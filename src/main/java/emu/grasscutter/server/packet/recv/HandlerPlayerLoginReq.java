@@ -22,6 +22,14 @@ public class HandlerPlayerLoginReq extends PacketHandler {
         }
 
         Player player = session.getPlayer();
+        if (!emu.grasscutter.data.ResourceLoader.isLoadedAll()) {
+            Grasscutter.getLogger()
+                    .warn(
+                            "Player {} login arrived before resources finished. Closing the session.",
+                            player.getUid());
+            session.close();
+            return;
+        }
         var intro = GAME_OPTIONS.newAccountIntro;
 
         if (player.getAvatars().getAvatarCount() == 0 && intro.enabled) {

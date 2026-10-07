@@ -1457,6 +1457,23 @@ public class Player implements PlayerHook, FieldFetch {
 
         runner.submit(
                 () -> {
+                    // The game socket accepts connections while resources are still loading.
+                    // Quest loading deletes any chapter whose definition is missing, so it has to
+                    // wait until the quest table actually exists.
+                    if (!emu.grasscutter.data.ResourceLoader.isLoadedAll()) {
+                        Grasscutter.getLogger()
+                                .warn(
+                                        "Player {} connected while resources are still loading. Waiting before reading saved data.",
+                                        this.getUid());
+                        for (int spin = 0; spin < 1800 && !emu.grasscutter.data.ResourceLoader.isLoadedAll(); spin++) {
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException interrupted) {
+                                Thread.currentThread().interrupt();
+                                break;
+                            }
+                        }
+                    }
                     this.getAvatars().loadFromDatabase();
                     this.getQuestManager().loadFromDatabase();
                     // Recover earned characters before inventory resolves saved equipment owners.

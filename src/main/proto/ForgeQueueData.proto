@@ -3,12 +3,14 @@ syntax = "proto3";
 option java_package = "emu.grasscutter.net.proto";
 option java_outer_classname = "ForgeQueueDataOuterClass";
 
+// 7.1 reader NLGBJEEJDLG 0x14820f340. The queue dictionary is keyed by field 9.
+// Field 13 drives the current-item bar, field 7 is the countdown shown beside it.
 message ForgeQueueData {
-	uint32 total_finish_timestamp = 50000;
 	uint32 forge_id = 1;
-	uint32 next_finish_timestamp = 50001;
-	uint32 finish_count = 10;
-	uint32 queue_id = 50002;
-	uint32 unfinish_count = 50003;
 	uint32 avatar_id = 2;
+	uint32 unfinish_count = 3;
+	uint32 total_finish_timestamp = 7;
+	uint32 queue_id = 9;
+	uint32 finish_count = 10;
+	uint32 next_finish_timestamp = 13;
 }

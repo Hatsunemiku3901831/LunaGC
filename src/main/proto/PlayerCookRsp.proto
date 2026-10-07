@@ -6,11 +6,14 @@ option java_outer_classname = "PlayerCookRspOuterClass";
 import "CookRecipeData.proto";
 import "ItemParam.proto";
 
+// 7.1 reader NLGBJEEJDLG 0x14ca21a80.
+// Field 6 is qte_quality (object +0x34). The result UI reads it, and an auto cook treats 0 as 3.
+// Field 8 is cook_count (object +0x38).
 message PlayerCookRsp {
+	uint32 qte_quality = 6;
+	uint32 cook_count = 8;
 	int32 retcode = 9;
 	repeated ItemParam extral_item_list = 10;
-	uint32 cook_count = 50000;
 	repeated ItemParam item_list = 11;
 	CookRecipeData recipe_data = 13;
-	uint32 qte_quality = 50001;
 }

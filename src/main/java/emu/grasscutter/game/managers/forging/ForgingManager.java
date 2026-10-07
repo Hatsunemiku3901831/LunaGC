@@ -67,10 +67,35 @@ public final class ForgingManager extends BasePlayerManager {
         return res;
     }
 
+    /**
+     * The client clears its forge-recipe set and copies this list over it. Recipes marked
+     * default-show in the excel are the ones a blacksmith offers before any diagram is used.
+     */
+    static List<Integer> visibleForgeIds(
+            Collection<Integer> unlocked, Iterable<ForgeData> recipes, int adventureRank) {
+        var ids = new LinkedHashSet<Integer>();
+        if (unlocked != null) {
+            ids.addAll(unlocked);
+        }
+        if (recipes != null) {
+            for (ForgeData recipe : recipes) {
+                if (recipe.isDefaultShow() && recipe.getPlayerLevel() <= adventureRank) {
+                    ids.add(recipe.getId());
+                }
+            }
+        }
+        ids.remove(0);
+        return List.copyOf(ids);
+    }
+
     public synchronized void sendForgeDataNotify() {
         // Determine the number of queues and unlocked items.
         int numQueues = this.determineNumberOfQueues();
-        var unlockedItems = this.player.getUnlockedForgingBlueprints();
+        var unlockedItems =
+                visibleForgeIds(
+                        this.player.getUnlockedForgingBlueprints(),
+                        GameData.getForgeDataMap().values(),
+                        this.player.getLevel());
         var queueData = this.determineCurrentForgeQueueData();
 
         // Send notification.
@@ -135,10 +160,8 @@ public final class ForgingManager extends BasePlayerManager {
                 player.getInventory().payItems(material, req.getForgeCount(), ActionReason.ForgeCost);
 
         if (!success) {
-            // TODO:I'm not sure this one is correct.
-            this.player.sendPacket(
-                    new PacketForgeStartRsp(
-                            Retcode.RET_ITEM_COUNT_NOT_ENOUGH)); // ToDo: Probably the wrong return code.
+            this.player.sendPacket(new PacketForgeStartRsp(Retcode.RET_ITEM_COUNT_NOT_ENOUGH));
+            return;
         }
 
         // Consume forge points.

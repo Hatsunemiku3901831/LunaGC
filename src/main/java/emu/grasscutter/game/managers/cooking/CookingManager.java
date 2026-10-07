@@ -110,10 +110,10 @@ public class CookingManager extends BasePlayerManager {
         int recipeId = req.getRecipeId();
         int avatar = req.getAssistAvatar();
 
-        // The 7.0 client dump renamed both cooking quantities, but kept their roles:
-        // KLACBPCPCMJ (field 2) is how many dishes the client asked for -- 1 for a manual cook,
-        // the slider value for an auto cook -- and JJPABEHGMCH (field 15) is the QTE result,
-        // whose 1/2/3 select the recipe's 奇怪/普通/美味 output tiers.
+        // 7.1 writer: KLACBPCPCMJ (field 4) is how many dishes the client asked for -- 1 for a
+        // manual cook, the slider value for an auto cook -- and JJPABEHGMCH (field 1) is the QTE
+        // result, whose 1/2/3 select the recipe's 奇怪/普通/美味 output tiers. An auto cook omits
+        // the quality field, so it arrives as 0.
         int count = req.getKLACBPCPCMJ();
         int quality = req.getJJPABEHGMCH();
 
@@ -124,12 +124,13 @@ public class CookingManager extends BasePlayerManager {
         }
 
         // Trace the raw request once per recipe, and on every auto cook (count != 1), so the
-        // field mapping above stays verifiable from the logs.  DDACKLBMIKL/OLLOPKLIIAC are two
-        // 7.0-only context fields that are still unidentified.
+        // field mapping above stays verifiable from the logs. Fields 7 and 10 are the two
+        // context uints the client copies from the cooking controller. The 7.0 names stay in
+        // historical field-number order.
         if (loggedReqLayout.add(recipeId) || count != 1) {
             Grasscutter.getLogger()
                     .debug(
-                            "PlayerCookReq recipe={} assist={} count={} quality={} f5={} f12={}",
+                            "PlayerCookReq recipe={} assist={} count={} quality={} f7={} f10={}",
                             recipeId,
                             avatar,
                             count,

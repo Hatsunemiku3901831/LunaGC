@@ -3,7 +3,10 @@ syntax = "proto3";
 option java_package = "emu.grasscutter.net.proto";
 option java_outer_classname = "UnlockTransPointReqOuterClass";
 
+// 7.1 writer IENGFLPCLNM 0x14c898170.
+// Field 1 is point_id (object +0x18, tag 0x08). Field 12 is scene_id (object +0x1c, tag 0x60).
+// The two obfuscated members are the same point_id/scene_id pair as SceneTransToPointReq.
 message UnlockTransPointReq {
-	uint32 point_id = 12;
-	uint32 scene_id = 14;
+	uint32 point_id = 1;
+	uint32 scene_id = 12;
 }

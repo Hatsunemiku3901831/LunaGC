@@ -624,7 +624,24 @@ public final class QuestManager extends BasePlayerManager {
                 .toList();
     }
 
+    /**
+     * A login that arrives while resources are still loading sees an empty quest table. Treating
+     * that as "this quest id does not exist" deletes the player's saved chapters.
+     */
+    public static boolean resourcesReadyForQuestLoad() {
+        return emu.grasscutter.data.ResourceLoader.isLoadedAll()
+                && !GameData.getQuestDataMap().isEmpty();
+    }
+
     public void loadFromDatabase() {
+        if (!resourcesReadyForQuestLoad()) {
+            Grasscutter.getLogger()
+                    .warn(
+                            "Player {} connected before quest resources were loaded. Saved quests were kept.",
+                            getPlayer().getUid());
+            return;
+        }
+
         List<GameMainQuest> quests = DatabaseHelper.getAllQuests(getPlayer());
 
         for (GameMainQuest mainQuest : quests) {

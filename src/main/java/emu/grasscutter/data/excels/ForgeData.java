@@ -15,6 +15,7 @@ public class ForgeData extends GameResource {
     private int id;
 
     private int playerLevel;
+    private boolean isDefaultShow;
     private int forgeType;
     private int showItemId;
     private int resultItemId;

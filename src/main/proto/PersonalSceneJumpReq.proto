@@ -3,6 +3,8 @@ syntax = "proto3";
 option java_package = "emu.grasscutter.net.proto";
 option java_outer_classname = "PersonalSceneJumpReqOuterClass";
 
+// 7.1 writer IENGFLPCLNM 0x14bcffa40.
+// The only field is point_id at object +0x18, tag 0x58 (field 11).
 message PersonalSceneJumpReq {
-	uint32 point_id = 5;
+	uint32 point_id = 11;
 }

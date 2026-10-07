@@ -108,7 +108,7 @@ public final class PacketOpcodes {
     public static final int TeamHexenzirkelChangeNotify = -6;
     public static final int AvatarDieAnimationEndReq = 29784;
     public static final int AvatarDieAnimationEndRsp = 26739;
-    public static final int PersonalSceneJumpReq = -7;
+    public static final int PersonalSceneJumpReq = 13; // client EJKBEPMLFBH getter 0x14bcffb60
     public static final int VehicleStaminaNotify = 22099;
     public static final int ServerBuffChangeNotify = 20465;
     public static final int VehicleInteractReq = 22285;
@@ -379,7 +379,7 @@ public final class PacketOpcodes {
     public static final int TakeBattlePassRewardRsp = 2848;
     public static final int TakeFurnitureMakeReq = 4563;
     public static final int TakeFurnitureMakeRsp = 29002;
-    public static final int TakePlayerLevelRewardReq = -70;
+    public static final int TakePlayerLevelRewardReq = 7321;
     public static final int TakePlayerLevelRewardRsp = 4616;
     public static final int UnlockPersonalLineReq = -71;
     public static final int UnlockPersonalLineRsp = 28128;
@@ -543,7 +543,7 @@ public final class PacketOpcodes {
     public static final int AvatarUpgradeRsp = 9873;
     public static final int QueryPathReq = 2328;
     public static final int QueryPathRsp = 2343;
-    public static final int UnlockTransPointReq = -119;
+    public static final int UnlockTransPointReq = 9369; // client DMMJNICDOHM getter 0x14c898520
     public static final int UnlockTransPointRsp = -120;
     public static final int PlayerEnterChildMapLayerNotify = -121;
     public static final int PlayerEnterMapLayerNotify = -122;
