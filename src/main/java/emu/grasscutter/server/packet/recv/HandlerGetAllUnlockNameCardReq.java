@@ -1,6 +1,7 @@
 package emu.grasscutter.server.packet.recv;
 
 import emu.grasscutter.net.packet.*;
+import emu.grasscutter.net.proto.PacketHeadOuterClass.PacketHead;
 import emu.grasscutter.server.game.GameSession;
 import emu.grasscutter.server.packet.send.PacketGetAllUnlockNameCardRsp;
 
@@ -9,6 +10,8 @@ public class HandlerGetAllUnlockNameCardReq extends PacketHandler {
 
     @Override
     public void handle(GameSession session, byte[] header, byte[] payload) throws Exception {
-        session.send(new PacketGetAllUnlockNameCardRsp(session.getPlayer()));
+        session.send(
+                new PacketGetAllUnlockNameCardRsp(session.getPlayer())
+                        .buildHeader(PacketHead.parseFrom(header).getClientSequenceId()));
     }
 }

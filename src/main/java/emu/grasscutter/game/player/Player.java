@@ -3,6 +3,7 @@ package emu.grasscutter.game.player;
 import static emu.grasscutter.config.Configuration.GAME_OPTIONS;
 
 import dev.morphia.annotations.*;
+
 import emu.grasscutter.*;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.excels.PlayerLevelData;
@@ -59,11 +60,14 @@ import emu.grasscutter.server.game.GameSession.SessionState;
 import emu.grasscutter.server.packet.send.*;
 import emu.grasscutter.utils.*;
 import emu.grasscutter.utils.objects.FieldFetch;
+
 import it.unimi.dsi.fastutil.ints.*;
+
+import lombok.*;
+
 import java.time.*;
 import java.util.*;
 import java.util.concurrent.*;
-import lombok.*;
 
 @Entity(value = "players", useDiscriminator = false)
 public class Player implements PlayerHook, FieldFetch {
@@ -84,6 +88,47 @@ public class Player implements PlayerHook, FieldFetch {
     @Getter private String nickname;
     @Getter private String signature;
     @Getter private int headImage;
+    private ProfileCosmetics profileCosmetics = new ProfileCosmetics();
+
+    public synchronized ProfileCosmetics getProfileCosmetics() {
+        if (profileCosmetics == null) profileCosmetics = new ProfileCosmetics();
+        return profileCosmetics;
+    }
+
+    public ProfilePicture getProfilePicture() {
+        return getProfileCosmetics().toProto(getHeadImage());
+    }
+
+    public synchronized boolean selectProfilePicture(int pictureId) {
+        if (!getProfileCosmetics().selectPicture(this, pictureId)) return false;
+        var portrait = getProfilePicture();
+        headImage = portrait.getAvatarId() == 0 ? pictureId : portrait.getAvatarId();
+        updateProfile();
+        save();
+        return true;
+    }
+
+    public synchronized boolean selectProfileFrame(int frameId) {
+        if (!getProfileCosmetics().selectFrame(frameId)) return false;
+        updateProfile();
+        save();
+        return true;
+    }
+
+    public synchronized boolean unlockProfilePicture(int pictureId, int sourceItem) {
+        if (!getProfileCosmetics().unlockPicture(pictureId, sourceItem)) return false;
+        save();
+        sendPacket(new PacketGetAllUnlockProfileDataRsp(this));
+        return true;
+    }
+
+    public synchronized boolean unlockProfileFrame(int frameId) {
+        if (!getProfileCosmetics().unlockFrame(frameId)) return false;
+        save();
+        sendPacket(new PacketGetAllUnlockProfileDataRsp(this));
+        return true;
+    }
+
     @Getter private Map<Integer, Set<Integer>> sceneTags;
     @Getter private int nameCardId = 210001;
     @Getter private Position position;
@@ -111,6 +156,19 @@ public class Player implements PlayerHook, FieldFetch {
     @Getter private Set<Integer> traceEffectList;
     @Getter private Set<Integer> costumeList;
     private Set<Integer> weaponSkinList = new HashSet<>();
+    private List<Integer> tpsLoadout = new ArrayList<>();
+    @Getter @Setter private boolean tpsLoadoutInitialized;
+    private Map<Integer, Integer> tpsAmmunition = new HashMap<>();
+
+    public synchronized List<Integer> getTpsLoadout() {
+        if (tpsLoadout == null) tpsLoadout = new ArrayList<>();
+        return tpsLoadout;
+    }
+
+    public synchronized Map<Integer, Integer> getTpsAmmunition() {
+        if (tpsAmmunition == null) tpsAmmunition = new HashMap<>();
+        return tpsAmmunition;
+    }
 
     public synchronized Set<Integer> getWeaponSkinList() {
         if (weaponSkinList == null) weaponSkinList = new HashSet<>();
@@ -153,10 +211,10 @@ public class Player implements PlayerHook, FieldFetch {
     /**
      * Main quests marked finished for the CLIENT only, with no quest data behind them.
      *
-     * <p>Region access is quest-gated, and a region released after this server's resource set was cut
-     * has no quest data here - the quest system cannot finish what it does not know about, so the
-     * client keeps the barrier up. These ids are replayed to the client on every login, which is what
-     * makes the unlock survive a relog.
+     * <p>Region access is quest-gated, and a region released after this server's resource set was
+     * cut has no quest data here - the quest system cannot finish what it does not know about, so
+     * the client keeps the barrier up. These ids are replayed to the client on every login, which
+     * is what makes the unlock survive a relog.
      */
     @Getter private Set<Integer> forcedFinishedQuests;
 
@@ -189,6 +247,8 @@ public class Player implements PlayerHook, FieldFetch {
     @Transient @Getter @Setter private HomeWorld curHomeWorld;
     @Transient @Getter @Setter private boolean hasSentInitPacketInHome;
     @Transient private Scene scene;
+    // World and scene transfers are serialized without using the player monitor used by skills.
+    @Transient @Getter private final Object sceneTransferLock = new Object();
     @Transient @Getter private int weatherId = 0;
     @Transient @Getter private ClimateType climate = ClimateType.CLIMATE_SUNNY;
     @Transient @Getter private int areaId = 0;
@@ -251,7 +311,9 @@ public class Player implements PlayerHook, FieldFetch {
     @Getter private final transient Queue<AttackResult> attackResults;
     @Getter private final transient InvokeHandler<CombatInvokeEntry> combatInvokeHandler;
     @Getter private final transient InvokeHandler<AbilityInvokeEntry> abilityInvokeHandler;
-    @Getter private final transient InvokeHandler<AbilityInvokeEntry> clientAbilityInitFinishHandler;
+
+    @Getter
+    private final transient InvokeHandler<AbilityInvokeEntry> clientAbilityInitFinishHandler;
 
     @Getter @Setter private long springLastUsed;
     private HashMap<String, MapMark> mapMarks;
@@ -508,6 +570,7 @@ public class Player implements PlayerHook, FieldFetch {
 
     public void setHeadImage(int picture) {
         this.headImage = picture;
+        getProfileCosmetics().resetPicture();
         this.updateProfile();
         this.save();
     }
@@ -587,7 +650,8 @@ public class Player implements PlayerHook, FieldFetch {
 
             this.getProgressManager().tryUnlockOpenStates();
             this.getQuestManager().queueEvent(QuestContent.QUEST_CONTENT_PLAYER_LEVEL_UP, level);
-            this.getQuestManager().queueEvent(QuestCond.QUEST_COND_PLAYER_LEVEL_EQUAL_GREATER, level);
+            this.getQuestManager()
+                    .queueEvent(QuestCond.QUEST_COND_PLAYER_LEVEL_EQUAL_GREATER, level);
 
             return true;
         }
@@ -640,7 +704,8 @@ public class Player implements PlayerHook, FieldFetch {
         this.setProperty(PlayerProperty.PROP_PHLOGISTON_ENABLE, 1);
 
         this.setProperty(
-                PlayerProperty.PROP_CUR_PERSIST_STAMINA, this.getProperty(PlayerProperty.PROP_MAX_STAMINA));
+                PlayerProperty.PROP_CUR_PERSIST_STAMINA,
+                this.getProperty(PlayerProperty.PROP_MAX_STAMINA));
         this.setProperty(
                 PlayerProperty.PROP_DIVE_CUR_STAMINA,
                 this.getProperty(PlayerProperty.PROP_DIVE_MAX_STAMINA));
@@ -749,7 +814,12 @@ public class Player implements PlayerHook, FieldFetch {
                                                                 ? 4
                                                                 : (currentLevel >= 30)
                                                                         ? 3
-                                                                        : (currentLevel >= 25) ? 2 : (currentLevel >= 20) ? 1 : 0;
+                                                                        : (currentLevel >= 25)
+                                                                                ? 2
+                                                                                : (currentLevel
+                                                                                                >= 20)
+                                                                                        ? 1
+                                                                                        : 0;
 
         if (newWorldLevel != currentWorldLevel) {
             this.setWorldLevel(newWorldLevel);
@@ -780,14 +850,20 @@ public class Player implements PlayerHook, FieldFetch {
                             if (quest.getTriggerData() != null
                                     && quest.getTriggers().containsKey(enterRegionName)
                                     && region.getGroupId()
-                                            == quest.getTriggerData().get(enterRegionName).getGroupId()) {
+                                            == quest.getTriggerData()
+                                                    .get(enterRegionName)
+                                                    .getGroupId()) {
 
-                                if (!Boolean.TRUE.equals(quest.getTriggers().put(enterRegionName, true))) {
-                                    this.getSession().send(new PacketServerCondMeetQuestListUpdateNotify());
+                                if (!Boolean.TRUE.equals(
+                                        quest.getTriggers().put(enterRegionName, true))) {
+                                    this.getSession()
+                                            .send(new PacketServerCondMeetQuestListUpdateNotify());
                                     this.getQuestManager()
                                             .queueEvent(
                                                     QuestContent.QUEST_CONTENT_TRIGGER_FIRE,
-                                                    quest.getTriggerData().get(enterRegionName).getId(),
+                                                    quest.getTriggerData()
+                                                            .get(enterRegionName)
+                                                            .getId(),
                                                     0);
                                 }
                             }
@@ -801,14 +877,20 @@ public class Player implements PlayerHook, FieldFetch {
                         quest -> {
                             if (quest.getTriggers().containsKey(leaveRegionName)
                                     && region.getGroupId()
-                                            == quest.getTriggerData().get(leaveRegionName).getGroupId()) {
+                                            == quest.getTriggerData()
+                                                    .get(leaveRegionName)
+                                                    .getGroupId()) {
 
-                                if (!Boolean.TRUE.equals(quest.getTriggers().put(leaveRegionName, true))) {
-                                    this.getSession().send(new PacketServerCondMeetQuestListUpdateNotify());
+                                if (!Boolean.TRUE.equals(
+                                        quest.getTriggers().put(leaveRegionName, true))) {
+                                    this.getSession()
+                                            .send(new PacketServerCondMeetQuestListUpdateNotify());
                                     this.getQuestManager()
                                             .queueEvent(
                                                     QuestContent.QUEST_CONTENT_TRIGGER_FIRE,
-                                                    quest.getTriggerData().get(leaveRegionName).getId(),
+                                                    quest.getTriggerData()
+                                                            .get(leaveRegionName)
+                                                            .getId(),
                                                     0);
                                 }
                             }
@@ -862,8 +944,19 @@ public class Player implements PlayerHook, FieldFetch {
         return session.getLastPingTime();
     }
 
+    public emu.grasscutter.server.game.PlayerTimeClock.Snapshot getPlayerTimeSnapshot() {
+        return session == null
+                ? new emu.grasscutter.server.game.PlayerTimeClock.Snapshot(0, isPaused())
+                : session.getPlayerTimeSnapshot();
+    }
+
+    public long getPlayerTimeMs() {
+        return getPlayerTimeSnapshot().playerTime();
+    }
+
     public void setPaused(boolean newPauseState) {
         var oldPauseState = this.paused;
+        if (session != null) session.setPlayerTimePaused(newPauseState);
         this.paused = newPauseState;
 
         if (newPauseState && !oldPauseState) {
@@ -871,6 +964,8 @@ public class Player implements PlayerHook, FieldFetch {
         } else if (oldPauseState && !newPauseState) {
             this.onUnpause();
         }
+        if (session != null && oldPauseState != newPauseState)
+            sendPacket(new PacketPlayerTimeNotify(this));
     }
 
     public boolean isInMultiplayer() {
@@ -879,7 +974,7 @@ public class Player implements PlayerHook, FieldFetch {
 
     /** The same 04:00 Asia/Shanghai day boundary in development and Docker. */
     protected LocalDate moonCardToday() {
-        return ZonedDateTime.now(ZoneId.of("Asia/Shanghai")).minusHours(4).toLocalDate();
+        return GameCalendar.resetDay(Instant.now());
     }
 
     private static Date moonCardDate(LocalDate day) {
@@ -895,13 +990,17 @@ public class Player implements PlayerHook, FieldFetch {
     }
 
     public int getMoonCardRemainDays() {
+        return getMoonCardRemainDays(moonCardToday());
+    }
+
+    private int getMoonCardRemainDays(LocalDate today) {
         if (!moonCard || moonCardStartTime == null) return 0;
         var start = moonCardStartTime.toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDate();
         return Math.max(
                 0,
                 (int)
                         java.time.temporal.ChronoUnit.DAYS.between(
-                                moonCardToday(), start.plusDays(moonCardDuration)));
+                                today, start.plusDays(moonCardDuration)));
     }
 
     public boolean rechargeMoonCard() {
@@ -927,14 +1026,19 @@ public class Player implements PlayerHook, FieldFetch {
     }
 
     public synchronized void getTodayMoonCard() {
+        getTodayMoonCard(moonCardToday());
+    }
+
+    private void getTodayMoonCard(LocalDate rewardDay) {
         if (!moonCard) return;
-        if (getMoonCardRemainDays() == 0) {
+        int remaining = getMoonCardRemainDays(rewardDay);
+        if (remaining == 0) {
             moonCard = false;
             save();
             return;
         }
         if (moonCardGetTimes == null) moonCardGetTimes = new HashSet<>();
-        Date today = moonCardDate(moonCardToday());
+        Date today = moonCardDate(rewardDay);
         // Existing saves used JVM-local midnight. Compare calendar days to preserve old claims.
         if (moonCardGetTimes.stream()
                 .anyMatch(
@@ -942,7 +1046,7 @@ public class Player implements PlayerHook, FieldFetch {
                                 d.toInstant()
                                         .atZone(ZoneId.of("Asia/Shanghai"))
                                         .toLocalDate()
-                                        .equals(moonCardToday()))) return;
+                                        .equals(rewardDay))) return;
         int reward = moonCardDailyPrimogems > 0 ? moonCardDailyPrimogems : 90;
         if ((long) getPrimogems() + reward > Integer.MAX_VALUE) return;
         if (!getInventory().addItem(new GameItem(201, reward), ActionReason.BlessingRedeemReward))
@@ -950,7 +1054,7 @@ public class Player implements PlayerHook, FieldFetch {
         moonCardGetTimes.clear();
         moonCardGetTimes.add(today);
         save();
-        sendPacket(new PacketCardProductRewardNotify(getMoonCardRemainDays(), reward));
+        sendPacket(new PacketCardProductRewardNotify(remaining, reward));
     }
 
     public void addExpeditionInfo(long avatarGuid, int expId, int hourTime, int startTime) {
@@ -1011,7 +1115,9 @@ public class Player implements PlayerHook, FieldFetch {
 
                 sendPacket(
                         new PacketAvatarAddNotify(
-                                avatar, addToCurrentTeam && this.getTeamManager().canAddAvatarToCurrentTeam()));
+                                avatar,
+                                addToCurrentTeam
+                                        && this.getTeamManager().canAddAvatarToCurrentTeam()));
                 if (addToCurrentTeam) {
 
                     this.getTeamManager().addAvatarToCurrentTeam(avatar);
@@ -1058,8 +1164,7 @@ public class Player implements PlayerHook, FieldFetch {
 
     public void addPersonalLine(int personalLineId) {
         this.getPersonalLineList().add(personalLineId);
-        session
-                .getPlayer()
+        session.getPlayer()
                 .getQuestManager()
                 .queueEvent(QuestCond.QUEST_COND_PERSONAL_LINE_UNLOCK, personalLineId);
     }
@@ -1084,7 +1189,9 @@ public class Player implements PlayerHook, FieldFetch {
     }
 
     public void sendMessage(Player sender, Object message) {
-        this.getServer().getChatSystem().sendPrivateMessage(sender, this.getUid(), message.toString());
+        this.getServer()
+                .getChatSystem()
+                .sendPrivateMessage(sender, this.getUid(), message.toString());
     }
 
     public List<Mail> getAllMail() {
@@ -1142,7 +1249,7 @@ public class Player implements PlayerHook, FieldFetch {
                         .setMpSettingType(this.getMpSetting())
                         .setNameCardId(this.getNameCardId())
                         .setSignature(this.getSignature())
-                        .setProfilePicture(ProfilePicture.newBuilder().setAvatarId(this.getHeadImage()));
+                        .setProfilePicture(this.getProfilePicture());
 
         if (this.getWorld() != null) {
             onlineInfo.setCurPlayerNumInWorld(getWorld().getPlayerCount());
@@ -1196,7 +1303,7 @@ public class Player implements PlayerHook, FieldFetch {
 
         return SocialDetail.newBuilder()
                 .setUid(this.getUid())
-                .setProfilePicture(ProfilePicture.newBuilder().setAvatarId(this.getHeadImage()))
+                .setProfilePicture(this.getProfilePicture())
                 .setNickname(this.getNickname())
                 .setSignature(this.getSignature())
                 .setLevel(this.getLevel())
@@ -1274,7 +1381,10 @@ public class Player implements PlayerHook, FieldFetch {
         if (this.battlePassManager != null) return;
         this.battlePassManager = DatabaseHelper.loadBattlePass(this);
         this.battlePassManager.synchronizeSchedule();
-        this.battlePassManager.getMissions().values().removeIf(mission -> mission.getData() == null);
+        this.battlePassManager
+                .getMissions()
+                .values()
+                .removeIf(mission -> mission.getData() == null);
     }
 
     public PlayerCollectionRecords getCollectionRecordStore() {
@@ -1312,8 +1422,8 @@ public class Player implements PlayerHook, FieldFetch {
                                 this.getUid(),
                                 this.getNickname(),
                                 false,
-                                PlayerApplyEnterHomeResultNotifyOuterClass.PlayerApplyEnterHomeResultNotify.Reason
-                                        .SYSTEM_JUDGE));
+                                PlayerApplyEnterHomeResultNotifyOuterClass
+                                        .PlayerApplyEnterHomeResultNotify.Reason.SYSTEM_JUDGE));
         req.getRequester().sendPacket(new PacketTryEnterHomeRsp());
         return true;
     }
@@ -1379,17 +1489,24 @@ public class Player implements PlayerHook, FieldFetch {
     }
 
     private synchronized void doDailyReset() {
+        doDailyReset(Instant.now());
+    }
 
-        if (getBattlePassManager().refreshMissions()) {
-            getBattlePassManager().triggerMission(WatcherTriggerType.TRIGGER_LOGIN);
+    protected synchronized void doDailyReset(Instant now) {
+        var battlePass = getBattlePassManager();
+        if (battlePass != null && battlePass.refreshMissions(now)) {
+            battlePass.triggerMission(WatcherTriggerType.TRIGGER_LOGIN);
         }
-        int currentTime = Utils.getCurrentSeconds();
+        int currentTime = Math.toIntExact(now.getEpochSecond());
 
-        var currentDate =
-                LocalDate.ofInstant(Instant.ofEpochSecond(currentTime), ZoneId.systemDefault());
-        var lastResetDate =
-                LocalDate.ofInstant(
-                        Instant.ofEpochSecond(this.getLastDailyReset()), ZoneId.systemDefault());
+        var currentDate = GameCalendar.resetDay(now);
+        var lastResetDate = GameCalendar.resetDay(Instant.ofEpochSecond(getLastDailyReset()));
+
+        // Birthday mail uses midnight; Welkin uses 04:00. Neither needs a new quota reset to
+        // retry a previously refused reward, and both retain their own persisted claim guard.
+        BirthdayMailSystem.checkAndSend(this, GameCalendar.calendarDay(now));
+        // Initial login retains its existing reward order, after the full inventory is sent.
+        if (isOnline()) getTodayMoonCard(currentDate);
 
         if (!currentDate.isAfter(lastResetDate)) {
             return;
@@ -1398,31 +1515,25 @@ public class Player implements PlayerHook, FieldFetch {
         this.setForgePoints(300_000);
 
         // The weekly-boss claim counter refreshes with the weekly reset. doDailyReset only runs
-        // once per calendar day, so comparing the Monday that starts each week - rather than
+        // once per game day, so comparing the Monday that starts each week - rather than
         // "today is Monday" - still resets for a player who skips Monday and logs in on Tuesday.
-        long lastWeekStart = weekStartEpochDay(lastResetDate);
-        long currentWeekStart = weekStartEpochDay(currentDate);
+        long lastWeekStart = GameCalendar.weekStart(lastResetDate).toEpochDay();
+        long currentWeekStart = GameCalendar.weekStart(currentDate).toEpochDay();
         if (currentWeekStart > lastWeekStart) {
             this.setWeeklyBossChestNum(0);
         }
 
         this.setResinBuyCount(0);
 
-        BirthdayMailSystem.checkAndSend(this, currentDate);
-
         if (this.dailyTaskManager != null) {
             // Asked, not forced: the commissions keep their own record of which day they belong to,
             // and only draw a new set when the one they are holding is genuinely from an older one.
-            this.dailyTaskManager.resetDailyTasksForNewDay();
+            this.dailyTaskManager.resetDailyTasksForNewDay(now);
         }
 
         this.setLastDailyReset(currentTime);
-    }
-
-    /** Epoch day of the Monday that begins the week {@code date} falls in. */
-    private static long weekStartEpochDay(LocalDate date) {
-        // DayOfWeek.getValue() is 1 for Monday, so this walks back to the week's Monday.
-        return date.minusDays(date.getDayOfWeek().getValue() - 1).toEpochDay();
+        save();
+        if (isOnline() && activityManager != null) activityManager.onDailyReset(now.toEpochMilli());
     }
 
     public void resetSendPlayerLocTime() {
@@ -1463,9 +1574,12 @@ public class Player implements PlayerHook, FieldFetch {
                     if (!emu.grasscutter.data.ResourceLoader.isLoadedAll()) {
                         Grasscutter.getLogger()
                                 .warn(
-                                        "Player {} connected while resources are still loading. Waiting before reading saved data.",
+                                        "Player {} connected while resources are still loading."
+                                                + " Waiting before reading saved data.",
                                         this.getUid());
-                        for (int spin = 0; spin < 1800 && !emu.grasscutter.data.ResourceLoader.isLoadedAll(); spin++) {
+                        for (int spin = 0;
+                                spin < 1800 && !emu.grasscutter.data.ResourceLoader.isLoadedAll();
+                                spin++) {
                             try {
                                 Thread.sleep(100);
                             } catch (InterruptedException interrupted) {
@@ -1515,7 +1629,10 @@ public class Player implements PlayerHook, FieldFetch {
         }
 
         World world = new World(this);
-        world.addPlayer(this);
+        if (!world.tryAddPlayer(this)) {
+            throw new IllegalStateException(
+                    "Cannot enter login scene " + this.getSceneId() + " for uid " + this.getUid());
+        }
 
         // A player can log out and back in *inside* a scene that replaces the party and grants
         // scene-level avatar abilities - Stormterror's Lair (scene 20020) forces the Traveler and
@@ -1541,8 +1658,8 @@ public class Player implements PlayerHook, FieldFetch {
                     && this.position.getY() < sceneConfig.born_pos.getY() - LOGIN_FLOOR_MARGIN) {
                 Grasscutter.getLogger()
                         .warn(
-                                "Player {} logged in at Y {} in dungeon scene {}, {}m below the entry"
-                                        + " point - moving back to the scene's born_pos",
+                                "Player {} logged in at Y {} in dungeon scene {}, {}m below the"
+                                        + " entry point - moving back to the scene's born_pos",
                                 this.getUid(),
                                 this.position.getY(),
                                 this.getSceneId(),
@@ -1565,6 +1682,7 @@ public class Player implements PlayerHook, FieldFetch {
         session.send(new PacketPlayerDataNotify(this));
         session.send(new PacketStoreWeightLimitNotify());
         session.send(new PacketPlayerStoreNotify(this));
+        this.getTeamManager().refreshTeamSkillLevelBonuses(false);
         session.send(new PacketAvatarDataNotify(this));
         session.send(new PacketAvatarWeaponSkinDataNotify(this));
 
@@ -1654,7 +1772,9 @@ public class Player implements PlayerHook, FieldFetch {
             this.getProfile().syncWithCharacter(this);
 
             this.getCoopRequests().clear();
-            this.getEnterHomeRequests().values().forEach(req -> this.expireEnterHomeRequest(req, true));
+            this.getEnterHomeRequests()
+                    .values()
+                    .forEach(req -> this.expireEnterHomeRequest(req, true));
             this.getEnterHomeRequests().clear();
 
             this.save();
@@ -1687,7 +1807,8 @@ public class Player implements PlayerHook, FieldFetch {
                         scenePointEntry -> {
                             val pointId = scenePointEntry.getPointData().getId();
                             if (unlockedScenePoints.get(sceneId).contains(pointId)) {
-                                this.sendPacket(new PacketUnfreezeGroupLimitNotify(pointId, sceneId));
+                                this.sendPacket(
+                                        new PacketUnfreezeGroupLimitNotify(pointId, sceneId));
                             }
                         });
     }

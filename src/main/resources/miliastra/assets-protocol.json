@@ -1,0 +1,18 @@
+{
+  "source": "https://github.com/luern0313/UGC-File-Generate-Utils",
+  "protoCommit": "c56862b4fe2cb1d8dac5fdb6fb738ad559641ca2",
+  "license": "MIT",
+  "verifiedClientVersion": null,
+  "sourceSha256": {
+    "gia.proto": "3193d355fed77e676080449a02177ec9c58a28625051698fe1ca4cbb533296a7",
+    "asset.proto": "2bff8aabfc561f6e1a06c1350905982863bafb46db6e7c6fd5397bbd2a7fcc24",
+    "entity.proto": "d4556e33518034f2f4cc051a92dc97e206730f69b3b56aa874798cdeefb4b6b6",
+    "camera.proto": "6ce8961e23ae00c187232d126249583cda28ca45f347d9bcb8e48762ea7aa423"
+  },
+  "changes": [
+    "package",
+    "imports",
+    "Java options",
+    "attribution"
+  ]
+}

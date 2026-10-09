@@ -60,6 +60,16 @@ import java.util.regex.Pattern;
  * on and off without remembering ids or editing {@code data/Banners.json} by hand.
  */
 public final class GmHandler implements Router {
+    private final GmMiliastra miliastra;
+
+    public GmHandler() {
+        this(FileUtils.getDataUserPath("miliastra/assets"));
+    }
+
+    GmHandler(Path assetDirectory) {
+        this.miliastra = new GmMiliastra(new emu.grasscutter.game.beyond.MiliastraAssetStore(assetDirectory));
+    }
+
     private static final String CONSOLE_RESOURCE = "/gm/console.html";
 
     /** Cap on how many item rows one request will return, however big the page asks for. */
@@ -162,6 +172,16 @@ public final class GmHandler implements Router {
         javalin.get("/gm/", GmHandler::serveConsole);
         javalin.get("/gm/api/commands", GmHandler::listCommands);
         javalin.get("/gm/api/players", GmHandler::listPlayers);
+        javalin.get("/gm/api/database", ctx -> {
+            if (!authorize(ctx)) return;
+            ctx.header("Cache-Control", "no-store");
+            ctx.json(Map.of("retcode", 0, "queues", emu.grasscutter.database.DatabaseHelper.queueStatus()));
+        });
+        javalin.get("/gm/api/runtime", ctx -> {
+            if (!authorize(ctx)) return;
+            ctx.header("Cache-Control", "no-store");
+            ctx.json(Map.of("retcode", 0, "status", emu.grasscutter.server.game.RuntimeDiagnostics.snapshot()));
+        });
         javalin.post("/gm/api/command", GmHandler::runCommand);
         javalin.get("/gm/api/items", GmHandler::listItems);
         javalin.get("/gm/api/equipment/options", GmHandler::equipmentOptions);
@@ -181,6 +201,19 @@ public final class GmHandler implements Router {
         javalin.post("/gm/api/notices", ctx -> messageRequest(ctx, GmMessages::editNotice));
         javalin.get("/gm/api/mail", ctx -> messageRequest(ctx, GmMessages::inbox));
         javalin.post("/gm/api/mail", ctx -> messageRequest(ctx, GmMessages::sendMail));
+        javalin.get("/gm/api/miliastra", ctx -> GmMiliastra.request(ctx, miliastra::list));
+        javalin.post("/gm/api/miliastra", ctx -> GmMiliastra.request(ctx, miliastra::upload));
+        javalin.get("/gm/api/miliastra/{id}/download", ctx -> GmMiliastra.request(ctx, miliastra::download));
+        javalin.get("/gm/api/miliastra/palette", ctx -> GmMiliastra.request(ctx, miliastra::palette));
+        javalin.post("/gm/api/miliastra/generate/model", ctx -> GmMiliastra.request(ctx, miliastra::generateModel));
+        javalin.post("/gm/api/miliastra/generate/image", ctx -> GmMiliastra.request(ctx, miliastra::generateImage));
+        javalin.post("/gm/api/miliastra/{id}/convert", ctx -> GmMiliastra.request(ctx, miliastra::convert));
+        javalin.post("/gm/api/miliastra/{id}/remap", ctx -> GmMiliastra.request(ctx, miliastra::remap));
+        javalin.post("/gm/api/miliastra/{id}/canvas", ctx -> GmMiliastra.request(ctx, miliastra::canvas));
+        javalin.get("/gm/api/miliastra/camera-templates", ctx -> GmMiliastra.request(ctx, miliastra::cameraTemplates));
+        javalin.post("/gm/api/miliastra/generate/camera", ctx -> GmMiliastra.request(ctx, miliastra::generateCamera));
+        javalin.post("/gm/api/miliastra/generate/voxel", ctx -> GmMiliastra.request(ctx, miliastra::generateVoxel));
+        javalin.post("/gm/api/miliastra/{id}/camera", ctx -> GmMiliastra.request(ctx, miliastra::camera));
     }
 
     private static void messageRequest(Context ctx, ShopRequest request) throws Exception {
@@ -291,7 +324,10 @@ public final class GmHandler implements Router {
         if (!authorize(ctx)) return;
 
         var players = new ArrayList<Map<String, Object>>();
-        for (Player player : Grasscutter.getGameServer().getPlayers().values()) {
+        var server = Grasscutter.getGameServer();
+        var online = server == null || server.getPlayers() == null
+                ? List.<Player>of() : server.getPlayers().values();
+        for (Player player : online) {
             var entry = new LinkedHashMap<String, Object>();
             entry.put("uid", player.getUid());
             entry.put("nickname", player.getNickname());
@@ -1463,7 +1499,7 @@ public final class GmHandler implements Router {
      * asked for a secret. {@code loopbackOnly} above is then the only thing standing between the
      * console and the LAN.
      */
-    private static boolean authorize(Context ctx) throws Exception {
+    static boolean authorize(Context ctx) throws Exception {
         if (SERVER.gm.loopbackOnly) {
             try {
                 if (!InetAddress.getByName(ctx.ip()).isLoopbackAddress()) {

@@ -22,8 +22,8 @@ public class HandlerClientAbilitiesInitFinishCombineNotify extends PacketHandler
 
         for (EntityAbilityInvokeEntry entry : notif.getEntityInvokeListList()) {
             for (AbilityInvokeEntry ability : entry.getInvokesList()) {
-                player.getAbilityManager().onAbilityInvoke(ability);
-                player.getClientAbilityInitFinishHandler().addEntry(ability.getForwardType(), ability);
+                if (player.getAbilityManager().acceptAbilityInvoke(ability))
+                    player.getClientAbilityInitFinishHandler().addEntry(ability.getForwardType(), ability);
             }
 
             if (entry.getInvokesList().size() > 0) {

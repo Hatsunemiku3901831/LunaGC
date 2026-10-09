@@ -1,0 +1,74 @@
+[
+  {
+    "source": "BinOutput/Ability/Temp/ActivityAbilities/ConfigAbility_Activity_AcrobaticsBattle.json",
+    "sourceSha256": "8fbbaae3eb3e70e9130afdfecd51bd8c58e60393b4c85e5c9ebceb5d42de06ce",
+    "configIndex": 7,
+    "ability": "Activity_AcrobaticsBattle_Lv2_LevelBuff_Avatar",
+    "owner": "ability",
+    "mixinIndex": 1,
+    "shape": "numeric"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/ActivityAbilities/ConfigAbility_Activity_AcrobaticsBattle.json",
+    "sourceSha256": "8fbbaae3eb3e70e9130afdfecd51bd8c58e60393b4c85e5c9ebceb5d42de06ce",
+    "configIndex": 17,
+    "ability": "Activity_AcrobaticsBattle_Lv6_LevelBuff_Monster",
+    "owner": "ability",
+    "mixinIndex": 0,
+    "shape": "numeric"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/ActivityAbilities/ConfigAbility_Activity_AdventureGoalFighting.json",
+    "sourceSha256": "0d75fdaeb946aeb5fba5be4825cd99bd11f42889bfb84a255b014829c8d05c76",
+    "configIndex": 5,
+    "ability": "ActivityAbility_AdventureGoalFighting_Buff_1",
+    "owner": "Activity_AdventureGoalFighting_Buff_1_CurAvatar",
+    "mixinIndex": 1,
+    "shape": "numeric"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/ActivityAbilities/ConfigAbility_Activity_BadgeBattle.json",
+    "sourceSha256": "9f410fb7154794e7879578ff531c0a2dc96b342308c24e4276762dfc493b1c08",
+    "configIndex": 4,
+    "ability": "Activity_BadgeBattle_Badge_ScreenEffectManager",
+    "owner": "ScreenEffManager",
+    "mixinIndex": 0,
+    "shape": "numeric"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/ActivityAbilities/ConfigAbility_Activity_MapMark.json",
+    "sourceSha256": "5d30ed725eb13778ce22a7b249fea35243ad9f92116196b633bc176887b40ce2",
+    "configIndex": 6,
+    "ability": "SceneObj_Property_Ani_Prop_MapMark_CaneraPivot",
+    "owner": "SceneObj_Property_Ani_Prop_MapMark_CaneraPivot",
+    "mixinIndex": 0,
+    "shape": "numeric"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/ActivityAbilities/ConfigAbility_Activity_V6_3_MVM2.json",
+    "sourceSha256": "d9c004ef01047dc2bc3eaedb6d1e8aa044b6e2d0819f3979882ba75a6ce47a69",
+    "configIndex": 9,
+    "ability": "Necalevia_AOERangeMulti_Damage_MvM2",
+    "owner": "ability",
+    "mixinIndex": 0,
+    "shape": "numeric"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AnimalAbilities/ConfigAbility_Animal_Electrohercules_02.json",
+    "sourceSha256": "55b33093f40ad66afd854b315788b70fa171a95e5c4f0cbe5be332838199f213",
+    "configIndex": 1,
+    "ability": "Partner_Animal_Electrohercules_Defend_StaminaController",
+    "owner": "Partner_Animal_Electrohercules_DefendLoop",
+    "mixinIndex": 0,
+    "shape": "postfix"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Iansan.json",
+    "sourceSha256": "d7fdc57b4aa4a5efb9b1879f52b590778564ee09949130b3515ba4e5b43eb8f1",
+    "configIndex": 20,
+    "ability": "Avatar_Iansan_Constellation_1",
+    "owner": "Avatar_Iansan_Constellation_1_Trigger",
+    "mixinIndex": 1,
+    "shape": "named"
+  }
+]

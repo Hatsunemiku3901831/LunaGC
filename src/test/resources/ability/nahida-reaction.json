@@ -1,0 +1,103 @@
+{
+  "abilityName": "Avatar_Nahida_ElementalArt",
+  "abilitySpecials": {
+    "WitChain_CD_Reduce": 0.0,
+    "Chain_CD": 0.0,
+    "Chain_Damage_PerAtk": 0.0,
+    "Chain_Damage_PerMastery": 0.0,
+    "Chain_Duration": 0.0,
+    "DefenseDown_Dura": 0.0,
+    "DefenseDown_Ratio": 0.0,
+    "Reaction_Crit_Ratio": 0.0,
+    "MoonOvergrow_Crit_Ratio": 0.0,
+    "MoonOvergrow_CritHurt_Ratio": 0.0
+  },
+  "modifiers": {
+    "UNIQUE_Avatar_Nahida_Constellation_2_OnMonster": {
+      "stacking": "Unique",
+      "elementDurability": 100.0,
+      "modifierMixins": [
+        {
+          "$type": "DoActionBySelfElementReactionMixin",
+          "IGAMNNAADJB": [
+            "Overdose",
+            "OverdoseElectric",
+            "OverdoseGrass"
+          ],
+          "actionQueue": [
+            {
+              "$type": "ApplyModifier",
+              "modifierName": "UNIQUE_Avatar_Nahida_Constellation_2_DefenseDown",
+              "target": "Self"
+            }
+          ]
+        },
+        {
+          "$type": "ModifyBeHitDamageMixin",
+          "AOONAPCFEKD": "Reaction_Crit_Ratio",
+          "damagePercentageRatio": 0.0,
+          "predicates": [
+            {
+              "$type": "GPEMEIHPCCF",
+              "predicates": [
+                {
+                  "$type": "NEBPDJJINNM",
+                  "GNFHFKBPNBJ": "Burning"
+                },
+                {
+                  "$type": "NEBPDJJINNM",
+                  "GNFHFKBPNBJ": "Overgrow"
+                },
+                {
+                  "$type": "NEBPDJJINNM",
+                  "GNFHFKBPNBJ": "OvergrowMushroomFire"
+                },
+                {
+                  "$type": "NEBPDJJINNM",
+                  "GNFHFKBPNBJ": "OvergrowMushroomElectric"
+                }
+              ]
+            }
+          ],
+          "ignoreEventInfo": true
+        },
+        {
+          "$type": "ModifyBeHitDamageMixin",
+          "BOELJJKKDHP": "MoonOvergrow_CritHurt_Ratio",
+          "damagePercentageRatio": 0.0,
+          "EJDDDMMFFLG": "MoonOvergrow_Crit_Ratio",
+          "predicates": [
+            {
+              "$type": "CCHPEOBKOBO",
+              "attackTags": [
+                "MoonOvergrowDamage"
+              ]
+            }
+          ],
+          "ignoreEventInfo": true
+        }
+      ],
+      "modifierName": "",
+      "isUnique": true,
+      "AIHNJLDFEGJ": 0.0
+    },
+    "UNIQUE_Avatar_Nahida_Constellation_2_DefenseDown": {
+      "duration": "DefenseDown_Dura",
+      "isLimitedProperties": true,
+      "properties": {
+        "Actor_DefenceRatio": [
+          0.0,
+          1.0,
+          "DefenseDown_Ratio",
+          "MUL",
+          "SUB"
+        ]
+      },
+      "elementDurability": 100.0,
+      "state": "DefenseDown",
+      "modifierName": "",
+      "isUnique": true,
+      "AIHNJLDFEGJ": 0.0
+    }
+  }
+}

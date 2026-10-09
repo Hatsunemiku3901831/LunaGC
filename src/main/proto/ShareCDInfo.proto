@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "ShareCDInfoOuterClass";
+
+import "ShareCD.proto";
+
+message ShareCDInfo {
+    repeated ShareCD share_cd_list = 6;
+    uint32 share_cd_id = 13;
+}

@@ -1,0 +1,23 @@
+[
+  {
+    "source": "BinOutput/Ability/Temp/MonsterAbilities/ConfigAbility_Monster_Effigy_Electric.json",
+    "sourceSha256": "8654b19dd5fce027d15e79cf1b63ed6d3bb3fa2c936cd74635d7e25f35ca57c3",
+    "ability": "Monster_Effigy_Electric_Shield",
+    "modifier": "ShieldModifier",
+    "state": "LockHP"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Hutao.json",
+    "sourceSha256": "7d45149a563e58731ff42d146e01f9e10e9469bd230850a6acad2761a1715ae8",
+    "ability": "Avatar_Hutao_VermilionBite_CameraController",
+    "modifier": "VermilionBite_Camera_Protection_Invincible",
+    "state": "Invincible"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Hutao.json",
+    "sourceSha256": "7d45149a563e58731ff42d146e01f9e10e9469bd230850a6acad2761a1715ae8",
+    "ability": "Avatar_Hutao_Constellation_Limbo",
+    "modifier": "UNIQUE_Hutao_Constellation_Limbo_Untriggered_Limbo",
+    "state": "Limbo"
+  }
+]

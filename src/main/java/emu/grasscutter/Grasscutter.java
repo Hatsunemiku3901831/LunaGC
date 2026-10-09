@@ -220,13 +220,15 @@ public final class Grasscutter {
                 executor.shutdownNow();
             }
 
-            // Wait for database operations to finish.
-            var dbExecutor = DatabaseHelper.getEventExecutor();
-            dbExecutor.shutdown();
-            if (!dbExecutor.awaitTermination(5, TimeUnit.SECONDS)) {
-                dbExecutor.shutdownNow();
+        } catch (InterruptedException interrupted) {
+            Thread.currentThread().interrupt();
+        } finally {
+            try {
+                DatabaseHelper.shutdown();
+            } catch (InterruptedException interrupted) {
+                Thread.currentThread().interrupt();
+                logger.error("Interrupted while draining database writes.", interrupted);
             }
-        } catch (InterruptedException ignored) {
         }
     }
 

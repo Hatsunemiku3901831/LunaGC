@@ -8,10 +8,12 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import emu.grasscutter.data.common.DynamicFloat;
 import emu.grasscutter.game.props.ElementType;
+import emu.grasscutter.utils.JsonAdapters.DynamicFloatAdapter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.LinkedHashMap;
 
 import lombok.ToString;
 
@@ -71,6 +73,8 @@ public class AbilityModifier implements Serializable {
     public DynamicFloat duration = DynamicFloat.ZERO;
     public DynamicFloat thinkInterval = DynamicFloat.ZERO;
     public String stacking;
+    @SerializedName(value = "stackingOption", alternate = "GMGIAGMCGLF")
+    public Map<String,Object> stackingOption;
 
     @SerializedName(value = "modifierMixins", alternate = "IIECHMHLPDM")
     public AbilityMixinData[] modifierMixins;
@@ -80,6 +84,7 @@ public class AbilityModifier implements Serializable {
     public DynamicFloat elementDurability = DynamicFloat.ZERO;
 
     @ToString
+    @JsonAdapter(AbilityActionAdapter.class)
     public static class AbilityModifierAction implements Serializable {
         public enum Type {
            PhlogistonCostMixin,
@@ -90,6 +95,7 @@ public class AbilityModifier implements Serializable {
             AddClimateMeter,
             AddElementDurability,
             AddHPDebts,
+            @SerializedName(value = "AddSpecialEnergy", alternate = "ReviveSpecialEnergy")
             AddSpecialEnergy,
             GetHPPaidDebts,
             ChangePhlogiston,
@@ -113,6 +119,8 @@ public class AbilityModifier implements Serializable {
             AvatarExitFocus,
             AvatarExitViewBias,
             AvatarShareCDSkillStart,
+            ActivitySkillShareCDStart,
+            ClearShareCD,
             AvatarSkillStart,
             BroadcastNeuronStimulate,
             ByTargetGlobalValue,
@@ -138,7 +146,9 @@ public class AbilityModifier implements Serializable {
             CreateTile,
             DamageByAttackValue,
             DebugLog,
+            @SerializedName(value = "NyxSet", alternate = "SetNyxValue")
             NyxSet,
+            @SerializedName(value = "NyxAdd", alternate = "AddNyxValue")
             NyxAdd,
             DestroyTile,
             DoBlink,
@@ -199,6 +209,7 @@ public class AbilityModifier implements Serializable {
             PushInterActionByConfigPath,
             PushPos,
             Randomed,
+            RandomAction,
             ReduceHPDebts,
             ReTriggerAISkillInitialCD,
             RefreshUICombatBarLayout,
@@ -334,6 +345,8 @@ public class AbilityModifier implements Serializable {
         @SerializedName(value = "amountByCasterCurrentHPRatio")
         public DynamicFloat amountByCasterCurrentHPRatio = DynamicFloat.ZERO;
 
+        public DynamicFloat amountByCasterCurrentHPDebtsRatio = DynamicFloat.ZERO;
+
         @SerializedName(
                 value = "amountByCasterMaxHPRatio",
                 alternate = {"PKPBLCNMPIG", "HFNJHOGGFKB", "GEJGGCIOLKN", "MEEACMKOLJF", "OLMENJCGGJJ","EJGDELKANMO", "ECOAIFKENNM", "GJBFAJMJFOP"})
@@ -361,6 +374,7 @@ public class AbilityModifier implements Serializable {
 
         public boolean enableLockHP;
         public boolean disableWhenLoading;
+        public boolean doOffStage;
         public boolean lethal = true;
 
         public boolean muteHealEffect = false;
@@ -376,6 +390,7 @@ public class AbilityModifier implements Serializable {
         public GadgetInfo gadgetInfo;
 
         public boolean isFromOwner;
+        @SerializedName(value = "healTag", alternate = {"FFNEJGGNAFF", "__exp_healTag"})
         public String healTag;
         public String key;
         public String abilityName;
@@ -395,15 +410,69 @@ public class AbilityModifier implements Serializable {
         public DynamicFloat maxValue = DynamicFloat.ZERO;
         public DynamicFloat targetValue = DynamicFloat.ZERO;
         public DynamicFloat costStaminaRatio = DynamicFloat.ZERO;
+        public emu.grasscutter.game.ability.AbilityPlayMode.Type fromPlayMode =
+                emu.grasscutter.game.ability.AbilityPlayMode.Type.Normal;
+        public emu.grasscutter.game.ability.AbilityPlayMode.Type toPlayMode =
+                emu.grasscutter.game.ability.AbilityPlayMode.Type.Normal;
         public DynamicFloat fightProp = DynamicFloat.ZERO;
+        // Keep both spellings: canonical source selection must not depend on JSON member order.
+        public String fightPropSourceTarget;
+        @SerializedName("NKJNADEMKOG")
+        public String legacyFightPropSourceTarget;
+        @SerializedName("AAFLDOBAJJJ")
+        public String fightPropAggregation;
+        @SerializedName("LIMIEDCFNAM")
+        public String legacyFightPropAggregation;
+
+        public String fightPropertySourceTarget() {
+            if (fightPropSourceTarget != null) return fightPropSourceTarget;
+            return legacyFightPropSourceTarget == null ? "Caster" : legacyFightPropSourceTarget;
+        }
+
+        public String fightPropertyAggregation() {
+            if (fightPropAggregation != null && legacyFightPropAggregation != null
+                    && !fightPropAggregation.equals(legacyFightPropAggregation)) return "<conflicting>";
+            return fightPropAggregation == null ? legacyFightPropAggregation : fightPropAggregation;
+        }
         public boolean useLimitRange;
+        public boolean randomInRange;
 
         public int skillID;
+        public int shareCDID;
+        @JsonAdapter(RandomCountAdapter.class)
+        public Integer shareCDType = 0;
         public int resistanceListID;
         public int monsterID;
         public int summonTag;
 
         public AbilityModifierAction[] actions;
+        @SerializedName(value = "repeatTimes", alternate = "GFJCFFFEDCF")
+        public DynamicFloat repeatTimes = DynamicFloat.ZERO;
+
+        @SerializedName(value = "randomCount", alternate = "GJKEHHFNGLP")
+        @JsonAdapter(RandomCountAdapter.class)
+        public Integer randomCount = 0;
+        @SerializedName(value = "randomQueue", alternate = "AHHFBGACEJF")
+        public RandomActionGroup[] randomQueue;
+
+        @JsonAdapter(AbilityActionAdapter.class)
+        public static class RandomActionGroup implements Serializable {
+            @SerializedName(value = "randomPredicates", alternate = "EBOIAJJCFAG")
+            public List<Map<String,Object>> randomPredicates;
+            @SerializedName(value = "actionQueue", alternate = "FMBINFHJBGG")
+            public AbilityModifierAction[] actionQueue;
+        }
+
+        /** The native count is an integer; malformed numbers must not truncate into one. */
+        public static class RandomCountAdapter extends TypeAdapter<Integer> {
+            @Override public Integer read(JsonReader reader) throws IOException {
+                if (reader.peek()!=JsonToken.NUMBER) { reader.skipValue(); return null; }
+                var literal=reader.nextString();
+                try { return new java.math.BigDecimal(literal).intValueExact(); }
+                catch (ArithmeticException | NumberFormatException invalid) { return null; }
+            }
+            @Override public void write(JsonWriter writer,Integer count) throws IOException { writer.value(count); }
+        }
 
         /** Which gadget an action is about, where it does not carry a flat gadgetID. */
         public static class GadgetInfo {
@@ -418,20 +487,20 @@ public class AbilityModifier implements Serializable {
 
         public DropType dropType = DropType.LevelControl;
         public DynamicFloat baseEnergy;
-        @SerializedName(value = "ratio", alternate = "value")
         public DynamicFloat ratio = DynamicFloat.ONE;
+
+        /** Explicit writes may coexist with a ratio, including a deliberately zero ratio. */
+        public DynamicFloat value;
 
         /**
          * The value an action writes, as opposed to the one it multiplies by.
          *
-         * <p>The field is shared between both senses, so it defaults to one - right for a
-         * multiplier, wrong for a write. Gson builds a fresh instance whenever the config carries a
-         * value of its own, so still holding the shared default means it carried none, and none
-         * means zero. Without this a bare "clear this mark" set it, and 629 of the 1058 animator
-         * bools in the corpus - the ones shipped with no value - were broadcast as true.
+         * <p>An absent write means zero; an absent multiplier still means one. The adapter retains
+         * legacy value-only configs for ratio consumers without discarding an explicit ratio.
          */
         public DynamicFloat writtenValue() {
-            return this.ratio == DynamicFloat.ONE ? DynamicFloat.ZERO : this.ratio;
+            return this.value != null ? this.value
+                    : this.ratio == DynamicFloat.ONE ? DynamicFloat.ZERO : this.ratio;
         }
         public String determineType;
         public int configID;
@@ -475,10 +544,61 @@ public class AbilityModifier implements Serializable {
         }
     }
 
+    @JsonAdapter(AbilityModifierPropertyAdapter.class)
     public static class AbilityModifierProperty implements Serializable {
         // Usually a constant, but a config may also name an ability special to read it from.
         public DynamicFloat Actor_HpThresholdRatio = DynamicFloat.ZERO;
+        public DynamicFloat Actor_MaxHPRatio = DynamicFloat.ZERO;
+        private final Map<String, DynamicFloat> values = new LinkedHashMap<>();
 
+        /** Keep the legacy HP fields writable while retaining other resource properties. */
+        public Map<String, DynamicFloat> getValues() {
+            var result = new LinkedHashMap<>(values);
+            result.put("Actor_HpThresholdRatio", Actor_HpThresholdRatio);
+            result.put("Actor_MaxHPRatio", Actor_MaxHPRatio);
+            return result;
+        }
+    }
+
+    public static class AbilityModifierPropertyAdapter extends TypeAdapter<AbilityModifierProperty> {
+        private final DynamicFloatAdapter floats = new DynamicFloatAdapter();
+
+        @Override public AbilityModifierProperty read(JsonReader reader) throws IOException {
+            if (reader.peek() == JsonToken.NULL) {
+                reader.nextNull();
+                return null;
+            }
+            var result = new AbilityModifierProperty();
+            reader.beginObject();
+            while (reader.hasNext()) {
+                String key = reader.nextName();
+                DynamicFloat value;
+                if (reader.peek() == JsonToken.NULL) {
+                    reader.nextNull();
+                    value = null;
+                } else value = floats.read(reader);
+                switch (key) {
+                    case "Actor_HpThresholdRatio" -> result.Actor_HpThresholdRatio = value;
+                    case "Actor_MaxHPRatio" -> result.Actor_MaxHPRatio = value;
+                    default -> result.values.put(key, value);
+                }
+            }
+            reader.endObject();
+            return result;
+        }
+
+        @Override public void write(JsonWriter writer, AbilityModifierProperty value) throws IOException {
+            if (value == null) {
+                writer.nullValue();
+                return;
+            }
+            writer.beginObject();
+            for (var entry : value.getValues().entrySet()) {
+                writer.name(entry.getKey());
+                floats.write(writer, entry.getValue());
+            }
+            writer.endObject();
+        }
     }
 
     public enum State {

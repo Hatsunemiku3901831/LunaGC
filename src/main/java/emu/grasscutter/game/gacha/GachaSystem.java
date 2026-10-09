@@ -31,6 +31,7 @@ import org.greenrobot.eventbus.Subscribe;
 public class GachaSystem extends BaseGameSystem {
     private static final int starglitterId = 221;
     private static final int stardustId = 222;
+    private static final int masterlessStellaId = 104300;
     private volatile Int2ObjectMap<GachaBanner> gachaBanners;
     private WatchService watchService;
 
@@ -177,6 +178,16 @@ public class GachaSystem extends BaseGameSystem {
      */
     record PullResult(int itemId, boolean capturedRadiance) {}
 
+    private record RolledItem(GameItem item, GachaItem.Builder gacha) {}
+
+    private static boolean hasExtraLevelReward() {
+        return GameData.getItemDataMap().containsKey(masterlessStellaId)
+                && GameData.getAvatarExtraLevelDataMap().values().stream()
+                        .filter(emu.grasscutter.data.excels.avatar.AvatarExtraLevelData::isValid)
+                        .flatMap(data -> Arrays.stream(data.getCostItems()))
+                        .anyMatch(cost -> cost.getId() == masterlessStellaId);
+    }
+
     synchronized PullResult doRarePull(
             int[] featured,
             int[] fallback1,
@@ -193,8 +204,7 @@ public class GachaSystem extends BaseGameSystem {
                         && wishInfo.matches(banner)
                         && banner.isWishItemAllowed(wishInfo.getWishItemId())
                         && Arrays.stream(featured).anyMatch(id -> id == wishInfo.getWishItemId());
-        boolean pityEpitomized =
-                epitomized && wishInfo.getFatePoints() >= banner.getWishMaxProgress();
+        boolean pityEpitomized = epitomized && wishInfo.getFatePoints() >= banner.getWishMaxProgress();
         boolean pityFeatured =
                 (gachaInfo.getFailedFeaturedItemPulls(rarity) >= 1); // Lost previous coinflip
         boolean rollFeatured =
@@ -237,7 +247,9 @@ public class GachaSystem extends BaseGameSystem {
     }
 
     private synchronized PullResult doPull(
-            GachaBanner banner, PlayerGachaBannerInfo gachaInfo, BannerPools pools,
+            GachaBanner banner,
+            PlayerGachaBannerInfo gachaInfo,
+            BannerPools pools,
             PlayerGachaWishInfo wishInfo) {
         // Pre-increment all pity pools (yes this makes all calculations assume 1-indexed pity)
         gachaInfo.incPityAll();
@@ -345,7 +357,8 @@ public class GachaSystem extends BaseGameSystem {
         gachaInfo.addTotalPulls(times);
         BannerPools pools = new BannerPools(banner);
         List<GachaItem> list = new ArrayList<>();
-        int stardust = 0, starglitter = 0;
+        int stardust = 0, starglitter = 0, masterlessStella = 0;
+        boolean hasExtraLevelReward = hasExtraLevelReward();
 
         if (banner.isRemoveC6FromPool()) { // The ultimate form of pity (non-vanilla)
             pools.rateUpItems4 = removeC6FromPool(pools.rateUpItems4, player);
@@ -356,7 +369,7 @@ public class GachaSystem extends BaseGameSystem {
             pools.fallbackItems5Pool2 = removeC6FromPool(pools.fallbackItems5Pool2, player);
         }
 
-        var items = new ArrayList<PlayerWishEvent.WishCompute>();
+        var items = new ArrayList<RolledItem>();
         for (int i = 0; i < times; i++) {
             // Roll
             PullResult pull = doPull(banner, gachaInfo, pools, wishInfo);
@@ -381,10 +394,28 @@ public class GachaSystem extends BaseGameSystem {
             GachaItem.Builder gachaItem = GachaItem.newBuilder();
             // Plays the Capturing Radiance animation on this card
             if (pull.capturedRadiance()) gachaItem.setIsFlashCard(true);
+            if (banner.isRemoveC6FromPool()
+                    && InventorySystem.checkPlayerAvatarConstellationLevel(player, itemId) == 5) {
+                pools.removeFromAllPools(new int[] {itemId});
+            }
+
+            items.add(new RolledItem(new GameItem(itemData), gachaItem));
+        }
+
+        // Call post-PlayerWishEvent.
+        event.finish(items.stream().map(RolledItem::item).toList());
+
+        var eventItems = event.getReceivedItems();
+        for (var i = 0; i < items.size(); i++) {
+            var gameItem = eventItems.get(i);
+            var itemData = gameItem.getItemData();
+            var gachaItem = items.get(i).gacha();
+            int itemId = gameItem.getItemId();
             int addStardust = 0, addStarglitter = 0;
             boolean isTransferItem = false;
 
-            // Const check
+            // Settle each card after previous cards reached the inventory. Ten pulls can cross C6,
+            // and a post-wish plugin may have replaced the originally rolled item.
             int constellation = InventorySystem.checkPlayerAvatarConstellationLevel(player, itemId);
             switch (constellation) {
                 case -2: // Is weapon
@@ -400,12 +431,16 @@ public class GachaSystem extends BaseGameSystem {
                 default:
                     if (constellation >= 6) { // C6, give consolation starglitter
                         addStarglitter = (itemData.getRankLevel() == 5) ? 25 : 5;
-                    } else { // C0-C5, give constellation item
-                        if (banner.isRemoveC6FromPool()
-                                && constellation
-                                        == 5) { // New C6, remove it from the pools so we don't get C7 in a 10pull
-                            pools.removeFromAllPools(new int[] {itemId});
+                        if (itemData.getRankLevel() == 5 && hasExtraLevelReward) {
+                            gachaItem.addTransferItems(
+                                    GachaTransferItem.newBuilder()
+                                            .setItem(ItemParam.newBuilder().setItemId(masterlessStellaId).setCount(1))
+                                            .setIsTransferItemNew(
+                                                    masterlessStella == 0
+                                                            && inventory.getItemCountById(masterlessStellaId) == 0));
+                            masterlessStella++;
                         }
+                    } else { // C0-C5, give constellation item
                         addStarglitter = (itemData.getRankLevel() == 5) ? 10 : 2;
                         int constItemId =
                                 itemId + 100; // This may not hold true for future characters. Examples of strictly
@@ -423,39 +458,20 @@ public class GachaSystem extends BaseGameSystem {
                     break;
             }
 
-            // Create item
-            GameItem item = new GameItem(itemData);
-            items.add(
-                    new PlayerWishEvent.WishCompute(
-                            item, gachaItem, addStardust, addStarglitter, isTransferItem));
-        }
-
-        // Call post-PlayerWishEvent.
-        event.finish(items.stream().map(PlayerWishEvent.WishCompute::getItem).toList());
-
-        var eventItems = event.getReceivedItems();
-        for (var i = 0; i < items.size(); i++) {
-            var compute = items.get(i);
-            var gameItem = eventItems.get(i);
-            var gachaItem = compute.getGacha();
-
             gachaItem.setGachaItem(gameItem.toItemParam());
             inventory.addItem(gameItem);
 
-            stardust += compute.getAddStardust();
-            starglitter += compute.getAddStarglitter();
+            stardust += addStardust;
+            starglitter += addStarglitter;
 
-            if (compute.getAddStardust() > 0) {
+            if (addStardust > 0) {
                 gachaItem.addTokenItemList(
-                        ItemParam.newBuilder().setItemId(stardustId).setCount(compute.getAddStardust()));
+                        ItemParam.newBuilder().setItemId(stardustId).setCount(addStardust));
             }
-            if (compute.getAddStarglitter() > 0) {
+            if (addStarglitter > 0) {
                 ItemParam starglitterParam =
-                        ItemParam.newBuilder()
-                                .setItemId(starglitterId)
-                                .setCount(compute.getAddStarglitter())
-                                .build();
-                if (compute.isTransferItem()) {
+                        ItemParam.newBuilder().setItemId(starglitterId).setCount(addStarglitter).build();
+                if (isTransferItem) {
                     gachaItem.addTransferItems(GachaTransferItem.newBuilder().setItem(starglitterParam));
                 }
                 gachaItem.addTokenItemList(starglitterParam);
@@ -470,6 +486,9 @@ public class GachaSystem extends BaseGameSystem {
         }
         if (starglitter > 0) {
             inventory.addItem(starglitterId, starglitter);
+        }
+        if (masterlessStella > 0) {
+            inventory.addItem(masterlessStellaId, masterlessStella);
         }
 
         // Packets

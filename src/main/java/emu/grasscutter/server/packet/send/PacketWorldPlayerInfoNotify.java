@@ -12,9 +12,7 @@ public class PacketWorldPlayerInfoNotify extends BasePacket {
 
         WorldPlayerInfoNotify.Builder proto = WorldPlayerInfoNotify.newBuilder();
 
-        for (int i = 0; i < world.getPlayers().size(); i++) {
-            Player p = world.getPlayers().get(i);
-
+        for (Player p : java.util.List.copyOf(world.getPlayers())) {
             proto.addPlayerInfoList(p.getOnlinePlayerInfo());
             proto.addPlayerUidList(p.getUid());
         }

@@ -31,13 +31,18 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.Nullable;
 import lombok.Getter;
 import lombok.val;
@@ -45,13 +50,22 @@ import org.jetbrains.annotations.NotNull;
 
 public class World implements Iterable<Player> {
     @Getter private final GameServer server;
-    @Getter private Player host;
+    @Getter private volatile Player host;
     @Getter private final List<Player> players;
     @Getter private final Int2ObjectMap<Scene> scenes;
 
     @Getter private EntityWorld entity;
-    private int nextEntityId = 0;
-    private int nextPeerId = 0;
+    // Entities are also created under scene locks; allocation must not acquire the world monitor.
+    private final AtomicInteger nextEntityId = new AtomicInteger();
+    private final AtomicInteger nextPeerId = new AtomicInteger();
+    // Only membership metadata is changed here. No scene callbacks, packet sends or
+    // other-player locks run under this lock, so two world monitors cannot be inverted.
+    private static final Object MEMBERSHIP_LOCK = new Object();
+    private volatile boolean closing;
+    private final AtomicInteger pendingDepartures = new AtomicInteger();
+    private final ConcurrentMap<Player, EntrySource> pendingEvacuations = new ConcurrentHashMap<>();
+    private final AtomicBoolean evacuatingGuests = new AtomicBoolean();
+    private volatile long nextEvacuationAt;
     private int worldLevel;
 
     @Getter private boolean isMultiplayer = false;
@@ -81,7 +95,7 @@ public class World implements Iterable<Player> {
     public World(Player player, boolean isMultiplayer) {
         this.host = player;
         this.server = player.getServer();
-        this.players = Collections.synchronizedList(new ArrayList<>());
+        this.players = new CopyOnWriteArrayList<>();
         this.scenes = Int2ObjectMaps.synchronize(new Int2ObjectOpenHashMap<>());
 
         // this.levelEntityId = this.getNextEntityId(EntityIdType.MPLEVEL);
@@ -93,18 +107,16 @@ public class World implements Iterable<Player> {
         this.lastUpdateTime = System.currentTimeMillis();
         this.currentWorldTime = host.getPlayerGameTime();
 
-        this.host.getServer().registerWorld(this);
     }
 
     public World(GameServer server, Player owner) {
         this.server = server;
         this.host = owner;
-        this.players = Collections.synchronizedList(new ArrayList<>());
+        this.players = new CopyOnWriteArrayList<>();
         this.scenes = Int2ObjectMaps.synchronize(new Int2ObjectOpenHashMap<>());
         this.entity = new EntityWorld(this);
         this.lastUpdateTime = System.currentTimeMillis();
 
-        server.registerWorld(this);
     }
 
     public int getLevelEntityId() {
@@ -121,7 +133,7 @@ public class World implements Iterable<Player> {
     }
 
     public int getNextPeerId() {
-        return ++this.nextPeerId;
+        return this.nextPeerId.incrementAndGet();
     }
 
     public int getWorldLevel() {
@@ -143,25 +155,36 @@ public class World implements Iterable<Player> {
      * @return The scene.
      */
     @Nullable public Scene getSceneById(int sceneId) {
-        // Get scene normally
-        var scene = this.getScenes().get(sceneId);
-        if (scene != null) {
-            return scene;
-        }
+        synchronized (this.getScenes()) {
+            // Get scene normally
+            var scene = this.getScenes().get(sceneId);
+            if (scene != null) {
+                return scene;
+            }
 
-        // Create scene from scene data if it doesn't exist
-        var sceneData = GameData.getSceneDataMap().get(sceneId);
-        if (sceneData != null) {
-            scene = new Scene(this, sceneData);
-            this.registerScene(scene);
-            return scene;
-        }
+            // Create scene from scene data if it doesn't exist
+            var sceneData = GameData.getSceneDataMap().get(sceneId);
+            if (sceneData != null) {
+                scene = new Scene(this, sceneData);
+                this.registerScene(scene);
+                return scene;
+            }
 
-        return null;
+            return null;
+        }
     }
 
     public int getPlayerCount() {
         return this.players.size();
+    }
+
+    /** Atomically retires an empty world so a concurrent join cannot enter an unregistered world. */
+    public boolean tryCloseIfEmpty() {
+        synchronized (MEMBERSHIP_LOCK) {
+            if (!this.players.isEmpty() || !this.pendingEvacuations.isEmpty() || this.pendingDepartures.get() != 0) return false;
+            this.closing = true;
+            return true;
+        }
     }
 
     /**
@@ -170,152 +193,306 @@ public class World implements Iterable<Player> {
      * @param idType The entity type.
      * @return The next entity ID.
      */
-    public synchronized int getNextEntityId(EntityIdType idType) {
-        return (idType.getId() << GameConstants.ENTITY_ID_BIT_SHIFT) + ++this.nextEntityId;
+    public int getNextEntityId(EntityIdType idType) {
+        return (idType.getId() << GameConstants.ENTITY_ID_BIT_SHIFT)
+                + this.nextEntityId.incrementAndGet();
     }
 
-    public synchronized void addPlayer(Player player) {
-        // Check if player already in
-        if (this.getPlayers().contains(player)) {
-            return;
-        }
-
-        // Remove player from prev world
-        if (player.getWorld() != null) {
-            player.getWorld().removePlayer(player);
-        }
-
-        // Register
-        player.setWorld(this);
-        this.getPlayers().add(player);
-
-        // Set player variables
-        player.setPeerId(this.getNextPeerId());
-        player.getTeamManager().setEntity(new EntityTeam(player));
-        // player.getTeamManager().setEntityId(this.getNextEntityId(EntityIdType.TEAM));
-
-        // Copy main team to multiplayer team
-        if (this.isMultiplayer()) {
-            player
-                    .getTeamManager()
-                    .getMpTeam()
-                    .copyFrom(
-                            player.getTeamManager().getCurrentSinglePlayerTeamInfo(),
-                            player.getTeamManager().getMaxTeamSize());
-            player.getTeamManager().setCurrentCharacterIndex(0);
-        }
-
-        // Add to scene
-        Scene scene = this.getSceneById(player.getSceneId());
-        scene.addPlayer(player);
-
-        // Info packet for other players
-        if (this.getPlayers().size() > 1) {
-            this.updatePlayerInfos(player);
-        }
+    public void addPlayer(Player player) {
+        addPlayerToWorld(player, null, null, null);
     }
 
-    public synchronized void addPlayer(Player player, int newSceneId) {
-        // Check if player already in
-        if (this.getPlayers().contains(player)) {
-            return;
-        }
+    public void addPlayer(Player player, int newSceneId) {
+        addPlayerToWorld(player, newSceneId, null, null);
+    }
 
-        // Remove player from prev world
-        if (player.getWorld() != null) {
-            player.getWorld().removePlayer(player);
-        }
+    public boolean tryAddPlayer(Player player) {
+        return addPlayerToWorld(player, null, null, null);
+    }
 
-        // Register
-        player.setWorld(this);
-        this.getPlayers().add(player);
+    public boolean tryAddPlayer(Player player, int newSceneId) {
+        return addPlayerToWorld(player, newSceneId, null, null);
+    }
 
-        // Set player variables
-        player.setPeerId(this.getNextPeerId());
-        player.getTeamManager().setEntity(new EntityTeam(player));
-        // player.getTeamManager().setEntityId(this.getNextEntityId(EntityIdType.TEAM));
+    public record WorldEntryContext(
+            World previousWorld, int previousSceneId, Position previousPosition, Position previousRotation) {}
 
-        // Copy main team to multiplayer team
-        if (this.isMultiplayer()) {
-            player
-                    .getTeamManager()
-                    .getMpTeam()
-                    .copyFrom(
-                            player.getTeamManager().getCurrentSinglePlayerTeamInfo(),
-                            player.getTeamManager().getMaxTeamSize());
-            player.getTeamManager().setCurrentCharacterIndex(0);
+    private record EntryAction(TeleportProperties properties, Consumer<WorldEntryContext> onEntered) {}
+    // A non-null source wrapper also permits a conditional retry after failed cleanup left no world.
+    private record EntrySource(World world) {}
 
-            if (player != this.getHost()) {
-                this.broadcastPacket(
-                        new PacketPlayerChatNotify(
-                                player,
-                                0,
+    public boolean tryAddPlayer(Player player, World expectedSource, Consumer<WorldEntryContext> onEntered) {
+        if (expectedSource == null) return false;
+        return addPlayerToWorld(player, null, new EntrySource(expectedSource), new EntryAction(null, onEntered));
+    }
+
+    /** Position and caller notifications are applied only after entry succeeds, under the transfer lock. */
+    public boolean tryAddPlayer(Player player, World expectedSource, TeleportProperties properties,
+            Consumer<WorldEntryContext> onEntered) {
+        if (expectedSource == null || properties == null) return false;
+        return addPlayerToWorld(player, properties.getSceneId(), new EntrySource(expectedSource),
+                new EntryAction(properties, onEntered));
+    }
+
+    private record Departure(World world, Scene scene, List<Player> members, List<Player> kicked, AtomicBoolean pending) {}
+
+    private boolean addPlayerToWorld(Player player, Integer newSceneId, EntrySource expectedPrevious, EntryAction action) {
+        Departure departure = null;
+        Departure failedEntry = null;
+        try {
+            synchronized (player.getSceneTransferLock()) {
+                if (expectedPrevious != null && player.getWorld() != expectedPrevious.world) return false;
+                if (this.players.contains(player)) return false;
+                int sceneId = newSceneId == null ? player.getSceneId() : newSceneId;
+                var scene = this.getSceneById(sceneId);
+                if (scene == null
+                        || !emu.grasscutter.game.tps.TpsAvatarSystem.canEnter(player, scene.getSceneData()))
+                    return false;
+
+                var previousWorld = player.getWorld();
+                var previousScene = player.getScene();
+                var context = new WorldEntryContext(previousWorld, previousScene == null ? player.getSceneId() : previousScene.getId(),
+                        player.getPosition().clone(), player.getRotation().clone());
+                var position = action == null || action.properties == null || action.properties.getTeleportTo() == null
+                        ? null : action.properties.getTeleportTo().clone();
+                var rotation = action == null || action.properties == null || action.properties.getTeleportRot() == null
+                        ? null : action.properties.getTeleportRot().clone();
+                int previousPeerId = player.getPeerId();
+                final int peerId;
+                synchronized (MEMBERSHIP_LOCK) {
+                    if (this.closing || this.players.contains(player)) return false;
+                    if (previousWorld != null)
+                        departure = previousWorld.detachPlayer(player, previousScene);
+                    this.players.add(player);
+                    peerId = peerIdForJoiningPlayer(player);
+                    // Publish only after construction and admission preflight have completed.
+                    this.server.registerWorld(this);
+                }
+
+                try {
+                    player.setWorld(null);
+                    if (departure != null) departure.world.finishDeparture(player, departure);
+                    else if (previousScene != null) previousScene.removePlayer(player);
+
+                    player.setWorld(this);
+                    player.setPeerId(peerId);
+                    player.getTeamManager().setEntity(new EntityTeam(player));
+                    if (this.isMultiplayer()) {
+                        player.getTeamManager().getMpTeam().copyFrom(
+                                player.getTeamManager().getCurrentSinglePlayerTeamInfo(),
+                                player.getTeamManager().getMaxTeamSize());
+                        player.getTeamManager().setCurrentCharacterIndex(0);
+                    }
+                    player.setSceneId(sceneId);
+                    if (position != null) player.getPosition().set(position);
+                    if (rotation != null) player.getRotation().set(rotation);
+                    scene.addPlayer(player);
+                    if (action != null && action.onEntered != null) action.onEntered.accept(context);
+                    if (this.isMultiplayer() && player != this.getHost())
+                        this.broadcastPacket(new PacketPlayerChatNotify(player, 0,
                                 SystemHintOuterClass.SystemHint.newBuilder()
                                         .setType(SystemHintTypeOuterClass.SystemHintType.SYSTEM_HINT_TYPE_CHAT_ENTER_WORLD.getNumber())
                                         .build()));
+                } catch (RuntimeException | Error failure) {
+                    var currentScene = player.getScene();
+                    var enteredScene = currentScene != null && currentScene.getWorld() == this
+                            ? currentScene : null;
+                    synchronized (MEMBERSHIP_LOCK) {
+                        failedEntry = detachPlayer(player, enteredScene);
+                    }
+                    if (player.getWorld() == this) player.setWorld(null);
+                    if (enteredScene != null) {
+                        try {
+                            enteredScene.removePlayer(player);
+                        } catch (RuntimeException | Error cleanupFailure) {
+                            if (cleanupFailure != failure) failure.addSuppressed(cleanupFailure);
+                        }
+                    }
+                    if (departure != null && departure.world.restoreDeparture(player, departure))
+                        departure = null;
+                    player.getPosition().set(context.previousPosition);
+                    player.getRotation().set(context.previousRotation);
+                    player.setSceneId(player.getScene() == null ? context.previousSceneId : player.getScene().getId());
+                    player.setPeerId(previousPeerId);
+                    throw failure;
+                }
+            }
+        } finally {
+            // Moving another player must never be done while holding the departing host's lock.
+            if (departure != null) {
+                departure.world.completeDeparture(departure);
+                departure.world.evacuateGuests(departure.kicked);
+                departure.world.updatePlayerInfos(player);
+            }
+            if (failedEntry != null) {
+                completeDeparture(failedEntry);
+                evacuateGuests(failedEntry.kicked);
+                updatePlayerInfos(player);
             }
         }
+        if (this.getPlayerCount() > 1) this.updatePlayerInfos(player);
+        return true;
+    }
 
-        // Add to scene
-        player.setSceneId(newSceneId);
-        Scene scene = this.getSceneById(player.getSceneId());
-        scene.addPlayer(player);
+    /** Called only while MEMBERSHIP_LOCK is held; overrides must only allocate an ID. */
+    protected int peerIdForJoiningPlayer(Player player) {
+        return this.getNextPeerId();
+    }
 
-        // Info packet for other players
-        if (this.getPlayers().size() > 1) {
-            this.updatePlayerInfos(player);
+    protected boolean disbandsOnHostLeave() {
+        return true;
+    }
+
+    private Departure detachPlayer(Player player, Scene scene) {
+        if (this.players.stream().noneMatch(member -> member == player)) return null;
+        var members = List.copyOf(this.players);
+        this.players.removeIf(member -> member == player);
+        List<Player> kicked = List.of();
+        if (player == this.getHost() && this.disbandsOnHostLeave()) {
+            this.closing = true;
+            kicked = List.copyOf(this.players);
+        }
+        this.pendingDepartures.incrementAndGet();
+        return new Departure(this, scene, members, kicked, new AtomicBoolean(true));
+    }
+
+    public void removePlayer(Player player) {
+        Departure departure = null;
+        try {
+            synchronized (player.getSceneTransferLock()) {
+                if (player.getWorld() != this) return;
+                var scene = player.getScene();
+                synchronized (MEMBERSHIP_LOCK) {
+                    departure = detachPlayer(player, scene);
+                }
+                if (departure == null) return;
+                player.setWorld(null);
+                try {
+                    finishDeparture(player, departure);
+                } catch (RuntimeException | Error failure) {
+                    if (restoreDeparture(player, departure)) departure = null;
+                    throw failure;
+                }
+            }
+        } finally {
+            // Run even if the departing host's cleanup throws, after releasing its transfer lock.
+            if (departure != null) {
+                completeDeparture(departure);
+                evacuateGuests(departure.kicked);
+                updatePlayerInfos(player);
+            }
         }
     }
 
-    public synchronized void removePlayer(Player player) {
-        // Remove team entities
-        player.sendPacket(
-                new PacketDelTeamEntityNotify(
-                        player.getSceneId(),
-                        this.getPlayers().stream()
-                                .map(
-                                        p ->
-                                                p.getTeamManager().getEntity() == null
-                                                        ? 0
-                                                        : p.getTeamManager().getEntity().getId())
-                                .toList()));
+    private void finishDeparture(Player player, Departure departure) {
+        var teamIds = departure.members.stream()
+                .map(p -> p.getTeamManager().getEntity() == null
+                        ? 0 : p.getTeamManager().getEntity().getId()).toList();
+        int sceneId = departure.scene == null ? player.getSceneId() : departure.scene.getId();
+        this.sendDepartureTeamPacket(player, sceneId, teamIds);
+        if (departure.scene != null && departure.scene.getWorld() == this)
+            departure.scene.removePlayer(player);
+        if (player != this.getHost() || !this.disbandsOnHostLeave())
+            this.broadcastPacket(new PacketPlayerChatNotify(player, 0,
+                    SystemHintOuterClass.SystemHint.newBuilder()
+                            .setType(SystemHintTypeOuterClass.SystemHintType.SYSTEM_HINT_TYPE_CHAT_LEAVE_WORLD.getNumber())
+                            .build()));
+    }
 
-        // Deregister
-        this.getPlayers().remove(player);
-        player.setWorld(null);
-
-        // Remove from scene
-        Scene scene = this.getSceneById(player.getSceneId());
-        scene.removePlayer(player);
-
-        // Info packet for other players
-        if (this.getPlayers().size() > 0) {
-            this.updatePlayerInfos(player);
+    private boolean restoreDeparture(Player player, Departure departure) {
+        // If scene removal never happened, keep the actual source membership. Once the player
+        // has left its scene, do not re-register a stale scene or repeat completed callbacks.
+        var scene = departure.scene;
+        if (scene == null || player.getScene() != scene
+                || scene.getPlayers().stream().noneMatch(member -> member == player)) return false;
+        synchronized (MEMBERSHIP_LOCK) {
+            if (this.players.stream().noneMatch(member -> member == player)) this.players.add(player);
+            if (player == this.getHost() && this.disbandsOnHostLeave()) this.closing = false;
+            completeDeparture(departure);
         }
+        player.setWorld(this);
+        player.setSceneId(scene.getId());
+        return true;
+    }
 
-        // Disband world if host leaves
-        if (this.getHost() == player) {
-            List<Player> kicked = new ArrayList<>(this.getPlayers());
-            for (Player victim : kicked) {
-                World world = new World(victim);
-                world.addPlayer(victim);
+    private void completeDeparture(Departure departure) {
+        if (departure.pending.compareAndSet(true, false)) this.pendingDepartures.decrementAndGet();
+    }
 
-                victim.sendPacket(
-                        new PacketPlayerEnterSceneNotify(
-                                victim,
-                                EnterType.EnterType_ENTER_SELF,
-                                EnterReason.TeamKick,
-                                victim.getSceneId(),
-                                victim.getPosition()));
+    protected void sendDepartureTeamPacket(Player player, int sceneId, List<Integer> teamIds) {
+        player.sendPacket(new PacketDelTeamEntityNotify(sceneId, teamIds));
+    }
+
+    private void evacuateGuests(List<Player> kicked) {
+        for (var victim : kicked) pendingEvacuations.putIfAbsent(victim, new EntrySource(this));
+        retryGuestEvacuations();
+    }
+
+    protected long evacuationTimeMillis() {
+        return System.currentTimeMillis();
+    }
+
+    private void retryGuestEvacuations() {
+        if (pendingEvacuations.isEmpty() || evacuationTimeMillis() < nextEvacuationAt
+                || !evacuatingGuests.compareAndSet(false, true)) return;
+        try {
+            nextEvacuationAt = evacuationTimeMillis() + 1000L;
+            for (var entry : List.copyOf(pendingEvacuations.entrySet())) {
+                var victim = entry.getKey();
+                var expectedSource = entry.getValue();
+                synchronized (victim.getSceneTransferLock()) {
+                    // A joining guest is pre-registered before its old scene is cleaned up.
+                    // Wait for that transfer instead of treating its temporary pointer as a departure.
+                    if (!victim.isOnline() || victim.getWorld() != expectedSource.world) {
+                        pendingEvacuations.remove(victim, expectedSource);
+                        continue;
+                    }
+                }
+                World destination = null;
+                try {
+                    destination = new World(victim);
+                    var personal = destination;
+                    Consumer<WorldEntryContext> notify = context -> {
+                        var properties = TeleportProperties.builder().sceneId(victim.getSceneId())
+                                .teleportTo(victim.getPosition().clone()).teleportRot(victim.getRotation().clone())
+                                .enterType(EnterType.EnterType_ENTER_SELF).enterReason(EnterReason.TeamKick).build();
+                        victim.sendPacket(new PacketPlayerEnterSceneNotify(victim, personal, properties));
+                        victim.sendPacket(new PacketEnterScenePeerNotify(victim));
+                    };
+                    boolean moved = personal.addPlayerToWorld(victim, null, expectedSource, new EntryAction(null, notify));
+                    if (!moved && victim.getWorld() == expectedSource.world) {
+                        // A deleted dungeon/home scene cannot strand a guest in a closed world.
+                        var fallback = personal.getSceneById(3);
+                        if (fallback != null) {
+                            var config = fallback.getScriptManager().getConfig();
+                            var properties = TeleportProperties.builder().sceneId(3)
+                                    .teleportTo(config != null && config.born_pos != null
+                                            ? config.born_pos : GameConstants.START_POSITION)
+                                    .teleportRot(config != null && config.born_rot != null
+                                            ? config.born_rot : new Position()).build();
+                            moved = personal.addPlayerToWorld(victim, 3, expectedSource, new EntryAction(properties, notify));
+                        }
+                    }
+                    if (moved || victim.getWorld() != expectedSource.world)
+                        pendingEvacuations.remove(victim, expectedSource);
+                } catch (RuntimeException failure) {
+                    // Each guest is independent. A later guest must still reach its own world.
+                    if (victim.getWorld() == null && victim.isOnline())
+                        pendingEvacuations.replace(victim, expectedSource, new EntrySource(null));
+                    else if (victim.getWorld() != expectedSource.world)
+                        pendingEvacuations.remove(victim, expectedSource);
+                    Grasscutter.getLogger().error("Could not return guest {} to its personal world; retrying later", victim.getUid(), failure);
+                } finally {
+                    if (destination != null && destination.getPlayerCount() == 0) {
+                        try { this.server.deregisterWorld(destination); }
+                        catch (RuntimeException failure) {
+                            Grasscutter.getLogger().error("Could not clean up empty guest world for {}", victim.getUid(), failure);
+                        }
+                    }
+                }
             }
-        } else {
-            this.broadcastPacket(
-                    new PacketPlayerChatNotify(
-                            player,
-                            0,
-                            SystemHintOuterClass.SystemHint.newBuilder()
-                                    .setType(SystemHintTypeOuterClass.SystemHintType.SYSTEM_HINT_TYPE_CHAT_LEAVE_WORLD.getNumber())
-                                    .build()));
+        } finally {
+            evacuatingGuests.set(false);
         }
     }
 
@@ -325,11 +502,13 @@ public class World implements Iterable<Player> {
 
     public void deregisterScene(Scene scene) {
         scene.saveGroups();
-        this.getScenes().remove(scene.getId());
+        this.getScenes().remove(scene.getId(), scene);
     }
 
     public void save() {
-        this.getScenes().values().forEach(Scene::saveGroups);
+        final List<Scene> snapshot;
+        synchronized (this.scenes) { snapshot = new ArrayList<>(this.scenes.values()); }
+        snapshot.forEach(Scene::saveGroups);
     }
 
     public void queueTransferPlayerToScene(Player player, int sceneId, Position pos, int delayMs) {
@@ -440,6 +619,13 @@ public class World implements Iterable<Player> {
     }
 
     public boolean transferPlayerToScene(Player player, TeleportProperties teleportProperties) {
+        synchronized (player.getSceneTransferLock()) {
+            if (player.getWorld() != this) return false;
+            return transferPlayerToSceneLocked(player, teleportProperties);
+        }
+    }
+
+    private boolean transferPlayerToSceneLocked(Player player, TeleportProperties teleportProperties) {
         // If a queued teleport already exists, cancel it. This prevents the player from
         // becoming stranded in a dungeon due to quitting it by teleporting to a map waypoint.
         synchronized (player) {
@@ -469,6 +655,9 @@ public class World implements Iterable<Player> {
 
         Scene oldScene = player.getScene();
         var newScene = this.getSceneById(teleportProperties.getSceneId());
+        if (newScene == null || !emu.grasscutter.game.tps.TpsAvatarSystem.canEnter(player, newScene.getSceneData())) {
+            return false;
+        }
 
         // Move directly in the same scene.
         if (newScene == oldScene && teleportProperties.getTeleportType() == TeleportType.COMMAND) {
@@ -540,32 +729,35 @@ public class World implements Iterable<Player> {
 
     protected void updatePlayerInfos(Player paramPlayer) {
         for (Player player : this.getPlayers()) {
-            // Dont send packets if player is logging in and filter out joining player
-            if (!player.hasSentLoginPackets() || player == paramPlayer) {
-                continue;
-            }
+            if (player == paramPlayer) continue;
+            synchronized (player.getSceneTransferLock()) {
+                // Dont send packets if player is logging in and filter out joining player
+                if (player.getWorld() != this || !player.hasSentLoginPackets()) {
+                    continue;
+                }
 
-            // Update team of all players since max players has been changed - Probably not the best way
-            // to do it
-            if (this.isMultiplayer()) {
-                player
-                        .getTeamManager()
-                        .getMpTeam()
-                        .copyFrom(
-                                player.getTeamManager().getMpTeam(), player.getTeamManager().getMaxTeamSize());
-                player.getTeamManager().updateTeamEntities(null);
-            }
+                // Update team of all players since max players has been changed - Probably not the best way
+                // to do it
+                if (this.isMultiplayer()) {
+                    player
+                            .getTeamManager()
+                            .getMpTeam()
+                            .copyFrom(
+                                    player.getTeamManager().getMpTeam(), player.getTeamManager().getMaxTeamSize());
+                    player.getTeamManager().updateTeamEntities(null);
+                }
 
-            // Dont send packets if player is loading into the scene
-            if (player.getSceneLoadState().getValue() >= SceneLoadState.INIT.getValue()) {
-                // World player info packets
-                player.getSession().send(new PacketWorldPlayerInfoNotify(this));
-                player.getSession().send(new PacketScenePlayerInfoNotify(this));
-                player.getSession().send(new PacketWorldPlayerRTTNotify(this));
+                // Dont send packets if player is loading into the scene
+                if (player.getSceneLoadState().getValue() >= SceneLoadState.INIT.getValue()) {
+                    // World player info packets
+                    player.getSession().send(new PacketWorldPlayerInfoNotify(this));
+                    player.getSession().send(new PacketScenePlayerInfoNotify(this));
+                    player.getSession().send(new PacketWorldPlayerRTTNotify(this));
 
-                // Team packets
-                player.getSession().send(new PacketSyncTeamEntityNotify(player));
-                player.getSession().send(new PacketSyncScenePlayTeamEntityNotify(player));
+                    // Team packets
+                    player.getSession().send(new PacketSyncTeamEntityNotify(player));
+                    player.getSession().send(new PacketSyncScenePlayTeamEntityNotify(player));
+                }
             }
         }
     }
@@ -583,21 +775,25 @@ public class World implements Iterable<Player> {
      * @return True if the world should be removed.
      */
     public boolean onTick() {
+        if (this.closing && !this.pendingEvacuations.isEmpty()) {
+            retryGuestEvacuations();
+            // Keep detached online guests reachable until retry succeeds or they disconnect.
+            if (!this.pendingEvacuations.isEmpty()) return false;
+        }
         // Check if there are players in this world.
-        if (this.getPlayerCount() == 0) return true;
+        if (this.getPlayerCount() == 0) return this.pendingDepartures.get() == 0 && this.pendingEvacuations.isEmpty();
         // Tick all associated scenes.
-        this.getScenes()
-                .forEach(
-                        (k, scene) -> {
-                            if (scene.getPlayerCount() == 0) return;
-
-                            try {
-                                scene.onTick();
-                            } catch (Throwable e) {
-                                // One scene's trouble is not the next one's, nor the world's clock below.
-                                Grasscutter.getLogger().error("Scene {} threw while ticking.", k, e);
-                            }
-                        });
+        final List<Scene> snapshot;
+        synchronized (this.scenes) { snapshot = new ArrayList<>(this.scenes.values()); }
+        for (var scene : snapshot) {
+            if (this.scenes.get(scene.getId()) != scene || scene.getPlayerCount() == 0) continue;
+            try {
+                scene.onTick();
+            } catch (Throwable e) {
+                // One scene's trouble is not the next one's, nor the world's clock below.
+                Grasscutter.getLogger().error("Scene {} threw while ticking.", scene.getId(), e);
+            }
+        }
 
         // These are wall-clock cadences, not tick counts: the tick rate is configurable, so
         // counting ticks would sync the clock 5x too often at 200ms and not at all at 5000ms.

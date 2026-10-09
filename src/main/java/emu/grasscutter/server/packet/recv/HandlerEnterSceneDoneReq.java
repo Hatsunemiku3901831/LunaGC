@@ -67,6 +67,9 @@ public class HandlerEnterSceneDoneReq extends PacketHandler {
         // Reset timer for sending player locations
         player.resetSendPlayerLocTime();
 
+        emu.grasscutter.game.tps.TpsWeaponSystem.sendSceneAmmunition(player);
+        player.getAbilityManager().getSharedCooldown().synchronize();
+
         // Rsp
         session.send(new PacketEnterSceneDoneRsp(player));
     }

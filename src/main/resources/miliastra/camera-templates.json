@@ -1,0 +1,184 @@
+{
+  "source": "https://github.com/luern0313/UGC-File-Generate-Utils",
+  "commit": "fba7c267a3752d3f0108b30020c46868d56acdd5",
+  "sourceSha256": "3fc3f0f0e6e06584c146886ca5a6c03b220620068eb14fbbb48ed517e75afbc2",
+  "license": "Apache-2.0",
+  "verifiedClientVersion": null,
+  "templates": [
+    {
+      "id": "twoPointFiveD",
+      "defaults": {
+        "name": "2.5D镜头",
+        "cameraMode": 2,
+        "defaultDistance": 15.0,
+        "minDistance": 3.0,
+        "maxDistance": 25.0,
+        "fieldOfView": 45.0,
+        "viewpointOffset": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "followRotation": true,
+        "horizontalAngle": 0.0,
+        "minHorizontalAngle": -180.0,
+        "maxHorizontalAngle": 180.0,
+        "minPitchAngle": -89.0,
+        "maxPitchAngle": 89.0,
+        "ignoreCollision": false,
+        "field14": 0.800000011920929,
+        "wireCameraMode": 2
+      },
+      "editorHints": {
+        "canEditFov": true,
+        "canEditDistance": true,
+        "canEditViewpointOffset": true,
+        "canEditFollowRotation": true,
+        "canEditHorizontalAngle": true,
+        "canEditHorizontalAngleRange": true,
+        "canEditPitchAngleRange": true,
+        "canEditIgnoreCollision": true
+      }
+    },
+    {
+      "id": "backCamera",
+      "defaults": {
+        "name": "3D背镜头",
+        "cameraMode": 1,
+        "defaultDistance": 3.0,
+        "minDistance": 1.0,
+        "maxDistance": 5.0,
+        "fieldOfView": 45.0,
+        "viewpointOffset": {
+          "x": 0.6,
+          "y": 0.1,
+          "z": 0.0
+        },
+        "followRotation": true,
+        "horizontalAngle": 0.0,
+        "minHorizontalAngle": -180.0,
+        "maxHorizontalAngle": 180.0,
+        "minPitchAngle": -89.0,
+        "maxPitchAngle": 89.0,
+        "ignoreCollision": false,
+        "field14": 1.0,
+        "wireCameraMode": 1
+      },
+      "editorHints": {
+        "canEditFov": true,
+        "canEditDistance": true,
+        "canEditViewpointOffset": true,
+        "canEditFollowRotation": true,
+        "canEditHorizontalAngle": true,
+        "canEditHorizontalAngleRange": true,
+        "canEditPitchAngleRange": true,
+        "canEditIgnoreCollision": true
+      }
+    },
+    {
+      "id": "firstPerson",
+      "defaults": {
+        "name": "第一人称镜头",
+        "cameraMode": 3,
+        "defaultDistance": 0.1,
+        "minDistance": 0.1,
+        "maxDistance": 0.1,
+        "fieldOfView": 45.0,
+        "viewpointOffset": {
+          "x": 0.0,
+          "y": 0.3,
+          "z": 0.0
+        },
+        "followRotation": false,
+        "horizontalAngle": 0.0,
+        "minHorizontalAngle": -180.0,
+        "maxHorizontalAngle": 180.0,
+        "minPitchAngle": -89.0,
+        "maxPitchAngle": 89.0,
+        "ignoreCollision": false,
+        "field14": 1.0,
+        "wireCameraMode": 3
+      },
+      "editorHints": {
+        "canEditFov": true,
+        "canEditDistance": false,
+        "canEditViewpointOffset": false,
+        "canEditFollowRotation": false,
+        "canEditHorizontalAngle": true,
+        "canEditHorizontalAngleRange": true,
+        "canEditPitchAngleRange": true,
+        "canEditIgnoreCollision": true
+      }
+    },
+    {
+      "id": "classic",
+      "defaults": {
+        "name": "经典镜头",
+        "cameraMode": 5,
+        "defaultDistance": 6.0,
+        "minDistance": 1.0,
+        "maxDistance": 6.0,
+        "fieldOfView": 45.0,
+        "viewpointOffset": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "followRotation": false,
+        "horizontalAngle": 0.0,
+        "minHorizontalAngle": -180.0,
+        "maxHorizontalAngle": 180.0,
+        "minPitchAngle": -89.0,
+        "maxPitchAngle": 89.0,
+        "ignoreCollision": false,
+        "field14": 1.0,
+        "wireCameraMode": 0
+      },
+      "editorHints": {
+        "canEditFov": false,
+        "canEditDistance": false,
+        "canEditViewpointOffset": false,
+        "canEditFollowRotation": false,
+        "canEditHorizontalAngle": false,
+        "canEditHorizontalAngleRange": false,
+        "canEditPitchAngleRange": false,
+        "canEditIgnoreCollision": false
+      }
+    },
+    {
+      "id": "thirdPerson",
+      "defaults": {
+        "name": "第三人称镜头",
+        "cameraMode": 4,
+        "defaultDistance": 6.0,
+        "minDistance": 1.0,
+        "maxDistance": 30.0,
+        "fieldOfView": 45.0,
+        "viewpointOffset": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "followRotation": true,
+        "horizontalAngle": 0.0,
+        "minHorizontalAngle": -180.0,
+        "maxHorizontalAngle": 180.0,
+        "minPitchAngle": -89.0,
+        "maxPitchAngle": 89.0,
+        "ignoreCollision": false,
+        "field14": 1.0,
+        "wireCameraMode": 4
+      },
+      "editorHints": {
+        "canEditFov": true,
+        "canEditDistance": true,
+        "canEditViewpointOffset": true,
+        "canEditFollowRotation": true,
+        "canEditHorizontalAngle": true,
+        "canEditHorizontalAngleRange": true,
+        "canEditPitchAngleRange": true,
+        "canEditIgnoreCollision": true
+      }
+    }
+  ]
+}

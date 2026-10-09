@@ -1,0 +1,44 @@
+[
+  {
+    "source": "BinOutput/Ability/Temp/ConfigAbility_Activity_V6_7_AquariumUnderWater.json",
+    "sourceSha256": "341711c2524dea278a8232d6b0f976848093f4734e92cb4fa967af6f1125815b",
+    "ability": "MonsterAffix_AquarUnderWater_InteractHandler",
+    "modifier": "BasicHPModifier",
+    "globalKey": "SGV_AquarUnderWater_Monster_PwrFactor"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/ConfigAbility_Activity_V6_7_AquariumUnderWater.json",
+    "sourceSha256": "341711c2524dea278a8232d6b0f976848093f4734e92cb4fa967af6f1125815b",
+    "ability": "MonsterAffix_AquarUnderWater_InteractHandler",
+    "modifier": "RedEyeFishModifier",
+    "globalKey": "SGV_AquarUnderWater_Monster_RedEyePwrFactor"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/GadgetAbilities/ConfigAbility_Scene_RoleCombat.json",
+    "sourceSha256": "3d44044c40d3dd21adeb38e83590c68567421f9238c7ffdf84fc5e57b4a5044b",
+    "ability": "SceneObj_Level_Common_Property_Ani_Prop_RoleCombat_GuardEntity_01",
+    "modifier": "UNIQUE_RAGE_REDUCE_MAXHP",
+    "globalKey": "SGV_ROLECOMBAT_HP_REDUCE"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/MonsterAbilities/ConfigAbility_Monster_TowerDefenceV4_Common.json",
+    "sourceSha256": "ce6e83cf4b417af39aeff6665c0fd63aa71b156344d6f5fe46206544fb261dae",
+    "ability": "Monster_TowerDefenceV4_EnemyUp_MaxHP",
+    "modifier": "UNIQUE_Modifier_EnemyUp_MaxHP_TowerDefenceV4_Team",
+    "globalKey": "GV_EnemyUp_MaxHP_Team"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/MonsterAbilities/ConfigAbility_Monster_TowerDefenceV4_Common.json",
+    "sourceSha256": "ce6e83cf4b417af39aeff6665c0fd63aa71b156344d6f5fe46206544fb261dae",
+    "ability": "Monster_TowerDefenceV4_Property_HpImprove",
+    "modifier": "Modifier_Hp_Property",
+    "globalKey": "SGV_TowerDefenceV4_HpImprove"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/MonsterAbilities/ConfigAbility_Monster_TowerDefenceV4_Common.json",
+    "sourceSha256": "ce6e83cf4b417af39aeff6665c0fd63aa71b156344d6f5fe46206544fb261dae",
+    "ability": "Monster_TowerDefenceV4_Property_HpImprove_Team",
+    "modifier": "Modifier_Hp_Property_ByTeam",
+    "globalKey": "GV_TowerDefenceV4_HpImprove_Team_Self"
+  }
+]

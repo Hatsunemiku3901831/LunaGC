@@ -4,7 +4,9 @@ import dev.morphia.annotations.*;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.game.home.GameHome;
 import emu.grasscutter.game.player.Player;
+import emu.grasscutter.game.player.ProfileCosmetics;
 import emu.grasscutter.net.proto.FriendEnterHomeOptionOuterClass;
+import emu.grasscutter.net.proto.ProfilePictureOuterClass.ProfilePicture;
 import emu.grasscutter.utils.Utils;
 import lombok.Getter;
 import org.jetbrains.annotations.Nullable;
@@ -17,6 +19,13 @@ public class PlayerProfile {
 
     private int nameCard;
     private int avatarId;
+    private int profilePictureId;
+    private int profileFrameId;
+
+    public ProfilePicture toProfilePictureProto() {
+        return ProfileCosmetics.toProto(avatarId, profilePictureId, profileFrameId);
+    }
+
     private String name;
     private String signature;
 
@@ -59,6 +68,8 @@ public class PlayerProfile {
         this.uid = player.getUid();
         this.name = player.getNickname();
         this.avatarId = player.getHeadImage();
+        this.profilePictureId = player.getProfilePicture().getProfilePictureId();
+        this.profileFrameId = player.getProfilePicture().getProfileFrameId();
         this.signature = player.getSignature();
         this.nameCard = player.getNameCardId();
         this.playerLevel = player.getLevel();

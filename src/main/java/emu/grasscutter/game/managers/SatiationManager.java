@@ -26,7 +26,7 @@ public class SatiationManager extends BasePlayerManager {
         updateTime();
 
         // Calculate times
-        var playerTime = (player.getClientTime() / 1000);
+        var playerTime = (player.getPlayerTimeMs() / 1000);
         float finishTime = playerTime + (totalSatiation / 30);
 
         // Penalty
@@ -98,7 +98,7 @@ public class SatiationManager extends BasePlayerManager {
      * Player Updates
      ********************/
     public synchronized void updateSingleAvatar(Avatar avatar, float givenTime) {
-        float time = (player.getClientTime() / 1000) + givenTime;
+        float time = (player.getPlayerTimeMs() / 1000) + givenTime;
         player.getSession().send(new PacketAvatarPropNotify(avatar));
         player.getSession().send(new PacketAvatarSatiationDataNotify(time, avatar));
     }

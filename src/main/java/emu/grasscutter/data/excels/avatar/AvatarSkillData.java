@@ -15,6 +15,8 @@ public class AvatarSkillData extends GameResource {
     private float cdTime;
     private int costElemVal;
     private int maxChargeNum;
+    private int shareCDID;
+    private int cdSlot;
     private int triggerID;
     private boolean isAttackCameraLock;
     private int proudSkillGroupId;
@@ -24,10 +26,10 @@ public class AvatarSkillData extends GameResource {
     private String abilityName;
     @SerializedName(
             value = "specialEnergyMin",
-            alternate = {"LNEGGCDIDCP"})
+            alternate = {"LNEGGCDIDCP", "specialEnergyCostMax"})
     public float specialEnergyMin;
     @SerializedName(
             value = "specialEnergyMax",
-            alternate = {"GHCNBMAPHML"})
+            alternate = {"GHCNBMAPHML", "specialEnergyCostStart"})
     public float specialEnergyMax;
 }

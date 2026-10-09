@@ -1,0 +1,20 @@
+[
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Yelan.json",
+    "sourceSha256": "c959f6a7a23ad4324a317d8b10ff07cc8cea58599209bb936a3e1528c44cee64",
+    "ability": "Avatar_Yelan_Constellation_4",
+    "modifier": "UNIQUE_Yelan_Constellation_4_HpBuff"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Furina.json",
+    "sourceSha256": "2d0b80ea3675fb27d4254e8b1ff673eece95ee81cf8638c124235460240c4f94",
+    "ability": "Avatar_Furina_ElementalBurst",
+    "modifier": "UNIQUE_Furina_Constellation_6_Buff"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/ItemAbilities.json",
+    "sourceSha256": "68b0c1e583876dff587be42db86883fffdf2bda88a642627d89e44d6dd81761f",
+    "ability": "Item_Food_MaxHP",
+    "modifier": "SERVER_MaxHPModifier"
+  }
+]

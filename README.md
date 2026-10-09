@@ -2,6 +2,183 @@
 
 外部项目的适配线索、已核对的本地缺口与后续验证清单见 [2026-10-03 外部实现调研](docs/UPSTREAM_RESEARCH_2026-10-03.md)。
 
+## 保存队列与运行状态
+
+数据库异步保存分为常规、账号、物品和场景四类有界队列，避免物品批量写入阻塞账号保存。
+队列满时由提交线程执行，同一对象向同一数据库重复排队时会合并；同步经济写入仍等待 MongoDB 确认。
+保存、重试与内置删除操作保留提交时选择的数据库，避免排队期间切换连接或运行模式后写入另一处。
+正常停机等待四类队列及提交线程中的写入完成，超时会明确记录尚未完成的数量。
+
+在 GM 顶部点击「运行状态」，可查看队列积压、失败次数、合并次数、逻辑循环耗时和 JVM 死锁线程数。
+`/status/server` 发现逻辑循环停滞、死锁或队列积压达到 80% 时返回 HTTP 503，Docker Compose 使用该检查。
+默认停机排空时间为 30 秒，Compose 预留 60 秒。队列参数位于 `databaseInfo.asyncWrites`，修改后重启生效。
+参数、来源和验证范围见 [外部实现适配记录](docs/UPSTREAM_INTEGRATION_2026-10-08.md)。
+双 Mongo 实例验证及连接切换边界见 [数据库写入目标](docs/DATABASE_DATASTORE_SCOPE_2026-10-09.md)。
+
+## 资源加载与诊断
+
+资源表中的单条类型或初始化异常不会中断后续有效数据，同类其余文件仍会尝试加载。
+文件错误和被拒绝的行会明确记录；空配置不会覆盖已有有效缓存，重载不会误报 ID 聚合。
+机关与场景能力配置保留空数组和键值数组格式。来源、异常行为与真实资源核对见
+[资源加载记录](docs/RESOURCE_LOADING_2026-10-08.md)。
+
+技能数值表达式检查操作数、除零和无效数值，异常时使用调用方默认值。
+已逐一核对当前资源中的 7,745 个后缀算术表达式；天赋增量／比例仍需继续确认。
+范围与验证结果见 [技能数值表达式记录](docs/ABILITY_EXPRESSIONS_2026-10-08.md)。
+
+技能参数使用基础天赋等级与对应命座加成，天赋升级后刷新已有角色和装备技能。
+协议继续分别显示基础与额外等级，验证范围见 [技能等级与运行参数](docs/SKILL_LEVELS_2026-10-09.md)。
+
+达达利亚与丝柯克的固有天赋可按当前队伍提供技能等级加 1，换队后清除相应贡献。
+加成不写入基础等级存档，条件、通知及实机验收边界见 [队伍技能等级加成](docs/TEAM_SKILL_LEVELS_2026-10-09.md)。
+
+天赋配置保留实际增级值和多个技能位置，技能次数加成支持累加与命座重置恢复。
+启动时优先读取当前四类天赋源目录，并兼容旧缓存；范围见 [天赋配置与资源优先级](docs/OPEN_CONFIG_2026-10-09.md)。
+
+队伍共鸣读取当前资源的实际参数，换队或旅行者切换元素后更新技能并清理失效属性。
+真实资源、联机阵容检查与实机验证边界见 [队伍共鸣适配](docs/TEAM_RESONANCE_2026-10-09.md)。
+
+召唤物回调支持 `CasterOriginOwner`，切人后继续作用于原施法角色，并检查实体生命周期。
+当前接入范围见 [召唤物与施法者目标](docs/ABILITY_CASTER_TARGET_2026-10-09.md)。
+初始化、治疗和附加状态回调统一选择目标，全队附加效果每个成员只分发一次；
+范围见 [技能回调目标与执行顺序](docs/ABILITY_CALLBACK_ROUTING_2026-10-09.md)。
+技能属性缓存支持资源指定来源、召唤物施法者及全队合计，范围见
+[技能战斗属性读取](docs/ABILITY_FIGHT_PROPERTY_READS_2026-10-09.md)。
+具体实体类型条件与单项类型优先级支持受控治疗序列，范围见
+[技能实体类型条件与五郎治疗链](docs/ABILITY_ENTITY_TYPE_CONDITIONS_2026-10-09.md)。
+滑翔挑战、剧情与千星奇域武器的临时技能信息可以同步和清理，并保留命座次数；
+范围见 [临时技能信息同步](docs/TEMPORARY_SKILL_INFORMATION_2026-10-09.md)。
+共享组关联、槽位、次数恢复和当前协议证据见
+[共享技能冷却](docs/SHARED_SKILL_COOLDOWNS_2026-10-09.md)。
+玩家时间、暂停、换场景保留和实时活动技能的后续纠正见
+[共享冷却时钟](docs/SHARED_COOLDOWN_CLOCKS_2026-10-09.md)。
+角色模式记录区分进入与退出，体力扣除读取当前角色有效的资源减免效果；
+来源、公式推断和实机验证范围见 [角色模式与体力消耗](docs/PLAY_MODES_AND_STAMINA_2026-10-09.md)。
+
+元素反应、自身元素反应与全局值变化的客户端回调可执行资源中的动作队列。
+动作按顺序处理，保留请求目标，并检查实体生命周期、条件及 Self／Caster／Team 目标。
+接入范围和实机验证边界见 [技能反应回调](docs/ABILITY_REACTION_CALLBACKS_2026-10-08.md)。
+
+已登记的无敌、锁血和濒死保护修饰器参与伤害处理，移除或替换后按剩余实例重新判定。
+濒死保护阈值读取所属技能的当前参数，缺少阈值时仍防止死亡；初始保护遵守条件和目标。
+具体规则及尚未接入的定时、其他保护状态见 [战斗保护状态](docs/ABILITY_COMBAT_STATES_2026-10-08.md)。
+
+生命值比例修饰器支持叠加、移除及技能参数更新，角色和怪物重算属性后重新应用一次。
+增减时保留当前血量比例和生命之契绝对值；客户端确认不会重复计入服务端请求的加成。
+公式依据、资源核对和实机验证边界见 [生命值加成](docs/ABILITY_HP_MODIFIERS_2026-10-08.md)。
+生命值修饰器可读取承载实体的 SGV／GV；Lua 写入保留小数并刷新属性，客户端哈希键按实体解析。
+具体入口、六处活动资源绑定及验证范围见 [实体全局值](docs/ABILITY_GLOBAL_VALUES_2026-10-09.md)。
+修饰器已接入上游的 37 种战斗属性映射，包含生命值比例、攻击、防御、精通、暴击、充能及伤害加减。
+普通属性与额外属性分两步计算，登记、参数更新及移除合并发送一次属性通知；
+移除巨大但有限的加成时保留原始基值，未知属性继续保留为待办。
+资源核对、已验证范围及客户端公式边界见 [修饰器战斗属性](docs/ABILITY_PROPERTIES_2026-10-09.md)。
+三类全局值区间监听可按档位附着／释放加成，支持跨实体更新、父状态清理和客户端确认去重。
+Self 首次初始化缺失变量，NoInit 只读取变量；完整周期动作与实机语义仍待完善，范围见 [全局值监听](docs/ABILITY_GLOBAL_VALUE_WATCHERS_2026-10-09.md)。
+
+已支持的治疗、数值更新、条件分支和状态创建／移除可按资源间隔顺序执行，支持角色切换及离场停止；
+服务端创建的子状态保留初始化与结束动作归属，客户端逐个确认多实例，避免重复执行和相互清除。
+治疗加成读取施法者，受治疗加成读取目标。参数晚到可启动原有计时，重新施放使用新起点；完整施法仍待验证，
+范围见 [周期治疗](docs/ABILITY_PERIODIC_HEALING_2026-10-09.md)。
+服务端临时状态按资源时间结束并撤销加成，结束动作可按条件分发到施法者或全队、创建后续状态。
+客户端确认后沿用客户端移除链；验证与边界见 [状态持续时间](docs/ABILITY_MODIFIER_DURATION_2026-10-09.md)。
+刷新型多实例支持资源上限，满层刷新最早一层并保留周期起点，旧计时器不会清除刷新后的实例；
+其他刷新／耐久度模式和完整客户端流程仍待适配，见 [堆叠与刷新](docs/ABILITY_MODIFIER_STACKING_2026-10-09.md)。
+普通技能返能、元素球与直接补能限制到实际上下限，变化通知发送本次增减量；
+固定返能保留原数值，元素球仍受充能效率影响。已验证范围见
+[普通元素能量](docs/ABILITY_ELEMENTAL_ENERGY_2026-10-09.md)。
+可识别的绫人、多莉和火主周期返能已接入；队伍切人保留后台能力计时，
+按资源的后台标志执行动作，到期、退队与切场景仍停止旧效果。范围与剩余条件见
+[周期返能与后台计时](docs/ABILITY_PERIODIC_ENERGY_2026-10-09.md)。
+技能参数动作写入后刷新依赖状态和待启动计时器，指定技能时更新接收目标已有实例；
+合法零值与无效公式分开处理。随机参数仍由客户端提供，接入范围与验证结果见
+[技能参数写入](docs/ABILITY_OVERRIDE_MAP_2026-10-09.md)。
+全局值写入、累加与复制遵守资源条件，拒绝无效公式和溢出；相同值不重复发送通知。
+无公式的全局值转技能参数已接入可识别的周期链，随机配置仍需继续还原，范围见
+[全局值与参数传递](docs/ABILITY_GLOBAL_PARAMETER_WRITES_2026-10-09.md)。
+随机分支检查条件与概率，子动作按自身配置选择接收目标；完整可识别的随机树可参与
+周期和状态回调，客户端补发不会重复结算。范围与未实现部分见
+[随机分支与回调目标](docs/ABILITY_RANDOM_BRANCHES_2026-10-09.md)。
+重复动作逐轮执行有序子动作，清除全局值遵守条件和通知规则；嵌套回调共享执行额度，
+避免异常配置长时间占用服务。资源用例与尚未验收部分见
+[重复动作与全局值清除](docs/ABILITY_REPEATED_ACTIONS_2026-10-09.md)。
+当前恰斯卡／流浪者的单组随机队列先筛选条件，再执行选中组的有序子动作；
+完整可识别的组登记归属并参与计时回调。多次抽选与客户端一致性仍待验证，见
+[条件随机队列](docs/ABILITY_RANDOM_QUEUES_2026-10-09.md)。
+基础技能目录优先读取当前角色配置，旧缓存作为缺失资源时的回退；
+旅行者元素技能组独立加载。更新外部资源后需重启服务，验证范围见
+[基础技能目录与资源更新](docs/ABILITY_EMBRYO_REFRESH_2026-10-09.md)。
+
+## 场景切换与 Lua 时间轴
+
+玩家进入场景前先退出旧场景，同一玩家的场景进入／移除串行执行，避免互换场景时等待彼此的锁。
+实体编号使用世界内的原子计数，场景内创建实体不获取世界监视器。
+来源、并发验证与剩余边界见 [场景切换记录](docs/SCENE_TRANSFERS_2026-10-08.md)。
+
+世界和尘歌壶成员迁移共用场景切换锁，房主退出在锁外迁移访客，旧世界不能清除新归属。
+尘歌壶为房主保留编号 1，访客编号不会因房主进入或其他访客离开而重合。
+完整传送的坐标与通知按顺序执行；来源与目标的异常成员登记可修复。
+验证范围和后续工作见 [世界成员迁移记录](docs/WORLD_MEMBERSHIP_2026-10-08.md)。
+
+联机、尘歌壶和原素烘炉匹配检查进入结果，再修改位置和发送成功通知。
+房主退出时逐个返回访客，临时失败按秒重试；缺失旧场景时尝试个人大世界。
+空世界退役与成员登记协调，进入中和待恢复的玩家不会因空列表被提前清理。
+接口、异常边界与验证结果见 [世界进入与恢复记录](docs/WORLD_ENTRY_2026-10-08.md)。
+
+新世界在首次入场预检后才加入 tick；排队技能检查实体生命周期与施法者场景。
+触发技能保留施法者归属，复用实例并执行每次开始动作。
+具体边界和资源验证见 [技能生命周期记录](docs/ABILITY_LIFECYCLE_2026-10-08.md)。
+
+`InitTimeAxis` 按秒处理全部时间点，支持小数秒；`EVENT_TIME_AXIS_PASS` 提供时间点序号和 `source_name`。
+Lua 直接接收原始数组并检查数值与连续索引，避免数值重载把小数截断；Java 数组调用入口保留。
+同名时间轴按场景组隔离，替换、停止、组卸载和场景销毁会取消旧任务。
+共享定时线程与 Lua 执行线程分开，慢回调保留事件顺序。
+资源核对、清理边界与验证结果见 [场景时间轴记录](docs/SCENE_TIME_AXES_2026-10-08.md)。
+
+## TPS 开发支持
+
+已接入 TPS 武器、配件与弹药资源、装备协议、库存保存和场景实体清理。
+GM 物品目录可筛选 TPS 武器；开发命令支持发放、穿戴、解锁配件和补充弹药。
+服务端已接入资源指定场景的专用旅行者和进入／退出队伍恢复，保留任务试用角色。
+武器、配件与套装参数按实际装备生效，配件解锁按能力分别判断，装备变化后刷新能力参数。
+换装重建的武器能力绑定实际穿戴者；弹药元消息按类型处理，只有通过校验的更新会转发。
+游戏内入口、射击与结算仍需继续接入和验证，尚未部署到日常服务。
+命令、协议证据、已知资源缺口与验证范围见
+[TPS 基础适配记录](docs/TPS_COMPATIBILITY_2026-10-08.md)和
+[场景队伍适配记录](docs/TPS_SCENE_LIFECYCLE_2026-10-08.md)，以及
+[词条参数与解锁记录](docs/TPS_TALENTS_2026-10-08.md)。当前 TPS 词条的资源参数均为零，实际伤害与射速仍待核对。
+接包流程、真实冰枪资源验证与能力副本对比见 [TPS 运行记录](docs/TPS_RUNTIME_2026-10-08.md)。
+12 个配件支持按背包解锁材料自动生效、移除和登录恢复，保留 GM 手动授予，见
+[配件材料解锁记录](docs/TPS_ACCESSORIES_2026-10-08.md)。
+
+## 千星资产归档
+
+GM「千星资产」支持导入 GIA／GIL／GIP／GIR 与节点图 JSON、分页检索及原文件导出。
+资产按 SHA-256 去重，保留未知字段；校验容器边界、节点引用和 GUID 冲突。
+展开「生成实体 / 像素画 / 镜头 / 体素 .gia」可将实体 JSON 或 PNG／JPEG／BMP／GIF 转为 GIA 并归档。
+像素画匹配 21 种方块，支持透明度、比例、平面和原点；自动 GUID 避开已归档的主资产 ID。
+单文件最多 100000 项资产，列表仅保留前 100 项元数据预览。生成参数与限制见
+[千星资产生成](docs/MILIASTRA_GENERATION_2026-10-08.md)。
+选择「镜头 JSON」可填写五种镜头模板，修改视距、视野、偏移、角度和碰撞参数，
+也可批量生成水平角、俯仰角、视距与视野变体；自动编号同时避开已解析的镜头内部编号和依赖引用。
+生成文件与当前 7.1 客户端导入效果的验证范围见 [镜头生成](docs/MILIASTRA_CAMERA_2026-10-08.md)。
+已有镜头 GIA 可「提取镜头 JSON」，在 GM 中编辑配置并转回 GIA；未编辑时恢复原字节，
+编辑后保留编号、依赖、未知字段和其他资产，见 [镜头提取与编辑](docs/MILIASTRA_CAMERA_EDIT_2026-10-08.md)。
+选择「体素 JSON」可读取 Blender 导出的坐标／颜色数组，设置边长、原点和透明度后生成 GIA。
+项目提供 `tools/blender_miliastra_voxels.py`，使用本机已有 Blender，无需服务端安装；支持选中网格、
+修改器、世界坐标缩放和 UV 贴图。完整流程与边界见 [Blender 体素生成](docs/MILIASTRA_VOXEL_2026-10-08.md)。
+节点 GIA 还可转为 `.gia.json` 结构文件，保留输入值、连接、复合定义及未知字段；
+编辑后重新导入并转回 GIA，未修改时恢复原始字节，见
+[节点结构转换](docs/MILIASTRA_NODES_2026-10-08.md)。
+编辑器画布 JSON 可转为 GIA，保留已映射的流程／数据连接、常量、泛型、分支与注释；
+未映射内容显示原因，原文件继续保留，见 [画布转换](docs/MILIASTRA_CANVAS_2026-10-08.md)。
+普通节点 GIA 或结构 JSON 可「转为编辑器画布 JSON」；未编辑时还原原字节，
+编辑后保留原 GUID、节点索引、变量与未知字段，见 [反向画布转换](docs/MILIASTRA_REVERSE_2026-10-08.md)。
+GIA 与节点结构 JSON 可「复制并重新编号」，联动更新实体、镜头、普通节点图的已知 GUID 引用，
+支持自动避让、指定起点及重复去重；未知引用与复杂资产的限制见
+[GUID 复制](docs/MILIASTRA_GUID_2026-10-08.md)。
+游戏内发布、节点执行和奖励链路仍待接入。来源、存储位置与接口见
+[千星资产记录](docs/MILIASTRA_ASSETS_2026-10-08.md)。
+
 ## GM 物品与装备
 
 物品名称读取中文主文本表及 `TextMap_MediumCHS.json`，支持分片文本表与已知的 ±512 索引偏移。
@@ -19,6 +196,16 @@
 已补齐 7.1 武器强化与溢出矿石预览的请求包号和材料字段。支持使用强化矿石、消耗未装备且未锁定的武器，
 扣除摩拉并提升等级；达到当前突破阶段的等级上限后，溢出经验按资源换回矿石。预览不会扣除材料。
 协议依据和测试范围见 [武器强化协议记录](docs/protocol-weapon-upgrade-7.1.md)。
+
+## 角色 90–100 级突破
+
+满突破、90 级的自有角色可消耗无主命星直接升到 95 级，再消耗两个升到 100 级。
+等级、属性和突破材料成本读取资源；试用角色不能使用，重复请求不会再次扣除材料。
+满级时使用经验书会返回等级上限错误，不消耗经验书或摩拉。
+
+重复抽取满命五星角色会赠送一个无主命星及原有 25 星辉；十连按每次发放后的命座状态计算转换。
+服务端请求、结算及保存读回已有测试，游戏内突破与重登显示还需实机验收。
+来源、协议字段与验证边界见 [角色突破记录](docs/protocol-avatar-extra-level-7.1.md)。
 
 ## 公告与游戏邮件
 
@@ -59,6 +246,7 @@ GM 邮箱会显示「附件领取中断」，需要核对数据库与日志后�
 - **免费充值商品**：空月祝福（小月卡）、珍珠纪行 / 珍珠之歌（大月卡）、原石与创世结晶。
   现金价格统一为 **0**；填写顶部在线玩家 UID 后点击「免费购买」即可发放。
   月卡按资源配置提供立即结晶和每日原石，剩余天数最多 180 天，按上海时间 04:00 换日。
+  在线跨日也会检查日奖励，发放失败可重试；初次登录保留原领取顺序，见 [日界线与在线刷新](docs/DAILY_REFRESH_2026-10-09.md)。
   纪行使用本期任务和等级奖励；珍珠之歌的等级与额外奖励读取当前资源，同档位不能重复领取。
   结晶礼包保留资源中的首次 / 后续额外数量，直接购买原石则发放标注数量。
 - **兑换商品**：搜索、商店筛选、分页、编辑、新增、上架、下架与恢复默认。
@@ -181,6 +369,10 @@ GM 商城显示千星商品的中文名称，支持编辑事象凝核价格，�
 支持开启、关闭、恢复与重新复刻。目录覆盖 401 条资源活动，158 条已对应历史时间。
 每条活动可自定义 1–365 天复刻时长（0 为原活动时长）；已有排期可保存新的到期时间并保留进度和已领取奖励。
 恢复开启沿用原排期，重新复刻会重置进度；修改到期时间会同步调整玩法关闭时间并保留原有领奖期长度。
+通用活动天数按国服凌晨 4 点计数；旧排期、未知条件和错误参数不再误通过。
+具体范围及仍未接入的条件见 [活动日界线与条件](docs/ACTIVITY_CONDITIONS_2026-10-09.md)。
+在线跨凌晨 4 点会更新排期、通用条件通知与任务条件事件，不重置已有活动进度；
+服务端验证和仍需游戏内验收的范围见 [日界线与在线刷新](docs/DAILY_REFRESH_2026-10-09.md)。
 按发布时间从 1.0「原素烘炉」开始还原；已恢复主控脚本，接入活动详情、Lua 计分、倒计时、阶段回调和 13 项任务进度。
 已接入活动场景加载与关闭清理，以及 7.1 开始、进度、点名和结束通知。
 已接入当前世界的房主邀请、队友答复、20 秒准备及中断流程。
@@ -533,6 +725,24 @@ After changing the resource submodule commit or its files, run
 holds its own copy of the resources, so an existing container does not see later
 checkout changes. Both runtime and development use this Compose MongoDB, so
 accounts, player progress, inventory and wish history are shared between modes.
+
+Before replacing a working runtime, save its installed jar, bundled resources,
+Java runtime and image startup settings without stopping the server:
+
+```powershell
+task runtime:snapshot
+task runtime:snapshot:build SNAPSHOT_PATH="debug/runtime-snapshots/<capture-directory>"
+task runtime:snapshot:status SNAPSHOT_PATH="debug/runtime-snapshots/<capture-directory>"
+```
+
+Use the path printed by the first command. The script locates this checkout and
+its Compose `server` automatically; project paths are not hardcoded. Building a
+recovery image uses the captured files, with no Java compilation or resource
+download. Repeating the build reuses the verified image when its ID is unchanged.
+The snapshot stays in the ignored `debug/` directory and includes private runtime
+configuration. Mounted server state and MongoDB data require separate backups.
+See [runtime recovery and validation](docs/RUNTIME_RECOVERY_2026-10-09.md) for the
+verified images, commands and remaining deployment checks.
 
 ### Switching between development and runtime
 
@@ -992,6 +1202,51 @@ Setting the last three to `1`, `1` and `0` gives you plain, unweighted domain ro
   request is there, the server received it and had no handler for it. Most entries
   read `UNKNOWN (<number>)` rather than a name — the 7.0 dump has no name for
   them, and the number is what you search `PacketOpcodes` for.
+
+## External reference sources
+
+`task refs:sync` downloads the public repositories listed in
+[the upstream research](docs/UPSTREAM_RESEARCH_2026-10-03.md) and their Git
+submodules into `debug/`. It requires Python 3 and Git. No third-party setup or
+build scripts are run. `task refs:update` only fast-forwards clean checkouts;
+local changes are preserved. `debug/references.json` records each exact commit.
+The gcsim checkout initially expands only `pkg/core/stacks` and root files. Its
+manifest entry compares the current commit's stack sources with the fixed
+release used for adaptation; a later update recalculates that comparison.
+
+These sources are ignored by Git and excluded from the runtime image. Closed
+services are recorded as public information when no source repository is
+available. Adaptation results and remaining gaps are documented in
+[the integration notes](docs/UPSTREAM_INTEGRATION_2026-10-08.md).
+
+The 7.1 portrait adapter loads the resource catalog, validates avatar, costume,
+quest and ticket unlocks, and persists selected pictures and frames. Legacy
+avatar IDs remain readable. Ticket use consumes one item and rejects duplicate
+unlocks; non-default frames require an explicit reward grant. The protocol
+evidence, remaining custom portrait and frame reward work, and client validation
+requirements are in [the portrait notes](docs/protocol-profile-7.1.md).
+
+Region membership scans now use integer hash lookups while preserving event
+order and live callback effects. Lua skill calls restore the caller's context,
+pass context before numeric arguments, and execute controller callbacks with
+activity cancellation checks. Missing functions use bounded warnings; real
+script errors retain their stack traces. Validation and remaining control-group
+work are in [the scene and script notes](docs/SCRIPT_HOT_PATHS_2026-10-08.md).
+
+Arlecchino's own burst now reads the resource heal tag and repays Bond before
+restoring HP. Normal attack Bond consumption uses the resource modifier;
+combat hit packets no longer apply an extra deduction to every attack.
+Debt actions validate conditions and amounts and share the ordinary healing
+monitor. Source evidence and remaining gameplay checks are in
+[the healing notes](docs/ARLECCHINO_HEALING_2026-10-08.md).
+
+Clorinde's healing conversion now follows installed resource modifiers and
+their removal, with skill and inherent talent parameters applied to each
+ability. Gunshots, burst and Impale use resource Bond actions; skill-start,
+global-value and hit packets no longer apply extra Bond changes. Healing tags
+also follow asynchronous callbacks without leaking into later events.
+Current client predicate evidence, the exact gunshot boundary and remaining
+gameplay checks are in [the Clorinde notes](docs/CLORINDE_BOND_2026-10-08.md).
 
 ## Repository layout
 

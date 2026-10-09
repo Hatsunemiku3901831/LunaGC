@@ -9,10 +9,11 @@ public class PacketPlayerTimeNotify extends BasePacket {
     public PacketPlayerTimeNotify(Player player) {
         super(PacketOpcodes.PlayerTimeNotify);
 
+        var time = player.getPlayerTimeSnapshot();
         PlayerTimeNotify proto =
                 PlayerTimeNotify.newBuilder()
-                        .setIsPaused(player.isPaused())
-                        .setPlayerTime(player.getClientTime())
+                        .setIsPaused(time.paused())
+                        .setPlayerTime(time.playerTime())
                         .setServerTime(System.currentTimeMillis())
                         .build();
 

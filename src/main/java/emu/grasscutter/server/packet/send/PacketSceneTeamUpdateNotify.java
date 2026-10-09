@@ -27,7 +27,8 @@ public class PacketSceneTeamUpdateNotify extends BasePacket {
                                 .setIsOnScene(p.getTeamManager().getCurrentAvatarEntity() == entityAvatar)
                                 .setAvatarAbilityInfo(AbilitySyncStateInfo.newBuilder())
                                 .setWeaponAbilityInfo(AbilitySyncStateInfo.newBuilder())
-                                .setAbilityControlBlock(entityAvatar.getAbilityControlBlock());
+                                .setAbilityControlBlock(entityAvatar.getAbilityControlBlock())
+                                .addAllTpsWeaponList(emu.grasscutter.game.tps.TpsWeaponSystem.getSceneWeaponInfos(entityAvatar.getAvatar()));
 
                 if (player.getWorld().isMultiplayer()) {
                     avatarProto.setAvatarInfo(entityAvatar.getAvatar().toProto());

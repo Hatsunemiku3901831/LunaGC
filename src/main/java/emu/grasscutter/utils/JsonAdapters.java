@@ -45,7 +45,8 @@ public interface JsonAdapters {
                 }
                 case BEGIN_OBJECT -> {
                     reader.skipValue();
-                    return DynamicFloat.ZERO;
+                    // Preserve the caller's fallback for an unsupported expression shape.
+                    return new DynamicFloat(List.of());
                 }
                 default -> throw new IOException(
                         "Invalid DynamicFloat definition - " + reader.peek().name());
@@ -53,7 +54,24 @@ public interface JsonAdapters {
         }
 
         @Override
-        public void write(JsonWriter writer, DynamicFloat f) {}
+        public void write(JsonWriter writer, DynamicFloat f) throws IOException {
+            if (f == null) {
+                writer.nullValue();
+            } else if (!f.isDynamic()) {
+                writer.value(f.getConstant());
+            } else {
+                writer.beginArray();
+                for (var token : f.getOps()) {
+                    switch (token.op) {
+                        case CONSTANT -> writer.value(token.fValue);
+                        case KEY -> writer.value((token.negative ? "-%" : "") + token.sValue);
+                        case NEXBOOLEAN -> writer.value(token.bValue);
+                        default -> writer.value(token.op.name());
+                    }
+                }
+                writer.endArray();
+            }
+        }
     }
 
     /**
@@ -306,7 +324,7 @@ public interface JsonAdapters {
                 }
             }
 
-            return new TypeAdapter<>() {
+            return new TypeAdapter<T>() {
                 public T read(JsonReader reader) throws IOException {
                     return switch (reader.peek()) {
                         case STRING -> map.get(reader.nextString());
@@ -318,7 +336,7 @@ public interface JsonAdapters {
                 public void write(JsonWriter writer, T value) throws IOException {
                     writer.value(value.toString());
                 }
-            };
+            }.nullSafe();
         }
     }
 }

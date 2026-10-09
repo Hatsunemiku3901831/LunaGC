@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "ShareCDOuterClass";
+
+message ShareCD {
+    uint64 cd_end_time = 4;
+    // The client uses this value to select a cooldown duration slot, not a charge number.
+    uint32 cd_slot = 5;
+}

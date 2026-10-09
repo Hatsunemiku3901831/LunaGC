@@ -5,6 +5,7 @@ import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.player.Player.SceneLoadState;
 import emu.grasscutter.game.props.EnterReason;
 import emu.grasscutter.game.world.World;
+import emu.grasscutter.game.world.data.TeleportProperties;
 import emu.grasscutter.net.proto.EnterTypeOuterClass.EnterType;
 import emu.grasscutter.net.proto.PlayerApplyEnterMpResultNotifyOuterClass;
 import emu.grasscutter.net.proto.ReasonOuterClass;
@@ -29,7 +30,7 @@ public class MultiplayerSystem extends BaseGameSystem {
             return;
         }
 
-        if (player.getWorld().isMultiplayer()) {
+        if (player.getWorld() == null || player.getWorld().isMultiplayer()) {
             return;
         }
 
@@ -67,35 +68,49 @@ public class MultiplayerSystem extends BaseGameSystem {
             return;
         }
 
-        if (requester.getWorld().isMultiplayer()) {
+        if (requester.getWorld() == null || requester.getWorld().isMultiplayer() || hostPlayer.getWorld() == null) {
             request.getRequester().sendPacket(new PacketPlayerApplyEnterMpResultNotify(hostPlayer, false, ReasonOuterClass.Reason.Reason_PLAYER_CANNOT_ENTER_MP));
             return;
         }
 
-        request.getRequester().sendPacket(new PacketPlayerApplyEnterMpResultNotify(hostPlayer, isAgreed, ReasonOuterClass.Reason.Reason_PLAYER_JUDGE));
-
         if (!isAgreed) {
+            requester.sendPacket(new PacketPlayerApplyEnterMpResultNotify(hostPlayer, false, ReasonOuterClass.Reason.Reason_PLAYER_JUDGE));
             return;
         }
 
-        if (!hostPlayer.getWorld().isMultiplayer()) {
-
-            World world = new World(hostPlayer, true);
-
-            world.addPlayer(hostPlayer);
-
-            hostPlayer.sendPacket(new PacketPlayerEnterSceneNotify(hostPlayer, hostPlayer, EnterType.EnterType_ENTER_OTHER, EnterReason.HostFromSingleToMp, hostPlayer.getScene().getId(), hostPlayer.getPosition()));
-            hostPlayer.sendPacket(new PacketEnterScenePeerNotify(hostPlayer));
+        var target = hostPlayer.getWorld();
+        if (!target.isMultiplayer()) {
+            var promoted = new World(hostPlayer, true);
+            if (!promoted.tryAddPlayer(hostPlayer, target, context -> {
+                hostPlayer.sendPacket(new PacketPlayerEnterSceneNotify(hostPlayer, promoted,
+                        entry(hostPlayer, EnterType.EnterType_ENTER_OTHER, EnterReason.HostFromSingleToMp)));
+                hostPlayer.sendPacket(new PacketEnterScenePeerNotify(hostPlayer));
+            })) {
+                rejectEntry(requester, hostPlayer);
+                return;
+            }
+            target = promoted;
         }
 
-        requester.getPosition().set(hostPlayer.getPosition());
-        requester.getRotation().set(hostPlayer.getRotation());
-        requester.setSceneId(hostPlayer.getSceneId());
+        var source = requester.getWorld();
+        var destination = target;
+        var properties = entry(hostPlayer, EnterType.EnterType_ENTER_OTHER, EnterReason.TeamJoin);
+        if (!destination.tryAddPlayer(requester, source, properties, context -> {
+            requester.sendPacket(new PacketPlayerApplyEnterMpResultNotify(hostPlayer, true, ReasonOuterClass.Reason.Reason_PLAYER_JUDGE));
+            requester.sendPacket(new PacketPlayerEnterSceneNotify(requester, destination, properties));
+            requester.sendPacket(new PacketEnterScenePeerNotify(requester));
+        })) rejectEntry(requester, hostPlayer);
+    }
 
-        hostPlayer.getWorld().addPlayer(requester);
+    private static TeleportProperties entry(Player player, EnterType type, EnterReason reason) {
+        return TeleportProperties.builder().sceneId(player.getSceneId())
+                .teleportTo(player.getPosition().clone()).teleportRot(player.getRotation().clone())
+                .enterType(type).enterReason(reason).build();
+    }
 
-        requester.sendPacket(new PacketPlayerEnterSceneNotify(requester, hostPlayer, EnterType.EnterType_ENTER_OTHER, EnterReason.TeamJoin, hostPlayer.getScene().getId(), hostPlayer.getPosition()));
-        requester.sendPacket(new PacketEnterScenePeerNotify(requester));
+    private void rejectEntry(Player requester, Player host) {
+        requester.sendPacket(new PacketPlayerApplyEnterMpResultNotify(host, false,
+                ReasonOuterClass.Reason.Reason_PLAYER_CANNOT_ENTER_MP));
     }
 
     public boolean leaveCoop(Player player) {
@@ -108,27 +123,27 @@ public class MultiplayerSystem extends BaseGameSystem {
 
         getServer().getCrucibleMatchSystem().cancel(player);
 
-        if (player.getCurHomeWorld().isInHome(player)) {
+        if (player.getCurHomeWorld() != null && player.getCurHomeWorld().isInHome(player)) {
             return false;
         }
 
-        if (!player.getWorld().isMultiplayer()) {
+        var source = player.getWorld();
+        if (source == null || !source.isMultiplayer()) {
             return false;
         }
 
-        for (Player p : player.getWorld().getPlayers()) {
+        for (Player p : source.getPlayers()) {
             if (p.getSceneLoadState() != SceneLoadState.LOADED) {
                 return false;
             }
         }
 
         World world = new World(player);
-        world.addPlayer(player);
-
-        player.sendPacket(new PacketPlayerEnterSceneNotify(player, EnterType.EnterType_ENTER_OTHER, EnterReason.TeamBack, player.getScene().getId(), player.getPosition()));
-        player.sendPacket(new PacketEnterScenePeerNotify(player));
-
-        return true;
+        return world.tryAddPlayer(player, source, context -> {
+            player.sendPacket(new PacketPlayerEnterSceneNotify(player, world,
+                    entry(player, EnterType.EnterType_ENTER_OTHER, EnterReason.TeamBack)));
+            player.sendPacket(new PacketEnterScenePeerNotify(player));
+        });
     }
 
     public boolean kickPlayer(Player player, int targetUid) {
@@ -139,13 +154,14 @@ public class MultiplayerSystem extends BaseGameSystem {
 
     private boolean kickPlayerLocked(Player player, int targetUid) {
 
-        if (!player.getWorld().isMultiplayer() || player.getWorld().getHost() != player) {
+        var source = player.getWorld();
+        if (source == null || !source.isMultiplayer() || source.getHost() != player) {
             return false;
         }
 
         Player victim = player.getServer().getPlayerByUid(targetUid);
 
-        if (victim == null || victim == player) {
+        if (victim == null || victim == player || victim.getWorld() != source) {
             return false;
         }
 
@@ -156,10 +172,10 @@ public class MultiplayerSystem extends BaseGameSystem {
         }
 
         World world = new World(victim);
-        world.addPlayer(victim);
-
-        victim.sendPacket(new PacketPlayerEnterSceneNotify(victim, EnterType.EnterType_ENTER_OTHER, EnterReason.TeamKick, victim.getScene().getId(), victim.getPosition()));
-        victim.sendPacket(new PacketEnterScenePeerNotify(victim));
-        return true;
+        return world.tryAddPlayer(victim, source, context -> {
+            victim.sendPacket(new PacketPlayerEnterSceneNotify(victim, world,
+                    entry(victim, EnterType.EnterType_ENTER_OTHER, EnterReason.TeamKick)));
+            victim.sendPacket(new PacketEnterScenePeerNotify(victim));
+        });
     }
 }

@@ -13,8 +13,8 @@ import emu.grasscutter.Grasscutter.ServerRunMode;
 import emu.grasscutter.game.Account;
 
 public final class DatabaseManager {
-    private static Datastore gameDatastore;
-    private static Datastore dispatchDatastore;
+    private static volatile Datastore gameDatastore;
+    private static volatile Datastore dispatchDatastore;
 
     public static Datastore getGameDatastore() {
         return gameDatastore;

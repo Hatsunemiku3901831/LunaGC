@@ -9,6 +9,7 @@ import emu.grasscutter.data.binout.config.ConfigLevelEntity;
 import emu.grasscutter.data.binout.config.fields.ConfigAbilityData;
 import emu.grasscutter.data.excels.avatar.AvatarSkillDepotData;
 import emu.grasscutter.game.avatar.Avatar;
+import emu.grasscutter.game.avatar.TeamSkillLevelBonuses;
 import emu.grasscutter.game.entity.*;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.game.world.*;
@@ -41,6 +42,7 @@ public final class TeamManager extends BasePlayerDataManager {
     @Transient @Getter private final IntSet teamResonances;
     @Transient @Getter private final IntSet teamResonancesConfig;
     @Transient @Getter @Setter private Set<String> teamAbilityEmbryos;
+    @Transient private transient final TeamSkillLevelBonuses skillLevelBonuses = new TeamSkillLevelBonuses();
 
     @Getter private LinkedHashMap<Integer, TeamInfo> teams;
     private int currentTeamIndex;
@@ -50,7 +52,7 @@ public final class TeamManager extends BasePlayerDataManager {
 
     @Transient private int useTemporarilyTeamIndex = -1;
     @Transient private List<TeamInfo> temporaryTeam;
-    @Transient @Getter @Setter private boolean usingTrialTeam;
+    @Transient @Setter private boolean usingTrialTeam;
     @Transient @Getter @Setter private TeamInfo trialAvatarTeam;
     @Transient private boolean trialTeamIncludesOwnedAvatars;
 
@@ -58,6 +60,59 @@ public final class TeamManager extends BasePlayerDataManager {
     @Getter private Map<Integer, Integer> questTrialAvatarIds = new LinkedHashMap<>();
 
     @Transient @Getter @Setter private Map<Integer, Avatar> trialAvatars;
+
+    // A scene party overlays the regular, temporary and quest parties without modifying them.
+    @Transient @Getter private Avatar tpsSceneAvatar;
+    @Transient private TeamInfo tpsSceneTeam;
+    @Transient private Scene tpsScene;
+    // Persist only the selected slot so a reconnect in the mode can still restore it on exit.
+    private Integer tpsPreviousIndex;
+
+    public boolean isUsingTrialTeam() {
+        return usingTrialTeam || tpsSceneAvatar != null;
+    }
+
+    public Collection<Avatar> getAllTrialAvatars() {
+        var result = new ArrayList<>(trialAvatars.values());
+        if (tpsSceneAvatar != null) result.add(tpsSceneAvatar);
+        return result;
+    }
+
+    public Avatar getAvatarForTeam(int avatarId) {
+        if (tpsSceneAvatar != null && tpsSceneAvatar.getAvatarId() == avatarId) return tpsSceneAvatar;
+        boolean temporary = temporaryTeam != null && useTemporarilyTeamIndex >= 0
+                && useTemporarilyTeamIndex < temporaryTeam.size();
+        var trial = usingTrialTeam && !temporary ? trialAvatars.get(avatarId) : null;
+        return trial != null ? trial : player.getAvatars().getAvatarById(avatarId);
+    }
+
+    public void beginTpsSceneTeam(Scene scene, Avatar avatar) {
+        if (tpsSceneAvatar != null) throw new IllegalStateException("TPS scene party already active");
+        if (tpsPreviousIndex == null) tpsPreviousIndex = currentCharacterIndex;
+        tpsScene = scene;
+        tpsSceneAvatar = avatar;
+        tpsSceneTeam = new TeamInfo();
+        tpsSceneTeam.addAvatar(avatar);
+        currentCharacterIndex = 0;
+    }
+
+    public boolean endTpsSceneTeam(Scene scene) {
+        if (tpsSceneAvatar == null || tpsScene != scene) return false;
+        var avatar = tpsSceneAvatar;
+        avatar.getEquips().values().forEach(emu.grasscutter.game.tps.TpsWeaponSystem::removeWeaponEntity);
+        tpsSceneAvatar = null;
+        tpsSceneTeam = null;
+        tpsScene = null;
+        restoreTpsSelection();
+        if (player.hasSentLoginPackets()) player.sendPacket(new PacketAvatarDelNotify(List.of(avatar.getGuid())));
+        return true;
+    }
+
+    public void restoreTpsSelection() {
+        if (tpsSceneAvatar != null || tpsPreviousIndex == null) return;
+        currentCharacterIndex = Math.max(0, Math.min(tpsPreviousIndex, getCurrentTeamInfo().size() - 1));
+        tpsPreviousIndex = null;
+    }
 
     @Transient @Getter @Setter
     private int previousIndex = -1;
@@ -166,10 +221,11 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public TeamInfo getCurrentTeamInfo() {
+        if (tpsSceneTeam != null) return tpsSceneTeam;
         if (temporaryTeam != null && useTemporarilyTeamIndex >= 0
                 && useTemporarilyTeamIndex < temporaryTeam.size())
             return temporaryTeam.get(useTemporarilyTeamIndex);
-        if (this.isUsingTrialTeam()) return this.getTrialAvatarTeam();
+        if (this.usingTrialTeam) return this.getTrialAvatarTeam();
         return this.getRegularTeamInfo();
     }
 
@@ -196,6 +252,13 @@ public final class TeamManager extends BasePlayerDataManager {
 
     public List<EntityAvatar> getActiveTeam() {
         return avatars;
+    }
+
+    /** Copy under the list's own monitor; scene ticks must not acquire the team manager monitor. */
+    public List<EntityAvatar> getActiveTeamSnapshot() {
+        synchronized (avatars) {
+            return List.copyOf(avatars);
+        }
     }
 
     public List<EntityAvatar> getActiveTeam(boolean fix) {
@@ -268,7 +331,7 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public boolean canAddAvatarsToCurrentTeam(int avatars) {
-        if (this.useTemporarilyTeamIndex != -1) {
+        if (this.useTemporarilyTeamIndex != -1 || tpsSceneAvatar != null) {
             return false;
         }
         return this.canAddAvatarsToTeam(this.getCurrentTeamInfo(), avatars);
@@ -313,7 +376,7 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public boolean addAvatarsToCurrentTeam(Collection<Avatar> avatars) {
-        if (this.useTemporarilyTeamIndex != -1) {
+        if (this.useTemporarilyTeamIndex != -1 || tpsSceneAvatar != null) {
             return false;
         }
         return this.addAvatarsToTeam(this.getCurrentTeamInfo(), avatars);
@@ -327,31 +390,12 @@ public final class TeamManager extends BasePlayerDataManager {
         this.getTeamResonances().clear();
         this.getTeamResonancesConfig().clear();
 
-        if (this.avatars.size() < 4) return;
-
-        var elementCounts = new Object2IntOpenHashMap<ElementType>();
-        this.getActiveTeam().stream()
-            .map(EntityAvatar::getAvatar)
-            .filter(Objects::nonNull)
-            .map(Avatar::getSkillDepot)
-            .filter(Objects::nonNull)
-            .map(AvatarSkillDepotData::getElementType)
-            .filter(Objects::nonNull)
-            .forEach(elementType -> elementCounts.addTo(elementType, 1));
-
-        elementCounts.object2IntEntrySet().stream()
-            .filter(e -> e.getIntValue() >= 2)
-            .map(e -> e.getKey())
-            .filter(elementType -> elementType.getTeamResonanceId() != 0)
-            .forEach(
-                elementType -> {
-                    this.teamResonances.add(elementType.getTeamResonanceId());
-                    this.teamResonancesConfig.add(elementType.getConfigHash());
-                });
-
-        if (elementCounts.size() >= 4) {
-            this.teamResonances.add(ElementType.Default.getTeamResonanceId());
-            this.teamResonancesConfig.add(ElementType.Default.getConfigHash());
+        for (var data : emu.grasscutter.game.avatar.TeamResonances.active(player)) {
+            this.teamResonances.add(data.getId());
+            var config = GameData.getOpenConfigEntries().get(data.getOpenConfig());
+            if (config != null && config.getAddAbilities() != null)
+                for (var name : config.getAddAbilities())
+                    this.teamResonancesConfig.add(Utils.abilityHash(name));
         }
     }
 
@@ -382,11 +426,15 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public void updateTeamProperties() {
-        this.updateTeamResonances();
+        var skillChanges = this.prepareTeamSkillLevelBonuses();
+        var resonanceChanges = this.prepareTeamResonances(true);
         this.getWorld()
             .broadcastPacket(
                 new PacketSceneTeamUpdateNotify(
                     this.getPlayer()));
+
+        skillChanges.forEach(change -> change.finish(true));
+        resonanceChanges.forEach(Runnable::run);
 
         this.getActiveTeam().stream()
             .map(EntityAvatar::getAvatar)
@@ -400,6 +448,49 @@ public final class TeamManager extends BasePlayerDataManager {
         this.getPlayer().sendPacket(new PacketServerGlobalValueChangeNotify(
             this.getEntity().getId(), "SGV_HexenzirkelLevel", (float) hexenzirkelCount));
         this.getPlayer().sendPacket(new PacketTeamHexenzirkelChangeNotify((int) hexenzirkelCount));
+    }
+
+    private List<TeamSkillLevelBonuses.Change> prepareTeamSkillLevelBonuses() {
+        return skillLevelBonuses.prepare(player, this::getSelectedPartySnapshot);
+    }
+
+    public List<Avatar> getSelectedPartySnapshot() {
+        var selected = new ArrayList<Avatar>();
+        var team = getCurrentTeamInfo();
+        if (team != null) {
+            var active = getActiveTeamSnapshot();
+            for (var id : new ArrayList<>(team.getAvatars())) {
+                var avatar = id == null ? null : getAvatarForTeam(id);
+                if (avatar == null && id != null)
+                    avatar = active.stream().map(EntityAvatar::getAvatar)
+                            .filter(a -> a.getAvatarId() == id && a.getPlayer() == player).findFirst().orElse(null);
+                selected.add(avatar);
+            }
+        }
+        return selected;
+    }
+
+    private List<Runnable> prepareTeamResonances(boolean notify) {
+        var changes = new ArrayList<Runnable>();
+        for (var member : emu.grasscutter.game.avatar.TeamResonances.participants(player)) {
+            var manager = member.getTeamManager();
+            var previous = new IntOpenHashSet(manager.getTeamResonancesConfig());
+            manager.updateTeamResonances();
+            boolean layoutChanged = !previous.equals(manager.getTeamResonancesConfig());
+            changes.add(() -> member.getAbilityManager().refreshTeamResonanceAbilities(previous.size(), layoutChanged, notify));
+        }
+        return changes;
+    }
+
+    public void refreshTeamResonances(boolean notify) {
+        var changes = prepareTeamResonances(notify);
+        if (notify && player.hasSentLoginPackets() && getWorld() != null)
+            getWorld().broadcastPacket(new PacketSceneTeamUpdateNotify(player));
+        changes.forEach(Runnable::run);
+    }
+
+    public void refreshTeamSkillLevelBonuses(boolean notify) {
+        this.prepareTeamSkillLevelBonuses().forEach(change -> change.finish(notify));
     }
 
     public void updateTeamEntities(BasePacket responsePacket) {
@@ -420,8 +511,7 @@ public final class TeamManager extends BasePlayerDataManager {
 
         for (int i = 0; i < this.getCurrentTeamInfo().getAvatars().size(); i++) {
             var avatarId = (int) this.getCurrentTeamInfo().getAvatars().get(i);
-            var avatar = this.isUsingTrialTeam() ? this.getTrialAvatars().get(avatarId) : null;
-            if (avatar == null) avatar = this.getPlayer().getAvatars().getAvatarById(avatarId);
+            var avatar = this.getAvatarForTeam(avatarId);
             if (avatar == null) continue;
             EntityAvatar entity;
             if (existingAvatars.containsKey(avatarId) && existingAvatars.get(avatarId).getAvatar() == avatar) {
@@ -497,6 +587,7 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public synchronized void setupAvatarTeam(int teamId, List<Long> list) {
+        if (tpsSceneAvatar != null) return;
 
         if (list.isEmpty()
             || list.size() > this.getMaxTeamSize()
@@ -527,6 +618,7 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public void setupMpTeam(List<Long> list) {
+        if (tpsSceneAvatar != null) return;
 
         if (list.size() == 0
             || list.size() > this.getMaxTeamSize()
@@ -551,12 +643,12 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public void setupTrialAvatars(boolean save) {
-        if (this.isUsingTrialTeam()) return;
-        this.setPreviousIndex(this.getCurrentCharacterIndex());
+        if (this.usingTrialTeam) return;
+        this.setPreviousIndex(tpsSceneAvatar == null ? this.getCurrentCharacterIndex() : tpsPreviousIndex);
         this.trialTeamIncludesOwnedAvatars = save;
         this.trialAvatarTeam = new TeamInfo();
         if (save) this.trialAvatarTeam.copyFrom(this.getRegularTeamInfo());
-        else {
+        else if (tpsSceneAvatar == null) {
             var scene = this.getPlayer().getScene();
             if (scene != null) this.getActiveTeam().forEach(entity ->
                 scene.removeEntity(entity, VisionTypeOuterClass.VisionType.VisionType_VISION_REMOVE));
@@ -566,6 +658,7 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public void trialAvatarTeamPostUpdate(int newCharacterIndex) {
+        if (tpsSceneAvatar != null || this.getActiveTeam().isEmpty()) return;
         this.setCurrentCharacterIndex(Math.min(newCharacterIndex, this.getActiveTeam().size() - 1));
 
         this.updateTeamProperties();
@@ -574,6 +667,10 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public void addAvatarToTrialTeam(Avatar trialAvatar) {
+        this.trialAvatarTeam.getAvatars().removeIf(id -> id == trialAvatar.getAvatarId());
+        this.trialAvatarTeam.addAvatar(trialAvatar);
+        this.getTrialAvatars().put(trialAvatar.getAvatarId(), trialAvatar);
+        if (tpsSceneAvatar != null) return;
 
         this.getActiveTeam()
             .forEach(
@@ -583,12 +680,9 @@ public final class TeamManager extends BasePlayerDataManager {
                         .removeEntity(x, VisionTypeOuterClass.VisionType.VisionType_VISION_REMOVE));
 
         this.getActiveTeam().removeIf(x -> x.getAvatar().getAvatarId() == trialAvatar.getAvatarId());
-        this.getCurrentTeamInfo().getAvatars().removeIf(x -> x == trialAvatar.getAvatarId());
 
         var entity = this.createTrialAvatarEntity(trialAvatar);
         if (entity != null) this.getActiveTeam().add(entity);
-        this.getCurrentTeamInfo().addAvatar(trialAvatar);
-        this.getTrialAvatars().put(trialAvatar.getAvatarId(), trialAvatar);
     }
 
     public long getTrialAvatarGuid(int trialAvatarId) {
@@ -624,13 +718,17 @@ public final class TeamManager extends BasePlayerDataManager {
         if (!removed) return;
         this.usingTrialTeam = !this.getTrialAvatars().isEmpty();
         this.trialAvatarTeam = new TeamInfo();
-        if (this.isUsingTrialTeam()) {
+        if (this.usingTrialTeam) {
             if (this.trialTeamIncludesOwnedAvatars)
                 this.trialAvatarTeam.copyFrom(this.getRegularTeamInfo());
             for (var avatar : this.getTrialAvatars().values()) {
                 this.trialAvatarTeam.getAvatars().removeIf(id -> id == avatar.getAvatarId());
                 this.trialAvatarTeam.addAvatar(avatar);
             }
+        }
+        if (tpsSceneAvatar != null && !usingTrialTeam) {
+            tpsPreviousIndex = Math.max(0, previousIndex);
+            previousIndex = -1;
         }
         this.refreshTrialTeamEntities();
     }
@@ -642,6 +740,7 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     private void refreshTrialTeamEntities() {
+        if (tpsSceneAvatar != null) return;
         var scene = this.getPlayer().getScene();
         if (scene == null) {
             this.getActiveTeam().clear();
@@ -654,8 +753,7 @@ public final class TeamManager extends BasePlayerDataManager {
             scene.removeEntity(entity, VisionTypeOuterClass.VisionType.VisionType_VISION_REMOVE));
         this.getActiveTeam().clear();
         for (var id : this.getCurrentTeamInfo().getAvatars()) {
-            var avatar = this.getTrialAvatars().get(id);
-            if (avatar == null) avatar = this.getPlayer().getAvatars().getAvatarById(id);
+            var avatar = this.getAvatarForTeam(id);
             if (avatar != null) this.getActiveTeam().add(this.createTrialAvatarEntity(avatar));
         }
         if (this.isUsingTrialTeam()) this.trialAvatarTeamPostUpdate(this.getCurrentCharacterIndex());
@@ -663,6 +761,7 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public void setupTemporaryTeam(List<List<Long>> guidList) {
+        if (tpsSceneAvatar != null) return;
         var teams = new ArrayList<TeamInfo>(guidList.size());
 
         for (int i = 0; i < guidList.size(); i++) {
@@ -708,6 +807,7 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public void useTemporaryTeam(int index) {
+        if (tpsSceneAvatar != null) return;
         int available = this.temporaryTeam == null ? 0 : this.temporaryTeam.size();
         if (index < 0 || index >= available) {
             // getCurrentTeamInfo falls back to the overworld team here, which is exactly what the
@@ -745,6 +845,7 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public boolean cleanTemporaryTeam() {
+        if (tpsSceneAvatar != null) return false;
 
         if (useTemporarilyTeamIndex < 0) {
             return false;
@@ -757,6 +858,7 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public synchronized void setCurrentTeam(int teamId) {
+        if (tpsSceneAvatar != null) return;
 
         if (this.getPlayer().isInMultiplayer()) {
             return;
@@ -982,7 +1084,8 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public void onPlayerLogin() {
-        this.updateTeamResonances();
+        this.refreshTeamSkillLevelBonuses(false);
+        this.refreshTeamResonances(false);
     }
 
     public synchronized void addNewCustomTeam() {
@@ -1028,7 +1131,7 @@ public final class TeamManager extends BasePlayerDataManager {
             var avatarIds = scene.getSceneData().getSpecifiedAvatarList();
             var specifiedAvatarList = this.getActiveTeam();
 
-            if (avatarIds != null && avatarIds.size() > 0) {
+            if (tpsSceneAvatar == null && avatarIds != null && avatarIds.size() > 0) {
 
                 specifiedAvatarList.clear();
                 // The list holds every variant of the forced character; the scene only admits
@@ -1072,35 +1175,39 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public List<Integer> getTrialAvatarParam(int trialAvatarId) {
-        if (GameData.getTrialAvatarCustomData()
-            .isEmpty()) {
-            if (GameData.getTrialAvatarDataMap().get(trialAvatarId) == null) return List.of();
-
-            return GameData.getTrialAvatarDataMap().get(trialAvatarId).getTrialAvatarParamList();
+        var custom = GameData.getTrialAvatarCustomData().get(trialAvatarId);
+        if (custom != null) {
+            var params = custom.getTrialAvatarParamList();
+            if (params == null || params.isEmpty() || params.get(0) == null) return List.of();
+            try {
+                var parsed = Stream.of(params.get(0).split(";")).map(String::trim).map(Integer::parseInt).toList();
+                return validTrialParam(parsed) ? parsed : List.of();
+            } catch (NumberFormatException ignored) {
+                return List.of();
+            }
         }
+        var data = GameData.getTrialAvatarDataMap().get(trialAvatarId);
+        var params = data == null ? null : data.getTrialAvatarParamList();
+        return validTrialParam(params) ? params : List.of();
+    }
 
-        if (GameData.getTrialAvatarCustomData().get(trialAvatarId) == null) return List.of();
-
-        val trialCustomParams =
-            GameData.getTrialAvatarCustomData().get(trialAvatarId).getTrialAvatarParamList();
-        return trialCustomParams.isEmpty()
-            ? List.of()
-            : Stream.of(trialCustomParams.get(0).split(";")).map(Integer::parseInt).toList();
+    private boolean validTrialParam(List<Integer> params) {
+        return params != null && params.size() >= 2 && params.get(0) != null && params.get(0) > 0
+                && params.get(1) != null && params.get(1) > 0 && params.get(1) <= 100;
     }
 
     public boolean addTrialAvatar(int avatarId, int questMainId, GrantReason reason) {
         List<Integer> trialAvatarBasicParam = getTrialAvatarParam(avatarId);
-        if (trialAvatarBasicParam.isEmpty()) return false;
+        if (trialAvatarBasicParam.isEmpty() || !this.getPlayer().hasSentLoginPackets()) return false;
+        if (!GameData.getAvatarDataMap().containsKey((int) trialAvatarBasicParam.get(0))) return false;
 
         var avatar = new Avatar(trialAvatarBasicParam.get(0));
-        if (avatar.getAvatarData() == null || !this.getPlayer().hasSentLoginPackets()) return false;
-
-        avatar.setOwner(this.getPlayer());
 
         avatar.setTrialAvatarInfo(trialAvatarBasicParam.get(1), avatarId, reason, questMainId);
-        avatar.equipTrialItems();
+        avatar.setOwner(this.getPlayer());
+        avatar.equipTrialItems(tpsSceneAvatar == null && player.getScene() != null);
 
-        avatar.recalcStats();
+        avatar.recalcStats(false, tpsSceneAvatar == null);
 
         this.getPlayer().sendPacket(new PacketAvatarAddNotify(avatar, false));
 
@@ -1160,10 +1267,13 @@ public final class TeamManager extends BasePlayerDataManager {
         boolean changed = this.questTrialAvatarIds.keySet().removeAll(trialAvatarIds);
         var guids = trialAvatarIds.stream().map(this::getTrialAvatarGuid)
             .filter(guid -> guid != 0).distinct().toList();
-        if (changed) this.getPlayer().save();
-        if (guids.isEmpty()) return;
+        if (guids.isEmpty()) {
+            if (changed) this.getPlayer().save();
+            return;
+        }
         this.getPlayer().sendPacket(new PacketAvatarDelNotify(guids));
         this.removeTrialAvatarTeam(trialAvatarIds);
+        if (changed) this.getPlayer().save();
         this.getPlayer().sendPacket(new PacketAvatarTeamUpdateNotify(this.getPlayer()));
     }
 

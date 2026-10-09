@@ -1,6 +1,7 @@
 package emu.grasscutter.game.activity.condition;
 
 public enum ActivityConditions {
+    NEW_ACTIVITY_COND_NONE,
     NEW_ACTIVITY_COND_PLAYER_LEVEL_GREAT_EQUAL,
     NEW_ACTIVITY_COND_NOT_FINISH_TALK,
     NEW_ACTIVITY_COND_SALESMAN_CAN_DELIVER,

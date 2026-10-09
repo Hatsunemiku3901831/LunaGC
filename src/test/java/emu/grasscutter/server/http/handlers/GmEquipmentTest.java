@@ -214,12 +214,7 @@ class GmEquipmentTest {
     }
 
     private static void drain() throws Exception {
-        var executor = (ThreadPoolExecutor) DatabaseHelper.getEventExecutor();
-        long end = System.nanoTime() + TimeUnit.SECONDS.toNanos(5);
-        while (executor.getActiveCount() != 0 || !executor.getQueue().isEmpty()) {
-            if (System.nanoTime() > end) fail("Pending test database jobs");
-            Thread.sleep(5);
-        }
+        assertTrue(DatabaseHelper.awaitIdle(java.time.Duration.ofSeconds(5)), "Pending database test jobs");
     }
 
     @Test

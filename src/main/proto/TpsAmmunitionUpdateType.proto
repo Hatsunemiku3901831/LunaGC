@@ -1,0 +1,9 @@
+syntax = "proto3";
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "TpsAmmunitionUpdateTypeOuterClass";
+enum TpsAmmunitionUpdateType {
+  TPS_AMMUNITION_COST = 0;
+  TPS_AMMUNITION_RELOAD = 1;
+  TPS_AMMUNITION_PICKED = 2;
+  TPS_AMMUNITION_SUPPLY = 3;
+}

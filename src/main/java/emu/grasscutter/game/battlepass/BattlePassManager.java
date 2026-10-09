@@ -1,6 +1,7 @@
 package emu.grasscutter.game.battlepass;
 
 import dev.morphia.annotations.*;
+
 import emu.grasscutter.*;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.excels.*;
@@ -14,11 +15,14 @@ import emu.grasscutter.net.proto.BattlePassRewardTakeOptionOuterClass.BattlePass
 import emu.grasscutter.net.proto.BattlePassScheduleOuterClass.BattlePassSchedule;
 import emu.grasscutter.net.proto.BattlePassUnlockStatusOuterClass.BattlePassUnlockStatus;
 import emu.grasscutter.server.packet.send.*;
-import java.time.*;
-import java.time.temporal.TemporalAdjusters;
-import java.util.*;
+import emu.grasscutter.utils.GameCalendar;
+
 import lombok.Getter;
+
 import org.bson.types.ObjectId;
+
+import java.time.*;
+import java.util.*;
 
 @Entity(value = "battlepass", useDiscriminator = false)
 public class BattlePassManager extends BasePlayerDataManager {
@@ -34,7 +38,6 @@ public class BattlePassManager extends BasePlayerDataManager {
     @Getter private boolean extraPaidRewardTaken;
     private int scheduleId;
     private long lastMissionRefreshDay;
-    private static final ZoneId RESET_ZONE = ZoneId.of("Asia/Shanghai");
 
     private Map<Integer, BattlePassMission> missions;
     private Map<Integer, BattlePassReward> takenRewards;
@@ -139,11 +142,12 @@ public class BattlePassManager extends BasePlayerDataManager {
 
     public synchronized boolean unlockPaid(boolean extra) {
         if (extra ? extraPaidRewardTaken : isPaid()) return false;
-        var schedule = GameData.getBattlePassScheduleDataMap().get(BattlePassScheduleData.currentId());
+        var schedule =
+                GameData.getBattlePassScheduleDataMap().get(BattlePassScheduleData.currentId());
         if (extra
                 && (schedule == null
-                        || GameData.getRewardDataMap().get(schedule.getExtraPaidRewardId()) == null))
-            throw new IllegalArgumentException("当前纪行的珍珠之歌奖励资源不完整。");
+                        || GameData.getRewardDataMap().get(schedule.getExtraPaidRewardId())
+                                == null)) throw new IllegalArgumentException("当前纪行的珍珠之歌奖励资源不完整。");
         if (extra) {
             var reward = GameData.getRewardDataMap().get(schedule.getExtraPaidRewardId());
             var items = new ArrayList<GameItem>();
@@ -211,7 +215,8 @@ public class BattlePassManager extends BasePlayerDataManager {
 
             // Take reward
             if (mission.getStatus() == BattlePassMissionStatus.MISSION_STATUS_FINISHED) {
-                this.addPointsDirectly(mission.getData().getAddPoint(), mission.getData().isCycleRefresh());
+                this.addPointsDirectly(
+                        mission.getData().getAddPoint(), mission.getData().isCycleRefresh());
                 mission.setStatus(BattlePassMissionStatus.MISSION_STATUS_POINT_TAKEN);
 
                 updatedMissions.add(mission);
@@ -249,7 +254,8 @@ public class BattlePassManager extends BasePlayerDataManager {
             }
             var use = data.getItemUse().get(0);
             var choices = use.getUseParam()[0].split(",");
-            if (index < 1 || index > choices.length) throw new IllegalArgumentException("纪行自选奖励选项无效");
+            if (index < 1 || index > choices.length)
+                throw new IllegalArgumentException("纪行自选奖励选项无效");
             int chosen = Integer.parseInt(choices[index - 1]);
             if (use.getUseOp() == ItemUseOp.ITEM_USE_ADD_SELECT_ITEM) {
                 if (!GameData.getItemDataMap().containsKey(chosen))
@@ -263,7 +269,9 @@ public class BattlePassManager extends BasePlayerDataManager {
                     if (!GameData.getItemDataMap().containsKey(choice.getItemId()))
                         throw new IllegalArgumentException("自选物品缺失");
                     items.add(
-                            new GameItem(choice.getItemId(), Math.multiplyExact(choice.getItemCount(), count)));
+                            new GameItem(
+                                    choice.getItemId(),
+                                    Math.multiplyExact(choice.getItemCount(), count)));
                 }
             } else throw new IllegalArgumentException("纪行自选奖励类型无效");
         }
@@ -274,7 +282,8 @@ public class BattlePassManager extends BasePlayerDataManager {
         synchronizeSchedule();
         var claimed = new ArrayList<BattlePassRewardTakeOption>();
         var items = new ArrayList<GameItem>();
-        var schedule = GameData.getBattlePassScheduleDataMap().get(BattlePassScheduleData.currentId());
+        var schedule =
+                GameData.getBattlePassScheduleDataMap().get(BattlePassScheduleData.currentId());
         int index =
                 schedule != null && schedule.getLevelRewardIndexId() > 0
                         ? schedule.getLevelRewardIndexId()
@@ -290,17 +299,21 @@ public class BattlePassManager extends BasePlayerDataManager {
             if (data == null) continue;
             boolean premium =
                     tag.getUnlockStatus()
-                            == BattlePassUnlockStatus.BattlePassUnlockSTATUS_BATTLE_PASS_UNLOCK_PAID;
+                            == BattlePassUnlockStatus
+                                    .BattlePassUnlockSTATUS_BATTLE_PASS_UNLOCK_PAID;
             boolean free =
                     tag.getUnlockStatus()
-                            == BattlePassUnlockStatus.BattlePassUnlockSTATUS_BATTLE_PASS_UNLOCK_FREE;
+                            == BattlePassUnlockStatus
+                                    .BattlePassUnlockSTATUS_BATTLE_PASS_UNLOCK_FREE;
             if (!(free && data.getFreeRewardIdList().contains(id))
                     && !(premium && isPaid() && data.getPaidRewardIdList().contains(id))) continue;
             var resolved = new ArrayList<GameItem>();
             try {
-                resolveRewardItems(GameData.getRewardDataMap().get(id), option.getOptionIdx(), 1, resolved);
+                resolveRewardItems(
+                        GameData.getRewardDataMap().get(id), option.getOptionIdx(), 1, resolved);
             } catch (IllegalArgumentException | ArithmeticException e) {
-                Grasscutter.getLogger().warn("Battle pass reward {} rejected: {}", id, e.getMessage());
+                Grasscutter.getLogger()
+                        .warn("Battle pass reward {} rejected: {}", id, e.getMessage());
                 continue;
             }
             getPlayer().getInventory().addItems(resolved, ActionReason.BattlePassLevelReward);
@@ -341,24 +354,33 @@ public class BattlePassManager extends BasePlayerDataManager {
     }
 
     private LocalDate missionDay() {
-        return missionNow().atZone(RESET_ZONE).minusHours(4).toLocalDate();
+        return GameCalendar.resetDay(missionNow());
     }
 
     private static LocalDate weekStart(LocalDate day) {
-        return day.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        return GameCalendar.weekStart(day);
     }
 
-    /** First assignment preserves legacy progress; subsequent refreshes also catch missed Mondays. */
+    /**
+     * First assignment preserves legacy progress; subsequent refreshes also catch missed Mondays.
+     */
     public synchronized boolean refreshMissions() {
+        return refreshMissions(missionNow());
+    }
+
+    public synchronized boolean refreshMissions(Instant now) {
         synchronizeSchedule();
-        var day = missionDay();
+        var day = GameCalendar.resetDay(now);
         if (lastMissionRefreshDay >= day.toEpochDay()) return false;
         boolean dailyReset = lastMissionRefreshDay != 0;
         boolean weeklyReset =
                 dailyReset
-                        && weekStart(day).isAfter(weekStart(LocalDate.ofEpochDay(lastMissionRefreshDay)));
+                        && weekStart(day)
+                                .isAfter(weekStart(LocalDate.ofEpochDay(lastMissionRefreshDay)));
         lastMissionRefreshDay = day.toEpochDay();
-        getMissions().values().removeIf(m -> m.getData() == null || !m.getData().isValidRefreshType());
+        getMissions()
+                .values()
+                .removeIf(m -> m.getData() == null || !m.getData().isValidRefreshType());
         if (dailyReset) resetDailyMissions();
         if (weeklyReset) resetWeeklyMissions();
         save();
@@ -374,11 +396,15 @@ public class BattlePassManager extends BasePlayerDataManager {
             boolean matches =
                     daily
                             ? type == null
-                                    || type == BattlePassMissionRefreshType.BATTLE_PASS_MISSION_REFRESH_DAILY
+                                    || type
+                                            == BattlePassMissionRefreshType
+                                                    .BATTLE_PASS_MISSION_REFRESH_DAILY
                             : type
                                             == BattlePassMissionRefreshType
                                                     .BATTLE_PASS_MISSION_REFRESH_CYCLE_CROSS_SCHEDULE
-                                    || type == BattlePassMissionRefreshType.BATTLE_PASS_MISSION_REFRESH_CYCLE;
+                                    || type
+                                            == BattlePassMissionRefreshType
+                                                    .BATTLE_PASS_MISSION_REFRESH_CYCLE;
             if (!matches) continue;
             mission.setProgress(0);
             mission.setStatus(BattlePassMissionStatus.MISSION_STATUS_UNFINISHED);
@@ -401,8 +427,17 @@ public class BattlePassManager extends BasePlayerDataManager {
     //
     public BattlePassSchedule getScheduleProto() {
         var monday = weekStart(missionDay());
-        int begin = (int) monday.atTime(4, 0).atZone(RESET_ZONE).toEpochSecond();
-        int end = (int) monday.plusWeeks(1).atTime(4, 0).atZone(RESET_ZONE).toEpochSecond();
+        int begin =
+                (int)
+                        monday.atTime(GameCalendar.RESET_HOUR, 0)
+                                .atZone(GameCalendar.SERVER_ZONE)
+                                .toEpochSecond();
+        int end =
+                (int)
+                        monday.plusWeeks(1)
+                                .atTime(GameCalendar.RESET_HOUR, 0)
+                                .atZone(GameCalendar.SERVER_ZONE)
+                                .toEpochSecond();
 
         BattlePassSchedule.Builder schedule =
                 BattlePassSchedule.newBuilder()
@@ -416,10 +451,15 @@ public class BattlePassManager extends BasePlayerDataManager {
                         .setEndTime(2059483200)
                         .setUnlockStatus(
                                 this.isPaid()
-                                        ? BattlePassUnlockStatus.BattlePassUnlockSTATUS_BATTLE_PASS_UNLOCK_PAID
-                                        : BattlePassUnlockStatus.BattlePassUnlockSTATUS_BATTLE_PASS_UNLOCK_FREE)
+                                        ? BattlePassUnlockStatus
+                                                .BattlePassUnlockSTATUS_BATTLE_PASS_UNLOCK_PAID
+                                        : BattlePassUnlockStatus
+                                                .BattlePassUnlockSTATUS_BATTLE_PASS_UNLOCK_FREE)
                         .setCurCycle(
-                                BattlePassCycle.newBuilder().setBeginTime(begin).setEndTime(end).setCycleIdx(3));
+                                BattlePassCycle.newBuilder()
+                                        .setBeginTime(begin)
+                                        .setEndTime(end)
+                                        .setCycleIdx(3));
 
         for (BattlePassReward reward : getTakenRewards().values()) {
             schedule.addRewardTakenList(reward.toProto());

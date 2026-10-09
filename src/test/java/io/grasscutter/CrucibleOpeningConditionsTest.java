@@ -1,19 +1,24 @@
 package io.grasscutter;
 
 import static emu.grasscutter.game.activity.condition.ActivityConditions.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.google.gson.Gson;
+
 import emu.grasscutter.data.excels.activity.ActivityCondExcelConfigData;
 import emu.grasscutter.game.activity.*;
 import emu.grasscutter.game.activity.condition.*;
 import emu.grasscutter.game.activity.condition.all.*;
 import emu.grasscutter.game.player.Player;
+
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import java.nio.file.*;
-import java.util.*;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.nio.file.*;
+import java.util.*;
 
 class CrucibleOpeningConditionsTest {
     @BeforeAll
@@ -27,7 +32,8 @@ class CrucibleOpeningConditionsTest {
                 new Gson()
                         .fromJson(
                                 Files.readString(
-                                        Path.of("resources/ExcelBinOutput/NewActivityCondExcelConfigData.json")),
+                                        Path.of(
+                                                "resources/ExcelBinOutput/NewActivityCondExcelConfigData.json")),
                                 ActivityCondExcelConfigData[].class);
         var conditions = new Int2ObjectOpenHashMap<ActivityCondExcelConfigData>();
         var mapping = new Int2ObjectOpenHashMap<PlayerActivityData>();
@@ -48,11 +54,15 @@ class CrucibleOpeningConditionsTest {
             }
         var config = new ActivityConfigItem();
         config.setActivityId(5001);
+        config.setScheduleId(5001005);
         config.setBeginTime(new Date(System.currentTimeMillis() - 86400000L));
+        config.setEndTime(new Date(System.currentTimeMillis() + 86400000L));
+        config.onLoad();
         var quest =
                 new ActivityConditionBaseHandler() {
                     @Override
-                    public boolean execute(PlayerActivityData data, ActivityConfigItem item, int... params) {
+                    public boolean execute(
+                            PlayerActivityData data, ActivityConfigItem item, int... params) {
                         assertArrayEquals(new int[] {4091105}, params);
                         return introductionComplete;
                     }

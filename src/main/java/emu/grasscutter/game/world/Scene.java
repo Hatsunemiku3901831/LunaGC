@@ -219,55 +219,72 @@ public class Scene {
         return this.entities.containsKey(entity.getId());
     }
 
-    public synchronized void addPlayer(Player player) {
+    public void addPlayer(Player player) {
+        synchronized (player.getSceneTransferLock()) {
+            if (getPlayers().contains(player)) return;
 
-        if (getPlayers().contains(player)) {
-            return;
+            // Validate before leaving so an unavailable TPS scene preserves the current party.
+            if (!emu.grasscutter.game.tps.TpsAvatarSystem.canEnter(player, this.getSceneData()))
+                throw new IllegalStateException("TPS scene resources unavailable: " + this.getId());
+
+            // Never hold the destination monitor while waiting for the source scene.
+            var previous = player.getScene();
+            if (previous != null && previous != this) previous.removePlayer(player);
+
+            synchronized (this) {
+                if (getPlayers().contains(player)) return;
+                getPlayers().add(player);
+                player.setSceneId(this.getId());
+                player.setScene(this);
+
+                emu.grasscutter.game.tps.TpsAvatarSystem.prepareSceneTeam(player, this);
+                this.setupPlayerAvatars(player);
+                if (player.hasSentLoginPackets()) {
+                    var borrowed = player.getTeamManager().getTpsSceneAvatar();
+                    if (borrowed != null) player.sendPacket(new PacketAvatarAddNotify(borrowed, false));
+                    player.sendPacket(new PacketAvatarTeamUpdateNotify(player));
+                }
+            }
         }
-
-        if (player.getScene() != null) {
-            player.getScene().removePlayer(player);
-        }
-
-        getPlayers().add(player);
-        player.setSceneId(this.getId());
-        player.setScene(this);
-
-        this.setupPlayerAvatars(player);
     }
 
-    public synchronized void removePlayer(Player player) {
+    public void removePlayer(Player player) {
+        synchronized (player.getSceneTransferLock()) {
+            synchronized (this) {
+                if (getPlayers().stream().noneMatch(member -> member == player)) return;
 
-        if (this.getChallenge() != null && this.getChallenge().inProgress()) {
-            player.sendPacket(new PacketDungeonChallengeFinishNotify(this.getChallenge()));
+                if (this.getChallenge() != null && this.getChallenge().inProgress()) {
+                    player.sendPacket(new PacketDungeonChallengeFinishNotify(this.getChallenge()));
+                }
+
+                this.crucibleSceneController.onPlayerLeaving(player);
+                this.salesmanSceneController.onPlayerLeaving(player);
+                getPlayers().remove(player);
+                player.setScene(null);
+
+                this.removePlayerAvatars(player);
+
+                for (EntityBaseGadget gadget : player.getTeamManager().getGadgets()) {
+                    this.removeEntity(gadget);
+                }
+
+                this.getEntities().values().stream()
+                        .filter(gameEntity -> gameEntity instanceof EntityVehicle)
+                        .map(gameEntity -> (EntityVehicle) gameEntity)
+                        .filter(entityVehicle -> entityVehicle.getOwner().equals(player))
+                        .forEach(entityVehicle -> this.removeEntity(entityVehicle, VisionType.VisionType_VISION_REMOVE));
+
+                if (this.getPlayerCount() <= 0 && !this.dontDestroyWhenEmpty) {
+                    this.crucibleSceneController.close();
+                    this.salesmanSceneController.close();
+                    this.asterSceneController.close();
+                    this.getScriptManager().onDestroy();
+                    this.getWorld().deregisterScene(this);
+                }
+
+                this.saveGroups();
+            }
         }
-
-        this.crucibleSceneController.onPlayerLeaving(player);
-        this.salesmanSceneController.onPlayerLeaving(player);
-        getPlayers().remove(player);
-        player.setScene(null);
-
-        this.removePlayerAvatars(player);
-
-        for (EntityBaseGadget gadget : player.getTeamManager().getGadgets()) {
-            this.removeEntity(gadget);
-        }
-
-        this.getEntities().values().stream()
-                .filter(gameEntity -> gameEntity instanceof EntityVehicle)
-                .map(gameEntity -> (EntityVehicle) gameEntity)
-                .filter(entityVehicle -> entityVehicle.getOwner().equals(player))
-                .forEach(entityVehicle -> this.removeEntity(entityVehicle, VisionType.VisionType_VISION_REMOVE));
-
-        if (this.getPlayerCount() <= 0 && !this.dontDestroyWhenEmpty) {
-            this.crucibleSceneController.close();
-            this.salesmanSceneController.close();
-            this.asterSceneController.close();
-            this.getScriptManager().onDestroy();
-            this.getWorld().deregisterScene(this);
-        }
-
-        this.saveGroups();
     }
 
     private void setupPlayerAvatars(Player player) {
@@ -276,13 +293,8 @@ public class Scene {
 
         TeamInfo teamInfo = player.getTeamManager().getCurrentTeamInfo();
         for (int avatarId : teamInfo.getAvatars()) {
-            Avatar avatar = player.getAvatars().getAvatarById(avatarId);
-            if (avatar == null) {
-                if (player.getTeamManager().isUsingTrialTeam()) {
-                    avatar = player.getTeamManager().getTrialAvatars().get(avatarId);
-                }
-                if (avatar == null) continue;
-            }
+            Avatar avatar = player.getTeamManager().getAvatarForTeam(avatarId);
+            if (avatar == null) continue;
             player
                     .getTeamManager()
                     .getActiveTeam()
@@ -298,15 +310,19 @@ public class Scene {
                 || player.getTeamManager().getCurrentCharacterIndex() < 0) {
             player
                     .getTeamManager()
-                    .setCurrentCharacterIndex(player.getTeamManager().getCurrentCharacterIndex() - 1);
+                    .setCurrentCharacterIndex(0);
         }
+        player.getTeamManager().refreshTeamSkillLevelBonuses(false);
+        player.getTeamManager().refreshTeamResonances(false);
     }
 
     private synchronized void removePlayerAvatars(Player player) {
+        emu.grasscutter.game.tps.TpsWeaponSystem.releaseSceneWeapons(player, this);
         var team = player.getTeamManager().getActiveTeam();
 
         team.forEach(e -> removeEntity(e, VisionType.VisionType_VISION_REMOVE));
         team.clear();
+        if (player.getTeamManager().endTpsSceneTeam(this)) player.save();
     }
 
     public void spawnPlayer(Player player) {
@@ -328,7 +344,9 @@ public class Scene {
     }
 
     private void addEntityDirectly(GameEntity entity) {
-        getEntities().put(entity.getId(), entity);
+        var previous = getEntities().put(entity.getId(), entity);
+        if (previous != null && previous != entity) previous.invalidateAbilityLifecycle();
+        entity.activateAbilityLifecycle();
         entity.onCreate();
     }
 
@@ -403,7 +421,10 @@ public class Scene {
     }
 
     private GameEntity removeEntityDirectly(GameEntity entity) {
-        var removed = getEntities().remove(entity.getId());
+        // Party avatars can be removed before their first appearance packet registers them.
+        if (entity.getScene() == this) entity.invalidateAbilityLifecycle();
+        if (!getEntities().remove(entity.getId(), entity)) return null;
+        var removed = entity;
         if (removed != null) {
             removed.onRemoved();
         }
@@ -434,7 +455,11 @@ public class Scene {
     }
 
     public synchronized void replaceEntity(EntityAvatar oldEntity, EntityAvatar newEntity) {
-        this.removeEntityDirectly(oldEntity);
+        if (oldEntity.getPlayer() == newEntity.getPlayer() && oldEntity.isInSceneParty()
+                && newEntity.isInSceneParty()) {
+            // Switching visible avatars does not end either party member's ability lifetime.
+            this.getEntities().remove(oldEntity.getId(), oldEntity);
+        } else this.removeEntityDirectly(oldEntity);
         this.addEntityDirectly(newEntity);
         this.broadcastPacket(
                 new PacketSceneEntityDisappearNotify(oldEntity, VisionType.VisionType_VISION_REPLACE));
@@ -499,57 +524,12 @@ public class Scene {
 
         target.damage(result.getDamage(), result.getAttackerId(), attackType);
 
-        if (attacker instanceof EntityAvatar arlecAttacker
-                && arlecAttacker.getAvatar().getAvatarId() == 10000096
-                && !(target instanceof EntityAvatar)) {
-            reduceArlecchinoBoL(arlecAttacker);
-        }
+        // Arlecchino's 0.03s unique FireAttack modifier consumes Bond through ReduceHPDebts.
+        // Paying again for every combat packet also consumed Bond on skills, charged attacks
+        // and each target of the same hit, before her burst could snapshot it for healing.
 
-        if (attacker instanceof EntityAvatar clorindeAttacker
-                && clorindeAttacker.getAvatar().getAvatarId() == 10000098
-                && !(target instanceof EntityAvatar)) {
-            reduceClorindeBoL(clorindeAttacker);
-        }
-    }
-
-    private void reduceClorindeBoL(EntityAvatar clorinde) {
-        float curDebt = clorinde.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP_DEBTS);
-        if (curDebt <= 0f) return;
-        float reduction = curDebt * 0.015f;
-        float newDebt = Math.max(0f, curDebt - reduction);
-        float change = newDebt - curDebt;
-        clorinde.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP_DEBTS, newDebt);
-        broadcastPacket(new PacketEntityFightPropUpdateNotify(clorinde, FightProperty.FIGHT_PROP_CUR_HP_DEBTS));
-        var debtsReason = newDebt <= 0f
-            ? ChangeHpDebtsReasonOuterClass.ChangeHpDebtsReason.CHANGE_HP_DEBTS_REASON_CHANGE_HP_DEBTS_PAY_FINISH
-            : ChangeHpDebtsReasonOuterClass.ChangeHpDebtsReason.CHANGE_HP_DEBTS_REASON_CHANGE_HP_DEBTS_PAY;
-        broadcastPacket(new PacketEntityFightPropChangeReasonNotify(
-            clorinde,
-            FightProperty.FIGHT_PROP_CUR_HP_DEBTS,
-            change,
-            PropChangeReasonOuterClass.PropChangeReason.PropChangeReason_PROP_CHANGE_ABILITY,
-            debtsReason
-        ));
-    }
-
-    private void reduceArlecchinoBoL(EntityAvatar arlecchino) {
-        float curDebt = arlecchino.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP_DEBTS);
-        if (curDebt <= 0f) return;
-        float reduction = curDebt * 0.024f;
-        float newDebt = Math.max(0f, curDebt - reduction);
-        float change = newDebt - curDebt;
-        arlecchino.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP_DEBTS, newDebt);
-        broadcastPacket(new PacketEntityFightPropUpdateNotify(arlecchino, FightProperty.FIGHT_PROP_CUR_HP_DEBTS));
-        var debtsReason = newDebt <= 0f
-            ? ChangeHpDebtsReasonOuterClass.ChangeHpDebtsReason.CHANGE_HP_DEBTS_REASON_CHANGE_HP_DEBTS_PAY_FINISH
-            : ChangeHpDebtsReasonOuterClass.ChangeHpDebtsReason.CHANGE_HP_DEBTS_REASON_CHANGE_HP_DEBTS_PAY;
-        broadcastPacket(new PacketEntityFightPropChangeReasonNotify(
-            arlecchino,
-            FightProperty.FIGHT_PROP_CUR_HP_DEBTS,
-            change,
-            PropChangeReasonOuterClass.PropChangeReason.PropChangeReason_PROP_CHANGE_ABILITY,
-            debtsReason
-        ));
+        // Clorinde's gunshot and Impale already add/pay Bond through resource actions.
+        // A hit must not charge a second, invented 1.5% payment.
     }
 
     public void killEntity(GameEntity target) {
@@ -687,6 +667,7 @@ public class Scene {
         if (challenge != null) stage("the challenge timer", () -> challenge.onCheckTimeOut());
 
         var sceneTime = getSceneTimeSeconds();
+        Set<EntityAvatar> tickedAvatars = Collections.newSetFromMap(new IdentityHashMap<>());
 
         // getEntities() is already concurrent, so it is iterated in place rather than copied
         // wholesale every tick - at a 200ms tick that copy was the scene's largest allocation.
@@ -696,9 +677,24 @@ public class Scene {
                                 stage(
                                         "an entity's tick",
                                         () -> {
-                                            if (!e.isAlive()) this.getEntities().remove(eid);
+                                            if (e instanceof EntityAvatar avatar) tickedAvatars.add(avatar);
+                                            if (!e.isAlive()) {
+                                                if (this.getEntities().remove(eid, e)) e.invalidateAbilityLifecycle();
+                                            }
                                             else e.onTick(sceneTime);
                                         }));
+
+        for (var player : getPlayers()) {
+            if (player.getScene() != this) continue;
+            for (var avatar : player.getTeamManager().getActiveTeamSnapshot()) {
+                if (tickedAvatars.contains(avatar) || avatar.getScene() != this
+                        || getEntities().get(avatar.getId()) != null) continue;
+                stage("an offstage avatar's abilities", () -> {
+                    if (!avatar.isAlive()) avatar.invalidateAbilityLifecycle();
+                    else if (avatar.isInSceneParty()) avatar.onAbilityTick();
+                });
+            }
+        }
 
         stage("the blossoms", () -> blossomManager.onTick());
 

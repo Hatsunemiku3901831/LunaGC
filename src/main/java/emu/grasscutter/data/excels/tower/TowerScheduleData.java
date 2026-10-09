@@ -9,8 +9,12 @@ import java.util.Objects;
 public class TowerScheduleData extends GameResource {
     private int scheduleId;
     private List<Integer> entranceFloorId;
-    @SerializedName(value = "schedules", alternate = {"LHOGNLPBILP"})
+
+    @SerializedName(
+            value = "schedules",
+            alternate = {"LHOGNLPBILP"})
     private List<ScheduleDetail> schedules;
+
     private int monthlyLevelConfigId;
 
     @Override
@@ -22,10 +26,11 @@ public class TowerScheduleData extends GameResource {
     public void onLoad() {
         super.onLoad();
         this.schedules =
-                this.schedules.stream()
-                        .filter(Objects::nonNull)
-                        .filter(item -> item.getFloorList() != null && !item.getFloorList().isEmpty())
-                        .toList();
+                (this.schedules == null ? List.<ScheduleDetail>of() : this.schedules)
+                        .stream()
+                                .filter(Objects::nonNull)
+                                .filter(item -> item.getFloorList() != null && !item.getFloorList().isEmpty())
+                                .toList();
     }
 
     public int getScheduleId() {

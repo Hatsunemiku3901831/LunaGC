@@ -245,6 +245,8 @@ public class StaminaManager extends BasePlayerManager {
 
     public int updateStaminaRelative(GameSession session, Consumption consumption, boolean isCharacterStamina) {
         int currentStamina = isCharacterStamina ? getCurrentCharacterStamina() : getCurrentVehicleStamina();
+        int amount = emu.grasscutter.game.ability.AbilityStaminaCost.adjust(player, consumption.amount, isCharacterStamina);
+        if (amount != consumption.amount) consumption = new Consumption(consumption.type, amount);
         if (consumption.amount == 0) {
             return currentStamina;
         }

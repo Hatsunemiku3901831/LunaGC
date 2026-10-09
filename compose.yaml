@@ -37,12 +37,12 @@ services:
     volumes:
       - lunagc-state:/var/lib/lunagc
     healthcheck:
-      test: ["CMD-SHELL", "timeout 3 bash -c '</dev/tcp/127.0.0.1/8088'"]
+      test: ["CMD", "java", "-Xms16m", "-Xmx32m", "-cp", "/opt/lunagc/LunaGC.jar", "emu.grasscutter.server.http.ServerHealthCheck"]
       interval: 15s
       timeout: 5s
       retries: 5
       start_period: 180s
-    stop_grace_period: 30s
+    stop_grace_period: 60s
 
 volumes:
   mongo-data:

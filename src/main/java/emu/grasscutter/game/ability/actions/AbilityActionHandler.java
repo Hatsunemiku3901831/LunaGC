@@ -19,6 +19,12 @@ import emu.grasscutter.game.entity.GameEntity;
 public abstract class AbilityActionHandler {
     public abstract boolean execute(
             Ability ability, AbilityModifierAction action, ByteString abilityData, GameEntity target);
+
+    /** Callback dispatch has already selected this recipient, including any party fan-out. */
+    public boolean executeResolved(
+            Ability ability, AbilityModifierAction action, ByteString abilityData, GameEntity target) {
+        return execute(ability, action, abilityData, target);
+    }
             protected AbilityManager abilityManager;
           
             public AbilityActionHandler setManager(AbilityManager mgr) {
@@ -49,8 +55,12 @@ public abstract class AbilityActionHandler {
      * defined in both places still resolves the way it always did.
      */
     public static Object2FloatMap<String> propertiesFor(Ability ability) {
+        return propertiesFor(ability, ability.getOwner());
+    }
+
+    /** Explicit entity context for properties attached to a different ability target. */
+    public static Object2FloatMap<String> propertiesFor(Ability ability, GameEntity owner) {
         var properties = new Object2FloatOpenHashMap<String>();
-        var owner = ability.getOwner();
 
         if (owner != null) {
             for (var property : FightProperty.values()) {
@@ -92,7 +102,8 @@ public abstract class AbilityActionHandler {
             case "OriginOwner", "CurLocalAvatar" -> teamManager != null
                     ? teamManager.getCurrentAvatarEntity()
                     : null;
-            case "CasterOriginOwner" -> null; // TODO: Figure out.
+            // Summons retain their launch caster, including after the selected avatar changes.
+            case "CasterOriginOwner" -> ability.getCasterEntity();
             default -> {
                 Grasscutter.getLogger().debug("Unknown ability target type: {}", target);
                 yield entity;

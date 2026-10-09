@@ -22,10 +22,7 @@ public class ActivityWatcherData extends GameResource {
 
     @Override
     public void onLoad() {
-        this.triggerConfig.paramList =
-                this.triggerConfig.paramList.stream().filter(x -> (x != null) && !x.isBlank()).toList();
-        this.triggerConfig.watcherTriggerType =
-                WatcherTriggerType.getTypeByName(this.triggerConfig.triggerType);
+        this.triggerConfig.onLoad();
     }
 
     @Getter
@@ -37,7 +34,9 @@ public class ActivityWatcherData extends GameResource {
         transient WatcherTriggerType watcherTriggerType;
 
         public void onLoad() {
-            this.paramList = this.paramList.stream().filter(x -> (x != null) && !x.isBlank()).toList();
+            this.paramList =
+                    (this.paramList == null ? List.<String>of() : this.paramList)
+                            .stream().filter(x -> (x != null) && !x.isBlank()).toList();
             this.watcherTriggerType = WatcherTriggerType.getTypeByName(this.triggerType);
         }
     }

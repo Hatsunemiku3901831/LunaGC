@@ -1,0 +1,152 @@
+[
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Aino.json",
+    "sourceSha256": "c7bb1b9955cab599cd67e61ddf025e3f535932e44331742bb06010ae3c0747ed",
+    "ability": "Avatar_Aino_ElementalBurst",
+    "modifier": "UNIQUE_Aino_ElementalBurst_Moon2_AddElemMasteryDelta"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Albedo.json",
+    "sourceSha256": "33aa6325a269273d0d71c65c669c824b53eea83fb055d9b2f0a1db0861b518da",
+    "ability": "Avatar_Albedo_HexenzirkelSkill",
+    "modifier": "UNIQUE_Avatar_Albedo_Hexenzirkel_Talent_1"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Alhatham.json",
+    "sourceSha256": "067b78502d259e48af6a41a6a571e7ef8605cca10645f5a6204ac465ed93cea5",
+    "ability": "Avatar_Alhatham_ElementalBurst",
+    "modifier": "UNIQUE_Alhatham_Constellation_4_GainBuff"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Alhatham.json",
+    "sourceSha256": "067b78502d259e48af6a41a6a571e7ef8605cca10645f5a6204ac465ed93cea5",
+    "ability": "Avatar_Alhatham_Constellation_6",
+    "modifier": "UNIQUE_Alhatham_Constellation_6_OverflowPrism_Buff"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Aloy.json",
+    "sourceSha256": "55759c80ef8ca61e9fb3db51c01cefab6b60552d2ccea9067d7d47261db94be8",
+    "ability": "Avatar_Aloy_Coil_Handler",
+    "modifier": "UNIQUE_Aloy_Coil_Monster_AttackDown"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Aloy.json",
+    "sourceSha256": "55759c80ef8ca61e9fb3db51c01cefab6b60552d2ccea9067d7d47261db94be8",
+    "ability": "Avatar_Aloy_Coil_Handler",
+    "modifier": "Aloy_CoilBurst_IceAttackUp"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Arlecchino.json",
+    "sourceSha256": "49c116e7d7c059242942fe6aa532ee59bc6d0c1b169ef77fe1605ef112cc78cc",
+    "ability": "Avatar_Arlecchino_ExtraAttack",
+    "modifier": "UNIQUE_Arlecchino_Constellation_2_SubHurt"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Arlecchino.json",
+    "sourceSha256": "49c116e7d7c059242942fe6aa532ee59bc6d0c1b169ef77fe1605ef112cc78cc",
+    "ability": "Avatar_Arlecchino_HealToHpDebts",
+    "modifier": "Avatar_Arlecchino_HealToHpDebts_State"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Baizhuer.json",
+    "sourceSha256": "0fc3670a80a9d3847161b148cba504e82b70caa920141c9c2da7eeb7fd7bffb0",
+    "ability": "Avatar_Baizhuer_PermanentSkill_1",
+    "modifier": "UNIQUE_Baizhuer_HPRatio_Low_Buff"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Barbara.json",
+    "sourceSha256": "8f88c0d105c9c04bb08dea9eab3f2dd7682e65026191c6a70036dcb5efa3f786",
+    "ability": "Avatar_Barbara_WetShiled_Heal",
+    "modifier": "WetShiled_WaterAddHurtDelta"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Beidou.json",
+    "sourceSha256": "47346751dbac3f9c30c95256195e1357752d81de3cf4538f628a083191746a46",
+    "ability": "Avatar_Beidou_ThunderShield_Gadget",
+    "modifier": "UNIQUE_Beidou_ThunderShield"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Bennett.json",
+    "sourceSha256": "69965b9dead8f75bc10194520146bdd740c7808ae59f7f50d1ff5ac0845e13b8",
+    "ability": "Avatar_Bennett_ElementalBurst_Gadget",
+    "modifier": "UNIQUE_WarmField_AttackUp"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Bennett.json",
+    "sourceSha256": "69965b9dead8f75bc10194520146bdd740c7808ae59f7f50d1ff5ac0845e13b8",
+    "ability": "Avatar_Bennett_Talent_Capacitor",
+    "modifier": "Capacitor_EnergyGain_Up"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Chevreuse.json",
+    "sourceSha256": "0773f2aa368b4d7b511c8b48b4b75dc5d97a91407d0dc5c54e4d07c4e910bde1",
+    "ability": "Avatar_Chevreuse_ElementalArt",
+    "modifier": "UNIQUE_Avatar_Chevreuse_Talent6_Up"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Chiori.json",
+    "sourceSha256": "28b9f2f67875900cf7c158b07baf6610f48b641f52b1f692e05b4c17e04cc861",
+    "ability": "Avatar_Chiori_PermanentSkill_2_OnCreateRockGadget",
+    "modifier": "Avatar_Chiori_PermanentSkill_2_OnCreateRockGadget_Buff"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Chongyun.json",
+    "sourceSha256": "c831588e726977bdb4d043ba5cb716341a068d9513bec5134e0a2f537264832a",
+    "ability": "Avatar_Chongyun_IceCrystal",
+    "modifier": "UNIQUE_Weapon_Enchanted_Defense"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Columbina.json",
+    "sourceSha256": "10ab705adcc0a26ff5049be3ded7887be8fe7eb3b6fdec354f6190263fd009d9",
+    "ability": "Avatar_Columbina_Constellation_2",
+    "modifier": "Avatar_Columbina_Constellation_2_MoonShockBuff_OnLocal"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Columbina.json",
+    "sourceSha256": "10ab705adcc0a26ff5049be3ded7887be8fe7eb3b6fdec354f6190263fd009d9",
+    "ability": "Avatar_Columbina_Constellation_2",
+    "modifier": "Avatar_Columbina_Constellation_2_MoonCrystalBuff_OnLocal"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Dahlia.json",
+    "sourceSha256": "b0fab6cef2117f8bfc535bbb4db001331f2a3ba5a06d1a807b2cb0995a91a981",
+    "ability": "Avatar_Dahlia_Constellation_2",
+    "modifier": "Avatar_Dahlia_Constellation_2_ShieldUp_OnAvatar"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Diona.json",
+    "sourceSha256": "bfd8063850d7f78a0073bf07000e16a9c0d0fc3519cbe4a18233c584b0109e47",
+    "ability": "Avatar_Diona_IceWine_Fog",
+    "modifier": "Diona_Talent_ElementalBurst_HealedAddUp"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Eula.json",
+    "sourceSha256": "81af94f068e90f5137f53f142cb2cedf8ea0ac69d62bea01b1133d53a2c883a5",
+    "ability": "Avatar_Eula_ElementalArt",
+    "modifier": "UNIQUE_Eula_Talent_PhysicalAddHurt"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Faruzan.json",
+    "sourceSha256": "2a476caa419e34c343290a293ab9ce7d446a71cba2e05d978a2d66963cea2ec2",
+    "ability": "Avatar_Faruzan_PermanentSkill2_WindDamageExtraUp",
+    "modifier": "UNIQUE_Avatar_Faruzan_ElementalBurst_WindAddHurtUp"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Flins2.json",
+    "sourceSha256": "3c6648559d0c7c96ae5b5692648226d219b8326738c0c69347a253aea5ed40cb",
+    "ability": "Avatar_Flins_PermanentSkill_2",
+    "modifier": "Avatar_Flins_PermanentSkill_2_Buff"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Mona.json",
+    "sourceSha256": "e85717ee751f31fc70ca29e1c337b1e785f176f5117f4a9ebe0333abba9bfb49",
+    "ability": "Avatar_Mona_StarChart",
+    "modifier": "UNIQUE_Debuff_Bubble_RemoveDamage"
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Razor.json",
+    "sourceSha256": "f5c9bd48c7dedccc3f673c78be38b3373857affeabdf70be31e35740e1488068",
+    "ability": "Avatar_Razor_Talent_ArcaneFeast",
+    "modifier": "UNIQUE_ArcaneFeast_Attack_Up"
+  }
+]

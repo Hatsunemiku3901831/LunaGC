@@ -186,6 +186,7 @@
   <label style="color:var(--dim)">目标 UID</label>
   <input id="target" placeholder="@uid">
   <button id="playersBtn" class="ghost">刷新在线</button>
+  <button id="runtimeBtn" class="ghost">运行状态</button>
   <button id="logout" class="ghost">换令牌</button>
 </header>
 <main>
@@ -205,6 +206,7 @@
       <button class="tab" data-tab="mail">邮件</button>
       <button class="tab" data-tab="history">历史卡池</button>
       <button class="tab" data-tab="activities">往期活动</button>
+      <button class="tab" data-tab="miliastra">千星资产</button>
     </div>
 
     <div class="pane sel" id="pane-cmd">
@@ -229,6 +231,7 @@
           <option value="ITEM_VIRTUAL">虚拟货币</option>
           <option value="ITEM_MATERIAL">材料</option>
           <option value="ITEM_WEAPON">武器</option>
+          <option value="ITEM_TPS_WEAPON">TPS 武器</option>
           <option value="ITEM_RELIQUARY">圣遗物</option>
           <option value="ITEM_FURNITURE">摆设</option>
           <option value="ITEM_DISPLAY">展示</option>
@@ -347,11 +350,115 @@
       <div class="pager" id="activityPagerBottom" aria-label="往期活动底部分页"></div>
     </div>
 
+    <div class="pane" id="pane-miliastra">
+      <h2>千星资产 <button id="miliastraRefresh" class="ghost" style="padding:3px 10px;font-size:12px">刷新</button></h2>
+      <p class="eq-note">导入千星奇域 .gia / .gil / .gip / .gir 或节点图 JSON，按原始文件保存并导出。
+        二进制、节点结构 .gia.json 与镜头 .camera.json 最大 32 MiB，编辑器画布 JSON 最大 8 MiB。
+        镜头 GIA 可提取配置 JSON 并编辑；未修改时恢复原字节，修改后保留原编号与其他资产。
+        节点 GIA 可转为结构 JSON 或编辑器画布，画布可转回 GIA；无法完整映射时显示原因。
+        这里管理文件归档；游戏内发布、节点运行和奖励领取尚未接入。</p>
+      <div class="row">
+        <input id="miliastraFiles" type="file" multiple accept=".gia,.gil,.gip,.gir,.json" aria-label="选择千星资产文件" style="max-width:100%">
+        <button id="miliastraImport">导入文件</button>
+      </div>
+      <p id="miliastraStatus" role="status" aria-live="polite" style="white-space:pre-wrap;overflow-wrap:anywhere"></p>
+      <details id="miliastraGenerator" class="banner" style="margin-bottom:14px">
+        <summary>生成实体 / 像素画 / 镜头 / 体素 .gia</summary>
+        <p class="eq-note">图片自动匹配 21 种方块，忽略透明像素；GIF 使用第一帧。最多 100000 个实体。
+          自动 ID 会避开本服务已归档的主资产 ID，外部编辑器中的 ID 需要另行检查。当前客户端导入效果待验证。</p>
+        <form id="miliastraGenerateForm">
+          <div class="row">
+            <label>生成方式 <select id="miliastraGenerateMode"><option value="image">图片转像素画</option><option value="model">实体 JSON</option><option value="camera">镜头 JSON</option><option value="voxel">体素 JSON</option></select></label>
+            <label>输出文件名 <input id="miliastraGenerateName" value="像素画.gia" required maxlength="180" style="max-width:100%;width:180px"></label>
+            <label>GUID 起点 <input id="miliastraGenerateGuid" type="number" min="1" max="2147483647" step="1" placeholder="自动分配" style="width:150px"></label>
+          </div>
+          <div id="miliastraImageFields" style="margin-top:10px">
+            <input id="miliastraImage" type="file" accept="image/png,image/jpeg,image/bmp,image/gif" aria-label="选择像素画图片" style="max-width:100%">
+            <div class="row" style="margin:10px 0">
+              <label>宽 <input id="miliastraWidth" type="number" min="1" max="1000" step="1" value="240" required style="width:80px"></label>
+              <label>高 <input id="miliastraHeight" type="number" min="1" max="1000" step="1" value="240" required style="width:80px"></label>
+              <label><input id="miliastraAspect" type="checkbox" checked> 保持比例</label>
+              <label>像素边长 <input id="miliastraUnit" type="number" min="0.000001" step="any" value="0.1" required style="width:100px"></label>
+              <label>透明度阈值 <input id="miliastraAlpha" type="number" min="0" max="255" step="1" value="128" required style="width:80px"></label>
+              <label>摆放平面 <select id="miliastraPlane"><option>XY</option><option>XZ</option><option>YZ</option></select></label>
+            </div>
+            <div class="row">
+              <label>原点 X <input id="miliastraOriginX" type="number" step="any" value="0" required style="width:90px"></label>
+              <label>原点 Y <input id="miliastraOriginY" type="number" step="any" value="0" required style="width:90px"></label>
+              <label>原点 Z <input id="miliastraOriginZ" type="number" step="any" value="0" required style="width:90px"></label>
+            </div>
+          </div>
+          <div id="miliastraModelFields" hidden style="margin-top:10px">
+            <label for="miliastraModel">实体 JSON</label>
+            <textarea id="miliastraModel" rows="6" style="width:100%;margin:8px 0">{"blocks":[{"templateId":20001224,"name":"木箱","position":{"x":0,"y":0,"z":0},"scale":{"x":1,"y":1,"z":1}}]}</textarea>
+            <p class="eq-note">可选 guid、name、position、rotation、scale、static。坐标和旋转默认 0，缩放默认 1，static 默认 true。</p>
+          </div>
+          <div id="miliastraCameraFields" hidden style="margin-top:10px">
+            <div class="row">
+              <label>镜头模板 <select id="miliastraCameraPreset" aria-label="镜头模板"><option value="thirdPerson">第三人称镜头</option></select></label>
+              <button id="miliastraCameraUsePreset" type="button" class="ghost">填写所选模板</button>
+              <button id="miliastraCameraAll" type="button" class="ghost">填写五种模板</button>
+              <button id="miliastraCameraVariations" type="button" class="ghost">填写批量变体示例</button>
+            </div>
+            <label for="miliastraCameraModel">镜头配置 JSON</label>
+            <textarea id="miliastraCameraModel" rows="8" style="width:100%;margin:8px 0" disabled>{"cameras":[{"preset":"thirdPerson","name":"第三人称镜头"}]}</textarea>
+            <p class="eq-note">可设置名称、视距、视野、视点偏移、跟随旋转、角度范围和碰撞开关。
+              批量变体支持水平角、俯仰角、视距与视野；与实体共用最多 100000 项及 32 MiB 输出限制。
+              生成镜头配置文件，当前客户端实际导入与效果待验证。</p>
+          </div>
+          <div id="miliastraVoxelFields" hidden style="margin-top:10px">
+            <div class="row">
+              <input id="miliastraVoxelFile" type="file" accept=".json,application/json" aria-label="选择体素 JSON 文件" disabled style="max-width:100%">
+              <button id="miliastraVoxelRead" type="button" class="ghost" disabled>读取体素文件</button>
+            </div>
+            <label for="miliastraVoxelModel">体素坐标与颜色 JSON</label>
+            <textarea id="miliastraVoxelModel" rows="8" style="width:100%;margin:8px 0" disabled>[{"x":-1,"y":0,"z":0,"color":"#877264"},{"x":0,"y":1,"z":0,"color":[135,114,100,255]}]</textarea>
+            <div class="row">
+              <label>体素边长 <input id="miliastraVoxelUnit" type="number" min="0.000001" step="any" value="0.01" required disabled style="width:100px"></label>
+              <label>透明度阈值 <input id="miliastraVoxelAlpha" type="number" min="0" max="255" step="1" value="128" required disabled style="width:80px"></label>
+              <label>原点 X <input id="miliastraVoxelX" type="number" step="any" value="0" required disabled style="width:90px"></label>
+              <label>原点 Y <input id="miliastraVoxelY" type="number" step="any" value="0" required disabled style="width:90px"></label>
+              <label>原点 Z <input id="miliastraVoxelZ" type="number" step="any" value="0" required disabled style="width:90px"></label>
+            </div>
+            <p class="eq-note">从 Blender 导出后读取文件，也可直接编辑数组。网格坐标须为整数，颜色支持 RGB／RGBA 十六进制或 0–255 数组。
+              边长应与导出时相同；Blender 导出器已转换 Y/Z 轴。最多 100000 个方块、8 MiB JSON；自动匹配 21 种方块颜色。</p>
+          </div>
+          <button id="miliastraGenerate" type="submit" style="margin-top:12px">生成并归档</button>
+          <p id="miliastraGenerateStatus" role="status" aria-live="polite" style="overflow-wrap:anywhere"></p>
+        </form>
+      </details>
+      <div class="row">
+        <input id="miliastraQ" placeholder="搜索名称、文件名或 SHA-256" aria-label="搜索千星资产" style="flex:1;min-width:180px">
+        <select id="miliastraType" aria-label="千星资产类型"><option value="">全部文件</option>
+          <option>GIA</option><option>GIL</option><option>GIP</option><option>GIR</option><option value="GRAPH_JSON">画布 JSON</option><option value="GIA_JSON">节点结构 JSON</option><option value="CAMERA_JSON">镜头配置 JSON</option>
+        </select>
+        <button id="miliastraSearch" class="ghost">搜索</button>
+      </div>
+      <p id="miliastraSummary" class="eq-note" role="status"></p>
+      <div id="miliastraList" style="overflow-wrap:anywhere"></div>
+      <div class="pager">
+        <button id="miliastraPrev" class="ghost">上一页</button><span id="miliastraPage"></span>
+        <button id="miliastraNext" class="ghost">下一页</button>
+      </div>
+    </div>
+
     <h2>输出</h2>
     <div id="output"><span class="empty">输出会显示在这里。</span></div>
   </section>
 </main>
 </div>
+
+<dialog id="miliastraCameraDialog" aria-labelledby="miliastraCameraTitle">
+  <form id="miliastraCameraEditForm">
+    <div class="eq-heading"><h3 id="miliastraCameraTitle">编辑镜头配置</h3><button type="button" class="ghost" id="miliastraCameraClose">关闭</button></div>
+    <p class="eq-note">修改 assetName 或 data 中的配置。索引、编号和镜头数量保持原样；原始来源自动保留。
+      cameraMode 使用原生 0–4（经典模式为 0），ignoreCollision 使用 0–1 数值。保存为新归档后可转为 GIA。</p>
+    <label for="miliastraCameraEdit">镜头列表 JSON</label>
+    <textarea id="miliastraCameraEdit" rows="14" style="width:100%;margin:8px 0" required></textarea>
+    <p id="miliastraCameraEditStatus" role="status" aria-live="polite" style="overflow-wrap:anywhere"></p>
+    <div class="eq-actions"><button type="submit" id="miliastraCameraSave">保存镜头副本</button></div>
+  </form>
+</dialog>
 
 <dialog id="equipmentDialog" aria-labelledby="eqTitle">
   <form id="equipmentForm">
@@ -460,6 +567,20 @@ function out(text, cls) {
   box.appendChild(el);
   box.scrollTop = box.scrollHeight;
 }
+
+$("runtimeBtn").onclick = async () => {
+  try {
+    const r = await api("/gm/api/runtime");
+    if (!r.ok) { out("运行状态获取失败。", "err"); return; }
+    const s = r.json.status;
+    out(s.healthy ? "服务器运行正常。" : "服务器存在积压、停滞或死锁，请查看下面的状态。", s.healthy ? "" : "err");
+    if (s.tick && s.tick.completed != null) out(`逻辑循环：已完成 ${s.tick.completed} 次，最近耗时 ${s.tick.durationMillis} ms，距上次完成 ${s.tick.ageMillis} ms。`);
+    out(`JVM 死锁线程：${s.deadlockedThreads}。`);
+    const labels = {default:"常规保存", account:"账号保存", item:"物品保存", group:"场景保存"};
+    for (const q of s.queues) out(`${labels[q.name] || q.name}：排队 ${q.queued}/${q.capacity}，执行中 ${q.outstanding - q.queued}，失败 ${q.failed}，满载由调用者执行 ${q.callerRuns}，合并重复保存 ${q.coalesced}。`, q.failed ? "err" : "");
+    $("output").scrollIntoView({block:"nearest"});
+  } catch (e) { if (e.message !== "403") out("无法获取运行状态：" + e, "err"); }
+};
 
 // --- target UID -------------------------------------------------------
 function targetOf() {
@@ -580,8 +701,320 @@ document.querySelectorAll(".tab").forEach(t => {
     if (t.dataset.tab === "items") ensureItems();
     if (t.dataset.tab === "history") loadHistory();
     if (t.dataset.tab === "activities") loadActivities();
+    if (t.dataset.tab === "miliastra") loadMiliastra();
   };
 });
+
+// --- Miliastra source archives ----------------------------------------
+let miliastraOffset = 0, miliastraTotal = 0, miliastraGeneration = 0;
+const MILIASTRA_PAGE = 20;
+function miliastraText(parent, tag, text, className) {
+  const element = document.createElement(tag);
+  element.textContent = text;
+  if (className) element.className = className;
+  parent.appendChild(element);
+  return element;
+}
+async function loadMiliastra() {
+  const generation = ++miliastraGeneration;
+  $("miliastraPrev").disabled = $("miliastraNext").disabled = true;
+  try {
+    const params = new URLSearchParams({q: $("miliastraQ").value, type: $("miliastraType").value,
+      offset: String(miliastraOffset), limit: String(MILIASTRA_PAGE)});
+    const result = await api("/gm/api/miliastra?" + params);
+    if (generation !== miliastraGeneration) return;
+    if (!result.ok) throw new Error(result.json?.message || "资产目录加载失败。");
+    const listing = result.json;
+    miliastraTotal = listing.total;
+    if (miliastraOffset >= miliastraTotal && miliastraOffset > 0) {
+      miliastraOffset = 0; return loadMiliastra();
+    }
+    $("miliastraSummary").textContent = "共 " + listing.total + " 个文件。相同内容会合并归档。" +
+      (listing.unreadable ? "有 " + listing.unreadable + " 个归档无法读取，请检查服务端文件。" : "");
+    const list = $("miliastraList"); list.replaceChildren();
+    if (!listing.assets.length) miliastraText(list, "p", "没有匹配的资产文件。", "empty");
+    for (const asset of listing.assets) {
+      const card = document.createElement("div"); card.className = "banner"; list.appendChild(card);
+      miliastraText(card, "strong", asset.name + " · " + asset.type);
+      miliastraText(card, "div", asset.filename + " · " + asset.bytes + " 字节", "eq-note");
+      miliastraText(card, "div", "SHA-256：" + asset.id, "eq-note");
+      if (asset.binary) {
+        miliastraText(card, "div", "容器版本 " + asset.binary.version + " · " + (asset.binary.assetCount ?? asset.binary.assets.length) + " 项资产", "eq-note");
+        for (const item of asset.binary.assets.slice(0, 12)) {
+          miliastraText(card, "div", (item.related ? "关联资产：" : "资产：") + (item.name || "未命名") +
+            " · GUID " + item.guid + " · 类型 " + item.type, "eq-note");
+        }
+        if ((asset.binary.assetCount ?? asset.binary.assets.length) > 12) miliastraText(card, "div", "其余资产保留在原文件中。", "eq-note");
+      }
+      if (asset.graph) miliastraText(card, "div", asset.graph.environment + " · " + asset.graph.nodes + " 个节点 · " + asset.graph.edges + " 条连接", "eq-note");
+      for (const warning of asset.warnings) miliastraText(card, "p", warning, "eq-note");
+      const button = miliastraText(card, "button", "导出原文件", "ghost");
+      if (["GIA", "GIA_JSON"].includes(asset.type)) {
+        const row = document.createElement("div"); row.className = "row"; card.appendChild(row);
+        const label = miliastraText(row, "label", "复制 GUID 起点");
+        const first = document.createElement("input"); first.type = "number"; first.min = "1"; first.max = "2147483647";
+        first.placeholder = "自动分配"; first.setAttribute("aria-label", asset.filename + " 复制 GUID 起点"); label.appendChild(first);
+        const remap = miliastraText(row, "button", "复制并重新编号", "ghost");
+        remap.onclick = async () => {
+          const generation = miliastraGeneration; remap.disabled = true;
+          try {
+            const params = first.value.trim() ? "?firstGuid=" + encodeURIComponent(first.value.trim()) : "";
+            const result = await api("/gm/api/miliastra/" + encodeURIComponent(asset.id) + "/remap" + params, {method:"POST"});
+            if (generation !== miliastraGeneration) return;
+            if (!result.ok) throw new Error(result.json?.message || result.text || "重新编号失败。");
+            $("miliastraStatus").textContent = result.json.asset.filename + (result.json.duplicate ? "：副本已存在。" : "：副本已归档。") +
+              "\n" + result.json.guidCount + " 个 GUID，更新 " + result.json.changedFields + " 处已知字段。原文件保留。\n" + result.json.warnings.join("\n");
+            $("miliastraStatus").style.color = "var(--ok)";
+            $("miliastraQ").value = ""; $("miliastraType").value = ""; miliastraOffset = 0; await loadMiliastra();
+          } catch (error) {
+            if (generation === miliastraGeneration && error.message !== "403") {
+              $("miliastraStatus").textContent = error.message; $("miliastraStatus").style.color = "var(--err)";
+            }
+          } finally { remap.disabled = false; }
+        };
+        miliastraText(card, "div", "复制实体、镜头或普通节点图及已知 GUID 引用；未知字段保留，复杂资产会给出诊断。", "eq-note");
+      }
+      button.onclick = () => downloadMiliastra(asset, button);
+      if (asset.type === "CAMERA_JSON") {
+        const edit = miliastraText(card, "button", "编辑镜头 JSON", "ghost"); edit.style.marginLeft = "8px";
+        edit.onclick = () => editMiliastraCamera(asset, edit);
+      }
+      if (asset.type === "GIA" && (asset.binary?.assets.some(item => item.type === 13) || asset.binary?.assetCount > asset.binary?.assets.length)) {
+        const camera = miliastraText(card, "button", "提取镜头 JSON", "ghost"); camera.style.marginLeft = "8px";
+        camera.onclick = async () => {
+          camera.disabled = true;
+          try {
+            const result = await api("/gm/api/miliastra/" + encodeURIComponent(asset.id) + "/camera", {method:"POST"});
+            if (!result.ok) throw new Error(result.json?.message || result.text || "镜头提取失败。");
+            $("miliastraStatus").textContent = result.json.asset.filename + (result.json.duplicate ? "：镜头配置已存在。" : "：镜头配置已归档。") + "\n可编辑镜头 JSON 后转回 GIA；原始文件保留。";
+            $("miliastraStatus").style.color = "var(--ok)";
+            $("miliastraQ").value = ""; $("miliastraType").value = ""; miliastraOffset = 0; await loadMiliastra();
+          } catch (error) {
+            if (error.message !== "403") { $("miliastraStatus").textContent = error.message; $("miliastraStatus").style.color = "var(--err)"; }
+          } finally { camera.disabled = false; }
+        };
+      }
+      const nodeTypes = [9,10,11,12,22,23,29,46,47];
+      if (asset.type === "GIA_JSON" || (asset.type === "GIA" && asset.binary?.assets.some(item => !item.related && nodeTypes.includes(item.type)))) {
+        const reverse = miliastraText(card, "button", "转为编辑器画布 JSON", "ghost"); reverse.style.marginLeft = "8px";
+        reverse.onclick = async () => {
+          const generation = miliastraGeneration; reverse.disabled = true;
+          try {
+            const result = await api("/gm/api/miliastra/" + encodeURIComponent(asset.id) + "/canvas", {method:"POST"});
+            if (generation !== miliastraGeneration) return;
+            if (!result.ok) throw new Error(result.json?.message || result.text || "反向转换失败。");
+            $("miliastraStatus").textContent = result.json.asset.filename + (result.json.duplicate ? "：画布已存在。" : "：画布已归档。") + "\n原始 GIA 已保留；未编辑可还原原字节，编辑后沿用原图 GUID。";
+            $("miliastraStatus").style.color = "var(--ok)";
+            $("miliastraQ").value = ""; $("miliastraType").value = ""; miliastraOffset = 0; await loadMiliastra();
+          } catch (error) {
+            if (generation === miliastraGeneration && error.message !== "403") { $("miliastraStatus").textContent = error.message; $("miliastraStatus").style.color = "var(--err)"; }
+          } finally { reverse.disabled = false; }
+        };
+      }
+      if (asset.type === "GIA_JSON" || asset.type === "GRAPH_JSON" || asset.type === "CAMERA_JSON" || (asset.type === "GIA" && asset.binary?.assets.some(item => !item.related && nodeTypes.includes(item.type)))) {
+        const convert = miliastraText(card, "button", asset.type === "GIA" ? "转为节点结构 JSON" : "转为 GIA", "ghost");
+        convert.style.marginLeft = "8px";
+        convert.onclick = async () => {
+          convert.disabled = true;
+          try {
+            const result = await api("/gm/api/miliastra/" + encodeURIComponent(asset.id) + "/convert", {method:"POST"});
+            if (!result.ok) throw new Error(result.json?.message || result.text || "转换失败。");
+            $("miliastraStatus").textContent = result.json.asset.filename + (result.json.duplicate ? "：已存在，未重复保存。" : "：转换并归档完成。");
+            $("miliastraStatus").style.color = "var(--ok)";
+            $("miliastraQ").value = ""; $("miliastraType").value = ""; miliastraOffset = 0; await loadMiliastra();
+          } catch (error) {
+            if (error.message !== "403") { $("miliastraStatus").textContent = error.message; $("miliastraStatus").style.color = "var(--err)"; }
+          } finally { convert.disabled = false; }
+        };
+      }
+    }
+    $("miliastraPage").textContent = "第 " + (Math.floor(miliastraOffset / MILIASTRA_PAGE) + 1) +
+      " / " + Math.max(1, Math.ceil(miliastraTotal / MILIASTRA_PAGE)) + " 页";
+    $("miliastraPrev").disabled = miliastraOffset === 0;
+    $("miliastraNext").disabled = miliastraOffset + MILIASTRA_PAGE >= miliastraTotal;
+  } catch (error) {
+    if (generation === miliastraGeneration && error.message !== "403") {
+      $("miliastraStatus").textContent = error.message;
+      $("miliastraStatus").style.color = "var(--err)";
+    }
+  }
+}
+let miliastraCameraEditing = null;
+async function editMiliastraCamera(asset, button) {
+  button.disabled = true;
+  try {
+    const response = await fetch("/gm/api/miliastra/" + encodeURIComponent(asset.id) + "/download", {headers: token ? {Authorization:"Bearer " + token} : {}});
+    if (response.status === 403) { showGate(); return; }
+    if (!response.ok) throw new Error((await response.json()).message || "镜头配置读取失败。");
+    const document = await response.json();
+    miliastraCameraEditing = {asset, document};
+    $("miliastraCameraEdit").value = JSON.stringify(document.cameras, null, 2);
+    $("miliastraCameraEditStatus").textContent = "";
+    $("miliastraCameraDialog").showModal();
+  } catch (error) { $("miliastraStatus").textContent = error.message; $("miliastraStatus").style.color = "var(--err)"; }
+  finally { button.disabled = false; }
+}
+$("miliastraCameraClose").onclick = () => $("miliastraCameraDialog").close();
+$("miliastraCameraDialog").addEventListener("close", () => { miliastraCameraEditing = null; $("miliastraCameraEdit").value = ""; });
+$("miliastraCameraEditForm").onsubmit = async event => {
+  event.preventDefault(); if (!miliastraCameraEditing) return;
+  const editing = miliastraCameraEditing, button = $("miliastraCameraSave"), status = $("miliastraCameraEditStatus"); button.disabled = true;
+  try {
+    const cameras = JSON.parse($("miliastraCameraEdit").value);
+    if (!Array.isArray(cameras)) throw new Error("镜头列表应为 JSON 数组。");
+    const body = '{"format":' + JSON.stringify(editing.document.format) + ',"source":' + JSON.stringify(editing.document.source) + ',"cameras":' + $("miliastraCameraEdit").value + '}';
+    if (new TextEncoder().encode(body).length > 32 * 1024 * 1024) throw new Error("镜头 JSON 最大为 32 MiB。");
+    const result = await api("/gm/api/miliastra?name=" + encodeURIComponent(editing.asset.filename), {method:"POST", headers:{"Content-Type":"application/json"}, body});
+    if (!result.ok) throw new Error(result.json?.message || result.text || "镜头配置保存失败。");
+    $("miliastraCameraDialog").close();
+    $("miliastraStatus").textContent = result.json.asset.filename + (result.json.duplicate ? "：配置已存在。" : "：镜头副本已归档。") + "\n原文件保留，可将配置转为 GIA。";
+    $("miliastraStatus").style.color = "var(--ok)";
+    $("miliastraQ").value = ""; $("miliastraType").value = "CAMERA_JSON"; miliastraOffset = 0; await loadMiliastra();
+  } catch (error) { if (error.message !== "403") { status.textContent = error.message; status.style.color = "var(--err)"; } }
+  finally { button.disabled = false; }
+};
+async function downloadMiliastra(asset, button) {
+  button.disabled = true;
+  try {
+    const response = await fetch("/gm/api/miliastra/" + encodeURIComponent(asset.id) + "/download",
+      {headers: token ? {Authorization: "Bearer " + token} : {}});
+    if (response.status === 403) { showGate(); return; }
+    if (!response.ok) throw new Error((await response.json()).message || "导出失败。");
+    const url = URL.createObjectURL(await response.blob());
+    const link = document.createElement("a"); link.href = url; link.download = asset.filename;
+    document.body.appendChild(link); link.click(); link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  } catch (error) { $("miliastraStatus").textContent = error.message; $("miliastraStatus").style.color = "var(--err)"; }
+  finally { button.disabled = false; }
+}
+$("miliastraImport").onclick = async () => {
+  const files = Array.from($("miliastraFiles").files);
+  if (!files.length) { $("miliastraStatus").textContent = "请先选择文件。"; return; }
+  const button = $("miliastraImport"); button.disabled = true;
+  $("miliastraStatus").style.color = "var(--dim)";
+  const messages = [];
+  try {
+    for (const file of files) {
+      if (file.size > (file.name.toLowerCase().endsWith(".json") && !/\.(gia|camera)\.json$/i.test(file.name) ? 8 : 32) * 1024 * 1024) {
+        throw new Error(file.name + "：文件超过大小限制。");
+      }
+      $("miliastraStatus").textContent = "正在导入 " + file.name + "…";
+      const result = await api("/gm/api/miliastra?name=" + encodeURIComponent(file.name),
+        {method: "POST", headers: {"Content-Type": "application/octet-stream"}, body: file});
+      if (!result.ok) throw new Error(file.name + "：" + (result.json?.message || "导入失败。"));
+      messages.push(file.name + (result.json.duplicate ? "：内容已归档，未重复保存。" : "：已导入。"));
+    }
+    $("miliastraFiles").value = "";
+    $("miliastraStatus").textContent = messages.join("\n");
+    $("miliastraStatus").style.color = "var(--ok)";
+  } catch (error) {
+    $("miliastraStatus").textContent = messages.concat(error.message).join("\n");
+    $("miliastraStatus").style.color = "var(--err)";
+  } finally { button.disabled = false; miliastraOffset = 0; await loadMiliastra(); }
+};
+function searchMiliastra() { miliastraOffset = 0; loadMiliastra(); }
+$("miliastraRefresh").onclick = searchMiliastra;
+$("miliastraSearch").onclick = searchMiliastra;
+$("miliastraType").onchange = searchMiliastra;
+$("miliastraQ").addEventListener("keydown", event => { if (event.key === "Enter") searchMiliastra(); });
+$("miliastraPrev").onclick = () => { miliastraOffset = Math.max(0, miliastraOffset - MILIASTRA_PAGE); loadMiliastra(); };
+$("miliastraNext").onclick = () => { miliastraOffset += MILIASTRA_PAGE; loadMiliastra(); };
+
+$("miliastraGenerateMode").onchange = () => {
+  const mode = $("miliastraGenerateMode").value;
+  for (const [value, id] of Object.entries({image:"miliastraImageFields",model:"miliastraModelFields",camera:"miliastraCameraFields",voxel:"miliastraVoxelFields"})) {
+    $(id).hidden = mode !== value;
+    $(id).querySelectorAll("input,select,textarea,button").forEach(input => { input.disabled = mode !== value; });
+  }
+  $("miliastraGenerateName").value = ({image:"像素画.gia",camera:"镜头.gia",voxel:"体素.gia",model:"实体.gia"})[mode];
+  $("miliastraGenerateStatus").textContent = "";
+  if (mode === "camera") loadMiliastraCameraTemplates();
+};
+$("miliastraVoxelRead").onclick = async () => {
+  const button = $("miliastraVoxelRead"), status = $("miliastraGenerateStatus"); button.disabled = true;
+  try {
+    const file = $("miliastraVoxelFile").files[0];
+    if (!file) throw new Error("请先选择体素 JSON 文件。");
+    if (file.size > 8 * 1024 * 1024) throw new Error("体素 JSON 最大为 8 MiB。");
+    const text = new TextDecoder("utf-8", {fatal:true}).decode(await file.arrayBuffer());
+    $("miliastraVoxelModel").value = text;
+    status.textContent = "已读取体素文件：" + file.name; status.style.color = "var(--dim)";
+  } catch (error) { status.textContent = error.message; status.style.color = "var(--err)"; }
+  finally { button.disabled = $("miliastraGenerateMode").value !== "voxel"; }
+};
+let miliastraCameraTemplates = null;
+async function loadMiliastraCameraTemplates() {
+  if (miliastraCameraTemplates) return;
+  try {
+    const result = await api("/gm/api/miliastra/camera-templates");
+    if (!result.ok) throw new Error(result.json?.message || "镜头模板读取失败。");
+    miliastraCameraTemplates = result.json.templates;
+    $("miliastraCameraPreset").replaceChildren(...miliastraCameraTemplates.map(template => {
+      const option = document.createElement("option"); option.value = template.id; option.textContent = template.defaults.name; return option;
+    }));
+    $("miliastraCameraPreset").value = "thirdPerson";
+  } catch (error) {
+    if (error.message !== "403") { $("miliastraGenerateStatus").textContent = error.message; $("miliastraGenerateStatus").style.color = "var(--err)"; }
+  }
+}
+$("miliastraCameraUsePreset").onclick = () => {
+  const preset = $("miliastraCameraPreset").value;
+  const template = miliastraCameraTemplates?.find(row => row.id === preset);
+  const defaults = template ? {...template.defaults} : {};
+  delete defaults.wireCameraMode;
+  $("miliastraCameraModel").value = JSON.stringify({cameras:[{preset,...defaults}]}, null, 2);
+};
+$("miliastraCameraAll").onclick = () => {
+  if (!miliastraCameraTemplates) return;
+  $("miliastraCameraModel").value = JSON.stringify({cameras:miliastraCameraTemplates.map(row => ({preset:row.id}))}, null, 2);
+};
+$("miliastraCameraVariations").onclick = () => {
+  $("miliastraCameraModel").value = JSON.stringify({variations:[
+    {parameter:"horizontalAngle",from:-180,to:180,step:1},
+    {parameter:"pitchAngle",from:-89,to:89,step:1},
+    {parameter:"distance",from:1,to:30,step:0.1},
+    {parameter:"fieldOfView",from:30,to:60,step:1}
+  ]}, null, 2);
+};
+$("miliastraGenerateForm").onsubmit = async event => {
+  event.preventDefault();
+  const button = $("miliastraGenerate"), status = $("miliastraGenerateStatus");
+  button.disabled = true; status.style.color = "var(--dim)";
+  try {
+    const mode = $("miliastraGenerateMode").value;
+    const params = new URLSearchParams({name: $("miliastraGenerateName").value});
+    const guid = $("miliastraGenerateGuid").value.trim();
+    if (guid) params.set("firstGuid", guid);
+    let body, contentType;
+    if (mode === "image") {
+      const file = $("miliastraImage").files[0];
+      if (!file) throw new Error("请先选择图片。");
+      if (file.size > 16 * 1024 * 1024) throw new Error("图片最大为 16 MiB。");
+      for (const [key, id] of Object.entries({width:"miliastraWidth",height:"miliastraHeight",unit:"miliastraUnit",
+          alphaThreshold:"miliastraAlpha",plane:"miliastraPlane",x:"miliastraOriginX",y:"miliastraOriginY",z:"miliastraOriginZ"})) params.set(key, $(id).value);
+      params.set("keepAspect", String($("miliastraAspect").checked));
+      body = file; contentType = "application/octet-stream";
+    } else {
+      body = $(mode === "camera" ? "miliastraCameraModel" : mode === "voxel" ? "miliastraVoxelModel" : "miliastraModel").value;
+      if (mode === "voxel") {
+        for (const [key, id] of Object.entries({unit:"miliastraVoxelUnit",alphaThreshold:"miliastraVoxelAlpha",x:"miliastraVoxelX",y:"miliastraVoxelY",z:"miliastraVoxelZ"})) params.set(key, $(id).value);
+      }
+      if (new TextEncoder().encode(body).length > 8 * 1024 * 1024) throw new Error("生成 JSON 最大为 8 MiB。");
+      contentType = "application/json";
+    }
+    status.textContent = "正在生成并归档…";
+    const result = await api("/gm/api/miliastra/generate/" + mode + "?" + params,
+      {method:"POST",headers:{"Content-Type":contentType},body});
+    if (!result.ok) throw new Error(result.json?.message || result.text || "生成失败。");
+    status.textContent = "已生成 " + result.json.count + (mode === "camera" ? " 个镜头" : mode === "voxel" ? " 个体素方块" : " 个实体") + "并归档：" + result.json.asset.filename +
+      (result.json.automaticCount ? "。自动 GUID 起点：" + result.json.firstAutomaticGuid : "。使用指定的 GUID");
+    status.style.color = "var(--ok)";
+    $("miliastraQ").value = ""; $("miliastraType").value = ""; miliastraOffset = 0;
+    await loadMiliastra();
+  } catch (error) {
+    if (error.message !== "403") { status.textContent = error.message; status.style.color = "var(--err)"; }
+  } finally { button.disabled = false; }
+};
 
 // --- items ------------------------------------------------------------
 const ITEM_PAGE = 50;
@@ -830,7 +1263,7 @@ $("equipmentForm").onsubmit = async e => {
 function typeLabel(t) {
   return ({
     ITEM_VIRTUAL: "货币", ITEM_MATERIAL: "材料", ITEM_WEAPON: "武器",
-    ITEM_RELIQUARY: "圣遗物", ITEM_FURNITURE: "摆设", ITEM_DISPLAY: "展示", ITEM_NONE: "其它",
+    ITEM_RELIQUARY: "圣遗物", ITEM_FURNITURE: "摆设", ITEM_DISPLAY: "展示", ITEM_NONE: "其它", ITEM_TPS_WEAPON: "TPS 武器",
   })[t] || t;
 }
 

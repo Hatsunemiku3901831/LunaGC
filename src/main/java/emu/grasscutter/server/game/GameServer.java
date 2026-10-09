@@ -61,6 +61,12 @@ public final class GameServer extends KcpServer implements Iterable<Player> {
     private final Map<Integer, Player> players;
     private final Set<World> worlds;
     private final Int2ObjectMap<HomeWorld> homeWorlds;
+    private volatile long completedTicks;
+    private volatile long firstTickStartedNanos;
+    private volatile long lastTickCompletedNanos;
+    private volatile long lastTickCompletedAtMillis;
+    private volatile long lastTickDurationMillis;
+    private volatile long maxTickDurationMillis;
 
     @Setter private DispatchClient dispatchClient;
 
@@ -306,20 +312,48 @@ public final class GameServer extends KcpServer implements Iterable<Player> {
     }
 
     public synchronized void onTick() {
+        long started = System.nanoTime();
+        if (firstTickStartedNanos == 0) firstTickStartedNanos = started;
+        try {
+            runTick();
+            lastTickCompletedAtMillis = System.currentTimeMillis();
+            lastTickCompletedNanos = System.nanoTime();
+            completedTicks++;
+        } finally {
+            lastTickDurationMillis = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - started);
+            maxTickDurationMillis = Math.max(maxTickDurationMillis, lastTickDurationMillis);
+        }
+    }
+
+    /** Health reads cannot take the tick monitor: the tick may itself be stuck. */
+    public TickStatus tickStatus() {
+        long last = lastTickCompletedNanos;
+        long baseline = last == 0 ? firstTickStartedNanos : last;
+        long age = baseline == 0 ? 0 : Math.max(0, TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - baseline));
+        long threshold = Math.max(5000L, Math.max(1L, GAME_INFO.tickRateMs) * 5L);
+        return new TickStatus(completedTicks, lastTickCompletedAtMillis, age,
+                lastTickDurationMillis, maxTickDurationMillis, baseline != 0 && age > threshold);
+    }
+
+    public record TickStatus(long completed, long lastCompletedAtMillis, long ageMillis,
+                             long durationMillis, long maxDurationMillis, boolean stalled) {}
+
+    private void runTick() {
         var tickStart = Instant.now();
 
         // Each of these is guarded on its own. One world or one player throwing used to abandon the
         // whole tick, so everybody else's world stopped moving for reasons that had nothing to do
         // with them - and the scheduler at the end never ran at all.
-        this.worlds.removeIf(
-                world -> {
-                    try {
-                        return world.onTick();
-                    } catch (Throwable e) {
-                        Grasscutter.getLogger().error("A world threw while ticking.", e);
-                        return false;
-                    }
-                });
+        final List<World> snapshot;
+        synchronized (this.worlds) { snapshot = new ArrayList<>(this.worlds); }
+        for (var world : snapshot) {
+            if (!this.worlds.contains(world)) continue;
+            try {
+                if (world.onTick()) removeWorldIfEmpty(world);
+            } catch (Throwable e) {
+                Grasscutter.getLogger().error("A world threw while ticking.", e);
+            }
+        }
 
         try {
             this.crucibleMatchSystem.onTick();
@@ -354,8 +388,17 @@ public final class GameServer extends KcpServer implements Iterable<Player> {
     }
 
     public void deregisterWorld(World world) {
-        // TODO Auto-generated method stub
+        this.worlds.remove(world);
+        if (world instanceof HomeWorld homeWorld && world.getHost() != null)
+            this.homeWorlds.remove(world.getHost().getUid(), homeWorld);
         world.save(); // Save the player's world
+    }
+
+    private void removeWorldIfEmpty(World world) {
+        if (!world.tryCloseIfEmpty()) return;
+        if (world instanceof HomeWorld homeWorld && world.getHost() != null)
+            this.homeWorlds.remove(world.getHost().getUid(), homeWorld);
+        this.worlds.remove(world);
     }
 
     public HomeWorld getHomeWorldOrCreate(Player owner) {

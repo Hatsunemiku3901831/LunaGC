@@ -19,6 +19,11 @@ public class PacketAvatarDataNotify extends BasePacket {
                         .addAllOwnedTraceEffectList(player.getTraceEffectList());
 
         player.getAvatars().forEach(avatar -> proto.addAvatarList(avatar.toProto()));
+        var borrowed = player.getTeamManager().getTpsSceneAvatar();
+        if (borrowed != null) {
+            proto.addAvatarList(borrowed.toProto());
+            proto.addTempAvatarGuidList(borrowed.getGuid());
+        }
 
         player
                 .getTeamManager()
@@ -26,13 +31,12 @@ public class PacketAvatarDataNotify extends BasePacket {
                 .forEach(
                         (id, teamInfo) -> {
                             proto.putAvatarTeamMap(id, teamInfo.toProto(player));
-                            if (id > 4) {
-
-                            }
+                            if (id > 4) {}
                         });
 
         Avatar mainCharacter = player.getAvatars().getAvatarById(player.getMainCharacterId());
-        if (mainCharacter != null) {
+        if (borrowed != null) proto.setChooseAvatarGuid(borrowed.getGuid());
+        else if (mainCharacter != null) {
             proto.setChooseAvatarGuid(mainCharacter.getGuid());
         }
 

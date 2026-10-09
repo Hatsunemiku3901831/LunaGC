@@ -1,0 +1,79 @@
+[
+  {
+    "abilityName": "Avatar_Yelan_Constellation_4",
+    "abilitySpecials": {
+      "Hit_Count": 0.0,
+      "Buff_Level": 0.0,
+      "Hp_Ratio": 0.0,
+      "Duration": 0.0,
+      "Max_Level": 0.0
+    },
+    "modifiers": {
+      "UNIQUE_Yelan_Constellation_4_HpBuff": {
+        "duration": "Duration",
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_MaxHPRatio": [
+            "Hp_Ratio",
+            "Buff_Level",
+            "MUL"
+          ]
+        },
+        "stacking": "Unique",
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "isUnique": true,
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Furina_ElementalBurst",
+    "abilitySpecials": {
+      "AvatarChangeHP_Count": 0.0,
+      "ElementalBurstDMG": 0.0,
+      "AvatarChangeHP_Duration": 0.1,
+      "AvatarChangeHP_MinCount": 0.0,
+      "AvatarChangeHP_MaxCount": 0.0,
+      "AvatarChangeHP2GVRatio": 0.0,
+      "AvatarChangeHP_Count2DMGRatio": 0.0,
+      "AvatarChangeHP_Count2HealRatio": 0.0,
+      "AvatarChangeHP_MaxCount_Overflow": 0.0,
+      "AvatarChangeHP_Count_Overflow": 0.0,
+      "OverflowCount2MaxHPRatio": 0.0
+    },
+    "modifiers": {
+      "UNIQUE_Furina_Constellation_6_Buff": {
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_MaxHPRatio": [
+            "AvatarChangeHP_Count_Overflow",
+            "OverflowCount2MaxHPRatio",
+            "MUL"
+          ]
+        },
+        "elementDurability": 100.0,
+        "state": "AttackUp",
+        "modifierName": "",
+        "isUnique": true,
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  },
+  {
+    "abilityName": "Item_Food_MaxHP",
+    "abilitySpecials": {},
+    "modifiers": {
+      "SERVER_MaxHPModifier": {
+        "reduceDurablityIgnoreTimeScale": true,
+        "properties": {
+          "Actor_MaxHPRatio": 0.5
+        },
+        "stacking": "Multiple",
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  }
+]

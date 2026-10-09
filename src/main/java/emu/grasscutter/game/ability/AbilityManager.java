@@ -53,6 +53,7 @@ import lombok.Getter;
 
 public final class AbilityManager extends BasePlayerManager {
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbilityManager.class);
+    private final Set<EntityAvatar> resonanceEntities = Collections.newSetFromMap(new WeakHashMap<>());
 
     private static final HashMap<AbilityModifierAction.Type, AbilityActionHandler> actionHandlers =
         new HashMap<>();
@@ -73,6 +74,12 @@ public final class AbilityManager extends BasePlayerManager {
         java.util.EnumSet.of(
             AbilityModifierAction.Type.Predicated,
             AbilityModifierAction.Type.CreateGadget,
+            AbilityModifierAction.Type.GetFightProperty,
+            AbilityModifierAction.Type.AddAvatarSkillInfo,
+            AbilityModifierAction.Type.RemoveAvatarSkillInfo,
+            AbilityModifierAction.Type.AvatarShareCDSkillStart,
+            AbilityModifierAction.Type.ActivitySkillShareCDStart,
+            AbilityModifierAction.Type.ClearShareCD,
             AbilityModifierAction.Type.SetGlobalValue);
 
     /**
@@ -86,10 +93,17 @@ public final class AbilityManager extends BasePlayerManager {
     private static final java.util.EnumSet<AbilityModifierAction.Type> SERVER_OWNED_CHAIN =
         java.util.EnumSet.of(
             AbilityModifierAction.Type.Predicated,
+            AbilityModifierAction.Type.Repeated,
             AbilityModifierAction.Type.CreateGadget,
             AbilityModifierAction.Type.SetGlobalValue,
             AbilityModifierAction.Type.AddGlobalValue,
             AbilityModifierAction.Type.ClearGlobalValue,
+            AbilityModifierAction.Type.GetFightProperty,
+            AbilityModifierAction.Type.AddAvatarSkillInfo,
+            AbilityModifierAction.Type.RemoveAvatarSkillInfo,
+            AbilityModifierAction.Type.AvatarShareCDSkillStart,
+            AbilityModifierAction.Type.ActivitySkillShareCDStart,
+            AbilityModifierAction.Type.ClearShareCD,
             AbilityModifierAction.Type.CopyGlobalValue);
 
     public static boolean isAllowedInServerOwnedChain(AbilityModifierAction.Type type) {
@@ -105,6 +119,7 @@ public final class AbilityManager extends BasePlayerManager {
      */
     private static final ThreadLocal<Boolean> serverOwnedChain =
         ThreadLocal.withInitial(() -> Boolean.FALSE);
+    private static final ThreadLocal<Integer> callbackActionDepth = ThreadLocal.withInitial(() -> 0);
 
     public static boolean isServerOwnedChain() {
         return serverOwnedChain.get();
@@ -117,8 +132,12 @@ public final class AbilityManager extends BasePlayerManager {
      * another one does not hand the rest of its parent back to the client half way through.
      */
     public static void runServerOwned(Runnable body) {
+        runServerOwned(true, body);
+    }
+
+    private static void runServerOwned(boolean owned, Runnable body) {
         var previous = serverOwnedChain.get();
-        serverOwnedChain.set(Boolean.TRUE);
+        serverOwnedChain.set(owned);
         try {
             body.run();
         } finally {
@@ -149,9 +168,11 @@ public final class AbilityManager extends BasePlayerManager {
 
     private long arlecchinoChargedAttackTime = 0L;
     private long arlecchinoESkillTime = 0L;
+    @Getter private final AbilitySharedCooldown sharedCooldown;
 
     public AbilityManager(Player player) {
         super(player);
+        this.sharedCooldown = new AbilitySharedCooldown(player);
         removePendingEnergyClear();
     }
 
@@ -234,6 +255,7 @@ public final class AbilityManager extends BasePlayerManager {
 
     public void executeAction(
         Ability ability, AbilityModifierAction action, ByteString abilityData, GameEntity target) {
+        if (action == null) return;
         var handler = actionHandlers.get(action.type);
         if (handler == null || ability == null) {
             if (DebugConstants.LOG_MISSING_ABILITY_HANDLERS) {
@@ -244,8 +266,11 @@ public final class AbilityManager extends BasePlayerManager {
             return;
         }
 
+        var context = new AbilityExecutionContext(ability, target);
+        if (!context.isCurrent()) return;
         eventExecutor.submit(
             () -> {
+                if (!context.isCurrent()) return;
                 try {
                     if (!handler.execute(ability, action, abilityData, target)) {
                         Grasscutter.getLogger()
@@ -269,6 +294,12 @@ public final class AbilityManager extends BasePlayerManager {
      */
     public void executeActionNow(
         Ability ability, AbilityModifierAction action, ByteString abilityData, GameEntity target) {
+        executeActionNow(ability, action, abilityData, target, false);
+    }
+
+    private void executeActionNow(
+        Ability ability, AbilityModifierAction action, ByteString abilityData, GameEntity target, boolean resolved) {
+        if (action == null) return;
         var handler = actionHandlers.get(action.type);
         if (handler == null || ability == null) {
             if (DebugConstants.LOG_MISSING_ABILITY_HANDLERS) {
@@ -280,7 +311,10 @@ public final class AbilityManager extends BasePlayerManager {
         }
 
         try {
-            if (!handler.execute(ability, action, abilityData, target)) {
+            boolean success = resolved
+                    ? handler.executeResolved(ability, action, abilityData, target)
+                    : handler.execute(ability, action, abilityData, target);
+            if (!success) {
                 Grasscutter.getLogger()
                     .debug("Ability execute action failed for {} at {}.", action.type, ability);
             }
@@ -290,14 +324,18 @@ public final class AbilityManager extends BasePlayerManager {
     }
 
     public void executeMixin(Ability ability, AbilityMixinData mixinData, ByteString abilityData) {
+        executeMixin(ability, mixinData, abilityData, ability == null ? null : ability.getOwner());
+    }
 
-        var invoke = AbilityInvokeEntry.newBuilder().setAbilityData(abilityData).build();
-        var head = invoke.getHead();
+    public void executeMixin(Ability ability, AbilityMixinData mixinData, ByteString abilityData,
+                             GameEntity target) {
+
+        if (ability == null || mixinData == null || target == null) return;
+
         var handler = mixinHandlers.get(mixinData.type);
-        GameEntity target = ability.getOwner();
         Player player = getPlayer();
 
-        if (handler == mixinHandlers.get(AbilityMixinData.Type.PhlogistonCostMixin)) {
+        if (mixinData.type == AbilityMixinData.Type.PhlogistonCostMixin) {
 
             EntityAvatar avatarEntity = player.getTeamManager().getCurrentAvatarEntity();
             Avatar avatar = avatarEntity.getAvatar();
@@ -319,16 +357,8 @@ public final class AbilityManager extends BasePlayerManager {
             }
         }
 
-        if (handler == mixinHandlers.get(AbilityMixinData.Type.SwitchHealToHPDebtsMixin)) {
-
-            if (target instanceof EntityAvatar avatar) {
-
-                if (avatar.getAvatar().getAvatarId() == 10000098 || avatar.getAvatar().getAvatarId() == 10000096)
-                    target.setConvertToHpDebt(true);
-
-            }
-
-        }
+        // SwitchHealToHPDebtsMixin is evaluated by HealHP against installed modifiers.
+        // A bare invocation cannot represent its predicates or its removal lifetime.
 
         if (handler == null || ability == null) {
             Grasscutter.getLogger()
@@ -336,8 +366,11 @@ public final class AbilityManager extends BasePlayerManager {
             return;
         }
 
+        var context = new AbilityExecutionContext(ability, target);
+        if (!context.isCurrent()) return;
         eventExecutor.submit(
             () -> {
+                if (!context.isCurrent()) return;
                 try {
                     if (!handler.execute(ability, mixinData, abilityData, target)) {
                         Grasscutter.getLogger()
@@ -350,7 +383,85 @@ public final class AbilityManager extends BasePlayerManager {
             });
     }
 
+    /** A client-selected callback is one ordered action chain on its invocation target. */
+    public boolean executeMixinActionsNow(Ability ability, AbilityMixinData mixin,
+                                         ByteString payload, GameEntity target) {
+        if (ability == null || mixin == null || target == null) return false;
+        var actions = mixin.actions;
+        if (actions == null || actions.length == 0) actions = mixin.actionQueue;
+        if (actions == null || actions.length == 0) return true;
+        var context = new AbilityExecutionContext(ability, target);
+        if (!context.isCurrent()
+                || !PredicateEvaluator.all(mixin.predicates, ability, ability.getOwner(), target, null))
+            return true;
+        return executeCallbackActionsNow(ability,actions,payload,target,target);
+    }
+
+    /** Ordered native branches share target resolution and lifetime checks with mixin callbacks. */
+    public boolean executeCallbackActionsNow(Ability ability, AbilityModifierAction[] actions,
+                                              ByteString payload, GameEntity self, GameEntity selectedTarget) {
+        if (ability == null || self == null) return false;
+        var context=new AbilityExecutionContext(ability,self);
+        if (!context.isCurrent()) return false;
+        if (actions == null) return true;
+        int depth=callbackActionDepth.get();
+        if (depth>=32) return false;
+        callbackActionDepth.set(depth+1);
+        try { return AbilityActionBudget.run(()->{
+            for (var action:actions) {
+                if (!context.isCurrent()) return true;
+                if (action == null || (isServerOwnedChain() && !isAllowedInServerOwnedChain(action.type))) continue;
+                var base="Target".equals(action.target)?selectedTarget:self;
+                if (base == null) continue;
+                for (var recipient:AbilityActionSequence.targets(ability,action,base,true)) {
+                    if (!context.isCurrent()) return true;
+                    if (recipient == null || !AbilityExecutionContext.canTrigger(recipient,ability.getPlayerOwner())) continue;
+                    if (!AbilityActionBudget.consume()) return false;
+                    @SuppressWarnings("unchecked")
+                    var predicates=(List<Map<String,Object>>)(List<?>)action.predicates;
+                    if (PredicateEvaluator.all(predicates,ability,ability.getOwner(),recipient,action))
+                        executeActionNow(ability,action,payload,recipient,true);
+                }
+            }
+            return true;
+        }); } finally {
+            if (depth==0) callbackActionDepth.remove(); else callbackActionDepth.set(depth);
+        }
+    }
+
+    public void executeHealingCallbacks(Ability ability, AbilityModifierAction[] actions,
+                                        GameEntity owner, String healTag) {
+        queueCallbackActions(ability, actions, ByteString.EMPTY, owner, healTag);
+    }
+
+    private void queueCallbackActions(Ability ability, AbilityModifierAction[] actions,
+                                      ByteString payload, GameEntity owner, String healTag) {
+        if (ability == null || owner == null || actions == null || actions.length == 0) return;
+        var context = new AbilityExecutionContext(ability, owner);
+        if (!context.isCurrent()) return;
+        var snapshot = actions.clone();
+        var owned = isServerOwnedChain();
+        eventExecutor.submit(() -> AbilityHealContext.run(healTag, () -> runServerOwned(owned, () -> {
+            if (context.isCurrent()) executeCallbackActionsNow(ability, snapshot, payload, owner, owner);
+        })));
+    }
+
     public void onAbilityInvoke(AbilityInvokeEntry invoke) throws Exception {
+        acceptAbilityInvoke(invoke);
+    }
+
+    /** TPS metadata is validated before forwarding; other invokes retain their existing routing. */
+    public boolean acceptAbilityInvoke(AbilityInvokeEntry invoke) throws Exception {
+        // Metadata may carry the local ID of its originating action. It is still metadata,
+        // and must not be redirected to handleServerInvoke's action/mixin dispatch.
+        if (invoke.getArgumentType() == AbilityInvokeArgument.ABILITY_META_UPDATE_TPS_WEAPON_AMMUNITION) {
+            try {
+                return emu.grasscutter.game.tps.TpsWeaponSystem.onAmmunitionInvoke(this.player, invoke);
+            } catch (InvalidProtocolBufferException e) {
+                Grasscutter.getLogger().debug("Invalid TPS ammunition metadata for player {}", player.getUid());
+                return false;
+            }
+        }
         Grasscutter.getLogger()
             .trace(
                 "Ability invoke: "
@@ -394,7 +505,7 @@ public final class AbilityManager extends BasePlayerManager {
         }
         if (invoke.getHead().getLocalId() != 0) {
             this.handleServerInvoke(invoke);
-            return;
+            return true;
         }
 
         switch (invoke.getArgumentType()) {
@@ -428,6 +539,7 @@ public final class AbilityManager extends BasePlayerManager {
                 }
             }
         }
+        return true;
     }
 
     private void handleClearGlobalFloatValue(AbilityInvokeEntry invoke)
@@ -439,15 +551,9 @@ public final class AbilityManager extends BasePlayerManager {
         var entry = AbilityScalarValueEntry.parseFrom(invoke.getAbilityData());
 
         if (entry == null) return;
-        String key = null;
+        String key = resolveGlobalValueKey(entry.getKey(), entity);
 
-        if (entry.getKey().hasStr()) {
-            key = entry.getKey().getStr();
-        } else if (entry.getKey().hasHash()) {
-            key = GameData.getAbilityHashes().get(entry.getKey().getHash());
-        }
-
-        if (key == null) return;
+        if (key == null || key.isEmpty() || key.startsWith("SGV_")) return;
 
         entity.getGlobalAbilityValues().remove(key);
         entity.onAbilityValueUpdate();
@@ -539,6 +645,7 @@ public final class AbilityManager extends BasePlayerManager {
 
         var action = ability.getData().localIdToAction.get(head.getLocalId());
         if (action != null) {
+            if(entity.getAbilityPeriodicHealing().ownsAction(ability,head.getInstancedModifierId(),action)) return;
             this.executeAction(ability, action, invoke.getAbilityData(), target);
             return;
         } else {
@@ -546,7 +653,7 @@ public final class AbilityManager extends BasePlayerManager {
 
             if (mixin != null) {
                 Grasscutter.getLogger().trace("Executing mixin: {}", mixin);
-                executeMixin(ability, mixin, invoke.getAbilityData());
+                executeMixin(ability, mixin, invoke.getAbilityData(), target);
 
                 return;
             }
@@ -592,16 +699,6 @@ public final class AbilityManager extends BasePlayerManager {
         var currentAvatar = player.getTeamManager().getCurrentAvatarEntity();
         if (currentAvatar == null || currentAvatar.getId() != casterId) {
             return;
-        }
-
-        if (currentAvatar.getAvatar().getAvatarId() == 10000098) {
-            if (skillId == 10982) {
-
-                applyClorindeBoL(currentAvatar, 0.35f);
-            } else if (skillId == 10985) {
-
-                applyClorindeBoL(currentAvatar, 0.66f);
-            }
         }
 
         var skillData = GameData.getAvatarSkillDataMap().get(skillId);
@@ -674,163 +771,148 @@ public final class AbilityManager extends BasePlayerManager {
         var ability = entity.getInstancedAbilities().get(instancedAbilityIndex);
         if (ability == null) return;
         setAbilityOverrideValue(ability, valueChange);
+        ability.refreshModifierTargets(true);
     }
 
     private void handleReinitOverrideMap(AbilityInvokeEntry invoke) throws Exception {
-        var entity = this.player.getScene().getEntityById(invoke.getEntityId());
-        var head = invoke.getHead();
+        var entity = player.getScene().getEntityById(invoke.getEntityId());
+        if (entity == null) return;
+        int index = invoke.getHead().getInstancedAbilityId() - 1;
+        if (index < 0 || index >= entity.getInstancedAbilities().size()) return;
+        var ability = entity.getInstancedAbilities().get(index);
+        if (ability == null) return;
+        var changes = AbilityMetaReInitOverrideMap.parseFrom(invoke.getAbilityData());
+        for (var change : changes.getOverrideMapList()) setAbilityOverrideValue(ability, change);
+        ability.refreshModifierTargets(true);
 
-        if (entity == null) {
-            Grasscutter.getLogger().trace("Entity not found: {}", invoke.getEntityId());
-            return;
-        }
+        if (!(entity instanceof EntityClientGadget) && !(entity instanceof emu.grasscutter.game.entity.EntityWeapon)) return;
+        var computed = resolveTalentOverrides(ability);
+        var notifications = new ArrayList<AbilityInvokeEntry>();
+        computed.forEach((name, value) -> {
+            ability.getAbilitySpecials().put(name, value);
+            notifications.add(talentOverrideInvoke(entity, index + 1, name, value));
+        });
 
-        var valueChanges = AbilityMetaReInitOverrideMap.parseFrom(invoke.getAbilityData());
-        Map<String, Float> computedVarOverrides = new HashMap<>();
-
-        if (entity instanceof EntityClientGadget clientGadget) {
-            var ownerEntity = player.getScene().getEntityById(clientGadget.getOriginalOwnerEntityId());
-            if (ownerEntity instanceof EntityAvatar avatarOwner) {
-                var avatar = avatarOwner.getAvatar();
-                AvatarSkillDepotData depot = GameData.getAvatarSkillDepotDataMap().get(avatar.getSkillDepotId());
-                List<AbilityInvokeEntry> overrides = new ArrayList<>();
-
-                for (var variableChange : valueChanges.getOverrideMapList()) {
-                    String varName = variableChange.getKey().hasStr()
-                        ? variableChange.getKey().getStr()
-                        : GameData.getAbilityHashes().get(variableChange.getKey().getHash());
-                    if (varName == null || varName.isEmpty()) continue;
-
-                    var talentVarList = GameData.getVarNameToTalentVars().get(varName);
-                    if (talentVarList == null || talentVarList.isEmpty()) continue;
-
-                    for (var tv : talentVarList) {
-                        Integer groupId = GameData.getOpenConfigToProudSkillGroup().get(tv.openConfigName());
-                        if (groupId == null) continue;
-
-                        int skillLevel = 1;
-                        if (depot != null) {
-                            int resolvedGroupId = groupId;
-                            skillLevel = depot.getSkillsAndEnergySkill()
-                                .filter(sid -> {
-                                    var sc = GameData.getAvatarSkillDataMap().get(sid);
-                                    return sc != null && sc.getProudSkillGroupId() == resolvedGroupId;
-                                })
-                                .mapToObj(sid -> avatar.getSkillLevelMap().getOrDefault(sid, 1))
-                                .findFirst()
-                                .orElse(1);
-                        }
-
-                        ProudSkillData proudSkill = GameData.getProudSkillDataMap().get(groupId * 100 + skillLevel);
-                        if (proudSkill == null) continue;
-                        float[] paramList = proudSkill.getParamList();
-                        if (paramList == null || tv.paramIndex() >= paramList.length) continue;
-
-                        float value = paramList[tv.paramIndex()];
-                        computedVarOverrides.put(varName, value);
-                        overrides.add(AbilityInvokeEntry.newBuilder()
-                            .setEntityId(entity.getId())
-                            .setArgumentType(AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_META_OVERRIDE_PARAM)
-                            .setHead(AbilityInvokeEntryHead.newBuilder()
-                                .setInstancedAbilityId(head.getInstancedAbilityId())
-                                .build())
-                            .setAbilityData(AbilityScalarValueEntry.newBuilder()
-                                .setKey(AbilityString.newBuilder()
-                                    .setStr(varName)
-                                    .setHash(Utils.abilityHash(varName))
-                                    .build())
-                                .setFloatValue(value)
-                                .build()
-                                .toByteString())
-                            .build());
-                        break;
-                    }
+        // A shared variable name can have different values in different abilities.
+        var caster = ability.getCasterEntity();
+        if (caster != null && !computed.isEmpty()) {
+            var casterAbilities = caster.getInstancedAbilities();
+            for (int i = 0; i < casterAbilities.size(); i++) {
+                var candidate = casterAbilities.get(i);
+                if (candidate == null || candidate == ability) continue;
+                var ownValues = resolveTalentOverrides(candidate);
+                for (var entry : ownValues.entrySet()) {
+                    if (!computed.containsKey(entry.getKey())) continue;
+                    candidate.getAbilitySpecials().put(entry.getKey(), entry.getValue());
+                    notifications.add(talentOverrideInvoke(caster, i + 1, entry.getKey(), entry.getValue()));
                 }
-
-                if (!overrides.isEmpty()) {
-
-                    player.sendPacket(new PacketAbilityInvocationsNotify(overrides));
-                }
-
-                if (!computedVarOverrides.isEmpty()) {
-
-                    var talentVarMap = GameData.getAbilityTalentVarMap();
-                    Map<String, Set<String>> varToAbilityNames = new HashMap<>();
-                    for (var mapEntry : talentVarMap.entrySet()) {
-                        String abilName = mapEntry.getKey();
-                        for (var tv : mapEntry.getValue()) {
-                            if (computedVarOverrides.containsKey(tv.varName())) {
-                                varToAbilityNames
-                                    .computeIfAbsent(tv.varName(), k -> new HashSet<>())
-                                    .add(abilName);
-                            }
-                        }
-                    }
-
-                    List<AbilityInvokeEntry> avatarPatch = new ArrayList<>();
-                    var avatarAbils = avatarOwner.getInstancedAbilities();
-                    for (int i = 0; i < avatarAbils.size(); i++) {
-                        var ab = avatarAbils.get(i);
-                        if (ab == null || ab.getData() == null) continue;
-                        String abName = ab.getData().abilityName;
-                        if (abName == null) continue;
-
-                        boolean matched = false;
-                        for (var e : computedVarOverrides.entrySet()) {
-                            Set<String> owners = varToAbilityNames.get(e.getKey());
-                            if (owners == null || !owners.contains(abName)) continue;
-                            avatarPatch.add(AbilityInvokeEntry.newBuilder()
-                                .setEntityId(avatarOwner.getId())
-                                .setArgumentType(AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_META_OVERRIDE_PARAM)
-                                .setHead(AbilityInvokeEntryHead.newBuilder()
-                                    .setInstancedAbilityId(i + 1)
-                                    .build())
-                                .setAbilityData(AbilityScalarValueEntry.newBuilder()
-                                    .setKey(AbilityString.newBuilder()
-                                        .setStr(e.getKey())
-                                        .setHash(Utils.abilityHash(e.getKey()))
-                                        .build())
-                                    .setFloatValue(e.getValue())
-                                    .build()
-                                    .toByteString())
-                                .build());
-                            ab.getAbilitySpecials().put(e.getKey(), e.getValue());
-                            matched = true;
-                        }
-                        if (matched) {
-
-                        }
-                    }
-                    if (!avatarPatch.isEmpty()) {
-                        player.sendPacket(new PacketAbilityInvocationsNotify(avatarPatch));
-                    }
-                }
+                candidate.refreshModifierTargets(true);
             }
         }
+        ability.refreshModifierTargets(true);
+        if (!notifications.isEmpty()) player.sendPacket(new PacketAbilityInvocationsNotify(notifications));
+    }
 
-        var instancedAbilityIndex = head.getInstancedAbilityId() - 1;
-        if (instancedAbilityIndex < 0 || instancedAbilityIndex >= entity.getInstancedAbilities().size()) {
-            Grasscutter.getLogger().trace("Ability not found {}", head.getInstancedAbilityId());
-            return;
-        }
+    private static Map<String, Float> resolveTalentOverrides(Ability ability) {
+        var avatar = AbilityTalentResolver.casterAvatar(ability.getPlayerOwner(), ability.getOwner());
+        if (avatar == null && ability.getCasterEntity() != null) avatar = ability.getCasterEntity().getAvatar();
+        return AbilityTalentResolver.overrides(avatar, ability.getData().abilityName);
+    }
 
-        var ability = entity.getInstancedAbilities().get(instancedAbilityIndex);
-        if (ability != null) {
-            for (var variableChange : valueChanges.getOverrideMapList()) {
-                setAbilityOverrideValue(ability, variableChange);
+    private static AbilityInvokeEntry talentOverrideInvoke(GameEntity entity, int abilityId, String name, float value) {
+        return AbilityInvokeEntry.newBuilder()
+                .setEntityId(entity.getId())
+                .setArgumentType(AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_META_OVERRIDE_PARAM)
+                .setHead(AbilityInvokeEntryHead.newBuilder().setInstancedAbilityId(abilityId))
+                .setAbilityData(AbilityScalarValueEntry.newBuilder()
+                        .setKey(AbilityString.newBuilder().setStr(name).setHash(Utils.abilityHash(name)))
+                        .setFloatValue(value).build().toByteString())
+                .build();
+    }
+
+    /** Refresh equipped entities only; fired projectiles retain their launch parameters. */
+    public void refreshEquipmentTalents(Avatar avatar, boolean notify) {
+        if (avatar.getPlayer() != player) return;
+        var entities = Collections.newSetFromMap(new IdentityHashMap<GameEntity, Boolean>());
+        var avatarEntity = avatar.getAsEntity();
+        if (avatarEntity != null) entities.add(avatarEntity);
+        var weapon = avatar.getWeapon();
+        if (weapon != null && weapon.getWeaponEntity() != null) entities.add(weapon.getWeaponEntity());
+        for (var item : emu.grasscutter.game.tps.TpsWeaponSystem.getWornWeapons(avatar))
+            if (item.getWeaponEntity() != null) entities.add(item.getWeaponEntity());
+        var updates = new ArrayList<AbilityInvokeEntry>();
+        for (var entity : entities) {
+            var abilities = entity.getInstancedAbilities();
+            for (int i = 0; i < abilities.size(); i++) {
+                var ability = abilities.get(i);
+                if (ability == null) continue;
+                var values = ability.refreshTalentSpecials();
+                ability.refreshModifierTargets(notify);
+                for (var entry : values.entrySet())
+                    updates.add(talentOverrideInvoke(entity, i + 1, entry.getKey(), entry.getValue()));
             }
         }
+        if (notify && player.hasSentLoginPackets() && !updates.isEmpty())
+            player.sendPacket(new PacketAbilityInvocationsNotify(updates));
+    }
 
-        var resolvedAbility = ability;
-        if (resolvedAbility == null) {
-            for (var ab : entity.getInstancedAbilities()) {
-                if (ab != null) { resolvedAbility = ab; break; }
+    /** Keep server instance IDs aligned with the new team announcement, retaining live skills. */
+    public void refreshTeamResonanceAbilities(int previousResonanceCount, boolean layoutChanged, boolean notify) {
+        var updates = new ArrayList<AbilityInvokeEntry>();
+        var active = player.getTeamManager().getActiveTeamSnapshot();
+        List<EntityAvatar> departed;
+        synchronized (resonanceEntities) {
+            departed = resonanceEntities.stream().filter(e -> !active.contains(e)).toList();
+            resonanceEntities.clear();
+            resonanceEntities.addAll(active);
+        }
+        for (var entity : departed)
+            for (var ability : entity.getInstancedAbilities())
+                if (ability != null && GameData.getTeamResonanceDataMap().values().stream()
+                        .anyMatch(d -> d.getOpenConfig().equals(ability.getData().abilityName)))
+                    ability.removeInstalledModifiers();
+        for (var entity : active) {
+            if (!layoutChanged) {
+                refreshEquipmentTalents(entity.getAvatar(), notify);
+                continue;
             }
+            var instances = entity.getInstancedAbilities();
+            if (instances.isEmpty()) continue; // First client initialization uses the new roster.
+            var old = new ArrayList<>(instances);
+            var block = entity.getAbilityControlBlock().getAbilityEmbryoListList();
+            int oldSize = Math.min(old.size(), block.size()
+                    - player.getTeamManager().getTeamResonancesConfig().size() + previousResonanceCount);
+            var byHash = new HashMap<Integer, ArrayDeque<Ability>>();
+            for (var ability : old.subList(0, oldSize))
+                if (ability != null) byHash.computeIfAbsent(ability.getHash(), h -> new ArrayDeque<>()).add(ability);
+            var next = new ArrayList<Ability>();
+            var retained = Collections.newSetFromMap(new IdentityHashMap<Ability, Boolean>());
+            for (var embryo : block) {
+                var candidates = byHash.get(embryo.getAbilityNameHash());
+                Ability ability = candidates == null || candidates.isEmpty() ? null : candidates.removeFirst();
+                if (ability != null) retained.add(ability);
+                else {
+                    var name = GameData.getAbilityHashes().get(embryo.getAbilityNameHash());
+                    var data = name == null ? null : GameData.getAbilityData(name);
+                    if (data != null) {
+                        ability = new Ability(data, entity, player);
+                        for (var entry : AbilityTalentResolver.overrides(entity.getAvatar(), name).entrySet())
+                            updates.add(talentOverrideInvoke(entity, embryo.getAbilityId(), entry.getKey(), entry.getValue()));
+                    }
+                }
+                next.add(ability);
+            }
+            for (var ability : old.subList(0, oldSize))
+                if (ability != null && !retained.contains(ability)) ability.removeInstalledModifiers();
+            next.addAll(old.subList(oldSize, old.size())); // Dynamic abilities keep their relative order.
+            if (!old.equals(next)) {
+                instances.clear();
+                instances.addAll(next);
+            }
+            refreshEquipmentTalents(entity.getAvatar(), notify);
         }
-        final var finalAbility = resolvedAbility;
-        if (finalAbility != null) {
-            computedVarOverrides.forEach((k, v) -> finalAbility.getAbilitySpecials().put(k, v));
-        }
+        if (notify && player.hasSentLoginPackets() && !updates.isEmpty())
+            player.sendPacket(new PacketAbilityInvocationsNotify(updates));
     }
 
     private Ability findExistingAbility(GameEntity source, int abilityId, String parentName) {
@@ -948,33 +1030,50 @@ public final class AbilityManager extends BasePlayerManager {
             boolean hasOrchestration = false;
             if (fromParentName && modifierData.onAdded != null) {
                 for (var a : modifierData.onAdded) {
-                    if (a.type == AbilityModifierAction.Type.AttachModifier
-                            || a.type == AbilityModifierAction.Type.ApplyModifier) {
+                    if (a != null && (a.type == AbilityModifierAction.Type.AttachModifier
+                            || a.type == AbilityModifierAction.Type.ApplyModifier)) {
                         hasOrchestration = true;
                         break;
                     }
                 }
             }
 
-            AbilityModifierController modifier =
-                new AbilityModifierController(instancedAbility, instancedAbilityData, modifierData);
+            AbilityModifierController modifier;
+            AbilityModifierController previous;
 
             // Follow-up actions and removal messages refer to this client instance ID even
             // when onAdded applies another modifier (e.g. Nahida's release/camera chain).
             var instances = entity.getInstancedModifiers();
             synchronized (instances) {
-                var previous = instances.put(head.getInstancedModifierId(), modifier);
-                if (previous != null) previous.getAbility().unregisterModifier(entity, previous);
+                previous=instances.get(head.getInstancedModifierId());
+                if(previous!=null && previous.hasServerCallbacks() && previous.getAbility()==instancedAbility
+                        && previous.getModifierData()==modifierData) {
+                    modifier=previous;
+                } else {
+                    modifier=entity.getAbilityHpModifier().pendingServerController(instancedAbility,
+                            instancedAbilityData.modifiers.keySet().toArray(new String[0])[modChange.getModifierLocalId()]);
+                    if(modifier==null) modifier=new AbilityModifierController(instancedAbility,instancedAbilityData,modifierData);
+                }
+                instances.put(head.getInstancedModifierId(), modifier);
+                entity.getAbilityPeriodicHealing().clientAdded(head.getInstancedModifierId());
+                // Register the replacement before refreshing its properties; intermediate state
+                // can otherwise count both a pending server buff and its client confirmation.
+                if (previous != null && previous != modifier) previous.getAbility().unregisterModifier(entity, previous, false);
                 instancedAbility.registerModifier(entity, modifier);
             }
+            if(previous!=null && previous!=modifier) previous.runServerOnRemoved();
 
-            if (fromParentName && hasOrchestration && modifierData.onAdded != null) {
+            boolean initializedByWatcher = entity.getAbilityGlobalValueWatchers()
+                    .ownsChild(instancedAbility, modifier.getName());
+            boolean initializedOnServer=modifier.hasServerCallbacks();
+            if (!initializedOnServer && fromParentName && hasOrchestration && modifierData.onAdded != null) {
                 final var finalAbility = instancedAbility;
                 final var finalEntity = entity;
-                for (var a : modifierData.onAdded) {
-                    executeActionNow(finalAbility, a, invoke.getAbilityData(), finalEntity);
-                }
-            } else if (modifierData.onAdded != null) {
+                var actions = Arrays.stream(modifierData.onAdded)
+                        .filter(a -> a != null && (!initializedByWatcher || !isAllowedInServerOwnedChain(a.type)))
+                        .toArray(AbilityModifierAction[]::new);
+                executeCallbackActionsNow(finalAbility, actions, invoke.getAbilityData(), finalEntity, finalEntity);
+            } else if (!initializedOnServer && modifierData.onAdded != null && !initializedByWatcher) {
                 // A modifier whose onAdded neither attaches nor applies another modifier used to run
                 // nothing at all here, so anything the server alone is meant to do - spawning an
                 // avatar's summon, most visibly - never happened. Only the state and spawn actions
@@ -984,23 +1083,27 @@ public final class AbilityManager extends BasePlayerManager {
                 final var ownedEntity = entity;
                 runServerOwned(
                     () -> {
-                        for (var a : modifierData.onAdded) {
-                            if (a != null && SERVER_OWNED_ON_ADDED.contains(a.type)) {
-                                executeActionNow(ownedAbility, a, invoke.getAbilityData(), ownedEntity);
-                            }
-                        }
+                        var actions = Arrays.stream(modifierData.onAdded)
+                                .filter(a -> a != null && SERVER_OWNED_ON_ADDED.contains(a.type))
+                                .toArray(AbilityModifierAction[]::new);
+                        executeCallbackActionsNow(ownedAbility, actions, invoke.getAbilityData(), ownedEntity, ownedEntity);
                     });
             }
         } else if (modChange.getAction() == ModifierAction.MODIFIER_ACTION_REMOVED) {
             var instances = entity.getInstancedModifiers();
+            AbilityModifierController modifier;
             synchronized (instances) {
-                var modifier = instances.remove(head.getInstancedModifierId());
-                if (modifier != null) modifier.getAbility().unregisterModifier(entity, modifier);
+                modifier = instances.remove(head.getInstancedModifierId());
+                if (modifier != null) {
+                    entity.getAbilityPeriodicHealing().clientRemoved(head.getInstancedModifierId(),modifier);
+                }
             }
+            if(modifier!=null) modifier.getAbility().unregisterModifier(entity, modifier);
         } else {
 
             Grasscutter.getLogger().debug("Unknown action");
         }
+        entity.getAbilityGlobalValueWatchers().flushPending();
     }
 
     private void handleMixinCostStamina(AbilityInvokeEntry invoke)
@@ -1020,28 +1123,17 @@ public final class AbilityManager extends BasePlayerManager {
         var entry = AbilityScalarValueEntry.parseFrom(invoke.getAbilityData());
         if (entry == null) return;
 
-        String key = null;
-        if (entry.getKey().hasStr()) {
-            key = entry.getKey().getStr();
-        } else if (entry.getKey().hasHash()) {
-            key = GameData.getAbilityHashes().get(entry.getKey().getHash());
-        }
+        String key = resolveGlobalValueKey(entry.getKey(), entity);
 
-        if (key == null) return;
+        if (key == null || key.isEmpty()) return;
         if (key.startsWith("SGV_")) return;
 
         float value = entry.getFloatValue();
-        if (Float.isNaN(value)) return;
+        if (!Float.isFinite(value)) return;
 
         if (key.equals("MoonOvergrowPoint_All")) {
             value = 50f;
             this.player.sendPacket(new PacketServerGlobalValueChangeNotify(entity, key, 50f));
-        }
-
-        if ("_ABILITY_Clorinde_Dodge_HealFlag".equals(key) && value == 0f
-                && entity instanceof EntityAvatar clorinde
-                && clorinde.getAvatar().getAvatarId() == 10000098) {
-            applyClorindeBoL(clorinde);
         }
 
         if ("_Arlecchino_HPDebtsMark_Level".equals(key)) {
@@ -1065,33 +1157,29 @@ public final class AbilityManager extends BasePlayerManager {
         entity.onAbilityValueUpdate();
     }
 
-    private void applyClorindeBoL(EntityAvatar clorinde) {
-        applyClorindeBoL(clorinde, 0.35f);
-    }
-
-    private void applyClorindeBoL(EntityAvatar clorinde, float ratio) {
-        float maxHp = clorinde.getFightProperty(FightProperty.FIGHT_PROP_MAX_HP);
-        float debtAmount = ratio * maxHp;
-        float curDebt = clorinde.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP_DEBTS);
-        float newDebt = Math.min(curDebt + debtAmount, 2f * maxHp);
-        float change = newDebt - curDebt;
-        if (change <= 0f) return;
-        clorinde.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP_DEBTS, newDebt);
-        var scene = this.player.getScene();
-        scene.broadcastPacket(new PacketEntityFightPropUpdateNotify(clorinde, FightProperty.FIGHT_PROP_CUR_HP_DEBTS));
-        scene.broadcastPacket(new PacketEntityFightPropChangeReasonNotify(
-            clorinde,
-            FightProperty.FIGHT_PROP_CUR_HP_DEBTS,
-            change,
-            PropChangeReasonOuterClass.PropChangeReason.PropChangeReason_PROP_CHANGE_ABILITY,
-            ChangeHpDebtsReasonOuterClass.ChangeHpDebtsReason.CHANGE_HP_DEBTS_REASON_CHANGE_HP_DEBTS_ADD_ABILITY
-        ));
+    private String resolveGlobalValueKey(AbilityString value, GameEntity entity) {
+        if (value.hasStr()) return value.getStr();
+        if (!value.hasHash()) return null;
+        int hash = value.getHash();
+        var candidates = new LinkedHashSet<String>(entity.getGlobalAbilityValues().keySet());
+        candidates.addAll(entity.getAbilityHpModifier().getReferencedKeys());
+        candidates.addAll(entity.getAbilityGlobalValueWatchers().getReferencedKeys());
+        String legacy = GameData.getAbilityHashes().get(hash);
+        if (legacy != null) candidates.add(legacy);
+        String resolved = null;
+        for (var key : candidates) {
+            if (key == null || key.isEmpty() || Utils.abilityHash(key) != hash) continue;
+            // A hash cannot distinguish two names. Wait for an explicit string instead of guessing.
+            if (resolved != null && !resolved.equals(key)) return null;
+            resolved = key;
+        }
+        return resolved;
     }
 
     private float getArlecchinoBoLRatio(Avatar avatar, String varName) {
         var depot = GameData.getAvatarSkillDepotDataMap().get(avatar.getSkillDepotId());
         if (depot == null) return 0f;
-        var skillLevelMap = avatar.getSkillLevelMap();
+        var skillLevelMap = avatar.getEffectiveSkillLevelMap();
         var result = new float[]{0f};
 
         depot.getSkillsAndEnergySkill().forEach(skillId -> {
@@ -1107,8 +1195,8 @@ public final class AbilityManager extends BasePlayerManager {
             if (params == null) return;
             for (var setter : entry.getAbilityVarSetters()) {
                 if (!varName.equals(setter.getVarName())) continue;
-                int idx = setter.getParamIndex();
-                if (idx < params.length) { result[0] = params[idx]; return; }
+                Float value = setter.resolve(params);
+                if (value != null) { result[0] = value; return; }
             }
         });
         if (result[0] > 0f) return result[0];
@@ -1125,8 +1213,8 @@ public final class AbilityManager extends BasePlayerManager {
                 if (params == null) continue;
                 for (var setter : entry.getAbilityVarSetters()) {
                     if (!varName.equals(setter.getVarName())) continue;
-                    int idx = setter.getParamIndex();
-                    if (idx < params.length) { result[0] = params[idx]; break; }
+                    Float value = setter.resolve(params);
+                    if (value != null) { result[0] = value; break; }
                 }
             }
         }
@@ -1197,6 +1285,7 @@ public final class AbilityManager extends BasePlayerManager {
             var data = GameData.getAbilityData(name);
             avatar.getInstancedAbilities().add(data != null ? new Ability(data, avatar, player) : null);
         }
+        avatar.getAbilityGlobalValueWatchers().refresh();
     }
 
     private void invokeAction(
@@ -1284,62 +1373,16 @@ public final class AbilityManager extends BasePlayerManager {
             setAbilityOverrideValue(newAbility, override);
         }
 
-        if (abilityName != null && entity instanceof EntityClientGadget clientGadget) {
-            var talentVars = GameData.getAbilityTalentVarMap().get(abilityName);
-            if (talentVars != null && !talentVars.isEmpty()) {
-                var ownerEntity = player.getScene().getEntityById(clientGadget.getOriginalOwnerEntityId());
-                if (ownerEntity instanceof EntityAvatar avatarOwner) {
-                    var avatar = avatarOwner.getAvatar();
-                    AvatarSkillDepotData depot = GameData.getAvatarSkillDepotDataMap().get(avatar.getSkillDepotId());
-                    List<AbilityInvokeEntry> overrides = new ArrayList<>();
-
-                    for (var tv : talentVars) {
-                        Integer groupId = GameData.getOpenConfigToProudSkillGroup().get(tv.openConfigName());
-                        if (groupId == null) continue;
-
-                        int skillLevel = 1;
-                        if (depot != null) {
-                            int resolvedGroupId = groupId;
-                            skillLevel = depot.getSkillsAndEnergySkill()
-                                .filter(skillId -> {
-                                    var sc = GameData.getAvatarSkillDataMap().get(skillId);
-                                    return sc != null && sc.getProudSkillGroupId() == resolvedGroupId;
-                                })
-                                .mapToObj(skillId -> avatar.getSkillLevelMap().getOrDefault(skillId, 1))
-                                .findFirst()
-                                .orElse(1);
-                        }
-
-                        ProudSkillData proudSkill = GameData.getProudSkillDataMap().get(groupId * 100 + skillLevel);
-                        if (proudSkill == null) continue;
-                        float[] paramList = proudSkill.getParamList();
-                        if (paramList == null || tv.paramIndex() >= paramList.length) continue;
-
-                        float value = paramList[tv.paramIndex()];
-                        overrides.add(AbilityInvokeEntry.newBuilder()
-                            .setEntityId(entity.getId())
-                            .setArgumentType(AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_META_OVERRIDE_PARAM)
-                            .setHead(AbilityInvokeEntryHead.newBuilder()
-                                .setInstancedAbilityId(targetIndex + 1)
-                                .build())
-                            .setAbilityData(AbilityScalarValueEntry.newBuilder()
-                                .setKey(AbilityString.newBuilder()
-                                    .setStr(tv.varName())
-                                    .setHash(Utils.abilityHash(tv.varName()))
-                                    .build())
-                                .setFloatValue(value)
-                                .build()
-                                .toByteString())
-                            .build());
-                    }
-
-                    if (!overrides.isEmpty()) {
-                        player.sendPacket(new PacketAbilityInvocationsNotify(overrides));
-                    }
-                }
+        if (entity instanceof EntityClientGadget || entity instanceof emu.grasscutter.game.entity.EntityWeapon) {
+            var overrides = new ArrayList<AbilityInvokeEntry>();
+            var values = resolveTalentOverrides(newAbility);
+            for (var entry : values.entrySet()) {
+                newAbility.getAbilitySpecials().put(entry.getKey(), entry.getValue());
+                overrides.add(talentOverrideInvoke(entity, targetIndex + 1, entry.getKey(), entry.getValue()));
             }
+            if (!overrides.isEmpty()) player.sendPacket(new PacketAbilityInvocationsNotify(overrides));
         }
-
+        newAbility.refreshModifierTargets(true);
     }
 
     private void handleKillState(AbilityInvokeEntry invoke) throws InvalidProtocolBufferException {
@@ -1373,48 +1416,19 @@ public final class AbilityManager extends BasePlayerManager {
     }
 
     public Map<String, Float> computeGadgetVarOverrides(EntityClientGadget gadget) {
-        Map<String, Float> result = new HashMap<>();
-        var ownerEntity = player.getScene().getEntityById(gadget.getOriginalOwnerEntityId());
-        if (!(ownerEntity instanceof EntityAvatar avatarOwner)) return result;
-        var avatar = avatarOwner.getAvatar();
-        AvatarSkillDepotData depot = GameData.getAvatarSkillDepotDataMap().get(avatar.getSkillDepotId());
-
-        List<String> abilityNames = new ArrayList<>();
-        if (gadget.getConfigGadget() != null && gadget.getConfigGadget().getAbilities() != null) {
-            for (var a : gadget.getConfigGadget().getAbilities()) {
-                if (a.getAbilityName() != null) abilityNames.add(a.getAbilityName());
-            }
-        }
-        var gd = GameData.getGadgetDataMap().get(gadget.getGadgetId());
-        if (abilityNames.isEmpty() && gd != null && gd.getJsonName() != null) {
-            abilityNames.add("Bullet_" + gd.getJsonName());
-        }
-
-        for (String abilityName : abilityNames) {
-            var talentVars = GameData.getAbilityTalentVarMap().get(abilityName);
-            if (talentVars == null) continue;
-            for (var tv : talentVars) {
-                Integer groupId = GameData.getOpenConfigToProudSkillGroup().get(tv.openConfigName());
-                if (groupId == null) continue;
-                int skillLevel = 1;
-                if (depot != null) {
-                    int resolvedGroupId = groupId;
-                    skillLevel = depot.getSkillsAndEnergySkill()
-                        .filter(sid -> {
-                            var sc = GameData.getAvatarSkillDataMap().get(sid);
-                            return sc != null && sc.getProudSkillGroupId() == resolvedGroupId;
-                        })
-                        .mapToObj(sid -> avatar.getSkillLevelMap().getOrDefault(sid, 1))
-                        .findFirst()
-                        .orElse(1);
-                }
-                ProudSkillData proudSkill = GameData.getProudSkillDataMap().get(groupId * 100 + skillLevel);
-                if (proudSkill == null) continue;
-                float[] paramList = proudSkill.getParamList();
-                if (paramList == null || tv.paramIndex() >= paramList.length) continue;
-                result.put(tv.varName(), paramList[tv.paramIndex()]);
-            }
-        }
+        var result = new LinkedHashMap<String, Float>();
+        var avatar = AbilityTalentResolver.casterAvatar(player, gadget);
+        if (avatar == null) return result;
+        var names = new LinkedHashSet<String>();
+        if (gadget.getConfigGadget() != null && gadget.getConfigGadget().getAbilities() != null)
+            for (var config : gadget.getConfigGadget().getAbilities())
+                if (config != null && config.getAbilityName() != null) names.add(config.getAbilityName());
+        for (var ability : gadget.getInstancedAbilities())
+            if (ability != null) names.add(ability.getData().abilityName);
+        var data = GameData.getGadgetDataMap().get(gadget.getGadgetId());
+        if (names.isEmpty() && data != null && data.getJsonName() != null)
+            names.add("Bullet_" + data.getJsonName());
+        for (var name : names) result.putAll(AbilityTalentResolver.overrides(avatar, name));
         return result;
     }
 
@@ -1429,25 +1443,71 @@ public final class AbilityManager extends BasePlayerManager {
         fireAbilityOnAdded(ability, entity);
     }
 
+    /** Trigger the caster's instance, retaining onAdded state when the same ability runs again. */
+    public boolean triggerAbility(GameEntity entity, String name) {
+        if (entity == null || name == null || name.isBlank()) return false;
+        if (!AbilityExecutionContext.canTrigger(entity, this.player)) return false;
+        Ability selected;
+        boolean created = false;
+        var instances = entity.getInstancedAbilities();
+        synchronized (instances) {
+            selected = instances.stream()
+                    .filter(a -> a.getPlayerOwner() == this.player && name.equals(a.getData().abilityName))
+                    .findFirst().orElse(null);
+            if (selected == null) {
+                var data = GameData.getAbilityData(name);
+                if (data == null) return false;
+                selected = new Ability(data, entity, this.player);
+                selected.prepareTriggerInitialization();
+                instances.add(selected);
+                created = true;
+            }
+        }
+        var instance = selected;
+        var context = new AbilityExecutionContext(instance, entity);
+        var ownedChain = isServerOwnedChain();
+        var healTag = AbilityHealContext.currentTag();
+        // Continuations do not wait or retain entity-list locks during nested cross-entity triggers.
+        instance.getTriggerInitialization().thenRun(() -> AbilityHealContext.run(healTag, () -> runServerOwned(ownedChain, () -> {
+            if (instance.getData().onAbilityStart == null) return;
+            if (context.isCurrent()) executeCallbackActionsNow(instance, instance.getData().onAbilityStart,
+                    ByteString.EMPTY, entity, entity);
+        }))).exceptionally(error -> {
+            Grasscutter.getLogger().error("Triggered ability {} failed during initialization/start", name, error);
+            return null;
+        });
+        if (created) {
+            try {
+                fireAbilityOnAdded(instance, entity, true);
+                instance.getTriggerInitialization().complete(null);
+            } catch (RuntimeException | Error error) {
+                instance.getTriggerInitialization().completeExceptionally(error);
+                throw error;
+            }
+        }
+        return true;
+    }
+
     private void fireAbilityOnAdded(Ability ability, GameEntity entity) {
+        fireAbilityOnAdded(ability, entity, false);
+    }
+
+    private void fireAbilityOnAdded(Ability ability, GameEntity entity, boolean immediate) {
         var data = ability.getData();
         if (data == null) return;
 
-        if (data.onAdded != null) {
-            for (var action : data.onAdded) {
-                if (action.type == null) continue;
-                executeAction(ability, action, com.google.protobuf.ByteString.EMPTY, entity);
-            }
-        }
+        var actions = new ArrayList<AbilityModifierAction>();
+        if (data.onAdded != null) Collections.addAll(actions, data.onAdded);
 
         if (data.modifiers != null) {
             var defaultMod = data.modifiers.get("Default");
             if (defaultMod != null && defaultMod.onAdded != null) {
-                for (var action : defaultMod.onAdded) {
-                    if (action.type == null) continue;
-                    executeAction(ability, action, com.google.protobuf.ByteString.EMPTY, entity);
-                }
+                Collections.addAll(actions, defaultMod.onAdded);
             }
         }
+        var sequence = actions.toArray(AbilityModifierAction[]::new);
+        if (immediate) executeCallbackActionsNow(ability, sequence, ByteString.EMPTY, entity, entity);
+        else queueCallbackActions(ability, sequence, ByteString.EMPTY, entity, AbilityHealContext.currentTag());
+        entity.getAbilityGlobalValueWatchers().refresh();
     }
 }

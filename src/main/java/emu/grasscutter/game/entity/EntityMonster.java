@@ -369,6 +369,13 @@ public class EntityMonster extends GameEntity {
     }
 
     public void recalcStats() {
+        synchronized (getInstancedModifiers()) {
+            recalcStatProperties();
+            getAbilityHpModifier().afterStatRecalc();
+        }
+    }
+
+    private void recalcStatProperties() {
         // Monster data
         MonsterData data = this.getMonsterData();
 

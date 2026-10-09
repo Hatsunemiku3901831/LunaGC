@@ -54,12 +54,7 @@ class AsterPersistenceTest {
     }
 
     private static void drain() throws Exception {
-        var executor = (ThreadPoolExecutor) DatabaseHelper.getEventExecutor();
-        long until = System.nanoTime() + TimeUnit.SECONDS.toNanos(5);
-        while (executor.getActiveCount() != 0 || !executor.getQueue().isEmpty()) {
-            if (System.nanoTime() > until) fail("Database test jobs did not finish");
-            Thread.sleep(5);
-        }
+        assertTrue(DatabaseHelper.awaitIdle(java.time.Duration.ofSeconds(5)), "Pending database test jobs");
     }
 
     @BeforeEach

@@ -13,6 +13,7 @@ import emu.grasscutter.game.props.*;
 import emu.grasscutter.game.props.ItemUseAction.UseItemParams;
 import emu.grasscutter.game.quest.enums.QuestContent;
 import emu.grasscutter.game.shop.BeyondCurrency;
+import emu.grasscutter.game.tps.TpsWeaponSystem;
 import emu.grasscutter.net.proto.ItemParamOuterClass.ItemParam;
 import emu.grasscutter.server.event.player.PlayerObtainItemEvent;
 import emu.grasscutter.server.packet.send.*;
@@ -40,6 +41,8 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
                 ItemType.ITEM_MATERIAL, new MaterialInventoryTab(INVENTORY_LIMITS.materials));
         this.createInventoryTab(
                 ItemType.ITEM_FURNITURE, new MaterialInventoryTab(INVENTORY_LIMITS.furniture));
+        this.createInventoryTab(ItemType.ITEM_TPS_WEAPON,
+                new MaterialInventoryTab(TpsWeaponSystem.TPS_WEAPON_ITEM_LIMIT));
     }
 
     public AvatarStorage getAvatarStorage() {
@@ -132,11 +135,17 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
      * @return True if the item was stored.
      */
     public boolean addItem(GameItem item, boolean skipUseOnGain) {
+        return addItem(item, skipUseOnGain, true);
+    }
+
+    /** Login initialization is announced later by PlayerStoreNotify. */
+    public boolean addItem(GameItem item, boolean skipUseOnGain, boolean notify) {
         GameItem result = putItem(item, skipUseOnGain);
 
         if (result != null) {
+            TpsWeaponSystem.onMaterialsChanged(this.player, List.of(result.getItemId()), notify);
             this.triggerAddItemEvents(result);
-            getPlayer().sendPacket(new PacketStoreItemChangeNotify(result));
+            if (notify) getPlayer().sendPacket(new PacketStoreItemChangeNotify(result));
 
             // Call PlayerObtainItemEvent.
             new PlayerObtainItemEvent(this.getPlayer(), item).call();
@@ -203,6 +212,12 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
         if (changedItems.size() == 0) {
             return;
         }
+        TpsWeaponSystem.onMaterialsChanged(
+                this.player,
+                changedItems.stream()
+                        .map(GameItem::getItemId)
+                        .collect(java.util.stream.Collectors.toSet()),
+                true);
         getPlayer().sendPacket(new PacketStoreItemChangeNotify(changedItems));
         if (reason != null) {
             // The originals may have merged into an existing stack or been consumed by a
@@ -313,6 +328,8 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
         // Dont add items that dont have a valid item definition.
         var data = item.getItemData();
         if (data == null) return null;
+        if (data.getItemType() == ItemType.ITEM_TPS_WEAPON
+                && getInventoryTab(ItemType.ITEM_TPS_WEAPON).getItemById(item.getItemId()) != null) return null;
         try {
             this.player.getProgressManager().addItemObtainedHistory(item.getItemId(), item.getCount());
         } catch (Exception e) {
@@ -332,6 +349,13 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
 
         // Add
         switch (type) {
+            case ITEM_TPS_WEAPON:
+                if (tab.getSize() >= tab.getMaxCapacity()) return null;
+                item.setCount(1);
+                this.putItem(item, tab);
+                TpsWeaponSystem.reconcileAccessories(this.player, item);
+                item.save();
+                return item;
             case ITEM_WEAPON:
             case ITEM_RELIQUARY:
                 if (tab.getSize() >= tab.getMaxCapacity()) {
@@ -657,6 +681,7 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
 
         // Update in db
         item.save();
+        TpsWeaponSystem.onMaterialsChanged(this.player, List.of(item.getItemId()), true);
 
         // Returns true on success
         return true;
@@ -667,6 +692,7 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
         if (tab != null) {
             tab.onRemoveItem(item);
         }
+        if (TpsWeaponSystem.isTpsWeapon(item)) TpsWeaponSystem.onWeaponRemoved(this.player, item);
     }
 
     public boolean equipItem(long avatarGuid, long equipGuid) {
@@ -721,10 +747,17 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
                 tab = getInventoryTab(item.getItemData().getItemType());
             }
 
+            if (item.getItemType() == ItemType.ITEM_TPS_WEAPON) {
+                if (tab.getItemById(item.getItemId()) != null) {
+                    Grasscutter.getLogger().warn("Duplicate TPS weapon {} in player {} inventory", item.getItemId(), player.getUid());
+                    continue;
+                }
+                item.setCount(1);
+            }
             this.putItem(item, tab);
 
             // Equip to a character if possible
-            if (item.isEquipped()) {
+            if (item.isEquipped() && item.getItemType() != ItemType.ITEM_TPS_WEAPON) {
                 Avatar avatar = getPlayer().getAvatars().getAvatarById(item.getEquipCharacter());
                 boolean hasEquipped = false;
 
@@ -738,6 +771,8 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
                 }
             }
         }
+
+        TpsWeaponSystem.restoreAccessories(this.player);
 
         // Load avatars after inventory.
         this.getPlayer().getAvatars().postLoad();

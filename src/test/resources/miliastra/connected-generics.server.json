@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 2,
+  "name": "相连泛型类型验证",
+  "environment": "server",
+  "nodes": [
+    {
+      "id": "sum",
+      "type": "math.add",
+      "position": {"x": 10, "y": 20},
+      "data": {"overrides": {"a": 1, "b": 2}}
+    },
+    {
+      "id": "equal",
+      "type": "math.equals",
+      "position": {"x": 80, "y": 20},
+      "data": {"overrides": {"input2": 3}}
+    }
+  ],
+  "edges": [
+    {
+      "id": "sum-equal",
+      "source": {"nodeId": "sum", "portId": "result"},
+      "target": {"nodeId": "equal", "portId": "input1"}
+    }
+  ],
+  "comments": []
+}

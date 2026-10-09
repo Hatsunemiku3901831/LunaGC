@@ -5,6 +5,7 @@ import static com.mongodb.client.model.Filters.eq;
 import com.mongodb.MongoWriteException;
 import com.mongodb.WriteConcern;
 import dev.morphia.DeleteOptions;
+import dev.morphia.Datastore;
 import dev.morphia.InsertOneOptions;
 import dev.morphia.query.*;
 import dev.morphia.query.experimental.filters.Filters;
@@ -24,7 +25,8 @@ import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.quest.GameMainQuest;
 import emu.grasscutter.game.world.SceneGroupInstance;
 import emu.grasscutter.utils.objects.Returnable;
-import io.netty.util.concurrent.FastThreadLocalThread;
+import emu.grasscutter.config.ConfigContainer.Database.Pool;
+import java.time.Duration;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.concurrent.*;
@@ -35,16 +37,39 @@ import lombok.Getter;
 public final class DatabaseHelper {
     private static volatile boolean mailCounterInitialized;
 
-    @Getter
-    private static final ExecutorService eventExecutor =
-            new ThreadPoolExecutor(
-                    6,
-                    6,
-                    60,
-                    TimeUnit.SECONDS,
-                    new LinkedBlockingDeque<>(),
-                    FastThreadLocalThread::new,
-                    new ThreadPoolExecutor.AbortPolicy());
+    private static final emu.grasscutter.config.ConfigContainer.Database.AsyncWrites queueConfig =
+            Grasscutter.getConfig().databaseInfo.asyncWrites;
+    @Getter private static final DatabaseWriteQueue eventExecutor = queue("default", queueConfig.defaults);
+    @Getter private static final DatabaseWriteQueue eventExecutorAccount = queue("account", queueConfig.accounts);
+    @Getter private static final DatabaseWriteQueue eventExecutorItem = queue("item", queueConfig.items);
+    @Getter private static final DatabaseWriteQueue eventExecutorGroup = queue("group", queueConfig.groups);
+    private static final List<DatabaseWriteQueue> queues =
+            List.of(eventExecutor, eventExecutorAccount, eventExecutorItem, eventExecutorGroup);
+
+    private static DatabaseWriteQueue queue(String name, Pool settings) {
+        return new DatabaseWriteQueue(name, settings.threads, settings.capacity);
+    }
+
+    public static List<DatabaseWriteQueue.Snapshot> queueStatus() {
+        return queues.stream().map(DatabaseWriteQueue::snapshot).toList();
+    }
+
+    /** Quiescence check for callers that have stopped producing database work. */
+    public static boolean awaitIdle(Duration timeout) throws InterruptedException {
+        long deadline = System.nanoTime() + timeout.toNanos();
+        for (var queue : queues) {
+            if (!queue.awaitIdle(Duration.ofNanos(Math.max(0, deadline - System.nanoTime())))) return false;
+        }
+        return true;
+    }
+
+    /** Stop every pool together, then drain accepted work without discarding queued writes. */
+    public static boolean shutdown() throws InterruptedException {
+        queues.forEach(DatabaseWriteQueue::shutdown);
+        boolean drained = awaitIdle(Duration.ofSeconds(Math.max(1, queueConfig.shutdownTimeoutSeconds)));
+        if (!drained) Grasscutter.getLogger().error("Database shutdown timed out with unfinished writes: {}", queueStatus());
+        return drained;
+    }
 
     /**
      * Saves an object on the account datastore.
@@ -52,7 +77,10 @@ public final class DatabaseHelper {
      * @param object The object to save.
      */
     public static void saveAccountAsync(Object object) {
-        DatabaseHelper.eventExecutor.submit(() -> DatabaseManager.getAccountDatastore().save(object));
+        var datastore = DatabaseManager.getAccountDatastore();
+        eventExecutorAccount.saveSnapshot(object, datastore, () -> {
+            synchronized (object) { datastore.save(object); }
+        });
     }
 
     /**
@@ -61,13 +89,17 @@ public final class DatabaseHelper {
      * @param object The object to save.
      */
     public static void saveGameAsync(Object object) {
-        DatabaseHelper.eventExecutor.submit(
+        var datastore = DatabaseManager.getGameDatastore();
+        var queue = object instanceof GameItem ? eventExecutorItem
+                : object instanceof SceneGroupInstance ? eventExecutorGroup
+                : object instanceof Account ? eventExecutorAccount : eventExecutor;
+        queue.saveSnapshot(object, datastore,
                 () -> {
                     synchronized (object) {
                         // A queued stack save must respect a subsequent removal instead of recreating it.
                         if (object instanceof GameItem item && item.getCount() <= 0)
-                            DatabaseManager.getGameDatastore().delete(item);
-                        else saveWithRetry(object);
+                            datastore.delete(item);
+                        else saveWithRetry(datastore, object);
                     }
                 });
     }
@@ -92,41 +124,35 @@ public final class DatabaseHelper {
      * another thread while Morphia walked it - typically during login. Both used to lose the write
      * silently, so progress simply disappeared.
      */
-    private static void saveWithRetry(Object object) {
+    private static void saveWithRetry(Datastore datastore, Object object) {
         var name = object.getClass().getSimpleName();
         try {
-            DatabaseManager.getGameDatastore().save(object);
+            datastore.save(object);
         } catch (MongoWriteException e) {
             if (e.getError() == null || e.getError().getCode() != 11000) {
-                Grasscutter.getLogger().error("Failed to save {}.", name, e);
-                return;
+                throw e;
             }
             // The id is reflected back onto the object by the failed insert, so the retry
             // becomes a replace.
             try {
-                DatabaseManager.getGameDatastore().save(object);
-            } catch (Throwable t) {
-                Grasscutter.getLogger().error("Failed to save {} after a duplicate key.", name, t);
+                datastore.save(object);
+            } catch (RuntimeException t) {
+                throw new IllegalStateException("Failed to save " + name + " after a duplicate key", t);
             }
         } catch (ConcurrentModificationException e) {
             for (var attempt = 0; attempt < 8; attempt++) {
                 try {
                     Thread.sleep(100);
-                    DatabaseManager.getGameDatastore().save(object);
+                    datastore.save(object);
                     return;
                 } catch (ConcurrentModificationException ignored) {
                     // The other thread has not settled yet.
                 } catch (InterruptedException interrupted) {
                     Thread.currentThread().interrupt();
-                    return;
-                } catch (Throwable t) {
-                    Grasscutter.getLogger().error("Failed to save {}.", name, t);
-                    return;
+                    throw new IllegalStateException("Interrupted while saving " + name, interrupted);
                 }
             }
-            Grasscutter.getLogger().error("Failed to save {} - it kept being modified.", name, e);
-        } catch (Throwable t) {
-            Grasscutter.getLogger().error("Failed to save {}.", name, t);
+            throw new IllegalStateException("Failed to save " + name + " - it kept being modified", e);
         }
     }
 
@@ -149,7 +175,7 @@ public final class DatabaseHelper {
         var future = new CompletableFuture<T>();
 
         // Run the task on the event executor.
-        DatabaseHelper.eventExecutor.submit(
+        try { DatabaseHelper.eventExecutor.submit(
                 () -> {
                     try {
                         future.complete(task.invoke());
@@ -157,6 +183,9 @@ public final class DatabaseHelper {
                         future.completeExceptionally(e);
                     }
                 });
+        } catch (RejectedExecutionException exception) {
+            future.completeExceptionally(exception);
+        }
 
         return future;
     }
@@ -284,54 +313,58 @@ public final class DatabaseHelper {
         // database in an inconsistent state, but unfortunately Mongo only supports that when we have a
         // replica set ...
 
-        Player player = Grasscutter.getGameServer().getPlayerByAccountId(target.getId());
+        var gameDatastore = DatabaseManager.getGameDatastore();
+        var accountDatastore = DatabaseManager.getAccountDatastore();
+        String accountId = target.getId();
+        Player player = Grasscutter.getGameServer().getPlayerByAccountId(accountId);
 
         // Close session first
         if (player != null) {
             player.getSession().close();
         } else {
-            player = getPlayerByAccount(target);
+            player = gameDatastore.find(Player.class).filter(Filters.eq("accountId", accountId)).first();
             if (player == null) return;
         }
         int uid = player.getUid();
+        var gameDatabase = gameDatastore.getDatabase();
 
         DatabaseHelper.asyncOperation(
                 () -> {
                     // Delete data from collections
-                    DatabaseManager.getGameDatabase()
+                    gameDatabase
                             .getCollection("achievements")
                             .deleteMany(eq("uid", uid));
-                    DatabaseManager.getGameDatabase().getCollection("activities").deleteMany(eq("uid", uid));
-                    DatabaseManager.getGameDatabase().getCollection("homes").deleteMany(eq("ownerUid", uid));
-                    DatabaseManager.getGameDatabase().getCollection("mail").deleteMany(eq("ownerUid", uid));
-                    DatabaseManager.getGameDatabase().getCollection("avatars").deleteMany(eq("ownerId", uid));
-                    DatabaseManager.getGameDatabase().getCollection("gachas").deleteMany(eq("ownerId", uid));
-                    DatabaseManager.getGameDatabase().getCollection("items").deleteMany(eq("ownerId", uid));
-                    DatabaseManager.getGameDatabase().getCollection("quests").deleteMany(eq("ownerUid", uid));
-                    DatabaseManager.getGameDatabase()
+                    gameDatabase.getCollection("activities").deleteMany(eq("uid", uid));
+                    gameDatabase.getCollection("homes").deleteMany(eq("ownerUid", uid));
+                    gameDatabase.getCollection("mail").deleteMany(eq("ownerUid", uid));
+                    gameDatabase.getCollection("avatars").deleteMany(eq("ownerId", uid));
+                    gameDatabase.getCollection("gachas").deleteMany(eq("ownerId", uid));
+                    gameDatabase.getCollection("items").deleteMany(eq("ownerId", uid));
+                    gameDatabase.getCollection("quests").deleteMany(eq("ownerUid", uid));
+                    gameDatabase
                             .getCollection("battlepass")
                             .deleteMany(eq("ownerUid", uid));
 
                     // Delete friendships.
                     // Here, we need to make sure to not only delete the deleted account's friendships,
                     // but also all friendship entries for that account's friends.
-                    DatabaseManager.getGameDatabase()
+                    gameDatabase
                             .getCollection("friendships")
                             .deleteMany(eq("ownerId", uid));
-                    DatabaseManager.getGameDatabase()
+                    gameDatabase
                             .getCollection("friendships")
                             .deleteMany(eq("friendId", uid));
 
                     // Delete the player last.
-                    DatabaseManager.getGameDatastore()
+                    gameDatastore
                             .find(Player.class)
                             .filter(Filters.eq("id", uid))
                             .delete();
 
                     // Finally, delete the account itself.
-                    DatabaseManager.getAccountDatastore()
+                    accountDatastore
                             .find(Account.class)
-                            .filter(Filters.eq("id", target.getId()))
+                            .filter(Filters.eq("id", accountId))
                             .delete();
                 });
     }
@@ -453,10 +486,11 @@ public final class DatabaseHelper {
     }
 
     public static void deleteItem(GameItem item) {
-        DatabaseHelper.asyncOperation(
+        var datastore = DatabaseManager.getGameDatastore();
+        eventExecutorItem.submit(
                 () -> {
                     synchronized (item) {
-                        DatabaseManager.getGameDatastore().delete(item);
+                        datastore.delete(item);
                     }
                 });
     }
@@ -496,7 +530,8 @@ public final class DatabaseHelper {
     }
 
     public static void deleteFriendship(Friendship friendship) {
-        DatabaseHelper.asyncOperation(() -> DatabaseManager.getGameDatastore().delete(friendship));
+        var datastore = DatabaseManager.getGameDatastore();
+        DatabaseHelper.asyncOperation(() -> datastore.delete(friendship));
     }
 
     public static Friendship getReverseFriendship(Friendship friendship) {
@@ -623,7 +658,8 @@ public final class DatabaseHelper {
     }
 
     public static void deleteMail(Mail mail) {
-        DatabaseHelper.asyncOperation(() -> DatabaseManager.getGameDatastore().delete(mail));
+        var datastore = DatabaseManager.getGameDatastore();
+        DatabaseHelper.asyncOperation(() -> datastore.delete(mail));
     }
 
     public static List<GameMainQuest> getAllQuests(Player player) {
@@ -639,7 +675,8 @@ public final class DatabaseHelper {
     }
 
     public static void deleteQuest(GameMainQuest quest) {
-        DatabaseHelper.asyncOperation(() -> DatabaseManager.getGameDatastore().delete(quest));
+        var datastore = DatabaseManager.getGameDatastore();
+        DatabaseHelper.asyncOperation(() -> datastore.delete(quest));
     }
 
     public static GameHome getHomeByUid(int id) {

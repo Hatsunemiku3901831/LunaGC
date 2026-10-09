@@ -1,0 +1,9 @@
+syntax = "proto3";
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "GetAllUnlockProfileDataRspOuterClass";
+// MFLHNBCGNJP, native packet 22477, reader 0x1490cac50.
+message GetAllUnlockProfileDataRsp {
+  repeated uint32 profile_picture_list = 4;
+  repeated uint32 profile_frame_list = 15;
+  int32 retcode = 9;
+}

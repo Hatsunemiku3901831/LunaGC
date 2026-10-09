@@ -26,9 +26,11 @@ public class ActivityData extends GameResource {
     @Override
     public void onLoad() {
         this.watcherDataList =
-                (watcherId == null ? List.<Integer>of() : watcherId).stream()
-                        .map(item -> GameData.getActivityWatcherDataMap().get(item.intValue()))
-                        .filter(Objects::nonNull)
-                        .toList();
+                (watcherId == null ? List.<Integer>of() : watcherId)
+                        .stream()
+                                .filter(Objects::nonNull)
+                                .map(item -> GameData.getActivityWatcherDataMap().get(item.intValue()))
+                                .filter(Objects::nonNull)
+                                .toList();
     }
 }

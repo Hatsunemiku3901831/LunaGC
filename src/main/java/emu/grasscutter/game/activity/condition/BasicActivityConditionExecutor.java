@@ -3,12 +3,14 @@ package emu.grasscutter.game.activity.condition;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.excels.activity.ActivityCondExcelConfigData;
 import emu.grasscutter.game.activity.*;
-import emu.grasscutter.game.activity.condition.all.UnknownActivityConditionHandler;
 import emu.grasscutter.game.activity.salesman.SalesmanActivityHandler;
 import emu.grasscutter.game.quest.enums.LogicType;
+
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+
 import java.util.*;
 import java.util.function.BooleanSupplier;
+import java.util.function.LongSupplier;
 import java.util.stream.Collectors;
 
 public class BasicActivityConditionExecutor implements ActivityConditionExecutor {
@@ -18,25 +20,50 @@ public class BasicActivityConditionExecutor implements ActivityConditionExecutor
 
     private final Int2ObjectMap<PlayerActivityData> playerActivityDataByActivityCondId;
     private final Map<ActivityConditions, ActivityConditionBaseHandler> activityConditionsHandlers;
+    private final LongSupplier clock;
 
     public BasicActivityConditionExecutor(
             Map<Integer, ActivityConfigItem> activityConfigItemMap,
             Int2ObjectMap<ActivityCondExcelConfigData> activityConditions,
             Int2ObjectMap<PlayerActivityData> playerActivityDataByActivityCondId,
             Map<ActivityConditions, ActivityConditionBaseHandler> activityConditionsHandlers) {
+        this(
+                activityConfigItemMap,
+                activityConditions,
+                playerActivityDataByActivityCondId,
+                activityConditionsHandlers,
+                System::currentTimeMillis);
+    }
+
+    public BasicActivityConditionExecutor(
+            Map<Integer, ActivityConfigItem> activityConfigItemMap,
+            Int2ObjectMap<ActivityCondExcelConfigData> activityConditions,
+            Int2ObjectMap<PlayerActivityData> playerActivityDataByActivityCondId,
+            Map<ActivityConditions, ActivityConditionBaseHandler> activityConditionsHandlers,
+            LongSupplier clock) {
         this.activityConfigItemMap = activityConfigItemMap;
         this.activityConditions = activityConditions;
         this.playerActivityDataByActivityCondId = playerActivityDataByActivityCondId;
         this.activityConditionsHandlers = activityConditionsHandlers;
+        this.clock = Objects.requireNonNull(clock);
     }
 
     @Override
     public List<Integer> getMeetActivitiesConditions(List<Integer> condIds) {
-        return condIds.stream().filter(this::meetsCondition).collect(Collectors.toList());
+        return getMeetActivitiesConditions(condIds, clock.getAsLong());
+    }
+
+    @Override
+    public List<Integer> getMeetActivitiesConditions(List<Integer> condIds, long now) {
+        return condIds.stream().filter(id -> meetsCondition(id, now)).collect(Collectors.toList());
     }
 
     @Override
     public boolean meetsCondition(int activityCondId) {
+        return meetsCondition(activityCondId, clock.getAsLong());
+    }
+
+    private boolean meetsCondition(int activityCondId, long now) {
         ActivityCondExcelConfigData condData = activityConditions.get(activityCondId);
 
         if (condData == null) {
@@ -46,42 +73,62 @@ public class BasicActivityConditionExecutor implements ActivityConditionExecutor
         }
 
         LogicType condComb = condData.getCondComb();
-        if (condComb == null) {
-            condComb = LogicType.LOGIC_AND;
-        }
+        if (condComb == null) return false;
 
         PlayerActivityData activity = playerActivityDataByActivityCondId.get(activityCondId);
         if (activity == null) {
             return false;
         }
         ActivityConfigItem activityConfig = activityConfigItemMap.get(activity.getActivityId());
-        if (activityConfig != null
-                && activityConfig.getActivityHandler() instanceof SalesmanActivityHandler) {
+        if (activityConfig == null
+                || !activityConfig.isActiveAt(now)
+                || activityConfig.getActivityId() != activity.getActivityId()
+                || activityConfig.getScheduleId() != activity.getScheduleId()) return false;
+        if (activityConfig.getActivityHandler() instanceof SalesmanActivityHandler) {
             return activity.getPlayer() != null
                     && SalesmanActivityHandler.conditions(
-                                    activity,
-                                    activityConfig,
-                                    activity.getPlayer().getLevel(),
-                                    System.currentTimeMillis())
+                                    activity, activityConfig, activity.getPlayer().getLevel(), now)
                             .contains(activityCondId);
         }
-        // Resource padding (NEW_ACTIVITY_COND_NONE) is removed by onLoad. A LOGIC_NONE
-        // row with no remaining predicates is unconditional, not an unsupported operation.
-        if (condComb == LogicType.LOGIC_NONE && condData.getCond().isEmpty()) {
-            return true;
-        }
+        if (condData.getCond() == null) return false;
+        // Activity LOGIC_NONE is a conjunction, including rows with multiple real predicates.
+        if (condComb == LogicType.LOGIC_NONE) condComb = LogicType.LOGIC_AND;
         List<BooleanSupplier> predicates =
                 condData.getCond().stream()
                         .map(
                                 c ->
                                         (BooleanSupplier)
                                                 () ->
-                                                        activityConditionsHandlers
-                                                                .getOrDefault(
-                                                                        c.getType(), new UnknownActivityConditionHandler(c.getType()))
-                                                                .execute(activity, activityConfig, c.paramArray()))
+                                                        evaluate(
+                                                                activityCondId,
+                                                                c,
+                                                                activity,
+                                                                activityConfig,
+                                                                now))
                         .collect(Collectors.toList());
 
         return LogicType.calculate(condComb, predicates);
+    }
+
+    private boolean evaluate(
+            int conditionId,
+            ActivityCondExcelConfigData.ActivityConfigCondition condition,
+            PlayerActivityData activity,
+            ActivityConfigItem config,
+            long now) {
+        if (condition == null || condition.getType() == null) return false;
+        var handler = activityConditionsHandlers.get(condition.getType());
+        if (handler == null) return false;
+        try {
+            return handler.executeAt(activity, config, now, condition.paramArray());
+        } catch (RuntimeException invalid) {
+            Grasscutter.getLogger()
+                    .warn(
+                            "Activity condition {} ({}) could not be evaluated: {}",
+                            conditionId,
+                            condition.getType(),
+                            invalid.toString());
+            return false;
+        }
     }
 }

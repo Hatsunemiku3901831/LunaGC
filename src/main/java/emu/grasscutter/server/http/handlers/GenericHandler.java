@@ -7,22 +7,22 @@ import emu.grasscutter.server.http.Router;
 import emu.grasscutter.server.http.objects.*;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import java.util.Map;
+import emu.grasscutter.server.game.RuntimeDiagnostics;
 
 /** Handles all generic, hard-coded responses. */
 public final class GenericHandler implements Router {
     private static void serverStatus(Context ctx) {
-        int playerCount = Grasscutter.getGameServer().getPlayers().size();
+        var server = Grasscutter.getGameServer();
+        int playerCount = server == null || server.getPlayers() == null ? 0 : server.getPlayers().size();
         int maxPlayer = ACCOUNT.maxPlayer;
         String version = GameConstants.VERSION;
 
-        ctx.result(
-                "{\"retcode\":0,\"status\":{\"playerCount\":"
-                        + playerCount
-                        + ",\"maxPlayer\":"
-                        + maxPlayer
-                        + ",\"version\":\""
-                        + version
-                        + "\"}}");
+        var health = RuntimeDiagnostics.snapshot();
+        ctx.header("Cache-Control", "no-store");
+        ctx.status(Boolean.TRUE.equals(health.get("healthy")) ? 200 : 503)
+                .json(Map.of("retcode", 0, "status", Map.of("playerCount", playerCount,
+                        "maxPlayer", maxPlayer, "version", version, "health", health)));
     }
 
     @Override

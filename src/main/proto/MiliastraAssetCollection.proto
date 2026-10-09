@@ -1,0 +1,16 @@
+// Adapted from luern0313, MIT, proto submodule c56862b4fe2cb1d8dac5fdb6fb738ad559641ca2.
+// GIA文件Proto结构定义
+
+syntax = "proto3";
+option java_package = "emu.grasscutter.game.beyond.proto.assets";
+option java_outer_classname = "MiliastraAssetCollection";
+
+package lunagc.miliastra.assets;
+
+import "MiliastraAssetDefinitions.proto";
+
+
+// GIA文件
+message GIACollection {
+    repeated lunagc.miliastra.assets.asset.Asset Assets = 1;     // 资产列表
+}

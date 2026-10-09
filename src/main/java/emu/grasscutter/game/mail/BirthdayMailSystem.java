@@ -7,10 +7,12 @@ import emu.grasscutter.config.ConfigContainer.GameOptions.BirthdayMailOptions.Gi
 import emu.grasscutter.game.mail.Mail.MailContent;
 import emu.grasscutter.game.mail.Mail.MailItem;
 import emu.grasscutter.game.player.Player;
+import emu.grasscutter.utils.GameCalendar;
 import emu.grasscutter.utils.Utils;
 import emu.grasscutter.utils.lang.Language;
+
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +28,9 @@ import java.util.List;
  *   <li>Uses {@link Language#translate(Player, String, Object...)} so the mail is shown in each
  *       player's own configured language, instead of a hardcoded English string.
  *   <li>Reads the gift items, mail expiry, and an enable/disable switch from {@link
- *       BirthdayMailOptions} instead of hardcoding them, so server owners can configure or turn
- *       off the feature. The mail is sent from "Server", matching the convention already used by
- *       {@link emu.grasscutter.command.commands.SendMailCommand}.
+ *       BirthdayMailOptions} instead of hardcoding them, so server owners can configure or turn off
+ *       the feature. The mail is sent from "Server", matching the convention already used by {@link
+ *       emu.grasscutter.command.commands.SendMailCommand}.
  *   <li>Tracks the last year a player was mailed (see {@link Player#getLastBirthdayMailYear()}) so
  *       the mail is only ever sent once per birthday, no matter how many times the player logs in
  *       that day.
@@ -36,20 +38,18 @@ import java.util.List;
  */
 public final class BirthdayMailSystem {
     private BirthdayMailSystem() {}
-	
-	/**
-	 * Checks birthday mail using the server machine's current local date.
-	 */
-	public static void checkAndSend(Player player) {
-		checkAndSend(player, LocalDate.now(ZoneId.systemDefault()));
-	}	
+
+    /** Checks birthday mail using midnight in the China server calendar. */
+    public static void checkAndSend(Player player) {
+        checkAndSend(player, GameCalendar.calendarDay(Instant.now()));
+    }
 
     /**
      * Checks whether the player's birthday is today and, if so, sends them a gift mail - but only
      * once per year.
      *
      * @param player The player to check.
-     * @param today The current date, in the server's local time zone.
+     * @param today The current date in the China server calendar (midnight boundary).
      */
     public static void checkAndSend(Player player, LocalDate today) {
         var options = GAME_OPTIONS.birthdayMail;
@@ -57,8 +57,8 @@ public final class BirthdayMailSystem {
 
         var birthday = player.getBirthday();
         if (birthday == null || birthday.getDay() <= 0) return;
-        if (birthday.getMonth() != today.getMonthValue() || birthday.getDay() != today.getDayOfMonth())
-            return;
+        if (birthday.getMonth() != today.getMonthValue()
+                || birthday.getDay() != today.getDayOfMonth()) return;
 
         // Don't send the mail more than once per year (e.g. multiple logins on the same day).
         if (player.getLastBirthdayMailYear() >= today.getYear()) return;
@@ -76,7 +76,7 @@ public final class BirthdayMailSystem {
         long expireTime = Utils.getCurrentSeconds() + (options.expireDays * 86400L);
         var mail = new Mail(content, gifts, expireTime);
 
-        player.getMailHandler().sendMail(mail);
+        if (!player.getMailHandler().deliver(mail)) return;
 
         player.setLastBirthdayMailYear(today.getYear());
         player.save();

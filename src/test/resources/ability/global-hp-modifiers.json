@@ -1,0 +1,288 @@
+[
+  {
+    "abilityName": "MonsterAffix_AquarUnderWater_InteractHandler",
+    "abilitySpecials": {
+      "sub_hurt_delta": 0.75,
+      "damage_multiplier": 1.0
+    },
+    "modifiers": {
+      "BasicHPModifier": {
+        "properties": {
+          "Actor_MaxHPRatio": "SGV_AquarUnderWater_Monster_PwrFactor"
+        },
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      }
+    }
+  },
+  {
+    "abilityName": "MonsterAffix_AquarUnderWater_InteractHandler",
+    "abilitySpecials": {
+      "sub_hurt_delta": 0.75,
+      "damage_multiplier": 1.0
+    },
+    "modifiers": {
+      "RedEyeFishModifier": {
+        "properties": {
+          "Actor_MaxHPRatio": "SGV_AquarUnderWater_Monster_RedEyePwrFactor"
+        },
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      }
+    }
+  },
+  {
+    "abilityName": "SceneObj_Level_Common_Property_Ani_Prop_RoleCombat_GuardEntity_01",
+    "abilitySpecials": {},
+    "modifiers": {
+      "UNIQUE_RAGE_REDUCE_MAXHP": {
+        "thinkInterval": 2.0,
+        "properties": {
+          "Actor_MaxHPRatio": "SGV_ROLECOMBAT_HP_REDUCE"
+        },
+        "stacking": "Unique",
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "isUnique": true,
+        "onThinkInterval": [
+          {
+            "$type": "TriggerTaunt",
+            "careValue": 30.0,
+            "tauntLevel": "Ability_TauntLevel_2",
+            "otherTargets": {
+              "$type": "SelectTargetsByShape",
+              "sizeRatio": 1.0,
+              "campTargetType": "Enemy",
+              "shapeName": "CircleR25",
+              "NLNIBNNOOCK": {
+                "APKLAIJMEIL": {
+                  "HHNLJKNBKPP": 180
+                },
+                "value": 10,
+                "direction": {
+                  "maxAngle": 180
+                },
+                "onGroundRaycastUpDist": 2
+              }
+            },
+            "predicates": [
+              {
+                "$type": "DEOFBICNFHF",
+                "entityTypes": [
+                  "Monster"
+                ],
+                "target": "Target",
+                "value": -1
+              }
+            ],
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "canBeHandledOnRecover": true
+          }
+        ],
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      }
+    }
+  },
+  {
+    "abilityName": "Monster_TowerDefenceV4_EnemyUp_MaxHP",
+    "abilitySpecials": {
+      "HealthPropertyRatio": 0.0
+    },
+    "modifiers": {
+      "UNIQUE_Modifier_EnemyUp_MaxHP_TowerDefenceV4_Team": {
+        "properties": {
+          "Actor_MaxHPRatio": "GV_EnemyUp_MaxHP_Team"
+        },
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "isUnique": true,
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      }
+    }
+  },
+  {
+    "abilityName": "Monster_TowerDefenceV4_Property_HpImprove",
+    "abilitySpecials": {},
+    "modifiers": {
+      "Modifier_Hp_Property": {
+        "onAdded": [
+          {
+            "$type": "CopyGlobalValue",
+            "srcKey": "SGV_TowerDefenceV4_LoseHPArifact_Team",
+            "dstTarget": "Self",
+            "srcTarget": "Team",
+            "dstKey": "GV_TowerDefenceV4_LoseHPArifact_Team",
+            "target": "Self",
+            "useLimitRange": false,
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "canBeHandledOnRecover": true
+          },
+          {
+            "$type": "Predicated",
+            "successActions": [
+              {
+                "$type": "LoseHP",
+                "PBEMJNJJAFK": "",
+                "FPOCDLCHDPE": "GV_TowerDefenceV4_LoseHPArifact_Team",
+                "JBKJGMEJFFI": "",
+                "lethal": true,
+                "disableWhenLoading": true,
+                "enableLockHP": true,
+                "amountByTargetCurrentHPRatio": 0.0,
+                "amountByCasterAttackRatio": 0.0,
+                "target": "Self",
+                "actorIceSubHurtDelta": -1,
+                "doOffStage": false,
+                "amountByTargetMaxHPRatio": "GV_TowerDefenceV4_LoseHPArifact_Team",
+                "enableInvincible": true,
+                "canBeHandledOnRecover": true
+              },
+              {
+                "$type": "SetGlobalValue",
+                "key": "GV_TowerDefenceV4_LoseHP_Done",
+                "minValue": 0.0,
+                "maxValue": 0.0,
+                "value": 1.0,
+                "useLimitRange": false,
+                "target": "Self",
+                "actorIceSubHurtDelta": -1,
+                "doOffStage": false,
+                "canBeHandledOnRecover": true
+              }
+            ],
+            "targetPredicates": [
+              {
+                "$type": "ByTargetGlobalValue",
+                "value": 0.0,
+                "compareType": "MoreThan",
+                "key": "GV_TowerDefenceV4_LoseHPArifact_Team",
+                "target": "Self"
+              },
+              {
+                "$type": "ByTargetGlobalValue",
+                "value": 0.0,
+                "compareType": "NoneOrEqual",
+                "key": "GV_TowerDefenceV4_LoseHP_Done",
+                "target": "Self"
+              }
+            ],
+            "target": "Self",
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "canBeHandledOnRecover": true
+          }
+        ],
+        "properties": {
+          "Actor_MaxHPRatio": "SGV_TowerDefenceV4_HpImprove"
+        },
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      }
+    }
+  },
+  {
+    "abilityName": "Monster_TowerDefenceV4_Property_HpImprove_Team",
+    "abilitySpecials": {},
+    "modifiers": {
+      "Modifier_Hp_Property_ByTeam": {
+        "onAdded": [
+          {
+            "$type": "CopyGlobalValue",
+            "srcKey": "SGV_TowerDefenceV4_LoseHPArifact_Team",
+            "dstTarget": "Self",
+            "srcTarget": "Team",
+            "dstKey": "GV_TowerDefenceV4_LoseHPArifact_Team",
+            "target": "Self",
+            "useLimitRange": false,
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "canBeHandledOnRecover": true
+          },
+          {
+            "$type": "Predicated",
+            "successActions": [
+              {
+                "$type": "LoseHP",
+                "PBEMJNJJAFK": "",
+                "FPOCDLCHDPE": "GV_TowerDefenceV4_LoseHPArifact_Team",
+                "JBKJGMEJFFI": "",
+                "lethal": true,
+                "disableWhenLoading": true,
+                "enableLockHP": true,
+                "amountByTargetCurrentHPRatio": 0.0,
+                "amountByCasterAttackRatio": 0.0,
+                "target": "Self",
+                "actorIceSubHurtDelta": -1,
+                "doOffStage": false,
+                "amountByTargetMaxHPRatio": "GV_TowerDefenceV4_LoseHPArifact_Team",
+                "enableInvincible": true,
+                "canBeHandledOnRecover": true
+              },
+              {
+                "$type": "SetGlobalValue",
+                "key": "GV_TowerDefenceV4_LoseHP_Done",
+                "minValue": 0.0,
+                "maxValue": 0.0,
+                "value": 1.0,
+                "useLimitRange": false,
+                "target": "Self",
+                "actorIceSubHurtDelta": -1,
+                "doOffStage": false,
+                "canBeHandledOnRecover": true
+              }
+            ],
+            "targetPredicates": [
+              {
+                "$type": "ByTargetGlobalValue",
+                "value": 0.0,
+                "compareType": "MoreThan",
+                "key": "GV_TowerDefenceV4_LoseHPArifact_Team",
+                "target": "Self"
+              },
+              {
+                "$type": "ByTargetGlobalValue",
+                "value": 0.0,
+                "compareType": "NoneOrEqual",
+                "key": "GV_TowerDefenceV4_LoseHP_Done",
+                "target": "Self"
+              }
+            ],
+            "target": "Self",
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "canBeHandledOnRecover": true
+          }
+        ],
+        "properties": {
+          "Actor_MaxHPRatio": "GV_TowerDefenceV4_HpImprove_Team_Self"
+        },
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      }
+    }
+  }
+]

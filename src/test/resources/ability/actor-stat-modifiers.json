@@ -1,0 +1,1078 @@
+[
+  {
+    "abilityName": "Avatar_Aino_ElementalBurst",
+    "abilitySpecials": {
+      "Burst_Moon2_Dur": 0.0,
+      "Burst_Moon2_ElemMasteryDelta": 0.0
+    },
+    "modifiers": {
+      "UNIQUE_Aino_ElementalBurst_Moon2_AddElemMasteryDelta": {
+        "properties": {
+          "Actor_ElemMasteryDelta": "Burst_Moon2_ElemMasteryDelta"
+        },
+        "stacking": "Unique",
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "isUnique": true,
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "isLimitedProperties": true,
+        "NLBKJKDNFFP": -1
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Albedo_HexenzirkelSkill",
+    "abilitySpecials": {
+      "Hexenzirkel_DamageUp_Ratio_NG": 0.0,
+      "Hexenzirkel_DamageUp_Ratio_OG": 0.0,
+      "Defence_InCalc_NG": 0.0,
+      "Defence_InCalc_OG": 0.0,
+      "Ratio_OG": 0.0,
+      "Ratio_NG": 0.0,
+      "Ratio_OG_Max": 0.0,
+      "Ratio_NG_Max": 0.0,
+      "Ratio_OG_Duration": 0.0,
+      "Ratio_NG_Duration": 0.0,
+      "Talent_2_Ratio": 0.0,
+      "ElemMasteryUpTime": 0.0,
+      "FullBloomDelay": 0.37,
+      "ElemMasteryDelta": 0.0,
+      "DefenceRatio": 0.0,
+      "Duration": 0.0
+    },
+    "modifiers": {
+      "UNIQUE_Avatar_Albedo_Hexenzirkel_Talent_1": {
+        "duration": "Duration",
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_DefenceRatio": "DefenceRatio"
+        },
+        "elementDurability": 100.0,
+        "state": "DefenseUp",
+        "modifierName": "",
+        "isUnique": true,
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Alhatham_ElementalBurst",
+    "abilitySpecials": {
+      "ForlornLotus_Restore_Level": 0.0,
+      "ForlornLotus_Cost_Level": 0.0,
+      "Constellation_4_CostBuff_Mastery": 0.0,
+      "Constellation_4_CostBuff_Duration": 0.0,
+      "Constellation_4_GainBuff_GrassAddHurtDelta": 0.0,
+      "Constellation_4_GainBuff_Duration": 0.0,
+      "ForlornLotus_Level_CeilingTemp_After": 0.0
+    },
+    "modifiers": {
+      "UNIQUE_Alhatham_Constellation_4_GainBuff": {
+        "duration": "Constellation_4_GainBuff_Duration",
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_GrassAddHurtDelta": [
+            "Constellation_4_GainBuff_GrassAddHurtDelta",
+            "ForlornLotus_Restore_Level",
+            "MUL"
+          ]
+        },
+        "stacking": "Unique",
+        "elementDurability": 100.0,
+        "state": "AttackUp",
+        "modifierName": "",
+        "isUnique": true,
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Alhatham_Constellation_6",
+    "abilitySpecials": {
+      "Constellation_6_CriticalDelta": 0.0,
+      "Constellation_6_CriticalHurtDelta": 0.0,
+      "Constellation_6_Duration": 0.0
+    },
+    "modifiers": {
+      "UNIQUE_Alhatham_Constellation_6_OverflowPrism_Buff": {
+        "thinkInterval": 0.8,
+        "duration": "Constellation_6_Duration",
+        "onAdded": [
+          {
+            "$type": "FireEffect",
+            "effectPattern": "Eff_Avatar_Male_Sword_Alhatham_Constellation_6_Watch",
+            "scale": 1.0,
+            "ILLLPEOODKP": "",
+            "effectTempleteID": -1.0,
+            "target": "Self"
+          },
+          {
+            "$type": "AttachModifier",
+            "modifierName": "Avatar_Alhatham_Constellation_6_FX",
+            "target": "Self"
+          }
+        ],
+        "isLimitedProperties": true,
+        "onAvatarOut": [
+          {
+            "$type": "RemoveModifier",
+            "modifierName": "Avatar_Alhatham_Constellation_6_FX",
+            "doOffStage": true,
+            "target": "Self"
+          }
+        ],
+        "properties": {
+          "Actor_CriticalDelta": "Constellation_6_CriticalDelta",
+          "Actor_CriticalHurtDelta": "Constellation_6_CriticalHurtDelta"
+        },
+        "stacking": "Prolong",
+        "elementDurability": 100.0,
+        "state": "AttackUp",
+        "modifierName": "",
+        "isUnique": true,
+        "onThinkInterval": [
+          {
+            "$type": "AttachModifier",
+            "modifierName": "Avatar_Alhatham_Constellation_6_FX",
+            "doOffStage": false,
+            "target": "Self"
+          }
+        ],
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Aloy_Coil_Handler",
+    "abilitySpecials": {
+      "Aloy_Coil_MaxCount": 4.0,
+      "Aloy_Coil_AttackRatio": 0.0,
+      "Aloy_Coil_BuffDuration": 0.0,
+      "Aloy_Coil_AttackDownRatio": 0.0,
+      "Aloy_Coil_DebuffDuration": 0.0,
+      "Aloy_Coil_UltraModeLifeTime": 0.0,
+      "NormalAttack_Coil_L1_DamagePercentageRatio": 0.0,
+      "NormalAttack_Coil_L2_DamagePercentageRatio": 0.0,
+      "NormalAttack_Coil_L3_DamagePercentageRatio": 0.0,
+      "NormalAttack_Coil_L4_DamagePercentageRatio": 0.0,
+      "Aloy_CoilBurst_IceAttackDelta": 0.0
+    },
+    "modifiers": {
+      "UNIQUE_Aloy_Coil_Monster_AttackDown": {
+        "duration": "Aloy_Coil_DebuffDuration",
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_AttackRatio": [
+            0.0,
+            1.0,
+            "Aloy_Coil_AttackDownRatio",
+            "MUL",
+            "SUB"
+          ]
+        },
+        "stacking": "Unique",
+        "elementDurability": 100.0,
+        "state": "DefenseDown",
+        "modifierName": "",
+        "isUnique": true,
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Aloy_Coil_Handler",
+    "abilitySpecials": {
+      "Aloy_Coil_MaxCount": 4.0,
+      "Aloy_Coil_AttackRatio": 0.0,
+      "Aloy_Coil_BuffDuration": 0.0,
+      "Aloy_Coil_AttackDownRatio": 0.0,
+      "Aloy_Coil_DebuffDuration": 0.0,
+      "Aloy_Coil_UltraModeLifeTime": 0.0,
+      "NormalAttack_Coil_L1_DamagePercentageRatio": 0.0,
+      "NormalAttack_Coil_L2_DamagePercentageRatio": 0.0,
+      "NormalAttack_Coil_L3_DamagePercentageRatio": 0.0,
+      "NormalAttack_Coil_L4_DamagePercentageRatio": 0.0,
+      "Aloy_CoilBurst_IceAttackDelta": 0.0
+    },
+    "modifiers": {
+      "Aloy_CoilBurst_IceAttackUp": {
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_IceAddHurtDelta": "Aloy_CoilBurst_IceAttackDelta"
+        },
+        "stacking": "MultipleAllRefresh",
+        "GMGIAGMCGLF": {
+          "PFEHHABPHDB": "",
+          "KAANKELFPLA": 10.0
+        },
+        "elementDurability": 100.0,
+        "state": "AttackUp",
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "stackingOption": {
+          "abilitySpecialName": "",
+          "maxModifierNumForMultipleType": 10.0
+        }
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Arlecchino_ExtraAttack",
+    "abilitySpecials": {
+      "ExtraAttack_Pole_Stamina_Cost": 0.0,
+      "SpecialMove_Stamina_Cost": 0.0,
+      "Flexible_Stamina": -2.0,
+      "Arlecchino_Constellation_2_CD": 0.0,
+      "Arlecchino_Constellation_4_CD": 0.0,
+      "Constellation_4_ReduceBurstCD_Delta": 0.0,
+      "Constellation_4_ReviveEnergy": 0.0,
+      "HPDebts_CriticalPointRatio": 0.0,
+      "Constellation_6_Chance": 0.0,
+      "HPDebtsMark_Durability": 300.0,
+      "HpDebts_Level_1_Ratio": 0.0,
+      "HpDebts_Level_2_Ratio": 0.0,
+      "Constellation_2_Ratio": 0.0,
+      "Constellation_2_SubHurt_Duration": 0.0,
+      "Constellation_2_SubHurt_Ratio": 0.0
+    },
+    "modifiers": {
+      "UNIQUE_Arlecchino_Constellation_2_SubHurt": {
+        "duration": "Constellation_2_SubHurt_Duration",
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_WindSubHurtDelta": "Constellation_2_SubHurt_Ratio",
+          "Actor_FireSubHurtDelta": "Constellation_2_SubHurt_Ratio",
+          "Actor_ElecSubHurtDelta": "Constellation_2_SubHurt_Ratio",
+          "Actor_WaterSubHurtDelta": "Constellation_2_SubHurt_Ratio",
+          "Actor_GrassSubHurtDelta": "Constellation_2_SubHurt_Ratio",
+          "Actor_IceSubHurtDelta": "Constellation_2_SubHurt_Ratio",
+          "Actor_RockSubHurtDelta": "Constellation_2_SubHurt_Ratio",
+          "Actor_PhysicalSubHurtDelta": "Constellation_2_SubHurt_Ratio"
+        },
+        "stacking": "RefreshUniqueDurability",
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "isUnique": true,
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Arlecchino_HealToHpDebts",
+    "abilitySpecials": {
+      "HealToHPDebtsRatio": 1.5,
+      "HPDebts_CriticalPointRatio": 0.0,
+      "Cur_HPDebts_Ratio": 0.0,
+      "FireAttack_Buff_Ratio": 0.0,
+      "Cur_HPDebts": 0.0,
+      "Cur_HPDebts_Reduce_Ratio": 0.0,
+      "Arlecchino_FireAttack_CurAtk": 0.0,
+      "NormalAttack_ReduceCD_Delta": 0.8,
+      "Constellation_1_Ratio": 0.0,
+      "HealCount": 0.0,
+      "HealHp_Test_Ratio": 0.09,
+      "_HPDebts": 0.0,
+      "Arlecchino_HealToHpDebts_FireHurt_Factor": 0.0
+    },
+    "modifiers": {
+      "Avatar_Arlecchino_HealToHpDebts_State": {
+        "onRemoved": [
+          {
+            "$type": "SetGlobalValue",
+            "key": "_ABILITY_Avatar_ForbidFoodHeal",
+            "minValue": 0.0,
+            "maxValue": 0.0,
+            "value": 0.0,
+            "doOffStage": true,
+            "useLimitRange": false,
+            "target": "Self"
+          }
+        ],
+        "onAdded": [
+          {
+            "$type": "SetGlobalValue",
+            "key": "_ABILITY_Avatar_ForbidFoodHeal",
+            "minValue": 0.0,
+            "maxValue": 0.0,
+            "value": 1.0,
+            "doOffStage": true,
+            "useLimitRange": false,
+            "target": "Self"
+          }
+        ],
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_FireAddHurtDelta": "Arlecchino_HealToHpDebts_FireHurt_Factor"
+        },
+        "stacking": "Unique",
+        "elementDurability": 100.0,
+        "modifierMixins": [
+          {
+            "$type": "SwitchHealToHPDebtsMixin",
+            "predicates": [
+              {
+                "$type": "GKGBIPDLMMG",
+                "predicates": [
+                  {
+                    "$type": "ONJEHDDFFCH",
+                    "LAIFKEGOFJO": [
+                      "Arlecchino_ElementalBurst_Heal"
+                    ],
+                    "__exp_healTags": [
+                      "Arlecchino_ElementalBurst_Heal"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "GIFEPLNMNJF": 0.0,
+            "ratio": 0.0,
+            "IFGCGNMLEPO": 0.0
+          },
+          {
+            "$type": "OverrideCombatLockMixin",
+            "skillID": 10961,
+            "shapeName": "CircleLockEnemyR12H14HC"
+          }
+        ],
+        "state": "AttackUp",
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Baizhuer_PermanentSkill_1",
+    "abilitySpecials": {
+      "HPRatio": 0.0,
+      "HealUp": 0.0,
+      "GrassUp": 0.0
+    },
+    "modifiers": {
+      "UNIQUE_Baizhuer_HPRatio_Low_Buff": {
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_HealAddDelta": "HealUp"
+        },
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "isUnique": true,
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Barbara_WetShiled_Heal",
+    "abilitySpecials": {
+      "HealHP": 0.0,
+      "HealHP_Const": 0.0,
+      "HealHPOnAdded": 0.0,
+      "HealHPOnAdded_Const": 0.0,
+      "HealHP_OnHittingOthers": 0.0,
+      "HealHP_Const_OnHittingOthers": 0.0,
+      "Square": 1.0,
+      "Barbara_CostStaminaDelta": -0.12,
+      "WaterAddHurtDelta": 0.15,
+      "Barbara_WetShiled_MaxHP_Heal": 0.1
+    },
+    "modifiers": {
+      "WetShiled_WaterAddHurtDelta": {
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_WaterAddHurtDelta": "WaterAddHurtDelta"
+        },
+        "stacking": "Unique",
+        "elementDurability": 100.0,
+        "state": "AttackUp",
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Beidou_ThunderShield_Gadget",
+    "abilitySpecials": {
+      "ElectricDown": 0.0,
+      "ShieldHP": 0.0,
+      "ChainDamage": 0.0,
+      "Duration": -1.6,
+      "DamageReduce": 0.0,
+      "IceDown": 0.0,
+      "MasteryUp": 0.0
+    },
+    "modifiers": {
+      "UNIQUE_Beidou_ThunderShield": {
+        "onAdded": [
+          {
+            "$type": "ClearEndura",
+            "ratio": 1
+          }
+        ],
+        "properties": {
+          "Actor_EndureDelta": 0.5,
+          "Actor_SubHurtDelta": "DamageReduce"
+        },
+        "onAttackLanded": [
+          {
+            "$type": "Predicated",
+            "successActions": [
+              {
+                "$type": "ApplyModifier",
+                "modifierName": "Beidou_Lightining0",
+                "target": "Other",
+                "predicates": [
+                  {
+                    "$type": "ByUnlockTalentParam",
+                    "talentParam": "Beidou_ExtraChain",
+                    "target": "Caster"
+                  }
+                ]
+              },
+              {
+                "$type": "ApplyModifier",
+                "modifierName": "Beidou_Lightining2",
+                "target": "Other",
+                "predicates": [
+                  {
+                    "$type": "GKGBIPDLMMG",
+                    "predicates": [
+                      {
+                        "$type": "ByUnlockTalentParam",
+                        "talentParam": "Beidou_ExtraChain",
+                        "target": "Caster"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "$type": "ApplyModifier",
+                "modifierName": "Beidou_LightiningCD",
+                "target": "Caster"
+              },
+              {
+                "$type": "AddGlobalValue",
+                "useLimitRange": true,
+                "key": "_ABILITY_ThunderChain_COUNT",
+                "maxValue": 1.0,
+                "minValue": 0.0,
+                "value": -1.0,
+                "target": "Caster"
+              }
+            ],
+            "targetPredicates": [
+              {
+                "$type": "DEOFBICNFHF",
+                "entityTypes": [
+                  "Monster"
+                ]
+              },
+              {
+                "$type": "ByTargetGlobalValue",
+                "value": 0.0,
+                "compareType": "NoneOrEqual",
+                "key": "_ANIMAL_ENTITY_TYPE"
+              },
+              {
+                "$type": "CNFMGJJEOPM",
+                "NJICAELBCCB": "",
+                "JBOGOHPICML": "",
+                "compareType": "XYZ",
+                "value": 15.0,
+                "logic": "LesserOrEqual"
+              },
+              {
+                "$type": "ByTargetGlobalValue",
+                "value": true,
+                "compareType": "MoreThan",
+                "key": "_ABILITY_ThunderChain_COUNT",
+                "target": "Caster"
+              },
+              {
+                "$type": "CCHPEOBKOBO",
+                "attackTags": [
+                  "NormalAttack_01",
+                  "NormalAttack_02",
+                  "NormalAttack_03",
+                  "NormalAttack_04",
+                  "NormalAttack_05",
+                  "NormalAttack_06",
+                  "ExtraAttack"
+                ]
+              }
+            ],
+            "target": "Other"
+          }
+        ],
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "isUnique": true,
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Bennett_ElementalBurst_Gadget",
+    "abilitySpecials": {
+      "HealMaxHpRatio": 0.0,
+      "HealConst": 0.0,
+      "HPTreshhold": 0.7,
+      "AttackTreshhold": 0.7,
+      "AttackUpRatio": 0.0,
+      "FireUp": 0.0,
+      "Bennett_WarmField_BaseAttack": 0.0
+    },
+    "modifiers": {
+      "UNIQUE_WarmField_AttackUp": {
+        "duration": 2.1,
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_AttackExtraDelta": [
+            "AttackUpRatio",
+            "Bennett_WarmField_BaseAttack",
+            "MUL"
+          ]
+        },
+        "elementDurability": 100.0,
+        "state": "AttackUp",
+        "modifierName": "",
+        "isUnique": true,
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Bennett_Talent_Capacitor",
+    "abilitySpecials": {
+      "HPRatio": 0.0,
+      "Rate": 0.0
+    },
+    "modifiers": {
+      "Capacitor_EnergyGain_Up": {
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_ChargeEfficiencyDelta": "Rate"
+        },
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Chevreuse_ElementalArt",
+    "abilitySpecials": {
+      "Heal_Dura": 0.5,
+      "Heal_HPRatio": 0.0,
+      "Heal_Const": 0.0,
+      "Middle_Time": 0.0,
+      "HPRatio": 0.0,
+      "AttackUp": 0.0,
+      "AttDura": 0.0,
+      "MaxStack": 0.0
+    },
+    "modifiers": {
+      "UNIQUE_Avatar_Chevreuse_Talent6_Up": {
+        "duration": "AttDura",
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_FireAddHurtDelta": "AttackUp",
+          "Actor_ElecAddHurtDelta": "AttackUp"
+        },
+        "stacking": "MultipleRefresh",
+        "GMGIAGMCGLF": {
+          "PFEHHABPHDB": "",
+          "HJKNBILJBKK": true,
+          "KAANKELFPLA": "MaxStack"
+        },
+        "elementDurability": 100.0,
+        "state": "AttackUp",
+        "modifierName": "",
+        "isUnique": true,
+        "AIHNJLDFEGJ": 0.0,
+        "stackingOption": {
+          "abilitySpecialName": "",
+          "maxModifierNumForMultipleType": "MaxStack",
+          "enableMixedUnique": true
+        }
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Chiori_PermanentSkill_2_OnCreateRockGadget",
+    "abilitySpecials": {
+      "PermanentSkill_2_Dura": 0.0,
+      "PermanentSkill_2_RockAddHurt": 0.0
+    },
+    "modifiers": {
+      "Avatar_Chiori_PermanentSkill_2_OnCreateRockGadget_Buff": {
+        "duration": "PermanentSkill_2_Dura",
+        "properties": {
+          "Actor_RockAddHurtDelta": "PermanentSkill_2_RockAddHurt"
+        },
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Chongyun_IceCrystal",
+    "abilitySpecials": {
+      "EnchantDuration": 0.0,
+      "SkillCDMinusRatio": 0.0,
+      "OverallSpeedRatio": 0.0
+    },
+    "modifiers": {
+      "UNIQUE_Weapon_Enchanted_Defense": {
+        "duration": 2.1,
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_SkillCDMinusRatio": "SkillCDMinusRatio"
+        },
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "isUnique": true,
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Columbina_Constellation_2",
+    "abilitySpecials": {
+      "Add_Ratio": 0.0,
+      "Buff_Duration": 0.0,
+      "MaxHp_Ratio": 0.0,
+      "Attack_ByMaxHpRatio": 0.0,
+      "Mastery_ByMaxHpRatio": 0.0,
+      "Defence_ByMaxHpRatio": 0.0
+    },
+    "modifiers": {
+      "Avatar_Columbina_Constellation_2_MoonShockBuff_OnLocal": {
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_AttackDelta": [
+            "FIGHT_PROP_MAX_HP",
+            "Attack_ByMaxHpRatio",
+            "MUL"
+          ]
+        },
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "reApplyModifierOnStateChange": true,
+        "minus_one": -1,
+        "NLBKJKDNFFP": -1
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Columbina_Constellation_2",
+    "abilitySpecials": {
+      "Add_Ratio": 0.0,
+      "Buff_Duration": 0.0,
+      "MaxHp_Ratio": 0.0,
+      "Attack_ByMaxHpRatio": 0.0,
+      "Mastery_ByMaxHpRatio": 0.0,
+      "Defence_ByMaxHpRatio": 0.0
+    },
+    "modifiers": {
+      "Avatar_Columbina_Constellation_2_MoonCrystalBuff_OnLocal": {
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_DefenceDelta": [
+            "FIGHT_PROP_MAX_HP",
+            "Defence_ByMaxHpRatio",
+            "MUL"
+          ]
+        },
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "reApplyModifierOnStateChange": true,
+        "minus_one": -1,
+        "NLBKJKDNFFP": -1
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Dahlia_Constellation_2",
+    "abilitySpecials": {
+      "ShieldMinusRatio": 0.0,
+      "Buff_Timer": 0.0
+    },
+    "modifiers": {
+      "Avatar_Dahlia_Constellation_2_ShieldUp_OnAvatar": {
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_ShieldCostMinusRatio": "ShieldMinusRatio"
+        },
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "reApplyModifierOnStateChange": true,
+        "minus_one": -1,
+        "NLBKJKDNFFP": -1
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Diona_IceWine_Fog",
+    "abilitySpecials": {
+      "HealHPRatio": 0.0,
+      "HealHP_Const": 0.0,
+      "Elemental_Burst_Damage": 0.0,
+      "Talent_ReviveElemEnergyRatio": 0.0,
+      "Diona_Talent_AttackRatio": 0.0,
+      "AttackDown_Duration": 0.0,
+      "Diona_Talent_HealedAddDelta": 0.0,
+      "Diona_Talent_ElemMastery": 0.0,
+      "Constellation_6_StarDamageUp_Ratio": 0.0
+    },
+    "modifiers": {
+      "Diona_Talent_ElementalBurst_HealedAddUp": {
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_HealedAddDelta": "Diona_Talent_HealedAddDelta"
+        },
+        "elementDurability": 100.0,
+        "state": "DefenseUp",
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Eula_ElementalArt",
+    "abilitySpecials": {
+      "ElementalArt_Extra_Damage": 0.0,
+      "BaseDuration": 0.0,
+      "DefenceDown_MaxDuration": 0.0,
+      "Eula_ElementalArt_MaxCount": 2.0,
+      "PhysicalAddHurt_BaseDuration": 0.0,
+      "Elemental_Burst_Judgment_BaseDamage": 0.0,
+      "PermanentSkill_1_Judgment_Ratio": 0.0,
+      "Eula_Constellation_2_PhysicalAddHurtDelta": 0.0,
+      "Eula_ElementalArt_PhysicalSubHurtDelta": 0.0,
+      "Eula_ElementalArt_IceSubHurtDelta": 0.0,
+      "PhysicalAddHurt_MaxDuration": 0.0
+    },
+    "modifiers": {
+      "UNIQUE_Eula_Talent_PhysicalAddHurt": {
+        "thinkInterval": 0.5,
+        "duration": [
+          "PhysicalAddHurt_BaseDuration",
+          6.0,
+          "ADD"
+        ],
+        "onAdded": [
+          {
+            "$type": "AttachModifier",
+            "modifierName": "UNIQUE_Eula_Talent_Weapon_Fx",
+            "otherTargets": {
+              "$type": "IHJCDAEBAME",
+              "equipPartNames": [
+                "equip01",
+                "equip02",
+                "sheathPoint"
+              ]
+            },
+            "target": "Self"
+          }
+        ],
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_PhysicalAddHurtDelta": "Eula_Constellation_2_PhysicalAddHurtDelta"
+        },
+        "stacking": "Unique",
+        "elementDurability": [
+          "PhysicalAddHurt_BaseDuration",
+          6.0,
+          "ADD"
+        ],
+        "modifierName": "",
+        "isUnique": true,
+        "onThinkInterval": [
+          {
+            "$type": "AttachModifier",
+            "modifierName": "UNIQUE_Eula_Talent_Weapon_Fx",
+            "otherTargets": {
+              "$type": "IHJCDAEBAME",
+              "equipPartNames": [
+                "equip01",
+                "equip02",
+                "sheathPoint"
+              ]
+            },
+            "target": "Self"
+          }
+        ],
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Faruzan_PermanentSkill2_WindDamageExtraUp",
+    "abilitySpecials": {
+      "AttackUpTime": 0.0,
+      "ExtraDamageRatio": 0.0,
+      "ExtraDamage_CD": 0.0,
+      "WindAddHurtUp_Ratio": 0.0,
+      "CriticalHurtUpRatio": 0.0,
+      "AutoHurricaneArrow_CD_Duration": 0.0,
+      "WindBlackHole_Gadget_Damage": 0.0
+    },
+    "modifiers": {
+      "UNIQUE_Avatar_Faruzan_ElementalBurst_WindAddHurtUp": {
+        "duration": "AttackUpTime",
+        "onAdded": [
+          {
+            "$type": "AttachModifier",
+            "modifierName": "UNIQUE_Avatar_Faruzan_ElementalBurst_WindAddHurtUp_LoopEff",
+            "doOffStage": true,
+            "target": "Self"
+          },
+          {
+            "$type": "AttachModifier",
+            "modifierName": "UNIQUE_Avatar_Faruzan_ElementalBurst_WindDamageValueUp_Handler",
+            "doOffStage": true,
+            "predicates": [
+              {
+                "$type": "ByUnlockTalentParam",
+                "talentParam": "TalentParam_Faruzan_PermanentSkill_2",
+                "target": "Caster"
+              }
+            ],
+            "target": "Self"
+          },
+          {
+            "$type": "AttachModifier",
+            "modifierName": "UNIQUE_Avatar_Faruzan_ElementalBurst_WindCriticalHurtUp",
+            "doOffStage": true,
+            "predicates": [
+              {
+                "$type": "ByUnlockTalentParam",
+                "talentParam": "Faruzan_Constellation_6",
+                "target": "Caster"
+              }
+            ],
+            "target": "Self"
+          },
+          {
+            "$type": "AttachModifier",
+            "modifierName": "UNIQUE_Avatar_Faruzan_ElementalBurst_AutoHurricaneArrow",
+            "doOffStage": true,
+            "predicates": [
+              {
+                "$type": "ByUnlockTalentParam",
+                "talentParam": "Faruzan_Constellation_6",
+                "target": "Caster"
+              }
+            ],
+            "target": "Self"
+          }
+        ],
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_WindAddHurtDelta": "WindAddHurtUp_Ratio"
+        },
+        "stacking": "Unique",
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "isUnique": true,
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Flins_PermanentSkill_2",
+    "abilitySpecials": {
+      "Last_Attack": 0.0,
+      "Calc_Mastery": 0.0,
+      "Ratio": 0.0,
+      "MaxMastery": 0.0,
+      "Ratio2": 0.0,
+      "MaxMastery2": 0.0
+    },
+    "modifiers": {
+      "Avatar_Flins_PermanentSkill_2_Buff": {
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_ElemMasteryExtraDelta": "Calc_Mastery"
+        },
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "reApplyModifierOnStateChange": true
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Mona_StarChart",
+    "abilitySpecials": {
+      "AS_Mona_StarChart_Bubble_Duration": 0.0,
+      "AS_Mona_StarChart_Bubble_RemovedDamage": 0.0,
+      "AS_Mona_StarChart_RemovedDamage_HurtUp_DamageRate": -1.0,
+      "AS_Mona_StarChart_HurtUp_DamageRate": 0.0,
+      "AS_Mona_StarChart_HurtUp_Duration": 0.0,
+      "AS_Mona_Talent_ElementReactionUp_Electric": 0.0,
+      "AS_Mona_Talent_ElementReactionUp_Steam": 0.0,
+      "AS_Mona_Talent_ElementReactionUp_SwirlWater": 0.0,
+      "AS_Mona_Talent_ElementReactionUp_Freeze": 0.0,
+      "AS_Mona_Talent_ElementReactionUp_Crystallize": 0.0,
+      "AS_Mona_Talent_ElementReactionUp_Time": 0.0,
+      "AS_Mona_Talent_AntiCritical": 0.0,
+      "Hexenzirkel_Constellation_1_BuffUp": 0.0,
+      "Max_DebuffExtend_Count": 0.0,
+      "DebuffExtend": 0.0,
+      "DebuffExtend_CD": 0.0
+    },
+    "modifiers": {
+      "UNIQUE_Debuff_Bubble_RemoveDamage": {
+        "duration": "AS_Mona_StarChart_Bubble_Duration",
+        "onRemoved": [
+          {
+            "$type": "ClearGlobalValue",
+            "key": "Is_Mona_StarChart_HurtUp",
+            "target": "Self"
+          },
+          {
+            "$type": "RemoveModifier",
+            "modifierName": "Debuff_Bubble_Struggle",
+            "target": "Self"
+          },
+          {
+            "$type": "FireEffect",
+            "effectPattern": "Eff_Avatar_Girl_Catalyst_Mona_StarChart_Bubble_AS",
+            "scale": 1.0,
+            "ILLLPEOODKP": "",
+            "effectTempleteID": -1.0,
+            "target": "Self"
+          },
+          {
+            "$type": "DamageByAttackValue",
+            "attackInfo": {
+              "attackProperty": {
+                "elementType": "Water",
+                "damagePercentageRatio": 0.0,
+                "strikeType": "Default",
+                "enBreak": 200.0,
+                "damagePercentage": "AS_Mona_StarChart_Bubble_RemovedDamage",
+                "damageExtra": 0.0,
+                "elementDurability": 50.0,
+                "arkheGrade": 0.0
+              },
+              "hitPattern": {
+                "FLFCIDDNMNA": "",
+                "onHitEffectName": "default",
+                "hitHaltTimeScale": 0.01,
+                "hitImpulseType": "LV1"
+              },
+              "attenuationGroup": "default",
+              "attenuationTag": "Elemental_Burst",
+              "attackTag": "Elemental_Burst"
+            },
+            "born": {
+              "$type": "BGOLIIIHLMO",
+              "attachPointName": "Fx_ChestNode",
+              "offset": {
+                "x": 0.0,
+                "z": 0.0,
+                "y": 0.3
+              }
+            },
+            "target": "Target",
+            "doOffStage": true
+          },
+          {
+            "$type": "RemoveUniqueModifier",
+            "modifierName": "UNIQUE_Debuff_HurtUp",
+            "target": "Self"
+          },
+          {
+            "$type": "ApplyModifier",
+            "modifierName": "UNIQUE_Debuff_HurtUp",
+            "target": "Self"
+          }
+        ],
+        "onAdded": [
+          {
+            "$type": "RemoveUniqueModifier",
+            "modifierName": "UNIQUE_Debuff_HurtUp",
+            "target": "Self"
+          },
+          {
+            "$type": "AttachEffect",
+            "ILLLPEOODKP": "",
+            "scale": 1.0,
+            "effectPattern": "Eff_Avatar_Girl_Catalyst_Mona_StarChart_Bubble",
+            "effectTempleteID": -1.0,
+            "target": "Self"
+          },
+          {
+            "$type": "AddGlobalValue",
+            "useLimitRange": true,
+            "key": "Is_Mona_StarChart_HurtUp",
+            "maxValue": 1.0,
+            "minValue": 1.0,
+            "value": 1.0,
+            "target": "Self"
+          }
+        ],
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_SubHurtDelta": "AS_Mona_StarChart_HurtUp_DamageRate",
+          "Actor_AntiCriticalDelta": "AS_Mona_Talent_AntiCritical"
+        },
+        "onKill": [
+          {
+            "$type": "RemoveUniqueModifier",
+            "modifierName": "UNIQUE_Debuff_Bubble_RemoveDamage",
+            "target": "Self"
+          }
+        ],
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "isUnique": true,
+        "AIHNJLDFEGJ": 0.0,
+        "onBeingHit": [
+          {
+            "$type": "RemoveUniqueModifier",
+            "modifierName": "UNIQUE_Debuff_Bubble_RemoveDamage",
+            "predicates": [
+              {
+                "$type": "PEBNCCMEBMC",
+                "hitImpulse": 0.0
+              }
+            ],
+            "target": "Self"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Razor_Talent_ArcaneFeast",
+    "abilitySpecials": {
+      "ArcaneFeast_Duration": 8.0,
+      "ArcaneFeast_AttackDelta": 0.1
+    },
+    "modifiers": {
+      "UNIQUE_ArcaneFeast_Attack_Up": {
+        "duration": "ArcaneFeast_Duration",
+        "isLimitedProperties": true,
+        "properties": {
+          "Actor_AddHurtDelta": "ArcaneFeast_AttackDelta"
+        },
+        "elementDurability": 100.0,
+        "state": "AttackUp",
+        "modifierName": "",
+        "isUnique": true,
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  }
+]

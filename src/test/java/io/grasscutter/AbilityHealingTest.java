@@ -41,6 +41,20 @@ class AbilityHealingTest {
     }
 
     @Test
+    void outgoingAndIncomingHealingBonusesUseTheCasterAndRecipientRespectively() {
+        var target = new AbilityTestFixture.TestEntity(fixture.scene);
+        target.setId(43); fixture.scene.getEntities().put(43,target);
+        target.setFightProperty(FightProperty.FIGHT_PROP_MAX_HP,200);
+        target.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP,100);
+        fixture.entity.setFightProperty(FightProperty.FIGHT_PROP_HEAL_ADD,0.2f);
+        target.setFightProperty(FightProperty.FIGHT_PROP_HEAL_ADD,2f);
+        target.setFightProperty(FightProperty.FIGHT_PROP_HEALED_ADD,0.3f);
+        var action=JsonUtils.decode("{\"$type\":\"HealHP\",\"amount\":10}",AbilityModifierAction.class);
+        assertTrue(new ActionHealHP().execute(ability,action,ByteString.EMPTY,target));
+        assertEquals(115f,target.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP));
+    }
+
+    @Test
     void combinedFlatAndPercentageHealDoesNotAddTheFlatPartTwice() {
         assertEquals(120f, heal("\"amount\":10,\"amountByCasterMaxHPRatio\":0.05"));
     }

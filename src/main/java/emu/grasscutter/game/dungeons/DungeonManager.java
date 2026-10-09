@@ -49,7 +49,8 @@ public final class DungeonManager {
     @Getter private int startSceneTime = 0;
     @Setter @Getter private boolean towerDungeon = false;
 
-    DungeonTrialTeam trialTeam = null;
+    // Remember only the borrowed instances granted by this dungeon, separately for each player.
+    private final Map<Player, Map<Integer, Long>> grantedTrialAvatars = new HashMap<>();
 
     public DungeonManager(@NonNull Scene scene, @NonNull DungeonData dungeonData) {
         this.scene = scene;
@@ -307,11 +308,14 @@ public final class DungeonManager {
     }
 
     public void applyTrialTeam(Player player) {
-        if (getDungeonData() == null) return;
+        if (getDungeonData() == null || getDungeonData().getType() == null
+                || emu.grasscutter.game.tps.TpsAvatarSystem.isTpsScene(scene.getSceneData())) return;
+        DungeonTrialTeam trialTeam = null;
 
         switch (getDungeonData().getType()) {
                 // case DUNGEON_PLOT is handled by quest execs
             case DUNGEON_ACTIVITY -> {
+                if (getDungeonData().getPlayType() == null) return;
                 switch (getDungeonData().getPlayType()) {
                     case DUNGEON_PLAY_TYPE_TRIAL_AVATAR -> {
                         val activityHandler =
@@ -319,25 +323,47 @@ public final class DungeonManager {
                                         .getActivityManager()
                                         .getActivityHandlerAs(
                                                 ActivityType.NEW_ACTIVITY_TRIAL_AVATAR, TrialAvatarActivityHandler.class);
-                        activityHandler.ifPresent(
-                                trialAvatarActivityHandler ->
-                                        this.trialTeam = trialAvatarActivityHandler.getTrialAvatarDungeonTeam());
+                        trialTeam = activityHandler.map(TrialAvatarActivityHandler::getTrialAvatarDungeonTeam).orElse(null);
                     }
                 }
             }
             case DUNGEON_ELEMENT_CHALLENGE -> {} // TODO
         }
 
-        if (this.trialTeam != null) {
-            player.getTeamManager().addTrialAvatars(trialTeam.trialAvatarIds);
+        applyTrialTeam(player, trialTeam);
+    }
+
+    synchronized void applyTrialTeam(Player player, DungeonTrialTeam team) {
+        if (team == null || team.getTrialAvatarIds() == null || grantedTrialAvatars.containsKey(player)) return;
+        var manager = player.getTeamManager();
+        var ids = team.getTrialAvatarIds().stream().filter(Objects::nonNull).distinct()
+                .filter(id -> manager.getTrialAvatarGuid(id) == 0)
+                .filter(id -> {
+                    var params = manager.getTrialAvatarParam(id);
+                    return params.size() >= 2 && !manager.getTrialAvatars().containsKey(params.get(0));
+                }).toList();
+        if (ids.isEmpty()) return;
+        var introduced = new LinkedHashMap<Integer, Long>();
+        try {
+            manager.addTrialAvatars(ids);
+        } finally {
+            // A partial grant must also be cleaned on exit; existing quest grants are excluded.
+            for (int id : ids) {
+                long guid = manager.getTrialAvatarGuid(id);
+                if (guid != 0) introduced.put(id, guid);
+            }
+            if (!introduced.isEmpty()) grantedTrialAvatars.put(player, introduced);
         }
     }
 
-    public void unsetTrialTeam(Player player) {
-        if (this.trialTeam == null) return;
-
-        player.getTeamManager().removeTrialAvatar();
-        this.trialTeam = null;
+    public synchronized void unsetTrialTeam(Player player) {
+        var introduced = grantedTrialAvatars.remove(player);
+        if (introduced == null) return;
+        var manager = player.getTeamManager();
+        var ids = introduced.entrySet().stream()
+                .filter(entry -> manager.getTrialAvatarGuid(entry.getKey()) == entry.getValue())
+                .map(Map.Entry::getKey).toList();
+        manager.removeTrialAvatar(ids);
     }
 
     public void startDungeon() {

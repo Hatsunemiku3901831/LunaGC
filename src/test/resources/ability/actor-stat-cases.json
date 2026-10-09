@@ -1,0 +1,246 @@
+[
+  {
+    "modifier": "UNIQUE_Aino_ElementalBurst_Moon2_AddElemMasteryDelta",
+    "inputs": {
+      "Burst_Moon2_ElemMasteryDelta": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_ELEMENT_MASTERY": 0.20000000298023224
+    }
+  },
+  {
+    "modifier": "UNIQUE_Avatar_Albedo_Hexenzirkel_Talent_1",
+    "inputs": {
+      "DefenceRatio": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_CUR_DEFENSE": 300.0,
+      "FIGHT_PROP_DEFENSE_PERCENT": 0.30000001192092896
+    }
+  },
+  {
+    "modifier": "UNIQUE_Alhatham_Constellation_4_GainBuff",
+    "inputs": {
+      "Constellation_4_GainBuff_GrassAddHurtDelta": 0.2,
+      "ForlornLotus_Restore_Level": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_GRASS_ADD_HURT": 0.04000000283122063
+    }
+  },
+  {
+    "modifier": "UNIQUE_Alhatham_Constellation_6_OverflowPrism_Buff",
+    "inputs": {
+      "Constellation_6_CriticalDelta": 0.2,
+      "Constellation_6_CriticalHurtDelta": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_CRITICAL": 0.20000000298023224,
+      "FIGHT_PROP_CRITICAL_HURT": 0.20000000298023224
+    }
+  },
+  {
+    "modifier": "UNIQUE_Aloy_Coil_Monster_AttackDown",
+    "inputs": {
+      "Aloy_Coil_AttackDownRatio": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_ATTACK_PERCENT": 0.30000001192092896,
+      "FIGHT_PROP_CUR_ATTACK": 160.0
+    }
+  },
+  {
+    "modifier": "Aloy_CoilBurst_IceAttackUp",
+    "inputs": {
+      "Aloy_CoilBurst_IceAttackDelta": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_ICE_ADD_HURT": 0.20000000298023224
+    }
+  },
+  {
+    "modifier": "UNIQUE_Arlecchino_Constellation_2_SubHurt",
+    "inputs": {
+      "Constellation_2_SubHurt_Ratio": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_ELEC_SUB_HURT": 0.20000000298023224,
+      "FIGHT_PROP_FIRE_SUB_HURT": 0.20000000298023224,
+      "FIGHT_PROP_GRASS_SUB_HURT": 0.20000000298023224,
+      "FIGHT_PROP_ICE_SUB_HURT": 0.20000000298023224,
+      "FIGHT_PROP_PHYSICAL_SUB_HURT": 0.20000000298023224,
+      "FIGHT_PROP_ROCK_SUB_HURT": 0.20000000298023224,
+      "FIGHT_PROP_WATER_SUB_HURT": 0.20000000298023224,
+      "FIGHT_PROP_WIND_SUB_HURT": 0.20000000298023224
+    }
+  },
+  {
+    "modifier": "Avatar_Arlecchino_HealToHpDebts_State",
+    "inputs": {
+      "Arlecchino_HealToHpDebts_FireHurt_Factor": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_FIRE_ADD_HURT": 0.20000000298023224
+    }
+  },
+  {
+    "modifier": "UNIQUE_Baizhuer_HPRatio_Low_Buff",
+    "inputs": {
+      "HealUp": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_HEAL_ADD": 0.20000000298023224
+    }
+  },
+  {
+    "modifier": "WetShiled_WaterAddHurtDelta",
+    "inputs": {
+      "WaterAddHurtDelta": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_WATER_ADD_HURT": 0.20000000298023224
+    }
+  },
+  {
+    "modifier": "UNIQUE_Beidou_ThunderShield",
+    "inputs": {
+      "DamageReduce": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_SUB_HURT": 0.20000000298023224
+    }
+  },
+  {
+    "modifier": "UNIQUE_WarmField_AttackUp",
+    "inputs": {
+      "AttackUpRatio": 0.2,
+      "Bennett_WarmField_BaseAttack": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_ATTACK": 30.040000915527344,
+      "FIGHT_PROP_CUR_ATTACK": 180.0399932861328
+    }
+  },
+  {
+    "modifier": "Capacitor_EnergyGain_Up",
+    "inputs": {
+      "Rate": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_CHARGE_EFFICIENCY": 0.20000000298023224
+    }
+  },
+  {
+    "modifier": "UNIQUE_Avatar_Chevreuse_Talent6_Up",
+    "inputs": {
+      "AttackUp": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_ELEC_ADD_HURT": 0.20000000298023224,
+      "FIGHT_PROP_FIRE_ADD_HURT": 0.20000000298023224
+    }
+  },
+  {
+    "modifier": "Avatar_Chiori_PermanentSkill_2_OnCreateRockGadget_Buff",
+    "inputs": {
+      "PermanentSkill_2_RockAddHurt": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_ROCK_ADD_HURT": 0.20000000298023224
+    }
+  },
+  {
+    "modifier": "UNIQUE_Weapon_Enchanted_Defense",
+    "inputs": {
+      "SkillCDMinusRatio": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_SKILL_CD_MINUS_RATIO": 0.20000000298023224
+    }
+  },
+  {
+    "modifier": "Avatar_Columbina_Constellation_2_MoonShockBuff_OnLocal",
+    "inputs": {
+      "Attack_ByMaxHpRatio": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_ATTACK": 60.0,
+      "FIGHT_PROP_CUR_ATTACK": 210.0
+    }
+  },
+  {
+    "modifier": "Avatar_Columbina_Constellation_2_MoonCrystalBuff_OnLocal",
+    "inputs": {
+      "Defence_ByMaxHpRatio": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_CUR_DEFENSE": 290.0,
+      "FIGHT_PROP_DEFENSE": 70.0
+    }
+  },
+  {
+    "modifier": "Avatar_Dahlia_Constellation_2_ShieldUp_OnAvatar",
+    "inputs": {
+      "ShieldMinusRatio": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_SHIELD_COST_MINUS_RATIO": 0.20000000298023224
+    }
+  },
+  {
+    "modifier": "Diona_Talent_ElementalBurst_HealedAddUp",
+    "inputs": {
+      "Diona_Talent_HealedAddDelta": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_HEALED_ADD": 0.20000000298023224
+    }
+  },
+  {
+    "modifier": "UNIQUE_Eula_Talent_PhysicalAddHurt",
+    "inputs": {
+      "Eula_Constellation_2_PhysicalAddHurtDelta": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_PHYSICAL_ADD_HURT": 0.20000000298023224
+    }
+  },
+  {
+    "modifier": "UNIQUE_Avatar_Faruzan_ElementalBurst_WindAddHurtUp",
+    "inputs": {
+      "WindAddHurtUp_Ratio": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_WIND_ADD_HURT": 0.20000000298023224
+    }
+  },
+  {
+    "modifier": "Avatar_Flins_PermanentSkill_2_Buff",
+    "inputs": {
+      "Calc_Mastery": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_ELEMENT_MASTERY": 0.20000000298023224
+    }
+  },
+  {
+    "modifier": "UNIQUE_Debuff_Bubble_RemoveDamage",
+    "inputs": {
+      "AS_Mona_StarChart_HurtUp_DamageRate": 0.2,
+      "AS_Mona_Talent_AntiCritical": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_ANTI_CRITICAL": 0.20000000298023224,
+      "FIGHT_PROP_SUB_HURT": 0.20000000298023224
+    }
+  },
+  {
+    "modifier": "UNIQUE_ArcaneFeast_Attack_Up",
+    "inputs": {
+      "ArcaneFeast_AttackDelta": 0.2
+    },
+    "expected": {
+      "FIGHT_PROP_ADD_HURT": 0.20000000298023224
+    }
+  }
+]

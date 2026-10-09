@@ -10,6 +10,7 @@ import emu.grasscutter.game.ability.PredicateEvaluator;
 import emu.grasscutter.game.entity.EntityMonster;
 import emu.grasscutter.game.entity.GameEntity;
 import java.util.List;
+import java.util.Arrays;
 
 @AbilityAction(value = AbilityModifier.AbilityModifierAction.Type.Predicated)
 public final class ActionPredicated extends AbilityActionHandler {
@@ -17,7 +18,8 @@ public final class ActionPredicated extends AbilityActionHandler {
     @Override
     public boolean execute(Ability ability, AbilityModifierAction action, ByteString abilityData, GameEntity target) {
         AbilityManager mgr = ability != null ? ability.getManager() : null;
-        if (mgr == null) return true;
+        if (mgr == null || action == null || target == null) return false;
+        if (!conditionsPass(ability,action,target)) return true;
 
         // A block with otherTargets asks a question about something else in the scene - the nearest
         // enemy, say - so its predicates and actions run against whatever that picks out, not
@@ -78,35 +80,16 @@ public final class ActionPredicated extends AbilityActionHandler {
     private void dispatchOwnerOnly(AbilityManager mgr, Ability ability, AbilityModifierAction[] actions,
                                    ByteString abilityData, GameEntity self) {
         if (actions == null) return;
-        for (var child : actions) {
-            if (child == null || "Target".equals(child.target)) continue;
-            if (!allowed(child)) continue;
-            mgr.executeActionNow(ability, child, abilityData, self);
-        }
+        var ownActions=Arrays.stream(actions).filter(child->child!=null && !"Target".equals(child.target)).toArray(AbilityModifierAction[]::new);
+        mgr.executeCallbackActionsNow(ability,ownActions,abilityData,self,self);
     }
 
     /**
-     * Children that name Target explicitly act on the picked entity; the rest act on the entity the
-     * modifier is attached to, which is what keeps a summon's bookkeeping on its owner rather than
-     * on whatever it happened to aim at.
+     * Target refers to the picked entity; Self stays on the carrier and Caster on the ability owner.
      */
     private void dispatch(AbilityManager mgr, Ability ability, AbilityModifierAction[] actions,
                           ByteString abilityData, GameEntity self, GameEntity candidate) {
-        if (actions == null) return;
-        for (var child : actions) {
-            if (child == null || !allowed(child)) continue;
-            // In order, on this thread: a later block reads what an earlier one writes.
-            mgr.executeActionNow(ability, child, abilityData, "Target".equals(child.target) ? candidate : self);
-        }
+        mgr.executeCallbackActionsNow(ability,actions,abilityData,self,candidate);
     }
 
-    /**
-     * A chain the client never asked the server to run stays within state and spawning, however deep
-     * it nests. Everything else - damage, healing, killing - belongs to the invocations the client
-     * actually sends, where the target is the one it aimed at rather than the one we picked.
-     */
-    private boolean allowed(AbilityModifierAction action) {
-        return !AbilityManager.isServerOwnedChain()
-                || AbilityManager.isAllowedInServerOwnedChain(action.type);
-    }
 }

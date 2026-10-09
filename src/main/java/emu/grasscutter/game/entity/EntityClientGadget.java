@@ -1,8 +1,5 @@
 package emu.grasscutter.game.entity;
 
-import java.util.List;
-
-import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.binout.config.ConfigEntityGadget;
 import emu.grasscutter.data.binout.config.fields.ConfigAbilityData;
@@ -10,20 +7,18 @@ import emu.grasscutter.data.excels.GadgetData;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.props.PlayerProperty;
 import emu.grasscutter.game.world.*;
-import emu.grasscutter.server.packet.send.PacketPlayerEnterSceneInfoNotify;
 import emu.grasscutter.net.proto.AbilitySyncStateInfoOuterClass.AbilitySyncStateInfo;
 import emu.grasscutter.net.proto.AnimatorParameterValueInfoPairOuterClass.AnimatorParameterValueInfoPair;
-
 import emu.grasscutter.net.proto.ClientGadgetInfoOuterClass;
 import emu.grasscutter.net.proto.EntityAuthorityInfoOuterClass.EntityAuthorityInfo;
 import emu.grasscutter.net.proto.EntityClientDataOuterClass.EntityClientData;
 import emu.grasscutter.net.proto.EntityRendererChangedInfoOuterClass.EntityRendererChangedInfo;
 import emu.grasscutter.net.proto.EvtCreateGadgetNotifyOuterClass.EvtCreateGadgetNotify;
+import emu.grasscutter.net.proto.FightPropPairOuterClass.FightPropPair;
+import emu.grasscutter.net.proto.GadgetBornTypeOuterClass.GadgetBornType;
 import emu.grasscutter.net.proto.MotionInfoOuterClass.MotionInfo;
 import emu.grasscutter.net.proto.PropPairOuterClass.PropPair;
 import emu.grasscutter.net.proto.ProtEntityTypeOuterClass.ProtEntityType;
-import emu.grasscutter.net.proto.FightPropPairOuterClass.FightPropPair;
-import emu.grasscutter.net.proto.GadgetBornTypeOuterClass.GadgetBornType;
 import emu.grasscutter.net.proto.SceneEntityAiInfoOuterClass.SceneEntityAiInfo;
 import emu.grasscutter.net.proto.SceneEntityInfoOuterClass.SceneEntityInfo;
 import emu.grasscutter.net.proto.SceneGadgetInfoOuterClass.SceneGadgetInfo;
@@ -31,6 +26,7 @@ import emu.grasscutter.net.proto.VectorOuterClass.Vector;
 import emu.grasscutter.utils.helpers.ProtoHelper;
 import it.unimi.dsi.fastutil.ints.Int2FloatMap;
 import it.unimi.dsi.fastutil.ints.Int2FloatOpenHashMap;
+import java.util.HashSet;
 import lombok.Getter;
 
 public class EntityClientGadget extends EntityBaseGadget {
@@ -85,32 +81,19 @@ public class EntityClientGadget extends EntityBaseGadget {
         }
 
         GameEntity ownerEntity = scene.getEntityById(this.ownerEntityId);
-        String ownerTypeBeforeResolve = ownerEntity != null ? ownerEntity.getClass().getSimpleName() : "null";
         ownerEntity = findOwnerEntity(ownerEntity);
-        if (ownerEntity == null) {
-            ownerEntity = scene.getEntityById(16777225);
-        }
-        if (ownerEntity instanceof EntityClientGadget ownerGadget) {
-            this.originalOwnerEntityId = ownerGadget.getOriginalOwnerEntityId();
-        } else {
-            this.originalOwnerEntityId = this.ownerEntityId;
-        }
+        this.originalOwnerEntityId = ownerEntity != null ? ownerEntity.getId() : this.ownerEntityId;
 
         this.initAbilities();
     }
 
     private GameEntity findOwnerEntity(GameEntity owner) {
-        if (owner instanceof EntityClientGadget ownerGadget) {
-
-        GameEntity nextOwner = ownerGadget.getScene().getEntityById(ownerGadget.getOwnerEntityId());
-
-        if (nextOwner instanceof EntityClientGadget) {
-            return findOwnerEntity((EntityClientGadget) nextOwner);
+        var seen = new HashSet<Integer>();
+        for (int depth = 0; owner instanceof EntityClientGadget gadget && depth < 32; depth++) {
+            if (!seen.add(owner.getId())) return null;
+            owner = gadget.getScene().getEntityById(gadget.getOwnerEntityId());
         }
-
-        return nextOwner;
-        }
-        return owner;
+        return owner instanceof EntityClientGadget ? null : owner;
     }
 
     @Override
@@ -146,8 +129,7 @@ public class EntityClientGadget extends EntityBaseGadget {
                 EntityAuthorityInfo.newBuilder()
                         .setAbilityInfo(AbilitySyncStateInfo.newBuilder())
                         .setRendererChangedInfo(EntityRendererChangedInfo.newBuilder())
-                        .setAiInfo(
-                                SceneEntityAiInfo.newBuilder().setIsAiOpen(true))
+                        .setAiInfo(SceneEntityAiInfo.newBuilder().setIsAiOpen(true))
                         .setBornPos(Vector.newBuilder())
                         .build();
 
@@ -171,9 +153,7 @@ public class EntityClientGadget extends EntityBaseGadget {
                         .setPropValue(ProtoHelper.newPropValue(PlayerProperty.PROP_LEVEL, 1))
                         .build();
         entityInfo.addPropList(pair);
-        FightPropPair pair2 =
-                FightPropPair.newBuilder()
-                .build();
+        FightPropPair pair2 = FightPropPair.newBuilder().build();
         entityInfo.addFightPropList(pair2);
 
         ClientGadgetInfoOuterClass.ClientGadgetInfo clientGadget =
@@ -191,9 +171,11 @@ public class EntityClientGadget extends EntityBaseGadget {
                 SceneGadgetInfo.newBuilder()
                         .setGadgetId(this.getGadgetId())
                         .setOwnerEntityId(this.getOwnerEntityId())
-                        .setBornType(this.bornType != null ? this.bornType : GadgetBornType.GadgetBornType_GADGET_BORN_PLAYER)
+                        .setBornType(
+                                this.bornType != null
+                                        ? this.bornType
+                                        : GadgetBornType.GadgetBornType_GADGET_BORN_PLAYER)
                         .setGadgetState(this.getGadgetState())
-
                         .setIsEnableInteract(true)
                         .setPropOwnerEntityId(this.getPropOwnerEntityId())
                         .setClientGadget(clientGadget)

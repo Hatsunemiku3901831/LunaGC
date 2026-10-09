@@ -16,7 +16,8 @@ import lombok.Getter;
             "MaterialExcelConfigData.json",
             "WeaponExcelConfigData.json",
             "ReliquaryExcelConfigData.json",
-            "HomeWorldFurnitureExcelConfigData.json"
+            "HomeWorldFurnitureExcelConfigData.json",
+            "TpsWeaponExcelConfigData.json"
         })
 @Getter
 public class ItemData extends GameResource {
@@ -146,6 +147,13 @@ public class ItemData extends GameResource {
                             .map(ItemUseAction::fromItemUseData)
                             .filter(Objects::nonNull)
                             .toList();
+            // 7.1 particle rows omit useOnGain. Only infer it for supported energy pickups.
+            if (this.materialType == MaterialType.MATERIAL_ADSORBATE
+                    && this.itemUseActions.stream().anyMatch(action ->
+                            action.getItemUseOp() == ItemUseOp.ITEM_USE_ADD_ELEM_ENERGY
+                                    || action.getItemUseOp() == ItemUseOp.ITEM_USE_ADD_ALL_ENERGY)) {
+                this.useOnGain = true;
+            }
         }
     }
 

@@ -19,4 +19,13 @@ public abstract class ActivityConditionBaseHandler {
      */
     public abstract boolean execute(
             PlayerActivityData activityData, ActivityConfigItem activityConfig, int... params);
+
+    /** Evaluate all time predicates in a condition response against the same instant. */
+    public boolean executeAt(
+            PlayerActivityData activityData,
+            ActivityConfigItem activityConfig,
+            long now,
+            int... params) {
+        return execute(activityData, activityConfig, params);
+    }
 }

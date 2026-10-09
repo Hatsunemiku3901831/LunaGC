@@ -1,16 +1,11 @@
 package emu.grasscutter.game.home;
 
 import emu.grasscutter.data.GameData;
-import emu.grasscutter.game.entity.EntityTeam;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.world.World;
 import emu.grasscutter.net.packet.BasePacket;
-import emu.grasscutter.net.proto.ChatInfoOuterClass;
-import emu.grasscutter.net.proto.SystemHintOuterClass;
-import emu.grasscutter.net.proto.SystemHintTypeOuterClass;
 import emu.grasscutter.server.game.GameServer;
 import emu.grasscutter.server.packet.send.PacketDelTeamEntityNotify;
-import emu.grasscutter.server.packet.send.PacketPlayerChatNotify;
 import emu.grasscutter.server.packet.send.PacketPlayerGameTimeNotify;
 import java.util.List;
 import java.util.function.Consumer;
@@ -31,6 +26,7 @@ public class HomeWorld extends World {
 
     @Override
     public boolean onTick() {
+        if (this.getPlayerCount() == 0) return true;
         if (this.moduleManager == null) {
             return false;
         }
@@ -72,124 +68,43 @@ public class HomeWorld extends World {
     }
 
     @Override
-    public synchronized void addPlayer(Player player) {
-        // Check if player already in
-        if (this.getPlayers().contains(player)) {
-            return;
-        }
-
-        // Remove player from prev world
-        if (player.getWorld() != null) {
-            player.getWorld().removePlayer(player);
-        }
-
-        // Register
-        player.setWorld(this);
-        this.getPlayers().add(player);
-
-        // Set player variables
-        if (this.getHost().equals(player)) {
-            player.setPeerId(1);
-            this.getGuests().forEach(player1 -> player1.setPeerId(player1.getPeerId() + 1));
-        } else {
-            player.setPeerId(this.getNextPeerId());
-        }
-
-        player.getTeamManager().setEntity(new EntityTeam(player));
-
-        // Copy main team to multiplayer team
-        if (this.isMultiplayer()) {
-            player
-                    .getTeamManager()
-                    .getMpTeam()
-                    .copyFrom(
-                            player.getTeamManager().getCurrentSinglePlayerTeamInfo(),
-                            player.getTeamManager().getMaxTeamSize());
-            player.getTeamManager().setCurrentCharacterIndex(0);
-
-            if (!player.equals(this.getHost())) {
-                this.broadcastPacket(
-                        new PacketPlayerChatNotify(
-                                player,
-                                0,
-                                SystemHintOuterClass.SystemHint.newBuilder()
-                                        .setType(
-                                                SystemHintTypeOuterClass.SystemHintType.SYSTEM_HINT_TYPE_CHAT_ENTER_WORLD
-                                                        .getNumber())
-                                        .build()));
-            }
-        }
-
-        // Add to scene
-        var scene = this.getSceneById(player.getSceneId());
-        scene.addPlayer(player);
-
-        // Info packet for other players
-        if (this.getPlayers().size() > 1) {
-            this.updatePlayerInfos(player);
-        }
+    protected int peerIdForJoiningPlayer(Player player) {
+        return player == this.getHost() ? 1 : this.getNextPeerId();
     }
 
     @Override
-    public synchronized void removePlayer(Player player) {
-        // Remove team entities
-        this.broadcastPacket(
-                new PacketDelTeamEntityNotify(
-                        player.getSceneId(),
-                        this.getPlayers().stream()
-                                .map(
-                                        p ->
-                                                p.getTeamManager().getEntity() == null
-                                                        ? 0
-                                                        : p.getTeamManager().getEntity().getId())
-                                .toList()));
+    protected boolean disbandsOnHostLeave() {
+        return false;
+    }
 
-        // Deregister
-        this.getPlayers().remove(player);
-        player.setWorld(null);
-
-        // Remove from scene
-        var scene = this.getSceneById(player.getSceneId());
-        if (scene != null) {
-            scene.removePlayer(player);
-        }
-
-        // Info packet for other players
-        if (!this.getPlayers().isEmpty()) {
-            this.updatePlayerInfos(player);
-        }
-
-        this.broadcastPacket(
-                new PacketPlayerChatNotify(
-                        player,
-                        0,
-                        SystemHintOuterClass.SystemHint.newBuilder()
-                                .setType(
-                                        SystemHintTypeOuterClass.SystemHintType.SYSTEM_HINT_TYPE_CHAT_LEAVE_WORLD
-                                                .getNumber())
-                                .build()));
+    @Override
+    protected void sendDepartureTeamPacket(Player player, int sceneId, List<Integer> teamIds) {
+        this.broadcastPacket(new PacketDelTeamEntityNotify(sceneId, teamIds));
     }
 
     @Override
     @Nullable public HomeScene getSceneById(int sceneId) {
-        var scene = this.getScenes().get(sceneId);
-        if (scene instanceof HomeScene homeScene) {
-            return homeScene;
-        }
+        synchronized (this.getScenes()) {
+            var scene = this.getScenes().get(sceneId);
+            if (scene instanceof HomeScene homeScene) {
+                return homeScene;
+            }
 
-        var sceneData = GameData.getSceneDataMap().get(sceneId);
-        if (sceneData != null) {
-            scene = new HomeScene(this, sceneData);
-            this.registerScene(scene);
-            return (HomeScene) scene;
-        }
+            var sceneData = GameData.getSceneDataMap().get(sceneId);
+            if (sceneData != null) {
+                scene = new HomeScene(this, sceneData);
+                this.registerScene(scene);
+                return (HomeScene) scene;
+            }
 
-        return null;
+            return null;
+        }
     }
 
     @Override
     public int getNextPeerId() {
-        return this.getPlayers().size() + 1;
+        // Reserve peer 1 for the owner, even when guests enter before the owner.
+        return super.getNextPeerId() + 1;
     }
 
     @Override

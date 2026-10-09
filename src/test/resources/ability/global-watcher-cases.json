@@ -1,0 +1,334 @@
+[
+  {
+    "ability": "Activity_AcrobaticsBattle_Lv2_LevelBuff_Avatar",
+    "owner": "ability",
+    "mixinIndex": 1,
+    "overrides": {},
+    "vectors": [
+      {
+        "value": -0.625,
+        "step": -1
+      },
+      {
+        "value": -0.5,
+        "step": 0
+      },
+      {
+        "value": -0.375,
+        "step": 0
+      },
+      {
+        "value": 0.375,
+        "step": 0
+      },
+      {
+        "value": 0.5,
+        "step": 1
+      },
+      {
+        "value": 0.625,
+        "step": 1
+      },
+      {
+        "value": 1.375,
+        "step": 1
+      },
+      {
+        "value": 1.5,
+        "step": -1
+      },
+      {
+        "value": 1.625,
+        "step": -1
+      }
+    ]
+  },
+  {
+    "ability": "Activity_AcrobaticsBattle_Lv6_LevelBuff_Monster",
+    "owner": "ability",
+    "mixinIndex": 0,
+    "overrides": {},
+    "vectors": [
+      {
+        "value": -0.625,
+        "step": -1
+      },
+      {
+        "value": -0.5,
+        "step": 0
+      },
+      {
+        "value": -0.375,
+        "step": 0
+      },
+      {
+        "value": 0.375,
+        "step": 0
+      },
+      {
+        "value": 0.5,
+        "step": 1
+      },
+      {
+        "value": 0.625,
+        "step": 1
+      },
+      {
+        "value": 1.375,
+        "step": 1
+      },
+      {
+        "value": 1.5,
+        "step": -1
+      },
+      {
+        "value": 1.625,
+        "step": -1
+      }
+    ]
+  },
+  {
+    "ability": "ActivityAbility_AdventureGoalFighting_Buff_1",
+    "owner": "Activity_AdventureGoalFighting_Buff_1_CurAvatar",
+    "mixinIndex": 1,
+    "overrides": {},
+    "vectors": [
+      {
+        "value": 0.375,
+        "step": -1
+      },
+      {
+        "value": 0.5,
+        "step": 0
+      },
+      {
+        "value": 0.625,
+        "step": 0
+      },
+      {
+        "value": 98.875,
+        "step": 0
+      },
+      {
+        "value": 99.0,
+        "step": -1
+      },
+      {
+        "value": 99.125,
+        "step": -1
+      }
+    ]
+  },
+  {
+    "ability": "Activity_BadgeBattle_Badge_ScreenEffectManager",
+    "owner": "ScreenEffManager",
+    "mixinIndex": 0,
+    "overrides": {},
+    "vectors": [
+      {
+        "value": -0.625,
+        "step": -1
+      },
+      {
+        "value": -0.5,
+        "step": 0
+      },
+      {
+        "value": -0.375,
+        "step": 0
+      },
+      {
+        "value": 0.375,
+        "step": 0
+      },
+      {
+        "value": 0.5,
+        "step": 1
+      },
+      {
+        "value": 0.625,
+        "step": 1
+      },
+      {
+        "value": 1.375,
+        "step": 1
+      },
+      {
+        "value": 1.5,
+        "step": -1
+      },
+      {
+        "value": 1.625,
+        "step": -1
+      }
+    ]
+  },
+  {
+    "ability": "SceneObj_Property_Ani_Prop_MapMark_CaneraPivot",
+    "owner": "SceneObj_Property_Ani_Prop_MapMark_CaneraPivot",
+    "mixinIndex": 0,
+    "overrides": {},
+    "vectors": [
+      {
+        "value": -0.625,
+        "step": -1
+      },
+      {
+        "value": -0.5,
+        "step": 0
+      },
+      {
+        "value": -0.375,
+        "step": 0
+      },
+      {
+        "value": 0.375,
+        "step": 0
+      },
+      {
+        "value": 0.5,
+        "step": 1
+      },
+      {
+        "value": 0.625,
+        "step": 1
+      },
+      {
+        "value": 1.375,
+        "step": 1
+      },
+      {
+        "value": 1.5,
+        "step": -1
+      },
+      {
+        "value": 1.625,
+        "step": -1
+      }
+    ]
+  },
+  {
+    "ability": "Necalevia_AOERangeMulti_Damage_MvM2",
+    "owner": "ability",
+    "mixinIndex": 0,
+    "overrides": {},
+    "vectors": [
+      {
+        "value": 0.375,
+        "step": -1
+      },
+      {
+        "value": 0.5,
+        "step": 0
+      },
+      {
+        "value": 0.625,
+        "step": 0
+      },
+      {
+        "value": 1.375,
+        "step": 0
+      },
+      {
+        "value": 1.5,
+        "step": -1
+      },
+      {
+        "value": 1.625,
+        "step": -1
+      }
+    ]
+  },
+  {
+    "ability": "Partner_Animal_Electrohercules_Defend_StaminaController",
+    "owner": "Partner_Animal_Electrohercules_DefendLoop",
+    "mixinIndex": 0,
+    "overrides": {
+      "Electrohercules_Property_MaxStamina": 20.0
+    },
+    "vectors": [
+      {
+        "value": -0.625,
+        "step": -1
+      },
+      {
+        "value": -0.5,
+        "step": 0
+      },
+      {
+        "value": -0.375,
+        "step": 0
+      },
+      {
+        "value": 0.375,
+        "step": 0
+      },
+      {
+        "value": 0.5,
+        "step": 1
+      },
+      {
+        "value": 0.625,
+        "step": 1
+      },
+      {
+        "value": 20.375,
+        "step": 1
+      },
+      {
+        "value": 20.5,
+        "step": -1
+      },
+      {
+        "value": 20.625,
+        "step": -1
+      }
+    ]
+  },
+  {
+    "ability": "Avatar_Iansan_Constellation_1",
+    "owner": "Avatar_Iansan_Constellation_1_Trigger",
+    "mixinIndex": 1,
+    "overrides": {
+      "NyxReduceValue": 2.0
+    },
+    "vectors": [
+      {
+        "value": -99.125,
+        "step": -1
+      },
+      {
+        "value": -99.0,
+        "step": 0
+      },
+      {
+        "value": -98.875,
+        "step": 0
+      },
+      {
+        "value": 1.875,
+        "step": 0
+      },
+      {
+        "value": 2.0,
+        "step": 1
+      },
+      {
+        "value": 2.125,
+        "step": 1
+      },
+      {
+        "value": 98.875,
+        "step": 1
+      },
+      {
+        "value": 99.0,
+        "step": -1
+      },
+      {
+        "value": 99.125,
+        "step": -1
+      }
+    ]
+  }
+]

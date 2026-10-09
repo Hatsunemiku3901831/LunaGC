@@ -4,6 +4,7 @@ import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.player.Player.SceneLoadState;
 import emu.grasscutter.game.props.EnterReason;
 import emu.grasscutter.game.world.Position;
+import emu.grasscutter.game.world.World;
 import emu.grasscutter.game.world.data.TeleportProperties;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.EnterTypeOuterClass.EnterType;
@@ -72,6 +73,16 @@ public class PacketPlayerEnterSceneNotify extends BasePacket {
 
     public PacketPlayerEnterSceneNotify(
             Player player, Player target, TeleportProperties teleportProperties) {
+        this(player, target.getUid(), target.getWorld().getWorldLevel(), teleportProperties);
+    }
+
+    public PacketPlayerEnterSceneNotify(
+            Player player, World destination, TeleportProperties teleportProperties) {
+        this(player, destination.getHost().getUid(), destination.getWorldLevel(), teleportProperties);
+    }
+
+    private PacketPlayerEnterSceneNotify(
+            Player player, int targetUid, int worldLevel, TeleportProperties teleportProperties) {
         super(PacketOpcodes.PlayerEnterSceneNotify);
 
         player.setSceneLoadState(SceneLoadState.LOADING);
@@ -88,14 +99,14 @@ public class PacketPlayerEnterSceneNotify extends BasePacket {
                         .setPos(teleportProperties.getTeleportTo().toProto())
                         .setSceneBeginTime((currentTime ^ 27843L) + 16749L)
                         .setType(teleportProperties.getEnterType())
-                        .setTargetUid((target.getUid() - 30259) ^ 4145)
+                        .setTargetUid((targetUid - 30259) ^ 4145)
                         .setEnterSceneToken((player.getEnterSceneToken() ^ 57361) - 22665)
-                        .setWorldLevel((target.getWorld().getWorldLevel() ^ 31579) + 19873)
+                        .setWorldLevel((worldLevel ^ 31579) + 19873)
 
                         .setSceneTransaction(
                                 teleportProperties.getSceneId()
                                         + "-"
-                                        + target.getUid()
+                                        + targetUid
                                         + "-"
                                         + (int) (System.currentTimeMillis() / 1000)
                                         + "-"

@@ -19,6 +19,7 @@ import emu.grasscutter.game.world.Scene;
 import emu.grasscutter.game.entity.EntityMonster;
 import emu.grasscutter.scripts.ScriptLoader;
 import emu.grasscutter.utils.FileUtils;
+import emu.grasscutter.utils.GameCalendar;
 import emu.grasscutter.server.packet.send.PacketDailyTaskDataNotify;
 import emu.grasscutter.server.packet.send.PacketDailyTaskProgressNotify;
 import emu.grasscutter.server.packet.send.PacketWorldOwnerDailyTaskNotify;
@@ -35,8 +36,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import lombok.Getter;
 import org.bson.types.ObjectId;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.Instant;
 
 @Getter
 @Entity(value = "dailytasks", useDiscriminator = false)
@@ -89,7 +89,7 @@ public class DailyTaskManager {
 	 *
 	 * This is the authoritative quota marker for daily commissions.
 	 * A server restart must never generate another set while this value
-	 * still represents the current server-local calendar day.
+	 * still represents the current China server day (04:00 boundary).
 	 */
 	private int lastGenerationDate;
 
@@ -154,7 +154,7 @@ public class DailyTaskManager {
 	}
 
 	/**
-	 * Ensures that the player has a commission set for the current calendar day.
+	 * Ensures that the player has a commission set for the current game day.
 	 *
 	 * This is the method automatic systems must use.
 	 */
@@ -164,6 +164,10 @@ public class DailyTaskManager {
 
 	private synchronized int ensureDailyTasksForToday(
 			boolean syncClient) {
+		return ensureDailyTasksForDay(syncClient, getCurrentDateKey());
+	}
+
+	private synchronized int ensureDailyTasksForDay(boolean syncClient, int today) {
 		if (this.player == null) {
 			return 0;
 		}
@@ -172,16 +176,15 @@ public class DailyTaskManager {
 			this.dailyTasks = new ArrayList<>();
 		}
 
-		int today =
-				getCurrentDateKey();
-
 		/*
 		 * This is the main quota guard.
 		 *
 		 * If a set was already generated today, absolutely nothing about
 		 * restarting/relogging may generate another one.
+		 * Keep later markers too: old midnight saves can be one date ahead during
+		 * migration, and a clock rollback must not issue another reward quota.
 		 */
-		if (this.lastGenerationDate == today) {
+		if (this.lastGenerationDate >= today) {
 			Grasscutter.getLogger()
 					.debug(
 							"[DailyTask] UID {} already has today's commission quota "
@@ -228,6 +231,10 @@ public class DailyTaskManager {
 	 */
 	public synchronized int resetDailyTasksForNewDay() {
 		return this.ensureDailyTasksForToday(true);
+	}
+
+	public synchronized int resetDailyTasksForNewDay(Instant now) {
+		return this.ensureDailyTasksForDay(true, dateKey(now));
 	}
 
 	/**
@@ -1248,13 +1255,16 @@ public class DailyTaskManager {
 				.count();
 	}
 
-	private static int getCurrentDateKey() {
-		LocalDate today =
-				LocalDate.now(ZoneId.systemDefault());
+	protected Instant generationNow() {
+		return Instant.now();
+	}
 
-		return today.getYear() * 10000
-				+ today.getMonthValue() * 100
-				+ today.getDayOfMonth();
+	private int getCurrentDateKey() {
+		return dateKey(generationNow());
+	}
+
+	private static int dateKey(Instant now) {
+		return GameCalendar.dateKey(GameCalendar.resetDay(now));
 	}
 
 	private int getStoredTaskCount() {

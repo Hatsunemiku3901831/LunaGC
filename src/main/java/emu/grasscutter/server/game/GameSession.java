@@ -8,6 +8,7 @@ import emu.grasscutter.Grasscutter.ServerDebugMode;
 import emu.grasscutter.game.Account;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.net.packet.*;
+import emu.grasscutter.net.proto.CombatInvocationsNotifyOuterClass.CombatInvocationsNotify;
 import emu.grasscutter.server.event.game.SendPacketEvent;
 import emu.grasscutter.utils.*;
 import io.netty.buffer.*;
@@ -49,13 +50,21 @@ public class GameSession implements GameSessionManager.KcpChannel {
 
     @Getter private int clientTime;
     @Getter private long lastPingTime;
+    private final PlayerTimeClock playerTimeClock;
     private int lastClientSeq = 10;
+    private final Object outboundLock = new Object();
+    private int lastCombatSeq;
 
     /** Packets that reached the client, for the developer-mode no-response check. */
-    @Getter private long packetsSent;
+    @Getter private volatile long packetsSent;
 
     public GameSession(GameServer server) {
+        this(server, new PlayerTimeClock());
+    }
+
+    public GameSession(GameServer server, PlayerTimeClock playerTimeClock) {
         this.server = server;
+        this.playerTimeClock = java.util.Objects.requireNonNull(playerTimeClock);
         this.state = SessionState.WAITING_FOR_TOKEN;
         this.lastPingTime = System.currentTimeMillis();
 
@@ -89,6 +98,7 @@ public class GameSession implements GameSessionManager.KcpChannel {
         this.player = player;
         this.player.setSession(this);
         this.player.setAccount(this.getAccount());
+        playerTimeClock.setPaused(this.player.isPaused());
     }
 
     public boolean isLoggedIn() {
@@ -100,8 +110,18 @@ public class GameSession implements GameSessionManager.KcpChannel {
         this.lastPingTime = System.currentTimeMillis();
     }
 
+    public PlayerTimeClock.Snapshot getPlayerTimeSnapshot() {
+        return playerTimeClock.snapshot();
+    }
+
+    public void setPlayerTimePaused(boolean paused) {
+        playerTimeClock.setPaused(paused);
+    }
+
     public int getNextClientSequence() {
-        return ++lastClientSeq;
+        synchronized (outboundLock) {
+            return ++lastClientSeq;
+        }
     }
 
     public void replayPacket(int opcode, String name) {
@@ -152,10 +172,6 @@ public class GameSession implements GameSessionManager.KcpChannel {
             return;
         }
 
-        if (packet.shouldBuildHeader()) {
-            packet.buildHeader(this.getNextClientSequence());
-        }
-
         switch (GAME_INFO.logPackets) {
             case ALL -> {
                 if ((!PacketOpcodesUtils.LOOP_PACKETS.contains(packet.getOpcode())
@@ -183,21 +199,33 @@ public class GameSession implements GameSessionManager.KcpChannel {
         event.call();
         if (!event.isCanceled()) {
             try {
-                packet = event.getPacket();
-                var bytes = packet.build();
-                if (packet.shouldEncrypt) {
-                    if (Grasscutter.getConfig().server.game.useXorEncryption) {
-                        Crypto.xor(bytes, packet.useDispatchKey() || !useSecretKey() ? Crypto.DISPATCH_KEY : this.encryptKey);
+                synchronized (outboundLock) {
+                    packet = event.getPacket();
+                    // Stamp in actual write order, independently for each recipient. A scene
+                    // broadcasts the same packet object to multiple sessions, so keep it immutable.
+                    if (packet.getOpcode() == PacketOpcodes.CombatInvocationsNotify) {
+                        var proto = CombatInvocationsNotify.parseFrom(packet.getData());
+                        if (++lastCombatSeq == 0) ++lastCombatSeq;
+                        var copy = new BasePacket(packet.getOpcode(), packet.shouldBuildHeader());
+                        copy.shouldEncrypt = packet.shouldEncrypt;
+                        copy.setUseDispatchKey(packet.useDispatchKey());
+                        copy.setHeader(packet.getHeader());
+                        copy.setData(proto.toBuilder().setClientSequenceId(lastCombatSeq));
+                        packet = copy;
                     }
+                    if (packet.shouldBuildHeader()) packet.buildHeader(getNextClientSequence());
+                    var bytes = packet.build();
+                    if (packet.shouldEncrypt) {
+                        if (Grasscutter.getConfig().server.game.useXorEncryption) {
+                            Crypto.xor(bytes, packet.useDispatchKey() || !useSecretKey() ? Crypto.DISPATCH_KEY : this.encryptKey);
+                        }
+                    }
+                    tunnel.writeData(bytes);
+                    // Count only completed writes, excluding plugin cancellations and failures.
+                    this.packetsSent++;
                 }
-                tunnel.writeData(bytes);
-                // Counted after the write rather than on entry: a packet a plugin cancelled, or one
-                // of the non-positive sentinels above, never reached the client, and a handler that
-                // only 'sent' one of those is still a handler that answered nothing. Developer mode
-                // diffs this around a handler's invocation to find exactly that.
-                this.packetsSent++;
-            } catch (Exception ignored) {
-                Grasscutter.getLogger().debug("Unable to send packet to client.");
+            } catch (Exception exception) {
+                Grasscutter.getLogger().debug("Unable to send packet to client.", exception);
             }
         }
     }

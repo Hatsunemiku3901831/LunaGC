@@ -1,14 +1,19 @@
 package emu.grasscutter.game.entity;
 
+import emu.grasscutter.GameConstants;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.binout.config.ConfigEntityGadget;
 import emu.grasscutter.data.binout.config.fields.ConfigAbilityData;
 import emu.grasscutter.data.excels.GadgetData;
+import emu.grasscutter.game.avatar.Avatar;
 import emu.grasscutter.game.props.EntityIdType;
 import emu.grasscutter.game.world.*;
+import emu.grasscutter.net.proto.AbilityControlBlockOuterClass.AbilityControlBlock;
+import emu.grasscutter.net.proto.AbilityEmbryoOuterClass.AbilityEmbryo;
 import emu.grasscutter.net.proto.SceneEntityInfoOuterClass.SceneEntityInfo;
 import emu.grasscutter.scripts.EntityControllerScriptManager;
+import emu.grasscutter.utils.Utils;
 import it.unimi.dsi.fastutil.ints.*;
 import javax.annotation.Nullable;
 import lombok.*;
@@ -16,6 +21,7 @@ import lombok.*;
 @ToString(callSuper = true)
 public class EntityWeapon extends EntityBaseGadget {
     @Getter private final GadgetData gadgetData;
+    @Nullable @Getter private final Avatar casterAvatar;
 
     @Getter(onMethod_ = @Override)
     @Setter
@@ -30,7 +36,12 @@ public class EntityWeapon extends EntityBaseGadget {
     @Getter private final Position bornRot;
 
     public EntityWeapon(Scene scene, int gadgetId) {
+        this(scene, gadgetId, null);
+    }
+
+    public EntityWeapon(Scene scene, int gadgetId, Avatar casterAvatar) {
         super(scene);
+        this.casterAvatar = casterAvatar;
 
         this.gadgetData = GameData.getGadgetDataMap().get(gadgetId);
         if (gadgetData != null && gadgetData.getJsonName() != null) {
@@ -59,7 +70,12 @@ public class EntityWeapon extends EntityBaseGadget {
 
     private void addConfigAbility(ConfigAbilityData abilityData) {
         var data = GameData.getAbilityData(abilityData.getAbilityName());
-        if (data != null) this.getWorld().getHost().getAbilityManager().addAbilityToEntity(this, data);
+        if (data != null) {
+            var player = casterAvatar != null ? casterAvatar.getPlayer() : this.getWorld().getHost();
+            player.getAbilityManager().addAbilityToEntity(this, data);
+        } else
+            this.getInstancedAbilities()
+                    .add(null); // Keep instance IDs aligned with the announced embryos.
     }
 
     @Override
@@ -67,9 +83,28 @@ public class EntityWeapon extends EntityBaseGadget {
         // TODO: handle pre-dynamic, static and dynamic here
         if (this.configGadget != null && this.configGadget.getAbilities() != null) {
             for (var ability : this.configGadget.getAbilities()) {
+                if (ability == null
+                        || ability.getAbilityName() == null
+                        || ability.getAbilityName().isEmpty()) continue;
                 this.addConfigAbility(ability);
             }
         }
+    }
+
+    public AbilityControlBlock getAbilityControlBlock() {
+        var block = AbilityControlBlock.newBuilder();
+        if (configGadget == null || configGadget.getAbilities() == null) return block.build();
+        int id = 0;
+        for (var ability : configGadget.getAbilities()) {
+            if (ability == null || ability.getAbilityName() == null || ability.getAbilityName().isEmpty())
+                continue;
+            block.addAbilityEmbryoList(
+                    AbilityEmbryo.newBuilder()
+                            .setAbilityId(++id)
+                            .setAbilityNameHash(Utils.abilityHash(ability.getAbilityName()))
+                            .setAbilityOverrideNameHash(GameConstants.DEFAULT_ABILITY_NAME));
+        }
+        return block.build();
     }
 
     @Override

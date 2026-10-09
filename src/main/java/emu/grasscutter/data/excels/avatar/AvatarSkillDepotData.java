@@ -92,6 +92,7 @@ public class AvatarSkillDepotData extends GameResource {
 
         // Get constellation item from GameData
         Optional.ofNullable(this.talents)
+                .filter(talents -> !talents.isEmpty())
                 .map(talents -> talents.get(0))
                 .map(i -> GameData.getAvatarTalentDataMap().get((int) i))
                 .map(talentData -> talentData.getMainCostItemId())
@@ -99,8 +100,10 @@ public class AvatarSkillDepotData extends GameResource {
     }
 
     public IntStream getSkillsAndEnergySkill() {
-        return IntStream.concat(this.skills.stream().mapToInt(i -> i), IntStream.of(this.energySkill))
-                .filter(skillId -> skillId > 0);
+        var regular = this.skills == null ? IntStream.empty() : this.skills.stream()
+                .filter(Objects::nonNull).mapToInt(i -> i);
+        return IntStream.concat(regular, IntStream.of(this.energySkill, this.attackModeSkill))
+                .filter(skillId -> skillId > 0).distinct();
     }
 
     @Getter

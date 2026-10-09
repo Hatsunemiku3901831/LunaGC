@@ -8,6 +8,7 @@ import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.player.Player.SceneLoadState;
 import emu.grasscutter.game.props.EnterReason;
 import emu.grasscutter.game.world.*;
+import emu.grasscutter.game.world.data.TeleportProperties;
 import emu.grasscutter.net.packet.BasePacket;
 import emu.grasscutter.net.proto.EnterTypeOuterClass.EnterType;
 import emu.grasscutter.net.proto.MatchTypeOuterClass.MatchType;
@@ -156,18 +157,20 @@ public final class CrucibleMatchSystem {
         if (!validSources(run)) throw new IllegalStateException("Matching party changed before transfer");
         Player host = server.getPlayerByUid(run.hostUid());
         var players = members(run);
-        // Invalidate source invitations before World.addPlayer removes anyone from those scenes.
+        // Invalidate source invitations before moving anyone out of those scenes.
         run.parties().forEach(p -> {
             var team = teams.get(p.ownerUid());
             team.source().getCrucibleSceneController().releaseMatching(team.serial());
         });
         World world = host.getWorld();
         if (!world.isMultiplayer()) {
-            world = new World(host, true);
-            world.addPlayer(host);
-            host.sendPacket(new PacketPlayerEnterSceneNotify(host, host, EnterType.EnterType_ENTER_OTHER,
-                    EnterReason.HostFromSingleToMp, 3, host.getPosition()));
-            host.sendPacket(new PacketEnterScenePeerNotify(host));
+            var promoted = new World(host, true);
+            if (!promoted.tryAddPlayer(host, world, context -> {
+                host.sendPacket(new PacketPlayerEnterSceneNotify(host, promoted,
+                        entry(host, EnterReason.HostFromSingleToMp)));
+                host.sendPacket(new PacketEnterScenePeerNotify(host));
+            })) throw new IllegalStateException("Cannot promote matching host " + host.getUid());
+            world = promoted;
         }
         destinations.put(run.id(), world);
         for (Party party : run.parties()) {
@@ -176,14 +179,20 @@ public final class CrucibleMatchSystem {
                     .sorted(Comparator.comparing(p -> p.getUid() == party.ownerUid())).toList();
             for (Player player : ordered) {
                 if (player.getWorld() == world) continue;
-                player.getPosition().set(host.getPosition());
-                player.getRotation().set(host.getRotation());
-                world.addPlayer(player, 3);
-                player.sendPacket(new PacketPlayerEnterSceneNotify(player, host, EnterType.EnterType_ENTER_OTHER,
-                        EnterReason.MpPlay, 3, host.getPosition()));
-                player.sendPacket(new PacketEnterScenePeerNotify(player));
+                var destination = world;
+                var properties = entry(host, EnterReason.MpPlay);
+                if (!destination.tryAddPlayer(player, player.getWorld(), properties, context -> {
+                    player.sendPacket(new PacketPlayerEnterSceneNotify(player, destination, properties));
+                    player.sendPacket(new PacketEnterScenePeerNotify(player));
+                })) throw new IllegalStateException("Cannot enter matching world for uid " + player.getUid());
             }
         }
+    }
+
+    private static TeleportProperties entry(Player host, EnterReason reason) {
+        return TeleportProperties.builder().sceneId(3)
+                .teleportTo(host.getPosition().clone()).teleportRot(host.getRotation().clone())
+                .enterType(EnterType.EnterType_ENTER_OTHER).enterReason(reason).build();
     }
 
     private void stop(Run run, int reason) {

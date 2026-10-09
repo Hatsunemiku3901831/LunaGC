@@ -1,0 +1,142 @@
+[
+  {
+    "abilityName": "Monster_Effigy_Electric_Shield",
+    "abilitySpecials": {
+      "SubHurtDelta": 0.99
+    },
+    "modifiers": {
+      "ShieldModifier": {
+        "onRemoved": [
+          {
+            "$type": "EnableHitBoxByName",
+            "MPHBGGFPBII": [
+              "ShieldHitBox1",
+              "ShieldHitBox2",
+              "ShieldHitBox3",
+              "ShieldHitBox4",
+              "ShieldHitBox5",
+              "ShieldHitBox6",
+              "ShieldHitBox7",
+              "ShieldHitBox8"
+            ],
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "hitBoxNames": [
+              "ShieldHitBox1",
+              "ShieldHitBox2",
+              "ShieldHitBox3",
+              "ShieldHitBox4",
+              "ShieldHitBox5",
+              "ShieldHitBox6",
+              "ShieldHitBox7",
+              "ShieldHitBox8"
+            ],
+            "canBeHandledOnRecover": true
+          }
+        ],
+        "onAdded": [
+          {
+            "$type": "EnableHitBoxByName",
+            "MPHBGGFPBII": [
+              "ShieldHitBox1",
+              "ShieldHitBox2",
+              "ShieldHitBox3",
+              "ShieldHitBox4",
+              "ShieldHitBox5",
+              "ShieldHitBox6",
+              "ShieldHitBox7",
+              "ShieldHitBox8"
+            ],
+            "setEnable": true,
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "hitBoxNames": [
+              "ShieldHitBox1",
+              "ShieldHitBox2",
+              "ShieldHitBox3",
+              "ShieldHitBox4",
+              "ShieldHitBox5",
+              "ShieldHitBox6",
+              "ShieldHitBox7",
+              "ShieldHitBox8"
+            ],
+            "canBeHandledOnRecover": true
+          },
+          {
+            "$type": "AttachAbilityStateResistance",
+            "resistanceListID": 12002,
+            "target": "Self",
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "durationRatio": 1,
+            "canBeHandledOnRecover": true
+          }
+        ],
+        "properties": {
+          "Actor_SubHurtDelta": "SubHurtDelta"
+        },
+        "elementDurability": 100.0,
+        "state": "LockHP",
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "onBeingHit": [
+          {
+            "$type": "FireEffect",
+            "effectPattern": "Eff_Monster_Effigy_Electric_ShieldBeHit",
+            "scale": 1.0,
+            "born": {
+              "$type": "MBOEKFDLCGB",
+              "alongGround": true,
+              "direction": {
+                "$type": "BDODHIJDMCE",
+                "maxAngle": 180
+              },
+              "APKLAIJMEIL": {
+                "HHNLJKNBKPP": 180
+              },
+              "value": 10,
+              "onGroundRaycastUpDist": 2
+            },
+            "ILLLPEOODKP": "",
+            "effectTempleteID": -1.0,
+            "target": "Self",
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "canBeHandledOnRecover": true
+          }
+        ],
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Hutao_VermilionBite_CameraController",
+    "abilitySpecials": {},
+    "modifiers": {
+      "VermilionBite_Camera_Protection_Invincible": {
+        "elementDurability": 100.0,
+        "state": "Invincible",
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Hutao_Constellation_Limbo",
+    "abilitySpecials": {
+      "Hutao_Constellation_Limbo_HPRatio": 0.0
+    },
+    "modifiers": {
+      "UNIQUE_Hutao_Constellation_Limbo_Untriggered_Limbo": {
+        "duration": 3.0,
+        "elementDurability": 100.0,
+        "state": "Limbo",
+        "modifierName": "",
+        "isUnique": true,
+        "AIHNJLDFEGJ": 0.0
+      }
+    }
+  }
+]

@@ -1,0 +1,805 @@
+[
+  {
+    "abilityName": "Activity_AcrobaticsBattle_Lv2_LevelBuff_Avatar",
+    "abilitySpecials": {
+      "Debuff_SubHurtDelta": 0.0,
+      "Buff_AddHurtDelta": 0.0,
+      "FeverBuffRatio": 0.0,
+      "BuffDuration": 0.0,
+      "Kill_Window": 0.0
+    },
+    "modifiers": {
+      "Blank": {
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "thinkInterval": 0.0,
+        "duration": 0.0,
+        "elementType": "None",
+        "stacking": "Refresh",
+        "state": "None",
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      },
+      "UNIQUE_Activity_AcrobaticsBattle_Lv2_FeverBuff_Handler": {
+        "stacking": "Unique",
+        "elementDurability": 100.0,
+        "modifierMixins": [
+          {
+            "$type": "AttachModifierToSelfGlobalValueMixin",
+            "modifierNameSteps": [
+              "Blank",
+              "Activity_AcrobaticsBattle_Lv2_FeverBuff_Count1",
+              "Activity_AcrobaticsBattle_Lv2_FeverBuff_Count2",
+              "Activity_AcrobaticsBattle_Lv2_FeverBuff_Count3",
+              "Activity_AcrobaticsBattle_Lv2_FeverBuff_Count4",
+              "Activity_AcrobaticsBattle_Lv2_FeverBuff_Count5"
+            ],
+            "valueSteps": [
+              -0.5,
+              0.5,
+              1.5,
+              2.5,
+              3.5,
+              4.5,
+              5.5
+            ],
+            "globalValueKey": "_ABILITY_Activity_AcrobaticsBattle_Lv2_LevelBuff_ExplodeCount",
+            "defaultGlobalValueOnCreate": 0.0,
+            "removeAppliedModifier": true,
+            "globalValueTarget": "Self",
+            "enable": true,
+            "actorIceSubHurtDelta": -1
+          }
+        ],
+        "modifierName": "",
+        "isUnique": true,
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      }
+    },
+    "abilityMixins": [
+      {
+        "$type": "AttachModifierToSelfGlobalValueMixin",
+        "modifierNameSteps": [
+          "Blank",
+          "Activity_AcrobaticsBattle_Lv2_LevelBuff_Count1",
+          "Activity_AcrobaticsBattle_Lv2_LevelBuff_Count2",
+          "Activity_AcrobaticsBattle_Lv2_LevelBuff_Count3",
+          "Activity_AcrobaticsBattle_Lv2_LevelBuff_Count4",
+          "Activity_AcrobaticsBattle_Lv2_LevelBuff_Count5"
+        ],
+        "valueSteps": [
+          -0.5,
+          0.5,
+          1.5,
+          2.5,
+          3.5,
+          4.5,
+          5.5
+        ],
+        "globalValueKey": "_ABILITY_Activity_AcrobaticsBattle_Lv2_LevelBuff_ExplodeCount",
+        "defaultGlobalValueOnCreate": 0.0,
+        "removeAppliedModifier": true,
+        "globalValueTarget": "Self",
+        "enable": true,
+        "actorIceSubHurtDelta": -1
+      },
+      {
+        "$type": "AttachModifierToGlobalValueMixin",
+        "modifierNameSteps": [
+          "Blank",
+          "UNIQUE_Activity_AcrobaticsBattle_Lv2_FeverBuff_Handler"
+        ],
+        "globalValueKey": "_ABILITY_Activity_AcrobaticsBattle_FeverBuff_Mark",
+        "valueSteps": [
+          -0.5,
+          0.5,
+          1.5
+        ],
+        "enable": true,
+        "removeAppliedModifier": true,
+        "globalValueTarget": "Self",
+        "useLimitRange": false,
+        "actorIceSubHurtDelta": -1,
+        "PNELLOCFHCP": true
+      }
+    ]
+  },
+  {
+    "abilityName": "Activity_AcrobaticsBattle_Lv6_LevelBuff_Monster",
+    "abilitySpecials": {
+      "SubHurtDelta": 0.0,
+      "Kill_Window": 0.0,
+      "LoseHpRatio": 0.0
+    },
+    "modifiers": {
+      "Blank": {
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "thinkInterval": 0.0,
+        "duration": 0.0,
+        "elementType": "None",
+        "stacking": "Refresh",
+        "state": "None",
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      },
+      "UNIQUE_Activity_AcrobaticsBattle_Lv6_FeverBuff_EnemyHandler": {
+        "stacking": "Unique",
+        "elementDurability": 100.0,
+        "modifierMixins": [
+          {
+            "$type": "AttachToAbilityStateMixin",
+            "modifierName": "UNIQUE_Activity_AcrobaticsBattle_Lv6_FeverBuff_EnemyFreeze",
+            "abilityStates": [
+              "ElementFreeze"
+            ],
+            "actorIceSubHurtDelta": -1
+          }
+        ],
+        "modifierName": "",
+        "isUnique": true,
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      }
+    },
+    "abilityMixins": [
+      {
+        "$type": "AttachModifierToGlobalValueMixin",
+        "modifierNameSteps": [
+          "Blank",
+          "UNIQUE_Activity_AcrobaticsBattle_Lv6_FeverBuff_EnemyHandler"
+        ],
+        "globalValueTarget": "Team",
+        "globalValueKey": "_ABILITY_Activity_AcrobaticsBattle_Lv6_FeverMark",
+        "valueSteps": [
+          -0.5,
+          0.5,
+          1.5
+        ],
+        "enable": true,
+        "removeAppliedModifier": true,
+        "useLimitRange": false,
+        "actorIceSubHurtDelta": -1,
+        "PNELLOCFHCP": true
+      }
+    ]
+  },
+  {
+    "abilityName": "ActivityAbility_AdventureGoalFighting_Buff_1",
+    "abilitySpecials": {
+      "DamageUpRate": 0.0,
+      "CountDamageUpRate": 0.0,
+      "BuffTime": 0.0,
+      "BuffMaxLevel": 0.0
+    },
+    "modifiers": {
+      "Activity_AdventureGoalFighting_Buff_1_AttackUpState": {
+        "stacking": "Unique",
+        "elementDurability": 100.0,
+        "state": "AttackUp",
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      },
+      "Activity_AdventureGoalFighting_Buff_1_CurAvatar": {
+        "elementDurability": 100.0,
+        "modifierMixins": [
+          {
+            "$type": "ModifyDamageMixin",
+            "damagePercentageRatio": [
+              "CountDamageUpRate",
+              "AdventureGoalFighting_Buff_1_Count",
+              "MUL"
+            ],
+            "ignoreEventInfo": true,
+            "elementDurability": 0.0,
+            "actorIceSubHurtDelta": -1
+          },
+          {
+            "$type": "AttachModifierToGlobalValueMixin",
+            "modifierNameSteps": [
+              "Activity_AdventureGoalFighting_Buff_1_AttackUpState"
+            ],
+            "globalValueTarget": "Team",
+            "globalValueKey": "AdventureGoalFighting_Buff_1_Count",
+            "valueSteps": [
+              0.5,
+              99.0
+            ],
+            "DEFOFMOIAAI": true,
+            "enable": true,
+            "useLimitRange": false,
+            "actorIceSubHurtDelta": -1,
+            "removeAppliedModifier": true,
+            "PNELLOCFHCP": true
+          }
+        ],
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      }
+    }
+  },
+  {
+    "abilityName": "Activity_BadgeBattle_Badge_ScreenEffectManager",
+    "abilitySpecials": {},
+    "modifiers": {
+      "Eff_Off": {
+        "onAdded": [
+          {
+            "$type": "SendCameraScreenEffectTrigger",
+            "effectName": "Eff_UI_SnowRaceCombat_Buff_ScreenEffect",
+            "parameter": "FadeOut",
+            "target": "Team",
+            "BDPFBBFKKAH": true,
+            "muteRemoteAction": true,
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "canBeHandledOnRecover": true
+          }
+        ],
+        "stacking": "Unique",
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      },
+      "Eff_On": {
+        "onAdded": [
+          {
+            "$type": "Predicated",
+            "successActions": [
+              {
+                "$type": "SendCameraScreenEffectTrigger",
+                "effectName": "Eff_UI_SnowRaceCombat_Buff_ScreenEffect",
+                "parameter": "FadeIn",
+                "target": "Team",
+                "BDPFBBFKKAH": true,
+                "muteRemoteAction": true,
+                "actorIceSubHurtDelta": -1,
+                "doOffStage": false,
+                "canBeHandledOnRecover": true
+              }
+            ],
+            "failActions": [
+              {
+                "$type": "ApplyModifier",
+                "modifierName": "ScreenEff",
+                "target": "Self",
+                "actorIceSubHurtDelta": -1,
+                "doOffStage": false,
+                "canBeHandledOnRecover": true
+              }
+            ],
+            "targetPredicates": [
+              {
+                "$type": "ByHasModifier",
+                "modifierName": "ScreenEff",
+                "target": "Target"
+              }
+            ],
+            "target": "Self",
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "canBeHandledOnRecover": true
+          }
+        ],
+        "stacking": "Unique",
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      },
+      "ScreenEffManager": {
+        "stacking": "Unique",
+        "elementDurability": 100.0,
+        "modifierMixins": [
+          {
+            "$type": "AttachModifierToGlobalValueMixin",
+            "modifierNameSteps": [
+              "Eff_Off",
+              "Eff_On"
+            ],
+            "globalValueKey": "_ABILITY_Activity_BadgeBattle_Badge_ScreenEff",
+            "valueSteps": [
+              -0.5,
+              0.5,
+              1.5
+            ],
+            "DEFOFMOIAAI": true,
+            "enable": true,
+            "globalValueTarget": "Self",
+            "useLimitRange": false,
+            "actorIceSubHurtDelta": -1,
+            "removeAppliedModifier": true,
+            "PNELLOCFHCP": true
+          }
+        ],
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      }
+    }
+  },
+  {
+    "abilityName": "SceneObj_Property_Ani_Prop_MapMark_CaneraPivot",
+    "abilitySpecials": {},
+    "modifiers": {
+      "State_SGV_Fov_Type_0": {
+        "elementDurability": 100.0,
+        "modifierMixins": [
+          {
+            "$type": "SpawnCameraStateMixin",
+            "JBABBKGDBOB": "Owner",
+            "HHDAFCDMDLO": {
+              "duration": 0.3,
+              "DAGICMOAFJP": 1,
+              "AKLMKDHGNAD": 2,
+              "blendType": 2,
+              "duHPRation": 0.30000001192092896
+            },
+            "DGPDJMGNEHP": {
+              "duration": 0.3,
+              "DAGICMOAFJP": 1,
+              "AKLMKDHGNAD": 2,
+              "blendType": 2,
+              "duHPRation": 0.30000001192092896
+            },
+            "priority": 1,
+            "AFDENKPAECI": {
+              "$type": "LHJLJIBCJAC",
+              "KEPFDDOLEEO": "RootNode",
+              "fov": 45.0,
+              "FPBINHDGKBM": 0.1,
+              "MBNGBCJDAJC": 0.9,
+              "GPAHPIKDFBG": 10.0,
+              "MBLIAJAPIHK": true,
+              "NFMCBONAMOF": "RootNode",
+              "ONHEBFIJBMF": 10.0
+            },
+            "CEBHIKGMAED": true,
+            "actorIceSubHurtDelta": -1,
+            "target": "Owner",
+            "sceneID": 1
+          }
+        ],
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      },
+      "State_SGV_Fov_Type_1": {
+        "elementDurability": 100.0,
+        "modifierMixins": [
+          {
+            "$type": "SpawnCameraStateMixin",
+            "JBABBKGDBOB": "Owner",
+            "HHDAFCDMDLO": {
+              "duration": 0.3,
+              "DAGICMOAFJP": 1,
+              "AKLMKDHGNAD": 2,
+              "blendType": 2,
+              "duHPRation": 0.30000001192092896
+            },
+            "DGPDJMGNEHP": {
+              "duration": 0.3,
+              "DAGICMOAFJP": 1,
+              "AKLMKDHGNAD": 2,
+              "blendType": 2,
+              "duHPRation": 0.30000001192092896
+            },
+            "priority": 1,
+            "AFDENKPAECI": {
+              "$type": "LHJLJIBCJAC",
+              "KEPFDDOLEEO": "RootNode",
+              "fov": 55.0,
+              "FPBINHDGKBM": 0.1,
+              "MBNGBCJDAJC": 0.9,
+              "GPAHPIKDFBG": 10.0,
+              "MBLIAJAPIHK": true,
+              "NFMCBONAMOF": "RootNode",
+              "ONHEBFIJBMF": 10.0
+            },
+            "CEBHIKGMAED": true,
+            "actorIceSubHurtDelta": -1,
+            "target": "Owner",
+            "sceneID": 1
+          }
+        ],
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      },
+      "SceneObj_Property_Ani_Prop_MapMark_CaneraPivot": {
+        "elementDurability": 100.0,
+        "modifierMixins": [
+          {
+            "$type": "AttachModifierToGlobalValueMixin",
+            "modifierNameSteps": [
+              "State_SGV_Fov_Type_0",
+              "State_SGV_Fov_Type_1"
+            ],
+            "globalValueTarget": "Owner",
+            "globalValueKey": "SGV_Fov_Type",
+            "valueSteps": [
+              -0.5,
+              0.5,
+              1.5
+            ],
+            "DEFOFMOIAAI": true,
+            "enable": true,
+            "useLimitRange": false,
+            "actorIceSubHurtDelta": -1,
+            "removeAppliedModifier": true,
+            "PNELLOCFHCP": true
+          }
+        ],
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      }
+    }
+  },
+  {
+    "abilityName": "Necalevia_AOERangeMulti_Damage_MvM2",
+    "abilitySpecials": {},
+    "modifiers": {
+      "AOE_KillSelf": {
+        "onAdded": [
+          {
+            "$type": "KillSelf",
+            "MBGFJOOIMOK": [
+              42005106
+            ],
+            "target": "Self",
+            "killSelfType": "Normal",
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "configIdArray": [
+              42005106
+            ],
+            "canBeHandledOnRecover": true
+          }
+        ],
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      }
+    },
+    "abilityMixins": [
+      {
+        "$type": "AttachModifierToGlobalValueMixin",
+        "modifierNameSteps": [
+          "AOE_KillSelf"
+        ],
+        "globalValueTarget": "Owner",
+        "globalValueKey": "_AOE_WATERBULLET_KILLSELF",
+        "valueSteps": [
+          0.5,
+          1.5
+        ],
+        "DEFOFMOIAAI": true,
+        "enable": true,
+        "useLimitRange": false,
+        "actorIceSubHurtDelta": -1,
+        "removeAppliedModifier": true,
+        "PNELLOCFHCP": true
+      }
+    ]
+  },
+  {
+    "abilityName": "Partner_Animal_Electrohercules_Defend_StaminaController",
+    "abilitySpecials": {
+      "Electrohercules_Stamina_Defend_Prededucted": 30.0,
+      "Electrohercules_Stamina_Defend_LoopCost": 1.0,
+      "Electrohercules_Property_CurrentStamina": 0.0,
+      "Electrohercules_Property_MaxStamina": 100.0
+    },
+    "modifiers": {
+      "Partner_Animal_Electrohercules_Defend_StaminaEmpty": {
+        "onAdded": [
+          {
+            "$type": "RemoveModifier",
+            "modifierName": "Partner_Animal_Electrohercules_DefendLoop",
+            "target": "Self",
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "canBeHandledOnRecover": true
+          }
+        ],
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      },
+      "Empty": {
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      },
+      "Partner_Animal_Electrohercules_DefendLoop": {
+        "thinkInterval": 0.1,
+        "onRemoved": [
+          {
+            "$type": "SetGlobalValue",
+            "key": "_ONIKABUTOBATTLE_PLAYERCONTROL_CHARGEDISPLAY",
+            "minValue": 0.0,
+            "maxValue": 0.0,
+            "value": 0.0,
+            "useLimitRange": false,
+            "target": "Self",
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "canBeHandledOnRecover": true
+          },
+          {
+            "$type": "SetGlobalValue",
+            "key": "_ONIKABUTOBATTLE_MONSTER_ELECTROHERCULES_STAMINA_PREDEDUCTED",
+            "minValue": 0.0,
+            "maxValue": 0.0,
+            "value": 0.0,
+            "useLimitRange": false,
+            "target": "Self",
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "canBeHandledOnRecover": true
+          },
+          {
+            "$type": "SetGlobalValue",
+            "key": "_ONIKABUTOBATTLE_PARTNER_CANRECOVERSTAMINA",
+            "minValue": 0.0,
+            "maxValue": 0.0,
+            "value": 1.0,
+            "useLimitRange": false,
+            "target": "Self",
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "canBeHandledOnRecover": true
+          },
+          {
+            "$type": "SetAnimatorBool",
+            "boolID": "Defend",
+            "target": "Self",
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "canBeHandledOnRecover": true
+          }
+        ],
+        "onAdded": [
+          {
+            "$type": "AddGlobalValue",
+            "useLimitRange": true,
+            "key": "_ONIKABUTOBATTLE_MONSTER_ELECTROHERCULES_STAMINA",
+            "maxValue": "Electrohercules_Property_MaxStamina",
+            "minValue": 0.0,
+            "value": [
+              0.0,
+              1.0,
+              "Electrohercules_Stamina_Defend_LoopCost",
+              "MUL",
+              "SUB"
+            ],
+            "target": "Self",
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "canBeHandledOnRecover": true
+          },
+          {
+            "$type": "SetGlobalValue",
+            "key": "_ONIKABUTOBATTLE_PARTNER_CANRECOVERSTAMINA",
+            "minValue": 0.0,
+            "maxValue": 0.0,
+            "value": 0.0,
+            "useLimitRange": false,
+            "target": "Self",
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "canBeHandledOnRecover": true
+          },
+          {
+            "$type": "SetAnimatorBool",
+            "value": true,
+            "boolID": "Defend",
+            "target": "Self",
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "canBeHandledOnRecover": true
+          },
+          {
+            "$type": "ServerMonsterLog",
+            "paramList": [
+              0,
+              3,
+              0
+            ],
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "canBeHandledOnRecover": true
+          }
+        ],
+        "elementDurability": 100.0,
+        "modifierMixins": [
+          {
+            "$type": "AttachModifierToGlobalValueMixin",
+            "modifierNameSteps": [
+              "Partner_Animal_Electrohercules_Defend_StaminaEmpty",
+              "Empty"
+            ],
+            "globalValueKey": "_ONIKABUTOBATTLE_MONSTER_ELECTROHERCULES_STAMINA",
+            "valueSteps": [
+              -0.5,
+              0.5,
+              [
+                "Electrohercules_Property_MaxStamina",
+                0.5,
+                "ADD"
+              ]
+            ],
+            "enable": true,
+            "removeAppliedModifier": true,
+            "globalValueTarget": "Self",
+            "useLimitRange": false,
+            "actorIceSubHurtDelta": -1,
+            "PNELLOCFHCP": true
+          }
+        ],
+        "modifierName": "",
+        "onThinkInterval": [
+          {
+            "$type": "AddGlobalValue",
+            "useLimitRange": true,
+            "key": "_ONIKABUTOBATTLE_MONSTER_ELECTROHERCULES_STAMINA",
+            "maxValue": "Electrohercules_Property_MaxStamina",
+            "minValue": 0.0,
+            "value": [
+              0.0,
+              1.0,
+              "Electrohercules_Stamina_Defend_LoopCost",
+              "MUL",
+              "SUB"
+            ],
+            "target": "Self",
+            "actorIceSubHurtDelta": -1,
+            "doOffStage": false,
+            "canBeHandledOnRecover": true
+          }
+        ],
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "IAKPBCLBNKF": -1,
+        "isLimitedProperties": true
+      }
+    }
+  },
+  {
+    "abilityName": "Avatar_Iansan_Constellation_1",
+    "abilitySpecials": {
+      "NyxReduceValue": 0.0,
+      "EnergyRecover": 0.0,
+      "EnergyRecoverCD": 0.0
+    },
+    "modifiers": {
+      "Blank": {
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "thinkInterval": 0.0,
+        "duration": 0.0,
+        "elementType": "None",
+        "stacking": "Refresh",
+        "state": "None",
+        "minus_one": -1,
+        "isLimitedProperties": true,
+        "NLBKJKDNFFP": -1
+      },
+      "UNIQUE_Avatar_Iansan_Constellation_1_EnergyRecover_Trigger": {
+        "duration": 0.1,
+        "onAdded": [
+          {
+            "$type": "ApplyModifier",
+            "modifierName": "UNIQUE_Avatar_Iansan_Constellation_1_EnergyRecover",
+            "doOffStage": true,
+            "target": "Self",
+            "canBeHandledOnRecover": true,
+            "actorIceSubHurtDelta": -1
+          }
+        ],
+        "stacking": "Unique",
+        "elementDurability": 100.0,
+        "modifierName": "",
+        "isUnique": true,
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "isLimitedProperties": true,
+        "NLBKJKDNFFP": -1
+      },
+      "Avatar_Iansan_Constellation_1_Trigger": {
+        "onAdded": [
+          {
+            "$type": "SetGlobalValue",
+            "key": "_ABILITY_Iansan_Constellation_1_NyxReduceValue",
+            "minValue": 0.0,
+            "maxValue": 0.0,
+            "value": 0.0,
+            "doOffStage": true,
+            "useLimitRange": false,
+            "target": "Self",
+            "canBeHandledOnRecover": true,
+            "actorIceSubHurtDelta": -1
+          }
+        ],
+        "elementDurability": 100.0,
+        "modifierMixins": [
+          {
+            "$type": "NyxValueMonitorMixin",
+            "ratio": 1.0,
+            "maxValue": 999.0,
+            "DPNLHBANFBN": "_ABILITY_Iansan_Constellation_1_NyxReduceValue",
+            "minValue": 0.0,
+            "type": "Reduce",
+            "MLFIAAKKLPH": 1.0,
+            "HHMLEHFAOKF": "_ABILITY_Iansan_Constellation_1_NyxReduceValue",
+            "OAFEMEBEDBN": 1,
+            "actorIceSubHurtDelta": -1
+          },
+          {
+            "$type": "AttachModifierToGlobalValueMixin",
+            "modifierNameSteps": [
+              "Blank",
+              "UNIQUE_Avatar_Iansan_Constellation_1_EnergyRecover_Trigger"
+            ],
+            "globalValueKey": "_ABILITY_Iansan_Constellation_1_NyxReduceValue",
+            "valueSteps": [
+              -99.0,
+              "NyxReduceValue",
+              99.0
+            ],
+            "enable": true,
+            "removeAppliedModifier": true,
+            "globalValueTarget": "Self",
+            "useLimitRange": false,
+            "PGNFKDOAEMM": true,
+            "actorIceSubHurtDelta": -1
+          }
+        ],
+        "modifierName": "",
+        "AIHNJLDFEGJ": 0.0,
+        "minus_one": -1,
+        "isLimitedProperties": true,
+        "NLBKJKDNFFP": -1
+      }
+    }
+  }
+]

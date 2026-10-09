@@ -6,7 +6,6 @@ import dev.morphia.annotations.*;
 import emu.grasscutter.GameConstants;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.binout.OpenConfigEntry;
-import emu.grasscutter.data.binout.OpenConfigEntry.SkillPointModifier;
 import emu.grasscutter.data.common.FightPropData;
 import emu.grasscutter.data.excels.*;
 import emu.grasscutter.data.excels.ItemData.WeaponProperty;
@@ -19,6 +18,7 @@ import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.game.entity.*;
 import emu.grasscutter.game.inventory.*;
 import emu.grasscutter.game.player.Player;
+import emu.grasscutter.game.tps.TpsWeaponSystem;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.net.proto.AvatarFetterInfoOuterClass.AvatarFetterInfo;
 import emu.grasscutter.net.proto.AvatarInfoOuterClass.AvatarInfo;
@@ -72,6 +72,8 @@ public class Avatar {
     private Map<Integer, Integer> proudSkillBonusMap =
             new Int2IntArrayMap(2); // Talent bonus levels (from const)
 
+    @Transient private transient volatile Map<Integer, Integer> teamSkillLevelBonuses = Map.of();
+
     @Getter private int skillDepotId;
     private Set<Integer> talentIdList; // Constellation id list
     @Getter private Set<Integer> proudSkillList; // Character passives
@@ -87,6 +89,12 @@ public class Avatar {
     @Getter @Setter private int nameCardId;
     @Getter @Setter private int traceEffect;
     @Getter @Setter private int weaponSkin;
+    private List<Integer> tpsWeaponIds = new ArrayList<>();
+
+    public List<Integer> getTpsWeaponIds() {
+        if (tpsWeaponIds == null) tpsWeaponIds = new ArrayList<>();
+        return tpsWeaponIds;
+    }
 
     // trial avatar property
     @Getter @Setter private int trialAvatarId = 0;
@@ -288,8 +296,11 @@ public class Avatar {
                 .map(groupId -> (groupId * 100) + 1)
                 .filter(proudSkillId -> GameData.getProudSkillDataMap().containsKey(proudSkillId))
                 .forEach(proudSkillId -> this.proudSkillList.add(proudSkillId));
+        this.recalcConstellations();
         this.recalcStats();
 
+        if (getPlayer() != null) getPlayer().getTeamManager().refreshTeamSkillLevelBonuses(notify);
+        if (getPlayer() != null) getPlayer().getTeamManager().refreshTeamResonances(notify);
         if (notify) {
             owner.sendPacket(new PacketAvatarSkillDepotChangeNotify(this));
         }
@@ -385,22 +396,22 @@ public class Avatar {
     }
 
     public void addSpecialEnergy(float energy) {
-        float curSpecialEnergy = getFightProperty(FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY);
-        float maxSpecialEnergy = getFightProperty(FightProperty.FIGHT_PROP_MAX_SPECIAL_ENERGY);
-        curSpecialEnergy += energy;
-        if (curSpecialEnergy >= maxSpecialEnergy) {
-            curSpecialEnergy = maxSpecialEnergy;
+        if (!Float.isFinite(energy)) return;
+        synchronized (getFightProperties()) {
+            float max = Math.max(0f, getFightProperty(FightProperty.FIGHT_PROP_MAX_SPECIAL_ENERGY));
+            float current = getFightProperty(FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY);
+            setFightProperty(
+                    FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY,
+                    Math.max(0f, Math.min(max, current + energy)));
+            if (getPlayer() != null) getPlayer().sendPacket(new PacketAvatarFightPropNotify(this));
         }
-        setFightProperty(FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY, curSpecialEnergy);
-        getPlayer().sendPacket(new PacketAvatarFightPropNotify(this));
     }
 
     public void clearSpecialEnergy() {
-        float curSpecialEnergy = getFightProperty(FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY);
-        float maxSpecialEnergy = getFightProperty(FightProperty.FIGHT_PROP_MAX_SPECIAL_ENERGY);
-        curSpecialEnergy = 0;
-        setFightProperty(FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY, curSpecialEnergy);
-        getPlayer().sendPacket(new PacketAvatarFightPropNotify(this));
+        synchronized (getFightProperties()) {
+            setFightProperty(FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY, 0f);
+            if (getPlayer() != null) getPlayer().sendPacket(new PacketAvatarFightPropNotify(this));
+        }
     }
 
     public float getFightProperty(FightProperty prop) {
@@ -417,10 +428,25 @@ public class Avatar {
         return map;
     }
 
+    /** Server ability parameters use base levels plus the resource-capped skill bonuses. */
+    public Map<Integer, Integer> getEffectiveSkillLevelMap() {
+        var levels = new Int2IntOpenHashMap(this.getSkillLevelMap());
+        var bonuses = this.getProudSkillBonusMap();
+        levels.replaceAll(
+                (skillId, level) -> {
+                    var skillData = GameData.getAvatarSkillDataMap().get((int) skillId);
+                    return skillData == null
+                            ? level
+                            : level + bonuses.getOrDefault(skillData.getProudSkillGroupId(), 0);
+                });
+        return levels;
+    }
+
     // Returns a copy of the skill bonus levels for the current skillDepot, capped to avoid invalid
     // levels.
     public Map<Integer, Integer> getProudSkillBonusMap() {
         var map = new Int2IntArrayMap();
+        if (this.skillDepot == null) return map;
         this.skillDepot
                 .getSkillsAndEnergySkill()
                 .forEach(
@@ -428,7 +454,8 @@ public class Avatar {
                             val skillData = GameData.getAvatarSkillDataMap().get(skillId);
                             if (skillData == null) return;
                             int proudSkillGroupId = skillData.getProudSkillGroupId();
-                            int bonus = this.proudSkillBonusMap.getOrDefault(proudSkillGroupId, 0);
+                            int bonus = this.proudSkillBonusMap.getOrDefault(proudSkillGroupId, 0)
+                                    + this.teamSkillLevelBonuses.getOrDefault(proudSkillGroupId, 0);
                             int maxLevel = GameData.getProudSkillGroupMaxLevel(proudSkillGroupId);
                             int curLevel = this.skillLevelMap.getOrDefault(skillId, 0);
                             if (maxLevel > 0) {
@@ -437,6 +464,42 @@ public class Avatar {
                             map.put(proudSkillGroupId, bonus);
                         });
         return map;
+    }
+
+    /** Only the selected party's utility talents write this transient contribution. */
+    public boolean setTeamSkillLevelBonuses(Map<Integer, Integer> bonuses) {
+        var next = Map.copyOf(bonuses);
+        if (next.equals(this.teamSkillLevelBonuses)) return false;
+        this.teamSkillLevelBonuses = next;
+        return true;
+    }
+
+    private int skillForTalentIndex(int index) {
+        if (this.skillDepot == null) return 0;
+        if (index == 9) return this.skillDepot.getEnergySkill();
+        var skills = this.skillDepot.getSkills();
+        if ((index != 1 && index != 2) || skills == null || skills.size() < index) return 0;
+        var id = skills.get(index - 1);
+        return id == null ? 0 : id;
+    }
+
+    public int getSkillLevelBonusForTalentIndex(int index) {
+        var data = GameData.getAvatarSkillDataMap().get(skillForTalentIndex(index));
+        return data == null ? 0 : getProudSkillBonusMap().getOrDefault(data.getProudSkillGroupId(), 0);
+    }
+
+    public void notifySkillLevelBonusChanges(Map<Integer, Integer> previous) {
+        var player = getPlayer();
+        if (player == null || !player.hasSentLoginPackets()) return;
+        var current = getProudSkillBonusMap();
+        for (int index : new int[] {1, 2, 9}) {
+            var data = GameData.getAvatarSkillDataMap().get(skillForTalentIndex(index));
+            if (data == null) continue;
+            int group = data.getProudSkillGroupId();
+            int next = current.getOrDefault(group, 0);
+            if (next != previous.getOrDefault(group, 0))
+                player.sendPacket(new PacketProudSkillExtraLevelNotify(this, index, next));
+        }
     }
 
     public IntSet getTalentIdList() { // Returns a copy of the unlocked constellations for the current
@@ -490,9 +553,11 @@ public class Avatar {
 
         if (itemEquipType == EquipType.EQUIP_WEAPON && getPlayer().getWorld() != null) {
             if (!(item.getWeaponEntity() != null
-                    && item.getWeaponEntity().getScene() == getPlayer().getScene())) {
+                    && item.getWeaponEntity().getScene() == getPlayer().getScene()
+                    && item.getWeaponEntity().getCasterAvatar() == this)) {
+                TpsWeaponSystem.removeWeaponEntity(item);
                 item.setWeaponEntity(
-                        new EntityWeapon(this.getPlayer().getScene(), item.getItemData().getGadgetId()));
+                        new EntityWeapon(this.getPlayer().getScene(), item.getItemData().getGadgetId(), this));
                 this.getPlayer()
                         .getScene()
                         .getWeaponEntities()
@@ -532,6 +597,35 @@ public class Avatar {
     }
 
     public void recalcStats(boolean forceSendAbilityChange) {
+        recalcStats(forceSendAbilityChange, true);
+    }
+
+    /** Borrowed scene avatars must be announced before their stat/ability updates. */
+    public void recalcStats(boolean forceSendAbilityChange, boolean notify) {
+        var previousEmbryos = this.getExtraAbilityEmbryos();
+        var entity = getPlayer() != null ? getAsEntity() : null;
+        if (entity != null) {
+            synchronized (entity.getInstancedModifiers()) {
+                recalcStatProperties();
+                entity.getAbilityHpModifier().afterStatRecalc();
+            }
+        } else recalcStatProperties();
+
+        // Talent refresh can also update buffs attached to another entity; keep it outside the lock.
+        if (getPlayer() != null) getPlayer().getAbilityManager().refreshEquipmentTalents(this, notify);
+        if (notify && getPlayer() != null && getPlayer().hasSentLoginPackets()) {
+            if (entity != null && entity.getAbilityHpModifier().hasAppliedRatio()) {
+                entity.getAbilityHpModifier().publishEntityHp();
+            }
+            getPlayer().sendPacket(new PacketAvatarFightPropNotify(this));
+            if (entity != null
+                    && (!getExtraAbilityEmbryos().equals(previousEmbryos) || forceSendAbilityChange)) {
+                getPlayer().sendPacket(new PacketAbilityChangeNotify(entity));
+            }
+        }
+    }
+
+    private void recalcStatProperties() {
         // Setup
         var data = this.getAvatarData();
         var promoteData =
@@ -539,7 +633,6 @@ public class Avatar {
         var setMap = new Int2IntOpenHashMap();
 
         // Extra ability embryos
-        Set<String> prevExtraAbilityEmbryos = this.getExtraAbilityEmbryos();
         this.extraAbilityEmbryos = new HashSet<>();
 
         // Fetters
@@ -581,11 +674,18 @@ public class Avatar {
         // The burst's own specialEnergyMin, not a flat 200: Mavuika's Fighting Spirit does want 200
         // but Skirk's wants 100, and a doubled bar never fills.
         float maxSpecialEnergy = 0f;
+        float startSpecialEnergy = 0f;
         if (this.getSkillDepot() != null && this.getSkillDepot().getEnergySkillData() != null) {
             maxSpecialEnergy = this.getSkillDepot().getEnergySkillData().getSpecialEnergyMin();
+            startSpecialEnergy = this.getSkillDepot().getEnergySkillData().getSpecialEnergyMax();
         }
         this.setFightProperty(FightProperty.FIGHT_PROP_MAX_SPECIAL_ENERGY, maxSpecialEnergy);
-        this.setFightProperty(FightProperty.FIGHT_PROP_START_SPECIAL_ENERGY, maxSpecialEnergy / 2f);
+        this.setFightProperty(
+                FightProperty.FIGHT_PROP_START_SPECIAL_ENERGY,
+                Math.max(0f, Math.min(maxSpecialEnergy, startSpecialEnergy)));
+        this.setFightProperty(
+                FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY,
+                Math.max(0f, Math.min(maxSpecialEnergy, specialEnergy)));
 
         if (promoteData != null) {
             for (FightPropData fightPropData : promoteData.getAddProps()) {
@@ -704,6 +804,8 @@ public class Avatar {
             }
         }
 
+        TpsWeaponSystem.applyAffixes(this);
+
         // Add proud skills and unlock them if needed
         AvatarSkillDepotData skillDepot =
                 GameData.getAvatarSkillDepotDataMap().get(this.getSkillDepotId());
@@ -774,18 +876,6 @@ public class Avatar {
         // Set HP Debts
         this.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP_DEBTS, hpDebt);
 
-        // Packet
-        if (getPlayer() != null && getPlayer().hasSentLoginPackets()) {
-            // Update stats for client
-            getPlayer().sendPacket(new PacketAvatarFightPropNotify(this));
-            // Update client abilities
-            EntityAvatar entity = this.getAsEntity();
-            if (entity != null
-                    && (!this.getExtraAbilityEmbryos().equals(prevExtraAbilityEmbryos)
-                            || forceSendAbilityChange)) {
-                getPlayer().sendPacket(new PacketAbilityChangeNotify(entity));
-            }
-        }
     }
 
     public void addToExtraAbilityEmbryos(String openConfig) {
@@ -815,30 +905,24 @@ public class Avatar {
 
     public void calcConstellation(OpenConfigEntry entry, boolean notifyClient) {
         if (entry == null) return;
-        if (this.getPlayer() == null) notifyClient = false;
-
-        // Check if new constellation adds +3 to a skill level
-        if (this.calcConstellationExtraLevels(entry) && notifyClient) {
-            // Packet
-            this.getPlayer()
-                    .sendPacket(new PacketProudSkillExtraLevelNotify(this, entry.getExtraTalentIndex()));
-        }
-        // Check if new constellation adds skill charges
-        if (this.calcConstellationExtraCharges(entry) && notifyClient) {
-            // Packet
-            Stream.of(entry.getSkillPointModifiers())
-                    .mapToInt(SkillPointModifier::getSkillId)
-                    .forEach(
-                            skillId -> {
-                                this.getPlayer()
-                                        .sendPacket(
-                                                new PacketAvatarSkillMaxChargeCountNotify(
-                                                        this, skillId, this.getSkillExtraChargeMap().getOrDefault(skillId, 0)));
-                            });
+        notifyClient &= getPlayer() != null && getPlayer().hasSentLoginPackets();
+        var previousLevels = notifyClient ? getProudSkillBonusMap() : null;
+        var previousCharges = notifyClient ? new HashMap<>(skillExtraChargeMap) : null;
+        this.calcConstellationExtraLevels(entry);
+        this.calcConstellationExtraCharges(entry);
+        if (notifyClient) {
+            this.notifySkillLevelBonusChanges(previousLevels);
+            this.notifySkillChargeChanges(previousCharges);
         }
     }
 
     public void recalcConstellations() {
+        recalcConstellations(false);
+    }
+
+    private void recalcConstellations(boolean notify) {
+        var previousLevels = notify ? getProudSkillBonusMap() : null;
+        var previousCharges = notify ? new HashMap<>(skillExtraChargeMap) : null;
         // Clear first
         this.proudSkillBonusMap.clear();
         this.skillExtraChargeMap.clear();
@@ -858,56 +942,58 @@ public class Avatar {
                 .map(GameData.getOpenConfigEntries()::get)
                 .filter(Objects::nonNull)
                 .forEach(e -> this.calcConstellation(e, false));
+        if (notify) {
+            this.notifySkillLevelBonusChanges(previousLevels);
+            this.notifySkillChargeChanges(previousCharges);
+        }
     }
 
-    private boolean calcConstellationExtraCharges(OpenConfigEntry entry) {
+    private boolean hasSkillInDepot(int skillId) {
+        if (skillDepot == null || skillId <= 0) return false;
+        return skillDepot.getSkillsAndEnergySkill().anyMatch(id -> id == skillId)
+                || (skillDepot.getSubSkills() != null && skillDepot.getSubSkills().contains(skillId));
+    }
+
+    private void notifySkillChargeChanges(Map<Integer, Integer> previous) {
+        var player = getPlayer();
+        if (player == null || !player.hasSentLoginPackets()) return;
+        var skills = new TreeSet<>(previous.keySet());
+        skills.addAll(skillExtraChargeMap.keySet());
+        for (int skillId : skills) {
+            var data = GameData.getAvatarSkillDataMap().get(skillId);
+            if (data == null || !hasSkillInDepot(skillId)) continue;
+            int next = skillExtraChargeMap.getOrDefault(skillId, data.getMaxChargeNum());
+            if (next != previous.getOrDefault(skillId, data.getMaxChargeNum()))
+                player.sendPacket(new PacketAvatarSkillMaxChargeCountNotify(this, skillId, next));
+        }
+    }
+
+    private void calcConstellationExtraCharges(OpenConfigEntry entry) {
         var skillPointModifiers = entry.getSkillPointModifiers();
-        if (skillPointModifiers == null) return false;
+        if (skillPointModifiers == null) return;
 
         for (var mod : skillPointModifiers) {
+            if (mod == null || !hasSkillInDepot(mod.getSkillId())) continue;
             AvatarSkillData skillData = GameData.getAvatarSkillDataMap().get(mod.getSkillId());
 
             if (skillData == null) continue;
 
-            int charges = skillData.getMaxChargeNum() + mod.getDelta();
-
-            this.getSkillExtraChargeMap().put(mod.getSkillId(), charges);
+            long charges = (long) skillExtraChargeMap.getOrDefault(mod.getSkillId(), skillData.getMaxChargeNum())
+                    + mod.getDelta();
+            if (charges >= 0 && charges <= Integer.MAX_VALUE)
+                this.skillExtraChargeMap.put(mod.getSkillId(), (int) charges);
         }
-        return true;
     }
 
-    private boolean calcConstellationExtraLevels(OpenConfigEntry entry) {
-        int skillId =
-                switch (entry.getExtraTalentIndex()) {
-                    case 9 -> this.skillDepot.getEnergySkill(); // Ult skill
-                    case 2 -> (this.skillDepot.getSkills().size() >= 2)
-                            ? this.skillDepot.getSkills().get(1)
-                            : 0; // E skill
-                    case 1 -> (this.skillDepot.getSkills().size() >= 1)
-                            ? this.skillDepot.getSkills().get(0)
-                            : 0; // Normal Attack (Liney)
-                    default -> 0;
-                };
-        // Sanity check
-        if (skillId == 0) {
-            return false;
+    private void calcConstellationExtraLevels(OpenConfigEntry entry) {
+        for (var mod : entry.getExtraTalentModifiers()) {
+            if (mod == null || mod.extraLevel() <= 0) continue;
+            var skillData = GameData.getAvatarSkillDataMap().get(skillForTalentIndex(mod.talentIndex()));
+            if (skillData == null || skillData.getProudSkillGroupId() <= 0) continue;
+            int group = skillData.getProudSkillGroupId();
+            long next = (long) proudSkillBonusMap.getOrDefault(group, 0) + mod.extraLevel();
+            if (next <= Integer.MAX_VALUE) this.proudSkillBonusMap.put(group, (int) next);
         }
-
-        // Get proud skill group id
-        AvatarSkillData skillData = GameData.getAvatarSkillDataMap().get(skillId);
-
-        if (skillData == null) {
-            return false;
-        }
-
-        // Add to bonus list
-        this.addProudSkillLevelBonus(skillData.getProudSkillGroupId(), 3);
-        return true;
-    }
-
-    private int addProudSkillLevelBonus(int proudSkillGroupId, int bonus) {
-        return this.proudSkillBonusMap.compute(
-                proudSkillGroupId, (k, v) -> (v == null) ? bonus : v + bonus);
     }
 
     public boolean upgradeSkill(int skillId) {
@@ -941,6 +1027,7 @@ public class Avatar {
         int oldLevel =
                 this.skillLevelMap.getOrDefault(
                         skillId, 0); // just taking the return value of put would have null concerns
+        var previousBonus = this.getProudSkillBonusMap();
         this.skillLevelMap.put(skillId, level);
         this.save();
 
@@ -949,6 +1036,10 @@ public class Avatar {
         if (player != null) {
             player.sendPacket(new PacketAvatarSkillChangeNotify(this, skillId, oldLevel, level));
             player.sendPacket(new PacketAvatarSkillUpgradeRsp(this, skillId, oldLevel, level));
+            if (oldLevel != level) {
+                this.notifySkillLevelBonusChanges(previousBonus);
+                player.getAbilityManager().refreshEquipmentTalents(this, player.hasSentLoginPackets());
+            }
         }
         return true;
     }
@@ -991,7 +1082,7 @@ public class Avatar {
         }
 
         // Proud skill bonus map (Extra skills)
-        this.calcConstellation(GameData.getOpenConfigEntries().get(talentData.getOpenConfig()), true);
+        this.recalcConstellations(true);
 
         // Recalc + save avatar
         this.recalcStats(true);
@@ -1004,6 +1095,7 @@ public class Avatar {
 
         if (level < 0) { // Special case for resetConst to remove inactive depots too
             this.talentIdList.clear();
+            this.recalcConstellations(true);
             this.recalcStats();
             this.save();
             return;
@@ -1011,12 +1103,13 @@ public class Avatar {
         this.talentIdList.removeAll(
                 this.getTalentIdList()); // Only remove constellations from active depot
         for (int i = 0; i < level; i++) this.unlockConstellation(true);
+        this.recalcConstellations(true);
         this.recalcStats();
         this.save();
     }
 
     public boolean sendSkillExtraChargeMap() {
-        val map = this.getSkillExtraChargeMap();
+        val map = this.getSkillInfoCharges();
         if (map.isEmpty()) return false;
         this.getPlayer()
                 .sendPacket(
@@ -1028,8 +1121,18 @@ public class Avatar {
         return true;
     }
 
+    /** Compose transient scene skills without changing constellation or stored talent data. */
+    public Map<Integer, Integer> getSkillInfoCharges() {
+        var map = new TreeMap<Integer, Integer>(getSkillExtraChargeMap());
+        var entity = getAsEntity();
+        if (entity != null) map.putAll(entity.getAbilityAvatarSkillInfo().snapshot());
+        return map;
+    }
+
     public EntityAvatar getAsEntity() {
-        for (EntityAvatar entity : getPlayer().getTeamManager().getActiveTeam()) {
+        var player = getPlayer();
+        if (player == null || player.getTeamManager() == null) return null;
+        for (EntityAvatar entity : player.getTeamManager().getActiveTeamSnapshot()) {
             if (entity.getAvatar() == this) {
                 return entity;
             }
@@ -1044,6 +1147,17 @@ public class Avatar {
 
     public void save() {
         DatabaseHelper.saveAvatar(this);
+    }
+
+    /** Current level on the resource-defined extra-level ladder, also sent again at login. */
+    public int getExtraLevel() {
+        if (getPromoteLevel() < 6 || getTrialAvatarId() != 0) return 0;
+        int current = getLevel();
+        return GameData.getAvatarExtraLevelDataMap().values().stream()
+                        .filter(AvatarExtraLevelData::isValid)
+                        .anyMatch(row -> row.getRequireLevel() == current || row.getMaxLevel() == current)
+                ? current
+                : 0;
     }
 
     public AvatarInfo toProto() {
@@ -1087,9 +1201,11 @@ public class Avatar {
                         .setWearingFlycloakId(this.getFlyCloak())
                         .setCostumeId(this.getCostume())
                         .setTraceEffectId(this.getTraceEffect())
-                        .setWeaponSkinId(this.getWeaponSkin());
+                        .setExtraLevel(this.getExtraLevel())
+                        .setWeaponSkinId(this.getWeaponSkin())
+                        .addAllTpsWeaponList(TpsWeaponSystem.getSceneWeaponInfos(this));
 
-        this.getSkillExtraChargeMap()
+        this.getSkillInfoCharges()
                 .forEach(
                         (skillId, count) ->
                                 avatarInfo.putSkillMap(
@@ -1208,7 +1324,7 @@ public class Avatar {
      */
     public int getTrialSkillLevel() {
         // Use default data if custom data not available.
-        if (GameData.getTrialAvatarCustomData().isEmpty()) {
+        if (!GameData.getTrialAvatarCustomData().containsKey(this.getTrialAvatarId())) {
             var template = getTrialTemplate(); // round trial level to fit template levels
 
             var templateData = GameData.getTrialAvatarTemplateDataMap().get(template);
@@ -1234,7 +1350,7 @@ public class Avatar {
      */
     public int getTrialWeaponId() {
         // Use default data if custom data not available.
-        if (GameData.getTrialAvatarCustomData().isEmpty()) {
+        if (!GameData.getTrialAvatarCustomData().containsKey(this.getTrialAvatarId())) {
             if (GameData.getTrialAvatarDataMap().get(this.getTrialAvatarId()) == null)
                 return this.getAvatarData().getInitialWeapon();
 
@@ -1258,7 +1374,7 @@ public class Avatar {
      */
     public List<Integer> getTrialReliquary() {
         // Use default data if custom data not available.
-        if (GameData.getTrialAvatarCustomData().isEmpty()) {
+        if (!GameData.getTrialAvatarCustomData().containsKey(this.getTrialAvatarId())) {
             int trialAvatarTemplateLevel = getTrialTemplate();
 
             TrialAvatarTemplateData templateData =
@@ -1314,6 +1430,11 @@ public class Avatar {
 
     /** Equips the items applied from {@link Avatar#applyTrialItems()}. */
     public void equipTrialItems() {
+        equipTrialItems(true);
+    }
+
+    /** Assign equipment GUIDs now; EntityAvatar creates entities when the party becomes active. */
+    public void equipTrialItems(boolean notify) {
         var player = this.getPlayer();
 
         this.getEquips()
@@ -1322,7 +1443,7 @@ public class Avatar {
                         item -> {
                             item.setEquipCharacter(this.getAvatarId());
                             item.setOwner(player);
-                            if (item.getItemData().getEquipType() == EquipType.EQUIP_WEAPON) {
+                            if (notify && item.getItemData().getEquipType() == EquipType.EQUIP_WEAPON) {
                                 if (!(item.getWeaponEntity() != null
                                         && item.getWeaponEntity().getScene() == player.getScene())) {
                                     item.setWeaponEntity(

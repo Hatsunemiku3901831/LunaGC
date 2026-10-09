@@ -83,10 +83,22 @@ class StoreProtocolTest {
     void monthlyCardEnablesTheRecommendedEntrance() throws Exception {
         Class.forName("emu.grasscutter.Grasscutter");
         var manager = new ShopSystem(null);
+        // Control the empty exchange catalogue: Shop.json and earlier tests may already load it.
+        manager.getCatalog().replaceBase(new it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap<>());
         var rsp =
                 GetShopmallDataRspOuterClass.GetShopmallDataRsp.parseFrom(
                         new emu.grasscutter.server.packet.send.PacketGetShopmallDataRsp(manager).getData());
-        assertTrue(rsp.getShopTypeListList().containsAll(java.util.List.of(900, 902, 903, 1001)));
+        assertTrue(rsp.getShopTypeListList().containsAll(java.util.List.of(900, 902, 903)));
+        // An empty exchange shop has no entrance; cash products remain independently available.
+        assertFalse(rsp.getShopTypeListList().contains(1001));
+        var goods = new ShopInfo();
+        goods.setGoodsItem(new emu.grasscutter.data.common.ItemParamData(202, 1));
+        var base = new it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap<java.util.List<ShopInfo>>();
+        base.put(1001, java.util.List.of(goods));
+        manager.getCatalog().replaceBase(base);
+        var loaded = GetShopmallDataRspOuterClass.GetShopmallDataRsp.parseFrom(
+                new emu.grasscutter.server.packet.send.PacketGetShopmallDataRsp(manager).getData());
+        assertTrue(loaded.getShopTypeListList().contains(1001));
     }
 
     @Test

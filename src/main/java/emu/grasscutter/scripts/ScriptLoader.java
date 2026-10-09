@@ -112,7 +112,7 @@ public class ScriptLoader {
         ctx.globals.set("RegionShape", CoerceJavaToLua.coerce(new ScriptRegionShape()));
 
         scriptLib = new ScriptLib();
-        scriptLibLua = CoerceJavaToLua.coerce(scriptLib);
+        scriptLibLua = new ScriptLibUserdata(scriptLib);
         ctx.globals.set("ScriptLib", scriptLibLua);
     }
 

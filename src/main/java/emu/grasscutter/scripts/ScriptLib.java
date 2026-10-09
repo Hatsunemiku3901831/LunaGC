@@ -3,6 +3,7 @@ package emu.grasscutter.scripts;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.game.activity.ActivityManager;
+import emu.grasscutter.game.ability.Ability;
 import emu.grasscutter.game.dungeons.challenge.DungeonChallenge;
 import emu.grasscutter.game.dungeons.challenge.enums.FatherChallengeProperty;
 import emu.grasscutter.game.dungeons.challenge.factory.ChallengeFactory;
@@ -24,6 +25,7 @@ import org.slf4j.*;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Supplier;
 
 import static emu.grasscutter.GameConstants.ENTITY_ID_BIT_SHIFT;
 import static emu.grasscutter.game.props.EnterReason.Lua;
@@ -98,6 +100,52 @@ public class ScriptLib {
 
     public Optional<GameEntity> getCurrentEntity() {
         return Optional.ofNullable(this.currentEntity.getIfExists());
+    }
+
+    /** Restore the caller's Lua context, including nested callbacks and exceptions. */
+    public <T> T withEntityContext(GameEntity entity, Supplier<T> callback) {
+        var manager = entity.getScene().getScriptManager();
+        var instance = manager.getGroupInstanceById(entity.getGroupId());
+        var group = instance == null ? null : instance.getLuaGroup();
+        if (group == null && entity instanceof EntityGadget gadget && gadget.getMetaGadget() != null)
+            group = gadget.getMetaGadget().group;
+        return withEntityContext(entity, group, callback);
+    }
+
+    /** A SpecificGroup action uses its selected group instead of the entity's own group. */
+    public <T> T withEntityContext(GameEntity entity, SceneGroup group, Supplier<T> callback) {
+        var previousManager = sceneScriptManager.getIfExists();
+        var previousGroup = currentGroup.getIfExists();
+        var previousEntity = currentEntity.getIfExists();
+        try {
+            setCurrentEntity(entity);
+            setSceneScriptManager(entity.getScene().getScriptManager());
+            if (group == null) removeCurrentGroup(); else setCurrentGroup(group);
+            return callback.get();
+        } finally {
+            if (previousEntity == null) removeCurrentEntity(); else setCurrentEntity(previousEntity);
+            if (previousGroup == null) removeCurrentGroup(); else setCurrentGroup(previousGroup);
+            if (previousManager == null) removeSceneScriptManager(); else setSceneScriptManager(previousManager);
+        }
+    }
+
+    /**
+     * Keep ScriptLib's Java receiver while exposing per-call metadata expected by SLC scripts.
+     * These fields belong to this invocation, rather than shared globals or player caches.
+     */
+    public LuaValue createAbilityContext(Ability ability, GameEntity target) {
+        var fields = new LuaTable();
+        fields.set("uid", ability.getPlayerOwner() == null ? 0 : ability.getPlayerOwner().getUid());
+        fields.set("source_entity_id", ability.getOwner() == null ? 0 : ability.getOwner().getId());
+        fields.set("target_entity_id", target.getId());
+        fields.set("group_id", getCurrentGroup().map(group -> group.id).orElse(0));
+        return new LuaUserdata(this) {
+            @Override
+            public LuaValue get(LuaValue key) {
+                var value = fields.rawget(key);
+                return value.isnil() ? ScriptLoader.getScriptLibLua().get(key) : value;
+            }
+        };
     }
 
     private GameEntity createGadget(int configId, SceneGroup group) {
@@ -567,7 +615,10 @@ public class ScriptLib {
 
     public int EndTimeAxis(String identifier) {
         logger.debug("[LUA] Call EndTimeAxis");
-        this.getSceneScriptManager().stopTimeAxis(identifier);
+        var group = this.getCurrentGroup().orElse(null);
+        var manager = getSceneScriptManagerOrNull();
+        if (group == null || manager == null || identifier == null || identifier.isBlank()) return -1;
+        manager.stopTimeAxis(group.id, identifier);
         return 0;
     }
 
@@ -713,10 +764,10 @@ public class ScriptLib {
 
     public int GetContextGroupId() {
         logger.debug("[LUA] Call GetContextGroupId");
-        EntityGadget gadget = getCurrentEntityGadget();
-        if (gadget == null) return -1;
-
-        return gadget.getGroupId();
+        var group = currentGroup.getIfExists();
+        if (group != null) return group.id;
+        var entity = currentEntity.getIfExists();
+        return entity != null && entity.getGroupId() > 0 ? entity.getGroupId() : -1;
     }
 
     public int GetCurTriggerCount() {
@@ -928,20 +979,38 @@ public class ScriptLib {
     }
 
     public int InitTimeAxis(String identifier, int[] delays, boolean shouldLoop) {
+        return InitTimeAxis(identifier, delays == null ? null : Arrays.stream(delays).asDoubleStream().toArray(), shouldLoop);
+    }
+
+    public int InitTimeAxis(String identifier, LuaTable delays, boolean shouldLoop) {
+        if (delays == null || delays.length() == 0 || delays.keys().length != delays.length()) return -1;
+        var points = new double[delays.length()];
+        for (int i = 0; i < points.length; i++) {
+            var value = delays.rawget(i + 1);
+            if (value.type() != LuaValue.TNUMBER) return -1;
+            points[i] = value.todouble();
+        }
+        return InitTimeAxis(identifier, points, shouldLoop);
+    }
+
+    public int InitTimeAxis(String identifier, double[] delays, boolean shouldLoop) {
         if (this.getCurrentGroup().isEmpty()) {
             logger.warn("[LUA] Call InitTimeAxis without a group");
-            return 0;
+            return -1;
         }
 
-        var scriptManager = this.getSceneScriptManager();
+        var scriptManager = this.getSceneScriptManagerOrNull();
+        if (scriptManager == null) return -1;
         var group = this.getCurrentGroup().get();
 
-        var timeAxis = new SceneTimeAxis(
-                scriptManager, group.id,
-                identifier, delays[0], shouldLoop
-        );
-        scriptManager.initTimeAxis(timeAxis);
-        timeAxis.start();
+        try {
+            var timeAxis = new SceneTimeAxis(scriptManager, group.id, identifier, delays, shouldLoop);
+            if (!scriptManager.tryInitTimeAxis(timeAxis)) return -1;
+            timeAxis.start();
+        } catch (IllegalArgumentException exception) {
+            logger.debug("Invalid time axis {} in group {}", identifier, group.id, exception);
+            return -1;
+        }
 
         return 0;
     }
@@ -1172,25 +1241,39 @@ public class ScriptLib {
         return 0;
     }
 
-    public int SetEntityServerGlobalValueByConfigId(int cfgId, String sgvName, int value) {
+    public int SetEntityServerGlobalValueByConfigId(int cfgId, String sgvName, double value) {
         logger.debug("[LUA] Call SetEntityServerGlobalValueByConfigId with {}, {}, {}", cfgId, sgvName, value);
-        var scriptManager = this.getSceneScriptManager();
-        if (scriptManager == null) return 1;
+        var scriptManager = this.getSceneScriptManagerOrNull();
+        var group = getCurrentGroup().orElse(null);
+        if (scriptManager == null || group == null) return 1;
         var scene = scriptManager.getScene();
-        var entity = scene.getEntityByConfigId(cfgId, getCurrentGroup().get().id);
+        var entity = scene.getEntityByConfigId(cfgId, group.id);
         if (entity == null) return 2;
-        scene.runWhenHostInitialized(() -> scene.broadcastPacket(
-                new PacketServerGlobalValueChangeNotify(entity, sgvName, value)));
-        return 0;
+        return setEntityServerGlobalValue(scene, entity, sgvName, value);
     }
 
-    public int SetEntityServerGlobalValueByEntityId(int entityId, String sgvName, int value) {
+    public int SetEntityServerGlobalValueByEntityId(int entityId, String sgvName, double value) {
         logger.debug("[LUA] Call SetEntityServerGlobalValueByEntityId with {}, {}, {}", entityId, sgvName, value);
-        var scriptManager = this.getSceneScriptManager();
+        var scriptManager = this.getSceneScriptManagerOrNull();
         if (scriptManager == null) return 1;
         var scene = scriptManager.getScene();
-        scene.runWhenHostInitialized(() -> scene.broadcastPacket(
-                new PacketServerGlobalValueChangeNotify(entityId, sgvName, value)));
+        var entity = scene.getEntityById(entityId);
+        if (entity == null) return 2;
+        return setEntityServerGlobalValue(scene, entity, sgvName, value);
+    }
+
+    private int setEntityServerGlobalValue(Scene scene, GameEntity entity, String key, double value) {
+        float storedValue = (float) value;
+        if (key == null || key.isEmpty() || !Float.isFinite(storedValue)) return 1;
+        long version = entity.getAbilityLifecycleVersion();
+        if (!entity.isAbilityLifecycleCurrent(version)) return 2;
+        entity.getGlobalAbilityValues().put(key, storedValue);
+        entity.onAbilityValueUpdate();
+        scene.runWhenHostInitialized(() -> {
+            if (scene.getEntityById(entity.getId()) == entity && entity.isAbilityLifecycleCurrent(version)) {
+                scene.broadcastPacket(new PacketServerGlobalValueChangeNotify(entity, key, storedValue));
+            }
+        });
         return 0;
     }
 

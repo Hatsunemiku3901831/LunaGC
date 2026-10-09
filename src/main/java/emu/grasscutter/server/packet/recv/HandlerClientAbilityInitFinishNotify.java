@@ -1,6 +1,5 @@
 package emu.grasscutter.server.packet.recv;
 
-import emu.grasscutter.Grasscutter;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.AbilityInvokeEntryOuterClass.AbilityInvokeEntry;
@@ -19,9 +18,13 @@ public class HandlerClientAbilityInitFinishNotify extends PacketHandler {
         player.getAbilityManager().onSkillEnd(player);
 
         for (AbilityInvokeEntry entry : notif.getInvokesList()) {
-            player.getAbilityManager().onAbilityInvoke(entry);
-            player.getClientAbilityInitFinishHandler().addEntry(entry.getForwardType(), entry);
+            if (player.getAbilityManager().acceptAbilityInvoke(entry))
+                player.getClientAbilityInitFinishHandler().addEntry(entry.getForwardType(), entry);
         }
+        var current = emu.grasscutter.game.tps.TpsWeaponSystem.currentAvatar(player);
+        // Weapon initialization also sends this notify. Replying to that would restart it.
+        if (current != null && notif.getEntityId() == current.getId())
+            emu.grasscutter.game.tps.TpsWeaponSystem.sendWeaponAbilityBlocks(current.getAvatar());
 
         if (notif.getInvokesList().size() > 0) {
             session.getPlayer().getClientAbilityInitFinishHandler().update(session.getPlayer());

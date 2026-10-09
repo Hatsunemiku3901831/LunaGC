@@ -1,6 +1,7 @@
 package emu.grasscutter.game.activity;
 
 import com.esotericsoftware.reflectasm.ConstructorAccess;
+
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.excels.activity.ActivityData;
 import emu.grasscutter.data.server.ActivityCondGroup;
@@ -10,10 +11,12 @@ import emu.grasscutter.game.props.WatcherTriggerType;
 import emu.grasscutter.game.quest.enums.QuestCond;
 import emu.grasscutter.net.proto.ActivityInfoOuterClass;
 import emu.grasscutter.utils.helpers.DateHelper;
-import java.util.*;
-import java.util.stream.Collectors;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -31,8 +34,12 @@ public abstract class ActivityHandler {
 
     public abstract void onInitPlayerActivityData(PlayerActivityData playerActivityData);
 
-    /** Add newly restored fields to an existing schedule without resetting the player's progress. */
-    public boolean onLoadPlayerActivityData(PlayerActivityData data) { return false; }
+    /**
+     * Add newly restored fields to an existing schedule without resetting the player's progress.
+     */
+    public boolean onLoadPlayerActivityData(PlayerActivityData data) {
+        return false;
+    }
 
     public void initWatchers(Map<WatcherTriggerType, ConstructorAccess<?>> activityWatcherTypeMap) {
         activityData = GameData.getActivityDataMap().get(activityConfigItem.getActivityId());
@@ -56,8 +63,11 @@ public abstract class ActivityHandler {
                             watcher.setActivityHandler(this);
                             watcher.setActivityWatcherData(watcherData);
                             watchersMap.computeIfAbsent(
-                                    watcherData.getTriggerConfig().getWatcherTriggerType(), k -> new ArrayList<>());
-                            watchersMap.get(watcherData.getTriggerConfig().getWatcherTriggerType()).add(watcher);
+                                    watcherData.getTriggerConfig().getWatcherTriggerType(),
+                                    k -> new ArrayList<>());
+                            watchersMap
+                                    .get(watcherData.getTriggerConfig().getWatcherTriggerType())
+                                    .add(watcher);
                         });
     }
 
@@ -71,13 +81,16 @@ public abstract class ActivityHandler {
                 .getCondGroupId()
                 .forEach(
                         condGroupId -> {
-                            var condGroup = GameData.getActivityCondGroupMap().get((int) condGroupId);
+                            var condGroup =
+                                    GameData.getActivityCondGroupMap().get((int) condGroupId);
                             if (condGroup != null)
                                 condGroup
                                         .getCondIds()
                                         .forEach(
                                                 condition ->
-                                                        questManager.queueEvent(QuestCond.QUEST_COND_ACTIVITY_COND, condition));
+                                                        questManager.queueEvent(
+                                                                QuestCond.QUEST_COND_ACTIVITY_COND,
+                                                                condition));
                         });
     }
 
@@ -121,15 +134,28 @@ public abstract class ActivityHandler {
 
     public ActivityInfoOuterClass.ActivityInfo toProto(
             PlayerActivityData playerActivityData, ActivityConditionExecutor conditionExecutor) {
+        return buildProto(playerActivityData, getMeetConditions(conditionExecutor));
+    }
+
+    public ActivityInfoOuterClass.ActivityInfo toProto(
+            PlayerActivityData playerActivityData,
+            ActivityConditionExecutor conditionExecutor,
+            long now) {
+        return buildProto(
+                playerActivityData,
+                conditionExecutor.getMeetActivitiesConditions(getActivityConditions(), now));
+    }
+
+    private ActivityInfoOuterClass.ActivityInfo buildProto(
+            PlayerActivityData playerActivityData, List<Integer> meetConditions) {
         var proto = ActivityInfoOuterClass.ActivityInfo.newBuilder();
-        proto
-                .setActivityId(activityConfigItem.getActivityId())
+        proto.setActivityId(activityConfigItem.getActivityId())
                 .setActivityType(activityConfigItem.getActivityType())
                 .setScheduleId(activityConfigItem.getScheduleId())
                 .setBeginTime(DateHelper.getUnixTime(activityConfigItem.getBeginTime()))
                 .setFirstDayStartTime(DateHelper.getUnixTime(activityConfigItem.getBeginTime()))
                 .setEndTime(DateHelper.getUnixTime(activityConfigItem.getEndTime()))
-                .addAllMeetCondList(getMeetConditions(conditionExecutor));
+                .addAllMeetCondList(meetConditions);
 
         if (playerActivityData != null) {
             proto.addAllWatcherInfoList(playerActivityData.getAllWatcherInfoList());

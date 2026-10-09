@@ -33,6 +33,7 @@ import emu.grasscutter.data.GameData;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 
 
 import lombok.*;
@@ -60,9 +61,13 @@ public abstract class GameEntity {
 
     @Getter @Setter private int lastMoveReliableSeq;
 
-    @Getter @Setter private boolean lockHP;
+    @Setter private boolean lockHP;
     private boolean limbo;
     private float limboHpThreshold;
+
+    public boolean isLockHP() {
+        return lockHP || AbilityCombatState.read(this).lockHp();
+    }
 
     @Getter
     private volatile boolean isDead = false;
@@ -71,7 +76,30 @@ public abstract class GameEntity {
     @Getter @Setter private EntityController entityController;
     @Getter private ElementType lastAttackType = ElementType.None;
 
-    @Getter private List<Ability> instancedAbilities = new ArrayList<>();
+    @Getter private List<Ability> instancedAbilities = new EntityAbilityList(this);
+    // Even versions are live; removal invalidates tasks captured before a later re-add.
+    private final AtomicLong abilityLifecycleVersion = new AtomicLong();
+
+    public long getAbilityLifecycleVersion() {
+        return abilityLifecycleVersion.get();
+    }
+
+    public boolean isAbilityLifecycleCurrent(long version) {
+        return (version & 1) == 0 && abilityLifecycleVersion.get() == version;
+    }
+
+    public void activateAbilityLifecycle() {
+        abilityLifecycleVersion.updateAndGet(version -> (version & 1) == 0 ? version : version + 1);
+        abilityGlobalValueWatchers.refresh();
+    }
+
+    public void invalidateAbilityLifecycle() {
+        abilityLifecycleVersion.updateAndGet(version -> (version & 1) == 0 ? version + 1 : version);
+        abilityStaminaCost.clear();
+        getAbilityPeriodicHealing().clear();
+        getAbilityModifierDuration().clear();
+        abilityGlobalValueWatchers.changed();
+    }
 
     // Dynamic abilities have no client-list index. Cache by name, independently of active states.
     @Getter private final Map<String, Ability> dynamicAbilities = new ConcurrentHashMap<>();
@@ -83,6 +111,14 @@ public abstract class GameEntity {
     // Named states are attached to an entity, even when their ability belongs to another caster.
     @Getter private final Map<Ability, Map<String, AbilityModifierController>> appliedAbilityModifiers =
             new ConcurrentHashMap<>();
+    @Getter private final AbilityHpModifier abilityHpModifier = new AbilityHpModifier(this);
+    @Getter private final emu.grasscutter.game.ability.AbilityPeriodicHealing abilityPeriodicHealing =
+            new emu.grasscutter.game.ability.AbilityPeriodicHealing(this);
+    @Getter private final emu.grasscutter.game.ability.AbilityModifierDuration abilityModifierDuration =
+            new emu.grasscutter.game.ability.AbilityModifierDuration(this);
+    @Getter private final AbilityGlobalValueWatchers abilityGlobalValueWatchers = new AbilityGlobalValueWatchers(this);
+    @Getter private final emu.grasscutter.game.ability.AbilityStaminaCost abilityStaminaCost =
+            new emu.grasscutter.game.ability.AbilityStaminaCost(this);
 
     public List<AbilityModifierController> getInstancedModifiersSnapshot() {
         synchronized (instancedModifiers) {
@@ -313,18 +349,27 @@ public abstract class GameEntity {
         }
         return owner;
     }
-      public void addSpecialEnergy(float energy){
-       float curSpecialEnergy = getFightProperty(FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY);
-       float maxSpecialEnergy = getFightProperty(FightProperty.FIGHT_PROP_MAX_SPECIAL_ENERGY);
-       // Nightsoul is spent through here too, as a negative, so it needs a floor as well as a cap.
-       curSpecialEnergy = Math.max(0, Math.min(maxSpecialEnergy, curSpecialEnergy + energy));
-       setFightProperty(FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY, curSpecialEnergy);
-       this.getScene().broadcastPacket(new PacketEntityFightPropUpdateNotify(this, FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY));
+    public void addSpecialEnergy(float energy) {
+        var properties = getFightProperties();
+        if (properties == null || !Float.isFinite(energy)) return;
+        synchronized (properties) {
+            float current = getFightProperty(FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY);
+            float max = Math.max(0f, getFightProperty(FightProperty.FIGHT_PROP_MAX_SPECIAL_ENERGY));
+            setFightProperty(FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY,
+                    Math.max(0f, Math.min(max, current + energy)));
+            if (getScene() != null) getScene().broadcastPacket(new PacketEntityFightPropUpdateNotify(
+                    this, FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY));
+        }
     }
 
     public void clearSpecialEnergy(){
-        setFightProperty(FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY, 0);
-        this.getScene().broadcastPacket(new PacketEntityFightPropUpdateNotify(this, FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY));
+        var properties = getFightProperties();
+        if (properties == null) return;
+        synchronized (properties) {
+            setFightProperty(FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY, 0f);
+            if (getScene() != null) getScene().broadcastPacket(new PacketEntityFightPropUpdateNotify(
+                    this, FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY));
+        }
     }
 
     public void damage(float amount, ElementType attackType) {
@@ -340,11 +385,24 @@ public abstract class GameEntity {
     }
 
     public void damage(float amount, int killerId, ElementType attackType, PropChangeReason propChangeReason, ChangeHpReason changeHpReason) {
+        damage(amount, killerId, attackType, propChangeReason, changeHpReason, true);
+    }
+
+    public void loseHpByAbility(float amount, boolean respectLockHp) {
+        damage(amount, 0, ElementType.None, PropChangeReason.PropChangeReason_PROP_CHANGE_ABILITY,
+                ChangeHpReason.ChangeHpReason_CHANGE_HP_SUB_ABILITY, respectLockHp);
+    }
+
+    private void damage(float amount, int killerId, ElementType attackType,
+            PropChangeReason propChangeReason, ChangeHpReason changeHpReason, boolean respectLockHp) {
 
         if (this.isDead || deathProcessed.get()) return;
         if (this.getFightProperties() == null || !hasFightProperty(FightProperty.FIGHT_PROP_CUR_HP)) {
             return;
         }
+
+        var combatState = AbilityCombatState.read(this);
+        if (combatState.invincible()) return;
 
         EntityDamageEvent event =
                 new EntityDamageEvent(this, amount, attackType, this.getScene().getEntityById(killerId));
@@ -355,18 +413,21 @@ public abstract class GameEntity {
 
         float effectiveDamage = 0;
         float curHp = getFightProperty(FightProperty.FIGHT_PROP_CUR_HP);
-        if (limbo) {
+        if (combatState.lockHp() && respectLockHp) {
+            // Modifier shields also block lethal damage, independently of a gadget's base HP lock.
+        } else if (limbo || combatState.limbo()) {
             float maxHp = getFightProperty(FightProperty.FIGHT_PROP_MAX_HP);
             float curRatio = curHp / maxHp;
-            if (curRatio > limboHpThreshold) {
+            float threshold = Math.max(limbo ? limboHpThreshold : 0f, combatState.hpThreshold());
+            if (curRatio > threshold) {
 
                 effectiveDamage = event.getDamage();
             }
-            if (effectiveDamage >= curHp && limboHpThreshold > .0f) {
+            if (effectiveDamage >= curHp) {
 
-                effectiveDamage = curHp - 1;
+                effectiveDamage = Math.max(0f, curHp - 1f);
             }
-        } else if (curHp != Float.POSITIVE_INFINITY && !lockHP
+        } else if (curHp != Float.POSITIVE_INFINITY && (!lockHP || !respectLockHp)
                 || lockHP && curHp <= event.getDamage()) {
             effectiveDamage = event.getDamage();
         }
@@ -384,7 +445,9 @@ public abstract class GameEntity {
         if (effectiveDamage > 0) {
             GameEntity attacker = this.getScene().getEntityById(killerId);
             ChangeHpReason dmgHpReason;
-            if (attacker instanceof EntityAvatar) {
+            if (changeHpReason != ChangeHpReason.ChangeHpReason_CHANGE_HP_NONE) {
+                dmgHpReason = changeHpReason;
+            } else if (attacker instanceof EntityAvatar) {
                 dmgHpReason = ChangeHpReason.ChangeHpReason_CHANGE_HP_SUB_AVATAR;
             } else if (attacker instanceof EntityMonster) {
                 dmgHpReason = ChangeHpReason.ChangeHpReason_CHANGE_HP_SUB_MONSTER;
@@ -393,7 +456,7 @@ public abstract class GameEntity {
             }
             this.getScene().broadcastPacket(new PacketEntityFightPropChangeReasonNotify(
                 this, FightProperty.FIGHT_PROP_CUR_HP, -effectiveDamage,
-                PropChangeReason.PropChangeReason_PROP_CHANGE_NONE, dmgHpReason));
+                propChangeReason, dmgHpReason));
         }
 
         if (this instanceof EntityAvatar entityAvatar) {
@@ -533,9 +596,17 @@ public abstract class GameEntity {
     }
 
     public void onTick(int sceneTime) {
+        onAbilityTick();
         if (entityController != null) {
             entityController.onTimer(this, sceneTime);
         }
+    }
+
+    /** Party members offstage continue ability clocks, without running scene entity controllers. */
+    public void onAbilityTick() {
+        abilityGlobalValueWatchers.flushPending();
+        getAbilityPeriodicHealing().tick();
+        getAbilityModifierDuration().tick();
     }
 
     public int onClientExecuteRequest(int param1, int param2, int param3) {
@@ -557,7 +628,10 @@ public abstract class GameEntity {
     }
 
     public void onAbilityValueUpdate() {
-
+        abilityGlobalValueWatchers.changed();
+        abilityHpModifier.refresh(AbilityGlobalValueWatchers.shouldNotify());
+        getAbilityPeriodicHealing().refresh();
+        getAbilityModifierDuration().refresh();
     }
 
     public abstract SceneEntityInfo toProto();

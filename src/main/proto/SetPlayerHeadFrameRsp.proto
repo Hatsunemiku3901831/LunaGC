@@ -1,0 +1,9 @@
+syntax = "proto3";
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "SetPlayerHeadFrameRspOuterClass";
+import "ProfilePicture.proto";
+// BGLAIJBKLAJ, native packet 9314, reader 0x14974ff20.
+message SetPlayerHeadFrameRsp {
+  ProfilePicture profile_picture = 3;
+  int32 retcode = 15;
+}

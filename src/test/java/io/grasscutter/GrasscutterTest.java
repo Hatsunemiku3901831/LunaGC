@@ -1,8 +1,8 @@
 package io.grasscutter;
 
-import com.mchange.util.AssertException;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.config.Configuration;
+import com.google.gson.JsonParser;
 import java.io.IOException;
 import lombok.Getter;
 import okhttp3.OkHttpClient;
@@ -34,8 +34,8 @@ public final class GrasscutterTest {
         try {
             // Start Grasscutter.
             Grasscutter.main(new String[] {"-test"});
-        } catch (Exception ignored) {
-            throw new AssertException("Grasscutter failed to start.");
+        } catch (Exception exception) {
+            throw new AssertionError("Grasscutter failed to start.", exception);
         }
 
         // Set the ports.
@@ -56,5 +56,42 @@ public final class GrasscutterTest {
         } catch (IOException exception) {
             throw new AssertionError(exception);
         }
+    }
+
+    @Test
+    public void runtimeHealthWorksInDispatchModeAndGmDiagnosticsRequireTheToken() throws IOException {
+        var config = Configuration.SERVER.gm;
+        var originalToken = config.accessToken;
+        var originalLoopback = config.loopbackOnly;
+        try {
+            config.accessToken = "isolated-validation-token";
+            config.loopbackOnly = false;
+            try (var response = httpClient.newCall(new Request.Builder().url(http("status/server")).build()).execute()) {
+                Assertions.assertEquals(200, response.code());
+                var status = JsonParser.parseString(response.body().string()).getAsJsonObject().getAsJsonObject("status");
+                Assertions.assertTrue(status.getAsJsonObject("health").get("healthy").getAsBoolean());
+                Assertions.assertEquals(4, status.getAsJsonObject("health").getAsJsonArray("queues").size());
+            }
+            for (var route : new String[]{"gm/api/runtime", "gm/api/database"}) {
+                try (var response = httpClient.newCall(new Request.Builder().url(http(route)).build()).execute()) {
+                    Assertions.assertEquals(403, response.code());
+                }
+                try (var response = httpClient.newCall(new Request.Builder().url(http(route))
+                        .header("Authorization", "Bearer isolated-validation-token").build()).execute()) {
+                    Assertions.assertEquals(200, response.code());
+                    Assertions.assertEquals("no-store", response.header("Cache-Control"));
+                    var body = JsonParser.parseString(response.body().string()).getAsJsonObject();
+                    Assertions.assertEquals(0, body.get("retcode").getAsInt());
+                    Assertions.assertEquals(4, route.endsWith("database") ? body.getAsJsonArray("queues").size()
+                            : body.getAsJsonObject("status").getAsJsonArray("queues").size());
+                }
+            }
+            try (var response = httpClient.newCall(new Request.Builder().url(http("gm/api/players"))
+                    .header("Authorization", "Bearer isolated-validation-token").build()).execute()) {
+                Assertions.assertEquals(200, response.code());
+                var body = JsonParser.parseString(response.body().string()).getAsJsonObject();
+                Assertions.assertTrue(body.getAsJsonArray("players").isEmpty());
+            }
+        } finally { config.accessToken = originalToken; config.loopbackOnly = originalLoopback; }
     }
 }

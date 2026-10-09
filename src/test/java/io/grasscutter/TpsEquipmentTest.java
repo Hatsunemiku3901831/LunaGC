@@ -1,0 +1,901 @@
+package io.grasscutter;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import com.google.gson.JsonParser;
+import emu.grasscutter.Grasscutter;
+import emu.grasscutter.data.*;
+import emu.grasscutter.data.binout.AbilityData;
+import emu.grasscutter.data.binout.config.ConfigEntityGadget;
+import emu.grasscutter.data.excels.*;
+import emu.grasscutter.data.excels.avatar.AvatarData;
+import emu.grasscutter.data.excels.tps.*;
+import emu.grasscutter.game.avatar.Avatar;
+import emu.grasscutter.game.entity.EntityAvatar;
+import emu.grasscutter.game.inventory.*;
+import emu.grasscutter.game.player.*;
+import emu.grasscutter.game.props.FightProperty;
+import emu.grasscutter.game.tps.*;
+import emu.grasscutter.net.packet.*;
+import emu.grasscutter.net.proto.AbilityInvokeArgumentOuterClass.AbilityInvokeArgument;
+import emu.grasscutter.net.proto.AbilityInvokeEntryHeadOuterClass.AbilityInvokeEntryHead;
+import emu.grasscutter.net.proto.AbilityInvokeEntryOuterClass.AbilityInvokeEntry;
+import emu.grasscutter.net.proto.AbilityMetaUpdateTpsWeaponAmmunitionOuterClass.AbilityMetaUpdateTpsWeaponAmmunition;
+import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
+import emu.grasscutter.net.proto.TpsAmmunitionChangeNotifyOuterClass.TpsAmmunitionChangeNotify;
+import emu.grasscutter.net.proto.TpsAmmunitionChangeOuterClass.TpsAmmunitionChange;
+import emu.grasscutter.utils.JsonUtils;
+import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+class TpsEquipmentTest {
+    private RecordingPlayer player;
+    private final List<Runnable> restore = new ArrayList<>();
+
+    @BeforeAll
+    static void init() {
+        Grasscutter.getLogger();
+    }
+
+    @BeforeEach
+    void resources() {
+        player = new RecordingPlayer();
+        for (int id : new int[] {224001, 224002, 224003, 224004, 224005}) {
+            int slot = id >= 224004 ? 2 : 1;
+            put(
+                    GameData.getItemDataMap(),
+                    id,
+                    JsonUtils.decode(
+                            "{\"id\":"
+                                    + id
+                                    + ",\"itemType\":\"ITEM_TPS_WEAPON\",\"gadgetId\":"
+                                    + (50016000 + id - 224000)
+                                    + "}",
+                            ItemData.class));
+            put(
+                    GameData.getTpsWeaponDataMap(),
+                    id,
+                    JsonUtils.decode(
+                            "{\"id\":"
+                                    + id
+                                    + ",\"NNJGEAPMJFL\":"
+                                    + slot
+                                    + ",\"PIHHHIMPCAM\":"
+                                    + id * 10
+                                    + ",\"ammoSlotIds\":["
+                                    + (id == 224002 ? 201 : 101)
+                                    + "]}",
+                            TpsWeaponData.class));
+        }
+        put(
+                GameData.getTpsAmmunitionDataMap(),
+                1001,
+                JsonUtils.decode(
+                        "{\"id\":1001,\"tpsAmmoLimit\":2000,\"ammoSlotIds\":[101,201]}",
+                        TpsAmmunitionData.class));
+        put(
+                GameData.getTpsAmmunitionDataMap(),
+                1002,
+                JsonUtils.decode(
+                        "{\"id\":1002,\"tpsAmmoLimit\":90,\"ammoSlotIds\":[102]}", TpsAmmunitionData.class));
+        put(
+                GameData.getTpsWeaponAccessoryDataMap(),
+                224506,
+                JsonUtils.decode(
+                        "{\"id\":224506,\"tpsWeaponId\":224001,\"PIHHHIMPCAM\":2240121,\"KOHCBGDKMPG\":223112}",
+                        TpsWeaponAccessoryData.class));
+    }
+
+    private <K, V> void put(Map<K, V> map, K key, V value) {
+        V old = map.put(key, value);
+        restore.add(
+                () -> {
+                    if (old == null) map.remove(key);
+                    else map.put(key, old);
+                });
+    }
+
+    @AfterEach
+    void restore() {
+        Collections.reverse(restore);
+        restore.forEach(Runnable::run);
+        restore.clear();
+    }
+
+    static class RecordingPlayer extends Player {
+        final TeamManager team = new TeamManager(this);
+        final List<BasePacket> packets = new ArrayList<>();
+        int saves;
+        boolean loggedIn;
+
+        @Override
+        public TeamManager getTeamManager() {
+            return team;
+        }
+
+        @Override
+        public void save() {
+            saves++;
+        }
+
+        @Override
+        public void sendPacket(BasePacket packet) {
+            packets.add(packet);
+        }
+
+        @Override
+        public boolean hasSentLoginPackets() {
+            return loggedIn;
+        }
+    }
+
+    static class RecordingItem extends GameItem {
+        int saves;
+
+        RecordingItem(int id) {
+            super(id, 99);
+        }
+
+        @Override
+        public void save() {
+            saves++;
+        }
+    }
+
+    static class RecordingAvatar extends Avatar {
+        final int avatarId;
+        int saves, recalcs;
+
+        RecordingAvatar(int id) {
+            avatarId = id;
+        }
+
+        @Override
+        public int getAvatarId() {
+            return avatarId;
+        }
+
+        @Override
+        public AvatarData getAvatarData() {
+            return new AvatarData();
+        }
+
+        @Override
+        public void save() {
+            saves++;
+        }
+
+        @Override
+        public void recalcStats(boolean force) {
+            recalcs++;
+        }
+    }
+
+    private RecordingAvatar avatar(int id, boolean trial) {
+        var avatar = new RecordingAvatar(id);
+        if (trial) {
+            avatar.setTrialAvatarId(10064);
+            avatar.setOwner(player);
+            player.team.getTrialAvatars().put(id, avatar);
+        } else player.getAvatars().addAvatar(avatar);
+        avatar.saves = 0;
+        return avatar;
+    }
+
+    private RecordingItem item(int id) {
+        var item = new RecordingItem(id);
+        player.getInventory().addItem(item);
+        return item;
+    }
+
+    private void equip(Avatar avatar, GameItem... items) {
+        assertEquals(
+                0,
+                TpsWeaponSystem.wear(
+                        player, avatar.getGuid(), Arrays.stream(items).map(GameItem::getGuid).toList()));
+    }
+
+    @Test
+    void inventoryStoresOneCopyPerWeaponEvenWhenGivenMany() {
+        var first = item(224001);
+        var next = item(224001);
+        assertEquals(1, player.getInventory().getItems().size());
+        assertEquals(1, first.getCount());
+        assertEquals(first, TpsWeaponSystem.findOwnedWeapon(player, 224001));
+        assertEquals(0, next.getGuid());
+        assertEquals(
+                20, player.getInventory().getInventoryTab(ItemType.ITEM_TPS_WEAPON).getMaxCapacity());
+        assertTrue(first.toProto().hasTpsWeapon());
+        assertFalse(first.toProto().hasMaterial());
+    }
+
+    @Test
+    void duplicateGiveReportsNoGainAndDoesNotRepeatPacketsOrHistoryWrites() {
+        var gun = item(224001);
+        player.packets.clear();
+        player.saves = 0;
+        assertFalse(player.getInventory().addItem(new RecordingItem(224001)));
+        assertTrue(player.packets.isEmpty());
+        assertEquals(0, player.saves);
+        assertSame(gun, TpsWeaponSystem.findOwnedWeapon(player, 224001));
+    }
+
+    @Test
+    void invalidGuidDoesNotPartiallyTransferAnotherAvatarsWeapon() {
+        var first = avatar(10000005, false);
+        var second = avatar(10000007, false);
+        var gun = item(224001);
+        equip(first, gun);
+        assertEquals(
+                Retcode.RET_ITEM_NOT_EXIST_VALUE,
+                TpsWeaponSystem.wear(player, second.getGuid(), List.of(gun.getGuid(), -1L)));
+        assertEquals(List.of(224001), first.getTpsWeaponIds());
+        assertTrue(second.getTpsWeaponIds().isEmpty());
+        assertEquals(0, second.recalcs);
+    }
+
+    @Test
+    void duplicateGuidIsRejectedWithoutChanges() {
+        var first = avatar(10000005, false);
+        var gun = item(224001);
+        assertEquals(
+                Retcode.RET_FAIL_VALUE,
+                TpsWeaponSystem.wear(player, first.getGuid(), List.of(gun.getGuid(), gun.getGuid())));
+        assertTrue(first.getTpsWeaponIds().isEmpty());
+    }
+
+    @Test
+    void unknownAvatarIsRejected() {
+        assertEquals(
+                Retcode.RET_CAN_NOT_FIND_AVATAR_VALUE, TpsWeaponSystem.wear(player, -1, List.of()));
+    }
+
+    @Test
+    void twoGunsAndOneGrenadeFitButOtherCombinationsDoNot() {
+        var first = avatar(10000005, false);
+        var a = item(224001);
+        var b = item(224002);
+        var c = item(224003);
+        var d = item(224004);
+        var e = item(224005);
+        assertEquals(
+                Retcode.RET_EQUIP_EXCEED_LIMIT_VALUE,
+                TpsWeaponSystem.wear(
+                        player, first.getGuid(), List.of(a.getGuid(), b.getGuid(), c.getGuid())));
+        assertEquals(
+                Retcode.RET_EQUIP_EXCEED_LIMIT_VALUE,
+                TpsWeaponSystem.wear(player, first.getGuid(), List.of(d.getGuid(), e.getGuid())));
+        equip(first, a, b, d);
+        assertEquals(List.of(224001, 224002, 224004), first.getTpsWeaponIds());
+    }
+
+    @Test
+    void missingWeaponConfigIsRejected() {
+        var first = avatar(10000005, false);
+        var gun = item(224001);
+        put(GameData.getTpsWeaponDataMap(), 224001, null);
+        assertEquals(
+                Retcode.RET_EQUIP_EXCEED_LIMIT_VALUE,
+                TpsWeaponSystem.wear(player, first.getGuid(), List.of(gun.getGuid())));
+    }
+
+    @Test
+    void trialAndOwnedWearersTransferInsteadOfSharingWeapons() {
+        var first = avatar(TpsAvatarSystem.MALE, true);
+        var second = avatar(10000005, false);
+        var gun = item(224001);
+        equip(first, gun);
+        assertEquals(List.of(224001), player.getTpsLoadout());
+        equip(second, gun);
+        assertTrue(first.getTpsWeaponIds().isEmpty());
+        assertEquals(List.of(224001), second.getTpsWeaponIds());
+        assertTrue(player.getTpsLoadout().isEmpty());
+        assertEquals(0, first.saves);
+        assertEquals(2, first.recalcs);
+    }
+
+    @Test
+    void emptyReplacementUnequipsAndSameReplacementIsIdempotent() {
+        var first = avatar(10000005, false);
+        var gun = item(224001);
+        equip(first, gun);
+        int saves = first.saves;
+        equip(first, gun);
+        assertEquals(saves, first.saves);
+        equip(first);
+        assertTrue(first.getTpsWeaponIds().isEmpty());
+        assertEquals(saves + 1, first.saves);
+    }
+
+    @Test
+    void accessoriesAndAffixesFilterDuplicatesAndOtherWeapons() {
+        var a = item(224001);
+        var b = item(224002);
+        a.getTpsAccessoryIds().addAll(Arrays.asList(224506, 224506, 0, null));
+        b.getTpsAccessoryIds().add(224506);
+        assertEquals(List.of(224506), TpsWeaponSystem.getValidAccessories(a));
+        assertTrue(TpsWeaponSystem.getValidAccessories(b).isEmpty());
+        assertEquals(1, TpsWeaponSystem.getAffixLevels(a).get(224012));
+        assertEquals(List.of(224506), a.toProto().getTpsWeapon().getAccessoryIdListList());
+        assertTrue(b.toProto().getTpsWeapon().getAccessoryIdListList().isEmpty());
+    }
+
+    @Test
+    void accessoryUnlockRequiresAnOwnedWeaponAndIsIdempotent() {
+        assertFalse(TpsWeaponSystem.unlockAccessory(player, 224506));
+        var gun = item(224001);
+        assertTrue(TpsWeaponSystem.unlockAccessory(player, 224506));
+        int saves = gun.saves;
+        assertFalse(TpsWeaponSystem.unlockAccessory(player, 224506));
+        assertEquals(saves, gun.saves);
+        assertEquals(List.of(224506), gun.getTpsAccessoryIds());
+    }
+
+    @Test
+    void deletingWeaponRemovesLoadoutAndAllWearerReferences() {
+        var first = avatar(TpsAvatarSystem.MALE, true);
+        var gun = item(224001);
+        equip(first, gun);
+        assertTrue(player.getInventory().removeItem(gun, 99));
+        assertTrue(first.getTpsWeaponIds().isEmpty());
+        assertTrue(player.getTpsLoadout().isEmpty());
+        assertNull(TpsWeaponSystem.findOwnedWeapon(player, 224001));
+    }
+
+    @Test
+    void staleAndRepeatedWornIdsAreOmittedFromProto() {
+        var first = avatar(10000005, false);
+        var gun = item(224001);
+        first.getTpsWeaponIds().addAll(Arrays.asList(224001, 224001, 123, null));
+        assertEquals(List.of(gun), TpsWeaponSystem.getWornWeapons(first));
+        assertEquals(1, TpsWeaponSystem.getSceneWeaponInfos(first).size());
+    }
+
+    @Test
+    void sharedSlotsResolveToOneReserveAndZeroSurvivesReads() {
+        assertEquals(1001, TpsWeaponSystem.getAmmunitionForSlot(101).getId());
+        assertEquals(1001, TpsWeaponSystem.getAmmunitionForSlot(201).getId());
+        assertNull(TpsWeaponSystem.getAmmunitionForSlot(-1));
+        assertEquals(2000, TpsWeaponSystem.getReserve(player, 1001));
+        player.getTpsAmmunition().put(1001, 0);
+        assertEquals(0, TpsWeaponSystem.getReserve(player, 1001));
+        assertEquals(0, TpsWeaponSystem.getReserve(player, -1));
+    }
+
+    @Test
+    void reserveChangesClampWithoutIntegerOverflowAndSaveOnlyChanges() {
+        assertEquals(0, TpsWeaponSystem.changeReserve(player, 1001, Integer.MIN_VALUE));
+        assertEquals(2000, TpsWeaponSystem.changeReserve(player, 1001, Integer.MAX_VALUE));
+        assertEquals(2, player.saves);
+        assertEquals(2000, TpsWeaponSystem.changeReserve(player, 1001, 1));
+        assertEquals(0, TpsWeaponSystem.changeReserve(player, -1, 1));
+        assertEquals(2, player.saves);
+    }
+
+    @Test
+    void invalidSavedReserveValuesAreBounded() {
+        player.getTpsAmmunition().put(1001, null);
+        assertEquals(0, TpsWeaponSystem.getReserve(player, 1001));
+        player.getTpsAmmunition().put(1001, -5);
+        assertEquals(0, TpsWeaponSystem.getReserve(player, 1001));
+        player.getTpsAmmunition().put(1001, 3000);
+        assertEquals(2000, TpsWeaponSystem.getReserve(player, 1001));
+    }
+
+    @Test
+    void oldDocumentsWithoutTpsCollectionsAreUsable() throws Exception {
+        for (String name : List.of("tpsLoadout", "tpsAmmunition")) {
+            Field field = Player.class.getDeclaredField(name);
+            field.setAccessible(true);
+            field.set(player, null);
+        }
+        var avatar = new Avatar();
+        Field wear = Avatar.class.getDeclaredField("tpsWeaponIds");
+        wear.setAccessible(true);
+        wear.set(avatar, null);
+        var gun = item(224001);
+        Field accessories = GameItem.class.getDeclaredField("tpsAccessoryIds");
+        accessories.setAccessible(true);
+        accessories.set(gun, null);
+        assertTrue(player.getTpsLoadout().isEmpty());
+        assertTrue(player.getTpsAmmunition().isEmpty());
+        assertTrue(avatar.getTpsWeaponIds().isEmpty());
+        assertTrue(gun.getTpsAccessoryIds().isEmpty());
+    }
+
+    @Test
+    void sceneWeaponProtoReportsEachSlotsSharedReserveWithoutAccessoryGarbage() {
+        var gun = item(224001);
+        player.getTpsAmmunition().put(1001, 39);
+        var proto = TpsWeaponSystem.toSceneWeaponInfo(player, gun);
+        assertEquals(0, proto.getEntityId());
+        assertEquals(101, proto.getAmmunitionList(0).getAmmunitionType());
+        assertEquals(1001, proto.getAmmunitionList(0).getAmmunitionConfigId());
+        assertEquals(39, proto.getAmmunitionList(0).getCurrentAmmunition());
+    }
+
+    @Test
+    void unmappedElectricSlotDoesNotBorrowAnotherGunsReserve() {
+        put(
+                GameData.getTpsWeaponDataMap(),
+                224002,
+                JsonUtils.decode("{\"id\":224002,\"ammoSlotIds\":[201,202]}", TpsWeaponData.class));
+        assertNull(TpsWeaponSystem.getAmmunitionForSlot(202));
+        var proto = TpsWeaponSystem.toSceneWeaponInfo(player, item(224002));
+        assertEquals(1, proto.getAmmunitionListCount());
+        assertEquals(201, proto.getAmmunitionList(0).getAmmunitionType());
+        assertEquals(1001, proto.getAmmunitionList(0).getAmmunitionConfigId());
+    }
+
+    @Test
+    void weaponInitializationDoesNotTriggerAnAbilityNotificationLoop() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            var weapon =
+                    new emu.grasscutter.game.entity.EntityWeapon(fixture.scene, 50016001) {
+                        @Override
+                        public emu.grasscutter.net.proto.AbilityControlBlockOuterClass.AbilityControlBlock
+                                getAbilityControlBlock() {
+                            return emu.grasscutter.net.proto.AbilityControlBlockOuterClass.AbilityControlBlock
+                                    .newBuilder()
+                                    .addAbilityEmbryoList(
+                                            emu.grasscutter.net.proto.AbilityEmbryoOuterClass.AbilityEmbryo.newBuilder()
+                                                    .setAbilityId(1))
+                                    .build();
+                        }
+                    };
+            gun.setWeaponEntity(weapon);
+            fixture.scene.getWeaponEntities().put(weapon.getId(), weapon);
+            player.loggedIn = true;
+            player.packets.clear();
+            var session =
+                    new emu.grasscutter.server.game.GameSession(null) {
+                        @Override
+                        public Player getPlayer() {
+                            return player;
+                        }
+                    };
+            var handler = new emu.grasscutter.server.packet.recv.HandlerClientAbilityInitFinishNotify();
+            for (int id :
+                    new int[] {weapon.getId(), fixture.entity.getId(), entity.getId(), weapon.getId()}) {
+                var notify =
+                        emu.grasscutter.net.proto.ClientAbilityInitFinishNotifyOuterClass
+                                .ClientAbilityInitFinishNotify.newBuilder()
+                                .setEntityId(id)
+                                .build();
+                handler.handle(session, new byte[0], notify.toByteArray());
+            }
+            assertEquals(1, player.packets.size());
+            assertEquals(PacketOpcodes.AbilityChangeNotify, player.packets.get(0).getOpcode());
+        }
+    }
+
+    private EntityAvatar sceneAvatar(AbilityTestFixture fixture) {
+        player.setScene(fixture.scene);
+        var avatar = avatar(10000005, false);
+        avatar.setFightProperty(FightProperty.FIGHT_PROP_MAX_HP, 100);
+        avatar.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, 100);
+        var entity =
+                new EntityAvatar(fixture.scene, avatar) {
+                    @Override
+                    public void initAbilities() {}
+                };
+        player.team.getActiveTeam().add(entity);
+        player.team.setCurrentCharacterIndex(0);
+        fixture.scene.getEntities().put(entity.getId(), entity);
+        return entity;
+    }
+
+    private AbilityInvokeEntry invoke(int entityId, int type, int... pairs) {
+        var meta = AbilityMetaUpdateTpsWeaponAmmunition.newBuilder().setUpdateTypeValue(type);
+        for (int i = 0; i < pairs.length; i += 2)
+            meta.addAmmunitionList(
+                    TpsAmmunitionChange.newBuilder()
+                            .setAmmunitionConfigId(pairs[i])
+                            .setChangeCount(pairs[i + 1]));
+        return AbilityInvokeEntry.newBuilder()
+                .setEntityId(entityId)
+                .setAbilityData(meta.build().toByteString())
+                .build();
+    }
+
+    @Test
+    void entityMigrationReusesSameSceneAndCleansOldScene() throws Exception {
+        try (var one = new AbilityTestFixture();
+                var two = new AbilityTestFixture()) {
+            var gun = item(224001);
+            TpsWeaponSystem.ensureWeaponEntity(gun, one.scene);
+            var old = gun.getWeaponEntity();
+            TpsWeaponSystem.ensureWeaponEntity(gun, one.scene);
+            assertSame(old, gun.getWeaponEntity());
+            TpsWeaponSystem.ensureWeaponEntity(gun, two.scene);
+            assertFalse(one.scene.getWeaponEntities().containsKey(old.getId()));
+            assertSame(gun.getWeaponEntity(), two.scene.getEntityById(gun.getWeaponEntity().getId()));
+            TpsWeaponSystem.releaseSceneWeapons(player, one.scene);
+            assertNotNull(gun.getWeaponEntity());
+            TpsWeaponSystem.releaseSceneWeapons(player, two.scene);
+            assertNull(gun.getWeaponEntity());
+            assertTrue(two.scene.getWeaponEntities().isEmpty());
+        }
+    }
+
+    @Test
+    void unequippingAlsoRemovesTheOldEntityWhenLoginNotificationsAreSuppressed() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            TpsWeaponSystem.ensureWeaponEntity(gun, fixture.scene);
+            int old = gun.getWeaponEntity().getId();
+            equip(entity.getAvatar());
+            assertNull(gun.getWeaponEntity());
+            assertNull(fixture.scene.getEntityById(old));
+        }
+    }
+
+    @Test
+    void clientCostsArePersistedOnceAndCannotSpendUnwornAmmo() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            equip(entity.getAvatar(), item(224001));
+            player.saves = 0;
+            assertTrue(
+                    TpsWeaponSystem.onAmmunitionInvoke(
+                            player, invoke(entity.getId(), 0, 1001, -3, 1001, -2)));
+            assertEquals(1995, TpsWeaponSystem.getReserve(player, 1001));
+            assertEquals(1, player.saves);
+            assertFalse(
+                    TpsWeaponSystem.onAmmunitionInvoke(
+                            player, invoke(entity.getId(), 0, 1001, -1, 1002, -1)));
+            assertEquals(1995, TpsWeaponSystem.getReserve(player, 1001));
+        }
+    }
+
+    @Test
+    void forgedGrantsAndOverdrawsDoNotPartiallyChangeAmmo() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            equip(entity.getAvatar(), item(224001));
+            player.saves = 0;
+            for (int type : new int[] {0, 1, 2, 3, 99})
+                assertFalse(
+                        TpsWeaponSystem.onAmmunitionInvoke(player, invoke(entity.getId(), type, 1001, 1)));
+            assertFalse(
+                    TpsWeaponSystem.onAmmunitionInvoke(
+                            player, invoke(entity.getId(), 0, 1001, -1, 1001, -2000)));
+            assertEquals(2000, TpsWeaponSystem.getReserve(player, 1001));
+            assertEquals(0, player.saves);
+        }
+    }
+
+    @Test
+    void costsFromAnotherEntityOrAnEmptyTeamAreIgnored() throws Exception {
+        assertFalse(TpsWeaponSystem.onAmmunitionInvoke(player, invoke(42, 0, 1001, -1)));
+        assertEquals(0, player.getAvatars().getAvatarCount());
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            equip(entity.getAvatar(), item(224001));
+            player.saves = 0;
+            assertFalse(
+                    TpsWeaponSystem.onAmmunitionInvoke(player, invoke(fixture.entity.getId(), 0, 1001, -1)));
+            assertEquals(0, player.saves);
+        }
+    }
+
+    @Test
+    void sceneAmmoNotifyDeduplicatesSharedPoolsAndRefillKeepsEntityIds() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun, item(224002));
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            int id = gun.getWeaponEntity().getId();
+            player.getTpsAmmunition().put(1001, 0);
+            TpsWeaponSystem.refillAmmunition(player);
+            assertEquals(id, gun.getWeaponEntity().getId());
+            var packets =
+                    player.packets.stream()
+                            .filter(p -> p.getOpcode() == PacketOpcodes.TpsAmmunitionChangeNotify)
+                            .toList();
+            assertEquals(1, packets.size());
+            var notify = TpsAmmunitionChangeNotify.parseFrom(packets.get(0).getData());
+            assertEquals(1, notify.getAmmunitionListCount());
+            assertEquals(2000, notify.getAmmunitionList(0).getChangeCount());
+        }
+    }
+
+    private void realIceGunAbilities() throws Exception {
+        var configName = "TPS_Avatar_AutoWeapon_AssaultRifle_01";
+        var config =
+                JsonParser.parseString(
+                                Files.readString(
+                                        Path.of(
+                                                "resources/BinOutput/Gadget/ConfigGadget_TPS_Avatar_Weapon_AssaultRifle_01.json")))
+                        .getAsJsonObject()
+                        .get(configName);
+        put(
+                GameData.getGadgetDataMap(),
+                50016001,
+                JsonUtils.decode(
+                        "{\"id\":50016001,\"jsonName\":\"" + configName + "\"}", GadgetData.class));
+        put(
+                GameData.getGadgetConfigData(),
+                configName,
+                JsonUtils.decode(config.toString(), ConfigEntityGadget.class));
+        for (var row :
+                JsonParser.parseString(
+                                Files.readString(
+                                        Path.of(
+                                                "resources/BinOutput/Ability/Temp/EquipAbilities/TPSWeaponAbilities/ConfigAbility_TPSWeapon_IceGun.json")))
+                        .getAsJsonArray()) {
+            var ability =
+                    JsonUtils.decode(row.getAsJsonObject().get("Default").toString(), AbilityData.class);
+            put(GameData.getAbilityDataMap(), ability.abilityName, ability);
+        }
+    }
+
+    @Test
+    void changingEquipmentBindsRealGunAbilitiesToTheWearerBeforeInitialization() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            realIceGunAbilities();
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            player.loggedIn = true;
+            equip(entity.getAvatar(), gun);
+            var weapon = gun.getWeaponEntity();
+            assertSame(entity.getAvatar(), weapon.getCasterAvatar());
+            assertEquals(5, weapon.getInstancedAbilities().size());
+            for (var ability : weapon.getInstancedAbilities()) {
+                assertNotNull(ability);
+                assertSame(player, ability.getPlayerOwner());
+                assertSame(player.getAbilityManager(), ability.getManager());
+                assertSame(entity, ability.getCasterEntity());
+            }
+            assertNotSame(
+                    fixture.player.getAbilityManager(), weapon.getInstancedAbilities().get(0).getManager());
+        }
+    }
+
+    @Test
+    void anotherEquipmentNotificationRetainsCasterAndRemovesTheOldWeapon() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            var old = gun.getWeaponEntity();
+            player.loggedIn = true;
+            TpsWeaponSystem.sendEquipChange(entity.getAvatar());
+            assertNotSame(old, gun.getWeaponEntity());
+            assertSame(entity.getAvatar(), gun.getWeaponEntity().getCasterAvatar());
+            assertNull(fixture.scene.getEntityById(old.getId()));
+        }
+    }
+
+    @Test
+    void removedAvatarCannotContinueSpendingAmmoFromTheOldActiveTeam() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            equip(entity.getAvatar(), item(224001));
+            fixture.scene.getEntities().remove(entity.getId());
+            assertFalse(TpsWeaponSystem.onAmmunitionInvoke(player, invoke(entity.getId(), 0, 1001, -1)));
+            assertEquals(2000, TpsWeaponSystem.getReserve(player, 1001));
+        }
+    }
+
+    @Test
+    void replacedAvatarWithTheSameIdCannotSpendThePreviousAvatarsAmmo() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            equip(entity.getAvatar(), item(224001));
+            fixture.scene.getEntities().put(entity.getId(), fixture.entity);
+            assertFalse(TpsWeaponSystem.onAmmunitionInvoke(player, invoke(entity.getId(), 0, 1001, -1)));
+        }
+    }
+
+    @Test
+    void removedWeaponCannotSpendAmmoThroughItsItemsStalePointer() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            var weapon = gun.getWeaponEntity();
+            fixture.scene.getWeaponEntities().remove(weapon.getId());
+            assertFalse(TpsWeaponSystem.onAmmunitionInvoke(player, invoke(weapon.getId(), 0, 1001, -1)));
+            assertEquals(2000, TpsWeaponSystem.getReserve(player, 1001));
+        }
+    }
+
+    @Test
+    void aWeaponBoundToAnotherAvatarCannotSpendTheCurrentAvatarsAmmo() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            var foreign =
+                    new emu.grasscutter.game.entity.EntityWeapon(
+                            fixture.scene, 50016001, avatar(10000007, false));
+            gun.setWeaponEntity(foreign);
+            fixture.scene.getWeaponEntities().put(foreign.getId(), foreign);
+            assertFalse(TpsWeaponSystem.onAmmunitionInvoke(player, invoke(foreign.getId(), 0, 1001, -1)));
+        }
+    }
+
+    private AbilityInvokeEntry clientAmmo(int entityId, int type, int localId, int... pairs) {
+        return invoke(entityId, type, pairs).toBuilder()
+                .setArgumentType(AbilityInvokeArgument.ABILITY_META_UPDATE_TPS_WEAPON_AMMUNITION)
+                .setForwardType(
+                        emu.grasscutter.net.proto.ForwardTypeOuterClass.ForwardType.ForwardType_FORWARD_TO_ALL)
+                .setHead(AbilityInvokeEntryHead.newBuilder().setLocalId(localId).setInstancedAbilityId(1))
+                .build();
+    }
+
+    private void dispatchAmmo(
+            String kind, AbilityTestFixture fixture, List<AbilityInvokeEntry> entries) throws Exception {
+        player.setWorld(fixture.scene.getWorld());
+        var session =
+                new emu.grasscutter.server.game.GameSession(null) {
+                    @Override
+                    public Player getPlayer() {
+                        return player;
+                    }
+                };
+        switch (kind) {
+            case "invocations" -> new emu.grasscutter.server.packet.recv.HandlerAbilityInvocationsNotify()
+                    .handle(
+                            session,
+                            new byte[0],
+                            emu.grasscutter.net.proto.AbilityInvocationsNotifyOuterClass.AbilityInvocationsNotify
+                                    .newBuilder()
+                                    .addAllInvokes(entries)
+                                    .build()
+                                    .toByteArray());
+            case "change" -> new emu.grasscutter.server.packet.recv.HandlerClientAbilityChangeNotify()
+                    .handle(
+                            session,
+                            new byte[0],
+                            emu.grasscutter.net.proto.ClientAbilityChangeNotifyOuterClass
+                                    .ClientAbilityChangeNotify.newBuilder()
+                                    .addAllInvokes(entries)
+                                    .build()
+                                    .toByteArray());
+            case "init" -> new emu.grasscutter.server.packet.recv.HandlerClientAbilityInitFinishNotify()
+                    .handle(
+                            session,
+                            new byte[0],
+                            emu.grasscutter.net.proto.ClientAbilityInitFinishNotifyOuterClass
+                                    .ClientAbilityInitFinishNotify.newBuilder()
+                                    .addAllInvokes(entries)
+                                    .build()
+                                    .toByteArray());
+            case "combine" -> new emu.grasscutter.server.packet.recv
+                            .HandlerClientAbilitiesInitFinishCombineNotify()
+                    .handle(
+                            session,
+                            new byte[0],
+                            emu.grasscutter.net.proto.ClientAbilitiesInitFinishCombineNotifyOuterClass
+                                    .ClientAbilitiesInitFinishCombineNotify.newBuilder()
+                                    .addEntityInvokeList(
+                                            emu.grasscutter.net.proto.EntityAbilityInvokeEntryOuterClass
+                                                    .EntityAbilityInvokeEntry.newBuilder()
+                                                    .addAllInvokes(entries))
+                                    .build()
+                                    .toByteArray());
+            default -> fail(kind);
+        }
+        player.getAbilityInvokeHandler().update(player);
+        player.getClientAbilityInitFinishHandler().update(player);
+    }
+
+    private List<AbilityInvokeEntry> forwarded(AbilityTestFixture fixture) throws Exception {
+        var result = new ArrayList<AbilityInvokeEntry>();
+        for (var packet : fixture.scene.packets) {
+            if (packet.getOpcode() == PacketOpcodes.AbilityInvocationsNotify)
+                result.addAll(
+                        emu.grasscutter.net.proto.AbilityInvocationsNotifyOuterClass.AbilityInvocationsNotify
+                                .parseFrom(packet.getData())
+                                .getInvokesList());
+            if (packet.getOpcode() == PacketOpcodes.ClientAbilityInitFinishNotify)
+                result.addAll(
+                        emu.grasscutter.net.proto.ClientAbilityInitFinishNotifyOuterClass
+                                .ClientAbilityInitFinishNotify.parseFrom(packet.getData())
+                                .getInvokesList());
+        }
+        return result;
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"invocations", "change", "init", "combine"})
+    void ammunitionMetaWithLocalIdReachesTheReserveHandlerAtEveryEntryPoint(String kind)
+            throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            equip(entity.getAvatar(), item(224001));
+            player.saves = 0;
+            var cost = clientAmmo(entity.getId(), 0, 32771, 1001, -3);
+            fixture.scene.packets.clear();
+            dispatchAmmo(kind, fixture, List.of(cost));
+            assertEquals(1997, TpsWeaponSystem.getReserve(player, 1001));
+            assertEquals(1, player.saves);
+            assertEquals(List.of(cost), forwarded(fixture));
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"invocations", "change", "init", "combine"})
+    void rejectedAmmunitionMetaIsNotForwardedButTheNextValidEntryIsProcessed(String kind)
+            throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            equip(entity.getAvatar(), item(224001));
+            var foreign = clientAmmo(42, 0, 0, 1001, -1);
+            var grant = clientAmmo(entity.getId(), 3, 0, 1001, 300);
+            var overdraw = clientAmmo(entity.getId(), 1, 0, 1001, -2001);
+            var valid = clientAmmo(entity.getId(), 0, 0, 1001, -2);
+            player.saves = 0;
+            fixture.scene.packets.clear();
+            dispatchAmmo(kind, fixture, List.of(foreign, grant, overdraw, valid));
+            assertEquals(1998, TpsWeaponSystem.getReserve(player, 1001));
+            assertEquals(1, player.saves);
+            assertEquals(List.of(valid), forwarded(fixture));
+        }
+    }
+
+    @Test
+    void legacyAbilityManagerEntryPointAlsoProcessesAmmunitionMetaWithLocalId() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            equip(entity.getAvatar(), item(224001));
+            player.getAbilityManager().onAbilityInvoke(clientAmmo(entity.getId(), 1, 32771, 1001, -4));
+            assertEquals(1996, TpsWeaponSystem.getReserve(player, 1001));
+        }
+    }
+
+    @Test
+    void currentWeaponCanSendAnAmmunitionMetaWithLocalId() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            dispatchAmmo(
+                    "invocations",
+                    fixture,
+                    List.of(clientAmmo(gun.getWeaponEntity().getId(), 1, 32771, 1001, -4)));
+            assertEquals(1996, TpsWeaponSystem.getReserve(player, 1001));
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"invocations", "change", "init", "combine"})
+    void malformedAmmoDoesNotBlockLaterValidEntriesOrGetForwarded(String kind) throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            equip(entity.getAvatar(), item(224001));
+            var malformed =
+                    clientAmmo(entity.getId(), 0, 0).toBuilder()
+                            .setAbilityData(com.google.protobuf.ByteString.copyFrom(new byte[] {(byte) 0x80}))
+                            .build();
+            var valid = clientAmmo(entity.getId(), 0, 0, 1001, -2);
+            fixture.scene.packets.clear();
+            assertDoesNotThrow(() -> dispatchAmmo(kind, fixture, List.of(malformed, valid)));
+            assertEquals(1998, TpsWeaponSystem.getReserve(player, 1001));
+            assertEquals(List.of(valid), forwarded(fixture));
+        }
+    }
+
+    @Test
+    void anAmmunitionMetaBeforeSceneCreationIsIgnored() {
+        assertDoesNotThrow(
+                () -> player.getAbilityManager().onAbilityInvoke(clientAmmo(42, 0, 0, 1001, -1)));
+        assertEquals(0, player.saves);
+    }
+}

@@ -43,7 +43,9 @@ public class SceneScriptManager {
     private volatile boolean initAttempted;
     private boolean noCacheGroupGridsToDisk;
 
-    private final Map<String, SceneTimeAxis> timeAxis = new ConcurrentHashMap<>();
+    private record TimeAxisKey(int groupId, String identifier) {}
+    private final Map<TimeAxisKey, SceneTimeAxis> timeAxis = new ConcurrentHashMap<>();
+    private volatile boolean destroyed;
 
     /** current triggers controlled by RefreshGroup */
     private final Map<Integer, Set<SceneTrigger>> currentTriggers;
@@ -719,53 +721,7 @@ public class SceneScriptManager {
     }
 
     public void checkRegions() {
-        if (this.regions.size() == 0) {
-            return;
-        }
-
-        for (var region : this.regions.values()) {
-            // currently all condition_ENTER_REGION Events check for avatar, so we have no necessary to
-            // add other types of entity
-            var entities =
-                    getScene().getEntities().values().stream()
-                            .filter(e -> region.getMetaRegion().contains(e.getPosition()))
-                            .toList();
-
-            var entitiesIds = entities.stream().map(GameEntity::getId).toList();
-            var enterEntities =
-                    entitiesIds.stream().filter(e -> !region.getEntities().contains(e)).toList();
-            var leaveEntities =
-                    region.getEntities().stream().filter(e -> !entitiesIds.contains(e)).toList();
-
-            entities.forEach(region::addEntity);
-
-            for (var targetId : enterEntities) {
-                if (EntityIdType.toEntityType(targetId >> ENTITY_ID_BIT_SHIFT).getValue() == 19) continue;
-                Grasscutter.getLogger()
-                        .trace("Call EVENT_ENTER_REGION_{}", region.getMetaRegion().config_id);
-                this.callEvent(
-                        new ScriptArgs(region.getGroupId(), EventType.EVENT_ENTER_REGION, region.getConfigId())
-                                .setEventSource(EntityIdType.toEntityType(targetId >> ENTITY_ID_BIT_SHIFT).getValue())
-                                .setSourceEntityId(region.getId())
-                                .setTargetEntityId(targetId));
-            }
-
-            for (var entityId : region.getEntities()) {
-                var entity = this.getScene().getEntityById(entityId);
-                if (entity == null || !region.getMetaRegion().contains(entity.getPosition())) {
-                    region.removeEntity(entityId);
-                }
-            }
-
-            for (var targetId : leaveEntities) {
-                if (EntityIdType.toEntityType(targetId >> ENTITY_ID_BIT_SHIFT).getValue() == 19) continue;
-                this.callEvent(
-                        new ScriptArgs(region.getGroupId(), EventType.EVENT_LEAVE_REGION, region.getConfigId())
-                                .setEventSource(EntityIdType.toEntityType(targetId >> ENTITY_ID_BIT_SHIFT).getValue())
-                                .setSourceEntityId(region.getId())
-                                .setTargetEntityId(targetId));
-            }
-        }
+        RegionMembershipTick.check(this, this.regions);
     }
 
     public List<EntityGadget> getGadgetsInGroupSuite(
@@ -1368,6 +1324,7 @@ public class SceneScriptManager {
     }
 
     public void cancelGroupTimers(int groupId) {
+        stopTimeAxesForGroup(groupId);
         var timers = activeGroupTimers.remove(groupId);
         if (timers != null) timers.forEach(timer ->
                 Grasscutter.getGameServer().getScheduler().cancelTask(timer.component2()));
@@ -1402,7 +1359,43 @@ public class SceneScriptManager {
      * @param timeAxis The time axis.
      */
     public void initTimeAxis(SceneTimeAxis timeAxis) {
-        this.timeAxis.put(timeAxis.getIdentifier(), timeAxis);
+        tryInitTimeAxis(timeAxis);
+    }
+
+    public boolean tryInitTimeAxis(SceneTimeAxis axis) {
+        if (axis.getHandle() != this) throw new IllegalArgumentException("Time axis belongs to another scene");
+        SceneTimeAxis previous = null;
+        boolean accepted;
+        synchronized (timeAxis) {
+            accepted = !destroyed;
+            if (accepted) previous = timeAxis.put(timeAxisKey(axis), axis);
+        }
+        // Never hold the registration monitor while stopping or executing a timeline.
+        if (!accepted) axis.stop();
+        else if (previous != null && previous != axis) previous.stop();
+        return accepted;
+    }
+
+    private static TimeAxisKey timeAxisKey(SceneTimeAxis axis) {
+        return new TimeAxisKey(axis.getGroupId(), axis.getIdentifier());
+    }
+
+    boolean isCurrentTimeAxis(SceneTimeAxis axis) {
+        return !destroyed && timeAxis.get(timeAxisKey(axis)) == axis;
+    }
+
+    void finishTimeAxis(SceneTimeAxis axis) {
+        timeAxis.remove(timeAxisKey(axis), axis);
+    }
+
+    CompletableFuture<Void> callTimeAxisEvent(SceneTimeAxis axis, ScriptArgs params) {
+        long activityTicket = scene.getCrucibleSceneController().getLifecycle().ticket();
+        long activityRound = scene.getCrucibleSceneController().currentRoundSerial();
+        long invitationSerial = scene.getCrucibleSceneController().invitationSerial();
+        return CompletableFuture.runAsync(() -> {
+            if (!axis.isStopped() && isCurrentTimeAxis(axis))
+                realCallEvent(params, activityTicket, activityRound, invitationSerial);
+        }, eventExecutor);
     }
 
     /**
@@ -1411,13 +1404,29 @@ public class SceneScriptManager {
      * @param identifier The identifier of the time axis.
      */
     public void stopTimeAxis(String identifier) {
-        var timeAxis = this.timeAxis.get(identifier);
-        if (timeAxis != null) {
-            timeAxis.stop();
-        }
+        // Compatibility for Java callers without Lua's implicit current group.
+        timeAxis.values().stream().filter(axis -> axis.getIdentifier().equals(identifier))
+                .toList().forEach(SceneTimeAxis::stop);
+    }
+
+    public void stopTimeAxis(int groupId, String identifier) {
+        var axis = timeAxis.get(new TimeAxisKey(groupId, identifier));
+        if (axis != null) axis.stop();
+    }
+
+    private void stopTimeAxesForGroup(int groupId) {
+        timeAxis.values().stream().filter(axis -> axis.getGroupId() == groupId)
+                .toList().forEach(SceneTimeAxis::stop);
     }
 
     public void onDestroy() {
+        List<SceneTimeAxis> axes;
+        synchronized (timeAxis) {
+            destroyed = true;
+            axes = new ArrayList<>(timeAxis.values());
+            timeAxis.clear();
+        }
+        axes.forEach(SceneTimeAxis::stop);
         activeGroupTimers.forEach(
                 (gid, times) ->
                         times.forEach(

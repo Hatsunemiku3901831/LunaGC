@@ -2,6 +2,11 @@ package emu.grasscutter.game.ability;
 
 import emu.grasscutter.data.binout.*;
 import lombok.Getter;
+import emu.grasscutter.game.entity.GameEntity;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.BooleanSupplier;
 
 public class AbilityModifierController {
     @Getter private Ability ability;
@@ -9,6 +14,62 @@ public class AbilityModifierController {
     @Getter private AbilityData abilityData;
     @Getter private AbilityModifier modifierData;
     @Getter private final String name;
+    private volatile ServerCallbacks serverCallbacks;
+    private static final AtomicLong applicationSequence=new AtomicLong();
+    private static final class ServerCallbacks {
+        final GameEntity target;
+        final AbilityExecutionContext context;
+        final Set<AbilityModifier.AbilityModifierAction> added,removed;
+        final AtomicBoolean started=new AtomicBoolean(),ended=new AtomicBoolean();
+        volatile long applicationOrder=applicationSequence.incrementAndGet();
+        ServerCallbacks(Ability ability, GameEntity target, Set<AbilityModifier.AbilityModifierAction> added,
+                        Set<AbilityModifier.AbilityModifierAction> removed) {
+            this.target=target; this.context=new AbilityExecutionContext(ability,target);
+            this.added=added; this.removed=removed;
+        }
+    }
+
+    boolean prepareServerCallbacks(GameEntity target) {
+        var added=AbilityActionSequence.callbacks(abilityData,modifierData.onAdded);
+        var removed=AbilityActionSequence.callbacks(abilityData,modifierData.onRemoved);
+        if(added==null || removed==null) return false;
+        var callbacks=new ServerCallbacks(ability,target,added,removed);
+        if(!callbacks.context.isCurrent()) return false;
+        serverCallbacks=callbacks; return true;
+    }
+    public boolean hasServerCallbacks() {
+        var callbacks=serverCallbacks;
+        return callbacks!=null && callbacks.context.isCurrent();
+    }
+    long serverApplicationOrder() {
+        var callbacks=serverCallbacks;
+        return callbacks==null?Long.MAX_VALUE:callbacks.applicationOrder;
+    }
+    void refreshServerApplication() {
+        var callbacks=serverCallbacks;
+        if(callbacks!=null && !callbacks.ended.get() && callbacks.context.isCurrent())
+            callbacks.applicationOrder=applicationSequence.incrementAndGet();
+    }
+    boolean ownsServerCallback(AbilityModifier.AbilityModifierAction action) {
+        var callbacks=serverCallbacks;
+        return callbacks!=null && callbacks.context.isCurrent()
+                && (callbacks.added.contains(action) || callbacks.removed.contains(action));
+    }
+    void runServerOnAdded(BooleanSupplier parentCurrent) {
+        var callbacks=serverCallbacks;
+        if(callbacks==null || !callbacks.started.compareAndSet(false,true)) return;
+        AbilityActionSequence.run(ability,modifierData.onAdded,callbacks.target,()-> {
+            if(!parentCurrent.getAsBoolean() || !callbacks.context.isCurrent() || callbacks.ended.get()) return false;
+            synchronized(callbacks.target.getInstancedModifiers()) {
+                return callbacks.target.getAbilityHpModifier().activeControllers().contains(this);
+            }
+        });
+    }
+    public void runServerOnRemoved() {
+        var callbacks=serverCallbacks;
+        if(callbacks==null || !callbacks.ended.compareAndSet(false,true)) return;
+        AbilityActionSequence.run(ability,modifierData.onRemoved,callbacks.target,callbacks.context::isCurrent);
+    }
 
     public AbilityModifierController(
             Ability ability, AbilityData abilityData, AbilityModifier modifierData) {

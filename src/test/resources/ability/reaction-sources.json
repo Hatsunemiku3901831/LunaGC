@@ -1,0 +1,22 @@
+[
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Nahida.json",
+    "sourceSha256": "361b5401dcada5ef93466292e291fb2d9d0fdf0dd57929dc0b5889a7501f5999",
+    "fixture": "nahida-reaction.json",
+    "ability": "Avatar_Nahida_ElementalArt",
+    "modifiers": [
+      "UNIQUE_Avatar_Nahida_Constellation_2_OnMonster",
+      "UNIQUE_Avatar_Nahida_Constellation_2_DefenseDown"
+    ]
+  },
+  {
+    "source": "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Lauma.json",
+    "sourceSha256": "b3f94ec22bdc876495f0312f76fd3a9d043b7a335771c0eaac79cacaf8d30069",
+    "fixture": "lauma-reaction.json",
+    "ability": "Avatar_Lauma_Constellation_1",
+    "modifiers": [
+      "UNIQUE_Avatar_Lauma_Constellation_1_AvatarHandler",
+      "UNIQUE_Avatar_Lauma_Constellation_1_HealHP"
+    ]
+  }
+]

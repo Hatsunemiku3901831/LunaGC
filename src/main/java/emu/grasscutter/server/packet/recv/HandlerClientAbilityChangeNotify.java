@@ -12,8 +12,8 @@ public final class HandlerClientAbilityChangeNotify extends PacketHandler {
 
         var player = session.getPlayer();
         for (var entry : notif.getInvokesList()) {
-            player.getAbilityManager().onAbilityInvoke(entry);
-            player.getAbilityInvokeHandler().addEntry(entry.getForwardType(), entry);
+            if (player.getAbilityManager().acceptAbilityInvoke(entry))
+                player.getAbilityInvokeHandler().addEntry(entry.getForwardType(), entry);
         }
         player.getAbilityManager().flushPendingBoL();
     }

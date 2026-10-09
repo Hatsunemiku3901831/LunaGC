@@ -137,6 +137,7 @@ public class PacketPlayerEnterSceneInfoNotify extends BasePacket {
                             .setWeaponEntityId(avatarEntity.getWeaponEntityId())
                             .setAvatarAbilityInfo(avatarAbilityInfo)
                             .setWeaponAbilityInfo(AbilitySyncStateInfo.newBuilder())
+                            .addAllTpsWeaponList(emu.grasscutter.game.tps.TpsWeaponSystem.getSceneWeaponInfos(avatarEntity.getAvatar()))
                             .build();
 
             proto.addAvatarEnterInfo(avatarInfo);

@@ -165,9 +165,15 @@ public class AvatarData extends GameResource {
      * Create ability embryos.
      */
     public void buildEmbryo() {
-        var split = this.iconName.split("_");
+        this.abilities = new IntArrayList();
+        this.abilitieNames.clear();
+        var split = this.iconName == null ? new String[0] : this.iconName.split("_");
         if (split.length > 0) {
-            this.name = split[split.length - 1];
+            this.name = switch (this.id) {
+                case 10000134 -> "AetherShadow";
+                case 10000135 -> "LumineShadow";
+                default -> split[split.length - 1];
+            };
 
             var info = GameData.getAbilityEmbryoInfo().get(this.name);
             if (info != null) {

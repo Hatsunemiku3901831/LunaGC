@@ -166,7 +166,9 @@ public final class PacketOpcodes {
     public static final int DoGachaReq = 26017;
     public static final int DoGachaRsp = 21670;
     public static final int UnlockNameCardNotify = 3626;
-    public static final int GetAllUnlockNameCardReq = -14;
+    public static final int GetAllUnlockNameCardReq = 5683;
+    public static final int GetAllUnlockProfileDataReq = 4179;
+    public static final int GetAllUnlockProfileDataRsp = 22477;
     public static final int GetAllUnlockNameCardRsp = 4400;
     public static final int SetNameCardReq = 2661;
     public static final int SetNameCardRsp = 20885;
@@ -468,8 +470,8 @@ public final class PacketOpcodes {
     public static final int SetPlayerNameRsp = 20824;
     public static final int SetPlayerSignatureReq = 493;
     public static final int SetPlayerSignatureRsp = 23734;
-    public static final int SetPlayerHeadImageReq = -98;
-    public static final int SetPlayerHeadImageRsp = -99;
+    public static final int SetPlayerHeadImageReq = 6969;
+    public static final int SetPlayerHeadImageRsp = 1191;
     public static final int SetPlayerBirthdayReq = 27497;
     public static final int SetPlayerBirthdayRsp = 29394;
     public static final int AvatarExpeditionDataNotify = 4867;
@@ -1786,8 +1788,8 @@ public final class PacketOpcodes {
     public static final int _SeekerDetectorDataNotify = 20875;
     public static final int _SetFoodStarStateReq = 3838;
     public static final int _SetFoodStarStateRsp = 28754;
-    public static final int _SetPlayerHeadFrameReq = -301;
-    public static final int _SetPlayerHeadFrameRsp = -302;
+    public static final int _SetPlayerHeadFrameReq = 21517;
+    public static final int _SetPlayerHeadFrameRsp = 9314;
     public static final int _SetReliquaryStarStateReq = 5672;
     public static final int _SetReliquaryStarStateRsp = 7536;
     public static final int _SetWidgetQuickSlotListReq = 21516;
@@ -2081,8 +2083,8 @@ public final class PacketOpcodes {
     public static final int SeekerDetectorDataNotify = 20875;
     public static final int SetFoodStarStateReq = 3838;
     public static final int SetFoodStarStateRsp = 28754;
-    public static final int SetPlayerHeadFrameReq = -341;
-    public static final int SetPlayerHeadFrameRsp = -342;
+    public static final int SetPlayerHeadFrameReq = 21517;
+    public static final int SetPlayerHeadFrameRsp = 9314;
     public static final int SetReliquaryStarStateReq = 5672;
     public static final int SetReliquaryStarStateRsp = 7536;
     public static final int SetWidgetQuickSlotListReq = 21516;
@@ -2913,7 +2915,11 @@ public final class PacketOpcodes {
     public static final int PIHOBBKMLFN = 25984;
     public static final int PIOBEFIHDFC = 9592;
     public static final int PJCLLHHJAOC = 3771;
-    public static final int PJFEBILHHJJ = 21312;
+    public static final int TpsEquipChangeNotify = 21312;
+    public static final int WearTpsEquipReq = 20756;
+    public static final int WearTpsEquipRsp = 25902;
+    public static final int TpsAmmunitionChangeNotify = 24371;
+    public static final int TpsRegionalPlaySupplyInfoNotify = 6579;
     public static final int PJJNBFBOGCN = 6936;
     public static final int PJKDLDPHGMA = 21650;
     public static final int PJMNDBADAOM = 26157;

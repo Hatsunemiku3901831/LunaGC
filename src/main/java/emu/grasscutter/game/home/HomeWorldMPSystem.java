@@ -77,7 +77,7 @@ public class HomeWorldMPSystem extends BaseGameSystem {
         var requester = request.getRequester();
         owner.getEnterHomeRequests().remove(requesterUid);
 
-        if (requester.getWorld().isMultiplayer()) {
+        if (requester.getWorld() == null || requester.getWorld().isMultiplayer()) {
             requester.sendPacket(
                     new PacketPlayerApplyEnterHomeResultNotify(
                             owner.getUid(),
@@ -89,25 +89,30 @@ public class HomeWorldMPSystem extends BaseGameSystem {
             return;
         }
 
-        requester.sendPacket(
-                new PacketPlayerApplyEnterHomeResultNotify(
-                        owner.getUid(),
-                        owner.getNickname(),
-                        isAgreed,
-                        PlayerApplyEnterHomeResultNotifyOuterClass.PlayerApplyEnterHomeResultNotify.Reason
-                                .PLAYER_JUDGE));
-
         if (!isAgreed) {
+            requester.sendPacket(new PacketPlayerApplyEnterHomeResultNotify(owner.getUid(), owner.getNickname(), false,
+                    PlayerApplyEnterHomeResultNotifyOuterClass.PlayerApplyEnterHomeResultNotify.Reason.PLAYER_JUDGE));
             requester.sendPacket(new PacketTryEnterHomeRsp());
             return;
         }
 
-        this.enterHome(requester, owner, 0, false);
+        if (!this.tryEnterHome(requester, owner, 0, false, () -> requester.sendPacket(
+                new PacketPlayerApplyEnterHomeResultNotify(owner.getUid(), owner.getNickname(), true,
+                        PlayerApplyEnterHomeResultNotifyOuterClass.PlayerApplyEnterHomeResultNotify.Reason.PLAYER_JUDGE)))) {
+            requester.sendPacket(new PacketPlayerApplyEnterHomeResultNotify(owner.getUid(), owner.getNickname(), false,
+                    PlayerApplyEnterHomeResultNotifyOuterClass.PlayerApplyEnterHomeResultNotify.Reason.SYSTEM_JUDGE));
+        }
     }
 
     public void enterHome(Player requester, Player owner, int teleportPoint, boolean toSafe) {
-        if (requester.getWorld().isMultiplayer()) {
-            return;
+        tryEnterHome(requester, owner, teleportPoint, toSafe, () -> {});
+    }
+
+    private boolean tryEnterHome(Player requester, Player owner, int teleportPoint, boolean toSafe, Runnable onEntered) {
+        var source = requester.getWorld();
+        if (source == null || source.isMultiplayer()) {
+            requester.sendPacket(new PacketTryEnterHomeRsp());
+            return false;
         }
 
         if (owner.getRealmList() == null) {
@@ -115,7 +120,7 @@ public class HomeWorldMPSystem extends BaseGameSystem {
             requester.sendPacket(
                     new PacketTryEnterHomeRsp(
                             RetcodeOuterClass.Retcode.RET_HOME_NOT_FOUND_IN_MEM_VALUE, owner.getUid()));
-            return;
+            return false;
         }
 
         var world = this.server.getHomeWorldOrCreate(owner);
@@ -127,27 +132,28 @@ public class HomeWorldMPSystem extends BaseGameSystem {
             requester.sendPacket(
                     new PacketTryEnterHomeRsp(
                             RetcodeOuterClass.Retcode.RET_HOME_OWNER_REFUSE_TO_ENTER_HOME_VALUE, owner.getUid()));
-            return;
+            return false;
         }
 
         if (owner.isInEditMode()) {
             requester.sendPacket(
                     new PacketTryEnterHomeRsp(
                             RetcodeOuterClass.Retcode.RET_HOME_CANT_ENTER_BY_IN_EDIT_MODE_VALUE, owner.getUid()));
-            return;
+            return false;
         }
 
         int realmId = 2000 + owner.getCurrentRealmId();
-        var item = targetHome.getHomeSceneItem(realmId);
         var scene = world.getSceneById(realmId);
-        targetHome.save();
-
-        Position pos;
-        if (scene != null) {
-            pos = toSafe ? scene.getScriptManager().getConfig().born_pos : item.getBornPos();
-        } else {
-            pos = item.getBornPos();
+        if (scene == null) {
+            requester.sendPacket(new PacketTryEnterHomeRsp(
+                    RetcodeOuterClass.Retcode.RET_HOME_NOT_FOUND_IN_MEM_VALUE, owner.getUid()));
+            return false;
         }
+        var item = targetHome.getHomeSceneItem(realmId);
+
+        var config = scene.getScriptManager().getConfig();
+        Position pos = toSafe && config != null && config.born_pos != null
+                ? config.born_pos : item.getBornPos();
 
         if (teleportPoint != 0) {
             var target = item.getTeleportPointPos(teleportPoint);
@@ -156,31 +162,29 @@ public class HomeWorldMPSystem extends BaseGameSystem {
             }
         }
 
-        requester.getPrevPosForHome().set(requester.getPosition());
-        requester.setCurHomeWorld(world);
-        requester.setPrevScene(requester.getSceneId());
-        world.addPlayer(requester, realmId);
-        requester.setSceneId(realmId);
-        requester.getPosition().set(pos);
-
-        requester.sendPacket(
-                new PacketPlayerEnterSceneNotify(
-                        requester,
-                        owner.getUid(),
-                        TeleportProperties.builder()
-                                .sceneId(realmId)
-                                .enterReason(EnterReason.EnterHome)
-                                .teleportTo(pos)
-                                .teleportType(PlayerTeleportEvent.TeleportType.INTERNAL)
-                                .build(),
-                        !requester.equals(owner)));
-        requester.sendPacket(new PacketEnterScenePeerNotify(requester));
-        requester.sendPacket(new PacketTryEnterHomeRsp(owner.getUid()));
-
-        requester.setHasSentInitPacketInHome(false);
-        world.getPlayers().stream()
-                .filter(player -> !player.equals(requester))
-                .forEach(player -> player.sendPacket(new PacketPlayerPreEnterMpNotify(requester)));
+        if (pos == null) {
+            requester.sendPacket(new PacketTryEnterHomeRsp());
+            return false;
+        }
+        var properties = TeleportProperties.builder().sceneId(realmId)
+                .enterReason(EnterReason.EnterHome).teleportTo(pos.clone())
+                .teleportType(PlayerTeleportEvent.TeleportType.INTERNAL).build();
+        boolean entered = world.tryAddPlayer(requester, source, properties, context -> {
+            requester.getPrevPosForHome().set(context.previousPosition());
+            requester.setCurHomeWorld(world);
+            requester.setPrevScene(context.previousSceneId());
+            requester.setHasSentInitPacketInHome(false);
+            targetHome.save();
+            onEntered.run();
+            requester.sendPacket(new PacketPlayerEnterSceneNotify(requester, owner.getUid(),
+                    properties, !requester.equals(owner)));
+            requester.sendPacket(new PacketEnterScenePeerNotify(requester));
+            requester.sendPacket(new PacketTryEnterHomeRsp(owner.getUid()));
+            world.getPlayers().stream().filter(player -> !player.equals(requester))
+                    .forEach(player -> player.sendPacket(new PacketPlayerPreEnterMpNotify(requester)));
+        });
+        if (!entered) requester.sendPacket(new PacketTryEnterHomeRsp());
+        return entered;
     }
 
     public boolean leaveCoop(Player player, int prevScene) {
@@ -188,8 +192,9 @@ public class HomeWorldMPSystem extends BaseGameSystem {
     }
 
     public boolean leaveCoop(Player player, int prevScene, Position pos) {
-
-        for (var p : player.getWorld().getPlayers()) {
+        if (!(player.getWorld() instanceof HomeWorld source) || player.getCurHomeWorld() != source)
+            return false;
+        for (var p : source.getPlayers()) {
             if (p.getSceneLoadState() != Player.SceneLoadState.LOADED) {
                 return false;
             }
@@ -198,48 +203,35 @@ public class HomeWorldMPSystem extends BaseGameSystem {
         var event =
                 new PlayerLeaveHomeEvent(
                         player,
-                        player.getCurHomeWorld().getHost(),
-                        player.getCurHomeWorld().getHome(),
+                        source.getHost(),
+                        source.getHome(),
                         PlayerLeaveHomeEvent.Reason.PLAYER_LEAVE);
         event.call();
 
-        player.getPosition().set(pos);
         var world = new World(player);
-        world.addPlayer(player, prevScene);
-        player
-                .getCurHomeWorld()
-                .sendPacketToHostIfOnline(
-                        new PacketOtherPlayerEnterOrLeaveHomeNotify(
-                                player,
-                                OtherPlayerEnterHomeNotifyOuterClass.OtherPlayerEnterHomeNotify.Reason.LEAVE));
-        var myHome = this.server.getHomeWorldOrCreate(player);
-        player.setCurHomeWorld(myHome);
-        myHome.getHome().onOwnerLogin(player);
-
-        player.sendPacket(
-                new PacketPlayerQuitFromHomeNotify(
-                        PlayerQuitFromHomeNotifyOuterClass.PlayerQuitFromHomeNotify.QuitReason
-                                .BACK_TO_MY_WORLD));
-        player.sendPacket(
-                new PacketPlayerEnterSceneNotify(
-                        player,
-                        EnterTypeOuterClass.EnterType.EnterType_ENTER_BACK,
-                        EnterReason.TeamBack,
-                        prevScene,
-                        pos));
-        player.sendPacket(new PacketEnterScenePeerNotify(player));
-
-        return true;
+        var properties = TeleportProperties.builder().sceneId(prevScene).teleportTo(pos.clone())
+                .enterType(EnterTypeOuterClass.EnterType.EnterType_ENTER_BACK).enterReason(EnterReason.TeamBack).build();
+        return world.tryAddPlayer(player, source, properties, context -> {
+            source.sendPacketToHostIfOnline(new PacketOtherPlayerEnterOrLeaveHomeNotify(player,
+                    OtherPlayerEnterHomeNotifyOuterClass.OtherPlayerEnterHomeNotify.Reason.LEAVE));
+            var myHome = this.server.getHomeWorldOrCreate(player);
+            player.setCurHomeWorld(myHome);
+            myHome.getHome().onOwnerLogin(player);
+            player.sendPacket(new PacketPlayerQuitFromHomeNotify(
+                    PlayerQuitFromHomeNotifyOuterClass.PlayerQuitFromHomeNotify.QuitReason.BACK_TO_MY_WORLD));
+            player.sendPacket(new PacketPlayerEnterSceneNotify(player, world, properties));
+            player.sendPacket(new PacketEnterScenePeerNotify(player));
+        });
     }
 
     public boolean kickPlayerFromHome(Player owner, int targetUid) {
-
-        if (!owner.getCurHomeWorld().getHost().equals(owner)) {
+        var source = owner.getCurHomeWorld();
+        if (source == null || !source.getHost().equals(owner)) {
             return false;
         }
 
         var victim = owner.getServer().getPlayerByUid(targetUid);
-        if (victim == null || owner.equals(victim)) {
+        if (victim == null || owner.equals(victim) || victim.getWorld() != source || victim.getCurHomeWorld() != source) {
             return false;
         }
 
@@ -249,33 +241,22 @@ public class HomeWorldMPSystem extends BaseGameSystem {
 
         var event =
                 new PlayerLeaveHomeEvent(
-                        victim, owner, victim.getCurHomeWorld().getHome(), PlayerLeaveHomeEvent.Reason.KICKED);
+                        victim, owner, source.getHome(), PlayerLeaveHomeEvent.Reason.KICKED);
         event.call();
 
-        victim.getPosition().set(victim.getPrevPosForHome());
         var world = new World(victim);
-        world.addPlayer(victim, 3);
-        victim
-                .getCurHomeWorld()
-                .sendPacketToHostIfOnline(
-                        new PacketOtherPlayerEnterOrLeaveHomeNotify(
-                                victim,
-                                OtherPlayerEnterHomeNotifyOuterClass.OtherPlayerEnterHomeNotify.Reason.LEAVE));
-        var myHome = this.server.getHomeWorldOrCreate(victim);
-        victim.setCurHomeWorld(myHome);
-        myHome.getHome().onOwnerLogin(victim);
-
-        victim.sendPacket(
-                new PacketPlayerQuitFromHomeNotify(
-                        PlayerQuitFromHomeNotifyOuterClass.PlayerQuitFromHomeNotify.QuitReason.KICK_BY_HOST));
-        victim.sendPacket(
-                new PacketPlayerEnterSceneNotify(
-                        victim,
-                        EnterTypeOuterClass.EnterType.EnterType_ENTER_BACK,
-                        EnterReason.TeamKick,
-                        victim.getScene().getId(),
-                        victim.getPrevPosForHome()));
-        victim.sendPacket(new PacketEnterScenePeerNotify(victim));
-        return true;
+        var properties = TeleportProperties.builder().sceneId(3).teleportTo(victim.getPrevPosForHome().clone())
+                .enterType(EnterTypeOuterClass.EnterType.EnterType_ENTER_BACK).enterReason(EnterReason.TeamKick).build();
+        return world.tryAddPlayer(victim, source, properties, context -> {
+            source.sendPacketToHostIfOnline(new PacketOtherPlayerEnterOrLeaveHomeNotify(victim,
+                    OtherPlayerEnterHomeNotifyOuterClass.OtherPlayerEnterHomeNotify.Reason.LEAVE));
+            var myHome = this.server.getHomeWorldOrCreate(victim);
+            victim.setCurHomeWorld(myHome);
+            myHome.getHome().onOwnerLogin(victim);
+            victim.sendPacket(new PacketPlayerQuitFromHomeNotify(
+                    PlayerQuitFromHomeNotifyOuterClass.PlayerQuitFromHomeNotify.QuitReason.KICK_BY_HOST));
+            victim.sendPacket(new PacketPlayerEnterSceneNotify(victim, world, properties));
+            victim.sendPacket(new PacketEnterScenePeerNotify(victim));
+        });
     }
 }

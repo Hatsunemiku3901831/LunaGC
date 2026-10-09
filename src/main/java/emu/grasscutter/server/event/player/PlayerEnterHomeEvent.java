@@ -17,6 +17,6 @@ public final class PlayerEnterHomeEvent extends PlayerEvent implements Cancellab
 
         this.home = home;
         this.homeOwner = homeOwner;
-        this.isOtherHome = this.getPlayer().equals(this.homeOwner);
+        this.isOtherHome = !this.getPlayer().equals(this.homeOwner);
     }
 }

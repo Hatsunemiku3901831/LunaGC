@@ -12,6 +12,7 @@ import emu.grasscutter.data.excels.achievement.AchievementGoalData;
 import emu.grasscutter.data.excels.activity.ActivityCondExcelConfigData;
 import emu.grasscutter.data.excels.activity.ActivityData;
 import emu.grasscutter.data.excels.activity.ActivityShopData;
+import emu.grasscutter.data.excels.activity.ActivitySkillData;
 import emu.grasscutter.data.excels.activity.ActivityWatcherData;
 import emu.grasscutter.data.excels.activity.AsterLittleData;
 import emu.grasscutter.data.excels.activity.AsterMissionData;
@@ -42,6 +43,7 @@ import emu.grasscutter.data.excels.tower.TowerFloorData;
 import emu.grasscutter.data.excels.tower.TowerLevelData;
 import emu.grasscutter.data.excels.tower.TowerScheduleData;
 import emu.grasscutter.data.excels.trial.*;
+import emu.grasscutter.data.excels.tps.*;
 import emu.grasscutter.data.excels.weapon.WeaponCurveData;
 import emu.grasscutter.data.excels.weapon.WeaponLevelData;
 import emu.grasscutter.data.excels.weapon.WeaponPromoteData;
@@ -64,6 +66,21 @@ import lombok.*;
 
 @SuppressWarnings({"unused", "MismatchedQueryAndUpdateOfCollection"})
 public final class GameData {
+    @Getter private static final Int2ObjectMap<TpsWeaponData> tpsWeaponDataMap = new Int2ObjectOpenHashMap<>();
+    @Getter private static final Int2ObjectMap<TpsWeaponAccessoryData> tpsWeaponAccessoryDataMap = new Int2ObjectOpenHashMap<>();
+    @Getter private static final Int2ObjectMap<TpsAmmunitionData> tpsAmmunitionDataMap = new Int2ObjectOpenHashMap<>();
+    @Getter
+    private static final Int2ObjectMap<ProfilePictureData> profilePictureDataMap =
+            new Int2ObjectOpenHashMap<>();
+
+    @Getter
+    private static final Int2ObjectMap<ProfileFrameData> profileFrameDataMap =
+            new Int2ObjectOpenHashMap<>();
+
+    @Getter
+    private static final Int2ObjectMap<AvatarExtraLevelData> avatarExtraLevelDataMap =
+            new Int2ObjectOpenHashMap<>();
+
     @Getter
     private static final Int2ObjectMap<AvatarWeaponSkinData> avatarWeaponSkinDataMap =
             new Int2ObjectOpenHashMap<>();
@@ -85,6 +102,9 @@ public final class GameData {
             new Int2ObjectOpenHashMap<>();
 
     @Getter private static final Map<String, AbilityData> abilityDataMap = new HashMap<>();
+
+    @Getter private static final Int2ObjectMap<TeamResonanceData> teamResonanceDataMap =
+            new Int2ObjectOpenHashMap<>();
 
     @Getter
     private static final Int2ObjectMap<ScenePointEntry> scenePointEntryMap =
@@ -233,6 +253,9 @@ public final class GameData {
     @Getter
     private static final Int2ObjectMap<AvatarSkillData> avatarSkillDataMap =
             new Int2ObjectOpenHashMap<>();
+
+    @Getter private static final Int2ObjectMap<ShareCDData> shareCDDataMap = new Int2ObjectOpenHashMap<>();
+    @Getter private static final Int2ObjectMap<ActivitySkillData> activitySkillDataMap = new Int2ObjectOpenHashMap<>();
 
     @Getter
     private static final Int2ObjectMap<AvatarSkillDepotData> avatarSkillDepotDataMap =
@@ -457,7 +480,11 @@ public final class GameData {
 
     @Getter private static final Map<String, Integer> openConfigToProudSkillGroup = new HashMap<>();
 
-    public record AbilityTalentVar(String openConfigName, String varName, int paramIndex) {}
+    public record AbilityTalentVar(String openConfigName, String varName, int paramIndex, float multiplier) {
+        public AbilityTalentVar(String openConfigName, String varName, int paramIndex) {
+            this(openConfigName, varName, paramIndex, 1f);
+        }
+    }
 
     @Getter
     private static final Int2ObjectMap<QuestData> questDataMap = new Int2ObjectOpenHashMap<>();

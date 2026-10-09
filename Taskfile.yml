@@ -48,6 +48,41 @@ tasks:
     cmds:
       - task --list
 
+  refs:sync:
+    desc: Download public reference repositories and submodules into debug/
+    cmds:
+      - python tools/sync_debug_references.py
+
+  refs:update:
+    desc: Fast-forward clean reference checkouts and refresh debug/references.json
+    cmds:
+      - python tools/sync_debug_references.py --update
+
+  refs:miliastra-catalog:
+    desc: Extract literal Miliastra node metadata from the downloaded reference
+    cmds:
+      - python tools/extract_miliastra_catalog.py
+
+  refs:miliastra-blocks:
+    desc: Extract literal Miliastra block palette from the downloaded reference
+    cmds:
+      - python tools/extract_miliastra_blocks.py
+
+  refs:miliastra-protocol:
+    desc: Extract literal Miliastra protocol type and node rules from the pinned reference
+    cmds:
+      - python tools/extract_miliastra_protocol.py
+
+  refs:miliastra-assets:
+    desc: 从固定参考库提取 MIT 实体与镜头资产协议
+    cmds:
+      - python tools/extract_miliastra_assets.py
+
+  refs:miliastra-cameras:
+    desc: 从固定参考库提取五种镜头模板字面量
+    cmds:
+      - python tools/extract_miliastra_cameras.py
+
   # ------------------------------------------------------------------ build
   build:
     desc: Build the patch DLL and the server jar
@@ -111,6 +146,25 @@ tasks:
     desc: Tail the server stdout/stderr logs
     cmds:
       - cmd: cmd /c "echo === stdout === & type start_stdout.log | more"
+
+  runtime:snapshot:
+    desc: 保存当前 Compose 服务的运行包和内置资源，不停止服务
+    cmds:
+      - powershell -NoProfile -ExecutionPolicy Bypass -File tools/runtime_snapshot.ps1 -Mode capture
+
+  runtime:snapshot:build:
+    desc: 从已有快照构建本地恢复镜像，并核对启动配置
+    requires:
+      vars: [SNAPSHOT_PATH]
+    cmds:
+      - powershell -NoProfile -ExecutionPolicy Bypass -File tools/runtime_snapshot.ps1 -Mode build -SnapshotPath "{{ .SNAPSHOT_PATH }}"
+
+  runtime:snapshot:status:
+    desc: 显示已有运行快照及恢复镜像
+    requires:
+      vars: [SNAPSHOT_PATH]
+    cmds:
+      - powershell -NoProfile -ExecutionPolicy Bypass -File tools/runtime_snapshot.ps1 -Mode status -SnapshotPath "{{ .SNAPSHOT_PATH }}"
 
   # ------------------------------------------------------------------ patch
   patch:

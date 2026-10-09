@@ -25,6 +25,8 @@ public class AbilityMixinData implements Serializable {
         AvatarCombatMixin,
         DoActionByEventMixin,
         DoActionByKillingMixin,
+        DoActionByElementReactionMixin,
+        DoActionBySelfElementReactionMixin,
         SkillButtonHoldChargeMixin,
         GlobalSubShieldMixin,
         TileAttackMixin,
@@ -34,6 +36,7 @@ public class AbilityMixinData implements Serializable {
         KENHGCLICPB,
         DoActionOnGlobalValueChangeMixin,
         CurLocalAvatarMixin,
+        @SerializedName(value = "NyxCostMixin", alternate = "ChangeNyxValueMixin")
         NyxCostMixin,
         ModifyDamageMixin,
         AvatarChangeSkillMixin,
@@ -88,6 +91,14 @@ public class AbilityMixinData implements Serializable {
     public AbilityModifierAction[] idontknowwhattonamethis;
     public AbilityModifierAction[] idontknowwhattonamethis2;
 
+    // Reaction callbacks use actions, while self reactions use actionQueue.
+    public AbilityModifierAction[] actions;
+    public AbilityModifierAction[] actionQueue;
+    public List<String> reactionTypes = new ArrayList<>();
+    // Both occur together with different entries in current resources. Keep them separate.
+    @SerializedName("IGAMNNAADJB")
+    public List<String> rawReactionTypes = new ArrayList<>();
+
     @SerializedName("onEnterCombat")
     public AbilityModifierAction[] onEnterCombat;
 
@@ -120,12 +131,27 @@ public class AbilityMixinData implements Serializable {
     public DynamicFloat speed = DynamicFloat.ZERO;
     public DynamicFloat costStaminaDelta = DynamicFloat.ZERO;
     public DynamicFloat ratio = DynamicFloat.ONE;
+    public List<Map<String, Object>> predicates;
+    public DynamicFloat value;
+    public DynamicFloat minValue;
+    public DynamicFloat maxValue;
     public DynamicFloat detectWindow = DynamicFloat.ONE;
     public String globalValueKey;
     public List<String> stateIDs = new ArrayList<>();
     public String stateID;
     public DynamicFloat defaultGlobalValueOnCreate = DynamicFloat.ZERO;
     public List<DynamicFloat> ratioSteps = new ArrayList<>();
+    public List<DynamicFloat> valueSteps = new ArrayList<>();
+    public String globalValueTarget;
+    // These coexist in current resources. Do not alias them and lose the canonical value.
+    public Boolean removeAppliedModifier;
+    @SerializedName("DEFOFMOIAAI")
+    public Boolean rawRemoveAppliedModifier;
+    public boolean enable = true;
+    public boolean removesAppliedModifier() {
+        return removeAppliedModifier != null ? removeAppliedModifier
+                : rawRemoveAppliedModifier == null || rawRemoveAppliedModifier;
+    }
     @JsonAdapter(JsonAdapters.ModifierNameStepsAdapter.class)
     public List<String> modifierNameSteps = new ArrayList<>();
     public boolean EJEMBMFPBKF = true;

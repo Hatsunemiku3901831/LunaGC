@@ -1,11 +1,14 @@
 package emu.grasscutter.game.entity;
 
 import emu.grasscutter.*;
+import emu.grasscutter.config.Configuration;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.excels.avatar.*;
+import emu.grasscutter.game.ability.AbilityAvatarSkillInfo;
 import emu.grasscutter.game.avatar.Avatar;
 import emu.grasscutter.game.inventory.*;
 import emu.grasscutter.game.player.Player;
+import emu.grasscutter.game.tps.TpsWeaponSystem;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.game.quest.enums.QuestContent;
 import emu.grasscutter.game.world.*;
@@ -35,6 +38,9 @@ import lombok.*;
 
 public class EntityAvatar extends GameEntity {
     @Getter private final Avatar avatar;
+    @Getter private final AbilityAvatarSkillInfo abilityAvatarSkillInfo = new AbilityAvatarSkillInfo(this);
+    @Getter private final emu.grasscutter.game.ability.AbilityPlayMode abilityPlayMode =
+            new emu.grasscutter.game.ability.AbilityPlayMode(this);
     private static long lastExecutionTime = 0;
     public static final long COOLDOWN = 14000;
 
@@ -57,9 +63,11 @@ public class EntityAvatar extends GameEntity {
 
             var weapon = this.getAvatar().getWeapon();
             if (weapon != null) {
-                if (!(weapon.getWeaponEntity() != null && weapon.getWeaponEntity().getScene() == scene)) {
+                if (!(weapon.getWeaponEntity() != null && weapon.getWeaponEntity().getScene() == scene
+                        && weapon.getWeaponEntity().getCasterAvatar() == avatar)) {
+                    TpsWeaponSystem.removeWeaponEntity(weapon);
                     weapon.setWeaponEntity(
-                            new EntityWeapon(this.getPlayer().getScene(), weapon.getItemData().getGadgetId()));
+                            new EntityWeapon(this.getPlayer().getScene(), weapon.getItemData().getGadgetId(), avatar));
                     scene.getWeaponEntities().put(weapon.getWeaponEntity().getId(), weapon.getWeaponEntity());
                 }
             }
@@ -69,6 +77,7 @@ public class EntityAvatar extends GameEntity {
         }
 
         this.initAbilities();
+        TpsWeaponSystem.ensureWeaponEntities(avatar, scene);
 
         this.checkIfDead();
     }
@@ -98,6 +107,13 @@ public class EntityAvatar extends GameEntity {
 
     public Player getPlayer() {
         return this.avatar.getPlayer();
+    }
+
+    /** A hidden party member still belongs to this scene until removed or transferred. */
+    public boolean isInSceneParty() {
+        var player = getPlayer();
+        return getScene() != null && player != null && player.getScene() == getScene()
+                && player.getTeamManager().getActiveTeam().contains(this);
     }
 
     @Override
@@ -245,14 +261,7 @@ public class EntityAvatar extends GameEntity {
     }
 
     public boolean addEnergy(float amount) {
-        var curEnergyProp = this.getAvatar().getSkillDepot().getElementType().getCurEnergyProp();
-        var curEnergy = this.getFightProperty(curEnergyProp);
-        if (curEnergy == amount) return false;
-
-        this.getAvatar().setCurrentEnergy(curEnergyProp, curEnergy + amount);
-
-        this.getScene().broadcastPacket(new PacketEntityFightPropUpdateNotify(this, curEnergyProp));
-        return true;
+        return applyElementalEnergy(amount,null,true);
     }
 
     public void addEnergy(float amount, PropChangeReason reason) {
@@ -260,28 +269,29 @@ public class EntityAvatar extends GameEntity {
     }
 
     public void addEnergy(float amount, PropChangeReason reason, boolean isFlat) {
+        applyElementalEnergy(amount,reason,isFlat);
+    }
 
-        val elementType = this.getAvatar().getSkillDepot().getElementType();
-        val curEnergyProp = elementType.getCurEnergyProp();
-        val maxEnergyProp = elementType.getMaxEnergyProp();
-
-        float curEnergy = this.getFightProperty(curEnergyProp);
-        float maxEnergy = this.getFightProperty(maxEnergyProp);
-
-        if (!isFlat) {
-            amount *= this.getFightProperty(FightProperty.FIGHT_PROP_CHARGE_EFFICIENCY);
-        }
-
-        float newEnergy = Math.min(curEnergy + amount, maxEnergy);
-
-        if (newEnergy != curEnergy) {
-            this.avatar.setCurrentEnergy(curEnergyProp, newEnergy);
-
-            this.getScene()
-                    .broadcastPacket(new PacketAvatarFightPropUpdateNotify(this.getAvatar(), curEnergyProp));
-            this.getScene()
-                    .broadcastPacket(
-                            new PacketEntityFightPropChangeReasonNotify(this, curEnergyProp, newEnergy, reason));
+    private boolean applyElementalEnergy(float amount,PropChangeReason reason,boolean isFlat) {
+        if (!Configuration.GAME_OPTIONS.energyUsage || !Float.isFinite(amount) || getScene()==null) return false;
+        var depot=avatar.getSkillDepot();
+        if (depot==null || depot.getElementType()==null) return false;
+        var element=depot.getElementType();
+        var property=element.getCurEnergyProp();
+        synchronized(getFightProperties()) {
+            float current=getFightProperty(property),maximum=getFightProperty(element.getMaxEnergyProp());
+            double gain=amount;
+            if (!isFlat) gain*=getFightProperty(FightProperty.FIGHT_PROP_CHARGE_EFFICIENCY);
+            if (!Double.isFinite(gain) || !Float.isFinite(current) || !Float.isFinite(maximum) || maximum<0) return false;
+            float next=(float)Math.max(0,Math.min(maximum,(double)current+gain));
+            if (next==current) return false;
+            avatar.setCurrentEnergy(property,next);
+            if (reason==null) getScene().broadcastPacket(new PacketEntityFightPropUpdateNotify(this,property));
+            else {
+                getScene().broadcastPacket(new PacketAvatarFightPropUpdateNotify(avatar,property));
+                getScene().broadcastPacket(new PacketEntityFightPropChangeReasonNotify(this,property,next-current,reason));
+            }
+            return true;
         }
     }
 
@@ -305,7 +315,8 @@ public class EntityAvatar extends GameEntity {
                         .setCostumeId(avatar.getCostume())
                         .setTraceEffectId(avatar.getTraceEffect())
                         .setWeaponSkinId(avatar.getWeaponSkin())
-                        .setBornTime(avatar.getBornTime());
+                        .setBornTime(avatar.getBornTime())
+                        .addAllTpsWeaponList(TpsWeaponSystem.getSceneWeaponInfos(avatar));
 
         for (GameItem item : avatar.getEquips().values()) {
             if (item.getItemData().getEquipType() == EquipType.EQUIP_WEAPON) {

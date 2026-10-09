@@ -1,0 +1,175 @@
+{
+  "abilityName": "Avatar_Lauma_Constellation_1",
+  "abilitySpecials": {
+    "Constellation_1_Heal_Ratio": 0.0,
+    "Constellation_1_Heal_CD": 0.0,
+    "Constellation_1_Dura": 0.0,
+    "Constellation_1_SpecialMove_AddDura": 0.0
+  },
+  "modifiers": {
+    "UNIQUE_Avatar_Lauma_Constellation_1_AvatarHandler": {
+      "duration": 2.0,
+      "stacking": "RefreshUniqueDurability",
+      "elementDurability": 2.0,
+      "modifierMixins": [
+        {
+          "$type": "DoActionByElementReactionMixin",
+          "actions": [
+            {
+              "$type": "ApplyModifier",
+              "modifierName": "UNIQUE_Avatar_Lauma_Constellation_1_HealHP",
+              "target": "Caster",
+              "doOffStage": true,
+              "canBeHandledOnRecover": true,
+              "actorIceSubHurtDelta": -1
+            }
+          ],
+          "range": 40.0,
+          "NGEMAJNHAEJ": true,
+          "IGAMNNAADJB": [
+            "MoonOvergrow"
+          ],
+          "KMNEDAKBCBJ": true,
+          "reactionTypes": [
+            "MoonOvergrow"
+          ],
+          "actorIceSubHurtDelta": -1
+        }
+      ],
+      "modifierName": "",
+      "isUnique": true,
+      "AIHNJLDFEGJ": 0.0,
+      "minus_one": -1,
+      "isLimitedProperties": true,
+      "NLBKJKDNFFP": -1
+    },
+    "UNIQUE_Avatar_Lauma_Constellation_1_HealHP": {
+      "thinkInterval": "Constellation_1_Heal_CD",
+      "duration": "Constellation_1_Heal_CD",
+      "onAdded": [
+        {
+          "$type": "FireEffect",
+          "effectPattern": "Eff_Avatar_Lady_Catalyst_Lauma_Constellation_1_Heal",
+          "scale": 1.0,
+          "ILLLPEOODKP": "",
+          "effectTempleteID": -1.0,
+          "doOffStage": true,
+          "otherTargets": {
+            "$type": "SelectTargetsByShape",
+            "centerBasedOn": "CurLocalAvatar",
+            "sizeRatio": 1.0,
+            "campTargetType": "All",
+            "shapeName": "CircleR6H6",
+            "GLDMBEOHPHB": {
+              "direction": {
+                "maxAngle": 180
+              },
+              "EALBHHJEFGH": {
+                "BKAPGJCLCIO": 180
+              },
+              "value": 10,
+              "onGroundRaycastUpDist": 2
+            }
+          },
+          "predicates": [
+            {
+              "$type": "DEOFBICNFHF",
+              "entityTypes": [
+                "Avatar"
+              ],
+              "value": -1,
+              "target": "Target"
+            }
+          ],
+          "target": "Self",
+          "canBeHandledOnRecover": true,
+          "born": {
+            "direction": {
+              "maxAngle": 180
+            },
+            "EALBHHJEFGH": {
+              "BKAPGJCLCIO": 180
+            },
+            "value": 10,
+            "onGroundRaycastUpDist": 2
+          },
+          "actorIceSubHurtDelta": -1
+        },
+        {
+          "$type": "GetFightProperty",
+          "globalValueKey": "_ABILITY_Lauma_Constellation_1_Mastery",
+          "NKJNADEMKOG": "Caster",
+          "fightProp": "FIGHT_PROP_ELEMENT_MASTERY",
+          "doOffStage": true,
+          "canBeHandledOnRecover": true,
+          "target": "Caster",
+          "actorIceSubHurtDelta": -1
+        },
+        {
+          "$type": "HealHP",
+          "amount": [
+            "Constellation_1_Heal_Ratio",
+            "_ABILITY_Lauma_Constellation_1_Mastery",
+            "MUL"
+          ],
+          "FFNEJGGNAFF": "",
+          "doOffStage": true,
+          "otherTargets": {
+            "$type": "SelectTargetsByShape",
+            "centerBasedOn": "CurLocalAvatar",
+            "sizeRatio": 1.0,
+            "campTargetType": "All",
+            "shapeName": "CircleR6H6",
+            "GLDMBEOHPHB": {
+              "direction": {
+                "maxAngle": 180
+              },
+              "EALBHHJEFGH": {
+                "BKAPGJCLCIO": 180
+              },
+              "value": 10,
+              "onGroundRaycastUpDist": 2
+            }
+          },
+          "predicates": [
+            {
+              "$type": "DEOFBICNFHF",
+              "entityTypes": [
+                "Avatar"
+              ],
+              "value": -1,
+              "target": "Target"
+            }
+          ],
+          "value": 1,
+          "amountByTargetMaxHPRatio": 0.0,
+          "amountByTargetCurrentHPRatio": 0.0,
+          "amountByCasterMaxHPRatio": 0.0,
+          "amountByCasterAttackRatio": 0.0,
+          "target": "Self",
+          "canBeHandledOnRecover": true,
+          "actorIceSubHurtDelta": -1
+        }
+      ],
+      "stacking": "Unique",
+      "elementDurability": 100.0,
+      "modifierName": "",
+      "onThinkIntervalIsFixedUpdate": true,
+      "isUnique": true,
+      "onThinkInterval": [
+        {
+          "$type": "RemoveUniqueModifier",
+          "modifierName": "UNIQUE_Avatar_Lauma_Constellation_1_HealHP",
+          "doOffStage": true,
+          "target": "Self",
+          "canBeHandledOnRecover": true,
+          "actorIceSubHurtDelta": -1
+        }
+      ],
+      "AIHNJLDFEGJ": 0.0,
+      "minus_one": -1,
+      "isLimitedProperties": true,
+      "NLBKJKDNFFP": -1
+    }
+  }
+}

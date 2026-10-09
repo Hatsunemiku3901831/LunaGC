@@ -3,6 +3,7 @@ package emu.grasscutter.data;
 import static emu.grasscutter.utils.FileUtils.*;
 import static emu.grasscutter.utils.lang.Language.translate;
 
+import com.google.gson.JsonElement;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import emu.grasscutter.Grasscutter;
@@ -174,8 +175,18 @@ public final class ResourceLoader {
             Class<?> c, ResourceType type, Int2ObjectMap map, boolean doReload) throws Exception {
         val simpleName = c.getSimpleName();
         if (doReload || !loadedResources.contains(simpleName)) {
+            Exception failure = null;
             for (String name : type.name()) {
-                loadFromResource(c, FileUtils.getExcelPath(name), map);
+                try {
+                    loadFromResource(c, FileUtils.getExcelPath(name), map);
+                } catch (Exception e) {
+                    if (failure == null) failure = e;
+                    else failure.addSuppressed(e);
+                }
+            }
+            if (failure != null) {
+                loadedResources.remove(simpleName);
+                throw failure;
             }
             loadedResources.add(simpleName);
         }
@@ -184,24 +195,56 @@ public final class ResourceLoader {
     @SuppressWarnings({"rawtypes", "unchecked"})
     protected static <T> void loadFromResource(Class<T> c, Path filename, Int2ObjectMap map)
             throws Exception {
-        val results =
+        var diagnostics = new ResourceLoadDiagnostics(c, filename);
+        var loadedIds = new IntOpenHashSet();
+        int rows;
+        int loadedRows = 0;
+        if (FileUtils.getFileExtension(filename).equals("json")) {
+            // Parse the container before installing anything. Syntax errors remain file failures;
+            // typed decoding and onLoad errors affect only their own row.
+            var container = JsonUtils.loadToClass(filename, JsonElement.class);
+            if (container == null || container.isJsonNull()) return;
+            var source = container.getAsJsonArray();
+            rows = source.size();
+            for (int i = 0; i < rows; i++) {
+                try {
+                    var resource = (GameResource) JsonUtils.decode(source.get(i), c);
+                    installResource(resource, map, loadedIds);
+                    loadedRows++;
+                } catch (Exception e) {
+                    diagnostics.reject("row " + (i + 1), e);
+                }
+            }
+        } else {
+            val results =
                 switch (FileUtils.getFileExtension(filename)) {
-                    case "json" -> JsonUtils.loadToList(filename, c);
                     case "tsj" -> TsvUtils.loadTsjToListSetField(filename, c);
                     case "tsv" -> TsvUtils.loadTsvToListSetField(filename, c);
-                    default -> null;
+                    default -> throw new IOException("Unsupported resource format: " + filename);
                 };
-        if (results == null) return;
+            if (results == null) throw new IOException("Could not decode resource table: " + filename);
+            rows = results.size();
+            for (int i = 0; i < rows; i++) {
+                try {
+                    installResource((GameResource) results.get(i), map, loadedIds);
+                    loadedRows++;
+                } catch (Exception e) {
+                    diagnostics.reject("row " + (i + 1), e);
+                }
+            }
+        }
+        diagnostics.report();
+        reportCollapse(c, filename.getFileName().toString(), loadedRows, loadedIds.size());
+    }
 
-        val before = map.size();
-        results.forEach(
-                o -> {
-                    GameResource res = (GameResource) o;
-                    res.onLoad();
-                    map.put(res.getId(), res);
-                });
-
-        reportCollapse(c, filename.getFileName().toString(), results.size(), map.size() - before);
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private static void installResource(GameResource resource, Int2ObjectMap map, IntSet loadedIds) {
+        Objects.requireNonNull(resource, "null or rejected row");
+        resource.onLoad();
+        // Some tables compute their key during onLoad (e.g. rank/level for reliquaries).
+        int id = resource.getId();
+        map.put(id, resource);
+        loadedIds.add(id);
     }
 
     /**
@@ -213,14 +256,14 @@ public final class ResourceLoader {
      * three codex tables each came down to a single entry without anyone noticing. Rows can share a
      * key legitimately, so this only speaks up when almost all of them do.
      */
-    private static void reportCollapse(Class<?> c, String filename, int rows, int added) {
-        if (rows < 8 || added > Math.max(2, rows / 8)) return;
+    private static void reportCollapse(Class<?> c, String filename, int rows, int distinctIds) {
+        if (rows < 8 || distinctIds > Math.max(2, rows / 8)) return;
 
         Grasscutter.getLogger()
                 .warn(
                         "{} kept {} of {} rows from {} - are the id field's name and case right?",
                         c.getSimpleName(),
-                        added,
+                        distinctIds,
                         rows,
                         filename);
     }
@@ -228,13 +271,7 @@ public final class ResourceLoader {
     @SuppressWarnings({"rawtypes", "unchecked"})
     protected static <T> void loadFromResource(Class<T> c, String fileName, Int2ObjectMap map)
             throws Exception {
-        JsonUtils.loadToList(getResourcePath("ExcelBinOutput/" + fileName), c)
-                .forEach(
-                        o -> {
-                            GameResource res = (GameResource) o;
-                            res.onLoad();
-                            map.put(res.getId(), res);
-                        });
+        loadFromResource(c, FileUtils.getExcelPath(fileName), map);
     }
 
     private static void loadGlobalCombatConfig() {
@@ -340,74 +377,79 @@ public final class ResourceLoader {
     }
 
     static void loadAbilityEmbryos() {
-        List<AbilityEmbryoEntry> embryoList = null;
+        loadAbilityEmbryos(getDataPath("AbilityEmbryos.json"),getResourcePath("BinOutput/Avatar/"),
+                getResourcePath("BinOutput/AbilityGroup/AbilityGroup_Other_PlayerElementAbility.json"));
+    }
 
-        try {
-            embryoList =
-                    JsonUtils.loadToList(getDataPath("AbilityEmbryos.json"), AbilityEmbryoEntry.class);
-        } catch (Exception ignored) {
-        }
-
-        if (embryoList == null) {
-
-            var pattern = Pattern.compile("ConfigAvatar_(.+?)\\.json");
-
-            var entries = new ArrayList<AbilityEmbryoEntry>();
-            try (var stream =
-                    Files.newDirectoryStream(getResourcePath("BinOutput/Avatar/"), "ConfigAvatar_*.json")) {
-
-                stream.forEach(
-                        path -> {
-                            var matcher = pattern.matcher(path.getFileName().toString());
-                            if (!matcher.find()) return;
-
-                            var avatarName = matcher.group(1);
-                            AvatarConfig config;
-                            try {
-                                config = JsonUtils.loadToClass(path, AvatarConfig.class);
-                            } catch (Exception e) {
-                                Grasscutter.getLogger().error("Error loading player ability embryos:", e);
-                                return;
-                            }
-
-                            if (config.abilities == null) return;
-
-                            entries.add(
-                                    new AbilityEmbryoEntry(
-                                            avatarName,
-                                            config.abilities.stream()
-                                                    .map(Object::toString)
-                                                    .toArray(size -> new String[config.abilities.size()])));
-                        });
-            } catch (IOException e) {
-                Grasscutter.getLogger().error("Error loading ability embryos: no files found");
-                return;
-            }
-
-            embryoList = entries;
-
+    static void loadAbilityEmbryos(Path cachePath,Path avatarDirectory,Path playerGroupPath) {
+        var resolved=new LinkedHashMap<String,AbilityEmbryoEntry>();
+        if (Files.isRegularFile(cachePath)) {
             try {
-                GameDepot.setPlayerAbilities(
-                        JsonUtils.loadToMap(
-                                getResourcePath(
-                                        "BinOutput/AbilityGroup/AbilityGroup_Other_PlayerElementAbility.json"),
-                                String.class,
-                                AvatarConfig.class));
-            } catch (IOException e) {
-                Grasscutter.getLogger().error("Error loading player abilities:", e);
+                var container=JsonUtils.loadToClass(cachePath,JsonElement.class);
+                if (container==null || !container.isJsonArray()) throw new IllegalArgumentException("Expected an embryo array");
+                int rejected=0;
+                for (var row:container.getAsJsonArray()) {
+                    try {
+                        var entry=JsonUtils.decode(row,AbilityEmbryoEntry.class);
+                        if (!validEmbryo(entry)) { rejected++; continue; }
+                        resolved.put(entry.getName(),entry);
+                    } catch (RuntimeException invalid) { rejected++; }
+                }
+                if (rejected>0) Grasscutter.getLogger().warn("Ignored {} invalid cached ability embryos in {}",rejected,cachePath);
+            } catch (IOException | RuntimeException invalid) {
+                Grasscutter.getLogger().warn("Could not read ability embryo cache {}; using current avatar configs",cachePath);
             }
         }
 
-        if (embryoList == null || embryoList.isEmpty()) {
-            Grasscutter.getLogger().error("No embryos loaded!");
-            return;
+        var pattern=Pattern.compile("ConfigAvatar_(.+)\\.json");
+        try (var files=Files.newDirectoryStream(avatarDirectory,"ConfigAvatar_*.json")) {
+            var ordered=new ArrayList<Path>(); files.forEach(ordered::add); ordered.sort(Comparator.comparing(p->p.getFileName().toString()));
+            for (var path:ordered) {
+                var name=pattern.matcher(path.getFileName().toString());
+                if (!name.matches() || !Files.isRegularFile(path)) continue;
+                try {
+                    var config=JsonUtils.loadToClass(path,AvatarConfig.class);
+                    if (!validAvatarAbilities(config)) {
+                        // Many entity configs have no avatar ability list; keep any cached fallback.
+                        if (config!=null && config.abilities!=null)
+                            Grasscutter.getLogger().warn("Invalid base ability names in {}",path);
+                        continue;
+                    }
+                    // Only the explicit base list is active; dynamic definitions still need an unlock.
+                    resolved.put(name.group(1),new AbilityEmbryoEntry(name.group(1),
+                            config.abilities.stream().map(Object::toString).toArray(String[]::new)));
+                } catch (IOException | RuntimeException invalid) {
+                    Grasscutter.getLogger().warn("Could not read avatar base abilities {}; retaining any cached fallback",path);
+                }
+            }
+        } catch (IOException | RuntimeException unavailable) {
+            Grasscutter.getLogger().warn("Could not read avatar ability directory {}; retaining {} cached entries",avatarDirectory,resolved.size());
         }
 
-        // Dynamic definitions are unlocked by talents, equipment or quest/activity logic.
-        // A matching avatar name is not permission to activate them in the base embryo.
-        for (AbilityEmbryoEntry entry : embryoList) {
-            GameData.getAbilityEmbryoInfo().put(entry.getName(), entry);
+        if (!resolved.isEmpty()) {
+            GameData.getAbilityEmbryoInfo().clear();
+            GameData.getAbilityEmbryoInfo().putAll(resolved);
+        } else Grasscutter.getLogger().error("No valid ability embryos loaded; retaining the previous catalog");
+
+        // Element groups are independent of whether the embryo cache exists or source configs loaded.
+        try {
+            var loaded=JsonUtils.loadToMap(playerGroupPath,String.class,AvatarConfig.class);
+            if (loaded==null || loaded.entrySet().stream().anyMatch(e->e.getKey()==null || e.getKey().isBlank()
+                    || !validAvatarAbilities(e.getValue()))) throw new IllegalArgumentException("Invalid player ability group");
+            GameDepot.setPlayerAbilities(new LinkedHashMap<>(loaded));
+        } catch (IOException | RuntimeException invalid) {
+            Grasscutter.getLogger().warn("Could not read player ability groups {}; retaining the previous groups",playerGroupPath);
         }
+    }
+
+    private static boolean validAvatarAbilities(AvatarConfig config) {
+        return config!=null && config.abilities!=null && config.abilities.stream()
+                .allMatch(a->a!=null && a.abilityName!=null && !a.abilityName.isBlank());
+    }
+
+    private static boolean validEmbryo(AbilityEmbryoEntry entry) {
+        return entry!=null && entry.getName()!=null && !entry.getName().isBlank() && entry.getAbilities()!=null
+                && Arrays.stream(entry.getAbilities()).allMatch(name->name!=null && !name.isBlank());
     }
 
     private static void loadAbilityModifiers() {
@@ -547,6 +589,9 @@ public final class ResourceLoader {
     private static void buildAbilityTalentVarMaps() {
         var abilityTalentVarMap = GameData.getAbilityTalentVarMap();
         var openConfigToGroup = GameData.getOpenConfigToProudSkillGroup();
+        abilityTalentVarMap.clear();
+        openConfigToGroup.clear();
+        GameData.getVarNameToTalentVars().clear();
 
         for (var proudSkill : GameData.getProudSkillDataMap().values()) {
             if (proudSkill.getOpenConfig() != null && !proudSkill.getOpenConfig().isEmpty()) {
@@ -561,10 +606,10 @@ public final class ResourceLoader {
             if (configEntry.getAbilityVarSetters() == null) continue;
             for (var setter : configEntry.getAbilityVarSetters()) {
                 if (setter.getAbilityName() == null || setter.getVarName() == null) continue;
-                var tv = new GameData.AbilityTalentVar(configEntry.getName(), setter.getVarName(), setter.getParamIndex());
+                var tv = new GameData.AbilityTalentVar(configEntry.getName(), setter.getVarName(), setter.getParamIndex(), setter.getMultiplier());
                 abilityTalentVarMap.computeIfAbsent(setter.getAbilityName(), k -> new java.util.ArrayList<>()).add(tv);
 
-                String combo = configEntry.getName() + "|" + setter.getVarName() + "|" + setter.getParamIndex();
+                String combo = configEntry.getName() + "|" + setter.getVarName() + "|" + setter.getParamIndex() + "|" + setter.getMultiplier();
                 if (addedCombos.add(combo)) {
                     varNameMap.computeIfAbsent(setter.getVarName(), k -> new java.util.ArrayList<>()).add(tv);
                 }
@@ -573,47 +618,21 @@ public final class ResourceLoader {
     }
 
     private static void loadOpenConfig() {
+        loadOpenConfig(getDataPath("OpenConfig.json"),
+                getResourcePath("BinOutput/Talent/EquipTalents/"),
+                getResourcePath("BinOutput/Talent/AvatarTalents/"),
+                getResourcePath("BinOutput/Talent/RelicTalents/"),
+                getResourcePath("BinOutput/Talent/TeamTalents/"));
+    }
 
-        List<OpenConfigEntry> list = null;
-
-        try {
-            list = JsonUtils.loadToList(getDataPath("OpenConfig.json"), OpenConfigEntry.class);
-        } catch (Exception ignored) {
-        }
-
-        if (list == null) {
-            Map<String, OpenConfigEntry> map = new TreeMap<>();
-            String[] folderNames = {"BinOutput/Talent/EquipTalents/", "BinOutput/Talent/AvatarTalents/"};
-
-            for (String folderName : folderNames) {
-                try (val stream = Files.newDirectoryStream(getResourcePath(folderName), "*.json")) {
-                    stream.forEach(
-                                    path -> {
-                                        try {
-                                            JsonUtils.loadToMap(path, String.class, OpenConfigData[].class)
-                                                    .forEach((name, data) -> map.put(name, new OpenConfigEntry(name, data)));
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                        }
-                                    });
-                } catch (IOException e) {
-                    Grasscutter.getLogger()
-                            .error("Error loading open config: no files found in " + folderName);
-                    return;
-                }
-            }
-
-            list = new ArrayList<>(map.values());
-        }
-
-        if (list == null || list.isEmpty()) {
-            Grasscutter.getLogger().error("No openconfig entries loaded!");
+    static void loadOpenConfig(Path cache, Path... directories) {
+        var entries = OpenConfigLoader.load(cache, directories);
+        if (entries.isEmpty()) {
+            Grasscutter.getLogger().error("No openconfig entries loaded; preserving the current catalog");
             return;
         }
-
-        for (OpenConfigEntry entry : list) {
-            GameData.getOpenConfigEntries().put(entry.getName(), entry);
-        }
+        GameData.getOpenConfigEntries().clear();
+        GameData.getOpenConfigEntries().putAll(entries);
     }
 
     private static void loadQuests() {
@@ -764,7 +783,8 @@ public final class ResourceLoader {
                     path -> {
                         try {
                             val name = path.getFileName().toString().replace(".json", "");
-                            targetMap.put(name, JsonUtils.loadToClass(path, configClass));
+                            var config = JsonUtils.loadToClass(path, configClass);
+                            if (config != null) targetMap.put(name, config);
                         } catch (Exception e) {
                             Grasscutter.getLogger()
                                     .error("failed to load {} entries for {}", className, path.toString(), e);
@@ -791,14 +811,14 @@ public final class ResourceLoader {
         }
     }
 
-    private static <T extends ConfigEntityBase> void loadConfigDataMap(
+    private static <T> void loadConfigDataMap(
             Map<String, T> targetMap, String folderPath, Class<T> configClass) {
         val className = configClass.getName();
         try (val stream = Files.newDirectoryStream(getResourcePath(folderPath), "*.json")) {
             stream.forEach(
                     path -> {
                         try {
-                            targetMap.putAll(JsonUtils.loadToMap(path, String.class, configClass));
+                            loadConfigMapFile(targetMap, path, configClass);
                         } catch (Exception e) {
                             Grasscutter.getLogger()
                                     .error("failed to load {} entries for {}", className, path.toString(), e);
@@ -809,6 +829,42 @@ public final class ResourceLoader {
         } catch (IOException e) {
             Grasscutter.getLogger().error("Failed to load {} folder.", className);
         }
+    }
+
+    private static <T> void loadConfigMapFile(
+            Map<String, T> targetMap, Path path, Class<T> configClass) throws IOException {
+        var container = JsonUtils.loadToClass(path, JsonElement.class);
+        if (container == null || container.isJsonNull()) {
+            Grasscutter.getLogger().debug("Skipping null {} config file {}", configClass.getSimpleName(), path);
+            return;
+        }
+        var diagnostics = new ResourceLoadDiagnostics(configClass, path);
+        if (container.isJsonArray()) {
+            // Gson also accepts maps as [[key, value], ...]. Several real configs use [].
+            var source = container.getAsJsonArray();
+            for (int i = 0; i < source.size(); i++) {
+                try {
+                    var pair = source.get(i).getAsJsonArray();
+                    if (pair.size() != 2) throw new IllegalArgumentException("Expected a key/value pair");
+                    var key = JsonUtils.decode(pair.get(0), String.class);
+                    var config = JsonUtils.decode(pair.get(1), configClass);
+                    if (config != null) targetMap.put(key, config);
+                } catch (Exception e) {
+                    diagnostics.reject("entry " + (i + 1), e);
+                }
+            }
+        } else {
+            for (var entry : container.getAsJsonObject().entrySet()) {
+                if (entry.getValue().isJsonNull()) continue;
+                try {
+                    var config = JsonUtils.decode(entry.getValue(), configClass);
+                    if (config != null) targetMap.put(entry.getKey(), config);
+                } catch (Exception e) {
+                    diagnostics.reject("entry " + entry.getKey(), e);
+                }
+            }
+        }
+        diagnostics.report();
     }
 
     private static void loadBlossomResources() {
@@ -832,15 +888,12 @@ public final class ResourceLoader {
                     path -> {
                         val matcher = pattern.matcher(path.getFileName().toString());
                         if (!matcher.find()) return;
-                        Map<String, ConfigLevelEntity> config;
-
                         try {
-                            config = JsonUtils.loadToMap(path, String.class, ConfigLevelEntity.class);
+                            loadConfigMapFile(
+                                    GameData.getConfigLevelEntityDataMap(), path, ConfigLevelEntity.class);
                         } catch (Exception e) {
-                            Grasscutter.getLogger().error("Error loading player ability embryos:", e);
-                            return;
+                            Grasscutter.getLogger().error("Error loading config level entity {}:", path, e);
                         }
-                        GameData.getConfigLevelEntityDataMap().putAll(config);
                     });
             }
         } catch (IOException e) {
@@ -1108,19 +1161,22 @@ public final class ResourceLoader {
     public static class OpenConfigData {
         public String $type;
 
-        @SerializedName(value = "abilityName", alternate = {"BEAFNCHOJGD"})
+        @SerializedName(value = "abilityName", alternate = {"BEAFNCHOJGD", "NCCKLDFFDOH"})
         public String abilityName;
 
-        @SerializedName(value = "varName", alternate = {"AAAENDNEBIG", "paramSpecial"})
+        @SerializedName(value = "varName", alternate = {"AAAENDNEBIG", "paramSpecial", "LDACNDBDKBA"})
         public String varName;
 
-        @SerializedName(value = "varValue", alternate = {"KCHPDCEBCNI", "paramDelta"})
+        @SerializedName(value = "varValue", alternate = {"KCHPDCEBCNI", "paramDelta", "IJFENBIJGLJ"})
         public com.google.gson.JsonElement varValue;
 
         @SerializedName(
                 value = "talentIndex",
                 alternate = {"OJOFFKLNAHN", "LPHIOIIJJOD"})
         public int talentIndex;
+
+        public String talentType;
+        public Integer extraLevel;
 
         @SerializedName(
                 value = "skillID",
@@ -1132,7 +1188,7 @@ public final class ResourceLoader {
                 alternate = {"IGEBKIHPOIF"})
         public int pointDelta;
 
-        @SerializedName(value = "talentParam", alternate = {"FJIKJIDMFNH"})
+        @SerializedName(value = "talentParam", alternate = {"FJIKJIDMFNH", "AAAENHAPNLB"})
         public String talentParam;
     }
 

@@ -117,6 +117,27 @@ public class ConfigContainer {
     public static class Database {
         public DataStore server = new DataStore();
         public DataStore game = new DataStore();
+        public AsyncWrites asyncWrites = new AsyncWrites();
+
+        public static class AsyncWrites {
+            public Pool defaults = new Pool(2, 1024);
+            public Pool accounts = new Pool(1, 256);
+            public Pool items = new Pool(2, 2048);
+            public Pool groups = new Pool(1, 1024);
+            public int shutdownTimeoutSeconds = 30;
+        }
+
+        public static class Pool {
+            public int threads;
+            public int capacity;
+
+            public Pool() { this(1, 1024); }
+
+            public Pool(int threads, int capacity) {
+                this.threads = threads;
+                this.capacity = capacity;
+            }
+        }
 
         public static class DataStore {
             public String connectionUri = "mongodb://localhost:27017";

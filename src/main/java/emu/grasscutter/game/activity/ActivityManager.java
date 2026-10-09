@@ -164,17 +164,34 @@ public class ActivityManager extends BasePlayerManager {
 
     public boolean meetsCondition(int id) { return conditionExecutor.meetsCondition(id); }
 
+    /** Publish newly unlocked days without replacing the player's stored schedule or progress. */
+    public synchronized void onDailyReset(long now) {
+        if (conditionExecutor == null) return;
+        var snapshot = configuration;
+        player.sendPacket(new PacketActivityScheduleInfoNotify(snapshot.schedules().values(), now));
+        for (var item : snapshot.schedules().values()) {
+            var info = getInfoProtoByActivityId(snapshot, item.getActivityId(), now);
+            player.sendPacket(new PacketActivityInfoNotify(info));
+        }
+        snapshot.activities().values().stream().filter(item -> item.isActiveAt(now))
+                .forEach(item -> item.getActivityHandler().triggerCondEvents(player));
+    }
+
     public void triggerActivityConditions() {
         configuration.activities().values().stream().filter(item -> item.isActiveAt(System.currentTimeMillis()))
                 .forEach(item -> item.getActivityHandler().triggerCondEvents(player));
     }
 
     public ActivityInfoOuterClass.ActivityInfo getInfoProtoByActivityId(int id) {
-        var item = configuration.activities().get(id);
-        if (item == null || !item.isActiveAt(System.currentTimeMillis())) {
+        return getInfoProtoByActivityId(configuration, id, System.currentTimeMillis());
+    }
+
+    private ActivityInfoOuterClass.ActivityInfo getInfoProtoByActivityId(Configuration snapshot, int id, long now) {
+        var item = snapshot.activities().get(id);
+        if (item == null || !item.isActiveAt(now)) {
             return ActivityInfoOuterClass.ActivityInfo.newBuilder().setActivityId(id).build();
         }
-        return item.getActivityHandler().toProto(playerActivityDataMap.get(id), conditionExecutor);
+        return item.getActivityHandler().toProto(playerActivityDataMap.get(id), conditionExecutor, now);
     }
 
     public Optional<ActivityHandler> getActivityHandler(ActivityType type) {

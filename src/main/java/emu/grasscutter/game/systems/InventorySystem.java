@@ -14,6 +14,7 @@ import emu.grasscutter.game.props.ItemUseAction.*;
 import emu.grasscutter.net.proto.ItemParamOuterClass.ItemParam;
 import emu.grasscutter.net.proto.MaterialInfoOuterClass.MaterialInfo;
 import emu.grasscutter.net.proto.RetcodeOuterClass;
+import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.server.event.player.*;
 import emu.grasscutter.server.game.*;
 import emu.grasscutter.server.packet.send.*;
@@ -661,6 +662,59 @@ public class InventorySystem extends BaseGameSystem {
         avatar.save();
     }
 
+    /**
+     * The native request includes the expected current level, preventing stale requests paying twice.
+     */
+    public void upgradeAvatarExtraLevel(Player player, long guid, int requireLevel) {
+        synchronized (player.getInventory()) {
+            Avatar avatar = player.getAvatars().getAvatarByGuid(guid);
+            if (avatar == null) {
+                player.sendPacket(
+                        new PacketAvatarExtraLevelUpgradeRsp(guid, 0, 0, Retcode.RET_AVATAR_ID_ERROR));
+                return;
+            }
+            int oldLevel = avatar.getLevel();
+            var row = GameData.getAvatarExtraLevelDataMap().get(oldLevel);
+            var promote =
+                    avatar.getAvatarData() == null
+                            ? null
+                            : GameData.getAvatarPromoteData(
+                                    avatar.getAvatarData().getAvatarPromoteId(), avatar.getPromoteLevel());
+            if (row == null
+                    || !row.isValid()
+                    || row.getRequireLevel() != requireLevel
+                    || oldLevel != requireLevel
+                    || avatar.getPromoteLevel() < 6
+                    || avatar.getTrialAvatarId() != 0
+                    || promote == null
+                    || oldLevel < promote.getUnlockMaxLevel()
+                    || !GameData.getAvatarCurveDataMap().containsKey(row.getMaxLevel())
+                    || Arrays.stream(row.getCostItems())
+                            .anyMatch(cost -> !GameData.getItemDataMap().containsKey(cost.getId()))) {
+                player.sendPacket(
+                        new PacketAvatarExtraLevelUpgradeRsp(
+                                guid, oldLevel, oldLevel, Retcode.RET_AVATAR_LIMIT_LEVEL_ERROR));
+                return;
+            }
+            if (!player.getInventory().payItems(row.getCostItems())) {
+                player.sendPacket(
+                        new PacketAvatarExtraLevelUpgradeRsp(
+                                guid, oldLevel, oldLevel, Retcode.RET_ITEM_COUNT_NOT_ENOUGH));
+                return;
+            }
+            avatar.setLevel(row.getMaxLevel());
+            avatar.setExp(0);
+            avatar.recalcStats(true);
+            avatar.save();
+            player.sendPacket(new PacketAvatarPropNotify(avatar));
+            player.sendPacket(new PacketAvatarExtraLevelNotify(avatar));
+            player.sendPacket(
+                    new PacketAvatarExtraLevelUpgradeRsp(
+                            guid, oldLevel, avatar.getLevel(), Retcode.RET_SUCC));
+            new PlayerLevelAvatarEvent(player, oldLevel, avatar).call();
+        }
+    }
+
     // Old upgrade UI
     @Deprecated(forRemoval = true)
     public void upgradeAvatar(Player player, long guid, int itemId, int count) {
@@ -675,6 +729,10 @@ public class InventorySystem extends BaseGameSystem {
                 GameData.getAvatarPromoteData(
                         avatar.getAvatarData().getAvatarPromoteId(), avatar.getPromoteLevel());
         if (promoteData == null) {
+            return;
+        }
+        if (avatar.getLevel() >= promoteData.getUnlockMaxLevel()) {
+            player.sendPacket(new PacketAvatarUpgradeRsp(avatar, Retcode.RET_AVATAR_LIMIT_LEVEL_ERROR));
             return;
         }
 
@@ -723,6 +781,10 @@ public class InventorySystem extends BaseGameSystem {
                 GameData.getAvatarPromoteData(
                         avatar.getAvatarData().getAvatarPromoteId(), avatar.getPromoteLevel());
         if (promoteData == null) {
+            return;
+        }
+        if (avatar.getLevel() >= promoteData.getUnlockMaxLevel()) {
+            player.sendPacket(new PacketAvatarUpgradeRsp(avatar, Retcode.RET_AVATAR_LIMIT_LEVEL_ERROR));
             return;
         }
 

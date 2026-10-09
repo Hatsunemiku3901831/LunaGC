@@ -69,29 +69,52 @@ public class DynamicFloat {
     }
 
     public float get(Object2FloatMap<String> props, float defaultValue) {
-        if (!this.dynamic) return constant;
+        float fallback = Float.isFinite(defaultValue) ? defaultValue : 0f;
+        return evaluate(props, fallback);
+    }
 
-        val fl = new FloatArrayList();
-        for (var op : this.ops) {
-            switch (op.op) {
-                case CONSTANT -> fl.push(op.fValue);
-                case KEY -> fl.push(props.getOrDefault(op.sValue, 0f) * (op.negative ? -1 : 1));
-                case ADD -> fl.push(fl.popFloat() + fl.popFloat());
-                case SUB -> fl.push(
-                        -fl.popFloat() + fl.popFloat()); // [f0, f1, f2] -> [f0, f1-f2]  (opposite of RPN order)
-                case MUL -> fl.push(fl.popFloat() * fl.popFloat());
-                case DIV -> fl.push((1f / fl.popFloat()) * fl.popFloat()); // [f0, f1, f2] -> [f0, f1/f2]
-                // Keyed by an Optional<Boolean> against a map of String, this could only ever
-                // miss and push the default. A boolean in an op list is worth one or zero.
-                case NEXBOOLEAN -> fl.push(op.bValue ? 1f : 0f);
+    /** Parameter writes must distinguish invalid expressions from an intentional zero. */
+    public OptionalDouble tryGet(Object2FloatMap<String> props) {
+        float value = evaluate(props, Float.NaN);
+        return Float.isFinite(value) ? OptionalDouble.of(value) : OptionalDouble.empty();
+    }
+
+    private float evaluate(Object2FloatMap<String> props, float fallback) {
+        if (!this.dynamic) return Float.isFinite(constant) ? constant : fallback;
+        if (this.ops == null || this.ops.isEmpty()) return fallback;
+
+        var stack = new FloatArrayList();
+        for (var token : this.ops) {
+            if (token == null || token.op == null) return fallback;
+            float value;
+            switch (token.op) {
+                case CONSTANT -> value = token.fValue;
+                case KEY -> {
+                    if (token.sValue == null || props == null) return fallback;
+                    value = props.getOrDefault(token.sValue, 0f) * (token.negative ? -1f : 1f);
+                }
+                case NEXBOOLEAN -> value = token.bValue ? 1f : 0f;
+                case ADD, SUB, MUL, DIV -> {
+                    if (stack.size() < 2) return fallback;
+                    float right = stack.popFloat(), left = stack.popFloat();
+                    if (token.op == StackOp.Op.DIV && right == 0f) return fallback;
+                    value =
+                            switch (token.op) {
+                                case ADD -> left + right;
+                                case SUB -> left - right;
+                                case MUL -> left * right;
+                                case DIV -> left / right;
+                                default -> fallback;
+                            };
+                }
+                default -> {
+                    return fallback;
+                }
             }
+            if (!Float.isFinite(value)) return fallback;
+            stack.push(value);
         }
-
-        try {
-            return fl.popFloat(); // well-formed data will always have only one value left at this point
-        } catch (NoSuchElementException e) {
-            return defaultValue;
-        }
+        return stack.size() == 1 ? stack.getFloat(0) : fallback;
     }
 
     public float get(ProudSkillData skill) {
@@ -113,7 +136,11 @@ public class DynamicFloat {
         public boolean negative = false;
 
         public StackOp(String s) {
-            switch (s.toUpperCase()) {
+            if (s == null) {
+                this.op = Op.KEY;
+                return;
+            }
+            switch (s.toUpperCase(Locale.ROOT)) {
                 case "ADD" -> this.op = Op.ADD;
                 case "SUB" -> this.op = Op.SUB;
                 case "MUL" -> this.op = Op.MUL;
@@ -142,7 +169,7 @@ public class DynamicFloat {
             this.fValue = f;
         }
 
-        enum Op {
+        public enum Op {
             CONSTANT,
             KEY,
             ADD,

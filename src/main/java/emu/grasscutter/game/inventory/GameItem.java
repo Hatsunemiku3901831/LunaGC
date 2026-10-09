@@ -8,6 +8,7 @@ import emu.grasscutter.data.excels.reliquary.*;
 import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.game.entity.EntityWeapon;
 import emu.grasscutter.game.player.Player;
+import emu.grasscutter.game.tps.TpsWeaponSystem;
 import emu.grasscutter.game.props.FightProperty;
 import emu.grasscutter.net.proto.AbilitySyncStateInfoOuterClass.AbilitySyncStateInfo;
 import emu.grasscutter.net.proto.EquipOuterClass.Equip;
@@ -47,6 +48,19 @@ public class GameItem {
     // Weapon
     @Getter private List<Integer> affixes;
     @Getter @Setter private int refinement = 0;
+    @Setter private List<Integer> tpsAccessoryIds = new ArrayList<>();
+    // Only material-derived grants are revocable. Older persisted IDs remain manual grants.
+    @Setter private List<Integer> tpsMaterialAccessoryIds = new ArrayList<>();
+
+    public List<Integer> getTpsAccessoryIds() {
+        if (tpsAccessoryIds == null) tpsAccessoryIds = new ArrayList<>();
+        return tpsAccessoryIds;
+    }
+
+    public List<Integer> getTpsMaterialAccessoryIds() {
+        if (tpsMaterialAccessoryIds == null) tpsMaterialAccessoryIds = new ArrayList<>();
+        return tpsMaterialAccessoryIds;
+    }
 
     // Relic
     @Getter @Setter private int mainPropId;
@@ -108,6 +122,10 @@ public class GameItem {
                 }
                 // Create extra stats
                 this.addAppendProps(data.getAppendPropNum());
+                break;
+            case ITEM_TPS_WEAPON:
+                this.count = 1;
+                this.level = 1;
                 break;
             default:
                 this.count = Math.min(count, data.getStackLimit());
@@ -356,6 +374,9 @@ public class GameItem {
             case ITEM_FURNITURE:
                 Furniture furniture = Furniture.newBuilder().setCount(getCount()).build();
                 proto.setFurniture(furniture);
+                break;
+            case ITEM_TPS_WEAPON:
+                proto.setTpsWeapon(TpsWeaponSystem.toTpsWeaponProto(this));
                 break;
             default:
                 Material material = Material.newBuilder().setCount(getCount()).build();

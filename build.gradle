@@ -36,7 +36,7 @@ plugins {
 
 spotless {
     java {
-        target fileTree(rootDir) {
+        target fileTree('src') {
             include '**/*.java'
             exclude '**/generated/**/*.*'
             exclude '.idea/**/*.*'

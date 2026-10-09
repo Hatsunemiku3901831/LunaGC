@@ -2,10 +2,11 @@ package emu.grasscutter.scripts.data.controller;
 
 import emu.grasscutter.*;
 import emu.grasscutter.game.entity.GameEntity;
-import emu.grasscutter.game.entity.EntityGadget;
 import emu.grasscutter.game.props.ElementType;
 import emu.grasscutter.scripts.*;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import javax.script.*;
 import org.luaj.vm2.*;
 
@@ -39,8 +40,12 @@ public class EntityController {
     }
 
     public void onPlayStageChange(GameEntity entity, int previous, int stage, int last) {
-        callControllerScriptFunc(entity, "OnPlayStageChange", LuaValue.valueOf(previous),
-                LuaValue.valueOf(stage), LuaValue.valueOf(last));
+        callControllerScriptFunc(
+                entity,
+                "OnPlayStageChange",
+                LuaValue.valueOf(previous),
+                LuaValue.valueOf(stage),
+                LuaValue.valueOf(last));
     }
 
     public int onClientExecuteRequest(GameEntity entity, int param1, int param2, int param3) {
@@ -79,15 +84,34 @@ public class EntityController {
 
     private LuaValue callControllerScriptFunc(
             GameEntity entity, String funcName, LuaValue arg1, LuaValue arg2, LuaValue arg3) {
+        return runInCurrentLifecycle(
+                entity, () -> invokeController(entity, funcName, arg1, arg2, arg3), LuaValue.valueOf(-1));
+    }
+
+    /** Skill callbacks share controller serialization, entity context and activity cancellation. */
+    public boolean callAbilityFunction(GameEntity entity, Function<Bindings, Boolean> callback) {
+        return runInCurrentLifecycle(
+                entity,
+                () -> {
+                    synchronized (this) {
+                        return ScriptLoader.getScriptLib()
+                                .withEntityContext(entity, () -> callback.apply(entityControllerBindings));
+                    }
+                },
+                false);
+    }
+
+    private <T> T runInCurrentLifecycle(GameEntity entity, Supplier<T> callback, T cancelled) {
         var activity = entity.getScene().getCrucibleSceneController();
-        if (!activity.owns(entity.getGroupId()))
-            return invokeController(entity, funcName, arg1, arg2, arg3);
-        var result = new LuaValue[] { LuaValue.valueOf(-1) };
-        activity.runIfCurrent(activity.getLifecycle().ticket(), () -> {
-            if (entity.getScene().getEntities().get(entity.getId()) == entity)
-                result[0] = invokeController(entity, funcName, arg1, arg2, arg3);
-        });
-        return result[0];
+        if (!activity.owns(entity.getGroupId())) return callback.get();
+        var result = new java.util.concurrent.atomic.AtomicReference<T>(cancelled);
+        activity.runIfCurrent(
+                activity.getLifecycle().ticket(),
+                () -> {
+                    if (entity.getScene().getEntities().get(entity.getId()) == entity)
+                        result.set(callback.get());
+                });
+        return result.get();
     }
 
     private synchronized LuaValue invokeController(
@@ -100,20 +124,17 @@ public class EntityController {
         LuaValue ret = LuaValue.ONE;
 
         if (funcLua != null) {
-            var library = ScriptLoader.getScriptLib();
-            var previousEntity = library.getCurrentEntity().orElse(null);
-            var previousGroup = library.getCurrentGroup().orElse(null);
-            var previousManager = library.getSceneScriptManagerOrNull();
             try {
-                library.setCurrentEntity(entity);
-                library.setSceneScriptManager(entity.getScene().getScriptManager());
-                if (entity instanceof EntityGadget gadget && gadget.getMetaGadget() != null)
-                    library.setCurrentGroup(gadget.getMetaGadget().group);
-                else library.removeCurrentGroup();
+                var function = funcLua;
                 ret =
-                        funcLua
-                                .invoke(new LuaValue[] {ScriptLoader.getScriptLibLua(), arg1, arg2, arg3})
-                                .arg1();
+                        ScriptLoader.getScriptLib()
+                                .withEntityContext(
+                                        entity,
+                                        () ->
+                                                function
+                                                        .invoke(
+                                                                new LuaValue[] {ScriptLoader.getScriptLibLua(), arg1, arg2, arg3})
+                                                        .arg1());
             } catch (LuaError error) {
                 ScriptLib.logger.error(
                         "[LUA] call function failed in gadget {} with {} {} {},{}",
@@ -124,13 +145,6 @@ public class EntityController {
                         arg3,
                         error);
                 ret = LuaValue.valueOf(-1);
-            } finally {
-                if (previousEntity == null) library.removeCurrentEntity();
-                else library.setCurrentEntity(previousEntity);
-                if (previousGroup == null) library.removeCurrentGroup();
-                else library.setCurrentGroup(previousGroup);
-                if (previousManager == null) library.removeSceneScriptManager();
-                else library.setSceneScriptManager(previousManager);
             }
         } else if (funcName != null && !SERVER_CALLED.contains(funcName)) {
             ScriptLib.logger.error(
