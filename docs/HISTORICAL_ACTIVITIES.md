@@ -145,7 +145,8 @@ Lua `ElementType` 编号（火 1、水 2、草 3、雷 4、冰 5、风 7、岩 8
 名称均通过 UTF-8 与控制字符检查；非零方法地址位于 PE 文件支持的区间。
 字段类型输出包括基础类型、属性及类/值类型的定义索引。
 新增可选的 startup 泛型参数提取，能解析字段引用的 18,822 个不同泛型实例；
-未启用该选项时继续保留原始索引。数组元素及完整方法签名尚未恢复。
+未启用该选项时继续保留原始索引。可选父类型提取已恢复 87,244 条继承关系，
+其中 1,565 条泛型父类型可通过 startup 元数据解析。数组元素及完整方法签名尚未恢复。
 随后从客户端直接返回包号的函数恢复了 4,923 个类型的编号，其中有 4,919 个不同编号。
 烘炉的五个外层通知包号与项目已有 7.1 表一致，字段通过原生 protobuf 读取分支交叉核对。
 其他混淆消息的名称和字段仍需逐项核实，完整提取结果不能直接当作可用的 `.proto`。
@@ -161,13 +162,19 @@ python tools/extract_client_type_names.py 'C:\Users\InvokerBot\AppData\Local\hoy
 
 # 解析嵌套泛型参数，需要字段选项和匹配的 startup-metadata.dat
 python tools/extract_client_type_names.py 'C:\Users\InvokerBot\AppData\Local\hoyo\hk4e\versions\current' --include-fields --include-methods --include-packet-ids --include-generic-types
+
+# 仅查询继承关系及泛型父类型，免去完整字段和方法导出
+python tools/extract_client_type_names.py 'C:\Users\InvokerBot\AppData\Local\hoyo\hk4e\versions\current' --include-parents --include-generic-types --output local/activity-research/client-parents.json
 ```
 
 该工具只读取客户端；内置偏移与解码常量严格绑定本次 exe 和元数据的 SHA-256，
 其他构建会被拒绝，避免更新后套用旧偏移。输出默认保存在被忽略的
 `local/activity-research/client-type-names.json`；带字段或方法选项时默认保存为同目录的
 `client-type-metadata.json`。字段和方法选项可单独使用；包号选项要求同时启用方法选项。
-泛型参数选项要求字段选项，并独立校验本次 startup 元数据的 SHA-256。
+泛型参数选项要求字段或父类型选项，并独立校验本次 startup 元数据的 SHA-256。
+父类型可以单独提取，也可与字段、方法和包号选项组合；默认输出仍为
+`client-type-metadata.json`，单独查询时建议指定输出文件。依据与技能冷却调研范围见
+[继承关系和普通技能冷却](CLIENT_INHERITANCE_AND_SKILL_COOLDOWNS_2026-10-09.md)。
 工具保留同一编号的多个类型，不自动替换项目的包号表。`--output` 可指定分析结果路径，
 客户端目录内的输出会被拒绝。客户端文件和提取出的元数据不随仓库或镜像发布。
 

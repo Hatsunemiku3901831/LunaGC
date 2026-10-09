@@ -2,8 +2,8 @@
 """Read type names and optional member tables from the supplied 7.1.0 client.
 
 This profile is tied to the exact executable and metadata SHA-256 hashes below.
-It recovers names, field type references, method addresses and optional literal
-packet ID getters, not a complete protobuf schema or dump.cs. Message names and
+It recovers names, parent and field type references, method addresses and optional
+literal packet ID getters, not a complete protobuf schema or dump.cs. Message names and
 wire fields still require verification.
 The source client files are never modified.
 """
@@ -186,6 +186,66 @@ class GenericTypes:
         return {**reference, **self.cache[index]}
 
 
+def recover_parents(binary: bytes, metadata: bytes, records: list[dict], report: dict,
+                    *, startup: bytes | None = None) -> None:
+    """Recover the parent reference read at 0x159f645d2, without guessing member offsets."""
+    type_base = int(report["typeOffset"], 16)
+    registration = pe_file_offset(binary, METADATA_REGISTRATION_VA, 0x58)
+    reference_count = u32(binary, registration + 0x30) ^ 0x28A0FA2D
+    reference_va = struct.unpack_from("<Q", binary, registration + 0x50)[0]
+    reference_base = pe_file_offset(binary, reference_va, reference_count * 16)
+    generics = GenericTypes(binary, startup, records) if startup is not None else None
+    objects = [item for item in records if (item["namespace"], item["name"]) == ("System", "Object")]
+    parents = {}
+    generic_count = 0
+    for item in records:
+        entry = type_base + item["index"] * TYPE_STRIDE + 0x2C
+        if entry < 0 or entry + 4 > len(metadata):
+            raise ValueError(f"Parent reference exceeds metadata for type {item['index']}")
+        index = u32(metadata, entry) ^ 0x5FCD8771
+        if index == 0xFFFFFFFF:
+            item["parent"] = None
+            continue
+        if not 0 <= index < reference_count:
+            raise ValueError(f"Invalid parent reference for type {item['index']}")
+        data, bits = struct.unpack_from("<QI", binary, reference_base + index * 16)
+        kind = (bits >> 16) & 0xFF
+        if kind not in (18, 21, 28):
+            raise ValueError(f"Unsupported parent kind {kind:#x} for type {item['index']}")
+        parent = {"kind": TYPE_KINDS[kind], "typeIndex": index, "data": hex(data)}
+        if kind == 28:
+            if len(objects) != 1:
+                raise ValueError("Object parent requires exactly one System.Object definition")
+            definition = objects[0]
+        elif kind == 18:
+            if data >= len(records):
+                raise ValueError(f"Invalid parent definition for type {item['index']}")
+            definition = records[data]
+        else:
+            generic_count += 1
+            definition = None
+            if generics:
+                parent = generics.resolve(parent)
+        if definition is not None:
+            parent.update(typeDefinition=definition["index"], name=definition["name"],
+                          namespace=definition["namespace"])
+        if "typeDefinition" in parent:
+            parents[item["index"]] = parent["typeDefinition"]
+        item["parent"] = parent
+    checked = set()
+    for start in parents:
+        path = set()
+        current = start
+        while current in parents and current not in checked:
+            if current in path:
+                raise ValueError(f"Cyclic parent definitions at type {current}")
+            path.add(current)
+            current = parents[current]
+        checked.update(path)
+    report.update(parentCount=sum(item["parent"] is not None for item in records),
+                  resolvedParentCount=len(parents), genericParentCount=generic_count)
+
+
 def recover_members(binary: bytes, metadata: bytes, records: list[dict], report: dict,
                     *, fields: bool, methods: bool, packet_ids: bool = False,
                     startup: bytes | None = None) -> None:
@@ -308,16 +368,18 @@ def main() -> None:
                         help="Include field names, attributes and type reference records")
     parser.add_argument("--include-methods", action="store_true",
                         help="Include method names, native addresses and parameter counts")
+    parser.add_argument("--include-parents", action="store_true",
+                        help="Include verified parent references and inheritance relationships")
     parser.add_argument("--include-packet-ids", action="store_true",
                         help="Include literal packet ID getters; requires --include-methods")
     parser.add_argument("--include-generic-types", action="store_true",
-                        help="Resolve field generic arguments from startup metadata; requires --include-fields")
+                        help="Resolve generic arguments from startup metadata; requires --include-fields or --include-parents")
     args = parser.parse_args()
     if args.include_packet_ids and not args.include_methods:
         parser.error("--include-packet-ids requires --include-methods")
-    if args.include_generic_types and not args.include_fields:
-        parser.error("--include-generic-types requires --include-fields")
-    default_name = ("client-type-metadata.json" if args.include_fields or args.include_methods
+    if args.include_generic_types and not (args.include_fields or args.include_parents):
+        parser.error("--include-generic-types requires --include-fields or --include-parents")
+    default_name = ("client-type-metadata.json" if args.include_fields or args.include_methods or args.include_parents
                     else "client-type-names.json")
     output = (args.output or Path("local/activity-research") / default_name).resolve()
     # Reject writes into the input directory, including paths through symlinks.
@@ -329,10 +391,12 @@ def main() -> None:
     startup = (read_verified(args.client_directory / "YuanShen_Data/Native/Data/Metadata/startup-metadata.dat",
                              STARTUP_SHA256) if args.include_generic_types else None)
     records, report = recover_types(binary, metadata)
+    if args.include_parents:
+        recover_parents(binary, metadata, records, report, startup=startup)
     if args.include_fields or args.include_methods:
         recover_members(binary, metadata, records, report,
                         fields=args.include_fields, methods=args.include_methods,
-                        packet_ids=args.include_packet_ids, startup=startup)
+                        packet_ids=args.include_packet_ids, startup=startup if args.include_fields else None)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(records, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({**report, "output": str(output),
