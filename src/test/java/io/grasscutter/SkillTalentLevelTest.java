@@ -38,6 +38,7 @@ class SkillTalentLevelTest {
     private static AvatarSkillDepotData depot;
     private static AvatarSkillDepotData arlecchinoDepot;
     private static final Map<String, OpenConfigEntry> configs = new LinkedHashMap<>();
+    private static final Map<String, AbilityData> abilities = new LinkedHashMap<>();
     private final List<Runnable> restore = new ArrayList<>();
     private AbilityTestFixture fixture;
     private RecordingPlayer player;
@@ -95,6 +96,12 @@ class SkillTalentLevelTest {
                         .findFirst()
                         .orElseThrow();
         for (String character : List.of("Nahida", "Arlecchino")) {
+            for (var row : JsonParser.parseString(Files.readString(Path.of(
+                    "resources/BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_"
+                            + character + ".json"))).getAsJsonArray()) {
+                var data = JsonUtils.decode(row.getAsJsonObject().get("Default"), AbilityData.class);
+                abilities.put(data.abilityName, data);
+            }
             var root =
                     JsonParser.parseString(
                                     Files.readString(
@@ -120,6 +127,7 @@ class SkillTalentLevelTest {
         player.setUid(73554);
         player.setScene(fixture.scene);
         configs.forEach((key, value) -> put(GameData.getOpenConfigEntries(), key, value));
+        abilities.forEach((key, value) -> put(GameData.getAbilityDataMap(), key, value));
         skills.forEach(s -> put(GameData.getAvatarSkillDataMap(), s.getId(), s));
         proudSkills.forEach(s -> put(GameData.getProudSkillDataMap(), s.getId(), s));
         constellations.forEach(s -> put(GameData.getAvatarTalentDataMap(), s.getId(), s));
@@ -235,14 +243,12 @@ class SkillTalentLevelTest {
     }
 
     private Ability ability(String name, GameEntity owner) {
+        var data = new AbilityData();
+        data.abilityName = name;
+        var real = abilities.get(name);
+        data.abilitySpecials = real == null ? Map.of() : real.abilitySpecials;
         return new Ability(
-                JsonUtils.decode(
-                        "{\"abilityName\":\""
-                                + name
-                                + "\",\"abilitySpecials\":{\"Click_Damage\":8,\"Hollow_Fire_Lv1\":8}}",
-                        AbilityData.class),
-                owner,
-                player);
+                data, owner, player);
     }
 
     private Ability activeArt() {
@@ -498,7 +504,7 @@ class SkillTalentLevelTest {
         avatar.unlockConstellation(733, true);
         var row = GameData.getProudSkillDataMap().remove(733204);
         restore.add(() -> GameData.getProudSkillDataMap().put(733204, row));
-        assertEquals(8f, ability(ART, entity).getAbilitySpecials().getFloat("Click_Damage"));
+        assertEquals(0f, ability(ART, entity).getAbilitySpecials().getFloat("Click_Damage"));
     }
 
     @Test

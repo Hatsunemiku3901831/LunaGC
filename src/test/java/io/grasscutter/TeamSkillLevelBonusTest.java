@@ -35,6 +35,7 @@ class TeamSkillLevelBonusTest {
     private static List<AvatarSkillData> skills;
     private static List<ProudSkillData> proud;
     private static List<AvatarTalentData> talents;
+    private static AbilityData normalAttack;
     private static final Map<String, OpenConfigEntry> configs = new LinkedHashMap<>();
     private final List<Runnable> restore = new ArrayList<>();
     private AbilityTestFixture fixture;
@@ -46,6 +47,16 @@ class TeamSkillLevelBonusTest {
 
     @BeforeAll
     static void resources() throws Exception {
+        for (var row : JsonParser.parseString(Files.readString(Path.of(
+                "resources/BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Nahida.json")))
+                .getAsJsonArray()) {
+            var data = JsonUtils.decode(row.getAsJsonObject().get("Default"), AbilityData.class);
+            if ("Avatar_Nahida_Attack01".equals(data.abilityName)) {
+                normalAttack = data;
+                break;
+            }
+        }
+        assertNotNull(normalAttack);
         depots =
                 JsonUtils.loadToList(
                                 EXCEL.resolve("AvatarSkillDepotExcelConfigData.json"),
@@ -112,6 +123,7 @@ class TeamSkillLevelBonusTest {
     void setup() throws Exception {
         fixture = new AbilityTestFixture();
         configs.forEach((key, value) -> put(GameData.getOpenConfigEntries(), key, value));
+        put(GameData.getAbilityDataMap(), normalAttack.abilityName, normalAttack);
         skills.forEach(s -> put(GameData.getAvatarSkillDataMap(), s.getId(), s));
         proud.forEach(
                 p -> {
@@ -298,14 +310,10 @@ class TeamSkillLevelBonusTest {
     }
 
     private Ability ability(String name, GameEntity owner) {
-        return new Ability(
-                JsonUtils.decode(
-                        "{\"abilityName\":\""
-                                + name
-                                + "\",\"abilitySpecials\":{\"NormalAttack_01_Damage\":8,\"Click_Damage\":8}}",
-                        AbilityData.class),
-                owner,
-                player);
+        var data = new AbilityData();
+        data.abilityName = name;
+        data.abilitySpecials = new LinkedHashMap<>(normalAttack.abilitySpecials);
+        return new Ability(data, owner, player);
     }
 
     private Ability normal() {

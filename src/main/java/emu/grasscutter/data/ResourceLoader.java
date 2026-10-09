@@ -1161,14 +1161,20 @@ public final class ResourceLoader {
     public static class OpenConfigData {
         public String $type;
 
-        @SerializedName(value = "abilityName", alternate = {"BEAFNCHOJGD", "NCCKLDFFDOH"})
+        @SerializedName(value = "abilityName", alternate = {"BEAFNCHOJGD", "NCCKLDFFDOH", "EEGHGBOCFMM"})
         public String abilityName;
 
-        @SerializedName(value = "varName", alternate = {"AAAENDNEBIG", "paramSpecial", "LDACNDBDKBA"})
+        @SerializedName(value = "varName", alternate = {"AAAENDNEBIG", "paramSpecial", "LDACNDBDKBA", "LCFJHKJNGKL"})
         public String varName;
 
-        @SerializedName(value = "varValue", alternate = {"KCHPDCEBCNI", "paramDelta", "IJFENBIJGLJ"})
+        @SerializedName(value = "varValue", alternate = {"KCHPDCEBCNI", "paramDelta", "IJFENBIJGLJ", "JOBOBBGALMD"})
         public com.google.gson.JsonElement varValue;
+
+        @SerializedName(value = "paramRatio", alternate = {"ALMMICJIJKP"})
+        public com.google.gson.JsonElement paramRatio;
+
+        @SerializedName(value = "talentFilter", alternate = {"CMLJMLJBBKI"})
+        public String talentFilter;
 
         @SerializedName(
                 value = "talentIndex",

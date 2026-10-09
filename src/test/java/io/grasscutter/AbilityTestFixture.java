@@ -65,6 +65,7 @@ final class AbilityTestFixture implements AutoCloseable {
         @Override public TeamManager getTeamManager() { return team; }
         @Override public SatiationManager getSatiationManager() { return satiation; }
         @Override public void sendPacket(BasePacket packet) { packets.add(packet); }
+        @Override public void save() {} // Scene fixtures do not connect to a database.
     }
 
     static class TestScene extends Scene {

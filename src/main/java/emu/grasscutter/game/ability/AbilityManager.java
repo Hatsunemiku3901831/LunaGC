@@ -816,7 +816,7 @@ public final class AbilityManager extends BasePlayerManager {
     private static Map<String, Float> resolveTalentOverrides(Ability ability) {
         var avatar = AbilityTalentResolver.casterAvatar(ability.getPlayerOwner(), ability.getOwner());
         if (avatar == null && ability.getCasterEntity() != null) avatar = ability.getCasterEntity().getAvatar();
-        return AbilityTalentResolver.overrides(avatar, ability.getData().abilityName);
+        return AbilityTalentResolver.overrides(avatar, ability.getData().abilityName, ability.getData().abilitySpecials);
     }
 
     private static AbilityInvokeEntry talentOverrideInvoke(GameEntity entity, int abilityId, String name, float value) {

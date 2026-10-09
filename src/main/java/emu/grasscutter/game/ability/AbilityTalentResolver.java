@@ -83,17 +83,39 @@ public final class AbilityTalentResolver {
     }
 
     public static Map<String, Float> overrides(Avatar avatar, String abilityName) {
+        var data = abilityName == null ? null : GameData.getAbilityData(abilityName);
+        return overrides(avatar, abilityName, data == null ? null : data.abilitySpecials);
+    }
+
+    public static Map<String, Float> overrides(
+            Avatar avatar, String abilityName, Map<String, Float> resourceSpecials) {
         var values = new LinkedHashMap<String, Float>();
         if (abilityName == null || abilityName.isEmpty()) return values;
+        var modifiers = new LinkedHashMap<String, float[]>();
         for (var talent : activeTalents(avatar)) {
             var config = GameData.getOpenConfigEntries().get(talent.name());
             if (config == null || config.getAbilityVarSetters() == null) continue;
             for (var setter : config.getAbilityVarSetters()) {
                 if (setter == null || !abilityName.equals(setter.getAbilityName())) continue;
                 Float value = setter.resolve(talent.parameters());
-                if (value != null) values.put(setter.getVarName(), value);
+                if (!setter.isModifyAbility()) {
+                    if (value != null) values.put(setter.getVarName(), value);
+                    continue;
+                }
+                if (!setter.isUnconditional() || value == null || resourceSpecials == null) continue;
+                Float original = resourceSpecials.get(setter.getVarName());
+                Float ratio = setter.resolveRatio(talent.parameters());
+                if (original == null || !Float.isFinite(original) || ratio == null) continue;
+                var sum = modifiers.computeIfAbsent(setter.getVarName(), key -> new float[2]);
+                sum[0] += value;
+                sum[1] += ratio;
             }
         }
+        // The client sums deltas and ratios separately, then applies both to the resource baseline.
+        modifiers.forEach((name, sum) -> {
+            float value = (resourceSpecials.get(name) + sum[0]) * (1f + sum[1]);
+            if (Float.isFinite(value)) values.put(name, value);
+        });
         return values;
     }
 

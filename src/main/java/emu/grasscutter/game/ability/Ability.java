@@ -188,7 +188,7 @@ public class Ability {
         Avatar casterAvatar = AbilityTalentResolver.casterAvatar(playerOwner, owner);
         if (casterAvatar == null && casterEntity != null) casterAvatar = casterEntity.getAvatar();
         if (casterAvatar != null) {
-            talentSpecials = AbilityTalentResolver.overrides(casterAvatar, data.abilityName);
+            talentSpecials = AbilityTalentResolver.overrides(casterAvatar, data.abilityName, data.abilitySpecials);
             talentSpecials.forEach(abilitySpecials::put);
         }
 
@@ -233,7 +233,7 @@ public class Ability {
                 caster != null
                         ? caster.getAvatar()
                         : AbilityTalentResolver.casterAvatar(playerOwner, owner);
-        var next = AbilityTalentResolver.overrides(avatar, data.abilityName);
+        var next = AbilityTalentResolver.overrides(avatar, data.abilityName, data.abilitySpecials);
         var changes = new LinkedHashMap<String, Float>();
         for (var name : talentSpecials.keySet()) {
             if (next.containsKey(name)) continue;

@@ -42,9 +42,17 @@ class TalentApplicationTest {
     private static List<EquipAffixData> realAffixes;
     private static List<TpsWeaponAccessoryData> realAccessories;
     private static List<TpsWeaponData> realWeapons;
+    private static final Map<String, AbilityData> REAL_ABILITIES = new LinkedHashMap<>();
 
     @BeforeAll
     static void resources() throws Exception {
+        for (String weapon : List.of("IceGun", "ElectricGun"))
+            for (var row : JsonParser.parseString(Files.readString(Path.of(
+                    "resources/BinOutput/Ability/Temp/EquipAbilities/TPSWeaponAbilities/ConfigAbility_TPSWeapon_"
+                            + weapon + ".json"))).getAsJsonArray()) {
+                var data = JsonUtils.decode(row.getAsJsonObject().get("Default"), AbilityData.class);
+                REAL_ABILITIES.put(data.abilityName, data);
+            }
         var talents = Path.of("resources/BinOutput/Talent/EquipTalents");
         try (var files = Files.list(talents)) {
             for (var file : files.filter(p -> p.toString().endsWith(".json")).toList()) {
@@ -81,6 +89,7 @@ class TalentApplicationTest {
         fixture = new AbilityTestFixture();
         fixture.player.setUid(73001);
         REAL_CONFIGS.forEach((key, value) -> put(GameData.getOpenConfigEntries(), key, value));
+        REAL_ABILITIES.forEach((key, value) -> put(GameData.getAbilityDataMap(), key, value));
         realAffixes.forEach(d -> put(GameData.getEquipAffixDataMap(), d.getId(), d));
         realAccessories.forEach(d -> put(GameData.getTpsWeaponAccessoryDataMap(), d.getId(), d));
         realWeapons.forEach(d -> put(GameData.getTpsWeaponDataMap(), d.getId(), d));
@@ -198,12 +207,15 @@ class TalentApplicationTest {
     }
 
     private Ability ability(String name, GameEntity owner) {
+        var data = new AbilityData();
+        data.abilityName = name;
+        data.abilitySpecials = new LinkedHashMap<>();
+        data.abilitySpecials.put("Value", 8f);
+        var real = REAL_ABILITIES.get(name);
+        if (real != null && real.abilitySpecials != null)
+            data.abilitySpecials.putAll(real.abilitySpecials);
         return new Ability(
-                JsonUtils.decode(
-                        "{\"abilityName\":\"" + name + "\",\"abilitySpecials\":{\"Value\":8}}",
-                        AbilityData.class),
-                owner,
-                fixture.player);
+                data, owner, fixture.player);
     }
 
     private boolean unlocked(Ability ability, String flag) {
@@ -260,7 +272,7 @@ class TalentApplicationTest {
         affix(2240141, "TPS_Weapon_IceGun_Accessory_Scope", .35f);
         var scoped = ability("TPS_IceGun_Accessory_Manager", entity);
         assertEquals(
-                -.35f,
+                -.65f,
                 scoped.getAbilitySpecials().getFloat("IceGun_Accessory_Scope_ResistStripRatio"),
                 .00001f);
         assertFalse(
@@ -306,10 +318,11 @@ class TalentApplicationTest {
         var stranger = new Player();
         stranger.setUid(73002);
         gun.setOwner(stranger);
-        assertFalse(
+        assertEquals(
+                .1f,
                 ability("TPS_IceGun_Accessory_Manager", entity)
                         .getAbilitySpecials()
-                        .containsKey("IceGun_Accessory_Magazine_FireIntervalRatio"));
+                        .getFloat("IceGun_Accessory_Magazine_FireIntervalRatio"));
     }
 
     @Test
@@ -320,11 +333,11 @@ class TalentApplicationTest {
         affix(2240121, "TPS_Weapon_IceGun_Accessory_Magazine", .4f);
         var second = ability("TPS_IceGun_Accessory_Manager", entity);
         assertEquals(
-                .65f, first.getAbilitySpecials().getFloat("IceGun_Accessory_Magazine_FireIntervalRatio"));
+                .75f, first.getAbilitySpecials().getFloat("IceGun_Accessory_Magazine_FireIntervalRatio"));
         assertEquals(
-                .4f, second.getAbilitySpecials().getFloat("IceGun_Accessory_Magazine_FireIntervalRatio"));
-        assertFalse(
-                first.getData().abilitySpecials.containsKey("IceGun_Accessory_Magazine_FireIntervalRatio"));
+                .5f, second.getAbilitySpecials().getFloat("IceGun_Accessory_Magazine_FireIntervalRatio"));
+        assertEquals(
+                .1f, first.getData().abilitySpecials.get("IceGun_Accessory_Magazine_FireIntervalRatio"));
     }
 
     @Test
@@ -441,7 +454,7 @@ class TalentApplicationTest {
         for (var affix : realAffixes) assertArrayEquals(new float[8], affix.getParamList());
         var shot = ability("TPS_Weapon_AutoWeapon_AssaultRifle_01_Fire", entity);
         assertTrue(shot.getAbilitySpecials().containsKey("IceGun_Bullet_Damage_Ratio"));
-        assertEquals(0f, shot.getAbilitySpecials().getFloat("IceGun_Bullet_Damage_Ratio"));
+        assertEquals(.1f, shot.getAbilitySpecials().getFloat("IceGun_Bullet_Damage_Ratio"));
     }
 
     @Test
@@ -645,14 +658,14 @@ class TalentApplicationTest {
                         .build()
                         .toByteString());
         assertEquals(
-                .65f,
+                .75f,
                 bullet
                         .getInstancedAbilities()
                         .get(0)
                         .getAbilitySpecials()
                         .getFloat("IceGun_Accessory_Magazine_FireIntervalRatio"));
         assertEquals(
-                .65f,
+                .75f,
                 fixture
                         .player
                         .getAbilityManager()
@@ -725,11 +738,11 @@ class TalentApplicationTest {
         affix(2240121, "TPS_Weapon_IceGun_Accessory_Magazine", .65f);
         avatar.recalcStats(false, false);
         assertEquals(
-                .65f, active.getAbilitySpecials().getFloat("IceGun_Accessory_Magazine_FireIntervalRatio"));
+                .75f, active.getAbilitySpecials().getFloat("IceGun_Accessory_Magazine_FireIntervalRatio"));
         gun.getTpsAccessoryIds().clear();
         avatar.recalcStats(false, false);
-        assertFalse(
-                active.getAbilitySpecials().containsKey("IceGun_Accessory_Magazine_FireIntervalRatio"));
+        assertEquals(
+                .1f, active.getAbilitySpecials().getFloat("IceGun_Accessory_Magazine_FireIntervalRatio"));
     }
 
     @Test
@@ -742,7 +755,7 @@ class TalentApplicationTest {
         entity.getInstancedAbilities().add(active);
         String key = "IceGun_Accessory_Magazine_FireIntervalRatio";
         assertFalse(unlocked(active, "Unlock_Accessory_Magazine"));
-        assertFalse(active.getAbilitySpecials().containsKey(key));
+        assertEquals(.1f, active.getAbilitySpecials().getFloat(key));
         var data =
                 JsonUtils.decode(
                         "{\"id\":223112,\"itemType\":\"ITEM_MATERIAL\",\"stackLimit\":1}", ItemData.class);
@@ -752,11 +765,11 @@ class TalentApplicationTest {
         token.setCount(1);
         assertTrue(fixture.player.getInventory().addItem(token, false, false));
         assertTrue(unlocked(active, "Unlock_Accessory_Magazine"));
-        assertEquals(0f, active.getAbilitySpecials().getFloat(key));
+        assertEquals(.1f, active.getAbilitySpecials().getFloat(key));
         assertTrue(active.getAbilitySpecials().containsKey(key));
         fixture.player.getInventory().removeItem(token);
         assertFalse(unlocked(active, "Unlock_Accessory_Magazine"));
-        assertFalse(active.getAbilitySpecials().containsKey(key));
+        assertEquals(.1f, active.getAbilitySpecials().getFloat(key));
     }
 
     @Test
