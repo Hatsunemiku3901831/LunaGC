@@ -13,6 +13,7 @@ public class OpenConfigEntry {
     private int extraTalentIndex;
     private ExtraTalentModifier[] extraTalentModifiers;
     private SkillPointModifier[] skillPointModifiers;
+    private SkillCooldownModifier[] skillCooldownModifiers;
     private AbilityVarSetter[] abilityVarSetters;
     private TalentParamEntry[] talentParamEntries;
 
@@ -22,6 +23,7 @@ public class OpenConfigEntry {
         List<String> abilityList = new ArrayList<>();
         List<ExtraTalentModifier> levelList = new ArrayList<>();
         List<SkillPointModifier> modList = new ArrayList<>();
+        List<SkillCooldownModifier> cooldownList = new ArrayList<>();
         List<AbilityVarSetter> varList = new ArrayList<>();
         List<TalentParamEntry> paramList = new ArrayList<>();
 
@@ -43,6 +45,13 @@ public class OpenConfigEntry {
             } else if (entry.$type.equals("ModifySkillPoint")) {
                 if (entry.skillID > 0 && entry.pointDelta != 0)
                     modList.add(new SkillPointModifier(entry.skillID, entry.pointDelta));
+            } else if (entry.$type.equals("ModifySkillCD")) {
+                var delta = TalentValue.parse(entry.cdDelta);
+                var ratio = TalentValue.parse(entry.cdRatio);
+                if (entry.skillID > 0 && delta != null && ratio != null)
+                    cooldownList.add(
+                            new SkillCooldownModifier(
+                                    entry.skillID, delta, ratio, entry.talentFilter));
             } else if (entry.$type.equals("ModifyAbility") || entry.$type.equals("GMOELNAHCOH")) {
                 if (entry.abilityName != null
                         && entry.varName != null
@@ -75,6 +84,7 @@ public class OpenConfigEntry {
 
         if (!abilityList.isEmpty()) this.addAbilities = abilityList.toArray(new String[0]);
         this.extraTalentModifiers = levelList.toArray(new ExtraTalentModifier[0]);
+        this.skillCooldownModifiers = cooldownList.toArray(new SkillCooldownModifier[0]);
         if (!modList.isEmpty())
             this.skillPointModifiers = modList.toArray(new SkillPointModifier[0]);
         if (!varList.isEmpty()) this.abilityVarSetters = varList.toArray(new AbilityVarSetter[0]);
@@ -136,6 +146,43 @@ public class OpenConfigEntry {
 
     public SkillPointModifier[] getSkillPointModifiers() {
         return skillPointModifiers;
+    }
+
+    public SkillCooldownModifier[] getSkillCooldownModifiers() {
+        return skillCooldownModifiers == null
+                ? new SkillCooldownModifier[0]
+                : skillCooldownModifiers;
+    }
+
+    public static final class SkillCooldownModifier {
+        private final int skillId;
+        private final TalentValue delta;
+        private final TalentValue ratio;
+        private final String talentFilter;
+
+        private SkillCooldownModifier(
+                int skillId, TalentValue delta, TalentValue ratio, String talentFilter) {
+            this.skillId = skillId;
+            this.delta = delta;
+            this.ratio = ratio;
+            this.talentFilter = talentFilter;
+        }
+
+        public int skillId() {
+            return skillId;
+        }
+
+        public boolean isUnconditional() {
+            return talentFilter == null || talentFilter.equals("All");
+        }
+
+        public Float delta(float[] parameters) {
+            return delta == null ? null : delta.resolve(parameters);
+        }
+
+        public Float ratio(float[] parameters) {
+            return ratio == null ? null : ratio.resolve(parameters);
+        }
     }
 
     public AbilityVarSetter[] getAbilityVarSetters() {

@@ -5,8 +5,6 @@ import emu.grasscutter.game.entity.EntityAvatar;
 import emu.grasscutter.game.entity.GameEntity;
 import emu.grasscutter.server.packet.send.PacketAvatarSkillInfoNotify;
 
-import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
-
 import java.util.*;
 
 /** Temporary skill information belongs to this scene avatar, not its stored talent charges. */
@@ -80,9 +78,10 @@ public final class AbilityAvatarSkillInfo {
     private void notifyCharges(int skillId, int count) {
         var player = entity.getPlayer();
         if (player == null) return;
-        var map = new Int2IntArrayMap();
-        map.put(skillId, count);
-        player.sendPacket(new PacketAvatarSkillInfoNotify(entity.getAvatar().getGuid(), map));
+        var avatar = entity.getAvatar();
+        var state = player.getAbilityManager().getSkillCooldown().state(avatar, skillId, count);
+        if (state != null)
+            player.sendPacket(new PacketAvatarSkillInfoNotify(avatar.getGuid(), Map.of(skillId, state)));
     }
 
     public synchronized Map<Integer, Integer> snapshot() {

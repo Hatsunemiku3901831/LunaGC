@@ -4,6 +4,7 @@ import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.AvatarSkillInfoNotifyOuterClass.AvatarSkillInfoNotify;
 import emu.grasscutter.net.proto.AvatarSkillInfoOuterClass.AvatarSkillInfo;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
+import java.util.Map;
 
 public class PacketAvatarSkillInfoNotify extends BasePacket {
     public PacketAvatarSkillInfoNotify(long avatarGuid, Int2IntMap skillExtraChargeMap) {
@@ -17,5 +18,10 @@ public class PacketAvatarSkillInfoNotify extends BasePacket {
                                 skillId, AvatarSkillInfo.newBuilder().setMaxChargeCount(count).build()));
 
         this.setData(proto);
+    }
+
+    public PacketAvatarSkillInfoNotify(long avatarGuid, Map<Integer, AvatarSkillInfo> skills) {
+        super(PacketOpcodes.AvatarSkillInfoNotify);
+        this.setData(AvatarSkillInfoNotify.newBuilder().setGuid(avatarGuid).putAllSkillMap(skills));
     }
 }

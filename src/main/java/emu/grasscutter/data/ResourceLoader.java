@@ -1173,6 +1173,11 @@ public final class ResourceLoader {
         @SerializedName(value = "paramRatio", alternate = {"ALMMICJIJKP"})
         public com.google.gson.JsonElement paramRatio;
 
+        public com.google.gson.JsonElement cdDelta;
+
+        @SerializedName(value = "cdRatio", alternate = {"__exp_healTag"})
+        public com.google.gson.JsonElement cdRatio;
+
         @SerializedName(value = "talentFilter", alternate = {"CMLJMLJBBKI"})
         public String talentFilter;
 

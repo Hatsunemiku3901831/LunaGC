@@ -77,6 +77,7 @@ public final class AbilityManager extends BasePlayerManager {
             AbilityModifierAction.Type.GetFightProperty,
             AbilityModifierAction.Type.AddAvatarSkillInfo,
             AbilityModifierAction.Type.RemoveAvatarSkillInfo,
+            AbilityModifierAction.Type.AvatarSkillStart,
             AbilityModifierAction.Type.AvatarShareCDSkillStart,
             AbilityModifierAction.Type.ActivitySkillShareCDStart,
             AbilityModifierAction.Type.ClearShareCD,
@@ -101,6 +102,7 @@ public final class AbilityManager extends BasePlayerManager {
             AbilityModifierAction.Type.GetFightProperty,
             AbilityModifierAction.Type.AddAvatarSkillInfo,
             AbilityModifierAction.Type.RemoveAvatarSkillInfo,
+            AbilityModifierAction.Type.AvatarSkillStart,
             AbilityModifierAction.Type.AvatarShareCDSkillStart,
             AbilityModifierAction.Type.ActivitySkillShareCDStart,
             AbilityModifierAction.Type.ClearShareCD,
@@ -169,10 +171,12 @@ public final class AbilityManager extends BasePlayerManager {
     private long arlecchinoChargedAttackTime = 0L;
     private long arlecchinoESkillTime = 0L;
     @Getter private final AbilitySharedCooldown sharedCooldown;
+    @Getter private final AbilitySkillCooldown skillCooldown;
 
     public AbilityManager(Player player) {
         super(player);
         this.sharedCooldown = new AbilitySharedCooldown(player);
+        this.skillCooldown = new AbilitySkillCooldown(player);
         removePendingEnergyClear();
     }
 

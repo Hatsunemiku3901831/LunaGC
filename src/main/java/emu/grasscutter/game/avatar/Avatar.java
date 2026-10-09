@@ -1109,15 +1109,11 @@ public class Avatar {
     }
 
     public boolean sendSkillExtraChargeMap() {
-        val map = this.getSkillInfoCharges();
+        val map = this.getSkillInfoStates();
         if (map.isEmpty()) return false;
         this.getPlayer()
                 .sendPacket(
-                        new PacketAvatarSkillInfoNotify(
-                                this.guid,
-                                new Int2IntArrayMap(
-                                        map))); // TODO: Remove this allocation when updating interfaces to FastUtils
-        // later
+                        new PacketAvatarSkillInfoNotify(this.guid, map));
         return true;
     }
 
@@ -1127,6 +1123,17 @@ public class Avatar {
         var entity = getAsEntity();
         if (entity != null) map.putAll(entity.getAbilityAvatarSkillInfo().snapshot());
         return map;
+    }
+
+    public Map<Integer, AvatarSkillInfo> getSkillInfoStates() {
+        var charges = getSkillInfoCharges();
+        var player = getPlayer();
+        if (player != null && player.getAbilityManager() != null)
+            return player.getAbilityManager().getSkillCooldown().snapshot(this, charges);
+        var states = new TreeMap<Integer, AvatarSkillInfo>();
+        charges.forEach((id, count) -> states.put(id,
+                AvatarSkillInfo.newBuilder().setMaxChargeCount(count).build()));
+        return states;
     }
 
     public EntityAvatar getAsEntity() {
@@ -1205,11 +1212,7 @@ public class Avatar {
                         .setWeaponSkinId(this.getWeaponSkin())
                         .addAllTpsWeaponList(TpsWeaponSystem.getSceneWeaponInfos(this));
 
-        this.getSkillInfoCharges()
-                .forEach(
-                        (skillId, count) ->
-                                avatarInfo.putSkillMap(
-                                        skillId, AvatarSkillInfo.newBuilder().setMaxChargeCount(count).build()));
+        avatarInfo.putAllSkillMap(this.getSkillInfoStates());
 
         this.getEquips().forEach((k, item) -> avatarInfo.addEquipGuidList(item.getGuid()));
 

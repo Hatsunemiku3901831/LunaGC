@@ -82,6 +82,27 @@ public final class AbilityTalentResolver {
         if (data != null) talents.add(new Talent(data.getOpenConfig(), data.getParamList()));
     }
 
+    /** Resolve from the resource baseline on every use; changes do not compound or rewrite live queues. */
+    public static OptionalDouble cooldownSeconds(Avatar avatar, int skillId, float baseline) {
+        if (avatar == null || skillId <= 0 || !Float.isFinite(baseline) || baseline < 0)
+            return OptionalDouble.empty();
+        float delta = 0f, ratio = 0f;
+        for (var talent : activeTalents(avatar)) {
+            var config = GameData.getOpenConfigEntries().get(talent.name());
+            if (config == null) continue;
+            for (var modifier : config.getSkillCooldownModifiers()) {
+                if (modifier == null || modifier.skillId() != skillId || !modifier.isUnconditional()) continue;
+                Float nextDelta = modifier.delta(talent.parameters());
+                Float nextRatio = modifier.ratio(talent.parameters());
+                if (nextDelta == null || nextRatio == null) continue;
+                delta += nextDelta;
+                ratio += nextRatio;
+            }
+        }
+        float value = (baseline + delta) * (1f + ratio);
+        return Float.isFinite(value) ? OptionalDouble.of(Math.max(0f, value)) : OptionalDouble.empty();
+    }
+
     public static Map<String, Float> overrides(Avatar avatar, String abilityName) {
         var data = abilityName == null ? null : GameData.getAbilityData(abilityName);
         return overrides(avatar, abilityName, data == null ? null : data.abilitySpecials);

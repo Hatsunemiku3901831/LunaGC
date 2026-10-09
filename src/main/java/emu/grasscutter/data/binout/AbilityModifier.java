@@ -410,6 +410,17 @@ public class AbilityModifier implements Serializable {
         public DynamicFloat maxValue = DynamicFloat.ZERO;
         public DynamicFloat targetValue = DynamicFloat.ZERO;
         public DynamicFloat costStaminaRatio = DynamicFloat.ZERO;
+        // The exported operand is a use multiplier in AvatarSkillStart and a delta ratio in
+        // ModifyAvatarSkillCD. Keep the canonical fields separate from the export alias.
+        public DynamicFloat cdTimeRatio;
+        @SerializedName("BGNJBEPEJBO")
+        public DynamicFloat legacyCdRatio;
+        public DynamicFloat cdRatio;
+        public DynamicFloat cdDelta;
+        public com.google.gson.JsonElement cdMin;
+        @SerializedName("FBGLBGFMOHC")
+        public com.google.gson.JsonElement absoluteCdTime;
+        public int[] skillSlot;
         public emu.grasscutter.game.ability.AbilityPlayMode.Type fromPlayMode =
                 emu.grasscutter.game.ability.AbilityPlayMode.Type.Normal;
         public emu.grasscutter.game.ability.AbilityPlayMode.Type toPlayMode =
