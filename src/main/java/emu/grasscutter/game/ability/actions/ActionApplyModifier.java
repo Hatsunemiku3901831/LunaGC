@@ -4,6 +4,7 @@ import com.google.protobuf.ByteString;
 
 import emu.grasscutter.data.binout.AbilityModifier.AbilityModifierAction;
 import emu.grasscutter.game.ability.Ability;
+import emu.grasscutter.game.ability.AbilityCooldownInvocation;
 import emu.grasscutter.game.ability.AbilityModifierController;
 import emu.grasscutter.game.ability.PredicateEvaluator;
 import emu.grasscutter.game.entity.GameEntity;
@@ -37,8 +38,11 @@ public final class ActionApplyModifier extends AbilityActionHandler {
                 new AbilityModifierController(ability, ability.getData(), modifierData);
         ability.registerModifier(target, modifier);
         var manager = ability.getManager();
-        manager.executeCallbackActionsNow(
-                ability, modifierData.onAdded, abilityData, target, target);
+        AbilityCooldownInvocation.run(
+                modifier,
+                () ->
+                        manager.executeCallbackActionsNow(
+                                ability, modifierData.onAdded, abilityData, target, target));
         // onAttackLanded belongs to an actual hit invocation. Applying the listener must not
         // grant energy, add a mark or trigger a reaction before an attack has happened.
 

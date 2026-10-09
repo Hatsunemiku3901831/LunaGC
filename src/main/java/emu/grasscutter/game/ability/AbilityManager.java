@@ -78,6 +78,7 @@ public final class AbilityManager extends BasePlayerManager {
             AbilityModifierAction.Type.AddAvatarSkillInfo,
             AbilityModifierAction.Type.RemoveAvatarSkillInfo,
             AbilityModifierAction.Type.AvatarSkillStart,
+            AbilityModifierAction.Type.ModifyAvatarSkillCD,
             AbilityModifierAction.Type.AvatarShareCDSkillStart,
             AbilityModifierAction.Type.ActivitySkillShareCDStart,
             AbilityModifierAction.Type.ClearShareCD,
@@ -103,6 +104,7 @@ public final class AbilityManager extends BasePlayerManager {
             AbilityModifierAction.Type.AddAvatarSkillInfo,
             AbilityModifierAction.Type.RemoveAvatarSkillInfo,
             AbilityModifierAction.Type.AvatarSkillStart,
+            AbilityModifierAction.Type.ModifyAvatarSkillCD,
             AbilityModifierAction.Type.AvatarShareCDSkillStart,
             AbilityModifierAction.Type.ActivitySkillShareCDStart,
             AbilityModifierAction.Type.ClearShareCD,
@@ -259,7 +261,7 @@ public final class AbilityManager extends BasePlayerManager {
 
     public void executeAction(
         Ability ability, AbilityModifierAction action, ByteString abilityData, GameEntity target) {
-        if (action == null) return;
+        if (action == null || !AbilityCooldownInvocation.allows(action)) return;
         var handler = actionHandlers.get(action.type);
         if (handler == null || ability == null) {
             if (DebugConstants.LOG_MISSING_ABILITY_HANDLERS) {
@@ -272,8 +274,9 @@ public final class AbilityManager extends BasePlayerManager {
 
         var context = new AbilityExecutionContext(ability, target);
         if (!context.isCurrent()) return;
+        var cooldownInvocation = AbilityCooldownInvocation.capture();
         eventExecutor.submit(
-            () -> {
+            () -> AbilityCooldownInvocation.run(cooldownInvocation, () -> {
                 if (!context.isCurrent()) return;
                 try {
                     if (!handler.execute(ability, action, abilityData, target)) {
@@ -286,7 +289,7 @@ public final class AbilityManager extends BasePlayerManager {
                     Grasscutter.getLogger()
                         .error("Ability action {} threw at {}.", action.type, ability, e);
                 }
-            });
+            }));
     }
 
     /**
@@ -303,7 +306,7 @@ public final class AbilityManager extends BasePlayerManager {
 
     private void executeActionNow(
         Ability ability, AbilityModifierAction action, ByteString abilityData, GameEntity target, boolean resolved) {
-        if (action == null) return;
+        if (action == null || !AbilityCooldownInvocation.allows(action)) return;
         var handler = actionHandlers.get(action.type);
         if (handler == null || ability == null) {
             if (DebugConstants.LOG_MISSING_ABILITY_HANDLERS) {
@@ -445,9 +448,10 @@ public final class AbilityManager extends BasePlayerManager {
         if (!context.isCurrent()) return;
         var snapshot = actions.clone();
         var owned = isServerOwnedChain();
-        eventExecutor.submit(() -> AbilityHealContext.run(healTag, () -> runServerOwned(owned, () -> {
+        var cooldownInvocation = AbilityCooldownInvocation.capture();
+        eventExecutor.submit(() -> AbilityCooldownInvocation.run(cooldownInvocation, () -> AbilityHealContext.run(healTag, () -> runServerOwned(owned, () -> {
             if (context.isCurrent()) executeCallbackActionsNow(ability, snapshot, payload, owner, owner);
-        })));
+        }))));
     }
 
     public void onAbilityInvoke(AbilityInvokeEntry invoke) throws Exception {
@@ -608,10 +612,14 @@ public final class AbilityManager extends BasePlayerManager {
         if (target == null) target = entity;
 
         Ability ability = null;
+        AbilityModifierController invokedModifier = null;
 
         if (head.getInstancedModifierId() != 0) {
             var modifier = entity.getInstancedModifiers().get(head.getInstancedModifierId());
-            if (modifier != null) ability = modifier.getAbility();
+            if (modifier != null) {
+                ability = modifier.getAbility();
+                invokedModifier = modifier;
+            }
         }
 
         if (ability == null
@@ -649,7 +657,32 @@ public final class AbilityManager extends BasePlayerManager {
 
         var action = ability.getData().localIdToAction.get(head.getLocalId());
         if (action != null) {
-            if(entity.getAbilityPeriodicHealing().ownsAction(ability,head.getInstancedModifierId(),action)) return;
+            boolean owned = entity.getAbilityPeriodicHealing().ownsAction(ability,head.getInstancedModifierId(),action);
+            if (AbilityCooldownInvocation.isCooldownAction(action)) {
+                if (head.getInstancedModifierId() != 0 && invokedModifier == null) return;
+                if (invokedModifier != null && AbilityCooldownInvocation.isModifierCallback(ability.getData(), action)
+                        && !invokedModifier.ownsCooldownCallback(action)) return;
+                if (invokedModifier == null && AbilityCooldownInvocation.isModifierCallback(ability.getData(), action)) {
+                    // A removed explicit instance cannot consume a later cast's charges. Without
+                    // an instance ID, a unique live application is the only unambiguous match.
+                    if (head.getInstancedModifierId() != 0) return;
+                    var currentAbility = ability;
+                    var matches = entity.getAbilityHpModifier().activeControllers().stream()
+                            .filter(c -> c.getAbility() == currentAbility && c.ownsCooldownCallback(action)).toList();
+                    if (matches.size() != 1) return;
+                    invokedModifier = matches.get(0);
+                }
+                if (owned && invokedModifier == null) return;
+                var scope = invokedModifier == null ? null : new AbilityCooldownInvocation.Scope(invokedModifier, false);
+                var currentAbility = ability;
+                var currentTarget = target;
+                // Record before processing later removal/start messages; asynchronous dispatch
+                // could evaluate this cast against the next cast's changed parameters.
+                AbilityCooldownInvocation.run(scope, () -> runServerOwned(owned, () ->
+                        executeActionNow(currentAbility, action, invoke.getAbilityData(), currentTarget)));
+                return;
+            }
+            if (owned) return;
             this.executeAction(ability, action, invoke.getAbilityData(), target);
             return;
         } else {
@@ -1056,7 +1089,12 @@ public final class AbilityManager extends BasePlayerManager {
                 } else {
                     modifier=entity.getAbilityHpModifier().pendingServerController(instancedAbility,
                             instancedAbilityData.modifiers.keySet().toArray(new String[0])[modChange.getModifierLocalId()]);
-                    if(modifier==null) modifier=new AbilityModifierController(instancedAbility,instancedAbilityData,modifierData);
+                    if (modifier == null) modifier = entity.getAbilityHpModifier().pendingCooldownController(instancedAbility,
+                            instancedAbilityData.modifiers.keySet().toArray(new String[0])[modChange.getModifierLocalId()]);
+                    if(modifier==null) {
+                        modifier=new AbilityModifierController(instancedAbility,instancedAbilityData,modifierData);
+                        modifier.inheritCooldownLedger(previous);
+                    }
                 }
                 instances.put(head.getInstancedModifierId(), modifier);
                 entity.getAbilityPeriodicHealing().clientAdded(head.getInstancedModifierId());
@@ -1076,7 +1114,8 @@ public final class AbilityManager extends BasePlayerManager {
                 var actions = Arrays.stream(modifierData.onAdded)
                         .filter(a -> a != null && (!initializedByWatcher || !isAllowedInServerOwnedChain(a.type)))
                         .toArray(AbilityModifierAction[]::new);
-                executeCallbackActionsNow(finalAbility, actions, invoke.getAbilityData(), finalEntity, finalEntity);
+                AbilityCooldownInvocation.run(modifier, () ->
+                        executeCallbackActionsNow(finalAbility, actions, invoke.getAbilityData(), finalEntity, finalEntity));
             } else if (!initializedOnServer && modifierData.onAdded != null && !initializedByWatcher) {
                 // A modifier whose onAdded neither attaches nor applies another modifier used to run
                 // nothing at all here, so anything the server alone is meant to do - spawning an
@@ -1085,13 +1124,13 @@ public final class AbilityManager extends BasePlayerManager {
                 // resolves those and running them again would double them up.
                 final var ownedAbility = instancedAbility;
                 final var ownedEntity = entity;
-                runServerOwned(
+                AbilityCooldownInvocation.run(modifier, () -> runServerOwned(
                     () -> {
                         var actions = Arrays.stream(modifierData.onAdded)
                                 .filter(a -> a != null && SERVER_OWNED_ON_ADDED.contains(a.type))
                                 .toArray(AbilityModifierAction[]::new);
                         executeCallbackActionsNow(ownedAbility, actions, invoke.getAbilityData(), ownedEntity, ownedEntity);
-                    });
+                    }));
             }
         } else if (modChange.getAction() == ModifierAction.MODIFIER_ACTION_REMOVED) {
             var instances = entity.getInstancedModifiers();
@@ -1102,7 +1141,14 @@ public final class AbilityManager extends BasePlayerManager {
                     entity.getAbilityPeriodicHealing().clientRemoved(head.getInstancedModifierId(),modifier);
                 }
             }
-            if(modifier!=null) modifier.getAbility().unregisterModifier(entity, modifier);
+            if (modifier != null) {
+                var removed = modifier;
+                if (!removed.hasServerCallbacks() && removed.getModifierData().onRemoved != null)
+                    AbilityCooldownInvocation.run(new AbilityCooldownInvocation.Scope(removed, true), () ->
+                            runServerOwned(() -> executeCallbackActionsNow(removed.getAbility(),
+                                    removed.getModifierData().onRemoved, invoke.getAbilityData(), entity, entity)));
+                modifier.getAbility().unregisterModifier(entity, modifier);
+            }
         } else {
 
             Grasscutter.getLogger().debug("Unknown action");

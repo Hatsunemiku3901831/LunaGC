@@ -6,6 +6,8 @@ import emu.grasscutter.data.binout.AbilityModifier.AbilityModifierAction;
 import emu.grasscutter.game.ability.actions.AbilityActionHandler;
 import emu.grasscutter.game.ability.actions.ActionGetFightProperty;
 import emu.grasscutter.game.ability.actions.ActionSharedCooldown;
+import emu.grasscutter.game.ability.actions.ActionModifyAvatarSkillCooldown;
+import emu.grasscutter.data.GameData;
 import emu.grasscutter.game.entity.GameEntity;
 import emu.grasscutter.game.entity.EntityAvatar;
 import java.util.*;
@@ -24,6 +26,7 @@ final class AbilityActionSequence {
             AbilityModifierAction.Type.ReduceHPDebts, AbilityModifierAction.Type.AddSpecialEnergy,
             AbilityModifierAction.Type.ReviveElemEnergy,
             AbilityModifierAction.Type.AddAvatarSkillInfo, AbilityModifierAction.Type.RemoveAvatarSkillInfo,
+            AbilityModifierAction.Type.AvatarSkillStart, AbilityModifierAction.Type.ModifyAvatarSkillCD,
             AbilityModifierAction.Type.AvatarShareCDSkillStart, AbilityModifierAction.Type.ActivitySkillShareCDStart,
             AbilityModifierAction.Type.ClearShareCD,
             AbilityModifierAction.Type.SetOverrideMapValue,
@@ -45,7 +48,7 @@ final class AbilityActionSequence {
         Set<AbilityModifierAction> result=Collections.newSetFromMap(new IdentityHashMap<>());
         Set<AbilityModifierAction> path=Collections.newSetFromMap(new IdentityHashMap<>());
         Set<AbilityModifierAction> validated=Collections.newSetFromMap(new IdentityHashMap<>());
-        return collect(data,actions,result,validated,path,0)?result:null;
+        return collect(data,actions,result,validated,path,0,false)?result:null;
     }
     static boolean isModifierAction(AbilityModifierAction.Type type) {
         return type==AbilityModifierAction.Type.ApplyModifier || type==AbilityModifierAction.Type.AttachModifier
@@ -54,7 +57,7 @@ final class AbilityActionSequence {
     /** Claim the entire tree or none of it; unknown client predicates must not become true. */
     private static boolean collect(AbilityData data, AbilityModifierAction[] actions, Set<AbilityModifierAction> callbacks,
                                    Set<AbilityModifierAction> validated,
-                                   Set<AbilityModifierAction> path, int depth) {
+                                   Set<AbilityModifierAction> path, int depth, boolean repeated) {
         if(actions==null) return true;
         if(depth>32) return false;
         for(var action:actions) {
@@ -62,11 +65,18 @@ final class AbilityActionSequence {
                     || !supportedPredicates(action.predicates,0)
                     || !supportedPredicates(action.targetPredicates,0) || !supportedSelector(action)
                     || !path.add(action)) return false;
+            // Repeated leaves need an occurrence identity, not just the modifier's identity.
+            if (repeated && (action.type==AbilityModifierAction.Type.AvatarSkillStart
+                    || action.type==AbilityModifierAction.Type.ModifyAvatarSkillCD)) return false;
             if(action.type==AbilityModifierAction.Type.CopyGlobalValue
                     && (!knownTarget(action.srcTarget) || !knownTarget(action.dstTarget)
                         || "AllPlayerAvatars".equals(action.srcTarget) || "AllPlayerAvatars".equals(action.dstTarget))) return false;
             if(action.type==AbilityModifierAction.Type.GetFightProperty
                     && !ActionGetFightProperty.supportedSource(action)) return false;
+            if (action.type==AbilityModifierAction.Type.AvatarSkillStart
+                    && (action.skillID<=0 || !GameData.getAvatarSkillDataMap().containsKey(action.skillID))) return false;
+            if (action.type==AbilityModifierAction.Type.ModifyAvatarSkillCD
+                    && !ActionModifyAvatarSkillCooldown.supported(action)) return false;
             if((action.type==AbilityModifierAction.Type.AvatarShareCDSkillStart
                     || action.type==AbilityModifierAction.Type.ActivitySkillShareCDStart
                     || action.type==AbilityModifierAction.Type.ClearShareCD)
@@ -77,16 +87,16 @@ final class AbilityActionSequence {
             validated.add(action);
             if(validated.size()>256) return false;
             if((action.type==AbilityModifierAction.Type.Predicated || action.type==AbilityModifierAction.Type.Randomed)
-                    && (!collect(data,action.successActions,callbacks,validated,path,depth+1)
-                        || !collect(data,action.failActions,callbacks,validated,path,depth+1))) return false;
+                    && (!collect(data,action.successActions,callbacks,validated,path,depth+1,repeated)
+                        || !collect(data,action.failActions,callbacks,validated,path,depth+1,repeated))) return false;
             if(action.type==AbilityModifierAction.Type.Repeated
-                    && !collect(data,action.actions,callbacks,validated,path,depth+1)) return false;
+                    && !collect(data,action.actions,callbacks,validated,path,depth+1,true)) return false;
             if(action.type==AbilityModifierAction.Type.RandomAction) {
                 if(!AbilityRandomQueue.supportedCount(action)
                         || action.randomQueue!=null && action.randomQueue.length>256) return false;
                 if(action.randomQueue!=null) for(var group:action.randomQueue)
                     if(group!=null && (!supportedPredicates(group.randomPredicates,0)
-                            || !collect(data,group.actionQueue,callbacks,validated,path,depth+1))) return false;
+                            || !collect(data,group.actionQueue,callbacks,validated,path,depth+1,true))) return false;
             }
             if(isModifierAction(action.type)) {
                 if(data.modifiers==null || action.modifierName==null) return false;
@@ -94,8 +104,8 @@ final class AbilityActionSequence {
                 // Validate referenced callbacks, but only their own instances may claim them.
                 Set<AbilityModifierAction> referenced=Collections.newSetFromMap(new IdentityHashMap<>());
                 if(modifier==null || !AbilityModifierStacking.supported(modifier)
-                        || !collect(data,modifier.onAdded,referenced,validated,path,depth+1)
-                        || !collect(data,modifier.onRemoved,referenced,validated,path,depth+1)) return false;
+                        || !collect(data,modifier.onAdded,referenced,validated,path,depth+1,false)
+                        || !collect(data,modifier.onRemoved,referenced,validated,path,depth+1,false)) return false;
             }
             path.remove(action);
         }

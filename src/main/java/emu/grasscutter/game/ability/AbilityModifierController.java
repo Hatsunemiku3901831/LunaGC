@@ -15,6 +15,21 @@ public class AbilityModifierController {
     @Getter private AbilityModifier modifierData;
     @Getter private final String name;
     private volatile ServerCallbacks serverCallbacks;
+    private final Set<AbilityModifier.AbilityModifierAction> cooldownCallbacks;
+    private AbilityCooldownInvocation.Ledger cooldownLedger = new AbilityCooldownInvocation.Ledger();
+
+    AbilityCooldownInvocation.Ledger getCooldownLedger() { return cooldownLedger; }
+
+    boolean ownsCooldownCallback(AbilityModifier.AbilityModifierAction action) {
+        return cooldownCallbacks.contains(action);
+    }
+
+    boolean hasCooldownCallbacks() { return !cooldownCallbacks.isEmpty(); }
+
+    void inheritCooldownLedger(AbilityModifierController previous) {
+        if (previous != null && previous.ability == ability && previous.modifierData == modifierData)
+            cooldownLedger = previous.cooldownLedger;
+    }
     private static final AtomicLong applicationSequence=new AtomicLong();
     private static final class ServerCallbacks {
         final GameEntity target;
@@ -58,17 +73,17 @@ public class AbilityModifierController {
     void runServerOnAdded(BooleanSupplier parentCurrent) {
         var callbacks=serverCallbacks;
         if(callbacks==null || !callbacks.started.compareAndSet(false,true)) return;
-        AbilityActionSequence.run(ability,modifierData.onAdded,callbacks.target,()-> {
+        AbilityCooldownInvocation.run(this, () -> AbilityActionSequence.run(ability,modifierData.onAdded,callbacks.target,()-> {
             if(!parentCurrent.getAsBoolean() || !callbacks.context.isCurrent() || callbacks.ended.get()) return false;
             synchronized(callbacks.target.getInstancedModifiers()) {
                 return callbacks.target.getAbilityHpModifier().activeControllers().contains(this);
             }
-        });
+        }));
     }
     public void runServerOnRemoved() {
         var callbacks=serverCallbacks;
         if(callbacks==null || !callbacks.ended.compareAndSet(false,true)) return;
-        AbilityActionSequence.run(ability,modifierData.onRemoved,callbacks.target,callbacks.context::isCurrent);
+        AbilityCooldownInvocation.run(this, () -> AbilityActionSequence.run(ability,modifierData.onRemoved,callbacks.target,callbacks.context::isCurrent));
     }
 
     public AbilityModifierController(
@@ -76,6 +91,7 @@ public class AbilityModifierController {
         this.ability = ability;
         this.abilityData = abilityData;
         this.modifierData = modifierData;
+        this.cooldownCallbacks = AbilityCooldownInvocation.callbacks(modifierData.onAdded, modifierData.onRemoved);
         this.name = abilityData.modifiers.entrySet().stream()
                 .filter(entry -> entry.getValue() == modifierData)
                 .map(java.util.Map.Entry::getKey).findFirst().orElse("");

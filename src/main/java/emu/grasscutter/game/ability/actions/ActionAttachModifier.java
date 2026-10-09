@@ -5,6 +5,7 @@ import com.google.protobuf.ByteString;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.binout.AbilityModifier.AbilityModifierAction;
 import emu.grasscutter.game.ability.Ability;
+import emu.grasscutter.game.ability.AbilityCooldownInvocation;
 import emu.grasscutter.game.ability.AbilityModifierController;
 import emu.grasscutter.game.entity.GameEntity;
 
@@ -45,12 +46,19 @@ public final class ActionAttachModifier extends AbilityActionHandler {
         Grasscutter.getLogger().debug("[Ability] AttachModifier fallback target={}", action.target);
 
         if (!conditionsPass(ability, action, target)) return true;
-        ability.registerModifier(
-                target, new AbilityModifierController(ability, ability.getData(), modifierData));
+        var modifier = new AbilityModifierController(ability, ability.getData(), modifierData);
+        ability.registerModifier(target, modifier);
         if ("AllPlayerAvatars".equals(action.target))
-            ability.getManager()
-                    .executeCallbackActionsNow(
-                            ability, modifierData.onAdded, abilityData, target, target);
+            AbilityCooldownInvocation.run(
+                    modifier,
+                    () ->
+                            ability.getManager()
+                                    .executeCallbackActionsNow(
+                                            ability,
+                                            modifierData.onAdded,
+                                            abilityData,
+                                            target,
+                                            target));
         return true;
     }
 

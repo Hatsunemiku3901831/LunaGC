@@ -9,12 +9,19 @@ import emu.grasscutter.data.*;
 import emu.grasscutter.data.ResourceLoader.OpenConfigData;
 import emu.grasscutter.data.binout.*;
 import emu.grasscutter.data.binout.AbilityModifier.AbilityModifierAction;
+import emu.grasscutter.data.excels.ShareCDData;
 import emu.grasscutter.data.excels.avatar.*;
 import emu.grasscutter.game.ability.*;
 import emu.grasscutter.game.ability.actions.*;
 import emu.grasscutter.game.entity.*;
+import emu.grasscutter.net.proto.AbilityInvokeArgumentOuterClass.AbilityInvokeArgument;
+import emu.grasscutter.net.proto.AbilityInvokeEntryHeadOuterClass.AbilityInvokeEntryHead;
+import emu.grasscutter.net.proto.AbilityInvokeEntryOuterClass.AbilityInvokeEntry;
+import emu.grasscutter.net.proto.AbilityMetaModifierChangeOuterClass.AbilityMetaModifierChange;
+import emu.grasscutter.net.proto.AbilityStringOuterClass.AbilityString;
 import emu.grasscutter.net.proto.AvatarSkillInfoNotifyOuterClass.AvatarSkillInfoNotify;
 import emu.grasscutter.net.proto.AvatarSkillInfoOuterClass.AvatarSkillInfo;
+import emu.grasscutter.net.proto.ModifierActionOuterClass.ModifierAction;
 import emu.grasscutter.server.game.*;
 import emu.grasscutter.server.packet.send.PacketAvatarSkillInfoNotify;
 import emu.grasscutter.utils.JsonUtils;
@@ -31,6 +38,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 class AbilitySkillCooldownTest {
     private static List<AvatarSkillData> skills;
+    private static List<ShareCDData> sharedGroups;
     private static final Map<String, OpenConfigEntry> configs = new TreeMap<>();
     private AbilityTestFixture fixture;
     private TestAvatar avatar;
@@ -43,10 +51,15 @@ class AbilitySkillCooldownTest {
 
     @BeforeAll
     static void resources() throws Exception {
+        AbilityManager.registerHandlers();
         skills =
                 JsonUtils.loadToList(
                         Path.of("resources/ExcelBinOutput/AvatarSkillExcelConfigData.json"),
                         AvatarSkillData.class);
+        sharedGroups =
+                JsonUtils.loadToList(
+                        Path.of("resources/ExcelBinOutput/ShareCDExcelConfigData.json"),
+                        ShareCDData.class);
         try (var files = Files.walk(Path.of("resources/BinOutput/Talent"))) {
             for (var file : files.filter(p -> p.toString().endsWith(".json")).toList()) {
                 var root = JsonParser.parseString(Files.readString(file));
@@ -72,6 +85,7 @@ class AbilitySkillCooldownTest {
         clock = new PlayerTimeClock(nanos::get);
         fixture.player.setSession(new GameSession(null, clock));
         for (var skill : skills) put(GameData.getAvatarSkillDataMap(), skill.getId(), skill);
+        for (var group : sharedGroups) put(GameData.getShareCDDataMap(), group.getId(), group);
         configs.forEach((name, data) -> put(GameData.getOpenConfigEntries(), name, data));
         var depot =
                 JsonUtils.decode(
@@ -106,6 +120,21 @@ class AbilitySkillCooldownTest {
     private EntityAvatar entity(TestAvatar value) {
         var result =
                 new EntityAvatar(fixture.scene, value) {
+                    private final AbilityPeriodicHealing periodic =
+                            new AbilityPeriodicHealing(this, nanos::get);
+                    private final AbilityModifierDuration duration =
+                            new AbilityModifierDuration(this, nanos::get);
+
+                    @Override
+                    public AbilityPeriodicHealing getAbilityPeriodicHealing() {
+                        return periodic;
+                    }
+
+                    @Override
+                    public AbilityModifierDuration getAbilityModifierDuration() {
+                        return duration;
+                    }
+
                     @Override
                     public void initAbilities() {}
                 };
@@ -481,6 +510,392 @@ class AbilitySkillCooldownTest {
         assertNull(state(10022));
         assertTrue(cooldown.start(avatar, 10022, 5));
         assertEquals(List.of(5000), state(10022).getFullCdTimeListList());
+    }
+
+    private static final String START = "{\"$type\":\"AvatarSkillStart\",\"skillID\":10022}";
+
+    private void modifierAbility(String fields) {
+        ability =
+                new Ability(
+                        JsonUtils.decode(
+                                "{\"abilityName\":\"Cooldown_Instances\",\"modifiers\":{\"Buff\":{"
+                                        + fields
+                                        + "}}}",
+                                AbilityData.class),
+                        entity,
+                        fixture.player);
+        entity.getInstancedAbilities().clear();
+        entity.getInstancedAbilities().add(ability);
+    }
+
+    private void clientModifier(boolean add, int id) throws Exception {
+        var change =
+                AbilityMetaModifierChange.newBuilder()
+                        .setAction(
+                                add
+                                        ? ModifierAction.MODIFIER_ACTION_ADDED
+                                        : ModifierAction.MODIFIER_ACTION_REMOVED)
+                        .setParentAbilityName(
+                                AbilityString.newBuilder().setStr(ability.getData().abilityName))
+                        .setModifierLocalId(0);
+        fixture.player
+                .getAbilityManager()
+                .onAbilityInvoke(
+                        AbilityInvokeEntry.newBuilder()
+                                .setEntityId(entity.getId())
+                                .setHead(
+                                        AbilityInvokeEntryHead.newBuilder()
+                                                .setTargetId(entity.getId())
+                                                .setInstancedAbilityId(1)
+                                                .setInstancedModifierId(id))
+                                .setArgumentType(
+                                        AbilityInvokeArgument
+                                                .AbilityInvokeArgument_ABILITY_META_MODIFIER_CHANGE)
+                                .setAbilityData(change.build().toByteString())
+                                .build());
+    }
+
+    private void confirm(AbilityModifierAction action, int instance, EntityAvatar recipient)
+            throws Exception {
+        int local =
+                ability.getData().localIdToAction.entrySet().stream()
+                        .filter(row -> row.getValue() == action)
+                        .findFirst()
+                        .orElseThrow()
+                        .getKey();
+        ability.getManager()
+                .handleServerInvoke(
+                        AbilityInvokeEntry.newBuilder()
+                                .setEntityId(entity.getId())
+                                .setHead(
+                                        AbilityInvokeEntryHead.newBuilder()
+                                                .setTargetId(recipient.getId())
+                                                .setInstancedAbilityId(1)
+                                                .setInstancedModifierId(instance)
+                                                .setLocalId(local))
+                                .build());
+    }
+
+    private AbilityModifierAction added() {
+        return ability.getData().modifiers.get("Buff").onAdded[0];
+    }
+
+    @Test
+    void repeatedAddedAndActionConfirmationsConsumeOneChargeButANewInstanceConsumesAnother()
+            throws Exception {
+        modifierAbility("\"stacking\":\"Multiple\",\"onAdded\":[" + START + "]");
+        clientModifier(true, 71);
+        advance(1000);
+        clientModifier(true, 71);
+        confirm(added(), 71, entity);
+        assertEquals(List.of(5000), state(10022).getFullCdTimeListList());
+        assertEquals(1000, state(10022).getPassCdTime());
+        clientModifier(true, 72);
+        confirm(added(), 72, entity);
+        assertEquals(List.of(5000, 5000), state(10022).getFullCdTimeListList());
+        assertTrue(fixture.player.packets.isEmpty());
+        assertEquals(0, avatar.saves);
+    }
+
+    @Test
+    void expiredOrRemovedConfirmationsCannotStartANewRecoveryAndReusedIdsAreFresh()
+            throws Exception {
+        modifierAbility("\"onAdded\":[" + START + "]");
+        clientModifier(true, 71);
+        advance(6000);
+        confirm(added(), 71, entity);
+        assertEquals(0, state(10022).getFullCdTimeListCount());
+        clientModifier(false, 71);
+        confirm(added(), 71, entity);
+        assertEquals(0, state(10022).getFullCdTimeListCount());
+        clientModifier(true, 71);
+        assertEquals(List.of(5000), state(10022).getFullCdTimeListList());
+    }
+
+    @Test
+    void ratioChangeAndClientConfirmationApplyOnlyOnce() throws Exception {
+        cooldown.start(avatar, 10022, 5);
+        advance(1000);
+        modifierAbility(
+                "\"onAdded\":[{\"$type\":\"ModifyAvatarSkillCD\",\"skillID\":10022,\"cdRatio\":-0.5}]");
+        clientModifier(true, 71);
+        assertEquals(3000, state(10022).getPassCdTime());
+        clientModifier(true, 71);
+        confirm(added(), 71, entity);
+        assertEquals(3000, state(10022).getPassCdTime());
+        clientModifier(true, 72);
+        assertEquals(4000, state(10022).getPassCdTime());
+    }
+
+    @Test
+    void removalStartsItsOwnRecoveryOnceAndDoesNotRepeatOtherClientEffects() throws Exception {
+        modifierAbility(
+                "\"onRemoved\":[{\"$type\":\"SetGlobalValue\",\"key\":\"unrelated\",\"value\":99},"
+                        + START
+                        + "]");
+        var removed = ability.getData().modifiers.get("Buff").onRemoved[1];
+        clientModifier(true, 71);
+        assertNull(state(10022));
+        confirm(removed, 71, entity);
+        clientModifier(false, 71);
+        assertEquals(List.of(5000), state(10022).getFullCdTimeListList());
+        assertFalse(entity.getGlobalAbilityValues().containsKey("unrelated"));
+        advance(6000);
+        clientModifier(false, 71);
+        confirm(removed, 71, entity);
+        assertEquals(0, state(10022).getFullCdTimeListCount());
+    }
+
+    @Test
+    void modifierRemovalWithoutAnActionConfirmationStillRecordsItsCooldown() throws Exception {
+        modifierAbility("\"onRemoved\":[" + START + "]");
+        clientModifier(true, 71);
+        clientModifier(false, 71);
+        assertEquals(List.of(5000), state(10022).getFullCdTimeListList());
+    }
+
+    @Test
+    void rootAbilityStartInvocationsRemainIndependentUsesOfThePersistentAbility() throws Exception {
+        ability =
+                new Ability(
+                        JsonUtils.decode(
+                                "{\"abilityName\":\"RootCooldown\",\"onAbilityStart\":["
+                                        + START
+                                        + "]}",
+                                AbilityData.class),
+                        entity,
+                        fixture.player);
+        entity.getInstancedAbilities().add(ability);
+        confirm(ability.getData().onAbilityStart[0], 0, entity);
+        confirm(ability.getData().onAbilityStart[0], 0, entity);
+        assertEquals(List.of(5000, 5000), state(10022).getFullCdTimeListList());
+    }
+
+    @Test
+    void missingInstanceMatchesOnlyOneLiveModifierAndAmbiguousConfirmationsAreIgnored()
+            throws Exception {
+        modifierAbility(
+                "\"stacking\":\"Multiple\",\"onAdded\":[{\"$type\":\"ModifyAvatarSkillCD\",\"skillID\":10022,\"cdRatio\":-0.5}]");
+        clientModifier(true, 71); // No recovery yet; a later confirmation cannot modify a new cast.
+        cooldown.start(avatar, 10022, 5);
+        confirm(added(), 0, entity);
+        assertEquals(0, state(10022).getPassCdTime());
+        clientModifier(true, 72);
+        assertEquals(2500, state(10022).getPassCdTime());
+        confirm(added(), 0, entity);
+        confirm(added(), 999, entity);
+        assertEquals(2500, state(10022).getPassCdTime());
+    }
+
+    @Test
+    void eachRecipientHasItsOwnDecisionWithinOneModifierApplication() throws Exception {
+        modifierAbility("\"onAdded\":[" + START + "]");
+        var second = new TestAvatar(avatar.getSkillDepot());
+        var secondEntity = entity(second);
+        clientModifier(true, 71);
+        confirm(added(), 71, secondEntity);
+        confirm(added(), 71, secondEntity);
+        assertEquals(List.of(5000), state(10022).getFullCdTimeListList());
+        assertEquals(List.of(5000), second.getSkillInfoStates().get(10022).getFullCdTimeListList());
+    }
+
+    @Test
+    void failedOperandsDoNotMarkAnApplicationBeforeAValidRetry() throws Exception {
+        modifierAbility(
+                "\"onAdded\":[{\"$type\":\"AvatarSkillStart\",\"skillID\":10022,\"cdTimeRatio\":\"Multiplier\"}]");
+        ability.getAbilitySpecials().put("Multiplier", Float.NaN);
+        clientModifier(true, 71);
+        assertNull(state(10022));
+        ability.getAbilitySpecials().put("Multiplier", 1f);
+        confirm(added(), 71, entity);
+        confirm(added(), 71, entity);
+        assertEquals(List.of(5000), state(10022).getFullCdTimeListList());
+    }
+
+    @Test
+    void directApplicationAndItsLaterClientAssignmentShareTheCooldownDecision() throws Exception {
+        modifierAbility("\"onAdded\":[" + START + "]");
+        var apply =
+                JsonUtils.decode(
+                        "{\"$type\":\"ApplyModifier\",\"modifierName\":\"Buff\"}",
+                        AbilityModifierAction.class);
+        assertTrue(new ActionApplyModifier().execute(ability, apply, ByteString.EMPTY, entity));
+        clientModifier(true, 71);
+        confirm(added(), 71, entity);
+        assertEquals(List.of(5000), state(10022).getFullCdTimeListList());
+    }
+
+    @Test
+    void twoUnassignedDirectApplicationsBindToTwoDistinctClientInstances() throws Exception {
+        modifierAbility("\"stacking\":\"Multiple\",\"onAdded\":[" + START + "]");
+        var apply =
+                JsonUtils.decode(
+                        "{\"$type\":\"ApplyModifier\",\"modifierName\":\"Buff\"}",
+                        AbilityModifierAction.class);
+        var handler = new ActionApplyModifier();
+        assertTrue(handler.execute(ability, apply, ByteString.EMPTY, entity));
+        var first = entity.getAppliedAbilityModifiers().get(ability).get("Buff");
+        assertTrue(handler.execute(ability, apply, ByteString.EMPTY, entity));
+        var second = entity.getAppliedAbilityModifiers().get(ability).get("Buff");
+        assertNotSame(first, second);
+        clientModifier(true, 71);
+        clientModifier(true, 72);
+        assertSame(first, entity.getInstancedModifiers().get(71));
+        assertSame(second, entity.getInstancedModifiers().get(72));
+        confirm(added(), 71, entity);
+        confirm(added(), 72, entity);
+        assertEquals(List.of(5000, 5000), state(10022).getFullCdTimeListList());
+    }
+
+    @Test
+    void conditionalRemovalPreservesItsPredicateAndSkipsUnrelatedBranches() throws Exception {
+        modifierAbility(
+                "\"onRemoved\":[{\"$type\":\"Predicated\",\"targetPredicates\":[{\"$type\":\"ByTargetGlobalValue\",\"key\":\"Release\",\"value\":1,\"compareType\":\"Equal\"}],"
+                    + "\"successActions\":["
+                        + START
+                        + ",{\"$type\":\"SetGlobalValue\",\"key\":\"unrelated\",\"value\":99}]}]");
+        clientModifier(true, 71);
+        clientModifier(false, 71);
+        assertNull(state(10022));
+        entity.getGlobalAbilityValues().put("Release", 1f);
+        clientModifier(true, 72);
+        clientModifier(false, 72);
+        assertEquals(List.of(5000), state(10022).getFullCdTimeListList());
+        assertFalse(entity.getGlobalAbilityValues().containsKey("unrelated"));
+    }
+
+    private void periodicAbility(String child) {
+        ability =
+                new Ability(
+                        JsonUtils.decode(
+                                "{\"abilityName\":\"PeriodicCooldown\",\"modifiers\":{"
+                                        + "\"Buff\":{"
+                                        + child
+                                        + "},\"Pulse\":{\"thinkInterval\":1,\"duration\":30,"
+                                        + "\"onThinkInterval\":[{\"$type\":\"ApplyModifier\",\"modifierName\":\"Buff\"}]}}}",
+                                AbilityData.class),
+                        entity,
+                        fixture.player);
+        entity.getInstancedAbilities().add(ability);
+        ability.registerModifier(
+                entity,
+                new AbilityModifierController(
+                        ability, ability.getData(), ability.getData().modifiers.get("Pulse")));
+    }
+
+    @Test
+    void serverGeneratedCallbacksAndTheirClientConfirmationShareOneApplication() throws Exception {
+        periodicAbility(
+                "\"stacking\":\"MultipleRefreshNoRemove\",\"stackingOption\":{\"maxModifierNumForMultipleType\":1},"
+                    + "\"duration\":20,\"onAdded\":["
+                        + START
+                        + "]");
+        advance(1000);
+        entity.getAbilityPeriodicHealing().tick();
+        assertEquals(List.of(5000), state(10022).getFullCdTimeListList());
+        advance(1000);
+        entity.getAbilityPeriodicHealing().tick(); // Refreshing the same slot is not another cast.
+        clientModifier(true, 71);
+        assertTrue(entity.getInstancedModifiers().get(71).hasServerCallbacks());
+        confirm(added(), 71, entity);
+        assertEquals(List.of(5000), state(10022).getFullCdTimeListList());
+        assertEquals(1000, state(10022).getPassCdTime());
+    }
+
+    @Test
+    void repeatedCooldownLeavesAreNotClaimedAsOneServerOwnedApplication() {
+        periodicAbility(
+                "\"onAdded\":[{\"$type\":\"Repeated\",\"repeatCount\":2,\"actions\":["
+                        + START
+                        + "]}]");
+        advance(1000);
+        entity.getAbilityPeriodicHealing().tick();
+        assertNull(state(10022));
+        assertFalse(entity.getAppliedAbilityModifiers().get(ability).containsKey("Buff"));
+    }
+
+    @Test
+    void unsupportedCooldownShapesDoNotClaimTheContainingServerCallback() {
+        periodicAbility(
+                "\"onAdded\":[{\"$type\":\"ModifyAvatarSkillCD\",\"skillID\":10022,\"cdMin\":0,\"cdRatio\":-1}]");
+        cooldown.start(avatar, 10022, 5);
+        advance(1000);
+        entity.getAbilityPeriodicHealing().tick();
+        assertEquals(1000, state(10022).getPassCdTime());
+        assertFalse(entity.getAppliedAbilityModifiers().get(ability).containsKey("Buff"));
+    }
+
+    @Test
+    void sharedChargeStartsAreAlsoDeduplicatedByModifierInstance() throws Exception {
+        int skill =
+                skills.stream()
+                        .filter(s -> s.getShareCDID() == 20050)
+                        .findFirst()
+                        .orElseThrow()
+                        .getId();
+        modifierAbility(
+                "\"stacking\":\"Multiple\",\"onAdded\":[{\"$type\":\"AvatarShareCDSkillStart\",\"skillID\":"
+                        + skill
+                        + ",\"shareCDType\":0}]");
+        clientModifier(true, 71);
+        confirm(added(), 71, entity);
+        var other = entity(new TestAvatar(avatar.getSkillDepot()));
+        confirm(added(), 71, other);
+        clientModifier(true, 71);
+        var shared = fixture.player.getAbilityManager().getSharedCooldown();
+        assertEquals(1, shared.snapshot().get(20050).size());
+        clientModifier(true, 72);
+        assertEquals(2, shared.snapshot().get(20050).size());
+        assertEquals(2, fixture.player.packets.size());
+    }
+
+    @Test
+    void anOldSharedClearConfirmationCannotEraseALaterCast() throws Exception {
+        int skill =
+                skills.stream()
+                        .filter(s -> s.getShareCDID() == 20050)
+                        .findFirst()
+                        .orElseThrow()
+                        .getId();
+        var shared = fixture.player.getAbilityManager().getSharedCooldown();
+        assertTrue(shared.startAvatarSkill(skill, 0));
+        modifierAbility("\"onAdded\":[{\"$type\":\"ClearShareCD\",\"shareCDID\":20050}]");
+        clientModifier(true, 71);
+        assertTrue(shared.snapshot().isEmpty());
+        assertTrue(shared.startAvatarSkill(skill, 0));
+        confirm(added(), 71, entity);
+        confirm(added(), 71, entity(new TestAvatar(avatar.getSkillDepot())));
+        assertEquals(1, shared.snapshot().get(20050).size());
+    }
+
+    @Test
+    void nestedInvocationScopesRestoreAfterFailureAndDoNotLeakIntoOtherActions() throws Exception {
+        modifierAbility("\"onAdded\":[" + START + "]");
+        clientModifier(true, 71);
+        var modifier = entity.getInstancedModifiers().get(71);
+        var outer = new AbilityCooldownInvocation.Scope(modifier, true);
+        AbilityCooldownInvocation.run(
+                outer,
+                () -> {
+                    assertSame(outer, AbilityCooldownInvocation.capture());
+                    assertThrows(
+                            IllegalStateException.class,
+                            () ->
+                                    AbilityCooldownInvocation.run(
+                                            modifier,
+                                            () -> {
+                                                throw new IllegalStateException("test");
+                                            }));
+                    assertSame(outer, AbilityCooldownInvocation.capture());
+                    var write =
+                            JsonUtils.decode(
+                                    "{\"$type\":\"SetGlobalValue\",\"key\":\"unrelated\",\"value\":99}",
+                                    AbilityModifierAction.class);
+                    ability.getManager().executeActionNow(ability, write, ByteString.EMPTY, entity);
+                    ability.getManager().executeAction(ability, write, ByteString.EMPTY, entity);
+                });
+        assertNull(AbilityCooldownInvocation.capture());
+        assertFalse(entity.getGlobalAbilityValues().containsKey("unrelated"));
     }
 
     @Test

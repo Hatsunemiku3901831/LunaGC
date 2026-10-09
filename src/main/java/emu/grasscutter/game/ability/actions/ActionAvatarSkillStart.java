@@ -8,6 +8,7 @@ import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.binout.AbilityModifier.AbilityModifierAction;
 import emu.grasscutter.game.ability.Ability;
+import emu.grasscutter.game.ability.AbilityCooldownInvocation;
 import emu.grasscutter.game.ability.AbilityGlobalValues;
 import emu.grasscutter.game.ability.AbilityManager;
 import emu.grasscutter.game.ability.AbilitySkillCooldown;
@@ -65,10 +66,9 @@ public class ActionAvatarSkillStart extends AbilityActionHandler {
                                 .getAvatar()
                                 .getSkillInfoCharges()
                                 .getOrDefault(action.skillID, data.getMaxChargeNum());
-                // A single recovery is idempotent until it expires. Multiple charges need a
-                // proved client-instance identity before recording both autonomous callbacks
-                // and their confirmations; their explicit start path remains available.
-                if (AbilityManager.isServerOwnedChain() && count != 1) return true;
+                if (AbilityManager.isServerOwnedChain()
+                        && count != 1
+                        && !AbilityCooldownInvocation.identifiable(ability, action)) return true;
                 var multiplier =
                         action.cdTimeRatio != null ? action.cdTimeRatio : action.legacyCdRatio;
                 var ratio =
@@ -79,12 +79,17 @@ public class ActionAvatarSkillStart extends AbilityActionHandler {
                         AbilityTalentResolver.cooldownSeconds(
                                 recipient.getAvatar(), action.skillID, data.getCdTime());
                 if (ratio.isPresent() && ratio.getAsDouble() >= 0 && duration.isPresent())
-                    player.getAbilityManager()
-                            .getSkillCooldown()
-                            .start(
-                                    recipient.getAvatar(),
-                                    action.skillID,
-                                    duration.getAsDouble() * ratio.getAsDouble());
+                    AbilityCooldownInvocation.record(
+                            ability,
+                            action,
+                            recipient,
+                            () ->
+                                    player.getAbilityManager()
+                                            .getSkillCooldown()
+                                            .start(
+                                                    recipient.getAvatar(),
+                                                    action.skillID,
+                                                    duration.getAsDouble() * ratio.getAsDouble()));
             }
         }
         // Server-owned callbacks only record the cooldown; resource actions already run locally.

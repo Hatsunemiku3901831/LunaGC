@@ -2,12 +2,23 @@ package emu.grasscutter.game.ability.actions;
 
 import com.google.protobuf.ByteString;
 
+import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.binout.AbilityModifier.AbilityModifierAction;
 import emu.grasscutter.game.ability.*;
 import emu.grasscutter.game.entity.*;
 
 @AbilityAction(AbilityModifierAction.Type.ModifyAvatarSkillCD)
 public final class ActionModifyAvatarSkillCooldown extends AbilityActionHandler {
+    public static boolean supported(AbilityModifierAction action) {
+        if (action == null) return false;
+        var skill = GameData.getAvatarSkillDataMap().get(action.skillID);
+        return skill != null
+                && skill.getShareCDID() == 0
+                && action.absoluteCdTime == null
+                && action.cdMin == null
+                && (action.skillSlot == null || action.skillSlot.length == 0);
+    }
+
     @Override
     public boolean execute(
             Ability ability, AbilityModifierAction action, ByteString data, GameEntity target) {
@@ -28,10 +39,7 @@ public final class ActionModifyAvatarSkillCooldown extends AbilityActionHandler 
         if (ability == null
                 || action == null
                 || !(target instanceof EntityAvatar avatar)
-                || action.skillID <= 0
-                || action.absoluteCdTime != null
-                || action.cdMin != null
-                || action.skillSlot != null && action.skillSlot.length != 0
+                || !supported(action)
                 || !AbilityGlobalValues.isCurrent(ability, avatar)) return false;
         var player = ability.getPlayerOwner();
         if (player == null || avatar.getPlayer() != player) return false;
@@ -45,12 +53,17 @@ public final class ActionModifyAvatarSkillCooldown extends AbilityActionHandler 
         var ratio = operand == null ? java.util.OptionalDouble.of(0) : operand.tryGet(properties);
         return delta.isPresent()
                 && ratio.isPresent()
-                && player.getAbilityManager()
-                        .getSkillCooldown()
-                        .modifyRemaining(
-                                avatar.getAvatar(),
-                                action.skillID,
-                                (float) delta.getAsDouble(),
-                                (float) ratio.getAsDouble());
+                && AbilityCooldownInvocation.record(
+                        ability,
+                        action,
+                        avatar,
+                        () ->
+                                player.getAbilityManager()
+                                        .getSkillCooldown()
+                                        .modifyRemaining(
+                                                avatar.getAvatar(),
+                                                action.skillID,
+                                                (float) delta.getAsDouble(),
+                                                (float) ratio.getAsDouble()));
     }
 }

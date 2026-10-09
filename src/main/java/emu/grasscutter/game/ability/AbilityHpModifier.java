@@ -110,6 +110,18 @@ public final class AbilityHpModifier {
         return null;
     }
 
+    /** A locally applied callback may precede its client instance assignment. */
+    AbilityModifierController pendingCooldownController(Ability ability, String name) {
+        var named = serverStacks.get(ability);
+        var stack = named == null ? null : named.get(name);
+        var candidates = stack == null ? activeControllers() : stack;
+        return candidates.stream()
+                .filter(c -> c.getAbility() == ability && name.equals(c.getName())
+                        && c.hasCooldownCallbacks()
+                        && !entity.getInstancedModifiers().containsValue(c))
+                .findFirst().orElse(null);
+    }
+
     /** Known expression keys on this bearer can identify a first, hashed global-value update. */
     public Set<String> getReferencedKeys() {
         synchronized (entity.getInstancedModifiers()) {

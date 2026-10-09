@@ -83,13 +83,18 @@ public final class ActionSharedCooldown extends AbilityActionHandler {
                 || !AbilityGlobalValues.isCurrent(ability, recipient)) return false;
         if (!conditionsPass(ability, action, target)) return true;
         var cooldown = player.getAbilityManager().getSharedCooldown();
-        return switch (action.type) {
-            case AvatarShareCDSkillStart -> cooldown.startAvatarSkill(
-                    action.skillID, action.shareCDType);
-            case ActivitySkillShareCDStart -> cooldown.startActivitySkill(
-                    action.skillID, action.shareCDType);
-            case ClearShareCD -> cooldown.clear(action.shareCDID);
-            default -> false;
-        };
+        return AbilityCooldownInvocation.recordShared(
+                ability,
+                action,
+                recipient,
+                () ->
+                        switch (action.type) {
+                            case AvatarShareCDSkillStart -> cooldown.startAvatarSkill(
+                                    action.skillID, action.shareCDType);
+                            case ActivitySkillShareCDStart -> cooldown.startActivitySkill(
+                                    action.skillID, action.shareCDType);
+                            case ClearShareCD -> cooldown.clear(action.shareCDID);
+                            default -> false;
+                        });
     }
 }
