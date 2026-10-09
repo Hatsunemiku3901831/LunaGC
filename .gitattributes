@@ -2,3 +2,5 @@
 * text=auto
 # Preserve archived Lua bytes, including the original whitespace.
 src/main/resources/historical-scripts/**/*.lua text eol=lf -whitespace
+# Keep the original test fixture bytes on Windows and Linux.
+src/test/resources/seal-battle/*.lua -text -whitespace

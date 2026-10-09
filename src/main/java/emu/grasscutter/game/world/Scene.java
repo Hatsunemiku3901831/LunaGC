@@ -77,6 +77,7 @@ public class Scene {
     @Getter private final CrucibleSceneController crucibleSceneController;
     @Getter private final SalesmanSceneController salesmanSceneController;
     @Getter private final AsterSceneController asterSceneController;
+    @Getter private final emu.grasscutter.game.world.seal.SealBattleManager sealBattleManager;
     @Getter @Setter private WorldChallenge challenge;
     @Getter private List<DungeonSettleListener> dungeonSettleListeners;
     @Getter @Setter private int prevScene;
@@ -117,6 +118,7 @@ public class Scene {
         this.crucibleSceneController = new CrucibleSceneController(this);
         this.salesmanSceneController = new SalesmanSceneController(this);
         this.asterSceneController = new AsterSceneController(this);
+        this.sealBattleManager = new emu.grasscutter.game.world.seal.SealBattleManager(this);
         this.scriptManager = new SceneScriptManager(this);
         this.blossomManager = new BlossomManager(this);
         this.unlockedForces = new HashSet<>();
@@ -259,6 +261,7 @@ public class Scene {
 
                 this.crucibleSceneController.onPlayerLeaving(player);
                 this.salesmanSceneController.onPlayerLeaving(player);
+                this.sealBattleManager.onPlayerLeaving(player);
                 getPlayers().remove(player);
                 player.setScene(null);
 
@@ -424,6 +427,7 @@ public class Scene {
         // Party avatars can be removed before their first appearance packet registers them.
         if (entity.getScene() == this) entity.invalidateAbilityLifecycle();
         if (!getEntities().remove(entity.getId(), entity)) return null;
+        this.sealBattleManager.onEntityRemoved(entity);
         var removed = entity;
         if (removed != null) {
             removed.onRemoved();
@@ -479,6 +483,7 @@ public class Scene {
                         .toList();
 
         player.sendPacket(new PacketSceneEntityAppearNotify(entities, VisionType.VisionType_VISION_MEET));
+        this.sealBattleManager.sendTo(player);
     }
 
     public void handleAttack(AttackResult result) {
@@ -578,6 +583,7 @@ public class Scene {
             activityManager.triggerWatcher(
                     WatcherTriggerType.TRIGGER_KILL_MONSTERS_WITHOUT_VEHICLE, monsterId);
             getCrucibleSceneController().onMonsterKilled(killed, avatarAttacker.getPlayer());
+            this.sealBattleManager.onMonsterKilled(killed, avatarAttacker.getPlayer());
         }
 
         var world = this.getWorld();
@@ -635,6 +641,7 @@ public class Scene {
         // way in and never reach the entity loop below, so nothing in the scene moved, died or
         // despawned - and the player was left in a world that had quietly stopped.
         if (!isPaused) stage("the scheduler", () -> this.getScheduler().runTasks());
+        if (!isPaused) stage("the seal battles", this.sealBattleManager::tick);
 
         // Streaming does not need the full tick rate - it answers "which groups are near the
         // player", and a player cannot outrun half a second of it. The timers and triggers below
@@ -679,7 +686,10 @@ public class Scene {
                                         () -> {
                                             if (e instanceof EntityAvatar avatar) tickedAvatars.add(avatar);
                                             if (!e.isAlive()) {
-                                                if (this.getEntities().remove(eid, e)) e.invalidateAbilityLifecycle();
+                                                if (this.getEntities().remove(eid, e)) {
+                                                    e.invalidateAbilityLifecycle();
+                                                    this.sealBattleManager.onEntityRemoved(e);
+                                                }
                                             }
                                             else e.onTick(sceneTime);
                                         }));

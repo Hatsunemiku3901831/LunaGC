@@ -1571,10 +1571,19 @@ public class ScriptLib {
         return entityGadget.startPlatform() ? 0 : 2;
     }
 
-    public int StartSealBattle(int gadgetId, LuaTable var2) {
-        logger.warn("[LUA] unimplemented Call StartSealBattle with {} {}", gadgetId, printTable(var2));
-
-        return 0;
+    public int StartSealBattle(int gadgetId, LuaTable parameters) {
+        var manager = sceneScriptManager.getIfExists();
+        var group = currentGroup.getIfExists();
+        if (manager == null || group == null) return -1;
+        var entity = manager.getScene().getEntityByConfigId(gadgetId, group.id);
+        if (!(entity instanceof EntityGadget gadget)) return -1;
+        try {
+            var config = emu.grasscutter.game.world.seal.SealBattleParameters.fromLua(parameters);
+            return manager.getScene().getSealBattleManager().start(gadget, group, config) ? 0 : -1;
+        } catch (IllegalArgumentException invalid) {
+            logger.debug("Invalid seal battle {}: {}", gadgetId, invalid.getMessage());
+            return -1;
+        }
     }
 
     public int StopChallenge(int var1, int var2) {

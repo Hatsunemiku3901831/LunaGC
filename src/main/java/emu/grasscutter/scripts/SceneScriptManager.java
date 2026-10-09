@@ -402,6 +402,11 @@ public class SceneScriptManager {
         return loadedGroupSetPerBlock;
     }
 
+    /** A lifecycle check must not load a group which has already been unloaded. */
+    public SceneGroup getLoadedGroupById(int groupId) {
+        return sceneGroups.get(groupId);
+    }
+
     // TODO optimize
     public SceneGroup getGroupById(int groupId) {
         if (!scene.getCrucibleSceneController().allows(groupId)) return null;
@@ -711,6 +716,7 @@ public class SceneScriptManager {
     }
 
     public void unregisterGroup(SceneGroup group) {
+        this.scene.getSealBattleManager().onGroupUnloaded(group);
         cancelGroupMonsterSpawns(group.id);
         cancelGroupTimers(group.id);
         this.sceneGroups.remove(group.id);
@@ -864,6 +870,11 @@ public class SceneScriptManager {
     }
 
     public Future<?> callEvent(@Nonnull ScriptArgs params) {
+        return callEvent(params, () -> true);
+    }
+
+    /** Recheck the originating round before queued Lua callbacks touch a reloaded group. */
+    public Future<?> callEvent(@Nonnull ScriptArgs params, java.util.function.BooleanSupplier current) {
         /**
          * We use ThreadLocal to trans SceneScriptManager context to ScriptLib, to avoid eval script for
          * every groups' trigger in every scene instances. But when callEvent is called in a ScriptLib
@@ -874,10 +885,13 @@ public class SceneScriptManager {
         long activityTicket = scene.getCrucibleSceneController().getLifecycle().ticket();
         long activityRound = scene.getCrucibleSceneController().currentRoundSerial();
         long invitationSerial = scene.getCrucibleSceneController().invitationSerial();
-        return eventExecutor.submit(() -> this.realCallEvent(params, activityTicket, activityRound, invitationSerial));
+        return eventExecutor.submit(() -> {
+            if (current.getAsBoolean()) this.realCallEvent(params, activityTicket, activityRound, invitationSerial, current);
+        });
     }
 
-    private void realCallEvent(@Nonnull ScriptArgs params, long activityTicket, long activityRound, long invitationSerial) {
+    private void realCallEvent(@Nonnull ScriptArgs params, long activityTicket, long activityRound, long invitationSerial,
+            java.util.function.BooleanSupplier current) {
         try {
             ScriptLoader.getScriptLib().setSceneScriptManager(this);
 
@@ -903,6 +917,7 @@ public class SceneScriptManager {
                     };
 
             for (SceneTrigger trigger : relevantTriggers) {
+                if (!current.getAsBoolean()) return;
                 var activity = scene.getCrucibleSceneController();
                 if (activity.owns(trigger.currentGroup.id)) {
                     activity.runIfCurrent(activityTicket, activityRound, () -> {
@@ -1394,7 +1409,7 @@ public class SceneScriptManager {
         long invitationSerial = scene.getCrucibleSceneController().invitationSerial();
         return CompletableFuture.runAsync(() -> {
             if (!axis.isStopped() && isCurrentTimeAxis(axis))
-                realCallEvent(params, activityTicket, activityRound, invitationSerial);
+                realCallEvent(params, activityTicket, activityRound, invitationSerial, () -> true);
         }, eventExecutor);
     }
 
@@ -1420,6 +1435,7 @@ public class SceneScriptManager {
     }
 
     public void onDestroy() {
+        scene.getSealBattleManager().close();
         List<SceneTimeAxis> axes;
         synchronized (timeAxis) {
             destroyed = true;
