@@ -1663,11 +1663,18 @@ public class ScriptLib {
         return TeamGlobalValues.setServer(teamValueScene(), uid, key, value);
     }
 
-    public int SetWeatherAreaState(int var1, int var2) {
-        logger.debug("[LUA] Call SetWeatherAreaState with {} {}", var1, var2);
-        this.getSceneScriptManager().getScene().getPlayers()
-                .forEach(p -> p.setWeather(var1, ClimateType.getTypeByValue(var2)));
-        return 0;
+    public int SetWeatherAreaState(int weatherAreaId, int state) {
+        logger.debug("[LUA] Call SetWeatherAreaState with {} {}", weatherAreaId, state);
+        var manager = getSceneScriptManagerOrNull();
+        if (manager == null || weatherAreaId <= 0 || (state != 0 && state != 1)) return 1;
+        var scene = manager.getScene();
+        if (scene == null
+                || (state == 1 && !WeatherAreaState.canActivate(weatherAreaId, scene.getId())))
+            return 1;
+        boolean success = true;
+        for (var player : scene.getPlayers())
+            success &= WeatherAreaState.apply(player, weatherAreaId, state);
+        return success ? 0 : 1;
     }
 
     public int SetWorktopOptions(LuaTable table) {

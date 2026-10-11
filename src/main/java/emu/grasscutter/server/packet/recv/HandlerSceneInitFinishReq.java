@@ -33,11 +33,18 @@ public class HandlerSceneInitFinishReq extends PacketHandler {
         session.send(new PacketPlayerGameTimeNotify(player));
         session.send(new PacketPlayerEnterSceneInfoNotify(player));
         player.getTeamManager().sendMoonsignState();
-        int hexenzirkelCount = (int) player.getTeamManager().getActiveTeam().stream()
-                .filter(e -> PacketPlayerEnterSceneInfoNotify.getHexenzirkelIds().contains(e.getAvatar().getAvatarId()))
-                .count();
+        int hexenzirkelCount =
+                (int)
+                        player.getTeamManager().getActiveTeam().stream()
+                                .filter(
+                                        e ->
+                                                PacketPlayerEnterSceneInfoNotify.getHexenzirkelIds()
+                                                        .contains(e.getAvatar().getAvatarId()))
+                                .count();
         session.send(new PacketTeamHexenzirkelChangeNotify(hexenzirkelCount));
-        session.send(new PacketSceneAreaWeatherNotify(player));
+        var scene = player.getScene();
+        if (scene == null || !player.getQuestManager().restoreActiveQuestWeather(scene.getId()))
+            session.send(new PacketSceneAreaWeatherNotify(player));
         session.send(new PacketScenePlayerInfoNotify(world));
         session.send(new PacketSceneTeamUpdateNotify(player));
 

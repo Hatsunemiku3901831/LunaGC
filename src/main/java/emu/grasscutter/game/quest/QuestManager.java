@@ -11,6 +11,7 @@ import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.game.player.*;
 import emu.grasscutter.game.quest.enums.*;
 import emu.grasscutter.game.world.Position;
+import emu.grasscutter.game.world.WeatherAreaState;
 import emu.grasscutter.net.proto.GivingRecordOuterClass.GivingRecord;
 import emu.grasscutter.server.packet.send.*;
 
@@ -734,6 +735,20 @@ public final class QuestManager extends BasePlayerManager {
             deferredSavedChapters.remove(parentId);
             if (rebound) mainQuest.save();
         }
+    }
+
+    /** Returns true only when restoration has already sent the initial weather notification. */
+    public boolean restoreActiveQuestWeather(int sceneId) {
+        var scene = player.getScene();
+        if (scene == null || scene.getId() != sceneId || player.getWeatherId() != 0) return false;
+        var active =
+                getActiveMainQuests().stream()
+                        .flatMap(main -> main.getActiveQuests().stream())
+                        .map(GameQuest::getQuestData)
+                        .filter(Objects::nonNull)
+                        .toList();
+        int area = QuestWeatherRestore.selectArea(active, sceneId);
+        return area > 0 && WeatherAreaState.apply(player, area, 1);
     }
 
     public List<GameMainQuest> getActiveMainQuests() {
