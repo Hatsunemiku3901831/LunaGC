@@ -4,6 +4,7 @@ import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.*;
 import emu.grasscutter.game.activity.salesman.SalesmanSchedule;
 import emu.grasscutter.utils.FileUtils;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -15,7 +16,8 @@ public final class HistoricalActivityService {
         entries.sort(
                 Comparator.comparingLong(
                                 (HistoricalActivity item) -> {
-                                    long time = HistoricalActivity.epoch(item.getOfficialBeginTime());
+                                    long time =
+                                            HistoricalActivity.epoch(item.getOfficialBeginTime());
                                     return time == 0 ? Long.MAX_VALUE : time;
                                 })
                         .thenComparingInt(HistoricalActivity::getActivityId));
@@ -32,7 +34,8 @@ public final class HistoricalActivityService {
                             .filter(
                                     item ->
                                             item.getActivityId() == event.getActivityId()
-                                                    && Objects.equals(item.getHistoryKey(), event.getKey()))
+                                                    && Objects.equals(
+                                                            item.getHistoryKey(), event.getKey()))
                             .findFirst()
                             .orElse(null);
             var row = new LinkedHashMap<String, Object>();
@@ -64,7 +67,10 @@ public final class HistoricalActivityService {
             long titleCount =
                     event.getActivityId() == 5001
                             ? GameData.getMpPlayWatcherDataMap().values().stream()
-                                    .filter(watcher -> watcher.getMpPlayId() == 1 && !watcher.isDisuse())
+                                    .filter(
+                                            watcher ->
+                                                    watcher.getMpPlayId() == 1
+                                                            && !watcher.isDisuse())
                                     .count()
                             : 0;
             row.put("settlementTitleCount", titleCount);
@@ -73,7 +79,10 @@ public final class HistoricalActivityService {
                     salesman == null
                             ? 0
                             : salesman.getDailyConfigIdList().stream()
-                                    .filter(id -> GameData.getSalesmanDailyDataMap().containsKey(id.intValue()))
+                                    .filter(
+                                            id ->
+                                                    GameData.getSalesmanDailyDataMap()
+                                                            .containsKey(id.intValue()))
                                     .count();
             var salesmanRewards = new HashSet<Integer>();
             if (salesman != null) {
@@ -90,7 +99,8 @@ public final class HistoricalActivityService {
                     "salesmanResourcesReady",
                     salesman != null
                             && SalesmanSchedule.resourcesAvailable()
-                            && emu.grasscutter.game.activity.salesman.SalesmanNpcScene.resourcesAvailable());
+                            && emu.grasscutter.game.activity.salesman.SalesmanNpcScene
+                                    .resourcesAvailable());
             row.put(
                     "restorationNote",
                     event.getActivityId() == 5001
@@ -102,12 +112,19 @@ public final class HistoricalActivityService {
                                             + salesmanDays
                                             + " 天材料、"
                                             + salesmanRewardCount
-                                            + " 组首期奖励，已接入七处立本、每日对话、凌晨 4 点换日、材料提交、累计开匣机会、七匣不重复抽取与实际发奖；客户端完整流程待验证"
+                                            + " 组首期奖励，已接入七处立本、每日对话、凌晨 4"
+                                            + " 点换日、材料提交、累计开匣机会、七匣不重复抽取与实际发奖；客户端完整流程待验证"
                                     : event.getActivityId() == 2001
-                                            ? "已恢复六处探索区域、118 个碎屑点、两轮区域任务，以及陨星回收的 60 处营地、难度选择、封印战斗、各玩家独立 20 树脂领奖和六项累计任务；奖励生成时固定世界玩家资格，联机首次领取后保留 10 秒，全部领完或到期时结束营地；进度与货币 109 保存到各人排期，已接入活动商店信用兑换、真实发货与独立限购。货币显示、最终多人挑战、第三章兑换与菲谢尔领取仍待补齐，客户端流程待实机验证"
+                                            ? "已恢复六处探索区域、118 个碎屑点、两轮区域任务，以及陨星回收的 60"
+                                                  + " 处营地、难度选择、封印战斗、各玩家独立 20 树脂领奖和六项累计任务；进度与货币 109"
+                                                  + " 保存到各人排期，已接入活动商店信用兑换、真实发货与独立限购。大型陨星已接入原始四组入口、全队同意后直接挑战或跨世界"
+                                                  + " 2–4 人匹配、全员加载后准备、原始难度与战斗脚本，以及各玩家独立 40"
+                                                  + " 树脂领奖。货币显示、完整结算称号、第三章任务与兑换、菲谢尔领取和重启后的未领机关恢复仍待补齐，客户端完整流程待实机验证"
                                             : !resource
                                                     ? "本资源版本缺少活动记录，暂不能开启"
-                                                    : !event.hasKnownType() ? "活动类型编号尚未核实，暂不能开启" : "可管理活动排期；专属玩法尚未完成客户端验证");
+                                                    : !event.hasKnownType()
+                                                            ? "活动类型编号尚未核实，暂不能开启"
+                                                            : "可管理活动排期；专属玩法尚未完成客户端验证");
             rows.add(row);
         }
         return Map.of("retcode", 0, "activities", rows, "order", "release-ascending");
@@ -144,7 +161,9 @@ public final class HistoricalActivityService {
             }
         }
         var selected =
-                next.stream().filter(item -> item.getActivityId() == event.getActivityId()).findFirst();
+                next.stream()
+                        .filter(item -> item.getActivityId() == event.getActivityId())
+                        .findFirst();
         return Map.of(
                 "retcode",
                 0,

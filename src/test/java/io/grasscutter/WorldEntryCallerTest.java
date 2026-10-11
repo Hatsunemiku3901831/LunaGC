@@ -3,7 +3,9 @@ package io.grasscutter;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.google.gson.Gson;
+
 import dev.morphia.Datastore;
+
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.excels.activity.MpPlayGroupData;
 import emu.grasscutter.data.excels.scene.SceneData;
@@ -35,12 +37,15 @@ import emu.grasscutter.server.event.player.PlayerEnterHomeEvent;
 import emu.grasscutter.server.game.*;
 import emu.grasscutter.server.packet.recv.*;
 import emu.grasscutter.server.packet.send.*;
+
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import it.unimi.dsi.fastutil.ints.IntSets;
+
+import org.junit.jupiter.api.*;
+
 import java.lang.reflect.Proxy;
 import java.util.*;
-import org.junit.jupiter.api.*;
 
 class WorldEntryCallerTest {
     private AbilityTestFixture fixture;
@@ -359,7 +364,8 @@ class WorldEntryCallerTest {
         noEntry(player);
         for (var packet : player.packets)
             if (packet instanceof PacketPlayerApplyEnterMpResultNotify)
-                assertFalse(PlayerApplyEnterMpResultNotify.parseFrom(packet.getData()).getIsAgreed());
+                assertFalse(
+                        PlayerApplyEnterMpResultNotify.parseFrom(packet.getData()).getIsAgreed());
     }
 
     @Test
@@ -498,7 +504,8 @@ class WorldEntryCallerTest {
                         .filter(p -> p instanceof PacketPlayerApplyEnterMpResultNotify)
                         .toList();
         assertEquals(1, results.size());
-        assertTrue(PlayerApplyEnterMpResultNotify.parseFrom(results.get(0).getData()).getIsAgreed());
+        assertTrue(
+                PlayerApplyEnterMpResultNotify.parseFrom(results.get(0).getData()).getIsAgreed());
         assertEquals(owner.getUid(), (entryPacket(guest).getTargetUid() ^ 4145) + 30259);
     }
 
@@ -612,7 +619,8 @@ class WorldEntryCallerTest {
         var field = emu.grasscutter.scripts.SceneScriptManager.class.getDeclaredField("meta");
         field.setAccessible(true);
         field.set(manager, meta);
-        var initialized = emu.grasscutter.scripts.SceneScriptManager.class.getDeclaredField("isInit");
+        var initialized =
+                emu.grasscutter.scripts.SceneScriptManager.class.getDeclaredField("isInit");
         initialized.setAccessible(true);
         initialized.set(manager, true);
         homes.enterHome(first, owner, 0, true);
@@ -665,7 +673,8 @@ class WorldEntryCallerTest {
                         .filter(p -> p instanceof PacketPlayerApplyEnterHomeResultNotify)
                         .toList();
         assertEquals(1, results.size());
-        assertFalse(PlayerApplyEnterHomeResultNotify.parseFrom(results.get(0).getData()).getIsAgreed());
+        assertFalse(
+                PlayerApplyEnterHomeResultNotify.parseFrom(results.get(0).getData()).getIsAgreed());
     }
 
     @Test
@@ -700,7 +709,11 @@ class WorldEntryCallerTest {
         var rotation = new Position(0, 90, 0);
         var called = new boolean[1];
         var properties =
-                TeleportProperties.builder().sceneId(3).teleportTo(position).teleportRot(rotation).build();
+                TeleportProperties.builder()
+                        .sceneId(3)
+                        .teleportTo(position)
+                        .teleportRot(rotation)
+                        .build();
         assertTrue(
                 target.tryAddPlayer(
                         guest,
@@ -737,7 +750,10 @@ class WorldEntryCallerTest {
                 target.tryAddPlayer(
                         guest,
                         expected,
-                        TeleportProperties.builder().sceneId(3).teleportTo(new Position(4, 5, 6)).build(),
+                        TeleportProperties.builder()
+                                .sceneId(3)
+                                .teleportTo(new Position(4, 5, 6))
+                                .build(),
                         c -> called[0] = true));
         assertFalse(called[0]);
         assertSame(source, guest.getWorld());
@@ -836,7 +852,10 @@ class WorldEntryCallerTest {
                 .handle(
                         owner.getSession(),
                         new byte[0],
-                        HomeKickPlayerReq.newBuilder().setTargetUid(guest.getUid()).build().toByteArray());
+                        HomeKickPlayerReq.newBuilder()
+                                .setTargetUid(guest.getUid())
+                                .build()
+                                .toByteArray());
         var response =
                 owner.packets.stream()
                         .filter(p -> p instanceof PacketHomeKickPlayerRsp)
@@ -901,8 +920,7 @@ class WorldEntryCallerTest {
                     public void save() {}
                 };
         avatar.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, 100);
-        owner
-                .getTeamManager()
+        owner.getTeamManager()
                 .getActiveTeam()
                 .add(
                         new EntityAvatar(scene, avatar) {
@@ -944,32 +962,47 @@ class WorldEntryCallerTest {
 
     private CrucibleMatchmaking.Run match(Member owner, Member guest) throws Exception {
         var system = server.getCrucibleMatchSystem();
-        var field = CrucibleMatchSystem.class.getDeclaredField("teams");
+        matchingTeam(owner);
+        matchingTeam(guest);
+        int type = emu.grasscutter.net.proto.MatchTypeOuterClass.MatchType.MatchType_MP_PLAY_VALUE;
+        system.start(owner, type, 1, 0, 0);
+        system.start(guest, type, 1, 0, 0);
+        assertTrue(system.isReserved(owner));
+        assertTrue(system.isReserved(guest));
+        var pool = cruciblePool();
+        var field = pool.getClass().getDeclaredField("queue");
         field.setAccessible(true);
-        @SuppressWarnings("unchecked")
-        var teams = (Map<Integer, CrucibleSceneController.MatchingTeam>) field.get(system);
-        teams.put(owner.getUid(), matchingTeam(owner));
-        teams.put(guest.getUid(), matchingTeam(guest));
-        return new CrucibleMatchmaking.Run(
-                1,
-                CrucibleMatchmaking.Stage.TRANSFERRING,
-                owner.getUid(),
-                5001002,
-                List.of(
-                        new CrucibleMatchmaking.Party(
-                                owner.getUid(), 5001002, Map.of(owner.getUid(), owner.getWorldLevel())),
-                        new CrucibleMatchmaking.Party(
-                                guest.getUid(), 5001002, Map.of(guest.getUid(), guest.getWorldLevel()))),
-                Map.of(owner.getUid(), owner.getWorldLevel(), guest.getUid(), guest.getWorldLevel()),
-                Long.MAX_VALUE);
+        var queue = (CrucibleMatchmaking) field.get(pool);
+        long now = System.currentTimeMillis() / 1000 + 5;
+        var run = queue.findMatches(now).get(0);
+        assertEquals(owner.getUid(), run.hostUid());
+        assertEquals(CrucibleMatchmaking.Reply.ACCEPTED, queue.confirm(owner.getUid(), true, now));
+        assertEquals(
+                CrucibleMatchmaking.Reply.ALL_AGREED, queue.confirm(guest.getUid(), true, now));
+        assertTrue(queue.allowEnter(owner.getUid(), owner.getUid(), now));
+        assertTrue(queue.allowEnter(guest.getUid(), owner.getUid(), now));
+        assertTrue(queue.beginTransfer(run.id(), now));
+        return queue.runFor(owner.getUid());
+    }
+
+    private Object cruciblePool() throws Exception {
+        var field = CrucibleMatchSystem.class.getDeclaredField("pools");
+        field.setAccessible(true);
+        for (var pool : (List<?>) field.get(server.getCrucibleMatchSystem())) {
+            var id = pool.getClass().getDeclaredField("playId");
+            id.setAccessible(true);
+            if (id.getInt(pool) == 1) return pool;
+        }
+        throw new AssertionError("Crucible queue missing");
     }
 
     private void transferMatch(CrucibleMatchmaking.Run run) throws Exception {
         var method =
-                CrucibleMatchSystem.class.getDeclaredMethod("transfer", CrucibleMatchmaking.Run.class);
+                CrucibleMatchSystem.class.getDeclaredMethod(
+                        "transfer", cruciblePool().getClass(), CrucibleMatchmaking.Run.class);
         method.setAccessible(true);
         try {
-            method.invoke(server.getCrucibleMatchSystem(), run);
+            method.invoke(server.getCrucibleMatchSystem(), cruciblePool(), run);
         } catch (java.lang.reflect.InvocationTargetException e) {
             if (e.getCause() instanceof RuntimeException cause) throw cause;
             throw e;

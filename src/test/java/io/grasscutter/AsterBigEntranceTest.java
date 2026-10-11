@@ -52,10 +52,10 @@ class AsterBigEntranceTest {
     private static final int MAIN = 133001413;
     private static final List<Integer> GROUPS = List.of(MAIN, 133001426, 133001427, 133001498);
     private AbilityTestFixture environment;
-    private AsterBigTestFixture resources;
-    private AsterMidSceneTest.RecoveryPlayer host, guest;
-    private AbilityTestFixture.TestScene scene;
-    private TrackedScripts scripts;
+    AsterBigTestFixture resources;
+    AsterMidSceneTest.RecoveryPlayer host, guest;
+    AbilityTestFixture.TestScene scene;
+    TrackedScripts scripts;
     private Object oldConfiguration, oldDatastore;
     private final List<Runnable> restore = new ArrayList<>();
 
@@ -114,7 +114,15 @@ class AsterBigEntranceTest {
         ready(host, resources.host, 1);
     }
 
-    private void ready(AsterMidSceneTest.RecoveryPlayer player, PlayerActivityData data, int peer) {
+    void ready(AsterMidSceneTest.RecoveryPlayer player, PlayerActivityData data, int peer) {
+        ready(player, data, peer, scene);
+    }
+
+    void ready(
+            AsterMidSceneTest.RecoveryPlayer player,
+            PlayerActivityData data,
+            int peer,
+            Scene scene) {
         player.server = scene.getWorld().getServer();
         player.setUid(data.getUid());
         player.setPeerId(peer);
@@ -173,7 +181,7 @@ class AsterBigEntranceTest {
     }
 
     // Reflection keeps the initial regression runnable before the missing controller exists.
-    private void update(long now) throws Exception {
+    void update(long now) throws Exception {
         var controller = Scene.class.getMethod("getAsterBigSceneController").invoke(scene);
         controller.getClass().getMethod("update", long.class).invoke(controller, now);
         scripts.awaitAll();
@@ -389,10 +397,10 @@ class AsterBigEntranceTest {
     }
 
     @Test
-    void matchingRequestReceivesAnExplicitUnavailableResponse() throws Exception {
+    void matchingOwnerCheckAcceptsEligiblePlayTwoWithoutStartingABattle() throws Exception {
         update(resources.now);
         scene.getAsterBigSceneController().checkOwnerRequest(host, 2, false);
-        assertEquals(Retcode.RET_MP_MATCH_PLAY_NOT_OPEN_VALUE, ownerCheck(host).getRetcode());
+        assertEquals(0, ownerCheck(host).getRetcode());
         assertEquals(0, scene.getScenePlayBattleManager().getInfo(MAIN).getState());
     }
 
@@ -587,13 +595,13 @@ class AsterBigEntranceTest {
         }
     }
 
-    private static Field field(Class<?> type, String name) throws Exception {
+    static Field field(Class<?> type, String name) throws Exception {
         var field = type.getDeclaredField(name);
         field.setAccessible(true);
         return field;
     }
 
-    private static final class TrackedScripts extends SceneScriptManager {
+    static final class TrackedScripts extends SceneScriptManager {
         final List<Future<?>> futures = new CopyOnWriteArrayList<>();
 
         TrackedScripts(Scene scene) {

@@ -15,7 +15,7 @@ import emu.grasscutter.server.packet.send.*;
 import java.util.*;
 import java.util.concurrent.*;
 
-/** Day-8 original play-2 groups and consent for direct battles in the current world. */
+/** Day-8 original play-2 groups and consent for direct or matched battles. */
 public final class AsterBigSceneController {
     public static final int PLAY_ID = 2, MAIN = 133001413, ENTRANCE = 413001;
     private static final Set<Integer> GROUPS = Set.of(MAIN, 133001426, 133001427, 133001498);
@@ -24,19 +24,33 @@ public final class AsterBigSceneController {
     private final Map<Integer, SceneGroup> mounted = new ConcurrentHashMap<>();
     private int scheduleId;
     private long generation;
+    private long invitationSerial;
     private Future<?> opening;
     private Invitation invitation;
 
     private static final class Invitation {
         final Map<Integer, Player> members;
         final Set<Integer> agreed = new HashSet<>();
-        final long deadline, generation;
+        final Map<Integer, Integer> worldLevels;
+        final long generation;
+        long deadline;
+        final boolean matching;
+        boolean queued;
 
-        Invitation(Map<Integer, Player> members, int owner, long generation, long deadline) {
+        Invitation(
+                Map<Integer, Player> members,
+                int owner,
+                long generation,
+                long deadline,
+                boolean matching) {
             this.members = Map.copyOf(members);
+            var levels = new LinkedHashMap<Integer, Integer>();
+            members.forEach((uid, player) -> levels.put(uid, player.getWorldLevel()));
+            this.worldLevels = Map.copyOf(levels);
             this.agreed.add(owner);
             this.generation = generation;
             this.deadline = deadline;
+            this.matching = matching;
         }
     }
 
@@ -277,9 +291,8 @@ public final class AsterBigSceneController {
         if (invitation != null || !scene.getScenePlayBattleManager().canPrepare(PLAY_ID))
             return new Check(Retcode.RET_MP_IN_MP_PLAY_BATTLE, 0);
         if (!entrance.isInteractEnabled()) return new Check(Retcode.RET_MP_PLAY_NOT_ACTIVE, 0);
-        // Cross-world matching is wired separately; do not turn its request into an unconsented
-        // direct battle.
-        if (!skipMatch) return new Check(Retcode.RET_MP_MATCH_PLAY_NOT_OPEN, 0);
+        if (!skipMatch && !GameData.getMpPlayMatchDataMap().get(PLAY_ID).isAutoMatch())
+            return new Check(Retcode.RET_MP_MATCH_PLAY_NOT_OPEN, 0);
         if (players.isEmpty() || players.size() > 4 || !players.contains(owner))
             return new Check(Retcode.RET_MP_WORLD_IS_FULL, 0);
         for (var player : players) {
@@ -312,8 +325,10 @@ public final class AsterBigSceneController {
                             members,
                             owner.getUid(),
                             generation,
-                            System.currentTimeMillis() / 1000 + INVITE_SECONDS);
-            if (members.size() == 1) beginPreparation();
+                            System.currentTimeMillis() / 1000 + INVITE_SECONDS,
+                            !skipMatch);
+            invitationSerial++;
+            if (members.size() == 1) completeInvitation();
             else
                 for (var player : members.values())
                     player.sendPacket(
@@ -343,6 +358,7 @@ public final class AsterBigSceneController {
         synchronized (scene) {
             if (id != PLAY_ID
                     || !invitationCurrent()
+                    || invitation.queued
                     || System.currentTimeMillis() / 1000 >= invitation.deadline
                     || invitation.members.get(player.getUid()) != player
                     || player == scene.getHost()
@@ -356,8 +372,112 @@ public final class AsterBigSceneController {
             if (!agree) cancelInvitation();
             else {
                 invitation.agreed.add(player.getUid());
-                if (invitation.agreed.size() == invitation.members.size()) beginPreparation();
+                if (invitation.agreed.size() == invitation.members.size()) completeInvitation();
             }
+        }
+    }
+
+    private void completeInvitation() {
+        if (!invitation.matching) {
+            beginPreparation();
+            return;
+        }
+        invitation.queued = true;
+        invitation.deadline = System.currentTimeMillis() / 1000 + 300;
+        sendToMembers(PacketMpPlay.inviteResult(PLAY_ID, true));
+    }
+
+    public record MatchingTeam(
+            Scene source,
+            int scheduleId,
+            long generation,
+            long serial,
+            List<Player> players,
+            Map<Integer, Integer> worldLevels) {
+        public MatchingTeam {
+            players = List.copyOf(players);
+            worldLevels = Map.copyOf(worldLevels);
+        }
+    }
+
+    /** The server observes consent outside scene/world locks; only a solo caller may start here. */
+    public MatchingTeam matchingTeam(Player owner, int playId, boolean permitSoloStart) {
+        synchronized (scene) {
+            if (permitSoloStart
+                    && invitation == null
+                    && scene.getWorld().getPlayers().size() == 1
+                    && checkOwner(owner, playId, false, List.of(owner)).code() == 0)
+                startInvitation(owner, playId, false);
+            if (playId != PLAY_ID
+                    || owner != scene.getHost()
+                    || invitation == null
+                    || !invitation.queued) return null;
+            var team =
+                    new MatchingTeam(
+                            scene,
+                            scheduleId,
+                            generation,
+                            invitationSerial,
+                            List.copyOf(invitation.members.values()),
+                            invitation.worldLevels);
+            return isMatching(team) ? team : null;
+        }
+    }
+
+    public boolean isMatching(MatchingTeam team) {
+        synchronized (scene) {
+            return team != null
+                    && team.source() == scene
+                    && team.scheduleId() == scheduleId
+                    && team.generation() == generation
+                    && team.serial() == invitationSerial
+                    && invitation != null
+                    && invitation.queued
+                    && invitationCurrent()
+                    && System.currentTimeMillis() / 1000 < invitation.deadline
+                    && invitation.worldLevels.equals(team.worldLevels())
+                    && new HashSet<>(team.players())
+                            .equals(new HashSet<>(invitation.members.values()))
+                    && scene.getWorld().getWorldLevel()
+                            == team.worldLevels().get(scene.getHost().getUid())
+                    && team.players().stream()
+                            .allMatch(p -> p.getWorldLevel() == team.worldLevels().get(p.getUid()));
+        }
+    }
+
+    public void releaseMatching(long serial) {
+        synchronized (scene) {
+            if (invitation != null && invitation.queued && serial == invitationSerial) {
+                invitation = null;
+                invitationSerial++;
+            }
+        }
+    }
+
+    /** Admission/loading finishes before enabling the original MATCH difficulty and battle. */
+    public boolean startMatchedPreparation(Player owner, int schedule, List<Player> players) {
+        synchronized (scene) {
+            if (schedule != scheduleId
+                    || checkOwner(owner, PLAY_ID, false, players).code() != 0
+                    || !scene.getWorld().isMultiplayer()
+                    || !new HashSet<>(scene.getWorld().getPlayers()).equals(new HashSet<>(players)))
+                return false;
+            boolean success =
+                    scene.getScenePlayBattleManager()
+                            .prepare(
+                                    GameData.getMpPlayGroupDataMap().get(PLAY_ID),
+                                    GameData.getMpPlayMatchDataMap().get(PLAY_ID),
+                                    2,
+                                    ScenePlayBattleManager.MATCH,
+                                    players);
+            if (success)
+                scene.broadcastPacket(
+                        new PacketMpPlayPrepareNotify(
+                                PLAY_ID,
+                                scene.getScenePlayBattleManager()
+                                        .getInfo(MAIN)
+                                        .getPrepareEndTime()));
+            return success;
         }
     }
 
