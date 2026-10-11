@@ -928,8 +928,19 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public void onAvatarDie(long dieGuid) {
-        EntityAvatar deadAvatar = this.getCurrentAvatarEntity();
-        if (deadAvatar == null || deadAvatar.getId() != dieGuid) return;
+        if (dieGuid == 0) return;
+        var scene = this.player.getScene();
+        var activeTeam = this.getActiveTeamSnapshot();
+        if (scene == null || activeTeam.isEmpty()) return;
+        int currentIndex = this.currentCharacterIndex;
+        if (currentIndex < 0 || currentIndex >= activeTeam.size()) currentIndex = 0;
+        EntityAvatar deadAvatar = activeTeam.get(currentIndex);
+        if (deadAvatar == null
+                || deadAvatar.getScene() != scene
+                || deadAvatar.isAlive()
+                || (deadAvatar.getId() != dieGuid && deadAvatar.getAvatar().getGuid() != dieGuid))
+            return;
+        this.currentCharacterIndex = currentIndex;
 
         PlayerDieType dieType = deadAvatar.getKilledType();
         int killedBy = deadAvatar.getKilledBy();
@@ -939,18 +950,22 @@ public final class TeamManager extends BasePlayerDataManager {
             this.getPlayer().sendPacket(new PacketWorldPlayerDieNotify(dieType, killedBy));
         } else {
 
-            int replaceIndex = getDeadAvatarReplacement();
-            if (0 <= replaceIndex && replaceIndex < this.getActiveTeam().size()) {
+            int replaceIndex = -1;
+            for (int index = 0; index < activeTeam.size(); index++) {
+                if (activeTeam.get(index).isAlive()) {
+                    replaceIndex = index;
+                    break;
+                }
+            }
+            if (replaceIndex >= 0) {
 
                 this.setCurrentCharacterIndex(replaceIndex);
-                this.getPlayer().getScene().addEntity(this.getActiveTeam().get(replaceIndex));
+                scene.addEntity(activeTeam.get(replaceIndex));
             } else {
 
                 this.getPlayer().sendPacket(new PacketWorldPlayerDieNotify(dieType, killedBy));
 
-                PlayerTeamDeathEvent event =
-                    new PlayerTeamDeathEvent(
-                        this.getPlayer(), this.getActiveTeam().get(this.getCurrentCharacterIndex()));
+                PlayerTeamDeathEvent event = new PlayerTeamDeathEvent(this.getPlayer(), deadAvatar);
                 event.call();
             }
         }
