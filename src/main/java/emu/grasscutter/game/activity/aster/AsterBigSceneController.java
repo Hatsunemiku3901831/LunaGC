@@ -228,6 +228,11 @@ public final class AsterBigSceneController {
                             || scene.getEntityByConfigId(AsterBigRewards.CONFIG, MAIN) != null;
             if ((nearby || busy) && mounted.isEmpty()) load();
             else if (!nearby && !busy && !mounted.isEmpty()) close();
+            if (!mounted.isEmpty()
+                    && opening != null
+                    && opening.isDone()
+                    && scene.getScenePlayBattleManager().getInfo(MAIN).getState() == 0)
+                scene.getScenePlayBattleManager().getRewards().restore();
             if (invitation != null && (now / 1000 >= invitation.deadline || !invitationCurrent()))
                 cancelInvitation();
         }

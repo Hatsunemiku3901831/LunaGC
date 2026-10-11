@@ -104,6 +104,102 @@ public final class AsterBigRewardController {
         }
     }
 
+    /** Rehydrate the saved generation; current world members never create new qualification. */
+    public boolean restore() {
+        synchronized (scene) {
+            var owner = data(scene.getHost());
+            if (owner == null
+                    || !eligible(scene.getHost(), config(owner), System.currentTimeMillis()))
+                return false;
+            final AsterBigRewardState.View offer;
+            synchronized (owner) {
+                try {
+                    offer = AsterSchedule.progress(owner).bigReward();
+                } catch (RuntimeException invalid) {
+                    return false;
+                }
+            }
+            if (point != null) {
+                if (offer != null
+                        && point.owner == owner
+                        && offer.token().equals(point.token)
+                        && current(point)) return true;
+                close();
+            }
+            if (offer == null
+                    || offer.remaining().isEmpty()
+                    || !offer.rewards().containsKey(owner.getUid())
+                    || offer.rewards().values().stream().anyMatch(r -> !canonical(r))) return false;
+            var scripts = scene.getScriptManager();
+            var group = scripts.getLoadedGroupById(AsterBigRewards.GROUP);
+            if (group == null || !scripts.allowsGroupCall(group)) return false;
+            var meta = group.gadgets.get(AsterBigRewards.CONFIG);
+            if (meta == null
+                    || meta.gadget_id != AsterBigRewards.GADGET
+                    || scene.getEntityByConfigId(AsterBigRewards.CONFIG, AsterBigRewards.GROUP)
+                            != null) return false;
+            var entity = scripts.createGadget(group.id, group.block_id, meta);
+            return entity != null
+                    && owns(entity)
+                    && publish(
+                            entity,
+                            owner,
+                            offer.token(),
+                            () ->
+                                    scripts.getLoadedGroupById(group.id) == group
+                                            && scripts.allowsGroupCall(group));
+        }
+    }
+
+    private static boolean canonical(AsterBigRewards.Reward frozen) {
+        var actual = AsterBigRewards.reward(frozen.worldLevel());
+        return actual != null
+                && actual.dropId() == frozen.dropId()
+                && actual.adventureExp() == frozen.adventureExp()
+                && actual.companionshipExp() == frozen.companionshipExp()
+                && actual.essence() == frozen.essence();
+    }
+
+    /** Complete validation precedes this acknowledged retirement and the next round publication. */
+    boolean retireForNewBattle() {
+        synchronized (scene) {
+            if (!canReplace()) return false;
+            var owner = data(scene.getHost());
+            if (owner != null) {
+                synchronized (owner) {
+                    String before = owner.getDetail();
+                    boolean storing = false;
+                    try {
+                        var progress = AsterSchedule.progress(owner);
+                        if (progress.bigReward() != null) {
+                            progress.retireBigReward();
+                            owner.setDetail(progress);
+                            storing = true;
+                            owner.saveSync();
+                        }
+                    } catch (RuntimeException failure) {
+                        owner.setDetailJson(before);
+                        if (storing) {
+                            try {
+                                owner.saveSync();
+                            } catch (RuntimeException restoreFailure) {
+                                if (restoreFailure != failure)
+                                    failure.addSuppressed(restoreFailure);
+                            }
+                        }
+                        Grasscutter.getLogger()
+                                .error(
+                                        "Aster large reward retirement was not acknowledged",
+                                        failure);
+                        return false;
+                    }
+                }
+            }
+            close();
+            return true;
+        }
+    }
+
     boolean create(BooleanSupplier current) {
         synchronized (scene) {
             var owner = data(scene.getHost());
@@ -145,20 +241,25 @@ public final class AsterBigRewardController {
                     throw failure;
                 }
             }
-            close();
-            point = new Point(entity, owner, token, current);
-            try {
-                scene.addEntity(entity);
-            } catch (RuntimeException failure) {
-                if (scene.getEntities().get(entity.getId()) != entity) {
-                    point = null;
-                    throw failure;
-                }
-                // Registration succeeded. Preserve the generation if appearance broadcast failed.
-                Grasscutter.getLogger().error("Aster large reward appearance failed", failure);
-            }
-            return true;
+            return publish(entity, owner, token, current);
         }
+    }
+
+    private boolean publish(
+            EntityGadget entity, PlayerActivityData owner, String token, BooleanSupplier current) {
+        close();
+        point = new Point(entity, owner, token, current);
+        try {
+            scene.addEntity(entity);
+        } catch (RuntimeException failure) {
+            if (scene.getEntities().get(entity.getId()) != entity) {
+                point = null;
+                throw failure;
+            }
+            // Registration succeeded. Preserve the generation if appearance broadcast failed.
+            Grasscutter.getLogger().error("Aster large reward appearance failed", failure);
+        }
+        return true;
     }
 
     public GadgetGeneralRewardInfo info(EntityGadget gadget) {

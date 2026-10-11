@@ -186,7 +186,7 @@ public final class ScenePlayBattleManager {
                                 && (active(other) || !callbacksDone(other))) return false;
                 groups.put(id, group);
             }
-            if (previous != null && previous.entry.getId() == 2) rewards.close();
+            if (entry.getId() == 2 && !rewards.retireForNewBattle()) return false;
             if (previous != null)
                 previous.groups.keySet().forEach(id -> byGroup.remove(id, previous));
             var round = new Round(entry, playType, type, minimum, owner, members, groups, now);

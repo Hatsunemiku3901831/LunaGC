@@ -50,6 +50,15 @@ public final class AsterProgress {
         bigReward.reserve(uid);
     }
 
+    /**
+     * Starting a replacement battle retires only the old offer, preserving currency and receipts.
+     */
+    public void retireBigReward() {
+        if (bigReward != null && !bigReward.view().reserved().isEmpty())
+            throw new IllegalStateException("Unconfirmed Aster large reward cannot be retired");
+        bigReward = null;
+    }
+
     public void cancelBigReward(int uid) {
         bigReward.cancel(uid);
     }
