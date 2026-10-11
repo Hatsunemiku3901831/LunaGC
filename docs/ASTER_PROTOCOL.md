@@ -22,6 +22,7 @@
 | AsterMiscInfoNotify | DEFAMMEJKOA（57890） | 包号返回函数、读取函数 `0x153446370` | 包号 24878；DKOEMPLNJBP 13、JAHBDIPMKMI 15；替换旧版 token 9 / credit 2 |
 | SelectAsterMidDifficultyReq | NBKLACHMLFI（79827） | 写入函数 `0x14b776950` | 包号 29428；gadget_entity_id 2、schedule_id 7、difficulty_id 12 |
 | SelectAsterMidDifficultyRsp | EFIOBDGHMAO（78529） | 读取函数 `0x150e50230` | 包号 2401；gadget_entity_id 1、schedule_id 3、retcode 12、difficulty_id 15 |
+| ServerUpdateGlobalValueNotify | OCPJGODBDKF（80676） | 读取函数 `0x14e773600`、包号函数 `0x14e7735f0`、实际枚举默认值 | 包号 20882；delta 1、key_hash 5、update_type 12、entity_id 13、value 14；ADD 1、SET 2 |
 
 上述对象偏移仅用于核对本次客户端，不能作为其他客户端版本的通用布局。
 两个余额槽的**熄星能量（109）/ 熄星精粹（110）对应关系尚未核实**，保留原始混淆字段名，当前服务端不向其中填写推测值。
@@ -53,6 +54,9 @@
 奖励点同步资格与剩余玩家，联机首次领取后 10 秒到期；世界营地地图取自房主进度。
 详见[陨星回收接入](ASTER_MID_RECOVERY_2026-10-11.md)。第三章暂不发送可游玩的开放标记。
 活动目录保持「还原中」，不将已恢复字段或已加载脚本等同于完整可玩。
+
+第三章依赖的队伍浮点能量增减、赋值、读取和 7.1 操作通知已接入，
+见[队伍能量接口](TEAM_GLOBAL_VALUES_2026-10-11.md)。完整场景战斗和能量提交交互仍待接入。
 
 活动商店的复刻排期、秒时间、分页开放／预览／购买资格和排期独立限购已接入，
 见[活动商店接入范围](ACTIVITY_SHOPS_2026-10-11.md)。货币 109 的服务端扣费和发货已接入，

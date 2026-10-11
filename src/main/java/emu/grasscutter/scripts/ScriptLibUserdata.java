@@ -4,9 +4,48 @@ import org.luaj.vm2.*;
 import org.luaj.vm2.lib.VarArgFunction;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 
-/** Preserve Java library access while receiving time-axis arrays before LuaJ's numeric coercion. */
+/** Validate Lua arrays before Java numeric coercion, while preserving ordinary library access. */
 final class ScriptLibUserdata extends LuaUserdata {
     private final LuaValue delegate;
+    private final LuaValue addTeamValue = teamValueFunction(true);
+    private final LuaValue setTeamValue = teamValueFunction(false);
+
+    private static LuaValue teamValueFunction(boolean add) {
+        return new VarArgFunction() {
+            @Override
+            public Varargs invoke(Varargs args) {
+                var receiver = args.arg1().touserdata(ScriptLib.class);
+                var list = args.arg(2);
+                var key = args.arg(3);
+                var amount = args.arg(4);
+                if (!(receiver instanceof ScriptLib library)
+                        || !list.istable()
+                        || key.type() != LuaValue.TSTRING
+                        || amount.type() != LuaValue.TNUMBER) return LuaValue.valueOf(-1);
+                var table = list.checktable();
+                int size = table.length();
+                if (table.keys().length != size) return LuaValue.valueOf(-1);
+                int[] uids = new int[size];
+                for (int i = 0; i < size; i++) {
+                    var value = table.rawget(i + 1);
+                    double uid = value.todouble();
+                    if (value.type() != LuaValue.TNUMBER
+                            || !Double.isFinite(uid)
+                            || uid <= 0
+                            || uid > Integer.MAX_VALUE
+                            || uid != Math.rint(uid)) return LuaValue.valueOf(-1);
+                    uids[i] = (int) uid;
+                }
+                return LuaValue.valueOf(
+                        add
+                                ? library.AddTeamEntityGlobalFloatValue(
+                                        uids, key.tojstring(), amount.todouble())
+                                : library.SetTeamEntityGlobalFloatValue(
+                                        uids, key.tojstring(), amount.todouble()));
+            }
+        };
+    }
+
     private final LuaValue initTimeAxis =
             new VarArgFunction() {
                 @Override
@@ -19,7 +58,9 @@ final class ScriptLibUserdata extends LuaUserdata {
                             || !points.istable()) return LuaValue.valueOf(-1);
                     return LuaValue.valueOf(
                             library.InitTimeAxis(
-                                    identifier.tojstring(), points.checktable(), args.arg(4).toboolean()));
+                                    identifier.tojstring(),
+                                    points.checktable(),
+                                    args.arg(4).toboolean()));
                 }
             };
 
@@ -34,9 +75,17 @@ final class ScriptLibUserdata extends LuaUserdata {
 
     @Override
     public LuaValue get(LuaValue key) {
-        return key.isstring() && key.tojstring().equals("InitTimeAxis")
-                ? initTimeAxis
-                : delegate.get(key);
+        if (key.isstring()) {
+            switch (key.tojstring()) {
+                case "InitTimeAxis":
+                    return initTimeAxis;
+                case "AddTeamEntityGlobalFloatValue":
+                    return addTeamValue;
+                case "SetTeamEntityGlobalFloatValue":
+                    return setTeamValue;
+            }
+        }
+        return delegate.get(key);
     }
 
     @Override

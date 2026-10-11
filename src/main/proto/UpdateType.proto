@@ -1,4 +1,4 @@
-// Recovered from UpdateTypeOuterClass.java's embedded descriptor; wire schema may predate 7.1.
+// Verified 7.1 enum BKMDHFKFIEI numeric defaults (fields 399232-399234).
 syntax = "proto3";
 
 package recovered.p_UpdateType;

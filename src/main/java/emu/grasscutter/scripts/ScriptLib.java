@@ -4,6 +4,7 @@ import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.game.activity.ActivityManager;
 import emu.grasscutter.game.ability.Ability;
+import emu.grasscutter.game.ability.TeamGlobalValues;
 import emu.grasscutter.game.dungeons.challenge.DungeonChallenge;
 import emu.grasscutter.game.dungeons.challenge.enums.FatherChallengeProperty;
 import emu.grasscutter.game.dungeons.challenge.factory.ChallengeFactory;
@@ -322,10 +323,16 @@ public class ScriptLib {
         return 0;
     }
 
-    public int AddTeamEntityGlobalFloatValue(int[] sceneUidList, String var2, int var3) {
-        logger.warn("[LUA] Call unimplemented AddTeamEntityGlobalFloatValue with {} {} {}", sceneUidList, var2, var3);
+    public int AddTeamEntityGlobalFloatValue(int[] sceneUidList, String key, double delta) {
+        return TeamGlobalValues.add(teamValueScene(), sceneUidList, key, delta);
+    }
 
-        return 0;
+    @Nullable
+    private Scene teamValueScene() {
+        var entity = getCurrentEntity().orElse(null);
+        if (entity != null) return entity.getScene();
+        var manager = getSceneScriptManagerOrNull();
+        return manager == null ? null : manager.getScene();
     }
 
     public int AssignPlayerShowTemplateReminder(int var1, LuaTable var2) {
@@ -721,17 +728,11 @@ public class ScriptLib {
     }
 
     public int GetUidByTeamEntityId(int entityId) {
-        var gadget = getCurrentEntityGadget();
-        var scene = gadget != null ? gadget.getScene() : getSceneScriptManager().getScene();
-        return scene.getPlayers().stream().filter(player -> player.getTeamManager().getEntity().getId() == entityId)
-                .mapToInt(player -> player.getUid()).findFirst().orElse(0);
+        return TeamGlobalValues.uidByEntityId(teamValueScene(), entityId);
     }
 
     public float GetTeamAbilityFloatValue(int uid, String key) {
-        var gadget = getCurrentEntityGadget();
-        var scene = gadget != null ? gadget.getScene() : getSceneScriptManager().getScene();
-        return scene.getPlayers().stream().filter(player -> player.getUid() == uid).findFirst()
-                .map(player -> player.getTeamManager().getEntity().getGlobalAbilityValues().getOrDefault(key, 0f)).orElse(0f);
+        return TeamGlobalValues.get(teamValueScene(), uid, key);
     }
 
     public LuaTable GetActivityOpenAndCloseTimeByScheduleId(int scheduleId) {
@@ -1444,10 +1445,8 @@ public class ScriptLib {
         return 0;
     }
 
-    public int SetTeamEntityGlobalFloatValue(int[] sceneUidList, String var2, int var3) {
-        logger.warn("[LUA] Call unimplemented SetTeamEntityGlobalFloatValue with {} {} {}", sceneUidList, var2, var3);
-
-        return 0;
+    public int SetTeamEntityGlobalFloatValue(int[] sceneUidList, String key, double value) {
+        return TeamGlobalValues.set(teamValueScene(), sceneUidList, key, value);
     }
 
     public int SetTeamServerGlobalValue(int sceneUid, String var2, int var3) {
