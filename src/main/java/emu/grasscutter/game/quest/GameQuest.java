@@ -127,6 +127,8 @@ public class GameQuest {
         questManager.queueEvent(QuestContent.QUEST_CONTENT_QUEST_STATE_EQUAL, questId, state, 0, 0, 0);
         questManager.queueEvent(
                 QuestContent.QUEST_CONTENT_QUEST_STATE_NOT_EQUAL, questId, state, 0, 0, 0);
+        var activities = this.getOwner().getActivityManager();
+        if (activities != null) activities.onQuestStateChanged(questId);
     }
 
     public String getTriggerNameById(int id) {

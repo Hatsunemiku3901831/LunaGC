@@ -1,6 +1,7 @@
 package emu.grasscutter.game.activity;
 
 import com.esotericsoftware.reflectasm.ConstructorAccess;
+
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.*;
 import emu.grasscutter.game.activity.condition.*;
@@ -8,9 +9,11 @@ import emu.grasscutter.game.player.*;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.net.proto.ActivityInfoOuterClass;
 import emu.grasscutter.server.packet.send.*;
+
+import lombok.Getter;
+
 import java.util.*;
 import java.util.concurrent.*;
-import lombok.Getter;
 
 @Getter
 public class ActivityManager extends BasePlayerManager {
@@ -52,7 +55,8 @@ public class ActivityManager extends BasePlayerManager {
             }
             if (item.isDisabled()) continue;
             var data = GameData.getActivityDataMap().get(item.getActivityId());
-            if (data == null) throw new IllegalArgumentException("活动资源不存在: " + item.getActivityId());
+            if (data == null)
+                throw new IllegalArgumentException("活动资源不存在: " + item.getActivityId());
             var constructor = handlers.get(ActivityType.getTypeByName(data.getActivityType()));
             var handler = constructor == null ? new DefaultActivityHandler()
                     : (ActivityHandler) constructor.newInstance();
@@ -68,8 +72,11 @@ public class ActivityManager extends BasePlayerManager {
 
     public static void loadActivityConfigData() {
         try {
-            installConfiguration(prepareConfiguration(DataLoader.loadList("ActivityConfig.json", ActivityConfigItem.class)));
-            Grasscutter.getLogger().debug("Loaded {} activities.", configuration.activities().size());
+            installConfiguration(
+                    prepareConfiguration(
+                            DataLoader.loadList("ActivityConfig.json", ActivityConfigItem.class)));
+            Grasscutter.getLogger()
+                    .debug("Loaded {} activities.", configuration.activities().size());
         } catch (Exception e) {
             Grasscutter.getLogger().warn("Unable to load activities config.", e);
         }
@@ -108,6 +115,9 @@ public class ActivityManager extends BasePlayerManager {
         player.sendPacket(new PacketActivityScheduleInfoNotify(snapshot.schedules().values()));
         snapshot.activities().values().stream().filter(item -> item.isActiveAt(System.currentTimeMillis()))
                 .forEach(item -> player.sendPacket(new PacketActivityInfoNotify(getInfoProtoByActivityId(item.getActivityId()))));
+        // During construction Player has not installed this manager yet. Login triggers after
+        // assignment; later GM refreshes must unlock quests without requiring a new login.
+        triggerActivityConditions();
     }
 
     public void triggerWatcher(WatcherTriggerType type, String... params) {
@@ -173,25 +183,80 @@ public class ActivityManager extends BasePlayerManager {
             var info = getInfoProtoByActivityId(snapshot, item.getActivityId(), now);
             player.sendPacket(new PacketActivityInfoNotify(info));
         }
-        snapshot.activities().values().stream().filter(item -> item.isActiveAt(now))
-                .forEach(item -> item.getActivityHandler().triggerCondEvents(player));
+        if (canTriggerQuestConditions())
+            snapshot.activities().values().stream()
+                    .filter(item -> item.isActiveAt(now))
+                    .forEach(item -> item.getActivityHandler().triggerCondEvents(player));
     }
 
     public void triggerActivityConditions() {
-        configuration.activities().values().stream().filter(item -> item.isActiveAt(System.currentTimeMillis()))
+        if (!canTriggerQuestConditions()) return;
+        configuration.activities().values().stream()
+                .filter(item -> item.isActiveAt(System.currentTimeMillis()))
                 .forEach(item -> item.getActivityHandler().triggerCondEvents(player));
+    }
+
+    private boolean canTriggerQuestConditions() {
+        return conditionExecutor != null
+                && player.getActivityManager() == this
+                && player.getWorld() != null
+                && player.getQuestManager().isQuestingEnabled();
+    }
+
+    /** A story completion can unlock activity side quests in the same session. */
+    public void onQuestStateChanged(int questId) {
+        if (!canTriggerQuestConditions()) return;
+        var snapshot = configuration;
+        for (var item : snapshot.activities().values()) {
+            if (!item.isActiveAt(System.currentTimeMillis())) continue;
+            var meta = item.getActivityHandler().getActivityData();
+            if (meta == null || meta.getCondGroupId() == null) continue;
+            var affected = new LinkedHashSet<Integer>();
+            for (int groupId : meta.getCondGroupId()) {
+                var group = GameData.getActivityCondGroupMap().get(groupId);
+                if (group == null || group.getCondIds() == null) continue;
+                for (int id : group.getCondIds()) {
+                    var condition = GameData.getActivityCondExcelConfigDataMap().get(id);
+                    if (condition == null || condition.getCond() == null) continue;
+                    if (condition.getCond().stream()
+                            .filter(Objects::nonNull)
+                            .anyMatch(
+                                    c ->
+                                            c.getType()
+                                                            == ActivityConditions
+                                                                    .NEW_ACTIVITY_COND_QUEST_FINISH
+                                                    && c.getParam() != null
+                                                    && !c.getParam().isEmpty()
+                                                    && String.valueOf(questId)
+                                                            .equals(c.getParam().get(0))))
+                        affected.add(id);
+                }
+            }
+            if (affected.isEmpty()) continue;
+            for (int id : affected)
+                player.getQuestManager()
+                        .queueEvent(
+                                emu.grasscutter.game.quest.enums.QuestCond.QUEST_COND_ACTIVITY_COND,
+                                id);
+            player.sendPacket(
+                    new PacketActivityInfoNotify(
+                            getInfoProtoByActivityId(
+                                    snapshot, item.getActivityId(), System.currentTimeMillis())));
+        }
     }
 
     public ActivityInfoOuterClass.ActivityInfo getInfoProtoByActivityId(int id) {
         return getInfoProtoByActivityId(configuration, id, System.currentTimeMillis());
     }
 
-    private ActivityInfoOuterClass.ActivityInfo getInfoProtoByActivityId(Configuration snapshot, int id, long now) {
+    private ActivityInfoOuterClass.ActivityInfo getInfoProtoByActivityId(
+            Configuration snapshot, int id, long now) {
         var item = snapshot.activities().get(id);
         if (item == null || !item.isActiveAt(now)) {
             return ActivityInfoOuterClass.ActivityInfo.newBuilder().setActivityId(id).build();
         }
-        return item.getActivityHandler().toProto(playerActivityDataMap.get(id), conditionExecutor, now);
+        return item.getActivityHandler()
+                .toProto(playerActivityDataMap.get(id), conditionExecutor, now);
     }
 
     public Optional<ActivityHandler> getActivityHandler(ActivityType type) {

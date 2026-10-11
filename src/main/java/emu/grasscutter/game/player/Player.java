@@ -1735,6 +1735,7 @@ public class Player implements PlayerHook, FieldFetch {
         home.onOwnerLogin(this);
 
         this.activityManager = new ActivityManager(this);
+        this.activityManager.triggerActivityConditions();
 
         session.send(new PacketPlayerEnterSceneNotify(this));
         session.send(new PacketPlayerLevelRewardUpdateNotify(rewardedLevels));

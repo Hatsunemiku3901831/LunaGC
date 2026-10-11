@@ -13,14 +13,19 @@ import emu.grasscutter.game.quest.enums.*;
 import emu.grasscutter.game.world.Position;
 import emu.grasscutter.net.proto.GivingRecordOuterClass.GivingRecord;
 import emu.grasscutter.server.packet.send.*;
+
 import io.netty.util.concurrent.FastThreadLocalThread;
+
 import it.unimi.dsi.fastutil.ints.*;
+
+import lombok.*;
+
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+
 import javax.annotation.Nonnull;
-import lombok.*;
 
 public final class QuestManager extends BasePlayerManager {
     @Getter private final Player player;
@@ -348,7 +353,11 @@ public final class QuestManager extends BasePlayerManager {
         var newVal = getPlayer().getQuestGlobalVariables().compute(variable, (k, v) -> prevVal + inc);
 
         Grasscutter.getLogger()
-                .debug("Incremented questGlobalVar {} value from {} to {}", variable, prevVal, newVal);
+                .debug(
+                        "Incremented questGlobalVar {} value from {} to {}",
+                        variable,
+                        prevVal,
+                        newVal);
         this.triggerQuestGlobalVarAction(variable, newVal);
     }
 
@@ -359,7 +368,11 @@ public final class QuestManager extends BasePlayerManager {
         var newVal = getQuestGlobalVarValue(variable);
 
         Grasscutter.getLogger()
-                .debug("Decremented questGlobalVar {} value from {} to {}", variable, prevVal, newVal);
+                .debug(
+                        "Decremented questGlobalVar {} value from {} to {}",
+                        variable,
+                        prevVal,
+                        newVal);
         this.triggerQuestGlobalVarAction(variable, newVal);
     }
 
@@ -509,20 +522,38 @@ public final class QuestManager extends BasePlayerManager {
                     acceptProgressLists.putIfAbsent(questData.getId(), new int[acceptCond.size()]);
                     for (int i = 0; i < acceptCond.size(); i++) {
                         val condition = acceptCond.get(i);
-                        if (condition.getType() == condType) {
+                        // Quest state and activity predicates describe the current world, not a
+                        // remembered event. Recheck them before accepting another condition.
+                        boolean liveCondition =
+                                switch (condition.getType()) {
+                                    case QUEST_COND_STATE_EQUAL,
+                                            QUEST_COND_STATE_NOT_EQUAL,
+                                            QUEST_COND_ACTIVITY_COND -> true;
+                                    default -> false;
+                                };
+                        if (condition.getType() == condType || liveCondition) {
                             boolean result =
-                                    questSystem.triggerCondition(owner, questData, condition, paramStr, params);
+                                    questSystem.triggerCondition(
+                                            owner,
+                                            questData,
+                                            condition,
+                                            liveCondition ? condition.getParamStr() : paramStr,
+                                            liveCondition ? condition.getParam() : params);
                             acceptProgressLists.get(questData.getId())[i] = result ? 1 : 0;
                         }
                     }
 
                     boolean shouldAccept =
                             LogicType.calculate(
-                                    questData.getAcceptCondComb(), acceptProgressLists.get(questData.getId()));
+                                    questData.getAcceptCondComb() == LogicType.LOGIC_NONE
+                                            ? LogicType.LOGIC_AND
+                                            : questData.getAcceptCondComb(),
+                                    acceptProgressLists.get(questData.getId()));
                     if (this.loggedQuests.contains(questData.getId())) {
                         Grasscutter.getLogger()
                                 .debug(
-                                        ">>> Quest {} will be {} as a result of event trigger {} ({}, {}).",
+                                        ">>> Quest {} will be {} as a result of event trigger {}"
+                                            + " ({}, {}).",
                                         questData.getId(),
                                         shouldAccept ? "accepted" : "not accepted",
                                         condType.name(),
@@ -540,7 +571,9 @@ public final class QuestManager extends BasePlayerManager {
                                                     .filter(value -> value > 0)
                                                     .mapToObj(String::valueOf)
                                                     .collect(Collectors.joining(", ")),
-                                            acceptProgressLists.get(questData.getId())[i] == 1 ? "success" : "failure");
+                                            acceptProgressLists.get(questData.getId())[i] == 1
+                                                    ? "success"
+                                                    : "failure");
                         }
                     }
 
@@ -637,7 +670,8 @@ public final class QuestManager extends BasePlayerManager {
         if (!resourcesReadyForQuestLoad()) {
             Grasscutter.getLogger()
                     .warn(
-                            "Player {} connected before quest resources were loaded. Saved quests were kept.",
+                            "Player {} connected before quest resources were loaded. Saved quests"
+                                + " were kept.",
                             getPlayer().getUid());
             return;
         }
