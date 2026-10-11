@@ -1,0 +1,10 @@
+// Verified 7.1 native type 28496; reader 0x14ae2dcd0. See docs/SCENE_PLAY_BATTLE_2026-10-11.md.
+syntax = "proto3";
+import "ScenePlayBattleInfo.proto";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "ScenePlayBattleInfoNotifyOuterClass";
+
+message ScenePlayBattleInfoNotify {
+  ScenePlayBattleInfo battle_info = 2;
+}

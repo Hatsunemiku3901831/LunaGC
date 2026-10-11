@@ -1,0 +1,11 @@
+// Verified 7.1 native type 83082; reader 0x1510f8170. See docs/SCENE_PLAY_BATTLE_2026-10-11.md.
+syntax = "proto3";
+import "ItemParam.proto";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "ScenePlayBattleSettleRewardInfoOuterClass";
+
+message ScenePlayBattleSettleRewardInfo {
+  repeated ItemParam reward_item_list = 1;
+  uint32 uid = 10;
+}

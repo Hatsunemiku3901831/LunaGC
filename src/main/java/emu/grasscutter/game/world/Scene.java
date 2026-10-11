@@ -79,6 +79,7 @@ public class Scene {
     @Getter private final AsterSceneController asterSceneController;
     @Getter private final emu.grasscutter.game.activity.aster.AsterMidSceneController asterMidSceneController;
     @Getter private final emu.grasscutter.game.world.seal.SealBattleManager sealBattleManager;
+    @Getter private final emu.grasscutter.game.world.sceneplay.ScenePlayBattleManager scenePlayBattleManager;
     @Getter @Setter private WorldChallenge challenge;
     @Getter private List<DungeonSettleListener> dungeonSettleListeners;
     @Getter @Setter private int prevScene;
@@ -121,6 +122,7 @@ public class Scene {
         this.asterSceneController = new AsterSceneController(this);
         this.asterMidSceneController = new emu.grasscutter.game.activity.aster.AsterMidSceneController(this);
         this.sealBattleManager = new emu.grasscutter.game.world.seal.SealBattleManager(this);
+        this.scenePlayBattleManager = new emu.grasscutter.game.world.sceneplay.ScenePlayBattleManager(this);
         this.scriptManager = new SceneScriptManager(this);
         this.blossomManager = new BlossomManager(this);
         this.unlockedForces = new HashSet<>();
@@ -264,6 +266,7 @@ public class Scene {
                 this.crucibleSceneController.onPlayerLeaving(player);
                 this.salesmanSceneController.onPlayerLeaving(player);
                 this.sealBattleManager.onPlayerLeaving(player);
+                this.scenePlayBattleManager.onPlayerLeaving(player);
                 getPlayers().remove(player);
                 player.setScene(null);
 
@@ -645,6 +648,7 @@ public class Scene {
         // despawned - and the player was left in a world that had quietly stopped.
         if (!isPaused) stage("the scheduler", () -> this.getScheduler().runTasks());
         if (!isPaused) stage("the seal battles", this.sealBattleManager::tick);
+        if (!isPaused) stage("the scene play battles", this.scenePlayBattleManager::tick);
 
         // Streaming does not need the full tick rate - it answers "which groups are near the
         // player", and a player cannot outrun half a second of it. The timers and triggers below
@@ -837,7 +841,7 @@ public class Scene {
     }
 
     public void playerSceneInitialized(Player player) {
-
+        this.scenePlayBattleManager.sendTo(player);
         if (!player.equals(this.getHost())) return;
 
         this.afterHostInitCallbacks.forEach(Runnable::run);

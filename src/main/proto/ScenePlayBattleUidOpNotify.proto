@@ -1,0 +1,18 @@
+// Verified 7.1 native type 49234; reader 0x14cc60310. See docs/SCENE_PLAY_BATTLE_2026-10-11.md.
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "ScenePlayBattleUidOpNotifyOuterClass";
+
+message ScenePlayBattleUidOpNotify {
+  repeated uint32 uid_list = 1;
+  uint32 param_duration = 3;
+  uint32 entity_id = 4;
+  repeated uint32 param_list = 7;
+  uint32 play_id = 8;
+  uint32 op = 9;
+  uint32 play_type = 10;
+  repeated uint32 param_target_list = 11;
+  string param_str = 12;
+  uint32 param_index = 14;
+}

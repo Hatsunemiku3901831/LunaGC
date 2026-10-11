@@ -1,0 +1,18 @@
+// Verified 7.1 native type 62733; reader 0x1473fff10. See docs/SCENE_PLAY_BATTLE_2026-10-11.md.
+syntax = "proto3";
+import "ProfilePicture.proto";
+import "ExhibitionDisplayInfo.proto";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "ScenePlayBattleSettlePlayerInfoOuterClass";
+
+message ScenePlayBattleSettlePlayerInfo {
+  string online_id = 2;
+  string nickname = 3;
+  repeated ExhibitionDisplayInfo card_list = 4;
+  uint32 head_image = 5;
+  uint32 uid = 8;
+  int64 param = 9;
+  uint32 statistic_id = 10;
+  ProfilePicture profile_picture = 13;
+}

@@ -1,0 +1,11 @@
+// Verified 7.1 native type 64399; reader 0x153f98880. See docs/SCENE_PLAY_BATTLE_2026-10-11.md.
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "ScenePlayBattleInterruptNotifyOuterClass";
+
+message ScenePlayBattleInterruptNotify {
+  uint32 interrupt_state = 1;
+  uint32 play_type = 6;
+  uint32 play_id = 13;
+}

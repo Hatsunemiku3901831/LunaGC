@@ -717,6 +717,7 @@ public class SceneScriptManager {
 
     public void unregisterGroup(SceneGroup group) {
         this.scene.getSealBattleManager().onGroupUnloaded(group);
+        this.scene.getScenePlayBattleManager().onGroupUnloaded(group);
         cancelGroupMonsterSpawns(group.id);
         cancelGroupTimers(group.id);
         this.sceneGroups.remove(group.id);
@@ -890,9 +891,24 @@ public class SceneScriptManager {
                 && (!scene.getAsterMidSceneController().owns(params.group_id)
                     || origin != null && sceneGroups.get(params.group_id) == origin
                         && scene.getAsterMidSceneController().allows(origin));
-        return eventExecutor.submit(() -> {
-            if (guarded.getAsBoolean()) this.realCallEvent(params, activityTicket, activityRound, invitationSerial, guarded);
-        });
+        return scene.getScenePlayBattleManager()
+                .submitCallback(
+                        params.group_id,
+                        battleCurrent ->
+                                eventExecutor.submit(
+                                        () -> {
+                                            java.util.function.BooleanSupplier applicable =
+                                                    () ->
+                                                            guarded.getAsBoolean()
+                                                                    && battleCurrent.getAsBoolean();
+                                            if (applicable.getAsBoolean())
+                                                this.realCallEvent(
+                                                        params,
+                                                        activityTicket,
+                                                        activityRound,
+                                                        invitationSerial,
+                                                        applicable);
+                                        }));
     }
 
     private void realCallEvent(@Nonnull ScriptArgs params, long activityTicket, long activityRound, long invitationSerial,
@@ -1067,7 +1083,12 @@ public class SceneScriptManager {
 
     public LuaValue safetyCall(String name, LuaValue func, LuaValue args, SceneGroup group) {
         try {
-            return func.call(ScriptLoader.getScriptLibLua(), args);
+            var params = args.touserdata(ScriptArgs.class);
+            var context =
+                    params instanceof ScriptArgs event
+                            ? ScriptLoader.getScriptLib().createEventContext(event, group)
+                            : ScriptLoader.getScriptLibLua();
+            return func.call(context, args);
         } catch (RuntimeException error) {
             // LuaError, but also the odd crash inside luaj's own traceback builder, which used to
             // escape a method whose whole job is to contain script failures
@@ -1445,6 +1466,7 @@ public class SceneScriptManager {
 
     public void onDestroy() {
         scene.getSealBattleManager().close();
+        scene.getScenePlayBattleManager().close();
         List<SceneTimeAxis> axes;
         synchronized (timeAxis) {
             destroyed = true;

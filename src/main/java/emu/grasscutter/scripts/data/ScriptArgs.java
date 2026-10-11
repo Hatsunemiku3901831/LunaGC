@@ -9,6 +9,7 @@ public class ScriptArgs {
     public int param3;
     public int source_eid; // Source entity
     public int target_eid;
+    public int uid;
     public int group_id;
     public String source; // source string, used for timers
     public String source_name; // Lua time-axis and timer callbacks use this field.
@@ -31,6 +32,11 @@ public class ScriptArgs {
 
     public int getParam1() {
         return param1;
+    }
+
+    public ScriptArgs setUid(int uid) {
+        this.uid = uid;
+        return this;
     }
 
     public ScriptArgs setParam1(int param1) {

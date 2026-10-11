@@ -14,6 +14,7 @@ import emu.grasscutter.game.entity.gadget.platform.*;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.game.quest.enums.*;
 import emu.grasscutter.game.world.*;
+import emu.grasscutter.game.world.sceneplay.ScenePlayBattleParameters;
 import emu.grasscutter.net.proto.EnterTypeOuterClass;
 import emu.grasscutter.net.proto.VisionTypeOuterClass.VisionType;
 import emu.grasscutter.scripts.constants.*;
@@ -140,6 +141,19 @@ public class ScriptLib {
         fields.set("source_entity_id", ability.getOwner() == null ? 0 : ability.getOwner().getId());
         fields.set("target_entity_id", target.getId());
         fields.set("group_id", getCurrentGroup().map(group -> group.id).orElse(0));
+        return createContext(fields);
+    }
+
+    public LuaValue createEventContext(ScriptArgs event, SceneGroup group) {
+        var fields = new LuaTable();
+        fields.set("uid", event.uid);
+        fields.set("group_id", group == null ? event.group_id : group.id);
+        fields.set("source_entity_id", event.source_eid);
+        fields.set("target_entity_id", event.target_eid);
+        return createContext(fields);
+    }
+
+    private LuaValue createContext(LuaTable fields) {
         return new LuaUserdata(this) {
             @Override
             public LuaValue get(LuaValue key) {
@@ -333,6 +347,100 @@ public class ScriptLib {
         if (entity != null) return entity.getScene();
         var manager = getSceneScriptManagerOrNull();
         return manager == null ? null : manager.getScene();
+    }
+
+    private int sceneBattleGroup(int groupId) {
+        var scene = teamValueScene();
+        var group = getCurrentGroup().orElse(null);
+        if (scene == null
+                || groupId < 0
+                || group != null && scene.getScriptManager().getLoadedGroupById(group.id) != group)
+            return 0;
+        if (groupId != 0) return groupId;
+        return group != null ? group.id : getCurrentEntity().map(GameEntity::getGroupId).orElse(0);
+    }
+
+    public int PrestartScenePlayBattle(LuaTable table) {
+        try {
+            int groupId = (int) ScenePlayBattleParameters.unsigned(table.rawget("group_id"));
+            var scene = teamValueScene();
+            return scene != null
+                            && scene.getScenePlayBattleManager()
+                                    .prestart(
+                                            sceneBattleGroup(groupId),
+                                            ScenePlayBattleParameters.fromLua(table))
+                    ? 0
+                    : -1;
+        } catch (IllegalArgumentException invalid) {
+            return -1;
+        }
+    }
+
+    public int AddScenePlayBattleProgress(int groupId, long progress) {
+        var scene = teamValueScene();
+        return scene != null
+                        && scene.getScenePlayBattleManager()
+                                .addProgress(sceneBattleGroup(groupId), progress)
+                ? 0
+                : -1;
+    }
+
+    public long GetScenePlayBattleUidValue(int groupId, int uid, String key) {
+        var scene = teamValueScene();
+        return scene == null
+                ? 0
+                : scene.getScenePlayBattleManager()
+                        .getUidValue(sceneBattleGroup(groupId), uid, key);
+    }
+
+    public int SetScenePlayBattleUidValue(int groupId, int uid, String key, long value) {
+        var scene = teamValueScene();
+        return scene != null
+                        && scene.getScenePlayBattleManager()
+                                .setUidValue(sceneBattleGroup(groupId), uid, key, value)
+                ? 0
+                : -1;
+    }
+
+    public int GetScenePlayBattleHostUid(int groupId) {
+        var scene = teamValueScene();
+        return scene == null
+                ? 0
+                : scene.getScenePlayBattleManager().getHostUid(sceneBattleGroup(groupId));
+    }
+
+    public int GetScenePlayBattleType(int groupId) {
+        var scene = teamValueScene();
+        return scene == null
+                ? 0
+                : scene.getScenePlayBattleManager().getType(sceneBattleGroup(groupId));
+    }
+
+    public int ScenePlayBattleUidOp(
+            int groupId,
+            int configId,
+            int[] uids,
+            int op,
+            String name,
+            int[] parameters,
+            int[] targets,
+            int index,
+            int duration) {
+        var scene = teamValueScene();
+        return scene != null
+                        && scene.getScenePlayBattleManager()
+                                .uidOp(
+                                        sceneBattleGroup(groupId),
+                                        configId,
+                                        uids,
+                                        op,
+                                        name,
+                                        parameters,
+                                        targets,
+                                        index,
+                                        duration)
+                ? 0
+                : -1;
     }
 
     public int AssignPlayerShowTemplateReminder(int var1, LuaTable var2) {

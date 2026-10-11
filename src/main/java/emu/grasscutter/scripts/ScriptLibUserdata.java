@@ -9,6 +9,8 @@ final class ScriptLibUserdata extends LuaUserdata {
     private final LuaValue delegate;
     private final LuaValue addTeamValue = teamValueFunction(true);
     private final LuaValue setTeamValue = teamValueFunction(false);
+    private final java.util.Map<String, LuaValue> sceneBattleFunctions =
+            ScenePlayBattleLua.functions();
 
     private static LuaValue teamValueFunction(boolean add) {
         return new VarArgFunction() {
@@ -76,6 +78,8 @@ final class ScriptLibUserdata extends LuaUserdata {
     @Override
     public LuaValue get(LuaValue key) {
         if (key.isstring()) {
+            var battleFunction = sceneBattleFunctions.get(key.tojstring());
+            if (battleFunction != null) return battleFunction;
             switch (key.tojstring()) {
                 case "InitTimeAxis":
                     return initTimeAxis;
