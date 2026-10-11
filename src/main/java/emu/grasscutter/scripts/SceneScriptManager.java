@@ -1547,7 +1547,7 @@ public class SceneScriptManager {
                 && (!scene.getAsterBigSceneController().owns(groupId) || scene.getAsterBigSceneController().allows(group));
     }
 
-    // todo use killed monsters instead of spawned entites for check?
+    /** Death callbacks can leave a corpse mapped while another monster uses the same config. */
     public boolean isClearedGroupMonsters(int groupId) {
         val groupInstance = getGroupInstanceById(groupId);
         if (groupInstance == null || groupInstance.getLuaGroup() == null) return false;
@@ -1556,12 +1556,20 @@ public class SceneScriptManager {
 
         if (monsters == null || monsters.isEmpty()) return true;
 
-        return monsters.values().stream()
+        var declaredConfigs = new HashSet<Integer>();
+        for (var monster : monsters.values()) {
+            if (monster == null) return false;
+            declaredConfigs.add(monster.config_id);
+        }
+
+        // Inspect all matches: a dead first match must not hide a living replacement.
+        return scene.getEntities().values().stream()
                 .noneMatch(
-                        m -> {
-                            val entity = scene.getEntityByConfigId(m.config_id, groupId);
-                            return entity != null && entity.getGroupId() == groupId;
-                        });
+                        entity ->
+                                entity instanceof EntityMonster
+                                        && entity.getGroupId() == groupId
+                                        && declaredConfigs.contains(entity.getConfigId())
+                                        && !entity.isDead());
     }
 
     /**
