@@ -1,9 +1,11 @@
 package emu.grasscutter.server.packet.recv;
 
+import emu.grasscutter.game.shop.ActivityShop;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.GetShopReqNewOuterClass.GetShopReqNew;
 import emu.grasscutter.server.game.GameSession;
 import emu.grasscutter.server.packet.send.PacketGetShopRspNew;
+
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -17,6 +19,13 @@ public class HandlerGetShopReqNew extends PacketHandler {
         // actually loaded, not a 4.x snapshot that still names three tabs the 7.0 excel dropped.
         var shopIds =
                 session.getServer().getShopSystem().getShopData().keySet().stream()
+                        .filter(
+                                id ->
+                                        ActivityShop.resolve(
+                                                        session.getPlayer(),
+                                                        id,
+                                                        System.currentTimeMillis())
+                                                .isOpen())
                         .sorted()
                         .collect(Collectors.toCollection(ArrayList::new));
 

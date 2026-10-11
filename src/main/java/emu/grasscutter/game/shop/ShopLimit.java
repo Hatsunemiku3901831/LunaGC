@@ -8,6 +8,21 @@ public class ShopLimit {
     private int hasBought;
     private int hasBoughtInPeriod = 0;
     private int nextRefreshTime = 0;
+    private int activityScheduleId;
+
+    public int getActivityScheduleId() {
+        return activityScheduleId;
+    }
+
+    /** Legacy limits bind once without granting extra buys; a new replay resets its period. */
+    public void bindActivitySchedule(int scheduleId) {
+        if (scheduleId <= 0) throw new IllegalArgumentException("Invalid activity shop schedule");
+        if (activityScheduleId != 0 && activityScheduleId != scheduleId) {
+            hasBoughtInPeriod = 0;
+            nextRefreshTime = 0;
+        }
+        activityScheduleId = scheduleId;
+    }
 
     public int getShopGoodId() {
         return shopGoodId;

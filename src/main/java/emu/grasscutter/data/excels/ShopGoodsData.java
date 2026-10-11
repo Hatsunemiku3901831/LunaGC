@@ -1,9 +1,11 @@
 package emu.grasscutter.data.excels;
 
 import com.google.gson.annotations.SerializedName;
+
 import emu.grasscutter.data.*;
 import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.game.shop.ShopInfo;
+
 import java.util.List;
 
 @ResourceType(name = "ShopGoodsExcelConfigData.json")
@@ -44,9 +46,7 @@ public class ShopGoodsData extends GameResource {
         return endTime;
     }
 
-    @SerializedName(
-            value = "subTabId",
-            alternate = {"secondarySheetId"})
+    private int secondarySheetId;
     private int subTabId;
 
     private String refreshType;
@@ -67,7 +67,8 @@ public class ShopGoodsData extends GameResource {
                     switch (this.refreshType) {
                         case "SHOP_REFRESH_DAILY" -> ShopInfo.ShopRefreshType.SHOP_REFRESH_DAILY;
                         case "SHOP_REFRESH_WEEKLY" -> ShopInfo.ShopRefreshType.SHOP_REFRESH_WEEKLY;
-                        case "SHOP_REFRESH_MONTHLY" -> ShopInfo.ShopRefreshType.SHOP_REFRESH_MONTHLY;
+                        case "SHOP_REFRESH_MONTHLY" -> ShopInfo.ShopRefreshType
+                                .SHOP_REFRESH_MONTHLY;
                         default -> ShopInfo.ShopRefreshType.NONE;
                     };
         }
@@ -128,6 +129,10 @@ public class ShopGoodsData extends GameResource {
 
     public int getSubTabId() {
         return subTabId;
+    }
+
+    public int getSecondarySheetId() {
+        return secondarySheetId;
     }
 
     public ShopInfo.ShopRefreshType getRefreshType() {

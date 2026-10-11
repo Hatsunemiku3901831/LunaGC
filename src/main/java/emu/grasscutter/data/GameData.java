@@ -12,6 +12,7 @@ import emu.grasscutter.data.excels.achievement.AchievementGoalData;
 import emu.grasscutter.data.excels.activity.ActivityCondExcelConfigData;
 import emu.grasscutter.data.excels.activity.ActivityData;
 import emu.grasscutter.data.excels.activity.ActivityShopData;
+import emu.grasscutter.data.excels.activity.ActivityShopSheetData;
 import emu.grasscutter.data.excels.activity.ActivitySkillData;
 import emu.grasscutter.data.excels.activity.ActivityWatcherData;
 import emu.grasscutter.data.excels.activity.AsterLittleData;
@@ -225,6 +226,10 @@ public final class GameData {
 
     @Getter
     private static final Int2ObjectMap<ActivityShopData> activityShopDataMap =
+            new Int2ObjectOpenHashMap<>();
+
+    @Getter
+    private static final Int2ObjectMap<ActivityShopSheetData> activityShopSheetDataMap =
             new Int2ObjectOpenHashMap<>();
 
     @Getter

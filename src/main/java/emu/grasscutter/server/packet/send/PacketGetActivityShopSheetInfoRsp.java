@@ -1,49 +1,33 @@
 package emu.grasscutter.server.packet.send;
 
-import emu.grasscutter.data.GameData;
-import emu.grasscutter.game.activity.*;
+import emu.grasscutter.game.player.Player;
+import emu.grasscutter.game.shop.ActivityShop;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.ActivityShopSheetInfoOuterClass.ActivityShopSheetInfo;
 import emu.grasscutter.net.proto.GetActivityShopSheetInfoRspOuterClass.GetActivityShopSheetInfoRsp;
-import emu.grasscutter.net.proto.RetcodeOuterClass;
-import java.util.*;
+import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 
 public class PacketGetActivityShopSheetInfoRsp extends BasePacket {
 
-    public PacketGetActivityShopSheetInfoRsp(int shopType) {
+    public PacketGetActivityShopSheetInfoRsp(Player player, int shopType) {
+        this(player, shopType, System.currentTimeMillis());
+    }
+
+    public PacketGetActivityShopSheetInfoRsp(Player player, int shopType, long now) {
         super(PacketOpcodes.GetActivityShopSheetInfoRsp);
-
-        var sheetInfo = GameData.getActivityShopDataMap().get(shopType);
-        ActivityConfigItem activityConfigItem = null;
-
-        if (sheetInfo != null) {
-            activityConfigItem =
-                    ActivityManager.getScheduleActivityConfigMap().get(sheetInfo.getScheduleId());
+        var access = ActivityShop.resolve(player, shopType, now);
+        var response = GetActivityShopSheetInfoRsp.newBuilder().setShopType(shopType);
+        if (!access.activityShop() || !access.isOpen() || access.sheets().isEmpty()) {
+            response.setRetcode(Retcode.RET_SHOP_NOT_OPEN_VALUE);
+        } else {
+            for (var sheet : access.sheets()) {
+                response.addSheetInfoList(
+                        ActivityShopSheetInfo.newBuilder()
+                                .setSheetId(sheet.id())
+                                .setBeginTime(sheet.beginTime())
+                                .setEndTime(sheet.endTime()));
+            }
         }
-
-        if (sheetInfo == null || activityConfigItem == null) {
-            setData(
-                    GetActivityShopSheetInfoRsp.newBuilder()
-                            .setShopType(shopType)
-                            .setRetcode(RetcodeOuterClass.Retcode.RET_SHOP_NOT_OPEN_VALUE)
-                            .build());
-            return;
-        }
-
-        List<ActivityShopSheetInfo> sheetInfos = new ArrayList<>(sheetInfo.getSheetList().size());
-        for (int id : sheetInfo.getSheetList()) {
-            sheetInfos.add(
-                    ActivityShopSheetInfo.newBuilder()
-                            .setSheetId(id)
-                            .setBeginTime((int) activityConfigItem.getBeginTime().getTime())
-                            .setEndTime((int) activityConfigItem.getEndTime().getTime())
-                            .build());
-        }
-
-        setData(
-                GetActivityShopSheetInfoRsp.newBuilder()
-                        .setShopType(shopType)
-                        .addAllSheetInfoList(sheetInfos)
-                        .build());
+        setData(response.build());
     }
 }

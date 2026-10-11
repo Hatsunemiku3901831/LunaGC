@@ -17,6 +17,7 @@ import emu.grasscutter.server.packet.send.PacketBeyondAddCosmeticNotify;
 import emu.grasscutter.server.packet.send.PacketBuyGoodsRsp;
 import emu.grasscutter.server.packet.send.PacketGetShopRsp;
 import emu.grasscutter.utils.Utils;
+
 import java.util.*;
 
 @Opcodes(PacketOpcodes.BuyGoodsReq)
@@ -39,6 +40,14 @@ public class HandlerBuyGoodsReq extends PacketHandler {
     public void handle(GameSession session, byte[] header, byte[] payload) throws Exception {
         BuyGoodsReqOuterClass.BuyGoodsReq buyGoodsReq =
                 BuyGoodsReqOuterClass.BuyGoodsReq.parseFrom(payload);
+        var player = session.getPlayer();
+        int currentTs = Utils.getCurrentSeconds();
+        var activityShop =
+                ActivityShop.resolve(player, buyGoodsReq.getShopType(), currentTs * 1000L);
+        if (!activityShop.isOpen()) {
+            session.send(new PacketBuyGoodsRsp(Retcode.RET_SHOP_NOT_OPEN));
+            return;
+        }
         List<ShopInfo> configShop =
                 session.getServer().getShopSystem().getShopData().get(buyGoodsReq.getShopType());
         if (configShop == null) {
@@ -47,7 +56,6 @@ public class HandlerBuyGoodsReq extends PacketHandler {
         }
 
         // Don't trust your users' input
-        var player = session.getPlayer();
 
         // A non-positive count buys nothing and cannot be honest. Worse, it inverts the whole
         // purchase: payItems checks `held < cost * count`, which is never true for a negative
@@ -69,7 +77,10 @@ public class HandlerBuyGoodsReq extends PacketHandler {
             }
             ShopInfo sg = sg2.get();
 
-            int currentTs = Utils.getCurrentSeconds();
+            if (!activityShop.canPurchase(sg)) {
+                session.send(new PacketBuyGoodsRsp(Retcode.RET_SHOP_CONTENT_NOT_MATCH));
+                continue;
+            }
             int level =
                     buyGoodsReq.getShopType() >= 100000 && buyGoodsReq.getShopType() <= 105000
                             ? player.getProperty(PlayerProperty.PROP_PLAYER_BEYOND_LEVEL)
@@ -81,10 +92,11 @@ public class HandlerBuyGoodsReq extends PacketHandler {
                 session.send(new PacketBuyGoodsRsp(Retcode.RET_SHOP_CONTENT_NOT_MATCH));
                 continue;
             }
-            ShopLimit shopLimit = player.getGoodsLimit(sg.getGoodsId());
+            ShopLimit shopLimit = activityShop.prepareLimit(player, sg);
             int bought = 0;
             if (shopLimit != null) {
-                if (shopLimit.getNextRefreshTime() > 0 && currentTs >= shopLimit.getNextRefreshTime()) {
+                if (shopLimit.getNextRefreshTime() > 0
+                        && currentTs >= shopLimit.getNextRefreshTime()) {
                     shopLimit.setNextRefreshTime(ShopSystem.getShopNextRefreshTime(sg));
                     shopLimit.setHasBoughtInPeriod(0);
                 } else {
@@ -137,7 +149,8 @@ public class HandlerBuyGoodsReq extends PacketHandler {
                             sg.getCostItemList() == null ? List.of() : sg.getCostItemList());
             var bydMaterial = GameData.getBydMaterialDataMap().get(itemId);
             var costumes = BeyondCloset.resolveCostumes(itemId);
-            if (bydMaterial != null && (itemCount != 1 || !player.getBeyondCloset().canGrant(costumes))) {
+            if (bydMaterial != null
+                    && (itemCount != 1 || !player.getBeyondCloset().canGrant(costumes))) {
                 session.send(new PacketBuyGoodsRsp(Retcode.RET_SHOP_CONTENT_NOT_MATCH));
                 continue;
             }
@@ -154,7 +167,9 @@ public class HandlerBuyGoodsReq extends PacketHandler {
                 var granted = player.getBeyondCloset().grant(costumes);
                 if (granted.isEmpty()) {
                     costs.forEach(
-                            cost -> player.getInventory().addItem(cost.getId(), cost.getCount() * buyCount));
+                            cost ->
+                                    player.getInventory()
+                                            .addItem(cost.getId(), cost.getCount() * buyCount));
                     session.send(new PacketBuyGoodsRsp(Retcode.RET_SHOP_CONTENT_NOT_MATCH));
                     continue;
                 }
@@ -179,7 +194,9 @@ public class HandlerBuyGoodsReq extends PacketHandler {
                     for (int i = 0; i < itemCount; i++) {
                         var params = new UseItemParams(player, itemData.getUseTarget());
                         params.usedItemId = itemId;
-                        if (!session.getServer().getInventorySystem().useItemDirect(itemData, params)) {
+                        if (!session.getServer()
+                                .getInventorySystem()
+                                .useItemDirect(itemData, params)) {
                             break;
                         }
                         delivered++;
@@ -188,14 +205,17 @@ public class HandlerBuyGoodsReq extends PacketHandler {
                         // The use action rejected the good, so the player got nothing for the
                         // currency they handed over.
                         costs.forEach(
-                                cost -> player.getInventory().addItem(cost.getId(), cost.getCount() * buyCount));
+                                cost ->
+                                        player.getInventory()
+                                                .addItem(cost.getId(), cost.getCount() * buyCount));
                         session.send(new PacketBuyGoodsRsp(Retcode.RET_SHOP_CONTENT_NOT_MATCH));
                         continue;
                     }
                     if (delivered < itemCount) {
                         Grasscutter.getLogger()
                                 .warn(
-                                        "Item use consumed {} of the {} units of item {} bought by player {}.",
+                                        "Item use consumed {} of the {} units of item {} bought by"
+                                            + " player {}.",
                                         delivered,
                                         itemCount,
                                         itemId,
@@ -214,13 +234,16 @@ public class HandlerBuyGoodsReq extends PacketHandler {
                     // the chest table holds - and if that table is missing the purchase just
                     // vanishes. The player bought the item, so put the item in the bag and let them
                     // open it.
-                    boolean delivered = player.getInventory().addItem(item, ActionReason.Shop, true, true);
+                    boolean delivered =
+                            player.getInventory().addItem(item, ActionReason.Shop, true, true);
                     if (!delivered) {
                         // The bag was full or the stack could not take the count. Hand the currency
                         // back and answer failure, rather than charging for a good that never
                         // arrived.
                         costs.forEach(
-                                cost -> player.getInventory().addItem(cost.getId(), cost.getCount() * buyCount));
+                                cost ->
+                                        player.getInventory()
+                                                .addItem(cost.getId(), cost.getCount() * buyCount));
                         session.send(new PacketBuyGoodsRsp(Retcode.RET_PACK_EXCEED_MAX_WEIGHT));
                         continue;
                     }
@@ -233,13 +256,11 @@ public class HandlerBuyGoodsReq extends PacketHandler {
                     new PacketBuyGoodsRsp(
                             buyGoodsReq.getShopType(),
                             player.getGoodsLimit(sg.getGoodsId()).getHasBoughtInPeriod(),
-                            PacketGetShopRsp.buildShop(
-                                            player, session.getServer().getShopSystem(), buyGoodsReq.getShopType())
-                                    .getGoodsListList()
-                                    .stream()
-                                    .filter(x -> x.getGoodsId() == goodsId)
-                                    .findFirst()
-                                    .get()));
+                            PacketGetShopRsp.describeGoods(sg, resolvedItem, activityShop)
+                                    .setNextRefreshTime(
+                                            player.getGoodsLimit(sg.getGoodsId())
+                                                    .getNextRefreshTime())
+                                    .build()));
         }
 
         player.save();

@@ -11,6 +11,9 @@ public class HandlerGetActivityShopSheetInfoReq extends PacketHandler {
     @Override
     public void handle(GameSession session, byte[] header, byte[] payload) throws Exception {
         GetActivityShopSheetInfoReq req = GetActivityShopSheetInfoReq.parseFrom(payload);
-        session.getPlayer().sendPacket(new PacketGetActivityShopSheetInfoRsp(req.getShopType()));
+        session.getPlayer()
+                .sendPacket(
+                        new PacketGetActivityShopSheetInfoRsp(
+                                session.getPlayer(), req.getShopType()));
     }
 }

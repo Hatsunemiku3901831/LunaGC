@@ -4,11 +4,13 @@ import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.data.excels.ShopGoodsData;
 import emu.grasscutter.data.excels.ShopRotateData;
+
+import lombok.*;
+
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
-import lombok.*;
 
 public class ShopInfo {
     @Getter @Setter private int goodsId = 0;
@@ -59,7 +61,7 @@ public class ShopInfo {
                                 .filter(x -> x != null && x.getId() != 0)
                                 .map(x -> new ItemParamData(x.getId(), x.getCount()))
                                 .toList();
-        this.secondarySheetId = sgd.getSubTabId();
+        this.secondarySheetId = sgd.getSecondarySheetId();
         setShopRefreshType(sgd.getRefreshType());
         this.shopRefreshParam = sgd.getRefreshParam();
     }
@@ -118,7 +120,8 @@ public class ShopInfo {
     }
 
     public void removeVirtualCosts() {
-        if (this.costItemList != null) this.costItemList.removeIf(item -> evaluateVirtualCost(item));
+        if (this.costItemList != null)
+            this.costItemList.removeIf(item -> evaluateVirtualCost(item));
     }
 
     public enum ShopRefreshType {

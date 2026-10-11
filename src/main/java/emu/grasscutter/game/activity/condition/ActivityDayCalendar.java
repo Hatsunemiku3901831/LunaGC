@@ -9,6 +9,18 @@ import java.time.*;
 public final class ActivityDayCalendar {
     private ActivityDayCalendar() {}
 
+    /** Day one keeps the configured start; subsequent days open at the server's daily reset. */
+    public static long beginTime(ActivityConfigItem config, int day) {
+        long begin = config.getBeginTime().getTime();
+        if (day <= 1) return begin;
+        return resetDay(begin)
+                .plusDays(day - 1L)
+                .atTime(GameCalendar.RESET_HOUR, 0)
+                .atZone(GameCalendar.SERVER_ZONE)
+                .toInstant()
+                .toEpochMilli();
+    }
+
     public static long dayIndex(ActivityConfigItem config, long now) {
         if (config == null || !config.isActiveAt(now)) return 0;
         var first = resetDay(config.getBeginTime().getTime());
