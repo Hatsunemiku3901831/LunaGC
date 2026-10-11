@@ -9,7 +9,21 @@ import emu.grasscutter.game.quest.*;
 public class ContentPlayerLevelUp extends BaseContent {
     @Override
     public boolean execute(
-            GameQuest quest, QuestData.QuestContentCondition condition, String paramStr, int... params) {
-        return quest.getOwner().getLevel() >= condition.getCount();
+            GameQuest quest,
+            QuestData.QuestContentCondition condition,
+            String paramStr,
+            int... params) {
+        return getProgress(quest, condition, 0, paramStr, params)
+                >= QuestContentProgress.target(condition);
+    }
+
+    @Override
+    public int getProgress(
+            GameQuest quest,
+            QuestData.QuestContentCondition condition,
+            int previous,
+            String paramStr,
+            int... params) {
+        return QuestContentProgress.current(condition, quest.getOwner().getLevel());
     }
 }

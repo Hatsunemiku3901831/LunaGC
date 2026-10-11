@@ -8,6 +8,7 @@ import emu.grasscutter.game.quest.conditions.BaseCondition;
 import emu.grasscutter.game.quest.content.BaseContent;
 import emu.grasscutter.game.quest.handlers.QuestExecHandler;
 import emu.grasscutter.server.game.*;
+
 import it.unimi.dsi.fastutil.ints.*;
 
 public final class QuestSystem extends BaseGameSystem {
@@ -77,7 +78,10 @@ public final class QuestSystem extends BaseGameSystem {
 
         if (handler == null || questData == null) {
             Grasscutter.getLogger()
-                    .debug("Could not trigger condition {} at {}", condition.getType().getValue(), questData);
+                    .debug(
+                            "Could not trigger condition {} at {}",
+                            condition.getType().getValue(),
+                            questData);
             return false;
         }
 
@@ -98,6 +102,19 @@ public final class QuestSystem extends BaseGameSystem {
         }
 
         return handler.execute(quest, condition, paramStr, params);
+    }
+
+    public int getContentProgress(
+            GameQuest quest,
+            QuestContentCondition condition,
+            int previous,
+            String paramStr,
+            int... params) {
+        BaseContent handler = contHandlers.get(condition.getType().getValue());
+        if (handler == null || quest.getQuestData() == null) {
+            return previous;
+        }
+        return handler.getProgress(quest, condition, previous, paramStr, params);
     }
 
     public void triggerExec(GameQuest quest, QuestExecParam execParam, String... params) {

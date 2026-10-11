@@ -368,10 +368,15 @@ public class GameMainQuest {
     }
 
     public void tryFailSubQuests(QuestContent condType, String paramStr, int... params) {
+        boolean updated = false;
         try {
             List<GameQuest> subQuestsWithCond =
                     getChildQuests().values().stream()
-                            .filter(p -> p.getState() == QuestState.QUEST_STATE_UNFINISHED)
+                            .filter(
+                                    p ->
+                                            p.getState() == QuestState.QUEST_STATE_UNFINISHED
+                                                    && p.getQuestData() != null
+                                                    && p.getQuestData().getFailCond() != null)
                             .filter(
                                     p ->
                                             p.getQuestData().getFailCond().stream()
@@ -381,43 +386,50 @@ public class GameMainQuest {
             for (GameQuest subQuestWithCond : subQuestsWithCond) {
                 val failCond = subQuestWithCond.getQuestData().getFailCond();
 
-                for (int i = 0; i < failCond.size(); i++) {
-                    val condition = failCond.get(i);
-                    if (condition.getType() == condType) {
-                        boolean result =
-                                this.getOwner()
-                                        .getServer()
-                                        .getQuestSystem()
-                                        .triggerContent(subQuestWithCond, condition, paramStr, params);
-                        subQuestWithCond.setFailProgress(i, result ? 1 : 0);
-                        if (result) {
-                            getOwner().getSession().send(new PacketQuestProgressUpdateNotify(subQuestWithCond));
-                        }
-                    }
+                boolean changed =
+                        updateContentProgress(
+                                subQuestWithCond,
+                                failCond,
+                                subQuestWithCond.getFailProgressList(),
+                                condType,
+                                paramStr,
+                                params);
+                updated |= changed;
+                if (changed) {
+                    getOwner()
+                            .getSession()
+                            .send(new PacketQuestProgressUpdateNotify(subQuestWithCond));
                 }
 
                 boolean shouldFail =
-                        LogicType.calculate(
+                        QuestContentProgress.isSatisfied(
                                 subQuestWithCond.getQuestData().getFailCondComb(),
+                                failCond,
                                 subQuestWithCond.getFailProgressList());
 
-                if (shouldFail) subQuestWithCond.fail();
+                if (shouldFail) {
+                    subQuestWithCond.fail();
+                    updated = true;
+                }
             }
 
         } catch (Exception e) {
             Grasscutter.getLogger().error("An error occurred while trying to fail quest.", e);
+        } finally {
+            if (updated) save();
         }
     }
 
     public void tryFinishSubQuests(QuestContent condType, String paramStr, int... params) {
+        boolean updated = false;
         try {
             List<GameQuest> subQuestsWithCond =
                     getChildQuests().values().stream()
-                            // There are subQuests with no acceptCond, but can be finished (example: 35104)
                             .filter(
                                     p ->
                                             p.getState() == QuestState.QUEST_STATE_UNFINISHED
-                                                    && p.getQuestData().getAcceptCond() != null)
+                                                    && p.getQuestData() != null
+                                                    && p.getQuestData().getFinishCond() != null)
                             .filter(
                                     p ->
                                             p.getQuestData().getFinishCond().stream()
@@ -427,32 +439,36 @@ public class GameMainQuest {
             for (GameQuest subQuestWithCond : subQuestsWithCond) {
                 val finishCond = subQuestWithCond.getQuestData().getFinishCond();
 
-                for (int i = 0; i < finishCond.size(); i++) {
-                    val condition = finishCond.get(i);
-                    if (condition.getType() == condType) {
-                        boolean result =
-                                this.getOwner()
-                                        .getServer()
-                                        .getQuestSystem()
-                                        .triggerContent(subQuestWithCond, condition, paramStr, params);
-                        subQuestWithCond.setFinishProgress(i, result ? 1 : 0);
-                        if (result) {
-                            getOwner().getSession().send(new PacketQuestProgressUpdateNotify(subQuestWithCond));
-                        }
-                    }
+                boolean changed =
+                        updateContentProgress(
+                                subQuestWithCond,
+                                finishCond,
+                                subQuestWithCond.getFinishProgressList(),
+                                condType,
+                                paramStr,
+                                params);
+                updated |= changed;
+                if (changed) {
+                    getOwner()
+                            .getSession()
+                            .send(new PacketQuestProgressUpdateNotify(subQuestWithCond));
                 }
 
                 boolean shouldFinish =
-                        LogicType.calculate(
+                        QuestContentProgress.isSatisfied(
                                 subQuestWithCond.getQuestData().getFinishCondComb(),
+                                finishCond,
                                 subQuestWithCond.getFinishProgressList());
 
                 var questManager = this.getQuestManager();
                 if (questManager != null
-                        && questManager.getLoggedQuests().contains(subQuestWithCond.getSubQuestId())) {
+                        && questManager
+                                .getLoggedQuests()
+                                .contains(subQuestWithCond.getSubQuestId())) {
                     Grasscutter.getLogger()
                             .debug(
-                                    ">>> Quest {} will be {} as a result of content trigger {} ({}, {}).",
+                                    ">>> Quest {} will be {} as a result of content trigger {} ({},"
+                                        + " {}).",
                                     subQuestWithCond.getSubQuestId(),
                                     shouldFinish ? "finished" : "not finished",
                                     condType.name(),
@@ -466,7 +482,34 @@ public class GameMainQuest {
             }
         } catch (Exception e) {
             Grasscutter.getLogger().debug("An error occurred while trying to finish quest.", e);
+        } finally {
+            if (updated) save();
         }
+    }
+
+    private boolean updateContentProgress(
+            GameQuest quest,
+            List<QuestData.QuestContentCondition> conditions,
+            int[] progress,
+            QuestContent type,
+            String paramStr,
+            int... params) {
+        if (progress == null || progress.length != conditions.size()) return false;
+        boolean changed = false;
+        for (int i = 0; i < conditions.size(); i++) {
+            var condition = conditions.get(i);
+            if (condition.getType() != type) continue;
+            int next =
+                    getOwner()
+                            .getServer()
+                            .getQuestSystem()
+                            .getContentProgress(quest, condition, progress[i], paramStr, params);
+            if (progress[i] != next) {
+                progress[i] = next;
+                changed = true;
+            }
+        }
+        return changed;
     }
 
     public void save() {
