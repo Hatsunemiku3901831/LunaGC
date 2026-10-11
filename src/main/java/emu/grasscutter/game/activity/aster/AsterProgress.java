@@ -14,6 +14,46 @@ public final class AsterProgress {
     private Map<Integer, AsterMidRewardState> midRewardStates = new HashMap<>();
     private Set<String> midClaims = new HashSet<>();
     private String pendingMidReward = "";
+    private int spentCredit;
+    private Map<Integer, Integer> shopPurchases = new HashMap<>();
+    private ShopPurchase pendingShopPurchase;
+
+    /** Kept until both the delivered item and the completion have acknowledged writes. */
+    public static final class ShopPurchase {
+        private int goodsId, count, cost, itemId, itemCount;
+
+        public ShopPurchase(int goodsId, int count, int cost, int itemId, int itemCount) {
+            this.goodsId = goodsId;
+            this.count = count;
+            this.cost = cost;
+            this.itemId = itemId;
+            this.itemCount = itemCount;
+        }
+
+        public int goodsId() {
+            return goodsId;
+        }
+
+        public int count() {
+            return count;
+        }
+
+        public int cost() {
+            return cost;
+        }
+
+        public int itemId() {
+            return itemId;
+        }
+
+        public int itemCount() {
+            return itemCount;
+        }
+
+        boolean isValid() {
+            return goodsId > 0 && count > 0 && cost > 0 && itemId > 0 && itemCount > 0;
+        }
+    }
 
     public Set<Long> collected() {
         return Set.copyOf(collected);
@@ -21,6 +61,44 @@ public final class AsterProgress {
 
     public int credit() {
         return Math.addExact(collected.size(), midCredit);
+    }
+
+    public int creditBalance() {
+        return Math.subtractExact(credit(), spentCredit);
+    }
+
+    public int shopBought(int goodsId) {
+        return shopPurchases.getOrDefault(goodsId, 0);
+    }
+
+    public ShopPurchase pendingShopPurchase() {
+        return pendingShopPurchase;
+    }
+
+    public boolean hasPendingReward() {
+        return pendingWatcherReward != 0 || pendingMidClaim != 0 || pendingShopPurchase != null;
+    }
+
+    public void beginShopPurchase(ShopPurchase purchase, int previouslyBought) {
+        if (hasPendingReward()
+                || purchase == null
+                || !purchase.isValid()
+                || previouslyBought < 0
+                || purchase.cost() > creditBalance())
+            throw new IllegalStateException("Aster shop purchase cannot be reserved");
+        int bought =
+                Math.addExact(
+                        Math.max(shopBought(purchase.goodsId()), previouslyBought),
+                        purchase.count());
+        spentCredit = Math.addExact(spentCredit, purchase.cost());
+        shopPurchases.put(purchase.goodsId(), bought);
+        pendingShopPurchase = purchase;
+    }
+
+    public void finishShopPurchase() {
+        if (pendingShopPurchase == null)
+            throw new IllegalStateException("No Aster shop reservation");
+        pendingShopPurchase = null;
     }
 
     public boolean collect(int groupId, int configId) {
@@ -36,8 +114,7 @@ public final class AsterProgress {
     }
 
     public void beginWatcherReward(int id) {
-        if (pendingWatcherReward != 0 || pendingMidClaim != 0)
-            throw new IllegalStateException("Aster reward already reserved");
+        if (hasPendingReward()) throw new IllegalStateException("Aster reward already reserved");
         pendingWatcherReward = id;
     }
 
@@ -116,8 +193,7 @@ public final class AsterProgress {
     }
 
     public void beginSharedMidClaim(int camp, String token) {
-        if (pendingMidClaim != 0
-                || pendingWatcherReward != 0
+        if (hasPendingReward()
                 || !AsterMidRewardState.validToken(token)
                 || midClaims.contains(token)
                 || !AsterMidCamps.camps().containsKey(camp))
@@ -165,10 +241,7 @@ public final class AsterProgress {
     }
 
     public void beginMidClaim(int id) {
-        if (pendingMidClaim != 0
-                || pendingWatcherReward != 0
-                || !midOffers.containsKey(id)
-                || midRewardStates.containsKey(id))
+        if (hasPendingReward() || !midOffers.containsKey(id) || midRewardStates.containsKey(id))
             throw new IllegalStateException("Aster reward already reserved");
         pendingMidClaim = id;
     }
@@ -197,6 +270,23 @@ public final class AsterProgress {
                 && midCredit >= 0
                 && midCollectCount >= 0
                 && (long) midCredit + collected.size() <= Integer.MAX_VALUE
+                && spentCredit >= 0
+                && spentCredit <= (long) midCredit + collected.size()
+                && shopPurchases != null
+                && shopPurchases.entrySet().stream()
+                        .allMatch(
+                                e ->
+                                        e.getKey() != null
+                                                && e.getKey() > 0
+                                                && e.getValue() != null
+                                                && e.getValue() > 0)
+                && (pendingShopPurchase == null
+                        || pendingShopPurchase.isValid()
+                                && pendingWatcherReward == 0
+                                && pendingMidClaim == 0
+                                && spentCredit >= pendingShopPurchase.cost()
+                                && shopBought(pendingShopPurchase.goodsId())
+                                        >= pendingShopPurchase.count())
                 && midOffers != null
                 && midFinishedCamps != null
                 && midRewardStates != null

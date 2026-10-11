@@ -41,7 +41,7 @@ public final class AsterWatcherRewards {
             if (!watcher.isFinished())
                 return Retcode.RET_ACTIVITY_WATCHER_REWARD_NOT_FINISHED_VALUE;
             var progress = AsterSchedule.progress(data);
-            if (progress.pendingWatcherReward() != 0 || progress.pendingMidClaim() != 0)
+            if (progress.hasPendingReward())
                 return Retcode.RET_SVR_ERROR_VALUE;
             int code = validate.applyAsInt(meta.getRewardID());
             if (code != 0) return code;

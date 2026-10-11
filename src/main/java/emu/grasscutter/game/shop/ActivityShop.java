@@ -52,6 +52,18 @@ public final class ActivityShop {
                 player.getShopLimit().add(limit);
             }
             limit.bindActivitySchedule(config.getScheduleId());
+            if (config.getActivityId() == AsterSchedule.ACTIVITY_ID) {
+                var data =
+                        player.getActivityManager()
+                                .getPlayerActivityDataMap()
+                                .get(config.getActivityId());
+                synchronized (data) {
+                    limit.setHasBoughtInPeriod(
+                            Math.max(
+                                    limit.getHasBoughtInPeriod(),
+                                    AsterSchedule.progress(data).shopBought(goods.getGoodsId())));
+                }
+            }
             return limit;
         }
     }

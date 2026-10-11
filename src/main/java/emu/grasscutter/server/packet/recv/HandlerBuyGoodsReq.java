@@ -3,6 +3,7 @@ package emu.grasscutter.server.packet.recv;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.common.ItemParamData;
+import emu.grasscutter.game.activity.aster.AsterShop;
 import emu.grasscutter.game.beyond.BeyondCloset;
 import emu.grasscutter.game.inventory.*;
 import emu.grasscutter.game.props.ActionReason;
@@ -79,6 +80,21 @@ public class HandlerBuyGoodsReq extends PacketHandler {
 
             if (!activityShop.canPurchase(sg)) {
                 session.send(new PacketBuyGoodsRsp(Retcode.RET_SHOP_CONTENT_NOT_MATCH));
+                continue;
+            }
+            if (AsterShop.usesCurrency(sg)) {
+                var result =
+                        AsterShop.buy(player, buyGoodsReq.getShopType(), sg, buyCount, currentTs);
+                session.send(
+                        result.retcode() != 0
+                                ? new PacketBuyGoodsRsp(Retcode.forNumber(result.retcode()))
+                                : new PacketBuyGoodsRsp(
+                                        buyGoodsReq.getShopType(),
+                                        result.bought(),
+                                        PacketGetShopRsp.describeGoods(
+                                                        sg, result.item(), result.access())
+                                                .setNextRefreshTime(0)
+                                                .build()));
                 continue;
             }
             int level =
@@ -215,7 +231,7 @@ public class HandlerBuyGoodsReq extends PacketHandler {
                         Grasscutter.getLogger()
                                 .warn(
                                         "Item use consumed {} of the {} units of item {} bought by"
-                                            + " player {}.",
+                                                + " player {}.",
                                         delivered,
                                         itemCount,
                                         itemId,

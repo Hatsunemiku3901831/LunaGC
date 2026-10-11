@@ -26,6 +26,7 @@ public final class AsterGather {
                     || now < AsterSchedule.beginTime(config, stage.getOpenDay()))
                 return Retcode.RET_ACTIVITY_CLOSE_VALUE;
             var progress = AsterSchedule.progress(data);
+            if (progress.pendingShopPurchase() != null) return Retcode.RET_SVR_ERROR_VALUE;
             var watcher = data.getWatcherInfoMap().get(area.watcherId());
             if (watcher == null) return Retcode.RET_SVR_ERROR_VALUE;
             if (!progress.collect(groupId, configId)) return Retcode.RET_ACTIVITY_ITEM_ERROR_VALUE;

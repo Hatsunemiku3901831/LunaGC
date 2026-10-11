@@ -82,7 +82,7 @@ public final class AsterMidRewards {
                     || progress.midReward(campId) != null
                     || !Objects.equals(progress.midOffers().get(campId), difficulty))
                 return Retcode.RET_ACTIVITY_ITEM_ERROR_VALUE;
-            if (progress.pendingMidClaim() != 0 || progress.pendingWatcherReward() != 0)
+            if (progress.hasPendingReward())
                 return Retcode.RET_SVR_ERROR_VALUE;
             if ((long) progress.credit() + reward.energy() > Integer.MAX_VALUE
                     || progress.midCollectCount() == Integer.MAX_VALUE)
@@ -205,7 +205,7 @@ public final class AsterMidRewards {
                 || !Objects.equals(offer.token(), token)
                 || !offer.canClaim(claimant.getUid(), now)
                 || progress.hasMidClaim(token)) return Retcode.RET_ACTIVITY_ITEM_ERROR_VALUE;
-        if (progress.pendingMidClaim() != 0 || progress.pendingWatcherReward() != 0)
+        if (progress.hasPendingReward())
             return Retcode.RET_SVR_ERROR_VALUE;
         var reward = reward(offer.difficulty());
         if (reward == null) return Retcode.RET_NOT_FOUND_CONFIG_VALUE;

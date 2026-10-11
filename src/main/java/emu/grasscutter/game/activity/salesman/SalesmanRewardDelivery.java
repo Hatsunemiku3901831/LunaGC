@@ -46,7 +46,10 @@ public final class SalesmanRewardDelivery {
     private static int currency(Player player, int id) { return id == 201 ? player.getPrimogems() : player.getMora(); }
     public static int validate(Player player, int rewardId) {
         var reward = GameData.getRewardDataMap().get(rewardId);
-        return reward == null ? Retcode.RET_SVR_ERROR_VALUE : validate(reward.getRewardItemList(),
+        return reward == null ? Retcode.RET_SVR_ERROR_VALUE : validate(player, reward.getRewardItemList());
+    }
+    public static int validate(Player player, List<ItemParamData> items) {
+        return validate(items,
                 id -> GameData.getItemDataMap().get(id), player.getInventory()::getInventoryTab, id -> currency(player, id));
     }
     /** Caller holds the inventory monitor from preflight through the grant. */
@@ -56,8 +59,12 @@ public final class SalesmanRewardDelivery {
     public static void grant(Player player, int rewardId, ActionReason reason) {
         var reward = GameData.getRewardDataMap().get(rewardId);
         if (reward == null || validate(player, rewardId) != 0) throw new IllegalStateException("Salesman reward preflight changed");
+        grant(player, reward.getRewardItemList(), reason);
+    }
+    public static void grant(Player player, List<ItemParamData> items, ActionReason reason) {
+        if (validate(player, items) != 0) throw new IllegalStateException("Activity item preflight changed");
         var inventory = player.getInventory();
-        for (var param : reward.getRewardItemList()) {
+        for (var param : items) {
             boolean virtual = GameData.getItemDataMap().get(param.getId()).getItemType() == ItemType.ITEM_VIRTUAL;
             int before = virtual ? currency(player, param.getId()) : inventory.getItemCountById(param.getId());
             if (!inventory.addItem(param, reason)) throw new IllegalStateException("Activity item was not granted");
