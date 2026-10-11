@@ -434,6 +434,7 @@ public class SceneScriptManager {
     // TODO optimize
     public SceneGroup getGroupById(int groupId) {
         if (!scene.getCrucibleSceneController().allows(groupId)) return null;
+        if (!scene.getAsterBigSceneController().allows(groupId)) return null;
         var group = findGroupById(groupId);
         if (group != null && !this.sceneGroupsInstances.containsKey(groupId)) {
             this.getScene().onLoadGroup(List.of(group));
@@ -1010,11 +1011,14 @@ public class SceneScriptManager {
         long activityTicket = scene.getCrucibleSceneController().getLifecycle().ticket();
         long activityRound = scene.getCrucibleSceneController().currentRoundSerial();
         long invitationSerial = scene.getCrucibleSceneController().invitationSerial();
-        var origin = scene.getAsterMidSceneController().owns(params.group_id) ? sceneGroups.get(params.group_id) : null;
+        boolean historical = scene.getAsterMidSceneController().owns(params.group_id)
+                || scene.getAsterBigSceneController().owns(params.group_id);
+        var origin = historical ? getLoadedGroupById(params.group_id) : null;
         java.util.function.BooleanSupplier guarded = () -> current.getAsBoolean()
-                && (!scene.getAsterMidSceneController().owns(params.group_id)
-                    || origin != null && sceneGroups.get(params.group_id) == origin
-                        && scene.getAsterMidSceneController().allows(origin));
+                && (!historical
+                    || origin != null && getLoadedGroupById(params.group_id) == origin
+                        && allowsGroupCall(origin));
+        boolean atomicScene = lockScene || scene.getAsterBigSceneController().owns(params.group_id);
         return scene.getScenePlayBattleManager()
                 .submitCallback(
                         params.group_id,
@@ -1025,7 +1029,11 @@ public class SceneScriptManager {
                                                     () ->
                                                             guarded.getAsBoolean()
                                                                     && battleCurrent.getAsBoolean();
-                                            if (lockScene) {
+                                            if (atomicScene) {
+                                                // A caller's eligibility callback may wait on work
+                                                // which needs the scene monitor. Preflight it outside
+                                                // the monitor, then recheck identity atomically.
+                                                if (!applicable.getAsBoolean()) return;
                                                 synchronized (scene) {
                                                     if (applicable.getAsBoolean())
                                                         this.realCallEvent(params, activityTicket, activityRound,
@@ -1535,7 +1543,8 @@ public class SceneScriptManager {
         var activity = scene.getCrucibleSceneController();
         return (!activity.owns(groupId) || (activity.allows(groupId) && sceneGroups.get(groupId) == group))
                 && (!scene.getAsterSceneController().owns(groupId) || scene.getAsterSceneController().allows(group))
-                && (!scene.getAsterMidSceneController().owns(groupId) || scene.getAsterMidSceneController().allows(group));
+                && (!scene.getAsterMidSceneController().owns(groupId) || scene.getAsterMidSceneController().allows(group))
+                && (!scene.getAsterBigSceneController().owns(groupId) || scene.getAsterBigSceneController().allows(group));
     }
 
     // todo use killed monsters instead of spawned entites for check?

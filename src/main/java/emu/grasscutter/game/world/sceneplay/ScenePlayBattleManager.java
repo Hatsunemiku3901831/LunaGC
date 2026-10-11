@@ -94,6 +94,16 @@ public final class ScenePlayBattleManager {
         return rewards;
     }
 
+    /** A completed round remains unavailable until its Lua callbacks and durable claims settle. */
+    public boolean canPrepare(int playId) {
+        synchronized (scene) {
+            var previous = rounds.get(playId);
+            return !closed
+                    && (previous == null || !active(previous) && callbacksDone(previous))
+                    && (playId != 2 || rewards.canReplace());
+        }
+    }
+
     /** Only the original completed Aster large battle can create this configured reward point. */
     public int createGeneralRewardGadget(int originGroup, int groupId, int configId) {
         synchronized (scene) {
@@ -758,7 +768,7 @@ public final class ScenePlayBattleManager {
     /** Retain the round of queued group events, including timer and gadget callbacks. */
     public Future<?> submitCallback(int groupId, Function<BooleanSupplier, Future<?>> submit) {
         synchronized (scene) {
-            var round = byGroup.get(groupId);
+            var round = find(groupId);
             BooleanSupplier guard =
                     () -> {
                         synchronized (scene) {

@@ -19,6 +19,20 @@ final class ScriptLibUserdata extends LuaUserdata {
     private final java.util.Map<String, LuaValue> timerFunctions = GroupTimerLua.functions();
     private final LuaValue templateReminder = TemplateReminderLua.function();
     private final LuaValue scenePlayReward = ScenePlayRewardLua.function();
+    private final LuaValue printLog =
+            new VarArgFunction() {
+                @Override
+                public Varargs invoke(Varargs args) {
+                    // Historical Lua also uses PrintLog(message) without its usual context
+                    // argument.
+                    if (args.narg() == 1 && args.arg1().type() == LuaValue.TSTRING) {
+                        ((ScriptLib) ScriptLibUserdata.this.touserdata(ScriptLib.class))
+                                .PrintLog(args.arg1().tojstring());
+                        return LuaValue.ZERO;
+                    }
+                    return delegate.get("PrintLog").invoke(args);
+                }
+            };
 
     private static LuaValue teamValueFunction(boolean add) {
         return new VarArgFunction() {
@@ -128,6 +142,8 @@ final class ScriptLibUserdata extends LuaUserdata {
             var battleFunction = sceneBattleFunctions.get(key.tojstring());
             if (battleFunction != null) return battleFunction;
             switch (key.tojstring()) {
+                case "PrintLog":
+                    return printLog;
                 case "CreateScenePlayGeneralRewardGadget":
                     return scenePlayReward;
                 case "ShowTemplateReminder":

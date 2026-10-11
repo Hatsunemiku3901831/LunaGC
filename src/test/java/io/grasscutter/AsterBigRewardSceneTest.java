@@ -116,6 +116,14 @@ class AsterBigRewardSceneTest {
             scene.scripts.instances.put(id, new SceneGroupInstance(group, host));
         }
         main = scene.scripts.loaded.get(AsterBigRewards.GROUP);
+        var controller = scene.getAsterBigSceneController();
+        @SuppressWarnings("unchecked")
+        var mounted =
+                (Map<Integer, SceneGroup>)
+                        field(AsterBigSceneController.class, "mounted").get(controller);
+        mounted.putAll(scene.scripts.loaded);
+        field(AsterBigSceneController.class, "scheduleId")
+                .set(controller, resources.config.getScheduleId());
         library = ScriptLoader.getScriptLib();
         library.setSceneScriptManager(scene.scripts);
         library.setCurrentGroup(main);

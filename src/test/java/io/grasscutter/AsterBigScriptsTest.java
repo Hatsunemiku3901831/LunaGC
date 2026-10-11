@@ -742,6 +742,12 @@ class AsterBigScriptsTest {
             return loaded.get(id);
         }
 
+        // Script-engine tests provide their own mounted scope. Entrance tests use the real gates.
+        @Override
+        public boolean allowsGroupCall(SceneGroup group) {
+            return group == null || loaded.get(group.id) == group;
+        }
+
         @Override
         public SceneGroup getGroupById(int id) {
             return loaded.get(id);

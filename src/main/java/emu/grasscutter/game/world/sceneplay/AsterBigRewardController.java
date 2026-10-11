@@ -253,7 +253,7 @@ public final class AsterBigRewardController {
                             Grasscutter.getLogger()
                                     .error(
                                             "Aster large reward needs reconciliation: uid {} token"
-                                                + " {}",
+                                                    + " {}",
                                             player.getUid(),
                                             selected.token,
                                             failure);
@@ -298,7 +298,7 @@ public final class AsterBigRewardController {
         }
     }
 
-    void close() {
+    public void close() {
         var selected = point;
         point = null;
         if (selected != null && scene.getEntities().get(selected.entity.getId()) == selected.entity)

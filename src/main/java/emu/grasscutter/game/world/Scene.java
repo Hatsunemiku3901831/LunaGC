@@ -80,6 +80,7 @@ public class Scene {
     @Getter private final SalesmanSceneController salesmanSceneController;
     @Getter private final AsterSceneController asterSceneController;
     @Getter private final emu.grasscutter.game.activity.aster.AsterMidSceneController asterMidSceneController;
+    @Getter private final emu.grasscutter.game.activity.aster.AsterBigSceneController asterBigSceneController;
     @Getter private final emu.grasscutter.game.world.seal.SealBattleManager sealBattleManager;
     @Getter private final emu.grasscutter.game.world.sceneplay.ScenePlayBattleManager scenePlayBattleManager;
     @Getter @Setter private WorldChallenge challenge;
@@ -123,6 +124,7 @@ public class Scene {
         this.salesmanSceneController = new SalesmanSceneController(this);
         this.asterSceneController = new AsterSceneController(this);
         this.asterMidSceneController = new emu.grasscutter.game.activity.aster.AsterMidSceneController(this);
+        this.asterBigSceneController = new emu.grasscutter.game.activity.aster.AsterBigSceneController(this);
         this.sealBattleManager = new emu.grasscutter.game.world.seal.SealBattleManager(this);
         this.scenePlayBattleManager = new emu.grasscutter.game.world.sceneplay.ScenePlayBattleManager(this);
         this.scriptManager = new SceneScriptManager(this);
@@ -268,6 +270,7 @@ public class Scene {
 
                 this.crucibleSceneController.onPlayerLeaving(player);
                 this.salesmanSceneController.onPlayerLeaving(player);
+                this.asterBigSceneController.onPlayerLeaving(player);
                 this.sealBattleManager.onPlayerLeaving(player);
                 this.scenePlayBattleManager.onPlayerLeaving(player);
                 getPlayers().remove(player);
@@ -290,6 +293,7 @@ public class Scene {
                     this.salesmanSceneController.close();
                     this.asterSceneController.close();
                     this.asterMidSceneController.close();
+                    this.asterBigSceneController.close();
                     this.getScriptManager().onDestroy();
                     this.getWorld().deregisterScene(this);
                 }
@@ -685,6 +689,7 @@ public class Scene {
                         this.crucibleSceneController.update(nowMs);
                         this.asterSceneController.update(nowMs);
                         this.asterMidSceneController.update(nowMs);
+                        this.asterBigSceneController.update(nowMs);
                         this.checkGroups();
                     }
                     else if (this.getScriptManager().isInitAttempted()) this.checkSpawns();
@@ -1047,6 +1052,7 @@ public class Scene {
                         .flatMap(Collection::stream)
                         .filter(id -> !crucibleSceneController.owns(id))
                         .filter(id -> !asterMidSceneController.owns(id))
+                        .filter(id -> !asterBigSceneController.owns(id))
                         .collect(Collectors.toSet());
 
         for (var group : this.loadedGroups) {
@@ -1180,6 +1186,7 @@ public class Scene {
 
         for (var group : groups) {
             if (!crucibleSceneController.allows(group.id)) continue;
+            if (!asterBigSceneController.allows(group.id)) continue;
             if (this.loadedGroups.contains(group)) continue;
 
             this.getScriptManager().loadGroupFromScript(group);
@@ -1191,6 +1198,7 @@ public class Scene {
         var entities = new ArrayList<GameEntity>();
         for (var group : groups) {
             if (!crucibleSceneController.allows(group.id)) continue;
+            if (!asterBigSceneController.allows(group.id)) continue;
             if (this.loadedGroups.contains(group)) continue;
 
             if (group.init_config == null) {

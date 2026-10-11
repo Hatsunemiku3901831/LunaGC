@@ -69,10 +69,12 @@ public final class AsterActivityHandler extends ActivityHandler {
         int rank = data != null && data.getPlayer() != null ? data.getPlayer().getLevel() : 0;
         // Read the two documents separately before locking the claimant for the remaining fields.
         var mid = AsterMidSceneController.infoForWorld(data, getActivityConfigItem(), rank, now);
-        if (data == null) buildInfo(null, info, mid, rank, now);
+        var bigOpen =
+                AsterBigSceneController.openForWorld(data, getActivityConfigItem(), rank, now);
+        if (data == null) buildInfo(null, info, mid, bigOpen, rank, now);
         else
             synchronized (data) {
-                buildInfo(data, info, mid, rank, now);
+                buildInfo(data, info, mid, bigOpen, rank, now);
             }
     }
 
@@ -80,6 +82,7 @@ public final class AsterActivityHandler extends ActivityHandler {
             PlayerActivityData data,
             ActivityInfo.Builder info,
             AsterMidDetailInfo mid,
+            boolean bigOpen,
             int rank,
             long now) {
         var detail =
@@ -95,6 +98,7 @@ public final class AsterActivityHandler extends ActivityHandler {
         detail.setAsterMid(mid)
                 .setAsterLarge(
                         AsterLargeDetailInfo.newBuilder()
+                                .setIsOpen(bigOpen)
                                 .setBeginTime(
                                         (int)
                                                 (AsterSchedule.beginTime(getActivityConfigItem(), 8)
