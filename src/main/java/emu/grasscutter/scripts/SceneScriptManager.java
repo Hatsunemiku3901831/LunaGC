@@ -407,6 +407,12 @@ public class SceneScriptManager {
         return sceneGroups.get(groupId);
     }
 
+    /** Group calls must not revive unloaded definitions or bypass historical activity gates. */
+    public boolean allowsGroupCall(@Nullable SceneGroup group) {
+        return !destroyed && (group == null || getLoadedGroupById(group.id) == group
+                && allowsActivityEntity(group.id, group));
+    }
+
     // TODO optimize
     public SceneGroup getGroupById(int groupId) {
         if (!scene.getCrucibleSceneController().allows(groupId)) return null;
@@ -987,6 +993,7 @@ public class SceneScriptManager {
             return false;
         } finally {
             ScriptLoader.getScriptLib().removeCurrentGroup();
+            ScriptLoader.getScriptLib().removeCurrentCallParams();
         }
     }
 

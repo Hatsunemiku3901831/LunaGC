@@ -668,6 +668,28 @@ public final class ScenePlayBattleManager {
         return round.luaCalls == 0 && round.callbacks.stream().allMatch(Future::isDone);
     }
 
+    /** A nested synchronous group call also keeps its battle alive until the call returns. */
+    public int withGroupLuaCall(
+            SceneGroup origin, SceneGroup target, java.util.function.IntSupplier call) {
+        synchronized (scene) {
+            if (closed || target == null || call == null) return -1;
+            var selected = new LinkedHashSet<Round>();
+            for (var group : new SceneGroup[] {origin, target}) {
+                if (group == null) continue;
+                var round = byGroup.get(group.id);
+                if (round == null) continue;
+                if (!round.valid || !groupsCurrent(round)) return -1;
+                selected.add(round);
+            }
+            selected.forEach(round -> round.luaCalls++);
+            try {
+                return call.getAsInt();
+            } finally {
+                selected.forEach(round -> round.luaCalls--);
+            }
+        }
+    }
+
     /** Retain the round of queued group events, including timer and gadget callbacks. */
     public Future<?> submitCallback(int groupId, Function<BooleanSupplier, Future<?>> submit) {
         synchronized (scene) {

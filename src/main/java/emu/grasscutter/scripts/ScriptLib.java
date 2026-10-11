@@ -84,6 +84,30 @@ public class ScriptLib {
         this.callParams.set(callArgs);
     }
 
+    public void removeCurrentCallParams() {
+        this.callParams.remove();
+    }
+
+    /** A group function starts without the caller's entity or event parameters. */
+    <T> T withGroupContext(SceneScriptManager manager, SceneGroup group, Supplier<T> callback) {
+        var previousManager = sceneScriptManager.getIfExists();
+        var previousGroup = currentGroup.getIfExists();
+        var previousEntity = currentEntity.getIfExists();
+        var previousParams = callParams.getIfExists();
+        try {
+            setSceneScriptManager(manager);
+            setCurrentGroup(group);
+            removeCurrentEntity();
+            removeCurrentCallParams();
+            return callback.get();
+        } finally {
+            if (previousParams == null) removeCurrentCallParams(); else setCurrentCallParams(previousParams);
+            if (previousEntity == null) removeCurrentEntity(); else setCurrentEntity(previousEntity);
+            if (previousGroup == null) removeCurrentGroup(); else setCurrentGroup(previousGroup);
+            if (previousManager == null) removeSceneScriptManager(); else setSceneScriptManager(previousManager);
+        }
+    }
+
     public Optional<SceneGroup> getCurrentGroup() {
         return Optional.ofNullable(this.currentGroup.getIfExists());
     }

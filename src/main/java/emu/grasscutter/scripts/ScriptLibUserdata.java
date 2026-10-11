@@ -14,6 +14,7 @@ final class ScriptLibUserdata extends LuaUserdata {
     private final LuaValue getTeamServerValue = teamServerValueFunction("Get");
     private final java.util.Map<String, LuaValue> sceneBattleFunctions =
             ScenePlayBattleLua.functions();
+    private final java.util.Map<String, LuaValue> groupFunctions = GroupLuaCall.functions();
 
     private static LuaValue teamValueFunction(boolean add) {
         return new VarArgFunction() {
@@ -114,6 +115,8 @@ final class ScriptLibUserdata extends LuaUserdata {
     @Override
     public LuaValue get(LuaValue key) {
         if (key.isstring()) {
+            var groupFunction = groupFunctions.get(key.tojstring());
+            if (groupFunction != null) return groupFunction;
             var battleFunction = sceneBattleFunctions.get(key.tojstring());
             if (battleFunction != null) return battleFunction;
             switch (key.tojstring()) {
