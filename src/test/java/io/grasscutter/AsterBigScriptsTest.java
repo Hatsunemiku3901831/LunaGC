@@ -705,7 +705,7 @@ class AsterBigScriptsTest {
         return null;
     }
 
-    private static final class BigScene extends AbilityTestFixture.TestScene {
+    static final class BigScene extends AbilityTestFixture.TestScene {
         final AtomicLong now = new AtomicLong(1000);
         final BigScripts scripts;
 
@@ -725,7 +725,7 @@ class AsterBigScriptsTest {
         }
     }
 
-    private static final class BigScripts extends SceneScriptManager {
+    static final class BigScripts extends SceneScriptManager {
         final Map<Integer, SceneGroup> loaded = new HashMap<>();
         final Map<Integer, SceneGroupInstance> instances = new HashMap<>();
         final List<ScoringMonster> spawned = new ArrayList<>();

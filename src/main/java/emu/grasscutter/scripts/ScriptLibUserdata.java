@@ -18,6 +18,7 @@ final class ScriptLibUserdata extends LuaUserdata {
     private final java.util.Map<String, LuaValue> tideFunctions = MonsterTideLua.functions();
     private final java.util.Map<String, LuaValue> timerFunctions = GroupTimerLua.functions();
     private final LuaValue templateReminder = TemplateReminderLua.function();
+    private final LuaValue scenePlayReward = ScenePlayRewardLua.function();
 
     private static LuaValue teamValueFunction(boolean add) {
         return new VarArgFunction() {
@@ -127,6 +128,8 @@ final class ScriptLibUserdata extends LuaUserdata {
             var battleFunction = sceneBattleFunctions.get(key.tojstring());
             if (battleFunction != null) return battleFunction;
             switch (key.tojstring()) {
+                case "CreateScenePlayGeneralRewardGadget":
+                    return scenePlayReward;
                 case "ShowTemplateReminder":
                     return templateReminder;
                 case "InitTimeAxis":

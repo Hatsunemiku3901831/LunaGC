@@ -17,6 +17,65 @@ public final class AsterProgress {
     private int spentCredit;
     private Map<Integer, Integer> shopPurchases = new HashMap<>();
     private ShopPurchase pendingShopPurchase;
+    private int bigCredit, bigCollectCount;
+    private AsterBigRewardState bigReward;
+    private Set<String> bigClaims = new HashSet<>();
+    private String pendingBigClaim = "";
+
+    public int bigCredit() {
+        return bigCredit;
+    }
+
+    public int bigCollectCount() {
+        return bigCollectCount;
+    }
+
+    public AsterBigRewardState.View bigReward() {
+        return bigReward == null ? null : bigReward.view();
+    }
+
+    public boolean hasBigClaim(String token) {
+        return bigClaims.contains(token);
+    }
+
+    public void openBigReward(Map<Integer, AsterBigRewards.Reward> rewards) {
+        if (bigReward != null && !bigReward.view().reserved().isEmpty())
+            throw new IllegalStateException("Unconfirmed Aster large reward cannot be replaced");
+        var next = new AsterBigRewardState(rewards);
+        if (!next.isValid()) throw new IllegalArgumentException("Invalid Aster large reward");
+        bigReward = next;
+    }
+
+    public void reserveBigReward(int uid) {
+        bigReward.reserve(uid);
+    }
+
+    public void cancelBigReward(int uid) {
+        bigReward.cancel(uid);
+    }
+
+    public void acknowledgeBigReward(int uid) {
+        bigReward.acknowledge(uid);
+    }
+
+    public void beginBigClaim(String token) {
+        if (hasPendingReward() || !AsterMidRewardState.validToken(token) || hasBigClaim(token))
+            throw new IllegalStateException("Aster large claim cannot be reserved");
+        pendingBigClaim = token;
+    }
+
+    public void cancelBigClaim() {
+        pendingBigClaim = "";
+    }
+
+    public void finishBigClaim(int essence) {
+        if (pendingBigClaim.isEmpty() || essence <= 0 || bigClaims.contains(pendingBigClaim))
+            throw new IllegalStateException("No Aster large reservation");
+        bigCredit = Math.addExact(bigCredit, essence);
+        bigCollectCount = Math.addExact(bigCollectCount, 1);
+        bigClaims.add(pendingBigClaim);
+        pendingBigClaim = "";
+    }
 
     /** Kept until both the delivered item and the completion have acknowledged writes. */
     public static final class ShopPurchase {
@@ -76,7 +135,10 @@ public final class AsterProgress {
     }
 
     public boolean hasPendingReward() {
-        return pendingWatcherReward != 0 || pendingMidClaim != 0 || pendingShopPurchase != null;
+        return pendingWatcherReward != 0
+                || pendingMidClaim != 0
+                || pendingShopPurchase != null
+                || !pendingBigClaim.isEmpty();
     }
 
     public void beginShopPurchase(ShopPurchase purchase, int previouslyBought) {
@@ -262,7 +324,20 @@ public final class AsterProgress {
     }
 
     public boolean isValid() {
-        return collected != null
+        return bigCredit >= 0
+                && bigCollectCount >= 0
+                && bigClaims != null
+                && bigClaims.size() <= bigCollectCount
+                && bigClaims.stream().allMatch(AsterMidRewardState::validToken)
+                && (bigReward == null || bigReward.isValid())
+                && pendingBigClaim != null
+                && (pendingBigClaim.isEmpty()
+                        || AsterMidRewardState.validToken(pendingBigClaim)
+                                && !bigClaims.contains(pendingBigClaim)
+                                && pendingWatcherReward == 0
+                                && pendingMidClaim == 0
+                                && pendingShopPurchase == null)
+                && collected != null
                 && collected.stream().allMatch(k -> k != null && AsterFragments.contains(k))
                 && (pendingWatcherReward == 0
                         || pendingWatcherReward >= 1200101 && pendingWatcherReward <= 1200106

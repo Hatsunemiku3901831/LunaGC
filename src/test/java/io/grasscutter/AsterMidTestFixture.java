@@ -112,7 +112,7 @@ final class AsterMidTestFixture implements AutoCloseable {
         data.setDetail(progress);
     }
 
-    private <T extends GameResource> void load(
+    <T extends GameResource> void load(
             String name, Class<T> type, Int2ObjectMap<T> target, IntPredicate include)
             throws Exception {
         var before = new HashMap<>(target);

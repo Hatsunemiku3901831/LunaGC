@@ -573,7 +573,7 @@ class AsterMidSceneTest {
         }
     }
 
-    private static final class RecoveryPlayer extends AbilityTestFixture.TestPlayer {
+    static final class RecoveryPlayer extends AbilityTestFixture.TestPlayer {
         int worldLevel = 1, adventureExp, companionshipExp;
         long timeMs;
         GameServer server;

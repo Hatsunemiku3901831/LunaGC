@@ -345,7 +345,9 @@ public class EntityGadget extends EntityBaseGadget {
                     case RewardStatue -> new GadgetRewardStatue(this);
                     case MpPlayRewardPoint -> new GadgetMpPlayReward(this);
                     case GeneralRewardPoint -> getScene().getAsterMidSceneController().owns(getGroupId())
-                            ? new GadgetAsterReward(this) : null;
+                            ? new GadgetAsterReward(this)
+                            : getScene().getScenePlayBattleManager().getRewards().owns(this)
+                                    ? new GadgetScenePlayReward(this) : null;
                     case Chest -> new GadgetChest(this);
                     case Gadget -> new GadgetObject(this);
                     default -> null;

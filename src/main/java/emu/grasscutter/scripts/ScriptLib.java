@@ -716,6 +716,17 @@ public class ScriptLib {
         }
     }
 
+    public int CreateScenePlayGeneralRewardGadget(int groupId, int configId) {
+        var manager = getSceneScriptManagerOrNull();
+        if (manager == null) return -1;
+        synchronized (manager.getScene()) {
+            var origin = getCurrentGroup().orElse(null);
+            if (origin == null || !manager.allowsGroupCall(origin)) return -1;
+            return manager.getScene().getScenePlayBattleManager()
+                    .createGeneralRewardGadget(origin.id, groupId, configId);
+        }
+    }
+
     public int CreateMonster(LuaTable table) {
         logger.debug("[LUA] Call CreateMonster with {}", printTable(table));
         var configId = table.get("config_id").toint();

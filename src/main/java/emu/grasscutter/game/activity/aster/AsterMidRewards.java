@@ -2,10 +2,8 @@ package emu.grasscutter.game.activity.aster;
 
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
-import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.game.activity.*;
 import emu.grasscutter.game.player.Player;
-import emu.grasscutter.game.props.ActionReason;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 
 import java.util.*;
@@ -82,8 +80,7 @@ public final class AsterMidRewards {
                     || progress.midReward(campId) != null
                     || !Objects.equals(progress.midOffers().get(campId), difficulty))
                 return Retcode.RET_ACTIVITY_ITEM_ERROR_VALUE;
-            if (progress.hasPendingReward())
-                return Retcode.RET_SVR_ERROR_VALUE;
+            if (progress.hasPendingReward()) return Retcode.RET_SVR_ERROR_VALUE;
             if ((long) progress.credit() + reward.energy() > Integer.MAX_VALUE
                     || progress.midCollectCount() == Integer.MAX_VALUE)
                 return Retcode.RET_ITEM_EXCEED_LIMIT_VALUE;
@@ -205,8 +202,7 @@ public final class AsterMidRewards {
                 || !Objects.equals(offer.token(), token)
                 || !offer.canClaim(claimant.getUid(), now)
                 || progress.hasMidClaim(token)) return Retcode.RET_ACTIVITY_ITEM_ERROR_VALUE;
-        if (progress.hasPendingReward())
-            return Retcode.RET_SVR_ERROR_VALUE;
+        if (progress.hasPendingReward()) return Retcode.RET_SVR_ERROR_VALUE;
         var reward = reward(offer.difficulty());
         if (reward == null) return Retcode.RET_NOT_FOUND_CONFIG_VALUE;
         if ((long) progress.credit() + reward.energy() > Integer.MAX_VALUE
@@ -305,7 +301,7 @@ public final class AsterMidRewards {
         Grasscutter.getLogger()
                 .error(
                         "Shared Aster recovery needs reconciliation: host {} uid {} schedule {}"
-                            + " camp {}",
+                                + " camp {}",
                         owner.getUid(),
                         claimant.getUid(),
                         owner.getScheduleId(),
@@ -318,22 +314,6 @@ public final class AsterMidRewards {
      * reserved.
      */
     public static void grant(Player player, Reward reward) {
-        for (int id : List.of(102, 105, 109)) {
-            var item = GameData.getItemDataMap().get(id);
-            if (item == null
-                    || item.getItemType() != emu.grasscutter.game.inventory.ItemType.ITEM_VIRTUAL)
-                throw new IllegalStateException("Aster virtual reward resource missing: " + id);
-        }
-        DatabaseHelper.saveGameSync(player);
-        var inventory = player.getInventory();
-        synchronized (inventory) {
-            if (!inventory.addItem(102, reward.adventureExp(), ActionReason.TakeGeneralReward)
-                    || !inventory.addItem(
-                            105, reward.companionshipExp(), ActionReason.TakeGeneralReward))
-                throw new IllegalStateException("Aster EXP reward was not granted");
-            for (var avatar : player.getTeamManager().getActiveTeam())
-                DatabaseHelper.saveGameSync(avatar.getAvatar());
-            DatabaseHelper.saveGameSync(player);
-        }
+        AsterRewardDelivery.grant(player, reward.adventureExp(), reward.companionshipExp(), 109);
     }
 }

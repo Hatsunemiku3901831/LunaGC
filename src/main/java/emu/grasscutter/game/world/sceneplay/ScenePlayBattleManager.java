@@ -46,6 +46,8 @@ public final class ScenePlayBattleManager {
         int playTeamGadgetId;
         boolean valid = true;
         int luaCalls;
+        int resultReason = -1;
+        boolean rewardCreated;
         ScenePlayBattleParameters parameters;
 
         Round(
@@ -70,6 +72,7 @@ public final class ScenePlayBattleManager {
 
     private final Scene scene;
     private final LongSupplier clock;
+    private final AsterBigRewardController rewards;
     // All state, packet ordering and callback tickets follow the scene monitor.
     private final Map<Integer, Round> rounds = new LinkedHashMap<>();
     private final Map<Integer, Round> byGroup = new HashMap<>();
@@ -84,6 +87,36 @@ public final class ScenePlayBattleManager {
     public ScenePlayBattleManager(Scene scene, LongSupplier clock) {
         this.scene = Objects.requireNonNull(scene);
         this.clock = Objects.requireNonNull(clock);
+        this.rewards = new AsterBigRewardController(scene);
+    }
+
+    public AsterBigRewardController getRewards() {
+        return rewards;
+    }
+
+    /** Only the original completed Aster large battle can create this configured reward point. */
+    public int createGeneralRewardGadget(int originGroup, int groupId, int configId) {
+        synchronized (scene) {
+            var round = find(originGroup);
+            if (round == null
+                    || round.state != STOP
+                    || round.resultReason != WIN
+                    || round.entry.getId() != 2
+                    || round.playType != 2
+                    || groupId != round.entry.getRewardGroupId()
+                    || configId != round.entry.getRewardConfigId()) return -1;
+            if (round.rewardCreated) return 0;
+            if (!rewards.create(
+                    () ->
+                            !closed
+                                    && round.valid
+                                    && byGroup.get(originGroup) == round
+                                    && groupsCurrent(round)
+                                    && round.state == STOP
+                                    && round.resultReason == WIN)) return -1;
+            round.rewardCreated = true;
+            return 0;
+        }
     }
 
     /** Does not perform activity unlock checks, matchmaking, or create script groups. */
@@ -117,6 +150,7 @@ public final class ScenePlayBattleManager {
                 return false;
             var previous = rounds.get(entry.getId());
             if (previous != null && (active(previous) || !callbacksDone(previous))) return false;
+            if (entry.getId() == 2 && !rewards.canReplace()) return false;
             int minimum = type == DIRECT ? 1 : match.getMinPlayers();
             var members = new LinkedHashMap<Integer, Player>();
             for (var player : participants)
@@ -142,6 +176,7 @@ public final class ScenePlayBattleManager {
                                 && (active(other) || !callbacksDone(other))) return false;
                 groups.put(id, group);
             }
+            if (previous != null && previous.entry.getId() == 2) rewards.close();
             if (previous != null)
                 previous.groups.keySet().forEach(id -> byGroup.remove(id, previous));
             var round = new Round(entry, playType, type, minimum, owner, members, groups, now);
@@ -493,6 +528,7 @@ public final class ScenePlayBattleManager {
         synchronized (scene) {
             if (closed) return;
             for (var round : rounds.values()) advance(round);
+            rewards.tick();
             for (var entity : getPlayTeamEntities()) entity.onAbilityTick();
         }
     }
@@ -573,6 +609,7 @@ public final class ScenePlayBattleManager {
     public void close() {
         synchronized (scene) {
             closed = true;
+            rewards.close();
             rounds.values().forEach(round -> round.valid = false);
             rounds.values()
                     .forEach(
@@ -608,6 +645,7 @@ public final class ScenePlayBattleManager {
         if (!active(round)) return;
         long cost = round.startTime == 0 ? 0 : Math.max(0, time(round) - round.startTime);
         round.state = STOP;
+        round.resultReason = reason;
         // The original scripts consume result reason in param3, not a STATE/STOP event.
         if (callback)
             emit(

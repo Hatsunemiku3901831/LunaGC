@@ -26,6 +26,10 @@ public class MpPlayGroupData extends GameResource {
     private int bornGroupId;
     private int bornConfigId;
     private int rewardGroupId;
+
+    @SerializedName(
+            value = "rewardConfigId",
+            alternate = {"generalRewardConfigId"})
     private int rewardConfigId;
 
     @SerializedName(
