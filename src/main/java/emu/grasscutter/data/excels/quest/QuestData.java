@@ -1,15 +1,19 @@
 package emu.grasscutter.data.excels.quest;
 
 import com.google.gson.annotations.SerializedName;
+
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.*;
 import emu.grasscutter.data.binout.MainQuestData;
 import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.game.quest.enums.*;
-import java.util.*;
-import javax.annotation.*;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.*;
+
+import javax.annotation.*;
 
 @ResourceType(name = "QuestExcelConfigData.json")
 @Getter
@@ -38,6 +42,9 @@ public class QuestData extends GameResource {
     @Getter private List<Integer> trialAvatarList;
     @Getter private List<ItemParamData> gainItems;
 
+    // Client chapters can contain objectives without the server's acceptance rules.
+    private transient boolean automaticAcceptance = true;
+
     public static String questConditionKey(
             @Nonnull Enum<?> type, int firstParam, @Nullable String paramsStr) {
         return type.name() + firstParam + (paramsStr != null ? paramsStr : "");
@@ -49,13 +56,26 @@ public class QuestData extends GameResource {
     }
 
     public void onLoad() {
-        this.acceptCond = acceptCond.stream().filter(p -> p.getType() != null).toList();
-        this.finishCond = finishCond.stream().filter(p -> p.getType() != null).toList();
-        this.failCond = failCond.stream().filter(p -> p.getType() != null).toList();
+        if (this.acceptCond == null) this.automaticAcceptance = false;
+        this.acceptCond =
+                nonNull(this.acceptCond).stream()
+                        .filter(p -> p != null && p.getType() != null)
+                        .toList();
+        this.finishCond =
+                nonNull(this.finishCond).stream()
+                        .filter(p -> p != null && p.getType() != null)
+                        .toList();
+        this.failCond =
+                nonNull(this.failCond).stream()
+                        .filter(p -> p != null && p.getType() != null)
+                        .toList();
 
-        this.beginExec = beginExec.stream().filter(p -> p.type != null).toList();
-        this.finishExec = finishExec.stream().filter(p -> p.type != null).toList();
-        this.failExec = failExec.stream().filter(p -> p.type != null).toList();
+        this.beginExec =
+                nonNull(this.beginExec).stream().filter(p -> p != null && p.type != null).toList();
+        this.finishExec =
+                nonNull(this.finishExec).stream().filter(p -> p != null && p.type != null).toList();
+        this.failExec =
+                nonNull(this.failExec).stream().filter(p -> p != null && p.type != null).toList();
 
         if (this.acceptCondComb == null) this.acceptCondComb = LogicType.LOGIC_NONE;
 
@@ -68,14 +88,18 @@ public class QuestData extends GameResource {
         this.addToCache();
     }
 
+    private static <T> List<T> nonNull(List<T> values) {
+        return values == null ? List.of() : values;
+    }
+
     public void applyFrom(MainQuestData.SubQuestData additionalData) {
         this.isRewind = additionalData.isRewind();
         this.finishParent = additionalData.isFinishParent();
     }
 
     private void addToCache() {
-        if (this.acceptCond == null) {
-            Grasscutter.getLogger().warn("missing AcceptConditions for quest {}", getSubId());
+        if (!this.automaticAcceptance) {
+            Grasscutter.getLogger().debug("No automatic acceptance rules for quest {}", getSubId());
             return;
         }
 
@@ -91,7 +115,8 @@ public class QuestData extends GameResource {
                     .forEach(
                             questCondition -> {
                                 if (questCondition.getType() == null) {
-                                    Grasscutter.getLogger().warn("null accept type for quest {}", getSubId());
+                                    Grasscutter.getLogger()
+                                            .warn("null accept type for quest {}", getSubId());
                                     return;
                                 }
 

@@ -1,11 +1,18 @@
 package emu.grasscutter.data.binout;
 
+import com.google.gson.JsonObject;
+
 import dev.morphia.annotations.Entity;
+
 import emu.grasscutter.data.GameData;
+import emu.grasscutter.data.QuestBinFallback;
 import emu.grasscutter.game.quest.enums.QuestType;
+import emu.grasscutter.utils.JsonUtils;
+
+import lombok.Data;
+
 import java.math.BigInteger;
 import java.util.*;
-import lombok.Data;
 
 public class MainQuestData {
     private int id;
@@ -17,7 +24,8 @@ public class MainQuestData {
     private int[] suggestTrackMainQuestList;
     private int[] rewardIdList;
 
-    private SubQuestData[] subQuests;
+    private JsonObject[] subQuests;
+    private transient SubQuestData[] parsedSubQuests;
     private List<TalkData> talks;
     // Resource hashes are unsigned 64-bit values and can exceed Long.MAX_VALUE.
     private BigInteger[] preloadLuaList;
@@ -47,7 +55,16 @@ public class MainQuestData {
     }
 
     public SubQuestData[] getSubQuests() {
-        return subQuests;
+        if (parsedSubQuests == null) {
+            parsedSubQuests =
+                    subQuests == null
+                            ? new SubQuestData[0]
+                            : Arrays.stream(subQuests)
+                                    .filter(Objects::nonNull)
+                                    .map(row -> JsonUtils.decode(row, SubQuestData.class))
+                                    .toArray(SubQuestData[]::new);
+        }
+        return parsedSubQuests;
     }
 
     public List<TalkData> getTalks() {
@@ -60,13 +77,15 @@ public class MainQuestData {
 
     public void onLoad() {
         if (this.talks == null) this.talks = new ArrayList<>();
-        if (this.subQuests == null) this.subQuests = new SubQuestData[0];
+        if (this.subQuests == null) this.subQuests = new JsonObject[0];
 
         this.talks = this.talks.stream().filter(Objects::nonNull).toList();
         // Apply talk data to the quest talk map.
-        this.talks.forEach(talkData -> GameData.getQuestTalkMap().put(talkData.getId(), this.getId()));
+        this.talks.forEach(
+                talkData -> GameData.getQuestTalkMap().put(talkData.getId(), this.getId()));
+        QuestBinFallback.recover(this.id, this.subQuests);
         // Apply additional sub-quest data to sub-quests.
-        Arrays.stream(this.subQuests)
+        Arrays.stream(this.getSubQuests())
                 .forEach(
                         quest -> {
                             var questData = GameData.getQuestDataMap().get(quest.getSubId());
