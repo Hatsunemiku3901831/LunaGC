@@ -33,7 +33,7 @@ public class GameMainQuest {
     @Getter private long[] timeVar;
     @Getter private ParentQuestState state;
     @Getter private boolean isFinished;
-    @Getter List<QuestGroupSuite> questGroupSuites;
+    private List<QuestGroupSuite> questGroupSuites;
 
     @Getter int[] suggestTrackMainQuestList;
     @Getter private Map<Integer, TalkData> talks;
@@ -80,6 +80,12 @@ public class GameMainQuest {
         return childQuests.values().stream()
                 .filter(q -> q.getState().getValue() == QuestState.QUEST_STATE_UNFINISHED.getValue())
                 .toList();
+    }
+
+    /** Older saves can omit an empty list or store null; later suite actions need a mutable list. */
+    public synchronized List<QuestGroupSuite> getQuestGroupSuites() {
+        if (questGroupSuites == null) questGroupSuites = new ArrayList<>();
+        return questGroupSuites;
     }
 
     public void setOwner(Player player) {

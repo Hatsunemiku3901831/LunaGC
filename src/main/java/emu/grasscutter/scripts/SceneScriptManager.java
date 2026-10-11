@@ -280,7 +280,7 @@ public class SceneScriptManager {
 
         if (waitForOne
                 && (groupInstance.getTargetSuiteId() == 0
-                        || prevSuiteIndex != groupInstance.getTargetSuiteId())) {
+                        || suiteIndex != groupInstance.getTargetSuiteId())) {
             groupInstance.setTargetSuiteId(suiteIndex);
             Grasscutter.getLogger()
                     .debug("Group {} suite {} wating one more refresh", group.id, suiteIndex);
@@ -326,12 +326,14 @@ public class SceneScriptManager {
         var targetGroupInstance = getGroupInstanceById(groupId);
         if (targetGroupInstance == null) {
             getGroupById(
-                    groupId); // Load the group, this ensures an instance is created and the if neccesary
+                    groupId); // Load the group, this ensures an instance is created and the if
+                              // neccesary
             // unloaded, but the suite data is stored
             targetGroupInstance = getGroupInstanceById(groupId);
             Grasscutter.getLogger()
                     .debug(
-                            "Tried to refresh group suite {} in an unloaded and uncached group {} in scene {}.",
+                            "Tried to refresh group suite {} in an unloaded and uncached group {}"
+                                + " in scene {}.",
                             suiteId,
                             groupId,
                             getScene().getId());
@@ -343,21 +345,51 @@ public class SceneScriptManager {
                         targetGroupInstance,
                         suiteId,
                         false); // If suiteId is zero, the value of suiteId changes
+        if (suiteId <= 0) return false; // A missing or deferred suite has not been applied.
         scene.broadcastPacket(new PacketGroupSuiteNotify(groupId, suiteId));
 
         return true;
     }
 
+    /** Store the latest applied override per scene/group; suite zero removes that override. */
+    private static boolean rememberQuestGroupSuite(
+            List<QuestGroupSuite> saved, int sceneId, int groupId, int suiteId) {
+        if (saved == null || sceneId <= 0 || groupId <= 0 || suiteId < 0) return false;
+        synchronized (saved) {
+            int matches = 0;
+            int previous = -1;
+            for (var entry : saved) {
+                if (entry != null && entry.getScene() == sceneId && entry.getGroup() == groupId) {
+                    matches++;
+                    previous = entry.getSuite();
+                }
+            }
+            if ((suiteId == 0 && matches == 0)
+                    || (suiteId > 0 && matches == 1 && previous == suiteId)) return false;
+            saved.removeIf(
+                    entry ->
+                            entry != null
+                                    && entry.getScene() == sceneId
+                                    && entry.getGroup() == groupId);
+            if (suiteId > 0)
+                saved.add(
+                        QuestGroupSuite.of().scene(sceneId).group(groupId).suite(suiteId).build());
+            return true;
+        }
+    }
+
     public boolean refreshGroupSuite(int groupId, int suiteId, GameQuest quest) {
         var result = refreshGroupSuite(groupId, suiteId);
-        if (suiteId != 0 && quest != null) {
-            quest
-                    .getMainQuest()
-                    .getQuestGroupSuites()
-                    .add(
-                            QuestGroupSuite.of().scene(getScene().getId()).group(groupId).suite(suiteId).build());
+        if (result
+                && quest != null
+                && rememberQuestGroupSuite(
+                        quest.getMainQuest().getQuestGroupSuites(),
+                        getScene().getId(),
+                        groupId,
+                        suiteId)) {
+            // Begin actions may run after the initial quest save; persist the applied transition.
+            quest.save();
         }
-
         return result;
     }
 
