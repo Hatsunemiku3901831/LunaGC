@@ -1,5 +1,8 @@
 # 队伍能量的 Lua 接口与 7.1 通知
 
+队伍 SGV 的单 UID 设置、增量、读取和绝对值广播见
+[队伍服务端全局值](TEAM_SERVER_GLOBAL_VALUES_2026-10-11.md)。
+
 ## 已接入
 
 `AddTeamEntityGlobalFloatValue(context, uid_list, key, delta)` 和

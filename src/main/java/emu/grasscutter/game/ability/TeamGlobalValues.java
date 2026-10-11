@@ -4,6 +4,7 @@ import emu.grasscutter.game.entity.EntityTeam;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.world.Scene;
 import emu.grasscutter.net.proto.UpdateTypeOuterClass.UpdateType;
+import emu.grasscutter.server.packet.send.PacketServerGlobalValueChangeNotify;
 import emu.grasscutter.server.packet.send.PacketServerUpdateGlobalValueNotify;
 import emu.grasscutter.utils.Utils;
 
@@ -63,6 +64,74 @@ public final class TeamGlobalValues {
 
     public static int set(Scene scene, int[] uids, String key, double value) {
         return update(scene, uids, key, value, UpdateType.UpdateType_SET);
+    }
+
+    public static float getServer(Scene scene, int uid, String key) {
+        var player = owner(scene, uid);
+        if (player == null || key == null || key.isBlank()) return 0;
+        var team = player.getTeamManager().getEntity();
+        if (team == null) return 0;
+        synchronized (team) {
+            if (!currentServer(
+                    scene, player, team, uid, team.getId(), team.getAbilityLifecycleVersion()))
+                return 0;
+            float value = team.getGlobalAbilityValues().getOrDefault(key, 0f);
+            return Float.isFinite(value) ? value : 0;
+        }
+    }
+
+    public static int setServer(Scene scene, int uid, String key, double value) {
+        return updateServer(scene, uid, key, value, false);
+    }
+
+    public static int addServer(Scene scene, int uid, String key, double delta) {
+        return updateServer(scene, uid, key, delta, true);
+    }
+
+    private static boolean currentServer(
+            Scene scene, Player player, EntityTeam team, int uid, int id, long version) {
+        return current(scene, player, team, version)
+                && player.getUid() == uid
+                && team.getPlayer() == player
+                && team.getScene() == scene
+                && team.getId() == id;
+    }
+
+    private static int updateServer(Scene scene, int uid, String key, double amount, boolean add) {
+        float operand = (float) amount;
+        if (key == null
+                || !key.startsWith("SGV_")
+                || Utils.abilityHash(key) == 0
+                || !Float.isFinite(operand)) return -1;
+        var player = owner(scene, uid);
+        if (player == null) return -1;
+        var team = player.getTeamManager().getEntity();
+        if (team == null) return -1;
+        synchronized (team) {
+            long version = team.getAbilityLifecycleVersion();
+            int id = team.getId();
+            if (!currentServer(scene, player, team, uid, id, version)) return -1;
+            Float previous = team.getGlobalAbilityValues().get(key);
+            float value = operand;
+            if (add && previous != null) {
+                if (!Float.isFinite(previous)) return -1;
+                // The original server creates a missing value directly, then bounds later
+                // additions.
+                value = Math.max(0, Math.min(Float.MAX_VALUE, previous + operand));
+            }
+            team.getGlobalAbilityValues().put(key, value);
+            float snapshot = value;
+            scene.runWhenHostInitialized(
+                    () -> {
+                        synchronized (team) {
+                            if (currentServer(scene, player, team, uid, id, version))
+                                scene.broadcastPacket(
+                                        new PacketServerGlobalValueChangeNotify(id, key, snapshot));
+                        }
+                    });
+            team.onAbilityValueUpdate();
+        }
+        return 0;
     }
 
     private static int update(Scene scene, int[] uids, String key, double amount, UpdateType type) {

@@ -49,6 +49,7 @@ import emu.grasscutter.utils.algorithms.KahnsSort;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
@@ -86,14 +87,14 @@ public class Scene {
     @Getter @Setter private int prevScenePoint;
     @Getter @Setter private int killedMonsterCount;
     private Set<SceneNpcBornEntry> npcBornEntrySet;
-    @Getter private boolean finishedLoading = false;
+    @Getter private volatile boolean finishedLoading = false;
     @Getter protected int tickCount = 0;
     private long lastTimeNotify = 0;
     private long lastStreamCheck = 0;
     @Getter private boolean isPaused = false;
 
     private final List<Runnable> afterLoadedCallbacks = new ArrayList<>();
-    private final List<Runnable> afterHostInitCallbacks = new ArrayList<>();
+    private final Queue<Runnable> afterHostInitCallbacks = new ConcurrentLinkedQueue<>();
 
     @Getter private GameEntity sceneEntity;
     @Getter private final ServerTaskScheduler scheduler;
@@ -844,8 +845,8 @@ public class Scene {
         this.scenePlayBattleManager.sendTo(player);
         if (!player.equals(this.getHost())) return;
 
-        this.afterHostInitCallbacks.forEach(Runnable::run);
-        this.afterHostInitCallbacks.clear();
+        Runnable callback;
+        while ((callback = this.afterHostInitCallbacks.poll()) != null) callback.run();
     }
 
     public void runWhenHostInitialized(Runnable runnable) {
@@ -855,6 +856,8 @@ public class Scene {
         }
 
         this.afterHostInitCallbacks.add(runnable);
+        // Initialization can finish between the first check and the enqueue.
+        if (this.isFinishedLoading() && this.afterHostInitCallbacks.remove(runnable)) runnable.run();
     }
 
     public int getEntityLevel(int baseLevel, int worldLevelOverride) {

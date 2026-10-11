@@ -341,6 +341,10 @@ public class ScriptLib {
         return TeamGlobalValues.add(teamValueScene(), sceneUidList, key, delta);
     }
 
+    public int AddTeamServerGlobalValue(int uid, String key, double delta) {
+        return TeamGlobalValues.addServer(teamValueScene(), uid, key, delta);
+    }
+
     @Nullable
     private Scene teamValueScene() {
         var entity = getCurrentEntity().orElse(null);
@@ -841,6 +845,10 @@ public class ScriptLib {
 
     public float GetTeamAbilityFloatValue(int uid, String key) {
         return TeamGlobalValues.get(teamValueScene(), uid, key);
+    }
+
+    public float GetTeamServerGlobalValue(int uid, String key) {
+        return TeamGlobalValues.getServer(teamValueScene(), uid, key);
     }
 
     public LuaTable GetActivityOpenAndCloseTimeByScheduleId(int scheduleId) {
@@ -1557,10 +1565,8 @@ public class ScriptLib {
         return TeamGlobalValues.set(teamValueScene(), sceneUidList, key, value);
     }
 
-    public int SetTeamServerGlobalValue(int sceneUid, String var2, int var3) {
-        logger.warn("[LUA] Call unimplemented SetTeamServerGlobalValue with {} {} {}", sceneUid, var2, var3);
-
-        return 0;
+    public int SetTeamServerGlobalValue(int uid, String key, double value) {
+        return TeamGlobalValues.setServer(teamValueScene(), uid, key, value);
     }
 
     public int SetWeatherAreaState(int var1, int var2) {

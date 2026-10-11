@@ -9,6 +9,9 @@ final class ScriptLibUserdata extends LuaUserdata {
     private final LuaValue delegate;
     private final LuaValue addTeamValue = teamValueFunction(true);
     private final LuaValue setTeamValue = teamValueFunction(false);
+    private final LuaValue addTeamServerValue = teamServerValueFunction("Add");
+    private final LuaValue setTeamServerValue = teamServerValueFunction("Set");
+    private final LuaValue getTeamServerValue = teamServerValueFunction("Get");
     private final java.util.Map<String, LuaValue> sceneBattleFunctions =
             ScenePlayBattleLua.functions();
 
@@ -44,6 +47,39 @@ final class ScriptLibUserdata extends LuaUserdata {
                                         uids, key.tojstring(), amount.todouble())
                                 : library.SetTeamEntityGlobalFloatValue(
                                         uids, key.tojstring(), amount.todouble()));
+            }
+        };
+    }
+
+    private static LuaValue teamServerValueFunction(String operation) {
+        return new VarArgFunction() {
+            @Override
+            public Varargs invoke(Varargs args) {
+                var receiver = args.arg1().touserdata(ScriptLib.class);
+                var identifier = args.arg(2);
+                var key = args.arg(3);
+                var amount = args.arg(4);
+                double uid = identifier.todouble();
+                boolean read = operation.equals("Get");
+                if (!(receiver instanceof ScriptLib library)
+                        || identifier.type() != LuaValue.TNUMBER
+                        || !Double.isFinite(uid)
+                        || uid <= 0
+                        || uid > Integer.MAX_VALUE
+                        || uid != Math.rint(uid)
+                        || key.type() != LuaValue.TSTRING
+                        || !read && amount.type() != LuaValue.TNUMBER)
+                    return LuaValue.valueOf(read ? 0 : -1);
+                return switch (operation) {
+                    case "Add" -> LuaValue.valueOf(
+                            library.AddTeamServerGlobalValue(
+                                    (int) uid, key.tojstring(), amount.todouble()));
+                    case "Set" -> LuaValue.valueOf(
+                            library.SetTeamServerGlobalValue(
+                                    (int) uid, key.tojstring(), amount.todouble()));
+                    default -> LuaValue.valueOf(
+                            library.GetTeamServerGlobalValue((int) uid, key.tojstring()));
+                };
             }
         };
     }
@@ -87,6 +123,12 @@ final class ScriptLibUserdata extends LuaUserdata {
                     return addTeamValue;
                 case "SetTeamEntityGlobalFloatValue":
                     return setTeamValue;
+                case "AddTeamServerGlobalValue":
+                    return addTeamServerValue;
+                case "SetTeamServerGlobalValue":
+                    return setTeamServerValue;
+                case "GetTeamServerGlobalValue":
+                    return getTeamServerValue;
             }
         }
         return delegate.get(key);
