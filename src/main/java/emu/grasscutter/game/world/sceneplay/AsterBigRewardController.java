@@ -342,6 +342,11 @@ public final class AsterBigRewardController {
                             }
                             if (code == 0) {
                                 selected.previewed.remove(player.getUid());
+                                player.sendPacket(
+                                        new PacketActivityUpdateWatcherNotify(
+                                                AsterSchedule.ACTIVITY_ID,
+                                                claimant.getWatcherInfoMap()
+                                                        .get(AsterMilestones.LARGE)));
                                 var reward = offer.rewards().get(player.getUid());
                                 player.sendPacket(
                                         new PacketItemAddHintNotify(

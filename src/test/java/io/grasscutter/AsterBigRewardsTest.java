@@ -78,7 +78,8 @@ class AsterBigRewardsTest {
         assertEquals(0, guest.midCollectCount());
         assertTrue(guest.hasBigClaim(token));
         assertFalse(guest.hasPendingReward());
-        assertTrue(resources.guest.getWatcherInfoMap().isEmpty());
+        assertEquals(Set.of(1200132), resources.guest.getWatcherInfoMap().keySet());
+        assertEquals(1, resources.guest.getWatcherInfoMap().get(1200132).getCurProgress());
         assertEquals(Set.of(10001), AsterSchedule.progress(resources.host).bigReward().remaining());
         assertNotEquals(
                 0,

@@ -102,7 +102,7 @@ class AsterMidCoopPersistenceTest {
                                                         || failure == 2 && data.getUid() == 10001))
                                             throw new IllegalStateException(
                                                     "Mongo accepted the write; acknowledgement"
-                                                        + " lost");
+                                                            + " lost");
                                     }
                                     return result;
                                 }));
@@ -147,6 +147,7 @@ class AsterMidCoopPersistenceTest {
                 assertEquals(15, persistedGuest.credit());
                 assertTrue(persistedGuest.hasMidClaim(token));
                 assertEquals(1, guestReload.getWatcherInfoMap().get(1200110).getCurProgress());
+                assertEquals(1, guestReload.getWatcherInfoMap().get(1200131).getCurProgress());
                 assertEquals(Set.of(10001, 10002), persistedPoint.qualified());
                 assertEquals(
                         failure == 1 ? Set.of(10001, 10002) : Set.of(10001),

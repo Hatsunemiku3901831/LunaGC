@@ -73,7 +73,7 @@ class AsterBigPersistenceTest {
                                                 || failure == 4 && data.getUid() == 10002 && n == 1)
                                             throw new IllegalStateException(
                                                     "Mongo accepted the write; acknowledgement"
-                                                        + " lost");
+                                                            + " lost");
                                     }
                                     return result;
                                 }));
@@ -119,6 +119,14 @@ class AsterBigPersistenceTest {
                 assertEquals(Set.of(10001, 10002), point.rewards().keySet());
                 assertEquals(failure < 3 ? 50 : 0, receipt.bigCredit());
                 assertEquals(failure < 3 ? 1 : 0, receipt.bigCollectCount());
+                if (failure < 3)
+                    assertEquals(1, guest.getWatcherInfoMap().get(1200132).getCurProgress());
+                else assertFalse(guest.getWatcherInfoMap().containsKey(1200132));
+                var handler = new AsterActivityHandler();
+                assertTrue(handler.onLoadPlayerActivityData(guest));
+                assertEquals(
+                        failure < 3 ? 1 : 0,
+                        guest.getWatcherInfoMap().get(1200132).getCurProgress());
                 assertEquals(failure < 3, receipt.hasBigClaim(token));
                 assertEquals(0, receipt.credit());
                 assertEquals(0, receipt.midCollectCount());

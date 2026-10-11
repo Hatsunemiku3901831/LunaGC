@@ -3,6 +3,7 @@ package emu.grasscutter.game.activity.aster;
 import com.esotericsoftware.reflectasm.ConstructorAccess;
 
 import emu.grasscutter.data.GameData;
+import emu.grasscutter.data.excels.activity.ActivityWatcherData;
 import emu.grasscutter.game.activity.*;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.net.proto.ActivityInfoOuterClass.ActivityInfo;
@@ -20,23 +21,38 @@ public final class AsterActivityHandler extends ActivityHandler {
         if (getActivityConfigItem().getActivityId() != AsterSchedule.ACTIVITY_ID
                 || !AsterSchedule.resourcesAvailable())
             throw new IllegalArgumentException("未归的熄星阶段、任务或地图资源缺失");
+        getWatchersMap()
+                .values()
+                .forEach(
+                        list ->
+                                list.replaceAll(
+                                        watcher ->
+                                                watcher.getWatcherId() == AsterMilestones.MIDDLE
+                                                                || watcher.getWatcherId()
+                                                                        == AsterMilestones.LARGE
+                                                        ? validatedWatcher(
+                                                                watcher.getActivityWatcherData())
+                                                        : watcher));
         for (var mission : GameData.getAsterMissionDataMap().values()) {
             var meta = GameData.getActivityWatcherDataMap().get(mission.getWatcherId());
             if (meta == null || meta.isDisuse())
                 throw new IllegalArgumentException("未归的熄星任务资源缺失: " + mission.getWatcherId());
-            var watcher =
-                    new DefaultWatcher(); // Gather/reward progress only enters through validated
-            // server
-            // interactions.
-            watcher.setWatcherId(meta.getId());
-            watcher.setActivityWatcherData(meta);
-            watcher.setActivityHandler(this);
+            // Gather/reward progress only enters through validated server interactions.
+            var watcher = validatedWatcher(meta);
             getWatchersMap()
                     .computeIfAbsent(
                             meta.getTriggerConfig().getWatcherTriggerType(),
                             key -> new ArrayList<>())
                     .add(watcher);
         }
+    }
+
+    private ActivityWatcher validatedWatcher(ActivityWatcherData meta) {
+        var watcher = new DefaultWatcher();
+        watcher.setWatcherId(meta.getId());
+        watcher.setActivityWatcherData(meta);
+        watcher.setActivityHandler(this);
+        return watcher;
     }
 
     @Override
@@ -47,7 +63,7 @@ public final class AsterActivityHandler extends ActivityHandler {
     @Override
     public boolean onLoadPlayerActivityData(PlayerActivityData data) {
         synchronized (data) {
-            AsterSchedule.progress(data);
+            var progress = AsterSchedule.progress(data);
             boolean changed = false;
             for (var watcher :
                     getWatchersMap().values().stream().flatMap(Collection::stream).toList()) {
@@ -59,7 +75,7 @@ public final class AsterActivityHandler extends ActivityHandler {
                     changed = true;
                 }
             }
-            return changed;
+            return AsterMilestones.restore(data, progress) | changed;
         }
     }
 

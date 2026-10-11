@@ -87,6 +87,8 @@ public final class AsterMidRewards {
             for (int id = 1200110; id <= 1200115; id++)
                 if (data.getWatcherInfoMap().get(id) == null)
                     return Retcode.RET_ACTIVITY_ITEM_ERROR_VALUE;
+            var milestone = AsterMilestones.prepare(data, AsterMilestones.MIDDLE);
+            if (milestone == null) return Retcode.RET_NOT_FOUND_CONFIG_VALUE;
             String original = data.getDetail();
             progress.beginMidClaim(campId);
             data.setDetail(progress);
@@ -123,6 +125,7 @@ public final class AsterMidRewards {
             }
             var oldWatcherCounts = new HashMap<Integer, Integer>();
             progress.finishMidClaim(reward.energy());
+            milestone.apply(progress.midCollectCount());
             for (int id = 1200110; id <= 1200115; id++) {
                 var watcher = data.getWatcherInfoMap().get(id);
                 oldWatcherCounts.put(id, watcher.getCurProgress());
@@ -133,6 +136,7 @@ public final class AsterMidRewards {
             try {
                 save.run();
             } catch (RuntimeException failure) {
+                milestone.rollback();
                 oldWatcherCounts.forEach(
                         (id, count) ->
                                 data.getWatcherInfoMap().get(id.intValue()).setCurProgress(count));
@@ -211,6 +215,8 @@ public final class AsterMidRewards {
         for (int id = 1200110; id <= 1200115; id++)
             if (claimant.getWatcherInfoMap().get(id) == null)
                 return Retcode.RET_ACTIVITY_ITEM_ERROR_VALUE;
+        var milestone = AsterMilestones.prepare(claimant, AsterMilestones.MIDDLE);
+        if (milestone == null) return Retcode.RET_NOT_FOUND_CONFIG_VALUE;
 
         String hostBefore = owner.getDetail(), before = claimant.getDetail();
         hostProgress.reserveMidReward(campId, claimant.getUid());
@@ -259,6 +265,7 @@ public final class AsterMidRewards {
 
         var oldWatcherCounts = new HashMap<Integer, Integer>();
         progress.finishSharedMidClaim(reward.energy());
+        milestone.apply(progress.midCollectCount());
         hostProgress.acknowledgeMidReward(campId, claimant.getUid(), now);
         for (int id = 1200110; id <= 1200115; id++) {
             var watcher = claimant.getWatcherInfoMap().get(id);
@@ -272,6 +279,7 @@ public final class AsterMidRewards {
             if (!same) saveClaimant.run();
             else saveOwner.run();
         } catch (RuntimeException failure) {
+            milestone.rollback();
             oldWatcherCounts.forEach(
                     (id, count) ->
                             claimant.getWatcherInfoMap().get(id.intValue()).setCurProgress(count));

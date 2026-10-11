@@ -22,6 +22,7 @@ import emu.grasscutter.game.systems.InventorySystem;
 import emu.grasscutter.game.world.*;
 import emu.grasscutter.game.world.sceneplay.*;
 import emu.grasscutter.net.packet.PacketOpcodes;
+import emu.grasscutter.net.proto.ActivityUpdateWatcherNotifyOuterClass.ActivityUpdateWatcherNotify;
 import emu.grasscutter.net.proto.GadgetGeneralRewardInfoNotifyOuterClass.GadgetGeneralRewardInfoNotify;
 import emu.grasscutter.net.proto.GadgetInteractReqOuterClass.GadgetInteractReq;
 import emu.grasscutter.net.proto.GadgetInteractRspOuterClass.GadgetInteractRsp;
@@ -258,6 +259,22 @@ class AsterBigRewardSceneTest {
         assertEquals(200, guest.adventureExp);
         assertEquals(80, guest.companionshipExp);
         assertEquals(50, AsterSchedule.progress(resources.guest).bigCredit());
+        var milestone =
+                ActivityUpdateWatcherNotify.parseFrom(
+                        guest.packets.stream()
+                                .filter(
+                                        p ->
+                                                p.getOpcode()
+                                                        == PacketOpcodes
+                                                                .ActivityUpdateWatcherNotify)
+                                .findFirst()
+                                .orElseThrow()
+                                .getData());
+        assertEquals(2001, milestone.getActivityId());
+        assertEquals(1200132, milestone.getWatcherInfo().getWatcherId());
+        assertEquals(1, milestone.getWatcherInfo().getCurProgress());
+        assertEquals(7, milestone.getWatcherInfo().getTotalProgress());
+        assertFalse(resources.host.getWatcherInfoMap().containsKey(1200132));
         assertEquals(0, AsterSchedule.progress(resources.guest).credit());
         assertSame(reward, scene.getEntityById(reward.getId()));
         var notify =

@@ -166,6 +166,8 @@ public final class AsterBigRewards {
         if ((long) player.bigCredit() + reward.essence() > Integer.MAX_VALUE
                 || player.bigCollectCount() == Integer.MAX_VALUE)
             return Retcode.RET_ITEM_EXCEED_LIMIT_VALUE;
+        var milestone = AsterMilestones.prepare(claimant, AsterMilestones.LARGE);
+        if (milestone == null) return Retcode.RET_NOT_FOUND_CONFIG_VALUE;
         String hostBefore = owner.getDetail(), before = claimant.getDetail();
         host.reserveBigReward(claimant.getUid());
         player.beginBigClaim(token);
@@ -205,12 +207,14 @@ public final class AsterBigRewards {
         grant.accept(reward);
         player.finishBigClaim(reward.essence());
         host.acknowledgeBigReward(claimant.getUid());
+        milestone.apply(player.bigCollectCount());
         owner.setDetail(host);
         if (!same) claimant.setDetail(player);
         try {
             if (!same) saveClaimant.run();
             else saveOwner.run();
         } catch (RuntimeException failure) {
+            milestone.rollback();
             owner.setDetailJson(hostReserved);
             if (!same) claimant.setDetailJson(reserved);
             throw failure;

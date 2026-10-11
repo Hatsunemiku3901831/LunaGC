@@ -19,6 +19,7 @@ import emu.grasscutter.game.props.*;
 import emu.grasscutter.game.systems.InventorySystem;
 import emu.grasscutter.game.world.*;
 import emu.grasscutter.net.packet.PacketOpcodes;
+import emu.grasscutter.net.proto.ActivityUpdateWatcherNotifyOuterClass.ActivityUpdateWatcherNotify;
 import emu.grasscutter.net.proto.GadgetGeneralRewardInfoNotifyOuterClass.GadgetGeneralRewardInfoNotify;
 import emu.grasscutter.net.proto.GadgetInteractReqOuterClass.GadgetInteractReq;
 import emu.grasscutter.net.proto.GadgetInteractRspOuterClass.GadgetInteractRsp;
@@ -329,6 +330,19 @@ class AsterMidSceneTest {
         assertSame(reward, reward());
         assertNotNull(scene.getEntityByConfigId(camp.sealConfigId(), core.id));
         assertEquals(80, guest.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        var updates = new ArrayList<ActivityUpdateWatcherNotify>();
+        for (var packet : guest.packets)
+            if (packet.getOpcode() == PacketOpcodes.ActivityUpdateWatcherNotify)
+                updates.add(ActivityUpdateWatcherNotify.parseFrom(packet.getData()));
+        var milestone =
+                updates.stream()
+                        .filter(p -> p.getWatcherInfo().getWatcherId() == 1200131)
+                        .findFirst()
+                        .orElseThrow();
+        assertEquals(2001, milestone.getActivityId());
+        assertEquals(1, milestone.getWatcherInfo().getCurProgress());
+        assertEquals(14, milestone.getWatcherInfo().getTotalProgress());
+        assertFalse(resources.data.getWatcherInfoMap().containsKey(1200131));
         assertEquals(100, guest.adventureExp);
         assertEquals(
                 20, guest.companionshipExp, "Inventory applies the existing MP EXP multiplier");

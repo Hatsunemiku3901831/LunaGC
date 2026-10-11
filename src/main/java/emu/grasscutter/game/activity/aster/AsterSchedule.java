@@ -5,6 +5,7 @@ import emu.grasscutter.game.activity.*;
 import emu.grasscutter.net.proto.AsterLittleDetailInfoOuterClass.AsterLittleDetailInfo;
 import emu.grasscutter.net.proto.AsterLittleStageStateOuterClass.AsterLittleStageState;
 import emu.grasscutter.utils.JsonUtils;
+
 import java.time.*;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -44,7 +45,8 @@ public final class AsterSchedule {
         var preview = GameData.getAsterPreviewDataMap().get(ACTIVITY_ID);
         if (preview == null || config == null || config.getCloseTime() == null) return 0;
         return Math.min(
-                beginTime(config, preview.getActivityStayTime() + 1), config.getCloseTime().getTime());
+                beginTime(config, preview.getActivityStayTime() + 1),
+                config.getCloseTime().getTime());
     }
 
     public static AsterProgress progress(PlayerActivityData data) {
@@ -94,7 +96,8 @@ public final class AsterSchedule {
                     .anyMatch(
                             id ->
                                     data.getWatcherInfoMap().get(id) == null
-                                            || !data.getWatcherInfoMap().get(id).isFinished())) return stage;
+                                            || !data.getWatcherInfoMap().get(id).isFinished()))
+                return stage;
         }
         return 2;
     }
@@ -109,11 +112,18 @@ public final class AsterSchedule {
                 !open
                         ? AsterLittleStageState.AsterLittleStageState_ASTER_LITTLE_STAGE_NONE
                         : now < stageTime
-                                ? AsterLittleStageState.AsterLittleStageState_ASTER_LITTLE_STAGE_UNSTARTED
+                                ? AsterLittleStageState
+                                        .AsterLittleStageState_ASTER_LITTLE_STAGE_UNSTARTED
                                 : stageWatchers(stageId).stream()
-                                                .allMatch(id -> data.getWatcherInfoMap().get(id).isFinished())
-                                        ? AsterLittleStageState.AsterLittleStageState_ASTER_LITTLE_STAGE_FINISHED
-                                        : AsterLittleStageState.AsterLittleStageState_ASTER_LITTLE_STAGE_STARTED;
+                                                .allMatch(
+                                                        id ->
+                                                                data.getWatcherInfoMap()
+                                                                        .get(id)
+                                                                        .isFinished())
+                                        ? AsterLittleStageState
+                                                .AsterLittleStageState_ASTER_LITTLE_STAGE_FINISHED
+                                        : AsterLittleStageState
+                                                .AsterLittleStageState_ASTER_LITTLE_STAGE_STARTED;
         return AsterLittleDetailInfo.newBuilder()
                 .setBeginTime((int) (beginTime(config, 1) / 1000))
                 .setIsOpen(open)
@@ -128,7 +138,8 @@ public final class AsterSchedule {
         if (preview == null
                 || preview.getUnlockLevel() != 20
                 || preview.getActivityStayTime() != 14
-                || !preview.getWatcherList().equals(List.of(1200130, 1200131, 1200132))) return false;
+                || !preview.getWatcherList().equals(List.of(1200130, 1200131, 1200132))
+                || !AsterMilestones.resourcesAvailable()) return false;
         for (int id = 1; id <= 3; id++) {
             var chapter = GameData.getAsterStageDataMap().get(id);
             if (chapter == null
@@ -151,11 +162,13 @@ public final class AsterSchedule {
                 && AsterFragments.areas().values().stream()
                         .allMatch(
                                 a -> {
-                                    var watcher = GameData.getActivityWatcherDataMap().get(a.watcherId());
+                                    var watcher =
+                                            GameData.getActivityWatcherDataMap().get(a.watcherId());
                                     var reward =
                                             watcher == null
                                                     ? null
-                                                    : GameData.getRewardDataMap().get(watcher.getRewardID());
+                                                    : GameData.getRewardDataMap()
+                                                            .get(watcher.getRewardID());
                                     return watcher != null
                                             && !watcher.isDisuse()
                                             && watcher.getProgress() == 7
@@ -163,10 +176,10 @@ public final class AsterSchedule {
                                             && reward.getRewardItemList() != null
                                             && !reward.getRewardItemList().isEmpty()
                                             && reward.getRewardItemList().stream()
-                                                    .allMatch(p -> p.getId() > 0 && p.getCount() > 0)
+                                                    .allMatch(
+                                                            p -> p.getId() > 0 && p.getCount() > 0)
                                             && stageWatchers(a.stageId()).contains(a.watcherId())
-                                            && watcher
-                                                    .getTriggerConfig()
+                                            && watcher.getTriggerConfig()
                                                     .getParamList()
                                                     .equals(List.of(String.valueOf(a.groupId())));
                                 });

@@ -672,6 +672,11 @@ public final class AsterMidSceneController {
                                                     AsterSchedule.ACTIVITY_ID,
                                                     data.getWatcherInfoMap().get(id)));
                                 player.sendPacket(
+                                        new PacketActivityUpdateWatcherNotify(
+                                                AsterSchedule.ACTIVITY_ID,
+                                                data.getWatcherInfoMap()
+                                                        .get(AsterMilestones.MIDDLE)));
+                                player.sendPacket(
                                         new PacketItemAddHintNotify(
                                                 new GameItem(109, reward.energy()),
                                                 ActionReason.TakeGeneralReward));
