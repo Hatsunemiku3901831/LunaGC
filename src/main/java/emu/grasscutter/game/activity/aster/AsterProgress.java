@@ -17,13 +17,25 @@ public final class AsterProgress {
     private int spentCredit;
     private Map<Integer, Integer> shopPurchases = new HashMap<>();
     private ShopPurchase pendingShopPurchase;
-    private int bigCredit, bigCollectCount;
+    private int bigCredit, bigCollectCount, spentBigCredit;
     private AsterBigRewardState bigReward;
     private Set<String> bigClaims = new HashSet<>();
     private String pendingBigClaim = "";
 
     public int bigCredit() {
         return bigCredit;
+    }
+
+    public int bigCreditBalance() {
+        return Math.subtractExact(bigCredit, spentBigCredit);
+    }
+
+    public int currencyBalance(int currencyId) {
+        return switch (currencyId) {
+            case 109 -> creditBalance();
+            case 110 -> bigCreditBalance();
+            default -> throw new IllegalArgumentException("Invalid Aster shop currency");
+        };
     }
 
     public int bigCollectCount() {
@@ -89,13 +101,27 @@ public final class AsterProgress {
     /** Kept until both the delivered item and the completion have acknowledged writes. */
     public static final class ShopPurchase {
         private int goodsId, count, cost, itemId, itemCount;
+        // Older reservations were all paid with exploration/recovery credit.
+        private int currencyId = 109;
+
+        private ShopPurchase() {}
 
         public ShopPurchase(int goodsId, int count, int cost, int itemId, int itemCount) {
+            this(goodsId, count, cost, itemId, itemCount, 109);
+        }
+
+        public ShopPurchase(
+                int goodsId, int count, int cost, int itemId, int itemCount, int currencyId) {
             this.goodsId = goodsId;
             this.count = count;
             this.cost = cost;
             this.itemId = itemId;
             this.itemCount = itemCount;
+            this.currencyId = currencyId;
+        }
+
+        public int currencyId() {
+            return currencyId;
         }
 
         public int goodsId() {
@@ -119,7 +145,12 @@ public final class AsterProgress {
         }
 
         boolean isValid() {
-            return goodsId > 0 && count > 0 && cost > 0 && itemId > 0 && itemCount > 0;
+            return goodsId > 0
+                    && count > 0
+                    && cost > 0
+                    && itemId > 0
+                    && itemCount > 0
+                    && (currencyId == 109 || currencyId == 110);
         }
     }
 
@@ -155,13 +186,14 @@ public final class AsterProgress {
                 || purchase == null
                 || !purchase.isValid()
                 || previouslyBought < 0
-                || purchase.cost() > creditBalance())
+                || purchase.cost() > currencyBalance(purchase.currencyId()))
             throw new IllegalStateException("Aster shop purchase cannot be reserved");
         int bought =
                 Math.addExact(
                         Math.max(shopBought(purchase.goodsId()), previouslyBought),
                         purchase.count());
-        spentCredit = Math.addExact(spentCredit, purchase.cost());
+        if (purchase.currencyId() == 109) spentCredit = Math.addExact(spentCredit, purchase.cost());
+        else spentBigCredit = Math.addExact(spentBigCredit, purchase.cost());
         shopPurchases.put(purchase.goodsId(), bought);
         pendingShopPurchase = purchase;
     }
@@ -334,6 +366,8 @@ public final class AsterProgress {
 
     public boolean isValid() {
         return bigCredit >= 0
+                && spentBigCredit >= 0
+                && spentBigCredit <= bigCredit
                 && bigCollectCount >= 0
                 && bigClaims != null
                 && bigClaims.size() <= bigCollectCount
@@ -368,7 +402,10 @@ public final class AsterProgress {
                         || pendingShopPurchase.isValid()
                                 && pendingWatcherReward == 0
                                 && pendingMidClaim == 0
-                                && spentCredit >= pendingShopPurchase.cost()
+                                && (pendingShopPurchase.currencyId() == 109
+                                                ? spentCredit
+                                                : spentBigCredit)
+                                        >= pendingShopPurchase.cost()
                                 && shopBought(pendingShopPurchase.goodsId())
                                         >= pendingShopPurchase.count())
                 && midOffers != null

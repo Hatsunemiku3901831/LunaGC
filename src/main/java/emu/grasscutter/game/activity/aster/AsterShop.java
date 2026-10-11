@@ -82,7 +82,7 @@ public final class AsterShop {
                     Grasscutter.getLogger()
                             .error(
                                     "Aster shop requires reconciliation: uid={}, schedule={},"
-                                        + " goods={}",
+                                            + " goods={}",
                                     player.getUid(),
                                     data.getScheduleId(),
                                     goods.getGoodsId(),
@@ -139,17 +139,18 @@ public final class AsterShop {
                 || goods.getMcoin() != 0
                 || goods.getBeyondMcoin() != 0) return Result.reject(Retcode.RET_SVR_ERROR_VALUE);
         var costs = goods.getCostItemList();
+        int currencyId =
+                costs == null || costs.isEmpty() || costs.get(0) == null ? 0 : costs.get(0).getId();
         if (costs == null
                 || costs.isEmpty()
+                || currencyId != 109 && currencyId != 110
                 || costs.stream()
                         .anyMatch(
                                 cost ->
                                         cost == null
-                                                || cost.getId() != 109
+                                                || cost.getId() != currencyId
                                                 || cost.getCount() <= 0))
             return Result.reject(Retcode.RET_SHOP_CONTENT_NOT_MATCH_VALUE);
-        // Chapter-three tokens (110) have no implemented earning path yet. Never spend credit for
-        // them.
         var unit = goods.resolveGoodsItem(timestamp);
         if (unit == null || unit.getId() <= 0 || unit.getCount() <= 0)
             return Result.reject(Retcode.RET_SVR_ERROR_VALUE);
@@ -170,14 +171,19 @@ public final class AsterShop {
             if ((long) bought + count > Integer.MAX_VALUE
                     || goods.getBuyLimit() != 0 && (long) bought + count > goods.getBuyLimit())
                 return Result.reject(Retcode.RET_SHOP_BATCH_BUY_COUNT_LIMIT_VALUE);
-            if (progress.creditBalance() < cost)
+            if (progress.currencyBalance(currencyId) < cost)
                 return Result.reject(Retcode.RET_SHOP_CONTENT_NOT_MATCH_VALUE);
             int invalid = validate.applyAsInt(item);
             if (invalid != 0) return Result.reject(invalid);
 
             progress.beginShopPurchase(
                     new AsterProgress.ShopPurchase(
-                            goods.getGoodsId(), count, cost, item.getId(), item.getCount()),
+                            goods.getGoodsId(),
+                            count,
+                            cost,
+                            item.getId(),
+                            item.getCount(),
+                            currencyId),
                     bought);
             data.setDetail(progress);
             // A lost acknowledgement may mean this write was accepted. Keep the reservation even on

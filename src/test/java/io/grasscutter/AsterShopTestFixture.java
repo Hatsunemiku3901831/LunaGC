@@ -112,6 +112,24 @@ final class AsterShopTestFixture implements AutoCloseable {
         return goods.stream().filter(g -> g.getGoodsId() == id).findFirst().orElseThrow();
     }
 
+    void loadBigRewards() throws Exception {
+        event.load(
+                "MpPlayGroupExcelConfigData.json",
+                MpPlayGroupData.class,
+                GameData.getMpPlayGroupDataMap(),
+                id -> id == 2);
+        event.load(
+                "../Server/DropTableExcelConfigData.json",
+                DropTableData.class,
+                GameData.getDropTableDataMap(),
+                id -> id >= 210020000 && id <= 210020080);
+        event.load(
+                "MaterialExcelConfigData.json",
+                ItemData.class,
+                GameData.getItemDataMap(),
+                id -> id == 102 || id == 105);
+    }
+
     private <T extends GameResource> void load(String name, Class<T> type, Int2ObjectMap<T> map)
             throws Exception {
         load(name, type, map, Set.of());

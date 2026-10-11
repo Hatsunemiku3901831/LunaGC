@@ -26,7 +26,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.lang.reflect.*;
 import java.time.Duration;
@@ -36,14 +36,37 @@ import java.util.concurrent.atomic.*;
 /** Actual shop requests, item/player documents and activity reservations in an isolated Mongo. */
 class AsterShopPersistenceTest {
     @ParameterizedTest
-    @ValueSource(ints = {0, 1, 2, 3})
-    void actualPurchasesAndUncertainWritesSurviveMongoReload(int failure) throws Exception {
+    @CsvSource({"109,0", "109,1", "109,2", "109,3", "110,0", "110,1", "110,2", "110,3"})
+    void actualPurchasesAndUncertainWritesSurviveMongoReload(int currency, int failure)
+            throws Exception {
         String uri = System.getenv("LUNAGC_TEST_MONGO_URI");
         Assumptions.assumeTrue(uri != null && !uri.isBlank());
         String database = "lunagc_aster_shop_" + UUID.randomUUID().toString().replace("-", "");
         try (var fixture = new AsterShopTestFixture();
                 var scene = new AbilityTestFixture();
                 var client = MongoClients.create(uri)) {
+            int goodsId = currency == 109 ? 1002008 : 1002011;
+            int itemId = currency == 109 ? 104003 : 104302;
+            if (currency == 110) {
+                fixture.loadBigRewards();
+                fixture.event.config.setBeginTime(new Date(fixture.event.now - 8 * 86400000L));
+                var progress = AsterSchedule.progress(fixture.event.data);
+                progress.openBigReward(Map.of(fixture.player.getUid(), AsterBigRewards.reward(8)));
+                fixture.event.data.setDetail(progress);
+                assertEquals(
+                        0,
+                        AsterBigRewards.takeShared(
+                                fixture.event.data,
+                                fixture.event.data,
+                                fixture.event.config,
+                                20,
+                                fixture.event.now,
+                                progress.bigReward().token(),
+                                () -> true,
+                                reward -> assertEquals(50, reward.essence()),
+                                () -> {},
+                                () -> {}));
+            }
             var field = DatabaseManager.class.getDeclaredField("gameDatastore");
             field.setAccessible(true);
             var original = field.get(null);
@@ -92,7 +115,7 @@ class AsterShopPersistenceTest {
                                                 fault.set(true);
                                                 throw new IllegalStateException(
                                                         "Activity write accepted, acknowledgement"
-                                                            + " lost");
+                                                                + " lost");
                                             }
                                         }
                                         if (args[0] instanceof GameItem
@@ -134,7 +157,7 @@ class AsterShopPersistenceTest {
                                 .setBuyCount(2)
                                 .setGoods(
                                         ShopGoods.newBuilder()
-                                                .setGoodsId(1002008)
+                                                .setGoodsId(goodsId)
                                                 .setScoin(1)
                                                 .setGoodsItem(
                                                         ItemParam.newBuilder()
@@ -152,15 +175,20 @@ class AsterShopPersistenceTest {
                                 .first();
                 assertNotNull(reloaded);
                 var ledger = AsterSchedule.progress(reloaded);
-                assertEquals(110, ledger.creditBalance());
+                assertEquals(currency == 109 ? 110 : 118, ledger.creditBalance());
+                assertEquals(currency == 109 ? 0 : 42, ledger.bigCreditBalance());
                 assertEquals(118, ledger.credit());
-                assertEquals(2, ledger.shopBought(1002008));
+                assertEquals(currency == 109 ? 0 : 50, ledger.bigCredit());
+                assertEquals(currency == 109 ? 0 : 1, ledger.bigCollectCount());
+                assertEquals(2, ledger.shopBought(goodsId));
                 assertEquals(failure == 1 || failure == 2, ledger.pendingShopPurchase() != null);
+                if (ledger.pendingShopPurchase() != null)
+                    assertEquals(currency, ledger.pendingShopPurchase().currencyId());
                 var items =
                         store.find(GameItem.class)
                                 .filter(
                                         Filters.eq("ownerId", fixture.player.getUid()),
-                                        Filters.eq("itemId", 104003))
+                                        Filters.eq("itemId", itemId))
                                 .iterator()
                                 .toList();
                 assertEquals(failure == 1 ? 0 : 1, items.size());
@@ -174,28 +202,34 @@ class AsterShopPersistenceTest {
                     assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
                     assertEquals(
                             failure == 1 ? 0 : 2,
-                            fixture.player.getInventory().getItemCountById(104003));
-                    assertEquals(110, AsterSchedule.progress(fixture.event.data).creditBalance());
+                            fixture.player.getInventory().getItemCountById(itemId));
+                    assertEquals(
+                            currency == 109 ? 110 : 118,
+                            AsterSchedule.progress(fixture.event.data).creditBalance());
+                    assertEquals(
+                            currency == 109 ? 0 : 42,
+                            AsterSchedule.progress(fixture.event.data).bigCreditBalance());
                 } else {
                     assertEquals(2, answer.getGoodsList(0).getBoughtNum());
-                    assertEquals(104003, answer.getGoodsList(0).getGoodsItem().getItemId());
+                    assertEquals(itemId, answer.getGoodsList(0).getGoodsItem().getItemId());
                     assertEquals(
                             1,
                             answer.getGoodsList(0).getGoodsItem().getCount(),
                             "The response describes one unit, not the delivered batch");
                     assertEquals(4, answer.getGoodsList(0).getCostItemList(0).getCount());
+                    assertEquals(currency, answer.getGoodsList(0).getCostItemList(0).getItemId());
                     assertEquals(
                             2,
                             store.find(AsterShopTestFixture.ShopPlayer.class)
                                     .first()
-                                    .getGoodsLimit(1002008)
+                                    .getGoodsLimit(goodsId)
                                     .getHasBoughtInPeriod());
                     fixture.event.data.setDetailJson(reloaded.getDetail());
-                    fixture.player.getGoodsLimit(1002008).setHasBoughtInPeriod(0);
+                    fixture.player.getGoodsLimit(goodsId).setHasBoughtInPeriod(0);
                     assertEquals(
                             2,
                             fixture.access()
-                                    .prepareLimit(fixture.player, fixture.goods(1002008))
+                                    .prepareLimit(fixture.player, fixture.goods(goodsId))
                                     .getHasBoughtInPeriod());
                     var mora =
                             request.toBuilder()
@@ -210,9 +244,13 @@ class AsterShopPersistenceTest {
                             10000,
                             store.find(AsterShopTestFixture.ShopPlayer.class).first().getMora());
                     assertEquals(
-                            106,
+                            currency == 109 ? 106 : 114,
                             AsterSchedule.progress(store.find(PlayerActivityData.class).first())
                                     .creditBalance());
+                    assertEquals(
+                            currency == 109 ? 0 : 42,
+                            AsterSchedule.progress(store.find(PlayerActivityData.class).first())
+                                    .bigCreditBalance());
                 }
             } finally {
                 assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
