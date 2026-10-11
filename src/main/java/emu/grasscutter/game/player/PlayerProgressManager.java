@@ -12,8 +12,7 @@ import emu.grasscutter.game.quest.enums.*;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.scripts.data.ScriptArgs;
 import emu.grasscutter.server.packet.send.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 // @Entity
@@ -38,40 +37,45 @@ public final class PlayerProgressManager extends BasePlayerDataManager {
                     // This should be removed when city reputation is implemented.
                     );
 
-    // Open states 7.0 added that sit behind OPEN_STATE_COND_QUEST and nothing else. With questing
-    // off nothing ever satisfies that condition, so the features stay locked for good rather than
-    // just unlocking late - the Nod-Krai and Natlan menu entries among them. Unlocked outright.
-    public static final Set<Integer> QUEST_GATED_7_0_OPEN_STATES =
-            Set.of(6701, 6702, 6706, 7011, 7014, 7015, 7016, 7021, 7025, 7055, 7056, 7059);
-
-    // Set of open states that are set per default for all accounts. Can be overwritten by an entry in
-    // `map`.
+    /** Compatibility view; defaults follow current resources rather than class loading time. */
+    @Deprecated
     public static final Set<Integer> DEFAULT_OPEN_STATES =
-            GameData.getOpenStateList().stream()
-                    .filter(
-                            s ->
-                                    s.isDefaultState() && !s.isAllowClientOpen() // Actual default-opened states.
-                                            || ((s.getCond().size() == 1)
-                                                    && (s.getCond().get(0).getCondType()
-                                                            == OpenStateCondType.OPEN_STATE_COND_PLAYER_LEVEL)
-                                                    && (s.getCond().get(0).getParam() == 1))
-                                            // All states whose unlock we don't handle correctly yet.
-                                            || (s.getCond().stream()
-                                                    .anyMatch(
-                                                            c ->
-                                                                    c.getCondType() == OpenStateCondType.OPEN_STATE_OFFERING_LEVEL
-                                                                            || c.getCondType()
-                                                                                    == OpenStateCondType.OPEN_STATE_CITY_REPUTATION_LEVEL))
-                                            || QUEST_GATED_7_0_OPEN_STATES.contains(s.getId())
-                                            // Always unlock OPEN_STATE_PAIMON, otherwise the player will not have a
-                                            // working chat.
-                                            || s.getId() == 1)
-                    .map(OpenStateData::getId)
-                    .filter(s -> !BLACKLIST_OPEN_STATES.contains(s)) // Filter out states in the blacklist.
-                    .filter(
-                            s ->
-                                    !IGNORED_OPEN_STATES.contains(s)) // Filter out states in the default ignore list.
-                    .collect(Collectors.toSet());
+            Collections.unmodifiableSet(
+                    new AbstractSet<>() {
+                        @Override
+                        public Iterator<Integer> iterator() {
+                            return currentDefaultOpenStates().iterator();
+                        }
+
+                        @Override
+                        public int size() {
+                            return currentDefaultOpenStates().size();
+                        }
+
+                        @Override
+                        public boolean contains(Object value) {
+                            return currentDefaultOpenStates().contains(value);
+                        }
+                    });
+
+    private static Set<Integer> currentDefaultOpenStates() {
+        return GameData.getOpenStateList().stream()
+                .filter(PlayerProgressManager::isDefaultOpenState)
+                .map(OpenStateData::getId)
+                .collect(Collectors.toSet());
+    }
+
+    public static boolean isDefaultOpenState(OpenStateData state) {
+        return !BLACKLIST_OPEN_STATES.contains(state.getId())
+                && !IGNORED_OPEN_STATES.contains(state.getId())
+                && ((state.isDefaultState() && !state.isAllowClientOpen()) || state.getId() == 1);
+    }
+
+    private static boolean isAutomaticOpenStateCandidate(OpenStateData state) {
+        return !state.isAllowClientOpen()
+                && (state.isDefaultState()
+                        || (state.getCond() != null && !state.getCond().isEmpty()));
+    }
 
     public PlayerProgressManager(Player player) {
         super(player);
@@ -81,23 +85,31 @@ public final class PlayerProgressManager extends BasePlayerDataManager {
      * Handler for player login.
      **********/
     public void onPlayerLogin() {
-        // Try unlocking open states on player login. This handles accounts where unlock conditions were
+        // Try unlocking open states on player login. This handles accounts where unlock conditions
+        // were
         // already met before certain open state unlocks were implemented.
         this.tryUnlockOpenStates(false);
-
-        // Send notify to the client.
-        player.getSession().send(new PacketOpenStateUpdateNotify(this.player));
-
-        // Add statue quests if necessary.
-        this.addStatueQuestsOnLogin();
 
         if (!GAME_OPTIONS.questing.enabled) {
             // Auto-unlock the first statue and map area.
             this.player.getUnlockedScenePoints(3).add(7);
             this.player.getUnlockedSceneAreas(3).add(1);
             // Allow the player to visit all areas.
-            this.setOpenState(47, 1, true);
+            this.setOpenState(47, 1, false);
         }
+
+        if (GAME_OPTIONS.unlockAllOpenStatesOnLogin) {
+            for (var state : GameData.getOpenStateList()) {
+                if (!BLACKLIST_OPEN_STATES.contains(state.getId())
+                        && !IGNORED_OPEN_STATES.contains(state.getId())) {
+                    this.setOpenState(state.getId(), 1, false);
+                }
+            }
+        }
+
+        // Publish the complete snapshot after optional sandbox unlocks.
+        player.getSession().send(new PacketOpenStateUpdateNotify(this.player));
+        this.addStatueQuestsOnLogin();
     }
 
     /**********
@@ -133,7 +145,10 @@ public final class PlayerProgressManager extends BasePlayerDataManager {
     private boolean areConditionsMet(OpenStateData openState) {
         // Check all conditions and test if at least one of them is violated.
         for (var condition : openState.getCond()) {
-            switch (condition.getCondType()) {
+            var type = condition.getCondType();
+            if (type == null) return false;
+            switch (type) {
+                case OPEN_STATE_COND_NONE -> {}
                     // For level conditions, check if the player has reached the necessary level.
                 case OPEN_STATE_COND_PLAYER_LEVEL -> {
                     if (this.player.getLevel() < condition.getParam()) {
@@ -150,14 +165,18 @@ public final class PlayerProgressManager extends BasePlayerDataManager {
                 case OPEN_STATE_COND_PARENT_QUEST -> {
                     // check main quest id for quest finished met requirements
                     // TODO not sure if its having or finished quest
-                    var mainQuest = this.player.getQuestManager().getMainQuestById(condition.getParam());
+                    var mainQuest =
+                            this.player.getQuestManager().getMainQuestById(condition.getParam());
                     if (mainQuest == null
-                            || mainQuest.getState() != ParentQuestState.PARENT_QUEST_STATE_FINISHED) {
+                            || mainQuest.getState()
+                                    != ParentQuestState.PARENT_QUEST_STATE_FINISHED) {
                         return false;
                     }
                 }
                     // ToDo: Implement.
-                case OPEN_STATE_OFFERING_LEVEL, OPEN_STATE_CITY_REPUTATION_LEVEL -> {}
+                case OPEN_STATE_OFFERING_LEVEL, OPEN_STATE_CITY_REPUTATION_LEVEL -> {
+                    return false;
+                }
             }
         }
 
@@ -209,7 +228,7 @@ public final class PlayerProgressManager extends BasePlayerDataManager {
             // * it can not be a state that is unlocked by the client,
             // * it has to meet all its unlock conditions, and
             // * it can not be in the blacklist.
-            if (!state.isAllowClientOpen()
+            if (isAutomaticOpenStateCandidate(state)
                     && this.areConditionsMet(state)
                     && !BLACKLIST_OPEN_STATES.contains(state.getId())
                     && !IGNORED_OPEN_STATES.contains(state.getId())) {
@@ -230,6 +249,7 @@ public final class PlayerProgressManager extends BasePlayerDataManager {
     private void addStatueQuestsOnLogin() {
         // Get all currently existing subquests for the "unlock all statues" main quest.
         var statueMainQuest = GameData.getMainQuestDataMap().get(303);
+        if (statueMainQuest == null) return;
         var statueSubQuests = statueMainQuest.getSubQuests();
 
         // Add the main statue quest if it isn't active yet.
@@ -238,6 +258,7 @@ public final class PlayerProgressManager extends BasePlayerDataManager {
             this.player.getQuestManager().addQuest(30302);
             statueGameMainQuest = this.player.getQuestManager().getMainQuestById(303);
         }
+        if (statueGameMainQuest == null) return;
 
         // Set all subquests to active if they aren't already finished.
         for (var subData : statueSubQuests) {

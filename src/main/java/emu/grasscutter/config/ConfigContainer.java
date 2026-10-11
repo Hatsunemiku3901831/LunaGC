@@ -35,9 +35,10 @@ public class ConfigContainer {
      *              HTTP server should start immediately.
      * Version 13 - 'game.useUniquePacketKey' was added to control whether the
      *              encryption key used for packets is a constant or randomly generated.
+     * Version 14 - 'gameOptions.unlockAllOpenStatesOnLogin' controls optional feature unlocks.
      */
     private static int version() {
-        return 13;
+        return 14;
     }
 
     /**
@@ -364,6 +365,9 @@ public class ConfigContainer {
 
         public boolean watchGachaConfig = false;
         public boolean enableShopItems = true;
+        /** Explicit sandbox option; normal progression uses resource prerequisites. */
+        public boolean unlockAllOpenStatesOnLogin = false;
+
         public ArtifactShopOptions artifactShop = new ArtifactShopOptions();
         public boolean staminaUsage = true;
         public boolean energyUsage = true;

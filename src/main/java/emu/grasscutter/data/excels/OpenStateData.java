@@ -1,6 +1,9 @@
 package emu.grasscutter.data.excels;
 
+import com.google.gson.annotations.SerializedName;
+
 import emu.grasscutter.data.*;
+
 import lombok.Getter;
 
 import java.util.*;
@@ -9,29 +12,26 @@ import java.util.*;
 public class OpenStateData extends GameResource {
     @Getter(onMethod_ = @Override)
     private int id;
-    @Getter
-    private boolean defaultState;
-    @Getter
-    private boolean allowClientOpen;
-    @Getter
-    private int systemOpenUiId;
-    @Getter
-    private List<OpenStateCond> cond;
+
+    @Getter private boolean defaultState;
+    @Getter private boolean allowClientOpen;
+    @Getter private int systemOpenUiId;
+    @Getter private List<OpenStateCond> cond;
 
     @Override
     public void onLoad() {
-        // Add this open state to the global list.
-        GameData.getOpenStateList().add(this);
-
-        // Remove any empty conditions
         if (this.cond != null) {
-            this.cond.removeIf(c -> c.getCondType() == null);
+            // Empty slots are placeholders; unknown named requirements must remain blocking.
+            this.cond.removeIf(c -> c == null || c.isPlaceholder());
         } else {
             this.cond = new ArrayList<>();
         }
+        GameData.getOpenStateList().removeIf(state -> state.getId() == this.id);
+        GameData.getOpenStateList().add(this);
     }
 
     public enum OpenStateCondType {
+        OPEN_STATE_COND_NONE,
         OPEN_STATE_COND_PLAYER_LEVEL,
         OPEN_STATE_COND_QUEST,
         OPEN_STATE_OFFERING_LEVEL,
@@ -40,12 +40,27 @@ public class OpenStateData extends GameResource {
     }
 
     public static class OpenStateCond {
-        @Getter
-        private OpenStateCondType condType;
-        @Getter
-        private int param;
-        @Getter
-        private int param2;
+        @SerializedName(
+                value = "cond_type",
+                alternate = {"condType"})
+        private String condType;
+
+        @Getter private int param;
+        @Getter private int param2;
+
+        public OpenStateCondType getCondType() {
+            if (condType == null) return null;
+            try {
+                return OpenStateCondType.valueOf(condType);
+            } catch (IllegalArgumentException unknown) {
+                return null;
+            }
+        }
+
+        private boolean isPlaceholder() {
+            return getCondType() == OpenStateCondType.OPEN_STATE_COND_NONE
+                    || ((condType == null || condType.isBlank()) && param == 0 && param2 == 0);
+        }
     }
 }
 
