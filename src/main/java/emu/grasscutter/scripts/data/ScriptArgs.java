@@ -7,6 +7,7 @@ public class ScriptArgs {
     public int param1;
     public int param2;
     public int param3;
+    public int param4;
     public int source_eid; // Source entity
     public int target_eid;
     public int uid;
@@ -60,6 +61,10 @@ public class ScriptArgs {
     public ScriptArgs setParam3(int param3) {
         this.param3 = param3;
         return this;
+    }
+
+    public int getParam4() {
+        return param4;
     }
 
     public int getSourceEntityId() {

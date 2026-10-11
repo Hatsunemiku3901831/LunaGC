@@ -492,15 +492,44 @@ public class ScriptLib {
         return 0;
     }
 
-    public int AutoMonsterTide(int sourceId, int groupId, Integer[] ordersConfigId, int tideCount, int sceneLimit, int param6) {
-        logger.debug("[LUA] Call AutoMonsterTide with {},{},{},{},{},{}", sourceId, groupId, ordersConfigId, tideCount, sceneLimit, param6);
-
-        SceneGroup group = getSceneScriptManager().getGroupById(groupId);
-        if (group == null || group.monsters == null) {
-            return 1;
+    public int AutoMonsterTide(int sourceId, int groupId, Integer[] ordersConfigId, int total, int minimum, int maximum) {
+        var manager = getSceneScriptManagerOrNull();
+        if (manager == null || sourceId <= 0 || groupId <= 0) return -1;
+        synchronized (manager.getScene()) {
+            var origin = getCurrentGroup().orElse(null);
+            if (!manager.allowsGroupCall(origin)) return -1;
+            var group = manager.getGroupById(groupId);
+            if (!manager.allowsGroupCall(origin)) return -1;
+            return manager.startMonsterTideInGroup(Integer.toString(sourceId), group, ordersConfigId, total, minimum, maximum);
         }
-        this.getSceneScriptManager().startMonsterTideInGroup(Integer.toString(sourceId), group, ordersConfigId, tideCount, sceneLimit);
-        return 0;
+    }
+
+    public int KillMonsterTide(int groupId, int tideIndex) {
+        var manager = getSceneScriptManagerOrNull();
+        if (manager == null || groupId <= 0 || tideIndex <= 0) return -1;
+        synchronized (manager.getScene()) {
+            var tide = manager.getMonsterTide(groupId, Integer.toString(tideIndex));
+            return tide == null || !manager.allowsGroupCall(tide.getGroup()) ? -1
+                    : manager.killMonsterTide(groupId, Integer.toString(tideIndex));
+        }
+    }
+
+    public int EndMonsterTide(int groupId, int tideIndex, int reason) {
+        var manager = getSceneScriptManagerOrNull();
+        var tide = manager == null ? null : manager.getMonsterTide(groupId, Integer.toString(tideIndex));
+        return reason < 0 || tide == null || !tide.finish(reason) ? -1 : 0;
+    }
+
+    public int PauseAutoMonsterTide(int groupId, int tideIndex) {
+        var manager = getSceneScriptManagerOrNull();
+        var tide = manager == null ? null : manager.getMonsterTide(groupId, Integer.toString(tideIndex));
+        return tide == null || !tide.pause() ? -1 : 0;
+    }
+
+    public int ContinueAutoMonster(int groupId, int tideIndex) {
+        var manager = getSceneScriptManagerOrNull();
+        var tide = manager == null ? null : manager.getMonsterTide(groupId, Integer.toString(tideIndex));
+        return tide == null || !tide.resume() ? -1 : 0;
     }
 
     public int BeginCameraSceneLook(LuaTable sceneLookParams) {

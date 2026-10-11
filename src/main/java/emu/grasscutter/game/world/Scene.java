@@ -651,6 +651,7 @@ public class Scene {
         if (!isPaused) stage("the scheduler", () -> this.getScheduler().runTasks());
         if (!isPaused) stage("the seal battles", this.sealBattleManager::tick);
         if (!isPaused) stage("the scene play battles", this.scenePlayBattleManager::tick);
+        if (!isPaused) stage("the monster tides", this.getScriptManager()::tickMonsterTides);
 
         // Streaming does not need the full tick rate - it answers "which groups are near the
         // player", and a player cannot outrun half a second of it. The timers and triggers below

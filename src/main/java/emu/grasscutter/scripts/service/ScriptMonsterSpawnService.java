@@ -3,12 +3,15 @@ package emu.grasscutter.scripts.service;
 import emu.grasscutter.game.entity.EntityMonster;
 import emu.grasscutter.scripts.SceneScriptManager;
 import emu.grasscutter.scripts.listener.ScriptMonsterListener;
+
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ScriptMonsterSpawnService {
 
-    public final List<ScriptMonsterListener> onMonsterCreatedListener = new ArrayList<>();
-    public final List<ScriptMonsterListener> onMonsterDeadListener = new ArrayList<>();
+    public final List<ScriptMonsterListener> onMonsterCreatedListener =
+            new CopyOnWriteArrayList<>();
+    public final List<ScriptMonsterListener> onMonsterDeadListener = new CopyOnWriteArrayList<>();
     private final SceneScriptManager sceneScriptManager;
 
     public ScriptMonsterSpawnService(SceneScriptManager sceneScriptManager) {

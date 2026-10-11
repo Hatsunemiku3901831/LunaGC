@@ -60,6 +60,8 @@ public class SceneScriptManager {
     private final Map<Integer, SceneGroupInstance> sceneGroupsInstances;
     private final Map<Integer, SceneGroupInstance> cachedSceneGroupsInstances;
     private ScriptMonsterTideService scriptMonsterTideService;
+    private record MonsterTideKey(int groupId, String source) {}
+    private final Map<MonsterTideKey, ScriptMonsterTideService> monsterTides = new LinkedHashMap<>();
     private ScriptMonsterSpawnService scriptMonsterSpawnService;
     private final ScriptMonsterSpawnQueue monsterSpawnQueue;
     /** blockid - loaded groupSet */
@@ -722,6 +724,7 @@ public class SceneScriptManager {
     }
 
     public void unregisterGroup(SceneGroup group) {
+        stopMonsterTides(group);
         this.scene.getSealBattleManager().onGroupUnloaded(group);
         this.scene.getScenePlayBattleManager().onGroupUnloaded(group);
         cancelGroupMonsterSpawns(group.id);
@@ -826,15 +829,77 @@ public class SceneScriptManager {
 
     public void startMonsterTideInGroup(
             String source, SceneGroup group, Integer[] ordersConfigId, int tideCount, int sceneLimit) {
-        this.scriptMonsterTideService =
-                new ScriptMonsterTideService(this, source, group, tideCount, sceneLimit, ordersConfigId);
+        startMonsterTideInGroup(source, group, ordersConfigId, tideCount, sceneLimit, sceneLimit);
+    }
+
+    public int startMonsterTideInGroup(String source, SceneGroup group, Integer[] order,
+            int total, int minimum, int maximum) {
+        synchronized (scene) {
+            if (group == null || !allowsGroupCall(group) || group.monsters == null
+                    || source == null || source.isBlank() || order == null || order.length == 0
+                    || total < 0 || minimum <= 0 || maximum < minimum || maximum > order.length)
+                return -1;
+            var identifiers = new HashSet<Integer>();
+            int free = 0;
+            for (var id : order) {
+                if (id == null || id <= 0 || !identifiers.add(id) || !group.monsters.containsKey(id))
+                    return -1;
+                if (scene.getEntityByConfigId(id, group.id) == null) free++;
+            }
+            if (free < (total == 0 ? maximum : Math.min(total, maximum))) return -1;
+            var key = new MonsterTideKey(group.id, source);
+            var previous = monsterTides.get(key);
+            if (previous != null) {
+                if (!previous.canRetire()) return -1;
+                previous.unload();
+                monsterTides.remove(key, previous);
+            }
+            var tide = new ScriptMonsterTideService(this, source, group, total, minimum, maximum, order);
+            monsterTides.put(key, tide);
+            try {
+                if (tide.start()) { scriptMonsterTideService = tide; return 0; }
+            } catch (RuntimeException failure) {
+                Grasscutter.getLogger().error("Monster tide {} failed in group {}", source, group.id, failure);
+            }
+            monsterTides.remove(key, tide);
+            tide.unload();
+            return -1;
+        }
+    }
+
+    public ScriptMonsterTideService getMonsterTide(int groupId, String source) {
+        synchronized (scene) { return monsterTides.get(new MonsterTideKey(groupId, source)); }
+    }
+
+    public int killMonsterTide(int groupId, String source) {
+        synchronized (scene) {
+            var tide = monsterTides.remove(new MonsterTideKey(groupId, source));
+            if (tide == null) return -1;
+            tide.unload();
+            if (scriptMonsterTideService == tide) scriptMonsterTideService = null;
+            return 0;
+        }
+    }
+
+    public void stopMonsterTides(SceneGroup group) {
+        synchronized (scene) {
+            for (var tide : List.copyOf(monsterTides.values()))
+                if (tide.getGroup() == group) killMonsterTide(group.id, tide.getSource());
+        }
+    }
+
+    public void tickMonsterTides() {
+        synchronized (scene) {
+            for (var tide : List.copyOf(monsterTides.values()))
+                if (tide.canRetire()) killMonsterTide(tide.getGroup().id, tide.getSource());
+        }
     }
 
     public void unloadCurrentMonsterTide() {
-        if (this.getScriptMonsterTideService() == null) {
-            return;
+        synchronized (scene) {
+            for (var tide : List.copyOf(monsterTides.values()))
+                killMonsterTide(tide.getGroup().id, tide.getSource());
         }
-        this.getScriptMonsterTideService().unload();
     }
 
     public void spawnMonstersByConfigId(SceneGroup group, int configId, int delayTime) {
@@ -882,6 +947,12 @@ public class SceneScriptManager {
 
     /** Recheck the originating round before queued Lua callbacks touch a reloaded group. */
     public Future<?> callEvent(@Nonnull ScriptArgs params, java.util.function.BooleanSupplier current) {
+        return callEvent(params, current, false);
+    }
+
+    /** Monster-tide callbacks validate and execute atomically with tide replacement/cleanup. */
+    public Future<?> callEvent(@Nonnull ScriptArgs params, java.util.function.BooleanSupplier current,
+            boolean lockScene) {
         /**
          * We use ThreadLocal to trans SceneScriptManager context to ScriptLib, to avoid eval script for
          * every groups' trigger in every scene instances. But when callEvent is called in a ScriptLib
@@ -907,7 +978,13 @@ public class SceneScriptManager {
                                                     () ->
                                                             guarded.getAsBoolean()
                                                                     && battleCurrent.getAsBoolean();
-                                            if (applicable.getAsBoolean())
+                                            if (lockScene) {
+                                                synchronized (scene) {
+                                                    if (applicable.getAsBoolean())
+                                                        this.realCallEvent(params, activityTicket, activityRound,
+                                                                invitationSerial, applicable);
+                                                }
+                                            } else if (applicable.getAsBoolean())
                                                 this.realCallEvent(
                                                         params,
                                                         activityTicket,
@@ -1472,11 +1549,14 @@ public class SceneScriptManager {
     }
 
     public void onDestroy() {
+        synchronized (scene) {
+            destroyed = true;
+            unloadCurrentMonsterTide();
+        }
         scene.getSealBattleManager().close();
         scene.getScenePlayBattleManager().close();
         List<SceneTimeAxis> axes;
         synchronized (timeAxis) {
-            destroyed = true;
             axes = new ArrayList<>(timeAxis.values());
             timeAxis.clear();
         }
