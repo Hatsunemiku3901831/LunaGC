@@ -1,6 +1,7 @@
 package emu.grasscutter.game.activity;
 
 import emu.grasscutter.data.excels.activity.ActivityWatcherData;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -20,6 +21,11 @@ public abstract class ActivityWatcher {
      */
     protected int getProgressDelta(String... param) {
         return 1;
+    }
+
+    /** Rebuild a state-based condition during loading; the caller saves changed data. */
+    public boolean refreshProgress(PlayerActivityData data) {
+        return false;
     }
 
     public void trigger(PlayerActivityData playerActivityData, String... param) {

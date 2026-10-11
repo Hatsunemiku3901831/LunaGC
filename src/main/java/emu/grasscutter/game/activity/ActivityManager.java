@@ -105,16 +105,42 @@ public class ActivityManager extends BasePlayerManager {
             }
             data.setPlayer(player);
             data.setActivityHandler(item.getActivityHandler());
-            if (item.getActivityHandler().onLoadPlayerActivityData(data)) data.saveSync();
+            synchronized (data) {
+                var originalWatchers = data.getWatcherInfoMap();
+                var previousWatchers =
+                        originalWatchers == null ? null : new HashMap<>(originalWatchers);
+                String previousDetail = data.getDetail();
+                try {
+                    boolean changed = item.getActivityHandler().onLoadPlayerActivityData(data);
+                    changed |= item.getActivityHandler().refreshWatcherProgress(data);
+                    if (changed) data.saveSync();
+                } catch (RuntimeException | Error failure) {
+                    if (originalWatchers != null) {
+                        originalWatchers.clear();
+                        originalWatchers.putAll(previousWatchers);
+                    }
+                    data.setWatcherInfoMap(originalWatchers);
+                    data.setDetailJson(previousDetail);
+                    throw failure;
+                }
+            }
             playerActivityDataMap.put(item.getActivityId(), data);
         }
-        conditionExecutor = new BasicActivityConditionExecutor(snapshot.activities(),
-                GameData.getActivityCondExcelConfigDataMap(),
-                PlayerActivityDataMappingBuilder.buildPlayerActivityDataByActivityCondId(playerActivityDataMap),
-                AllActivityConditionBuilder.buildActivityConditions());
+        conditionExecutor =
+                new BasicActivityConditionExecutor(
+                        snapshot.activities(),
+                        GameData.getActivityCondExcelConfigDataMap(),
+                        PlayerActivityDataMappingBuilder.buildPlayerActivityDataByActivityCondId(
+                                playerActivityDataMap),
+                        AllActivityConditionBuilder.buildActivityConditions());
         player.sendPacket(new PacketActivityScheduleInfoNotify(snapshot.schedules().values()));
-        snapshot.activities().values().stream().filter(item -> item.isActiveAt(System.currentTimeMillis()))
-                .forEach(item -> player.sendPacket(new PacketActivityInfoNotify(getInfoProtoByActivityId(item.getActivityId()))));
+        snapshot.activities().values().stream()
+                .filter(item -> item.isActiveAt(System.currentTimeMillis()))
+                .forEach(
+                        item ->
+                                player.sendPacket(
+                                        new PacketActivityInfoNotify(
+                                                getInfoProtoByActivityId(item.getActivityId()))));
         // During construction Player has not installed this manager yet. Login triggers after
         // assignment; later GM refreshes must unlock quests without requiring a new login.
         triggerActivityConditions();

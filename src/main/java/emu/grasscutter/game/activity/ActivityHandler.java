@@ -41,6 +41,16 @@ public abstract class ActivityHandler {
         return false;
     }
 
+    /** Runs after activity-specific repairs, including for handlers that override the load hook. */
+    public final boolean refreshWatcherProgress(PlayerActivityData data) {
+        synchronized (data) {
+            boolean changed = false;
+            for (var watchers : watchersMap.values())
+                for (var watcher : watchers) changed |= watcher.refreshProgress(data);
+            return changed;
+        }
+    }
+
     public void initWatchers(Map<WatcherTriggerType, ConstructorAccess<?>> activityWatcherTypeMap) {
         activityData = GameData.getActivityDataMap().get(activityConfigItem.getActivityId());
 

@@ -36,11 +36,14 @@ import emu.grasscutter.server.game.GameSession;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
+import java.lang.reflect.*;
 import java.nio.file.*;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /** Original quest conditions through the real quest system, with a disposable Mongo database. */
 class AsterQuestTest {
@@ -486,6 +489,157 @@ class AsterQuestTest {
         player.getQuestManager().getQuestById(4111309).triggerStateEvents();
         drain();
         for (int id : List.of(4112601, 4112701, 4113115)) assertFalse(started(id));
+    }
+
+    @Test
+    void activityReloadRestoresStoryMilestoneFromCompletedQuest() throws Exception {
+        finished(4111309);
+        player.activity.refreshActivities();
+        drain();
+        var data = player.activity.getPlayerActivityDataMap().get(2001);
+        assertEquals(1, data.getWatcherInfoMap().get(1200130).getCurProgress());
+        assertFalse(data.getWatcherInfoMap().get(1200131).isFinished());
+        assertFalse(data.getWatcherInfoMap().get(1200132).isFinished());
+        var saved =
+                store.find(PlayerActivityData.class)
+                        .filter(Filters.eq("uid", player.getUid()))
+                        .first();
+        assertEquals(1, saved.getWatcherInfoMap().get(1200130).getCurProgress());
+    }
+
+    @Test
+    void freshReplayKeepsCompletedQuestAndRestoresOnlyItsStoryMilestone() throws Exception {
+        finished(4111309);
+        var quest = player.getQuestManager().getQuestById(4111309);
+        var old = player.activity.getPlayerActivityDataMap().get(2001);
+        String id = old.getId();
+        old.getWatcherInfoMap().values().forEach(w -> w.setCurProgress(w.getTotalProgress()));
+        old.setDetail(new AsterProgress());
+        old.saveSync();
+        resources.config.setScheduleId(resources.config.getScheduleId() + 1);
+        ActivityManager.installConfiguration(
+                ActivityManager.prepareConfiguration(List.of(resources.config)));
+        player.activity.refreshActivities();
+        drain();
+        var data = player.activity.getPlayerActivityDataMap().get(2001);
+        assertNotSame(old, data);
+        assertEquals(id, data.getId());
+        assertEquals(resources.config.getScheduleId(), data.getScheduleId());
+        assertSame(quest, player.getQuestManager().getQuestById(4111309));
+        assertEquals(QuestState.QUEST_STATE_FINISHED, quest.getState());
+        assertEquals(1, data.getWatcherInfoMap().get(1200130).getCurProgress());
+        for (var entry : data.getWatcherInfoMap().entrySet())
+            if (entry.getKey() != 1200130) assertEquals(0, entry.getValue().getCurProgress());
+        assertFalse(AsterSchedule.progress(data).specialRewardTaken());
+        assertEquals(0, AsterSchedule.progress(data).midCollectCount());
+        assertEquals(0, AsterSchedule.progress(data).bigCollectCount());
+        boolean published = false;
+        for (var packet : player.packets)
+            if (packet.getOpcode() == PacketOpcodes.ActivityInfoNotify)
+                published |=
+                        ActivityInfoNotify.parseFrom(packet.getData())
+                                .getActivityInfo()
+                                .getWatcherInfoListList()
+                                .stream()
+                                .anyMatch(
+                                        w ->
+                                                w.getWatcherId() == 1200130
+                                                        && w.getCurProgress() == 1);
+        assertTrue(published);
+    }
+
+    @Test
+    void coldQuestAndActivityLoadRestoresMissingStoryEvent() throws Exception {
+        finished(4111309);
+        player.getQuestManager().getMainQuestById(41113).save();
+        drain();
+        player.getQuestManager().getMainQuests().clear();
+        var loaded = ResourceLoader.class.getDeclaredField("loadedAll");
+        loaded.setAccessible(true);
+        boolean previous = loaded.getBoolean(null);
+        try {
+            loaded.setBoolean(null, true);
+            player.getQuestManager().loadFromDatabase();
+        } finally {
+            loaded.setBoolean(null, previous);
+        }
+        assertEquals(
+                QuestState.QUEST_STATE_FINISHED,
+                player.getQuestManager().getQuestById(4111309).getState());
+        player.activity.getPlayerActivityDataMap().clear();
+        player.activity.refreshActivities();
+        drain();
+        var data = player.activity.getPlayerActivityDataMap().get(2001);
+        assertEquals(1, data.getWatcherInfoMap().get(1200130).getCurProgress());
+        assertFalse(AsterSchedule.progress(data).specialRewardTaken());
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void failedLoadSaveDoesNotPublishOptimisticStoryProgress(boolean loseAcknowledgement)
+            throws Exception {
+        finished(4111309);
+        player.packets.clear();
+        var data = player.activity.getPlayerActivityDataMap().get(2001);
+        var previous = data.getWatcherInfoMap().get(1200130);
+        String detail = data.getDetail();
+        var fault = new AtomicBoolean();
+        replaceField(
+                DatabaseManager.class,
+                null,
+                "gameDatastore",
+                Proxy.newProxyInstance(
+                        Datastore.class.getClassLoader(),
+                        new Class<?>[] {Datastore.class},
+                        (proxy, method, args) -> {
+                            boolean inject =
+                                    method.getName().equals("save")
+                                            && args[0] instanceof PlayerActivityData saved
+                                            && saved.getWatcherInfoMap()
+                                                            .get(1200130)
+                                                            .getCurProgress()
+                                                    == 1
+                                            && !fault.getAndSet(true);
+                            if (inject && !loseAcknowledgement)
+                                throw new IllegalStateException("story write failed");
+                            Object result;
+                            try {
+                                result = method.invoke(store, args);
+                            } catch (InvocationTargetException failure) {
+                                throw failure.getCause();
+                            }
+                            if (inject)
+                                throw new IllegalStateException("story acknowledgement lost");
+                            return result;
+                        }));
+        assertThrows(IllegalStateException.class, () -> player.activity.refreshActivities());
+        assertTrue(fault.get());
+        assertSame(previous, data.getWatcherInfoMap().get(1200130));
+        assertEquals(0, previous.getCurProgress());
+        assertEquals(detail, data.getDetail());
+        assertTrue(player.packets.isEmpty());
+        var saved =
+                store.find(PlayerActivityData.class)
+                        .filter(Filters.eq("uid", player.getUid()))
+                        .first();
+        assertEquals(
+                loseAcknowledgement ? 1 : 0,
+                saved.getWatcherInfoMap().get(1200130).getCurProgress());
+        player.activity.refreshActivities();
+        drain();
+        assertEquals(1, data.getWatcherInfoMap().get(1200130).getCurProgress());
+        assertEquals(
+                1,
+                store.find(PlayerActivityData.class)
+                        .filter(Filters.eq("uid", player.getUid()))
+                        .first()
+                        .getWatcherInfoMap()
+                        .get(1200130)
+                        .getCurProgress());
+        assertFalse(AsterSchedule.progress(data).specialRewardTaken());
+        assertEquals(
+                QuestState.QUEST_STATE_FINISHED,
+                player.getQuestManager().getQuestById(4111309).getState());
     }
 
     private void customQuest(String combination, String predicates) {
