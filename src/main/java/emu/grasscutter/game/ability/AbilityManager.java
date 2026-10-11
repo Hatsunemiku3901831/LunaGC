@@ -272,12 +272,13 @@ public final class AbilityManager extends BasePlayerManager {
             return;
         }
 
-        var context = new AbilityExecutionContext(ability, target);
+        var context = new AbilityExecutionContext(ability, target,
+                action.type == AbilityModifierAction.Type.ServerLuaCall
+                        && action.luaCallType == AbilityModifierAction.LuaCallType.CurScenePlay);
         if (!context.isCurrent()) return;
         var cooldownInvocation = AbilityCooldownInvocation.capture();
         eventExecutor.submit(
-            () -> AbilityCooldownInvocation.run(cooldownInvocation, () -> {
-                if (!context.isCurrent()) return;
+            () -> AbilityCooldownInvocation.run(cooldownInvocation, () -> context.runIfCurrent(() -> {
                 try {
                     if (!handler.execute(ability, action, abilityData, target)) {
                         Grasscutter.getLogger()
@@ -289,7 +290,7 @@ public final class AbilityManager extends BasePlayerManager {
                     Grasscutter.getLogger()
                         .error("Ability action {} threw at {}.", action.type, ability, e);
                 }
-            }));
+            })));
     }
 
     /**
@@ -376,8 +377,7 @@ public final class AbilityManager extends BasePlayerManager {
         var context = new AbilityExecutionContext(ability, target);
         if (!context.isCurrent()) return;
         eventExecutor.submit(
-            () -> {
-                if (!context.isCurrent()) return;
+            () -> context.runIfCurrent(() -> {
                 try {
                     if (!handler.execute(ability, mixinData, abilityData, target)) {
                         Grasscutter.getLogger()
@@ -387,7 +387,7 @@ public final class AbilityManager extends BasePlayerManager {
                     Grasscutter.getLogger()
                         .error("Ability mixin {} threw at {}.", mixinData.type, ability, e);
                 }
-            });
+            }));
     }
 
     /** A client-selected callback is one ordered action chain on its invocation target. */
@@ -450,7 +450,7 @@ public final class AbilityManager extends BasePlayerManager {
         var owned = isServerOwnedChain();
         var cooldownInvocation = AbilityCooldownInvocation.capture();
         eventExecutor.submit(() -> AbilityCooldownInvocation.run(cooldownInvocation, () -> AbilityHealContext.run(healTag, () -> runServerOwned(owned, () -> {
-            if (context.isCurrent()) executeCallbackActionsNow(ability, snapshot, payload, owner, owner);
+            context.runIfCurrent(() -> executeCallbackActionsNow(ability, snapshot, payload, owner, owner));
         }))));
     }
 
@@ -1520,8 +1520,8 @@ public final class AbilityManager extends BasePlayerManager {
         // Continuations do not wait or retain entity-list locks during nested cross-entity triggers.
         instance.getTriggerInitialization().thenRun(() -> AbilityHealContext.run(healTag, () -> runServerOwned(ownedChain, () -> {
             if (instance.getData().onAbilityStart == null) return;
-            if (context.isCurrent()) executeCallbackActionsNow(instance, instance.getData().onAbilityStart,
-                    ByteString.EMPTY, entity, entity);
+            context.runIfCurrent(() -> executeCallbackActionsNow(instance, instance.getData().onAbilityStart,
+                    ByteString.EMPTY, entity, entity));
         }))).exceptionally(error -> {
             Grasscutter.getLogger().error("Triggered ability {} failed during initialization/start", name, error);
             return null;

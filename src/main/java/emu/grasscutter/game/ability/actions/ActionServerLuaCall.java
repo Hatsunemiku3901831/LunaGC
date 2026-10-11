@@ -1,15 +1,19 @@
 package emu.grasscutter.game.ability.actions;
 
 import com.google.protobuf.ByteString;
+
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.binout.AbilityModifier.AbilityModifierAction;
 import emu.grasscutter.game.ability.Ability;
 import emu.grasscutter.game.entity.GameEntity;
 import emu.grasscutter.scripts.ScriptLoader;
-import java.util.concurrent.TimeUnit;
-import javax.script.Bindings;
+
 import org.luaj.vm2.LuaFunction;
 import org.luaj.vm2.LuaValue;
+
+import java.util.concurrent.TimeUnit;
+
+import javax.script.Bindings;
 
 @AbilityAction(AbilityModifierAction.Type.ServerLuaCall)
 public final class ActionServerLuaCall extends AbilityActionHandler {
@@ -18,7 +22,10 @@ public final class ActionServerLuaCall extends AbilityActionHandler {
 
     @Override
     public boolean execute(
-            Ability ability, AbilityModifierAction action, ByteString abilityData, GameEntity target) {
+            Ability ability,
+            AbilityModifierAction action,
+            ByteString abilityData,
+            GameEntity target) {
         if (ability == null
                 || action == null
                 || target == null
@@ -44,12 +51,19 @@ public final class ActionServerLuaCall extends AbilityActionHandler {
                 yield controller != null
                         && controller.callAbilityFunction(
                                 source,
-                                bindings -> callFunction(bindings, action.funcName, ability, action, target));
+                                bindings ->
+                                        callFunction(
+                                                bindings,
+                                                action.funcName,
+                                                ability,
+                                                action,
+                                                target));
             }
             case FromGroup, OwnerFromGroup, SpecificGroup -> {
                 int groupId = source.getGroupId();
                 if (action.luaCallType == AbilityModifierAction.LuaCallType.SpecificGroup) {
-                    if (action.callParamList == null || action.callParamList.length == 0) yield false;
+                    if (action.callParamList == null || action.callParamList.length == 0)
+                        yield false;
                     groupId = action.callParamList[0];
                 }
                 if (groupId <= 0) yield false;
@@ -64,7 +78,12 @@ public final class ActionServerLuaCall extends AbilityActionHandler {
                                     source,
                                     group,
                                     () ->
-                                            callFunction(group.getBindings(), action.funcName, ability, action, target));
+                                            callFunction(
+                                                    group.getBindings(),
+                                                    action.funcName,
+                                                    ability,
+                                                    action,
+                                                    target));
                 var result = new boolean[1];
                 activity.runIfCurrent(
                         ticket,
@@ -77,10 +96,32 @@ public final class ActionServerLuaCall extends AbilityActionHandler {
                                                         group,
                                                         () ->
                                                                 callFunction(
-                                                                        group.getBindings(), action.funcName, ability, action, target));
+                                                                        group.getBindings(),
+                                                                        action.funcName,
+                                                                        ability,
+                                                                        action,
+                                                                        target));
                         });
                 yield result[0];
             }
+            case CurScenePlay -> source.getScene()
+                    .getScenePlayBattleManager()
+                    .callServerLua(
+                            source,
+                            ability.getOwner(),
+                            ability.getPlayerOwner(),
+                            group ->
+                                    ScriptLoader.getScriptLib()
+                                            .withEntityContext(
+                                                    source,
+                                                    group,
+                                                    () ->
+                                                            callFunction(
+                                                                    group.getBindings(),
+                                                                    action.funcName,
+                                                                    ability,
+                                                                    action,
+                                                                    target)));
             default -> false;
         };
     }
@@ -108,9 +149,12 @@ public final class ActionServerLuaCall extends AbilityActionHandler {
                 if (suppressed >= 0)
                     Grasscutter.getLogger()
                             .warn(
-                                    "Unable to invoke {}: binding is not a LuaFunction ({}); suppressed {} repeated warnings.",
+                                    "Unable to invoke {}: binding is not a LuaFunction ({});"
+                                        + " suppressed {} repeated warnings.",
                                     functionName,
-                                    function == null ? "missing" : function.getClass().getSimpleName(),
+                                    function == null
+                                            ? "missing"
+                                            : function.getClass().getSimpleName(),
                                     suppressed);
                 return false;
             }
@@ -119,8 +163,9 @@ public final class ActionServerLuaCall extends AbilityActionHandler {
             if (action.paramNum >= 1) args[1] = LuaValue.valueOf(action.param1.get(ability));
             if (action.paramNum >= 2) args[2] = LuaValue.valueOf(action.param2.get(ability));
             if (action.paramNum >= 3) args[3] = LuaValue.valueOf(action.param3.get(ability));
-            luaFunction.invoke(args);
-            return true;
+            var status = luaFunction.invoke(args).arg1();
+            return action.luaCallType != AbilityModifierAction.LuaCallType.CurScenePlay
+                    || status.type() == LuaValue.TNUMBER && status.todouble() == 0;
         } catch (Exception exception) {
             // Real failures retain their stack trace; only absent functions are sampled.
             Grasscutter.getLogger().warn("Unable to invoke {}.", functionName, exception);

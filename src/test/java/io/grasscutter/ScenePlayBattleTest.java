@@ -5,9 +5,15 @@ import static emu.grasscutter.game.world.sceneplay.ScenePlayBattleManager.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.google.gson.*;
+import com.google.protobuf.ByteString;
 
+import emu.grasscutter.data.binout.*;
+import emu.grasscutter.data.binout.AbilityModifier.AbilityModifierAction;
+import emu.grasscutter.data.common.DynamicFloat;
 import emu.grasscutter.data.excels.activity.*;
 import emu.grasscutter.data.excels.scene.SceneData;
+import emu.grasscutter.game.ability.*;
+import emu.grasscutter.game.ability.actions.ActionServerLuaCall;
 import emu.grasscutter.game.entity.*;
 import emu.grasscutter.game.world.*;
 import emu.grasscutter.game.world.sceneplay.*;
@@ -18,6 +24,7 @@ import emu.grasscutter.net.proto.ScenePlayBattleUidOpNotifyOuterClass.ScenePlayB
 import emu.grasscutter.scripts.*;
 import emu.grasscutter.scripts.constants.EventType;
 import emu.grasscutter.scripts.data.*;
+import emu.grasscutter.utils.JsonUtils;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -610,6 +617,470 @@ class ScenePlayBattleTest {
                         "return"
                             + " ScriptLib.ScenePlayBattleUidOp(ScriptLib,133001413,413002,{10002},6,'random_buff_aster',{},{},6,0)"));
         assertEquals(1, packets(6526).size());
+    }
+
+    private Ability luaAbility(AbilityTestFixture.TestPlayer player) {
+        var entity = new AbilityTestFixture.TestEntity(scene);
+        entity.setId(20000 + player.getUid());
+        entity.setGroupId(999);
+        scene.getEntities().put(entity.getId(), entity);
+        return new Ability(
+                JsonUtils.decode("{\"abilityName\":\"Scene_Play_Lua_Test\"}", AbilityData.class),
+                entity,
+                player);
+    }
+
+    private AbilityModifierAction sceneLuaAction(int parameters) {
+        return JsonUtils.decode(
+                "{\"$type\":\"ServerLuaCall\",\"luaCallType\":\"CurScenePlay\","
+                        + "\"funcName\":\"callable\",\"paramNum\":"
+                        + parameters
+                        + ",\"param1\":11.5,\"param2\":-2.25,\"param3\":3}",
+                AbilityModifierAction.class);
+    }
+
+    private boolean sceneLua(Ability ability, AbilityModifierAction action) {
+        return new ActionServerLuaCall()
+                .execute(
+                        ability,
+                        action,
+                        ByteString.EMPTY,
+                        ability.getPlayerOwner().getTeamManager().getEntity());
+    }
+
+    private SimpleBindings battleBindings(int groupId) {
+        var result = new SimpleBindings();
+        result.put("ScriptLib", ScriptLoader.getScriptLibLua());
+        scene.scripts.loaded.get(groupId).setBindings(result);
+        return result;
+    }
+
+    private void serverLuaGroups(int... groups) {
+        var raw = new Gson().toJsonTree(entry).getAsJsonObject();
+        var ids = new JsonArray();
+        for (int id : groups) ids.add(id);
+        raw.add("serverLuaCallGroupList", ids);
+        entry = new Gson().fromJson(raw, MpPlayGroupData.class);
+    }
+
+    @Test
+    void scenePlayLuaUsesTheActualResourceControlGroupAndGuestContext() throws Exception {
+        assertTrue(prepare());
+        var a = luaAbility(guest);
+        var b = battleBindings(MAIN);
+        ScriptLoader.getEngine()
+                .eval(
+                        "function callable(context,p1) recorded_uid=context.uid;"
+                            + " recorded_source=context.source_entity_id;"
+                            + " recorded_target=context.target_entity_id;"
+                            + " recorded_group=context.group_id; return"
+                            + " ScriptLib.SetScenePlayBattleUidValue(context,0,context.uid,'slc',p1)"
+                            + " end",
+                        b);
+        var action = sceneLuaAction(1);
+        action.param1 = new DynamicFloat(25);
+        assertTrue(sceneLua(a, action));
+        assertEquals(10002, ((Number) b.get("recorded_uid")).intValue());
+        assertEquals(MAIN, ((Number) b.get("recorded_group")).intValue());
+        assertEquals(a.getOwner().getId(), ((Number) b.get("recorded_source")).intValue());
+        assertEquals(
+                guest.getTeamManager().getEntity().getId(),
+                ((Number) b.get("recorded_target")).intValue());
+        assertEquals(25, battles.getUidValue(MAIN, 10002, "slc"));
+        assertEquals(0, battles.getUidValue(MAIN, 10001, "slc"));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 2, 3})
+    void scenePlayLuaRetainsTheConfiguredNumberAndValuesOfParameters(int count) {
+        assertTrue(prepare());
+        var b = battleBindings(MAIN);
+        b.put(
+                "callable",
+                new org.luaj.vm2.lib.VarArgFunction() {
+                    @Override
+                    public Varargs invoke(Varargs args) {
+                        assertEquals(count + 1, args.narg());
+                        if (count > 0) assertEquals(11.5, args.arg(2).todouble());
+                        if (count > 1) assertEquals(-2.25, args.arg(3).todouble());
+                        if (count > 2) assertEquals(3, args.arg(4).todouble());
+                        return LuaValue.ZERO;
+                    }
+                });
+        assertTrue(sceneLua(luaAbility(host), sceneLuaAction(count)));
+    }
+
+    @Test
+    void actualAsterAbilityActionReachesUpdateAsterProgress() throws Exception {
+        var root =
+                JsonParser.parseString(
+                        Files.readString(
+                                Path.of(
+                                        "resources/BinOutput/Ability/Temp/ChallengeAbilities/ConfigAbility_Challenge_Meteorite.json")));
+        var raw = findScenePlayAction(root);
+        assertNotNull(raw);
+        assertEquals("Team", raw.get("target").getAsString());
+        assertEquals("UpdateAsterProgress", raw.get("funcName").getAsString());
+        var action = JsonUtils.decode(raw.toString(), AbilityModifierAction.class);
+        var b = battleBindings(MAIN);
+        ScriptLoader.getEngine()
+                .eval(
+                        "function UpdateAsterProgress(context) "
+                                + "recorded_uid=context.uid; return 0 end",
+                        b);
+        assertTrue(prepare());
+        assertTrue(sceneLua(luaAbility(guest), action));
+        assertEquals(10002, ((Number) b.get("recorded_uid")).intValue());
+    }
+
+    private static JsonObject findScenePlayAction(JsonElement node) {
+        if (node.isJsonObject()) {
+            var object = node.getAsJsonObject();
+            if (object.has("luaCallType")
+                    && "CurScenePlay".equals(object.get("luaCallType").getAsString()))
+                return object;
+            for (var child : object.entrySet()) {
+                var found = findScenePlayAction(child.getValue());
+                if (found != null) return found;
+            }
+        } else if (node.isJsonArray()) {
+            for (var child : node.getAsJsonArray()) {
+                var found = findScenePlayAction(child);
+                if (found != null) return found;
+            }
+        }
+        return null;
+    }
+
+    @Test
+    void controlGroupsAreDeduplicatedSortedAndDoNotUseTheOrdinaryGroupList() {
+        serverLuaGroups(133001427, MAIN, 133001427);
+        var called = new ArrayList<Integer>();
+        for (int group : List.of(MAIN, 133001426, 133001427, 133001498)) {
+            var b = battleBindings(group);
+            b.put(
+                    "callable",
+                    new org.luaj.vm2.lib.VarArgFunction() {
+                        @Override
+                        public Varargs invoke(Varargs args) {
+                            called.add(group);
+                            return LuaValue.ZERO;
+                        }
+                    });
+        }
+        assertTrue(prepare());
+        assertTrue(sceneLua(luaAbility(host), sceneLuaAction(0)));
+        assertEquals(List.of(MAIN, 133001427), called);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"-1", "1", "nil", "'0'", "0/0", "error('fixture failure')"})
+    void scenePlayLuaFailuresRestoreContextAndStillCallTheRemainingControlGroup(String status)
+            throws Exception {
+        serverLuaGroups(MAIN, 133001427);
+        var first = battleBindings(MAIN);
+        var second = battleBindings(133001427);
+        ScriptLoader.getEngine()
+                .eval("function callable(context) return " + status + " end", first);
+        ScriptLoader.getEngine()
+                .eval("function callable(context) reached=true; return 0 end", second);
+        assertTrue(prepare());
+        var library = ScriptLoader.getScriptLib();
+        var outer = new SceneGroup();
+        outer.id = 999;
+        var outerEntity = environment.entity;
+        library.setCurrentGroup(outer);
+        library.setCurrentEntity(outerEntity);
+        library.setSceneScriptManager(environment.scene.getScriptManager());
+        assertFalse(sceneLua(luaAbility(host), sceneLuaAction(0)));
+        assertTrue(((LuaValue) second.get("reached")).toboolean());
+        assertSame(outer, library.getCurrentGroup().orElseThrow());
+        assertSame(outerEntity, library.getCurrentEntity().orElseThrow());
+        assertSame(environment.scene.getScriptManager(), library.getSceneScriptManagerOrNull());
+    }
+
+    @Test
+    void emptyMissingAndReplacedControlGroupsDoNotFallBackToEntityOrOtherGroups() {
+        var a = luaAbility(host);
+        assertFalse(sceneLua(a, sceneLuaAction(0)));
+        serverLuaGroups();
+        assertTrue(prepare());
+        assertFalse(sceneLua(a, sceneLuaAction(0)));
+        battles.close();
+    }
+
+    @Test
+    void aReplacedControlGroupAndAReplacedPlayerCannotInheritTheRound() {
+        assertTrue(prepare());
+        var a = luaAbility(guest);
+        var b = battleBindings(MAIN);
+        b.put(
+                "callable",
+                new org.luaj.vm2.lib.VarArgFunction() {
+                    @Override
+                    public Varargs invoke(Varargs args) {
+                        fail("stale request");
+                        return LuaValue.ZERO;
+                    }
+                });
+        var original = scene.scripts.loaded.get(MAIN);
+        var replacement = new SceneGroup();
+        replacement.id = MAIN;
+        replacement.setBindings(b);
+        scene.scripts.loaded.put(MAIN, replacement);
+        assertFalse(sceneLua(a, sceneLuaAction(0)));
+        scene.scripts.loaded.put(MAIN, original);
+        var other = new AbilityTestFixture.TestPlayer();
+        ready(other, guest.getUid());
+        scene.getPlayers().remove(guest);
+        assertFalse(sceneLua(a, sceneLuaAction(0)));
+        assertFalse(sceneLua(luaAbility(other), sceneLuaAction(0)));
+    }
+
+    @Test
+    void aLateFunctionDefinitionRepairsAMissAndAnUnlistedPlayerCannotCallIt() throws Exception {
+        assertTrue(prepare());
+        var a = luaAbility(host);
+        assertFalse(sceneLua(a, sceneLuaAction(0)));
+        var b = battleBindings(MAIN);
+        ScriptLoader.getEngine().eval("function callable(context) return 0 end", b);
+        assertTrue(sceneLua(a, sceneLuaAction(0)));
+        var outsider = new AbilityTestFixture.TestPlayer();
+        ready(outsider, 10003);
+        assertFalse(sceneLua(luaAbility(outsider), sceneLuaAction(0)));
+    }
+
+    @Test
+    void unregisteredReplacedInvalidatedAndForeignEntitiesAreRejected() {
+        assertTrue(prepare());
+        var a = luaAbility(host);
+        var id = a.getOwner().getId();
+        scene.getEntities().remove(id);
+        assertFalse(sceneLua(a, sceneLuaAction(0)));
+        scene.getEntities().put(id, new AbilityTestFixture.TestEntity(scene));
+        assertFalse(sceneLua(a, sceneLuaAction(0)));
+        scene.getEntities().put(id, a.getOwner());
+        a.getOwner().invalidateAbilityLifecycle();
+        assertFalse(sceneLua(a, sceneLuaAction(0)));
+        var foreign =
+                new Ability(
+                        JsonUtils.decode("{\"abilityName\":\"Foreign\"}", AbilityData.class),
+                        environment.entity,
+                        host);
+        assertFalse(sceneLua(foreign, sceneLuaAction(0)));
+    }
+
+    @Test
+    void lateProgressCallsDoNotRunAfterTheDeadline() throws Exception {
+        startBattle();
+        var b = battleBindings(MAIN);
+        b.put(
+                "callable",
+                new org.luaj.vm2.lib.VarArgFunction() {
+                    @Override
+                    public Varargs invoke(Varargs args) {
+                        fail("expired battle");
+                        return LuaValue.ZERO;
+                    }
+                });
+        scene.now.set(1630);
+        assertFalse(sceneLua(luaAbility(host), sceneLuaAction(0)));
+        assertEquals(STOP, battles.getInfo(MAIN).getState());
+    }
+
+    @Test
+    void oneCallCannotFinishAndReplaceItsOwnRoundEvenAfterEventsDrain() throws Exception {
+        startBattle();
+        var b = battleBindings(MAIN);
+        b.put(
+                "callable",
+                new org.luaj.vm2.lib.VarArgFunction() {
+                    @Override
+                    public Varargs invoke(Varargs args) {
+                        assertTrue(battles.addProgress(MAIN, 6500));
+                        scene.scripts.drain();
+                        assertFalse(prepare());
+                        return LuaValue.ZERO;
+                    }
+                });
+        assertTrue(sceneLua(luaAbility(host), sceneLuaAction(0)));
+        assertTrue(prepare());
+    }
+
+    @Test
+    void replacingTheSourceDuringTheFirstCallSkipsTheRemainingGroup() {
+        serverLuaGroups(MAIN, 133001427);
+        assertTrue(prepare());
+        var a = luaAbility(host);
+        battleBindings(MAIN)
+                .put(
+                        "callable",
+                        new org.luaj.vm2.lib.VarArgFunction() {
+                            @Override
+                            public Varargs invoke(Varargs args) {
+                                a.getOwner().invalidateAbilityLifecycle();
+                                return LuaValue.ZERO;
+                            }
+                        });
+        battleBindings(133001427)
+                .put(
+                        "callable",
+                        new org.luaj.vm2.lib.VarArgFunction() {
+                            @Override
+                            public Varargs invoke(Varargs args) {
+                                fail("replaced source");
+                                return LuaValue.ZERO;
+                            }
+                        });
+        assertFalse(sceneLua(a, sceneLuaAction(0)));
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void queuedScenePlayActionsCannotAdoptARoundThatStartsAfterSubmission(boolean previouslyActive)
+            throws Exception {
+        if (previouslyActive) startBattle();
+        var a = luaAbility(host);
+        var calls = new java.util.concurrent.atomic.AtomicInteger();
+        battleBindings(MAIN)
+                .put(
+                        "callable",
+                        new org.luaj.vm2.lib.VarArgFunction() {
+                            @Override
+                            public Varargs invoke(Varargs args) {
+                                calls.incrementAndGet();
+                                return LuaValue.ZERO;
+                            }
+                        });
+        var entered = new CountDownLatch(4);
+        var release = new CountDownLatch(1);
+        var held = new ArrayList<Future<?>>();
+        try {
+            for (int n = 0; n < 4; n++)
+                held.add(
+                        AbilityManager.eventExecutor.submit(
+                                () -> {
+                                    entered.countDown();
+                                    try {
+                                        assertTrue(release.await(10, TimeUnit.SECONDS));
+                                    } catch (InterruptedException e) {
+                                        throw new AssertionError(e);
+                                    }
+                                }));
+            assertTrue(entered.await(5, TimeUnit.SECONDS));
+            host.getAbilityManager()
+                    .executeAction(
+                            a,
+                            sceneLuaAction(0),
+                            ByteString.EMPTY,
+                            host.getTeamManager().getEntity());
+            if (previouslyActive) {
+                assertTrue(battles.addProgress(MAIN, 6500));
+                scene.scripts.drain();
+            }
+            assertTrue(prepare());
+        } finally {
+            release.countDown();
+        }
+        for (var task : held) task.get(5, TimeUnit.SECONDS);
+        var pool = (ThreadPoolExecutor) AbilityManager.eventExecutor;
+        long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(5);
+        while ((!pool.getQueue().isEmpty() || pool.getActiveCount() != 0)
+                && System.nanoTime() < deadline) Thread.sleep(5);
+        assertTrue(pool.getQueue().isEmpty());
+        assertEquals(0, pool.getActiveCount());
+        assertEquals(0, calls.get());
+        assertEquals(PREPARE, battles.getInfo(MAIN).getState());
+    }
+
+    @Test
+    void ordinaryTeamFollowsItsOwnerSceneAndAReplacedTeamIsRejected() {
+        var team = host.getTeamManager().getEntity();
+        assertSame(scene, team.getScene());
+        host.setScene(environment.scene);
+        assertSame(environment.scene, team.getScene());
+        host.setScene(scene);
+        assertTrue(prepare());
+        var a = luaAbility(host);
+        host.getTeamManager().setEntity(new EntityTeam(host));
+        assertFalse(
+                new ActionServerLuaCall().execute(a, sceneLuaAction(0), ByteString.EMPTY, team));
+    }
+
+    @Test
+    void aCurrentScenePlayActionRunsThroughTheRealAbilityExecutor() throws Exception {
+        assertTrue(prepare());
+        var reached = new CountDownLatch(1);
+        battleBindings(MAIN)
+                .put(
+                        "callable",
+                        new org.luaj.vm2.lib.VarArgFunction() {
+                            @Override
+                            public Varargs invoke(Varargs args) {
+                                reached.countDown();
+                                return LuaValue.ZERO;
+                            }
+                        });
+        var a = luaAbility(guest);
+        guest.getAbilityManager()
+                .executeAction(
+                        a, sceneLuaAction(0), ByteString.EMPTY, guest.getTeamManager().getEntity());
+        assertTrue(reached.await(5, TimeUnit.SECONDS));
+        // Wait for the callback to release the scene monitor before fixture teardown.
+        synchronized (scene) {
+            assertEquals(PREPARE, battles.getInfo(MAIN).getState());
+        }
+    }
+
+    @Test
+    void deferredAbilityStartKeepsItsOriginalBattleScope() throws Exception {
+        startBattle();
+        var owner = luaAbility(host).getOwner();
+        var data =
+                JsonUtils.decode(
+                        "{\"abilityName\":\"Deferred_Scene_Play\",\"onAbilityStart\":["
+                                + "{\"$type\":\"ServerLuaCall\",\"luaCallType\":\"CurScenePlay\","
+                                + "\"funcName\":\"callable\",\"target\":\"Team\"}]}",
+                        AbilityData.class);
+        var a = new Ability(data, owner, host);
+        var begin = Ability.class.getDeclaredMethod("prepareTriggerInitialization");
+        begin.setAccessible(true);
+        begin.invoke(a);
+        owner.getInstancedAbilities().add(a);
+        var calls = new java.util.concurrent.atomic.AtomicInteger();
+        battleBindings(MAIN)
+                .put(
+                        "callable",
+                        new org.luaj.vm2.lib.VarArgFunction() {
+                            @Override
+                            public Varargs invoke(Varargs args) {
+                                calls.incrementAndGet();
+                                return LuaValue.ZERO;
+                            }
+                        });
+        assertTrue(host.getAbilityManager().triggerAbility(owner, data.abilityName));
+        assertEquals(0, calls.get());
+        assertTrue(battles.addProgress(MAIN, 6500));
+        scene.scripts.drain();
+        assertTrue(prepare());
+        assertTrue(a.getTriggerInitialization().complete(null));
+        assertEquals(0, calls.get());
+    }
+
+    @Test
+    void anAbilityScopeRejectsUidChangesDepartureAndSceneShutdown() {
+        assertTrue(prepare());
+        var scope = battles.captureAbilityScope(guest);
+        assertTrue(scope.getAsBoolean());
+        guest.setUid(10003);
+        assertFalse(scope.getAsBoolean());
+        guest.setUid(10002);
+        scene.getPlayers().remove(guest);
+        assertFalse(scope.getAsBoolean());
+        scene.getPlayers().add(guest);
+        assertTrue(scope.getAsBoolean());
+        battles.close();
+        assertFalse(scope.getAsBoolean());
     }
 
     private static final class BattleScene extends AbilityTestFixture.TestScene {

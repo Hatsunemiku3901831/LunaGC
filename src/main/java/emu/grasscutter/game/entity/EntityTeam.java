@@ -6,6 +6,7 @@ import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.props.EntityIdType;
 import emu.grasscutter.game.world.*;
 import emu.grasscutter.net.proto.SceneEntityInfoOuterClass.SceneEntityInfo;
+
 import it.unimi.dsi.fastutil.ints.*;
 
 public class EntityTeam extends GameEntity {
@@ -13,12 +14,11 @@ public class EntityTeam extends GameEntity {
     private Player player;
 
     public EntityTeam(Player player) {
-        super(player.getScene());        
+        super(player.getScene());
         this.player = player;
         initAbilities();
         this.id = player.getWorld().getNextEntityId(EntityIdType.TEAM);
     }
-
 
     @Override
     public void initAbilities() {
@@ -35,6 +35,15 @@ public class EntityTeam extends GameEntity {
     @Override
     public World getWorld() {
         return player.getWorld();
+    }
+
+    @Override
+    public Scene getScene() {
+        return player == null ? super.getScene() : player.getScene();
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     @Override

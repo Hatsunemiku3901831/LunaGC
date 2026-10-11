@@ -1,8 +1,11 @@
 package emu.grasscutter.game.ability;
 
+import emu.grasscutter.data.binout.AbilityModifier.AbilityModifierAction;
 import emu.grasscutter.game.entity.*;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.world.Scene;
+
+import java.util.function.BooleanSupplier;
 
 /** A queued scene action belongs to the entity lifetime and caster scene that submitted it. */
 final class AbilityExecutionContext {
@@ -10,16 +13,54 @@ final class AbilityExecutionContext {
     private final EntityLifetime target;
     private final Player caster;
     private final Scene casterScene;
+    private final BooleanSupplier scenePlayScope;
+    private final Scene scenePlayScene;
 
     AbilityExecutionContext(Ability ability, GameEntity target) {
+        this(ability, target, false);
+    }
+
+    AbilityExecutionContext(Ability ability, GameEntity target, boolean scenePlayCall) {
         this.owner = new EntityLifetime(ability.getOwner());
         this.target = target == null ? null : new EntityLifetime(target);
         this.caster = ability.getPlayerOwner();
         this.casterScene = owner.scene;
+        var data = ability.getData();
+        boolean scenePlayAbility =
+                scenePlayCall
+                        || data != null
+                                && data.localIdToAction != null
+                                && data.localIdToAction.values().stream()
+                                        .anyMatch(
+                                                action ->
+                                                        action != null
+                                                                && action.type
+                                                                        == AbilityModifierAction
+                                                                                .Type.ServerLuaCall
+                                                                && action.luaCallType
+                                                                        == AbilityModifierAction
+                                                                                .LuaCallType
+                                                                                .CurScenePlay);
+        var scene = caster == null ? ability.getOwner().getScene() : caster.getScene();
+        this.scenePlayScene = scenePlayAbility ? scene : null;
+        this.scenePlayScope =
+                scenePlayScene != null
+                        ? scenePlayScene.getScenePlayBattleManager().captureAbilityScope(caster)
+                        : () -> true;
+    }
+
+    void runIfCurrent(Runnable action) {
+        if (scenePlayScene != null) {
+            synchronized (scenePlayScene) {
+                if (isCurrent()) action.run();
+            }
+        } else if (isCurrent()) action.run();
     }
 
     boolean isCurrent() {
-        if (!owner.isCurrent() || (target != null && !target.isCurrent())) return false;
+        if (!owner.isCurrent()
+                || (target != null && !target.isCurrent())
+                || !scenePlayScope.getAsBoolean()) return false;
         // World and team entities have a dynamic scene, including during initial world setup.
         if (casterScene == null) return true;
         return (caster == null || caster.getScene() == casterScene)
@@ -29,7 +70,9 @@ final class AbilityExecutionContext {
     static boolean canTrigger(GameEntity entity, Player caster) {
         var lifetime = new EntityLifetime(entity);
         return lifetime.isCurrent()
-                && (lifetime.scene == null || caster == null || caster.getScene() == lifetime.scene);
+                && (lifetime.scene == null
+                        || caster == null
+                        || caster.getScene() == lifetime.scene);
     }
 
     private static final class EntityLifetime {
@@ -44,7 +87,9 @@ final class AbilityExecutionContext {
             this.version = entity.getAbilityLifecycleVersion();
             this.id = entity.getId();
             this.scene =
-                    entity instanceof EntityWorld || entity instanceof EntityTeam ? null : entity.getScene();
+                    entity instanceof EntityWorld || entity instanceof EntityTeam
+                            ? null
+                            : entity.getScene();
             this.registered = scene != null && lookup() == entity;
         }
 

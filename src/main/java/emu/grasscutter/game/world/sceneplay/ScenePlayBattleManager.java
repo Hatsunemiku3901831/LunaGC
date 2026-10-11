@@ -1,7 +1,7 @@
 package emu.grasscutter.game.world.sceneplay;
 
 import emu.grasscutter.data.excels.activity.*;
-import emu.grasscutter.game.entity.EntityGadget;
+import emu.grasscutter.game.entity.*;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.world.Scene;
 import emu.grasscutter.net.proto.ScenePlayBattleInfoOuterClass.ScenePlayBattleInfo;
@@ -41,6 +41,7 @@ public final class ScenePlayBattleManager {
         long lastTime, prepareEnd, startTime, progress;
         int state = INIT;
         boolean valid = true;
+        int luaCalls;
         ScenePlayBattleParameters parameters;
 
         Round(
@@ -234,6 +235,104 @@ public final class ScenePlayBattleManager {
             var round = find(groupId);
             return round == null ? ScenePlayBattleInfo.getDefaultInstance() : info(round);
         }
+    }
+
+    /** An asynchronous scene-play ability keeps the rounds present when it was submitted. */
+    public BooleanSupplier captureAbilityScope(Player player) {
+        synchronized (scene) {
+            int uid = player == null ? 0 : player.getUid();
+            var captured = abilityRounds(player);
+            return () -> {
+                synchronized (scene) {
+                    return !closed
+                            && present(player)
+                            && player.getUid() == uid
+                            && captured.equals(abilityRounds(player));
+                }
+            };
+        }
+    }
+
+    private List<Round> abilityRounds(Player player) {
+        return rounds.values().stream()
+                .filter(
+                        round ->
+                                active(round)
+                                        && round.valid
+                                        && groupsCurrent(round)
+                                        && present(round.owner)
+                                        && player != null
+                                        && round.members.get(player.getUid()) == player)
+                .toList();
+    }
+
+    /** CurScenePlay selects the resource's server Lua groups, independently of the entity group. */
+    public boolean callServerLua(
+            GameEntity source,
+            GameEntity owner,
+            Player player,
+            Function<SceneGroup, Boolean> call) {
+        synchronized (scene) {
+            if (closed
+                    || call == null
+                    || !present(player)
+                    || !currentAbilityEntity(source)
+                    || !currentAbilityEntity(owner)) return false;
+            for (var round : List.copyOf(rounds.values())) advance(round);
+            var selected = abilityRounds(player);
+            if (selected.isEmpty()) return false;
+            record Route(Round round, SceneGroup group) {}
+            var routes = new TreeMap<Integer, Route>();
+            for (var round : selected) {
+                var ids = round.entry.getServerLuaCallGroupList();
+                if (ids != null)
+                    for (int id : ids) {
+                        var group = round.groups.get(id);
+                        if (group != null) routes.putIfAbsent(id, new Route(round, group));
+                    }
+            }
+            if (routes.isEmpty()) return false;
+            long sourceVersion = source.getAbilityLifecycleVersion();
+            long ownerVersion = owner.getAbilityLifecycleVersion();
+            int sourceId = source.getId(), ownerId = owner.getId(), uid = player.getUid();
+            selected.forEach(round -> round.luaCalls++);
+            try {
+                boolean successful = true;
+                for (var route : routes.values()) {
+                    var round = route.round();
+                    if (closed
+                            || player.getUid() != uid
+                            || !present(player)
+                            || !active(round)
+                            || !round.valid
+                            || !groupsCurrent(round)
+                            || rounds.get(round.entry.getId()) != round
+                            || round.members.get(uid) != player
+                            || !present(round.owner)
+                            || source.getId() != sourceId
+                            || owner.getId() != ownerId
+                            || !source.isAbilityLifecycleCurrent(sourceVersion)
+                            || !owner.isAbilityLifecycleCurrent(ownerVersion)
+                            || !currentAbilityEntity(source)
+                            || !currentAbilityEntity(owner)) return false;
+                    successful &= Boolean.TRUE.equals(call.apply(route.group()));
+                }
+                return successful;
+            } finally {
+                selected.forEach(round -> round.luaCalls--);
+            }
+        }
+    }
+
+    private boolean currentAbilityEntity(GameEntity entity) {
+        if (entity == null
+                || entity.getScene() != scene
+                || !entity.isAbilityLifecycleCurrent(entity.getAbilityLifecycleVersion()))
+            return false;
+        if (entity instanceof EntityTeam team)
+            return present(team.getPlayer())
+                    && team.getPlayer().getTeamManager().getEntity() == team;
+        return scene.getEntityById(entity.getId()) == entity;
     }
 
     public boolean uidOp(
@@ -445,7 +544,7 @@ public final class ScenePlayBattleManager {
     }
 
     private static boolean callbacksDone(Round round) {
-        return round.callbacks.stream().allMatch(Future::isDone);
+        return round.luaCalls == 0 && round.callbacks.stream().allMatch(Future::isDone);
     }
 
     /** Retain the round of queued group events, including timer and gadget callbacks. */
