@@ -795,11 +795,14 @@
     "source": "https://raw.githubusercontent.com/Ahanlei123/2.8_live_data/f25e3155e38f9dc8f647493bf23a935147caf59e/lua/common/AsterBig.lua",
     "gitBlob": "bac0f6e422893f9cc51d25cd001dd9baa8ada452",
     "upstreamSha256": "98bbc043ca6cefcd479d00f0013694e8bab0c3b2480386cd59382c19d4ccfecc",
-    "sha256": "8b279ab49c7f4f551fa4eedeb77491551e81429fda457296c821b6e08f0f3693",
+    "sha256": "ef38b7aa227910a4bd5af31ba3581833751fbf975c31376a7f8cb9350630a21b",
     "adaptations": [
       "LuaJ-compatible integer division in LF_Get_Uid_Op_Buff",
       "Read player team ratio values with context.uid, matching the actual ScriptLib UID argument",
-      "Check the running round before consuming player energy through the existing zero-progress operation"
+      "Check the running round before consuming player energy through the existing zero-progress operation",
+      "Check the running round before spawning timed reinforcements",
+      "Ignore invalid or completed wave pointers without removing the reusable timer trigger",
+      "Spawn the current wave before scheduling the next, including the final 540-second wave"
     ]
   }
 ]

@@ -659,6 +659,7 @@ public class Scene {
         // way in and never reach the entity loop below, so nothing in the scene moved, died or
         // despawned - and the player was left in a world that had quietly stopped.
         if (!isPaused) stage("the scheduler", () -> this.getScheduler().runTasks());
+        if (!isPaused) stage("the group timers", this.getScriptManager()::tickGroupTimers);
         if (!isPaused) stage("the seal battles", this.sealBattleManager::tick);
         if (!isPaused) stage("the scene play battles", this.scenePlayBattleManager::tick);
         if (!isPaused) stage("the monster tides", this.getScriptManager()::tickMonsterTides);

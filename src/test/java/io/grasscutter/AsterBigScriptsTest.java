@@ -1,6 +1,7 @@
 package io.grasscutter;
 
 import static emu.grasscutter.game.world.sceneplay.ScenePlayBattleManager.*;
+import static emu.grasscutter.scripts.constants.EventType.EVENT_TIMER_EVENT;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,8 +21,10 @@ import emu.grasscutter.game.ability.actions.ActionServerLuaCall;
 import emu.grasscutter.game.entity.*;
 import emu.grasscutter.game.world.*;
 import emu.grasscutter.game.world.sceneplay.ScenePlayBattleManager;
+import emu.grasscutter.net.packet.PacketOpcodes;
 import emu.grasscutter.net.proto.SceneEntityInfoOuterClass.SceneEntityInfo;
 import emu.grasscutter.net.proto.ServerUpdateGlobalValueNotifyOuterClass.ServerUpdateGlobalValueNotify;
+import emu.grasscutter.net.proto.ShowTemplateReminderNotifyOuterClass.ShowTemplateReminderNotify;
 import emu.grasscutter.scripts.*;
 import emu.grasscutter.scripts.data.*;
 import emu.grasscutter.utils.JsonUtils;
@@ -30,6 +33,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
 import org.luaj.vm2.*;
+import org.luaj.vm2.lib.VarArgFunction;
 
 import java.nio.file.*;
 import java.util.*;
@@ -39,6 +43,7 @@ import java.util.function.BooleanSupplier;
 
 class AsterBigScriptsTest {
     private static final int MAIN = 133001413;
+    private static final int TIMER = 133001426;
     private static final String ENERGY = "AVATAR_ASTER_SCORE";
     private static JsonArray gadgetRows, abilityRows;
     private static JsonObject gadgetConfigs;
@@ -91,6 +96,7 @@ class AsterBigScriptsTest {
             var group = SceneGroup.of(id).load(3);
             assertNotNull(group.init_config, "original group " + id);
             scene.scripts.loaded.put(id, group);
+            scene.scripts.instances.put(id, new SceneGroupInstance(group, host));
         }
         main = scene.scripts.loaded.get(MAIN);
         library.setSceneScriptManager(scene.scripts);
@@ -155,8 +161,9 @@ class AsterBigScriptsTest {
     }
 
     @AfterEach
-    void cleanup() {
+    void cleanup() throws Exception {
         scene.scripts.onDestroy();
+        scene.scripts.drain();
         library.removeCurrentGroup();
         library.removeCurrentEntity();
         library.removeCurrentCallParams();
@@ -517,6 +524,138 @@ class AsterBigScriptsTest {
         assertTrue(library.GetTeamAbilityFloatValue(host.getUid(), ENERGY) > 0);
     }
 
+    private SceneGroup setTimer(int choice) {
+        var group = scene.scripts.loaded.get(TIMER);
+        var math = new LuaTable();
+        math.set(
+                "randomseed",
+                new VarArgFunction() {
+                    @Override
+                    public Varargs invoke(Varargs values) {
+                        return LuaValue.NONE;
+                    }
+                });
+        math.set(
+                "random",
+                new VarArgFunction() {
+                    @Override
+                    public Varargs invoke(Varargs values) {
+                        return LuaValue.valueOf(choice);
+                    }
+                });
+        // Choose both original suite alternatives deterministically without changing shared
+        // globals.
+        var closure = (LuaClosure) group.getBindings().get("action_timer_summon");
+        var globals = closure.upValues[0].getValue();
+        assertSame(ScriptLoader.getScriptLibLua(), globals.get("ScriptLib"));
+        globals.set("math", math);
+        scene.scripts.registerTrigger(group.triggers.get("Timer_Summon"));
+        assertEquals(0, invoke(group, "LF_Set_Timer", new ScriptArgs(TIMER, 50)));
+        return group;
+    }
+
+    private void timerTicks(int seconds) throws Exception {
+        for (int i = 0; i < seconds; i++) {
+            scene.now.incrementAndGet();
+            scene.getScheduler().runTasks();
+            scene.scripts.drain();
+            scene.scripts.tickGroupTimers();
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4})
+    void originalTimedReinforcementsSpawnAtAllFiveTimesIncludingTheLastWave(int difficulty)
+            throws Exception {
+        prepare(difficulty, MATCH);
+        scene.now.addAndGet(10);
+        battles.tick();
+        assertEquals(START, battles.getInfo(MAIN).getState());
+        var timer = setTimer(1);
+        scene.packets.clear();
+        long started = scene.now.get();
+        int[] times = {60, 180, 300, 420, 540};
+        int[] configs = {426002, 426003, 426004, 426001, 426002};
+        int previous = 0;
+        for (int i = 0; i < times.length; i++) {
+            timerTicks(times[i] - previous - 1);
+            assertEquals(i, scene.scripts.spawned.size());
+            timerTicks(1);
+            assertEquals(i + 1, scene.scripts.spawned.size(), "wave at " + times[i]);
+            var monster = scene.scripts.spawned.get(i);
+            assertEquals(configs[i], monster.getConfigId());
+            assertEquals(TIMER, monster.getGroupId());
+            assertSame(monster, scene.getEntityById(monster.getId()));
+            assertEquals(started + times[i], scene.scripts.spawnTimes.get(i));
+            assertEquals(i + 2, battles.getUidValue(MAIN, host.getUid(), "timer_ptr"));
+            // The final original suite reuses the first monster config ID.
+            scene.killEntity(monster);
+            previous = times[i];
+        }
+        var reminders =
+                scene.packets.stream()
+                        .filter(p -> p.getOpcode() == PacketOpcodes.ShowTemplateReminderNotify)
+                        .toList();
+        assertEquals(5, reminders.size());
+        for (var packet : reminders) {
+            var reminder = ShowTemplateReminderNotify.parseFrom(packet.getData());
+            assertEquals(110, reminder.getTemplateReminderId());
+            assertEquals(List.of(0, 0), reminder.getParamListList());
+        }
+        assertTrue(
+                scene.scripts
+                        .getTriggersByEvent(EVENT_TIMER_EVENT)
+                        .contains(timer.triggers.get("Timer_Summon")));
+        assertEquals(
+                0, invoke(timer, "action_timer_summon", new ScriptArgs(TIMER, EVENT_TIMER_EVENT)));
+        timerTicks(30);
+        assertEquals(5, scene.scripts.spawned.size());
+    }
+
+    @Test
+    void originalEmptySuiteAlternativeAdvancesAllFiveWavesWithoutRemindersOrMonsters()
+            throws Exception {
+        start();
+        setTimer(2);
+        scene.packets.clear();
+        timerTicks(550);
+        assertEquals(6, battles.getUidValue(MAIN, host.getUid(), "timer_ptr"));
+        assertTrue(scene.scripts.spawned.isEmpty());
+        assertTrue(
+                scene.packets.stream()
+                        .noneMatch(p -> p.getOpcode() == PacketOpcodes.ShowTemplateReminderNotify));
+    }
+
+    @Test
+    void countdownTimerCannotSpawnOrConsumeItsOriginalWave() throws Exception {
+        prepare(1, MATCH);
+        var timer = setTimer(1);
+        assertEquals(
+                0, invoke(timer, "action_timer_summon", new ScriptArgs(TIMER, EVENT_TIMER_EVENT)));
+        assertTrue(scene.scripts.spawned.isEmpty());
+        assertEquals(1, battles.getUidValue(MAIN, host.getUid(), "timer_ptr"));
+    }
+
+    @Test
+    void oldReinforcementTimerCannotRunAfterStopOrInTheNextBattle() throws Exception {
+        start();
+        var timer = setTimer(1);
+        scene.now.set(1630);
+        battles.tick();
+        assertEquals(STOP, battles.getInfo(MAIN).getState());
+        assertEquals(
+                0, invoke(timer, "action_timer_summon", new ScriptArgs(TIMER, EVENT_TIMER_EVENT)));
+        assertTrue(scene.scripts.spawned.isEmpty());
+        prepare(1, MATCH);
+        scene.now.addAndGet(10);
+        battles.tick();
+        timerTicks(61);
+        assertTrue(scene.scripts.spawned.isEmpty());
+        setTimer(1);
+        timerTicks(60);
+        assertEquals(1, scene.scripts.spawned.size());
+    }
+
     private static final class ScoringMonster extends EntityMonster {
         ScoringMonster(Scene scene) {
             super(
@@ -588,6 +727,10 @@ class AsterBigScriptsTest {
 
     private static final class BigScripts extends SceneScriptManager {
         final Map<Integer, SceneGroup> loaded = new HashMap<>();
+        final Map<Integer, SceneGroupInstance> instances = new HashMap<>();
+        final List<ScoringMonster> spawned = new ArrayList<>();
+        final List<Long> spawnTimes = new ArrayList<>();
+        final List<Future<?>> callbacks = new CopyOnWriteArrayList<>();
         final Map<String, Integer> variables = new HashMap<>();
 
         BigScripts(Scene scene) {
@@ -600,6 +743,27 @@ class AsterBigScriptsTest {
         }
 
         @Override
+        public SceneGroup getGroupById(int id) {
+            return loaded.get(id);
+        }
+
+        @Override
+        public SceneGroupInstance getGroupInstanceById(int id) {
+            return instances.get(id);
+        }
+
+        @Override
+        public EntityMonster createMonster(int groupId, int blockId, SceneMonster definition) {
+            var monster = new ScoringMonster(getScene());
+            monster.setGroupId(groupId);
+            monster.setConfigId(definition.config_id);
+            monster.setMetaMonster(definition);
+            spawned.add(monster);
+            spawnTimes.add(((BigScene) getScene()).now.get());
+            return monster;
+        }
+
+        @Override
         public Map<String, Integer> getVariables(int id) {
             return variables;
         }
@@ -607,6 +771,22 @@ class AsterBigScriptsTest {
         @Override
         public Future<?> callEvent(ScriptArgs args, BooleanSupplier current) {
             return CompletableFuture.completedFuture(null);
+        }
+
+        @Override
+        public Future<?> callEvent(ScriptArgs args, BooleanSupplier current, boolean locked) {
+            if (args.type != emu.grasscutter.scripts.constants.EventType.EVENT_TIMER_EVENT)
+                return CompletableFuture.completedFuture(null);
+            var result = super.callEvent(args, current, locked);
+            callbacks.add(result);
+            return result;
+        }
+
+        void drain() throws Exception {
+            var pending = List.copyOf(callbacks);
+            callbacks.removeAll(pending);
+            for (var callback : pending)
+                if (!callback.isCancelled()) callback.get(5, TimeUnit.SECONDS);
         }
     }
 }

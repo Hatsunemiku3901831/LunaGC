@@ -366,9 +366,16 @@ function action_monster_die_before_leave_scene(context, evt)
 end
 
 function action_timer_summon(context, evt)
+	-- Keep delayed reinforcement callbacks from spawning after the battle has stopped.
+	if ScriptLib.AddScenePlayBattleProgress(context, play.group_main, 0) ~= 0 then
+		return 0
+	end
 	local host = ScriptLib.GetScenePlayBattleHostUid(context, 0)
 	local D = ScriptLib.GetScenePlayBattleUidValue(context, 0, host, play.difficulty)
 	local timer_ptr = ScriptLib.GetScenePlayBattleUidValue(context, 0, host,"timer_ptr")
+	if defs.aster_timer[timer_ptr] == nil or timer_def[D] == nil or timer_def[D][timer_ptr] == nil then
+		return 0
+	end
 	ScriptLib.PrintContextLog(context, "## ASTER_LOG : timer_event \"aster_timer\" -> "..defs.aster_timer[timer_ptr])
 	ScriptLib.PrintContextLog(context, "## ASTER_LOG : cur_timer_ptr -> "..timer_ptr)
 	math.randomseed(ScriptLib.GetServerTime(context) + timer_ptr)
@@ -376,18 +383,18 @@ function action_timer_summon(context, evt)
 	if #suites[Timer].monsters > 0 then
 		ScriptLib.ShowTemplateReminder(context, 110, {0,0})
 	end
-	if defs.aster_timer[timer_ptr+1] == nil then
-		ScriptLib.PrintContextLog(context, "## ASTER_LOG : aster_timer_end")
-		return -1
-	end
-	--设置下一招怪阶段
-	ScriptLib.CreateGroupTimerEvent(context, play.group_timer, "aster_timer", defs.aster_timer[timer_ptr+1] - defs.aster_timer[timer_ptr])
 	--ScriptLib.CreateGroupTimerEvent(context, play.group_timer, "clear_delay", defs.clear_delay)
 	--召唤当前波次的怪物
 	--ScriptLib.PauseAutoMonsterTide(context, play.group_main, play.monster_tide)
 	--ScriptLib.RefreshGroup(context, {group_id = play.group_timer, suite = timer_def[D][timer_ptr][math.random(1,#timer_def[D][timer_ptr])]})
 	ScriptLib.AddExtraGroupSuite(context, play.group_timer, Timer)
 	ScriptLib.SetScenePlayBattleUidValue(context, 0, host,"timer_ptr", timer_ptr + 1)
+	if defs.aster_timer[timer_ptr+1] == nil then
+		ScriptLib.PrintContextLog(context, "## ASTER_LOG : aster_timer_end")
+		return 0
+	end
+	-- Schedule the next wave after spawning this one, including the final 540-second wave.
+	ScriptLib.CreateGroupTimerEvent(context, play.group_timer, "aster_timer", defs.aster_timer[timer_ptr+1] - defs.aster_timer[timer_ptr])
 	--ScriptLib.SetScenePlayBattleUidValue(context, 0, host,"prev_timer_suite", Timer)
 	return 0
 end

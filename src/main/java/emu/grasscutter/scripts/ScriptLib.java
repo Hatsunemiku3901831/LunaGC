@@ -540,7 +540,12 @@ public class ScriptLib {
 
     public int CancelGroupTimerEvent(int groupID, String source) {
         logger.debug("[LUA] Call CancelGroupTimerEvent");
-        return sceneScriptManager.get().cancelGroupTimerEvent(groupID, source);
+        var manager = getSceneScriptManagerOrNull();
+        if (manager == null) return -1;
+        synchronized (manager.getScene()) {
+            if (!manager.allowsGroupCall(getCurrentGroup().orElse(null))) return -1;
+            return manager.cancelGroupTimerEvent(groupID, source);
+        }
     }
 
     public int CauseDungeonFail() {
@@ -692,7 +697,23 @@ public class ScriptLib {
 
     public int CreateGroupTimerEvent(int groupID, String source, double time) {
         logger.debug("[LUA] Call CreateGroupTimerEvent with {} {} {}", groupID, source, time);
-        return sceneScriptManager.get().createGroupTimerEvent(groupID, source, time);
+        var manager = getSceneScriptManagerOrNull();
+        if (manager == null) return -1;
+        synchronized (manager.getScene()) {
+            if (!manager.allowsGroupCall(getCurrentGroup().orElse(null))) return -1;
+            return manager.createGroupTimerEvent(groupID, source, time);
+        }
+    }
+
+    public int ShowTemplateReminder(int id, int[] parameters) {
+        var manager = getSceneScriptManagerOrNull();
+        if (id <= 0 || parameters == null || manager == null) return -1;
+        synchronized (manager.getScene()) {
+            if (!manager.allowsGroupCall(getCurrentGroup().orElse(null))) return -1;
+            manager.getScene().broadcastPacket(new emu.grasscutter.server.packet.send
+                    .PacketShowTemplateReminderNotify(id, parameters));
+            return 0;
+        }
     }
 
     public int CreateMonster(LuaTable table) {

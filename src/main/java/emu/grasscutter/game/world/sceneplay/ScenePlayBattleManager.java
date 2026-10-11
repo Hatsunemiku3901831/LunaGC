@@ -323,15 +323,26 @@ public final class ScenePlayBattleManager {
 
     /** A dying monster cannot score during countdown, after stop, or in a replacement round. */
     public BooleanSupplier captureMonsterDeathScope(int groupId) {
+        return captureGroupScope(groupId, true);
+    }
+
+    /** A delayed group callback retains its original round without blocking replacement. */
+    public BooleanSupplier captureGroupCallbackScope(int groupId) {
+        return captureGroupScope(groupId, false);
+    }
+
+    private BooleanSupplier captureGroupScope(int groupId, boolean running) {
         synchronized (scene) {
             var round = byGroup.get(groupId);
-            if (round != null && round.valid && groupsCurrent(round)) advance(round);
+            if (running && round != null && round.valid && groupsCurrent(round)) advance(round);
             return () -> {
                 synchronized (scene) {
                     return !closed
                             && byGroup.get(groupId) == round
                             && (round == null
-                                    || round.valid && groupsCurrent(round) && round.state == START);
+                                    || round.valid
+                                            && groupsCurrent(round)
+                                            && (!running || round.state == START));
                 }
             };
         }

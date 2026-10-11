@@ -52,7 +52,22 @@ public class SceneScriptManager {
 
     private final Set<SceneTrigger> ongoingTriggers;
     private final Map<String, Set<SceneTrigger>> triggersByGroupScene;
-    private final Map<Integer, Set<Pair<String, Integer>>> activeGroupTimers;
+    private record GroupTimerKey(int groupId, String source) {}
+    private static final class GroupTimer {
+        final SceneGroup group;
+        final String source;
+        final java.util.function.BooleanSupplier roundCurrent;
+        int taskId;
+        Future<?> callback;
+        boolean valid = true, fired, executing;
+
+        GroupTimer(SceneGroup group, String source, java.util.function.BooleanSupplier roundCurrent) {
+            this.group = group;
+            this.source = source;
+            this.roundCurrent = roundCurrent;
+        }
+    }
+    private final Map<GroupTimerKey, GroupTimer> activeGroupTimers;
     private final Map<String, AtomicInteger> triggerInvocations;
     private final Map<Integer, EntityRegion> regions; // <EntityId-Region>
     private final Map<Integer, SceneGroup> sceneGroups;
@@ -274,6 +289,7 @@ public class SceneScriptManager {
 
         groupInstance.setTargetSuiteId(0);
         cancelGroupMonsterSpawns(group.id);
+        cancelGroupTimerTasks(group.id);
 
         if (prevSuiteData != null) {
             removeGroupSuite(group, prevSuiteData);
@@ -1047,6 +1063,7 @@ public class SceneScriptManager {
                                 .filter(
                                         t -> params.getGroupId() == 0 || t.getCurrentGroup().id == params.getGroupId())
                                 .filter(t -> eventType != EventType.EVENT_MONSTER_DIE_BEFORE_LEAVE_SCENE
+                                        && eventType != EventType.EVENT_TIMER_EVENT
                                         || getLoadedGroupById(t.currentGroup.id) == t.currentGroup)
                                 .filter(
                                         t -> (t.getSource().isEmpty() || t.getSource().equals(params.getEventSource())))
@@ -1160,10 +1177,6 @@ public class SceneScriptManager {
                                                         }
                                                     });
                                 });
-            }
-
-            if (event == EVENT_TIMER_EVENT) {
-                cancelGroupTimerEvent(trigger.currentGroup.id, trigger.getSource());
             }
 
             // always deregister on error, otherwise only if the count is reached
@@ -1421,76 +1434,101 @@ public class SceneScriptManager {
     }
 
     public int createGroupTimerEvent(int groupID, String source, double time) {
-        // TODO also remove timers when refreshing and test
-        var group = getGroupById(groupID);
-        if (group == null || group.triggers == null) {
-            Grasscutter.getLogger()
-                    .debug(
-                            "trying to create a timer for unknown group with id {} and source {}",
-                            groupID,
-                            source);
-            return 1;
+        if (groupID <= 0 || source == null || source.isBlank() || !Double.isFinite(time)
+                || time < 0 || Math.ceil(time) > Integer.MAX_VALUE) return -1;
+        synchronized (scene) {
+            if (destroyed) return -1;
+            var group = getGroupById(groupID);
+            if (group == null || !allowsGroupCall(group) || group.triggers == null
+                    || group.triggers.values().stream().noneMatch(trigger ->
+                        trigger.getEvent() == EVENT_TIMER_EVENT && source.equals(trigger.getSource()))) return -1;
+            var battleCurrent = scene.getScenePlayBattleManager().captureGroupCallbackScope(groupID);
+            var activity = scene.getCrucibleSceneController();
+            long activityTicket = activity.getLifecycle().ticket();
+            long activityRound = activity.currentRoundSerial();
+            var timer = new GroupTimer(group, source, () -> battleCurrent.getAsBoolean()
+                    && (!activity.owns(groupID) || activity.getLifecycle().isCurrent(activityTicket)
+                        && activity.currentRoundSerial() == activityRound));
+            cancelGroupTimerEvent(groupID, source);
+            activeGroupTimers.put(new GroupTimerKey(groupID, source), timer);
+            timer.taskId = scene.getScheduler().scheduleDelayedTask(() -> fireGroupTimer(timer),
+                    (int) Math.ceil(time));
+            return 0;
         }
-        Grasscutter.getLogger()
-                .debug(
-                        "creating group timer event for group {} with source {} and time {}",
-                        groupID,
-                        source,
-                        time);
-        for (SceneTrigger trigger : group.triggers.values()) {
-            if (trigger.getEvent() == EVENT_TIMER_EVENT && trigger.getSource().equals(source)) {
-                Grasscutter.getLogger()
-                        .debug(
-                                "[LUA] Found timer trigger with source {} for group {} : {}",
-                                source,
-                                groupID,
-                                trigger.getName());
-                this.cancelGroupTimerEvent(groupID, source);
-                var activity = scene.getCrucibleSceneController();
-                long activityTicket = activity.getLifecycle().ticket();
-                long activityRound = activity.currentRoundSerial();
-                var taskIdentifier =
-                        Grasscutter.getGameServer()
-                                .getScheduler()
-                                .scheduleDelayedRepeatingTask(
-                                        () -> {
-                                            Runnable callback = () -> callEvent(new ScriptArgs(groupID, EVENT_TIMER_EVENT).setEventSource(source));
-                                            if (activity.owns(groupID)) activity.runIfCurrent(activityTicket, activityRound,
-                                                    () -> { if (activity.isRoundActive(activityRound)) callback.run(); });
-                                            else callback.run();
-                                        },
-                                        (int) time,
-                                        (int) time);
-                var groupTasks = activeGroupTimers.computeIfAbsent(groupID, k -> ConcurrentHashMap.newKeySet());
-                groupTasks.add(new Pair<>(source, taskIdentifier));
-            }
-        }
-        return 0;
     }
 
     public int cancelGroupTimerEvent(int groupID, String source) {
-        // TODO test
-        var groupTimers = activeGroupTimers.get(groupID);
-        if (groupTimers != null && !groupTimers.isEmpty()) {
-            for (var timer : new HashSet<>(groupTimers)) {
-                if (timer.component1().equals(source)) {
-                    Grasscutter.getGameServer().getScheduler().cancelTask(timer.component2());
-                    groupTimers.remove(timer);
-                    return 0;
-                }
-            }
+        if (groupID <= 0 || source == null || source.isBlank()) return -1;
+        synchronized (scene) {
+            var timer = activeGroupTimers.remove(new GroupTimerKey(groupID, source));
+            if (timer != null) stopGroupTimer(timer);
+            return 0;
         }
-
-        Grasscutter.getLogger()
-                .warn("trying to cancel a timer that's not active {} {}", groupID, source);
-        return 0;
     }
 
     public void cancelGroupTimers(int groupId) {
         stopTimeAxesForGroup(groupId);
-        var timers = activeGroupTimers.remove(groupId);
-        if (timers != null) timers.forEach(timer ->
-                Grasscutter.getGameServer().getScheduler().cancelTask(timer.component2()));
+        cancelGroupTimerTasks(groupId);
+    }
+
+    private void cancelGroupTimerTasks(int groupId) {
+        synchronized (scene) {
+            activeGroupTimers.keySet().stream().filter(key -> key.groupId == groupId)
+                    .toList().forEach(key -> stopGroupTimer(activeGroupTimers.remove(key)));
+        }
+    }
+
+    private void stopGroupTimer(GroupTimer timer) {
+        timer.valid = false;
+        scene.getScheduler().cancelTask(timer.taskId);
+        if (timer.callback != null && !timer.executing) timer.callback.cancel(false);
+    }
+
+    private boolean isCurrentGroupTimer(GroupTimer timer) {
+        return timer.valid && !destroyed
+                && activeGroupTimers.get(new GroupTimerKey(timer.group.id, timer.source)) == timer
+                && allowsGroupCall(timer.group) && timer.roundCurrent.getAsBoolean();
+    }
+
+    private void fireGroupTimer(GroupTimer timer) {
+        synchronized (scene) {
+            if (!isCurrentGroupTimer(timer) || timer.fired) return;
+            var activity = scene.getCrucibleSceneController();
+            if (activity.owns(timer.group.id) && !activity.isRoundActive(activity.currentRoundSerial())) {
+                activeGroupTimers.remove(new GroupTimerKey(timer.group.id, timer.source), timer);
+                stopGroupTimer(timer);
+                return;
+            }
+            timer.fired = true;
+            try {
+                timer.callback = callEvent(new ScriptArgs(timer.group.id, EVENT_TIMER_EVENT)
+                        .setEventSource(timer.source), () -> {
+                            if (!isCurrentGroupTimer(timer)
+                                    || activity.owns(timer.group.id)
+                                        && !activity.isRoundActive(activity.currentRoundSerial())) return false;
+                            timer.executing = true;
+                            return true;
+                        }, true);
+            } catch (RuntimeException failure) {
+                activeGroupTimers.remove(new GroupTimerKey(timer.group.id, timer.source), timer);
+                stopGroupTimer(timer);
+                Grasscutter.getLogger().error("Group timer {} failed in group {}", timer.source,
+                        timer.group.id, failure);
+            }
+        }
+    }
+
+    /** Release completed callbacks without deleting a new timer created by the same Lua action. */
+    public void tickGroupTimers() {
+        synchronized (scene) {
+            for (var timer : List.copyOf(activeGroupTimers.values())) {
+                if (!isCurrentGroupTimer(timer)
+                        || timer.fired && timer.callback != null && timer.callback.isDone()) {
+                    activeGroupTimers.remove(new GroupTimerKey(timer.group.id, timer.source), timer);
+                    stopGroupTimer(timer);
+                }
+            }
+        }
     }
 
     private boolean allowsActivityEntity(int groupId, SceneGroup group) {
@@ -1587,6 +1625,8 @@ public class SceneScriptManager {
         synchronized (scene) {
             destroyed = true;
             unloadCurrentMonsterTide();
+            activeGroupTimers.values().forEach(this::stopGroupTimer);
+            activeGroupTimers.clear();
         }
         scene.getSealBattleManager().close();
         scene.getScenePlayBattleManager().close();
@@ -1596,10 +1636,5 @@ public class SceneScriptManager {
             timeAxis.clear();
         }
         axes.forEach(SceneTimeAxis::stop);
-        activeGroupTimers.forEach(
-                (gid, times) ->
-                        times.forEach(
-                                (e) -> Grasscutter.getGameServer().getScheduler().cancelTask(e.getSecond())));
-        activeGroupTimers.clear();
     }
 }

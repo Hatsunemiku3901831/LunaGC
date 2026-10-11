@@ -16,6 +16,8 @@ final class ScriptLibUserdata extends LuaUserdata {
             ScenePlayBattleLua.functions();
     private final java.util.Map<String, LuaValue> groupFunctions = GroupLuaCall.functions();
     private final java.util.Map<String, LuaValue> tideFunctions = MonsterTideLua.functions();
+    private final java.util.Map<String, LuaValue> timerFunctions = GroupTimerLua.functions();
+    private final LuaValue templateReminder = TemplateReminderLua.function();
 
     private static LuaValue teamValueFunction(boolean add) {
         return new VarArgFunction() {
@@ -116,6 +118,8 @@ final class ScriptLibUserdata extends LuaUserdata {
     @Override
     public LuaValue get(LuaValue key) {
         if (key.isstring()) {
+            var timerFunction = timerFunctions.get(key.tojstring());
+            if (timerFunction != null) return timerFunction;
             var tideFunction = tideFunctions.get(key.tojstring());
             if (tideFunction != null) return tideFunction;
             var groupFunction = groupFunctions.get(key.tojstring());
@@ -123,6 +127,8 @@ final class ScriptLibUserdata extends LuaUserdata {
             var battleFunction = sceneBattleFunctions.get(key.tojstring());
             if (battleFunction != null) return battleFunction;
             switch (key.tojstring()) {
+                case "ShowTemplateReminder":
+                    return templateReminder;
                 case "InitTimeAxis":
                     return initTimeAxis;
                 case "AddTeamEntityGlobalFloatValue":

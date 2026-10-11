@@ -1,0 +1,12 @@
+// Verified 7.1 native message 37088, command 28686, reader 0x1519dce80.
+// Metadata identifies the uint32 ID and int32/uint32 repeated codecs.
+// Boolean tags 3 and 10 are unused here; their semantics remain unverified.
+syntax = "proto3";
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "ShowTemplateReminderNotifyOuterClass";
+
+message ShowTemplateReminderNotify {
+    repeated uint32 param_uid_list = 1;
+    uint32 template_reminder_id = 4;
+    repeated int32 param_list = 12;
+}
