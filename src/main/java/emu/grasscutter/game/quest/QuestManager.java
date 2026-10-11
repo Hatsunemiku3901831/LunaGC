@@ -33,6 +33,7 @@ public final class QuestManager extends BasePlayerManager {
     @Getter private final Int2ObjectMap<GameMainQuest> mainQuests;
     @Getter private Int2ObjectMap<int[]> acceptProgressLists;
     @Getter private final List<Integer> loggedQuests;
+    private final Set<Integer> deferredSavedChapters = ConcurrentHashMap.newKeySet();
 
     private long lastHourCheck = 0;
     private long lastDayCheck = 0;
@@ -432,6 +433,8 @@ public final class QuestManager extends BasePlayerManager {
     }
 
     public GameMainQuest addMainQuest(QuestData questConfig) {
+        // A resource mismatch must not turn an existing saved chapter into a fresh quest.
+        if (deferredSavedChapters.contains(questConfig.getMainId())) return null;
         var mainQuest = new GameMainQuest(getPlayer(), questConfig.getMainId());
         this.getMainQuests().put(mainQuest.getParentQuestId(), mainQuest);
         this.getPlayer().sendPacket(new PacketFinishedParentQuestUpdateNotify(mainQuest));
@@ -455,6 +458,7 @@ public final class QuestManager extends BasePlayerManager {
         // Create main quest if it doesnt exist
         if (mainQuest == null) {
             mainQuest = addMainQuest(questConfig);
+            if (mainQuest == null) return null;
         }
 
         // Sub quest
@@ -579,7 +583,8 @@ public final class QuestManager extends BasePlayerManager {
 
                     if (shouldAccept) {
                         GameQuest quest = owner.getQuestManager().addQuest(questData);
-                        Grasscutter.getLogger().debug("Added quest {}", questData.getSubId());
+                        if (quest != null)
+                            Grasscutter.getLogger().debug("Added quest {}", questData.getSubId());
                     }
                 });
     }
@@ -657,10 +662,7 @@ public final class QuestManager extends BasePlayerManager {
                 .toList();
     }
 
-    /**
-     * A login that arrives while resources are still loading sees an empty quest table. Treating
-     * that as "this quest id does not exist" deletes the player's saved chapters.
-     */
+    /** Saved quests must only be bound after the resource tables are ready. */
     public static boolean resourcesReadyForQuestLoad() {
         return emu.grasscutter.data.ResourceLoader.isLoadedAll()
                 && !GameData.getQuestDataMap().isEmpty();
@@ -671,7 +673,7 @@ public final class QuestManager extends BasePlayerManager {
             Grasscutter.getLogger()
                     .warn(
                             "Player {} connected before quest resources were loaded. Saved quests"
-                                + " were kept.",
+                                    + " were kept.",
                             getPlayer().getUid());
             return;
         }
@@ -679,25 +681,58 @@ public final class QuestManager extends BasePlayerManager {
         List<GameMainQuest> quests = DatabaseHelper.getAllQuests(getPlayer());
 
         for (GameMainQuest mainQuest : quests) {
+            int parentId = mainQuest.getParentQuestId();
+            var parentConfig = GameData.getMainQuestDataMap().get(parentId);
+            if (parentConfig == null || parentConfig.getId() != parentId) {
+                deferredSavedChapters.add(parentId);
+                Grasscutter.getLogger()
+                        .warn(
+                                "Player {}: saved quest chapter {} has no matching definition. Kept"
+                                        + " for retry.",
+                                getPlayer().getUid(),
+                                parentId);
+                continue;
+            }
+
             boolean cancelAdd = false;
-            mainQuest.setOwner(this.getPlayer());
-
-            for (GameQuest quest : mainQuest.getChildQuests().values()) {
-                QuestData questConfig = GameData.getQuestDataMap().get(quest.getSubQuestId());
-
-                if (questConfig == null) {
-                    mainQuest.delete();
+            var configs = new LinkedHashMap<GameQuest, QuestData>();
+            // Validate every child before changing or publishing any part of this saved chapter.
+            for (var entry : mainQuest.getChildQuests().entrySet()) {
+                var quest = entry.getValue();
+                var questConfig = GameData.getQuestDataMap().get(entry.getKey().intValue());
+                if (quest == null
+                        || questConfig == null
+                        || entry.getKey() != quest.getSubQuestId()
+                        || quest.getMainQuestId() != parentId
+                        || questConfig.getId() != quest.getSubQuestId()
+                        || questConfig.getMainId() != parentId) {
+                    Grasscutter.getLogger()
+                            .warn(
+                                    "Player {}: saved quest chapter {} has an unavailable or"
+                                            + " inconsistent child {}. Kept for retry.",
+                                    getPlayer().getUid(),
+                                    parentId,
+                                    entry.getKey());
                     cancelAdd = true;
                     break;
                 }
+                configs.put(quest, questConfig);
+            }
+            if (cancelAdd) {
+                deferredSavedChapters.add(parentId);
+                continue;
+            }
 
+            mainQuest.setOwner(this.getPlayer());
+            boolean rebound = false;
+            for (var entry : configs.entrySet()) {
+                var quest = entry.getKey();
                 quest.setMainQuest(mainQuest);
-                quest.setConfig(questConfig);
+                rebound |= quest.rebindConfig(entry.getValue());
             }
-
-            if (!cancelAdd) {
-                this.getMainQuests().put(mainQuest.getParentQuestId(), mainQuest);
-            }
+            this.getMainQuests().put(parentId, mainQuest);
+            deferredSavedChapters.remove(parentId);
+            if (rebound) mainQuest.save();
         }
     }
 

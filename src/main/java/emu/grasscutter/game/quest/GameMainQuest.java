@@ -85,6 +85,7 @@ public class GameMainQuest {
     public void setOwner(Player player) {
         if (player.getUid() != this.getOwnerUid()) return;
         this.owner = player;
+        this.questManager = player.getQuestManager();
     }
 
     public int getQuestVar(int i) {

@@ -38,6 +38,12 @@ public class GameQuest {
 
     @Getter private int[] finishProgressList;
     @Getter private int[] failProgressList;
+    @Getter private List<String> finishConditionKeys;
+    @Getter private List<String> failConditionKeys;
+    @Getter private List<QuestProgressBinding.RetiredProgress> retiredFinishProgress;
+    @Getter private List<QuestProgressBinding.RetiredProgress> retiredFailProgress;
+    @Getter private int[] legacyFinishProgressList;
+    @Getter private int[] legacyFailProgressList;
     @Transient @Getter private Map<String, TriggerExcelConfigData> triggerData;
     @Getter private Map<String, Boolean> triggers;
     private transient Bindings bindings;
@@ -53,8 +59,7 @@ public class GameQuest {
         this.state = QuestState.QUEST_STATE_UNSTARTED;
         this.triggerData = new HashMap<>();
         this.triggers = new HashMap<>();
-        this.finishProgressList = new int[questData.getFinishCond().size()];
-        this.failProgressList = new int[questData.getFailCond().size()];
+        resetContentProgress();
         this.finishTime = 0;
     }
 
@@ -146,8 +151,66 @@ public class GameQuest {
     }
 
     public void setConfig(QuestData config) {
-        if (config == null || getSubQuestId() != config.getId()) return;
+        rebindConfig(config);
+    }
+
+    /**
+     * Returns whether persisted progress metadata changed; binding itself has no gameplay effects.
+     */
+    public boolean rebindConfig(QuestData config) {
+        if (config == null
+                || getSubQuestId() != config.getId()
+                || getMainQuestId() != config.getMainId()) return false;
+        var oldFinishKeys = finishConditionKeys;
+        var oldFailKeys = failConditionKeys;
+        // A live resource reload still has the previous definition, even before key metadata
+        // exists.
+        if (questData != null) {
+            if (oldFinishKeys == null)
+                oldFinishKeys = QuestProgressBinding.keys(questData.getFinishCond());
+            if (oldFailKeys == null)
+                oldFailKeys = QuestProgressBinding.keys(questData.getFailCond());
+        }
+        var finish =
+                QuestProgressBinding.bind(
+                        finishProgressList,
+                        oldFinishKeys,
+                        QuestProgressBinding.keys(config.getFinishCond()),
+                        retiredFinishProgress,
+                        legacyFinishProgressList);
+        var fail =
+                QuestProgressBinding.bind(
+                        failProgressList,
+                        oldFailKeys,
+                        QuestProgressBinding.keys(config.getFailCond()),
+                        retiredFailProgress,
+                        legacyFailProgressList);
+        boolean changed =
+                finish.changed()
+                        || fail.changed()
+                        || !Objects.equals(finishConditionKeys, finish.keys())
+                        || !Objects.equals(failConditionKeys, fail.keys());
         this.questData = config;
+        finishProgressList = finish.progress();
+        finishConditionKeys = finish.keys();
+        retiredFinishProgress = finish.retired();
+        legacyFinishProgressList = finish.legacy();
+        failProgressList = fail.progress();
+        failConditionKeys = fail.keys();
+        retiredFailProgress = fail.retired();
+        legacyFailProgressList = fail.legacy();
+        return changed;
+    }
+
+    private void resetContentProgress() {
+        finishConditionKeys = QuestProgressBinding.keys(questData.getFinishCond());
+        failConditionKeys = QuestProgressBinding.keys(questData.getFailCond());
+        finishProgressList = new int[finishConditionKeys.size()];
+        failProgressList = new int[failConditionKeys.size()];
+        retiredFinishProgress = null;
+        retiredFailProgress = null;
+        legacyFinishProgressList = null;
+        legacyFailProgressList = null;
     }
 
     public void setFinishProgress(int index, int value) {
@@ -174,7 +237,6 @@ public class GameQuest {
                     this.getOwner().getPlayerProgress().resetCurrentProgress(condition.getParamStr());
                 }
             }
-            this.finishProgressList = new int[questData.getFinishCond().size()];
         }
 
         if (questData.getFailCond() != null && questData.getFailCond().size() != 0) {
@@ -183,8 +245,9 @@ public class GameQuest {
                     this.getOwner().getPlayerProgress().resetCurrentProgress(condition.getParamStr());
                 }
             }
-            this.failProgressList = new int[questData.getFailCond().size()];
         }
+
+        resetContentProgress();
 
         this.getMainQuest().getTalks().values().removeIf(talk -> talk.getId() == this.getSubQuestId());
 

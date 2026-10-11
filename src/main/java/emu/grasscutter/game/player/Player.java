@@ -1569,8 +1569,7 @@ public class Player implements PlayerHook, FieldFetch {
         runner.submit(
                 () -> {
                     // The game socket accepts connections while resources are still loading.
-                    // Quest loading deletes any chapter whose definition is missing, so it has to
-                    // wait until the quest table actually exists.
+                    // Wait for resource tables before binding any saved quest definitions.
                     if (!emu.grasscutter.data.ResourceLoader.isLoadedAll()) {
                         Grasscutter.getLogger()
                                 .warn(
