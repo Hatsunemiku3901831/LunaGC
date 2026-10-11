@@ -247,6 +247,14 @@ public class ScriptLoader {
 
         try {
             var source = Files.readString(scriptPath);
+            // The selected 7.1 resources contain a comment-only placeholder for this Common.
+            // Preserve executable resource overrides, but use the recovered original for a stub.
+            if (!useAbsPath && path.equals("Common/AsterMiddle.lua")
+                    && source.lines().allMatch(line -> line.isBlank() || line.stripLeading().startsWith("--"))) {
+                try (var stream = ScriptLoader.class.getResourceAsStream("/historical-scripts/" + path)) {
+                    if (stream != null) source = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
+                }
+            }
             ScriptLoader.scriptSources.put(path, new SoftReference<>(source));
 
             return source;
@@ -289,7 +297,8 @@ public class ScriptLoader {
             if (sources == null) return null;
 
             // Check to see if the script references other scripts.
-            if (!Configuration.FAST_REQUIRE && sources.contains("require")) {
+            // AsterMiddle reads the control script's local `defs`; it must share that lexical scope.
+            if ((!Configuration.FAST_REQUIRE || sources.contains("require \"AsterMiddle\"")) && sources.contains("require")) {
                 var lines = sources.split("\n");
                 var output = new StringBuilder();
                 for (var line : lines) {
@@ -299,8 +308,14 @@ public class ScriptLoader {
                         continue;
                     }
 
+                    if (Configuration.FAST_REQUIRE && !line.trim().equals("require \"AsterMiddle\"")) {
+                        output.append(line).append("\n");
+                        continue;
+                    }
+
                     // Extract the script name.
-                    var scriptName = line.substring(9, line.length() - 1);
+                    var requireLine = line.trim();
+                    var scriptName = requireLine.substring(9, requireLine.length() - 1);
                     // Resolve the script path.
                     var scriptPath = "Common/" + scriptName + ".lua";
                     var scriptSource = ScriptLoader.readScript(scriptPath, useAbsPath);

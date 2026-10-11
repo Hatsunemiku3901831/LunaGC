@@ -25,5 +25,18 @@ and collection IDs from those six scripts (118 points in total). It excludes the
 three disused exploration missions. Each world's controller creates its own group
 definitions and bindings; collected points are kept in the player's activity document.
 
-The archived `Common/AsterMiddle.lua` and `Common/AsterBig.lua` are not activated by
-this recovery. They need the original camp/reward and scene-play battle interfaces.
+## Unreconciled Stars recovery camps (2001)
+
+The 60 original control groups and 60 battle groups are recovered from the same
+pinned archive. The original and packaged SHA-256 values are recorded separately
+in `Activity/2001/sources.json`; packaged files use LF line endings and the existing
+scene-group paths. `Activity/2001/mid-camps.json` derives camp/group positions from
+the original activity block and seal/reward IDs from the corresponding control groups.
+
+`Common/AsterMiddle.lua` is recovered from that pinned archive's `lua/common/`.
+Twenty control groups require it. It shares their local `defs`, so it is inlined
+even when fast require is enabled. Host reward interactions are connected to the
+original seal-end actions and persisted activity progress.
+The comment-only placeholder for this Common in the selected resources uses the
+packaged original; executable resource overrides retain precedence.
+`Common/AsterBig.lua` is not activated; chapter three still needs its scene-play interfaces.

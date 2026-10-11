@@ -1,0 +1,1502 @@
+[
+  {
+    "campId": 1011,
+    "groupId": 302001020,
+    "sealConfigId": 20021,
+    "sealGadgetId": 70950015,
+    "emptySuite": 5,
+    "rewardConfigId": 20022,
+    "position": {
+      "x": 1534.41,
+      "y": 335.521,
+      "z": -2110.276
+    },
+    "groupPosition": {
+      "x": 1538.519,
+      "y": 335.521,
+      "z": -2113.576
+    },
+    "battleGroups": {
+      "302001058": {
+        "x": 1532.53,
+        "y": 335.521,
+        "z": -2110.474
+      }
+    }
+  },
+  {
+    "campId": 1012,
+    "groupId": 302001021,
+    "sealConfigId": 21021,
+    "sealGadgetId": 70950015,
+    "emptySuite": 1,
+    "rewardConfigId": 21022,
+    "position": {
+      "x": 1256.224,
+      "y": 306.576,
+      "z": -1772.465
+    },
+    "groupPosition": {
+      "x": 1260.13,
+      "y": 306.248,
+      "z": -1777.832
+    },
+    "battleGroups": {
+      "302001065": {
+        "x": 1259.965,
+        "y": 306.379,
+        "z": -1775.785
+      }
+    }
+  },
+  {
+    "campId": 1013,
+    "groupId": 302001066,
+    "sealConfigId": 66001,
+    "sealGadgetId": 70950015,
+    "emptySuite": 1,
+    "rewardConfigId": 66002,
+    "position": {
+      "x": 1454.276,
+      "y": 270.184,
+      "z": -1653.26
+    },
+    "groupPosition": {
+      "x": 1458.269,
+      "y": 269.661,
+      "z": -1658.628
+    },
+    "battleGroups": {
+      "302001022": {
+        "x": 1458.505,
+        "y": 269.758,
+        "z": -1657.757
+      }
+    }
+  },
+  {
+    "campId": 1014,
+    "groupId": 302001067,
+    "sealConfigId": 67001,
+    "sealGadgetId": 70950015,
+    "emptySuite": 1,
+    "rewardConfigId": 67002,
+    "position": {
+      "x": 1409.097,
+      "y": 283.916,
+      "z": -1398.586
+    },
+    "groupPosition": {
+      "x": 1413.221,
+      "y": 284.782,
+      "z": -1404.053
+    },
+    "battleGroups": {
+      "302001023": {
+        "x": 1413.215,
+        "y": 284.788,
+        "z": -1404.004
+      }
+    }
+  },
+  {
+    "campId": 1021,
+    "groupId": 302001068,
+    "sealConfigId": 68001,
+    "sealGadgetId": 70950020,
+    "emptySuite": 1,
+    "rewardConfigId": 68002,
+    "position": {
+      "x": 1829.033,
+      "y": 194.78,
+      "z": -1381.672
+    },
+    "groupPosition": {
+      "x": 1834.088,
+      "y": 194.855,
+      "z": -1387.963
+    },
+    "battleGroups": {
+      "302001029": {
+        "x": 1834.088,
+        "y": 194.855,
+        "z": -1387.963
+      }
+    }
+  },
+  {
+    "campId": 1022,
+    "groupId": 302001069,
+    "sealConfigId": 69001,
+    "sealGadgetId": 70950020,
+    "emptySuite": 1,
+    "rewardConfigId": 69002,
+    "position": {
+      "x": 2218.956,
+      "y": 237.565,
+      "z": -1411.798
+    },
+    "groupPosition": {
+      "x": 2223.135,
+      "y": 238.308,
+      "z": -1417.21
+    },
+    "battleGroups": {
+      "302001030": {
+        "x": 2223.13,
+        "y": 238.246,
+        "z": -1416.221
+      }
+    }
+  },
+  {
+    "campId": 1023,
+    "groupId": 302001070,
+    "sealConfigId": 70001,
+    "sealGadgetId": 70950020,
+    "emptySuite": 1,
+    "rewardConfigId": 70002,
+    "position": {
+      "x": 2077.577,
+      "y": 209.766,
+      "z": -1298.861
+    },
+    "groupPosition": {
+      "x": 2081.721,
+      "y": 210.652,
+      "z": -1304.28
+    },
+    "battleGroups": {
+      "302001031": {
+        "x": 2081.029,
+        "y": 210.503,
+        "z": -1303.05
+      }
+    }
+  },
+  {
+    "campId": 1024,
+    "groupId": 302001071,
+    "sealConfigId": 71001,
+    "sealGadgetId": 70950020,
+    "emptySuite": 1,
+    "rewardConfigId": 71002,
+    "position": {
+      "x": 2073.438,
+      "y": 199.729,
+      "z": -1143.271
+    },
+    "groupPosition": {
+      "x": 2077.582,
+      "y": 200.069,
+      "z": -1148.69
+    },
+    "battleGroups": {
+      "302001032": {
+        "x": 2077.657,
+        "y": 200.092,
+        "z": -1147.502
+      }
+    }
+  },
+  {
+    "campId": 1031,
+    "groupId": 302001084,
+    "sealConfigId": 84001,
+    "sealGadgetId": 70950015,
+    "emptySuite": 1,
+    "rewardConfigId": 84002,
+    "position": {
+      "x": 2813.781,
+      "y": 264.617,
+      "z": -1707.316
+    },
+    "groupPosition": {
+      "x": 2818.705,
+      "y": 265.461,
+      "z": -1714.084
+    },
+    "battleGroups": {
+      "302001033": {
+        "x": 2817.681,
+        "y": 265.213,
+        "z": -1712.356
+      }
+    }
+  },
+  {
+    "campId": 1032,
+    "groupId": 302001089,
+    "sealConfigId": 89001,
+    "sealGadgetId": 70950015,
+    "emptySuite": 1,
+    "rewardConfigId": 89002,
+    "position": {
+      "x": 2612.404,
+      "y": 226.675,
+      "z": -1118.507
+    },
+    "groupPosition": {
+      "x": 2616.632,
+      "y": 227.129,
+      "z": -1123.381
+    },
+    "battleGroups": {
+      "302001034": {
+        "x": 2617.798,
+        "y": 227.686,
+        "z": -1124.344
+      }
+    }
+  },
+  {
+    "campId": 1033,
+    "groupId": 302001090,
+    "sealConfigId": 90001,
+    "sealGadgetId": 70950015,
+    "emptySuite": 1,
+    "rewardConfigId": 90002,
+    "position": {
+      "x": 2545.642,
+      "y": 218.399,
+      "z": -1437.041
+    },
+    "groupPosition": {
+      "x": 2550.426,
+      "y": 217.814,
+      "z": -1442.273
+    },
+    "battleGroups": {
+      "302001035": {
+        "x": 2549.733,
+        "y": 217.878,
+        "z": -1442.48
+      }
+    }
+  },
+  {
+    "campId": 1034,
+    "groupId": 302001095,
+    "sealConfigId": 95001,
+    "sealGadgetId": 70950015,
+    "emptySuite": 1,
+    "rewardConfigId": 95002,
+    "position": {
+      "x": 2198.239,
+      "y": 228.043,
+      "z": -1249.907
+    },
+    "groupPosition": {
+      "x": 2202.576,
+      "y": 228.647,
+      "z": -1254.542
+    },
+    "battleGroups": {
+      "302001037": {
+        "x": 2202.165,
+        "y": 228.725,
+        "z": -1255.194
+      }
+    }
+  },
+  {
+    "campId": 1041,
+    "groupId": 302001116,
+    "sealConfigId": 116001,
+    "sealGadgetId": 70950020,
+    "emptySuite": 1,
+    "rewardConfigId": 116002,
+    "position": {
+      "x": 1913.913,
+      "y": 248.71,
+      "z": -454.843
+    },
+    "groupPosition": {
+      "x": 1917.281,
+      "y": 249.932,
+      "z": -461.345
+    },
+    "battleGroups": {
+      "302001053": {
+        "x": 1917.849,
+        "y": 249.805,
+        "z": -460.313
+      }
+    }
+  },
+  {
+    "campId": 1042,
+    "groupId": 302001117,
+    "sealConfigId": 117001,
+    "sealGadgetId": 70950020,
+    "emptySuite": 1,
+    "rewardConfigId": 117002,
+    "position": {
+      "x": 1964.658,
+      "y": 221.859,
+      "z": -703.487
+    },
+    "groupPosition": {
+      "x": 1968.591,
+      "y": 221.668,
+      "z": -708.316
+    },
+    "battleGroups": {
+      "302001054": {
+        "x": 1968.802,
+        "y": 221.621,
+        "z": -708.905
+      }
+    }
+  },
+  {
+    "campId": 1043,
+    "groupId": 302001122,
+    "sealConfigId": 122001,
+    "sealGadgetId": 70950020,
+    "emptySuite": 1,
+    "rewardConfigId": 122002,
+    "position": {
+      "x": 1798.219,
+      "y": 243.047,
+      "z": -720.384
+    },
+    "groupPosition": {
+      "x": 1802.418,
+      "y": 242.488,
+      "z": -725.073
+    },
+    "battleGroups": {
+      "302001055": {
+        "x": 1802.179,
+        "y": 243.405,
+        "z": -724.995
+      }
+    }
+  },
+  {
+    "campId": 1044,
+    "groupId": 302001123,
+    "sealConfigId": 123001,
+    "sealGadgetId": 70950020,
+    "emptySuite": 1,
+    "rewardConfigId": 123002,
+    "position": {
+      "x": 1892.775,
+      "y": 250.5,
+      "z": -834.632
+    },
+    "groupPosition": {
+      "x": 1894.775,
+      "y": 250.745,
+      "z": -840.193
+    },
+    "battleGroups": {
+      "302001056": {
+        "x": 1896.074,
+        "y": 250.91,
+        "z": -839.934
+      }
+    }
+  },
+  {
+    "campId": 1051,
+    "groupId": 302001124,
+    "sealConfigId": 124001,
+    "sealGadgetId": 70950019,
+    "emptySuite": 1,
+    "rewardConfigId": 124002,
+    "position": {
+      "x": 2507.167,
+      "y": 247.945,
+      "z": -393.42
+    },
+    "groupPosition": {
+      "x": 2507.009,
+      "y": 247.676,
+      "z": -393.183
+    },
+    "battleGroups": {
+      "302001061": {
+        "x": 2507.009,
+        "y": 247.676,
+        "z": -393.183
+      }
+    }
+  },
+  {
+    "campId": 1052,
+    "groupId": 302001127,
+    "sealConfigId": 127001,
+    "sealGadgetId": 70950019,
+    "emptySuite": 1,
+    "rewardConfigId": 127002,
+    "position": {
+      "x": 2245.491,
+      "y": 279.576,
+      "z": -176.91
+    },
+    "groupPosition": {
+      "x": 2248.338,
+      "y": 278.69,
+      "z": -185.082
+    },
+    "battleGroups": {
+      "302001062": {
+        "x": 2249.713,
+        "y": 278.697,
+        "z": -183.233
+      }
+    }
+  },
+  {
+    "campId": 1053,
+    "groupId": 302001128,
+    "sealConfigId": 128001,
+    "sealGadgetId": 70950019,
+    "emptySuite": 1,
+    "rewardConfigId": 128002,
+    "position": {
+      "x": 2157.758,
+      "y": 276.465,
+      "z": -261.079
+    },
+    "groupPosition": {
+      "x": 2160.713,
+      "y": 276.568,
+      "z": -267.561
+    },
+    "battleGroups": {
+      "302001063": {
+        "x": 2161.825,
+        "y": 276.498,
+        "z": -266.818
+      }
+    }
+  },
+  {
+    "campId": 1054,
+    "groupId": 302001131,
+    "sealConfigId": 131001,
+    "sealGadgetId": 70950019,
+    "emptySuite": 1,
+    "rewardConfigId": 131002,
+    "position": {
+      "x": 1864.54,
+      "y": 202.714,
+      "z": -232.67
+    },
+    "groupPosition": {
+      "x": 1868.415,
+      "y": 203.101,
+      "z": -238.873
+    },
+    "battleGroups": {
+      "302001064": {
+        "x": 1868.684,
+        "y": 203.18,
+        "z": -238.089
+      }
+    }
+  },
+  {
+    "campId": 2011,
+    "groupId": 302001072,
+    "sealConfigId": 72001,
+    "sealGadgetId": 70950020,
+    "emptySuite": 1,
+    "rewardConfigId": 72002,
+    "position": {
+      "x": -259.912,
+      "y": 200.841,
+      "z": -873.201
+    },
+    "groupPosition": {
+      "x": -255.782,
+      "y": 201.93,
+      "z": -879.373
+    },
+    "battleGroups": {
+      "302001024": {
+        "x": -255.768,
+        "y": 200.909,
+        "z": -878.62
+      }
+    }
+  },
+  {
+    "campId": 2012,
+    "groupId": 302001073,
+    "sealConfigId": 73001,
+    "sealGadgetId": 70950020,
+    "emptySuite": 1,
+    "rewardConfigId": 73002,
+    "position": {
+      "x": -141.456,
+      "y": 200.798,
+      "z": -901.96
+    },
+    "groupPosition": {
+      "x": -139.573,
+      "y": 200.831,
+      "z": -906.834
+    },
+    "battleGroups": {
+      "302001025": {
+        "x": -137.359,
+        "y": 200.745,
+        "z": -906.076
+      }
+    }
+  },
+  {
+    "campId": 2013,
+    "groupId": 302001074,
+    "sealConfigId": 74001,
+    "sealGadgetId": 70950020,
+    "emptySuite": 1,
+    "rewardConfigId": 74002,
+    "position": {
+      "x": -94.248,
+      "y": 200.525,
+      "z": -735.258
+    },
+    "groupPosition": {
+      "x": -89.444,
+      "y": 201.223,
+      "z": -741.475
+    },
+    "battleGroups": {
+      "302001026": {
+        "x": -89.499,
+        "y": 199.514,
+        "z": -742.87
+      }
+    }
+  },
+  {
+    "campId": 2014,
+    "groupId": 302001075,
+    "sealConfigId": 75001,
+    "sealGadgetId": 70950020,
+    "emptySuite": 1,
+    "rewardConfigId": 75002,
+    "position": {
+      "x": -155.748,
+      "y": 201.83,
+      "z": -455.9
+    },
+    "groupPosition": {
+      "x": -150.795,
+      "y": 202.577,
+      "z": -461.947
+    },
+    "battleGroups": {
+      "302001028": {
+        "x": -139.862,
+        "y": 201.834,
+        "z": -455.382
+      }
+    }
+  },
+  {
+    "campId": 2071,
+    "groupId": 302001085,
+    "sealConfigId": 85001,
+    "sealGadgetId": 70950019,
+    "emptySuite": 1,
+    "rewardConfigId": 85002,
+    "position": {
+      "x": 1614.925,
+      "y": 225.725,
+      "z": 1274.538
+    },
+    "groupPosition": {
+      "x": 1618.345,
+      "y": 225.079,
+      "z": 1269.12
+    },
+    "battleGroups": {
+      "302001036": {
+        "x": 1618.457,
+        "y": 225.086,
+        "z": 1272.76
+      }
+    }
+  },
+  {
+    "campId": 2072,
+    "groupId": 302001086,
+    "sealConfigId": 86001,
+    "sealGadgetId": 70950019,
+    "emptySuite": 1,
+    "rewardConfigId": 86002,
+    "position": {
+      "x": 1431.366,
+      "y": 213.519,
+      "z": 1104.475
+    },
+    "groupPosition": {
+      "x": 1435.492,
+      "y": 213.665,
+      "z": 1099.063
+    },
+    "battleGroups": {
+      "302001038": {
+        "x": 1435.897,
+        "y": 213.759,
+        "z": 1100.967
+      }
+    }
+  },
+  {
+    "campId": 2073,
+    "groupId": 302001087,
+    "sealConfigId": 87001,
+    "sealGadgetId": 70950019,
+    "emptySuite": 1,
+    "rewardConfigId": 87002,
+    "position": {
+      "x": 1330.54,
+      "y": 200.283,
+      "z": 928.869
+    },
+    "groupPosition": {
+      "x": 1334.683,
+      "y": 200.0,
+      "z": 923.45
+    },
+    "battleGroups": {
+      "302001039": {
+        "x": 1335.215,
+        "y": 200.0,
+        "z": 926.194
+      }
+    }
+  },
+  {
+    "campId": 2074,
+    "groupId": 302001088,
+    "sealConfigId": 88001,
+    "sealGadgetId": 70950019,
+    "emptySuite": 1,
+    "rewardConfigId": 88002,
+    "position": {
+      "x": 1076.375,
+      "y": 200.646,
+      "z": 771.058
+    },
+    "groupPosition": {
+      "x": 1080.519,
+      "y": 200.966,
+      "z": 765.639
+    },
+    "battleGroups": {
+      "302001040": {
+        "x": 1079.237,
+        "y": 201.356,
+        "z": 757.014
+      }
+    }
+  },
+  {
+    "campId": 2021,
+    "groupId": 302001076,
+    "sealConfigId": 76001,
+    "sealGadgetId": 70950015,
+    "emptySuite": 1,
+    "rewardConfigId": 76002,
+    "position": {
+      "x": -108.028,
+      "y": 253.675,
+      "z": -103.079
+    },
+    "groupPosition": {
+      "x": -105.759,
+      "y": 253.463,
+      "z": -112.934
+    },
+    "battleGroups": {
+      "302001044": {
+        "x": -103.883,
+        "y": 253.73,
+        "z": -108.096
+      }
+    }
+  },
+  {
+    "campId": 2022,
+    "groupId": 302001077,
+    "sealConfigId": 77001,
+    "sealGadgetId": 70950015,
+    "emptySuite": 1,
+    "rewardConfigId": 77002,
+    "position": {
+      "x": 29.648,
+      "y": 267.42,
+      "z": 114.905
+    },
+    "groupPosition": {
+      "x": 33.082,
+      "y": 267.705,
+      "z": 110.678
+    },
+    "battleGroups": {
+      "302001045": {
+        "x": 33.792,
+        "y": 267.609,
+        "z": 109.486
+      }
+    }
+  },
+  {
+    "campId": 2023,
+    "groupId": 302001078,
+    "sealConfigId": 78001,
+    "sealGadgetId": 70950015,
+    "emptySuite": 1,
+    "rewardConfigId": 78002,
+    "position": {
+      "x": 240.725,
+      "y": 224.751,
+      "z": 251.26
+    },
+    "groupPosition": {
+      "x": 241.721,
+      "y": 224.875,
+      "z": 246.458
+    },
+    "battleGroups": {
+      "302001046": {
+        "x": 244.869,
+        "y": 224.807,
+        "z": 245.841
+      }
+    }
+  },
+  {
+    "campId": 2024,
+    "groupId": 302001079,
+    "sealConfigId": 79001,
+    "sealGadgetId": 70950015,
+    "emptySuite": 1,
+    "rewardConfigId": 79002,
+    "position": {
+      "x": 137.413,
+      "y": 237.368,
+      "z": 277.058
+    },
+    "groupPosition": {
+      "x": 143.829,
+      "y": 237.511,
+      "z": 272.424
+    },
+    "battleGroups": {
+      "302001050": {
+        "x": 141.557,
+        "y": 237.686,
+        "z": 271.639
+      }
+    }
+  },
+  {
+    "campId": 2081,
+    "groupId": 302001093,
+    "sealConfigId": 93001,
+    "sealGadgetId": 70950015,
+    "emptySuite": 1,
+    "rewardConfigId": 93002,
+    "position": {
+      "x": 1261.19,
+      "y": 200.6,
+      "z": -148.369
+    },
+    "groupPosition": {
+      "x": 1265.334,
+      "y": 200.319,
+      "z": -153.788
+    },
+    "battleGroups": {
+      "302001047": {
+        "x": 1264.318,
+        "y": 200.181,
+        "z": -151.707
+      }
+    }
+  },
+  {
+    "campId": 2082,
+    "groupId": 302001094,
+    "sealConfigId": 94001,
+    "sealGadgetId": 70950015,
+    "emptySuite": 1,
+    "rewardConfigId": 94002,
+    "position": {
+      "x": 1127.609,
+      "y": 201.146,
+      "z": -19.432
+    },
+    "groupPosition": {
+      "x": 1125.948,
+      "y": 203.194,
+      "z": -22.018
+    },
+    "battleGroups": {
+      "302001048": {
+        "x": 1123.905,
+        "y": 201.143,
+        "z": -17.895
+      }
+    }
+  },
+  {
+    "campId": 2083,
+    "groupId": 302001096,
+    "sealConfigId": 96001,
+    "sealGadgetId": 70950015,
+    "emptySuite": 1,
+    "rewardConfigId": 96002,
+    "position": {
+      "x": 845.0,
+      "y": 201.153,
+      "z": -9.0
+    },
+    "groupPosition": {
+      "x": 845.0,
+      "y": 201.0,
+      "z": -9.0
+    },
+    "battleGroups": {
+      "302001049": {
+        "x": 844.801,
+        "y": 200.77,
+        "z": -6.126
+      }
+    }
+  },
+  {
+    "campId": 2084,
+    "groupId": 302001097,
+    "sealConfigId": 97001,
+    "sealGadgetId": 70950015,
+    "emptySuite": 1,
+    "rewardConfigId": 97002,
+    "position": {
+      "x": 1160.0,
+      "y": 204.32,
+      "z": -158.0
+    },
+    "groupPosition": {
+      "x": 1160.0,
+      "y": 204.0,
+      "z": -158.0
+    },
+    "battleGroups": {
+      "302001051": {
+        "x": 1160.76,
+        "y": 204.286,
+        "z": -159.888
+      }
+    }
+  },
+  {
+    "campId": 2031,
+    "groupId": 302001080,
+    "sealConfigId": 80001,
+    "sealGadgetId": 70950020,
+    "emptySuite": 1,
+    "rewardConfigId": 80002,
+    "position": {
+      "x": 396.872,
+      "y": 200.593,
+      "z": -364.855
+    },
+    "groupPosition": {
+      "x": 400.477,
+      "y": 200.728,
+      "z": -372.478
+    },
+    "battleGroups": {
+      "302001052": {
+        "x": 401.017,
+        "y": 200.713,
+        "z": -370.274
+      }
+    }
+  },
+  {
+    "campId": 2032,
+    "groupId": 302001081,
+    "sealConfigId": 81001,
+    "sealGadgetId": 70950020,
+    "emptySuite": 1,
+    "rewardConfigId": 81002,
+    "position": {
+      "x": 425.514,
+      "y": 201.283,
+      "z": -289.803
+    },
+    "groupPosition": {
+      "x": 430.47,
+      "y": 201.174,
+      "z": -292.535
+    },
+    "battleGroups": {
+      "302001057": {
+        "x": 429.658,
+        "y": 201.339,
+        "z": -295.222
+      }
+    }
+  },
+  {
+    "campId": 2033,
+    "groupId": 302001082,
+    "sealConfigId": 82001,
+    "sealGadgetId": 70950020,
+    "emptySuite": 1,
+    "rewardConfigId": 82002,
+    "position": {
+      "x": 310.512,
+      "y": 200.776,
+      "z": 35.462
+    },
+    "groupPosition": {
+      "x": 314.293,
+      "y": 200.87,
+      "z": 31.18
+    },
+    "battleGroups": {
+      "302001059": {
+        "x": 314.656,
+        "y": 200.832,
+        "z": 30.043
+      }
+    }
+  },
+  {
+    "campId": 2034,
+    "groupId": 302001083,
+    "sealConfigId": 83001,
+    "sealGadgetId": 70950020,
+    "emptySuite": 1,
+    "rewardConfigId": 83002,
+    "position": {
+      "x": 522.227,
+      "y": 200.177,
+      "z": 141.627
+    },
+    "groupPosition": {
+      "x": 517.8,
+      "y": 200.878,
+      "z": 147.112
+    },
+    "battleGroups": {
+      "302001060": {
+        "x": 526.371,
+        "y": 200.232,
+        "z": 136.208
+      }
+    }
+  },
+  {
+    "campId": 2091,
+    "groupId": 302001104,
+    "sealConfigId": 104001,
+    "sealGadgetId": 70950019,
+    "emptySuite": 1,
+    "rewardConfigId": 104002,
+    "position": {
+      "x": 1742.755,
+      "y": 257.43,
+      "z": 185.88
+    },
+    "groupPosition": {
+      "x": 1742.754,
+      "y": 258.692,
+      "z": 185.881
+    },
+    "battleGroups": {
+      "302001098": {
+        "x": 1742.833,
+        "y": 258.641,
+        "z": 185.945
+      }
+    }
+  },
+  {
+    "campId": 2092,
+    "groupId": 302001105,
+    "sealConfigId": 105001,
+    "sealGadgetId": 70950019,
+    "emptySuite": 1,
+    "rewardConfigId": 105002,
+    "position": {
+      "x": 1296.957,
+      "y": 200.469,
+      "z": 519.967
+    },
+    "groupPosition": {
+      "x": 1299.0,
+      "y": 200.0,
+      "z": 519.0
+    },
+    "battleGroups": {
+      "302001099": {
+        "x": 1299.0,
+        "y": 200.0,
+        "z": 519.0
+      }
+    }
+  },
+  {
+    "campId": 2093,
+    "groupId": 302001106,
+    "sealConfigId": 106001,
+    "sealGadgetId": 70950019,
+    "emptySuite": 1,
+    "rewardConfigId": 106002,
+    "position": {
+      "x": 1341.793,
+      "y": 200.253,
+      "z": 718.4
+    },
+    "groupPosition": {
+      "x": 1345.937,
+      "y": 200.308,
+      "z": 712.981
+    },
+    "battleGroups": {
+      "302001101": {
+        "x": 1341.2,
+        "y": 200.244,
+        "z": 718.374
+      }
+    }
+  },
+  {
+    "campId": 2094,
+    "groupId": 302001107,
+    "sealConfigId": 107001,
+    "sealGadgetId": 70950019,
+    "emptySuite": 1,
+    "rewardConfigId": 107002,
+    "position": {
+      "x": 1681.896,
+      "y": 239.17,
+      "z": 791.226
+    },
+    "groupPosition": {
+      "x": 1685.971,
+      "y": 238.457,
+      "z": 785.627
+    },
+    "battleGroups": {
+      "302001102": {
+        "x": 1684.291,
+        "y": 238.891,
+        "z": 790.889
+      }
+    }
+  },
+  {
+    "campId": 2101,
+    "groupId": 302001112,
+    "sealConfigId": 112001,
+    "sealGadgetId": 70950020,
+    "emptySuite": 1,
+    "rewardConfigId": 112002,
+    "position": {
+      "x": 1359.299,
+      "y": 200.505,
+      "z": 186.06
+    },
+    "groupPosition": {
+      "x": 1360.996,
+      "y": 200.2,
+      "z": 184.228
+    },
+    "battleGroups": {
+      "302001108": {
+        "x": 1358.579,
+        "y": 200.188,
+        "z": 185.234
+      }
+    }
+  },
+  {
+    "campId": 2102,
+    "groupId": 302001113,
+    "sealConfigId": 113001,
+    "sealGadgetId": 70950020,
+    "emptySuite": 1,
+    "rewardConfigId": 113002,
+    "position": {
+      "x": 1210.232,
+      "y": 200.61,
+      "z": 388.986
+    },
+    "groupPosition": {
+      "x": 1214.376,
+      "y": 200.342,
+      "z": 383.567
+    },
+    "battleGroups": {
+      "302001109": {
+        "x": 1209.873,
+        "y": 200.478,
+        "z": 386.704
+      }
+    }
+  },
+  {
+    "campId": 2103,
+    "groupId": 302001114,
+    "sealConfigId": 114001,
+    "sealGadgetId": 70950020,
+    "emptySuite": 1,
+    "rewardConfigId": 114002,
+    "position": {
+      "x": 940.635,
+      "y": 201.049,
+      "z": 189.576
+    },
+    "groupPosition": {
+      "x": 944.787,
+      "y": 200.812,
+      "z": 184.158
+    },
+    "battleGroups": {
+      "302001110": {
+        "x": 941.956,
+        "y": 200.909,
+        "z": 189.449
+      }
+    }
+  },
+  {
+    "campId": 2104,
+    "groupId": 302001115,
+    "sealConfigId": 115001,
+    "sealGadgetId": 70950020,
+    "emptySuite": 1,
+    "rewardConfigId": 115002,
+    "position": {
+      "x": 1060.003,
+      "y": 200.772,
+      "z": 207.186
+    },
+    "groupPosition": {
+      "x": 1060.817,
+      "y": 200.748,
+      "z": 203.704
+    },
+    "battleGroups": {
+      "302001111": {
+        "x": 1060.472,
+        "y": 200.754,
+        "z": 203.031
+      }
+    }
+  },
+  {
+    "campId": 2041,
+    "groupId": 302001091,
+    "sealConfigId": 91001,
+    "sealGadgetId": 70950019,
+    "emptySuite": 5,
+    "rewardConfigId": 91002,
+    "position": {
+      "x": 781.819,
+      "y": 201.321,
+      "z": 545.989
+    },
+    "groupPosition": {
+      "x": 785.928,
+      "y": 201.231,
+      "z": 542.233
+    },
+    "battleGroups": {
+      "302001092": {
+        "x": 779.939,
+        "y": 201.231,
+        "z": 545.335
+      }
+    }
+  },
+  {
+    "campId": 2042,
+    "groupId": 302001100,
+    "sealConfigId": 100001,
+    "sealGadgetId": 70950019,
+    "emptySuite": 5,
+    "rewardConfigId": 100002,
+    "position": {
+      "x": 529.208,
+      "y": 200.238,
+      "z": 506.282
+    },
+    "groupPosition": {
+      "x": 533.317,
+      "y": 200.238,
+      "z": 502.982
+    },
+    "battleGroups": {
+      "302001103": {
+        "x": 527.328,
+        "y": 200.238,
+        "z": 506.084
+      }
+    }
+  },
+  {
+    "campId": 2043,
+    "groupId": 302001118,
+    "sealConfigId": 118001,
+    "sealGadgetId": 70950019,
+    "emptySuite": 5,
+    "rewardConfigId": 118002,
+    "position": {
+      "x": 536.312,
+      "y": 200.457,
+      "z": 587.651
+    },
+    "groupPosition": {
+      "x": 540.657,
+      "y": 200.516,
+      "z": 583.806
+    },
+    "battleGroups": {
+      "302001119": {
+        "x": 534.668,
+        "y": 200.516,
+        "z": 586.908
+      }
+    }
+  },
+  {
+    "campId": 2044,
+    "groupId": 302001120,
+    "sealConfigId": 120001,
+    "sealGadgetId": 70950019,
+    "emptySuite": 5,
+    "rewardConfigId": 120002,
+    "position": {
+      "x": 304.132,
+      "y": 203.447,
+      "z": 483.954
+    },
+    "groupPosition": {
+      "x": 308.241,
+      "y": 203.426,
+      "z": 481.119
+    },
+    "battleGroups": {
+      "302001121": {
+        "x": 302.252,
+        "y": 203.426,
+        "z": 484.221
+      }
+    }
+  },
+  {
+    "campId": 2051,
+    "groupId": 302001125,
+    "sealConfigId": 125001,
+    "sealGadgetId": 70950019,
+    "emptySuite": 5,
+    "rewardConfigId": 125002,
+    "position": {
+      "x": -740.11,
+      "y": 222.636,
+      "z": 350.799
+    },
+    "groupPosition": {
+      "x": -740.311,
+      "y": 222.27,
+      "z": 353.253
+    },
+    "battleGroups": {
+      "302001126": {
+        "x": -740.311,
+        "y": 222.27,
+        "z": 353.253
+      }
+    }
+  },
+  {
+    "campId": 2052,
+    "groupId": 302001129,
+    "sealConfigId": 129001,
+    "sealGadgetId": 70950019,
+    "emptySuite": 5,
+    "rewardConfigId": 129002,
+    "position": {
+      "x": -842.382,
+      "y": 195.358,
+      "z": 750.626
+    },
+    "groupPosition": {
+      "x": -838.273,
+      "y": 196.232,
+      "z": 747.326
+    },
+    "battleGroups": {
+      "302001130": {
+        "x": -844.262,
+        "y": 196.232,
+        "z": 750.428
+      }
+    }
+  },
+  {
+    "campId": 2053,
+    "groupId": 302001132,
+    "sealConfigId": 132001,
+    "sealGadgetId": 70950019,
+    "emptySuite": 5,
+    "rewardConfigId": 132002,
+    "position": {
+      "x": -936.55,
+      "y": 197.493,
+      "z": 774.374
+    },
+    "groupPosition": {
+      "x": -932.44,
+      "y": 197.464,
+      "z": 771.355
+    },
+    "battleGroups": {
+      "302001133": {
+        "x": -938.429,
+        "y": 197.464,
+        "z": 774.457
+      }
+    }
+  },
+  {
+    "campId": 2054,
+    "groupId": 302001134,
+    "sealConfigId": 134001,
+    "sealGadgetId": 70950019,
+    "emptySuite": 5,
+    "rewardConfigId": 134002,
+    "position": {
+      "x": -850.46,
+      "y": 243.847,
+      "z": 570.162
+    },
+    "groupPosition": {
+      "x": -846.351,
+      "y": 243.696,
+      "z": 566.862
+    },
+    "battleGroups": {
+      "302001135": {
+        "x": -852.34,
+        "y": 243.696,
+        "z": 569.964
+      }
+    }
+  },
+  {
+    "campId": 2061,
+    "groupId": 302001136,
+    "sealConfigId": 136001,
+    "sealGadgetId": 70950015,
+    "emptySuite": 5,
+    "rewardConfigId": 136002,
+    "position": {
+      "x": 370.572,
+      "y": 277.29,
+      "z": 1600.334
+    },
+    "groupPosition": {
+      "x": 374.681,
+      "y": 277.058,
+      "z": 1597.034
+    },
+    "battleGroups": {
+      "302001137": {
+        "x": 368.692,
+        "y": 277.058,
+        "z": 1600.136
+      }
+    }
+  },
+  {
+    "campId": 2062,
+    "groupId": 302001138,
+    "sealConfigId": 138001,
+    "sealGadgetId": 70950015,
+    "emptySuite": 5,
+    "rewardConfigId": 138002,
+    "position": {
+      "x": 437.363,
+      "y": 231.825,
+      "z": 1708.73
+    },
+    "groupPosition": {
+      "x": 442.679,
+      "y": 231.708,
+      "z": 1703.771
+    },
+    "battleGroups": {
+      "302001139": {
+        "x": 436.69,
+        "y": 231.708,
+        "z": 1706.873
+      }
+    }
+  },
+  {
+    "campId": 2063,
+    "groupId": 302001140,
+    "sealConfigId": 140001,
+    "sealGadgetId": 70950015,
+    "emptySuite": 5,
+    "rewardConfigId": 140002,
+    "position": {
+      "x": 666.872,
+      "y": 231.332,
+      "z": 1714.337
+    },
+    "groupPosition": {
+      "x": 672.356,
+      "y": 231.007,
+      "z": 1711.037
+    },
+    "battleGroups": {
+      "302001141": {
+        "x": 666.367,
+        "y": 231.007,
+        "z": 1714.138
+      }
+    }
+  },
+  {
+    "campId": 2064,
+    "groupId": 302001142,
+    "sealConfigId": 142001,
+    "sealGadgetId": 70950015,
+    "emptySuite": 5,
+    "rewardConfigId": 142002,
+    "position": {
+      "x": 709.318,
+      "y": 245.27,
+      "z": 1614.852
+    },
+    "groupPosition": {
+      "x": 714.123,
+      "y": 245.255,
+      "z": 1612.367
+    },
+    "battleGroups": {
+      "302001143": {
+        "x": 708.134,
+        "y": 245.255,
+        "z": 1615.468
+      }
+    }
+  }
+]

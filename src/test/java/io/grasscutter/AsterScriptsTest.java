@@ -6,10 +6,12 @@ import emu.grasscutter.Grasscutter;
 import emu.grasscutter.game.activity.aster.*;
 import emu.grasscutter.scripts.ScriptLoader;
 import emu.grasscutter.scripts.data.*;
+
+import org.junit.jupiter.api.*;
+
 import java.security.MessageDigest;
 import java.util.*;
 import java.util.HexFormat;
-import org.junit.jupiter.api.*;
 
 class AsterScriptsTest {
     @BeforeAll
@@ -59,15 +61,18 @@ class AsterScriptsTest {
                     new com.google.gson.JsonParser()
                             .parse(new java.io.InputStreamReader(stream))
                             .getAsJsonArray();
-            assertEquals(6, entries.size());
+            assertEquals(128, entries.size());
             for (var entry : entries) {
                 var row = entry.getAsJsonObject();
-                try (var script = getClass().getResourceAsStream(root + row.get("path").getAsString())) {
+                try (var script =
+                        getClass().getResourceAsStream(root + row.get("path").getAsString())) {
                     assertNotNull(script);
                     assertEquals(
                             row.get("sha256").getAsString(),
                             HexFormat.of()
-                                    .formatHex(MessageDigest.getInstance("SHA-256").digest(script.readAllBytes())));
+                                    .formatHex(
+                                            MessageDigest.getInstance("SHA-256")
+                                                    .digest(script.readAllBytes())));
                 }
             }
         }

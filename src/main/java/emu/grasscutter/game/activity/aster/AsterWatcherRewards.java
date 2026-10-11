@@ -5,6 +5,7 @@ import emu.grasscutter.game.activity.*;
 import emu.grasscutter.game.activity.salesman.SalesmanRewardDelivery;
 import emu.grasscutter.game.props.ActionReason;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
+
 import java.util.function.*;
 
 /** Acknowledged reservation prevents a partially granted reward from being replayed. */
@@ -25,19 +26,23 @@ public final class AsterWatcherRewards {
                 || !config.isActiveAt(now)
                 || config.getActivityId() != AsterSchedule.ACTIVITY_ID
                 || data.getActivityId() != AsterSchedule.ACTIVITY_ID
-                || config.getScheduleId() != data.getScheduleId()) return Retcode.RET_ACTIVITY_CLOSE_VALUE;
+                || config.getScheduleId() != data.getScheduleId())
+            return Retcode.RET_ACTIVITY_CLOSE_VALUE;
         if (rank < 20) return Retcode.RET_PLAYER_LEVEL_LESS_THAN_VALUE;
-        // Phase two rewards are enabled only when that gameplay has its own validated result path.
-        if (id < 1200101 || id > 1200106) return Retcode.RET_ACTIVITY_ITEM_ERROR_VALUE;
+        if (!(id >= 1200101 && id <= 1200106
+                || id >= 1200110 && id <= 1200115 && AsterMidCamps.resourcesAvailable()))
+            return Retcode.RET_ACTIVITY_ITEM_ERROR_VALUE;
         synchronized (data) {
             var watcher = data.getWatcherInfoMap().get(id);
             var meta = GameData.getActivityWatcherDataMap().get(id);
             if (watcher == null || meta == null || meta.isDisuse())
                 return Retcode.RET_ACTIVITY_ITEM_ERROR_VALUE;
             if (watcher.isTakenReward()) return Retcode.RET_ACTIVITY_WATCHER_REWARD_TAKEN_VALUE;
-            if (!watcher.isFinished()) return Retcode.RET_ACTIVITY_WATCHER_REWARD_NOT_FINISHED_VALUE;
+            if (!watcher.isFinished())
+                return Retcode.RET_ACTIVITY_WATCHER_REWARD_NOT_FINISHED_VALUE;
             var progress = AsterSchedule.progress(data);
-            if (progress.pendingWatcherReward() != 0) return Retcode.RET_SVR_ERROR_VALUE;
+            if (progress.pendingWatcherReward() != 0 || progress.pendingMidClaim() != 0)
+                return Retcode.RET_SVR_ERROR_VALUE;
             int code = validate.applyAsInt(meta.getRewardID());
             if (code != 0) return code;
             String original = data.getDetail();
@@ -55,7 +60,8 @@ public final class AsterWatcherRewards {
             } catch (RuntimeException failure) {
                 emu.grasscutter.Grasscutter.getLogger()
                         .error(
-                                "Aster reward needs reconciliation: UID {}, schedule {}, watcher {}",
+                                "Aster reward needs reconciliation: UID {}, schedule {}, watcher"
+                                    + " {}",
                                 data.getUid(),
                                 data.getScheduleId(),
                                 id,
@@ -72,7 +78,8 @@ public final class AsterWatcherRewards {
                 data.setDetailJson(reservation);
                 emu.grasscutter.Grasscutter.getLogger()
                         .error(
-                                "Aster granted reward acknowledgement failed: UID {}, schedule {}, watcher {}",
+                                "Aster granted reward acknowledgement failed: UID {}, schedule {},"
+                                    + " watcher {}",
                                 data.getUid(),
                                 data.getScheduleId(),
                                 id,
@@ -87,7 +94,9 @@ public final class AsterWatcherRewards {
         var player = data.getPlayer();
         var config = ActivityManager.getScheduleActivityConfigMap().get(data.getScheduleId());
         if (player == null
-                || player.getActivityManager().getPlayerActivityDataMap().get(AsterSchedule.ACTIVITY_ID)
+                || player.getActivityManager()
+                                .getPlayerActivityDataMap()
+                                .get(AsterSchedule.ACTIVITY_ID)
                         != data) return Retcode.RET_ACTIVITY_CLOSE_VALUE;
         synchronized (player.getInventory()) {
             return take(
@@ -97,7 +106,9 @@ public final class AsterWatcherRewards {
                     System.currentTimeMillis(),
                     id,
                     reward -> SalesmanRewardDelivery.validate(player, reward),
-                    reward -> SalesmanRewardDelivery.grant(player, reward, ActionReason.ActivityWatcher),
+                    reward ->
+                            SalesmanRewardDelivery.grant(
+                                    player, reward, ActionReason.ActivityWatcher),
                     data::saveSync);
         }
     }

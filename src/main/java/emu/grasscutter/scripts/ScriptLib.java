@@ -1154,7 +1154,7 @@ public class ScriptLib {
     }
 
     public int RefreshGroup(LuaTable table) {
-        logger.warn("[LUA] Call improperly implemented RefreshGroup with {}", printTable(table));
+        logger.debug("[LUA] Call RefreshGroup with {}", printTable(table));
 
         int groupId = table.get("group_id").toint();
         int suite = table.get("suite").toint();
@@ -1163,7 +1163,7 @@ public class ScriptLib {
             logger.warn("[LUA] trying to refresh unloaded group {}", groupId);
             return 1;
         }
-        getSceneScriptManager().refreshGroup(groupInstance, suite, false);
+        getSceneScriptManager().refreshGroup(groupInstance, suite, table.get("exclude_prev").optboolean(false));
         return 0;
     }
 
@@ -1584,6 +1584,14 @@ public class ScriptLib {
             logger.debug("Invalid seal battle {}: {}", gadgetId, invalid.getMessage());
             return -1;
         }
+    }
+
+    public int CreateAsterMidGeneralRewardGadget(LuaTable parameters) {
+        var manager = sceneScriptManager.getIfExists();
+        var group = currentGroup.getIfExists();
+        if (manager == null || group == null || parameters == null) return -1;
+        return manager.getScene().getAsterMidSceneController().createReward(group,
+                parameters.get("config_id").optint(0), parameters.get("difficulty_id").optint(0)) ? 0 : -1;
     }
 
     public int StopChallenge(int var1, int var2) {

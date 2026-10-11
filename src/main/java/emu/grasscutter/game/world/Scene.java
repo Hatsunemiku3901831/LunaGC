@@ -77,6 +77,7 @@ public class Scene {
     @Getter private final CrucibleSceneController crucibleSceneController;
     @Getter private final SalesmanSceneController salesmanSceneController;
     @Getter private final AsterSceneController asterSceneController;
+    @Getter private final emu.grasscutter.game.activity.aster.AsterMidSceneController asterMidSceneController;
     @Getter private final emu.grasscutter.game.world.seal.SealBattleManager sealBattleManager;
     @Getter @Setter private WorldChallenge challenge;
     @Getter private List<DungeonSettleListener> dungeonSettleListeners;
@@ -118,6 +119,7 @@ public class Scene {
         this.crucibleSceneController = new CrucibleSceneController(this);
         this.salesmanSceneController = new SalesmanSceneController(this);
         this.asterSceneController = new AsterSceneController(this);
+        this.asterMidSceneController = new emu.grasscutter.game.activity.aster.AsterMidSceneController(this);
         this.sealBattleManager = new emu.grasscutter.game.world.seal.SealBattleManager(this);
         this.scriptManager = new SceneScriptManager(this);
         this.blossomManager = new BlossomManager(this);
@@ -281,6 +283,7 @@ public class Scene {
                     this.crucibleSceneController.close();
                     this.salesmanSceneController.close();
                     this.asterSceneController.close();
+                    this.asterMidSceneController.close();
                     this.getScriptManager().onDestroy();
                     this.getWorld().deregisterScene(this);
                 }
@@ -663,6 +666,7 @@ public class Scene {
                     if (this.getScriptManager().isInit()) {
                         this.crucibleSceneController.update(nowMs);
                         this.asterSceneController.update(nowMs);
+                        this.asterMidSceneController.update(nowMs);
                         this.checkGroups();
                     }
                     else if (this.getScriptManager().isInitAttempted()) this.checkSpawns();
@@ -1022,6 +1026,7 @@ public class Scene {
                         .map(this::getPlayerActiveGroups)
                         .flatMap(Collection::stream)
                         .filter(id -> !crucibleSceneController.owns(id))
+                        .filter(id -> !asterMidSceneController.owns(id))
                         .collect(Collectors.toSet());
 
         for (var group : this.loadedGroups) {

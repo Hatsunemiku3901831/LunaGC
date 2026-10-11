@@ -15,6 +15,9 @@ import emu.grasscutter.data.excels.activity.ActivityShopData;
 import emu.grasscutter.data.excels.activity.ActivitySkillData;
 import emu.grasscutter.data.excels.activity.ActivityWatcherData;
 import emu.grasscutter.data.excels.activity.AsterLittleData;
+import emu.grasscutter.data.excels.activity.AsterMidData;
+import emu.grasscutter.data.excels.activity.AsterMidGroupsData;
+import emu.grasscutter.data.excels.activity.AsterMidDifficultyData;
 import emu.grasscutter.data.excels.activity.AsterMissionData;
 import emu.grasscutter.data.excels.activity.AsterPreviewData;
 import emu.grasscutter.data.excels.activity.AsterStageData;
@@ -198,6 +201,15 @@ public final class GameData {
     @Getter
     private static final Int2ObjectMap<AsterLittleData> asterLittleDataMap =
             new Int2ObjectOpenHashMap<>();
+
+    @Getter
+    private static final Int2ObjectMap<AsterMidData> asterMidDataMap = new Int2ObjectOpenHashMap<>();
+
+    @Getter
+    private static final Int2ObjectMap<AsterMidGroupsData> asterMidGroupsDataMap = new Int2ObjectOpenHashMap<>();
+
+    @Getter
+    private static final Int2ObjectMap<AsterMidDifficultyData> asterMidDifficultyDataMap = new Int2ObjectOpenHashMap<>();
 
     @Getter
     private static final Int2ObjectMap<AsterMissionData> asterMissionDataMap =

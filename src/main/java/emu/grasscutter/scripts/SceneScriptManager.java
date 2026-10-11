@@ -885,8 +885,13 @@ public class SceneScriptManager {
         long activityTicket = scene.getCrucibleSceneController().getLifecycle().ticket();
         long activityRound = scene.getCrucibleSceneController().currentRoundSerial();
         long invitationSerial = scene.getCrucibleSceneController().invitationSerial();
+        var origin = scene.getAsterMidSceneController().owns(params.group_id) ? sceneGroups.get(params.group_id) : null;
+        java.util.function.BooleanSupplier guarded = () -> current.getAsBoolean()
+                && (!scene.getAsterMidSceneController().owns(params.group_id)
+                    || origin != null && sceneGroups.get(params.group_id) == origin
+                        && scene.getAsterMidSceneController().allows(origin));
         return eventExecutor.submit(() -> {
-            if (current.getAsBoolean()) this.realCallEvent(params, activityTicket, activityRound, invitationSerial, current);
+            if (guarded.getAsBoolean()) this.realCallEvent(params, activityTicket, activityRound, invitationSerial, guarded);
         });
     }
 
@@ -1087,6 +1092,7 @@ public class SceneScriptManager {
     public EntityGadget createGadget(int groupId, int blockId, SceneGadget g, int state) {
         if (g == null || !allowsActivityEntity(groupId, g.group)) return null;
         if (!scene.getAsterSceneController().allowsGadget(groupId, g)) return null;
+        if (!scene.getAsterMidSceneController().allowsGadget(groupId, g)) return null;
         if (g.isOneoff) {
             var hasEntity =
                     getScene().getEntities().values().stream()
@@ -1108,7 +1114,7 @@ public class SceneScriptManager {
         entity.setConfigId(g.config_id);
         entity.setGroupId(groupId);
         entity.getRotation().set(g.rot);
-        entity.setState(state);
+        entity.setState(scene.getAsterMidSceneController().initialState(groupId, g, state));
 
         entity.setPointType(g.point_type);
         entity.setRouteConfig(BaseRoute.fromSceneGadget(g));
@@ -1138,7 +1144,8 @@ public class SceneScriptManager {
         var data = GameData.getMonsterDataMap().get(monster.monster_id);
         if (data == null) return null;
 
-        var level = getScene().getLevelForMonster(monster.config_id, monster.level);
+        var level = scene.getAsterMidSceneController().monsterLevel(group.id,
+                getScene().getLevelForMonster(monster.config_id, monster.level));
         var entity =
                 new EntityMonster(
                         getScene(),
@@ -1171,7 +1178,8 @@ public class SceneScriptManager {
         }
 
         // Calculate level
-        int level = getScene().getLevelForMonster(monster.config_id, monster.level);
+        int level = scene.getAsterMidSceneController().monsterLevel(groupId,
+                getScene().getLevelForMonster(monster.config_id, monster.level));
 
         // Spawn mob
         EntityMonster entity = new EntityMonster(getScene(), data, monster.pos, monster.rot, level);
@@ -1348,7 +1356,8 @@ public class SceneScriptManager {
     private boolean allowsActivityEntity(int groupId, SceneGroup group) {
         var activity = scene.getCrucibleSceneController();
         return (!activity.owns(groupId) || (activity.allows(groupId) && sceneGroups.get(groupId) == group))
-                && (!scene.getAsterSceneController().owns(groupId) || scene.getAsterSceneController().allows(group));
+                && (!scene.getAsterSceneController().owns(groupId) || scene.getAsterSceneController().allows(group))
+                && (!scene.getAsterMidSceneController().owns(groupId) || scene.getAsterMidSceneController().allows(group));
     }
 
     // todo use killed monsters instead of spawned entites for check?

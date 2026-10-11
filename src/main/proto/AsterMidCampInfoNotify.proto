@@ -1,0 +1,9 @@
+// Local 7.1 DOMPCDGFLDN / parser 0x150e24410 / opcode 9033.
+syntax = "proto3";
+package recovered.p_AsterMidCampInfoNotify;
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "AsterMidCampInfoNotifyOuterClass";
+import "AsterMidCampInfo.proto";
+message AsterMidCampInfoNotify {
+  repeated AsterMidCampInfo camp_list = 13;
+}

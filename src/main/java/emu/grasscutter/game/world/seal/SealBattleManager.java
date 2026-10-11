@@ -188,6 +188,7 @@ public final class SealBattleManager {
                         .setIsWin(won)
                         .build());
         scene.broadcastPacket(packet);
+        scene.getAsterMidSceneController().onBattleEnd(round.gadget, won);
         if (callback)
             round.callbacks.add(
                     scene.getScriptManager()
@@ -296,6 +297,15 @@ public final class SealBattleManager {
 
     private static boolean callbacksDone(Round round) {
         return round.callbacks.stream().allMatch(Future::isDone);
+    }
+
+    /** The previous round's Lua callbacks must finish before a new difficulty is accepted. */
+    public boolean isSettled(EntityGadget gadget) {
+        synchronized (scene) {
+            var previous = rounds.get(new Key(gadget.getGroupId(), gadget.getConfigId()));
+            return previous == null
+                    || previous.gadget == gadget && !previous.active && callbacksDone(previous);
+        }
     }
 
     private static ScriptArgs event(Round round, int type, int result) {

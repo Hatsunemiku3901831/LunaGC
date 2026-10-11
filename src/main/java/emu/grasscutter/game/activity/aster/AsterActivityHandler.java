@@ -1,13 +1,14 @@
 package emu.grasscutter.game.activity.aster;
 
 import com.esotericsoftware.reflectasm.ConstructorAccess;
+
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.game.activity.*;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.net.proto.ActivityInfoOuterClass.ActivityInfo;
 import emu.grasscutter.net.proto.AsterActivityDetailInfoOuterClass.AsterActivityDetailInfo;
 import emu.grasscutter.net.proto.AsterLargeDetailInfoOuterClass.AsterLargeDetailInfo;
-import emu.grasscutter.net.proto.AsterMidDetailInfoOuterClass.AsterMidDetailInfo;
+
 import java.util.*;
 
 @GameActivity(ActivityType.NEW_ACTIVITY_ASTER)
@@ -23,14 +24,16 @@ public final class AsterActivityHandler extends ActivityHandler {
             if (meta == null || meta.isDisuse())
                 throw new IllegalArgumentException("未归的熄星任务资源缺失: " + mission.getWatcherId());
             var watcher =
-                    new DefaultWatcher(); // Gather/reward progress only enters through validated server
+                    new DefaultWatcher(); // Gather/reward progress only enters through validated
+                                          // server
             // interactions.
             watcher.setWatcherId(meta.getId());
             watcher.setActivityWatcherData(meta);
             watcher.setActivityHandler(this);
             getWatchersMap()
                     .computeIfAbsent(
-                            meta.getTriggerConfig().getWatcherTriggerType(), key -> new ArrayList<>())
+                            meta.getTriggerConfig().getWatcherTriggerType(),
+                            key -> new ArrayList<>())
                     .add(watcher);
         }
     }
@@ -45,10 +48,13 @@ public final class AsterActivityHandler extends ActivityHandler {
         synchronized (data) {
             AsterSchedule.progress(data);
             boolean changed = false;
-            for (var watcher : getWatchersMap().values().stream().flatMap(Collection::stream).toList()) {
+            for (var watcher :
+                    getWatchersMap().values().stream().flatMap(Collection::stream).toList()) {
                 if (!data.getWatcherInfoMap().containsKey(watcher.getWatcherId())) {
                     data.getWatcherInfoMap()
-                            .put(watcher.getWatcherId(), PlayerActivityData.WatcherInfo.init(watcher));
+                            .put(
+                                    watcher.getWatcherId(),
+                                    PlayerActivityData.WatcherInfo.init(watcher));
                     changed = true;
                 }
             }
@@ -70,19 +76,21 @@ public final class AsterActivityHandler extends ActivityHandler {
         int rank = data != null && data.getPlayer() != null ? data.getPlayer().getLevel() : 0;
         var detail =
                 AsterActivityDetailInfo.newBuilder()
-                        .setAsterLittle(AsterSchedule.littleInfo(data, getActivityConfigItem(), rank, now))
+                        .setAsterLittle(
+                                AsterSchedule.littleInfo(data, getActivityConfigItem(), rank, now))
                         .setContentCloseTime(
-                                (int) (AsterSchedule.contentCloseTime(getActivityConfigItem()) / 1000))
-                        .setIsContentClosed(now >= AsterSchedule.contentCloseTime(getActivityConfigItem()));
-        // Mid/large are deliberately not advertised as open until their actual scene gameplay is
-        // restored.
-        detail
-                .setAsterMid(
-                        AsterMidDetailInfo.newBuilder()
-                                .setBeginTime((int) (AsterSchedule.beginTime(getActivityConfigItem(), 3) / 1000)))
+                                (int)
+                                        (AsterSchedule.contentCloseTime(getActivityConfigItem())
+                                                / 1000))
+                        .setIsContentClosed(
+                                now >= AsterSchedule.contentCloseTime(getActivityConfigItem()));
+        detail.setAsterMid(AsterMidSceneController.info(data, getActivityConfigItem(), rank, now))
                 .setAsterLarge(
                         AsterLargeDetailInfo.newBuilder()
-                                .setBeginTime((int) (AsterSchedule.beginTime(getActivityConfigItem(), 8) / 1000)));
+                                .setBeginTime(
+                                        (int)
+                                                (AsterSchedule.beginTime(getActivityConfigItem(), 8)
+                                                        / 1000)));
         info.setAsterInfo(detail);
         info.clearWatcherInfoList();
         if (data != null)
@@ -95,8 +103,16 @@ public final class AsterActivityHandler extends ActivityHandler {
                                                 .findFirst()
                                                 .orElse(null);
                                 return mission == null
-                                        || mission.getPhase() == 1
-                                                && AsterSchedule.phaseOpen(data, getActivityConfigItem(), rank, now, 1);
+                                        || AsterSchedule.phaseOpen(
+                                                        data,
+                                                        getActivityConfigItem(),
+                                                        rank,
+                                                        now,
+                                                        mission.getPhase())
+                                                && (mission.getPhase() == 1
+                                                        || mission.getPhase() == 2
+                                                                && AsterMidCamps
+                                                                        .resourcesAvailable());
                             })
                     .map(PlayerActivityData.WatcherInfo::toProto)
                     .forEach(info::addWatcherInfoList);
