@@ -13,12 +13,14 @@ import emu.grasscutter.data.binout.AbilityModifier.AbilityModifierAction;
 import emu.grasscutter.data.binout.config.ConfigEntityGadget;
 import emu.grasscutter.data.excels.GadgetData;
 import emu.grasscutter.data.excels.activity.*;
+import emu.grasscutter.data.excels.monster.MonsterData;
 import emu.grasscutter.data.excels.scene.SceneData;
 import emu.grasscutter.game.ability.Ability;
 import emu.grasscutter.game.ability.actions.ActionServerLuaCall;
 import emu.grasscutter.game.entity.*;
 import emu.grasscutter.game.world.*;
 import emu.grasscutter.game.world.sceneplay.ScenePlayBattleManager;
+import emu.grasscutter.net.proto.SceneEntityInfoOuterClass.SceneEntityInfo;
 import emu.grasscutter.net.proto.ServerUpdateGlobalValueNotifyOuterClass.ServerUpdateGlobalValueNotify;
 import emu.grasscutter.scripts.*;
 import emu.grasscutter.scripts.data.*;
@@ -182,6 +184,7 @@ class AsterBigScriptsTest {
     }
 
     private void prepare(int difficulty, int type) {
+        long now = scene.now.get();
         scene.scripts.variables.put("GM_Mode", difficulty);
         assertTrue(
                 battles.prepare(
@@ -190,7 +193,7 @@ class AsterBigScriptsTest {
                         2,
                         type,
                         type == DIRECT ? List.of(host) : List.of(host, guest)));
-        scene.now.set(1020);
+        scene.now.set(now + 20);
         battles.tick();
         assertEquals(READY, battles.getInfo(MAIN).getState());
         assertEquals(
@@ -204,7 +207,7 @@ class AsterBigScriptsTest {
 
     private void start() {
         prepare(1, MATCH);
-        scene.now.set(1030);
+        scene.now.addAndGet(10);
         battles.tick();
         assertEquals(START, battles.getInfo(MAIN).getState());
     }
@@ -421,6 +424,126 @@ class AsterBigScriptsTest {
         assertEquals(
                 definition.kill_score * 2f,
                 library.GetTeamAbilityFloatValue(guest.getUid(), ENERGY));
+    }
+
+    private ScoringMonster scoringMonster(int id, boolean scoring) {
+        var group = scene.scripts.loaded.get(id);
+        scene.scripts.registerTrigger(group.triggers.get("Monster_Die_Before_Leave_Scene"));
+        var definition =
+                group.monsters.values().stream()
+                        .filter(monster -> monster.kill_score > 0)
+                        .findFirst()
+                        .orElseThrow();
+        if (!scoring) {
+            // Exercise the original condition's zero-score branch with a controlled Lua row.
+            ((LuaTable) group.getBindings().get("monsters"))
+                    .get(definition.config_id)
+                    .set("kill_score", 0);
+            definition.kill_score = 0;
+        }
+        var monster = new ScoringMonster(scene);
+        monster.setGroupId(id);
+        monster.setConfigId(definition.config_id);
+        monster.setMetaMonster(definition);
+        scene.addEntity(monster);
+        return monster;
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {MAIN, 133001426, 133001427})
+    void actualMonsterDeathRunsOriginalScoringTriggersInAllThreeCombatGroups(int id) {
+        start();
+        battles.setUidValue(MAIN, host.getUid(), "ratio_ptr", 2);
+        var monster = scoringMonster(id, true);
+        scene.killEntity(monster);
+        float expected = monster.getMetaMonster().kill_score * 2f;
+        assertEquals(expected, library.GetTeamAbilityFloatValue(host.getUid(), ENERGY));
+        assertEquals(expected, library.GetTeamAbilityFloatValue(guest.getUid(), ENERGY));
+        assertNull(scene.getEntityById(monster.getId()));
+        scene.killEntity(monster);
+        assertEquals(expected, library.GetTeamAbilityFloatValue(host.getUid(), ENERGY));
+    }
+
+    @Test
+    void zeroScoreMonsterDoesNotAwardAsterEnergy() {
+        start();
+        scene.killEntity(scoringMonster(MAIN, false));
+        assertEquals(0f, library.GetTeamAbilityFloatValue(host.getUid(), ENERGY));
+        assertEquals(0f, library.GetTeamAbilityFloatValue(guest.getUid(), ENERGY));
+    }
+
+    @Test
+    void countdownKillDoesNotAwardAsterEnergy() {
+        prepare(1, MATCH);
+        scene.killEntity(scoringMonster(MAIN, true));
+        assertEquals(0f, library.GetTeamAbilityFloatValue(host.getUid(), ENERGY));
+        assertEquals(0f, library.GetTeamAbilityFloatValue(guest.getUid(), ENERGY));
+    }
+
+    @Test
+    void stoppedBattleDoesNotAwardAsterEnergyFromRemainingMonsters() {
+        start();
+        var monster = scoringMonster(MAIN, true);
+        scene.now.set(1630);
+        battles.tick();
+        scene.killEntity(monster);
+        assertEquals(0f, library.GetTeamAbilityFloatValue(host.getUid(), ENERGY));
+        assertEquals(0f, library.GetTeamAbilityFloatValue(guest.getUid(), ENERGY));
+    }
+
+    @Test
+    void oldGroupMonsterCannotAwardEnergyAfterGroupReplacement() {
+        start();
+        var monster = scoringMonster(MAIN, true);
+        scene.scripts.loaded.put(MAIN, SceneGroup.of(MAIN).load(3));
+        scene.killEntity(monster);
+        assertEquals(0f, library.GetTeamAbilityFloatValue(host.getUid(), ENERGY));
+    }
+
+    @Test
+    void survivingMonsterFromPreviousBattleCannotAwardEnergyToTheNewBattle() {
+        start();
+        var old = scoringMonster(MAIN, true);
+        scene.now.set(1630);
+        battles.tick();
+        prepare(1, MATCH);
+        scene.now.set(1660);
+        battles.tick();
+        assertEquals(START, battles.getInfo(MAIN).getState());
+        scene.killEntity(old);
+        assertEquals(0f, library.GetTeamAbilityFloatValue(host.getUid(), ENERGY));
+        var fresh = scoringMonster(MAIN, true);
+        scene.killEntity(fresh);
+        assertTrue(library.GetTeamAbilityFloatValue(host.getUid(), ENERGY) > 0);
+    }
+
+    private static final class ScoringMonster extends EntityMonster {
+        ScoringMonster(Scene scene) {
+            super(
+                    scene,
+                    new Gson()
+                            .fromJson(
+                                    "{\"id\":21010101,\"type\":\"MONSTER_ORDINARY\","
+                                            + "\"equips\":[],\"affix\":[]}",
+                                    MonsterData.class),
+                    new Position(),
+                    new Position(),
+                    1);
+        }
+
+        @Override
+        public void initAbilities() {}
+
+        @Override
+        public void recalcStats() {}
+
+        @Override
+        public void onDeath(int killer) {}
+
+        @Override
+        public SceneEntityInfo toProto() {
+            return SceneEntityInfo.getDefaultInstance();
+        }
     }
 
     private static JsonObject findSubmit(JsonElement node) {

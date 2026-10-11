@@ -442,9 +442,9 @@ public abstract class GameEntity {
                 .broadcastPacket(
                         new PacketEntityFightPropUpdateNotify(this, FightProperty.FIGHT_PROP_CUR_HP));
 
+        ChangeHpReason dmgHpReason = changeHpReason;
         if (effectiveDamage > 0) {
             GameEntity attacker = this.getScene().getEntityById(killerId);
-            ChangeHpReason dmgHpReason;
             if (changeHpReason != ChangeHpReason.ChangeHpReason_CHANGE_HP_NONE) {
                 dmgHpReason = changeHpReason;
             } else if (attacker instanceof EntityAvatar) {
@@ -465,7 +465,7 @@ public abstract class GameEntity {
         }
 
         if (this.isDead) {
-            this.getScene().killEntity(this, killerId);
+            this.getScene().killEntity(this, killerId, dmgHpReason);
         }
     }
 

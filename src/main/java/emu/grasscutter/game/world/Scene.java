@@ -33,6 +33,7 @@ import emu.grasscutter.net.packet.BasePacket;
 import emu.grasscutter.net.proto.*;
 import emu.grasscutter.net.proto.AttackResultOuterClass.AttackResult;
 import emu.grasscutter.net.proto.ChangeHpDebtsReasonOuterClass;
+import emu.grasscutter.net.proto.ChangeHpReasonOuterClass.ChangeHpReason;
 import emu.grasscutter.net.proto.PropChangeReasonOuterClass;
 import emu.grasscutter.net.proto.VisionTypeOuterClass.VisionType;
 import emu.grasscutter.scripts.SceneIndexManager;
@@ -550,14 +551,23 @@ public class Scene {
     }
 
     public void killEntity(GameEntity target, int attackerId) {
-        if (target == null || target.getScene() != this) return;
-        // Ability self-destruction and lethal hits can arrive together or repeat after removal.
-        if (!(target instanceof EntityAvatar) && entities.get(target.getId()) != target) return;
-        if (!target.tryBeginDeath()) return;
-        GameEntity attacker = null;
+        killEntity(target, attackerId, ChangeHpReason.ChangeHpReason_CHANGE_HP_NONE);
+    }
 
-        if (attackerId > 0) {
-            attacker = getEntityById(attackerId);
+    public void killEntity(GameEntity target, int attackerId, ChangeHpReason reason) {
+        GameEntity attacker = null;
+        synchronized (this) {
+            if (target == null || target.getScene() != this) return;
+            // Ability self-destruction and lethal hits can arrive together or repeat after removal.
+            if (!(target instanceof EntityAvatar) && entities.get(target.getId()) != target) return;
+            if (!target.tryBeginDeath()) return;
+            if (attackerId > 0) attacker = getEntityById(attackerId);
+            if (target instanceof EntityMonster monster) {
+                var owner = attacker == null ? null : attacker.getTrueOwner();
+                int uid = owner instanceof EntityAvatar avatar ? avatar.getPlayer().getUid() : 0;
+                getScriptManager().onMonsterDieBeforeLeaveScene(monster, uid,
+                        reason == null || reason == ChangeHpReason.UNRECOGNIZED ? 0 : reason.getNumber());
+            }
         }
 
         if (attacker != null) {

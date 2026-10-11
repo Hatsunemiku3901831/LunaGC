@@ -937,6 +937,37 @@ public class SceneScriptManager {
         }
     }
     // Events
+    /** Run event 55 on the death thread while the exact monster is still in this scene. */
+    public void onMonsterDieBeforeLeaveScene(EntityMonster monster, int attackerUid, int reason) {
+        synchronized (scene) {
+            if (monster == null || monster.getScene() != scene || monster.getGroupId() <= 0) return;
+            var group = getLoadedGroupById(monster.getGroupId());
+            if (group == null || !allowsGroupCall(group)
+                    || monster.getMetaMonster() != null && monster.getMetaMonster().group != group) return;
+            var battles = scene.getScenePlayBattleManager();
+            var battleCurrent = battles.captureMonsterDeathScope(group.id);
+            java.util.function.BooleanSupplier current = () -> allowsGroupCall(group)
+                    && scene.getEntities().get(monster.getId()) == monster
+                    && monster.isMonsterDeathScopeCurrent()
+                    && battleCurrent.getAsBoolean();
+            if (!current.getAsBoolean()) return;
+            var event = new ScriptArgs(group.id, EventType.EVENT_MONSTER_DIE_BEFORE_LEAVE_SCENE,
+                    monster.getConfigId(), attackerUid).setSourceEntityId(monster.getId())
+                    .setParam3(reason).setUid(attackerUid);
+            var data = monster.getMonsterData();
+            event.param4 = data == null || data.getType() == null ? 0 : data.getType().getValue();
+            var activity = scene.getCrucibleSceneController();
+            long ticket = activity.getLifecycle().ticket(), round = activity.currentRoundSerial();
+            long invitation = activity.invitationSerial();
+            battles.withGroupLuaCall(null, group, () -> ScriptLoader.getScriptLib()
+                    .withGroupContext(this, group, () -> {
+                        if (current.getAsBoolean())
+                            realCallEvent(event, ticket, round, invitation, current);
+                        return 0;
+                    }));
+        }
+    }
+
     public Future<?> callEvent(int groupId, int eventType) {
         return callEvent(new ScriptArgs(groupId, eventType));
     }
@@ -1015,6 +1046,8 @@ public class SceneScriptManager {
                         default -> this.getTriggersByEvent(eventType).stream()
                                 .filter(
                                         t -> params.getGroupId() == 0 || t.getCurrentGroup().id == params.getGroupId())
+                                .filter(t -> eventType != EventType.EVENT_MONSTER_DIE_BEFORE_LEAVE_SCENE
+                                        || getLoadedGroupById(t.currentGroup.id) == t.currentGroup)
                                 .filter(
                                         t -> (t.getSource().isEmpty() || t.getSource().equals(params.getEventSource())))
                                 .collect(Collectors.toSet());
@@ -1027,6 +1060,7 @@ public class SceneScriptManager {
                     activity.runIfCurrent(activityTicket, activityRound, () -> {
                         if (!activity.allowsInvitationEvent(invitationSerial, eventType)) return;
                         if ((eventType == EventType.EVENT_ANY_MONSTER_DIE
+                                || eventType == EventType.EVENT_MONSTER_DIE_BEFORE_LEAVE_SCENE
                                 || eventType == EventType.EVENT_GADGET_LUA_NOTIFY
                                 || eventType == EventType.EVENT_GADGET_PLAY_START
                                 || eventType == EventType.EVENT_GADGET_PLAY_START_CD)
@@ -1034,9 +1068,9 @@ public class SceneScriptManager {
                         if ((eventType == EventType.EVENT_ENTER_REGION || eventType == EventType.EVENT_LEAVE_REGION)
                                 && params.source_eid != 0 && !regions.containsKey(params.source_eid)) return;
                         if (sceneGroups.get(trigger.currentGroup.id) == trigger.currentGroup)
-                            handleEventForTrigger(params, trigger);
+                            handleEventForTrigger(params, trigger, current);
                     });
-                } else handleEventForTrigger(params, trigger);
+                } else handleEventForTrigger(params, trigger, current);
             }
         } catch (Throwable throwable) {
             Grasscutter.getLogger()
@@ -1047,7 +1081,8 @@ public class SceneScriptManager {
         }
     }
 
-    private boolean handleEventForTrigger(ScriptArgs params, SceneTrigger trigger) {
+    private boolean handleEventForTrigger(ScriptArgs params, SceneTrigger trigger,
+            java.util.function.BooleanSupplier current) {
         Grasscutter.getLogger()
                 .trace("checking trigger {} for event {}", trigger.getName(), params.type);
         try {
@@ -1055,7 +1090,7 @@ public class SceneScriptManager {
             ScriptLoader.getScriptLib().setCurrentGroup(trigger.currentGroup);
             ScriptLoader.getScriptLib().setCurrentCallParams(params);
 
-            if (evaluateTriggerCondition(trigger, params)) {
+            if (evaluateTriggerCondition(trigger, params) && current.getAsBoolean()) {
                 callTrigger(trigger, params);
                 return true;
             } else {

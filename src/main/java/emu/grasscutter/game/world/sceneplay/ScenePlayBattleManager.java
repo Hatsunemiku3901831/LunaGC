@@ -321,6 +321,22 @@ public final class ScenePlayBattleManager {
         }
     }
 
+    /** A dying monster cannot score during countdown, after stop, or in a replacement round. */
+    public BooleanSupplier captureMonsterDeathScope(int groupId) {
+        synchronized (scene) {
+            var round = byGroup.get(groupId);
+            if (round != null && round.valid && groupsCurrent(round)) advance(round);
+            return () -> {
+                synchronized (scene) {
+                    return !closed
+                            && byGroup.get(groupId) == round
+                            && (round == null
+                                    || round.valid && groupsCurrent(round) && round.state == START);
+                }
+            };
+        }
+    }
+
     private List<Round> abilityRounds(Player player) {
         return rounds.values().stream()
                 .filter(

@@ -60,6 +60,18 @@ public class EntityMonster extends GameEntity {
 
     @Getter private List<Player> playerOnBattle;
     @Nullable @Getter @Setter private SceneMonster metaMonster;
+    private volatile java.util.function.BooleanSupplier scenePlayDeathScope = () -> false;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        scenePlayDeathScope = getScene().getScenePlayBattleManager()
+                .captureMonsterDeathScope(getGroupId());
+    }
+
+    public boolean isMonsterDeathScopeCurrent() {
+        return scenePlayDeathScope.getAsBoolean();
+    }
 
     public EntityMonster(
             Scene scene, MonsterData monsterData, Position pos, Position rot, int level) {
