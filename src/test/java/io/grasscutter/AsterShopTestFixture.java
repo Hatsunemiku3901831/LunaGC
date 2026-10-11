@@ -31,6 +31,7 @@ final class AsterShopTestFixture implements AutoCloseable {
     @Entity(value = "players", useDiscriminator = false)
     static final class ShopPlayer extends Player {
         @Transient ActivityManager activity;
+        @Transient final List<BasePacket> packets = new ArrayList<>();
 
         @Override
         public ActivityManager getActivityManager() {
@@ -38,7 +39,9 @@ final class AsterShopTestFixture implements AutoCloseable {
         }
 
         @Override
-        public void sendPacket(BasePacket packet) {}
+        public void sendPacket(BasePacket packet) {
+            packets.add(packet);
+        }
 
         @Override
         public void save() {}

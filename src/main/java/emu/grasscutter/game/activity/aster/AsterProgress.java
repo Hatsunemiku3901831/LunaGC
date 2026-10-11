@@ -8,6 +8,7 @@ import java.util.*;
 public final class AsterProgress {
     private Set<Long> collected = new HashSet<>();
     private int pendingWatcherReward;
+    private boolean specialRewardTaken, pendingSpecialReward;
     private int midRefreshId, midCollectCount, midCredit, pendingMidClaim;
     private Set<Integer> midFinishedCamps = new HashSet<>();
     private Map<Integer, Integer> midOffers = new HashMap<>();
@@ -176,9 +177,31 @@ public final class AsterProgress {
 
     public boolean hasPendingReward() {
         return pendingWatcherReward != 0
+                || pendingSpecialReward
                 || pendingMidClaim != 0
                 || pendingShopPurchase != null
                 || !pendingBigClaim.isEmpty();
+    }
+
+    public boolean specialRewardTaken() {
+        return specialRewardTaken;
+    }
+
+    public boolean pendingSpecialReward() {
+        return pendingSpecialReward;
+    }
+
+    public void beginSpecialReward() {
+        if (specialRewardTaken || hasPendingReward())
+            throw new IllegalStateException("Aster special reward cannot be reserved");
+        pendingSpecialReward = true;
+    }
+
+    public void finishSpecialReward() {
+        if (!pendingSpecialReward || specialRewardTaken)
+            throw new IllegalStateException("No Aster special reward reservation");
+        specialRewardTaken = true;
+        pendingSpecialReward = false;
     }
 
     public void beginShopPurchase(ShopPurchase purchase, int previouslyBought) {
@@ -365,7 +388,14 @@ public final class AsterProgress {
     }
 
     public boolean isValid() {
-        return bigCredit >= 0
+        return (!pendingSpecialReward
+                        || !specialRewardTaken
+                                && pendingWatcherReward == 0
+                                && pendingMidClaim == 0
+                                && pendingShopPurchase == null
+                                && pendingBigClaim != null
+                                && pendingBigClaim.isEmpty())
+                && bigCredit >= 0
                 && spentBigCredit >= 0
                 && spentBigCredit <= bigCredit
                 && bigCollectCount >= 0

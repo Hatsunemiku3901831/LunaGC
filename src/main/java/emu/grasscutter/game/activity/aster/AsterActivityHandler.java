@@ -103,6 +103,8 @@ public final class AsterActivityHandler extends ActivityHandler {
             long now) {
         var detail =
                 AsterActivityDetailInfo.newBuilder()
+                        .setIsSpecialRewardTaken(
+                                data != null && AsterSchedule.progress(data).specialRewardTaken())
                         .setAsterLittle(
                                 AsterSchedule.littleInfo(data, getActivityConfigItem(), rank, now))
                         .setContentCloseTime(

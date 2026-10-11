@@ -71,6 +71,12 @@
     }
   },
   "commands": {
+    "aster": {
+      "description": "查看或领取未归的熄星菲谢尔奖励，要求完成原始三个条件",
+      "ready": "菲谢尔活动奖励条件已满足，可以使用 aster take 领取。",
+      "taken": "菲谢尔活动奖励已领取并保存。",
+      "rejected": "菲谢尔活动奖励未领取：%s（状态码 %s）。"
+    },
     "generic": {
       "not_specified": "未指定命令。",
       "unknown_command": "未知命令：%s",

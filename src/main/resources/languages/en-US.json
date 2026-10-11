@@ -71,6 +71,12 @@
     }
   },
   "commands": {
+    "aster": {
+      "description": "Check or claim the Unreconciled Stars Fischl reward after all original conditions",
+      "ready": "Fischl's activity reward is ready. Use aster take to claim it.",
+      "taken": "Fischl's activity reward has been delivered and saved.",
+      "rejected": "Fischl's activity reward was not claimed: %s (code %s)."
+    },
     "generic": {
       "not_specified": "No command specified.",
       "unknown_command": "Unknown command: %s",
