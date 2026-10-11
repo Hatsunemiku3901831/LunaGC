@@ -1,0 +1,10 @@
+// Local 7.1 GGHNPIGNHLI / parser 0x14ec35800 / opcode getter 0x14ec35630 (2019).
+syntax = "proto3";
+package recovered.p_GadgetGeneralRewardInfoNotify;
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "GadgetGeneralRewardInfoNotifyOuterClass";
+import "GadgetGeneralRewardInfo.proto";
+message GadgetGeneralRewardInfoNotify {
+  uint32 entity_id = 10;
+  GadgetGeneralRewardInfo general_reward_info = 13;
+}

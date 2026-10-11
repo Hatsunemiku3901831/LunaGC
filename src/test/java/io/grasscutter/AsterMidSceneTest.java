@@ -19,7 +19,9 @@ import emu.grasscutter.game.props.*;
 import emu.grasscutter.game.systems.InventorySystem;
 import emu.grasscutter.game.world.*;
 import emu.grasscutter.net.packet.PacketOpcodes;
+import emu.grasscutter.net.proto.GadgetGeneralRewardInfoNotifyOuterClass.GadgetGeneralRewardInfoNotify;
 import emu.grasscutter.net.proto.GadgetInteractReqOuterClass.GadgetInteractReq;
+import emu.grasscutter.net.proto.GadgetInteractRspOuterClass.GadgetInteractRsp;
 import emu.grasscutter.net.proto.InterOpTypeOuterClass.InterOpType;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.net.proto.SealBattleBeginNotifyOuterClass.SealBattleBeginNotify;
@@ -97,7 +99,7 @@ class AsterMidSceneTest {
                 new InventorySystem(server) {
                     @Override
                     public void upgradeAvatarFetterLevel(Player p, Avatar a, int amount) {
-                        player.companionshipExp += amount;
+                        ((RecoveryPlayer) p).companionshipExp += amount;
                     }
                 };
         field(GameServer.class, "inventorySystem").set(server, player.inventorySystem);
@@ -115,8 +117,10 @@ class AsterMidSceneTest {
         player.setWorld(scene.getWorld());
         player.setSceneLoadState(Player.SceneLoadState.LOADED);
         player.getActivityManager().getPlayerActivityDataMap().put(2001, resources.data);
+        resources.data.setPlayer(player);
         player.getTeamManager().setEntity(new EntityTeam(player));
         scene.getPlayers().add(player);
+        scene.getWorld().getPlayers().add(player);
         var depot =
                 JsonUtils.decode(
                         "{\"id\":7301,\"skills\":[],\"talents\":[],\"inherentProudSkillOpens\":[]}",
@@ -301,6 +305,210 @@ class AsterMidSceneTest {
         assertEquals(100, player.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
     }
 
+    @Test
+    void realSharedRewardRequiresEachPlayersPreviewAndGrantsIndependentProgress() throws Exception {
+        var guest = addGuest(10002);
+        guest.getPosition().setX(player.getPosition().getX() + 10_000);
+        assertEquals(0, select(1));
+        scripts.awaitAll();
+        win();
+        var reward = reward();
+        var initial = reward.toProto().getGadget().getGeneralReward();
+        assertEquals(List.of(10001, 10002), initial.getQualifyUidListList());
+        assertEquals(initial.getQualifyUidListList(), initial.getRemainUidListList());
+        assertEquals(0, initial.getDeadTime());
+        player.getPosition().set(reward.getPosition());
+        guest.getPosition().set(reward.getPosition());
+        assertEquals(0, interact(player, reward, InterOpType.InterOpType_INTER_OP_START));
+        assertEquals(
+                Retcode.RET_FORBIDDEN_VALUE,
+                interact(guest, reward, InterOpType.InterOpType_INTER_OP_FINISH));
+        assertEquals(100, guest.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertEquals(0, interact(guest, reward, InterOpType.InterOpType_INTER_OP_START));
+        assertEquals(0, interact(guest, reward, InterOpType.InterOpType_INTER_OP_FINISH));
+        assertSame(reward, reward());
+        assertNotNull(scene.getEntityByConfigId(camp.sealConfigId(), core.id));
+        assertEquals(80, guest.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertEquals(100, guest.adventureExp);
+        assertEquals(
+                20, guest.companionshipExp, "Inventory applies the existing MP EXP multiplier");
+        assertEquals(0, player.adventureExp);
+        var guestData = guest.getActivityManager().getPlayerActivityDataMap().get(2001);
+        assertEquals(1, AsterSchedule.progress(guestData).midCollectCount());
+        assertEquals(2, AsterSchedule.progress(guestData).midRefreshId());
+        assertEquals(0, AsterSchedule.progress(resources.data).midCollectCount());
+        var update =
+                GadgetGeneralRewardInfoNotify.parseFrom(
+                        scene.packets.stream()
+                                .filter(
+                                        p ->
+                                                p.getOpcode()
+                                                        == PacketOpcodes
+                                                                .GadgetGeneralRewardInfoNotify)
+                                .reduce((a, b) -> b)
+                                .orElseThrow()
+                                .getData());
+        assertEquals(reward.getId(), update.getEntityId());
+        assertEquals(List.of(10001), update.getGeneralRewardInfo().getRemainUidListList());
+        assertEquals(List.of(10001, 10002), update.getGeneralRewardInfo().getQualifyUidListList());
+        assertTrue(update.getGeneralRewardInfo().getDeadTime() > System.currentTimeMillis() / 1000);
+        var guestInfo =
+                AsterMidSceneController.infoForWorld(
+                        guestData, resources.config, 20, System.currentTimeMillis());
+        assertEquals(1, guestInfo.getCollectCount());
+        assertEquals(
+                AsterMidSceneController.info(
+                                resources.data, resources.config, 20, System.currentTimeMillis())
+                        .getCampListList(),
+                guestInfo.getCampListList());
+        assertNotEquals(0, interact(guest, reward, InterOpType.InterOpType_INTER_OP_FINISH));
+        assertEquals(0, interact(player, reward, InterOpType.InterOpType_INTER_OP_FINISH));
+        scripts.awaitAll();
+        assertNull(reward());
+        assertNull(scene.getEntityByConfigId(camp.sealConfigId(), core.id));
+        assertEquals(1, AsterSchedule.progress(resources.data).midCollectCount());
+        assertEquals(80, player.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+    }
+
+    @Test
+    void rewardReloadKeepsClaimedPlayersAndOriginalDeadlineThenExpiresTheCamp() throws Exception {
+        var guest = addGuest(10002);
+        assertEquals(0, select(1));
+        scripts.awaitAll();
+        win();
+        var reward = reward();
+        player.getPosition().set(reward.getPosition());
+        assertEquals(0, interact(player, reward, InterOpType.InterOpType_INTER_OP_START));
+        assertEquals(0, interact(player, reward, InterOpType.InterOpType_INTER_OP_FINISH));
+        var state = AsterSchedule.progress(resources.data).midReward(camp.campId());
+        long deadline = state.deadTime() * 1000;
+        scene.removeEntity(reward);
+        var load =
+                AsterMidSceneController.class.getDeclaredMethod("load", AsterMidCamps.Camp.class);
+        load.setAccessible(true);
+        load.invoke(scene.getAsterMidSceneController(), camp);
+        scripts.awaitAll();
+        var restored = reward();
+        assertNotNull(restored);
+        assertNotSame(reward, restored);
+        var info = restored.toProto().getGadget().getGeneralReward();
+        assertEquals(List.of(10002), info.getRemainUidListList());
+        assertEquals(state.deadTime(), Integer.toUnsignedLong(info.getDeadTime()));
+        assertNotEquals(0, interact(player, restored, InterOpType.InterOpType_INTER_OP_START));
+        scene.getAsterMidSceneController().expireRewards(deadline - 1);
+        assertSame(restored, reward());
+        scene.getAsterMidSceneController().expireRewards(deadline);
+        scripts.awaitAll();
+        assertNull(reward());
+        assertNull(scene.getEntityByConfigId(camp.sealConfigId(), core.id));
+        assertTrue(
+                AsterSchedule.progress(resources.data).midFinishedCamps().contains(camp.campId()));
+        assertEquals(100, guest.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertEquals(0, guest.adventureExp);
+        assertEquals(
+                0,
+                AsterSchedule.progress(
+                                guest.getActivityManager().getPlayerActivityDataMap().get(2001))
+                        .midCollectCount());
+    }
+
+    @Test
+    void lateJoinersCannotClaimAndDisconnectDoesNotExpandOrForgetQualification() throws Exception {
+        var guest = addGuest(10002);
+        assertEquals(0, select(1));
+        scripts.awaitAll();
+        win();
+        var reward = reward();
+        var late = addGuest(10003);
+        late.getPosition().set(reward.getPosition());
+        assertNotEquals(0, interact(late, reward, InterOpType.InterOpType_INTER_OP_START));
+        assertNotEquals(0, interact(late, reward, InterOpType.InterOpType_INTER_OP_FINISH));
+        scene.getPlayers().remove(guest);
+        scene.getWorld().getPlayers().remove(guest);
+        guest.getPosition().set(reward.getPosition());
+        assertNotEquals(0, interact(guest, reward, InterOpType.InterOpType_INTER_OP_START));
+        assertEquals(
+                List.of(10001, 10002),
+                reward.toProto().getGadget().getGeneralReward().getQualifyUidListList());
+        scene.getPlayers().add(guest);
+        scene.getWorld().getPlayers().add(guest);
+        assertEquals(0, interact(guest, reward, InterOpType.InterOpType_INTER_OP_START));
+        assertEquals(0, interact(guest, reward, InterOpType.InterOpType_INTER_OP_FINISH));
+        assertEquals(80, guest.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertEquals(100, late.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+    }
+
+    private RecoveryPlayer addGuest(int uid) throws Exception {
+        var guest = new RecoveryPlayer();
+        guest.setUid(uid);
+        guest.server = player.server;
+        guest.inventorySystem = player.inventorySystem;
+        guest.setScene(scene);
+        guest.setWorld(scene.getWorld());
+        guest.setSceneLoadState(Player.SceneLoadState.LOADED);
+        var watchers = new HashMap<Integer, PlayerActivityData.WatcherInfo>();
+        resources
+                .data
+                .getWatcherInfoMap()
+                .forEach(
+                        (id, w) ->
+                                watchers.put(
+                                        id,
+                                        PlayerActivityData.WatcherInfo.of()
+                                                .watcherId(id)
+                                                .totalProgress(w.getTotalProgress())
+                                                .build()));
+        var data =
+                PlayerActivityData.of()
+                        .uid(uid)
+                        .activityId(2001)
+                        .scheduleId(resources.config.getScheduleId())
+                        .detail("{}")
+                        .watcherInfoMap(watchers)
+                        .build();
+        data.setPlayer(guest);
+        var progress = AsterSchedule.progress(data);
+        progress.startMidBatch(2);
+        data.setDetail(progress);
+        guest.getActivityManager().getPlayerActivityDataMap().put(2001, data);
+        guest.getTeamManager().setEntity(new EntityTeam(guest));
+        var depot =
+                JsonUtils.decode(
+                        "{\"id\":7301,\"skills\":[],\"talents\":[],\"inherentProudSkillOpens\":[]}",
+                        AvatarSkillDepotData.class);
+        depot.onLoad();
+        var avatar =
+                new EntityAvatar(
+                        scene, new SkillTalentLevelTest.RecordingAvatar(guest, 10000073, depot)) {
+                    @Override
+                    public void initAbilities() {}
+                };
+        guest.getTeamManager().getActiveTeam().add(avatar);
+        scene.getEntities().put(avatar.getId(), avatar);
+        guest.setProperty(PlayerProperty.PROP_PLAYER_RESIN, 100);
+        scene.getPlayers().add(guest);
+        scene.getWorld().getPlayers().add(guest);
+        field(World.class, "isMultiplayer").set(scene.getWorld(), true);
+        return guest;
+    }
+
+    private int interact(RecoveryPlayer claimant, EntityGadget reward, InterOpType op)
+            throws Exception {
+        reward.onInteract(
+                claimant,
+                GadgetInteractReq.newBuilder()
+                        .setGadgetEntityId(reward.getId())
+                        .setOpType(op)
+                        .build());
+        return GadgetInteractRsp.parseFrom(
+                        claimant.packets.stream()
+                                .filter(p -> p.getOpcode() == PacketOpcodes.GadgetInteractRsp)
+                                .reduce((a, b) -> b)
+                                .orElseThrow()
+                                .getData())
+                .getRetcode();
+    }
+
     private int select(int difficulty) {
         return scene.getAsterMidSceneController()
                 .select(player, resources.config.getScheduleId(), seal.getId(), difficulty);
@@ -392,11 +600,6 @@ class AsterMidSceneTest {
                     @Override
                     public void triggerMission(String name, int param, int progress) {}
                 };
-
-        @Override
-        public int getUid() {
-            return 10001;
-        }
 
         @Override
         public int getLevel() {

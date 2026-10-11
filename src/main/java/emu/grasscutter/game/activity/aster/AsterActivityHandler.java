@@ -8,6 +8,7 @@ import emu.grasscutter.game.props.*;
 import emu.grasscutter.net.proto.ActivityInfoOuterClass.ActivityInfo;
 import emu.grasscutter.net.proto.AsterActivityDetailInfoOuterClass.AsterActivityDetailInfo;
 import emu.grasscutter.net.proto.AsterLargeDetailInfoOuterClass.AsterLargeDetailInfo;
+import emu.grasscutter.net.proto.AsterMidDetailInfoOuterClass.AsterMidDetailInfo;
 
 import java.util.*;
 
@@ -25,7 +26,7 @@ public final class AsterActivityHandler extends ActivityHandler {
                 throw new IllegalArgumentException("未归的熄星任务资源缺失: " + mission.getWatcherId());
             var watcher =
                     new DefaultWatcher(); // Gather/reward progress only enters through validated
-                                          // server
+            // server
             // interactions.
             watcher.setWatcherId(meta.getId());
             watcher.setActivityWatcherData(meta);
@@ -64,16 +65,23 @@ public final class AsterActivityHandler extends ActivityHandler {
 
     @Override
     public void onProtoBuild(PlayerActivityData data, ActivityInfo.Builder info) {
-        if (data == null) buildInfo(null, info);
+        long now = System.currentTimeMillis();
+        int rank = data != null && data.getPlayer() != null ? data.getPlayer().getLevel() : 0;
+        // Read the two documents separately before locking the claimant for the remaining fields.
+        var mid = AsterMidSceneController.infoForWorld(data, getActivityConfigItem(), rank, now);
+        if (data == null) buildInfo(null, info, mid, rank, now);
         else
             synchronized (data) {
-                buildInfo(data, info);
+                buildInfo(data, info, mid, rank, now);
             }
     }
 
-    private void buildInfo(PlayerActivityData data, ActivityInfo.Builder info) {
-        long now = System.currentTimeMillis();
-        int rank = data != null && data.getPlayer() != null ? data.getPlayer().getLevel() : 0;
+    private void buildInfo(
+            PlayerActivityData data,
+            ActivityInfo.Builder info,
+            AsterMidDetailInfo mid,
+            int rank,
+            long now) {
         var detail =
                 AsterActivityDetailInfo.newBuilder()
                         .setAsterLittle(
@@ -84,7 +92,7 @@ public final class AsterActivityHandler extends ActivityHandler {
                                                 / 1000))
                         .setIsContentClosed(
                                 now >= AsterSchedule.contentCloseTime(getActivityConfigItem()));
-        detail.setAsterMid(AsterMidSceneController.info(data, getActivityConfigItem(), rank, now))
+        detail.setAsterMid(mid)
                 .setAsterLarge(
                         AsterLargeDetailInfo.newBuilder()
                                 .setBeginTime(

@@ -12,6 +12,7 @@ import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.AsterMidCampInfoNotifyOuterClass.AsterMidCampInfoNotify;
 import emu.grasscutter.net.proto.AsterMidDetailInfoOuterClass.AsterMidDetailInfo;
 import emu.grasscutter.net.proto.AsterMidInfoNotifyOuterClass.AsterMidInfoNotify;
+import emu.grasscutter.net.proto.GadgetGeneralRewardInfoNotifyOuterClass.GadgetGeneralRewardInfoNotify;
 import emu.grasscutter.net.proto.GadgetGeneralRewardInfoOuterClass.GadgetGeneralRewardInfo;
 import emu.grasscutter.net.proto.GadgetInteractReqOuterClass.GadgetInteractReq;
 import emu.grasscutter.net.proto.InterOpTypeOuterClass.InterOpType;
@@ -25,13 +26,13 @@ import emu.grasscutter.server.packet.send.*;
 import java.util.*;
 import java.util.concurrent.*;
 
-/** Hosts the original recovery camps; successful offers and claims belong to the host's replay. */
+/** The host owns the camps; each qualified player owns their recovery rewards and progress. */
 public final class AsterMidSceneController {
     private final Scene scene;
     private int scheduleId;
     private final Map<Integer, SceneGroup> mounted = new ConcurrentHashMap<>();
     private final Map<Integer, AsterMidDetailInfo> notified = new HashMap<>();
-    private final Set<Integer> previewed = new HashSet<>();
+    private final Set<Long> previewed = new HashSet<>();
     private Round round;
 
     private static final class Round {
@@ -150,6 +151,22 @@ public final class AsterMidSceneController {
         return builder.build();
     }
 
+    public static AsterMidDetailInfo infoForWorld(
+            PlayerActivityData data, ActivityConfigItem config, int rank, long now) {
+        var personal = info(data, config, rank, now);
+        var player = data == null ? null : data.getPlayer();
+        var world = player == null ? null : player.getWorld();
+        var host = world == null ? null : world.getHost();
+        if (host == null || host == player || host.getActivityManager() == null) return personal;
+        var owner =
+                host.getActivityManager().getPlayerActivityDataMap().get(AsterSchedule.ACTIVITY_ID);
+        var hosted = info(owner, config, host.getLevel(), now);
+        return personal.toBuilder()
+                .clearCampList()
+                .addAllCampList(personal.getIsOpen() ? hosted.getCampListList() : List.of())
+                .build();
+    }
+
     private void ensureBatch(PlayerActivityData data) {
         synchronized (data) {
             var progress = AsterSchedule.progress(data);
@@ -248,7 +265,7 @@ public final class AsterMidSceneController {
         scene.getEntities().values().stream()
                 .filter(e -> e.getGroupId() == id)
                 .map(GameEntity::getId)
-                .forEach(previewed::remove);
+                .forEach(entity -> previewed.removeIf(key -> (int) key.longValue() == entity));
         if (round != null && (round.group == group || round.camp.battleGroups().containsKey(id)))
             round = null;
         try {
@@ -278,6 +295,7 @@ public final class AsterMidSceneController {
             if (!active || scheduleId != 0 && scheduleId != config.getScheduleId()) close();
             if (active) {
                 scheduleId = config.getScheduleId();
+                expireRewards(now);
                 ensureBatch(data);
                 AsterProgress progress;
                 synchronized (data) {
@@ -314,16 +332,100 @@ public final class AsterMidSceneController {
                 }
             }
             notified.keySet()
-                    .removeIf(uid -> scene.getPlayers().stream().noneMatch(p -> p.getUid() == uid));
+                    .removeIf(
+                            uid ->
+                                    scene.getWorld().getPlayers().stream()
+                                            .noneMatch(p -> p.getUid() == uid));
+            previewed.removeIf(
+                    key ->
+                            scene.getPlayers().stream()
+                                    .noneMatch(p -> p.getUid() == (int) (key >>> 32)));
             if (config != null)
-                for (var player : scene.getPlayers()) {
+                for (var player : scene.getWorld().getPlayers()) {
                     var playerData = data(player);
                     if (playerData == null) continue;
-                    var detail = info(playerData, config, player.getLevel(), now);
+                    var detail = worldInfo(player, config, now);
                     if (!detail.equals(notified.put(player.getUid(), detail)))
                         notify(player, detail);
                 }
         }
+    }
+
+    private AsterMidDetailInfo worldInfo(Player player, ActivityConfigItem config, long now) {
+        return infoForWorld(data(player), config, player.getLevel(), now);
+    }
+
+    private void restoreRewardStates(PlayerActivityData data) {
+        synchronized (data) {
+            var progress = AsterSchedule.progress(data);
+            boolean changed = false;
+            for (int camp : progress.midOffers().keySet())
+                changed |= progress.upgradeMidReward(camp, data.getUid());
+            if (!changed) return;
+            String before = data.getDetail();
+            data.setDetail(progress);
+            try {
+                data.saveSync();
+            } catch (RuntimeException failure) {
+                data.setDetailJson(before);
+                throw failure;
+            }
+        }
+    }
+
+    public void expireRewards(long now) {
+        synchronized (scene) {
+            var config = config();
+            var owner = data(scene.getHost());
+            if (scene.getId() != 3
+                    || config == null
+                    || scheduleId != config.getScheduleId()
+                    || !eligible(scene.getHost(), config, now)) return;
+            restoreRewardStates(owner);
+            Set<Integer> camps;
+            synchronized (owner) {
+                camps = AsterSchedule.progress(owner).midOffers().keySet();
+            }
+            for (int camp : camps) retireReward(camp, now);
+        }
+    }
+
+    /** Called for loaded and unloaded camps, so a reconnect cannot restart an expired timer. */
+    private boolean retireReward(int campId, long now) {
+        var owner = data(scene.getHost());
+        synchronized (owner) {
+            var progress = AsterSchedule.progress(owner);
+            if (!progress.finishMidReward(campId, now, scene.getWorld().isMultiplayer()))
+                return false;
+            String before = owner.getDetail();
+            owner.setDetail(progress);
+            try {
+                owner.saveSync();
+            } catch (RuntimeException failure) {
+                owner.setDetailJson(before);
+                throw failure;
+            }
+        }
+        var camp = AsterMidCamps.camps().get(campId);
+        var gadget = scene.getEntityByConfigId(camp.rewardConfigId(), camp.groupId());
+        if (gadget instanceof EntityGadget reward) {
+            previewed.removeIf(key -> (int) key.longValue() == reward.getId());
+            scene.killEntity(reward);
+            var group = mounted.get(camp.groupId());
+            if (group != null)
+                scene.getScriptManager()
+                        .callEvent(
+                                new ScriptArgs(
+                                        group.id,
+                                        EventType.EVENT_GENERAL_REWARD_DIE,
+                                        camp.rewardConfigId()),
+                                () ->
+                                        allows(group)
+                                                && scene.getScriptManager()
+                                                                .getLoadedGroupById(group.id)
+                                                        == group);
+        }
+        return true;
     }
 
     private void cleanupFailed(Round failed) {
@@ -446,7 +548,10 @@ public final class AsterMidSceneController {
             synchronized (selected.data) {
                 var progress = AsterSchedule.progress(selected.data);
                 String before = selected.data.getDetail();
-                if (!progress.offerMidReward(selected.camp.campId(), difficulty)) return false;
+                var qualified = new HashSet<Integer>();
+                for (var player : scene.getWorld().getPlayers()) qualified.add(player.getUid());
+                if (!progress.offerMidReward(selected.camp.campId(), difficulty, qualified))
+                    return false;
                 selected.data.setDetail(progress);
                 try {
                     selected.data.saveSync();
@@ -480,67 +585,87 @@ public final class AsterMidSceneController {
                 return GadgetGeneralRewardInfo.getDefaultInstance();
             synchronized (data) {
                 var progress = AsterSchedule.progress(data);
-                var difficulty = progress.midOffers().get(camp.campId());
-                var reward = difficulty == null ? null : AsterMidRewards.reward(difficulty);
+                var offer = progress.midReward(camp.campId());
+                var reward = offer == null ? null : AsterMidRewards.reward(offer.difficulty());
                 if (reward == null) return GadgetGeneralRewardInfo.getDefaultInstance();
                 return GadgetGeneralRewardInfo.newBuilder()
                         .setResin(reward.resin())
-                        .addQualifyUidList(host.getUid())
-                        .addRemainUidList(host.getUid())
+                        .setDeadTime((int) offer.deadTime())
+                        .addAllQualifyUidList(offer.qualified().stream().sorted().toList())
+                        .addAllRemainUidList(offer.remaining().stream().sorted().toList())
                         .build();
             }
         }
+    }
+
+    private void notifyReward(EntityGadget gadget) {
+        var packet = new BasePacket(PacketOpcodes.GadgetGeneralRewardInfoNotify);
+        packet.setData(
+                GadgetGeneralRewardInfoNotify.newBuilder()
+                        .setEntityId(gadget.getId())
+                        .setGeneralRewardInfo(rewardInfo(gadget))
+                        .build());
+        scene.broadcastPacket(packet);
+    }
+
+    private static long previewKey(Player player, EntityGadget gadget) {
+        return ((long) player.getUid() << 32) | (gadget.getId() & 0xffff_ffffL);
     }
 
     public boolean interactReward(Player player, EntityGadget gadget, GadgetInteractReq req) {
         synchronized (scene) {
             var config = config();
             var data = data(player);
+            var owner = data(scene.getHost());
             var camp = AsterMidCamps.byGroup(gadget.getGroupId());
             int code = Retcode.RET_ACTIVITY_CLOSE_VALUE;
-            boolean remove = false;
+            long now = System.currentTimeMillis();
             if (camp != null
                     && config != null
                     && config.getScheduleId() == scheduleId
-                    && eligible(player, config, System.currentTimeMillis())
-                    && player == scene.getHost()
+                    && eligible(player, config, now)
+                    && eligible(scene.getHost(), config, now)
                     && present(player)
                     && near(player, gadget)
                     && scene.getEntities().get(gadget.getId()) == gadget
+                    && req.getGadgetEntityId() == gadget.getId()
                     && gadget.getConfigId() == camp.rewardConfigId()
                     && gadget.getGadgetId() == 70950021
                     && allows(mounted.get(gadget.getGroupId()))) {
-                Integer difficulty;
-                synchronized (data) {
-                    difficulty = AsterSchedule.progress(data).midOffers().get(camp.campId());
+                AsterMidRewardState.View offer;
+                synchronized (owner) {
+                    offer = AsterSchedule.progress(owner).midReward(camp.campId());
                 }
                 code = Retcode.RET_ACTIVITY_ITEM_ERROR_VALUE;
-                if (difficulty != null && AsterMidRewards.reward(difficulty) != null) {
+                if (offer != null
+                        && offer.canClaim(player.getUid(), now)
+                        && AsterMidRewards.reward(offer.difficulty()) != null) {
                     if (req.getOpType() == InterOpType.InterOpType_INTER_OP_START) {
-                        previewed.add(gadget.getId());
+                        previewed.add(previewKey(player, gadget));
                         code = 0;
                     } else if (req.getOpType() != InterOpType.InterOpType_INTER_OP_FINISH
-                            || !previewed.contains(gadget.getId())
+                            || !previewed.contains(previewKey(player, gadget))
                             || req.getResinCostType() != ResinCostType.ResinCostType_NONE
                                     && req.getResinCostType() != ResinCostType.ResinCostType_NORMAL)
                         code = Retcode.RET_FORBIDDEN_VALUE;
                     else {
-                        var reward = AsterMidRewards.reward(difficulty);
+                        var reward = AsterMidRewards.reward(offer.difficulty());
                         try {
                             code =
-                                    AsterMidRewards.take(
+                                    AsterMidRewards.takeShared(
+                                            owner,
                                             data,
                                             config,
                                             player.getLevel(),
-                                            System.currentTimeMillis(),
+                                            now,
                                             camp.campId(),
-                                            difficulty,
+                                            offer.token(),
                                             () -> player.getResinManager().useResin(reward.resin()),
                                             r -> AsterMidRewards.grant(player, r),
+                                            owner::saveSync,
                                             data::saveSync);
                             if (code == 0) {
-                                previewed.remove(gadget.getId());
-                                remove = true;
+                                previewed.remove(previewKey(player, gadget));
                                 for (int id = 1200110; id <= 1200115; id++)
                                     player.sendPacket(
                                             new PacketActivityUpdateWatcherNotify(
@@ -550,13 +675,10 @@ public final class AsterMidSceneController {
                                         new PacketItemAddHintNotify(
                                                 new GameItem(109, reward.energy()),
                                                 ActionReason.TakeGeneralReward));
-                                notify(
-                                        player,
-                                        info(
-                                                data,
-                                                config,
-                                                player.getLevel(),
-                                                System.currentTimeMillis()));
+                                if (!retireReward(camp.campId(), now)) notifyReward(gadget);
+                                for (var member : scene.getWorld().getPlayers())
+                                    if (data(member) != null)
+                                        notify(member, worldInfo(member, config, now));
                             }
                         } catch (RuntimeException failure) {
                             code = Retcode.RET_SVR_ERROR_VALUE;
@@ -576,26 +698,15 @@ public final class AsterMidSceneController {
                             InteractType.InteractType_INTERACT_GENERAL_REWARD,
                             req.getOpType() == InterOpType.UNRECOGNIZED ? null : req.getOpType(),
                             code));
-            if (remove) {
-                var group = mounted.get(gadget.getGroupId());
-                scene.getScriptManager()
-                        .callEvent(
-                                new ScriptArgs(
-                                        group.id,
-                                        EventType.EVENT_GENERAL_REWARD_DIE,
-                                        gadget.getConfigId()),
-                                () ->
-                                        allows(group)
-                                                && scene.getScriptManager()
-                                                                .getLoadedGroupById(group.id)
-                                                        == group);
-            }
-            return remove;
+            // The controller retires a shared point only after all claims or its deadline.
+            return false;
         }
     }
 
     private boolean present(Player player) {
         return player.getScene() == scene
+                && player.getWorld() == scene.getWorld()
+                && scene.getWorld().getPlayers().contains(player)
                 && scene.getPlayers().contains(player)
                 && player.getSceneLoadState() == Player.SceneLoadState.LOADED;
     }

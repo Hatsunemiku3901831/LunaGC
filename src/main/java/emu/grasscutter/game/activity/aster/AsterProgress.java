@@ -11,6 +11,9 @@ public final class AsterProgress {
     private int midRefreshId, midCollectCount, midCredit, pendingMidClaim;
     private Set<Integer> midFinishedCamps = new HashSet<>();
     private Map<Integer, Integer> midOffers = new HashMap<>();
+    private Map<Integer, AsterMidRewardState> midRewardStates = new HashMap<>();
+    private Set<String> midClaims = new HashSet<>();
+    private String pendingMidReward = "";
 
     public Set<Long> collected() {
         return Set.copyOf(collected);
@@ -62,6 +65,76 @@ public final class AsterProgress {
         return Map.copyOf(midOffers);
     }
 
+    public AsterMidRewardState.View midReward(int camp) {
+        var state = midRewardStates.get(camp);
+        return state == null ? null : state.view(midOffers.get(camp));
+    }
+
+    public boolean hasMidClaim(String token) {
+        return midClaims.contains(token);
+    }
+
+    public boolean offerMidReward(int camp, int difficulty, Set<Integer> qualified) {
+        if (qualified == null
+                || qualified.isEmpty()
+                || qualified.stream().anyMatch(uid -> uid == null || uid <= 0)) return false;
+        if (!offerMidReward(camp, difficulty)) return false;
+        midRewardStates.put(camp, new AsterMidRewardState(qualified));
+        return true;
+    }
+
+    /** Existing host-only offers retain their original qualification, including after reload. */
+    public boolean upgradeMidReward(int camp, int hostUid) {
+        if (!midOffers.containsKey(camp)
+                || midRewardStates.containsKey(camp)
+                || pendingMidClaim == camp
+                || hostUid <= 0) return false;
+        midRewardStates.put(camp, new AsterMidRewardState(Set.of(hostUid)));
+        return true;
+    }
+
+    public void reserveMidReward(int camp, int uid) {
+        midRewardStates.get(camp).reserve(uid);
+    }
+
+    public void cancelMidReward(int camp, int uid) {
+        midRewardStates.get(camp).cancel(uid);
+    }
+
+    public void acknowledgeMidReward(int camp, int uid, long now) {
+        midRewardStates.get(camp).acknowledge(uid, now);
+    }
+
+    public boolean finishMidReward(int camp, long now, boolean multiplayer) {
+        var state = midRewardStates.get(camp);
+        if (state == null || !state.canFinish(now, multiplayer) || pendingMidClaim == camp)
+            return false;
+        midRewardStates.remove(camp);
+        midOffers.remove(camp);
+        midFinishedCamps.add(camp);
+        return true;
+    }
+
+    public void beginSharedMidClaim(int camp, String token) {
+        if (pendingMidClaim != 0
+                || pendingWatcherReward != 0
+                || !AsterMidRewardState.validToken(token)
+                || midClaims.contains(token)
+                || !AsterMidCamps.camps().containsKey(camp))
+            throw new IllegalStateException("Aster reward already reserved");
+        pendingMidClaim = camp;
+        pendingMidReward = token;
+    }
+
+    public void finishSharedMidClaim(int energy) {
+        if (pendingMidClaim == 0 || energy <= 0 || pendingMidReward.isEmpty())
+            throw new IllegalStateException("No shared Aster recovery claim");
+        midCredit = Math.addExact(midCredit, energy);
+        midCollectCount = Math.addExact(midCollectCount, 1);
+        midClaims.add(pendingMidReward);
+        cancelMidClaim();
+    }
+
     public void startMidBatch(int id) {
         var batch = emu.grasscutter.data.GameData.getAsterMidDataMap().get(id);
         if (batch == null
@@ -92,17 +165,21 @@ public final class AsterProgress {
     }
 
     public void beginMidClaim(int id) {
-        if (pendingMidClaim != 0 || pendingWatcherReward != 0 || !midOffers.containsKey(id))
+        if (pendingMidClaim != 0
+                || pendingWatcherReward != 0
+                || !midOffers.containsKey(id)
+                || midRewardStates.containsKey(id))
             throw new IllegalStateException("Aster reward already reserved");
         pendingMidClaim = id;
     }
 
     public void cancelMidClaim() {
         pendingMidClaim = 0;
+        pendingMidReward = "";
     }
 
     public void finishMidClaim(int energy) {
-        if (pendingMidClaim == 0 || energy <= 0)
+        if (pendingMidClaim == 0 || energy <= 0 || !pendingMidReward.isEmpty())
             throw new IllegalStateException("No Aster recovery claim");
         midCredit = Math.addExact(midCredit, energy);
         midCollectCount = Math.addExact(midCollectCount, 1);
@@ -122,6 +199,17 @@ public final class AsterProgress {
                 && (long) midCredit + collected.size() <= Integer.MAX_VALUE
                 && midOffers != null
                 && midFinishedCamps != null
+                && midRewardStates != null
+                && midClaims != null
+                && pendingMidReward != null
+                && midClaims.stream().allMatch(AsterMidRewardState::validToken)
+                && midClaims.size() <= midCollectCount
+                && midRewardStates.entrySet().stream()
+                        .allMatch(
+                                e ->
+                                        midOffers.containsKey(e.getKey())
+                                                && e.getValue() != null
+                                                && e.getValue().isValid())
                 && midOffers.entrySet().stream()
                         .allMatch(
                                 e ->
@@ -133,7 +221,13 @@ public final class AsterProgress {
                 && midFinishedCamps.stream()
                         .allMatch(id -> id != null && AsterMidCamps.camps().containsKey(id))
                 && (pendingMidClaim == 0
-                        || pendingWatcherReward == 0 && midOffers.containsKey(pendingMidClaim))
+                        ? pendingMidReward.isEmpty()
+                        : pendingWatcherReward == 0
+                                && AsterMidCamps.camps().containsKey(pendingMidClaim)
+                                && (pendingMidReward.isEmpty()
+                                        ? midOffers.containsKey(pendingMidClaim)
+                                        : AsterMidRewardState.validToken(pendingMidReward)
+                                                && !midClaims.contains(pendingMidReward)))
                 && (midRefreshId == 0
                         ? midOffers.isEmpty() && midFinishedCamps.isEmpty()
                         : emu.grasscutter.data.GameData.getAsterMidDataMap()

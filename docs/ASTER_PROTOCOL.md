@@ -16,6 +16,7 @@
 | AsterMidCampInfo | FINKAAMFMJL（20013） | 写入函数 `0x14bbdd5e0` | pos 13、camp_id 15 |
 | AsterMidCampInfoNotify | DOMPCDGFLDN（51110） | 读取函数 `0x150e24410` | 包号 9033；camp_list 13 |
 | AsterMidInfoNotify | PCHDJMDOHKG（53089） | 读取函数 `0x14b8f5dc0` | 包号 7830；info 6 |
+| GadgetGeneralRewardInfoNotify | GGHNPIGNHLI（17219） | 读取函数 `0x14ec35800`、包号返回 `0x14ec35630` | 包号 2019；entity_id 10、general_reward_info 13；2026-10-11 核对 |
 | AsterLargeDetailInfo | OBKGNLGCCFM（64675） | 读取与写入函数 | begin_time 6、open 10 |
 | AsterProgressDetailInfo | HJKFPOCOCGF（67314） | 读取与写入函数 | last_auto_add_time 6、count 9 |
 | AsterMiscInfoNotify | DEFAMMEJKOA（57890） | 包号返回函数、读取函数 `0x153446370` | 包号 24878；DKOEMPLNJBP 13、JAHBDIPMKMI 15；替换旧版 token 9 / credit 2 |
@@ -42,12 +43,12 @@
 ## 仍需继续完成
 
 - 两个余额槽的语义和 AsterMiscInfoNotify 的发包接入（包号与字段已核对）。
-- 第 2 章陨星回收的协作玩家领奖、资格列表及奖励点到期。
 - 第 3 章多人挑战：场景战斗、能量提交、匹配、奖励和进度。
 - 活动商店、特殊角色奖励以及剧情组和支线任务。
 - 7.1 客户端完整探索流程和后续阶段的实机验证。
 
 探索阶段和陨星回收按本次排期开放；第二章已接入 60 处营地、难度选择、
-原始能量封印战斗、房主 20 树脂领奖与六项累计任务。
+原始能量封印战斗、每名具备资格的玩家独立支付 20 树脂领奖与六项累计任务。
+奖励点同步资格与剩余玩家，联机首次领取后 10 秒到期；世界营地地图取自房主进度。
 详见[陨星回收接入](ASTER_MID_RECOVERY_2026-10-11.md)。第三章暂不发送可游玩的开放标记。
 活动目录保持「还原中」，不将已恢复字段或已加载脚本等同于完整可玩。
