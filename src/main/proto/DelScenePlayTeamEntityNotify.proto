@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "DelScenePlayTeamEntityNotifyOuterClass";
+
+message DelScenePlayTeamEntityNotify {
+    uint32 scene_id = 15;
+    repeated uint32 del_entity_id_list = 3;
+}

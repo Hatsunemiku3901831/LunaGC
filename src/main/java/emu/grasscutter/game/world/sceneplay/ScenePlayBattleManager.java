@@ -1,5 +1,6 @@
 package emu.grasscutter.game.world.sceneplay;
 
+import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.excels.activity.*;
 import emu.grasscutter.game.entity.*;
 import emu.grasscutter.game.player.Player;
@@ -10,9 +11,10 @@ import emu.grasscutter.net.proto.ScenePlayBattleSettlePlayerInfoOuterClass.Scene
 import emu.grasscutter.net.proto.ScenePlayBattleUidOpNotifyOuterClass.ScenePlayBattleUidOpNotify;
 import emu.grasscutter.scripts.constants.EventType;
 import emu.grasscutter.scripts.data.*;
-import emu.grasscutter.server.packet.send.PacketScenePlayBattle;
+import emu.grasscutter.server.packet.send.*;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 import java.util.function.BooleanSupplier;
 import java.util.function.Function;
@@ -36,10 +38,12 @@ public final class ScenePlayBattleManager {
         final Player owner;
         final Map<Integer, Player> members;
         final Map<Integer, SceneGroup> groups;
+        final Map<Integer, EntityPlayTeam> playTeams = new LinkedHashMap<>();
         final Map<Integer, Map<String, Long>> uidValues = new HashMap<>();
         final Set<Future<?>> callbacks = new HashSet<>();
         long lastTime, prepareEnd, startTime, progress;
         int state = INIT;
+        int playTeamGadgetId;
         boolean valid = true;
         int luaCalls;
         ScenePlayBattleParameters parameters;
@@ -69,6 +73,8 @@ public final class ScenePlayBattleManager {
     // All state, packet ordering and callback tickets follow the scene monitor.
     private final Map<Integer, Round> rounds = new LinkedHashMap<>();
     private final Map<Integer, Round> byGroup = new HashMap<>();
+    // Ability callbacks look up registered carriers without acquiring the scene monitor.
+    private final Map<Integer, EntityPlayTeam> playTeamEntities = new ConcurrentHashMap<>();
     private boolean closed;
 
     public ScenePlayBattleManager(Scene scene) {
@@ -158,14 +164,76 @@ public final class ScenePlayBattleManager {
             if (round.state != READY
                     || now + parameters.startCd() + parameters.duration()
                             > ScenePlayBattleParameters.MAX_UINT32) return false;
+            List<EntityPlayTeam> created = new ArrayList<>();
+            if (round.playTeamGadgetId != 0) {
+                var abilities = EntityPlayTeam.configuredAbilities(round.playTeamGadgetId);
+                if (abilities == null
+                        || round.members.values().stream()
+                                .anyMatch(
+                                        player ->
+                                                player.getPeerId() <= 0
+                                                        || player.getTeamManager().getEntity()
+                                                                == null)) return false;
+                for (var player : round.members.values())
+                    created.add(
+                            new EntityPlayTeam(scene, player, round.playTeamGadgetId, abilities));
+            }
             round.parameters = parameters;
             round.progress = 0;
             round.startTime = now + parameters.startCd();
             round.state = PRESTART;
+            for (var entity : created) {
+                round.playTeams.put(entity.getPlayerUid(), entity);
+                playTeamEntities.put(entity.getId(), entity);
+            }
+            if (!created.isEmpty())
+                scene.broadcastPacket(
+                        new PacketSyncScenePlayTeamEntityNotify(scene.getId(), created));
             emitState(round);
             broadcastInfo(round);
+            try {
+                created.forEach(EntityPlayTeam::initAbilities);
+            } catch (RuntimeException failure) {
+                Grasscutter.getLogger().error("Scene-play carrier initialization failed", failure);
+                interrupt(round, true);
+                return false;
+            }
             advance(round);
             return true;
+        }
+    }
+
+    public boolean setPlayTeamEntityGadgetId(int groupId, int gadgetId) {
+        synchronized (scene) {
+            var round = find(groupId);
+            if (round == null) return false;
+            advance(round);
+            if (round.state != PREPARE && round.state != READY
+                    || gadgetId <= 0
+                    || EntityPlayTeam.configuredAbilities(gadgetId) == null) return false;
+            round.playTeamGadgetId = gadgetId;
+            return true;
+        }
+    }
+
+    public EntityPlayTeam getPlayTeamEntity(int id) {
+        var entity = playTeamEntities.get(id);
+        if (entity == null
+                || entity.getId() != id
+                || entity.getPlayer().getUid() != entity.getPlayerUid()
+                || entity.getPlayer().getPeerId() != entity.getAuthorityPeerId()
+                || !present(entity.getPlayer())
+                || !entity.isAbilityLifecycleCurrent(entity.getAbilityLifecycleVersion()))
+            return null;
+        return entity;
+    }
+
+    public List<EntityPlayTeam> getPlayTeamEntities() {
+        synchronized (scene) {
+            return playTeamEntities.values().stream()
+                    .filter(entity -> getPlayTeamEntity(entity.getId()) == entity)
+                    .sorted(Comparator.comparingInt(GameEntity::getId))
+                    .toList();
         }
     }
 
@@ -279,7 +347,13 @@ public final class ScenePlayBattleManager {
                     || !currentAbilityEntity(source)
                     || !currentAbilityEntity(owner)) return false;
             for (var round : List.copyOf(rounds.values())) advance(round);
-            var selected = abilityRounds(player);
+            var selected =
+                    abilityRounds(player).stream()
+                            .filter(
+                                    round ->
+                                            belongsToRound(source, round)
+                                                    && belongsToRound(owner, round))
+                            .toList();
             if (selected.isEmpty()) return false;
             record Route(Round round, SceneGroup group) {}
             var routes = new TreeMap<Integer, Route>();
@@ -335,6 +409,11 @@ public final class ScenePlayBattleManager {
         return scene.getEntityById(entity.getId()) == entity;
     }
 
+    private static boolean belongsToRound(GameEntity entity, Round round) {
+        return !(entity instanceof EntityPlayTeam playTeam)
+                || round.playTeams.get(playTeam.getPlayerUid()) == playTeam;
+    }
+
     public boolean uidOp(
             int groupId,
             int configId,
@@ -387,17 +466,28 @@ public final class ScenePlayBattleManager {
         synchronized (scene) {
             if (closed) return;
             for (var round : rounds.values()) advance(round);
+            for (var entity : getPlayTeamEntities()) entity.onAbilityTick();
         }
     }
 
     private void advance(Round round) {
         if (!active(round)) return;
-        if (!present(round.owner)
-                || round.members.values().stream().filter(this::present).count()
+        if (!currentMember(round, round.owner)
+                || round.members.values().stream()
+                                .filter(player -> currentMember(round, player))
+                                .count()
                         < round.minimumPlayers
                 || !groupsCurrent(round)) {
             interrupt(round, groupsCurrent(round));
             return;
+        }
+        var absent =
+                round.members.entrySet().stream()
+                        .filter(entry -> !currentMember(round, entry.getValue()))
+                        .toList();
+        for (var entry : absent) {
+            removePlayTeamEntities(round, List.of(entry.getKey()));
+            round.members.remove(entry.getKey());
         }
         long now = time(round);
         if (round.state == PREPARE && now >= round.prepareEnd) {
@@ -420,10 +510,11 @@ public final class ScenePlayBattleManager {
                 if (!active(round) || round.members.get(player.getUid()) != player) continue;
                 long remaining =
                         round.members.values().stream()
-                                .filter(member -> member != player && present(member))
+                                .filter(member -> member != player && currentMember(round, member))
                                 .count();
                 if (round.owner == player || remaining < round.minimumPlayers)
                     interrupt(round, true);
+                else removePlayTeamEntities(round, List.of(player.getUid()));
                 round.members.remove(player.getUid(), player);
             }
         }
@@ -456,6 +547,11 @@ public final class ScenePlayBattleManager {
         synchronized (scene) {
             closed = true;
             rounds.values().forEach(round -> round.valid = false);
+            rounds.values()
+                    .forEach(
+                            round ->
+                                    removePlayTeamEntities(
+                                            round, List.copyOf(round.playTeams.keySet())));
             rounds.clear();
             byGroup.clear();
         }
@@ -477,6 +573,7 @@ public final class ScenePlayBattleManager {
         else {
             round.state = NONE;
             broadcastInfo(round);
+            removePlayTeamEntities(round, List.copyOf(round.playTeams.keySet()));
         }
     }
 
@@ -508,6 +605,30 @@ public final class ScenePlayBattleManager {
         // Activity-specific titles, score and resin rewards belong to its controller.
         scene.broadcastPacket(PacketScenePlayBattle.result(result.build()));
         broadcastInfo(round);
+        removePlayTeamEntities(round, List.copyOf(round.playTeams.keySet()));
+    }
+
+    private void removePlayTeamEntities(Round round, Collection<Integer> uids) {
+        var removed = new ArrayList<Integer>();
+        for (int uid : uids) {
+            var entity = round.playTeams.remove(uid);
+            if (entity == null) continue;
+            playTeamEntities.remove(entity.getId(), entity);
+            removed.add(entity.getId());
+            try {
+                entity.dispose();
+            } catch (RuntimeException failure) {
+                Grasscutter.getLogger().error("Scene-play carrier cleanup failed", failure);
+            }
+        }
+        if (!removed.isEmpty())
+            scene.broadcastPacket(new PacketDelScenePlayTeamEntityNotify(scene.getId(), removed));
+    }
+
+    private boolean currentMember(Round round, Player player) {
+        if (!present(player) || round.members.get(player.getUid()) != player) return false;
+        var entity = round.playTeams.get(player.getUid());
+        return entity == null || getPlayTeamEntity(entity.getId()) == entity;
     }
 
     private Round find(int groupId) {

@@ -389,6 +389,15 @@ public class ScriptLib {
                 : -1;
     }
 
+    public int SetScenePlayBattlePlayTeamEntityGadgetId(int groupId, int gadgetId) {
+        var scene = teamValueScene();
+        return scene != null
+                        && scene.getScenePlayBattleManager()
+                                .setPlayTeamEntityGadgetId(sceneBattleGroup(groupId), gadgetId)
+                ? 0
+                : -1;
+    }
+
     public long GetScenePlayBattleUidValue(int groupId, int uid, String key) {
         var scene = teamValueScene();
         return scene == null

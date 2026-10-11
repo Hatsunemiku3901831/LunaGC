@@ -20,6 +20,7 @@ final class ScenePlayBattleLua {
                 new String[] {
                     "PrestartScenePlayBattle",
                     "AddScenePlayBattleProgress",
+                    "SetScenePlayBattlePlayTeamEntityGadgetId",
                     "GetScenePlayBattleUidValue",
                     "SetScenePlayBattleUidValue",
                     "GetScenePlayBattleHostUid",
@@ -44,6 +45,13 @@ final class ScenePlayBattleLua {
                                 }
                                 int group = identifier(args.arg(2), true);
                                 return switch (functionName) {
+                                    case "SetScenePlayBattlePlayTeamEntityGadgetId" -> LuaValue
+                                            .valueOf(
+                                                    library
+                                                            .SetScenePlayBattlePlayTeamEntityGadgetId(
+                                                                    group,
+                                                                    identifier(
+                                                                            args.arg(3), false)));
                                     case "AddScenePlayBattleProgress" -> LuaValue.valueOf(
                                             library.AddScenePlayBattleProgress(
                                                     group,

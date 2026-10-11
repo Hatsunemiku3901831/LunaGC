@@ -42,9 +42,14 @@ final class AbilityExecutionContext {
                                                                                 .LuaCallType
                                                                                 .CurScenePlay);
         var scene = caster == null ? ability.getOwner().getScene() : caster.getScene();
-        this.scenePlayScene = scenePlayAbility ? scene : null;
+        this.scenePlayScene =
+                scenePlayAbility
+                                || ability.getOwner() instanceof EntityPlayTeam
+                                || target instanceof EntityPlayTeam
+                        ? scene
+                        : null;
         this.scenePlayScope =
-                scenePlayScene != null
+                scenePlayAbility && scenePlayScene != null
                         ? scenePlayScene.getScenePlayBattleManager().captureAbilityScope(caster)
                         : () -> true;
     }
@@ -95,7 +100,8 @@ final class AbilityExecutionContext {
 
         private GameEntity lookup() {
             var found = scene.getEntities().get(id);
-            return found == null ? scene.getWeaponEntities().get(id) : found;
+            if (found == null) found = scene.getWeaponEntities().get(id);
+            return found == null ? scene.getScenePlayBattleManager().getPlayTeamEntity(id) : found;
         }
 
         boolean isCurrent() {

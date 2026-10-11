@@ -460,6 +460,35 @@ public final class AbilityManager extends BasePlayerManager {
 
     /** TPS metadata is validated before forwarding; other invokes retain their existing routing. */
     public boolean acceptAbilityInvoke(AbilityInvokeEntry invoke) throws Exception {
+        if (usesPlayTeam(invoke)) {
+            var scene = player.getScene();
+            if (scene == null) return false;
+            synchronized (scene) {
+                if (player.getScene() != scene || !ownsPlayTeams(invoke)) return false;
+                return acceptAbilityInvokeCurrent(invoke);
+            }
+        }
+        return acceptAbilityInvokeCurrent(invoke);
+    }
+
+    private static boolean isPlayTeamId(int id) {
+        return (id >> GameConstants.ENTITY_ID_BIT_SHIFT) == EntityIdType.PLAY_TEAM.getId();
+    }
+
+    private static boolean usesPlayTeam(AbilityInvokeEntry invoke) {
+        return isPlayTeamId(invoke.getEntityId()) || isPlayTeamId(invoke.getHead().getTargetId());
+    }
+
+    private boolean ownsPlayTeams(AbilityInvokeEntry invoke) {
+        for (int id : new int[] {invoke.getEntityId(), invoke.getHead().getTargetId()}) {
+            if (!isPlayTeamId(id)) continue;
+            var entity = player.getScene().getScenePlayBattleManager().getPlayTeamEntity(id);
+            if (entity == null || entity.getPlayer() != player) return false;
+        }
+        return true;
+    }
+
+    private boolean acceptAbilityInvokeCurrent(AbilityInvokeEntry invoke) throws Exception {
         // Metadata may carry the local ID of its originating action. It is still metadata,
         // and must not be redirected to handleServerInvoke's action/mixin dispatch.
         if (invoke.getArgumentType() == AbilityInvokeArgument.ABILITY_META_UPDATE_TPS_WEAPON_AMMUNITION) {
@@ -598,9 +627,21 @@ public final class AbilityManager extends BasePlayerManager {
     }
 
     public void handleServerInvoke(AbilityInvokeEntry invoke) {
+        if (usesPlayTeam(invoke)) {
+            var scene = player.getScene();
+            if (scene == null) return;
+            synchronized (scene) {
+                if (player.getScene() == scene && ownsPlayTeams(invoke))
+                    handleServerInvokeCurrent(invoke);
+            }
+        } else handleServerInvokeCurrent(invoke);
+    }
+
+    private void handleServerInvokeCurrent(AbilityInvokeEntry invoke) {
         var head = invoke.getHead();
 
         var entity = this.player.getScene().getEntityById(invoke.getEntityId());
+
         if (entity == null) {
             Grasscutter.getLogger().trace(
                 "handleServerInvoke: entity not found: entityId={} localId={} type={}",

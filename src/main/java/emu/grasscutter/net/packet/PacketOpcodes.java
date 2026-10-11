@@ -319,7 +319,7 @@ public final class PacketOpcodes {
     public static final int PlayerCompoundMaterialRsp = 28111;
     public static final int CompoundDataNotify = 4170;
     public static final int CoopDataNotify = 25775;
-    public static final int DelTeamEntityNotify = -47;
+    public static final int DelTeamEntityNotify = 2050;
     public static final int UpdateAbilityCreatedMovingPlatformNotify = 9036;
     public static final int EnterTrialAvatarActivityDungeonRsp = -48;
     public static final int EvtAvatarEnterFocusNotify = 8782;
@@ -866,7 +866,7 @@ public final class PacketOpcodes {
     public static final int DataResVersionNotify = 29521;
     public static final int DeathZoneInfoNotify = 21541;
     public static final int DeathZoneObserveNotify = 26031;
-    public static final int DelScenePlayTeamEntityNotify = -209;
+    public static final int DelScenePlayTeamEntityNotify = 26830;
     public static final int DeshretObeliskChestInfoNotify = 29346;
     public static final int DigActivityMarkPointChangeNotify = 8255;
     public static final int DoRoguelikeDungeonCardGachaRsp = 24062;

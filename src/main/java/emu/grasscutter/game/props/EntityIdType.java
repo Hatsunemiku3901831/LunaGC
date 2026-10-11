@@ -10,7 +10,8 @@ public enum EntityIdType {
     REGION(0x05),
     WEAPON(0x06),
     TEAM(0x09),
-    MPLEVEL(0x0b);
+    MPLEVEL(0x0b),
+    PLAY_TEAM(0x0c);
 
     private final int id;
 
@@ -25,6 +26,7 @@ public enum EntityIdType {
         map.put(EntityIdType.WEAPON.getId(), EntityType.Equip);
         map.put(EntityIdType.TEAM.getId(), EntityType.Team);
         map.put(EntityIdType.MPLEVEL.getId(), EntityType.MPLevel);
+        map.put(EntityIdType.PLAY_TEAM.getId(), EntityType.PlayTeam);
     }
 
     EntityIdType(int id) {
