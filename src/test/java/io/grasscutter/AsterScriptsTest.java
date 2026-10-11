@@ -61,7 +61,7 @@ class AsterScriptsTest {
                     new com.google.gson.JsonParser()
                             .parse(new java.io.InputStreamReader(stream))
                             .getAsJsonArray();
-            assertEquals(128, entries.size());
+            assertEquals(133, entries.size());
             for (var entry : entries) {
                 var row = entry.getAsJsonObject();
                 try (var script =

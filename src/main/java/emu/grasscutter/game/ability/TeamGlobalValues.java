@@ -59,11 +59,19 @@ public final class TeamGlobalValues {
     }
 
     public static int add(Scene scene, int[] uids, String key, double delta) {
-        return update(scene, uids, key, delta, UpdateType.UpdateType_ADD);
+        if (scene == null) return -1;
+        // Scene-play modifier checks acquire the scene monitor. Match callback lock order
+        // before acquiring a team or modifier map, including non-script callers.
+        synchronized (scene) {
+            return update(scene, uids, key, delta, UpdateType.UpdateType_ADD);
+        }
     }
 
     public static int set(Scene scene, int[] uids, String key, double value) {
-        return update(scene, uids, key, value, UpdateType.UpdateType_SET);
+        if (scene == null) return -1;
+        synchronized (scene) {
+            return update(scene, uids, key, value, UpdateType.UpdateType_SET);
+        }
     }
 
     public static float getServer(Scene scene, int uid, String key) {
@@ -81,11 +89,17 @@ public final class TeamGlobalValues {
     }
 
     public static int setServer(Scene scene, int uid, String key, double value) {
-        return updateServer(scene, uid, key, value, false);
+        if (scene == null) return -1;
+        synchronized (scene) {
+            return updateServer(scene, uid, key, value, false);
+        }
     }
 
     public static int addServer(Scene scene, int uid, String key, double delta) {
-        return updateServer(scene, uid, key, delta, true);
+        if (scene == null) return -1;
+        synchronized (scene) {
+            return updateServer(scene, uid, key, delta, true);
+        }
     }
 
     private static boolean currentServer(

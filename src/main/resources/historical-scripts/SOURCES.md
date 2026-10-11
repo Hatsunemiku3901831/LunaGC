@@ -39,4 +39,18 @@ even when fast require is enabled. Host reward interactions are connected to the
 original seal-end actions and persisted activity progress.
 The comment-only placeholder for this Common in the selected resources uses the
 packaged original; executable resource overrides retain precedence.
-`Common/AsterBig.lua` is not activated; chapter three still needs its scene-play interfaces.
+## Unreconciled Stars large meteorite scripts (2001)
+
+The original scene groups `133001413`, `133001426`, `133001427`, and `133001498`
+come from that archive's `lua/scene/3/`. Their packaged bytes are unchanged.
+`Common/AsterBig.lua` comes from `lua/common/` and is inlined into the three
+control groups even with fast require, because it reads their local definitions.
+The selected resource checkout's comment-only Common placeholder uses this
+packaged fallback; executable resource overrides retain precedence.
+
+Its adaptations are recorded in `Activity/2001/sources.json`: LuaJ-compatible
+integer division, player UID arguments for team energy/progress ratios, and a
+running-round check before consuming submitted energy. The original and packaged
+hashes are recorded separately and the original Git blobs are verified.
+Recovery and tested script calls do not activate chapter three: scene mounting,
+monster death dispatch, reminders, matchmaking and rewards still need integration.

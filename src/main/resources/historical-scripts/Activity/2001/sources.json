@@ -761,5 +761,45 @@
     "sha256": "8227351c09ee9953281fe5ad5132f5e7faa482f51fa04a2e1a71ecf51cb12401",
     "blockSource": "https://raw.githubusercontent.com/Ahanlei123/2.8_live_data/f25e3155e38f9dc8f647493bf23a935147caf59e/lua/activity/2001/activity2001_block200101.lua",
     "blockSha256": "9063b3bf5136004b02c6676ba3652ff798adf9c241ce59b8d4c7a7166deec4bd"
+  },
+  {
+    "path": "Scene/3/scene3_group133001413.lua",
+    "source": "https://raw.githubusercontent.com/Ahanlei123/2.8_live_data/f25e3155e38f9dc8f647493bf23a935147caf59e/lua/scene/3/scene3_group133001413.lua",
+    "gitBlob": "99eedbb688cfad1b5114f7fdbf1d4439e8f2c719",
+    "sha256": "0d5663584c5f2c75c09568a447f735bea91cd41d85eea0eef685a85776af2ea9",
+    "upstreamSha256": "0d5663584c5f2c75c09568a447f735bea91cd41d85eea0eef685a85776af2ea9"
+  },
+  {
+    "path": "Scene/3/scene3_group133001426.lua",
+    "source": "https://raw.githubusercontent.com/Ahanlei123/2.8_live_data/f25e3155e38f9dc8f647493bf23a935147caf59e/lua/scene/3/scene3_group133001426.lua",
+    "gitBlob": "a02ffa4923ad1eebdbb390fc02481ea95b4abc18",
+    "sha256": "c624ed42012bd5dcee46d9aa9a6d3f52cbb328ac15a39d011e46eadab58ce28c",
+    "upstreamSha256": "c624ed42012bd5dcee46d9aa9a6d3f52cbb328ac15a39d011e46eadab58ce28c"
+  },
+  {
+    "path": "Scene/3/scene3_group133001427.lua",
+    "source": "https://raw.githubusercontent.com/Ahanlei123/2.8_live_data/f25e3155e38f9dc8f647493bf23a935147caf59e/lua/scene/3/scene3_group133001427.lua",
+    "gitBlob": "358e1f9f5d044632672a7f15f961a9c9bec55fc2",
+    "sha256": "2022767eb37b8ac8e13f185549e1200664fe7877a1c71f65c67153a4c4ab5a7f",
+    "upstreamSha256": "2022767eb37b8ac8e13f185549e1200664fe7877a1c71f65c67153a4c4ab5a7f"
+  },
+  {
+    "path": "Scene/3/scene3_group133001498.lua",
+    "source": "https://raw.githubusercontent.com/Ahanlei123/2.8_live_data/f25e3155e38f9dc8f647493bf23a935147caf59e/lua/scene/3/scene3_group133001498.lua",
+    "gitBlob": "bd9d71c0cd305cb75a5d7634edc81a8d666c2ae1",
+    "sha256": "bad6ff026b3baa4e0a19a1e0c2fdaf33c4e895df72e62925ca45143fb6f74e74",
+    "upstreamSha256": "bad6ff026b3baa4e0a19a1e0c2fdaf33c4e895df72e62925ca45143fb6f74e74"
+  },
+  {
+    "path": "Common/AsterBig.lua",
+    "source": "https://raw.githubusercontent.com/Ahanlei123/2.8_live_data/f25e3155e38f9dc8f647493bf23a935147caf59e/lua/common/AsterBig.lua",
+    "gitBlob": "bac0f6e422893f9cc51d25cd001dd9baa8ada452",
+    "upstreamSha256": "98bbc043ca6cefcd479d00f0013694e8bab0c3b2480386cd59382c19d4ccfecc",
+    "sha256": "8b279ab49c7f4f551fa4eedeb77491551e81429fda457296c821b6e08f0f3693",
+    "adaptations": [
+      "LuaJ-compatible integer division in LF_Get_Uid_Op_Buff",
+      "Read player team ratio values with context.uid, matching the actual ScriptLib UID argument",
+      "Check the running round before consuming player energy through the existing zero-progress operation"
+    ]
   }
 ]

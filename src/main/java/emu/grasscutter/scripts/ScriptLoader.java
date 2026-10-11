@@ -249,7 +249,7 @@ public class ScriptLoader {
             var source = Files.readString(scriptPath);
             // The selected 7.1 resources contain a comment-only placeholder for this Common.
             // Preserve executable resource overrides, but use the recovered original for a stub.
-            if (!useAbsPath && path.equals("Common/AsterMiddle.lua")
+            if (!useAbsPath && (path.equals("Common/AsterMiddle.lua") || path.equals("Common/AsterBig.lua"))
                     && source.lines().allMatch(line -> line.isBlank() || line.stripLeading().startsWith("--"))) {
                 try (var stream = ScriptLoader.class.getResourceAsStream("/historical-scripts/" + path)) {
                     if (stream != null) source = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
@@ -297,8 +297,9 @@ public class ScriptLoader {
             if (sources == null) return null;
 
             // Check to see if the script references other scripts.
-            // AsterMiddle reads the control script's local `defs`; it must share that lexical scope.
-            if ((!Configuration.FAST_REQUIRE || sources.contains("require \"AsterMiddle\"")) && sources.contains("require")) {
+            // These historical Commons read local control-group configuration in the same scope.
+            if ((!Configuration.FAST_REQUIRE || sources.contains("require \"AsterMiddle\"")
+                    || sources.contains("require \"AsterBig\"")) && sources.contains("require")) {
                 var lines = sources.split("\n");
                 var output = new StringBuilder();
                 for (var line : lines) {
@@ -308,7 +309,8 @@ public class ScriptLoader {
                         continue;
                     }
 
-                    if (Configuration.FAST_REQUIRE && !line.trim().equals("require \"AsterMiddle\"")) {
+                    if (Configuration.FAST_REQUIRE && !line.trim().equals("require \"AsterMiddle\"")
+                            && !line.trim().equals("require \"AsterBig\"")) {
                         output.append(line).append("\n");
                         continue;
                     }
