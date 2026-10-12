@@ -11,6 +11,7 @@ import emu.grasscutter.game.player.*;
 import emu.grasscutter.game.props.ActionReason;
 import emu.grasscutter.game.props.FightProperty;
 import emu.grasscutter.net.proto.PropChangeReasonOuterClass.PropChangeReason;
+import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.server.packet.send.*;
 import java.util.*;
 import lombok.*;
@@ -228,7 +229,7 @@ public class TowerManager extends BasePlayerManager {
                 Grasscutter.getLogger()
                         .warn(
                                 "Tower team selection rejected for floor {}: missing floor or"
-                                    + " incorrect team count",
+                                        + " incorrect team count",
                                 floor);
                 return false;
             }
@@ -238,6 +239,7 @@ public class TowerManager extends BasePlayerManager {
             getTowerData().currentFloorId = floorData.getFloorId();
             getTowerData().currentLevel = 0;
             getTowerData().currentLevelId = firstLevel;
+            getTowerData().rememberAbyssTeams(towerTeams);
 
             if (getTowerData().entryScene == 0) {
                 getTowerData().entryScene = player.getSceneId();
@@ -256,6 +258,38 @@ public class TowerManager extends BasePlayerManager {
                             towerTeams.size(),
                             towerTeams.stream().map(List::size).toList());
 
+            player.save();
+            return true;
+        }
+    }
+
+    public List<List<Long>> getAbyssTeamGuids() {
+        return getTowerData().getAbyssTeamGuids();
+    }
+
+    public boolean restoreTemporaryTeams() {
+        synchronized (player.getSceneTransferLock()) {
+            var data = getTowerData();
+            var floor = GameData.getTowerFloorDataMap().get(data.currentFloorId);
+            if (floor == null
+                    || floor.getTeamNum() <= 0
+                    || data.currentLevel < 0
+                    || data.currentLevel >= LEVELS_PER_FLOOR) return false;
+            int firstLevel = getFirstLevelId(data.currentFloorId);
+            var level = GameData.getTowerLevelDataMap().get(firstLevel + data.currentLevel);
+            if (firstLevel <= 0
+                    || level == null
+                    || level.getLevelGroupId() != floor.getLevelGroupId()) return false;
+            var selected = getAbyssTeamGuids();
+            boolean migrate = selected.isEmpty();
+            if (migrate) selected = player.getTeamManager().getTemporaryTeamGuids();
+            if (selected.size() != floor.getTeamNum()
+                    || !player.getTeamManager().trySetupTemporaryTeam(selected)) return false;
+            data.currentLevelId = firstLevel;
+            if (migrate) {
+                data.rememberAbyssTeams(selected);
+                player.save();
+            }
             return true;
         }
     }
@@ -279,6 +313,13 @@ public class TowerManager extends BasePlayerManager {
     }
 
     public void enterLevel(int enterPointId) {
+        if (!restoreTemporaryTeams()) {
+            player.getSession()
+                    .send(
+                            new PacketTowerEnterLevelRsp(
+                                    getCurrentFloorId(), getCurrentLevel(), Retcode.RET_FAIL));
+            return;
+        }
         var levelData = getCurrentTowerLevelDataMap();
         if (levelData == null) {
             // No level means no dungeon to hand off to; entering would NPE on the way in.
@@ -295,8 +336,7 @@ public class TowerManager extends BasePlayerManager {
         notifyCurLevelRecordChange();
         // use team user choose
         player.getTeamManager().useTemporaryTeam(0);
-        player
-                .getServer()
+        player.getServer()
                 .getDungeonSystem()
                 .handoffDungeon(player, dungeonId, towerDungeonSettleListener);
 
@@ -304,18 +344,20 @@ public class TowerManager extends BasePlayerManager {
         player.getScene().setPrevScene(getTowerData().entryScene);
         player.getScene().setPrevScenePoint(enterPointId);
 
-        player
-                .getSession()
-                .send(new PacketTowerEnterLevelRsp(getTowerData().currentFloorId, getCurrentLevel()));
+        player.getSession()
+                .send(
+                        new PacketTowerEnterLevelRsp(
+                                getTowerData().currentFloorId, getCurrentLevel()));
         // stop using skill
         player.getSession().send(new PacketCanUseSkillNotify(false));
         // notify the cond of stars
         currentPossibleStars = 3;
-        player
-                .getSession()
+        player.getSession()
                 .send(
                         new PacketTowerLevelStarCondNotify(
-                                getTowerData().currentFloorId, getCurrentLevel(), currentPossibleStars + 1));
+                                getTowerData().currentFloorId,
+                                getCurrentLevel(),
+                                currentPossibleStars + 1));
     }
 
     public void notifyCurLevelRecordChange() {
@@ -483,7 +525,8 @@ public class TowerManager extends BasePlayerManager {
 
     public void mirrorTeamSetUp(int teamId) {
         // use team user choose
-        player.getTeamManager().useTemporaryTeam(teamId);
+        if (!restoreTemporaryTeams() || !player.getTeamManager().tryUseTemporaryTeam(teamId))
+            return;
         player.sendPacket(new PacketTowerMiddleLevelChangeTeamNotify());
 
         // The second half starts with full bursts. Skills stay off until the player takes the
