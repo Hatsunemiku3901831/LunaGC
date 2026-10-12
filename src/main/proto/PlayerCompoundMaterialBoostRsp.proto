@@ -1,0 +1,16 @@
+// Current client GGMNLFMAGLL parser 0x148c02af0 and consumer 0x14c2558b0.
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "PlayerCompoundMaterialBoostRspOuterClass";
+
+import "CompoundBoostTakeStatusType.proto";
+import "CompoundQueueData.proto";
+import "ItemParam.proto";
+
+message PlayerCompoundMaterialBoostRsp {
+  int32 retcode = 2;
+  repeated CompoundQueueData compound_que_data_list = 5;
+  CompoundBoostTakeStatusType take_status = 10;
+  repeated ItemParam take_item_list = 11;
+}

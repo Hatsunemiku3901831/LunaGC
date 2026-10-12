@@ -1,0 +1,12 @@
+// Current client AFOIKPIKDNK: sender 0x14c28d5a0 and writer 0x14c99f4f0.
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "PlayerCompoundMaterialBoostReqOuterClass";
+
+message PlayerCompoundMaterialBoostReq {
+  uint32 consume_material_id = 3;
+  bool is_boost_all = 5;
+  uint32 consume_material_count = 8;
+  uint32 target_compound_group_id = 12;
+}

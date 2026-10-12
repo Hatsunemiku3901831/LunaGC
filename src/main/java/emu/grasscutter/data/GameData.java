@@ -354,6 +354,9 @@ public final class GameData {
     private static final Int2ObjectMap<CompoundData> compoundDataMap = new Int2ObjectOpenHashMap<>();
 
     @Getter
+    private static final Int2ObjectMap<CompoundBoostData> compoundBoostDataMap = new Int2ObjectOpenHashMap<>();
+
+    @Getter
     private static final Int2ObjectMap<DailyDungeonData> dailyDungeonDataMap =
             new Int2ObjectOpenHashMap<>();
 
