@@ -105,6 +105,10 @@ public class CookingManager extends BasePlayerManager {
         };
     }
 
+    protected double nextCookingRoll() {
+        return ThreadLocalRandom.current().nextDouble();
+    }
+
     /** Hold both monitors through the durable receipt and actual ingredient/dish writes. */
     public synchronized void handlePlayerCookReq(PlayerCookReq req) {
         synchronized (player.getInventory()) {
@@ -126,7 +130,8 @@ public class CookingManager extends BasePlayerManager {
                     || !recipe.isDefaultUnlocked()
                             && !player.getUnlockedRecipies().containsKey(recipeId)
                     || assistant < 0
-                    || assistant > 0 && !player.getAvatars().hasAvatar(assistant)) {
+                    || assistant > 0 && !player.getAvatars().hasAvatar(assistant)
+                    || !CookBonuses.canCook(player, assistant)) {
                 player.sendPacket(new PacketPlayerCookRsp(Retcode.RET_FAIL));
                 return;
             }
@@ -201,6 +206,26 @@ public class CookingManager extends BasePlayerManager {
                             data.getId(),
                             Math.multiplyExact(output.getCount(), count - specialties),
                             Math::addExact);
+                for (var extra : CookBonuses.extras(player, assistant, recipe, quality)) {
+                    var target = slots.get(extra.quality() - 1);
+                    if (target == null || target.getId() <= 0 || target.getCount() <= 0)
+                        throw new IllegalArgumentException("Missing cooking passive output");
+                    var targetData = GameData.getItemDataMap().get(target.getId());
+                    if (targetData == null
+                            || targetData.getId() != target.getId()
+                            || targetData.getItemType() != ItemType.ITEM_MATERIAL
+                            || targetData.isUseOnGain())
+                        throw new IllegalArgumentException("Invalid cooking passive output");
+                    int extraUnits = 0;
+                    for (int i = 0; i < count; i++)
+                        if (nextCookingRoll() < extra.chance() / 10000.0)
+                            extraUnits = Math.addExact(extraUnits, extra.count());
+                    if (extraUnits > 0)
+                        amounts.merge(
+                                target.getId(),
+                                Math.multiplyExact(target.getCount(), extraUnits),
+                                Math::addExact);
+                }
                 products =
                         amounts.entrySet().stream()
                                 .map(e -> new ItemParamData(e.getKey(), e.getValue()))

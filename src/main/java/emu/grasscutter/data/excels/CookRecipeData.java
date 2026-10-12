@@ -3,8 +3,10 @@ package emu.grasscutter.data.excels;
 import emu.grasscutter.data.*;
 import emu.grasscutter.data.ResourceType.LoadPriority;
 import emu.grasscutter.data.common.ItemParamData;
-import java.util.List;
+
 import lombok.Getter;
+
+import java.util.List;
 
 @ResourceType(
         name = {"CookRecipeExcelConfigData.json"},
@@ -18,6 +20,7 @@ public class CookRecipeData extends GameResource {
     private int id;
 
     private int rankLevel;
+    private String foodType;
     private boolean isDefaultUnlocked;
     private int maxProficiency;
 
