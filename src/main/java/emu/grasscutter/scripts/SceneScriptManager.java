@@ -41,6 +41,7 @@ public class SceneScriptManager {
     private SceneMeta meta;
     private volatile boolean isInit;
     private volatile boolean initAttempted;
+    private final CompletableFuture<Boolean> initialization = new CompletableFuture<>();
     private boolean noCacheGroupGridsToDisk;
 
     private record TimeAxisKey(int groupId, String identifier) {}
@@ -117,6 +118,8 @@ public class SceneScriptManager {
         // TEMPORARY
         if (this.getScene().getId() < 10
                 && !Grasscutter.getConfig().server.game.enableScriptInBigWorld) {
+            this.initAttempted = true;
+            this.initialization.complete(false);
             return;
         }
 
@@ -551,25 +554,26 @@ public class SceneScriptManager {
     }
 
     private void init() {
-        var event = new SceneMetaLoadEvent(getScene());
-        event.call();
-
-        if (event.isOverride()) {
-            // Group grids should not be cached to disk when a scene
-            // group override is in effect. Otherwise, when the server
-            // next runs without that override, the cached content
-            // will not make sense.
-            noCacheGroupGridsToDisk = true;
+        try {
+            if (destroyed) return;
+            var event = new SceneMetaLoadEvent(getScene());
+            event.call();
+            if (event.isOverride()) noCacheGroupGridsToDisk = true;
+            var loaded = ScriptLoader.getSceneMeta(getScene().getId());
+            // Destruction may happen while the resource loader is still blocked.
+            synchronized (scene) {
+                if (!destroyed && loaded != null) {
+                    this.meta = loaded;
+                    this.isInit = true;
+                }
+            }
+        } catch (RuntimeException error) {
+            Grasscutter.getLogger()
+                    .error("Scene {} script initialization failed", scene.getId(), error);
+        } finally {
+            this.initAttempted = true;
+            this.initialization.complete(isInit && !destroyed);
         }
-
-        var meta = ScriptLoader.getSceneMeta(getScene().getId());
-        if (meta != null) {
-            this.meta = meta;
-
-            // TEMP
-            this.isInit = true;
-        }
-        this.initAttempted = true;
     }
 
     public List<Grid> getGroupGrids() {
@@ -743,6 +747,11 @@ public class SceneScriptManager {
      */
     public boolean isInitAttempted() {
         return initAttempted;
+    }
+
+    /** Reports the initialization outcome once; unavailable scenes also release their waiters. */
+    public void whenInitialized(java.util.function.Consumer<Boolean> callback) {
+        initialization.thenAccept(ready -> callback.accept(ready && !destroyed));
     }
 
     public void loadBlockFromScript(SceneBlock block) {
@@ -1677,10 +1686,12 @@ public class SceneScriptManager {
     public void onDestroy() {
         synchronized (scene) {
             destroyed = true;
+            isInit = false;
             unloadCurrentMonsterTide();
             activeGroupTimers.values().forEach(this::stopGroupTimer);
             activeGroupTimers.clear();
         }
+        initialization.complete(false);
         scene.getSealBattleManager().close();
         scene.getScenePlayBattleManager().close();
         List<SceneTimeAxis> axes;

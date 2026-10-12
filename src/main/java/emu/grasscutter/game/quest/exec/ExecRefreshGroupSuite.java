@@ -6,6 +6,7 @@ import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.quest.GameQuest;
 import emu.grasscutter.game.quest.QuestValueExec;
 import emu.grasscutter.game.quest.enums.QuestExec;
+import emu.grasscutter.game.quest.enums.QuestState;
 import emu.grasscutter.game.quest.handlers.QuestExecHandler;
 import emu.grasscutter.game.world.Scene;
 import emu.grasscutter.game.world.World;
@@ -48,7 +49,51 @@ public class ExecRefreshGroupSuite extends QuestExecHandler {
         if (world == null) return false;
         var scene = world.getSceneById(sceneId);
         if (scene == null) return false;
+        var scripts = scene.getScriptManager();
+        if (scripts.isDestroyed()) return false;
+        if (!scripts.isInit()) {
+            // Initialization may complete between these two status reads.
+            if (scripts.isInitAttempted() && !scripts.isInit()) return false;
+            final QuestState state;
+            final QuestData definition;
+            final long revision;
+            synchronized (quest) {
+                state = quest.getState();
+                definition = quest.getQuestData();
+                revision = quest.getExecutionRevision();
+            }
+            scripts.whenInitialized(
+                    ready -> {
+                        if (!ready) return;
+                        scene.getScheduler()
+                                .scheduleDelayedTask(
+                                        () -> {
+                                            synchronized (quest) {
+                                                if (quest.getOwner() == owner
+                                                        && owner.getWorld() == world
+                                                        && world.getScenes().get(sceneId) == scene
+                                                        && owner.getQuestManager()
+                                                                        .getQuestById(
+                                                                                quest
+                                                                                        .getSubQuestId())
+                                                                == quest
+                                                        && quest.getState() == state
+                                                        && quest.getQuestData() == definition
+                                                        && quest.getExecutionRevision() == revision
+                                                        && scripts.isInit()
+                                                        && !scripts.isDestroyed()) {
+                                                    applyChanges(quest, scene, changes);
+                                                }
+                                            }
+                                        },
+                                        1);
+                    });
+            return true;
+        }
+        return applyChanges(quest, scene, changes);
+    }
 
+    private static boolean applyChanges(GameQuest quest, Scene scene, List<SuiteChange> changes) {
         boolean result = true;
         for (var change : changes) {
             try {

@@ -28,7 +28,8 @@ public class GameQuest {
 
     @Getter private int subQuestId;
     @Getter private int mainQuestId;
-    @Getter @Setter public QuestState state;
+    @Getter public volatile QuestState state;
+    @Transient @Getter private transient volatile long executionRevision;
 
     @Getter @Setter private int startTime;
     @Getter @Setter private int acceptTime;
@@ -63,11 +64,17 @@ public class GameQuest {
         this.finishTime = 0;
     }
 
+    /** A new phase invalidates delayed actions even when state and timestamps repeat. */
+    public synchronized void setState(QuestState state) {
+        this.state = state;
+        executionRevision++;
+    }
+
     public void start() {
         this.acceptTime = Utils.getCurrentSeconds();
         this.startTime = this.acceptTime;
         this.startGameDay = getOwner().getWorld().getTotalGameTimeDays();
-        this.state = QuestState.QUEST_STATE_UNFINISHED;
+        setState(QuestState.QUEST_STATE_UNFINISHED);
 
         val triggerCond =
                 questData.getFinishCond().stream()
@@ -280,7 +287,7 @@ public class GameQuest {
                 return;
             }
 
-            this.state = QuestState.QUEST_STATE_FINISHED;
+            setState(QuestState.QUEST_STATE_FINISHED);
         }
         this.finishTime = Utils.getCurrentSeconds();
 
@@ -339,7 +346,7 @@ public class GameQuest {
 
     // TODO
     public void fail() {
-        this.state = QuestState.QUEST_STATE_FAILED;
+        setState(QuestState.QUEST_STATE_FAILED);
         this.finishTime = Utils.getCurrentSeconds();
 
         this.getOwner().sendPacket(new PacketQuestListUpdateNotify(this));
