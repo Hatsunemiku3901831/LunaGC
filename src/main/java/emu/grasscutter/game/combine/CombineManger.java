@@ -87,7 +87,8 @@ public class CombineManger extends BaseGameSystem {
     }
 
     private CombineResult combineLocked(Player player, Inventory inventory, int cid, int count) {
-        if (player.getPendingCombine() != null) return fail(player, Retcode.RET_SVR_ERROR_VALUE);
+        if (player.getPendingCombine() != null || player.getPendingStrongbox() != null)
+            return fail(player, Retcode.RET_SVR_ERROR_VALUE);
         var data = GameData.getCombineDataMap().get(cid);
         if (data == null || data.getId() != cid || count <= 0)
             return fail(player, Retcode.RET_FAIL_VALUE);
@@ -268,6 +269,10 @@ public class CombineManger extends BaseGameSystem {
     }
 
     private void decomposeLocked(Player player, int configId, int count, List<Long> input) {
+        if (player.getPendingStrongbox() != null || player.getPendingCombine() != null) {
+            player.sendPacket(new PacketReliquaryDecomposeRsp(Retcode.RET_SVR_ERROR));
+            return;
+        }
         var rule = GameData.getReliquaryDecomposeDataMap().get(configId);
         int inputsPerOutput = rule == null ? 3 : rule.getNeedReliquaryCount();
         int rank = rule == null ? 5 : rule.getNeedReliquaryRankLevel();
@@ -321,22 +326,53 @@ public class CombineManger extends BaseGameSystem {
             return;
         }
 
-        // Delete the input reliquaries.
-        for (long guid : input) {
-            inventory.removeItem(guid);
+        StrongboxReceipt receipt = null;
+        var outputs = new ArrayList<GameItem>();
+        try {
+            // Freeze random item IDs and attributes before reserving or deleting ingredients.
+            for (int i = 0; i < count; i++) {
+                int id = Utils.drawRandomListElement(possibleDrops);
+                var item = createStrongboxItem(id);
+                if (item == null
+                        || item.getItemId() != id
+                        || item.getCount() != 1
+                        || item.getItemData() != GameData.getItemDataMap().get(id))
+                    throw new IllegalStateException("Invalid generated strongbox relic");
+                outputs.add(item);
+            }
+            var ingredients = input.stream().map(inventory::getItemByGuid).toList();
+            receipt = new StrongboxReceipt(configId, ingredients, outputs);
+            player.setPendingStrongbox(receipt);
+            DatabaseHelper.saveGameSync(player);
+            StrongboxDelivery.consume(player, receipt, ingredients);
+            StrongboxDelivery.grant(player, receipt, outputs);
+            receipt.completed();
+            DatabaseHelper.saveGameSync(player);
+            player.setPendingStrongbox(null);
+            DatabaseHelper.saveGameSync(player);
+        } catch (RuntimeException failure) {
+            if (receipt != null) {
+                player.setPendingStrongbox(receipt);
+                try {
+                    DatabaseHelper.saveGameSync(player);
+                } catch (RuntimeException saveFailure) {
+                    failure.addSuppressed(saveFailure);
+                }
+            }
+            Grasscutter.getLogger()
+                    .error(
+                            "Strongbox needs reconciliation: UID {}, config {}",
+                            player.getUid(),
+                            configId,
+                            failure);
+            player.sendPacket(new PacketReliquaryDecomposeRsp(Retcode.RET_SVR_ERROR));
+            return;
         }
+        player.sendPacket(
+                new PacketReliquaryDecomposeRsp(outputs.stream().map(GameItem::getGuid).toList()));
+    }
 
-        // Generate outoput reliquaries.
-        List<Long> resultItems = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            int itemId = Utils.drawRandomListElement(possibleDrops);
-            GameItem newReliquary = new GameItem(itemId, 1);
-
-            inventory.addItem(newReliquary);
-            resultItems.add(newReliquary.getGuid());
-        }
-
-        // Send packet.
-        player.sendPacket(new PacketReliquaryDecomposeRsp(resultItems));
+    protected GameItem createStrongboxItem(int id) {
+        return new GameItem(id, 1);
     }
 }

@@ -152,6 +152,12 @@ public class GameItem {
         return id;
     }
 
+    /** Reserve a durable identity before an economic intent references a newly created item. */
+    public synchronized ObjectId ensurePersistenceId() {
+        if (id == null) id = new ObjectId();
+        return id;
+    }
+
     public ItemType getItemType() {
         return this.itemData.getItemType();
     }
