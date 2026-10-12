@@ -91,56 +91,70 @@ public final class DungeonSystem extends BaseGameSystem {
     }
 
     public boolean enterDungeon(Player player, int pointId, int dungeonId, boolean savePrevious) {
-        DungeonData data = GameData.getDungeonDataMap().get(dungeonId);
-
-        if (data == null) {
+        if (player == null) {
             return false;
         }
-        Grasscutter.getLogger()
-                .debug(
-                        "{} ({}) is trying to enter dungeon {}.",
-                        player.getNickname(),
-                        player.getUid(),
-                        dungeonId);
+        synchronized (player.getSceneTransferLock()) {
+            var world = player.getWorld();
+            var source = player.getScene();
+            DungeonData data = GameData.getDungeonDataMap().get(dungeonId);
 
-        var sceneId = data.getSceneId();
-        var scene = player.getScene();
-        if (savePrevious) scene.setPrevScene(scene.getId());
+            if (world == null || source == null || data == null) {
+                return false;
+            }
+            Grasscutter.getLogger()
+                    .debug(
+                            "{} ({}) is trying to enter dungeon {}.",
+                            player.getNickname(),
+                            player.getUid(),
+                            dungeonId);
 
-        if (player.getWorld().transferPlayerToScene(player, sceneId, data)) {
-            scene = player.getScene();
+            var sceneId = data.getSceneId();
+            if (!world.transferPlayerToScene(player, sceneId, data)) {
+                return false;
+            }
+            var scene = player.getScene();
             scene.setDungeonManager(new DungeonManager(scene, data));
             MissingDomainFallbackManager.install(scene, data);
             scene.addDungeonSettleObserver(basicDungeonSettleObserver);
+            if (savePrevious) {
+                scene.setPrevScene(source.getId());
+                scene.setPrevScenePoint(pointId);
+            }
+            return true;
         }
-
-        if (savePrevious) scene.setPrevScenePoint(pointId);
-        return true;
     }
 
     /** used in tower dungeons handoff */
     public boolean handoffDungeon(
             Player player, int dungeonId, List<DungeonSettleListener> dungeonSettleListeners) {
-        DungeonData data = GameData.getDungeonDataMap().get(dungeonId);
-
-        if (data == null) {
+        if (player == null) {
             return false;
         }
-        Grasscutter.getLogger()
-                .info(
-                        "{}({}) is trying to enter tower dungeon {}",
-                        player.getNickname(),
-                        player.getUid(),
-                        dungeonId);
+        synchronized (player.getSceneTransferLock()) {
+            var world = player.getWorld();
+            DungeonData data = GameData.getDungeonDataMap().get(dungeonId);
 
-        if (player.getWorld().transferPlayerToScene(player, data.getSceneId(), data)) {
+            if (world == null || player.getScene() == null || data == null) {
+                return false;
+            }
+            Grasscutter.getLogger()
+                    .info(
+                            "{}({}) is trying to enter tower dungeon {}",
+                            player.getNickname(),
+                            player.getUid(),
+                            dungeonId);
+
+            if (!world.transferPlayerToScene(player, data.getSceneId(), data)) {
+                return false;
+            }
             var scene = player.getScene();
             var dungeonManager = new DungeonManager(scene, data);
             dungeonManager.setTowerDungeon(true);
             scene.setDungeonManager(dungeonManager);
             dungeonSettleListeners.forEach(scene::addDungeonSettleObserver);
+            return true;
         }
-        return true;
     }
 
     public void exitDungeon(Player player) {
