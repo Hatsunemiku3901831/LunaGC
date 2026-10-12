@@ -36,6 +36,7 @@ class ForgeRefundFlowTest {
     private Object oldDatastore;
     private Map<Integer, ForgeData> oldRecipes;
     private Map<Integer, ItemData> oldItems;
+    private Map<Integer, DropTableData> oldDrops;
     private boolean oldResinUsage;
     private int saves, failSave;
     private final Gson gson = new Gson();
@@ -71,13 +72,14 @@ class ForgeRefundFlowTest {
         environment = new AbilityTestFixture();
         oldRecipes = new HashMap<>(GameData.getForgeDataMap());
         oldItems = new HashMap<>(GameData.getItemDataMap());
+        oldDrops = new HashMap<>(GameData.getDropTableDataMap());
         GameData.getForgeDataMap().clear();
         GameData.getItemDataMap().clear();
         oldResinUsage = emu.grasscutter.config.Configuration.GAME_OPTIONS.resinOptions.resinUsage;
         emu.grasscutter.config.Configuration.GAME_OPTIONS.resinOptions.resinUsage = false;
         recipe("{}");
         for (int id : List.of(101001, 101002, 104011, 101004, 104013)) item(id, "ITEM_MATERIAL");
-        for (int id : List.of(202, 106)) item(id, "ITEM_VIRTUAL");
+        for (int id : List.of(102, 105, 202, 106)) item(id, "ITEM_VIRTUAL");
         player = new RefundPlayer();
         player.setSession(
                 new InvestigationRewardTest.ClaimSession(
@@ -121,6 +123,8 @@ class ForgeRefundFlowTest {
         GameData.getForgeDataMap().putAll(oldRecipes);
         GameData.getItemDataMap().clear();
         GameData.getItemDataMap().putAll(oldItems);
+        GameData.getDropTableDataMap().clear();
+        GameData.getDropTableDataMap().putAll(oldDrops);
         emu.grasscutter.config.Configuration.GAME_OPTIONS.resinOptions.resinUsage = oldResinUsage;
         environment.close();
     }
@@ -229,6 +233,17 @@ class ForgeRefundFlowTest {
     }
 
     private void actualResinRecipe() throws Exception {
+        var drops =
+                JsonUtils.loadToList(
+                        java.nio.file.Path.of("/resources/Server/DropTableExcelConfigData.json"),
+                        DropTableData.class);
+        GameData.getDropTableDataMap()
+                .put(
+                        208001500,
+                        drops.stream()
+                                .filter(row -> row.getId() == 208001500)
+                                .findFirst()
+                                .orElseThrow());
         var rows =
                 JsonUtils.loadToList(
                         java.nio.file.Path.of(

@@ -26,9 +26,51 @@ public class ActiveForgeData {
     private int paymentVersion;
     private int paidUnitsRemaining;
     private int paidForgePointsPerUnit;
-    private List<PaidCost> paidCostsPerUnit;
+    private List<PaidCost> paidCostsPerUnit = new ArrayList<>();
     private int bonusVersion;
-    private List<PaidCost> bonusReturnsPerUnit;
+    // Morphia omits empty collections; retain the valid empty default after loading a queue.
+    private List<PaidCost> bonusReturnsPerUnit = new ArrayList<>();
+    private int productVersion;
+    private List<PaidCost> productsPerUnit;
+
+    public int getProductVersion() {
+        return productVersion;
+    }
+
+    /** Freeze all guaranteed rewards before paying; configuration edits cannot rewrite a queue. */
+    public void captureProducts(List<ItemParamData> products) {
+        if (isBusy()
+                || productVersion != 0
+                || paymentVersion != 1
+                || products == null
+                || products.isEmpty())
+            throw new IllegalStateException("Forge products cannot be recorded");
+        var copied = new ArrayList<PaidCost>();
+        var ids = new HashSet<Integer>();
+        for (var item : products) {
+            if (item == null || item.getId() <= 0 || item.getCount() <= 0 || !ids.add(item.getId()))
+                throw new IllegalArgumentException("Invalid forge product row");
+            copied.add(new PaidCost(item.getId(), item.getCount()));
+        }
+        productsPerUnit = copied;
+        productVersion = 1;
+    }
+
+    public List<ItemParamData> getProducts(int units) {
+        if (productVersion != 1
+                || productsPerUnit == null
+                || productsPerUnit.isEmpty()
+                || units <= 0
+                || units > count) throw new IllegalStateException("Invalid forge product receipt");
+        var result = new ArrayList<ItemParamData>();
+        var ids = new HashSet<Integer>();
+        for (var item : productsPerUnit) {
+            if (item == null || item.itemId <= 0 || item.count <= 0 || !ids.add(item.itemId))
+                throw new IllegalStateException("Invalid forge product row");
+            result.add(new ItemParamData(item.itemId, Math.multiplyExact(item.count, units)));
+        }
+        return result;
+    }
 
     public int getBonusVersion() {
         return bonusVersion;

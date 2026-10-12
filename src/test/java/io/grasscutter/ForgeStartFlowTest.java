@@ -35,6 +35,7 @@ class ForgeStartFlowTest {
     private GameServerPacketHandler dispatcher;
     private Map<Integer, ForgeData> oldRecipes;
     private Map<Integer, ItemData> oldItems;
+    private Map<Integer, DropTableData> oldDrops;
     private java.lang.reflect.Field datastore;
     private Object oldDatastore;
     private int confirmations, failConfirmation;
@@ -91,6 +92,7 @@ class ForgeStartFlowTest {
         oldResinUsage = emu.grasscutter.config.Configuration.GAME_OPTIONS.resinOptions.resinUsage;
         oldRecipes = new HashMap<>(GameData.getForgeDataMap());
         oldItems = new HashMap<>(GameData.getItemDataMap());
+        oldDrops = new HashMap<>(GameData.getDropTableDataMap());
         GameData.getForgeDataMap().clear();
         GameData.getItemDataMap().clear();
         recipe("{}");
@@ -136,6 +138,8 @@ class ForgeStartFlowTest {
         GameData.getForgeDataMap().putAll(oldRecipes);
         GameData.getItemDataMap().clear();
         GameData.getItemDataMap().putAll(oldItems);
+        GameData.getDropTableDataMap().clear();
+        GameData.getDropTableDataMap().putAll(oldDrops);
         environment.close();
         emu.grasscutter.config.Configuration.GAME_OPTIONS.resinOptions.resinUsage = oldResinUsage;
     }
@@ -510,6 +514,19 @@ class ForgeStartFlowTest {
         item(101004, "ITEM_MATERIAL");
         item(104013, "ITEM_MATERIAL");
         item(106, "ITEM_VIRTUAL");
+        item(102, "ITEM_VIRTUAL");
+        item(105, "ITEM_VIRTUAL");
+        var drops =
+                emu.grasscutter.utils.JsonUtils.loadToList(
+                        java.nio.file.Path.of("/resources/Server/DropTableExcelConfigData.json"),
+                        DropTableData.class);
+        GameData.getDropTableDataMap()
+                .put(
+                        208001500,
+                        drops.stream()
+                                .filter(row -> row.getId() == 208001500)
+                                .findFirst()
+                                .orElseThrow());
         assertTrue(player.getInventory().addItem(101004, 10));
         player.setProperty(PlayerProperty.PROP_PLAYER_WORLD_LEVEL, 3);
         player.setProperty(PlayerProperty.PROP_PLAYER_RESIN, 100);

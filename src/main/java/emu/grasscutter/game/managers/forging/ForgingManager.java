@@ -189,6 +189,14 @@ public final class ForgingManager extends BasePlayerManager {
                 failStart(Retcode.RET_NOT_FOUND_CONFIG);
                 return;
             }
+            List<ItemParamData> products;
+            try {
+                products = ForgeProducts.resolve(definition);
+                for (var product : products) Math.multiplyExact(product.getCount(), count);
+            } catch (RuntimeException invalid) {
+                failStart(Retcode.RET_NOT_FOUND_CONFIG);
+                return;
+            }
             var costs = forgeCosts(definition, count);
             if (costs == null) {
                 failStart(Retcode.RET_NOT_FOUND_CONFIG);
@@ -232,6 +240,7 @@ public final class ForgingManager extends BasePlayerManager {
             queue.setForgeTime(definition.getForgeTime());
             queue.capturePayment(costs, count, definition.getForgePoint());
             queue.captureBonus(ForgeBonuses.oreReturns(player, avatar, definition, costs, count));
+            queue.captureProducts(products);
             queue.reserveStart();
             active.add(queue);
             int pointsBefore = player.getForgePoints();
@@ -320,26 +329,22 @@ public final class ForgingManager extends BasePlayerManager {
             failManipulate(type, Retcode.RET_FORGE_NO_FINISH_CAN_TAKE);
             return;
         }
-        int resultId =
-                definition.getResultItemId() > 0
-                        ? definition.getResultItemId()
-                        : definition.getShowItemId();
-        var result = GameData.getItemDataMap().get(resultId);
-        long amount = (long) definition.getResultItemCount() * finished;
-        if (result == null
-                || result.getId() != resultId
-                || result.isUseOnGain()
-                || result.getItemType() != ItemType.ITEM_MATERIAL
-                        && result.getItemType() != ItemType.ITEM_WEAPON
-                || amount > Integer.MAX_VALUE) {
+        List<ItemParamData> products;
+        try {
+            if (forge.getProductVersion() == 1) products = forge.getProducts(finished);
+            else if (forge.getProductVersion() == 0)
+                products =
+                        ForgeProducts.resolve(definition).stream()
+                                .map(
+                                        item ->
+                                                new ItemParamData(
+                                                        item.getId(),
+                                                        Math.multiplyExact(
+                                                                item.getCount(), finished)))
+                                .toList();
+            else throw new IllegalArgumentException("Unknown forge product receipt");
+        } catch (RuntimeException invalid) {
             failManipulate(type, Retcode.RET_NOT_FOUND_CONFIG);
-            return;
-        }
-        boolean weapon = result.getItemType() == ItemType.ITEM_WEAPON;
-        var weaponTab = player.getInventory().getInventoryTab(ItemType.ITEM_WEAPON);
-        if (weapon && (weaponTab == null || amount > weaponTab.getMaxCapacity())
-                || !weapon && (result.getStackLimit() <= 0 || amount > result.getStackLimit())) {
-            failManipulate(type, Retcode.RET_ITEM_EXCEED_LIMIT);
             return;
         }
         boolean confirmationStarted = false;
@@ -347,16 +352,44 @@ public final class ForgingManager extends BasePlayerManager {
             // Block reentry before the plugin receives mutable output objects.
             forge.reserveOutput(finished);
             var outputs = new ArrayList<GameItem>();
-            for (int i = 0, entries = weapon ? (int) amount : 1; i < entries; i++) {
-                var event =
-                        new PlayerForgeItemEvent(
-                                player, new GameItem(result, weapon ? 1 : (int) amount));
-                if (!event.call()) {
+            var experience = new ArrayList<ItemParamData>();
+            for (var product : products) {
+                var result = GameData.getItemDataMap().get(product.getId());
+                if (result == null || result.getId() != product.getId() || result.isUseOnGain()) {
                     forge.releaseOutputReservation();
-                    failManipulate(type, Retcode.RET_FAIL);
+                    failManipulate(type, Retcode.RET_NOT_FOUND_CONFIG);
                     return;
                 }
-                outputs.add(event.getItemForged());
+                if (result.getItemType() == ItemType.ITEM_VIRTUAL) {
+                    experience.add(product);
+                    continue;
+                }
+                boolean weapon = result.getItemType() == ItemType.ITEM_WEAPON;
+                var weaponTab = player.getInventory().getInventoryTab(ItemType.ITEM_WEAPON);
+                if (!weapon && result.getItemType() != ItemType.ITEM_MATERIAL) {
+                    forge.releaseOutputReservation();
+                    failManipulate(type, Retcode.RET_NOT_FOUND_CONFIG);
+                    return;
+                }
+                if (weapon && (weaponTab == null || product.getCount() > weaponTab.getMaxCapacity())
+                        || !weapon
+                                && (result.getStackLimit() <= 0
+                                        || product.getCount() > result.getStackLimit())) {
+                    forge.releaseOutputReservation();
+                    failManipulate(type, Retcode.RET_ITEM_EXCEED_LIMIT);
+                    return;
+                }
+                for (int i = 0, entries = weapon ? product.getCount() : 1; i < entries; i++) {
+                    var event =
+                            new PlayerForgeItemEvent(
+                                    player, new GameItem(result, weapon ? 1 : product.getCount()));
+                    if (!event.call()) {
+                        forge.releaseOutputReservation();
+                        failManipulate(type, Retcode.RET_FAIL);
+                        return;
+                    }
+                    outputs.add(event.getItemForged());
+                }
             }
             var delivery = new ArrayList<>(outputs);
             for (var bonus : forge.getBonusReturns(finished)) {
@@ -377,6 +410,7 @@ public final class ForgingManager extends BasePlayerManager {
                 delivery.add(new GameItem(data, bonus.getCount()));
             }
             int validation = ForgeOutputDelivery.validate(player, delivery);
+            if (validation == 0) validation = ForgeExperienceDelivery.validate(player, experience);
             if (validation != 0) {
                 forge.releaseOutputReservation();
                 failManipulate(type, Retcode.forNumber(validation));
@@ -385,6 +419,8 @@ public final class ForgingManager extends BasePlayerManager {
             confirmationStarted = true;
             DatabaseHelper.saveGameSync(player);
             var hints = ForgeOutputDelivery.grant(player, delivery);
+            var primaryHints = new ArrayList<>(hints.subList(0, outputs.size()));
+            primaryHints.addAll(ForgeExperienceDelivery.grant(player, experience));
             forge.finishOutput();
             player.getBattlePassManager()
                     .triggerMission(WatcherTriggerType.TRIGGER_DO_FORGE, 0, finished);
@@ -409,7 +445,7 @@ public final class ForgingManager extends BasePlayerManager {
                     new PacketForgeQueueManipulateRsp(
                             0,
                             type,
-                            hints.subList(0, outputs.size()),
+                            primaryHints,
                             hints.subList(outputs.size(), hints.size()),
                             List.of()));
         } catch (RuntimeException failure) {
