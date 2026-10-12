@@ -443,7 +443,7 @@ public final class PacketOpcodes {
     public static final int DungeonDieOptionReq = 873;
     public static final int DungeonDieOptionRsp = 22925;
     public static final int DungeonEntryToBeExploreNotify = 26609;
-    public static final int DungeonRestartReq = -89;
+    public static final int DungeonRestartReq = 9381;
     public static final int DungeonRestartRsp = 25275;
     public static final int DungeonWayPointNotify = 1222;
     public static final int GetDailyDungeonEntryInfoReq = -90;

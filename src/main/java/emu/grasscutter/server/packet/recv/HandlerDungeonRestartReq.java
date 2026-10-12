@@ -1,5 +1,6 @@
 package emu.grasscutter.server.packet.recv;
 
+import emu.grasscutter.game.dungeons.DungeonRestartGuard;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.server.game.GameSession;
 
@@ -7,7 +8,13 @@ import emu.grasscutter.server.game.GameSession;
 public class HandlerDungeonRestartReq extends PacketHandler {
     @Override
     public void handle(GameSession session, byte[] header, byte[] payload) throws Exception {
-        session.getPlayer().getServer().getDungeonSystem().restartDungeon(session.getPlayer());
-        session.getPlayer().sendPacket(new BasePacket(PacketOpcodes.DungeonRestartRsp));
+        var player = session.getPlayer();
+        if (player == null) return;
+        synchronized (player.getSceneTransferLock()) {
+            if (!DungeonRestartGuard.mayRestart(player, payload)) return;
+            if (player.getServer().getDungeonSystem().tryRestartDungeon(player)) {
+                player.sendPacket(new BasePacket(PacketOpcodes.DungeonRestartRsp));
+            }
+        }
     }
 }

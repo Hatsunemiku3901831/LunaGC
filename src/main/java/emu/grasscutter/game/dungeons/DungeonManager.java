@@ -42,7 +42,7 @@ public final class DungeonManager {
     @Getter private final DungeonPassConfigData passConfigData;
 
     @Getter private final int[] finishedConditions;
-    private final IntSet rewardedPlayers = new IntOpenHashSet();
+    private final IntSet rewardedPlayers = IntSets.synchronize(new IntOpenHashSet());
     private final Set<Integer> activeDungeonWayPoints = new HashSet<>();
     private boolean ended = false;
     private int newestWayPoint = 0;
@@ -89,6 +89,10 @@ public final class DungeonManager {
     public boolean isFinishedSuccessfully() {
         if (passConfigData.getConds() == null) return false;
         return LogicType.calculate(passConfigData.getLogicType(), finishedConditions);
+    }
+
+    public boolean hasClaimedDomainReward(int uid) {
+        return rewardedPlayers.contains(uid);
     }
 
     public int getLevelForMonster(int id) {

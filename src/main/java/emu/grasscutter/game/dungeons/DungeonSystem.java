@@ -206,39 +206,37 @@ public final class DungeonSystem extends BaseGameSystem {
     }
 
     public void restartDungeon(Player player) {
-        var scene = player.getScene();
-        if (scene == null) {
-            return;
-        }
-        var dungeonManager = scene.getDungeonManager();
-        if (dungeonManager == null || dungeonManager.getDungeonData() == null) {
-            return;
-        }
-        var dungeonData = dungeonManager.getDungeonData();
-        var sceneId = dungeonData.getSceneId();
-        var isTower = dungeonManager.isTowerDungeon();
+        tryRestartDungeon(player);
+    }
 
-        // Forward over previous scene and scene point
-        var prevScene = scene.getPrevScene();
-        var pointId = scene.getPrevScenePoint();
-
-        // Force teardown so the scene is rebuilt fresh instead of reused stale.
-        scene.setDontDestroyWhenEmpty(false);
-        scene.getPlayers().forEach(scene::removePlayer);
-
-        if (player.getWorld().transferPlayerToScene(player, sceneId, dungeonData)) {
-            scene = player.getScene();
-            scene.setPrevScene(prevScene);
-            scene.setPrevScenePoint(pointId);
-            var newManager = new DungeonManager(scene, dungeonData);
-            newManager.setTowerDungeon(isTower);
-            scene.setDungeonManager(newManager);
-            if (isTower) {
-                scene.addDungeonSettleObserver(new TowerDungeonSettleListener());
-            } else {
-                MissingDomainFallbackManager.install(scene, dungeonData);
-                scene.addDungeonSettleObserver(basicDungeonSettleObserver);
-            }
+    public boolean tryRestartDungeon(Player player) {
+        if (player == null) return false;
+        synchronized (player.getSceneTransferLock()) {
+            var scene = player.getScene();
+            var world = player.getWorld();
+            if (scene == null || world == null) return false;
+            var dungeonManager = scene.getDungeonManager();
+            if (dungeonManager == null || dungeonManager.getDungeonData() == null) return false;
+            var dungeonData = dungeonManager.getDungeonData();
+            var isTower = dungeonManager.isTowerDungeon();
+            var prevScene = scene.getPrevScene();
+            var pointId = scene.getPrevScenePoint();
+            return world.restartDungeonScene(
+                    player,
+                    dungeonData,
+                    fresh -> {
+                        var newManager = new DungeonManager(fresh, dungeonData);
+                        newManager.setTowerDungeon(isTower);
+                        fresh.setDungeonManager(newManager);
+                        fresh.setPrevScene(prevScene);
+                        fresh.setPrevScenePoint(pointId);
+                        if (isTower) {
+                            fresh.addDungeonSettleObserver(new TowerDungeonSettleListener());
+                        } else {
+                            MissingDomainFallbackManager.install(fresh, dungeonData);
+                            fresh.addDungeonSettleObserver(basicDungeonSettleObserver);
+                        }
+                    });
         }
     }
 }

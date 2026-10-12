@@ -6,6 +6,7 @@ import emu.grasscutter.GameConstants;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.excels.dungeon.DungeonData;
+import emu.grasscutter.game.dungeons.DungeonManager;
 import emu.grasscutter.game.entity.EntityTeam;
 import emu.grasscutter.game.entity.EntityWorld;
 import emu.grasscutter.game.player.Player;
@@ -261,6 +262,7 @@ public class World implements Iterable<Player> {
                 final int peerId;
                 synchronized (MEMBERSHIP_LOCK) {
                     if (this.closing || this.players.contains(player)) return false;
+                    if (this.getScenes().get(sceneId) != scene) return false;
                     if (previousWorld != null)
                         departure = previousWorld.detachPlayer(player, previousScene);
                     this.players.add(player);
@@ -625,7 +627,64 @@ public class World implements Iterable<Player> {
         }
     }
 
-    private boolean transferPlayerToSceneLocked(Player player, TeleportProperties teleportProperties) {
+    /** Rebuild only a solo dungeon, after the normal teleport event and admission checks. */
+    public boolean restartDungeonScene(Player player, DungeonData data, Consumer<Scene> prepare) {
+        if (player == null || data == null || prepare == null) return false;
+        synchronized (player.getSceneTransferLock()) {
+            var source = player.getScene();
+            var manager = source == null ? null : source.getDungeonManager();
+            if (!canRestartDungeonScene(player, source, manager, data)) return false;
+            var properties =
+                    TeleportProperties.builder()
+                            .sceneId(data.getSceneId())
+                            .dungeonId(data.getId())
+                            .teleportType(TeleportType.DUNGEON)
+                            .enterReason(EnterReason.DungeonEnter)
+                            .enterType(EnterType.EnterType_ENTER_DUNGEON)
+                            .teleportTo(data.getStartPosition())
+                            .teleportRot(data.getStartRotation())
+                            .build();
+            return transferPlayerToSceneLocked(player, properties, source, manager, prepare);
+        }
+    }
+
+    private boolean canRestartDungeonScene(
+            Player player, Scene source, DungeonManager manager, DungeonData data) {
+        if (data == null || manager == null) return false;
+        var resource = GameData.getSceneDataMap().get(data.getSceneId());
+        return !this.isMultiplayer
+                && this.host == player
+                && this.players.size() == 1
+                && this.players.get(0) == player
+                && player.getWorld() == this
+                && player.getScene() == source
+                && source != null
+                && source.getWorld() == this
+                && source.getId() == data.getSceneId()
+                && data.getId() > 0
+                && source.getSceneType() == SceneType.SCENE_DUNGEON
+                && resource != null
+                && resource.getSceneType() == SceneType.SCENE_DUNGEON
+                && GameData.getDungeonDataMap().get(data.getId()) == data
+                && this.getScenes().get(source.getId()) == source
+                && source.getPlayers().size() == 1
+                && source.getPlayers().get(0) == player
+                && !source.getScriptManager().isDestroyed()
+                && source.getDungeonManager() == manager
+                && manager.getDungeonData() == data;
+    }
+
+    private boolean transferPlayerToSceneLocked(
+            Player player, TeleportProperties teleportProperties) {
+        return transferPlayerToSceneLocked(player, teleportProperties, null, null, null);
+    }
+
+    private boolean transferPlayerToSceneLocked(
+            Player player,
+            TeleportProperties teleportProperties,
+            Scene restartSource,
+            DungeonManager restartManager,
+            Consumer<Scene> prepare) {
         // If a queued teleport already exists, cancel it. This prevents the player from
         // becoming stranded in a dungeon due to quitting it by teleporting to a map waypoint.
         synchronized (player) {
@@ -654,9 +713,38 @@ public class World implements Iterable<Player> {
         }
 
         Scene oldScene = player.getScene();
-        var newScene = this.getSceneById(teleportProperties.getSceneId());
-        if (newScene == null || !emu.grasscutter.game.tps.TpsAvatarSystem.canEnter(player, newScene.getSceneData())) {
+        var data = restartManager == null ? null : restartManager.getDungeonData();
+        if (restartSource != null
+                && !canRestartDungeonScene(player, restartSource, restartManager, data))
             return false;
+        var newScene =
+                restartSource == null
+                        ? this.getSceneById(teleportProperties.getSceneId())
+                        : new Scene(
+                                this,
+                                GameData.getSceneDataMap().get(teleportProperties.getSceneId()));
+        if (newScene == null
+                || !emu.grasscutter.game.tps.TpsAvatarSystem.canEnter(
+                        player, newScene.getSceneData())) {
+            if (restartSource != null && newScene != null) newScene.getScriptManager().onDestroy();
+            return false;
+        }
+
+        if (restartSource != null) {
+            try {
+                prepare.accept(newScene);
+                synchronized (MEMBERSHIP_LOCK) {
+                    if (!canRestartDungeonScene(player, restartSource, restartManager, data)
+                            || !this.getScenes()
+                                    .replace(restartSource.getId(), restartSource, newScene)) {
+                        return false;
+                    }
+                }
+            } finally {
+                if (this.getScenes().get(newScene.getId()) != newScene)
+                    newScene.getScriptManager().onDestroy();
+            }
+            restartSource.setDontDestroyWhenEmpty(false);
         }
 
         // Move directly in the same scene.
