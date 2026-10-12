@@ -3,6 +3,7 @@ package emu.grasscutter.game.battlepass;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.excels.BattlePassMissionData;
 import emu.grasscutter.game.player.Player;
+import emu.grasscutter.game.player.InvestigationHandbook;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.server.event.player.PlayerFinishBattlePassMission;
 import emu.grasscutter.server.game.*;
@@ -53,6 +54,7 @@ public class BattlePassSystem extends BaseGameSystem {
 
     public void triggerMission(Player player, String triggerType, int param, int progress) {
         if (progress <= 0) return;
+        InvestigationHandbook.trigger(player, triggerType, param, progress);
         var pass = player.getBattlePassManager();
         synchronized (pass) {
             pass.refreshMissions();

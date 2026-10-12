@@ -1720,6 +1720,7 @@ public class Player implements PlayerHook, FieldFetch {
         this.getServer().getShopSystem().sendProductPriceCatalog(session);
 
         this.getProgressManager().onPlayerLogin();
+        InvestigationHandbook.onPlayerLogin(this);
 
         session.send(new PacketFinishedParentQuestNotify(this));
         // The client replays the opening cutscene for as long as it believes the prologue is

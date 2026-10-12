@@ -322,6 +322,8 @@ public final class PlayerProgressManager extends BasePlayerDataManager {
             scene.getScriptManager()
                     .callEvent(new ScriptArgs(0, EVENT_UNLOCK_TRANS_POINT, sceneId, pointId));
 
+        InvestigationHandbook.refreshAndNotify(player);
+
         return true;
     }
 
@@ -331,6 +333,7 @@ public final class PlayerProgressManager extends BasePlayerDataManager {
 
         // Send packet.
         this.player.sendPacket(new PacketSceneAreaUnlockNotify(sceneId, areaId));
+        InvestigationHandbook.refreshAndNotify(player);
     }
 
     /** Give replace costume to player (Amber, Jean, Mona, Rosaria) */

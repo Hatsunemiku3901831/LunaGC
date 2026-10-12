@@ -22,6 +22,13 @@ public class PlayerProgress {
      */
     private IntArrayList completedDungeons;
 
+    private InvestigationProgress investigation;
+
+    public synchronized InvestigationProgress getInvestigation() {
+        if (investigation == null) investigation = new InvestigationProgress();
+        return investigation;
+    }
+
     // keep track of EXEC_ADD_QUEST_PROGRESS count, will be used in CONTENT_ADD_QUEST_PROGRESS
     // not sure where to put this, this should be saved to DB but not to individual quest, since
     // it will be hard to loop and compare

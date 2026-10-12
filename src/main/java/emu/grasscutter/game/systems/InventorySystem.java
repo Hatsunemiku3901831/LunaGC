@@ -9,6 +9,7 @@ import emu.grasscutter.data.excels.weapon.WeaponPromoteData;
 import emu.grasscutter.game.avatar.Avatar;
 import emu.grasscutter.game.inventory.*;
 import emu.grasscutter.game.player.Player;
+import emu.grasscutter.game.player.InvestigationHandbook;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.game.props.ItemUseAction.*;
 import emu.grasscutter.net.proto.ItemParamOuterClass.ItemParam;
@@ -262,6 +263,7 @@ public class InventorySystem extends BaseGameSystem {
         // Packet
         player.sendPacket(new PacketStoreItemChangeNotify(relic));
         player.sendPacket(new PacketReliquaryUpgradeRsp(relic, rate, oldLevel, oldAppendPropIdList));
+        InvestigationHandbook.refreshAndNotify(player);
     }
 
     public List<ItemParam> calcWeaponUpgradeReturnItems(
@@ -466,6 +468,7 @@ public class InventorySystem extends BaseGameSystem {
 
         // Call PlayerLevelItemEvent.
         new PlayerLevelItemEvent(player, oldLevel, weapon);
+        InvestigationHandbook.refreshAndNotify(player);
     }
 
     private List<ItemParam> getLeftoverOres(int leftover) {
@@ -596,6 +599,7 @@ public class InventorySystem extends BaseGameSystem {
         // Packets
         player.sendPacket(new PacketStoreItemChangeNotify(weapon));
         player.sendPacket(new PacketWeaponPromoteRsp(weapon, oldPromoteLevel));
+        InvestigationHandbook.refreshAndNotify(player);
     }
 
     public void promoteAvatar(Player player, long guid) {
@@ -660,6 +664,7 @@ public class InventorySystem extends BaseGameSystem {
         // TODO Send entity prop update packet to world
         avatar.recalcStats(true);
         avatar.save();
+        InvestigationHandbook.refreshAndNotify(player);
     }
 
     /**
@@ -878,6 +883,7 @@ public class InventorySystem extends BaseGameSystem {
 
         // Call PlayerLevelAvatarEvent.
         new PlayerLevelAvatarEvent(player, oldLevel, avatar).call();
+        InvestigationHandbook.refreshAndNotify(player);
     }
 
     public void upgradeAvatarFetterLevel(Player player, Avatar avatar, int expGain) {
