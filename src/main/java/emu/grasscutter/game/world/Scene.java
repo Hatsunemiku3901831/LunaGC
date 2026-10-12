@@ -411,6 +411,55 @@ public class Scene {
         player.sendPacket(new PacketSceneEntityAppearNotify(entity));
     }
 
+    /** A Lua position change keeps scene membership, group state and party instances. */
+    public synchronized boolean canRelocatePlayer(Player player) {
+        if (player == null
+                || player.getScene() != this
+                || player.getWorld() != world
+                || getWorld().getScenes().get(getId()) != this
+                || getScriptManager().isDestroyed()
+                || players.stream().noneMatch(member -> member == player)) return false;
+        var team = player.getTeamManager().getActiveTeam();
+        if (team == null
+                || team.isEmpty()
+                || team.stream()
+                        .anyMatch(
+                                avatar ->
+                                        avatar == null
+                                                || avatar.getScene() != this
+                                                || avatar.getPlayer() != player)) return false;
+        var current = player.getTeamManager().getCurrentAvatarEntity();
+        return current != null && entities.get(current.getId()) == current;
+    }
+
+    public synchronized boolean relocatePlayer(
+            Player player, Position position, Position rotation) {
+        if (!canRelocatePlayer(player)
+                || !finitePosition(position)
+                || rotation != null && !finitePosition(rotation)) return false;
+        var visible =
+                player.getTeamManager().getActiveTeam().stream()
+                        .filter(avatar -> entities.get(avatar.getId()) == avatar)
+                        .map(avatar -> (GameEntity) avatar)
+                        .toList();
+        player.getPosition().set(position);
+        if (rotation != null) player.getRotation().set(rotation);
+        // Refresh only registered avatars; inactive party members share the player's position.
+        broadcastPacket(
+                new PacketSceneEntityDisappearNotify(visible, VisionType.VisionType_VISION_REMOVE));
+        broadcastPacket(
+                new PacketSceneEntityAppearNotify(visible, VisionType.VisionType_VISION_BORN));
+        player.sendPacket(new PacketScenePlayerLocationNotify(this));
+        return true;
+    }
+
+    private static boolean finitePosition(Position position) {
+        return position != null
+                && Float.isFinite(position.getX())
+                && Float.isFinite(position.getY())
+                && Float.isFinite(position.getZ());
+    }
+
     public void addDropEntity(GameItem item, GameEntity bornForm, Player player, boolean share) {
 
         ItemData itemData = GameData.getItemDataMap().get(item.getItemId());

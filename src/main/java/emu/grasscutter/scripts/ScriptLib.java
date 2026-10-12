@@ -11,6 +11,7 @@ import emu.grasscutter.game.dungeons.challenge.factory.ChallengeFactory;
 import emu.grasscutter.game.entity.*;
 import emu.grasscutter.game.entity.gadget.GadgetWorktop;
 import emu.grasscutter.game.entity.gadget.platform.*;
+import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.game.quest.enums.*;
 import emu.grasscutter.game.world.*;
@@ -1906,41 +1907,51 @@ public class ScriptLib {
     }
 
     public int TransPlayerToPos(LuaTable var1) {
-        logger.warn("[LUA] Call unchecked TransPlayerToPos with {}", printTable(var1));
-
-        var targetsTable = var1.get("uid_list");
-        var pos = var1.get("pos");
-        var rot = var1.get("rot");
-        var radius = var1.get("radius");
-        if (targetsTable.isnil() || !targetsTable.istable() || targetsTable.length() == 0 || pos.isnil()) {
-            return 1;
-        }
-        ArrayList<Integer> targets = new ArrayList<>(targetsTable.length());
-        for (int i = 1; i <= targetsTable.length(); i++) {
-            targets.add(targetsTable.get(i).optint(-1));
-        }
-
-        var x = pos.get("x");
-        var y = pos.get("y");
-        var z = pos.get("z");
-
         var scriptManager = sceneScriptManager.getIfExists();
-        if (scriptManager == null || !x.isnumber() || !y.isnumber() || !z.isnumber()) {
-            return 2;
+        if (scriptManager == null || var1 == null) return 2;
+        var targetsTable = var1.get("uid_list");
+        if (!targetsTable.istable() || targetsTable.length() == 0) return 1;
+        var targetPos = relocationVector(var1.get("pos"), false);
+        var rot = var1.get("rot");
+        var targetRot = rot.isnil() ? null : relocationVector(rot, true);
+        if (targetPos == null || !rot.isnil() && targetRot == null) return 2;
+        var ids = new LinkedHashSet<Integer>();
+        for (int i = 1; i <= targetsTable.length(); i++) {
+            var uid = targetsTable.get(i);
+            if (!uid.isint() || uid.toint() <= 0) return 1;
+            ids.add(uid.toint());
         }
-
-        var targetPos = new Position(x.toint(), y.toint(), z.toint());
-
         var scene = scriptManager.getScene();
-        scene.getPlayers().stream().filter(p -> targets.contains(p.getUid())).forEach(p -> {
-            scene.removePlayer(p);
-            scene.addPlayer(p);
-            p.getPosition().set(targetPos);
+        synchronized (scene) {
+            if (!scriptManager.allowsGroupCall(getCurrentGroup().orElse(null))) return 2;
+            var targets = new ArrayList<Player>(ids.size());
+            for (int uid : ids) {
+                var player =
+                        scene.getPlayers().stream()
+                                .filter(member -> member.getUid() == uid)
+                                .findFirst()
+                                .orElse(null);
+                if (!scene.canRelocatePlayer(player)) return 2;
+                targets.add(player);
+            }
+            for (var player : targets)
+                if (!scene.relocatePlayer(player, targetPos, targetRot)) return 2;
+            return 0;
+        }
+    }
 
-            p.sendPacket(new PacketPlayerEnterSceneNotify(p, EnterTypeOuterClass.EnterType.EnterType_ENTER_GOTO, Lua, scene.getId(), targetPos));
-            p.sendPacket(new PacketEnterScenePeerNotify(p));
-        });
-        return 0;
+    private static Position relocationVector(LuaValue value, boolean optionalAxes) {
+        if (!value.istable()) return null;
+        float[] axes = new float[3];
+        String[] names = {"x", "y", "z"};
+        for (int i = 0; i < names.length; i++) {
+            var axis = value.get(names[i]);
+            if (axis.isnil() && optionalAxes) continue;
+            if (!axis.isnumber()) return null;
+            axes[i] = axis.tofloat();
+            if (!Float.isFinite(axes[i])) return null;
+        }
+        return new Position(axes[0], axes[1], axes[2]);
     }
 
     public int TryReallocateEntityAuthority(int uid, int endConfig, int var3) {
