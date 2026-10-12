@@ -1,42 +1,49 @@
 package emu.grasscutter.server.packet.recv;
 
 import emu.grasscutter.game.expedition.*;
-import emu.grasscutter.game.inventory.GameItem;
-import emu.grasscutter.game.props.ActionReason;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.AvatarExpeditionGetRewardReqOuterClass.AvatarExpeditionGetRewardReq;
+import emu.grasscutter.net.proto.PacketHeadOuterClass.PacketHead;
+import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.server.game.GameSession;
 import emu.grasscutter.server.packet.send.*;
-import java.util.*;
+import emu.grasscutter.utils.Utils;
 
 @Opcodes(PacketOpcodes.AvatarExpeditionGetRewardReq)
 public class HandlerAvatarExpeditionGetRewardReq extends PacketHandler {
     @Override
     public void handle(GameSession session, byte[] header, byte[] payload) throws Exception {
-        AvatarExpeditionGetRewardReq req = AvatarExpeditionGetRewardReq.parseFrom(payload);
         var player = session.getPlayer();
-
-        ExpeditionInfo expInfo = player.getExpeditionInfo(req.getAvatarGuid());
-        List<GameItem> items = new ArrayList<>();
-        List<ExpeditionRewardDataList> expeditionRewardDataLists =
-                session
-                        .getServer()
-                        .getExpeditionSystem()
-                        .getExpeditionRewardDataList()
-                        .get(expInfo.getExpId());
-
-        if (expeditionRewardDataLists != null) {
-            expeditionRewardDataLists.stream()
-                    .filter(r -> r.getHourTime() == expInfo.getHourTime())
-                    .map(ExpeditionRewardDataList::getRewards)
-                    .forEach(items::addAll);
+        AvatarExpeditionGetRewardReq req;
+        try {
+            req = AvatarExpeditionGetRewardReq.parseFrom(payload);
+        } catch (com.google.protobuf.InvalidProtocolBufferException
+                | NullPointerException malformed) {
+            session.send(
+                    new PacketAvatarExpeditionGetRewardRsp(
+                            player.getExpeditionInfo(),
+                            java.util.List.of(),
+                            Retcode.RET_FAIL_VALUE));
+            return;
         }
-
-        player.getInventory().addItems(items);
-        player.sendPacket(new PacketItemAddHintNotify(items, ActionReason.ExpeditionReward));
-
-        player.removeExpeditionInfo(req.getAvatarGuid());
-        player.save();
-        session.send(new PacketAvatarExpeditionGetRewardRsp(player.getExpeditionInfo(), items));
+        var result =
+                ExpeditionClaims.take(
+                        player,
+                        session.getServer().getExpeditionSystem(),
+                        req.getAvatarGuid(),
+                        req.getIsClaimAll(),
+                        Utils.getCurrentSeconds());
+        var response =
+                new PacketAvatarExpeditionGetRewardRsp(
+                        player.getExpeditionInfo(), result.rewards(), result.retcode());
+        if (header != null && header.length > 0) {
+            try {
+                response.buildHeader(PacketHead.parseFrom(header).getClientSequenceId());
+            } catch (com.google.protobuf.InvalidProtocolBufferException ignored) {
+            }
+        }
+        session.send(response);
+        if (result.retcode() == 0)
+            session.send(new PacketAvatarExpeditionDataNotify(player.getExpeditionInfo()));
     }
 }

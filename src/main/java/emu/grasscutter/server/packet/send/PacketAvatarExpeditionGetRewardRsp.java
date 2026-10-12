@@ -1,19 +1,22 @@
 package emu.grasscutter.server.packet.send;
 
 import emu.grasscutter.game.expedition.ExpeditionInfo;
-import emu.grasscutter.game.inventory.GameItem;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.AvatarExpeditionGetRewardRspOuterClass.AvatarExpeditionGetRewardRsp;
+import emu.grasscutter.net.proto._AvatarExpeditionRewardInfoOuterClass._AvatarExpeditionRewardInfo;
+
 import java.util.*;
 
 public class PacketAvatarExpeditionGetRewardRsp extends BasePacket {
     public PacketAvatarExpeditionGetRewardRsp(
-            Map<Long, ExpeditionInfo> expeditionInfo, Collection<GameItem> items) {
+            Map<Long, ExpeditionInfo> expeditionInfo,
+            Collection<_AvatarExpeditionRewardInfo> rewards,
+            int retcode) {
         super(PacketOpcodes.AvatarExpeditionGetRewardRsp);
 
         AvatarExpeditionGetRewardRsp.Builder proto = AvatarExpeditionGetRewardRsp.newBuilder();
         expeditionInfo.forEach((key, e) -> proto.putExpeditionInfoMap(key, e.toProto()));
-        // AvatarExpeditionGetRewardRsp has no item_list in the 7.0 dump.
+        proto.setRetcode(retcode).addAllExpeditionRewardList(rewards);
 
         this.setData(proto.build());
     }

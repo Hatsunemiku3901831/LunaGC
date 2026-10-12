@@ -407,7 +407,7 @@ public class Player implements PlayerHook, FieldFetch {
         this.codex = new PlayerCodex(this);
         this.progressManager = new PlayerProgressManager(this);
         this.shopLimit = new ArrayList<>();
-        this.expeditionInfo = new HashMap<>();
+        this.expeditionInfo = new java.util.concurrent.ConcurrentHashMap<>();
         this.mapMarksManager = new MapMarksManager(this);
         this.staminaManager = new StaminaManager(this);
         this.sotsManager = new SotSManager(this);
@@ -1478,7 +1478,7 @@ public class Player implements PlayerHook, FieldFetch {
         var needNotify = false;
         for (ExpeditionInfo e : expeditionInfo.values()) {
             if (e.getState() == 1) {
-                if (timeNow - e.getStartTime() >= e.getHourTime() * 60 * 60) {
+                if (emu.grasscutter.game.expedition.ExpeditionClaims.finished(e, timeNow)) {
                     e.setState(2);
                     needNotify = true;
                 }
@@ -1558,6 +1558,9 @@ public class Player implements PlayerHook, FieldFetch {
 
     @PostLoad
     private void onLoad() {
+        this.expeditionInfo = this.expeditionInfo == null
+                ? new java.util.concurrent.ConcurrentHashMap<>()
+                : new java.util.concurrent.ConcurrentHashMap<>(this.expeditionInfo);
         this.getCodex().setPlayer(this);
         this.getProgressManager().setPlayer(this);
         this.getTeamManager().setPlayer(this);
