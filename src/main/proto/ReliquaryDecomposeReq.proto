@@ -1,3 +1,5 @@
+// 7.1 native ReliquaryDecomposeReq: opcode 24936, writer 0x151e98510, GUID codec 0x151e98b10.
+// Scalar aliases are retained from the server schema; native slot/tag mapping is verified.
 syntax = "proto3";
 
 option java_package = "emu.grasscutter.net.proto";

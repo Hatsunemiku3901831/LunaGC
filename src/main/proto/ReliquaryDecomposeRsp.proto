@@ -1,3 +1,4 @@
+// 7.1 native ReliquaryDecomposeRsp: opcode 20871, reader 0x150605180, receiver 0x14b167350.
 syntax = "proto3";
 
 option java_package = "emu.grasscutter.net.proto";
