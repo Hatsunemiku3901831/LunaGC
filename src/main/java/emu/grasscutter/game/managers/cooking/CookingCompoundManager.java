@@ -217,6 +217,10 @@ public class CookingCompoundManager extends BasePlayerManager {
                 DatabaseHelper.saveGameSync(player);
                 InvestigationRewardDelivery.grant(player, combined, ActionReason.Compound);
                 selected.values().forEach(ActiveCookCompoundData::finishClaim);
+                amounts.forEach(
+                        (id, count) ->
+                                InvestigationHandbook.trigger(
+                                        player, "TRIGGER_DO_COMPOUND", id, count));
                 DatabaseHelper.saveGameSync(player);
                 selected.forEach(
                         (id, queue) -> {
