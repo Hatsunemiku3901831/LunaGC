@@ -1,3 +1,4 @@
+// Verified 7.1 CombineRsp: opcode 20600, reader 0x14d115eb0, receiver 0x14b1536f0.
 syntax = "proto3";
 
 option java_package = "emu.grasscutter.net.proto";
@@ -7,13 +8,15 @@ import "ItemParam.proto";
 
 message CombineRsp {
 	uint32 combine_count = 15;
-	repeated ItemParam FBMBEJKABDH = 50000;
-	repeated ItemParam DAPJDPKECGP = 50001;
-	repeated ItemParam FIHLCAAADMG = 50002;
-	repeated ItemParam result_item_list = 50003;
+	// Native lists rendered as additional output; their individual origins remain undecoded.
+	repeated ItemParam KFJKGFJGJFC = 5;
+	repeated ItemParam absolute_result_item_list = 6;
+	// The native receiver multiplies these per-operation counts by combine_count.
+	repeated ItemParam result_item_list = 7;
+	repeated ItemParam BJCLGIKDJAC = 9;
+	repeated ItemParam MNIDEDDGAED = 11;
 	int32 retcode = 2;
 	uint64 avatar_guid = 4;
 	uint32 combine_id = 14;
-	repeated ItemParam totalExtraItemList = 50004;
 	repeated ItemParam cost_item_list = 12;
 }

@@ -35,25 +35,23 @@ public class PacketCombineRsp extends BasePacket {
 
         super(PacketOpcodes.CombineRsp);
 
-        CombineRspOuterClass.CombineRsp proto =
+        CombineRspOuterClass.CombineRsp.Builder proto =
                 CombineRspOuterClass.CombineRsp.newBuilder()
                         .setRetcode(RetcodeOuterClass.Retcode.RET_SUCC_VALUE)
                         .setCombineId(combineReq.getCombineId())
                         .setCombineCount(combineReq.getCombineCount())
                         .setAvatarGuid(combineReq.getAvatarGuid())
-                        .addAllCostItemList(costItemList)
-                        .addAllResultItemList(resultItemList)
-                        .addAllTotalExtraItemList(totalExtraItemList)
-                        // totalRandomItemList and totalReturnItemList are deliberately not sent.
-                        // 7.0 leaves three `repeated ItemParam` fields here obfuscated (2, 3 and 4)
-                        // and 6.7 has exactly three to match them to - these two plus uk10 - with
-                        // nothing to say which is which. Guessing would put items under the wrong
-                        // field; sending them at their 6.7 numbers, which is what happened before,
-                        // wrote a length-delimited value into 7.0's combine_id and made the whole
-                        // response unparseable. The craft itself is unaffected either way: the
-                        // items are already in the inventory by the time this is built.
-                        .build();
+                        .addAllCostItemList(costItemList);
+        int units = combineReq.getCombineCount();
+        for (var item : resultItemList) {
+            // Callers report acknowledged totals. The native primary path scales field 7.
+            if (units > 0 && item.getCount() % units == 0)
+                proto.addResultItemList(item.toBuilder().setCount(item.getCount() / units));
+            else proto.addAbsoluteResultItemList(item);
+        }
+        // The three bonus origins have not yet been matched to native fields 5, 9 and 11.
+        // Current combine flows supply empty groups; keep these API parameters for later mapping.
 
-        this.setData(proto);
+        this.setData(proto.build());
     }
 }

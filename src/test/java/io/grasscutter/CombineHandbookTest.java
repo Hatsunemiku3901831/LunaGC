@@ -423,6 +423,7 @@ class CombineHandbookTest {
         assertEquals(0, result.getRetcode());
         assertEquals(2, result.getCombineCount());
         assertEquals(2, result.getCostItemListCount());
+        assertEquals(1, result.getResultItemList(0).getCount()); // Native UI multiplies by count.
         assertEquals(2, progress());
         assertEquals(2, count(112003));
     }
