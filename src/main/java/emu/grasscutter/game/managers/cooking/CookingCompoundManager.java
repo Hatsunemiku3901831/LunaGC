@@ -4,11 +4,14 @@ import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.database.DatabaseHelper;
+import emu.grasscutter.game.inventory.ItemType;
 import emu.grasscutter.game.player.*;
 import emu.grasscutter.game.props.ActionReason;
+import emu.grasscutter.net.proto.CompoundBoostTakeStatusTypeOuterClass.CompoundBoostTakeStatusType;
 import emu.grasscutter.net.proto.CompoundQueueDataOuterClass.CompoundQueueData;
 import emu.grasscutter.net.proto.GetCompoundDataReqOuterClass.GetCompoundDataReq;
 import emu.grasscutter.net.proto.ItemParamOuterClass.ItemParam;
+import emu.grasscutter.net.proto.PlayerCompoundMaterialBoostReqOuterClass.PlayerCompoundMaterialBoostReq;
 import emu.grasscutter.net.proto.PlayerCompoundMaterialReqOuterClass.PlayerCompoundMaterialReq;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.net.proto.TakeCompoundOutputReqOuterClass.TakeCompoundOutputReq;
@@ -113,7 +116,7 @@ public class CookingCompoundManager extends BasePlayerManager {
                     || queue != null
                             && (queue.getCompoundId() != id
                                     || queue.getTotalCount() < 0
-                                    || queue.getClaimState() != 0)) {
+                                    || queue.isBusy())) {
                 player.sendPacket(new PacketPlayerCompoundMaterialRsp(Retcode.RET_FAIL_VALUE));
                 return;
             }
@@ -153,105 +156,285 @@ public class CookingCompoundManager extends BasePlayerManager {
 
     public synchronized void handleTakeCompoundOutputReq(TakeCompoundOutputReq req) {
         synchronized (player.getInventory()) {
-            int group = req.getCompoundGroupId(),
-                    recipe = req.getCompoundId(),
+            var result =
+                    claimOutput(req.getCompoundGroupId(), req.getCompoundId(), req.getIsClaimAll());
+            player.sendPacket(
+                    new PackageTakeCompoundOutputRsp(itemParams(result.items()), result.retcode()));
+            if (result.retcode() == 0)
+                player.sendPacket(new PacketCompoundDataNotify(unlocked, getCompoundQueueData()));
+        }
+    }
+
+    private record ClaimResult(int retcode, List<ItemParamData> items) {
+        static ClaimResult failure(int code) {
+            return new ClaimResult(code, List.of());
+        }
+    }
+
+    /** Caller holds the manager and inventory monitors, including during automatic collection. */
+    private ClaimResult claimOutput(int group, int recipe, boolean all) {
+        int now = Utils.getCurrentSeconds();
+        if (!all && group <= 0 && recipe <= 0) {
+            return ClaimResult.failure(Retcode.RET_FAIL_VALUE);
+        }
+        var active = player.getActiveCookCompounds();
+        var selected = new LinkedHashMap<Integer, ActiveCookCompoundData>();
+        var amounts = new LinkedHashMap<Integer, Integer>();
+        var rewards = new ArrayList<ItemParamData>();
+        for (var entry : active.entrySet().stream().sorted(Map.Entry.comparingByKey()).toList()) {
+            int id = entry.getKey();
+            var queue = entry.getValue();
+            var definition = GameData.getCompoundDataMap().get(id);
+            if (!all && recipe > 0 && id != recipe) continue;
+            if (!all && recipe == 0 && (definition == null || definition.getGroupId() != group))
+                continue;
+            if (definition == null
+                    || definition.getId() != id
+                    || queue == null
+                    || queue.getCompoundId() != id
+                    || queue.getTotalCount() < 0
+                    || !all && recipe > 0 && group > 0 && definition.getGroupId() != group) {
+                return ClaimResult.failure(Retcode.RET_NOT_FOUND_CONFIG_VALUE);
+            }
+            if (queue.isBusy()) {
+                return ClaimResult.failure(Retcode.RET_SVR_ERROR_VALUE);
+            }
+            int count = queue.getOutputCount(now);
+            if (count <= 0) continue;
+            var items = scale(definition.getOutputVec(), count);
+            if (items == null || items.isEmpty()) {
+                return ClaimResult.failure(Retcode.RET_NOT_FOUND_CONFIG_VALUE);
+            }
+            selected.put(id, queue);
+            amounts.put(id, count);
+            rewards.addAll(items);
+        }
+        if (selected.isEmpty()) {
+            return ClaimResult.failure(Retcode.RET_COMPOUND_NOT_FINISH_VALUE);
+        }
+        var combined = scale(rewards, 1);
+        if (combined == null) {
+            return ClaimResult.failure(Retcode.RET_ITEM_EXCEED_LIMIT_VALUE);
+        }
+        int validation = InvestigationRewardDelivery.validate(player, combined);
+        if (validation != 0) {
+            return ClaimResult.failure(validation);
+        }
+        try {
+            selected.forEach((id, queue) -> queue.reserveClaim(amounts.get(id)));
+            DatabaseHelper.saveGameSync(player);
+            InvestigationRewardDelivery.grant(player, combined, ActionReason.Compound);
+            selected.values().forEach(ActiveCookCompoundData::finishClaim);
+            amounts.forEach(
+                    (id, count) ->
+                            InvestigationHandbook.trigger(
+                                    player, "TRIGGER_DO_COMPOUND", id, count));
+            DatabaseHelper.saveGameSync(player);
+            selected.forEach(
+                    (id, queue) -> {
+                        if (queue.getTotalCount() == 0) active.remove(id, queue);
+                        else queue.acknowledgeClaim();
+                    });
+            DatabaseHelper.saveGameSync(player);
+            return new ClaimResult(0, combined);
+        } catch (RuntimeException failure) {
+            Grasscutter.getLogger()
+                    .error(
+                            "Compound output needs reconciliation: UID {}",
+                            player.getUid(),
+                            failure);
+            return ClaimResult.failure(Retcode.RET_SVR_ERROR_VALUE);
+        }
+    }
+
+    private static List<ItemParam> itemParams(List<ItemParamData> items) {
+        return items.stream()
+                .map(
+                        item ->
+                                ItemParam.newBuilder()
+                                        .setItemId(item.getId())
+                                        .setCount(item.getCount())
+                                        .build())
+                .toList();
+    }
+
+    public synchronized void handleCompoundBoost(PlayerCompoundMaterialBoostReq req) {
+        synchronized (player.getInventory()) {
+            ensureCompoundTables();
+            int group = req.getTargetCompoundGroupId(),
+                    ore = req.getConsumeMaterialId(),
+                    count = req.getConsumeMaterialCount(),
                     now = Utils.getCurrentSeconds();
-            boolean all = req.getIsClaimAll();
-            if (!all && group <= 0 && recipe <= 0) {
-                failTake(Retcode.RET_FAIL_VALUE);
+            var inventory = player.getInventory();
+            var rate = GameData.getCompoundBoostDataMap().get(ore);
+            var oreData = GameData.getItemDataMap().get(ore);
+            if (group <= 0
+                    || !compoundGroups.containsKey(group)
+                    || count <= 0
+                    || inventory.getItemCountById(220060) < 1
+                    || rate == null
+                    || rate.getId() != ore
+                    || rate.getBoostTime() <= 0
+                    || oreData == null
+                    || oreData.getId() != ore
+                    || oreData.getItemType() != ItemType.ITEM_MATERIAL
+                    || oreData.getStackLimit() <= 0
+                    || oreData.isUseOnGain()) {
+                failBoost(Retcode.RET_FAIL_VALUE);
                 return;
             }
             var active = player.getActiveCookCompounds();
             var selected = new LinkedHashMap<Integer, ActiveCookCompoundData>();
-            var amounts = new LinkedHashMap<Integer, Integer>();
+            var shifted = new LinkedHashMap<Integer, ActiveCookCompoundData>();
             var rewards = new ArrayList<ItemParamData>();
-            for (var entry :
-                    active.entrySet().stream().sorted(Map.Entry.comparingByKey()).toList()) {
-                int id = entry.getKey();
-                var queue = entry.getValue();
-                var definition = GameData.getCompoundDataMap().get(id);
-                if (!all && recipe > 0 && id != recipe) continue;
-                if (!all && recipe == 0 && (definition == null || definition.getGroupId() != group))
-                    continue;
-                if (definition == null
-                        || definition.getId() != id
-                        || queue == null
-                        || queue.getCompoundId() != id
-                        || queue.getTotalCount() < 0
-                        || !all && recipe > 0 && group > 0 && definition.getGroupId() != group) {
-                    failTake(Retcode.RET_NOT_FOUND_CONFIG_VALUE);
+            long longest = 0, total = 0, budget = (long) count * rate.getBoostTime();
+            try {
+                for (int id : compoundGroups.get(group).stream().sorted().toList()) {
+                    var queue = active.get(id);
+                    if (queue == null) continue;
+                    var definition = GameData.getCompoundDataMap().get(id);
+                    if (definition == null
+                            || definition.getId() != id
+                            || definition.getGroupId() != group
+                            || !unlocked.contains(id)
+                            || definition.getQueueSize() <= 0
+                            || definition.getCostTime() < 0
+                            || queue.getCompoundId() != id
+                            || queue.getTotalCount() <= 0
+                            || queue.getTotalCount() > definition.getQueueSize()
+                            || queue.isBusy()) {
+                        failBoost(Retcode.RET_FAIL_VALUE);
+                        return;
+                    }
+                    long remaining = queue.getRemainingSeconds(now);
+                    longest = Math.max(longest, remaining);
+                    total = Math.addExact(total, remaining);
+                    selected.put(id, queue);
+                    var items = scale(definition.getOutputVec(), queue.getTotalCount());
+                    if (items == null || items.isEmpty()) {
+                        failBoost(Retcode.RET_NOT_FOUND_CONFIG_VALUE);
+                        return;
+                    }
+                    rewards.addAll(items);
+                }
+                if (longest == 0 || req.getIsBoostAll() && budget < longest) {
+                    failBoost(Retcode.RET_COMPOUND_NOT_FINISH_VALUE);
                     return;
                 }
-                if (queue.getClaimState() != 0) {
-                    failTake(Retcode.RET_SVR_ERROR_VALUE);
-                    return;
+                // Client partial previews share a budget; full mode checks the latest finish.
+                // The multi-recipe policy still needs an in-game comparison.
+                long remainingBudget = budget;
+                for (var entry : selected.entrySet()) {
+                    var queue = entry.getValue();
+                    long seconds =
+                            req.getIsBoostAll()
+                                    ? queue.getRemainingSeconds(now)
+                                    : Math.min(remainingBudget, queue.getRemainingSeconds(now));
+                    shifted.put(
+                            entry.getKey(),
+                            seconds == 0 ? queue : queue.copyWithBoost(seconds, now));
+                    if (!req.getIsBoostAll()) remainingBudget -= seconds;
                 }
-                int count = queue.getOutputCount(now);
-                if (count <= 0) continue;
-                var items = scale(definition.getOutputVec(), count);
-                if (items == null || items.isEmpty()) {
-                    failTake(Retcode.RET_NOT_FOUND_CONFIG_VALUE);
-                    return;
-                }
-                selected.put(id, queue);
-                amounts.put(id, count);
-                rewards.addAll(items);
-            }
-            if (selected.isEmpty()) {
-                failTake(Retcode.RET_COMPOUND_NOT_FINISH_VALUE);
+            } catch (ArithmeticException | IllegalArgumentException invalidQueue) {
+                failBoost(Retcode.RET_FAIL_VALUE);
                 return;
             }
             var combined = scale(rewards, 1);
             if (combined == null) {
-                failTake(Retcode.RET_ITEM_EXCEED_LIMIT_VALUE);
+                failBoost(Retcode.RET_ITEM_EXCEED_LIMIT_VALUE);
                 return;
             }
             int validation = InvestigationRewardDelivery.validate(player, combined);
-            if (validation != 0) {
-                failTake(validation);
+            if (validation != 0 && validation != Retcode.RET_ITEM_EXCEED_LIMIT_VALUE) {
+                failBoost(validation);
+                return;
+            }
+            long seconds = req.getIsBoostAll() ? longest : Math.min(budget, total);
+            int paid = Math.toIntExact((seconds + rate.getBoostTime() - 1) / rate.getBoostTime());
+            int before = inventory.getItemCountById(ore);
+            var oreItem = inventory.getItemById(ore);
+            if (before < paid || oreItem == null) {
+                failBoost(Retcode.RET_ITEM_COUNT_NOT_ENOUGH_VALUE);
                 return;
             }
             try {
-                selected.forEach((id, queue) -> queue.reserveClaim(amounts.get(id)));
+                selected.values().forEach(ActiveCookCompoundData::reserveBoost);
                 DatabaseHelper.saveGameSync(player);
-                InvestigationRewardDelivery.grant(player, combined, ActionReason.Compound);
-                selected.values().forEach(ActiveCookCompoundData::finishClaim);
-                amounts.forEach(
-                        (id, count) ->
-                                InvestigationHandbook.trigger(
-                                        player, "TRIGGER_DO_COMPOUND", id, count));
-                DatabaseHelper.saveGameSync(player);
-                selected.forEach(
+                if (!inventory.payItems(
+                                List.of(new ItemParamData(ore, paid)), 1, ActionReason.Compound)
+                        || (long) before - inventory.getItemCountById(ore) != paid)
+                    throw new IllegalStateException("Compound boost minerals were not confirmed");
+                DatabaseHelper.saveGameSync(oreItem);
+                shifted.forEach(
                         (id, queue) -> {
-                            if (queue.getTotalCount() == 0) active.remove(id, queue);
-                            else queue.acknowledgeClaim();
+                            if (queue != selected.get(id)) queue.reserveBoost();
+                            active.put(id, queue);
                         });
                 DatabaseHelper.saveGameSync(player);
-                player.sendPacket(
-                        new PackageTakeCompoundOutputRsp(
-                                combined.stream()
-                                        .map(
-                                                item ->
-                                                        ItemParam.newBuilder()
-                                                                .setItemId(item.getId())
-                                                                .setCount(item.getCount())
-                                                                .build())
-                                        .toList(),
-                                0));
-                player.sendPacket(new PacketCompoundDataNotify(unlocked, getCompoundQueueData()));
+                shifted.values().forEach(ActiveCookCompoundData::acknowledgeBoost);
+                DatabaseHelper.saveGameSync(player);
             } catch (RuntimeException failure) {
+                // A failed cleanup acknowledgement remains blocked in memory as well as on disk.
+                selected.keySet()
+                        .forEach(
+                                id -> {
+                                    var queue = active.get(id);
+                                    if (queue != null && !queue.isBusy()) queue.reserveBoost();
+                                });
                 Grasscutter.getLogger()
                         .error(
-                                "Compound output needs reconciliation: UID {}",
+                                "Compound boost needs reconciliation: UID {}, group {}, ore {},"
+                                        + " count {}",
                                 player.getUid(),
+                                group,
+                                ore,
+                                paid,
                                 failure);
-                failTake(Retcode.RET_SVR_ERROR_VALUE);
+                failBoost(Retcode.RET_SVR_ERROR_VALUE);
+                return;
             }
+            int
+                    status =
+                            CompoundBoostTakeStatusType
+                                    .COMPOUND_BOOST_TAKE_STATUS_TYPE_BOOST_ONLY_VALUE,
+                    retcode = 0;
+            List<ItemParamData> taken = List.of();
+            if (req.getIsBoostAll()) {
+                var result = claimOutput(group, 0, false);
+                if (result.retcode() == Retcode.RET_ITEM_EXCEED_LIMIT_VALUE)
+                    status =
+                            CompoundBoostTakeStatusType
+                                    .COMPOUND_BOOST_TAKE_STATUS_TYPE_BAG_FULL_VALUE;
+                else {
+                    retcode = result.retcode();
+                    status =
+                            retcode == 0
+                                    ? CompoundBoostTakeStatusType
+                                            .COMPOUND_BOOST_TAKE_STATUS_TYPE_BOOST_AND_TAKE_VALUE
+                                    : CompoundBoostTakeStatusType
+                                            .COMPOUND_BOOST_TAKE_STATUS_TYPE_NONE_VALUE;
+                    taken = result.items();
+                }
+            }
+            var queues =
+                    selected.keySet().stream()
+                            .map(
+                                    id ->
+                                            active.containsKey(id)
+                                                    ? queueData(active.get(id), now)
+                                                    : CompoundQueueData.newBuilder()
+                                                            .setCompoundId(id)
+                                                            .build())
+                            .toList();
+            player.sendPacket(
+                    new PacketPlayerCompoundMaterialBoostRsp(
+                            retcode, status, queues, itemParams(taken)));
+            player.sendPacket(new PacketCompoundDataNotify(unlocked, getCompoundQueueData()));
         }
     }
 
-    private void failTake(int code) {
-        player.sendPacket(new PackageTakeCompoundOutputRsp(List.of(), code));
+    private void failBoost(int code) {
+        player.sendPacket(new PacketPlayerCompoundMaterialBoostRsp(code, 0, List.of(), List.of()));
     }
 
     private static List<ItemParamData> scale(List<ItemParamData> rows, int count) {

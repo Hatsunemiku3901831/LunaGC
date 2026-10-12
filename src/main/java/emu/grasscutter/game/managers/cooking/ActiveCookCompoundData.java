@@ -13,6 +13,8 @@ public class ActiveCookCompoundData {
     // Persisted receipt: 0 available, 1 reserved, 2 delivered before cleanup confirmation.
     @Getter private int claimState;
     private int reservedCount;
+    // An uncertain mineral payment/time update must be reconciled before another mutation.
+    @Getter private int boostState;
 
     public ActiveCookCompoundData(int compoundId, int processTime, int count, int startTime) {
         this.compoundId = compoundId;
@@ -44,7 +46,7 @@ public class ActiveCookCompoundData {
     }
 
     public void addCompound(int count, int currentTime) {
-        if (count <= 0 || claimState != 0 || (long) totalCount + count > Integer.MAX_VALUE)
+        if (count <= 0 || isBusy() || (long) totalCount + count > Integer.MAX_VALUE)
             throw new IllegalArgumentException("Invalid compound append");
         if (getOutputCount(currentTime) == totalCount)
             startTime = Math.toIntExact((long) currentTime - (long) totalCount * costTime);
@@ -52,7 +54,7 @@ public class ActiveCookCompoundData {
     }
 
     public ActiveCookCompoundData copyWithAppend(int count, int resourceCostTime, int currentTime) {
-        if (costTime < 0 || resourceCostTime < 0 || claimState != 0)
+        if (costTime < 0 || resourceCostTime < 0 || isBusy())
             throw new IllegalArgumentException("Invalid compound queue");
         int processingTime = costTime == 0 ? resourceCostTime : costTime;
         int started =
@@ -65,7 +67,7 @@ public class ActiveCookCompoundData {
     }
 
     public void reserveClaim(int count) {
-        if (claimState != 0 || count <= 0 || count > totalCount)
+        if (isBusy() || count <= 0 || count > totalCount)
             throw new IllegalStateException("Compound claim is not available");
         reservedCount = count;
         claimState = 1;
@@ -84,6 +86,34 @@ public class ActiveCookCompoundData {
             throw new IllegalStateException("Compound delivery is not acknowledged");
         claimState = 0;
         reservedCount = 0;
+    }
+
+    public boolean isBusy() {
+        return claimState != 0 || boostState != 0;
+    }
+
+    public long getRemainingSeconds(int currentTime) {
+        if (costTime < 0 || totalCount < 0)
+            throw new IllegalArgumentException("Invalid compound processing state");
+        if (costTime == 0) return 0;
+        return Math.max(0, (long) startTime + (long) totalCount * costTime - currentTime);
+    }
+
+    public ActiveCookCompoundData copyWithBoost(long seconds, int currentTime) {
+        if (seconds <= 0 || isBusy()) throw new IllegalArgumentException("Invalid compound boost");
+        long applied = Math.min(seconds, getRemainingSeconds(currentTime));
+        return new ActiveCookCompoundData(
+                compoundId, costTime, totalCount, Math.toIntExact((long) startTime - applied));
+    }
+
+    public void reserveBoost() {
+        if (isBusy()) throw new IllegalStateException("Compound boost is not available");
+        boostState = 1;
+    }
+
+    public void acknowledgeBoost() {
+        if (boostState != 1) throw new IllegalStateException("Compound boost is not reserved");
+        boostState = 0;
     }
 
     /**

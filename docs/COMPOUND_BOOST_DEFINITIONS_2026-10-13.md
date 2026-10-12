@@ -1,7 +1,8 @@
 # 加工加速消息定义与矿石资源
 
 本批接入食材加工加速的资源表及请求、回包定义，为后续服务端扣矿、加速和自动领取提供类型。
-当前仍没有 `PlayerCompoundMaterialBoostReq` 处理器；本批不代表游戏加速功能已经可用。
+第一百四十五批结束时没有 `PlayerCompoundMaterialBoostReq` 处理器；本批只验证定义和资源加载。
+后续处理器与服务端流程见[食材加工加速与自动领取](COMPOUND_BOOST_FLOW_2026-10-13.md)。
 
 ## 资源
 
