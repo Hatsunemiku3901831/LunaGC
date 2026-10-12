@@ -27,6 +27,7 @@ import emu.grasscutter.utils.Utils;
 import it.unimi.dsi.fastutil.ints.*;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import java.util.*;
+import java.util.function.BooleanSupplier;
 import java.util.stream.Stream;
 import lombok.*;
 
@@ -841,18 +842,12 @@ public final class TeamManager extends BasePlayerDataManager {
             Grasscutter.getLogger()
                     .warn(
                             "Asked to use temporary team {} but only {} are set up; the current"
-                                + " team stays",
+                                    + " team stays",
                             index + 1,
                             available);
             return false;
         }
-        var chosen = this.temporaryTeam.get(index);
-        if (chosen == null
-                || chosen.size() == 0
-                || chosen.size() > this.getMaxTeamSize()
-                || chosen.getAvatars().stream()
-                        .anyMatch(id -> id == null || !this.getPlayer().getAvatars().hasAvatar(id)))
-            return false;
+        if (!hasUsableTemporaryTeam(index)) return false;
         var scene = this.getPlayer().getScene();
         // Not getCurrentAvatarEntity(): on an empty team that builds a fresh main character and
         // files it in the avatar list, which is not something reading the current avatar should do.
@@ -884,6 +879,43 @@ public final class TeamManager extends BasePlayerDataManager {
         // burst, no switching - and the monsters have nothing to aim at.
         scene.spawnPlayer(this.getPlayer());
         return true;
+    }
+
+    private boolean hasUsableTemporaryTeam(int index) {
+        if (tpsSceneAvatar != null
+                || temporaryTeam == null
+                || index < 0
+                || index >= temporaryTeam.size()) return false;
+        var chosen = temporaryTeam.get(index);
+        return chosen != null
+                && chosen.size() > 0
+                && chosen.size() <= getMaxTeamSize()
+                && chosen.getAvatars().stream()
+                        .allMatch(id -> id != null && player.getAvatars().hasAvatar(id));
+    }
+
+    /** Select the entry party without changing entities in the scene being left. */
+    public boolean enterSceneWithTemporaryTeam(int index, BooleanSupplier enter) {
+        if (enter == null) return false;
+        synchronized (player.getSceneTransferLock()) {
+            if (!hasUsableTemporaryTeam(index)) return false;
+            var source = player.getScene();
+            var world = player.getWorld();
+            int previousTeam = useTemporarilyTeamIndex;
+            int previousAvatar = currentCharacterIndex;
+            boolean entered = false;
+            useTemporarilyTeamIndex = index;
+            currentCharacterIndex = 0;
+            try {
+                entered = enter.getAsBoolean();
+                return entered;
+            } finally {
+                if (!entered && player.getScene() == source && player.getWorld() == world) {
+                    useTemporarilyTeamIndex = previousTeam;
+                    currentCharacterIndex = previousAvatar;
+                }
+            }
+        }
     }
 
     public boolean cleanTemporaryTeam() {

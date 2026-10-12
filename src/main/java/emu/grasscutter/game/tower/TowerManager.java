@@ -313,51 +313,55 @@ public class TowerManager extends BasePlayerManager {
     }
 
     public void enterLevel(int enterPointId) {
-        if (!restoreTemporaryTeams()) {
+        tryEnterLevel(enterPointId);
+    }
+
+    public boolean tryEnterLevel(int enterPointId) {
+        synchronized (player.getSceneTransferLock()) {
+            var source = player.getScene();
+            if (source == null || player.getWorld() == null || !restoreTemporaryTeams())
+                return rejectEntry();
+            var levelData = getCurrentTowerLevelDataMap();
+            if (levelData == null
+                    || !GameData.getDungeonDataMap().containsKey(levelData.getDungeonId()))
+                return rejectEntry();
+            int previousScene =
+                    getTowerData().entryScene > 0 ? getTowerData().entryScene : source.getId();
+            boolean entered =
+                    player.getTeamManager()
+                            .enterSceneWithTemporaryTeam(
+                                    0,
+                                    () ->
+                                            player.getServer()
+                                                    .getDungeonSystem()
+                                                    .handoffDungeon(
+                                                            player,
+                                                            levelData.getDungeonId(),
+                                                            towerDungeonSettleListener));
+            if (!entered) return rejectEntry();
+            player.getScene().setPrevScene(previousScene);
+            player.getScene().setPrevScenePoint(enterPointId);
+            notifyCurLevelRecordChange();
+            player.getSession()
+                    .send(new PacketTowerEnterLevelRsp(getCurrentFloorId(), getCurrentLevel()));
+            player.getSession().send(new PacketCanUseSkillNotify(false));
+            currentPossibleStars = 3;
             player.getSession()
                     .send(
-                            new PacketTowerEnterLevelRsp(
-                                    getCurrentFloorId(), getCurrentLevel(), Retcode.RET_FAIL));
-            return;
+                            new PacketTowerLevelStarCondNotify(
+                                    getCurrentFloorId(),
+                                    getCurrentLevel(),
+                                    currentPossibleStars + 1));
+            return true;
         }
-        var levelData = getCurrentTowerLevelDataMap();
-        if (levelData == null) {
-            // No level means no dungeon to hand off to; entering would NPE on the way in.
-            Grasscutter.getLogger()
-                    .warn(
-                            "Tower enter level {} on floor {} has no level data",
-                            getCurrentLevelId(),
-                            getCurrentFloorId());
-            return;
-        }
+    }
 
-        var dungeonId = levelData.getDungeonId();
-
-        notifyCurLevelRecordChange();
-        // use team user choose
-        player.getTeamManager().useTemporaryTeam(0);
-        player.getServer()
-                .getDungeonSystem()
-                .handoffDungeon(player, dungeonId, towerDungeonSettleListener);
-
-        // make sure user can exit dungeon correctly
-        player.getScene().setPrevScene(getTowerData().entryScene);
-        player.getScene().setPrevScenePoint(enterPointId);
-
+    private boolean rejectEntry() {
         player.getSession()
                 .send(
                         new PacketTowerEnterLevelRsp(
-                                getTowerData().currentFloorId, getCurrentLevel()));
-        // stop using skill
-        player.getSession().send(new PacketCanUseSkillNotify(false));
-        // notify the cond of stars
-        currentPossibleStars = 3;
-        player.getSession()
-                .send(
-                        new PacketTowerLevelStarCondNotify(
-                                getTowerData().currentFloorId,
-                                getCurrentLevel(),
-                                currentPossibleStars + 1));
+                                getCurrentFloorId(), getCurrentLevel(), Retcode.RET_FAIL));
+        return false;
     }
 
     public void notifyCurLevelRecordChange() {
