@@ -1,9 +1,12 @@
 package emu.grasscutter.game.managers.forging;
 
+import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.data.excels.*;
+import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.game.inventory.GameItem;
+import emu.grasscutter.game.inventory.ItemType;
 import emu.grasscutter.game.player.*;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.net.proto.ForgeQueueDataOuterClass.ForgeQueueData;
@@ -14,6 +17,7 @@ import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.server.event.player.PlayerForgeItemEvent;
 import emu.grasscutter.server.packet.send.*;
 import emu.grasscutter.utils.Utils;
+
 import java.util.*;
 
 public final class ForgingManager extends BasePlayerManager {
@@ -26,7 +30,8 @@ public final class ForgingManager extends BasePlayerManager {
      * Blueprint unlocking.
      **********/
     public boolean unlockForgingBlueprint(int id) {
-        // Tell the client that this blueprint is now unlocked and add the unlocked item to the player.
+        // Tell the client that this blueprint is now unlocked and add the unlocked item to the
+        // player.
         if (!this.player.getUnlockedForgingBlueprints().add(id)) {
             return false; // Already unlocked
         }
@@ -108,7 +113,8 @@ public final class ForgingManager extends BasePlayerManager {
         var queueData = this.determineCurrentForgeQueueData();
 
         // Reply.
-        this.player.sendPacket(new PacketForgeGetQueueDataRsp(Retcode.RET_SUCC, numQueues, queueData));
+        this.player.sendPacket(
+                new PacketForgeGetQueueDataRsp(Retcode.RET_SUCC, numQueues, queueData));
     }
 
     /**********
@@ -130,56 +136,162 @@ public final class ForgingManager extends BasePlayerManager {
     }
 
     public synchronized void handleForgeStartReq(ForgeStartReq req) {
-        // Refuse if all queues are already full.
-        if (this.player.getActiveForges().size() >= this.determineNumberOfQueues()) {
-            this.player.sendPacket(new PacketForgeStartRsp(Retcode.RET_FORGE_QUEUE_FULL));
-            return;
+        synchronized (player.getInventory()) {
+            var active = player.getActiveForges();
+            if (active.stream().anyMatch(queue -> queue == null || queue.getStartState() != 0)) {
+                failStart(Retcode.RET_SVR_ERROR);
+                return;
+            }
+            if (active.size() >= determineNumberOfQueues()) {
+                failStart(Retcode.RET_FORGE_QUEUE_FULL);
+                return;
+            }
+            int id = req.getForgeId(), count = req.getForgeCount(), avatar = req.getAvatarId();
+            var definition = GameData.getForgeDataMap().get(id);
+            if (definition == null
+                    || definition.getId() != id
+                    || count <= 0
+                    || definition.getQueueNum() <= 0
+                    || count > definition.getQueueNum()
+                    || definition.getPlayerLevel() > player.getLevel()
+                    || definition.getEffectiveWorldLevels() != null
+                            && !definition.getEffectiveWorldLevels().isEmpty()
+                            && !definition
+                                    .getEffectiveWorldLevels()
+                                    .contains(player.getWorldLevel())
+                    || !definition.isDefaultShow()
+                            && !player.getUnlockedForgingBlueprints().contains(id)
+                    || definition.getForgeTime() <= 0
+                    || definition.getForgePoint() < 0
+                    || definition.getScoinCost() < 0
+                    || definition.getResultItemCount() <= 0
+                    || avatar < 0
+                    || avatar > 0 && !player.getAvatars().hasAvatar(avatar)) {
+                failStart(Retcode.RET_FAIL);
+                return;
+            }
+            int resultId =
+                    definition.getResultItemId() > 0
+                            ? definition.getResultItemId()
+                            : definition.getShowItemId();
+            var result = GameData.getItemDataMap().get(resultId);
+            int now = Utils.getCurrentSeconds();
+            long points = (long) definition.getForgePoint() * count,
+                    finish = (long) now + (long) definition.getForgeTime() * count;
+            if (result == null
+                    || result.getId() != resultId
+                    || result.isUseOnGain()
+                    || result.getItemType() != ItemType.ITEM_MATERIAL
+                            && result.getItemType() != ItemType.ITEM_WEAPON
+                    || (long) definition.getResultItemCount() * count > Integer.MAX_VALUE
+                    || points > Integer.MAX_VALUE
+                    || finish > Integer.MAX_VALUE) {
+                failStart(Retcode.RET_NOT_FOUND_CONFIG);
+                return;
+            }
+            var costs = forgeCosts(definition, count);
+            if (costs == null) {
+                failStart(Retcode.RET_NOT_FOUND_CONFIG);
+                return;
+            }
+            if (!emu.grasscutter.config.Configuration.GAME_OPTIONS.resinOptions.resinUsage)
+                costs = costs.stream().filter(cost -> cost.getId() != 106).toList();
+            if (points > player.getForgePoints()) {
+                failStart(Retcode.RET_FORGE_POINT_NOT_ENOUGH);
+                return;
+            }
+            var before = new LinkedHashMap<Integer, Integer>();
+            var stacks = new ArrayList<GameItem>();
+            for (var cost : costs) {
+                var item = GameData.getItemDataMap().get(cost.getId());
+                if (item == null
+                        || item.getId() != cost.getId()
+                        || item.isUseOnGain()
+                        || item.getItemType() != ItemType.ITEM_MATERIAL
+                                && !(item.getItemType() == ItemType.ITEM_VIRTUAL
+                                        && (cost.getId() == 202 || cost.getId() == 106))
+                        || item.getItemType() == ItemType.ITEM_MATERIAL
+                                && item.getStackLimit() <= 0) {
+                    failStart(Retcode.RET_NOT_FOUND_CONFIG);
+                    return;
+                }
+                int amount = forgeCostCount(cost.getId());
+                if (amount < cost.getCount()) {
+                    failStart(Retcode.RET_ITEM_COUNT_NOT_ENOUGH);
+                    return;
+                }
+                before.put(cost.getId(), amount);
+                if (item.getItemType() == ItemType.ITEM_MATERIAL)
+                    stacks.add(player.getInventory().getItemById(cost.getId()));
+            }
+            var queue = new ActiveForgeData();
+            queue.setForgeId(id);
+            queue.setAvatarId(avatar);
+            queue.setCount(count);
+            queue.setStartTime(now);
+            queue.setForgeTime(definition.getForgeTime());
+            queue.reserveStart();
+            active.add(queue);
+            int pointsBefore = player.getForgePoints();
+            try {
+                DatabaseHelper.saveGameSync(player);
+                if (!player.getInventory().payItems(costs, 1, ActionReason.ForgeCost))
+                    throw new IllegalStateException("Forge costs were refused after reservation");
+                for (var cost : costs)
+                    if ((long) before.get(cost.getId()) - forgeCostCount(cost.getId())
+                            != cost.getCount())
+                        throw new IllegalStateException("Forge cost count changed");
+                for (var item : stacks) DatabaseHelper.saveGameSync(item);
+                if (!player.setForgePoints(pointsBefore - (int) points)
+                        || player.getForgePoints() != pointsBefore - points)
+                    throw new IllegalStateException("Forge point cost was not applied");
+                DatabaseHelper.saveGameSync(player);
+                queue.acknowledgeStart();
+                DatabaseHelper.saveGameSync(player);
+            } catch (RuntimeException failure) {
+                if (queue.getStartState() == 0) queue.reserveStart();
+                Grasscutter.getLogger()
+                        .error(
+                                "Forge start needs reconciliation: UID {}, recipe {}, count {}",
+                                player.getUid(),
+                                id,
+                                count,
+                                failure);
+                failStart(Retcode.RET_SVR_ERROR);
+                return;
+            }
+            sendForgeQueueDataNotify();
+            player.sendPacket(new PacketForgeStartRsp(Retcode.RET_SUCC));
         }
+    }
 
-        // Get the required forging information for the target item.
-        if (!GameData.getForgeDataMap().containsKey(req.getForgeId())) {
-            this.player.sendPacket(
-                    new PacketForgeStartRsp(Retcode.RET_FAIL)); // ToDo: Probably the wrong return code.
-            return;
+    private void failStart(Retcode code) {
+        player.sendPacket(new PacketForgeStartRsp(code));
+    }
+
+    private int forgeCostCount(int id) {
+        return switch (id) {
+            case 202 -> player.getMora();
+            case 106 -> player.getProperty(PlayerProperty.PROP_PLAYER_RESIN);
+            default -> player.getInventory().getItemCountById(id);
+        };
+    }
+
+    private static List<ItemParamData> forgeCosts(ForgeData recipe, int count) {
+        if (recipe.getMaterialItems() == null) return null;
+        var totals = new LinkedHashMap<Integer, Long>();
+        var rows = new ArrayList<>(recipe.getMaterialItems());
+        rows.add(new ItemParamData(202, recipe.getScoinCost()));
+        for (var row : rows) {
+            if (row == null || row.getId() < 0 || row.getCount() < 0) return null;
+            if (row.getCount() == 0) continue;
+            if (row.getId() == 0) return null;
+            long total = totals.merge(row.getId(), (long) row.getCount() * count, Long::sum);
+            if (total > Integer.MAX_VALUE) return null;
         }
-
-        ForgeData forgeData = GameData.getForgeDataMap().get(req.getForgeId());
-
-        // Check if the player has sufficient forge points.
-        int requiredPoints = forgeData.getForgePoint() * req.getForgeCount();
-        if (requiredPoints > this.player.getForgePoints()) {
-            this.player.sendPacket(new PacketForgeStartRsp(Retcode.RET_FORGE_POINT_NOT_ENOUGH));
-            return;
-        }
-
-        // Check if we have enough of each material and consume.
-        List<ItemParamData> material = new ArrayList<>(forgeData.getMaterialItems());
-        material.add(new ItemParamData(202, forgeData.getScoinCost()));
-
-        boolean success =
-                player.getInventory().payItems(material, req.getForgeCount(), ActionReason.ForgeCost);
-
-        if (!success) {
-            this.player.sendPacket(new PacketForgeStartRsp(Retcode.RET_ITEM_COUNT_NOT_ENOUGH));
-            return;
-        }
-
-        // Consume forge points.
-        this.player.setForgePoints(this.player.getForgePoints() - requiredPoints);
-
-        // Create and add active forge.
-        ActiveForgeData activeForge = new ActiveForgeData();
-        activeForge.setForgeId(req.getForgeId());
-        activeForge.setAvatarId(req.getAvatarId());
-        activeForge.setCount(req.getForgeCount());
-        activeForge.setStartTime(Utils.getCurrentSeconds());
-        activeForge.setForgeTime(forgeData.getForgeTime());
-
-        this.player.getActiveForges().add(activeForge);
-
-        // Done.
-        this.sendForgeQueueDataNotify();
-        this.player.sendPacket(new PacketForgeStartRsp(Retcode.RET_SUCC));
+        return totals.entrySet().stream()
+                .map(entry -> new ItemParamData(entry.getKey(), entry.getValue().intValue()))
+                .toList();
     }
 
     /**********
@@ -304,6 +416,15 @@ public final class ForgingManager extends BasePlayerManager {
         // Get info from the request.
         int queueId = req.getForgeQueueId();
         var manipulateType = req.getManipulateType();
+        if (queueId <= 0
+                || queueId > player.getActiveForges().size()
+                || player.getActiveForges().get(queueId - 1) == null
+                || player.getActiveForges().get(queueId - 1).getStartState() != 0) {
+            player.sendPacket(
+                    new PacketForgeQueueManipulateRsp(
+                            Retcode.RET_FAIL, manipulateType, List.of(), List.of(), List.of()));
+            return;
+        }
 
         // Handle according to the manipulation type.
         switch (manipulateType) {
@@ -327,7 +448,8 @@ public final class ForgingManager extends BasePlayerManager {
         }
 
         boolean hasChanges =
-                this.player.getActiveForges().stream().anyMatch(forge -> forge.updateChanged(currentTime));
+                this.player.getActiveForges().stream()
+                        .anyMatch(forge -> forge.updateChanged(currentTime));
 
         if (!hasChanges) {
             return;

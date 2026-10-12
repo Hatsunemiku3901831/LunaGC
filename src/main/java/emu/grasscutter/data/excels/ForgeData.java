@@ -3,8 +3,10 @@ package emu.grasscutter.data.excels;
 import emu.grasscutter.data.*;
 import emu.grasscutter.data.ResourceType.LoadPriority;
 import emu.grasscutter.data.common.ItemParamData;
-import java.util.List;
+
 import lombok.Getter;
+
+import java.util.List;
 
 @ResourceType(
         name = {"ForgeExcelConfigData.json"},
@@ -15,6 +17,7 @@ public class ForgeData extends GameResource {
     private int id;
 
     private int playerLevel;
+    private List<Integer> effectiveWorldLevels;
     private boolean isDefaultShow;
     private int forgeType;
     private int showItemId;

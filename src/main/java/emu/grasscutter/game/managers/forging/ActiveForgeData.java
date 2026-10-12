@@ -13,26 +13,46 @@ public class ActiveForgeData {
 
     private int lastUnfinishedCount;
     private boolean changed;
+    // 0 available; 1 reserved while start costs and queue persistence are unconfirmed.
+    private int startState;
+
+    public int getStartState() {
+        return startState;
+    }
+
+    public void reserveStart() {
+        if (startState != 0) throw new IllegalStateException("Forge start is already reserved");
+        startState = 1;
+    }
+
+    public void acknowledgeStart() {
+        if (startState != 1) throw new IllegalStateException("Forge start is not reserved");
+        startState = 0;
+    }
 
     public int getFinishedCount(int currentTime) {
-        int timeDelta = currentTime - this.startTime;
-        int finishedCount = timeDelta / this.forgeTime;
-
-        return Math.min(finishedCount, this.count);
+        if (startState != 0 || forgeTime <= 0 || count <= 0) return 0;
+        long finishedCount = Math.max(0, (long) currentTime - startTime) / forgeTime;
+        return (int) Math.min(finishedCount, count);
     }
 
     public int getUnfinishedCount(int currentTime) {
-        return this.count - this.getFinishedCount(currentTime);
+        return Math.max(0, count) - getFinishedCount(currentTime);
     }
 
     public int getNextFinishTimestamp(int currentTime) {
-        return (currentTime >= this.getTotalFinishTimestamp())
-                ? this.getTotalFinishTimestamp()
-                : (this.getFinishedCount(currentTime) * this.forgeTime + this.forgeTime + this.startTime);
+        long total = (long) startTime + (long) forgeTime * count;
+        if (forgeTime <= 0 || count <= 0 || total < 0 || total > Integer.MAX_VALUE) return 0;
+        return currentTime >= total
+                ? (int) total
+                : (int) ((long) startTime + (long) (getFinishedCount(currentTime) + 1) * forgeTime);
     }
 
     public int getTotalFinishTimestamp() {
-        return this.startTime + this.forgeTime * this.count;
+        long total = (long) startTime + (long) forgeTime * count;
+        return forgeTime <= 0 || count <= 0 || total < 0 || total > Integer.MAX_VALUE
+                ? 0
+                : (int) total;
     }
 
     public int getForgeId() {
