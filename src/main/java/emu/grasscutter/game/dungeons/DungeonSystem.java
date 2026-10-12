@@ -110,6 +110,7 @@ public final class DungeonSystem extends BaseGameSystem {
                             dungeonId);
 
             var sceneId = data.getSceneId();
+            var origin = DungeonReturnLocation.capture(source, player.getPosition());
             if (!world.transferPlayerToScene(player, sceneId, data)) {
                 return false;
             }
@@ -121,6 +122,7 @@ public final class DungeonSystem extends BaseGameSystem {
                 scene.setPrevScene(source.getId());
                 scene.setPrevScenePoint(pointId);
             }
+            player.rememberDungeonReturnLocation(origin);
             return true;
         }
     }

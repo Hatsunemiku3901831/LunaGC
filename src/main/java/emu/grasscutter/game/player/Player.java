@@ -18,6 +18,7 @@ import emu.grasscutter.game.battlepass.BattlePassManager;
 import emu.grasscutter.game.beyond.BeyondCloset;
 import emu.grasscutter.game.beyond.BeyondProgress;
 import emu.grasscutter.game.city.CityInfoData;
+import emu.grasscutter.game.dungeons.DungeonReturnLocation;
 import emu.grasscutter.game.entity.GameEntity;
 import emu.grasscutter.game.expedition.ExpeditionInfo;
 import emu.grasscutter.game.friends.*;
@@ -135,6 +136,7 @@ public class Player implements PlayerHook, FieldFetch {
     @Getter @Setter private Position prevPos;
     @Getter @Setter private Position prevPosForHome;
     @Getter @Setter private int prevScene;
+    @Getter private DungeonReturnLocation dungeonReturnLocation;
     @Getter private Position rotation;
     @Getter private PlayerBirthday birthday;
     @Getter private PlayerCodex codex;
@@ -1623,6 +1625,20 @@ public class Player implements PlayerHook, FieldFetch {
         this.getPlayerProgress().setPlayer(this);
     }
 
+    public synchronized void rememberDungeonReturnLocation(DungeonReturnLocation origin) {
+        if (origin == null) return;
+        this.dungeonReturnLocation = origin;
+        this.save();
+    }
+
+    private void recoverDungeonLoginLocation() {
+        var savedScene = GameData.getSceneDataMap().get(this.getSceneId());
+        if (savedScene == null || savedScene.getSceneType() != SceneType.SCENE_DUNGEON) return;
+        var origin = DungeonReturnLocation.resolve(this.dungeonReturnLocation);
+        this.setSceneId(origin.getSceneId());
+        this.position.set(origin.getPosition());
+    }
+
     public void onLogin() {
         this.getTeamManager().repairPersistentTeams();
 
@@ -1640,6 +1656,8 @@ public class Player implements PlayerHook, FieldFetch {
             }
             this.position.set(pos);
         }
+
+        this.recoverDungeonLoginLocation();
 
         World world = new World(this);
         if (!world.tryAddPlayer(this)) {
