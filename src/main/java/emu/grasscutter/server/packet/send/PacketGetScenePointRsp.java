@@ -10,21 +10,26 @@ public class PacketGetScenePointRsp extends BasePacket {
     public PacketGetScenePointRsp(Player player, int sceneId) {
         super(PacketOpcodes.GetScenePointRsp);
 
-        GetScenePointRsp.Builder p = GetScenePointRsp.newBuilder().setSceneId(sceneId);
-
-        var unlockedPoints = player.getUnlockedScenePoints(sceneId);
-        if (GameData.getScenePointIdList().size() == 0 || unlockedPoints.isEmpty()) {
-            for (int i = 1; i < 1000; i++) {
-                p.addUnlockedPointList(i);
-                p.addUnhidePointList(i);
-            }
-        } else {
-            p.addAllUnlockedPointList(unlockedPoints);
-            p.addAllUnhidePointList(unlockedPoints);
-        }
-
-        for (int i = 1; i < 9; i++) {
-            p.addUnlockAreaList(i);
+        GetScenePointRsp.Builder p =
+                GetScenePointRsp.newBuilder().setSceneId(sceneId).setBelongUid(player.getUid());
+        synchronized (player) {
+            GameData.getScenePointEntryMap().values().stream()
+                    .filter(
+                            entry ->
+                                    entry != null
+                                            && entry.getSceneId() == sceneId
+                                            && entry.getPointData() != null)
+                    .map(entry -> entry.getPointData().getId())
+                    .distinct()
+                    .sorted()
+                    .forEach(
+                            point -> {
+                                if (player.isScenePointForceLocked(sceneId, point))
+                                    p.addHidePointList(point);
+                                else if (player.getUnlockedScenePoints(sceneId).contains(point))
+                                    p.addUnlockedPointList(point);
+                            });
+            p.addAllUnlockAreaList(player.getUnlockedSceneAreas(sceneId));
         }
 
         this.setData(p);

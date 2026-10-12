@@ -206,6 +206,7 @@ public class Player implements PlayerHook, FieldFetch {
     @Getter private Map<Integer, Integer> openStates;
     @Getter @Setter private Map<Integer, Set<Integer>> unlockedSceneAreas;
     @Getter @Setter private Map<Integer, Set<Integer>> unlockedScenePoints;
+    private Map<Integer, Set<Integer>> forceLockedScenePoints = new HashMap<>();
     @Getter @Setter private List<Integer> chatEmojiIdList;
 
     /**
@@ -632,6 +633,19 @@ public class Player implements PlayerHook, FieldFetch {
 
     public Set<Integer> getUnlockedScenePoints(int sceneId) {
         return this.unlockedScenePoints.computeIfAbsent(sceneId, i -> new CopyOnWriteArraySet<>());
+    }
+
+    /** Quest locks do not erase permanent exploration progress. Legacy records may omit this map. */
+    public synchronized Set<Integer> getForceLockedScenePoints(int sceneId) {
+        if (forceLockedScenePoints == null) forceLockedScenePoints = new HashMap<>();
+        return forceLockedScenePoints.computeIfAbsent(
+                sceneId, ignored -> new CopyOnWriteArraySet<>());
+    }
+
+    public synchronized boolean isScenePointForceLocked(int sceneId, int pointId) {
+        if (forceLockedScenePoints == null) return false;
+        var points = forceLockedScenePoints.get(sceneId);
+        return points != null && points.contains(pointId);
     }
 
     public int getLevel() {

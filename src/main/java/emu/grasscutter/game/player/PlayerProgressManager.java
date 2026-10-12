@@ -4,7 +4,6 @@ import static emu.grasscutter.config.Configuration.GAME_OPTIONS;
 import static emu.grasscutter.scripts.constants.EventType.EVENT_UNLOCK_TRANS_POINT;
 
 import emu.grasscutter.data.GameData;
-import emu.grasscutter.data.binout.ScenePointEntry;
 import emu.grasscutter.data.excels.OpenStateData;
 import emu.grasscutter.data.excels.OpenStateData.OpenStateCondType;
 import emu.grasscutter.game.props.ActionReason;
@@ -269,20 +268,46 @@ public final class PlayerProgressManager extends BasePlayerDataManager {
         }
     }
 
+    public boolean lockTransPoint(int sceneId, int pointId) {
+        if (!knownTransPoint(sceneId, pointId)) return false;
+        synchronized (player) {
+            if (player.getForceLockedScenePoints(sceneId).add(pointId)) player.save();
+            player.sendPacket(PacketScenePointUnlockNotify.lock(sceneId, pointId));
+        }
+        return true;
+    }
+
+    private static boolean knownTransPoint(int sceneId, int pointId) {
+        if (sceneId <= 0 || pointId <= 0) return false;
+        var entry = GameData.getScenePointEntryById(sceneId, pointId);
+        return entry != null
+                && entry.getSceneId() == sceneId
+                && entry.getPointData() != null
+                && entry.getPointData().getId() == pointId;
+    }
+
     public boolean unlockTransPoint(int sceneId, int pointId, boolean isStatue) {
         // Check whether the unlocked point exists and whether it is still locked.
-        ScenePointEntry scenePointEntry = GameData.getScenePointEntryById(sceneId, pointId);
-
-        if (scenePointEntry == null || this.player.getUnlockedScenePoints(sceneId).contains(pointId)) {
-            return false;
+        if (!knownTransPoint(sceneId, pointId)) return false;
+        final boolean newlyDiscovered, releasedLock;
+        synchronized (player) {
+            releasedLock = player.getForceLockedScenePoints(sceneId).remove(pointId);
+            newlyDiscovered = player.getUnlockedScenePoints(sceneId).add(pointId);
+            if (!newlyDiscovered && !releasedLock) return false;
+            player.save();
+            player.sendPacket(
+                    releasedLock
+                            ? PacketScenePointUnlockNotify.releaseQuestLock(sceneId, pointId)
+                            : new PacketScenePointUnlockNotify(sceneId, pointId));
         }
 
-        // Add the point to the list of unlocked points for its scene.
-        this.player.getUnlockedScenePoints(sceneId).add(pointId);
-
         // Give primogems  and Adventure EXP for unlocking.
-        this.player.getInventory().addItem(201, 5, ActionReason.UnlockPointReward);
-        this.player.getInventory().addItem(102, isStatue ? 50 : 10, ActionReason.UnlockPointReward);
+        if (newlyDiscovered) {
+            this.player.getInventory().addItem(201, 5, ActionReason.UnlockPointReward);
+            this.player
+                    .getInventory()
+                    .addItem(102, isStatue ? 50 : 10, ActionReason.UnlockPointReward);
+        }
 
         // this.player.sendPacket(new
         // PacketPlayerPropChangeReasonNotify(this.player.getProperty(PlayerProperty.PROP_PLAYER_EXP),
@@ -292,13 +317,11 @@ public final class PlayerProgressManager extends BasePlayerDataManager {
         this.player
                 .getQuestManager()
                 .queueEvent(QuestContent.QUEST_CONTENT_UNLOCK_TRANS_POINT, sceneId, pointId);
-        this.player
-                .getScene()
-                .getScriptManager()
-                .callEvent(new ScriptArgs(0, EVENT_UNLOCK_TRANS_POINT, sceneId, pointId));
+        var scene = player.getScene();
+        if (scene != null)
+            scene.getScriptManager()
+                    .callEvent(new ScriptArgs(0, EVENT_UNLOCK_TRANS_POINT, sceneId, pointId));
 
-        // Send packet.
-        this.player.sendPacket(new PacketScenePointUnlockNotify(sceneId, pointId));
         return true;
     }
 
