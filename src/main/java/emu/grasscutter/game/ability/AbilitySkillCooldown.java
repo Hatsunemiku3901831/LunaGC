@@ -196,4 +196,40 @@ public final class AbilitySkillCooldown {
                 player.sendPacket(new PacketAvatarSkillInfoNotify(avatar.getGuid(), states));
         }
     }
+
+    /** Reset selected owned avatars and report full charges, including the inactive half. */
+    public boolean reset(Collection<Avatar> selected) {
+        if (selected == null || selected.isEmpty() || player.getScene() == null) return false;
+        var targets = new LinkedHashSet<Avatar>();
+        var charges = new LinkedHashMap<Avatar, Map<Integer, Integer>>();
+        for (var avatar : selected) {
+            if (avatar == null
+                    || avatar.getPlayer() != player
+                    || player.getAvatars().getAvatarById(avatar.getAvatarId()) != avatar
+                    || !targets.add(avatar)) return false;
+            charges.put(avatar, avatar.getSkillInfoCharges());
+        }
+        var resets = new LinkedHashMap<Avatar, Map<Integer, AvatarSkillInfo>>();
+        synchronized (this) {
+            if (time() < 0) return false;
+            for (var avatar : targets) {
+                var states = snapshot(avatar, charges.get(avatar));
+                var ready = new TreeMap<Integer, AvatarSkillInfo>();
+                states.forEach(
+                        (id, state) ->
+                                ready.put(
+                                        id,
+                                        AvatarSkillInfo.newBuilder()
+                                                .setMaxChargeCount(state.getMaxChargeCount())
+                                                .build()));
+                resets.put(avatar, ready);
+            }
+            targets.forEach(avatars::remove);
+        }
+        resets.forEach(
+                (avatar, ready) ->
+                        player.sendPacket(
+                                new PacketAvatarSkillInfoNotify(avatar.getGuid(), ready)));
+        return true;
+    }
 }

@@ -5,6 +5,7 @@ import static emu.grasscutter.config.Configuration.GAME_OPTIONS;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.common.ItemParamData;
+import emu.grasscutter.data.excels.dungeon.DungeonData;
 import emu.grasscutter.data.excels.tower.TowerLevelData;
 import emu.grasscutter.game.dungeons.*;
 import emu.grasscutter.game.player.*;
@@ -12,6 +13,7 @@ import emu.grasscutter.game.props.ActionReason;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.server.packet.send.*;
 import java.util.*;
+import java.util.function.BooleanSupplier;
 import lombok.*;
 
 public class TowerManager extends BasePlayerManager {
@@ -260,6 +262,65 @@ public class TowerManager extends BasePlayerManager {
                             getCurrentFloorId(),
                             getCurrentLevelId(),
                             getTowerData().getAbyssAvatarIds());
+        }
+    }
+
+    public boolean canRestartChamber(DungeonData dungeon) {
+        var scene = player.getScene();
+        var manager = scene == null ? null : scene.getDungeonManager();
+        var floor = GameData.getTowerFloorDataMap().get(getCurrentFloorId());
+        var level = GameData.getTowerLevelDataMap().get(getCurrentLevelId());
+        var data = getTowerData();
+        return dungeon != null
+                && manager != null
+                && manager.isTowerDungeon()
+                && manager.getDungeonData() == dungeon
+                && floor != null
+                && level != null
+                && level.getLevelGroupId() == floor.getLevelGroupId()
+                && level.getDungeonId() == dungeon.getId()
+                && data.getAbyssAvatarIds()
+                        .equals(player.getTeamManager().getTemporaryTeamAvatarIds())
+                && data.chamberState != null
+                && data.chamberState.canRestore(
+                        player, getCurrentFloorId(), getCurrentLevelId(), data.getAbyssAvatarIds());
+    }
+
+    public boolean tryRestartChamber(DungeonData dungeon, BooleanSupplier enter) {
+        synchronized (player.getSceneTransferLock()) {
+            if (enter == null || !restoreTemporaryTeams() || !canRestartChamber(dungeon))
+                return false;
+            if (!player.getTeamManager().enterSceneWithTemporaryTeam(0, enter)) return false;
+            if (!restoreChamberState()) return false;
+            var avatars =
+                    getTowerData().getAbyssAvatarIds().stream()
+                            .flatMap(Collection::stream)
+                            .map(id -> player.getAvatars().getAvatarById(id))
+                            .toList();
+            if (!player.getAbilityManager().getSkillCooldown().reset(avatars)) return false;
+            var groups = new HashSet<Integer>();
+            for (var avatar : avatars) {
+                var ids = new HashSet<>(avatar.getSkillInfoCharges().keySet());
+                var depot = avatar.getSkillDepot();
+                if (depot != null) {
+                    depot.getSkillsAndEnergySkill().forEach(ids::add);
+                    if (depot.getSubSkills() != null) ids.addAll(depot.getSubSkills());
+                }
+                for (var id : ids) {
+                    var skill = id == null ? null : GameData.getAvatarSkillDataMap().get(id);
+                    if (skill != null && skill.getShareCDID() > 0) groups.add(skill.getShareCDID());
+                }
+            }
+            groups.forEach(id -> player.getAbilityManager().getSharedCooldown().clear(id));
+            inProgress = false;
+            currentTimeLimit = 0;
+            currentPossibleStars = STARS_PER_LEVEL;
+            player.sendPacket(new PacketCanUseSkillNotify(false));
+            notifyCurLevelRecordChange();
+            player.sendPacket(
+                    new PacketTowerLevelStarCondNotify(getCurrentFloorId(), getCurrentLevel(), 4));
+            player.save();
+            return true;
         }
     }
 

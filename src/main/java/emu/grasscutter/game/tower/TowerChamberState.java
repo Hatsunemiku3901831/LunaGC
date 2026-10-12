@@ -98,21 +98,31 @@ public final class TowerChamberState {
         return Float.isFinite(maximum) && maximum > 0;
     }
 
-    public boolean restore(Player player, int floor, int level, List<List<Integer>> selected) {
-        if (!matches(floor, level, selected) || avatars == null) return false;
+    private Map<Avatar, AvatarState> targets(
+            Player player, int floor, int level, List<List<Integer>> selected) {
+        if (player == null || !matches(floor, level, selected) || avatars == null) return null;
         var targets = new LinkedHashMap<Avatar, AvatarState>();
         for (var team : selected) {
-            if (team == null || team.isEmpty()) return false;
+            if (team == null || team.isEmpty()) return null;
             for (var id : team) {
                 var avatar = id == null ? null : player.getAvatars().getAvatarById(id);
                 var state = avatars.get(id);
                 if (avatar == null
                         || avatar.getPlayer() != player
                         || !valid(state, avatar)
-                        || targets.put(avatar, state) != null) return false;
+                        || targets.put(avatar, state) != null) return null;
             }
         }
-        if (targets.size() != avatars.size()) return false;
+        return targets.size() == avatars.size() ? targets : null;
+    }
+
+    public boolean canRestore(Player player, int floor, int level, List<List<Integer>> selected) {
+        return targets(player, floor, level, selected) != null;
+    }
+
+    public boolean restore(Player player, int floor, int level, List<List<Integer>> selected) {
+        var targets = targets(player, floor, level, selected);
+        if (targets == null) return false;
         for (var entry : targets.entrySet()) {
             var avatar = entry.getKey();
             var state = entry.getValue();

@@ -234,15 +234,10 @@ class DungeonRestartSafetyTest extends QuestTestFixture {
     }
 
     @Test
-    void legacyTowerReplayKeepsItsTowerManagerAndSettleObserver() {
+    void towerFlagWithoutAValidatedChamberCannotRebuildTheScene() {
         manager.setTowerDungeon(true);
-        system.restartDungeon(player);
-        var fresh = player.getScene();
-        assertNotSame(source, fresh);
-        assertTrue(fresh.getDungeonManager().isTowerDungeon());
-        assertEquals(1, fresh.getDungeonSettleListeners().size());
-        assertInstanceOf(
-                TowerDungeonSettleListener.class, fresh.getDungeonSettleListeners().get(0));
+        assertFalse(system.tryRestartDungeon(player));
+        kept();
     }
 
     @Test

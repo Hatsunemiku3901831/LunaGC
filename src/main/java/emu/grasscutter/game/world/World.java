@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.BooleanSupplier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ConcurrentHashMap;
@@ -629,11 +630,17 @@ public class World implements Iterable<Player> {
 
     /** Rebuild only a solo dungeon, after the normal teleport event and admission checks. */
     public boolean restartDungeonScene(Player player, DungeonData data, Consumer<Scene> prepare) {
-        if (player == null || data == null || prepare == null) return false;
+        return restartDungeonScene(player, data, prepare, () -> true);
+    }
+
+    public boolean restartDungeonScene(
+            Player player, DungeonData data, Consumer<Scene> prepare, BooleanSupplier ready) {
+        if (player == null || data == null || prepare == null || ready == null) return false;
         synchronized (player.getSceneTransferLock()) {
             var source = player.getScene();
             var manager = source == null ? null : source.getDungeonManager();
-            if (!canRestartDungeonScene(player, source, manager, data)) return false;
+            if (!canRestartDungeonScene(player, source, manager, data) || !ready.getAsBoolean())
+                return false;
             var properties =
                     TeleportProperties.builder()
                             .sceneId(data.getSceneId())
@@ -644,7 +651,7 @@ public class World implements Iterable<Player> {
                             .teleportTo(data.getStartPosition())
                             .teleportRot(data.getStartRotation())
                             .build();
-            return transferPlayerToSceneLocked(player, properties, source, manager, prepare);
+            return transferPlayerToSceneLocked(player, properties, source, manager, prepare, ready);
         }
     }
 
@@ -685,6 +692,17 @@ public class World implements Iterable<Player> {
             Scene restartSource,
             DungeonManager restartManager,
             Consumer<Scene> prepare) {
+        return transferPlayerToSceneLocked(
+                player, teleportProperties, restartSource, restartManager, prepare, () -> true);
+    }
+
+    private boolean transferPlayerToSceneLocked(
+            Player player,
+            TeleportProperties teleportProperties,
+            Scene restartSource,
+            DungeonManager restartManager,
+            Consumer<Scene> prepare,
+            BooleanSupplier ready) {
         // If a queued teleport already exists, cancel it. This prevents the player from
         // becoming stranded in a dungeon due to quitting it by teleporting to a map waypoint.
         synchronized (player) {
@@ -715,8 +733,8 @@ public class World implements Iterable<Player> {
         Scene oldScene = player.getScene();
         var data = restartManager == null ? null : restartManager.getDungeonData();
         if (restartSource != null
-                && !canRestartDungeonScene(player, restartSource, restartManager, data))
-            return false;
+                && (!canRestartDungeonScene(player, restartSource, restartManager, data)
+                        || !ready.getAsBoolean())) return false;
         var newScene =
                 restartSource == null
                         ? this.getSceneById(teleportProperties.getSceneId())
@@ -733,6 +751,7 @@ public class World implements Iterable<Player> {
         if (restartSource != null) {
             try {
                 prepare.accept(newScene);
+                if (!ready.getAsBoolean()) return false;
                 synchronized (MEMBERSHIP_LOCK) {
                     if (!canRestartDungeonScene(player, restartSource, restartManager, data)
                             || !this.getScenes()

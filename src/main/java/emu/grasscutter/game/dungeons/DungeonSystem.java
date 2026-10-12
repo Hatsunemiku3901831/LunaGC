@@ -221,22 +221,34 @@ public final class DungeonSystem extends BaseGameSystem {
             var isTower = dungeonManager.isTowerDungeon();
             var prevScene = scene.getPrevScene();
             var pointId = scene.getPrevScenePoint();
-            return world.restartDungeonScene(
-                    player,
-                    dungeonData,
-                    fresh -> {
-                        var newManager = new DungeonManager(fresh, dungeonData);
-                        newManager.setTowerDungeon(isTower);
-                        fresh.setDungeonManager(newManager);
-                        fresh.setPrevScene(prevScene);
-                        fresh.setPrevScenePoint(pointId);
-                        if (isTower) {
-                            fresh.addDungeonSettleObserver(new TowerDungeonSettleListener());
-                        } else {
-                            MissingDomainFallbackManager.install(fresh, dungeonData);
-                            fresh.addDungeonSettleObserver(basicDungeonSettleObserver);
-                        }
-                    });
+            java.util.function.BooleanSupplier restart =
+                    () ->
+                            world.restartDungeonScene(
+                                    player,
+                                    dungeonData,
+                                    fresh -> {
+                                        var newManager = new DungeonManager(fresh, dungeonData);
+                                        newManager.setTowerDungeon(isTower);
+                                        fresh.setDungeonManager(newManager);
+                                        fresh.setPrevScene(prevScene);
+                                        fresh.setPrevScenePoint(pointId);
+                                        if (isTower) {
+                                            fresh.addDungeonSettleObserver(
+                                                    new TowerDungeonSettleListener());
+                                        } else {
+                                            MissingDomainFallbackManager.install(
+                                                    fresh, dungeonData);
+                                            fresh.addDungeonSettleObserver(
+                                                    basicDungeonSettleObserver);
+                                        }
+                                    },
+                                    () ->
+                                            !isTower
+                                                    || player.getTowerManager()
+                                                            .canRestartChamber(dungeonData));
+            return isTower
+                    ? player.getTowerManager().tryRestartChamber(dungeonData, restart)
+                    : restart.getAsBoolean();
         }
     }
 }
