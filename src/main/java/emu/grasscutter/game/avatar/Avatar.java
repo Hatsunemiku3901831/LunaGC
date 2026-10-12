@@ -17,6 +17,7 @@ import emu.grasscutter.data.excels.weapon.*;
 import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.game.entity.*;
 import emu.grasscutter.game.inventory.*;
+import emu.grasscutter.game.player.InvestigationHandbook;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.tps.TpsWeaponSystem;
 import emu.grasscutter.game.props.*;
@@ -64,6 +65,7 @@ public class Avatar {
     private List<Integer> fetters;
 
     private Map<Integer, Integer> skillLevelMap = new Int2IntArrayMap(7); // Talent levels
+    @Transient private transient boolean upgradingSkill;
 
     @Transient @Getter
     private Map<Integer, Integer> skillExtraChargeMap = new Int2IntArrayMap(2); // Charges
@@ -1008,26 +1010,51 @@ public class Avatar {
     }
 
     public boolean upgradeSkill(int skillId) {
+        var player = getPlayer();
+        if (player == null) return false;
+        // Payment callbacks can reenter; keep validation, costs and the level change together.
+        synchronized (player.getInventory()) {
+            if (upgradingSkill) return false;
+            upgradingSkill = true;
+            try {
+                return upgradeSkillLocked(player, skillId);
+            } finally {
+                upgradingSkill = false;
+            }
+        }
+    }
+
+    private boolean upgradeSkillLocked(Player player, int skillId) {
         AvatarSkillData skillData = GameData.getAvatarSkillDataMap().get(skillId);
-        if (skillData == null) return false;
+        if (skillData == null || skillData.getId() != skillId || !hasSkillInDepot(skillId))
+            return false;
 
         // Get data for next skill level
-        int newLevel = this.skillLevelMap.getOrDefault(skillId, 0) + 1;
-        if (newLevel > 10) return false;
+        int oldLevel = this.skillLevelMap.getOrDefault(skillId, 0);
+        if (oldLevel < 1 || oldLevel >= 10) return false;
+        int newLevel = oldLevel + 1;
+        var validLevels = GameData.getAvatarSkillLevels(skillId);
+        if (validLevels != null && !validLevels.contains(newLevel)) return false;
 
         // Proud skill data
-        int proudSkillId = (skillData.getProudSkillGroupId() * 100) + newLevel;
-        ProudSkillData proudSkill = GameData.getProudSkillDataMap().get(proudSkillId);
-        if (proudSkill == null) return false;
+        long proudSkillId = (long) skillData.getProudSkillGroupId() * 100 + newLevel;
+        if (skillData.getProudSkillGroupId() <= 0 || proudSkillId > Integer.MAX_VALUE)
+            return false;
+        ProudSkillData proudSkill = GameData.getProudSkillDataMap().get((int) proudSkillId);
+        if (proudSkill == null
+                || proudSkill.getId() != proudSkillId
+                || proudSkill.getProudSkillGroupId() != skillData.getProudSkillGroupId()
+                || proudSkill.getLevel() != newLevel) return false;
 
         // Make sure break level is correct
         if (this.getPromoteLevel() < proudSkill.getBreakLevel()) return false;
 
         // Pay materials and mora if possible
-        if (!this.getPlayer().getInventory().payItems(proudSkill.getTotalCostItems())) return false;
+        if (!player.getInventory().payItems(proudSkill.getTotalCostItems())) return false;
 
         // Upgrade skill
-        this.setSkillLevel(skillId, newLevel);
+        if (!this.setSkillLevel(skillId, newLevel)) return false;
+        InvestigationHandbook.trigger(player, "TRIGGER_UPGRADE_TALENT", skillId, 1);
         return true;
     }
 
