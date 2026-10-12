@@ -14,10 +14,13 @@ import emu.grasscutter.game.shop.BeyondCurrency;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.server.game.*;
 import emu.grasscutter.server.packet.send.*;
+import emu.grasscutter.utils.FileUtils;
+import emu.grasscutter.utils.JsonUtils;
 import emu.grasscutter.utils.Utils;
 
 import it.unimi.dsi.fastutil.ints.*;
 
+import java.nio.file.Files;
 import java.util.*;
 
 public class CombineManger extends BaseGameSystem {
@@ -31,13 +34,26 @@ public class CombineManger extends BaseGameSystem {
     }
 
     public static void initialize() {
-        // Read the data we need for strongbox.
+        reliquaryDecomposeData.clear();
+        reliquaryDecomposeData.putAll(StrongboxCatalog.build());
+        var overrides = FileUtils.getDataUserPath("ReliquaryDecompose.json");
         try {
-            DataLoader.loadList("ReliquaryDecompose.json", ReliquaryDecomposeEntry.class)
-                    .forEach(
-                            entry -> {
-                                reliquaryDecomposeData.put(entry.getConfigId(), entry.getItems());
-                            });
+            List<ReliquaryDecomposeEntry> entries = List.of();
+            if (Files.isRegularFile(overrides)) {
+                try (var reader = Files.newBufferedReader(overrides)) {
+                    entries = JsonUtils.loadToList(reader, ReliquaryDecomposeEntry.class);
+                }
+            } else if (GameData.getReliquaryDecomposeDataMap().isEmpty()) {
+                entries =
+                        DataLoader.loadList(
+                                "ReliquaryDecompose.json", ReliquaryDecomposeEntry.class);
+            }
+            for (var entry : entries)
+                if (entry != null
+                        && entry.getConfigId() > 0
+                        && entry.getItems() != null
+                        && !entry.getItems().isEmpty())
+                    reliquaryDecomposeData.put(entry.getConfigId(), List.copyOf(entry.getItems()));
             Grasscutter.getLogger()
                     .debug("Loaded {} reliquary decompose entries.", reliquaryDecomposeData.size());
         } catch (Exception ex) {
@@ -252,14 +268,18 @@ public class CombineManger extends BaseGameSystem {
     }
 
     private void decomposeLocked(Player player, int configId, int count, List<Long> input) {
-        // Current resource definitions require three five-star inputs, at most 39 outputs.
+        var rule = GameData.getReliquaryDecomposeDataMap().get(configId);
+        int inputsPerOutput = rule == null ? 3 : rule.getNeedReliquaryCount();
+        int rank = rule == null ? 5 : rule.getNeedReliquaryRankLevel();
+        int maximum = rule == null ? 39 : rule.getMaxReliquaryNum();
         var possibleDrops = reliquaryDecomposeData.get(configId);
         if (possibleDrops == null
                 || possibleDrops.isEmpty()
+                || rule != null && !rule.isValid()
                 || count <= 0
-                || count > 39
+                || count > maximum
                 || input == null
-                || input.size() != (long) count * 3) {
+                || input.size() != (long) count * inputsPerOutput) {
             failDecompose(player);
             return;
         }
@@ -275,7 +295,7 @@ public class CombineManger extends BaseGameSystem {
                     || data != item.getItemData()
                     || data.getId() != item.getItemId()
                     || data.getItemType() != ItemType.ITEM_RELIQUARY
-                    || data.getRankLevel() != 5
+                    || data.getRankLevel() != rank
                     || item.getOwnerId() != player.getUid()
                     || item.getCount() != 1
                     || !item.isDestroyable()) {
@@ -290,7 +310,7 @@ public class CombineManger extends BaseGameSystem {
                     || data.getId() != id
                     || data.isUseOnGain()
                     || data.getItemType() != ItemType.ITEM_RELIQUARY
-                    || data.getRankLevel() != 5) {
+                    || data.getRankLevel() != rank) {
                 failDecompose(player);
                 return;
             }

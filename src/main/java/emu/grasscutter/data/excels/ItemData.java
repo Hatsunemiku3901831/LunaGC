@@ -1,15 +1,19 @@
 package emu.grasscutter.data.excels;
 
 import com.google.gson.annotations.SerializedName;
+
 import emu.grasscutter.data.*;
 import emu.grasscutter.data.common.ItemUseData;
 import emu.grasscutter.game.home.SpecialFurnitureType;
 import emu.grasscutter.game.inventory.*;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.game.props.ItemUseAction.ItemUseAction;
+
 import it.unimi.dsi.fastutil.ints.*;
-import java.util.*;
+
 import lombok.Getter;
+
+import java.util.*;
 
 @ResourceType(
         name = {
@@ -28,6 +32,7 @@ public class ItemData extends GameResource {
     private int stackLimit = 1;
     private int maxUseCount;
     private int rankLevel;
+    private boolean dropable;
     private String effectName;
     private int rank;
     private int weight;
@@ -58,8 +63,10 @@ public class ItemData extends GameResource {
     private int mainPropDepotId;
     private int appendPropDepotId;
     private int appendPropNum;
+
     @SerializedName(value = "setId", alternate = "setID")
     private int setId;
+
     private int[] addPropLevels;
     private int baseConvExp;
     private int maxLevel;
@@ -67,8 +74,12 @@ public class ItemData extends GameResource {
     // Weapon
     private int weaponPromoteId;
     private int weaponBaseExp;
-    @SerializedName(value = "storyId", alternate = {"LAJDDBLOPIO"})
+
+    @SerializedName(
+            value = "storyId",
+            alternate = {"LAJDDBLOPIO"})
     private int storyId;
+
     private int avatarPromoteId;
     private int awakenMaterial;
     private int[] awakenCosts;
@@ -138,7 +149,8 @@ public class ItemData extends GameResource {
         }
 
         // Prevent material type from being null
-        this.materialType = this.materialType == null ? MaterialType.MATERIAL_NONE : this.materialType;
+        this.materialType =
+                this.materialType == null ? MaterialType.MATERIAL_NONE : this.materialType;
 
         if (this.itemUse != null && !this.itemUse.isEmpty()) {
             this.itemUseActions =
@@ -149,9 +161,13 @@ public class ItemData extends GameResource {
                             .toList();
             // 7.1 particle rows omit useOnGain. Only infer it for supported energy pickups.
             if (this.materialType == MaterialType.MATERIAL_ADSORBATE
-                    && this.itemUseActions.stream().anyMatch(action ->
-                            action.getItemUseOp() == ItemUseOp.ITEM_USE_ADD_ELEM_ENERGY
-                                    || action.getItemUseOp() == ItemUseOp.ITEM_USE_ADD_ALL_ENERGY)) {
+                    && this.itemUseActions.stream()
+                            .anyMatch(
+                                    action ->
+                                            action.getItemUseOp()
+                                                            == ItemUseOp.ITEM_USE_ADD_ELEM_ENERGY
+                                                    || action.getItemUseOp()
+                                                            == ItemUseOp.ITEM_USE_ADD_ALL_ENERGY)) {
                 this.useOnGain = true;
             }
         }
