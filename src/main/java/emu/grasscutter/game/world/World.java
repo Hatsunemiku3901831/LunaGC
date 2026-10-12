@@ -655,6 +655,96 @@ public class World implements Iterable<Player> {
         }
     }
 
+    /** Build a fresh solo tower scene and prepare its manager before publishing it. */
+    public boolean handoffTowerDungeonScene(
+            Player player, DungeonData data, Consumer<Scene> prepare) {
+        if (player == null || data == null || prepare == null) return false;
+        synchronized (player.getSceneTransferLock()) {
+            var source = player.getScene();
+            var manager = source == null ? null : source.getDungeonManager();
+            var transition =
+                    new DungeonSceneTransition(
+                            source,
+                            manager,
+                            data,
+                            this.scenes.get(data.getSceneId()),
+                            data.getSceneId(),
+                            data.getId(),
+                            false,
+                            false,
+                            prepare,
+                            () -> true);
+            if (!canTransitionDungeon(player, transition)) return false;
+            var properties =
+                    TeleportProperties.builder()
+                            .sceneId(data.getSceneId())
+                            .dungeonId(data.getId())
+                            .teleportType(TeleportType.DUNGEON)
+                            .enterReason(EnterReason.DungeonEnter)
+                            .enterType(EnterType.EnterType_ENTER_DUNGEON)
+                            .teleportTo(data.getStartPosition())
+                            .teleportRot(data.getStartRotation())
+                            .build();
+            return transferPlayerToSceneLocked(player, properties, transition);
+        }
+    }
+
+    private record DungeonSceneTransition(
+            Scene source,
+            DungeonManager manager,
+            DungeonData data,
+            Scene replaced,
+            int sceneId,
+            int dungeonId,
+            boolean restart,
+            boolean persistentGroups,
+            Consumer<Scene> prepare,
+            BooleanSupplier ready) {}
+
+    private boolean canTransitionDungeon(Player player, DungeonSceneTransition transition) {
+        var source = transition.source();
+        var data = transition.data();
+        if (data == null
+                || data.getId() != transition.dungeonId()
+                || data.getSceneId() != transition.sceneId()) return false;
+        if (transition.restart())
+            return canRestartDungeonScene(player, source, transition.manager(), data)
+                    && this.scenes.get(transition.sceneId()) == transition.replaced()
+                    && transition.persistentGroups() == !transition.manager().isTowerDungeon();
+        var resource = GameData.getSceneDataMap().get(transition.sceneId());
+        var replaced = transition.replaced();
+        var manager = transition.manager();
+        return !this.isMultiplayer
+                && this.host == player
+                && this.players.size() == 1
+                && this.players.get(0) == player
+                && player.getWorld() == this
+                && source != null
+                && player.getScene() == source
+                && source.getWorld() == this
+                && this.scenes.get(source.getId()) == source
+                && source.getPlayers().size() == 1
+                && source.getPlayers().get(0) == player
+                && !source.getScriptManager().isDestroyed()
+                && source.getDungeonManager() == manager
+                && (source.getSceneType() == SceneType.SCENE_WORLD && manager == null
+                        || source.getSceneType() == SceneType.SCENE_DUNGEON
+                                && manager != null
+                                && manager.isTowerDungeon()
+                                && manager.getDungeonData() != null
+                                && manager.getDungeonData().getSceneId() == source.getId())
+                && transition.dungeonId() > 0
+                && resource != null
+                && resource.getSceneType() == SceneType.SCENE_DUNGEON
+                && GameData.getDungeonDataMap().get(transition.dungeonId()) == data
+                && this.scenes.get(transition.sceneId()) == replaced
+                && (replaced == null
+                        || replaced == source
+                        || replaced.getWorld() == this
+                                && replaced.getId() == transition.sceneId()
+                                && replaced.getPlayerCount() == 0);
+    }
+
     private boolean canRestartDungeonScene(
             Player player, Scene source, DungeonManager manager, DungeonData data) {
         if (data == null || manager == null) return false;
@@ -703,6 +793,28 @@ public class World implements Iterable<Player> {
             DungeonManager restartManager,
             Consumer<Scene> prepare,
             BooleanSupplier ready) {
+        var data = restartManager == null ? null : restartManager.getDungeonData();
+        var transition =
+                restartSource == null
+                        ? null
+                        : new DungeonSceneTransition(
+                                restartSource,
+                                restartManager,
+                                data,
+                                restartSource,
+                                data.getSceneId(),
+                                data.getId(),
+                                true,
+                                !restartManager.isTowerDungeon(),
+                                prepare,
+                                ready);
+        return transferPlayerToSceneLocked(player, teleportProperties, transition);
+    }
+
+    private boolean transferPlayerToSceneLocked(
+            Player player,
+            TeleportProperties teleportProperties,
+            DungeonSceneTransition transition) {
         // If a queued teleport already exists, cancel it. This prevents the player from
         // becoming stranded in a dungeon due to quitting it by teleporting to a map waypoint.
         synchronized (player) {
@@ -731,32 +843,43 @@ public class World implements Iterable<Player> {
         }
 
         Scene oldScene = player.getScene();
-        var data = restartManager == null ? null : restartManager.getDungeonData();
-        if (restartSource != null
-                && (!canRestartDungeonScene(player, restartSource, restartManager, data)
-                        || !ready.getAsBoolean())) return false;
+        if (transition != null
+                && (!canTransitionDungeon(player, transition)
+                        || teleportProperties.getSceneId() != transition.sceneId()
+                        || teleportProperties.getDungeonId() != transition.dungeonId()
+                        || !transition.ready().getAsBoolean())) return false;
         var newScene =
-                restartSource == null
+                transition == null
                         ? this.getSceneById(teleportProperties.getSceneId())
                         : new Scene(
                                 this,
                                 GameData.getSceneDataMap().get(teleportProperties.getSceneId()),
-                                !restartManager.isTowerDungeon());
+                                transition.persistentGroups());
         if (newScene == null
                 || !emu.grasscutter.game.tps.TpsAvatarSystem.canEnter(
                         player, newScene.getSceneData())) {
-            if (restartSource != null && newScene != null) newScene.getScriptManager().onDestroy();
+            if (transition != null && newScene != null) newScene.getScriptManager().onDestroy();
             return false;
         }
 
-        if (restartSource != null) {
+        if (transition != null) {
             try {
-                prepare.accept(newScene);
-                if (!ready.getAsBoolean()) return false;
+                transition.prepare().accept(newScene);
+                if (!transition.ready().getAsBoolean()) return false;
+                if (!transition.restart()
+                        && (newScene.getDungeonManager() == null
+                                || newScene.getDungeonManager().getDungeonData()
+                                        != transition.data()
+                                || !newScene.getDungeonManager().isTowerDungeon())) return false;
                 synchronized (MEMBERSHIP_LOCK) {
-                    if (!canRestartDungeonScene(player, restartSource, restartManager, data)
-                            || !this.getScenes()
-                                    .replace(restartSource.getId(), restartSource, newScene)) {
+                    if (!canTransitionDungeon(player, transition)
+                            || !(transition.replaced() == null
+                                    ? this.scenes.putIfAbsent(transition.sceneId(), newScene)
+                                            == null
+                                    : this.scenes.replace(
+                                            transition.sceneId(),
+                                            transition.replaced(),
+                                            newScene))) {
                         return false;
                     }
                 }
@@ -764,7 +887,9 @@ public class World implements Iterable<Player> {
                 if (this.getScenes().get(newScene.getId()) != newScene)
                     newScene.getScriptManager().onDestroy();
             }
-            restartSource.setDontDestroyWhenEmpty(false);
+            transition.source().setDontDestroyWhenEmpty(false);
+            if (transition.replaced() != null && transition.replaced() != transition.source())
+                transition.replaced().getScriptManager().onDestroy();
         }
 
         // Move directly in the same scene.

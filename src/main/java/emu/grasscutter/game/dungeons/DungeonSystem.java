@@ -135,11 +135,22 @@ public final class DungeonSystem extends BaseGameSystem {
         }
         synchronized (player.getSceneTransferLock()) {
             var world = player.getWorld();
+            var source = player.getScene();
             DungeonData data = GameData.getDungeonDataMap().get(dungeonId);
 
-            if (world == null || player.getScene() == null || data == null) {
+            if (world == null
+                    || source == null
+                    || data == null
+                    || dungeonSettleListeners == null
+                    || dungeonSettleListeners.stream().anyMatch(java.util.Objects::isNull)) {
                 return false;
             }
+            var observers = List.copyOf(dungeonSettleListeners);
+            int previousScene =
+                    source.getSceneType() == SceneType.SCENE_DUNGEON
+                            ? source.getPrevScene()
+                            : source.getId();
+            int previousPoint = source.getPrevScenePoint();
             Grasscutter.getLogger()
                     .info(
                             "{}({}) is trying to enter tower dungeon {}",
@@ -147,15 +158,17 @@ public final class DungeonSystem extends BaseGameSystem {
                             player.getUid(),
                             dungeonId);
 
-            if (!world.transferPlayerToScene(player, data.getSceneId(), data)) {
-                return false;
-            }
-            var scene = player.getScene();
-            var dungeonManager = new DungeonManager(scene, data);
-            dungeonManager.setTowerDungeon(true);
-            scene.setDungeonManager(dungeonManager);
-            dungeonSettleListeners.forEach(scene::addDungeonSettleObserver);
-            return true;
+            return world.handoffTowerDungeonScene(
+                    player,
+                    data,
+                    scene -> {
+                        var dungeonManager = new DungeonManager(scene, data);
+                        dungeonManager.setTowerDungeon(true);
+                        scene.setDungeonManager(dungeonManager);
+                        scene.setPrevScene(previousScene);
+                        scene.setPrevScenePoint(previousPoint);
+                        observers.forEach(scene::addDungeonSettleObserver);
+                    });
         }
     }
 

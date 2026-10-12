@@ -13,6 +13,7 @@ import emu.grasscutter.game.world.*;
 import org.junit.jupiter.api.*;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 /** Dungeon entry must report and commit the actual scene transfer outcome. */
 class DungeonEntryOutcomeTest extends QuestTestFixture {
@@ -28,6 +29,13 @@ class DungeonEntryOutcomeTest extends QuestTestFixture {
 
         TransferWorld() {
             super(player.server, player);
+        }
+
+        @Override
+        public boolean handoffTowerDungeonScene(
+                Player target, DungeonData data, Consumer<Scene> prepare) {
+            if (success && !throwTransfer) prepare.accept(destination);
+            return transferPlayerToScene(target, data.getSceneId(), data);
         }
 
         @Override

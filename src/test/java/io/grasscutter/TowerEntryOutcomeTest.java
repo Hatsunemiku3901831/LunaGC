@@ -33,6 +33,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.nio.file.*;
 import java.util.*;
+import java.util.function.Consumer;
 
 /** Actual tower/system calls with controlled transfer outcomes and owned avatar serialization. */
 class TowerEntryOutcomeTest extends QuestTestFixture {
@@ -103,6 +104,23 @@ class TowerEntryOutcomeTest extends QuestTestFixture {
 
         TransferWorld() {
             super(player.server, player);
+        }
+
+        @Override
+        public boolean handoffTowerDungeonScene(
+                Player target, DungeonData data, Consumer<Scene> prepare) {
+            if (nativeTransfer) {
+                attempts++;
+                try {
+                    selectedAtTransfer = index();
+                } catch (Exception error) {
+                    throw new AssertionError(error);
+                }
+                avatarAtTransfer = target.getTeamManager().getCurrentCharacterIndex();
+                return super.handoffTowerDungeonScene(target, data, prepare);
+            }
+            if (success && !throwTransfer) prepare.accept(destination);
+            return transferPlayerToScene(target, data.getSceneId(), data);
         }
 
         @Override
@@ -364,6 +382,25 @@ class TowerEntryOutcomeTest extends QuestTestFixture {
     }
 
     @Test
+    void successfulNewChamberClearsPreviousChallengeBookkeeping() throws Exception {
+        player.getTowerManager().onBegin();
+        replaceField(emu.grasscutter.game.tower.TowerManager.class, player.getTowerManager(), "currentTimeLimit", 600);
+        world.success = true;
+        assertTrue(player.getTowerManager().tryEnterLevel(123));
+        assertFalse(player.getTowerManager().isInProgress());
+        assertEquals(0, player.getTowerManager().getCurrentTimeLimit());
+    }
+
+    @Test
+    void canceledNewChamberKeepsPreviousChallengeBookkeeping() throws Exception {
+        player.getTowerManager().onBegin();
+        replaceField(emu.grasscutter.game.tower.TowerManager.class, player.getTowerManager(), "currentTimeLimit", 600);
+        assertFalse(player.getTowerManager().tryEnterLevel(123));
+        assertTrue(player.getTowerManager().isInProgress());
+        assertEquals(600, player.getTowerManager().getCurrentTimeLimit());
+    }
+
+    @Test
     void actualTeleportCancellationKeepsTheOriginalEntitiesAndSelection() throws Exception {
         var pluginPath = FileUtils.getPluginPath("");
         if (Files.isDirectory(pluginPath))
@@ -387,6 +424,9 @@ class TowerEntryOutcomeTest extends QuestTestFixture {
                         })
                 .register(null);
         world.nativeTransfer = true;
+        world.getPlayers().add(player);
+        world.getScenes().put(4, source);
+        world.getScenes().put(9, destination);
         player.getTowerManager().enterLevel(123);
         assertTrue(called[0]);
         kept();

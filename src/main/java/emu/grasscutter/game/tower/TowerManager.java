@@ -415,6 +415,8 @@ public class TowerManager extends BasePlayerManager {
                                                             levelData.getDungeonId(),
                                                             towerDungeonSettleListener));
             if (!entered) return rejectEntry();
+            inProgress = false;
+            currentTimeLimit = 0;
             player.getScene().setPrevScene(previousScene);
             player.getScene().setPrevScenePoint(enterPointId);
             captureChamberState();
