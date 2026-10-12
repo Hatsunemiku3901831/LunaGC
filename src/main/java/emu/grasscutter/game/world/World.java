@@ -740,7 +740,8 @@ public class World implements Iterable<Player> {
                         ? this.getSceneById(teleportProperties.getSceneId())
                         : new Scene(
                                 this,
-                                GameData.getSceneDataMap().get(teleportProperties.getSceneId()));
+                                GameData.getSceneDataMap().get(teleportProperties.getSceneId()),
+                                !restartManager.isTowerDungeon());
         if (newScene == null
                 || !emu.grasscutter.game.tps.TpsAvatarSystem.canEnter(
                         player, newScene.getSceneData())) {

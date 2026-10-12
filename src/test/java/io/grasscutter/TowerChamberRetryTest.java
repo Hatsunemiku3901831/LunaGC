@@ -20,6 +20,7 @@ import emu.grasscutter.game.world.*;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.AvatarSkillInfoNotifyOuterClass.AvatarSkillInfoNotify;
 import emu.grasscutter.plugin.PluginManager;
+import emu.grasscutter.scripts.data.*;
 import emu.grasscutter.server.event.EventHandler;
 import emu.grasscutter.server.event.player.PlayerTeleportEvent;
 
@@ -28,6 +29,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /** Formal World/Scene replay and cancellation with owned avatars and controlled resource data. */
 class TowerChamberRetryTest extends QuestTestFixture {
@@ -398,6 +400,86 @@ class TowerChamberRetryTest extends QuestTestFixture {
                         .getSkillCooldown()
                         .state(avatar(FIRST), 81201, 2)
                         .getFullCdTimeListCount());
+    }
+
+    private SceneGroup group() {
+        var group = SceneGroup.of(19900120);
+        group.setLoaded(true);
+        var stage = new SceneVar();
+        stage.name = "stage";
+        stage.value = 0;
+        var time = new SceneVar();
+        time.name = "TPL_TIME";
+        time.value = 0;
+        group.variables = List.of(stage, time);
+        return group;
+    }
+
+    private SceneGroupInstance oldGroup() throws Exception {
+        store.getMapper().map(SceneGroupInstance.class);
+        var state = loadGroup(source);
+        state.getCachedVariables().put("stage", 2);
+        state.getCachedVariables().put("TPL_TIME", 180);
+        state.setActiveSuiteId(2);
+        state.getDeadEntities().add(12001);
+        state.markScriptGadgetDestroyed(12002);
+        source.saveGroups();
+        drain();
+        return state;
+    }
+
+    private SceneGroupInstance loadGroup(Scene scene) {
+        var group = group();
+        scene.getScriptManager().registerLocalGroups(List.of(group));
+        scene.getScriptManager().loadGroupFromScript(group);
+        return scene.getScriptManager().getCachedGroupInstanceById(19900120);
+    }
+
+    @Test
+    void retryReloadsGroupDefaultsInsteadOfPersistedLowerHalfState() throws Exception {
+        oldGroup();
+        assertTrue(system.tryRestartDungeon(player));
+        var state = loadGroup(player.getScene());
+        assertEquals(0, state.getCachedVariables().get("stage"));
+        assertEquals(0, state.getCachedVariables().get("TPL_TIME"));
+        assertEquals(0, state.getActiveSuiteId());
+        assertTrue(state.getDeadEntities().isEmpty());
+        assertFalse(state.isScriptGadgetDestroyed(12002));
+    }
+
+    @Test
+    void canceledRetryPreservesTheActiveAndSavedGroupState() throws Exception {
+        var before = oldGroup();
+        event(PlayerTeleportEvent::cancel);
+        assertFalse(system.tryRestartDungeon(player));
+        kept();
+        assertSame(before, source.getScriptManager().getCachedGroupInstanceById(19900120));
+        assertEquals(2, before.getCachedVariables().get("stage"));
+        drain();
+        var saved = emu.grasscutter.database.DatabaseHelper.loadGroupInstance(19900120, player);
+        assertNotNull(saved);
+        assertEquals(2, saved.getCachedVariables().get("stage"));
+    }
+
+    @Test
+    void rejectedCandidateCannotSaveItsFreshGroupOverTheActiveRun() throws Exception {
+        oldGroup();
+        var checks = new AtomicInteger();
+        assertFalse(
+                world.restartDungeonScene(
+                        player,
+                        data,
+                        fresh -> {
+                            loadGroup(fresh).getCachedVariables().put("stage", 0);
+                            fresh.saveGroups();
+                        },
+                        () -> checks.incrementAndGet() < 3));
+        kept();
+        drain();
+        var saved = emu.grasscutter.database.DatabaseHelper.loadGroupInstance(19900120, player);
+        assertNotNull(saved);
+        assertEquals(2, saved.getCachedVariables().get("stage"));
+        assertEquals(1, store.getDatabase().getCollection("group_instances").countDocuments());
     }
 
     @ParameterizedTest

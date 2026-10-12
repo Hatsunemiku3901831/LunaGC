@@ -75,6 +75,7 @@ public class SceneScriptManager {
     private final Map<Integer, SceneGroup> localGroups = new ConcurrentHashMap<>();
     private final Map<Integer, SceneGroupInstance> sceneGroupsInstances;
     private final Map<Integer, SceneGroupInstance> cachedSceneGroupsInstances;
+    private final boolean persistentGroups;
     private ScriptMonsterTideService scriptMonsterTideService;
     private record MonsterTideKey(int groupId, String source) {}
     private final Map<MonsterTideKey, ScriptMonsterTideService> monsterTides = new LinkedHashMap<>();
@@ -99,7 +100,12 @@ public class SceneScriptManager {
     }
 
     public SceneScriptManager(Scene scene) {
+        this(scene, true);
+    }
+
+    public SceneScriptManager(Scene scene, boolean persistentGroups) {
         this.scene = scene;
+        this.persistentGroups = persistentGroups;
         this.monsterSpawnQueue = new ScriptMonsterSpawnQueue(scene, scene.getScheduler());
         this.currentTriggers = new ConcurrentHashMap<>();
         this.ongoingTriggers = ConcurrentHashMap.newKeySet();
@@ -515,7 +521,7 @@ public class SceneScriptManager {
 
     public SceneGroupInstance getCachedGroupInstanceById(int groupId) {
         var instance = cachedSceneGroupsInstances.getOrDefault(groupId, null);
-        if (instance == null) {
+        if (instance == null && persistentGroups) {
             instance = DatabaseHelper.loadGroupInstance(groupId, scene.getWorld().getHost());
             if (instance != null) {
                 cachedSceneGroupsInstances.put(groupId, instance);
@@ -767,7 +773,9 @@ public class SceneScriptManager {
             this.cachedSceneGroupsInstances.get(group.id).setCached(false);
             this.cachedSceneGroupsInstances.get(group.id).setLuaGroup(group);
         } else {
-            var instance = new SceneGroupInstance(group, getScene().getWorld().getHost());
+            var instance =
+                    new SceneGroupInstance(
+                            group, getScene().getWorld().getHost(), persistentGroups);
             this.sceneGroupsInstances.put(group.id, instance);
             this.cachedSceneGroupsInstances.put(group.id, instance);
             this.cachedSceneGroupsInstances.get(group.id).setCached(false);

@@ -27,6 +27,7 @@ public final class SceneGroupInstance {
     // Lua removals survive default suite reloads even for ordinary, non-oneoff gadgets.
     private Set<Integer> scriptDestroyedGadgets = new HashSet<>();
     private boolean isCached;
+    @Transient private boolean persistent = true;
 
     @Getter private Map<Integer, Integer> cachedGadgetStates;
     @Getter private Map<String, Integer> cachedVariables;
@@ -34,6 +35,12 @@ public final class SceneGroupInstance {
     @Getter @Setter private int lastTimeRefreshed;
 
     public SceneGroupInstance(SceneGroup group, Player owner) {
+        this(group, owner, true);
+    }
+
+    /** A fresh dungeon attempt keeps group progress only for this scene's lifetime. */
+    public SceneGroupInstance(SceneGroup group, Player owner, boolean persistent) {
+        this.persistent = persistent;
         this.luaGroup = group;
         this.groupId = group.id;
         this.targetSuiteId = 0;
@@ -91,7 +98,7 @@ public final class SceneGroupInstance {
     }
 
     public void save() {
-        DatabaseHelper.saveGroupInstance(this);
+        if (persistent) DatabaseHelper.saveGroupInstance(this);
     }
 
     /** Activity scenes recreate their round state on mount, independently of watcher progress. */

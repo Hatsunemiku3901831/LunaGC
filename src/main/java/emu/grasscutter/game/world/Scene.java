@@ -103,6 +103,10 @@ public class Scene {
     @Getter private final ServerTaskScheduler scheduler;
 
     public Scene(World world, SceneData sceneData) {
+        this(world, sceneData, true);
+    }
+
+    public Scene(World world, SceneData sceneData, boolean persistentGroups) {
         this.world = world;
         this.sceneData = sceneData;
         this.players = new CopyOnWriteArrayList<>();
@@ -124,11 +128,14 @@ public class Scene {
         this.crucibleSceneController = new CrucibleSceneController(this);
         this.salesmanSceneController = new SalesmanSceneController(this);
         this.asterSceneController = new AsterSceneController(this);
-        this.asterMidSceneController = new emu.grasscutter.game.activity.aster.AsterMidSceneController(this);
-        this.asterBigSceneController = new emu.grasscutter.game.activity.aster.AsterBigSceneController(this);
+        this.asterMidSceneController =
+                new emu.grasscutter.game.activity.aster.AsterMidSceneController(this);
+        this.asterBigSceneController =
+                new emu.grasscutter.game.activity.aster.AsterBigSceneController(this);
         this.sealBattleManager = new emu.grasscutter.game.world.seal.SealBattleManager(this);
-        this.scenePlayBattleManager = new emu.grasscutter.game.world.sceneplay.ScenePlayBattleManager(this);
-        this.scriptManager = new SceneScriptManager(this);
+        this.scenePlayBattleManager =
+                new emu.grasscutter.game.world.sceneplay.ScenePlayBattleManager(this);
+        this.scriptManager = new SceneScriptManager(this, persistentGroups);
         this.blossomManager = new BlossomManager(this);
         this.unlockedForces = new HashSet<>();
         this.sceneEntity = new EntityScene(this);
