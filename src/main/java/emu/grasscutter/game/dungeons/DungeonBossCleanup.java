@@ -14,6 +14,7 @@ import java.util.*;
 public final class DungeonBossCleanup {
     private final Scene scene;
     private final Map<Integer, RemovedBoss> removedBosses = new LinkedHashMap<>();
+    private DungeonManager settledDvalinManager;
 
     private static final class RemovedBoss {
         final EntityMonster boss;
@@ -78,9 +79,11 @@ public final class DungeonBossCleanup {
     public void onSettle(DungeonManager manager, DungeonEndReason reason) {
         synchronized (scene) {
             if (reason != DungeonEndReason.COMPLETED
+                    || manager == null
                     || !available()
                     || scene.getDungeonManager() != manager
                     || scene.getWorld().getScenes().get(scene.getId()) != scene) return;
+            if (scene.getId() == 20025) settledDvalinManager = manager;
             for (var entity : List.copyOf(scene.getEntities().values())) {
                 if (entity instanceof EntityMonster monster && boss(monster)) {
                     var previous = removedBosses.get(entity.getId());
@@ -89,6 +92,43 @@ public final class DungeonBossCleanup {
                 }
             }
             for (var removed : removedBosses.values()) removeOwned(removed, true);
+        }
+    }
+
+    /** Keep post-settlement script/scheduler work from restoring the completed arena boss. */
+    public boolean allowsMonsterCreation(int monsterId) {
+        synchronized (scene) {
+            return !(monsterId >= 29010101
+                    && monsterId <= 29010104
+                    && available()
+                    && scene.getId() == 20025
+                    && settledDvalinManager != null
+                    && scene.getDungeonManager() == settledDvalinManager
+                    && scene.getWorld().getScenes().get(scene.getId()) == scene);
+        }
+    }
+
+    public boolean rejectLateMonster(GameEntity entity) {
+        synchronized (scene) {
+            if (!(entity instanceof EntityMonster monster)
+                    || entity.getScene() != scene
+                    || monster.getMonsterData() == null
+                    || allowsMonsterCreation(monster.getMonsterData().getId())) return false;
+            var current = scene.getEntityById(entity.getId());
+            if (current == null || current == entity) {
+                var removed = new RemovedBoss(monster);
+                removed.modelRemoved = true;
+                removedBosses.put(entity.getId(), removed);
+                removeOwned(removed, false);
+            }
+            entity.invalidateAbilityLifecycle();
+            return true;
+        }
+    }
+
+    public void resetDungeon(DungeonManager manager) {
+        synchronized (scene) {
+            if (settledDvalinManager == manager) settledDvalinManager = null;
         }
     }
 

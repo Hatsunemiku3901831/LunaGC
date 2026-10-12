@@ -378,13 +378,15 @@ public final class DungeonManager {
     }
 
     public void startDungeon() {
+        scene.getDungeonBossCleanup().resetDungeon(this);
         this.startSceneTime = scene.getSceneTimeSeconds();
-        scene
-                .getPlayers()
+        scene.getPlayers()
                 .forEach(
                         p -> {
                             p.getQuestManager()
-                                    .queueEvent(QuestContent.QUEST_CONTENT_ENTER_DUNGEON, dungeonData.getId());
+                                    .queueEvent(
+                                            QuestContent.QUEST_CONTENT_ENTER_DUNGEON,
+                                            dungeonData.getId());
                             applyTrialTeam(p);
                         });
     }
@@ -637,6 +639,7 @@ public final class DungeonManager {
     }
 
     public void restartDungeon() {
+        scene.getDungeonBossCleanup().resetDungeon(this);
         towerLifecycle++;
         towerCompletionGeneration++;
         pendingTowerEnd = null;
@@ -651,6 +654,7 @@ public final class DungeonManager {
     }
 
     public void cleanUpScene() {
+        scene.getDungeonBossCleanup().resetDungeon(this);
         towerLifecycle++;
         towerCompletionGeneration++;
         pendingTowerEnd = null;

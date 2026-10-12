@@ -1388,69 +1388,86 @@ public class SceneScriptManager {
     /** Same as {@link #createMonster}, but the caller chooses where it appears. Backs ScriptLib. */
     public EntityMonster createMonsterByConfigIdByPos(
             SceneGroup group, int configId, Position pos, Position rot) {
-        if (group == null || group.monsters == null) return null;
-        if (!allowsActivityEntity(group.id, group)) return null;
+        synchronized (scene) {
+            if (group == null || group.monsters == null) return null;
+            if (!allowsActivityEntity(group.id, group)) return null;
 
-        var monster = group.monsters.get(configId);
-        if (monster == null) {
-            Grasscutter.getLogger()
-                    .warn("Could not find monster config {} in group {}.", configId, group.id);
-            return null;
+            var monster = group.monsters.get(configId);
+            if (monster == null) {
+                Grasscutter.getLogger()
+                        .warn("Could not find monster config {} in group {}.", configId, group.id);
+                return null;
+            }
+
+            if (!scene.getDungeonBossCleanup().allowsMonsterCreation(monster.monster_id))
+                return null;
+            var data = GameData.getMonsterDataMap().get(monster.monster_id);
+            if (data == null) return null;
+
+            var level =
+                    scene.getAsterMidSceneController()
+                            .monsterLevel(
+                                    group.id,
+                                    getScene()
+                                            .getLevelForMonster(monster.config_id, monster.level));
+            var entity =
+                    new EntityMonster(
+                            getScene(),
+                            data,
+                            pos != null ? pos : monster.pos,
+                            rot != null ? rot : monster.rot,
+                            level);
+            entity.setGroupId(group.id);
+            entity.setBlockId(group.block_id);
+            entity.setConfigId(monster.config_id);
+            entity.setPoseId(monster.pose_id);
+            entity.setMetaMonster(monster);
+
+            this.getScriptMonsterSpawnService()
+                    .onMonsterCreatedListener
+                    .forEach(action -> action.onNotify(entity));
+
+            return entity;
         }
-
-        var data = GameData.getMonsterDataMap().get(monster.monster_id);
-        if (data == null) return null;
-
-        var level = scene.getAsterMidSceneController().monsterLevel(group.id,
-                getScene().getLevelForMonster(monster.config_id, monster.level));
-        var entity =
-                new EntityMonster(
-                        getScene(),
-                        data,
-                        pos != null ? pos : monster.pos,
-                        rot != null ? rot : monster.rot,
-                        level);
-        entity.setGroupId(group.id);
-        entity.setBlockId(group.block_id);
-        entity.setConfigId(monster.config_id);
-        entity.setPoseId(monster.pose_id);
-        entity.setMetaMonster(monster);
-
-        this.getScriptMonsterSpawnService()
-                .onMonsterCreatedListener
-                .forEach(action -> action.onNotify(entity));
-
-        return entity;
     }
 
     public EntityMonster createMonster(int groupId, int blockId, SceneMonster monster) {
-        if (monster == null || !allowsActivityEntity(groupId, monster.group)) {
-            return null;
+        synchronized (scene) {
+            if (monster == null || !allowsActivityEntity(groupId, monster.group)) {
+                return null;
+            }
+
+            if (!scene.getDungeonBossCleanup().allowsMonsterCreation(monster.monster_id))
+                return null;
+            var data = GameData.getMonsterDataMap().get(monster.monster_id);
+
+            if (data == null) {
+                return null;
+            }
+
+            // Calculate level
+            int level =
+                    scene.getAsterMidSceneController()
+                            .monsterLevel(
+                                    groupId,
+                                    getScene()
+                                            .getLevelForMonster(monster.config_id, monster.level));
+
+            // Spawn mob
+            EntityMonster entity =
+                    new EntityMonster(getScene(), data, monster.pos, monster.rot, level);
+            entity.setGroupId(groupId);
+            entity.setBlockId(blockId);
+            entity.setConfigId(monster.config_id);
+            entity.setPoseId(monster.pose_id);
+            entity.setMetaMonster(monster);
+
+            this.getScriptMonsterSpawnService()
+                    .onMonsterCreatedListener
+                    .forEach(action -> action.onNotify(entity));
+
+            return entity;
         }
-
-        var data = GameData.getMonsterDataMap().get(monster.monster_id);
-
-        if (data == null) {
-            return null;
-        }
-
-        // Calculate level
-        int level = scene.getAsterMidSceneController().monsterLevel(groupId,
-                getScene().getLevelForMonster(monster.config_id, monster.level));
-
-        // Spawn mob
-        EntityMonster entity = new EntityMonster(getScene(), data, monster.pos, monster.rot, level);
-        entity.setGroupId(groupId);
-        entity.setBlockId(blockId);
-        entity.setConfigId(monster.config_id);
-        entity.setPoseId(monster.pose_id);
-        entity.setMetaMonster(monster);
-
-        this.getScriptMonsterSpawnService()
-                .onMonsterCreatedListener
-                .forEach(action -> action.onNotify(entity));
-
-        return entity;
     }
 
     public void addEntity(GameEntity gameEntity) {

@@ -394,20 +394,22 @@ public class Scene {
                 .forEach(Avatar::sendSkillExtraChargeMap);
     }
 
-    private void addEntityDirectly(GameEntity entity) {
+    private synchronized boolean addEntityDirectly(GameEntity entity) {
+        if (dungeonBossCleanup.rejectLateMonster(entity)) return false;
         var previous = getEntities().put(entity.getId(), entity);
         if (previous != null && previous != entity) previous.invalidateAbilityLifecycle();
         entity.activateAbilityLifecycle();
         entity.onCreate();
+        return true;
     }
 
     public synchronized void addEntity(GameEntity entity) {
-        this.addEntityDirectly(entity);
+        if (!this.addEntityDirectly(entity)) return;
         this.broadcastPacket(new PacketSceneEntityAppearNotify(entity));
     }
 
     public synchronized void addEntityToSingleClient(Player player, GameEntity entity) {
-        this.addEntityDirectly(entity);
+        if (!this.addEntityDirectly(entity)) return;
         player.sendPacket(new PacketSceneEntityAppearNotify(entity));
     }
 
@@ -511,11 +513,9 @@ public class Scene {
             return;
         }
 
-        for (var entity : entities) {
-            this.addEntityDirectly(entity);
-        }
-
-        for (var l : chopped(new ArrayList<>(entities), 100)) {
+        var added = new ArrayList<GameEntity>();
+        for (var entity : entities) if (this.addEntityDirectly(entity)) added.add(entity);
+        for (var l : chopped(added, 100)) {
             this.broadcastPacket(new PacketSceneEntityAppearNotify(l, visionType));
         }
     }
@@ -1029,10 +1029,10 @@ public class Scene {
         Set<SpawnDataEntry.GridBlockId> leavingBlocks = new HashSet<>(this.loadedGridBlocks);
         leavingBlocks.removeAll(loadedGridBlocks);
         if (!leavingBlocks.isEmpty()) {
-            this.getDeadSpawnedEntities().removeIf(entry -> leavingBlocks.contains(entry.getBlockId()));
+            this.getDeadSpawnedEntities()
+                    .removeIf(entry -> leavingBlocks.contains(entry.getBlockId()));
         }
-        if (this.loadedGridBlocks.containsAll(
-                loadedGridBlocks)) {
+        if (this.loadedGridBlocks.containsAll(loadedGridBlocks)) {
             return;
         }
         this.loadedGridBlocks = loadedGridBlocks;
@@ -1045,7 +1045,8 @@ public class Scene {
             }
         }
 
-        WorldLevelData worldLevelData = GameData.getWorldLevelDataMap().get(getWorld().getWorldLevel());
+        WorldLevelData worldLevelData =
+                GameData.getWorldLevelDataMap().get(getWorld().getWorldLevel());
         int worldLevelOverride = 0;
 
         if (worldLevelData != null) {
@@ -1057,7 +1058,8 @@ public class Scene {
         var spawnedEntities = this.getSpawnedEntities();
         for (SpawnDataEntry entry : visible) {
 
-            if (!spawnedEntities.contains(entry) && !this.getDeadSpawnedEntities().contains(entry)) {
+            if (!spawnedEntities.contains(entry)
+                    && !this.getDeadSpawnedEntities().contains(entry)) {
 
                 GameEntity entity = null;
 
@@ -1077,7 +1079,8 @@ public class Scene {
                     entity = monster;
                 } else if (entry.getGadgetId() > 0) {
                     EntityGadget gadget =
-                            new EntityGadget(this, entry.getGadgetId(), entry.getPos(), entry.getRot());
+                            new EntityGadget(
+                                    this, entry.getGadgetId(), entry.getPos(), entry.getRot());
                     gadget.setGroupId(entry.getGroup().getGroupId());
                     gadget.setConfigId(entry.getConfigId());
                     gadget.setSpawnEntry(entry);
@@ -1087,9 +1090,12 @@ public class Scene {
                     }
                     gadget.buildContent();
 
-                    gadget.setFightProperty(FightProperty.FIGHT_PROP_BASE_HP, Float.POSITIVE_INFINITY);
-                    gadget.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, Float.POSITIVE_INFINITY);
-                    gadget.setFightProperty(FightProperty.FIGHT_PROP_MAX_HP, Float.POSITIVE_INFINITY);
+                    gadget.setFightProperty(
+                            FightProperty.FIGHT_PROP_BASE_HP, Float.POSITIVE_INFINITY);
+                    gadget.setFightProperty(
+                            FightProperty.FIGHT_PROP_CUR_HP, Float.POSITIVE_INFINITY);
+                    gadget.setFightProperty(
+                            FightProperty.FIGHT_PROP_MAX_HP, Float.POSITIVE_INFINITY);
 
                     entity = gadget;
                     blossomManager.initBlossom(gadget);
@@ -1113,14 +1119,18 @@ public class Scene {
         }
 
         if (toAdd.size() > 0) {
-            toAdd.forEach(this::addEntityDirectly);
-            this.broadcastPacket(new PacketSceneEntityAppearNotify(toAdd, VisionType.VisionType_VISION_BORN));
+            var added = toAdd.stream().filter(this::addEntityDirectly).toList();
+            if (!added.isEmpty())
+                this.broadcastPacket(
+                        new PacketSceneEntityAppearNotify(
+                                added, VisionType.VisionType_VISION_BORN));
         }
 
         if (toRemove.size() > 0) {
             toRemove.forEach(this::removeEntityDirectly);
             this.broadcastPacket(
-                    new PacketSceneEntityDisappearNotify(toRemove, VisionType.VisionType_VISION_REMOVE));
+                    new PacketSceneEntityDisappearNotify(
+                            toRemove, VisionType.VisionType_VISION_REMOVE));
             blossomManager.recycleGadgetEntity(toRemove);
         }
     }
