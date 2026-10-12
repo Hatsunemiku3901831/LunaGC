@@ -9,6 +9,7 @@ import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.game.inventory.*;
 import emu.grasscutter.game.player.InvestigationHandbook;
 import emu.grasscutter.game.player.Player;
+import emu.grasscutter.game.props.ItemUseOp;
 import emu.grasscutter.game.props.PlayerProperty;
 import emu.grasscutter.game.shop.BeyondCurrency;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
@@ -62,6 +63,8 @@ public class CombineManger extends BaseGameSystem {
     }
 
     public boolean unlockCombineDiagram(Player player, int combineId) {
+        if (!RecipeUnlocks.canUnlock(player, ItemUseOp.ITEM_USE_UNLOCK_COMBINE, combineId))
+            return false;
         if (!player.getUnlockedCombines().add(combineId)) {
             return false; // Already unlocked
         }

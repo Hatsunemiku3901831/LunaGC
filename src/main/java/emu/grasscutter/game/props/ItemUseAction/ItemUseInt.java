@@ -6,6 +6,7 @@ public abstract class ItemUseInt extends ItemUseAction {
     @Getter protected int i = 0;
 
     public ItemUseInt(String[] useParam) {
+        if (useParam == null) return;
         try {
             this.i = Integer.parseInt(useParam[0]);
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {

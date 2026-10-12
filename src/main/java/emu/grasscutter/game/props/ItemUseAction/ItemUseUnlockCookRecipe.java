@@ -1,5 +1,6 @@
 package emu.grasscutter.game.props.ItemUseAction;
 
+import emu.grasscutter.game.inventory.RecipeUnlocks;
 import emu.grasscutter.game.props.ItemUseOp;
 
 public class ItemUseUnlockCookRecipe extends ItemUseInt {
@@ -14,7 +15,7 @@ public class ItemUseUnlockCookRecipe extends ItemUseInt {
 
     @Override
     public boolean useItem(UseItemParams params) {
-        return true;
+        return RecipeUnlocks.canUse(params, getItemUseOp(), this.i);
     }
 
     @Override

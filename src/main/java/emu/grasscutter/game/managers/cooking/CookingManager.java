@@ -6,7 +6,9 @@ import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.data.excels.ItemData;
 import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.game.inventory.ItemType;
+import emu.grasscutter.game.inventory.RecipeUnlocks;
 import emu.grasscutter.game.player.*;
+import emu.grasscutter.game.props.ItemUseOp;
 import emu.grasscutter.game.props.WatcherTriggerType;
 import emu.grasscutter.net.proto.CookRecipeDataOuterClass;
 import emu.grasscutter.net.proto.PlayerCookArgsReqOuterClass.PlayerCookArgsReq;
@@ -81,6 +83,8 @@ public class CookingManager extends BasePlayerManager {
      * Unlocking for recipies.
      ********************/
     public boolean unlockRecipe(int id) {
+        if (!RecipeUnlocks.canUnlock(player, ItemUseOp.ITEM_USE_UNLOCK_COOK_RECIPE, id))
+            return false;
         if (this.player.getUnlockedRecipies().containsKey(id)) {
             return false; // Recipe already unlocked
         }

@@ -977,6 +977,7 @@ public class InventorySystem extends BaseGameSystem {
             int count,
             int optionId,
             boolean isEnterMpDungeonTeam) {
+        if (player == null || count <= 0) return null;
         Grasscutter.getLogger()
                 .debug(
                         "Attempting to use item from inventory: guid {} count {} target guid {}",
@@ -985,7 +986,7 @@ public class InventorySystem extends BaseGameSystem {
                         targetGuid);
         Avatar target = player.getAvatars().getAvatarByGuid(targetGuid);
         GameItem item = player.getInventory().getItemByGuid(itemGuid);
-        if (item == null) {
+        if (item == null || item.getOwnerId() != player.getUid()) {
             Grasscutter.getLogger()
                     .warn(
                             "Item use rejected: no inventory item with guid {} (uid {}).",
@@ -1013,13 +1014,18 @@ public class InventorySystem extends BaseGameSystem {
                             player.getUid());
             return null;
         }
+        if (itemData.getMaxUseCount() > 0 && count > itemData.getMaxUseCount()) return null;
 
         var params =
                 new UseItemParams(
                         player, itemData.getUseTarget(), target, count, optionId, isEnterMpDungeonTeam);
         params.usedItemId = item.getItemId();
         if (useItemDirect(itemData, params)) {
-            player.getInventory().removeItem(item, count);
+            int before = item.getCount();
+            if (!player.getInventory().removeItem(item, count) || before - item.getCount() != count) {
+                Grasscutter.getLogger().warn("Item use removal was not confirmed: UID {}, item {}", player.getUid(), item.getItemId());
+                return null;
+            }
             var actions = itemData.getItemUseActions();
             if (actions != null) actions.forEach(use -> use.postUseItem(params));
             Grasscutter.getLogger()

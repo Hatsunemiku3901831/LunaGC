@@ -7,6 +7,7 @@ import emu.grasscutter.data.excels.*;
 import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.game.inventory.GameItem;
 import emu.grasscutter.game.inventory.ItemType;
+import emu.grasscutter.game.inventory.RecipeUnlocks;
 import emu.grasscutter.game.player.*;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.net.proto.ForgeQueueDataOuterClass.ForgeQueueData;
@@ -30,6 +31,7 @@ public final class ForgingManager extends BasePlayerManager {
      * Blueprint unlocking.
      **********/
     public boolean unlockForgingBlueprint(int id) {
+        if (!RecipeUnlocks.canUnlock(player, ItemUseOp.ITEM_USE_UNLOCK_FORGE, id)) return false;
         // Tell the client that this blueprint is now unlocked and add the unlocked item to the
         // player.
         if (!this.player.getUnlockedForgingBlueprints().add(id)) {
