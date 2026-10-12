@@ -1061,25 +1061,42 @@ public class SceneScriptManager {
     }
 
     /** Monster-tide callbacks validate and execute atomically with tide replacement/cleanup. */
-    public Future<?> callEvent(@Nonnull ScriptArgs params, java.util.function.BooleanSupplier current,
+    public Future<?> callEvent(
+            @Nonnull ScriptArgs params,
+            java.util.function.BooleanSupplier current,
             boolean lockScene) {
+        return callEvent(params, current, lockScene, null);
+    }
+
+    /** Runs the continuation after Lua has returned and its thread-local context is cleared. */
+    public Future<?> callEvent(
+            @Nonnull ScriptArgs params,
+            java.util.function.BooleanSupplier current,
+            boolean lockScene,
+            Runnable after) {
         /**
-         * We use ThreadLocal to trans SceneScriptManager context to ScriptLib, to avoid eval script for
-         * every groups' trigger in every scene instances. But when callEvent is called in a ScriptLib
-         * func, it may cause NPE because the inner call cleans the ThreadLocal so that outer call could
-         * not get it. e.g. CallEvent -> set -> ScriptLib.xxx -> CallEvent -> set -> remove -> NPE ->
-         * (remove) So we use thread pool to clean the stack to avoid this new issue.
+         * We use ThreadLocal to trans SceneScriptManager context to ScriptLib, to avoid eval script
+         * for every groups' trigger in every scene instances. But when callEvent is called in a
+         * ScriptLib func, it may cause NPE because the inner call cleans the ThreadLocal so that
+         * outer call could not get it. e.g. CallEvent -> set -> ScriptLib.xxx -> CallEvent -> set
+         * -> remove -> NPE -> (remove) So we use thread pool to clean the stack to avoid this new
+         * issue.
          */
         long activityTicket = scene.getCrucibleSceneController().getLifecycle().ticket();
         long activityRound = scene.getCrucibleSceneController().currentRoundSerial();
         long invitationSerial = scene.getCrucibleSceneController().invitationSerial();
-        boolean historical = scene.getAsterMidSceneController().owns(params.group_id)
-                || scene.getAsterBigSceneController().owns(params.group_id);
+        boolean historical =
+                scene.getAsterMidSceneController().owns(params.group_id)
+                        || scene.getAsterBigSceneController().owns(params.group_id);
         var origin = historical ? getLoadedGroupById(params.group_id) : null;
-        java.util.function.BooleanSupplier guarded = () -> current.getAsBoolean()
-                && (!historical
-                    || origin != null && getLoadedGroupById(params.group_id) == origin
-                        && allowsGroupCall(origin));
+        java.util.function.BooleanSupplier guarded =
+                () ->
+                        !destroyed
+                                && current.getAsBoolean()
+                                && (!historical
+                                        || origin != null
+                                                && getLoadedGroupById(params.group_id) == origin
+                                                && allowsGroupCall(origin));
         boolean atomicScene = lockScene || scene.getAsterBigSceneController().owns(params.group_id);
         return scene.getScenePlayBattleManager()
                 .submitCallback(
@@ -1091,23 +1108,40 @@ public class SceneScriptManager {
                                                     () ->
                                                             guarded.getAsBoolean()
                                                                     && battleCurrent.getAsBoolean();
+                                            boolean delivered = false;
                                             if (atomicScene) {
                                                 // A caller's eligibility callback may wait on work
-                                                // which needs the scene monitor. Preflight it outside
+                                                // which needs the scene monitor. Preflight it
+                                                // outside
                                                 // the monitor, then recheck identity atomically.
                                                 if (!applicable.getAsBoolean()) return;
                                                 synchronized (scene) {
-                                                    if (applicable.getAsBoolean())
-                                                        this.realCallEvent(params, activityTicket, activityRound,
-                                                                invitationSerial, applicable);
+                                                    if (applicable.getAsBoolean()) {
+                                                        this.realCallEvent(
+                                                                params,
+                                                                activityTicket,
+                                                                activityRound,
+                                                                invitationSerial,
+                                                                applicable);
+                                                        delivered = true;
+                                                    }
                                                 }
-                                            } else if (applicable.getAsBoolean())
+                                            } else if (applicable.getAsBoolean()) {
                                                 this.realCallEvent(
                                                         params,
                                                         activityTicket,
                                                         activityRound,
                                                         invitationSerial,
                                                         applicable);
+                                                delivered = true;
+                                            }
+                                            // Never run Java settlement while holding the Lua scene
+                                            // monitor.
+                                            // A continuation may queue another event, but must not
+                                            // wait for it.
+                                            if (delivered
+                                                    && after != null
+                                                    && applicable.getAsBoolean()) after.run();
                                         }));
     }
 

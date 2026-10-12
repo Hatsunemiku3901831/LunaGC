@@ -543,8 +543,14 @@ public class TowerManager extends BasePlayerManager {
             var cond = levelData.getCondType(star);
             if (cond == TowerLevelData.TowerCondType.TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN) {
                 var params = levelData.getTimeCond(star);
-                var timeRemaining =
-                        challenge.getTimeLimit() - (scene.getSceneTimeSeconds() - challenge.getStartedAt());
+                long elapsed =
+                        challenge.isSuccess() && !challenge.inProgress()
+                                ? Math.max(0, challenge.getFinishedTime())
+                                : Math.max(
+                                        0L,
+                                        (long) scene.getSceneTimeSeconds()
+                                                - challenge.getStartedAt());
+                var timeRemaining = (long) challenge.getTimeLimit() - elapsed;
                 if (timeRemaining >= params.getMinimumTimeInSeconds()) {
                     break;
                 }
@@ -557,7 +563,8 @@ public class TowerManager extends BasePlayerManager {
             } else {
                 Grasscutter.getLogger()
                         .error(
-                                "getCurLevelStars: Tower level {} has no or unknown condition defined for {} stars",
+                                "getCurLevelStars: Tower level {} has no or unknown condition"
+                                    + " defined for {} stars",
                                 getCurrentLevelId(),
                                 star + 1);
                 continue;

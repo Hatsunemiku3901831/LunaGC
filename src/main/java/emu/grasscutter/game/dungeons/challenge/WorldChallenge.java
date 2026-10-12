@@ -31,6 +31,7 @@ public class WorldChallenge {
     private boolean success;
     private int startedAt;
     private int finishedTime;
+    private volatile long startSerial;
 
     /**
      * @param scene The scene the challenge is in.
@@ -82,6 +83,7 @@ public class WorldChallenge {
             Grasscutter.getLogger().debug("Could not start a in progress challenge.");
             return;
         }
+        this.startSerial++;
         this.progress = true;
         this.startedAt = getScene().getSceneTimeSeconds();
         getScene().broadcastPacket(new PacketDungeonChallengeBeginNotify(this));
@@ -96,8 +98,12 @@ public class WorldChallenge {
     }
 
     public void done() {
-        if (!this.inProgress()) return;
-        this.finish(true);
+        final long serial;
+        synchronized (scene) {
+            if (!this.inProgress()) return;
+            this.finish(true);
+            serial = startSerial;
+        }
 
         var scene = this.getScene();
         var scriptManager = scene.getScriptManager();
@@ -124,11 +130,38 @@ public class WorldChallenge {
             if (players.size() == 1)
                 players.get(0).getTowerManager().recordHalfTime(this, eventTime);
         }
-        scriptManager.callEvent(
+        var event =
                 new ScriptArgs(this.getGroup().id, EventType.EVENT_CHALLENGE_SUCCESS)
                         .setParam2(eventTime)
-                        .setEventSource(this.getChallengeIndex()));
+                        .setEventSource(this.getChallengeIndex());
+        if (dungeonManager != null && dungeonManager.isTowerDungeon()) {
+            var owner = scene.getPlayers().stream().findFirst().orElse(null);
+            var context = dungeonManager.towerCompletionCurrent(this, owner);
+            java.util.function.BooleanSupplier current =
+                    () -> startSerial == serial && context.getAsBoolean();
+            if (!current.getAsBoolean()) return;
+            try {
+                scriptManager.callEvent(
+                        event,
+                        current,
+                        false,
+                        () -> {
+                            synchronized (owner.getSceneTransferLock()) {
+                                synchronized (scene) {
+                                    if (current.getAsBoolean()) finishChallenge();
+                                }
+                            }
+                        });
+            } catch (java.util.concurrent.RejectedExecutionException error) {
+                Grasscutter.getLogger().warn("Tower challenge success event was rejected", error);
+            }
+        } else {
+            scriptManager.callEvent(event);
+            finishChallenge();
+        }
+    }
 
+    private void finishChallenge() {
         this.getScene()
                 .triggerDungeonEvent(
                         DungeonPassConditionType.DUNGEON_COND_FINISH_CHALLENGE,

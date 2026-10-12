@@ -82,6 +82,19 @@ class TowerHalfClockTest extends QuestTestFixture {
         }
 
         @Override
+        public Future<?> callEvent(
+                ScriptArgs event,
+                java.util.function.BooleanSupplier current,
+                boolean lockScene,
+                Runnable after) {
+            if (current.getAsBoolean()) {
+                events.add(event);
+                if (after != null) after.run();
+            }
+            return CompletableFuture.completedFuture(null);
+        }
+
+        @Override
         public void unloadCurrentMonsterTide() {
             tideStops++;
             super.unloadCurrentMonsterTide();

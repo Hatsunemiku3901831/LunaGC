@@ -5,6 +5,7 @@ import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.data.excels.dungeon.*;
 import emu.grasscutter.game.activity.trialavatar.TrialAvatarActivityHandler;
+import emu.grasscutter.game.dungeons.challenge.WorldChallenge;
 import emu.grasscutter.game.dungeons.dungeon_results.BaseDungeonResult;
 import emu.grasscutter.game.dungeons.enums.DungeonPassConditionType;
 import emu.grasscutter.game.dungeons.enums.DungeonSubType;
@@ -45,6 +46,9 @@ public final class DungeonManager {
     private final IntSet rewardedPlayers = IntSets.synchronize(new IntOpenHashSet());
     private final Set<Integer> activeDungeonWayPoints = new HashSet<>();
     private boolean ended = false;
+    private volatile boolean towerCompletionPending;
+    private volatile long towerCompletionGeneration;
+    private volatile long towerLifecycle;
     private int newestWayPoint = 0;
     @Getter private int startSceneTime = 0;
     @Setter @Getter private boolean towerDungeon = false;
@@ -383,7 +387,15 @@ public final class DungeonManager {
     }
 
     public void finishDungeon() {
+        if (isTowerDungeon()) {
+            finishTowerDungeon();
+            return;
+        }
         this.notifyEndDungeon(true);
+        finishDungeonResult();
+    }
+
+    private void finishDungeonResult() {
         this.endDungeon(BaseDungeonResult.DungeonEndReason.COMPLETED);
 
         // Call PlayerFinishDungeonEvent.
@@ -392,11 +404,86 @@ public final class DungeonManager {
         // jump players to next dungeon if available
         if (this.dungeonData.getPassJumpDungeon() != 0) {
             for (var player : this.getScene().getPlayers()) {
-                player
-                        .getServer()
+                player.getServer()
                         .getDungeonSystem()
                         .enterDungeon(player, 0, this.dungeonData.getPassJumpDungeon(), false);
             }
+        }
+    }
+
+    /** Capture identities before queueing; a retired chamber cannot settle its replacement. */
+    public java.util.function.BooleanSupplier towerCompletionCurrent(
+            WorldChallenge challenge, Player owner) {
+        var players = scene.getPlayers();
+        if (challenge == null
+                || challenge.getGroup() == null
+                || owner == null
+                || players.size() != 1
+                || players.get(0) != owner) return () -> false;
+        var tower = owner.getTowerManager();
+        int floor = tower.getCurrentFloorId();
+        int level = tower.getCurrentLevelId();
+        long startSerial = challenge.getStartSerial();
+        long lifecycle = towerLifecycle;
+        var teams = tower.getTowerData().getAbyssAvatarIds();
+        return () ->
+                isTowerDungeon()
+                        && challenge.isSuccess()
+                        && !challenge.inProgress()
+                        && towerLifecycle == lifecycle
+                        && scene.getDungeonManager() == this
+                        && !scene.getScriptManager().isDestroyed()
+                        && scene.getWorld().getScenes().get(scene.getId()) == scene
+                        && scene.getChallenge() == challenge
+                        && challenge.getStartSerial() == startSerial
+                        && challenge.getScene() == scene
+                        && scene.getScriptManager().getLoadedGroupById(challenge.getGroup().id)
+                                == challenge.getGroup()
+                        && owner.getWorld() == scene.getWorld()
+                        && owner.getScene() == scene
+                        && scene.getPlayers().size() == 1
+                        && scene.getPlayers().get(0) == owner
+                        && tower.getCurrentFloorId() == floor
+                        && tower.getCurrentLevelId() == level
+                        && teams.equals(tower.getTowerData().getAbyssAvatarIds())
+                        && teams.equals(owner.getTeamManager().getTemporaryTeamAvatarIds());
+    }
+
+    private void finishTowerDungeon() {
+        var owner = scene.getPlayers().stream().findFirst().orElse(null);
+        var current = towerCompletionCurrent(scene.getChallenge(), owner);
+        final long generation;
+        synchronized (scene) {
+            if (towerCompletionPending || !current.getAsBoolean()) return;
+            towerCompletionPending = true;
+            ended = true;
+            generation = ++towerCompletionGeneration;
+        }
+        java.util.function.BooleanSupplier applicable =
+                () ->
+                        current.getAsBoolean()
+                                && towerCompletionPending
+                                && towerCompletionGeneration == generation;
+        try {
+            scene.getScriptManager()
+                    .callEvent(
+                            new ScriptArgs(0, EventType.EVENT_DUNGEON_SETTLE, 1),
+                            applicable,
+                            false,
+                            () -> {
+                                synchronized (owner.getSceneTransferLock()) {
+                                    synchronized (scene) {
+                                        if (!applicable.getAsBoolean()) return;
+                                        // Consume the continuation; repeated finishDungeon calls
+                                        // stay suppressed.
+                                        towerCompletionGeneration++;
+                                        notifyEndPlayers(true);
+                                        finishDungeonResult();
+                                    }
+                                }
+                            });
+        } catch (java.util.concurrent.RejectedExecutionException error) {
+            Grasscutter.getLogger().warn("Tower dungeon settle event was rejected", error);
         }
     }
 
@@ -411,8 +498,22 @@ public final class DungeonManager {
     }
 
     public void notifyEndDungeon(boolean successfully) {
-        scene
-                .getPlayers()
+        notifyEndPlayers(successfully);
+        var future =
+                scene.getScriptManager()
+                        .callEvent(
+                                new ScriptArgs(
+                                        0, EventType.EVENT_DUNGEON_SETTLE, successfully ? 1 : 0));
+        // Ordinary dungeon callers retain their existing synchronous notification contract.
+        try {
+            future.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void notifyEndPlayers(boolean successfully) {
+        scene.getPlayers()
                 .forEach(
                         p -> {
                             // Trigger the fail and success event.
@@ -421,30 +522,17 @@ public final class DungeonManager {
                                 p.getPlayerProgress().markDungeonAsComplete(dungeonId);
                             } else {
                                 p.getQuestManager()
-                                        .queueEvent(QuestContent.QUEST_CONTENT_FAIL_DUNGEON, dungeonData.getId());
+                                        .queueEvent(
+                                                QuestContent.QUEST_CONTENT_FAIL_DUNGEON,
+                                                dungeonData.getId());
                             }
 
                             // Battle pass trigger
                             if (dungeonData.getType().isCountsToBattlepass() && successfully) {
-                                p.getBattlePassManager().triggerMission(WatcherTriggerType.TRIGGER_FINISH_DUNGEON);
+                                p.getBattlePassManager()
+                                        .triggerMission(WatcherTriggerType.TRIGGER_FINISH_DUNGEON);
                             }
                         });
-        var future =
-                scene
-                        .getScriptManager()
-                        .callEvent(new ScriptArgs(0, EventType.EVENT_DUNGEON_SETTLE, successfully ? 1 : 0));
-        // Note: There is a possible race condition with calling
-        //       EVENT_DUNGEON_SETTLE here asynchronously:
-        // 1. EVENT_DUNGEON_SETTLE triggers some Lua-side logic,
-        //    which may happen after 2 (below) finishes.
-        // 2. Some DungeonSettleListener could be comparing some
-        //    Lua variable before its setting in 1 (above) finishes.
-        // For safety, ensure all events have finished before returning.
-        try {
-            future.get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public void endDungeon(BaseDungeonResult.DungeonEndReason endReason) {
@@ -458,6 +546,9 @@ public final class DungeonManager {
     }
 
     public void restartDungeon() {
+        towerLifecycle++;
+        towerCompletionGeneration++;
+        towerCompletionPending = false;
         this.scene.setKilledMonsterCount(0);
         this.rewardedPlayers.clear();
         Arrays.fill(finishedConditions, 0);
@@ -466,6 +557,9 @@ public final class DungeonManager {
     }
 
     public void cleanUpScene() {
+        towerLifecycle++;
+        towerCompletionGeneration++;
+        towerCompletionPending = false;
         this.scene.setDungeonManager(null);
         this.scene.setKilledMonsterCount(0);
     }
