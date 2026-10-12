@@ -5,6 +5,7 @@ import emu.grasscutter.game.dungeons.dungeon_results.BaseDungeonResult;
 import emu.grasscutter.game.dungeons.dungeon_results.BaseDungeonResult.DungeonEndReason;
 import emu.grasscutter.game.dungeons.dungeon_results.TowerResult;
 import emu.grasscutter.server.packet.send.*;
+
 import java.util.List;
 
 public class TowerDungeonSettleListener implements DungeonSettleListener {
@@ -14,33 +15,37 @@ public class TowerDungeonSettleListener implements DungeonSettleListener {
         var scene = dungeonManager.getScene();
 
         var dungeonData = dungeonManager.getDungeonData();
-        if (scene.getLoadedGroups().stream()
-                .anyMatch(
-                        g -> {
-                            var variables = scene.getScriptManager().getVariables(g.id);
-                            return variables != null
-                                    && variables.containsKey("stage")
-                                    && variables.get("stage") == 1;
-                        })) {
+        if (endReason == DungeonEndReason.COMPLETED
+                && scene.getLoadedGroups().stream()
+                        .anyMatch(
+                                g -> {
+                                    var variables = scene.getScriptManager().getVariables(g.id);
+                                    return variables != null
+                                            && variables.containsKey("stage")
+                                            && variables.get("stage") == 1;
+                                })) {
             return;
         }
 
-        var players = scene.getPlayers();
+        var players = List.copyOf(scene.getPlayers());
         if (players.isEmpty()) {
             // Settle can land after the last player has left the scene; there is no record to
             // update and nobody to broadcast to.
             return;
         }
         var towerManager = players.get(0).getTowerManager();
-        var stars = towerManager.getCurLevelStars();
+        int stars = 0;
 
         List<ItemParamData> firstPassReward = List.of();
         if (endReason == DungeonEndReason.COMPLETED) {
+            stars = towerManager.getCurLevelStars();
             // Update star record only when challenge completes successfully.
             firstPassReward = towerManager.notifyCurLevelRecordChangeWhenDone(stars);
             scene.broadcastPacket(
                     new PacketTowerFloorRecordChangeNotify(
-                            towerManager.getCurrentFloorId(), stars, towerManager.canEnterScheduleFloor()));
+                            towerManager.getCurrentFloorId(),
+                            stars,
+                            towerManager.canEnterScheduleFloor()));
         }
 
         var challenge = scene.getChallenge();
@@ -50,7 +55,12 @@ public class TowerDungeonSettleListener implements DungeonSettleListener {
         var result =
                 endReason == DungeonEndReason.COMPLETED
                         ? new TowerResult(
-                                dungeonData, dungeonStats, towerManager, challenge, stars, firstPassReward)
+                                dungeonData,
+                                dungeonStats,
+                                towerManager,
+                                challenge,
+                                stars,
+                                firstPassReward)
                         : new BaseDungeonResult(dungeonData, dungeonStats);
 
         scene.broadcastPacket(new PacketDungeonSettleNotify(result));

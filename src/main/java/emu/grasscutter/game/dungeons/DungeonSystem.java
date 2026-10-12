@@ -184,38 +184,63 @@ public final class DungeonSystem extends BaseGameSystem {
 
         // Get previous position
         val dungeonManager = scene.getDungeonManager();
+        if (dungeonManager != null && dungeonManager.hasDispatchedTowerExit()) return;
         DungeonData dungeonData = dungeonManager != null ? dungeonManager.getDungeonData() : null;
         Position prevPos = new Position(GameConstants.START_POSITION);
 
         if (dungeonData != null) {
-            ScenePointEntry entry = GameData.getScenePointEntryById(prevScene, scene.getPrevScenePoint());
+            ScenePointEntry entry =
+                    GameData.getScenePointEntryById(prevScene, scene.getPrevScenePoint());
 
             if (entry != null) {
                 prevPos.set(entry.getPointData().getTranPos());
             }
-            if (!dungeonManager.isFinishedSuccessfully()) {
-                dungeonManager.quitDungeon();
+        }
+        var returnPos = new Position(prevPos);
+        Runnable exit =
+                () -> finishExitDungeon(player, scene, dungeonManager, prevScene, returnPos);
+        if (dungeonManager != null && dungeonManager.isTowerDungeon()) {
+            dungeonManager.quitDungeon(exit);
+            return;
+        }
+        if (dungeonManager != null && !dungeonManager.isFinishedSuccessfully())
+            dungeonManager.quitDungeon();
+        exit.run();
+    }
+
+    private void finishExitDungeon(
+            Player player,
+            Scene scene,
+            DungeonManager dungeonManager,
+            int prevScene,
+            Position prevPos) {
+        synchronized (player.getSceneTransferLock()) {
+            synchronized (scene) {
+                if (player.getScene() != scene
+                        || player.getWorld() != scene.getWorld()
+                        || scene.getWorld().getScenes().get(scene.getId()) != scene
+                        || scene.getScriptManager().isDestroyed()
+                        || scene.getDungeonManager() != dungeonManager) return;
+                if (dungeonManager != null) dungeonManager.unsetTrialTeam(player);
+                // clean temp team if it has
+                if (!player.getTeamManager().cleanTemporaryTeam()) {
+                    // no temp team. Will use real current team, but check
+                    // for any dead avatar to prevent switching into them.
+                    player.getTeamManager().checkCurrentAvatarIsAlive(null);
+                }
+                player.getTowerManager().clearEntry();
+                if (dungeonManager != null) {
+                    dungeonManager.setTowerDungeon(false);
+                }
+
+                // Transfer player back to world after a small delay.
+                // This wait is important for avoiding double teleports,
+                // which specifically happen when player quits a dungeon
+                // by teleporting to map waypoints.
+                // From testing, 200ms seem reasonable.
+                player.getWorld().queueTransferPlayerToScene(player, prevScene, prevPos, 200);
             }
-
-            dungeonManager.unsetTrialTeam(player);
         }
-        // clean temp team if it has
-        if (!player.getTeamManager().cleanTemporaryTeam()) {
-            // no temp team. Will use real current team, but check
-            // for any dead avatar to prevent switching into them.
-            player.getTeamManager().checkCurrentAvatarIsAlive(null);
-        }
-        player.getTowerManager().clearEntry();
-        if (dungeonManager != null) {
-            dungeonManager.setTowerDungeon(false);
-        }
-
-        // Transfer player back to world after a small delay.
-        // This wait is important for avoiding double teleports,
-        // which specifically happen when player quits a dungeon
-        // by teleporting to map waypoints.
-        // From testing, 200ms seem reasonable.
-        player.getWorld().queueTransferPlayerToScene(player, prevScene, prevPos, 200);
     }
 
     public void restartDungeon(Player player) {
