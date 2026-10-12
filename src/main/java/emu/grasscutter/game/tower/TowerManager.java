@@ -8,7 +8,9 @@ import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.data.excels.dungeon.DungeonData;
 import emu.grasscutter.data.excels.tower.TowerLevelData;
 import emu.grasscutter.game.dungeons.*;
+import emu.grasscutter.game.dungeons.challenge.WorldChallenge;
 import emu.grasscutter.game.player.*;
+import emu.grasscutter.game.world.Scene;
 import emu.grasscutter.game.props.ActionReason;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.server.packet.send.*;
@@ -23,6 +25,15 @@ public class TowerManager extends BasePlayerManager {
     private int currentPossibleStars = 0;
     @Getter private boolean inProgress;
     @Getter private int currentTimeLimit;
+    private volatile HalfTime halfTime;
+    private record HalfTime(
+            Scene scene,
+            DungeonManager manager,
+            int floor,
+            int level,
+            List<List<Integer>> parties,
+            WorldChallenge upper,
+            int seconds) {}
 
     public TowerManager(Player player) {
         super(player);
@@ -75,6 +86,11 @@ public class TowerManager extends BasePlayerManager {
         var challenge = player.getScene().getChallenge();
         inProgress = true;
         currentTimeLimit = challenge != null ? challenge.getTimeLimit() : 0;
+        var clock = halfTime;
+        if (challenge != null
+                && challenge.getTimeLimit() > 0
+                && (player.getTeamManager().getTemporaryTeamIndex() == 0 || matchesHalfTime(clock)))
+            halfTime = null;
 
         // Skills are NOT re-enabled here: the floor's own Lua owns that. It holds them off across
         // the chamber change and switches them back on from the worktop the player starts the half
@@ -86,6 +102,64 @@ public class TowerManager extends BasePlayerManager {
 
     public void onEnd() {
         inProgress = false;
+        halfTime = null;
+    }
+
+    /** Capture upper-half remaining time before its success callback can switch parties. */
+    public void recordHalfTime(WorldChallenge challenge, int remaining) {
+        var scene = player.getScene();
+        var manager = scene == null ? null : scene.getDungeonManager();
+        var floor = GameData.getTowerFloorDataMap().get(getCurrentFloorId());
+        var level = getCurrentTowerLevelDataMap();
+        var parties = getTowerData().getAbyssAvatarIds();
+        if (remaining < 0
+                || challenge == null
+                || challenge.getScene() != scene
+                || scene.getChallenge() != challenge
+                || !challenge.isSuccess()
+                || manager == null
+                || !manager.isTowerDungeon()
+                || manager.getDungeonData() == null
+                || scene.getPlayers().size() != 1
+                || scene.getPlayers().get(0) != player
+                || floor == null
+                || floor.getTeamNum() != 2
+                || level == null
+                || level.getDungeonId() != manager.getDungeonData().getId()
+                || player.getTeamManager().getTemporaryTeamIndex() != 0
+                || parties.size() != 2
+                || !parties.equals(player.getTeamManager().getTemporaryTeamAvatarIds())) return;
+        halfTime =
+                new HalfTime(
+                        scene,
+                        manager,
+                        getCurrentFloorId(),
+                        getCurrentLevelId(),
+                        parties,
+                        challenge,
+                        remaining);
+    }
+
+    private boolean matchesHalfTime(HalfTime clock) {
+        var scene = player.getScene();
+        return clock != null
+                && scene == clock.scene()
+                && scene.getDungeonManager() == clock.manager()
+                && clock.manager().isTowerDungeon()
+                && getCurrentFloorId() == clock.floor()
+                && getCurrentLevelId() == clock.level()
+                && getTowerData().getAbyssAvatarIds().equals(clock.parties())
+                && player.getTeamManager().getTemporaryTeamAvatarIds().equals(clock.parties());
+    }
+
+    /** A zero budget must not turn a timed lower half into an unlimited challenge. */
+    public int resolveHalfTime(int luaSeconds) {
+        var clock = halfTime;
+        if (player.getTeamManager().getTemporaryTeamIndex() == 1
+                && matchesHalfTime(clock)
+                && player.getScene().getChallenge() == clock.upper())
+            return clock.seconds() > 0 ? clock.seconds() : -1;
+        return luaSeconds;
     }
 
     private static final int LEVELS_PER_FLOOR = 3;
@@ -202,6 +276,7 @@ public class TowerManager extends BasePlayerManager {
             getTowerData().currentLevel = 0;
             getTowerData().currentLevelId = firstLevel;
             getTowerData().chamberState = null;
+            halfTime = null;
             getTowerData()
                     .rememberAbyssTeams(
                             towerTeams, player.getTeamManager().getTemporaryTeamAvatarIds());
@@ -314,6 +389,7 @@ public class TowerManager extends BasePlayerManager {
             groups.forEach(id -> player.getAbilityManager().getSharedCooldown().clear(id));
             inProgress = false;
             currentTimeLimit = 0;
+            halfTime = null;
             currentPossibleStars = STARS_PER_LEVEL;
             player.sendPacket(new PacketCanUseSkillNotify(false));
             notifyCurLevelRecordChange();
@@ -417,6 +493,7 @@ public class TowerManager extends BasePlayerManager {
             if (!entered) return rejectEntry();
             inProgress = false;
             currentTimeLimit = 0;
+            halfTime = null;
             player.getScene().setPrevScene(previousScene);
             player.getScene().setPrevScenePoint(enterPointId);
             captureChamberState();
@@ -607,11 +684,16 @@ public class TowerManager extends BasePlayerManager {
     }
 
     public void mirrorTeamSetUp(int teamId) {
+        tryMirrorTeamSetUp(teamId);
+    }
+
+    public boolean tryMirrorTeamSetUp(int teamId) {
         // use team user choose
         if (!restoreTemporaryTeams() || !player.getTeamManager().tryUseTemporaryTeam(teamId))
-            return;
+            return false;
         player.sendPacket(new PacketTowerMiddleLevelChangeTeamNotify());
 
         // Keep the lower team's chamber state. Lua enables skills when the next worktop starts.
+        return true;
     }
 }

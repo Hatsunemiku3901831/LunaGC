@@ -271,44 +271,75 @@ public class ScriptLib {
         return dungeonManager.activateRespawnPoint(var1) ? 0 : 2;
     }
 
-    public synchronized int ActiveChallenge(int challengeId, int challengeIndex, int timeLimitOrGroupId, int groupId, int objectiveKills, int param5) {
-        logger.debug("[LUA] Call ActiveChallenge with {},{},{},{},{},{}", challengeId, challengeIndex, timeLimitOrGroupId, groupId, objectiveKills, param5);
-
-        var scene = getSceneScriptManager().getScene();
-        var existingChallenge = scene.getChallenge();
-        if (existingChallenge != null && existingChallenge.inProgress()) {
-            logger.warn("ActiveChallenge: tried to create challenge while one is already in progress");
-            return 0;
-        }
-
-        var players = scene.getPlayers();
-        var towerManager = players.isEmpty() ? null : players.get(0).getTowerManager();
-        if (towerManager != null && towerManager.isInProgress() && towerManager.getCurrentTimeLimit() > 0) {
-
-            timeLimitOrGroupId = towerManager.getCurrentTimeLimit() - timeLimitOrGroupId;
-            if (timeLimitOrGroupId < 0) {
-                timeLimitOrGroupId = 0;
-            }
-        }
-
-        var challenge = ChallengeFactory.getChallenge(
+    public synchronized int ActiveChallenge(
+            int challengeId,
+            int challengeIndex,
+            int timeLimitOrGroupId,
+            int groupId,
+            int objectiveKills,
+            int param5) {
+        logger.debug(
+                "[LUA] Call ActiveChallenge with {},{},{},{},{},{}",
                 challengeId,
                 challengeIndex,
                 timeLimitOrGroupId,
                 groupId,
                 objectiveKills,
-                param5,
-                scene,
-                getCurrentGroup().get()
-        );
+                param5);
 
-        if (challenge == null) {
+        var scene = getSceneScriptManager().getScene();
+        var existingChallenge = scene.getChallenge();
+        if (existingChallenge != null && existingChallenge.inProgress()) {
+            logger.warn(
+                    "ActiveChallenge: tried to create challenge while one is already in progress");
+            return 0;
+        }
+
+        var players = scene.getPlayers();
+        var metadata = GameData.getDungeonChallengeConfigDataMap().get(challengeIndex);
+        if (players.isEmpty()
+                || metadata == null
+                || metadata.getChallengeType() == null
+                || getCurrentGroup().isEmpty()) return 1;
+        var towerManager = players.get(0).getTowerManager();
+        var manager = scene.getDungeonManager();
+        if (manager != null && manager.isTowerDungeon()) {
+            switch (metadata.getChallengeType()) {
+                case CHALLENGE_KILL_COUNT_IN_TIME,
+                        CHALLENGE_KILL_COUNT_FAST,
+                        CHALLENGE_KILL_MONSTER_IN_TIME,
+                        CHALLENGE_TRIGGER_IN_TIME,
+                        CHALLENGE_SURVIVE -> {
+                    timeLimitOrGroupId = towerManager.resolveHalfTime(timeLimitOrGroupId);
+                    if (timeLimitOrGroupId <= 0) return 1;
+                }
+                case CHALLENGE_TIME_FLY -> {
+                    objectiveKills = towerManager.resolveHalfTime(objectiveKills);
+                    if (objectiveKills <= 0) return 1;
+                }
+                default -> {}
+            }
+        }
+
+        var challenge =
+                ChallengeFactory.getChallenge(
+                        challengeId,
+                        challengeIndex,
+                        timeLimitOrGroupId,
+                        groupId,
+                        objectiveKills,
+                        param5,
+                        scene,
+                        getCurrentGroup().get());
+
+        if (challenge == null || challenge.getGroup() == null) {
             return 1;
         }
 
         if (challenge instanceof DungeonChallenge dungeonChallenge) {
 
-            dungeonChallenge.setStage(getSceneScriptManager().getVariables(groupId).getOrDefault("stage", -1) == 0);
+            dungeonChallenge.setStage(
+                    getSceneScriptManager().getVariables(groupId).getOrDefault("stage", -1) == 0);
         }
 
         scene.setChallenge(challenge);
@@ -1854,15 +1885,23 @@ public class ScriptLib {
         return 0;
     }
 
+    public int TowerMirrorTeamSetUp(int team) {
+        return TowerMirrorTeamSetUp(team, 0);
+    }
+
     public int TowerMirrorTeamSetUp(int team, int var1) {
         logger.debug("[LUA] Call TowerMirrorTeamSetUp with {},{}", team, var1);
-        getSceneScriptManager().unloadCurrentMonsterTide();
         // This is the mid-chamber team swap on two-team floors, driven from the floor's Lua.
-        var players = getSceneScriptManager().getScene().getPlayers();
-        if (players.isEmpty()) {
-            return 0;
-        }
-        players.get(0).getTowerManager().mirrorTeamSetUp(team - 1);
+        var scripts = getSceneScriptManager();
+        var scene = scripts.getScene();
+        var players = scene.getPlayers();
+        var manager = scene.getDungeonManager();
+        if (players.size() != 1
+                || manager == null
+                || !manager.isTowerDungeon()
+                || players.get(0).getScene() != scene
+                || !players.get(0).getTowerManager().tryMirrorTeamSetUp(team - 1)) return 1;
+        scripts.unloadCurrentMonsterTide();
         return 0;
     }
 

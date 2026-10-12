@@ -848,6 +848,10 @@ public final class TeamManager extends BasePlayerDataManager {
                 .toList();
     }
 
+    public int getTemporaryTeamIndex() {
+        return useTemporarilyTeamIndex;
+    }
+
     public boolean tryUseTemporaryTeam(int index) {
         if (tpsSceneAvatar != null) return false;
         int available = this.temporaryTeam == null ? 0 : this.temporaryTeam.size();

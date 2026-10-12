@@ -103,22 +103,30 @@ public class WorldChallenge {
         var scriptManager = scene.getScriptManager();
         var dungeonManager = scene.getDungeonManager();
         if (dungeonManager != null && dungeonManager.getDungeonData() != null) {
-            scene
-                    .getPlayers()
+            scene.getPlayers()
                     .forEach(
                             p ->
                                     p.getActivityManager()
                                             .triggerWatcher(
                                                     WatcherTriggerType.TRIGGER_FINISH_CHALLENGE,
-                                                    String.valueOf(dungeonManager.getDungeonData().getId()),
+                                                    String.valueOf(
+                                                            dungeonManager
+                                                                    .getDungeonData()
+                                                                    .getId()),
                                                     String.valueOf(this.getGroup().id),
                                                     String.valueOf(this.getChallengeId())));
         }
 
-        // TODO: record the time in PARAM2 and used in action
+        int eventTime = finishedTime;
+        if (dungeonManager != null && dungeonManager.isTowerDungeon() && timeLimit > 0) {
+            eventTime = (int) Math.max(0L, (long) timeLimit - Math.max(0, finishedTime));
+            var players = scene.getPlayers();
+            if (players.size() == 1)
+                players.get(0).getTowerManager().recordHalfTime(this, eventTime);
+        }
         scriptManager.callEvent(
                 new ScriptArgs(this.getGroup().id, EventType.EVENT_CHALLENGE_SUCCESS)
-                        .setParam2(finishedTime)
+                        .setParam2(eventTime)
                         .setEventSource(this.getChallengeIndex()));
 
         this.getScene()
