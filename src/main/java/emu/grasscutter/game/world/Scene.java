@@ -72,6 +72,8 @@ public class Scene {
     private final HashSet<Integer> unlockedForces;
     private final long startWorldTime;
     @Getter @Setter DungeonManager dungeonManager;
+    @Getter private final emu.grasscutter.game.dungeons.DungeonBossCleanup dungeonBossCleanup =
+            new emu.grasscutter.game.dungeons.DungeonBossCleanup(this);
     @Getter Int2ObjectMap<Route> sceneRoutes;
     private Set<SpawnDataEntry.GridBlockId> loadedGridBlocks;
     @Getter @Setter private boolean dontDestroyWhenEmpty;
@@ -600,10 +602,16 @@ public class Scene {
             if (!target.tryBeginDeath()) return;
             if (attackerId > 0) attacker = getEntityById(attackerId);
             if (target instanceof EntityMonster monster) {
+                dungeonBossCleanup.rememberDeath(monster);
                 var owner = attacker == null ? null : attacker.getTrueOwner();
                 int uid = owner instanceof EntityAvatar avatar ? avatar.getPlayer().getUid() : 0;
-                getScriptManager().onMonsterDieBeforeLeaveScene(monster, uid,
-                        reason == null || reason == ChangeHpReason.UNRECOGNIZED ? 0 : reason.getNumber());
+                getScriptManager()
+                        .onMonsterDieBeforeLeaveScene(
+                                monster,
+                                uid,
+                                reason == null || reason == ChangeHpReason.UNRECOGNIZED
+                                        ? 0
+                                        : reason.getNumber());
             }
         }
 
@@ -625,7 +633,8 @@ public class Scene {
             }
         }
 
-        this.broadcastPacket(new PacketLifeStateChangeNotify(attackerId, target, LifeState.LIFE_DEAD));
+        this.broadcastPacket(
+                new PacketLifeStateChangeNotify(attackerId, target, LifeState.LIFE_DEAD));
 
         // Activity watchers count kills. The attacker may be a summon or a client gadget, so credit
         // the avatar that actually owns it rather than the entity that landed the hit.
@@ -634,7 +643,8 @@ public class Scene {
                         instanceof EntityAvatar avatarAttacker) {
             var monsterId = String.valueOf(killed.getMonsterData().getId());
             var activityManager = avatarAttacker.getPlayer().getActivityManager();
-            activityManager.triggerWatcher(WatcherTriggerType.TRIGGER_BATTLE_FOR_MONSTER_DIE_OR, monsterId);
+            activityManager.triggerWatcher(
+                    WatcherTriggerType.TRIGGER_BATTLE_FOR_MONSTER_DIE_OR, monsterId);
             activityManager.triggerWatcher(
                     WatcherTriggerType.TRIGGER_KILL_MONSTERS_WITHOUT_VEHICLE, monsterId);
             getCrucibleSceneController().onMonsterKilled(killed, avatarAttacker.getPlayer());
@@ -642,12 +652,14 @@ public class Scene {
         }
 
         var world = this.getWorld();
-        if (target instanceof EntityMonster monster && this.getSceneType() != SceneType.SCENE_DUNGEON) {
+        if (target instanceof EntityMonster monster
+                && this.getSceneType() != SceneType.SCENE_DUNGEON) {
             if (monster.getMetaMonster() != null
                     && !world.getServer().getDropSystem().handleMonsterDrop(monster)) {
                 Grasscutter.getLogger()
                         .debug(
-                                "Can not solve monster drop: drop_id = {}, drop_tag = {}. Falling back to legacy drop system.",
+                                "Can not solve monster drop: drop_id = {}, drop_tag = {}. Falling"
+                                    + " back to legacy drop system.",
                                 monster.getMetaMonster().drop_id,
                                 monster.getMetaMonster().drop_tag);
                 world.getServer().getDropSystemLegacy().callDrop(monster);
@@ -656,15 +668,17 @@ public class Scene {
 
         if (target instanceof EntityGadget gadget) {
             if (gadget.getMetaGadget() != null) {
-                world
-                        .getServer()
+                world.getServer()
                         .getDropSystem()
                         .handleChestDrop(
-                                gadget.getMetaGadget().drop_id, gadget.getMetaGadget().drop_count, gadget);
+                                gadget.getMetaGadget().drop_id,
+                                gadget.getMetaGadget().drop_count,
+                                gadget);
             }
         }
 
-        this.removeEntity(target);
+        if (!(target instanceof EntityMonster monster
+                && dungeonBossCleanup.removeAfterDeath(monster))) this.removeEntity(target);
 
         if (target instanceof EntityClientGadget cg && cg.getOwner() != null) {
             cg.getOwner().getTeamManager().getGadgets().remove(cg);
@@ -1325,11 +1339,12 @@ public class Scene {
         this.scriptManager.unregisterGroup(group);
     }
 
-    public void onPlayerCreateGadget(EntityClientGadget gadget) {
+    public synchronized void onPlayerCreateGadget(EntityClientGadget gadget) {
         var owner = gadget.getOwner();
 
         this.addEntityDirectly(gadget);
         owner.getTeamManager().getGadgets().add(gadget);
+        if (dungeonBossCleanup.removeLateGadget(gadget)) return;
 
         for (var player : this.getPlayers()) {
             if (player != owner) {

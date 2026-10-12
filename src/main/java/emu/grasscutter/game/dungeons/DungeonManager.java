@@ -622,6 +622,7 @@ public final class DungeonManager {
     }
 
     public void endDungeon(BaseDungeonResult.DungeonEndReason endReason) {
+        scene.getDungeonBossCleanup().onSettle(this, endReason);
         if (scene.getDungeonSettleListeners() != null) {
             scene.getDungeonSettleListeners().forEach(o -> o.onDungeonSettle(this, endReason));
         }
