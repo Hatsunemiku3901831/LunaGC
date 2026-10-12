@@ -231,6 +231,7 @@ public final class ForgingManager extends BasePlayerManager {
             queue.setStartTime(now);
             queue.setForgeTime(definition.getForgeTime());
             queue.capturePayment(costs, count, definition.getForgePoint());
+            queue.captureBonus(ForgeBonuses.oreReturns(player, avatar, definition, costs, count));
             queue.reserveStart();
             active.add(queue);
             int pointsBefore = player.getForgePoints();
@@ -357,7 +358,25 @@ public final class ForgingManager extends BasePlayerManager {
                 }
                 outputs.add(event.getItemForged());
             }
-            int validation = ForgeOutputDelivery.validate(player, outputs);
+            var delivery = new ArrayList<>(outputs);
+            for (var bonus : forge.getBonusReturns(finished)) {
+                var data = GameData.getItemDataMap().get(bonus.getId());
+                if (data == null
+                        || data.getId() != bonus.getId()
+                        || data.getItemType() != ItemType.ITEM_MATERIAL
+                        || data.isUseOnGain()) {
+                    forge.releaseOutputReservation();
+                    failManipulate(type, Retcode.RET_NOT_FOUND_CONFIG);
+                    return;
+                }
+                if (bonus.getCount() > data.getStackLimit()) {
+                    forge.releaseOutputReservation();
+                    failManipulate(type, Retcode.RET_ITEM_EXCEED_LIMIT);
+                    return;
+                }
+                delivery.add(new GameItem(data, bonus.getCount()));
+            }
+            int validation = ForgeOutputDelivery.validate(player, delivery);
             if (validation != 0) {
                 forge.releaseOutputReservation();
                 failManipulate(type, Retcode.forNumber(validation));
@@ -365,7 +384,7 @@ public final class ForgingManager extends BasePlayerManager {
             }
             confirmationStarted = true;
             DatabaseHelper.saveGameSync(player);
-            var hints = ForgeOutputDelivery.grant(player, outputs);
+            var hints = ForgeOutputDelivery.grant(player, delivery);
             forge.finishOutput();
             player.getBattlePassManager()
                     .triggerMission(WatcherTriggerType.TRIGGER_DO_FORGE, 0, finished);
@@ -387,7 +406,12 @@ public final class ForgingManager extends BasePlayerManager {
             DatabaseHelper.saveGameSync(player);
             sendForgeQueueDataNotify(removed);
             player.sendPacket(
-                    new PacketForgeQueueManipulateRsp(0, type, hints, List.of(), List.of()));
+                    new PacketForgeQueueManipulateRsp(
+                            0,
+                            type,
+                            hints.subList(0, outputs.size()),
+                            hints.subList(outputs.size(), hints.size()),
+                            List.of()));
         } catch (RuntimeException failure) {
             if (confirmationStarted) {
                 forge.restoreOutputPending();

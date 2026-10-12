@@ -27,6 +27,40 @@ public class ActiveForgeData {
     private int paidUnitsRemaining;
     private int paidForgePointsPerUnit;
     private List<PaidCost> paidCostsPerUnit;
+    private int bonusVersion;
+    private List<PaidCost> bonusReturnsPerUnit;
+
+    public int getBonusVersion() {
+        return bonusVersion;
+    }
+
+    public void captureBonus(List<ItemParamData> returns) {
+        if (isBusy() || bonusVersion != 0 || paymentVersion != 1)
+            throw new IllegalStateException("Forge bonus cannot be recorded");
+        var rows = new ArrayList<PaidCost>();
+        var ids = new HashSet<Integer>();
+        for (var item : returns) {
+            if (item == null || item.getId() <= 0 || item.getCount() <= 0 || !ids.add(item.getId()))
+                throw new IllegalArgumentException("Invalid forge bonus row");
+            rows.add(new PaidCost(item.getId(), item.getCount()));
+        }
+        bonusReturnsPerUnit = rows;
+        bonusVersion = 1;
+    }
+
+    public List<ItemParamData> getBonusReturns(int units) {
+        if (bonusVersion == 0) return List.of();
+        if (bonusVersion != 1 || bonusReturnsPerUnit == null || units <= 0 || units > count)
+            throw new IllegalStateException("Invalid forge bonus receipt");
+        var rows = new ArrayList<ItemParamData>();
+        var ids = new HashSet<Integer>();
+        for (var item : bonusReturnsPerUnit) {
+            if (item == null || item.itemId <= 0 || item.count <= 0 || !ids.add(item.itemId))
+                throw new IllegalStateException("Invalid forge bonus row");
+            rows.add(new ItemParamData(item.itemId, Math.multiplyExact(item.count, units)));
+        }
+        return rows;
+    }
 
     @Entity
     public static class PaidCost {
