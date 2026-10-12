@@ -4,18 +4,25 @@ import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.*;
 import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.data.excels.CombineData;
-import emu.grasscutter.game.inventory.GameItem;
+import emu.grasscutter.data.excels.ItemData;
+import emu.grasscutter.game.inventory.*;
+import emu.grasscutter.game.player.InvestigationHandbook;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.props.ActionReason;
-import emu.grasscutter.net.proto.RetcodeOuterClass;
+import emu.grasscutter.game.props.PlayerProperty;
+import emu.grasscutter.game.shop.BeyondCurrency;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.server.game.*;
 import emu.grasscutter.server.packet.send.*;
 import emu.grasscutter.utils.Utils;
+
 import it.unimi.dsi.fastutil.ints.*;
+
 import java.util.*;
 
 public class CombineManger extends BaseGameSystem {
+    private static final ThreadLocal<Set<Inventory>> combining =
+            ThreadLocal.withInitial(() -> Collections.newSetFromMap(new IdentityHashMap<>()));
     private static final Int2ObjectMap<List<Integer>> reliquaryDecomposeData =
             new Int2ObjectOpenHashMap<>();
 
@@ -42,61 +49,164 @@ public class CombineManger extends BaseGameSystem {
         if (!player.getUnlockedCombines().add(combineId)) {
             return false; // Already unlocked
         }
-        // Tell the client that this diagram is now unlocked and add the unlocked item to the player.
+        // Tell the client that this diagram is now unlocked and add the unlocked item to the
+        // player.
         player.sendPacket(new PacketCombineFormulaDataNotify(combineId));
         return true;
     }
 
     public CombineResult combineItem(Player player, int cid, int count) {
-        // check config exist
-        if (!GameData.getCombineDataMap().containsKey(cid)) {
-            player.getWorld().getHost().sendPacket(new PacketCombineRsp());
-            return null;
+        if (player == null) return null;
+        var inventory = player.getInventory();
+        synchronized (inventory) {
+            var active = combining.get();
+            if (!active.add(inventory)) return fail(player, Retcode.RET_SVR_ERROR_VALUE);
+            try {
+                return combineLocked(player, inventory, cid, count);
+            } finally {
+                active.remove(inventory);
+                if (active.isEmpty()) combining.remove();
+            }
         }
+    }
 
-        // The count comes straight off the wire. A negative one inverts payItems, refunding the
-        // materials and the mora instead of charging for them.
-        if (count <= 0) {
-            player.sendPacket(new PacketCombineRsp());
-            return null;
+    private CombineResult combineLocked(Player player, Inventory inventory, int cid, int count) {
+        var data = GameData.getCombineDataMap().get(cid);
+        if (data == null || data.getId() != cid || count <= 0)
+            return fail(player, Retcode.RET_FAIL_VALUE);
+        if (data.getPlayerLevel() > player.getLevel())
+            return fail(player, Retcode.RET_PLAYER_LEVEL_LESS_THAN_VALUE);
+        long quantity = (long) data.getResultItemCount() * count;
+        var output = GameData.getItemDataMap().get(data.getResultItemId());
+        if (output == null
+                || output.getId() != data.getResultItemId()
+                || output.isUseOnGain()
+                || quantity <= 0
+                || quantity > Integer.MAX_VALUE)
+            return fail(player, Retcode.RET_NOT_FOUND_CONFIG_VALUE);
+        var costs = scaledCosts(data, count);
+        if (costs == null) return fail(player, Retcode.RET_FAIL_VALUE);
+        if (!canReceive(player, inventory, output, (int) quantity, costs))
+            return fail(player, Retcode.RET_ITEM_EXCEED_LIMIT_VALUE);
+        if (!inventory.payItems(costs, 1, ActionReason.Combine))
+            return fail(player, Retcode.RET_ITEM_COMBINE_COUNT_NOT_ENOUGH_VALUE);
+        var tab = inventory.getInventoryTab(output.getItemType());
+        int before = tab == null ? 0 : tab.getItemCountById(output.getId());
+        try {
+            boolean delivered = true;
+            if (output.getItemType() == ItemType.ITEM_WEAPON
+                    || output.getItemType() == ItemType.ITEM_RELIQUARY) {
+                for (int i = 0; i < quantity; i++)
+                    if (!inventory.addItem(new GameItem(output, 1), ActionReason.Combine)) {
+                        delivered = false;
+                        break;
+                    }
+            } else
+                delivered = inventory.addItem(output.getId(), (int) quantity, ActionReason.Combine);
+            if (!delivered
+                    || (output.getItemType() == ItemType.ITEM_MATERIAL
+                            && (long) tab.getItemCountById(output.getId()) - before != quantity))
+                throw new IllegalStateException("Combine output was not fully delivered");
+        } catch (RuntimeException failure) {
+            // Costs or output may already be stored; do not blindly refund or grant again.
+            Grasscutter.getLogger()
+                    .error(
+                            "Combine needs reconciliation: UID {}, recipe {}",
+                            player.getUid(),
+                            cid,
+                            failure);
+            return fail(player, Retcode.RET_SVR_ERROR_VALUE);
         }
-
-        CombineData combineData = GameData.getCombineDataMap().get(cid);
-
-        if (combineData.getPlayerLevel() > player.getLevel()) {
-            return null;
-        }
-
-        // consume items
-        List<ItemParamData> material = new ArrayList<>(combineData.getMaterialItems());
-        material.add(new ItemParamData(202, combineData.getScoinCost()));
-
-        boolean success = player.getInventory().payItems(material, count, ActionReason.Combine);
-
-        // abort if not enough material - this said "abort" but fell through to hand out the
-        // result anyway, so crafting worked with no materials at all
-        if (!success) {
-            player.sendPacket(
-                    new PacketCombineRsp(RetcodeOuterClass.Retcode.RET_ITEM_COMBINE_COUNT_NOT_ENOUGH_VALUE));
-            return null;
-        }
-
-        // make the result
-        player
-                .getInventory()
-                .addItem(combineData.getResultItemId(), combineData.getResultItemCount() * count);
-
+        InvestigationHandbook.trigger(player, "TRIGGER_DO_COMBINE", cid, count);
         CombineResult result = new CombineResult();
-        result.setMaterial(List.of());
-        result.setResult(
-                List.of(
-                        new ItemParamData(
-                                combineData.getResultItemId(), combineData.getResultItemCount() * count)));
+        result.setMaterial(costs);
+        result.setResult(List.of(new ItemParamData(output.getId(), (int) quantity)));
         // TODO lucky characters
         result.setExtra(List.of());
         result.setBack(List.of());
 
         return result;
+    }
+
+    private static CombineResult fail(Player player, int code) {
+        player.sendPacket(new PacketCombineRsp(code));
+        return null;
+    }
+
+    private static List<ItemParamData> scaledCosts(CombineData data, int count) {
+        if (data.getMaterialItems() == null || data.getScoinCost() < 0) return null;
+        var totals = new LinkedHashMap<Integer, Long>();
+        var original = new ArrayList<>(data.getMaterialItems());
+        if (data.getScoinCost() > 0) original.add(new ItemParamData(202, data.getScoinCost()));
+        for (var item : original) {
+            if (item == null || item.getId() < 0 || item.getCount() < 0) return null;
+            if (item.getCount() == 0) continue;
+            if (item.getId() == 0) return null;
+            long amount = (long) item.getCount() * count;
+            if (amount > Integer.MAX_VALUE) return null;
+            long total = totals.merge(item.getId(), amount, Long::sum);
+            if (total > Integer.MAX_VALUE) return null;
+        }
+        return totals.entrySet().stream()
+                .map(entry -> new ItemParamData(entry.getKey(), entry.getValue().intValue()))
+                .toList();
+    }
+
+    private static boolean canReceive(
+            Player player,
+            Inventory inventory,
+            ItemData output,
+            int quantity,
+            List<ItemParamData> costs) {
+        if (output.getItemType() == ItemType.ITEM_VIRTUAL) {
+            var property = BeyondCurrency.propertyForItem(output.getId());
+            int before =
+                    property == null
+                            ? switch (output.getId()) {
+                                case 201 -> player.getPrimogems();
+                                case 202 -> player.getMora();
+                                case 203 -> player.getCrystals();
+                                case 204 -> player.getHomeCoin();
+                                case 106 -> player.getProperty(PlayerProperty.PROP_PLAYER_RESIN);
+                                case 107 -> player.getProperty(
+                                        PlayerProperty.PROP_PLAYER_LEGENDARY_KEY);
+                                default -> -1;
+                            }
+                            : player.getProperty(property);
+            long spent =
+                    costs.stream()
+                            .filter(item -> item.getId() == output.getId())
+                            .mapToLong(ItemParamData::getCount)
+                            .sum();
+            return before < 0 || (long) before - spent + quantity <= Integer.MAX_VALUE;
+        }
+        var tab = inventory.getInventoryTab(output.getItemType());
+        if (tab == null) return false;
+        if (output.getItemType() == ItemType.ITEM_WEAPON
+                || output.getItemType() == ItemType.ITEM_RELIQUARY)
+            return (long) tab.getSize() + quantity <= tab.getMaxCapacity();
+        if (output.getItemType() == ItemType.ITEM_TPS_WEAPON)
+            return quantity == 1
+                    && tab.getItemById(output.getId()) == null
+                    && tab.getSize() < tab.getMaxCapacity();
+        if (output.getStackLimit() <= 0
+                || Set.of(
+                                MaterialType.MATERIAL_AVATAR,
+                                MaterialType.MATERIAL_FLYCLOAK,
+                                MaterialType.MATERIAL_COSTUME,
+                                MaterialType.MATERIAL_NAMECARD,
+                                MaterialType.MATERIAL_AVATAR_TRACE,
+                                MaterialType.MATERIAL_WEAPON_SKIN)
+                        .contains(output.getMaterialType())) return false;
+        long remaining = tab.getItemCountById(output.getId());
+        int freed = 0;
+        for (var cost : costs) {
+            var stack = tab.getItemById(cost.getId());
+            if (stack != null && stack.getCount() == cost.getCount()) freed++;
+            if (cost.getId() == output.getId()) remaining -= cost.getCount();
+        }
+        if (remaining < 0 || remaining + quantity > output.getStackLimit()) return false;
+        return (long) tab.getSize() - freed + (remaining == 0 ? 1 : 0) <= tab.getMaxCapacity();
     }
 
     public synchronized void decomposeReliquaries(
@@ -120,7 +230,8 @@ public class CombineManger extends BaseGameSystem {
         for (long guid : input) {
             if (player.getInventory().getItemByGuid(guid) == null) {
                 player.sendPacket(
-                        new PacketReliquaryDecomposeRsp(Retcode.RET_RELIQUARY_DECOMPOSE_PARAM_ERROR));
+                        new PacketReliquaryDecomposeRsp(
+                                Retcode.RET_RELIQUARY_DECOMPOSE_PARAM_ERROR));
                 return;
             }
         }

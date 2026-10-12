@@ -5,6 +5,7 @@ import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.*;
 import emu.grasscutter.server.game.GameSession;
 import emu.grasscutter.server.packet.send.PacketCombineRsp;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,13 +15,20 @@ public class HandlerCombineReq extends PacketHandler {
     @Override
     public void handle(GameSession session, byte[] header, byte[] payload) throws Exception {
 
-        CombineReqOuterClass.CombineReq req = CombineReqOuterClass.CombineReq.parseFrom(payload);
+        CombineReqOuterClass.CombineReq req;
+        try {
+            req = CombineReqOuterClass.CombineReq.parseFrom(payload);
+        } catch (com.google.protobuf.InvalidProtocolBufferException
+                | NullPointerException malformed) {
+            session.send(new PacketCombineRsp(RetcodeOuterClass.Retcode.RET_FAIL_VALUE));
+            return;
+        }
 
         var result =
-                session
-                        .getServer()
+                session.getServer()
                         .getCombineSystem()
-                        .combineItem(session.getPlayer(), req.getCombineId(), req.getCombineCount());
+                        .combineItem(
+                                session.getPlayer(), req.getCombineId(), req.getCombineCount());
 
         if (result == null) {
             return;
