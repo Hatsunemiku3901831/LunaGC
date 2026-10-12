@@ -3,7 +3,7 @@
 
 This profile is tied to the exact executable and metadata SHA-256 hashes below.
 It recovers names, parent and field type references, method addresses and optional
-literal packet ID getters, not a complete protobuf schema or dump.cs. Message names and
+literal packet ID getters and optional field layouts, not a complete protobuf schema or dump.cs. Message names and
 wire fields still require verification.
 The source client files are never modified.
 """
@@ -360,12 +360,77 @@ def recover_members(binary: bytes, metadata: bytes, records: list[dict], report:
         report.update(genericClassCount=generics.count, resolvedGenericClassCount=len(generics.cache))
 
 
+def recover_field_offsets(binary: bytes, metadata: bytes, records: list[dict], report: dict) -> None:
+    """Read the layout tables used by Class::SetupFields at 0x1405135b0.
+
+    Offsets describe declaring-type or static storage as indicated by field attributes.
+    Runtime-dependent markers remain raw; they are never reported as object offsets.
+    Validate every span before extending records so malformed data cannot leave a partial result.
+    """
+    header = pe_file_offset(binary, HEADER_VA, BODY_OFFSET)
+    lookup = BODY_OFFSET + (u32(binary, header + 0x198) ^ 0x5303F399)
+    layouts = BODY_OFFSET + (u32(binary, header + 0x1A4) ^ 0x0D8C5D0A)
+    offsets = BODY_OFFSET + (u32(binary, header + 0x1E4) ^ 0x67102427)
+
+    def span(start: int, size: int, name: str) -> None:
+        if start < 0 or size < 0 or start + size > len(metadata):
+            raise ValueError(f"{name} exceeds metadata")
+
+    pending = []
+    counts = {"fieldLayoutTypeCount": 0, "instanceFieldOffsetCount": 0,
+              "staticFieldOffsetCount": 0, "runtimeFieldOffsetCount": 0}
+    for item in records:
+        if "fields" not in item:
+            raise ValueError("Field metadata is required for field offsets")
+        fields = item["fields"]
+        if item.get("fieldCount") != len(fields):
+            raise ValueError(f"Inconsistent field count for type {item['index']}")
+        if not fields:
+            pending.append((item, None, []))
+            continue
+        index = item["index"]
+        if not isinstance(index, int) or index < 0:
+            raise ValueError("Invalid field layout type index")
+        span(lookup + index * 4, 4, "field layout lookup")
+        layout_index = struct.unpack_from("<i", metadata, lookup + index * 4)[0]
+        if layout_index < -1:
+            raise ValueError(f"Invalid field layout index for type {index}")
+        if layout_index == -1:
+            values = [{"offset": None, "rawOffset": None, "offsetKind": "runtime"} for field in fields]
+            counts["runtimeFieldOffsetCount"] += len(fields)
+            pending.append((item, {"kind": "runtime", "index": -1}, values))
+            continue
+        entry = layouts + layout_index * 12
+        span(entry, 12, "field layout record")
+        flags, size_flags, first = struct.unpack_from("<III", metadata, entry)
+        span(offsets + first * 4, len(fields) * 4, "field offset span")
+        values = []
+        for relative, field in enumerate(fields):
+            raw = u32(metadata, offsets + (first + relative) * 4)
+            attributes = int(field["type"]["attributes"], 16)
+            kind = "runtime" if raw >= 0x01000000 else "static" if attributes & 0x10 else "instance"
+            values.append({"rawOffset": hex(raw), "offset": None if kind == "runtime" else hex(raw),
+                           "offsetKind": kind})
+            counts[kind + "FieldOffsetCount"] += 1
+        pending.append((item, {"kind": "metadata", "index": layout_index, "rawFlags": hex(flags),
+                               "rawSizeFlags": hex(size_flags), "offsetIndex": first}, values))
+        counts["fieldLayoutTypeCount"] += 1
+    for item, layout, values in pending:
+        item["fieldLayout"] = layout
+        for field, value in zip(item["fields"], values):
+            field.update(value)
+    report.update(counts, fieldLayoutLookupOffset=hex(lookup), fieldLayoutRecordOffset=hex(layouts),
+                  fieldOffsetTableOffset=hex(offsets))
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("client_directory", type=Path)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--include-fields", action="store_true",
                         help="Include field names, attributes and type reference records")
+    parser.add_argument("--include-field-offsets", action="store_true",
+                        help="Include verified field layouts and unresolved runtime markers; requires --include-fields")
     parser.add_argument("--include-methods", action="store_true",
                         help="Include method names, native addresses and parameter counts")
     parser.add_argument("--include-parents", action="store_true",
@@ -375,6 +440,8 @@ def main() -> None:
     parser.add_argument("--include-generic-types", action="store_true",
                         help="Resolve generic arguments from startup metadata; requires --include-fields or --include-parents")
     args = parser.parse_args()
+    if args.include_field_offsets and not args.include_fields:
+        parser.error("--include-field-offsets requires --include-fields")
     if args.include_packet_ids and not args.include_methods:
         parser.error("--include-packet-ids requires --include-methods")
     if args.include_generic_types and not (args.include_fields or args.include_parents):
@@ -397,6 +464,8 @@ def main() -> None:
         recover_members(binary, metadata, records, report,
                         fields=args.include_fields, methods=args.include_methods,
                         packet_ids=args.include_packet_ids, startup=startup if args.include_fields else None)
+    if args.include_field_offsets:
+        recover_field_offsets(binary, metadata, records, report)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(records, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({**report, "output": str(output),
