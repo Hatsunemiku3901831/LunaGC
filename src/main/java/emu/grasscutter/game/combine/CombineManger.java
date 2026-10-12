@@ -228,36 +228,82 @@ public class CombineManger extends BaseGameSystem {
         return (long) tab.getSize() - freed + (remaining == 0 ? 1 : 0) <= tab.getMaxCapacity();
     }
 
-    public synchronized void decomposeReliquaries(
-            Player player, int configId, int count, List<Long> input) {
-        // Check if the configId is legal.
-        List<Integer> possibleDrops = reliquaryDecomposeData.get(configId);
-        if (possibleDrops == null) {
-            player.sendPacket(
-                    new PacketReliquaryDecomposeRsp(Retcode.RET_RELIQUARY_DECOMPOSE_PARAM_ERROR));
-            return;
-        }
-
-        // Check if the number of input items matches the output count.
-        if (input.size() != count * 3) {
-            player.sendPacket(
-                    new PacketReliquaryDecomposeRsp(Retcode.RET_RELIQUARY_DECOMPOSE_PARAM_ERROR));
-            return;
-        }
-
-        // Check if all the input reliquaries actually are in the player's inventory.
-        for (long guid : input) {
-            if (player.getInventory().getItemByGuid(guid) == null) {
-                player.sendPacket(
-                        new PacketReliquaryDecomposeRsp(
-                                Retcode.RET_RELIQUARY_DECOMPOSE_PARAM_ERROR));
+    public void decomposeReliquaries(Player player, int configId, int count, List<Long> input) {
+        if (player == null) return;
+        var inventory = player.getInventory();
+        synchronized (inventory) {
+            var active = combining.get();
+            if (!active.add(inventory)) {
+                failDecompose(player);
                 return;
             }
+            try {
+                decomposeLocked(player, configId, count, input);
+            } finally {
+                active.remove(inventory);
+                if (active.isEmpty()) combining.remove();
+            }
+        }
+    }
+
+    private static void failDecompose(Player player) {
+        player.sendPacket(
+                new PacketReliquaryDecomposeRsp(Retcode.RET_RELIQUARY_DECOMPOSE_PARAM_ERROR));
+    }
+
+    private void decomposeLocked(Player player, int configId, int count, List<Long> input) {
+        // Current resource definitions require three five-star inputs, at most 39 outputs.
+        var possibleDrops = reliquaryDecomposeData.get(configId);
+        if (possibleDrops == null
+                || possibleDrops.isEmpty()
+                || count <= 0
+                || count > 39
+                || input == null
+                || input.size() != (long) count * 3) {
+            failDecompose(player);
+            return;
+        }
+        var inventory = player.getInventory();
+        var guids = new HashSet<Long>();
+        for (var guid : input) {
+            var item = guid == null ? null : inventory.getItemByGuid(guid);
+            var data = item == null ? null : GameData.getItemDataMap().get(item.getItemId());
+            if (guid == null
+                    || !guids.add(guid)
+                    || item == null
+                    || data == null
+                    || data != item.getItemData()
+                    || data.getId() != item.getItemId()
+                    || data.getItemType() != ItemType.ITEM_RELIQUARY
+                    || data.getRankLevel() != 5
+                    || item.getOwnerId() != player.getUid()
+                    || item.getCount() != 1
+                    || !item.isDestroyable()) {
+                failDecompose(player);
+                return;
+            }
+        }
+        // Validate every potential output before consuming the selected relics.
+        for (var id : possibleDrops) {
+            var data = id == null ? null : GameData.getItemDataMap().get(id.intValue());
+            if (data == null
+                    || data.getId() != id
+                    || data.isUseOnGain()
+                    || data.getItemType() != ItemType.ITEM_RELIQUARY
+                    || data.getRankLevel() != 5) {
+                failDecompose(player);
+                return;
+            }
+        }
+        var tab = inventory.getInventoryTab(ItemType.ITEM_RELIQUARY);
+        if (tab == null || (long) tab.getSize() - input.size() + count > tab.getMaxCapacity()) {
+            failDecompose(player);
+            return;
         }
 
         // Delete the input reliquaries.
         for (long guid : input) {
-            player.getInventory().removeItem(guid);
+            inventory.removeItem(guid);
         }
 
         // Generate outoput reliquaries.
@@ -266,7 +312,7 @@ public class CombineManger extends BaseGameSystem {
             int itemId = Utils.drawRandomListElement(possibleDrops);
             GameItem newReliquary = new GameItem(itemId, 1);
 
-            player.getInventory().addItem(newReliquary);
+            inventory.addItem(newReliquary);
             resultItems.add(newReliquary.getGuid());
         }
 
