@@ -80,14 +80,18 @@ public class CookingCompoundManager extends BasePlayerManager {
                 new ArrayList<>(player.getActiveCookCompounds().size());
         int currentTime = Utils.getCurrentSeconds();
         for (var item : player.getActiveCookCompounds().values()) {
-            var data =
-                    CompoundQueueData.newBuilder()
-                            .setCompoundId(item.getCompoundId())
-                            .setWaitCount(item.getWaitCount(currentTime))
-                            .build();
-            compoundQueueData.add(data);
+            compoundQueueData.add(queueData(item, currentTime));
         }
         return compoundQueueData;
+    }
+
+    private static CompoundQueueData queueData(ActiveCookCompoundData queue, int currentTime) {
+        return CompoundQueueData.newBuilder()
+                .setCompoundId(queue.getCompoundId())
+                .setOutputCount(queue.getOutputCount(currentTime))
+                .setWaitCount(queue.getWaitCount(currentTime))
+                .setOutputTime(queue.getOutputTime(currentTime))
+                .build();
     }
 
     public synchronized void handleGetCompoundDataReq(GetCompoundDataReq req) {
@@ -143,12 +147,7 @@ public class CookingCompoundManager extends BasePlayerManager {
             }
             active.put(id, next);
             player.save();
-            player.sendPacket(
-                    new PacketPlayerCompoundMaterialRsp(
-                            CompoundQueueData.newBuilder()
-                                    .setCompoundId(id)
-                                    .setWaitCount(next.getWaitCount(now))
-                                    .build()));
+            player.sendPacket(new PacketPlayerCompoundMaterialRsp(queueData(next, now)));
         }
     }
 
