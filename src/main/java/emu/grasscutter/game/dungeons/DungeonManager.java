@@ -11,6 +11,7 @@ import emu.grasscutter.game.dungeons.enums.DungeonPassConditionType;
 import emu.grasscutter.game.dungeons.enums.DungeonSubType;
 import emu.grasscutter.game.dungeons.fallback.MissingDomainFallbackManager;
 import emu.grasscutter.game.inventory.GameItem;
+import emu.grasscutter.game.player.InvestigationHandbook;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.game.quest.enums.*;
@@ -608,6 +609,10 @@ public final class DungeonManager {
                             if (successfully) {
                                 var dungeonId = this.getDungeonData().getId();
                                 p.getPlayerProgress().markDungeonAsComplete(dungeonId);
+                                if (!dungeonData.getType().isCountsToBattlepass()) {
+                                    InvestigationHandbook.trigger(
+                                            p, "TRIGGER_FINISH_DUNGEON", dungeonId, 1);
+                                }
                             } else {
                                 p.getQuestManager()
                                         .queueEvent(
@@ -618,7 +623,10 @@ public final class DungeonManager {
                             // Battle pass trigger
                             if (dungeonData.getType().isCountsToBattlepass() && successfully) {
                                 p.getBattlePassManager()
-                                        .triggerMission(WatcherTriggerType.TRIGGER_FINISH_DUNGEON);
+                                        .triggerMission(
+                                                WatcherTriggerType.TRIGGER_FINISH_DUNGEON,
+                                                dungeonData.getId(),
+                                                1);
                             }
                         });
     }
