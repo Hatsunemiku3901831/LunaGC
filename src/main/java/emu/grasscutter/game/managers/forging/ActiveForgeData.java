@@ -15,13 +15,56 @@ public class ActiveForgeData {
     private boolean changed;
     // 0 available; 1 reserved while start costs and queue persistence are unconfirmed.
     private int startState;
+    // 0 available, 1 reserved, 2 delivered before final cleanup acknowledgement.
+    private int outputState;
+    private int reservedOutputCount;
+
+    public int getOutputState() {
+        return outputState;
+    }
+
+    public boolean isBusy() {
+        return startState != 0 || outputState != 0;
+    }
+
+    public void reserveOutput(int finished) {
+        if (isBusy() || finished <= 0 || finished > count || forgeTime <= 0)
+            throw new IllegalStateException("Forge output is not available");
+        Math.toIntExact((long) startTime + (long) finished * forgeTime);
+        reservedOutputCount = finished;
+        outputState = 1;
+    }
+
+    public void releaseOutputReservation() {
+        if (outputState != 1) throw new IllegalStateException("Forge output is not reserved");
+        outputState = 0;
+        reservedOutputCount = 0;
+    }
+
+    public void finishOutput() {
+        if (outputState != 1 || reservedOutputCount <= 0 || reservedOutputCount > count)
+            throw new IllegalStateException("Invalid forge output reservation");
+        startTime = Math.toIntExact((long) startTime + (long) reservedOutputCount * forgeTime);
+        count -= reservedOutputCount;
+        outputState = 2;
+    }
+
+    public void acknowledgeOutput() {
+        if (outputState != 2) throw new IllegalStateException("Forge output is not delivered");
+        outputState = 0;
+        // Keep the last quantity for reconciliation if final acknowledgement fails.
+    }
+
+    public void restoreOutputPending() {
+        if (outputState == 0) outputState = 2;
+    }
 
     public int getStartState() {
         return startState;
     }
 
     public void reserveStart() {
-        if (startState != 0) throw new IllegalStateException("Forge start is already reserved");
+        if (isBusy()) throw new IllegalStateException("Forge start is already reserved");
         startState = 1;
     }
 

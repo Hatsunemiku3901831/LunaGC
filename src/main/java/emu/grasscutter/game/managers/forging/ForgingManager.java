@@ -138,7 +138,7 @@ public final class ForgingManager extends BasePlayerManager {
     public synchronized void handleForgeStartReq(ForgeStartReq req) {
         synchronized (player.getInventory()) {
             var active = player.getActiveForges();
-            if (active.stream().anyMatch(queue -> queue == null || queue.getStartState() != 0)) {
+            if (active.stream().anyMatch(queue -> queue == null || queue.isBusy())) {
                 failStart(Retcode.RET_SVR_ERROR);
                 return;
             }
@@ -298,65 +298,116 @@ public final class ForgingManager extends BasePlayerManager {
      * Forge queue manipulation (obtaining results and cancelling forges).
      **********/
     private synchronized void obtainItems(int queueId) {
-        // Determine how many items are finished.
-        int currentTime = Utils.getCurrentSeconds();
-        ActiveForgeData forge = this.player.getActiveForges().get(queueId - 1);
-
-        int finished = forge.getFinishedCount(currentTime);
-        int unfinished = forge.getUnfinishedCount(currentTime);
-
-        // Sanity check: Are any items finished?
-        if (finished <= 0) {
+        int type = ForgeQueueManipulateType.ForgeQueueManipulateType_RECEIVE_OUTPUT_VALUE;
+        var active = player.getActiveForges();
+        var forge = active.get(queueId - 1);
+        var definition = GameData.getForgeDataMap().get(forge.getForgeId());
+        if (definition == null
+                || definition.getId() != forge.getForgeId()
+                || definition.getResultItemCount() <= 0
+                || definition.getQueueNum() <= 0
+                || forge.getCount() <= 0
+                || forge.getCount() > definition.getQueueNum()
+                || forge.getForgeTime() <= 0
+                || forge.getTotalFinishTimestamp() <= 0) {
+            failManipulate(type, Retcode.RET_NOT_FOUND_CONFIG);
             return;
         }
-
-        // Give finished items to the player.
-        ForgeData data = GameData.getForgeDataMap().get(forge.getForgeId());
-
-        int resultId = data.getResultItemId() > 0 ? data.getResultItemId() : data.getShowItemId();
-        ItemData resultItemData = GameData.getItemDataMap().get(resultId);
-        GameItem addItem = new GameItem(resultItemData, data.getResultItemCount() * finished);
-
-        // Call the PlayerForgeItemEvent.
-        var event = new PlayerForgeItemEvent(this.player, addItem);
-        if (!event.call()) return;
-
-        addItem = event.getItemForged();
-        this.player.getInventory().addItem(addItem);
-
-        // Battle pass trigger handler
-        this.player
-                .getBattlePassManager()
-                .triggerMission(WatcherTriggerType.TRIGGER_DO_FORGE, 0, finished);
-
-        // Replace active forge with a new one for the unfinished items, if there are any.
-        if (unfinished > 0) {
-            ActiveForgeData remainingForge = new ActiveForgeData();
-
-            remainingForge.setForgeId(forge.getForgeId());
-            remainingForge.setAvatarId(forge.getAvatarId());
-            remainingForge.setCount(unfinished);
-            remainingForge.setForgeTime(forge.getForgeTime());
-            remainingForge.setStartTime(forge.getStartTime() + finished * forge.getForgeTime());
-
-            this.player.getActiveForges().set(queueId - 1, remainingForge);
-            this.sendForgeQueueDataNotify();
+        int finished = forge.getFinishedCount(Utils.getCurrentSeconds());
+        if (finished <= 0) {
+            failManipulate(type, Retcode.RET_FORGE_NO_FINISH_CAN_TAKE);
+            return;
         }
-        // Otherwise, completely remove it.
-        else {
-            this.player.getActiveForges().remove(queueId - 1);
-            // this.sendForgeQueueDataNotify(queueId);
-            this.sendForgeQueueDataNotify(true);
+        int resultId =
+                definition.getResultItemId() > 0
+                        ? definition.getResultItemId()
+                        : definition.getShowItemId();
+        var result = GameData.getItemDataMap().get(resultId);
+        long amount = (long) definition.getResultItemCount() * finished;
+        if (result == null
+                || result.getId() != resultId
+                || result.isUseOnGain()
+                || result.getItemType() != ItemType.ITEM_MATERIAL
+                        && result.getItemType() != ItemType.ITEM_WEAPON
+                || amount > Integer.MAX_VALUE) {
+            failManipulate(type, Retcode.RET_NOT_FOUND_CONFIG);
+            return;
         }
+        boolean weapon = result.getItemType() == ItemType.ITEM_WEAPON;
+        var weaponTab = player.getInventory().getInventoryTab(ItemType.ITEM_WEAPON);
+        if (weapon && (weaponTab == null || amount > weaponTab.getMaxCapacity())
+                || !weapon && (result.getStackLimit() <= 0 || amount > result.getStackLimit())) {
+            failManipulate(type, Retcode.RET_ITEM_EXCEED_LIMIT);
+            return;
+        }
+        boolean confirmationStarted = false;
+        try {
+            // Block reentry before the plugin receives mutable output objects.
+            forge.reserveOutput(finished);
+            var outputs = new ArrayList<GameItem>();
+            for (int i = 0, entries = weapon ? (int) amount : 1; i < entries; i++) {
+                var event =
+                        new PlayerForgeItemEvent(
+                                player, new GameItem(result, weapon ? 1 : (int) amount));
+                if (!event.call()) {
+                    forge.releaseOutputReservation();
+                    failManipulate(type, Retcode.RET_FAIL);
+                    return;
+                }
+                outputs.add(event.getItemForged());
+            }
+            int validation = ForgeOutputDelivery.validate(player, outputs);
+            if (validation != 0) {
+                forge.releaseOutputReservation();
+                failManipulate(type, Retcode.forNumber(validation));
+                return;
+            }
+            confirmationStarted = true;
+            DatabaseHelper.saveGameSync(player);
+            var hints = ForgeOutputDelivery.grant(player, outputs);
+            forge.finishOutput();
+            player.getBattlePassManager()
+                    .triggerMission(WatcherTriggerType.TRIGGER_DO_FORGE, 0, finished);
+            var rarityCounts = new LinkedHashMap<Integer, Integer>();
+            for (var item : outputs)
+                if (item.getItemData().getItemType() == ItemType.ITEM_WEAPON)
+                    rarityCounts.merge(item.getItemData().getRankLevel(), 1, Math::addExact);
+            rarityCounts.forEach(
+                    (rarity, count) ->
+                            player.getBattlePassManager()
+                                    .triggerMission(
+                                            WatcherTriggerType.TRIGGER_FORGE_WEAPON,
+                                            rarity,
+                                            count));
+            DatabaseHelper.saveGameSync(player);
+            boolean removed = forge.getCount() == 0;
+            if (removed) active.remove(forge);
+            else forge.acknowledgeOutput();
+            DatabaseHelper.saveGameSync(player);
+            sendForgeQueueDataNotify(removed);
+            player.sendPacket(
+                    new PacketForgeQueueManipulateRsp(0, type, hints, List.of(), List.of()));
+        } catch (RuntimeException failure) {
+            if (confirmationStarted) {
+                forge.restoreOutputPending();
+                if (!active.contains(forge))
+                    active.add(Math.min(queueId - 1, active.size()), forge);
+                Grasscutter.getLogger()
+                        .error(
+                                "Forge output needs reconciliation: UID {}, recipe {}, count {}",
+                                player.getUid(),
+                                forge.getForgeId(),
+                                finished,
+                                failure);
+            } else if (forge.getOutputState() == 1) forge.releaseOutputReservation();
+            failManipulate(type, Retcode.RET_SVR_ERROR);
+        }
+    }
 
-        // Send response.
-        this.player.sendPacket(
+    private void failManipulate(int type, Retcode code) {
+        player.sendPacket(
                 new PacketForgeQueueManipulateRsp(
-                        Retcode.RET_SUCC,
-                        ForgeQueueManipulateType.ForgeQueueManipulateType_RECEIVE_OUTPUT,
-                        List.of(addItem),
-                        List.of(),
-                        List.of()));
+                        code.getNumber(), type, List.of(), List.of(), List.of()));
     }
 
     private synchronized void cancelForge(int queueId) {
@@ -413,24 +464,24 @@ public final class ForgingManager extends BasePlayerManager {
     }
 
     public synchronized void handleForgeQueueManipulateReq(ForgeQueueManipulateReq req) {
-        // Get info from the request.
-        int queueId = req.getForgeQueueId();
-        var manipulateType = req.getManipulateType();
-        if (queueId <= 0
-                || queueId > player.getActiveForges().size()
-                || player.getActiveForges().get(queueId - 1) == null
-                || player.getActiveForges().get(queueId - 1).getStartState() != 0) {
-            player.sendPacket(
-                    new PacketForgeQueueManipulateRsp(
-                            Retcode.RET_FAIL, manipulateType, List.of(), List.of(), List.of()));
-            return;
-        }
+        synchronized (player.getInventory()) {
+            // Get info from the request.
+            int queueId = req.getForgeQueueId();
+            var manipulateType = req.getManipulateType();
+            if (queueId <= 0
+                    || queueId > player.getActiveForges().size()
+                    || player.getActiveForges().get(queueId - 1) == null
+                    || player.getActiveForges().get(queueId - 1).isBusy()) {
+                failManipulate(req.getManipulateTypeValue(), Retcode.RET_FAIL);
+                return;
+            }
 
-        // Handle according to the manipulation type.
-        switch (manipulateType) {
-            case ForgeQueueManipulateType_RECEIVE_OUTPUT -> this.obtainItems(queueId);
-            case ForgeQueueManipulateType_STOP_FORGE -> this.cancelForge(queueId);
-            default -> {} // Should never happen.
+            // Handle according to the manipulation type.
+            switch (manipulateType) {
+                case ForgeQueueManipulateType_RECEIVE_OUTPUT -> this.obtainItems(queueId);
+                case ForgeQueueManipulateType_STOP_FORGE -> this.cancelForge(queueId);
+                default -> failManipulate(req.getManipulateTypeValue(), Retcode.RET_FAIL);
+            }
         }
     }
 
