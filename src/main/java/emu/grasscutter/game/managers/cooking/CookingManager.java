@@ -4,16 +4,18 @@ import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.data.excels.ItemData;
-import emu.grasscutter.game.inventory.GameItem;
+import emu.grasscutter.database.DatabaseHelper;
+import emu.grasscutter.game.inventory.ItemType;
 import emu.grasscutter.game.player.*;
-import emu.grasscutter.game.props.ActionReason;
 import emu.grasscutter.game.props.WatcherTriggerType;
 import emu.grasscutter.net.proto.CookRecipeDataOuterClass;
 import emu.grasscutter.net.proto.PlayerCookArgsReqOuterClass.PlayerCookArgsReq;
 import emu.grasscutter.net.proto.PlayerCookReqOuterClass.PlayerCookReq;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.server.packet.send.*;
+
 import io.netty.util.internal.ThreadLocalRandom;
+
 import java.util.*;
 
 public class CookingManager extends BasePlayerManager {
@@ -36,9 +38,9 @@ public class CookingManager extends BasePlayerManager {
      * Recipe ids every account starts with.
      *
      * <p>Recomputed on first use (and again while it is still empty) because the game data is
-     * loaded after the {@code GameServer} constructor runs {@link #initialize()}, so an eager
-     * scan there sees an empty {@link GameData#getCookRecipeDataMap()} and every player would
-     * otherwise begin with an empty recipe list -- the client then shows no recipes at all.
+     * loaded after the {@code GameServer} constructor runs {@link #initialize()}, so an eager scan
+     * there sees an empty {@link GameData#getCookRecipeDataMap()} and every player would otherwise
+     * begin with an empty recipe list -- the client then shows no recipes at all.
      */
     public static synchronized Set<Integer> getDefaultUnlockedRecipies() {
         if (defaultUnlockedRecipies == null || defaultUnlockedRecipies.isEmpty()) {
@@ -82,7 +84,8 @@ public class CookingManager extends BasePlayerManager {
         if (this.player.getUnlockedRecipies().containsKey(id)) {
             return false; // Recipe already unlocked
         }
-        // Tell the client that this blueprint is now unlocked and add the unlocked item to the player.
+        // Tell the client that this blueprint is now unlocked and add the unlocked item to the
+        // player.
         this.player.getUnlockedRecipies().put(id, 0);
         this.player.sendPacket(new PacketCookRecipeDataNotify(id));
 
@@ -92,7 +95,7 @@ public class CookingManager extends BasePlayerManager {
     /********************
      * Perform cooking.
      ********************/
-    private double getSpecialtyChance(ItemData cookedItem) {
+    protected double getSpecialtyChance(ItemData cookedItem) {
         // Chances taken from the Wiki.
         return switch (cookedItem.getRankLevel()) {
             case 1 -> 0.25;
@@ -102,128 +105,153 @@ public class CookingManager extends BasePlayerManager {
         };
     }
 
-    /** Recipe ids whose PlayerCookReq field layout has already been dumped this session. */
-    private static final Set<Integer> loggedReqLayout = new HashSet<>();
-
-    public void handlePlayerCookReq(PlayerCookReq req) {
-        // Get info from the request.
-        int recipeId = req.getRecipeId();
-        int avatar = req.getAssistAvatar();
-
-        // 7.1 writer: KLACBPCPCMJ (field 4) is how many dishes the client asked for -- 1 for a
-        // manual cook, the slider value for an auto cook -- and JJPABEHGMCH (field 1) is the QTE
-        // result, whose 1/2/3 select the recipe's 奇怪/普通/美味 output tiers. An auto cook omits
-        // the quality field, so it arrives as 0.
-        int count = req.getKLACBPCPCMJ();
-        int quality = req.getJJPABEHGMCH();
-
-        // A cook always has to yield at least one dish; the client omits the field entirely
-        // only when it is broken, so never hand out a zero-count stack.
-        if (count < 1) {
-            count = 1;
-        }
-
-        // Trace the raw request once per recipe, and on every auto cook (count != 1), so the
-        // field mapping above stays verifiable from the logs. Fields 7 and 10 are the two
-        // context uints the client copies from the cooking controller. The 7.0 names stay in
-        // historical field-number order.
-        if (loggedReqLayout.add(recipeId) || count != 1) {
-            Grasscutter.getLogger()
-                    .debug(
-                            "PlayerCookReq recipe={} assist={} count={} quality={} f7={} f10={}",
-                            recipeId,
-                            avatar,
-                            count,
-                            quality,
-                            req.getDDACKLBMIKL(),
-                            req.getOLLOPKLIIAC());
-        }
-
-        // Get recipe data.
-        var recipeData = GameData.getCookRecipeDataMap().get(recipeId);
-        if (recipeData == null) {
-            this.player.sendPacket(new PacketPlayerCookRsp(Retcode.RET_FAIL));
-            return;
-        }
-
-        // Get proficiency for player.
-        int proficiency = this.player.getUnlockedRecipies().getOrDefault(recipeId, 0);
-
-        // Try consuming materials.
-        boolean success =
-                player.getInventory().payItems(recipeData.getInputVec(), count, ActionReason.Cook);
-        if (!success) {
-            this.player.sendPacket(new PacketPlayerCookRsp(Retcode.RET_FAIL));
-            return; // ref keeps going here, which would create the dish without paying for it
-        }
-
-        // Get result item information.  A quality of 0 means the client sent no QTE result,
-        // which only an auto cook does; those resolve to the top tier.
-        int qualityIndex = quality == 0 ? 2 : quality - 1;
-
-        ItemParamData resultParam = recipeData.getQualityOutputVec().get(qualityIndex);
-        // Some recipes only fill one or two of the three quality slots; a meal cannot be
-        // crafted from an empty {id:0,count:0} slot, so fall back to the lowest filled tier.
-        if (resultParam == null || resultParam.getItemId() <= 0) {
-            for (ItemParamData candidate : recipeData.getQualityOutputVec()) {
-                if (candidate != null && candidate.getItemId() > 0) {
-                    resultParam = candidate;
-                    break;
+    /** Hold both monitors through the durable receipt and actual ingredient/dish writes. */
+    public synchronized void handlePlayerCookReq(PlayerCookReq req) {
+        synchronized (player.getInventory()) {
+            if (player.getPendingCook() != null) {
+                player.sendPacket(new PacketPlayerCookRsp(Retcode.RET_SVR_ERROR));
+                return;
+            }
+            int recipeId = req.getRecipeId(), count = req.getKLACBPCPCMJ();
+            int quality = req.getJJPABEHGMCH(), assistant = req.getAssistAvatar();
+            var recipe = GameData.getCookRecipeDataMap().get(recipeId);
+            if (recipe == null
+                    || recipe.getId() != recipeId
+                    || count < 1
+                    || count > 99
+                    || quality < 0
+                    || quality > 3
+                    || quality != 0 && count != 1
+                    || recipe.getMaxProficiency() < 0
+                    || !recipe.isDefaultUnlocked()
+                            && !player.getUnlockedRecipies().containsKey(recipeId)
+                    || assistant < 0
+                    || assistant > 0 && !player.getAvatars().hasAvatar(assistant)) {
+                player.sendPacket(new PacketPlayerCookRsp(Retcode.RET_FAIL));
+                return;
+            }
+            int proficiency = player.getUnlockedRecipies().getOrDefault(recipeId, 0);
+            if (proficiency < 0
+                    || proficiency > recipe.getMaxProficiency()
+                    || quality == 0 && proficiency != recipe.getMaxProficiency()) {
+                player.sendPacket(new PacketPlayerCookRsp(Retcode.RET_FAIL));
+                return;
+            }
+            List<ItemParamData> costs, products;
+            try {
+                costs = CookDelivery.costs(recipe.getInputVec(), count);
+                if (costs.stream()
+                        .anyMatch(
+                                cost ->
+                                        player.getInventory().getItemCountById(cost.getId())
+                                                < cost.getCount())) {
+                    player.sendPacket(new PacketPlayerCookRsp(Retcode.RET_ITEM_COUNT_NOT_ENOUGH));
+                    return;
                 }
+                var slots = recipe.getQualityOutputVec();
+                if (slots == null || slots.size() != 3)
+                    throw new IllegalArgumentException("Invalid cooking tiers");
+                var output = slots.get(quality == 0 ? 2 : quality - 1);
+                if (output == null || output.getId() <= 0 || output.getCount() <= 0)
+                    output =
+                            slots.stream()
+                                    .filter(
+                                            row ->
+                                                    row != null
+                                                            && row.getId() > 0
+                                                            && row.getCount() > 0)
+                                    .findFirst()
+                                    .orElseThrow(
+                                            () ->
+                                                    new IllegalArgumentException(
+                                                            "Cooking has no filled tier"));
+                var data = GameData.getItemDataMap().get(output.getId());
+                if (data == null
+                        || data.getId() != output.getId()
+                        || data.isUseOnGain()
+                        || data.getItemType() != ItemType.ITEM_MATERIAL)
+                    throw new IllegalArgumentException("Missing cooking output");
+                var amounts = new LinkedHashMap<Integer, Integer>();
+                int specialties = 0;
+                var bonus = GameData.getCookBonusDataMap().get(assistant);
+                if (bonus != null
+                        && bonus.getAvatarId() == assistant
+                        && bonus.getRecipeId() == recipeId) {
+                    if (bonus.getParamVec() == null || bonus.getParamVec().length == 0)
+                        throw new IllegalArgumentException("Missing cooking specialty");
+                    var replacement = GameData.getItemDataMap().get(bonus.getReplacementItemId());
+                    if (replacement == null
+                            || replacement.getId() != bonus.getReplacementItemId()
+                            || replacement.isUseOnGain()
+                            || replacement.getItemType() != ItemType.ITEM_MATERIAL)
+                        throw new IllegalArgumentException("Invalid cooking specialty");
+                    double chance = getSpecialtyChance(data);
+                    if (!Double.isFinite(chance) || chance < 0 || chance > 1)
+                        throw new IllegalArgumentException("Invalid specialty chance");
+                    for (int i = 0; i < count; i++)
+                        if (ThreadLocalRandom.current().nextDouble() < chance) specialties++;
+                    if (specialties > 0)
+                        amounts.merge(
+                                replacement.getId(),
+                                Math.multiplyExact(output.getCount(), specialties),
+                                Math::addExact);
+                }
+                if (count > specialties)
+                    amounts.merge(
+                            data.getId(),
+                            Math.multiplyExact(output.getCount(), count - specialties),
+                            Math::addExact);
+                products =
+                        amounts.entrySet().stream()
+                                .map(e -> new ItemParamData(e.getKey(), e.getValue()))
+                                .toList();
+                int validation = InvestigationRewardDelivery.validate(player, products);
+                if (validation != 0) {
+                    player.sendPacket(new PacketPlayerCookRsp(Retcode.forNumber(validation)));
+                    return;
+                }
+            } catch (RuntimeException invalid) {
+                player.sendPacket(new PacketPlayerCookRsp(Retcode.RET_NOT_FOUND_CONFIG));
+                return;
+            }
+            int nextProficiency =
+                    quality == MANUAL_PERFECT_COOK_QUALITY
+                            ? (int) Math.min((long) proficiency + 1, recipe.getMaxProficiency())
+                            : proficiency;
+            var receipt =
+                    new CookReceipt(
+                            recipeId, count, quality, assistant, nextProficiency, costs, products);
+            player.setPendingCook(receipt);
+            try {
+                DatabaseHelper.saveGameSync(player);
+                CookDelivery.pay(player, receipt);
+                var results = CookDelivery.grant(player, products);
+                player.getUnlockedRecipies().put(recipeId, nextProficiency);
+                player.getBattlePassManager()
+                        .triggerMission(WatcherTriggerType.TRIGGER_DO_COOK, 1, count);
+                receipt.delivered();
+                DatabaseHelper.saveGameSync(player);
+                player.setPendingCook(null);
+                DatabaseHelper.saveGameSync(player);
+                player.sendPacket(
+                        new PacketPlayerCookRsp(
+                                results,
+                                quality == 0 ? MANUAL_PERFECT_COOK_QUALITY : quality,
+                                count,
+                                recipeId,
+                                nextProficiency));
+            } catch (RuntimeException failure) {
+                player.setPendingCook(receipt);
+                Grasscutter.getLogger()
+                        .error(
+                                "Cooking needs reconciliation: UID {}, recipe {}, count {}",
+                                player.getUid(),
+                                recipeId,
+                                count,
+                                failure);
+                player.sendPacket(new PacketPlayerCookRsp(Retcode.RET_SVR_ERROR));
             }
         }
-        ItemData resultItemData =
-                resultParam == null || resultParam.getItemId() <= 0
-                        ? null
-                        : GameData.getItemDataMap().get(resultParam.getItemId());
-        if (resultItemData == null) {
-            // The recipe's output item is not in the item table, so there is nothing to hand over.
-            this.player.sendPacket(new PacketPlayerCookRsp(Retcode.RET_FAIL));
-            return;
-        }
-
-        // Handle character's specialties.
-        int specialtyCount = 0;
-        double specialtyChance = this.getSpecialtyChance(resultItemData);
-
-        var bonusData = GameData.getCookBonusDataMap().get(avatar);
-        if (bonusData != null && recipeId == bonusData.getRecipeId()) {
-            // Roll for specialy replacements.
-            for (int i = 0; i < count; i++) {
-                if (ThreadLocalRandom.current().nextDouble() <= specialtyChance) {
-                    specialtyCount++;
-                }
-            }
-        }
-
-        // Obtain results.
-        List<GameItem> cookResults = new ArrayList<>();
-
-        int normalCount = count - specialtyCount;
-        GameItem cookResultNormal = new GameItem(resultItemData, resultParam.getCount() * normalCount);
-        cookResults.add(cookResultNormal);
-        this.player.getInventory().addItem(cookResultNormal);
-
-        if (specialtyCount > 0) {
-            ItemData specialtyItemData = GameData.getItemDataMap().get(bonusData.getReplacementItemId());
-            GameItem cookResultSpecialty =
-                    new GameItem(specialtyItemData, resultParam.getCount() * specialtyCount);
-            cookResults.add(cookResultSpecialty);
-            this.player.getInventory().addItem(cookResultSpecialty);
-        }
-
-        // Increase player proficiency, if this was a manual perfect cook.  Auto cooks also
-        // report the top tier, but only recipes whose proficiency is already capped offer auto
-        // cooking, so the +1 they take here is harmless -- it clamps straight back to the cap.
-        if (quality == 0 || quality == MANUAL_PERFECT_COOK_QUALITY) {
-            proficiency = Math.min(proficiency + 1, recipeData.getMaxProficiency());
-            this.player.getUnlockedRecipies().put(recipeId, proficiency);
-        }
-
-        // Send response.
-        this.player.getBattlePassManager().triggerMission(WatcherTriggerType.TRIGGER_DO_COOK, 1, count);
-        this.player.sendPacket(
-                new PacketPlayerCookRsp(cookResults, quality, count, recipeId, proficiency));
     }
 
     /********************
