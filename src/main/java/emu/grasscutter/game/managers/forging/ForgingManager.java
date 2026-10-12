@@ -230,6 +230,7 @@ public final class ForgingManager extends BasePlayerManager {
             queue.setCount(count);
             queue.setStartTime(now);
             queue.setForgeTime(definition.getForgeTime());
+            queue.capturePayment(costs, count, definition.getForgePoint());
             queue.reserveStart();
             active.add(queue);
             int pointsBefore = player.getForgePoints();
@@ -411,56 +412,77 @@ public final class ForgingManager extends BasePlayerManager {
     }
 
     private synchronized void cancelForge(int queueId) {
-        // Make sure there are no unfinished items.
-        int currentTime = Utils.getCurrentSeconds();
-        ActiveForgeData forge = this.player.getActiveForges().get(queueId - 1);
-
-        if (forge.getFinishedCount(currentTime) > 0) {
+        int type = ForgeQueueManipulateType.ForgeQueueManipulateType_STOP_FORGE_VALUE;
+        var active = player.getActiveForges();
+        var forge = active.get(queueId - 1);
+        if (forge.getCount() <= 0
+                || forge.getForgeTime() <= 0
+                || forge.getTotalFinishTimestamp() <= 0) {
+            failManipulate(type, Retcode.RET_NOT_FOUND_CONFIG);
             return;
         }
-
-        // Return material items to the player.
-        ForgeData data = GameData.getForgeDataMap().get(forge.getForgeId());
-
-        var returnItems = new ArrayList<GameItem>();
-        for (var material : data.getMaterialItems()) {
-            if (material.getItemId() == 0) {
-                continue;
-            }
-
-            ItemData resultItemData = GameData.getItemDataMap().get(material.getItemId());
-            GameItem returnItem =
-                    new GameItem(resultItemData, material.getItemCount() * forge.getCount());
-
-            this.player.getInventory().addItem(returnItem);
-            returnItems.add(returnItem);
+        if (forge.getFinishedCount(Utils.getCurrentSeconds()) > 0) {
+            failManipulate(type, Retcode.RET_FAIL);
+            return;
         }
-
-        // Return Mora to the player.
-        this.player.setMora(this.player.getMora() + data.getScoinCost() * forge.getCount());
-
-        ItemData moraItem = GameData.getItemDataMap().get(202);
-        GameItem returnMora = new GameItem(moraItem, data.getScoinCost() * forge.getCount());
-        returnItems.add(returnMora);
-
-        // Return forge points to the player.
-        int requiredPoints = data.getForgePoint() * forge.getCount();
-        int newPoints = Math.min(this.player.getForgePoints() + requiredPoints, 300_000);
-
-        this.player.setForgePoints(newPoints);
-
-        // Remove the forge queue.
-        this.player.getActiveForges().remove(queueId - 1);
-        this.sendForgeQueueDataNotify(true);
-
-        // Send response.
-        this.player.sendPacket(
-                new PacketForgeQueueManipulateRsp(
-                        Retcode.RET_SUCC,
-                        ForgeQueueManipulateType.ForgeQueueManipulateType_STOP_FORGE,
-                        List.of(),
-                        returnItems,
-                        List.of()));
+        List<ItemParamData> costs;
+        int points;
+        try {
+            if (forge.getPaymentVersion() == 1) {
+                costs = forge.getRefundCosts();
+                points = forge.getRefundPoints();
+            } else if (forge.getPaymentVersion() == 0) {
+                // Legacy queues did not record effective fees. A resin payment cannot be inferred.
+                var definition = GameData.getForgeDataMap().get(forge.getForgeId());
+                if (definition == null
+                        || definition.getId() != forge.getForgeId()
+                        || definition.getQueueNum() <= 0
+                        || forge.getCount() > definition.getQueueNum()
+                        || definition.getForgeTime() != forge.getForgeTime()
+                        || definition.getForgePoint() < 0
+                        || definition.getScoinCost() < 0)
+                    throw new IllegalArgumentException("Invalid legacy forge refund");
+                costs = forgeCosts(definition, forge.getCount());
+                if (costs == null || costs.stream().anyMatch(cost -> cost.getId() == 106))
+                    throw new IllegalArgumentException("Legacy forge payment needs reconciliation");
+                points = Math.multiplyExact(definition.getForgePoint(), forge.getCount());
+            } else throw new IllegalArgumentException("Unknown forge payment version");
+        } catch (RuntimeException invalidReceipt) {
+            failManipulate(type, Retcode.RET_NOT_FOUND_CONFIG);
+            return;
+        }
+        int validation = ForgeRefundDelivery.validate(player, costs);
+        int beforePoints = player.getForgePoints();
+        if (validation != 0 || beforePoints < 0 || beforePoints > 300000) {
+            failManipulate(
+                    type, validation == 0 ? Retcode.RET_FAIL : Retcode.forNumber(validation));
+            return;
+        }
+        int afterPoints = (int) Math.min(300000L, (long) beforePoints + points);
+        try {
+            forge.reserveRefund();
+            DatabaseHelper.saveGameSync(player);
+            var hints = ForgeRefundDelivery.grant(player, costs);
+            if (!player.setForgePoints(afterPoints) || player.getForgePoints() != afterPoints)
+                throw new IllegalStateException("Forge point refund was not applied");
+            forge.finishRefund();
+            DatabaseHelper.saveGameSync(player);
+            active.remove(forge);
+            DatabaseHelper.saveGameSync(player);
+            sendForgeQueueDataNotify(true);
+            player.sendPacket(
+                    new PacketForgeQueueManipulateRsp(0, type, List.of(), hints, List.of()));
+        } catch (RuntimeException failure) {
+            if (!active.contains(forge)) active.add(Math.min(queueId - 1, active.size()), forge);
+            Grasscutter.getLogger()
+                    .error(
+                            "Forge refund needs reconciliation: UID {}, recipe {}, count {}",
+                            player.getUid(),
+                            forge.getForgeId(),
+                            forge.getCount(),
+                            failure);
+            failManipulate(type, Retcode.RET_SVR_ERROR);
+        }
     }
 
     public synchronized void handleForgeQueueManipulateReq(ForgeQueueManipulateReq req) {

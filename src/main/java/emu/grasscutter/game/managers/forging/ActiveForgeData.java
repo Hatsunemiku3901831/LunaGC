@@ -2,6 +2,10 @@ package emu.grasscutter.game.managers.forging;
 
 import dev.morphia.annotations.Entity;
 
+import emu.grasscutter.data.common.ItemParamData;
+
+import java.util.*;
+
 @Entity
 public class ActiveForgeData {
     private int forgeId;
@@ -18,17 +22,99 @@ public class ActiveForgeData {
     // 0 available, 1 reserved, 2 delivered before final cleanup acknowledgement.
     private int outputState;
     private int reservedOutputCount;
+    private int refundState;
+    private int paymentVersion;
+    private int paidUnitsRemaining;
+    private int paidForgePointsPerUnit;
+    private List<PaidCost> paidCostsPerUnit;
+
+    @Entity
+    public static class PaidCost {
+        private int itemId;
+        private int count;
+
+        public PaidCost() {}
+
+        PaidCost(int itemId, int count) {
+            this.itemId = itemId;
+            this.count = count;
+        }
+    }
+
+    public int getPaymentVersion() {
+        return paymentVersion;
+    }
+
+    public int getRefundState() {
+        return refundState;
+    }
+
+    /** Store the effective costs after configuration switches and duplicate-row aggregation. */
+    public void capturePayment(List<ItemParamData> costs, int units, int pointsPerUnit) {
+        if (isBusy() || paymentVersion != 0 || units <= 0 || count != units || pointsPerUnit < 0)
+            throw new IllegalArgumentException("Invalid forge payment snapshot");
+        var copied = new ArrayList<PaidCost>();
+        for (var cost : costs) {
+            if (cost.getId() <= 0 || cost.getCount() <= 0 || cost.getCount() % units != 0)
+                throw new IllegalArgumentException("Invalid forge cost snapshot");
+            copied.add(new PaidCost(cost.getId(), cost.getCount() / units));
+        }
+        paidCostsPerUnit = copied;
+        paidForgePointsPerUnit = pointsPerUnit;
+        paidUnitsRemaining = units;
+        paymentVersion = 1;
+    }
+
+    public List<ItemParamData> getRefundCosts() {
+        if (paymentVersion != 1
+                || count <= 0
+                || count != paidUnitsRemaining
+                || paidCostsPerUnit == null)
+            throw new IllegalStateException("Invalid forge payment receipt");
+        var costs = new ArrayList<ItemParamData>();
+        var ids = new HashSet<Integer>();
+        for (var cost : paidCostsPerUnit) {
+            if (cost == null || cost.itemId <= 0 || cost.count <= 0 || !ids.add(cost.itemId))
+                throw new IllegalStateException("Invalid forge payment row");
+            costs.add(new ItemParamData(cost.itemId, Math.multiplyExact(cost.count, count)));
+        }
+        return costs;
+    }
+
+    public int getRefundPoints() {
+        if (paymentVersion != 1
+                || count <= 0
+                || count != paidUnitsRemaining
+                || paidForgePointsPerUnit < 0)
+            throw new IllegalStateException("Invalid forge point receipt");
+        return Math.multiplyExact(paidForgePointsPerUnit, count);
+    }
+
+    public void reserveRefund() {
+        if (isBusy() || count <= 0)
+            throw new IllegalStateException("Forge refund is not available");
+        refundState = 1;
+    }
+
+    public void finishRefund() {
+        if (refundState != 1) throw new IllegalStateException("Forge refund is not reserved");
+        refundState = 2;
+    }
 
     public int getOutputState() {
         return outputState;
     }
 
     public boolean isBusy() {
-        return startState != 0 || outputState != 0;
+        return startState != 0 || outputState != 0 || refundState != 0;
     }
 
     public void reserveOutput(int finished) {
-        if (isBusy() || finished <= 0 || finished > count || forgeTime <= 0)
+        if (isBusy()
+                || finished <= 0
+                || finished > count
+                || forgeTime <= 0
+                || paymentVersion == 1 && count != paidUnitsRemaining)
             throw new IllegalStateException("Forge output is not available");
         Math.toIntExact((long) startTime + (long) finished * forgeTime);
         reservedOutputCount = finished;
@@ -46,6 +132,7 @@ public class ActiveForgeData {
             throw new IllegalStateException("Invalid forge output reservation");
         startTime = Math.toIntExact((long) startTime + (long) reservedOutputCount * forgeTime);
         count -= reservedOutputCount;
+        if (paymentVersion == 1) paidUnitsRemaining -= reservedOutputCount;
         outputState = 2;
     }
 
