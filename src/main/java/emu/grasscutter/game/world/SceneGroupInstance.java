@@ -1,13 +1,17 @@
 package emu.grasscutter.game.world;
 
 import dev.morphia.annotations.*;
+
 import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.scripts.data.*;
+
+import lombok.*;
+
+import org.bson.types.ObjectId;
+
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import lombok.*;
-import org.bson.types.ObjectId;
 
 @Entity(value = "group_instances", useDiscriminator = false)
 public final class SceneGroupInstance {
@@ -20,6 +24,8 @@ public final class SceneGroupInstance {
     @Getter @Setter private int targetSuiteId;
     @Getter @Setter private int activeSuiteId;
     @Getter private Set<Integer> deadEntities; // Config_ids
+    // Lua removals survive default suite reloads even for ordinary, non-oneoff gadgets.
+    private Set<Integer> scriptDestroyedGadgets = new HashSet<>();
     private boolean isCached;
 
     @Getter private Map<Integer, Integer> cachedGadgetStates;
@@ -73,16 +79,28 @@ public final class SceneGroupInstance {
         return (state == null) ? g.state : state;
     }
 
+    public synchronized boolean isScriptGadgetDestroyed(int configId) {
+        return scriptDestroyedGadgets != null && scriptDestroyedGadgets.contains(configId);
+    }
+
+    /** Record unloaded gadgets too; older Mongo records may omit this set or store null. */
+    public synchronized boolean markScriptGadgetDestroyed(int configId) {
+        if (configId <= 0) return false;
+        if (scriptDestroyedGadgets == null) scriptDestroyedGadgets = new HashSet<>();
+        return scriptDestroyedGadgets.add(configId);
+    }
+
     public void save() {
         DatabaseHelper.saveGroupInstance(this);
     }
 
     /** Activity scenes recreate their round state on mount, independently of watcher progress. */
-    public void reset() {
+    public synchronized void reset() {
         targetSuiteId = 0;
         activeSuiteId = 0;
         lastTimeRefreshed = 0;
         deadEntities.clear();
+        if (scriptDestroyedGadgets != null) scriptDestroyedGadgets.clear();
         cachedGadgetStates.clear();
         cachedVariables.clear();
     }

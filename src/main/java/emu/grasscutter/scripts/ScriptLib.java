@@ -1241,14 +1241,32 @@ public class ScriptLib {
     public int KillEntityByConfigId(LuaTable table) {
         logger.debug("[LUA] Call KillEntityByConfigId with {}", printTable(table));
         var configId = table.get("config_id");
-        if (configId == LuaValue.NIL) {
+        if (configId.type() != LuaValue.TNUMBER || !configId.isint() || configId.toint() <= 0)
             return 1;
+        var requestedGroup = table.get("group_id");
+        if (!requestedGroup.isnil()
+                && (requestedGroup.type() != LuaValue.TNUMBER
+                        || !requestedGroup.isint()
+                        || requestedGroup.toint() < 0)) return 1;
+        int groupId =
+                requestedGroup.isnil() || requestedGroup.toint() == 0
+                        ? getCurrentGroup().map(group -> group.id).orElse(0)
+                        : requestedGroup.toint();
+        var manager = getSceneScriptManagerOrNull();
+        if (groupId <= 0 || manager == null || manager.isDestroyed()) return 1;
+
+        var group = manager.getLoadedGroupById(groupId);
+        if (group == null) group = manager.getGroupById(groupId);
+        if (group == null || !manager.allowsGroupCall(group)) return 1;
+        var instance = manager.getGroupInstanceById(groupId);
+        if (group.gadgets != null
+                && group.gadgets.containsKey(configId.toint())
+                && instance != null
+                && instance.markScriptGadgetDestroyed(configId.toint())) {
+            instance.save();
         }
-        var entity = getSceneScriptManager().getScene().getEntityByConfigId(configId.toint(), getCurrentGroup().get().id);
-        if (entity == null) {
-            return 0;
-        }
-        getSceneScriptManager().getScene().killEntity(entity, 0);
+        var entity = manager.getScene().getEntityByConfigId(configId.toint(), groupId);
+        if (entity != null) manager.getScene().killEntity(entity, 0);
         return 0;
     }
 

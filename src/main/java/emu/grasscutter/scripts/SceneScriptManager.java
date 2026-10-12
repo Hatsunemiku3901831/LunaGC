@@ -810,11 +810,20 @@ public class SceneScriptManager {
                         m -> {
                             var entity = scene.getEntityByConfigId(m.config_id, group.id);
                             return (entity == null || entity.getGroupId() != group.id)
+                                    && !groupInstance.isScriptGadgetDestroyed(m.config_id)
                                     && (!m.isOneoff
                                             || !m.persistent
-                                            || !groupInstance.getDeadEntities().contains(m.config_id));
+                                            || !groupInstance
+                                                    .getDeadEntities()
+                                                    .contains(m.config_id));
                         })
-                .map(g -> createGadget(group.id, group.block_id, g, groupInstance.getCachedGadgetState(g)))
+                .map(
+                        g ->
+                                createGadget(
+                                        group.id,
+                                        group.block_id,
+                                        g,
+                                        groupInstance.getCachedGadgetState(g)))
                 .filter(Objects::nonNull)
                 .peek(g -> groupInstance.cacheGadgetState(g.getMetaGadget(), g.getState()))
                 .toList();
