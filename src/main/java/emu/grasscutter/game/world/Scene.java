@@ -843,20 +843,34 @@ public class Scene {
     }
 
     public void finishLoading() {
-        if (this.finishedLoading) return;
-
-        this.finishedLoading = true;
-        this.afterLoadedCallbacks.forEach(Runnable::run);
-        this.afterLoadedCallbacks.clear();
+        final List<Runnable> ready;
+        synchronized (afterLoadedCallbacks) {
+            if (finishedLoading) return;
+            finishedLoading = true;
+            ready = new ArrayList<>(afterLoadedCallbacks);
+            afterLoadedCallbacks.clear();
+        }
+        ready.forEach(this::invokeLoadedCallback);
     }
 
     public void runWhenFinished(Runnable runnable) {
-        if (this.isFinishedLoading()) {
-            runnable.run();
-            return;
+        if (runnable == null) return;
+        synchronized (afterLoadedCallbacks) {
+            if (!finishedLoading) {
+                afterLoadedCallbacks.add(runnable);
+                return;
+            }
         }
+        invokeLoadedCallback(runnable);
+    }
 
-        this.afterLoadedCallbacks.add(runnable);
+    private void invokeLoadedCallback(Runnable callback) {
+        try {
+            callback.run();
+        } catch (RuntimeException error) {
+            Grasscutter.getLogger()
+                    .error("Scene {} finished-loading callback failed", getId(), error);
+        }
     }
 
     public void playerSceneInitialized(Player player) {
