@@ -227,6 +227,23 @@ public class EntityAvatar extends GameEntity {
         return healed;
     }
 
+    public synchronized void restoreChamberHealth(float hp, float debt) {
+        float maximum = getFightProperty(FightProperty.FIGHT_PROP_MAX_HP);
+        if (!Float.isFinite(hp)
+                || hp < 0
+                || !Float.isFinite(debt)
+                || debt < 0
+                || !Float.isFinite(maximum)
+                || maximum <= 0) return;
+        hp = Math.min(hp, maximum);
+        avatar.setCurrentHp(hp);
+        setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, hp);
+        setFightProperty(FightProperty.FIGHT_PROP_CUR_HP_DEBTS, debt);
+        setDead(hp <= 0);
+        killedType = PlayerDieType.PlayerDieType_PLAYER_DIE_NONE;
+        killedBy = 0;
+    }
+
     @Override
     public float heal(float amount) {
         return this.heal(amount, false);

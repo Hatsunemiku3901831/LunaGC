@@ -9,8 +9,6 @@ import emu.grasscutter.data.excels.tower.TowerLevelData;
 import emu.grasscutter.game.dungeons.*;
 import emu.grasscutter.game.player.*;
 import emu.grasscutter.game.props.ActionReason;
-import emu.grasscutter.game.props.FightProperty;
-import emu.grasscutter.net.proto.PropChangeReasonOuterClass.PropChangeReason;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.server.packet.send.*;
 import java.util.*;
@@ -81,45 +79,7 @@ public class TowerManager extends BasePlayerManager {
         // with (SetIsAllowUseSkill(1) in the EVENT_SELECT_OPTION action). Sending it from here
         // races that and turns them on while the script means them off.
 
-        // The abyss hands every character a full burst at the start of a chamber.
-        this.fillTeamEnergy();
-    }
-
-    /**
-     * Fills the burst gauge of everyone on the team, as entering a chamber does in the game.
-     *
-     * <p>Guarded at every step because this runs inside {@link
-     * emu.grasscutter.game.dungeons.challenge.WorldChallenge#start()}: throwing here would stop the
-     * challenge starting at all, which costs the whole chamber rather than one burst. A depot can be
-     * null, and so can its element - the element-less Traveler is the standing example.
-     */
-    private void fillTeamEnergy() {
-        player
-                .getTeamManager()
-                .getActiveTeam()
-                .forEach(
-                        entity -> {
-                            var depot = entity.getAvatar().getSkillDepot();
-                            if (depot == null) return;
-
-                            // Nightsoul characters spend a separate gauge, and addEnergy would top up
-                            // an elemental one they never use.
-                            var energySkill = depot.getEnergySkillData();
-                            if (energySkill != null && energySkill.getSpecialEnergyMin() > 0) {
-                                entity.addSpecialEnergy(
-                                        entity.getFightProperty(FightProperty.FIGHT_PROP_MAX_SPECIAL_ENERGY));
-                                return;
-                            }
-
-                            var element = depot.getElementType();
-                            if (element == null) return;
-
-                            float max = entity.getFightProperty(element.getMaxEnergyProp());
-                            if (max <= 0) return;
-
-                            entity.addEnergy(
-                                    max, PropChangeReason.PropChangeReason_PROP_CHANGE_ABILITY, true);
-                        });
+        this.captureChamberState();
     }
 
     public void onEnd() {
@@ -239,6 +199,7 @@ public class TowerManager extends BasePlayerManager {
             getTowerData().currentFloorId = floorData.getFloorId();
             getTowerData().currentLevel = 0;
             getTowerData().currentLevelId = firstLevel;
+            getTowerData().chamberState = null;
             getTowerData()
                     .rememberAbyssTeams(
                             towerTeams, player.getTeamManager().getTemporaryTeamAvatarIds());
@@ -267,6 +228,39 @@ public class TowerManager extends BasePlayerManager {
 
     public List<List<Long>> getAbyssTeamGuids() {
         return getTowerData().getAbyssTeamGuids();
+    }
+
+    public boolean captureChamberState() {
+        synchronized (player.getSceneTransferLock()) {
+            if (!restoreTemporaryTeams()) return false;
+            var data = getTowerData();
+            if (data.chamberState != null
+                    && data.chamberState.matches(
+                            getCurrentFloorId(), getCurrentLevelId(), data.getAbyssAvatarIds()))
+                return true;
+            var state =
+                    TowerChamberState.capture(
+                            player,
+                            getCurrentFloorId(),
+                            getCurrentLevelId(),
+                            data.getAbyssAvatarIds());
+            if (state == null) return false;
+            data.chamberState = state;
+            player.save();
+            return true;
+        }
+    }
+
+    public boolean restoreChamberState() {
+        synchronized (player.getSceneTransferLock()) {
+            var state = getTowerData().chamberState;
+            return state != null
+                    && state.restore(
+                            player,
+                            getCurrentFloorId(),
+                            getCurrentLevelId(),
+                            getTowerData().getAbyssAvatarIds());
+        }
     }
 
     public boolean restoreTemporaryTeams() {
@@ -362,6 +356,7 @@ public class TowerManager extends BasePlayerManager {
             if (!entered) return rejectEntry();
             player.getScene().setPrevScene(previousScene);
             player.getScene().setPrevScenePoint(enterPointId);
+            captureChamberState();
             notifyCurLevelRecordChange();
             player.getSession()
                     .send(new PacketTowerEnterLevelRsp(getCurrentFloorId(), getCurrentLevel()));
@@ -554,9 +549,6 @@ public class TowerManager extends BasePlayerManager {
             return;
         player.sendPacket(new PacketTowerMiddleLevelChangeTeamNotify());
 
-        // The second half starts with full bursts. Skills stay off until the player takes the
-        // worktop option the floor's Lua puts up right after this call - that is what turns them
-        // back on, and what spawns the second half's monsters.
-        this.fillTeamEnergy();
+        // Keep the lower team's chamber state. Lua enables skills when the next worktop starts.
     }
 }

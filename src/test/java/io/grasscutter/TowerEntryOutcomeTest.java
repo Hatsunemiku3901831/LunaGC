@@ -341,6 +341,29 @@ class TowerEntryOutcomeTest extends QuestTestFixture {
     }
 
     @Test
+    void successfulEntryCapturesTheWholeRosterBeforeTheChallengeStarts() throws Exception {
+        world.success = true;
+        for (var avatar : player.getAvatars()) {
+            avatar.setFightProperty(FightProperty.FIGHT_PROP_MAX_HP, 100);
+            avatar.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, 37);
+            avatar.setCurrentHp(37);
+        }
+        player.getTowerManager().enterLevel(123);
+        assertSame(destination, player.getScene());
+        for (var avatar : player.getAvatars()) {
+            avatar.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, 0);
+            avatar.setCurrentHp(0);
+        }
+        assertEquals(
+                true,
+                player.getTowerManager()
+                        .getClass()
+                        .getMethod("restoreChamberState")
+                        .invoke(player.getTowerManager()));
+        for (var avatar : player.getAvatars()) assertEquals(37, avatar.getCurrentHp());
+    }
+
+    @Test
     void actualTeleportCancellationKeepsTheOriginalEntitiesAndSelection() throws Exception {
         var pluginPath = FileUtils.getPluginPath("");
         if (Files.isDirectory(pluginPath))

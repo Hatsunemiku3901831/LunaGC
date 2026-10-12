@@ -19,6 +19,7 @@ public class TowerData {
 
     private List<List<Long>> abyssTeamGuids = new ArrayList<>();
     private List<List<Integer>> abyssAvatarIds = new ArrayList<>();
+    TowerChamberState chamberState;
 
     public List<List<Long>> getAbyssTeamGuids() {
         return snapshot(abyssTeamGuids);

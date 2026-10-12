@@ -383,6 +383,17 @@ public class Avatar {
         }
     }
 
+    public void restoreSceneEnergy(FightProperty property, float value) {
+        if (property == null || !Float.isFinite(value) || value < 0) return;
+        boolean current =
+                property == FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY
+                        || Arrays.stream(ElementType.values())
+                                .anyMatch(type -> type.getCurEnergyProp() == property);
+        if (!current) return;
+        this.currentEnergy = value;
+        this.setFightProperty(property, value);
+    }
+
     public void setFightProperty(FightProperty prop, float value) {
         this.getFightProperties().put(prop.getId(), value);
     }
