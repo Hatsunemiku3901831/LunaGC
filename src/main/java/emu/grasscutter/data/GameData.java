@@ -70,6 +70,7 @@ import lombok.*;
 
 @SuppressWarnings({"unused", "MismatchedQueryAndUpdateOfCollection"})
 public final class GameData {
+    @Getter private static final Int2ObjectMap<ExpeditionData> expeditionDataMap = new Int2ObjectOpenHashMap<>();
     @Getter
     private static final Int2ObjectMap<InvestigationData> investigationDataMap =
             new Int2ObjectOpenHashMap<>();

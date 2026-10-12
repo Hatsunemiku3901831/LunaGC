@@ -59,7 +59,7 @@ public final class ExpeditionClaims {
                             info.getRewardState() == 2
                                     ? Retcode.RET_REWARD_HAS_TAKEN_VALUE
                                     : Retcode.RET_SVR_ERROR_VALUE);
-                var definitions = system.getExpeditionRewardDataList().get(info.getExpId());
+                var definitions = system.getResolvedRewardDataList(info.getExpId());
                 if (definitions == null) return error(Retcode.RET_NOT_FOUND_CONFIG_VALUE);
                 var matches =
                         definitions.stream()

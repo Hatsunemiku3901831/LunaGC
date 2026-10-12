@@ -1,5 +1,6 @@
 package emu.grasscutter.server.packet.recv;
 
+import emu.grasscutter.game.expedition.ExpeditionCatalog;
 import emu.grasscutter.game.expedition.ExpeditionClaims;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.server.game.GameSession;
@@ -15,7 +16,9 @@ public class HandlerAvatarExpeditionAllDataReq extends PacketHandler {
             if (ExpeditionClaims.refresh(player, Utils.getCurrentSeconds())) player.save();
             session.send(
                     new PacketAvatarExpeditionAllDataRsp(
-                            player.getExpeditionInfo(), player.getExpeditionLimit()));
+                            player.getExpeditionInfo(),
+                            player.getExpeditionLimit(),
+                            ExpeditionCatalog.openIds(player)));
         }
     }
 }

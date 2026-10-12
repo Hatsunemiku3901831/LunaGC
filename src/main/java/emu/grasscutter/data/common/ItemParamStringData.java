@@ -15,12 +15,13 @@ public class ItemParamStringData {
     }
 
     public ItemParamData toItemParamData() {
-        if (count.contains(";")) {
-            String[] split = count.split(";");
-            count = count.split(";")[split.length - 1];
-        } else if (count.contains(".")) {
-            return new ItemParamData(id, (int) Math.ceil(Double.parseDouble(count)));
+        String amount = count;
+        if (amount.contains(";")) {
+            String[] split = amount.split(";");
+            amount = split[split.length - 1];
+        } else if (amount.contains(".")) {
+            return new ItemParamData(id, (int) Math.ceil(Double.parseDouble(amount)));
         }
-        return new ItemParamData(id, Integer.parseInt(count));
+        return new ItemParamData(id, Integer.parseInt(amount));
     }
 }

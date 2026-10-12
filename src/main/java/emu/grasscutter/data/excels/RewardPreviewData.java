@@ -3,8 +3,10 @@ package emu.grasscutter.data.excels;
 import emu.grasscutter.data.*;
 import emu.grasscutter.data.ResourceType.LoadPriority;
 import emu.grasscutter.data.common.*;
-import java.util.Arrays;
+
 import lombok.Getter;
+
+import java.util.Arrays;
 
 @ResourceType(name = "RewardPreviewExcelConfigData.json", loadPriority = LoadPriority.HIGH)
 public class RewardPreviewData extends GameResource {
@@ -18,12 +20,21 @@ public class RewardPreviewData extends GameResource {
         return previewItemsArray;
     }
 
+    /** Original quantity ranges; display conversion must not overwrite their minima. */
+    public ItemParamStringData[] getRawPreviewItems() {
+        return previewItems;
+    }
+
     @Override
     public void onLoad() {
         if (this.previewItems != null && this.previewItems.length > 0) {
             this.previewItemsArray =
                     Arrays.stream(this.previewItems)
-                            .filter(d -> d.getId() > 0 && d.getCount() != null && !d.getCount().isEmpty())
+                            .filter(
+                                    d ->
+                                            d.getId() > 0
+                                                    && d.getCount() != null
+                                                    && !d.getCount().isEmpty())
                             .map(ItemParamStringData::toItemParamData)
                             .toArray(size -> new ItemParamData[size]);
         } else {
