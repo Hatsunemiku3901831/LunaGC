@@ -732,6 +732,10 @@ public class SceneScriptManager {
         return isInit;
     }
 
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
     /**
      * Whether init() has finished, regardless of whether it found a scene meta. init() runs on its
      * own thread, so isInit() alone cannot tell "this scene has no scripts" apart from "the scripts
