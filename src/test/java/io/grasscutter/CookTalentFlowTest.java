@@ -232,7 +232,10 @@ class CookTalentFlowTest {
         var result = cook(recipe, 1, 3, actor);
         assertEquals(0, result.getRetcode());
         assertEquals(2, stock(item(recipe, 3)));
-        assertEquals(2, result.getItemList(0).getCount());
+        assertEquals(1, result.getItemList(0).getCount());
+        assertEquals(1, result.getExtralItemListCount());
+        assertEquals(item(recipe, 3), result.getExtralItemList(0).getItemId());
+        assertEquals(1, result.getExtralItemList(0).getCount());
         assertEquals(1, player.progress);
         assertEquals(1, rollCalls);
     }
@@ -286,7 +289,10 @@ class CookTalentFlowTest {
         actor(actor);
         var result = cook(1001, 1, 3, actor);
         assertEquals(0, result.getRetcode());
-        assertEquals(2, result.getItemListCount());
+        assertEquals(1, result.getItemListCount());
+        assertEquals(1, result.getExtralItemListCount());
+        assertEquals(item(1001, 1), result.getExtralItemList(0).getItemId());
+        assertEquals(1, result.getExtralItemList(0).getCount());
         assertEquals(1, stock(item(1001, 3)));
         assertEquals(1, stock(item(1001, 1)));
         assertEquals(1, player.progress);
@@ -416,5 +422,61 @@ class CookTalentFlowTest {
         assertEquals(rolls, rollCalls);
         assertEquals(primary, stock(item(1001, 3)));
         assertEquals(extra, stock(item(1001, 1)));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {10000003, 10000046})
+    void extraClassificationSurvivesMongoAndOldMissingField(int actor) throws Exception {
+        actor(actor);
+        failSave = 5;
+        assertNotEquals(0, cook(1001, 1, 3, actor).getRetcode());
+        var receipt = player.getPendingCook();
+        assertNotNull(receipt);
+        @SuppressWarnings("unchecked")
+        var extras =
+                assertDoesNotThrow(
+                        () ->
+                                (List<emu.grasscutter.data.common.ItemParamData>)
+                                        receipt.getClass()
+                                                .getMethod("getExtraProducts")
+                                                .invoke(receipt));
+        assertEquals(1, extras.size());
+        int extraId = item(1001, actor == 10000003 ? 3 : 1);
+        assertEquals(extraId, extras.get(0).getId());
+        assertEquals(1, extras.get(0).getCount());
+        String uri = System.getenv("LUNAGC_TEST_MONGO_URI");
+        assertNotNull(uri);
+        String name = "lunagc_test_cookextra155_" + UUID.randomUUID().toString().replace("-", "");
+        try (var client = com.mongodb.client.MongoClients.create(uri)) {
+            var store = dev.morphia.Morphia.createDatastore(client, name);
+            store.getMapper().map(CookDeliveryFlowTest.StoredCook.class);
+            try {
+                var row = new CookDeliveryFlowTest.StoredCook();
+                row.id = "pending";
+                row.receipt = receipt;
+                store.save(row);
+                var loaded = store.find(CookDeliveryFlowTest.StoredCook.class).first().receipt;
+                assertEquals(1, loaded.getExtraProducts().size());
+                assertEquals(extraId, loaded.getExtraProducts().get(0).getId());
+                assertEquals(2, loaded.getProducts().stream().mapToInt(r -> r.getCount()).sum());
+                client.getDatabase(name)
+                        .getCollection("cook_receipt_test")
+                        .updateOne(
+                                new org.bson.Document("_id", "pending"),
+                                new org.bson.Document(
+                                        "$unset",
+                                        new org.bson.Document("receipt.extraProducts", "")));
+                var old = store.find(CookDeliveryFlowTest.StoredCook.class).first().receipt;
+                assertTrue(old.getExtraProducts().isEmpty());
+                player.setPendingCook(old);
+                failSave = 0;
+                int rolls = rollCalls;
+                assertNotEquals(0, cook(1001, 1, 3, actor).getRetcode());
+                assertEquals(rolls, rollCalls);
+            } finally {
+                assertTrue(name.startsWith("lunagc_test_cookextra155_"));
+                client.getDatabase(name).drop();
+            }
+        }
     }
 }

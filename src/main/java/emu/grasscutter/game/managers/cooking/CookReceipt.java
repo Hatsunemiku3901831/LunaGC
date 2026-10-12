@@ -12,6 +12,7 @@ public final class CookReceipt {
     private int recipeId, count, quality, assistant, proficiency, state;
     private List<Row> costs = new ArrayList<>();
     private List<Row> products = new ArrayList<>();
+    private List<Row> extraProducts = new ArrayList<>();
 
     public CookReceipt() {}
 
@@ -23,6 +24,18 @@ public final class CookReceipt {
             int proficiency,
             List<ItemParamData> costs,
             List<ItemParamData> products) {
+        this(recipeId, count, quality, assistant, proficiency, costs, products, List.of());
+    }
+
+    CookReceipt(
+            int recipeId,
+            int count,
+            int quality,
+            int assistant,
+            int proficiency,
+            List<ItemParamData> costs,
+            List<ItemParamData> products,
+            List<ItemParamData> extraProducts) {
         this.recipeId = recipeId;
         this.count = count;
         this.quality = quality;
@@ -30,6 +43,7 @@ public final class CookReceipt {
         this.proficiency = proficiency;
         this.costs = copy(costs);
         this.products = copy(products);
+        this.extraProducts = copy(extraProducts);
         this.state = 1;
     }
 
@@ -81,6 +95,10 @@ public final class CookReceipt {
 
     public List<ItemParamData> getProducts() {
         return products.stream().map(row -> new ItemParamData(row.id, row.count)).toList();
+    }
+
+    public List<ItemParamData> getExtraProducts() {
+        return extraProducts.stream().map(row -> new ItemParamData(row.id, row.count)).toList();
     }
 
     void paid() {

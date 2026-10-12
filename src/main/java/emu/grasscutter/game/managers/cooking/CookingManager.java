@@ -142,7 +142,7 @@ public class CookingManager extends BasePlayerManager {
                 player.sendPacket(new PacketPlayerCookRsp(Retcode.RET_FAIL));
                 return;
             }
-            List<ItemParamData> costs, products;
+            List<ItemParamData> costs, products, primaryProducts, extraProducts;
             try {
                 costs = CookDelivery.costs(recipe.getInputVec(), count);
                 if (costs.stream()
@@ -206,6 +206,11 @@ public class CookingManager extends BasePlayerManager {
                             data.getId(),
                             Math.multiplyExact(output.getCount(), count - specialties),
                             Math::addExact);
+                primaryProducts =
+                        amounts.entrySet().stream()
+                                .map(e -> new ItemParamData(e.getKey(), e.getValue()))
+                                .toList();
+                var extras = new LinkedHashMap<Integer, Integer>();
                 for (var extra : CookBonuses.extras(player, assistant, recipe, quality)) {
                     var target = slots.get(extra.quality() - 1);
                     if (target == null || target.getId() <= 0 || target.getCount() <= 0)
@@ -221,11 +226,16 @@ public class CookingManager extends BasePlayerManager {
                         if (nextCookingRoll() < extra.chance() / 10000.0)
                             extraUnits = Math.addExact(extraUnits, extra.count());
                     if (extraUnits > 0)
-                        amounts.merge(
+                        extras.merge(
                                 target.getId(),
                                 Math.multiplyExact(target.getCount(), extraUnits),
                                 Math::addExact);
                 }
+                extraProducts =
+                        extras.entrySet().stream()
+                                .map(e -> new ItemParamData(e.getKey(), e.getValue()))
+                                .toList();
+                extras.forEach((id, amount) -> amounts.merge(id, amount, Math::addExact));
                 products =
                         amounts.entrySet().stream()
                                 .map(e -> new ItemParamData(e.getKey(), e.getValue()))
@@ -245,12 +255,19 @@ public class CookingManager extends BasePlayerManager {
                             : proficiency;
             var receipt =
                     new CookReceipt(
-                            recipeId, count, quality, assistant, nextProficiency, costs, products);
+                            recipeId,
+                            count,
+                            quality,
+                            assistant,
+                            nextProficiency,
+                            costs,
+                            products,
+                            extraProducts);
             player.setPendingCook(receipt);
             try {
                 DatabaseHelper.saveGameSync(player);
                 CookDelivery.pay(player, receipt);
-                var results = CookDelivery.grant(player, products);
+                CookDelivery.grant(player, products);
                 player.getUnlockedRecipies().put(recipeId, nextProficiency);
                 player.getBattlePassManager()
                         .triggerMission(WatcherTriggerType.TRIGGER_DO_COOK, 1, count);
@@ -260,7 +277,8 @@ public class CookingManager extends BasePlayerManager {
                 DatabaseHelper.saveGameSync(player);
                 player.sendPacket(
                         new PacketPlayerCookRsp(
-                                results,
+                                primaryProducts,
+                                extraProducts,
                                 quality == 0 ? MANUAL_PERFECT_COOK_QUALITY : quality,
                                 count,
                                 recipeId,
