@@ -5,10 +5,10 @@ import emu.grasscutter.data.*;
 import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.data.excels.CombineData;
 import emu.grasscutter.data.excels.ItemData;
+import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.game.inventory.*;
 import emu.grasscutter.game.player.InvestigationHandbook;
 import emu.grasscutter.game.player.Player;
-import emu.grasscutter.game.props.ActionReason;
 import emu.grasscutter.game.props.PlayerProperty;
 import emu.grasscutter.game.shop.BeyondCurrency;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
@@ -71,6 +71,7 @@ public class CombineManger extends BaseGameSystem {
     }
 
     private CombineResult combineLocked(Player player, Inventory inventory, int cid, int count) {
+        if (player.getPendingCombine() != null) return fail(player, Retcode.RET_SVR_ERROR_VALUE);
         var data = GameData.getCombineDataMap().get(cid);
         if (data == null || data.getId() != cid || count <= 0)
             return fail(player, Retcode.RET_FAIL_VALUE);
@@ -86,29 +87,37 @@ public class CombineManger extends BaseGameSystem {
             return fail(player, Retcode.RET_NOT_FOUND_CONFIG_VALUE);
         var costs = scaledCosts(data, count);
         if (costs == null) return fail(player, Retcode.RET_FAIL_VALUE);
+        if (!emu.grasscutter.config.Configuration.GAME_OPTIONS.resinOptions.resinUsage)
+            costs = costs.stream().filter(cost -> cost.getId() != 106).toList();
         if (!canReceive(player, inventory, output, (int) quantity, costs))
             return fail(player, Retcode.RET_ITEM_EXCEED_LIMIT_VALUE);
-        if (!inventory.payItems(costs, 1, ActionReason.Combine))
-            return fail(player, Retcode.RET_ITEM_COMBINE_COUNT_NOT_ENOUGH_VALUE);
-        var tab = inventory.getInventoryTab(output.getItemType());
-        int before = tab == null ? 0 : tab.getItemCountById(output.getId());
+        Map<Integer, Integer> before;
         try {
-            boolean delivered = true;
-            if (output.getItemType() == ItemType.ITEM_WEAPON
-                    || output.getItemType() == ItemType.ITEM_RELIQUARY) {
-                for (int i = 0; i < quantity; i++)
-                    if (!inventory.addItem(new GameItem(output, 1), ActionReason.Combine)) {
-                        delivered = false;
-                        break;
-                    }
-            } else
-                delivered = inventory.addItem(output.getId(), (int) quantity, ActionReason.Combine);
-            if (!delivered
-                    || (output.getItemType() == ItemType.ITEM_MATERIAL
-                            && (long) tab.getItemCountById(output.getId()) - before != quantity))
-                throw new IllegalStateException("Combine output was not fully delivered");
+            before = CombineDelivery.paymentStock(player, costs);
+        } catch (IllegalArgumentException invalid) {
+            return fail(player, Retcode.RET_NOT_FOUND_CONFIG_VALUE);
+        }
+        if (costs.stream().anyMatch(cost -> before.get(cost.getId()) < cost.getCount()))
+            return fail(player, Retcode.RET_ITEM_COMBINE_COUNT_NOT_ENOUGH_VALUE);
+        var receipt = new CombineReceipt(cid, count, output.getId(), (int) quantity, costs, before);
+        player.setPendingCombine(receipt);
+        try {
+            DatabaseHelper.saveGameSync(player);
+            CombineDelivery.pay(player, receipt, costs);
+            CombineDelivery.grant(player, output, (int) quantity, receipt);
+            InvestigationHandbook.trigger(player, "TRIGGER_DO_COMBINE", cid, count);
+            receipt.completed();
+            DatabaseHelper.saveGameSync(player);
+            player.setPendingCombine(null);
+            DatabaseHelper.saveGameSync(player);
         } catch (RuntimeException failure) {
-            // Costs or output may already be stored; do not blindly refund or grant again.
+            player.setPendingCombine(receipt);
+            // Retry only the unchanged receipt write; never retry an economic operation.
+            try {
+                DatabaseHelper.saveGameSync(player);
+            } catch (RuntimeException saveFailure) {
+                failure.addSuppressed(saveFailure);
+            }
             Grasscutter.getLogger()
                     .error(
                             "Combine needs reconciliation: UID {}, recipe {}",
@@ -117,7 +126,6 @@ public class CombineManger extends BaseGameSystem {
                             failure);
             return fail(player, Retcode.RET_SVR_ERROR_VALUE);
         }
-        InvestigationHandbook.trigger(player, "TRIGGER_DO_COMBINE", cid, count);
         CombineResult result = new CombineResult();
         result.setMaterial(costs);
         result.setResult(List.of(new ItemParamData(output.getId(), (int) quantity)));
@@ -178,7 +186,16 @@ public class CombineManger extends BaseGameSystem {
                             .filter(item -> item.getId() == output.getId())
                             .mapToLong(ItemParamData::getCount)
                             .sum();
-            return before < 0 || (long) before - spent + quantity <= Integer.MAX_VALUE;
+            if (before < 0) return false;
+            long after = (long) before - spent + quantity;
+            if (output.getId() == 106) {
+                if (!emu.grasscutter.config.Configuration.GAME_OPTIONS.resinOptions.resinUsage)
+                    return false;
+                return after <= player.getPropertyMax(PlayerProperty.PROP_PLAYER_RESIN);
+            }
+            if (output.getId() == 107)
+                return after <= player.getPropertyMax(PlayerProperty.PROP_PLAYER_LEGENDARY_KEY);
+            return after >= 0 && after <= Integer.MAX_VALUE;
         }
         var tab = inventory.getInventoryTab(output.getItemType());
         if (tab == null) return false;

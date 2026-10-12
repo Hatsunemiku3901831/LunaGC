@@ -447,15 +447,16 @@ class CombineHandbookTest {
     }
 
     @Test
-    void aDeliveryExceptionReleasesTheOperationForAValidLaterCraft() throws Exception {
+    void aDeliveryExceptionKeepsThePlayerPendingForReconciliation() throws Exception {
         player.crafting.throwOutput = true;
         assertNull(manager.combineItem(player, 11001, 1));
         assertNotEquals(0, error());
         assertEquals(0, progress());
         player.crafting.throwOutput = false;
-        assertNotNull(manager.combineItem(player, 11001, 1));
-        assertEquals(1, progress());
-        assertEquals(1, count(112003));
+        assertNull(manager.combineItem(player, 11001, 1));
+        assertEquals(0, progress());
+        assertEquals(0, count(112003));
+        assertEquals(3, count(112002));
     }
 
     @Test

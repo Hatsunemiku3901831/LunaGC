@@ -197,6 +197,7 @@ public class Player implements PlayerHook, FieldFetch {
     @Getter private Map<Long, ExpeditionInfo> expeditionInfo;
     @Getter private Map<Integer, Integer> unlockedRecipies;
     @Getter @Setter private emu.grasscutter.game.managers.cooking.CookReceipt pendingCook;
+    @Getter @Setter private emu.grasscutter.game.combine.CombineReceipt pendingCombine;
     @Getter private List<ActiveForgeData> activeForges;
     @Getter private Map<Integer, ActiveCookCompoundData> activeCookCompounds;
     @Getter private Map<Integer, Integer> questGlobalVariables;
