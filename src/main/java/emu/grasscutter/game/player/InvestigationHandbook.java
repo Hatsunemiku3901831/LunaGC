@@ -40,7 +40,7 @@ public final class InvestigationHandbook {
                         || "INVESTIGATION_EDCATION".equals(chapter.getInvestigationType()));
     }
 
-    private static boolean open(Player player, InvestigationData chapter) {
+    static boolean open(Player player, InvestigationData chapter) {
         if (!supported(chapter)
                 || player.getLevel() < chapter.getUnlockLevel()
                 || player.getOpenStates().getOrDefault(1100, 0) <= 0) return false;
@@ -292,7 +292,10 @@ public final class InvestigationHandbook {
                 .setQuestId(target.getId())
                 .setTotalProgress(target.getProgress())
                 .setProgress(current)
-                .setStateValue(current >= target.getProgress() ? 2 : 1)
+                .setStateValue(
+                        state.getTargetRewardState(target.getId()) == 2
+                                ? 3
+                                : current >= target.getProgress() ? 2 : 1)
                 .build();
     }
 

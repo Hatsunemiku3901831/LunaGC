@@ -10,6 +10,21 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class InvestigationProgress {
     private Map<Integer, Integer> targets = new ConcurrentHashMap<>();
     private Set<Integer> firstDungeonRewards = ConcurrentHashMap.newKeySet();
+    // 1 is a durable reservation; 2 is an acknowledged grant. Pending grants require
+    // reconciliation.
+    private Map<Integer, Integer> targetRewards = new ConcurrentHashMap<>();
+
+    public synchronized int getTargetRewardState(int id) {
+        return targetRewards == null ? 0 : targetRewards.getOrDefault(id, 0);
+    }
+
+    public synchronized void setTargetRewardState(int id, int state) {
+        if (id <= 0 || state < 0 || state > 2)
+            throw new IllegalArgumentException("Invalid handbook receipt");
+        if (targetRewards == null) targetRewards = new ConcurrentHashMap<>();
+        if (state == 0) targetRewards.remove(id);
+        else targetRewards.put(id, state);
+    }
 
     public synchronized int get(int id) {
         return targets == null ? 0 : Math.max(0, targets.getOrDefault(id, 0));
