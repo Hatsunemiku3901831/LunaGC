@@ -761,27 +761,35 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public void setupTemporaryTeam(List<List<Long>> guidList) {
-        if (tpsSceneAvatar != null) return;
+        trySetupTemporaryTeam(guidList);
+    }
+
+    public boolean trySetupTemporaryTeam(List<List<Long>> guidList) {
+        if (tpsSceneAvatar != null || guidList == null || guidList.isEmpty()) return false;
         var teams = new ArrayList<TeamInfo>(guidList.size());
+        var selected = new HashSet<Integer>();
 
         for (int i = 0; i < guidList.size(); i++) {
             var guids = guidList.get(i);
             String rejected = null;
             List<Integer> avatarIds = null;
 
-            if (guids.isEmpty()) {
+            if (guids == null || guids.isEmpty()) {
                 rejected = "it is empty";
             } else if (guids.size() > this.getMaxTeamSize()) {
                 rejected = guids.size() + " avatars, over the limit of " + this.getMaxTeamSize();
             } else {
                 var newTeam = new LinkedHashSet<Avatar>();
                 for (Long guid : guids) {
-                    Avatar avatar = this.getPlayer().getAvatars().getAvatarByGuid(guid);
+                    Avatar avatar =
+                            guid == null
+                                    ? null
+                                    : this.getPlayer().getAvatars().getAvatarByGuid(guid);
                     if (avatar == null) {
                         rejected = "no avatar with guid " + guid;
                         break;
                     }
-                    if (!newTeam.add(avatar)) {
+                    if (!newTeam.add(avatar) || !selected.add(avatar.getAvatarId())) {
                         rejected = "avatar " + avatar.getAvatarId() + " is listed twice";
                         break;
                     }
@@ -792,44 +800,60 @@ public final class TeamManager extends BasePlayerDataManager {
             }
 
             if (rejected != null) {
-                // Keep the slot rather than dropping it. The abyss picks its second half by INDEX,
-                // so removing a rejected team renumbers the ones behind it and seats the wrong half
-                // - and an empty result falls back to the overworld team with nothing said. An
-                // empty slot leaves the previous team in place, same as before, but aligned.
                 Grasscutter.getLogger().warn("Temporary team {} rejected: {}", i + 1, rejected);
-                teams.add(new TeamInfo());
+                return false;
             } else {
-                teams.add(new TeamInfo(avatarIds));
+                teams.add(new TeamInfo(new ArrayList<>(avatarIds)));
             }
         }
 
         this.temporaryTeam = teams;
+        return true;
     }
 
     public void useTemporaryTeam(int index) {
-        if (tpsSceneAvatar != null) return;
+        tryUseTemporaryTeam(index);
+    }
+
+    public boolean tryUseTemporaryTeam(int index) {
+        if (tpsSceneAvatar != null) return false;
         int available = this.temporaryTeam == null ? 0 : this.temporaryTeam.size();
         if (index < 0 || index >= available) {
             // getCurrentTeamInfo falls back to the overworld team here, which is exactly what the
             // abyss looks like when the selection never landed. Do not let that happen quietly.
             Grasscutter.getLogger()
                     .warn(
-                            "Asked to use temporary team {} but only {} are set up; the current team stays",
+                            "Asked to use temporary team {} but only {} are set up; the current"
+                                + " team stays",
                             index + 1,
                             available);
+            return false;
         }
+        var chosen = this.temporaryTeam.get(index);
+        if (chosen == null
+                || chosen.size() == 0
+                || chosen.size() > this.getMaxTeamSize()
+                || chosen.getAvatars().stream()
+                        .anyMatch(id -> id == null || !this.getPlayer().getAvatars().hasAvatar(id)))
+            return false;
         var scene = this.getPlayer().getScene();
         // Not getCurrentAvatarEntity(): on an empty team that builds a fresh main character and
         // files it in the avatar list, which is not something reading the current avatar should do.
         var previous =
                 scene == null || this.getActiveTeam().isEmpty()
                         ? null
-                        : this.getActiveTeam().get(Math.min(this.currentCharacterIndex, this.getActiveTeam().size() - 1));
+                        : this.getActiveTeam()
+                                .get(
+                                        Math.max(
+                                                0,
+                                                Math.min(
+                                                        this.currentCharacterIndex,
+                                                        this.getActiveTeam().size() - 1)));
 
         this.useTemporarilyTeamIndex = index;
         this.updateTeamEntities(null);
 
-        if (scene == null) return;
+        if (scene == null) return true;
 
         // updateTeamEntities keeps whichever avatar was selected even when the new team has no slot
         // for it, so the half that just finished would otherwise stay standing in the chamber.
@@ -842,6 +866,7 @@ public final class TeamManager extends BasePlayerDataManager {
         // avatar entity actually in the world the client has nothing to drive - no skills, no
         // burst, no switching - and the monsters have nothing to aim at.
         scene.spawnPlayer(this.getPlayer());
+        return true;
     }
 
     public boolean cleanTemporaryTeam() {

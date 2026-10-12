@@ -1,6 +1,7 @@
 package emu.grasscutter.server.packet.recv;
 
 import emu.grasscutter.net.packet.*;
+import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.net.proto.TowerTeamOuterClass;
 import emu.grasscutter.net.proto.TowerTeamSelectReqOuterClass.TowerTeamSelectReq;
 import emu.grasscutter.server.game.GameSession;
@@ -18,8 +19,9 @@ public class HandlerTowerTeamSelectReq extends PacketHandler {
                         .map(TowerTeamOuterClass.TowerTeam::getAvatarGuidListList)
                         .toList();
 
-        session.getPlayer().getTowerManager().teamSelect(req.getFloorId(), towerTeams);
-
-        session.send(new PacketTowerTeamSelectRsp());
+        var player = session.getPlayer();
+        if (player == null) return;
+        var success = player.getTowerManager().tryTeamSelect(req.getFloorId(), towerTeams);
+        session.send(new PacketTowerTeamSelectRsp(success ? Retcode.RET_SUCC : Retcode.RET_FAIL));
     }
 }

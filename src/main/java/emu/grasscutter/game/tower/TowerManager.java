@@ -215,31 +215,49 @@ public class TowerManager extends BasePlayerManager {
     }
 
     public void teamSelect(int floor, List<List<Long>> towerTeams) {
-        var floorData = GameData.getTowerFloorDataMap().get(floor);
-        if (floorData == null) {
-            Grasscutter.getLogger().warn("Tower team select for unknown floor {}", floor);
-            return;
+        tryTeamSelect(floor, towerTeams);
+    }
+
+    public boolean tryTeamSelect(int floor, List<List<Long>> towerTeams) {
+        synchronized (player.getSceneTransferLock()) {
+            var floorData = GameData.getTowerFloorDataMap().get(floor);
+            if (floorData == null
+                    || towerTeams == null
+                    || floorData.getTeamNum() <= 0
+                    || towerTeams.size() != floorData.getTeamNum()) {
+                Grasscutter.getLogger()
+                        .warn(
+                                "Tower team selection rejected for floor {}: missing floor or"
+                                    + " incorrect team count",
+                                floor);
+                return false;
+            }
+            var firstLevel = getFirstLevelId(floor);
+            if (firstLevel <= 0 || !player.getTeamManager().trySetupTemporaryTeam(towerTeams))
+                return false;
+            getTowerData().currentFloorId = floorData.getFloorId();
+            getTowerData().currentLevel = 0;
+            getTowerData().currentLevelId = firstLevel;
+
+            if (getTowerData().entryScene == 0) {
+                getTowerData().entryScene = player.getSceneId();
+            }
+
+            // The teams the client picked are the whole point of this packet, and every way they
+            // can go
+            // missing looks identical in game - the overworld team just walks in instead. Say what
+            // arrived: no teams at all means the request did not carry them, whereas teams that
+            // arrive
+            // and then get refused are reported by setupTemporaryTeam.
+            Grasscutter.getLogger()
+                    .info(
+                            "Tower team select on floor {}: {} team(s), sizes {}",
+                            floor,
+                            towerTeams.size(),
+                            towerTeams.stream().map(List::size).toList());
+
+            return true;
         }
-        getTowerData().currentFloorId = floorData.getFloorId();
-        getTowerData().currentLevel = 0;
-        getTowerData().currentLevelId = getFirstLevelId(floor);
-
-        if (getTowerData().entryScene == 0) {
-            getTowerData().entryScene = player.getSceneId();
-        }
-
-        // The teams the client picked are the whole point of this packet, and every way they can go
-        // missing looks identical in game - the overworld team just walks in instead. Say what
-        // arrived: no teams at all means the request did not carry them, whereas teams that arrive
-        // and then get refused are reported by setupTemporaryTeam.
-        Grasscutter.getLogger()
-                .info(
-                        "Tower team select on floor {}: {} team(s), sizes {}",
-                        floor,
-                        towerTeams.size(),
-                        towerTeams.stream().map(List::size).toList());
-
-        player.getTeamManager().setupTemporaryTeam(towerTeams);
     }
 
     public TowerLevelData getCurrentTowerLevelDataMap() {
