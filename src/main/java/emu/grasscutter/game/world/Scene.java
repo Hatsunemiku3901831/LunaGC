@@ -96,6 +96,7 @@ public class Scene {
     @Getter private boolean isPaused = false;
 
     private final List<Runnable> afterLoadedCallbacks = new ArrayList<>();
+    private final Map<Player, List<Runnable>> afterPlayerEntryCallbacks = new IdentityHashMap<>();
     private final Queue<Runnable> afterHostInitCallbacks = new ConcurrentLinkedQueue<>();
 
     @Getter private GameEntity sceneEntity;
@@ -231,6 +232,7 @@ public class Scene {
     }
 
     public void addPlayer(Player player) {
+        final List<Runnable> arrived;
         synchronized (player.getSceneTransferLock()) {
             if (getPlayers().contains(player)) return;
 
@@ -252,11 +254,30 @@ public class Scene {
                 this.setupPlayerAvatars(player);
                 if (player.hasSentLoginPackets()) {
                     var borrowed = player.getTeamManager().getTpsSceneAvatar();
-                    if (borrowed != null) player.sendPacket(new PacketAvatarAddNotify(borrowed, false));
+                    if (borrowed != null)
+                        player.sendPacket(new PacketAvatarAddNotify(borrowed, false));
                     player.sendPacket(new PacketAvatarTeamUpdateNotify(player));
                 }
+                arrived = afterPlayerEntryCallbacks.remove(player);
             }
         }
+        if (arrived != null) arrived.forEach(this::invokeSceneCallback);
+    }
+
+    /** Wait for this live player object to join; a saved scene ID is not proof of arrival. */
+    public void runWhenPlayerEnters(Player player, Runnable callback) {
+        if (player == null || callback == null) return;
+        synchronized (this) {
+            if (scriptManager.isDestroyed() || player.getWorld() != world) return;
+            if (player.getScene() != this
+                    || players.stream().noneMatch(member -> member == player)) {
+                afterPlayerEntryCallbacks
+                        .computeIfAbsent(player, ignored -> new ArrayList<>())
+                        .add(callback);
+                return;
+            }
+        }
+        invokeSceneCallback(callback);
     }
 
     public void removePlayer(Player player) {
@@ -286,9 +307,14 @@ public class Scene {
                         .filter(gameEntity -> gameEntity instanceof EntityVehicle)
                         .map(gameEntity -> (EntityVehicle) gameEntity)
                         .filter(entityVehicle -> entityVehicle.getOwner().equals(player))
-                        .forEach(entityVehicle -> this.removeEntity(entityVehicle, VisionType.VisionType_VISION_REMOVE));
+                        .forEach(
+                                entityVehicle ->
+                                        this.removeEntity(
+                                                entityVehicle,
+                                                VisionType.VisionType_VISION_REMOVE));
 
                 if (this.getPlayerCount() <= 0 && !this.dontDestroyWhenEmpty) {
+                    afterPlayerEntryCallbacks.clear();
                     this.crucibleSceneController.close();
                     this.salesmanSceneController.close();
                     this.asterSceneController.close();
@@ -850,7 +876,7 @@ public class Scene {
             ready = new ArrayList<>(afterLoadedCallbacks);
             afterLoadedCallbacks.clear();
         }
-        ready.forEach(this::invokeLoadedCallback);
+        ready.forEach(this::invokeSceneCallback);
     }
 
     public void runWhenFinished(Runnable runnable) {
@@ -861,15 +887,14 @@ public class Scene {
                 return;
             }
         }
-        invokeLoadedCallback(runnable);
+        invokeSceneCallback(runnable);
     }
 
-    private void invokeLoadedCallback(Runnable callback) {
+    private void invokeSceneCallback(Runnable callback) {
         try {
             callback.run();
         } catch (RuntimeException error) {
-            Grasscutter.getLogger()
-                    .error("Scene {} finished-loading callback failed", getId(), error);
+            Grasscutter.getLogger().error("Scene {} callback failed", getId(), error);
         }
     }
 
