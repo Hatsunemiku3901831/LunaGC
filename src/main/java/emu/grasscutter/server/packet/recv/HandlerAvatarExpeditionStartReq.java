@@ -1,11 +1,15 @@
 package emu.grasscutter.server.packet.recv;
 
 import emu.grasscutter.data.GameData;
+import emu.grasscutter.game.expedition.ExpeditionBonuses;
 import emu.grasscutter.game.expedition.ExpeditionCatalog;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.AvatarExpeditionStartReqOuterClass.AvatarExpeditionStartReq;
+import emu.grasscutter.net.proto.PacketHeadOuterClass.PacketHead;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
+import emu.grasscutter.net.proto._AvatarExpeditionBasicInfoOuterClass._AvatarExpeditionBasicInfo;
 import emu.grasscutter.server.game.GameSession;
+import emu.grasscutter.server.packet.send.PacketAvatarExpeditionDataNotify;
 import emu.grasscutter.server.packet.send.PacketAvatarExpeditionStartRsp;
 import emu.grasscutter.utils.Utils;
 
@@ -75,12 +79,31 @@ public class HandlerAvatarExpeditionStartReq extends PacketHandler {
                 }
             }
             int startTime = Utils.getCurrentSeconds();
+            var started = new ArrayList<_AvatarExpeditionBasicInfo>();
             for (var info : req.getBasicInfoListList()) {
                 player.addExpeditionInfo(
                         info.getAvatarGuid(), info.getExpId(), info.getHourTime(), startTime);
+                var trip = player.getExpeditionInfo(info.getAvatarGuid());
+                ExpeditionBonuses.bind(player, info.getAvatarGuid(), trip);
+                started.add(
+                        _AvatarExpeditionBasicInfo.newBuilder()
+                                .setAvatarGuid(info.getAvatarGuid())
+                                .setExpId(info.getExpId())
+                                .setHourTime(info.getHourTime())
+                                .setShortenRatio(trip.toProto().getShortenRatio())
+                                .build());
             }
             player.save();
-            session.send(new PacketAvatarExpeditionStartRsp(player.getExpeditionInfo()));
+            var response =
+                    new PacketAvatarExpeditionStartRsp(player.getExpeditionInfo(), 0, started);
+            if (header != null && header.length > 0) {
+                try {
+                    response.buildHeader(PacketHead.parseFrom(header).getClientSequenceId());
+                } catch (com.google.protobuf.InvalidProtocolBufferException ignored) {
+                }
+            }
+            session.send(response);
+            session.send(new PacketAvatarExpeditionDataNotify(player.getExpeditionInfo()));
         }
     }
 }

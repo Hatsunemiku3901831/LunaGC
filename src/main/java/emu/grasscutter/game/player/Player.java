@@ -1475,15 +1475,7 @@ public class Player implements PlayerHook, FieldFetch {
         this.doDailyReset();
 
         var timeNow = Utils.getCurrentSeconds();
-        var needNotify = false;
-        for (ExpeditionInfo e : expeditionInfo.values()) {
-            if (e.getState() == 1) {
-                if (emu.grasscutter.game.expedition.ExpeditionClaims.finished(e, timeNow)) {
-                    e.setState(2);
-                    needNotify = true;
-                }
-            }
-        }
+        var needNotify = emu.grasscutter.game.expedition.ExpeditionClaims.refresh(this,timeNow);
         if (needNotify) {
             this.save();
             this.sendPacket(new PacketAvatarExpeditionDataNotify(this.getExpeditionInfo()));

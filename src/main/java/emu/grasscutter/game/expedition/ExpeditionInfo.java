@@ -16,6 +16,10 @@ public class ExpeditionInfo {
     private int startTime;
     // 0 available, 1 reserved/reconcile, 2 delivery acknowledged; absent in old saves is 0.
     private int rewardState;
+    private boolean bonusRecorded;
+    private int shortenRate;
+    private int extraRate;
+    private int extraProbability;
 
     public AvatarExpeditionInfo toProto() {
         return AvatarExpeditionInfo.newBuilder()
@@ -23,6 +27,8 @@ public class ExpeditionInfo {
                 .setExpId(this.getExpId())
                 .setHourTime(this.getHourTime())
                 .setStartTime(this.getStartTime())
+                .setShortenRatio(
+                        shortenRate >= 0 && shortenRate < 10000 ? shortenRate / 10000f : 0f)
                 .build();
     }
 }
