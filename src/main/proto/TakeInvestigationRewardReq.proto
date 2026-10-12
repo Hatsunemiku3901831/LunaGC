@@ -1,0 +1,9 @@
+// Verified 7.1 PECLOBLIJCM writer 0x14d257610, getter 0x14d257770; handbook sender 0x14d6e3e50.
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "TakeInvestigationRewardReqOuterClass";
+
+message TakeInvestigationRewardReq {
+  uint32 id = 6;
+}

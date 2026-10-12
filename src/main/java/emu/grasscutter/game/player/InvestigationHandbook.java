@@ -253,7 +253,7 @@ public final class InvestigationHandbook {
                         GameData.getInvestigationDataMap().values().stream()
                                 .filter(c -> open(player, c))
                                 .sorted(Comparator.comparingInt(InvestigationData::getId))
-                                .map(c -> chapterInfo(c.getId(), targetInfo))
+                                .map(c -> chapterInfo(progress, c.getId(), targetInfo))
                                 .toList();
                 if (full)
                     send(
@@ -299,14 +299,18 @@ public final class InvestigationHandbook {
                 .build();
     }
 
-    private static Investigation chapterInfo(int id, List<InvestigationTarget> targets) {
+    private static Investigation chapterInfo(
+            InvestigationProgress state, int id, List<InvestigationTarget> targets) {
         var children = targets.stream().filter(t -> t.getInvestigationId() == id).toList();
         int complete = (int) children.stream().filter(t -> t.getStateValue() >= 2).count();
         return Investigation.newBuilder()
                 .setId(id)
                 .setProgress(complete)
                 .setTotalProgress(children.size())
-                .setStateValue(!children.isEmpty() && complete == children.size() ? 2 : 1)
+                .setStateValue(
+                        state.getChapterRewardState(id) == 2
+                                ? 3
+                                : !children.isEmpty() && complete == children.size() ? 2 : 1)
                 .build();
     }
 

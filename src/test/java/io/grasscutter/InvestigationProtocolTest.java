@@ -154,8 +154,7 @@ class InvestigationProtocolTest {
     @Test
     void targetRewardOpcodeMatchesTheClientsLiteralGetter() {
         assertEquals(2703, PacketOpcodes.TakeInvestigationTargetRewardReq);
-        // Keep the unconfirmed chapter request unavailable.
-        assertTrue(PacketOpcodes.TakeInvestigationRewardReq < 0);
+        assertEquals(8841, PacketOpcodes.TakeInvestigationRewardReq);
     }
 
     @Test

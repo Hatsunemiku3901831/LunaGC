@@ -73,6 +73,10 @@ public final class InvestigationRewardDelivery {
 
     /** The caller holds the inventory monitor through preflight, receipt and delivery. */
     public static void grant(Player player, List<ItemParamData> items) {
+        grant(player, items, ActionReason.InvestigationTargetReward);
+    }
+
+    public static void grant(Player player, List<ItemParamData> items, ActionReason reason) {
         if (validate(player, items) != 0)
             throw new IllegalStateException("Handbook reward preflight changed");
         var inventory = player.getInventory();
@@ -81,7 +85,7 @@ public final class InvestigationRewardDelivery {
             if (data.getItemType() == ItemType.ITEM_RELIQUARY) {
                 for (int i = 0; i < param.getCount(); i++) {
                     var relic = new GameItem(data, 1);
-                    if (!inventory.addItem(relic, ActionReason.InvestigationTargetReward)
+                    if (!inventory.addItem(relic, reason)
                             || inventory.getItemByGuid(relic.getGuid()) != relic)
                         throw new IllegalStateException("Handbook relic was not stored");
                     DatabaseHelper.saveGameSync(relic);
@@ -89,7 +93,7 @@ public final class InvestigationRewardDelivery {
             } else {
                 int before = count(player, param.getId());
                 int levelBefore = player.getLevel();
-                if (!inventory.addItem(param, ActionReason.InvestigationTargetReward))
+                if (!inventory.addItem(param, reason))
                     throw new IllegalStateException("Handbook reward was not granted");
                 if (param.getId() == 102) {
                     long after = (long) player.getExp();

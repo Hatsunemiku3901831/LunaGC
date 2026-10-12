@@ -13,6 +13,19 @@ public final class InvestigationProgress {
     // 1 is a durable reservation; 2 is an acknowledged grant. Pending grants require
     // reconciliation.
     private Map<Integer, Integer> targetRewards = new ConcurrentHashMap<>();
+    private Map<Integer, Integer> chapterRewards = new ConcurrentHashMap<>();
+
+    public synchronized int getChapterRewardState(int id) {
+        return chapterRewards == null ? 0 : chapterRewards.getOrDefault(id, 0);
+    }
+
+    public synchronized void setChapterRewardState(int id, int state) {
+        if (id <= 0 || state < 0 || state > 2)
+            throw new IllegalArgumentException("Invalid chapter receipt");
+        if (chapterRewards == null) chapterRewards = new ConcurrentHashMap<>();
+        if (state == 0) chapterRewards.remove(id);
+        else chapterRewards.put(id, state);
+    }
 
     public synchronized int getTargetRewardState(int id) {
         return targetRewards == null ? 0 : targetRewards.getOrDefault(id, 0);

@@ -1452,7 +1452,7 @@ public final class PacketOpcodes {
     public static final int TakeEffigyFirstPassRewardRsp = 26022;
     public static final int TakeHuntingOfferReq = -260;
     public static final int TakeHuntingOfferRsp = -261;
-    public static final int TakeInvestigationRewardReq = -262;
+    public static final int TakeInvestigationRewardReq = 8841;
     public static final int TakeInvestigationRewardRsp = 27528;
     public static final int TakeInvestigationTargetRewardReq = 2703;
     public static final int TakeInvestigationTargetRewardRsp = 22263;
