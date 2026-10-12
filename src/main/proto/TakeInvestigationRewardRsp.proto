@@ -1,0 +1,10 @@
+// Verified 7.1 client AKMDMFFKPBF parser 0x14eb68c80, literal opcode 27528.
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "TakeInvestigationRewardRspOuterClass";
+
+message TakeInvestigationRewardRsp {
+  uint32 id = 3;
+  int32 retcode = 10;
+}

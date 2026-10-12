@@ -1,0 +1,11 @@
+// Verified 7.1 client CAGEHFLCHEP parser 0x1476088f0, literal opcode 25214.
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "PlayerInvestigationNotifyOuterClass";
+
+import "Investigation.proto";
+
+message PlayerInvestigationNotify {
+  repeated Investigation investigation_list = 6;
+}

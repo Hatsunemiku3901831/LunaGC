@@ -1,0 +1,9 @@
+// Verified 7.1 client INBBJMODBNE writer 0x14818ec70, literal opcode 2703.
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "TakeInvestigationTargetRewardReqOuterClass";
+
+message TakeInvestigationTargetRewardReq {
+  uint32 quest_id = 9;
+}

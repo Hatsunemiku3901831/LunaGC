@@ -1454,7 +1454,7 @@ public final class PacketOpcodes {
     public static final int TakeHuntingOfferRsp = -261;
     public static final int TakeInvestigationRewardReq = -262;
     public static final int TakeInvestigationRewardRsp = 27528;
-    public static final int TakeInvestigationTargetRewardReq = -263;
+    public static final int TakeInvestigationTargetRewardReq = 2703;
     public static final int TakeInvestigationTargetRewardRsp = 22263;
     public static final int TakeMaterialDeleteReturnReq = 4228;
     public static final int TakeMaterialDeleteReturnRsp = -264;

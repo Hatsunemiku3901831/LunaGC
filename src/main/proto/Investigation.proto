@@ -1,0 +1,19 @@
+// Verified 7.1 client CNCJMKCKFPE parser 0x15252e840; see INVESTIGATION_PROTOCOL_2026-10-12.md.
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "InvestigationOuterClass";
+
+message Investigation {
+  enum State {
+    INVALID = 0;
+    IN_PROGRESS = 1;
+    COMPLETE = 2;
+    REWARD_TAKEN = 3;
+  }
+
+  uint32 total_progress = 1;
+  uint32 id = 7;
+  State state = 15;
+  uint32 progress = 13;
+}

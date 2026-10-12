@@ -1,0 +1,13 @@
+// Verified 7.1 client KKFJNFDCFMO parser 0x148fdc560, literal opcode 20026.
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "PlayerInvestigationAllInfoNotifyOuterClass";
+
+import "Investigation.proto";
+import "InvestigationTarget.proto";
+
+message PlayerInvestigationAllInfoNotify {
+  repeated Investigation investigation_list = 2;
+  repeated InvestigationTarget investigation_target_list = 10;
+}

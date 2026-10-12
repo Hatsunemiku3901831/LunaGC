@@ -1,0 +1,10 @@
+// Verified 7.1 client ADCNNGMFIJC parser 0x14c97e340, literal opcode 22263.
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "TakeInvestigationTargetRewardRspOuterClass";
+
+message TakeInvestigationTargetRewardRsp {
+  uint32 quest_id = 14;
+  int32 retcode = 9;
+}

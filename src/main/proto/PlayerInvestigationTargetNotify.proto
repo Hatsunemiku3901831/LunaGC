@@ -1,0 +1,11 @@
+// Verified 7.1 client KKOAFFKHOFD parser 0x1477787c0, literal opcode 5903.
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "PlayerInvestigationTargetNotifyOuterClass";
+
+import "InvestigationTarget.proto";
+
+message PlayerInvestigationTargetNotify {
+  repeated InvestigationTarget investigation_target_list = 1;
+}
