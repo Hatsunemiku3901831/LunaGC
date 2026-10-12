@@ -6,10 +6,11 @@ option java_outer_classname = "DungeonEntryInfoOuterClass";
 import "WeeklyBossResinDiscountInfo.proto";
 
 message DungeonEntryInfo {
+	// 7.1 PLOKNNKAHCI writer 0x150cd44b0; field aliases match enter/settle and monster detail.
 	uint32 next_refresh_time = 2;
 	bool is_passed = 12;
-	uint32 boss_chest_num = 50000;
+	uint32 boss_chest_num = 10;
 	WeeklyBossResinDiscountInfo weekly_boss_resin_discount_info = 3;
-	uint32 max_boss_chest_num = 50001;
+	uint32 max_boss_chest_num = 4;
 	uint32 dungeon_id = 15;
 }
