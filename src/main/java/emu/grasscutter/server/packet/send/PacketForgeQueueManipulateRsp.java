@@ -4,8 +4,8 @@ import emu.grasscutter.game.inventory.GameItem;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.ForgeQueueManipulateRspOuterClass.ForgeQueueManipulateRsp;
 import emu.grasscutter.net.proto.ForgeQueueManipulateTypeOuterClass.ForgeQueueManipulateType;
-import emu.grasscutter.net.proto.ItemParamOuterClass.ItemParam;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
+
 import java.util.List;
 
 public class PacketForgeQueueManipulateRsp extends BasePacket {
@@ -21,9 +21,16 @@ public class PacketForgeQueueManipulateRsp extends BasePacket {
         ForgeQueueManipulateRsp.Builder builder =
                 ForgeQueueManipulateRsp.newBuilder()
                         .setRetcode(retcode.getNumber())
-                        .setManipulateType(type);
-
-        // ToDo: Add extra items when once we have handling for it.
+                        .setManipulateTypeValue(
+                                type == ForgeQueueManipulateType.UNRECOGNIZED
+                                        ? -1
+                                        : type.getNumber())
+                        .addAllOutputItemList(
+                                output.stream().map(GameItem::toItemHintProto).toList())
+                        .addAllReturnItemList(
+                                refund.stream().map(GameItem::toItemHintProto).toList())
+                        .addAllExtraOutputItemList(
+                                extra.stream().map(GameItem::toItemHintProto).toList());
 
         this.setData(builder.build());
     }
