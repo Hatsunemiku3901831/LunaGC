@@ -84,6 +84,7 @@ class CombineHandbookTest {
         manager = new CombineManger(environment.scene.getWorld().getServer());
         player.setProperty(PlayerProperty.PROP_PLAYER_LEVEL, 45);
         player.setMora(100);
+        player.getUnlockedCombines().add(11001);
         player.getOpenStates().put(1100, 1);
         player.getOpenStates().put(1101, 1);
         oldRecipes = new HashMap<>(GameData.getCombineDataMap());
@@ -163,6 +164,131 @@ class CombineHandbookTest {
 
     private void definition(String json) {
         GameData.getCombineDataMap().put(11001, gson.fromJson(json, CombineData.class));
+    }
+
+    private void defaultShown(boolean visible) {
+        var json = gson.toJsonTree(GameData.getCombineDataMap().get(11001)).getAsJsonObject();
+        json.addProperty("isDefaultShow", visible);
+        GameData.getCombineDataMap().put(11001, gson.fromJson(json, CombineData.class));
+    }
+
+    @Test
+    void hiddenUnlearnedRecipeCannotConsumeMaterialsOrAdvanceProgress() throws Exception {
+        player.getUnlockedCombines().clear();
+        defaultShown(false);
+        assertNull(manager.combineItem(player, 11001, 1));
+        assertEquals(Retcode.RET_COMBINE_IS_LOCKED_VALUE, error());
+        assertEquals(6, count(112002));
+        assertEquals(100, player.getMora());
+        assertEquals(0, count(112003));
+        assertEquals(0, progress());
+        assertNull(player.getPendingCombine());
+        assertTrue(player.getUnlockedCombines().isEmpty());
+    }
+
+    @Test
+    void learnedHiddenRecipeCanBeCombined() {
+        defaultShown(false);
+        assertNotNull(manager.combineItem(player, 11001, 1));
+        assertEquals(1, count(112003));
+        assertEquals(1, progress());
+    }
+
+    @Test
+    void defaultShownRecipeDoesNotNeedAnExplicitUnlock() {
+        player.getUnlockedCombines().clear();
+        defaultShown(true);
+        assertNotNull(manager.combineItem(player, 11001, 1));
+        assertEquals(1, count(112003));
+        assertTrue(player.getUnlockedCombines().isEmpty());
+    }
+
+    @Test
+    void learningAnotherRecipeDoesNotUnlockThisOne() throws Exception {
+        player.getUnlockedCombines().clear();
+        player.getUnlockedCombines().add(22001);
+        defaultShown(false);
+        assertNull(manager.combineItem(player, 11001, 1));
+        assertEquals(Retcode.RET_COMBINE_IS_LOCKED_VALUE, error());
+        assertEquals(6, count(112002));
+        assertEquals(Set.of(22001), player.getUnlockedCombines());
+    }
+
+    @Test
+    void diagramUnlockEnablesALockedRecipeAndSendsOnlyOneNotification() throws Exception {
+        player.getUnlockedCombines().clear();
+        defaultShown(false);
+        assertNull(manager.combineItem(player, 11001, 1));
+        assertTrue(manager.unlockCombineDiagram(player, 11001));
+        assertFalse(manager.unlockCombineDiagram(player, 11001));
+        var notices =
+                player.packets.stream()
+                        .filter(
+                                packet ->
+                                        packet.getOpcode()
+                                                == PacketOpcodes.CombineFormulaDataNotify)
+                        .toList();
+        assertEquals(1, notices.size());
+        var notice =
+                emu.grasscutter.net.proto.CombineFormulaDataNotifyOuterClass
+                        .CombineFormulaDataNotify.parseFrom(notices.get(0).getData());
+        assertEquals(11001, notice.getCombineId());
+        assertFalse(notice.getIsLocked());
+        assertNotNull(manager.combineItem(player, 11001, 1));
+        assertEquals(1, count(112003));
+    }
+
+    @Test
+    void missingDefaultShowFlagRequiresAnExplicitUnlock() throws Exception {
+        player.getUnlockedCombines().clear();
+        recipe(3, 1, 25);
+        assertNull(manager.combineItem(player, 11001, 1));
+        assertEquals(Retcode.RET_COMBINE_IS_LOCKED_VALUE, error());
+        assertEquals(100, player.getMora());
+    }
+
+    @Test
+    void learnedRecipeStillRequiresTheAdventureRank() throws Exception {
+        var json = gson.toJsonTree(GameData.getCombineDataMap().get(11001)).getAsJsonObject();
+        json.addProperty("playerLevel", 46);
+        GameData.getCombineDataMap().put(11001, gson.fromJson(json, CombineData.class));
+        assertNull(manager.combineItem(player, 11001, 1));
+        assertEquals(Retcode.RET_PLAYER_LEVEL_LESS_THAN_VALUE, error());
+        assertEquals(6, count(112002));
+    }
+
+    @Test
+    void realResourceDiagramMapsToANonDefaultCombineRecipe() throws Exception {
+        var materials =
+                com.google.gson.JsonParser.parseString(
+                                Files.readString(
+                                        Path.of(
+                                                "resources/ExcelBinOutput/MaterialExcelConfigData.json")))
+                        .getAsJsonArray();
+        var combines =
+                com.google.gson.JsonParser.parseString(
+                                Files.readString(
+                                        Path.of(
+                                                "resources/ExcelBinOutput/CombineExcelConfigData.json")))
+                        .getAsJsonArray();
+        var diagram =
+                java.util.stream.StreamSupport.stream(materials.spliterator(), false)
+                        .map(com.google.gson.JsonElement::getAsJsonObject)
+                        .filter(row -> row.get("id").getAsInt() == 221001)
+                        .findFirst()
+                        .orElseThrow();
+        var action = diagram.getAsJsonArray("itemUse").get(0).getAsJsonObject();
+        assertEquals("ITEM_USE_UNLOCK_COMBINE", action.get("useOp").getAsString());
+        int recipeId = action.getAsJsonArray("useParam").get(0).getAsInt();
+        assertEquals(22001, recipeId);
+        var recipe =
+                java.util.stream.StreamSupport.stream(combines.spliterator(), false)
+                        .map(com.google.gson.JsonElement::getAsJsonObject)
+                        .filter(row -> row.get("combineId").getAsInt() == recipeId)
+                        .findFirst()
+                        .orElseThrow();
+        assertFalse(recipe.get("isDefaultShow").getAsBoolean());
+        assertEquals(220001, recipe.get("resultItemId").getAsInt());
     }
 
     private int count(int id) {

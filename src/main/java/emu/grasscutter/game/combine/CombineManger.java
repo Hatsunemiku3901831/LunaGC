@@ -77,6 +77,8 @@ public class CombineManger extends BaseGameSystem {
             return fail(player, Retcode.RET_FAIL_VALUE);
         if (data.getPlayerLevel() > player.getLevel())
             return fail(player, Retcode.RET_PLAYER_LEVEL_LESS_THAN_VALUE);
+        if (!data.isDefaultShow() && !player.getUnlockedCombines().contains(cid))
+            return fail(player, Retcode.RET_COMBINE_IS_LOCKED_VALUE);
         long quantity = (long) data.getResultItemCount() * count;
         var output = GameData.getItemDataMap().get(data.getResultItemId());
         if (output == null

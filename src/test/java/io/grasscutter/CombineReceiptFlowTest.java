@@ -105,6 +105,7 @@ class CombineReceiptFlowTest {
                         environment.scene.getWorld().getServer(), player));
         player.setProperty(PlayerProperty.PROP_PLAYER_LEVEL, 45);
         player.setMora(200);
+        player.getUnlockedCombines().add(11001);
         oldResin = emu.grasscutter.config.Configuration.GAME_OPTIONS.resinOptions.resinUsage;
         for (int id : List.of(112002, 112003))
             put(
@@ -423,6 +424,7 @@ class CombineReceiptFlowTest {
                         environment.scene.getWorld().getServer(), other));
         other.setProperty(PlayerProperty.PROP_PLAYER_LEVEL, 45);
         other.setMora(200);
+        other.getUnlockedCombines().add(11001);
         assertTrue(other.getInventory().addItem(112002, 12));
         assertNotNull(manager.combineItem(other, 11001, 1));
         assertEquals(1, other.getInventory().getItemCountById(112003));
