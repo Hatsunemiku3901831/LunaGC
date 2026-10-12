@@ -239,7 +239,9 @@ public class TowerManager extends BasePlayerManager {
             getTowerData().currentFloorId = floorData.getFloorId();
             getTowerData().currentLevel = 0;
             getTowerData().currentLevelId = firstLevel;
-            getTowerData().rememberAbyssTeams(towerTeams);
+            getTowerData()
+                    .rememberAbyssTeams(
+                            towerTeams, player.getTeamManager().getTemporaryTeamAvatarIds());
 
             if (getTowerData().entryScene == 0) {
                 getTowerData().entryScene = player.getSceneId();
@@ -281,13 +283,32 @@ public class TowerManager extends BasePlayerManager {
                     || level == null
                     || level.getLevelGroupId() != floor.getLevelGroupId()) return false;
             var selected = getAbyssTeamGuids();
-            boolean migrate = selected.isEmpty();
-            if (migrate) selected = player.getTeamManager().getTemporaryTeamGuids();
+            var identities = data.getAbyssAvatarIds();
+            boolean migrate = identities.isEmpty();
+            if (migrate) {
+                var live = player.getTeamManager().getTemporaryTeamGuids();
+                if (!selected.isEmpty() && !selected.equals(live)) return false;
+                selected = live;
+            } else {
+                var rebound = new ArrayList<List<Long>>(identities.size());
+                for (var team : identities) {
+                    if (team == null || team.isEmpty()) return false;
+                    var guids = new ArrayList<Long>(team.size());
+                    for (var id : team) {
+                        var avatar = id == null ? null : player.getAvatars().getAvatarById(id);
+                        if (avatar == null) return false;
+                        guids.add(avatar.getGuid());
+                    }
+                    rebound.add(guids);
+                }
+                selected = rebound;
+            }
             if (selected.size() != floor.getTeamNum()
                     || !player.getTeamManager().trySetupTemporaryTeam(selected)) return false;
             data.currentLevelId = firstLevel;
-            if (migrate) {
-                data.rememberAbyssTeams(selected);
+            if (migrate || !selected.equals(getAbyssTeamGuids())) {
+                data.rememberAbyssTeams(
+                        selected, player.getTeamManager().getTemporaryTeamAvatarIds());
                 player.save();
             }
             return true;

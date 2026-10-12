@@ -215,6 +215,21 @@ class TowerPartyPersistenceTest extends QuestTestFixture {
         var fields =
                 new Document("towerData.abyssTeamGuids", guids)
                         .append("towerData.currentLevel", level);
+        var ids = new ArrayList<List<Integer>>();
+        boolean valid = true;
+        for (var team : guids) {
+            var row = new ArrayList<Integer>();
+            for (var guid : team) {
+                var avatar = model.getAvatars().getAvatarByGuid(guid);
+                if (avatar == null) {
+                    valid = false;
+                    break;
+                }
+                row.add(avatar.getAvatarId());
+            }
+            ids.add(row);
+        }
+        fields.append("towerData.abyssAvatarIds", valid ? ids : null);
         store.getDatabase()
                 .getCollection("players")
                 .updateOne(new Document("_id", 20115), new Document("$set", fields));

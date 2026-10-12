@@ -833,6 +833,21 @@ public final class TeamManager extends BasePlayerDataManager {
         return List.copyOf(result);
     }
 
+    public List<List<Integer>> getTemporaryTeamAvatarIds() {
+        var guids = getTemporaryTeamGuids();
+        return guids.stream()
+                .map(
+                        team ->
+                                team.stream()
+                                        .map(
+                                                guid ->
+                                                        player.getAvatars()
+                                                                .getAvatarByGuid(guid)
+                                                                .getAvatarId())
+                                        .toList())
+                .toList();
+    }
+
     public boolean tryUseTemporaryTeam(int index) {
         if (tpsSceneAvatar != null) return false;
         int available = this.temporaryTeam == null ? 0 : this.temporaryTeam.size();
