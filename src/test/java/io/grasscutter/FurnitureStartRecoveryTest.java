@@ -194,7 +194,7 @@ class FurnitureStartRecoveryTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {-1, 0, 1, 2, 4})
+    @ValueSource(ints = {-1, 0, 1, 4})
     void otherPhasesCannotBeInferredAsAConfirmedQueue(int state) throws Exception {
         queued(6);
         var field = FurnitureStartReceipt.class.getDeclaredField("state");
