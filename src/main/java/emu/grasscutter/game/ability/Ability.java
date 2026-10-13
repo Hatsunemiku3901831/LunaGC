@@ -39,6 +39,18 @@ public class Ability {
 
     @Getter private int hash;
     @Getter private Set<Integer> avatarSkillStartIds;
+    private volatile Set<AbilityModifierAction> serverTriggerCallbacks = Set.of();
+    private volatile AbilityExecutionContext serverTriggerContext;
+
+    void claimServerTriggerCallbacks(Set<AbilityModifierAction> callbacks, GameEntity target) {
+        serverTriggerCallbacks = callbacks;
+        serverTriggerContext = new AbilityExecutionContext(this, target);
+    }
+
+    boolean ownsServerTriggerCallback(AbilityModifierAction action) {
+        var context = serverTriggerContext;
+        return context != null && context.isCurrent() && serverTriggerCallbacks.contains(action);
+    }
     private final Set<GameEntity> modifierTargets = Collections.newSetFromMap(new WeakHashMap<>());
 
     public void refreshModifierTargets(boolean notify) {
@@ -99,6 +111,19 @@ public class Ability {
 
     public boolean removeModifier(GameEntity target, String name) {
         return removeModifier(target,name,true);
+    }
+
+    public void removeUniqueModifier(GameEntity target, String name) {
+        var sources = Collections.newSetFromMap(new IdentityHashMap<Ability, Boolean>());
+        sources.add(this);
+        synchronized (target.getInstancedModifiers()) {
+            for (var controller : target.getAbilityHpModifier().activeControllers()) {
+                var data = controller.getModifierData();
+                if (name.equals(controller.getName()) && (data.isUnique
+                        || data.stacking != null && data.stacking.contains("Unique"))) sources.add(controller.getAbility());
+            }
+        }
+        for (var source : sources) source.removeModifier(target, name);
     }
 
     boolean removeModifier(GameEntity target, String name, boolean refresh) {

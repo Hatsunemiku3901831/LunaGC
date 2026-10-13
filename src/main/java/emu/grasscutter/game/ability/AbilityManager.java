@@ -698,6 +698,7 @@ public final class AbilityManager extends BasePlayerManager {
 
         var action = ability.getData().localIdToAction.get(head.getLocalId());
         if (action != null) {
+            if (ability.ownsServerTriggerCallback(action)) return;
             boolean owned = entity.getAbilityPeriodicHealing().ownsAction(ability,head.getInstancedModifierId(),action);
             if (AbilityCooldownInvocation.isCooldownAction(action)) {
                 if (head.getInstancedModifierId() != 0 && invokedModifier == null) return;
@@ -1540,6 +1541,8 @@ public final class AbilityManager extends BasePlayerManager {
         if (!AbilityExecutionContext.canTrigger(entity, this.player)) return false;
         Ability selected;
         boolean created = false;
+        boolean controlled = AbilityActionSequence.isRunning();
+        Set<AbilityModifierAction> controlledCallbacks = Collections.newSetFromMap(new IdentityHashMap<>());
         var instances = entity.getInstancedAbilities();
         synchronized (instances) {
             selected = instances.stream()
@@ -1548,28 +1551,34 @@ public final class AbilityManager extends BasePlayerManager {
             if (selected == null) {
                 var data = GameData.getAbilityData(name);
                 if (data == null) return false;
+                if (controlled && !collectTriggerCallbacks(data, controlledCallbacks)) return false;
                 selected = new Ability(data, entity, this.player);
                 selected.prepareTriggerInitialization();
                 instances.add(selected);
                 created = true;
+            } else if (controlled && !collectTriggerCallbacks(selected.getData(), controlledCallbacks)) {
+                return false;
             }
         }
         var instance = selected;
+        if (controlled) instance.claimServerTriggerCallbacks(controlledCallbacks, entity);
         var context = new AbilityExecutionContext(instance, entity);
-        var ownedChain = isServerOwnedChain();
+        var ownedChain = isServerOwnedChain() || controlled;
         var healTag = AbilityHealContext.currentTag();
         // Continuations do not wait or retain entity-list locks during nested cross-entity triggers.
         instance.getTriggerInitialization().thenRun(() -> AbilityHealContext.run(healTag, () -> runServerOwned(ownedChain, () -> {
             if (instance.getData().onAbilityStart == null) return;
-            context.runIfCurrent(() -> executeCallbackActionsNow(instance, instance.getData().onAbilityStart,
-                    ByteString.EMPTY, entity, entity));
+            context.runIfCurrent(() -> {
+                if (controlled) AbilityActionSequence.run(instance, instance.getData().onAbilityStart, entity, context::isCurrent);
+                else executeCallbackActionsNow(instance, instance.getData().onAbilityStart, ByteString.EMPTY, entity, entity);
+            });
         }))).exceptionally(error -> {
             Grasscutter.getLogger().error("Triggered ability {} failed during initialization/start", name, error);
             return null;
         });
         if (created) {
             try {
-                fireAbilityOnAdded(instance, entity, true);
+                runServerOwned(ownedChain, () -> fireAbilityOnAdded(instance, entity, true, controlled));
                 instance.getTriggerInitialization().complete(null);
             } catch (RuntimeException | Error error) {
                 instance.getTriggerInitialization().completeExceptionally(error);
@@ -1579,11 +1588,25 @@ public final class AbilityManager extends BasePlayerManager {
         return true;
     }
 
+    private static boolean collectTriggerCallbacks(AbilityData data, Set<AbilityModifierAction> output) {
+        var added = AbilityActionSequence.callbacks(data, data.onAdded);
+        var started = AbilityActionSequence.callbacks(data, data.onAbilityStart);
+        var defaultModifier = data.modifiers == null ? null : data.modifiers.get("Default");
+        var defaults = AbilityActionSequence.callbacks(data, defaultModifier == null ? null : defaultModifier.onAdded);
+        if (added == null || started == null || defaults == null) return false;
+        output.addAll(added); output.addAll(started); output.addAll(defaults);
+        return true;
+    }
+
     private void fireAbilityOnAdded(Ability ability, GameEntity entity) {
         fireAbilityOnAdded(ability, entity, false);
     }
 
     private void fireAbilityOnAdded(Ability ability, GameEntity entity, boolean immediate) {
+        fireAbilityOnAdded(ability, entity, immediate, false);
+    }
+
+    private void fireAbilityOnAdded(Ability ability, GameEntity entity, boolean immediate, boolean controlled) {
         var data = ability.getData();
         if (data == null) return;
 
@@ -1597,7 +1620,10 @@ public final class AbilityManager extends BasePlayerManager {
             }
         }
         var sequence = actions.toArray(AbilityModifierAction[]::new);
-        if (immediate) executeCallbackActionsNow(ability, sequence, ByteString.EMPTY, entity, entity);
+        if (controlled) {
+            var context = new AbilityExecutionContext(ability, entity);
+            AbilityActionSequence.run(ability, sequence, entity, context::isCurrent);
+        } else if (immediate) executeCallbackActionsNow(ability, sequence, ByteString.EMPTY, entity, entity);
         else queueCallbackActions(ability, sequence, ByteString.EMPTY, entity, AbilityHealContext.currentTag());
         entity.getAbilityGlobalValueWatchers().refresh();
     }

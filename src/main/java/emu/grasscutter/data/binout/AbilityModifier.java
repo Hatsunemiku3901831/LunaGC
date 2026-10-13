@@ -73,6 +73,7 @@ public class AbilityModifier implements Serializable {
     public DynamicFloat duration = DynamicFloat.ZERO;
     public DynamicFloat thinkInterval = DynamicFloat.ZERO;
     public String stacking;
+    public boolean isUnique;
     @SerializedName(value = "stackingOption", alternate = "GMGIAGMCGLF")
     public Map<String,Object> stackingOption;
 

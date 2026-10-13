@@ -33,9 +33,12 @@ final class AbilityActionSequence {
             AbilityModifierAction.Type.SetGlobalValueToOverrideMap,
             AbilityModifierAction.Type.Predicated, AbilityModifierAction.Type.Randomed, AbilityModifierAction.Type.RandomAction,
             AbilityModifierAction.Type.Repeated, AbilityModifierAction.Type.ApplyModifier,
-            AbilityModifierAction.Type.AttachModifier, AbilityModifierAction.Type.RemoveModifier);
+            AbilityModifierAction.Type.AttachModifier, AbilityModifierAction.Type.RemoveModifier,
+            AbilityModifierAction.Type.RemoveUniqueModifier, AbilityModifierAction.Type.TriggerAbility,
+            AbilityModifierAction.Type.FireEffect, AbilityModifierAction.Type.AttachEffect);
     private static final Set<String> PREDICATES = Set.of("ByUnlockTalentParam", "ByHasModifier",
-            "ByTargetGlobalValue", "ByTargetHPRatio", "LPKOBOLMDBI", "ONJEHDDFFCH", "GKGBIPDLMMG", "DEOFBICNFHF");
+            "ByTargetGlobalValue", "ByTargetHPRatio", "MIJGFBNEIOG", "BAEGOCNMDPJ",
+            "LPKOBOLMDBI", "ONJEHDDFFCH", "GKGBIPDLMMG", "DEOFBICNFHF");
     private static final Set<String> SELECTOR_FIELDS = Set.of("$type", "shapeName", "sizeRatio",
             "campTargetType", "entityTypes", "entityTypePriority", "sortType", "topLimit");
     private static final Set<String> COMPARISONS = Set.of("Equal", "NotEqual", "MoreThan", "Greater",
@@ -44,6 +47,10 @@ final class AbilityActionSequence {
 
     private static final ThreadLocal<Integer> nesting=ThreadLocal.withInitial(()->0);
     private AbilityActionSequence() {}
+    static boolean isRunning() { return nesting.get()>0; }
+    static boolean visual(AbilityModifierAction.Type type) {
+        return type==AbilityModifierAction.Type.FireEffect || type==AbilityModifierAction.Type.AttachEffect;
+    }
     static Set<AbilityModifierAction> callbacks(AbilityData data, AbilityModifierAction[] actions) {
         Set<AbilityModifierAction> result=Collections.newSetFromMap(new IdentityHashMap<>());
         Set<AbilityModifierAction> path=Collections.newSetFromMap(new IdentityHashMap<>());
@@ -86,6 +93,16 @@ final class AbilityActionSequence {
                     && action.abilityFormula!=null && !action.abilityFormula.isEmpty()) return false;
             validated.add(action);
             if(validated.size()>256) return false;
+            if(action.type==AbilityModifierAction.Type.RemoveUniqueModifier
+                    && (action.modifierName==null || action.modifierName.isBlank())) return false;
+            if(action.type==AbilityModifierAction.Type.TriggerAbility) {
+                var child=action.abilityName==null?null:GameData.getAbilityData(action.abilityName);
+                Set<AbilityModifierAction> referenced=Collections.newSetFromMap(new IdentityHashMap<>());
+                var defaultModifier=child==null || child.modifiers==null?null:child.modifiers.get("Default");
+                if(child==null || !collect(child,child.onAdded,referenced,validated,path,depth+1,false)
+                        || !collect(child,child.onAbilityStart,referenced,validated,path,depth+1,false)
+                        || defaultModifier!=null && !collect(child,defaultModifier.onAdded,referenced,validated,path,depth+1,false)) return false;
+            }
             if((action.type==AbilityModifierAction.Type.Predicated || action.type==AbilityModifierAction.Type.Randomed)
                     && (!collect(data,action.successActions,callbacks,validated,path,depth+1,repeated)
                         || !collect(data,action.failActions,callbacks,validated,path,depth+1,repeated))) return false;
@@ -112,7 +129,7 @@ final class AbilityActionSequence {
         return true;
     }
     private static boolean knownTarget(String target) { return target==null || TARGETS.contains(target); }
-    private static boolean supportedPredicates(List<?> predicates, int depth) {
+    static boolean supportedPredicates(List<?> predicates, int depth) {
         if(predicates==null) return true;
         if(depth>32) return false;
         for(var value:predicates) {
@@ -124,7 +141,7 @@ final class AbilityActionSequence {
                     && ((TARGETS.contains(name) && !"AllPlayerAvatars".equals(name))
                         || "Team".equals(name) || "CasterOriginOwner".equals(name)))) return false;
             if("ByTargetGlobalValue".equals(type) && !supportedComparison(predicate,"compareType")) return false;
-            if(("ByTargetHPRatio".equals(type) || "LPKOBOLMDBI".equals(type))
+            if(("ByTargetHPRatio".equals(type) || "MIJGFBNEIOG".equals(type) || "LPKOBOLMDBI".equals(type))
                     && !supportedComparison(predicate,"logic")) return false;
             if("GKGBIPDLMMG".equals(predicate.get("$type"))
                     && (!(predicate.get("predicates") instanceof List<?> children)
@@ -186,6 +203,7 @@ final class AbilityActionSequence {
     private static void execute(Ability ability, AbilityModifierAction action, GameEntity self,
                                 BooleanSupplier current, int depth, boolean periodic) {
         if(action==null || depth>32 || !current.getAsBoolean() || !AbilityActionBudget.consume()) return;
+        if(visual(action.type)) return; // The client renders the modifier's local effects.
         // This flag applies to the callback's carrier, before resolving its recipient(s).
         if(periodic && !action.doOffStage && self instanceof EntityAvatar
                 && (self.getScene()==null || self.getScene().getEntities().get(self.getId())!=self)) return;

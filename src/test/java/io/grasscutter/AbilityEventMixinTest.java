@@ -39,7 +39,7 @@ class AbilityEventMixinTest {
     void install(String fields) {
         var data =
                 JsonUtils.decode(
-                        "{abilityName:'Event_Callback_Test',abilityMixins:[{$type:'DoActionByEventMixin',onEvent:'HPDown',type:'Both',"
+                        "{abilityName:'Event_Callback_Test',abilityMixins:[{$type:'DoActionByEventMixin',onEvent:'HPDown',type:'Client',"
                                 + fields
                                 + "}]}",
                         AbilityData.class);
@@ -112,7 +112,7 @@ class AbilityEventMixinTest {
 
     @Test
     void eventMetadataDoesNotOverrideTheMixinKind() throws Exception {
-        install("actions:[]");
+        install("actions:[],type:'Both'");
         var mixin = ability.getData().abilityMixins[0];
         assertEquals(AbilityMixinData.Type.DoActionByEventMixin, mixin.type);
         var json = JsonUtils.toJson(mixin).getAsJsonObject();

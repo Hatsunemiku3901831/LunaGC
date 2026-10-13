@@ -98,6 +98,7 @@ public abstract class GameEntity {
         abilityStaminaCost.clear();
         getAbilityPeriodicHealing().clear();
         getAbilityModifierDuration().clear();
+        abilityHealthEvents.clear();
         abilityGlobalValueWatchers.changed();
     }
 
@@ -117,6 +118,8 @@ public abstract class GameEntity {
     @Getter private final emu.grasscutter.game.ability.AbilityModifierDuration abilityModifierDuration =
             new emu.grasscutter.game.ability.AbilityModifierDuration(this);
     @Getter private final AbilityGlobalValueWatchers abilityGlobalValueWatchers = new AbilityGlobalValueWatchers(this);
+    @Getter private final emu.grasscutter.game.ability.AbilityHealthEvents abilityHealthEvents =
+            new emu.grasscutter.game.ability.AbilityHealthEvents(this);
     @Getter private final emu.grasscutter.game.ability.AbilityStaminaCost abilityStaminaCost =
             new emu.grasscutter.game.ability.AbilityStaminaCost(this);
 
@@ -203,7 +206,9 @@ public abstract class GameEntity {
         var properties = this.getFightProperties();
         if (properties == null) return;
 
+        float previous = properties.getOrDefault(id, 0f);
         properties.put(id, value);
+        if (id == FightProperty.FIGHT_PROP_CUR_HP.getId()) abilityHealthEvents.changed(previous, value);
     }
 
     public void addFightProperty(FightProperty prop, float value) {
@@ -409,6 +414,11 @@ public abstract class GameEntity {
         event.call();
         if (event.isCanceled()) {
             return;
+        }
+
+        if (Float.isFinite(event.getDamage()) && event.getDamage() > 0) {
+            abilityHealthEvents.prepareDamage();
+            combatState = AbilityCombatState.read(this);
         }
 
         float effectiveDamage = 0;
