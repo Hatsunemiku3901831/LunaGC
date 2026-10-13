@@ -1,0 +1,10 @@
+// Fingerprint-checked 7.1 native type 83146, opcode 9270, parser 0x14c6d2650.
+syntax = "proto3";
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "FurnitureMakeBeHelpedNotifyOuterClass";
+import "FurnitureMakeBeHelpedData.proto";
+import "FurnitureMakeSlot.proto";
+message FurnitureMakeBeHelpedNotify {
+  FurnitureMakeBeHelpedData helped_data = 8;
+  FurnitureMakeSlot furniture_make_slot = 12;
+}

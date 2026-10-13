@@ -1,0 +1,9 @@
+// Fingerprint-checked 7.1 native type 56885, opcode 23475, parser 0x14d0c63f0.
+syntax = "proto3";
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "FurnitureMakeHelpRspOuterClass";
+import "FurnitureMakeHelpData.proto";
+message FurnitureMakeHelpRsp {
+  repeated FurnitureMakeHelpData help_data_list = 3;
+  int32 retcode = 4;
+}

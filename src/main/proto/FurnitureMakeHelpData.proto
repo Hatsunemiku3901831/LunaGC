@@ -1,11 +1,11 @@
-// Recovered from FurnitureMakeHelpDataOuterClass.java's embedded descriptor; wire schema may predate 7.1.
+// Fingerprint-checked 7.1 native type 78585; parser 0x14d595df0.
+// Scalar semantics remain unverified; retain native field names.
 syntax = "proto3";
 
-package recovered.p_FurnitureMakeHelpData;
 option java_package = "emu.grasscutter.net.proto";
 option java_outer_classname = "FurnitureMakeHelpDataOuterClass";
 
 message FurnitureMakeHelpData {
-  uint32 times = 10;
-  uint32 uid = 4;
+  uint32 LJIIINKMNIE = 3;
+  uint32 IGLAIHPKGPP = 9;
 }
