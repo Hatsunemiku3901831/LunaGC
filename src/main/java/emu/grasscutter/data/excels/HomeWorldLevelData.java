@@ -1,9 +1,13 @@
 package emu.grasscutter.data.excels;
 
+import com.google.gson.annotations.SerializedName;
+
 import emu.grasscutter.data.*;
-import java.util.List;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.List;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -15,12 +19,25 @@ public class HomeWorldLevelData extends GameResource {
     int homeCoinStoreLimit;
     int homeFetterExpStoreLimit;
     int rewardId;
-    int furnitureMakeSlotCount;
+    Integer furnitureMakeSlotCount;
+
+    @SerializedName("HMEPEMLDHII")
+    Integer legacyFurnitureMakeSlotCount;
+
+    @SerializedName("HALLBIKHGGJ")
+    Integer modernFurnitureMakeSlotCount;
+
     int outdoorUnlockBlockCount;
     int freeUnlockModuleCount;
     int deployNpcCount;
     int limitShopGoodsCount;
     List<String> levelFuncs;
+
+    public int getFurnitureMakeSlotCount() {
+        if (furnitureMakeSlotCount != null) return furnitureMakeSlotCount;
+        if (modernFurnitureMakeSlotCount != null) return modernFurnitureMakeSlotCount;
+        return legacyFurnitureMakeSlotCount == null ? 0 : legacyFurnitureMakeSlotCount;
+    }
 
     @Override
     public int getId() {

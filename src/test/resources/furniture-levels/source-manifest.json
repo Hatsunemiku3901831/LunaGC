@@ -1,0 +1,27 @@
+{
+  "repository": "https://github.com/iam-akuzihs/excel",
+  "revision": "ca385db35654e0278861e791005da7aed32b1a81",
+  "fixtures": [
+    {
+      "version": "v5.4.0-dee14cc45e",
+      "url": "https://raw.githubusercontent.com/iam-akuzihs/excel/ca385db35654e0278861e791005da7aed32b1a81/v5.4.0-dee14cc45e/ExcelBinOutput/HomeworldLevelExcelConfigData.json",
+      "sha256": "bca76ac60b1417f4478615416989b64dfadfa2949f76b7829f1d26d775f7e7ea",
+      "rows": 10,
+      "file": "5.4.json"
+    },
+    {
+      "version": "v6.0.0-4f9f22c884",
+      "url": "https://raw.githubusercontent.com/iam-akuzihs/excel/ca385db35654e0278861e791005da7aed32b1a81/v6.0.0-4f9f22c884/ExcelBinOutput/HomeworldLevelExcelConfigData.json",
+      "sha256": "cdc5d8012593cae1e1654ed88a9b32320f332104177d4ed475d9c4d22955dab4",
+      "rows": 10,
+      "file": "6.0.json"
+    },
+    {
+      "version": "v7.1.0-9587d1afbd",
+      "url": "https://raw.githubusercontent.com/iam-akuzihs/excel/ca385db35654e0278861e791005da7aed32b1a81/v7.1.0-9587d1afbd/ExcelBinOutput/HomeworldLevelExcelConfigData.json",
+      "sha256": "f089a844636d2edd5893df686e9269e7c958ac7211521e7e6d129e58f42d3a77",
+      "rows": 10,
+      "file": "7.1.json"
+    }
+  ]
+}
