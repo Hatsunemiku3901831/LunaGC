@@ -9,7 +9,7 @@ import emu.grasscutter.server.packet.send.PacketServerGlobalValueChangeNotify;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/** Value-range bindings on live abilities and attached modifiers, owned by their bearer. */
+/** Value-range and ability-state bindings share child ownership on each live bearer. */
 public final class AbilityGlobalValueWatchers {
     private record Key(Ability ability, String parent, AbilityMixinData mixin) {}
     private record Child(Ability ability, String name) {}
@@ -19,7 +19,7 @@ public final class AbilityGlobalValueWatchers {
         GameEntity initializedSource;
         State(Key key, GameEntity bearer) { context = new AbilityExecutionContext(key.ability(), bearer); }
     }
-    private record Claim(AbilityModifierController controller, boolean owned) {}
+    private record Claim(AbilityModifierController controller, boolean owned, boolean stateCallbacks) {}
     private final GameEntity entity;
     private final Map<Key, State> states = new LinkedHashMap<>();
     private final Map<Child, Claim> claims = new LinkedHashMap<>();
@@ -84,8 +84,10 @@ public final class AbilityGlobalValueWatchers {
     private void addMixins(Map<Key, State> next, Ability ability, String parent, AbilityMixinData[] mixins) {
         if (mixins == null) return;
         for (var mixin : mixins) {
-            if (mixin == null || !observesGlobalValue(mixin.type)
-                    || !mixin.enable || mixin.globalValueKey == null || mixin.globalValueKey.isEmpty()) continue;
+            if (mixin == null || !mixin.enable) continue;
+            boolean stateBinding = mixin.type == AbilityMixinData.Type.AttachToAbilityStateMixin;
+            if (!stateBinding && (!observesGlobalValue(mixin.type)
+                    || mixin.globalValueKey == null || mixin.globalValueKey.isEmpty())) continue;
             var key = new Key(ability,parent,mixin);
             var state = states.get(key);
             if (state == null || !state.context.isCurrent()) state = new State(key,entity);
@@ -156,6 +158,12 @@ public final class AbilityGlobalValueWatchers {
         var initializedSources = Collections.newSetFromMap(new IdentityHashMap<GameEntity, Boolean>());
         for (var entry : next.entrySet()) {
             var key = entry.getKey(); var state = entry.getValue(); var mixin = key.mixin();
+            if (mixin.type == AbilityMixinData.Type.AttachToAbilityStateMixin) {
+                state.desired.clear();
+                var name = AbilityStateBinding.desired(key.ability(), entity, mixin);
+                if (name != null) state.desired.add(name);
+                continue;
+            }
             boolean noInit = mixin.type == AbilityMixinData.Type.AttachModifierToSelfGlobalValueNoInitMixin;
             GameEntity source = noInit ? entity : source(key.ability(),mixin.globalValueTarget);
             if (source == null || !AbilityExecutionContext.canTrigger(source,key.ability().getPlayerOwner())) {
@@ -200,12 +208,23 @@ public final class AbilityGlobalValueWatchers {
         dependencies.forEach((source,keys) -> immutable.put(source,Set.copyOf(keys)));
         referenced = Collections.unmodifiableMap(immutable);
         var wanted = new LinkedHashSet<Child>();
+        var stateChildren = new LinkedHashSet<Child>();
         states.forEach((key,state) -> state.desired.forEach(name -> wanted.add(new Child(key.ability(),name))));
+        states.forEach((key,state) -> {
+            if (key.mixin().type == AbilityMixinData.Type.AttachToAbilityStateMixin)
+                state.desired.forEach(name -> stateChildren.add(new Child(key.ability(), name)));
+        });
         boolean changed = false;
+        var ended = new ArrayList<AbilityModifierController>();
         for (var entry : new ArrayList<>(claims.entrySet())) {
             if (wanted.contains(entry.getKey())) continue;
             ownedChildren.remove(entry.getKey());
-            if (entry.getValue().owned()) changed |= entry.getKey().ability().removeModifier(entity,entry.getKey().name(),false);
+            if (entry.getValue().owned()) {
+                if (entry.getValue().stateCallbacks()) {
+                    changed |= entry.getKey().ability().removeModifierInstance(entity, entry.getValue().controller(), false);
+                    ended.add(entry.getValue().controller());
+                } else changed |= entry.getKey().ability().removeModifier(entity,entry.getKey().name(),false);
+            }
             claims.remove(entry.getKey());
         }
         var added = new ArrayList<Child>();
@@ -214,7 +233,9 @@ public final class AbilityGlobalValueWatchers {
             if (claims.containsKey(child) && existing != null) continue;
             var controller = existing != null ? existing : new AbilityModifierController(child.ability(),
                     child.ability().getData(),child.ability().getData().modifiers.get(child.name()));
-            claims.put(child,new Claim(controller,existing == null));
+            boolean stateCallbacks = stateChildren.contains(child);
+            if (existing == null && stateCallbacks && !controller.prepareServerCallbacks(entity)) continue;
+            claims.put(child,new Claim(controller,existing == null, stateCallbacks));
             if (existing == null) {
                 ownedChildren.add(child);
                 child.ability().registerModifier(entity,controller,false);
@@ -222,11 +243,17 @@ public final class AbilityGlobalValueWatchers {
             }
         }
         if (changed) entity.getAbilityHpModifier().refresh(shouldNotify());
+        ended.forEach(AbilityModifierController::runServerOnRemoved);
         for (var child : added) {
             // Changes can remove a parent while another child's onAdded is executing.
             var owners = states.entrySet().stream().filter(e -> e.getKey().ability()==child.ability()
                     && e.getValue().desired.contains(child.name())).toList();
             if (owners.stream().noneMatch(e -> e.getValue().context.isCurrent())) continue;
+            var claim = claims.get(child);
+            if (claim != null && claim.stateCallbacks()) {
+                claim.controller().runServerOnAdded(() -> owners.stream().anyMatch(e -> e.getValue().context.isCurrent()));
+                continue;
+            }
             var modifier = child.ability().getData().modifiers.get(child.name());
             if (modifier.onAdded != null) AbilityManager.runServerOwned(() -> {
                 var actions = Arrays.stream(modifier.onAdded)

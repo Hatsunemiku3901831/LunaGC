@@ -127,6 +127,12 @@ public class AbilityMixinData implements Serializable {
     public JsonElement legacySkillIndex;
 
     public JsonElement priority;
+    public JsonElement abilityStates;
+    public JsonElement reject;
+    public JsonElement elementTypeModifier;
+    public JsonElement doAfterDie;
+    public JsonElement isUnique;
+    public JsonElement NHPDOIELPCE;
     public List<String> reactionTypes = new ArrayList<>();
     // Both occur together with different entries in current resources. Keep them separate.
     @SerializedName("IGAMNNAADJB")

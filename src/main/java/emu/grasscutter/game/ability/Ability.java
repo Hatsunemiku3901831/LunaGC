@@ -166,6 +166,24 @@ public class Ability {
         unregisterModifier(target, modifier, true);
     }
 
+    /** Release one binding's controller, preserving independently attached same-name instances. */
+    boolean removeModifierInstance(GameEntity target, AbilityModifierController modifier, boolean refresh) {
+        boolean removed;
+        synchronized (target.getInstancedModifiers()) {
+            removed = target.getAbilityHpModifier().lifecycleControllers().contains(modifier);
+            target.getInstancedModifiers().int2ObjectEntrySet().removeIf(entry -> {
+                if (entry.getValue() != modifier) return false;
+                target.getAbilityPeriodicHealing().clientRemoved(entry.getIntKey(), modifier);
+                return true;
+            });
+            unregisterModifierLocked(target, modifier);
+            if (removed && refresh) target.getAbilityHpModifier().refresh(true);
+        }
+        if (removed) target.getAbilityGlobalValueWatchers().refresh();
+        if (refresh) modifier.runServerOnRemoved();
+        return removed;
+    }
+
     void unregisterModifier(GameEntity target, AbilityModifierController modifier, boolean refresh) {
         synchronized (target.getInstancedModifiers()) {
             unregisterModifierLocked(target,modifier);
