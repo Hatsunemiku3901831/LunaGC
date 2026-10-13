@@ -57,6 +57,8 @@ public class GameHome {
     int storedCoin;
     int storedFetterExp;
     List<FurnitureMakeSlotItem> furnitureMakeSlotItemList;
+    FurnitureTakeReceipt pendingFurnitureTake;
+    Set<Integer> craftedFurnitureIds;
     ConcurrentHashMap<Integer, HomeSceneItem> sceneMap;
     ConcurrentHashMap<Integer, HomeSceneItem> mainHouseMap;
     Set<Integer> unlockedHomeBgmList;
@@ -131,6 +133,11 @@ public class GameHome {
 
     public void save() {
         DatabaseHelper.saveHome(this);
+    }
+
+    public Set<Integer> getCraftedFurnitureIds() {
+        if (craftedFurnitureIds == null) craftedFurnitureIds = new HashSet<>();
+        return craftedFurnitureIds;
     }
 
     public HomeSceneItem getHomeSceneItem(int sceneId) {

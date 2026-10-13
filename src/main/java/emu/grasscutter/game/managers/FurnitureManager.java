@@ -4,9 +4,7 @@ import emu.grasscutter.data.GameData;
 import emu.grasscutter.game.home.FurnitureMakeSlotItem;
 import emu.grasscutter.game.inventory.RecipeUnlocks;
 import emu.grasscutter.game.player.*;
-import emu.grasscutter.game.props.ActionReason;
 import emu.grasscutter.game.props.ItemUseOp;
-import emu.grasscutter.net.proto.ItemParamOuterClass;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.server.packet.send.*;
 import emu.grasscutter.utils.Utils;
@@ -56,6 +54,10 @@ public class FurnitureManager extends BasePlayerManager {
     }
 
     public void startMake(int makeId, int avatarId) {
+        if (player.getHome() != null && player.getHome().getPendingFurnitureTake() != null) {
+            player.getSession().send(new PacketFurnitureMakeStartRsp(Retcode.RET_SVR_ERROR_VALUE, null));
+            return;
+        }
         var makeData = GameData.getFurnitureMakeConfigDataMap().get(makeId);
         if (makeData == null) {
             player
@@ -115,74 +117,6 @@ public class FurnitureManager extends BasePlayerManager {
     }
 
     public void take(int index, int makeId, boolean isFastFinish) {
-        var makeData = GameData.getFurnitureMakeConfigDataMap().get(makeId);
-        if (makeData == null) {
-            player
-                    .getSession()
-                    .send(
-                            new PacketTakeFurnitureMakeRsp(
-                                    Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR_VALUE, makeId, null, null));
-            return;
-        }
-
-        var slotItem =
-                player.getHome().getFurnitureMakeSlotItemList().stream()
-                        .filter(x -> x.getIndex() == index && x.getMakeId() == makeId)
-                        .findFirst();
-
-        if (slotItem.isEmpty()) {
-            player
-                    .getSession()
-                    .send(
-                            new PacketTakeFurnitureMakeRsp(
-                                    Retcode.RET_FURNITURE_MAKE_NO_MAKE_DATA_VALUE, makeId, null, null));
-            return;
-        }
-
-        // pay the speedup item
-        if (isFastFinish && !player.getInventory().payItem(107013, 1)) {
-            player
-                    .getSession()
-                    .send(
-                            new PacketTakeFurnitureMakeRsp(
-                                    Retcode.RET_FURNITURE_MAKE_UNFINISH_VALUE, makeId, null, null));
-            return;
-        }
-
-        // check if player can take
-        //        if (slotItem.get().getBeginTime() + slotItem.get().getDurTime() >=
-        // Utils.getCurrentSeconds() && !isFastFinish) {
-        //            player.getSession().send(new
-        // PacketTakeFurnitureMakeRsp(Retcode.RET_FURNITURE_MAKE_UNFINISH_VALUE, makeId, null, null));
-        //            return;
-        //        }
-
-        player.getInventory().addItem(makeData.getFurnitureItemID(), makeData.getCount());
-        player.getHome().getFurnitureMakeSlotItemList().remove(slotItem.get());
-        player
-                .getBattlePassManager()
-                .triggerMission(
-                        emu.grasscutter.game.props.WatcherTriggerType.TRIGGER_FURNITURE_MAKE,
-                        0,
-                        makeData.getCount());
-
-        // Should be for first craft, but until first craft check exists add exp for each item crafted
-        player.getInventory().addItem(121, makeData.getExp(), ActionReason.FurnitureMakeTake);
-
-        player
-                .getSession()
-                .send(
-                        new PacketTakeFurnitureMakeRsp(
-                                Retcode.RET_SUCC_VALUE,
-                                makeId,
-                                List.of(
-                                        ItemParamOuterClass.ItemParam.newBuilder()
-                                                .setItemId(makeData.getFurnitureItemID())
-                                                .setCount(makeData.getCount())
-                                                .build()),
-                                player.getHome().getFurnitureMakeSlotItemList().stream()
-                                        .map(FurnitureMakeSlotItem::toProto)
-                                        .toList()));
-        player.getHome().save();
+        emu.grasscutter.game.home.FurnitureTake.take(player, index, makeId, isFastFinish);
     }
 }
