@@ -94,6 +94,9 @@ public class AbilityMixinData implements Serializable {
     // Reaction callbacks use actions, while self reactions use actionQueue.
     public AbilityModifierAction[] actions;
     public AbilityModifierAction[] actionQueue;
+    public String onEvent;
+    @SerializedName("type")
+    public String eventExecutionType;
     public List<String> reactionTypes = new ArrayList<>();
     // Both occur together with different entries in current resources. Keep them separate.
     @SerializedName("IGAMNNAADJB")
