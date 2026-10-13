@@ -35,6 +35,10 @@ public class PacketCreateVehicleRsp extends BasePacket {
                             vehicleMembers.stream()
                                     .forEach(
                                             vehicleMember -> {
+                                                ((EntityVehicle) entity).getVehicleMembers().remove(vehicleMember);
+                                                player.getScene().getPlayers().stream()
+                                                        .filter(p -> p.getUid()==vehicleMember.getUid())
+                                                        .findFirst().ifPresent(p -> p.getStaminaManager().releaseVehicle(entity.getId()));
                                                 player
                                                         .getScene()
                                                         .broadcastPacket(

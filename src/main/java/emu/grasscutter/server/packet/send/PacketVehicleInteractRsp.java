@@ -1,90 +1,94 @@
 package emu.grasscutter.server.packet.send;
 
-
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.game.ability.NatsaurusVehicleHelper;
-import emu.grasscutter.game.entity.*;
+import emu.grasscutter.game.entity.EntityVehicle;
 import emu.grasscutter.game.player.Player;
-import emu.grasscutter.game.quest.enums.QuestContent;
 import emu.grasscutter.net.packet.*;
+import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.net.proto.VehicleInteractRspOuterClass.VehicleInteractRsp;
 import emu.grasscutter.net.proto.VehicleInteractTypeOuterClass.VehicleInteractType;
 import emu.grasscutter.net.proto.VehicleMemberOuterClass.VehicleMember;
+
 import java.util.Locale;
+
+/** A snapshot of an interaction; constructing a packet never changes gameplay state. */
 public class PacketVehicleInteractRsp extends BasePacket {
-
-    public PacketVehicleInteractRsp(Player player, int entityId, VehicleInteractType interactType) {
+    public PacketVehicleInteractRsp(int entityId, int operation, int retcode) {
         super(PacketOpcodes.VehicleInteractRsp);
-        VehicleInteractRsp.Builder proto = VehicleInteractRsp.newBuilder();
+        setData(
+                VehicleInteractRsp.newBuilder()
+                        .setEntityId(entityId)
+                        .setInteractTypeValue(operation)
+                        .setRetcode(retcode)
+                        .build());
+    }
 
-        GameEntity vehicle = player.getScene()==null?null:player.getScene().getEntityById(entityId);
-        if (!(vehicle instanceof EntityVehicle)) { this.setData(proto.build()); return; }
-        boolean natsaurus=NatsaurusVehicleHelper.isNatsaurusMount((EntityVehicle)vehicle);
-        if (!natsaurus) {
-            vehicle.setFightProperty(1010,1000);
-            vehicle.setFightProperty(2000,1000);
+    public PacketVehicleInteractRsp(Player player, int entityId, VehicleInteractType operation) {
+        super(PacketOpcodes.VehicleInteractRsp);
+        var entity =
+                player == null || player.getScene() == null
+                        ? null
+                        : player.getScene().getEntityById(entityId);
+        if (!(entity instanceof EntityVehicle vehicle)) {
+            setData(
+                    VehicleInteractRsp.newBuilder()
+                            .setEntityId(entityId)
+                            .setInteractType(operation)
+                            .setRetcode(Retcode.RET_ENTITY_NOT_EXIST.getNumber())
+                            .build());
+            return;
         }
-        if (vehicle instanceof EntityVehicle) {
-            proto.setEntityId(vehicle.getId());
-
-            VehicleMember vehicleMember =
-                    VehicleMember.newBuilder()
-                            .setUid(player.getUid())
-                            .setAvatarGuid(player.getTeamManager().getCurrentCharacterGuid())
-                            .build();
-
-            proto.setInteractType(interactType);
-            proto.setMember(vehicleMember);
-
-            switch (interactType) {
-                case VehicleInteractType_VEHICLE_INTERACT_IN -> {
-                    if (((EntityVehicle) vehicle).getVehicleMembers().stream().noneMatch(m -> m.getUid()==player.getUid()))
-                        ((EntityVehicle) vehicle).getVehicleMembers().add(vehicleMember);
-                    player
-                            .getQuestManager()
-                            .queueEvent(
-                                    QuestContent.QUEST_CONTENT_ENTER_VEHICLE,
-                                    ((EntityVehicle) vehicle).getGadgetId());
-
-                    // For phlogiston
-                    var jsonName = GameData.getGadgetDataMap().get(((EntityVehicle) vehicle).getGadgetId())
-                            .getJsonName().toLowerCase(Locale.ROOT);
-                    var vehicleType = jsonName.contains("skiff") ? 2 : jsonName.contains("sorush") ? 3 :
-                            jsonName.contains("natsaurus") ? 4 : 1;
-                    proto.setGadgetId(((EntityVehicle) vehicle).getGadgetId());
-                    proto.setVehicleType(vehicleType);
-                    proto.setVehiclePos((natsaurus?vehicle.getPosition():player.getPosition()).toProto());
-                    proto.setVehicleRot((natsaurus?vehicle.getRotation():player.getRotation()).toProto());
-                }
-                case VehicleInteractType_VEHICLE_INTERACT_OUT -> {
-                    ((EntityVehicle) vehicle).getVehicleMembers().remove(vehicleMember);
-                }
-                default -> {}
-            }
-        }
-        this.setData(proto.build());
+        var member =
+                vehicle.getVehicleMembers().stream()
+                        .filter(m -> m.getUid() == player.getUid())
+                        .findFirst()
+                        .orElseGet(
+                                () ->
+                                        VehicleMember.newBuilder()
+                                                .setUid(player.getUid())
+                                                .setAvatarGuid(
+                                                        player.getTeamManager()
+                                                                .getCurrentCharacterGuid())
+                                                .build());
+        setData(snapshot(vehicle, member, operation, player));
     }
 
     public PacketVehicleInteractRsp(
-            EntityVehicle vehicle, VehicleMember vehicleMember, VehicleInteractType interactType) {
+            EntityVehicle vehicle, VehicleMember member, VehicleInteractType operation) {
         super(PacketOpcodes.VehicleInteractRsp);
-        VehicleInteractRsp.Builder proto = VehicleInteractRsp.newBuilder();
+        setData(snapshot(vehicle, member, operation, null));
+    }
 
-        if (vehicle != null) {
-            proto.setEntityId(vehicle.getId());
-            proto.setInteractType(interactType);
-            proto.setMember(vehicleMember);
-
-            switch (interactType) {
-                case VehicleInteractType_VEHICLE_INTERACT_IN -> {
-                    vehicle.getVehicleMembers().add(vehicleMember);
-                }
-                case VehicleInteractType_VEHICLE_INTERACT_OUT -> {
-                    vehicle.getVehicleMembers().remove(vehicleMember);
-                }
-                default -> {}
-            }
+    private static VehicleInteractRsp snapshot(
+            EntityVehicle vehicle,
+            VehicleMember member,
+            VehicleInteractType operation,
+            Player player) {
+        var reply = VehicleInteractRsp.newBuilder().setInteractType(operation);
+        if (vehicle == null || member == null)
+            return reply.setRetcode(Retcode.RET_ENTITY_NOT_EXIST.getNumber()).build();
+        reply.setEntityId(vehicle.getId()).setMember(member);
+        if (operation == VehicleInteractType.VehicleInteractType_VEHICLE_INTERACT_IN) {
+            var data = GameData.getGadgetDataMap().get(vehicle.getGadgetId());
+            var name =
+                    data == null || data.getJsonName() == null
+                            ? ""
+                            : data.getJsonName().toLowerCase(Locale.ROOT);
+            int type =
+                    name.contains("skiff")
+                            ? 2
+                            : name.contains("sorush") ? 3 : name.contains("natsaurus") ? 4 : 1;
+            boolean mount = NatsaurusVehicleHelper.isNatsaurusMount(vehicle);
+            reply.setGadgetId(vehicle.getGadgetId())
+                    .setVehicleType(type)
+                    .setVehiclePos(
+                            (mount || player == null ? vehicle.getPosition() : player.getPosition())
+                                    .toProto())
+                    .setVehicleRot(
+                            (mount || player == null ? vehicle.getRotation() : player.getRotation())
+                                    .toProto());
         }
-        this.setData(proto.build());
+        return reply.build();
     }
 }

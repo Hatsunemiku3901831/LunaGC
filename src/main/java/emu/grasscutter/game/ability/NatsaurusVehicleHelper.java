@@ -140,17 +140,12 @@ public final class NatsaurusVehicleHelper {
                 eject(player);
                 scene.removeEntity(source, VisionType.VisionType_VISION_REMOVE);
                 scene.addEntity(mount);
-                player.getStaminaManager()
-                        .handleVehicleInteractReq(
+                player.sendPacket(
+                        VehicleInteraction.execute(
                                 player.getSession(),
                                 mount.getId(),
-                                VehicleInteractType.VehicleInteractType_VEHICLE_INTERACT_IN);
-                player.sendPacket(
-                        new PacketVehicleInteractRsp(
-                                player,
-                                mount.getId(),
-                                VehicleInteractType.VehicleInteractType_VEHICLE_INTERACT_IN));
-                scene.updateEntity(mount);
+                                VehicleInteractType.VehicleInteractType_VEHICLE_INTERACT_IN
+                                        .getNumber()));
                 player.getAbilityManager().setScanTarget(null);
                 return mount;
             }
