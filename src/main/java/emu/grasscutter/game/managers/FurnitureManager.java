@@ -70,6 +70,11 @@ public class FurnitureManager extends BasePlayerManager {
                             Retcode.RET_FURNITURE_MAKE_NOT_IN_CORRECT_HOME_VALUE));
             return;
         }
+        if (home.getPendingFurnitureStart() != null
+                && !emu.grasscutter.game.home.FurnitureStartRecovery.recover(player)) {
+            player.sendPacket(new PacketFurnitureMakeRsp(Retcode.RET_SVR_ERROR_VALUE));
+            return;
+        }
         player.sendPacket(new PacketFurnitureMakeRsp(home));
     }
 
