@@ -71,6 +71,15 @@
     }
   },
   "commands": {
+    "furniture": {
+      "description": "Help with furniture crafting in the friend's home you are visiting.\n\tUsage: furniture help",
+      "help_success": "Furniture crafting assistance confirmed.",
+      "visit_required": "Enter a friend's Serenitea Pot before assisting.",
+      "daily_limit": "You have already helped this friend today.",
+      "acceleration_limit": "These jobs have already received their maximum assistance.",
+      "no_jobs": "There are no unfinished furniture jobs to assist.",
+      "help_error": "Assistance could not be confirmed. Try again shortly."
+    },
     "aster": {
       "description": "Check or claim the Unreconciled Stars Fischl reward after all original conditions",
       "ready": "Fischl's activity reward is ready. Use aster take to claim it.",

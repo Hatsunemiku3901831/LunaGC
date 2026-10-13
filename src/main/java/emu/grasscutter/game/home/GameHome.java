@@ -62,6 +62,7 @@ public class GameHome {
     FurnitureCancelReceipt pendingFurnitureCancel;
     FurnitureBulkReceipt pendingFurnitureBulk;
     Map<Integer, Integer> furnitureAssistanceDays;
+    Map<Integer, FurnitureAssistanceRecord> furnitureAssistanceProfiles;
     @Transient transient FurnitureAssistance.Pending pendingFurnitureAssistanceWrite;
     Set<Integer> craftedFurnitureIds;
     ConcurrentHashMap<Integer, HomeSceneItem> sceneMap;

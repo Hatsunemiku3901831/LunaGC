@@ -70,7 +70,8 @@ public class FurnitureManager extends BasePlayerManager {
                             Retcode.RET_FURNITURE_MAKE_NOT_IN_CORRECT_HOME_VALUE));
             return;
         }
-        if (!emu.grasscutter.game.home.FurnitureCompletedRecovery.recover(player)) {
+        if (!emu.grasscutter.game.home.FurnitureCompletedRecovery.recover(player)
+                || !emu.grasscutter.game.home.FurnitureAssistance.confirmPending(home)) {
             player.sendPacket(new PacketFurnitureMakeRsp(Retcode.RET_SVR_ERROR_VALUE));
             return;
         }
@@ -83,6 +84,11 @@ public class FurnitureManager extends BasePlayerManager {
 
     public void cancel(int index, int makeId) {
         emu.grasscutter.game.home.FurnitureCancel.cancel(player, index, makeId);
+    }
+
+    public int helpMake() {
+        return emu.grasscutter.game.home.FurnitureAssistance.assist(
+                player, emu.grasscutter.utils.Utils.getCurrentSeconds());
     }
 
     public void takeAll(

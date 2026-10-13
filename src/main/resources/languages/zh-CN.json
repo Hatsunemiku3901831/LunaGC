@@ -71,6 +71,15 @@
     }
   },
   "commands": {
+    "furniture": {
+      "description": "协助当前拜访的好友家园制作摆设。\n\t用法：furniture help",
+      "help_success": "摆设制作协助已完成。",
+      "visit_required": "请先进入好友的尘歌壶，再进行协助。",
+      "daily_limit": "今天已经协助过这位好友。",
+      "acceleration_limit": "这些制作任务已经达到协助减时上限。",
+      "no_jobs": "当前没有可以协助的未完成摆设。",
+      "help_error": "协助暂时未能确认，请稍后再试。"
+    },
     "aster": {
       "description": "查看或领取未归的熄星菲谢尔奖励，要求完成原始三个条件",
       "ready": "菲谢尔活动奖励条件已满足，可以使用 aster take 领取。",

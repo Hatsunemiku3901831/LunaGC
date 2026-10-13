@@ -18,6 +18,10 @@ public class PacketFurnitureMakeRsp extends BasePacket {
             return;
         }
         synchronized (home) {
+            if (home.getPendingFurnitureAssistanceWrite() != null) {
+                setData(failure(Retcode.RET_SVR_ERROR_VALUE));
+                return;
+            }
             var definition = GameData.getHomeWorldLevelDataMap().get(home.getLevel());
             if (definition == null
                     || definition.getId() != home.getLevel()
@@ -37,9 +41,35 @@ public class PacketFurnitureMakeRsp extends BasePacket {
                     return;
                 }
             }
+            var profiles = home.getFurnitureAssistanceProfiles();
+            if (profiles != null
+                    && profiles.entrySet().stream()
+                            .anyMatch(
+                                    entry ->
+                                            entry.getKey() == null
+                                                    || entry.getValue() == null
+                                                    || entry.getKey() != entry.getValue().getUid()
+                                                    || !entry.getValue().isValid())) {
+                setData(failure(Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR_VALUE));
+                return;
+            }
             setData(
                     FurnitureMakeRspOuterClass.FurnitureMakeRsp.newBuilder()
                             .setFurnitureMakeSlotNum(definition.getFurnitureMakeSlotCount())
+                            .addAllHelpedDataList(
+                                    profiles == null
+                                            ? List.of()
+                                            : profiles.values().stream()
+                                                    .sorted(
+                                                            Comparator.comparingInt(
+                                                                            FurnitureAssistanceRecord
+                                                                                    ::getTime)
+                                                                    .reversed()
+                                                                    .thenComparingInt(
+                                                                            FurnitureAssistanceRecord
+                                                                                    ::getUid))
+                                                    .map(FurnitureAssistanceRecord::toProto)
+                                                    .toList())
                             .setFurnitureMakeSlot(
                                     FurnitureMakeSlotOuterClass.FurnitureMakeSlot.newBuilder()
                                             .addAllFurnitureMakeDataList(
