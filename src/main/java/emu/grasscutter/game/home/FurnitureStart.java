@@ -128,6 +128,14 @@ public final class FurnitureStart {
                                 .avatarId(avatarId)
                                 .beginTime(Utils.getCurrentSeconds())
                                 .durTime(recipe.getMakeTime())
+                                .plan(
+                                        new FurnitureMakePlan(
+                                                makeId,
+                                                product.getId(),
+                                                recipe.getCount(),
+                                                recipe.getMakeTime(),
+                                                recipe.getExp(),
+                                                totals))
                                 .build();
                 var receipt = new FurnitureStartReceipt(slot, costs);
                 home.setFurnitureMakeSlotItemList(slots);
@@ -163,7 +171,7 @@ public final class FurnitureStart {
                     Grasscutter.getLogger()
                             .error(
                                     "Furniture start needs reconciliation: UID {}, recipe {}, slot"
-                                        + " {}",
+                                            + " {}",
                                     player.getUid(),
                                     makeId,
                                     index,

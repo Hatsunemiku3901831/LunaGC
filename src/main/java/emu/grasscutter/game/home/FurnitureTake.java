@@ -49,7 +49,8 @@ public final class FurnitureTake {
         var inventory = player.getInventory();
         synchronized (inventory) {
             synchronized (home) {
-                if (home.getPendingFurnitureTake() != null || home.getPendingFurnitureStart() != null) {
+                if (home.getPendingFurnitureTake() != null
+                        || home.getPendingFurnitureStart() != null) {
                     fail(player, makeId, Retcode.RET_SVR_ERROR);
                     return;
                 }
@@ -71,19 +72,35 @@ public final class FurnitureTake {
                     return;
                 }
                 var slot = matches.get(0);
-                var recipe = GameData.getFurnitureMakeConfigDataMap().get(makeId);
-                var data =
-                        recipe == null
-                                ? null
-                                : GameData.getItemDataMap().get(recipe.getFurnitureItemID());
-                if (recipe == null
-                        || recipe.getId() != makeId
-                        || recipe.getCount() <= 0
-                        || recipe.getExp() < 0
-                        || slot.getBeginTime() <= 0
+                var plan = slot.getPlan();
+                int itemId, count, trustExp;
+                if (plan != null) {
+                    if (!plan.isValidFor(slot)) {
+                        fail(player, makeId, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
+                        return;
+                    }
+                    itemId = plan.getItemId();
+                    count = plan.getCount();
+                    trustExp = plan.getTrustExp();
+                } else {
+                    // Legacy jobs have no captured definition; do not invent one on reload.
+                    var recipe = GameData.getFurnitureMakeConfigDataMap().get(makeId);
+                    if (recipe == null
+                            || recipe.getId() != makeId
+                            || recipe.getCount() <= 0
+                            || recipe.getExp() < 0) {
+                        fail(player, makeId, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
+                        return;
+                    }
+                    itemId = recipe.getFurnitureItemID();
+                    count = recipe.getCount();
+                    trustExp = recipe.getExp();
+                }
+                var data = GameData.getItemDataMap().get(itemId);
+                if (slot.getBeginTime() <= 0
                         || slot.getDurTime() <= 0
                         || data == null
-                        || data.getId() != recipe.getFurnitureItemID()
+                        || data.getId() != itemId
                         || data.getItemType() != ItemType.ITEM_FURNITURE
                         || data.isUseOnGain()
                         || data.getStackLimit() <= 0) {
@@ -100,7 +117,7 @@ public final class FurnitureTake {
                 var tab = inventory.getInventoryTab(ItemType.ITEM_FURNITURE);
                 var existing = inventory.getItemById(data.getId());
                 if (before < 0
-                        || (long) before + recipe.getCount() > data.getStackLimit()
+                        || (long) before + count > data.getStackLimit()
                         || tab == null
                         || before == 0 && tab.getSize() >= tab.getMaxCapacity()
                         || existing != null && existing.getOwnerId() != player.getUid()) {
@@ -121,7 +138,7 @@ public final class FurnitureTake {
                     return;
                 }
                 boolean first = !home.getCraftedFurnitureIds().contains(data.getId());
-                int award = first ? recipe.getExp() : 0;
+                int award = first ? trustExp : 0;
                 var progress = trustAfter(home, award);
                 if (progress == null) {
                     fail(player, makeId, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
@@ -131,7 +148,7 @@ public final class FurnitureTake {
                         new FurnitureTakeReceipt(
                                 slot,
                                 data.getId(),
-                                recipe.getCount(),
+                                count,
                                 before,
                                 vialBefore,
                                 needsVial,
@@ -155,9 +172,8 @@ public final class FurnitureTake {
                     }
                     receipt.paid();
                     DatabaseHelper.saveGameSync(home);
-                    if (!inventory.addItem(new GameItem(data, recipe.getCount()))
-                            || (long) inventory.getItemCountById(data.getId()) - before
-                                    != recipe.getCount())
+                    if (!inventory.addItem(new GameItem(data, count))
+                            || (long) inventory.getItemCountById(data.getId()) - before != count)
                         throw new IllegalStateException("Furniture output was not stored exactly");
                     var stored = inventory.getItemById(data.getId());
                     if (stored == null || stored.getOwnerId() != player.getUid())
@@ -176,10 +192,7 @@ public final class FurnitureTake {
                     receipt.progressed();
                     DatabaseHelper.saveGameSync(home);
                     player.getBattlePassManager()
-                            .triggerMission(
-                                    WatcherTriggerType.TRIGGER_FURNITURE_MAKE,
-                                    0,
-                                    recipe.getCount());
+                            .triggerMission(WatcherTriggerType.TRIGGER_FURNITURE_MAKE, 0, count);
                     DatabaseHelper.saveGameSync(player.getBattlePassManager());
                     receipt.missionApplied();
                     if (!slots.remove(slot))
@@ -200,7 +213,7 @@ public final class FurnitureTake {
                     Grasscutter.getLogger()
                             .error(
                                     "Furniture claim needs reconciliation: UID {}, recipe {}, slot"
-                                        + " {}",
+                                            + " {}",
                                     player.getUid(),
                                     makeId,
                                     index,
@@ -218,7 +231,7 @@ public final class FurnitureTake {
                                         List.of(
                                                 ItemParam.newBuilder()
                                                         .setItemId(data.getId())
-                                                        .setCount(recipe.getCount())
+                                                        .setCount(count)
                                                         .build()),
                                         slots.stream()
                                                 .map(FurnitureMakeSlotItem::toProto)

@@ -1,7 +1,9 @@
 package emu.grasscutter.game.home;
 
 import dev.morphia.annotations.*;
+
 import emu.grasscutter.net.proto.FurnitureMakeDataOuterClass;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -15,6 +17,7 @@ public class FurnitureMakeSlotItem {
     int avatarId;
     int beginTime;
     int durTime;
+    FurnitureMakePlan plan;
 
     public FurnitureMakeDataOuterClass.FurnitureMakeData toProto() {
         return FurnitureMakeDataOuterClass.FurnitureMakeData.newBuilder()
