@@ -160,7 +160,12 @@ public final class FurnitureStart {
                                                     recipe.getCount(),
                                                     duration,
                                                     recipe.getExp(),
-                                                    materialCosts))
+                                                    materialCosts,
+                                                    FurnitureBonuses.materialReturns(
+                                                            player,
+                                                            avatarId,
+                                                            product,
+                                                            materialCosts)))
                                     .build());
                     used.add(index++);
                 }
@@ -224,7 +229,7 @@ public final class FurnitureStart {
                     Grasscutter.getLogger()
                             .error(
                                     "Furniture start needs reconciliation: UID {}, jobs {}, first"
-                                        + " recipe {}, first slot {}",
+                                            + " recipe {}, first slot {}",
                                     player.getUid(),
                                     jobs.size(),
                                     jobs.get(0).getMakeId(),

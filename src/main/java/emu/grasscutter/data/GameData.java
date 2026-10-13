@@ -403,6 +403,10 @@ public final class GameData {
             new Int2ObjectOpenHashMap<>();
 
     @Getter
+    private static final Int2ObjectMap<FurnitureTypeData> furnitureTypeDataMap =
+            new Int2ObjectOpenHashMap<>();
+
+    @Getter
     private static final Int2ObjectMap<FurnitureSuiteData> furnitureSuiteDataMap =
             new Int2ObjectOpenHashMap<>();
 
