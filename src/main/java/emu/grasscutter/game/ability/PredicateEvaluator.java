@@ -59,6 +59,7 @@ public final class PredicateEvaluator {
             case "ByTargetHPRatio" -> byTargetHPRatio(pred, ability, resolved);
                 // Verified against the current 7.1 client; these are not unknown predicates.
             case "MIJGFBNEIOG" -> byTargetHpValue(pred, ability, resolved);
+            case "BAEGOCNMDPJ" -> AbilitySkillReadyPredicate.evaluate(pred, resolved);
             case "LPKOBOLMDBI" -> byTargetHpDebts(pred, ability, resolved);
             case "ONJEHDDFFCH" -> byHealTags(pred, action);
             case "GKGBIPDLMMG" -> none(pred, ability, owner, target, action);

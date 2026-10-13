@@ -118,6 +118,18 @@ public final class AbilitySharedCooldown {
         return Collections.unmodifiableMap(result);
     }
 
+    /** Predicate reads do not consume a charge or send a synchronization packet. */
+    public synchronized Optional<Boolean> fullyRecovered(int groupId) {
+        var data = GameData.getShareCDDataMap().get(groupId);
+        if (groupId <= 0
+                || data == null
+                || data.getMaxChargeNum() < 1
+                || data.getMaxChargeNum() > 64
+                || times() == null) return Optional.empty();
+        var queue = groups.get(groupId);
+        return Optional.of(queue == null || queue.isEmpty());
+    }
+
     /** Scene entry imports the player's remaining cooldowns without resetting their clocks. */
     public synchronized void synchronize() {
         if (player.getScene() != null)
