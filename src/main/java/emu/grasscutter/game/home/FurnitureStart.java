@@ -30,7 +30,8 @@ public final class FurnitureStart {
             synchronized (home) {
                 if (home.getPendingFurnitureTake() != null
                         || home.getPendingFurnitureStart() != null
-                        || home.getPendingFurnitureCancel() != null) {
+                        || home.getPendingFurnitureCancel() != null
+                        || home.getPendingFurnitureBulk() != null) {
                     fail(player, Retcode.RET_SVR_ERROR);
                     return;
                 }

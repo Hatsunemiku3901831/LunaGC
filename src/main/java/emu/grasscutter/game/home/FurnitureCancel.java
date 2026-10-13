@@ -31,7 +31,8 @@ public final class FurnitureCancel {
             synchronized (home) {
                 if (home.getPendingFurnitureStart() != null
                         || home.getPendingFurnitureTake() != null
-                        || home.getPendingFurnitureCancel() != null) {
+                        || home.getPendingFurnitureCancel() != null
+                        || home.getPendingFurnitureBulk() != null) {
                     fail(player, makeId, Retcode.RET_SVR_ERROR);
                     return;
                 }

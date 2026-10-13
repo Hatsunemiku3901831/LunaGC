@@ -70,4 +70,8 @@ public class FurnitureManager extends BasePlayerManager {
     public void cancel(int index, int makeId) {
         emu.grasscutter.game.home.FurnitureCancel.cancel(player, index, makeId);
     }
+
+    public void takeAll(java.util.List<emu.grasscutter.net.proto.FurnitureMakeTakeInfoOuterClass.FurnitureMakeTakeInfo> selections) {
+        emu.grasscutter.game.home.FurnitureBulkTake.take(player,selections);
+    }
 }

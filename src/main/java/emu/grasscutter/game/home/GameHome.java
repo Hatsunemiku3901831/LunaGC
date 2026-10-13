@@ -60,6 +60,7 @@ public class GameHome {
     FurnitureTakeReceipt pendingFurnitureTake;
     FurnitureStartReceipt pendingFurnitureStart;
     FurnitureCancelReceipt pendingFurnitureCancel;
+    FurnitureBulkReceipt pendingFurnitureBulk;
     Set<Integer> craftedFurnitureIds;
     ConcurrentHashMap<Integer, HomeSceneItem> sceneMap;
     ConcurrentHashMap<Integer, HomeSceneItem> mainHouseMap;

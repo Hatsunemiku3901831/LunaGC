@@ -12,17 +12,24 @@ import emu.grasscutter.server.packet.send.*;
 import emu.grasscutter.utils.Utils;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /** One acknowledged furniture claim, including speedup, storage and first-craft progress. */
 public final class FurnitureTake {
     private FurnitureTake() {}
 
-    private static void fail(Player player, int makeId, Retcode code) {
-        player.getSession()
-                .send(new PacketTakeFurnitureMakeRsp(code.getNumber(), makeId, null, null));
+    record Result(
+            int retcode,
+            int makeId,
+            List<ItemParam> outputs,
+            List<emu.grasscutter.net.proto.FurnitureMakeDataOuterClass.FurnitureMakeData>
+                    remaining) {}
+
+    private static void fail(Consumer<Result> reply, int makeId, Retcode code) {
+        reply.accept(new Result(code.getNumber(), makeId, null, null));
     }
 
-    private static int[] trustAfter(GameHome home, int award) {
+    static int[] trustAfter(GameHome home, int award) {
         if (home.getLevel() <= 0 || home.getExp() < 0 || award < 0) return null;
         long exp = (long) home.getExp() + award;
         int level = home.getLevel();
@@ -41,9 +48,48 @@ public final class FurnitureTake {
     }
 
     public static void take(Player player, int index, int makeId, boolean fast) {
+        execute(
+                player,
+                index,
+                makeId,
+                fast,
+                null,
+                null,
+                result ->
+                        player.getSession()
+                                .send(
+                                        new PacketTakeFurnitureMakeRsp(
+                                                result.retcode(),
+                                                result.makeId(),
+                                                result.outputs(),
+                                                result.remaining())));
+    }
+
+    static Result claim(
+            Player player, FurnitureBulkReceipt owner, FurnitureBulkReceipt.Entry entry) {
+        Result[] result = {null};
+        execute(
+                player,
+                entry.getIndex(),
+                entry.getMakeId(),
+                entry.isFast(),
+                owner,
+                entry,
+                value -> result[0] = value);
+        return result[0];
+    }
+
+    private static void execute(
+            Player player,
+            int index,
+            int makeId,
+            boolean fast,
+            FurnitureBulkReceipt owner,
+            FurnitureBulkReceipt.Entry entry,
+            Consumer<Result> reply) {
         var home = player.getHome();
         if (home == null || home.getOwnerUid() != player.getUid()) {
-            fail(player, makeId, Retcode.RET_HOME_PLAYER_NOT_IN_SELF_HOME_WORLD);
+            fail(reply, makeId, Retcode.RET_HOME_PLAYER_NOT_IN_SELF_HOME_WORLD);
             return;
         }
         var inventory = player.getInventory();
@@ -51,13 +97,15 @@ public final class FurnitureTake {
             synchronized (home) {
                 if (home.getPendingFurnitureTake() != null
                         || home.getPendingFurnitureStart() != null
-                        || home.getPendingFurnitureCancel() != null) {
-                    fail(player, makeId, Retcode.RET_SVR_ERROR);
+                        || home.getPendingFurnitureCancel() != null
+                        || home.getPendingFurnitureBulk() != owner
+                        || owner != null && !owner.canRun(entry)) {
+                    fail(reply, makeId, Retcode.RET_SVR_ERROR);
                     return;
                 }
                 var slots = home.getFurnitureMakeSlotItemList();
                 if (slots == null || index < 0) {
-                    fail(player, makeId, Retcode.RET_FURNITURE_MAKE_NO_MAKE_DATA);
+                    fail(reply, makeId, Retcode.RET_FURNITURE_MAKE_NO_MAKE_DATA);
                     return;
                 }
                 var matches =
@@ -69,15 +117,23 @@ public final class FurnitureTake {
                                                         && slot.getMakeId() == makeId)
                                 .toList();
                 if (matches.size() != 1) {
-                    fail(player, makeId, Retcode.RET_FURNITURE_MAKE_NO_MAKE_DATA);
+                    fail(reply, makeId, Retcode.RET_FURNITURE_MAKE_NO_MAKE_DATA);
                     return;
                 }
                 var slot = matches.get(0);
                 var plan = slot.getPlan();
                 int itemId, count, trustExp;
-                if (plan != null) {
+                if (owner != null) {
+                    if (!entry.matches(slot)) {
+                        fail(reply, makeId, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
+                        return;
+                    }
+                    itemId = entry.getItemId();
+                    count = entry.getCount();
+                    trustExp = entry.getTrustExp();
+                } else if (plan != null) {
                     if (!plan.isValidFor(slot)) {
-                        fail(player, makeId, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
+                        fail(reply, makeId, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
                         return;
                     }
                     itemId = plan.getItemId();
@@ -90,7 +146,7 @@ public final class FurnitureTake {
                             || recipe.getId() != makeId
                             || recipe.getCount() <= 0
                             || recipe.getExp() < 0) {
-                        fail(player, makeId, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
+                        fail(reply, makeId, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
                         return;
                     }
                     itemId = recipe.getFurnitureItemID();
@@ -105,13 +161,13 @@ public final class FurnitureTake {
                         || data.getItemType() != ItemType.ITEM_FURNITURE
                         || data.isUseOnGain()
                         || data.getStackLimit() <= 0) {
-                    fail(player, makeId, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
+                    fail(reply, makeId, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
                     return;
                 }
                 long end = (long) slot.getBeginTime() + slot.getDurTime();
                 boolean needsVial = end > Utils.getCurrentSeconds();
                 if (needsVial && !fast) {
-                    fail(player, makeId, Retcode.RET_FURNITURE_MAKE_UNFINISH);
+                    fail(reply, makeId, Retcode.RET_FURNITURE_MAKE_UNFINISH);
                     return;
                 }
                 int before = inventory.getItemCountById(data.getId());
@@ -122,7 +178,7 @@ public final class FurnitureTake {
                         || tab == null
                         || before == 0 && tab.getSize() >= tab.getMaxCapacity()
                         || existing != null && existing.getOwnerId() != player.getUid()) {
-                    fail(player, makeId, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
+                    fail(reply, makeId, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
                     return;
                 }
                 int vialBefore = inventory.getItemCountById(107013);
@@ -135,14 +191,14 @@ public final class FurnitureTake {
                                 || vialData == null
                                 || vialData.getId() != 107013
                                 || vialData.getItemType() != ItemType.ITEM_MATERIAL)) {
-                    fail(player, makeId, Retcode.RET_FURNITURE_MAKE_UNFINISH);
+                    fail(reply, makeId, Retcode.RET_FURNITURE_MAKE_UNFINISH);
                     return;
                 }
                 boolean first = !home.getCraftedFurnitureIds().contains(data.getId());
                 int award = first ? trustExp : 0;
                 var progress = trustAfter(home, award);
                 if (progress == null) {
-                    fail(player, makeId, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
+                    fail(reply, makeId, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
                     return;
                 }
                 var receipt =
@@ -200,6 +256,7 @@ public final class FurnitureTake {
                         throw new IllegalStateException("Furniture source slot changed");
                     removed = true;
                     receipt.completed();
+                    if (owner != null) owner.completed(entry, data.getId(), count);
                     DatabaseHelper.saveGameSync(home);
                     home.setPendingFurnitureTake(null);
                     DatabaseHelper.saveGameSync(home);
@@ -219,24 +276,21 @@ public final class FurnitureTake {
                                     makeId,
                                     index,
                                     failure);
-                    fail(player, makeId, Retcode.RET_SVR_ERROR);
+                    fail(reply, makeId, Retcode.RET_SVR_ERROR);
                     return;
                 }
                 if (award > 0 && player.getCurHomeWorld() != null)
                     player.sendPacket(new PacketHomeBasicInfoNotify(player, false));
-                player.getSession()
-                        .send(
-                                new PacketTakeFurnitureMakeRsp(
-                                        0,
-                                        makeId,
-                                        List.of(
-                                                ItemParam.newBuilder()
-                                                        .setItemId(data.getId())
-                                                        .setCount(count)
-                                                        .build()),
-                                        slots.stream()
-                                                .map(FurnitureMakeSlotItem::toProto)
-                                                .toList()));
+                reply.accept(
+                        new Result(
+                                0,
+                                makeId,
+                                List.of(
+                                        ItemParam.newBuilder()
+                                                .setItemId(data.getId())
+                                                .setCount(count)
+                                                .build()),
+                                slots.stream().map(FurnitureMakeSlotItem::toProto).toList()));
             }
         }
     }
