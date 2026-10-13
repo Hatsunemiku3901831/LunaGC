@@ -2,8 +2,10 @@ package emu.grasscutter.game.managers;
 
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.game.home.FurnitureMakeSlotItem;
+import emu.grasscutter.game.inventory.RecipeUnlocks;
 import emu.grasscutter.game.player.*;
 import emu.grasscutter.game.props.ActionReason;
+import emu.grasscutter.game.props.ItemUseOp;
 import emu.grasscutter.net.proto.ItemParamOuterClass;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.server.packet.send.*;
@@ -34,6 +36,8 @@ public class FurnitureManager extends BasePlayerManager {
     }
 
     public boolean unlockFurnitureFormula(int id) {
+        if (!RecipeUnlocks.canUnlock(player, ItemUseOp.ITEM_USE_UNLOCK_FURNITURE_FORMULA, id))
+            return false;
         if (!player.getUnlockedFurniture().add(id)) {
             return false; // Already unlocked!
         }
@@ -42,6 +46,8 @@ public class FurnitureManager extends BasePlayerManager {
     }
 
     public boolean unlockFurnitureSuite(int id) {
+        if (!RecipeUnlocks.canUnlock(player, ItemUseOp.ITEM_USE_UNLOCK_FURNITURE_SUITE, id))
+            return false;
         if (!player.getUnlockedFurnitureSuite().add(id)) {
             return false; // Already unlocked!
         }

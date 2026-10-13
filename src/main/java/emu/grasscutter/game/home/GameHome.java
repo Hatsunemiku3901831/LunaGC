@@ -7,6 +7,7 @@ import emu.grasscutter.data.excels.HomeWorldLevelData;
 import emu.grasscutter.data.excels.scene.SceneData;
 import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.game.avatar.Avatar;
+import emu.grasscutter.game.inventory.RecipeUnlocks;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.props.SceneType;
 import emu.grasscutter.net.proto.HomeAvatarTalkFinishInfoOuterClass.HomeAvatarTalkFinishInfo;
@@ -305,6 +306,7 @@ public class GameHome {
     }
 
     public boolean addUnlockedHomeBgm(int homeBgmId) {
+        if (!RecipeUnlocks.canUnlockHomeBgm(this, homeBgmId)) return false;
         if (!getUnlockedHomeBgmList().add(homeBgmId)) return false;
 
         var player = this.getPlayer();

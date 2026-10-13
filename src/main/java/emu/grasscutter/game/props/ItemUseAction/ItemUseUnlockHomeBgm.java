@@ -1,5 +1,6 @@
 package emu.grasscutter.game.props.ItemUseAction;
 
+import emu.grasscutter.game.inventory.RecipeUnlocks;
 import emu.grasscutter.game.props.ItemUseOp;
 
 public class ItemUseUnlockHomeBgm extends ItemUseInt {
@@ -14,7 +15,12 @@ public class ItemUseUnlockHomeBgm extends ItemUseInt {
 
     @Override
     public boolean useItem(UseItemParams params) {
-        params.player.getHome().addUnlockedHomeBgm(this.i);
-        return true; // Probably best to remove the item even if the bgm was already unlocked.
+        return RecipeUnlocks.canUse(params, getItemUseOp(), this.i);
+    }
+
+    @Override
+    public boolean postUseItem(UseItemParams params) {
+        return RecipeUnlocks.canUse(params, getItemUseOp(), this.i)
+                && params.player.getHome().addUnlockedHomeBgm(this.i);
     }
 }

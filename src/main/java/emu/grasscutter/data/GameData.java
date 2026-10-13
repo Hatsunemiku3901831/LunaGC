@@ -399,6 +399,10 @@ public final class GameData {
             new Int2ObjectOpenHashMap<>();
 
     @Getter
+    private static final Int2ObjectMap<FurnitureSuiteData> furnitureSuiteDataMap =
+            new Int2ObjectOpenHashMap<>();
+
+    @Getter
     private static final Int2ObjectMap<GadgetData> gadgetDataMap = new Int2ObjectOpenHashMap<>();
 
     @Getter

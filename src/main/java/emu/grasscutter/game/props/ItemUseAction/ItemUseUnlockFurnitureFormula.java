@@ -1,5 +1,6 @@
 package emu.grasscutter.game.props.ItemUseAction;
 
+import emu.grasscutter.game.inventory.RecipeUnlocks;
 import emu.grasscutter.game.props.ItemUseOp;
 
 public class ItemUseUnlockFurnitureFormula extends ItemUseInt {
@@ -14,11 +15,12 @@ public class ItemUseUnlockFurnitureFormula extends ItemUseInt {
 
     @Override
     public boolean useItem(UseItemParams params) {
-        return true;
+        return RecipeUnlocks.canUse(params, getItemUseOp(), this.i);
     }
 
     @Override
     public boolean postUseItem(UseItemParams params) {
-        return params.player.getFurnitureManager().unlockFurnitureFormula(this.i);
+        return RecipeUnlocks.canUse(params, getItemUseOp(), this.i)
+                && params.player.getFurnitureManager().unlockFurnitureFormula(this.i);
     }
 }

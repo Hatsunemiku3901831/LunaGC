@@ -1,11 +1,12 @@
 package emu.grasscutter.game.inventory;
 
 import emu.grasscutter.data.GameData;
+import emu.grasscutter.game.home.GameHome;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.props.ItemUseAction.UseItemParams;
 import emu.grasscutter.game.props.ItemUseOp;
 
-/** Shared eligibility checks for learning one real, non-default recipe once. */
+/** Shared eligibility checks for learning one real recipe or home blueprint once. */
 public final class RecipeUnlocks {
     private RecipeUnlocks() {}
 
@@ -37,7 +38,42 @@ public final class RecipeUnlocks {
                         && !recipe.isDefaultUnlocked()
                         && !player.getUnlockedRecipies().containsKey(id);
             }
+            case ITEM_USE_UNLOCK_FURNITURE_FORMULA -> {
+                var furniture = GameData.getItemDataMap().get(id);
+                yield furniture != null
+                        && furniture.getId() == id
+                        && furniture.getItemType() == ItemType.ITEM_FURNITURE
+                        && !player.getUnlockedFurniture().contains(id)
+                        && GameData.getFurnitureMakeConfigDataMap().values().stream()
+                                .anyMatch(
+                                        recipe ->
+                                                recipe != null
+                                                        && recipe.getId() > 0
+                                                        && recipe.getFurnitureItemID() == id
+                                                        && recipe.getCount() > 0
+                                                        && GameData.getFurnitureMakeConfigDataMap()
+                                                                        .get(recipe.getId())
+                                                                == recipe);
+            }
+            case ITEM_USE_UNLOCK_FURNITURE_SUITE -> {
+                var suite = GameData.getFurnitureSuiteDataMap().get(id);
+                yield suite != null
+                        && suite.getId() == id
+                        && suite.getJsonName() != null
+                        && !suite.getJsonName().isBlank()
+                        && !player.getUnlockedFurnitureSuite().contains(id);
+            }
+            case ITEM_USE_UNLOCK_HOME_BGM -> canUnlockHomeBgm(player.getHome(), id);
             default -> false;
         };
+    }
+
+    public static boolean canUnlockHomeBgm(GameHome home, int id) {
+        if (home == null || id <= 0) return false;
+        var bgm = GameData.getHomeWorldBgmDataMap().get(id);
+        return bgm != null
+                && bgm.getId() == id
+                && !bgm.isDefaultUnlock()
+                && !home.getUnlockedHomeBgmList().contains(id);
     }
 }
