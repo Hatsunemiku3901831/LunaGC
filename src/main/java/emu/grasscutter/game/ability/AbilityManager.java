@@ -272,7 +272,7 @@ public final class AbilityManager extends BasePlayerManager {
 
     public void executeAction(
         Ability ability, AbilityModifierAction action, ByteString abilityData, GameEntity target) {
-        if (action == null || !AbilityCooldownInvocation.allows(action)) return;
+        if (action == null || !action.hasSupportedOffStageConfig() || !AbilityCooldownInvocation.allows(action)) return;
         var handler = actionHandlers.get(action.type);
         if (handler == null || ability == null) {
             if (DebugConstants.LOG_MISSING_ABILITY_HANDLERS) {
@@ -290,6 +290,7 @@ public final class AbilityManager extends BasePlayerManager {
         var cooldownInvocation = AbilityCooldownInvocation.capture();
         eventExecutor.submit(
             () -> AbilityCooldownInvocation.run(cooldownInvocation, () -> context.runIfCurrent(() -> {
+                if (!action.hasSupportedOffStageConfig()) return;
                 try {
                     if (!handler.execute(ability, action, abilityData, target)) {
                         Grasscutter.getLogger()
@@ -318,7 +319,7 @@ public final class AbilityManager extends BasePlayerManager {
 
     private void executeActionNow(
         Ability ability, AbilityModifierAction action, ByteString abilityData, GameEntity target, boolean resolved) {
-        if (action == null || !AbilityCooldownInvocation.allows(action)) return;
+        if (action == null || !action.hasSupportedOffStageConfig() || !AbilityCooldownInvocation.allows(action)) return;
         var handler = actionHandlers.get(action.type);
         if (handler == null || ability == null) {
             if (DebugConstants.LOG_MISSING_ABILITY_HANDLERS) {

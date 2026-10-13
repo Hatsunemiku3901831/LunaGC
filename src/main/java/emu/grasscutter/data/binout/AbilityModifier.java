@@ -1,6 +1,7 @@
 package emu.grasscutter.data.binout;
 
 import com.google.gson.TypeAdapter;
+import com.google.gson.JsonElement;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
@@ -378,6 +379,13 @@ public class AbilityModifier implements Serializable {
         public boolean enableLockHP;
         public boolean disableWhenLoading;
         public boolean doOffStage;
+        public transient JsonElement rawDoOffStageConfig;
+
+        /** Empty export placeholders use the default flag; other unknown shapes stay dormant. */
+        public boolean hasSupportedOffStageConfig() {
+            return rawDoOffStageConfig == null || rawDoOffStageConfig.isJsonNull()
+                    || rawDoOffStageConfig.isJsonArray() && rawDoOffStageConfig.getAsJsonArray().size() == 0;
+        }
         public boolean lethal = true;
 
         public boolean muteHealEffect = false;

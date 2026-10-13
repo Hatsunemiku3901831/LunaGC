@@ -68,7 +68,7 @@ final class AbilityActionSequence {
         if(actions==null) return true;
         if(depth>32) return false;
         for(var action:actions) {
-            if(action==null || action.type==null || !ACTIONS.contains(action.type) || !knownTarget(action.target)
+            if(action==null || !action.hasSupportedOffStageConfig() || action.type==null || !ACTIONS.contains(action.type) || !knownTarget(action.target)
                     || !supportedPredicates(action.predicates,0)
                     || !supportedPredicates(action.targetPredicates,0) || !supportedSelector(action)
                     || !path.add(action)) return false;
@@ -202,7 +202,7 @@ final class AbilityActionSequence {
     }
     private static void execute(Ability ability, AbilityModifierAction action, GameEntity self,
                                 BooleanSupplier current, int depth, boolean periodic) {
-        if(action==null || depth>32 || !current.getAsBoolean() || !AbilityActionBudget.consume()) return;
+        if(action==null || !action.hasSupportedOffStageConfig() || depth>32 || !current.getAsBoolean() || !AbilityActionBudget.consume()) return;
         if(visual(action.type)) return; // The client renders the modifier's local effects.
         // This flag applies to the callback's carrier, before resolving its recipient(s).
         if(periodic && !action.doOffStage && self instanceof EntityAvatar
