@@ -6,11 +6,16 @@ public class ItemUseChestSelectItem extends ItemUseSelectItems {
     private final int[] optionItemCounts;
 
     public ItemUseChestSelectItem(String[] useParam) {
-        String[] options = useParam[0].split(",");
+        String[] options = options(useParam);
         this.optionItemIds = new int[options.length];
         this.optionItemCounts = new int[options.length];
         for (int i = 0; i < options.length; i++) {
-            String[] optionParts = options[i].split(":");
+            String[] optionParts = options[i].split(":", -1);
+            if (optionParts.length != 2) {
+                this.optionItemIds[i] = INVALID;
+                this.optionItemCounts[i] = INVALID;
+                continue;
+            }
             try {
                 this.optionItemIds[i] = Integer.parseInt(optionParts[0]);
             } catch (NumberFormatException ignored) {
@@ -31,7 +36,7 @@ public class ItemUseChestSelectItem extends ItemUseSelectItems {
 
     @Override
     protected int getItemCount(int index) {
-        if ((optionItemCounts == null) || (index < 0) || (index > optionItemCounts.length))
+        if ((optionItemCounts == null) || (index < 0) || (index >= optionItemCounts.length))
             return INVALID;
         return this.optionItemCounts[index];
     }

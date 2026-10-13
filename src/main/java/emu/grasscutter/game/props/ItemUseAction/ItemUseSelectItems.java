@@ -1,15 +1,18 @@
 package emu.grasscutter.game.props.ItemUseAction;
 
 import emu.grasscutter.data.GameData;
+import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.game.inventory.GameItem;
-import emu.grasscutter.game.props.ActionReason;
+
+import java.util.*;
 
 public abstract class ItemUseSelectItems extends ItemUseAction {
     protected static final int INVALID = -1;
     protected int[] optionItemIds;
 
     protected int getItemId(int index) {
-        if ((optionItemIds == null) || (index < 0) || (index > optionItemIds.length)) return INVALID;
+        if ((optionItemIds == null) || (index < 0) || (index >= optionItemIds.length))
+            return INVALID;
         return this.optionItemIds[index];
     }
 
@@ -17,22 +20,44 @@ public abstract class ItemUseSelectItems extends ItemUseAction {
         return 1;
     }
 
+    protected static String[] options(String[] params) {
+        return params == null || params.length == 0 || params[0] == null || params[0].isBlank()
+                ? new String[0]
+                : params[0].split(",", -1);
+    }
+
+    public List<ItemParamData> resolveItems(UseItemParams params) {
+        if (params == null || params.player == null || params.count <= 0 || params.optionId <= 0)
+            return List.of();
+        int id = getItemId(params.optionId - 1), count = getItemCount(params.optionId - 1);
+        if (id <= 0 || count <= 0) return List.of();
+        long amount = (long) count * params.count;
+        if (amount > Integer.MAX_VALUE)
+            throw new IllegalArgumentException("Selection quantity overflow");
+        return List.of(new ItemParamData(id, (int) amount));
+    }
+
     protected GameItem getItemStack(int index, int useCount) {
         int id = this.getItemId(index);
         int count = this.getItemCount(index);
-        if (id == INVALID || count == INVALID) return null;
+        if (id <= 0 || count <= 0 || useCount <= 0 || (long) count * useCount > Integer.MAX_VALUE)
+            return null;
 
         var item = GameData.getItemDataMap().get(id);
         if (item == null) return null;
 
-        return new GameItem(item, count * useCount);
+        long amount = (long) count * useCount;
+        if (item.isEquip() && amount != 1
+                || !item.isEquip()
+                        && item.getItemType()
+                                != emu.grasscutter.game.inventory.ItemType.ITEM_VIRTUAL
+                        && amount > item.getStackLimit()) return null;
+        return new GameItem(item, (int) amount);
     }
 
     @Override
     public boolean useItem(UseItemParams params) {
-        var itemStack = this.getItemStack(params.optionId - 1, params.count);
-        if (itemStack == null) return false;
-
-        return params.player.getInventory().addItem(itemStack, ActionReason.Shop);
+        // Selected chests require their owned inventory source and payment confirmation.
+        return false;
     }
 }

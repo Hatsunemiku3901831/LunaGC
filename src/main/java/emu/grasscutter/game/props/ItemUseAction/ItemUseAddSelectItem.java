@@ -4,7 +4,7 @@ import emu.grasscutter.game.props.ItemUseOp;
 
 public class ItemUseAddSelectItem extends ItemUseSelectItems {
     public ItemUseAddSelectItem(String[] useParam) {
-        String[] options = useParam[0].split(",");
+        String[] options = options(useParam);
         this.optionItemIds = new int[options.length];
         for (int i = 0; i < options.length; i++) {
             try {
