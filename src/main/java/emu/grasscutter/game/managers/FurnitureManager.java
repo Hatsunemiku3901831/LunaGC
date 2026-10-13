@@ -4,8 +4,8 @@ import emu.grasscutter.game.home.FurnitureStart;
 import emu.grasscutter.game.inventory.RecipeUnlocks;
 import emu.grasscutter.game.player.*;
 import emu.grasscutter.game.props.ItemUseOp;
+import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.server.packet.send.*;
-import java.util.*;
 
 public class FurnitureManager extends BasePlayerManager {
 
@@ -55,11 +55,12 @@ public class FurnitureManager extends BasePlayerManager {
     }
 
     public void queryStatus() {
-        if (player.getHome().getFurnitureMakeSlotItemList() == null) {
-            player.getHome().setFurnitureMakeSlotItemList(new ArrayList<>());
+        var home = player.getHome();
+        if (home == null || home.getOwnerUid() != player.getUid()) {
+            player.sendPacket(new PacketFurnitureMakeRsp(Retcode.RET_FURNITURE_MAKE_NOT_IN_CORRECT_HOME_VALUE));
+            return;
         }
-
-        player.sendPacket(new PacketFurnitureMakeRsp(player.getHome()));
+        player.sendPacket(new PacketFurnitureMakeRsp(home));
     }
 
     public void take(int index, int makeId, boolean isFastFinish) {
