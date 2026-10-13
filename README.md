@@ -1323,8 +1323,12 @@ Setting the last three to `1`, `1` and `0` gives you plain, unweighted domain ro
 submodules into `debug/`. It requires Python 3 and Git. No third-party setup or
 build scripts are run. `task refs:update` only fast-forwards clean checkouts;
 local changes are preserved. `debug/references.json` records each exact commit.
-The gcsim checkout initially expands only `pkg/core/stacks` and root files. Its
-manifest entry compares the current commit's stack sources with the fixed
+New checkouts materialize the complete current source tree. Synchronization also
+expands existing clean sparse checkouts without changing their commits; dirty
+sparse checkouts are preserved and reported as errors. `--manifest-only` leaves
+checkout contents unchanged. The manifest records checkout completeness, local
+changes, missing tracked files, and any remaining sparse scope.
+The gcsim manifest entry compares the current commit's stack sources with the fixed
 release used for adaptation; a later update recalculates that comparison.
 
 These sources are ignored by Git and excluded from the runtime image. Closed

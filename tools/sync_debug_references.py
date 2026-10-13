@@ -22,7 +22,6 @@ REFERENCES = {
     "mavuika-rs": "https://git.xeondev.com/mavuika-rs/mavuika-rs.git",
     "gcsim": "https://github.com/genshinsim/gcsim.git",
 }
-SPARSE_CHECKOUTS = {"gcsim": ["pkg/core/stacks"]}
 ADAPTED_SOURCES = {
     "gcsim": {
         "release": "v2.47.2",
@@ -52,14 +51,18 @@ def main():
             if not checkout.exists():
                 if options.manifest_only:
                     raise RuntimeError("checkout has not been downloaded")
-                clone_options = ["--sparse"] if name in SPARSE_CHECKOUTS else []
-                git("clone", "--filter=blob:none", *clone_options, url, checkout)
-                if name in SPARSE_CHECKOUTS:
-                    git("-C", checkout, "sparse-checkout", "set", *SPARSE_CHECKOUTS[name])
+                git("clone", "--filter=blob:none", url, checkout)
             if git("-C", checkout, "rev-parse", "--show-toplevel").replace("\\", "/").lower() != checkout.as_posix().lower():
                 raise RuntimeError("directory is not a standalone Git checkout")
             if git("-C", checkout, "remote", "get-url", "origin") != url:
                 raise RuntimeError("origin differs from the expected reference")
+            sparse = git("-C", checkout, "config", "--bool", "--default", "false",
+                         "--get", "core.sparseCheckout") == "true"
+            if sparse and not options.manifest_only:
+                if git("-C", checkout, "status", "--porcelain"):
+                    raise RuntimeError("checkout has local changes; full materialization skipped")
+                git("-C", checkout, "sparse-checkout", "disable")
+                sparse = False
             if options.update:
                 if git("-C", checkout, "status", "--porcelain"):
                     raise RuntimeError("checkout has local changes; update skipped")
@@ -71,9 +74,13 @@ def main():
                       "commit_date": git("-C", checkout, "show", "-s", "--format=%cI", "HEAD"),
                       "branch": git("-C", checkout, "branch", "--show-current"),
                       "submodules": git("-C", checkout, "submodule", "status", "--recursive").splitlines()}
-            if name in SPARSE_CHECKOUTS and git(
-                    "-C", checkout, "config", "--bool", "--default", "false",
-                    "--get", "core.sparseCheckout") == "true":
+            missing = git("-C", checkout, "ls-files", "--deleted").splitlines()
+            record["worktree_clean"] = not git("-C", checkout, "status", "--porcelain")
+            record["checkout_complete"] = not sparse and not missing and all(
+                line[:1] not in ("-", "U") for line in record["submodules"])
+            if missing:
+                record["missing_tracked_files"] = missing
+            if sparse:
                 record["checkout_scope"] = git("-C", checkout, "sparse-checkout", "list").splitlines()
             if name in ADAPTED_SOURCES:
                 adapted = ADAPTED_SOURCES[name]
