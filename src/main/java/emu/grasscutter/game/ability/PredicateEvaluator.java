@@ -6,6 +6,7 @@ import emu.grasscutter.game.ability.actions.AbilityActionHandler;
 import emu.grasscutter.game.entity.EntityAvatar;
 import emu.grasscutter.game.entity.GameEntity;
 import emu.grasscutter.utils.JsonUtils;
+
 import java.util.List;
 import java.util.Map;
 
@@ -40,12 +41,14 @@ public final class PredicateEvaluator {
         if ("ByUnlockTalentParam".equals(type)) {
             GameEntity caster = ability != null ? ability.getCasterEntity() : null;
             GameEntity talentTarget = caster != null ? caster : (owner != null ? owner : resolved);
-            if (pred.get("target") instanceof String && !Boolean.TRUE.equals(pred.get("forceByCaster"))) {
+            if (pred.get("target") instanceof String
+                    && !Boolean.TRUE.equals(pred.get("forceByCaster"))) {
                 talentTarget = resolved;
                 if ("Team".equals(pred.get("target"))
                         && ability != null
                         && ability.getPlayerOwner() != null)
-                    talentTarget = ability.getPlayerOwner().getTeamManager().getCurrentAvatarEntity();
+                    talentTarget =
+                            ability.getPlayerOwner().getTeamManager().getCurrentAvatarEntity();
             }
             return byUnlockTalentParam(pred, ability, talentTarget);
         }
@@ -55,6 +58,7 @@ public final class PredicateEvaluator {
             case "ByTargetGlobalValue" -> byTargetGlobalValue(pred, ability, resolved);
             case "ByTargetHPRatio" -> byTargetHPRatio(pred, ability, resolved);
                 // Verified against the current 7.1 client; these are not unknown predicates.
+            case "MIJGFBNEIOG" -> byTargetHpValue(pred, ability, resolved);
             case "LPKOBOLMDBI" -> byTargetHpDebts(pred, ability, resolved);
             case "ONJEHDDFFCH" -> byHealTags(pred, action);
             case "GKGBIPDLMMG" -> none(pred, ability, owner, target, action);
@@ -129,7 +133,8 @@ public final class PredicateEvaluator {
             case "MoreThan", "Greater" -> current > bound;
             case "MoreThanAndEqual", "MoreOrEqual", "GreaterOrEqual" -> current >= bound;
             case "LessThan", "Lesser" -> current < bound;
-            case "LessThanAndEqual", "LessAndEqual", "LessOrEqual", "LesserOrEqual" -> current <= bound;
+            case "LessThanAndEqual", "LessAndEqual", "LessOrEqual", "LesserOrEqual" -> current
+                    <= bound;
             case "NotEqual" -> current != bound;
             default -> current == bound;
         };
@@ -148,11 +153,28 @@ public final class PredicateEvaluator {
         return compare(curHp / maxHp, threshold, logic);
     }
 
+    private static boolean byTargetHpValue(
+            Map<String, Object> pred, Ability ability, GameEntity target) {
+        if (target == null || pred.get("HP") == null) return false;
+        float current =
+                target.getFightProperty(emu.grasscutter.game.props.FightProperty.FIGHT_PROP_CUR_HP);
+        float bound = readFloat(pred.get("HP"), ability);
+        if (!Float.isFinite(current) || !Float.isFinite(bound)) return false;
+        String logic = pred.get("logic") instanceof String value ? value : "Greater";
+        // The native comparison enum has these five values; invalid values return false.
+        return switch (logic) {
+            case "Greater", "GreaterOrEqual", "Equal", "Lesser", "LesserOrEqual" -> compare(
+                    current, bound, logic);
+            default -> false;
+        };
+    }
+
     private static boolean byTargetHpDebts(
             Map<String, Object> pred, Ability ability, GameEntity target) {
         if (target == null || !pred.containsKey("value")) return false;
         float current =
-                target.getFightProperty(emu.grasscutter.game.props.FightProperty.FIGHT_PROP_CUR_HP_DEBTS);
+                target.getFightProperty(
+                        emu.grasscutter.game.props.FightProperty.FIGHT_PROP_CUR_HP_DEBTS);
         float bound = readFloat(pred.get("value"), ability);
         if (!Float.isFinite(current) || !Float.isFinite(bound)) return false;
         // The native enum defaults to 0 (Greater), including when JSON omits logic.
