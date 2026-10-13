@@ -1,3 +1,5 @@
+// 7.1 native UseItemReq: opcode 25681, writer 0x14e55e840, uint32 list codec 0x14e55e5b0.
+// Existing scalar aliases retained; native list grouping semantics are not yet established.
 syntax = "proto3";
 
 option java_package = "emu.grasscutter.net.proto";

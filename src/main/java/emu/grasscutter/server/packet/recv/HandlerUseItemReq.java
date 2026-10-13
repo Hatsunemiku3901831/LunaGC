@@ -1,5 +1,8 @@
 package emu.grasscutter.server.packet.recv;
 
+import com.google.protobuf.InvalidProtocolBufferException;
+
+import emu.grasscutter.Grasscutter;
 import emu.grasscutter.game.inventory.GameItem;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.UseItemReqOuterClass.UseItemReq;
@@ -11,21 +14,39 @@ public class HandlerUseItemReq extends PacketHandler {
 
     @Override
     public void handle(GameSession session, byte[] header, byte[] payload) throws Exception {
-        UseItemReq req = UseItemReq.parseFrom(payload);
+        UseItemReq req;
+        try {
+            req = UseItemReq.parseFrom(payload);
+        } catch (InvalidProtocolBufferException | NullPointerException malformed) {
+            session.send(new PacketUseItemRsp());
+            return;
+        }
 
-        GameItem useItem =
-                session
-                        .getServer()
-                        .getInventorySystem()
-                        .useItem(
-                                session.getPlayer(),
-                                req.getTargetGuid(),
-                                req.getGuid(),
-                                req.getCount(),
-                                req.getOptionIdx(),
-                                req.getIsEnterMpDungeonTeam());
+        GameItem useItem;
+        try {
+            useItem =
+                    session.getServer()
+                            .getInventorySystem()
+                            .useItem(
+                                    session.getPlayer(),
+                                    req.getTargetGuid(),
+                                    req.getGuid(),
+                                    req.getCount(),
+                                    req.getOptionIdx(),
+                                    req.getIsEnterMpDungeonTeam());
+        } catch (RuntimeException failure) {
+            // Inventory may already have a pending receipt. Do not retry the economic operation.
+            Grasscutter.getLogger()
+                    .error(
+                            "UseItem failed for UID {} and source GUID {}.",
+                            session.getPlayer() != null ? session.getPlayer().getUid() : 0,
+                            req.getGuid(),
+                            failure);
+            session.send(new PacketUseItemRsp());
+            return;
+        }
         if (useItem != null) {
-            session.send(new PacketUseItemRsp(req.getTargetGuid(), useItem));
+            session.send(new PacketUseItemRsp(req.getTargetGuid(), useItem, req.getOptionIdx()));
         } else {
             session.send(new PacketUseItemRsp());
         }
