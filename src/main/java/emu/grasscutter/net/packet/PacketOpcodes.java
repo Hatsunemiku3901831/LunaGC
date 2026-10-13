@@ -526,7 +526,7 @@ public final class PacketOpcodes {
     public static final int GetRegionSearchReq = -113;
     public static final int RegionSearchNotify = 25227;
     public static final int GetFurnitureCurModuleArrangeCountReq = -114;
-    public static final int FurnitureMakeReq = -115;
+    public static final int FurnitureMakeReq = 20116;
     public static final int ChangeTeamNameReq = 27436;
     public static final int ChangeTeamNameRsp = 6702;
     public static final int WorldPlayerRTTNotify = 25508;

@@ -1,4 +1,4 @@
-// Recovered from FurnitureMakeReqOuterClass.java's embedded descriptor; wire schema may predate 7.1.
+// Empty request type 21294, opcode 20116; sent by the current client building page.
 syntax = "proto3";
 
 package recovered.p_FurnitureMakeReq;
