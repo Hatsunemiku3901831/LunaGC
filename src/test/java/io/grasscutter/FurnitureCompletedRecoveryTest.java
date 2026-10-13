@@ -222,12 +222,13 @@ class FurnitureCompletedRecoveryTest {
 
     @ParameterizedTest
     @ValueSource(ints = {8, 9})
-    void completedChildCanBeReleasedWhileTheUnfinishedParentRemainsReserved(int stage)
+    void completedChildCanBeReleasedWhenTheRemainingProductIsUnavailable(int stage)
             throws Exception {
         bulkFailure(stage);
         assertEquals(5, home.getPendingFurnitureTake().getState());
         assertFalse(home.getPendingFurnitureBulk().getEntries().get(1).isCompleted());
         var parent = home.getPendingFurnitureBulk();
+        emu.grasscutter.data.GameData.getItemDataMap().remove(360102);
         String before = economics();
         int events = missions(), saves = writes();
         assertEquals(Retcode.RET_SVR_ERROR_VALUE, query().getRetcode());

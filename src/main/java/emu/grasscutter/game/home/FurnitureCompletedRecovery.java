@@ -66,7 +66,7 @@ public final class FurnitureCompletedRecovery {
                                     && slots.stream()
                                             .anyMatch(s -> s.getIndex() == entry.getIndex()))
                                 return false;
-                        if (!completed && take == null) return false;
+                        if (!completed && take == null) return FurnitureBulkResume.resume(player);
                         change = new Change(slots, take != null, false, completed, completed);
                     }
                 }
@@ -76,7 +76,6 @@ public final class FurnitureCompletedRecovery {
                 if (change.bulk()) home.setPendingFurnitureBulk(null);
                 try {
                     DatabaseHelper.saveGameSync(home);
-                    return change.complete();
                 } catch (RuntimeException error) {
                     home.setFurnitureMakeSlotItemList(before);
                     home.setPendingFurnitureTake(take);
@@ -89,6 +88,7 @@ public final class FurnitureCompletedRecovery {
                                     error);
                     return false;
                 }
+                return change.complete() || FurnitureBulkResume.resume(player);
             }
         }
     }
@@ -225,7 +225,10 @@ public final class FurnitureCompletedRecovery {
                 || source.getBeginTime() != receipt.getBeginTime()
                 || source.getDurTime() != receipt.getDurTime()) return false;
         var plan = source.getPlan();
-        return plan == null
+        // A batch child delivers the parent's frozen selection. Its current source plan may
+        // legitimately differ; belongs() below verifies the durable parent and output values.
+        return receipt.getParentOperationId() != null
+                || plan == null
                 || plan.isValidFor(source)
                         && plan.getItemId() == receipt.getItemId()
                         && plan.getCount() == receipt.getCount()

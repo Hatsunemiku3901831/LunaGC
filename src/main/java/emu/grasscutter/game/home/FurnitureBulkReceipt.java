@@ -18,6 +18,7 @@ public final class FurnitureBulkReceipt {
     public static final class Entry {
         private int index, makeId, beginTime, durTime, accelerateTime, itemId, count, trustExp;
         private boolean fast, completed;
+        private FurnitureMakeSlotItem sourceSlot;
         private List<FurnitureMakePlan.Material> returns;
 
         public Entry() {}
@@ -28,6 +29,7 @@ public final class FurnitureBulkReceipt {
             beginTime = slot.getBeginTime();
             durTime = slot.getDurTime();
             accelerateTime = slot.getAccelerateTime();
+            sourceSlot = slot.snapshot();
             this.fast = fast;
             this.itemId = itemId;
             this.count = count;
