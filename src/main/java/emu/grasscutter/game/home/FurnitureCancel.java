@@ -59,12 +59,13 @@ public final class FurnitureCancel {
                 var plan = slot.getPlan();
                 if (slot.getBeginTime() <= 0
                         || slot.getDurTime() < 0
+                        || slot.getAccelerateTime() < 0
                         || plan == null
                         || !plan.isValidFor(slot)) {
                     fail(player, makeId, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
                     return;
                 }
-                if ((long) slot.getBeginTime() + slot.getDurTime() <= Utils.getCurrentSeconds()) {
+                if (slot.getCompletionTime() <= Utils.getCurrentSeconds()) {
                     fail(player, makeId, Retcode.RET_FURNITURE_MAKE_IS_FINISH);
                     return;
                 }

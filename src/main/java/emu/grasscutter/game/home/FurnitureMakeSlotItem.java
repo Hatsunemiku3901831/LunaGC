@@ -17,7 +17,13 @@ public class FurnitureMakeSlotItem {
     int avatarId;
     int beginTime;
     int durTime;
+    int accelerateTime;
     FurnitureMakePlan plan;
+
+    /** Native countdown: begin + duration - assistance, using a wide sum. */
+    public long getCompletionTime() {
+        return (long) beginTime + durTime - accelerateTime;
+    }
 
     public FurnitureMakeDataOuterClass.FurnitureMakeData toProto() {
         return FurnitureMakeDataOuterClass.FurnitureMakeData.newBuilder()
@@ -26,6 +32,7 @@ public class FurnitureMakeSlotItem {
                 .setMakeId(makeId)
                 .setBeginTime(beginTime)
                 .setDurTime(durTime)
+                .setAccelerateTime(accelerateTime)
                 .build();
     }
 }

@@ -104,6 +104,7 @@ public final class FurnitureBulkTake {
                     var data = GameData.getItemDataMap().get(itemId);
                     if (slot.getBeginTime() <= 0
                             || slot.getDurTime() < 0
+                            || slot.getAccelerateTime() < 0
                             || slot.getDurTime() == 0 && plan == null
                             || data == null
                             || data.getId() != itemId
@@ -114,9 +115,7 @@ public final class FurnitureBulkTake {
                         fail(player, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
                         return;
                     }
-                    boolean unfinished =
-                            (long) slot.getBeginTime() + slot.getDurTime()
-                                    > Utils.getCurrentSeconds();
+                    boolean unfinished = slot.getCompletionTime() > Utils.getCurrentSeconds();
                     if (unfinished && !selection.getIsFastFinish()) {
                         fail(player, Retcode.RET_FURNITURE_MAKE_UNFINISH);
                         return;

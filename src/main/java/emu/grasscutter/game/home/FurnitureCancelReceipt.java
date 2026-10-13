@@ -10,7 +10,7 @@ import java.util.*;
 @Getter
 public final class FurnitureCancelReceipt {
     private String operationId;
-    private int index, makeId, state;
+    private int index, makeId, state, accelerateTime;
     private List<Refund> refunds;
 
     @Entity
@@ -35,6 +35,7 @@ public final class FurnitureCancelReceipt {
         operationId = UUID.randomUUID().toString();
         index = slot.getIndex();
         makeId = slot.getMakeId();
+        accelerateTime = slot.getAccelerateTime();
         state = 1;
         this.refunds = new ArrayList<>(refunds);
     }

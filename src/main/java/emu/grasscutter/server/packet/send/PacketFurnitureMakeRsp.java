@@ -29,7 +29,10 @@ public class PacketFurnitureMakeRsp extends BasePacket {
             if (slots == null) slots = List.of();
             Set<Integer> indexes = new HashSet<>();
             for (var slot : slots) {
-                if (slot == null || slot.getIndex() < 0 || !indexes.add(slot.getIndex())) {
+                if (slot == null
+                        || slot.getIndex() < 0
+                        || slot.getAccelerateTime() < 0
+                        || !indexes.add(slot.getIndex())) {
                     setData(failure(Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR_VALUE));
                     return;
                 }

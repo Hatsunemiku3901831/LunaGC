@@ -10,7 +10,7 @@ import java.util.*;
 @Getter
 public final class FurnitureTakeReceipt {
     private String operationId, productObjectId;
-    private int index, makeId, avatarId, beginTime, durTime;
+    private int index, makeId, avatarId, beginTime, durTime, accelerateTime;
     private int itemId, count, itemBefore, vialBefore, trustExp;
     private int levelBefore, expBefore, levelAfter, expAfter, state;
     private boolean needsVial, firstCraft, missionApplied;
@@ -58,6 +58,7 @@ public final class FurnitureTakeReceipt {
         avatarId = slot.getAvatarId();
         beginTime = slot.getBeginTime();
         durTime = slot.getDurTime();
+        accelerateTime = slot.getAccelerateTime();
         this.itemId = itemId;
         this.count = count;
         this.itemBefore = itemBefore;

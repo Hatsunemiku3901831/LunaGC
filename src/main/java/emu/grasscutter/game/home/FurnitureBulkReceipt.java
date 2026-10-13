@@ -16,7 +16,7 @@ public final class FurnitureBulkReceipt {
     @Entity
     @Getter
     public static final class Entry {
-        private int index, makeId, beginTime, durTime, itemId, count, trustExp;
+        private int index, makeId, beginTime, durTime, accelerateTime, itemId, count, trustExp;
         private boolean fast, completed;
         private List<FurnitureMakePlan.Material> returns;
 
@@ -27,6 +27,7 @@ public final class FurnitureBulkReceipt {
             makeId = slot.getMakeId();
             beginTime = slot.getBeginTime();
             durTime = slot.getDurTime();
+            accelerateTime = slot.getAccelerateTime();
             this.fast = fast;
             this.itemId = itemId;
             this.count = count;
@@ -50,7 +51,8 @@ public final class FurnitureBulkReceipt {
             return slot.getIndex() == index
                     && slot.getMakeId() == makeId
                     && slot.getBeginTime() == beginTime
-                    && slot.getDurTime() == durTime;
+                    && slot.getDurTime() == durTime
+                    && slot.getAccelerateTime() == accelerateTime;
         }
     }
 

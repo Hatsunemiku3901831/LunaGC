@@ -160,6 +160,7 @@ public final class FurnitureTake {
                 var data = GameData.getItemDataMap().get(itemId);
                 if (slot.getBeginTime() <= 0
                         || slot.getDurTime() < 0
+                        || slot.getAccelerateTime() < 0
                         || slot.getDurTime() == 0 && plan == null
                         || data == null
                         || data.getId() != itemId
@@ -169,7 +170,7 @@ public final class FurnitureTake {
                     fail(reply, makeId, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
                     return;
                 }
-                long end = (long) slot.getBeginTime() + slot.getDurTime();
+                long end = slot.getCompletionTime();
                 boolean needsVial = end > Utils.getCurrentSeconds();
                 if (needsVial && !fast) {
                     fail(reply, makeId, Retcode.RET_FURNITURE_MAKE_UNFINISH);
