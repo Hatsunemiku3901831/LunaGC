@@ -4,7 +4,7 @@ import dev.morphia.annotations.Entity;
 
 import lombok.Getter;
 
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Getter
@@ -14,6 +14,27 @@ public final class FurnitureTakeReceipt {
     private int itemId, count, itemBefore, vialBefore, trustExp;
     private int levelBefore, expBefore, levelAfter, expAfter, state;
     private boolean needsVial, firstCraft, missionApplied;
+    private List<Return> returns;
+
+    @Entity
+    @Getter
+    public static final class Return {
+        private int itemId, count, before;
+        private String objectId;
+        private boolean delivered;
+
+        public Return() {}
+
+        Return(int itemId, int count, int before) {
+            this.itemId = itemId;
+            this.count = count;
+            this.before = before;
+        }
+    }
+
+    public List<Return> getReturns() {
+        return returns == null ? List.of() : Collections.unmodifiableList(returns);
+    }
 
     public FurnitureTakeReceipt() {}
 
@@ -29,7 +50,8 @@ public final class FurnitureTakeReceipt {
             int levelBefore,
             int expBefore,
             int levelAfter,
-            int expAfter) {
+            int expAfter,
+            List<Return> returns) {
         operationId = UUID.randomUUID().toString();
         index = slot.getIndex();
         makeId = slot.getMakeId();
@@ -47,6 +69,7 @@ public final class FurnitureTakeReceipt {
         this.expBefore = expBefore;
         this.levelAfter = levelAfter;
         this.expAfter = expAfter;
+        this.returns = new ArrayList<>(returns);
         state = 1;
     }
 
@@ -62,8 +85,16 @@ public final class FurnitureTakeReceipt {
     }
 
     void progressed() {
-        if (state != 3) throw new IllegalStateException("Furniture not delivered");
+        if (state != 3 || getReturns().stream().anyMatch(value -> !value.delivered))
+            throw new IllegalStateException("Furniture and material returns not delivered");
         state = 4;
+    }
+
+    void returned(Return value, String objectId) {
+        if (state != 3 || value.delivered || !getReturns().contains(value))
+            throw new IllegalStateException("Furniture return is not reserved");
+        value.objectId = objectId;
+        value.delivered = true;
     }
 
     void missionApplied() {

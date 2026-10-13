@@ -56,6 +56,7 @@ public final class FurnitureBulkTake {
                 Set<Integer> selected = new HashSet<>(), firstCrafts = new HashSet<>();
                 int vials = 0;
                 long trust = 0;
+                var returnCapacity = new FurnitureReturns.Capacity(player);
                 for (var selection : selections) {
                     if (selection == null
                             || selection.getIndex() < 0
@@ -121,6 +122,16 @@ public final class FurnitureBulkTake {
                         return;
                     }
                     if (unfinished) vials++;
+                    if (unfinished && !returnCapacity.spendVial()) {
+                        fail(player, Retcode.RET_FURNITURE_MAKE_UNFINISH);
+                        return;
+                    }
+                    if (plan != null)
+                        for (var value : plan.getReturns())
+                            if (!returnCapacity.add(value.getId(), value.getCount())) {
+                                fail(player, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
+                                return;
+                            }
                     totals.merge(itemId, count, Integer::sum);
                     if (!home.getCraftedFurnitureIds().contains(itemId) && firstCrafts.add(itemId))
                         trust += exp;
@@ -163,6 +174,15 @@ public final class FurnitureBulkTake {
                     }
                 }
                 var receipt = new FurnitureBulkReceipt(entries);
+                Map<Integer, Integer> confirmed = new LinkedHashMap<>();
+                for (var entry : entries)
+                    for (var value : entry.getReturns())
+                        if ((long) confirmed.getOrDefault(value.getId(), 0) + value.getCount()
+                                > Integer.MAX_VALUE) {
+                            fail(player, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
+                            return;
+                        } else confirmed.merge(value.getId(), value.getCount(), Integer::sum);
+                confirmed.clear();
                 home.setPendingFurnitureBulk(receipt);
                 try {
                     DatabaseHelper.saveGameSync(home);
@@ -171,6 +191,8 @@ public final class FurnitureBulkTake {
                         if (result == null || result.retcode() != 0)
                             throw new IllegalStateException(
                                     "Furniture batch entry was not confirmed");
+                        for (var value : result.outputs())
+                            confirmed.merge(value.getItemId(), value.getCount(), Math::addExact);
                     }
                     receipt.finished();
                     DatabaseHelper.saveGameSync(home);
@@ -193,7 +215,7 @@ public final class FurnitureBulkTake {
                     return;
                 }
                 var outputs =
-                        totals.entrySet().stream()
+                        confirmed.entrySet().stream()
                                 .map(
                                         e ->
                                                 ItemParam.newBuilder()

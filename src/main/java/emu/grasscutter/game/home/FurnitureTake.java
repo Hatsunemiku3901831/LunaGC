@@ -11,7 +11,7 @@ import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.server.packet.send.*;
 import emu.grasscutter.utils.Utils;
 
-import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
 
 /** One acknowledged furniture claim, including speedup, storage and first-craft progress. */
@@ -123,6 +123,7 @@ public final class FurnitureTake {
                 var slot = matches.get(0);
                 var plan = slot.getPlan();
                 int itemId, count, trustExp;
+                List<FurnitureMakePlan.Material> materialReturns;
                 if (owner != null) {
                     if (!entry.matches(slot)) {
                         fail(reply, makeId, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
@@ -131,6 +132,7 @@ public final class FurnitureTake {
                     itemId = entry.getItemId();
                     count = entry.getCount();
                     trustExp = entry.getTrustExp();
+                    materialReturns = entry.getReturns();
                 } else if (plan != null) {
                     if (!plan.isValidFor(slot)) {
                         fail(reply, makeId, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
@@ -139,6 +141,7 @@ public final class FurnitureTake {
                     itemId = plan.getItemId();
                     count = plan.getCount();
                     trustExp = plan.getTrustExp();
+                    materialReturns = plan.getReturns();
                 } else {
                     // Legacy jobs have no captured definition; do not invent one on reload.
                     var recipe = GameData.getFurnitureMakeConfigDataMap().get(makeId);
@@ -152,6 +155,7 @@ public final class FurnitureTake {
                     itemId = recipe.getFurnitureItemID();
                     count = recipe.getCount();
                     trustExp = recipe.getExp();
+                    materialReturns = List.of();
                 }
                 var data = GameData.getItemDataMap().get(itemId);
                 if (slot.getBeginTime() <= 0
@@ -196,6 +200,11 @@ public final class FurnitureTake {
                     return;
                 }
                 boolean first = !home.getCraftedFurnitureIds().contains(data.getId());
+                var returns = FurnitureReturns.reserve(player, materialReturns, needsVial);
+                if (returns == null) {
+                    fail(reply, makeId, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
+                    return;
+                }
                 int award = first ? trustExp : 0;
                 var progress = trustAfter(home, award);
                 if (progress == null) {
@@ -215,7 +224,8 @@ public final class FurnitureTake {
                                 home.getLevel(),
                                 home.getExp(),
                                 progress[0],
-                                progress[1]);
+                                progress[1],
+                                returns);
                 home.setPendingFurnitureTake(receipt);
                 boolean removed = false;
                 try {
@@ -240,6 +250,27 @@ public final class FurnitureTake {
                     DatabaseHelper.saveGameSync(stored);
                     receipt.delivered(stored.getObjectId().toHexString());
                     DatabaseHelper.saveGameSync(home);
+                    for (var value : receipt.getReturns()) {
+                        var material = GameData.getItemDataMap().get(value.getItemId());
+                        if (material == null
+                                || material.getId() != value.getItemId()
+                                || material.getItemType() != ItemType.ITEM_MATERIAL
+                                || material.isUseOnGain()
+                                || !inventory.addItem(new GameItem(material, value.getCount()))
+                                || (long) inventory.getItemCountById(value.getItemId())
+                                                - value.getBefore()
+                                        != value.getCount())
+                            throw new IllegalStateException(
+                                    "Furniture material return was not stored exactly");
+                        var returned = inventory.getItemById(value.getItemId());
+                        if (returned == null || returned.getOwnerId() != player.getUid())
+                            throw new IllegalStateException(
+                                    "Furniture material return has no owned stack");
+                        returned.ensurePersistenceId();
+                        DatabaseHelper.saveGameSync(returned);
+                        receipt.returned(value, returned.getObjectId().toHexString());
+                        DatabaseHelper.saveGameSync(home);
+                    }
                     if (home.getLevel() != receipt.getLevelBefore()
                             || home.getExp() != receipt.getExpBefore()
                             || first && home.getCraftedFurnitureIds().contains(data.getId()))
@@ -286,13 +317,22 @@ public final class FurnitureTake {
                         new Result(
                                 0,
                                 makeId,
-                                List.of(
-                                        ItemParam.newBuilder()
-                                                .setItemId(data.getId())
-                                                .setCount(count)
-                                                .build()),
+                                outputs(data.getId(), count, receipt.getReturns()),
                                 slots.stream().map(FurnitureMakeSlotItem::toProto).toList()));
             }
         }
+    }
+
+    private static List<ItemParam> outputs(
+            int itemId, int count, List<FurnitureTakeReceipt.Return> returns) {
+        List<ItemParam> outputs = new ArrayList<>();
+        outputs.add(ItemParam.newBuilder().setItemId(itemId).setCount(count).build());
+        for (var value : returns)
+            outputs.add(
+                    ItemParam.newBuilder()
+                            .setItemId(value.getItemId())
+                            .setCount(value.getCount())
+                            .build());
+        return outputs;
     }
 }
