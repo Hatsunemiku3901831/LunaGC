@@ -884,6 +884,21 @@ To skip handbook generation, build the jar by hand:
 The handbook is generated as `GM Handbook.txt` / `handbook.html` in the repo
 root; both are gitignored.
 
+## Tests
+
+Configure `LUNAGC_MONGO_URI`, `LUNAGC_TEST_MONGO_URI` and
+`LUNAGC_TEST_MONGO_SECONDARY_URI` for an isolated test Mongo instance before running:
+
+```powershell
+.\gradlew.bat test serverSmokeTest -PskipHandbook=1 --console=plain
+```
+
+`test` runs the Java and resource regressions. `serverSmokeTest` starts a dispatch
+server in a separate JVM, checks HTTP health and GM authentication, then stops it.
+Its HTTP listener uses a loopback address and an automatically allocated port.
+`check` includes both tasks. The separate JVM keeps startup independent of Lua
+and other static state initialized by unit test fixtures.
+
 ## Running the server
 
 ```

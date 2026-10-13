@@ -4,12 +4,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.google.gson.Gson;
 
+import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
+import emu.grasscutter.data.binout.config.ConfigGlobalCombat;
 import emu.grasscutter.data.excels.activity.*;
 import emu.grasscutter.data.server.ActivityCondGroup;
 import emu.grasscutter.game.activity.condition.*;
 import emu.grasscutter.game.activity.condition.all.DaysGreatEqual;
 import emu.grasscutter.game.player.Player;
+import emu.grasscutter.game.world.World;
 import emu.grasscutter.net.packet.BasePacket;
 import emu.grasscutter.net.proto.ActivityInfoNotifyOuterClass.ActivityInfoNotify;
 import emu.grasscutter.net.proto.ActivityScheduleInfoNotifyOuterClass.ActivityScheduleInfoNotify;
@@ -32,9 +35,17 @@ class ActivityDailyRefreshTest {
     static final long FOUR = time("2026-10-10T04:00:00+08:00");
     ActivityManager.Configuration previous;
     ActivityCondGroup previousGroup;
+    ConfigGlobalCombat previousCombat;
+    ActivityManager activeManager;
+    boolean previousScripts, previousQuesting;
     final List<BasePacket> packets = new ArrayList<>();
     final Player player =
             new Player() {
+                @Override
+                public ActivityManager getActivityManager() {
+                    return activeManager == null ? super.getActivityManager() : activeManager;
+                }
+
                 @Override
                 public void sendPacket(BasePacket packet) {
                     packets.add(packet);
@@ -63,6 +74,17 @@ class ActivityDailyRefreshTest {
     @BeforeEach
     void setup() throws Exception {
         Class.forName("emu.grasscutter.Grasscutter");
+        previousScripts = Grasscutter.getConfig().server.game.enableScriptInBigWorld;
+        previousQuesting = Grasscutter.getConfig().server.game.gameOptions.questing.enabled;
+        Grasscutter.getConfig().server.game.enableScriptInBigWorld = true;
+        Grasscutter.getConfig().server.game.gameOptions.questing.enabled = true;
+        previousCombat = GameData.getConfigGlobalCombat();
+        GameData.setConfigGlobalCombat(
+                new Gson()
+                        .fromJson(
+                                "{defaultAbilities:{defaultMPLevelAbilities:[],levelElementAbilities:[]}}",
+                                ConfigGlobalCombat.class));
+        player.setWorld(new World(null, player));
         var field = ActivityManager.class.getDeclaredField("configuration");
         field.setAccessible(true);
         previous = (ActivityManager.Configuration) field.get(null);
@@ -75,6 +97,10 @@ class ActivityDailyRefreshTest {
     @AfterEach
     void restore() {
         ActivityManager.installConfiguration(previous);
+        Grasscutter.getConfig().server.game.enableScriptInBigWorld = previousScripts;
+        Grasscutter.getConfig().server.game.gameOptions.questing.enabled = previousQuesting;
+        GameData.setConfigGlobalCombat(previousCombat);
+        player.setWorld(null);
         if (previousGroup == null) GameData.getActivityCondGroupMap().remove(GROUP);
         else GameData.getActivityCondGroupMap().put(GROUP, previousGroup);
     }
@@ -113,6 +139,7 @@ class ActivityDailyRefreshTest {
                     @Override
                     public void refreshActivities() {}
                 };
+        activeManager = manager;
         var conditions = new Int2ObjectOpenHashMap<ActivityCondExcelConfigData>();
         var condition =
                 new Gson()
@@ -215,5 +242,35 @@ class ActivityDailyRefreshTest {
                 };
         assertDoesNotThrow(() -> manager.onDailyReset(FOUR));
         assertTrue(packets.isEmpty());
+    }
+
+    @Test
+    void dailyRefreshWithoutAWorldPublishesInfoButDoesNotTriggerQuestConditions() throws Exception {
+        var item = config(901, FOUR - 86400000, FOUR + 86400000, false);
+        var manager = manager(List.of(item));
+        player.setWorld(null);
+        manager.onDailyReset(FOUR);
+        assertFalse(packets.isEmpty());
+        assertEquals(0, ((Handler) item.getActivityHandler()).conditionTriggers);
+    }
+
+    @Test
+    void dailyRefreshWithQuestingDisabledDoesNotTriggerQuestConditions() throws Exception {
+        var item = config(901, FOUR - 86400000, FOUR + 86400000, false);
+        var manager = manager(List.of(item));
+        Grasscutter.getConfig().server.game.gameOptions.questing.enabled = false;
+        manager.onDailyReset(FOUR);
+        assertFalse(packets.isEmpty());
+        assertEquals(0, ((Handler) item.getActivityHandler()).conditionTriggers);
+    }
+
+    @Test
+    void aReplacedManagerCannotTriggerQuestConditions() throws Exception {
+        var item = config(901, FOUR - 86400000, FOUR + 86400000, false);
+        var replaced = manager(List.of(item));
+        manager(List.of(item));
+        replaced.onDailyReset(FOUR);
+        assertFalse(packets.isEmpty());
+        assertEquals(0, ((Handler) item.getActivityHandler()).conditionTriggers);
     }
 }

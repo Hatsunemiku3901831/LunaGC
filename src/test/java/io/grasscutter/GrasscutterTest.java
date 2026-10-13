@@ -1,16 +1,24 @@
 package io.grasscutter;
 
-import emu.grasscutter.Grasscutter;
-import emu.grasscutter.config.Configuration;
 import com.google.gson.JsonParser;
-import java.io.IOException;
+
+import emu.grasscutter.Grasscutter;
+import emu.grasscutter.config.ConfigContainer.Region;
+import emu.grasscutter.config.Configuration;
+
 import lombok.Getter;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+import java.util.List;
 
 /** Testing entrypoint for {@link Grasscutter}. */
 public final class GrasscutterTest {
@@ -32,15 +40,26 @@ public final class GrasscutterTest {
     @BeforeAll
     public static void entry() {
         try {
+            Grasscutter.getConfig();
+            Configuration.DISPATCH_INFO.regions =
+                    List.of(new Region("os_usa", "Isolated test", "127.0.0.1", 22102));
+            Configuration.SERVER.http.bindAddress = "127.0.0.1";
+            Configuration.SERVER.http.bindPort = 0;
             // Start Grasscutter.
-            Grasscutter.main(new String[] {"-test"});
+            Grasscutter.main(new String[] {"-test", "-dispatch"});
         } catch (Exception exception) {
             throw new AssertionError("Grasscutter failed to start.", exception);
         }
 
         // Set the ports.
-        GrasscutterTest.httpPort = Configuration.SERVER.http.bindPort;
+        GrasscutterTest.httpPort = Grasscutter.getHttpServer().getHandle().port();
         GrasscutterTest.gamePort = Configuration.SERVER.game.bindPort;
+    }
+
+    @AfterAll
+    static void stopServer() throws InterruptedException {
+        if (Grasscutter.getHttpServer() != null) Grasscutter.getHttpServer().getHandle().stop();
+        if (Grasscutter.getDispatchServer() != null) Grasscutter.getDispatchServer().stop(1000);
     }
 
     @Test
@@ -59,39 +78,75 @@ public final class GrasscutterTest {
     }
 
     @Test
-    public void runtimeHealthWorksInDispatchModeAndGmDiagnosticsRequireTheToken() throws IOException {
+    public void runtimeHealthWorksInDispatchModeAndGmDiagnosticsRequireTheToken()
+            throws IOException {
         var config = Configuration.SERVER.gm;
         var originalToken = config.accessToken;
         var originalLoopback = config.loopbackOnly;
         try {
             config.accessToken = "isolated-validation-token";
             config.loopbackOnly = false;
-            try (var response = httpClient.newCall(new Request.Builder().url(http("status/server")).build()).execute()) {
+            try (var response =
+                    httpClient
+                            .newCall(new Request.Builder().url(http("status/server")).build())
+                            .execute()) {
                 Assertions.assertEquals(200, response.code());
-                var status = JsonParser.parseString(response.body().string()).getAsJsonObject().getAsJsonObject("status");
-                Assertions.assertTrue(status.getAsJsonObject("health").get("healthy").getAsBoolean());
-                Assertions.assertEquals(4, status.getAsJsonObject("health").getAsJsonArray("queues").size());
+                var status =
+                        JsonParser.parseString(response.body().string())
+                                .getAsJsonObject()
+                                .getAsJsonObject("status");
+                Assertions.assertTrue(
+                        status.getAsJsonObject("health").get("healthy").getAsBoolean());
+                Assertions.assertEquals(
+                        4, status.getAsJsonObject("health").getAsJsonArray("queues").size());
             }
-            for (var route : new String[]{"gm/api/runtime", "gm/api/database"}) {
-                try (var response = httpClient.newCall(new Request.Builder().url(http(route)).build()).execute()) {
+            for (var route : new String[] {"gm/api/runtime", "gm/api/database"}) {
+                try (var response =
+                        httpClient
+                                .newCall(new Request.Builder().url(http(route)).build())
+                                .execute()) {
                     Assertions.assertEquals(403, response.code());
                 }
-                try (var response = httpClient.newCall(new Request.Builder().url(http(route))
-                        .header("Authorization", "Bearer isolated-validation-token").build()).execute()) {
+                try (var response =
+                        httpClient
+                                .newCall(
+                                        new Request.Builder()
+                                                .url(http(route))
+                                                .header(
+                                                        "Authorization",
+                                                        "Bearer isolated-validation-token")
+                                                .build())
+                                .execute()) {
                     Assertions.assertEquals(200, response.code());
                     Assertions.assertEquals("no-store", response.header("Cache-Control"));
                     var body = JsonParser.parseString(response.body().string()).getAsJsonObject();
                     Assertions.assertEquals(0, body.get("retcode").getAsInt());
-                    Assertions.assertEquals(4, route.endsWith("database") ? body.getAsJsonArray("queues").size()
-                            : body.getAsJsonObject("status").getAsJsonArray("queues").size());
+                    Assertions.assertEquals(
+                            4,
+                            route.endsWith("database")
+                                    ? body.getAsJsonArray("queues").size()
+                                    : body.getAsJsonObject("status")
+                                            .getAsJsonArray("queues")
+                                            .size());
                 }
             }
-            try (var response = httpClient.newCall(new Request.Builder().url(http("gm/api/players"))
-                    .header("Authorization", "Bearer isolated-validation-token").build()).execute()) {
+            try (var response =
+                    httpClient
+                            .newCall(
+                                    new Request.Builder()
+                                            .url(http("gm/api/players"))
+                                            .header(
+                                                    "Authorization",
+                                                    "Bearer isolated-validation-token")
+                                            .build())
+                            .execute()) {
                 Assertions.assertEquals(200, response.code());
                 var body = JsonParser.parseString(response.body().string()).getAsJsonObject();
                 Assertions.assertTrue(body.getAsJsonArray("players").isEmpty());
             }
-        } finally { config.accessToken = originalToken; config.loopbackOnly = originalLoopback; }
+        } finally {
+            config.accessToken = originalToken;
+            config.loopbackOnly = originalLoopback;
+        }
     }
 }

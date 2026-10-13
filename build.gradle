@@ -192,6 +192,23 @@ jar {
 test {
     useJUnitPlatform()
     setMaxHeapSize('4G')
+    // Starting the HTTP server needs a fresh JVM, separate from static resource fixtures.
+    exclude 'io/grasscutter/GrasscutterTest.class'
+}
+
+tasks.register('serverSmokeTest', Test) {
+    description = 'Starts a dispatch server in a fresh JVM and checks HTTP and GM diagnostics.'
+    group = 'verification'
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    useJUnitPlatform()
+    setMaxHeapSize('4G')
+    include 'io/grasscutter/GrasscutterTest.class'
+    shouldRunAfter tasks.named('test')
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('serverSmokeTest')
 }
 
 publishing {

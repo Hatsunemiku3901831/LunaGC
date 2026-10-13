@@ -3,16 +3,19 @@ package io.grasscutter;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.google.gson.Gson;
+
 import emu.grasscutter.GameConstants;
 import emu.grasscutter.data.excels.scene.SceneData;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.props.EntityIdType;
 import emu.grasscutter.game.world.*;
+
+import org.junit.jupiter.api.*;
+
 import java.lang.management.ManagementFactory;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.junit.jupiter.api.*;
 
 class SceneTransferConcurrencyTest {
     private AbilityTestFixture fixture;
@@ -106,7 +109,9 @@ class SceneTransferConcurrencyTest {
         var leaving = new CountDownLatch(2);
         class SwapScene extends AbilityTestFixture.TestScene {
             SwapScene(int id) {
-                super(SceneTransferConcurrencyTest.this.world, SceneTransferConcurrencyTest.this.data(id));
+                super(
+                        SceneTransferConcurrencyTest.this.world,
+                        SceneTransferConcurrencyTest.this.data(id));
                 setDontDestroyWhenEmpty(true);
             }
 
@@ -181,7 +186,8 @@ class SceneTransferConcurrencyTest {
             assertTrue(startedSecond.await(2, TimeUnit.SECONDS));
             Thread.sleep(100);
             assertFalse(
-                    second.isDone(), "A second transfer must wait for the first transfer of this player");
+                    second.isDone(),
+                    "A second transfer must wait for the first transfer of this player");
             assertTrue(secondScene.getPlayers().isEmpty());
         } finally {
             release.countDown();
@@ -255,7 +261,8 @@ class SceneTransferConcurrencyTest {
             if (ids != null)
                 for (var info : bean.getThreadInfo(ids, true, true)) System.err.println(info);
             fail(
-                    "World entry and scene entity allocation did not finish; monitor diagnostics recorded",
+                    "World entry and scene entity allocation did not finish; monitor diagnostics"
+                        + " recorded",
                     timeout);
         }
         assertSame(world, fixture.player.getWorld());
@@ -266,30 +273,35 @@ class SceneTransferConcurrencyTest {
 
     @Test
     void concurrentAllocationsKeepUniqueSerialsAcrossAllEntityTypes() throws Exception {
-        var ready = new CountDownLatch(8);
+        var types = EntityIdType.values();
+        int allocationsPerType = 200;
+        int expectedAllocations = types.length * allocationsPerType;
+        var ready = new CountDownLatch(types.length);
         var start = new CountDownLatch(1);
         var serials = ConcurrentHashMap.<Integer>newKeySet();
         int mask = (1 << GameConstants.ENTITY_ID_BIT_SHIFT) - 1;
         int before = world.getNextEntityId(EntityIdType.GADGET) & mask;
         var futures = new ArrayList<CompletableFuture<Void>>();
-        for (var type : EntityIdType.values())
+        for (var type : types)
             futures.add(
                     worker(
                             () -> {
                                 ready.countDown();
                                 await(start);
-                                for (int i = 0; i < 200; i++) {
+                                for (int i = 0; i < allocationsPerType; i++) {
                                     int id = world.getNextEntityId(type);
-                                    assertEquals(type.getId(), id >>> GameConstants.ENTITY_ID_BIT_SHIFT);
+                                    assertEquals(
+                                            type.getId(), id >>> GameConstants.ENTITY_ID_BIT_SHIFT);
                                     assertTrue(
-                                            serials.add(id & mask), "Serial numbers must be shared across entity types");
+                                            serials.add(id & mask),
+                                            "Serial numbers must be shared across entity types");
                                 }
                             }));
         assertTrue(ready.await(2, TimeUnit.SECONDS));
         start.countDown();
         CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new)).get(4, TimeUnit.SECONDS);
-        assertEquals(1600, serials.size());
+        assertEquals(expectedAllocations, serials.size());
         assertEquals(before + 1, Collections.min(serials));
-        assertEquals(before + 1600, Collections.max(serials));
+        assertEquals(before + expectedAllocations, Collections.max(serials));
     }
 }
