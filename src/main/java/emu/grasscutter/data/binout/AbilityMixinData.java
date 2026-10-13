@@ -87,7 +87,11 @@ public class AbilityMixinData implements Serializable {
         AvatarSteerByCameraMixin,
         ModifyDamageCountMixin,
         AttackCostElementMixin,
-        OnAvatarUseSkillMixin
+        OnAvatarUseSkillMixin,
+        CheckSubTagScanEntityMixin,
+        TryEnterVehicleMixin,
+        DoActionOnVehicleInteractPostMixin,
+        TriggerVehicleOff
     }
     public AbilityModifierAction[] idontknowwhattonamethis;
     public AbilityModifierAction[] idontknowwhattonamethis2;
@@ -96,6 +100,12 @@ public class AbilityMixinData implements Serializable {
     public AbilityModifierAction[] actions;
     public AbilityModifierAction[] actionQueue;
     public String onEvent;
+    public String vehicleType;
+    public AbilityModifierAction[] onSelectStart;
+    @SerializedName(value = "onSelectEnd", alternate = "IMEDGAOLLEM")
+    public AbilityModifierAction[] onSelectEnd;
+    public AbilityModifierAction[] onVehicleIn;
+    public AbilityModifierAction[] onVehicleOut;
     @SerializedName("type")
     public String eventExecutionType;
     public JsonElement skillID;

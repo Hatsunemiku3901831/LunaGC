@@ -9,4 +9,5 @@ public class ConfigCombat {
     // There are more values that can be added that might be useful in the json
     ConfigCombatProperty property;
     ConfigCombatSummon summon;
+    ConfigCombatDie die;
 }

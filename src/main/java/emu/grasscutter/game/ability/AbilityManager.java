@@ -82,7 +82,8 @@ public final class AbilityManager extends BasePlayerManager {
             AbilityModifierAction.Type.AvatarShareCDSkillStart,
             AbilityModifierAction.Type.ActivitySkillShareCDStart,
             AbilityModifierAction.Type.ClearShareCD,
-            AbilityModifierAction.Type.SetGlobalValue);
+            AbilityModifierAction.Type.SetGlobalValue,
+            AbilityModifierAction.Type.TriggerVehicleOff);
 
     /**
      * What a server owned chain may run, at any depth.
@@ -108,7 +109,8 @@ public final class AbilityManager extends BasePlayerManager {
             AbilityModifierAction.Type.AvatarShareCDSkillStart,
             AbilityModifierAction.Type.ActivitySkillShareCDStart,
             AbilityModifierAction.Type.ClearShareCD,
-            AbilityModifierAction.Type.CopyGlobalValue);
+            AbilityModifierAction.Type.CopyGlobalValue,
+            AbilityModifierAction.Type.TriggerVehicleOff);
 
     public static boolean isAllowedInServerOwnedChain(AbilityModifierAction.Type type) {
         return type != null && SERVER_OWNED_CHAIN.contains(type);
@@ -174,6 +176,15 @@ public final class AbilityManager extends BasePlayerManager {
     private long arlecchinoESkillTime = 0L;
     @Getter private final AbilitySharedCooldown sharedCooldown;
     @Getter private final AbilitySkillCooldown skillCooldown;
+    private volatile GameEntity scanTarget;
+
+    public void setScanTarget(GameEntity target) { scanTarget = target; }
+    public GameEntity getScanTarget() {
+        var target=scanTarget;
+        var scene=player.getScene();
+        return target!=null && scene!=null && target.getScene()==scene
+                && scene.getEntityById(target.getId())==target && target.isAlive()?target:null;
+    }
 
     public AbilityManager(Player player) {
         super(player);
@@ -376,6 +387,14 @@ public final class AbilityManager extends BasePlayerManager {
 
         var context = new AbilityExecutionContext(ability, target);
         if (!context.isCurrent()) return;
+        if (mixinData.type==AbilityMixinData.Type.CheckSubTagScanEntityMixin
+                || mixinData.type==AbilityMixinData.Type.TryEnterVehicleMixin
+                || mixinData.type==AbilityMixinData.Type.DoActionOnVehicleInteractPostMixin
+                || mixinData.type==AbilityMixinData.Type.TriggerVehicleOff) {
+            // Scan selection must be visible to the immediately following modifier attachment.
+            context.runIfCurrent(() -> handler.execute(ability,mixinData,abilityData,target));
+            return;
+        }
         eventExecutor.submit(
             () -> context.runIfCurrent(() -> {
                 try {
@@ -1174,6 +1193,7 @@ public final class AbilityManager extends BasePlayerManager {
                         executeCallbackActionsNow(ownedAbility, actions, invoke.getAbilityData(), ownedEntity, ownedEntity);
                     }));
             }
+            runVehicleAttachment(modifier, entity, invoke.getAbilityData());
         } else if (modChange.getAction() == ModifierAction.MODIFIER_ACTION_REMOVED) {
             var instances = entity.getInstancedModifiers();
             AbilityModifierController modifier;
@@ -1196,6 +1216,17 @@ public final class AbilityManager extends BasePlayerManager {
             Grasscutter.getLogger().debug("Unknown action");
         }
         entity.getAbilityGlobalValueWatchers().flushPending();
+    }
+
+    private void runVehicleAttachment(AbilityModifierController controller,GameEntity target,ByteString payload) {
+        var mixins=controller.getModifierData().modifierMixins;
+        if(mixins==null || Arrays.stream(mixins).noneMatch(m -> m!=null
+                && m.type==AbilityMixinData.Type.TryEnterVehicleMixin)
+                || !controller.startVehicleAttachment()) return;
+        for(var mixin:mixins)
+            if(mixin!=null && (mixin.type==AbilityMixinData.Type.TryEnterVehicleMixin
+                    || mixin.type==AbilityMixinData.Type.DoActionOnVehicleInteractPostMixin))
+                executeMixin(controller.getAbility(),mixin,payload,target);
     }
 
     private void handleMixinCostStamina(AbilityInvokeEntry invoke)

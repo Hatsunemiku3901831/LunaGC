@@ -148,7 +148,7 @@ public class StaminaManager extends BasePlayerManager {
     private int lastSkillId = 0;
     private int lastSkillCasterId = 0;
     private boolean lastSkillFirstTick = true;
-    private int vehicleId = -1;
+    private volatile int vehicleId = -1;
     private int vehicleStamina = GlobalVehicleMaxStamina;
 
     public StaminaManager(Player player) {
@@ -418,14 +418,19 @@ public class StaminaManager extends BasePlayerManager {
 
     public void handleVehicleInteractReq(GameSession session, int vehicleId, VehicleInteractType vehicleInteractType) {
         if (vehicleInteractType == VehicleInteractType.VehicleInteractType_VEHICLE_INTERACT_IN) {
-            this.vehicleId = vehicleId;
+            synchronized (this) { this.vehicleId = vehicleId; }
             // Reset character stamina here to prevent falling into water immediately on ejection if char stamina is
             //      close to empty when boarding.
             updateStaminaAbsolute(session, "board vehicle", getMaxCharacterStamina(), true);
             updateStaminaAbsolute(session, "board vehicle", getMaxVehicleStamina(), false);
         } else {
-            this.vehicleId = -1;
+            releaseVehicle(vehicleId);
         }
+    }
+
+    /** A late exit from another vehicle must not clear the current ride's stamina context. */
+    public synchronized void releaseVehicle(int entityId) {
+        if (vehicleId==entityId) vehicleId=-1;
     }
 
     // Internal handler

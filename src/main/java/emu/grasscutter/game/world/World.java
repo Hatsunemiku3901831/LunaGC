@@ -892,6 +892,9 @@ public class World implements Iterable<Player> {
                 transition.replaced().getScriptManager().onDestroy();
         }
 
+        // Admission and plugin cancellation have succeeded. End possession before moving the avatar.
+        emu.grasscutter.game.ability.NatsaurusVehicleHelper.takeAway(player);
+
         // Move directly in the same scene.
         if (newScene == oldScene && teleportProperties.getTeleportType() == TeleportType.COMMAND) {
             // Set player position and rotation

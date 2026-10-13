@@ -88,6 +88,8 @@ public class AbilityModifier implements Serializable {
     @JsonAdapter(AbilityActionAdapter.class)
     public static class AbilityModifierAction implements Serializable {
         public enum Type {
+            TriggerVehicleOff,
+            TriggerVehicleOn,
            PhlogistonCostMixin,
             ActCameraRadialBlur,
             ActCameraShake,

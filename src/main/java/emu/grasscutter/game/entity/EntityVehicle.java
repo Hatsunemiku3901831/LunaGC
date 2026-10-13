@@ -62,7 +62,7 @@ public class EntityVehicle extends EntityBaseGadget {
                 this.pointId = pointId;
                 this.curStamina = 240; // might be in configGadget.GCALKECLLLP.JBAKBEFIMBN.ANBMPHPOALP
                 this.curPhlogiston = 50;
-                this.vehicleMembers = new ArrayList<>();
+                this.vehicleMembers = new java.util.concurrent.CopyOnWriteArrayList<>();
                 GadgetData data = GameData.getGadgetDataMap().get(gadgetId);
                 if (data != null && data.getJsonName() != null) {
                         this.configGadget = GameData.getGadgetConfigData().get(data.getJsonName());
@@ -77,6 +77,10 @@ public class EntityVehicle extends EntityBaseGadget {
         super.fillFightProps(configGadget);
         this.addFightProperty(FightProperty.FIGHT_PROP_CUR_SPEED, 0);
         this.addFightProperty(FightProperty.FIGHT_PROP_CHARGE_EFFICIENCY, 0);
+        if (NatsaurusVehicleHelper.isNatsaurusMount(this)) {
+            float hp=getFightProperty(FightProperty.FIGHT_PROP_MAX_HP);
+            if (Float.isFinite(hp) && hp>0) setFightProperty(FightProperty.FIGHT_PROP_CUR_HP,hp);
+        }
     }
 
     private void addConfigAbility(ConfigAbilityData abilityData) {
@@ -94,6 +98,7 @@ public class EntityVehicle extends EntityBaseGadget {
                         .setOwnerUid(this.owner.getUid())
                         .setCurStamina(getCurStamina())
                         .setCurPhlogiston(getCurPhlogiston())
+                        .addAllMemberList(vehicleMembers)
                         .setTransformEntityId(transformEntityId)
                         .build();
 
@@ -149,6 +154,16 @@ public class EntityVehicle extends EntityBaseGadget {
             for (var ability : this.configGadget.getAbilities()) {
                 this.addConfigAbility(ability);
             }
+        }
+    }
+
+    @Override public void onDeath(int killerId) {
+        super.onDeath(killerId);
+        if(!NatsaurusVehicleHelper.isNatsaurusMount(this)) return;
+        for(var member:new ArrayList<>(vehicleMembers)) {
+            var rider=getScene().getPlayers().stream().filter(p -> p.getUid()==member.getUid()).findFirst().orElse(null);
+            if(rider==null) vehicleMembers.remove(member);
+            else NatsaurusVehicleHelper.dismount(rider,this,member);
         }
     }
 }

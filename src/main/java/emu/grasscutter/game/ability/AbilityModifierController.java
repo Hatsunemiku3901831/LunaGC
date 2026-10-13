@@ -18,6 +18,8 @@ public class AbilityModifierController {
     private volatile ServerCallbacks serverCallbacks;
     private final Set<AbilityModifier.AbilityModifierAction> cooldownCallbacks;
     private AbilityCooldownInvocation.Ledger cooldownLedger = new AbilityCooldownInvocation.Ledger();
+    private AtomicBoolean vehicleAttachment = new AtomicBoolean();
+    boolean startVehicleAttachment() { return vehicleAttachment.compareAndSet(false,true); }
 
     AbilityCooldownInvocation.Ledger getCooldownLedger() { return cooldownLedger; }
 
@@ -30,6 +32,7 @@ public class AbilityModifierController {
     void inheritCooldownLedger(AbilityModifierController previous) {
         if (previous != null && previous.ability == ability && previous.modifierData == modifierData) {
             cooldownLedger = previous.cooldownLedger;
+            vehicleAttachment = previous.vehicleAttachment;
             skillSlotSourceOrder = previous.skillSlotSourceOrder;
         }
     }

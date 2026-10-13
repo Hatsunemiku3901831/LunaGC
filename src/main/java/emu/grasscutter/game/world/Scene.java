@@ -303,6 +303,7 @@ public class Scene {
                 this.asterBigSceneController.onPlayerLeaving(player);
                 this.sealBattleManager.onPlayerLeaving(player);
                 this.scenePlayBattleManager.onPlayerLeaving(player);
+                emu.grasscutter.game.ability.NatsaurusVehicleHelper.takeAway(player);
                 getPlayers().remove(player);
                 player.setScene(null);
 
@@ -726,7 +727,10 @@ public class Scene {
             }
         }
 
-        if (!(target instanceof EntityMonster monster
+        if (target instanceof EntityVehicle vehicle
+                && emu.grasscutter.game.ability.NatsaurusVehicleHelper.isNatsaurusMount(vehicle))
+            removeNatsaurusAfterDeath(vehicle);
+        else if (!(target instanceof EntityMonster monster
                 && dungeonBossCleanup.removeAfterDeath(monster))) this.removeEntity(target);
 
         if (target instanceof EntityClientGadget cg && cg.getOwner() != null) {
@@ -745,6 +749,20 @@ public class Scene {
 
         this.triggerDungeonEvent(
                 DungeonPassConditionType.DUNGEON_COND_KILL_MONSTER_COUNT, ++killedMonsterCount);
+    }
+
+    private void removeNatsaurusAfterDeath(EntityVehicle vehicle) {
+        var combat=vehicle.getConfigGadget()==null?null:vehicle.getConfigGadget().getCombat();
+        var die=combat==null?null:combat.getDie();
+        double seconds=die==null || !die.isHasAnimatorDie()?0:die.getDieEndTime();
+        removeEntity(vehicle,VisionType.VisionType_VISION_DIE);
+        if(!Double.isFinite(seconds) || seconds<=0) return;
+        int ticks=(int)Math.min(Integer.MAX_VALUE,
+                Math.ceil(seconds*1000/Math.max(1,emu.grasscutter.config.Configuration.GAME_INFO.tickRateMs)));
+        scheduler.scheduleDelayedTask(() -> {
+            if(getWorld().getScenes().get(getId())==this && getEntityById(vehicle.getId())==null)
+                broadcastPacket(new PacketSceneEntityDisappearNotify(vehicle,VisionType.VisionType_VISION_REMOVE));
+        },ticks);
     }
 
     public void onTick() {

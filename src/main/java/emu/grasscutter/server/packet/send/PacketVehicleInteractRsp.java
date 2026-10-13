@@ -2,6 +2,7 @@ package emu.grasscutter.server.packet.send;
 
 
 import emu.grasscutter.data.GameData;
+import emu.grasscutter.game.ability.NatsaurusVehicleHelper;
 import emu.grasscutter.game.entity.*;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.quest.enums.QuestContent;
@@ -16,9 +17,13 @@ public class PacketVehicleInteractRsp extends BasePacket {
         super(PacketOpcodes.VehicleInteractRsp);
         VehicleInteractRsp.Builder proto = VehicleInteractRsp.newBuilder();
 
-        GameEntity vehicle = player.getScene().getEntityById(entityId);
-        vehicle.setFightProperty(1010,1000);
-        vehicle.setFightProperty(2000,1000);
+        GameEntity vehicle = player.getScene()==null?null:player.getScene().getEntityById(entityId);
+        if (!(vehicle instanceof EntityVehicle)) { this.setData(proto.build()); return; }
+        boolean natsaurus=NatsaurusVehicleHelper.isNatsaurusMount((EntityVehicle)vehicle);
+        if (!natsaurus) {
+            vehicle.setFightProperty(1010,1000);
+            vehicle.setFightProperty(2000,1000);
+        }
         if (vehicle instanceof EntityVehicle) {
             proto.setEntityId(vehicle.getId());
 
@@ -33,7 +38,8 @@ public class PacketVehicleInteractRsp extends BasePacket {
 
             switch (interactType) {
                 case VehicleInteractType_VEHICLE_INTERACT_IN -> {
-                    ((EntityVehicle) vehicle).getVehicleMembers().add(vehicleMember);
+                    if (((EntityVehicle) vehicle).getVehicleMembers().stream().noneMatch(m -> m.getUid()==player.getUid()))
+                        ((EntityVehicle) vehicle).getVehicleMembers().add(vehicleMember);
                     player
                             .getQuestManager()
                             .queueEvent(
@@ -47,8 +53,8 @@ public class PacketVehicleInteractRsp extends BasePacket {
                             jsonName.contains("natsaurus") ? 4 : 1;
                     proto.setGadgetId(((EntityVehicle) vehicle).getGadgetId());
                     proto.setVehicleType(vehicleType);
-                    proto.setVehiclePos(player.getPosition().toProto());
-                    proto.setVehicleRot(player.getRotation().toProto());
+                    proto.setVehiclePos((natsaurus?vehicle.getPosition():player.getPosition()).toProto());
+                    proto.setVehicleRot((natsaurus?vehicle.getRotation():player.getRotation()).toProto());
                 }
                 case VehicleInteractType_VEHICLE_INTERACT_OUT -> {
                     ((EntityVehicle) vehicle).getVehicleMembers().remove(vehicleMember);
