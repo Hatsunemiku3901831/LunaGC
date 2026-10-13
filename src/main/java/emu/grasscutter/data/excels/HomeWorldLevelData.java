@@ -27,6 +27,11 @@ public class HomeWorldLevelData extends GameResource {
     @SerializedName("HALLBIKHGGJ")
     Integer modernFurnitureMakeSlotCount;
 
+    Integer furnitureMakeTimeReduction;
+
+    @SerializedName("MBABBBPOFFM")
+    Integer modernFurnitureMakeTimeReduction;
+
     int outdoorUnlockBlockCount;
     int freeUnlockModuleCount;
     int deployNpcCount;
@@ -37,6 +42,11 @@ public class HomeWorldLevelData extends GameResource {
         if (furnitureMakeSlotCount != null) return furnitureMakeSlotCount;
         if (modernFurnitureMakeSlotCount != null) return modernFurnitureMakeSlotCount;
         return legacyFurnitureMakeSlotCount == null ? 0 : legacyFurnitureMakeSlotCount;
+    }
+
+    public int getFurnitureMakeTimeReduction() {
+        if (furnitureMakeTimeReduction != null) return furnitureMakeTimeReduction;
+        return modernFurnitureMakeTimeReduction == null ? 0 : modernFurnitureMakeTimeReduction;
     }
 
     @Override

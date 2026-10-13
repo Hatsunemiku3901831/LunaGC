@@ -58,7 +58,7 @@ public final class FurnitureCancel {
                 var slot = matches.get(0);
                 var plan = slot.getPlan();
                 if (slot.getBeginTime() <= 0
-                        || slot.getDurTime() <= 0
+                        || slot.getDurTime() < 0
                         || plan == null
                         || !plan.isValidFor(slot)) {
                     fail(player, makeId, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
@@ -144,7 +144,7 @@ public final class FurnitureCancel {
                     Grasscutter.getLogger()
                             .error(
                                     "Furniture cancellation needs reconciliation: UID {}, recipe"
-                                        + " {}, slot {}",
+                                            + " {}, slot {}",
                                     player.getUid(),
                                     makeId,
                                     index,

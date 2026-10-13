@@ -55,7 +55,7 @@ public final class FurnitureMakePlan {
                 || makeId != slot.getMakeId()
                 || itemId <= 0
                 || count <= 0
-                || makeTime <= 0
+                || makeTime < 0
                 || makeTime != slot.getDurTime()
                 || trustExp < 0
                 || materials == null) return false;

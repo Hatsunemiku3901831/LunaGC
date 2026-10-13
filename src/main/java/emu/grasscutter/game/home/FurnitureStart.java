@@ -66,7 +66,8 @@ public final class FurnitureStart {
                 var level = GameData.getHomeWorldLevelDataMap().get(home.getLevel());
                 if (level == null
                         || level.getId() != home.getLevel()
-                        || level.getFurnitureMakeSlotCount() <= 0) {
+                        || level.getFurnitureMakeSlotCount() <= 0
+                        || level.getFurnitureMakeTimeReduction() < 0) {
                     fail(player, Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR);
                     return;
                 }
@@ -123,19 +124,21 @@ public final class FurnitureStart {
                 }
                 int index = 0;
                 while (used.contains(index)) index++;
+                int duration =
+                        Math.max(0, recipe.getMakeTime() - level.getFurnitureMakeTimeReduction());
                 var slot =
                         FurnitureMakeSlotItem.of()
                                 .index(index)
                                 .makeId(makeId)
                                 .avatarId(avatarId)
                                 .beginTime(Utils.getCurrentSeconds())
-                                .durTime(recipe.getMakeTime())
+                                .durTime(duration)
                                 .plan(
                                         new FurnitureMakePlan(
                                                 makeId,
                                                 product.getId(),
                                                 recipe.getCount(),
-                                                recipe.getMakeTime(),
+                                                duration,
                                                 recipe.getExp(),
                                                 totals))
                                 .build();

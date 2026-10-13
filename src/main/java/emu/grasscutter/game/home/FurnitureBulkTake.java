@@ -102,7 +102,8 @@ public final class FurnitureBulkTake {
                     }
                     var data = GameData.getItemDataMap().get(itemId);
                     if (slot.getBeginTime() <= 0
-                            || slot.getDurTime() <= 0
+                            || slot.getDurTime() < 0
+                            || slot.getDurTime() == 0 && plan == null
                             || data == null
                             || data.getId() != itemId
                             || data.getItemType() != ItemType.ITEM_FURNITURE
