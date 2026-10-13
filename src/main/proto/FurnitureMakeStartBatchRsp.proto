@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "FurnitureMakeStartBatchRspOuterClass";
+
+import "FurnitureMakeSlot.proto";
+
+// Current client type 63299, opcode 9832; its consumer advances the batch UI.
+message FurnitureMakeStartBatchRsp {
+    int32 retcode = 4;
+    FurnitureMakeSlot furniture_make_slot = 15;
+}

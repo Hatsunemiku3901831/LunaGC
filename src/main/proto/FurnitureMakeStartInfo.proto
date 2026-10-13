@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "FurnitureMakeStartInfoOuterClass";
+
+// Current client type 23201. Shared field names tie these to the single start request.
+message FurnitureMakeStartInfo {
+    uint32 make_id = 7;
+    uint32 avatar_id = 12;
+}

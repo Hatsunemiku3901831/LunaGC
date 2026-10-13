@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "FurnitureMakeStartBatchReqOuterClass";
+
+import "FurnitureMakeStartInfo.proto";
+
+// Current client type 85662, opcode 871, repeated message codec wire key 0x62.
+message FurnitureMakeStartBatchReq {
+    repeated FurnitureMakeStartInfo make_info_list = 12;
+}
