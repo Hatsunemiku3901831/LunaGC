@@ -29,7 +29,8 @@ public final class FurnitureStart {
         synchronized (inventory) {
             synchronized (home) {
                 if (home.getPendingFurnitureTake() != null
-                        || home.getPendingFurnitureStart() != null) {
+                        || home.getPendingFurnitureStart() != null
+                        || home.getPendingFurnitureCancel() != null) {
                     fail(player, Retcode.RET_SVR_ERROR);
                     return;
                 }

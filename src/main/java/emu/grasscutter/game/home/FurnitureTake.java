@@ -50,7 +50,8 @@ public final class FurnitureTake {
         synchronized (inventory) {
             synchronized (home) {
                 if (home.getPendingFurnitureTake() != null
-                        || home.getPendingFurnitureStart() != null) {
+                        || home.getPendingFurnitureStart() != null
+                        || home.getPendingFurnitureCancel() != null) {
                     fail(player, makeId, Retcode.RET_SVR_ERROR);
                     return;
                 }

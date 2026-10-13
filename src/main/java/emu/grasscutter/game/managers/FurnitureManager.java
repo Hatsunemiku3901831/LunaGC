@@ -66,4 +66,8 @@ public class FurnitureManager extends BasePlayerManager {
     public void take(int index, int makeId, boolean isFastFinish) {
         emu.grasscutter.game.home.FurnitureTake.take(player, index, makeId, isFastFinish);
     }
+
+    public void cancel(int index, int makeId) {
+        emu.grasscutter.game.home.FurnitureCancel.cancel(player, index, makeId);
+    }
 }
