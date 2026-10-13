@@ -4,6 +4,8 @@ import emu.grasscutter.game.avatar.Avatar;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.props.ItemUseTarget;
 
+import java.util.List;
+
 public class UseItemParams {
     // Don't want to change 40 method signatures when this gets extended!
     public Player player;
@@ -11,6 +13,7 @@ public class UseItemParams {
     public Avatar targetAvatar = null;
     public int count = 1;
     public int optionId = 0;
+    public List<Integer> optionIds = List.of();
     public boolean isEnterMpDungeonTeam = false;
     public int usedItemId = 0;
 

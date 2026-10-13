@@ -28,7 +28,7 @@ public final class SelectedItemUse {
             if (player.getPendingItemUse() != null) return false;
             List<ItemParamData> products;
             try {
-                products = action.resolveItems(params);
+                products = action.resolveItems(params, params.optionIds);
                 if (!preflight(player, source, params.count, products)) return false;
             } catch (IllegalArgumentException invalid) {
                 return false;
@@ -39,7 +39,8 @@ public final class SelectedItemUse {
                             params.count,
                             params.optionId,
                             action.getItemUseOp().getValue(),
-                            products);
+                            products,
+                            params.optionIds);
             player.setPendingItemUse(receipt);
             try {
                 DatabaseHelper.saveGameSync(player);

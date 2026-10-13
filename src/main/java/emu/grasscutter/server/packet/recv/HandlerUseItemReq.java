@@ -24,16 +24,30 @@ public class HandlerUseItemReq extends PacketHandler {
 
         GameItem useItem;
         try {
-            useItem =
-                    session.getServer()
-                            .getInventorySystem()
-                            .useItem(
-                                    session.getPlayer(),
-                                    req.getTargetGuid(),
-                                    req.getGuid(),
-                                    req.getCount(),
-                                    req.getOptionIdx(),
-                                    req.getIsEnterMpDungeonTeam());
+            if (req.getOptionIdxListCount() == 0) {
+                useItem =
+                        session.getServer()
+                                .getInventorySystem()
+                                .useItem(
+                                        session.getPlayer(),
+                                        req.getTargetGuid(),
+                                        req.getGuid(),
+                                        req.getCount(),
+                                        req.getOptionIdx(),
+                                        req.getIsEnterMpDungeonTeam());
+            } else {
+                useItem =
+                        session.getServer()
+                                .getInventorySystem()
+                                .useItem(
+                                        session.getPlayer(),
+                                        req.getTargetGuid(),
+                                        req.getGuid(),
+                                        req.getCount(),
+                                        req.getOptionIdx(),
+                                        req.getIsEnterMpDungeonTeam(),
+                                        req.getOptionIdxListList());
+            }
         } catch (RuntimeException failure) {
             // Inventory may already have a pending receipt. Do not retry the economic operation.
             Grasscutter.getLogger()
@@ -46,7 +60,12 @@ public class HandlerUseItemReq extends PacketHandler {
             return;
         }
         if (useItem != null) {
-            session.send(new PacketUseItemRsp(req.getTargetGuid(), useItem, req.getOptionIdx()));
+            session.send(
+                    new PacketUseItemRsp(
+                            req.getTargetGuid(),
+                            useItem,
+                            req.getOptionIdx(),
+                            req.getOptionIdxListList()));
         } else {
             session.send(new PacketUseItemRsp());
         }

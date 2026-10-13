@@ -14,6 +14,7 @@ public final class ItemUseReceipt {
     private String operationId, sourceObjectId;
     private long sourceGuid;
     private int sourceId, sourceBefore, usedCount, optionId, operation, state;
+    private List<Integer> optionIds = new ArrayList<>();
     private List<Product> products = new ArrayList<>();
     private List<Delivery> deliveries = new ArrayList<>();
 
@@ -25,6 +26,16 @@ public final class ItemUseReceipt {
             int optionId,
             int operation,
             List<ItemParamData> products) {
+        this(source, usedCount, optionId, operation, products, List.of());
+    }
+
+    ItemUseReceipt(
+            GameItem source,
+            int usedCount,
+            int optionId,
+            int operation,
+            List<ItemParamData> products,
+            List<Integer> choices) {
         operationId = UUID.randomUUID().toString();
         sourceId = source.getItemId();
         sourceGuid = source.getGuid();
@@ -33,9 +44,14 @@ public final class ItemUseReceipt {
         this.usedCount = usedCount;
         this.optionId = optionId;
         this.operation = operation;
+        this.optionIds = new ArrayList<>(choices);
         for (var product : products)
             this.products.add(new Product(product.getId(), product.getCount()));
         state = 1;
+    }
+
+    public List<Integer> getOptionIds() {
+        return optionIds == null ? List.of() : Collections.unmodifiableList(optionIds);
     }
 
     public List<Product> getProducts() {

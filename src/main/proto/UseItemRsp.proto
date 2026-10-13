@@ -1,5 +1,6 @@
 // 7.1 native UseItemRsp: opcode 25449, parser 0x148005ad0, uint32 list codec 0x148005da0.
 // Consumer 0x14b154bb0 forwards GUID, item ID, target GUID and scalar choice on success.
+// Server preserves the complete successful choice list in field 9; mixed choices retain scalar zero.
 syntax = "proto3";
 
 option java_package = "emu.grasscutter.net.proto";

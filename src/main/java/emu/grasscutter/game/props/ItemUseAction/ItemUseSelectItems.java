@@ -37,6 +37,41 @@ public abstract class ItemUseSelectItems extends ItemUseAction {
         return List.of(new ItemParamData(id, (int) amount));
     }
 
+    /** Native lists contain one one-based candidate index per consumed box. */
+    public List<ItemParamData> resolveItems(UseItemParams params, List<Integer> choices) {
+        if (choices == null || params == null) return List.of();
+        if (choices.isEmpty()) return resolveItems(params);
+        if (params.player == null || params.count <= 0 || choices.size() != params.count)
+            return List.of();
+        var quantities = new LinkedHashMap<Integer, Long>();
+        for (var choice : choices) {
+            if (choice == null || choice <= 0 || params.optionId != 0 && params.optionId != choice)
+                return List.of();
+            var selected =
+                    new UseItemParams(
+                            params.player,
+                            params.itemUseTarget,
+                            params.targetAvatar,
+                            1,
+                            choice,
+                            params.isEnterMpDungeonTeam);
+            selected.usedItemId = params.usedItemId;
+            var products = resolveItems(selected);
+            if (products == null || products.isEmpty()) return List.of();
+            for (var product : products) {
+                if (product == null || product.getId() <= 0 || product.getCount() <= 0)
+                    return List.of();
+                long total = quantities.getOrDefault(product.getId(), 0L) + product.getCount();
+                if (total > Integer.MAX_VALUE)
+                    throw new IllegalArgumentException("Selection quantity overflow");
+                quantities.put(product.getId(), total);
+            }
+        }
+        return quantities.entrySet().stream()
+                .map(entry -> new ItemParamData(entry.getKey(), entry.getValue().intValue()))
+                .toList();
+    }
+
     protected GameItem getItemStack(int index, int useCount) {
         int id = this.getItemId(index);
         int count = this.getItemCount(index);

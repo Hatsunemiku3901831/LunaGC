@@ -36,5 +36,5 @@ JAR SHA-256：`0e798d50bd1f39ebe05a94799a85bfabbacb989b91937c5d904ae628b62eabcc`
 没有重启日常服务。
 
 另已定位四种分组批量自选礼包：115016、115017、115024、115025，均允许最多 99 次使用。
-其资源候选列表已解析，原生请求中的重复选择列表仍需确认赋值与分组含义。
-这项独立适配尚未完成，证据在 `batch165/group-choice-materials.json`。
+后续[原生选择列表适配](CHOICE_LIST_USE_2026-10-13.md)已确认重复列表含义并接入整批消费发奖。
+资源定位证据在 `batch165/group-choice-materials.json`，新协议与处理证据在 `batch167/`。

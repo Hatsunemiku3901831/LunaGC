@@ -977,7 +977,19 @@ public class InventorySystem extends BaseGameSystem {
             int count,
             int optionId,
             boolean isEnterMpDungeonTeam) {
+        return useItem(player, targetGuid, itemGuid, count, optionId, isEnterMpDungeonTeam, List.of());
+    }
+
+    public synchronized GameItem useItem(
+            Player player,
+            long targetGuid,
+            long itemGuid,
+            int count,
+            int optionId,
+            boolean isEnterMpDungeonTeam,
+            List<Integer> optionIds) {
         if (player == null || count <= 0 || player.getPendingItemUse()!=null) return null;
+        if (optionIds == null || !optionIds.isEmpty() && optionIds.size() != count) return null;
         Grasscutter.getLogger()
                 .debug(
                         "Attempting to use item from inventory: guid {} count {} target guid {}",
@@ -1020,11 +1032,17 @@ public class InventorySystem extends BaseGameSystem {
                 new UseItemParams(
                         player, itemData.getUseTarget(), target, count, optionId, isEnterMpDungeonTeam);
         params.usedItemId = item.getItemId();
+        try {
+            params.optionIds = List.copyOf(optionIds);
+        } catch (NullPointerException invalidChoice) {
+            return null;
+        }
         var selectionActions=itemData.getItemUseActions();
         if(selectionActions!=null && selectionActions.stream().anyMatch(action->action instanceof ItemUseSelectItems)) {
             if(selectionActions.size()!=1) return null;
             return SelectedItemUse.use(player,item,params,(ItemUseSelectItems)selectionActions.get(0))?item:null;
         }
+        if (!params.optionIds.isEmpty()) return null;
         if (useItemDirect(itemData, params)) {
             int before = item.getCount();
             if (!player.getInventory().removeItem(item, count) || before - item.getCount() != count) {
