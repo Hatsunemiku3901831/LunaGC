@@ -165,9 +165,25 @@ public final class ResourceLoader {
                 pair ->
                         Grasscutter.getLogger()
                                 .error("Error loading resource file: " + pair.left(), pair.right()));
+        loadEscoffierCookConfig(getExcelPath("ConstValueExcelConfigData.json"));
         long endTime = System.nanoTime();
         long ns = (endTime - startTime);
         Grasscutter.getLogger().debug("Loading resources took " + ns + "ns == " + ns / 1000000 + "ms");
+    }
+
+    public static boolean loadEscoffierCookConfig(Path path) {
+        try {
+            var rows = JsonUtils.loadToClass(path, JsonElement.class);
+            if (rows == null || !rows.isJsonArray())
+                throw new IllegalArgumentException("Expected a constants array");
+            GameData.setEscoffierCookConfig(
+                    emu.grasscutter.game.managers.cooking.EscoffierCookConfig.parse(rows.getAsJsonArray()));
+            return true;
+        } catch (IOException | RuntimeException error) {
+            GameData.setEscoffierCookConfig(null);
+            Grasscutter.getLogger().error("Could not load Escoffier cooking constants from {}", path, error);
+            return false;
+        }
     }
 
     @SuppressWarnings("rawtypes")

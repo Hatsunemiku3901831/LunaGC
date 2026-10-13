@@ -70,6 +70,8 @@ import lombok.*;
 
 @SuppressWarnings({"unused", "MismatchedQueryAndUpdateOfCollection"})
 public final class GameData {
+    @Getter @Setter
+    private static volatile emu.grasscutter.game.managers.cooking.EscoffierCookConfig escoffierCookConfig;
     @Getter private static final Int2ObjectMap<ExpeditionData> expeditionDataMap = new Int2ObjectOpenHashMap<>();
     @Getter
     private static final Int2ObjectMap<InvestigationData> investigationDataMap =

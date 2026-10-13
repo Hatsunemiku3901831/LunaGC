@@ -197,6 +197,7 @@ public class Player implements PlayerHook, FieldFetch {
     @Getter private Map<Long, ExpeditionInfo> expeditionInfo;
     @Getter private Map<Integer, Integer> unlockedRecipies;
     @Getter @Setter private emu.grasscutter.game.managers.cooking.CookReceipt pendingCook;
+    @Getter @Setter private emu.grasscutter.game.managers.cooking.EscoffierCookState escoffierCookState;
     @Getter @Setter private emu.grasscutter.game.combine.CombineReceipt pendingCombine;
     @Getter @Setter private emu.grasscutter.game.combine.StrongboxReceipt pendingStrongbox;
     @Getter @Setter private emu.grasscutter.game.inventory.ItemUseReceipt pendingItemUse;
@@ -1750,6 +1751,7 @@ public class Player implements PlayerHook, FieldFetch {
         this.forgingManager.sendForgeDataNotify();
         this.resinManager.onPlayerLogin();
         this.cookingManager.sendCookDataNotify();
+        EscoffierCooking.sync(this);
         this.cookingCompoundManager.onPlayerLogin();
         this.teamManager.onPlayerLogin();
 
