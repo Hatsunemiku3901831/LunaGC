@@ -401,6 +401,7 @@ public abstract class GameEntity {
     private void damage(float amount, int killerId, ElementType attackType,
             PropChangeReason propChangeReason, ChangeHpReason changeHpReason, boolean respectLockHp) {
 
+        if (!Float.isFinite(amount) || amount < 0f) return;
         if (this.isDead || deathProcessed.get()) return;
         if (this.getFightProperties() == null || !hasFightProperty(FightProperty.FIGHT_PROP_CUR_HP)) {
             return;
@@ -412,11 +413,12 @@ public abstract class GameEntity {
         EntityDamageEvent event =
                 new EntityDamageEvent(this, amount, attackType, this.getScene().getEntityById(killerId));
         event.call();
-        if (event.isCanceled()) {
+        float requestedDamage = event.getDamage();
+        if (event.isCanceled() || !Float.isFinite(requestedDamage) || requestedDamage < 0f) {
             return;
         }
 
-        if (Float.isFinite(event.getDamage()) && event.getDamage() > 0) {
+        if (requestedDamage > 0) {
             abilityHealthEvents.prepareDamage();
             combatState = AbilityCombatState.read(this);
         }
@@ -431,15 +433,15 @@ public abstract class GameEntity {
             float threshold = Math.max(limbo ? limboHpThreshold : 0f, combatState.hpThreshold());
             if (curRatio > threshold) {
 
-                effectiveDamage = event.getDamage();
+                effectiveDamage = requestedDamage;
             }
             if (effectiveDamage >= curHp) {
 
                 effectiveDamage = Math.max(0f, curHp - 1f);
             }
         } else if (curHp != Float.POSITIVE_INFINITY && (!lockHP || !respectLockHp)
-                || lockHP && curHp <= event.getDamage()) {
-            effectiveDamage = event.getDamage();
+                || lockHP && curHp <= requestedDamage) {
+            effectiveDamage = requestedDamage;
         }
 
         this.addFightProperty(FightProperty.FIGHT_PROP_CUR_HP, -effectiveDamage);
