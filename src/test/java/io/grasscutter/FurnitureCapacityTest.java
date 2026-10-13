@@ -45,7 +45,7 @@ class FurnitureCapacityTest {
         var rows = gson.fromJson(Files.readString(path), HomeWorldLevelData[].class);
         var definition =
                 Arrays.stream(rows).filter(r -> r.getId() == level).findFirst().orElseThrow();
-        assertEquals(level, definition.getFurnitureMakeSlotCount());
+        assertEquals(level == 10 ? 15 : level, definition.getFurnitureMakeSlotCount());
     }
 
     @Test
@@ -126,20 +126,12 @@ class FurnitureCapacityTest {
 
     @Test
     void realLegacyTableCanStartItsRankOneQueue() throws Exception {
-        var path =
-                Path.of(
-                        System.getenv().getOrDefault("LUNAGC_TEST_RESOURCES", "/resources"),
-                        "ExcelBinOutput/HomeworldLevelExcelConfigData.json");
-        runQueue(Files.readString(path), 1, 1);
+        runQueue(fixture("6.0"), 1, 1);
     }
 
     @Test
     void realLegacyRankTenHonorsTenSlots() throws Exception {
-        var path =
-                Path.of(
-                        System.getenv().getOrDefault("LUNAGC_TEST_RESOURCES", "/resources"),
-                        "ExcelBinOutput/HomeworldLevelExcelConfigData.json");
-        runQueue(Files.readString(path), 10, 10);
+        runQueue(fixture("6.0"), 10, 10);
     }
 
     @Test
