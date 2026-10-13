@@ -99,15 +99,21 @@ public class Ability {
     }
 
     void registerModifier(GameEntity target, AbilityModifierController modifier, boolean refresh) {
+        modifier.prepareAttachmentCallbacks(target);
         synchronized (target.getInstancedModifiers()) {
-            getModifiers(target).put(modifier.getName(), modifier);
+            var replaced=getModifiers(target).put(modifier.getName(), modifier);
             synchronized (modifierTargets) { modifierTargets.add(target); }
             target.getAbilityHpModifier().registered(modifier);
             target.getAbilityModifierDuration().registered(modifier);
             target.getAbilityPeriodicHealing().registered(modifier);
+            if(replaced!=null && replaced!=modifier && replaced.hasAttachmentCallbacks()
+                    && !target.getAbilityHpModifier().lifecycleControllers().contains(replaced))
+                modifier.deferAttachmentReplacement(replaced);
             if (refresh) target.getAbilityHpModifier().refresh(true);
         }
         target.getAbilityGlobalValueWatchers().refresh();
+        if(!Thread.holdsLock(target.getInstancedModifiers()) && !modifier.hasServerCallbacks())
+            modifier.runAttachmentOnAdded(()->true);
     }
 
     public boolean removeModifier(GameEntity target, String name) {
@@ -134,8 +140,9 @@ public class Ability {
         synchronized (instances) {
             endActions = target.getAbilityModifierDuration().removalCallbacks(this,name);
             endActions=new ArrayList<>(endActions);
-            for(var controller:target.getAbilityHpModifier().activeControllers()) {
-                if(controller.getAbility()==this && name.equals(controller.getName()) && controller.hasServerCallbacks())
+            for(var controller:target.getAbilityHpModifier().lifecycleControllers()) {
+                if(controller.getAbility()==this && name.equals(controller.getName())
+                        && (controller.hasServerCallbacks() || controller.hasAttachmentCallbacks()))
                     endActions.add(controller::runServerOnRemoved);
             }
             var named = target.getAppliedAbilityModifiers().get(this);

@@ -16,6 +16,24 @@ public class AbilityModifierController {
     @Getter private final String name;
     @Getter private long skillSlotSourceOrder = AbilitySkillSlots.nextSourceOrder();
     private volatile ServerCallbacks serverCallbacks;
+    private volatile ModifierAttachmentCallbacks attachments;
+    private final java.util.Queue<AbilityModifierController> attachmentReplacements=new java.util.concurrent.ConcurrentLinkedQueue<>();
+    void deferAttachmentReplacement(AbilityModifierController previous) { attachmentReplacements.add(previous); }
+    private void finishAttachmentReplacements() {
+        for(AbilityModifierController old;(old=attachmentReplacements.poll())!=null;) old.runServerOnRemoved();
+    }
+    synchronized void prepareAttachmentCallbacks(GameEntity target) {
+        var mixins=modifierData.modifierMixins;
+        if(mixins==null || java.util.Arrays.stream(mixins).noneMatch(m -> m!=null
+                && m.type==AbilityMixinData.Type.AttachActionToModifierMixin)) return;
+        if(attachments==null || !attachments.available()) attachments=new ModifierAttachmentCallbacks(this,target);
+        else if(!attachments.forTarget(target)) throw new IllegalArgumentException("Modifier controller has another bearer");
+    }
+    boolean hasAttachmentCallbacks() { var hooks=attachments; return hooks!=null && hooks.available(); }
+    void runAttachmentOnAdded(BooleanSupplier current) {
+        finishAttachmentReplacements();
+        var hooks=attachments; if(hooks!=null) hooks.added(current);
+    }
     private final Set<AbilityModifier.AbilityModifierAction> cooldownCallbacks;
     private AbilityCooldownInvocation.Ledger cooldownLedger = new AbilityCooldownInvocation.Ledger();
     private AtomicBoolean vehicleAttachment = new AtomicBoolean();
@@ -77,6 +95,7 @@ public class AbilityModifierController {
                 && (callbacks.added.contains(action) || callbacks.removed.contains(action));
     }
     void runServerOnAdded(BooleanSupplier parentCurrent) {
+        finishAttachmentReplacements();
         var callbacks=serverCallbacks;
         if(callbacks==null || !callbacks.started.compareAndSet(false,true)) return;
         AbilityCooldownInvocation.run(this, () -> AbilityActionSequence.run(ability,modifierData.onAdded,callbacks.target,()-> {
@@ -85,11 +104,13 @@ public class AbilityModifierController {
                 return callbacks.target.getAbilityHpModifier().activeControllers().contains(this);
             }
         }));
+        runAttachmentOnAdded(parentCurrent);
     }
     public void runServerOnRemoved() {
         var callbacks=serverCallbacks;
-        if(callbacks==null || !callbacks.ended.compareAndSet(false,true)) return;
-        AbilityCooldownInvocation.run(this, () -> AbilityActionSequence.run(ability,modifierData.onRemoved,callbacks.target,callbacks.context::isCurrent));
+        if(callbacks!=null && callbacks.ended.compareAndSet(false,true))
+            AbilityCooldownInvocation.run(this, () -> AbilityActionSequence.run(ability,modifierData.onRemoved,callbacks.target,callbacks.context::isCurrent));
+        var hooks=attachments; if(hooks!=null) hooks.removed();
     }
 
     public AbilityModifierController(

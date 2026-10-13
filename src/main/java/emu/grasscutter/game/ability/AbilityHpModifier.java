@@ -97,6 +97,7 @@ public final class AbilityHpModifier {
         }
         return result;
     }
+    Collection<AbilityModifierController> lifecycleControllers() { return controllers(); }
 
     AbilityModifierController pendingServerController(Ability ability,String name) {
         var named=serverStacks.get(ability);
@@ -120,6 +121,10 @@ public final class AbilityHpModifier {
                         && c.hasCooldownCallbacks()
                         && !entity.getInstancedModifiers().containsValue(c))
                 .findFirst().orElse(null);
+    }
+    AbilityModifierController pendingAttachmentController(Ability ability,String name) {
+        return controllers().stream().filter(c -> c.getAbility()==ability && name.equals(c.getName())
+                && c.hasAttachmentCallbacks() && !entity.getInstancedModifiers().containsValue(c)).findFirst().orElse(null);
     }
 
     /** Known expression keys on this bearer can identify a first, hashed global-value update. */

@@ -1144,13 +1144,15 @@ public final class AbilityManager extends BasePlayerManager {
             var instances = entity.getInstancedModifiers();
             synchronized (instances) {
                 previous=instances.get(head.getInstancedModifierId());
-                if(previous!=null && previous.hasServerCallbacks() && previous.getAbility()==instancedAbility
+                if(previous!=null && (previous.hasServerCallbacks() || previous.hasAttachmentCallbacks()) && previous.getAbility()==instancedAbility
                         && previous.getModifierData()==modifierData) {
                     modifier=previous;
                 } else {
                     modifier=entity.getAbilityHpModifier().pendingServerController(instancedAbility,
                             instancedAbilityData.modifiers.keySet().toArray(new String[0])[modChange.getModifierLocalId()]);
                     if (modifier == null) modifier = entity.getAbilityHpModifier().pendingCooldownController(instancedAbility,
+                            instancedAbilityData.modifiers.keySet().toArray(new String[0])[modChange.getModifierLocalId()]);
+                    if (modifier == null) modifier = entity.getAbilityHpModifier().pendingAttachmentController(instancedAbility,
                             instancedAbilityData.modifiers.keySet().toArray(new String[0])[modChange.getModifierLocalId()]);
                     if(modifier==null) {
                         modifier=new AbilityModifierController(instancedAbility,instancedAbilityData,modifierData);
@@ -1193,6 +1195,7 @@ public final class AbilityManager extends BasePlayerManager {
                         executeCallbackActionsNow(ownedAbility, actions, invoke.getAbilityData(), ownedEntity, ownedEntity);
                     }));
             }
+            modifier.runAttachmentOnAdded(()->true);
             runVehicleAttachment(modifier, entity, invoke.getAbilityData());
         } else if (modChange.getAction() == ModifierAction.MODIFIER_ACTION_REMOVED) {
             var instances = entity.getInstancedModifiers();

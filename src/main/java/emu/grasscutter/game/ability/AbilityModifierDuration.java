@@ -102,6 +102,7 @@ public final class AbilityModifierDuration {
     private void end(State state) {
         var controller=state.controller;
         if(controller.hasServerCallbacks()) { controller.runServerOnRemoved(); return; }
+        if(controller.hasAttachmentCallbacks()) controller.runServerOnRemoved();
         var ability=controller.getAbility();
         var actions=controller.getModifierData().onRemoved;
         if(actions==null) return;
