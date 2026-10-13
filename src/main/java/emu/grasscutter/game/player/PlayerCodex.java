@@ -1,13 +1,17 @@
 package emu.grasscutter.game.player;
 
 import dev.morphia.annotations.*;
+
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.excels.codex.CodexAnimalData;
 import emu.grasscutter.game.entity.*;
+import emu.grasscutter.game.inventory.BookUnlocks;
 import emu.grasscutter.game.inventory.GameItem;
 import emu.grasscutter.server.packet.send.PacketCodexDataUpdateNotify;
-import java.util.*;
+
 import lombok.*;
+
+import java.util.*;
 
 @Entity
 public class PlayerCodex {
@@ -44,6 +48,20 @@ public class PlayerCodex {
         this.fixReliquaries();
     }
 
+    public boolean unlockBook(int codexId) {
+        var book = GameData.getCodexBookDataMap().get(codexId);
+        if (player == null
+                || book == null
+                || book.getId() != codexId
+                || book.getMaterialId() <= 0
+                || BookUnlocks.definition(GameData.getItemDataMap().get(book.getMaterialId()))
+                        != book
+                || !this.getUnlockedBook().add(book.getMaterialId())) return false;
+        player.save();
+        player.sendPacket(new PacketCodexDataUpdateNotify(5, codexId));
+        return true;
+    }
+
     public void checkAddedItem(GameItem item) {
         val itemData = item.getItemData();
         val itemId = item.getItemId();
@@ -54,7 +72,9 @@ public class PlayerCodex {
                                 codexData -> {
                                     if (this.getUnlockedWeapon().add(itemId)) {
                                         this.player.save();
-                                        this.player.sendPacket(new PacketCodexDataUpdateNotify(2, codexData.getId()));
+                                        this.player.sendPacket(
+                                                new PacketCodexDataUpdateNotify(
+                                                        2, codexData.getId()));
                                     }
                                 });
             }
@@ -72,7 +92,8 @@ public class PlayerCodex {
                                             if (this.getUnlockedMaterial().add(itemId)) {
                                                 this.player.save();
                                                 this.player.sendPacket(
-                                                        new PacketCodexDataUpdateNotify(4, codexData.getId()));
+                                                        new PacketCodexDataUpdateNotify(
+                                                                4, codexData.getId()));
                                             }
                                         });
                     }

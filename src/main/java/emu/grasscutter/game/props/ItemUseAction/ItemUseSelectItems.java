@@ -6,7 +6,7 @@ import emu.grasscutter.game.inventory.GameItem;
 
 import java.util.*;
 
-public abstract class ItemUseSelectItems extends ItemUseAction {
+public abstract class ItemUseSelectItems extends ItemUseAction implements ItemUseProductAction {
     protected static final int INVALID = -1;
     protected int[] optionItemIds;
 
@@ -24,6 +24,11 @@ public abstract class ItemUseSelectItems extends ItemUseAction {
         return params == null || params.length == 0 || params[0] == null || params[0].isBlank()
                 ? new String[0]
                 : params[0].split(",", -1);
+    }
+
+    @Override
+    public List<ItemParamData> planItems(UseItemParams params) {
+        return params == null ? List.of() : resolveItems(params, params.optionIds);
     }
 
     public List<ItemParamData> resolveItems(UseItemParams params) {

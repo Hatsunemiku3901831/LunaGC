@@ -140,6 +140,9 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
 
     /** Login initialization is announced later by PlayerStoreNotify. */
     public boolean addItem(GameItem item, boolean skipUseOnGain, boolean notify) {
+        var book = skipUseOnGain ? null : BookUnlocks.definition(item.getItemData());
+        if (book != null && (item.getCount() != 1 || BookUnlocks.owned(player, item.getItemId())))
+            return false;
         GameItem result = putItem(item, skipUseOnGain);
 
         if (result != null) {
@@ -148,6 +151,12 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
             if (notify) getPlayer().sendPacket(new PacketStoreItemChangeNotify(result));
 
             // Call PlayerObtainItemEvent.
+            new PlayerObtainItemEvent(this.getPlayer(), item).call();
+            return true;
+        }
+
+        if (book != null && BookUnlocks.owned(player, item.getItemId())) {
+            this.triggerAddItemEvents(item);
             new PlayerObtainItemEvent(this.getPlayer(), item).call();
             return true;
         }

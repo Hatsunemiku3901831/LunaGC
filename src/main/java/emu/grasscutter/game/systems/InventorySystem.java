@@ -1037,10 +1037,10 @@ public class InventorySystem extends BaseGameSystem {
         } catch (NullPointerException invalidChoice) {
             return null;
         }
-        var selectionActions=itemData.getItemUseActions();
-        if(selectionActions!=null && selectionActions.stream().anyMatch(action->action instanceof ItemUseSelectItems)) {
-            if(selectionActions.size()!=1) return null;
-            return SelectedItemUse.use(player,item,params,(ItemUseSelectItems)selectionActions.get(0))?item:null;
+        var productActions=itemData.getItemUseActions();
+        if(productActions!=null && productActions.stream().anyMatch(action->action instanceof ItemUseProductAction)) {
+            if(productActions.size()!=1) return null;
+            return SelectedItemUse.use(player,item,params,(ItemUseProductAction)productActions.get(0))?item:null;
         }
         if (!params.optionIds.isEmpty()) return null;
         if (useItemDirect(itemData, params)) {

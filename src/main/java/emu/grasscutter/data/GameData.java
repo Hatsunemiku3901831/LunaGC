@@ -320,6 +320,10 @@ public final class GameData {
             new Int2ObjectOpenHashMap<>();
 
     @Getter
+    private static final Int2ObjectMap<CodexBookData> codexBookDataItemIdMap =
+            new Int2ObjectOpenHashMap<>();
+
+    @Getter
     private static final Int2ObjectMap<CodexQuestData> codexQuestDataIdMap =
             new Int2ObjectOpenHashMap<>();
 
@@ -655,6 +659,9 @@ public final class GameData {
             new Int2ObjectOpenHashMap<>();
 
     // The following are accessed via getMapByResourceDef, and will show as unused
+    @Getter
+    private static final Int2ObjectMap<CodexBookData> codexBookDataMap =
+            new Int2ObjectOpenHashMap<>();
     private static final Int2ObjectMap<CodexMaterialData> codexMaterialDataMap =
             new Int2ObjectOpenHashMap<>();
     private static final Int2ObjectMap<CodexQuestData> codexQuestDataMap =

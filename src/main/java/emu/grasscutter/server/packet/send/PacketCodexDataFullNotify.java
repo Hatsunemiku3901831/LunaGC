@@ -5,6 +5,7 @@ import emu.grasscutter.game.player.Player;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.CodexDataFullNotifyOuterClass.CodexDataFullNotify;
 import emu.grasscutter.net.proto.CodexTypeDataOuterClass.CodexTypeData;
+
 import java.util.Collections;
 
 public class PacketCodexDataFullNotify extends BasePacket {
@@ -35,13 +36,13 @@ public class PacketCodexDataFullNotify extends BasePacket {
         // Reliquary
         CodexTypeData.Builder reliquaryData = CodexTypeData.newBuilder().setTypeValue(8);
 
-        player
-                .getQuestManager()
+        player.getQuestManager()
                 .forEachMainQuest(
                         mainQuest -> {
                             if (mainQuest.isFinished()) {
                                 var codexQuest =
-                                        GameData.getCodexQuestDataIdMap().get(mainQuest.getParentQuestId());
+                                        GameData.getCodexQuestDataIdMap()
+                                                .get(mainQuest.getParentQuestId());
                                 if (codexQuest != null) {
                                     questTypeData
                                             .addCodexIdList(codexQuest.getId())
@@ -50,8 +51,7 @@ public class PacketCodexDataFullNotify extends BasePacket {
                             }
                         });
 
-        player
-                .getCodex()
+        player.getCodex()
                 .getUnlockedWeapon()
                 .forEach(
                         weapon -> {
@@ -63,8 +63,7 @@ public class PacketCodexDataFullNotify extends BasePacket {
                             }
                         });
 
-        player
-                .getCodex()
+        player.getCodex()
                 .getUnlockedAnimal()
                 .forEach(
                         (animal, amount) -> {
@@ -76,12 +75,12 @@ public class PacketCodexDataFullNotify extends BasePacket {
                             }
                         });
 
-        player
-                .getCodex()
+        player.getCodex()
                 .getUnlockedMaterial()
                 .forEach(
                         material -> {
-                            var codexMaterial = GameData.getCodexMaterialDataIdMap().get((int) material);
+                            var codexMaterial =
+                                    GameData.getCodexMaterialDataIdMap().get((int) material);
                             if (codexMaterial != null) {
                                 materialTypeData
                                         .addCodexIdList(codexMaterial.getId())
@@ -89,14 +88,25 @@ public class PacketCodexDataFullNotify extends BasePacket {
                             }
                         });
 
-        player
-                .getCodex()
+        player.getCodex()
                 .getUnlockedReliquarySuitCodex()
                 .forEach(
                         reliquarySuit -> {
                             reliquaryData
                                     .addCodexIdList(reliquarySuit)
                                     .addAllHaveViewedList(Collections.singleton(true));
+                        });
+
+        // Codex stores material IDs; the client expects the corresponding codex IDs.
+        player.getCodex().getUnlockedBook().stream()
+                .sorted()
+                .forEach(
+                        materialId -> {
+                            var book = GameData.getCodexBookDataItemIdMap().get(materialId);
+                            if (book != null
+                                    && GameData.getCodexBookDataMap().get(book.getId()) == book) {
+                                bookTypeData.addCodexIdList(book.getId()).addHaveViewedList(true);
+                            }
                         });
 
         CodexDataFullNotify.Builder proto =

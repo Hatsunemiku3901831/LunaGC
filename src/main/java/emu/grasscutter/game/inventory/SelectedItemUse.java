@@ -12,12 +12,17 @@ import emu.grasscutter.game.shop.SpecialCosmeticShop;
 
 import java.util.*;
 
-/** Owned choice boxes reserve their selection before payment, then confirm every delivered unit. */
+/** Owned consumables reserve a complete reward plan before confirming payment and delivery. */
 public final class SelectedItemUse {
     private SelectedItemUse() {}
 
     public static boolean use(
             Player player, GameItem source, UseItemParams params, ItemUseSelectItems action) {
+        return use(player, source, params, (ItemUseProductAction) action);
+    }
+
+    public static boolean use(
+            Player player, GameItem source, UseItemParams params, ItemUseProductAction action) {
         if (player == null
                 || source == null
                 || params == null
@@ -28,7 +33,7 @@ public final class SelectedItemUse {
             if (player.getPendingItemUse() != null) return false;
             List<ItemParamData> products;
             try {
-                products = action.resolveItems(params, params.optionIds);
+                products = action.planItems(params);
                 if (!preflight(player, source, params.count, products)) return false;
             } catch (IllegalArgumentException invalid) {
                 return false;
@@ -52,13 +57,20 @@ public final class SelectedItemUse {
                                 && inventory.getItemByGuid(source.getGuid()) != source
                         || source.getCount() == 0
                                 && inventory.getItemByGuid(source.getGuid()) != null)
-                    throw new IllegalStateException("Choice box payment was not deducted exactly");
+                    throw new IllegalStateException("Item use payment was not deducted exactly");
                 DatabaseHelper.saveGameSync(source);
                 receipt.paid();
                 DatabaseHelper.saveGameSync(player);
                 for (var product : products) {
                     var data = GameData.getItemDataMap().get(product.getId());
-                    if (!SpecialCosmeticShop.kind(product.getId()).isEmpty()) {
+                    if (BookUnlocks.definition(data) != null) {
+                        if (!inventory.addItem(
+                                        new GameItem(data, product.getCount()), ActionReason.Shop)
+                                || !BookUnlocks.owned(player, product.getId()))
+                            throw new IllegalStateException("Book reward was not unlocked");
+                        DatabaseHelper.saveGameSync(player);
+                        receipt.delivered(product.getId(), product.getCount(), null);
+                    } else if (!SpecialCosmeticShop.kind(product.getId()).isEmpty()) {
                         if (!SpecialCosmeticShop.grant(player, product.getId())
                                 || !SpecialCosmeticShop.owned(player, product.getId()))
                             throw new IllegalStateException("Selected cosmetic was not unlocked");
@@ -135,6 +147,11 @@ public final class SelectedItemUse {
         var slots = new EnumMap<ItemType, Long>(ItemType.class);
         for (var product : products) {
             var data = GameData.getItemDataMap().get(product.getId());
+            if (BookUnlocks.definition(data) != null) {
+                if (product.getCount() != 1 || BookUnlocks.owned(player, product.getId()))
+                    return false;
+                continue;
+            }
             if (!SpecialCosmeticShop.kind(product.getId()).isEmpty()) {
                 if (product.getCount() != 1
                         || SpecialCosmeticShop.owned(player, product.getId())
