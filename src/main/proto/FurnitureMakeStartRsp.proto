@@ -1,3 +1,5 @@
+// Native 7.1 stage-one furniture response: opcode 21056, parser 0x14f51fe80.
+// Start role inferred from refresh reason 1 in consumer 0x14fadb940; live UI validation pending.
 syntax = "proto3";
 
 option java_package = "emu.grasscutter.net.proto";
@@ -6,6 +8,6 @@ option java_outer_classname = "FurnitureMakeStartRspOuterClass";
 import "FurnitureMakeSlot.proto";
 
 message FurnitureMakeStartRsp {
-	FurnitureMakeSlot furniture_make_slot = 2;
-	int32 retcode = 3;
+	FurnitureMakeSlot furniture_make_slot = 14;
+	int32 retcode = 8;
 }

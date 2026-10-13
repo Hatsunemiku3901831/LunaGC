@@ -1,3 +1,5 @@
+// Native 7.1 opcode 29002, parser 0x147ffda80, consumer 0x14fabe3a0.
+// Field 12 feeds primary reward hints; field 15 remains an opaque secondary hint list.
 syntax = "proto3";
 
 option java_package = "emu.grasscutter.net.proto";
@@ -8,8 +10,8 @@ import "ItemParam.proto";
 
 message TakeFurnitureMakeRsp {
 	uint32 make_id = 2;
-	repeated ItemParam JHDDMEHLKII = 50000;
+	repeated ItemParam output_item_list = 12;
 	int32 retcode = 7;
-	repeated ItemParam NOIOACEJCBF = 50001;
+	repeated ItemParam OMBGMDKJNEN = 15;
 	FurnitureMakeSlot furniture_make_slot = 5;
 }

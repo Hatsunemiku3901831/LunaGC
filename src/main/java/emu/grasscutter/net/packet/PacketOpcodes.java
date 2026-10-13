@@ -328,7 +328,8 @@ public final class PacketOpcodes {
     public static final int ForgeDataNotify = 22647;
     public static final int ForgeGetQueueDataRsp = 6800;
     public static final int ForgeQueueDataNotify = 8557;
-    public static final int FurnitureMakeStartRsp = -50;
+    // Native 7.1 slot response 30904 dispatches furniture refresh reason 1; UI role awaits live validation.
+    public static final int FurnitureMakeStartRsp = 21056;
     public static final int GetAuthkeyReq = 23630;
     public static final int GetAuthkeyRsp = 9681;
     public static final int GetCompoundDataReq = -51;
