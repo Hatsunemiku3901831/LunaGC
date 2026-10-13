@@ -1,0 +1,9 @@
+// Verified 7.1 native type 16886: list codec tag 9; opcode 478.
+syntax = "proto3";
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "TakeFurnitureMakeAllReqOuterClass";
+import "FurnitureMakeTakeInfo.proto";
+
+message TakeFurnitureMakeAllReq {
+  repeated FurnitureMakeTakeInfo take_info_list = 9;
+}

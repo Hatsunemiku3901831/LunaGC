@@ -1,0 +1,14 @@
+// Verified 7.1 native type 60165: parser 0x14a942950; opcode 27862.
+syntax = "proto3";
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "TakeFurnitureMakeAllRspOuterClass";
+import "ItemParam.proto";
+import "FurnitureMakeSlot.proto";
+
+message TakeFurnitureMakeAllRsp {
+  repeated ItemParam output_item_list = 8;
+  int32 retcode = 9;
+  repeated ItemParam OMBGMDKJNEN = 11;
+  repeated uint32 IKFCMAIAIIB = 14;
+  FurnitureMakeSlot furniture_make_slot = 15;
+}

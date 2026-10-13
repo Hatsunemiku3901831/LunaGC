@@ -1,0 +1,10 @@
+// Verified 7.1 native type 74317: writer 0x15250d220.
+syntax = "proto3";
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "FurnitureMakeTakeInfoOuterClass";
+
+message FurnitureMakeTakeInfo {
+  uint32 index = 2;
+  bool is_fast_finish = 4;
+  uint32 make_id = 10;
+}
