@@ -1,7 +1,6 @@
 package emu.grasscutter.game.ability;
 
 import emu.grasscutter.data.GameData;
-import emu.grasscutter.game.avatar.Avatar;
 import emu.grasscutter.game.entity.EntityAvatar;
 import emu.grasscutter.game.entity.GameEntity;
 
@@ -22,7 +21,7 @@ public final class AbilitySkillReadyPredicate {
             for (var value : slots) {
                 Long slot = unsigned(value);
                 if (slot == null) return false;
-                int skill = slotSkill(entity.getAvatar(), slot);
+                int skill = AbilitySkillSlots.selectedSkill(entity, slot);
                 if (skill != 0) selected.add(skill);
             }
         }
@@ -39,18 +38,6 @@ public final class AbilitySkillReadyPredicate {
                         && result == Math.rint(result)
                 ? (long) result
                 : null;
-    }
-
-    private static int slotSkill(Avatar avatar, long slot) {
-        var depot = avatar.getSkillDepot();
-        if (depot == null || slot == 0 || slot > 6) return 0;
-        // The native six-element array keeps holes: burst is index 4, attack mode index 5.
-        if (slot == 5) return depot.getEnergySkill();
-        if (slot == 6) return depot.getAttackModeSkill();
-        var regular = depot.getSkills();
-        if (regular == null || slot > regular.size()) return 0;
-        var skill = regular.get((int) slot - 1);
-        return skill == null ? 0 : skill;
     }
 
     private static boolean fullyRecovered(EntityAvatar entity, int skillId) {

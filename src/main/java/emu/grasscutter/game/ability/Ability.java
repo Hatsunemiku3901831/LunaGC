@@ -39,6 +39,7 @@ public class Ability {
 
     @Getter private int hash;
     @Getter private Set<Integer> avatarSkillStartIds;
+    @Getter private final long skillSlotSourceOrder = AbilitySkillSlots.nextSourceOrder();
     private volatile Set<AbilityModifierAction> serverTriggerCallbacks = Set.of();
     private volatile AbilityExecutionContext serverTriggerContext;
 

@@ -40,6 +40,7 @@ public class AbilityMixinData implements Serializable {
         NyxCostMixin,
         ModifyDamageMixin,
         AvatarChangeSkillMixin,
+        SwitchSkillIDMixin,
         KHOENFHDFJE,
         HJKDMEOOBDK,
         FIGCOCJJHCH,
@@ -97,6 +98,11 @@ public class AbilityMixinData implements Serializable {
     public String onEvent;
     @SerializedName("type")
     public String eventExecutionType;
+    public JsonElement skillID;
+    public JsonElement skillIndex;
+    @SerializedName("actorIceSubHurtDelta")
+    public JsonElement legacySkillIndex;
+    public JsonElement priority;
     public List<String> reactionTypes = new ArrayList<>();
     // Both occur together with different entries in current resources. Keep them separate.
     @SerializedName("IGAMNNAADJB")

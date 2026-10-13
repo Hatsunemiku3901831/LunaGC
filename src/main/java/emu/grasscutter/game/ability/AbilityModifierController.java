@@ -14,6 +14,7 @@ public class AbilityModifierController {
     @Getter private AbilityData abilityData;
     @Getter private AbilityModifier modifierData;
     @Getter private final String name;
+    @Getter private long skillSlotSourceOrder = AbilitySkillSlots.nextSourceOrder();
     private volatile ServerCallbacks serverCallbacks;
     private final Set<AbilityModifier.AbilityModifierAction> cooldownCallbacks;
     private AbilityCooldownInvocation.Ledger cooldownLedger = new AbilityCooldownInvocation.Ledger();
@@ -27,8 +28,10 @@ public class AbilityModifierController {
     boolean hasCooldownCallbacks() { return !cooldownCallbacks.isEmpty(); }
 
     void inheritCooldownLedger(AbilityModifierController previous) {
-        if (previous != null && previous.ability == ability && previous.modifierData == modifierData)
+        if (previous != null && previous.ability == ability && previous.modifierData == modifierData) {
             cooldownLedger = previous.cooldownLedger;
+            skillSlotSourceOrder = previous.skillSlotSourceOrder;
+        }
     }
     private static final AtomicLong applicationSequence=new AtomicLong();
     private static final class ServerCallbacks {
