@@ -1,13 +1,10 @@
 package emu.grasscutter.game.managers;
 
-import emu.grasscutter.data.GameData;
-import emu.grasscutter.game.home.FurnitureMakeSlotItem;
+import emu.grasscutter.game.home.FurnitureStart;
 import emu.grasscutter.game.inventory.RecipeUnlocks;
 import emu.grasscutter.game.player.*;
 import emu.grasscutter.game.props.ItemUseOp;
-import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.server.packet.send.*;
-import emu.grasscutter.utils.Utils;
 import java.util.*;
 
 public class FurnitureManager extends BasePlayerManager {
@@ -54,58 +51,7 @@ public class FurnitureManager extends BasePlayerManager {
     }
 
     public void startMake(int makeId, int avatarId) {
-        if (player.getHome() != null && player.getHome().getPendingFurnitureTake() != null) {
-            player.getSession().send(new PacketFurnitureMakeStartRsp(Retcode.RET_SVR_ERROR_VALUE, null));
-            return;
-        }
-        var makeData = GameData.getFurnitureMakeConfigDataMap().get(makeId);
-        if (makeData == null) {
-            player
-                    .getSession()
-                    .send(
-                            new PacketFurnitureMakeStartRsp(Retcode.RET_FURNITURE_MAKE_CONFIG_ERROR_VALUE, null));
-            return;
-        }
-
-        // check slot count
-        if (player.getHome().getLevelData().getFurnitureMakeSlotCount()
-                <= player.getHome().getFurnitureMakeSlotItemList().size()) {
-            player
-                    .getSession()
-                    .send(new PacketFurnitureMakeStartRsp(Retcode.RET_FURNITURE_MAKE_SLOT_FULL_VALUE, null));
-            return;
-        }
-
-        // pay items first
-        if (!player.getInventory().payItems(makeData.getMaterialItems())) {
-            player
-                    .getSession()
-                    .send(
-                            new PacketFurnitureMakeStartRsp(
-                                    Retcode.RET_HOME_FURNITURE_COUNT_NOT_ENOUGH_VALUE, null));
-            return;
-        }
-
-        var furnitureSlot =
-                FurnitureMakeSlotItem.of()
-                        .avatarId(avatarId)
-                        .makeId(makeId)
-                        .beginTime(Utils.getCurrentSeconds())
-                        .durTime(makeData.getMakeTime())
-                        .build();
-
-        // add furniture make task
-        player.getHome().getFurnitureMakeSlotItemList().add(furnitureSlot);
-        player
-                .getSession()
-                .send(
-                        new PacketFurnitureMakeStartRsp(
-                                Retcode.RET_SUCC_VALUE,
-                                player.getHome().getFurnitureMakeSlotItemList().stream()
-                                        .map(FurnitureMakeSlotItem::toProto)
-                                        .toList()));
-
-        player.getHome().save();
+        FurnitureStart.start(player, makeId, avatarId);
     }
 
     public void queryStatus() {

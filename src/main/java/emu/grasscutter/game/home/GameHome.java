@@ -58,6 +58,7 @@ public class GameHome {
     int storedFetterExp;
     List<FurnitureMakeSlotItem> furnitureMakeSlotItemList;
     FurnitureTakeReceipt pendingFurnitureTake;
+    FurnitureStartReceipt pendingFurnitureStart;
     Set<Integer> craftedFurnitureIds;
     ConcurrentHashMap<Integer, HomeSceneItem> sceneMap;
     ConcurrentHashMap<Integer, HomeSceneItem> mainHouseMap;

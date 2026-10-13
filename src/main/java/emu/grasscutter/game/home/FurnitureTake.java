@@ -49,7 +49,7 @@ public final class FurnitureTake {
         var inventory = player.getInventory();
         synchronized (inventory) {
             synchronized (home) {
-                if (home.getPendingFurnitureTake() != null) {
+                if (home.getPendingFurnitureTake() != null || home.getPendingFurnitureStart() != null) {
                     fail(player, makeId, Retcode.RET_SVR_ERROR);
                     return;
                 }
