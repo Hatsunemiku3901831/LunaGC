@@ -1,0 +1,10 @@
+// Verified 7.1 native type 33281: writer 0x14f68e030; opcode 8383.
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "FurnitureMakeCancelReqOuterClass";
+
+message FurnitureMakeCancelReq {
+  uint32 index = 4;
+  uint32 make_id = 11;
+}
