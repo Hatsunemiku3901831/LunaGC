@@ -9,7 +9,8 @@ import java.util.*;
 @Entity
 @Getter
 public final class FurnitureTakeReceipt {
-    private String operationId, productObjectId;
+    private String operationId, productObjectId, parentOperationId;
+    private FurnitureMakeSlotItem sourceSlot;
     private int index, makeId, avatarId, beginTime, durTime, accelerateTime;
     private int itemId, count, itemBefore, vialBefore, trustExp;
     private int levelBefore, expBefore, levelAfter, expAfter, state;
@@ -53,6 +54,7 @@ public final class FurnitureTakeReceipt {
             int expAfter,
             List<Return> returns) {
         operationId = UUID.randomUUID().toString();
+        sourceSlot = slot.snapshot();
         index = slot.getIndex();
         makeId = slot.getMakeId();
         avatarId = slot.getAvatarId();
@@ -72,6 +74,12 @@ public final class FurnitureTakeReceipt {
         this.expAfter = expAfter;
         this.returns = new ArrayList<>(returns);
         state = 1;
+    }
+
+    void bindParent(FurnitureBulkReceipt owner) {
+        if (state != 1 || parentOperationId != null || owner == null)
+            throw new IllegalStateException("Furniture parent cannot be rebound");
+        parentOperationId = owner.getOperationId();
     }
 
     void paid() {

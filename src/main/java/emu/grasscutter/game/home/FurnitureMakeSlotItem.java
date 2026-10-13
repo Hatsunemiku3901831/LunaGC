@@ -20,6 +20,18 @@ public class FurnitureMakeSlotItem {
     int accelerateTime;
     FurnitureMakePlan plan;
 
+    /** Independent scalar identity; the frozen plan exposes no mutation API. */
+    public FurnitureMakeSlotItem snapshot() {
+        return of().index(index)
+                .makeId(makeId)
+                .avatarId(avatarId)
+                .beginTime(beginTime)
+                .durTime(durTime)
+                .accelerateTime(accelerateTime)
+                .plan(plan)
+                .build();
+    }
+
     /** Native countdown: begin + duration - assistance, using a wide sum. */
     public long getCompletionTime() {
         return (long) beginTime + durTime - accelerateTime;

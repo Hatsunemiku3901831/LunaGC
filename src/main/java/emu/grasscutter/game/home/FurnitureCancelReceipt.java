@@ -10,6 +10,7 @@ import java.util.*;
 @Getter
 public final class FurnitureCancelReceipt {
     private String operationId;
+    private FurnitureMakeSlotItem sourceSlot;
     private int index, makeId, state, accelerateTime;
     private List<Refund> refunds;
 
@@ -33,6 +34,7 @@ public final class FurnitureCancelReceipt {
 
     FurnitureCancelReceipt(FurnitureMakeSlotItem slot, List<Refund> refunds) {
         operationId = UUID.randomUUID().toString();
+        sourceSlot = slot.snapshot();
         index = slot.getIndex();
         makeId = slot.getMakeId();
         accelerateTime = slot.getAccelerateTime();

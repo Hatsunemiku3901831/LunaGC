@@ -227,6 +227,7 @@ public final class FurnitureTake {
                                 progress[0],
                                 progress[1],
                                 returns);
+                if (owner != null) receipt.bindParent(owner);
                 home.setPendingFurnitureTake(receipt);
                 boolean removed = false;
                 try {
