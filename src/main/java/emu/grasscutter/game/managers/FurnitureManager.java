@@ -19,15 +19,15 @@ public class FurnitureManager extends BasePlayerManager {
     }
 
     public void notifyUnlockFurniture() {
-        player
-                .getSession()
+        player.getSession()
                 .send(new PacketUnlockedFurnitureFormulaDataNotify(player.getUnlockedFurniture()));
     }
 
     public void notifyUnlockFurnitureSuite() {
-        player
-                .getSession()
-                .send(new PacketUnlockedFurnitureSuiteDataNotify(player.getUnlockedFurnitureSuite()));
+        player.getSession()
+                .send(
+                        new PacketUnlockedFurnitureSuiteDataNotify(
+                                player.getUnlockedFurnitureSuite()));
     }
 
     public boolean unlockFurnitureFormula(int id) {
@@ -54,10 +54,20 @@ public class FurnitureManager extends BasePlayerManager {
         FurnitureStart.start(player, makeId, avatarId);
     }
 
+    public void startBatch(
+            java.util.List<
+                            emu.grasscutter.net.proto.FurnitureMakeStartInfoOuterClass
+                                    .FurnitureMakeStartInfo>
+                    entries) {
+        FurnitureStart.startBatch(player, entries);
+    }
+
     public void queryStatus() {
         var home = player.getHome();
         if (home == null || home.getOwnerUid() != player.getUid()) {
-            player.sendPacket(new PacketFurnitureMakeRsp(Retcode.RET_FURNITURE_MAKE_NOT_IN_CORRECT_HOME_VALUE));
+            player.sendPacket(
+                    new PacketFurnitureMakeRsp(
+                            Retcode.RET_FURNITURE_MAKE_NOT_IN_CORRECT_HOME_VALUE));
             return;
         }
         player.sendPacket(new PacketFurnitureMakeRsp(home));
@@ -71,7 +81,11 @@ public class FurnitureManager extends BasePlayerManager {
         emu.grasscutter.game.home.FurnitureCancel.cancel(player, index, makeId);
     }
 
-    public void takeAll(java.util.List<emu.grasscutter.net.proto.FurnitureMakeTakeInfoOuterClass.FurnitureMakeTakeInfo> selections) {
-        emu.grasscutter.game.home.FurnitureBulkTake.take(player,selections);
+    public void takeAll(
+            java.util.List<
+                            emu.grasscutter.net.proto.FurnitureMakeTakeInfoOuterClass
+                                    .FurnitureMakeTakeInfo>
+                    selections) {
+        emu.grasscutter.game.home.FurnitureBulkTake.take(player, selections);
     }
 }

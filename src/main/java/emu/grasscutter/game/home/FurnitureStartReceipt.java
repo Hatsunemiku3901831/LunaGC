@@ -12,6 +12,7 @@ public final class FurnitureStartReceipt {
     private String operationId;
     private int index, makeId, avatarId, beginTime, durTime, state;
     private List<Cost> costs;
+    private List<FurnitureMakeSlotItem> jobs;
 
     @Entity
     @Getter
@@ -32,6 +33,11 @@ public final class FurnitureStartReceipt {
     public FurnitureStartReceipt() {}
 
     FurnitureStartReceipt(FurnitureMakeSlotItem slot, List<Cost> costs) {
+        this(List.of(slot), costs);
+    }
+
+    FurnitureStartReceipt(List<FurnitureMakeSlotItem> jobs, List<Cost> costs) {
+        var slot = jobs.get(0);
         operationId = UUID.randomUUID().toString();
         index = slot.getIndex();
         makeId = slot.getMakeId();
@@ -39,7 +45,12 @@ public final class FurnitureStartReceipt {
         beginTime = slot.getBeginTime();
         durTime = slot.getDurTime();
         this.costs = new ArrayList<>(costs);
+        this.jobs = new ArrayList<>(jobs);
         state = 1;
+    }
+
+    public List<FurnitureMakeSlotItem> getJobs() {
+        return jobs == null ? List.of() : Collections.unmodifiableList(jobs);
     }
 
     void paid() {
