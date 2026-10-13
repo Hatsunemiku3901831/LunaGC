@@ -1,0 +1,9 @@
+// Verified 7.1 native type 60962, opcode 7204, parser 0x1481a3710.
+// Semantic names cross-checked against AstaPS protocol/7.1/protocol.desc.
+syntax = "proto3";
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "AvatarEscoffierSkillCookDataNotifyOuterClass";
+message AvatarEscoffierSkillCookDataNotify {
+  uint32 last_refresh_time = 6;
+  uint32 finished_weekly_cook_num = 13;
+}

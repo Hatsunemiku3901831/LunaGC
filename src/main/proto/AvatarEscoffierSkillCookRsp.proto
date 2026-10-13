@@ -1,0 +1,12 @@
+// Verified 7.1 native type 50271, opcode 1040, parser 0x14f1ccf40.
+// Shared quota fields use different tags from the notification.
+syntax = "proto3";
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "AvatarEscoffierSkillCookRspOuterClass";
+import "ItemParam.proto";
+message AvatarEscoffierSkillCookRsp {
+  repeated ItemParam item_list = 4;
+  uint32 finished_weekly_cook_num = 5;
+  int32 retcode = 12;
+  uint32 last_refresh_time = 13;
+}
