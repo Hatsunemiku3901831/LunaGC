@@ -533,6 +533,9 @@ public class AbilityModifier implements Serializable {
                     : this.ratio == DynamicFloat.ONE ? DynamicFloat.ZERO : this.ratio;
         }
         public String determineType;
+        public String costType;
+        @SerializedName("DHDDHBBIHEJ")
+        public String rawPhlogistonCostType;
         public int configID;
 
         public DynamicFloat valueRangeMin;

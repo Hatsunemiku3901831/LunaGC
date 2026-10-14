@@ -468,7 +468,7 @@ public class Player implements PlayerHook, FieldFetch {
     }
 
     public float addPhlogistonValue(float amount) {
-        setPhlogistonValue(getPhlogistonValue() + amount);
+        Phlogiston.change(this, amount);
         return getPhlogistonValue();
     }
 

@@ -38,13 +38,12 @@ public final class SgvCommand implements CommandHandler {
 
     @Override
     public void execute(Player sender, Player targetPlayer, List<String> args) {
+        if (targetPlayer == null || args.size() != 2) return;
         var value = (float)Integer.parseInt(args.get(1));
-        targetPlayer.sendPacket(new PacketServerGlobalValueChangeNotify(
+        if(args.get(0).equalsIgnoreCase("SGV_PlayerTeam_Phlogiston")) Phlogiston.set(targetPlayer, value);
+        else targetPlayer.sendPacket(new PacketServerGlobalValueChangeNotify(
                 targetPlayer.getTeamManager().getEntity().getId(), args.get(0), value));
         CommandHandler.sendMessage(targetPlayer, String.valueOf(Utils.abilityHash(args.get(0))));
         CommandHandler.sendMessage(targetPlayer, "Changed Server Global Value for " + args.get(0));
-        if(args.get(0).equalsIgnoreCase("SGV_PlayerTeam_Phlogiston") ){
-            targetPlayer.setPhlogistonValue(value);
-        }
     }
 }

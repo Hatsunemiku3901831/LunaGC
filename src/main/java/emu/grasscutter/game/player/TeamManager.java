@@ -146,11 +146,9 @@ public final class TeamManager extends BasePlayerDataManager {
         int embryoId = 0;
 
         if (GameConstants.defaultTeamAbilityStrings().length > 0) {
-            boolean inNatlan = player.getScene() != null && player.getScene().getId() == 101;
             List<String> teamAbilties =
                 Arrays.stream(GameConstants.defaultTeamAbilityStrings()).toList();
             for (String skill : teamAbilties) {
-                if ("DynamicAbility_Phlogiston".equals(skill) && !inNatlan) continue;
                 AbilityEmbryoOuterClass.AbilityEmbryo emb =
                     AbilityEmbryoOuterClass.AbilityEmbryo.newBuilder()
                         .setAbilityId(++embryoId)

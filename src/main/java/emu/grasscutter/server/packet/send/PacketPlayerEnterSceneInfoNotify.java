@@ -64,13 +64,7 @@ public class PacketPlayerEnterSceneInfoNotify extends BasePacket {
     public PacketPlayerEnterSceneInfoNotify(Player player) {
         super(PacketOpcodes.PlayerEnterSceneInfoNotify);
 
-        AbilityScalarValueEntry scalarValue = AbilityScalarValueEntry.newBuilder()
-                .setKey(AbilityStringOuterClass.AbilityString.newBuilder().setHash(Utils.abilityHash("SGV_PlayerTeam_Phlogiston"))
-                        .setStr("SGV_PlayerTeam_Phlogiston")
-                        .build())
-                        .setFloatValue(100)
-                .build();
-                player.setPhlogistonValue(100);
+        AbilityScalarValueEntry scalarValue = emu.grasscutter.game.player.Phlogiston.snapshot(player);
 
         long hexCount = player.getTeamManager().getActiveTeam().stream()
                 .filter(e -> getHexenzirkelIds().contains(e.getAvatar().getAvatarId()))
