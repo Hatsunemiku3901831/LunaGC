@@ -84,7 +84,7 @@ public final class PhlogistonMixinCallbacks {
         return values != null && Arrays.stream(values).anyMatch(value -> value == mixin);
     }
 
-    private static boolean scope(
+    static boolean scope(
             Ability ability,
             AbilityMixinData mixin,
             GameEntity bearer,

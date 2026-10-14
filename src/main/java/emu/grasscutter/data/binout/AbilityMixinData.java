@@ -52,6 +52,8 @@ public class AbilityMixinData implements Serializable {
         PhlogistonCostMixin,
         ChangePhlogistonMixin,
         InfinitePhlogistonMixin,
+        @SerializedName(value = "HumanDragonCollabPickPhlogistonBallMixin", alternate = "NILDEPAIECE")
+        HumanDragonCollabPickPhlogistonBallMixin,
         FIHACJPNNED,
         JMEOJHGPNMB,
         AttachModifierToSelfGlobalValueMixin,
@@ -194,6 +196,8 @@ public class AbilityMixinData implements Serializable {
     public String costType;
     @SerializedName("DHDDHBBIHEJ") public String rawPhlogistonCostType;
     public String targetType;
+    public Integer phlogistonBallGadgetId;
+    @SerializedName("KNEIAADHCBH") public Integer rawPhlogistonBallGadgetId;
     public DynamicFloat costStaminaDelta = DynamicFloat.ZERO;
     public DynamicFloat ratio = DynamicFloat.ONE;
     public List<Map<String, Object>> predicates;

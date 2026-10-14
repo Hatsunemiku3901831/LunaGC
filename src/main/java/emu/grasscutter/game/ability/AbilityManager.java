@@ -713,6 +713,14 @@ public final class AbilityManager extends BasePlayerManager {
         }
 
         var combatMixin=ability.getData().localIdToMixin.get(head.getLocalId());
+        boolean ballArgument = invoke.getArgumentType() == AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_MIXIN_HUMAN_DRAGON_COLLAB_PICK_PHLOGISTON_BALL;
+        boolean ballCallback = combatMixin != null && combatMixin.type == AbilityMixinData.Type.HumanDragonCollabPickPhlogistonBallMixin;
+        if (ballArgument || ballCallback) {
+            if (!ballArgument || !ballCallback || player != ability.getPlayerOwner()
+                    || head.getInstancedModifierId() != 0 && invokedModifier == null) return;
+            PhlogistonBallPickup.invoke(ability, combatMixin, invoke.getAbilityData(), target, invokedModifier);
+            return;
+        }
         boolean fuelArgument = invoke.getArgumentType() == AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_MIXIN_CHANGE_PHLOGISTON;
         boolean fuelCallback = combatMixin != null && combatMixin.type == AbilityMixinData.Type.ChangePhlogistonMixin;
         if (fuelArgument || fuelCallback) {

@@ -48,6 +48,7 @@ public enum ItemUseOp {
     ITEM_USE_ADD_REGIONAL_PLAY_VAR(46),
     ITEM_USE_UNLOCK_AVATAR_TRACE(56),
     ITEM_USE_UNLOCK_PROFILE_PICTURE(57),
+    ITEM_USE_ADD_PHLOGISTON(60),
     ITEM_USE_ADD_WEAPON_SKIN(62);
 
     private static final Int2ObjectMap<ItemUseOp> map = new Int2ObjectOpenHashMap<>();

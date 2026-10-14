@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "AbilityMixinHumanDragonCollabPickPhlogistonBallOuterClass";
+
+// Current client type 29362: writer/reader use tag 0x48; sender supplies ball actor ID.
+message AbilityMixinHumanDragonCollabPickPhlogistonBall {
+    uint32 entity_id = 9;
+}

@@ -93,6 +93,12 @@ public class EntityItem extends EntityBaseGadget {
 
     @Override
     public void onInteract(Player player, GadgetInteractReq interactReq) {
+        if (emu.grasscutter.game.ability.PhlogistonBallPickup.isFuelBall(this)) {
+            if (emu.grasscutter.game.ability.PhlogistonBallPickup.pickup(
+                    player, player.getTeamManager().getCurrentAvatarEntity(), this))
+                player.sendPacket(new PacketGadgetInteractRsp(this, InteractType.InteractType_INTERACT_PICK_ITEM));
+            return;
+        }
         // check drop owner to avoid someone picked up item in others' world
         if (!this.isShare()) {
             int dropOwner = (int) (this.getGuid() >> 32);
