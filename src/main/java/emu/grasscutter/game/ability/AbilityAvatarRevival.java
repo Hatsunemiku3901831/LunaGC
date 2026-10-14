@@ -35,13 +35,7 @@ public final class AbilityAvatarRevival {
                 && action.otherTargets == null
                 && radius(action.range).isPresent()
                 && AbilityActionSequence.supportedPredicates(action.predicates, 0)
-                && (action.rawReviveSkillControl == null
-                        || action.rawReviveSkillControl.isJsonNull()
-                        || action.rawReviveSkillControl.isJsonPrimitive()
-                                && action.rawReviveSkillControl.getAsJsonPrimitive().isBoolean()
-                                && !action.rawReviveSkillControl.getAsBoolean())
-                && (action.type != AbilityModifierAction.Type.ReviveDeadAvatar
-                        || action.skillID == 0);
+                && AbilityRevivalSkillControl.supported(action);
     }
 
     public static List<EntityAvatar> recipients(

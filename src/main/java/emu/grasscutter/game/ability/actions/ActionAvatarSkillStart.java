@@ -13,6 +13,7 @@ import emu.grasscutter.game.ability.AbilityGlobalValues;
 import emu.grasscutter.game.ability.AbilityManager;
 import emu.grasscutter.game.ability.AbilitySkillCooldown;
 import emu.grasscutter.game.ability.AbilityTalentResolver;
+import emu.grasscutter.game.ability.AbilityRevivalSkillControl;
 import emu.grasscutter.game.avatar.Avatar;
 import emu.grasscutter.game.entity.*;
 import emu.grasscutter.game.managers.stamina.Consumption;
@@ -50,6 +51,8 @@ public class ActionAvatarSkillStart extends AbilityActionHandler {
                 || target == null
                 || !AbilityGlobalValues.isCurrent(ability, target)) return false;
         if (!conditionsPass(ability, action, target)) return true;
+        if (AbilityRevivalSkillControl.nativeAbility(ability))
+            return ability.getManager().getRevivalSkillControl().nativeAction(ability,action,target,true);
         var owner = ability.getOwner();
         var player = ability.getPlayerOwner();
         EntityAvatar recipient =

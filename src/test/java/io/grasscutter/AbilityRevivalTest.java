@@ -205,14 +205,14 @@ class AbilityRevivalTest {
     }
 
     @Test
-    void qiqiActualResourceReadsTheObfuscatedRatioAndRevivesHalfHealth() throws Exception {
+    void qiqiActualResourceReadsTheRatioButRequiresAnAuthorizedCaster() throws Exception {
         var dead = member(100, 0);
         var data = actual("Qiqi", "Avatar_Qiqi_Revive");
         ability = new Ability(data, fixture.entity, fixture.player);
         assertEquals(0.5f, data.onAbilityStart[2].amountByTargetMaxHPRatio.get(ability));
         new ActionReviveAvatar().execute(ability, data.onAbilityStart[2], ByteString.EMPTY, fixture.entity);
-        assertTrue(dead.isAlive());
-        assertEquals(50f, dead.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP));
+        assertFalse(dead.isAlive());
+        assertEquals(0f, dead.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP));
     }
 
     @Test

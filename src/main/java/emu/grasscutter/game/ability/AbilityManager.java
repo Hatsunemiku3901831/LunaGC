@@ -178,6 +178,7 @@ public final class AbilityManager extends BasePlayerManager {
     private long arlecchinoESkillTime = 0L;
     @Getter private final AbilitySharedCooldown sharedCooldown;
     @Getter private final AbilitySkillCooldown skillCooldown;
+    @Getter private final AbilityRevivalSkillControl revivalSkillControl = new AbilityRevivalSkillControl();
     private volatile GameEntity scanTarget;
 
     public void setScanTarget(GameEntity target) { scanTarget = target; }

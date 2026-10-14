@@ -43,7 +43,8 @@ XZ 1,513 份、Y 106 份、XYZ 275 份。预检通过仍须满足运行时参数
 - `SceneObj_Twinline_FakeElementResonance_V3_5`：12 米水平条件及其动作范围。
 
 复活动作预检通过数量由 38 增至 41／43。
-七七额外技能控制和 Rerir 的 `CBHEIAINBAI` 布尔条件仍待核对。
+本批结束时七七额外技能控制和 Rerir 的 `CBHEIAINBAI` 布尔条件仍待核对。
+2026-10-15 已分别接入，见[七七技能控制](QIQI_REVIVAL_CONTROL_2026-10-15.md)和[实体可用状态](ABILITY_ENTITY_AVAILABILITY_2026-10-15.md)。复活动作现为 43／43 通过本地预检。
 父能力的其他动作、实际触发、特殊冷却和游戏客户端验收继续推进。
 
 ## 回归修复和验证

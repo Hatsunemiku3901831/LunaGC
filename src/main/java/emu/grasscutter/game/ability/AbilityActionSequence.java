@@ -223,6 +223,12 @@ final class AbilityActionSequence {
         // This flag applies to the callback's carrier, before resolving its recipient(s).
         if(periodic && !action.doOffStage && self instanceof EntityAvatar
                 && (self.getScene()==null || self.getScene().getEntities().get(self.getId())!=self)) return;
+        // A default/group dead-avatar revival makes one caster decision for the entire party.
+        if(action.type==AbilityModifierAction.Type.ReviveDeadAvatar && action.otherTargets==null
+                && (action.target==null || "AllPlayerAvatars".equals(action.target) || "CurTeamAvatars".equals(action.target))) {
+            ability.getManager().executeActionNow(ability,action,ByteString.EMPTY,self);
+            return;
+        }
         for(var target:targets(ability,action,self)) {
             if(!current.getAsBoolean() || !AbilityExecutionContext.canTrigger(target,ability.getPlayerOwner())) return;
             @SuppressWarnings("unchecked")

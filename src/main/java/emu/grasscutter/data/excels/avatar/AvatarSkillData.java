@@ -14,6 +14,8 @@ public class AvatarSkillData extends GameResource {
 
     private float cdTime;
     private int costElemVal;
+    private float costStamina;
+    private boolean ignoreCDMinusRatio;
     private int maxChargeNum;
     private int shareCDID;
     private int cdSlot;
