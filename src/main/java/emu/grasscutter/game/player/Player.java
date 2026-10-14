@@ -147,6 +147,17 @@ public class Player implements PlayerHook, FieldFetch {
     @Getter @Setter private int currentRealmId;
     @Getter @Setter private transient boolean isInEditMode;
     @Getter @Setter private int widgetId;
+    @Getter @Setter private int widgetPetId;
+    @Transient private transient volatile WidgetManager widgets;
+
+    public WidgetManager getWidgets() {
+        var value = widgets;
+        if (value == null) synchronized (this) {
+            if (widgets == null) widgets = new WidgetManager(this);
+            value = widgets;
+        }
+        return value;
+    }
     @Getter @Setter private int sceneId;
     @Getter @Setter private int regionId;
     @Getter private int mainCharacterId;

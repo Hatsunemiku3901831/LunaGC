@@ -1483,6 +1483,8 @@ public final class AbilityManager extends BasePlayerManager {
         var abilities = entity.getInstancedAbilities();
         int targetIndex = invoke.getHead().getInstancedAbilityId() - 1;
         if (targetIndex < 0) return;
+        if (entity instanceof emu.grasscutter.game.entity.EntityTeam team && team.getPlayer() == player
+                && !player.getWidgets().allowsTeamAbility(targetIndex + 1, abilityName)) return;
 
         while (abilities.size() < targetIndex) abilities.add(null);
 

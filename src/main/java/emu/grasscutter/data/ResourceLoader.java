@@ -94,6 +94,7 @@ public final class ResourceLoader {
         loadOpenConfig();
         loadAbilityModifiers();
         loadAbilityEmbryos();
+        emu.grasscutter.game.player.WidgetCatalog.reload();
 
         loadResources(true);
         buildAbilityTalentVarMaps();

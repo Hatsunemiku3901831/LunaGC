@@ -4,6 +4,21 @@ import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.*;
 
 public class PacketWidgetSlotChangeNotify extends BasePacket {
+    public PacketWidgetSlotChangeNotify(
+            int materialId, int tag, WidgetSlotOpOuterClass.WidgetSlotOp op) {
+        super(PacketOpcodes.WidgetSlotChangeNotify);
+        setData(
+                WidgetSlotChangeNotifyOuterClass.WidgetSlotChangeNotify.newBuilder()
+                        .setOp(op)
+                        .setSlot(
+                                WidgetSlotDataOuterClass.WidgetSlotData.newBuilder()
+                                        .setMaterialId(materialId)
+                                        .setTagValue(tag)
+                                        .setIsActive(
+                                                op
+                                                        == WidgetSlotOpOuterClass.WidgetSlotOp
+                                                                .WidgetSlotOp_ATTACH)));
+    }
 
     public PacketWidgetSlotChangeNotify(
             WidgetSlotChangeNotifyOuterClass.WidgetSlotChangeNotify proto) {
@@ -18,7 +33,10 @@ public class PacketWidgetSlotChangeNotify extends BasePacket {
         WidgetSlotChangeNotifyOuterClass.WidgetSlotChangeNotify proto =
                 WidgetSlotChangeNotifyOuterClass.WidgetSlotChangeNotify.newBuilder()
                         .setOp(op)
-                        .setSlot(WidgetSlotDataOuterClass.WidgetSlotData.newBuilder().setIsActive(true).build())
+                        .setSlot(
+                                WidgetSlotDataOuterClass.WidgetSlotData.newBuilder()
+                                        .setIsActive(true)
+                                        .build())
                         .build();
 
         this.setData(proto);

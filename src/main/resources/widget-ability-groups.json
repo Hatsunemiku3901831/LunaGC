@@ -1,0 +1,22 @@
+{
+  "DynamicAbility_Toys_Seelie": ["SceneObj_Toys_SeelieCreater"],
+  "DynamicAbility_Toys_Seelie02": ["SceneObj_Toys_SeelieCreater_02"],
+  "DynamicAbility_Toys_Seelie03": ["SceneObj_Toys_SeelieCreater_03"],
+  "DynamicAbility_Toys_Seelie_Purple": ["SceneObj_Toys_SeelieCreater_04"],
+  "DynamicAbility_Toys_Seelie_Green": ["SceneObj_Toys_SeelieCreater_05"],
+  "DynamicAbility_Toys_Endora": ["SceneObj_Toys_Endora"],
+  "DynamicAbility_Toys_LeiLing": ["SceneObj_Toys_LeiLing"],
+  "DynamicAbility_Toys_ShikiShogun": ["SceneObj_Toys_ShikiShogun"],
+  "DynamicAbility_Toys_SeekerSeelieV3": ["SceneObj_Toys_SeekerWindCrystal_SeekerSeelieV3"],
+  "DynamicAbility_Toys_WeatherWizard": ["SceneObj_Toys_WeatherWizard"],
+  "DynamicAbility_Toys_PaperCraftCrane": ["SceneObj_Toys_PaperCraftCrane"],
+  "DynamicAbility_Toys_Sorush": ["SceneObj_Toys_Sorush"],
+  "DynamicAbility_Toys_Sorush_Hat": ["SceneObj_Toys_Sorush_Hat"],
+  "DynamicAbility_Toys_Octopus": ["SceneObj_Toys_Octopus"],
+  "DynamicAbility_Toys_TreasureSeekingSeelie_Fontaine": ["SceneObj_Toys_SeekerWindCrystal_TreasureSeekingSeelie_Fontaine"],
+  "DynamicAbility_Toys_MiniSeelie_Fontaine": ["SceneObj_Toys_MiniSeelie_Fontaine"],
+  "DynamicAbility_Toys_Salamander": ["SceneObj_Toys_Salamander"],
+  "DynamicAbility_Toys_MachinePora": ["SceneObj_Toys_MachinePora"],
+  "DynamicAbility_Toys_Felicette": ["SceneObj_Toys_Felicette"],
+  "DynamicAbility_Toys_FrostConductor": ["SceneObj_Toys_FrostConductor"]
+}

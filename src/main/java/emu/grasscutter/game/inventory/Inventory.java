@@ -691,6 +691,8 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
         // Update in db
         item.save();
         TpsWeaponSystem.onMaterialsChanged(this.player, List.of(item.getItemId()), true);
+        if (item.getCount() <= 0 && (this.player.getWidgetId() == item.getItemId()
+                || this.player.getWidgetPetId() == item.getItemId())) this.player.getWidgets().refresh();
 
         // Returns true on success
         return true;

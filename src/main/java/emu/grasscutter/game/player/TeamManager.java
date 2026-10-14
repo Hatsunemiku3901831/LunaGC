@@ -150,6 +150,10 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public AbilityControlBlockOuterClass.AbilityControlBlock getAbilityControlBlock() {
+        return player.getWidgets().extend(getBaseAbilityControlBlock());
+    }
+
+    public AbilityControlBlockOuterClass.AbilityControlBlock getBaseAbilityControlBlock() {
         AbilityControlBlockOuterClass.AbilityControlBlock.Builder abilityControlBlock =
             AbilityControlBlockOuterClass.AbilityControlBlock.newBuilder();
         int embryoId = 0;

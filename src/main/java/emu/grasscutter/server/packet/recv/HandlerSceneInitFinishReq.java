@@ -31,6 +31,7 @@ public class HandlerSceneInitFinishReq extends PacketHandler {
 
         session.send(new PacketSceneTimeNotify(player));
         session.send(new PacketPlayerGameTimeNotify(player));
+        player.getWidgets().prepareForScene();
         session.send(new PacketPlayerEnterSceneInfoNotify(player));
         player.getTeamManager().sendMoonsignState();
         int hexenzirkelCount =
@@ -52,6 +53,7 @@ public class HandlerSceneInitFinishReq extends PacketHandler {
         session.send(new PacketSyncScenePlayTeamEntityNotify(player));
 
         session.send(new PacketSceneInitFinishRsp(player));
+        player.getWidgets().syncEquipped();
 
         // A negative configured CmdId suppresses the watermark for this scene.
         var sweep = Configuration.GAME_OPTIONS.watermark.sweep;

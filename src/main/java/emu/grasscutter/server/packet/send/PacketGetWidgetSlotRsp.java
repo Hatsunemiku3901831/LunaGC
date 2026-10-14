@@ -3,7 +3,6 @@ package emu.grasscutter.server.packet.send;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.*;
-import java.util.List;
 
 public class PacketGetWidgetSlotRsp extends BasePacket {
 
@@ -13,22 +12,7 @@ public class PacketGetWidgetSlotRsp extends BasePacket {
         GetWidgetSlotRspOuterClass.GetWidgetSlotRsp.Builder proto =
                 GetWidgetSlotRspOuterClass.GetWidgetSlotRsp.newBuilder();
 
-        if (player.getWidgetId()
-                == 0) { // TODO: check this logic later, it was null-checking an int before which made it
-            // dead code
-            proto.addAllSlotList(List.of());
-        } else {
-            proto.addSlotList(
-                    WidgetSlotDataOuterClass.WidgetSlotData.newBuilder()
-                            .setIsActive(true)
-                            .setMaterialId(player.getWidgetId())
-                            .build());
-
-            proto.addSlotList(
-                    WidgetSlotDataOuterClass.WidgetSlotData.newBuilder()
-                            .setTag(WidgetSlotTagOuterClass.WidgetSlotTag.WidgetSlotTag_WIDGET_SLOT_ATTACH_AVATAR)
-                            .build());
-        }
+        proto.addAllSlotList(player.getWidgets().slots());
 
         GetWidgetSlotRspOuterClass.GetWidgetSlotRsp protoData = proto.build();
 

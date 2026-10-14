@@ -4,8 +4,10 @@ option java_package = "emu.grasscutter.net.proto";
 option java_outer_classname = "SetWidgetSlotReqOuterClass";
 
 import "WidgetSlotOp.proto";
+import "WidgetSlotTag.proto";
 
 message SetWidgetSlotReq {
 	WidgetSlotOp op = 2;
 	uint32 material_id = 12;
+	repeated WidgetSlotTag tag_list = 4;
 }
