@@ -14,6 +14,7 @@
 | 大世界持久建造 | [保存、临时模式、恢复及立即删除](SCENE_BUILDING_2026-10-15.md) |
 | 战斗伤害统计 | [实际扣血、召唤物归属、DPS 与 GM 查询](DAMAGE_LOG_2026-10-15.md) |
 | 材料采集点标记 | [20 种材料、最近点、个人标记保留及清理](MATERIAL_TRACKING_2026-10-15.md) |
+| 动画时序的效果生命周期 | [客户端确认、进入／退出、重复消息及父实例清理](ANIMATION_TIMING_2026-10-15.md) |
 
 ## 能力处理器差异
 
@@ -25,9 +26,9 @@ AstaPS 的首轮注解比较得到八个差异。AvatarCombatMixin 本次新增�
 | AttachToAbilityStateMixin | 已由 AbilityGlobalValueWatchers／AbilityStateBinding 接入条件；[状态绑定记录](ABILITY_STATE_BINDINGS_2026-10-14.md) |
 | DoWatcherSystemAction | 参考 execute 仅返回 true，没有监听或更新逻辑；不能据此补齐玩法 |
 | SkillButtonHoldChargeMixin | 参考 execute 仅返回 true，未提供蓄力控制实现 |
-| AttachToStateIDMixin | 需要继续核对动画状态与修饰器生命周期；参考会立即附加配置中的修饰器 |
-| AttachToNormalizedTimeMixin | 需要继续核对状态、播放时间及结束时机；参考省略这些判断 |
-| AttachToMultiNormalizedTimeMixin | 同上，还需逐项处理多个播放区间 |
+| AttachToStateIDMixin | 已接入客户端确认的子效果生命周期；状态判断由客户端执行，完整原生／画面验收待完成 |
+| AttachToNormalizedTimeMixin | 已保留播放区间并接入确认生命周期；不在能力加载时提前附加 |
+| AttachToMultiNormalizedTimeMixin | 已保留多个播放区间并接入确认生命周期；客户端逐区间时序仍需实机验收 |
 
 当前资源有 6,359 个 StateID 节点、4,097 个单播放区间节点及 1,668 个多播放区间节点。
 这些是配置数量，不能当作独立玩法数量或完成率。

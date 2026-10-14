@@ -18,6 +18,19 @@ public class AbilityModifierController {
     private volatile ServerCallbacks serverCallbacks;
     private volatile ModifierAttachmentCallbacks attachments;
     private volatile BindingModifierCallbacks bindingCallbacks;
+    private volatile AnimationModifierCallbacks animationCallbacks;
+    void prepareAnimationCallbacks(GameEntity target) {
+        if (animationCallbacks == null && !hasServerCallbacks() && !hasBindingCallbacks())
+            animationCallbacks = AnimationModifierCallbacks.create(this, target);
+    }
+    boolean hasAnimationCallbacks() { var callbacks = animationCallbacks; return callbacks != null && callbacks.current(); }
+    boolean ownsAnimationCallback(AbilityModifier.AbilityModifierAction action) {
+        var callbacks = animationCallbacks; return callbacks != null && callbacks.owns(action);
+    }
+    void runAnimationOnAdded() { var callbacks = animationCallbacks; if (callbacks != null) callbacks.added(); }
+    void animationParentRemoved(AbilityModifierController parent) {
+        var callbacks = animationCallbacks; if (callbacks != null) callbacks.parentRemoved(parent);
+    }
     void prepareBindingCallbacks(GameEntity target) { bindingCallbacks = new BindingModifierCallbacks(this, target); }
     public boolean hasBindingCallbacks() { var callbacks = bindingCallbacks; return callbacks != null && callbacks.available(); }
     void runBindingOnAdded(BooleanSupplier current) { var callbacks = bindingCallbacks; if (callbacks != null) callbacks.added(current); }
@@ -119,6 +132,7 @@ public class AbilityModifierController {
             AbilityCooldownInvocation.run(this, () -> AbilityActionSequence.run(ability,modifierData.onRemoved,callbacks.target,callbacks.context::isCurrent));
         var binding=bindingCallbacks; if(binding!=null) binding.removed();
         var hooks=attachments; if(hooks!=null) hooks.removed();
+        var animation=animationCallbacks; if(animation!=null) animation.removed();
     }
 
     public AbilityModifierController(

@@ -21,6 +21,13 @@ final class BindingModifierCallbacks {
         return guard == null || guard.getAsBoolean();
     }
 
+    static void withInitializationGuard(BooleanSupplier guard, Runnable body) {
+        var previous = captureGuard();
+        initializationGuard.set(() -> (previous == null || previous.getAsBoolean()) && guard.getAsBoolean());
+        try { body.run(); }
+        finally { if (previous == null) initializationGuard.remove(); else initializationGuard.set(previous); }
+    }
+
     static void withoutInitializationGuard(Runnable body) {
         var previous = captureGuard();
         initializationGuard.remove();

@@ -141,8 +141,10 @@ public class Ability {
             endActions = new ArrayList<>(target.getAbilityModifierDuration().removalCallbacks(this,name));
             for(var controller:target.getAbilityHpModifier().lifecycleControllers()) {
                 if(controller.getAbility()==this && name.equals(controller.getName())
-                        && (controller.hasServerCallbacks() || controller.hasAttachmentCallbacks() || controller.hasBindingCallbacks()))
+                        && (controller.hasServerCallbacks() || controller.hasAttachmentCallbacks() || controller.hasBindingCallbacks() || controller.hasAnimationCallbacks()))
                     endActions.add(controller::runServerOnRemoved);
+                if(controller.getAbility()==this && name.equals(controller.getName()))
+                    endActions.add(() -> AnimationModifierCallbacks.parentRemoved(target, controller));
             }
             var named = target.getAppliedAbilityModifiers().get(this);
             removed = named != null && named.remove(name) != null;
@@ -189,6 +191,7 @@ public class Ability {
             if (refresh) target.getAbilityHpModifier().refresh(true);
         }
         if(refresh) modifier.runServerOnRemoved();
+        if(refresh) AnimationModifierCallbacks.parentRemoved(target, modifier);
         target.getAbilityGlobalValueWatchers().refresh();
     }
 

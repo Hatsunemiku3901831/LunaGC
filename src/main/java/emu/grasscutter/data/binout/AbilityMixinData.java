@@ -194,6 +194,16 @@ public class AbilityMixinData implements Serializable {
     public String globalValueKey;
     public List<String> stateIDs = new ArrayList<>();
     public String stateID;
+    // The client evaluates these animation windows and confirms their modifier lifetime.
+    public Float normalizeStart;
+    public Float normalizeEnd;
+    public List<NormalizedStateID> normalizedStateIDList;
+    public String target;
+    public static final class NormalizedStateID implements Serializable {
+        public String stateID;
+        public Float normalizeStart;
+        public Float normalizeEnd;
+    }
     public DynamicFloat defaultGlobalValueOnCreate = DynamicFloat.ZERO;
     public List<DynamicFloat> ratioSteps = new ArrayList<>();
     public List<DynamicFloat> valueSteps = new ArrayList<>();

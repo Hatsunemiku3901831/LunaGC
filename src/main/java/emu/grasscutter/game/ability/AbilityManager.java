@@ -724,6 +724,9 @@ public final class AbilityManager extends BasePlayerManager {
         var action = ability.getData().localIdToAction.get(head.getLocalId());
         if (action != null) {
             if (ability.ownsServerTriggerCallback(action)) return;
+            if (invokedModifier != null && invokedModifier.ownsAnimationCallback(action)) return;
+            if (head.getInstancedModifierId() != 0 && invokedModifier == null
+                    && AnimationModifierCallbacks.isCallback(ability.getData(), action)) return;
             boolean owned = entity.getAbilityPeriodicHealing().ownsAction(ability,head.getInstancedModifierId(),action);
             if (AbilityCooldownInvocation.isCooldownAction(action)) {
                 if (head.getInstancedModifierId() != 0 && invokedModifier == null) return;
@@ -1150,7 +1153,7 @@ public final class AbilityManager extends BasePlayerManager {
             var instances = entity.getInstancedModifiers();
             synchronized (instances) {
                 previous=instances.get(head.getInstancedModifierId());
-                if(previous!=null && (previous.hasServerCallbacks() || previous.hasAttachmentCallbacks() || previous.hasBindingCallbacks()) && previous.getAbility()==instancedAbility
+                if(previous!=null && (previous.hasServerCallbacks() || previous.hasAttachmentCallbacks() || previous.hasBindingCallbacks() || previous.hasAnimationCallbacks()) && previous.getAbility()==instancedAbility
                         && previous.getModifierData()==modifierData) {
                     modifier=previous;
                 } else {
@@ -1166,6 +1169,7 @@ public final class AbilityManager extends BasePlayerManager {
                     }
                 }
                 instances.put(head.getInstancedModifierId(), modifier);
+                modifier.prepareAnimationCallbacks(entity);
                 entity.getAbilityPeriodicHealing().clientAdded(head.getInstancedModifierId());
                 // Register the replacement before refreshing its properties; intermediate state
                 // can otherwise count both a pending server buff and its client confirmation.
@@ -1176,7 +1180,9 @@ public final class AbilityManager extends BasePlayerManager {
 
             boolean initializedByWatcher = entity.getAbilityGlobalValueWatchers()
                     .ownsChild(instancedAbility, modifier.getName());
-            boolean initializedOnServer=modifier.hasServerCallbacks() || modifier.hasBindingCallbacks();
+            boolean animationConfirmed = modifier.hasAnimationCallbacks();
+            boolean initializedOnServer=modifier.hasServerCallbacks() || modifier.hasBindingCallbacks() || animationConfirmed;
+            if (animationConfirmed) modifier.runAnimationOnAdded();
             if (!initializedOnServer && fromParentName && hasOrchestration && modifierData.onAdded != null) {
                 final var finalAbility = instancedAbility;
                 final var finalEntity = entity;
@@ -1214,7 +1220,7 @@ public final class AbilityManager extends BasePlayerManager {
             }
             if (modifier != null) {
                 var removed = modifier;
-                if (!removed.hasServerCallbacks() && !removed.hasBindingCallbacks() && removed.getModifierData().onRemoved != null)
+                if (!removed.hasServerCallbacks() && !removed.hasBindingCallbacks() && !removed.hasAnimationCallbacks() && removed.getModifierData().onRemoved != null)
                     AbilityCooldownInvocation.run(new AbilityCooldownInvocation.Scope(removed, true), () ->
                             runServerOwned(() -> executeCallbackActionsNow(removed.getAbility(),
                                     removed.getModifierData().onRemoved, invoke.getAbilityData(), entity, entity)));
