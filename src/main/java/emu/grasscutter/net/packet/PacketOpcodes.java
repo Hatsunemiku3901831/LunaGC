@@ -282,7 +282,7 @@ public final class PacketOpcodes {
     public static final int EnterTransPointRegionNotify = -35;
     public static final int ExitTransPointRegionNotify = -36;
     public static final int CombineFormulaDataNotify = 9365;
-    public static final int VehiclePhlogistonPointsNotify = -37;
+    public static final int VehiclePhlogistonPointsNotify = 7926; // Legacy name for VehiclePhlogistonNotify.
     public static final int EntityAnimatorPairValueInfoNotify = -38;
     public static final int WeaponAwakenReq = 4226;
     public static final int WeaponAwakenRsp = 23006;

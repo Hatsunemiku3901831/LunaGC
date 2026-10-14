@@ -4,6 +4,7 @@ option java_package = "emu.grasscutter.net.proto";
 option java_outer_classname = "VehiclePhlogistonPointsNotifyOuterClass";
 
 message VehiclePhlogistonPointsNotify {
-	float cur_phlogiston = 3;
-	uint32 entity_id = 7;
+	// Current client's CmdId 7926, type 77150: tags 0x6d and 0x78.
+	float cur_phlogiston = 13;
+	uint32 entity_id = 15;
 }

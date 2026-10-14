@@ -7,7 +7,7 @@ import emu.grasscutter.net.proto.VehiclePhlogistonPointsNotifyOuterClass.Vehicle
 public class PacketVehiclePhlogistonPointsNotify extends BasePacket {
 
     public PacketVehiclePhlogistonPointsNotify(EntityVehicle vehicle) {
-        super(PacketOpcodes.VehiclePhlogistonPointsNotify);
+        super(PacketOpcodes.VehiclePhlogistonNotify);
 
         VehiclePhlogistonPointsNotify notify = VehiclePhlogistonPointsNotify.newBuilder()
                 .setCurPhlogiston(vehicle.getCurPhlogiston())
