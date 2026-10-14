@@ -1,6 +1,5 @@
 package emu.grasscutter.game.ability;
 
-import com.google.protobuf.ByteString;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.binout.*;
 import emu.grasscutter.game.ability.actions.AbilityActionHandler;
@@ -30,6 +29,18 @@ public final class AbilityGlobalValueWatchers {
     private final AtomicBoolean dirty = new AtomicBoolean();
     private final AtomicBoolean notifyPending = new AtomicBoolean();
     private static final ThreadLocal<Boolean> notifications = ThreadLocal.withInitial(() -> true);
+    private static final ThreadLocal<Set<AbilityGlobalValueWatchers>> cleanupPending = new ThreadLocal<>();
+    /** Refresh after the current removal call finishes all of its old callbacks. */
+    static void runRemovalCallbacks(Runnable callbacks) {
+        if (cleanupPending.get() != null) { BindingModifierCallbacks.withoutInitializationGuard(callbacks); return; }
+        Set<AbilityGlobalValueWatchers> pending = Collections.newSetFromMap(new IdentityHashMap<>());
+        cleanupPending.set(pending);
+        try { BindingModifierCallbacks.withoutInitializationGuard(callbacks); }
+        finally {
+            cleanupPending.remove();
+            BindingModifierCallbacks.withoutInitializationGuard(() -> pending.forEach(AbilityGlobalValueWatchers::drain));
+        }
+    }
     public static boolean shouldNotify() { return notifications.get(); }
     private volatile Map<GameEntity, Set<String>> referenced = Map.of();
 
@@ -58,6 +69,8 @@ public final class AbilityGlobalValueWatchers {
         dirty.set(true); drain();
     }
     private void drain() {
+        var pending = cleanupPending.get();
+        if (pending != null) { pending.add(this); return; }
         // Client registration and stat recalculation may surround a call with this registry lock.
         // Their caller flushes afterwards; entity tick also flushes any remaining pending refresh.
         if (Thread.holdsLock(entity.getInstancedModifiers()) || Thread.holdsLock(entity.getInstancedAbilities())
@@ -220,10 +233,8 @@ public final class AbilityGlobalValueWatchers {
             if (wanted.contains(entry.getKey())) continue;
             ownedChildren.remove(entry.getKey());
             if (entry.getValue().owned()) {
-                if (entry.getValue().stateCallbacks()) {
-                    changed |= entry.getKey().ability().removeModifierInstance(entity, entry.getValue().controller(), false);
-                    ended.add(entry.getValue().controller());
-                } else changed |= entry.getKey().ability().removeModifier(entity,entry.getKey().name(),false);
+                changed |= entry.getKey().ability().removeModifierInstance(entity, entry.getValue().controller(), false);
+                ended.add(entry.getValue().controller());
             }
             claims.remove(entry.getKey());
         }
@@ -235,6 +246,7 @@ public final class AbilityGlobalValueWatchers {
                     child.ability().getData(),child.ability().getData().modifiers.get(child.name()));
             boolean stateCallbacks = stateChildren.contains(child);
             if (existing == null && stateCallbacks && !controller.prepareServerCallbacks(entity)) continue;
+            if (existing == null && !stateCallbacks) controller.prepareBindingCallbacks(entity);
             claims.put(child,new Claim(controller,existing == null, stateCallbacks));
             if (existing == null) {
                 ownedChildren.add(child);
@@ -243,7 +255,7 @@ public final class AbilityGlobalValueWatchers {
             }
         }
         if (changed) entity.getAbilityHpModifier().refresh(shouldNotify());
-        ended.forEach(AbilityModifierController::runServerOnRemoved);
+        AbilityGlobalValueWatchers.runRemovalCallbacks(() -> ended.forEach(AbilityModifierController::runServerOnRemoved));
         for (var child : added) {
             // Changes can remove a parent while another child's onAdded is executing.
             var owners = states.entrySet().stream().filter(e -> e.getKey().ability()==child.ability()
@@ -254,15 +266,30 @@ public final class AbilityGlobalValueWatchers {
                 claim.controller().runServerOnAdded(() -> owners.stream().anyMatch(e -> e.getValue().context.isCurrent()));
                 continue;
             }
-            var modifier = child.ability().getData().modifiers.get(child.name());
-            if (modifier.onAdded != null) AbilityManager.runServerOwned(() -> {
-                var actions = Arrays.stream(modifier.onAdded)
-                        .filter(action -> action != null && AbilityManager.isAllowedInServerOwnedChain(action.type))
-                        .toArray(AbilityModifier.AbilityModifierAction[]::new);
-                child.ability().getManager().executeCallbackActionsNow(child.ability(),actions,ByteString.EMPTY,entity,entity);
-            });
+            if (claim != null) claim.controller().runBindingOnAdded(() -> stillDesired(child));
         }
         // Notify other subscribers after this bearer's full modifier result has been reconciled.
         for (var source : initializedSources) source.onAbilityValueUpdate();
+    }
+
+    private boolean stillDesired(Child child) {
+        for (var entry : active().entrySet()) {
+            var key = entry.getKey(); var state = entry.getValue(); var mixin = key.mixin();
+            if (key.ability() != child.ability() || !state.context.isCurrent()
+                    || !state.desired.contains(child.name())) continue;
+            if (mixin.type == AbilityMixinData.Type.AttachToAbilityStateMixin) {
+                if (child.name().equals(AbilityStateBinding.desired(key.ability(), entity, mixin))) return true;
+                continue;
+            }
+            if (!mixin.removesAppliedModifier()) return true;
+            boolean noInit = mixin.type == AbilityMixinData.Type.AttachModifierToSelfGlobalValueNoInitMixin;
+            var source = noInit ? entity : source(key.ability(), mixin.globalValueTarget);
+            if (source == null || !AbilityExecutionContext.canTrigger(source, key.ability().getPlayerOwner())) continue;
+            float fallback = noInit || mixin.defaultGlobalValueOnCreate == null ? 0
+                    : mixin.defaultGlobalValueOnCreate.get(AbilityActionHandler.propertiesFor(key.ability(), entity), 0);
+            int step = selectStep(key.ability(), entity, mixin, source.getGlobalAbilityValues().getOrDefault(mixin.globalValueKey, fallback));
+            if (step >= 0 && child.name().equals(mixin.modifierNameSteps.get(step))) return true;
+        }
+        return false;
     }
 }

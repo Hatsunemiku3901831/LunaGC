@@ -105,7 +105,7 @@ public final class AbilityHpModifier {
         var candidates=stack==null?activeControllers():stack;
         for(var controller:candidates) {
             if(controller.getAbility()==ability && name.equals(controller.getName())
-                    && !entity.getInstancedModifiers().containsValue(controller) && controller.hasServerCallbacks())
+                    && !entity.getInstancedModifiers().containsValue(controller) && (controller.hasServerCallbacks() || controller.hasBindingCallbacks()))
                 return controller;
         }
         return null;

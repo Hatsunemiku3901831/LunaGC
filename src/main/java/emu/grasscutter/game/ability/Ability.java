@@ -138,11 +138,10 @@ public class Ability {
         boolean removed;
         List<Runnable> endActions;
         synchronized (instances) {
-            endActions = target.getAbilityModifierDuration().removalCallbacks(this,name);
-            endActions=new ArrayList<>(endActions);
+            endActions = new ArrayList<>(target.getAbilityModifierDuration().removalCallbacks(this,name));
             for(var controller:target.getAbilityHpModifier().lifecycleControllers()) {
                 if(controller.getAbility()==this && name.equals(controller.getName())
-                        && (controller.hasServerCallbacks() || controller.hasAttachmentCallbacks()))
+                        && (controller.hasServerCallbacks() || controller.hasAttachmentCallbacks() || controller.hasBindingCallbacks()))
                     endActions.add(controller::runServerOnRemoved);
             }
             var named = target.getAppliedAbilityModifiers().get(this);
@@ -157,8 +156,8 @@ public class Ability {
             target.getAbilityPeriodicHealing().removed(this,name);
             if (removed && refresh) target.getAbilityHpModifier().refresh(true);
         }
+        if (removed) AbilityGlobalValueWatchers.runRemovalCallbacks(() -> endActions.forEach(Runnable::run));
         if (removed) target.getAbilityGlobalValueWatchers().refresh();
-        if (removed) endActions.forEach(Runnable::run);
         return removed;
     }
 
@@ -179,8 +178,8 @@ public class Ability {
             unregisterModifierLocked(target, modifier);
             if (removed && refresh) target.getAbilityHpModifier().refresh(true);
         }
-        if (removed) target.getAbilityGlobalValueWatchers().refresh();
         if (refresh) modifier.runServerOnRemoved();
+        if (removed) target.getAbilityGlobalValueWatchers().refresh();
         return removed;
     }
 
@@ -189,8 +188,8 @@ public class Ability {
             unregisterModifierLocked(target,modifier);
             if (refresh) target.getAbilityHpModifier().refresh(true);
         }
-        target.getAbilityGlobalValueWatchers().refresh();
         if(refresh) modifier.runServerOnRemoved();
+        target.getAbilityGlobalValueWatchers().refresh();
     }
 
     private void unregisterModifierLocked(GameEntity target, AbilityModifierController modifier) {

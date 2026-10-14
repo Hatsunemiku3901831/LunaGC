@@ -272,7 +272,7 @@ public final class AbilityManager extends BasePlayerManager {
 
     public void executeAction(
         Ability ability, AbilityModifierAction action, ByteString abilityData, GameEntity target) {
-        if (action == null || !action.hasSupportedOffStageConfig() || !AbilityCooldownInvocation.allows(action)) return;
+        if (action == null || !BindingModifierCallbacks.current() || !action.hasSupportedOffStageConfig() || !AbilityCooldownInvocation.allows(action)) return;
         var handler = actionHandlers.get(action.type);
         if (handler == null || ability == null) {
             if (DebugConstants.LOG_MISSING_ABILITY_HANDLERS) {
@@ -288,9 +288,10 @@ public final class AbilityManager extends BasePlayerManager {
                         && action.luaCallType == AbilityModifierAction.LuaCallType.CurScenePlay);
         if (!context.isCurrent()) return;
         var cooldownInvocation = AbilityCooldownInvocation.capture();
+        var bindingGuard = BindingModifierCallbacks.captureGuard();
         eventExecutor.submit(
             () -> AbilityCooldownInvocation.run(cooldownInvocation, () -> context.runIfCurrent(() -> {
-                if (!action.hasSupportedOffStageConfig()) return;
+                if ((bindingGuard != null && !bindingGuard.getAsBoolean()) || !action.hasSupportedOffStageConfig()) return;
                 try {
                     if (!handler.execute(ability, action, abilityData, target)) {
                         Grasscutter.getLogger()
@@ -319,7 +320,7 @@ public final class AbilityManager extends BasePlayerManager {
 
     private void executeActionNow(
         Ability ability, AbilityModifierAction action, ByteString abilityData, GameEntity target, boolean resolved) {
-        if (action == null || !action.hasSupportedOffStageConfig() || !AbilityCooldownInvocation.allows(action)) return;
+        if (action == null || !BindingModifierCallbacks.current() || !action.hasSupportedOffStageConfig() || !AbilityCooldownInvocation.allows(action)) return;
         var handler = actionHandlers.get(action.type);
         if (handler == null || ability == null) {
             if (DebugConstants.LOG_MISSING_ABILITY_HANDLERS) {
@@ -436,12 +437,12 @@ public final class AbilityManager extends BasePlayerManager {
         callbackActionDepth.set(depth+1);
         try { return AbilityActionBudget.run(()->{
             for (var action:actions) {
-                if (!context.isCurrent()) return true;
+                if (!context.isCurrent() || !BindingModifierCallbacks.current()) return true;
                 if (action == null || (isServerOwnedChain() && !isAllowedInServerOwnedChain(action.type))) continue;
                 var base="Target".equals(action.target)?selectedTarget:self;
                 if (base == null) continue;
                 for (var recipient:AbilityActionSequence.targets(ability,action,base,true)) {
-                    if (!context.isCurrent()) return true;
+                    if (!context.isCurrent() || !BindingModifierCallbacks.current()) return true;
                     if (recipient == null || !AbilityExecutionContext.canTrigger(recipient,ability.getPlayerOwner())) continue;
                     if (!AbilityActionBudget.consume()) return false;
                     @SuppressWarnings("unchecked")
@@ -1145,7 +1146,7 @@ public final class AbilityManager extends BasePlayerManager {
             var instances = entity.getInstancedModifiers();
             synchronized (instances) {
                 previous=instances.get(head.getInstancedModifierId());
-                if(previous!=null && (previous.hasServerCallbacks() || previous.hasAttachmentCallbacks()) && previous.getAbility()==instancedAbility
+                if(previous!=null && (previous.hasServerCallbacks() || previous.hasAttachmentCallbacks() || previous.hasBindingCallbacks()) && previous.getAbility()==instancedAbility
                         && previous.getModifierData()==modifierData) {
                     modifier=previous;
                 } else {
@@ -1171,7 +1172,7 @@ public final class AbilityManager extends BasePlayerManager {
 
             boolean initializedByWatcher = entity.getAbilityGlobalValueWatchers()
                     .ownsChild(instancedAbility, modifier.getName());
-            boolean initializedOnServer=modifier.hasServerCallbacks();
+            boolean initializedOnServer=modifier.hasServerCallbacks() || modifier.hasBindingCallbacks();
             if (!initializedOnServer && fromParentName && hasOrchestration && modifierData.onAdded != null) {
                 final var finalAbility = instancedAbility;
                 final var finalEntity = entity;
@@ -1209,7 +1210,7 @@ public final class AbilityManager extends BasePlayerManager {
             }
             if (modifier != null) {
                 var removed = modifier;
-                if (!removed.hasServerCallbacks() && removed.getModifierData().onRemoved != null)
+                if (!removed.hasServerCallbacks() && !removed.hasBindingCallbacks() && removed.getModifierData().onRemoved != null)
                     AbilityCooldownInvocation.run(new AbilityCooldownInvocation.Scope(removed, true), () ->
                             runServerOwned(() -> executeCallbackActionsNow(removed.getAbility(),
                                     removed.getModifierData().onRemoved, invoke.getAbilityData(), entity, entity)));

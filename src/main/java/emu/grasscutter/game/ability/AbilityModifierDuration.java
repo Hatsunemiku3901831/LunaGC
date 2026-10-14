@@ -6,6 +6,7 @@ import emu.grasscutter.game.entity.GameEntity;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.LongSupplier;
+import java.util.function.BooleanSupplier;
 
 /** Resource duration and end callbacks for server instances awaiting client confirmation. */
 public final class AbilityModifierDuration {
@@ -31,7 +32,7 @@ public final class AbilityModifierDuration {
     // Registration and removal share the entity's modifier registry lock.
     public void registered(AbilityModifierController controller) {
         if(entity.getInstancedModifiers().containsValue(controller)) {
-            if(controller.hasServerCallbacks()) states.remove(controller);
+            if(controller.hasServerCallbacks() || controller.hasBindingCallbacks()) states.remove(controller);
             else states.keySet().removeIf(c->sameModifier(c,controller));
             return;
         }
@@ -100,14 +101,20 @@ public final class AbilityModifierDuration {
         }
     }
     private void end(State state) {
+        AbilityGlobalValueWatchers.runRemovalCallbacks(() -> endCallbacks(state));
+    }
+    private void endCallbacks(State state) {
         var controller=state.controller;
-        if(controller.hasServerCallbacks()) { controller.runServerOnRemoved(); return; }
+        if(controller.hasServerCallbacks() || controller.hasBindingCallbacks()) { controller.runServerOnRemoved(); return; }
         if(controller.hasAttachmentCallbacks()) controller.runServerOnRemoved();
+        runRemovalActions(controller, entity, state.context::isCurrent);
+    }
+    static void runRemovalActions(AbilityModifierController controller, GameEntity entity, BooleanSupplier current) {
         var ability=controller.getAbility();
         var actions=controller.getModifierData().onRemoved;
         if(actions==null) return;
         for(var action:actions) {
-            if(!state.context.isCurrent()) return;
+            if(!current.getAsBoolean()) return;
             if(action==null) continue;
             Collection<? extends GameEntity> targets;
             if("AllPlayerAvatars".equals(action.target)) {
@@ -118,7 +125,7 @@ public final class AbilityModifierDuration {
                 targets=target==null?List.of():List.of(target);
             }
             for(var target:targets) {
-                if(!state.context.isCurrent()) return;
+                if(!current.getAsBoolean()) return;
                 if(!AbilityExecutionContext.canTrigger(target,ability.getPlayerOwner())) continue;
                 @SuppressWarnings("unchecked")
                 var predicates=(List<Map<String,Object>>) (List<?>) action.predicates;

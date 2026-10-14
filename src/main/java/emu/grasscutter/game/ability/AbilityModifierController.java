@@ -17,6 +17,10 @@ public class AbilityModifierController {
     @Getter private long skillSlotSourceOrder = AbilitySkillSlots.nextSourceOrder();
     private volatile ServerCallbacks serverCallbacks;
     private volatile ModifierAttachmentCallbacks attachments;
+    private volatile BindingModifierCallbacks bindingCallbacks;
+    void prepareBindingCallbacks(GameEntity target) { bindingCallbacks = new BindingModifierCallbacks(this, target); }
+    public boolean hasBindingCallbacks() { var callbacks = bindingCallbacks; return callbacks != null && callbacks.available(); }
+    void runBindingOnAdded(BooleanSupplier current) { var callbacks = bindingCallbacks; if (callbacks != null) callbacks.added(current); }
     private final java.util.Queue<AbilityModifierController> attachmentReplacements=new java.util.concurrent.ConcurrentLinkedQueue<>();
     void deferAttachmentReplacement(AbilityModifierController previous) { attachmentReplacements.add(previous); }
     private void finishAttachmentReplacements() {
@@ -107,9 +111,13 @@ public class AbilityModifierController {
         runAttachmentOnAdded(parentCurrent);
     }
     public void runServerOnRemoved() {
+        AbilityGlobalValueWatchers.runRemovalCallbacks(this::runRemovalCallbacks);
+    }
+    private void runRemovalCallbacks() {
         var callbacks=serverCallbacks;
         if(callbacks!=null && callbacks.ended.compareAndSet(false,true))
             AbilityCooldownInvocation.run(this, () -> AbilityActionSequence.run(ability,modifierData.onRemoved,callbacks.target,callbacks.context::isCurrent));
+        var binding=bindingCallbacks; if(binding!=null) binding.removed();
         var hooks=attachments; if(hooks!=null) hooks.removed();
     }
 
