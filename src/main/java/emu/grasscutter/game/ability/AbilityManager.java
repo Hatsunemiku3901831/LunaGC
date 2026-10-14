@@ -370,30 +370,6 @@ public final class AbilityManager extends BasePlayerManager {
         if (ability == null || mixinData == null || target == null) return;
 
         var handler = mixinHandlers.get(mixinData.type);
-        Player player = getPlayer();
-
-        if (mixinData.type == AbilityMixinData.Type.PhlogistonCostMixin) {
-
-            EntityAvatar avatarEntity = player.getTeamManager().getCurrentAvatarEntity();
-            Avatar avatar = avatarEntity.getAvatar();
-            if (avatar.getAvatarId() == 10000106 || avatar.getAvatarId() == 10000107 || avatar.getAvatarId() == 10000105 || avatar.getAvatarId() == 10000103 || avatar.getAvatarId() == 10000100) {
-
-                Grasscutter.getLogger().trace("NyxValue: " + avatarEntity.getNyxValue());
-                float curPhlogiston = player.getPhlogistonValue();
-                float consume = 0.67f;
-                float updatedPhlogistonValue = curPhlogiston - consume;
-                updatedPhlogistonValue = Math.max(0, Math.min(100, updatedPhlogistonValue));
-                player.setPhlogistonValue(updatedPhlogistonValue);
-
-                player.sendPacket(new PacketServerGlobalValueChangeNotify(
-                    player.getTeamManager().getEntity().getId(),
-                    "SGV_PlayerTeam_Phlogiston",
-                    updatedPhlogistonValue
-                ));
-
-            }
-        }
-
         // SwitchHealToHPDebtsMixin is evaluated by HealHP against installed modifiers.
         // A bare invocation cannot represent its predicates or its removal lifetime.
 
