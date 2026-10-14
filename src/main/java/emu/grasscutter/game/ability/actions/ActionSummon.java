@@ -2,10 +2,12 @@ package emu.grasscutter.game.ability.actions;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
+
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.binout.AbilityModifier.AbilityModifierAction;
 import emu.grasscutter.game.ability.Ability;
+import emu.grasscutter.game.ability.AbilityBornPosition;
 import emu.grasscutter.game.entity.*;
 import emu.grasscutter.game.world.*;
 import emu.grasscutter.net.proto.AbilityActionSummonOuterClass.AbilityActionSummon;
@@ -16,23 +18,53 @@ import emu.grasscutter.utils.*;
 public class ActionSummon extends AbilityActionHandler {
     @Override
     public synchronized boolean execute(
-            Ability ability, AbilityModifierAction action, ByteString abilityData, GameEntity target) {
+            Ability ability,
+            AbilityModifierAction action,
+            ByteString abilityData,
+            GameEntity target) {
+        return summon(ability, action, abilityData, target, false);
+    }
+
+    @Override
+    public synchronized boolean executeResolved(
+            Ability ability,
+            AbilityModifierAction action,
+            ByteString abilityData,
+            GameEntity target) {
+        return summon(ability, action, abilityData, target, true);
+    }
+
+    private boolean summon(
+            Ability ability,
+            AbilityModifierAction action,
+            ByteString abilityData,
+            GameEntity target,
+            boolean resolved) {
+        target = AbilityBornPosition.recipient(ability, action, target, resolved);
+        if (!(target instanceof EntityMonster ownerEntity)
+                || abilityData == null
+                || !conditionsPass(ability, action, target)) return false;
         AbilityActionSummon summonPosRot = null;
         try {
-            // In game version 4.0, summoned entity's
-            // position and rotation are packed in EPKDEHOJFLI.
-            // This is packet AbilityActionSummon and has two fields:
-            //  4: Vector pos
-            //  13: Vector rot
             summonPosRot = AbilityActionSummon.parseFrom(abilityData);
         } catch (InvalidProtocolBufferException e) {
             Grasscutter.getLogger()
-                    .error("Failed to parse abilityData: {}", Utils.bytesToHex(abilityData.toByteArray()));
+                    .error(
+                            "Failed to parse abilityData: {}",
+                            Utils.bytesToHex(abilityData.toByteArray()));
             return false;
         }
 
-        var pos = new Position(summonPosRot.getPos());
-        var rot = new Position(summonPosRot.getRot());
+        var pos =
+                summonPosRot.hasPos()
+                        ? AbilityBornPosition.snapshot(new Position(summonPosRot.getPos()))
+                        : AbilityBornPosition.resolve(action.born, target, target);
+        var rot =
+                AbilityBornPosition.snapshot(
+                        summonPosRot.hasRot()
+                                ? new Position(summonPosRot.getRot())
+                                : target.getRotation());
+        if (pos == null || rot == null) return false;
         var monsterId = action.monsterID;
 
         var scene = target.getScene();
@@ -43,28 +75,25 @@ public class ActionSummon extends AbilityActionHandler {
             return false;
         }
 
-        if (target instanceof EntityMonster ownerEntity) {
-            var level = scene.getLevelForMonster(0, ownerEntity.getLevel());
-            var entity = new EntityMonster(scene, monsterData, pos, rot, level);
-            ownerEntity.getSummonTagMap().put(action.summonTag, entity);
-            entity.setSummonedTag(action.summonTag);
-            entity.setOwnerEntityId(target.getId());
-            scene.addEntity(entity);
-            scene.getPlayers().get(0).sendPacket(new PacketMonsterSummonTagNotify(ownerEntity));
+        var level = scene.getLevelForMonster(0, ownerEntity.getLevel());
+        var entity = new EntityMonster(scene, monsterData, pos, rot, level);
+        ownerEntity.getSummonTagMap().put(action.summonTag, entity);
+        entity.setSummonedTag(action.summonTag);
+        entity.setOwnerEntityId(target.getId());
+        scene.addEntity(entity);
+        scene.broadcastPacket(new PacketMonsterSummonTagNotify(ownerEntity));
 
-            Grasscutter.getLogger()
-                    .trace(
-                            "Spawned entityId {} monsterId {} pos {} rot {}, target { {} }, action { {} }",
-                            entity.getId(),
-                            monsterId,
-                            pos,
-                            rot,
-                            target,
-                            action);
+        Grasscutter.getLogger()
+                .trace(
+                        "Spawned entityId {} monsterId {} pos {} rot {}, target { {} }, action"
+                                + " { {} }",
+                        entity.getId(),
+                        monsterId,
+                        pos,
+                        rot,
+                        target,
+                        action);
 
-            return true;
-        } else {
-            return false;
-        }
+        return true;
     }
 }

@@ -74,6 +74,7 @@ public final class AbilityManager extends BasePlayerManager {
         java.util.EnumSet.of(
             AbilityModifierAction.Type.Predicated,
             AbilityModifierAction.Type.CreateGadget,
+            AbilityModifierAction.Type.SetGlobalPos,
             AbilityModifierAction.Type.GetFightProperty,
             AbilityModifierAction.Type.AddAvatarSkillInfo,
             AbilityModifierAction.Type.RemoveAvatarSkillInfo,
@@ -98,6 +99,7 @@ public final class AbilityManager extends BasePlayerManager {
             AbilityModifierAction.Type.Predicated,
             AbilityModifierAction.Type.Repeated,
             AbilityModifierAction.Type.CreateGadget,
+            AbilityModifierAction.Type.SetGlobalPos,
             AbilityModifierAction.Type.SetGlobalValue,
             AbilityModifierAction.Type.AddGlobalValue,
             AbilityModifierAction.Type.ClearGlobalValue,
@@ -287,6 +289,14 @@ public final class AbilityManager extends BasePlayerManager {
                 action.type == AbilityModifierAction.Type.ServerLuaCall
                         && action.luaCallType == AbilityModifierAction.LuaCallType.CurScenePlay);
         if (!context.isCurrent()) return;
+        // A written position and the spawn that reads it belong to this invocation. Queuing them
+        // separately can let a later cast change the point before the first summon is created.
+        if (action.type == AbilityModifierAction.Type.SetGlobalPos
+                || action.type == AbilityModifierAction.Type.CreateGadget
+                || action.type == AbilityModifierAction.Type.Summon) {
+            context.runIfCurrent(() -> executeActionNow(ability, action, abilityData, target));
+            return;
+        }
         var cooldownInvocation = AbilityCooldownInvocation.capture();
         var bindingGuard = BindingModifierCallbacks.captureGuard();
         eventExecutor.submit(

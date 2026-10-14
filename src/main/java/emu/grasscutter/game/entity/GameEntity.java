@@ -95,6 +95,7 @@ public abstract class GameEntity {
 
     public void invalidateAbilityLifecycle() {
         abilityLifecycleVersion.updateAndGet(version -> (version & 1) == 0 ? version + 1 : version);
+        abilityGlobalPositions.clear();
         abilityStaminaCost.clear();
         getAbilityPeriodicHealing().clear();
         getAbilityModifierDuration().clear();
@@ -132,6 +133,7 @@ public abstract class GameEntity {
     // Abilities run on a thread pool, so a plain HashMap here threw ConcurrentModificationException
     // out of whichever action happened to be reading the values while another wrote them
     @Getter private Map<String, Float> globalAbilityValues = new ConcurrentHashMap<>();
+    @Getter private final AbilityGlobalPositions abilityGlobalPositions = new AbilityGlobalPositions(this);
 
     public GameEntity(Scene scene) {
         this.scene = scene;

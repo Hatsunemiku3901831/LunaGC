@@ -21,6 +21,7 @@ final class AbilityActionSequence {
             AbilityModifierAction.Type.HealHP, AbilityModifierAction.Type.LoseHP,
             AbilityModifierAction.Type.SetGlobalValue, AbilityModifierAction.Type.SetGlobalValueV2,
             AbilityModifierAction.Type.AddGlobalValue, AbilityModifierAction.Type.ClearGlobalValue,
+            AbilityModifierAction.Type.SetGlobalPos,
             AbilityModifierAction.Type.CopyGlobalValue, AbilityModifierAction.Type.GetFightProperty, AbilityModifierAction.Type.NyxSet,
             AbilityModifierAction.Type.NyxAdd, AbilityModifierAction.Type.AddHPDebts,
             AbilityModifierAction.Type.ReduceHPDebts, AbilityModifierAction.Type.AddSpecialEnergy,
@@ -80,6 +81,15 @@ final class AbilityActionSequence {
                         || "AllPlayerAvatars".equals(action.srcTarget) || "AllPlayerAvatars".equals(action.dstTarget))) return false;
             if(action.type==AbilityModifierAction.Type.GetFightProperty
                     && !ActionGetFightProperty.supportedSource(action)) return false;
+            if(action.type==AbilityModifierAction.Type.SetGlobalPos
+                    && (action.born==null || action.born.isJsonNull()
+                        || !AbilityBornPosition.supported(action.born)
+                        || action.key==null || action.key.isBlank()
+                        || action.otherTargets!=null
+                        || "AllPlayerAvatars".equals(action.target)
+                        || action.setTarget!=null && !action.setTarget.isJsonNull()
+                            && !(action.setTarget.isJsonPrimitive()
+                                && action.setTarget.getAsJsonPrimitive().isBoolean()))) return false;
             if (action.type==AbilityModifierAction.Type.AvatarSkillStart
                     && (action.skillID<=0 || !GameData.getAvatarSkillDataMap().containsKey(action.skillID))) return false;
             if (action.type==AbilityModifierAction.Type.ModifyAvatarSkillCD
