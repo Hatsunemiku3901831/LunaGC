@@ -407,6 +407,7 @@ public class Scene {
         var previous = getEntities().put(entity.getId(), entity);
         if (previous != null && previous != entity) previous.invalidateAbilityLifecycle();
         entity.activateAbilityLifecycle();
+        if (entity instanceof EntityClientGadget gadget) getWorld().getDamageLog().trackGadget(gadget);
         entity.onCreate();
         return true;
     }

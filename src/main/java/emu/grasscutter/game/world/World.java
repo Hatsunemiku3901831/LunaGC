@@ -51,6 +51,8 @@ import lombok.val;
 import org.jetbrains.annotations.NotNull;
 
 public class World implements Iterable<Player> {
+    @Getter private final emu.grasscutter.game.combat.DamageLog damageLog =
+            new emu.grasscutter.game.combat.DamageLog(this);
     @Getter private final GameServer server;
     @Getter private volatile Player host;
     @Getter private final List<Player> players;

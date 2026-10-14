@@ -144,6 +144,21 @@ public final class GrasscutterTest {
                 var body = JsonParser.parseString(response.body().string()).getAsJsonObject();
                 Assertions.assertTrue(body.getAsJsonArray("players").isEmpty());
             }
+            for (var route :
+                    new String[] {"gm/api/combat?uid=10001", "gm/api/combat/reset?uid=10001"}) {
+                var request = new Request.Builder().url(http(route));
+                if (route.contains("/reset"))
+                    request.post(
+                            okhttp3.RequestBody.create(
+                                    "", okhttp3.MediaType.parse("application/json")));
+                try (var response = httpClient.newCall(request.build()).execute()) {
+                    Assertions.assertEquals(403, response.code());
+                }
+                request.header("Authorization", "Bearer isolated-validation-token");
+                try (var response = httpClient.newCall(request.build()).execute()) {
+                    Assertions.assertEquals(404, response.code());
+                }
+            }
         } finally {
             config.accessToken = originalToken;
             config.loopbackOnly = originalLoopback;

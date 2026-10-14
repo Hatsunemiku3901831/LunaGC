@@ -448,6 +448,10 @@ public abstract class GameEntity {
 
         this.addFightProperty(FightProperty.FIGHT_PROP_CUR_HP, -effectiveDamage);
 
+        if (Float.isFinite(curHp) && curHp > 0f && effectiveDamage > 0f)
+            this.getWorld().getDamageLog().record(
+                    this, killerId, Math.min(curHp, effectiveDamage), attackType);
+
         this.lastAttackType = attackType;
         this.checkIfDead();
         this.runLuaCallbacks(event);

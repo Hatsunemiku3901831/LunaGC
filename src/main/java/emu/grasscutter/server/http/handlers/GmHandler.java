@@ -172,6 +172,7 @@ public final class GmHandler implements Router {
         javalin.get("/gm/", GmHandler::serveConsole);
         javalin.get("/gm/api/commands", GmHandler::listCommands);
         javalin.get("/gm/api/players", GmHandler::listPlayers);
+        GmCombat.applyRoutes(javalin);
         javalin.get("/gm/api/database", ctx -> {
             if (!authorize(ctx)) return;
             ctx.header("Cache-Control", "no-store");

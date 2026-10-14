@@ -164,6 +164,8 @@ public final class HttpServer {
         @Override
         public void applyRoutes(Javalin javalin) {
             javalin.error(404, ctx -> {
+                // GM errors must remain observable to operators and API callers.
+                if (ctx.path().equals("/gm") || ctx.path().startsWith("/gm/")) return;
                 ctx.status(200);
                 ctx.contentType(ContentType.APPLICATION_JSON);
                 ctx.result("{\"retcode\":0,\"message\":\"OK\",\"data\":{}}");
