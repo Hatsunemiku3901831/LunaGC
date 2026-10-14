@@ -32,7 +32,17 @@ public class HandlerEnterSceneDoneReq extends PacketHandler {
         // Spawn player in world
         player.getScene().spawnPlayer(player);
 
-        // Spawn other entites already in world
+        // Restore saved host placements before sending the current scene contents.
+        if (player == player.getScene().getHost()
+                && player.getScene().getSceneType()
+                        == emu.grasscutter.game.props.SceneType.SCENE_WORLD) {
+            try {
+                player.getScene().getBuildingManager().restore(player);
+            } catch (RuntimeException failure) {
+                Grasscutter.getLogger()
+                        .error("Could not restore scene buildings for UID {}", player.getUid(), failure);
+            }
+        }
         player.getScene().showOtherEntities(player);
 
         // Locations

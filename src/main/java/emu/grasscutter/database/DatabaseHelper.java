@@ -336,6 +336,7 @@ public final class DatabaseHelper {
                             .deleteMany(eq("uid", uid));
                     gameDatabase.getCollection("activities").deleteMany(eq("uid", uid));
                     gameDatabase.getCollection("homes").deleteMany(eq("ownerUid", uid));
+                    gameDatabase.getCollection("scene_buildings").deleteMany(eq("ownerUid", uid));
                     gameDatabase.getCollection("mail").deleteMany(eq("ownerUid", uid));
                     gameDatabase.getCollection("avatars").deleteMany(eq("ownerId", uid));
                     gameDatabase.getCollection("gachas").deleteMany(eq("ownerId", uid));

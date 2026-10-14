@@ -59,6 +59,13 @@ import lombok.*;
 import static emu.grasscutter.GameConstants.ENTITY_ID_BIT_SHIFT;
 
 public class Scene {
+    private SceneBuildingManager buildingManager;
+
+    public synchronized SceneBuildingManager getBuildingManager() {
+        if (buildingManager == null) buildingManager = new SceneBuildingManager(this);
+        return buildingManager;
+    }
+
     @Getter private final World world;
     @Getter private final SceneData sceneData;
     @Getter private final List<Player> players;
