@@ -38,8 +38,16 @@ public final class ActionChangePhlogiston extends AbilityActionHandler {
         var amount = expression.tryGet(propertiesFor(ability));
         if (amount.isEmpty()) return false;
         float delta = (float) amount.getAsDouble();
+        boolean ratio = current && action.phlogistonUsesRatio();
+        if (ratio && delta < 0) return false;
         if ("Sub".equals(mode) || "Cost".equals(mode)) delta = -delta;
+        var basis =
+                ratio
+                        ? "Cost".equals(mode) || "Sub".equals(mode)
+                                ? Phlogiston.RatioBasis.CURRENT
+                                : Phlogiston.RatioBasis.CAPACITY
+                        : Phlogiston.RatioBasis.ABSOLUTE;
         return conditionsPass(ability, action, target)
-                && Phlogiston.mutate(ability, target, delta, "Set".equals(mode));
+                && Phlogiston.mutate(ability, target, delta, "Set".equals(mode), basis);
     }
 }

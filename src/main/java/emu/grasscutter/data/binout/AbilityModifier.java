@@ -536,6 +536,12 @@ public class AbilityModifier implements Serializable {
         public String costType;
         @SerializedName("DHDDHBBIHEJ")
         public String rawPhlogistonCostType;
+        public Boolean useRatio;
+        @SerializedName("JDIMELLBMFO")
+        public Boolean rawPhlogistonUseRatio;
+        public boolean phlogistonUsesRatio() {
+            return useRatio != null ? useRatio : Boolean.TRUE.equals(rawPhlogistonUseRatio);
+        }
         public int configID;
 
         public DynamicFloat valueRangeMin;

@@ -196,6 +196,12 @@ public class AbilityMixinData implements Serializable {
     public String costType;
     @SerializedName("DHDDHBBIHEJ") public String rawPhlogistonCostType;
     public String targetType;
+    @SerializedName("BBIPIGDBGFJ") public String rawPhlogistonTargetType;
+    public Boolean useRatio;
+    @SerializedName("JDIMELLBMFO") public Boolean rawPhlogistonUseRatio;
+    public boolean phlogistonUsesRatio() {
+        return useRatio != null ? useRatio : Boolean.TRUE.equals(rawPhlogistonUseRatio);
+    }
     public Integer phlogistonBallGadgetId;
     @SerializedName("KNEIAADHCBH") public Integer rawPhlogistonBallGadgetId;
     public DynamicFloat costStaminaDelta = DynamicFloat.ZERO;

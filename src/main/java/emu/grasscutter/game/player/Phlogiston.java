@@ -13,6 +13,12 @@ public final class Phlogiston {
     public static final float TEAM_MAX = 100f;
     public static final float VEHICLE_MAX = 50f;
 
+    public enum RatioBasis {
+        ABSOLUTE,
+        CURRENT,
+        CAPACITY
+    }
+
     private Phlogiston() {}
 
     public static void change(Player player, float delta) {
@@ -24,6 +30,10 @@ public final class Phlogiston {
     }
 
     private static void mutate(Player player, float amount, boolean set) {
+        mutate(player, amount, set, RatioBasis.ABSOLUTE);
+    }
+
+    private static void mutate(Player player, float amount, boolean set, RatioBasis basis) {
         if (player == null || !Float.isFinite(amount) || !set && amount == 0) return;
         if (!set && amount < 0 && infinite(player)) return;
         GameEntity changedTeam;
@@ -31,7 +41,8 @@ public final class Phlogiston {
             var team = player.getTeamManager().getEntity();
             float previous = player.getPhlogistonValue();
             if (team == null || !Float.isFinite(previous)) return;
-            float value = clamp(set ? amount : (double) previous + amount, TEAM_MAX);
+            double scaled = scale(amount, previous, TEAM_MAX, basis);
+            float value = clamp(set ? scaled : previous + scaled, TEAM_MAX);
             if (Float.compare(previous, value) == 0) return;
             player.setPhlogistonValue(value);
             team.getGlobalAbilityValues().put(TEAM_KEY, value);
@@ -51,6 +62,10 @@ public final class Phlogiston {
     }
 
     private static void mutate(EntityVehicle vehicle, float amount, boolean set) {
+        mutate(vehicle, amount, set, RatioBasis.ABSOLUTE);
+    }
+
+    private static void mutate(EntityVehicle vehicle, float amount, boolean set, RatioBasis basis) {
         if (vehicle == null
                 || vehicle.getOwner() == null
                 || !Float.isFinite(amount)
@@ -59,7 +74,8 @@ public final class Phlogiston {
         synchronized (vehicle) {
             float previous = vehicle.getCurPhlogiston();
             if (!Float.isFinite(previous)) return;
-            float value = clamp(set ? amount : (double) previous + amount, VEHICLE_MAX);
+            double scaled = scale(amount, previous, VEHICLE_MAX, basis);
+            float value = clamp(set ? scaled : previous + scaled, VEHICLE_MAX);
             if (Float.compare(previous, value) == 0) return;
             vehicle.setCurPhlogiston(value);
             vehicle.getOwner().sendPacket(new PacketVehiclePhlogistonPointsNotify(vehicle));
@@ -76,7 +92,14 @@ public final class Phlogiston {
     /** Current mixin's explicit target overrides automatic party/Saurian selection. */
     public static boolean change(
             Ability ability, GameEntity bearer, float delta, String targetType) {
-        if (!java.util.Set.of("Auto", "Self", "Team", "Vehicle").contains(targetType)
+        return change(ability, bearer, delta, targetType, RatioBasis.ABSOLUTE);
+    }
+
+    public static boolean change(
+            Ability ability, GameEntity bearer, float delta, String targetType, RatioBasis basis) {
+        if (targetType == null
+                || basis == null
+                || !java.util.Set.of("Auto", "Self", "Team", "Vehicle").contains(targetType)
                 || ability == null
                 || bearer == null
                 || !Float.isFinite(delta)
@@ -99,14 +122,20 @@ public final class Phlogiston {
             if (vehicle != null
                     && !"Team".equals(targetType)
                     && (!"Auto".equals(targetType) || vehicle.getCurPhlogiston() > 0))
-                change(vehicle, delta);
-            else change(player, delta);
+                mutate(vehicle, delta, false, basis);
+            else mutate(player, delta, false, basis);
             return true;
         }
     }
 
     public static boolean mutate(Ability ability, GameEntity target, float delta, boolean set) {
+        return mutate(ability, target, delta, set, RatioBasis.ABSOLUTE);
+    }
+
+    public static boolean mutate(
+            Ability ability, GameEntity target, float delta, boolean set, RatioBasis basis) {
         if (ability == null
+                || basis == null
                 || target == null
                 || !Float.isFinite(delta)
                 || ability.getPlayerOwner() == null) return false;
@@ -118,11 +147,11 @@ public final class Phlogiston {
             if (owner.isDead() || !AbilityGlobalValues.isCurrent(ability, target)) return false;
             if (owner instanceof EntityVehicle vehicle) {
                 if (vehicle.getOwner() != player) return false;
-                mutate(vehicle, delta, set);
+                mutate(vehicle, delta, set, basis);
             } else {
                 var caster = ability.getCasterEntity();
                 if (caster == null || caster.getPlayer() != player) return false;
-                mutate(player, delta, set);
+                mutate(player, delta, set, basis);
             }
             return true;
         }
@@ -149,6 +178,15 @@ public final class Phlogiston {
 
     private static float clamp(double value, float max) {
         return (float) Math.max(0d, Math.min(max, value));
+    }
+
+    private static double scale(float amount, float previous, float max, RatioBasis basis) {
+        return (double) amount
+                * switch (basis) {
+                    case ABSOLUTE -> 1f;
+                    case CURRENT -> clamp(previous, max);
+                    case CAPACITY -> max;
+                };
     }
 
     /** The client's blocker list is held on Team entities, with one entry per live mixin. */

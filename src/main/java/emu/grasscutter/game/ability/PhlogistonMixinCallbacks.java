@@ -76,7 +76,16 @@ public final class PhlogistonMixinCallbacks {
                     ability,
                     bearer,
                     (float) ("Cost".equals(mode) ? -amount : amount),
-                    mixin.targetType == null ? "Auto" : mixin.targetType);
+                    mixin.targetType != null
+                            ? mixin.targetType
+                            : mixin.rawPhlogistonTargetType != null
+                                    ? mixin.rawPhlogistonTargetType
+                                    : "Auto",
+                    mixin.phlogistonUsesRatio()
+                            ? "Cost".equals(mode)
+                                    ? Phlogiston.RatioBasis.CURRENT
+                                    : Phlogiston.RatioBasis.CAPACITY
+                            : Phlogiston.RatioBasis.ABSOLUTE);
         }
     }
 
