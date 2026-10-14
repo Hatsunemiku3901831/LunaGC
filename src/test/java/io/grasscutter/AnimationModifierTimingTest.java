@@ -69,6 +69,69 @@ class AnimationModifierTimingTest {
         return fixture.entity.getGlobalAbilityValues().getOrDefault("mark", 0f);
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"AttachToNormalizedTimeMixin", "AttachToMultiNormalizedTimeMixin"})
+    void loopingAnimationWindowsCanExtendPastOneCycle(String type) {
+        install(mixin(type).replace("normalizeEnd:0.7", "normalizeEnd:99"), false);
+        client(101, true);
+        assertEquals(1, value());
+        client(101, false);
+        assertEquals(0, value());
+    }
+
+    @Test
+    void ownerTargetUsesConfirmedOwnerBearer() {
+        install(mixin("AttachToStateIDMixin").replace("target:'Self'", "target:'Owner'"), false);
+        client(101, true);
+        assertEquals(1, value());
+        client(101, false);
+        assertEquals(0, value());
+    }
+
+    @Test
+    void realAnimalLoopWindowUsesResourceEndNinetyNine() throws Exception {
+        var path =
+                java.nio.file.Path.of(
+                        "resources/BinOutput/Ability/Temp/AnimalAbilities/ConfigAbility_Animal_Capra.json");
+        org.junit.jupiter.api.Assumptions.assumeTrue(java.nio.file.Files.exists(path));
+        var raw =
+                findLoopWindow(
+                        com.google.gson.JsonParser.parseString(
+                                java.nio.file.Files.readString(path)));
+        assertNotNull(raw);
+        var node = raw.deepCopy();
+        node.addProperty("modifierName", "Window");
+        install(node.toString(), false);
+        client(101, true);
+        assertEquals(1, value());
+        client(101, false);
+        assertEquals(0, value());
+    }
+
+    private com.google.gson.JsonObject findLoopWindow(com.google.gson.JsonElement node) {
+        if (node.isJsonObject()) {
+            var object = node.getAsJsonObject();
+            if (object.has("$type")
+                    && "AttachToMultiNormalizedTimeMixin".equals(object.get("$type").getAsString())
+                    && object.has("normalizedStateIDList")) {
+                for (var state : object.getAsJsonArray("normalizedStateIDList")) {
+                    var fields = state.getAsJsonObject();
+                    if (fields.has("normalizeEnd") && fields.get("normalizeEnd").getAsFloat() == 99)
+                        return object;
+                }
+            }
+            for (var entry : object.entrySet()) {
+                var found = findLoopWindow(entry.getValue());
+                if (found != null) return found;
+            }
+        } else if (node.isJsonArray())
+            for (var item : node.getAsJsonArray()) {
+                var found = findLoopWindow(item);
+                if (found != null) return found;
+            }
+        return null;
+    }
+
     void client(int id, boolean added) {
         assertDoesNotThrow(
                 () ->

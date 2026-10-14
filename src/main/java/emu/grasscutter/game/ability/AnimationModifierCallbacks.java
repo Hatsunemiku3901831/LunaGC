@@ -38,9 +38,13 @@ final class AnimationModifierCallbacks {
     static AnimationModifierCallbacks create(
             AbilityModifierController controller, GameEntity target) {
         var ability = controller.getAbility();
-        boolean root = references(ability.getData().abilityMixins, controller.getName());
+        boolean root =
+                references(ability.getData().abilityMixins, controller.getName(), ability, target);
         var defaults = ability.getData().modifiers.get("Default");
-        root |= defaults != null && references(defaults.modifierMixins, controller.getName());
+        root |=
+                defaults != null
+                        && references(
+                                defaults.modifierMixins, controller.getName(), ability, target);
         var parents =
                 Collections.newSetFromMap(
                         new IdentityHashMap<AbilityModifierController, Boolean>());
@@ -49,8 +53,10 @@ final class AnimationModifierCallbacks {
                 if (parent != controller
                         && parent.getAbility() == ability
                         && references(
-                                parent.getModifierData().modifierMixins, controller.getName()))
-                    parents.add(parent);
+                                parent.getModifierData().modifierMixins,
+                                controller.getName(),
+                                ability,
+                                target)) parents.add(parent);
         }
         return root || !parents.isEmpty()
                 ? new AnimationModifierCallbacks(controller, target, root, parents)
@@ -64,11 +70,15 @@ final class AnimationModifierCallbacks {
                 && Float.isFinite(first)
                 && Float.isFinite(last)
                 && first >= 0
-                && last <= 1
                 && first < last;
     }
 
     private static boolean references(AbilityMixinData[] mixins, String name) {
+        return references(mixins, name, null, null);
+    }
+
+    private static boolean references(
+            AbilityMixinData[] mixins, String name, Ability ability, GameEntity bearer) {
         if (mixins == null) return false;
         for (var mixin : mixins) {
             if (mixin == null
@@ -77,8 +87,12 @@ final class AnimationModifierCallbacks {
                     || !mixin.modifierName.isJsonPrimitive()
                     || !mixin.modifierName.getAsJsonPrimitive().isString()
                     || !name.equals(mixin.modifierName.getAsString())
-                    || mixin.target != null && !Set.of("Self", "Target").contains(mixin.target))
-                continue;
+                    || mixin.target != null
+                            && !Set.of("Self", "Target", "Owner", "Caster").contains(mixin.target)
+                    || ability != null
+                            && emu.grasscutter.game.ability.actions.AbilityActionHandler
+                                            .resolveTarget(ability, bearer, mixin.target)
+                                    != bearer) continue;
             if (mixin.type == AbilityMixinData.Type.AttachToStateIDMixin
                     && mixin.stateIDs != null
                     && !mixin.stateIDs.isEmpty()
