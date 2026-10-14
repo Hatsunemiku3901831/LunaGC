@@ -1,38 +1,45 @@
 package emu.grasscutter.game.ability.actions;
 
 import com.google.protobuf.ByteString;
+
 import emu.grasscutter.data.binout.AbilityModifier.AbilityModifierAction;
 import emu.grasscutter.game.ability.Ability;
-import emu.grasscutter.game.entity.EntityAvatar;
+import emu.grasscutter.game.ability.AbilityAvatarRevival;
 import emu.grasscutter.game.entity.GameEntity;
-import emu.grasscutter.game.props.FightProperty;
-import java.util.List;
 
-@AbilityAction(AbilityModifierAction.Type.ReviveAvatar)
+@AbilityAction({
+    AbilityModifierAction.Type.ReviveAvatar,
+    AbilityModifierAction.Type.ReviveDeadAvatar
+})
 public final class ActionReviveAvatar extends AbilityActionHandler {
     @Override
     public boolean execute(
-            Ability ability, AbilityModifierAction action, ByteString abilityData, GameEntity target) {
-        var player = ability.getPlayerOwner();
-        if (player == null) return false;
+            Ability ability,
+            AbilityModifierAction action,
+            ByteString abilityData,
+            GameEntity target) {
+        return revive(ability, action, target, false);
+    }
 
-        float ratio = action.amountByTargetMaxHPRatio.get(propertiesFor(ability), 0f);
-        if (!Float.isFinite(ratio) || ratio <= 0f) return true;
+    @Override
+    public boolean executeResolved(
+            Ability ability,
+            AbilityModifierAction action,
+            ByteString abilityData,
+            GameEntity target) {
+        return revive(ability, action, target, true);
+    }
 
-        List<EntityAvatar> recipients;
-        if ("AllPlayerAvatars".equals(action.target) || "CurTeamAvatars".equals(action.target)) {
-            recipients = List.copyOf(player.getTeamManager().getActiveTeam());
-        } else {
-            // Reading the current avatar on an empty team otherwise creates an unrelated avatar.
-            if (("CurLocalAvatar".equals(action.target) || "OriginOwner".equals(action.target))
-                    && player.getTeamManager().getActiveTeam().isEmpty()) return true;
-            var recipient = resolveTarget(ability, target, action.target);
-            recipients = recipient instanceof EntityAvatar avatar ? List.of(avatar) : List.of();
-        }
-
-        for (var avatar : recipients) {
-            if (conditionsPass(ability, action, avatar)) {
-                avatar.revive(avatar.getFightProperty(FightProperty.FIGHT_PROP_MAX_HP) * ratio);
+    private boolean revive(
+            Ability ability, AbilityModifierAction action, GameEntity target, boolean resolved) {
+        if (ability == null || target == null || !AbilityAvatarRevival.supported(action))
+            return false;
+        for (var avatar : AbilityAvatarRevival.recipients(ability, action, target, resolved)) {
+            synchronized (avatar) {
+                if (!AbilityAvatarRevival.eligible(ability, action, avatar)
+                        || !conditionsPass(ability, action, avatar)) continue;
+                var health = AbilityAvatarRevival.health(ability, action, avatar);
+                if (health.isPresent()) avatar.revive((float) health.getAsDouble());
             }
         }
         return true;

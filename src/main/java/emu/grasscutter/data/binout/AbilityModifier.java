@@ -400,6 +400,9 @@ public class AbilityModifier implements Serializable {
         /** Keep the full exported birth rule, including types the server cannot yet calculate. */
         public JsonElement born;
         public JsonElement setTarget;
+        public JsonElement range;
+        @SerializedName("KGHOMBBGBDI")
+        public JsonElement rawReviveSkillControl;
 
         /** KillGadget names its target here rather than in a flat gadgetID. */
         public GadgetInfo gadgetInfo;

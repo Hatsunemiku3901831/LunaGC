@@ -28,6 +28,10 @@ public final class AbilityActionAdapter implements TypeAdapterFactory {
                                 && !(flag.isJsonPrimitive()
                                         && flag.getAsJsonPrimitive().isBoolean()))
                             rawOffStage = object.remove("doOffStage");
+                        if (object.has("amountByTargetMaxHPRatio")) {
+                            object.remove("FPOCDLCHDPE");
+                            object.remove("GGLMMJHNGMO");
+                        }
                     }
                     for (var name : new String[] {"value", "ratio", "repeatTimes"}) {
                         if (object.has(name) && object.get(name).isJsonNull()) object.remove(name);

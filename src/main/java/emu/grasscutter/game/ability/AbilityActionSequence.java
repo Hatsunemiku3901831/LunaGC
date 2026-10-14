@@ -16,7 +16,7 @@ import java.util.function.BooleanSupplier;
 /** Validated resource sequences, including callbacks of explicitly referenced modifiers. */
 final class AbilityActionSequence {
     private static final Set<String> TARGETS = Set.of("Self","Target","Applier","Owner","Caster",
-            "CurLocalAvatar","OriginOwner","CasterOriginOwner","AllPlayerAvatars");
+            "CurLocalAvatar","OriginOwner","CasterOriginOwner","AllPlayerAvatars","CurTeamAvatars");
     private static final Set<AbilityModifierAction.Type> ACTIONS = Set.of(
             AbilityModifierAction.Type.HealHP, AbilityModifierAction.Type.LoseHP,
             AbilityModifierAction.Type.SetGlobalValue, AbilityModifierAction.Type.SetGlobalValueV2,
@@ -26,6 +26,7 @@ final class AbilityActionSequence {
             AbilityModifierAction.Type.NyxAdd, AbilityModifierAction.Type.AddHPDebts,
             AbilityModifierAction.Type.ReduceHPDebts, AbilityModifierAction.Type.AddSpecialEnergy,
             AbilityModifierAction.Type.ReviveElemEnergy,
+            AbilityModifierAction.Type.ReviveAvatar, AbilityModifierAction.Type.ReviveDeadAvatar,
             AbilityModifierAction.Type.AddAvatarSkillInfo, AbilityModifierAction.Type.RemoveAvatarSkillInfo,
             AbilityModifierAction.Type.AvatarSkillStart, AbilityModifierAction.Type.ModifyAvatarSkillCD,
             AbilityModifierAction.Type.AvatarShareCDSkillStart, AbilityModifierAction.Type.ActivitySkillShareCDStart,
@@ -78,9 +79,12 @@ final class AbilityActionSequence {
                     || action.type==AbilityModifierAction.Type.ModifyAvatarSkillCD)) return false;
             if(action.type==AbilityModifierAction.Type.CopyGlobalValue
                     && (!knownTarget(action.srcTarget) || !knownTarget(action.dstTarget)
-                        || "AllPlayerAvatars".equals(action.srcTarget) || "AllPlayerAvatars".equals(action.dstTarget))) return false;
+                        || "AllPlayerAvatars".equals(action.srcTarget) || "AllPlayerAvatars".equals(action.dstTarget)
+                        || "CurTeamAvatars".equals(action.srcTarget) || "CurTeamAvatars".equals(action.dstTarget))) return false;
             if(action.type==AbilityModifierAction.Type.GetFightProperty
                     && !ActionGetFightProperty.supportedSource(action)) return false;
+            if((action.type==AbilityModifierAction.Type.ReviveAvatar || action.type==AbilityModifierAction.Type.ReviveDeadAvatar)
+                    && !AbilityAvatarRevival.supported(action)) return false;
             if(action.type==AbilityModifierAction.Type.SetGlobalPos
                     && (action.born==null || action.born.isJsonNull()
                         || !AbilityBornPosition.supported(action.born)
@@ -148,7 +152,7 @@ final class AbilityActionSequence {
                     || !PREDICATES.contains(type)) return false;
             if("DEOFBICNFHF".equals(type) && !AbilityEntityTypePredicate.supported(predicate)) return false;
             if(predicate.containsKey("target") && !(predicate.get("target") instanceof String name
-                    && ((TARGETS.contains(name) && !"AllPlayerAvatars".equals(name))
+                    && ((TARGETS.contains(name) && !"AllPlayerAvatars".equals(name) && !"CurTeamAvatars".equals(name))
                         || "Team".equals(name) || "CasterOriginOwner".equals(name)))) return false;
             if("ByTargetGlobalValue".equals(type) && !supportedComparison(predicate,"compareType")) return false;
             if(("ByTargetHPRatio".equals(type) || "MIJGFBNEIOG".equals(type) || "LPKOBOLMDBI".equals(type))
@@ -246,7 +250,9 @@ final class AbilityActionSequence {
                         ability.removeModifier(target,action.modifierName);
                     AbilityModifierStacking.apply(ability,data,target,current);
                 }
-            } else ability.getManager().executeActionNow(ability,action,ByteString.EMPTY,target);
+            } else if(action.type==AbilityModifierAction.Type.ReviveAvatar || action.type==AbilityModifierAction.Type.ReviveDeadAvatar)
+                ability.getManager().executeResolvedActionNow(ability,action,target);
+            else ability.getManager().executeActionNow(ability,action,ByteString.EMPTY,target);
         }
     }
     private static List<GameEntity> targets(Ability ability,AbilityModifierAction action,GameEntity self) {
@@ -260,7 +266,7 @@ final class AbilityActionSequence {
             if(!nativeFallback) return List.of();
         }
         var player=ability.getPlayerOwner();
-        if("AllPlayerAvatars".equals(action.target))
+        if("AllPlayerAvatars".equals(action.target) || "CurTeamAvatars".equals(action.target))
             return player==null?List.of():new ArrayList<>(new LinkedHashSet<>(player.getTeamManager().getActiveTeamSnapshot()));
         if(("CurLocalAvatar".equals(action.target) || "OriginOwner".equals(action.target))
                 && (player==null || player.getTeamManager().getActiveTeam().isEmpty())) return List.of();

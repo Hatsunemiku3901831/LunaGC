@@ -328,6 +328,11 @@ public final class AbilityManager extends BasePlayerManager {
         executeActionNow(ability, action, abilityData, target, false);
     }
 
+    /** The action sequence has already selected this leaf's recipient. */
+    void executeResolvedActionNow(Ability ability, AbilityModifierAction action, GameEntity target) {
+        executeActionNow(ability, action, ByteString.EMPTY, target, true);
+    }
+
     private void executeActionNow(
         Ability ability, AbilityModifierAction action, ByteString abilityData, GameEntity target, boolean resolved) {
         if (action == null || !BindingModifierCallbacks.current() || !action.hasSupportedOffStageConfig() || !AbilityCooldownInvocation.allows(action)) return;
