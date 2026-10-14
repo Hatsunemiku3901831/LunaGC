@@ -39,7 +39,7 @@ final class AbilityActionSequence {
             AbilityModifierAction.Type.RemoveUniqueModifier, AbilityModifierAction.Type.TriggerAbility,
             AbilityModifierAction.Type.FireEffect, AbilityModifierAction.Type.AttachEffect);
     private static final Set<String> PREDICATES = Set.of("ByUnlockTalentParam", "ByHasModifier",
-            "ByTargetGlobalValue", "ByTargetHPRatio", "MIJGFBNEIOG", "BAEGOCNMDPJ",
+            "ByTargetGlobalValue", "ByTargetHPRatio", "MIJGFBNEIOG", "BAEGOCNMDPJ", "CNFMGJJEOPM",
             "LPKOBOLMDBI", "ONJEHDDFFCH", "GKGBIPDLMMG", "DEOFBICNFHF");
     private static final Set<String> SELECTOR_FIELDS = Set.of("$type", "shapeName", "sizeRatio",
             "campTargetType", "entityTypes", "entityTypePriority", "sortType", "topLimit");
@@ -151,6 +151,7 @@ final class AbilityActionSequence {
             if(!(value instanceof Map<?,?> predicate) || !(predicate.get("$type") instanceof String type)
                     || !PREDICATES.contains(type)) return false;
             if("DEOFBICNFHF".equals(type) && !AbilityEntityTypePredicate.supported(predicate)) return false;
+            if("CNFMGJJEOPM".equals(type) && !AbilityDistancePredicate.supported(predicate)) return false;
             if(predicate.containsKey("target") && !(predicate.get("target") instanceof String name
                     && ((TARGETS.contains(name) && !"AllPlayerAvatars".equals(name) && !"CurTeamAvatars".equals(name))
                         || "Team".equals(name) || "CasterOriginOwner".equals(name)))) return false;

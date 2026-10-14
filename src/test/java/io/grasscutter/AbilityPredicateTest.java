@@ -242,6 +242,7 @@ class AbilityPredicateTest {
                 "resources/BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Furina.json"), AbilityConfigData.class);
         var low = member(50);
         var high = member(100);
+        fixture.player.getPosition().set(0, 0, 0);
         fixture.player.setSceneLoadState(Player.SceneLoadState.LOADED);
         for (var summon : List.of("Octopus", "SeaHorse", "HermitCrab")) {
             var name = "Furina_" + summon + "_PreAttack";
@@ -256,6 +257,13 @@ class AbilityPredicateTest {
             assertTrue(new ActionAttachModifier().execute(ability, attach, ByteString.EMPTY, fixture.entity));
             assertEquals(50f, low.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP), summon);
             assertEquals(96f, high.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP), summon);
+            // The prior fixture left avatars at the default spawn, thousands of units from the
+            // summon. Use both sides of the actual resource's 40-unit distance requirement.
+            fixture.player.getPosition().set(41, 0, 0);
+            hp(high, 100, 100);
+            assertTrue(new ActionAttachModifier().execute(ability, attach, ByteString.EMPTY, fixture.entity));
+            assertEquals(100f, high.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP), summon);
+            fixture.player.getPosition().set(0, 0, 0);
         }
     }
 }
