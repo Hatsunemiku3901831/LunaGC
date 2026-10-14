@@ -3,6 +3,8 @@ package emu.grasscutter.game.ability.mixins;
 import com.google.protobuf.ByteString;
 import emu.grasscutter.data.binout.AbilityMixinData;
 import emu.grasscutter.game.ability.Ability;
+import emu.grasscutter.game.ability.AbilityGlobalValues;
+import emu.grasscutter.game.ability.actions.AbilityActionHandler;
 import emu.grasscutter.game.entity.GameEntity;
 import emu.grasscutter.game.managers.stamina.Consumption;
 import emu.grasscutter.game.managers.stamina.ConsumptionType;
@@ -18,10 +20,14 @@ public class CostStaminaMixin extends AbilityMixinHandler {
 
     @Override
     public boolean execute(Ability ability, AbilityMixinData mixinData, ByteString abilityData, GameEntity target) {
-        float staminaRatio = mixinData.costStaminaDelta.get(ability);
-        if (staminaRatio == 0.0f) {
-            staminaRatio = 1.0f;
-        }
+        if (ability == null || mixinData == null || !mixinData.enable
+                || mixinData.costStaminaDelta == null || !AbilityGlobalValues.isCurrent(ability,target))
+            return false;
+        var resolved = mixinData.costStaminaDelta.tryGet(AbilityActionHandler.propertiesFor(ability));
+        if (resolved.isEmpty()) return false;
+        float staminaRatio = (float)resolved.getAsDouble();
+        // A zero resource or talent override has no cost and does not advance another use's clock.
+        if (staminaRatio == 0.0f) return true;
 
         Player player = ability.getPlayerOwner();
         if (player == null) {

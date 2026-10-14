@@ -157,7 +157,7 @@ class PhlogistonMutationTest {
 
     @Test
     void malformedExpressionCannotSpendFuelThroughFallback() {
-        new PhlogistonCostMixin().execute(ability, cost("'1 0 /'"), ByteString.EMPTY, caster);
+        new PhlogistonCostMixin().execute(ability, cost("[1,0,'DIV']"), ByteString.EMPTY, caster);
         assertEquals(50, fixture.player.getPhlogistonValue());
         assertTrue(fixture.player.packets.isEmpty());
     }
@@ -278,7 +278,7 @@ class PhlogistonMutationTest {
     void malformedChangeExpressionDoesNotUseDefaultStep() {
         var action =
                 JsonUtils.decode(
-                        "{$type:'ChangePhlogiston',ratio:'1 0 /',determineType:'Add'}",
+                        "{$type:'ChangePhlogiston',ratio:[1,0,'DIV'],determineType:'Add'}",
                         AbilityModifierAction.class);
         new ActionChangePhlogiston().execute(ability, action, ByteString.EMPTY, caster);
         assertEquals(50, fixture.player.getPhlogistonValue());
