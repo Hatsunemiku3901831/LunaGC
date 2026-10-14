@@ -39,6 +39,8 @@ public final class PredicateEvaluator {
         if (!(typeObj instanceof String type)) return true;
         if ("CNFMGJJEOPM".equals(type))
             return AbilityDistancePredicate.evaluate(pred, ability, owner, target);
+        if ("CBHEIAINBAI".equals(type))
+            return AbilityEntityAvailability.evaluate(pred, ability, owner, target);
         GameEntity resolved = resolveTarget(pred, ability, owner, target);
         if ("ByUnlockTalentParam".equals(type)) {
             GameEntity caster = ability != null ? ability.getCasterEntity() : null;
