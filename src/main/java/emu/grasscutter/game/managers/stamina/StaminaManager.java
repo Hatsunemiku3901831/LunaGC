@@ -321,16 +321,19 @@ public class StaminaManager extends BasePlayerManager {
     // Kills avatar, removes entity and sends notification.
     // TODO: Probably move this to Avatar class? since other components may also need to kill avatar.
     public void killAvatar(GameSession session, GameEntity entity, PlayerDieType dieType) {
+        if (entity == null || entity.getScene() != player.getScene() || !entity.tryBeginDeath()) return;
         session.send(new PacketAvatarLifeStateChangeNotify(player.getTeamManager().getCurrentAvatarEntity().getAvatar(),
             LifeState.LIFE_DEAD, dieType));
         session.send(new PacketLifeStateChangeNotify(entity, LifeState.LIFE_DEAD, dieType));
         entity.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, 0);
         entity.getWorld().broadcastPacket(new PacketEntityFightPropUpdateNotify(entity, FightProperty.FIGHT_PROP_CUR_HP));
         entity.getWorld().broadcastPacket(new PacketLifeStateChangeNotify(0, entity, LifeState.LIFE_DEAD));
-        player.getScene().removeEntity(entity);
-
-        if (entity instanceof EntityAvatar avatar)
+        if (entity instanceof EntityAvatar avatar) {
+            var revival = emu.grasscutter.game.ability.AbilityAutomaticRevival.prepare(avatar);
             avatar.onDeath(dieType, 0);
+            if (revival != null && (revival.revive() || avatar.isAlive())) return;
+        }
+        player.getScene().removeEntity(entity);
     }
 
     public void startSustainedStaminaHandler() {

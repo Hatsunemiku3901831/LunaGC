@@ -126,6 +126,7 @@ public class AbilityModifier implements Serializable {
             ActivitySkillShareCDStart,
             ClearShareCD,
             AvatarSkillStart,
+        UnlockSkill,
             BroadcastNeuronStimulate,
             ByTargetGlobalValue,
             CalcDvalinS04RebornPoint,

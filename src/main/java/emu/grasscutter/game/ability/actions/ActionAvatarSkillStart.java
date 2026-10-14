@@ -8,6 +8,7 @@ import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.binout.AbilityModifier.AbilityModifierAction;
 import emu.grasscutter.game.ability.Ability;
+import emu.grasscutter.game.ability.AbilityAutomaticRevival;
 import emu.grasscutter.game.ability.AbilityCooldownInvocation;
 import emu.grasscutter.game.ability.AbilityGlobalValues;
 import emu.grasscutter.game.ability.AbilityManager;
@@ -51,6 +52,8 @@ public class ActionAvatarSkillStart extends AbilityActionHandler {
                 || target == null
                 || !AbilityGlobalValues.isCurrent(ability, target)) return false;
         if (!conditionsPass(ability, action, target)) return true;
+        if (AbilityAutomaticRevival.nativeAbility(ability))
+            return AbilityAutomaticRevival.nativeConfirmation(ability,target);
         if (AbilityRevivalSkillControl.nativeAbility(ability))
             return ability.getManager().getRevivalSkillControl().nativeAction(ability,action,target,true);
         var owner = ability.getOwner();

@@ -5,6 +5,7 @@ import com.google.protobuf.ByteString;
 import emu.grasscutter.data.binout.AbilityModifier.AbilityModifierAction;
 import emu.grasscutter.game.ability.Ability;
 import emu.grasscutter.game.ability.AbilityAvatarRevival;
+import emu.grasscutter.game.ability.AbilityAutomaticRevival;
 import emu.grasscutter.game.ability.AbilityRevivalSkillControl;
 import emu.grasscutter.game.entity.GameEntity;
 
@@ -33,6 +34,8 @@ public final class ActionReviveAvatar extends AbilityActionHandler {
 
     private boolean revive(
             Ability ability, AbilityModifierAction action, GameEntity target, boolean resolved) {
+        if (AbilityAutomaticRevival.nativeAbility(ability))
+            return AbilityAutomaticRevival.nativeConfirmation(ability,target);
         if (AbilityRevivalSkillControl.nativeAbility(ability))
             return ability.getManager()
                     .getRevivalSkillControl()

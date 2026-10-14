@@ -195,13 +195,13 @@ class AbilityRevivalTest {
     }
 
     @Test
-    void barbaraActualResourceRevivesThePartyToFullHealth() throws Exception {
+    void barbaraNativeConfirmationCannotReviveWithoutAnAuthorizedDeath() throws Exception {
         var dead = member(100, 0);
         var data = actual("Barbara", "Avatar_Barbara_ReBorn");
         ability = new Ability(data, fixture.entity, fixture.player);
         new ActionReviveAvatar().execute(ability, data.onAbilityStart[2], ByteString.EMPTY, fixture.entity);
-        assertTrue(dead.isAlive());
-        assertEquals(100f, dead.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP));
+        assertFalse(dead.isAlive());
+        assertEquals(0f, dead.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP));
     }
 
     @Test

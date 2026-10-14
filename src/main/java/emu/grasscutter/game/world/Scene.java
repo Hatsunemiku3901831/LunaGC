@@ -686,6 +686,17 @@ public class Scene {
         this.broadcastPacket(
                 new PacketLifeStateChangeNotify(attackerId, target, LifeState.LIFE_DEAD));
 
+        boolean deathSettled = false;
+        if (target instanceof EntityAvatar avatar) {
+            var revival = emu.grasscutter.game.ability.AbilityAutomaticRevival.prepare(avatar);
+            if (revival != null) {
+                avatar.onDeath(attackerId);
+                deathSettled = true;
+                // Keep the current entity registered when its offstage teammate rescues it.
+                if (revival.revive() || avatar.isAlive()) return;
+            }
+        }
+
         // Activity watchers count kills. The attacker may be a summon or a client gadget, so credit
         // the avatar that actually owns it rather than the entity that landed the hit.
         if (target instanceof EntityMonster killed
@@ -737,7 +748,7 @@ public class Scene {
             cg.getOwner().getTeamManager().getGadgets().remove(cg);
         }
 
-        target.onDeath(attackerId);
+        if (!deathSettled) target.onDeath(attackerId);
 
         // A commission that asks for kills counts them here, by the group the monster belongs to.
         if (target instanceof EntityMonster monster) {

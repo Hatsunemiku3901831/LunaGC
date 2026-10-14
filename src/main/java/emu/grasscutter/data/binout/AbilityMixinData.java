@@ -66,6 +66,7 @@ public class AbilityMixinData implements Serializable {
         IPIBBIDFDOL,
         EBBCNBHOAIP,
         ReviveElemEnergyMixin,
+        DoReviveMixin,
         HKGPGGJAKGL,
         ENPGGGNLLJG,
         PBOJOFIGPIC,
@@ -154,6 +155,16 @@ public class AbilityMixinData implements Serializable {
 
     @SerializedName("onKill")
     public AbilityModifierAction[] onKill;
+
+    public AbilityModifierAction[] onKillActions;
+    public AbilityModifierAction[] onReviveActions;
+
+    // Current exports contain canonical and obfuscated callbacks together.
+    @SerializedName("HCFAFEALFCI")
+    public AbilityModifierAction[] rawReviveKillActions;
+
+    @SerializedName("MMLFABGAGIK")
+    public AbilityModifierAction[] rawReviveFinishActions;
 
     @SerializedName("successActions")
     public AbilityModifierAction[] successActions;
