@@ -145,6 +145,12 @@ public class AbilityMixinData implements Serializable {
     @SerializedName("onExitCombat")
     public AbilityModifierAction[] onExitCombat;
 
+    @SerializedName("OJIADBPIBAO")
+    public AbilityModifierAction[] rawEnterCombat;
+
+    @SerializedName("IBMKAAGPNAK")
+    public AbilityModifierAction[] rawExitCombat;
+
     @SerializedName("onTriggerSkill")
     public AbilityModifierAction[] onTriggerSkill;
 

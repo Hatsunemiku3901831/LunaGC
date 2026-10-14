@@ -52,6 +52,7 @@ import java.util.concurrent.*;
 import lombok.Getter;
 
 public final class AbilityManager extends BasePlayerManager {
+    @Getter private final AbilityCombatCallbacks combatCallbacks = new AbilityCombatCallbacks();
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbilityManager.class);
     private final Set<EntityAvatar> resonanceEntities = Collections.newSetFromMap(new WeakHashMap<>());
 
@@ -384,7 +385,8 @@ public final class AbilityManager extends BasePlayerManager {
         if (mixinData.type==AbilityMixinData.Type.CheckSubTagScanEntityMixin
                 || mixinData.type==AbilityMixinData.Type.TryEnterVehicleMixin
                 || mixinData.type==AbilityMixinData.Type.DoActionOnVehicleInteractPostMixin
-                || mixinData.type==AbilityMixinData.Type.TriggerVehicleOff) {
+                || mixinData.type==AbilityMixinData.Type.TriggerVehicleOff
+                || mixinData.type==AbilityMixinData.Type.AvatarCombatMixin) {
             // Scan selection must be visible to the immediately following modifier attachment.
             context.runIfCurrent(() -> handler.execute(ability,mixinData,abilityData,target));
             return;
@@ -709,6 +711,16 @@ public final class AbilityManager extends BasePlayerManager {
             target.setDetailAbilityInfo(detailAbility);
         }
 
+        var combatMixin=ability.getData().localIdToMixin.get(head.getLocalId());
+        boolean combatArgument=invoke.getArgumentType()==AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_MIXIN_AVATAR_COMBAT;
+        boolean combatCallback=combatMixin!=null && combatMixin.type==AbilityMixinData.Type.AvatarCombatMixin;
+        if (combatArgument!=combatCallback) return;
+        if (combatArgument) {
+            if (this.player!=ability.getPlayerOwner()
+                    || head.getInstancedModifierId()!=0 && invokedModifier==null) return;
+            combatCallbacks.apply(ability,combatMixin,invoke.getAbilityData(),target,invokedModifier);
+            return;
+        }
         var action = ability.getData().localIdToAction.get(head.getLocalId());
         if (action != null) {
             if (ability.ownsServerTriggerCallback(action)) return;
