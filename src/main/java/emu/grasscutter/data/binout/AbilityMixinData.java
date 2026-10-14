@@ -51,6 +51,7 @@ public class AbilityMixinData implements Serializable {
         DLJBCMKDMEK,
         PhlogistonCostMixin,
         ChangePhlogistonMixin,
+        InfinitePhlogistonMixin,
         FIHACJPNNED,
         JMEOJHGPNMB,
         AttachModifierToSelfGlobalValueMixin,

@@ -25,6 +25,7 @@ public final class Phlogiston {
 
     private static void mutate(Player player, float amount, boolean set) {
         if (player == null || !Float.isFinite(amount) || !set && amount == 0) return;
+        if (!set && amount < 0 && infinite(player)) return;
         GameEntity changedTeam;
         synchronized (player) {
             var team = player.getTeamManager().getEntity();
@@ -54,6 +55,7 @@ public final class Phlogiston {
                 || vehicle.getOwner() == null
                 || !Float.isFinite(amount)
                 || !set && amount == 0) return;
+        if (!set && amount < 0 && infinite(vehicle.getOwner())) return;
         synchronized (vehicle) {
             float previous = vehicle.getCurPhlogiston();
             if (!Float.isFinite(previous)) return;
@@ -147,5 +149,43 @@ public final class Phlogiston {
 
     private static float clamp(double value, float max) {
         return (float) Math.max(0d, Math.min(max, value));
+    }
+
+    /** The client's blocker list is held on Team entities, with one entry per live mixin. */
+    private static boolean infinite(Player player) {
+        var team = player.getTeamManager().getEntity();
+        if (team == null) return false;
+        synchronized (team.getInstancedModifiers()) {
+            if (team.getAbilityHpModifier()
+                    .hasActiveMixin(
+                            emu.grasscutter.data.binout.AbilityMixinData.Type
+                                    .InfinitePhlogistonMixin)) return true;
+            for (var ability : team.getInstancedAbilities()) {
+                if (ability == null) continue;
+                if (hasInfinite(ability, team, ability.getData().abilityMixins)) return true;
+                var defaults = ability.getData().modifiers.get("Default");
+                if (defaults != null && hasInfinite(ability, team, defaults.modifierMixins))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean hasInfinite(
+            Ability ability,
+            GameEntity bearer,
+            emu.grasscutter.data.binout.AbilityMixinData[] mixins) {
+        if (mixins == null) return false;
+        for (var mixin : mixins)
+            if (mixin != null
+                    && mixin.enable
+                    && mixin.type
+                            == emu.grasscutter.data.binout.AbilityMixinData.Type
+                                    .InfinitePhlogistonMixin
+                    && AbilityGlobalValues.isCurrent(ability, bearer)
+                    && emu.grasscutter.game.ability.PredicateEvaluator.all(
+                            mixin.predicates, ability, ability.getOwner(), bearer, null))
+                return true;
+        return false;
     }
 }

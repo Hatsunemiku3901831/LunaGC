@@ -98,6 +98,19 @@ public final class AbilityHpModifier {
         return result;
     }
     Collection<AbilityModifierController> lifecycleControllers() { return controllers(); }
+    public boolean hasActiveMixin(emu.grasscutter.data.binout.AbilityMixinData.Type type) {
+        synchronized (entity.getInstancedModifiers()) {
+            for (var controller : activeControllers()) {
+                var mixins = controller.getModifierData().modifierMixins;
+                if (mixins == null) continue;
+                for (var mixin : mixins)
+                    if (mixin != null && mixin.enable && mixin.type == type
+                            && AbilityGlobalValues.isCurrent(controller.getAbility(), entity)
+                            && PredicateEvaluator.all(mixin.predicates, controller.getAbility(), controller.getAbility().getOwner(), entity, null)) return true;
+            }
+            return false;
+        }
+    }
 
     AbilityModifierController pendingServerController(Ability ability,String name) {
         var named=serverStacks.get(ability);
