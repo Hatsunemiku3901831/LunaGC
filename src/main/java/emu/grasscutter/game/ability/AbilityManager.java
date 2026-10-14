@@ -290,7 +290,8 @@ public final class AbilityManager extends BasePlayerManager {
 
         var context = new AbilityExecutionContext(ability, target,
                 action.type == AbilityModifierAction.Type.ServerLuaCall
-                        && action.luaCallType == AbilityModifierAction.LuaCallType.CurScenePlay);
+                        && action.luaCallType == AbilityModifierAction.LuaCallType.CurScenePlay,
+                true);
         if (!context.isCurrent()) return;
         // A written position and the spawn that reads it belong to this invocation. Queuing them
         // separately can let a later cast change the point before the first summon is created.
@@ -381,7 +382,7 @@ public final class AbilityManager extends BasePlayerManager {
             return;
         }
 
-        var context = new AbilityExecutionContext(ability, target);
+        var context = new AbilityExecutionContext(ability, target, false, true);
         if (!context.isCurrent()) return;
         if (mixinData.type==AbilityMixinData.Type.CheckSubTagScanEntityMixin
                 || mixinData.type==AbilityMixinData.Type.TryEnterVehicleMixin
@@ -460,7 +461,7 @@ public final class AbilityManager extends BasePlayerManager {
     private void queueCallbackActions(Ability ability, AbilityModifierAction[] actions,
                                       ByteString payload, GameEntity owner, String healTag) {
         if (ability == null || owner == null || actions == null || actions.length == 0) return;
-        var context = new AbilityExecutionContext(ability, owner);
+        var context = new AbilityExecutionContext(ability, owner, false, true);
         if (!context.isCurrent()) return;
         var snapshot = actions.clone();
         var owned = isServerOwnedChain();

@@ -67,6 +67,23 @@ class AbilityLifecycleTest {
         }
         assertFalse(fixture.entity.getGlobalAbilityValues().containsKey("queued"));
     }
+    @Test void queuedActionCannotResumeFromRemovedRootAbility() throws Exception {
+        fixture.entity.getInstancedAbilities().add(ability);
+        try (var workers = new Workers()) {
+            queue(fixture.entity);
+            fixture.entity.getInstancedAbilities().set(0, null);
+        }
+        assertFalse(fixture.entity.getGlobalAbilityValues().containsKey("queued"));
+    }
+    @Test void sameNameReplacementCannotInheritOldQueuedAction() throws Exception {
+        fixture.entity.getInstancedAbilities().add(ability);
+        try (var workers = new Workers()) {
+            queue(fixture.entity);
+            fixture.entity.getInstancedAbilities().set(0,
+                    new Ability(ability.getData(), fixture.entity, fixture.player));
+        }
+        assertFalse(fixture.entity.getGlobalAbilityValues().containsKey("queued"));
+    }
     @Test void queuedActionCannotFollowTheCasterIntoAnotherScene() throws Exception {
         try (var workers = new Workers()) {
             queue(fixture.entity);

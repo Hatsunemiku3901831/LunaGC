@@ -11,6 +11,7 @@ import java.util.function.BooleanSupplier;
 final class AbilityExecutionContext {
     private final EntityLifetime owner;
     private final EntityLifetime target;
+    private final Ability installedRoot;
     private final Player caster;
     private final Scene casterScene;
     private final BooleanSupplier scenePlayScope;
@@ -21,7 +22,15 @@ final class AbilityExecutionContext {
     }
 
     AbilityExecutionContext(Ability ability, GameEntity target, boolean scenePlayCall) {
+        this(ability, target, scenePlayCall, false);
+    }
+
+    AbilityExecutionContext(Ability ability, GameEntity target, boolean scenePlayCall,
+                            boolean requireInstalledRoot) {
         this.owner = new EntityLifetime(ability.getOwner());
+        this.installedRoot = requireInstalledRoot
+                && ability.getOwner().getInstancedAbilities().contains(ability)
+                ? ability : null;
         this.target = target == null ? null : new EntityLifetime(target);
         this.caster = ability.getPlayerOwner();
         this.casterScene = owner.scene;
@@ -65,6 +74,8 @@ final class AbilityExecutionContext {
     boolean isCurrent() {
         if (!owner.isCurrent()
                 || (target != null && !target.isCurrent())
+                || (installedRoot != null
+                        && !installedRoot.getOwner().getInstancedAbilities().contains(installedRoot))
                 || !scenePlayScope.getAsBoolean()) return false;
         // World and team entities have a dynamic scene, including during initial world setup.
         if (casterScene == null) return true;
