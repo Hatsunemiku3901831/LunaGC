@@ -50,6 +50,7 @@ public class AbilityMixinData implements Serializable {
         AttachToMultiNormalizedTimeMixin,
         DLJBCMKDMEK,
         PhlogistonCostMixin,
+        ChangePhlogistonMixin,
         FIHACJPNNED,
         JMEOJHGPNMB,
         AttachModifierToSelfGlobalValueMixin,
@@ -184,6 +185,14 @@ public class AbilityMixinData implements Serializable {
     public JsonElement modifierName;
 
     public DynamicFloat speed = DynamicFloat.ZERO;
+    @SerializedName("CIFADBDOAFI") public DynamicFloat rawPhlogistonSpeed;
+    public DynamicFloat interval;
+    @SerializedName("LANIGKLMJHP") public DynamicFloat rawPhlogistonInterval;
+    @SerializedName("JLJLIKPJADO") public DynamicFloat currentPhlogistonInterval;
+    @SerializedName("ALFOIOIHMIA") public DynamicFloat extraPhlogistonInterval;
+    public String costType;
+    @SerializedName("DHDDHBBIHEJ") public String rawPhlogistonCostType;
+    public String targetType;
     public DynamicFloat costStaminaDelta = DynamicFloat.ZERO;
     public DynamicFloat ratio = DynamicFloat.ONE;
     public List<Map<String, Object>> predicates;

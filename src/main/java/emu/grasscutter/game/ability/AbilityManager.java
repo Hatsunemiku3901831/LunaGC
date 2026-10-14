@@ -53,6 +53,7 @@ import lombok.Getter;
 
 public final class AbilityManager extends BasePlayerManager {
     @Getter private final AbilityCombatCallbacks combatCallbacks = new AbilityCombatCallbacks();
+    @Getter private final PhlogistonMixinCallbacks phlogistonCallbacks = new PhlogistonMixinCallbacks();
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbilityManager.class);
     private final Set<EntityAvatar> resonanceEntities = Collections.newSetFromMap(new WeakHashMap<>());
 
@@ -712,6 +713,14 @@ public final class AbilityManager extends BasePlayerManager {
         }
 
         var combatMixin=ability.getData().localIdToMixin.get(head.getLocalId());
+        boolean fuelArgument = invoke.getArgumentType() == AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_MIXIN_CHANGE_PHLOGISTON;
+        boolean fuelCallback = combatMixin != null && combatMixin.type == AbilityMixinData.Type.ChangePhlogistonMixin;
+        if (fuelArgument || fuelCallback) {
+            if (!fuelArgument || !fuelCallback || player != ability.getPlayerOwner()
+                    || head.getInstancedModifierId() != 0 && invokedModifier == null) return;
+            phlogistonCallbacks.apply(ability, combatMixin, invoke.getAbilityData(), target, invokedModifier);
+            return;
+        }
         boolean combatArgument=invoke.getArgumentType()==AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_MIXIN_AVATAR_COMBAT;
         boolean combatCallback=combatMixin!=null && combatMixin.type==AbilityMixinData.Type.AvatarCombatMixin;
         if (combatArgument!=combatCallback) return;

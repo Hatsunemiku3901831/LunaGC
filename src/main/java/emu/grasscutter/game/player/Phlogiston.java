@@ -71,6 +71,37 @@ public final class Phlogiston {
     public static boolean change(Ability ability, GameEntity target, float delta) {
         return mutate(ability, target, delta, false);
     }
+    /** Current mixin's explicit target overrides automatic party/Saurian selection. */
+    public static boolean change(
+            Ability ability, GameEntity bearer, float delta, String targetType) {
+        if (!java.util.Set.of("Auto", "Self", "Team", "Vehicle").contains(targetType)
+                || ability == null
+                || bearer == null
+                || !Float.isFinite(delta)
+                || !AbilityGlobalValues.isCurrent(ability, bearer)) return false;
+        var player = ability.getPlayerOwner();
+        var owner = ability.getOwner();
+        if (player == null || player.getScene() == null || owner == null || owner.isDead())
+            return false;
+        synchronized (player.getScene()) {
+            EntityVehicle vehicle =
+                    bearer instanceof EntityVehicle v
+                            ? v
+                            : owner instanceof EntityVehicle v ? v : null;
+            if (vehicle != null && vehicle.getOwner() != player) return false;
+            if (vehicle == null) {
+                var caster = ability.getCasterEntity();
+                if (caster == null || caster.getPlayer() != player) return false;
+            }
+            if ("Vehicle".equals(targetType) && vehicle == null) return false;
+            if (vehicle != null
+                    && !"Team".equals(targetType)
+                    && (!"Auto".equals(targetType) || vehicle.getCurPhlogiston() > 0))
+                change(vehicle, delta);
+            else change(player, delta);
+            return true;
+        }
+    }
 
     public static boolean mutate(Ability ability, GameEntity target, float delta, boolean set) {
         if (ability == null
