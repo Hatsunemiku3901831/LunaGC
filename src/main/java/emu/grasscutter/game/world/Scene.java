@@ -758,6 +758,9 @@ public class Scene {
 
         if (!deathSettled) target.onDeath(attackerId);
 
+        if (target instanceof EntityAvatar avatar && avatar.getPlayer() != null)
+            avatar.getPlayer().getTeamManager().getQuestTeamWipe().settled(avatar);
+
         // A commission that asks for kills counts them here, by the group the monster belongs to.
         if (target instanceof EntityMonster monster) {
             var host = this.getWorld().getHost();

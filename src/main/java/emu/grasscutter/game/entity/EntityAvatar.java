@@ -181,6 +181,7 @@ public class EntityAvatar extends GameEntity {
 
         setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, Math.min(maxHp, amount));
         setDead(false);
+        getPlayer().getTeamManager().getQuestTeamWipe().revived(this);
         killedType = PlayerDieType.PlayerDieType_PLAYER_DIE_NONE;
         killedBy = 0;
 

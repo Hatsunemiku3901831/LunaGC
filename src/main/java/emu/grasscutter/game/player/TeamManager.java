@@ -129,6 +129,15 @@ public final class TeamManager extends BasePlayerDataManager {
         this.trialAvatarTeam = new TeamInfo();
     }
 
+    @Transient
+    private transient emu.grasscutter.game.quest.QuestTeamWipe questTeamWipe;
+
+    public synchronized emu.grasscutter.game.quest.QuestTeamWipe getQuestTeamWipe() {
+        if (questTeamWipe == null)
+            questTeamWipe = new emu.grasscutter.game.quest.QuestTeamWipe(this);
+        return questTeamWipe;
+    }
+
     public TeamManager(Player player) {
         this();
         this.setPlayer(player);
