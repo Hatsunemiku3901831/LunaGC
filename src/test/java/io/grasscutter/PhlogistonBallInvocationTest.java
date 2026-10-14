@@ -17,6 +17,43 @@ import java.io.ByteArrayOutputStream;
 
 class PhlogistonBallInvocationTest extends PhlogistonMixinInvocationTest {
     EntityItem ball;
+
+    @Test
+    void unavailableTeamPreservesBall() {
+        setupPickup();
+        var team = env.fixture.player.getTeamManager().getEntity();
+        try {
+            env.fixture.player.getTeamManager().setEntity(null);
+            ball.onInteract(
+                    env.fixture.player,
+                    emu.grasscutter.net.proto.GadgetInteractReqOuterClass.GadgetInteractReq
+                            .getDefaultInstance());
+            assertEquals(50, fuel());
+            assertSame(ball, env.fixture.scene.getEntities().get(ball.getId()));
+        } finally {
+            env.fixture.player.getTeamManager().setEntity(team);
+        }
+    }
+
+    @Test
+    void unavailableTeamRejectsDirectItemUse() {
+        var team = env.fixture.player.getTeamManager().getEntity();
+        try {
+            env.fixture.player.getTeamManager().setEntity(null);
+            var action =
+                    new emu.grasscutter.game.props.ItemUseAction.ItemUseAddPhlogiston(
+                            new String[] {"20"});
+            var params =
+                    new emu.grasscutter.game.props.ItemUseAction.UseItemParams(
+                            env.fixture.player,
+                            emu.grasscutter.game.props.ItemUseTarget.ITEM_USE_TARGET_CUR_TEAM);
+            assertFalse(action.useItem(params));
+            assertEquals(50, fuel());
+        } finally {
+            env.fixture.player.getTeamManager().setEntity(team);
+        }
+    }
+
     static final String CONFIG =
             "{$type:'HumanDragonCollabPickPhlogistonBallMixin',KNEIAADHCBH:70331081,attachPoint:'ElementAbsorb'}";
 

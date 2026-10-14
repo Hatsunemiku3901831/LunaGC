@@ -31,6 +31,7 @@ public final class ItemUseAddPhlogiston extends ItemUseAction {
         float total = params == null ? Float.NaN : amount(params.count);
         if (!Float.isFinite(total)
                 || params.player == null
+                || params.player.getTeamManager().getEntity() == null
                 || !Float.isFinite(params.player.getPhlogistonValue())) return false;
         Phlogiston.change(params.player, total);
         return true;

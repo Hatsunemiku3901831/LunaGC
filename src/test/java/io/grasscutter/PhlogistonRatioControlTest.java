@@ -15,6 +15,16 @@ import org.junit.jupiter.api.Test;
 
 /** Resource ratio switches must not be interpreted as one absolute fuel point. */
 class PhlogistonRatioControlTest extends PhlogistonMixinInvocationTest {
+    @Test
+    void invalidVehicleValueCannotFallbackToTeam() {
+        owner = env.environment.candle(NatsaurusPossessionTest.DRILL);
+        ((EntityVehicle) owner).setCurPhlogiston(Float.NaN);
+        install("{$type:'ChangePhlogistonMixin',speed:0.1,interval:1,JDIMELLBMFO:true}", true);
+        tick();
+        assertEquals(50, fuel());
+        assertTrue(Float.isNaN(((EntityVehicle) owner).getCurPhlogiston()));
+    }
+
     boolean action(String config) {
         return new ActionChangePhlogiston()
                 .execute(

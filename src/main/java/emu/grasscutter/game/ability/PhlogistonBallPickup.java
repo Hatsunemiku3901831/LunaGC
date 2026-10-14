@@ -28,7 +28,11 @@ public final class PhlogistonBallPickup {
 
     public static boolean pickup(Player player, GameEntity bearer, EntityItem ball) {
         var scene = player == null ? null : player.getScene();
-        if (scene == null || bearer == null || ball == null || bearer.isDead()) return false;
+        if (scene == null
+                || bearer == null
+                || ball == null
+                || bearer.isDead()
+                || player.getTeamManager().getEntity() == null) return false;
         synchronized (scene) {
             if (ball.getScene() != scene
                     || scene.getEntityById(ball.getId()) != ball

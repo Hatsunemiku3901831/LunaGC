@@ -114,6 +114,9 @@ public final class Phlogiston {
                             ? v
                             : owner instanceof EntityVehicle v ? v : null;
             if (vehicle != null && vehicle.getOwner() != player) return false;
+            if (vehicle != null
+                    && !"Team".equals(targetType)
+                    && !Float.isFinite(vehicle.getCurPhlogiston())) return false;
             if (vehicle == null) {
                 var caster = ability.getCasterEntity();
                 if (caster == null || caster.getPlayer() != player) return false;

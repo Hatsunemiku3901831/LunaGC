@@ -7,6 +7,7 @@
 - 补充和普通动作设值的倍率按池容量计算：队伍 100、龙 50；倍率 1 的 Add 可从空池补满，不再只补 1 点。Cost／Sub 倍率使用当前存量。
 - 倍率计算与燃素写入在同一锁内执行，保留零值、上限及无限燃素控制。负倍率不反向产生奖励，无效表达式不执行。
 - 周期 mixin 兼容原始目标 `BBIPIGDBGFJ`，可读 `targetType` 优先。Team、Vehicle、Self、Auto 使用各自所选池；空 Vehicle 不转扣队伍，Auto 可回退。
+- Auto 遇到车辆存量为 NaN／无穷数会拒绝，不能把坏状态当作空池后转扣队伍；明确 Team 不读取无关车辆存量。
 - 原来的旧 ratio/determineType 配置继续按绝对数值处理；这里的 `useRatio` 是百分比模式，和动态表达式操作数 `ratio` 分开。
 
 ## 依据及边界
@@ -31,4 +32,5 @@
 红测试首轮 39 项中 10 项失败，修复后首轮相关回归通过；最终又补充负倍率、上限、原始目标及优先级检查。
 最终相关 **251 项／10 套件**通过，零失败、错误和跳过；JAR 构建通过，修改源码宿主机／容器哈希及编译类／JAR 字节一致。
 使用实际 AbilityConfigData 读取器解析当前 **1,444 个文件／31,664 个定义**，零错误。
+后续无效池状态的回归最终为 **254 项／10 套件**，独立启动／HTTP **2 项**通过；证据另见 `guard-red-results/`、`guard-final-results/` 和 `guard-verification.json`。
 证据：`debug/aster-mid-20261011/batch223/ratio-red.xml`、`ratio-final-results/`、`ratio-verification.json` 和原生反汇编。
