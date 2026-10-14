@@ -33,4 +33,5 @@
 最终相关 **251 项／10 套件**通过，零失败、错误和跳过；JAR 构建通过，修改源码宿主机／容器哈希及编译类／JAR 字节一致。
 使用实际 AbilityConfigData 读取器解析当前 **1,444 个文件／31,664 个定义**，零错误。
 后续无效池状态的回归最终为 **254 项／10 套件**，独立启动／HTTP **2 项**通过；证据另见 `guard-red-results/`、`guard-final-results/` 和 `guard-verification.json`。
+后续修正了无效池被外层误报为执行成功的问题；[执行结果记录](PHLOGISTON_POOL_RESULTS_2026-10-15.md)覆盖普通和倍率动作、周期回调，以及有效零值／满池／无限燃素的接受结果。
 证据：`debug/aster-mid-20261011/batch223/ratio-red.xml`、`ratio-final-results/`、`ratio-verification.json` 和原生反汇编。

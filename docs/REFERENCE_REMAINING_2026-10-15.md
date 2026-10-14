@@ -21,6 +21,7 @@
 | 车辆燃素通知 | [命令 7926、当前客户端字段 13／15](VEHICLE_PHLOGISTON_PROTOCOL_2026-10-15.md) |
 | 燃素球联动 | [人龙各自补充、调用 136、拾取去重及物品动作](PHLOGISTON_BALL_PICKUP_2026-10-15.md) |
 | 燃素倍率开关 | [当前存量消耗、容量补充、目标及配置优先级](PHLOGISTON_RATIO_CONTROL_2026-10-15.md) |
+| 燃素动作结果 | [未就绪／无效池拒绝、正常零值及满池保持成功](PHLOGISTON_POOL_RESULTS_2026-10-15.md) |
 | 全队倒下的任务失败 | [真实任务失败、复活顺序、并发去重和数据库保存](TEAM_WIPE_QUEST_FAILURE_2026-10-15.md) |
 | 活动全服开放日 | [12 条真实条件、04:00 日界线及复刻排期](ACTIVITY_GLOBAL_DAY_CONDITIONS_2026-10-15.md) |
 

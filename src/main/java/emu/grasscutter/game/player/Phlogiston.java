@@ -33,17 +33,18 @@ public final class Phlogiston {
         mutate(player, amount, set, RatioBasis.ABSOLUTE);
     }
 
-    private static void mutate(Player player, float amount, boolean set, RatioBasis basis) {
-        if (player == null || !Float.isFinite(amount) || !set && amount == 0) return;
-        if (!set && amount < 0 && infinite(player)) return;
+    private static boolean mutate(Player player, float amount, boolean set, RatioBasis basis) {
+        if (player == null || basis == null || !Float.isFinite(amount)) return false;
+        boolean blocked = !set && amount < 0 && infinite(player);
         GameEntity changedTeam;
         synchronized (player) {
             var team = player.getTeamManager().getEntity();
             float previous = player.getPhlogistonValue();
-            if (team == null || !Float.isFinite(previous)) return;
+            if (team == null || !Float.isFinite(previous)) return false;
+            if (blocked || !set && amount == 0) return true;
             double scaled = scale(amount, previous, TEAM_MAX, basis);
             float value = clamp(set ? scaled : previous + scaled, TEAM_MAX);
-            if (Float.compare(previous, value) == 0) return;
+            if (Float.compare(previous, value) == 0) return true;
             player.setPhlogistonValue(value);
             team.getGlobalAbilityValues().put(TEAM_KEY, value);
             changedTeam = team;
@@ -51,6 +52,7 @@ public final class Phlogiston {
                     new PacketServerGlobalValueChangeNotify(team.getId(), TEAM_KEY, value));
         }
         changedTeam.onAbilityValueUpdate();
+        return true;
     }
 
     /**
@@ -65,20 +67,23 @@ public final class Phlogiston {
         mutate(vehicle, amount, set, RatioBasis.ABSOLUTE);
     }
 
-    private static void mutate(EntityVehicle vehicle, float amount, boolean set, RatioBasis basis) {
+    private static boolean mutate(
+            EntityVehicle vehicle, float amount, boolean set, RatioBasis basis) {
         if (vehicle == null
                 || vehicle.getOwner() == null
-                || !Float.isFinite(amount)
-                || !set && amount == 0) return;
-        if (!set && amount < 0 && infinite(vehicle.getOwner())) return;
+                || basis == null
+                || !Float.isFinite(amount)) return false;
+        boolean blocked = !set && amount < 0 && infinite(vehicle.getOwner());
         synchronized (vehicle) {
             float previous = vehicle.getCurPhlogiston();
-            if (!Float.isFinite(previous)) return;
+            if (!Float.isFinite(previous)) return false;
+            if (blocked || !set && amount == 0) return true;
             double scaled = scale(amount, previous, VEHICLE_MAX, basis);
             float value = clamp(set ? scaled : previous + scaled, VEHICLE_MAX);
-            if (Float.compare(previous, value) == 0) return;
+            if (Float.compare(previous, value) == 0) return true;
             vehicle.setCurPhlogiston(value);
             vehicle.getOwner().sendPacket(new PacketVehiclePhlogistonPointsNotify(vehicle));
+            return true;
         }
     }
 
@@ -125,9 +130,8 @@ public final class Phlogiston {
             if (vehicle != null
                     && !"Team".equals(targetType)
                     && (!"Auto".equals(targetType) || vehicle.getCurPhlogiston() > 0))
-                mutate(vehicle, delta, false, basis);
-            else mutate(player, delta, false, basis);
-            return true;
+                return mutate(vehicle, delta, false, basis);
+            return mutate(player, delta, false, basis);
         }
     }
 
@@ -150,13 +154,12 @@ public final class Phlogiston {
             if (owner.isDead() || !AbilityGlobalValues.isCurrent(ability, target)) return false;
             if (owner instanceof EntityVehicle vehicle) {
                 if (vehicle.getOwner() != player) return false;
-                mutate(vehicle, delta, set, basis);
+                return mutate(vehicle, delta, set, basis);
             } else {
                 var caster = ability.getCasterEntity();
                 if (caster == null || caster.getPlayer() != player) return false;
-                mutate(player, delta, set, basis);
+                return mutate(player, delta, set, basis);
             }
-            return true;
         }
     }
 
