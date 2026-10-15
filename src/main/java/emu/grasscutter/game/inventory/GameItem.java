@@ -38,6 +38,7 @@ public class GameItem {
     @Getter @Setter private int count;
 
     @Transient @Getter private long guid; // Player unique id
+    @Transient @Getter @Setter private transient volatile boolean reshapePending;
     @Transient @Getter @Setter private ItemData itemData;
 
     // Equips
@@ -190,6 +191,9 @@ public class GameItem {
     public void setOwner(Player player) {
         this.ownerId = player.getUid();
         this.guid = player.getNextGameGuid();
+        this.reshapePending = this.id != null
+                && player.getArtifactTransmuterData().getReshapeCandidates()
+                        .containsKey(this.id.toHexString());
     }
 
     public void checkIsNew(Inventory inventory) {
@@ -239,7 +243,7 @@ public class GameItem {
     }
 
     public boolean isDestroyable() {
-        return !this.isLocked() && !this.isEquipped();
+        return !this.isLocked() && !this.isEquipped() && !this.reshapePending;
     }
 
     public void addAppendProp() {

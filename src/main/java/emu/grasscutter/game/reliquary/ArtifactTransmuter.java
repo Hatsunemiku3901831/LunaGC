@@ -6,6 +6,10 @@ import emu.grasscutter.data.GameData;
 import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.game.inventory.*;
 import emu.grasscutter.game.player.Player;
+import emu.grasscutter.net.proto.ReliquaryDustReqOuterClass.ReliquaryDustReq;
+import emu.grasscutter.net.proto.ReliquaryDustRspOuterClass.ReliquaryDustRsp;
+import emu.grasscutter.net.proto.ReliquaryDustSelectReqOuterClass.ReliquaryDustSelectReq;
+import emu.grasscutter.net.proto.ReliquaryDustSelectRspOuterClass.ReliquaryDustSelectRsp;
 import emu.grasscutter.net.proto.ReliquaryOfferDataNotifyOuterClass.ReliquaryOfferDataNotify;
 import emu.grasscutter.net.proto.ReliquaryOfferDefineInfoOuterClass.ReliquaryOfferDefineInfo;
 import emu.grasscutter.net.proto.ReliquaryOfferDefineReqOuterClass.ReliquaryOfferDefineReq;
@@ -13,7 +17,6 @@ import emu.grasscutter.net.proto.ReliquaryOfferDefineRspOuterClass.ReliquaryOffe
 import emu.grasscutter.net.proto.ReliquaryOfferExtractReqOuterClass.ReliquaryOfferExtractReq;
 import emu.grasscutter.net.proto.ReliquaryOfferExtractRspOuterClass.ReliquaryOfferExtractRsp;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
-import emu.grasscutter.server.packet.send.PacketReliquaryOfferCompanionNotify;
 import emu.grasscutter.server.packet.send.PacketReliquaryOfferDataNotify;
 
 import java.util.*;
@@ -114,6 +117,7 @@ public final class ArtifactTransmuter {
                         && data.getCycleEndTime() <= 0xffff_ffffL,
                 Retcode.RET_SVR_ERROR_VALUE);
         require(data.getPending() == null, Retcode.RET_SVR_ERROR_VALUE);
+        require(!ArtifactReshape.unsettled(data), Retcode.RET_SVR_ERROR_VALUE);
         if (data.getCycleEndTime() <= now || data.getScheduleId() != config.scheduleId) {
             data.setScheduleId(config.scheduleId);
             data.setCycleEndTime(now + config.cycleDurationSeconds);
@@ -173,11 +177,25 @@ public final class ArtifactTransmuter {
     }
 
     public void onLogin() {
-        if (ownsGadget()) {
+        boolean hasGadget = ownsGadget();
+        if (hasGadget) {
             open();
-            // Reshape has no server candidate yet; clear any stale client snapshot on login.
-            player.sendPacket(new PacketReliquaryOfferCompanionNotify());
         }
+        new ArtifactReshape(player, save, saveItem).onLogin(hasGadget);
+    }
+
+    public boolean hasReshapeCandidate(GameItem item) {
+        synchronized (player.getInventory()) {
+            return ArtifactReshape.holds(player, item);
+        }
+    }
+
+    public ReliquaryDustRsp reshape(ReliquaryDustReq request) {
+        return new ArtifactReshape(player, save, saveItem).roll(request);
+    }
+
+    public ReliquaryDustSelectRsp selectReshape(ReliquaryDustSelectReq request) {
+        return new ArtifactReshape(player, save, saveItem).select(request);
     }
 
     public ReliquaryOfferDefineRsp define(ReliquaryOfferDefineReq request) {
@@ -290,6 +308,7 @@ public final class ArtifactTransmuter {
                                     && item.getItemData().getRankLevel() >= rules.minRank()
                                     && item.getLevel() >= rules.minLevel()
                                     && item.getLevel() <= rules.artifactUnits().size()
+                                    && !hasReshapeCandidate(item)
                                     && item.isDestroyable(),
                             Retcode.RET_FAIL_VALUE);
                     long value = rules.artifactUnits().get(item.getLevel() - 1);

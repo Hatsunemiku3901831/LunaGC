@@ -7,7 +7,7 @@ import lombok.Setter;
 
 import java.util.*;
 
-/** Per-player extraction progress; the manager serializes changes with the player's inventory. */
+/** Per-player transmuter state; the manager serializes changes with the player's inventory. */
 @Entity
 @Getter
 @Setter
@@ -18,6 +18,16 @@ public final class ArtifactTransmuterData {
     private int extractedCount;
     private ArtifactTransmuterReceipt pending;
     private Map<Integer, Integer> definedCounts = new HashMap<>();
+    private long reshapeProgress;
+    private Map<String, ArtifactReshapeCandidate> reshapeCandidates = new HashMap<>();
+
+    public Map<String, ArtifactReshapeCandidate> getReshapeCandidates() {
+        return reshapeCandidates == null ? Map.of() : reshapeCandidates;
+    }
+
+    public void setReshapeCandidates(Map<String, ArtifactReshapeCandidate> candidates) {
+        reshapeCandidates = Map.copyOf(candidates);
+    }
 
     public Map<Integer, Integer> getDefinedCounts() {
         return definedCounts == null ? Map.of() : definedCounts;

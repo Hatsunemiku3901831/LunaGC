@@ -659,6 +659,8 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
         if (count <= 0 || item == null) {
             return false;
         }
+        if (item.getItemType() == ItemType.ITEM_RELIQUARY
+                && getPlayer().getArtifactTransmuter().hasReshapeCandidate(item)) return false;
 
         int countBefore = item.getCount();
 
