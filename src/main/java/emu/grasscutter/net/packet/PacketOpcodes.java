@@ -5,6 +5,13 @@ import java.util.HashSet;
 /** 7.1 CmdIds from the upstream protocol table. Negative values are unresolved messages. */
 public final class PacketOpcodes {
     public static final int NONE = 0;
+    // Verified 7.1 artifact transmuter packet getters; retain the opaque aliases below.
+    public static final int ReliquaryOfferExtractReq = 1781;
+    public static final int ReliquaryOfferExtractRsp = 24;
+    public static final int ReliquaryOfferDefineReq = 22095;
+    public static final int ReliquaryOfferDefineRsp = 3259;
+    public static final int ReliquaryOfferDataNotify = 24434;
+    public static final int ReliquaryOfferCompanionNotify = 228;
     public static final int GetPlayerTokenReq = 23252;
     public static final int GetPlayerTokenRsp = 3713;
     public static final int PingReq = 20324;

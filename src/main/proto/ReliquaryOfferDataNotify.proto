@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "ReliquaryOfferDataNotifyOuterClass";
+
+import "ReliquaryOfferDefineInfo.proto";
+
+message ReliquaryOfferDataNotify {
+  uint32 schedule_id = 5;
+  uint32 progress = 7;
+  uint32 cycle_end_time = 8;
+  float fractional_progress = 10;
+  uint32 extracted_count = 11;
+  repeated ReliquaryOfferDefineInfo define_count_list = 13;
+}

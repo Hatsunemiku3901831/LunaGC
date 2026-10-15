@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "ReliquaryOfferDefineReqOuterClass";
+
+message ReliquaryOfferDefineReq {
+  uint32 main_prop_type = 1;
+  repeated uint32 append_prop_type_list = 3;
+  uint32 equip_type = 8;
+  uint32 purchase_id = 9;
+  uint32 schedule_id = 10;
+}
