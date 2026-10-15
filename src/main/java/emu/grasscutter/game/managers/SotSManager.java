@@ -38,12 +38,7 @@ public class SotSManager extends BasePlayerManager {
             persistOfferCost;
 
     public SotSManager(Player player) {
-        this(
-                player,
-                () -> emu.grasscutter.database.DatabaseHelper.saveGameSync(player),
-                rewards ->
-                        InvestigationRewardDelivery.grant(
-                                player, rewards, ActionReason.CityLevelupReward));
+        this(player, () -> emu.grasscutter.database.DatabaseHelper.saveGameSync(player), null);
     }
 
     public SotSManager(
@@ -64,7 +59,9 @@ public class SotSManager extends BasePlayerManager {
             java.util.function.Consumer<emu.grasscutter.game.inventory.GameItem> persistOfferCost) {
         super(player);
         this.persistOffer = Objects.requireNonNull(persistOffer);
-        this.deliverOffer = Objects.requireNonNull(deliverOffer);
+        // A supplied delivery callback is a fault-injection seam; production uses the frozen
+        // ledger.
+        this.deliverOffer = deliverOffer;
         this.persistOfferCost = Objects.requireNonNull(persistOfferCost);
     }
 
@@ -543,6 +540,38 @@ public class SotSManager extends BasePlayerManager {
                         areaId,
                         result.retcode()));
         if (result.retcode() != 0 || !result.leveled()) return;
+        finishOffering(result, sceneId, areaId);
+    }
+
+    public List<String> inspectOffering(int cityId) {
+        return new StatueOfferRecovery(player, persistOffer, persistOfferCost).inspect(cityId);
+    }
+
+    public void recoverOffering(int cityId, String operationId, boolean resume) {
+        var receipt =
+                new StatueOfferRecovery(player, persistOffer, persistOfferCost)
+                        .recover(cityId, operationId, resume);
+        if (!resume) return;
+        var result =
+                new StatueOffering.Result(
+                        0,
+                        cityId,
+                        receipt.getLevelAfter(),
+                        receipt.getCrystalsAfter(),
+                        receipt.getLevelAfter() > receipt.getLevelBefore(),
+                        receipt.getForces());
+        player.sendPacket(
+                new PacketLevelupCityRsp(
+                        receipt.getSceneId(),
+                        result.level(),
+                        cityId,
+                        result.crystals(),
+                        receipt.getAreaId(),
+                        0));
+        if (result.leveled()) finishOffering(result, receipt.getSceneId(), receipt.getAreaId());
+    }
+
+    private void finishOffering(StatueOffering.Result result, int sceneId, int areaId) {
         for (int force : result.forces()) player.getScene().unlockForce(force);
         player.getQuestManager()
                 .queueEvent(QuestContent.QUEST_CONTENT_CITY_LEVEL_UP, result.cityId(), areaId);

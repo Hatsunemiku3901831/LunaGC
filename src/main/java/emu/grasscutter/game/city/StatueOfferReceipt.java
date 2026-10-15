@@ -24,6 +24,9 @@ public final class StatueOfferReceipt {
             state;
     private int staminaBefore, staminaAfter;
     private List<Reward> rewards = new ArrayList<>();
+    private int version, sceneId, areaId;
+    private String costObjectId;
+    private List<Integer> forces = new ArrayList<>();
 
     public StatueOfferReceipt() {}
 
@@ -62,16 +65,53 @@ public final class StatueOfferReceipt {
         state = 3;
     }
 
+    /** Freeze identities before the intent is saved; old receipts retain version zero. */
+    public void freeze(
+            String costObjectId,
+            int sceneId,
+            int areaId,
+            List<Integer> forces,
+            List<Reward> rewards) {
+        if (version != 0 || state != 1) throw new IllegalStateException("Offering already frozen");
+        this.costObjectId = costObjectId;
+        this.sceneId = sceneId;
+        this.areaId = areaId;
+        this.forces = new ArrayList<>(forces);
+        this.rewards = new ArrayList<>(rewards);
+        version = 1;
+    }
+
     @Entity
     @Getter
     public static final class Reward {
         private int id, count;
+        private int before, after, levelBefore, levelAfter;
+        private String objectId;
+        private boolean virtual;
 
         public Reward() {}
 
         Reward(int id, int count) {
             this.id = id;
             this.count = count;
+        }
+
+        public Reward(
+                int id,
+                int count,
+                int before,
+                int after,
+                int levelBefore,
+                int levelAfter,
+                String objectId,
+                boolean virtual) {
+            this(id, count);
+            this.before = before;
+            this.after = after;
+            this.levelBefore = levelBefore;
+            this.levelAfter = levelAfter;
+            this.objectId = objectId;
+            this.virtual = virtual;
         }
     }
 }

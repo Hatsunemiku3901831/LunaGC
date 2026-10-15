@@ -16,6 +16,8 @@ import java.util.*;
             "city [cityId]",
             "level <cityId> <level>",
             "reset [cityId=8]",
+            "audit <cityId>",
+            "(resume|cancel) <cityId> <operationId>",
             "(lock|unlock|status) [pointId]"
         },
         permission = "player.teleport",
@@ -30,6 +32,32 @@ public final class StatueCommand implements CommandHandler {
         String operation = args.get(0).toLowerCase(Locale.ROOT);
         try {
             switch (operation) {
+                case "audit" -> {
+                    if (args.size() != 2) {
+                        sendUsageMessage(sender);
+                        return;
+                    }
+                    for (var line :
+                            target.getSotsManager().inspectOffering(Integer.parseInt(args.get(1))))
+                        CommandHandler.sendMessage(sender, line);
+                }
+                case "resume", "cancel" -> {
+                    if (args.size() != 3) {
+                        sendUsageMessage(sender);
+                        return;
+                    }
+                    target.getSotsManager()
+                            .recoverOffering(
+                                    Integer.parseInt(args.get(1)),
+                                    args.get(2),
+                                    operation.equals("resume"));
+                    CommandHandler.sendMessage(
+                            sender,
+                            "供奉记录已"
+                                    + (operation.equals("resume") ? "恢复" : "取消")
+                                    + "："
+                                    + args.get(2));
+                }
                 case "city" -> {
                     if (args.size() > 2) {
                         sendUsageMessage(sender);

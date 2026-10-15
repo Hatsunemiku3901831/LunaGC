@@ -135,6 +135,7 @@ final class StatueOffering {
                                 staminaBefore,
                                 staminaAfter,
                                 plan.rewards());
+                StatueOfferRecovery.freeze(player, receipt, source, sceneId, area, plan.forces());
                 info.setPendingOffer(receipt);
                 save.run();
                 if (plan.consumed() > 0) {
@@ -145,7 +146,8 @@ final class StatueOffering {
                 }
                 receipt.paid();
                 save.run();
-                if (!plan.rewards().isEmpty()) grant.accept(plan.rewards());
+                if (grant == null) StatueOfferRecovery.grant(player, receipt, save, saveCost);
+                else if (!plan.rewards().isEmpty()) grant.accept(plan.rewards());
                 boolean leveled = plan.level() > info.getLevel();
                 if (staminaAfter > staminaBefore
                         && (player.getProperty(PlayerProperty.PROP_MAX_STAMINA) != staminaBefore
