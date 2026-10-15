@@ -1,0 +1,75 @@
+{
+  "metadataSha256": "469eccd43aa48fe7a2df4e1caf66fa1268a17f5a4a03fa209e1427e467cb0161",
+  "vectors": [
+    {
+      "index": 0,
+      "encodedStart": 3299087751,
+      "encodedEnd": 4131394562,
+      "start": 0,
+      "end": 1,
+      "ciphertext": "1d",
+      "value": "i",
+      "utf8Valid": true
+    },
+    {
+      "index": 479,
+      "encodedStart": 509256351,
+      "encodedEnd": 1786156826,
+      "start": 9915,
+      "end": 9916,
+      "ciphertext": "7a",
+      "value": ".",
+      "utf8Valid": true
+    },
+    {
+      "index": 24585,
+      "encodedStart": 1702269853,
+      "encodedEnd": 1408591391,
+      "start": 639912,
+      "end": 639948,
+      "ciphertext": "d0ce89b52b27ddb1f1147c0dec96420de74c76ac67035190d7547656f49fcc5df5bb4bc5",
+      "value": "Data/InjectFix/Assembly-CSharp.patch",
+      "utf8Valid": true
+    },
+    {
+      "index": 24592,
+      "encodedStart": 1271379282,
+      "encodedEnd": 2109993014,
+      "start": 640090,
+      "end": 640136,
+      "ciphertext": "303555b6c12b7e4b117f580b069be5d0079753ae8d0ffc2f37ff2958029412151d063fdb800589905a4c3651128d",
+      "value": "Data/InjectFix/Assembly-CSharp-firstpass.patch",
+      "utf8Valid": true
+    },
+    {
+      "index": 86107,
+      "encodedStart": 1020612573,
+      "encodedEnd": 3010180409,
+      "start": 2420838,
+      "end": 2420929,
+      "ciphertext": "861466e1bf5baa28ba4e768924de2bbcf46c6d51a2529223bab9418430d4d5caf4fc5d2bb3541d40f87d4dba3cda4bb5a04d203af34a9d77a18e27ca21df8312bbd02d15ba552ac7b30808d935d56c3db1651b53b15ea1a1ba6a51",
+      "value": "Random Insertion is semantically invalid, since this structure does not guarantee ordering.",
+      "utf8Valid": true
+    },
+    {
+      "index": 1129,
+      "encodedStart": 2450749265,
+      "encodedEnd": 269208828,
+      "start": 31768,
+      "end": 31771,
+      "ciphertext": "7b1c52",
+      "value": "�",
+      "utf8Valid": true
+    },
+    {
+      "index": 6,
+      "encodedStart": 492660850,
+      "encodedEnd": 84707617,
+      "start": 8,
+      "end": 8,
+      "ciphertext": "",
+      "value": "",
+      "utf8Valid": true
+    }
+  ]
+}
