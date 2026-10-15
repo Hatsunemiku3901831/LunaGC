@@ -14,6 +14,7 @@ public class HandlerEvtCreateGadgetNotify extends PacketHandler {
         EvtCreateGadgetNotify notify = EvtCreateGadgetNotify.parseFrom(payload);
 
         var scene = session.getPlayer().getScene();
+        if (scene == null) return;
 
         if (scene.getEntityById(notify.getEntityId()) != null) {
             return;
@@ -24,12 +25,12 @@ public class HandlerEvtCreateGadgetNotify extends PacketHandler {
                 switch (gadgetId) {
 
                     case EntitySolarIsotomaClientGadget.GADGET_ID -> new EntitySolarIsotomaClientGadget(
-                            session.getPlayer().getScene(), session.getPlayer(), notify);
+                            scene, session.getPlayer(), notify);
 
                     default -> new EntityClientGadget(
-                            session.getPlayer().getScene(), session.getPlayer(), notify);
+                            scene, session.getPlayer(), notify);
                 };
 
-        session.getPlayer().getScene().onPlayerCreateGadget(gadget);
+        scene.onPlayerCreateGadget(session.getPlayer(), gadget);
     }
 }

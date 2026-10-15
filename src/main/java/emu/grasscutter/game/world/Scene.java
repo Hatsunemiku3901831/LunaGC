@@ -15,6 +15,7 @@ import emu.grasscutter.game.activity.crucible.CrucibleSceneController;
 import emu.grasscutter.game.activity.salesman.SalesmanSceneController;
 import emu.grasscutter.game.activity.salesman.SalesmanNpcScene;
 import emu.grasscutter.game.activity.aster.AsterSceneController;
+import emu.grasscutter.game.ability.IneffaSummons;
 import emu.grasscutter.game.avatar.Avatar;
 import emu.grasscutter.game.dungeons.DungeonManager;
 import emu.grasscutter.game.dungeons.DungeonSettleListener;
@@ -1430,12 +1431,24 @@ public class Scene {
         this.scriptManager.unregisterGroup(group);
     }
 
+    /** Wire notifications cannot replace existing entities or register after the sender leaves. */
+    public synchronized void onPlayerCreateGadget(Player sender, EntityClientGadget gadget) {
+        if (sender == null || gadget.getOwner() != sender || sender.getScene() != this || gadget.getScene() != this
+                || getEntities().containsKey(gadget.getId())) return;
+        onPlayerCreateGadget(gadget);
+    }
+
     public synchronized void onPlayerCreateGadget(EntityClientGadget gadget) {
         var owner = gadget.getOwner();
 
-        this.addEntityDirectly(gadget);
+        if (!this.addEntityDirectly(gadget)) return;
         owner.getTeamManager().getGadgets().add(gadget);
         if (dungeonBossCleanup.removeLateGadget(gadget)) return;
+        IneffaSummons.created(this, gadget);
+        if (getEntities().get(gadget.getId()) != gadget) {
+            owner.getTeamManager().getGadgets().remove(gadget);
+            return;
+        }
 
         for (var player : this.getPlayers()) {
             if (player != owner) {
@@ -1444,7 +1457,14 @@ public class Scene {
         }
     }
 
-    public void onPlayerDestroyGadget(int entityId) {
+    /** A client may remove only the gadget registered to this exact player session. */
+    public synchronized void onPlayerDestroyGadget(Player sender, int entityId) {
+        if (sender == null || sender.getScene() != this) return;
+        if (getEntities().get(entityId) instanceof EntityClientGadget gadget
+                && gadget.getOwner() == sender) onPlayerDestroyGadget(entityId);
+    }
+
+    public synchronized void onPlayerDestroyGadget(int entityId) {
         GameEntity entity = getEntities().get(entityId);
 
         if (!(entity instanceof EntityClientGadget gadget)) {
@@ -1454,12 +1474,13 @@ public class Scene {
             return;
         }
 
-        this.removeEntityDirectly(gadget);
+        IneffaSummons.destroying(this, gadget);
+        var removed = this.removeEntityDirectly(gadget);
 
         var owner = gadget.getOwner();
         owner.getTeamManager().getGadgets().remove(gadget);
 
-        this.broadcastPacket(
+        if (removed != null && getEntities().get(entityId) == null) this.broadcastPacket(
                 new PacketSceneEntityDisappearNotify(gadget, VisionType.VisionType_VISION_DIE));
     }
 

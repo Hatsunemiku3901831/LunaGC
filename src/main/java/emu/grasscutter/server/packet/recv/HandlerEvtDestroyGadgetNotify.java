@@ -11,6 +11,8 @@ public class HandlerEvtDestroyGadgetNotify extends PacketHandler {
     public void handle(GameSession session, byte[] header, byte[] payload) throws Exception {
         EvtDestroyGadgetNotify notify = EvtDestroyGadgetNotify.parseFrom(payload);
 
-        session.getPlayer().getScene().onPlayerDestroyGadget(notify.getEntityId());
+        var player = session.getPlayer();
+        var scene = player.getScene();
+        if (scene != null) scene.onPlayerDestroyGadget(player, notify.getEntityId());
     }
 }
