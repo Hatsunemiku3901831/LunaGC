@@ -14,7 +14,7 @@ message AvatarEnterSceneInfo {
 	repeated SceneWeaponInfo tps_weapon_list = 13;
 	uint32 weapon_entity_id = 2;
 	uint32 avatar_entity_id = 9;
-	AbilitySyncStateInfo avatar_ability_info = 50000;
-	AbilitySyncStateInfo weapon_ability_info = 50001;
+	AbilitySyncStateInfo avatar_ability_info = 5;
+	AbilitySyncStateInfo weapon_ability_info = 8;
 	uint64 avatar_guid = 12;
 }

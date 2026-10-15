@@ -184,6 +184,18 @@ class SceneTalentSnapshotTest extends QuestTestFixture {
         assertEquals(avatar.getGuid(), proto.getAvatarEnterInfo(0).getAvatarGuid());
         assertEquals(
                 Map.of("Absolute", 7f), values(proto.getAvatarEnterInfo(0).getAvatarAbilityInfo()));
+        // Round-tripping through the same generated schema hid the old 50000 placeholder.
+        var nativeEntry =
+                com.google.protobuf.CodedInputStream.newInstance(
+                        proto.getAvatarEnterInfo(0).toByteArray());
+        AbilitySyncStateInfo nativeAvatarInfo = null;
+        for (int tag; (tag = nativeEntry.readTag()) != 0; ) {
+            if (tag == 42)
+                nativeAvatarInfo = AbilitySyncStateInfo.parseFrom(nativeEntry.readBytes());
+            else nativeEntry.skipField(tag);
+        }
+        assertNotNull(nativeAvatarInfo, "Current client reads avatar ability snapshot at field 5");
+        assertEquals(Map.of("Absolute", 7f), values(nativeAvatarInfo));
     }
 
     @Test

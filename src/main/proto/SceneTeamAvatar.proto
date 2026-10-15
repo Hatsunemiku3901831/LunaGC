@@ -14,13 +14,13 @@ import "ServerBuff.proto";
 message SceneTeamAvatar {
 	bool is_reconnect = 3;
 	bool is_player_cur_avatar = 50000;
-	AbilitySyncStateInfo avatar_ability_info = 50001;
+	AbilitySyncStateInfo avatar_ability_info = 14;
 	uint32 weapon_entity_id = 12;
 	AbilityControlBlock ability_control_block = 11;
 	AvatarInfo avatar_info = 4;
 	uint32 player_uid = 13;
 	uint32 entity_id = 8;
-	AbilitySyncStateInfo weapon_ability_info = 50002;
+	AbilitySyncStateInfo weapon_ability_info = 10;
 	repeated ServerBuff server_buff_list = 9;
 	SceneEntityInfo scene_entity_info = 15;
 	uint64 avatar_guid = 5;
