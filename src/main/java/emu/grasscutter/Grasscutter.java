@@ -319,7 +319,8 @@ public final class Grasscutter {
                 }
             }
 
-            consoleLineReader = LineReaderBuilder.builder().terminal(terminal).build();
+            consoleLineReader = LineReaderBuilder.builder().terminal(terminal)
+                    .completer(new ConsoleCommandCompleter()).build();
         }
 
         return consoleLineReader;
