@@ -2,13 +2,12 @@ package emu.grasscutter.server.packet.send;
 
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.*;
-import java.io.IOException;
+
 import java.util.List;
 
 public class PacketWidgetGadgetDataNotify extends BasePacket {
 
-    public PacketWidgetGadgetDataNotify(int gadgetId, List<Integer> gadgetEntityIdList)
-            throws IOException {
+    public PacketWidgetGadgetDataNotify(int gadgetId, List<Integer> gadgetEntityIdList) {
         super(PacketOpcodes.WidgetGadgetDataNotify);
 
         WidgetGadgetDataNotifyOuterClass.WidgetGadgetDataNotify proto =
@@ -23,7 +22,7 @@ public class PacketWidgetGadgetDataNotify extends BasePacket {
         this.setData(proto);
     }
 
-    public PacketWidgetGadgetDataNotify(int gadgetId, int gadgetEntityIdList) throws IOException {
+    public PacketWidgetGadgetDataNotify(int gadgetId, int gadgetEntityIdList) {
         super(PacketOpcodes.WidgetGadgetDataNotify);
 
         WidgetGadgetDataNotifyOuterClass.WidgetGadgetDataNotify proto =

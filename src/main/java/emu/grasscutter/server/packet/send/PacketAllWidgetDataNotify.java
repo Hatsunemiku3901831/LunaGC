@@ -18,7 +18,7 @@ public class PacketAllWidgetDataNotify extends BasePacket {
                 AllWidgetDataNotify.newBuilder()
                         .setLunchBoxData(player.getWidgets().lunchBox())
                         .addAllOneoffGatherPointDetectorDataList(List.of())
-                        .addAllCoolDownGroupDataList(List.of())
+                        .addAllCoolDownGroupDataList(player.getWidgets().placements().cooldowns())
                         .addAllAnchorPointList(List.of())
                         .addAllClientCollectorDataList(List.of())
                         .addAllNormalCoolDownDataList(List.of());

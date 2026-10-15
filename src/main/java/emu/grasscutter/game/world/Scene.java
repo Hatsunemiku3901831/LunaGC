@@ -316,7 +316,7 @@ public class Scene {
 
                 this.removePlayerAvatars(player);
 
-                for (EntityBaseGadget gadget : player.getTeamManager().getGadgets()) {
+                for (EntityBaseGadget gadget : new ArrayList<>(player.getTeamManager().getGadgets())) {
                     this.removeEntity(gadget);
                 }
 

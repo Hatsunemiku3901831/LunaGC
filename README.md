@@ -12,6 +12,9 @@ GM／控制台的 `build` 命令支持大世界持久放置、临时放置、查
 `trackmat` 支持材料 ID／完整名称的采集点标记与清理，自动避让个人标记；
 默认包含 20 种材料、560 个点，见[材料采集点标记](docs/MATERIAL_TRACKING_2026-10-15.md)。
 
+尘歌壶与「烟花筒」已按当前协议和资源接入放置、回收、独立冷却及联机归属，
+实现和客户端验收范围见[小道具放置](docs/WIDGET_PLACEMENT_2026-10-15.md)。
+
 `sound list [filter] [--page N]` 查询本次运行观察到的音效，每页 20 条；控制台支持实时 Tab 补全。
 播放使用 `sound @UID <name> [x y z]`，可用 `audio` 别名，见[音效目录与补全](docs/OBSERVED_SOUND_CATALOG_2026-10-15.md)。
 

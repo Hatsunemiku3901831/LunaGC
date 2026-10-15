@@ -17,6 +17,8 @@ import java.util.*;
 public final class WidgetCatalog {
     public record GroupAbility(String name, String override) {}
 
+    public record Creator(int gadgetId, int cooldownGroup, long cooldownMillis) {}
+
     private record Group(boolean team, List<GroupAbility> abilities) {}
 
     private record FoodSlot(Set<Integer> ids, Set<String> effects) {}
@@ -32,15 +34,27 @@ public final class WidgetCatalog {
 
     private final Map<Integer, Entry> entries;
     private final Map<Integer, FoodSlot> foodSlots;
+    private final Map<Integer, Creator> creators;
     private static volatile WidgetCatalog current;
 
-    private WidgetCatalog(Map<Integer, Entry> entries, Map<Integer, FoodSlot> foodSlots) {
+    private WidgetCatalog(
+            Map<Integer, Entry> entries,
+            Map<Integer, FoodSlot> foodSlots,
+            Map<Integer, Creator> creators) {
         this.entries = Map.copyOf(entries);
         this.foodSlots = Map.copyOf(foodSlots);
+        this.creators = Map.copyOf(creators);
     }
 
     public Entry get(int id) {
         return entries.get(id);
+    }
+
+    /**
+     * These two reusable creators already have a server placement path. Other effects are separate.
+     */
+    public Creator creator(int materialId) {
+        return creators.get(materialId);
     }
 
     public boolean available() {
@@ -146,11 +160,10 @@ public final class WidgetCatalog {
         }
         var entries = new HashMap<Integer, Entry>();
         var foods = new HashMap<Integer, FoodSlot>();
+        var creators = new HashMap<Integer, Creator>();
         try (var reader = Files.newBufferedReader(config)) {
-            var map =
-                    JsonParser.parseReader(reader)
-                            .getAsJsonObject()
-                            .getAsJsonObject("widgetConfigMap");
+            var root = JsonParser.parseReader(reader).getAsJsonObject();
+            var map = root.getAsJsonObject("widgetConfigMap");
             for (var entry : map.entrySet()) {
                 var row = entry.getValue().getAsJsonObject();
                 var tags = new TreeSet<Integer>();
@@ -160,6 +173,29 @@ public final class WidgetCatalog {
                         if ("FlyAttach".equals(tag.getAsString())) tags.add(1);
                     }
                 int id = Integer.parseInt(entry.getKey());
+                if ((id == 220026 || id == 220047)
+                        && "RetractAndCreate".equals(text(row, "doBagType"))
+                        && (!row.has("isConsumeMaterial")
+                                || !row.get("isConsumeMaterial").getAsBoolean())
+                        && row.has("gadgetId")
+                        && row.has("cdGroup")) {
+                    int gadget = row.get("gadgetId").getAsInt();
+                    int groupId = row.get("cdGroup").getAsInt();
+                    var groupsConfig = root.getAsJsonObject("cdGroupConfigMap");
+                    var cooldown =
+                            groupsConfig == null
+                                    ? null
+                                    : groupsConfig.getAsJsonObject(Integer.toString(groupId));
+                    if (gadget > 0
+                            && groupId > 0
+                            && cooldown != null
+                            && cooldown.has("coolDownSuccess")) {
+                        double seconds = cooldown.get("coolDownSuccess").getAsDouble();
+                        if (Double.isFinite(seconds) && seconds >= 0 && seconds <= 86400)
+                            creators.put(
+                                    id, new Creator(gadget, groupId, Math.round(seconds * 1000)));
+                    }
+                }
                 if (id == LUNCH_BOX && row.has("healMaterials") && row.has("reviveMaterials")) {
                     var heal = row.getAsJsonObject("healMaterials");
                     foods.put(
@@ -190,8 +226,9 @@ public final class WidgetCatalog {
             Grasscutter.getLogger().warn("Could not read widget configuration {}", config, invalid);
             entries.clear();
             foods.clear();
+            creators.clear();
         }
-        return new WidgetCatalog(entries, foods);
+        return new WidgetCatalog(entries, foods, creators);
     }
 
     private static Set<Integer> foodIds(JsonObject row, String key) {

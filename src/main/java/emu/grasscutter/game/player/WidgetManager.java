@@ -26,6 +26,7 @@ public final class WidgetManager {
             int id, String name, String override, Ability instance, boolean owned) {}
 
     private final Player player;
+    private final WidgetPlacementManager placements;
     private final Map<String, Installed> active = new LinkedHashMap<>();
     private final Map<String, Integer> reserved = new HashMap<>();
     private EntityTeam boundTeam;
@@ -36,6 +37,11 @@ public final class WidgetManager {
 
     public WidgetManager(Player player) {
         this.player = player;
+        this.placements = new WidgetPlacementManager(player, System::currentTimeMillis);
+    }
+
+    public WidgetPlacementManager placements() {
+        return placements;
     }
 
     private <T> T inScene(Supplier<T> action) {

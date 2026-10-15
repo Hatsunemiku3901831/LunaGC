@@ -29,3 +29,10 @@
 证据：`debug/aster-mid-20261011/batch222/interval-proof.json`、`fuel-native-verification.json`、`fuel-mixin-red.xml`、`fuel-mixin-results/`、`fuel-mixin-verification.json`。
 
 日常运行服务未替换。完整飞行／骑乘、耗尽动画、车辆消息字段、无限燃素和燃素球的客户端验收仍需继续。
+
+## 本轮客户端输入复核
+
+`batch254/fuel-control-evidence.json` 再次校验 executable、global-metadata 和 startup-metadata，
+三个 SHA-256 与既有白名单完全一致。周期类型 31489 保留目标字段 `BBIPIGDBGFJ`，
+普通动作类型 87220 只有数值、模式及倍率三个字段，未将周期目标字段误加为普通动作的原始字段别名。
+当前原生 tick 的非 Cost 分支仍未提供完整算法，未找到可直接配对的 ILFix 文件，持续 Set 的边界不变。
