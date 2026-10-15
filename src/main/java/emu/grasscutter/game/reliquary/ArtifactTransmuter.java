@@ -198,6 +198,25 @@ public final class ArtifactTransmuter {
         return new ArtifactReshape(player, save, saveItem).select(request);
     }
 
+    public List<String> inspect() {
+        return new ArtifactTransmuterRecovery(player, save, saveItem).inspect();
+    }
+
+    public void reconcile(String operationId, boolean resume) {
+        synchronized (player.getInventory()) {
+            new ArtifactTransmuterRecovery(player, save, saveItem).reconcile(operationId, resume);
+            try {
+                notifyData(player.getArtifactTransmuterData());
+            } catch (RuntimeException failure) {
+                Grasscutter.getLogger()
+                        .warn(
+                                "Artifact recovery committed but notification failed for UID {}",
+                                player.getUid(),
+                                failure);
+            }
+        }
+    }
+
     public ReliquaryOfferDefineRsp define(ReliquaryOfferDefineReq request) {
         var response =
                 ReliquaryOfferDefineRsp.newBuilder()

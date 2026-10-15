@@ -24,7 +24,7 @@ public final class ArtifactTransmuterReceipt {
             rewardCount;
     private long cycleEndTime, progressBefore, progressAfter;
     private List<Cost> costs = new ArrayList<>();
-    private int purchaseId, setId, definedBefore, definedAfter, mainPropId;
+    private int purchaseId, setId, definedBefore, definedAfter, mainPropId, definedUpgradeGuarantee;
     private String outputObjectId;
     private List<Integer> appendPropIds = new ArrayList<>();
     private List<Integer> selectedPropIds = new ArrayList<>();
@@ -77,6 +77,7 @@ public final class ArtifactTransmuterReceipt {
         receipt.definedAfter = receipt.definedBefore + 1;
         receipt.outputObjectId = item.ensurePersistenceId().toHexString();
         receipt.mainPropId = item.getMainPropId();
+        receipt.definedUpgradeGuarantee = item.getDefinedUpgradeGuarantee();
         receipt.appendPropIds = new ArrayList<>(item.getAppendPropIdList());
         receipt.selectedPropIds = new ArrayList<>(item.getPurchasedAppendPropIdList());
         return receipt;

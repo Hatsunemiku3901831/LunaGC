@@ -213,6 +213,13 @@ public class GameItem {
         return id;
     }
 
+    /** Restore an unowned reserved output without assigning it a second economic identity. */
+    public synchronized void restorePersistenceId(ObjectId reservedId) {
+        if (reservedId == null || id != null || ownerId != 0 || guid != 0)
+            throw new IllegalStateException("Only a new unowned item can restore its reserved ID");
+        id = reservedId;
+    }
+
     public ItemType getItemType() {
         return this.itemData.getItemType();
     }
