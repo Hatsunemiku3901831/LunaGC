@@ -186,14 +186,10 @@ class StatueOfferingTest extends QuestTestFixture {
     @Test
     void realOfferingRequestReachesTheCurrentRegionUpgradePath() throws Exception {
         stock(107023, 20);
-        var request =
-                emu.grasscutter.net.proto.LevelupCityReqOuterClass.LevelupCityReq.newBuilder()
-                        .setSceneId(3)
-                        .setAreaId(33)
-                        .setItemNum(20)
-                        .build();
+        // Current native writer 0x14939bb80: item_num=1, scene_id=5, area_id=8.
+        byte[] request = {0x08, 20, 0x28, 3, 0x40, 33};
         new emu.grasscutter.server.packet.recv.HandlerLevelupCityReq()
-                .handle(player.getSession(), new byte[0], request.toByteArray());
+                .handle(player.getSession(), new byte[0], request);
         assertEquals(0, response().getRetcode());
         assertEquals(2, response().getCityInfo().getLevel());
         assertEquals(60, reward(201));

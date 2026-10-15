@@ -43,9 +43,35 @@
 `statue-final-results/`、`statue-verification.json` 和真实资源统计。
 JAR SHA-256：`4c4a3756bd9f314fe85e08a847f8cf98f27da72391fba8af3559113968280c94`。
 
+## 7.1 原生协议编码核对
+
+随后使用当前客户端原生包号 getter、请求 writer、响应 reader 和嵌套城市 writer 核对字段编码：
+
+| 消息 | 原生依据 | 字段编码 |
+| --- | --- | --- |
+| LevelupCityReq | 类型 32379，getter `0x14939bb40`，writer `0x14939bb80` | 包号 8352；数量 1、场景 5、区域 8，均为 uint32 |
+| LevelupCityRsp | 类型 82546，getter `0x1492c54d0`，reader `0x1492c5620` | 包号 26402；场景 1、区域 3、城市消息 5、返回码 6 |
+| CityInfo | 类型 70464，writer `0x14af83ee0`，reader `0x14af84610` | 结晶数 3、等级 5、城市 7，均为 uint32 |
+
+当前 proto 与上述编码一致，没有修改 schema 或包号。
+新增 5 项独立字节样本检查，覆盖 handler 注册、请求、嵌套城市及非零错误返回；
+原有真实供奉请求测试改为输入原生 writer 对应的独立字节序列，避免仅用同一生成器自证。
+相关 **26 项／2 套件**通过，零失败、错误和跳过，JAR 构建通过；生产类没有字节变化。
+
+三个输入文件均经 `tools/extract_client_type_names.py` 的固定 SHA-256 校验：
+
+- YuanShen.exe：`7f89938da606c1281659607d464702cddb9a09a7d4320a196630f60a811ec38e`
+- global-metadata.dat：`469eccd43aa48fe7a2df4e1caf66fa1268a17f5a4a03fa209e1427e467cb0161`
+- startup-metadata.dat：`90848967d3f9432e7a13caffcec999bf457ac3be1f2ae86336443a63acbaadcf`
+
+radare2 成功打开文件后，反汇编与关闭调用均返回 `Transport closed`；
+随后使用只读 Capstone 与 PE 函数范围完成上述核对。
+证据在 `debug/aster-mid-20261011/batch235/` 的 `city-native-inputs.json`、
+三类字段／方法记录、`native-*.asm`、`city-protocol-final-results/` 和 `city-protocol-verification.json`。
+
 ## 尚未验收
 
-本次验证服务端逻辑、既有消息入口和数据库效果，未新增或宣称完成 LevelupCity／CityInfo 的当前客户端原生字段配对。
+原生协议编码通过不等于客户端流程已经验收。
 客户端神像入口、动画、ACTIVATE_ITEM 引导及相关场景脚本仍需实机核对。
 资源中存在 8 号地区记录不代表对应客户端场景已经完整可玩。
 神像管理命令、异常供奉记录恢复，以及参考奖励倍率仍列为后续事项。
