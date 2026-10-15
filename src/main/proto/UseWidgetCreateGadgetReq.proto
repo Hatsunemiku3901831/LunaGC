@@ -1,4 +1,4 @@
-// Recovered from UseWidgetCreateGadgetReqOuterClass.java's embedded descriptor; wire schema may predate 7.1.
+// Verified against current native type 58369, command 20020.
 syntax = "proto3";
 
 package recovered.p_UseWidgetCreateGadgetReq;
@@ -7,7 +7,7 @@ option java_outer_classname = "UseWidgetCreateGadgetReqOuterClass";
 import "Vector.proto";
 
 message UseWidgetCreateGadgetReq {
-  .Vector pos = 13;
-  .Vector rot = 3;
-  uint32 material_id = 11;
+  .Vector pos = 14;
+  .Vector rot = 15;
+  uint32 material_id = 4;
 }

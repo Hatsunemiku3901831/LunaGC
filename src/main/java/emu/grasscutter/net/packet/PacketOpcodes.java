@@ -258,7 +258,7 @@ public final class PacketOpcodes {
     public static final int SetUpLunchBoxWidgetReq = 23773;
     public static final int SetUpLunchBoxWidgetRsp = 29400;
     public static final int WidgetDoBagReq = 27964;
-    public static final int WidgetDoBagRsp = -26;
+    public static final int WidgetDoBagRsp = 21894;
     public static final int WidgetCoolDownNotify = 3761;
     public static final int AllWidgetDataNotify = 599;
     public static final int WidgetGadgetDataNotify = 1325;
@@ -3275,7 +3275,7 @@ public final class PacketOpcodes {
     public static final int UnnamedOpcode4599 = -100031;
     public static final int UnnamedOpcode98 = -100032;
     public static final int UnnamedOpcode9980 = -100033;
-    public static final int UseWidgetCreateGadgetRsp = -100034;
+    public static final int UseWidgetCreateGadgetRsp = 7173;
 
     public static final HashSet<Integer> BANNED_PACKETS =
             new HashSet<>() {

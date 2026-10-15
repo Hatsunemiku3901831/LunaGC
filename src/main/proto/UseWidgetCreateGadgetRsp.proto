@@ -1,4 +1,4 @@
-// Recovered from UseWidgetCreateGadgetRspOuterClass.java's embedded descriptor; wire schema may predate 7.1.
+// Verified against current native type 41419, command 7173.
 syntax = "proto3";
 
 package recovered.p_UseWidgetCreateGadgetRsp;
@@ -6,6 +6,6 @@ option java_package = "emu.grasscutter.net.proto";
 option java_outer_classname = "UseWidgetCreateGadgetRspOuterClass";
 
 message UseWidgetCreateGadgetRsp {
-  uint32 material_id = 14;
-  int32 retcode = 12;
+  uint32 material_id = 11;
+  int32 retcode = 5;
 }

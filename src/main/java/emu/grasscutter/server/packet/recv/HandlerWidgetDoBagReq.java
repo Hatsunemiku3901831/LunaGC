@@ -26,7 +26,7 @@ public class HandlerWidgetDoBagReq extends PacketHandler {
             case 220047 -> this.spawnVehicle(session, 70800058, pos, rot);
             default -> {}
         }
-        session.send(new PacketWidgetDoBagRsp());
+        session.send(new PacketWidgetDoBagRsp(req.getMaterialId()));
     }
 
     private void spawnVehicle(GameSession session, int gadgetId, Position pos, Position rot)
