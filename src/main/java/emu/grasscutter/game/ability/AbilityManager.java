@@ -85,6 +85,7 @@ public final class AbilityManager extends BasePlayerManager {
             AbilityModifierAction.Type.AvatarShareCDSkillStart,
             AbilityModifierAction.Type.ActivitySkillShareCDStart,
             AbilityModifierAction.Type.ClearShareCD,
+            AbilityModifierAction.Type.TPSSupplyAmmo,
             AbilityModifierAction.Type.SetGlobalValue,
             AbilityModifierAction.Type.TriggerVehicleOff);
 
@@ -113,6 +114,7 @@ public final class AbilityManager extends BasePlayerManager {
             AbilityModifierAction.Type.AvatarShareCDSkillStart,
             AbilityModifierAction.Type.ActivitySkillShareCDStart,
             AbilityModifierAction.Type.ClearShareCD,
+            AbilityModifierAction.Type.TPSSupplyAmmo,
             AbilityModifierAction.Type.CopyGlobalValue,
             AbilityModifierAction.Type.TriggerVehicleOff);
 
@@ -747,7 +749,7 @@ public final class AbilityManager extends BasePlayerManager {
                     && AnimationModifierCallbacks.isCallback(ability.getData(), action)) return;
             boolean owned = entity.getAbilityPeriodicHealing().ownsAction(ability,head.getInstancedModifierId(),action)
                     || player.getBuffManager().ownsHealing(ability,action);
-            if (AbilityCooldownInvocation.isCooldownAction(action)) {
+            if (AbilityCooldownInvocation.isTrackedAction(action)) {
                 if (head.getInstancedModifierId() != 0 && invokedModifier == null) return;
                 if (invokedModifier != null && AbilityCooldownInvocation.isModifierCallback(ability.getData(), action)
                         && !invokedModifier.ownsCooldownCallback(action)) return;

@@ -17,6 +17,7 @@ import emu.grasscutter.net.proto.AbilityMetaUpdateTpsWeaponAmmunitionOuterClass.
 import emu.grasscutter.net.proto.AbilitySyncStateInfoOuterClass.AbilitySyncStateInfo;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.net.proto.SceneWeaponInfoOuterClass.SceneWeaponInfo;
+import emu.grasscutter.net.proto.TpsAmmunitionChangeNotifyOuterClass.*;
 import emu.grasscutter.net.proto.TpsEquipChangeNotifyOuterClass.TpsEquipChangeNotify;
 import emu.grasscutter.net.proto.TpsRegionalPlaySupplyInfoNotifyOuterClass.*;
 import emu.grasscutter.net.proto.TpsWeaponAmmunitionInfoOuterClass.TpsWeaponAmmunitionInfo;
@@ -380,6 +381,35 @@ public final class TpsWeaponSystem {
                 player.save();
             }
             return after;
+        }
+    }
+
+    /** Resource actions award totals; the client's positive pickup requests cannot award ammo. */
+    public static boolean supplyAmmunition(EntityAvatar recipient, int id, int amount) {
+        var player = recipient == null ? null : recipient.getPlayer();
+        if (player == null || amount < 0) return false;
+        synchronized (player) {
+            var scene = player.getScene();
+            if (scene == null
+                    || recipient.getScene() != scene
+                    || recipient.isDead()
+                    || currentAvatar(player) != recipient
+                    || scene.getEntities().get(recipient.getId()) != recipient
+                    || getWornWeapons(recipient.getAvatar()).isEmpty()
+                    || !GameData.getTpsAmmunitionDataMap().containsKey(id)) return false;
+            int before = getReserve(player, id);
+            int gained = changeReserve(player, id, amount) - before;
+            if (gained > 0) {
+                var packet = new BasePacket(PacketOpcodes.TpsAmmunitionChangeNotify);
+                packet.setData(
+                        TpsAmmunitionChangeNotify.newBuilder()
+                                .addAmmunitionList(
+                                        TpsAmmunitionChangeNotifyEntry.newBuilder()
+                                                .setAmmunitionConfigId(id)
+                                                .setChangeCount(gained)));
+                player.sendPacket(packet);
+            }
+            return true;
         }
     }
 

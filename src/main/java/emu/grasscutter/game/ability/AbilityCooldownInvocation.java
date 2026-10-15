@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.function.BooleanSupplier;
 
 /**
- * A modifier application and its client confirmations share one cooldown decision per recipient.
+ * A modifier application and its client confirmations share cooldown and ammo-supply decisions.
  */
 public final class AbilityCooldownInvocation {
     private static final ThreadLocal<Scope> current = new ThreadLocal<>();
@@ -43,6 +43,11 @@ public final class AbilityCooldownInvocation {
                     ClearShareCD -> true;
             default -> false;
         };
+    }
+
+    public static boolean isTrackedAction(AbilityModifierAction action) {
+        return isCooldownAction(action)
+                || action != null && action.type == AbilityModifierAction.Type.TPSSupplyAmmo;
     }
 
     public static Scope capture() {
@@ -136,7 +141,7 @@ public final class AbilityCooldownInvocation {
         if (actions == null || depth > 32 || result.size() > 256) return;
         for (var action : actions) {
             if (action == null || !path.add(action)) continue;
-            if (isCooldownAction(action)) result.add(action);
+            if (isTrackedAction(action)) result.add(action);
             // Repeated and random-queue branches may legitimately execute one object more than
             // once. Their occurrences need their own identity; do not collapse them here.
             if (action.type == AbilityModifierAction.Type.Predicated

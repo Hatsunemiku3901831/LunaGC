@@ -103,6 +103,7 @@ public class AbilityModifier implements Serializable {
             AddSpecialEnergy,
             GetHPPaidDebts,
             ChangePhlogiston,
+            TPSSupplyAmmo,
             AddGlobalValue,
             AddGlobalValueToTarget,
             AddRegionalPlayVarValue,
@@ -547,6 +548,15 @@ public class AbilityModifier implements Serializable {
             return useRatio != null ? useRatio : Boolean.TRUE.equals(rawPhlogistonUseRatio);
         }
         public int configID;
+
+        @SerializedName(value = "tpsSupplyAmount", alternate = "EMNMAKMAKLM")
+        public DynamicFloat tpsSupplyAmount;
+        @SerializedName(value = "tpsSupplyAmmunitionId", alternate = "NHCCEJKBOPB")
+        public int tpsSupplyAmmunitionId;
+        @SerializedName(value = "tpsSupplyUseExplicitAmmoId", alternate = "FMGHPKANDIA")
+        public Boolean tpsSupplyUseExplicitAmmoId;
+        @SerializedName(value = "tpsSupplyUseBonus", alternate = "DBPIABFDELD")
+        public boolean tpsSupplyUseBonus;
 
         public DynamicFloat valueRangeMin;
         public DynamicFloat valueRangeMax;
