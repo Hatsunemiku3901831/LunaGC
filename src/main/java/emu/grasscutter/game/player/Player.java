@@ -1492,6 +1492,7 @@ public class Player implements PlayerHook, FieldFetch {
         this.getEnterHomeRequests().values().removeIf(this::expireEnterHomeRequest);
 
         this.getBuffManager().onTick();
+        this.getSotsManager().onTick(System.currentTimeMillis());
 
         if (this.getWorld() != null) {
 
@@ -1670,6 +1671,7 @@ public class Player implements PlayerHook, FieldFetch {
     }
 
     public void onLogin() {
+        this.getSotsManager().startRecovery();
         this.getTeamManager().repairPersistentTeams();
 
         // Union the defaults in on every login, not just when the player has none. A save made
@@ -1820,6 +1822,8 @@ public class Player implements PlayerHook, FieldFetch {
 
     public void onLogout() {
         try {
+
+            this.getSotsManager().stopRecovery();
 
             this.getServer().getCrucibleMatchSystem().cancel(this);
 

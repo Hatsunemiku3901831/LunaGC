@@ -1,7 +1,7 @@
 # 神像回复与泉水结算
 
 核对 AstaPS 固定提交 `7cc148d1f752a43d4b9146b3b73f26875902546f` 的神像回复处理后，
-先修正本地治疗与泉水结算；距离触发入口随后单独接入。
+接入回复结算修正和基于玩家 tick 的距离触发。
 
 ## 当前修正
 
@@ -29,5 +29,44 @@
 证据：`debug/aster-mid-20261011/batch240/statue-healing-red-results/`、
 `statue-healing-boundary-red-results/`、`statue-healing-final-results/` 和 `statue-healing-verification.json`。
 
-当前本地进入／离开通知包号为负值，尚不能依靠客户端通知触发回复。
-距离触发和当前客户端实际画面仍待下一步接入、验收；日常运行服务未替换。
+## 距离触发与生命周期
+
+本地进入／离开通知包号仍为负值，因此通过现有 `Player.onTick()` 检测实际位置。
+查询当前场景的神像点位，使用实际传送位置；缺少时使用点位位置。
+只对玩家已发现或资源默认开放、且未被任务强锁的神像触发。
+角色、场景、世界及在线会话需一致，坏坐标和无效半径不产生回复。
+
+首次进入等待 2.5 秒，之后每 15 秒执行一次回复；每次都重新验证位置和解锁状态。
+进入时沿用已有队伍复活流程；持续回复尊重自动回复开关与比例。
+离开范围、场景过渡、会话失效及资源点位替换会取消旧周期。
+退出登录后明确停止，后续遗留 tick 不能重新启动；重新登录时恢复检测。
+现有进入／离开处理器也统一验证实际位置，不能用远距离通知直接启动治疗。
+
+在现有 `server.game.gameOptions` 下可设置：
+
+```json
+{
+  "statueRecovery": {
+    "enabled": true,
+    "radius": 15.0
+  }
+}
+```
+
+默认启用距离触发。15 个世界坐标单位来自参考库的兼容取值，尚未核对当前客户端的精确触发边界。
+不再为每个玩家建立独立 Timer，也不保留首次查询后永久不变的神像点位缓存。
+优先使用资源的场景索引；资源行替换可供下次 tick 读取。
+
+新增 15 项检查：初始 14 项全部因缺少距离入口或真实玩家 tick 委派失败；
+随后补充自动回复关闭时的持续复活限制，并锁定退出后重启周期的问题。
+最终距离、真实 `Player.onTick()` 路由、回复结算、供奉及管理命令相关
+**65 项／5 套件**通过，零失败、错误和跳过，JAR 构建通过。
+修改源码、编译类和 JAR 字节一致；仅按预期删除旧 `AutoRecoverTimerTick` 编译类。
+
+证据：`debug/aster-mid-20261011/batch241/statue-proximity-red-results/`、
+`statue-proximity-settings-red-results/`、`statue-proximity-lifecycle-red-results/`、
+`statue-proximity-final-results/` 和 `statue-proximity-verification.json`。
+JAR SHA-256：`0c503659d474ca6bb27633093e97c271d977a45478375ab4661fe376ffd93dda`。
+
+当前客户端实际画面、精确区域边界及相关通知协议仍待验收；日常运行服务未替换。
+参考库的免泉水增强模式尚未接入，当前保留实际泉水预算。

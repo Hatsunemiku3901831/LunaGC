@@ -459,6 +459,7 @@ public class ConfigContainer {
         public ResinOptions resinOptions = new ResinOptions();
         public Rates rates = new Rates();
         public StatueRewardOptions statueRewards = new StatueRewardOptions();
+        public StatueRecoveryOptions statueRecovery = new StatueRecoveryOptions();
         public TowerOptions tower = new TowerOptions();
 
         public HandbookOptions handbook = new HandbookOptions();
@@ -490,6 +491,12 @@ public class ConfigContainer {
             public boolean evenlyDistribute = true;
             /** City ID -> item ID -> positive integer multiplier; 1 retains the original level row. */
             public Map<Integer, Map<Integer, Integer>> cityItemMultipliers = new LinkedHashMap<>();
+        }
+
+        public static class StatueRecoveryOptions {
+            public boolean enabled = true;
+            /** Reference proximity radius; client region notifications are not required. */
+            public double radius = 15.0;
         }
 
         /** Spiral Abyss. */

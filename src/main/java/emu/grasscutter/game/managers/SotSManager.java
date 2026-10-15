@@ -4,6 +4,7 @@ import ch.qos.logback.classic.Logger;
 
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
+import emu.grasscutter.data.binout.ScenePointEntry;
 import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.data.excels.*;
 import emu.grasscutter.game.city.CityInfoData;
@@ -26,8 +27,10 @@ public class SotSManager extends BasePlayerManager {
     public static final int GlobalMaximumSpringVolume =
             PlayerProperty.PROP_MAX_SPRING_VOLUME.getMax();
     private final Logger logger = Grasscutter.getLogger();
-    private final boolean enablePriorityHealing = false;
-    private Timer autoRecoverTimer;
+    private emu.grasscutter.game.world.Scene recoveryScene;
+    private int recoveryPoint;
+    private long nextRecoveryAt;
+    private boolean recoveryStopped;
     private boolean springHealing;
     private final Runnable persistOffer;
     private final java.util.function.Consumer<List<ItemParamData>> deliverOffer;
@@ -116,20 +119,126 @@ public class SotSManager extends BasePlayerManager {
     }
 
     public void handleEnterTransPointRegionNotify() {
-        logger.trace("Player entered statue region");
-        autoRevive();
-        if (autoRecoverTimer == null) {
-            autoRecoverTimer = new Timer();
-            autoRecoverTimer.schedule(new AutoRecoverTimerTick(), 2500, 15000);
-        }
+        onTick(System.currentTimeMillis());
     }
 
     public void handleExitTransPointRegionNotify() {
-        logger.trace("Player left statue region");
-        if (autoRecoverTimer != null) {
-            autoRecoverTimer.cancel();
-            autoRecoverTimer = null;
+        onTick(System.currentTimeMillis());
+    }
+
+    /** The existing player tick owns recovery; no per-player timer survives a scene or logout. */
+    public void onTick(long now) {
+        synchronized (player) {
+            try {
+                if (recoveryStopped || !player.isOnline() || now < 0) {
+                    resetRecovery();
+                    return;
+                }
+                refillSpringVolume();
+                var scene = player.getScene();
+                var options = Grasscutter.getConfig().server.game.gameOptions.statueRecovery;
+                double radius = options == null ? 15d : options.radius;
+                double limit = radius * radius;
+                var current = player.getTeamManager().getCurrentAvatarEntity();
+                if (options != null && !options.enabled
+                        || scene == null
+                        || scene.getWorld() != player.getWorld()
+                        || !scene.getPlayers().contains(player)
+                        || current == null
+                        || current.getScene() != scene
+                        || current.getPlayer() != player
+                        || radius <= 0
+                        || !Double.isFinite(limit)) {
+                    resetRecovery();
+                    return;
+                }
+                int point = nearestRecoveryPoint(scene.getId(), limit);
+                if (point <= 0) {
+                    resetRecovery();
+                    return;
+                }
+                if (recoveryScene != scene || recoveryPoint != point) {
+                    recoveryScene = scene;
+                    recoveryPoint = point;
+                    nextRecoveryAt = nextRecovery(now, 2500);
+                    autoRevive();
+                }
+                if (now < nextRecoveryAt) return;
+                nextRecoveryAt = nextRecovery(now, 15000);
+                if (!getIsAutoRecoveryEnabled()) return;
+                autoRevive();
+                for (var avatar : new ArrayList<>(player.getTeamManager().getActiveTeam()))
+                    checkAndHealAvatar(avatar);
+            } catch (RuntimeException error) {
+                resetRecovery();
+                logger.error("Statue proximity recovery failed for UID {}", player.getUid(), error);
+            }
         }
+    }
+
+    public void stopRecovery() {
+        synchronized (player) {
+            recoveryStopped = true;
+            resetRecovery();
+        }
+    }
+
+    public void startRecovery() {
+        synchronized (player) {
+            recoveryStopped = false;
+            resetRecovery();
+        }
+    }
+
+    private void resetRecovery() {
+        recoveryScene = null;
+        recoveryPoint = 0;
+        nextRecoveryAt = 0;
+    }
+
+    private static long nextRecovery(long now, int delay) {
+        return now > Long.MAX_VALUE - delay ? Long.MAX_VALUE : now + delay;
+    }
+
+    private int nearestRecoveryPoint(int scene, double limit) {
+        var position = player.getPosition();
+        if (position == null
+                || !Float.isFinite(position.getX())
+                || !Float.isFinite(position.getY())
+                || !Float.isFinite(position.getZ())) return -1;
+        var unlocked = player.getUnlockedScenePoints().getOrDefault(scene, Set.of());
+        var index = GameData.getScenePointsPerScene().get(scene);
+        Collection<ScenePointEntry> candidates =
+                index == null
+                        ? GameData.getScenePointEntryMap().values()
+                        : index.stream()
+                                .map(id -> GameData.getScenePointEntryById(scene, id))
+                                .filter(Objects::nonNull)
+                                .toList();
+        int best = -1;
+        double nearest = limit;
+        for (var entry : candidates) {
+            if (entry == null || entry.getSceneId() != scene || entry.getPointData() == null)
+                continue;
+            var point = entry.getPointData();
+            if (point.getId() <= 0
+                    || point.getMaxSpringVolume() <= 0
+                    || !point.isUnlocked() && !unlocked.contains(point.getId())
+                    || player.isScenePointForceLocked(scene, point.getId())) continue;
+            var origin = point.getTranPos() == null ? point.getPos() : point.getTranPos();
+            if (origin == null) continue;
+            double dx = (double) position.getX() - origin.getX();
+            double dy = (double) position.getY() - origin.getY();
+            double dz = (double) position.getZ() - origin.getZ();
+            double distance = dx * dx + dy * dy + dz * dz;
+            if (Double.isFinite(distance)
+                    && (distance < nearest
+                            || distance == nearest && (best < 0 || point.getId() < best))) {
+                nearest = distance;
+                best = point.getId();
+            }
+        }
+        return best;
     }
 
     // autoRevive automatically revives all team members.
@@ -273,43 +382,6 @@ public class SotSManager extends BasePlayerManager {
                     && getCurrentVolume() == updated) {
                 player.setSpringLastUsed(now - (now - last) % 15);
                 player.save();
-            }
-        }
-    }
-
-    private class AutoRecoverTimerTick extends TimerTask {
-        // autoRecover checks player setting to see if auto recover is enabled, and refill HP to the
-        // predefined level.
-        public void run() {
-            refillSpringVolume();
-
-            logger.trace(
-                    "isAutoRecoveryEnabled: "
-                            + getIsAutoRecoveryEnabled()
-                            + "\tautoRecoverPercentage: "
-                            + getAutoRecoveryPercentage());
-
-            if (getIsAutoRecoveryEnabled()) {
-                List<EntityAvatar> activeTeam = player.getTeamManager().getActiveTeam();
-                // When the statue does not have enough remaining volume:
-                //      Enhanced experience: Enable priority healing
-                //                              The current active character will get healed first,
-                // then
-                // sequential.
-                //      Vanilla experience: Disable priority healing
-                //                              Sequential healing based on character index.
-                int priorityIndex =
-                        enablePriorityHealing
-                                ? player.getTeamManager().getCurrentCharacterIndex()
-                                : -1;
-                if (priorityIndex >= 0) {
-                    checkAndHealAvatar(activeTeam.get(priorityIndex));
-                }
-                for (int i = 0; i < activeTeam.size(); i++) {
-                    if (i != priorityIndex) {
-                        checkAndHealAvatar(activeTeam.get(i));
-                    }
-                }
             }
         }
     }
