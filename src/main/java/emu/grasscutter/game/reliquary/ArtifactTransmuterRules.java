@@ -19,7 +19,11 @@ public record ArtifactTransmuterRules(
         long requiredUnits,
         int cycleLimit,
         List<Long> artifactUnits,
-        Map<Integer, Long> materialUnits) {
+        Map<Integer, Long> materialUnits,
+        int selectedPropCount,
+        int setDefinitionLimit,
+        int guaranteedUpgradeHits,
+        Map<Integer, Integer> slotCosts) {
     public static final int SCALE = 1000;
     private static volatile ArtifactTransmuterRules current;
 
@@ -51,7 +55,8 @@ public record ArtifactTransmuterRules(
                 var row = element.getAsJsonObject();
                 if (!row.has("name")) continue;
                 String name = row.get("name").getAsString();
-                if (!name.startsWith("CONST_VALUE_COMPOUND_SPE_RELIQUARY_PARAMS_")) continue;
+                if (!name.startsWith("CONST_VALUE_COMPOUND_SPE_RELIQUARY_PARAMS_")
+                        && !name.equals("CONST_VALUE_PURCHASE_RELIQUARY_PARAM")) continue;
                 if (constants.put(name, row.getAsJsonArray("value")) != null)
                     throw new IllegalArgumentException("Duplicate artifact constant: " + name);
             }
@@ -68,6 +73,15 @@ public record ArtifactTransmuterRules(
         int gadget = first.get(0).getAsInt(), elixir = first.get(3).getAsInt();
         int rank = second.get(0).getAsInt(), level = second.get(1).getAsInt();
         int batch = second.get(2).getAsInt(), limit = second.get(4).getAsInt();
+        int choices = first.get(1).getAsInt(), setLimit = first.get(2).getAsInt();
+        int guaranteed =
+                Objects.requireNonNull(constants.get("CONST_VALUE_PURCHASE_RELIQUARY_PARAM"))
+                        .get(0)
+                        .getAsInt();
+        var costs = new LinkedHashMap<Integer, Integer>();
+        var rawCosts = first.get(4).getAsString().split(";", -1);
+        if (rawCosts.length != 5) throw new IllegalArgumentException("Missing artifact slot costs");
+        for (int i = 0; i < rawCosts.length; i++) costs.put(i + 1, Integer.parseInt(rawCosts[i]));
         long required = units(second.get(3).getAsString());
         var curve = new ArrayList<Long>();
         for (var point : second.get(5).getAsString().split(";", -1)) curve.add(units(point));
@@ -95,7 +109,13 @@ public record ArtifactTransmuterRules(
                 || limit > 1000
                 || curve.stream().anyMatch(x -> x < 0)
                 || curve.get(level - 1) <= 0
-                || materials.isEmpty())
+                || materials.isEmpty()
+                || choices < 1
+                || choices > 4
+                || setLimit < 1
+                || guaranteed < 1
+                || guaranteed > 5
+                || costs.values().stream().anyMatch(x -> x <= 0))
             throw new IllegalArgumentException("Invalid artifact transmuter constants");
         return new ArtifactTransmuterRules(
                 gadget,
@@ -106,7 +126,11 @@ public record ArtifactTransmuterRules(
                 required,
                 limit,
                 List.copyOf(curve),
-                Map.copyOf(materials));
+                Map.copyOf(materials),
+                choices,
+                setLimit,
+                guaranteed,
+                Map.copyOf(costs));
     }
 
     private static long units(String number) {

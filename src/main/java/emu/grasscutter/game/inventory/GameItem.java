@@ -1,6 +1,7 @@
 package emu.grasscutter.game.inventory;
 
 import dev.morphia.annotations.*;
+
 import emu.grasscutter.data.*;
 import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.data.excels.ItemData;
@@ -8,8 +9,8 @@ import emu.grasscutter.data.excels.reliquary.*;
 import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.game.entity.EntityWeapon;
 import emu.grasscutter.game.player.Player;
-import emu.grasscutter.game.tps.TpsWeaponSystem;
 import emu.grasscutter.game.props.FightProperty;
+import emu.grasscutter.game.tps.TpsWeaponSystem;
 import emu.grasscutter.net.proto.AbilitySyncStateInfoOuterClass.AbilitySyncStateInfo;
 import emu.grasscutter.net.proto.EquipOuterClass.Equip;
 import emu.grasscutter.net.proto.FurnitureOuterClass.Furniture;
@@ -23,9 +24,11 @@ import emu.grasscutter.net.proto.SceneWeaponInfoOuterClass.SceneWeaponInfo;
 import emu.grasscutter.net.proto.WeaponOuterClass.Weapon;
 import emu.grasscutter.utils.objects.WeightedList;
 
-import java.util.*;
 import lombok.*;
+
 import org.bson.types.ObjectId;
+
+import java.util.*;
 
 @Entity(value = "items", useDiscriminator = false)
 public class GameItem {
@@ -65,6 +68,54 @@ public class GameItem {
     // Relic
     @Getter @Setter private int mainPropId;
     @Getter private List<Integer> appendPropIdList;
+    private List<Integer> purchasedAppendPropIdList;
+    private List<Integer> definiteAppendPropIdList;
+    @Getter private int definedInitialAppendCount;
+    @Getter private int definedUpgradeGuarantee;
+
+    public List<Integer> getPurchasedAppendPropIdList() {
+        return purchasedAppendPropIdList == null
+                ? List.of()
+                : Collections.unmodifiableList(purchasedAppendPropIdList);
+    }
+
+    public List<Integer> getDefiniteAppendPropIdList() {
+        return definiteAppendPropIdList == null
+                ? List.of()
+                : Collections.unmodifiableList(definiteAppendPropIdList);
+    }
+
+    /**
+     * Preserve the actual initial rolls and the shared minimum number of selected-stat upgrades.
+     */
+    public void markAsDefinedReliquary(List<Integer> selected, int minimumHits) {
+        if (itemData == null
+                || getItemType() != ItemType.ITEM_RELIQUARY
+                || level != 1
+                || appendPropIdList == null
+                || appendPropIdList.size() < 3
+                || appendPropIdList.size() > 4
+                || selected == null
+                || selected.isEmpty()
+                || new HashSet<>(selected).size() != selected.size()
+                || !appendPropIdList.containsAll(selected)
+                || minimumHits <= 0
+                || minimumHits > (itemData.getMaxLevel() - 1) / 4 - (4 - appendPropIdList.size()))
+            throw new IllegalArgumentException("Invalid defined artifact rolls");
+        var properties = new HashSet<FightProperty>();
+        for (int id : selected) {
+            var row = GameData.getReliquaryAffixDataMap().get(id);
+            if (row == null
+                    || row.getFightProp() == null
+                    || row.getFightProp() == FightProperty.FIGHT_PROP_NONE
+                    || !properties.add(row.getFightProp()))
+                throw new IllegalArgumentException("Invalid defined artifact selection");
+        }
+        purchasedAppendPropIdList = new ArrayList<>(selected);
+        definiteAppendPropIdList = new ArrayList<>(selected);
+        definedInitialAppendCount = appendPropIdList.size();
+        definedUpgradeGuarantee = minimumHits;
+    }
 
     @Getter @Setter private int equipCharacter;
     @Transient @Getter @Setter private EntityWeapon weaponEntity;
@@ -220,7 +271,8 @@ public class GameItem {
 
     private Set<FightProperty> getAppendFightProperties() {
         Set<FightProperty> props = new HashSet<>();
-        // Previously this would check no more than the first four affixes, however custom artifacts may
+        // Previously this would check no more than the first four affixes, however custom artifacts
+        // may
         // not respect this order.
         for (int appendPropId : this.appendPropIdList) {
             ReliquaryAffixData affixData = GameData.getReliquaryAffixDataMap().get(appendPropId);
@@ -274,12 +326,16 @@ public class GameItem {
 
         // Build whitelist
         Set<FightProperty> whitelist = this.getAppendFightProperties();
+        var forced = this.requiredDefinedUpgradeProps();
+        if (!forced.isEmpty()) whitelist.retainAll(forced);
 
         // Build random list
         WeightedList<ReliquaryAffixData> randomList = new WeightedList<>();
         for (ReliquaryAffixData affix : affixList) {
             if (whitelist.contains(affix.getFightProp())) {
-                randomList.add(affix.getUpgradeWeight() * bias.weigh(affix), affix);
+                randomList.add(
+                        affix.getUpgradeWeight() * (forced.isEmpty() ? bias.weigh(affix) : 1),
+                        affix);
             }
         }
 
@@ -290,6 +346,31 @@ public class GameItem {
         // Add random stat
         ReliquaryAffixData affixData = randomList.next();
         this.appendPropIdList.add(affixData.getId());
+    }
+
+    /**
+     * Keep ordinary rolls until the remaining upgrade opportunities are needed for the guarantee.
+     */
+    private Set<FightProperty> requiredDefinedUpgradeProps() {
+        if (definedUpgradeGuarantee <= 0
+                || definedInitialAppendCount < 3
+                || definedInitialAppendCount > 4
+                || getDefiniteAppendPropIdList().isEmpty()) return Set.of();
+        var selected = new HashSet<FightProperty>();
+        for (int id : getDefiniteAppendPropIdList()) {
+            var row = GameData.getReliquaryAffixDataMap().get(id);
+            if (row == null || row.getFightProp() == null) return Set.of();
+            selected.add(row.getFightProp());
+        }
+        int hits = 0;
+        for (int id : appendPropIdList) {
+            var row = GameData.getReliquaryAffixDataMap().get(id);
+            if (row != null && selected.contains(row.getFightProp())) hits++;
+        }
+        int needed = definedUpgradeGuarantee - Math.max(0, hits - selected.size());
+        int maximumGrowth = (itemData.getMaxLevel() - 1) / 4 - (4 - definedInitialAppendCount);
+        int remaining = maximumGrowth - (appendPropIdList.size() - 4);
+        return needed > 0 && remaining > 0 && remaining <= needed ? selected : Set.of();
     }
 
     @PostLoad
@@ -310,12 +391,15 @@ public class GameItem {
     public SceneWeaponInfo createSceneWeaponInfo() {
         var weaponInfo =
                 SceneWeaponInfo.newBuilder()
-                        .setEntityId(this.getWeaponEntity() != null ? this.getWeaponEntity().getId() : 0)
+                        .setEntityId(
+                                this.getWeaponEntity() != null ? this.getWeaponEntity().getId() : 0)
                         .setItemId(this.getItemId())
                         .setGuid(this.getGuid())
                         .setLevel(this.getLevel())
                         .setGadgetId(this.getItemData().getGadgetId())
-                        .setAbilityInfo(AbilitySyncStateInfo.newBuilder().setIsInited(getAffixes().size() > 0));
+                        .setAbilityInfo(
+                                AbilitySyncStateInfo.newBuilder()
+                                        .setIsInited(getAffixes().size() > 0));
 
         if (this.getAffixes() != null && this.getAffixes().size() > 0) {
             for (int affix : this.getAffixes()) {
@@ -360,7 +444,9 @@ public class GameItem {
                         .setExp(this.getExp())
                         .setPromoteLevel(this.getPromoteLevel())
                         .setMainPropId(this.getMainPropId())
-                        .addAllAppendPropIdList(this.getAppendPropIdList());
+                        .addAllAppendPropIdList(this.getAppendPropIdList())
+                        .addAllPurchasedAppendPropIdList(this.getPurchasedAppendPropIdList())
+                        .addAllDefiniteAppendPropIdList(this.getDefiniteAppendPropIdList());
 
         return relic.build();
     }
@@ -371,11 +457,16 @@ public class GameItem {
         switch (getItemType()) {
             case ITEM_WEAPON:
                 Weapon weapon = this.toWeaponProto();
-                proto.setEquip(Equip.newBuilder().setWeapon(weapon).setIsLocked(this.isLocked()).build());
+                proto.setEquip(
+                        Equip.newBuilder().setWeapon(weapon).setIsLocked(this.isLocked()).build());
                 break;
             case ITEM_RELIQUARY:
                 Reliquary relic = this.toReliquaryProto();
-                proto.setEquip(Equip.newBuilder().setReliquary(relic).setIsLocked(this.isLocked()).build());
+                proto.setEquip(
+                        Equip.newBuilder()
+                                .setReliquary(relic)
+                                .setIsLocked(this.isLocked())
+                                .build());
                 break;
             case ITEM_FURNITURE:
                 Furniture furniture = Furniture.newBuilder().setCount(getCount()).build();
@@ -394,12 +485,13 @@ public class GameItem {
     }
 
     public ItemHint toItemHintProto() {
-        var proto = ItemHint.newBuilder()
-            .setItemId(getItemId())
-            .setGuid(this.getGuid())
-            .setCount(getCount())
-            .setIsNew(this.isNewItem())
-            .build();
+        var proto =
+                ItemHint.newBuilder()
+                        .setItemId(getItemId())
+                        .setGuid(this.getGuid())
+                        .setCount(getCount())
+                        .setIsNew(this.isNewItem())
+                        .build();
         return proto;
     }
 

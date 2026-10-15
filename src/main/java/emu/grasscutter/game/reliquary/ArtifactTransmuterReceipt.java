@@ -24,6 +24,10 @@ public final class ArtifactTransmuterReceipt {
             rewardCount;
     private long cycleEndTime, progressBefore, progressAfter;
     private List<Cost> costs = new ArrayList<>();
+    private int purchaseId, setId, definedBefore, definedAfter, mainPropId;
+    private String outputObjectId;
+    private List<Integer> appendPropIds = new ArrayList<>();
+    private List<Integer> selectedPropIds = new ArrayList<>();
 
     public ArtifactTransmuterReceipt() {}
 
@@ -51,6 +55,31 @@ public final class ArtifactTransmuterReceipt {
 
     void paid() {
         state = 2;
+    }
+
+    static ArtifactTransmuterReceipt definition(
+            ArtifactTransmuterData data,
+            ArtifactDefinition.Plan plan,
+            Map<GameItem, Integer> costs) {
+        var item = plan.item();
+        var receipt =
+                new ArtifactTransmuterReceipt(
+                        data,
+                        data.getProgressUnits(),
+                        data.getExtractedCount(),
+                        item.getItemId(),
+                        0,
+                        1,
+                        costs);
+        receipt.purchaseId = plan.purchaseId();
+        receipt.setId = plan.setId();
+        receipt.definedBefore = data.getDefinedCounts().getOrDefault(plan.setId(), 0);
+        receipt.definedAfter = receipt.definedBefore + 1;
+        receipt.outputObjectId = item.ensurePersistenceId().toHexString();
+        receipt.mainPropId = item.getMainPropId();
+        receipt.appendPropIds = new ArrayList<>(item.getAppendPropIdList());
+        receipt.selectedPropIds = new ArrayList<>(item.getPurchasedAppendPropIdList());
+        return receipt;
     }
 
     void applied() {

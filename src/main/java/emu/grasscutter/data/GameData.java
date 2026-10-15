@@ -41,6 +41,7 @@ import emu.grasscutter.data.excels.quest.QuestGlobalVarData;
 import emu.grasscutter.data.excels.reliquary.ReliquaryAffixData;
 import emu.grasscutter.data.excels.reliquary.ReliquaryLevelData;
 import emu.grasscutter.data.excels.reliquary.ReliquaryMainPropData;
+import emu.grasscutter.data.excels.reliquary.ReliquaryOfferPurchaseData;
 import emu.grasscutter.data.excels.reliquary.ReliquarySetData;
 import emu.grasscutter.data.excels.scene.*;
 import emu.grasscutter.data.excels.tower.TowerFloorData;
@@ -544,6 +545,10 @@ public final class GameData {
 
     @Getter
     private static final Int2ObjectMap<ReliquarySetData> reliquarySetDataMap =
+            new Int2ObjectOpenHashMap<>();
+
+    @Getter
+    private static final Int2ObjectMap<ReliquaryOfferPurchaseData> reliquaryOfferPurchaseDataMap =
             new Int2ObjectOpenHashMap<>();
 
     @Getter

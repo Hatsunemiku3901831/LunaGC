@@ -7,6 +7,9 @@ import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.game.inventory.*;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.net.proto.ReliquaryOfferDataNotifyOuterClass.ReliquaryOfferDataNotify;
+import emu.grasscutter.net.proto.ReliquaryOfferDefineInfoOuterClass.ReliquaryOfferDefineInfo;
+import emu.grasscutter.net.proto.ReliquaryOfferDefineReqOuterClass.ReliquaryOfferDefineReq;
+import emu.grasscutter.net.proto.ReliquaryOfferDefineRspOuterClass.ReliquaryOfferDefineRsp;
 import emu.grasscutter.net.proto.ReliquaryOfferExtractReqOuterClass.ReliquaryOfferExtractReq;
 import emu.grasscutter.net.proto.ReliquaryOfferExtractRspOuterClass.ReliquaryOfferExtractRsp;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
@@ -97,6 +100,15 @@ public final class ArtifactTransmuter {
                         && data.getProgressUnits() < rules.requiredUnits()
                         && data.getExtractedCount() >= 0
                         && data.getExtractedCount() <= rules.cycleLimit()
+                        && data.getDefinedCounts().entrySet().stream()
+                                .allMatch(
+                                        x ->
+                                                x.getKey() != null
+                                                        && x.getKey() > 0
+                                                        && x.getValue() != null
+                                                        && x.getValue() >= 0
+                                                        && x.getValue()
+                                                                <= rules.setDefinitionLimit())
                         && data.getCycleEndTime() >= 0
                         && data.getCycleEndTime() <= 0xffff_ffffL,
                 Retcode.RET_SVR_ERROR_VALUE);
@@ -105,12 +117,23 @@ public final class ArtifactTransmuter {
             data.setScheduleId(config.scheduleId);
             data.setCycleEndTime(now + config.cycleDurationSeconds);
             data.setExtractedCount(0);
+            data.setDefinedCounts(Map.of());
             save.run();
         }
         return data;
     }
 
     private void notifyData(ArtifactTransmuterData data) {
+        var counts =
+                new TreeMap<>(data.getDefinedCounts())
+                        .entrySet().stream()
+                                .map(
+                                        x ->
+                                                ReliquaryOfferDefineInfo.newBuilder()
+                                                        .setDefineId(x.getKey())
+                                                        .setCount(x.getValue())
+                                                        .build())
+                                .toList();
         player.sendPacket(
                 new PacketReliquaryOfferDataNotify(
                         ReliquaryOfferDataNotify.newBuilder()
@@ -124,6 +147,7 @@ public final class ArtifactTransmuter {
                                         (data.getProgressUnits() % ArtifactTransmuterRules.SCALE)
                                                 / (float) ArtifactTransmuterRules.SCALE)
                                 .setExtractedCount(data.getExtractedCount())
+                                .addAllDefineCountList(counts)
                                 .build()));
     }
 
@@ -149,6 +173,82 @@ public final class ArtifactTransmuter {
 
     public void onLogin() {
         if (ownsGadget()) open();
+    }
+
+    public ReliquaryOfferDefineRsp define(ReliquaryOfferDefineReq request) {
+        var response =
+                ReliquaryOfferDefineRsp.newBuilder()
+                        .setScheduleId(request.getScheduleId())
+                        .setPurchaseId(request.getPurchaseId());
+        synchronized (player.getInventory()) {
+            try {
+                require(ownsGadget(), Retcode.RET_ITEM_NOT_EXIST_VALUE);
+                var rules = ArtifactTransmuterRules.current();
+                var data = ready(rules);
+                require(
+                        request.getScheduleId() == data.getScheduleId(),
+                        Retcode.RET_RELIQUARY_OFFER_PURCHASE_VERSION_IDX_ERROR_VALUE);
+                var plan = ArtifactDefinition.plan(request, rules);
+                require(
+                        data.getDefinedCounts().getOrDefault(plan.setId(), 0)
+                                < rules.setDefinitionLimit(),
+                        Retcode.RET_RELIQUARY_PURCHASE_SUITE_TIMES_OVER_LIMIT_VALUE);
+                var cost = owned(rules.elixirItemId());
+                require(
+                        cost != null
+                                && cost.getItemType() == ItemType.ITEM_MATERIAL
+                                && cost.getCount() >= plan.cost(),
+                        Retcode.RET_ITEM_COUNT_NOT_ENOUGH_VALUE);
+                var tab = player.getInventory().getInventoryTab(ItemType.ITEM_RELIQUARY);
+                require(
+                        tab != null && tab.getSize() < tab.getMaxCapacity(),
+                        Retcode.RET_ITEM_EXCEED_LIMIT_VALUE);
+                var receipt =
+                        ArtifactTransmuterReceipt.definition(data, plan, Map.of(cost, plan.cost()));
+                data.setPending(receipt);
+                save.run();
+                int before = cost.getCount();
+                if (!player.getInventory().removeItem(cost, plan.cost())
+                        || before - cost.getCount() != plan.cost())
+                    throw new IllegalStateException("Artifact definition payment was not exact");
+                saveItem.accept(cost);
+                receipt.paid();
+                save.run();
+                var output = plan.item();
+                if (!player.getInventory().addItem(output)
+                        || player.getInventory().getItemByGuid(output.getGuid()) != output
+                        || output.getOwnerId() != player.getUid()
+                        || output.getCount() != 1)
+                    throw new IllegalStateException("Defined artifact delivery was not confirmed");
+                saveItem.accept(output);
+                var next = new HashMap<>(data.getDefinedCounts());
+                next.put(plan.setId(), receipt.getDefinedAfter());
+                data.setDefinedCounts(next);
+                receipt.applied();
+                save.run();
+                data.setPending(null);
+                try {
+                    save.run();
+                } catch (RuntimeException uncertain) {
+                    data.setPending(receipt);
+                    throw uncertain;
+                }
+                notifyData(data);
+            } catch (ArtifactDefinition.Invalid invalid) {
+                response.setRetcode(invalid.code);
+            } catch (Rejected denied) {
+                response.setRetcode(denied.code);
+            } catch (RuntimeException failure) {
+                response.setRetcode(Retcode.RET_SVR_ERROR_VALUE);
+                Grasscutter.getLogger()
+                        .error(
+                                "Artifact definition failed for UID {}; retained any unresolved"
+                                    + " receipt",
+                                player.getUid(),
+                                failure);
+            }
+        }
+        return response.build();
     }
 
     public ReliquaryOfferExtractRsp extract(ReliquaryOfferExtractReq req) {
