@@ -187,14 +187,17 @@ public class PacketPlayerEnterSceneInfoNotify extends BasePacket {
         if (hasVarSetters) {
             float[] paramList = skillData.getParamList();
             for (AbilityVarSetter setter : entry.getAbilityVarSetters()) {
-                int idx = setter.getParamIndex();
-                if (paramList == null || idx >= paramList.length) continue;
+                // ModifyAbility carries a delta/ratio, not an absolute scene variable. Numeric
+                // operands have paramIndex -1 and are resolved by the normal talent evaluator.
+                if (setter == null || setter.isModifyAbility()) continue;
+                Float value = setter.resolve(paramList);
+                if (value == null) continue;
                 info.addDynamicValueMap(AbilityScalarValueEntry.newBuilder()
                         .setKey(AbilityString.newBuilder()
                                 .setHash(Utils.abilityHash(setter.getVarName()))
                                 .setStr(setter.getVarName())
                                 .build())
-                        .setFloatValue(paramList[idx])
+                        .setFloatValue(value)
                         .build());
             }
         }

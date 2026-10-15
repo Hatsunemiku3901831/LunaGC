@@ -172,8 +172,9 @@ public final class DebugCommand implements CommandHandler {
         float[] paramList = skillData.getParamList();
         int count = 0;
         for (AbilityVarSetter setter : entry.getAbilityVarSetters()) {
+            if (setter == null) continue;
             int idx = setter.getParamIndex();
-            float val = (paramList != null && idx < paramList.length) ? paramList[idx] : Float.NaN;
+            Float val = setter.resolve(paramList);
             Grasscutter.getLogger().info(
                 "  [{}] openConfig={} ability={} var={} paramIdx={} value={}",
                 label, skillData.getOpenConfig(), setter.getAbilityName(),
