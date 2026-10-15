@@ -286,9 +286,16 @@ public final class PlayerProgressManager extends BasePlayerDataManager {
                 && entry.getPointData().getId() == pointId;
     }
 
+    /** Retained for plugins; resource metadata determines the reward instead of the caller hint. */
+    @Deprecated
     public boolean unlockTransPoint(int sceneId, int pointId, boolean isStatue) {
+        return unlockTransPoint(sceneId, pointId);
+    }
+
+    public boolean unlockTransPoint(int sceneId, int pointId) {
         // Check whether the unlocked point exists and whether it is still locked.
         if (!knownTransPoint(sceneId, pointId)) return false;
+        boolean isStatue = GameData.getScenePointEntryById(sceneId, pointId).getPointData().isStatue();
         final boolean newlyDiscovered, releasedLock;
         synchronized (player) {
             releasedLock = player.getForceLockedScenePoints(sceneId).remove(pointId);

@@ -222,7 +222,7 @@ public class SotSManager extends BasePlayerManager {
                 continue;
             var point = entry.getPointData();
             if (point.getId() <= 0
-                    || point.getMaxSpringVolume() <= 0
+                    || !point.isStatue()
                     || !point.isUnlocked() && !unlocked.contains(point.getId())
                     || player.isScenePointForceLocked(scene, point.getId())) continue;
             var origin = point.getTranPos() == null ? point.getPos() : point.getTranPos();

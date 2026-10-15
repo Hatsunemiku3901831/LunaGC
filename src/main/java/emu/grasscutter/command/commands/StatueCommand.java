@@ -102,14 +102,14 @@ public final class StatueCommand implements CommandHandler {
                             || entry.getSceneId() != scene
                             || entry.getPointData() == null
                             || entry.getPointData().getId() != point
-                            || entry.getPointData().getMaxSpringVolume() <= 0) {
+                            || !entry.getPointData().isStatue()) {
                         CommandHandler.sendMessage(sender, "未找到神像，请指定当前场景的神像 pointId。");
                         return;
                     }
                     if (operation.equals("lock"))
                         target.getProgressManager().lockTransPoint(scene, point);
                     else if (operation.equals("unlock"))
-                        target.getProgressManager().unlockTransPoint(scene, point, true);
+                        target.getProgressManager().unlockTransPoint(scene, point);
                     if (!operation.equals("status"))
                         target.sendPacket(new PacketGetScenePointRsp(target, scene));
                     CommandHandler.sendMessage(
@@ -146,10 +146,8 @@ public final class StatueCommand implements CommandHandler {
         for (var entry : GameData.getScenePointEntryMap().values()) {
             if (entry == null || entry.getSceneId() != player.getSceneId()) continue;
             PointData point = entry.getPointData();
-            if (point == null
-                    || point.getId() <= 0
-                    || point.getMaxSpringVolume() <= 0
-                    || point.getPos() == null) continue;
+            if (point == null || point.getId() <= 0 || !point.isStatue() || point.getPos() == null)
+                continue;
             double dx = (double) point.getPos().getX() - position.getX();
             double dy = (double) point.getPos().getY() - position.getY();
             double dz = (double) point.getPos().getZ() - position.getZ();

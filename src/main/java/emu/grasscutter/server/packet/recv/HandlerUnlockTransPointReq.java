@@ -16,6 +16,6 @@ public class HandlerUnlockTransPointReq extends PacketHandler {
         // directly; UnlockTransPointRsp still has no known CmdId.
         session.getPlayer()
                 .getProgressManager()
-                .unlockTransPoint(req.getSceneId(), req.getPointId(), false);
+                .unlockTransPoint(req.getSceneId(), req.getPointId());
     }
 }

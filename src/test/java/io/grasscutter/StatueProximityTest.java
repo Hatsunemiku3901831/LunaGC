@@ -89,6 +89,41 @@ class StatueProximityTest {
     }
 
     @Test
+    void gadgetCategoryAlsoEnablesRecoveryWithoutSpringMetadata() throws Exception {
+        var before = GameData.getGadgetDataMap().get(70130009);
+        try {
+            var json =
+                    com.google.gson.JsonParser.parseString(
+                                    Files.readString(
+                                            Path.of(
+                                                    "resources/BinOutput/Scene/Point/scene3_point.json")))
+                            .getAsJsonObject()
+                            .getAsJsonObject("points")
+                            .getAsJsonObject("7")
+                            .deepCopy();
+            json.remove("maxSpringVolume");
+            json.remove("PHBHHNDGFCF");
+            json.addProperty("gadgetId", 70130009);
+            var resource = JsonUtils.decode(json, PointData.class);
+            resource.setId(7);
+            GameData.getScenePointEntryMap().put((3 << 16) + 7, new ScenePointEntry(3, resource));
+            GameData.getGadgetDataMap()
+                    .put(
+                            70130009,
+                            JsonUtils.decode(
+                                    "{id:70130009,type:'TransPointFirst'}",
+                                    emu.grasscutter.data.excels.GadgetData.class));
+            tick(0);
+            tick(2500);
+            assertEquals(100, env.hp());
+            assertEquals(1, env.healCalls);
+        } finally {
+            if (before == null) GameData.getGadgetDataMap().remove(70130009);
+            else GameData.getGadgetDataMap().put(70130009, before);
+        }
+    }
+
+    @Test
     void subsequentCyclesKeepTheFifteenSecondInterval() throws Exception {
         tick(0);
         tick(2500);

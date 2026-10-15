@@ -219,6 +219,22 @@ class StatueCommandTest {
     }
 
     @Test
+    void gadgetCategoryCanIdentifyAStatueWithoutSpringMetadata() throws Exception {
+        var point = JsonUtils.decode("{gadgetId:70130009}", PointData.class);
+        point.setId(1234);
+        env.put(GameData.getScenePointEntryMap(), (3 << 16) + 1234, new ScenePointEntry(3, point));
+        env.put(
+                GameData.getGadgetDataMap(),
+                70130009,
+                JsonUtils.decode(
+                        "{id:70130009,type:'TransPointFirst'}",
+                        emu.grasscutter.data.excels.GadgetData.class));
+        run("status", "1234");
+        assertTrue(messages.stream().anyMatch(x -> x.contains("point=1234")));
+        assertTrue(rewards.isEmpty());
+    }
+
+    @Test
     void lockKeepsDiscoveryAndRefreshesHiddenPointSnapshot() throws Exception {
         env.player.getUnlockedScenePoints(3).add(7);
         run("lock", "7");
