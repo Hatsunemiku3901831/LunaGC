@@ -700,6 +700,49 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
         return true;
     }
 
+    /** Reserve owned food quietly; effects and cost watchers must wait for acknowledged payment. */
+    protected synchronized boolean reserveForUse(GameItem item, int count) {
+        if (item == null || count <= 0 || item.getCount() < count || item.getOwnerId() != player.getUid()
+                || getItemByGuid(item.getGuid()) != item || item.getItemData() == null
+                || item.getItemData().getId() != item.getItemId()
+                || !FoodItemUse.isFood(item.getItemData())) return false;
+        var tab = getInventoryTab(ItemType.ITEM_MATERIAL);
+        if (tab == null || tab.getItemById(item.getItemId()) != item) return false;
+        item.setCount(item.getCount() - count);
+        if (item.getCount() == 0) deleteItem(item, tab);
+        return true;
+    }
+
+    /** A rejected food action restores the original identity without obtain/cost watcher events. */
+    synchronized boolean restoreUseReservation(GameItem item, int before, int count) {
+        if (item == null || count <= 0 || before < count || item.getCount() != before - count
+                || item.getOwnerId() != player.getUid()) return false;
+        var tab = getInventoryTab(ItemType.ITEM_MATERIAL);
+        if (tab == null) return false;
+        if (item.getCount() == 0) {
+            if (getItemByGuid(item.getGuid()) != null || tab.getItemById(item.getItemId()) != null
+                    || tab.getSize() >= tab.getMaxCapacity()) return false;
+            item.setCount(before);
+            getItems().put(item.getGuid(), item);
+            tab.onAddItem(item);
+        } else {
+            if (getItemByGuid(item.getGuid()) != item || tab.getItemById(item.getItemId()) != item)
+                return false;
+            item.setCount(before);
+        }
+        return true;
+    }
+
+    synchronized void announceUseReservation(GameItem item, int before, int count) {
+        if (item.getCount() != before - count
+                || (item.getCount() > 0 ? getItemByGuid(item.getGuid()) != item
+                                      : getItemByGuid(item.getGuid()) != null))
+            throw new IllegalStateException("Food stack changed during effects");
+        if (item.getCount() == 0) player.sendPacket(new PacketStoreItemDelNotify(item));
+        else player.sendPacket(new PacketStoreItemChangeNotify(item));
+        triggerRemItemEvents(item, count);
+    }
+
     private void deleteItem(GameItem item, InventoryTab tab) {
         getItems().remove(item.getGuid());
         if (tab != null) {

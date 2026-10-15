@@ -18,6 +18,8 @@ public class UseItemParams {
     public boolean isEnterMpDungeonTeam = false;
     public int usedItemId = 0;
     public Retcode failureRetcode;
+    // Known successful actions survive a later exception; do not refund their food satiation.
+    public boolean anyActionApplied;
 
     public UseItemParams(
             Player player,

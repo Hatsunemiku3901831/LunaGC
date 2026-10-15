@@ -37,7 +37,9 @@ class ItemUseCooldownTest {
     void setup() throws Exception {
         env = new FoodBuffEffectsTest();
         env.setup();
-        inventory = new InventorySystem(env.env.fixture.scene.getWorld().getServer(), now::get);
+        inventory =
+                new InventorySystem(
+                        env.env.fixture.scene.getWorld().getServer(), now::get, ignored -> {});
     }
 
     @AfterEach
@@ -200,12 +202,14 @@ class ItemUseCooldownTest {
         field.setAccessible(true);
         var old = field.get(server);
         field.set(server, inventory);
-        var oldSession=env.env.fixture.player.getSession();
-        var session=new emu.grasscutter.server.game.GameSession(server) {
-            @Override public void send(emu.grasscutter.net.packet.BasePacket packet) {
-                env.env.fixture.player.packets.add(packet);
-            }
-        };
+        var oldSession = env.env.fixture.player.getSession();
+        var session =
+                new emu.grasscutter.server.game.GameSession(server) {
+                    @Override
+                    public void send(emu.grasscutter.net.packet.BasePacket packet) {
+                        env.env.fixture.player.packets.add(packet);
+                    }
+                };
         session.setPlayer(env.env.fixture.player);
         env.env.fixture.player.setSession(session);
         try {

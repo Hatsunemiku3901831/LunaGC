@@ -17,6 +17,8 @@ GM／控制台的 `build` 命令支持大世界持久放置、临时放置、查
 
 资源物品的共享冷却支持当前客户端通知及登录同步，营养袋沿用普通食用链路；
 实现和实机验收范围见[物品冷却](docs/ITEM_USE_COOLDOWNS_2026-10-15.md)。
+食物先确认库存扣除再执行效果，明确未生效时退回原堆叠，异常时保留记录防止重放，
+见[食物付款与退款](docs/FOOD_PAYMENT_2026-10-15.md)。
 
 `sound list [filter] [--page N]` 查询本次运行观察到的音效，每页 20 条；控制台支持实时 Tab 补全。
 播放使用 `sound @UID <name> [x y z]`，可用 `audio` 别名，见[音效目录与补全](docs/OBSERVED_SOUND_CATALOG_2026-10-15.md)。

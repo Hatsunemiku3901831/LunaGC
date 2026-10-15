@@ -182,7 +182,7 @@ class FoodBuffEffectsTest {
         var item = stock(108511);
         var inventory =
                 new emu.grasscutter.game.systems.InventorySystem(
-                        env.fixture.scene.getWorld().getServer());
+                        env.fixture.scene.getWorld().getServer(), now::get, ignored -> {});
         assertSame(item, inventory.useItem(env.fixture.player, 50001, item.getGuid(), 1, 0, false));
         assertEquals(1, item.getCount());
         assertEquals(4400, hp(first));
@@ -202,7 +202,7 @@ class FoodBuffEffectsTest {
         dead.invoke(first, true);
         var inventory =
                 new emu.grasscutter.game.systems.InventorySystem(
-                        env.fixture.scene.getWorld().getServer());
+                        env.fixture.scene.getWorld().getServer(), now::get, ignored -> {});
         assertSame(item, inventory.useItem(env.fixture.player, 50001, item.getGuid(), 1, 0, false));
         assertTrue(first.isAlive());
         assertEquals(101, hp(first));

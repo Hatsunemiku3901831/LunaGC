@@ -29,6 +29,7 @@ import lombok.val;
 public class InventorySystem extends BaseGameSystem {
     private static final Int2IntMap weaponRefundMaterials = new Int2IntArrayMap();
     private final LongSupplier itemUseClock;
+    private final java.util.function.Consumer<Object> itemUseSave;
 
     {
         // Use a sorted map, use exp as key to sort by exp
@@ -56,8 +57,14 @@ public class InventorySystem extends BaseGameSystem {
     }
 
     public InventorySystem(GameServer server, LongSupplier itemUseClock) {
+        this(server, itemUseClock, emu.grasscutter.database.DatabaseHelper::saveGameSync);
+    }
+
+    /** Explicit storage seam for payment acknowledgement tests; production always uses synchronous writes. */
+    public InventorySystem(GameServer server, LongSupplier itemUseClock, java.util.function.Consumer<Object> itemUseSave) {
         super(server);
         this.itemUseClock = Objects.requireNonNull(itemUseClock);
+        this.itemUseSave = Objects.requireNonNull(itemUseSave);
     }
 
     public static synchronized int checkPlayerAvatarConstellationLevel(Player player, int id) {
@@ -1056,6 +1063,12 @@ public class InventorySystem extends BaseGameSystem {
             return SelectedItemUse.use(player,item,params,(ItemUseProductAction)productActions.get(0))?item:null;
         }
         if (!params.optionIds.isEmpty()) return null;
+        if (FoodItemUse.isFood(itemData)) {
+            boolean used = new FoodItemUse(player, item, params, itemUseSave)
+                    .use(ready -> useItemDirect(itemData, params, ready));
+            if (!used && params.failureRetcode != null) throw new ItemUseException(params.failureRetcode);
+            return used ? item : null;
+        }
         if (useItemDirect(itemData, params)) {
             int before = item.getCount();
             if (!player.getInventory().removeItem(item, count) || before - item.getCount() != count) {
@@ -1079,9 +1092,14 @@ public class InventorySystem extends BaseGameSystem {
 
     // Uses an item without checking the player's inventory.
     public synchronized boolean useItemDirect(ItemData itemData, UseItemParams params) {
+        return useItemDirect(itemData, params, () -> true);
+    }
+
+    private boolean useItemDirect(ItemData itemData, UseItemParams params, java.util.function.BooleanSupplier ready) {
         if (itemData == null || params == null || params.player == null
                 || params.itemUseTarget == null || params.count <= 0) return false;
         params.failureRetcode = null;
+        params.anyActionApplied = false;
 
         if (itemData.getMaterialType() == MaterialType.MATERIAL_WEAPON_SKIN) {
             // Ley-line appearances have no useOp in the material table. Resolve the real skin
@@ -1194,6 +1212,7 @@ public class InventorySystem extends BaseGameSystem {
 
         boolean used = false;
         try {
+            if (!ready.getAsBoolean()) return false;
             used = executeItemActions(itemData, params);
             if (used && cooldownEnd > 0) {
                 params.player.rememberItemUseCooldown(cooldownGroup, cooldownEnd);
@@ -1208,7 +1227,7 @@ public class InventorySystem extends BaseGameSystem {
             }
             return used;
         } finally {
-            if (!used && reservedSatiation > 0)
+            if (!used && !params.anyActionApplied && reservedSatiation > 0)
                 params.player.getSatiationManager()
                         .refundFoodSatiation(params.targetAvatar, reservedSatiation);
         }
@@ -1232,6 +1251,7 @@ public class InventorySystem extends BaseGameSystem {
                             itemData.getId(),
                             applied);
             used |= applied;
+            params.anyActionApplied |= applied;
         }
         if (!used) {
             Grasscutter.getLogger()

@@ -17,6 +17,9 @@ public final class ItemUseReceipt {
     private List<Integer> optionIds = new ArrayList<>();
     private List<Product> products = new ArrayList<>();
     private List<Delivery> deliveries = new ArrayList<>();
+    private String kind = "";
+    private int targetAvatarId;
+    private long targetGuid;
 
     public ItemUseReceipt() {}
 
@@ -48,6 +51,21 @@ public final class ItemUseReceipt {
         for (var product : products)
             this.products.add(new Product(product.getId(), product.getCount()));
         state = 1;
+    }
+
+    static ItemUseReceipt food(
+            GameItem source, int count, emu.grasscutter.game.avatar.Avatar target) {
+        var receipt = new ItemUseReceipt(source, count, 0, 0, List.of());
+        receipt.kind = "food";
+        receipt.targetAvatarId = target == null ? 0 : target.getAvatarId();
+        receipt.targetGuid = target == null ? 0 : target.getGuid();
+        return receipt;
+    }
+
+    void foodState(int expected, int next) {
+        if (!"food".equals(kind) || state != expected)
+            throw new IllegalStateException("Invalid food use stage");
+        state = next;
     }
 
     public List<Integer> getOptionIds() {

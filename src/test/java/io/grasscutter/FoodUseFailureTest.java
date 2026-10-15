@@ -39,11 +39,16 @@ class FoodUseFailureTest {
     void setup() throws Exception {
         env = new FoodBuffEffectsTest();
         env.setup();
-        var satiation=AbilityTestFixture.TestPlayer.class.getDeclaredField("satiation");
+        var satiation = AbilityTestFixture.TestPlayer.class.getDeclaredField("satiation");
         satiation.setAccessible(true);
-        satiation.set(env.env.fixture.player,
+        satiation.set(
+                env.env.fixture.player,
                 new emu.grasscutter.game.managers.SatiationManager(env.env.fixture.player));
-        inventory = new InventorySystem(env.env.fixture.scene.getWorld().getServer());
+        inventory =
+                new InventorySystem(
+                        env.env.fixture.scene.getWorld().getServer(),
+                        System::currentTimeMillis,
+                        ignored -> {});
         env.first.getAvatar().setSatiation(1234);
         env.first.getAvatar().setSatiationPenalty(678);
     }
@@ -153,8 +158,7 @@ class FoodUseFailureTest {
         assertEquals(
                 1234,
                 notify.getPropMapOrThrow(
-                                emu.grasscutter.game.props.PlayerProperty.PROP_SATIATION_VAL
-                                        .getId()));
+                        emu.grasscutter.game.props.PlayerProperty.PROP_SATIATION_VAL.getId()));
     }
 
     @Test
