@@ -14,6 +14,10 @@ public class PacketSceneTeamUpdateNotify extends BasePacket {
 
         for (var p : player.getWorld().getPlayers()) {
             for (var entityAvatar : p.getTeamManager().getActiveTeam(true)) {
+                var abilityInfo = AbilitySyncStateInfo.newBuilder();
+                PacketPlayerEnterSceneInfoNotify.buildAvatarAbilityVars(entityAvatar, abilityInfo);
+                entityAvatar.getAbilityRoots().appendOverrides(abilityInfo);
+                var weapon = entityAvatar.getAvatar().getWeaponNotNull().getWeaponEntity();
                 var avatarProto =
                         SceneTeamAvatar.newBuilder()
                                 .setPlayerUid(p.getUid())
@@ -25,8 +29,9 @@ public class PacketSceneTeamUpdateNotify extends BasePacket {
                                 .setWeaponEntityId(entityAvatar.getWeaponEntityId())
                                 .setIsPlayerCurAvatar(p.getTeamManager().getCurrentAvatarEntity() == entityAvatar)
                                 .setIsOnScene(p.getTeamManager().getCurrentAvatarEntity() == entityAvatar)
-                                .setAvatarAbilityInfo(AbilitySyncStateInfo.newBuilder())
-                                .setWeaponAbilityInfo(AbilitySyncStateInfo.newBuilder())
+                                .setAvatarAbilityInfo(abilityInfo)
+                                .setWeaponAbilityInfo(weapon != null ? weapon.getAbilityRoots().toSyncState()
+                                        : AbilitySyncStateInfo.getDefaultInstance())
                                 .setAbilityControlBlock(entityAvatar.getAbilityControlBlock())
                                 .addAllTpsWeaponList(emu.grasscutter.game.tps.TpsWeaponSystem.getSceneWeaponInfos(entityAvatar.getAvatar()));
 

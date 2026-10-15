@@ -16,6 +16,7 @@ public final class AbilityOverrideMap {
                 || !AbilityExecutionContext.canTrigger(destination.getOwner(), destination.getPlayerOwner())) return false;
         var parameters = destination.getAbilitySpecials();
         synchronized (parameters) {
+            destination.markOverrideWritten(action.overrideMapKey);
             if (parameters.containsKey(action.overrideMapKey)
                     && Float.compare(parameters.getFloat(action.overrideMapKey), value) == 0) return true;
             parameters.put(action.overrideMapKey, value);

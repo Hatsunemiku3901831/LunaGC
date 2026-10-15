@@ -25,6 +25,7 @@ public final class ActionGetHPPaidDebts extends AbilityActionHandler {
             }
 
             ability.getAbilitySpecials().put(overrideMapKey, paiddebt);
+            ability.markOverrideWritten(overrideMapKey);
 
             target.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP_PAID_DEBTS, paiddebt);
 

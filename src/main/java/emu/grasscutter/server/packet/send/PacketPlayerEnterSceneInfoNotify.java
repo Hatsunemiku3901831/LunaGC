@@ -122,6 +122,7 @@ public class PacketPlayerEnterSceneInfoNotify extends BasePacket {
 
             AbilitySyncStateInfo.Builder avatarAbilityInfo = AbilitySyncStateInfo.newBuilder();
             buildAvatarAbilityVars(avatarEntity, avatarAbilityInfo);
+            avatarEntity.getAbilityRoots().appendOverrides(avatarAbilityInfo);
 
             AvatarEnterSceneInfo avatarInfo =
                     AvatarEnterSceneInfo.newBuilder()
@@ -130,7 +131,9 @@ public class PacketPlayerEnterSceneInfoNotify extends BasePacket {
                             .setWeaponGuid(weaponGuid)
                             .setWeaponEntityId(avatarEntity.getWeaponEntityId())
                             .setAvatarAbilityInfo(avatarAbilityInfo)
-                            .setWeaponAbilityInfo(AbilitySyncStateInfo.newBuilder())
+                            .setWeaponAbilityInfo(weapon != null && weapon.getWeaponEntity() != null
+                                    ? weapon.getWeaponEntity().getAbilityRoots().toSyncState()
+                                    : AbilitySyncStateInfo.getDefaultInstance())
                             .addAllTpsWeaponList(emu.grasscutter.game.tps.TpsWeaponSystem.getSceneWeaponInfos(avatarEntity.getAvatar()))
                             .build();
 

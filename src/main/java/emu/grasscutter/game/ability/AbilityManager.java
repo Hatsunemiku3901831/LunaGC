@@ -604,7 +604,7 @@ public final class AbilityManager extends BasePlayerManager {
             case AbilityInvokeArgument_ABILITY_META_GLOBAL_FLOAT_VALUE -> this.handleGlobalFloatValue(invoke);
             case AbilityInvokeArgument_ABILITY_META_CLEAR_GLOBAL_FLOAT_VALUE ->
                 this.handleClearGlobalFloatValue(invoke);
-            case AbilityInvokeArgument_ABILITY_META_ADD_NEW_ABILITY -> this.handleAddNewAbility(invoke);
+            case AbilityInvokeArgument_ABILITY_META_ADD_NEW_ABILITY -> { return this.handleAddNewAbility(invoke); }
 
             case AbilityInvokeArgument_ABILITY_META_SET_KILLED_SETATE -> this.handleKillState(invoke);
             case AbilityInvokeArgument_ABILITY_META_ADD_SPECIAL_ENERGY_VALUE -> this.handleAddSpecialEnergy(invoke);
@@ -893,17 +893,22 @@ public final class AbilityManager extends BasePlayerManager {
 
     private void setAbilityOverrideValue(Ability ability, AbilityScalarValueEntry valueChange) {
         String key = valueChange.getKey().hasStr() ? valueChange.getKey().getStr() : null;
+        var specials=ability.getAbilitySpecials();
+        synchronized(specials) {
         if (valueChange.getKey().hasHash()) {
             // The global name table contains ability names, not their parameter names.
             // Resolve a compressed parameter against the specials of this exact instance.
             int hash = valueChange.getKey().getHash();
-            key = ability.getAbilitySpecials().keySet().stream()
-                .filter(name -> Utils.abilityHash(name) == hash)
-                .findFirst().orElse(null);
+            var matches = specials.keySet().stream()
+                .filter(name -> Utils.abilityHash(name) == hash).toList();
+            if(matches.size()!=1) return;
+            key=matches.get(0);
         }
         if (key == null || key.isEmpty() || !Float.isFinite(valueChange.getFloatValue())) return;
 
         ability.getAbilitySpecials().put(key, valueChange.getFloatValue());
+        ability.markOverrideWritten(key);
+        }
         Grasscutter.getLogger()
             .trace(
                 "Ability {} changed {} to {}",
@@ -913,6 +918,7 @@ public final class AbilityManager extends BasePlayerManager {
     }
 
     private void handleOverrideParam(AbilityInvokeEntry invoke) throws Exception {
+        if(invoke.getHead().getFPDAONBEBHKValue()!=0) return;
         var entity = this.player.getScene().getEntityById(invoke.getEntityId());
         var head = invoke.getHead();
 
@@ -930,20 +936,24 @@ public final class AbilityManager extends BasePlayerManager {
         var valueChange = AbilityScalarValueEntry.parseFrom(invoke.getAbilityData());
 
         var ability = entity.getInstancedAbilities().get(instancedAbilityIndex);
-        if (ability == null) return;
-        setAbilityOverrideValue(ability, valueChange);
-        ability.refreshModifierTargets(true);
+        if (ability != null) setAbilityOverrideValue(ability, valueChange);
+        entity.getAbilityRoots().recordOverride(instancedAbilityIndex+1,valueChange);
+        if (ability != null) ability.refreshModifierTargets(true);
     }
 
     private void handleReinitOverrideMap(AbilityInvokeEntry invoke) throws Exception {
+        if(invoke.getHead().getFPDAONBEBHKValue()!=0) return;
         var entity = player.getScene().getEntityById(invoke.getEntityId());
         if (entity == null) return;
         int index = invoke.getHead().getInstancedAbilityId() - 1;
         if (index < 0 || index >= entity.getInstancedAbilities().size()) return;
         var ability = entity.getInstancedAbilities().get(index);
-        if (ability == null) return;
         var changes = AbilityMetaReInitOverrideMap.parseFrom(invoke.getAbilityData());
-        for (var change : changes.getOverrideMapList()) setAbilityOverrideValue(ability, change);
+        for (var change : changes.getOverrideMapList()) {
+            if(ability!=null)setAbilityOverrideValue(ability,change);
+            entity.getAbilityRoots().recordOverride(index+1,change);
+        }
+        if(ability==null)return;
         ability.refreshModifierTargets(true);
 
         if (!(entity instanceof EntityClientGadget) && !(entity instanceof emu.grasscutter.game.entity.EntityWeapon)) return;
@@ -951,6 +961,7 @@ public final class AbilityManager extends BasePlayerManager {
         var notifications = new ArrayList<AbilityInvokeEntry>();
         computed.forEach((name, value) -> {
             ability.getAbilitySpecials().put(name, value);
+            ability.markOverrideWritten(name);
             notifications.add(talentOverrideInvoke(entity, index + 1, name, value));
         });
 
@@ -965,6 +976,7 @@ public final class AbilityManager extends BasePlayerManager {
                 for (var entry : ownValues.entrySet()) {
                     if (!computed.containsKey(entry.getKey())) continue;
                     candidate.getAbilitySpecials().put(entry.getKey(), entry.getValue());
+                    candidate.markOverrideWritten(entry.getKey());
                     notifications.add(talentOverrideInvoke(caster, i + 1, entry.getKey(), entry.getValue()));
                 }
                 candidate.refreshModifierTargets(true);
@@ -1529,27 +1541,35 @@ public final class AbilityManager extends BasePlayerManager {
         return s;
     }
 
-    private void handleAddNewAbility(AbilityInvokeEntry invoke)
+    private boolean handleAddNewAbility(AbilityInvokeEntry invoke)
         throws InvalidProtocolBufferException {
+        if(invoke.getHead().getFPDAONBEBHKValue()!=0) return true;
+        int id=invoke.getHead().getInstancedAbilityId();
+        // Bound allocation independently of the uint32 wire range.
+        if(id<=0 || id>65535) return false;
         var entity = this.player.getScene().getEntityById(invoke.getEntityId());
 
         if (entity == null) {
             Grasscutter.getLogger().trace("handleAddNewAbility: entity not found: {}", invoke.getEntityId());
-            return;
+            return true;
         }
 
         var addAbility = AbilityMetaAddAbility.parseFrom(invoke.getAbilityData());
+        if(!addAbility.hasAbility() || addAbility.getAbility().getInstancedAbilityId()!=0
+                && addAbility.getAbility().getInstancedAbilityId()!=id) return false;
         var abString = addAbility.getAbility().getAbilityName();
+        if(!abString.hasHash() && (!abString.hasStr() || abString.getStr().isEmpty())) return false;
         var abilityName = Ability.getAbilityName(abString);
         var abilityData = GameData.getAbilityData(abilityName);
 
         var abilities = entity.getInstancedAbilities();
         int targetIndex = invoke.getHead().getInstancedAbilityId() - 1;
-        if (targetIndex < 0) return;
+        if (targetIndex < 0) return false;
         if (entity instanceof emu.grasscutter.game.entity.EntityTeam team && team.getPlayer() == player
-                && !player.getWidgets().allowsTeamAbility(targetIndex + 1, abilityName)) return;
+                && !player.getWidgets().allowsTeamAbility(targetIndex + 1, abilityName)) return false;
 
-        while (abilities.size() < targetIndex) abilities.add(null);
+        if (abilities.size() < targetIndex)
+            abilities.addAll(Collections.nCopies(targetIndex - abilities.size(), null));
 
         int abHash = abString.hasHash() ? abString.getHash() : 0;
         boolean isTeamMoonPhase = "TeamAbility_MoonPhase".equals(abilityName)
@@ -1571,14 +1591,18 @@ public final class AbilityManager extends BasePlayerManager {
                 "handleAddNewAbility: ability data not found (stub at {}): entity={} name={} hash={}",
                 targetIndex, entity.getId(), abilityName,
                 abString.hasHash() ? abString.getHash() : 0);
+            var previous=targetIndex<abilities.size()?abilities.get(targetIndex):null;
             if (targetIndex == abilities.size()) abilities.add(null);
-            else if (targetIndex < abilities.size() && abilities.get(targetIndex) == null) abilities.set(targetIndex, null);
-            return;
+            else abilities.set(targetIndex,null);
+            entity.getAbilityRoots().record(id,addAbility.getAbility());
+            if(previous!=null && !abilities.contains(previous)) previous.removeInstalledModifiers();
+            return true;
         }
 
         // The wire ID selects a slot. Appending when that slot already exists shifts
         // later dynamic abilities away from the IDs used by release/hit invocations.
         var newAbility = targetIndex < abilities.size() ? abilities.get(targetIndex) : null;
+        var previous=newAbility;
         if (newAbility == null || !abilityName.equals(newAbility.getData().abilityName)) {
             newAbility = new Ability(abilityData, entity, player);
         }
@@ -1587,6 +1611,8 @@ public final class AbilityManager extends BasePlayerManager {
         } else {
             abilities.set(targetIndex, newAbility);
         }
+        entity.getAbilityRoots().record(id,addAbility.getAbility());
+        if(previous!=null && previous!=newAbility && !abilities.contains(previous)) previous.removeInstalledModifiers();
         for (var override : addAbility.getAbility().getOverrideMapList()) {
             setAbilityOverrideValue(newAbility, override);
         }
@@ -1596,11 +1622,13 @@ public final class AbilityManager extends BasePlayerManager {
             var values = resolveTalentOverrides(newAbility);
             for (var entry : values.entrySet()) {
                 newAbility.getAbilitySpecials().put(entry.getKey(), entry.getValue());
+                newAbility.markOverrideWritten(entry.getKey());
                 overrides.add(talentOverrideInvoke(entity, targetIndex + 1, entry.getKey(), entry.getValue()));
             }
             if (!overrides.isEmpty()) player.sendPacket(new PacketAbilityInvocationsNotify(overrides));
         }
         newAbility.refreshModifierTargets(true);
+        return true;
     }
 
     private void handleKillState(AbilityInvokeEntry invoke) throws InvalidProtocolBufferException {

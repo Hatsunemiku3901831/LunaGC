@@ -34,7 +34,14 @@ public class Ability {
         triggerInitialization = new CompletableFuture<>();
     }
 
-    @Getter private Object2FloatMap<String> abilitySpecials = new Object2FloatOpenHashMap<>();
+    @Getter private Object2FloatMap<String> abilitySpecials = Object2FloatMaps.synchronize(new Object2FloatOpenHashMap<>());
+    private final Set<String> writtenOverrides = ConcurrentHashMap.newKeySet();
+
+    public void markOverrideWritten(String name) {
+        if(name!=null && !name.isEmpty()) writtenOverrides.add(name);
+    }
+
+    public boolean wasOverrideWritten(String name) { return writtenOverrides.contains(name); }
     private Map<String, Float> talentSpecials = new LinkedHashMap<>();
 
     @Getter
@@ -306,6 +313,7 @@ public class Ability {
                     }
                 });
         talentSpecials = next;
+        changes.keySet().forEach(this::markOverrideWritten);
         return changes;
     }
 

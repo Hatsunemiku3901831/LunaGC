@@ -409,8 +409,8 @@ public class GameItem {
                         .setLevel(this.getLevel())
                         .setGadgetId(this.getItemData().getGadgetId())
                         .setAbilityInfo(
-                                AbilitySyncStateInfo.newBuilder()
-                                        .setIsInited(getAffixes().size() > 0));
+                                getWeaponEntity() != null ? getWeaponEntity().getAbilityRoots().toSyncState()
+                                        : AbilitySyncStateInfo.getDefaultInstance());
 
         if (this.getAffixes() != null && this.getAffixes().size() > 0) {
             for (int affix : this.getAffixes()) {

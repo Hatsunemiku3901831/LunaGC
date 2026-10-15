@@ -171,6 +171,78 @@ class SceneTalentSnapshotTest extends QuestTestFixture {
                                 (first, last) -> last));
     }
 
+    @Test
+    void actual_scene_packets_include_live_root_and_weapon_overrides() throws Exception {
+        config(
+                "[{\"$type\":\"UnlockTalentParam\",\"abilityName\":\"Avatar_Test\",\"talentParam\":\"Unlocked\"}]");
+        var avatar = model(false);
+        replaceField(
+                Avatar.class,
+                avatar,
+                "avatarData",
+                JsonUtils.decode(
+                        "{id:10000073,abilities:[]}",
+                        emu.grasscutter.data.excels.avatar.AvatarData.class));
+        var entity = player.getTeamManager().getCurrentAvatarEntity();
+        player.getScene().getEntities().put(entity.getId(), entity);
+        if (!player.getWorld().getPlayers().contains(player))
+            player.getWorld().getPlayers().add(player);
+        var data =
+                JsonUtils.decode(
+                        "{abilityName:'Avatar_Test',abilitySpecials:{rate:7}}",
+                        emu.grasscutter.data.binout.AbilityData.class);
+        var root = new emu.grasscutter.game.ability.Ability(data, entity, player);
+        entity.getInstancedAbilities().add(root);
+        root.getAbilitySpecials().put("rate", 4);
+        var item =
+                new emu.grasscutter.game.inventory.GameItem(
+                        JsonUtils.decode(
+                                "{id:11101,itemType:'ITEM_WEAPON',equipType:'EQUIP_WEAPON',gadgetId:5001,skillAffix:[123]}",
+                                emu.grasscutter.data.excels.ItemData.class));
+        avatar.getEquips()
+                .put(emu.grasscutter.game.inventory.EquipType.EQUIP_WEAPON.getValue(), item);
+        var weapon = new emu.grasscutter.game.entity.EntityWeapon(player.getScene(), 5001, avatar);
+        player.getScene().getWeaponEntities().put(weapon.getId(), weapon);
+        item.setWeaponEntity(weapon);
+        var weaponRoot = new emu.grasscutter.game.ability.Ability(data, weapon, player);
+        weapon.getInstancedAbilities().add(weaponRoot);
+        weaponRoot.getAbilitySpecials().put("rate", 3);
+        var enter =
+                PlayerEnterSceneInfoNotify.parseFrom(
+                                new PacketPlayerEnterSceneInfoNotify(player).getData())
+                        .getAvatarEnterInfo(0);
+        assertEquals(4, rootValue(enter.getAvatarAbilityInfo(), "rate"));
+        assertEquals(1, rootValue(enter.getAvatarAbilityInfo(), "Unlocked"));
+        assertEquals(3, rootValue(enter.getWeaponAbilityInfo(), "rate"));
+        assertEquals(
+                4, rootValue(entity.toProto().getEntityAuthorityInfo().getAbilityInfo(), "rate"));
+        assertEquals(3, rootValue(item.createSceneWeaponInfo().getAbilityInfo(), "rate"));
+        var team =
+                emu.grasscutter.net.proto.SceneTeamUpdateNotifyOuterClass.SceneTeamUpdateNotify
+                        .parseFrom(
+                                new emu.grasscutter.server.packet.send.PacketSceneTeamUpdateNotify(
+                                                player)
+                                        .getData())
+                        .getSceneTeamAvatarList(0);
+        assertEquals(4, rootValue(team.getAvatarAbilityInfo(), "rate"));
+        assertEquals(3, rootValue(team.getWeaponAbilityInfo(), "rate"));
+        assertFalse(enter.getAvatarAbilityInfo().getIsInited());
+        assertFalse(enter.getWeaponAbilityInfo().getIsInited());
+    }
+
+    private float rootValue(AbilitySyncStateInfo info, String name) {
+        return info.getAppliedAbilitiesList().stream()
+                .flatMap(a -> a.getOverrideMapList().stream())
+                .filter(
+                        v ->
+                                v.getKey().hasStr()
+                                        ? v.getKey().getStr().equals(name)
+                                        : v.getKey().getHash() == Utils.abilityHash(name))
+                .reduce((first, last) -> last)
+                .orElseThrow()
+                .getFloatValue();
+    }
+
     @ParameterizedTest
     @ValueSource(booleans = {false, true})
     void a_numeric_modify_operand_cannot_abort_the_full_scene_packet(boolean cold)
