@@ -57,6 +57,15 @@ radare2 可打开文件，但反汇编接口返回 Transport closed；之后使�
 `573174f9b0f69b201c1e37f9bffa9262abff465c6db80ef3e2b6b9a5468632f7`。
 失败及最终测试 XML、构建日志和产物核对记录均保存在上述证据目录。
 
+## 本机运行
+
+2026-10-16 07:49（UTC+8），提交 `be69eaaf` 的上述构建已启动。
+进程 24032 的实际命令行使用 `batch290/modifier-sync.jar`，文件哈希与验证产物一致。
+TCP 8088／UDP 22101 均属于该进程，健康检查通过、死锁为 0、在线玩家为 0。
+MongoDB 继续使用 `lunagc_mongo-data` 原数据卷。
+切换记录为同目录的 `runtime-stop-proof.json`／`runtime-start-proof.json`。
+此次游戏未运行，当前客户端的实际表现仍未验收。
+
 ## 剩余范围
 
 尚未启用完整修饰器恢复包。存续时间、快照耐久比例、serverbuff／server 表、mixin 恢复、
