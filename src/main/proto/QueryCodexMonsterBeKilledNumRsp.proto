@@ -1,3 +1,4 @@
+// Verified 7.1 client type 20894: command 20558, parser 0x147f19240.
 syntax = "proto3";
 
 option java_package = "emu.grasscutter.net.proto";
@@ -5,7 +6,8 @@ option java_outer_classname = "QueryCodexMonsterBeKilledNumRspOuterClass";
 
 message QueryCodexMonsterBeKilledNumRsp {
 	repeated uint32 codex_id_list = 14;
-	repeated uint32 phdcolpgnbi = 50000;
-	repeated uint32 dnicbjiekbm = 50001;
+	// Native UI reads field 10 for kill/fish counts and field 15 for capture counts.
+	repeated uint32 be_killed_num_list = 10;
+	repeated uint32 be_captured_num_list = 15;
 	int32 retcode = 2;
 }
