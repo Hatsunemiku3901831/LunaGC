@@ -86,6 +86,7 @@ public final class AbilityManager extends BasePlayerManager {
             AbilityModifierAction.Type.ActivitySkillShareCDStart,
             AbilityModifierAction.Type.ClearShareCD,
             AbilityModifierAction.Type.TPSSupplyAmmo,
+            AbilityModifierAction.Type.DoActionByGlobalValue,
             AbilityModifierAction.Type.SetGlobalValue,
             AbilityModifierAction.Type.TriggerVehicleOff);
 
@@ -115,6 +116,7 @@ public final class AbilityManager extends BasePlayerManager {
             AbilityModifierAction.Type.ActivitySkillShareCDStart,
             AbilityModifierAction.Type.ClearShareCD,
             AbilityModifierAction.Type.TPSSupplyAmmo,
+            AbilityModifierAction.Type.DoActionByGlobalValue,
             AbilityModifierAction.Type.CopyGlobalValue,
             AbilityModifierAction.Type.TriggerVehicleOff);
 
@@ -743,12 +745,15 @@ public final class AbilityManager extends BasePlayerManager {
         }
         var action = ability.getData().localIdToAction.get(head.getLocalId());
         if (action != null) {
+            if (ability.getData().isGlobalValueModifierDescendant(action)) return;
             if (ability.ownsServerTriggerCallback(action)) return;
             if (invokedModifier != null && invokedModifier.ownsAnimationCallback(action)) return;
             if (head.getInstancedModifierId() != 0 && invokedModifier == null
                     && AnimationModifierCallbacks.isCallback(ability.getData(), action)) return;
             boolean owned = entity.getAbilityPeriodicHealing().ownsAction(ability,head.getInstancedModifierId(),action)
                     || player.getBuffManager().ownsHealing(ability,action);
+            if (owned && (action.type == AbilityModifierAction.Type.DoActionByGlobalValue
+                    || action.type == AbilityModifierAction.Type.TPSSupplyAmmo)) return;
             if (AbilityCooldownInvocation.isTrackedAction(action)) {
                 if (head.getInstancedModifierId() != 0 && invokedModifier == null) return;
                 if (invokedModifier != null && AbilityCooldownInvocation.isModifierCallback(ability.getData(), action)

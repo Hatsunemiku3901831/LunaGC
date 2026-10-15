@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import emu.grasscutter.data.binout.AbilityModifier.AbilityModifierAction;
 import emu.grasscutter.utils.JsonAdapters;
 import emu.grasscutter.game.ability.AbilityLocalIdGenerator;
+import emu.grasscutter.game.ability.AbilityGlobalValueDispatch;
 import emu.grasscutter.game.ability.AbilityLocalIdGenerator.ConfigAbilitySubContainerType;
 import java.util.*;
 
@@ -37,6 +38,13 @@ public class AbilityData {
 
     public final Map<Integer, AbilityModifierAction> localIdToAction = new HashMap<>();
     public final Map<Integer, AbilityMixinData> localIdToMixin = new HashMap<>();
+
+    private final transient Set<AbilityModifierAction> globalValueModifierCallbacks =
+            Collections.newSetFromMap(new IdentityHashMap<>());
+
+    public boolean isGlobalValueModifierDescendant(AbilityModifierAction action) {
+        return globalValueModifierCallbacks.contains(action);
+    }
 
     private boolean _initialized = false;
 
@@ -110,6 +118,8 @@ public class AbilityData {
 
         var modifierIndex = 0;
         for (AbilityModifier abilityModifier : _modifiers) {
+            AbilityGlobalValueDispatch.collectModifierDescendants(abilityModifier.onAdded,globalValueModifierCallbacks);
+            AbilityGlobalValueDispatch.collectModifierDescendants(abilityModifier.onRemoved,globalValueModifierCallbacks);
             long configIndex = 0L;
             this.initializeActionSubCategory(
                     modifierIndex, configIndex++, abilityModifier.onAdded, localIdToAction);

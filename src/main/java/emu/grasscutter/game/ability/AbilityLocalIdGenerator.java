@@ -46,7 +46,12 @@ public class AbilityLocalIdGenerator {
             var id = GetLocalId();
             localIdToAction.put((int) id, actions[i]);
 
-            if (actions[i].type == AbilityModifierAction.Type.RandomAction && actions[i].randomQueue != null) {
+            if (actions[i].type == AbilityModifierAction.Type.DoActionByGlobalValue) {
+                if (actions[i].actionSteps != null)
+                    for (var group : actions[i].actionSteps)
+                        this.initializeActionLocalIds(group,localIdToAction,true);
+                this.initializeActionLocalIds(actions[i].defaultActions,localIdToAction,true);
+            } else if (actions[i].type == AbilityModifierAction.Type.RandomAction && actions[i].randomQueue != null) {
                 for (var group : actions[i].randomQueue)
                     if (group != null) this.initializeActionLocalIds(group.actionQueue,localIdToAction,true);
             } else if (actions[i].actions != null)

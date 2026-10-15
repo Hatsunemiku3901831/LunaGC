@@ -59,6 +59,7 @@ JAR SHA-256：`8c2780d7cff2107c6ad1bc78288b97be597d3e1e1adc8b88def91bea34ef85d4`
 
 ## 后续范围
 
-弹药包的 `DoActionByGlobalValue`、箱子的 `TPSAmmoBoxDispatch`、场域进入／退出、
+弹药包的 `DoActionByGlobalValue` 已在[分发记录](GLOBAL_VALUE_DISPATCH_2026-10-15.md)中接入。
+箱子的 `TPSAmmoBoxDispatch`、场域进入／退出、
 领取事务、消失／可重复领取生命周期与完整客户端验收仍待接入。
 本次完成条件和容量，未据此宣称完整拾取已完成，也未替换日常服务 JAR。

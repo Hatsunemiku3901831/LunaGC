@@ -31,6 +31,7 @@ final class AbilityActionSequence {
             AbilityModifierAction.Type.AvatarSkillStart, AbilityModifierAction.Type.ModifyAvatarSkillCD,
             AbilityModifierAction.Type.AvatarShareCDSkillStart, AbilityModifierAction.Type.ActivitySkillShareCDStart,
             AbilityModifierAction.Type.ClearShareCD,
+            AbilityModifierAction.Type.DoActionByGlobalValue, AbilityModifierAction.Type.TPSSupplyAmmo,
             AbilityModifierAction.Type.SetOverrideMapValue,
             AbilityModifierAction.Type.SetGlobalValueToOverrideMap,
             AbilityModifierAction.Type.Predicated, AbilityModifierAction.Type.Randomed, AbilityModifierAction.Type.RandomAction,
@@ -84,6 +85,14 @@ final class AbilityActionSequence {
                         || "CurTeamAvatars".equals(action.srcTarget) || "CurTeamAvatars".equals(action.dstTarget))) return false;
             if(action.type==AbilityModifierAction.Type.GetFightProperty
                     && !ActionGetFightProperty.supportedSource(action)) return false;
+            if(action.type==AbilityModifierAction.Type.TPSSupplyAmmo
+                    && !emu.grasscutter.game.ability.actions.ActionTpsSupplyAmmo.supported(action)) return false;
+            if(action.type==AbilityModifierAction.Type.DoActionByGlobalValue) {
+                if(!AbilityGlobalValueDispatch.supported(action)) return false;
+                if(action.actionSteps!=null) for(var branch:action.actionSteps)
+                    if(!collect(data,branch,callbacks,validated,path,depth+1,repeated)) return false;
+                if(!collect(data,action.defaultActions,callbacks,validated,path,depth+1,repeated)) return false;
+            }
             if((action.type==AbilityModifierAction.Type.ReviveAvatar || action.type==AbilityModifierAction.Type.ReviveDeadAvatar)
                     && !AbilityAvatarRevival.supported(action)) return false;
             if(action.type==AbilityModifierAction.Type.SetGlobalPos
@@ -248,6 +257,13 @@ final class AbilityActionSequence {
                 boolean pass=random==null?PredicateEvaluator.all(action.targetPredicates,ability,ability.getOwner(),target,action):random.get();
                 var branch=pass?action.successActions:action.failActions;
                 if(branch!=null) for(var child:branch) execute(ability,child,target,current,depth+1,periodic);
+            } else if(action.type==AbilityModifierAction.Type.DoActionByGlobalValue) {
+                AbilityCooldownInvocation.recordApplication(ability,action,()-> {
+                    var chosen=AbilityGlobalValueDispatch.choose(ability,action,target);
+                    if(chosen.isEmpty()) return false;
+                    for(var child:chosen.get()) execute(ability,child,target,current,depth+1,periodic);
+                    return true;
+                });
             } else if(action.type==AbilityModifierAction.Type.RandomAction) {
                 var chosen=AbilityRandomQueue.choose(ability,action,target);
                 if(chosen.isPresent()) for(var child:chosen.get()) execute(ability,child,target,current,depth+1,periodic);

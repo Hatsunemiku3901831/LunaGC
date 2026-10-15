@@ -141,6 +141,7 @@ public class AbilityModifier implements Serializable {
             ClearEndura,
             ClearGlobalPos,
             ClearGlobalValue,
+            DoActionByGlobalValue,
             ClearLocalGadgets,
             ClearLockTarget,
             ClearPos,
@@ -485,6 +486,15 @@ public class AbilityModifier implements Serializable {
         public Integer randomCount = 0;
         @SerializedName(value = "randomQueue", alternate = "AHHFBGACEJF")
         public RandomActionGroup[] randomQueue;
+
+        @SerializedName(value = "valueSteps", alternate = "ACDIBKKMCCK")
+        public DynamicFloat[] valueSteps;
+        @SerializedName(value = "globalValueProvider", alternate = "FKPKBNOINEG")
+        public JsonElement globalValueProvider;
+        @SerializedName(value = "actionSteps", alternate = "NGHBADANOHL")
+        public AbilityModifierAction[][] actionSteps;
+        @SerializedName(value = "defaultActions", alternate = "IAMAGJDLMAI")
+        public AbilityModifierAction[] defaultActions;
 
         @JsonAdapter(AbilityActionAdapter.class)
         public static class RandomActionGroup implements Serializable {

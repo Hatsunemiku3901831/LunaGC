@@ -47,7 +47,8 @@ public final class AbilityCooldownInvocation {
 
     public static boolean isTrackedAction(AbilityModifierAction action) {
         return isCooldownAction(action)
-                || action != null && action.type == AbilityModifierAction.Type.TPSSupplyAmmo;
+                || action != null && (action.type == AbilityModifierAction.Type.TPSSupplyAmmo
+                        || action.type == AbilityModifierAction.Type.DoActionByGlobalValue);
     }
 
     public static Scope capture() {
@@ -105,6 +106,12 @@ public final class AbilityCooldownInvocation {
                 .apply(target.getPlayer(), action, body);
     }
 
+    /** A scalar dispatch decision belongs to this application, even if the current avatar changes. */
+    public static boolean recordApplication(Ability ability, AbilityModifierAction action, BooleanSupplier body) {
+        if (!identifiable(ability,action)) return body.getAsBoolean();
+        return current.get().controller().getCooldownLedger().apply(ability.getOwner(),action,body);
+    }
+
     /**
      * Removal bookkeeping may traverse conditional branches, but cannot repeat unrelated effects.
      */
@@ -115,7 +122,8 @@ public final class AbilityCooldownInvocation {
                 || action != null
                         && action.type != null
                         && (action.type == AbilityModifierAction.Type.Predicated
-                                || action.type == AbilityModifierAction.Type.Randomed);
+                                || action.type == AbilityModifierAction.Type.Randomed
+                                || action.type == AbilityModifierAction.Type.DoActionByGlobalValue);
     }
 
     static Set<AbilityModifierAction> callbacks(AbilityModifierAction[]... groups) {
@@ -148,6 +156,11 @@ public final class AbilityCooldownInvocation {
                     || action.type == AbilityModifierAction.Type.Randomed) {
                 collect(action.successActions, result, path, depth + 1);
                 collect(action.failActions, result, path, depth + 1);
+            }
+            if (action.type == AbilityModifierAction.Type.DoActionByGlobalValue) {
+                if (action.actionSteps != null)
+                    for (var branch : action.actionSteps) collect(branch,result,path,depth+1);
+                collect(action.defaultActions,result,path,depth+1);
             }
             path.remove(action);
         }
