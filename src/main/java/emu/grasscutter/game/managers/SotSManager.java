@@ -279,6 +279,35 @@ public class SotSManager extends BasePlayerManager {
         player.getCityInfoData().put(cityInfoData.getCityId(), cityInfoData);
     }
 
+    /** A read-only scene snapshot includes resource cities without creating saved progress. */
+    public List<emu.grasscutter.net.proto.CityInfoOuterClass.CityInfo> citySnapshot(int sceneId) {
+        synchronized (player.getInventory()) {
+            var offeredCities = new HashSet<Integer>();
+            for (var row : GameData.getStatuePromoteDataMap().values())
+                if (row != null && row.getLevel() > 0) offeredCities.add(row.getCityId());
+            for (var row : GameData.getCityLevelupDataMap().values())
+                if (row != null && row.getLevel() > 0) offeredCities.add(row.getCityId());
+            var saved = player.getCityInfoData();
+            var snapshot =
+                    new TreeMap<Integer, emu.grasscutter.net.proto.CityInfoOuterClass.CityInfo>();
+            for (var city : GameData.getCityDataMap().values()) {
+                if (city == null || city.getCityId() <= 0) continue;
+                int cityId = city.getCityId();
+                var info = saved == null ? null : saved.get(cityId);
+                if (info == null && !offeredCities.contains(cityId)) continue;
+                int cityScene = city.getSceneId();
+                var first = GameData.getCityLevelupData(cityId, 1);
+                if (cityScene == 0 && first != null) cityScene = first.getSceneId();
+                if (cityScene != sceneId || sceneId <= 0) continue;
+                snapshot.put(
+                        cityId,
+                        (info == null ? new emu.grasscutter.game.city.CityInfoData(cityId) : info)
+                                .toProto());
+            }
+            return List.copyOf(snapshot.values());
+        }
+    }
+
     public void levelUpSotS(int areaId, int sceneId, int itemNum) {
         var result =
                 StatueOffering.offer(
