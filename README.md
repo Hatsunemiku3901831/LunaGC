@@ -863,6 +863,11 @@ Then:
 4. **Patch the client.** `task patch`. See below.
 5. **Start the server.** `task serve`.
 
+On Windows, the server launcher creates `debug/java-sockets` for the JDK selector
+pipe. For a deeply nested checkout, set `LUNAGC_JAVA_SOCKET_DIR` in `.env.local`
+to a shorter writable directory. Paths with spaces are supported; global Java
+VM options are unnecessary. See [Windows startup verification](docs/WINDOWS_JAVA_STARTUP_2026-10-16.md).
+
 To advance the deployed resource version, run:
 
 ```

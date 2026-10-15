@@ -54,13 +54,12 @@ $gamePort  = if ($env:LUNAGC_GAME_PORT) { $env:LUNAGC_GAME_PORT } else { '22101'
 $stdoutLog = Join-Path $repo 'start_stdout.log'
 $stderrLog = Join-Path $repo 'start_stderr.log'
 
-# The dispatch server is TCP; the KCP game server is UDP, so a TCP-only check
-# would report it as down when it is actually up.
-function Test-PortListening([string] $port) {
-    $tcp = Get-NetTCPConnection -State Listen -LocalPort ([int] $port) -ErrorAction SilentlyContinue
-    if ($null -ne $tcp) { return $true }
-    $udp = Get-NetUDPEndpoint -LocalPort ([int] $port) -ErrorAction SilentlyContinue
-    return $null -ne $udp
+# Dispatch is TCP; KCP is UDP. A UDP listener cannot make the HTTP server ready.
+function Test-PortListening([string] $port, [ValidateSet('tcp', 'udp')] [string] $protocol = 'tcp') {
+    if ($protocol -eq 'udp') {
+        return $null -ne (Get-NetUDPEndpoint -LocalPort ([int] $port) -ErrorAction SilentlyContinue)
+    }
+    return $null -ne (Get-NetTCPConnection -State Listen -LocalPort ([int] $port) -ErrorAction SilentlyContinue)
 }
 
 function Get-ServerPid {
@@ -80,8 +79,7 @@ if ($Mode -eq 'status') {
     if (-not $mongo) { $mongo = 'absent' }
 
     $http = if (Test-PortListening $httpPort) { 'listening' } else { 'down' }
-    $game = if (Test-PortListening $gamePort) { 'listening' } else { 'down' }
-    # $game is UDP; the TCP probe above already covers it via the UDP fallback.
+    $game = if (Test-PortListening $gamePort 'udp') { 'listening' } else { 'down' }
     $jarOk = if (Test-Path $jar) { 'present' } else { 'MISSING' }
 
     Write-Host ("mongo [{0}]  http 127.0.0.1:{1} [{2}]  game 127.0.0.1:{3} [{4}]  jar [{5}]" `
@@ -134,7 +132,16 @@ if ($Mode -eq 'start') {
     # $ServerArgs is interpolated into that single quoted statement, so it may
     # contain spaces ('-debug all') without needing extra quoting of its own.
     $args_ = if ($ServerArgs) { ' ' + $ServerArgs } else { '' }
-    $inner = 'java -jar "{0}"{1} > "{2}" 2> "{3}"' -f $jar, $args_, $stdoutLog, $stderrLog
+    # Windows JDK selectors can fail to connect their wake-up pipe under the default TEMP.
+    # Use a writable workspace directory; a shorter explicit path also supports deep checkouts.
+    $javaSocketDir = if ([string]::IsNullOrWhiteSpace($env:LUNAGC_JAVA_SOCKET_DIR)) {
+        Join-Path $repo 'debug\java-sockets'
+    } else {
+        [System.IO.Path]::GetFullPath($env:LUNAGC_JAVA_SOCKET_DIR)
+    }
+    New-Item -ItemType Directory -Path $javaSocketDir -Force | Out-Null
+    $inner = 'java "-Djdk.net.unixdomain.tmpdir={0}" -jar "{1}"{2} > "{3}" 2> "{4}"' `
+        -f $javaSocketDir, $jar, $args_, $stdoutLog, $stderrLog
     Start-Process -FilePath 'cmd.exe' `
         -ArgumentList "/c `"$inner`"" `
         -WorkingDirectory $repo `
