@@ -1,0 +1,9 @@
+// Current 7.1 type 71045: command 25967, native map codec tag 0x4a.
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "ItemCdGroupTimeNotifyOuterClass";
+
+message ItemCdGroupTimeNotify {
+  map<uint32, uint64> item_cd_map = 9;
+}

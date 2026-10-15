@@ -1140,9 +1140,11 @@ public class InventorySystem extends BaseGameSystem {
         if (cooldownGroup < 0 || !Float.isFinite(cooldownSeconds) || cooldownSeconds < 0)
             return false;
         long cooldownEnd = 0;
+        long cooldownObservedAt = 0;
         if (cooldownGroup > 0 && cooldownSeconds > 0) {
             double milliseconds = Math.ceil((double) cooldownSeconds * 1000);
             long now = itemUseClock.getAsLong();
+            cooldownObservedAt = now;
             if (now < 0 || milliseconds >= Long.MAX_VALUE - now) return false;
             if (params.player.getItemUseCooldownEnd(cooldownGroup) > now) {
                 params.failureRetcode = Retcode.RET_ITEM_IN_COOLDOWN;
@@ -1193,8 +1195,17 @@ public class InventorySystem extends BaseGameSystem {
         boolean used = false;
         try {
             used = executeItemActions(itemData, params);
-            if (used && cooldownEnd > 0)
+            if (used && cooldownEnd > 0) {
                 params.player.rememberItemUseCooldown(cooldownGroup, cooldownEnd);
+                try {
+                    params.player.sendPacket(
+                            new PacketItemCdGroupTimeNotify(params.player, cooldownObservedAt));
+                } catch (RuntimeException unavailable) {
+                    // Publishing a timer cannot turn an applied use into a retryable economic failure.
+                    Grasscutter.getLogger()
+                            .debug("Could not publish item cooldowns for {}", params.player.getUid(), unavailable);
+                }
+            }
             return used;
         } finally {
             if (!used && reservedSatiation > 0)

@@ -170,7 +170,22 @@ public class Player implements PlayerHook, FieldFetch {
     private volatile Map<Integer, Long> itemUseCooldowns = new HashMap<>();
 
     public synchronized long getItemUseCooldownEnd(int group) {
-        return itemUseCooldowns == null ? 0 : itemUseCooldowns.getOrDefault(group, 0L);
+        var end = itemUseCooldowns == null ? null : itemUseCooldowns.get(group);
+        return group > 0 && end != null && end > 0 ? end : 0;
+    }
+
+    /** Read-only copy: publishing a packet must not migrate or save a queried player. */
+    public synchronized Map<Integer, Long> itemUseCooldownSnapshot(long now) {
+        if (now < 0) throw new IllegalArgumentException("Invalid item cooldown clock");
+        var snapshot = new TreeMap<Integer, Long>();
+        if (itemUseCooldowns != null) {
+            itemUseCooldowns.forEach(
+                    (group, end) -> {
+                        if (group != null && group > 0 && end != null && end > now)
+                            snapshot.put(group, end);
+                    });
+        }
+        return Collections.unmodifiableMap(snapshot);
     }
 
     /** Publish a new snapshot so asynchronous persistence never iterates a mutating map. */
@@ -1764,6 +1779,7 @@ public class Player implements PlayerHook, FieldFetch {
         session.send(new PacketPlayerDataNotify(this));
         session.send(new PacketStoreWeightLimitNotify());
         session.send(new PacketPlayerStoreNotify(this));
+        session.send(new PacketItemCdGroupTimeNotify(this));
         this.getTeamManager().refreshTeamSkillLevelBonuses(false);
         session.send(new PacketAvatarDataNotify(this));
         session.send(new PacketAvatarWeaponSkinDataNotify(this));

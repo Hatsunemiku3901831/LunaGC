@@ -46,5 +46,6 @@ radare2 打开文件后，反汇编及关闭调用仍返回 Transport closed；�
 `lunchbox-red-results/`、`lunchbox-followup-results/`、`lunchbox-final-results/` 和 `lunchbox-verification.json`。
 JAR SHA-256：`7791202d1ad369513e0bc88298819aa527407d5203f6e784d98e3858a514b834`。
 
-本次完成配置保存与同步；实际食用、食物冷却和持续回血的完整链路仍需继续核对。
+配置保存与同步之后，普通食用效果及持续回血已在[食物恢复](FOOD_HEALING_2026-10-15.md)继续补齐。
+当前原生恢复／复活两条快捷路径均已核对为 UseItemReq，冷却通知及登录同步见[物品冷却](ITEM_USE_COOLDOWNS_2026-10-15.md#当前客户端通知与登录同步)。
 日常运行服务未替换，当前客户端界面与快捷食用尚未验收。
