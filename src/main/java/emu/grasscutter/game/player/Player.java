@@ -223,6 +223,7 @@ public class Player implements PlayerHook, FieldFetch {
     private List<Integer> tpsLoadout = new ArrayList<>();
     @Getter @Setter private boolean tpsLoadoutInitialized;
     private Map<Integer, Integer> tpsAmmunition = new HashMap<>();
+    private Map<Integer, Integer> tpsMagazineAmmunition = new HashMap<>();
 
     public synchronized List<Integer> getTpsLoadout() {
         if (tpsLoadout == null) tpsLoadout = new ArrayList<>();
@@ -232,6 +233,11 @@ public class Player implements PlayerHook, FieldFetch {
     public synchronized Map<Integer, Integer> getTpsAmmunition() {
         if (tpsAmmunition == null) tpsAmmunition = new HashMap<>();
         return tpsAmmunition;
+    }
+
+    public synchronized Map<Integer, Integer> getTpsMagazineAmmunition() {
+        if (tpsMagazineAmmunition == null) tpsMagazineAmmunition = new HashMap<>();
+        return tpsMagazineAmmunition;
     }
 
     public synchronized Set<Integer> getWeaponSkinList() {

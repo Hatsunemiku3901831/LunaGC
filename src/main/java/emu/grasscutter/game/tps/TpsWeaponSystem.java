@@ -228,6 +228,12 @@ public final class TpsWeaponSystem {
     public static void onWeaponRemoved(Player player, GameItem item) {
         synchronized (player) {
             removeWeaponEntity(item);
+            boolean magazineChanged = false;
+            var data = GameData.getTpsWeaponDataMap().get(item.getItemId());
+            if (data != null && data.getAmmoSlotIds() != null)
+                for (Integer slot : data.getAmmoSlotIds())
+                    if (slot != null)
+                        magazineChanged |= player.getTpsMagazineAmmunition().remove(slot) != null;
             for (var avatar : getWearers(player)) {
                 if (!avatar.getTpsWeaponIds().removeIf(id -> Objects.equals(id, item.getItemId())))
                     continue;
@@ -235,7 +241,8 @@ public final class TpsWeaponSystem {
                 avatar.recalcStats();
                 sendEquipChange(avatar);
             }
-            if (player.getTpsLoadout().removeIf(id -> Objects.equals(id, item.getItemId())))
+            if (player.getTpsLoadout().removeIf(id -> Objects.equals(id, item.getItemId()))
+                    || magazineChanged)
                 player.save();
         }
     }
@@ -391,6 +398,7 @@ public final class TpsWeaponSystem {
     }
 
     public static SceneWeaponInfo toSceneWeaponInfo(Player player, GameItem item) {
+        var magazines = TpsMagazineSystem.visible(player, item);
         var builder =
                 SceneWeaponInfo.newBuilder()
                         .setEntityId(item.getWeaponEntity() == null ? 0 : item.getWeaponEntity().getId())
@@ -405,13 +413,13 @@ public final class TpsWeaponSystem {
             for (Integer slot : data.getAmmoSlotIds()) {
                 if (slot == null) continue;
                 var ammo = getAmmunitionForSlot(slot);
-                if (ammo == null) continue;
-                // The reference uses the shared reserve here. Magazine semantics need a live capture.
+                if (ammo == null || !magazines.containsKey((int) slot)) continue;
+                // Omit unknown slots: the native combat config initializes those magazines.
                 builder.addAmmunitionList(
                         TpsWeaponAmmunitionInfo.newBuilder()
                                 .setAmmunitionType(slot)
                                 .setAmmunitionConfigId(ammo.getId())
-                                .setCurrentAmmunition(getReserve(player, ammo.getId())));
+                                .setCurrentAmmunition(magazines.get((int) slot)));
             }
         return builder.build();
     }
@@ -438,7 +446,10 @@ public final class TpsWeaponSystem {
                         .setAvatarGuid(avatar.getGuid())
                         .addAllTpsWeaponList(getSceneWeaponInfos(avatar)));
         if (scene == null) player.sendPacket(packet);
-        else scene.broadcastPacket(packet);
+        else {
+            sendSceneAmmunition(player);
+            scene.broadcastPacket(packet);
+        }
         sendWeaponAbilityBlocks(avatar);
     }
 
@@ -456,8 +467,9 @@ public final class TpsWeaponSystem {
 
     public static void sendSceneAmmunition(Player player) {
         synchronized (player) {
-            var avatar = currentAvatar(player);
-            if (avatar == null || ammunitionIds(avatar.getAvatar()).isEmpty()) return;
+            boolean hasWeapons = player.getTeamManager().getActiveTeamSnapshot().stream()
+                    .anyMatch(entity -> entity != null && !ammunitionIds(entity.getAvatar()).isEmpty());
+            if (!hasWeapons) return;
             // 6579 replaces the whole total map. 24371 is a delta, not a snapshot.
             var builder = TpsRegionalPlaySupplyInfoNotify.newBuilder();
             GameData.getTpsAmmunitionDataMap().values().stream()
@@ -488,8 +500,8 @@ public final class TpsWeaponSystem {
     }
 
     /**
-     * Only costs from the owner's current avatar/weapon may change reserves; grants are
-     * server-authored.
+     * Costs from the owner's current avatar/weapon may change totals; reloads only update
+     * magazines. Grants are server-authored.
      */
     public static boolean onAmmunitionInvoke(Player player, AbilityInvokeEntry invoke)
             throws InvalidProtocolBufferException {
@@ -507,25 +519,23 @@ public final class TpsWeaponSystem {
                     invoke.getEntityId() == current.getId()
                             || getWornWeapons(avatar).stream()
                                     .anyMatch(
-                                            item ->
-                                                    item.getWeaponEntity() != null
-                                                            && item.getWeaponEntity().getScene() == scene
-                                                            && item.getWeaponEntity().getCasterAvatar() == avatar
-                                                            && scene.getWeaponEntities().get(item.getWeaponEntity().getId())
-                                                                    == item.getWeaponEntity()
-                                                            && item.getWeaponEntity().getId() == invoke.getEntityId());
+                                                    item -> isCurrentWeaponEntity(
+                                                            item, avatar, scene, invoke.getEntityId()));
             if (!ownedEntity) return false;
             var update = AbilityMetaUpdateTpsWeaponAmmunition.parseFrom(invoke.getAbilityData());
             if (update.getUpdateTypeValue() > 1 || update.getUpdateTypeValue() < 0) return false;
             var allowed = ammunitionIds(avatar);
             var changes = new Int2LongOpenHashMap();
             for (var entry : update.getAmmunitionListList()) {
-                if (!allowed.contains(entry.getAmmunitionConfigId()) || entry.getChangeCount() > 0)
+                if (!allowed.contains(entry.getAmmunitionConfigId()) || entry.getChangeCount() > 0
+                        || (update.getUpdateTypeValue() == 1 && entry.getChangeCount() != 0))
                     return false;
                 changes.addTo(entry.getAmmunitionConfigId(), entry.getChangeCount());
             }
             for (var entry : changes.int2LongEntrySet())
                 if (getReserve(player, entry.getIntKey()) + entry.getLongValue() < 0) return false;
+            var magazines = TpsMagazineSystem.validate(player, avatar, scene, update, changes);
+            if (magazines == null) return false;
             boolean changed = false;
             for (var entry : changes.int2LongEntrySet())
                 if (entry.getLongValue() != 0) {
@@ -536,6 +546,10 @@ public final class TpsWeaponSystem {
                                     (int) (getReserve(player, entry.getIntKey()) + entry.getLongValue()));
                     changed = true;
                 }
+            for (var entry : magazines.int2IntEntrySet()) {
+                var before = player.getTpsMagazineAmmunition().put(entry.getIntKey(), entry.getIntValue());
+                changed |= !Objects.equals(before, entry.getIntValue());
+            }
             if (changed) player.save();
             return true;
         }
@@ -545,5 +559,12 @@ public final class TpsWeaponSystem {
         var team = player.getTeamManager().getActiveTeam();
         int index = player.getTeamManager().getCurrentCharacterIndex();
         return index >= 0 && index < team.size() ? team.get(index) : null;
+    }
+
+    static boolean isCurrentWeaponEntity(GameItem item, Avatar avatar, Scene scene, int entityId) {
+        var entity = item.getWeaponEntity();
+        return scene != null && entity != null && entity.getId() == entityId && entity.getScene() == scene
+                && entity.getCasterAvatar() == avatar
+                && scene.getWeaponEntities().get(entityId) == entity;
     }
 }

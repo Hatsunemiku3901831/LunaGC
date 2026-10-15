@@ -25,6 +25,7 @@ import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.net.proto.TpsAmmunitionChangeNotifyOuterClass.TpsAmmunitionChangeNotify;
 import emu.grasscutter.net.proto.TpsAmmunitionChangeOuterClass.TpsAmmunitionChange;
 import emu.grasscutter.net.proto.TpsRegionalPlaySupplyInfoNotifyOuterClass.TpsRegionalPlaySupplyInfoNotify;
+import emu.grasscutter.net.proto.TpsWeaponAccessoryInfoOuterClass.TpsWeaponAccessoryInfo;
 import emu.grasscutter.utils.JsonUtils;
 import java.lang.reflect.Field;
 import java.nio.file.Files;
@@ -390,7 +391,7 @@ class TpsEquipmentTest {
 
     @Test
     void oldDocumentsWithoutTpsCollectionsAreUsable() throws Exception {
-        for (String name : List.of("tpsLoadout", "tpsAmmunition")) {
+        for (String name : List.of("tpsLoadout", "tpsAmmunition", "tpsMagazineAmmunition")) {
             Field field = Player.class.getDeclaredField(name);
             field.setAccessible(true);
             field.set(player, null);
@@ -405,19 +406,21 @@ class TpsEquipmentTest {
         accessories.set(gun, null);
         assertTrue(player.getTpsLoadout().isEmpty());
         assertTrue(player.getTpsAmmunition().isEmpty());
+        assertTrue(player.getTpsMagazineAmmunition().isEmpty());
         assertTrue(avatar.getTpsWeaponIds().isEmpty());
         assertTrue(gun.getTpsAccessoryIds().isEmpty());
     }
 
     @Test
-    void sceneWeaponProtoReportsEachSlotsSharedReserveWithoutAccessoryGarbage() {
+    void sceneWeaponProtoRestoresItsMagazineWithoutUsingTheSharedTotal() {
         var gun = item(224001);
         player.getTpsAmmunition().put(1001, 39);
+        player.getTpsMagazineAmmunition().put(101, 9);
         var proto = TpsWeaponSystem.toSceneWeaponInfo(player, gun);
         assertEquals(0, proto.getEntityId());
         assertEquals(101, proto.getAmmunitionList(0).getAmmunitionType());
         assertEquals(1001, proto.getAmmunitionList(0).getAmmunitionConfigId());
-        assertEquals(39, proto.getAmmunitionList(0).getCurrentAmmunition());
+        assertEquals(9, proto.getAmmunitionList(0).getCurrentAmmunition());
     }
 
     @Test
@@ -427,6 +430,7 @@ class TpsEquipmentTest {
                 224002,
                 JsonUtils.decode("{\"id\":224002,\"ammoSlotIds\":[201,202]}", TpsWeaponData.class));
         assertNull(TpsWeaponSystem.getAmmunitionForSlot(202));
+        player.getTpsMagazineAmmunition().put(201, 7);
         var proto = TpsWeaponSystem.toSceneWeaponInfo(player, item(224002));
         assertEquals(1, proto.getAmmunitionListCount());
         assertEquals(201, proto.getAmmunitionList(0).getAmmunitionType());
@@ -712,6 +716,410 @@ class TpsEquipmentTest {
         }
     }
 
+    private AbilityInvokeEntry magazineInvoke(
+            int source, int weapon, int type, int slot, int ammunition, int count, int delta) {
+        var meta =
+                AbilityMetaUpdateTpsWeaponAmmunition.newBuilder()
+                        .setUpdateTypeValue(type)
+                        .addAccessoryList(
+                                TpsWeaponAccessoryInfo.newBuilder()
+                                        .setEntityId(weapon)
+                                        .setAmmunitionType(slot)
+                                        .setAmmunitionConfigId(ammunition)
+                                        .setCurrentAmmunition(count))
+                        .addAmmunitionList(
+                                TpsAmmunitionChange.newBuilder()
+                                        .setAmmunitionConfigId(1001)
+                                        .setChangeCount(delta));
+        return AbilityInvokeEntry.newBuilder()
+                .setEntityId(source)
+                .setAbilityData(meta.build().toByteString())
+                .build();
+    }
+
+    @Test
+    void anUnobservedMagazineUsesTheClientsResourceDefaultsInsteadOfTheTotalPool() {
+        var gun = item(224001);
+        assertEquals(0, TpsWeaponSystem.toSceneWeaponInfo(player, gun).getAmmunitionListCount());
+        assertTrue(player.getTpsMagazineAmmunition().isEmpty());
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void aTeamChangeWhileReadingAWeaponDoesNotBreakTheAmmunitionSnapshot(boolean supply)
+            throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var armed = new java.util.concurrent.atomic.AtomicBoolean();
+            var gun =
+                    new RecordingItem(224001) {
+                        @Override
+                        public int getItemId() {
+                            if (armed.compareAndSet(true, false))
+                                player.team.getActiveTeam().clear();
+                            return super.getItemId();
+                        }
+                    };
+            player.getInventory().addItem(gun);
+            equip(entity.getAvatar(), gun);
+            player.getTpsMagazineAmmunition().put(101, 9);
+            armed.set(true);
+            if (supply) assertDoesNotThrow(() -> TpsWeaponSystem.sendSceneAmmunition(player));
+            else
+                assertEquals(
+                        9,
+                        assertDoesNotThrow(() -> TpsWeaponSystem.toSceneWeaponInfo(player, gun))
+                                .getAmmunitionList(0)
+                                .getCurrentAmmunition());
+            assertTrue(player.team.getActiveTeam().isEmpty());
+            assertEquals(Map.of(101, 9), player.getTpsMagazineAmmunition());
+        }
+    }
+
+    @Test
+    void anUnwornWeaponsStoredMagazineDoesNotOccupyTheActivePool() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224002);
+            equip(entity.getAvatar(), gun);
+            player.getTpsAmmunition().put(1001, 10);
+            player.getTpsMagazineAmmunition().putAll(Map.of(101, 9, 201, 9));
+            assertEquals(
+                    9,
+                    TpsWeaponSystem.toSceneWeaponInfo(player, gun)
+                            .getAmmunitionList(0)
+                            .getCurrentAmmunition());
+        }
+    }
+
+    @Test
+    void aPartyMembersTpsWeaponSeedsTotalsEvenWhenTheCurrentAvatarHasNone() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            sceneAvatar(fixture);
+            var member = avatar(10000007, false);
+            var entity =
+                    new EntityAvatar(fixture.scene, member) {
+                        @Override
+                        public void initAbilities() {}
+                    };
+            player.team.getActiveTeam().add(entity);
+            equip(member, item(224001));
+            player.packets.clear();
+            TpsWeaponSystem.sendSceneAmmunition(player);
+            assertEquals(1, player.packets.size());
+            assertEquals(
+                    PacketOpcodes.TpsRegionalPlaySupplyInfoNotify,
+                    player.packets.get(0).getOpcode());
+        }
+    }
+
+    @Test
+    void aShotStoresItsNativeMagazineSnapshotAlongsideTheCost() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            player.getTpsAmmunition().put(1001, 100);
+            player.saves = 0;
+            assertTrue(
+                    TpsWeaponSystem.onAmmunitionInvoke(
+                            player,
+                            magazineInvoke(
+                                    entity.getId(),
+                                    gun.getWeaponEntity().getId(),
+                                    0,
+                                    101,
+                                    1001,
+                                    44,
+                                    -1)));
+            assertEquals(99, TpsWeaponSystem.getReserve(player, 1001));
+            assertEquals(44, player.getTpsMagazineAmmunition().get(101));
+            assertEquals(1, player.saves);
+            assertEquals(
+                    44,
+                    TpsWeaponSystem.toSceneWeaponInfo(player, gun)
+                            .getAmmunitionList(0)
+                            .getCurrentAmmunition());
+        }
+    }
+
+    @Test
+    void nativeReloadHasZeroTotalDeltaAndCanRestoreAnExplicitlyEmptyMagazine() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            player.getTpsAmmunition().put(1001, 100);
+            player.getTpsMagazineAmmunition().put(101, 0);
+            player.saves = 0;
+            var reload =
+                    magazineInvoke(
+                            entity.getId(), gun.getWeaponEntity().getId(), 1, 101, 1001, 30, 0);
+            assertTrue(TpsWeaponSystem.onAmmunitionInvoke(player, reload));
+            assertEquals(100, TpsWeaponSystem.getReserve(player, 1001));
+            assertEquals(30, player.getTpsMagazineAmmunition().get(101));
+            assertEquals(1, player.saves);
+            assertTrue(TpsWeaponSystem.onAmmunitionInvoke(player, reload));
+            assertEquals(1, player.saves, "the same absolute reload snapshot does not save twice");
+            var empty =
+                    magazineInvoke(
+                            entity.getId(), gun.getWeaponEntity().getId(), 1, 101, 1001, 0, 0);
+            assertTrue(TpsWeaponSystem.onAmmunitionInvoke(player, empty));
+            assertEquals(
+                    0,
+                    TpsWeaponSystem.toSceneWeaponInfo(player, gun)
+                            .getAmmunitionList(0)
+                            .getCurrentAmmunition());
+        }
+    }
+
+    @Test
+    void aReloadCannotSpendOrGrantTotalAmmunition() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            player.getTpsAmmunition().put(1001, 100);
+            player.saves = 0;
+            for (int delta : new int[] {-1, 1}) {
+                assertFalse(
+                        TpsWeaponSystem.onAmmunitionInvoke(
+                                player,
+                                magazineInvoke(
+                                        entity.getId(),
+                                        gun.getWeaponEntity().getId(),
+                                        1,
+                                        101,
+                                        1001,
+                                        30,
+                                        delta)));
+                assertEquals(100, TpsWeaponSystem.getReserve(player, 1001));
+                assertTrue(player.getTpsMagazineAmmunition().isEmpty());
+                assertEquals(0, player.saves);
+            }
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6})
+    void invalidMagazineSnapshotsDoNotSpendOrSaveAnything(int invalid) throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            player.getTpsAmmunition().put(1001, 100);
+            player.getTpsMagazineAmmunition().put(101, 45);
+            int weapon = invalid == 1 ? 0 : gun.getWeaponEntity().getId();
+            int slot = invalid == 2 ? 201 : 101;
+            int ammunition = invalid == 3 ? 1002 : 1001;
+            int count = invalid == 4 ? 100 : invalid == 5 ? -1 : invalid == 6 ? 46 : 44;
+            player.saves = 0;
+            assertFalse(
+                    TpsWeaponSystem.onAmmunitionInvoke(
+                            player,
+                            magazineInvoke(
+                                    entity.getId(), weapon, 0, slot, ammunition, count, -1)));
+            assertEquals(100, TpsWeaponSystem.getReserve(player, 1001));
+            assertEquals(Map.of(101, 45), player.getTpsMagazineAmmunition());
+            assertEquals(0, player.saves);
+        }
+    }
+
+    @Test
+    void magazinesSharingAPoolCannotReserveMoreThanItsTotal() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var ice = item(224001);
+            var electric = item(224002);
+            equip(entity.getAvatar(), ice, electric);
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            player.getTpsAmmunition().put(1001, 100);
+            player.getTpsMagazineAmmunition().putAll(Map.of(101, 60, 201, 40));
+            player.saves = 0;
+            assertFalse(
+                    TpsWeaponSystem.onAmmunitionInvoke(
+                            player,
+                            magazineInvoke(
+                                    entity.getId(),
+                                    ice.getWeaponEntity().getId(),
+                                    0,
+                                    101,
+                                    1001,
+                                    59,
+                                    -10)));
+            assertEquals(100, TpsWeaponSystem.getReserve(player, 1001));
+            assertEquals(Map.of(101, 60, 201, 40), player.getTpsMagazineAmmunition());
+            assertEquals(0, player.saves);
+        }
+    }
+
+    @Test
+    void corruptStoredMagazinesAreBoundedForTheActiveLoadoutWithoutSaving() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var ice = item(224001);
+            var electric = item(224002);
+            equip(entity.getAvatar(), ice, electric);
+            player.getTpsAmmunition().put(1001, 10);
+            player.getTpsMagazineAmmunition().putAll(Map.of(101, 9, 201, 9, 999, 2000));
+            player.saves = 0;
+            assertEquals(
+                    9,
+                    TpsWeaponSystem.toSceneWeaponInfo(player, ice)
+                            .getAmmunitionList(0)
+                            .getCurrentAmmunition());
+            assertEquals(
+                    1,
+                    TpsWeaponSystem.toSceneWeaponInfo(player, electric)
+                            .getAmmunitionList(0)
+                            .getCurrentAmmunition());
+            assertEquals(Map.of(101, 9, 201, 9, 999, 2000), player.getTpsMagazineAmmunition());
+            assertEquals(0, player.saves);
+        }
+    }
+
+    @Test
+    void anInvalidLaterMagazineRejectsTheWholeUpdate() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            player.getTpsAmmunition().put(1001, 100);
+            var valid =
+                    magazineInvoke(
+                            entity.getId(), gun.getWeaponEntity().getId(), 0, 101, 1001, 44, -1);
+            var meta =
+                    AbilityMetaUpdateTpsWeaponAmmunition.parseFrom(valid.getAbilityData())
+                            .toBuilder()
+                            .addAccessoryList(
+                                    TpsWeaponAccessoryInfo.newBuilder()
+                                            .setEntityId(0)
+                                            .setAmmunitionType(201)
+                                            .setAmmunitionConfigId(1001)
+                                            .setCurrentAmmunition(4));
+            player.saves = 0;
+            assertFalse(
+                    TpsWeaponSystem.onAmmunitionInvoke(
+                            player,
+                            valid.toBuilder().setAbilityData(meta.build().toByteString()).build()));
+            assertEquals(100, TpsWeaponSystem.getReserve(player, 1001));
+            assertTrue(player.getTpsMagazineAmmunition().isEmpty());
+            assertEquals(0, player.saves);
+        }
+    }
+
+    @Test
+    void equipmentReplacementSeedsTotalsBeforeTheNativeWeaponIsAnnounced() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            player =
+                    new RecordingPlayer() {
+                        @Override
+                        public void sendPacket(BasePacket packet) {
+                            if (packet.getOpcode() == PacketOpcodes.TpsRegionalPlaySupplyInfoNotify)
+                                assertTrue(
+                                        fixture.scene.packets.stream()
+                                                .noneMatch(
+                                                        previous ->
+                                                                previous.getOpcode()
+                                                                        == PacketOpcodes
+                                                                                .TpsEquipChangeNotify));
+                            super.sendPacket(packet);
+                        }
+                    };
+            var entity = sceneAvatar(fixture);
+            equip(entity.getAvatar(), item(224001));
+            player.loggedIn = true;
+            fixture.scene.packets.clear();
+            player.packets.clear();
+            TpsWeaponSystem.sendEquipChange(entity.getAvatar());
+            assertTrue(
+                    player.packets.stream()
+                            .anyMatch(
+                                    packet ->
+                                            packet.getOpcode()
+                                                    == PacketOpcodes
+                                                            .TpsRegionalPlaySupplyInfoNotify));
+            assertTrue(
+                    fixture.scene.packets.stream()
+                            .anyMatch(
+                                    packet ->
+                                            packet.getOpcode()
+                                                    == PacketOpcodes.TpsEquipChangeNotify));
+        }
+    }
+
+    @Test
+    void actualSceneInitializationSeedsTotalsBeforeTheFirstWeaponSnapshot() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var order = new ArrayList<Integer>();
+            player =
+                    new RecordingPlayer() {
+                        @Override
+                        public void sendPacket(BasePacket packet) {
+                            order.add(packet.getOpcode());
+                            super.sendPacket(packet);
+                        }
+                    };
+            var avatar = sceneAvatar(fixture).getAvatar();
+            equip(avatar, item(224001));
+            for (String name : List.of("proudSkillList", "talentIdList")) {
+                var field = Avatar.class.getDeclaredField(name);
+                field.setAccessible(true);
+                field.set(avatar, new HashSet<Integer>());
+            }
+            player.setWorld(fixture.scene.getWorld());
+            player.team.setEntity(
+                    new emu.grasscutter.game.entity.EntityTeam(player) {
+                        @Override
+                        public void initAbilities() {}
+                    });
+            order.clear();
+            var cutoff = new IllegalStateException("scene initialization prefix recorded");
+            var session =
+                    new emu.grasscutter.server.game.GameSession(null) {
+                        @Override
+                        public Player getPlayer() {
+                            return player;
+                        }
+
+                        @Override
+                        public void send(BasePacket packet) {
+                            order.add(packet.getOpcode());
+                            if (packet.getOpcode() == PacketOpcodes.PlayerEnterSceneInfoNotify)
+                                throw cutoff;
+                        }
+                    };
+            var handler = new emu.grasscutter.server.packet.recv.HandlerSceneInitFinishReq();
+            assertSame(
+                    cutoff,
+                    assertThrows(
+                            IllegalStateException.class,
+                            () -> handler.handle(session, new byte[0], new byte[0])));
+            int supply = order.indexOf(PacketOpcodes.TpsRegionalPlaySupplyInfoNotify);
+            int weapons = order.indexOf(PacketOpcodes.PlayerEnterSceneInfoNotify);
+            assertTrue(supply >= 0 && supply < weapons, order.toString());
+        }
+    }
+
+    @Test
+    void removingAWeaponReleasesItsMagazineBackToTheUnloadedTotal() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            player.getTpsAmmunition().put(1001, 100);
+            player.getTpsMagazineAmmunition().put(101, 30);
+            assertTrue(player.getInventory().removeItem(gun));
+            assertTrue(player.getTpsMagazineAmmunition().isEmpty());
+            assertEquals(100, TpsWeaponSystem.getReserve(player, 1001));
+        }
+    }
+
     private void realIceGunAbilities() throws Exception {
         var configName = "TPS_Avatar_AutoWeapon_AssaultRifle_01";
         var config =
@@ -955,7 +1363,7 @@ class TpsEquipmentTest {
         try (var fixture = new AbilityTestFixture()) {
             var entity = sceneAvatar(fixture);
             equip(entity.getAvatar(), item(224001));
-            player.getAbilityManager().onAbilityInvoke(clientAmmo(entity.getId(), 1, 32771, 1001, -4));
+            player.getAbilityManager().onAbilityInvoke(clientAmmo(entity.getId(), 0, 32771, 1001, -4));
             assertEquals(1996, TpsWeaponSystem.getReserve(player, 1001));
         }
     }
@@ -970,7 +1378,7 @@ class TpsEquipmentTest {
             dispatchAmmo(
                     "invocations",
                     fixture,
-                    List.of(clientAmmo(gun.getWeaponEntity().getId(), 1, 32771, 1001, -4)));
+                    List.of(clientAmmo(gun.getWeaponEntity().getId(), 0, 32771, 1001, -4)));
             assertEquals(1996, TpsWeaponSystem.getReserve(player, 1001));
         }
     }

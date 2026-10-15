@@ -32,6 +32,7 @@ public class HandlerSceneInitFinishReq extends PacketHandler {
         session.send(new PacketSceneTimeNotify(player));
         session.send(new PacketPlayerGameTimeNotify(player));
         player.getWidgets().prepareForScene();
+        emu.grasscutter.game.tps.TpsWeaponSystem.sendSceneAmmunition(player);
         session.send(new PacketPlayerEnterSceneInfoNotify(player));
         player.getTeamManager().sendMoonsignState();
         int hexenzirkelCount =

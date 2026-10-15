@@ -189,6 +189,8 @@ class TpsPersistenceTest {
                 snapshot.player.setTpsLoadoutInitialized(true);
                 snapshot.player.getTpsAmmunition().put(1001, 0);
                 snapshot.player.getTpsAmmunition().put(1003, 5);
+                snapshot.player.getTpsMagazineAmmunition().put(101, 0);
+                snapshot.player.getTpsMagazineAmmunition().put(301, 3);
                 snapshot.avatar = new Avatar();
                 snapshot.avatar.getTpsWeaponIds().addAll(List.of(224001, 224004));
                 snapshot.weapon = new GameItem();
@@ -202,6 +204,8 @@ class TpsPersistenceTest {
                 assertTrue(loaded.player.isTpsLoadoutInitialized());
                 assertEquals(0, loaded.player.getTpsAmmunition().get(1001));
                 assertEquals(5, loaded.player.getTpsAmmunition().get(1003));
+                assertEquals(0, loaded.player.getTpsMagazineAmmunition().get(101));
+                assertEquals(3, loaded.player.getTpsMagazineAmmunition().get(301));
                 assertEquals(List.of(224001, 224004), loaded.avatar.getTpsWeaponIds());
                 assertEquals(List.of(224506), loaded.weapon.getTpsAccessoryIds());
                 assertEquals(List.of(224506), loaded.weapon.getTpsMaterialAccessoryIds());
@@ -216,6 +220,15 @@ class TpsPersistenceTest {
                         raw.get("player", Document.class)
                                 .get("tpsAmmunition", Document.class)
                                 .getInteger("1001"));
+                assertEquals(0, raw.get("player", Document.class)
+                        .get("tpsMagazineAmmunition", Document.class).getInteger("101"));
+                var collection = client.getDatabase(database).getCollection("tps_snapshots");
+                collection.updateOne(new Document("_id", "equipment"),
+                        new Document("$unset", new Document("player.tpsMagazineAmmunition", "")));
+                var legacy = datastore.find(Snapshot.class).first().player;
+                assertTrue(legacy.getTpsMagazineAmmunition().isEmpty());
+                assertFalse(collection.find().first().get("player", Document.class)
+                        .containsKey("tpsMagazineAmmunition"));
             } finally {
                 client.getDatabase(database).drop();
             }

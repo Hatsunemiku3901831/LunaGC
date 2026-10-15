@@ -12,6 +12,7 @@ import emu.grasscutter.net.proto.SceneWeaponInfoOuterClass.SceneWeaponInfo;
 import emu.grasscutter.net.proto.TpsAmmunitionChangeNotifyOuterClass.TpsAmmunitionChangeNotify;
 import emu.grasscutter.net.proto.TpsEquipChangeNotifyOuterClass.TpsEquipChangeNotify;
 import emu.grasscutter.net.proto.TpsRegionalPlaySupplyInfoNotifyOuterClass.TpsRegionalPlaySupplyInfoNotify;
+import emu.grasscutter.net.proto.TpsWeaponAccessoryInfoOuterClass.TpsWeaponAccessoryInfo;
 import emu.grasscutter.net.proto.WearTpsEquipReqOuterClass.WearTpsEquipReq;
 import emu.grasscutter.net.proto.WearTpsEquipRspOuterClass.WearTpsEquipRsp;
 import java.util.HexFormat;
@@ -69,6 +70,17 @@ class TpsProtocolTest {
         assertEquals(0, supply.getAmmunitionList(1).getTotalAmmunition());
         assertArrayEquals(wire, supply.toByteArray());
         assertEquals(6579, PacketOpcodes.TpsRegionalPlaySupplyInfoNotify);
+    }
+
+    @Test
+    void magazineEntryCarriesTheWeaponEntityAndResultingCount() throws Exception {
+        var wire = bytes("386558e90760ac02702c");
+        var entry = TpsWeaponAccessoryInfo.parseFrom(wire);
+        assertEquals(101, entry.getAmmunitionType());
+        assertEquals(1001, entry.getAmmunitionConfigId());
+        assertEquals(300, entry.getEntityId());
+        assertEquals(44, entry.getCurrentAmmunition());
+        assertArrayEquals(wire, entry.toByteArray());
     }
 
     @Test
