@@ -58,3 +58,24 @@
 `ratio-target-final-results/`、`ratio-target-verification.json`、`fuel-resource-summary.json`。
 JAR SHA-256：`2ad4264587f9246927815d7317e54f784fb8893f7e2979ac6b5dc01db90c99df`。
 日常运行服务未替换，当前客户端验收继续保留在剩余事项中。
+
+## 旧版扣除入口的倍率与选池
+
+`PhlogistonCostMixin` 之前只读取 `speed`，忽略已经解析的倍率和目标字段。
+现在旧入口复用相同的燃素写入逻辑：
+
+- `useRatio`／`JDIMELLBMFO` 开启时，按每次执行时所选池的当前存量扣除；明确 false 优先。
+- `targetType`／`BBIPIGDBGFJ` 可指定 Team、Self、Vehicle 或 Auto，可读目标优先。
+- 未指定目标时保留旧入口的拥有者池规则，空龙池不自动转扣队伍；明确 Auto 才允许回退。
+- 缺少明确车辆、未知目标及无效池返回失败，队伍目标不读取无关的坏龙池。
+
+这是旧配置入口的服务端兼容补齐，没有把它当作当前客户端新增原生类型的证明。
+当前资源未发现 `PhlogistonCostMixin` 节点；实际资源使用的 `ChangePhlogistonMixin`
+及其周期 Set、Add／Set 热修复分支的验证边界保持上述记录。
+
+新增 11 项检查，首轮 9 项失败；修复后包含拾球、直接补充、无限燃素与倍率的
+**175 项／6 套件**通过，零失败、错误和跳过，JAR 构建通过。
+宿主机／容器源码哈希及编译类／JAR 字节一致，无意外类删除。
+证据在 `debug/aster-mid-20261011/batch236/legacy-ratio-red-results/`、
+`legacy-ratio-final-results/` 及 `legacy-ratio-verification.json`。
+JAR SHA-256：`a0361b17c91e4aeaa5e8f3eda0e681f6730dc2f7d4cb4fe6a51bc981faeee8ba`。
