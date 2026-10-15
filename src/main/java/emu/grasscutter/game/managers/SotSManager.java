@@ -295,9 +295,7 @@ public class SotSManager extends BasePlayerManager {
                 int cityId = city.getCityId();
                 var info = saved == null ? null : saved.get(cityId);
                 if (info == null && !offeredCities.contains(cityId)) continue;
-                int cityScene = city.getSceneId();
-                var first = GameData.getCityLevelupData(cityId, 1);
-                if (cityScene == 0 && first != null) cityScene = first.getSceneId();
+                int cityScene = citySceneId(cityId);
                 if (cityScene != sceneId || sceneId <= 0) continue;
                 snapshot.put(
                         cityId,
@@ -305,6 +303,75 @@ public class SotSManager extends BasePlayerManager {
                                 .toProto());
             }
             return List.copyOf(snapshot.values());
+        }
+    }
+
+    public int citySceneId(int cityId) {
+        var city = GameData.getCityDataMap().get(cityId);
+        if (city == null) return 0;
+        int scene = city.getSceneId();
+        var first = GameData.getCityLevelupData(cityId, 1);
+        return scene == 0 && first != null ? first.getSceneId() : scene;
+    }
+
+    /** Administrative progress edit; it does not replay offering rewards or stamina changes. */
+    public void setCityLevel(int cityId, int level) {
+        synchronized (player.getInventory()) {
+            var city = GameData.getCityDataMap().get(cityId);
+            int sceneId = citySceneId(cityId);
+            boolean configured =
+                    level >= 1
+                            && (GameData.getCityLevelupDataMap().values().stream()
+                                            .anyMatch(
+                                                    x ->
+                                                            x != null
+                                                                    && x.getCityId() == cityId
+                                                                    && x.getLevel() > 0
+                                                                    && (level == 1
+                                                                            || x.getLevel()
+                                                                                    == level))
+                                    || GameData.getStatuePromoteDataMap().values().stream()
+                                            .anyMatch(
+                                                    x ->
+                                                            x != null
+                                                                    && x.getCityId() == cityId
+                                                                    && x.getLevel() > 0
+                                                                    && (level == 1
+                                                                            || x.getLevel()
+                                                                                    == level)));
+            if (city == null || cityId <= 0 || sceneId <= 0 || !configured)
+                throw new IllegalArgumentException(
+                        "Unknown statue city or level: " + cityId + "/" + level);
+            var original = player.getCityInfoData();
+            var before = original == null ? null : original.get(cityId);
+            if (before != null && before.getPendingOffer() != null)
+                throw new IllegalStateException(
+                        "Unresolved offering: " + before.getPendingOffer().getOperationId());
+            var updated = new CityInfoData(cityId);
+            updated.setLevel(level);
+            var map = original == null ? new HashMap<Integer, CityInfoData>() : original;
+            map.put(cityId, updated);
+            player.setCityInfoData(map);
+            try {
+                persistOffer.run();
+            } catch (RuntimeException error) {
+                if (before == null) map.remove(cityId);
+                else map.put(cityId, before);
+                player.setCityInfoData(original);
+                throw error;
+            }
+            logger.info(
+                    "Administrative statue edit: UID {}, city {}, level {} -> {} (no rewards)",
+                    player.getUid(),
+                    cityId,
+                    before == null ? 1 : before.getLevel(),
+                    level);
+            int areaId =
+                    city.getAreaIdVec() == null || city.getAreaIdVec().isEmpty()
+                            ? 0
+                            : city.getAreaIdVec().get(0);
+            player.sendPacket(new PacketLevelupCityRsp(sceneId, level, cityId, 0, areaId, 0));
+            player.sendPacket(new PacketGetSceneAreaRsp(player, sceneId));
         }
     }
 

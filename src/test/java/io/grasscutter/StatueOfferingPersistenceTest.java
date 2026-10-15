@@ -97,6 +97,26 @@ class StatueOfferingPersistenceTest extends WidgetPersistenceTest {
     }
 
     @Test
+    void adminCityLevelPersistsWithoutPaymentOrRewardSideEffects() throws Exception {
+        var actual = offerPlayer();
+        stock(actual, 107030, 40);
+        actual.getSotsManager().getCityInfo(7).setNumCrystal(17);
+        var command =
+                (emu.grasscutter.command.CommandHandler)
+                        Class.forName("emu.grasscutter.command.commands.StatueCommand")
+                                .getConstructor()
+                                .newInstance();
+        command.execute(null, actual, List.of("level", "7", "6"));
+        var restored = read();
+        assertEquals(6, restored.getSotsManager().getCityInfo(7).getLevel());
+        assertEquals(0, restored.getSotsManager().getCityInfo(7).getNumCrystal());
+        assertEquals(40, restored.getInventory().getItemCountById(107030));
+        assertEquals(0, restored.getPrimogems());
+        assertEquals(0, restored.getExp());
+        assertEquals(10000, restored.getProperty(PlayerProperty.PROP_MAX_STAMINA));
+    }
+
+    @Test
     void incompleteContributionSurvivesReloadAndCompletesWithTheRemainingCost() throws Exception {
         var actual = offerPlayer();
         stock(actual, 107023, 25);

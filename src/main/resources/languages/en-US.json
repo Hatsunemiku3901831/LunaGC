@@ -287,6 +287,9 @@
     "sound": {
       "description": "Plays a sound"
     },
+    "statue": {
+      "description": "Inspect statues, lock or unlock points, and manage offering levels"
+    },
     "reload": {
       "reload_start": "Reloading config.",
       "reload_done": "Reload complete.",

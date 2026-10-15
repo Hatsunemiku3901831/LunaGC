@@ -1,16 +1,25 @@
 package emu.grasscutter.data.common;
 
 import com.google.gson.annotations.SerializedName;
+
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.excels.dungeon.DailyDungeonData;
 import emu.grasscutter.game.world.Position;
+
 import it.unimi.dsi.fastutil.ints.*;
+
 import lombok.*;
 
 public final class PointData {
     @Getter @Setter private int id;
     @Getter private int areaId;
+
+    @SerializedName(
+            value = "maxSpringVolume",
+            alternate = {"PHBHHNDGFCF"})
+    @Getter
+    private int maxSpringVolume;
 
     private String $type;
     @Getter private Position tranPos;
