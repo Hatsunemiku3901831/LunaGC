@@ -15,8 +15,6 @@ public class HandlerClientAbilityInitFinishNotify extends PacketHandler {
 
         Player player = session.getPlayer();
 
-        player.getAbilityManager().onSkillEnd(player);
-
         for (AbilityInvokeEntry entry : notif.getInvokesList()) {
             if (player.getAbilityManager().acceptAbilityInvoke(entry))
                 player.getClientAbilityInitFinishHandler().addEntry(entry.getForwardType(), entry);

@@ -33,11 +33,6 @@ public class HandlerCombatInvocationsNotify extends PacketHandler {
                     AttackResult attackResult = hitInfo.getAttackResult();
                     Player player = session.getPlayer();
 
-                    if (attackResult.getAttackerId()
-                                    != player.getTeamManager().getCurrentAvatarEntity().getId()
-                            && player.getAbilityManager().isAbilityInvulnerable()) break;
-
-
                     player.getAttackResults().add(attackResult);
                     player.getEnergyManager().handleAttackHit(hitInfo);
                 }

@@ -625,14 +625,6 @@ public class Scene {
             return;
         }
 
-        if (target instanceof EntityAvatar avatar) {
-            if (avatar.getPlayer()
-            .getAbilityManager()
-            .isAbilityInvulnerable()) {
-                return;
-            }
-        }
-
         target.damage(result.getDamage(), result.getAttackerId(), attackType);
 
         // Arlecchino's 0.03s unique FireAttack modifier consumes Bond through ReduceHPDebts.

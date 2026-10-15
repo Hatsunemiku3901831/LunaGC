@@ -177,10 +177,24 @@ public final class AbilityManager extends BasePlayerManager {
         registerHandlers();
     }
 
-    @Getter
-    private boolean abilityInvulnerable = false;
     private int burstCasterId;
     private int burstSkillId;
+
+    /** Compatibility query; live protection belongs to the current avatar's modifiers. */
+    public boolean isAbilityInvulnerable() {
+        var team = player.getTeamManager();
+        if (team == null) return false;
+        var members = team.getActiveTeamSnapshot();
+        int index = team.getCurrentCharacterIndex();
+        if (index < 0 || index >= members.size()) return false;
+        var avatar = members.get(index);
+        var scene = player.getScene();
+        return avatar != null && avatar.getPlayer() == player && scene != null
+                && avatar.getScene() == scene && scene.getEntityById(avatar.getId()) == avatar
+                && avatar.isAlive()
+                && avatar.isAbilityLifecycleCurrent(avatar.getAbilityLifecycleVersion())
+                && AbilityCombatState.read(avatar).invincible();
+    }
 
     private long arlecchinoChargedAttackTime = 0L;
     private long arlecchinoESkillTime = 0L;
@@ -235,9 +249,8 @@ public final class AbilityManager extends BasePlayerManager {
             && (ability.getAvatarSkillStartIds().contains(this.burstSkillId) || skillInvincibility)) {
             Grasscutter.getLogger()
                 .trace(
-                    "Caster ID's {} burst successful, clearing energy and setting invulnerability",
+                    "Caster ID's {} burst successful, confirming energy consumption",
                     entityId);
-            this.abilityInvulnerable = true;
 
             this.player
                 .getEnergyManager()
@@ -856,16 +869,9 @@ public final class AbilityManager extends BasePlayerManager {
     }
 
     public void onSkillEnd(Player player) {
-
-        if (player.getUid() != this.player.getUid()) {
-            return;
-        }
-
-        if (!this.abilityInvulnerable) {
-            return;
-        }
-
-        this.abilityInvulnerable = false;
+        // Explicit skill teardown may discard an unconfirmed energy attribution. It cannot
+        // remove protection still owned by a live modifier, nor end another player's cast.
+        if (player == this.player) removePendingEnergyClear();
     }
 
     private void setAbilityOverrideValue(Ability ability, AbilityScalarValueEntry valueChange) {
