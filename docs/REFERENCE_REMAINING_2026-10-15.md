@@ -33,6 +33,7 @@
 | TPS 弹药箱分配 | [指定／自适应轮流分配、重复武器类型、主武器筛选、移除／到期发奖、预检查及存档异常防重放](TPS_AMMO_BOX_DISPATCH_2026-10-16.md) |
 | 登录活动初始化 | [实机空指针、任务检查前准备条件、新玩家／Mongo 冷读，以及活动通知延后发布](PLAYER_ACTIVITY_LOGIN_2026-10-16.md) |
 | Windows 服务启动 | [JDK Selector 临时目录、带空格路径、真实 Java 启动及 HTTP／UDP 状态区分](WINDOWS_JAVA_STARTUP_2026-10-16.md) |
+| 最近有效锚点复活 | [当前点位类型、任务锁定、最近目的地、原地回退、坐标快照及请求响应归属](WORLD_RESPAWN_POINTS_2026-10-16.md) |
 | 全队倒下的任务失败 | [真实任务失败、复活顺序、并发去重和数据库保存](TEAM_WIPE_QUEST_FAILURE_2026-10-15.md) |
 | 活动全服开放日 | [12 条真实条件、04:00 日界线及复刻排期](ACTIVITY_GLOBAL_DAY_CONDITIONS_2026-10-15.md) |
 | 客户端设置游戏时间 | [原生 7.1 字段、请求响应、时间锁、房主保存、联机同步及等待任务](CLIENT_GAME_TIME_2026-10-15.md) |

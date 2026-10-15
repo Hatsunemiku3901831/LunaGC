@@ -1135,7 +1135,7 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public void respawnTeam() {
-
+        Position reviveAt = this.getRespawnPosition();
         this.getPlayer()
             .getStaminaManager()
             .stopSustainedStaminaHandler();
@@ -1151,48 +1151,21 @@ public final class TeamManager extends BasePlayerDataManager {
             this.getPlayer().getSatiationManager().removeSatiationDirectly(entity.getAvatar(), 15000);
         }
 
-        try {
-            this.getPlayer()
-                .sendPacket(
-                    new PacketPlayerEnterSceneNotify(
-                        this.getPlayer(),
-                        EnterType.EnterType_ENTER_SELF,
-                        EnterReason.Revival,
-                        this.getPlayer().getSceneId(),
-                        this.getRespawnPosition()));
-            this.getPlayer().sendPacket(new PacketEnterScenePeerNotify(this.getPlayer()));
-            this.getPlayer().getPosition().set(this.getRespawnPosition());
-        } catch (Exception ignored) {
-            this.getPlayer()
-                .sendPacket(
-                    new PacketPlayerEnterSceneNotify(
-                        this.getPlayer(),
-                        EnterType.EnterType_ENTER_SELF,
-                        EnterReason.Revival,
-                        3,
-                        GameConstants.START_POSITION));
-            this.getPlayer().sendPacket(new PacketEnterScenePeerNotify(this.getPlayer()));
-            this.getPlayer()
-                .getPosition()
-                .set(GameConstants.START_POSITION);
-        }
-
-        this.getPlayer().sendPacket(new BasePacket(PacketOpcodes.WorldPlayerReviveRsp));
+        this.getPlayer()
+            .sendPacket(
+                new PacketPlayerEnterSceneNotify(
+                    this.getPlayer(),
+                    EnterType.EnterType_ENTER_SELF,
+                    EnterReason.Revival,
+                    this.getPlayer().getSceneId(),
+                    reviveAt));
+        this.getPlayer().sendPacket(new PacketEnterScenePeerNotify(this.getPlayer()));
+        this.getPlayer().getPosition().set(reviveAt);
+        // Each request handler sends its own response, including the dungeon revival path.
     }
 
     public Position getRespawnPosition() {
-        var deathPos = this.getPlayer().getPosition();
-        int sceneId = this.getPlayer().getSceneId();
-
-        var respawnPoint =
-            this.getPlayer().getUnlockedScenePoints(sceneId).stream()
-                .map(pointId -> GameData.getScenePointEntryById(sceneId, pointId))
-                .filter(point -> point.getPointData().getType().equals("SceneTransPoint"))
-                .min(
-                    (Comparator.comparingDouble(
-                        pos -> Utils.getDist(pos.getPointData().getTranPos(), deathPos))));
-
-        return respawnPoint.get().getPointData().getTranPos();
+        return RespawnPositionHelper.find(this.getPlayer());
     }
 
     public void saveAvatars() {

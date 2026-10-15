@@ -184,7 +184,12 @@ class AbilityRevivalTest {
         var second = member(200, 0);
         assertTrue(first.tryBeginDeath());
         assertTrue(second.tryBeginDeath());
-        fixture.player.getTeamManager().respawnTeam();
+        var session = new emu.grasscutter.server.game.GameSession(null) {
+            @Override public void send(BasePacket packet) { fixture.player.sendPacket(packet); }
+        };
+        session.setPlayer(fixture.player);
+        assertDoesNotThrow(() -> new emu.grasscutter.server.packet.recv.HandlerWorldPlayerReviveReq()
+                .handle(session, new byte[0], new byte[0]));
         assertTrue(first.isAlive());
         assertTrue(second.isAlive());
         assertEquals(40f, first.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP));
