@@ -1,198 +1,132 @@
 package emu.grasscutter.game.player;
 
-import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
+import emu.grasscutter.data.binout.*;
 import emu.grasscutter.data.binout.AbilityModifier.AbilityModifierAction;
 import emu.grasscutter.data.excels.BuffData;
+import emu.grasscutter.game.ability.*;
 import emu.grasscutter.game.avatar.Avatar;
-import emu.grasscutter.game.props.FightProperty;
 import emu.grasscutter.net.proto.ServerBuffChangeNotifyOuterClass.ServerBuffChangeNotify.ServerBuffChangeType;
 import emu.grasscutter.net.proto.ServerBuffOuterClass.ServerBuff;
 import emu.grasscutter.server.packet.send.PacketServerBuffChangeNotify;
+
 import it.unimi.dsi.fastutil.ints.*;
-import java.util.*;
+
 import lombok.Getter;
 
+import java.util.*;
+import java.util.function.LongSupplier;
+
 public final class PlayerBuffManager extends BasePlayerManager {
-    private final List<PlayerBuff> pendingBuffs;
-    private final Int2ObjectMap<PlayerBuff> buffs; // Server buffs
+    // UID keys allow two avatars to hold their own instance of the same food group.
+    private final Int2ObjectMap<PlayerBuff> buffs = new Int2ObjectOpenHashMap<>();
+    private final Map<AbilityData, Set<AbilityModifierAction>> healingClaims =
+            new java.util.concurrent.ConcurrentHashMap<>();
+    private final LongSupplier clock;
     private int nextBuffUid;
 
     public PlayerBuffManager(Player player) {
+        this(player, System::currentTimeMillis);
+    }
+
+    public PlayerBuffManager(Player player, LongSupplier clock) {
         super(player);
-
-        this.buffs = new Int2ObjectOpenHashMap<>();
-        this.pendingBuffs = new ArrayList<>();
+        this.clock = Objects.requireNonNull(clock);
     }
 
-    /**
-     * Gets a new uid for a server buff
-     *
-     * @return New integer buff uid
-     */
-    private int getNextBuffUid() {
-        return ++nextBuffUid;
-    }
-
-    /**
-     * Returns true if the player has a buff with this group id
-     *
-     * @param groupId Buff group id
-     * @return True if a buff with this group id exists
-     */
     public synchronized boolean hasBuff(int groupId) {
-        return this.buffs.containsKey(groupId);
+        return buffs.values().stream().anyMatch(b -> b.getGroupId() == groupId);
     }
 
-    /** Clears all player buffs */
     public synchronized void clearBuffs() {
-        // Remove from player
-        getPlayer()
-                .sendPacket(
-                        new PacketServerBuffChangeNotify(
-                                getPlayer(),
-                                ServerBuffChangeType.SERVER_BUFF_CHANGE_TYPE_DEL_SERVER_BUFF,
-                                this.buffs.values()));
-
-        // Clear
-        this.buffs.clear();
+        notify(
+                ServerBuffChangeType.SERVER_BUFF_CHANGE_TYPE_DEL_SERVER_BUFF,
+                new ArrayList<>(buffs.values()));
+        buffs.clear();
+        // Claims survive removal: a late native callback must not recreate an already paid heal.
     }
 
-    /**
-     * Adds a server buff to the player.
-     *
-     * @param buffId Server buff id
-     * @return True if a buff was added
-     */
     public boolean addBuff(int buffId) {
         return addBuff(buffId, -1f);
     }
 
-    /**
-     * Adds a server buff to the player.
-     *
-     * @param buffId Server buff id
-     * @param duration Duration of the buff in seconds. Set to 0 for an infinite buff.
-     * @return True if a buff was added
-     */
     public synchronized boolean addBuff(int buffId, float duration) {
         return addBuff(buffId, duration, null);
     }
 
-    /**
-     * Adds a server buff to the player.
-     *
-     * @param buffId Server buff id
-     * @param duration Duration of the buff in seconds. Set to 0 for an infinite buff.
-     * @param target Target avatar
-     * @return True if a buff was added
-     */
+    /** Negative duration uses the resource; zero applies only immediate effects. */
     public synchronized boolean addBuff(int buffId, float duration, Avatar target) {
-        // Get buff excel data
         var buffData = GameData.getBuffDataMap().get(buffId);
-        if (buffData == null) return false;
-
-        // Perform onAdded actions
-        var success =
-                Optional.ofNullable(GameData.getAbilityData(buffData.getAbilityName()))
-                        .map(data -> data.modifiers.get(buffData.getModifierName()))
-                        .map(modifier -> modifier.onAdded)
-                        .map(
-                                onAdded -> {
-                                    var shouldHeal = false;
-                                    for (var ability : onAdded) {
-                                        if (ability.type == null) {
-                                            continue;
-                                        }
-
-                                        if (ability.type == AbilityModifierAction.Type.HealHP) {
-                                            if (target == null) continue;
-
-                                            var maxHp = target.getFightProperty(FightProperty.FIGHT_PROP_MAX_HP);
-                                            var amount =
-                                                    ability.amount.get() + ability.amountByCasterMaxHPRatio.get() * maxHp;
-
-                                            target.getAsEntity().heal(amount);
-                                            shouldHeal = true;
-                                        }
-                                    }
-
-                                    return shouldHeal;
-                                })
-                        .orElse(false);
-
-        // Set duration
-        if (duration < 0f) {
-            duration = buffData.getTime();
+        if (buffData == null || !Float.isFinite(duration)) return false;
+        if (duration < 0) duration = buffData.getTime();
+        if (!Float.isFinite(duration)
+                || duration < 0
+                || target != null && target.getPlayer() != getPlayer()) return false;
+        var data = GameData.getAbilityData(buffData.getAbilityName());
+        var modifier = data == null ? null : data.modifiers.get(buffData.getModifierName());
+        long now = clock.getAsLong();
+        FoodBuffHealing healing = null;
+        if (FoodBuffHealing.hasHealing(data, modifier)) {
+            if (!FoodBuffHealing.supported(data, modifier)) return false;
+            healing = new FoodBuffHealing(getPlayer(), target, data, modifier, now);
+            if (healing.recipient() == null) return false;
+            healingClaims
+                    .computeIfAbsent(
+                            data, key -> java.util.concurrent.ConcurrentHashMap.newKeySet())
+                    .addAll(healing.actions());
+            if (!healing.initial()) return false;
         }
-
-        // Don't add buff if duration is equal or less than 0
-        if (duration <= 0) {
-            return success;
-        }
-
-        // Clear previous buff if it exists
-        this.removeBuff(buffData.getGroupId());
-
-        // Create and store buff
-        PlayerBuff buff = new PlayerBuff(getNextBuffUid(), buffData, duration);
-        this.buffs.put(buff.getGroupId(), buff);
-
-        // Packet
-        getPlayer()
-                .sendPacket(
-                        new PacketServerBuffChangeNotify(
-                                getPlayer(), ServerBuffChangeType.SERVER_BUFF_CHANGE_TYPE_ADD_SERVER_BUFF, buff));
-
+        if (duration == 0) return healing != null;
+        long targetGuid = target == null ? 0 : target.getGuid();
+        var replaced =
+                buffs.values().stream()
+                        .filter(
+                                b ->
+                                        b.getGroupId() == buffData.getGroupId()
+                                                && b.getTargetGuid() == targetGuid)
+                        .toList();
+        remove(replaced);
+        var buff = new PlayerBuff(++nextBuffUid, buffData, duration, now, targetGuid, healing);
+        buffs.put(buff.getUid(), buff);
+        notify(ServerBuffChangeType.SERVER_BUFF_CHANGE_TYPE_ADD_SERVER_BUFF, List.of(buff));
         return true;
     }
 
-    /**
-     * Removes a buff by its group id
-     *
-     * @param buffGroupId Server buff group id
-     * @return True if a buff was remove
-     */
-    public synchronized boolean removeBuff(int buffGroupId) {
-        PlayerBuff buff = this.buffs.remove(buffGroupId);
+    public boolean ownsHealing(Ability ability, AbilityModifierAction action) {
+        var claims =
+                ability == null || ability.getPlayerOwner() != getPlayer()
+                        ? null
+                        : healingClaims.get(ability.getData());
+        return claims != null && claims.contains(action);
+    }
 
-        if (buff != null) {
-            getPlayer()
-                    .sendPacket(
-                            new PacketServerBuffChangeNotify(
-                                    getPlayer(), ServerBuffChangeType.SERVER_BUFF_CHANGE_TYPE_DEL_SERVER_BUFF, buff));
-            return true;
-        }
+    public synchronized boolean removeBuff(int groupId) {
+        var selected = buffs.values().stream().filter(b -> b.getGroupId() == groupId).toList();
+        remove(selected);
+        return !selected.isEmpty();
+    }
 
-        return false;
+    private void remove(Collection<PlayerBuff> selected) {
+        selected.forEach(b -> buffs.remove(b.getUid()));
+        notify(ServerBuffChangeType.SERVER_BUFF_CHANGE_TYPE_DEL_SERVER_BUFF, selected);
+    }
+
+    private void notify(ServerBuffChangeType type, Collection<PlayerBuff> selected) {
+        var groups = new LinkedHashMap<Long, List<PlayerBuff>>();
+        for (var buff : selected)
+            groups.computeIfAbsent(buff.getTargetGuid(), key -> new ArrayList<>()).add(buff);
+        for (var group : groups.values())
+            getPlayer().sendPacket(new PacketServerBuffChangeNotify(getPlayer(), type, group));
     }
 
     public synchronized void onTick() {
-        // Skip if no buffs
-        if (this.buffs.isEmpty()) return;
-
-        long currentTime = System.currentTimeMillis();
-
-        // Add to pending buffs to remove if buff has expired
-        this.buffs
-                .values()
-                .removeIf(
-                        buff -> {
-                            if (currentTime <= buff.getEndTime()) return false;
-                            this.pendingBuffs.add(buff);
-                            return true;
-                        });
-
-        if (this.pendingBuffs.size() > 0) {
-            // Send packet
-            getPlayer()
-                    .sendPacket(
-                            new PacketServerBuffChangeNotify(
-                                    getPlayer(),
-                                    ServerBuffChangeType.SERVER_BUFF_CHANGE_TYPE_DEL_SERVER_BUFF,
-                                    this.pendingBuffs));
-            this.pendingBuffs.clear();
+        long now = clock.getAsLong();
+        var expired = new ArrayList<PlayerBuff>();
+        for (var buff : new ArrayList<>(buffs.values())) {
+            if (now > buff.getEndTime()) expired.add(buff);
+            else if (buff.healing != null) buff.healing.tick(now);
         }
+        remove(expired);
     }
 
     @Getter
@@ -200,22 +134,36 @@ public final class PlayerBuffManager extends BasePlayerManager {
         private final int uid;
         private final BuffData buffData;
         private final long endTime;
+        private final long targetGuid;
+        private final FoodBuffHealing healing;
 
         public PlayerBuff(int uid, BuffData buffData, float duration) {
+            this(uid, buffData, duration, System.currentTimeMillis(), 0, null);
+        }
+
+        private PlayerBuff(
+                int uid,
+                BuffData buffData,
+                float duration,
+                long now,
+                long targetGuid,
+                FoodBuffHealing healing) {
             this.uid = uid;
             this.buffData = buffData;
-            this.endTime = System.currentTimeMillis() + ((long) duration * 1000);
+            this.endTime = now + Math.max(1, Math.round(duration * 1000d));
+            this.targetGuid = targetGuid;
+            this.healing = healing;
         }
 
         public int getGroupId() {
-            return getBuffData().getGroupId();
+            return buffData.getGroupId();
         }
 
         public ServerBuff toProto() {
             return ServerBuff.newBuilder()
-                    .setServerBuffUid(this.getUid())
-                    .setServerBuffId(this.getBuffData().getId())
-                    .setServerBuffType(this.getBuffData().getServerBuffType().getValue())
+                    .setServerBuffUid(uid)
+                    .setServerBuffId(buffData.getId())
+                    .setServerBuffType(buffData.getServerBuffType().getValue())
                     .setInstancedModifierId(1)
                     .build();
         }

@@ -745,7 +745,8 @@ public final class AbilityManager extends BasePlayerManager {
             if (invokedModifier != null && invokedModifier.ownsAnimationCallback(action)) return;
             if (head.getInstancedModifierId() != 0 && invokedModifier == null
                     && AnimationModifierCallbacks.isCallback(ability.getData(), action)) return;
-            boolean owned = entity.getAbilityPeriodicHealing().ownsAction(ability,head.getInstancedModifierId(),action);
+            boolean owned = entity.getAbilityPeriodicHealing().ownsAction(ability,head.getInstancedModifierId(),action)
+                    || player.getBuffManager().ownsHealing(ability,action);
             if (AbilityCooldownInvocation.isCooldownAction(action)) {
                 if (head.getInstancedModifierId() != 0 && invokedModifier == null) return;
                 if (invokedModifier != null && AbilityCooldownInvocation.isModifierCallback(ability.getData(), action)

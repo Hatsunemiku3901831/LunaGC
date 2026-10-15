@@ -16,6 +16,9 @@ public final class ActionHealHP extends AbilityActionHandler {
     public boolean execute(
             Ability ability, AbilityModifierAction action, ByteString abilityData, GameEntity target) {
         if (ability == null || action == null || target == null) return false;
+        if (!ability.isServerFoodHealing()
+                && ability.getPlayerOwner() != null
+                && ability.getPlayerOwner().getBuffManager().ownsHealing(ability, action)) return true;
         var owner = ability.getOwner();
 
         if (owner instanceof EntityClientGadget ownerGadget) {
@@ -75,7 +78,7 @@ public final class ActionHealHP extends AbilityActionHandler {
                     amountByCasterDefRatio * owner.getFightProperty(FightProperty.FIGHT_PROP_CUR_DEFENSE);
 
             abilityRatio = 1.0f;
-            if (!action.ignoreAbilityProperty)
+            if (!action.ignoreAbilityProperty && !ability.isServerFoodHealing())
                 abilityRatio +=
                         owner.getFightProperty(FightProperty.FIGHT_PROP_HEAL_ADD)
                                 + target.getFightProperty(FightProperty.FIGHT_PROP_HEALED_ADD);

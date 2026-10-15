@@ -22,6 +22,9 @@ public class Ability {
     @Getter private AbilityData data;
     @Getter private GameEntity owner;
     @Getter private Player playerOwner;
+    @Getter private boolean serverFoodHealing;
+
+    void markServerFoodHealing() { serverFoodHealing = true; }
     private EntityAvatar casterEntity;
 
     @Getter private AbilityManager manager;

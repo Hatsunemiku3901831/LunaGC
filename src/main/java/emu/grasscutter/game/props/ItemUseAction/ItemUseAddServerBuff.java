@@ -3,13 +3,13 @@ package emu.grasscutter.game.props.ItemUseAction;
 import emu.grasscutter.game.props.ItemUseOp;
 
 public class ItemUseAddServerBuff extends ItemUseInt {
-    private int duration = 0;
+    private float duration = -1;
 
     public ItemUseAddServerBuff(String[] useParam) {
         super(useParam);
         try {
-            this.duration = Integer.parseInt(useParam[1]);
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
+            this.duration = Float.parseFloat(useParam[1]);
+        } catch (NumberFormatException | IndexOutOfBoundsException | NullPointerException ignored) {
         }
     }
 
@@ -20,6 +20,10 @@ public class ItemUseAddServerBuff extends ItemUseInt {
 
     @Override
     public boolean useItem(UseItemParams params) {
-        return params.player.getBuffManager().addBuff(this.i, this.duration, params.targetAvatar);
+        return params != null
+                && params.player != null
+                && params.player
+                        .getBuffManager()
+                        .addBuff(this.i, this.duration, params.targetAvatar);
     }
 }
