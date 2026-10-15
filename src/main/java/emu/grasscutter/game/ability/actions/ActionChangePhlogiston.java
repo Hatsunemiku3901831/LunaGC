@@ -43,13 +43,12 @@ public final class ActionChangePhlogiston extends AbilityActionHandler {
         if (amount.isEmpty()) return false;
         float delta = (float) amount.getAsDouble();
         boolean ratio = current && action.phlogistonUsesRatio();
-        if (ratio && delta < 0) return false;
-        if ("Sub".equals(mode) || "Cost".equals(mode)) delta = -delta;
+        boolean cost = "Sub".equals(mode) || "Cost".equals(mode);
+        if ((ratio || cost) && delta < 0) return false;
+        if (cost) delta = -delta;
         var basis =
                 ratio
-                        ? "Cost".equals(mode) || "Sub".equals(mode)
-                                ? Phlogiston.RatioBasis.CURRENT
-                                : Phlogiston.RatioBasis.CAPACITY
+                        ? cost ? Phlogiston.RatioBasis.CURRENT : Phlogiston.RatioBasis.CAPACITY
                         : Phlogiston.RatioBasis.ABSOLUTE;
         if (!conditionsPass(ability, action, target)) return false;
         return action.targetType == null
