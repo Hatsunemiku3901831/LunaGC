@@ -1065,7 +1065,8 @@ public class InventorySystem extends BaseGameSystem {
 
     // Uses an item without checking the player's inventory.
     public synchronized boolean useItemDirect(ItemData itemData, UseItemParams params) {
-        if (itemData == null) return false;
+        if (itemData == null || params == null || params.player == null
+                || params.itemUseTarget == null || params.count <= 0) return false;
 
         if (itemData.getMaterialType() == MaterialType.MATERIAL_WEAPON_SKIN) {
             // Ley-line appearances have no useOp in the material table. Resolve the real skin
@@ -1082,6 +1083,8 @@ public class InventorySystem extends BaseGameSystem {
 
         // Ensure targeting conditions are satisfied
         val target = Optional.ofNullable(params.targetAvatar);
+        if (target.isPresent() && target.get().getPlayer() != params.player) return false;
+        var targetEntity = target.map(Avatar::getAsEntity).orElse(null);
         switch (params.itemUseTarget) {
             case ITEM_USE_TARGET_NONE -> {}
             case ITEM_USE_TARGET_SPECIFY_AVATAR -> {
@@ -1094,7 +1097,7 @@ public class InventorySystem extends BaseGameSystem {
                 }
             }
             case ITEM_USE_TARGET_SPECIFY_ALIVE_AVATAR -> {
-                if (target.map(a -> !a.getAsEntity().isAlive()).orElse(true)) {
+                if (targetEntity == null || !targetEntity.isAlive()) {
                     Grasscutter.getLogger()
                             .debug(
                                     "Item use rejected: item {} targets a living avatar, but the target is dead or absent ({}).",
@@ -1104,7 +1107,7 @@ public class InventorySystem extends BaseGameSystem {
                 }
             }
             case ITEM_USE_TARGET_SPECIFY_DEAD_AVATAR -> {
-                if (target.map(a -> a.getAsEntity().isAlive()).orElse(true)) {
+                if (targetEntity == null || targetEntity.isAlive()) {
                     Grasscutter.getLogger()
                             .debug(
                                     "Item use rejected: item {} targets a fallen avatar, but the target is alive or absent ({}).",
@@ -1118,7 +1121,13 @@ public class InventorySystem extends BaseGameSystem {
         }
 
         int[] satiationParams = itemData.getSatiationParams();
+        int reservedSatiation = 0;
         if (satiationParams != null && satiationParams.length > 0 && target.isPresent()) {
+            var foodActions = itemData.getItemUseActions();
+            if (satiationParams.length < 2 || targetEntity == null
+                    || foodActions == null || foodActions.isEmpty()) return false;
+            float maxHp = params.targetAvatar.getFightProperty(FightProperty.FIGHT_PROP_MAX_HP);
+            if (!Float.isFinite(maxHp) || maxHp <= 0) return false;
             // Invoke and call player use food event.
             var event =
                     new PlayerUseFoodEvent(params.player, itemData, params.targetAvatar.getAsEntity());
@@ -1133,8 +1142,7 @@ public class InventorySystem extends BaseGameSystem {
 
             float satiationIncrease =
                     satiationParams[0]
-                            + ((float) satiationParams[1])
-                                    / params.targetAvatar.getFightProperty(FightProperty.FIGHT_PROP_MAX_HP);
+                            + ((float) satiationParams[1]) / maxHp;
             if (!params
                     .player
                     .getSatiationManager()
@@ -1148,8 +1156,21 @@ public class InventorySystem extends BaseGameSystem {
                                 itemData.getId());
                 return false;
             }
+            reservedSatiation = Math.round(satiationIncrease * 100);
         }
 
+        boolean used = false;
+        try {
+            used = executeItemActions(itemData, params);
+            return used;
+        } finally {
+            if (!used && reservedSatiation > 0)
+                params.player.getSatiationManager()
+                        .refundFoodSatiation(params.targetAvatar, reservedSatiation);
+        }
+    }
+
+    private boolean executeItemActions(ItemData itemData, UseItemParams params) {
         // Use
         var actions = itemData.getItemUseActions();
         Grasscutter.getLogger().trace("Using - actions - {}", actions);

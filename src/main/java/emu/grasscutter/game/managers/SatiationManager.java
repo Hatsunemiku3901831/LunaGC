@@ -16,6 +16,8 @@ public class SatiationManager extends BasePlayerManager {
      * Change satiation
      ********************/
     public synchronized boolean addSatiation(Avatar avatar, float satiationIncrease, int itemId) {
+        if (avatar == null || !Float.isFinite(satiationIncrease) || satiationIncrease < 0
+                || (double) satiationIncrease * 100 > Integer.MAX_VALUE) return false;
 
         // Satiation is max 10000 but can go over in the case of overeating
         Map<Integer, Long> propMap = new HashMap<>();
@@ -61,6 +63,14 @@ public class SatiationManager extends BasePlayerManager {
         avatar.reduceSatiationPenalty(3000);
         avatar.save();
         // Update avatar to no satiation
+        updateSingleAvatar(avatar, 0);
+    }
+
+    /** Refund only this failed use, preserving any elapsed reduction and existing penalty. */
+    public synchronized void refundFoodSatiation(Avatar avatar, int value) {
+        if (avatar == null || value <= 0) return;
+        avatar.reduceSatiation(value);
+        avatar.save();
         updateSingleAvatar(avatar, 0);
     }
 
