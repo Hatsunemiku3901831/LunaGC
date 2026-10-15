@@ -116,6 +116,7 @@ public class ActionCreateGadget extends AbilityActionHandler {
         var owner = action.ownerIsTarget ? target : entity;
         entityCreated.setOwner(owner);
         entityCreated.setAbilityServerOwned(action.byServer);
+        entityCreated.setLifeByOwnerIsAlive(action.lifeByOwnerIsAlive);
 
         // Preserve the legacy fallback for client mirrors. An explicit server action creates
         // every requested instance (e.g. all three rebirth prisms) and cannot be replaced by it.

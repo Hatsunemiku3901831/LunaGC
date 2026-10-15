@@ -53,7 +53,8 @@ public class EntityGadget extends EntityBaseGadget {
 
     @Getter private final Position bornPos;
     @Getter private final Position bornRot;
-    @Getter @Setter private GameEntity owner = null;
+    @Getter private volatile GameEntity owner = null;
+    private volatile OwnerLifetime ownerLifetime;
     /** Set only from the server's ability config; client gadget notifications cannot set it. */
     @Getter @Setter private boolean abilityServerOwned;
     @Getter @Setter private List<GameEntity> children = new ArrayList<>();
@@ -79,6 +80,61 @@ public class EntityGadget extends EntityBaseGadget {
     @Getter @Setter private int ticksSinceChange;
 
     @Getter private boolean interactEnabled = true;
+
+    public void setOwner(GameEntity owner) {
+        synchronized (getScene()) {
+            this.owner = owner;
+            if (ownerLifetime != null) ownerLifetime = OwnerLifetime.capture(owner);
+        }
+    }
+
+    public boolean isLifeByOwnerIsAlive() {
+        return ownerLifetime != null;
+    }
+
+    public void setLifeByOwnerIsAlive(boolean enabled) {
+        synchronized (getScene()) {
+            ownerLifetime = enabled ? OwnerLifetime.capture(owner) : null;
+        }
+    }
+
+    private record OwnerLifetime(
+            GameEntity entity, int entityId, long abilityVersion, long deathSequence, boolean alive) {
+        private static OwnerLifetime capture(GameEntity entity) {
+            // Read the sequence before alive: a death during capture cannot bind a new live owner.
+            return entity == null
+                    ? new OwnerLifetime(null, 0, 0, 0, false)
+                    : new OwnerLifetime(entity, entity.getId(), entity.getAbilityLifecycleVersion(),
+                            entity.getDeathSequence(), entity.isAlive());
+        }
+
+        private boolean isCurrent(Scene scene) {
+            if (entity == null || !alive || entity.getId() != entityId
+                    || !entity.isAlive() || entity.getDeathSequence() != deathSequence
+                    || !entity.isAbilityLifecycleCurrent(abilityVersion)) return false;
+            // World/team actors and offstage party members are not in the physical entity map.
+            if (entity instanceof EntityWorld world)
+                return world.getWorld() == scene.getWorld() && scene.getWorld().getEntity() == world;
+            if (entity.getScene() != scene) return false;
+            if (entity instanceof EntityScene) return scene.getSceneEntity() == entity;
+            if (entity instanceof EntityTeam team) {
+                var player = team.getPlayer();
+                return player != null && player.getScene() == scene
+                        && player.getWorld() == scene.getWorld()
+                        && player.getTeamManager().getEntity() == team;
+            }
+            if (entity instanceof EntityAvatar avatar) {
+                var player = avatar.getPlayer();
+                if (player == null || player.getScene() != scene
+                        || player.getWorld() != scene.getWorld()) return false;
+            }
+            var current = scene.getEntities().get(entityId);
+            if (current == null) current = scene.getWeaponEntities().get(entityId);
+            if (current == null) current = scene.getScenePlayBattleManager().getPlayTeamEntity(entityId);
+            if (current != null) return current == entity;
+            return entity instanceof EntityAvatar avatar && avatar.isInSceneParty();
+        }
+    }
 
     public EntityGadget(Scene scene, int gadgetId, Position pos) {
         this(scene, gadgetId, pos, null, null);
@@ -294,6 +350,24 @@ public class EntityGadget extends EntityBaseGadget {
     }
 
     @Override public void onTick(int sceneTime) {
+        if (ownerLifetime == null) {
+            tickGadget(sceneTime);
+            return;
+        }
+        synchronized (getScene()) {
+            // A stale tick may run after a removal callback has installed a replacement.
+            if (getScene().getEntities().get(getId()) != this) return;
+            var lifetime = ownerLifetime;
+            if (lifetime != null && (lifetime.entity() == this || !lifetime.isCurrent(getScene()))) {
+                getScene().removeEntity(this, VisionTypeOuterClass.VisionType.VisionType_VISION_REMOVE);
+                return;
+            }
+        }
+        // Controllers acquire their own monitor and can call back into the scene.
+        tickGadget(sceneTime);
+    }
+
+    private void tickGadget(int sceneTime) {
         super.onTick(sceneTime);
         if (metaGadget != null && metaGadget.crucible_config != null)
             updateGadgetPlay(state -> state.tick(System.currentTimeMillis() / 1000));

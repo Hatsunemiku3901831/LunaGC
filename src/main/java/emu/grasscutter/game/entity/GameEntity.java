@@ -72,6 +72,12 @@ public abstract class GameEntity {
     @Getter
     private volatile boolean isDead = false;
     private final AtomicBoolean deathProcessed = new AtomicBoolean();
+    // A summon must not survive a death followed by revival between its ticks.
+    private final AtomicLong deathSequence = new AtomicLong();
+
+    public long getDeathSequence() {
+        return deathSequence.get();
+    }
 
     @Getter @Setter private EntityController entityController;
     @Getter private ElementType lastAttackType = ElementType.None;
@@ -185,7 +191,9 @@ public abstract class GameEntity {
     }
 
     protected void setDead(boolean dead) {
+        boolean wasDead = this.isDead;
         this.isDead = dead;
+        if (dead && !wasDead) deathSequence.incrementAndGet();
         if (!dead) deathProcessed.set(false);
     }
     public LifeState getLifeState() {
@@ -500,7 +508,7 @@ public abstract class GameEntity {
                 this.getScene().broadcastPacket(new PacketEntityFightPropUpdateNotify(this, FightProperty.FIGHT_PROP_CUR_HP_DEBTS));
                 this.getScene().broadcastPacket(new PacketEntityFightPropChangeReasonNotify(this, FightProperty.FIGHT_PROP_CUR_HP_DEBTS, -debt, PropChangeReason.PropChangeReason_PROP_CHANGE_ABILITY, ChangeHpDebtsReason.CHANGE_HP_DEBTS_REASON_CHANGE_HP_DEBTS_CLEAR));
             }
-            this.isDead = true;
+            this.setDead(true);
         }
     }
 
@@ -636,7 +644,7 @@ public abstract class GameEntity {
 
     public void onDeath(int killerId) {
 
-        this.isDead = true;
+        this.setDead(true);
         EntityDeathEvent event = new EntityDeathEvent(this, killerId);
         event.call();
 
