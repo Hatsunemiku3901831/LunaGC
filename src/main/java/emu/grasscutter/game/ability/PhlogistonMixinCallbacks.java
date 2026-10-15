@@ -62,27 +62,29 @@ public final class PhlogistonMixinCallbacks {
                     || step.isEmpty()
                     || rate.getAsDouble() < 0
                     || step.getAsDouble() <= 0) return false;
-            String mode =
-                    mixin.costType != null
-                            ? mixin.costType
-                            : mixin.rawPhlogistonCostType != null
-                                    ? mixin.rawPhlogistonCostType
-                                    : "Cost";
+            var mode =
+                    Phlogiston.ChangeMode.fromConfig(
+                            mixin.costType != null
+                                    ? mixin.costType
+                                    : mixin.rawPhlogistonCostType != null
+                                            ? mixin.rawPhlogistonCostType
+                                            : "Cost");
             // Current resources contain Cost and Add. Set's timer semantics need a client pairing.
-            if (!"Cost".equals(mode) && !"Add".equals(mode)) return false;
+            if (mode != Phlogiston.ChangeMode.COST && mode != Phlogiston.ChangeMode.ADD)
+                return false;
             double amount = rate.getAsDouble() * step.getAsDouble();
             if (!Double.isFinite(amount) || amount > Float.MAX_VALUE) return false;
             return Phlogiston.change(
                     ability,
                     bearer,
-                    (float) ("Cost".equals(mode) ? -amount : amount),
+                    (float) (mode == Phlogiston.ChangeMode.COST ? -amount : amount),
                     mixin.targetType != null
                             ? mixin.targetType
                             : mixin.rawPhlogistonTargetType != null
                                     ? mixin.rawPhlogistonTargetType
                                     : "Auto",
                     mixin.phlogistonUsesRatio()
-                            ? "Cost".equals(mode)
+                            ? mode == Phlogiston.ChangeMode.COST
                                     ? Phlogiston.RatioBasis.CURRENT
                                     : Phlogiston.RatioBasis.CAPACITY
                             : Phlogiston.RatioBasis.ABSOLUTE);

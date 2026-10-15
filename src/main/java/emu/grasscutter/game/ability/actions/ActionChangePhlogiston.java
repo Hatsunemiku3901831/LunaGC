@@ -22,7 +22,7 @@ public final class ActionChangePhlogiston extends AbilityActionHandler {
                         || action.rawPhlogistonValue != null
                         || action.costType != null
                         || action.rawPhlogistonCostType != null;
-        String mode =
+        String configuredMode =
                 current
                         ? action.costType != null
                                 ? action.costType
@@ -30,20 +30,21 @@ public final class ActionChangePhlogiston extends AbilityActionHandler {
                                         ? action.rawPhlogistonCostType
                                         : "Cost"
                         : action.determineType;
+        // Sub is an existing ordinary-action alias, not a current periodic mixin mode.
+        var mode =
+                "Sub".equals(configuredMode)
+                        ? Phlogiston.ChangeMode.COST
+                        : Phlogiston.ChangeMode.fromConfig(configuredMode);
         var expression =
                 current
                         ? action.value != null ? action.value : action.rawPhlogistonValue
                         : action.ratio;
-        if (expression == null
-                || !("Cost".equals(mode)
-                        || "Sub".equals(mode)
-                        || "Add".equals(mode)
-                        || "Set".equals(mode))) return false;
+        if (expression == null || mode == null) return false;
         var amount = expression.tryGet(propertiesFor(ability));
         if (amount.isEmpty()) return false;
         float delta = (float) amount.getAsDouble();
         boolean ratio = current && action.phlogistonUsesRatio();
-        boolean cost = "Sub".equals(mode) || "Cost".equals(mode);
+        boolean cost = mode == Phlogiston.ChangeMode.COST;
         if ((ratio || cost) && delta < 0) return false;
         if (cost) delta = -delta;
         var basis =
@@ -52,8 +53,14 @@ public final class ActionChangePhlogiston extends AbilityActionHandler {
                         : Phlogiston.RatioBasis.ABSOLUTE;
         if (!conditionsPass(ability, action, target)) return false;
         return action.targetType == null
-                ? Phlogiston.mutate(ability, target, delta, "Set".equals(mode), basis)
+                ? Phlogiston.mutate(
+                        ability, target, delta, mode == Phlogiston.ChangeMode.SET, basis)
                 : Phlogiston.mutate(
-                        ability, target, delta, "Set".equals(mode), action.targetType, basis);
+                        ability,
+                        target,
+                        delta,
+                        mode == Phlogiston.ChangeMode.SET,
+                        action.targetType,
+                        basis);
     }
 }

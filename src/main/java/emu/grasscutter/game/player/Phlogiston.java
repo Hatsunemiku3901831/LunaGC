@@ -19,6 +19,41 @@ public final class Phlogiston {
         CAPACITY
     }
 
+    /** Both readable enum names and integer resource exports describe these same controls. */
+    public enum ChangeMode {
+        COST,
+        ADD,
+        SET;
+
+        public static ChangeMode fromConfig(String value) {
+            if (value == null) return null;
+            return switch (value) {
+                case "Cost", "0" -> COST;
+                case "Add", "1" -> ADD;
+                case "Set", "2" -> SET;
+                default -> null;
+            };
+        }
+    }
+
+    private enum Pool {
+        AUTO,
+        SELF,
+        TEAM,
+        VEHICLE;
+
+        static Pool fromConfig(String value) {
+            if (value == null) return null;
+            return switch (value) {
+                case "Auto", "0" -> AUTO;
+                case "Self", "1" -> SELF;
+                case "Team", "2" -> TEAM;
+                case "Vehicle", "3" -> VEHICLE;
+                default -> null;
+            };
+        }
+    }
+
     private Phlogiston() {}
 
     public static void change(Player player, float delta) {
@@ -123,9 +158,9 @@ public final class Phlogiston {
             boolean set,
             String targetType,
             RatioBasis basis) {
-        if (targetType == null
+        var pool = Pool.fromConfig(targetType);
+        if (pool == null
                 || basis == null
-                || !java.util.Set.of("Auto", "Self", "Team", "Vehicle").contains(targetType)
                 || ability == null
                 || bearer == null
                 || !Float.isFinite(delta)
@@ -140,17 +175,16 @@ public final class Phlogiston {
                             ? v
                             : owner instanceof EntityVehicle v ? v : null;
             if (vehicle != null && vehicle.getOwner() != player) return false;
-            if (vehicle != null
-                    && !"Team".equals(targetType)
-                    && !Float.isFinite(vehicle.getCurPhlogiston())) return false;
+            if (vehicle != null && pool != Pool.TEAM && !Float.isFinite(vehicle.getCurPhlogiston()))
+                return false;
             if (vehicle == null) {
                 var caster = ability.getCasterEntity();
                 if (caster == null || caster.getPlayer() != player) return false;
             }
-            if ("Vehicle".equals(targetType) && vehicle == null) return false;
+            if (pool == Pool.VEHICLE && vehicle == null) return false;
             if (vehicle != null
-                    && !"Team".equals(targetType)
-                    && (!"Auto".equals(targetType) || vehicle.getCurPhlogiston() > 0))
+                    && pool != Pool.TEAM
+                    && (pool != Pool.AUTO || vehicle.getCurPhlogiston() > 0))
                 return mutate(vehicle, delta, set, basis);
             return mutate(player, delta, set, basis);
         }
