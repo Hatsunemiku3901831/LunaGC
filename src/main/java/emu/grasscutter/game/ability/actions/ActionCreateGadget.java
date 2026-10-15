@@ -6,7 +6,7 @@ import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.binout.AbilityModifier.AbilityModifierAction;
 import emu.grasscutter.game.ability.Ability;
 import emu.grasscutter.game.ability.AbilityBornPosition;
-import emu.grasscutter.game.ability.IneffaSummons;
+import emu.grasscutter.game.ability.ClientSkillObjects;
 import emu.grasscutter.game.entity.*;
 import emu.grasscutter.game.props.CampTargetType;
 import emu.grasscutter.game.world.Position;
@@ -77,7 +77,7 @@ public class ActionCreateGadget extends AbilityActionHandler {
         // below only recognises summons belonging to the one controller it is standing on - so the
         // previous cast's singers match nothing, and neither does the KillGadget that should retire
         // them when the skill ends.
-        if (clientOwnsChain(entity) || IneffaSummons.clientCreates(entity, action.gadgetID)) {
+        if (clientOwnsChain(entity) || ClientSkillObjects.clientCreates(entity, action.gadgetID)) {
             return true;
         }
 

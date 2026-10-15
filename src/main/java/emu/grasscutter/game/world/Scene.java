@@ -16,6 +16,7 @@ import emu.grasscutter.game.activity.salesman.SalesmanSceneController;
 import emu.grasscutter.game.activity.salesman.SalesmanNpcScene;
 import emu.grasscutter.game.activity.aster.AsterSceneController;
 import emu.grasscutter.game.ability.IneffaSummons;
+import emu.grasscutter.game.ability.ClientSkillObjects;
 import emu.grasscutter.game.avatar.Avatar;
 import emu.grasscutter.game.dungeons.DungeonManager;
 import emu.grasscutter.game.dungeons.DungeonSettleListener;
@@ -548,20 +549,23 @@ public class Scene {
 
     public synchronized void removeEntity(GameEntity entity, VisionType visionType) {
         GameEntity removed = this.removeEntityDirectly(entity);
-        if (removed != null) {
+        if (removed != null && getEntities().get(removed.getId()) == null) {
             this.broadcastPacket(new PacketSceneEntityDisappearNotify(removed, visionType));
         }
     }
 
-    public void removeEntities(List<GameEntity> entity, VisionType visionType) {
+    public synchronized void removeEntities(List<GameEntity> entity, VisionType visionType) {
         var toRemove =
                 entity.stream()
                         .filter(Objects::nonNull)
                         .map(this::removeEntityDirectly)
                         .filter(Objects::nonNull)
                         .toList();
-        if (!toRemove.isEmpty()) {
-            this.broadcastPacket(new PacketSceneEntityDisappearNotify(toRemove, visionType));
+        // A later removal callback can register a replacement for an earlier list entry.
+        var visibleRemovals = toRemove.stream()
+                .filter(removed -> getEntities().get(removed.getId()) == null).toList();
+        if (!visibleRemovals.isEmpty()) {
+            this.broadcastPacket(new PacketSceneEntityDisappearNotify(visibleRemovals, visionType));
         }
     }
 
@@ -1444,7 +1448,8 @@ public class Scene {
         if (!this.addEntityDirectly(gadget)) return;
         owner.getTeamManager().getGadgets().add(gadget);
         if (dungeonBossCleanup.removeLateGadget(gadget)) return;
-        IneffaSummons.created(this, gadget);
+        ClientSkillObjects.created(this, gadget);
+        if (getEntities().get(gadget.getId()) == gadget) IneffaSummons.created(this, gadget);
         if (getEntities().get(gadget.getId()) != gadget) {
             owner.getTeamManager().getGadgets().remove(gadget);
             return;

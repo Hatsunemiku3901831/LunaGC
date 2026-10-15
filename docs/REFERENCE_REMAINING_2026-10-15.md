@@ -39,6 +39,7 @@
 | 退出清理与存档隔离 | [单步失败、家园请求、后台自有角色、逐角色保存及同 UID 注册表身份保护](PLAYER_LOGOUT_ISOLATION_2026-10-16.md) |
 | 元素爆发保护归属 | [实际承受者、真实角色修饰器移除、切人、召唤物伤害与初始化通知](BURST_PROTECTION_SCOPE_2026-10-16.md) |
 | 伊涅芙客户端召唤物 | [根节点副本、重召唤／销毁、辅助物与爆发弹、联机归属及回调替代对象保护](INEFFA_SUMMON_LIFECYCLE_2026-10-16.md) |
+| 温迪客户端技能对象 | [四类对象去重、共用归属与旧副本清理、独立效果共存及批量回调消失包](VENTI_CLIENT_SKILL_OBJECTS_2026-10-16.md) |
 | Windows 服务启动 | [JDK Selector 临时目录、带空格路径、真实 Java 启动及 HTTP／UDP 状态区分](WINDOWS_JAVA_STARTUP_2026-10-16.md) |
 | 最近有效锚点复活 | [当前点位类型、任务锁定、最近目的地、原地回退、坐标快照及请求响应归属](WORLD_RESPAWN_POINTS_2026-10-16.md) |
 | 全队倒下的任务失败 | [真实任务失败、复活顺序、并发去重和数据库保存](TEAM_WIPE_QUEST_FAILURE_2026-10-15.md) |
