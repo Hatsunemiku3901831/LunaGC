@@ -1,0 +1,12 @@
+// 7.1 type 68742; message 16 sender 0x14b91f380, parser 0x152b83990.
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "AbilityMetaModifierDurabilityChangeOuterClass";
+
+message AbilityMetaModifierDurabilityChange {
+    float remaining_durability = 5;
+    // The sender's second float is kept under its native name until its use is paired.
+    float JODMMPLFMEG = 8;
+    bool is_serverbuff_modifier = 15;
+}

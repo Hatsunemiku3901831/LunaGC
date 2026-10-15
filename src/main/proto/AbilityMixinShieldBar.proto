@@ -1,0 +1,12 @@
+// 7.1 type 53295; message 107 sender 0x1487345a0, parser 0x1497882d0.
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "AbilityMixinShieldBarOuterClass";
+
+message AbilityMixinShieldBar {
+    uint32 player_num = 2;
+    uint32 element_type = 9;
+    float max_durability = 10;
+    float remaining_durability = 15;
+}
