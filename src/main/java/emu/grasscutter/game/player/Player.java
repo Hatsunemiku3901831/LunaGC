@@ -1866,40 +1866,43 @@ public class Player implements PlayerHook, FieldFetch {
 
     public void onLogout() {
         try {
+            runLogoutStep("statue recovery", () -> this.getSotsManager().stopRecovery());
+            runLogoutStep("matchmaking", () -> this.getServer().getCrucibleMatchSystem().cancel(this));
+            runLogoutStep("chat history", () -> this.getServer().getChatSystem().clearHistoryOnLogout(this));
+            runLogoutStep("stamina", () -> this.getStaminaManager().stopSustainedStaminaHandler());
+            runLogoutStep("dungeon exit", () -> this.getServer().getDungeonSystem().exitDungeon(this));
+            runLogoutStep("world departure", () -> {
+                var world = this.getWorld();
+                if (world != null) world.removePlayer(this);
+            });
+            runLogoutStep("profile", () -> this.getProfile().syncWithCharacter(this));
+            runLogoutStep("co-op requests", () -> this.getCoopRequests().clear());
+            runLogoutStep("home requests", () -> {
+                for (var request : new ArrayList<>(this.getEnterHomeRequests().values()))
+                    runLogoutStep("home request reply", () -> this.expireEnterHomeRequest(request, true));
+                this.getEnterHomeRequests().clear();
+            });
 
-            this.getSotsManager().stopRecovery();
-
-            this.getServer().getCrucibleMatchSystem().cancel(this);
-
-            this.getServer().getChatSystem().clearHistoryOnLogout(this);
-
-            getStaminaManager().stopSustainedStaminaHandler();
-
-            this.getServer().getDungeonSystem().exitDungeon(this);
-
-            if (this.getWorld() != null) {
-                this.getWorld().removePlayer(this);
-            }
-
-            this.getProfile().syncWithCharacter(this);
-
-            this.getCoopRequests().clear();
-            this.getEnterHomeRequests()
-                    .values()
-                    .forEach(req -> this.expireEnterHomeRequest(req, true));
-            this.getEnterHomeRequests().clear();
-
-            this.save();
-            this.getTeamManager().saveAvatars();
-            this.getFriendsList().save();
-
-            PlayerQuitEvent event = new PlayerQuitEvent(this);
-            event.call();
-        } catch (Throwable e) {
-            e.printStackTrace();
-            Grasscutter.getLogger().warn("Player (UID {}) save failure", getUid());
+            runLogoutStep("player save", this::save);
+            runLogoutStep("avatar saves", () -> {
+                // Scene departure may replace a temporary party. Save the loaded owned avatars,
+                // including inactive members, and keep each save independent of the others.
+                for (var avatar : new ArrayList<>(this.getAvatars().getAvatars().values()))
+                    runLogoutStep("avatar save " + (avatar == null ? "missing" : avatar.getAvatarId()),
+                            () -> avatar.save());
+            });
+            runLogoutStep("friend profiles", () -> this.getFriendsList().save());
+            runLogoutStep("quit event", () -> new PlayerQuitEvent(this).call());
         } finally {
             removeFromServer();
+        }
+    }
+
+    private void runLogoutStep(String step, Runnable action) {
+        try {
+            action.run();
+        } catch (Throwable failure) {
+            Grasscutter.getLogger().warn("Player (UID {}) logout step '{}' failed", getUid(), step, failure);
         }
     }
 
