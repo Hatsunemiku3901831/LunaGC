@@ -60,3 +60,18 @@ JAR SHA-256：`6cb4b7ae5f0d7566aaeaa8339a240fd2678b1b717ef4d0069df5c843b0dd1ad0`
 `item-routing-final-results/`、`item-routing-verification.json`。
 JAR SHA-256：`03f68ef7bc846658797179621a3daa4e58fb6e5b1caa399d91c84970bb34fec7`。
 本次补齐服务端资源补充路径，未替换日常运行服务，未宣称当前客户端吸附动画已经验收。
+
+## 移除回调异常后的领取结算
+
+场景先从实体表移除球，再执行 `onRemoved` 和消失通知。以前这两个后续步骤发生异常时，
+已经消失的球不会补充燃素。现在捕获清理异常后核对实体表：已经移除则完成原来选中的池的补充；
+实体仍在场景中则不发放。异常仍写入日志。移除前后的重复请求与回调重入都不能再次领取。
+
+新增 6 项故障检查，首轮全部失败；修复后拾取、直接物品补充与车辆协议相关 **80 项／4 套件**通过，
+零失败、错误和跳过，JAR 构建通过。源码宿主机／容器哈希、编译类／JAR 字节一致，
+仅预期的拾球类发生变化，无意外类删除。
+
+证据：`debug/aster-mid-20261011/batch242/ball-settlement-red-results/`、
+`ball-settlement-final-results/` 和 `ball-settlement-verification.json`。
+JAR SHA-256：`b590af596c868be22c368cdde2a796ea9c4be5ecaf0801c9204dca52ed180359`。
+本次未替换日常运行服务，客户端画面与吸附动画的验收边界保持不变。

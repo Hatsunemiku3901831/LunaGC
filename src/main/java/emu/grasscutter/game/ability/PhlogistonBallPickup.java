@@ -106,7 +106,15 @@ public final class PhlogistonBallPickup {
                     vehicle == null ? player.getPhlogistonValue() : vehicle.getCurPhlogiston();
             if (!Float.isFinite(previous) || total <= 0 || total > Float.MAX_VALUE) return false;
             // Remove under the scene monitor before fuel callbacks can re-enter this claim.
-            scene.removeEntity(ball, VisionType.VisionType_VISION_REMOVE);
+            try {
+                scene.removeEntity(ball, VisionType.VisionType_VISION_REMOVE);
+            } catch (RuntimeException exception) {
+                // Scene removal commits before cleanup and the disappearance notification.
+                // A failed callback must not lose the fuel from an already consumed ball.
+                emu.grasscutter.Grasscutter.getLogger()
+                        .warn("Fuel ball {} removal callback failed", ball.getId(), exception);
+            }
+            if (scene.getEntities().get(ball.getId()) == ball) return false;
             if (vehicle == null) Phlogiston.change(player, (float) total);
             else Phlogiston.change(vehicle, (float) total);
             return true;
