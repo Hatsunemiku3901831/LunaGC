@@ -77,7 +77,9 @@ public class ActionCreateGadget extends AbilityActionHandler {
         // below only recognises summons belonging to the one controller it is standing on - so the
         // previous cast's singers match nothing, and neither does the KillGadget that should retire
         // them when the skill ends.
-        if (clientOwnsChain(entity) || ClientSkillObjects.clientCreates(entity, action.gadgetID)) {
+        if (!action.byServer
+                && (clientOwnsChain(entity)
+                        || ClientSkillObjects.clientCreates(entity, action.gadgetID))) {
             return true;
         }
 
@@ -113,17 +115,20 @@ public class ActionCreateGadget extends AbilityActionHandler {
                         CampTargetType.getTypeByName(action.campTargetType).getValue());
         var owner = action.ownerIsTarget ? target : entity;
         entityCreated.setOwner(owner);
+        entityCreated.setAbilityServerOwned(action.byServer);
 
-        // Nothing on this side runs the summon's own KillSelf, so without this every charged attack
-        // would leave another copy standing in the scene. One summon of a given kind per owner.
-        entity.getScene().getEntities().values().stream()
-                .filter(
-                        e ->
-                                e instanceof EntityGadget g
-                                        && g.getGadgetId() == action.gadgetID
-                                        && g.getOwner() == owner)
-                .toList()
-                .forEach(stale -> entity.getScene().removeEntity(stale));
+        // Preserve the legacy fallback for client mirrors. An explicit server action creates
+        // every requested instance (e.g. all three rebirth prisms) and cannot be replaced by it.
+        if (!action.byServer)
+            entity.getScene().getEntities().values().stream()
+                    .filter(
+                            e ->
+                                    e instanceof EntityGadget g
+                                            && !g.isAbilityServerOwned()
+                                            && g.getGadgetId() == action.gadgetID
+                                            && g.getOwner() == owner)
+                    .toList()
+                    .forEach(stale -> entity.getScene().removeEntity(stale));
 
         entity.getScene().addEntity(entityCreated);
 

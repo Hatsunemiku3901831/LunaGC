@@ -54,6 +54,8 @@ public class EntityGadget extends EntityBaseGadget {
     @Getter private final Position bornPos;
     @Getter private final Position bornRot;
     @Getter @Setter private GameEntity owner = null;
+    /** Set only from the server's ability config; client gadget notifications cannot set it. */
+    @Getter @Setter private boolean abilityServerOwned;
     @Getter @Setter private List<GameEntity> children = new ArrayList<>();
 
     @Getter private int state;

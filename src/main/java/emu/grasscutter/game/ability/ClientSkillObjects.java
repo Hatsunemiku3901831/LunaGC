@@ -6,7 +6,9 @@ import emu.grasscutter.game.world.Scene;
 
 import java.util.*;
 
-/** Known client-created skill objects; each avatar policy is verified against current resources. */
+/**
+ * Known client-created skill objects, verified against the current avatar and monster resources.
+ */
 public final class ClientSkillObjects {
     private static final Map<Integer, Set<Integer>> BY_AVATAR =
             Map.of(
@@ -15,12 +17,24 @@ public final class ClientSkillObjects {
                             Set.of(
                                     41116005, 41116006, 41116007, 41116008, 41116009, 41116010,
                                     41116011));
+    private static final Map<Integer, Set<Integer>> BY_MONSTER_FAMILY =
+            Map.of(
+                    200401, Set.of(42004003, 42004004, 42004005, 42004007, 42004008, 42004012),
+                    200402, Set.of(42004012),
+                    200404, Set.of(42004012),
+                    200405, Set.of(42004012),
+                    200406, Set.of(42004012),
+                    200407, Set.of(42004012));
 
     private ClientSkillObjects() {}
 
     public static boolean clientCreates(GameEntity source, int gadgetId) {
-        if (!(source instanceof EntityAvatar avatar)) return false;
-        var kinds = BY_AVATAR.get(avatar.getAvatar().getAvatarId());
+        Set<Integer> kinds;
+        if (source instanceof EntityAvatar avatar)
+            kinds = BY_AVATAR.get(avatar.getAvatar().getAvatarId());
+        else if (source instanceof EntityMonster monster && monster.getMonsterData() != null)
+            kinds = BY_MONSTER_FAMILY.get(monster.getMonsterData().getId() / 100);
+        else return false;
         return kinds != null && kinds.contains(gadgetId);
     }
 
@@ -40,6 +54,7 @@ public final class ClientSkillObjects {
                         .filter(
                                 e ->
                                         e instanceof EntityGadget gadget
+                                                && !gadget.isAbilityServerOwned()
                                                 && kinds.contains(gadget.getGadgetId())
                                                 && owned(gadget.getOwner(), player))
                         .toList();
