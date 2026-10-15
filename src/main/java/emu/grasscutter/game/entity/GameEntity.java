@@ -418,7 +418,10 @@ public abstract class GameEntity {
         }
 
         var combatState = AbilityCombatState.read(this);
-        if (combatState.invincible()) return;
+        if (combatState.invincible()) {
+            if (amount > 0f) syncInvincibleHp();
+            return;
+        }
 
         EntityDamageEvent event =
                 new EntityDamageEvent(this, amount, attackType, this.getScene().getEntityById(killerId));
@@ -492,6 +495,28 @@ public abstract class GameEntity {
 
         if (this.isDead) {
             this.getScene().killEntity(this, killerId, dmgHpReason);
+        }
+    }
+
+    /** Echo authoritative HP for a blocked hit without running damage settlement or callbacks. */
+    private void syncInvincibleHp() {
+        var currentScene = getScene();
+        if (currentScene == null) return;
+        synchronized (currentScene) {
+            float hp = getFightProperty(FightProperty.FIGHT_PROP_CUR_HP);
+            if (!Float.isFinite(hp) || hp < 0f || !isAlive()
+                    || !isAbilityLifecycleCurrent(getAbilityLifecycleVersion())) return;
+            var avatar = this instanceof EntityAvatar value ? value : null;
+            if (avatar != null && (avatar.getPlayer() == null
+                    || avatar.getPlayer().getScene() != currentScene
+                    || avatar.getPlayer().getWorld() != currentScene.getWorld())) return;
+            var registered = currentScene.getEntities().get(getId());
+            if (registered != this && !(registered == null && avatar != null
+                    && avatar.isInSceneParty())) return;
+            currentScene.broadcastPacket(new PacketEntityFightPropUpdateNotify(
+                    this, FightProperty.FIGHT_PROP_CUR_HP));
+            if (avatar != null)
+                avatar.getPlayer().sendPacket(new PacketAvatarFightPropNotify(avatar.getAvatar()));
         }
     }
 
