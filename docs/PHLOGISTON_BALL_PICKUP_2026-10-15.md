@@ -75,3 +75,19 @@ JAR SHA-256：`03f68ef7bc846658797179621a3daa4e58fb6e5b1caa399d91c84970bb34fec7`
 `ball-settlement-final-results/` 和 `ball-settlement-verification.json`。
 JAR SHA-256：`b590af596c868be22c368cdde2a796ea9c4be5ecaf0801c9204dca52ed180359`。
 本次未替换日常运行服务，客户端画面与吸附动画的验收边界保持不变。
+
+## 燃素写入后的能力刷新异常
+
+燃素值及其通知完成后，队伍能力刷新如果抛出异常，原来的调用仍会以失败结束。
+这会中断普通拾球的领取确认，也会让直接物品补充和倍率消耗把已完成的写入报告为失败。
+现在保留已完成的结算并记录刷新异常，普通交互继续发送领取确认；重复请求仍不能再次领取。
+这项处理仅隔离写入后的能力刷新，不会将无效燃素池或写入前的检查失败转成成功。
+
+新增 6 项故障注入检查，首轮全部失败；修复后拾球、物品补充、倍率和池可用性相关
+**164 项／6 套件**通过，零失败、错误和跳过，JAR 构建通过。
+宿主机／容器修改源码哈希、编译类／JAR 字节一致，无意外类删除。
+
+证据：`debug/aster-mid-20261011/batch249/settlement-red-results/`、
+`settlement-final-results/` 和 `settlement-verification.json`。
+JAR SHA-256：`cde4b16615f052c190fdf98c301a69614499f6efa4e2013fc020b94420e27f8f`。
+本次未替换日常服务，当前客户端画面验收仍待完成。

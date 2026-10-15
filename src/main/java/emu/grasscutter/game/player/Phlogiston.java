@@ -51,7 +51,17 @@ public final class Phlogiston {
             player.sendPacket(
                     new PacketServerGlobalValueChangeNotify(team.getId(), TEAM_KEY, value));
         }
-        changedTeam.onAbilityValueUpdate();
+        try {
+            changedTeam.onAbilityValueUpdate();
+        } catch (RuntimeException exception) {
+            // Fuel and its client update have committed. Failing this action now could replay
+            // a cost or leave a consumed ball without its interaction acknowledgement.
+            emu.grasscutter.Grasscutter.getLogger()
+                    .warn(
+                            "Fuel refresh failed for player {} after settlement",
+                            player.getUid(),
+                            exception);
+        }
         return true;
     }
 
