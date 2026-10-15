@@ -111,6 +111,7 @@ public class AbilityMixinData implements Serializable {
     public JsonElement removedLifecycleConfig;
 
     public AbilityModifierAction[] actionQueue;
+    public AbilityModifierAction[] onShieldBroken;
     public String onEvent;
     public transient JsonElement structuredOnEvent;
     public String vehicleType;

@@ -6,6 +6,7 @@ import emu.grasscutter.data.binout.AbilityModifier.AbilityModifierAction;
 import emu.grasscutter.utils.JsonAdapters;
 import emu.grasscutter.game.ability.AbilityLocalIdGenerator;
 import emu.grasscutter.game.ability.AbilityGlobalValueDispatch;
+import emu.grasscutter.game.ability.ShieldBarCallbacks;
 import emu.grasscutter.game.ability.AbilityLocalIdGenerator.ConfigAbilitySubContainerType;
 import java.util.*;
 
@@ -38,6 +39,7 @@ public class AbilityData {
 
     public final Map<Integer, AbilityModifierAction> localIdToAction = new HashMap<>();
     public final Map<Integer, AbilityMixinData> localIdToMixin = new HashMap<>();
+    public final transient Map<Integer, ShieldBarCallbacks.Callback> shieldBarCallbacks = new HashMap<>();
 
     private final transient Set<AbilityModifierAction> globalValueModifierCallbacks =
             Collections.newSetFromMap(new IdentityHashMap<>());
@@ -97,6 +99,7 @@ public class AbilityData {
             generator.configIndex = 0;
 
             generator.initializeMixinsLocalIds(abilityMixins, localIdToMixin);
+            ShieldBarCallbacks.index(this, abilityMixins, null, 0);
         }
     }
 
@@ -164,6 +167,7 @@ public class AbilityData {
                 generator.configIndex = 0;
 
                 generator.initializeMixinsLocalIds(abilityModifier.modifierMixins, localIdToMixin);
+                ShieldBarCallbacks.index(this, abilityModifier.modifierMixins, abilityModifier, modifierIndex);
             }
 
             modifierIndex++;

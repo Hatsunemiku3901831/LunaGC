@@ -758,6 +758,12 @@ public final class AbilityManager extends BasePlayerManager {
             combatCallbacks.apply(ability,combatMixin,invoke.getAbilityData(),target,invokedModifier);
             return;
         }
+        var shieldCallback = ability.getData().shieldBarCallbacks.get(head.getLocalId());
+        if (shieldCallback != null) {
+            ShieldBarCallbacks.invoke(ability, shieldCallback, entity, target, invokedModifier,
+                    head.getInstancedModifierId(), head.getTargetId(), invoke.getArgumentTypeValue(), invoke.getAbilityData());
+            return;
+        }
         var action = ability.getData().localIdToAction.get(head.getLocalId());
         if (action != null) {
             if (ability.getData().isGlobalValueModifierDescendant(action)) return;
