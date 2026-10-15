@@ -24,6 +24,7 @@ import emu.grasscutter.net.proto.AbilityMetaUpdateTpsWeaponAmmunitionOuterClass.
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.net.proto.TpsAmmunitionChangeNotifyOuterClass.TpsAmmunitionChangeNotify;
 import emu.grasscutter.net.proto.TpsAmmunitionChangeOuterClass.TpsAmmunitionChange;
+import emu.grasscutter.net.proto.TpsRegionalPlaySupplyInfoNotifyOuterClass.TpsRegionalPlaySupplyInfoNotify;
 import emu.grasscutter.utils.JsonUtils;
 import java.lang.reflect.Field;
 import java.nio.file.Files;
@@ -590,6 +591,91 @@ class TpsEquipmentTest {
     }
 
     @Test
+    void sceneSupplyPreservesTotalsForUnwornWeaponsAndExplicitlyIncludesEmptyPools()
+            throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            equip(entity.getAvatar(), item(224001));
+            player.getTpsAmmunition().put(1001, 17);
+            player.getTpsAmmunition().put(1002, 43);
+            player.getTpsAmmunition().put(-123, 900);
+            player.packets.clear();
+            player.saves = 0;
+
+            TpsWeaponSystem.sendSceneAmmunition(player);
+            var totals = clientAmmunitionTotals(player.packets);
+            assertEquals(17, totals.get(1001));
+            assertEquals(43, totals.get(1002), "the current weapon does not use this stored pool");
+            assertFalse(totals.containsKey(-123));
+            assertEquals(0, player.saves);
+
+            player.getTpsAmmunition().put(1002, 0);
+            player.packets.clear();
+            TpsWeaponSystem.sendSceneAmmunition(player);
+            totals = clientAmmunitionTotals(player.packets);
+            assertTrue(
+                    totals.containsKey(1002), "an empty known pool is part of the full snapshot");
+            assertEquals(0, totals.get(1002));
+        }
+    }
+
+    @Test
+    void sceneSupplyCarriesOneAbsoluteSnapshotWithoutSavingOrRefilling() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            equip(sceneAvatar(fixture).getAvatar(), item(224001), item(224002));
+            player.getTpsAmmunition().put(1001, Integer.MAX_VALUE);
+            player.getTpsAmmunition().put(1002, -1);
+            var before = new HashMap<>(player.getTpsAmmunition());
+            player.packets.clear();
+            player.saves = 0;
+            TpsWeaponSystem.sendSceneAmmunition(player);
+            TpsWeaponSystem.sendSceneAmmunition(player);
+            assertEquals(2, player.packets.size());
+            assertTrue(
+                    player.packets.stream()
+                            .allMatch(
+                                    packet ->
+                                            packet.getOpcode()
+                                                    == PacketOpcodes
+                                                            .TpsRegionalPlaySupplyInfoNotify));
+            assertEquals(2000, clientAmmunitionTotals(player.packets).get(1001));
+            assertEquals(0, clientAmmunitionTotals(player.packets).get(1002));
+            assertEquals(before, player.getTpsAmmunition());
+            assertEquals(0, player.saves);
+        }
+    }
+
+    /** The native 6579 handler replaces totals; 24371 adds signed deltas. */
+    private Map<Integer, Integer> clientAmmunitionTotals(List<BasePacket> packets)
+            throws Exception {
+        var totals = new HashMap<Integer, Integer>();
+        for (var packet : packets) {
+            if (packet.getOpcode() == PacketOpcodes.TpsRegionalPlaySupplyInfoNotify) {
+                totals.clear();
+                for (var entry :
+                        TpsRegionalPlaySupplyInfoNotify.parseFrom(
+                                        packet.getData() == null ? new byte[0] : packet.getData())
+                                .getAmmunitionListList())
+                    totals.put(entry.getAmmunitionConfigId(), entry.getTotalAmmunition());
+            } else if (packet.getOpcode() == PacketOpcodes.TpsAmmunitionChangeNotify) {
+                for (var entry :
+                        TpsAmmunitionChangeNotify.parseFrom(packet.getData())
+                                .getAmmunitionListList())
+                    totals.merge(
+                            entry.getAmmunitionConfigId(), entry.getChangeCount(), Integer::sum);
+            }
+        }
+        return totals;
+    }
+
+    @Test
+    void sceneSupplyIsSilentWithoutAnActiveTpsWeapon() {
+        player.packets.clear();
+        TpsWeaponSystem.sendSceneAmmunition(player);
+        assertTrue(player.packets.isEmpty());
+    }
+
+    @Test
     void sceneAmmoNotifyDeduplicatesSharedPoolsAndRefillKeepsEntityIds() throws Exception {
         try (var fixture = new AbilityTestFixture()) {
             var entity = sceneAvatar(fixture);
@@ -602,12 +688,27 @@ class TpsEquipmentTest {
             assertEquals(id, gun.getWeaponEntity().getId());
             var packets =
                     player.packets.stream()
-                            .filter(p -> p.getOpcode() == PacketOpcodes.TpsAmmunitionChangeNotify)
+                            .filter(
+                                    p ->
+                                            p.getOpcode()
+                                                    == PacketOpcodes
+                                                            .TpsRegionalPlaySupplyInfoNotify)
                             .toList();
             assertEquals(1, packets.size());
-            var notify = TpsAmmunitionChangeNotify.parseFrom(packets.get(0).getData());
-            assertEquals(1, notify.getAmmunitionListCount());
-            assertEquals(2000, notify.getAmmunitionList(0).getChangeCount());
+            var notify = TpsRegionalPlaySupplyInfoNotify.parseFrom(packets.get(0).getData());
+            assertEquals(
+                    1,
+                    notify.getAmmunitionListList().stream()
+                            .filter(entry -> entry.getAmmunitionConfigId() == 1001)
+                            .count());
+            assertEquals(2000, clientAmmunitionTotals(packets).get(1001));
+            assertEquals(90, clientAmmunitionTotals(packets).get(1002));
+            assertTrue(
+                    player.packets.stream()
+                            .noneMatch(
+                                    packet ->
+                                            packet.getOpcode()
+                                                    == PacketOpcodes.TpsAmmunitionChangeNotify));
         }
     }
 

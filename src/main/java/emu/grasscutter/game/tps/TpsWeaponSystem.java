@@ -17,8 +17,8 @@ import emu.grasscutter.net.proto.AbilityMetaUpdateTpsWeaponAmmunitionOuterClass.
 import emu.grasscutter.net.proto.AbilitySyncStateInfoOuterClass.AbilitySyncStateInfo;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.net.proto.SceneWeaponInfoOuterClass.SceneWeaponInfo;
-import emu.grasscutter.net.proto.TpsAmmunitionChangeNotifyOuterClass.*;
 import emu.grasscutter.net.proto.TpsEquipChangeNotifyOuterClass.TpsEquipChangeNotify;
+import emu.grasscutter.net.proto.TpsRegionalPlaySupplyInfoNotifyOuterClass.*;
 import emu.grasscutter.net.proto.TpsWeaponAmmunitionInfoOuterClass.TpsWeaponAmmunitionInfo;
 import emu.grasscutter.net.proto._TpsWeaponOuterClass._TpsWeapon;
 import emu.grasscutter.server.packet.send.PacketAbilityChangeNotify;
@@ -348,6 +348,10 @@ public final class TpsWeaponSystem {
                 .orElse(null);
     }
 
+    /**
+     * Total remaining ammunition, including loaded magazines. The legacy method name is retained;
+     * the client derives the reserve by subtracting its magazine counts from this total.
+     */
     public static int getReserve(Player player, int id) {
         var data = GameData.getTpsAmmunitionDataMap().get(id);
         if (data == null) return 0;
@@ -356,7 +360,7 @@ public final class TpsWeaponSystem {
         return Math.max(0, Math.min(stored == null ? 0 : stored, limit));
     }
 
-    /** Server-authored supplies and costs use resource limits and persist the resulting reserve. */
+    /** Server-authored supplies and costs persist the resulting total within resource limits. */
     public static int changeReserve(Player player, int id, int delta) {
         synchronized (player) {
             var data = GameData.getTpsAmmunitionDataMap().get(id);
@@ -451,26 +455,27 @@ public final class TpsWeaponSystem {
     }
 
     public static void sendSceneAmmunition(Player player) {
-        var avatar = currentAvatar(player);
-        if (avatar == null || ammunitionIds(avatar.getAvatar()).isEmpty()) return;
-        player.sendPacket(new BasePacket(PacketOpcodes.TpsRegionalPlaySupplyInfoNotify));
-        sendAmmunitionNotify(player, avatar.getAvatar());
-    }
-
-    private static void sendAmmunitionNotify(Player player, Avatar avatar) {
-        var builder = TpsAmmunitionChangeNotify.newBuilder();
-        ammunitionIds(avatar)
-                .intStream()
-                .sorted()
-                .forEach(
-                        id ->
-                                builder.addAmmunitionList(
-                                        TpsAmmunitionChangeNotifyEntry.newBuilder()
-                                                .setAmmunitionConfigId(id)
-                                                .setChangeCount(getReserve(player, id))));
-        var packet = new BasePacket(PacketOpcodes.TpsAmmunitionChangeNotify);
-        packet.setData(builder);
-        player.sendPacket(packet);
+        synchronized (player) {
+            var avatar = currentAvatar(player);
+            if (avatar == null || ammunitionIds(avatar.getAvatar()).isEmpty()) return;
+            // 6579 replaces the whole total map. 24371 is a delta, not a snapshot.
+            var builder = TpsRegionalPlaySupplyInfoNotify.newBuilder();
+            GameData.getTpsAmmunitionDataMap().values().stream()
+                    .filter(Objects::nonNull)
+                    .mapToInt(TpsAmmunitionData::getId)
+                    .filter(id -> id > 0)
+                    .distinct()
+                    .sorted()
+                    .forEach(
+                            id ->
+                                    builder.addAmmunitionList(
+                                            TpsAmmunitionSupplyInfo.newBuilder()
+                                                    .setAmmunitionConfigId(id)
+                                                    .setTotalAmmunition(getReserve(player, id))));
+            var packet = new BasePacket(PacketOpcodes.TpsRegionalPlaySupplyInfoNotify);
+            packet.setData(builder);
+            player.sendPacket(packet);
+        }
     }
 
     public static void refillAmmunition(Player player) {

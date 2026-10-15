@@ -1,7 +1,7 @@
 syntax = "proto3";
 option java_package = "emu.grasscutter.net.proto";
 option java_outer_classname = "TpsAmmunitionChangeNotifyOuterClass";
-// ONMCNLDIGJK / BOOHJPLDHBO. Count semantics remain a client validation item.
+// ONMCNLDIGJK / BOOHJPLDHBO: signed deltas applied to the client's total ammunition map.
 message TpsAmmunitionChangeNotify {
   repeated TpsAmmunitionChangeNotifyEntry ammunition_list = 6;
 }

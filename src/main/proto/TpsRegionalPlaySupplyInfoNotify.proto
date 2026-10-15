@@ -1,0 +1,13 @@
+syntax = "proto3";
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "TpsRegionalPlaySupplyInfoNotifyOuterClass";
+
+// JONAGHOAMLH / EBPGOAKBPBG, packet 6579: replaces the client's total ammunition map.
+message TpsRegionalPlaySupplyInfoNotify {
+  repeated TpsAmmunitionSupplyInfo ammunition_list = 11;
+}
+
+message TpsAmmunitionSupplyInfo {
+  uint32 ammunition_config_id = 1;
+  uint32 total_ammunition = 14;
+}

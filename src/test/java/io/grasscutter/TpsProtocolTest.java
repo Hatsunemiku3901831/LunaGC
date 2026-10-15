@@ -11,6 +11,7 @@ import emu.grasscutter.net.proto.SceneTeamAvatarOuterClass.SceneTeamAvatar;
 import emu.grasscutter.net.proto.SceneWeaponInfoOuterClass.SceneWeaponInfo;
 import emu.grasscutter.net.proto.TpsAmmunitionChangeNotifyOuterClass.TpsAmmunitionChangeNotify;
 import emu.grasscutter.net.proto.TpsEquipChangeNotifyOuterClass.TpsEquipChangeNotify;
+import emu.grasscutter.net.proto.TpsRegionalPlaySupplyInfoNotifyOuterClass.TpsRegionalPlaySupplyInfoNotify;
 import emu.grasscutter.net.proto.WearTpsEquipReqOuterClass.WearTpsEquipReq;
 import emu.grasscutter.net.proto.WearTpsEquipRspOuterClass.WearTpsEquipRsp;
 import java.util.HexFormat;
@@ -55,6 +56,19 @@ class TpsProtocolTest {
         assertEquals(5, notify.getAmmunitionList(0).getChangeCount());
         assertEquals(1001, notify.getAmmunitionList(0).getAmmunitionConfigId());
         assertEquals(24371, PacketOpcodes.TpsAmmunitionChangeNotify);
+    }
+
+    @Test
+    void fullAmmunitionSupplyUsesNativeListElevenAndEntryFieldsOneAndFourteen() throws Exception {
+        var wire = bytes("5a0608e90770d00f5a0308ea07");
+        var supply = TpsRegionalPlaySupplyInfoNotify.parseFrom(wire);
+        assertEquals(2, supply.getAmmunitionListCount());
+        assertEquals(1001, supply.getAmmunitionList(0).getAmmunitionConfigId());
+        assertEquals(2000, supply.getAmmunitionList(0).getTotalAmmunition());
+        assertEquals(1002, supply.getAmmunitionList(1).getAmmunitionConfigId());
+        assertEquals(0, supply.getAmmunitionList(1).getTotalAmmunition());
+        assertArrayEquals(wire, supply.toByteArray());
+        assertEquals(6579, PacketOpcodes.TpsRegionalPlaySupplyInfoNotify);
     }
 
     @Test

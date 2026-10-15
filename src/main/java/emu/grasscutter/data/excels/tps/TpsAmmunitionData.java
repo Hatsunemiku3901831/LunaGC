@@ -4,7 +4,7 @@ import emu.grasscutter.data.*;
 import java.util.List;
 import lombok.Getter;
 
-/** TpsAmmunitionExcelConfigData: one reserve pool per ammunition, shared by the slots it fills. */
+/** TpsAmmunitionExcelConfigData: one total ammunition pool shared by its magazine slots. */
 @Getter
 @ResourceType(name = "TpsAmmunitionExcelConfigData.json")
 public final class TpsAmmunitionData extends GameResource {
