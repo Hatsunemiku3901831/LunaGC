@@ -118,6 +118,10 @@ final class ArtifactReshape {
                                 && dust.getItemType() == ItemType.ITEM_MATERIAL
                                 && dust.getCount() >= candidate.getCost(),
                         Retcode.RET_ITEM_COUNT_NOT_ENOUGH_VALUE);
+                candidate.setOperationId(UUID.randomUUID().toString());
+                candidate.setMaterialObjectId(dust.ensurePersistenceId().toHexString());
+                candidate.setMaterialId(dust.getItemId());
+                candidate.setMaterialBefore(dust.getCount());
                 put(data, candidate, false);
                 item.setReshapePending(true);
                 save.run();
@@ -206,7 +210,7 @@ final class ArtifactReshape {
         return response.build();
     }
 
-    private boolean matches(GameItem item, ArtifactReshapeCandidate candidate) {
+    static boolean matches(GameItem item, ArtifactReshapeCandidate candidate) {
         return item.getCount() == 1
                 && item.getItemType() == ItemType.ITEM_RELIQUARY
                 && item.getItemId() == candidate.getItemId()
@@ -234,7 +238,7 @@ final class ArtifactReshape {
         }
     }
 
-    private void notifyState() {
+    void notifyState() {
         var data = player.getArtifactTransmuterData();
         require(
                 data.getReshapeProgress() >= 0 && data.getReshapeProgress() <= 0xffff_ffffL,

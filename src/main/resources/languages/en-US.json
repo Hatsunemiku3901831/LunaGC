@@ -288,7 +288,7 @@
       "description": "Plays a sound"
     },
     "transmuter": {
-      "description": "Inspect and reconcile unfinished artifact extraction or crafting by operation ID."
+      "description": "Inspect and reconcile unfinished artifact extraction, crafting or reshaping by operation ID."
     },
     "statue": {
       "description": "Inspect statues, lock or unlock points, and manage offering levels"

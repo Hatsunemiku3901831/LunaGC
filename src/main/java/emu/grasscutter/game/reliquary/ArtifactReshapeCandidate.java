@@ -20,6 +20,10 @@ public final class ArtifactReshapeCandidate {
     }
 
     private String itemObjectId;
+    private String operationId;
+    private String materialObjectId;
+    private int materialId;
+    private int materialBefore;
     private int itemId;
     private int level;
     private int mainPropId;
@@ -27,8 +31,8 @@ public final class ArtifactReshapeCandidate {
     private int tier;
     private long progressBefore;
     private long progressAfter;
-    private List<Integer> original;
-    private List<Integer> result;
-    private List<Integer> selected;
+    private List<Integer> original = List.of();
+    private List<Integer> result = List.of();
+    private List<Integer> selected = List.of();
     private Phase phase;
 }

@@ -204,7 +204,19 @@ public final class ArtifactTransmuter {
 
     public void reconcile(String operationId, boolean resume) {
         synchronized (player.getInventory()) {
-            new ArtifactTransmuterRecovery(player, save, saveItem).reconcile(operationId, resume);
+            var data = player.getArtifactTransmuterData();
+            var receipt = data.getPending();
+            boolean isTransmuter =
+                    receipt != null
+                            && operationId != null
+                            && operationId.equals(receipt.getOperationId());
+            if (isTransmuter) {
+                if (ArtifactReshapeRecovery.matches(data, operationId) > 0)
+                    throw new IllegalStateException("操作 ID 对应多笔不同类型记录，停止核对。");
+                new ArtifactTransmuterRecovery(player, save, saveItem)
+                        .reconcile(operationId, resume);
+            } else
+                new ArtifactReshapeRecovery(player, save, saveItem).reconcile(operationId, resume);
             try {
                 notifyData(player.getArtifactTransmuterData());
             } catch (RuntimeException failure) {

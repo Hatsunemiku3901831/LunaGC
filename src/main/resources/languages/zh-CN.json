@@ -288,7 +288,7 @@
       "description": "播放声音"
     },
     "transmuter": {
-      "description": "查询并核对圣言自明机的未完成萃取或制作，按操作 ID 继续或取消未扣费预留。"
+      "description": "查询并核对未完成的萃取、制作或重塑，按操作 ID 继续或取消未扣费预留。"
     },
     "statue": {
       "description": "查询神像、锁定或解锁入口，以及管理供奉等级"

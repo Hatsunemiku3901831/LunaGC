@@ -9,7 +9,6 @@ import emu.grasscutter.utils.JsonUtils;
 
 import org.bson.types.ObjectId;
 
-import java.time.Duration;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -18,11 +17,13 @@ final class ArtifactTransmuterRecovery {
     private final Player player;
     private final Runnable save;
     private final Consumer<GameItem> saveItem;
+    private final ArtifactRecoveryStore inventoryStore;
 
     ArtifactTransmuterRecovery(Player player, Runnable save, Consumer<GameItem> saveItem) {
         this.player = player;
         this.save = save;
         this.saveItem = saveItem;
+        this.inventoryStore = new ArtifactRecoveryStore(player);
     }
 
     private static void require(boolean valid, String reason) {
@@ -78,65 +79,21 @@ final class ArtifactTransmuterRecovery {
                                     + (stored == null ? 0 : stored.getCount()));
                 }
             }
-            for (var entry : new TreeMap<>(data.getReshapeCandidates()).entrySet())
-                result.add("reshape=" + entry.getKey() + " phase=" + entry.getValue().getPhase());
+            result.addAll(new ArtifactReshapeRecovery(player, save, saveItem).inspect());
             return List.copyOf(result);
         }
     }
 
     private GameItem live(String id) {
-        var matches =
-                player.getInventory().getItems().values().stream()
-                        .filter(
-                                x ->
-                                        x.getObjectId() != null
-                                                && x.getObjectId().toHexString().equals(id))
-                        .limit(2)
-                        .toList();
-        require(matches.size() <= 1, "同一持久 ID 对应多个背包条目，需先核对。");
-        return matches.isEmpty() ? null : matches.get(0);
+        return inventoryStore.live(id);
     }
 
     private GameItem stored(String id) {
-        require(id != null && ObjectId.isValid(id), "记录中的物品持久 ID 无效。");
-        return DatabaseManager.getGameDatastore()
-                .find(GameItem.class)
-                .field("id")
-                .equal(new ObjectId(id))
-                .first();
+        return inventoryStore.stored(id);
     }
 
     private void agree(GameItem live, GameItem stored, int itemId) {
-        require((live == null) == (stored == null), "背包与存档的物品存在状态不同，请重新登录后核对。");
-        if (live == null) return;
-        require(
-                live.getOwnerId() == player.getUid()
-                        && stored.getOwnerId() == player.getUid()
-                        && live.getItemId() == itemId
-                        && stored.getItemId() == itemId
-                        && live.getCount() > 0
-                        && live.getCount() == stored.getCount()
-                        && live.getObjectId().equals(stored.getObjectId()),
-                "物品归属、数量或持久 ID 与记录不符。");
-        if (live.getItemData() != null && live.getItemType() == ItemType.ITEM_RELIQUARY)
-            require(
-                    live.getLevel() == stored.getLevel()
-                            && live.getExp() == stored.getExp()
-                            && live.getTotalExp() == stored.getTotalExp()
-                            && live.getMainPropId() == stored.getMainPropId()
-                            && Objects.equals(
-                                    live.getAppendPropIdList(), stored.getAppendPropIdList())
-                            && live.isLocked() == stored.isLocked()
-                            && live.getEquipCharacter() == stored.getEquipCharacter()
-                            && live.getPurchasedAppendPropIdList()
-                                    .equals(stored.getPurchasedAppendPropIdList())
-                            && live.getDefiniteAppendPropIdList()
-                                    .equals(stored.getDefiniteAppendPropIdList())
-                            && live.getDefinedInitialAppendCount()
-                                    == stored.getDefinedInitialAppendCount()
-                            && live.getDefinedUpgradeGuarantee()
-                                    == stored.getDefinedUpgradeGuarantee(),
-                    "圣遗物属性与存档不同，请重新登录后核对。");
+        inventoryStore.agree(live, stored, itemId);
     }
 
     private record Payment(ArtifactTransmuterReceipt.Cost cost, GameItem item, boolean paid) {}
@@ -303,12 +260,7 @@ final class ArtifactTransmuterRecovery {
 
     void reconcile(String operationId, boolean resume) {
         synchronized (player.getInventory()) {
-            try {
-                require(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)), "数据库仍有待写入操作，请稍后重试。");
-            } catch (InterruptedException interrupted) {
-                Thread.currentThread().interrupt();
-                throw new IllegalStateException("核对被中断。", interrupted);
-            }
+            inventoryStore.flush();
             var data = player.getArtifactTransmuterData();
             var receipt = data.getPending();
             require(
@@ -316,14 +268,7 @@ final class ArtifactTransmuterRecovery {
                             && operationId != null
                             && operationId.equals(receipt.getOperationId()),
                     "未找到对应操作 ID 的待核对记录。");
-            var stored =
-                    DatabaseManager.getGameDatastore()
-                            .find(Player.class)
-                            .field("id")
-                            .equal(player.getUid())
-                            .first();
-            require(stored != null, "玩家存档不存在。");
-            var saved = stored.getArtifactTransmuterData();
+            var saved = inventoryStore.savedState();
             require(
                     JsonUtils.toJson(receipt).equals(JsonUtils.toJson(saved.getPending()))
                             && data.getScheduleId() == saved.getScheduleId()
