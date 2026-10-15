@@ -1,4 +1,4 @@
-// Recovered from ClientSetGameTimeReqOuterClass.java's embedded descriptor; wire schema may predate 7.1.
+// 7.1 CmdId 9122, native type 37549: writer 0x153190bd0.
 syntax = "proto3";
 
 package recovered.p_ClientSetGameTimeReq;
@@ -7,6 +7,6 @@ option java_outer_classname = "ClientSetGameTimeReqOuterClass";
 
 message ClientSetGameTimeReq {
   uint32 game_time = 5;
-  uint32 client_game_time = 12;
-  bool is_force_set = 15;
+  uint32 client_game_time = 7;
+  bool is_force_set = 12;
 }

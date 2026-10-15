@@ -1,4 +1,4 @@
-// Recovered from ClientSetGameTimeRspOuterClass.java's embedded descriptor; wire schema may predate 7.1.
+// 7.1 CmdId 25217, native type 51421: reader 0x14e4d4370.
 syntax = "proto3";
 
 package recovered.p_ClientSetGameTimeRsp;
@@ -6,8 +6,8 @@ option java_package = "emu.grasscutter.net.proto";
 option java_outer_classname = "ClientSetGameTimeRspOuterClass";
 
 message ClientSetGameTimeRsp {
-  repeated uint32 game_time_locked_quest_list = 3;
-  uint32 game_time = 5;
-  uint32 client_game_time = 6;
-  int32 retcode = 10;
+  repeated uint32 game_time_locked_quest_list = 7;
+  uint32 game_time = 6;
+  uint32 client_game_time = 4;
+  int32 retcode = 2;
 }
