@@ -12,6 +12,7 @@ public class CityInfoData {
     private int level = 1; // level of the city (include level SotS, level Frostbearing Trees, etc.)
 
     @Getter @Setter private int numCrystal = 0; // number of crystals in the city
+    @Getter @Setter private StatueOfferReceipt pendingOffer;
 
     public CityInfoData(int cityId) {
         this.cityId = cityId;

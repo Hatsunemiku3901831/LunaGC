@@ -14,6 +14,12 @@ public final class InvestigationRewardDelivery {
     private InvestigationRewardDelivery() {}
 
     public static int validate(Player player, List<ItemParamData> items) {
+        return validate(player, items, 0);
+    }
+
+    /** A single material payment may release its stack before these rewards are delivered. */
+    public static int validate(Player player, List<ItemParamData> items, int materialSlotsFreed) {
+        if (materialSlotsFreed < 0 || materialSlotsFreed > 1) return Retcode.RET_NOT_FOUND_CONFIG_VALUE;
         if (items == null || items.isEmpty()) return Retcode.RET_NOT_FOUND_CONFIG_VALUE;
         var counts = new LinkedHashMap<Integer, Long>();
         var slots = new HashMap<InventoryTab, Long>();
@@ -67,6 +73,7 @@ public final class InvestigationRewardDelivery {
             slots.merge(entry.getKey(), (long) entry.getValue().size(), Long::sum);
         for (var entry : slots.entrySet())
             if ((long) entry.getKey().getSize() + entry.getValue()
+                    - (entry.getKey() == inventory.getInventoryTab(ItemType.ITEM_MATERIAL) ? materialSlotsFreed : 0)
                     > entry.getKey().getMaxCapacity()) return Retcode.RET_ITEM_EXCEED_LIMIT_VALUE;
         return 0;
     }
