@@ -21,6 +21,8 @@ import emu.grasscutter.game.props.FightProperty;
 import emu.grasscutter.net.proto.AbilityInvokeEntryOuterClass.AbilityInvokeEntry;
 import emu.grasscutter.net.proto.AbilityMetaAddAbilityOuterClass.AbilityMetaAddAbility;
 import emu.grasscutter.net.proto.AbilityMetaModifierChangeOuterClass.AbilityMetaModifierChange;
+import emu.grasscutter.net.proto.AbilityMetaModifierDurabilityChangeOuterClass.AbilityMetaModifierDurabilityChange;
+import emu.grasscutter.net.proto.AbilityMixinShieldBarOuterClass.AbilityMixinShieldBar;
 import emu.grasscutter.server.packet.send.PacketMonsterSummonTagNotify;
 import emu.grasscutter.net.proto.AbilityMetaReInitOverrideMapOuterClass.AbilityMetaReInitOverrideMap;
 import emu.grasscutter.net.proto.AbilityMetaSetKilledStateOuterClass.AbilityMetaSetKilledState;
@@ -535,6 +537,17 @@ public final class AbilityManager extends BasePlayerManager {
                 return false;
             }
         }
+        // These reports carry data rather than child actions, including when a local ID is set.
+        if (invoke.getArgumentType() == AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_META_MODIFIER_DURABILITY_CHANGE
+                || invoke.getArgumentType() == AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_MIXIN_SHIELD_BAR) {
+            try {
+                return invoke.getArgumentType() == AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_META_MODIFIER_DURABILITY_CHANGE
+                        ? handleModifierDurabilityChange(invoke) : handleShieldBarChange(invoke);
+            } catch (InvalidProtocolBufferException e) {
+                Grasscutter.getLogger().debug("Invalid durability report for player {}", player.getUid());
+                return false;
+            }
+        }
         Grasscutter.getLogger()
             .trace(
                 "Ability invoke: "
@@ -591,8 +604,6 @@ public final class AbilityManager extends BasePlayerManager {
             case AbilityInvokeArgument_ABILITY_META_GLOBAL_FLOAT_VALUE -> this.handleGlobalFloatValue(invoke);
             case AbilityInvokeArgument_ABILITY_META_CLEAR_GLOBAL_FLOAT_VALUE ->
                 this.handleClearGlobalFloatValue(invoke);
-            case AbilityInvokeArgument_ABILITY_META_MODIFIER_DURABILITY_CHANGE -> this
-                .handleModifierDurabilityChange(invoke);
             case AbilityInvokeArgument_ABILITY_META_ADD_NEW_ABILITY -> this.handleAddNewAbility(invoke);
 
             case AbilityInvokeArgument_ABILITY_META_SET_KILLED_SETATE -> this.handleKillState(invoke);
@@ -1091,12 +1102,9 @@ public final class AbilityManager extends BasePlayerManager {
             return;
         }
 
-        // is_serverbuff_modifier has no named counterpart in the 7.0 AbilityInvokeEntryHead.
-        if (false) {
-
-            this.player.getScene().broadcastPacket(new PacketAbilityInvocationsNotify(invoke));
-            return;
-        }
+        // Source 1/2 use different instance namespaces. The normal controller registry must
+        // not consume their add/remove messages; forwarding remains with the packet handler.
+        if (head.getFPDAONBEBHKValue() != 0) return;
 
         var entity = this.player.getScene().getEntityById(invoke.getEntityId());
         if (entity == null) {
@@ -1211,6 +1219,8 @@ public final class AbilityManager extends BasePlayerManager {
                         modifier.inheritCooldownLedger(previous);
                     }
                 }
+                if (previous != modifier)
+                    entity.getAbilityDurability().modifierRebound(head.getInstancedModifierId());
                 instances.put(head.getInstancedModifierId(), modifier);
                 modifier.prepareAnimationCallbacks(entity);
                 entity.getAbilityPeriodicHealing().clientAdded(head.getInstancedModifierId());
@@ -1256,6 +1266,7 @@ public final class AbilityManager extends BasePlayerManager {
             var instances = entity.getInstancedModifiers();
             AbilityModifierController modifier;
             synchronized (instances) {
+                entity.getAbilityDurability().modifierRebound(head.getInstancedModifierId());
                 modifier = instances.remove(head.getInstancedModifierId());
                 if (modifier != null) {
                     entity.getAbilityPeriodicHealing().clientRemoved(head.getInstancedModifierId(),modifier);
@@ -1481,8 +1492,24 @@ public final class AbilityManager extends BasePlayerManager {
         AbilityModifierAction action, GameEntity target, GameEntity sourceEntity) {
     }
 
-    private void handleModifierDurabilityChange(AbilityInvokeEntry invoke)
+    private boolean handleModifierDurabilityChange(AbilityInvokeEntry invoke)
         throws InvalidProtocolBufferException {
+        var update = AbilityMetaModifierDurabilityChange.parseFrom(invoke.getAbilityData());
+        if (!Float.isFinite(update.getRemainingDurability()) || !Float.isFinite(update.getJODMMPLFMEG()))
+            return false;
+        var scene = player.getScene();
+        var entity = scene == null ? null : scene.getEntityById(invoke.getEntityId());
+        return entity == null || entity.getAbilityDurability().recordModifier(invoke.getHead(), update);
+    }
+
+    private boolean handleShieldBarChange(AbilityInvokeEntry invoke)
+        throws InvalidProtocolBufferException {
+        var update = AbilityMixinShieldBar.parseFrom(invoke.getAbilityData());
+        if (!Float.isFinite(update.getRemainingDurability()) || !Float.isFinite(update.getMaxDurability()))
+            return false;
+        var scene = player.getScene();
+        var entity = scene == null ? null : scene.getEntityById(invoke.getEntityId());
+        return entity == null || entity.getAbilityDurability().recordShieldBar(invoke.getHead(), update);
     }
 
     private static volatile Set<Integer> moonLightAbilityHashes;

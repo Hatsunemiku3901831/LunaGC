@@ -103,6 +103,7 @@ public abstract class GameEntity {
         abilityLifecycleVersion.updateAndGet(version -> (version & 1) == 0 ? version + 1 : version);
         abilityGlobalPositions.clear();
         abilityStaminaCost.clear();
+        abilityDurability.clear();
         getAbilityPeriodicHealing().clear();
         getAbilityModifierDuration().clear();
         abilityHealthEvents.clear();
@@ -125,6 +126,7 @@ public abstract class GameEntity {
     @Getter private final emu.grasscutter.game.ability.AbilityModifierDuration abilityModifierDuration =
             new emu.grasscutter.game.ability.AbilityModifierDuration(this);
     @Getter private final AbilityGlobalValueWatchers abilityGlobalValueWatchers = new AbilityGlobalValueWatchers(this);
+    @Getter private final AbilityDurabilityState abilityDurability = new AbilityDurabilityState(this);
     @Getter private final emu.grasscutter.game.ability.AbilityHealthEvents abilityHealthEvents =
             new emu.grasscutter.game.ability.AbilityHealthEvents(this);
     @Getter private final emu.grasscutter.game.ability.AbilityStaminaCost abilityStaminaCost =
