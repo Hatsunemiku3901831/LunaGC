@@ -26,6 +26,27 @@ public final class PhlogistonBallPickup {
                         .anyMatch(a -> a instanceof ItemUseAddPhlogiston);
     }
 
+    /** Gadget interaction has no bearer ID; use the player's current Saurian membership. */
+    public static boolean pickup(Player player, EntityItem ball) {
+        var scene = player == null ? null : player.getScene();
+        if (scene == null) return false;
+        synchronized (scene) {
+            GameEntity bearer = player.getTeamManager().getCurrentAvatarEntity();
+            EntityVehicle ridden = null;
+            for (var entity : scene.getEntities().values()) {
+                if (!(entity instanceof EntityVehicle vehicle)
+                        || vehicle.getOwner() != player
+                        || !NatsaurusVehicleHelper.isNatsaurusMount(vehicle)
+                        || vehicle.getVehicleMembers().stream()
+                                .noneMatch(member -> member.getUid() == player.getUid())) continue;
+                // A stale or ambiguous rider state must not redirect fuel to the human pool.
+                if (!vehicle.isAlive() || ridden != null) return false;
+                ridden = vehicle;
+            }
+            return pickup(player, ridden == null ? bearer : ridden, ball);
+        }
+    }
+
     public static boolean pickup(Player player, GameEntity bearer, EntityItem ball) {
         var scene = player == null ? null : player.getScene();
         if (scene == null

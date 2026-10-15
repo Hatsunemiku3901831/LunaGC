@@ -95,7 +95,7 @@ public class EntityItem extends EntityBaseGadget {
     public void onInteract(Player player, GadgetInteractReq interactReq) {
         if (emu.grasscutter.game.ability.PhlogistonBallPickup.isFuelBall(this)) {
             if (emu.grasscutter.game.ability.PhlogistonBallPickup.pickup(
-                    player, player.getTeamManager().getCurrentAvatarEntity(), this))
+                    player, this))
                 player.sendPacket(new PacketGadgetInteractRsp(this, InteractType.InteractType_INTERACT_PICK_ITEM));
             return;
         }

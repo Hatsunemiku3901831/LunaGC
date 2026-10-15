@@ -261,6 +261,178 @@ class PhlogistonBallInvocationTest extends PhlogistonMixinInvocationTest {
         assertNull(env.fixture.scene.getEntityById(ball.getId()));
     }
 
+    EntityVehicle ride(int gadget, float points) {
+        var vehicle = env.environment.candle(gadget);
+        emu.grasscutter.game.ability.VehicleInteraction.execute(
+                env.fixture.player.getSession(), vehicle.getId(), 1);
+        assertTrue(
+                vehicle.getVehicleMembers().stream()
+                        .anyMatch(member -> member.getUid() == env.fixture.player.getUid()));
+        vehicle.setCurPhlogiston(points);
+        return vehicle;
+    }
+
+    void interact() {
+        ball.onInteract(
+                env.fixture.player,
+                emu.grasscutter.net.proto.GadgetInteractReqOuterClass.GadgetInteractReq
+                        .getDefaultInstance());
+    }
+
+    @Test
+    void ordinaryPickupWhileRidingReplenishesTheSaurian() {
+        var vehicle = ride(NatsaurusPossessionTest.DRILL, 10);
+        setupPickup();
+        interact();
+        assertEquals(30, vehicle.getCurPhlogiston());
+        assertEquals(50, fuel());
+        assertNull(env.fixture.scene.getEntityById(ball.getId()));
+    }
+
+    @Test
+    void ordinaryPickupRefillsAnEmptySaurianInsteadOfTheTeam() {
+        var vehicle = ride(NatsaurusPossessionTest.DRILL, 0);
+        setupPickup();
+        interact();
+        assertEquals(20, vehicle.getCurPhlogiston());
+        assertEquals(50, fuel());
+    }
+
+    @Test
+    void ordinaryPickupAtSaurianCapacityCannotSpillIntoTheTeam() {
+        var vehicle = ride(NatsaurusPossessionTest.DRILL, 50);
+        setupPickup();
+        interact();
+        assertEquals(50, vehicle.getCurPhlogiston());
+        assertEquals(50, fuel());
+        assertNull(env.fixture.scene.getEntityById(ball.getId()));
+    }
+
+    @Test
+    void dismountRestoresHumanPickupRouting() {
+        var vehicle = ride(NatsaurusPossessionTest.DRILL, 10);
+        emu.grasscutter.game.ability.VehicleInteraction.execute(
+                env.fixture.player.getSession(), vehicle.getId(), 2);
+        setupPickup();
+        interact();
+        assertEquals(10, vehicle.getCurPhlogiston());
+        assertEquals(70, fuel());
+    }
+
+    @Test
+    void nearbyUnriddenSaurianCannotCaptureHumanFuel() {
+        var vehicle = env.environment.candle(NatsaurusPossessionTest.DRILL);
+        vehicle.setCurPhlogiston(10);
+        setupPickup();
+        interact();
+        assertEquals(10, vehicle.getCurPhlogiston());
+        assertEquals(70, fuel());
+    }
+
+    @Test
+    void skiffDoesNotUseSaurianFuelRouting() {
+        var vehicle = ride(NatsaurusPossessionTest.BOAT, 10);
+        setupPickup();
+        interact();
+        assertEquals(10, vehicle.getCurPhlogiston());
+        assertEquals(70, fuel());
+    }
+
+    @Test
+    void invalidRiddenPoolPreservesTheBallAndTheTeam() {
+        var vehicle = ride(NatsaurusPossessionTest.DRILL, Float.NaN);
+        setupPickup();
+        interact();
+        assertTrue(Float.isNaN(vehicle.getCurPhlogiston()));
+        assertEquals(50, fuel());
+        assertSame(ball, env.fixture.scene.getEntityById(ball.getId()));
+    }
+
+    @Test
+    void ordinaryPickupAndDragonCallbackUseOneClaim() {
+        var vehicle = ride(NatsaurusPossessionTest.DRILL, 10);
+        owner = vehicle;
+        setupPickup();
+        interact();
+        pickup();
+        assertEquals(30, vehicle.getCurPhlogiston());
+        assertEquals(50, fuel());
+    }
+
+    @Test
+    void dragonCallbackAndOrdinaryPickupUseOneClaim() {
+        var vehicle = ride(NatsaurusPossessionTest.DRILL, 10);
+        owner = vehicle;
+        setupPickup();
+        pickup();
+        interact();
+        assertEquals(30, vehicle.getCurPhlogiston());
+        assertEquals(50, fuel());
+    }
+
+    @Test
+    void staleDeadRiderStateCannotRedirectIntoTheTeam() {
+        var vehicle = ride(NatsaurusPossessionTest.DRILL, 10);
+        assertDoesNotThrow(
+                () -> {
+                    var dead =
+                            emu.grasscutter.game.entity.GameEntity.class.getDeclaredField("isDead");
+                    dead.setAccessible(true);
+                    dead.setBoolean(vehicle, true);
+                });
+        setupPickup();
+        interact();
+        assertEquals(10, vehicle.getCurPhlogiston());
+        assertEquals(50, fuel());
+        assertSame(ball, env.fixture.scene.getEntityById(ball.getId()));
+    }
+
+    @Test
+    void ambiguousRiderStatePreservesTheBall() {
+        var first = ride(NatsaurusPossessionTest.DRILL, 10);
+        var second = env.environment.candle(NatsaurusPossessionTest.HOOK);
+        second.getVehicleMembers().add(first.getVehicleMembers().get(0));
+        second.setCurPhlogiston(5);
+        setupPickup();
+        interact();
+        assertEquals(10, first.getCurPhlogiston());
+        assertEquals(5, second.getCurPhlogiston());
+        assertEquals(50, fuel());
+        assertSame(ball, env.fixture.scene.getEntityById(ball.getId()));
+    }
+
+    @Test
+    void simultaneousDragonCallbackAndOrdinaryPickupCannotDoubleClaim() throws Exception {
+        var vehicle = ride(NatsaurusPossessionTest.DRILL, 10);
+        owner = vehicle;
+        setupPickup();
+        var gate = new java.util.concurrent.CyclicBarrier(2);
+        var executor = java.util.concurrent.Executors.newFixedThreadPool(2);
+        try {
+            var normal =
+                    executor.submit(
+                            () -> {
+                                gate.await(5, java.util.concurrent.TimeUnit.SECONDS);
+                                interact();
+                                return null;
+                            });
+            var callback =
+                    executor.submit(
+                            () -> {
+                                gate.await(5, java.util.concurrent.TimeUnit.SECONDS);
+                                pickup();
+                                return null;
+                            });
+            normal.get(6, java.util.concurrent.TimeUnit.SECONDS);
+            callback.get(6, java.util.concurrent.TimeUnit.SECONDS);
+            assertEquals(30, vehicle.getCurPhlogiston());
+            assertEquals(50, fuel());
+            assertNull(env.fixture.scene.getEntityById(ball.getId()));
+        } finally {
+            executor.shutdownNow();
+        }
+    }
+
     @Test
     void itemUseRespectsCount() {
         var action =
