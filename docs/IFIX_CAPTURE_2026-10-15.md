@@ -65,6 +65,47 @@ $env:LUNAGC_IFIX_DUMP_DIR = 'D:\Projects\Experiment\LunaGC\debug\ifix-capture'
 这不能证明所有 IFix 逻辑都没有加载，也不能证明已取得实际热修复包。
 后续仍需在进入角色后读取观察结果，确认实际流类型和内容，再配对完整计算分支。
 
+## 已初始化的 VM 状态诊断（2026-10-16）
+
+同一个可选模块现在会从游戏进程自身记录燃素动作的 IFix 状态，
+用于确认加载标记、包装器和 VM 是否已经发布。仍通过上述环境变量或临时标记启用；
+临时标记在移除前会继续对后续启动生效，现有进程已初始化的配置不受删除标记影响。
+
+新增诊断在检查 EXE、metadata、startup 三份文件的 SHA-256 及
+`PatchManager.Load`／燃素动作入口签名后启动。
+燃素入口 RVA 为 `0x7b469f0`；加载标记为 `base + 0x5780c6b`，
+运行时根位于 `base + 0x5783de8`，静态存储和包装器偏移分别为 `0x256d0`／`0x57fcf8`。
+
+- 标记为零时只读取标记，不解引用尚未初始化的静态槽。
+- 当前包装器使用 metadata 类型 56285：VM 在 `0x10`、匿名对象在 `0x18`、方法 ID 在 `0x20`。
+  不与类型 11743 的反向字段布局混用。
+- VM 类型 7190 的 `unmanagedCodes` 在 `0x80`，`PatchedArrayLength` 在 `0x88`。
+  记录方法 ID、这些字段及已知数组的长度，不访问数组元素或方法体。
+- 每次读取要求返回完整字节，检查空指针、对象类指针、数组长度上限和地址溢出；
+  结束时复核加载标记、根、存储、包装器与 VM 头，拒绝读取期间发生替换的快照。
+- 每秒检查一次，最多 300 次；状态相同不新增文件，最多保存 32 个文件，每个至多 32 KiB。
+  输出为 `runtime-<pid>-<sha256>.json`，包含进程 ID、观测时间、模块基址及三份输入哈希。
+  文件冲突时保持原文件，模块停用后停止后续采样。
+
+补充核对了 Tencent/InjectFix 固定提交
+`5ba42eb8f63fe37134a3c78690f97d8425e13588` 的
+[VM](https://github.com/Tencent/InjectFix/blob/5ba42eb8f63fe37134a3c78690f97d8425e13588/Source/VSProj/Src/Core/VirtualMachine.cs)
+和[加载器](https://github.com/Tencent/InjectFix/blob/5ba42eb8f63fe37134a3c78690f97d8425e13588/Source/VSProj/Src/Builder/FileVirtualMachineBuilder.cs)。
+公共加载器逐方法读取长度后分配指令缓冲区；当前客户端的 `PatchedArrayLength` 是另一个字段，
+本次没有把它当作方法总数或代码长度，也没有按猜测的大小读取指令。
+完整燃素 Add／Set、持续 Set 和 TPS 状态动作的计算仍需实际加载流。
+
+新增 17 项测试，首轮保留 4 项失败；最终完整 Rust 单元测试 **44 项通过，零失败／忽略**，
+`cargo build --release` 成功。新 DLL SHA-256：
+`2fa28526cc5753242db63a411c67a8fd50d90e9bb4bf34917c510b862665d510`。
+
+本次准备安装时检测到游戏进程正在运行，在修改客户端文件前停止了安装步骤。
+运行中的会话仍使用上一版补丁，日志确认原始流捕获入口已启用，但当前捕获目录仍为空。
+新增 VM 状态诊断尚未进行客户端运行验证。
+
+源布局、公开源文件 blob 校验、红测试、完整测试、release 构建及安装前状态记录，
+位于 `debug/aster-mid-20261011/batch272/`。
+
 本机证据保存在 `debug/aster-mid-20261011/batch262/`：
 `ifix-capture-red.log`、`ifix-capture-final.log`、`ifix-capture-build.log`、
 `ifix-memory-layouts.json`、安装前快照及会话读取结果。
