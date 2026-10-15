@@ -150,6 +150,23 @@ public class Player implements PlayerHook, FieldFetch {
     @Getter @Setter private int widgetPetId;
     @Getter(lombok.AccessLevel.PACKAGE) @Setter(lombok.AccessLevel.PACKAGE)
     private Map<Integer, Integer> lunchBoxFood = new HashMap<>();
+    private volatile Map<Integer, Long> itemUseCooldowns = new HashMap<>();
+
+    public synchronized long getItemUseCooldownEnd(int group) {
+        return itemUseCooldowns == null ? 0 : itemUseCooldowns.getOrDefault(group, 0L);
+    }
+
+    /** Publish a new snapshot so asynchronous persistence never iterates a mutating map. */
+    public void rememberItemUseCooldown(int group, long end) {
+        if (group <= 0 || end <= 0) throw new IllegalArgumentException("Invalid item cooldown");
+        synchronized (this) {
+            var next = itemUseCooldowns == null ? new HashMap<Integer, Long>()
+                    : new HashMap<>(itemUseCooldowns);
+            next.merge(group, end, Math::max);
+            itemUseCooldowns = next;
+        }
+        save();
+    }
     @Transient private transient volatile WidgetManager widgets;
 
     public WidgetManager getWidgets() {

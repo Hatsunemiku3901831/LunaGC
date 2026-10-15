@@ -55,6 +55,8 @@ public class ItemData extends GameResource {
     @SerializedName("PANBBKJOBOL") private String currentFoodEffect;
     @SerializedName("KNOIOAPAFIH") private String legacyFoodEffect;
     private int[] satiationParams;
+    private int cdGroup;
+    private float cdTime;
 
     public String getFoodEffect() {
         return foodEffect != null ? foodEffect

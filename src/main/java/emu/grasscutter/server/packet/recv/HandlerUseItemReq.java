@@ -4,6 +4,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.game.inventory.GameItem;
+import emu.grasscutter.game.inventory.ItemUseException;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.UseItemReqOuterClass.UseItemReq;
 import emu.grasscutter.server.game.GameSession;
@@ -48,6 +49,9 @@ public class HandlerUseItemReq extends PacketHandler {
                                         req.getIsEnterMpDungeonTeam(),
                                         req.getOptionIdxListList());
             }
+        } catch (ItemUseException rejected) {
+            session.send(new PacketUseItemRsp(rejected.getRetcode()));
+            return;
         } catch (RuntimeException failure) {
             // Inventory may already have a pending receipt. Do not retry the economic operation.
             Grasscutter.getLogger()

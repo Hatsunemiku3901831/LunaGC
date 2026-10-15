@@ -3,6 +3,7 @@ package emu.grasscutter.game.props.ItemUseAction;
 import emu.grasscutter.game.avatar.Avatar;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.props.ItemUseTarget;
+import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class UseItemParams {
     public List<Integer> optionIds = List.of();
     public boolean isEnterMpDungeonTeam = false;
     public int usedItemId = 0;
+    public Retcode failureRetcode;
 
     public UseItemParams(
             Player player,

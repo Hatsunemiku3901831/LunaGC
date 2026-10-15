@@ -22,11 +22,13 @@ import emu.grasscutter.server.packet.send.*;
 import emu.grasscutter.utils.Utils;
 import it.unimi.dsi.fastutil.ints.*;
 import java.util.*;
+import java.util.function.LongSupplier;
 import java.util.stream.Stream;
 import lombok.val;
 
 public class InventorySystem extends BaseGameSystem {
     private static final Int2IntMap weaponRefundMaterials = new Int2IntArrayMap();
+    private final LongSupplier itemUseClock;
 
     {
         // Use a sorted map, use exp as key to sort by exp
@@ -50,7 +52,12 @@ public class InventorySystem extends BaseGameSystem {
     }
 
     public InventorySystem(GameServer server) {
+        this(server, System::currentTimeMillis);
+    }
+
+    public InventorySystem(GameServer server, LongSupplier itemUseClock) {
         super(server);
+        this.itemUseClock = Objects.requireNonNull(itemUseClock);
     }
 
     public static synchronized int checkPlayerAvatarConstellationLevel(Player player, int id) {
@@ -1059,6 +1066,7 @@ public class InventorySystem extends BaseGameSystem {
             // this line, because every failure looks identical from the handler's side.
             Grasscutter.getLogger()
                     .debug("Item use failed: item {} (guid {}).", item.getItemId(), itemGuid);
+            if (params.failureRetcode != null) throw new ItemUseException(params.failureRetcode);
             return null;
         }
     }
@@ -1067,6 +1075,7 @@ public class InventorySystem extends BaseGameSystem {
     public synchronized boolean useItemDirect(ItemData itemData, UseItemParams params) {
         if (itemData == null || params == null || params.player == null
                 || params.itemUseTarget == null || params.count <= 0) return false;
+        params.failureRetcode = null;
 
         if (itemData.getMaterialType() == MaterialType.MATERIAL_WEAPON_SKIN) {
             // Ley-line appearances have no useOp in the material table. Resolve the real skin
@@ -1120,6 +1129,22 @@ public class InventorySystem extends BaseGameSystem {
             case ITEM_USE_TARGET_CUR_TEAM -> {}
         }
 
+        int cooldownGroup = itemData.getCdGroup();
+        float cooldownSeconds = itemData.getCdTime();
+        if (cooldownGroup < 0 || !Float.isFinite(cooldownSeconds) || cooldownSeconds < 0)
+            return false;
+        long cooldownEnd = 0;
+        if (cooldownGroup > 0 && cooldownSeconds > 0) {
+            double milliseconds = Math.ceil((double) cooldownSeconds * 1000);
+            long now = itemUseClock.getAsLong();
+            if (now < 0 || milliseconds >= Long.MAX_VALUE - now) return false;
+            if (params.player.getItemUseCooldownEnd(cooldownGroup) > now) {
+                params.failureRetcode = Retcode.RET_ITEM_IN_COOLDOWN;
+                return false;
+            }
+            cooldownEnd = now + Math.max(1, (long) milliseconds);
+        }
+
         int[] satiationParams = itemData.getSatiationParams();
         int reservedSatiation = 0;
         if (satiationParams != null && satiationParams.length > 0 && target.isPresent()) {
@@ -1162,6 +1187,8 @@ public class InventorySystem extends BaseGameSystem {
         boolean used = false;
         try {
             used = executeItemActions(itemData, params);
+            if (used && cooldownEnd > 0)
+                params.player.rememberItemUseCooldown(cooldownGroup, cooldownEnd);
             return used;
         } finally {
             if (!used && reservedSatiation > 0)

@@ -34,11 +34,15 @@ public class PacketUseItemRsp extends BasePacket {
     }
 
     public PacketUseItemRsp() {
+        this(RetcodeOuterClass.Retcode.RET_SVR_ERROR);
+    }
+
+    public PacketUseItemRsp(RetcodeOuterClass.Retcode retcode) {
         super(PacketOpcodes.UseItemRsp);
 
         UseItemRsp proto =
                 UseItemRsp.newBuilder()
-                        .setRetcode(RetcodeOuterClass.Retcode.RET_SVR_ERROR_VALUE)
+                        .setRetcode(retcode.getNumber())
                         .build();
 
         this.setData(proto);
