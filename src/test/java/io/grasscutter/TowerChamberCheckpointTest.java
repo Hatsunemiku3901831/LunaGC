@@ -345,10 +345,15 @@ class TowerChamberCheckpointTest extends QuestTestFixture {
         assertTrue(capture(model));
         spent(model);
         assertTrue(restore(model));
-        var field = Avatar.class.getDeclaredField("currentEnergy");
-        field.setAccessible(true);
-        assertEquals(13, field.getFloat(model.getAvatars().getAvatarById(FIRST)));
-        assertEquals(29, field.getFloat(model.getAvatars().getAvatarById(SECOND)));
+        var first = model.getAvatars().getAvatarById(FIRST);
+        var second = model.getAvatars().getAvatarById(SECOND);
+        replaceField(Avatar.class, first, "skillDepot", first.getSkillDepot());
+        replaceField(Avatar.class, second, "skillDepot", second.getSkillDepot());
+        var firstEntity = new EntityAvatar(player.getScene(), first);
+        var secondEntity = new EntityAvatar(player.getScene(), second);
+        assertEquals(13, firstEntity.getFightProperty(FightProperty.FIGHT_PROP_CUR_GRASS_ENERGY));
+        assertEquals(29, secondEntity.getFightProperty(FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY));
+        assertEquals(0, secondEntity.getFightProperty(FightProperty.FIGHT_PROP_CUR_GRASS_ENERGY));
     }
 
     @Test

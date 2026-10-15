@@ -60,6 +60,8 @@ public class Avatar {
     @Getter @Setter private int satiationPenalty; // When eating too much
     @Getter @Setter private float currentHp;
     private float currentEnergy;
+    private Float currentSpecialEnergy;
+    @Transient private transient volatile SavedVitals loadingVitals;
     @Transient @Getter private Set<String> extraAbilityEmbryos;
 
     private List<Integer> fetters;
@@ -156,8 +158,6 @@ public class Avatar {
         setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, this.currentHp);
         setFightProperty(FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY, 100f);
         this.currentEnergy = 0f;
-        // Load handler
-        this.onLoad();
     }
 
     public static int getMinPromoteLevel(int level) {
@@ -380,7 +380,9 @@ public class Avatar {
     public void setCurrentEnergy(FightProperty curEnergyProp, float currentEnergy) {
         if (GAME_OPTIONS.energyUsage) {
             this.setFightProperty(curEnergyProp, currentEnergy);
-            this.currentEnergy = currentEnergy;
+            if (curEnergyProp == FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY)
+                this.currentSpecialEnergy = currentEnergy;
+            else this.currentEnergy = currentEnergy;
             this.save();
         }
     }
@@ -392,7 +394,9 @@ public class Avatar {
                         || Arrays.stream(ElementType.values())
                                 .anyMatch(type -> type.getCurEnergyProp() == property);
         if (!current) return;
-        this.currentEnergy = value;
+        if (property == FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY)
+            this.currentSpecialEnergy = value;
+        else this.currentEnergy = value;
         this.setFightProperty(property, value);
     }
 
@@ -627,6 +631,8 @@ public class Avatar {
                 entity.getAbilityHpModifier().afterStatRecalc();
             }
         } else recalcStatProperties();
+
+        restoreLoadingVitals(false);
 
         // Talent refresh can also update buffs attached to another entity; keep it outside the lock.
         if (getPlayer() != null) getPlayer().getAbilityManager().refreshEquipmentTalents(this, notify);
@@ -1528,12 +1534,81 @@ public class Avatar {
         return trialAvatar.build();
     }
 
+    private record SavedVitals(float hp, float energy, Float specialEnergy) {}
+
     @PostLoad
-    private void onLoad() {}
+    private void onLoad() {
+        this.loadingVitals = new SavedVitals(currentHp, currentEnergy, currentSpecialEnergy);
+    }
+
+    /** Inventory invokes this only after all saved equipment and the final stat pass are ready. */
+    void completeLoadingVitals() {
+        restoreLoadingVitals(true);
+    }
+
+    private synchronized void restoreLoadingVitals(boolean complete) {
+        var saved = this.loadingVitals;
+        float maximum = this.getFightProperty(FightProperty.FIGHT_PROP_MAX_HP);
+        if (saved == null || !Float.isFinite(maximum) || maximum <= 0) return;
+
+        // Early equipment recalculations can have a smaller cap. Keep the original absolute HP
+        // until the full inventory has loaded; zero and sub-one HP are legitimate saved values.
+        float hp = Float.isFinite(saved.hp()) ? Math.max(0f, saved.hp()) : 0f;
+        this.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, complete ? Math.min(maximum, hp) : hp);
+        var depot = this.getSkillDepot();
+        boolean definedEnergy = depot != null
+                && (depot.getEnergySkill() == 0 || depot.getEnergySkillData() != null);
+        if (definedEnergy && depot.getElementType() != null) {
+            var element = depot.getElementType();
+            this.setCurrentEnergy(
+                    boundedVital(saved.energy(), this.getFightProperty(element.getMaxEnergyProp())));
+        }
+        // Old saves do not identify a special-energy pool. Never reinterpret their elemental
+        // currentEnergy or nyxValue as Fighting Spirit / Serpent's Subtlety.
+        if (definedEnergy && saved.specialEnergy() != null)
+            this.setFightProperty(
+                    FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY,
+                    boundedVital(saved.specialEnergy(),
+                            this.getFightProperty(FightProperty.FIGHT_PROP_MAX_SPECIAL_ENERGY)));
+
+        if (complete) {
+            this.captureVitals();
+            this.loadingVitals = null;
+        }
+    }
+
+    private static float boundedVital(float value, float maximum) {
+        return Float.isFinite(value) && Float.isFinite(maximum) && maximum > 0
+                ? Math.max(0f, Math.min(maximum, value))
+                : 0f;
+    }
+
+    private void captureVitals() {
+        this.currentHp = boundedVital(
+                this.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP),
+                this.getFightProperty(FightProperty.FIGHT_PROP_MAX_HP));
+        var depot = this.getSkillDepot();
+        // A missing resource is not a known empty pool. Keep the saved scalars for a later
+        // complete load instead of replacing them with the temporary zero capacities.
+        if (depot == null || (depot.getEnergySkill() != 0 && depot.getEnergySkillData() == null))
+            return;
+        if (depot != null && depot.getElementType() != null) {
+            var element = depot.getElementType();
+            this.currentEnergy = boundedVital(
+                    this.getFightProperty(element.getCurEnergyProp()),
+                    this.getFightProperty(element.getMaxEnergyProp()));
+        }
+        this.currentSpecialEnergy = boundedVital(
+                this.getFightProperty(FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY),
+                this.getFightProperty(FightProperty.FIGHT_PROP_MAX_SPECIAL_ENERGY));
+    }
 
     @PrePersist
-    private void prePersist() {
-        this.currentHp = this.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP);
+    private synchronized void prePersist() {
+        // An offline/read-only load or an intermediate equipment pass is not a live snapshot.
+        float maximum = this.getFightProperty(FightProperty.FIGHT_PROP_MAX_HP);
+        if (loadingVitals != null || !Float.isFinite(maximum) || maximum <= 0) return;
+        this.captureVitals();
     }
 
     @AllArgsConstructor

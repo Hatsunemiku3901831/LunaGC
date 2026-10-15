@@ -35,6 +35,7 @@
 | 登录活动初始化 | [实机空指针、任务检查前准备条件、新玩家／Mongo 冷读，以及活动通知延后发布](PLAYER_ACTIVITY_LOGIN_2026-10-16.md) |
 | 旧角色技能等级补全 | [实际登录异常、缺失技能默认值、已学等级保留及角色快照／Mongo 冷读](AVATAR_SKILL_MAP_LOGIN_2026-10-16.md) |
 | 场景天赋参数保护 | [实机负下标异常、绝对赋值与增量区分、符号／零值、真实队伍资源及完整场景包](SCENE_TALENT_SNAPSHOT_2026-10-16.md) |
+| 角色生命值与能量读档 | [装备完成后恢复、提前保存保护、死亡／低血量、元素／特殊池、主角自动保存及深渊联动](AVATAR_VITALS_PERSISTENCE_2026-10-16.md) |
 | Windows 服务启动 | [JDK Selector 临时目录、带空格路径、真实 Java 启动及 HTTP／UDP 状态区分](WINDOWS_JAVA_STARTUP_2026-10-16.md) |
 | 最近有效锚点复活 | [当前点位类型、任务锁定、最近目的地、原地回退、坐标快照及请求响应归属](WORLD_RESPAWN_POINTS_2026-10-16.md) |
 | 全队倒下的任务失败 | [真实任务失败、复活顺序、并发去重和数据库保存](TEAM_WIPE_QUEST_FAILURE_2026-10-15.md) |

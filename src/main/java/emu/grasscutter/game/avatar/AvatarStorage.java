@@ -253,6 +253,7 @@ public class AvatarStorage extends BasePlayerManager implements Iterable<Avatar>
             }
             // Recalc stats
             avatar.recalcStats();
+            avatar.completeLoadingVitals();
         }
     }
 
