@@ -35,3 +35,26 @@
 后续无效池状态的回归最终为 **254 项／10 套件**，独立启动／HTTP **2 项**通过；证据另见 `guard-red-results/`、`guard-final-results/` 和 `guard-verification.json`。
 后续修正了无效池被外层误报为执行成功的问题；[执行结果记录](PHLOGISTON_POOL_RESULTS_2026-10-15.md)覆盖普通和倍率动作、周期回调，以及有效零值／满池／无限燃素的接受结果。
 证据：`debug/aster-mid-20261011/batch223/ratio-red.xml`、`ratio-final-results/`、`ratio-verification.json` 和原生反汇编。
+
+## 普通动作的显式池目标
+
+当前资源有 225 个普通 `ChangePhlogiston` 动作，其中 **94 个指定 Team、2 个指定 Vehicle**。
+之前普通动作没有保留 `targetType`，即使显式指定队伍也仍按能力拥有者选择燃素池。
+现在普通 Cost／Sub／Add／Set 与周期变化共用显式选池入口：
+
+- Team 的倍率扣除读取队伍存量，倍率 Add／Set 使用队伍容量；能力属于龙时也不改变龙池。
+- Vehicle 读取自己的承载车辆；缺少车辆不会转扣队伍，空龙池的显式 Vehicle Add 正常补充。
+- 明确 Team 不读取无关龙池的 NaN；缺少所选队伍池或未知目标返回失败。
+- 未指定池目标的动作保留原先能力拥有者选池；`target` 仍表示动作承载实体，不与 `targetType` 混用。
+
+这是对现有资源控制字段的兼容接入。普通 Add／Set 的完整客户端 ILFix 分支仍未解出，
+周期 Set 仍拒绝执行；没有把服务端测试当成客户端倍率与时序的全部验收。
+
+新增 12 项验证，包括使用实际小钻地龙资源中的两个 Vehicle 动作。
+首轮锁定问题的 6 项测试全部失败；修复后燃素倍率、普通动作、池状态、周期、拾取和无限燃素相关
+**195 项／6 套件**通过，零失败、错误和跳过；JAR 构建通过。
+宿主机／容器源码 SHA-256、编译类／JAR 字节一致，无意外类删除。
+证据：`debug/aster-mid-20261011/batch227/ratio-target-red-results/`、
+`ratio-target-final-results/`、`ratio-target-verification.json`、`fuel-resource-summary.json`。
+JAR SHA-256：`2ad4264587f9246927815d7317e54f784fb8893f7e2979ac6b5dc01db90c99df`。
+日常运行服务未替换，当前客户端验收继续保留在剩余事项中。

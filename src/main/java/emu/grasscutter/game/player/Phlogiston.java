@@ -102,6 +102,17 @@ public final class Phlogiston {
 
     public static boolean change(
             Ability ability, GameEntity bearer, float delta, String targetType, RatioBasis basis) {
+        return mutate(ability, bearer, delta, false, targetType, basis);
+    }
+
+    /** Explicit pool selection for both periodic changes and ordinary Add/Cost/Set actions. */
+    public static boolean mutate(
+            Ability ability,
+            GameEntity bearer,
+            float delta,
+            boolean set,
+            String targetType,
+            RatioBasis basis) {
         if (targetType == null
                 || basis == null
                 || !java.util.Set.of("Auto", "Self", "Team", "Vehicle").contains(targetType)
@@ -130,8 +141,8 @@ public final class Phlogiston {
             if (vehicle != null
                     && !"Team".equals(targetType)
                     && (!"Auto".equals(targetType) || vehicle.getCurPhlogiston() > 0))
-                return mutate(vehicle, delta, false, basis);
-            return mutate(player, delta, false, basis);
+                return mutate(vehicle, delta, set, basis);
+            return mutate(player, delta, set, basis);
         }
     }
 

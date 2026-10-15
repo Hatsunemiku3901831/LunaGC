@@ -26,6 +26,10 @@ class PhlogistonRatioControlTest extends PhlogistonMixinInvocationTest {
     }
 
     boolean action(String config) {
+        return action(config, owner);
+    }
+
+    boolean action(String config, emu.grasscutter.game.entity.GameEntity target) {
         return new ActionChangePhlogiston()
                 .execute(
                         env.ability,
@@ -33,7 +37,7 @@ class PhlogistonRatioControlTest extends PhlogistonMixinInvocationTest {
                                 "{$type:'ChangePhlogiston'," + config + "}",
                                 AbilityModifierAction.class),
                         ByteString.EMPTY,
-                        owner);
+                        target);
     }
 
     @Test
@@ -104,6 +108,148 @@ class PhlogistonRatioControlTest extends PhlogistonMixinInvocationTest {
         assertTrue(action("value:1,costType:'Add',JDIMELLBMFO:true"));
         assertEquals(50, ((EntityVehicle) owner).getCurPhlogiston());
         assertEquals(50, fuel());
+    }
+
+    EntityVehicle vehicleAbility(float points) {
+        var vehicle = env.environment.candle(NatsaurusPossessionTest.DRILL);
+        vehicle.setCurPhlogiston(points);
+        owner = vehicle;
+        env.ability =
+                new Ability(
+                        JsonUtils.decode(
+                                "{abilityName:'TargetedFuel',modifiers:{}}", AbilityData.class),
+                        owner,
+                        env.fixture.player);
+        return vehicle;
+    }
+
+    @Test
+    void explicitActionTeamCostReadsTeamWhileAbilityBelongsToVehicle() {
+        var vehicle = vehicleAbility(20);
+        assertTrue(action("value:0.1,costType:'Cost',useRatio:true,targetType:'Team'"));
+        assertEquals(45, fuel());
+        assertEquals(20, vehicle.getCurPhlogiston());
+    }
+
+    @Test
+    void explicitActionTeamAddUsesTeamCapacityInsteadOfVehicleCapacity() {
+        var vehicle = vehicleAbility(20);
+        assertTrue(action("value:0.1,costType:'Add',useRatio:true,targetType:'Team'"));
+        assertEquals(60, fuel());
+        assertEquals(20, vehicle.getCurPhlogiston());
+    }
+
+    @Test
+    void explicitActionTeamSetWritesOnlyTheTeam() {
+        var vehicle = vehicleAbility(20);
+        assertTrue(action("value:0.25,costType:'Set',useRatio:true,targetType:'Team'"));
+        assertEquals(25, fuel());
+        assertEquals(20, vehicle.getCurPhlogiston());
+    }
+
+    @Test
+    void explicitActionVehicleWithoutVehicleCannotChargeTheTeam() {
+        assertFalse(action("value:0.1,costType:'Cost',useRatio:true,targetType:'Vehicle'"));
+        assertEquals(50, fuel());
+    }
+
+    @Test
+    void unknownActionFuelTargetCannotFallbackToTheOwner() {
+        assertFalse(action("value:0.1,costType:'Cost',useRatio:true,targetType:'Unknown'"));
+        assertEquals(50, fuel());
+    }
+
+    @Test
+    void explicitActionTeamAbsoluteWriteAlsoHonoursItsTarget() {
+        var vehicle = vehicleAbility(20);
+        assertTrue(action("value:7,costType:'Set',useRatio:false,targetType:'Team'"));
+        assertEquals(7, fuel());
+        assertEquals(20, vehicle.getCurPhlogiston());
+    }
+
+    @Test
+    void explicitActionVehicleUsesTheBearerWhenTheCasterIsHuman() {
+        var vehicle = env.environment.candle(NatsaurusPossessionTest.DRILL);
+        vehicle.setCurPhlogiston(20);
+        assertTrue(action("value:0.1,costType:'Cost',useRatio:true,targetType:'Vehicle'", vehicle));
+        assertEquals(18, vehicle.getCurPhlogiston());
+        assertEquals(50, fuel());
+    }
+
+    @Test
+    void explicitActionEmptyVehicleAddUsesItsOwnCapacity() {
+        var vehicle = vehicleAbility(0);
+        assertTrue(action("value:1,costType:'Add',useRatio:true,targetType:'Vehicle'"));
+        assertEquals(50, vehicle.getCurPhlogiston());
+        assertEquals(50, fuel());
+    }
+
+    @Test
+    void explicitActionTeamDoesNotReadAnUnrelatedInvalidVehiclePool() {
+        var vehicle = vehicleAbility(Float.NaN);
+        assertTrue(action("value:0.1,costType:'Add',useRatio:true,targetType:'Team'"));
+        assertEquals(60, fuel());
+        assertTrue(Float.isNaN(vehicle.getCurPhlogiston()));
+    }
+
+    @Test
+    void explicitActionZeroSetEmptiesOnlyTheChosenTeam() {
+        var vehicle = vehicleAbility(20);
+        assertTrue(action("value:0,costType:'Set',useRatio:true,targetType:'Team'"));
+        assertEquals(0, fuel());
+        assertEquals(20, vehicle.getCurPhlogiston());
+    }
+
+    @Test
+    void explicitActionMissingTeamRejectsWithoutChangingVehicle() {
+        var vehicle = vehicleAbility(20);
+        var team = env.fixture.player.getTeamManager().getEntity();
+        try {
+            env.fixture.player.getTeamManager().setEntity(null);
+            assertFalse(action("value:1,costType:'Add',useRatio:true,targetType:'Team'"));
+            assertEquals(20, vehicle.getCurPhlogiston());
+            assertEquals(50, fuel());
+        } finally {
+            env.fixture.player.getTeamManager().setEntity(team);
+        }
+    }
+
+    @Test
+    void realSmallDrillheadActionsRetainAndUseTheirVehicleTarget() throws Exception {
+        var root =
+                com.google.gson.JsonParser.parseString(
+                        java.nio.file.Files.readString(
+                                java.nio.file.Path.of(
+                                        "resources/BinOutput/Ability/Temp/VehicleAbilities/"
+                                            + "ConfigAbility_Vehicle_Natsaurus_Small_Drillhead_01.json")));
+        var actions = new java.util.ArrayList<AbilityModifierAction>();
+        collectVehicleActions(root, actions);
+        assertEquals(2, actions.size());
+        var vehicle = env.environment.candle(NatsaurusPossessionTest.DRILL);
+        for (var config : actions) {
+            assertEquals("Vehicle", config.targetType);
+            vehicle.setCurPhlogiston(20);
+            assertTrue(
+                    new ActionChangePhlogiston()
+                            .execute(env.ability, config, ByteString.EMPTY, vehicle));
+            assertEquals(20 - config.value.get(), vehicle.getCurPhlogiston(), 0.00001);
+            assertEquals(50, fuel());
+        }
+    }
+
+    static void collectVehicleActions(
+            com.google.gson.JsonElement value, java.util.List<AbilityModifierAction> actions) {
+        if (value.isJsonObject()) {
+            var row = value.getAsJsonObject();
+            if (row.has("$type")
+                    && "ChangePhlogiston".equals(row.get("$type").getAsString())
+                    && row.has("targetType")
+                    && "Vehicle".equals(row.get("targetType").getAsString()))
+                actions.add(JsonUtils.decode(row, AbilityModifierAction.class));
+            for (var child : row.entrySet()) collectVehicleActions(child.getValue(), actions);
+        } else if (value.isJsonArray()) {
+            for (var child : value.getAsJsonArray()) collectVehicleActions(child, actions);
+        }
     }
 
     @Test

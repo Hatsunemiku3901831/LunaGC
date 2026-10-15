@@ -47,7 +47,10 @@ public final class ActionChangePhlogiston extends AbilityActionHandler {
                                 ? Phlogiston.RatioBasis.CURRENT
                                 : Phlogiston.RatioBasis.CAPACITY
                         : Phlogiston.RatioBasis.ABSOLUTE;
-        return conditionsPass(ability, action, target)
-                && Phlogiston.mutate(ability, target, delta, "Set".equals(mode), basis);
+        if (!conditionsPass(ability, action, target)) return false;
+        return action.targetType == null
+                ? Phlogiston.mutate(ability, target, delta, "Set".equals(mode), basis)
+                : Phlogiston.mutate(
+                        ability, target, delta, "Set".equals(mode), action.targetType, basis);
     }
 }
