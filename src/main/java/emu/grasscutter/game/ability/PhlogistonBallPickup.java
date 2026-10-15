@@ -9,6 +9,7 @@ import emu.grasscutter.game.inventory.MaterialType;
 import emu.grasscutter.game.player.Phlogiston;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.props.ItemUseAction.ItemUseAddPhlogiston;
+import emu.grasscutter.game.world.Scene;
 import emu.grasscutter.net.proto.AbilityMixinHumanDragonCollabPickPhlogistonBallOuterClass.AbilityMixinHumanDragonCollabPickPhlogistonBall;
 import emu.grasscutter.net.proto.VisionTypeOuterClass.VisionType;
 
@@ -31,20 +32,48 @@ public final class PhlogistonBallPickup {
         var scene = player == null ? null : player.getScene();
         if (scene == null) return false;
         synchronized (scene) {
-            GameEntity bearer = player.getTeamManager().getCurrentAvatarEntity();
-            EntityVehicle ridden = null;
-            for (var entity : scene.getEntities().values()) {
-                if (!(entity instanceof EntityVehicle vehicle)
-                        || vehicle.getOwner() != player
-                        || !NatsaurusVehicleHelper.isNatsaurusMount(vehicle)
-                        || vehicle.getVehicleMembers().stream()
-                                .noneMatch(member -> member.getUid() == player.getUid())) continue;
-                // A stale or ambiguous rider state must not redirect fuel to the human pool.
-                if (!vehicle.isAlive() || ridden != null) return false;
-                ridden = vehicle;
-            }
-            return pickup(player, ridden == null ? bearer : ridden, ball);
+            return pickup(player, recipient(player, scene), ball);
         }
+    }
+
+    /** Resource awards have no bearer ID either; resolve membership under the same scene lock. */
+    public static boolean replenish(Player player, float amount) {
+        var scene = player == null ? null : player.getScene();
+        if (scene == null || !Float.isFinite(amount) || amount <= 0) return false;
+        synchronized (scene) {
+            var bearer = recipient(player, scene);
+            if (bearer == null
+                    || bearer.isDead()
+                    || player.getTeamManager().getEntity() == null
+                    || !AbilityExecutionContext.canTrigger(bearer, player)) return false;
+            if (bearer instanceof EntityVehicle vehicle) {
+                if (!Float.isFinite(vehicle.getCurPhlogiston())) return false;
+                Phlogiston.change(vehicle, amount);
+            } else {
+                if (!(bearer instanceof EntityAvatar avatar)
+                        || avatar.getPlayer() != player
+                        || !Float.isFinite(player.getPhlogistonValue())) return false;
+                Phlogiston.change(player, amount);
+            }
+            return true;
+        }
+    }
+
+    /** Caller holds the scene monitor across selection and the award. */
+    private static GameEntity recipient(Player player, Scene scene) {
+        if (player.getScene() != scene) return null;
+        EntityVehicle ridden = null;
+        for (var entity : scene.getEntities().values()) {
+            if (!(entity instanceof EntityVehicle vehicle)
+                    || vehicle.getOwner() != player
+                    || !NatsaurusVehicleHelper.isNatsaurusMount(vehicle)
+                    || vehicle.getVehicleMembers().stream()
+                            .noneMatch(member -> member.getUid() == player.getUid())) continue;
+            // A stale or ambiguous rider state must not redirect fuel to the human pool.
+            if (!vehicle.isAlive() || ridden != null) return null;
+            ridden = vehicle;
+        }
+        return ridden == null ? player.getTeamManager().getCurrentAvatarEntity() : ridden;
     }
 
     public static boolean pickup(Player player, GameEntity bearer, EntityItem ball) {

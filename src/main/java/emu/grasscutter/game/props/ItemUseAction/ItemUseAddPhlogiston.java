@@ -1,6 +1,6 @@
 package emu.grasscutter.game.props.ItemUseAction;
 
-import emu.grasscutter.game.player.Phlogiston;
+import emu.grasscutter.game.ability.PhlogistonBallPickup;
 import emu.grasscutter.game.props.ItemUseOp;
 
 /** Resource operation 60; each current fuel ball carries its own configured amount. */
@@ -29,11 +29,6 @@ public final class ItemUseAddPhlogiston extends ItemUseAction {
     @Override
     public boolean useItem(UseItemParams params) {
         float total = params == null ? Float.NaN : amount(params.count);
-        if (!Float.isFinite(total)
-                || params.player == null
-                || params.player.getTeamManager().getEntity() == null
-                || !Float.isFinite(params.player.getPhlogistonValue())) return false;
-        Phlogiston.change(params.player, total);
-        return true;
+        return Float.isFinite(total) && PhlogistonBallPickup.replenish(params.player, total);
     }
 }
