@@ -19,6 +19,7 @@ public final class ActionChangePhlogiston extends AbilityActionHandler {
         if (ability == null || action == null || target == null) return false;
         boolean current =
                 action.value != null
+                        || action.rawPhlogistonValue != null
                         || action.costType != null
                         || action.rawPhlogistonCostType != null;
         String mode =
@@ -29,7 +30,10 @@ public final class ActionChangePhlogiston extends AbilityActionHandler {
                                         ? action.rawPhlogistonCostType
                                         : "Cost"
                         : action.determineType;
-        var expression = current ? action.value : action.ratio;
+        var expression =
+                current
+                        ? action.value != null ? action.value : action.rawPhlogistonValue
+                        : action.ratio;
         if (expression == null
                 || !("Cost".equals(mode)
                         || "Sub".equals(mode)

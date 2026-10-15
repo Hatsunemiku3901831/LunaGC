@@ -536,6 +536,8 @@ public class AbilityModifier implements Serializable {
         public String costType;
         /** Fuel pool selection in ChangePhlogiston resource exports, separate from action target. */
         public String targetType;
+        @SerializedName("CBOMLBFIPJM")
+        public DynamicFloat rawPhlogistonValue;
         @SerializedName("DHDDHBBIHEJ")
         public String rawPhlogistonCostType;
         public Boolean useRatio;

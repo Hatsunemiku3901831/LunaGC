@@ -79,3 +79,28 @@ JAR SHA-256：`2ad4264587f9246927815d7317e54f784fb8893f7e2979ac6b5dc01db90c99df`
 证据在 `debug/aster-mid-20261011/batch236/legacy-ratio-red-results/`、
 `legacy-ratio-final-results/` 及 `legacy-ratio-verification.json`。
 JAR SHA-256：`a0361b17c91e4aeaa5e8f3eda0e681f6730dc2f7d4cb4fe6a51bc981faeee8ba`。
+
+## 原始数值字段与倍率控制
+
+当前客户端动作类型 87220 的 `CBOMLBFIPJM` 位于 `+0x60`，类型为动态数值表达式 30281。
+之前普通动作只读取 `value`，导致仅包含原始数值字段的配置无法执行。
+现在将原始数值接入已有 Cost／Sub／Add／Set 和倍率选池入口；
+`value` 优先，包括明确的 0，无效的可读表达式不会改用原始字段。
+仅有原始数值时也会识别为当前格式，默认 Cost，不会误用旧 `ratio` 的默认 1。
+可读模式和倍率开关仍优先于原始字段，序列化往返保留原始控制。
+
+本次实际资源核对共 225 个普通燃素动作，均已整理为 `value`，其中 20 个保留原始倍率开关、
+96 个指定池目标。没有使用原始数值字段的现有资源样本；本次补齐的是客户端字段对应的原始导出兼容，
+并非宣称现有 225 个动作全部发生故障，也不改变现有容量／存量倍率语义。
+
+新增 **14 项**检查，首轮 8 项失败；修改后倍率、原始字段、旧入口、池状态、普通动作和无限燃素
+相关 **136 项／6 套件**通过，零失败、错误和跳过，JAR 构建通过。
+宿主机／容器源码哈希、编译类／JAR 字节一致，无意外类删除。
+证据：`debug/aster-mid-20261011/batch242/raw-control-red-results/`、
+`raw-control-final-results/`、`raw-control-verification.json` 和 `raw-amount-proof.json`。
+JAR SHA-256：`28b6c4450063c3b7dfedb9dd39b01f76e75032a30c98c1af8b7b55dcb86ff01a`。
+
+本次重新校验三个客户端输入文件的 SHA-256 并核对周期入口；原生周期分支仍只有 Cost 的明确计算，
+普通动作入口仍转交 ILFix。持续 Set 与完整 Add／Set 热修复语义保持未完成，未通过猜测补入。
+radare2 打开后反汇编／关闭报告 Transport closed，核对沿用已有的只读 Capstone 提取器。
+日常服务未替换，客户端吸附、骑乘和耗尽表现仍待实机验收。
