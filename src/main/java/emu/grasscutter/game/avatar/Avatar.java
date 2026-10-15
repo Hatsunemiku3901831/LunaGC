@@ -437,7 +437,11 @@ public class Avatar {
         this.skillDepot
                 .getSkillsAndEnergySkill()
                 .forEach(
-                        skillId -> map.put(skillId, this.skillLevelMap.putIfAbsent(skillId, 1).intValue()));
+                        skillId -> {
+                            // Old saves may predate a skill added to this depot.
+                            int level = this.skillLevelMap.computeIfAbsent(skillId, ignored -> 1);
+                            map.put(skillId, level);
+                        });
         return map;
     }
 
