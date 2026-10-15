@@ -458,6 +458,7 @@ public class ConfigContainer {
         public Questing questing = new Questing();
         public ResinOptions resinOptions = new ResinOptions();
         public Rates rates = new Rates();
+        public StatueRewardOptions statueRewards = new StatueRewardOptions();
         public TowerOptions tower = new TowerOptions();
 
         public HandbookOptions handbook = new HandbookOptions();
@@ -481,6 +482,14 @@ public class ConfigContainer {
             public float adventureExp = 1.0f;
             public float mora = 1.0f;
             public float leyLines = 1.0f;
+        }
+
+        public static class StatueRewardOptions {
+            /** Opt in to AstaPS's per-city reward multipliers. Costs and stamina stay in resources. */
+            public boolean referenceMultipliers = false;
+            public boolean evenlyDistribute = true;
+            /** City ID -> item ID -> positive integer multiplier; 1 retains the original level row. */
+            public Map<Integer, Map<Integer, Integer>> cityItemMultipliers = new LinkedHashMap<>();
         }
 
         /** Spiral Abyss. */

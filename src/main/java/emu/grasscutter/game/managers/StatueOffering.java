@@ -25,7 +25,7 @@ final class StatueOffering {
             boolean leveled,
             List<Integer> forces) {}
 
-    private record Definition(int item, int cost, int stamina, int[] rewards) {}
+    private record Definition(int item, int cost, int stamina) {}
 
     private record Plan(
             int item,
@@ -204,6 +204,7 @@ final class StatueOffering {
                 item = 0;
         var rewards = new LinkedHashMap<Integer, Long>();
         var forces = new LinkedHashSet<Integer>();
+        var rewardSchedule = StatueOfferRewardHelper.forCity(info.getCityId());
         while (remaining > 0 && level < max) {
             var definition = definition(info.getCityId(), level + 1);
             if (definition == null
@@ -225,23 +226,11 @@ final class StatueOffering {
             crystals -= definition.cost();
             level++;
             stamina = Math.addExact(stamina, definition.stamina());
-            if (definition.rewards() != null)
-                for (int id : definition.rewards()) {
-                    var reward = GameData.getRewardDataMap().get(id);
-                    if (reward == null || reward.getRewardItemList() == null)
-                        throw new IllegalArgumentException("Missing statue reward definition");
-                    var products = new ArrayList<>(reward.getRewardItemList());
-                    products.addAll(reward.getAdditionalRewards());
-                    for (var product : products) {
-                        if (product == null || product.getId() <= 0 || product.getCount() <= 0)
-                            throw new IllegalArgumentException("Invalid statue reward");
-                        long total =
-                                rewards.merge(
-                                        product.getId(), (long) product.getCount(), Long::sum);
-                        if (total > Integer.MAX_VALUE)
-                            throw new IllegalArgumentException("Statue reward overflow");
-                    }
-                }
+            for (var product : rewardSchedule.apply(level)) {
+                long total = rewards.merge(product.getId(), (long) product.getCount(), Long::sum);
+                if (total > Integer.MAX_VALUE)
+                    throw new IllegalArgumentException("Statue reward overflow");
+            }
             var current = GameData.getCityLevelupData(info.getCityId(), level);
             if (current != null && current.getActionVec() != null)
                 for (var action : current.getActionVec())
@@ -272,8 +261,7 @@ final class StatueOffering {
             return new Definition(
                     old.getCostItems()[0].getId(),
                     old.getCostItems()[0].getCount(),
-                    old.getStamina(),
-                    old.getRewardIdList());
+                    old.getStamina());
         }
         var current = GameData.getCityLevelupData(city, level);
         return current == null
@@ -281,7 +269,6 @@ final class StatueOffering {
                 : new Definition(
                         current.getCostItemId(),
                         current.getCostItemCount(),
-                        current.getStaminaGain(),
-                        current.getRewardId() > 0 ? new int[] {current.getRewardId()} : new int[0]);
+                        current.getStaminaGain());
     }
 }

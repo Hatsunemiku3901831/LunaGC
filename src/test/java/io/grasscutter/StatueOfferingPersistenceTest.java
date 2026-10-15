@@ -117,6 +117,28 @@ class StatueOfferingPersistenceTest extends WidgetPersistenceTest {
     }
 
     @Test
+    void referenceRewardProfilePersistsItsActualAwardsAndOriginalCost() throws Exception {
+        replaceField(
+                emu.grasscutter.config.ConfigContainer.Game.class,
+                Grasscutter.getConfig().server.game,
+                "gameOptions",
+                emu.grasscutter.utils.JsonUtils.decode(
+                        "{statueRewards:{referenceMultipliers:true},rates:{adventureExp:5}}",
+                        emu.grasscutter.config.ConfigContainer.GameOptions.class));
+        var actual = offerPlayer();
+        stock(actual, 107001, 2);
+        actual.getSotsManager().levelUpSotS(1, 3, 1);
+        var restored = read();
+        assertEquals(2, restored.getSotsManager().getCityInfo(1).getLevel());
+        assertNull(restored.getSotsManager().getCityInfo(1).getPendingOffer());
+        assertEquals(1, restored.getInventory().getItemCountById(107001));
+        assertEquals(550, restored.getPrimogems());
+        assertEquals(720, restored.getExp());
+        assertEquals(100, restored.getInventory().getItemCountById(305));
+        assertEquals(10700, restored.getProperty(PlayerProperty.PROP_MAX_STAMINA));
+    }
+
+    @Test
     void incompleteContributionSurvivesReloadAndCompletesWithTheRemainingCost() throws Exception {
         var actual = offerPlayer();
         stock(actual, 107023, 25);
