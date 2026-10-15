@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "ReliquaryOfferCompanionNotifyOuterClass";
+
+import "ReliquaryOfferCandidate.proto";
+
+message ReliquaryOfferCompanionNotify {
+  repeated ReliquaryOfferCandidate candidate_list = 3;
+  uint32 progress = 12;
+}

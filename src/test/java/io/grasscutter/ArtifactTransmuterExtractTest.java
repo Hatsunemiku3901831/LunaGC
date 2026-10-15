@@ -565,4 +565,34 @@ class ArtifactTransmuterExtractTest extends QuestTestFixture {
         assertEquals(100, actual.getInventory().getItemCountById(105003));
         assertEquals(0, actual.getInventory().getItemCountById(105005));
     }
+
+    @Test
+    void loginSynchronizesAnEmptyReshapeSnapshotAndKeepsExtractionProgressSeparate()
+            throws Exception {
+        actual.getArtifactTransmuterData().setProgressUnits(1500);
+        packets.clear();
+        actual.getArtifactTransmuter().onLogin();
+        var snapshots =
+                packets.stream()
+                        .filter(x -> x.getOpcode() == PacketOpcodes.ReliquaryOfferCompanionNotify)
+                        .toList();
+        assertEquals(1, snapshots.size());
+        assertArrayEquals(new byte[0], snapshots.get(0).getData());
+        assertEquals(1, state().getProgress());
+        assertEquals(0.5f, state().getFractionalProgress());
+        assertEquals(1, actual.getInventory().getItemCountById(220109));
+        assertEquals(0, actual.getInventory().getItemCountById(105005));
+    }
+
+    @Test
+    void loginWithoutTheGadgetDoesNotSendReshapeStateOrGrantTheGadget() {
+        actual.getInventory().removeItem(actual.getInventory().getItemById(220109), 1);
+        packets.clear();
+        actual.getArtifactTransmuter().onLogin();
+        assertTrue(
+                packets.stream()
+                        .noneMatch(
+                                x -> x.getOpcode() == PacketOpcodes.ReliquaryOfferCompanionNotify));
+        assertEquals(0, actual.getInventory().getItemCountById(220109));
+    }
 }

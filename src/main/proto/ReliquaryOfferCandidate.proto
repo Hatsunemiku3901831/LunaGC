@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "ReliquaryOfferCandidateOuterClass";
+
+message ReliquaryOfferCandidate {
+  uint64 reliquary_guid = 2;
+  repeated uint32 append_prop_id_list = 3;
+  repeated uint32 append_prop_type_list = 10;
+}

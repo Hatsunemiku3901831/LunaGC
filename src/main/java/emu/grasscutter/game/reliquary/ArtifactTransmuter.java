@@ -13,6 +13,7 @@ import emu.grasscutter.net.proto.ReliquaryOfferDefineRspOuterClass.ReliquaryOffe
 import emu.grasscutter.net.proto.ReliquaryOfferExtractReqOuterClass.ReliquaryOfferExtractReq;
 import emu.grasscutter.net.proto.ReliquaryOfferExtractRspOuterClass.ReliquaryOfferExtractRsp;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
+import emu.grasscutter.server.packet.send.PacketReliquaryOfferCompanionNotify;
 import emu.grasscutter.server.packet.send.PacketReliquaryOfferDataNotify;
 
 import java.util.*;
@@ -172,7 +173,11 @@ public final class ArtifactTransmuter {
     }
 
     public void onLogin() {
-        if (ownsGadget()) open();
+        if (ownsGadget()) {
+            open();
+            // Reshape has no server candidate yet; clear any stale client snapshot on login.
+            player.sendPacket(new PacketReliquaryOfferCompanionNotify());
+        }
     }
 
     public ReliquaryOfferDefineRsp define(ReliquaryOfferDefineReq request) {
@@ -243,7 +248,7 @@ public final class ArtifactTransmuter {
                 Grasscutter.getLogger()
                         .error(
                                 "Artifact definition failed for UID {}; retained any unresolved"
-                                    + " receipt",
+                                        + " receipt",
                                 player.getUid(),
                                 failure);
             }
