@@ -51,7 +51,15 @@ public class ItemData extends GameResource {
 
     // Food
     private String foodQuality;
+    private String foodEffect;
+    @SerializedName("PANBBKJOBOL") private String currentFoodEffect;
+    @SerializedName("KNOIOAPAFIH") private String legacyFoodEffect;
     private int[] satiationParams;
+
+    public String getFoodEffect() {
+        return foodEffect != null ? foodEffect
+                : currentFoodEffect != null ? currentFoodEffect : legacyFoodEffect;
+    }
 
     // Usable item
     private ItemUseTarget useTarget = ItemUseTarget.ITEM_USE_TARGET_NONE;

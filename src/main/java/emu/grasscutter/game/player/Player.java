@@ -148,6 +148,8 @@ public class Player implements PlayerHook, FieldFetch {
     @Getter @Setter private transient boolean isInEditMode;
     @Getter @Setter private int widgetId;
     @Getter @Setter private int widgetPetId;
+    @Getter(lombok.AccessLevel.PACKAGE) @Setter(lombok.AccessLevel.PACKAGE)
+    private Map<Integer, Integer> lunchBoxFood = new HashMap<>();
     @Transient private transient volatile WidgetManager widgets;
 
     public WidgetManager getWidgets() {

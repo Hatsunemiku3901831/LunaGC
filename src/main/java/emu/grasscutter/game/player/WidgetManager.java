@@ -8,6 +8,7 @@ import emu.grasscutter.game.inventory.*;
 import emu.grasscutter.game.world.Scene;
 import emu.grasscutter.net.proto.AbilityControlBlockOuterClass.AbilityControlBlock;
 import emu.grasscutter.net.proto.AbilityEmbryoOuterClass.AbilityEmbryo;
+import emu.grasscutter.net.proto.LunchBoxDataOuterClass.LunchBoxData;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.net.proto.WidgetSlotDataOuterClass.WidgetSlotData;
 import emu.grasscutter.net.proto.WidgetSlotOpOuterClass.WidgetSlotOp;
@@ -140,6 +141,66 @@ public final class WidgetManager {
                     for (int tag : tags) slot(tag, op == 0 ? materialId : 0);
                     refresh(oldQuick, oldPet, true);
                     return new Result(0, List.copyOf(tags));
+                });
+    }
+
+    /** A request patches the native Hp=1 and Revive=2 slots; material zero clears that slot. */
+    public int setLunchBox(Map<Integer, Integer> choices) {
+        return inScene(
+                () -> {
+                    if (!owned(WidgetCatalog.LUNCH_BOX))
+                        return Retcode.RET_ITEM_NOT_EXIST.getNumber();
+                    if (choices == null || choices.size() > 2)
+                        return Retcode.RET_LUNCH_BOX_DATA_ERROR.getNumber();
+                    var catalog = WidgetCatalog.current();
+                    for (var choice : choices.entrySet()) {
+                        var slot = choice.getKey();
+                        var id = choice.getValue();
+                        if (slot == null || slot != 1 && slot != 2 || id == null || id < 0)
+                            return Retcode.RET_LUNCH_BOX_DATA_ERROR.getNumber();
+                        if (id == 0) continue;
+                        if (!catalog.acceptsFood(slot, GameData.getItemDataMap().get(id)))
+                            return Retcode.RET_LUNCH_BOX_DATA_ERROR.getNumber();
+                        var item = player.getInventory().getItemById(id);
+                        if (item == null
+                                || item.getCount() <= 0
+                                || item.getOwnerId() != player.getUid()
+                                || player.getInventory().getItemByGuid(item.getGuid()) != item)
+                            return Retcode.RET_ITEM_NOT_EXIST.getNumber();
+                    }
+                    var old = player.getLunchBoxFood();
+                    var next = old == null ? new HashMap<Integer, Integer>() : new HashMap<>(old);
+                    choices.forEach(
+                            (slot, id) -> {
+                                if (id == 0) next.remove(slot);
+                                else next.put(slot, id);
+                            });
+                    if (!next.equals(old)) {
+                        player.setLunchBoxFood(next);
+                        savePending = true;
+                    }
+                    return 0;
+                });
+    }
+
+    /** Depleted food remains selected so a refill restores it without reconfiguring the widget. */
+    public LunchBoxData lunchBox() {
+        return inScene(
+                () -> {
+                    var result = LunchBoxData.newBuilder();
+                    var choices = player.getLunchBoxFood();
+                    if (choices != null)
+                        choices.forEach(
+                                (slot, id) -> {
+                                    if (slot != null
+                                            && id != null
+                                            && WidgetCatalog.current()
+                                                    .acceptsFood(
+                                                            slot,
+                                                            GameData.getItemDataMap().get(id)))
+                                        result.putSlotMaterialMap(slot, id);
+                                });
+                    return result.build();
                 });
     }
 

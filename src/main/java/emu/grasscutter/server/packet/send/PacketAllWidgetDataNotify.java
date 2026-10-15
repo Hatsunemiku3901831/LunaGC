@@ -12,11 +12,11 @@ public class PacketAllWidgetDataNotify extends BasePacket {
     public PacketAllWidgetDataNotify(Player player) {
         super(PacketOpcodes.AllWidgetDataNotify);
 
-        // Slot state is authoritative; other widget subsystems retain their existing empty data.
+        // Persisted slots and food selections are authoritative.
 
         AllWidgetDataNotify.Builder proto =
                 AllWidgetDataNotify.newBuilder()
-                        .setLunchBoxData(LunchBoxDataOuterClass.LunchBoxData.newBuilder().build())
+                        .setLunchBoxData(player.getWidgets().lunchBox())
                         .addAllOneoffGatherPointDetectorDataList(List.of())
                         .addAllCoolDownGroupDataList(List.of())
                         .addAllAnchorPointList(List.of())

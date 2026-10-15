@@ -6,9 +6,14 @@ import emu.grasscutter.net.proto.*;
 public class PacketSetUpLunchBoxWidgetRsp extends BasePacket {
 
     public PacketSetUpLunchBoxWidgetRsp(LunchBoxDataOuterClass.LunchBoxData lunchBoxData) {
+        this(lunchBoxData, 0);
+    }
+
+    public PacketSetUpLunchBoxWidgetRsp(
+            LunchBoxDataOuterClass.LunchBoxData lunchBoxData, int retcode) {
         super(PacketOpcodes.SetUpLunchBoxWidgetRsp);
         var rsp = SetUpLunchBoxWidgetRspOuterClass.SetUpLunchBoxWidgetRsp.newBuilder();
-        rsp.setLunchBoxData(lunchBoxData);
+        rsp.setLunchBoxData(lunchBoxData).setRetcode(retcode);
 
         setData(rsp.build());
     }

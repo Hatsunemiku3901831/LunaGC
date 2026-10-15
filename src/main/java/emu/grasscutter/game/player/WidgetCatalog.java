@@ -3,6 +3,9 @@ package emu.grasscutter.game.player;
 import com.google.gson.*;
 
 import emu.grasscutter.Grasscutter;
+import emu.grasscutter.data.excels.ItemData;
+import emu.grasscutter.game.inventory.ItemType;
+import emu.grasscutter.game.inventory.MaterialType;
 import emu.grasscutter.utils.FileUtils;
 
 import java.io.*;
@@ -16,6 +19,10 @@ public final class WidgetCatalog {
 
     private record Group(boolean team, List<GroupAbility> abilities) {}
 
+    private record FoodSlot(Set<Integer> ids, Set<String> effects) {}
+
+    public static final int LUNCH_BOX = 220008;
+
     public record Entry(
             int materialId, List<Integer> tags, String group, List<GroupAbility> abilities) {
         public boolean hasGroup() {
@@ -24,10 +31,12 @@ public final class WidgetCatalog {
     }
 
     private final Map<Integer, Entry> entries;
+    private final Map<Integer, FoodSlot> foodSlots;
     private static volatile WidgetCatalog current;
 
-    private WidgetCatalog(Map<Integer, Entry> entries) {
+    private WidgetCatalog(Map<Integer, Entry> entries, Map<Integer, FoodSlot> foodSlots) {
         this.entries = Map.copyOf(entries);
+        this.foodSlots = Map.copyOf(foodSlots);
     }
 
     public Entry get(int id) {
@@ -36,6 +45,18 @@ public final class WidgetCatalog {
 
     public boolean available() {
         return !entries.isEmpty();
+    }
+
+    public boolean acceptsFood(int slot, ItemData item) {
+        var rule = foodSlots.get(slot);
+        if (rule == null
+                || item == null
+                || item.getItemType() != ItemType.ITEM_MATERIAL
+                || item.getMaterialType() != MaterialType.MATERIAL_FOOD
+                        && item.getMaterialType() != MaterialType.MATERIAL_NOTICE_ADD_HP)
+            return false;
+        return rule.ids().contains(item.getId())
+                || item.getFoodEffect() != null && rule.effects().contains(item.getFoodEffect());
     }
 
     public static WidgetCatalog current() {
@@ -124,6 +145,7 @@ public final class WidgetCatalog {
             }
         }
         var entries = new HashMap<Integer, Entry>();
+        var foods = new HashMap<Integer, FoodSlot>();
         try (var reader = Files.newBufferedReader(config)) {
             var map =
                     JsonParser.parseReader(reader)
@@ -138,6 +160,19 @@ public final class WidgetCatalog {
                         if ("FlyAttach".equals(tag.getAsString())) tags.add(1);
                     }
                 int id = Integer.parseInt(entry.getKey());
+                if (id == LUNCH_BOX && row.has("healMaterials") && row.has("reviveMaterials")) {
+                    var heal = row.getAsJsonObject("healMaterials");
+                    foods.put(
+                            1,
+                            new FoodSlot(
+                                    foodIds(heal, "noticeAddHpMaterials"),
+                                    foodEffects(heal, "foodTypes", "HDNFKOEMILH")));
+                    foods.put(
+                            2,
+                            new FoodSlot(
+                                    foodIds(row, "reviveMaterials"),
+                                    foodEffects(row, "reviveFoodTypes", "GMIBGIIDDGM")));
+                }
                 String name = text(row, "abilityGroupName");
                 var group = groups.get(name);
                 boolean team = row.has("isTeam") && row.get("isTeam").getAsBoolean();
@@ -154,8 +189,26 @@ public final class WidgetCatalog {
         } catch (IOException | RuntimeException invalid) {
             Grasscutter.getLogger().warn("Could not read widget configuration {}", config, invalid);
             entries.clear();
+            foods.clear();
         }
-        return new WidgetCatalog(entries);
+        return new WidgetCatalog(entries, foods);
+    }
+
+    private static Set<Integer> foodIds(JsonObject row, String key) {
+        var ids = new HashSet<Integer>();
+        if (row.has(key))
+            for (var value : row.getAsJsonArray(key)) {
+                int id = value.getAsInt();
+                if (id > 0) ids.add(id);
+            }
+        return Set.copyOf(ids);
+    }
+
+    private static Set<String> foodEffects(JsonObject row, String canonical, String raw) {
+        var effects = new HashSet<String>();
+        var list = row.has(canonical) ? row.get(canonical) : row.get(raw);
+        if (list != null) for (var value : list.getAsJsonArray()) effects.add(value.getAsString());
+        return Set.copyOf(effects);
     }
 
     private static String text(JsonObject row, String key) {
