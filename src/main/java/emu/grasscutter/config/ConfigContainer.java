@@ -347,6 +347,12 @@ public class ConfigContainer {
         }
     }
 
+    /** Local rolling schedule from the reference server; not an official version calendar. */
+    public static class ArtifactTransmuterOptions {
+        public int scheduleId = 700;
+        public long cycleDurationSeconds = 3 * 24 * 3600;
+    }
+
     public static class GameOptions {
         public InventoryLimits inventoryLimits = new InventoryLimits();
         public AvatarLimits avatarLimits = new AvatarLimits();
@@ -369,6 +375,7 @@ public class ConfigContainer {
         public boolean unlockAllOpenStatesOnLogin = false;
 
         public ArtifactShopOptions artifactShop = new ArtifactShopOptions();
+        public ArtifactTransmuterOptions artifactTransmuter = new ArtifactTransmuterOptions();
         public boolean staminaUsage = true;
         public boolean energyUsage = true;
         public boolean fishhookTeleport = true;

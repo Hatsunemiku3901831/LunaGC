@@ -1035,6 +1035,12 @@ public class InventorySystem extends BaseGameSystem {
         }
         if (itemData.getMaxUseCount() > 0 && count > itemData.getMaxUseCount()) return null;
 
+        if (item.getItemId() == emu.grasscutter.game.reliquary.ArtifactTransmuter.GADGET_ITEM_ID) {
+            if (count != 1 || optionId != 0 || !optionIds.isEmpty()
+                    || player.getInventory().getItemById(item.getItemId()) != item) return null;
+            return player.getArtifactTransmuter().open() == 0 ? item : null;
+        }
+
         var params =
                 new UseItemParams(
                         player, itemData.getUseTarget(), target, count, optionId, isEnterMpDungeonTeam);

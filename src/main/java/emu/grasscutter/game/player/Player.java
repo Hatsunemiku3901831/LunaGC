@@ -36,6 +36,7 @@ import emu.grasscutter.game.managers.stamina.StaminaManager;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.game.quest.QuestManager;
 import emu.grasscutter.game.quest.enums.*;
+import emu.grasscutter.game.reliquary.*;
 import emu.grasscutter.game.shop.ShopLimit;
 import emu.grasscutter.game.talk.TalkManager;
 import emu.grasscutter.game.tower.*;
@@ -148,6 +149,22 @@ public class Player implements PlayerHook, FieldFetch {
     @Getter @Setter private transient boolean isInEditMode;
     @Getter @Setter private int widgetId;
     @Getter @Setter private int widgetPetId;
+    private ArtifactTransmuterData artifactTransmuterData;
+    @Transient private transient ArtifactTransmuter artifactTransmuter;
+
+    public ArtifactTransmuterData getArtifactTransmuterData() {
+        synchronized (getInventory()) {
+            if (artifactTransmuterData == null) artifactTransmuterData = new ArtifactTransmuterData();
+            return artifactTransmuterData;
+        }
+    }
+
+    public ArtifactTransmuter getArtifactTransmuter() {
+        synchronized (getInventory()) {
+            if (artifactTransmuter == null) artifactTransmuter = new ArtifactTransmuter(this);
+            return artifactTransmuter;
+        }
+    }
     @Getter(lombok.AccessLevel.PACKAGE) @Setter(lombok.AccessLevel.PACKAGE)
     private Map<Integer, Integer> lunchBoxFood = new HashMap<>();
     private volatile Map<Integer, Long> itemUseCooldowns = new HashMap<>();
@@ -1774,6 +1791,7 @@ public class Player implements PlayerHook, FieldFetch {
         session.send(new PacketQuestGlobalVarNotify(this));
         session.send(new PacketCodexDataFullNotify(this));
         session.send(new PacketAllWidgetDataNotify(this));
+        getArtifactTransmuter().onLogin();
 
         this.achievements.onLogin(this);
 
