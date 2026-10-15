@@ -28,6 +28,7 @@ public class SotSManager extends BasePlayerManager {
     private final Logger logger = Grasscutter.getLogger();
     private final boolean enablePriorityHealing = false;
     private Timer autoRecoverTimer;
+    private boolean springHealing;
     private final Runnable persistOffer;
     private final java.util.function.Consumer<List<ItemParamData>> deliverOffer;
     private final java.util.function.Consumer<emu.grasscutter.game.inventory.GameItem>
@@ -105,9 +106,13 @@ public class SotSManager extends BasePlayerManager {
     }
 
     public void setCurrentVolume(int volume) {
-        player.setProperty(PlayerProperty.PROP_CUR_SPRING_VOLUME, volume);
-        setLastUsed();
-        player.save();
+        synchronized (player) {
+            if (player.setProperty(PlayerProperty.PROP_CUR_SPRING_VOLUME, volume)
+                    && getCurrentVolume() == volume) {
+                player.setSpringLastUsed(System.currentTimeMillis() / 1000);
+                player.save();
+            }
+        }
     }
 
     public void handleEnterTransPointRegionNotify() {
@@ -146,72 +151,129 @@ public class SotSManager extends BasePlayerManager {
     }
 
     public void checkAndHealAvatar(EntityAvatar entity) {
-        int maxHP = (int) (entity.getFightProperty(FightProperty.FIGHT_PROP_MAX_HP) * 100);
-        int currentHP = (int) (entity.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP) * 100);
-        if (currentHP == maxHP) {
-            return;
-        }
-        int targetHP = maxHP * getAutoRecoveryPercentage() / 100;
-
-        if (targetHP > currentHP) {
-            int needHP = targetHP - currentHP;
-            int currentVolume = getCurrentVolume();
-            if (currentVolume >= needHP) {
-                // sufficient
-                setCurrentVolume(currentVolume - needHP);
-            } else {
-                // insufficient balance
-                needHP = currentVolume;
-                setCurrentVolume(0);
+        synchronized (player) {
+            if (springHealing
+                    || !getIsAutoRecoveryEnabled()
+                    || entity == null
+                    || entity.getPlayer() != player
+                    || entity.getScene() != player.getScene()
+                    || !player.getTeamManager().getActiveTeam().contains(entity)
+                    || !entity.isAlive()) return;
+            double max = entity.getFightProperty(FightProperty.FIGHT_PROP_MAX_HP);
+            double before = entity.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP);
+            if (!Double.isFinite(max) || !Double.isFinite(before) || max <= 0 || before <= 0)
+                return;
+            int percent = Math.max(0, Math.min(100, getAutoRecoveryPercentage()));
+            double needed = Math.max(0d, max * percent - before * 100d);
+            int available = Math.max(0, Math.min(getMaxVolume(), getCurrentVolume()));
+            int requested = (int) Math.min(available, Math.floor(needed));
+            if (requested <= 0) return;
+            springHealing = true;
+            boolean reserved = false;
+            int spent = 0;
+            try {
+                reserved =
+                        player.setProperty(
+                                        PlayerProperty.PROP_CUR_SPRING_VOLUME,
+                                        available - requested)
+                                && getCurrentVolume() == available - requested;
+                if (!reserved) return;
+                if (recoverAvatar(entity, requested)) {
+                    double after = entity.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP);
+                    if (Double.isFinite(after))
+                        spent =
+                                (int)
+                                        Math.min(
+                                                requested,
+                                                Math.max(0L, Math.round((after - before) * 100d)));
+                }
+            } catch (RuntimeException error) {
+                double after = entity.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP);
+                if (reserved && Double.isFinite(after))
+                    spent =
+                            (int)
+                                    Math.min(
+                                            requested,
+                                            Math.max(0L, Math.round((after - before) * 100d)));
+                logger.error(
+                        "Statue healing failed for UID {}, entity {}",
+                        player.getUid(),
+                        entity.getId(),
+                        error);
+            } finally {
+                try {
+                    if (reserved && spent < requested) {
+                        int refunded =
+                                (int)
+                                        Math.min(
+                                                Math.max(0, getMaxVolume()),
+                                                (long) getCurrentVolume() + requested - spent);
+                        if (!player.setProperty(PlayerProperty.PROP_CUR_SPRING_VOLUME, refunded)
+                                || getCurrentVolume() != refunded)
+                            logger.error(
+                                    "Statue healing refund was not confirmed: UID {}, entity {}",
+                                    player.getUid(),
+                                    entity.getId());
+                    }
+                    if (spent > 0) {
+                        player.setSpringLastUsed(System.currentTimeMillis() / 1000);
+                        player.save();
+                    }
+                } finally {
+                    springHealing = false;
+                }
             }
-            if (needHP > 0) {
-                logger.trace(
-                        "Healing avatar "
-                                + entity.getAvatar().getAvatarData().getName()
-                                + " +"
-                                + needHP);
-                player.getTeamManager().healAvatar(entity.getAvatar(), 0, needHP);
-                player.getSession()
-                        .send(
-                                new PacketEntityFightPropChangeReasonNotify(
-                                        entity,
-                                        FightProperty.FIGHT_PROP_CUR_HP,
-                                        ((float) needHP / 100),
-                                        List.of(3),
-                                        PropChangeReason
-                                                .PropChangeReason_PROP_CHANGE_STATUE_RECOVER,
-                                        ChangeHpReason.ChangeHpReason_CHANGE_HP_ADD_STATUE));
-                player.getSession()
-                        .send(
-                                new PacketEntityFightPropUpdateNotify(
-                                        entity, FightProperty.FIGHT_PROP_CUR_HP));
+            if (spent > 0) {
+                player.sendPacket(
+                        new PacketEntityFightPropChangeReasonNotify(
+                                entity,
+                                FightProperty.FIGHT_PROP_CUR_HP,
+                                (float) spent / 100,
+                                List.of(3),
+                                PropChangeReason.PropChangeReason_PROP_CHANGE_STATUE_RECOVER,
+                                ChangeHpReason.ChangeHpReason_CHANGE_HP_ADD_STATUE));
+                player.sendPacket(
+                        new PacketEntityFightPropUpdateNotify(
+                                entity, FightProperty.FIGHT_PROP_CUR_HP));
             }
         }
     }
 
-    public void refillSpringVolume() {
-        // Temporary: Max spring volume depends on level of the statues in Mondstadt and Liyue.
-        // Override
-        // until we have statue level.
-        // TODO: remove
-        // https://genshin-impact.fandom.com/wiki/Statue_of_The_Seven#:~:text=region%20of%20Inazuma.-,Statue%20Levels,-Upon%20first%20unlocking
-        setMaxVolume(8500000);
-        // Temporary: Auto enable 100% statue recovery until we can adjust statue settings in game
-        // TODO: remove
-        setAutoRecoveryPercentage(100);
-        setIsAutoRecoveryEnabled(true);
+    protected boolean recoverAvatar(EntityAvatar entity, int amount) {
+        return player.getTeamManager().healAvatar(entity.getAvatar(), 0, amount);
+    }
 
-        int maxVolume = getMaxVolume();
-        int currentVolume = getCurrentVolume();
-        if (currentVolume < maxVolume) {
+    public void refillSpringVolume() {
+        synchronized (player) {
+            if (springHealing) return;
             long now = System.currentTimeMillis() / 1000;
-            int secondsSinceLastUsed = (int) (now - getLastUsed());
-            // 15s = 1% max volume
-            int volumeRefilled = secondsSinceLastUsed * maxVolume / 15 / 100;
-            logger.trace("Statue has refilled HP volume: " + volumeRefilled);
-            currentVolume = Math.min(currentVolume + volumeRefilled, maxVolume);
-            logger.trace("Statue remaining HP volume: " + currentVolume);
-            setCurrentVolume(currentVolume);
+            if (now <= 0) return;
+            int maxVolume = getMaxVolume();
+            if (maxVolume <= 0 || maxVolume > GlobalMaximumSpringVolume) {
+                maxVolume = GlobalMaximumSpringVolume;
+                setMaxVolume(maxVolume);
+                if (getMaxVolume() != maxVolume) return;
+            }
+            int currentVolume = Math.max(0, Math.min(maxVolume, getCurrentVolume()));
+            long last = getLastUsed();
+            if (last <= 0) {
+                setCurrentVolume(maxVolume);
+                return;
+            }
+            if (now < last || currentVolume == maxVolume) return;
+            long ticks = (now - last) / 15;
+            if (ticks == 0) return;
+            int updated =
+                    (int)
+                            Math.min(
+                                    maxVolume,
+                                    currentVolume + Math.min(100L, ticks) * maxVolume / 100);
+            if (updated == currentVolume) return;
+            if (player.setProperty(PlayerProperty.PROP_CUR_SPRING_VOLUME, updated)
+                    && getCurrentVolume() == updated) {
+                player.setSpringLastUsed(now - (now - last) % 15);
+                player.save();
+            }
         }
     }
 
