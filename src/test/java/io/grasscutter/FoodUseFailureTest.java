@@ -88,6 +88,11 @@ class FoodUseFailureTest {
 
     @Test
     void unsupportedRealRecipeDoesNotSpendSatiationOrInventory() throws Exception {
+        var recipe = JsonUtils.decode(JsonUtils.toJson(GameData.getAbilityDataMap().get("ReHP_Ins&Con")),
+                emu.grasscutter.data.binout.AbilityData.class);
+        recipe.modifiers.get("SERVER_ReHP_Ins&Con_Modifier_lv53_3_Extra")
+                .onAdded[0].targetPredicates = List.of(Map.of("$type", "UnknownFoodRequirement"));
+        env.env.environment.put(GameData.getAbilityDataMap(), recipe.abilityName, recipe);
         env.env.environment.put(GameData.getItemDataMap(), special.getId(), special);
         var item = env.stock(special.getId());
         assertNull(inventory.useItem(env.env.fixture.player, 50001, item.getGuid(), 1, 0, false));

@@ -40,7 +40,8 @@ final class AbilityActionSequence {
             AbilityModifierAction.Type.FireEffect, AbilityModifierAction.Type.AttachEffect);
     private static final Set<String> PREDICATES = Set.of("ByUnlockTalentParam", "ByHasModifier",
             "ByTargetGlobalValue", "ByTargetHPRatio", "MIJGFBNEIOG", "BAEGOCNMDPJ", "CNFMGJJEOPM",
-            "LPKOBOLMDBI", "ONJEHDDFFCH", "GKGBIPDLMMG", "DEOFBICNFHF", "CBHEIAINBAI");
+            "LPKOBOLMDBI", "ONJEHDDFFCH", "GKGBIPDLMMG", "DEOFBICNFHF", "CBHEIAINBAI",
+            "AJPLICCNACO", "GPEMEIHPCCF");
     private static final Set<String> SELECTOR_FIELDS = Set.of("$type", "shapeName", "sizeRatio",
             "campTargetType", "entityTypes", "entityTypePriority", "sortType", "topLimit");
     private static final Set<String> COMPARISONS = Set.of("Equal", "NotEqual", "MoreThan", "Greater",
@@ -153,6 +154,11 @@ final class AbilityActionSequence {
             if("DEOFBICNFHF".equals(type) && !AbilityEntityTypePredicate.supported(predicate)) return false;
             if("CNFMGJJEOPM".equals(type) && !AbilityDistancePredicate.supported(predicate)) return false;
             if("CBHEIAINBAI".equals(type) && !AbilityEntityAvailability.supported(predicate)) return false;
+            if("AJPLICCNACO".equals(type) && !AbilityFeatureTagPredicate.supported(predicate)) return false;
+            if("GPEMEIHPCCF".equals(type)) {
+                var children=PredicateEvaluator.anyChildren(predicate);
+                if(children==null || !supportedPredicates(children,depth+1)) return false;
+            }
             if(predicate.containsKey("target") && !(predicate.get("target") instanceof String name
                     && ((TARGETS.contains(name) && !"AllPlayerAvatars".equals(name) && !"CurTeamAvatars".equals(name))
                         || "Team".equals(name) || "CasterOriginOwner".equals(name)))) return false;

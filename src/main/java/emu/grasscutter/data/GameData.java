@@ -402,6 +402,10 @@ public final class GameData {
     private static final Int2ObjectMap<ForgeData> forgeDataMap = new Int2ObjectOpenHashMap<>();
 
     @Getter
+    private static final Int2ObjectMap<FeatureTagGroupData> featureTagGroupDataMap =
+            new Int2ObjectOpenHashMap<>();
+
+    @Getter
     private static final Int2ObjectMap<FurnitureMakeConfigData> furnitureMakeConfigDataMap =
             new Int2ObjectOpenHashMap<>();
 

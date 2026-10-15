@@ -24,6 +24,7 @@ public class AvatarData extends GameResource {
     @Getter private int avatarPromoteId;
     @Getter private String cutsceneShow;
     @Getter private int skillDepotId;
+    @Getter private int featureTagGroupID;
     @Getter private int staminaRecoverSpeed;
     @Getter private List<Integer> candSkillDepotIds;
     @Getter private String avatarIdentityType;

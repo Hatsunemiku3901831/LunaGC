@@ -223,10 +223,9 @@ class FoodBuffEffectsTest {
     }
 
     @Test
-    void unpairedConditionalRecipeIsRejectedBeforeApplyingAnEffect() {
-        assertFalse(use(108102, "", first));
-        assertEquals(1000, hp(first));
-        assertFalse(manager.hasBuff(10));
+    void conditionalRecipeUsesItsBaseBranchWithoutMatchingTags() {
+        assertTrue(use(108102, "", first));
+        assertEquals(6300, hp(first), 0.01);
     }
 
     @Test

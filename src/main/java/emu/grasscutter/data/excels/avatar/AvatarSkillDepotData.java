@@ -21,6 +21,10 @@ public class AvatarSkillDepotData extends GameResource {
     private int energySkill;
     private int attackModeSkill;
 
+    // Native GetOverrideFeatureTagGroupID replaces the avatar's group for this skill depot.
+    @SerializedName(value = "featureTagGroupID", alternate = {"featureTagGroupId", "BHAHKMCMDLO"})
+    private int featureTagGroupID;
+
     private List<Integer> skills;
     private List<Integer> subSkills;
     private List<String> extraAbilities;

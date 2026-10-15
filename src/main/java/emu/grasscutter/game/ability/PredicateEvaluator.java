@@ -9,6 +9,7 @@ import emu.grasscutter.utils.JsonUtils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public final class PredicateEvaluator {
 
@@ -41,6 +42,10 @@ public final class PredicateEvaluator {
             return AbilityDistancePredicate.evaluate(pred, ability, owner, target);
         if ("CBHEIAINBAI".equals(type))
             return AbilityEntityAvailability.evaluate(pred, ability, owner, target);
+        if ("AJPLICCNACO".equals(type))
+            return AbilityFeatureTagPredicate.evaluate(pred, ability, owner, target);
+        if ("GPEMEIHPCCF".equals(type))
+            return any(pred, ability, owner, target, action);
         GameEntity resolved = resolveTarget(pred, ability, owner, target);
         if ("ByUnlockTalentParam".equals(type)) {
             GameEntity caster = ability != null ? ability.getCasterEntity() : null;
@@ -89,9 +94,10 @@ public final class PredicateEvaluator {
             case "Caster", "CasterOriginOwner", "OriginOwner" -> ability != null
                     ? ability.getCasterEntity()
                     : defaultTarget;
-            case "CurLocalAvatar" -> ability != null && ability.getPlayerOwner() != null
-                    ? ability.getPlayerOwner().getTeamManager().getCurrentAvatarEntity()
-                    : defaultTarget;
+            case "CurLocalAvatar" -> ability == null || ability.getPlayerOwner() == null
+                    ? defaultTarget
+                    : ability.getPlayerOwner().getTeamManager().getActiveTeamSnapshot().isEmpty()
+                            ? null : ability.getPlayerOwner().getTeamManager().getCurrentAvatarEntity();
             case "Team" -> ability != null && ability.getPlayerOwner() != null
                     ? ability.getPlayerOwner().getTeamManager().getEntity()
                     : defaultTarget;
@@ -199,6 +205,36 @@ public final class PredicateEvaluator {
         Object tags = pred.get("LAIFKEGOFJO");
         if (tags == null) tags = pred.get("__exp_healTags");
         return tags instanceof List<?> values && values.contains(healTag);
+    }
+
+    static List<?> anyChildren(Map<?, ?> predicate) {
+        // Some exported OR nodes retain scalar annotations copied from a child. The native
+        // configuration only reads the child array; those annotations do not replace that list.
+        if (!Set.of("$type", "target", "forceByCaster", "predicates", "MIMBECHCFKC",
+                        "talentParam", "key", "value", "compareType")
+                        .containsAll(predicate.keySet())
+                || predicate.containsKey("predicates") && predicate.containsKey("MIMBECHCFKC")
+                || predicate.containsKey("forceByCaster")
+                        && !(predicate.get("forceByCaster") instanceof Boolean)) return null;
+        Object value = predicate.containsKey("predicates")
+                ? predicate.get("predicates") : predicate.get("MIMBECHCFKC");
+        if (!(value instanceof List<?> children) || children.size() > 256
+                || children.stream().anyMatch(child -> !(child instanceof Map<?, ?>))) return null;
+        return children;
+    }
+
+    private static boolean any(Map<String, Object> predicate, Ability ability, GameEntity owner,
+            GameEntity target, AbilityModifierAction event) {
+        // Validate every branch before short circuiting; unknown predicates elsewhere default true.
+        if (!AbilityActionSequence.supportedPredicates(List.of(predicate), 0)) return false;
+        var selected = resolveTarget(predicate, ability, owner, target);
+        if (selected == null) return false;
+        for (var child : anyChildren(predicate)) {
+            @SuppressWarnings("unchecked")
+            var typed = (Map<String, Object>) child;
+            if (evaluate(typed, ability, owner, selected, event)) return true;
+        }
+        return false;
     }
 
     private static boolean none(

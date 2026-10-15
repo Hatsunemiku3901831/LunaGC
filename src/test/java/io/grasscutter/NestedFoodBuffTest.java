@@ -395,8 +395,7 @@ class NestedFoodBuffTest {
                 assertFalse(FoodBuffHealing.supported(recipe, modifier));
             } else {
                 assertTrue(FoodBuffHealing.hasHealing(recipe, modifier));
-                assertEquals(
-                        buff.getId() != 108102,
+                assertTrue(
                         FoodBuffHealing.supported(recipe, modifier),
                         "Unexpected recipe support: " + buff.getId());
             }
