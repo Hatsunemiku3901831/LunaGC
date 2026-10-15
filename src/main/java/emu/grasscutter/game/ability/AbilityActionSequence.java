@@ -41,7 +41,7 @@ final class AbilityActionSequence {
     private static final Set<String> PREDICATES = Set.of("ByUnlockTalentParam", "ByHasModifier",
             "ByTargetGlobalValue", "ByTargetHPRatio", "MIJGFBNEIOG", "BAEGOCNMDPJ", "CNFMGJJEOPM",
             "LPKOBOLMDBI", "ONJEHDDFFCH", "GKGBIPDLMMG", "DEOFBICNFHF", "CBHEIAINBAI",
-            "AJPLICCNACO", "GPEMEIHPCCF");
+            "AJPLICCNACO", "GPEMEIHPCCF", "FGDONAGOCFP");
     private static final Set<String> SELECTOR_FIELDS = Set.of("$type", "shapeName", "sizeRatio",
             "campTargetType", "entityTypes", "entityTypePriority", "sortType", "topLimit");
     private static final Set<String> COMPARISONS = Set.of("Equal", "NotEqual", "MoreThan", "Greater",
@@ -155,6 +155,8 @@ final class AbilityActionSequence {
             if("CNFMGJJEOPM".equals(type) && !AbilityDistancePredicate.supported(predicate)) return false;
             if("CBHEIAINBAI".equals(type) && !AbilityEntityAvailability.supported(predicate)) return false;
             if("AJPLICCNACO".equals(type) && !AbilityFeatureTagPredicate.supported(predicate)) return false;
+            if("FGDONAGOCFP".equals(type)
+                    && !GameData.getTpsAmmunitionDataMap().containsKey(AbilityTpsAmmunitionPredicate.poolId(predicate))) return false;
             if("GPEMEIHPCCF".equals(type)) {
                 var children=PredicateEvaluator.anyChildren(predicate);
                 if(children==null || !supportedPredicates(children,depth+1)) return false;

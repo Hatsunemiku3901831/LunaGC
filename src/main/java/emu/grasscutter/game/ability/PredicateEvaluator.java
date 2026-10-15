@@ -66,6 +66,7 @@ public final class PredicateEvaluator {
             case "ByHasModifier" -> byHasModifier(pred, ability, resolved);
             case "ByTargetGlobalValue" -> byTargetGlobalValue(pred, ability, resolved);
             case "ByTargetHPRatio" -> byTargetHPRatio(pred, ability, resolved);
+            case "FGDONAGOCFP" -> AbilityTpsAmmunitionPredicate.evaluate(pred, ability, resolved);
                 // Verified against the current 7.1 client; these are not unknown predicates.
             case "MIJGFBNEIOG" -> byTargetHpValue(pred, ability, resolved);
             case "BAEGOCNMDPJ" -> AbilitySkillReadyPredicate.evaluate(pred,

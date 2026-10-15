@@ -363,9 +363,17 @@ public final class TpsWeaponSystem {
     public static int getReserve(Player player, int id) {
         var data = GameData.getTpsAmmunitionDataMap().get(id);
         if (data == null) return 0;
-        int limit = Math.max(0, data.getTpsAmmoLimit());
+        int limit = ammunitionLimit(player, data);
         Integer stored = player.getTpsAmmunition().getOrDefault(id, limit);
         return Math.max(0, Math.min(stored == null ? 0 : stored, limit));
+    }
+
+    /** Native scene 7001 uses the TPS limit; other scenes use the separate normal limit. */
+    private static int ammunitionLimit(Player player, TpsAmmunitionData data) {
+        var scene = player.getScene();
+        int limit = scene != null && scene.getId() == 7001 || data.getNormalAmmoLimit() == null
+                ? data.getTpsAmmoLimit() : data.getNormalAmmoLimit();
+        return Math.max(0, limit);
     }
 
     /** Server-authored supplies and costs persist the resulting total within resource limits. */
@@ -375,7 +383,7 @@ public final class TpsWeaponSystem {
             if (data == null) return 0;
             int before = getReserve(player, id);
             int after =
-                    (int) Math.max(0L, Math.min((long) before + delta, Math.max(0, data.getTpsAmmoLimit())));
+                    (int) Math.max(0L, Math.min((long) before + delta, ammunitionLimit(player, data)));
             if (before != after) {
                 player.getTpsAmmunition().put(id, after);
                 player.save();
@@ -384,18 +392,30 @@ public final class TpsWeaponSystem {
         }
     }
 
+    public static boolean hasAmmunitionSpace(EntityAvatar recipient, int id) {
+        var player = recipient == null ? null : recipient.getPlayer();
+        if (player == null) return false;
+        synchronized (player) {
+            var data = GameData.getTpsAmmunitionDataMap().get(id);
+            return isSupplyRecipient(player, recipient) && data != null
+                    && getReserve(player, id) < ammunitionLimit(player, data);
+        }
+    }
+
+    private static boolean isSupplyRecipient(Player player, EntityAvatar recipient) {
+        var scene = player.getScene();
+        return scene != null && recipient.getScene() == scene && !recipient.isDead()
+                && currentAvatar(player) == recipient
+                && scene.getEntities().get(recipient.getId()) == recipient
+                && !getWornWeapons(recipient.getAvatar()).isEmpty();
+    }
+
     /** Resource actions award totals; the client's positive pickup requests cannot award ammo. */
     public static boolean supplyAmmunition(EntityAvatar recipient, int id, int amount) {
         var player = recipient == null ? null : recipient.getPlayer();
         if (player == null || amount < 0) return false;
         synchronized (player) {
-            var scene = player.getScene();
-            if (scene == null
-                    || recipient.getScene() != scene
-                    || recipient.isDead()
-                    || currentAvatar(player) != recipient
-                    || scene.getEntities().get(recipient.getId()) != recipient
-                    || getWornWeapons(recipient.getAvatar()).isEmpty()
+            if (!isSupplyRecipient(player, recipient)
                     || !GameData.getTpsAmmunitionDataMap().containsKey(id)) return false;
             int before = getReserve(player, id);
             int gained = changeReserve(player, id, amount) - before;
@@ -523,7 +543,7 @@ public final class TpsWeaponSystem {
     public static void refillAmmunition(Player player) {
         synchronized (player) {
             for (var data : GameData.getTpsAmmunitionDataMap().values())
-                player.getTpsAmmunition().put(data.getId(), Math.max(0, data.getTpsAmmoLimit()));
+                player.getTpsAmmunition().put(data.getId(), ammunitionLimit(player, data));
             player.save();
             sendSceneAmmunition(player);
         }
