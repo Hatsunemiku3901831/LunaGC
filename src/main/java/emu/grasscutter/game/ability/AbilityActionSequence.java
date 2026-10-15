@@ -32,6 +32,7 @@ final class AbilityActionSequence {
             AbilityModifierAction.Type.AvatarShareCDSkillStart, AbilityModifierAction.Type.ActivitySkillShareCDStart,
             AbilityModifierAction.Type.ClearShareCD,
             AbilityModifierAction.Type.DoActionByGlobalValue, AbilityModifierAction.Type.TPSSupplyAmmo,
+            AbilityModifierAction.Type.TPSAmmoBoxDispatch,
             AbilityModifierAction.Type.SetOverrideMapValue,
             AbilityModifierAction.Type.SetGlobalValueToOverrideMap,
             AbilityModifierAction.Type.Predicated, AbilityModifierAction.Type.Randomed, AbilityModifierAction.Type.RandomAction,
@@ -87,6 +88,12 @@ final class AbilityActionSequence {
                     && !ActionGetFightProperty.supportedSource(action)) return false;
             if(action.type==AbilityModifierAction.Type.TPSSupplyAmmo
                     && !emu.grasscutter.game.ability.actions.ActionTpsSupplyAmmo.supported(action)) return false;
+            if(action.type==AbilityModifierAction.Type.TPSAmmoBoxDispatch) {
+                if(!AbilityTpsAmmoBoxDispatch.supported(action)) return false;
+                // Shape-check inactive branches without requiring absent, unselected ammo tables.
+                for(var group:action.tpsAmmoBoxGroups) if(group.actionList!=null)
+                    for(var leaf:group.actionList) { callbacks.add(leaf); validated.add(leaf); }
+            }
             if(action.type==AbilityModifierAction.Type.DoActionByGlobalValue) {
                 if(!AbilityGlobalValueDispatch.supported(action)) return false;
                 if(action.actionSteps!=null) for(var branch:action.actionSteps)

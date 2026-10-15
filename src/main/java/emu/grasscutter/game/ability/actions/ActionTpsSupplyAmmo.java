@@ -10,6 +10,7 @@ import emu.grasscutter.game.entity.EntityAvatar;
 import emu.grasscutter.game.entity.GameEntity;
 import emu.grasscutter.game.tps.TpsWeaponSystem;
 
+import java.util.Optional;
 import java.util.Set;
 
 @AbilityAction(AbilityModifierAction.Type.TPSSupplyAmmo)
@@ -27,6 +28,12 @@ public final class ActionTpsSupplyAmmo extends AbilityActionHandler {
 
     /** Only the native explicit-pool, unscaled branch is paired with current resources. */
     public static boolean supported(AbilityModifierAction action) {
+        return supportedConfiguration(action)
+                && GameData.getTpsAmmunitionDataMap().containsKey(action.tpsSupplyAmmunitionId);
+    }
+
+    /** Inactive dispatch branches may reference a pool absent from this resource revision. */
+    public static boolean supportedConfiguration(AbilityModifierAction action) {
         return action != null
                 && action.type == AbilityModifierAction.Type.TPSSupplyAmmo
                 && action.hasSupportedOffStageConfig()
@@ -34,8 +41,7 @@ public final class ActionTpsSupplyAmmo extends AbilityActionHandler {
                 && Boolean.TRUE.equals(action.tpsSupplyUseExplicitAmmoId)
                 && !action.tpsSupplyUseBonus
                 && action.tpsSupplyAmount != null
-                && action.tpsSupplyAmmunitionId > 0
-                && GameData.getTpsAmmunitionDataMap().containsKey(action.tpsSupplyAmmunitionId);
+                && action.tpsSupplyAmmunitionId > 0;
     }
 
     @Override
@@ -53,8 +59,43 @@ public final class ActionTpsSupplyAmmo extends AbilityActionHandler {
     @Override
     public boolean executeResolved(
             Ability ability, AbilityModifierAction action, ByteString data, GameEntity target) {
+        if (ability == null
+                || !supported(action)
+                || !(target instanceof EntityAvatar recipient)
+                || !isCurrentSource(ability, recipient)) return false;
+        if (!conditionsPass(ability, action, target)) return true;
+        var planned = prepareResolved(ability, action, target);
+        if (planned.isEmpty()) return false;
+        var supply = planned.get();
+        return AbilityCooldownInvocation.recordShared(
+                ability, action, supply.recipient(), supply::grant);
+    }
+
+    public record Supply(Ability ability, EntityAvatar recipient, int pool, int amount) {
+        public boolean grant() {
+            return isCurrentSource(ability, recipient)
+                    && TpsWeaponSystem.supplyAmmunition(recipient, pool, amount);
+        }
+    }
+
+    /** Validate without mutating: a box checks every selected award before granting any. */
+    public static Optional<Supply> prepareResolved(
+            Ability ability, AbilityModifierAction action, GameEntity target) {
         if (ability == null || !supported(action) || !(target instanceof EntityAvatar recipient))
-            return false;
+            return Optional.empty();
+        if (!isCurrentSource(ability, recipient)) return Optional.empty();
+        var amount = action.tpsSupplyAmount.tryGet(propertiesFor(ability));
+        if (amount.isEmpty()) return Optional.empty();
+        // The native action evaluates a float and truncates it with cvttss2si.
+        float count = (float) amount.getAsDouble();
+        if (!Float.isFinite(count) || count < 0 || (double) count >= 2147483648d)
+            return Optional.empty();
+        return Optional.of(
+                new Supply(ability, recipient, action.tpsSupplyAmmunitionId, (int) count));
+    }
+
+    public static boolean isCurrentSource(Ability ability, EntityAvatar recipient) {
+        if (ability == null || recipient == null) return false;
         var owner = ability.getOwner();
         var player = ability.getPlayerOwner();
         var scene = player == null ? null : player.getScene();
@@ -64,21 +105,10 @@ public final class ActionTpsSupplyAmmo extends AbilityActionHandler {
                 || owner.getScene() != scene
                 || scene.getEntityById(owner.getId()) != owner
                 || recipient.getPlayer() != player
+                || !TpsWeaponSystem.isSupplyRecipient(recipient)
                 || !owner.getInstancedAbilities().contains(ability)
                         && owner.getDynamicAbilities().get(ability.getData().abilityName)
                                 != ability) return false;
-        if (!conditionsPass(ability, action, target)) return true;
-        var amount = action.tpsSupplyAmount.tryGet(propertiesFor(ability));
-        if (amount.isEmpty()) return false;
-        // The native action evaluates a float and truncates it with cvttss2si.
-        float count = (float) amount.getAsDouble();
-        if (!Float.isFinite(count) || count < 0 || (double) count >= 2147483648d) return false;
-        return AbilityCooldownInvocation.recordShared(
-                ability,
-                action,
-                recipient,
-                () ->
-                        TpsWeaponSystem.supplyAmmunition(
-                                recipient, action.tpsSupplyAmmunitionId, (int) count));
+        return true;
     }
 }

@@ -142,6 +142,7 @@ public class AbilityModifier implements Serializable {
             ClearGlobalPos,
             ClearGlobalValue,
             DoActionByGlobalValue,
+            TPSAmmoBoxDispatch,
             ClearLocalGadgets,
             ClearLockTarget,
             ClearPos,
@@ -495,6 +496,22 @@ public class AbilityModifier implements Serializable {
         public AbilityModifierAction[][] actionSteps;
         @SerializedName(value = "defaultActions", alternate = "IAMAGJDLMAI")
         public AbilityModifierAction[] defaultActions;
+
+        @SerializedName(value = "tpsAmmoBoxGroups", alternate = "DJGANAOKMHA")
+        public TpsAmmoBoxGroup[] tpsAmmoBoxGroups;
+        @SerializedName(value = "tpsAmmoBoxTotal", alternate = "OCAMECDEBDO")
+        public DynamicFloat tpsAmmoBoxTotal;
+        @SerializedName(value = "tpsAmmoBoxAdaptiveKey", alternate = "JACHOCKLPFO")
+        public String tpsAmmoBoxAdaptiveKey;
+
+        public static class TpsAmmoBoxGroup implements Serializable {
+            @SerializedName(value = "key", alternate = "ADGLOMNJIJB")
+            public String key;
+            @SerializedName(value = "actionList", alternate = "DKIALEELBPE")
+            public AbilityModifierAction[] actionList;
+            @SerializedName(value = "weaponType", alternate = "JIMCDBEIAEN")
+            public String weaponType;
+        }
 
         @JsonAdapter(AbilityActionAdapter.class)
         public static class RandomActionGroup implements Serializable {

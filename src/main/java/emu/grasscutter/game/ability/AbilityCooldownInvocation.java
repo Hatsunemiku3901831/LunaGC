@@ -6,6 +6,7 @@ import emu.grasscutter.game.entity.EntityAvatar;
 
 import java.util.*;
 import java.util.function.BooleanSupplier;
+import java.util.function.Supplier;
 
 /**
  * A modifier application and its client confirmations share cooldown and ammo-supply decisions.
@@ -29,6 +30,19 @@ public final class AbilityCooldownInvocation {
             actions.add(action);
             return true;
         }
+
+        synchronized boolean applyPrepared(
+                Object recipient, AbilityModifierAction action,
+                Supplier<Optional<BooleanSupplier>> prepare) {
+            var actions=recorded.computeIfAbsent(recipient,
+                    ignored->Collections.newSetFromMap(new IdentityHashMap<>()));
+            if(actions.contains(action)) return true;
+            var body=prepare.get();
+            if(body.isEmpty()) return false;
+            // Persistence can throw after a mutation. Once started, this application cannot replay.
+            actions.add(action);
+            return body.get().getAsBoolean();
+        }
     }
 
     private AbilityCooldownInvocation() {}
@@ -48,6 +62,7 @@ public final class AbilityCooldownInvocation {
     public static boolean isTrackedAction(AbilityModifierAction action) {
         return isCooldownAction(action)
                 || action != null && (action.type == AbilityModifierAction.Type.TPSSupplyAmmo
+                        || action.type == AbilityModifierAction.Type.TPSAmmoBoxDispatch
                         || action.type == AbilityModifierAction.Type.DoActionByGlobalValue);
     }
 
@@ -110,6 +125,16 @@ public final class AbilityCooldownInvocation {
     public static boolean recordApplication(Ability ability, AbilityModifierAction action, BooleanSupplier body) {
         if (!identifiable(ability,action)) return body.getAsBoolean();
         return current.get().controller().getCooldownLedger().apply(ability.getOwner(),action,body);
+    }
+
+    /** Reject invalid plans without consuming them; seal valid plans before their first write. */
+    public static boolean recordPreparedApplication(Ability ability, AbilityModifierAction action,
+                                                     Supplier<Optional<BooleanSupplier>> prepare) {
+        if(!identifiable(ability,action)) {
+            var body=prepare.get();
+            return body.isPresent() && body.get().getAsBoolean();
+        }
+        return current.get().controller().getCooldownLedger().applyPrepared(ability.getOwner(),action,prepare);
     }
 
     /**

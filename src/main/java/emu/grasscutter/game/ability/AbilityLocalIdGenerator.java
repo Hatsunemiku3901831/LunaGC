@@ -46,7 +46,10 @@ public class AbilityLocalIdGenerator {
             var id = GetLocalId();
             localIdToAction.put((int) id, actions[i]);
 
-            if (actions[i].type == AbilityModifierAction.Type.DoActionByGlobalValue) {
+            if (actions[i].type == AbilityModifierAction.Type.TPSAmmoBoxDispatch) {
+                if(actions[i].tpsAmmoBoxGroups!=null) for(var group:actions[i].tpsAmmoBoxGroups)
+                    if(group!=null) this.initializeActionLocalIds(group.actionList,localIdToAction,true);
+            } else if (actions[i].type == AbilityModifierAction.Type.DoActionByGlobalValue) {
                 if (actions[i].actionSteps != null)
                     for (var group : actions[i].actionSteps)
                         this.initializeActionLocalIds(group,localIdToAction,true);

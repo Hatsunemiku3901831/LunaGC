@@ -45,7 +45,8 @@ public final class AbilityGlobalValueDispatch {
             if (action == null || !path.add(action)) continue;
             if (nested) result.add(action);
             boolean child =
-                    nested || action.type == AbilityModifierAction.Type.DoActionByGlobalValue;
+                    nested || action.type == AbilityModifierAction.Type.DoActionByGlobalValue
+                            || action.type == AbilityModifierAction.Type.TPSAmmoBoxDispatch;
             collect(action.actions, result, path, child, depth + 1);
             collect(action.successActions, result, path, child, depth + 1);
             collect(action.failActions, result, path, child, depth + 1);
@@ -56,6 +57,8 @@ public final class AbilityGlobalValueDispatch {
                 for (var branch : action.actionSteps)
                     collect(branch, result, path, child, depth + 1);
             collect(action.defaultActions, result, path, child, depth + 1);
+            if(action.tpsAmmoBoxGroups!=null) for(var group:action.tpsAmmoBoxGroups)
+                if(group!=null) collect(group.actionList,result,path,child,depth+1);
             path.remove(action);
         }
     }

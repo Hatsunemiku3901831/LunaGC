@@ -402,6 +402,12 @@ public final class TpsWeaponSystem {
         }
     }
 
+    public static boolean isSupplyRecipient(EntityAvatar recipient) {
+        var player=recipient==null?null:recipient.getPlayer();
+        if(player==null) return false;
+        synchronized(player) { return isSupplyRecipient(player,recipient); }
+    }
+
     private static boolean isSupplyRecipient(Player player, EntityAvatar recipient) {
         var scene = player.getScene();
         return scene != null && recipient.getScene() == scene && !recipient.isDead()

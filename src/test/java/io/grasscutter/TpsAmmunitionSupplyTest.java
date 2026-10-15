@@ -56,7 +56,7 @@ class TpsAmmunitionSupplyTest {
     @BeforeEach
     void setup() throws Exception {
         fixture = new AbilityTestFixture();
-        player = new TpsEquipmentTest.RecordingPlayer();
+        player = createPlayer();
         player.setScene(fixture.scene);
         player.setWorld(fixture.scene.getWorld());
         var avatar = new TpsEquipmentTest.RecordingAvatar(10000005);
@@ -95,6 +95,10 @@ class TpsAmmunitionSupplyTest {
             player.getTpsAmmunition().put(ammo.getId(), 0);
         player.saves = 0;
         player.packets.clear();
+    }
+
+    TpsEquipmentTest.RecordingPlayer createPlayer() {
+        return new TpsEquipmentTest.RecordingPlayer();
     }
 
     @AfterEach

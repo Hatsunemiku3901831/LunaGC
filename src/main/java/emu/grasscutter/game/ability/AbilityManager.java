@@ -87,6 +87,7 @@ public final class AbilityManager extends BasePlayerManager {
             AbilityModifierAction.Type.ClearShareCD,
             AbilityModifierAction.Type.TPSSupplyAmmo,
             AbilityModifierAction.Type.DoActionByGlobalValue,
+            AbilityModifierAction.Type.TPSAmmoBoxDispatch,
             AbilityModifierAction.Type.SetGlobalValue,
             AbilityModifierAction.Type.TriggerVehicleOff);
 
@@ -117,6 +118,7 @@ public final class AbilityManager extends BasePlayerManager {
             AbilityModifierAction.Type.ClearShareCD,
             AbilityModifierAction.Type.TPSSupplyAmmo,
             AbilityModifierAction.Type.DoActionByGlobalValue,
+            AbilityModifierAction.Type.TPSAmmoBoxDispatch,
             AbilityModifierAction.Type.CopyGlobalValue,
             AbilityModifierAction.Type.TriggerVehicleOff);
 
@@ -746,6 +748,8 @@ public final class AbilityManager extends BasePlayerManager {
         var action = ability.getData().localIdToAction.get(head.getLocalId());
         if (action != null) {
             if (ability.getData().isGlobalValueModifierDescendant(action)) return;
+            if (action.type == AbilityModifierAction.Type.TPSAmmoBoxDispatch
+                    && AbilityTpsAmmoBoxDispatch.isRemovalCallback(ability.getData(),action)) return;
             if (ability.ownsServerTriggerCallback(action)) return;
             if (invokedModifier != null && invokedModifier.ownsAnimationCallback(action)) return;
             if (head.getInstancedModifierId() != 0 && invokedModifier == null
@@ -753,6 +757,7 @@ public final class AbilityManager extends BasePlayerManager {
             boolean owned = entity.getAbilityPeriodicHealing().ownsAction(ability,head.getInstancedModifierId(),action)
                     || player.getBuffManager().ownsHealing(ability,action);
             if (owned && (action.type == AbilityModifierAction.Type.DoActionByGlobalValue
+                    || action.type == AbilityModifierAction.Type.TPSAmmoBoxDispatch
                     || action.type == AbilityModifierAction.Type.TPSSupplyAmmo)) return;
             if (AbilityCooldownInvocation.isTrackedAction(action)) {
                 if (head.getInstancedModifierId() != 0 && invokedModifier == null) return;
@@ -1246,6 +1251,17 @@ public final class AbilityManager extends BasePlayerManager {
             }
             if (modifier != null) {
                 var removed = modifier;
+                if (!removed.hasServerCallbacks() && !removed.hasBindingCallbacks() && !removed.hasAnimationCallbacks()
+                        && removed.getModifierData().onRemoved != null) {
+                    // This resource's pickup awards on removal. Keep it outside the separate
+                    // cooldown-only bookkeeping pass, and retain this exact application's ledger.
+                    var boxActions=Arrays.stream(removed.getModifierData().onRemoved)
+                            .filter(a->a!=null && a.type==AbilityModifierAction.Type.TPSAmmoBoxDispatch)
+                            .toArray(AbilityModifierAction[]::new);
+                    AbilityCooldownInvocation.run(removed, () -> runServerOwned(() ->
+                            executeCallbackActionsNow(removed.getAbility(),boxActions,
+                                    invoke.getAbilityData(),entity,entity)));
+                }
                 if (!removed.hasServerCallbacks() && !removed.hasBindingCallbacks() && !removed.hasAnimationCallbacks() && removed.getModifierData().onRemoved != null)
                     AbilityCooldownInvocation.run(new AbilityCooldownInvocation.Scope(removed, true), () ->
                             runServerOwned(() -> executeCallbackActionsNow(removed.getAbility(),
