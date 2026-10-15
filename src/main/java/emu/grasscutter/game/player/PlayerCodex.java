@@ -4,6 +4,7 @@ import dev.morphia.annotations.*;
 
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.excels.codex.CodexAnimalData;
+import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.game.entity.*;
 import emu.grasscutter.game.inventory.BookUnlocks;
 import emu.grasscutter.game.inventory.GameItem;
@@ -16,6 +17,7 @@ import java.util.*;
 @Entity
 public class PlayerCodex {
     @Transient private Player player;
+    @Transient private transient boolean reliquaryMigrationPending;
 
     // itemId is not codexId!
     @Getter private Set<Integer> unlockedWeapon;
@@ -45,7 +47,21 @@ public class PlayerCodex {
 
     public void setPlayer(Player player) {
         this.player = player;
-        this.fixReliquaries();
+        this.reliquaryMigrationPending |= this.fixReliquaries();
+    }
+
+    /** Read-only binding may normalize a copy; only the login owner persists its migration. */
+    void onLogin() {
+        onLogin(() -> DatabaseHelper.saveGameSync(player));
+    }
+
+    void onLogin(Runnable save) {
+        reliquaryMigrationPending |= fixReliquaries();
+        if (!reliquaryMigrationPending) return;
+        if (player == null || player.getCodex() != this)
+            throw new IllegalStateException("Codex migration has no owning login player");
+        save.run();
+        reliquaryMigrationPending = false;
     }
 
     public boolean unlockBook(int codexId) {
@@ -138,17 +154,53 @@ public class PlayerCodex {
                         });
     }
 
-    @Deprecated // Maybe remove this if we ever stop caring about older dbs
-    private void fixReliquaries() {
+    private boolean fixReliquaries() {
+        boolean changed = false;
+        if (unlockedWeapon == null) {
+            unlockedWeapon = new HashSet<>();
+            changed = true;
+        }
+        if (unlockedAnimal == null) {
+            unlockedAnimal = new HashMap<>();
+            changed = true;
+        }
+        if (unlockedMaterial == null) {
+            unlockedMaterial = new HashSet<>();
+            changed = true;
+        }
+        if (unlockedBook == null) {
+            unlockedBook = new HashSet<>();
+            changed = true;
+        }
+        if (unlockedTip == null) {
+            unlockedTip = new HashSet<>();
+            changed = true;
+        }
+        if (unlockedView == null) {
+            unlockedView = new HashSet<>();
+            changed = true;
+        }
+        if (unlockedReliquary == null) {
+            unlockedReliquary = new HashSet<>();
+            changed = true;
+        }
+        if (unlockedReliquarySuitCodex == null) {
+            unlockedReliquarySuitCodex = new HashSet<>();
+            changed = true;
+        }
         // Migrate older database entries which were using non-canonical forms of itemIds
         val newReliquaries = new HashSet<Integer>();
-        this.unlockedReliquary.forEach(i -> newReliquaries.add((i / 10) * 10));
-        this.unlockedReliquary = newReliquaries;
-
-        GameData.getCodexReliquaryArrayList().stream()
-                .filter(x -> !this.getUnlockedReliquarySuitCodex().contains(x.getId()))
-                .filter(x -> this.getUnlockedReliquary().containsAll(x.getIds()))
-                .forEach(x -> this.getUnlockedReliquarySuitCodex().add(x.getId()));
-        this.player.save();
+        this.unlockedReliquary.forEach(
+                i -> {
+                    if (i != null) newReliquaries.add((i / 10) * 10);
+                });
+        if (!newReliquaries.equals(unlockedReliquary)) {
+            this.unlockedReliquary = newReliquaries;
+            changed = true;
+        }
+        for (var row : GameData.getCodexReliquaryArrayList())
+            if (unlockedReliquary.containsAll(row.getIds()))
+                changed |= unlockedReliquarySuitCodex.add(row.getId());
+        return changed;
     }
 }

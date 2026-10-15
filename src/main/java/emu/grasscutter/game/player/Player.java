@@ -1606,6 +1606,7 @@ public class Player implements PlayerHook, FieldFetch {
         this.expeditionInfo = this.expeditionInfo == null
                 ? new java.util.concurrent.ConcurrentHashMap<>()
                 : new java.util.concurrent.ConcurrentHashMap<>(this.expeditionInfo);
+        if (this.codex == null) this.codex = new PlayerCodex(this);
         this.getCodex().setPlayer(this);
         this.getProgressManager().setPlayer(this);
         this.getTeamManager().setPlayer(this);
@@ -1688,6 +1689,7 @@ public class Player implements PlayerHook, FieldFetch {
     }
 
     public void onLogin() {
+        this.getCodex().onLogin();
         this.getSotsManager().startRecovery();
         this.getTeamManager().repairPersistentTeams();
 
