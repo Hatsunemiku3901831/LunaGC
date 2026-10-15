@@ -65,11 +65,14 @@ class AbilityHpModifierTest {
     }
     private void remove(int id) throws Exception {
         invoke(43,id,AbilityMetaModifierChange.newBuilder().setAction(ModifierAction.MODIFIER_ACTION_REMOVED)
-                .build().toByteString(),AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_META_MODIFIER_CHANGE);
+                .build().toByteString(),AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_META_MODIFIER_CHANGE,0);
     }
     private void invoke(int entityId, int modifierId, ByteString data, AbilityInvokeArgument type) throws Exception {
+        invoke(entityId, modifierId, data, type, 1);
+    }
+    private void invoke(int entityId, int modifierId, ByteString data, AbilityInvokeArgument type, int root) throws Exception {
         fixture.player.getAbilityManager().onAbilityInvoke(AbilityInvokeEntry.newBuilder().setEntityId(entityId)
-                .setHead(AbilityInvokeEntryHead.newBuilder().setTargetId(42).setInstancedAbilityId(1)
+                .setHead(AbilityInvokeEntryHead.newBuilder().setTargetId(42).setInstancedAbilityId(root)
                         .setInstancedModifierId(modifierId)).setArgumentType(type).setAbilityData(data).build());
     }
     private AbilityModifier.AbilityModifierAction action(String type) {

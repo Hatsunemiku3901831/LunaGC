@@ -9,9 +9,11 @@ import "ModifierAction.proto";
 import "ModifierProperty.proto";
 
 message AbilityMetaModifierChange {
+	reserved 50000, 50001;
+	reserved "NBBGHMGOALL", "PKJMOLPCEBG";
 	repeated ModifierProperty properties = 15;
 	AbilityString parent_ability_name = 2;
-	bool NBBGHMGOALL = 50000;
+	bool FBIKNOFHCHI = 12;
 	bool is_attached_parent_ability = 4;
 	uint64 OCAMKBCONED = 3;
 	AbilityString parent_ability_override = 9;
@@ -21,5 +23,5 @@ message AbilityMetaModifierChange {
 	uint32 server_buff_uid = 7;
 	int32 modifier_local_id = 11;
 	AbilityAttachedModifier attached_instanced_modifier = 1;
-	bool PKJMOLPCEBG = 50001;
+	bool is_mute_remote = 13;
 }

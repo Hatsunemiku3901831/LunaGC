@@ -59,8 +59,11 @@ class AbilityPropertyModifierTest {
         var value=new Ability(data,fixture.entity,fixture.player); fixture.entity.getInstancedAbilities().add(value); return value;
     }
     private void invoke(int entity,int id,AbilityInvokeArgument type,ByteString data) throws Exception {
+        invoke(entity, id, type, data, 1);
+    }
+    private void invoke(int entity,int id,AbilityInvokeArgument type,ByteString data,int root) throws Exception {
         fixture.player.getAbilityManager().onAbilityInvoke(AbilityInvokeEntry.newBuilder().setEntityId(entity)
-                .setHead(AbilityInvokeEntryHead.newBuilder().setTargetId(42).setInstancedAbilityId(1).setInstancedModifierId(id))
+                .setHead(AbilityInvokeEntryHead.newBuilder().setTargetId(42).setInstancedAbilityId(root).setInstancedModifierId(id))
                 .setArgumentType(type).setAbilityData(data).build());
     }
     private void add(Ability a,String name,int id) throws Exception {
@@ -71,7 +74,7 @@ class AbilityPropertyModifierTest {
     }
     private void remove(int id) throws Exception {
         invoke(43,id,AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_META_MODIFIER_CHANGE,
-                AbilityMetaModifierChange.newBuilder().setAction(ModifierAction.MODIFIER_ACTION_REMOVED).build().toByteString());
+                AbilityMetaModifierChange.newBuilder().setAction(ModifierAction.MODIFIER_ACTION_REMOVED).build().toByteString(),0);
     }
     private void override(Ability a,String key,float value) throws Exception {
         invoke(42,0,AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_META_OVERRIDE_PARAM,

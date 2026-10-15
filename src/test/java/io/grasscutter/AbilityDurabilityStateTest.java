@@ -554,7 +554,9 @@ class AbilityDurabilityStateTest {
                 head(71, 0),
                 AbilityMetaModifierChange.newBuilder()
                         .setAction(ModifierAction.MODIFIER_ACTION_ADDED)
-                        .setModifierLocalId(1)
+                        .setModifierLocalId(
+                                new ArrayList<>(ability.getData().modifiers.keySet())
+                                        .indexOf("Other"))
                         .build()
                         .toByteString());
         assertNotSame(controller, fixture.entity.getInstancedModifiers().get(71));

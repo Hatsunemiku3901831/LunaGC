@@ -1195,8 +1195,6 @@ public final class AbilityManager extends BasePlayerManager {
                         modifierData);
             }
 
-            onPossibleElementalBurst(instancedAbility, modifierData, invoke.getEntityId());
-
             boolean hasOrchestration = false;
             if (fromParentName && modifierData.onAdded != null) {
                 for (var a : modifierData.onAdded) {
@@ -1216,9 +1214,17 @@ public final class AbilityManager extends BasePlayerManager {
             var instances = entity.getInstancedModifiers();
             synchronized (instances) {
                 previous=instances.get(head.getInstancedModifierId());
-                if(previous!=null && (previous.hasServerCallbacks() || previous.hasAttachmentCallbacks() || previous.hasBindingCallbacks() || previous.hasAnimationCallbacks()) && previous.getAbility()==instancedAbility
-                        && previous.getModifierData()==modifierData) {
-                    modifier=previous;
+                // Only an identical timed report proves a replay. Untimed reports retain
+                // native-state reapplication; new casts must still execute their onAdded.
+                if (previous != null && previous.getAbility() == instancedAbility
+                        && previous.getModifierData() == modifierData
+                        && previous.isDuplicateClientAdd(entity, invoke)) return;
+                if (previous != null && previous.getAbility() == instancedAbility
+                        && previous.getModifierData() == modifierData
+                        && previous.isClientInstanceCurrent(entity)
+                        && (previous.hasServerCallbacks() || previous.hasAttachmentCallbacks()
+                            || previous.hasBindingCallbacks() || previous.hasAnimationCallbacks())) {
+                    modifier = previous;
                 } else {
                     modifier=entity.getAbilityHpModifier().pendingServerController(instancedAbility,
                             instancedAbilityData.modifiers.keySet().toArray(new String[0])[modChange.getModifierLocalId()]);
@@ -1234,6 +1240,7 @@ public final class AbilityManager extends BasePlayerManager {
                 if (previous != modifier)
                     entity.getAbilityDurability().modifierRebound(head.getInstancedModifierId());
                 instances.put(head.getInstancedModifierId(), modifier);
+                modifier.bindClientInstance(entity, invoke);
                 modifier.prepareAnimationCallbacks(entity);
                 entity.getAbilityPeriodicHealing().clientAdded(head.getInstancedModifierId());
                 // Register the replacement before refreshing its properties; intermediate state
@@ -1241,6 +1248,7 @@ public final class AbilityManager extends BasePlayerManager {
                 if (previous != null && previous != modifier) previous.getAbility().unregisterModifier(entity, previous, false);
                 instancedAbility.registerModifier(entity, modifier);
             }
+            onPossibleElementalBurst(instancedAbility, modifierData, invoke.getEntityId());
             if(previous!=null && previous!=modifier) previous.runServerOnRemoved();
 
             boolean initializedByWatcher = entity.getAbilityGlobalValueWatchers()
@@ -1278,6 +1286,8 @@ public final class AbilityManager extends BasePlayerManager {
             var instances = entity.getInstancedModifiers();
             AbilityModifierController modifier;
             synchronized (instances) {
+                modifier = instances.get(head.getInstancedModifierId());
+                if (modifier != null && !modifier.matchesClientRemoval(head, modChange)) return;
                 entity.getAbilityDurability().modifierRebound(head.getInstancedModifierId());
                 modifier = instances.remove(head.getInstancedModifierId());
                 if (modifier != null) {

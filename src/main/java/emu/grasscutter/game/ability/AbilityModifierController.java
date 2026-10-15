@@ -3,6 +3,10 @@ package emu.grasscutter.game.ability;
 import emu.grasscutter.data.binout.*;
 import lombok.Getter;
 import emu.grasscutter.game.entity.GameEntity;
+import emu.grasscutter.net.proto.AbilityInvokeEntryHeadOuterClass.AbilityInvokeEntryHead;
+import emu.grasscutter.net.proto.AbilityInvokeEntryOuterClass.AbilityInvokeEntry;
+import emu.grasscutter.net.proto.AbilityMetaModifierChangeOuterClass.AbilityMetaModifierChange;
+import emu.grasscutter.utils.Utils;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
@@ -14,6 +18,44 @@ public class AbilityModifierController {
     @Getter private AbilityData abilityData;
     @Getter private AbilityModifier modifierData;
     @Getter private final String name;
+    private record ClientInstance(
+            GameEntity target, AbilityExecutionContext context, AbilityInvokeEntry addition) {}
+    private volatile ClientInstance clientInstance;
+
+    boolean isClientInstanceCurrent(GameEntity target) {
+        var instance = clientInstance;
+        return instance == null || instance.target == target && instance.context.isCurrent();
+    }
+
+    boolean isDuplicateClientAdd(GameEntity target, AbilityInvokeEntry addition) {
+        var instance = clientInstance;
+        double time = addition.getTotalTickTime();
+        return instance != null && instance.target == target && instance.context.isCurrent()
+                && Double.isFinite(time) && time > 0 && instance.addition.equals(addition);
+    }
+
+    void bindClientInstance(GameEntity target, AbilityInvokeEntry addition) {
+        clientInstance = new ClientInstance(
+                target, new AbilityExecutionContext(ability, target, false, true), addition);
+    }
+
+    boolean matchesClientRemoval(
+            AbilityInvokeEntryHead head, AbilityMetaModifierChange change) {
+        int root = head.getInstancedAbilityId();
+        var owner = ability.getOwner();
+        if (root != 0) {
+            var roots = owner.getInstancedAbilities();
+            if (root > 0 && root <= roots.size() && roots.get(root - 1) != null) {
+                if (roots.get(root - 1) != ability) return false;
+            } else if (owner.getDynamicAbilities().get(abilityData.abilityName) != ability) return false;
+        }
+        var parent = change.getParentAbilityName();
+        return !change.hasParentAbilityName()
+                || parent.hasStr()
+                        && (parent.getStr().isEmpty() || parent.getStr().equals(abilityData.abilityName))
+                || parent.hasHash() && parent.getHash() == Utils.abilityHash(abilityData.abilityName);
+    }
+
     @Getter private long skillSlotSourceOrder = AbilitySkillSlots.nextSourceOrder();
     private volatile ServerCallbacks serverCallbacks;
     private volatile ModifierAttachmentCallbacks attachments;
