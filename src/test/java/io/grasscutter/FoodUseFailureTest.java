@@ -29,7 +29,7 @@ class FoodUseFailureTest {
                                 Path.of("resources/ExcelBinOutput/MaterialExcelConfigData.json"),
                                 ItemData.class)
                         .stream()
-                        .filter(d -> d.getId() == 108566)
+                        .filter(d -> d.getId() == 108983)
                         .findFirst()
                         .orElseThrow();
         special.onLoad();

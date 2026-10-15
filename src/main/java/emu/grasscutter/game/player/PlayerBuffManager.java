@@ -76,7 +76,10 @@ public final class PlayerBuffManager extends BasePlayerManager {
                     .addAll(healing.actions());
             if (!healing.initial()) return false;
         }
-        if (duration == 0) return healing != null;
+        if (duration == 0) {
+            if (healing != null) healing.removed();
+            return healing != null;
+        }
         long targetGuid = target == null ? 0 : target.getGuid();
         var replaced =
                 buffs.values().stream()
@@ -108,6 +111,19 @@ public final class PlayerBuffManager extends BasePlayerManager {
 
     private void remove(Collection<PlayerBuff> selected) {
         selected.forEach(b -> buffs.remove(b.getUid()));
+        for (var buff : selected)
+            if (buff.healing != null) {
+                try {
+                    buff.healing.removed();
+                } catch (RuntimeException failed) {
+                    emu.grasscutter.Grasscutter.getLogger()
+                            .error(
+                                    "Food removal callback failed: UID {}, buff {}",
+                                    getPlayer().getUid(),
+                                    buff.buffData.getId(),
+                                    failed);
+                }
+            }
         notify(ServerBuffChangeType.SERVER_BUFF_CHANGE_TYPE_DEL_SERVER_BUFF, selected);
     }
 

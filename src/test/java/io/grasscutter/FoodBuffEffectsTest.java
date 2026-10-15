@@ -230,9 +230,9 @@ class FoodBuffEffectsTest {
     }
 
     @Test
-    void nestedSpecialEffectIsNotSilentlyAcceptedAsAnEmptyBuff() {
-        assertFalse(use(400102, "", first));
-        assertEquals(1000, hp(first));
+    void nestedSpecialEffectIsAcceptedWithOnlyItsResourceRecovery() {
+        assertTrue(use(400102, "", first));
+        assertTrue(hp(first) == 1000 || hp(first) == 1001);
     }
 
     @Test

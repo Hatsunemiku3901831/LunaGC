@@ -16,6 +16,9 @@ public final class FoodBuffHealing {
     private final AbilityData data;
     private final AbilityModifier modifier;
     private final long start, interval;
+    private final FoodBuffGraph graph;
+    private final java.util.concurrent.atomic.AtomicBoolean ended =
+            new java.util.concurrent.atomic.AtomicBoolean();
     private long consumed;
     private Ability ability;
 
@@ -26,6 +29,7 @@ public final class FoodBuffHealing {
         this.data = data;
         this.modifier = modifier;
         this.start = start;
+        this.graph = FoodBuffGraph.prepare(data, modifier);
         float seconds = modifier.thinkInterval == null ? 0 : modifier.thinkInterval.get();
         this.interval =
                 Float.isFinite(seconds) && seconds > 0
@@ -34,74 +38,67 @@ public final class FoodBuffHealing {
     }
 
     public static boolean supported(AbilityData data, AbilityModifier modifier) {
-        return modifier != null
-                && hasHealing(data, modifier)
-                && supported(data, modifier.onAdded)
-                && supported(data, modifier.onThinkInterval);
+        return FoodBuffGraph.prepare(data, modifier) != null;
     }
 
     public static boolean hasHealing(AbilityData data, AbilityModifier modifier) {
-        return modifier != null
-                && (hasHealing(data, modifier.onAdded, 0)
-                        || hasHealing(data, modifier.onThinkInterval, 0));
+        return hasHealing(data, modifier, 0, new int[1]);
     }
 
     private static boolean hasHealing(
-            AbilityData data, AbilityModifierAction[] actions, int depth) {
+            AbilityData data, AbilityModifier modifier, int depth, int[] steps) {
+        if (modifier == null) return false;
+        if (depth > 32 || ++steps[0] > 512) return true;
+        if (hasHealing(data, modifier.onAdded, depth + 1, steps)
+                || hasHealing(data, modifier.onThinkInterval, depth + 1, steps)
+                || hasHealing(data, modifier.onRemoved, depth + 1, steps)) return true;
+        if (modifier.modifierMixins != null)
+            for (var mixin : modifier.modifierMixins) {
+                if (mixin == null || mixin.type != AbilityMixinData.Type.AttachToStateIDMixin)
+                    continue;
+                if (data == null || data.modifiers == null || mixin.modifierName == null)
+                    return true;
+                try {
+                    for (var name : mixin.getModifierNames()) {
+                        var child = data.modifiers.get(name);
+                        if (child == null || hasHealing(data, child, depth + 1, steps)) return true;
+                    }
+                } catch (RuntimeException malformed) {
+                    return true;
+                }
+            }
+        return false;
+    }
+
+    private static boolean hasHealing(
+            AbilityData data, AbilityModifierAction[] actions, int depth, int[] steps) {
         if (actions == null) return false;
-        if (depth > 32) return true; // A cyclic or oversized food graph must fail validation.
+        if (depth > 32 || ++steps[0] > 512)
+            return true; // Force cyclic or oversized graphs through validation.
         for (var action : actions) {
+            if (++steps[0] > 512) return true;
             if (action == null) continue;
             if (action.type == AbilityModifierAction.Type.HealHP
-                    || hasHealing(data, action.successActions, depth + 1)
-                    || hasHealing(data, action.failActions, depth + 1)
-                    || hasHealing(data, action.actions, depth + 1)) return true;
+                    || hasHealing(data, action.successActions, depth + 1, steps)
+                    || hasHealing(data, action.failActions, depth + 1, steps)
+                    || hasHealing(data, action.actions, depth + 1, steps)) return true;
             if (action.randomQueue != null)
                 for (var group : action.randomQueue)
-                    if (group != null && hasHealing(data, group.actionQueue, depth + 1))
+                    if (group != null && hasHealing(data, group.actionQueue, depth + 1, steps))
                         return true;
-            if (action.type == AbilityModifierAction.Type.ApplyModifier
+            if ((action.type == AbilityModifierAction.Type.ApplyModifier
+                            || action.type == AbilityModifierAction.Type.AttachModifier)
                     && data != null
                     && data.modifiers != null) {
                 var child = data.modifiers.get(action.modifierName);
-                if (child != null
-                        && (hasHealing(data, child.onAdded, depth + 1)
-                                || hasHealing(data, child.onThinkInterval, depth + 1))) return true;
+                if (child == null || hasHealing(data, child, depth + 1, steps)) return true;
             }
         }
         return false;
     }
 
-    private static boolean supported(AbilityData data, AbilityModifierAction[] actions) {
-        var callbacks = AbilityActionSequence.callbacks(data, actions);
-        return callbacks != null
-                && callbacks.stream()
-                        .allMatch(
-                                a ->
-                                        Set.of(
-                                                                AbilityModifierAction.Type.HealHP,
-                                                                        AbilityModifierAction.Type
-                                                                                .SetOverrideMapValue,
-                                                                AbilityModifierAction.Type.Randomed,
-                                                                        AbilityModifierAction.Type
-                                                                                .Predicated,
-                                                                AbilityModifierAction.Type
-                                                                                .RandomAction,
-                                                                        AbilityModifierAction.Type
-                                                                                .Repeated)
-                                                        .contains(a.type)
-                                                && (a.target == null
-                                                        || "Self".equals(a.target)
-                                                        || "Target".equals(a.target))
-                                                && a.otherTargets == null
-                                                && a.hasSupportedOffStageConfig());
-    }
-
     public Set<AbilityModifierAction> actions() {
-        Set<AbilityModifierAction> actions = Collections.newSetFromMap(new IdentityHashMap<>());
-        actions.addAll(AbilityActionSequence.callbacks(data, modifier.onAdded));
-        actions.addAll(AbilityActionSequence.callbacks(data, modifier.onThinkInterval));
-        return actions;
+        return graph == null ? Set.of() : graph.claims();
     }
 
     public EntityAvatar recipient() {
@@ -117,6 +114,7 @@ public final class FoodBuffHealing {
     }
 
     public boolean initial() {
+        if (graph == null) return false;
         var entity = recipient();
         if (entity == null) return false;
         apply(modifier.onAdded, entity, false);
@@ -124,6 +122,7 @@ public final class FoodBuffHealing {
     }
 
     public void tick(long now) {
+        if (ended.get()) return;
         long elapsed = now - start;
         if (interval == 0 || elapsed < 0) return;
         long due = elapsed / interval;
@@ -132,6 +131,12 @@ public final class FoodBuffHealing {
         consumed = due;
         var entity = recipient();
         if (entity != null) apply(modifier.onThinkInterval, entity, true);
+    }
+
+    public void removed() {
+        if (!ended.compareAndSet(false, true)) return;
+        var entity = recipient();
+        if (entity != null) apply(modifier.onRemoved, entity, false);
     }
 
     private void apply(AbilityModifierAction[] actions, EntityAvatar entity, boolean periodic) {
@@ -152,5 +157,12 @@ public final class FoodBuffHealing {
                         AbilityActionSequence.run(
                                 ability, actions, entity, () -> recipient() == entity);
                 });
+        // Instant children have completed their entire callback; keeping them registered would leak
+        // per meal.
+        for (var bearer : player.getTeamManager().getActiveTeamSnapshot())
+            for (var controller : bearer.getAbilityHpModifier().activeControllers())
+                if (controller.getAbility() == ability
+                        && FoodBuffGraph.instantHealing(data, controller.getModifierData()))
+                    ability.unregisterModifier(bearer, controller);
     }
 }
