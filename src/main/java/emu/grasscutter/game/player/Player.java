@@ -1710,6 +1710,9 @@ public class Player implements PlayerHook, FieldFetch {
     }
 
     public void onLogin() {
+        // Quest and scene admission conditions need loaded activities. Publish their packets
+        // after the player/avatar snapshot, at the existing activity-login stage below.
+        this.activityManager = new ActivityManager(this, true);
         this.getCodex().onLogin();
         this.getSotsManager().startRecovery();
         this.getTeamManager().repairPersistentTeams();
@@ -1841,8 +1844,7 @@ public class Player implements PlayerHook, FieldFetch {
         this.setCurHomeWorld(homeWorld);
         home.onOwnerLogin(this);
 
-        this.activityManager = new ActivityManager(this);
-        this.activityManager.triggerActivityConditions();
+        this.activityManager.onPlayerLogin();
 
         session.send(new PacketPlayerEnterSceneNotify(this));
         session.send(new PacketPlayerLevelRewardUpdateNotify(rewardedLevels));

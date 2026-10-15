@@ -23,6 +23,8 @@ public class ActivityManager extends BasePlayerManager {
     private static volatile Configuration configuration = new Configuration(Map.of(), Map.of());
     private final Map<Integer, PlayerActivityData> playerActivityDataMap = new ConcurrentHashMap<>();
     private ActivityConditionExecutor conditionExecutor;
+    private Configuration loadedConfiguration;
+    private boolean notificationsEnabled;
 
     public static Map<Integer, ActivityConfigItem> getScheduleActivityConfigMap() {
         return configuration.schedules();
@@ -83,7 +85,13 @@ public class ActivityManager extends BasePlayerManager {
     }
 
     public ActivityManager(Player player) {
+        this(player, false);
+    }
+
+    /** Load conditions before login quests without sending activity packets before player data. */
+    public ActivityManager(Player player, boolean deferLoginNotifications) {
         super(player);
+        notificationsEnabled = !deferLoginNotifications;
         refreshActivities();
     }
 
@@ -133,17 +141,27 @@ public class ActivityManager extends BasePlayerManager {
                         PlayerActivityDataMappingBuilder.buildPlayerActivityDataByActivityCondId(
                                 playerActivityDataMap),
                         AllActivityConditionBuilder.buildActivityConditions());
-        player.sendPacket(new PacketActivityScheduleInfoNotify(snapshot.schedules().values()));
-        snapshot.activities().values().stream()
-                .filter(item -> item.isActiveAt(System.currentTimeMillis()))
-                .forEach(
-                        item ->
-                                player.sendPacket(
-                                        new PacketActivityInfoNotify(
-                                                getInfoProtoByActivityId(item.getActivityId()))));
+        loadedConfiguration = snapshot;
+        if (notificationsEnabled) sendActivitySnapshot(snapshot);
         // During construction Player has not installed this manager yet. Login triggers after
         // assignment; later GM refreshes must unlock quests without requiring a new login.
         triggerActivityConditions();
+    }
+
+    public synchronized void onPlayerLogin() {
+        if (loadedConfiguration != configuration) refreshActivities();
+        notificationsEnabled = true;
+        sendActivitySnapshot(loadedConfiguration);
+        triggerActivityConditions();
+    }
+
+    private void sendActivitySnapshot(Configuration snapshot) {
+        long now = System.currentTimeMillis();
+        player.sendPacket(new PacketActivityScheduleInfoNotify(snapshot.schedules().values(), now));
+        snapshot.activities().values().stream()
+                .filter(item -> item.isActiveAt(now))
+                .forEach(item -> player.sendPacket(new PacketActivityInfoNotify(
+                        getInfoProtoByActivityId(snapshot, item.getActivityId(), now))));
     }
 
     public void triggerWatcher(WatcherTriggerType type, String... params) {
@@ -202,7 +220,7 @@ public class ActivityManager extends BasePlayerManager {
 
     /** Publish newly unlocked days without replacing the player's stored schedule or progress. */
     public synchronized void onDailyReset(long now) {
-        if (conditionExecutor == null) return;
+        if (conditionExecutor == null || !notificationsEnabled) return;
         var snapshot = configuration;
         player.sendPacket(new PacketActivityScheduleInfoNotify(snapshot.schedules().values(), now));
         for (var item : snapshot.schedules().values()) {
@@ -223,7 +241,7 @@ public class ActivityManager extends BasePlayerManager {
     }
 
     private boolean canTriggerQuestConditions() {
-        return conditionExecutor != null
+        return notificationsEnabled && conditionExecutor != null
                 && player.getActivityManager() == this
                 && player.getWorld() != null
                 && player.getQuestManager().isQuestingEnabled();
