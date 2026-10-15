@@ -218,3 +218,37 @@ JAR SHA-256：`06172bebf64b4d1cb813241e5f0faff0c6071077372627f846a9d09908c55cde`
 重塑请求／应答／确认消息、候选生成与存档、实际材料支付和保留／采用结果仍需继续接入。
 官服版本日历和当前客户端页面也待适配／验收。日常运行服务未替换，
 未将本次快照同步当作完整重塑玩法完成。
+
+## 当前重塑与结果选择协议
+
+从当前客户端的请求写入器、响应读取器、网络模块和装备页面配对以下消息：
+
+| 消息 | 包号 | 字段 |
+| --- | --- | --- |
+| ReliquaryDustReq | 9185 | uint64 reliquary_guid=6；repeated uint32 append_prop_type_list=13 |
+| ReliquaryDustRsp | 9807 | uint64 reliquary_guid=10；int32 retcode=12 |
+| ReliquaryDustSelectReq | 28022 | bool is_new=14；uint64 reliquary_guid=15 |
+| ReliquaryDustSelectRsp | 4210 | int32 retcode=4 |
+
+类型 63594 和 85657 的自身类型槽分别与两个发送入口使用的槽相同，
+结果选择的调用来自 `MonoRelicDustResultDialog` 的控制器。
+枚举常量表明确给出 Old=1、New=2，界面将 New 转成 true 发送。
+初次重塑响应不是结果采用响应；后者只含 retcode，不回传 GUID。
+
+网络处理分别发布具名事件 `OnGetReliquaryDustRsp`（2482）与
+`OnGetReliquaryDustSelectRsp`（2483）。装备页面在初次重塑成功后，
+按响应 GUID 从伴随通知保存的候选字典取新结果；因此业务接入时必须先同步候选再应答成功。
+本地新增强类型协议、命名包号和保留客户端请求序号的响应包，尚不注册猜测的业务处理器。
+
+新增 7 项协议检查全部先失败；补齐后与已有通知、萃取和定向制作合计
+**77 项／5 套件**通过，零失败、错误和跳过，JAR 构建成功。
+覆盖 packed／unpacked 属性列表、完整 uint64 GUID、保留旧结果时省略 false、
+四个当前包号、响应字段与请求序号。初次测试有一处测试代码使用了不存在的序号 getter，
+改为解析实际 PacketHead 后才运行上述红测试；未将编译失败计作功能复现。
+修改源码宿主机／容器哈希、编译类／JAR 字节一致，无意外类删除。
+
+证据：`debug/aster-mid-20261011/batch250/dust-protocol-proof.json`、
+`dust-flow.json`、对应原生反汇编、`dust-protocol-red.xml`、
+`dust-protocol-final-results/` 和 `dust-protocol-verification.json`。
+JAR SHA-256：`b573578aa9fbd2ae4bf622e417d273091a1ae811cb9f0ee533dc747107b026bc`。
+实际支付、候选生成／持久化和采用／保留处理仍在接入范围内，当前客户端画面尚待验收。

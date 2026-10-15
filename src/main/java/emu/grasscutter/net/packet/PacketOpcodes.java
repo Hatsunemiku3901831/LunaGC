@@ -12,6 +12,10 @@ public final class PacketOpcodes {
     public static final int ReliquaryOfferDefineRsp = 3259;
     public static final int ReliquaryOfferDataNotify = 24434;
     public static final int ReliquaryOfferCompanionNotify = 228;
+    public static final int ReliquaryDustReq = 9185;
+    public static final int ReliquaryDustRsp = 9807;
+    public static final int ReliquaryDustSelectReq = 28022;
+    public static final int ReliquaryDustSelectRsp = 4210;
     public static final int GetPlayerTokenReq = 23252;
     public static final int GetPlayerTokenRsp = 3713;
     public static final int PingReq = 20324;

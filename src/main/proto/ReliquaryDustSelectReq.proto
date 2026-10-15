@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "ReliquaryDustSelectReqOuterClass";
+
+message ReliquaryDustSelectReq {
+  bool is_new = 14;
+  uint64 reliquary_guid = 15;
+}
