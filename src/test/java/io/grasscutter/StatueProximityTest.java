@@ -89,6 +89,24 @@ class StatueProximityTest {
     }
 
     @Test
+    void freeRecoveryStillWaitsForActualStatueProximityAndEntryDelay() throws Exception {
+        configure("{enabled:true,radius:15,freeHealing:true}");
+        env.prop(PlayerProperty.PROP_CUR_SPRING_VOLUME, 0);
+        move(50);
+        tick(0);
+        assertEquals(10, env.hp());
+        assertEquals(10000, env.manager.getCurrentVolume());
+        move(0);
+        tick(10);
+        tick(2509);
+        assertEquals(10, env.hp());
+        tick(2510);
+        assertEquals(100, env.hp());
+        assertEquals(10000, env.manager.getCurrentVolume());
+        assertEquals(1, env.healCalls);
+    }
+
+    @Test
     void gadgetCategoryAlsoEnablesRecoveryWithoutSpringMetadata() throws Exception {
         var before = GameData.getGadgetDataMap().get(70130009);
         try {

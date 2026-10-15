@@ -495,6 +495,8 @@ public class ConfigContainer {
 
         public static class StatueRecoveryOptions {
             public boolean enabled = true;
+            /** Optional reference policy: heal without a spring budget and display a full pool. */
+            public boolean freeHealing = false;
             /** Reference proximity radius; client region notifications are not required. */
             public double radius = 15.0;
         }

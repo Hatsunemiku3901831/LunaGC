@@ -274,7 +274,12 @@ public class SotSManager extends BasePlayerManager {
                 return;
             int percent = Math.max(0, Math.min(100, getAutoRecoveryPercentage()));
             double needed = Math.max(0d, max * percent - before * 100d);
-            int available = Math.max(0, Math.min(getMaxVolume(), getCurrentVolume()));
+            boolean free = freeHealingEnabled();
+            if (free) refillSpringVolume();
+            int available =
+                    free
+                            ? Integer.MAX_VALUE
+                            : Math.max(0, Math.min(getMaxVolume(), getCurrentVolume()));
             int requested = (int) Math.min(available, Math.floor(needed));
             if (requested <= 0) return;
             springHealing = true;
@@ -282,10 +287,11 @@ public class SotSManager extends BasePlayerManager {
             int spent = 0;
             try {
                 reserved =
-                        player.setProperty(
-                                        PlayerProperty.PROP_CUR_SPRING_VOLUME,
-                                        available - requested)
-                                && getCurrentVolume() == available - requested;
+                        free
+                                || player.setProperty(
+                                                PlayerProperty.PROP_CUR_SPRING_VOLUME,
+                                                available - requested)
+                                        && getCurrentVolume() == available - requested;
                 if (!reserved) return;
                 if (recoverAvatar(entity, requested)) {
                     double after = entity.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP);
@@ -311,7 +317,7 @@ public class SotSManager extends BasePlayerManager {
                         error);
             } finally {
                 try {
-                    if (reserved && spent < requested) {
+                    if (!free && reserved && spent < requested) {
                         int refunded =
                                 (int)
                                         Math.min(
@@ -324,7 +330,7 @@ public class SotSManager extends BasePlayerManager {
                                     player.getUid(),
                                     entity.getId());
                     }
-                    if (spent > 0) {
+                    if (!free && spent > 0) {
                         player.setSpringLastUsed(System.currentTimeMillis() / 1000);
                         player.save();
                     }
@@ -352,6 +358,11 @@ public class SotSManager extends BasePlayerManager {
         return player.getTeamManager().healAvatar(entity.getAvatar(), 0, amount);
     }
 
+    private boolean freeHealingEnabled() {
+        var options = Grasscutter.getConfig().server.game.gameOptions.statueRecovery;
+        return options != null && options.freeHealing;
+    }
+
     public void refillSpringVolume() {
         synchronized (player) {
             if (springHealing) return;
@@ -364,6 +375,10 @@ public class SotSManager extends BasePlayerManager {
                 if (getMaxVolume() != maxVolume) return;
             }
             int currentVolume = Math.max(0, Math.min(maxVolume, getCurrentVolume()));
+            if (freeHealingEnabled()) {
+                if (getCurrentVolume() != maxVolume) setCurrentVolume(maxVolume);
+                return;
+            }
             long last = getLastUsed();
             if (last <= 0) {
                 setCurrentVolume(maxVolume);
