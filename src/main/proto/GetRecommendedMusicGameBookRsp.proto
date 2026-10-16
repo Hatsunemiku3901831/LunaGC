@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "GetRecommendedMusicGameBookRspOuterClass";
+
+import "MusicGameBookBriefInfo.proto";
+
+// Current 7.1 native type PKAFDMEHMHE (47766).
+// Unpaired field meanings retain their native names; see docs/MUSIC_GAME_BOOK_PROTOCOL_2026-10-16.md.
+message GetRecommendedMusicGameBookRsp {
+    repeated MusicGameBookBriefInfo BMDMNFLCPLF = 7;
+    int32 retcode = 15;
+}

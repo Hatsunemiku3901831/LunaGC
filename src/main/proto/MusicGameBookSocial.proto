@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "MusicGameBookSocialOuterClass";
+
+// Current 7.1 native type GBFKJGCDBFA (45103).
+// Unpaired field meanings retain their native names; see docs/MUSIC_GAME_BOOK_PROTOCOL_2026-10-16.md.
+message MusicGameBookSocial {
+    uint32 PBHMOCOLOME = 7;
+    uint32 LHNNNBBIPGK = 8;
+    uint32 APLJOBOPOPP = 11;
+    uint32 LINEPEAIJGE = 14;
+    uint32 FGNHFELMGGC = 15;
+}

@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "MusicGameBookBriefInfoOuterClass";
+
+import "MusicGameBookSocial.proto";
+
+// Current 7.1 native type FEHNOKHDMHN (79336).
+// Unpaired field meanings retain their native names; see docs/MUSIC_GAME_BOOK_PROTOCOL_2026-10-16.md.
+message MusicGameBookBriefInfo {
+    uint32 GKFDMEALPDH = 1;
+    uint32 BBMIBHCCIKL = 2;
+    uint64 BCBDBEFONEF = 3;
+    MusicGameBookSocial BAEBFNBAMEH = 4;
+    uint32 NLLCAHFHGNA = 5;
+    bool MHPONLPAOIH = 6;
+    uint32 PCLFKIGAMFA = 7;
+    bool GKIAEIHNBGJ = 8;
+    bool JIOFAJEECJC = 9;
+    uint32 ANGGGIPAMIL = 10;
+    uint32 OGDFFPNPADF = 11;
+    uint32 MCPDKDGGBDD = 12;
+    uint32 FGBMHEJKKGJ = 13;
+    string MHLFAFLKCGH = 14;
+    bool CPKEBGBACCC = 15;
+    uint32 IMNOPIKEOBA = 519;
+    string IIDNHMHOGJD = 1038;
+    repeated uint32 OHNBIBJGEAD = 1216;
+    repeated uint32 IBKJHNJPBHD = 1296;
+    string JLAFKJJIKGP = 1755;
+    uint32 AONJOPALEAM = 1886;
+}

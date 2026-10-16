@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "MusicGameBookSettleRspOuterClass";
+
+import "MusicGameBookVote.proto";
+
+// Current 7.1 native type EGOPAFBFECO (52562).
+// Unpaired field meanings retain their native names; see docs/MUSIC_GAME_BOOK_PROTOCOL_2026-10-16.md.
+message MusicGameBookSettleRsp {
+    MusicGameBookVote BLFNCCLLGLB = 1;
+    int32 retcode = 2;
+    uint32 IHPMDKPGJLB = 3;
+    bool PHKLGIKKAMA = 4;
+    repeated uint32 OFKFKNJHDIO = 5;
+    uint32 IMNOPIKEOBA = 6;
+    bool OKICCBNHOOL = 11;
+    uint64 BCBDBEFONEF = 12;
+    bool JIOFAJEECJC = 13;
+}

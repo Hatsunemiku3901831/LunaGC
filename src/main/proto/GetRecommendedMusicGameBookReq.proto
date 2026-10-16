@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "GetRecommendedMusicGameBookReqOuterClass";
+
+// Current 7.1 native type MNLCNMANFAC (36514).
+// Unpaired field meanings retain their native names; see docs/MUSIC_GAME_BOOK_PROTOCOL_2026-10-16.md.
+message GetRecommendedMusicGameBookReq {
+    bool KKHMCPGDPJH = 4;
+    uint32 JBDNPAECJKC = 7;
+}

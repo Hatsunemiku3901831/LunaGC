@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "MusicGameBookRecordOuterClass";
+
+// Current 7.1 native type JEKECENHEAO (70673).
+// Unpaired field meanings retain their native names; see docs/MUSIC_GAME_BOOK_PROTOCOL_2026-10-16.md.
+message MusicGameBookRecord {
+    bool NFHCCJALOAJ = 4;
+    repeated uint32 JNJDOLEBBOO = 5;
+    uint32 MCPDKDGGBDD = 10;
+    uint32 IHPMDKPGJLB = 11;
+}

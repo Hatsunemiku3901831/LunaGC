@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "MusicGameBookAllDataNotifyOuterClass";
+
+import "MusicGameBookRecord.proto";
+import "MusicGameBookSettings.proto";
+
+// Current 7.1 native type JHMGPPKIMKA (82359).
+// Unpaired field meanings retain their native names; see docs/MUSIC_GAME_BOOK_PROTOCOL_2026-10-16.md.
+message MusicGameBookAllDataNotify {
+    uint32 LKAIFMEKBNG = 1;
+    repeated uint32 DHDNMAMDHIP = 2;
+    repeated MusicGameBookRecord PAEINCPKPHH = 3;
+    bool POIDELONALN = 5;
+    repeated uint32 KKCGHOOLALK = 7;
+    uint32 DGEAGAANHHO = 9;
+    MusicGameBookSettings NKFEGNKDBBK = 10;
+    repeated uint32 JNJDOLEBBOO = 12;
+    repeated uint32 ONCKJAILFEB = 13;
+    repeated uint32 OMFHIFALODP = 14;
+    uint32 IMNOPIKEOBA = 15;
+}

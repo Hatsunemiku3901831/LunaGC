@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "MusicGameBookVoteOuterClass";
+
+// Native enum MNDIJGCMEDL (16090). Numeric vote meanings are still unpaired.
+// Proto3 preserves every other numeric value through parsing and serialization.
+enum MusicGameBookVote {
+    MUSIC_GAME_BOOK_VOTE_UNSPECIFIED = 0;
+}

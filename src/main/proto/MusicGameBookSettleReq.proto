@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "MusicGameBookSettleReqOuterClass";
+
+// Current 7.1 native type KIJEOHIIHMF (17207).
+// Unpaired field meanings retain their native names; see docs/MUSIC_GAME_BOOK_PROTOCOL_2026-10-16.md.
+message MusicGameBookSettleReq {
+    uint32 EGDIMEINBJA = 1;
+    uint32 CAEKFNKKEPG = 2;
+    uint32 IHPMDKPGJLB = 4;
+    float DFPIEMBCGCN = 6;
+    uint32 PGDGFMNNIII = 7;
+    uint64 BCBDBEFONEF = 9;
+    repeated uint32 FMBMLBAGIIO = 10;
+    bool FNCOKHKCDDG = 13;
+    uint32 MPALNOCPELN = 14;
+    float MIENEOHDNBB = 773;
+    bool DGBEKHBEHFN = 896;
+    uint32 LKIMDBMGKEM = 1028;
+    repeated uint32 KBBAMIPLHEJ = 1071;
+    uint32 GHHABIPEHNN = 1274;
+    bool NGMCGJBAJJC = 1565;
+    uint32 KGAGGALLDPO = 1909;
+    uint32 FJDDGBILJCF = 2001;
+}

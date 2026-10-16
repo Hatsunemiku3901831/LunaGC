@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "MusicGameBookStartReqOuterClass";
+
+// Current 7.1 native type JMKPIKBLLBH (36283).
+// Unpaired field meanings retain their native names; see docs/MUSIC_GAME_BOOK_PROTOCOL_2026-10-16.md.
+message MusicGameBookStartReq {
+    uint32 IHPMDKPGJLB = 1;
+    bool EGKLPEIGACI = 3;
+    uint64 BCBDBEFONEF = 4;
+}
