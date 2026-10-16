@@ -39,6 +39,13 @@ class DungeonRestartSafetyTest extends QuestTestFixture {
     private FixtureDungeonData data;
     private DungeonSystem system;
     private PluginManager plugins;
+    private emu.grasscutter.data.excels.GadgetData oldStarter;
+
+    @BeforeAll
+    static void initializeLua() throws Exception {
+        if (emu.grasscutter.scripts.ScriptLoader.getEngine() == null)
+            emu.grasscutter.scripts.ScriptLoader.init();
+    }
 
     private class RestartWorld extends World {
         volatile Thread delayedJoin;
@@ -85,6 +92,7 @@ class DungeonRestartSafetyTest extends QuestTestFixture {
         oldScenes = new HashMap<>(GameData.getSceneDataMap());
         oldDungeons = new HashMap<>(GameData.getDungeonDataMap());
         oldPass = new HashMap<>(GameData.getDungeonPassConfigDataMap());
+        oldStarter = GameData.getGadgetDataMap().get(70360010);
         GameData.getSceneDataMap()
                 .put(9, gson.fromJson("{id:9,type:'SCENE_DUNGEON'}", SceneData.class));
         data =
@@ -139,6 +147,8 @@ class DungeonRestartSafetyTest extends QuestTestFixture {
         GameData.getDungeonDataMap().putAll(oldDungeons);
         GameData.getDungeonPassConfigDataMap().clear();
         GameData.getDungeonPassConfigDataMap().putAll(oldPass);
+        if (oldStarter == null) GameData.getGadgetDataMap().remove(70360010);
+        else GameData.getGadgetDataMap().put(70360010, oldStarter);
     }
 
     private void claimed(boolean value) throws Exception {
@@ -231,6 +241,158 @@ class DungeonRestartSafetyTest extends QuestTestFixture {
         assertEquals(32, fresh.getPrevScenePoint());
         assertEquals(1, fresh.getDungeonSettleListeners().size());
         assertTrue(new Position(1, 2, 3).equal3d(player.getPosition()));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {40201, 40300, 40774, 40780})
+    void a_canceled_real_domain_entry_exposes_the_challenge_spawn_without_changing_the_source(
+            int sceneId) throws Exception {
+        var resource =
+                emu.grasscutter.utils.JsonUtils.loadToList(
+                                Path.of("resources/ExcelBinOutput/DungeonExcelConfigData.json"),
+                                DungeonData.class)
+                        .stream()
+                        .filter(row -> row.getSceneId() == sceneId)
+                        .findFirst()
+                        .orElseThrow();
+        GameData.getDungeonDataMap().put(resource.getId(), resource);
+        GameData.getSceneDataMap()
+                .put(
+                        sceneId,
+                        gson.fromJson(
+                                "{id:" + sceneId + ",type:'SCENE_DUNGEON'}", SceneData.class));
+        var selected = new java.util.concurrent.atomic.AtomicReference<Position>();
+        teleportListener(
+                event -> {
+                    selected.set(new Position(event.getDestination()));
+                    event.cancel();
+                });
+        assertFalse(system.enterDungeon(player, 32, resource.getId(), true));
+        kept();
+        assertNotNull(selected.get());
+        var key =
+                switch (sceneId) {
+                    case 40774 -> new Position(499.966f, 69.750f, 500);
+                    case 40780 -> new Position(-0.013890f, 9.148f, -0.472390f);
+                    default -> new Position(0, sceneId == 40201 ? -0.040f : -0.055f, 0);
+                };
+        assertEquals(
+                2.2,
+                Math.hypot(selected.get().getX() - key.getX(), selected.get().getZ() - key.getZ()),
+                0.0001);
+        assertEquals(key.getY(), selected.get().getY());
+    }
+
+    private DungeonData resourceDomain(int sceneId) throws Exception {
+        var resource =
+                emu.grasscutter.utils.JsonUtils.loadToList(
+                                Path.of("resources/ExcelBinOutput/DungeonExcelConfigData.json"),
+                                DungeonData.class)
+                        .stream()
+                        .filter(row -> row.getSceneId() == sceneId)
+                        .findFirst()
+                        .orElseThrow();
+        GameData.getDungeonDataMap().put(resource.getId(), resource);
+        GameData.getSceneDataMap()
+                .put(
+                        sceneId,
+                        gson.fromJson(
+                                "{id:" + sceneId + ",type:'SCENE_DUNGEON'}", SceneData.class));
+        var pass =
+                emu.grasscutter.utils.JsonUtils.loadToList(
+                                Path.of("resources/ExcelBinOutput/DungeonPassExcelConfigData.json"),
+                                DungeonPassConfigData.class)
+                        .stream()
+                        .filter(row -> row.getId() == resource.getPassCond())
+                        .findFirst()
+                        .orElseThrow();
+        GameData.getDungeonPassConfigDataMap().put(pass.getId(), pass);
+        var starter =
+                emu.grasscutter.utils.JsonUtils.loadToList(
+                                Path.of("resources/ExcelBinOutput/GadgetExcelConfigData.json"),
+                                emu.grasscutter.data.excels.GadgetData.class)
+                        .stream()
+                        .filter(row -> row.getId() == 70360010)
+                        .findFirst()
+                        .orElseThrow();
+        GameData.getGadgetDataMap().put(starter.getId(), starter);
+        return resource;
+    }
+
+    @ParameterizedTest
+    @ValueSource(
+            ints = {
+                40760, 40761, 40762, 40763, 40770, 40771, 40772, 40773, 40780, 40781, 40782, 40783,
+                40784, 40785, 40786, 40787, 40788, 40789, 40790, 40791
+            })
+    void synthesized_domain_metadata_registers_its_existing_block_and_groups(int sceneId) {
+        var meta = emu.grasscutter.scripts.data.SceneMeta.of(sceneId);
+        assertNotNull(meta);
+        assertEquals(Set.of(sceneId), meta.blocks.keySet());
+        var block = meta.blocks.get(sceneId);
+        block.load(sceneId, meta.context);
+        assertFalse(block.groups.isEmpty());
+        assertTrue(meta.sceneBlockIndex.size() > 0);
+    }
+
+    private emu.grasscutter.game.entity.EntityGadget starter(
+            Scene scene, DungeonChallengeEntry.Spawn spawn) {
+        var gadget =
+                new emu.grasscutter.game.entity.EntityGadget(
+                        scene, spawn.gadgetId(), new Position());
+        gadget.setGroupId(spawn.groupId());
+        gadget.setConfigId(spawn.configId());
+        gadget.setState(202);
+        gadget.setFightProperty(emu.grasscutter.game.props.FightProperty.FIGHT_PROP_CUR_HP, 100);
+        gadget.buildContent();
+        scene.addEntity(gadget);
+        assertEquals(0, gadget.getState());
+        assertTrue(
+                ((emu.grasscutter.game.entity.gadget.GadgetWorktop) gadget.getContent())
+                        .getWorktopOptions()
+                        .contains(7));
+        return gadget;
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {40201, 40300, 40774, 40780})
+    void a_real_domain_entry_and_retry_preserve_spawn_and_reset_the_starter(int sceneId)
+            throws Exception {
+        var data = resourceDomain(sceneId);
+        var spawn =
+                DungeonChallengeEntry.resolve(
+                        data, data.getStartPosition(), data.getStartRotation());
+        assertNotNull(spawn);
+        assertTrue(system.enterDungeon(player, 32, data.getId(), true));
+        var first = player.getScene();
+        assertTrue(spawn.position().equal3d(player.getPosition()));
+        assertTrue(spawn.rotation().equal3d(player.getRotation()));
+        var oldKey = starter(first, spawn);
+        assertTrue(first.getDungeonChallengeEntry().select(player, oldKey, 7));
+        assertFalse(first.getDungeonChallengeEntry().select(player, oldKey, 7));
+        manager = first.getDungeonManager();
+        Arrays.fill(manager.getFinishedConditions(), 1);
+        claimed(true);
+        assertTrue(system.tryRestartDungeon(player));
+        var retry = player.getScene();
+        assertNotSame(first, retry);
+        assertTrue(first.getScriptManager().isDestroyed());
+        assertTrue(spawn.position().equal3d(player.getPosition()));
+        assertTrue(spawn.rotation().equal3d(player.getRotation()));
+        assertEquals(first.getPrevScene(), retry.getPrevScene());
+        assertEquals(first.getPrevScenePoint(), retry.getPrevScenePoint());
+        assertFalse(first.getDungeonChallengeEntry().select(player, oldKey, 7));
+        var newKey = starter(retry, spawn);
+        assertTrue(retry.getDungeonChallengeEntry().select(player, newKey, 7));
+    }
+
+    @Test
+    void a_plugin_can_override_the_near_starter_destination() throws Exception {
+        var data = resourceDomain(40201);
+        var chosen = new Position(7, 8, 9);
+        teleportListener(event -> event.setDestination(chosen));
+        assertTrue(system.enterDungeon(player, 32, data.getId(), true));
+        assertTrue(chosen.equal3d(player.getPosition()));
     }
 
     @Test

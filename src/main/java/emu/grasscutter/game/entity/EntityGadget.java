@@ -350,6 +350,7 @@ public class EntityGadget extends EntityBaseGadget {
     }
 
     @Override public void onTick(int sceneTime) {
+        getScene().getDungeonChallengeEntry().tick(this);
         if (ownerLifetime == null) {
             tickGadget(sceneTime);
             return;

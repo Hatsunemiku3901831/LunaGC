@@ -81,6 +81,13 @@ public class Scene {
     private final HashSet<Integer> unlockedForces;
     private final long startWorldTime;
     @Getter @Setter DungeonManager dungeonManager;
+    @Getter private final emu.grasscutter.game.dungeons.DungeonChallengeEntry dungeonChallengeEntry =
+            new emu.grasscutter.game.dungeons.DungeonChallengeEntry(this);
+
+    public void setDungeonManager(DungeonManager manager) {
+        dungeonManager = manager;
+        dungeonChallengeEntry.armExisting();
+    }
     @Getter private final emu.grasscutter.game.dungeons.DungeonBossCleanup dungeonBossCleanup =
             new emu.grasscutter.game.dungeons.DungeonBossCleanup(this);
     @Getter Int2ObjectMap<Route> sceneRoutes;
@@ -280,6 +287,7 @@ public class Scene {
                     player.sendPacket(new PacketAvatarTeamUpdateNotify(player));
                 }
                 arrived = afterPlayerEntryCallbacks.remove(player);
+                dungeonChallengeEntry.armExisting();
             }
         }
         if (arrived != null) arrived.forEach(this::invokeSceneCallback);
@@ -414,6 +422,7 @@ public class Scene {
         entity.activateAbilityLifecycle();
         if (entity instanceof EntityClientGadget gadget) getWorld().getDamageLog().trackGadget(gadget);
         entity.onCreate();
+        if (entity instanceof EntityGadget gadget) dungeonChallengeEntry.tick(gadget);
         return true;
     }
 

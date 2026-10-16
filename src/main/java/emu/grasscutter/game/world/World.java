@@ -7,6 +7,7 @@ import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.excels.dungeon.DungeonData;
 import emu.grasscutter.game.dungeons.DungeonManager;
+import emu.grasscutter.game.dungeons.DungeonChallengeEntry;
 import emu.grasscutter.game.entity.EntityTeam;
 import emu.grasscutter.game.entity.EntityWorld;
 import emu.grasscutter.game.player.Player;
@@ -613,6 +614,7 @@ public class World implements Iterable<Player> {
                     .teleportRot(dungeonData.getStartRotation());
             teleportProps.enterType(EnterType.EnterType_ENTER_DUNGEON).enterReason(EnterReason.DungeonEnter);
             teleportProps.dungeonId(dungeonData.getId());
+            teleportProps.prepareDungeonChallenge(true);
         } else if (player.getSceneId() == sceneId) {
             teleportProps.enterType(EnterType.EnterType_ENTER_GOTO);
         } else if (sceneData != null && sceneData.getSceneType() == SceneType.SCENE_HOME_WORLD) {
@@ -652,6 +654,7 @@ public class World implements Iterable<Player> {
                             .enterType(EnterType.EnterType_ENTER_DUNGEON)
                             .teleportTo(data.getStartPosition())
                             .teleportRot(data.getStartRotation())
+                            .prepareDungeonChallenge(!manager.isTowerDungeon())
                             .build();
             return transferPlayerToSceneLocked(player, properties, source, manager, prepare, ready);
         }
@@ -831,6 +834,18 @@ public class World implements Iterable<Player> {
         if (teleportProperties.getTeleportTo() == null)
             teleportProperties.setTeleportTo(player.getPosition());
 
+        DungeonChallengeEntry.Spawn challengeSpawn = null;
+        if (teleportProperties.isPrepareDungeonChallenge()) {
+            var data = GameData.getDungeonDataMap().get(teleportProperties.getDungeonId());
+            if (data != null && data.getSceneId() == teleportProperties.getSceneId())
+                challengeSpawn = DungeonChallengeEntry.resolve(data, teleportProperties.getTeleportTo(),
+                        teleportProperties.getTeleportRot());
+            if (challengeSpawn != null) {
+                teleportProperties.setTeleportTo(challengeSpawn.position());
+                teleportProperties.setTeleportRot(challengeSpawn.rotation());
+            }
+        }
+
         // Call player teleport event.
         PlayerTeleportEvent event =
                 new PlayerTeleportEvent(player, teleportProperties, player.getPosition());
@@ -863,6 +878,8 @@ public class World implements Iterable<Player> {
             if (transition != null && newScene != null) newScene.getScriptManager().onDestroy();
             return false;
         }
+
+        if (challengeSpawn != null) newScene.getDungeonChallengeEntry().install(challengeSpawn);
 
         if (transition != null) {
             try {

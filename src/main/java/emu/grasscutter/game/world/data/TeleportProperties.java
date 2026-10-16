@@ -4,6 +4,7 @@ import emu.grasscutter.game.props.EnterReason;
 import emu.grasscutter.game.world.Position;
 import emu.grasscutter.net.proto.EnterTypeOuterClass;
 import emu.grasscutter.server.event.player.PlayerTeleportEvent;
+
 import lombok.*;
 
 @Data
@@ -16,4 +17,5 @@ public final class TeleportProperties {
     private Position teleportTo;
     private Position teleportRot;
     private EnterTypeOuterClass.EnterType enterType;
+    @Builder.Default private boolean prepareDungeonChallenge = false;
 }

@@ -18,14 +18,18 @@ public class HandlerSelectWorktopOptionReq extends PacketHandler {
         SelectWorktopOptionReq req = SelectWorktopOptionReq.parseFrom(payload);
 
         try {
-            GameEntity entity = session.getPlayer().getScene().getEntityById(req.getGadgetEntityId());
+            GameEntity entity =
+                    session.getPlayer().getScene().getEntityById(req.getGadgetEntityId());
 
             if (!(entity instanceof EntityGadget)) {
                 return;
             }
+            if (!session.getPlayer()
+                    .getScene()
+                    .getDungeonChallengeEntry()
+                    .select(session.getPlayer(), (EntityGadget) entity, req.getOptionId())) return;
             session.getPlayer().getScene().selectWorktopOptionWith(req);
-            session
-                    .getPlayer()
+            session.getPlayer()
                     .getScene()
                     .getScriptManager()
                     .callEvent(
@@ -34,17 +38,19 @@ public class HandlerSelectWorktopOptionReq extends PacketHandler {
                                     EventType.EVENT_SELECT_OPTION,
                                     entity.getConfigId(),
                                     req.getOptionId()));
-            session
-                    .getPlayer()
+            session.getPlayer()
                     .getQuestManager()
                     .queueEvent(
-                            QuestContent.QUEST_CONTENT_WORKTOP_SELECT, entity.getConfigId(), req.getOptionId());
+                            QuestContent.QUEST_CONTENT_WORKTOP_SELECT,
+                            entity.getConfigId(),
+                            req.getOptionId());
 
             MissingDomainFallbackManager.handleSelectWorktopOption(
                     session.getPlayer().getScene(), entity, req.getOptionId());
         } finally {
             // Always send packet
-            session.send(new PacketSelectWorktopOptionRsp(req.getGadgetEntityId(), req.getOptionId()));
+            session.send(
+                    new PacketSelectWorktopOptionRsp(req.getGadgetEntityId(), req.getOptionId()));
         }
     }
 }
