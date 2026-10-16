@@ -81,6 +81,19 @@ SHA-256：`966bd148eaa0b93e914eca78782dc6eefae4bcbf55c8544a32930db85a080db4`。
 资源保持 `dac2a9d43332ef51879522cf39da2831b0ca0543`，外部检出和子模块均干净；
 固定 AstaPS 参考检出保持 `7cc148d1f752a43d4b9146b3b73f26875902546f`，且干净。
 
+## 本地运行
+
+功能提交 `da3b8e88` 已推送。2026-10-16 20:47（UTC+8），通过 GM 正常停止旧服务后，
+本地已切换至上述验证过的 JAR，未重新构建覆盖产物，未启动游戏。
+新 Java 进程 `50784` 同时监听 HTTP `8088` 与 UDP `22101`，健康检查通过，
+死锁、在线玩家和各队列的待处理、活跃、未完成及失败数量均为零；启动日志无 ERROR／FATAL／异常。
+
+启动按 `.env`、`.env.local` 顺序读取允许的环境配置，资源继续使用
+`D:/Projects/Experiment/LunaGC-Resources`；Compose Mongo 保持原卷 `lunagc_mongo-data`。
+停止前确认无游戏进程、在线玩家或未完成任务，未使用强制停服。
+同批目录中的 `runtime-stop-proof.json`、`runtime-launch-inputs.json` 和 `runtime-start-proof.json`
+保存本次切换证据；服务健康不代表客户端演奏已验收。
+
 ## 后续范围
 
 专辑与地区开放、完整目录操作、收藏、主题选择及其他设置、奖励领取与活动／任务进度、
