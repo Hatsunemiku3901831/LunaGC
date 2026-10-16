@@ -221,15 +221,18 @@ public final class DungeonManager {
             return this.rollRewards(useCondensed);
         }
         int statueDropId = dungeonData.getStatueDrop();
-        if (!GameData.getDropTableDataMap().containsKey(statueDropId)
-                && !GameData.getDungeonDropDataMap().containsKey(dungeonData.getId())) {
+        boolean hasOwnTable = GameData.getDropTableDataMap().containsKey(statueDropId);
+        if (!hasOwnTable) {
+            if (GameData.getDungeonDropDataMap().containsKey(dungeonData.getId()))
+                return this.rollRewards(useCondensed);
             var template = DungeonMaterialRewards.template(dungeonData);
             if (template != null)
                 return player.getServer().getDropSystem().handleDungeonRewardDrop(
                         template.dropId(), useCondensed, itemId -> template.itemIds().get(itemId));
         }
         // A fallback domain has no statue drop of its own; borrow one that exists.
-        int fallbackStatueDropId = MissingDomainFallbackManager.getStatueDropOverride(dungeonData.getId());
+        int fallbackStatueDropId = hasOwnTable ? 0
+                : MissingDomainFallbackManager.getStatueDropOverride(dungeonData.getId());
         if (fallbackStatueDropId != 0) {
             statueDropId = fallbackStatueDropId;
         }

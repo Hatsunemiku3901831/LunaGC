@@ -1550,6 +1550,8 @@ underscore; the `_`-prefixed files are ad-hoc analysis scratch and are gitignore
 保留抽取权重和数量并映射当前地区材料；自身根表或独立配置优先。
 适配范围、故障保护与未补齐的奖励见[天赋材料](docs/DUNGEON_MATERIAL_TEMPLATES_2026-10-17.md)
 和[武器材料](docs/DUNGEON_WEAPON_MATERIALS_2026-10-17.md)原型说明。
+当前资源的 72 处缺根表秘境已有材料／圣遗物奖励原型路由；原始表文件仍未取回。
+圣遗物的套装映射、配置优先级与验证边界见[圣遗物奖励原型](docs/DUNGEON_RELIC_TEMPLATES_2026-10-17.md)。
 
 ## Credit
 

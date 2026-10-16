@@ -944,6 +944,41 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
     @MethodSource("fallbackRewards")
     void fallbackDomainsGrantOnlyTheRelicSetsAdvertisedForTheirOwnDifficulty(
             int id, boolean condensed) throws Exception {
+        assertRelicRoll(
+                id,
+                condensed,
+                emu.grasscutter.game.dungeons.fallback.MissingDomainFallbackManager
+                        .getStatueDropOverride(id));
+    }
+
+    static Stream<Arguments> missingRelicRewards() {
+        int[] roots = {85333500, 85334000, 85334500, 85335500};
+        return Stream.of(4665, 5022, 4683, 4687, 4703)
+                .flatMap(
+                        first ->
+                                java.util.stream.IntStream.range(0, 4)
+                                        .boxed()
+                                        .flatMap(
+                                                level ->
+                                                        Stream.of(
+                                                                Arguments.of(
+                                                                        first + level,
+                                                                        false,
+                                                                        roots[level]),
+                                                                Arguments.of(
+                                                                        first + level,
+                                                                        true,
+                                                                        roots[level]))));
+    }
+
+    @ParameterizedTest
+    @MethodSource("missingRelicRewards")
+    void missingRelicTablesPreserveTheOriginalRollAndGrantTheAdvertisedSets(
+            int id, boolean condensed, int sourceRoot) throws Exception {
+        assertRelicRoll(id, condensed, sourceRoot);
+    }
+
+    DungeonManager relicDungeon(int id, int sourceRoot) throws Exception {
         var manager = dungeon(id);
         var preview =
                 JsonUtils.loadToList(
@@ -992,9 +1027,7 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
             JsonUtils.loadToList(Path.of("resources/Server/" + name), DropTableData.class)
                     .forEach(row -> tables.put(row.getId(), row));
         var pending = new ArrayDeque<Integer>();
-        pending.add(
-                emu.grasscutter.game.dungeons.fallback.MissingDomainFallbackManager
-                        .getStatueDropOverride(id));
+        pending.add(sourceRoot);
         var seen = new HashSet<Integer>();
         while (!pending.isEmpty()) {
             int tableId = pending.remove();
@@ -1006,16 +1039,25 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
                     .filter(row -> row.getWeight() > 0 && tables.containsKey(row.getId()))
                     .forEach(row -> pending.add(row.getId()));
         }
+        return manager;
+    }
+
+    void assertRelicRoll(int id, boolean condensed, int sourceRoot) throws Exception {
+        var manager = relicDungeon(id, sourceRoot);
+        var preview = manager.getDungeonData().getRewardPreviewData();
+        var allowed = new HashMap<Integer, Set<Integer>>();
+        for (var item : preview.getRawPreviewItems()) {
+            var data = GameData.getDisplayItemDataMap().get(item.getId());
+            if (data != null && data.getParam() > 0 && data.getRankLevel() > 0)
+                allowed.computeIfAbsent(data.getRankLevel(), ignored -> new HashSet<>())
+                        .add(data.getParam());
+        }
         var generator = actual.getServer().getDropSystem();
         var randomField = DropSystem.class.getDeclaredField("rand");
         randomField.setAccessible(true);
         var random = (Random) randomField.get(generator);
         random.setSeed(id);
-        var original =
-                generator.handleDungeonRewardDrop(
-                        emu.grasscutter.game.dungeons.fallback.MissingDomainFallbackManager
-                                .getStatueDropOverride(id),
-                        condensed);
+        var original = generator.handleDungeonRewardDrop(sourceRoot, condensed);
         random.setSeed(id);
         assertTrue(manager.getStatueDrops(actual, condensed, 0));
         var relics =
@@ -1043,6 +1085,142 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
                         .orElseThrow()
                         .getCount();
         assertEquals(mora * (condensed ? 2 : 1), actual.getMora());
+        assertEquals(condensed ? 200 : 180, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertEquals(condensed ? 0 : 1, actual.getInventory().getItemCountById(220007));
+    }
+
+    static Stream<Arguments> relicPoolFaults() {
+        return Stream.of("root", "cycle", "unknown-source", "target-item", "display", "currency")
+                .flatMap(fault -> Stream.of(Arguments.of(fault, false), Arguments.of(fault, true)));
+    }
+
+    @ParameterizedTest
+    @MethodSource("relicPoolFaults")
+    void anIncompleteBorrowedRelicPoolDoesNotChargeOrConsumeTheClaim(
+            String fault, boolean condensed) throws Exception {
+        var manager = relicDungeon(4668, 85335500);
+        var root = GameData.getDropTableDataMap().get(85335500);
+        switch (fault) {
+            case "root" -> GameData.getDropTableDataMap().remove(85335500);
+            case "cycle", "unknown-source" -> root.getDropVec()
+                    .add(
+                            gson.fromJson(
+                                    "{itemId:"
+                                            + (fault.equals("cycle") ? 85335500 : 1999999999)
+                                            + ",countRange:'1',weight:1}",
+                                    emu.grasscutter.data.common.DropItemData.class));
+            case "currency" -> replaceField(
+                    emu.grasscutter.data.common.DropItemData.class,
+                    root.getDropVec().stream()
+                            .filter(item -> item.getId() == 202)
+                            .findFirst()
+                            .orElseThrow(),
+                    "countRange",
+                    "999");
+            case "display", "target-item" -> {
+                int set =
+                        Arrays.stream(
+                                        manager.getDungeonData()
+                                                .getRewardPreviewData()
+                                                .getRawPreviewItems())
+                                .map(item -> GameData.getDisplayItemDataMap().get(item.getId()))
+                                .filter(Objects::nonNull)
+                                .filter(item -> item.getRankLevel() == 5)
+                                .findFirst()
+                                .orElseThrow()
+                                .getParam();
+                if (fault.equals("display")) {
+                    Arrays.stream(
+                                    manager.getDungeonData()
+                                            .getRewardPreviewData()
+                                            .getRawPreviewItems())
+                            .map(item -> GameData.getDisplayItemDataMap().get(item.getId()))
+                            .filter(Objects::nonNull)
+                            .filter(item -> item.getParam() == set)
+                            .forEach(item -> GameData.getDisplayItemDataMap().remove(item.getId()));
+                } else {
+                    var source =
+                            actual
+                                    .getServer()
+                                    .getDropSystem()
+                                    .handleDungeonRewardDrop(85335500, false)
+                                    .stream()
+                                    .map(GameItem::getItemData)
+                                    .filter(
+                                            item ->
+                                                    item.getItemType() == ItemType.ITEM_RELIQUARY
+                                                            && item.getRankLevel() == 5)
+                                    .findFirst()
+                                    .orElseThrow();
+                    int item =
+                            GameData.getItemDataMap().values().stream()
+                                    .filter(
+                                            data ->
+                                                    data.getSetId() == set
+                                                            && data.getRankLevel() == 5
+                                                            && data.getEquipType()
+                                                                    == source.getEquipType()
+                                                            && data.getMainPropDepotId()
+                                                                    == source.getMainPropDepotId()
+                                                            && data.getAppendPropDepotId()
+                                                                    == source.getAppendPropDepotId()
+                                                            && data.getAppendPropNum()
+                                                                    == source.getAppendPropNum()
+                                                            && data.getMaxLevel()
+                                                                    == source.getMaxLevel())
+                                    .findFirst()
+                                    .orElseThrow()
+                                    .getId();
+                    GameData.getItemDataMap().remove(item);
+                }
+            }
+        }
+        assertFalse(manager.getStatueDrops(actual, condensed, 0));
+        assertEquals(200, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertEquals(1, actual.getInventory().getItemCountById(220007));
+        assertEquals(0, actual.getMora());
+        assertFalse(manager.hasClaimedDomainReward(actual.getUid()));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "4668,false,false",
+        "4668,false,true",
+        "4668,true,false",
+        "4668,true,true",
+        "5063,false,false",
+        "5063,false,true",
+        "5063,true,false",
+        "5063,true,true"
+    })
+    void explicitRelicRewardsKeepPriorityOverBorrowedTemplates(
+            int id, boolean ownRoot, boolean condensed) throws Exception {
+        var manager = relicDungeon(id, 85335500);
+        if (ownRoot) {
+            int rootId = manager.getDungeonData().getStatueDrop();
+            oldTables.put(
+                    rootId,
+                    GameData.getDropTableDataMap()
+                            .put(
+                                    rootId,
+                                    gson.fromJson(
+                                            "{id:"
+                                                    + rootId
+                                                    + ",randomType:1,dropVec:[{itemId:202,countRange:'17',weight:10000}]}",
+                                            DropTableData.class)));
+        } else {
+            absentDrops.add(id);
+            GameData.getDungeonDropDataMap().put(id, List.of(drop(202, 17)));
+        }
+        assertTrue(manager.getStatueDrops(actual, condensed, 0));
+        assertEquals(condensed ? 34 : 17, actual.getMora());
+        assertEquals(0, actual.getExp());
+        assertTrue(
+                actual.getInventory().getItems().values().stream()
+                        .noneMatch(
+                                item ->
+                                        item.getItemData().getItemType()
+                                                == ItemType.ITEM_RELIQUARY));
         assertEquals(condensed ? 200 : 180, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
         assertEquals(condensed ? 0 : 1, actual.getInventory().getItemCountById(220007));
     }

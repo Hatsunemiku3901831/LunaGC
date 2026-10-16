@@ -900,22 +900,20 @@ public final class MissingDomainFallbackManager {
     private MissingDomainFallbackManager() {}
 
     public static int getStatueDropOverride(int dungeonId) {
-		return switch (dungeonId) {
-			// City of Gold / Domain of Blessing: Desert Citadel I-IV
-			case 5060 -> 85333500;
-			case 5061 -> 85334000;
-			case 5062 -> 85334500;
-			case 5063 -> 85335500;
-
-			// Molten Iron Fortress / Domain of Blessing: Forsaken Rampart I-IV
-			case 5064 -> 85343500;
-			case 5065 -> 85344000;
-			case 5066 -> 85344500;
-			case 5067 -> 85345500;
-
-			default -> 0;
-		};
-	}
+        return switch (dungeonId) {
+            // Audited missing relic roots: keep the existing weighted difficulty profiles.
+            case 5060, 4665, 5022, 4683, 4687, 4703 -> 85333500;
+            case 5061, 4666, 5023, 4684, 4688, 4704 -> 85334000;
+            case 5062, 4667, 5024, 4685, 4689, 4705 -> 85334500;
+            case 5063, 4668, 5025, 4686, 4690, 4706 -> 85335500;
+            // Molten Iron Fortress / Domain of Blessing: Forsaken Rampart I-IV
+            case 5064 -> 85343500;
+            case 5065 -> 85344000;
+            case 5066 -> 85344500;
+            case 5067 -> 85345500;
+            default -> 0;
+        };
+    }
 
 
 

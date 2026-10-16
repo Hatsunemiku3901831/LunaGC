@@ -5,6 +5,7 @@ import emu.grasscutter.data.excels.ItemData;
 import emu.grasscutter.data.excels.dungeon.DungeonData;
 import emu.grasscutter.game.inventory.*;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /** Rebind a borrowed drop table to the relic sets advertised by the current dungeon. */
@@ -32,27 +33,9 @@ final class DungeonRelicRewards {
     }
 
     static Map<Integer, Integer> itemIds(DungeonData dungeon, int dropId) {
-        if (!GameData.getDropTableDataMap().containsKey(dropId)) return Map.of();
+        validateCurrencies(dungeon, dropId);
         var source = new TreeMap<Integer, ItemData>();
-        var pending = new ArrayDeque<Integer>();
-        var visited = new HashSet<Integer>();
-        pending.add(dropId);
-        while (!pending.isEmpty()) {
-            int id = pending.remove();
-            if (!visited.add(id)) continue;
-            var table = GameData.getDropTableDataMap().get(id);
-            if (table == null) {
-                var item = GameData.getItemDataMap().get(id);
-                if (item == null)
-                    throw new IllegalArgumentException("Undefined borrowed reward " + id);
-                if (item.getItemType() == ItemType.ITEM_RELIQUARY) source.put(id, item);
-                continue;
-            }
-            if (table.getDropVec() == null)
-                throw new IllegalArgumentException("Missing drop vector " + id);
-            for (var child : table.getDropVec())
-                if (child.getId() > 0 && child.getWeight() > 0) pending.add(child.getId());
-        }
+        collectItems(dropId, source, new HashSet<>(), new HashSet<>());
         var sourceRanks = new TreeMap<Integer, SortedSet<Integer>>();
         source.values()
                 .forEach(
@@ -114,6 +97,53 @@ final class DungeonRelicRewards {
             result.put(entry.getKey(), candidates.get(0).getId());
         }
         return Map.copyOf(result);
+    }
+
+    private static void validateCurrencies(DungeonData dungeon, int dropId) {
+        var table = GameData.getDropTableDataMap().get(dropId);
+        var preview = dungeon.getRewardPreviewData();
+        if (table == null
+                || table.getRandomType() != 1
+                || table.getDropVec() == null
+                || preview == null
+                || preview.getRawPreviewItems() == null)
+            throw new IllegalArgumentException("Missing borrowed reward root or preview " + dropId);
+        for (int currency : List.of(102, 105, 202)) {
+            var expected =
+                    Arrays.stream(preview.getRawPreviewItems())
+                            .filter(item -> item.getId() == currency)
+                            .toList();
+            var drops =
+                    table.getDropVec().stream().filter(item -> item.getId() == currency).toList();
+            if (expected.size() != 1
+                    || drops.size() != 1
+                    || drops.get(0).getWeight() != 10000
+                    || new BigDecimal(expected.get(0).getCount())
+                                    .compareTo(new BigDecimal(drops.get(0).getCountRange()))
+                            != 0)
+                throw new IllegalArgumentException(
+                        "Incompatible borrowed reward currency " + currency);
+        }
+    }
+
+    private static void collectItems(
+            int id, Map<Integer, ItemData> source, Set<Integer> visited, Set<Integer> path) {
+        if (visited.contains(id)) return;
+        if (!path.add(id)) throw new IllegalArgumentException("Cyclic borrowed reward table " + id);
+        var table = GameData.getDropTableDataMap().get(id);
+        if (table == null) {
+            var item = GameData.getItemDataMap().get(id);
+            if (item == null) throw new IllegalArgumentException("Undefined borrowed reward " + id);
+            if (item.getItemType() == ItemType.ITEM_RELIQUARY) source.put(id, item);
+        } else {
+            if (table.getDropVec() == null)
+                throw new IllegalArgumentException("Missing drop vector " + id);
+            for (var child : table.getDropVec())
+                if (child.getId() > 0 && child.getWeight() > 0)
+                    collectItems(child.getId(), source, visited, path);
+        }
+        path.remove(id);
+        visited.add(id);
     }
 
     private static Map<List<Integer>, SortedSet<Integer>> groups(
