@@ -65,6 +65,19 @@ E／Q 两个触发动作的完整对象已比较一致；受控调用链用实�
 - `resource-proof.json`、`c1-triggers.json`：三个实际资源的校验与 E／Q 触发动作比对。
 - `party-aura.jar`：SHA256 `9ab3cc415f193ede8e11f5cb15843e8653da937eb8aa6b8aa6ca4e208519ed0b`。
 
+## 本地运行
+
+2026-10-16 10:58（UTC+8），源码提交 `b0af5e891d880de542bf7ac6fc8f3b13c8928773`
+已推送，并将本地服务切换至上述 `party-aura.jar`。
+旧进程经 GM stop 正常结束；新进程 PID `49236` 同时监听 TCP 8088 和 UDP 22101，
+健康检查通过、死锁为零、在线玩家为零。
+Mongo 继续使用 `lunagc_mongo-data`，资源提交保持 `dac2a9d43332ef51879522cf39da2831b0ca0543`。
+
+停止前检查、正常停止及启动验证分别记录在同目录的
+`runtime-stop-preflight.json`、`runtime-stop-proof.json`、`runtime-start-proof.json`。
+启动验证同时核对了实际进程命令、构建哈希、端口归属和数据卷。
+客户端未启动，`clientGameplayVerified` 为 false；此次部署不证明此前游戏报错已消失。
+
 ## 验收边界
 
 本轮确认服务端监听窗口、资源刷新、范围、确认及生命周期。
