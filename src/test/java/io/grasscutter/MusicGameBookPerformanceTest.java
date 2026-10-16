@@ -51,6 +51,7 @@ class MusicGameBookPerformanceTest extends QuestTestFixture {
     final AtomicBoolean failAfterWrite = new AtomicBoolean();
     final AtomicBoolean failSnapshot = new AtomicBoolean();
     final AtomicBoolean failRewardHint = new AtomicBoolean();
+    final AtomicBoolean failSettleReply = new AtomicBoolean();
     final Thread caller = Thread.currentThread();
     Player actual;
     GuardedPlayerTestStore playerStore;
@@ -121,6 +122,10 @@ class MusicGameBookPerformanceTest extends QuestTestFixture {
                 new GameSession(player.server) {
                     @Override
                     public void send(BasePacket packet) {
+                        if (packet.getOpcode() == PacketOpcodes.MusicGameBookSettleRsp
+                                && failSettleReply.getAndSet(false))
+                            throw new IllegalStateException(
+                                    "music settlement response transport fault");
                         if (packet.getOpcode() == PacketOpcodes.ItemAddHintNotify
                                 && failRewardHint.getAndSet(false))
                             throw new IllegalStateException("music reward hint transport fault");
@@ -929,5 +934,172 @@ class MusicGameBookPerformanceTest extends QuestTestFixture {
             assertEquals(0, settle(report(1, score, false)).getRetcode());
             assertEquals(score == 2087 ? 0 : 20, musicCoins());
         }
+    }
+
+    @Test
+    void ordinaryFirstClearReturnsTheResourceRewardIdForTheClientDisplay() throws Exception {
+        start(1);
+        var result = settle(report(1, 1740, false));
+        assertEquals(0, result.getRetcode());
+        assertEquals(List.of(4120011), result.getOFKFKNJHDIOList());
+        assertEquals(20, musicCoins());
+        assertTrue(
+                document()
+                        .get("musicGameBookRecords", Document.class)
+                        .get("1", Document.class)
+                        .getBoolean("normalCompleted"));
+    }
+
+    @Test
+    void aLegendaryFirstClearListsEveryActuallyPaidLowerDifficultyReward() throws Exception {
+        start(4);
+        var result = settle(report(4, maximums.get(4), false));
+        assertEquals(0, result.getRetcode());
+        assertEquals(List.of(4120011, 4120012, 4120013), result.getOFKFKNJHDIOList());
+        assertEquals(120, musicCoins());
+    }
+
+    @Test
+    void increasingDifficultyDisplaysOnlyTheStillUnpaidRewardIds() throws Exception {
+        for (int id = 1; id <= 3; id++) {
+            start(id);
+            var result = settle(report(id, maximums.get(id), false));
+            assertEquals(0, result.getRetcode());
+            assertEquals(List.of(4120010 + id), result.getOFKFKNJHDIOList());
+        }
+        start(4);
+        var repeated = settle(report(4, maximums.get(4), false));
+        assertEquals(0, repeated.getRetcode());
+        assertTrue(repeated.getOFKFKNJHDIOList().isEmpty());
+        assertEquals(120, musicCoins());
+    }
+
+    @Test
+    void guideRewardIdsDescribeBothDeliveredCurrencies() throws Exception {
+        start(9991);
+        var result = settle(report(9991, 300, false));
+        assertEquals(0, result.getRetcode());
+        assertEquals(List.of(4120001), result.getOFKFKNJHDIOList());
+        assertEquals(20, actual.getPrimogems());
+        assertEquals(20, musicCoins());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 2, 3})
+    void nonstandardSettlementsDoNotAdvertiseAnOrdinaryReward(int reason) throws Exception {
+        start(1);
+        var result = settle(report(1, 2000, false).toBuilder().setLKIMDBMGKEM(reason).build());
+        assertEquals(0, result.getRetcode());
+        assertTrue(result.getOFKFKNJHDIOList().isEmpty());
+        assertEquals(0, musicCoins());
+    }
+
+    @Test
+    void subThresholdAndInterruptedPerformancesHaveNoRewardDisplay() throws Exception {
+        start(1);
+        var subThreshold = settle(report(1, 1739, false));
+        assertEquals(0, subThreshold.getRetcode());
+        assertTrue(subThreshold.getOFKFKNJHDIOList().isEmpty());
+        start(1);
+        var interrupted = settle(report(1, 2000, false).toBuilder().setFNCOKHKCDDG(false).build());
+        assertEquals(0, interrupted.getRetcode());
+        assertTrue(interrupted.getOFKFKNJHDIOList().isEmpty());
+        assertEquals(0, musicCoins());
+    }
+
+    @Test
+    void anIdenticalSettlementReplaysTheConfirmedDisplayWithoutAnotherGrant() throws Exception {
+        start(3);
+        var request = report(3, 4000, false);
+        var first = settle(request);
+        assertEquals(List.of(4120011, 4120012, 4120013), first.getOFKFKNJHDIOList());
+        var before = document();
+        assertEquals(first, settle(request));
+        assertEquals(before, document());
+        assertEquals(120, musicCoins());
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void uncertainWritesReturnRewardIdsOnlyAfterTheOriginalGrantIsConfirmed(boolean committed)
+            throws Exception {
+        start(9991);
+        if (committed) failAfterWrite.set(true);
+        else failWrite.set(true);
+        var request = report(9991, 300, false);
+        var failed = settle(request);
+        assertNotEquals(0, failed.getRetcode());
+        assertTrue(
+                failed.getOFKFKNJHDIOList().isEmpty(),
+                "An error cannot advertise an unconfirmed reward");
+        failWrite.set(false);
+        var confirmed = settle(request);
+        assertEquals(0, confirmed.getRetcode());
+        assertEquals(List.of(4120001), confirmed.getOFKFKNJHDIOList());
+        var before = document();
+        assertEquals(confirmed, settle(request));
+        assertEquals(before, document());
+        assertEquals(20, actual.getPrimogems());
+        assertEquals(20, musicCoins());
+    }
+
+    @Test
+    void aLostResponseReplaysItsConfirmedRewardIdsWithoutPayingAgain() throws Exception {
+        start(3);
+        var request = report(3, 4000, false);
+        packets.clear();
+        failSettleReply.set(true);
+        dispatcher.handle(
+                actual.getSession(),
+                PacketOpcodes.MusicGameBookSettleReq,
+                new byte[0],
+                request.toByteArray());
+        assertTrue(
+                packets.stream()
+                        .noneMatch(p -> p.getOpcode() == PacketOpcodes.MusicGameBookSettleRsp));
+        var before = document();
+        var replay = settle(request);
+        assertEquals(0, replay.getRetcode());
+        assertEquals(List.of(4120011, 4120012, 4120013), replay.getOFKFKNJHDIOList());
+        assertEquals(before, document());
+        assertEquals(120, musicCoins());
+    }
+
+    @Test
+    void aLostCurrencyHintDoesNotRemoveTheConfirmedRewardDisplay() throws Exception {
+        start(9991);
+        failRewardHint.set(true);
+        var request = report(9991, 300, false);
+        var result = settle(request);
+        assertEquals(0, result.getRetcode());
+        assertEquals(List.of(4120001), result.getOFKFKNJHDIOList());
+        var before = document();
+        assertEquals(result, settle(request));
+        assertEquals(before, document());
+        assertEquals(20, musicCoins());
+    }
+
+    @Test
+    void reusedRewardDefinitionsStayRepeatedWhenSeparateFirstClearsEachPayThem(
+            @org.junit.jupiter.api.io.TempDir Path directory) throws Exception {
+        copyRewardResources(directory);
+        var file = directory.resolve("MusicGameBookBeatmapExcelConfigData.json");
+        var rows = JsonParser.parseString(Files.readString(file)).getAsJsonArray();
+        for (var value : rows) {
+            var row = value.getAsJsonObject();
+            if (row.get("id").getAsInt() == 2)
+                row.add("rewardIdList", JsonParser.parseString("[4120011]"));
+        }
+        Files.writeString(file, rows.toString());
+        start(2);
+        replaceField(
+                MusicGameBook.class,
+                actual.getMusicGameBook(),
+                "activeCatalog",
+                MusicGameBookCatalog.load(directory));
+        var result = settle(report(2, maximums.get(2), false));
+        assertEquals(0, result.getRetcode());
+        assertEquals(List.of(4120011, 4120011), result.getOFKFKNJHDIOList());
+        assertEquals(40, musicCoins());
     }
 }

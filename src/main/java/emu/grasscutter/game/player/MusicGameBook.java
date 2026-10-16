@@ -374,6 +374,10 @@ public final class MusicGameBook {
                                 throw new IllegalStateException("Negative music reward balance");
                             balances.put(property, Math.addExact(before, item.getValue()));
                         }
+                        // The native result page expands these paid reward definitions into its
+                        // currency list. Preserve repetitions when separate clears share a row.
+                        result.addAllOFKFKNJHDIO(
+                                targets.stream().flatMap(map -> map.rewardIds().stream()).toList());
                         if (recordedScore > previous
                                 || fullCombo && (old == null || !old.isFullCombo())
                                 || !targets.isEmpty()) {
@@ -429,7 +433,7 @@ public final class MusicGameBook {
                                 "Music book settlement unavailable for UID {}",
                                 player.getUid(),
                                 unavailable);
-                return result.setRetcode(Retcode.RET_SVR_ERROR_VALUE).build();
+                return result.clearOFKFKNJHDIO().setRetcode(Retcode.RET_SVR_ERROR_VALUE).build();
             }
         }
     }
