@@ -590,14 +590,15 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
     }
 
     @Test
-    void virtualActivityPreviewItemsDoNotConsumeSlotsOrCancelOtherRewards() throws Exception {
+    void inactiveActivityCurrenciesRejectTheWholeBatchBeforeCharging() throws Exception {
         materialCapacity(1);
         GameData.getDungeonDropDataMap()
                 .put(5125, List.of(drop(128, 1), drop(141, 1), drop(202, 10)));
         var manager = dungeon(5125);
-        assertTrue(manager.getStatueDrops(actual, false, 0));
-        assertEquals(10, actual.getMora());
-        assertEquals(180, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertFalse(manager.getStatueDrops(actual, false, 0));
+        assertEquals(0, actual.getMora());
+        assertEquals(200, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertFalse(manager.hasClaimedDomainReward(actual.getUid()));
         assertEquals(1, actual.getInventory().getInventoryTab(ItemType.ITEM_MATERIAL).getSize());
     }
 

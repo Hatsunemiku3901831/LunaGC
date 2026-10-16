@@ -1,0 +1,2086 @@
+{
+  "schema": 1,
+  "currencyCount": 67,
+  "declaredCurrencyCount": 45,
+  "legacyPriceCurrencyCount": 22,
+  "separateReceiptCurrencies": [
+    109,
+    110
+  ],
+  "inputSha256": {
+    "NewActivityExcelConfigData.json": "b41f134cac95fda01d824ebaa8b9b794141c0c429abefe22c8c91063594e395e",
+    "MaterialExcelConfigData.json": "b170f862af1cd9acf9ca5438cb915be0bf1ac65d1abb16d7ab64279160985fff",
+    "ActivityShopOverallExcelConfigData.json": "5c2e15801e99a6c41c82363f71b70314571e73f4c706be516a0098ef92859fb4",
+    "ShopGoodsExcelConfigData.json": "979059995c86889e0f7c3f4ccb6d031f572cee3db6454ffa9df5116f99c42d82",
+    "ActivityHistory.json": "6e884c4d87694f05f8ea5422260cdeada08a87cddaf960715d2a3b45750b2b26",
+    "ShopType.java": "8bd3f09b28c46f3dd3abb40c5b230beb70fa5b511de9ec2ab14516432567d950",
+    "BeyondCurrency.java": "03d1ee02ad806951c90f6bf9331e242efe345a055792d07283af67a10cd2fe70"
+  },
+  "currencies": [
+    {
+      "itemId": 111,
+      "activityId": 3001,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 1004101,
+          "shopType": 1040,
+          "count": 600
+        },
+        {
+          "goodsId": 1004102,
+          "shopType": 1040,
+          "count": 25
+        },
+        {
+          "goodsId": 1004103,
+          "shopType": 1040,
+          "count": 25
+        },
+        {
+          "goodsId": 1004104,
+          "shopType": 1040,
+          "count": 25
+        },
+        {
+          "goodsId": 1004105,
+          "shopType": 1040,
+          "count": 25
+        },
+        {
+          "goodsId": 1004106,
+          "shopType": 1040,
+          "count": 25
+        },
+        {
+          "goodsId": 1004107,
+          "shopType": 1040,
+          "count": 25
+        },
+        {
+          "goodsId": 1004108,
+          "shopType": 1040,
+          "count": 20
+        },
+        {
+          "goodsId": 1004109,
+          "shopType": 1040,
+          "count": 10
+        },
+        {
+          "goodsId": 1004110,
+          "shopType": 1040,
+          "count": 20
+        }
+      ]
+    },
+    {
+      "itemId": 112,
+      "activityId": 3001,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 1004201,
+          "shopType": 1040,
+          "count": 600
+        },
+        {
+          "goodsId": 1004202,
+          "shopType": 1040,
+          "count": 20
+        },
+        {
+          "goodsId": 1004203,
+          "shopType": 1040,
+          "count": 5
+        },
+        {
+          "goodsId": 1004204,
+          "shopType": 1040,
+          "count": 10
+        },
+        {
+          "goodsId": 1004205,
+          "shopType": 1040,
+          "count": 20
+        }
+      ]
+    },
+    {
+      "itemId": 113,
+      "activityId": 3001,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 1004301,
+          "shopType": 1040,
+          "count": 400
+        },
+        {
+          "goodsId": 1004302,
+          "shopType": 1040,
+          "count": 600
+        },
+        {
+          "goodsId": 1004303,
+          "shopType": 1040,
+          "count": 20
+        },
+        {
+          "goodsId": 1004304,
+          "shopType": 1040,
+          "count": 20
+        },
+        {
+          "goodsId": 1004305,
+          "shopType": 1040,
+          "count": 20
+        },
+        {
+          "goodsId": 1004306,
+          "shopType": 1040,
+          "count": 20
+        },
+        {
+          "goodsId": 1004307,
+          "shopType": 1040,
+          "count": 20
+        },
+        {
+          "goodsId": 1004308,
+          "shopType": 1040,
+          "count": 20
+        },
+        {
+          "goodsId": 1004309,
+          "shopType": 1040,
+          "count": 12
+        },
+        {
+          "goodsId": 1004310,
+          "shopType": 1040,
+          "count": 12
+        }
+      ]
+    },
+    {
+      "itemId": 115,
+      "activityId": 2002,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 1005101,
+          "shopType": 1043,
+          "count": 60
+        },
+        {
+          "goodsId": 1005102,
+          "shopType": 1043,
+          "count": 60
+        },
+        {
+          "goodsId": 1005103,
+          "shopType": 1043,
+          "count": 60
+        },
+        {
+          "goodsId": 1005104,
+          "shopType": 1043,
+          "count": 60
+        },
+        {
+          "goodsId": 1005105,
+          "shopType": 1043,
+          "count": 60
+        },
+        {
+          "goodsId": 1005106,
+          "shopType": 1043,
+          "count": 60
+        },
+        {
+          "goodsId": 1005107,
+          "shopType": 1043,
+          "count": 20
+        },
+        {
+          "goodsId": 1005108,
+          "shopType": 1043,
+          "count": 10
+        },
+        {
+          "goodsId": 1005109,
+          "shopType": 1043,
+          "count": 20
+        },
+        {
+          "goodsId": 1005201,
+          "shopType": 1043,
+          "count": 1000
+        },
+        {
+          "goodsId": 1005202,
+          "shopType": 1043,
+          "count": 20
+        },
+        {
+          "goodsId": 1005203,
+          "shopType": 1043,
+          "count": 10
+        },
+        {
+          "goodsId": 1005204,
+          "shopType": 1043,
+          "count": 20
+        },
+        {
+          "goodsId": 1005301,
+          "shopType": 1043,
+          "count": 1000
+        },
+        {
+          "goodsId": 1005302,
+          "shopType": 1043,
+          "count": 120
+        },
+        {
+          "goodsId": 1005303,
+          "shopType": 1043,
+          "count": 40
+        },
+        {
+          "goodsId": 1005304,
+          "shopType": 1043,
+          "count": 120
+        },
+        {
+          "goodsId": 1005305,
+          "shopType": 1043,
+          "count": 40
+        },
+        {
+          "goodsId": 1005306,
+          "shopType": 1043,
+          "count": 120
+        },
+        {
+          "goodsId": 1005307,
+          "shopType": 1043,
+          "count": 40
+        },
+        {
+          "goodsId": 1005308,
+          "shopType": 1043,
+          "count": 120
+        },
+        {
+          "goodsId": 1005309,
+          "shopType": 1043,
+          "count": 40
+        },
+        {
+          "goodsId": 1005310,
+          "shopType": 1043,
+          "count": 120
+        },
+        {
+          "goodsId": 1005311,
+          "shopType": 1043,
+          "count": 40
+        },
+        {
+          "goodsId": 1005312,
+          "shopType": 1043,
+          "count": 120
+        },
+        {
+          "goodsId": 1005313,
+          "shopType": 1043,
+          "count": 40
+        }
+      ]
+    },
+    {
+      "itemId": 118,
+      "activityId": 2003,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 1044101,
+          "shopType": 1044,
+          "count": 400
+        },
+        {
+          "goodsId": 1044102,
+          "shopType": 1044,
+          "count": 20
+        },
+        {
+          "goodsId": 1044103,
+          "shopType": 1044,
+          "count": 60
+        },
+        {
+          "goodsId": 1044104,
+          "shopType": 1044,
+          "count": 20
+        },
+        {
+          "goodsId": 1044105,
+          "shopType": 1044,
+          "count": 60
+        },
+        {
+          "goodsId": 1044106,
+          "shopType": 1044,
+          "count": 20
+        },
+        {
+          "goodsId": 1044107,
+          "shopType": 1044,
+          "count": 60
+        },
+        {
+          "goodsId": 1044108,
+          "shopType": 1044,
+          "count": 20
+        },
+        {
+          "goodsId": 1044109,
+          "shopType": 1044,
+          "count": 60
+        },
+        {
+          "goodsId": 1044110,
+          "shopType": 1044,
+          "count": 20
+        },
+        {
+          "goodsId": 1044111,
+          "shopType": 1044,
+          "count": 60
+        },
+        {
+          "goodsId": 1044112,
+          "shopType": 1044,
+          "count": 20
+        },
+        {
+          "goodsId": 1044113,
+          "shopType": 1044,
+          "count": 60
+        },
+        {
+          "goodsId": 1044114,
+          "shopType": 1044,
+          "count": 280
+        },
+        {
+          "goodsId": 1044115,
+          "shopType": 1044,
+          "count": 280
+        }
+      ]
+    },
+    {
+      "itemId": 119,
+      "activityId": 2003,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 1044201,
+          "shopType": 1044,
+          "count": 700
+        },
+        {
+          "goodsId": 1044202,
+          "shopType": 1044,
+          "count": 500
+        },
+        {
+          "goodsId": 1044203,
+          "shopType": 1044,
+          "count": 15
+        },
+        {
+          "goodsId": 1044204,
+          "shopType": 1044,
+          "count": 15
+        },
+        {
+          "goodsId": 1044205,
+          "shopType": 1044,
+          "count": 15
+        },
+        {
+          "goodsId": 1044206,
+          "shopType": 1044,
+          "count": 15
+        },
+        {
+          "goodsId": 1044207,
+          "shopType": 1044,
+          "count": 15
+        },
+        {
+          "goodsId": 1044208,
+          "shopType": 1044,
+          "count": 15
+        },
+        {
+          "goodsId": 1044209,
+          "shopType": 1044,
+          "count": 10
+        },
+        {
+          "goodsId": 1044210,
+          "shopType": 1044,
+          "count": 3
+        },
+        {
+          "goodsId": 1044211,
+          "shopType": 1044,
+          "count": 5
+        },
+        {
+          "goodsId": 1044212,
+          "shopType": 1044,
+          "count": 10
+        }
+      ]
+    },
+    {
+      "itemId": 122,
+      "activityId": 2004,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 15001101,
+          "shopType": 15001,
+          "count": 120
+        },
+        {
+          "goodsId": 15001102,
+          "shopType": 15001,
+          "count": 1000
+        },
+        {
+          "goodsId": 15001103,
+          "shopType": 15001,
+          "count": 40
+        },
+        {
+          "goodsId": 15001104,
+          "shopType": 15001,
+          "count": 120
+        },
+        {
+          "goodsId": 15001105,
+          "shopType": 15001,
+          "count": 40
+        },
+        {
+          "goodsId": 15001106,
+          "shopType": 15001,
+          "count": 120
+        },
+        {
+          "goodsId": 15001107,
+          "shopType": 15001,
+          "count": 40
+        },
+        {
+          "goodsId": 15001108,
+          "shopType": 15001,
+          "count": 120
+        },
+        {
+          "goodsId": 15001109,
+          "shopType": 15001,
+          "count": 40
+        },
+        {
+          "goodsId": 15001110,
+          "shopType": 15001,
+          "count": 120
+        },
+        {
+          "goodsId": 15001111,
+          "shopType": 15001,
+          "count": 40
+        },
+        {
+          "goodsId": 15001112,
+          "shopType": 15001,
+          "count": 120
+        },
+        {
+          "goodsId": 15001113,
+          "shopType": 15001,
+          "count": 40
+        },
+        {
+          "goodsId": 15001114,
+          "shopType": 15001,
+          "count": 120
+        },
+        {
+          "goodsId": 15001115,
+          "shopType": 15001,
+          "count": 60
+        },
+        {
+          "goodsId": 15001116,
+          "shopType": 15001,
+          "count": 60
+        },
+        {
+          "goodsId": 15001117,
+          "shopType": 15001,
+          "count": 60
+        },
+        {
+          "goodsId": 15001118,
+          "shopType": 15001,
+          "count": 60
+        },
+        {
+          "goodsId": 15001119,
+          "shopType": 15001,
+          "count": 60
+        },
+        {
+          "goodsId": 15001120,
+          "shopType": 15001,
+          "count": 60
+        },
+        {
+          "goodsId": 15001121,
+          "shopType": 15001,
+          "count": 20
+        },
+        {
+          "goodsId": 15001122,
+          "shopType": 15001,
+          "count": 10
+        },
+        {
+          "goodsId": 15001123,
+          "shopType": 15001,
+          "count": 20
+        },
+        {
+          "goodsId": 15001124,
+          "shopType": 15001,
+          "count": 30
+        }
+      ]
+    },
+    {
+      "itemId": 124,
+      "activityId": 2005,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 16001101,
+          "shopType": 16001,
+          "count": 500
+        },
+        {
+          "goodsId": 16001102,
+          "shopType": 16001,
+          "count": 500
+        },
+        {
+          "goodsId": 16001103,
+          "shopType": 16001,
+          "count": 100
+        },
+        {
+          "goodsId": 16001104,
+          "shopType": 16001,
+          "count": 100
+        },
+        {
+          "goodsId": 16001105,
+          "shopType": 16001,
+          "count": 200
+        },
+        {
+          "goodsId": 16001106,
+          "shopType": 16001,
+          "count": 50
+        },
+        {
+          "goodsId": 16001107,
+          "shopType": 16001,
+          "count": 50
+        },
+        {
+          "goodsId": 16001108,
+          "shopType": 16001,
+          "count": 50
+        },
+        {
+          "goodsId": 16001109,
+          "shopType": 16001,
+          "count": 50
+        },
+        {
+          "goodsId": 16001110,
+          "shopType": 16001,
+          "count": 50
+        },
+        {
+          "goodsId": 16001111,
+          "shopType": 16001,
+          "count": 50
+        }
+      ]
+    },
+    {
+      "itemId": 125,
+      "activityId": 2005,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 16001201,
+          "shopType": 16001,
+          "count": 800
+        },
+        {
+          "goodsId": 16001202,
+          "shopType": 16001,
+          "count": 500
+        },
+        {
+          "goodsId": 16001203,
+          "shopType": 16001,
+          "count": 200
+        },
+        {
+          "goodsId": 16001204,
+          "shopType": 16001,
+          "count": 200
+        },
+        {
+          "goodsId": 16001205,
+          "shopType": 16001,
+          "count": 200
+        },
+        {
+          "goodsId": 16001206,
+          "shopType": 16001,
+          "count": 10
+        },
+        {
+          "goodsId": 16001207,
+          "shopType": 16001,
+          "count": 10
+        },
+        {
+          "goodsId": 16001208,
+          "shopType": 16001,
+          "count": 10
+        },
+        {
+          "goodsId": 16001209,
+          "shopType": 16001,
+          "count": 10
+        },
+        {
+          "goodsId": 16001210,
+          "shopType": 16001,
+          "count": 10
+        },
+        {
+          "goodsId": 16001211,
+          "shopType": 16001,
+          "count": 10
+        },
+        {
+          "goodsId": 16001212,
+          "shopType": 16001,
+          "count": 5
+        },
+        {
+          "goodsId": 16001213,
+          "shopType": 16001,
+          "count": 10
+        }
+      ]
+    },
+    {
+      "itemId": 126,
+      "activityId": 5032,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 16002001,
+          "shopType": 16002,
+          "count": 200
+        },
+        {
+          "goodsId": 16002002,
+          "shopType": 16002,
+          "count": 1500
+        },
+        {
+          "goodsId": 16002003,
+          "shopType": 16002,
+          "count": 50
+        },
+        {
+          "goodsId": 16002004,
+          "shopType": 16002,
+          "count": 50
+        },
+        {
+          "goodsId": 16002005,
+          "shopType": 16002,
+          "count": 50
+        },
+        {
+          "goodsId": 16002006,
+          "shopType": 16002,
+          "count": 50
+        },
+        {
+          "goodsId": 16002007,
+          "shopType": 16002,
+          "count": 50
+        },
+        {
+          "goodsId": 16002008,
+          "shopType": 16002,
+          "count": 50
+        },
+        {
+          "goodsId": 16002009,
+          "shopType": 16002,
+          "count": 25
+        },
+        {
+          "goodsId": 16002010,
+          "shopType": 16002,
+          "count": 25
+        }
+      ]
+    },
+    {
+      "itemId": 127,
+      "activityId": 2006,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 20001101,
+          "shopType": 20001,
+          "count": 30
+        },
+        {
+          "goodsId": 20001102,
+          "shopType": 20001,
+          "count": 30
+        },
+        {
+          "goodsId": 20001103,
+          "shopType": 20001,
+          "count": 30
+        },
+        {
+          "goodsId": 20001104,
+          "shopType": 20001,
+          "count": 30
+        },
+        {
+          "goodsId": 20001105,
+          "shopType": 20001,
+          "count": 30
+        },
+        {
+          "goodsId": 20001106,
+          "shopType": 20001,
+          "count": 30
+        },
+        {
+          "goodsId": 20001107,
+          "shopType": 20001,
+          "count": 10
+        },
+        {
+          "goodsId": 20001108,
+          "shopType": 20001,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "itemId": 128,
+      "activityId": 2006,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 20001201,
+          "shopType": 20001,
+          "count": 500
+        },
+        {
+          "goodsId": 20001202,
+          "shopType": 20001,
+          "count": 20
+        },
+        {
+          "goodsId": 20001203,
+          "shopType": 20001,
+          "count": 60
+        },
+        {
+          "goodsId": 20001204,
+          "shopType": 20001,
+          "count": 20
+        },
+        {
+          "goodsId": 20001205,
+          "shopType": 20001,
+          "count": 60
+        },
+        {
+          "goodsId": 20001206,
+          "shopType": 20001,
+          "count": 20
+        },
+        {
+          "goodsId": 20001207,
+          "shopType": 20001,
+          "count": 60
+        },
+        {
+          "goodsId": 20001213,
+          "shopType": 20001,
+          "count": 10
+        }
+      ]
+    },
+    {
+      "itemId": 130,
+      "activityId": 5037,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 20002101,
+          "shopType": 20002,
+          "count": 50
+        },
+        {
+          "goodsId": 20002102,
+          "shopType": 20002,
+          "count": 15
+        },
+        {
+          "goodsId": 20002103,
+          "shopType": 20002,
+          "count": 15
+        },
+        {
+          "goodsId": 20002104,
+          "shopType": 20002,
+          "count": 15
+        },
+        {
+          "goodsId": 20002105,
+          "shopType": 20002,
+          "count": 8
+        },
+        {
+          "goodsId": 20002106,
+          "shopType": 20002,
+          "count": 8
+        }
+      ]
+    },
+    {
+      "itemId": 135,
+      "activityId": 2009,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 23001101,
+          "shopType": 20004,
+          "count": 400
+        },
+        {
+          "goodsId": 23001102,
+          "shopType": 20004,
+          "count": 15
+        },
+        {
+          "goodsId": 23001103,
+          "shopType": 20004,
+          "count": 45
+        },
+        {
+          "goodsId": 23001104,
+          "shopType": 20004,
+          "count": 15
+        },
+        {
+          "goodsId": 23001105,
+          "shopType": 20004,
+          "count": 45
+        },
+        {
+          "goodsId": 23001106,
+          "shopType": 20004,
+          "count": 15
+        },
+        {
+          "goodsId": 23001107,
+          "shopType": 20004,
+          "count": 45
+        },
+        {
+          "goodsId": 23001108,
+          "shopType": 20004,
+          "count": 10
+        },
+        {
+          "goodsId": 23001109,
+          "shopType": 20004,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "itemId": 136,
+      "activityId": 2009,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 23001201,
+          "shopType": 20004,
+          "count": 500
+        },
+        {
+          "goodsId": 23001202,
+          "shopType": 20004,
+          "count": 400
+        },
+        {
+          "goodsId": 23001203,
+          "shopType": 20004,
+          "count": 20
+        },
+        {
+          "goodsId": 23001204,
+          "shopType": 20004,
+          "count": 60
+        },
+        {
+          "goodsId": 23001205,
+          "shopType": 20004,
+          "count": 20
+        },
+        {
+          "goodsId": 23001206,
+          "shopType": 20004,
+          "count": 60
+        },
+        {
+          "goodsId": 23001207,
+          "shopType": 20004,
+          "count": 20
+        },
+        {
+          "goodsId": 23001208,
+          "shopType": 20004,
+          "count": 60
+        },
+        {
+          "goodsId": 23001209,
+          "shopType": 20004,
+          "count": 10
+        }
+      ]
+    },
+    {
+      "itemId": 137,
+      "activityId": 2010,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 24001101,
+          "shopType": 20005,
+          "count": 120
+        },
+        {
+          "goodsId": 24001102,
+          "shopType": 20005,
+          "count": 120
+        },
+        {
+          "goodsId": 24001103,
+          "shopType": 20005,
+          "count": 120
+        },
+        {
+          "goodsId": 24001104,
+          "shopType": 20005,
+          "count": 120
+        },
+        {
+          "goodsId": 24001105,
+          "shopType": 20005,
+          "count": 120
+        },
+        {
+          "goodsId": 24001106,
+          "shopType": 20005,
+          "count": 120
+        },
+        {
+          "goodsId": 24001107,
+          "shopType": 20005,
+          "count": 30
+        },
+        {
+          "goodsId": 24001108,
+          "shopType": 20005,
+          "count": 30
+        },
+        {
+          "goodsId": 24001109,
+          "shopType": 20005,
+          "count": 30
+        },
+        {
+          "goodsId": 24001110,
+          "shopType": 20005,
+          "count": 30
+        },
+        {
+          "goodsId": 24001111,
+          "shopType": 20005,
+          "count": 30
+        },
+        {
+          "goodsId": 24001112,
+          "shopType": 20005,
+          "count": 30
+        },
+        {
+          "goodsId": 24001113,
+          "shopType": 20005,
+          "count": 10
+        }
+      ]
+    },
+    {
+      "itemId": 138,
+      "activityId": 2010,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 24001201,
+          "shopType": 20005,
+          "count": 300
+        },
+        {
+          "goodsId": 24001202,
+          "shopType": 20005,
+          "count": 300
+        },
+        {
+          "goodsId": 24001203,
+          "shopType": 20005,
+          "count": 300
+        },
+        {
+          "goodsId": 24001204,
+          "shopType": 20005,
+          "count": 300
+        },
+        {
+          "goodsId": 24001205,
+          "shopType": 20005,
+          "count": 300
+        },
+        {
+          "goodsId": 24001206,
+          "shopType": 20005,
+          "count": 300
+        },
+        {
+          "goodsId": 24001207,
+          "shopType": 20005,
+          "count": 300
+        },
+        {
+          "goodsId": 24001208,
+          "shopType": 20005,
+          "count": 300
+        },
+        {
+          "goodsId": 24001209,
+          "shopType": 20005,
+          "count": 300
+        }
+      ]
+    },
+    {
+      "itemId": 139,
+      "activityId": 2010,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 24001301,
+          "shopType": 20005,
+          "count": 500
+        },
+        {
+          "goodsId": 24001302,
+          "shopType": 20005,
+          "count": 20
+        },
+        {
+          "goodsId": 24001303,
+          "shopType": 20005,
+          "count": 60
+        },
+        {
+          "goodsId": 24001304,
+          "shopType": 20005,
+          "count": 20
+        },
+        {
+          "goodsId": 24001305,
+          "shopType": 20005,
+          "count": 60
+        },
+        {
+          "goodsId": 24001306,
+          "shopType": 20005,
+          "count": 20
+        },
+        {
+          "goodsId": 24001307,
+          "shopType": 20005,
+          "count": 60
+        }
+      ]
+    },
+    {
+      "itemId": 140,
+      "activityId": 2013,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 27001101,
+          "shopType": 27001,
+          "count": 500
+        },
+        {
+          "goodsId": 27001102,
+          "shopType": 27001,
+          "count": 800
+        },
+        {
+          "goodsId": 27001103,
+          "shopType": 27001,
+          "count": 15
+        },
+        {
+          "goodsId": 27001104,
+          "shopType": 27001,
+          "count": 45
+        },
+        {
+          "goodsId": 27001105,
+          "shopType": 27001,
+          "count": 15
+        },
+        {
+          "goodsId": 27001106,
+          "shopType": 27001,
+          "count": 45
+        },
+        {
+          "goodsId": 27001107,
+          "shopType": 27001,
+          "count": 15
+        },
+        {
+          "goodsId": 27001108,
+          "shopType": 27001,
+          "count": 45
+        },
+        {
+          "goodsId": 27001109,
+          "shopType": 27001,
+          "count": 20
+        },
+        {
+          "goodsId": 27001110,
+          "shopType": 27001,
+          "count": 60
+        },
+        {
+          "goodsId": 27001111,
+          "shopType": 27001,
+          "count": 20
+        },
+        {
+          "goodsId": 27001112,
+          "shopType": 27001,
+          "count": 60
+        },
+        {
+          "goodsId": 27001113,
+          "shopType": 27001,
+          "count": 20
+        },
+        {
+          "goodsId": 27001114,
+          "shopType": 27001,
+          "count": 60
+        },
+        {
+          "goodsId": 27001115,
+          "shopType": 27001,
+          "count": 10
+        },
+        {
+          "goodsId": 27001116,
+          "shopType": 27001,
+          "count": 5
+        },
+        {
+          "goodsId": 27001117,
+          "shopType": 27001,
+          "count": 10
+        }
+      ]
+    },
+    {
+      "itemId": 141,
+      "activityId": 2014,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 28001101,
+          "shopType": 28001,
+          "count": 400
+        },
+        {
+          "goodsId": 28001102,
+          "shopType": 28001,
+          "count": 25
+        },
+        {
+          "goodsId": 28001103,
+          "shopType": 28001,
+          "count": 25
+        },
+        {
+          "goodsId": 28001104,
+          "shopType": 28001,
+          "count": 25
+        },
+        {
+          "goodsId": 28001105,
+          "shopType": 28001,
+          "count": 25
+        },
+        {
+          "goodsId": 28001106,
+          "shopType": 28001,
+          "count": 25
+        },
+        {
+          "goodsId": 28001107,
+          "shopType": 28001,
+          "count": 25
+        },
+        {
+          "goodsId": 28001108,
+          "shopType": 28001,
+          "count": 15
+        },
+        {
+          "goodsId": 28001109,
+          "shopType": 28001,
+          "count": 45
+        },
+        {
+          "goodsId": 28001110,
+          "shopType": 28001,
+          "count": 15
+        },
+        {
+          "goodsId": 28001111,
+          "shopType": 28001,
+          "count": 45
+        },
+        {
+          "goodsId": 28001112,
+          "shopType": 28001,
+          "count": 15
+        },
+        {
+          "goodsId": 28001113,
+          "shopType": 28001,
+          "count": 45
+        },
+        {
+          "goodsId": 28001114,
+          "shopType": 28001,
+          "count": 8
+        }
+      ]
+    },
+    {
+      "itemId": 143,
+      "activityId": 2015,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 30001201,
+          "shopType": 30001,
+          "count": 150
+        },
+        {
+          "goodsId": 30001202,
+          "shopType": 30001,
+          "count": 700
+        },
+        {
+          "goodsId": 30001203,
+          "shopType": 30001,
+          "count": 45
+        },
+        {
+          "goodsId": 30001204,
+          "shopType": 30001,
+          "count": 45
+        },
+        {
+          "goodsId": 30001205,
+          "shopType": 30001,
+          "count": 45
+        },
+        {
+          "goodsId": 30001206,
+          "shopType": 30001,
+          "count": 45
+        },
+        {
+          "goodsId": 30001207,
+          "shopType": 30001,
+          "count": 45
+        },
+        {
+          "goodsId": 30001208,
+          "shopType": 30001,
+          "count": 45
+        },
+        {
+          "goodsId": 30001209,
+          "shopType": 30001,
+          "count": 45
+        },
+        {
+          "goodsId": 30001210,
+          "shopType": 30001,
+          "count": 30
+        },
+        {
+          "goodsId": 30001211,
+          "shopType": 30001,
+          "count": 90
+        },
+        {
+          "goodsId": 30001212,
+          "shopType": 30001,
+          "count": 30
+        },
+        {
+          "goodsId": 30001213,
+          "shopType": 30001,
+          "count": 90
+        },
+        {
+          "goodsId": 30001214,
+          "shopType": 30001,
+          "count": 30
+        },
+        {
+          "goodsId": 30001215,
+          "shopType": 30001,
+          "count": 90
+        },
+        {
+          "goodsId": 30001216,
+          "shopType": 30001,
+          "count": 13
+        },
+        {
+          "goodsId": 30001217,
+          "shopType": 30001,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "itemId": 144,
+      "activityId": 2015,
+      "sources": [
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 30001101,
+          "shopType": 30001,
+          "count": 100
+        },
+        {
+          "goodsId": 30001102,
+          "shopType": 30001,
+          "count": 100
+        },
+        {
+          "goodsId": 30001103,
+          "shopType": 30001,
+          "count": 100
+        },
+        {
+          "goodsId": 30001104,
+          "shopType": 30001,
+          "count": 100
+        },
+        {
+          "goodsId": 30001105,
+          "shopType": 30001,
+          "count": 100
+        },
+        {
+          "goodsId": 30001106,
+          "shopType": 30001,
+          "count": 100
+        },
+        {
+          "goodsId": 30001107,
+          "shopType": 30001,
+          "count": 100
+        },
+        {
+          "goodsId": 30001108,
+          "shopType": 30001,
+          "count": 100
+        },
+        {
+          "goodsId": 30001109,
+          "shopType": 30001,
+          "count": 100
+        },
+        {
+          "goodsId": 30001110,
+          "shopType": 30001,
+          "count": 100
+        },
+        {
+          "goodsId": 30001111,
+          "shopType": 30001,
+          "count": 100
+        },
+        {
+          "goodsId": 30001112,
+          "shopType": 30001,
+          "count": 100
+        },
+        {
+          "goodsId": 30001113,
+          "shopType": 30001,
+          "count": 60
+        },
+        {
+          "goodsId": 30001114,
+          "shopType": 30001,
+          "count": 60
+        },
+        {
+          "goodsId": 30001115,
+          "shopType": 30001,
+          "count": 60
+        },
+        {
+          "goodsId": 30001116,
+          "shopType": 30001,
+          "count": 60
+        },
+        {
+          "goodsId": 30001117,
+          "shopType": 30001,
+          "count": 60
+        },
+        {
+          "goodsId": 30001118,
+          "shopType": 30001,
+          "count": 60
+        },
+        {
+          "goodsId": 30001119,
+          "shopType": 30001,
+          "count": 60
+        },
+        {
+          "goodsId": 30001120,
+          "shopType": 30001,
+          "count": 60
+        },
+        {
+          "goodsId": 30001121,
+          "shopType": 30001,
+          "count": 60
+        },
+        {
+          "goodsId": 30001122,
+          "shopType": 30001,
+          "count": 60
+        },
+        {
+          "goodsId": 30001123,
+          "shopType": 30001,
+          "count": 60
+        },
+        {
+          "goodsId": 30001124,
+          "shopType": 30001,
+          "count": 60
+        },
+        {
+          "goodsId": 30001125,
+          "shopType": 30001,
+          "count": 40
+        },
+        {
+          "goodsId": 30001126,
+          "shopType": 30001,
+          "count": 40
+        },
+        {
+          "goodsId": 30001127,
+          "shopType": 30001,
+          "count": 40
+        },
+        {
+          "goodsId": 30001128,
+          "shopType": 30001,
+          "count": 40
+        },
+        {
+          "goodsId": 30001129,
+          "shopType": 30001,
+          "count": 40
+        },
+        {
+          "goodsId": 30001130,
+          "shopType": 30001,
+          "count": 40
+        },
+        {
+          "goodsId": 30001131,
+          "shopType": 30001,
+          "count": 40
+        },
+        {
+          "goodsId": 30001132,
+          "shopType": 30001,
+          "count": 40
+        },
+        {
+          "goodsId": 30001133,
+          "shopType": 30001,
+          "count": 40
+        },
+        {
+          "goodsId": 30001134,
+          "shopType": 30001,
+          "count": 40
+        },
+        {
+          "goodsId": 30001135,
+          "shopType": 30001,
+          "count": 40
+        },
+        {
+          "goodsId": 30001136,
+          "shopType": 30001,
+          "count": 40
+        }
+      ]
+    },
+    {
+      "itemId": 151,
+      "activityId": 2017,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 152,
+      "activityId": 2017,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 153,
+      "activityId": 5107,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 155,
+      "activityId": 2018,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 156,
+      "activityId": 2019,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 157,
+      "activityId": 2020,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 158,
+      "activityId": 2021,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 159,
+      "activityId": 2020,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 160,
+      "activityId": 2022,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 161,
+      "activityId": 2023,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 162,
+      "activityId": 2023,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 163,
+      "activityId": 2024,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 164,
+      "activityId": 2025,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 166,
+      "activityId": 2026,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 167,
+      "activityId": 2027,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 168,
+      "activityId": 5174,
+      "sources": [
+        "activityCoinIdList",
+        "original-shop-cost"
+      ],
+      "originalPriceRows": [
+        {
+          "goodsId": 1003105,
+          "shopType": 1041,
+          "count": 160
+        },
+        {
+          "goodsId": 1003106,
+          "shopType": 1041,
+          "count": 160
+        },
+        {
+          "goodsId": 1003107,
+          "shopType": 1041,
+          "count": 160
+        },
+        {
+          "goodsId": 1003108,
+          "shopType": 1041,
+          "count": 160
+        },
+        {
+          "goodsId": 1003109,
+          "shopType": 1041,
+          "count": 160
+        },
+        {
+          "goodsId": 1003110,
+          "shopType": 1041,
+          "count": 160
+        },
+        {
+          "goodsId": 1003101,
+          "shopType": 1041,
+          "count": 20
+        },
+        {
+          "goodsId": 1003102,
+          "shopType": 1041,
+          "count": 25
+        },
+        {
+          "goodsId": 1003103,
+          "shopType": 1041,
+          "count": 25
+        },
+        {
+          "goodsId": 1003104,
+          "shopType": 1041,
+          "count": 35
+        },
+        {
+          "goodsId": 1003201,
+          "shopType": 1041,
+          "count": 35
+        },
+        {
+          "goodsId": 1003202,
+          "shopType": 1041,
+          "count": 35
+        }
+      ]
+    },
+    {
+      "itemId": 169,
+      "activityId": 2028,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 170,
+      "activityId": 2027,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 172,
+      "activityId": 2030,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 173,
+      "activityId": 2031,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 174,
+      "activityId": 2032,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 176,
+      "activityId": 2032,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 177,
+      "activityId": 2033,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 178,
+      "activityId": 2034,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 179,
+      "activityId": 2035,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 180,
+      "activityId": 2036,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 181,
+      "activityId": 2037,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 182,
+      "activityId": 2039,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 183,
+      "activityId": 2039,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 184,
+      "activityId": 2039,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 185,
+      "activityId": 2040,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 186,
+      "activityId": 2041,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 187,
+      "activityId": 2042,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 188,
+      "activityId": 2043,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 189,
+      "activityId": 2044,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 190,
+      "activityId": 2045,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 191,
+      "activityId": 2046,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 194,
+      "activityId": 2047,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 195,
+      "activityId": 2048,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 196,
+      "activityId": 2049,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 197,
+      "activityId": 2050,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 198,
+      "activityId": 5333,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 200,
+      "activityId": 5343,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 401,
+      "activityId": 5343,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    },
+    {
+      "itemId": 402,
+      "activityId": 2051,
+      "sources": [
+        "activityCoinIdList"
+      ],
+      "originalPriceRows": []
+    }
+  ]
+}

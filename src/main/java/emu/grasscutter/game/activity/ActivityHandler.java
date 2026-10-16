@@ -171,6 +171,8 @@ public abstract class ActivityHandler {
             proto.addAllWatcherInfoList(playerActivityData.getAllWatcherInfoList());
         }
 
+        ActivityCurrencies.appendInfo(activityConfigItem, playerActivityData, proto);
+
         onProtoBuild(playerActivityData, proto);
 
         return proto.build();

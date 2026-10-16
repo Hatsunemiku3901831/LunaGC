@@ -18,9 +18,17 @@ import java.util.concurrent.*;
 @Getter
 public class ActivityManager extends BasePlayerManager {
     public record Configuration(Map<Integer, ActivityConfigItem> activities,
-                                Map<Integer, ActivityConfigItem> schedules) {}
+                                Map<Integer, ActivityConfigItem> schedules,
+                                Map<Integer, Integer> currencyActivities) {
+        public Configuration { currencyActivities = Map.copyOf(currencyActivities); }
+        public Configuration(Map<Integer, ActivityConfigItem> activities, Map<Integer, ActivityConfigItem> schedules) {
+            this(activities, schedules, ActivityCurrencies.catalog());
+        }
+    }
 
-    private static volatile Configuration configuration = new Configuration(Map.of(), Map.of());
+    private static volatile Configuration configuration = new Configuration(Map.of(), Map.of(), Map.of());
+
+    static Configuration configurationSnapshot() { return configuration; }
     private final Map<Integer, PlayerActivityData> playerActivityDataMap = new ConcurrentHashMap<>();
     private ActivityConditionExecutor conditionExecutor;
     private Configuration loadedConfiguration;
@@ -79,6 +87,7 @@ public class ActivityManager extends BasePlayerManager {
                             DataLoader.loadList("ActivityConfig.json", ActivityConfigItem.class)));
             Grasscutter.getLogger()
                     .debug("Loaded {} activities.", configuration.activities().size());
+            Grasscutter.getLogger().info("Loaded {} activity currency bindings.", configuration.currencyActivities().size());
         } catch (Exception e) {
             Grasscutter.getLogger().warn("Unable to load activities config.", e);
         }
@@ -96,7 +105,13 @@ public class ActivityManager extends BasePlayerManager {
     }
 
     /** Closing preserves progress; a fresh schedule resets the existing database document. */
-    public synchronized void refreshActivities() {
+    public void refreshActivities() {
+        synchronized (player.getInventory()) {
+            synchronized (this) { refreshActivitiesLocked(); }
+        }
+    }
+
+    private void refreshActivitiesLocked() {
         var snapshot = configuration;
         playerActivityDataMap.keySet().removeIf(id -> !snapshot.activities().containsKey(id));
         for (var item : snapshot.activities().values()) {
@@ -119,7 +134,9 @@ public class ActivityManager extends BasePlayerManager {
                         originalWatchers == null ? null : new HashMap<>(originalWatchers);
                 String previousDetail = data.getDetail();
                 try {
-                    boolean changed = item.getActivityHandler().onLoadPlayerActivityData(data);
+                    boolean changed = originalWatchers == null;
+                    if (changed) data.setWatcherInfoMap(new HashMap<>());
+                    changed |= item.getActivityHandler().onLoadPlayerActivityData(data);
                     changed |= item.getActivityHandler().refreshWatcherProgress(data);
                     if (changed) data.saveSync();
                 } catch (RuntimeException | Error failure) {
@@ -148,7 +165,13 @@ public class ActivityManager extends BasePlayerManager {
         triggerActivityConditions();
     }
 
-    public synchronized void onPlayerLogin() {
+    public void onPlayerLogin() {
+        synchronized (player.getInventory()) {
+            synchronized (this) { onPlayerLoginLocked(); }
+        }
+    }
+
+    private void onPlayerLoginLocked() {
         if (loadedConfiguration != configuration) refreshActivities();
         notificationsEnabled = true;
         sendActivitySnapshot(loadedConfiguration);
@@ -177,7 +200,13 @@ public class ActivityManager extends BasePlayerManager {
     }
 
     /** A queued round must not contribute to a newer activity schedule. */
-    public synchronized void triggerWatcher(int activityId, int scheduleId, WatcherTriggerType type, String... params) {
+    public void triggerWatcher(int activityId, int scheduleId, WatcherTriggerType type, String... params) {
+        synchronized (player.getInventory()) {
+            synchronized (this) { triggerWatcherLocked(activityId, scheduleId, type, params); }
+        }
+    }
+
+    private void triggerWatcherLocked(int activityId, int scheduleId, WatcherTriggerType type, String... params) {
         var item = configuration.activities().get(activityId);
         var data = playerActivityDataMap.get(activityId);
         if (item == null || data == null || !item.isActiveAt(System.currentTimeMillis())
@@ -219,7 +248,13 @@ public class ActivityManager extends BasePlayerManager {
     public boolean meetsCondition(int id) { return conditionExecutor.meetsCondition(id); }
 
     /** Publish newly unlocked days without replacing the player's stored schedule or progress. */
-    public synchronized void onDailyReset(long now) {
+    public void onDailyReset(long now) {
+        synchronized (player.getInventory()) {
+            synchronized (this) { onDailyResetLocked(now); }
+        }
+    }
+
+    private void onDailyResetLocked(long now) {
         if (conditionExecutor == null || !notificationsEnabled) return;
         var snapshot = configuration;
         player.sendPacket(new PacketActivityScheduleInfoNotify(snapshot.schedules().values(), now));

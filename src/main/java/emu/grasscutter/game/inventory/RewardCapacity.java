@@ -1,6 +1,7 @@
 package emu.grasscutter.game.inventory;
 
 import emu.grasscutter.game.player.Player;
+import emu.grasscutter.game.activity.ActivityCurrencies;
 import emu.grasscutter.game.props.PlayerProperty;
 import emu.grasscutter.game.shop.BeyondCurrency;
 
@@ -36,8 +37,10 @@ public final class RewardCapacity {
             }
             var type = data.getItemType();
             if (type == ItemType.ITEM_VIRTUAL) {
+                if (ActivityCurrencies.contains(item.getItemId())
+                        && !ActivityCurrencies.canCredit(player, item.getItemId(), count)) return false;
                 long before = virtualBalance(player, item.getItemId());
-                if (before != Long.MIN_VALUE && (before < 0 || before + count > Integer.MAX_VALUE))
+                if (before == Long.MIN_VALUE || before < 0 || before + count > Integer.MAX_VALUE)
                     return false;
                 continue;
             }
@@ -83,17 +86,19 @@ public final class RewardCapacity {
     private static long virtualBalance(Player player, int itemId) {
         var property = BeyondCurrency.propertyForItem(itemId);
         if (property != null) return player.getProperty(property);
+        if (ActivityCurrencies.contains(itemId)) return ActivityCurrencies.balance(player, itemId);
         return switch (itemId) {
             case 101, 105 -> 0; // Character and companionship EXP are applied to the active team.
             case 102 -> player.getExp();
             case 106 -> player.getProperty(PlayerProperty.PROP_PLAYER_RESIN);
+            case 107 -> player.getProperty(PlayerProperty.PROP_PLAYER_LEGENDARY_KEY);
+            case 121 -> 0; // Realm EXP follows Inventory's immediate-effect path.
             case 201 -> player.getPrimogems();
             case 202 -> player.getMora();
             case 203 -> player.getCrystals();
             case 204 -> player.getHomeCoin();
             case 207 -> player.getProperty(PlayerProperty.PROP_PLAYER_MUSIC_GAME_BOOK_COIN);
-                // Preserve Inventory's existing virtual-effect path; missing mappings need their
-                // own port.
+                // Unsupported virtual items must not turn a paid reward into a no-op.
             default -> Long.MIN_VALUE;
         };
     }

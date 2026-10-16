@@ -8,6 +8,7 @@ import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.data.excels.ItemData;
 import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.game.avatar.*;
+import emu.grasscutter.game.activity.ActivityCurrencies;
 import emu.grasscutter.game.player.*;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.game.props.ItemUseAction.UseItemParams;
@@ -347,6 +348,8 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
         // Dont add items that dont have a valid item definition.
         var data = item.getItemData();
         if (data == null) return ItemAdmission.REJECTED;
+        if (data.getItemType() == ItemType.ITEM_VIRTUAL && ActivityCurrencies.contains(item.getItemId())
+                && !ActivityCurrencies.canCredit(player, item.getItemId(), item.getCount())) return ItemAdmission.REJECTED;
         if (data.getItemType() == ItemType.ITEM_TPS_WEAPON
                 && getInventoryTab(ItemType.ITEM_TPS_WEAPON).getItemById(item.getItemId()) != null) return ItemAdmission.REJECTED;
         try {
@@ -390,8 +393,8 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
                 return ItemAdmission.stored(item);
             case ITEM_VIRTUAL:
                 // Handle
-                this.addVirtualItem(item.getItemId(), item.getCount());
-                return ItemAdmission.stored(item);
+                return this.addVirtualItem(item.getItemId(), item.getCount())
+                        ? ItemAdmission.stored(item) : ItemAdmission.REJECTED;
             default:
                 switch (item.getItemData().getMaterialType()) {
                     case MATERIAL_AVATAR:
@@ -446,13 +449,14 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
         }
     }
 
-    private void addVirtualItem(int itemId, int count) {
+    private boolean addVirtualItem(int itemId, int count) {
         var beyondProperty = BeyondCurrency.propertyForItem(itemId);
         if (beyondProperty != null) {
             this.player.setProperty(
                     beyondProperty, Math.addExact(this.player.getProperty(beyondProperty), count));
-            return;
+            return true;
         }
+        if (ActivityCurrencies.contains(itemId)) return ActivityCurrencies.credit(player, itemId, count);
         switch (itemId) {
             case 101 -> // Character exp
             this.player.getTeamManager().getActiveTeam().stream()
@@ -495,7 +499,9 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
                             this.player.getProperties().getOrDefault(
                                     PlayerProperty.PROP_PLAYER_MUSIC_GAME_BOOK_COIN.getId(), 0),
                             count));
+            default -> { return false; }
         }
+        return true;
     }
 
     private GameItem payVirtualItem(int itemId, int count) {
@@ -536,6 +542,7 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
     private int getVirtualItemCount(int itemId) {
         var beyondProperty = BeyondCurrency.propertyForItem(itemId);
         if (beyondProperty != null) return this.player.getProperty(beyondProperty);
+        if (ActivityCurrencies.contains(itemId)) return ActivityCurrencies.balance(player, itemId);
         switch (itemId) {
             case 201: // Primogem
                 return this.player.getPrimogems();
@@ -564,6 +571,7 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
     public synchronized boolean payItem(int id, int count) {
         if (count < 0) return false;
         if (count == 0) return true;
+        if (ActivityCurrencies.contains(id)) return ActivityCurrencies.pay(player, Map.of(id, count));
         if (this.getVirtualItemCount(id) < count) return false;
         this.payVirtualItem(id, count);
         return true;
@@ -613,8 +621,12 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
         }
         for (var cost : totals.int2IntEntrySet())
             if (getVirtualItemCount(cost.getIntKey()) < cost.getIntValue()) return false;
+        var activityCosts = new HashMap<Integer, Integer>();
         for (var cost : totals.int2IntEntrySet())
-            this.payVirtualItem(cost.getIntKey(), cost.getIntValue());
+            if (ActivityCurrencies.contains(cost.getIntKey())) activityCosts.put(cost.getIntKey(), cost.getIntValue());
+        if (!ActivityCurrencies.pay(player, activityCosts)) return false;
+        for (var cost : totals.int2IntEntrySet())
+            if (!activityCosts.containsKey(cost.getIntKey())) this.payVirtualItem(cost.getIntKey(), cost.getIntValue());
         return true;
     }
 

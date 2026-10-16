@@ -21,17 +21,29 @@ import lombok.experimental.FieldDefaults;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder(builderMethodName = "of")
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class PlayerActivityData {
     @Id String id;
     int uid;
     int activityId;
     int scheduleId;
-    Map<Integer, WatcherInfo> watcherInfoMap;
+    @Builder.Default Map<Integer, WatcherInfo> watcherInfoMap = new HashMap<>();
+    @Builder.Default Map<Integer, Integer> activityCoins = new HashMap<>();
     /** the detail data of each type of activity (Json format) */
     String detail;
 
     @Transient Player player;
     @Transient ActivityHandler activityHandler;
+    @Transient @Getter(AccessLevel.NONE) @Setter(AccessLevel.NONE) volatile boolean unconfirmedActivityCoins;
+
+    public boolean hasUnconfirmedActivityCoins() { return unconfirmedActivityCoins; }
+    void blockUnconfirmedActivityCoins() { unconfirmedActivityCoins = true; }
+
+    public PlayerActivityData(String id, int uid, int activityId, int scheduleId,
+            Map<Integer, WatcherInfo> watcherInfoMap, String detail, Player player, ActivityHandler activityHandler) {
+        this(id, uid, activityId, scheduleId, watcherInfoMap, new HashMap<>(), detail, player, activityHandler, false);
+    }
 
     public static PlayerActivityData getByPlayer(Player player, int activityId) {
         return DatabaseHelper.getPlayerActivityData(player.getUid(), activityId);
@@ -39,17 +51,22 @@ public class PlayerActivityData {
 
     public void save() {
         // Acknowledged event documents must not race queued writes when the replay reuses their ID.
-        if (activityId == SalesmanSchedule.ACTIVITY_ID || activityId == emu.grasscutter.game.activity.aster.AsterSchedule.ACTIVITY_ID) saveSync();
+        if (activityId == SalesmanSchedule.ACTIVITY_ID || activityId == emu.grasscutter.game.activity.aster.AsterSchedule.ACTIVITY_ID
+                || ActivityCurrencies.belongsTo(activityId)) saveSync();
         else DatabaseHelper.savePlayerActivityData(this);
     }
 
-    public void saveSync() { DatabaseHelper.saveGameSync(this); }
+    public void saveSync() {
+        if (unconfirmedActivityCoins) throw new IllegalStateException("Activity coin write requires reconciliation");
+        DatabaseHelper.saveGameSync(this);
+    }
 
     public synchronized void addWatcherProgress(int watcherId) {
         addWatcherProgress(watcherId, 1);
     }
 
     public synchronized void addWatcherProgress(int watcherId, int delta) {
+        if (watcherInfoMap == null) return;
         var watcherInfo = watcherInfoMap.get(watcherId);
         if (watcherInfo == null) {
             return;
@@ -63,7 +80,7 @@ public class PlayerActivityData {
     }
 
     public List<ActivityWatcherInfoOuterClass.ActivityWatcherInfo> getAllWatcherInfoList() {
-        return watcherInfoMap.values().stream().map(WatcherInfo::toProto).toList();
+        return watcherInfoMap == null ? List.of() : watcherInfoMap.values().stream().map(WatcherInfo::toProto).toList();
     }
 
     public void setDetail(Object detail) {
@@ -74,9 +91,12 @@ public class PlayerActivityData {
     public void setDetailJson(String detail) { this.detail = detail; }
 
     public int takeWatcherReward(int watcherId) {
-        if (activityId == emu.grasscutter.game.activity.aster.AsterSchedule.ACTIVITY_ID)
-            return emu.grasscutter.game.activity.aster.AsterWatcherRewards.take(this, watcherId);
-        return takeDefaultWatcherReward(watcherId);
+        if (player == null) return Retcode.RET_ACTIVITY_CLOSE_VALUE;
+        synchronized (player.getInventory()) {
+            if (activityId == emu.grasscutter.game.activity.aster.AsterSchedule.ACTIVITY_ID)
+                return emu.grasscutter.game.activity.aster.AsterWatcherRewards.take(this, watcherId);
+            return takeDefaultWatcherReward(watcherId);
+        }
     }
 
     private synchronized int takeDefaultWatcherReward(int watcherId) {

@@ -91,6 +91,11 @@ public final class ActivityShop {
         }
     }
 
+    /** Original resource schedules remain stable when GM allocates a new replay schedule. */
+    public static Integer sourceActivityId(int scheduleId) {
+        return SourceSchedules.ACTIVITIES.get(scheduleId);
+    }
+
     public static Access resolve(Player player, int shopType, long now) {
         var overall = GameData.getActivityShopDataMap().get(shopType);
         boolean activityShop =
@@ -106,7 +111,7 @@ public final class ActivityShop {
 
         // Source schedule IDs identify the activity. GM reruns deliberately receive a fresh ID.
         var schedules = ActivityManager.getScheduleActivityConfigMap();
-        var sourceActivity = SourceSchedules.ACTIVITIES.get(overall.getScheduleId());
+        var sourceActivity = sourceActivityId(overall.getScheduleId());
         var config =
                 sourceActivity == null
                         ? schedules.get(overall.getScheduleId())

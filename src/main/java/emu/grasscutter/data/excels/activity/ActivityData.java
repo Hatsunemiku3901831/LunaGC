@@ -17,6 +17,7 @@ public class ActivityData extends GameResource {
     List<Integer> condGroupId;
     List<Integer> watcherId;
     List<ActivityWatcherData> watcherDataList;
+    List<Integer> activityCoinIdList = List.of();
 
     @Override
     public int getId() {
