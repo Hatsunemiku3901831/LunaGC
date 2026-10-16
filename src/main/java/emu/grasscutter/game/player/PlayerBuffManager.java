@@ -23,6 +23,7 @@ public final class PlayerBuffManager extends BasePlayerManager {
     private final Map<AbilityData, Set<AbilityModifierAction>> healingClaims =
             new java.util.concurrent.ConcurrentHashMap<>();
     private final LongSupplier clock;
+    private final ScarletQuartz scarletQuartz;
     private int nextBuffUid;
 
     public PlayerBuffManager(Player player) {
@@ -32,6 +33,7 @@ public final class PlayerBuffManager extends BasePlayerManager {
     public PlayerBuffManager(Player player, LongSupplier clock) {
         super(player);
         this.clock = Objects.requireNonNull(clock);
+        this.scarletQuartz = new ScarletQuartz(player);
     }
 
     public synchronized boolean hasBuff(int groupId) {
@@ -39,10 +41,12 @@ public final class PlayerBuffManager extends BasePlayerManager {
     }
 
     public synchronized void clearBuffs() {
+        boolean quartz = buffs.values().stream().anyMatch(b -> b.getTargetGuid() == 0 && ScarletQuartz.supports(b.buffData));
         notify(
                 ServerBuffChangeType.SERVER_BUFF_CHANGE_TYPE_DEL_SERVER_BUFF,
                 new ArrayList<>(buffs.values()));
         buffs.clear();
+        if (quartz) scarletQuartz.removed(false);
         // Claims survive removal: a late native callback must not recreate an already paid heal.
     }
 
@@ -91,6 +95,7 @@ public final class PlayerBuffManager extends BasePlayerManager {
         remove(replaced);
         var buff = new PlayerBuff(++nextBuffUid, buffData, duration, now, targetGuid, healing);
         buffs.put(buff.getUid(), buff);
+        if (targetGuid == 0 && ScarletQuartz.supports(buffData)) scarletQuartz.refresh();
         notify(ServerBuffChangeType.SERVER_BUFF_CHANGE_TYPE_ADD_SERVER_BUFF, List.of(buff));
         return true;
     }
@@ -109,8 +114,25 @@ public final class PlayerBuffManager extends BasePlayerManager {
         return !selected.isEmpty();
     }
 
+    /** Consume only the live normal team pickup, never an expired or event-specific buff. */
+    public synchronized boolean consumeScarletQuartz() {
+        long now = clock.getAsLong();
+        var selected = buffs.values().stream().filter(b -> b.getTargetGuid() == 0
+                && ScarletQuartz.supports(b.buffData)).toList();
+        if (selected.isEmpty()) return false;
+        boolean live = selected.stream().anyMatch(b -> now < b.getEndTime());
+        remove(selected, live);
+        return live;
+    }
+
     private void remove(Collection<PlayerBuff> selected) {
+        remove(selected, false);
+    }
+
+    private void remove(Collection<PlayerBuff> selected, boolean consumedQuartz) {
         selected.forEach(b -> buffs.remove(b.getUid()));
+        if (selected.stream().anyMatch(b -> b.getTargetGuid() == 0 && ScarletQuartz.supports(b.buffData)))
+            scarletQuartz.removed(consumedQuartz);
         for (var buff : selected)
             if (buff.healing != null) {
                 try {
@@ -139,10 +161,12 @@ public final class PlayerBuffManager extends BasePlayerManager {
         long now = clock.getAsLong();
         var expired = new ArrayList<PlayerBuff>();
         for (var buff : new ArrayList<>(buffs.values())) {
-            if (now > buff.getEndTime()) expired.add(buff);
+            if (now >= buff.getEndTime()) expired.add(buff);
             else if (buff.healing != null) buff.healing.tick(now);
         }
         remove(expired);
+        if (buffs.values().stream().anyMatch(b -> b.getTargetGuid() == 0 && ScarletQuartz.supports(b.buffData)))
+            scarletQuartz.refresh();
     }
 
     @Getter

@@ -634,6 +634,7 @@ public class Scene {
         }
 
         GameEntity attacker = getEntityById(result.getAttackerId());
+        if (emu.grasscutter.game.ability.ScarletQuartz.trySmash(this, attacker, target, result.getDamage())) return;
         if (attacker instanceof EntityClientGadget && target instanceof EntityAvatar) {
             if (target.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP_DEBTS) > 0f) return;
             float curHp = target.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP);

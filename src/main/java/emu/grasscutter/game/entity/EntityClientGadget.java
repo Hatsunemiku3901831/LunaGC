@@ -54,6 +54,9 @@ public class EntityClientGadget extends EntityBaseGadget {
     @Getter private int originalOwnerEntityId;
     @Getter private final GadgetData gadgetData;
     @Getter private ConfigEntityGadget configGadget;
+    private final EntityAvatar combatOwner;
+    private final int combatOwnerId;
+    private final long combatOwnerLifetime, combatOwnerDeath;
 
     public EntityClientGadget(Scene scene, Player player, EvtCreateGadgetNotify notify) {
         super(
@@ -82,6 +85,10 @@ public class EntityClientGadget extends EntityBaseGadget {
         GameEntity ownerEntity = scene.getEntityById(this.ownerEntityId);
         ownerEntity = findOwnerEntity(ownerEntity);
         this.originalOwnerEntityId = ownerEntity != null ? ownerEntity.getId() : this.ownerEntityId;
+        this.combatOwner = ownerEntity instanceof EntityAvatar avatar && avatar.isAlive() ? avatar : null;
+        this.combatOwnerId = combatOwner == null ? 0 : combatOwner.getId();
+        this.combatOwnerLifetime = combatOwner == null ? 0 : combatOwner.getAbilityLifecycleVersion();
+        this.combatOwnerDeath = combatOwner == null ? 0 : combatOwner.getDeathSequence();
 
         this.initAbilities();
     }
@@ -93,6 +100,16 @@ public class EntityClientGadget extends EntityBaseGadget {
             owner = gadget.getScene().getEntityById(gadget.getOwnerEntityId());
         }
         return owner instanceof EntityClientGadget ? null : owner;
+    }
+
+    /** A projectile retains its actual creator, including while that avatar is offstage. */
+    public EntityAvatar getCombatOwner() {
+        if (combatOwner == null || combatOwner.getPlayer() != owner || combatOwner.getScene() != getScene()
+                || combatOwner.getId() != combatOwnerId || !combatOwner.isAlive()
+                || !combatOwner.isAbilityLifecycleCurrent(combatOwnerLifetime)
+                || combatOwner.getDeathSequence() != combatOwnerDeath || !combatOwner.isInSceneParty()) return null;
+        var registered = getScene().getEntities().get(combatOwnerId);
+        return registered == null || registered == combatOwner ? combatOwner : null;
     }
 
     @Override
