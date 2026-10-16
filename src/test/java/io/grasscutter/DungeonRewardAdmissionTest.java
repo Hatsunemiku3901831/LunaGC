@@ -46,6 +46,7 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
     final Set<Integer> absentDrops = new HashSet<>();
     final Map<Integer, DropTableData> oldTables = new HashMap<>();
     final Map<Integer, DisplayItemData> oldDisplays = new HashMap<>();
+    final Map<Integer, DungeonData> oldDungeons = new HashMap<>();
     Consumer<BasePacket> packetAction = ignored -> {};
     boolean resinUsage;
     CodexBookData oldBook, oldBookMaterial;
@@ -156,6 +157,11 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
                 (id, data) -> {
                     if (data == null) GameData.getDisplayItemDataMap().remove(id.intValue());
                     else GameData.getDisplayItemDataMap().put(id.intValue(), data);
+                });
+        oldDungeons.forEach(
+                (id, data) -> {
+                    if (data == null) GameData.getDungeonDataMap().remove(id.intValue());
+                    else GameData.getDungeonDataMap().put(id.intValue(), data);
                 });
     }
 
@@ -643,6 +649,219 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
         return java.util.stream.IntStream.rangeClosed(5060, 5067)
                 .boxed()
                 .flatMap(id -> Stream.of(Arguments.of(id, false), Arguments.of(id, true)));
+    }
+
+    static Stream<Arguments> missingTalentRewards() {
+        return java.util.stream.IntStream.concat(
+                        java.util.stream.IntStream.rangeClosed(4651, 4662),
+                        java.util.stream.IntStream.rangeClosed(4691, 4702))
+                .boxed()
+                .flatMap(id -> Stream.of(Arguments.of(id, false), Arguments.of(id, true)));
+    }
+
+    DungeonManager talentDungeon(int id) throws Exception {
+        var manager = dungeon(id);
+        int sourceId = 4210 + (id - (id < 4691 ? 4651 : 4691)) % 4;
+        var source =
+                JsonUtils.loadToList(
+                                Path.of("resources/ExcelBinOutput/DungeonExcelConfigData.json"),
+                                DungeonData.class)
+                        .stream()
+                        .filter(row -> row.getId() == sourceId)
+                        .findFirst()
+                        .orElseThrow();
+        oldDungeons.put(sourceId, GameData.getDungeonDataMap().put(sourceId, source));
+        var previews =
+                JsonUtils.loadToList(
+                        Path.of("resources/ExcelBinOutput/RewardPreviewExcelConfigData.json"),
+                        RewardPreviewData.class);
+        for (var data : List.of(source, manager.getDungeonData())) {
+            var preview =
+                    previews.stream()
+                            .filter(row -> row.getId() == data.getPassRewardPreviewID())
+                            .findFirst()
+                            .orElseThrow();
+            preview.onLoad();
+            replaceField(DungeonData.class, data, "rewardPreviewData", preview);
+        }
+        for (var item :
+                JsonUtils.loadToList(
+                        Path.of("resources/ExcelBinOutput/MaterialExcelConfigData.json"),
+                        ItemData.class)) {
+            if (item.getMaterialType() != MaterialType.MATERIAL_AVATAR_MATERIAL
+                    && !Set.of(102, 105, 202).contains(item.getId())) continue;
+            item.onLoad();
+            if (!oldItems.containsKey(item.getId()))
+                oldItems.put(item.getId(), GameData.getItemDataMap().get(item.getId()));
+            GameData.getItemDataMap().put(item.getId(), item);
+        }
+        var tables = new HashMap<Integer, DropTableData>();
+        for (var name :
+                List.of("DropTableExcelConfigData.json", "DropSubTableExcelConfigData.json"))
+            JsonUtils.loadToList(Path.of("resources/Server/" + name), DropTableData.class)
+                    .forEach(row -> tables.put(row.getId(), row));
+        var pending = new ArrayDeque<Integer>();
+        var seen = new HashSet<Integer>();
+        pending.add(source.getStatueDrop());
+        while (!pending.isEmpty()) {
+            int tableId = pending.remove();
+            if (!seen.add(tableId)) continue;
+            var table = tables.get(tableId);
+            assertNotNull(table);
+            oldTables.put(tableId, GameData.getDropTableDataMap().put(tableId, table));
+            table.getDropVec().stream()
+                    .filter(row -> row.getWeight() > 0 && tables.containsKey(row.getId()))
+                    .forEach(row -> pending.add(row.getId()));
+        }
+        assertFalse(
+                GameData.getDropTableDataMap()
+                        .containsKey(manager.getDungeonData().getStatueDrop()));
+        assertFalse(GameData.getDungeonDropDataMap().containsKey(id));
+        absentDrops.add(id);
+        return manager;
+    }
+
+    @ParameterizedTest
+    @MethodSource("missingTalentRewards")
+    void missingTalentTablesPreserveTheOriginalRollAndGrantTheCurrentRegionsMaterials(
+            int id, boolean condensed) throws Exception {
+        var manager = talentDungeon(id);
+        int sourceId = 4210 + (id - (id < 4691 ? 4651 : 4691)) % 4;
+        var targetByRank = new HashMap<Integer, Integer>();
+        for (var entry : manager.getDungeonData().getRewardPreviewData().getRawPreviewItems()) {
+            var item = GameData.getItemDataMap().get(entry.getId());
+            if (item != null && item.getMaterialType() == MaterialType.MATERIAL_AVATAR_MATERIAL)
+                targetByRank.put(item.getRankLevel(), item.getId());
+        }
+        var generator = actual.getServer().getDropSystem();
+        var randomField = DropSystem.class.getDeclaredField("rand");
+        randomField.setAccessible(true);
+        var random = (Random) randomField.get(generator);
+        random.setSeed(id);
+        var original =
+                generator.handleDungeonRewardDrop(
+                        GameData.getDungeonDataMap().get(sourceId).getStatueDrop(), condensed);
+        var expected = new TreeMap<Integer, Integer>();
+        for (var item : original) {
+            int target =
+                    item.getItemData().getMaterialType() == MaterialType.MATERIAL_AVATAR_MATERIAL
+                            ? targetByRank.get(item.getItemData().getRankLevel())
+                            : item.getItemId();
+            expected.merge(target, item.getCount(), Integer::sum);
+        }
+        random.setSeed(id);
+        assertTrue(manager.getStatueDrops(actual, condensed, 0));
+        assertEquals(expected.get(102).intValue(), actual.getExp());
+        assertEquals(expected.get(202).intValue(), actual.getMora());
+        for (int target : targetByRank.values())
+            assertEquals(
+                    expected.getOrDefault(target, 0).intValue(),
+                    actual.getInventory().getItemCountById(target),
+                    "Dungeon " + id + " material " + target + " differs from its source roll");
+        assertTrue(
+                actual.getInventory().getItems().values().stream()
+                        .filter(
+                                item ->
+                                        item.getItemData().getMaterialType()
+                                                == MaterialType.MATERIAL_AVATAR_MATERIAL)
+                        .allMatch(item -> targetByRank.containsValue(item.getItemId())));
+        assertEquals(condensed ? 200 : 180, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertEquals(condensed ? 0 : 1, actual.getInventory().getItemCountById(220007));
+        assertTrue(manager.hasClaimedDomainReward(actual.getUid()));
+        assertFalse(manager.getStatueDrops(actual, condensed, 0));
+    }
+
+    @ParameterizedTest
+    @ValueSource(
+            strings = {
+                "source-item",
+                "target-item",
+                "preview-count",
+                "root",
+                "cycle",
+                "unmapped-leaf",
+                "duplicate-slot"
+            })
+    void anIncompleteBorrowedTalentPoolDoesNotChargeOrConsumeTheClaim(String fault)
+            throws Exception {
+        var manager = talentDungeon(4654);
+        var source = GameData.getDungeonDataMap().get(4213);
+        switch (fault) {
+            case "source-item" -> GameData.getItemDataMap().remove(104303);
+            case "target-item" -> GameData.getItemDataMap().remove(104358);
+            case "preview-count" -> {
+                var mora =
+                        Arrays.stream(
+                                        manager.getDungeonData()
+                                                .getRewardPreviewData()
+                                                .getRawPreviewItems())
+                                .filter(item -> item.getId() == 202)
+                                .findFirst()
+                                .orElseThrow();
+                replaceField(
+                        emu.grasscutter.data.common.ItemParamStringData.class,
+                        mora,
+                        "count",
+                        "999");
+            }
+            case "root" -> GameData.getDropTableDataMap().remove(source.getStatueDrop());
+            case "cycle", "unmapped-leaf" -> GameData.getDropTableDataMap()
+                    .get(source.getStatueDrop())
+                    .getDropVec()
+                    .add(
+                            gson.fromJson(
+                                    "{itemId:"
+                                            + (fault.equals("cycle")
+                                                    ? source.getStatueDrop()
+                                                    : 1999999999)
+                                            + ",countRange:'1',weight:1}",
+                                    emu.grasscutter.data.common.DropItemData.class));
+            case "duplicate-slot" -> {
+                var preview = manager.getDungeonData().getRewardPreviewData();
+                var duplicate =
+                        Arrays.copyOf(
+                                preview.getRawPreviewItems(),
+                                preview.getRawPreviewItems().length + 1);
+                duplicate[duplicate.length - 1] =
+                        Arrays.stream(preview.getRawPreviewItems())
+                                .filter(item -> item.getId() == 104358)
+                                .findFirst()
+                                .orElseThrow();
+                replaceField(RewardPreviewData.class, preview, "previewItems", duplicate);
+            }
+        }
+        assertFalse(manager.getStatueDrops(actual, false, 0));
+        assertEquals(200, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertEquals(1, actual.getInventory().getItemCountById(220007));
+        assertEquals(0, actual.getMora());
+        assertFalse(manager.hasClaimedDomainReward(actual.getUid()));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"false,false", "false,true", "true,false", "true,true"})
+    void explicitTalentRewardsKeepPriorityOverBorrowedTemplates(boolean ownRoot, boolean condensed)
+            throws Exception {
+        var manager = talentDungeon(4654);
+        if (ownRoot) {
+            int id = manager.getDungeonData().getStatueDrop();
+            var table =
+                    gson.fromJson(
+                            "{id:"
+                                    + id
+                                    + ",randomType:1,dropVec:[{itemId:202,countRange:'17',weight:10000}]}",
+                            DropTableData.class);
+            oldTables.put(id, GameData.getDropTableDataMap().put(id, table));
+        } else {
+            GameData.getDungeonDropDataMap().put(4654, List.of(drop(202, 17)));
+        }
+        assertTrue(manager.getStatueDrops(actual, condensed, 0));
+        assertEquals(condensed ? 34 : 17, actual.getMora());
+        assertEquals(0, actual.getExp());
+        assertEquals(0, actual.getInventory().getItemCountById(104356));
+        assertEquals(0, actual.getInventory().getItemCountById(104357));
+        assertEquals(0, actual.getInventory().getItemCountById(104358));
+        assertEquals(condensed ? 200 : 180, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertEquals(condensed ? 0 : 1, actual.getInventory().getItemCountById(220007));
     }
 
     @ParameterizedTest
