@@ -1556,6 +1556,8 @@ underscore; the `_`-prefixed files are ad-hoc analysis scratch and are gitignore
 圣遗物的套装映射、配置优先级与验证边界见[圣遗物奖励原型](docs/DUNGEON_RELIC_TEMPLATES_2026-10-17.md)。
 默认保留原始数量；可在 `server.game.gameOptions.dungeonRewards` 独立配置天赋／武器材料倍率，
 或启用圣遗物秘境的祝圣强化材料追加，详见[可选奖励策略](docs/DUNGEON_REWARD_POLICY_2026-10-17.md)。
+`referenceDropTables=true` 可独立启用已审阅的 244 条参考增强分布；默认关闭，
+支持单独文件覆盖及 `reload reference-drops`，详见[增强目录与排除清单](docs/DUNGEON_REFERENCE_DROPS_2026-10-17.md)。
 
 ## Credit
 

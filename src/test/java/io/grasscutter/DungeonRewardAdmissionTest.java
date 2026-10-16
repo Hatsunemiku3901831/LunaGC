@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import emu.grasscutter.config.ConfigContainer.GameOptions.DungeonRewardOptions;
 import emu.grasscutter.config.Configuration;
 import emu.grasscutter.data.DungeonDropCatalog;
+import emu.grasscutter.data.DungeonDropReferenceCatalog;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.excels.*;
 import emu.grasscutter.data.excels.codex.CodexBookData;
@@ -1355,6 +1356,7 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
         assertEquals(1, options.dungeonRewards.talentMaterialMultiplier);
         assertEquals(1, options.dungeonRewards.weaponMaterialMultiplier);
         assertFalse(options.dungeonRewards.relicEnhancementBonus);
+        assertFalse(options.dungeonRewards.referenceDropTables);
     }
 
     @ParameterizedTest
@@ -1570,6 +1572,157 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
         assertTrue(manager.getStatueDrops(actual, condensed, 0));
         assertTrue(actual.getInventory().getItemCountById(105003) >= 6);
         assertTrue(actual.getInventory().getItemCountById(105002) >= 7);
+    }
+
+    void referenceRewards(int itemId) throws Exception {
+        DungeonDropReferenceCatalog.reload(
+                new java.io.StringReader(
+                        "[{dungeonId:4654,drops:[{counts:[7],items:["
+                                + itemId
+                                + "]},{counts:[13],items:[202]}]}]"));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "own,false,1",
+        "own,true,3",
+        "legacy,false,3",
+        "legacy,true,1",
+        "template,false,1",
+        "template,true,3"
+    })
+    void referenceRewardsOverrideEachNormalRouteWhenEnabled(
+            String route, boolean condensed, int multiplier) throws Exception {
+        var manager = materialDungeon(4654, 4213);
+        if (route.equals("own"))
+            replaceField(
+                    DungeonData.class,
+                    manager.getDungeonData(),
+                    "statueDrop",
+                    GameData.getDungeonDataMap().get(4213).getStatueDrop());
+        if (route.equals("legacy"))
+            GameData.getDungeonDropDataMap().put(4654, List.of(drop(202, 17)));
+        referenceRewards(104358);
+        enhancementOptions().referenceDropTables = true;
+        enhancementOptions().talentMaterialMultiplier = multiplier;
+        assertTrue(manager.getStatueDrops(actual, condensed, 0));
+        assertEquals(
+                7 * (condensed ? 2 : 1) * multiplier,
+                actual.getInventory().getItemCountById(104358));
+        assertEquals(condensed ? 26 : 13, actual.getMora());
+        assertFalse(manager.getStatueDrops(actual, condensed, 0));
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void anUnlistedReferenceDomainKeepsTheNormalWeightedTemplate(boolean condensed)
+            throws Exception {
+        DungeonDropReferenceCatalog.reload(
+                new java.io.StringReader("[{dungeonId:1,drops:[{counts:[1],items:[202]}]}]"));
+        enhancementOptions().referenceDropTables = true;
+        assertMaterialRoll(4654, 4213, condensed);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "114001,false",
+        "114001,true",
+        "20002,false",
+        "20002,true",
+        "999999999,false",
+        "999999999,true",
+        "128,false",
+        "128,true",
+        "currency,false",
+        "currency,true"
+    })
+    void invalidReferenceCandidatesLeavePaymentAndTheClaimAvailable(String fault, boolean condensed)
+            throws Exception {
+        var manager = materialDungeon(4654, 4213);
+        var groups =
+                fault.equals("currency")
+                        ? "[{counts:[13],items:[202]}]"
+                        : "[{counts:[1],items:[104358," + fault + "],itemProbabilities:[1,0]}]";
+        DungeonDropReferenceCatalog.reload(
+                new java.io.StringReader("[{dungeonId:4654,drops:" + groups + "}]"));
+        enhancementOptions().referenceDropTables = true;
+        assertFalse(manager.getStatueDrops(actual, condensed, 0));
+        assertEquals(200, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertEquals(1, actual.getInventory().getItemCountById(220007));
+        assertFalse(manager.hasClaimedDomainReward(actual.getUid()));
+        referenceRewards(104358);
+        assertTrue(manager.getStatueDrops(actual, condensed, 0));
+        assertEquals(condensed ? 14 : 7, actual.getInventory().getItemCountById(104358));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "4654,4213,false",
+        "4654,4213,true",
+        "4674,4313,false",
+        "4674,4313,true",
+        "4668,85335500,false",
+        "4668,85335500,true",
+        "4510,85333500,false",
+        "4510,85333500,true",
+        "5128,85335500,false",
+        "5128,85335500,true"
+    })
+    void bundledReferenceRowsReachTheRealInventory(int id, int source, boolean condensed)
+            throws Exception {
+        var manager =
+                id == 4654 || id == 4674 ? materialDungeon(id, source) : relicDungeon(id, source);
+        DungeonDropReferenceCatalog.reload();
+        enhancementOptions().referenceDropTables = true;
+        var profile =
+                emu.grasscutter.data.DataLoader.loadList(
+                                "DungeonDropReference.json", DungeonDrop.class)
+                        .stream()
+                        .filter(row -> row.getDungeonId() == id)
+                        .findFirst()
+                        .orElseThrow();
+        assertTrue(manager.getStatueDrops(actual, condensed, 0));
+        int rolls = condensed ? 2 : 1;
+        var physicalIds = new HashSet<Integer>();
+        for (var group : profile.getDrops()) {
+            var metadata = GameData.getItemDataMap().get(group.getItems().get(0).intValue());
+            if (metadata.getItemType() == ItemType.ITEM_VIRTUAL) {
+                if (metadata.getId() == 102)
+                    assertEquals(group.getCounts().get(0) * rolls, actual.getExp());
+                if (metadata.getId() == 202)
+                    assertEquals(group.getCounts().get(0) * rolls, actual.getMora());
+                continue;
+            }
+            physicalIds.addAll(group.getItems());
+            int quantity =
+                    actual.getInventory().getItems().values().stream()
+                            .filter(item -> group.getItems().contains(item.getItemId()))
+                            .mapToInt(GameItem::getCount)
+                            .sum();
+            assertTrue(quantity >= group.getCounts().get(0) * rolls);
+            assertTrue(quantity <= group.getCounts().get(group.getCounts().size() - 1) * rolls);
+        }
+        assertTrue(
+                actual.getInventory().getItems().values().stream()
+                        .allMatch(
+                                item ->
+                                        item.getItemId() == 220007
+                                                || physicalIds.contains(item.getItemId())));
+        assertTrue(
+                actual.getInventory().getItems().values().stream()
+                        .filter(item -> item.getItemData().isEquip())
+                        .allMatch(item -> item.getCount() == 1));
+        assertEquals(condensed ? 200 : 180, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertEquals(condensed ? 0 : 1, actual.getInventory().getItemCountById(220007));
+        assertFalse(manager.getStatueDrops(actual, condensed, 0));
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void aRejectedReferenceRowKeepsItsCorrectedRelicTemplate(boolean condensed) throws Exception {
+        DungeonDropReferenceCatalog.reload();
+        enhancementOptions().referenceDropTables = true;
+        assertRelicRoll(4665, condensed, 85333500);
     }
 
     Map<String, Long> relicShape(Collection<GameItem> items) {

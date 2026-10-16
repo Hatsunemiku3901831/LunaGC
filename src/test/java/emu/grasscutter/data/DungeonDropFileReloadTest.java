@@ -230,6 +230,49 @@ class DungeonDropFileReloadTest {
     }
 
     @Test
+    void independentSinksLoadOnceAndKeepTheOrdinaryCatalog() throws Exception {
+        var independent = new AtomicReference<Int2ObjectMap<List<DungeonDropEntry>>>();
+        var ordinary = GameData.getDungeonDropDataMap();
+        var opens = new AtomicInteger();
+        var path = file(1);
+        var files =
+                new DungeonDropCatalog.FileCatalog(
+                        () -> path,
+                        selected -> {
+                            opens.incrementAndGet();
+                            return Files.newBufferedReader(selected);
+                        },
+                        clock::get,
+                        independent::set,
+                        "Independent.json");
+        files.ensureLoaded();
+        files.ensureLoaded();
+        assertNotNull(independent.get());
+        assertEquals(Set.of(1), independent.get().keySet());
+        assertEquals(1, opens.get());
+        assertSame(ordinary, GameData.getDungeonDropDataMap());
+        write(path, "[" + row(2) + "]");
+        files.ensureLoaded();
+        assertEquals(Set.of(2), independent.get().keySet());
+    }
+
+    @Test
+    void independentMemorySnapshotsDoNotReopenTheirFileSource() throws Exception {
+        var independent = new AtomicReference<Int2ObjectMap<List<DungeonDropEntry>>>();
+        var files =
+                new DungeonDropCatalog.FileCatalog(
+                        () -> directory.resolve("missing.json"),
+                        Files::newBufferedReader,
+                        clock::get,
+                        independent::set,
+                        "Independent.json");
+        files.reload(new StringReader("[" + row(2) + "]"));
+        assertDoesNotThrow(files::ensureLoaded);
+        assertNotNull(independent.get());
+        assertEquals(Set.of(2), independent.get().keySet());
+    }
+
+    @Test
     void aFailedExplicitReloadKeepsThePreviousAutomaticSourceActive() throws Exception {
         Path path = file(1);
         var files = watcher(path);

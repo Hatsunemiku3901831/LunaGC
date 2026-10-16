@@ -494,6 +494,8 @@ public class ConfigContainer {
         }
 
         public static class DungeonRewardOptions {
+            /** Use the audited optional reference distributions before the ordinary reward route. */
+            public boolean referenceDropTables = false;
             /** Positive integers; 1 preserves the original material quantities. */
             public int talentMaterialMultiplier = 1;
             public int weaponMaterialMultiplier = 1;

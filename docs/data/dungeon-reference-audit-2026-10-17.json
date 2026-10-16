@@ -1,0 +1,406 @@
+{
+  "referenceCommit": "7cc148d1f752a43d4b9146b3b73f26875902546f",
+  "hashNormalization": "LF line endings",
+  "referenceSha256": "071cc14d01a0ea730eecfca575568ff924a3b485d06a706c8d572410788c17c9",
+  "resourceSha256": {
+    "DungeonExcelConfigData.json": "91b8a45983330eb9bb2f4267f0319d25aaa84698f1536caac0acf510d4057c93",
+    "RewardPreviewExcelConfigData.json": "f88146ad5bc65bda878eca775a24a4fd289643ab750ba4a33236437c0bfd8ea4",
+    "DisplayItemExcelConfigData.json": "5ddd2fa3b9322bab6b4608c0906af7be96679e381807872595331b54fe61e90a",
+    "MaterialExcelConfigData.json": "b170f862af1cd9acf9ca5438cb915be0bf1ac65d1abb16d7ab64279160985fff",
+    "ReliquaryExcelConfigData.json": "cbcdc1a87a1c95e5a3b3901dc180a3036a0cebf52d0c1489c8c1b2e90850ed60",
+    "WeaponExcelConfigData.json": "ebff448f160e29e68dbf821c794fc54277d25bd4e421ac1732ab34b303e056a0"
+  },
+  "sourceCount": 266,
+  "acceptedCount": 244,
+  "acceptedIds": [
+    4210,
+    4211,
+    4212,
+    4213,
+    4220,
+    4221,
+    4222,
+    4223,
+    4230,
+    4231,
+    4232,
+    4233,
+    4310,
+    4311,
+    4312,
+    4313,
+    4320,
+    4321,
+    4322,
+    4323,
+    4330,
+    4331,
+    4332,
+    4333,
+    4340,
+    4341,
+    4342,
+    4343,
+    4350,
+    4351,
+    4352,
+    4353,
+    4360,
+    4361,
+    4362,
+    4363,
+    4382,
+    4383,
+    4384,
+    4385,
+    4386,
+    4387,
+    4388,
+    4389,
+    4390,
+    4391,
+    4392,
+    4393,
+    4400,
+    4401,
+    4402,
+    4403,
+    4410,
+    4411,
+    4412,
+    4413,
+    4420,
+    4421,
+    4422,
+    4423,
+    4430,
+    4431,
+    4432,
+    4433,
+    4434,
+    4435,
+    4436,
+    4437,
+    4440,
+    4441,
+    4442,
+    4443,
+    4444,
+    4445,
+    4446,
+    4447,
+    4450,
+    4451,
+    4452,
+    4453,
+    4454,
+    4455,
+    4456,
+    4457,
+    4460,
+    4461,
+    4462,
+    4463,
+    4481,
+    4482,
+    4483,
+    4485,
+    4486,
+    4487,
+    4490,
+    4491,
+    4492,
+    4493,
+    4494,
+    4495,
+    4496,
+    4497,
+    4510,
+    4511,
+    4512,
+    4513,
+    4651,
+    4652,
+    4653,
+    4654,
+    4655,
+    4656,
+    4657,
+    4658,
+    4659,
+    4660,
+    4661,
+    4662,
+    4666,
+    4667,
+    4668,
+    4671,
+    4672,
+    4673,
+    4674,
+    4675,
+    4676,
+    4677,
+    4678,
+    4679,
+    4680,
+    4681,
+    4682,
+    4691,
+    4692,
+    4693,
+    4694,
+    4695,
+    4696,
+    4697,
+    4698,
+    4699,
+    4700,
+    4701,
+    4702,
+    4703,
+    4704,
+    4705,
+    4706,
+    4707,
+    4708,
+    4709,
+    4710,
+    4711,
+    4712,
+    4713,
+    4714,
+    4715,
+    4716,
+    4717,
+    4718,
+    5003,
+    5004,
+    5005,
+    5006,
+    5007,
+    5009,
+    5010,
+    5011,
+    5012,
+    5013,
+    5014,
+    5015,
+    5016,
+    5017,
+    5019,
+    5020,
+    5021,
+    5023,
+    5024,
+    5025,
+    5051,
+    5052,
+    5053,
+    5061,
+    5062,
+    5063,
+    5065,
+    5066,
+    5067,
+    5102,
+    5103,
+    5104,
+    5105,
+    5106,
+    5107,
+    5108,
+    5109,
+    5110,
+    5111,
+    5112,
+    5113,
+    5114,
+    5115,
+    5120,
+    5121,
+    5122,
+    5123,
+    5125,
+    5126,
+    5127,
+    5128,
+    5200,
+    5201,
+    5202,
+    5203,
+    5204,
+    5205,
+    5206,
+    5207,
+    5214,
+    5215,
+    5216,
+    5217,
+    5218,
+    5219,
+    5220,
+    5221,
+    5222,
+    5223,
+    5224,
+    5225,
+    5254,
+    5255,
+    5256,
+    5257,
+    5258,
+    5259,
+    5260,
+    5261,
+    5262,
+    5263,
+    5264,
+    5265
+  ],
+  "excluded": [
+    {
+      "dungeonId": 4480,
+      "reasons": [
+        "material-in-relic-domain",
+        "unexpected-material"
+      ]
+    },
+    {
+      "dungeonId": 4484,
+      "reasons": [
+        "material-in-relic-domain",
+        "unexpected-material"
+      ]
+    },
+    {
+      "dungeonId": 4665,
+      "reasons": [
+        "material-in-relic-domain",
+        "unexpected-material"
+      ]
+    },
+    {
+      "dungeonId": 4683,
+      "reasons": [
+        "material-in-relic-domain",
+        "unexpected-material"
+      ]
+    },
+    {
+      "dungeonId": 4684,
+      "reasons": [
+        "unexpected-set"
+      ]
+    },
+    {
+      "dungeonId": 4685,
+      "reasons": [
+        "unexpected-set"
+      ]
+    },
+    {
+      "dungeonId": 4686,
+      "reasons": [
+        "unexpected-set"
+      ]
+    },
+    {
+      "dungeonId": 4687,
+      "reasons": [
+        "material-in-relic-domain",
+        "unexpected-material"
+      ]
+    },
+    {
+      "dungeonId": 4688,
+      "reasons": [
+        "unexpected-set"
+      ]
+    },
+    {
+      "dungeonId": 4689,
+      "reasons": [
+        "unexpected-set"
+      ]
+    },
+    {
+      "dungeonId": 4690,
+      "reasons": [
+        "unexpected-set"
+      ]
+    },
+    {
+      "dungeonId": 5000,
+      "reasons": [
+        "empty-items"
+      ]
+    },
+    {
+      "dungeonId": 5001,
+      "reasons": [
+        "empty-items"
+      ]
+    },
+    {
+      "dungeonId": 5002,
+      "reasons": [
+        "empty-items"
+      ]
+    },
+    {
+      "dungeonId": 5008,
+      "reasons": [
+        "empty-items"
+      ]
+    },
+    {
+      "dungeonId": 5018,
+      "reasons": [
+        "material-in-relic-domain",
+        "unexpected-material"
+      ]
+    },
+    {
+      "dungeonId": 5022,
+      "reasons": [
+        "material-in-relic-domain",
+        "unexpected-material"
+      ]
+    },
+    {
+      "dungeonId": 5050,
+      "reasons": [
+        "material-in-relic-domain",
+        "unexpected-material"
+      ]
+    },
+    {
+      "dungeonId": 5060,
+      "reasons": [
+        "material-in-relic-domain",
+        "unexpected-material"
+      ]
+    },
+    {
+      "dungeonId": 5064,
+      "reasons": [
+        "material-in-relic-domain",
+        "unexpected-material"
+      ]
+    },
+    {
+      "dungeonId": 5100,
+      "reasons": [
+        "empty-items"
+      ]
+    },
+    {
+      "dungeonId": 5101,
+      "reasons": [
+        "empty-items"
+      ]
+    }
+  ],
+  "enabledByDefault": false
+}

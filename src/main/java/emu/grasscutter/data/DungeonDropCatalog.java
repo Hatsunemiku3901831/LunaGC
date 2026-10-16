@@ -34,6 +34,11 @@ public final class DungeonDropCatalog {
         Reader open(Path path) throws IOException;
     }
 
+    @FunctionalInterface
+    interface CatalogPublisher {
+        void install(Int2ObjectMap<List<DungeonDropEntry>> snapshot) throws IOException;
+    }
+
     private record Stamp(Path path, long size, FileTime modified, Object key, boolean regular) {}
 
     private record WatchState(Stamp accepted, Stamp failed, long failedAt, boolean hasFailure) {}
@@ -42,13 +47,40 @@ public final class DungeonDropCatalog {
         private final Supplier<Path> source;
         private final ReaderFactory readers;
         private final LongSupplier clock;
+        private final CatalogPublisher publisher;
+        private final String name;
         private final ReentrantLock gate = new ReentrantLock();
         private volatile WatchState state;
+        private volatile boolean initialized;
 
         FileCatalog(Supplier<Path> source, ReaderFactory readers, LongSupplier clock) {
+            this(source, readers, clock, GameData::installDungeonDropData, "DungeonDrop.json");
+        }
+
+        FileCatalog(
+                Supplier<Path> source,
+                ReaderFactory readers,
+                LongSupplier clock,
+                CatalogPublisher publisher,
+                String name) {
             this.source = source;
             this.readers = readers;
             this.clock = clock;
+            this.publisher = publisher;
+            this.name = name;
+        }
+
+        void ensureLoaded() throws IOException {
+            if (initialized) {
+                reloadIfChanged();
+                return;
+            }
+            gate.lock();
+            try {
+                if (!initialized) reloadFile(current());
+            } finally {
+                gate.unlock();
+            }
         }
 
         int reload() throws IOException {
@@ -63,7 +95,7 @@ public final class DungeonDropCatalog {
         int reload(Reader reader) throws IOException {
             gate.lock();
             try {
-                return publish(parse(reader), null);
+                return publish(parse(reader, name), null);
             } finally {
                 gate.unlock();
             }
@@ -119,7 +151,7 @@ public final class DungeonDropCatalog {
                         "Dungeon drop source is not a regular file: " + before.path());
             Int2ObjectMap<List<DungeonDropEntry>> snapshot;
             try (var reader = readers.open(before.path())) {
-                snapshot = parse(reader);
+                snapshot = parse(reader, name);
             }
             var after = current();
             if (!before.equals(after))
@@ -127,11 +159,13 @@ public final class DungeonDropCatalog {
             return publish(snapshot, new WatchState(after, null, 0, false));
         }
 
-        private int publish(Int2ObjectMap<List<DungeonDropEntry>> snapshot, WatchState next) {
-            GameData.installDungeonDropData(snapshot);
+        private int publish(Int2ObjectMap<List<DungeonDropEntry>> snapshot, WatchState next)
+                throws IOException {
+            publisher.install(snapshot);
             state = next;
+            initialized = true;
             Grasscutter.getLogger()
-                    .info("Loaded {} dungeon reward tables from DungeonDrop.json", snapshot.size());
+                    .info("Loaded {} dungeon reward tables from {}", snapshot.size(), name);
             return snapshot.size();
         }
 
@@ -152,7 +186,7 @@ public final class DungeonDropCatalog {
                 Grasscutter.getLogger()
                         .warn(
                                 "Cannot automatically reload dungeon rewards from {}; keeping the"
-                                    + " previous catalog",
+                                        + " previous catalog",
                                 candidate == null ? "the configured source" : candidate.path(),
                                 failure);
         }
@@ -166,7 +200,8 @@ public final class DungeonDropCatalog {
         return FILES.reload(reader);
     }
 
-    private static Int2ObjectMap<List<DungeonDropEntry>> parse(Reader reader) throws IOException {
+    private static Int2ObjectMap<List<DungeonDropEntry>> parse(Reader reader, String name)
+            throws IOException {
         var snapshot = new Int2ObjectOpenHashMap<List<DungeonDropEntry>>();
         try {
             var rows = JsonUtils.loadToList(reader, DungeonDrop.class);
@@ -214,7 +249,7 @@ public final class DungeonDropCatalog {
                 snapshot.put(id, List.copyOf(entries));
             }
         } catch (RuntimeException invalid) {
-            throw new IOException("Invalid DungeonDrop.json: " + invalid.getMessage(), invalid);
+            throw new IOException("Invalid " + name + ": " + invalid.getMessage(), invalid);
         }
         return snapshot;
     }

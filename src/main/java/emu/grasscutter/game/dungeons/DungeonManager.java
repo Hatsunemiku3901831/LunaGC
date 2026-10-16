@@ -5,6 +5,8 @@ import static emu.grasscutter.config.Configuration.GAME_OPTIONS;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.DungeonDropCatalog;
+import emu.grasscutter.data.DungeonDropReferenceCatalog;
+import emu.grasscutter.config.ConfigContainer.GameOptions.DungeonRewardOptions;
 import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.data.excels.dungeon.*;
 import emu.grasscutter.game.activity.trialavatar.TrialAvatarActivityHandler;
@@ -181,16 +183,16 @@ public final class DungeonManager {
         // Build and validate the complete roll before spending either kind of resin. An empty or
         // unusable roll must leave this player's claim and weekly discount available for a retry.
         List<GameItem> rewards;
+        var rewardOptions = Grasscutter.getConfig().server.game.gameOptions.dungeonRewards;
         try {
-            rewards = new ArrayList<>(rollStatueDrops(player, useCondensed));
+            rewards = new ArrayList<>(rollStatueDrops(player, useCondensed, rewardOptions));
             if (rewards.stream().anyMatch(item -> item == null || item.getItemId() <= 0
                     || item.getItemData() == null || item.getCount() < 0)) {
                 return false;
             }
             rewards.removeIf(item -> item.getCount() == 0);
             if (rewards.isEmpty()) return false;
-            DungeonRewardPolicy.apply(dungeonData, rewards,
-                    Grasscutter.getConfig().server.game.gameOptions.dungeonRewards);
+            DungeonRewardPolicy.apply(dungeonData, rewards, rewardOptions);
         } catch (RuntimeException invalid) {
             Grasscutter.getLogger().warn("Cannot build rewards for dungeon {}", dungeonData.getId(), invalid);
             return false;
@@ -220,8 +222,12 @@ public final class DungeonManager {
         return true;
     }
 
-    private List<GameItem> rollStatueDrops(Player player, boolean useCondensed) {
+    private List<GameItem> rollStatueDrops(Player player, boolean useCondensed, DungeonRewardOptions options) {
         DungeonDropCatalog.reloadIfChanged();
+        if (options != null && options.referenceDropTables) {
+            var reference = DungeonDropReferenceCatalog.forDungeon(dungeonData);
+            if (reference != null) return rollRewards(useCondensed, reference);
+        }
         // One claim uses the same configured groups for both route selection and rolling.
         var configured = GameData.getDungeonDropDataMap().get(dungeonData.getId());
         if (usesLegacyLostValleyDrops(dungeonData.getId())) {

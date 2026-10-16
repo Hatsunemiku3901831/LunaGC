@@ -54,6 +54,7 @@ DungeonDropLoader、运行数据与本地领取路径时，发现内置 DungeonD
 后续已接入[自动文件检测](DUNGEON_DROP_AUTO_RELOAD_2026-10-17.md)，包括最后有效配置、
 并发读取、来源切换和一次领取的快照归属。72 处缺表也已有
 [服务端奖励原型路由](DUNGEON_RELIC_TEMPLATES_2026-10-17.md)，原始表文件尚未取回。
+参考 266 条也已完成[目录审阅与独立接入](DUNGEON_REFERENCE_DROPS_2026-10-17.md)：244 条通过，22 条错误条目未纳入，普通默认文件保持原值。
 
 ## 本地运行
 
