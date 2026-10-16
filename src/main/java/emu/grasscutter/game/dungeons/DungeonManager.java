@@ -1,5 +1,7 @@
 package emu.grasscutter.game.dungeons;
 
+import static emu.grasscutter.config.Configuration.GAME_OPTIONS;
+
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.common.ItemParamData;
@@ -189,18 +191,19 @@ public final class DungeonManager {
             Grasscutter.getLogger().warn("Cannot build rewards for dungeon {}", dungeonData.getId(), invalid);
             return false;
         }
-        if (rewards.isEmpty() || !handleCost(player, useCondensed)) {
-            return false;
-        }
-
-        // Finish the claim before the pickup notice: a transport failure cannot undo the grant.
-        player.getInventory().addItems(rewards, ActionReason.DungeonStatueDrop);
-        rewardedPlayers.add(player.getUid());
-
-        // Count the claim only now that the rewards are in the inventory, so a roll that produced
-        // nothing does not burn one of the week's discounted claims.
-        if (dungeonData.getSubType() == DungeonSubType.DUNGEON_SUB_BOSS) {
-            player.setWeeklyBossChestNum(player.getWeeklyBossChestNum() + 1);
+        var inventory = player.getInventory();
+        synchronized (inventory) {
+            boolean spendsCondensed = useCondensed && GAME_OPTIONS.resinOptions.resinUsage;
+            if (!DungeonRewardDelivery.canReceive(player, rewards, spendsCondensed)
+                    || !handleCost(player, useCondensed)) {
+                return false;
+            }
+            // The same monitor protects capacity, payment and the entire batch from other writers.
+            inventory.addItems(rewards, ActionReason.DungeonStatueDrop);
+            rewardedPlayers.add(player.getUid());
+            if (dungeonData.getSubType() == DungeonSubType.DUNGEON_SUB_BOSS) {
+                player.setWeeklyBossChestNum(player.getWeeklyBossChestNum() + 1);
+            }
         }
 
         try {
@@ -317,6 +320,7 @@ public final class DungeonManager {
                 if (amount < 0) {
                     throw new IllegalArgumentException("Negative dungeon reward amount");
                 }
+                if (amount == 0) continue;
 
                 // Roll items for this group.
                 // Here, we have to handle stacking, or the client will not display results correctly.
@@ -326,7 +330,16 @@ public final class DungeonManager {
                 // least
                 // for the currently existing set of dungeons.
                 if (entry.getItems().size() == 1) {
-                    rewards.add(new GameItem(entry.getItems().get(0), amount));
+                    var item = new GameItem(entry.getItems().get(0), amount);
+                    if (item.getItemData().isEquip()) {
+                        for (int i = 0; i < amount; i++) {
+                            rewards.add(i == 0 ? item : new GameItem(item.getItemData(), 1));
+                        }
+                    } else {
+                        // GameItem's bag constructor caps materials; admission needs the full roll.
+                        item.setCount(amount);
+                        rewards.add(item);
+                    }
                 } else {
                     for (int i = 0; i < amount; i++) {
                         // int itemIndex = ThreadLocalRandom.current().nextInt(0, entry.getItems().size());

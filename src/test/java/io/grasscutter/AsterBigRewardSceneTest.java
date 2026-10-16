@@ -17,6 +17,7 @@ import emu.grasscutter.game.activity.*;
 import emu.grasscutter.game.activity.aster.*;
 import emu.grasscutter.game.avatar.Avatar;
 import emu.grasscutter.game.entity.*;
+import emu.grasscutter.game.player.GuardedPlayerTestStore;
 import emu.grasscutter.game.props.PlayerProperty;
 import emu.grasscutter.game.systems.InventorySystem;
 import emu.grasscutter.game.world.*;
@@ -60,6 +61,7 @@ class AsterBigRewardSceneTest {
     private boolean resinUsage;
     private int activityWrites, failActivityWrite;
     private final List<String> saved = new ArrayList<>();
+    private GuardedPlayerTestStore playerStore;
 
     @BeforeEach
     void setup() throws Exception {
@@ -74,13 +76,17 @@ class AsterBigRewardSceneTest {
                         Datastore.class.getClassLoader(),
                         new Class<?>[] {Datastore.class},
                         (proxy, method, args) -> {
-                            assertEquals("save", method.getName());
-                            if (args[0] instanceof PlayerActivityData data) {
+                            if (method.getName().equals("save")
+                                    && args[0] instanceof PlayerActivityData data) {
                                 saved.add(data.getDetail());
                                 if (++activityWrites == failActivityWrite)
                                     throw new IllegalStateException("write acknowledgement lost");
                             }
-                            return args[0];
+                            try {
+                                return method.invoke(playerStore.datastore(), args);
+                            } catch (InvocationTargetException failure) {
+                                throw failure.getCause();
+                            }
                         }));
         configurationField = field(ActivityManager.class, "configuration");
         oldConfig = configurationField.get(null);
@@ -96,6 +102,8 @@ class AsterBigRewardSceneTest {
                         ConfigGlobalCombat.class));
         host = new AsterMidSceneTest.RecoveryPlayer();
         guest = new AsterMidSceneTest.RecoveryPlayer();
+        host.setUid(resources.host.getUid());
+        playerStore = new GuardedPlayerTestStore(host, () -> {});
         var server = environment.scene.getWorld().getServer();
         var inventory =
                 new InventorySystem(server) {
@@ -233,6 +241,7 @@ class AsterBigRewardSceneTest {
             library.removeSceneScriptManager();
         }
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        if (playerStore != null) playerStore.close();
         if (datastoreField != null) datastoreField.set(null, oldDatastore);
         if (configurationField != null) configurationField.set(null, oldConfig);
         emu.grasscutter.config.Configuration.GAME_OPTIONS.resinOptions.resinUsage = resinUsage;

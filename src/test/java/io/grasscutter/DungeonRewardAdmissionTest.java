@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import emu.grasscutter.config.Configuration;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.excels.*;
+import emu.grasscutter.data.excels.codex.CodexBookData;
 import emu.grasscutter.data.excels.dungeon.DungeonData;
 import emu.grasscutter.database.*;
 import emu.grasscutter.game.battlepass.BattlePassManager;
@@ -12,7 +13,7 @@ import emu.grasscutter.game.battlepass.BattlePassSystem;
 import emu.grasscutter.game.drop.DropSystem;
 import emu.grasscutter.game.dungeons.*;
 import emu.grasscutter.game.entity.EntityTeam;
-import emu.grasscutter.game.inventory.GameItem;
+import emu.grasscutter.game.inventory.*;
 import emu.grasscutter.game.player.*;
 import emu.grasscutter.game.props.PlayerProperty;
 import emu.grasscutter.game.systems.InventorySystem;
@@ -42,8 +43,10 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
     final Map<Integer, ItemData> oldItems = new HashMap<>();
     final Map<Integer, List<DungeonDropEntry>> oldDrops = new HashMap<>();
     final Set<Integer> absentDrops = new HashSet<>();
+    final Map<Integer, DropTableData> oldTables = new HashMap<>();
     Consumer<BasePacket> packetAction = ignored -> {};
     boolean resinUsage;
+    CodexBookData oldBook, oldBookMaterial;
 
     @BeforeAll
     static void lua() throws Exception {
@@ -69,11 +72,33 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
                 JsonUtils.loadToList(
                         Path.of("resources/ExcelBinOutput/MaterialExcelConfigData.json"),
                         ItemData.class)) {
-            if (data.getId() != 202 && data.getId() != 220007) continue;
+            if (!Set.of(128, 141, 202, 220007, 104002, 104003, 100215).contains(data.getId()))
+                continue;
             data.onLoad();
             oldItems.put(data.getId(), GameData.getItemDataMap().put(data.getId(), data));
         }
-        for (int id : List.of(103, 5125)) {
+        var relic =
+                JsonUtils.loadToList(
+                                Path.of("resources/ExcelBinOutput/ReliquaryExcelConfigData.json"),
+                                ItemData.class)
+                        .stream()
+                        .filter(data -> data.getId() == 20002)
+                        .findFirst()
+                        .orElseThrow();
+        relic.onLoad();
+        oldItems.put(relic.getId(), GameData.getItemDataMap().put(relic.getId(), relic));
+        var book =
+                JsonUtils.loadToList(
+                                Path.of("resources/ExcelBinOutput/BooksCodexExcelConfigData.json"),
+                                CodexBookData.class)
+                        .stream()
+                        .filter(data -> data.getId() == 50022001)
+                        .findFirst()
+                        .orElseThrow();
+        oldBook = GameData.getCodexBookDataMap().put(book.getId(), book);
+        oldBookMaterial = GameData.getCodexBookDataItemIdMap().get(book.getMaterialId());
+        book.onLoad();
+        for (int id : List.of(103, 5125, 1002)) {
             var old = GameData.getDungeonDropDataMap().get(id);
             if (old == null) absentDrops.add(id);
             else oldDrops.put(id, old);
@@ -108,6 +133,10 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
     void restoreRewards() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
         if (playerStore != null) playerStore.close();
+        if (oldBook == null) GameData.getCodexBookDataMap().remove(50022001);
+        else GameData.getCodexBookDataMap().put(50022001, oldBook);
+        if (oldBookMaterial == null) GameData.getCodexBookDataItemIdMap().remove(100215);
+        else GameData.getCodexBookDataItemIdMap().put(100215, oldBookMaterial);
         Configuration.GAME_OPTIONS.resinOptions.resinUsage = resinUsage;
         for (var entry : oldItems.entrySet()) {
             if (entry.getValue() == null)
@@ -116,6 +145,11 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
         }
         for (int id : absentDrops) GameData.getDungeonDropDataMap().remove(id);
         oldDrops.forEach((id, data) -> GameData.getDungeonDropDataMap().put(id.intValue(), data));
+        oldTables.forEach(
+                (id, data) -> {
+                    if (data == null) GameData.getDropTableDataMap().remove(id.intValue());
+                    else GameData.getDropTableDataMap().put(id.intValue(), data);
+                });
     }
 
     DungeonManager dungeon(int id) throws Exception {
@@ -331,5 +365,216 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
         assertTrue(manager.getStatueDrops(actual, false, 0));
         assertEquals(10, actual.getMora());
         assertEquals(180, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+    }
+
+    void modernDrops(DungeonManager manager, int item, int count, boolean separateRows)
+            throws Exception {
+        int id = 2100000001;
+        var rows = new ArrayList<Map<String, Object>>();
+        for (int i = 0; i < (separateRows ? count : 1); i++)
+            rows.add(
+                    Map.of(
+                            "itemId",
+                            item,
+                            "countRange",
+                            Integer.toString(separateRows ? 1 : count),
+                            "weight",
+                            10000));
+        var table =
+                gson.fromJson(
+                        gson.toJson(Map.of("id", id, "randomType", 1, "dropVec", rows)),
+                        DropTableData.class);
+        oldTables.put(id, GameData.getDropTableDataMap().put(id, table));
+        replaceField(DungeonData.class, manager.getDungeonData(), "statueDrop", id);
+    }
+
+    void materialCapacity(int capacity) throws Exception {
+        replaceField(
+                MaterialInventoryTab.class,
+                actual.getInventory().getInventoryTab(ItemType.ITEM_MATERIAL),
+                "maxCapacity",
+                capacity);
+    }
+
+    @ParameterizedTest
+    @MethodSource("costs")
+    void aFullMaterialBagRejectsTheWholeBatchBeforeEitherPayment(int id, boolean condensed)
+            throws Exception {
+        assertTrue(actual.getInventory().addItem(new GameItem(220007, 1)));
+        materialCapacity(1);
+        GameData.getDungeonDropDataMap().put(id, List.of(drop(202, 10), drop(104003, 1)));
+        var manager = dungeon(id);
+        assertFalse(manager.getStatueDrops(actual, condensed, 0));
+        assertEquals(200, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertEquals(2, actual.getInventory().getItemCountById(220007));
+        assertEquals(0, actual.getMora());
+        assertEquals(0, actual.getInventory().getItemCountById(104003));
+        assertEquals(0, actual.getWeeklyBossChestNum());
+        assertEquals(0, actual.getNextResinRefresh());
+        assertFalse(manager.hasClaimedDomainReward(actual.getUid()));
+        assertTrue(
+                packets.stream()
+                        .noneMatch(
+                                packet ->
+                                        packet.getOpcode()
+                                                == PacketOpcodes.GadgetAutoPickDropInfoNotify));
+        materialCapacity(2);
+        assertTrue(manager.getStatueDrops(actual, condensed, 0));
+        assertEquals(condensed ? 2 : 1, actual.getInventory().getItemCountById(104003));
+        assertEquals(condensed ? 20 : 10, actual.getMora());
+        assertEquals(condensed ? 1 : 2, actual.getInventory().getItemCountById(220007));
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void aBatchCannotPartiallyOverflowAnExistingMaterialStack(boolean condensed) throws Exception {
+        int limit = GameData.getItemDataMap().get(104003).getStackLimit();
+        assertTrue(actual.getInventory().addItem(new GameItem(104003, limit - 1)));
+        GameData.getDungeonDropDataMap()
+                .put(5125, List.of(drop(202, 10), drop(104003, 1), drop(104003, 1)));
+        var manager = dungeon(5125);
+        assertFalse(manager.getStatueDrops(actual, condensed, 0));
+        assertEquals(limit - 1, actual.getInventory().getItemCountById(104003));
+        assertEquals(0, actual.getMora());
+        assertEquals(200, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertEquals(1, actual.getInventory().getItemCountById(220007));
+        assertFalse(manager.hasClaimedDomainReward(actual.getUid()));
+        actual.getInventory().getItemById(104003).setCount(limit - (condensed ? 4 : 2));
+        assertTrue(manager.getStatueDrops(actual, condensed, 0));
+        assertEquals(limit, actual.getInventory().getItemCountById(104003));
+    }
+
+    @Test
+    void consumingTheLastCondensedResinCanFreeTheRequiredMaterialSlot() throws Exception {
+        materialCapacity(1);
+        GameData.getDungeonDropDataMap().put(5125, List.of(drop(104003, 1)));
+        var manager = dungeon(5125);
+        assertFalse(manager.getStatueDrops(actual, false, 0));
+        assertTrue(manager.getStatueDrops(actual, true, 0));
+        assertEquals(0, actual.getInventory().getItemCountById(220007));
+        assertEquals(2, actual.getInventory().getItemCountById(104003));
+        assertEquals(1, actual.getInventory().getInventoryTab(ItemType.ITEM_MATERIAL).getSize());
+        assertEquals(200, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+    }
+
+    @Test
+    void disabledResinUsageDoesNotPretendToFreeACondensedResinSlot() throws Exception {
+        materialCapacity(1);
+        Configuration.GAME_OPTIONS.resinOptions.resinUsage = false;
+        GameData.getDungeonDropDataMap().put(5125, List.of(drop(104003, 1)));
+        var manager = dungeon(5125);
+        assertFalse(manager.getStatueDrops(actual, true, 0));
+        assertEquals(1, actual.getInventory().getItemCountById(220007));
+        assertEquals(0, actual.getInventory().getItemCountById(104003));
+        assertFalse(manager.hasClaimedDomainReward(actual.getUid()));
+    }
+
+    @Test
+    void distinctMaterialsNeedSeparateSlotsButDuplicateRowsShareOneStack() throws Exception {
+        materialCapacity(2);
+        var manager = dungeon(5125);
+        GameData.getDungeonDropDataMap().put(5125, List.of(drop(104002, 1), drop(104003, 1)));
+        assertFalse(manager.getStatueDrops(actual, false, 0));
+        assertEquals(0, actual.getInventory().getItemCountById(104002));
+        GameData.getDungeonDropDataMap().put(5125, List.of(drop(104003, 1), drop(104003, 1)));
+        assertTrue(manager.getStatueDrops(actual, false, 0));
+        assertEquals(2, actual.getInventory().getItemCountById(104003));
+        assertEquals(2, actual.getInventory().getInventoryTab(ItemType.ITEM_MATERIAL).getSize());
+    }
+
+    @Test
+    void aFullRelicBagCannotConsumePaymentOrAwardOnlyTheCurrency() throws Exception {
+        actual.getInventory().createInventoryTab(ItemType.ITEM_RELIQUARY, new EquipInventoryTab(0));
+        GameData.getDungeonDropDataMap().put(103, List.of(drop(202, 10), drop(20002, 1)));
+        var manager = dungeon(103);
+        assertFalse(manager.getStatueDrops(actual, false, 0));
+        assertEquals(0, actual.getMora());
+        assertEquals(200, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertEquals(0, actual.getWeeklyBossChestNum());
+        assertFalse(manager.hasClaimedDomainReward(actual.getUid()));
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void modernRelicQuantitiesNeedIndividualSlotsAndIndividualItems(boolean separateRows)
+            throws Exception {
+        var manager = dungeon(103);
+        modernDrops(manager, 20002, 2, separateRows);
+        actual.getInventory().createInventoryTab(ItemType.ITEM_RELIQUARY, new EquipInventoryTab(1));
+        assertFalse(manager.getStatueDrops(actual, false, 0));
+        assertEquals(0, actual.getInventory().getItemCountById(20002));
+        assertEquals(200, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertFalse(manager.hasClaimedDomainReward(actual.getUid()));
+        actual.getInventory().createInventoryTab(ItemType.ITEM_RELIQUARY, new EquipInventoryTab(2));
+        assertTrue(manager.getStatueDrops(actual, false, 0));
+        var relics =
+                actual.getInventory().getItems().values().stream()
+                        .filter(item -> item.getItemId() == 20002)
+                        .toList();
+        assertEquals(2, relics.size());
+        assertEquals(2, relics.stream().map(GameItem::getGuid).distinct().count());
+        assertTrue(relics.stream().allMatch(item -> item.getCount() == 1));
+    }
+
+    @Test
+    void aRewardLargerThanANewStackLimitCannotBeSilentlyClampedDuringRoll() throws Exception {
+        int limit = GameData.getItemDataMap().get(104003).getStackLimit();
+        GameData.getDungeonDropDataMap().put(5125, List.of(drop(104003, limit + 1)));
+        var manager = dungeon(5125);
+        assertFalse(manager.getStatueDrops(actual, false, 0));
+        assertEquals(0, actual.getInventory().getItemCountById(104003));
+        assertEquals(200, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+    }
+
+    @Test
+    void aModernRewardLargerThanTheStackLimitIsNotClampedBeforeAdmission() throws Exception {
+        int limit = GameData.getItemDataMap().get(104003).getStackLimit();
+        var manager = dungeon(103);
+        modernDrops(manager, 104003, limit + 1, false);
+        assertFalse(manager.getStatueDrops(actual, false, 0));
+        assertEquals(0, actual.getInventory().getItemCountById(104003));
+        assertEquals(200, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+    }
+
+    @Test
+    void overflowingMoraCannotWrapTheBalanceAfterPayment() throws Exception {
+        actual.getProperties().put(PlayerProperty.PROP_PLAYER_SCOIN.getId(), Integer.MAX_VALUE - 5);
+        GameData.getDungeonDropDataMap().put(5125, List.of(drop(202, 10)));
+        var manager = dungeon(5125);
+        assertFalse(manager.getStatueDrops(actual, false, 0));
+        assertEquals(Integer.MAX_VALUE - 5, actual.getMora());
+        assertEquals(200, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void anAutomaticPlotBookDoesNotNeedAMaterialSlot(boolean alreadyOwned) throws Exception {
+        materialCapacity(1);
+        if (alreadyOwned) actual.getCodex().getUnlockedBook().add(100215);
+        GameData.getDungeonDropDataMap().put(1002, List.of(drop(202, 10), drop(100215, 1)));
+        var manager = dungeon(1002);
+        assertTrue(manager.getStatueDrops(actual, false, 0));
+        assertTrue(actual.getCodex().getUnlockedBook().contains(100215));
+        assertEquals(0, actual.getInventory().getItemCountById(100215));
+        assertEquals(1, actual.getInventory().getInventoryTab(ItemType.ITEM_MATERIAL).getSize());
+        assertEquals(10, actual.getMora());
+        assertEquals(200, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertEquals(
+                alreadyOwned ? 0 : 1,
+                packets.stream()
+                        .filter(packet -> packet.getOpcode() == PacketOpcodes.CodexDataUpdateNotify)
+                        .count());
+    }
+
+    @Test
+    void virtualActivityPreviewItemsDoNotConsumeSlotsOrCancelOtherRewards() throws Exception {
+        materialCapacity(1);
+        GameData.getDungeonDropDataMap()
+                .put(5125, List.of(drop(128, 1), drop(141, 1), drop(202, 10)));
+        var manager = dungeon(5125);
+        assertTrue(manager.getStatueDrops(actual, false, 0));
+        assertEquals(10, actual.getMora());
+        assertEquals(180, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertEquals(1, actual.getInventory().getInventoryTab(ItemType.ITEM_MATERIAL).getSize());
     }
 }

@@ -14,6 +14,7 @@ import emu.grasscutter.game.activity.aster.*;
 import emu.grasscutter.game.avatar.Avatar;
 import emu.grasscutter.game.battlepass.BattlePassManager;
 import emu.grasscutter.game.entity.*;
+import emu.grasscutter.game.player.GuardedPlayerTestStore;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.game.systems.InventorySystem;
@@ -59,6 +60,7 @@ class AsterMidSceneTest {
     private final Map<Integer, MonsterData> originalMonsters = new HashMap<>();
     private final List<String> persistedDetails = new CopyOnWriteArrayList<>();
     private boolean resinUsage;
+    private GuardedPlayerTestStore playerStore;
 
     @BeforeEach
     void setup() throws Exception {
@@ -74,10 +76,14 @@ class AsterMidSceneTest {
                         Datastore.class.getClassLoader(),
                         new Class<?>[] {Datastore.class},
                         (proxy, method, args) -> {
-                            assertEquals("save", method.getName());
-                            if (args[0] instanceof PlayerActivityData data)
+                            if (method.getName().equals("save")
+                                    && args[0] instanceof PlayerActivityData data)
                                 persistedDetails.add(data.getDetail());
-                            return args[0];
+                            try {
+                                return method.invoke(playerStore.datastore(), args);
+                            } catch (InvocationTargetException failure) {
+                                throw failure.getCause();
+                            }
                         }));
         configurationField = ActivityManager.class.getDeclaredField("configuration");
         configurationField.setAccessible(true);
@@ -94,6 +100,7 @@ class AsterMidSceneTest {
                         ConfigGlobalCombat.class));
         player = new RecoveryPlayer();
         player.setUid(10001);
+        playerStore = new GuardedPlayerTestStore(player, () -> {});
         var server = environment.scene.getWorld().getServer();
         player.server = server;
         player.inventorySystem =
@@ -200,6 +207,7 @@ class AsterMidSceneTest {
             scripts.onDestroy();
         }
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        if (playerStore != null) playerStore.close();
         if (configurationField != null) configurationField.set(null, originalConfiguration);
         if (datastoreField != null) datastoreField.set(null, originalDatastore);
         originalMonsters.forEach(
@@ -588,11 +596,11 @@ class AsterMidSceneTest {
     }
 
     static final class RecoveryPlayer extends AbilityTestFixture.TestPlayer {
-        int worldLevel = 1, adventureExp, companionshipExp;
-        long timeMs;
-        GameServer server;
-        InventorySystem inventorySystem;
-        private final ActivityManager activity =
+        transient int worldLevel = 1, adventureExp, companionshipExp;
+        transient long timeMs;
+        transient GameServer server;
+        transient InventorySystem inventorySystem;
+        private final transient ActivityManager activity =
                 new ActivityManager(this) {
                     @Override
                     public synchronized void refreshActivities() {}
@@ -603,7 +611,7 @@ class AsterMidSceneTest {
                     @Override
                     public void triggerActivityConditions() {}
                 };
-        private final BattlePassManager battlePass =
+        private final transient BattlePassManager battlePass =
                 new BattlePassManager(this) {
                     @Override
                     public void triggerMission(WatcherTriggerType type) {}

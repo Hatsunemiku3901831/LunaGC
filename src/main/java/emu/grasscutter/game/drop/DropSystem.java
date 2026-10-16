@@ -168,15 +168,7 @@ public final class DropSystem extends BaseGameSystem {
                     if (dropTable.containsKey(id)) {
                         processDrop(dropTable.get(id), amount, items);
                     } else {
-                        boolean flag = true;
-                        for (var j : items) {
-                            if (j.getItemId() == id) {
-                                j.setCount(j.getCount() + amount);
-                                flag = false;
-                                break;
-                            }
-                        }
-                        if (flag) items.add(new GameItem(id, amount));
+                        addDropItems(items, id, amount);
                     }
                     break;
                 }
@@ -191,19 +183,30 @@ public final class DropSystem extends BaseGameSystem {
                     if (dropTable.containsKey(id)) {
                         processDrop(dropTable.get(id), amount, items);
                     } else {
-                        boolean flag = true;
-                        for (var j : items) {
-                            if (j.getItemId() == id) {
-                                j.setCount(j.getCount() + amount);
-                                flag = false;
-                                break;
-                            }
-                        }
-                        if (flag) items.add(new GameItem(id, amount));
+                        addDropItems(items, id, amount);
                     }
                 }
             }
         }
+    }
+
+    private void addDropItems(List<GameItem> items, int itemId, int amount) {
+        var data = GameData.getItemDataMap().get(itemId);
+        if (data == null) throw new IllegalArgumentException("Unknown drop item " + itemId);
+        if (data.isEquip() || data.getItemType() == ItemType.ITEM_TPS_WEAPON) {
+            for (int i = 0; i < amount; i++) items.add(new GameItem(data, 1));
+            return;
+        }
+        for (var existing : items) {
+            if (existing.getItemId() == itemId) {
+                existing.setCount(Math.addExact(existing.getCount(), amount));
+                return;
+            }
+        }
+        var item = new GameItem(data, amount);
+        // Do not truncate before the caller can validate capacity for the complete roll.
+        item.setCount(amount);
+        items.add(item);
     }
 
     private int calculateDropAmount(DropItemData i) {
