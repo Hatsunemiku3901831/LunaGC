@@ -9,6 +9,8 @@ import emu.grasscutter.net.proto.ItemAddHintNotifyOuterClass.ItemAddHintNotify;
 import emu.grasscutter.net.proto.ItemHintOuterClass.ItemHint;
 import emu.grasscutter.net.proto.MusicGameBookAllDataNotifyOuterClass.MusicGameBookAllDataNotify;
 import emu.grasscutter.net.proto.MusicGameBookRecordOuterClass.MusicGameBookRecord;
+import emu.grasscutter.net.proto.MusicGameBookSaveSettingsReqOuterClass.MusicGameBookSaveSettingsReq;
+import emu.grasscutter.net.proto.MusicGameBookSaveSettingsRspOuterClass.MusicGameBookSaveSettingsRsp;
 import emu.grasscutter.net.proto.MusicGameBookSettleReqOuterClass.MusicGameBookSettleReq;
 import emu.grasscutter.net.proto.MusicGameBookSettleRspOuterClass.MusicGameBookSettleRsp;
 import emu.grasscutter.net.proto.MusicGameBookStartReqOuterClass.MusicGameBookStartReq;
@@ -28,12 +30,50 @@ public final class MusicGameBook {
     private byte[] completedRequest;
     private MusicGameBookSettleRsp completedResult;
     private PendingPerformance pendingPerformance;
+    private boolean pendingSettings;
 
     private record PendingPerformance(
             byte[] request, MusicGameBookSettleRsp result, Map<Integer, Integer> rewards) {}
 
     public MusicGameBook(Player player) {
         this.player = Objects.requireNonNull(player);
+    }
+
+    private void confirmSettings() {
+        if (!pendingSettings) return;
+        // Keep the intended value while PlayerSaveGuard reconciles a possibly committed document.
+        DatabaseHelper.saveGameSync(player);
+        pendingSettings = false;
+    }
+
+    public MusicGameBookSaveSettingsRsp saveSettings(MusicGameBookSaveSettingsReq request) {
+        synchronized (player.getInventory()) {
+            var response = MusicGameBookSaveSettingsRsp.newBuilder();
+            if (!request.hasNKFEGNKDBBK())
+                return response.setRetcode(Retcode.RET_FAIL_VALUE).build();
+            try {
+                confirmSettings();
+                confirmThemes();
+                confirmPerformance();
+                var next = new MusicGameBookSettingsData(request.getNKFEGNKDBBK());
+                var previous = player.getMusicGameBookSettings();
+                if (previous == null || !previous.toProto().equals(next.toProto())) {
+                    synchronized (player) {
+                        player.setMusicGameBookSettings(next);
+                        pendingSettings = true;
+                        confirmSettings();
+                    }
+                }
+                return response.setNKFEGNKDBBK(player.getMusicGameBookSettings().toProto()).build();
+            } catch (RuntimeException unavailable) {
+                Grasscutter.getLogger()
+                        .warn(
+                                "Music book settings unavailable for UID {}",
+                                player.getUid(),
+                                unavailable);
+                return response.setRetcode(Retcode.RET_SVR_ERROR_VALUE).build();
+            }
+        }
     }
 
     private void confirmThemes() {
@@ -61,6 +101,7 @@ public final class MusicGameBook {
         synchronized (player.getInventory()) {
             var catalog = MusicGameBookThemeCatalog.current();
             if (!catalog.contains(id)) return false;
+            confirmSettings();
             var saved = player.getMusicGameBookThemes();
             if (id != catalog.defaultTheme() && (saved == null || !saved.contains(id))) {
                 var next = saved == null ? new HashSet<Integer>() : new HashSet<>(saved);
@@ -74,6 +115,7 @@ public final class MusicGameBook {
     }
 
     private void sendData(MusicGameBookThemeCatalog catalog) {
+        confirmSettings();
         confirmThemes();
         confirmPerformance();
         var themes = new TreeSet<Integer>();
@@ -84,6 +126,8 @@ public final class MusicGameBook {
                 if (id != null && catalog.contains(id)) themes.add(id);
             }
         var notify = MusicGameBookAllDataNotify.newBuilder().addAllDHDNMAMDHIP(themes);
+        var settings = player.getMusicGameBookSettings();
+        if (settings != null) notify.setNKFEGNKDBBK(settings.toProto());
         var records = player.getMusicGameBookRecords();
         if (records != null && !records.isEmpty()) {
             var performances = MusicGameBookCatalog.current();
@@ -182,6 +226,7 @@ public final class MusicGameBook {
                 if (request.getBCBDBEFONEF() != 0 || map == null)
                     return result.setRetcode(Retcode.RET_MUSIC_GAME_LEVEL_CONFIG_NOT_FOUND_VALUE)
                             .build();
+                confirmSettings();
                 confirmPerformance();
                 activePerformance = map;
                 activeCatalog = catalog;
@@ -206,6 +251,7 @@ public final class MusicGameBook {
                             .setIHPMDKPGJLB(request.getIHPMDKPGJLB())
                             .setBCBDBEFONEF(request.getBCBDBEFONEF());
             try {
+                confirmSettings();
                 confirmPerformance();
                 var wire = request.toByteArray();
                 if (completedResult != null && Arrays.equals(completedRequest, wire))
