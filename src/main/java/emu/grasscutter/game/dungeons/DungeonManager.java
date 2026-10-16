@@ -160,33 +160,24 @@ public final class DungeonManager {
             return false;
         }
 
-        if (!handleCost(player, useCondensed)) {
+        // Build and validate the complete roll before spending either kind of resin. An empty or
+        // unusable roll must leave this player's claim and weekly discount available for a retry.
+        List<GameItem> rewards;
+        try {
+            rewards = new ArrayList<>(rollStatueDrops(player, useCondensed));
+            if (rewards.stream().anyMatch(item -> item == null || item.getItemId() <= 0
+                    || item.getItemData() == null || item.getCount() < 0)) {
+                return false;
+            }
+            rewards.removeIf(item -> item.getCount() == 0);
+        } catch (RuntimeException invalid) {
+            Grasscutter.getLogger().warn("Cannot build rewards for dungeon {}", dungeonData.getId(), invalid);
+            return false;
+        }
+        if (rewards.isEmpty() || !handleCost(player, useCondensed)) {
             return false;
         }
 
-        // Get and roll rewards.
-        List<GameItem> rewards;
-        if (usesLegacyLostValleyDrops(dungeonData.getId())) {
-            rewards = new ArrayList<>(this.rollRewards(useCondensed));
-        } else {
-            int statueDropId = dungeonData.getStatueDrop();
-
-            // A fallback domain has no statue drop of its own; borrow one that exists.
-            int fallbackStatueDropId =
-                    MissingDomainFallbackManager.getStatueDropOverride(dungeonData.getId());
-            if (fallbackStatueDropId != 0) {
-                statueDropId = fallbackStatueDropId;
-            }
-
-            rewards =
-                    player.getServer().getDropSystem().handleDungeonRewardDrop(statueDropId, useCondensed);
-
-            if (rewards.isEmpty()) {
-                // fallback to legacy drop system
-                Grasscutter.getLogger().debug("dungeon drop failed for {}", dungeonData.getId());
-                rewards = new ArrayList<>(this.rollRewards(useCondensed));
-            }
-        }
         // Add rewards to player and send notification.
         player.getInventory().addItems(rewards, ActionReason.DungeonStatueDrop);
         player.sendPacket(new PacketGadgetAutoPickDropInfoNotify(rewards));
@@ -201,6 +192,24 @@ public final class DungeonManager {
 
         scene.getScriptManager().callEvent(new ScriptArgs(groupId, EventType.EVENT_DUNGEON_REWARD_GET));
         return true;
+    }
+
+    private List<GameItem> rollStatueDrops(Player player, boolean useCondensed) {
+        if (usesLegacyLostValleyDrops(dungeonData.getId())) {
+            return this.rollRewards(useCondensed);
+        }
+        int statueDropId = dungeonData.getStatueDrop();
+        // A fallback domain has no statue drop of its own; borrow one that exists.
+        int fallbackStatueDropId = MissingDomainFallbackManager.getStatueDropOverride(dungeonData.getId());
+        if (fallbackStatueDropId != 0) {
+            statueDropId = fallbackStatueDropId;
+        }
+        var rewards = player.getServer().getDropSystem().handleDungeonRewardDrop(statueDropId, useCondensed);
+        if (!rewards.isEmpty()) {
+            return rewards;
+        }
+        Grasscutter.getLogger().debug("dungeon drop failed for {}", dungeonData.getId());
+        return this.rollRewards(useCondensed);
     }
 
     private static boolean usesLegacyLostValleyDrops(int dungeonId) {
@@ -285,6 +294,9 @@ public final class DungeonManager {
                 // Double rewards in multiply mode, if specified.
                 if (entry.isMpDouble() && this.getScene().getPlayerCount() > 1) {
                     amount *= 2;
+                }
+                if (amount < 0) {
+                    throw new IllegalArgumentException("Negative dungeon reward amount");
                 }
 
                 // Roll items for this group.
