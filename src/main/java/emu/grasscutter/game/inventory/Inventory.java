@@ -132,7 +132,7 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
      *     which is right for a dropped bundle but wrong for one that was bought and paid for. Passing
      *     true puts the item in the store like any other, so the player actually receives it and can
      *     open it themselves.
-     * @return True if the item was stored.
+     * @return True if the item was stored or its immediate effect was accepted.
      */
     public boolean addItem(GameItem item, boolean skipUseOnGain) {
         return addItem(item, skipUseOnGain, true);
@@ -143,7 +143,8 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
         var book = skipUseOnGain ? null : BookUnlocks.definition(item.getItemData());
         if (book != null && (item.getCount() != 1 || BookUnlocks.owned(player, item.getItemId())))
             return false;
-        GameItem result = putItem(item, skipUseOnGain);
+        var admission = putItem(item, skipUseOnGain);
+        GameItem result = admission.stored();
 
         if (result != null) {
             TpsWeaponSystem.onMaterialsChanged(this.player, List.of(result.getItemId()), notify);
@@ -155,7 +156,7 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
             return true;
         }
 
-        if (book != null && BookUnlocks.owned(player, item.getItemId())) {
+        if (admission.accepted() || book != null && BookUnlocks.owned(player, item.getItemId())) {
             this.triggerAddItemEvents(item);
             new PlayerObtainItemEvent(this.getPlayer(), item).call();
             return true;
@@ -207,31 +208,33 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
 
     public void addItems(Collection<GameItem> items, ActionReason reason) {
         List<GameItem> changedItems = new ArrayList<>();
+        List<GameItem> acquiredItems = new ArrayList<>();
         for (var item : items) {
             if (item.getItemId() == 0) continue;
-            GameItem result = null;
-
-            result = putItem(item);
+            var admission = putItem(item, false);
+            GameItem result = admission.stored();
 
             if (result != null) {
                 this.triggerAddItemEvents(result);
                 changedItems.add(result);
+                acquiredItems.add(result);
+            } else if (admission.accepted()) {
+                this.triggerAddItemEvents(item);
+                acquiredItems.add(item);
             }
         }
-        if (changedItems.size() == 0) {
-            return;
+        if (!changedItems.isEmpty()) {
+            TpsWeaponSystem.onMaterialsChanged(
+                    this.player,
+                    changedItems.stream()
+                            .map(GameItem::getItemId)
+                            .collect(java.util.stream.Collectors.toSet()),
+                    true);
+            getPlayer().sendPacket(new PacketStoreItemChangeNotify(changedItems));
         }
-        TpsWeaponSystem.onMaterialsChanged(
-                this.player,
-                changedItems.stream()
-                        .map(GameItem::getItemId)
-                        .collect(java.util.stream.Collectors.toSet()),
-                true);
-        getPlayer().sendPacket(new PacketStoreItemChangeNotify(changedItems));
-        if (reason != null) {
-            // The originals may have merged into an existing stack or been consumed by a
-            // use-on-gain item, so the toast has to name what the bag actually gained.
-            getPlayer().sendPacket(new PacketItemAddHintNotify(changedItems, reason));
+        if (reason != null && !acquiredItems.isEmpty()) {
+            // Include accepted immediate effects, while stored stacks use their actual merged item.
+            getPlayer().sendPacket(new PacketItemAddHintNotify(acquiredItems, reason));
         }
     }
 
@@ -329,16 +332,20 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
                 reason);
     }
 
-    private synchronized GameItem putItem(GameItem item) {
-        return putItem(item, false);
+    private record ItemAdmission(GameItem stored, boolean accepted) {
+        private static final ItemAdmission REJECTED = new ItemAdmission(null, false);
+
+        static ItemAdmission stored(GameItem item) {
+            return new ItemAdmission(item, true);
+        }
     }
 
-    private synchronized GameItem putItem(GameItem item, boolean skipUseOnGain) {
+    private synchronized ItemAdmission putItem(GameItem item, boolean skipUseOnGain) {
         // Dont add items that dont have a valid item definition.
         var data = item.getItemData();
-        if (data == null) return null;
+        if (data == null) return ItemAdmission.REJECTED;
         if (data.getItemType() == ItemType.ITEM_TPS_WEAPON
-                && getInventoryTab(ItemType.ITEM_TPS_WEAPON).getItemById(item.getItemId()) != null) return null;
+                && getInventoryTab(ItemType.ITEM_TPS_WEAPON).getItemById(item.getItemId()) != null) return ItemAdmission.REJECTED;
         try {
             this.player.getProgressManager().addItemObtainedHistory(item.getItemId(), item.getCount());
         } catch (Exception e) {
@@ -348,8 +355,9 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
         if (!skipUseOnGain && data.isUseOnGain()) {
             var params = new UseItemParams(this.player, data.getUseTarget());
             params.usedItemId = data.getId();
-            this.player.getServer().getInventorySystem().useItemDirect(data, params);
-            return null;
+            boolean accepted = this.player.getServer().getInventorySystem().useItemDirect(data, params);
+            // Replaying the drop must not repeat an effect already applied by a partial recipe.
+            return new ItemAdmission(null, accepted || params.anyActionApplied);
         }
 
         // Add item to inventory store
@@ -359,16 +367,16 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
         // Add
         switch (type) {
             case ITEM_TPS_WEAPON:
-                if (tab.getSize() >= tab.getMaxCapacity()) return null;
+                if (tab.getSize() >= tab.getMaxCapacity()) return ItemAdmission.REJECTED;
                 item.setCount(1);
                 this.putItem(item, tab);
                 TpsWeaponSystem.reconcileAccessories(this.player, item);
                 item.save();
-                return item;
+                return ItemAdmission.stored(item);
             case ITEM_WEAPON:
             case ITEM_RELIQUARY:
                 if (tab.getSize() >= tab.getMaxCapacity()) {
-                    return null;
+                    return ItemAdmission.REJECTED;
                 }
                 // Duplicates cause problems
                 item.setCount(Math.max(item.getCount(), 1));
@@ -376,11 +384,11 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
                 this.putItem(item, tab);
                 // Set ownership and save to db
                 item.save();
-                return item;
+                return ItemAdmission.stored(item);
             case ITEM_VIRTUAL:
                 // Handle
                 this.addVirtualItem(item.getItemId(), item.getCount());
-                return item;
+                return ItemAdmission.stored(item);
             default:
                 switch (item.getItemData().getMaterialType()) {
                     case MATERIAL_AVATAR:
@@ -394,22 +402,22 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
                                         "Attempted to add a "
                                                 + item.getItemData().getMaterialType().name()
                                                 + " to inventory, but item definition lacks isUseOnGain. This indicates a Resources error.");
-                        return null;
+                        return ItemAdmission.REJECTED;
                     default:
                         if (tab == null) {
-                            return null;
+                            return ItemAdmission.REJECTED;
                         }
                         GameItem existingItem = tab.getItemById(item.getItemId());
                         if (existingItem == null) {
                             // Item type didnt exist before, we will add it to main inventory map if there is
                             // enough space
                             if (tab.getSize() >= tab.getMaxCapacity()) {
-                                return null;
+                                return ItemAdmission.REJECTED;
                             }
                             this.putItem(item, tab);
                             // Set ownership and save to db
                             item.save();
-                            return item;
+                            return ItemAdmission.stored(item);
                         } else {
                             // Add count
                             existingItem.setCount(
@@ -417,7 +425,7 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
                                             existingItem.getCount() + item.getCount(),
                                             item.getItemData().getStackLimit()));
                             existingItem.save();
-                            return existingItem;
+                            return ItemAdmission.stored(existingItem);
                         }
                 }
         }

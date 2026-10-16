@@ -98,6 +98,12 @@ public class EntityItem extends EntityBaseGadget {
                 player.sendPacket(new PacketGadgetInteractRsp(this, InteractType.InteractType_INTERACT_PICK_ITEM));
             return;
         }
+        pickupItem(player);
+    }
+
+    private synchronized void pickupItem(Player player) {
+        if (player == null || player.getScene() != getScene()
+                || getScene().getEntities().get(getId()) != this) return;
         // check drop owner to avoid someone picked up item in others' world
         if (!this.isShare()) {
             int dropOwner = (int) (this.getGuid() >> 32);
