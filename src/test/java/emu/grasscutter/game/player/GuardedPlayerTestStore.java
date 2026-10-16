@@ -69,8 +69,16 @@ public final class GuardedPlayerTestStore implements AutoCloseable, PlayerSaveGu
 
     /** Match Player's post-load guard when a persistence fixture seeds a profile directly. */
     public static void loadSeededProfile(Player player, Datastore datastore) throws Exception {
+        loadSeededProfile(player, datastore, () -> {}, ignored -> {});
+    }
+
+    public static void loadSeededProfile(
+            Player player, Datastore datastore, Runnable before, Consumer<Document> after)
+            throws Exception {
         var name = datastore.getDatabase().getName();
-        if (!name.startsWith("lunagc_aster_shop_") && !name.startsWith("lunagc_test_"))
+        if (!name.startsWith("lunagc_aster_shop_")
+                && !name.startsWith("lunagc_aster_special_")
+                && !name.startsWith("lunagc_test_"))
             throw new IllegalArgumentException("Expected an isolated fixture database");
         var row =
                 datastore
@@ -85,7 +93,31 @@ public final class GuardedPlayerTestStore implements AutoCloseable, PlayerSaveGu
         player.setSaveStamp(stamp);
         var field = Player.class.getDeclaredField("saveGuard");
         field.setAccessible(true);
-        field.set(player, new PlayerSaveGuard(player, stamp, true));
+        var delegate = new PlayerSaveGuard.MongoStorage(datastore);
+        var wrapper =
+                new PlayerSaveGuard.Storage() {
+                    public Document read(int uid) {
+                        return delegate.read(uid);
+                    }
+
+                    public void insert(Document document) {
+                        before.run();
+                        delegate.insert(document);
+                        after.accept(document);
+                    }
+
+                    public boolean replace(Document filter, Document document) {
+                        before.run();
+                        boolean result = delegate.replace(filter, document);
+                        if (result) after.accept(document);
+                        return result;
+                    }
+
+                    public boolean advance(Document filter, PlayerSaveStamp value) {
+                        return delegate.advance(filter, value);
+                    }
+                };
+        field.set(player, new PlayerSaveGuard(player, stamp, true, ignored -> wrapper));
     }
 
     @Override

@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.google.gson.*;
 
-import dev.morphia.Datastore;
 
 import emu.grasscutter.data.*;
 import emu.grasscutter.data.common.ItemParamData;
@@ -36,12 +35,10 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
 
-import java.lang.reflect.Proxy;
 import java.nio.file.*;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 /** Real resources, activity documents, inventory payments and existing activity-info protocol. */
@@ -426,24 +423,7 @@ class ActivityCurrencyTest extends QuestTestFixture {
         assertTrue(give(127, 50));
         assertEquals(50, balance(127));
         player.setProperty(PlayerProperty.PROP_PLAYER_SCOIN, 100);
-        var writes = new AtomicInteger();
-        Datastore actual = DatabaseManager.getGameDatastore();
-        Datastore failing =
-                (Datastore)
-                        Proxy.newProxyInstance(
-                                Datastore.class.getClassLoader(),
-                                new Class<?>[] {Datastore.class},
-                                (proxy, method, args) -> {
-                                    if (method.getName().equals("save")
-                                            && args[0] instanceof PlayerActivityData) {
-                                        writes.incrementAndGet();
-                                        if (committed) method.invoke(actual, args);
-                                        throw new IllegalStateException(
-                                                "activity coin acknowledgement lost");
-                                    }
-                                    return method.invoke(actual, args);
-                                });
-        replaceField(DatabaseManager.class, null, "gameDatastore", failing);
+        var writes = ActivitySaveFaults.failNextWrite(player.activity.getPlayerActivityDataMap().get(2006), committed);
         player.packets.clear();
         assertThrows(
                 IllegalStateException.class,

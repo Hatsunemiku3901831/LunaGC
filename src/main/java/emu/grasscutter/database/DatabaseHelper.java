@@ -111,6 +111,10 @@ public final class DatabaseHelper {
                 player.getSaveGuard().save(DatabaseManager.getGameDatastore());
                 return;
             }
+            if (object instanceof PlayerActivityData activity) {
+                activity.getSaveGuard().save(DatabaseManager.getGameDatastore());
+                return;
+            }
             var concern = WriteConcern.MAJORITY.withJournal(true);
             if (object instanceof GameItem item && item.getCount() <= 0)
                 DatabaseManager.getGameDatastore().delete(item, new DeleteOptions().writeConcern(concern));
@@ -126,15 +130,16 @@ public final class DatabaseHelper {
      * <p>An unguarded save swallows both: a duplicate key means something else inserted the entity
      * first, and a ConcurrentModificationException means a player collection was being mutated on
      * another thread while Morphia walked it - typically during login. Both used to lose the write
-     * silently, so progress simply disappeared. Player duplicate keys are conflicts and must never
-     * be retried as unguarded replacements.
+     * silently, so progress simply disappeared. Guarded document duplicate keys are conflicts and
+     * must never be retried as unguarded replacements.
      */
     private static void saveWithRetry(Datastore datastore, Object object) {
         var name = object.getClass().getSimpleName();
         try {
             saveGameObject(datastore, object);
         } catch (MongoWriteException e) {
-            if (object instanceof Player || e.getError() == null || e.getError().getCode() != 11000) {
+            if (object instanceof Player || object instanceof PlayerActivityData
+                    || e.getError() == null || e.getError().getCode() != 11000) {
                 throw e;
             }
             // The id is reflected back onto the object by the failed insert, so the retry
@@ -163,6 +168,7 @@ public final class DatabaseHelper {
 
     private static void saveGameObject(Datastore datastore, Object object) {
         if (object instanceof Player player) player.getSaveGuard().save(datastore);
+        else if (object instanceof PlayerActivityData activity) activity.getSaveGuard().save(datastore);
         else datastore.save(object);
     }
 

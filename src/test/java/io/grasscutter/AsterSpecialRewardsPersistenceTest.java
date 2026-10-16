@@ -10,7 +10,7 @@ import dev.morphia.query.experimental.filters.Filters;
 
 import emu.grasscutter.command.commands.AsterCommand;
 import emu.grasscutter.database.*;
-import emu.grasscutter.game.activity.PlayerActivityData;
+import emu.grasscutter.game.activity.*;
 import emu.grasscutter.game.activity.aster.*;
 import emu.grasscutter.game.avatar.Avatar;
 import emu.grasscutter.game.inventory.GameItem;
@@ -92,10 +92,6 @@ class AsterSpecialRewardsPersistenceTest {
                                         assertEquals(
                                                 Boolean.TRUE, options.writeConcern().getJournal());
                                         boolean lose = false;
-                                        if (args[0] instanceof PlayerActivityData) {
-                                            int n = activitySaves.incrementAndGet();
-                                            lose = failure == 1 && n == 1 || failure == 5 && n == 2;
-                                        }
                                         if (args[0] instanceof GameItem item)
                                             lose =
                                                     failure == 2 && item.getItemId() == 15101
@@ -104,8 +100,6 @@ class AsterSpecialRewardsPersistenceTest {
                                                                             || item.getItemId()
                                                                                     == 221);
                                         if (args[0] instanceof Avatar) lose = failure == 3;
-                                        if (args[0] instanceof AsterShopTestFixture.ShopPlayer)
-                                            lose = failure == 4;
                                         if (lose) {
                                             fault.set(true);
                                             throw new IllegalStateException(
@@ -114,6 +108,21 @@ class AsterSpecialRewardsPersistenceTest {
                                     }
                                     return result;
                                 }));
+                GuardedActivityTestStore.bind(data, store, DatabaseManager.getGameDatastore(), true,
+                        ignored -> {}, document -> {
+                            int n = activitySaves.incrementAndGet();
+                            if (failure == 1 && n == 1 || failure == 5 && n == 2) {
+                                fault.set(true);
+                                throw new IllegalStateException("Activity write accepted, acknowledgement lost");
+                            }
+                        });
+                emu.grasscutter.game.player.GuardedPlayerTestStore.loadSeededProfile(player, store,
+                        () -> {}, document -> {
+                            if (failure == 4) {
+                                fault.set(true);
+                                throw new IllegalStateException("Player write accepted, acknowledgement lost");
+                            }
+                        });
                 assertEquals(0, AsterSpecialRewardDelivery.validate(player, 3000000));
                 if (failure == 0) new AsterCommand().execute(null, player, List.of("take"));
                 else

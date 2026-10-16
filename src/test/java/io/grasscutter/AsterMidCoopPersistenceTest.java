@@ -9,7 +9,7 @@ import dev.morphia.mapping.MapperOptions;
 import dev.morphia.query.experimental.filters.Filters;
 
 import emu.grasscutter.database.*;
-import emu.grasscutter.game.activity.PlayerActivityData;
+import emu.grasscutter.game.activity.*;
 import emu.grasscutter.game.activity.aster.*;
 
 import org.junit.jupiter.api.*;
@@ -92,20 +92,16 @@ class AsterMidCoopPersistenceTest {
                                     } catch (InvocationTargetException error) {
                                         throw error.getCause();
                                     }
-                                    if (method.getName().equals("save")
-                                            && args[0] instanceof PlayerActivityData data) {
-                                        int n =
-                                                (data.getUid() == 10001 ? hostSaves : guestSaves)
-                                                        .incrementAndGet();
-                                        if (n == 2
-                                                && (failure == 1 && data.getUid() == 10002
-                                                        || failure == 2 && data.getUid() == 10001))
-                                            throw new IllegalStateException(
-                                                    "Mongo accepted the write; acknowledgement"
-                                                            + " lost");
-                                    }
                                     return result;
                                 }));
+                for (var activity : List.of(fixture.data, guest))
+                    GuardedActivityTestStore.bind(activity, store, DatabaseManager.getGameDatastore(), true,
+                            ignored -> {}, document -> {
+                                int uid = document.getInteger("uid");
+                                int n = (uid == 10001 ? hostSaves : guestSaves).incrementAndGet();
+                                if (n == 2 && (failure == 1 && uid == 10002 || failure == 2 && uid == 10001))
+                                    throw new IllegalStateException("Mongo accepted the write; acknowledgement lost");
+                            });
                 var grants = new AtomicInteger();
                 var debits = new AtomicInteger();
                 var call =

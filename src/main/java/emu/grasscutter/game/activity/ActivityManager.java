@@ -118,9 +118,9 @@ public class ActivityManager extends BasePlayerManager {
             var data = playerActivityDataMap.get(item.getActivityId());
             if (data == null) data = PlayerActivityData.getByPlayer(player, item.getActivityId());
             if (data == null || (data.getScheduleId() != 0 && data.getScheduleId() != item.getScheduleId())) {
-                var previousId = data == null ? null : data.getId();
+                var previous = data;
                 data = item.getActivityHandler().initPlayerActivityData(player);
-                data.setId(previousId);
+                if (previous != null) data.inheritSaveIdentity(previous);
                 data.save();
             } else if (data.getScheduleId() == 0) {
                 data.setScheduleId(item.getScheduleId());

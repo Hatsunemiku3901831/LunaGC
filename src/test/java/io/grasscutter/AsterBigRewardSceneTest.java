@@ -76,12 +76,6 @@ class AsterBigRewardSceneTest {
                         Datastore.class.getClassLoader(),
                         new Class<?>[] {Datastore.class},
                         (proxy, method, args) -> {
-                            if (method.getName().equals("save")
-                                    && args[0] instanceof PlayerActivityData data) {
-                                saved.add(data.getDetail());
-                                if (++activityWrites == failActivityWrite)
-                                    throw new IllegalStateException("write acknowledgement lost");
-                            }
                             try {
                                 return method.invoke(playerStore.datastore(), args);
                             } catch (InvocationTargetException failure) {
@@ -164,6 +158,11 @@ class AsterBigRewardSceneTest {
         player.setWorld(scene.getWorld());
         player.setSceneLoadState(emu.grasscutter.game.player.Player.SceneLoadState.LOADED);
         data.setPlayer(player);
+        GuardedActivityTestStore.bind(data, playerStore.datastore(), document -> {
+            saved.add(document.getString("detail"));
+            if (++activityWrites == failActivityWrite)
+                throw new IllegalStateException("write acknowledgement lost");
+        }, ignored -> {});
         player.getActivityManager().getPlayerActivityDataMap().put(2001, data);
         player.getTeamManager().setEntity(new EntityTeam(player));
         var depot =

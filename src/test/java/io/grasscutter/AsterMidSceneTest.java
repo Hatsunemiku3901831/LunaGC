@@ -76,9 +76,6 @@ class AsterMidSceneTest {
                         Datastore.class.getClassLoader(),
                         new Class<?>[] {Datastore.class},
                         (proxy, method, args) -> {
-                            if (method.getName().equals("save")
-                                    && args[0] instanceof PlayerActivityData data)
-                                persistedDetails.add(data.getDetail());
                             try {
                                 return method.invoke(playerStore.datastore(), args);
                             } catch (InvocationTargetException failure) {
@@ -101,6 +98,8 @@ class AsterMidSceneTest {
         player = new RecoveryPlayer();
         player.setUid(10001);
         playerStore = new GuardedPlayerTestStore(player, () -> {});
+        GuardedActivityTestStore.bind(resources.data, playerStore.datastore(), ignored -> {},
+                document -> persistedDetails.add(document.getString("detail")));
         var server = environment.scene.getWorld().getServer();
         player.server = server;
         player.inventorySystem =

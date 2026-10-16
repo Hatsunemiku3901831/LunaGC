@@ -52,6 +52,7 @@ class AsterBigEntranceTest {
     private static final int MAIN = 133001413;
     private static final List<Integer> GROUPS = List.of(MAIN, 133001426, 133001427, 133001498);
     private AbilityTestFixture environment;
+    private emu.grasscutter.game.player.GuardedPlayerTestStore playerStore;
     AsterBigTestFixture resources;
     AsterMidSceneTest.RecoveryPlayer host, guest;
     AbilityTestFixture.TestScene scene;
@@ -65,16 +66,6 @@ class AsterBigEntranceTest {
         resources = new AsterBigTestFixture();
         if (ScriptLoader.getEngine() == null) ScriptLoader.init();
         oldDatastore = field(DatabaseManager.class, "gameDatastore").get(null);
-        field(DatabaseManager.class, "gameDatastore")
-                .set(
-                        null,
-                        Proxy.newProxyInstance(
-                                Datastore.class.getClassLoader(),
-                                new Class<?>[] {Datastore.class},
-                                (proxy, method, args) -> {
-                                    assertEquals("save", method.getName());
-                                    return args[0];
-                                }));
         oldConfiguration = field(ActivityManager.class, "configuration").get(null);
         ActivityManager.installConfiguration(
                 new ActivityManager.Configuration(
@@ -100,6 +91,9 @@ class AsterBigEntranceTest {
                         environment.scene.getWorld().getServer(),
                         new ConcurrentHashMap<Integer, Player>());
         host = new AsterMidSceneTest.RecoveryPlayer();
+        host.setUid(resources.host.getUid());
+        playerStore = new emu.grasscutter.game.player.GuardedPlayerTestStore(host, () -> {});
+        field(DatabaseManager.class, "gameDatastore").set(null, playerStore.datastore());
         guest = new AsterMidSceneTest.RecoveryPlayer();
         scene =
                 new AbilityTestFixture.TestScene(
@@ -178,6 +172,7 @@ class AsterBigEntranceTest {
         restore.forEach(Runnable::run);
         if (resources != null) resources.close();
         if (environment != null) environment.close();
+        if (playerStore != null) playerStore.close();
     }
 
     // Reflection keeps the initial regression runnable before the missing controller exists.

@@ -25,7 +25,6 @@ import emu.grasscutter.utils.JsonUtils;
 
 import org.junit.jupiter.api.*;
 
-import java.lang.reflect.Proxy;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -64,24 +63,11 @@ class AsterBigRewardRestoreTest {
     }
 
     private void cold() {
-        var watchers = new HashMap<Integer, PlayerActivityData.WatcherInfo>();
-        owner.getWatcherInfoMap()
-                .forEach(
-                        (id, value) ->
-                                watchers.put(
-                                        id,
-                                        JsonUtils.decode(
-                                                JsonUtils.encode(value),
-                                                PlayerActivityData.WatcherInfo.class)));
-        attach(
-                PlayerActivityData.of()
-                        .id(owner.getId())
-                        .uid(owner.getUid())
-                        .activityId(owner.getActivityId())
-                        .scheduleId(owner.getScheduleId())
-                        .watcherInfoMap(watchers)
-                        .detail(owner.getDetail())
-                        .build());
+        emu.grasscutter.database.DatabaseHelper.saveGameSync(owner);
+        var reloaded = DatabaseManager.getGameDatastore().find(PlayerActivityData.class)
+                .filter(Filters.eq("uid", owner.getUid())).first();
+        assertNotNull(reloaded);
+        attach(reloaded);
     }
 
     private EntityGadget restore() throws Exception {
@@ -156,18 +142,7 @@ class AsterBigRewardRestoreTest {
                 assertEquals(token, offer.token());
                 assertEquals(8, offer.rewards().get(10002).worldLevel());
                 assertEquals(50, offer.rewards().get(10002).essence());
-                AsterBigEntranceTest.field(DatabaseManager.class, "gameDatastore")
-                        .set(
-                                null,
-                                Proxy.newProxyInstance(
-                                        Datastore.class.getClassLoader(),
-                                        new Class<?>[] {Datastore.class},
-                                        (proxy, method, args) -> {
-                                            assertEquals("save", method.getName());
-                                            return args[0] instanceof PlayerActivityData data
-                                                    ? store.save(data)
-                                                    : args[0];
-                                        }));
+                AsterBigEntranceTest.field(DatabaseManager.class, "gameDatastore").set(null, store);
                 assertTrue(prepare());
                 fixture.scripts.awaitAll();
                 var retired =
@@ -303,20 +278,7 @@ class AsterBigRewardRestoreTest {
         var point = restore();
         assertNotNull(point);
         String before = owner.getDetail();
-        var fail = new AtomicBoolean(true);
-        AsterBigEntranceTest.field(DatabaseManager.class, "gameDatastore")
-                .set(
-                        null,
-                        Proxy.newProxyInstance(
-                                Datastore.class.getClassLoader(),
-                                new Class<?>[] {Datastore.class},
-                                (proxy, method, args) -> {
-                                    assertEquals("save", method.getName());
-                                    if (args[0] instanceof PlayerActivityData
-                                            && fail.getAndSet(false))
-                                        throw new IllegalStateException("retirement write failed");
-                                    return args[0];
-                                }));
+        ActivitySaveFaults.failNextWrite(owner, false);
         assertFalse(prepare());
         assertEquals(before, owner.getDetail());
         assertSame(point, fixture.scene.getEntityById(point.getId()));
@@ -357,28 +319,15 @@ class AsterBigRewardRestoreTest {
             store.getMapper().map(PlayerActivityData.class);
             try {
                 store.save(owner);
+                AsterBigEntranceTest.field(DatabaseManager.class, "gameDatastore").set(null, store);
+                attach(store.find(PlayerActivityData.class).filter(Filters.eq("uid", owner.getUid())).first());
                 cold();
                 var point = restore();
                 assertNotNull(point);
-                var loseAck = new AtomicBoolean(true);
-                AsterBigEntranceTest.field(DatabaseManager.class, "gameDatastore")
-                        .set(
-                                null,
-                                Proxy.newProxyInstance(
-                                        Datastore.class.getClassLoader(),
-                                        new Class<?>[] {Datastore.class},
-                                        (proxy, method, args) -> {
-                                            assertEquals("save", method.getName());
-                                            if (args[0] instanceof PlayerActivityData data) {
-                                                var saved = store.save(data);
-                                                if (loseAck.getAndSet(false))
-                                                    throw new IllegalStateException(
-                                                            "retirement stored; acknowledgement"
-                                                                + " lost");
-                                                return saved;
-                                            }
-                                            return args[0];
-                                        }));
+                var failedOnce = new AtomicBoolean();
+                GuardedActivityTestStore.bind(owner, store, store, true, ignored -> {}, document -> {
+                    if (!failedOnce.getAndSet(true)) throw new IllegalStateException("retirement stored; acknowledgement lost");
+                });
                 assertFalse(prepare());
                 assertSame(point, fixture.scene.getEntityById(point.getId()));
                 var reloaded =

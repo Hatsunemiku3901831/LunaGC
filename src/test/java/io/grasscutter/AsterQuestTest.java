@@ -214,7 +214,7 @@ class AsterQuestTest {
                 ActivityManager.prepareConfiguration(List.of(resources.config)));
         var data = resources.config.getActivityHandler().initPlayerActivityData(player);
         data.setPlayer(player);
-        store.save(data);
+        data.saveSync();
         player.activity.getPlayerActivityDataMap().put(2001, data);
         player.activity.refreshActivities();
         drain();
@@ -583,37 +583,9 @@ class AsterQuestTest {
         var data = player.activity.getPlayerActivityDataMap().get(2001);
         var previous = data.getWatcherInfoMap().get(1200130);
         String detail = data.getDetail();
-        var fault = new AtomicBoolean();
-        replaceField(
-                DatabaseManager.class,
-                null,
-                "gameDatastore",
-                Proxy.newProxyInstance(
-                        Datastore.class.getClassLoader(),
-                        new Class<?>[] {Datastore.class},
-                        (proxy, method, args) -> {
-                            boolean inject =
-                                    method.getName().equals("save")
-                                            && args[0] instanceof PlayerActivityData saved
-                                            && saved.getWatcherInfoMap()
-                                                            .get(1200130)
-                                                            .getCurProgress()
-                                                    == 1
-                                            && !fault.getAndSet(true);
-                            if (inject && !loseAcknowledgement)
-                                throw new IllegalStateException("story write failed");
-                            Object result;
-                            try {
-                                result = method.invoke(store, args);
-                            } catch (InvocationTargetException failure) {
-                                throw failure.getCause();
-                            }
-                            if (inject)
-                                throw new IllegalStateException("story acknowledgement lost");
-                            return result;
-                        }));
+        var fault = ActivitySaveFaults.failNextWrite(data, loseAcknowledgement);
         assertThrows(IllegalStateException.class, () -> player.activity.refreshActivities());
-        assertTrue(fault.get());
+        assertEquals(1, fault.get());
         assertSame(previous, data.getWatcherInfoMap().get(1200130));
         assertEquals(0, previous.getCurProgress());
         assertEquals(detail, data.getDetail());

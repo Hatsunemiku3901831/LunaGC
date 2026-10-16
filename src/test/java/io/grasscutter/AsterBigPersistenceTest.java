@@ -9,7 +9,7 @@ import dev.morphia.mapping.MapperOptions;
 import dev.morphia.query.experimental.filters.Filters;
 
 import emu.grasscutter.database.*;
-import emu.grasscutter.game.activity.PlayerActivityData;
+import emu.grasscutter.game.activity.*;
 import emu.grasscutter.game.activity.aster.*;
 
 import org.junit.jupiter.api.*;
@@ -62,21 +62,16 @@ class AsterBigPersistenceTest {
                                     } catch (InvocationTargetException error) {
                                         throw error.getCause();
                                     }
-                                    if (method.getName().equals("save")
-                                            && args[0] instanceof PlayerActivityData data) {
-                                        int n =
-                                                (data.getUid() == 10001 ? hostWrites : guestWrites)
-                                                        .incrementAndGet();
-                                        if (failure == 1 && data.getUid() == 10002 && n == 2
-                                                || failure == 2 && data.getUid() == 10001 && n == 2
-                                                || failure == 3 && data.getUid() == 10001 && n == 1
-                                                || failure == 4 && data.getUid() == 10002 && n == 1)
-                                            throw new IllegalStateException(
-                                                    "Mongo accepted the write; acknowledgement"
-                                                            + " lost");
-                                    }
                                     return result;
                                 }));
+                for (var activity : List.of(resources.host, resources.guest))
+                    GuardedActivityTestStore.bind(activity, store, DatabaseManager.getGameDatastore(), true,
+                            ignored -> {}, document -> {
+                                int uid = document.getInteger("uid");
+                                int n = (uid == 10001 ? hostWrites : guestWrites).incrementAndGet();
+                                if (failure == 1 && uid == 10002 && n == 2 || failure == 2 && uid == 10001 && n == 2 || failure == 3 && uid == 10001 && n == 1 || failure == 4 && uid == 10002 && n == 1)
+                                    throw new IllegalStateException("Mongo accepted the write; acknowledgement lost");
+                            });
                 var debits = new AtomicInteger();
                 var grants = new AtomicInteger();
                 var call =

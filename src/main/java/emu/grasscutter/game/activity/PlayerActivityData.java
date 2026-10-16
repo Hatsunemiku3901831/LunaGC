@@ -1,6 +1,8 @@
 package emu.grasscutter.game.activity;
 
 import dev.morphia.annotations.*;
+import dev.morphia.Datastore;
+import org.bson.Document;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.data.excels.activity.ActivityWatcherData;
@@ -36,13 +38,32 @@ public class PlayerActivityData {
     @Transient Player player;
     @Transient ActivityHandler activityHandler;
     @Transient @Getter(AccessLevel.NONE) @Setter(AccessLevel.NONE) volatile boolean unconfirmedActivityCoins;
+    @Setter(AccessLevel.NONE) ActivitySaveStamp saveStamp;
+    @Transient @Getter(AccessLevel.NONE) @Setter(AccessLevel.NONE) ActivitySaveGuard saveGuard;
+
+    @PostLoad
+    private void onLoad(Document row, Datastore datastore) {
+        saveGuard = new ActivitySaveGuard(this, row, datastore);
+    }
+
+    public synchronized ActivitySaveGuard getSaveGuard() {
+        if (saveGuard == null) saveGuard = new ActivitySaveGuard(this, null, null);
+        return saveGuard;
+    }
+
+    void setSaveStamp(ActivitySaveStamp stamp) { saveStamp = stamp; }
+
+    synchronized void inheritSaveIdentity(PlayerActivityData previous) {
+        if (saveGuard != null) throw new IllegalStateException("Replay identity already initialized");
+        saveGuard = previous.getSaveGuard().forReplay(this);
+    }
 
     public boolean hasUnconfirmedActivityCoins() { return unconfirmedActivityCoins; }
     void blockUnconfirmedActivityCoins() { unconfirmedActivityCoins = true; }
 
     public PlayerActivityData(String id, int uid, int activityId, int scheduleId,
             Map<Integer, WatcherInfo> watcherInfoMap, String detail, Player player, ActivityHandler activityHandler) {
-        this(id, uid, activityId, scheduleId, watcherInfoMap, new HashMap<>(), detail, player, activityHandler, false);
+        this(id, uid, activityId, scheduleId, watcherInfoMap, new HashMap<>(), detail, player, activityHandler, false, null, null);
     }
 
     public static PlayerActivityData getByPlayer(Player player, int activityId) {

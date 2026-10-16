@@ -42,13 +42,13 @@ class SalesmanPersistenceTest {
     @AfterEach void restore() throws Exception { try { drain(); } finally { datastoreField.set(null, original); if(playerStore!=null)playerStore.close(); } }
     @Test void reservationSaveUsesJournalAcknowledgementAndPropagatesErrorsToTheCaller() throws Exception {
         var thread = Thread.currentThread(); var called = new AtomicBoolean();
-        store((proxy, method, args) -> {
-            assertEquals("save", method.getName()); assertSame(thread, Thread.currentThread());
-            var options = (InsertOneOptions) args[1]; assertEquals("majority", options.writeConcern().getWString());
-            assertEquals(Boolean.TRUE, options.writeConcern().getJournal()); called.set(true);
+        playerStore = new emu.grasscutter.game.player.GuardedPlayerTestStore(new TestPlayer(), () -> {});
+        store((proxy, method, args) -> method.invoke(playerStore.datastore(), args));
+        var data = PlayerActivityData.of().uid(12345).activityId(5003).scheduleId(5003010).detail("{}").build();
+        GuardedActivityTestStore.bind(data, playerStore.datastore(), document -> {
+            assertSame(thread, Thread.currentThread()); called.set(true);
             throw new IllegalStateException("Unavailable DB");
-        });
-        var data = PlayerActivityData.of().activityId(5003).scheduleId(5003010).detail("{}").build();
+        }, ignored -> {});
         assertThrows(IllegalStateException.class, data::saveSync);
         assertThrows(IllegalStateException.class, data::save); assertTrue(called.get());
     }
@@ -87,15 +87,7 @@ class SalesmanPersistenceTest {
     @Test void sevenDayExchangeGrantsActualInventoryAndPersistsAllSevenBoxSelections() throws Exception {
         var gson = new Gson(); var root = Path.of("resources/ExcelBinOutput"); var loaded = new HashSet<Integer>();
         var savedDetail = new AtomicReference<String>(); var savedPrimogems = new AtomicInteger();
-        store((proxy, method, args) -> {
-            if (method.getName().equals("getMapper")) return playerStore.datastore().getMapper();
-            if (method.getName().equals("save")) {
-                if (args[0] instanceof PlayerActivityData data) savedDetail.set(data.getDetail());
-                if (args[0] instanceof Player player) savedPrimogems.set(player.getPrimogems());
-                return args[0];
-            }
-            return null;
-        });
+        store((proxy, method, args) -> method.invoke(playerStore.datastore(), args));
         try {
             for (var row : gson.fromJson(Files.readString(root.resolve("ActivitySalesmanExcelConfigData.json")), SalesmanData[].class))
                 GameData.getSalesmanDataMap().put(row.getId(), row);
@@ -118,6 +110,8 @@ class SalesmanPersistenceTest {
             var config = new ActivityConfigItem(); config.setActivityId(5003); config.setActivityType(3); config.setScheduleId(5003010);
             config.setBeginTime(new Date(now - 1000)); config.setEndTime(new Date(now + 8 * 86400000L)); config.onLoad();
             var data = PlayerActivityData.of().activityId(5003).scheduleId(5003010).detail("{}").build();
+            GuardedActivityTestStore.bind(data, playerStore.datastore(), ignored -> {},
+                    document -> savedDetail.set(document.getString("detail")));
             for (int day = 1; day <= 7; day++) {
                 long current = now + (day - 1) * 86400000L;
                 for (var cost : SalesmanSchedule.daily(config, current).getCostItemList()) assertTrue(player.getInventory().addItem(cost));
@@ -133,7 +127,8 @@ class SalesmanPersistenceTest {
             assertEquals(totals.get(202).intValue(), player.getMora());
             for (var total : totals.entrySet()) if (total.getKey() != 201 && total.getKey() != 202)
                 assertEquals(total.getValue().intValue(), player.getInventory().getItemCountById(total.getKey()));
-            var reloaded = PlayerActivityData.of().activityId(5003).scheduleId(5003010).detail(savedDetail.get()).build();
+            var reloaded = playerStore.datastore().find(PlayerActivityData.class).first();
+            assertEquals(savedDetail.get(), reloaded.getDetail());
             assertEquals(7, SalesmanSchedule.progress(reloaded).selectedRewardIdMap().size());
             assertEquals(0, SalesmanSchedule.progress(reloaded).remainingChances());
         } finally {

@@ -9,7 +9,7 @@ import dev.morphia.mapping.MapperOptions;
 import dev.morphia.query.experimental.filters.Filters;
 
 import emu.grasscutter.database.*;
-import emu.grasscutter.game.activity.PlayerActivityData;
+import emu.grasscutter.game.activity.*;
 import emu.grasscutter.game.activity.aster.*;
 import emu.grasscutter.game.inventory.GameItem;
 import emu.grasscutter.game.shop.*;
@@ -111,15 +111,6 @@ class AsterShopPersistenceTest {
                                                 "majority", options.writeConcern().getWString());
                                         assertEquals(
                                                 Boolean.TRUE, options.writeConcern().getJournal());
-                                        if (args[0] instanceof PlayerActivityData) {
-                                            int n = activitySaves.incrementAndGet();
-                                            if (failure == 1 && n == 1 || failure == 3 && n == 2) {
-                                                fault.set(true);
-                                                throw new IllegalStateException(
-                                                        "Activity write accepted, acknowledgement"
-                                                                + " lost");
-                                            }
-                                        }
                                         if (args[0] instanceof GameItem
                                                 && itemSaves.incrementAndGet() == 1
                                                 && failure == 2) {
@@ -130,6 +121,14 @@ class AsterShopPersistenceTest {
                                     }
                                     return result;
                                 }));
+                GuardedActivityTestStore.bind(fixture.event.data, store, DatabaseManager.getGameDatastore(), true,
+                        ignored -> {}, document -> {
+                            int n = activitySaves.incrementAndGet();
+                            if (failure == 1 && n == 1 || failure == 3 && n == 2) {
+                                fault.set(true);
+                                throw new IllegalStateException("Activity write accepted, acknowledgement lost");
+                            }
+                        });
                 var server = scene.scene.getWorld().getServer();
                 var manager = new ShopSystem(server);
                 var catalogue = new Int2ObjectOpenHashMap<List<ShopInfo>>();

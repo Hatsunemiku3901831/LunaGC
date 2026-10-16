@@ -23,6 +23,7 @@ import org.junit.jupiter.api.*;
 
 /** Real virtual-currency writes and acknowledged activity saves, without a production database. */
 class AsterPersistenceTest {
+    private emu.grasscutter.game.player.GuardedPlayerTestStore playerStore;
     private Field datastoreField;
     private Object original;
     private ActivityConfigItem config;
@@ -136,6 +137,7 @@ class AsterPersistenceTest {
             drain();
         } finally {
             datastoreField.set(null, original);
+            if (playerStore != null) playerStore.close();
             GameData.getAsterLittleDataMap().clear();
             GameData.getAsterMissionDataMap().clear();
             GameData.getAsterStageDataMap().clear();
@@ -157,22 +159,14 @@ class AsterPersistenceTest {
         var savedPrimogems = new AtomicInteger();
         var savedMora = new AtomicInteger();
         var gson = new Gson();
-        store(
-                (proxy, method, args) -> {
-                    assertEquals("save", method.getName());
-                    if (args[0] instanceof PlayerActivityData saved) {
-                        var options = (InsertOneOptions) args[1];
-                        assertEquals("majority", options.writeConcern().getWString());
-                        assertEquals(Boolean.TRUE, options.writeConcern().getJournal());
-                        savedDetail.set(saved.getDetail());
-                        savedWatchers.set(gson.toJson(saved.getWatcherInfoMap()));
-                    }
-                    if (args[0] instanceof Player saved) {
-                        savedPrimogems.set(saved.getPrimogems());
-                        savedMora.set(saved.getMora());
-                    }
-                    return args[0];
-                });
+        playerStore = new emu.grasscutter.game.player.GuardedPlayerTestStore(player, () -> {}, document -> {
+            savedPrimogems.set(player.getPrimogems()); savedMora.set(player.getMora());
+        });
+        store((proxy, method, args) -> method.invoke(playerStore.datastore(), args));
+        GuardedActivityTestStore.bind(data, playerStore.datastore(), ignored -> {}, document -> {
+            savedDetail.set(document.getString("detail"));
+            savedWatchers.set(gson.toJson(data.getWatcherInfoMap()));
+        });
         long now = System.currentTimeMillis();
         for (var area :
                 AsterFragments.areas().values().stream()
@@ -234,10 +228,11 @@ class AsterPersistenceTest {
     @Test
     void failedReservationSaveDoesNotChangeActualCurrencies() throws Exception {
         data.getWatcherInfoMap().get(1200101).setCurProgress(7);
-        store(
-                (proxy, method, args) -> {
-                    throw new IllegalStateException("DB unavailable");
-                });
+        playerStore = new emu.grasscutter.game.player.GuardedPlayerTestStore(player, () -> {});
+        store((proxy, method, args) -> method.invoke(playerStore.datastore(), args));
+        GuardedActivityTestStore.bind(data, playerStore.datastore(), document -> {
+            throw new IllegalStateException("DB unavailable");
+        }, ignored -> {});
         String before = data.getDetail();
         synchronized (player.getInventory()) {
             assertThrows(
