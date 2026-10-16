@@ -694,8 +694,12 @@ public final class GameData {
 
     // Custom community server resources
     @Getter
-    private static final Int2ObjectMap<List<DungeonDropEntry>> dungeonDropDataMap =
+    private static volatile Int2ObjectMap<List<DungeonDropEntry>> dungeonDropDataMap =
             new Int2ObjectOpenHashMap<>();
+
+    static void installDungeonDropData(Int2ObjectMap<List<DungeonDropEntry>> snapshot) {
+        dungeonDropDataMap = new Int2ObjectOpenHashMap<>(snapshot);
+    }
 
     @Getter
     private static final Int2ObjectMap<GadgetMapping> gadgetMappingMap =

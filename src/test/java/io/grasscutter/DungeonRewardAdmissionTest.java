@@ -3,6 +3,7 @@ package io.grasscutter;
 import static org.junit.jupiter.api.Assertions.*;
 
 import emu.grasscutter.config.Configuration;
+import emu.grasscutter.data.DungeonDropCatalog;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.excels.*;
 import emu.grasscutter.data.excels.codex.CodexBookData;
@@ -576,5 +577,59 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
         assertEquals(10, actual.getMora());
         assertEquals(180, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
         assertEquals(1, actual.getInventory().getInventoryTab(ItemType.ITEM_MATERIAL).getSize());
+    }
+
+    @Test
+    void theLoadedLostValleyCatalogGrantsItsActualRewardsInsteadOfTheDisplayPreview()
+            throws Exception {
+        var previous =
+                new it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap<>(
+                        GameData.getDungeonDropDataMap());
+        try {
+            DungeonDropCatalog.reload();
+            var groups = GameData.getDungeonDropDataMap().get(5128);
+            assertNotNull(groups);
+            var ids = new HashSet<Integer>();
+            groups.forEach(group -> ids.addAll(group.getItems()));
+            for (var name : List.of("Material", "Reliquary")) {
+                for (var data :
+                        JsonUtils.loadToList(
+                                Path.of(
+                                        "resources/ExcelBinOutput/"
+                                                + name
+                                                + "ExcelConfigData.json"),
+                                ItemData.class)) {
+                    if (!ids.contains(data.getId())) continue;
+                    data.onLoad();
+                    if (!oldItems.containsKey(data.getId()))
+                        oldItems.put(data.getId(), GameData.getItemDataMap().get(data.getId()));
+                    GameData.getItemDataMap().put(data.getId(), data);
+                }
+            }
+            assertTrue(dungeon(5128).getStatueDrops(actual, false, 0));
+            int mora =
+                    groups.stream()
+                            .filter(group -> group.getItems().equals(List.of(202)))
+                            .findFirst()
+                            .orElseThrow()
+                            .getCounts()
+                            .get(0);
+            assertNotEquals(10, mora); // This fixture's display-only preview contains ten Mora.
+            assertEquals(mora, actual.getMora());
+            assertEquals(100, actual.getExp());
+            assertEquals(180, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+            long fiveStar =
+                    actual.getInventory().getItems().values().stream()
+                            .filter(
+                                    item ->
+                                            item.getItemData().getItemType()
+                                                            == ItemType.ITEM_RELIQUARY
+                                                    && item.getItemData().getRankLevel() == 5)
+                            .count();
+            assertTrue(fiveStar >= 1 && fiveStar <= 2);
+        } finally {
+            GameData.getDungeonDropDataMap().clear();
+            GameData.getDungeonDropDataMap().putAll(previous);
+        }
     }
 }

@@ -1538,6 +1538,14 @@ Taskfile.yml    the task definitions
 Everything in `tools/` that the Taskfile invokes is named without a leading
 underscore; the `_`-prefixed files are ad-hoc analysis scratch and are gitignored.
 
+## 秘境掉落配置
+
+启动时优先读取运行数据目录的 `DungeonDrop.json`，不存在时使用 JAR 内置的 116 份配置。
+可在 GM 或控制台执行 `reload dungeon-drops` 单独重载；无参数 `reload` 也会重载掉落配置。
+配置错误时保留上一份完整快照，首次启动遇到错误配置会明确报错。
+路径遵循 `folderStructure.data`，默认用户覆盖位置为 `data/DungeonDrop.json`。
+配置范围与仍待补齐的根表见[秘境掉落加载说明](docs/DUNGEON_DROP_CATALOG_2026-10-17.md)。
+
 ## Credit
 
 girluh's [LunaGC](https://github.com/girluh/LunaGC)

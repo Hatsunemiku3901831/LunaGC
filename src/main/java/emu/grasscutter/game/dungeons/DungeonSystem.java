@@ -2,6 +2,7 @@ package emu.grasscutter.game.dungeons;
 
 import emu.grasscutter.*;
 import emu.grasscutter.data.GameData;
+import emu.grasscutter.data.DungeonDropCatalog;
 import emu.grasscutter.data.binout.ScenePointEntry;
 import emu.grasscutter.data.excels.dungeon.*;
 import emu.grasscutter.game.dungeons.fallback.MissingDomainFallbackManager;
@@ -25,6 +26,11 @@ public final class DungeonSystem extends BaseGameSystem {
         super(server);
 
         this.passCondHandlers = new Int2ObjectOpenHashMap<>();
+        try {
+            DungeonDropCatalog.reload();
+        } catch (java.io.IOException invalid) {
+            throw new IllegalStateException("Cannot load dungeon rewards", invalid);
+        }
         this.registerHandlers();
     }
 

@@ -297,8 +297,9 @@ public final class DungeonManager {
         List<GameItem> rewards = new ArrayList<>();
         int dungeonId = this.dungeonData.getId();
         // If we have specific drop data for this dungeon, we use it.
-        if (GameData.getDungeonDropDataMap().containsKey(dungeonId)) {
-            List<DungeonDropEntry> dropEntries = GameData.getDungeonDropDataMap().get(dungeonId);
+        // Keep one snapshot while a configuration reload publishes its replacement.
+        List<DungeonDropEntry> dropEntries = GameData.getDungeonDropDataMap().get(dungeonId);
+        if (dropEntries != null) {
 
             // Roll for each drop group.
             for (var entry : dropEntries) {
