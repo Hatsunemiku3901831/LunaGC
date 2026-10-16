@@ -2063,6 +2063,8 @@ public final class PacketOpcodes {
     public static final int MusicGameBookSettleRsp = 24067;
     public static final int MusicGameBookStartReq = 27235;
     public static final int MusicGameBookStartRsp = 29833;
+    public static final int MusicGameBookSaveSettingsReq = 25611;
+    public static final int MusicGameBookSaveSettingsRsp = 7502;
     public static final int MusicGameThemeUnlockNotify = 22198;
     public static final int PenumbraAdventureFlightGearSettleNotify = 6586;
     public static final int PenumbraAdventureTargetShootingSettleNotify = 25042;

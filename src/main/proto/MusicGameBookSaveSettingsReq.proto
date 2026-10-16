@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "MusicGameBookSaveSettingsReqOuterClass";
+
+import "MusicGameBookSettings.proto";
+
+// Descriptive local name for current 7.1 native FMDCIALMNDH (14112), opcode 25611.
+message MusicGameBookSaveSettingsReq {
+    MusicGameBookSettings NKFEGNKDBBK = 14;
+}

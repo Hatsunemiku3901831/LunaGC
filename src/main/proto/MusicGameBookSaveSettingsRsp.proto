@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "MusicGameBookSaveSettingsRspOuterClass";
+
+import "MusicGameBookSettings.proto";
+
+// Descriptive local name for current 7.1 native PPMAKFAIFKH (87204), opcode 7502.
+message MusicGameBookSaveSettingsRsp {
+    MusicGameBookSettings NKFEGNKDBBK = 3;
+    int32 retcode = 14;
+}
