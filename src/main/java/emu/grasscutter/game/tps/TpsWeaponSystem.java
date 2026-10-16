@@ -590,19 +590,28 @@ public final class TpsWeaponSystem {
                     || current.getAvatar().getPlayer() != player
                     || scene.getEntities().get(current.getId()) != current) return false;
             var avatar = current.getAvatar();
-            boolean ownedEntity =
+            var source =
                     invoke.getEntityId() == current.getId()
-                            || getWornWeapons(avatar).stream()
-                                    .anyMatch(
-                                                    item -> isCurrentWeaponEntity(
-                                                            item, avatar, scene, invoke.getEntityId()));
-            if (!ownedEntity) return false;
+                            ? current
+                            : getWornWeapons(avatar).stream()
+                                    .filter(
+                                            item ->
+                                                    isCurrentWeaponEntity(
+                                                            item,
+                                                            avatar,
+                                                            scene,
+                                                            invoke.getEntityId()))
+                                    .map(GameItem::getWeaponEntity)
+                                    .findFirst()
+                                    .orElse(null);
+            if (source == null) return false;
             var update = AbilityMetaUpdateTpsWeaponAmmunition.parseFrom(invoke.getAbilityData());
             if (update.getUpdateTypeValue() > 1 || update.getUpdateTypeValue() < 0) return false;
             var allowed = ammunitionIds(avatar);
             var changes = new Int2LongOpenHashMap();
             for (var entry : update.getAmmunitionListList()) {
-                if (!allowed.contains(entry.getAmmunitionConfigId()) || entry.getChangeCount() > 0
+                if (!allowed.contains(entry.getAmmunitionConfigId())
+                        || entry.getChangeCount() > 0
                         || (update.getUpdateTypeValue() == 1 && entry.getChangeCount() != 0))
                     return false;
                 changes.addTo(entry.getAmmunitionConfigId(), entry.getChangeCount());
@@ -611,18 +620,23 @@ public final class TpsWeaponSystem {
                 if (getReserve(player, entry.getIntKey()) + entry.getLongValue() < 0) return false;
             var magazines = TpsMagazineSystem.validate(player, avatar, scene, update, changes);
             if (magazines == null) return false;
+            if (!player.getTpsAmmunitionInvocations().begin(source, current, invoke, update))
+                return false;
             boolean changed = false;
             for (var entry : changes.int2LongEntrySet())
                 if (entry.getLongValue() != 0) {
-                    player
-                            .getTpsAmmunition()
+                    player.getTpsAmmunition()
                             .put(
                                     entry.getIntKey(),
-                                    (int) (getReserve(player, entry.getIntKey()) + entry.getLongValue()));
+                                    (int)
+                                            (getReserve(player, entry.getIntKey())
+                                                    + entry.getLongValue()));
                     changed = true;
                 }
             for (var entry : magazines.int2IntEntrySet()) {
-                var before = player.getTpsMagazineAmmunition().put(entry.getIntKey(), entry.getIntValue());
+                var before =
+                        player.getTpsMagazineAmmunition()
+                                .put(entry.getIntKey(), entry.getIntValue());
                 changed |= !Objects.equals(before, entry.getIntValue());
             }
             if (changed) player.save();

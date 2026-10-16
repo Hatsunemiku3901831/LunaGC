@@ -113,6 +113,7 @@ class TpsEquipmentTest {
         final TeamManager team = new TeamManager(this);
         final List<BasePacket> packets = new ArrayList<>();
         int saves;
+        boolean failNextSave;
         boolean loggedIn;
 
         @Override
@@ -123,6 +124,10 @@ class TpsEquipmentTest {
         @Override
         public void save() {
             saves++;
+            if (failNextSave) {
+                failNextSave = false;
+                throw new IllegalStateException("injected TPS save failure");
+            }
         }
 
         @Override
@@ -1532,5 +1537,275 @@ class TpsEquipmentTest {
         assertDoesNotThrow(
                 () -> player.getAbilityManager().onAbilityInvoke(clientAmmo(42, 0, 0, 1001, -1)));
         assertEquals(0, player.saves);
+    }
+
+    private AbilityInvokeEntry timedMagazine(
+            EntityAvatar entity, GameItem gun, int type, int count, int delta, double time) {
+        return magazineInvoke(
+                        entity.getId(),
+                        gun.getWeaponEntity().getId(),
+                        type,
+                        101,
+                        1001,
+                        count,
+                        delta)
+                .toBuilder()
+                .setArgumentType(AbilityInvokeArgument.ABILITY_META_UPDATE_TPS_WEAPON_AMMUNITION)
+                .setForwardType(
+                        emu.grasscutter.net.proto.ForwardTypeOuterClass.ForwardType
+                                .ForwardType_FORWARD_TO_ALL)
+                .setHead(
+                        AbilityInvokeEntryHead.newBuilder()
+                                .setLocalId(32771)
+                                .setInstancedAbilityId(1))
+                .setTotalTickTime(time)
+                .build();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"invocations", "change", "init", "combine"})
+    void theSameTimedShotIsSpentSavedAndForwardedOnce(String kind) throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            player.getTpsAmmunition().put(1001, 100);
+            player.saves = 0;
+            var shot = timedMagazine(entity, gun, 0, 44, -1, 12.5);
+            fixture.scene.packets.clear();
+            dispatchAmmo(kind, fixture, List.of(shot, shot));
+            assertEquals(99, TpsWeaponSystem.getReserve(player, 1001));
+            assertEquals(44, player.getTpsMagazineAmmunition().get(101));
+            assertEquals(1, player.saves);
+            assertEquals(List.of(shot), forwarded(fixture));
+        }
+    }
+
+    @Test
+    void replayingAnOldShotAfterReloadCannotSpendAgainOrRestoreTheOldMagazine() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            player.getTpsAmmunition().put(1001, 100);
+            var shot = timedMagazine(entity, gun, 0, 44, -1, 12.5);
+            assertTrue(TpsWeaponSystem.onAmmunitionInvoke(player, shot));
+            assertTrue(
+                    TpsWeaponSystem.onAmmunitionInvoke(
+                            player, timedMagazine(entity, gun, 1, 45, 0, 13)));
+            int saves = player.saves;
+            assertFalse(TpsWeaponSystem.onAmmunitionInvoke(player, shot));
+            assertEquals(99, TpsWeaponSystem.getReserve(player, 1001));
+            assertEquals(45, player.getTpsMagazineAmmunition().get(101));
+            assertEquals(saves, player.saves);
+        }
+    }
+
+    @Test
+    void replayingAnOldReloadCannotRollBackASubsequentShot() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            player.getTpsAmmunition().put(1001, 100);
+            var reload = timedMagazine(entity, gun, 1, 45, 0, 12);
+            assertTrue(TpsWeaponSystem.onAmmunitionInvoke(player, reload));
+            assertTrue(
+                    TpsWeaponSystem.onAmmunitionInvoke(
+                            player, timedMagazine(entity, gun, 0, 44, -1, 13)));
+            int saves = player.saves;
+            assertFalse(TpsWeaponSystem.onAmmunitionInvoke(player, reload));
+            assertEquals(99, TpsWeaponSystem.getReserve(player, 1001));
+            assertEquals(44, player.getTpsMagazineAmmunition().get(101));
+            assertEquals(saves, player.saves);
+        }
+    }
+
+    @Test
+    void aSaveFailureCannotMakeTheSameTimedShotSpendTwice() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            player.getTpsAmmunition().put(1001, 100);
+            player.saves = 0;
+            player.failNextSave = true;
+            var shot = timedMagazine(entity, gun, 0, 44, -1, 12.5);
+            assertThrows(
+                    IllegalStateException.class,
+                    () -> TpsWeaponSystem.onAmmunitionInvoke(player, shot));
+            assertEquals(99, TpsWeaponSystem.getReserve(player, 1001));
+            assertFalse(TpsWeaponSystem.onAmmunitionInvoke(player, shot));
+            assertEquals(99, TpsWeaponSystem.getReserve(player, 1001));
+            assertEquals(44, player.getTpsMagazineAmmunition().get(101));
+            assertEquals(1, player.saves);
+        }
+    }
+
+    @Test
+    void anInvalidatedSourceCannotSpendOrRecordAnAmmunitionReport() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            player.getTpsAmmunition().put(1001, 100);
+            player.saves = 0;
+            var shot = timedMagazine(entity, gun, 0, 44, -1, 12.5);
+            entity.invalidateAbilityLifecycle();
+            assertFalse(TpsWeaponSystem.onAmmunitionInvoke(player, shot));
+            assertEquals(100, TpsWeaponSystem.getReserve(player, 1001));
+            assertEquals(0, player.saves);
+            entity.activateAbilityLifecycle();
+            assertTrue(TpsWeaponSystem.onAmmunitionInvoke(player, shot));
+            assertEquals(99, TpsWeaponSystem.getReserve(player, 1001));
+        }
+    }
+
+    @Test
+    void aRecreatedSnapshotWeaponDoesNotInheritAnOldWeaponsReceiptWhenItsIdIsReused()
+            throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            player.getTpsAmmunition().put(1001, 100);
+            var shot = timedMagazine(entity, gun, 0, 44, -1, 12.5);
+            assertTrue(TpsWeaponSystem.onAmmunitionInvoke(player, shot));
+            var previous = gun.getWeaponEntity();
+            int reusedId = previous.getId();
+            TpsWeaponSystem.releaseSceneWeapons(player, fixture.scene);
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            var replacement = gun.getWeaponEntity();
+            assertNotSame(previous, replacement);
+            fixture.scene.getWeaponEntities().remove(replacement.getId());
+            replacement.setId(reusedId);
+            fixture.scene.getWeaponEntities().put(reusedId, replacement);
+            assertEquals(shot, timedMagazine(entity, gun, 0, 44, -1, 12.5));
+            assertTrue(TpsWeaponSystem.onAmmunitionInvoke(player, shot));
+            assertEquals(98, TpsWeaponSystem.getReserve(player, 1001));
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"time", "event", "payload"})
+    void distinctTimedReportsAreNotMerged(String difference) throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            player.getTpsAmmunition().put(1001, 100);
+            var shot = timedMagazine(entity, gun, 0, 44, -1, 12.5);
+            assertTrue(TpsWeaponSystem.onAmmunitionInvoke(player, shot));
+            var next =
+                    switch (difference) {
+                        case "time" -> shot.toBuilder().setTotalTickTime(13).build();
+                        case "event" -> shot.toBuilder().setEventId(1).build();
+                        default -> timedMagazine(entity, gun, 0, 43, -1, 12.5);
+                    };
+            assertTrue(TpsWeaponSystem.onAmmunitionInvoke(player, next));
+            assertEquals(98, TpsWeaponSystem.getReserve(player, 1001));
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {0, -1, Double.NaN, Double.POSITIVE_INFINITY})
+    void anUnidentifiedClockDoesNotMakeSeparateReportsDuplicates(double time) throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            player.getTpsAmmunition().put(1001, 100);
+            var shot = timedMagazine(entity, gun, 0, 44, -1, time);
+            assertTrue(TpsWeaponSystem.onAmmunitionInvoke(player, shot));
+            assertTrue(TpsWeaponSystem.onAmmunitionInvoke(player, shot));
+            assertEquals(98, TpsWeaponSystem.getReserve(player, 1001));
+        }
+    }
+
+    @Test
+    void totalOnlyFeesRetainNativeHandlingWithoutInferringAMagazineOperationIdentity()
+            throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            equip(entity.getAvatar(), item(224001));
+            player.getTpsAmmunition().put(1001, 100);
+            var fee =
+                    clientAmmo(entity.getId(), 0, 32771, 1001, -1).toBuilder()
+                            .setTotalTickTime(12.5)
+                            .build();
+            assertTrue(TpsWeaponSystem.onAmmunitionInvoke(player, fee));
+            assertTrue(TpsWeaponSystem.onAmmunitionInvoke(player, fee));
+            assertEquals(98, TpsWeaponSystem.getReserve(player, 1001));
+        }
+    }
+
+    @Test
+    void aTimedReportFromTheActualWeaponEntityIsAlsoSpentOnce() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            player.getTpsAmmunition().put(1001, 100);
+            var shot =
+                    timedMagazine(entity, gun, 0, 44, -1, 12.5).toBuilder()
+                            .setEntityId(gun.getWeaponEntity().getId())
+                            .build();
+            assertTrue(TpsWeaponSystem.onAmmunitionInvoke(player, shot));
+            assertFalse(TpsWeaponSystem.onAmmunitionInvoke(player, shot));
+            assertEquals(99, TpsWeaponSystem.getReserve(player, 1001));
+        }
+    }
+
+    @Test
+    void aRejectedReportCanBeRetriedAfterItsStatePreconditionIsSatisfied() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            player.getTpsAmmunition().put(1001, 0);
+            var shot = timedMagazine(entity, gun, 0, 44, -1, 12.5);
+            assertFalse(TpsWeaponSystem.onAmmunitionInvoke(player, shot));
+            player.getTpsAmmunition().put(1001, 100);
+            assertTrue(TpsWeaponSystem.onAmmunitionInvoke(player, shot));
+            assertEquals(99, TpsWeaponSystem.getReserve(player, 1001));
+        }
+    }
+
+    @Test
+    void concurrentCopiesOfOneTimedReportSpendOnce() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var entity = sceneAvatar(fixture);
+            var gun = item(224001);
+            equip(entity.getAvatar(), gun);
+            TpsWeaponSystem.ensureWeaponEntities(entity.getAvatar(), fixture.scene);
+            player.getTpsAmmunition().put(1001, 100);
+            player.saves = 0;
+            var shot = timedMagazine(entity, gun, 0, 44, -1, 12.5);
+            var pool = java.util.concurrent.Executors.newFixedThreadPool(4);
+            try {
+                var attempts = new ArrayList<java.util.concurrent.Future<Boolean>>();
+                for (int i = 0; i < 20; i++)
+                    attempts.add(
+                            pool.submit(() -> TpsWeaponSystem.onAmmunitionInvoke(player, shot)));
+                int accepted = 0;
+                for (var attempt : attempts)
+                    if (attempt.get(5, java.util.concurrent.TimeUnit.SECONDS)) accepted++;
+                assertEquals(1, accepted);
+                assertEquals(99, TpsWeaponSystem.getReserve(player, 1001));
+                assertEquals(1, player.saves);
+            } finally {
+                pool.shutdownNow();
+            }
+        }
     }
 }

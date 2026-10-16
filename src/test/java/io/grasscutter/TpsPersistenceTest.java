@@ -191,6 +191,7 @@ class TpsPersistenceTest {
                 snapshot.player.getTpsAmmunition().put(1003, 5);
                 snapshot.player.getTpsMagazineAmmunition().put(101, 0);
                 snapshot.player.getTpsMagazineAmmunition().put(301, 3);
+                var receipts = snapshot.player.getTpsAmmunitionInvocations();
                 snapshot.avatar = new Avatar();
                 snapshot.avatar.getTpsWeaponIds().addAll(List.of(224001, 224004));
                 snapshot.weapon = new GameItem();
@@ -222,6 +223,8 @@ class TpsPersistenceTest {
                                 .getInteger("1001"));
                 assertEquals(0, raw.get("player", Document.class)
                         .get("tpsMagazineAmmunition", Document.class).getInteger("101"));
+                assertFalse(raw.get("player", Document.class).containsKey("tpsAmmunitionInvocations"));
+                assertNotSame(receipts, loaded.player.getTpsAmmunitionInvocations());
                 var collection = client.getDatabase(database).getCollection("tps_snapshots");
                 collection.updateOne(new Document("_id", "equipment"),
                         new Document("$unset", new Document("player.tpsMagazineAmmunition", "")));
