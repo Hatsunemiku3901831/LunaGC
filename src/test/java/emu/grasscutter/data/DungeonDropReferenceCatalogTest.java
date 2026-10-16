@@ -64,7 +64,7 @@ class DungeonDropReferenceCatalogTest {
 
     @Test
     void everyBundledCandidateMatchesTheCurrentResources() {
-        assertEquals(244, bundled.size());
+        assertEquals(266, bundled.size());
         for (var row : bundled)
             assertDoesNotThrow(
                     () ->
@@ -80,7 +80,9 @@ class DungeonDropReferenceCatalogTest {
                         Path.of("docs/data/dungeon-reference-audit-2026-10-17.json"),
                         com.google.gson.JsonObject.class);
         assertEquals(266, audit.get("sourceCount").getAsInt());
-        assertEquals(244, audit.get("acceptedCount").getAsInt());
+        assertEquals(266, audit.get("acceptedCount").getAsInt());
+        assertEquals(244, audit.get("sourceAcceptedCount").getAsInt());
+        assertEquals(22, audit.get("repairedCount").getAsInt());
         var accepted = new HashSet<Integer>();
         audit.getAsJsonArray("acceptedIds").forEach(x -> assertTrue(accepted.add(x.getAsInt())));
         assertEquals(
@@ -88,20 +90,22 @@ class DungeonDropReferenceCatalogTest {
                 bundled.stream()
                         .map(DungeonDrop::getDungeonId)
                         .collect(java.util.stream.Collectors.toSet()));
-        var excluded = new HashSet<Integer>();
-        audit.getAsJsonArray("excluded")
+        assertTrue(audit.getAsJsonArray("excluded").isEmpty());
+        var repaired = new HashSet<Integer>();
+        audit.getAsJsonArray("repaired")
                 .forEach(
                         x -> {
                             assertTrue(
-                                    excluded.add(x.getAsJsonObject().get("dungeonId").getAsInt()));
-                            assertFalse(x.getAsJsonObject().getAsJsonArray("reasons").isEmpty());
+                                    repaired.add(x.getAsJsonObject().get("dungeonId").getAsInt()));
+                            assertFalse(
+                                    x.getAsJsonObject().getAsJsonArray("originalIssues").isEmpty());
                         });
         assertEquals(
                 Set.of(
                         4480, 4484, 4665, 4683, 4684, 4685, 4686, 4687, 4688, 4689, 4690, 5000,
                         5001, 5002, 5008, 5018, 5022, 5050, 5060, 5064, 5100, 5101),
-                excluded);
-        assertTrue(Collections.disjoint(accepted, excluded));
+                repaired);
+        assertTrue(accepted.containsAll(repaired));
     }
 
     List<DungeonDropEntry> groups(String body) throws IOException {
@@ -144,11 +148,12 @@ class DungeonDropReferenceCatalogTest {
     void theReferenceCatalogPublishesIndependentlyOfTheOrdinaryCatalog() throws Exception {
         var ordinary = GameData.getDungeonDropDataMap();
         assertEquals(
-                244,
+                266,
                 DungeonDropReferenceCatalog.reload(new StringReader(JsonUtils.encode(bundled))));
         assertSame(ordinary, GameData.getDungeonDropDataMap());
         assertNotNull(DungeonDropReferenceCatalog.forDungeon(dungeons.get(4668)));
-        assertNull(DungeonDropReferenceCatalog.forDungeon(dungeons.get(5064)));
+        assertNotNull(DungeonDropReferenceCatalog.forDungeon(dungeons.get(5064)));
+        assertNull(DungeonDropReferenceCatalog.forDungeon(dungeons.get(103)));
     }
 
     @Test

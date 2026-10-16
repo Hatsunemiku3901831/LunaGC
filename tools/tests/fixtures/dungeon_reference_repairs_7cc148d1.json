@@ -1,0 +1,2296 @@
+{
+  "referenceCommit": "7cc148d1f752a43d4b9146b3b73f26875902546f",
+  "referenceSha256": "071cc14d01a0ea730eecfca575568ff924a3b485d06a706c8d572410788c17c9",
+  "rows": [
+    {
+      "dungeonId": 4480,
+      "comment": "Generated reliquary domain 4480",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            1850
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            15
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "2-star Weapon Material",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            80,
+            20
+          ],
+          "items": [
+            114021
+          ]
+        },
+        {
+          "comment": "3-star Weapon Material",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            20,
+            80
+          ],
+          "items": [
+            114022
+          ]
+        },
+        {
+          "comment": "4-star Weapon Material",
+          "counts": [
+            1,
+            2
+          ],
+          "probabilities": [
+            50,
+            50
+          ],
+          "items": [
+            114023
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 4484,
+      "comment": "Generated reliquary domain 4484",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            1850
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            15
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "2-star Weapon Material",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            80,
+            20
+          ],
+          "items": [
+            114021
+          ]
+        },
+        {
+          "comment": "3-star Weapon Material",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            20,
+            80
+          ],
+          "items": [
+            114022
+          ]
+        },
+        {
+          "comment": "4-star Weapon Material",
+          "counts": [
+            1,
+            2
+          ],
+          "probabilities": [
+            50,
+            50
+          ],
+          "items": [
+            114023
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 4665,
+      "comment": "Generated reliquary domain 4665",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            1850
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            15
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "2-star Weapon Material",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            80,
+            20
+          ],
+          "items": [
+            114021
+          ]
+        },
+        {
+          "comment": "3-star Weapon Material",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            20,
+            80
+          ],
+          "items": [
+            114022
+          ]
+        },
+        {
+          "comment": "4-star Weapon Material",
+          "counts": [
+            1,
+            2
+          ],
+          "probabilities": [
+            50,
+            50
+          ],
+          "items": [
+            114023
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 4683,
+      "comment": "Generated reliquary domain 4683",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            1850
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            15
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "2-star Weapon Material",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            80,
+            20
+          ],
+          "items": [
+            114021
+          ]
+        },
+        {
+          "comment": "3-star Weapon Material",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            20,
+            80
+          ],
+          "items": [
+            114022
+          ]
+        },
+        {
+          "comment": "4-star Weapon Material",
+          "counts": [
+            1,
+            2
+          ],
+          "probabilities": [
+            50,
+            50
+          ],
+          "items": [
+            114023
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 4684,
+      "comment": "Generated reliquary domain 4684",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            2025
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            20
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "3-star Artifacts",
+          "counts": [
+            5,
+            6
+          ],
+          "probabilities": [
+            20,
+            80
+          ],
+          "items": [
+            54310,
+            54311,
+            54312,
+            54313,
+            54314,
+            54320,
+            54321,
+            54322,
+            54323,
+            54324,
+            54330,
+            54331,
+            54332,
+            54333,
+            54334,
+            54340,
+            54341,
+            54342,
+            54343,
+            54344,
+            54350,
+            54351,
+            54352,
+            54353,
+            54354,
+            57310,
+            57311,
+            57312,
+            57313,
+            57314,
+            57320,
+            57321,
+            57322,
+            57323,
+            57324,
+            57330,
+            57331,
+            57332,
+            57333,
+            57334,
+            57340,
+            57341,
+            57342,
+            57343,
+            57344,
+            57350,
+            57351,
+            57352,
+            57353,
+            57354
+          ]
+        },
+        {
+          "comment": "4-star Artifacts",
+          "counts": [
+            1,
+            2
+          ],
+          "probabilities": [
+            60,
+            40
+          ],
+          "items": [
+            43412,
+            43413,
+            43422,
+            43423,
+            43432,
+            43433,
+            43442,
+            43443,
+            43452,
+            43453,
+            44412,
+            44413,
+            44422,
+            44423,
+            44432,
+            44433,
+            44442,
+            44443,
+            44452,
+            44453,
+            54410,
+            54411,
+            54412,
+            54413,
+            54414,
+            54420,
+            54421,
+            54422,
+            54423,
+            54424,
+            54430,
+            54431,
+            54432,
+            54433,
+            54434,
+            54440,
+            54441,
+            54442,
+            54443,
+            54444,
+            54450,
+            54451,
+            54452,
+            54453,
+            54454,
+            57410,
+            57411,
+            57412,
+            57413,
+            57414,
+            57420,
+            57421,
+            57422,
+            57423,
+            57424,
+            57430,
+            57431,
+            57432,
+            57433,
+            57434,
+            57440,
+            57441,
+            57442,
+            57443,
+            57444,
+            57450,
+            57451,
+            57452,
+            57453,
+            57454
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 4685,
+      "comment": "Generated reliquary domain 4685",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            2200
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            20
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "3-star Artifacts",
+          "counts": [
+            4,
+            5
+          ],
+          "probabilities": [
+            2,
+            98
+          ],
+          "items": [
+            54310,
+            54311,
+            54312,
+            54313,
+            54314,
+            54320,
+            54321,
+            54322,
+            54323,
+            54324,
+            54330,
+            54331,
+            54332,
+            54333,
+            54334,
+            54340,
+            54341,
+            54342,
+            54343,
+            54344,
+            54350,
+            54351,
+            54352,
+            54353,
+            54354,
+            57310,
+            57311,
+            57312,
+            57313,
+            57314,
+            57320,
+            57321,
+            57322,
+            57323,
+            57324,
+            57330,
+            57331,
+            57332,
+            57333,
+            57334,
+            57340,
+            57341,
+            57342,
+            57343,
+            57344,
+            57350,
+            57351,
+            57352,
+            57353,
+            57354
+          ]
+        },
+        {
+          "comment": "4-star Artifacts",
+          "counts": [
+            1,
+            2
+          ],
+          "probabilities": [
+            20,
+            80
+          ],
+          "items": [
+            43412,
+            43413,
+            43422,
+            43423,
+            43432,
+            43433,
+            43442,
+            43443,
+            43452,
+            43453,
+            44412,
+            44413,
+            44422,
+            44423,
+            44432,
+            44433,
+            44442,
+            44443,
+            44452,
+            44453,
+            54410,
+            54411,
+            54412,
+            54413,
+            54414,
+            54420,
+            54421,
+            54422,
+            54423,
+            54424,
+            54430,
+            54431,
+            54432,
+            54433,
+            54434,
+            54440,
+            54441,
+            54442,
+            54443,
+            54444,
+            54450,
+            54451,
+            54452,
+            54453,
+            54454,
+            57410,
+            57411,
+            57412,
+            57413,
+            57414,
+            57420,
+            57421,
+            57422,
+            57423,
+            57424,
+            57430,
+            57431,
+            57432,
+            57433,
+            57434,
+            57440,
+            57441,
+            57442,
+            57443,
+            57444,
+            57450,
+            57451,
+            57452,
+            57453,
+            57454
+          ]
+        },
+        {
+          "comment": "5-star Artifacts",
+          "counts": [
+            0,
+            1
+          ],
+          "probabilities": [
+            60,
+            40
+          ],
+          "items": [
+            43513,
+            43514,
+            43523,
+            43524,
+            43533,
+            43534,
+            43543,
+            43544,
+            43553,
+            43554,
+            44513,
+            44514,
+            44523,
+            44524,
+            44533,
+            44534,
+            44543,
+            44544,
+            44553,
+            44554
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 4686,
+      "comment": "Generated reliquary domain 4686 (high tier 5-star only)",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            2525
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            20
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "5-star Artifacts",
+          "counts": [
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "probabilities": [
+            10,
+            20,
+            30,
+            25,
+            15
+          ],
+          "items": [
+            43513,
+            43514,
+            43523,
+            43524,
+            43533,
+            43534,
+            43543,
+            43544,
+            43553,
+            43554,
+            44513,
+            44514,
+            44523,
+            44524,
+            44533,
+            44534,
+            44543,
+            44544,
+            44553,
+            44554
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 4687,
+      "comment": "Generated reliquary domain 4687",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            1850
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            15
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "2-star Weapon Material",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            80,
+            20
+          ],
+          "items": [
+            114021
+          ]
+        },
+        {
+          "comment": "3-star Weapon Material",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            20,
+            80
+          ],
+          "items": [
+            114022
+          ]
+        },
+        {
+          "comment": "4-star Weapon Material",
+          "counts": [
+            1,
+            2
+          ],
+          "probabilities": [
+            50,
+            50
+          ],
+          "items": [
+            114023
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 4688,
+      "comment": "Generated reliquary domain 4688",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            2025
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            20
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "3-star Artifacts",
+          "counts": [
+            5,
+            6
+          ],
+          "probabilities": [
+            20,
+            80
+          ],
+          "items": [
+            55310,
+            55311,
+            55312,
+            55313,
+            55314,
+            55320,
+            55321,
+            55322,
+            55323,
+            55324,
+            55330,
+            55331,
+            55332,
+            55333,
+            55334,
+            55340,
+            55341,
+            55342,
+            55343,
+            55344,
+            55350,
+            55351,
+            55352,
+            55353,
+            55354,
+            59310,
+            59311,
+            59312,
+            59313,
+            59314,
+            59320,
+            59321,
+            59322,
+            59323,
+            59324,
+            59330,
+            59331,
+            59332,
+            59333,
+            59334,
+            59340,
+            59341,
+            59342,
+            59343,
+            59344,
+            59350,
+            59351,
+            59352,
+            59353,
+            59354
+          ]
+        },
+        {
+          "comment": "4-star Artifacts",
+          "counts": [
+            1,
+            2
+          ],
+          "probabilities": [
+            60,
+            40
+          ],
+          "items": [
+            45412,
+            45413,
+            45422,
+            45423,
+            45432,
+            45433,
+            45442,
+            45443,
+            45452,
+            45453,
+            46412,
+            46413,
+            46422,
+            46423,
+            46432,
+            46433,
+            46442,
+            46443,
+            46452,
+            46453,
+            55410,
+            55411,
+            55412,
+            55413,
+            55414,
+            55420,
+            55421,
+            55422,
+            55423,
+            55424,
+            55430,
+            55431,
+            55432,
+            55433,
+            55434,
+            55440,
+            55441,
+            55442,
+            55443,
+            55444,
+            55450,
+            55451,
+            55452,
+            55453,
+            55454,
+            59410,
+            59411,
+            59412,
+            59413,
+            59414,
+            59420,
+            59421,
+            59422,
+            59423,
+            59424,
+            59430,
+            59431,
+            59432,
+            59433,
+            59434,
+            59440,
+            59441,
+            59442,
+            59443,
+            59444,
+            59450,
+            59451,
+            59452,
+            59453,
+            59454
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 4689,
+      "comment": "Generated reliquary domain 4689",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            2200
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            20
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "3-star Artifacts",
+          "counts": [
+            4,
+            5
+          ],
+          "probabilities": [
+            2,
+            98
+          ],
+          "items": [
+            55310,
+            55311,
+            55312,
+            55313,
+            55314,
+            55320,
+            55321,
+            55322,
+            55323,
+            55324,
+            55330,
+            55331,
+            55332,
+            55333,
+            55334,
+            55340,
+            55341,
+            55342,
+            55343,
+            55344,
+            55350,
+            55351,
+            55352,
+            55353,
+            55354,
+            59310,
+            59311,
+            59312,
+            59313,
+            59314,
+            59320,
+            59321,
+            59322,
+            59323,
+            59324,
+            59330,
+            59331,
+            59332,
+            59333,
+            59334,
+            59340,
+            59341,
+            59342,
+            59343,
+            59344,
+            59350,
+            59351,
+            59352,
+            59353,
+            59354
+          ]
+        },
+        {
+          "comment": "4-star Artifacts",
+          "counts": [
+            1,
+            2
+          ],
+          "probabilities": [
+            20,
+            80
+          ],
+          "items": [
+            45412,
+            45413,
+            45422,
+            45423,
+            45432,
+            45433,
+            45442,
+            45443,
+            45452,
+            45453,
+            46412,
+            46413,
+            46422,
+            46423,
+            46432,
+            46433,
+            46442,
+            46443,
+            46452,
+            46453,
+            55410,
+            55411,
+            55412,
+            55413,
+            55414,
+            55420,
+            55421,
+            55422,
+            55423,
+            55424,
+            55430,
+            55431,
+            55432,
+            55433,
+            55434,
+            55440,
+            55441,
+            55442,
+            55443,
+            55444,
+            55450,
+            55451,
+            55452,
+            55453,
+            55454,
+            59410,
+            59411,
+            59412,
+            59413,
+            59414,
+            59420,
+            59421,
+            59422,
+            59423,
+            59424,
+            59430,
+            59431,
+            59432,
+            59433,
+            59434,
+            59440,
+            59441,
+            59442,
+            59443,
+            59444,
+            59450,
+            59451,
+            59452,
+            59453,
+            59454
+          ]
+        },
+        {
+          "comment": "5-star Artifacts",
+          "counts": [
+            0,
+            1
+          ],
+          "probabilities": [
+            60,
+            40
+          ],
+          "items": [
+            45513,
+            45514,
+            45523,
+            45524,
+            45533,
+            45534,
+            45543,
+            45544,
+            45553,
+            45554,
+            46513,
+            46514,
+            46523,
+            46524,
+            46533,
+            46534,
+            46543,
+            46544,
+            46553,
+            46554
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 4690,
+      "comment": "Generated reliquary domain 4690 (high tier 5-star only)",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            2525
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            20
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "5-star Artifacts",
+          "counts": [
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "probabilities": [
+            10,
+            20,
+            30,
+            25,
+            15
+          ],
+          "items": [
+            45513,
+            45514,
+            45523,
+            45524,
+            45533,
+            45534,
+            45543,
+            45544,
+            45553,
+            45554,
+            46513,
+            46514,
+            46523,
+            46524,
+            46533,
+            46534,
+            46543,
+            46544,
+            46553,
+            46554
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 5000,
+      "comment": "Generated reliquary domain 5000",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            1350
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            10
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "2-star Artifacts",
+          "counts": [
+            5
+          ],
+          "items": []
+        },
+        {
+          "comment": "3-star Artifacts",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            85,
+            15
+          ],
+          "items": [
+            51310,
+            51311,
+            51312,
+            51313,
+            51314,
+            51320,
+            51321,
+            51322,
+            51323,
+            51324,
+            51330,
+            51331,
+            51332,
+            51333,
+            51334,
+            51340,
+            51341,
+            51342,
+            51343,
+            51344,
+            51350,
+            51351,
+            51352,
+            51353,
+            51354,
+            60310,
+            60311,
+            60312,
+            60313,
+            60314,
+            60320,
+            60321,
+            60322,
+            60323,
+            60324,
+            60330,
+            60331,
+            60332,
+            60333,
+            60334,
+            60340,
+            60341,
+            60342,
+            60343,
+            60344,
+            60350,
+            60351,
+            60352,
+            60353,
+            60354
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 5001,
+      "comment": "Midsummer Courtyard 1",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            1525
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            15
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "2-star Artifacts",
+          "counts": [
+            5
+          ],
+          "items": []
+        },
+        {
+          "comment": "3-star Artifacts",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            85,
+            15
+          ],
+          "items": [
+            60341,
+            60342,
+            60321,
+            60322,
+            60351,
+            60352,
+            60311,
+            60312,
+            60331,
+            60332,
+            51341,
+            51342,
+            51321,
+            51322,
+            51351,
+            51352,
+            51311,
+            51312,
+            51331,
+            51332
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 5002,
+      "comment": "Midsummer Courtyard 2",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            1700
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            15
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "2-star Artifacts",
+          "counts": [
+            2,
+            3
+          ],
+          "items": []
+        },
+        {
+          "comment": "3-star Artifacts",
+          "counts": [
+            4,
+            5
+          ],
+          "probabilities": [
+            20,
+            80
+          ],
+          "items": [
+            60341,
+            60342,
+            60321,
+            60322,
+            60351,
+            60352,
+            60311,
+            60312,
+            60331,
+            60332,
+            51341,
+            51342,
+            51321,
+            51322,
+            51351,
+            51352,
+            51311,
+            51312,
+            51331,
+            51332
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 5008,
+      "comment": "Valley of Remembrance 1",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            1700
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            15
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "2-star Artifacts",
+          "counts": [
+            2,
+            3
+          ],
+          "items": []
+        },
+        {
+          "comment": "3-star Artifacts",
+          "counts": [
+            4,
+            5
+          ],
+          "probabilities": [
+            20,
+            80
+          ],
+          "items": [
+            63341,
+            63342,
+            63321,
+            63322,
+            63351,
+            63352,
+            63311,
+            63312,
+            63331,
+            63332,
+            54341,
+            54342,
+            54321,
+            54322,
+            54351,
+            54352,
+            54311,
+            54312,
+            54331,
+            54332
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 5018,
+      "comment": "Generated reliquary domain 5018",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            1850
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            15
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "2-star Weapon Material",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            80,
+            20
+          ],
+          "items": [
+            114021
+          ]
+        },
+        {
+          "comment": "3-star Weapon Material",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            20,
+            80
+          ],
+          "items": [
+            114022
+          ]
+        },
+        {
+          "comment": "4-star Weapon Material",
+          "counts": [
+            1,
+            2
+          ],
+          "probabilities": [
+            50,
+            50
+          ],
+          "items": [
+            114023
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 5022,
+      "comment": "Generated reliquary domain 5022",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            1850
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            15
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "2-star Weapon Material",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            80,
+            20
+          ],
+          "items": [
+            114021
+          ]
+        },
+        {
+          "comment": "3-star Weapon Material",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            20,
+            80
+          ],
+          "items": [
+            114022
+          ]
+        },
+        {
+          "comment": "4-star Weapon Material",
+          "counts": [
+            1,
+            2
+          ],
+          "probabilities": [
+            50,
+            50
+          ],
+          "items": [
+            114023
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 5050,
+      "comment": "Generated reliquary domain 5050",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            1850
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            15
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "2-star Weapon Material",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            80,
+            20
+          ],
+          "items": [
+            114021
+          ]
+        },
+        {
+          "comment": "3-star Weapon Material",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            20,
+            80
+          ],
+          "items": [
+            114022
+          ]
+        },
+        {
+          "comment": "4-star Weapon Material",
+          "counts": [
+            1,
+            2
+          ],
+          "probabilities": [
+            50,
+            50
+          ],
+          "items": [
+            114023
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 5060,
+      "comment": "Generated reliquary domain 5060",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            1850
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            15
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "2-star Weapon Material",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            80,
+            20
+          ],
+          "items": [
+            114021
+          ]
+        },
+        {
+          "comment": "3-star Weapon Material",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            20,
+            80
+          ],
+          "items": [
+            114022
+          ]
+        },
+        {
+          "comment": "4-star Weapon Material",
+          "counts": [
+            1,
+            2
+          ],
+          "probabilities": [
+            50,
+            50
+          ],
+          "items": [
+            114023
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 5064,
+      "comment": "Generated reliquary domain 5064",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            1850
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            15
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "2-star Weapon Material",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            80,
+            20
+          ],
+          "items": [
+            114021
+          ]
+        },
+        {
+          "comment": "3-star Weapon Material",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            20,
+            80
+          ],
+          "items": [
+            114022
+          ]
+        },
+        {
+          "comment": "4-star Weapon Material",
+          "counts": [
+            1,
+            2
+          ],
+          "probabilities": [
+            50,
+            50
+          ],
+          "items": [
+            114023
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 5100,
+      "comment": "Domain of Guyun 1",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            1525
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            15
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "2-star Artifacts",
+          "counts": [
+            5
+          ],
+          "items": []
+        },
+        {
+          "comment": "3-star Artifacts",
+          "counts": [
+            2,
+            3
+          ],
+          "probabilities": [
+            85,
+            15
+          ],
+          "items": [
+            61341,
+            61342,
+            61321,
+            61322,
+            61351,
+            61352,
+            61311,
+            61312,
+            61331,
+            61332,
+            52341,
+            52342,
+            52321,
+            52322,
+            52351,
+            52352,
+            52311,
+            52312,
+            52331,
+            52332
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 5101,
+      "comment": "Domain of Guyun 2",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            1700
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            15
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "2-star Artifacts",
+          "counts": [
+            2,
+            3
+          ],
+          "items": []
+        },
+        {
+          "comment": "3-star Artifacts",
+          "counts": [
+            4,
+            5
+          ],
+          "probabilities": [
+            20,
+            80
+          ],
+          "items": [
+            61341,
+            61342,
+            61321,
+            61322,
+            61351,
+            61352,
+            61311,
+            61312,
+            61331,
+            61332,
+            52341,
+            52342,
+            52321,
+            52322,
+            52351,
+            52352,
+            52311,
+            52312,
+            52331,
+            52332
+          ]
+        }
+      ]
+    },
+    {
+      "dungeonId": 5125,
+      "comment": "The Lost Valley 1",
+      "drops": [
+        {
+          "comment": "AR exp",
+          "counts": [
+            100
+          ],
+          "items": [
+            102
+          ]
+        },
+        {
+          "comment": "Mora",
+          "counts": [
+            1850
+          ],
+          "items": [
+            202
+          ]
+        },
+        {
+          "comment": "Friendship exp",
+          "counts": [
+            15
+          ],
+          "items": [
+            105
+          ],
+          "mpDouble": true
+        },
+        {
+          "comment": "3-star Artifacts",
+          "counts": [
+            6,
+            7
+          ],
+          "probabilities": [
+            60,
+            40
+          ],
+          "items": [
+            56341,
+            56342,
+            56321,
+            56322,
+            56351,
+            56352,
+            56311,
+            56312,
+            56331,
+            56332,
+            58341,
+            58342,
+            58321,
+            58322,
+            58351,
+            58352,
+            58311,
+            58312,
+            58331,
+            58332
+          ]
+        },
+        {
+          "comment": "4-star Artifacts",
+          "counts": [
+            0,
+            2
+          ],
+          "probabilities": [
+            20,
+            70,
+            10
+          ],
+          "items": [
+            56442,
+            56443,
+            56422,
+            56423,
+            56452,
+            56453,
+            56412,
+            56413,
+            56432,
+            56433,
+            58442,
+            58443,
+            58422,
+            58423,
+            58452,
+            58453,
+            58412,
+            58413,
+            58432,
+            58433,
+            97442,
+            97443,
+            97422,
+            97423,
+            97452,
+            97453,
+            97412,
+            97413,
+            97432,
+            97433,
+            98442,
+            98443,
+            98422,
+            98423,
+            98452,
+            98453,
+            98412,
+            98413,
+            98432,
+            98433
+          ]
+        }
+      ]
+    }
+  ]
+}

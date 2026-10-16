@@ -1,7 +1,8 @@
 # 独立的参考增强掉落目录：2026-10-17
 
 核对 AstaPS 固定提交 `7cc148d1f752a43d4b9146b3b73f26875902546f` 的
-`data/DungeonDrop.json` 全部 266 条配置，接入其中 244 条通过结构、物品类型、材料和套装校验的配置。
+`data/DungeonDrop.json` 全部 266 条配置；其中 244 条原样接入，22 条经后续
+[配置修正](DUNGEON_REFERENCE_REPAIRS_2026-10-17.md)后补入，当前共 266 条。
 默认继续使用现有资源、普通掉落目录和缺表原型，不自动提高奖励。
 
 ## 开启与优先级
@@ -58,12 +59,12 @@
 
 ## 266 条配置的处置
 
-本批接入 96 条天赋材料、72 条武器材料及 76 条圣遗物配置。
-原始数量、数量权重、物品权重、候选顺序及 `mpDouble` 按参考文件保留。
+当前接入 96 条天赋材料、72 条武器材料及 98 条圣遗物配置。
+244 条内容按参考文件原样保留，22 条修正的原型、数量、权重和属性依据见修正说明。
 普通默认目录的 116 条内容未修改。
-相对普通目录，本批包含 133 条新增、45 条修改及 66 条相同配置；其余 22 处差异列在下表。
+相对普通目录，当前包含 150 条新增、45 条修改及 71 条相同配置。
 
-以下 22 条不进入当前增强目录，仍沿用现有奖励路径：
+以下 22 条的原始问题已完成修正，现已进入增强目录：
 
 | 原因 | 秘境 ID |
 | --- | --- |
@@ -71,9 +72,9 @@
 | 套装与当前预览不符 | 4684、4685、4686、4688、4689、4690 |
 | 存在空物品组 | 5000、5001、5002、5008、5100、5101 |
 
-完整出处、归一化 LF 的文件哈希、244 条接入 ID 和排除原因保存在
+完整出处、归一化 LF 的文件哈希、266 条接入 ID、22 条修正及原始原因保存在
 [`docs/data/dungeon-reference-audit-2026-10-17.json`](data/dungeon-reference-audit-2026-10-17.json)。
-这 22 条中可借鉴的增强策略仍可继续独立修正；没有将其错误原样导入。
+原有 244 条未修改，原始错误未直接用于发奖。
 
 ## 重新生成与核对
 
@@ -81,7 +82,7 @@
 使用当前资源重新生成目录及审计文件：
 
 ```powershell
-python tools/import_reference_dungeon_drops.py --reference debug/AstaPS/data/DungeonDrop.json --reference-commit 7cc148d1f752a43d4b9146b3b73f26875902546f --resources resources --output src/main/resources/defaults/data/DungeonDropReference.json --audit docs/data/dungeon-reference-audit-2026-10-17.json
+python tools/import_reference_dungeon_drops.py --reference debug/AstaPS/data/DungeonDrop.json --reference-commit 7cc148d1f752a43d4b9146b3b73f26875902546f --resources resources --ordinary src/main/resources/defaults/data/DungeonDrop.json --repairs tools/reference_dungeon_drop_repairs.json --output src/main/resources/defaults/data/DungeonDropReference.json --audit docs/data/dungeon-reference-audit-2026-10-17.json
 ```
 
 追加 `--check` 只核对，不写入文件。哈希统一为 LF 换行，可同时核对 Windows 资源子模块和外部开发资源。
@@ -97,7 +98,7 @@ python tools/import_reference_dungeon_drops.py --reference debug/AstaPS/data/Dun
 
 证据与构建输入保存在 `debug/aster-mid-20261011/batch336/`。
 
-## 本地部署
+## 首批本地部署（244 条，历史记录）
 
 2026-10-17 05:39（UTC+8），源码提交 `6fa2fb0cda70134d30682735b2163a08adf9bfb4`
 的构建已启动并通过检查：

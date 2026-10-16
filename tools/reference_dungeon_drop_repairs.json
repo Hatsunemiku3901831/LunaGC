@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "referenceCommit": "7cc148d1f752a43d4b9146b3b73f26875902546f",
+  "repairs": [
+    {
+      "dungeonId": 4480,
+      "action": "replace-physical",
+      "source": "reference",
+      "sourceDungeonId": 5125,
+      "expectedIssues": [
+        "material-in-relic-domain",
+        "unexpected-material"
+      ]
+    },
+    {
+      "dungeonId": 4484,
+      "action": "replace-physical",
+      "source": "reference",
+      "sourceDungeonId": 5125,
+      "expectedIssues": [
+        "material-in-relic-domain",
+        "unexpected-material"
+      ]
+    },
+    {
+      "dungeonId": 4665,
+      "action": "replace-physical",
+      "source": "reference",
+      "sourceDungeonId": 5125,
+      "expectedIssues": [
+        "material-in-relic-domain",
+        "unexpected-material"
+      ]
+    },
+    {
+      "dungeonId": 4683,
+      "action": "replace-physical",
+      "source": "reference",
+      "sourceDungeonId": 5125,
+      "expectedIssues": [
+        "material-in-relic-domain",
+        "unexpected-material"
+      ]
+    },
+    {
+      "dungeonId": 4684,
+      "action": "remap-sets",
+      "source": "reference",
+      "sourceDungeonId": 4684,
+      "expectedIssues": [
+        "unexpected-set"
+      ]
+    },
+    {
+      "dungeonId": 4685,
+      "action": "remap-sets",
+      "source": "reference",
+      "sourceDungeonId": 4685,
+      "expectedIssues": [
+        "unexpected-set"
+      ]
+    },
+    {
+      "dungeonId": 4686,
+      "action": "remap-sets",
+      "source": "reference",
+      "sourceDungeonId": 4686,
+      "expectedIssues": [
+        "unexpected-set"
+      ]
+    },
+    {
+      "dungeonId": 4687,
+      "action": "replace-physical",
+      "source": "reference",
+      "sourceDungeonId": 5125,
+      "expectedIssues": [
+        "material-in-relic-domain",
+        "unexpected-material"
+      ]
+    },
+    {
+      "dungeonId": 4688,
+      "action": "remap-sets",
+      "source": "reference",
+      "sourceDungeonId": 4688,
+      "expectedIssues": [
+        "unexpected-set"
+      ]
+    },
+    {
+      "dungeonId": 4689,
+      "action": "remap-sets",
+      "source": "reference",
+      "sourceDungeonId": 4689,
+      "expectedIssues": [
+        "unexpected-set"
+      ]
+    },
+    {
+      "dungeonId": 4690,
+      "action": "remap-sets",
+      "source": "reference",
+      "sourceDungeonId": 4690,
+      "expectedIssues": [
+        "unexpected-set"
+      ]
+    },
+    {
+      "dungeonId": 5000,
+      "action": "fill-empty",
+      "source": "ordinary",
+      "sourceDungeonId": 5001,
+      "groupIndex": 3,
+      "expectedIssues": [
+        "empty-items"
+      ],
+      "rarity": 2
+    },
+    {
+      "dungeonId": 5001,
+      "action": "fill-empty",
+      "source": "ordinary",
+      "sourceDungeonId": 5001,
+      "groupIndex": 3,
+      "expectedIssues": [
+        "empty-items"
+      ],
+      "rarity": 2
+    },
+    {
+      "dungeonId": 5002,
+      "action": "fill-empty",
+      "source": "ordinary",
+      "sourceDungeonId": 5002,
+      "groupIndex": 3,
+      "expectedIssues": [
+        "empty-items"
+      ],
+      "rarity": 2
+    },
+    {
+      "dungeonId": 5008,
+      "action": "fill-empty",
+      "source": "ordinary",
+      "sourceDungeonId": 5008,
+      "groupIndex": 3,
+      "expectedIssues": [
+        "empty-items"
+      ],
+      "rarity": 2
+    },
+    {
+      "dungeonId": 5018,
+      "action": "replace-physical",
+      "source": "reference",
+      "sourceDungeonId": 5125,
+      "expectedIssues": [
+        "material-in-relic-domain",
+        "unexpected-material"
+      ]
+    },
+    {
+      "dungeonId": 5022,
+      "action": "replace-physical",
+      "source": "reference",
+      "sourceDungeonId": 5125,
+      "expectedIssues": [
+        "material-in-relic-domain",
+        "unexpected-material"
+      ]
+    },
+    {
+      "dungeonId": 5050,
+      "action": "replace-physical",
+      "source": "reference",
+      "sourceDungeonId": 5125,
+      "expectedIssues": [
+        "material-in-relic-domain",
+        "unexpected-material"
+      ]
+    },
+    {
+      "dungeonId": 5060,
+      "action": "replace-physical",
+      "source": "reference",
+      "sourceDungeonId": 5125,
+      "expectedIssues": [
+        "material-in-relic-domain",
+        "unexpected-material"
+      ]
+    },
+    {
+      "dungeonId": 5064,
+      "action": "replace-physical",
+      "source": "reference",
+      "sourceDungeonId": 5125,
+      "expectedIssues": [
+        "material-in-relic-domain",
+        "unexpected-material"
+      ]
+    },
+    {
+      "dungeonId": 5100,
+      "action": "fill-empty",
+      "source": "ordinary",
+      "sourceDungeonId": 5100,
+      "groupIndex": 3,
+      "expectedIssues": [
+        "empty-items"
+      ],
+      "rarity": 2
+    },
+    {
+      "dungeonId": 5101,
+      "action": "fill-empty",
+      "source": "ordinary",
+      "sourceDungeonId": 5101,
+      "groupIndex": 3,
+      "expectedIssues": [
+        "empty-items"
+      ],
+      "rarity": 2
+    }
+  ]
+}

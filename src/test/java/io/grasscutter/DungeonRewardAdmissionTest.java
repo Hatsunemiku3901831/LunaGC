@@ -1670,17 +1670,55 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
     })
     void bundledReferenceRowsReachTheRealInventory(int id, int source, boolean condensed)
             throws Exception {
-        var manager =
-                id == 4654 || id == 4674 ? materialDungeon(id, source) : relicDungeon(id, source);
-        DungeonDropReferenceCatalog.reload();
-        enhancementOptions().referenceDropTables = true;
+        assertBundledReferenceRow(id, source, condensed);
+    }
+
+    static Stream<Arguments> repairedReferenceRows() throws Exception {
+        var identifiers =
+                Set.of(
+                        4480, 4484, 4665, 4683, 4684, 4685, 4686, 4687, 4688, 4689, 4690, 5000,
+                        5001, 5002, 5008, 5018, 5022, 5050, 5060, 5064, 5100, 5101);
+        return JsonUtils.loadToList(
+                        Path.of("resources/ExcelBinOutput/DungeonExcelConfigData.json"),
+                        DungeonData.class)
+                .stream()
+                .filter(row -> identifiers.contains(row.getId()))
+                .flatMap(
+                        row -> {
+                            int source =
+                                    switch (row.getShowLevel()) {
+                                        case 59 -> 85333500;
+                                        case 69 -> 85334000;
+                                        case 80 -> 85334500;
+                                        case 90 -> 85335500;
+                                        default -> row.getStatueDrop();
+                                    };
+                            return Stream.of(
+                                    Arguments.of(row.getId(), source, false),
+                                    Arguments.of(row.getId(), source, true));
+                        });
+    }
+
+    @ParameterizedTest
+    @MethodSource("repairedReferenceRows")
+    void repairedReferenceRowsReachTheRealInventory(int id, int source, boolean condensed)
+            throws Exception {
+        assertBundledReferenceRow(id, source, condensed);
+    }
+
+    void assertBundledReferenceRow(int id, int source, boolean condensed) throws Exception {
         var profile =
                 emu.grasscutter.data.DataLoader.loadList(
                                 "DungeonDropReference.json", DungeonDrop.class)
                         .stream()
                         .filter(row -> row.getDungeonId() == id)
                         .findFirst()
-                        .orElseThrow();
+                        .orElse(null);
+        assertNotNull(profile, "Missing bundled reference row " + id);
+        var manager =
+                id == 4654 || id == 4674 ? materialDungeon(id, source) : relicDungeon(id, source);
+        DungeonDropReferenceCatalog.reload();
+        enhancementOptions().referenceDropTables = true;
         assertTrue(manager.getStatueDrops(actual, condensed, 0));
         int rolls = condensed ? 2 : 1;
         var physicalIds = new HashSet<Integer>();
@@ -1719,8 +1757,9 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
 
     @ParameterizedTest
     @ValueSource(booleans = {false, true})
-    void aRejectedReferenceRowKeepsItsCorrectedRelicTemplate(boolean condensed) throws Exception {
-        DungeonDropReferenceCatalog.reload();
+    void anUnlistedReferenceRowKeepsItsCorrectedRelicTemplate(boolean condensed) throws Exception {
+        DungeonDropReferenceCatalog.reload(
+                new java.io.StringReader("[{dungeonId:1,drops:[{counts:[1],items:[202]}]}]"));
         enhancementOptions().referenceDropTables = true;
         assertRelicRoll(4665, condensed, 85333500);
     }

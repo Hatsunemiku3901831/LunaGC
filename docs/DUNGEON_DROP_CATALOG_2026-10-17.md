@@ -70,3 +70,5 @@ DungeonDropLoader、运行数据与本地领取路径时，发现内置 DungeonD
 - Mongo 数据卷仍为 `lunagc_mongo-data`；外部开发资源与子模块保持干净的 `dac2a9d43`。
 
 本批未启动或操作游戏，更新前后游戏进程均为 0。
+
+后续已完成[22 条问题配置修正](DUNGEON_REFERENCE_REPAIRS_2026-10-17.md)，参考增强目录现为 266 条，默认仍关闭；普通默认目录未修改。
