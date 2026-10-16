@@ -9,7 +9,7 @@ import emu.grasscutter.game.inventory.*;
 import java.math.BigDecimal;
 import java.util.*;
 
-/** Resource templates for audited talent domains whose own drop roots are missing. */
+/** Resource templates for audited material domains whose own drop roots are missing. */
 final class DungeonMaterialRewards {
     private DungeonMaterialRewards() {}
 
@@ -19,11 +19,14 @@ final class DungeonMaterialRewards {
 
     static Template template(DungeonData target) {
         int id = target.getId();
-        int first = id >= 4651 && id <= 4662 ? 4651 : id >= 4691 && id <= 4702 ? 4691 : 0;
-        if (first == 0) return null;
-        // These two regions use the same four reward profiles as the existing talent domains.
-        // Keep their complete resource trees, including correlated rarity rolls, and rebind IDs.
-        var source = GameData.getDungeonDataMap().get(4210 + (id - first) % 4);
+        int sourceId;
+        if (id >= 4651 && id <= 4662) sourceId = 4210 + (id - 4651) % 4;
+        else if (id >= 4671 && id <= 4682) sourceId = 4310 + (id - 4671) % 4;
+        else if (id >= 4691 && id <= 4702) sourceId = 4210 + (id - 4691) % 4;
+        else if (id >= 4707 && id <= 4718) sourceId = 4310 + (id - 4707) % 4;
+        else return null;
+        // Keep the weighted resource trees, including correlated rarity rolls, and rebind IDs.
+        var source = GameData.getDungeonDataMap().get(sourceId);
         if (source == null
                 || source.getStatueCostID() != target.getStatueCostID()
                 || source.getStatueCostCount() != target.getStatueCostCount())

@@ -1545,9 +1545,11 @@ underscore; the `_`-prefixed files are ad-hoc analysis scratch and are gitignore
 配置错误时保留上一份完整快照，首次启动遇到错误配置会明确报错。
 路径遵循 `folderStructure.data`，默认用户覆盖位置为 `data/DungeonDrop.json`。
 配置范围与仍待补齐的根表见[秘境掉落加载说明](docs/DUNGEON_DROP_CATALOG_2026-10-17.md)。
-`4651–4662`、`4691–4702` 的缺失天赋材料表会使用已核对的同难度资源原型，
+`4651–4662`、`4691–4702` 的缺失天赋材料表，以及 `4671–4682`、`4707–4718` 的武器材料表，
+会使用已核对的同难度资源原型，
 保留抽取权重和数量并映射当前地区材料；自身根表或独立配置优先。
-适配范围、故障保护与未补齐的奖励见[材料奖励原型说明](docs/DUNGEON_MATERIAL_TEMPLATES_2026-10-17.md)。
+适配范围、故障保护与未补齐的奖励见[天赋材料](docs/DUNGEON_MATERIAL_TEMPLATES_2026-10-17.md)
+和[武器材料](docs/DUNGEON_WEAPON_MATERIALS_2026-10-17.md)原型说明。
 
 ## Credit
 

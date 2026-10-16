@@ -660,8 +660,12 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
     }
 
     DungeonManager talentDungeon(int id) throws Exception {
-        var manager = dungeon(id);
         int sourceId = 4210 + (id - (id < 4691 ? 4651 : 4691)) % 4;
+        return materialDungeon(id, sourceId);
+    }
+
+    DungeonManager materialDungeon(int id, int sourceId) throws Exception {
+        var manager = dungeon(id);
         var source =
                 JsonUtils.loadToList(
                                 Path.of("resources/ExcelBinOutput/DungeonExcelConfigData.json"),
@@ -725,8 +729,38 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
     @MethodSource("missingTalentRewards")
     void missingTalentTablesPreserveTheOriginalRollAndGrantTheCurrentRegionsMaterials(
             int id, boolean condensed) throws Exception {
-        var manager = talentDungeon(id);
         int sourceId = 4210 + (id - (id < 4691 ? 4651 : 4691)) % 4;
+        assertMaterialRoll(id, sourceId, condensed);
+    }
+
+    static Stream<Arguments> missingWeaponRewards() {
+        return Stream.of(4671, 4707)
+                .flatMap(
+                        first ->
+                                java.util.stream.IntStream.range(0, 12)
+                                        .boxed()
+                                        .flatMap(
+                                                offset ->
+                                                        Stream.of(
+                                                                Arguments.of(
+                                                                        first + offset,
+                                                                        4310 + offset % 4,
+                                                                        false),
+                                                                Arguments.of(
+                                                                        first + offset,
+                                                                        4310 + offset % 4,
+                                                                        true))));
+    }
+
+    @ParameterizedTest
+    @MethodSource("missingWeaponRewards")
+    void missingWeaponTablesPreserveTheOriginalRollAndGrantTheCurrentRegionsMaterials(
+            int id, int sourceId, boolean condensed) throws Exception {
+        assertMaterialRoll(id, sourceId, condensed);
+    }
+
+    void assertMaterialRoll(int id, int sourceId, boolean condensed) throws Exception {
+        var manager = materialDungeon(id, sourceId);
         var targetByRank = new HashMap<Integer, Integer>();
         for (var entry : manager.getDungeonData().getRewardPreviewData().getRawPreviewItems()) {
             var item = GameData.getItemDataMap().get(entry.getId());
@@ -784,11 +818,41 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
             })
     void anIncompleteBorrowedTalentPoolDoesNotChargeOrConsumeTheClaim(String fault)
             throws Exception {
-        var manager = talentDungeon(4654);
-        var source = GameData.getDungeonDataMap().get(4213);
+        assertIncompleteMaterialPool(talentDungeon(4654), 4213, 104303, 104358, fault, false);
+    }
+
+    static Stream<Arguments> weaponPoolFaults() {
+        return Stream.of(
+                        "source-item",
+                        "target-item",
+                        "preview-count",
+                        "root",
+                        "cycle",
+                        "unmapped-leaf",
+                        "duplicate-slot")
+                .flatMap(fault -> Stream.of(Arguments.of(fault, false), Arguments.of(fault, true)));
+    }
+
+    @ParameterizedTest
+    @MethodSource("weaponPoolFaults")
+    void anIncompleteBorrowedWeaponPoolDoesNotChargeOrConsumeTheClaim(
+            String fault, boolean condensed) throws Exception {
+        assertIncompleteMaterialPool(
+                materialDungeon(4674, 4313), 4313, 114004, 114076, fault, condensed);
+    }
+
+    void assertIncompleteMaterialPool(
+            DungeonManager manager,
+            int sourceId,
+            int sourceItem,
+            int targetItem,
+            String fault,
+            boolean condensed)
+            throws Exception {
+        var source = GameData.getDungeonDataMap().get(sourceId);
         switch (fault) {
-            case "source-item" -> GameData.getItemDataMap().remove(104303);
-            case "target-item" -> GameData.getItemDataMap().remove(104358);
+            case "source-item" -> GameData.getItemDataMap().remove(sourceItem);
+            case "target-item" -> GameData.getItemDataMap().remove(targetItem);
             case "preview-count" -> {
                 var mora =
                         Arrays.stream(
@@ -824,13 +888,13 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
                                 preview.getRawPreviewItems().length + 1);
                 duplicate[duplicate.length - 1] =
                         Arrays.stream(preview.getRawPreviewItems())
-                                .filter(item -> item.getId() == 104358)
+                                .filter(item -> item.getId() == targetItem)
                                 .findFirst()
                                 .orElseThrow();
                 replaceField(RewardPreviewData.class, preview, "previewItems", duplicate);
             }
         }
-        assertFalse(manager.getStatueDrops(actual, false, 0));
+        assertFalse(manager.getStatueDrops(actual, condensed, 0));
         assertEquals(200, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
         assertEquals(1, actual.getInventory().getItemCountById(220007));
         assertEquals(0, actual.getMora());
@@ -838,10 +902,19 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
     }
 
     @ParameterizedTest
-    @CsvSource({"false,false", "false,true", "true,false", "true,true"})
-    void explicitTalentRewardsKeepPriorityOverBorrowedTemplates(boolean ownRoot, boolean condensed)
-            throws Exception {
-        var manager = talentDungeon(4654);
+    @CsvSource({
+        "4654,4213,false,false",
+        "4654,4213,false,true",
+        "4654,4213,true,false",
+        "4654,4213,true,true",
+        "4674,4313,false,false",
+        "4674,4313,false,true",
+        "4674,4313,true,false",
+        "4674,4313,true,true"
+    })
+    void explicitMaterialRewardsKeepPriorityOverBorrowedTemplates(
+            int dungeonId, int sourceId, boolean ownRoot, boolean condensed) throws Exception {
+        var manager = materialDungeon(dungeonId, sourceId);
         if (ownRoot) {
             int id = manager.getDungeonData().getStatueDrop();
             var table =
@@ -852,14 +925,17 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
                             DropTableData.class);
             oldTables.put(id, GameData.getDropTableDataMap().put(id, table));
         } else {
-            GameData.getDungeonDropDataMap().put(4654, List.of(drop(202, 17)));
+            GameData.getDungeonDropDataMap().put(dungeonId, List.of(drop(202, 17)));
         }
         assertTrue(manager.getStatueDrops(actual, condensed, 0));
         assertEquals(condensed ? 34 : 17, actual.getMora());
         assertEquals(0, actual.getExp());
-        assertEquals(0, actual.getInventory().getItemCountById(104356));
-        assertEquals(0, actual.getInventory().getItemCountById(104357));
-        assertEquals(0, actual.getInventory().getItemCountById(104358));
+        assertTrue(
+                actual.getInventory().getItems().values().stream()
+                        .noneMatch(
+                                item ->
+                                        item.getItemData().getMaterialType()
+                                                == MaterialType.MATERIAL_AVATAR_MATERIAL));
         assertEquals(condensed ? 200 : 180, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
         assertEquals(condensed ? 0 : 1, actual.getInventory().getItemCountById(220007));
     }
