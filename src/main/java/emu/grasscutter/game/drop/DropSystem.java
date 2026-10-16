@@ -13,6 +13,7 @@ import emu.grasscutter.server.game.*;
 import emu.grasscutter.server.packet.send.*;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import java.util.*;
+import java.util.function.IntUnaryOperator;
 
 public final class DropSystem extends BaseGameSystem {
     private final Int2ObjectMap<DropTableData> dropTable;
@@ -75,10 +76,16 @@ public final class DropSystem extends BaseGameSystem {
     }
 
     public List<GameItem> handleDungeonRewardDrop(int dropId, boolean doubleReward) {
+        return handleDungeonRewardDrop(dropId, doubleReward, IntUnaryOperator.identity());
+    }
+
+    /** Keep the roll tree and translate reward IDs before constructing their item instances. */
+    public List<GameItem> handleDungeonRewardDrop(
+            int dropId, boolean doubleReward, IntUnaryOperator itemIds) {
         if (!dropTable.containsKey(dropId)) return List.of();
         var dropData = dropTable.get(dropId);
         List<GameItem> items = new ArrayList<>();
-        processDrop(dropData, doubleReward ? 2 : 1, items);
+        processDrop(dropData, doubleReward ? 2 : 1, items, itemIds);
         return items;
     }
 
@@ -141,10 +148,15 @@ public final class DropSystem extends BaseGameSystem {
     }
 
     private void processDrop(DropTableData dropData, int count, List<GameItem> items) {
+        processDrop(dropData, count, items, IntUnaryOperator.identity());
+    }
+
+    private void processDrop(
+            DropTableData dropData, int count, List<GameItem> items, IntUnaryOperator itemIds) {
         // TODO:Not clear on the meaning of some fields,like "dropLevel".Will ignore them.
         // TODO:solve drop limits,like everydayLimit.
         if (count > 1) {
-            for (int i = 0; i < count; i++) processDrop(dropData, 1, items);
+            for (int i = 0; i < count; i++) processDrop(dropData, 1, items, itemIds);
             return;
         }
         if (dropData.getRandomType() == 0) {
@@ -166,9 +178,9 @@ public final class DropSystem extends BaseGameSystem {
                     int amount = calculateDropAmount(i) * count;
                     if (amount <= 0) break;
                     if (dropTable.containsKey(id)) {
-                        processDrop(dropTable.get(id), amount, items);
+                        processDrop(dropTable.get(id), amount, items, itemIds);
                     } else {
-                        addDropItems(items, id, amount);
+                        addDropItems(items, itemIds.applyAsInt(id), amount);
                     }
                     break;
                 }
@@ -181,9 +193,9 @@ public final class DropSystem extends BaseGameSystem {
                     int amount = calculateDropAmount(i) * count;
                     if (amount <= 0) continue;
                     if (dropTable.containsKey(id)) {
-                        processDrop(dropTable.get(id), amount, items);
+                        processDrop(dropTable.get(id), amount, items, itemIds);
                     } else {
-                        addDropItems(items, id, amount);
+                        addDropItems(items, itemIds.applyAsInt(id), amount);
                     }
                 }
             }

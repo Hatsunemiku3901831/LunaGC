@@ -226,7 +226,10 @@ public final class DungeonManager {
         if (fallbackStatueDropId != 0) {
             statueDropId = fallbackStatueDropId;
         }
-        var rewards = player.getServer().getDropSystem().handleDungeonRewardDrop(statueDropId, useCondensed);
+        Map<Integer,Integer> itemIds = fallbackStatueDropId == 0 ? Map.of()
+                : DungeonRelicRewards.itemIds(dungeonData,statueDropId);
+        var rewards = player.getServer().getDropSystem().handleDungeonRewardDrop(statueDropId, useCondensed,
+                itemId -> itemIds.getOrDefault(itemId,itemId));
         if (!rewards.isEmpty()) {
             return rewards;
         }

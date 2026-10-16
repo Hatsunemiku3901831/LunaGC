@@ -45,6 +45,7 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
     final Map<Integer, List<DungeonDropEntry>> oldDrops = new HashMap<>();
     final Set<Integer> absentDrops = new HashSet<>();
     final Map<Integer, DropTableData> oldTables = new HashMap<>();
+    final Map<Integer, DisplayItemData> oldDisplays = new HashMap<>();
     Consumer<BasePacket> packetAction = ignored -> {};
     boolean resinUsage;
     CodexBookData oldBook, oldBookMaterial;
@@ -150,6 +151,11 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
                 (id, data) -> {
                     if (data == null) GameData.getDropTableDataMap().remove(id.intValue());
                     else GameData.getDropTableDataMap().put(id.intValue(), data);
+                });
+        oldDisplays.forEach(
+                (id, data) -> {
+                    if (data == null) GameData.getDisplayItemDataMap().remove(id.intValue());
+                    else GameData.getDisplayItemDataMap().put(id.intValue(), data);
                 });
     }
 
@@ -631,5 +637,141 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
             GameData.getDungeonDropDataMap().clear();
             GameData.getDungeonDropDataMap().putAll(previous);
         }
+    }
+
+    static Stream<Arguments> fallbackRewards() {
+        return java.util.stream.IntStream.rangeClosed(5060, 5067)
+                .boxed()
+                .flatMap(id -> Stream.of(Arguments.of(id, false), Arguments.of(id, true)));
+    }
+
+    @ParameterizedTest
+    @MethodSource("fallbackRewards")
+    void fallbackDomainsGrantOnlyTheRelicSetsAdvertisedForTheirOwnDifficulty(
+            int id, boolean condensed) throws Exception {
+        var manager = dungeon(id);
+        var preview =
+                JsonUtils.loadToList(
+                                Path.of(
+                                        "resources/ExcelBinOutput/RewardPreviewExcelConfigData.json"),
+                                RewardPreviewData.class)
+                        .stream()
+                        .filter(
+                                row ->
+                                        row.getId()
+                                                == manager.getDungeonData()
+                                                        .getPassRewardPreviewID())
+                        .findFirst()
+                        .orElseThrow();
+        preview.onLoad();
+        replaceField(DungeonData.class, manager.getDungeonData(), "rewardPreviewData", preview);
+        var displays = new HashMap<Integer, DisplayItemData>();
+        JsonUtils.loadToList(
+                        Path.of("resources/ExcelBinOutput/DisplayItemExcelConfigData.json"),
+                        DisplayItemData.class)
+                .forEach(row -> displays.put(row.getId(), row));
+        var allowed = new HashMap<Integer, Set<Integer>>();
+        for (var item : preview.getRawPreviewItems()) {
+            var data = displays.get(item.getId());
+            if (data == null || data.getParam() <= 0 || data.getRankLevel() <= 0) continue;
+            oldDisplays.put(data.getId(), GameData.getDisplayItemDataMap().put(data.getId(), data));
+            allowed.computeIfAbsent(data.getRankLevel(), ignored -> new HashSet<>())
+                    .add(data.getParam());
+        }
+        assertFalse(allowed.isEmpty());
+        for (var name : List.of("Material", "Reliquary")) {
+            for (var data :
+                    JsonUtils.loadToList(
+                            Path.of("resources/ExcelBinOutput/" + name + "ExcelConfigData.json"),
+                            ItemData.class)) {
+                if (!data.isEquip() && !Set.of(102, 105, 202).contains(data.getId())) continue;
+                data.onLoad();
+                if (!oldItems.containsKey(data.getId()))
+                    oldItems.put(data.getId(), GameData.getItemDataMap().get(data.getId()));
+                GameData.getItemDataMap().put(data.getId(), data);
+            }
+        }
+        var tables = new HashMap<Integer, DropTableData>();
+        for (var name :
+                List.of("DropTableExcelConfigData.json", "DropSubTableExcelConfigData.json"))
+            JsonUtils.loadToList(Path.of("resources/Server/" + name), DropTableData.class)
+                    .forEach(row -> tables.put(row.getId(), row));
+        var pending = new ArrayDeque<Integer>();
+        pending.add(
+                emu.grasscutter.game.dungeons.fallback.MissingDomainFallbackManager
+                        .getStatueDropOverride(id));
+        var seen = new HashSet<Integer>();
+        while (!pending.isEmpty()) {
+            int tableId = pending.remove();
+            if (!seen.add(tableId)) continue;
+            var table = tables.get(tableId);
+            assertNotNull(table);
+            oldTables.put(tableId, GameData.getDropTableDataMap().put(tableId, table));
+            table.getDropVec().stream()
+                    .filter(row -> row.getWeight() > 0 && tables.containsKey(row.getId()))
+                    .forEach(row -> pending.add(row.getId()));
+        }
+        var generator = actual.getServer().getDropSystem();
+        var randomField = DropSystem.class.getDeclaredField("rand");
+        randomField.setAccessible(true);
+        var random = (Random) randomField.get(generator);
+        random.setSeed(id);
+        var original =
+                generator.handleDungeonRewardDrop(
+                        emu.grasscutter.game.dungeons.fallback.MissingDomainFallbackManager
+                                .getStatueDropOverride(id),
+                        condensed);
+        random.setSeed(id);
+        assertTrue(manager.getStatueDrops(actual, condensed, 0));
+        var relics =
+                actual.getInventory().getItems().values().stream()
+                        .filter(item -> item.getItemData().getItemType() == ItemType.ITEM_RELIQUARY)
+                        .toList();
+        assertFalse(relics.isEmpty());
+        assertEquals(relicShape(original), relicShape(relics));
+        for (var relic : relics) {
+            var data = relic.getItemData();
+            assertTrue(
+                    allowed.getOrDefault(data.getRankLevel(), Set.of()).contains(data.getSetId()),
+                    "Dungeon "
+                            + id
+                            + " dropped unrelated set "
+                            + data.getSetId()
+                            + " at rarity "
+                            + data.getRankLevel());
+            assertEquals(1, relic.getCount());
+        }
+        int mora =
+                Arrays.stream(preview.getPreviewItems())
+                        .filter(item -> item.getId() == 202)
+                        .findFirst()
+                        .orElseThrow()
+                        .getCount();
+        assertEquals(mora * (condensed ? 2 : 1), actual.getMora());
+        assertEquals(condensed ? 200 : 180, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertEquals(condensed ? 0 : 1, actual.getInventory().getItemCountById(220007));
+    }
+
+    Map<String, Long> relicShape(Collection<GameItem> items) {
+        return items.stream()
+                .filter(item -> item.getItemData().getItemType() == ItemType.ITEM_RELIQUARY)
+                .collect(
+                        java.util.stream.Collectors.groupingBy(
+                                item -> {
+                                    var data = item.getItemData();
+                                    return data.getRankLevel()
+                                            + ":"
+                                            + data.getEquipType()
+                                            + ":"
+                                            + data.getMainPropDepotId()
+                                            + ":"
+                                            + data.getAppendPropDepotId()
+                                            + ":"
+                                            + data.getAppendPropNum()
+                                            + ":"
+                                            + data.getMaxLevel();
+                                },
+                                TreeMap::new,
+                                java.util.stream.Collectors.counting()));
     }
 }
