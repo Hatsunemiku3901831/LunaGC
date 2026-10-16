@@ -50,7 +50,7 @@
 - `interval-lifetime.jar`：SHA256 `c94d35f079a82307829f2280f0b719bfc638fd69e530441b9977a99c99956bc3`。
 
 构建时另发现自定义 jarFilename 会将 Gradle 的 archiveExtension 属性对象写入文件名；
-此处按实际产物路径取得候选包并核对变化类，该构建命名问题需另行修复。
+此处按实际产物路径取得候选包并核对变化类；命名问题已另行[修复并验证](JAR_NAMING_2026-10-16.md)。
 
 ## 验收边界
 

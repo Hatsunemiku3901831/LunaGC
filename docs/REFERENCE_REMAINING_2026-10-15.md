@@ -57,6 +57,7 @@
 | 菈乌玛一命监听窗口 | [20 秒窗口、半秒刷新、40 米传播、确认时钟、父子清理及回调实例保护](LAUMA_C1_WINDOW_2026-10-16.md) |
 | 菈乌玛一命治疗间隔生命周期 | [截止时间准入、失效角色恢复、客户端原时钟、到期并发及联机回调归属](LAUMA_C1_INTERVAL_LIFETIME_2026-10-16.md) |
 | Windows 服务启动 | [JDK Selector 临时目录、带空格路径、真实 Java 启动及 HTTP／UDP 状态区分](WINDOWS_JAVA_STARTUP_2026-10-16.md) |
+| 自定义构建产物名称 | [Gradle 属性取值、自定义 JAR 实际构建、默认／空格配置及内容一致性](JAR_NAMING_2026-10-16.md) |
 | 最近有效锚点复活 | [当前点位类型、任务锁定、最近目的地、原地回退、坐标快照及请求响应归属](WORLD_RESPAWN_POINTS_2026-10-16.md) |
 | 全队倒下的任务失败 | [真实任务失败、复活顺序、并发去重和数据库保存](TEAM_WIPE_QUEST_FAILURE_2026-10-15.md) |
 | 活动全服开放日 | [12 条真实条件、04:00 日界线及复刻排期](ACTIVITY_GLOBAL_DAY_CONDITIONS_2026-10-15.md) |

@@ -171,7 +171,7 @@ jar {
 
     archiveBaseName = 'LunaGC'
     if (project.hasProperty('jarFilename')) {
-        archiveFileName = "${jarFilename}.${archiveExtension}"
+        archiveFileName = "${jarFilename}.${archiveExtension.get()}"
     }
 
     from {

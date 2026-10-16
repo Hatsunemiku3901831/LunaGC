@@ -1035,6 +1035,15 @@ To skip handbook generation, build the jar by hand:
 .\gradlew.bat jar -PskipHandbook=1 --console=plain
 ```
 
+To choose a JAR name, pass the basename without `.jar`:
+
+```powershell
+.\gradlew.bat jar -PjarFilename=LunaGC-local -PskipHandbook=1 --console=plain
+```
+
+This creates `LunaGC-local.jar`. Quote the whole argument when the name contains spaces,
+for example `"-PjarFilename=LunaGC local"`. See the [archive naming checks](docs/JAR_NAMING_2026-10-16.md).
+
 The handbook is generated as `GM Handbook.txt` / `handbook.html` in the repo
 root; both are gitignored.
 
