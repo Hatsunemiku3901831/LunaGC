@@ -57,6 +57,15 @@
 `environmental.jar` SHA-256：
 `89997e65b83c8ece8a16a12ea28650f47d69d139d2615fea918faababdc68fc3`。
 
+## 本机运行
+
+2026-10-16 08:55（UTC+8）核对确认，提交 `5c813284` 的上述构建已在本机运行。
+进程 24676 的实际命令行使用 `batch294/environmental.jar`，文件哈希与验证记录一致。
+TCP 8088／UDP 22101 均由该进程监听；健康检查通过、死锁为 0、在线玩家为 0。
+MongoDB 继续使用原数据卷 `lunagc_mongo-data`。
+停止及启动核对分别保存在同目录的 `runtime-stop-proof.json`／`runtime-start-proof.json`。
+游戏未运行，客户端日志仍停留在 04:57，未新增实机结果。
+
 ## 仍需验证
 
 本轮确认了服务端结束回调、原始 Lua、受击保护及发奖路径。
