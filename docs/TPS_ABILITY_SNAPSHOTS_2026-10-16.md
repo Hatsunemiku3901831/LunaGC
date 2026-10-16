@@ -40,6 +40,17 @@
 `tps-snapshot.jar` SHA-256：
 `a04e14ddacc68b407f32285c2f62e0da8c18e10f51484516f56b9c6e8f554ad8`。
 
+## 本机运行
+
+2026-10-16 08:23（UTC+8），提交 `71fd0951` 的上述构建已替换上一服务。
+进程 58448 的实际命令行使用 `batch292/tps-snapshot.jar`，文件哈希与验证记录一致。
+TCP 8088／UDP 22101 均由该进程监听；健康检查通过、死锁为 0、在线玩家为 0。
+MongoDB 继续使用原数据卷 `lunagc_mongo-data`。
+停止及启动核对分别保存在本目录的 `runtime-stop-proof.json`／`runtime-start-proof.json`。
+
+核对时游戏未运行，客户端日志仍停留在 04:57:09，未产生新的进场或报错结果。
+此项只确认服务切换，没有新增客户端验收结论。
+
 ## 验证边界
 
 此处沿用已经核对的[根能力原生路径](ABILITY_ROOT_SNAPSHOTS_2026-10-16.md)
