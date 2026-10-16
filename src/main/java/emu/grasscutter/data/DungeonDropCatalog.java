@@ -7,19 +7,166 @@ import emu.grasscutter.utils.JsonUtils;
 import it.unimi.dsi.fastutil.ints.*;
 
 import java.io.*;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.*;
 
 /** Loads configured legacy rewards as one snapshot, keeping the previous catalog on failure. */
 public final class DungeonDropCatalog {
     private DungeonDropCatalog() {}
 
-    public static synchronized int reload() throws IOException {
-        try (var reader = DataLoader.loadReader("DungeonDrop.json")) {
-            return reload(reader);
+    private static final FileCatalog FILES =
+            new FileCatalog(
+                    () -> emu.grasscutter.utils.FileUtils.getDataPath("DungeonDrop.json"),
+                    path -> Files.newBufferedReader(path, java.nio.charset.StandardCharsets.UTF_8),
+                    System::nanoTime);
+
+    public static boolean reloadIfChanged() {
+        return FILES.reloadIfChanged();
+    }
+
+    @FunctionalInterface
+    interface ReaderFactory {
+        Reader open(Path path) throws IOException;
+    }
+
+    private record Stamp(Path path, long size, FileTime modified, Object key, boolean regular) {}
+
+    private record WatchState(Stamp accepted, Stamp failed, long failedAt, boolean hasFailure) {}
+
+    static final class FileCatalog {
+        private final Supplier<Path> source;
+        private final ReaderFactory readers;
+        private final LongSupplier clock;
+        private final ReentrantLock gate = new ReentrantLock();
+        private volatile WatchState state;
+
+        FileCatalog(Supplier<Path> source, ReaderFactory readers, LongSupplier clock) {
+            this.source = source;
+            this.readers = readers;
+            this.clock = clock;
+        }
+
+        int reload() throws IOException {
+            gate.lock();
+            try {
+                return reloadFile(current());
+            } finally {
+                gate.unlock();
+            }
+        }
+
+        int reload(Reader reader) throws IOException {
+            gate.lock();
+            try {
+                return publish(parse(reader), null);
+            } finally {
+                gate.unlock();
+            }
+        }
+
+        boolean reloadIfChanged() {
+            var seen = state;
+            if (seen == null) return false;
+            Stamp candidate;
+            try {
+                candidate = current();
+            } catch (IOException | RuntimeException failure) {
+                if (gate.tryLock()) {
+                    try {
+                        failed(null, failure);
+                    } finally {
+                        gate.unlock();
+                    }
+                }
+                return false;
+            }
+            if (candidate.equals(seen.accepted()) || !gate.tryLock()) return false;
+            try {
+                var active = state;
+                if (active == null) return false;
+                candidate = current();
+                if (candidate.equals(active.accepted())
+                        || !retryAllowed(active, candidate, clock.getAsLong())) return false;
+                reloadFile(candidate);
+                return true;
+            } catch (IOException | RuntimeException failure) {
+                failed(candidate, failure);
+                return false;
+            } finally {
+                gate.unlock();
+            }
+        }
+
+        private Stamp current() throws IOException {
+            var path = source.get().toAbsolutePath().normalize();
+            var attributes = Files.readAttributes(path, BasicFileAttributes.class);
+            return new Stamp(
+                    path,
+                    attributes.size(),
+                    attributes.lastModifiedTime(),
+                    attributes.fileKey(),
+                    attributes.isRegularFile());
+        }
+
+        private int reloadFile(Stamp before) throws IOException {
+            if (!before.regular())
+                throw new IOException(
+                        "Dungeon drop source is not a regular file: " + before.path());
+            Int2ObjectMap<List<DungeonDropEntry>> snapshot;
+            try (var reader = readers.open(before.path())) {
+                snapshot = parse(reader);
+            }
+            var after = current();
+            if (!before.equals(after))
+                throw new IOException("Dungeon drop source changed while it was being read");
+            return publish(snapshot, new WatchState(after, null, 0, false));
+        }
+
+        private int publish(Int2ObjectMap<List<DungeonDropEntry>> snapshot, WatchState next) {
+            GameData.installDungeonDropData(snapshot);
+            state = next;
+            Grasscutter.getLogger()
+                    .info("Loaded {} dungeon reward tables from DungeonDrop.json", snapshot.size());
+            return snapshot.size();
+        }
+
+        private boolean retryAllowed(WatchState active, Stamp candidate, long now) {
+            return !active.hasFailure()
+                    || !Objects.equals(active.failed(), candidate)
+                    || now - active.failedAt() >= TimeUnit.SECONDS.toNanos(1);
+        }
+
+        private void failed(Stamp candidate, Exception failure) {
+            var active = state;
+            if (active == null) return;
+            long now = clock.getAsLong();
+            if (!retryAllowed(active, candidate, now)) return;
+            boolean report = !active.hasFailure() || !Objects.equals(active.failed(), candidate);
+            state = new WatchState(active.accepted(), candidate, now, true);
+            if (report)
+                Grasscutter.getLogger()
+                        .warn(
+                                "Cannot automatically reload dungeon rewards from {}; keeping the"
+                                    + " previous catalog",
+                                candidate == null ? "the configured source" : candidate.path(),
+                                failure);
         }
     }
 
-    public static synchronized int reload(Reader reader) throws IOException {
+    public static int reload() throws IOException {
+        return FILES.reload();
+    }
+
+    public static int reload(Reader reader) throws IOException {
+        return FILES.reload(reader);
+    }
+
+    private static Int2ObjectMap<List<DungeonDropEntry>> parse(Reader reader) throws IOException {
         var snapshot = new Int2ObjectOpenHashMap<List<DungeonDropEntry>>();
         try {
             var rows = JsonUtils.loadToList(reader, DungeonDrop.class);
@@ -69,10 +216,7 @@ public final class DungeonDropCatalog {
         } catch (RuntimeException invalid) {
             throw new IOException("Invalid DungeonDrop.json: " + invalid.getMessage(), invalid);
         }
-        GameData.installDungeonDropData(snapshot);
-        Grasscutter.getLogger()
-                .info("Loaded {} dungeon reward tables from DungeonDrop.json", snapshot.size());
-        return snapshot.size();
+        return snapshot;
     }
 
     private static List<Integer> copyWeights(List<Integer> weights) {

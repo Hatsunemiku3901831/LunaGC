@@ -645,6 +645,102 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
         }
     }
 
+    @Test
+    void aChangedCatalogIsAppliedBeforeTheNextRealRewardClaim(
+            @org.junit.jupiter.api.io.TempDir Path directory) throws Exception {
+        var previous =
+                new it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap<>(
+                        GameData.getDungeonDropDataMap());
+        var filesField = DungeonDropCatalog.class.getDeclaredField("FILES");
+        filesField.setAccessible(true);
+        var files = filesField.get(null);
+        var sourceField = files.getClass().getDeclaredField("source");
+        var stateField = files.getClass().getDeclaredField("state");
+        sourceField.setAccessible(true);
+        stateField.setAccessible(true);
+        var source = sourceField.get(files);
+        var state = stateField.get(files);
+        Path path = directory.resolve("DungeonDrop.json");
+        try {
+            java.nio.file.Files.writeString(
+                    path, "[{dungeonId:5128,drops:[{counts:[17],items:[202]}]}]");
+            sourceField.set(files, (java.util.function.Supplier<Path>) () -> path);
+            var load = files.getClass().getDeclaredMethod("reload");
+            load.setAccessible(true);
+            load.invoke(files);
+            var modified = java.nio.file.Files.getLastModifiedTime(path).toMillis();
+            java.nio.file.Files.writeString(
+                    path, "[{dungeonId:5128,drops:[{counts:[23],items:[202]}]}]");
+            java.nio.file.Files.setLastModifiedTime(
+                    path, java.nio.file.attribute.FileTime.fromMillis(modified + 2000));
+            assertTrue(dungeon(5128).getStatueDrops(actual, false, 0));
+            assertEquals(23, actual.getMora());
+            assertEquals(180, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        } finally {
+            sourceField.set(files, source);
+            stateField.set(files, state);
+            GameData.getDungeonDropDataMap().clear();
+            GameData.getDungeonDropDataMap().putAll(previous);
+        }
+    }
+
+    @Test
+    void aCatalogReloadBetweenRoutingAndRollingKeepsOneClaimOnTheSameSnapshot() throws Exception {
+        var previous =
+                new it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap<>(
+                        GameData.getDungeonDropDataMap());
+        var filesField = DungeonDropCatalog.class.getDeclaredField("FILES");
+        filesField.setAccessible(true);
+        var files = filesField.get(null);
+        var stateField = files.getClass().getDeclaredField("state");
+        stateField.setAccessible(true);
+        var state = stateField.get(files);
+        var changed = new AtomicBoolean();
+        try {
+            DungeonDropCatalog.reload(
+                    new java.io.StringReader(
+                            "[{dungeonId:4668,drops:[{counts:[17],items:[202]}]}]"));
+            var routing =
+                    new it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap<List<DungeonDropEntry>>() {
+                        void update() {
+                            if (!changed.compareAndSet(false, true)) return;
+                            try {
+                                DungeonDropCatalog.reload(
+                                        new java.io.StringReader(
+                                                "[{dungeonId:999,drops:[{counts:[23],items:[202]}]}]"));
+                            } catch (java.io.IOException failed) {
+                                throw new AssertionError(failed);
+                            }
+                        }
+
+                        @Override
+                        public boolean containsKey(int key) {
+                            boolean value = super.containsKey(key);
+                            if (key == 4668) update();
+                            return value;
+                        }
+
+                        @Override
+                        public List<DungeonDropEntry> get(int key) {
+                            var value = super.get(key);
+                            if (key == 4668) update();
+                            return value;
+                        }
+                    };
+            routing.put(4668, List.of(drop(202, 17)));
+            replaceField(GameData.class, null, "dungeonDropDataMap", routing);
+            assertTrue(dungeon(4668).getStatueDrops(actual, false, 0));
+            assertTrue(changed.get());
+            assertFalse(GameData.getDungeonDropDataMap().containsKey(4668));
+            assertEquals(17, actual.getMora());
+            assertEquals(180, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        } finally {
+            stateField.set(files, state);
+            GameData.getDungeonDropDataMap().clear();
+            GameData.getDungeonDropDataMap().putAll(previous);
+        }
+    }
+
     static Stream<Arguments> fallbackRewards() {
         return java.util.stream.IntStream.rangeClosed(5060, 5067)
                 .boxed()

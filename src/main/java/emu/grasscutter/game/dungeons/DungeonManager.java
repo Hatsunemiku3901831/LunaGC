@@ -4,6 +4,7 @@ import static emu.grasscutter.config.Configuration.GAME_OPTIONS;
 
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
+import emu.grasscutter.data.DungeonDropCatalog;
 import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.data.excels.dungeon.*;
 import emu.grasscutter.game.activity.trialavatar.TrialAvatarActivityHandler;
@@ -217,14 +218,17 @@ public final class DungeonManager {
     }
 
     private List<GameItem> rollStatueDrops(Player player, boolean useCondensed) {
+        DungeonDropCatalog.reloadIfChanged();
+        // One claim uses the same configured groups for both route selection and rolling.
+        var configured = GameData.getDungeonDropDataMap().get(dungeonData.getId());
         if (usesLegacyLostValleyDrops(dungeonData.getId())) {
-            return this.rollRewards(useCondensed);
+            return this.rollRewards(useCondensed, configured);
         }
         int statueDropId = dungeonData.getStatueDrop();
         boolean hasOwnTable = GameData.getDropTableDataMap().containsKey(statueDropId);
         if (!hasOwnTable) {
-            if (GameData.getDungeonDropDataMap().containsKey(dungeonData.getId()))
-                return this.rollRewards(useCondensed);
+            if (configured != null)
+                return this.rollRewards(useCondensed, configured);
             var template = DungeonMaterialRewards.template(dungeonData);
             if (template != null)
                 return player.getServer().getDropSystem().handleDungeonRewardDrop(
@@ -244,7 +248,7 @@ public final class DungeonManager {
             return rewards;
         }
         Grasscutter.getLogger().debug("dungeon drop failed for {}", dungeonData.getId());
-        return this.rollRewards(useCondensed);
+        return this.rollRewards(useCondensed, configured);
     }
 
     private static boolean usesLegacyLostValleyDrops(int dungeonId) {
@@ -306,12 +310,10 @@ public final class DungeonManager {
                 : WEEKLY_BOSS_RESIN_COST;
     }
 
-    private List<GameItem> rollRewards(boolean useCondensed) {
+    private List<GameItem> rollRewards(boolean useCondensed, List<DungeonDropEntry> dropEntries) {
         List<GameItem> rewards = new ArrayList<>();
         int dungeonId = this.dungeonData.getId();
         // If we have specific drop data for this dungeon, we use it.
-        // Keep one snapshot while a configuration reload publishes its replacement.
-        List<DungeonDropEntry> dropEntries = GameData.getDungeonDropDataMap().get(dungeonId);
         if (dropEntries != null) {
 
             // Roll for each drop group.
