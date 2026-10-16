@@ -1,6 +1,9 @@
 # Compiled class file
 *.class
 
+# Python tooling bytecode caches
+__pycache__/
+
 #idea
 *.idea
 # Log file
