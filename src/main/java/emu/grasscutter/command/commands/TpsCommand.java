@@ -107,7 +107,10 @@ public final class TpsCommand implements CommandHandler {
                         return;
                     }
                     CommandHandler.sendMessage(
-                            sender, targetPlayer.getTpsSupplyTransaction().pending());
+                            sender,
+                            targetPlayer.getTpsSupplyTransaction().pending()
+                                    + "\n"
+                                    + targetPlayer.getTpsReportTransaction().pending());
                 }
                 case "audit", "resume", "cancel" -> {
                     if (args.size() != 2) {
@@ -115,11 +118,18 @@ public final class TpsCommand implements CommandHandler {
                         return;
                     }
                     var transaction = targetPlayer.getTpsSupplyTransaction();
+                    var report = targetPlayer.getTpsReportTransaction();
                     var result =
                             switch (args.get(0).toLowerCase(Locale.ROOT)) {
-                                case "audit" -> transaction.audit(args.get(1));
-                                case "resume" -> transaction.resume(args.get(1));
-                                default -> transaction.cancel(args.get(1));
+                                case "audit" -> report.isPending()
+                                        ? report.audit(args.get(1))
+                                        : transaction.audit(args.get(1));
+                                case "resume" -> report.isPending()
+                                        ? report.resume(args.get(1))
+                                        : transaction.resume(args.get(1));
+                                default -> report.isPending()
+                                        ? report.cancel(args.get(1))
+                                        : transaction.cancel(args.get(1));
                             };
                     CommandHandler.sendMessage(sender, result);
                 }

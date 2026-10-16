@@ -87,7 +87,9 @@ public final class ActionTpsSupplyAmmo extends AbilityActionHandler {
             Ability ability, AbilityModifierAction action, GameEntity target) {
         if (ability == null || !supported(action) || !(target instanceof EntityAvatar recipient))
             return Optional.empty();
-        if (recipient.getPlayer() == null || recipient.getPlayer().getPendingTpsSupply() != null)
+        if (recipient.getPlayer() == null
+                || recipient.getPlayer().getPendingTpsSupply() != null
+                || recipient.getPlayer().getTpsReportTransaction().isPending())
             return Optional.empty();
         if (!isCurrentSource(ability, recipient)) return Optional.empty();
         var amount = action.tpsSupplyAmount.tryGet(propertiesFor(ability));

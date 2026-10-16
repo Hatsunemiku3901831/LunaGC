@@ -234,6 +234,14 @@ public class Player implements PlayerHook, FieldFetch {
     }
 
     public void saveTpsAmmunition() { DatabaseHelper.saveGameSync(this); }
+    @Getter @Setter private emu.grasscutter.game.tps.TpsReportReceipt lastTpsReport;
+    @Transient private transient emu.grasscutter.game.tps.TpsReportTransaction tpsReportTransaction;
+
+    public synchronized emu.grasscutter.game.tps.TpsReportTransaction getTpsReportTransaction() {
+        if(tpsReportTransaction==null)
+            tpsReportTransaction=new emu.grasscutter.game.tps.TpsReportTransaction(this);
+        return tpsReportTransaction;
+    }
     @Transient private transient emu.grasscutter.game.tps.TpsAmmunitionInvocations tpsAmmunitionInvocations;
 
     public synchronized emu.grasscutter.game.tps.TpsAmmunitionInvocations getTpsAmmunitionInvocations() {

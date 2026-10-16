@@ -48,6 +48,7 @@ public final class TpsSupplyTransaction {
     public boolean grant(EntityAvatar recipient, List<Amount> amounts) {
         synchronized (player) {
             if (player.getPendingTpsSupply() != null
+                    || player.getTpsReportTransaction().isPending()
                     || !TpsWeaponSystem.isSupplyRecipient(recipient)
                     || recipient.getPlayer() != player
                     || amounts == null) return false;

@@ -136,6 +136,7 @@ public final class TpsWeaponSystem {
 
     public static int wear(Player player, long avatarGuid, List<Long> guids, boolean notify) {
         synchronized (player) {
+            if(player.getTpsReportTransaction().isPending()) return Retcode.RET_FAIL_VALUE;
             var avatar = findAvatar(player, avatarGuid);
             if (avatar == null) return Retcode.RET_CAN_NOT_FIND_AVATAR_VALUE;
             if (guids == null || guids.size() > 3) return Retcode.RET_EQUIP_EXCEED_LIMIT_VALUE;
@@ -398,7 +399,7 @@ public final class TpsWeaponSystem {
         if (player == null) return false;
         synchronized (player) {
             var data = GameData.getTpsAmmunitionDataMap().get(id);
-            return player.getPendingTpsSupply()==null && isSupplyRecipient(player, recipient) && data != null
+            return player.getPendingTpsSupply()==null && !player.getTpsReportTransaction().isPending() && isSupplyRecipient(player, recipient) && data != null
                     && getReserve(player, id) < ammunitionLimit(player, data);
         }
     }
@@ -430,8 +431,8 @@ public final class TpsWeaponSystem {
     }
 
     private static void requireSupplySettled(Player player) {
-        if(player.getPendingTpsSupply()!=null)
-            throw new IllegalStateException("TPS 补给尚未确认，请先用 tps pending / audit 核对。");
+        if(player.getPendingTpsSupply()!=null || player.getTpsReportTransaction().isPending())
+            throw new IllegalStateException("TPS 弹药操作尚未确认，请先用 tps pending / audit 核对。");
     }
 
     private static IntSet ammunitionIds(Avatar avatar) {
@@ -578,7 +579,7 @@ public final class TpsWeaponSystem {
             throws InvalidProtocolBufferException {
         if (player == null || invoke == null) return false;
         synchronized (player) {
-            if(player.getPendingTpsSupply()!=null) return false;
+            if(player.getPendingTpsSupply()!=null || player.getTpsReportTransaction().isPending()) return false;
             var scene = player.getScene();
             var current = currentAvatar(player);
             if (scene == null
@@ -619,25 +620,37 @@ public final class TpsWeaponSystem {
             if (magazines == null) return false;
             if (!player.getTpsAmmunitionInvocations().begin(source, current, invoke, update))
                 return false;
-            boolean changed = false;
+            var after = new LinkedHashMap<>(player.getTpsAmmunition());
+            var magazinesAfter = new LinkedHashMap<>(player.getTpsMagazineAmmunition());
             for (var entry : changes.int2LongEntrySet())
                 if (entry.getLongValue() != 0) {
-                    player.getTpsAmmunition()
-                            .put(
+                    after.put(
                                     entry.getIntKey(),
                                     (int)
                                             (getReserve(player, entry.getIntKey())
                                                     + entry.getLongValue()));
-                    changed = true;
                 }
             for (var entry : magazines.int2IntEntrySet()) {
-                var before =
-                        player.getTpsMagazineAmmunition()
-                                .put(entry.getIntKey(), entry.getIntValue());
-                changed |= !Objects.equals(before, entry.getIntValue());
+                magazinesAfter.put(entry.getIntKey(), entry.getIntValue());
             }
-            if (changed) player.save();
-            return true;
+            return player.getTpsReportTransaction().commit(current, invoke, after, magazinesAfter);
+        }
+    }
+
+    /** Recovery sends absolute quantities with the existing weapon identities. */
+    public static void sendRecoveredAmmunition(Player player) {
+        var scene = player.getScene();
+        if (!player.hasSentLoginPackets() || scene == null || player.getWorld() != scene.getWorld()) return;
+        sendSceneAmmunition(player);
+        for (var entity : player.getTeamManager().getActiveTeamSnapshot()) {
+            if (entity == null || entity.getPlayer() != player || entity.getScene() != scene
+                    || !entity.isAbilityLifecycleCurrent(entity.getAbilityLifecycleVersion())
+                    || scene.getEntityById(entity.getId()) != entity) continue;
+            var packet = new BasePacket(PacketOpcodes.TpsEquipChangeNotify);
+            packet.setData(TpsEquipChangeNotify.newBuilder()
+                    .setAvatarGuid(entity.getAvatar().getGuid())
+                    .addAllTpsWeaponList(getSceneWeaponInfos(entity.getAvatar())));
+            scene.broadcastPacket(packet);
         }
     }
 
