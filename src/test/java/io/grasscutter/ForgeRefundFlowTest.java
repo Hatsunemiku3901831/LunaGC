@@ -9,6 +9,7 @@ import emu.grasscutter.data.excels.*;
 import emu.grasscutter.database.*;
 import emu.grasscutter.game.inventory.*;
 import emu.grasscutter.game.managers.forging.*;
+import emu.grasscutter.game.player.GuardedPlayerTestStore;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.ForgeQueueManipulateReqOuterClass.ForgeQueueManipulateReq;
@@ -38,13 +39,14 @@ class ForgeRefundFlowTest {
     private Map<Integer, ItemData> oldItems;
     private Map<Integer, DropTableData> oldDrops;
     private boolean oldResinUsage;
+    private GuardedPlayerTestStore playerStore;
     private int saves, failSave;
     private final Gson gson = new Gson();
 
     static class RefundPlayer extends ForgeStartFlowTest.ForgePlayer {
         boolean refuseRefund, pretendRefund;
         int rejectRefundNumber, refunds;
-        Runnable afterRefund;
+        @dev.morphia.annotations.Transient Runnable afterRefund;
         final Inventory refundInventory =
                 new Inventory(this) {
                     @Override
@@ -92,12 +94,21 @@ class ForgeRefundFlowTest {
         datastore = DatabaseManager.class.getDeclaredField("gameDatastore");
         datastore.setAccessible(true);
         oldDatastore = datastore.get(null);
+        playerStore =
+                new GuardedPlayerTestStore(
+                        player,
+                        () -> {
+                            if (++saves == failSave)
+                                throw new IllegalStateException("Confirmation fault");
+                        });
         datastore.set(
                 null,
                 Proxy.newProxyInstance(
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
+                            if (method.getName().equals("getMapper"))
+                                return playerStore.datastore().getMapper();
                             if (method.getName().equals("save")
                                     || method.getName().equals("delete")) {
                                 if (args.length == 2 && ++saves == failSave)
@@ -119,6 +130,7 @@ class ForgeRefundFlowTest {
     void cleanup() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
         if (datastore != null) datastore.set(null, oldDatastore);
+        if (playerStore != null) playerStore.close();
         GameData.getForgeDataMap().clear();
         GameData.getForgeDataMap().putAll(oldRecipes);
         GameData.getItemDataMap().clear();

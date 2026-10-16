@@ -12,6 +12,7 @@ import emu.grasscutter.game.avatar.Avatar;
 import emu.grasscutter.game.battlepass.BattlePassManager;
 import emu.grasscutter.game.inventory.*;
 import emu.grasscutter.game.managers.cooking.CookingManager;
+import emu.grasscutter.game.player.GuardedPlayerTestStore;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.PlayerCookReqOuterClass.PlayerCookReq;
@@ -39,12 +40,15 @@ class CookDeliveryFlowTest {
     private Object oldDatastore;
     private final Gson gson = new Gson();
     private final List<Runnable> restore = new ArrayList<>();
+    private GuardedPlayerTestStore playerStore;
     private int saves, failSave;
 
     static class CookPlayer extends InvestigationRewardTest.ClaimPlayer {
         int progress, payments, grants, refuseNumber;
         boolean refusePay, pretend, throwAfterPay;
-        Runnable afterPay;
+        @dev.morphia.annotations.Transient Runnable afterPay;
+
+        @dev.morphia.annotations.Transient
         final BattlePassManager pass =
                 new BattlePassManager(this) {
                     @Override
@@ -52,6 +56,8 @@ class CookDeliveryFlowTest {
                         if (type == WatcherTriggerType.TRIGGER_DO_COOK) progress += amount;
                     }
                 };
+
+        @dev.morphia.annotations.Transient
         final Inventory inventory =
                 new Inventory(this) {
                     @Override
@@ -137,12 +143,21 @@ class CookDeliveryFlowTest {
         datastore = DatabaseManager.class.getDeclaredField("gameDatastore");
         datastore.setAccessible(true);
         oldDatastore = datastore.get(null);
+        playerStore =
+                new GuardedPlayerTestStore(
+                        player,
+                        () -> {
+                            if (++saves == failSave)
+                                throw new IllegalStateException("Confirmation fault");
+                        });
         datastore.set(
                 null,
                 Proxy.newProxyInstance(
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
+                            if (method.getName().equals("getMapper"))
+                                return playerStore.datastore().getMapper();
                             if (method.getName().equals("save")
                                     || method.getName().equals("delete")) {
                                 if (args.length == 2 && ++saves == failSave)
@@ -164,6 +179,7 @@ class CookDeliveryFlowTest {
     void cleanup() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
         if (datastore != null) datastore.set(null, oldDatastore);
+        if (playerStore != null) playerStore.close();
         Collections.reverse(restore);
         restore.forEach(Runnable::run);
         environment.close();

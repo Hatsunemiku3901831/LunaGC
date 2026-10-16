@@ -10,6 +10,7 @@ import emu.grasscutter.data.excels.*;
 import emu.grasscutter.database.*;
 import emu.grasscutter.game.inventory.*;
 import emu.grasscutter.game.managers.cooking.*;
+import emu.grasscutter.game.player.GuardedPlayerTestStore;
 import emu.grasscutter.game.props.ActionReason;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.PlayerCompoundMaterialReqOuterClass.PlayerCompoundMaterialReq;
@@ -38,11 +39,12 @@ class CompoundQueueFlowTest {
     private Map<Integer, ItemData> previousItems;
     private Object previousDatastore;
     private java.lang.reflect.Field datastore;
+    private GuardedPlayerTestStore playerStore;
     private int saves, failSave;
 
     static class ProcessPlayer extends InvestigationRewardTest.ClaimPlayer {
         boolean refuse, throwGrant;
-        Runnable afterGrant;
+        @dev.morphia.annotations.Transient Runnable afterGrant;
         final Inventory processInventory =
                 new Inventory(this) {
                     @Override
@@ -86,12 +88,21 @@ class CompoundQueueFlowTest {
         datastore = DatabaseManager.class.getDeclaredField("gameDatastore");
         datastore.setAccessible(true);
         previousDatastore = datastore.get(null);
+        playerStore =
+                new GuardedPlayerTestStore(
+                        player,
+                        () -> {
+                            if (++saves == failSave)
+                                throw new IllegalStateException("Confirmation fault");
+                        });
         datastore.set(
                 null,
                 Proxy.newProxyInstance(
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
+                            if (method.getName().equals("getMapper"))
+                                return playerStore.datastore().getMapper();
                             if (!method.getName().equals("save")) return null;
                             if (args.length == 2 && ++saves == failSave)
                                 throw new IllegalStateException("Confirmation fault");
@@ -105,6 +116,7 @@ class CompoundQueueFlowTest {
     void close() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
         if (datastore != null) datastore.set(null, previousDatastore);
+        if (playerStore != null) playerStore.close();
         GameData.getCompoundDataMap().clear();
         GameData.getCompoundDataMap().putAll(previousRecipes);
         GameData.getItemDataMap().clear();

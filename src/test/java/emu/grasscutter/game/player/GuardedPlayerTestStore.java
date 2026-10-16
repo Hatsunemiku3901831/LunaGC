@@ -67,6 +67,27 @@ public final class GuardedPlayerTestStore implements AutoCloseable, PlayerSaveGu
         return store;
     }
 
+    /** Match Player's post-load guard when a persistence fixture seeds a profile directly. */
+    public static void loadSeededProfile(Player player, Datastore datastore) throws Exception {
+        var name = datastore.getDatabase().getName();
+        if (!name.startsWith("lunagc_aster_shop_") && !name.startsWith("lunagc_test_"))
+            throw new IllegalArgumentException("Expected an isolated fixture database");
+        var row =
+                datastore
+                        .getDatabase()
+                        .getCollection("players")
+                        .withReadConcern(ReadConcern.MAJORITY)
+                        .withReadPreference(ReadPreference.primary())
+                        .find(new Document("_id", player.getUid()))
+                        .first();
+        if (row == null) throw new IllegalStateException("Fixture Player has not been seeded");
+        var stamp = PlayerSaveStamp.from(row);
+        player.setSaveStamp(stamp);
+        var field = Player.class.getDeclaredField("saveGuard");
+        field.setAccessible(true);
+        field.set(player, new PlayerSaveGuard(player, stamp, true));
+    }
+
     @Override
     public Document read(int uid) {
         return delegate.read(uid);

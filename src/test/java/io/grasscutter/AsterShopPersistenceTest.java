@@ -87,6 +87,8 @@ class AsterShopPersistenceTest {
                                 GameItem.class);
                 store.save(fixture.event.data);
                 store.save(fixture.player);
+                emu.grasscutter.game.player.GuardedPlayerTestStore.loadSeededProfile(
+                        fixture.player, store);
                 var activitySaves = new AtomicInteger();
                 var itemSaves = new AtomicInteger();
                 var fault = new AtomicBoolean();

@@ -10,6 +10,7 @@ import emu.grasscutter.data.excels.*;
 import emu.grasscutter.database.*;
 import emu.grasscutter.game.inventory.*;
 import emu.grasscutter.game.managers.cooking.*;
+import emu.grasscutter.game.player.GuardedPlayerTestStore;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.PlayerCompoundMaterialBoostReqOuterClass.PlayerCompoundMaterialBoostReq;
@@ -43,12 +44,13 @@ class CompoundBoostFlowTest {
     private Map<Integer, InvestigationTargetData> oldTargets;
     private java.lang.reflect.Field datastore;
     private Object oldDatastore;
+    private GuardedPlayerTestStore playerStore;
     private int saves, failSave;
 
     static class BoostPlayer extends InvestigationRewardTest.ClaimPlayer {
         boolean refusePay, throwAfterPay;
         int refuseOutput;
-        Runnable afterPay, afterGrant;
+        @dev.morphia.annotations.Transient Runnable afterPay, afterGrant;
         final Inventory boostInventory =
                 new Inventory(this) {
                     @Override
@@ -125,12 +127,21 @@ class CompoundBoostFlowTest {
         datastore = DatabaseManager.class.getDeclaredField("gameDatastore");
         datastore.setAccessible(true);
         oldDatastore = datastore.get(null);
+        playerStore =
+                new GuardedPlayerTestStore(
+                        player,
+                        () -> {
+                            if (++saves == failSave)
+                                throw new IllegalStateException("Confirmation fault");
+                        });
         datastore.set(
                 null,
                 Proxy.newProxyInstance(
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
+                            if (method.getName().equals("getMapper"))
+                                return playerStore.datastore().getMapper();
                             if (method.getName().equals("save")
                                     || method.getName().equals("delete")) {
                                 if (args.length == 2 && ++saves == failSave)
@@ -152,6 +163,7 @@ class CompoundBoostFlowTest {
     void cleanup() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
         if (datastore != null) datastore.set(null, oldDatastore);
+        if (playerStore != null) playerStore.close();
         GameData.getCompoundDataMap().clear();
         GameData.getCompoundDataMap().putAll(oldRecipes);
         GameData.getCompoundBoostDataMap().clear();
@@ -493,6 +505,9 @@ class CompoundBoostFlowTest {
     void completedGroupCannotBeBoostedOrChargedAgain() throws Exception {
         pending(1001, 2);
         assertEquals(0, boost(1, 101001, 6, true).getRetcode());
+        assertTrue(
+                player.getActiveCookCompounds().isEmpty(),
+                "Successful full boost removes its queue");
         assertNotEquals(0, boost(1, 101001, 6, true).getRetcode());
         assertEquals(94, stock(101001));
         assertEquals(2, stock(110001));

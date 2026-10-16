@@ -11,6 +11,7 @@ import emu.grasscutter.database.*;
 import emu.grasscutter.game.combine.*;
 import emu.grasscutter.game.inventory.*;
 import emu.grasscutter.game.player.*;
+import emu.grasscutter.game.player.GuardedPlayerTestStore;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.CombineRspOuterClass.CombineRsp;
@@ -33,13 +34,16 @@ class CombineReceiptFlowTest {
     private Object oldDatastore;
     private final Gson gson = new Gson();
     private final List<Runnable> restore = new ArrayList<>();
+    private GuardedPlayerTestStore playerStore;
     private int saves, failSave;
     private boolean oldResin;
 
     static class ReceiptPlayer extends InvestigationRewardTest.ClaimPlayer {
         boolean pretendPayment, throwAfterPayment, pretendOutput, refusePayment;
         int refuseGrant, grants, payments;
-        Runnable afterPayment;
+        @dev.morphia.annotations.Transient Runnable afterPayment;
+
+        @dev.morphia.annotations.Transient
         final Inventory inventory =
                 new Inventory(this) {
                     @Override
@@ -83,6 +87,13 @@ class CombineReceiptFlowTest {
         @Override
         public Inventory getInventory() {
             return inventory;
+        }
+    }
+
+    static class OtherReceiptPlayer extends ReceiptPlayer {
+        @Override
+        public int getUid() {
+            return 10002;
         }
     }
 
@@ -134,12 +145,21 @@ class CombineReceiptFlowTest {
         datastore = DatabaseManager.class.getDeclaredField("gameDatastore");
         datastore.setAccessible(true);
         oldDatastore = datastore.get(null);
+        playerStore =
+                new GuardedPlayerTestStore(
+                        player,
+                        () -> {
+                            if (++saves == failSave)
+                                throw new IllegalStateException("Confirmation fault");
+                        });
         datastore.set(
                 null,
                 Proxy.newProxyInstance(
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
+                            if (method.getName().equals("getMapper"))
+                                return playerStore.datastore().getMapper();
                             if (method.getName().equals("save")
                                     || method.getName().equals("delete")) {
                                 if (args.length == 2 && ++saves == failSave)
@@ -158,6 +178,7 @@ class CombineReceiptFlowTest {
     void cleanup() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
         if (datastore != null) datastore.set(null, oldDatastore);
+        if (playerStore != null) playerStore.close();
         Collections.reverse(restore);
         restore.forEach(Runnable::run);
         environment.close();
@@ -409,26 +430,26 @@ class CombineReceiptFlowTest {
     }
 
     @Test
-    void anotherPlayerCanCombineWhileThisPlayerHasAPendingReceipt() {
+    void anotherPlayerCanCombineWhileThisPlayerHasAPendingReceipt() throws Exception {
         player.refuseGrant = 1;
         assertNull(combine(1));
-        var other =
-                new ReceiptPlayer() {
-                    @Override
-                    public int getUid() {
-                        return 10002;
-                    }
-                };
+        var other = new OtherReceiptPlayer();
         other.setSession(
                 new InvestigationRewardTest.ClaimSession(
                         environment.scene.getWorld().getServer(), other));
         other.setProperty(PlayerProperty.PROP_PLAYER_LEVEL, 45);
         other.setMora(200);
         other.getUnlockedCombines().add(11001);
-        assertTrue(other.getInventory().addItem(112002, 12));
-        assertNotNull(manager.combineItem(other, 11001, 1));
-        assertEquals(1, other.getInventory().getItemCountById(112003));
-        assertNotNull(pending());
+        try (var otherStore = new GuardedPlayerTestStore(other, () -> {})) {
+            try {
+                assertTrue(other.getInventory().addItem(112002, 12));
+                assertNotNull(manager.combineItem(other, 11001, 1));
+                assertEquals(1, other.getInventory().getItemCountById(112003));
+                assertNotNull(pending());
+            } finally {
+                assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+            }
+        }
     }
 
     @Test

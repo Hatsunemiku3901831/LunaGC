@@ -24,6 +24,7 @@ import org.junit.jupiter.api.*;
 
 /** Exercises the real inventory and persistence entry points with an isolated datastore double. */
 class SalesmanPersistenceTest {
+    private emu.grasscutter.game.player.GuardedPlayerTestStore playerStore;
     private Field datastoreField;
     private Object original;
     @BeforeEach void prepare() throws Exception {
@@ -38,7 +39,7 @@ class SalesmanPersistenceTest {
     private static void drain() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(java.time.Duration.ofSeconds(5)), "Pending database test jobs");
     }
-    @AfterEach void restore() throws Exception { try { drain(); } finally { datastoreField.set(null, original); } }
+    @AfterEach void restore() throws Exception { try { drain(); } finally { datastoreField.set(null, original); if(playerStore!=null)playerStore.close(); } }
     @Test void reservationSaveUsesJournalAcknowledgementAndPropagatesErrorsToTheCaller() throws Exception {
         var thread = Thread.currentThread(); var called = new AtomicBoolean();
         store((proxy, method, args) -> {
@@ -87,6 +88,7 @@ class SalesmanPersistenceTest {
         var gson = new Gson(); var root = Path.of("resources/ExcelBinOutput"); var loaded = new HashSet<Integer>();
         var savedDetail = new AtomicReference<String>(); var savedPrimogems = new AtomicInteger();
         store((proxy, method, args) -> {
+            if (method.getName().equals("getMapper")) return playerStore.datastore().getMapper();
             if (method.getName().equals("save")) {
                 if (args[0] instanceof PlayerActivityData data) savedDetail.set(data.getDetail());
                 if (args[0] instanceof Player player) savedPrimogems.set(player.getPrimogems());
@@ -111,6 +113,8 @@ class SalesmanPersistenceTest {
             for (var row : gson.fromJson(Files.readString(root.resolve("MaterialExcelConfigData.json")), ItemData[].class))
                 if (needed.contains(row.getId())) { loaded.add(row.getId()); GameData.getItemDataMap().put(row.getId(), row); }
             var player = new TestPlayer(); long now = Instant.parse("2026-10-01T12:00:00Z").toEpochMilli();
+            playerStore = new emu.grasscutter.game.player.GuardedPlayerTestStore(player, () -> {},
+                    document -> savedPrimogems.set(player.getPrimogems()));
             var config = new ActivityConfigItem(); config.setActivityId(5003); config.setActivityType(3); config.setScheduleId(5003010);
             config.setBeginTime(new Date(now - 1000)); config.setEndTime(new Date(now + 8 * 86400000L)); config.onLoad();
             var data = PlayerActivityData.of().activityId(5003).scheduleId(5003010).detail("{}").build();
