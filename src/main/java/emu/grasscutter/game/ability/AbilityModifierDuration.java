@@ -31,7 +31,7 @@ public final class AbilityModifierDuration {
     }
     // Registration and removal share the entity's modifier registry lock.
     public void registered(AbilityModifierController controller) {
-        if(entity.getInstancedModifiers().containsValue(controller) && !controller.ownsAttachedDuration()) {
+        if(entity.getInstancedModifiers().containsValue(controller) && !controller.ownsServerDuration()) {
             if(controller.hasServerCallbacks() || controller.hasBindingCallbacks()) states.remove(controller);
             else states.keySet().removeIf(c->sameModifier(c,controller));
             return;
@@ -97,7 +97,7 @@ public final class AbilityModifierDuration {
         for(var state:new ArrayList<>(states.values())) {
             if(!state.context.isCurrent()) {
                 states.remove(state.controller,state);
-                if(state.controller.ownsAttachedDuration()) state.controller.getAbility().removeModifierInstance(entity,state.controller,true);
+                if(state.controller.ownsServerDuration()) state.controller.getAbility().removeModifierInstance(entity,state.controller,true);
                 continue;
             }
             boolean active;

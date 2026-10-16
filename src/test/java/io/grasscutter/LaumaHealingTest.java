@@ -21,6 +21,8 @@ import emu.grasscutter.net.proto.AbilityInvokeEntryOuterClass.AbilityInvokeEntry
 import emu.grasscutter.utils.JsonUtils;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.nio.file.*;
 import java.util.*;
@@ -374,6 +376,10 @@ class LaumaHealingTest {
 
     @Test
     void concurrent_reaction_callbacks_admit_one_heal() throws Exception {
+        concurrentReactions(600);
+    }
+
+    private void concurrentReactions(float expected) throws Exception {
         var action = ability.getData().modifiers.get(HANDLER).modifierMixins[0].actions[0];
         var pool = Executors.newFixedThreadPool(4);
         try {
@@ -389,7 +395,7 @@ class LaumaHealingTest {
                                                         com.google.protobuf.ByteString.EMPTY,
                                                         lauma)));
             for (var task : tasks) task.get(5, TimeUnit.SECONDS);
-            assertEquals(600, hp(active));
+            assertEquals(expected, hp(active));
         } finally {
             pool.shutdownNow();
         }
@@ -591,13 +597,17 @@ class LaumaHealingTest {
     }
 
     private void invokeExistingListener(int id) throws Exception {
+        invokeExistingListener(lauma, id);
+    }
+
+    private void invokeExistingListener(EntityAvatar bearer, int id) throws Exception {
         int local =
                 4 + (new ArrayList<>(ability.getData().modifiers.keySet()).indexOf(HANDLER) << 3);
-        fixture.player
+        bearer.getPlayer()
                 .getAbilityManager()
                 .handleServerInvoke(
                         AbilityInvokeEntry.newBuilder()
-                                .setEntityId(lauma.getId())
+                                .setEntityId(bearer.getId())
                                 .setArgumentType(
                                         AbilityInvokeArgument
                                                 .AbilityInvokeArgument_ABILITY_MIXIN_DO_ACTION_BY_ELEMENT_REACTION)
@@ -834,5 +844,120 @@ class LaumaHealingTest {
         invokeExistingListener(0);
         drain();
         assertEquals(600, hp(lauma));
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void a_new_caster_lifetime_cannot_be_blocked_by_its_old_healing_interval(boolean confirmed)
+            throws Exception {
+        showLauma();
+        reaction();
+        var previous = ability.getModifiers().get(HEAL);
+        assertEquals(600, hp(lauma));
+        if (confirmed) confirmHeal(true, 91);
+        lauma.invalidateAbilityLifecycle();
+        lauma.activateAbilityLifecycle();
+        reaction();
+        assertEquals(1100, hp(lauma));
+        assertNotSame(previous, ability.getModifiers().get(HEAL));
+        assertFalse(lauma.getInstancedModifiers().containsValue(previous));
+        if (confirmed) {
+            var replacement = ability.getModifiers().get(HEAL);
+            confirmHeal(false, 91);
+            assertSame(replacement, ability.getModifiers().get(HEAL));
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void the_healing_interval_ends_at_its_deadline_before_the_next_scene_tick(boolean confirmed)
+            throws Exception {
+        showLauma();
+        reaction();
+        var previous = ability.getModifiers().get(HEAL);
+        assertEquals(600, hp(lauma));
+        if (confirmed) {
+            clock.set(900_000_000L);
+            confirmHeal(true, 91);
+        }
+        clock.set(1_899_999_000L);
+        reaction();
+        assertEquals(600, hp(lauma));
+        assertSame(previous, ability.getModifiers().get(HEAL));
+        clock.set(1_900_001_000L);
+        reaction();
+        assertEquals(1100, hp(lauma));
+        assertNotSame(previous, ability.getModifiers().get(HEAL));
+        assertFalse(lauma.getInstancedModifiers().containsValue(previous));
+    }
+
+    @Test
+    void a_remote_listener_uses_the_casters_current_character_and_shared_interval()
+            throws Exception {
+        var partner = new AbilityTestFixture.TestPlayer();
+        partner.setUid(20002);
+        var ally = avatar(partner, 10000015, 30, 0, 0);
+        fixture.scene.getPlayers().add(partner);
+        fixture.scene.getWorld().getPlayers().add(partner);
+        active.getPosition().setX(20);
+        startWindow();
+        confirmListener(ally, 71);
+        invokeExistingListener(ally, 71);
+        drain();
+        assertEquals(600, hp(active));
+        assertEquals(100, hp(ally));
+        var first = ability.getModifiers().get(HEAL);
+        confirmListener(active, 72);
+        invokeExistingListener(active, 72);
+        drain();
+        assertEquals(600, hp(active));
+        assertSame(first, ability.getModifiers().get(HEAL));
+        showLauma();
+        invokeExistingListener(ally, 71);
+        drain();
+        assertEquals(100, hp(lauma));
+        clock.set(1_900_001_000L);
+        invokeExistingListener(ally, 71);
+        drain();
+        assertEquals(600, hp(lauma));
+        assertEquals(100, hp(ally));
+    }
+
+    @Test
+    void a_confirmed_healing_interval_keeps_its_original_clock_and_expires_on_duration_tick()
+            throws Exception {
+        showLauma();
+        reaction();
+        var previous = ability.getModifiers().get(HEAL);
+        clock.set(900_000_000L);
+        confirmHeal(true, 91);
+        clock.set(1_899_999_000L);
+        confirmHeal(true, 91);
+        assertSame(previous, lauma.getInstancedModifiers().get(91));
+        assertEquals(600, hp(lauma));
+        clock.set(1_900_001_000L);
+        lauma.getAbilityModifierDuration().tick();
+        assertFalse(ability.getModifiers().containsKey(HEAL));
+        assertFalse(lauma.getInstancedModifiers().containsKey(91));
+        reaction();
+        var replacement = ability.getModifiers().get(HEAL);
+        assertEquals(1100, hp(lauma));
+        confirmHeal(false, 91);
+        assertSame(replacement, ability.getModifiers().get(HEAL));
+    }
+
+    @Test
+    void concurrent_callbacks_after_the_deadline_admit_one_new_heal() throws Exception {
+        showLauma();
+        reaction();
+        confirmHeal(true, 91);
+        var previous = ability.getModifiers().get(HEAL);
+        clock.set(1_900_001_000L);
+        concurrentReactions(1100);
+        var replacement = ability.getModifiers().get(HEAL);
+        assertNotSame(previous, replacement);
+        assertFalse(lauma.getInstancedModifiers().containsValue(previous));
+        lauma.getAbilityModifierDuration().tick();
+        assertSame(replacement, ability.getModifiers().get(HEAL));
     }
 }

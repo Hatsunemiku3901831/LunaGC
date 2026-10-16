@@ -4,6 +4,7 @@ import emu.grasscutter.data.binout.AbilityModifier;
 import emu.grasscutter.game.ability.actions.AbilityActionHandler;
 import emu.grasscutter.game.entity.GameEntity;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.function.BooleanSupplier;
 
@@ -47,19 +48,26 @@ public final class AbilityModifierInterval {
             BooleanSupplier current) {
         if (!supported(ability, data, name, target) || !current.getAsBoolean()) return false;
         AbilityModifierController created;
+        var retired = new ArrayList<AbilityModifierController>();
         synchronized (target.getInstancedModifiers()) {
             for (var existing : target.getAbilityHpModifier().activeControllers()) {
                 var source = existing.getAbility();
                 if (name.equals(existing.getName())
                         && source.getOwner() == ability.getOwner()
                         && Objects.equals(
-                                source.getData().abilityName, ability.getData().abilityName))
-                    return true;
+                                source.getData().abilityName, ability.getData().abilityName)) {
+                    if (!existing.ownsIntervalDuration() || existing.intervalCurrent(target))
+                        return true;
+                    retired.add(existing);
+                }
             }
+            for (var previous : retired)
+                previous.getAbility().retireModifierLocked(target, previous);
             created = new AbilityModifierController(ability, ability.getData(), data);
             if (!created.prepareServerCallbacks(target)) return false;
             ability.registerModifier(target, created);
         }
+        for (var previous : retired) previous.runServerOnRemoved();
         created.runServerOnAdded(current);
         return true;
     }

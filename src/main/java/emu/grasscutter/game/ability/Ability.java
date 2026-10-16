@@ -227,7 +227,7 @@ public class Ability {
         }
     }
 
-    void retireAuraModifierLocked(GameEntity target, AbilityModifierController modifier) {
+    void retireModifierLocked(GameEntity target, AbilityModifierController modifier) {
         modifier.closeAuraAttachments();
         target.getInstancedModifiers().int2ObjectEntrySet().removeIf(entry -> {
             if(entry.getValue()!=modifier) return false;
@@ -242,8 +242,8 @@ public class Ability {
         synchronized(target.getInstancedModifiers()) {
             if(!currentTimer.getAsBoolean()
                     || !target.getAbilityHpModifier().activeControllers().contains(modifier)
-                    || target.getInstancedModifiers().containsValue(modifier) && !modifier.ownsAttachedDuration()) return false;
-            if(modifier.ownsAttachedDuration()) target.getInstancedModifiers().int2ObjectEntrySet().removeIf(entry -> {
+                    || target.getInstancedModifiers().containsValue(modifier) && !modifier.ownsServerDuration()) return false;
+            if(modifier.ownsServerDuration()) target.getInstancedModifiers().int2ObjectEntrySet().removeIf(entry -> {
                 if(entry.getValue()!=modifier) return false;
                 target.getAbilityPeriodicHealing().clientRemoved(entry.getIntKey(),modifier);
                 return true;

@@ -18,10 +18,18 @@ public class AbilityModifierController {
     private final Set<Child> attachedChildren=new java.util.HashSet<>();
     private volatile Child attachment;
     private volatile boolean attachmentRevoked, attachmentsEnding;
-    private boolean auraDuration;
+    private boolean auraDuration, intervalDuration;
 
     boolean ownsAuraDuration() { return auraDuration; }
-    boolean ownsAttachedDuration() { return auraDuration || attachment!=null && AbilityPartyAura.listener(modifierData); }
+    boolean ownsServerDuration() { return auraDuration || intervalDuration || attachment!=null && AbilityPartyAura.listener(modifierData); }
+    boolean ownsIntervalDuration() { return intervalDuration; }
+
+    boolean intervalCurrent(GameEntity target) {
+        var callbacks=serverCallbacks;
+        return intervalDuration && callbacks!=null && callbacks.target==target
+                && !callbacks.ended.get() && callbacks.context.isCurrent()
+                && target.getAbilityModifierDuration().withinLifetime(this);
+    }
 
     boolean auraCurrent() {
         var callbacks=serverCallbacks;
@@ -201,6 +209,7 @@ public class AbilityModifierController {
         var callbacks=new ServerCallbacks(ability,target,added,removed);
         if(!callbacks.context.isCurrent()) return false;
         auraDuration=AbilityPartyAura.window(ability,modifierData,target);
+        intervalDuration=AbilityModifierInterval.supported(ability,modifierData,name,target);
         serverCallbacks=callbacks;
         return true;
     }

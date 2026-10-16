@@ -83,7 +83,7 @@ final class AbilityModifierStacking {
                                                 c.getAbility() == ability
                                                         && c.getModifierData() == data)
                                 .toList());
-                for (var previous : retired) ability.retireAuraModifierLocked(target, previous);
+                for (var previous : retired) ability.retireModifierLocked(target, previous);
             }
             if (AbilityPartyAura.listener(data)) {
                 var existing =
