@@ -73,3 +73,22 @@ Gradle `test`、`jar` 成功。
 SHA-256：`543758f1712ec6f3afa6375a8cdb22bf987a7c04cf2c6e3723357e32d06a4bd4`。
 失败、各轮 XML 与 `verification.json` 同在 `batch322/`。
 设置界面的当前客户端验收仍待完成。
+
+## 本地运行与下一条入口
+
+协议提交 `28a91bd6`、业务提交 `73b19005` 已推送。
+2026-10-16 23:34（UTC+8），本地已启动上述验证 JAR，Java 进程 `61352`
+同时监听 HTTP `8088`、UDP `22101`。健康检查通过，死锁、在线玩家以及队列待处理、
+活跃、未完成和失败数量均为零；启动日志没有 ERROR／FATAL／异常。
+切换前确认没有客户端、在线玩家或未完成任务，通过 GM 正常停止原服务；本轮没有启动游戏。
+
+资源继续使用 `D:/Projects/Experiment/LunaGC-Resources`；外部检出和子模块保持干净的
+`dac2a9d43332ef51879522cf39da2831b0ca0543`，Mongo 保持 `lunagc_mongo-data` 卷。
+切换证据见 `batch322/runtime-stop-proof.json`、`runtime-launch-inputs.json`
+及 `runtime-start-proof.json`。这些结果确认服务构建与启动，不证明客户端界面验收。
+
+继续研究已定位另一条独立入口：`MusicSettingDialogContext.RequestModsUpdate`
+将具名 `_selectedModList`（`+0x2e0`）传给 `0x14f7bfb60`，
+由 TypeInfo `0x1457b61c8` 创建类型 55845 `FAGBLBIMBLK`，原生包号为 `5759`。
+来源为 `batch320/` 的具名字段、调用链及工厂类型报告。
+该入口的响应、选择状态及演奏资格继续配对，尚未作为已实现的模组功能登记。
