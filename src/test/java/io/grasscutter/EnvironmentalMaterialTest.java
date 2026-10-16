@@ -217,6 +217,64 @@ class EnvironmentalMaterialTest {
     }
 
     @ParameterizedTest
+    @ValueSource(ints = {70210013, 70210014, 70210063})
+    void native_zero_unseals_the_material_and_later_removal_does_not_repeat_lua(int id)
+            throws Exception {
+        var entity = gadget(id, seal(id));
+        assertTrue(confirm(entity, material(id), ModifierAction.MODIFIER_ACTION_ADDED));
+        var zero =
+                AbilityInvokeEntry.newBuilder()
+                        .setEntityId(entity.getId())
+                        .setArgumentType(
+                                AbilityInvokeArgument
+                                        .AbilityInvokeArgument_ABILITY_META_DURABILITY_IS_ZERO)
+                        .setHead(
+                                AbilityInvokeEntryHead.newBuilder()
+                                        .setTargetId(entity.getId())
+                                        .setInstancedAbilityId(1)
+                                        .setInstancedModifierId(71))
+                        .build();
+        assertTrue(fixture.player.getAbilityManager().acceptAbilityInvoke(zero));
+        assertEquals(ScriptGadgetState.Default, entity.getState());
+        assertTrue(entity.isAlive());
+        assertEquals(1, luaCalls);
+        assertEquals(0, grants);
+        assertTrue(fixture.player.getAbilityManager().acceptAbilityInvoke(zero));
+        assertTrue(confirm(entity, material(id), ModifierAction.MODIFIER_ACTION_REMOVED));
+        assertEquals(1, luaCalls);
+        var chest = (GadgetChest) entity.getContent();
+        assertTrue(chest.onInteract(fixture.player, GadgetInteractReq.getDefaultInstance()));
+        assertFalse(chest.onInteract(fixture.player, GadgetInteractReq.getDefaultInstance()));
+        assertEquals(1, grants);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {70220003, 70220020})
+    void native_zero_finishes_the_two_resource_wood_materials(int id) throws Exception {
+        var entity = gadget(id, 0);
+        String material = id == 70220003 ? "Bramble_Burning" : "Burning";
+        assertTrue(confirm(entity, material, ModifierAction.MODIFIER_ACTION_ADDED));
+        var zero =
+                AbilityInvokeEntry.newBuilder()
+                        .setEntityId(entity.getId())
+                        .setArgumentType(
+                                AbilityInvokeArgument
+                                        .AbilityInvokeArgument_ABILITY_META_DURABILITY_IS_ZERO)
+                        .setHead(
+                                AbilityInvokeEntryHead.newBuilder()
+                                        .setTargetId(entity.getId())
+                                        .setInstancedAbilityId(1)
+                                        .setInstancedModifierId(71))
+                        .build();
+        assertTrue(fixture.player.getAbilityManager().acceptAbilityInvoke(zero));
+        assertNull(fixture.scene.getEntities().get(entity.getId()));
+        assertTrue(entity.isDead());
+        assertSame(fixture.entity, fixture.scene.getEntities().get(fixture.entity.getId()));
+        assertTrue(fixture.player.getAbilityManager().acceptAbilityInvoke(zero));
+        assertEquals(0, grants);
+    }
+
+    @ParameterizedTest
     @ValueSource(ints = {70210001, 70210013, 70210014, 70210063})
     void a_lethal_hit_cannot_destroy_a_chest_or_grant_its_rewards(int id) throws Exception {
         var chest = gadget(id, id == 70210001 ? 0 : seal(id));

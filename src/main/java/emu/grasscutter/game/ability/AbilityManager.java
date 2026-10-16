@@ -22,6 +22,7 @@ import emu.grasscutter.net.proto.AbilityInvokeEntryOuterClass.AbilityInvokeEntry
 import emu.grasscutter.net.proto.AbilityMetaAddAbilityOuterClass.AbilityMetaAddAbility;
 import emu.grasscutter.net.proto.AbilityMetaModifierChangeOuterClass.AbilityMetaModifierChange;
 import emu.grasscutter.net.proto.AbilityMetaModifierDurabilityChangeOuterClass.AbilityMetaModifierDurabilityChange;
+import emu.grasscutter.net.proto.AbilityMetaDurabilityIsZeroOuterClass.AbilityMetaDurabilityIsZero;
 import emu.grasscutter.net.proto.AbilityMixinShieldBarOuterClass.AbilityMixinShieldBar;
 import emu.grasscutter.server.packet.send.PacketMonsterSummonTagNotify;
 import emu.grasscutter.net.proto.AbilityMetaReInitOverrideMapOuterClass.AbilityMetaReInitOverrideMap;
@@ -556,6 +557,18 @@ public final class AbilityManager extends BasePlayerManager {
                         ? handleModifierDurabilityChange(invoke) : handleShieldBarChange(invoke);
             } catch (InvalidProtocolBufferException e) {
                 Grasscutter.getLogger().debug("Invalid durability report for player {}", player.getUid());
+                return false;
+            }
+        }
+        if (invoke.getArgumentType() == AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_META_DURABILITY_IS_ZERO) {
+            try {
+                var update = AbilityMetaDurabilityIsZero.parseFrom(invoke.getAbilityData());
+                // The paired native sender writes false. Do not infer the other flag's meaning.
+                if (update.getIFACBKIKAOL()) return true;
+                var scene = player.getScene();
+                var entity = scene == null ? null : scene.getEntityById(invoke.getEntityId());
+                return entity == null || entity.getAbilityDurability().materialZero(invoke.getHead(), invoke.getAbilityData());
+            } catch (InvalidProtocolBufferException malformed) {
                 return false;
             }
         }

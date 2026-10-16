@@ -1,5 +1,7 @@
 package emu.grasscutter.game.ability;
 
+import com.google.protobuf.ByteString;
+
 import emu.grasscutter.data.binout.AbilityMixinData;
 import emu.grasscutter.game.entity.GameEntity;
 import emu.grasscutter.net.proto.AbilityInvokeEntryHeadOuterClass.AbilityInvokeEntryHead;
@@ -61,8 +63,9 @@ public final class AbilityDurabilityState {
                     || !context.isCurrent()
                     || !parentMatches(ability, head)) return false;
             int id = head.getInstancedModifierId();
-            if (controller != null && entity.getInstancedModifiers().get(id) != controller)
-                return false;
+            if (controller != null
+                    && (entity.getInstancedModifiers().get(id) != controller
+                            || !controller.isClientInstanceCurrent(entity))) return false;
             if (controller == null && (id != 0 || ability.getOwner() != entity)) return false;
             return mixin == null
                     || mixin.enable
@@ -163,6 +166,30 @@ public final class AbilityDurabilityState {
                                         update)));
             }
         }
+        return true;
+    }
+
+    /** Message 22 is an explicit end event; numeric reports 16/107 remain bookkeeping only. */
+    boolean materialZero(AbilityInvokeEntryHead head, ByteString payload) {
+        if (head.getFPDAONBEBHKValue() != 0
+                || head.getTargetId() != 0 && head.getTargetId() != entity.getId()) return true;
+        Binding binding;
+        synchronized (entity.getInstancedModifiers()) {
+            prune();
+            binding = bind(head, false);
+        }
+        // End actions may enter Lua and the scene. Keep them outside the registry monitor and
+        // retain the selected controller, so a later application cannot receive this report.
+        if (binding == null || !binding.current()) return true;
+        var configured = binding.controller.getModifierData().elementDurability;
+        var maximum =
+                configured == null
+                        ? OptionalDouble.empty()
+                        : configured.tryGet(
+                                emu.grasscutter.game.ability.actions.AbilityActionHandler
+                                        .propertiesFor(binding.ability, entity));
+        if (maximum.isPresent() && maximum.getAsDouble() > 0)
+            EnvironmentalMaterialCallbacks.removed(binding.controller, entity, payload);
         return true;
     }
 

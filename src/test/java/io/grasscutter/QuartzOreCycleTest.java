@@ -24,6 +24,8 @@ import emu.grasscutter.server.game.*;
 import emu.grasscutter.utils.JsonUtils;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.nio.file.*;
 import java.util.*;
@@ -281,6 +283,335 @@ class QuartzOreCycleTest {
                                                 .setInstancedModifierId(instance)
                                                 .setLocalId(local))
                                 .build());
+    }
+
+    private AbilityInvokeEntryOuterClass.AbilityInvokeEntry zeroMessage(
+            int modifier, int root, int target, int local, int source, byte... body) {
+        return AbilityInvokeEntryOuterClass.AbilityInvokeEntry.newBuilder()
+                .setEntityId(ore.getId())
+                .setArgumentType(
+                        AbilityInvokeArgumentOuterClass.AbilityInvokeArgument
+                                .AbilityInvokeArgument_ABILITY_META_DURABILITY_IS_ZERO)
+                .setHead(
+                        AbilityInvokeEntryHeadOuterClass.AbilityInvokeEntryHead.newBuilder()
+                                .setInstancedAbilityId(root)
+                                .setInstancedModifierId(modifier)
+                                .setTargetId(target)
+                                .setLocalId(local)
+                                .setFPDAONBEBHKValue(source))
+                .setAbilityData(com.google.protobuf.ByteString.copyFrom(body))
+                .build();
+    }
+
+    private void zero() throws Exception {
+        assertTrue(ability.getManager().acceptAbilityInvoke(zeroMessage(71, 1, ore.getId(), 0, 0)));
+    }
+
+    @Test
+    void anExplicitDurabilityZeroCompletesTheRealOreWithoutARemoval() throws Exception {
+        add("Appear");
+        zero();
+        assertEquals(1, drops().size());
+        assertEquals(201, ore.getState());
+        assertTrue(ore.isAlive());
+        assertEquals(List.of(201), lua);
+    }
+
+    @Test
+    void aNumericZeroIsOnlyAReportUntilTheExplicitCompletionArrives() throws Exception {
+        add("Appear");
+        var update =
+                AbilityMetaModifierDurabilityChangeOuterClass.AbilityMetaModifierDurabilityChange
+                        .newBuilder()
+                        .setRemainingDurability(0)
+                        .setJODMMPLFMEG(10)
+                        .build();
+        assertTrue(
+                ability.getManager()
+                        .acceptAbilityInvoke(
+                                zeroMessage(71, 1, ore.getId(), 0, 0).toBuilder()
+                                        .setArgumentType(
+                                                AbilityInvokeArgumentOuterClass
+                                                        .AbilityInvokeArgument
+                                                        .AbilityInvokeArgument_ABILITY_META_MODIFIER_DURABILITY_CHANGE)
+                                        .setAbilityData(update.toByteString())
+                                        .build()));
+        assertTrue(drops().isEmpty());
+        assertEquals(0, ore.getState());
+        assertEquals(
+                0f,
+                ore.getAbilityDurability()
+                        .snapshot()
+                        .modifiers()
+                        .get(0)
+                        .update()
+                        .getRemainingDurability());
+        zero();
+        assertEquals(1, drops().size());
+        assertEquals(201, ore.getState());
+    }
+
+    @Test
+    void anOldDurabilityRecordDoesNotSurviveTheOreRefresh() throws Exception {
+        add("Appear");
+        var update =
+                AbilityMetaModifierDurabilityChangeOuterClass.AbilityMetaModifierDurabilityChange
+                        .newBuilder()
+                        .setRemainingDurability(5)
+                        .setJODMMPLFMEG(1)
+                        .build();
+        assertTrue(
+                ability.getManager()
+                        .acceptAbilityInvoke(
+                                zeroMessage(71, 1, ore.getId(), 0, 0).toBuilder()
+                                        .setArgumentType(
+                                                AbilityInvokeArgumentOuterClass
+                                                        .AbilityInvokeArgument
+                                                        .AbilityInvokeArgument_ABILITY_META_MODIFIER_DURABILITY_CHANGE)
+                                        .setAbilityData(update.toByteString())
+                                        .build()));
+        assertEquals(1, ore.getAbilityDurability().snapshot().modifiers().size());
+        ore.onClientExecuteRequest(201, 0, 0);
+        nanos.set(15_000_000_000L);
+        ore.onTick(1);
+        assertEquals(0, ore.getState());
+        assertTrue(ore.getAbilityDurability().snapshot().modifiers().isEmpty());
+        zero();
+        assertTrue(drops().isEmpty());
+        add("Appear");
+        zero();
+        assertEquals(1, drops().size());
+    }
+
+    @Test
+    void explicitZeroAndLaterRemovalShareOneCompletion() throws Exception {
+        add("Appear");
+        zero();
+        zero();
+        remove("Appear");
+        assertEquals(1, drops().size());
+        assertEquals(List.of(201), lua);
+        nanos.set(15_000_000_000L);
+        ore.onTick(1);
+        mine();
+        assertEquals(2, drops().size());
+        assertEquals(List.of(201, 0, 201), lua);
+    }
+
+    @Test
+    void aZeroMetadataLocalIdCannotBeExecutedAsADifferentAction() throws Exception {
+        add("Appear");
+        var end = ability.getData().modifiers.get("Appear").onRemoved[0];
+        int local =
+                ability.getData().localIdToAction.entrySet().stream()
+                        .filter(e -> e.getValue() == end)
+                        .findFirst()
+                        .orElseThrow()
+                        .getKey();
+        assertTrue(
+                ability.getManager()
+                        .acceptAbilityInvoke(zeroMessage(71, 1, ore.getId(), local, 0)));
+        assertEquals(1, drops().size());
+        assertEquals(201, ore.getState());
+        assertEquals(List.of(201), lua);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 72, 999})
+    void aZeroWithoutTheMaterialInstanceDoesNotAward(int modifier) throws Exception {
+        add("Appear");
+        assertTrue(
+                ability.getManager()
+                        .acceptAbilityInvoke(zeroMessage(modifier, 1, ore.getId(), 0, 0)));
+        assertTrue(drops().isEmpty());
+        assertEquals(0, ore.getState());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 99})
+    void otherModifierSourcesDoNotBorrowTheNormalInstance(int source) throws Exception {
+        add("Appear");
+        assertTrue(
+                ability.getManager()
+                        .acceptAbilityInvoke(zeroMessage(71, 1, ore.getId(), 0, source)));
+        assertTrue(drops().isEmpty());
+        assertEquals(0, ore.getState());
+    }
+
+    @Test
+    void theUnpairedTrueFlagDoesNotRunTheNormalCompletion() throws Exception {
+        add("Appear");
+        assertTrue(
+                ability.getManager()
+                        .acceptAbilityInvoke(
+                                zeroMessage(71, 1, ore.getId(), 0, 0, (byte) 8, (byte) 1)));
+        assertTrue(drops().isEmpty());
+        assertEquals(0, ore.getState());
+    }
+
+    @Test
+    void aTruncatedZeroBodyIsRejectedBeforeForwarding() throws Exception {
+        add("Appear");
+        assertFalse(
+                ability.getManager()
+                        .acceptAbilityInvoke(zeroMessage(71, 1, ore.getId(), 0, 0, (byte) 8)));
+        assertTrue(drops().isEmpty());
+        assertEquals(0, ore.getState());
+    }
+
+    @Test
+    void theWrongRootOrTargetCannotCompleteTheMaterial() throws Exception {
+        add("Appear");
+        assertTrue(ability.getManager().acceptAbilityInvoke(zeroMessage(71, 2, ore.getId(), 0, 0)));
+        assertTrue(
+                ability.getManager()
+                        .acceptAbilityInvoke(zeroMessage(71, 1, env.caster.getId(), 0, 0)));
+        assertTrue(drops().isEmpty());
+        assertEquals(0, ore.getState());
+        zero();
+        assertEquals(1, drops().size());
+    }
+
+    @Test
+    void aZeroCannotUseARemovedRoot() throws Exception {
+        add("Appear");
+        ore.getInstancedAbilities().clear();
+        zero();
+        assertTrue(drops().isEmpty());
+        assertEquals(0, ore.getState());
+    }
+
+    @ParameterizedTest
+    @ValueSource(floats = {1f, 99999f, 100000f, Float.MAX_VALUE})
+    void hpDamageCannotDeleteTheResourceLockedOre(float damage) {
+        float hp = ore.getFightProperty(emu.grasscutter.game.props.FightProperty.FIGHT_PROP_CUR_HP);
+        assertEquals(99999f, hp);
+        env.fixture.scene.handleAttack(
+                AttackResultOuterClass.AttackResult.newBuilder()
+                        .setAttackerId(env.caster.getId())
+                        .setDefenseId(ore.getId())
+                        .setDamage(damage)
+                        .build());
+        assertTrue(ore.isAlive());
+        assertSame(ore, env.fixture.scene.getEntities().get(ore.getId()));
+        assertEquals(
+                hp,
+                ore.getFightProperty(emu.grasscutter.game.props.FightProperty.FIGHT_PROP_CUR_HP));
+        assertTrue(drops().isEmpty());
+        assertEquals(0, ore.getState());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"root-uninstalled", "caster-left"})
+    void theResourceHpLockSurvivesRootAndCasterChanges(String change) {
+        if (change.equals("root-uninstalled")) ore.getInstancedAbilities().clear();
+        else env.fixture.player.setScene(null);
+        float hp = ore.getFightProperty(emu.grasscutter.game.props.FightProperty.FIGHT_PROP_CUR_HP);
+        env.fixture.scene.handleAttack(
+                AttackResultOuterClass.AttackResult.newBuilder()
+                        .setAttackerId(env.caster.getId())
+                        .setDefenseId(ore.getId())
+                        .setDamage(100000)
+                        .build());
+        assertTrue(ore.isAlive());
+        assertSame(ore, env.fixture.scene.getEntities().get(ore.getId()));
+        assertEquals(
+                hp,
+                ore.getFightProperty(emu.grasscutter.game.props.FightProperty.FIGHT_PROP_CUR_HP));
+        assertTrue(drops().isEmpty());
+    }
+
+    @Test
+    void zeroAndRemovalAtTheSameTimeShareThePickup() throws Exception {
+        add("Appear");
+        var gate = new CyclicBarrier(2);
+        var executor = Executors.newFixedThreadPool(2);
+        try {
+            var a =
+                    executor.submit(
+                            () -> {
+                                gate.await(2, TimeUnit.SECONDS);
+                                zero();
+                                return null;
+                            });
+            var b =
+                    executor.submit(
+                            () -> {
+                                gate.await(2, TimeUnit.SECONDS);
+                                remove("Appear");
+                                return null;
+                            });
+            a.get(4, TimeUnit.SECONDS);
+            b.get(4, TimeUnit.SECONDS);
+            assertEquals(1, drops().size());
+            assertEquals(List.of(201), lua);
+        } finally {
+            executor.shutdownNow();
+        }
+    }
+
+    @Test
+    void aKnownOldZeroCannotMineTheOreAfterItRefreshes() throws Exception {
+        add("Appear");
+        zero();
+        assertEquals(1, drops().size());
+        nanos.set(15_000_000_000L);
+        ore.onTick(1);
+        zero();
+        assertEquals(1, drops().size());
+        assertEquals(0, ore.getState());
+        add("Appear");
+        zero();
+        assertEquals(2, drops().size());
+        assertEquals(201, ore.getState());
+    }
+
+    @Test
+    void restoringAMissingLootTableAllowsTheSameZeroToRetry() throws Exception {
+        add("Appear");
+        var original = GameData.getDropSubfieldMappingMap().remove(106);
+        try {
+            zero();
+            assertTrue(drops().isEmpty());
+            assertEquals(0, ore.getState());
+        } finally {
+            GameData.getDropSubfieldMappingMap().put(106, original);
+        }
+        zero();
+        assertEquals(1, drops().size());
+        assertEquals(201, ore.getState());
+    }
+
+    @Test
+    void aDisappearZeroCannotShortenTheOreRefresh() throws Exception {
+        mine();
+        add("Disppear");
+        assertTrue(ability.getManager().acceptAbilityInvoke(zeroMessage(72, 1, ore.getId(), 0, 0)));
+        assertEquals(201, ore.getState());
+        assertEquals(List.of(201), lua);
+        nanos.set(15_000_000_000L);
+        ore.onTick(1);
+        assertEquals(0, ore.getState());
+        assertEquals(List.of(201, 0), lua);
+    }
+
+    @Test
+    void zeroDoesNotExecuteArbitraryOtherModifierEndActions() throws Exception {
+        var data =
+                JsonUtils.decode(
+                        "{abilityName:'OtherMaterial',modifiers:{Shield:{elementDurability:10,onRemoved:[{$type:'SetGlobalValue',key:'unexpected',value:7,target:'Self'}]}}}",
+                        AbilityData.class);
+        var other = new Ability(data, ore, env.fixture.player);
+        ore.getInstancedAbilities().add(other);
+        var controller =
+                new emu.grasscutter.game.ability.AbilityModifierController(
+                        other, data, data.modifiers.get("Shield"));
+        ore.getInstancedModifiers().put(77, controller);
+        other.registerModifier(ore, controller);
+        assertTrue(ability.getManager().acceptAbilityInvoke(zeroMessage(77, 2, ore.getId(), 0, 0)));
+        assertFalse(ore.getGlobalAbilityValues().containsKey("unexpected"));
+        assertTrue(drops().isEmpty());
+        assertEquals(0, ore.getState());
     }
 
     @Test

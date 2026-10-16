@@ -1,0 +1,10 @@
+// 7.1 type 79840; message 22 sender 0x150efc3e5, parser 0x15395d0d0.
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "AbilityMetaDurabilityIsZeroOuterClass";
+
+message AbilityMetaDurabilityIsZero {
+    // Native name retained: only the sender's false branch is paired so far.
+    bool IFACBKIKAOL = 1;
+}

@@ -396,7 +396,8 @@ public class EntityGadget extends EntityBaseGadget {
 
     @Override
     protected boolean blocksDirectHpLoss() {
-        return content instanceof GadgetChest
+        return quartzOreCycle != null && quartzOreCycle.protectsHp()
+                || content instanceof GadgetChest
                 || gadgetData != null && gadgetData.getType() == EntityType.Chest;
     }
 

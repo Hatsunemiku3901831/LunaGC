@@ -51,6 +51,21 @@ public final class QuartzOreCycle {
         this.clock = clock;
     }
 
+    /** The resource's HP lock protects the persistent ore; material completion owns its drop. */
+    public boolean protectsHp() {
+        synchronized (ore.getScene()) {
+            var config = ore.getConfigGadget();
+            return ore.getGadgetId() == GADGET
+                    && config != null
+                    && config.getAbilities() != null
+                    && config.getAbilities().stream()
+                            .anyMatch(a -> a != null && ROOT.equals(a.getAbilityName()))
+                    && config.getCombat() != null
+                    && config.getCombat().getProperty() != null
+                    && config.getCombat().getProperty().isLockHP();
+        }
+    }
+
     private boolean own(AbilityModifierController controller) {
         return controller != null
                 && controller.getAbility().getOwner() == ore

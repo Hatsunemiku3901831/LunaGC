@@ -74,6 +74,10 @@ JAR 路径与 SHA-256 已核对，证据为同目录的 `runtime-stop-proof.json
 
 ## 后续边界
 
+后续已接入[普通环境材质的独立归零消息 22](MATERIAL_DURABILITY_ZERO_2026-10-16.md)，
+并使耐久记录遵循控制器本身的应用生命周期；矿石刷新后的旧记录不能继续读取。
+实时数值报告和归零结束通知仍为两条独立路径。
+
 后续已经接入[正常根能力原始条目与覆盖参数](ABILITY_ROOT_SNAPSHOTS_2026-10-16.md)、
 [普通实体](SCENE_ENTITY_ABILITY_STATE_2026-10-16.md)和[活动载体](PLAY_TEAM_ENTITIES_2026-10-11.md)的参数重发。
 完整 `AbilitySyncStateInfo` 仍未启用：修饰器存续时间、其他来源的实例表和 mixin 恢复数据仍需补齐。
