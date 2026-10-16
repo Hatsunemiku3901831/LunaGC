@@ -7,6 +7,7 @@ import emu.grasscutter.data.binout.OpenConfigEntry.TalentParamEntry;
 import emu.grasscutter.data.excels.ProudSkillData;
 import emu.grasscutter.data.excels.avatar.AvatarSkillDepotData;
 import emu.grasscutter.data.excels.avatar.AvatarTalentData;
+import emu.grasscutter.game.ability.AbilityGlobalValueSnapshot;
 import emu.grasscutter.game.avatar.Avatar;
 import emu.grasscutter.game.entity.EntityAvatar;
 import emu.grasscutter.game.inventory.GameItem;
@@ -64,6 +65,51 @@ public class PacketPlayerEnterSceneInfoNotify extends BasePacket {
     public PacketPlayerEnterSceneInfoNotify(Player player) {
         super(PacketOpcodes.PlayerEnterSceneInfoNotify);
 
+        PlayerEnterSceneInfoNotify.Builder proto =
+                PlayerEnterSceneInfoNotify.newBuilder()
+                        .setCurAvatarEntityId(player.getTeamManager().getCurrentAvatarEntity().getId())
+                        .setEnterSceneToken(player.getEnterSceneToken());
+
+        proto.setTeamEnterInfo(
+                TeamEnterSceneInfo.newBuilder()
+                        .setTeamEntityId(player.getTeamManager().getEntity().getId())
+                        .setTeamAbilityInfo(buildTeamAbilityInfo(player))
+                        .setAbilityControlBlock(player.getTeamManager().getAbilityControlBlock()));
+        proto.setMpLevelEntityInfo(
+                MPLevelEntityInfo.newBuilder()
+                        .setEntityId(player.getWorld().getLevelEntityId())
+                        .setAuthorityPeerId(player.getWorld().getHostPeerId())
+                        .setAbilityInfo(player.getWorld().getEntity().getAbilityRoots().toSyncState()));
+
+        for (EntityAvatar avatarEntity : player.getTeamManager().getActiveTeam()) {
+            GameItem weapon = avatarEntity.getAvatar().getWeapon();
+            long weaponGuid = weapon != null ? weapon.getGuid() : 0;
+
+            AbilitySyncStateInfo.Builder avatarAbilityInfo = AbilitySyncStateInfo.newBuilder();
+            buildAvatarAbilityVars(avatarEntity, avatarAbilityInfo);
+            avatarEntity.getAbilityRoots().appendOverrides(avatarAbilityInfo);
+
+            AvatarEnterSceneInfo avatarInfo =
+                    AvatarEnterSceneInfo.newBuilder()
+                            .setAvatarGuid(avatarEntity.getAvatar().getGuid())
+                            .setAvatarEntityId(avatarEntity.getId())
+                            .setWeaponGuid(weaponGuid)
+                            .setWeaponEntityId(avatarEntity.getWeaponEntityId())
+                            .setAvatarAbilityInfo(avatarAbilityInfo)
+                            .setWeaponAbilityInfo(weapon != null && weapon.getWeaponEntity() != null
+                                    ? weapon.getWeaponEntity().getAbilityRoots().toSyncState()
+                                    : AbilitySyncStateInfo.getDefaultInstance())
+                            .addAllTpsWeaponList(emu.grasscutter.game.tps.TpsWeaponSystem.getSceneWeaponInfos(avatarEntity.getAvatar()))
+                            .build();
+
+            proto.addAvatarEnterInfo(avatarInfo);
+        }
+
+        this.setData(proto.build());
+    }
+
+    public static AbilitySyncStateInfo buildTeamAbilityInfo(Player player) {
+
         AbilityScalarValueEntry scalarValue = emu.grasscutter.game.player.Phlogiston.snapshot(player);
 
         long hexCount = player.getTeamManager().getActiveTeam().stream()
@@ -97,50 +143,8 @@ public class PacketPlayerEnterSceneInfoNotify extends BasePacket {
             teamInfo.addDynamicValueMap(verdantDew());
         }
 
-        AbilitySyncStateInfo phlogiston = teamInfo.build();
-        AbilitySyncStateInfo empty = AbilitySyncStateInfo.newBuilder().build();
-
-        PlayerEnterSceneInfoNotify.Builder proto =
-                PlayerEnterSceneInfoNotify.newBuilder()
-                        .setCurAvatarEntityId(player.getTeamManager().getCurrentAvatarEntity().getId())
-                        .setEnterSceneToken(player.getEnterSceneToken());
-
-        proto.setTeamEnterInfo(
-                TeamEnterSceneInfo.newBuilder()
-                        .setTeamEntityId(player.getTeamManager().getEntity().getId())
-                        .setTeamAbilityInfo(phlogiston)
-                        .setAbilityControlBlock(player.getTeamManager().getAbilityControlBlock()));
-        proto.setMpLevelEntityInfo(
-                MPLevelEntityInfo.newBuilder()
-                        .setEntityId(player.getWorld().getLevelEntityId())
-                        .setAuthorityPeerId(player.getWorld().getHostPeerId())
-                        .setAbilityInfo(empty));
-
-        for (EntityAvatar avatarEntity : player.getTeamManager().getActiveTeam()) {
-            GameItem weapon = avatarEntity.getAvatar().getWeapon();
-            long weaponGuid = weapon != null ? weapon.getGuid() : 0;
-
-            AbilitySyncStateInfo.Builder avatarAbilityInfo = AbilitySyncStateInfo.newBuilder();
-            buildAvatarAbilityVars(avatarEntity, avatarAbilityInfo);
-            avatarEntity.getAbilityRoots().appendOverrides(avatarAbilityInfo);
-
-            AvatarEnterSceneInfo avatarInfo =
-                    AvatarEnterSceneInfo.newBuilder()
-                            .setAvatarGuid(avatarEntity.getAvatar().getGuid())
-                            .setAvatarEntityId(avatarEntity.getId())
-                            .setWeaponGuid(weaponGuid)
-                            .setWeaponEntityId(avatarEntity.getWeaponEntityId())
-                            .setAvatarAbilityInfo(avatarAbilityInfo)
-                            .setWeaponAbilityInfo(weapon != null && weapon.getWeaponEntity() != null
-                                    ? weapon.getWeaponEntity().getAbilityRoots().toSyncState()
-                                    : AbilitySyncStateInfo.getDefaultInstance())
-                            .addAllTpsWeaponList(emu.grasscutter.game.tps.TpsWeaponSystem.getSceneWeaponInfos(avatarEntity.getAvatar()))
-                            .build();
-
-            proto.addAvatarEnterInfo(avatarInfo);
-        }
-
-        this.setData(proto.build());
+        AbilityGlobalValueSnapshot.append(player.getTeamManager().getEntity(), teamInfo);
+        return teamInfo.build();
     }
 
     public static void buildAvatarAbilityVars(EntityAvatar avatarEntity, AbilitySyncStateInfo.Builder info) {
@@ -174,6 +178,7 @@ public class PacketPlayerEnterSceneInfoNotify extends BasePacket {
                 info.addAppliedAbilities(buildTalentParamAbility(param));
             }
         }
+        AbilityGlobalValueSnapshot.append(avatarEntity, info);
     }
 
     private static void applyProudSkillVars(int proudSkillId, AbilitySyncStateInfo.Builder info) {

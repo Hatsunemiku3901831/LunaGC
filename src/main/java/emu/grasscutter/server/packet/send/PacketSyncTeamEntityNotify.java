@@ -2,13 +2,8 @@ package emu.grasscutter.server.packet.send;
 
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.net.packet.*;
-import emu.grasscutter.net.proto.AbilityScalarTypeOuterClass;
-import emu.grasscutter.net.proto.AbilityScalarValueEntryOuterClass;
-import emu.grasscutter.net.proto.AbilityStringOuterClass;
-import emu.grasscutter.net.proto.AbilitySyncStateInfoOuterClass.AbilitySyncStateInfo;
 import emu.grasscutter.net.proto.SyncTeamEntityNotifyOuterClass.SyncTeamEntityNotify;
 import emu.grasscutter.net.proto.TeamEntityInfoOuterClass.TeamEntityInfo;
-import emu.grasscutter.utils.Utils;
 
 public class PacketSyncTeamEntityNotify extends BasePacket {
 
@@ -30,8 +25,7 @@ public class PacketSyncTeamEntityNotify extends BasePacket {
                         TeamEntityInfo.newBuilder()
                                 .setTeamEntityId(p.getTeamManager().getEntity().getId())
                                 .setAuthorityPeerId(p.getPeerId())
-                                .setTeamAbilityInfo(AbilitySyncStateInfo.newBuilder().addSgvDynamicValueMap(
-                                    emu.grasscutter.game.player.Phlogiston.snapshot(p)))
+                                .setTeamAbilityInfo(PacketPlayerEnterSceneInfoNotify.buildTeamAbilityInfo(p))
                                 .build();
 
                 proto.addTeamEntityInfoList(info);

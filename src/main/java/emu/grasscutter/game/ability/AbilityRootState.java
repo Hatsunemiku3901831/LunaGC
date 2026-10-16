@@ -279,6 +279,7 @@ public final class AbilityRootState {
     public AbilitySyncStateInfo toSyncState() {
         var info = AbilitySyncStateInfo.newBuilder();
         appendOverrides(info);
+        AbilityGlobalValueSnapshot.append(entity, info);
         return info.build();
     }
 

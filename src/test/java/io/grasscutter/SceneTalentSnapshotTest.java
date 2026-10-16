@@ -207,6 +207,18 @@ class SceneTalentSnapshotTest extends QuestTestFixture {
         var weaponRoot = new emu.grasscutter.game.ability.Ability(data, weapon, player);
         weapon.getInstancedAbilities().add(weaponRoot);
         weaponRoot.getAbilitySpecials().put("rate", 3);
+        entity.getGlobalAbilityValues().put("SGV_AvatarState", 7f);
+        weapon.getGlobalAbilityValues().put("SGV_WeaponState", 8f);
+        player.getTeamManager().getEntity().getGlobalAbilityValues().put("SGV_TeamState", 9f);
+        player.getWorld().getEntity().getGlobalAbilityValues().put("SGV_WorldState", 10f);
+        var fullEnter =
+                PlayerEnterSceneInfoNotify.parseFrom(
+                        new PacketPlayerEnterSceneInfoNotify(player).getData());
+        assertEquals(
+                9, serverValue(fullEnter.getTeamEnterInfo().getTeamAbilityInfo(), "SGV_TeamState"));
+        assertEquals(
+                10,
+                serverValue(fullEnter.getMpLevelEntityInfo().getAbilityInfo(), "SGV_WorldState"));
         var enter =
                 PlayerEnterSceneInfoNotify.parseFrom(
                                 new PacketPlayerEnterSceneInfoNotify(player).getData())
@@ -214,9 +226,18 @@ class SceneTalentSnapshotTest extends QuestTestFixture {
         assertEquals(4, rootValue(enter.getAvatarAbilityInfo(), "rate"));
         assertEquals(1, rootValue(enter.getAvatarAbilityInfo(), "Unlocked"));
         assertEquals(3, rootValue(enter.getWeaponAbilityInfo(), "rate"));
+        assertEquals(7, serverValue(enter.getAvatarAbilityInfo(), "SGV_AvatarState"));
+        assertEquals(8, serverValue(enter.getWeaponAbilityInfo(), "SGV_WeaponState"));
         assertEquals(
                 4, rootValue(entity.toProto().getEntityAuthorityInfo().getAbilityInfo(), "rate"));
         assertEquals(3, rootValue(item.createSceneWeaponInfo().getAbilityInfo(), "rate"));
+        assertEquals(
+                7,
+                serverValue(
+                        entity.toProto().getEntityAuthorityInfo().getAbilityInfo(),
+                        "SGV_AvatarState"));
+        assertEquals(
+                8, serverValue(item.createSceneWeaponInfo().getAbilityInfo(), "SGV_WeaponState"));
         var team =
                 emu.grasscutter.net.proto.SceneTeamUpdateNotifyOuterClass.SceneTeamUpdateNotify
                         .parseFrom(
@@ -226,6 +247,8 @@ class SceneTalentSnapshotTest extends QuestTestFixture {
                         .getSceneTeamAvatarList(0);
         assertEquals(4, rootValue(team.getAvatarAbilityInfo(), "rate"));
         assertEquals(3, rootValue(team.getWeaponAbilityInfo(), "rate"));
+        assertEquals(7, serverValue(team.getAvatarAbilityInfo(), "SGV_AvatarState"));
+        assertEquals(8, serverValue(team.getWeaponAbilityInfo(), "SGV_WeaponState"));
         assertFalse(enter.getAvatarAbilityInfo().getIsInited());
         assertFalse(enter.getWeaponAbilityInfo().getIsInited());
     }
@@ -239,6 +262,18 @@ class SceneTalentSnapshotTest extends QuestTestFixture {
                                         ? v.getKey().getStr().equals(name)
                                         : v.getKey().getHash() == Utils.abilityHash(name))
                 .reduce((first, last) -> last)
+                .orElseThrow()
+                .getFloatValue();
+    }
+
+    private float serverValue(AbilitySyncStateInfo info, String name) {
+        return info.getSgvDynamicValueMapList().stream()
+                .filter(
+                        v ->
+                                v.getKey().hasStr()
+                                        ? v.getKey().getStr().equals(name)
+                                        : v.getKey().getHash() == Utils.abilityHash(name))
+                .findFirst()
                 .orElseThrow()
                 .getFloatValue();
     }
