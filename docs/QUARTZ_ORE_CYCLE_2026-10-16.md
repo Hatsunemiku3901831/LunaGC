@@ -41,6 +41,21 @@ Lua 与场景操作沿用控制器在前的锁顺序，等待应用领取记录�
 最早一次因测试辅助方法未处理受检异常而编译失败，`red-results/` 含之前构建的旧报告，
 这两项不作为本轮业务失败证据。
 
+## 本机运行
+
+功能提交 `535664f4ea4fbb6f5c3e384ba7710b0e9a38de08` 已推送至 `origin/main`。
+2026-10-16 17:41（UTC+8），上述最终构建已在本机启动，进程 30632 同时监听
+TCP 8088 与 UDP 22101。健康检查通过，无死锁、在线玩家或未结束的队列任务，
+启动日志未发现 ERROR 或异常退出标记。
+
+切换前确认游戏关闭、玩家为 0，并通过 GM `stop` 正常停止旧进程 2084。
+首次直接启动未读取 `.env.local`，已正常停止该空闲进程；最终启动显式合并 `.env`
+与 `.env.local`，资源继续使用 `D:\Projects\Experiment\LunaGC-Resources`，
+Mongo 数据卷保持 `lunagc_mongo-data`，未启动游戏。
+启动输入、停止与健康核对保存在同目录 `runtime-launch-inputs.json`、
+`runtime-stop-proof.json`、`runtime-start-proof.json` 与 `runtime-after-start/`。
+这项核对确认本机服务切换；下列玩法和实机验收仍保留。
+
 ## 剩余范围
 
 本次从普通材质结束确认开始接通掉落与刷新。实际元素命中、逐步材质耐久、
