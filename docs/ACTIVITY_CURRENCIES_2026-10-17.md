@@ -49,6 +49,23 @@ python tools/audit_activity_currencies.py --resources resources --output docs/da
 最终 19 套、314 项全部通过，0 错误、0 跳过；
 结果及构建哈希见该目录的 `final-summary.json` 和 `verification.json`。
 
+## 本机运行记录
+
+2026-10-17 07:23（UTC+8）已部署代码提交 `8fbbe81e67ecbdbd36047b4b073e05828c5f7a13`，
+运行 PID 为 `25392`，JAR 为 `debug/aster-mid-20261011/batch339/activity-currencies.jar`，
+SHA-256 为 `ff0f4fa8892c537b7cec2af63c97521903b9ee9c8737513c4ad37db325e82566`。
+应用类逐项匹配编译输出，默认资源内容与此前构建一致；未变动的嵌套任务／库存类型也已核对执行字节码。
+
+启动日志实际加载 67 个货币绑定。当前数据目录的历史覆盖文件包含 401 条记录，
+排期归属与仓库默认目录一致，启动前后文件哈希保持原值。
+HTTP 8088、UDP 22101、健康检查及日志检查通过，死锁、在线玩家及保存队列失败均为 0。
+普通秘境目录启动／重载为 116 条，独立参考目录重载为 266 条且开关仍关闭。
+
+Mongo 卷保持 `lunagc_mongo-data`，资源子模块和本地资源目录保持干净，
+均为提交 `dac2a9d43332ef51879522cf39da2831b0ca0543`。
+没有启动客户端，也没有更改真实玩家的活动余额；运行证据见同目录的 `runtime-currency-proof.json`、
+`runtime-start-proof.json` 与 `final-state.json`。
+
 ## 尚未完成的范围
 
 确认写入异常时，服务端保留尝试后的余额，不自动恢复旧值；同一活动文档在当前会话中停止后续收支和保存，
