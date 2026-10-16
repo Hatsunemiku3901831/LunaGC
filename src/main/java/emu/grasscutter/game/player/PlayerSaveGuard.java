@@ -103,17 +103,11 @@ public final class PlayerSaveGuard {
 
     public void save(Datastore datastore) {
         synchronized (player) {
-            if (uid != player.getUid())
-                throw new IllegalStateException("Player save identity changed");
-            if (destination != null && destination != datastore)
-                throw new IllegalStateException("Player save destination changed");
-            if (conflicted) throw conflict();
+            resolvePending(datastore);
             if (storage == null) {
                 destination = datastore;
                 storage = storageFactory.apply(datastore);
             }
-            if (confirmed != null) confirmed.validate();
-            if (pending != null) resolve();
             // Encode before publishing an attempt: an encoding failure has sent no write.
             var document = datastore.getMapper().toDocument(player);
             if (!(document.get("_id") instanceof Integer id) || id != uid)
@@ -126,11 +120,20 @@ public final class PlayerSaveGuard {
     }
 
     private Document filter(PlayerSaveStamp stamp) {
-        var result = new Document("_id", uid);
-        if (stamp == null)
-            return result.append("saveStamp", null); // Missing and explicit null legacy rows.
-        return result.append("saveStamp.revision", stamp.getRevision())
-                .append("saveStamp.token", stamp.getToken());
+        return PlayerSaveStamp.condition(uid, stamp);
+    }
+
+    /** Retire or recognize an uncertain write before a caller decides from stored business data. */
+    public void resolvePending(Datastore datastore) {
+        synchronized (player) {
+            if (uid != player.getUid())
+                throw new IllegalStateException("Player save identity changed");
+            if (destination != null && destination != datastore)
+                throw new IllegalStateException("Player save destination changed");
+            if (conflicted) throw conflict();
+            if (confirmed != null) confirmed.validate();
+            if (pending != null) resolve();
+        }
     }
 
     /** Resolve only our own write; never adopt the version of a foreign Player copy. */

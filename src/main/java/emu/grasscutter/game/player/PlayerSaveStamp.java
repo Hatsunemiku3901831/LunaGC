@@ -41,6 +41,17 @@ public final class PlayerSaveStamp {
         return new Document("revision", revision).append("token", token);
     }
 
+    /**
+     * Read or replace only the version belonging to this Player copy; null includes legacy rows.
+     */
+    public static Document condition(int uid, PlayerSaveStamp stamp) {
+        var result = new Document("_id", uid);
+        if (stamp == null) return result.append("saveStamp", null);
+        stamp.validate();
+        return result.append("saveStamp.revision", stamp.revision)
+                .append("saveStamp.token", stamp.token);
+    }
+
     static PlayerSaveStamp from(Document row) {
         Object value = row.get("saveStamp");
         if (value == null) return null;

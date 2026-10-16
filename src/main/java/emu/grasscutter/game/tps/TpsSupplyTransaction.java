@@ -1,9 +1,13 @@
 package emu.grasscutter.game.tps;
 
+import com.mongodb.ReadConcern;
+import com.mongodb.ReadPreference;
+
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.database.DatabaseManager;
 import emu.grasscutter.game.entity.EntityAvatar;
 import emu.grasscutter.game.player.Player;
+import emu.grasscutter.game.player.PlayerSaveStamp;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.TpsAmmunitionChangeNotifyOuterClass.*;
 import emu.grasscutter.utils.JsonUtils;
@@ -22,23 +26,29 @@ public final class TpsSupplyTransaction {
 
     private final Player player;
     private final Runnable save;
-    private final Supplier<Stored> read;
+    private final Function<Boolean, Stored> read;
     private final LongSupplier clock;
 
     public TpsSupplyTransaction(Player player) {
         this(
                 player,
                 player::saveTpsAmmunition,
-                () -> readStored(player),
+                current -> readStored(player, current),
                 System::currentTimeMillis);
     }
 
     public TpsSupplyTransaction(Player player, Runnable save) {
-        this(player, save, () -> readStored(player), System::currentTimeMillis);
+        this(player, save, current -> readStored(player, current), System::currentTimeMillis);
     }
 
     public TpsSupplyTransaction(
             Player player, Runnable save, Supplier<Stored> read, LongSupplier clock) {
+        this(player, save, current -> read.get(), clock);
+        Objects.requireNonNull(read);
+    }
+
+    private TpsSupplyTransaction(
+            Player player, Runnable save, Function<Boolean, Stored> read, LongSupplier clock) {
         this.player = Objects.requireNonNull(player);
         this.save = Objects.requireNonNull(save);
         this.read = Objects.requireNonNull(read);
@@ -137,7 +147,7 @@ public final class TpsSupplyTransaction {
         }
     }
 
-    private TpsSupplyReceipt checked(String id) {
+    private TpsSupplyReceipt validatePending(String id) {
         var receipt = player.getPendingTpsSupply();
         require(
                 receipt != null && Objects.equals(id, receipt.getOperationId()),
@@ -147,7 +157,12 @@ public final class TpsSupplyTransaction {
                 player.getTpsAmmunition()
                         .equals(receipt.getState() == 1 ? receipt.getBefore() : receipt.getAfter()),
                 "当前弹药与冻结阶段不符，停止恢复。");
-        var stored = read.get();
+        return receipt;
+    }
+
+    private TpsSupplyReceipt checked(String id, boolean current) {
+        var receipt = validatePending(id);
+        var stored = read.apply(current);
         require(stored != null && stored.uid() == player.getUid(), "玩家存档不存在或归属不符。");
         var disk = stored.receipt();
         if (disk != null) {
@@ -174,7 +189,7 @@ public final class TpsSupplyTransaction {
 
     public String audit(String id) {
         synchronized (player) {
-            var receipt = checked(id);
+            var receipt = checked(id, false);
             return "TPS 补给核对通过："
                     + receipt.getOperationId()
                     + "，阶段 "
@@ -185,7 +200,9 @@ public final class TpsSupplyTransaction {
 
     public String resume(String id) {
         synchronized (player) {
-            var receipt = checked(id);
+            validatePending(id);
+            player.resolvePendingSave();
+            var receipt = checked(id, true);
             finish(receipt);
             TpsWeaponSystem.sendSceneAmmunition(player);
             return "TPS 补给已完成：" + id + "。";
@@ -194,7 +211,9 @@ public final class TpsSupplyTransaction {
 
     public String cancel(String id) {
         synchronized (player) {
-            var receipt = checked(id);
+            validatePending(id);
+            player.resolvePendingSave();
+            var receipt = checked(id, true);
             require(receipt.getState() == 1, "弹药已进入完整结果阶段，不能取消，请 resume。");
             player.setPendingTpsSupply(null);
             try {
@@ -208,18 +227,24 @@ public final class TpsSupplyTransaction {
         }
     }
 
-    private static Stored readStored(Player player) {
+    private static Stored readStored(Player player, boolean current) {
+        var filter =
+                current
+                        ? PlayerSaveStamp.condition(player.getUid(), player.getSaveStamp())
+                        : new Document("_id", player.getUid());
         var raw =
                 DatabaseManager.getGameDatastore()
                         .getMapper()
                         .getCollection(Player.class)
                         .withDocumentClass(BsonDocument.class)
-                        .find(new BsonDocument("_id", new BsonInt32(player.getUid())))
+                        .withReadPreference(ReadPreference.primary())
+                        .withReadConcern(ReadConcern.MAJORITY)
+                        .find(filter)
                         .projection(
                                 new BsonDocument("tpsAmmunition", new BsonInt32(1))
                                         .append("pendingTpsSupply", new BsonInt32(1)))
                         .first();
-        require(raw != null, "玩家存档不存在。");
+        require(raw != null, "玩家存档不存在或版本已变化，请重新核对。");
         var amounts = new LinkedHashMap<Integer, Integer>();
         if (raw.containsKey("tpsAmmunition"))
             for (var entry : raw.getDocument("tpsAmmunition").entrySet()) {

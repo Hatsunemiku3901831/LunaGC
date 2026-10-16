@@ -9,6 +9,7 @@ import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.excels.PlayerLevelData;
 import emu.grasscutter.data.excels.world.WeatherData;
 import emu.grasscutter.database.DatabaseHelper;
+import emu.grasscutter.database.DatabaseManager;
 import emu.grasscutter.game.*;
 import emu.grasscutter.game.ability.AbilityManager;
 import emu.grasscutter.game.achievement.Achievements;
@@ -89,6 +90,10 @@ public class Player implements PlayerHook, FieldFetch {
 
     void setSaveStamp(PlayerSaveStamp stamp) {
         this.saveStamp = stamp;
+    }
+
+    public synchronized void resolvePendingSave() {
+        if (saveGuard != null) saveGuard.resolvePending(DatabaseManager.getGameDatastore());
     }
 
     @Indexed(options = @IndexOptions(unique = true))

@@ -2,9 +2,13 @@ package emu.grasscutter.game.tps;
 
 import static emu.grasscutter.game.tps.TpsReportReceipt.require;
 
+import com.mongodb.ReadConcern;
+import com.mongodb.ReadPreference;
+
 import emu.grasscutter.database.DatabaseManager;
 import emu.grasscutter.game.entity.EntityAvatar;
 import emu.grasscutter.game.player.Player;
+import emu.grasscutter.game.player.PlayerSaveStamp;
 import emu.grasscutter.net.proto.AbilityInvokeEntryOuterClass.AbilityInvokeEntry;
 import emu.grasscutter.utils.JsonUtils;
 
@@ -29,7 +33,7 @@ public final class TpsReportTransaction {
 
     private final Player player;
     private final Runnable save;
-    private final Supplier<Stored> read;
+    private final Function<Boolean, Stored> read;
     private final LongSupplier clock;
     private Attempt pending;
 
@@ -37,16 +41,22 @@ public final class TpsReportTransaction {
         this(
                 player,
                 player::saveTpsAmmunition,
-                () -> readStored(player),
+                current -> readStored(player, current),
                 System::currentTimeMillis);
     }
 
     public TpsReportTransaction(Player player, Runnable save) {
-        this(player, save, () -> readStored(player), System::currentTimeMillis);
+        this(player, save, current -> readStored(player, current), System::currentTimeMillis);
     }
 
     public TpsReportTransaction(
             Player player, Runnable save, Supplier<Stored> read, LongSupplier clock) {
+        this(player, save, current -> read.get(), clock);
+        Objects.requireNonNull(read);
+    }
+
+    private TpsReportTransaction(
+            Player player, Runnable save, Function<Boolean, Stored> read, LongSupplier clock) {
         this.player = Objects.requireNonNull(player);
         this.save = Objects.requireNonNull(save);
         this.read = Objects.requireNonNull(read);
@@ -99,7 +109,7 @@ public final class TpsReportTransaction {
         }
     }
 
-    private boolean checked(String id) {
+    private TpsReportReceipt validatePending(String id) {
         require(
                 pending != null && Objects.equals(pending.receipt.getOperationId(), id),
                 "TPS 上报操作 ID 不符或没有待处理记录。");
@@ -112,7 +122,12 @@ public final class TpsReportTransaction {
                         && player.getTpsAmmunition().equals(receipt.getAfter())
                         && player.getTpsMagazineAmmunition().equals(receipt.getMagazinesAfter()),
                 "当前 TPS 上报状态与冻结结果不同。");
-        var stored = read.get();
+        return receipt;
+    }
+
+    private boolean checked(String id, boolean current) {
+        var receipt = validatePending(id);
+        var stored = read.apply(current);
         require(stored != null && stored.uid() == player.getUid(), "TPS 上报存档归属不符。");
         if (stored.receipt() != null) stored.receipt().validate();
         if (stored.receipt() != null && stored.receipt().getOperationId().equals(id)) {
@@ -138,7 +153,7 @@ public final class TpsReportTransaction {
 
     public String audit(String id) {
         synchronized (player) {
-            return checked(id)
+            return checked(id, false)
                     ? "TPS 上报已完整写入；resume 可确认并同步当前数量。"
                     : "TPS 上报尚未写入；可 resume 原结果或 cancel。";
         }
@@ -146,7 +161,9 @@ public final class TpsReportTransaction {
 
     public String resume(String id) {
         synchronized (player) {
-            if (!checked(id)) save.run();
+            validatePending(id);
+            player.resolvePendingSave();
+            if (!checked(id, true)) save.run();
             pending = null;
             TpsWeaponSystem.sendRecoveredAmmunition(player);
             return "TPS 射击／换弹已确认：" + id + "。";
@@ -155,7 +172,9 @@ public final class TpsReportTransaction {
 
     public String cancel(String id) {
         synchronized (player) {
-            require(!checked(id), "TPS 上报已完整写入，不能取消，请 resume。");
+            validatePending(id);
+            player.resolvePendingSave();
+            require(!checked(id, true), "TPS 上报已完整写入，不能取消，请 resume。");
             var attempt = pending;
             var receipt = attempt.receipt;
             install(receipt.getBefore(), receipt.getMagazinesBefore(), attempt.previous);
@@ -171,19 +190,25 @@ public final class TpsReportTransaction {
         }
     }
 
-    private static Stored readStored(Player player) {
+    private static Stored readStored(Player player, boolean current) {
+        var filter =
+                current
+                        ? PlayerSaveStamp.condition(player.getUid(), player.getSaveStamp())
+                        : new Document("_id", player.getUid());
         var raw =
                 DatabaseManager.getGameDatastore()
                         .getMapper()
                         .getCollection(Player.class)
                         .withDocumentClass(BsonDocument.class)
-                        .find(new BsonDocument("_id", new BsonInt32(player.getUid())))
+                        .withReadPreference(ReadPreference.primary())
+                        .withReadConcern(ReadConcern.MAJORITY)
+                        .find(filter)
                         .projection(
                                 new BsonDocument("tpsAmmunition", new BsonInt32(1))
                                         .append("tpsMagazineAmmunition", new BsonInt32(1))
                                         .append("lastTpsReport", new BsonInt32(1)))
                         .first();
-        require(raw != null, "玩家存档不存在。");
+        require(raw != null, "玩家存档不存在或版本已变化，请重新核对。");
         var receipt =
                 raw.containsKey("lastTpsReport") && !raw.isNull("lastTpsReport")
                         ? JsonUtils.decode(
