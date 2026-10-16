@@ -38,6 +38,23 @@
 [玩家确认保存测试夹具适配](PLAYER_SAVE_FIXTURES_2026-10-16.md)。
 过程日志、XML、原生对照及构建产物保存在 `debug/aster-mid-20261011/batch317/`。
 
+## 本地运行
+
+功能提交 `33fbb019`、测试夹具提交 `5d4045e2` 已推送。
+2026-10-16 21:38（UTC+8）正常停止旧服务后，本地已使用验证过的
+`batch317/music-book-coins.jar`，没有重新构建替换产物。
+SHA-256：`59fa9662613c8cd778dde4e7548ee227e45eb199f4c7bff731771ac8c6b0192f`。
+
+Java 进程 `63448` 同时监听 HTTP `8088`、UDP `22101`；健康检查通过，
+死锁、在线玩家及队列待处理、活跃、未完成和失败数量均为零，启动日志无 ERROR／FATAL／异常。
+停止前确认无客户端、在线玩家或未完成任务，使用 GM 正常停服；本批未启动游戏。
+
+资源继续读取 `D:/Projects/Experiment/LunaGC-Resources`；外部检出与子模块均为干净的
+`dac2a9d43332ef51879522cf39da2831b0ca0543`。
+Mongo 保持原有 `lunagc_mongo-data` 卷。源码与构建输入逐字节一致，JAR 中项目类与编译目录一致；
+相对上一产物变动的 4 个已有类均属于 Inventory、其内部类和 PlayerProperty，没有新增或删除项目类。
+同批的 `verification.json`、`coin-native-proof.json` 和 `runtime-*-proof.json` 保存验证依据。
+
 ## 待接入
 
 本批提供货币收支基础，没有自动发放演奏奖励、扩大资源奖励或开放兑换目录。
