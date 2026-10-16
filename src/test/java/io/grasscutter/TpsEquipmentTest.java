@@ -449,12 +449,14 @@ class TpsEquipmentTest {
 
     @Test
     void tpsAbilitySnapshotKeepsRealRootParametersAndItsOwnServerGlobals() throws Exception {
-        try (var fixture = new AbilityTestFixture()) {
+        try (var fixture = new AbilityTestFixture(); var actions = new PausedAbilityActions()) {
             var gun = gunWithAbilitySnapshot(fixture);
+            actions.runPending();
             player.getTpsMagazineAmmunition().put(101, 9);
             var before = Map.copyOf(gun.getWeaponEntity().getGlobalAbilityValues());
             player.packets.clear();
             fixture.scene.packets.clear();
+            int queued = actions.queued();
             var proto = TpsWeaponSystem.getSceneWeaponInfos(currentAvatar().getAvatar()).get(0);
             var info = proto.getAbilityInfo();
             assertFalse(info.getIsInited());
@@ -476,8 +478,10 @@ class TpsEquipmentTest {
             assertEquals(9, proto.getAmmunitionList(0).getCurrentAmmunition());
             assertEquals(TpsWeaponSystem.getAffixLevels(gun), proto.getAffixMapMap());
             assertEquals(before, gun.getWeaponEntity().getGlobalAbilityValues());
+            assertEquals(queued, actions.queued(), "Reading a snapshot must not queue ability work");
             assertTrue(player.packets.isEmpty());
-            assertTrue(fixture.scene.packets.isEmpty());
+            assertTrue(fixture.scene.packets.isEmpty(), () -> fixture.scene.packets.stream()
+                    .map(p -> p.getClass().getSimpleName() + ":" + p.getOpcode()).toList().toString());
         }
     }
 
