@@ -17,7 +17,6 @@ import emu.grasscutter.net.proto.AbilityStringOuterClass;
 import emu.grasscutter.net.proto.AbilityStringOuterClass.AbilityString;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.game.world.*;
-import emu.grasscutter.net.proto.AbilitySyncStateInfoOuterClass.AbilitySyncStateInfo;
 import emu.grasscutter.net.proto.AnimatorParameterValueInfoPairOuterClass.AnimatorParameterValueInfoPair;
 import emu.grasscutter.net.proto.EntityAuthorityInfoOuterClass.EntityAuthorityInfo;
 import emu.grasscutter.net.proto.EntityRendererChangedInfoOuterClass.EntityRendererChangedInfo;
@@ -104,7 +103,7 @@ public class EntityVehicle extends EntityBaseGadget {
 
         EntityAuthorityInfo authority =
                 EntityAuthorityInfo.newBuilder()
-                        .setAbilityInfo(AbilitySyncStateInfo.newBuilder())
+                        .setAbilityInfo(getAbilityRoots().toSyncState())
                         .setRendererChangedInfo(EntityRendererChangedInfo.newBuilder())
                         .setAiInfo(
                                 SceneEntityAiInfo.newBuilder()

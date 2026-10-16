@@ -5,7 +5,6 @@ import emu.grasscutter.game.inventory.GameItem;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.game.world.*;
-import emu.grasscutter.net.proto.AbilitySyncStateInfoOuterClass.AbilitySyncStateInfo;
 import emu.grasscutter.net.proto.AnimatorParameterValueInfoPairOuterClass.AnimatorParameterValueInfoPair;
 import emu.grasscutter.net.proto.EntityAuthorityInfoOuterClass.EntityAuthorityInfo;
 import emu.grasscutter.net.proto.EntityClientDataOuterClass.EntityClientData;
@@ -130,7 +129,7 @@ public class EntityItem extends EntityBaseGadget {
     public SceneEntityInfo toProto() {
         EntityAuthorityInfo authority =
                 EntityAuthorityInfo.newBuilder()
-                        .setAbilityInfo(AbilitySyncStateInfo.newBuilder())
+                        .setAbilityInfo(getAbilityRoots().toSyncState())
                         .setRendererChangedInfo(EntityRendererChangedInfo.newBuilder())
                         .setAiInfo(
                                 SceneEntityAiInfo.newBuilder().setIsAiOpen(true))

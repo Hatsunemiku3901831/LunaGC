@@ -468,7 +468,7 @@ public class EntityMonster extends GameEntity {
 
         var authority =
                 EntityAuthorityInfo.newBuilder()
-                        .setAbilityInfo(AbilitySyncStateInfo.newBuilder())
+                        .setAbilityInfo(getAbilityRoots().toSyncState())
                         .setRendererChangedInfo(EntityRendererChangedInfo.newBuilder())
                         .setAiInfo(aiInfo)
                         .setBornPos(this.getBornPos().toProto())
@@ -524,7 +524,10 @@ public class EntityMonster extends GameEntity {
                     SceneWeaponInfo.newBuilder()
                             .setEntityId(this.getWeaponEntity() != null ? this.getWeaponEntity().getId() : 0)
                             .setGadgetId(this.getMonsterWeaponId())
-                            .setAbilityInfo(AbilitySyncStateInfo.newBuilder())
+                            .setAbilityInfo(
+                                    getWeaponEntity() == null
+                                            ? AbilitySyncStateInfo.getDefaultInstance()
+                                            : getWeaponEntity().getAbilityRoots().toSyncState())
                             .build();
 
             monsterInfo.addWeaponList(weaponInfo);

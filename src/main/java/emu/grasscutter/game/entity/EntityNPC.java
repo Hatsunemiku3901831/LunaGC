@@ -51,7 +51,7 @@ public class EntityNPC extends GameEntity {
 
         EntityAuthorityInfoOuterClass.EntityAuthorityInfo authority =
                 EntityAuthorityInfoOuterClass.EntityAuthorityInfo.newBuilder()
-                        .setAbilityInfo(AbilitySyncStateInfoOuterClass.AbilitySyncStateInfo.newBuilder())
+                        .setAbilityInfo(getAbilityRoots().toSyncState())
                         .setRendererChangedInfo(
                                 EntityRendererChangedInfoOuterClass.EntityRendererChangedInfo.newBuilder())
                         .setAiInfo(
