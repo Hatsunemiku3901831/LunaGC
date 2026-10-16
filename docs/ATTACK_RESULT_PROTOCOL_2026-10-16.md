@@ -55,7 +55,21 @@
 `business-red-results/` 为初始失败，`focused-results/` 为专项，`final-results/` 与 `final.log` 为最终相关回归和构建。
 完整原生字段映射、解析分支、类型布局、发送端片段和输入哈希见同目录 `native-verification.json` 等文件。
 
-## 剩余范围
+## 本机运行
+
+功能提交 `d75dd9f3db26d7144da71f9ee084fc0d3d77233e` 已推送至 `origin/main`。
+2026-10-16 18:42（UTC+8），上述构建已在本机启动，进程 59128 同时监听
+TCP 8088 与 UDP 22101。健康检查通过，死锁、在线玩家和未结束的队列任务均为 0，
+启动日志未发现 ERROR 或异常退出标记。
+
+切换前确认游戏关闭与服务空闲，通过 GM `stop` 正常停止旧进程 20500。
+启动显式合并 `.env`／`.env.local`，继续使用外部资源目录
+`D:\Projects\Experiment\LunaGC-Resources` 和 Mongo 数据卷 `lunagc_mongo-data`。
+停止、启动输入、端口与健康核对保存在同目录 `runtime-stop-proof.json`、
+`runtime-launch-inputs.json`、`runtime-start-proof.json` 与 `runtime-after-start/`。
+这些记录确认服务切换，玩法和客户端验收仍按下面范围继续推进。
+
+## 后续范围
 
 完整逐次元素耐久结算、攻击标签和其余字段的实际业务含义、热修复分支、其他战斗消息，
 以及采矿、角色技能、受击效果和多人战斗的客户端验收仍需继续推进。
