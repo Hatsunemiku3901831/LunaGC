@@ -412,6 +412,11 @@ public abstract class GameEntity {
                 ChangeHpReason.ChangeHpReason_CHANGE_HP_SUB_ABILITY, respectLockHp);
     }
 
+    /** Some scene objects complete through interaction or material callbacks instead of HP loss. */
+    protected boolean blocksDirectHpLoss() {
+        return false;
+    }
+
     private void damage(float amount, int killerId, ElementType attackType,
             PropChangeReason propChangeReason, ChangeHpReason changeHpReason, boolean respectLockHp) {
 
@@ -435,14 +440,15 @@ public abstract class GameEntity {
             return;
         }
 
-        if (requestedDamage > 0) {
+        boolean protectedHp = blocksDirectHpLoss();
+        if (requestedDamage > 0 && !protectedHp) {
             abilityHealthEvents.prepareDamage();
             combatState = AbilityCombatState.read(this);
         }
 
         float effectiveDamage = 0;
         float curHp = getFightProperty(FightProperty.FIGHT_PROP_CUR_HP);
-        if (combatState.lockHp() && respectLockHp) {
+        if (protectedHp || combatState.lockHp() && respectLockHp) {
             // Modifier shields also block lethal damage, independently of a gadget's base HP lock.
         } else if (limbo || combatState.limbo()) {
             float maxHp = getFightProperty(FightProperty.FIGHT_PROP_MAX_HP);

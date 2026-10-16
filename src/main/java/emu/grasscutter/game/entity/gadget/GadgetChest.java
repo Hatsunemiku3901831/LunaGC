@@ -30,6 +30,9 @@ public class GadgetChest extends GadgetContent {
      */
     public synchronized boolean onInteract(Player player, GadgetInteractReq req) {
         if (interacting || normalOpened) return false;
+        int state = getGadget().getState();
+        if (state == ScriptGadgetState.ChestBramble || state == ScriptGadgetState.ChestFrozen
+                || state == ScriptGadgetState.ChestRock) return false;
         interacting = true;
         try {
             return interact(player, req);

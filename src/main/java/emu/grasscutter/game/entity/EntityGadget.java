@@ -382,6 +382,12 @@ public class EntityGadget extends EntityBaseGadget {
         }
     }
 
+    @Override
+    protected boolean blocksDirectHpLoss() {
+        return content instanceof GadgetChest
+                || gadgetData != null && gadgetData.getType() == EntityType.Chest;
+    }
+
     public void updateState(int state) {
         if (state == this.getState()) return; // Don't triggers events
 

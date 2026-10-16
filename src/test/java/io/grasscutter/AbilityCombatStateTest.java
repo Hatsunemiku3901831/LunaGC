@@ -69,7 +69,8 @@ class AbilityCombatStateTest {
                         .setParentAbilityName(AbilityString.newBuilder().setStr(ability.getData().abilityName))
                         .setModifierLocalId(
                                 new ArrayList<>(ability.getData().modifiers.keySet()).indexOf(name));
-        invoke(entityId, modifierId, change.build().toByteString(), fixture.entity.getId());
+        invoke(entityId, modifierId, change.build().toByteString(), fixture.entity.getId(),
+                fixture.entity.getInstancedAbilities().indexOf(ability) + 1);
     }
 
     private void remove(int entityId, int modifierId) throws Exception {
@@ -80,10 +81,10 @@ class AbilityCombatStateTest {
                         .setAction(ModifierAction.MODIFIER_ACTION_REMOVED)
                         .build()
                         .toByteString(),
-                0);
+                0, 0);
     }
 
-    private void invoke(int entityId, int modifierId, ByteString data, int sourceId)
+    private void invoke(int entityId, int modifierId, ByteString data, int sourceId, int rootId)
             throws Exception {
         fixture
                 .player
@@ -96,7 +97,7 @@ class AbilityCombatStateTest {
                                 .setHead(
                                         AbilityInvokeEntryHead.newBuilder()
                                                 .setInstancedModifierId(modifierId)
-                                                .setInstancedAbilityId(1)
+                                                .setInstancedAbilityId(rootId)
                                                 .setTargetId(sourceId))
                                 .setAbilityData(data)
                                 .build());

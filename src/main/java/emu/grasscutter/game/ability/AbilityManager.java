@@ -1296,6 +1296,7 @@ public final class AbilityManager extends BasePlayerManager {
             }
             if (modifier != null) {
                 var removed = modifier;
+                EnvironmentalMaterialCallbacks.removed(removed, entity, invoke.getAbilityData());
                 if (!removed.hasServerCallbacks() && !removed.hasBindingCallbacks() && !removed.hasAnimationCallbacks()
                         && removed.getModifierData().onRemoved != null) {
                     // This resource's pickup awards on removal. Keep it outside the separate

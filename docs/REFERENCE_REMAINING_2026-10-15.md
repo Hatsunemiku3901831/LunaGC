@@ -51,6 +51,7 @@
 | 温迪客户端技能对象 | [四类对象去重、共用归属与旧副本清理、独立效果共存及批量回调消失包](VENTI_CLIENT_SKILL_OBJECTS_2026-10-16.md) |
 | 道具生成方与复苏棱晶 | [byServer 优先级、多实例、标记保护、六类无相的位置标记及真实棱晶配置](SERVER_GADGET_CREATION_2026-10-16.md) |
 | 道具主人存活期 | [实际主人、死亡／复活代次、离场、后台队伍及实体编号复用保护](GADGET_OWNER_LIFETIME_2026-10-16.md) |
+| 环境材质结束回调 | [三类封印宝箱、两类荆棘墙、原始 Lua、宝箱受击保护及完整开箱调用](ENVIRONMENTAL_MATERIALS_2026-10-16.md) |
 | Windows 服务启动 | [JDK Selector 临时目录、带空格路径、真实 Java 启动及 HTTP／UDP 状态区分](WINDOWS_JAVA_STARTUP_2026-10-16.md) |
 | 最近有效锚点复活 | [当前点位类型、任务锁定、最近目的地、原地回退、坐标快照及请求响应归属](WORLD_RESPAWN_POINTS_2026-10-16.md) |
 | 全队倒下的任务失败 | [真实任务失败、复活顺序、并发去重和数据库保存](TEAM_WIPE_QUEST_FAILURE_2026-10-15.md) |
@@ -153,6 +154,7 @@ HunkyMeow 的大世界持久建造已在本地接入，并修正非持久模式�
 - TPS 箱子的 WidgetMpSupportMixin 交互归属，以及 AttachToGadgetStateMixin、ChangeGadgetState 和 EnableGadgetIntee 状态链仍有缺口。当前资源分别有 9,686／2,300／422 个后三类节点，这些是配置数量。已确认 ChangeGadgetState 原生入口和候选 Mixin 工厂转交 ILFix；完整行为需要实际热修复代码，不能仅靠字段名推定。字段、资源统计及原生记录见 `debug/aster-mid-20261011/batch272/`。
 - 千音雅集入口与目录兼容、圣言自明机的官服版本日历和客户端验收；萃取、定向制作、重塑及其按操作 ID 的异常核对／恢复、最低强化次数约束和伴随快照已接入，旧记录缺少关键付款快照时仍保留待核对，当前参考千音入口仅返回空目录。
 - Rerir 整场战斗及其他角色的剩余控制条件。
+- 环境宝箱与荆棘墙的实际元素命中、逐步耐久、燃烧及解封动画；五组资源的结束确认、原始 Lua／销毁、宝箱受击保护与解封后开箱已有[服务端验证](ENVIRONMENTAL_MATERIALS_2026-10-16.md)，其他材质及完整服务端元素盾结算继续核对。
 - 无相系列的完整元素盾、核心暴露／复苏结算及实机验收；护盾条的[破盾子动作入口](SHIELD_BREAK_CALLBACKS_2026-10-16.md)已接入，107 数值同步与 16 耐久变化的[当前字段已核对](ABILITY_DURABILITY_PROTOCOL_2026-10-16.md)，普通实例已有[实时内存记录、来源隔离和生命周期清理](ABILITY_DURABILITY_STATE_2026-10-16.md)，正常根能力已有[原始条目保存与角色／武器覆盖参数恢复](ABILITY_ROOT_SNAPSHOTS_2026-10-16.md)。完整修饰器存续时间／耐久、serverbuff／server 实例表、mixin、其他实体的完整恢复包、热修复分支及客户端恢复仍需接入。道具生成方与复苏多实例已有[资源和服务端验证](SERVER_GADGET_CREATION_2026-10-16.md)，明确的 `lifeByOwnerIsAlive` 已接入[主人存活期联动](GADGET_OWNER_LIFETIME_2026-10-16.md)，`lifeByOwnerV2` 等字段仍需配对。
 - UGC 节点运行、发布及结算；文件生成／转换工具不提供完整游戏网络服务。
 - 随行道具的实机外观、斯露莎等附加操控及任务玩法、营养袋快捷食用与重连倒计时的实机验收、特殊食物的其余玩法、角色效果完整恢复及其余物品事务，以及其余快速小道具的效果／探测器／便携锚点；普通库存的即时／持续恢复、复活、400102 嵌套恢复、108102 角色条件、先确认食物扣除、明确失败退款、部分效果保存、故障记录的库存成本核对／退款与明确接受消耗、共享冷却及当前倒计时通知已有服务端验证，营养袋原生恢复／复活路径已与 UseItemReq 配对，尘歌壶／烟花筒的资源放置、回收、冷却与联机归属已接入，完整客户端交互仍待验收。
@@ -168,7 +170,7 @@ HunkyMeow 的大世界持久建造已在本地接入，并修正非持久模式�
 
 | 参考入口 | 本地核对路径与所需证据 |
 | --- | --- |
-| `EnvironmentalSealHelper.tryProcessAttack`，由 EntityGadget、EntityBaseGadget 和 OreMiningHelper 调用 | 核对 `ChestBramble`／`ChestFrozen`／`ChestRock`、当前资源的元素与耐久、实际伤害入口、Lua 状态事件及解封后开箱；参考的缺少元素也作为火元素、固定 600 血量等补偿值需要单独审查 |
+| `EnvironmentalSealHelper.tryProcessAttack`，由 EntityGadget、EntityBaseGadget 和 OreMiningHelper 调用 | 五组资源的结束回调、原始 Lua／销毁、宝箱受击保护及解封后开箱已接入，见[验证记录](ENVIRONMENTAL_MATERIALS_2026-10-16.md)；真实元素耐久消耗与燃烧动画、其余材质继续核对，参考中的补偿数值单独记录 |
 | `DomainContinueSpawnHelper` 与 `DomainChallengeKeyHelper` | 当前 `DungeonRestartGuard` 只证明重试资格。继续比较重试／首次进场落点、朝向、实际机关编号、选项隐藏与刷新；需要真实秘境元数据及完整进出场用例 |
 | `LaumaC1HealHelper` | 本地已存在通用反应回调、ApplyModifier 与 HealHP 路径；需以 `Avatar_Lauma_Constellation_1` 的真实资源验证范围、精通来源、反应确认、1.9 秒间隔及 20 秒监听窗口，分别比较参考的技能开始／GV 补偿和原资源行为，避免重复治疗 |
 
