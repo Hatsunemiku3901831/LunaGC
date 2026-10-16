@@ -155,8 +155,8 @@ HunkyMeow 的大世界持久建造已在本地接入，并修正非持久模式�
 
 ## 其他仍需完成的范围
 
-2026-10-16 12:47（UTC+8），累计至提交 `a9f9388b` 的构建已在本机启动：
-`debug/aster-mid-20261011/batch303/playteam-ability-state.jar`，HTTP／UDP 由同一新进程监听，
+2026-10-16 13:35（UTC+8），累计至提交 `b588d12f` 的构建已在本机启动：
+`debug/aster-mid-20261011/batch304/tps-report-commit.jar`，HTTP／UDP 由同一新进程监听，
 健康检查通过，原 Mongo 数据卷保留。资源更新至 `dac2a9d43`，包含 20 个秘境的区块引用修复。
 此项确认服务切换；下列客户端和玩法适配范围仍然保留。
 

@@ -74,8 +74,21 @@ JAR 路径与 SHA-256 已核对，证据为同目录的 `runtime-stop-proof.json
 
 ## 后续边界
 
-客户端重连／重新入场需要的 `AbilitySyncStateInfo` 尚未重建：
-完整父能力列表、未识别能力的原始条目、修饰器存续时间、其他来源的实例表和 mixin 恢复数据仍需补齐。
+后续已经接入[正常根能力原始条目与覆盖参数](ABILITY_ROOT_SNAPSHOTS_2026-10-16.md)、
+[普通实体](SCENE_ENTITY_ABILITY_STATE_2026-10-16.md)和[活动载体](PLAY_TEAM_ENTITIES_2026-10-11.md)的参数重发。
+完整 `AbilitySyncStateInfo` 仍未启用：修饰器存续时间、其他来源的实例表和 mixin 恢复数据仍需补齐。
 消息 16 的第二个浮点数仍保留原生名称，没有将其当作快照的 `reduce_ratio`。
 本次没有发送不完整的初始化快照，也没有增加盾伤害公式、核心复苏结算或跨重启恢复。
 实机恢复和完整无相战斗仍未验收。
+
+## 快照生成侧补充调查（2026-10-16）
+
+在同一固定客户端的可执行区段中追踪 AppliedModifier 类缓存 `0x1457ec758` 和
+ModifierDurability 类缓存 `0x145800d00`，得到七组去重后的函数／缓存组合，分布在六个函数。
+当前取得的直接引用对应协议读取、克隆、复制及类型／序列化静态注册，没有取得实际快照生成代码。
+结果、带标签反汇编与只读脚本在 `debug/aster-mid-20261011/batch304/` 的
+`modifier-snapshot-users.json`、`native-*.asm` 和 `find-modifier-snapshot-users.py`。
+
+扫描限定于 RIP 相对 MOV／CMP 形式，并按 PE 函数区间和实际指令复核；
+它不覆盖所有间接分配或加载形式，不能据此断言生成端不存在。
+完整修饰器恢复仍需继续追踪实际热修复流，存续时长和快照耐久比例没有按名称推定。
