@@ -89,4 +89,80 @@ class MusicGameBookModCatalogTest {
                 IllegalStateException.class,
                 () -> MusicGameBookModCatalog.load(directory.resolve("missing.json")));
     }
+
+    void categories(String json) throws Exception {
+        Files.writeString(directory.resolve("MusicGameBookModGroupExcelConfigData.json"), json);
+    }
+
+    @Test
+    void theCurrentLowerDifficultyCategoryDisablesOnlyItsOfficialScores() {
+        var catalog =
+                MusicGameBookModCatalog.load(
+                        Path.of("resources/ExcelBinOutput/MusicGameBookModExcelConfigData.json"));
+        assertTrue(catalog.recordsOfficialScore(List.of()));
+        assertFalse(catalog.recordsOfficialScore(List.of(1)));
+        assertFalse(catalog.recordsOfficialScore(List.of(1, 3, 4)));
+        assertTrue(catalog.recordsOfficialScore(List.of(2, 3, 4)));
+    }
+
+    @Test
+    void categoryMembershipDeterminesTheRuleWithoutHardcodingAModOrCategoryId() throws Exception {
+        var catalog = load("[{id:11},{id:12},{id:13}]");
+        categories(
+                "[{id:41,nameTextMapHash:1759822631,GHLEGPMMNEG:[11,12]},"
+                        + "{id:42,nameTextMapHash:889317207,GHLEGPMMNEG:[13]}]");
+        assertFalse(catalog.recordsOfficialScore(List.of(11)));
+        assertFalse(catalog.recordsOfficialScore(List.of(12, 13)));
+        assertTrue(catalog.recordsOfficialScore(List.of(13)));
+    }
+
+    @Test
+    void newRunsReadTheCurrentCategoryMembership() throws Exception {
+        var catalog = load("[{id:11},{id:12}]");
+        categories(
+                "[{id:1,nameTextMapHash:1759822631,GHLEGPMMNEG:[11]},"
+                        + "{id:2,nameTextMapHash:889317207,GHLEGPMMNEG:[12]}]");
+        assertFalse(catalog.recordsOfficialScore(List.of(11)));
+        categories(
+                "[{id:1,nameTextMapHash:1759822631,GHLEGPMMNEG:[12]},"
+                        + "{id:2,nameTextMapHash:889317207,GHLEGPMMNEG:[11]}]");
+        assertTrue(catalog.recordsOfficialScore(List.of(11)));
+        assertFalse(catalog.recordsOfficialScore(List.of(12)));
+    }
+
+    @ParameterizedTest
+    @ValueSource(
+            strings = {
+                "[]",
+                "{}",
+                "[{}]",
+                "[{id:1,nameTextMapHash:889317207,GHLEGPMMNEG:[1,2]}]",
+                "[{id:1,nameTextMapHash:1759822631,GHLEGPMMNEG:[1]}]",
+                "[{id:1,nameTextMapHash:1759822631,GHLEGPMMNEG:[1,2,99]}]",
+                "[{id:1,nameTextMapHash:1759822631,GHLEGPMMNEG:[1,1,2]}]",
+                "[{id:1,nameTextMapHash:1759822631,GHLEGPMMNEG:[]},{id:2,nameTextMapHash:889317207,GHLEGPMMNEG:[1,2]}]",
+                "[{id:1,nameTextMapHash:1759822631,GHLEGPMMNEG:[1]},{id:1,nameTextMapHash:889317207,GHLEGPMMNEG:[2]}]",
+                "[{id:1,nameTextMapHash:1759822631,GHLEGPMMNEG:[1]},{id:2,nameTextMapHash:1759822631,GHLEGPMMNEG:[2]}]",
+                "[{id:1,nameTextMapHash:1759822631,GHLEGPMMNEG:[1,2]},{id:2,nameTextMapHash:889317207,GHLEGPMMNEG:[2]}]",
+                "[{id:0,nameTextMapHash:1759822631,GHLEGPMMNEG:[1,2]}]",
+                "[{id:1.5,nameTextMapHash:1759822631,GHLEGPMMNEG:[1,2]}]",
+                "[{id:1,nameTextMapHash:4294967296,GHLEGPMMNEG:[1,2]}]",
+                "[{id:1,nameTextMapHash:null,GHLEGPMMNEG:[1,2]}]",
+                "[{id:1,nameTextMapHash:1759822631,GHLEGPMMNEG:null}]"
+            })
+    void ambiguousMissingAndInvalidCategoriesCannotAdmitAModdedRecord(String json)
+            throws Exception {
+        var catalog = load("[{id:1},{id:2}]");
+        categories(json);
+        assertThrows(IllegalStateException.class, () -> catalog.recordsOfficialScore(List.of(1)));
+    }
+
+    @Test
+    void selectedModsRequireACategoryExportButEmptyChoicesDoNot() throws Exception {
+        var catalog = load("[{id:1}]");
+        assertTrue(catalog.recordsOfficialScore(List.of()));
+        assertThrows(IllegalStateException.class, () -> catalog.recordsOfficialScore(List.of(1)));
+        assertThrows(
+                IllegalArgumentException.class, () -> catalog.recordsOfficialScore(List.of(2)));
+    }
 }

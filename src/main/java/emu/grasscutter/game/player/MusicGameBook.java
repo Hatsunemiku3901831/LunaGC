@@ -29,6 +29,7 @@ public final class MusicGameBook {
     private final Set<Integer> pendingThemes = new TreeSet<>();
     private MusicGameBookCatalog.Beatmap activePerformance;
     private MusicGameBookCatalog activeCatalog;
+    private boolean activeRecordsScore;
     private byte[] completedRequest;
     private MusicGameBookSettleRsp completedResult;
     private PendingPerformance pendingPerformance;
@@ -230,6 +231,7 @@ public final class MusicGameBook {
         completedResult = confirmed.result();
         activePerformance = null;
         activeCatalog = null;
+        activeRecordsScore = false;
         pendingPerformance = null;
         if (!confirmed.rewards().isEmpty()) {
             try {
@@ -280,8 +282,14 @@ public final class MusicGameBook {
                 confirmSettings();
                 confirmMods();
                 confirmPerformance();
+                var mods = player.getMusicGameBookMods();
+                boolean recordsScore =
+                        map.guide()
+                                || MusicGameBookModCatalog.current()
+                                        .recordsOfficialScore(mods == null ? List.of() : mods);
                 activePerformance = map;
                 activeCatalog = catalog;
+                activeRecordsScore = recordsScore;
                 completedRequest = null;
                 completedResult = null;
                 return result.build();
@@ -335,9 +343,11 @@ public final class MusicGameBook {
                         var saved = player.getMusicGameBookRecords();
                         var old = saved == null ? null : saved.get(activePerformance.id());
                         int previous = old == null ? 0 : old.getMaximumScore();
+                        int recordedScore = activeRecordsScore ? (int) score : 0;
                         boolean fullCombo =
-                                request.getFJDDGBILJCF() == 1 || old != null && old.isFullCombo();
-                        result.setPHKLGIKKAMA(score > previous);
+                                activeRecordsScore && request.getFJDDGBILJCF() == 1
+                                        || old != null && old.isFullCombo();
+                        result.setPHKLGIKKAMA(recordedScore > previous);
                         // Native completion reason 1 is an ordinary single-player finish.
                         // The other list and booleans are telemetry/settings, not eligibility.
                         var targets =
@@ -364,7 +374,7 @@ public final class MusicGameBook {
                                 throw new IllegalStateException("Negative music reward balance");
                             balances.put(property, Math.addExact(before, item.getValue()));
                         }
-                        if (score > previous
+                        if (recordedScore > previous
                                 || fullCombo && (old == null || !old.isFullCombo())
                                 || !targets.isEmpty()) {
                             var next =
@@ -374,7 +384,7 @@ public final class MusicGameBook {
                             next.put(
                                     activePerformance.id(),
                                     new MusicGameBookRecordData(
-                                            Math.max((int) score, previous),
+                                            Math.max(recordedScore, previous),
                                             fullCombo,
                                             old != null && old.isNormalCompleted()));
                             for (var map : targets) {
@@ -402,6 +412,7 @@ public final class MusicGameBook {
                 completedResult = result.build();
                 activePerformance = null;
                 activeCatalog = null;
+                activeRecordsScore = false;
                 try {
                     sendData(MusicGameBookThemeCatalog.current());
                 } catch (RuntimeException disconnected) {

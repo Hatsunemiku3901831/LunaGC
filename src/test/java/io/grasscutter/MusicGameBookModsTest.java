@@ -13,6 +13,7 @@ import emu.grasscutter.game.player.*;
 import emu.grasscutter.game.props.PlayerProperty;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.MusicGameBookAllDataNotifyOuterClass.MusicGameBookAllDataNotify;
+import emu.grasscutter.net.proto.MusicGameBookRecordOuterClass.MusicGameBookRecord;
 import emu.grasscutter.net.proto.MusicGameBookSaveModsReqOuterClass.MusicGameBookSaveModsReq;
 import emu.grasscutter.net.proto.MusicGameBookSaveModsRspOuterClass.MusicGameBookSaveModsRsp;
 import emu.grasscutter.net.proto.MusicGameBookSaveSettingsReqOuterClass.MusicGameBookSaveSettingsReq;
@@ -523,5 +524,226 @@ class MusicGameBookModsTest extends QuestTestFixture {
                 20,
                 loaded.getProperties()
                         .get(PlayerProperty.PROP_PLAYER_MUSIC_GAME_BOOK_COIN.getId()));
+    }
+
+    void begin(int id) {
+        assertEquals(
+                0,
+                actual.getMusicGameBook()
+                        .startPerformance(
+                                MusicGameBookStartReq.newBuilder().setIHPMDKPGJLB(id).build())
+                        .getRetcode());
+    }
+
+    MusicGameBookSettleReq performance(int id, int score, boolean fullCombo) {
+        int count = MusicGameBookCatalog.current().beatmap(id).noteCount();
+        return MusicGameBookSettleReq.newBuilder()
+                .setIHPMDKPGJLB(id)
+                .setCAEKFNKKEPG(score)
+                .setFNCOKHKCDDG(true)
+                .setLKIMDBMGKEM(1)
+                .setFJDDGBILJCF(fullCombo ? 1 : 0)
+                .addAllKBBAMIPLHEJ(List.of(count - (fullCombo ? 0 : 1), 0, fullCombo ? 0 : 1))
+                .build();
+    }
+
+    MusicGameBookRecord record(Player target, int id) throws Exception {
+        return snapshot(target).getPAEINCPKPHHList().stream()
+                .filter(row -> row.getIHPMDKPGJLB() == id)
+                .findFirst()
+                .orElse(MusicGameBookRecord.getDefaultInstance());
+    }
+
+    @Test
+    void easyOfficialPerformancesDoNotStoreScoresOrFullCombo() throws Exception {
+        stockBook();
+        save(1, 3, 4);
+        begin(1);
+        var result =
+                actual.getMusicGameBook()
+                        .settlePerformance(
+                                performance(
+                                        1,
+                                        MusicGameBookCatalog.current().beatmap(1).maximumScore(),
+                                        true));
+        assertEquals(0, result.getRetcode());
+        assertFalse(result.getPHKLGIKKAMA(), "Lower-difficulty official scores are not recorded");
+        assertEquals(0, record(cold(), 1).getMCPDKDGGBDD());
+        assertFalse(
+                document()
+                        .get("musicGameBookRecords", Document.class)
+                        .get("1", Document.class)
+                        .getBoolean("fullCombo", false));
+    }
+
+    @Test
+    void anEasyRunCannotReplaceAnEarlierOfficialRecordOrItsFullCombo() throws Exception {
+        stockBook();
+        int maximum = MusicGameBookCatalog.current().beatmap(1).maximumScore();
+        int previous = (maximum + 1) / 2;
+        begin(1);
+        assertTrue(
+                actual.getMusicGameBook()
+                        .settlePerformance(performance(1, previous, false))
+                        .getPHKLGIKKAMA());
+        save(1);
+        var before = document();
+        begin(1);
+        var result = actual.getMusicGameBook().settlePerformance(performance(1, maximum, true));
+        assertEquals(0, result.getRetcode());
+        assertFalse(result.getPHKLGIKKAMA());
+        assertEquals(before, document());
+        assertEquals(previous, record(cold(), 1).getMCPDKDGGBDD());
+        assertFalse(
+                document()
+                        .get("musicGameBookRecords", Document.class)
+                        .get("1", Document.class)
+                        .getBoolean("fullCombo", false));
+    }
+
+    static Stream<List<Integer>> harderSelections() {
+        return Stream.of(List.of(2), List.of(3), List.of(4), List.of(2, 3, 4));
+    }
+
+    @ParameterizedTest
+    @MethodSource("harderSelections")
+    void harderModsRetainOfficialScoresAndFullCombo(List<Integer> mods) throws Exception {
+        stockBook();
+        save(MusicGameBookSaveModsReq.newBuilder().addAllJNJDOLEBBOO(mods).build());
+        begin(1);
+        int maximum = MusicGameBookCatalog.current().beatmap(1).maximumScore();
+        var result = actual.getMusicGameBook().settlePerformance(performance(1, maximum, true));
+        assertEquals(0, result.getRetcode());
+        assertTrue(result.getPHKLGIKKAMA());
+        assertEquals(maximum, record(cold(), 1).getMCPDKDGGBDD());
+        assertTrue(
+                document()
+                        .get("musicGameBookRecords", Document.class)
+                        .get("1", Document.class)
+                        .getBoolean("fullCombo"));
+    }
+
+    @Test
+    void guideBeatmapsIgnoreModsThatTheClientDoesNotActivate() throws Exception {
+        stockBook();
+        save(1);
+        beginGuide();
+        var result = actual.getMusicGameBook().settlePerformance(guide());
+        assertEquals(0, result.getRetcode());
+        assertTrue(result.getPHKLGIKKAMA());
+        var loaded = cold();
+        assertEquals(
+                MusicGameBookCatalog.current().beatmap(9991).maximumScore(),
+                record(loaded, 9991).getMCPDKDGGBDD());
+        assertEquals(20, loaded.getProperties().get(PlayerProperty.PROP_PLAYER_HCOIN.getId()));
+    }
+
+    @Test
+    void clearingTheNextSelectionCannotTurnAnEasyActiveRunIntoAnOfficialRecord() throws Exception {
+        stockBook();
+        save(1);
+        begin(1);
+        save();
+        int maximum = MusicGameBookCatalog.current().beatmap(1).maximumScore();
+        assertFalse(
+                actual.getMusicGameBook()
+                        .settlePerformance(performance(1, maximum, true))
+                        .getPHKLGIKKAMA());
+        assertEquals(0, record(cold(), 1).getMCPDKDGGBDD());
+        begin(1);
+        assertTrue(
+                actual.getMusicGameBook()
+                        .settlePerformance(performance(1, maximum, true))
+                        .getPHKLGIKKAMA());
+        assertEquals(maximum, record(cold(), 1).getMCPDKDGGBDD());
+    }
+
+    @Test
+    void changingFutureModsDoesNotDiscardTheCurrentlyAdmittedOrdinaryScore() throws Exception {
+        stockBook();
+        begin(1);
+        save(1);
+        int maximum = MusicGameBookCatalog.current().beatmap(1).maximumScore();
+        int previous = (maximum + 1) / 2;
+        assertTrue(
+                actual.getMusicGameBook()
+                        .settlePerformance(performance(1, previous, false))
+                        .getPHKLGIKKAMA());
+        begin(1);
+        assertFalse(
+                actual.getMusicGameBook()
+                        .settlePerformance(performance(1, maximum, true))
+                        .getPHKLGIKKAMA());
+        assertEquals(previous, record(cold(), 1).getMCPDKDGGBDD());
+    }
+
+    @Test
+    void admittingANewPerformanceReplacesItsOwnFrozenModEligibility() throws Exception {
+        stockBook();
+        save(1);
+        begin(1);
+        save(2);
+        begin(1);
+        int maximum = MusicGameBookCatalog.current().beatmap(1).maximumScore();
+        assertTrue(
+                actual.getMusicGameBook()
+                        .settlePerformance(performance(1, maximum, true))
+                        .getPHKLGIKKAMA());
+        assertEquals(maximum, record(cold(), 1).getMCPDKDGGBDD());
+    }
+
+    @Test
+    void aRejectedStartCannotReplaceTheEligibilityOfTheActiveRun() throws Exception {
+        stockBook();
+        save(1);
+        begin(1);
+        save(2);
+        assertNotEquals(
+                0,
+                actual.getMusicGameBook()
+                        .startPerformance(
+                                MusicGameBookStartReq.newBuilder().setIHPMDKPGJLB(999999).build())
+                        .getRetcode());
+        int maximum = MusicGameBookCatalog.current().beatmap(1).maximumScore();
+        assertFalse(
+                actual.getMusicGameBook()
+                        .settlePerformance(performance(1, maximum, true))
+                        .getPHKLGIKKAMA());
+        assertEquals(0, record(cold(), 1).getMCPDKDGGBDD());
+    }
+
+    @Test
+    void repeatingAnEasySettlementDoesNotInventARecordOrRepeatItsExistingClearWrite()
+            throws Exception {
+        stockBook();
+        save(1);
+        begin(1);
+        var request =
+                performance(1, MusicGameBookCatalog.current().beatmap(1).maximumScore(), true);
+        var first = actual.getMusicGameBook().settlePerformance(request);
+        assertEquals(0, first.getRetcode());
+        assertFalse(first.getPHKLGIKKAMA());
+        var before = document();
+        assertEquals(first, actual.getMusicGameBook().settlePerformance(request));
+        assertEquals(before, document());
+    }
+
+    @Test
+    void anUncertainExistingClearWriteCannotPublishAnEasyScoreDuringReconciliation()
+            throws Exception {
+        stockBook();
+        save(1);
+        begin(1);
+        var request =
+                performance(1, MusicGameBookCatalog.current().beatmap(1).maximumScore(), true);
+        failAfterWrite.set(true);
+        assertNotEquals(0, actual.getMusicGameBook().settlePerformance(request).getRetcode());
+        assertEquals(0, record(cold(), 1).getMCPDKDGGBDD());
+        var result = actual.getMusicGameBook().settlePerformance(request);
+        assertEquals(0, result.getRetcode());
+        assertFalse(result.getPHKLGIKKAMA());
+        var before = document();
+        assertEquals(result, actual.getMusicGameBook().settlePerformance(request));
+        assertEquals(before, document());
     }
 }
