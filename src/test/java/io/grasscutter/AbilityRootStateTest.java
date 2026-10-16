@@ -382,6 +382,118 @@ class AbilityRootStateTest {
     }
 
     @Test
+    void filtering_an_unchanged_default_cannot_hide_a_parameter_collision() {
+        data.abilitySpecials.put("A£", 1f);
+        data.abilitySpecials.put("B ", 2f);
+        ability.getAbilitySpecials().put("A£", 4f);
+        ability.getAbilitySpecials().put("B ", 2f);
+        assertTrue(
+                fixture.entity.getAbilityRoots().toSyncState().getAppliedAbilitiesList().isEmpty());
+    }
+
+    @ParameterizedTest
+    @ValueSource(floats = {Float.NaN, Float.POSITIVE_INFINITY, Float.NEGATIVE_INFINITY})
+    void filtering_a_non_finite_value_cannot_hide_its_colliding_name(float bad) {
+        ability.getAbilitySpecials().put("A£", 4f);
+        ability.getAbilitySpecials().put("B ", bad);
+        ability.getAbilitySpecials().put("rate", 3f);
+        var info = fixture.entity.getAbilityRoots().toSyncState();
+        assertEquals(1, info.getAppliedAbilitiesCount());
+        assertEquals(Map.of("rate", 3f), values(info.getAppliedAbilities(0)));
+    }
+
+    private AbilitySyncStateInfo.Builder template(String name, int id) {
+        return AbilitySyncStateInfo.newBuilder()
+                .addAppliedAbilities(root(NAME, id).addOverrideMap(scalar(name, 8)));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    void a_caller_parameter_cannot_alias_a_different_known_default(int id) {
+        data.abilitySpecials.put("A£", 1f);
+        ability.getAbilitySpecials().put("A£", 1f);
+        var info = template("B ", id);
+        fixture.entity.getAbilityRoots().appendOverrides(info);
+        assertTrue(info.getAppliedAbilitiesList().isEmpty());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    void merging_caller_and_runtime_parameters_keeps_unambiguous_values(int id) {
+        ability.getAbilitySpecials().put("A£", 4f);
+        ability.getAbilitySpecials().put("rate", 3f);
+        var info = template("B ", id);
+        fixture.entity.getAbilityRoots().appendOverrides(info);
+        assertEquals(1, info.getAppliedAbilitiesCount());
+        assertEquals(1, info.getAppliedAbilities(0).getInstancedAbilityId());
+        assertEquals(Map.of("rate", 3f), values(info.getAppliedAbilities(0)));
+    }
+
+    @Test
+    void duplicate_caller_templates_are_checked_before_hash_deduplication() {
+        var info = template("A£", 0);
+        info.addAppliedAbilities(
+                root(NAME, 0)
+                        .addOverrideMap(scalar("B ", 2))
+                        .addOverrideMap(scalar("Unlocked", 1)));
+        fixture.entity.getAbilityRoots().appendOverrides(info);
+        assertEquals(1, info.getAppliedAbilitiesCount());
+        assertEquals(Map.of("Unlocked", 1f), values(info.getAppliedAbilities(0)));
+    }
+
+    @Test
+    void an_unknown_root_retains_good_parameters_without_changing_its_raw_record()
+            throws Exception {
+        var raw =
+                root("Unknown_Root", 3)
+                        .addOverrideMap(scalar("A£", 1))
+                        .addOverrideMap(scalar("B ", 2))
+                        .addOverrideMap(scalar("Good", 3))
+                        .build();
+        assertTrue(add(3, 0, raw));
+        var info = fixture.entity.getAbilityRoots().toSyncState();
+        assertEquals(1, info.getAppliedAbilitiesCount());
+        assertEquals(3, info.getAppliedAbilities(0).getInstancedAbilityId());
+        assertEquals(Map.of("Good", 3f), values(info.getAppliedAbilities(0)));
+        assertEquals(raw, roots().get(1));
+    }
+
+    @Test
+    void independent_roots_do_not_share_parameter_name_scopes() {
+        ability.getAbilitySpecials().put("A£", 1f);
+        var otherData =
+                JsonUtils.decode(
+                        "{abilityName:'Other_Root',abilitySpecials:{}}", AbilityData.class);
+        var other = new Ability(otherData, fixture.entity, fixture.player);
+        other.getAbilitySpecials().put("B ", 2f);
+        fixture.entity.getInstancedAbilities().add(other);
+        var info = fixture.entity.getAbilityRoots().toSyncState();
+        assertEquals(2, info.getAppliedAbilitiesCount());
+        assertEquals(Map.of("A£", 1f), values(info.getAppliedAbilities(0)));
+        assertEquals(Map.of("B ", 2f), values(info.getAppliedAbilities(1)));
+    }
+
+    @Test
+    void a_matching_hash_alias_still_merges_with_its_single_known_name() {
+        ability.getAbilitySpecials().put("rate", 3f);
+        var info =
+                AbilitySyncStateInfo.newBuilder()
+                        .addAppliedAbilities(
+                                root(NAME, 0)
+                                        .addOverrideMap(
+                                                AbilityScalarValueEntry.newBuilder()
+                                                        .setKey(
+                                                                AbilityString.newBuilder()
+                                                                        .setHash(
+                                                                                Utils.abilityHash(
+                                                                                        "rate")))
+                                                        .setFloatValue(8)));
+        fixture.entity.getAbilityRoots().appendOverrides(info);
+        assertEquals(1, info.getAppliedAbilitiesCount());
+        assertEquals(Map.of("rate", 3f), values(info.getAppliedAbilities(0)));
+    }
+
+    @Test
     void departed_caster_does_not_emit_previous_scene_roots() {
         fixture.player.setScene(null);
         assertTrue(roots().isEmpty());

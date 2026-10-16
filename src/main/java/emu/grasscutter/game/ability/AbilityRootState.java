@@ -161,21 +161,32 @@ public final class AbilityRootState {
         return roots.values().stream().map(this::build).toList();
     }
 
-    private synchronized List<AbilityAppliedAbility> overrideSnapshot() {
-        var result = new ArrayList<AbilityAppliedAbility>();
+    private record Overrides(AbilityAppliedAbility root, Set<String> names) {}
+
+    private static void rememberNames(AbilityAppliedAbility root, Set<String> names) {
+        root.getOverrideMapList().stream()
+                .map(AbilityScalarValueEntry::getKey)
+                .filter(AbilityString::hasStr)
+                .forEach(key -> names.add(key.getStr()));
+    }
+
+    private synchronized List<Overrides> overrideSnapshot() {
+        var result = new ArrayList<Overrides>();
         for (var full : snapshot()) {
             var source = roots.get(full.getInstancedAbilityId());
+            var names = new HashSet<String>();
+            rememberNames(full, names);
             if (source.ability == null) {
-                result.add(full);
+                result.add(new Overrides(full, Set.copyOf(names)));
                 continue;
             }
             var defaults = source.ability.getData().abilitySpecials;
-            var names = new HashSet<String>();
             if (defaults != null) names.addAll(defaults.keySet());
-            full.getOverrideMapList().stream()
-                    .map(AbilityScalarValueEntry::getKey)
-                    .filter(AbilityString::hasStr)
-                    .forEach(key -> names.add(key.getStr()));
+            var specials = source.ability.getAbilitySpecials();
+            synchronized (specials) {
+                names.addAll(specials.keySet());
+            }
+            names.removeIf(name -> name == null || name.isEmpty());
             var partial = full.toBuilder().clearOverrideMap();
             for (var value : full.getOverrideMapList()) {
                 var name = resolve(value.getKey(), names);
@@ -201,7 +212,8 @@ public final class AbilityRootState {
                         || Float.compare(original, value.getFloatValue()) != 0)
                     partial.addOverrideMap(value);
             }
-            result.add(partial.build());
+            // Keep names removed by default/finite-value filtering for the final hash check.
+            result.add(new Overrides(partial.build(), Set.copyOf(names)));
         }
         return List.copyOf(result);
     }
@@ -224,7 +236,10 @@ public final class AbilityRootState {
         var current = overrideSnapshot();
         var templates = new LinkedHashMap<Long, AbilityAppliedAbility>();
         var merged = new LinkedHashMap<Identity, AbilityAppliedAbility>();
+        var names = new HashMap<Identity, Set<String>>();
+        var templateDefaults = new HashMap<Long, Set<String>>();
         for (var root : info.getAppliedAbilitiesList()) {
+            rememberNames(root, names.computeIfAbsent(identity(root), ignored -> new HashSet<>()));
             if (root.getInstancedAbilityId() == 0)
                 templates.merge(key(root), root, AbilityRootState::merge);
             else
@@ -234,9 +249,16 @@ public final class AbilityRootState {
                         AbilityRootState::merge);
         }
         var covered = new HashSet<Long>();
-        for (var root : current) {
-            if (root.getOverrideMapCount() == 0 || ambiguousParameters(root)) continue;
+        for (var snapshot : current) {
+            var root = snapshot.root;
+            var scope = names.computeIfAbsent(identity(root), ignored -> new HashSet<>());
+            scope.addAll(snapshot.names);
+            templateDefaults
+                    .computeIfAbsent(key(root), ignored -> new HashSet<>())
+                    .addAll(snapshot.names);
+            if (root.getOverrideMapCount() == 0) continue;
             var template = templates.get(key(root));
+            if (template != null) scope.addAll(names.get(identity(template)));
             var partial = template == null ? root : merge(template, root);
             merged.merge(
                     new Identity(key(root), root.getInstancedAbilityId()),
@@ -246,22 +268,43 @@ public final class AbilityRootState {
         }
         templates.forEach(
                 (variant, template) -> {
-                    if (!covered.contains(variant)) merged.put(new Identity(variant, 0), template);
+                    if (!covered.contains(variant)) {
+                        names.get(identity(template))
+                                .addAll(templateDefaults.getOrDefault(variant, Set.of()));
+                        merged.put(identity(template), template);
+                    }
                 });
-        info.clearAppliedAbilities().addAllAppliedAbilities(merged.values());
+        info.clearAppliedAbilities();
+        merged.forEach(
+                (id, root) -> {
+                    var safe = withoutAmbiguousParameters(root, names.getOrDefault(id, Set.of()));
+                    if (safe != null) info.addAppliedAbilities(safe);
+                });
     }
 
     private record Identity(long variant, int instanceId) {}
 
-    private static boolean ambiguousParameters(AbilityAppliedAbility root) {
-        var names = new HashMap<Integer, String>();
-        for (var value : root.getOverrideMapList())
-            if (value.getKey().hasStr()) {
-                String name = value.getKey().getStr();
-                var old = names.putIfAbsent(Utils.abilityHash(name), name);
-                if (old != null && !old.equals(name)) return true;
-            }
-        return false;
+    private static Identity identity(AbilityAppliedAbility root) {
+        return new Identity(key(root), root.getInstancedAbilityId());
+    }
+
+    private static AbilityAppliedAbility withoutAmbiguousParameters(
+            AbilityAppliedAbility root, Set<String> names) {
+        var known = new HashMap<Integer, String>();
+        var ambiguous = new HashSet<Integer>();
+        for (var name : names) {
+            int hash = Utils.abilityHash(name);
+            var previous = known.putIfAbsent(hash, name);
+            if (previous != null && !previous.equals(name)) ambiguous.add(hash);
+        }
+        if (ambiguous.isEmpty()) return root;
+        var safe = root.toBuilder().clearOverrideMap();
+        root.getOverrideMapList().stream()
+                .filter(value -> !ambiguous.contains(hash(value.getKey(), 0)))
+                .forEach(safe::addOverrideMap);
+        return root.getOverrideMapCount() > 0 && safe.getOverrideMapCount() == 0
+                ? null
+                : safe.build();
     }
 
     private static AbilityAppliedAbility merge(
