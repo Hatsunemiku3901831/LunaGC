@@ -94,3 +94,9 @@ MongoDB 继续使用原数据卷 `lunagc_mongo-data`。
 `parameter-scopes.jar` SHA-256：
 `1829d7c3c266c6f45059c4d3fcb4d66724ba9ee9da32897d4149eb2f094fa7df`。
 本项未增加完整修饰器恢复、跨重启存档或客户端实机验收结论。
+
+2026-10-16 08:33（UTC+8），提交 `de2d7ada` 的此构建已在本机启动。
+实际进程 59032 使用上述 `batch293/parameter-scopes.jar`，哈希与验证记录一致。
+TCP 8088／UDP 22101 均由该进程监听，健康检查通过、死锁为 0、在线玩家为 0，
+MongoDB 仍使用 `lunagc_mongo-data`。停止／启动核对保存在同目录的 runtime proof 文件。
+游戏未运行，未新增客户端进场验收结果。

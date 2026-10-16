@@ -144,8 +144,8 @@ HunkyMeow 的大世界持久建造已在本地接入，并修正非持久模式�
 
 ## 其他仍需完成的范围
 
-2026-10-16 08:23（UTC+8），累计至提交 `71fd0951` 的构建已在本机启动：
-`debug/aster-mid-20261011/batch292/tps-snapshot.jar`，HTTP／UDP 由同一新进程监听，
+2026-10-16 08:33（UTC+8），累计至提交 `de2d7ada` 的构建已在本机启动：
+`debug/aster-mid-20261011/batch293/parameter-scopes.jar`，HTTP／UDP 由同一新进程监听，
 健康检查通过，原 Mongo 数据卷保留。此项确认服务切换；下列客户端和玩法适配范围仍然保留。
 
 - 持续 Set 模式、Add／Set 倍率的完整客户端热修复分支配对，以及完整龙技能、输入和动画的实机验收；当前资源的普通动作、周期 Cost／Add、倍率开关、无限燃素、车辆通知及燃素球联动已分别接入。
@@ -160,3 +160,16 @@ HunkyMeow 的大世界持久建造已在本地接入，并修正非持久模式�
 - 神像场景引导验收及缺少经济快照的旧供奉记录人工核对；新供奉的按操作 ID 审计／恢复／取消、未确认记录保护、可选参考奖励倍率、回复结算、可选免泉水及距离触发已接入，LevelupCity／CityInfo 的原生字段编码已经独立核对。
 
 没有将上述事项标记为已经完成。参考库下载、基础接入和当前相关测试通过，均不等于项目整体玩法完成。
+
+## 新一轮源码行为核对入口
+
+本轮重新确认 AstaPS 检出为固定提交 `7cc148d1f752a43d4b9146b3b73f26875902546f`，工作区干净。
+下列是需要逐项验证的具体行为，尚未计入适配完成项：
+
+| 参考入口 | 本地核对路径与所需证据 |
+| --- | --- |
+| `EnvironmentalSealHelper.tryProcessAttack`，由 EntityGadget、EntityBaseGadget 和 OreMiningHelper 调用 | 核对 `ChestBramble`／`ChestFrozen`／`ChestRock`、当前资源的元素与耐久、实际伤害入口、Lua 状态事件及解封后开箱；参考的缺少元素也作为火元素、固定 600 血量等补偿值需要单独审查 |
+| `DomainContinueSpawnHelper` 与 `DomainChallengeKeyHelper` | 当前 `DungeonRestartGuard` 只证明重试资格。继续比较重试／首次进场落点、朝向、实际机关编号、选项隐藏与刷新；需要真实秘境元数据及完整进出场用例 |
+| `LaumaC1HealHelper` | 本地已存在通用反应回调、ApplyModifier 与 HealHP 路径；需以 `Avatar_Lauma_Constellation_1` 的真实资源验证范围、精通来源、反应确认、1.9 秒间隔及 20 秒监听窗口，分别比较参考的技能开始／GV 补偿和原资源行为，避免重复治疗 |
+
+上述核对不能由文件名比较得出，也不能凭通用处理器存在宣称整个角色或玩法已经完成。
