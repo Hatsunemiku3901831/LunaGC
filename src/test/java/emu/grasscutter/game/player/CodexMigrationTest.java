@@ -126,7 +126,7 @@ class CodexMigrationTest {
         player.getCodex().getUnlockedReliquary().addAll(oldIds ? legacy() : canonical());
         player.getCodex().getUnlockedBook().add(100178);
         player.getCodex().getUnlockedWeapon().add(11501);
-        store.save(player);
+        DatabaseHelper.saveGameSync(player);
         return player;
     }
 

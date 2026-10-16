@@ -107,6 +107,10 @@ public final class DatabaseHelper {
     /** Acknowledged writes for economic reservations; errors must reach the caller. */
     public static void saveGameSync(Object object) {
         synchronized (object) {
+            if (object instanceof Player player) {
+                player.getSaveGuard().save(DatabaseManager.getGameDatastore());
+                return;
+            }
             var concern = WriteConcern.MAJORITY.withJournal(true);
             if (object instanceof GameItem item && item.getCount() <= 0)
                 DatabaseManager.getGameDatastore().delete(item, new DeleteOptions().writeConcern(concern));
@@ -122,14 +126,15 @@ public final class DatabaseHelper {
      * <p>An unguarded save swallows both: a duplicate key means something else inserted the entity
      * first, and a ConcurrentModificationException means a player collection was being mutated on
      * another thread while Morphia walked it - typically during login. Both used to lose the write
-     * silently, so progress simply disappeared.
+     * silently, so progress simply disappeared. Player duplicate keys are conflicts and must never
+     * be retried as unguarded replacements.
      */
     private static void saveWithRetry(Datastore datastore, Object object) {
         var name = object.getClass().getSimpleName();
         try {
-            datastore.save(object);
+            saveGameObject(datastore, object);
         } catch (MongoWriteException e) {
-            if (e.getError() == null || e.getError().getCode() != 11000) {
+            if (object instanceof Player || e.getError() == null || e.getError().getCode() != 11000) {
                 throw e;
             }
             // The id is reflected back onto the object by the failed insert, so the retry
@@ -143,7 +148,7 @@ public final class DatabaseHelper {
             for (var attempt = 0; attempt < 8; attempt++) {
                 try {
                     Thread.sleep(100);
-                    datastore.save(object);
+                    saveGameObject(datastore, object);
                     return;
                 } catch (ConcurrentModificationException ignored) {
                     // The other thread has not settled yet.
@@ -154,6 +159,11 @@ public final class DatabaseHelper {
             }
             throw new IllegalStateException("Failed to save " + name + " - it kept being modified", e);
         }
+    }
+
+    private static void saveGameObject(Datastore datastore, Object object) {
+        if (object instanceof Player player) player.getSaveGuard().save(datastore);
+        else datastore.save(object);
     }
 
     /**
@@ -436,8 +446,8 @@ public final class DatabaseHelper {
             character.setUid(id);
         }
 
-        // Save to database
-        DatabaseHelper.saveGameAsync(character);
+        // Confirm creation before login managers can enqueue economic work for this profile.
+        DatabaseHelper.saveGameSync(character);
     }
 
     public static synchronized int getNextPlayerId(int reservedId) {

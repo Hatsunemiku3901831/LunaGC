@@ -79,6 +79,18 @@ public class Player implements PlayerHook, FieldFetch {
 
     @Id private int id;
 
+    @Getter private PlayerSaveStamp saveStamp;
+    @Transient private transient PlayerSaveGuard saveGuard;
+
+    public synchronized PlayerSaveGuard getSaveGuard() {
+        if (saveGuard == null) saveGuard = new PlayerSaveGuard(this, saveStamp, false);
+        return saveGuard;
+    }
+
+    void setSaveStamp(PlayerSaveStamp stamp) {
+        this.saveStamp = stamp;
+    }
+
     @Indexed(options = @IndexOptions(unique = true))
     @Getter
     private String accountId;
@@ -1649,6 +1661,7 @@ public class Player implements PlayerHook, FieldFetch {
 
     @PostLoad
     private void onLoad() {
+        this.saveGuard = new PlayerSaveGuard(this, this.saveStamp, true);
         this.expeditionInfo = this.expeditionInfo == null
                 ? new java.util.concurrent.ConcurrentHashMap<>()
                 : new java.util.concurrent.ConcurrentHashMap<>(this.expeditionInfo);
