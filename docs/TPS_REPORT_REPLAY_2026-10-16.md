@@ -65,4 +65,18 @@
   4 份 proto 内容在仅统一 CRLF／LF 后一致，保留两侧原始哈希。
 - `tps-reports.jar`：SHA256 `066643fa1ed95b51ca459a8a10fdff8afa9963f2da9db6139d2264b5c08ee309`。
 
+## 本地运行
+
+2026-10-16 11:38（UTC+8），源码提交 `315b59518e1bce9570350748e76994b37a212033`
+已推送，本地服务已切换至上述 `tps-reports.jar`。
+旧进程经 GM stop 正常退出；新进程 PID `57648` 同时监听 TCP 8088 和 UDP 22101，
+健康检查通过、死锁为零、在线玩家为零。
+Mongo 继续使用 `lunagc_mongo-data`，资源保持 `dac2a9d43332ef51879522cf39da2831b0ca0543`。
+
+同目录的 `runtime-stop-preflight.json`、`runtime-stop-proof.json`、`runtime-start-proof.json`
+保存了停止检查、正常退出及新进程命令、JAR 哈希、端口归属和数据卷核对。
+客户端未启动，`clientGameplayVerified` 为 false。
+
+## 验收边界
+
 真实射击、换弹动画、完整拾取和模式结算，以及此前客户端报错仍待实机复验。
