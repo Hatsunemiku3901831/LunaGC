@@ -91,6 +91,35 @@ class MusicGameBookCoinTest extends QuestTestFixture {
         return actual.getProperties().getOrDefault(PROP, 0);
     }
 
+    @Test
+    void legacyMissingMusicCurrencyReadsAsZeroWithoutMutatingTheProfile() {
+        actual.getProperties().remove(PROP);
+        assertEquals(0, actual.getInventory().getItemCountById(COIN));
+        assertFalse(actual.getProperties().containsKey(PROP));
+        assertFalse(actual.getInventory().payItem(COIN, 1));
+    }
+
+    @Test
+    void legacyMissingMusicCurrencyCanReceiveItsFirstGrant() {
+        actual.getProperties().remove(PROP);
+        assertTrue(actual.getInventory().addItem(new GameItem(coinData, 20)));
+        assertEquals(20, balance());
+    }
+
+    @Test
+    void coldLegacyProfileWithoutTheNewPropertyHasAZeroMusicBalance() throws Exception {
+        actual.getProperties().remove(PROP);
+        DatabaseHelper.saveGameSync(actual);
+        var cold =
+                guarded.datastore()
+                        .find(Player.class)
+                        .filter(Filters.eq("_id", actual.getUid()))
+                        .first();
+        assertNotNull(cold);
+        assertFalse(cold.getProperties().containsKey(PROP));
+        assertEquals(0, cold.getInventory().getItemCountById(COIN));
+    }
+
     boolean pay(boolean array, List<ItemParamData> costs, int quantity) {
         return array
                 ? actual.getInventory().payItems(costs.toArray(ItemParamData[]::new), quantity)

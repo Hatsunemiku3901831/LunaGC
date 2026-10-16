@@ -492,7 +492,8 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
             case 207 -> this.player.setProperty(
                     PlayerProperty.PROP_PLAYER_MUSIC_GAME_BOOK_COIN,
                     Math.addExact(
-                            this.player.getProperty(PlayerProperty.PROP_PLAYER_MUSIC_GAME_BOOK_COIN),
+                            this.player.getProperties().getOrDefault(
+                                    PlayerProperty.PROP_PLAYER_MUSIC_GAME_BOOK_COIN.getId(), 0),
                             count));
         }
     }
@@ -520,7 +521,8 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
             case 207 -> player.setProperty(
                     PlayerProperty.PROP_PLAYER_MUSIC_GAME_BOOK_COIN,
                     Math.subtractExact(
-                            player.getProperty(PlayerProperty.PROP_PLAYER_MUSIC_GAME_BOOK_COIN),
+                            player.getProperties().getOrDefault(
+                                    PlayerProperty.PROP_PLAYER_MUSIC_GAME_BOOK_COIN.getId(), 0),
                             count));
             default -> {
                 var gameItem = getInventoryTab(ItemType.ITEM_MATERIAL).getItemById(itemId);
@@ -548,7 +550,8 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
             case 204: // Home Coin
                 return this.player.getHomeCoin();
             case 207:
-                return this.player.getProperty(PlayerProperty.PROP_PLAYER_MUSIC_GAME_BOOK_COIN);
+                return this.player.getProperties().getOrDefault(
+                        PlayerProperty.PROP_PLAYER_MUSIC_GAME_BOOK_COIN.getId(), 0);
             default:
                 GameItem item =
                         getInventoryTab(ItemType.ITEM_MATERIAL)
