@@ -3,6 +3,10 @@ package emu.grasscutter.game.player;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.game.inventory.*;
+import emu.grasscutter.game.props.PlayerProperty;
+import emu.grasscutter.net.packet.*;
+import emu.grasscutter.net.proto.ItemAddHintNotifyOuterClass.ItemAddHintNotify;
+import emu.grasscutter.net.proto.ItemHintOuterClass.ItemHint;
 import emu.grasscutter.net.proto.MusicGameBookAllDataNotifyOuterClass.MusicGameBookAllDataNotify;
 import emu.grasscutter.net.proto.MusicGameBookRecordOuterClass.MusicGameBookRecord;
 import emu.grasscutter.net.proto.MusicGameBookSettleReqOuterClass.MusicGameBookSettleReq;
@@ -20,11 +24,13 @@ public final class MusicGameBook {
     private final Player player;
     private final Set<Integer> pendingThemes = new TreeSet<>();
     private MusicGameBookCatalog.Beatmap activePerformance;
+    private MusicGameBookCatalog activeCatalog;
     private byte[] completedRequest;
     private MusicGameBookSettleRsp completedResult;
     private PendingPerformance pendingPerformance;
 
-    private record PendingPerformance(byte[] request, MusicGameBookSettleRsp result) {}
+    private record PendingPerformance(
+            byte[] request, MusicGameBookSettleRsp result, Map<Integer, Integer> rewards) {}
 
     public MusicGameBook(Player player) {
         this.player = Objects.requireNonNull(player);
@@ -92,7 +98,7 @@ public final class MusicGameBook {
                         MusicGameBookRecord.newBuilder()
                                 .setIHPMDKPGJLB(entry.getKey())
                                 .setMCPDKDGGBDD(data.getMaximumScore())
-                                .setNFHCCJALOAJ(data.isFullCombo()));
+                                .setNFHCCJALOAJ(data.isNormalCompleted()));
             }
         }
         player.sendPacket(new PacketMusicGameBookAllDataNotify(notify.build()));
@@ -124,10 +130,42 @@ public final class MusicGameBook {
         // A frozen Player document may already be committed after an uncertain acknowledgement.
         // Keep the monotone record and confirm it before admitting another run or publishing it.
         DatabaseHelper.saveGameSync(player);
-        completedRequest = pendingPerformance.request();
-        completedResult = pendingPerformance.result();
+        var confirmed = pendingPerformance;
+        completedRequest = confirmed.request();
+        completedResult = confirmed.result();
         activePerformance = null;
+        activeCatalog = null;
         pendingPerformance = null;
+        if (!confirmed.rewards().isEmpty()) {
+            try {
+                var hint = ItemAddHintNotify.newBuilder();
+                for (var item : new TreeMap<>(confirmed.rewards()).entrySet()) {
+                    player.sendPacket(
+                            new PacketPlayerPropNotify(player, rewardProperty(item.getKey())));
+                    hint.addItemList(
+                            ItemHint.newBuilder()
+                                    .setItemId(item.getKey())
+                                    .setCount(item.getValue()));
+                }
+                var packet = new BasePacket(PacketOpcodes.ItemAddHintNotify);
+                packet.setData(hint.build());
+                player.sendPacket(packet);
+            } catch (RuntimeException disconnected) {
+                Grasscutter.getLogger()
+                        .warn(
+                                "Music book reward notification unavailable for UID {}",
+                                player.getUid(),
+                                disconnected);
+            }
+        }
+    }
+
+    private static PlayerProperty rewardProperty(int itemId) {
+        return switch (itemId) {
+            case 201 -> PlayerProperty.PROP_PLAYER_HCOIN;
+            case 207 -> PlayerProperty.PROP_PLAYER_MUSIC_GAME_BOOK_COIN;
+            default -> throw new IllegalArgumentException("Unsupported music book currency");
+        };
     }
 
     public MusicGameBookStartRsp startPerformance(MusicGameBookStartReq request) {
@@ -139,12 +177,14 @@ public final class MusicGameBook {
             if (!ownsBook(player.getInventory().getItemById(ITEM_ID)))
                 return result.setRetcode(Retcode.RET_ITEM_NOT_EXIST_VALUE).build();
             try {
-                var map = MusicGameBookCatalog.current().beatmap(request.getIHPMDKPGJLB());
+                var catalog = MusicGameBookCatalog.current();
+                var map = catalog.beatmap(request.getIHPMDKPGJLB());
                 if (request.getBCBDBEFONEF() != 0 || map == null)
                     return result.setRetcode(Retcode.RET_MUSIC_GAME_LEVEL_CONFIG_NOT_FOUND_VALUE)
                             .build();
                 confirmPerformance();
                 activePerformance = map;
+                activeCatalog = catalog;
                 completedRequest = null;
                 completedResult = null;
                 return result.build();
@@ -182,7 +222,8 @@ public final class MusicGameBook {
                 long score = Integer.toUnsignedLong(request.getCAEKFNKKEPG());
                 if (request.getFNCOKHKCDDG()) {
                     if (score > activePerformance.maximumScore()
-                            || request.getDGBEKHBEHFN()
+                            || request.getFJDDGBILJCF() != 0 && request.getFJDDGBILJCF() != 1
+                            || request.getFJDDGBILJCF() == 1
                                     && (score == 0
                                             || request.getKBBAMIPLHEJCount() != 3
                                             || request.getKBBAMIPLHEJ(2) != 0
@@ -191,29 +232,77 @@ public final class MusicGameBook {
                                                                     request.getKBBAMIPLHEJ(1))
                                                     == 0))
                         return result.setRetcode(Retcode.RET_FAIL_VALUE).build();
-                    var saved = player.getMusicGameBookRecords();
-                    var old = saved == null ? null : saved.get(activePerformance.id());
-                    int previous = old == null ? 0 : old.getMaximumScore();
-                    boolean fullCombo =
-                            request.getDGBEKHBEHFN() || old != null && old.isFullCombo();
-                    result.setPHKLGIKKAMA(score > previous);
-                    if (score > previous || fullCombo && (old == null || !old.isFullCombo())) {
-                        var next =
-                                saved == null
-                                        ? new HashMap<Integer, MusicGameBookRecordData>()
-                                        : new HashMap<>(saved);
-                        next.put(
-                                activePerformance.id(),
-                                new MusicGameBookRecordData(
-                                        Math.max((int) score, previous), fullCombo));
-                        player.setMusicGameBookRecords(Map.copyOf(next));
-                        pendingPerformance = new PendingPerformance(wire, result.build());
-                        confirmPerformance();
+                    synchronized (player) {
+                        var saved = player.getMusicGameBookRecords();
+                        var old = saved == null ? null : saved.get(activePerformance.id());
+                        int previous = old == null ? 0 : old.getMaximumScore();
+                        boolean fullCombo =
+                                request.getFJDDGBILJCF() == 1 || old != null && old.isFullCombo();
+                        result.setPHKLGIKKAMA(score > previous);
+                        // Native completion reason 1 is an ordinary single-player finish.
+                        // The other list and booleans are telemetry/settings, not eligibility.
+                        var targets =
+                                request.getLKIMDBMGKEM() == 1
+                                                && activeCatalog.passes(activePerformance, score)
+                                        ? activeCatalog
+                                                .standardClearTargets(activePerformance)
+                                                .stream()
+                                                .filter(
+                                                        map ->
+                                                                saved == null
+                                                                        || saved.get(map.id())
+                                                                                == null
+                                                                        || !saved.get(map.id())
+                                                                                .isNormalCompleted())
+                                                .toList()
+                                        : List.<MusicGameBookCatalog.Beatmap>of();
+                        var rewards = activeCatalog.rewards(targets);
+                        var balances = new EnumMap<PlayerProperty, Integer>(PlayerProperty.class);
+                        for (var item : rewards.entrySet()) {
+                            var property = rewardProperty(item.getKey());
+                            int before = player.getProperties().getOrDefault(property.getId(), 0);
+                            if (before < 0)
+                                throw new IllegalStateException("Negative music reward balance");
+                            balances.put(property, Math.addExact(before, item.getValue()));
+                        }
+                        if (score > previous
+                                || fullCombo && (old == null || !old.isFullCombo())
+                                || !targets.isEmpty()) {
+                            var next =
+                                    saved == null
+                                            ? new HashMap<Integer, MusicGameBookRecordData>()
+                                            : new HashMap<>(saved);
+                            next.put(
+                                    activePerformance.id(),
+                                    new MusicGameBookRecordData(
+                                            Math.max((int) score, previous),
+                                            fullCombo,
+                                            old != null && old.isNormalCompleted()));
+                            for (var map : targets) {
+                                var record = next.get(map.id());
+                                next.put(
+                                        map.id(),
+                                        new MusicGameBookRecordData(
+                                                record == null ? 0 : record.getMaximumScore(),
+                                                record != null && record.isFullCombo(),
+                                                true));
+                            }
+                            // Both currencies and every paid clear share the same guarded Player
+                            // document. Do not publish success or grant notifications before ack.
+                            balances.forEach(
+                                    (property, value) ->
+                                            player.getProperties().put(property.getId(), value));
+                            player.setMusicGameBookRecords(Map.copyOf(next));
+                            pendingPerformance =
+                                    new PendingPerformance(wire, result.build(), rewards);
+                            confirmPerformance();
+                        }
                     }
                 }
                 completedRequest = wire;
                 completedResult = result.build();
                 activePerformance = null;
+                activeCatalog = null;
                 try {
                     sendData(MusicGameBookThemeCatalog.current());
                 } catch (RuntimeException disconnected) {

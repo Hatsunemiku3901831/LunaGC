@@ -50,6 +50,7 @@ class MusicGameBookPerformanceTest extends QuestTestFixture {
     final AtomicBoolean failWrite = new AtomicBoolean();
     final AtomicBoolean failAfterWrite = new AtomicBoolean();
     final AtomicBoolean failSnapshot = new AtomicBoolean();
+    final AtomicBoolean failRewardHint = new AtomicBoolean();
     final Thread caller = Thread.currentThread();
     Player actual;
     GuardedPlayerTestStore playerStore;
@@ -120,6 +121,9 @@ class MusicGameBookPerformanceTest extends QuestTestFixture {
                 new GameSession(player.server) {
                     @Override
                     public void send(BasePacket packet) {
+                        if (packet.getOpcode() == PacketOpcodes.ItemAddHintNotify
+                                && failRewardHint.getAndSet(false))
+                            throw new IllegalStateException("music reward hint transport fault");
                         if (packet.getOpcode() == PacketOpcodes.MusicGameBookAllDataNotify
                                 && failSnapshot.getAndSet(false))
                             throw new IllegalStateException("music score snapshot transport fault");
@@ -167,7 +171,8 @@ class MusicGameBookPerformanceTest extends QuestTestFixture {
                 .setIHPMDKPGJLB(id)
                 .setCAEKFNKKEPG(score)
                 .setFNCOKHKCDDG(true)
-                .setDGBEKHBEHFN(fullCombo)
+                .setFJDDGBILJCF(fullCombo ? 1 : 0)
+                .setLKIMDBMGKEM(1)
                 .setDFPIEMBCGCN(score * 100f / maximums.get(id))
                 .addAllKBBAMIPLHEJ(
                         List.of(notes.get(id) - (fullCombo ? 0 : 1), 0, fullCombo ? 0 : 1))
@@ -234,14 +239,19 @@ class MusicGameBookPerformanceTest extends QuestTestFixture {
         assertEquals(id, result.getIHPMDKPGJLB());
         assertTrue(result.getPHKLGIKKAMA());
         var saved = snapshot();
-        assertEquals(1, saved.size());
-        assertEquals(id, saved.get(0).getIHPMDKPGJLB());
-        assertEquals(maximums.get(id).intValue(), saved.get(0).getMCPDKDGGBDD());
-        assertTrue(saved.get(0).getNFHCCJALOAJ());
+        var expected =
+                id <= 4
+                        ? java.util.stream.IntStream.rangeClosed(1, id).boxed().toList()
+                        : id == 100
+                                ? List.of(97, 98, 99, 100)
+                                : id == 552 ? List.of(549, 550, 551, 552) : List.of(id);
+        assertEquals(expected, saved.stream().map(MusicGameBookRecord::getIHPMDKPGJLB).toList());
+        var played =
+                saved.stream().filter(row -> row.getIHPMDKPGJLB() == id).findFirst().orElseThrow();
+        assertEquals(maximums.get(id).intValue(), played.getMCPDKDGGBDD());
+        assertTrue(played.getNFHCCJALOAJ());
         assertEquals(
-                0,
-                saved.get(0).getJNJDOLEBBOOCount(),
-                "Reward claims require their own verified workflow");
+                0, played.getJNJDOLEBBOOCount(), "Modifier completion has a separate workflow");
         assertNotNull(document());
     }
 
@@ -541,6 +551,383 @@ class MusicGameBookPerformanceTest extends QuestTestFixture {
         } finally {
             if (old == null) GameData.getItemDataMap().remove(319001);
             else GameData.getItemDataMap().put(319001, old);
+        }
+    }
+
+    private int musicCoins() {
+        return actual.getProperties().getOrDefault(10058, 0);
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<Integer, MusicGameBookRecordData> records() throws Exception {
+        var field = Player.class.getDeclaredField("musicGameBookRecords");
+        field.setAccessible(true);
+        return (Map<Integer, MusicGameBookRecordData>) field.get(actual);
+    }
+
+    private Set<Integer> completedMaps() throws Exception {
+        var result = new TreeSet<Integer>();
+        for (var record : snapshot())
+            if (record.getNFHCCJALOAJ()) result.add(record.getIHPMDKPGJLB());
+        return result;
+    }
+
+    @Test
+    void normalPassPaysItsResourceRewardWithoutRequiringAFullCombo() throws Exception {
+        start(1);
+        assertEquals(0, settle(report(1, 1740, false)).getRetcode());
+        assertEquals(20, musicCoins());
+        assertEquals(Set.of(1), completedMaps());
+        assertFalse(records().get(1).isFullCombo());
+    }
+
+    @Test
+    void aFullComboBelowTheFirstRatingDoesNotSetTheRewardCompletionMark() throws Exception {
+        start(1);
+        assertEquals(0, settle(report(1, 1739, true)).getRetcode());
+        assertEquals(0, musicCoins());
+        assertTrue(completedMaps().isEmpty());
+        assertTrue(records().get(1).isFullCombo());
+    }
+
+    @Test
+    void aReportedPercentageCannotReplaceTheServerScoreRatio() throws Exception {
+        start(1);
+        settle(report(1, 1, false).toBuilder().setDFPIEMBCGCN(100).build());
+        assertEquals(0, musicCoins());
+        assertTrue(completedMaps().isEmpty());
+    }
+
+    @Test
+    void aMasterClearAlsoPaysTheTwoLowerDifficultiesOfTheSameSong() throws Exception {
+        start(3);
+        assertEquals(0, settle(report(3, 3415, false)).getRetcode());
+        assertEquals(120, musicCoins());
+        assertEquals(Set.of(1, 2, 3), completedMaps());
+        assertEquals(0, records().get(1).getMaximumScore());
+        assertEquals(0, records().get(2).getMaximumScore());
+        assertFalse(records().containsKey(9));
+    }
+
+    @Test
+    void legendaryClearPaysLowerRewardsWithoutInventingALegendaryReward() throws Exception {
+        start(4);
+        assertEquals(0, settle(report(4, 4558, false)).getRetcode());
+        assertEquals(120, musicCoins());
+        assertEquals(Set.of(1, 2, 3, 4), completedMaps());
+    }
+
+    @Test
+    void increasingDifficultyOnlyPaysTheRemainingRewards() throws Exception {
+        for (int id = 1; id <= 3; id++) {
+            start(id);
+            assertEquals(0, settle(report(id, maximums.get(id), false)).getRetcode());
+            assertEquals(id == 1 ? 20 : id == 2 ? 60 : 120, musicCoins());
+        }
+        start(2);
+        settle(report(2, maximums.get(2), true));
+        assertEquals(120, musicCoins());
+    }
+
+    @Test
+    void allSevenGuidesHaveSeparateFirstClearRewards() throws Exception {
+        for (int id = 9991; id <= 9997; id++) {
+            start(id);
+            assertEquals(0, settle(report(id, maximums.get(id), false)).getRetcode());
+        }
+        assertEquals(140, actual.getPrimogems());
+        assertEquals(140, musicCoins());
+        assertEquals(7, completedMaps().size());
+        start(9991);
+        settle(report(9991, maximums.get(9991), false));
+        assertEquals(140, actual.getPrimogems());
+        assertEquals(140, musicCoins());
+    }
+
+    @Test
+    void repeatedRewardSettlementDoesNotChangeTheConfirmedDocument() throws Exception {
+        start(3);
+        var request = report(3, 4000, false);
+        var result = settle(request);
+        assertEquals(120, musicCoins());
+        var confirmed = document();
+        assertEquals(result, settle(request));
+        assertEquals(confirmed, document());
+        assertEquals(120, musicCoins());
+    }
+
+    @Test
+    void rewardAndAllCompletionMarksSurviveAColdReadAndAnotherClear() throws Exception {
+        start(3);
+        settle(report(3, 4000, false));
+        var cold =
+                playerStore
+                        .datastore()
+                        .find(Player.class)
+                        .filter(Filters.eq("_id", actual.getUid()))
+                        .first();
+        assertNotNull(cold);
+        actual = cold;
+        attach(cold);
+        assertEquals(120, musicCoins());
+        assertEquals(Set.of(1, 2, 3), completedMaps());
+        var datastore =
+                emu.grasscutter.database.DatabaseManager.class.getDeclaredField("gameDatastore");
+        datastore.setAccessible(true);
+        var previous = datastore.get(null);
+        try {
+            datastore.set(null, playerStore.datastore());
+            book.setOwner(cold);
+            cold.getInventory().getItems().put(book.getGuid(), book);
+            cold.getInventory().getInventoryTab(book.getItemType()).onAddItem(book);
+            assertEquals(0, start(1).getRetcode());
+            assertEquals(0, settle(report(1, 2000, false)).getRetcode());
+            assertEquals(120, musicCoins());
+        } finally {
+            assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+            datastore.set(null, previous);
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void uncertainRewardWriteCanOnlyConfirmTheOriginalSingleGrant(boolean committed)
+            throws Exception {
+        start(9991);
+        if (committed) failAfterWrite.set(true);
+        else failWrite.set(true);
+        var request = report(9991, 300, false);
+        assertNotEquals(0, settle(request).getRetcode());
+        assertEquals(
+                0,
+                packets.stream()
+                        .filter(p -> p.getOpcode() == PacketOpcodes.ItemAddHintNotify)
+                        .count());
+        if (committed) {
+            var saved = document();
+            assertNotNull(saved);
+            assertEquals(20, saved.get("properties", Document.class).getInteger("10058"));
+            assertTrue(
+                    saved.get("musicGameBookRecords", Document.class)
+                            .get("9991", Document.class)
+                            .getBoolean("normalCompleted"));
+        } else assertNull(document());
+        failWrite.set(false);
+        assertEquals(0, settle(request).getRetcode());
+        assertEquals(20, musicCoins());
+        assertEquals(20, actual.getPrimogems());
+        var confirmed = document();
+        assertEquals(0, settle(request).getRetcode());
+        assertEquals(confirmed, document());
+    }
+
+    @Test
+    void rewardOverflowIsCheckedBeforeAnyCurrencyOrRecordChanges() throws Exception {
+        actual.getProperties()
+                .put(
+                        emu.grasscutter.game.props.PlayerProperty.PROP_PLAYER_HCOIN.getId(),
+                        Integer.MAX_VALUE - 10);
+        start(9991);
+        assertNotEquals(0, settle(report(9991, 300, false)).getRetcode());
+        assertEquals(Integer.MAX_VALUE - 10, actual.getPrimogems());
+        assertEquals(0, musicCoins());
+        assertTrue(snapshot().isEmpty());
+    }
+
+    @Test
+    void legacyFullComboRecordDoesNotClaimAnUnpaidReward() throws Exception {
+        replaceField(
+                Player.class,
+                actual,
+                "musicGameBookRecords",
+                Map.of(1, new MusicGameBookRecordData(2000, true)));
+        assertTrue(completedMaps().isEmpty());
+        start(1);
+        settle(report(1, 1800, false));
+        assertEquals(20, musicCoins());
+        assertEquals(Set.of(1), completedMaps());
+        assertEquals(2000, records().get(1).getMaximumScore());
+    }
+
+    @Test
+    void simultaneousDuplicateClearsCannotPayTheResourceRewardsTwice() throws Exception {
+        start(3);
+        var request = report(3, 4000, false);
+        var pool = java.util.concurrent.Executors.newFixedThreadPool(2);
+        try {
+            var first = pool.submit(() -> actual.getMusicGameBook().settlePerformance(request));
+            var second = pool.submit(() -> actual.getMusicGameBook().settlePerformance(request));
+            assertEquals(0, first.get(15, java.util.concurrent.TimeUnit.SECONDS).getRetcode());
+            assertEquals(0, second.get(15, java.util.concurrent.TimeUnit.SECONDS).getRetcode());
+        } finally {
+            pool.shutdownNow();
+        }
+        assertEquals(120, musicCoins());
+    }
+
+    @Test
+    void negativeStoredCurrencyDoesNotConsumeTheFirstClearReward() throws Exception {
+        actual.getProperties().put(10058, -1);
+        start(1);
+        assertNotEquals(0, settle(report(1, 1740, false)).getRetcode());
+        assertEquals(-1, musicCoins());
+        assertTrue(snapshot().isEmpty());
+    }
+
+    @Test
+    void aLegacyProfileCanReceiveItsFirstMusicRewardWithoutAnExistingCurrencyProperty()
+            throws Exception {
+        actual.getProperties().remove(10058);
+        start(1);
+        assertEquals(0, settle(report(1, 1740, false)).getRetcode());
+        assertEquals(20, musicCoins());
+        assertEquals(Set.of(1), completedMaps());
+    }
+
+    private void copyRewardResources(Path directory) throws Exception {
+        for (var name :
+                List.of("Song", "Album", "Guide", "Beatmap", "BeatmapSettle", "ConstValue")) {
+            var file = "MusicGameBook" + name + "ExcelConfigData.json";
+            Files.copy(Path.of("resources/ExcelBinOutput", file), directory.resolve(file));
+        }
+        Files.copy(
+                Path.of("resources/ExcelBinOutput/RewardExcelConfigData.json"),
+                directory.resolve("RewardExcelConfigData.json"));
+    }
+
+    @ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(
+            strings = {"missing", "negative", "physical", "duplicate", "overflow", "extra"})
+    void invalidRewardResourcesCannotPayOrConsumeTheFirstClear(
+            String fault, @org.junit.jupiter.api.io.TempDir Path directory) throws Exception {
+        copyRewardResources(directory);
+        var rewardFile = directory.resolve("RewardExcelConfigData.json");
+        var original = Files.readString(rewardFile);
+        var rewards = JsonParser.parseString(original).getAsJsonArray();
+        JsonObject row = null;
+        int index = 0;
+        for (; index < rewards.size(); index++) {
+            var candidate = rewards.get(index).getAsJsonObject();
+            if (candidate.get("rewardId").getAsInt() == 4120011) {
+                row = candidate;
+                break;
+            }
+        }
+        assertNotNull(row);
+        var item = row.getAsJsonArray("rewardItemList").get(0).getAsJsonObject();
+        switch (fault) {
+            case "missing" -> rewards.remove(index);
+            case "negative" -> item.addProperty("itemCount", -20);
+            case "physical" -> item.addProperty("itemId", 100001);
+            case "duplicate" -> rewards.add(row.deepCopy());
+            case "overflow" -> row.getAsJsonArray("rewardItemList")
+                    .add(JsonParser.parseString("{itemId:207,itemCount:2147483647}"));
+            case "extra" -> row.addProperty("hcoin", 1);
+            default -> fail("Unknown resource fault");
+        }
+        Files.writeString(rewardFile, rewards.toString());
+        assertEquals(0, start(1).getRetcode());
+        replaceField(
+                MusicGameBook.class,
+                actual.getMusicGameBook(),
+                "activeCatalog",
+                MusicGameBookCatalog.load(directory));
+        var request = report(1, 1740, false);
+        assertNotEquals(0, settle(request).getRetcode());
+        assertEquals(0, musicCoins());
+        assertEquals(0, actual.getPrimogems());
+        assertTrue(snapshot().isEmpty());
+        assertNull(document());
+        assertEquals(
+                0,
+                packets.stream()
+                        .filter(p -> p.getOpcode() == PacketOpcodes.ItemAddHintNotify)
+                        .count());
+        Files.writeString(rewardFile, original);
+        assertEquals(0, settle(request).getRetcode());
+        assertEquals(20, musicCoins());
+        assertEquals(Set.of(1), completedMaps());
+    }
+
+    @Test
+    void notificationFailureCannotUndoOrDuplicateAConfirmedMusicReward() throws Exception {
+        start(9991);
+        failRewardHint.set(true);
+        var request = report(9991, 300, false);
+        assertEquals(0, settle(request).getRetcode());
+        assertEquals(20, actual.getPrimogems());
+        assertEquals(20, musicCoins());
+        assertEquals(Set.of(9991), completedMaps());
+        var saved = document();
+        assertEquals(0, settle(request).getRetcode());
+        assertEquals(saved, document());
+        assertEquals(20, musicCoins());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 2, 3})
+    void nonstandardFinishReasonDoesNotConsumeTheSinglePlayerReward(int reason) throws Exception {
+        start(1);
+        settle(report(1, 2000, false).toBuilder().setLKIMDBMGKEM(reason).build());
+        assertEquals(0, musicCoins());
+        assertTrue(completedMaps().isEmpty());
+    }
+
+    @Test
+    void opaqueNoteTelemetryAndSettingsDoNotSuppressAnOrdinarySinglePlayerClear() throws Exception {
+        start(1);
+        var request =
+                report(1, 2000, false).toBuilder()
+                        .setLKIMDBMGKEM(1)
+                        .addAllFMBMLBAGIIO(List.of(1, 3, 2, 1, 0, 4))
+                        .setNGMCGJBAJJC(true)
+                        .setDGBEKHBEHFN(true)
+                        .build();
+        assertEquals(0, settle(request).getRetcode());
+        assertEquals(20, musicCoins());
+        assertEquals(Set.of(1), completedMaps());
+    }
+
+    @Test
+    void nativeFullComboUsesTheOneBitIntegerInsteadOfAnOpaqueSettingFlag() throws Exception {
+        start(1);
+        var request = report(1, 2000, true).toBuilder().setDGBEKHBEHFN(false).build();
+        assertEquals(0, settle(request).getRetcode());
+        assertTrue(records().get(1).isFullCombo());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {2, -1})
+    void nativeFullComboIntegerOnlyAcceptsZeroOrOne(int flag) throws Exception {
+        start(1);
+        var request = report(1, 2000, false).toBuilder().setFJDDGBILJCF(flag).build();
+        assertNotEquals(0, settle(request).getRetcode());
+        assertTrue(snapshot().isEmpty());
+        assertEquals(0, musicCoins());
+    }
+
+    @Test
+    void theFirstRatingThresholdComesFromTheResourceTable(
+            @org.junit.jupiter.api.io.TempDir Path directory) throws Exception {
+        copyRewardResources(directory);
+        var file = directory.resolve("MusicGameBookConstValueExcelConfigData.json");
+        var constants = JsonParser.parseString(Files.readString(file)).getAsJsonArray();
+        for (var value : constants) {
+            var row = value.getAsJsonObject();
+            if (row.has("name")
+                    && row.get("name").getAsString().equals("MGB_CONST_VALUE_SCORE_RATIO"))
+                row.getAsJsonArray("value").set(0, new JsonPrimitive("60"));
+        }
+        Files.writeString(file, constants.toString());
+        for (int score : new int[] {2087, 2088}) {
+            start(1);
+            replaceField(
+                    MusicGameBook.class,
+                    actual.getMusicGameBook(),
+                    "activeCatalog",
+                    MusicGameBookCatalog.load(directory));
+            assertEquals(0, settle(report(1, score, false)).getRetcode());
+            assertEquals(score == 2087 ? 0 : 20, musicCoins());
         }
     }
 }
