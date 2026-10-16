@@ -69,6 +69,21 @@ PE 函数区间确认，不覆盖所有间接调用或热修复分支。
 `final-results/` 与 `final.log` 为相关回归和构建。
 `first-fix.log` 是补齐消息导入前的编译失败，不计为业务失败证据。
 
+## 本机运行
+
+功能提交 `111694c7185618bf3daa0aecb2b7fb7fda6d7c98` 已推送至 `origin/main`。
+2026-10-16 18:10（UTC+8），上述最终构建已在本机启动，进程 20500 同时监听
+TCP 8088 与 UDP 22101。健康检查通过，死锁、在线玩家和未结束的队列任务均为 0，
+启动日志未发现 ERROR 或异常退出标记。
+
+切换前确认游戏关闭和服务空闲，通过 GM `stop` 正常停止旧进程 30632。
+启动时显式合并 `.env`／`.env.local`，继续使用外部开发资源目录
+`D:\Projects\Experiment\LunaGC-Resources` 和 Mongo 数据卷 `lunagc_mongo-data`。
+资源提交保持 `dac2a9d43332ef51879522cf39da2831b0ca0543`。
+停止、启动输入和最终健康核对保存在同目录的 `runtime-stop-proof.json`、
+`runtime-launch-inputs.json`、`runtime-start-proof.json` 和 `runtime-after-start/`。
+本项确认服务切换，后续玩法和实机验收仍保留。
+
 ## 后续范围
 
 这次接入客户端明确发出的材质耗尽通知。完整服务端元素附着／反应、独立的逐次耐久伤害
