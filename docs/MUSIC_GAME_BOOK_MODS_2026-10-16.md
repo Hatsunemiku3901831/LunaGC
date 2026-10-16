@@ -37,3 +37,6 @@ radare2 MCP 本轮仍返回 `Transport closed`；只读分析使用重新验证�
 `debug/aster-mid-20261011/batch323/`。
 
 本批先补齐消息定义；实际选择保存、组合约束、演奏资格及客户端验收继续接入。
+
+2026-10-17 已接入[选择确认保存、互斥校验和重登同步](MUSIC_GAME_BOOK_MOD_SELECTION_2026-10-17.md)。
+演奏资格与当前客户端验收仍保留。

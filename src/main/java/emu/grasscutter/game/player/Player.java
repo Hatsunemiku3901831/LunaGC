@@ -172,6 +172,8 @@ public class Player implements PlayerHook, FieldFetch {
     private volatile Map<Integer, MusicGameBookRecordData> musicGameBookRecords = new HashMap<>();
     @Getter(AccessLevel.PACKAGE) @Setter(AccessLevel.PACKAGE)
     private volatile MusicGameBookSettingsData musicGameBookSettings;
+    @Getter(AccessLevel.PACKAGE) @Setter(AccessLevel.PACKAGE)
+    private volatile List<Integer> musicGameBookMods;
     @Transient private transient MusicGameBook musicGameBook;
 
     public MusicGameBook getMusicGameBook() {
