@@ -96,6 +96,9 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
     }
 
     public int getItemCountById(int itemId) {
+        var itemData = GameData.getItemDataMap().get(itemId);
+        if (itemData != null && itemData.getItemType() == ItemType.ITEM_VIRTUAL)
+            return this.getVirtualItemCount(itemId);
         val inventoryTab = this.getInventoryTabByItemId(itemId);
         return inventoryTab != null ? inventoryTab.getItemCountById(itemId) : 0;
     }
@@ -486,6 +489,11 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
             this.player.setCrystals(this.player.getCrystals() + count);
             case 204 -> // Home Coin
             this.player.setHomeCoin(this.player.getHomeCoin() + count);
+            case 207 -> this.player.setProperty(
+                    PlayerProperty.PROP_PLAYER_MUSIC_GAME_BOOK_COIN,
+                    Math.addExact(
+                            this.player.getProperty(PlayerProperty.PROP_PLAYER_MUSIC_GAME_BOOK_COIN),
+                            count));
         }
     }
 
@@ -509,6 +517,11 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
             player.useLegendaryKey(count);
             case 204 -> // Home Coin
             player.setHomeCoin(player.getHomeCoin() - count);
+            case 207 -> player.setProperty(
+                    PlayerProperty.PROP_PLAYER_MUSIC_GAME_BOOK_COIN,
+                    Math.subtractExact(
+                            player.getProperty(PlayerProperty.PROP_PLAYER_MUSIC_GAME_BOOK_COIN),
+                            count));
             default -> {
                 var gameItem = getInventoryTab(ItemType.ITEM_MATERIAL).getItemById(itemId);
                 removeItem(gameItem, count);
@@ -534,6 +547,8 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
                 return this.player.getProperty(PlayerProperty.PROP_PLAYER_LEGENDARY_KEY);
             case 204: // Home Coin
                 return this.player.getHomeCoin();
+            case 207:
+                return this.player.getProperty(PlayerProperty.PROP_PLAYER_MUSIC_GAME_BOOK_COIN);
             default:
                 GameItem item =
                         getInventoryTab(ItemType.ITEM_MATERIAL)
@@ -544,6 +559,8 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
     }
 
     public synchronized boolean payItem(int id, int count) {
+        if (count < 0) return false;
+        if (count == 0) return true;
         if (this.getVirtualItemCount(id) < count) return false;
         this.payVirtualItem(id, count);
         return true;
@@ -563,19 +580,7 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
 
     public synchronized boolean payItems(
             ItemParamData[] costItems, int quantity, ActionReason reason) {
-        // Make sure player has requisite items
-        for (ItemParamData cost : costItems)
-            if (this.getVirtualItemCount(cost.getId()) < (cost.getCount() * quantity)) return false;
-        // All costs are satisfied, now remove them all
-        for (ItemParamData cost : costItems) {
-            this.payVirtualItem(cost.getId(), cost.getCount() * quantity);
-        }
-
-        if (reason != null) { // Do we need these?
-            // getPlayer().sendPacket(new PacketItemAddHintNotify(changedItems, reason));
-        }
-        // getPlayer().sendPacket(new PacketStoreItemChangeNotify(changedItems));
-        return true;
+        return costItems != null && this.payItems(Arrays.asList(costItems), quantity, reason);
     }
 
     public boolean payItems(Iterable<ItemParamData> costItems) {
@@ -588,12 +593,25 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
 
     public synchronized boolean payItems(
             Iterable<ItemParamData> costItems, int quantity, ActionReason reason) {
-        // Make sure player has requisite items
-        for (ItemParamData cost : costItems)
-            if (getVirtualItemCount(cost.getId()) < (cost.getCount() * quantity)) return false;
-        // All costs are satisfied, now remove them all
-        costItems.forEach(cost -> this.payVirtualItem(cost.getId(), cost.getCount() * quantity));
-        // TODO:handle the reason(need to send certain package)
+        if (costItems == null || quantity <= 0) return false;
+        // Snapshot once, combine duplicate IDs and finish every arithmetic/balance check first.
+        // This also supports an Iterable backed by a single-use iterator.
+        var totals = new Int2IntLinkedOpenHashMap();
+        try {
+            for (var cost : costItems) {
+                if (cost == null || cost.getCount() < 0) return false;
+                if (cost.getCount() == 0) continue;
+                if (cost.getId() <= 0) return false;
+                int required = Math.multiplyExact(cost.getCount(), quantity);
+                totals.put(cost.getId(), Math.addExact(totals.get(cost.getId()), required));
+            }
+        } catch (ArithmeticException invalidCost) {
+            return false;
+        }
+        for (var cost : totals.int2IntEntrySet())
+            if (getVirtualItemCount(cost.getIntKey()) < cost.getIntValue()) return false;
+        for (var cost : totals.int2IntEntrySet())
+            this.payVirtualItem(cost.getIntKey(), cost.getIntValue());
         return true;
     }
 
