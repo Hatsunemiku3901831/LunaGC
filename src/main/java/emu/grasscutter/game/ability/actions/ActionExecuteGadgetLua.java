@@ -4,6 +4,7 @@ import com.google.protobuf.ByteString;
 import emu.grasscutter.data.binout.AbilityModifier.AbilityModifierAction;
 import emu.grasscutter.game.ability.Ability;
 import emu.grasscutter.game.entity.GameEntity;
+import emu.grasscutter.game.entity.EntityGadget;
 
 @AbilityAction(AbilityModifierAction.Type.ExecuteGadgetLua)
 public class ActionExecuteGadgetLua extends AbilityActionHandler {
@@ -11,6 +12,8 @@ public class ActionExecuteGadgetLua extends AbilityActionHandler {
     public boolean execute(
             Ability ability, AbilityModifierAction action, ByteString abilityData, GameEntity target) {
         GameEntity owner = ability.getOwner();
+        if (owner instanceof EntityGadget gadget && gadget.getQuartzOreCycle() != null)
+            return gadget.getQuartzOreCycle().executeLua(ability, action);
 
         // Investigate if we need to use target
 

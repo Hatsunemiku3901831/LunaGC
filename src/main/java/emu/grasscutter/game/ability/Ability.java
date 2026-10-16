@@ -112,6 +112,8 @@ public class Ability {
         modifier.prepareAttachmentCallbacks(target);
         synchronized (target.getInstancedModifiers()) {
             modifier.bindApplication(target);
+            if (target instanceof emu.grasscutter.game.entity.EntityGadget gadget
+                    && gadget.getQuartzOreCycle() != null) gadget.getQuartzOreCycle().registered(modifier);
             var replaced=getModifiers(target).put(modifier.getName(), modifier);
             synchronized (modifierTargets) { modifierTargets.add(target); }
             target.getAbilityHpModifier().registered(modifier);

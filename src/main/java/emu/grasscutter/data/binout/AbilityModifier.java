@@ -379,6 +379,7 @@ public class AbilityModifier implements Serializable {
         public boolean ignoreAbilityProperty;
 
         public String modifierName;
+        public String subfieldName;
 
         public boolean enableLockHP;
         public boolean disableWhenLoading;

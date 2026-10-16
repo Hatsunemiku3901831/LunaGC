@@ -63,6 +63,7 @@ public final class AbilityCooldownInvocation {
         return isCooldownAction(action)
                 || action != null && (action.type == AbilityModifierAction.Type.TPSSupplyAmmo
                         || action.type == AbilityModifierAction.Type.TPSAmmoBoxDispatch
+                        || action.type == AbilityModifierAction.Type.DropSubfield
                         || action.type == AbilityModifierAction.Type.DoActionByGlobalValue);
     }
 

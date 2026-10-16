@@ -107,6 +107,9 @@ public class AbilityModifierController {
     }
 
     boolean isClientInstanceCurrent(GameEntity target) {
+        if (target instanceof emu.grasscutter.game.entity.EntityGadget gadget
+                && gadget.getQuartzOreCycle() != null
+                && !gadget.getQuartzOreCycle().applicationCurrent(this)) return false;
         var bound = application;
         if (bound != null && (bound.target != target || !bound.context.isCurrent()
                 || bound.installedRoot && !ability.getOwner().getInstancedAbilities().contains(ability))) return false;

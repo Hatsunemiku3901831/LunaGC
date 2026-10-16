@@ -48,6 +48,10 @@ final class EnvironmentalMaterialCallbacks {
                 || controller.hasServerCallbacks()
                 || controller.hasBindingCallbacks()
                 || controller.hasAnimationCallbacks()) return;
+        if (gadget.getQuartzOreCycle() != null) {
+            gadget.getQuartzOreCycle().removed(controller, payload);
+            return;
+        }
         var material = MATERIALS.get(ability.getData().abilityName);
         if (material == null
                 || !material.modifier.equals(controller.getName())

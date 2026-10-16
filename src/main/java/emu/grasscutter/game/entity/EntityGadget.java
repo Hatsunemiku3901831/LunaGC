@@ -6,6 +6,7 @@ import emu.grasscutter.data.binout.config.ConfigEntityGadget;
 import emu.grasscutter.data.binout.config.fields.ConfigAbilityData;
 import emu.grasscutter.data.excels.GadgetData;
 import emu.grasscutter.data.excels.monster.MonsterCurveData;
+import emu.grasscutter.game.ability.QuartzOreCycle;
 import emu.grasscutter.game.entity.gadget.*;
 import emu.grasscutter.game.entity.gadget.platform.*;
 import emu.grasscutter.game.player.Player;
@@ -45,6 +46,7 @@ import lombok.*;
 @ToString(callSuper = true)
 public class EntityGadget extends EntityBaseGadget {
     @Getter private final GadgetData gadgetData;
+    @Getter private final QuartzOreCycle quartzOreCycle;
 
     @Getter(onMethod_ = @Override)
     @Setter
@@ -170,6 +172,7 @@ public class EntityGadget extends EntityBaseGadget {
 
         this.id = this.getScene().getWorld().getNextEntityId(EntityIdType.GADGET);
         this.gadgetId = gadgetId;
+        this.quartzOreCycle = gadgetId == QuartzOreCycle.GADGET ? new QuartzOreCycle(this) : null;
         this.content = content;
         this.bornPos = this.getPosition().clone();
         this.bornRot = this.getRotation().clone();
@@ -369,12 +372,21 @@ public class EntityGadget extends EntityBaseGadget {
 
     private void tickGadget(int sceneTime) {
         super.onTick(sceneTime);
+        if (quartzOreCycle != null) quartzOreCycle.tick();
         if (metaGadget != null && metaGadget.crucible_config != null)
             updateGadgetPlay(state -> state.tick(System.currentTimeMillis() / 1000));
     }
 
     public void setState(int state) {
+        if (quartzOreCycle != null) {
+            synchronized (getScene()) { storeState(state); }
+        } else storeState(state);
+    }
+
+    private void storeState(int state) {
+        int oldState = this.state;
         this.state = state;
+        if (quartzOreCycle != null) quartzOreCycle.stateChanged(oldState, state);
         // Cache the gadget state
         if (metaGadget != null && metaGadget.group != null) {
             var instance = getScene().getScriptManager().getGroupInstanceById(metaGadget.group.id);
@@ -389,6 +401,12 @@ public class EntityGadget extends EntityBaseGadget {
     }
 
     public void updateState(int state) {
+        if (quartzOreCycle != null) {
+            synchronized (getScene()) { updateStateNow(state); }
+        } else updateStateNow(state);
+    }
+
+    private void updateStateNow(int state) {
         if (state == this.getState()) return; // Don't triggers events
 
         var oldState = this.getState();
@@ -467,10 +485,23 @@ public class EntityGadget extends EntityBaseGadget {
     @Override
     public void onRemoved() {
         super.onRemoved();
+        if (quartzOreCycle != null) quartzOreCycle.clear();
         if (!children.isEmpty()) {
             getScene().removeEntities(children, VisionTypeOuterClass.VisionType.VisionType_VISION_REMOVE);
             children.clear();
         }
+    }
+
+    @Override
+    public boolean dropSubfield(String name) {
+        return quartzOreCycle != null && QuartzOreCycle.SUBFIELD.equals(name)
+                ? quartzOreCycle.drop(() -> super.dropSubfield(name)) : super.dropSubfield(name);
+    }
+
+    @Override
+    public int onClientExecuteRequest(int p1, int p2, int p3) {
+        return quartzOreCycle == null ? super.onClientExecuteRequest(p1, p2, p3)
+                : quartzOreCycle.clientExecute(p1, p2, p3, () -> super.onClientExecuteRequest(p1, p2, p3));
     }
 
     @Override
