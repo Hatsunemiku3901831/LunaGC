@@ -45,6 +45,7 @@ public final class DungeonManager {
 
     @Getter private final int[] finishedConditions;
     private final IntSet rewardedPlayers = IntSets.synchronize(new IntOpenHashSet());
+    private final IntSet claimingPlayers = IntSets.synchronize(new IntOpenHashSet());
     private final Set<Integer> activeDungeonWayPoints = new HashSet<>();
     private boolean ended = false;
     private volatile BaseDungeonResult.DungeonEndReason pendingTowerEnd;
@@ -149,6 +150,20 @@ public final class DungeonManager {
     }
 
     public boolean getStatueDrops(Player player, boolean useCondensed, int groupId) {
+        // Reserve before payment and inventory callbacks, both of which can re-enter this method.
+        // Do not hold a dungeon lock while calling the player's managers or sending packets.
+        int uid = player.getUid();
+        if (!claimingPlayers.add(uid)) {
+            return false;
+        }
+        try {
+            return claimStatueDrops(player, useCondensed, groupId);
+        } finally {
+            claimingPlayers.remove(uid);
+        }
+    }
+
+    private boolean claimStatueDrops(Player player, boolean useCondensed, int groupId) {
         if (!isFinishedSuccessfully()
                 || dungeonData.getRewardPreviewData() == null
                 || dungeonData.getRewardPreviewData().getPreviewItems().length == 0) {
@@ -178,10 +193,8 @@ public final class DungeonManager {
             return false;
         }
 
-        // Add rewards to player and send notification.
+        // Finish the claim before the pickup notice: a transport failure cannot undo the grant.
         player.getInventory().addItems(rewards, ActionReason.DungeonStatueDrop);
-        player.sendPacket(new PacketGadgetAutoPickDropInfoNotify(rewards));
-
         rewardedPlayers.add(player.getUid());
 
         // Count the claim only now that the rewards are in the inventory, so a roll that produced
@@ -190,6 +203,12 @@ public final class DungeonManager {
             player.setWeeklyBossChestNum(player.getWeeklyBossChestNum() + 1);
         }
 
+        try {
+            player.sendPacket(new PacketGadgetAutoPickDropInfoNotify(rewards));
+        } catch (RuntimeException notificationFailure) {
+            Grasscutter.getLogger().warn("Cannot notify dungeon {} reward pickup for player {}",
+                    dungeonData.getId(), player.getUid(), notificationFailure);
+        }
         scene.getScriptManager().callEvent(new ScriptArgs(groupId, EventType.EVENT_DUNGEON_REWARD_GET));
         return true;
     }
