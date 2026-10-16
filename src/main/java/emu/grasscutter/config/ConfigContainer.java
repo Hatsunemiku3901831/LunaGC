@@ -465,6 +465,7 @@ public class ConfigContainer {
         public Questing questing = new Questing();
         public ResinOptions resinOptions = new ResinOptions();
         public Rates rates = new Rates();
+        public DungeonRewardOptions dungeonRewards = new DungeonRewardOptions();
         public StatueRewardOptions statueRewards = new StatueRewardOptions();
         public StatueRecoveryOptions statueRecovery = new StatueRecoveryOptions();
         public TowerOptions tower = new TowerOptions();
@@ -490,6 +491,14 @@ public class ConfigContainer {
             public float adventureExp = 1.0f;
             public float mora = 1.0f;
             public float leyLines = 1.0f;
+        }
+
+        public static class DungeonRewardOptions {
+            /** Positive integers; 1 preserves the original material quantities. */
+            public int talentMaterialMultiplier = 1;
+            public int weaponMaterialMultiplier = 1;
+            /** Optional reference bonus: 6-12 essence and 7-10 unction per relic claim. */
+            public boolean relicEnhancementBonus = false;
         }
 
         public static class StatueRewardOptions {

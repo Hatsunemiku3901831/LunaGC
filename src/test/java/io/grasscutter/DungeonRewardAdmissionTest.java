@@ -2,6 +2,7 @@ package io.grasscutter;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import emu.grasscutter.config.ConfigContainer.GameOptions.DungeonRewardOptions;
 import emu.grasscutter.config.Configuration;
 import emu.grasscutter.data.DungeonDropCatalog;
 import emu.grasscutter.data.GameData;
@@ -49,6 +50,7 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
     final Map<Integer, DungeonData> oldDungeons = new HashMap<>();
     Consumer<BasePacket> packetAction = ignored -> {};
     boolean resinUsage;
+    DungeonRewardOptions oldDungeonRewards;
     CodexBookData oldBook, oldBookMaterial;
 
     @BeforeAll
@@ -58,6 +60,9 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
 
     @BeforeEach
     void rewardPlayer() throws Exception {
+        var options = emu.grasscutter.Grasscutter.getConfig().server.game.gameOptions;
+        oldDungeonRewards = options.dungeonRewards;
+        options.dungeonRewards = new DungeonRewardOptions();
         replaceField(
                 GameServer.class,
                 player.server,
@@ -75,8 +80,10 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
                 JsonUtils.loadToList(
                         Path.of("resources/ExcelBinOutput/MaterialExcelConfigData.json"),
                         ItemData.class)) {
-            if (!Set.of(128, 141, 202, 220007, 104002, 104003, 100215).contains(data.getId()))
-                continue;
+            if (!Set.of(
+                            128, 141, 202, 220007, 104002, 104003, 100215, 104303, 114001, 105002,
+                            105003, 105005)
+                    .contains(data.getId())) continue;
             data.onLoad();
             oldItems.put(data.getId(), GameData.getItemDataMap().put(data.getId(), data));
         }
@@ -134,6 +141,8 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
 
     @AfterEach
     void restoreRewards() throws Exception {
+        emu.grasscutter.Grasscutter.getConfig().server.game.gameOptions.dungeonRewards =
+                oldDungeonRewards;
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
         if (playerStore != null) playerStore.close();
         if (oldBook == null) GameData.getCodexBookDataMap().remove(50022001);
@@ -1319,6 +1328,248 @@ class DungeonRewardAdmissionTest extends QuestTestFixture {
                                                 == ItemType.ITEM_RELIQUARY));
         assertEquals(condensed ? 200 : 180, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
         assertEquals(condensed ? 0 : 1, actual.getInventory().getItemCountById(220007));
+    }
+
+    DungeonRewardOptions enhancementOptions() {
+        return emu.grasscutter.Grasscutter.getConfig().server.game.gameOptions.dungeonRewards;
+    }
+
+    DungeonManager configuredRewardDungeon(int id, List<DungeonDropEntry> groups) throws Exception {
+        if (!oldDrops.containsKey(id) && !absentDrops.contains(id)) {
+            var old = GameData.getDungeonDropDataMap().get(id);
+            if (old == null) absentDrops.add(id);
+            else oldDrops.put(id, old);
+        }
+        GameData.getDungeonDropDataMap().put(id, groups);
+        var manager = dungeon(id);
+        int root = manager.getDungeonData().getStatueDrop();
+        if (!oldTables.containsKey(root))
+            oldTables.put(root, GameData.getDropTableDataMap().get(root));
+        GameData.getDropTableDataMap().remove(root);
+        return manager;
+    }
+
+    @Test
+    void oldConfigurationKeepsResourceRewardsByDefault() {
+        var options = gson.fromJson("{}", emu.grasscutter.config.ConfigContainer.GameOptions.class);
+        assertEquals(1, options.dungeonRewards.talentMaterialMultiplier);
+        assertEquals(1, options.dungeonRewards.weaponMaterialMultiplier);
+        assertFalse(options.dungeonRewards.relicEnhancementBonus);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "4210,3,false",
+        "4210,3,true",
+        "4310,5,false",
+        "4310,5,true",
+        "5125,1,false",
+        "5125,1,true",
+        "103,1,false",
+        "103,1,true"
+    })
+    void optionalMaterialMultipliersFollowTheSubtype(int id, int multiplier, boolean condensed)
+            throws Exception {
+        enhancementOptions().talentMaterialMultiplier = 3;
+        enhancementOptions().weaponMaterialMultiplier = 5;
+        var manager =
+                configuredRewardDungeon(
+                        id,
+                        List.of(drop(104303, 2), drop(114001, 3), drop(202, 10), drop(20002, 1)));
+        assertTrue(manager.getStatueDrops(actual, condensed, 0));
+        int rolls = condensed ? 2 : 1;
+        assertEquals(2 * rolls * multiplier, actual.getInventory().getItemCountById(104303));
+        assertEquals(3 * rolls * multiplier, actual.getInventory().getItemCountById(114001));
+        assertEquals(10 * rolls, actual.getMora());
+        assertEquals(
+                rolls,
+                actual.getInventory().getItems().values().stream()
+                        .filter(item -> item.getItemId() == 20002)
+                        .count());
+        assertEquals(0, actual.getInventory().getItemCountById(105002));
+        assertEquals(0, actual.getInventory().getItemCountById(105003));
+        assertEquals(
+                condensed ? 200 : id == 103 ? 170 : 180,
+                actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertEquals(condensed ? 0 : 1, actual.getInventory().getItemCountById(220007));
+        assertFalse(manager.getStatueDrops(actual, condensed, 0));
+        assertEquals(10 * rolls, actual.getMora());
+    }
+
+    static Stream<Arguments> optionalWeightedRoutes() {
+        return Stream.of(Arguments.of(4654, 4213), Arguments.of(4674, 4313))
+                .flatMap(
+                        row ->
+                                Stream.of(false, true)
+                                        .flatMap(
+                                                own ->
+                                                        Stream.of(false, true)
+                                                                .map(
+                                                                        condensed ->
+                                                                                Arguments.of(
+                                                                                        row.get()[
+                                                                                                0],
+                                                                                        row.get()[
+                                                                                                1],
+                                                                                        own,
+                                                                                        condensed))));
+    }
+
+    @ParameterizedTest
+    @MethodSource("optionalWeightedRoutes")
+    void optionalMaterialMultipliersAlsoCoverWeightedRootsAndTemplates(
+            int id, int sourceId, boolean ownRoot, boolean condensed) throws Exception {
+        var manager = materialDungeon(id, sourceId);
+        int sourceRoot = GameData.getDungeonDataMap().get(sourceId).getStatueDrop();
+        if (ownRoot)
+            replaceField(DungeonData.class, manager.getDungeonData(), "statueDrop", sourceRoot);
+        enhancementOptions().talentMaterialMultiplier = 3;
+        enhancementOptions().weaponMaterialMultiplier = 3;
+        var targets = new HashMap<Integer, Integer>();
+        for (var row : manager.getDungeonData().getRewardPreviewData().getRawPreviewItems()) {
+            var item = GameData.getItemDataMap().get(row.getId());
+            if (item != null && item.getMaterialType() == MaterialType.MATERIAL_AVATAR_MATERIAL)
+                targets.put(item.getRankLevel(), item.getId());
+        }
+        var field = DropSystem.class.getDeclaredField("rand");
+        field.setAccessible(true);
+        var random = (Random) field.get(actual.getServer().getDropSystem());
+        random.setSeed(id);
+        var original =
+                actual.getServer().getDropSystem().handleDungeonRewardDrop(sourceRoot, condensed);
+        var expected = new TreeMap<Integer, Integer>();
+        for (var item : original) {
+            boolean material = item.getItemData().getItemType() == ItemType.ITEM_MATERIAL;
+            int target =
+                    material && !ownRoot
+                            ? targets.get(item.getItemData().getRankLevel())
+                            : item.getItemId();
+            expected.merge(target, item.getCount() * (material ? 3 : 1), Integer::sum);
+        }
+        random.setSeed(id);
+        assertTrue(manager.getStatueDrops(actual, condensed, 0));
+        assertEquals(expected.get(102).intValue(), actual.getExp());
+        assertEquals(expected.get(202).intValue(), actual.getMora());
+        for (var row : expected.entrySet())
+            if (GameData.getItemDataMap().get(row.getKey().intValue()).getItemType()
+                    == ItemType.ITEM_MATERIAL)
+                assertEquals(
+                        row.getValue().intValue(),
+                        actual.getInventory().getItemCountById(row.getKey()));
+        assertFalse(manager.getStatueDrops(actual, condensed, 0));
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void optionalRelicBonusIsPartOfTheSingleClaim(boolean condensed) throws Exception {
+        enhancementOptions().relicEnhancementBonus = true;
+        enhancementOptions().talentMaterialMultiplier = 10;
+        enhancementOptions().weaponMaterialMultiplier = 20;
+        var manager =
+                configuredRewardDungeon(
+                        5125, List.of(drop(20002, 1), drop(202, 10), drop(105005, 1)));
+        assertTrue(manager.getStatueDrops(actual, condensed, 0));
+        int essence = actual.getInventory().getItemCountById(105003);
+        int unction = actual.getInventory().getItemCountById(105002);
+        assertTrue(essence >= 6 && essence <= 12);
+        assertTrue(unction >= 7 && unction <= 10);
+        assertEquals(condensed ? 2 : 1, actual.getInventory().getItemCountById(105005));
+        assertEquals(condensed ? 20 : 10, actual.getMora());
+        assertFalse(manager.getStatueDrops(actual, condensed, 0));
+        assertEquals(essence, actual.getInventory().getItemCountById(105003));
+        assertEquals(unction, actual.getInventory().getItemCountById(105002));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"105002,false", "105002,true", "105003,false", "105003,true"})
+    void existingBlessingMaterialsAreNotDuplicated(int itemId, boolean condensed) throws Exception {
+        enhancementOptions().relicEnhancementBonus = true;
+        var manager = configuredRewardDungeon(5125, List.of(drop(20002, 1), drop(itemId, 7)));
+        assertTrue(manager.getStatueDrops(actual, condensed, 0));
+        assertEquals(condensed ? 14 : 7, actual.getInventory().getItemCountById(itemId));
+        assertEquals(0, actual.getInventory().getItemCountById(itemId == 105002 ? 105003 : 105002));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "overflow,false",
+        "overflow,true",
+        "zero,false",
+        "zero,true",
+        "negative,false",
+        "negative,true"
+    })
+    void invalidEnhancedAmountsDoNotSpendResinAndCanRetry(String fault, boolean condensed)
+            throws Exception {
+        enhancementOptions().talentMaterialMultiplier =
+                fault.equals("zero") ? 0 : fault.equals("negative") ? -1 : 3;
+        var manager =
+                configuredRewardDungeon(
+                        4210,
+                        fault.equals("overflow")
+                                ? List.of(drop(104303, 1), drop(114001, Integer.MAX_VALUE / 3 + 1))
+                                : List.of(drop(104303, 2)));
+        assertFalse(manager.getStatueDrops(actual, condensed, 0));
+        assertEquals(200, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertEquals(1, actual.getInventory().getItemCountById(220007));
+        assertEquals(0, actual.getInventory().getItemCountById(104303));
+        assertFalse(manager.hasClaimedDomainReward(actual.getUid()));
+        enhancementOptions().talentMaterialMultiplier = 3;
+        GameData.getDungeonDropDataMap().put(4210, List.of(drop(104303, 2)));
+        assertTrue(manager.getStatueDrops(actual, condensed, 0));
+        assertEquals(condensed ? 12 : 6, actual.getInventory().getItemCountById(104303));
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void enhancedQuantitiesAreAdmittedAgainstTheRealStackLimit(boolean condensed) throws Exception {
+        enhancementOptions().talentMaterialMultiplier = 3;
+        var manager = configuredRewardDungeon(4210, List.of(drop(104303, 800)));
+        assertFalse(manager.getStatueDrops(actual, condensed, 0));
+        assertEquals(200, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertEquals(1, actual.getInventory().getItemCountById(220007));
+        assertEquals(0, actual.getInventory().getItemCountById(104303));
+        enhancementOptions().talentMaterialMultiplier = 1;
+        assertTrue(manager.getStatueDrops(actual, condensed, 0));
+        assertEquals(condensed ? 1600 : 800, actual.getInventory().getItemCountById(104303));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "slots,false",
+        "slots,true",
+        "missing,false",
+        "missing,true",
+        "empty,false",
+        "empty,true",
+        "zero,false",
+        "zero,true"
+    })
+    void bonusSlotsMissingDefinitionsAndEmptyRollsCannotSpendResin(String fault, boolean condensed)
+            throws Exception {
+        enhancementOptions().relicEnhancementBonus = true;
+        var manager =
+                configuredRewardDungeon(
+                        5125,
+                        fault.equals("empty")
+                                ? List.of()
+                                : List.of(
+                                        drop(
+                                                fault.equals("zero") ? 202 : 20002,
+                                                fault.equals("zero") ? 0 : 1)));
+        var essence = GameData.getItemDataMap().get(105003);
+        if (fault.equals("slots")) materialCapacity(1);
+        if (fault.equals("missing")) GameData.getItemDataMap().remove(105003);
+        assertFalse(manager.getStatueDrops(actual, condensed, 0));
+        assertEquals(200, actual.getProperty(PlayerProperty.PROP_PLAYER_RESIN));
+        assertEquals(1, actual.getInventory().getItemCountById(220007));
+        assertFalse(manager.hasClaimedDomainReward(actual.getUid()));
+        if (fault.equals("slots")) materialCapacity(3);
+        GameData.getItemDataMap().put(105003, essence);
+        GameData.getDungeonDropDataMap().put(5125, List.of(drop(20002, 1)));
+        assertTrue(manager.getStatueDrops(actual, condensed, 0));
+        assertTrue(actual.getInventory().getItemCountById(105003) >= 6);
+        assertTrue(actual.getInventory().getItemCountById(105002) >= 7);
     }
 
     Map<String, Long> relicShape(Collection<GameItem> items) {

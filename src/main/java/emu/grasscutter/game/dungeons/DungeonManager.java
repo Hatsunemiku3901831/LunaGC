@@ -188,6 +188,9 @@ public final class DungeonManager {
                 return false;
             }
             rewards.removeIf(item -> item.getCount() == 0);
+            if (rewards.isEmpty()) return false;
+            DungeonRewardPolicy.apply(dungeonData, rewards,
+                    Grasscutter.getConfig().server.game.gameOptions.dungeonRewards);
         } catch (RuntimeException invalid) {
             Grasscutter.getLogger().warn("Cannot build rewards for dungeon {}", dungeonData.getId(), invalid);
             return false;

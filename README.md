@@ -1554,6 +1554,8 @@ underscore; the `_`-prefixed files are ad-hoc analysis scratch and are gitignore
 和[武器材料](docs/DUNGEON_WEAPON_MATERIALS_2026-10-17.md)原型说明。
 当前资源的 72 处缺根表秘境已有材料／圣遗物奖励原型路由；原始表文件仍未取回。
 圣遗物的套装映射、配置优先级与验证边界见[圣遗物奖励原型](docs/DUNGEON_RELIC_TEMPLATES_2026-10-17.md)。
+默认保留原始数量；可在 `server.game.gameOptions.dungeonRewards` 独立配置天赋／武器材料倍率，
+或启用圣遗物秘境的祝圣强化材料追加，详见[可选奖励策略](docs/DUNGEON_REWARD_POLICY_2026-10-17.md)。
 
 ## Credit
 
