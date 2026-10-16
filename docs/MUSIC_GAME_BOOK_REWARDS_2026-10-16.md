@@ -88,6 +88,22 @@ SHA-256：`eee37563e57cc6b008c34d987a0f270375f1ff924af201aa35d49d129060e099`。
 同目录保存原生对照、失败与各轮 XML、`reward-native-proof.json` 及 `verification.json`。
 其中较早的 649 项结果属于原生补查前的中间状态，最终验收采用 `paired-final-results` 的 654 项。
 
+## 本地运行
+
+功能提交 `a16bf255` 与旧余额兼容修复 `78b11b98` 已推送。
+2026-10-16 22:26（UTC+8），通过 GM 正常停止旧服务后，本地已切换到上述最终验证 JAR，
+没有使用原生补查前的中间产物，也没有重新构建覆盖验证文件。
+
+Java 进程 `58980` 同时监听 HTTP `8088`、UDP `22101`；健康检查通过，死锁、在线玩家和
+队列待处理、活跃、未完成及失败数量均为零，启动日志没有 ERROR／FATAL／异常。
+停止前确认没有客户端、在线玩家或未完成任务，未使用强制停服，本轮未启动游戏。
+
+按 `.env`、`.env.local` 顺序读取允许的配置，资源继续使用
+`D:/Projects/Experiment/LunaGC-Resources`；外部检出和子模块均为干净的
+`dac2a9d43332ef51879522cf39da2831b0ca0543`，Mongo 保持原有 `lunagc_mongo-data` 卷。
+同批目录中的 `runtime-stop-proof.json`、`runtime-launch-inputs.json`、`runtime-start-proof.json`
+及启动日志保存切换依据。服务健康不等同于客户端演奏或领奖验收。
+
 ## 后续范围
 
 模组对成绩及领奖资格的完整影响、模组完成、活动及成就进度、专辑／地区开放、完整目录操作、设置、自拟谱和多人模式，
