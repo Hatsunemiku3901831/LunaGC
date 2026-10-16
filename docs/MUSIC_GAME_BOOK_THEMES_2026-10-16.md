@@ -61,6 +61,18 @@ SHA-256：`dec3f12dc1330a4aa3ebb93edd028b60e244dd9211b181be83a1f7efa6706e04`。
 外部资源和子模块均保持 `dac2a9d43332ef51879522cf39da2831b0ca0543`，且干净；
 固定 AstaPS 参考检出仍为 `7cc148d1f752a43d4b9146b3b73f26875902546f`，且干净。
 
+## 本地运行
+
+功能提交 `c7de695e` 已推送。2026-10-16 20:09（UTC+8），通过 GM 正常停服后，
+本地服务已切换至上述确认过的 JAR，未重新构建覆盖产物，也未启动游戏。
+新 Java 进程 `62936` 同时监听 HTTP `8088` 和 UDP `22101`；健康检查通过，
+死锁、在线玩家及各队列待处理、活跃、未完成、失败数量均为零，启动日志无 ERROR／FATAL／异常。
+
+启动按 `.env`、`.env.local` 顺序读取允许的环境配置，资源目录为
+`D:/Projects/Experiment/LunaGC-Resources`；Compose Mongo 保持原卷 `lunagc_mongo-data`。
+启动输入、停服及运行验证保存在同批 `runtime-*-proof.json` 与 `runtime-launch-inputs.json`。
+这项确认本地服务与产物切换，不代表客户端功能已验收。
+
 ## 继续接入
 
 曲目／专辑目录、开放与解锁条件、开始／结算、成绩和奖励、自定义曲谱、推荐列表、
