@@ -168,6 +168,8 @@ public class Player implements PlayerHook, FieldFetch {
     @Getter @Setter private int widgetPetId;
     @Getter(AccessLevel.PACKAGE) @Setter(AccessLevel.PACKAGE)
     private volatile Set<Integer> musicGameBookThemes = new HashSet<>();
+    @Getter(AccessLevel.PACKAGE) @Setter(AccessLevel.PACKAGE)
+    private volatile Map<Integer, MusicGameBookRecordData> musicGameBookRecords = new HashMap<>();
     @Transient private transient MusicGameBook musicGameBook;
 
     public MusicGameBook getMusicGameBook() {
