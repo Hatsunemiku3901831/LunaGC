@@ -67,14 +67,18 @@ public final class ActionTpsSupplyAmmo extends AbilityActionHandler {
         var planned = prepareResolved(ability, action, target);
         if (planned.isEmpty()) return false;
         var supply = planned.get();
-        return AbilityCooldownInvocation.recordShared(
-                ability, action, supply.recipient(), supply::grant);
+        return AbilityCooldownInvocation.recordPreparedApplication(
+                ability,
+                action,
+                () -> Optional.of((java.util.function.BooleanSupplier) supply::grant));
     }
 
     public record Supply(Ability ability, EntityAvatar recipient, int pool, int amount) {
         public boolean grant() {
-            return isCurrentSource(ability, recipient)
-                    && TpsWeaponSystem.supplyAmmunition(recipient, pool, amount);
+            synchronized (recipient.getPlayer()) {
+                return isCurrentSource(ability, recipient)
+                        && TpsWeaponSystem.supplyAmmunition(recipient, pool, amount);
+            }
         }
     }
 
@@ -82,6 +86,8 @@ public final class ActionTpsSupplyAmmo extends AbilityActionHandler {
     public static Optional<Supply> prepareResolved(
             Ability ability, AbilityModifierAction action, GameEntity target) {
         if (ability == null || !supported(action) || !(target instanceof EntityAvatar recipient))
+            return Optional.empty();
+        if (recipient.getPlayer() == null || recipient.getPlayer().getPendingTpsSupply() != null)
             return Optional.empty();
         if (!isCurrentSource(ability, recipient)) return Optional.empty();
         var amount = action.tpsSupplyAmount.tryGet(propertiesFor(ability));

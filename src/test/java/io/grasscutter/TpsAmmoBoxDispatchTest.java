@@ -36,6 +36,8 @@ import java.util.concurrent.atomic.AtomicLong;
 class TpsAmmoBoxDispatchTest {
     TpsAmmunitionSupplyTest state;
     final AtomicBoolean failSave = new AtomicBoolean();
+    final AtomicBoolean captureSaves = new AtomicBoolean();
+    final List<Map<Integer, Integer>> savedAmmo = new ArrayList<>();
 
     @BeforeEach
     void setup() throws Exception {
@@ -47,6 +49,8 @@ class TpsAmmoBoxDispatchTest {
                             @Override
                             public void save() {
                                 super.save();
+                                if (captureSaves.get())
+                                    savedAmmo.add(new HashMap<>(getTpsAmmunition()));
                                 if (failSave.get())
                                     throw new IllegalStateException("injected save failure");
                             }
@@ -185,6 +189,26 @@ class TpsAmmoBoxDispatchTest {
     }
 
     @Test
+    void aSupplyBatchNeverPersistsOnlyItsFirstOrSecondAllocation() throws Exception {
+        weights(3, 0, 0);
+        captureSaves.set(true);
+        run(action(3));
+        assertEquals(225, TpsWeaponSystem.getReserve(state.player, 1001));
+        assertFalse(savedAmmo.isEmpty());
+        for (var snapshot : savedAmmo)
+            assertTrue(snapshot.get(1001) == 0 || snapshot.get(1001) == 225, snapshot.toString());
+    }
+
+    @Test
+    void aFailedInitialSupplySaveCannotLeaveOneOfThreeAllocationsGranted() throws Exception {
+        weights(3, 0, 0);
+        failSave.set(true);
+        run(action(3));
+        assertEquals(0, TpsWeaponSystem.getReserve(state.player, 1001));
+        assertTrue(packetPools().isEmpty());
+    }
+
+    @Test
     void anExplicitEmptySniperBranchConsumesItsUnit() throws Exception {
         state.weapon.getGlobalAbilityValues().put("SGV_Weight_Sniper", 1f);
         weights(0, 0, 10);
@@ -301,11 +325,13 @@ class TpsAmmoBoxDispatchTest {
         weights(3, 0, 0);
         failSave.set(true);
         nativeCallbacks.change(ModifierAction.MODIFIER_ACTION_ADDED);
-        assertEquals(75, TpsWeaponSystem.getReserve(state.player, 1001));
+        assertEquals(0, TpsWeaponSystem.getReserve(state.player, 1001));
+        assertNotNull(state.player.getPendingTpsSupply());
+        assertEquals(225,state.player.getPendingTpsSupply().getAfter().get(1001));
         failSave.set(false);
         nativeCallbacks.change(ModifierAction.MODIFIER_ACTION_ADDED);
         nativeCallbacks.confirm(data.modifiers.get("Pulse").onAdded[0], 110);
-        assertEquals(75, TpsWeaponSystem.getReserve(state.player, 1001));
+        assertEquals(0, TpsWeaponSystem.getReserve(state.player, 1001));
         assertEquals(1, state.player.saves);
     }
 
@@ -331,7 +357,7 @@ class TpsAmmoBoxDispatchTest {
         nativeCallbacks.confirm(data.modifiers.get("Pulse").onAdded[0], 110);
         assertEquals(75, TpsWeaponSystem.getReserve(state.player, 1001));
         nativeCallbacks.confirm(data.modifiers.get("Pulse").onAdded[0], 0);
-        assertEquals(1, state.player.saves);
+        assertEquals(3, state.player.saves);
     }
 
     @Test

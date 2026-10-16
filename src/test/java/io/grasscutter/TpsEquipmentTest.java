@@ -131,6 +131,9 @@ class TpsEquipmentTest {
         }
 
         @Override
+        public void saveTpsAmmunition() { save(); }
+
+        @Override
         public void sendPacket(BasePacket packet) {
             packets.add(packet);
         }

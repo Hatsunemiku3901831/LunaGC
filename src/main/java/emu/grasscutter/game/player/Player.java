@@ -224,6 +224,16 @@ public class Player implements PlayerHook, FieldFetch {
     @Getter @Setter private boolean tpsLoadoutInitialized;
     private Map<Integer, Integer> tpsAmmunition = new HashMap<>();
     private Map<Integer, Integer> tpsMagazineAmmunition = new HashMap<>();
+    @Getter @Setter private emu.grasscutter.game.tps.TpsSupplyReceipt pendingTpsSupply;
+    @Transient private transient emu.grasscutter.game.tps.TpsSupplyTransaction tpsSupplyTransaction;
+
+    public synchronized emu.grasscutter.game.tps.TpsSupplyTransaction getTpsSupplyTransaction() {
+        if(tpsSupplyTransaction==null)
+            tpsSupplyTransaction=new emu.grasscutter.game.tps.TpsSupplyTransaction(this);
+        return tpsSupplyTransaction;
+    }
+
+    public void saveTpsAmmunition() { DatabaseHelper.saveGameSync(this); }
     @Transient private transient emu.grasscutter.game.tps.TpsAmmunitionInvocations tpsAmmunitionInvocations;
 
     public synchronized emu.grasscutter.game.tps.TpsAmmunitionInvocations getTpsAmmunitionInvocations() {

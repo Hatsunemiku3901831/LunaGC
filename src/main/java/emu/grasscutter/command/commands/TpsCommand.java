@@ -4,11 +4,21 @@ import emu.grasscutter.command.*;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.tps.TpsWeaponSystem;
+
 import java.util.*;
 
 @Command(
         label = "tps",
-        usage = {"give [<itemId>]", "wear [<itemId> ...]", "accessory [<accessoryId>]", "refill"},
+        usage = {
+            "give [<itemId>]",
+            "wear [<itemId> ...]",
+            "accessory [<accessoryId>]",
+            "refill",
+            "pending",
+            "audit <operationId>",
+            "resume <operationId>",
+            "cancel <operationId>"
+        },
         permission = "server.tps",
         permissionTargeted = "server.tps.others")
 public final class TpsCommand implements CommandHandler {
@@ -28,7 +38,12 @@ public final class TpsCommand implements CommandHandler {
                     var ids =
                             args.size() == 2
                                     ? List.of(Integer.parseInt(args.get(1)))
-                                    : GameData.getTpsWeaponDataMap().keySet().intStream().sorted().boxed().toList();
+                                    : GameData.getTpsWeaponDataMap()
+                                            .keySet()
+                                            .intStream()
+                                            .sorted()
+                                            .boxed()
+                                            .toList();
                     int added = 0;
                     for (int id : ids) {
                         if (GameData.getTpsWeaponDataMap().containsKey(id)
@@ -44,14 +59,18 @@ public final class TpsCommand implements CommandHandler {
                     }
                     var guids = new ArrayList<Long>();
                     for (String arg : args.subList(1, args.size())) {
-                        var item = TpsWeaponSystem.findOwnedWeapon(targetPlayer, Integer.parseInt(arg));
+                        var item =
+                                TpsWeaponSystem.findOwnedWeapon(
+                                        targetPlayer, Integer.parseInt(arg));
                         if (item == null) {
                             CommandHandler.sendMessage(sender, "TPS weapon not owned: " + arg);
                             return;
                         }
                         guids.add(item.getGuid());
                     }
-                    int result = TpsWeaponSystem.wear(targetPlayer, current.getAvatar().getGuid(), guids);
+                    int result =
+                            TpsWeaponSystem.wear(
+                                    targetPlayer, current.getAvatar().getGuid(), guids);
                     CommandHandler.sendMessage(sender, "TPS equip retcode: " + result);
                 }
                 case "accessory" -> {
@@ -69,7 +88,9 @@ public final class TpsCommand implements CommandHandler {
                                             .boxed()
                                             .toList();
                     long added =
-                            ids.stream().filter(id -> TpsWeaponSystem.unlockAccessory(targetPlayer, id)).count();
+                            ids.stream()
+                                    .filter(id -> TpsWeaponSystem.unlockAccessory(targetPlayer, id))
+                                    .count();
                     CommandHandler.sendMessage(sender, "TPS accessories unlocked: " + added);
                 }
                 case "refill" -> {
@@ -80,10 +101,38 @@ public final class TpsCommand implements CommandHandler {
                     TpsWeaponSystem.refillAmmunition(targetPlayer);
                     CommandHandler.sendMessage(sender, "TPS ammunition refilled.");
                 }
+                case "pending" -> {
+                    if (args.size() != 1) {
+                        sendUsageMessage(sender);
+                        return;
+                    }
+                    CommandHandler.sendMessage(
+                            sender, targetPlayer.getTpsSupplyTransaction().pending());
+                }
+                case "audit", "resume", "cancel" -> {
+                    if (args.size() != 2) {
+                        sendUsageMessage(sender);
+                        return;
+                    }
+                    var transaction = targetPlayer.getTpsSupplyTransaction();
+                    var result =
+                            switch (args.get(0).toLowerCase(Locale.ROOT)) {
+                                case "audit" -> transaction.audit(args.get(1));
+                                case "resume" -> transaction.resume(args.get(1));
+                                default -> transaction.cancel(args.get(1));
+                            };
+                    CommandHandler.sendMessage(sender, result);
+                }
                 default -> sendUsageMessage(sender);
             }
         } catch (NumberFormatException e) {
             sendUsageMessage(sender);
+        } catch (IllegalStateException e) {
+            CommandHandler.sendMessage(sender, e.getMessage());
+        } catch (RuntimeException e) {
+            emu.grasscutter.Grasscutter.getLogger()
+                    .warn("TPS operation failed for player {}", targetPlayer.getUid(), e);
+            CommandHandler.sendMessage(sender, "TPS 操作未确认，请先用 tps pending / audit 核对并检查服务日志。");
         }
     }
 }

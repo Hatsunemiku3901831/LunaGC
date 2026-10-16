@@ -118,7 +118,7 @@ class TpsAmmunitionConditionTest {
         assertEquals(1f, state.recipient.getGlobalAbilityValues().get("AmmoPackTakenFlag"));
         assertEquals(50, TpsWeaponSystem.getReserve(state.player, 1003));
         assertEquals(1, state.notifiedDelta(1003));
-        assertEquals(1, state.player.saves);
+        assertEquals(3, state.player.saves);
     }
 
     void distinctLimits() {

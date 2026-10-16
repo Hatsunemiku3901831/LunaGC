@@ -161,7 +161,7 @@ class TpsAmmunitionSupplyTest {
                 known,
                 new ActionTpsSupplyAmmo().execute(ability, action, ByteString.EMPTY, recipient));
         assertEquals(known ? count : 0, TpsWeaponSystem.getReserve(player, id));
-        assertEquals(known ? 1 : 0, player.saves);
+        assertEquals(known ? 3 : 0, player.saves);
         assertEquals(known ? count : 0, notifiedDelta(id));
     }
 
@@ -174,6 +174,46 @@ class TpsAmmunitionSupplyTest {
                                 .getAmmunitionListList())
                     if (entry.getAmmunitionConfigId() == id) result += entry.getChangeCount();
         return result;
+    }
+
+    @Test
+    void resumingAnInterruptedNativeSupplyCannotBeRepeatedByItsOriginalLeafConfirmation()
+            throws Exception {
+        player.failNextSave = true;
+        modifierChange(ModifierAction.MODIFIER_ACTION_ADDED);
+        var pending = player.getPendingTpsSupply();
+        assertNotNull(pending);
+        assertEquals(0, TpsWeaponSystem.getReserve(player, 1003));
+        var stored =
+                new emu.grasscutter.game.tps.TpsSupplyTransaction.Stored(
+                        player.getUid(), new HashMap<>(pending.getBefore()), null);
+        var recovery =
+                new emu.grasscutter.game.tps.TpsSupplyTransaction(
+                        player, player::saveTpsAmmunition, () -> stored, System::currentTimeMillis);
+        recovery.resume(pending.getOperationId());
+        assertEquals(6, TpsWeaponSystem.getReserve(player, 1003));
+        int saves = player.saves;
+        var leaf = ability.getData().modifiers.get(BUFF).onAdded[2];
+        int local =
+                ability.getData().localIdToAction.entrySet().stream()
+                        .filter(e -> e.getValue() == leaf)
+                        .findFirst()
+                        .orElseThrow()
+                        .getKey();
+        player.getAbilityManager()
+                .onAbilityInvoke(
+                        AbilityInvokeEntry.newBuilder()
+                                .setEntityId(weapon.getId())
+                                .setArgumentType(
+                                        AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_NONE)
+                                .setHead(
+                                        AbilityInvokeEntryHead.newBuilder()
+                                                .setInstancedAbilityId(abilityId())
+                                                .setInstancedModifierId(91)
+                                                .setLocalId(local))
+                                .build());
+        assertEquals(6, TpsWeaponSystem.getReserve(player, 1003));
+        assertEquals(saves, player.saves);
     }
 
     AbilityModifierAction supply(String value) {
@@ -194,9 +234,9 @@ class TpsAmmunitionSupplyTest {
         assertTrue(handler.execute(ability, action, ByteString.EMPTY, recipient));
         assertEquals(50, TpsWeaponSystem.getReserve(player, 1003));
         assertEquals(2, notifiedDelta(1003));
-        assertEquals(1, player.saves);
+        assertEquals(3, player.saves);
         assertTrue(handler.execute(ability, action, ByteString.EMPTY, recipient));
-        assertEquals(1, player.saves);
+        assertEquals(3, player.saves);
         assertEquals(2, notifiedDelta(1003));
     }
 
@@ -209,7 +249,7 @@ class TpsAmmunitionSupplyTest {
                         .execute(ability, supply(amount), ByteString.EMPTY, recipient));
         assertEquals(expected, TpsWeaponSystem.getReserve(player, 1003));
         assertEquals(expected, notifiedDelta(1003));
-        assertEquals(expected == 0 ? 0 : 1, player.saves);
+        assertEquals(expected == 0 ? 0 : 3, player.saves);
     }
 
     @ParameterizedTest
@@ -277,7 +317,7 @@ class TpsAmmunitionSupplyTest {
         assertEquals(16, TpsWeaponSystem.getReserve(player, 1003));
         assertEquals(5, player.getTpsMagazineAmmunition().get(301));
         assertEquals(6, notifiedDelta(1003));
-        assertEquals(1, player.saves);
+        assertEquals(3, player.saves);
         assertEquals(1, player.packets.size());
     }
 
@@ -302,7 +342,7 @@ class TpsAmmunitionSupplyTest {
         }
         assertEquals(6, TpsWeaponSystem.getReserve(player, 1003));
         assertEquals(6, notifiedDelta(1003));
-        assertEquals(1, player.saves);
+        assertEquals(3, player.saves);
     }
 
     void modifierChange(ModifierAction action) throws Exception {
@@ -354,7 +394,7 @@ class TpsAmmunitionSupplyTest {
                                                 .setLocalId(local))
                                 .build());
         assertEquals(6, TpsWeaponSystem.getReserve(player, 1003));
-        assertEquals(1, player.saves);
+        assertEquals(3, player.saves);
         // The unique live application also identifies a confirmation with no modifier ID.
         player.getAbilityManager()
                 .onAbilityInvoke(
@@ -368,7 +408,7 @@ class TpsAmmunitionSupplyTest {
                                                 .setLocalId(local))
                                 .build());
         assertEquals(6, TpsWeaponSystem.getReserve(player, 1003));
-        assertEquals(1, player.saves);
+        assertEquals(3, player.saves);
         modifierChange(ModifierAction.MODIFIER_ACTION_REMOVED);
         // A late explicit callback from the removed application cannot grant again.
         player.getAbilityManager()
@@ -384,10 +424,10 @@ class TpsAmmunitionSupplyTest {
                                                 .setLocalId(local))
                                 .build());
         assertEquals(6, TpsWeaponSystem.getReserve(player, 1003));
-        assertEquals(1, player.saves);
+        assertEquals(3, player.saves);
         modifierChange(ModifierAction.MODIFIER_ACTION_ADDED);
         assertEquals(12, TpsWeaponSystem.getReserve(player, 1003));
-        assertEquals(2, player.saves);
+        assertEquals(6, player.saves);
     }
 
     int abilityId() {

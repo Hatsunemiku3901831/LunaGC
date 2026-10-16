@@ -129,15 +129,15 @@ class TpsGlobalValueDispatchTest {
         confirm(parent.actionSteps[0][0], 110);
         assertEquals(6, TpsWeaponSystem.getReserve(state.player, 1003));
         assertEquals(0, TpsWeaponSystem.getReserve(state.player, 1001));
-        assertEquals(1, state.player.saves);
+        assertEquals(3, state.player.saves);
         change(ModifierAction.MODIFIER_ACTION_REMOVED);
         confirm(parent, 110);
         confirm(parent.actionSteps[1][0], 110);
-        assertEquals(1, state.player.saves);
+        assertEquals(3, state.player.saves);
         change(ModifierAction.MODIFIER_ACTION_ADDED);
         assertEquals(6, TpsWeaponSystem.getReserve(state.player, 1003));
         assertEquals(75, TpsWeaponSystem.getReserve(state.player, 1001));
-        assertEquals(2, state.player.saves);
+        assertEquals(6, state.player.saves);
         assertEquals(6, state.notifiedDelta(1003));
         assertEquals(75, state.notifiedDelta(1001));
     }
@@ -178,7 +178,7 @@ class TpsGlobalValueDispatchTest {
                                 state.recipient));
         assertEquals(amount, TpsWeaponSystem.getReserve(state.player, pool));
         assertEquals(amount, state.notifiedDelta(pool));
-        assertEquals(amount > 0 ? 1 : 0, state.player.saves);
+        assertEquals(amount > 0 ? 3 : 0, state.player.saves);
         if (type == 1)
             assertEquals(1f, state.weapon.getGlobalAbilityValues().get("AmmoPackTakenFlag"));
     }

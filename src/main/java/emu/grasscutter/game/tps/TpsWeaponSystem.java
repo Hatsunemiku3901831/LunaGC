@@ -369,7 +369,7 @@ public final class TpsWeaponSystem {
     }
 
     /** Native scene 7001 uses the TPS limit; other scenes use the separate normal limit. */
-    private static int ammunitionLimit(Player player, TpsAmmunitionData data) {
+    static int ammunitionLimit(Player player, TpsAmmunitionData data) {
         var scene = player.getScene();
         int limit = scene != null && scene.getId() == 7001 || data.getNormalAmmoLimit() == null
                 ? data.getTpsAmmoLimit() : data.getNormalAmmoLimit();
@@ -379,6 +379,7 @@ public final class TpsWeaponSystem {
     /** Server-authored supplies and costs persist the resulting total within resource limits. */
     public static int changeReserve(Player player, int id, int delta) {
         synchronized (player) {
+            requireSupplySettled(player);
             var data = GameData.getTpsAmmunitionDataMap().get(id);
             if (data == null) return 0;
             int before = getReserve(player, id);
@@ -397,7 +398,7 @@ public final class TpsWeaponSystem {
         if (player == null) return false;
         synchronized (player) {
             var data = GameData.getTpsAmmunitionDataMap().get(id);
-            return isSupplyRecipient(player, recipient) && data != null
+            return player.getPendingTpsSupply()==null && isSupplyRecipient(player, recipient) && data != null
                     && getReserve(player, id) < ammunitionLimit(player, data);
         }
     }
@@ -420,23 +421,17 @@ public final class TpsWeaponSystem {
     public static boolean supplyAmmunition(EntityAvatar recipient, int id, int amount) {
         var player = recipient == null ? null : recipient.getPlayer();
         if (player == null || amount < 0) return false;
-        synchronized (player) {
-            if (!isSupplyRecipient(player, recipient)
-                    || !GameData.getTpsAmmunitionDataMap().containsKey(id)) return false;
-            int before = getReserve(player, id);
-            int gained = changeReserve(player, id, amount) - before;
-            if (gained > 0) {
-                var packet = new BasePacket(PacketOpcodes.TpsAmmunitionChangeNotify);
-                packet.setData(
-                        TpsAmmunitionChangeNotify.newBuilder()
-                                .addAmmunitionList(
-                                        TpsAmmunitionChangeNotifyEntry.newBuilder()
-                                                .setAmmunitionConfigId(id)
-                                                .setChangeCount(gained)));
-                player.sendPacket(packet);
-            }
-            return true;
-        }
+        return supplyAmmunition(recipient,List.of(new TpsSupplyTransaction.Amount(id,amount)));
+    }
+
+    public static boolean supplyAmmunition(EntityAvatar recipient,List<TpsSupplyTransaction.Amount> plan) {
+        var player=recipient==null?null:recipient.getPlayer();
+        return player!=null && player.getTpsSupplyTransaction().grant(recipient,plan);
+    }
+
+    private static void requireSupplySettled(Player player) {
+        if(player.getPendingTpsSupply()!=null)
+            throw new IllegalStateException("TPS 补给尚未确认，请先用 tps pending / audit 核对。");
     }
 
     private static IntSet ammunitionIds(Avatar avatar) {
@@ -567,6 +562,7 @@ public final class TpsWeaponSystem {
 
     public static void refillAmmunition(Player player) {
         synchronized (player) {
+            requireSupplySettled(player);
             for (var data : GameData.getTpsAmmunitionDataMap().values())
                 player.getTpsAmmunition().put(data.getId(), ammunitionLimit(player, data));
             player.save();
@@ -582,6 +578,7 @@ public final class TpsWeaponSystem {
             throws InvalidProtocolBufferException {
         if (player == null || invoke == null) return false;
         synchronized (player) {
+            if(player.getPendingTpsSupply()!=null) return false;
             var scene = player.getScene();
             var current = currentAvatar(player);
             if (scene == null

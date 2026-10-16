@@ -47,9 +47,18 @@ public final class ActionTpsAmmoBoxDispatch extends AbilityActionHandler {
 
     private static boolean grantAll(EntityAvatar recipient, List<ActionTpsSupplyAmmo.Supply> plan) {
         synchronized (recipient.getPlayer()) {
-            // The parent owns the decision. Repeated leaves are distinct awards.
-            for (var supply : plan) if (!supply.grant()) return false;
-            return true;
+            for (var supply : plan)
+                if (supply.recipient() != recipient
+                        || !ActionTpsSupplyAmmo.isCurrentSource(supply.ability(), recipient))
+                    return false;
+            return emu.grasscutter.game.tps.TpsWeaponSystem.supplyAmmunition(
+                    recipient,
+                    plan.stream()
+                            .map(
+                                    s ->
+                                            new emu.grasscutter.game.tps.TpsSupplyTransaction
+                                                    .Amount(s.pool(), s.amount()))
+                            .toList());
         }
     }
 }
