@@ -70,6 +70,11 @@ public final class AbilityCooldownInvocation {
         return current.get();
     }
 
+    private static boolean applicationCurrent() {
+        var scope = current.get();
+        return scope == null || scope.controller() == null || scope.controller().isApplicationCurrent();
+    }
+
     public static void run(Scope scope, Runnable body) {
         var previous = current.get();
         if (scope == null) current.remove();
@@ -99,6 +104,7 @@ public final class AbilityCooldownInvocation {
             AbilityModifierAction action,
             EntityAvatar target,
             BooleanSupplier body) {
+        if (!applicationCurrent()) return false;
         if (!identifiable(ability, action)) return body.getAsBoolean();
         return current.get()
                 .controller()
@@ -114,6 +120,7 @@ public final class AbilityCooldownInvocation {
             AbilityModifierAction action,
             EntityAvatar target,
             BooleanSupplier body) {
+        if (!applicationCurrent()) return false;
         if (!identifiable(ability, action)) return body.getAsBoolean();
         return current.get()
                 .controller()
@@ -123,6 +130,7 @@ public final class AbilityCooldownInvocation {
 
     /** A scalar dispatch decision belongs to this application, even if the current avatar changes. */
     public static boolean recordApplication(Ability ability, AbilityModifierAction action, BooleanSupplier body) {
+        if (!applicationCurrent()) return false;
         if (!identifiable(ability,action)) return body.getAsBoolean();
         return current.get().controller().getCooldownLedger().apply(ability.getOwner(),action,body);
     }
@@ -130,6 +138,7 @@ public final class AbilityCooldownInvocation {
     /** Reject invalid plans without consuming them; seal valid plans before their first write. */
     public static boolean recordPreparedApplication(Ability ability, AbilityModifierAction action,
                                                      Supplier<Optional<BooleanSupplier>> prepare) {
+        if (!applicationCurrent()) return false;
         if(!identifiable(ability,action)) {
             var body=prepare.get();
             return body.isPresent() && body.get().getAsBoolean();
@@ -141,6 +150,7 @@ public final class AbilityCooldownInvocation {
      * Removal bookkeeping may traverse conditional branches, but cannot repeat unrelated effects.
      */
     public static boolean allows(AbilityModifierAction action) {
+        if (!applicationCurrent()) return false;
         var scope = current.get();
         if (scope == null || !scope.cooldownOnly()) return true;
         return isCooldownAction(action)

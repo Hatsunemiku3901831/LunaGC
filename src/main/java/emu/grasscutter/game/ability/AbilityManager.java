@@ -716,6 +716,7 @@ public final class AbilityManager extends BasePlayerManager {
         if (head.getInstancedModifierId() != 0) {
             var modifier = entity.getInstancedModifiers().get(head.getInstancedModifierId());
             if (modifier != null) {
+                if (!modifier.isClientInstanceCurrent(entity)) return;
                 ability = modifier.getAbility();
                 invokedModifier = modifier;
             }
@@ -810,7 +811,8 @@ public final class AbilityManager extends BasePlayerManager {
                     if (head.getInstancedModifierId() != 0) return;
                     var currentAbility = ability;
                     var matches = entity.getAbilityHpModifier().activeControllers().stream()
-                            .filter(c -> c.getAbility() == currentAbility && c.ownsCooldownCallback(action)).toList();
+                            .filter(c -> c.getAbility() == currentAbility && c.isClientInstanceCurrent(entity)
+                                    && c.ownsCooldownCallback(action)).toList();
                     if (matches.size() != 1) return;
                     invokedModifier = matches.get(0);
                 }
@@ -837,7 +839,8 @@ public final class AbilityManager extends BasePlayerManager {
                         var currentAbility=ability;
                         synchronized(entity.getInstancedModifiers()) {
                             var matches=entity.getAbilityHpModifier().activeControllers().stream()
-                                    .filter(c -> c.getAbility()==currentAbility && ownsMixin(c,mixin) && c.attachmentCurrent()).toList();
+                                    .filter(c -> c.getAbility()==currentAbility && c.isClientInstanceCurrent(entity)
+                                            && ownsMixin(c,mixin) && c.attachmentCurrent()).toList();
                             if(matches.size()!=1) return;
                             invokedModifier=matches.get(0);
                         }
@@ -848,6 +851,7 @@ public final class AbilityManager extends BasePlayerManager {
                 Grasscutter.getLogger().trace("Executing mixin: {}", mixin);
                 executeMixin(ability, mixin, invoke.getAbilityData(), target,()-> {
                     if(callbackModifier==null) return true;
+                    if(!callbackModifier.isClientInstanceCurrent(entity)) return false;
                     if(!callbackModifier.attachmentCurrent()) return false;
                     synchronized(entity.getInstancedModifiers()) {
                         return callbackId==0 ? entity.getAbilityHpModifier().activeControllers().contains(callbackModifier)
@@ -1266,7 +1270,7 @@ public final class AbilityManager extends BasePlayerManager {
                             instancedAbilityData.modifiers.keySet().toArray(new String[0])[modChange.getModifierLocalId()]);
                     if(modifier==null) {
                         modifier=new AbilityModifierController(instancedAbility,instancedAbilityData,modifierData);
-                        modifier.inheritCooldownLedger(previous);
+                        modifier.inheritCooldownLedger(previous, entity);
                     }
                 }
                 if (previous != modifier)
@@ -1319,7 +1323,8 @@ public final class AbilityManager extends BasePlayerManager {
             AbilityModifierController modifier;
             synchronized (instances) {
                 modifier = instances.get(head.getInstancedModifierId());
-                if (modifier != null && !modifier.matchesClientRemoval(head, modChange)) return;
+                if (modifier != null && (!modifier.isApplicationCurrent(entity)
+                        || !modifier.matchesClientRemoval(head, modChange))) return;
                 entity.getAbilityDurability().modifierRebound(head.getInstancedModifierId());
                 modifier = instances.remove(head.getInstancedModifierId());
                 if (modifier != null) {

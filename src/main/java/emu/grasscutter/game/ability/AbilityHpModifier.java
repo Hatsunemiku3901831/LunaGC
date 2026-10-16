@@ -118,6 +118,7 @@ public final class AbilityHpModifier {
         var candidates=stack==null?activeControllers():stack;
         for(var controller:candidates) {
             if(controller.getAbility()==ability && name.equals(controller.getName())
+                    && controller.isClientInstanceCurrent(entity)
                     && !entity.getInstancedModifiers().containsValue(controller) && (controller.hasServerCallbacks() || controller.hasBindingCallbacks()))
                 return controller;
         }
@@ -131,12 +132,14 @@ public final class AbilityHpModifier {
         var candidates = stack == null ? activeControllers() : stack;
         return candidates.stream()
                 .filter(c -> c.getAbility() == ability && name.equals(c.getName())
+                        && c.isClientInstanceCurrent(entity)
                         && c.hasCooldownCallbacks()
                         && !entity.getInstancedModifiers().containsValue(c))
                 .findFirst().orElse(null);
     }
     AbilityModifierController pendingAttachmentController(Ability ability,String name) {
         return controllers().stream().filter(c -> c.getAbility()==ability && name.equals(c.getName())
+                && c.isClientInstanceCurrent(entity)
                 && c.hasAttachmentCallbacks() && !entity.getInstancedModifiers().containsValue(c)).findFirst().orElse(null);
     }
 

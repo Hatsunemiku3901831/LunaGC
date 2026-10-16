@@ -59,7 +59,7 @@ class TpsGlobalValueDispatchTest {
     }
 
     int abilityId() {
-        return state.weapon.getInstancedAbilities().indexOf(state.ability) + 1;
+        return state.ability.getOwner().getInstancedAbilities().indexOf(state.ability) + 1;
     }
 
     void change(ModifierAction action) throws Exception {
@@ -76,7 +76,7 @@ class TpsGlobalValueDispatchTest {
                 .getAbilityManager()
                 .onAbilityInvoke(
                         AbilityInvokeEntry.newBuilder()
-                                .setEntityId(state.weapon.getId())
+                                .setEntityId(state.ability.getOwner().getId())
                                 .setArgumentType(
                                         AbilityInvokeArgument
                                                 .AbilityInvokeArgument_ABILITY_META_MODIFIER_CHANGE)
@@ -99,7 +99,7 @@ class TpsGlobalValueDispatchTest {
                 .getAbilityManager()
                 .onAbilityInvoke(
                         AbilityInvokeEntry.newBuilder()
-                                .setEntityId(state.weapon.getId())
+                                .setEntityId(state.ability.getOwner().getId())
                                 .setArgumentType(
                                         AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_NONE)
                                 .setHead(

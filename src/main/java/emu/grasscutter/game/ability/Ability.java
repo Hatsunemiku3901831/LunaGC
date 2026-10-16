@@ -111,6 +111,7 @@ public class Ability {
     void registerModifier(GameEntity target, AbilityModifierController modifier, boolean refresh) {
         modifier.prepareAttachmentCallbacks(target);
         synchronized (target.getInstancedModifiers()) {
+            modifier.bindApplication(target);
             var replaced=getModifiers(target).put(modifier.getName(), modifier);
             synchronized (modifierTargets) { modifierTargets.add(target); }
             target.getAbilityHpModifier().registered(modifier);

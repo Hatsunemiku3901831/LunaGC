@@ -309,6 +309,98 @@ class TpsAmmoBoxDispatchTest {
     }
 
     @Test
+    void aRemovalFromThePreviousSourceLifeCannotAwardInTheNewLife() throws Exception {
+        var dispatch = actual();
+        dispatch.addProperty("OCAMECDEBDO", 3);
+        var data =
+                JsonUtils.decode(
+                        "{abilityName:AmmoBoxLifeRemoval,modifiers:{Pulse:{stacking:Unique,onRemoved:["
+                                + dispatch
+                                + "]}}}",
+                        AbilityData.class);
+        var source = state.fixture.entity;
+        state.ability = new Ability(data, source, state.player);
+        source.getInstancedAbilities().add(state.ability);
+        var callbacks = new TpsGlobalValueDispatchTest();
+        callbacks.state = state;
+        source.getGlobalAbilityValues().put("SGV_Weight_Rifle", 3f);
+        callbacks.change(ModifierAction.MODIFIER_ACTION_ADDED);
+        state.fixture.scene.removeEntity(source);
+        state.fixture.scene.addEntity(source);
+        callbacks.change(ModifierAction.MODIFIER_ACTION_REMOVED);
+        assertEquals(0, TpsWeaponSystem.getReserve(state.player, 1001));
+        assertEquals(0, state.player.saves);
+        callbacks.change(ModifierAction.MODIFIER_ACTION_ADDED);
+        callbacks.change(ModifierAction.MODIFIER_ACTION_REMOVED);
+        assertEquals(225, TpsWeaponSystem.getReserve(state.player, 1001));
+        assertEquals(3, state.player.saves);
+    }
+
+    @Test
+    void aCurrentLifeRemovalCanRetireItsClientInstanceAfterItsRootIsUninstalled() throws Exception {
+        var dispatch = actual();
+        dispatch.addProperty("OCAMECDEBDO", 3);
+        var data =
+                JsonUtils.decode(
+                        "{abilityName:AmmoBoxRootRemoval,modifiers:{Pulse:{stacking:Unique,onRemoved:["
+                                + dispatch
+                                + "]}}}",
+                        AbilityData.class);
+        var source = state.fixture.entity;
+        state.ability = new Ability(data, source, state.player);
+        source.getInstancedAbilities().add(state.ability);
+        source.getGlobalAbilityValues().put("SGV_Weight_Rifle", 3f);
+        var callbacks = new TpsGlobalValueDispatchTest();
+        callbacks.state = state;
+        callbacks.change(ModifierAction.MODIFIER_ACTION_ADDED);
+        source.getInstancedAbilities().remove(state.ability);
+        callbacks.change(ModifierAction.MODIFIER_ACTION_REMOVED);
+        assertFalse(source.getInstancedModifiers().containsKey(110));
+        assertEquals(0, TpsWeaponSystem.getReserve(state.player, 1001));
+        assertEquals(0, state.player.saves);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"explicit", "without-id", "server-scope"})
+    void anUnconsumedOldApplicationCannotClaimAPlanAfterSourceReentry(String route)
+            throws Exception {
+        var dispatch = actual();
+        dispatch.addProperty("OCAMECDEBDO", 2);
+        var data =
+                JsonUtils.decode(
+                        "{abilityName:AmmoBoxLifeConfirmation,modifiers:{Pulse:{stacking:Unique,onAdded:["
+                                + dispatch
+                                + "]}}}",
+                        AbilityData.class);
+        var source = state.fixture.entity;
+        state.ability = new Ability(data, source, state.player);
+        source.getInstancedAbilities().add(state.ability);
+        var parent = data.modifiers.get("Pulse").onAdded[0];
+        var callbacks = new TpsGlobalValueDispatchTest();
+        callbacks.state = state;
+        source.getGlobalAbilityValues().put("SGV_Weight_Rifle", 1f);
+        source.getGlobalAbilityValues()
+                .put("SGV_Weight_Shotgun", 1f); // Selected pool 1004 is absent.
+        callbacks.change(ModifierAction.MODIFIER_ACTION_ADDED);
+        assertEquals(0, state.player.saves);
+        var previous = source.getInstancedModifiers().get(110);
+        state.fixture.scene.removeEntity(source);
+        state.fixture.scene.addEntity(source);
+        source.getGlobalAbilityValues().put("SGV_Weight_Rifle", 2f);
+        source.getGlobalAbilityValues().put("SGV_Weight_Shotgun", 0f);
+        if (route.equals("server-scope"))
+            AbilityCooldownInvocation.run(previous, () -> run(parent));
+        else callbacks.confirm(parent, route.equals("explicit") ? 110 : 0);
+        assertEquals(0, TpsWeaponSystem.getReserve(state.player, 1001));
+        assertEquals(0, state.player.saves);
+        callbacks.change(ModifierAction.MODIFIER_ACTION_ADDED);
+        assertEquals(150, TpsWeaponSystem.getReserve(state.player, 1001));
+        callbacks.confirm(parent, 110);
+        assertEquals(150, TpsWeaponSystem.getReserve(state.player, 1001));
+        assertEquals(3, state.player.saves);
+    }
+
+    @Test
     void aSaveFailureCannotReplayTheStartedAwardOnDuplicateAddition() throws Exception {
         var dispatch = actual();
         dispatch.addProperty("OCAMECDEBDO", 3);
@@ -327,7 +419,7 @@ class TpsAmmoBoxDispatchTest {
         nativeCallbacks.change(ModifierAction.MODIFIER_ACTION_ADDED);
         assertEquals(0, TpsWeaponSystem.getReserve(state.player, 1001));
         assertNotNull(state.player.getPendingTpsSupply());
-        assertEquals(225,state.player.getPendingTpsSupply().getAfter().get(1001));
+        assertEquals(225, state.player.getPendingTpsSupply().getAfter().get(1001));
         failSave.set(false);
         nativeCallbacks.change(ModifierAction.MODIFIER_ACTION_ADDED);
         nativeCallbacks.confirm(data.modifiers.get("Pulse").onAdded[0], 110);

@@ -346,6 +346,10 @@ class TpsAmmunitionSupplyTest {
     }
 
     void modifierChange(ModifierAction action) throws Exception {
+        modifierChange(action, weapon);
+    }
+
+    void modifierChange(ModifierAction action, GameEntity source) throws Exception {
         int local = new ArrayList<>(ability.getData().modifiers.keySet()).indexOf(BUFF);
         var change =
                 AbilityMetaModifierChange.newBuilder()
@@ -356,13 +360,16 @@ class TpsAmmunitionSupplyTest {
         player.getAbilityManager()
                 .onAbilityInvoke(
                         AbilityInvokeEntry.newBuilder()
-                                .setEntityId(weapon.getId())
+                                .setEntityId(source.getId())
                                 .setArgumentType(
                                         AbilityInvokeArgument
                                                 .AbilityInvokeArgument_ABILITY_META_MODIFIER_CHANGE)
                                 .setHead(
                                         AbilityInvokeEntryHead.newBuilder()
-                                                .setInstancedAbilityId(abilityId())
+                                                .setInstancedAbilityId(
+                                                        source.getInstancedAbilities()
+                                                                        .indexOf(ability)
+                                                                + 1)
                                                 .setInstancedModifierId(91))
                                 .setAbilityData(change.build().toByteString())
                                 .build());
@@ -432,5 +439,51 @@ class TpsAmmunitionSupplyTest {
 
     int abilityId() {
         return weapon.getInstancedAbilities().indexOf(ability) + 1;
+    }
+
+    @ParameterizedTest
+    @CsvSource({"lifetime,false", "entity-id,false", "lifetime,true", "entity-id,true"})
+    void aReenteredSourceGetsOneFreshSupplyInsteadOfInheritingThePreviousLife(
+            String change, boolean serverFirst) throws Exception {
+        var source = fixture.entity;
+        ability = new Ability(nativeLauncherAbility(), source, player);
+        source.getInstancedAbilities().add(ability);
+        emu.grasscutter.game.ability.AbilityModifierController previous;
+        if (serverFirst) {
+            var modifier = ability.getData().modifiers.get(BUFF);
+            previous =
+                    new emu.grasscutter.game.ability.AbilityModifierController(
+                            ability, ability.getData(), modifier);
+            ability.registerModifier(source, previous);
+            emu.grasscutter.game.ability.AbilityCooldownInvocation.run(
+                    previous,
+                    () ->
+                            ability.getManager()
+                                    .executeActionNow(
+                                            ability,
+                                            modifier.onAdded[2],
+                                            ByteString.EMPTY,
+                                            recipient));
+        } else {
+            modifierChange(ModifierAction.MODIFIER_ACTION_ADDED, source);
+            previous = source.getInstancedModifiers().get(91);
+        }
+        assertEquals(6, TpsWeaponSystem.getReserve(player, 1003));
+        assertEquals(3, player.saves);
+        if (change.equals("lifetime")) {
+            fixture.scene.removeEntity(source);
+            fixture.scene.addEntity(source);
+        } else {
+            assertTrue(fixture.scene.getEntities().remove(source.getId(), source));
+            source.setId(84);
+            fixture.scene.addEntity(source);
+        }
+        modifierChange(ModifierAction.MODIFIER_ACTION_ADDED, source);
+        assertEquals(12, TpsWeaponSystem.getReserve(player, 1003));
+        assertNotSame(previous, source.getInstancedModifiers().get(91));
+        assertEquals(6, player.saves);
+        modifierChange(ModifierAction.MODIFIER_ACTION_ADDED, source);
+        assertEquals(12, TpsWeaponSystem.getReserve(player, 1003));
+        assertEquals(6, player.saves);
     }
 }

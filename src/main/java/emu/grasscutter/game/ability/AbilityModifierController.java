@@ -96,16 +96,42 @@ public class AbilityModifierController {
     private record ClientInstance(
             GameEntity target, AbilityExecutionContext context, AbilityInvokeEntry addition) {}
     private volatile ClientInstance clientInstance;
+    private record Application(GameEntity target, AbilityExecutionContext context, boolean installedRoot) {}
+    private volatile Application application;
+
+    /** Server registration can precede the first client ID; confirmation retains that lifetime. */
+    synchronized void bindApplication(GameEntity target) {
+        if (application != null) return;
+        application = new Application(target, new AbilityExecutionContext(ability, target),
+                ability.getOwner().getInstancedAbilities().contains(ability));
+    }
 
     boolean isClientInstanceCurrent(GameEntity target) {
+        var bound = application;
+        if (bound != null && (bound.target != target || !bound.context.isCurrent()
+                || bound.installedRoot && !ability.getOwner().getInstancedAbilities().contains(ability))) return false;
         var instance = clientInstance;
         return instance == null || instance.target == target && instance.context.isCurrent();
+    }
+
+    boolean isApplicationCurrent() {
+        var bound = application;
+        if (bound != null) return bound.context.isCurrent();
+        var instance = clientInstance;
+        return instance == null || isClientInstanceCurrent(instance.target);
+    }
+
+    /** Removal callbacks retain the entity lifetime when their root has already been uninstalled. */
+    boolean isApplicationCurrent(GameEntity target) {
+        var bound = application;
+        if (bound != null) return bound.target == target && bound.context.isCurrent();
+        return isClientInstanceCurrent(target);
     }
 
     boolean isDuplicateClientAdd(GameEntity target, AbilityInvokeEntry addition) {
         var instance = clientInstance;
         double time = addition.getTotalTickTime();
-        return instance != null && instance.target == target && instance.context.isCurrent()
+        return instance != null && isClientInstanceCurrent(target)
                 && Double.isFinite(time) && time > 0 && instance.addition.equals(addition);
     }
 
@@ -181,8 +207,9 @@ public class AbilityModifierController {
 
     boolean hasCooldownCallbacks() { return !cooldownCallbacks.isEmpty(); }
 
-    void inheritCooldownLedger(AbilityModifierController previous) {
-        if (previous != null && previous.ability == ability && previous.modifierData == modifierData) {
+    void inheritCooldownLedger(AbilityModifierController previous, GameEntity target) {
+        if (previous != null && previous.ability == ability && previous.modifierData == modifierData
+                && previous.isClientInstanceCurrent(target)) {
             cooldownLedger = previous.cooldownLedger;
             vehicleAttachment = previous.vehicleAttachment;
             skillSlotSourceOrder = previous.skillSlotSourceOrder;
