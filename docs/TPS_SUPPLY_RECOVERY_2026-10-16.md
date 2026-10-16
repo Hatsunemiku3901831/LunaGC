@@ -80,5 +80,19 @@ ID、归属、数量或计划不符时停止恢复，不猜测其他奖励或自
 - `resource-proof.json`：8 份直接相关资源及 4 份规范化 proto 的一致性核对。
 - `tps-supply-recovery.jar`：SHA256 `8e8feb5d4e7b31e64de1af50ef822487ada4bfce45eaa4d3fa219983d6e15eb6`。
 
+## 本地运行
+
+2026-10-16 12:16（UTC+8），源码提交 `803bb78170120ff26553445e6582b97e1a163415`
+已推送，本地服务已切换至上述 `tps-supply-recovery.jar`。
+旧进程经 GM stop 正常退出；新进程 PID `29924` 同时监听 TCP 8088 和 UDP 22101，
+健康检查通过、死锁为零、在线玩家为零。
+Mongo 保留 `lunagc_mongo-data`，资源保持 `dac2a9d43332ef51879522cf39da2831b0ca0543`。
+
+停止前检查、正常退出及新进程命令、JAR 哈希、端口归属和数据卷核对，
+分别记录于 batch301 的 `runtime-stop-preflight.json`、`runtime-stop-proof.json`、`runtime-start-proof.json`。
+客户端未启动，`clientGameplayVerified` 为 false。
+
+## 验收边界
+
 真实射击、换弹／拾取动画、多人领取及完整 TPS 模式仍待客户端验收。
 此前反馈的客户端错误也未在本轮实机复验。
