@@ -48,6 +48,7 @@ public enum MaterialType {
     MATERIAL_ARANARA(41),
     MATERIAL_DESHRET_MANUAL(46),
     MATERIAL_AVATAR_TRACE(54),
+    MATERIAL_MUSIC_GAME_BOOK_THEME(57),
     MATERIAL_WEAPON_SKIN(66);
 
     private static final Int2ObjectMap<MaterialType> map = new Int2ObjectOpenHashMap<>();

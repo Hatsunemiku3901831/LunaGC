@@ -16,6 +16,7 @@ import org.bson.Document;
 
 import java.util.Objects;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 /** Real isolated Player writes for business tests retaining their own item-write fault seam. */
 public final class GuardedPlayerTestStore implements AutoCloseable, PlayerSaveGuard.Storage {
@@ -23,14 +24,21 @@ public final class GuardedPlayerTestStore implements AutoCloseable, PlayerSaveGu
     private final Datastore store;
     private final PlayerSaveGuard.Storage delegate;
     private final Runnable beforeWrite;
+    private final Consumer<Document> afterWrite;
     private final String name =
             "lunagc_test_guarded_flow_" + UUID.randomUUID().toString().replace("-", "");
 
     public GuardedPlayerTestStore(Player player, Runnable beforeWrite) throws Exception {
+        this(player, beforeWrite, ignored -> {});
+    }
+
+    public GuardedPlayerTestStore(
+            Player player, Runnable beforeWrite, Consumer<Document> afterWrite) throws Exception {
         String uri = System.getenv("LUNAGC_TEST_MONGO_URI");
         if (uri == null || uri.isBlank())
             throw new IllegalStateException("Isolated test Mongo URI is required");
         this.beforeWrite = Objects.requireNonNull(beforeWrite);
+        this.afterWrite = Objects.requireNonNull(afterWrite);
         client = MongoClients.create(uri);
         store = Morphia.createDatastore(client, name);
         try {
@@ -68,12 +76,15 @@ public final class GuardedPlayerTestStore implements AutoCloseable, PlayerSaveGu
     public void insert(Document document) {
         beforeWrite.run();
         delegate.insert(document);
+        afterWrite.accept(document);
     }
 
     @Override
     public boolean replace(Document filter, Document document) {
         beforeWrite.run();
-        return delegate.replace(filter, document);
+        boolean replaced = delegate.replace(filter, document);
+        if (replaced) afterWrite.accept(document);
+        return replaced;
     }
 
     @Override

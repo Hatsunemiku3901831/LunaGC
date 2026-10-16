@@ -1047,6 +1047,10 @@ public class InventorySystem extends BaseGameSystem {
                     || player.getInventory().getItemById(item.getItemId()) != item) return null;
             return player.getArtifactTransmuter().open() == 0 ? item : null;
         }
+        if (item.getItemId() == emu.grasscutter.game.player.MusicGameBook.ITEM_ID) {
+            if (count != 1 || optionId != 0 || !optionIds.isEmpty()) return null;
+            return player.getMusicGameBook().open(item) ? item : null;
+        }
 
         var params =
                 new UseItemParams(

@@ -166,6 +166,17 @@ public class Player implements PlayerHook, FieldFetch {
     @Getter @Setter private transient boolean isInEditMode;
     @Getter @Setter private int widgetId;
     @Getter @Setter private int widgetPetId;
+    @Getter(AccessLevel.PACKAGE) @Setter(AccessLevel.PACKAGE)
+    private volatile Set<Integer> musicGameBookThemes = new HashSet<>();
+    @Transient private transient MusicGameBook musicGameBook;
+
+    public MusicGameBook getMusicGameBook() {
+        synchronized (getInventory()) {
+            if (musicGameBook == null) musicGameBook = new MusicGameBook(this);
+            return musicGameBook;
+        }
+    }
+
     private ArtifactTransmuterData artifactTransmuterData;
     @Transient private transient ArtifactTransmuter artifactTransmuter;
 
@@ -1862,6 +1873,7 @@ public class Player implements PlayerHook, FieldFetch {
         session.send(new PacketCodexDataFullNotify(this));
         session.send(new PacketAllWidgetDataNotify(this));
         getArtifactTransmuter().onLogin();
+        getMusicGameBook().onLogin();
 
         this.achievements.onLogin(this);
 

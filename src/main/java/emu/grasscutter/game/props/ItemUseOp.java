@@ -1,6 +1,7 @@
 package emu.grasscutter.game.props;
 
 import it.unimi.dsi.fastutil.ints.*;
+
 import java.util.stream.Stream;
 
 public enum ItemUseOp {
@@ -49,6 +50,7 @@ public enum ItemUseOp {
     ITEM_USE_UNLOCK_AVATAR_TRACE(56),
     ITEM_USE_UNLOCK_PROFILE_PICTURE(57),
     ITEM_USE_ADD_PHLOGISTON(60),
+    ITEM_USE_MUSIC_GAME_BOOK_UNLOCK_THEME(61),
     ITEM_USE_ADD_WEAPON_SKIN(62);
 
     private static final Int2ObjectMap<ItemUseOp> map = new Int2ObjectOpenHashMap<>();

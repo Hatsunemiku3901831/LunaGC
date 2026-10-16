@@ -10,6 +10,7 @@ import "MusicGameBookSettings.proto";
 // Unpaired field meanings retain their native names; see docs/MUSIC_GAME_BOOK_PROTOCOL_2026-10-16.md.
 message MusicGameBookAllDataNotify {
     uint32 LKAIFMEKBNG = 1;
+    // Unlocked themes: current native consumers share this set with MusicGameThemeUnlockNotify.
     repeated uint32 DHDNMAMDHIP = 2;
     repeated MusicGameBookRecord PAEINCPKPHH = 3;
     bool POIDELONALN = 5;
