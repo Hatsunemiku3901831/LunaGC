@@ -52,6 +52,19 @@
 构建时另发现自定义 jarFilename 会将 Gradle 的 archiveExtension 属性对象写入文件名；
 此处按实际产物路径取得候选包并核对变化类；命名问题已另行[修复并验证](JAR_NAMING_2026-10-16.md)。
 
+## 本地运行
+
+2026-10-16 11:15（UTC+8），治疗修复提交 `bab18757` 与构建修复提交 `4a81bbf1`
+均已推送，本地服务运行 `debug/aster-mid-20261011/batch299/interval-lifetime.jar`。
+该文件内容与上述测试构建逐条一致，SHA256 为
+`428cf74a7e2d903a5fce08bb056a81c8dfe054d62108329c9fa6625beb2796ef`。
+
+旧进程经 GM stop 正常退出；新进程 PID `10404` 同时监听 TCP 8088 和 UDP 22101，
+健康检查通过、死锁为零、在线玩家为零。
+Mongo 保留 `lunagc_mongo-data`，资源保持 `dac2a9d43332ef51879522cf39da2831b0ca0543`。
+停止前检查、正常停止与实际进程／哈希／端口／数据卷验证均记录于 batch299 的 runtime JSON。
+客户端未启动，`clientGameplayVerified` 为 false。
+
 ## 验收边界
 
 本轮证明服务端间隔、生命周期和联机调用链中的目标归属。
