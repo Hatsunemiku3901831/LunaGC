@@ -455,15 +455,19 @@ public final class TpsWeaponSystem {
 
     public static SceneWeaponInfo toSceneWeaponInfo(Player player, GameItem item) {
         var magazines = TpsMagazineSystem.visible(player, item);
+        var weapon = currentSceneWeapon(player, item);
         var builder =
                 SceneWeaponInfo.newBuilder()
-                        .setEntityId(item.getWeaponEntity() == null ? 0 : item.getWeaponEntity().getId())
+                        .setEntityId(weapon == null ? 0 : weapon.getId())
                         .setGadgetId(item.getItemData().getGadgetId())
                         .setItemId(item.getItemId())
                         .setGuid(item.getGuid())
                         .setLevel(item.getLevel())
                         .putAllAffixMap(getAffixLevels(item))
-                        .setAbilityInfo(AbilitySyncStateInfo.newBuilder().setIsInited(true));
+                        .setAbilityInfo(
+                                weapon == null
+                                        ? AbilitySyncStateInfo.getDefaultInstance()
+                                        : weapon.getAbilityRoots().toSyncState());
         var data = GameData.getTpsWeaponDataMap().get(item.getItemId());
         if (data != null && data.getAmmoSlotIds() != null)
             for (Integer slot : data.getAmmoSlotIds()) {
@@ -478,6 +482,21 @@ public final class TpsWeaponSystem {
                                 .setCurrentAmmunition(magazines.get((int) slot)));
             }
         return builder.build();
+    }
+
+    private static EntityWeapon currentSceneWeapon(Player player, GameItem item) {
+        var weapon = item.getWeaponEntity();
+        var caster = weapon == null ? null : weapon.getCasterAvatar();
+        var scene = player.getScene();
+        return caster != null
+                        && caster.getPlayer() == player
+                        && scene != null
+                        && player.getWorld() == scene.getWorld()
+                        && getWornWeapons(caster).contains(item)
+                        && isCurrentWeaponEntity(item, caster, scene, weapon.getId())
+                        && weapon.isAbilityLifecycleCurrent(weapon.getAbilityLifecycleVersion())
+                ? weapon
+                : null;
     }
 
     public static List<SceneWeaponInfo> getSceneWeaponInfos(Avatar avatar) {

@@ -207,6 +207,22 @@ class SceneTalentSnapshotTest extends QuestTestFixture {
         var weaponRoot = new emu.grasscutter.game.ability.Ability(data, weapon, player);
         weapon.getInstancedAbilities().add(weaponRoot);
         weaponRoot.getAbilitySpecials().put("rate", 3);
+        var tpsItem =
+                new emu.grasscutter.game.inventory.GameItem(
+                        JsonUtils.decode(
+                                "{id:224001,itemType:'ITEM_TPS_WEAPON',gadgetId:50016001}",
+                                emu.grasscutter.data.excels.ItemData.class));
+        tpsItem.setOwner(player);
+        player.getInventory().getItems().put(tpsItem.getGuid(), tpsItem);
+        avatar.getTpsWeaponIds().add(tpsItem.getItemId());
+        var tpsWeapon =
+                new emu.grasscutter.game.entity.EntityWeapon(player.getScene(), 50016001, avatar);
+        player.getScene().getWeaponEntities().put(tpsWeapon.getId(), tpsWeapon);
+        tpsItem.setWeaponEntity(tpsWeapon);
+        var tpsRoot = new emu.grasscutter.game.ability.Ability(data, tpsWeapon, player);
+        tpsWeapon.getInstancedAbilities().add(tpsRoot);
+        tpsRoot.getAbilitySpecials().put("rate", 5);
+        tpsWeapon.getGlobalAbilityValues().put("SGV_TpsState", 11f);
         entity.getGlobalAbilityValues().put("SGV_AvatarState", 7f);
         weapon.getGlobalAbilityValues().put("SGV_WeaponState", 8f);
         player.getTeamManager().getEntity().getGlobalAbilityValues().put("SGV_TeamState", 9f);
@@ -249,6 +265,24 @@ class SceneTalentSnapshotTest extends QuestTestFixture {
         assertEquals(3, rootValue(team.getWeaponAbilityInfo(), "rate"));
         assertEquals(7, serverValue(team.getAvatarAbilityInfo(), "SGV_AvatarState"));
         assertEquals(8, serverValue(team.getWeaponAbilityInfo(), "SGV_WeaponState"));
+        for (var tps :
+                List.of(
+                        enter.getTpsWeaponList(0),
+                        team.getTpsWeaponList(0),
+                        entity.toProto().getAvatar().getTpsWeaponList(0))) {
+            assertEquals(tpsWeapon.getId(), tps.getEntityId());
+            assertFalse(tps.getAbilityInfo().getIsInited());
+            assertEquals(5, rootValue(tps.getAbilityInfo(), "rate"));
+            assertEquals(11, serverValue(tps.getAbilityInfo(), "SGV_TpsState"));
+            var wire = com.google.protobuf.CodedInputStream.newInstance(tps.toByteArray());
+            AbilitySyncStateInfo nativeAbilityInfo = null;
+            for (int tag; (tag = wire.readTag()) != 0; ) {
+                if (tag == 58) nativeAbilityInfo = AbilitySyncStateInfo.parseFrom(wire.readBytes());
+                else wire.skipField(tag);
+            }
+            assertNotNull(nativeAbilityInfo, "Weapon ability snapshot is carried at field 7");
+            assertEquals(5, rootValue(nativeAbilityInfo, "rate"));
+        }
         assertFalse(enter.getAvatarAbilityInfo().getIsInited());
         assertFalse(enter.getWeaponAbilityInfo().getIsInited());
     }

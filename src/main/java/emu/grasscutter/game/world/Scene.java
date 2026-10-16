@@ -173,9 +173,12 @@ public class Scene {
         if (id == 0x13800001) return this.sceneEntity;
         else if (id == this.getWorld().getLevelEntityId()) return this.getWorld().getEntity();
 
-        var teamEntityPlayer =
-                players.stream().filter(p -> p.getTeamManager().getEntity().getId() == id).findAny();
-        if (teamEntityPlayer.isPresent()) return teamEntityPlayer.get().getTeamManager().getEntity();
+        var teamEntity = players.stream()
+                .map(p -> p.getTeamManager().getEntity())
+                .filter(Objects::nonNull)
+                .filter(team -> team.getId() == id)
+                .findAny();
+        if (teamEntity.isPresent()) return teamEntity.get();
 
         var entity = this.entities.get(id);
         if (entity == null) entity = this.weaponEntities.get(id);

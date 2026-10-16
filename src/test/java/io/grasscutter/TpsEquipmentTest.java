@@ -421,6 +421,132 @@ class TpsEquipmentTest {
         assertEquals(101, proto.getAmmunitionList(0).getAmmunitionType());
         assertEquals(1001, proto.getAmmunitionList(0).getAmmunitionConfigId());
         assertEquals(9, proto.getAmmunitionList(0).getCurrentAmmunition());
+        assertFalse(proto.getAbilityInfo().getIsInited());
+    }
+
+    private RecordingItem gunWithAbilitySnapshot(AbilityTestFixture fixture) throws Exception {
+        realIceGunAbilities();
+        var avatar = sceneAvatar(fixture);
+        player.setWorld(fixture.scene.getWorld());
+        var gun = item(224001);
+        equip(avatar.getAvatar(), gun);
+        TpsWeaponSystem.ensureWeaponEntities(avatar.getAvatar(), fixture.scene);
+        var weapon = gun.getWeaponEntity();
+        assertEquals(5, weapon.getInstancedAbilities().size());
+        weapon.getInstancedAbilities().get(0).getAbilitySpecials().put("ServerSnapshot", 17f);
+        weapon.getGlobalAbilityValues().put("SGV_WeaponSnapshot", 6f);
+        avatar.getGlobalAbilityValues().put("SGV_AvatarOnly", 99f);
+        return gun;
+    }
+
+    @Test
+    void tpsAbilitySnapshotKeepsRealRootParametersAndItsOwnServerGlobals() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var gun = gunWithAbilitySnapshot(fixture);
+            player.getTpsMagazineAmmunition().put(101, 9);
+            var before = Map.copyOf(gun.getWeaponEntity().getGlobalAbilityValues());
+            player.packets.clear();
+            fixture.scene.packets.clear();
+            var proto = TpsWeaponSystem.getSceneWeaponInfos(currentAvatar().getAvatar()).get(0);
+            var info = proto.getAbilityInfo();
+            assertFalse(info.getIsInited());
+            assertEquals(gun.getWeaponEntity().getId(), proto.getEntityId());
+            assertEquals(1, info.getAppliedAbilitiesCount());
+            var root = info.getAppliedAbilities(0);
+            assertEquals(1, root.getInstancedAbilityId());
+            assertEquals(
+                    gun.getWeaponEntity().getInstancedAbilities().get(0).getData().abilityName,
+                    root.getAbilityName().getStr());
+            assertEquals(1, root.getOverrideMapCount());
+            assertEquals("ServerSnapshot", root.getOverrideMap(0).getKey().getStr());
+            assertEquals(17f, root.getOverrideMap(0).getFloatValue());
+            assertEquals(1, info.getSgvDynamicValueMapCount());
+            assertEquals("SGV_WeaponSnapshot", info.getSgvDynamicValueMap(0).getKey().getStr());
+            assertEquals(6f, info.getSgvDynamicValueMap(0).getFloatValue());
+            assertTrue(info.getDynamicValueMapList().isEmpty());
+            assertTrue(info.getAppliedModifiersList().isEmpty());
+            assertEquals(9, proto.getAmmunitionList(0).getCurrentAmmunition());
+            assertEquals(TpsWeaponSystem.getAffixLevels(gun), proto.getAffixMapMap());
+            assertEquals(before, gun.getWeaponEntity().getGlobalAbilityValues());
+            assertTrue(player.packets.isEmpty());
+            assertTrue(fixture.scene.packets.isEmpty());
+        }
+    }
+
+    private EntityAvatar currentAvatar() {
+        return TpsWeaponSystem.currentAvatar(player);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7})
+    void tpsAbilitySnapshotCannotRestoreAnExpiredOrForeignWeapon(int invalid) throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var gun = gunWithAbilitySnapshot(fixture);
+            var weapon = gun.getWeaponEntity();
+            switch (invalid) {
+                case 0 -> weapon.invalidateAbilityLifecycle();
+                case 1 -> fixture.scene.getWeaponEntities().remove(weapon.getId());
+                case 2 -> {
+                    var replacement =
+                            new emu.grasscutter.game.entity.EntityWeapon(
+                                    fixture.scene, 50016001, currentAvatar().getAvatar());
+                    replacement.setId(weapon.getId());
+                    fixture.scene.getWeaponEntities().put(weapon.getId(), replacement);
+                }
+                case 3 -> player.setScene(null);
+                case 4 -> player.setWorld(null);
+                case 5 -> currentAvatar().getAvatar().getTpsWeaponIds().clear();
+                case 6 -> {
+                    var other = avatar(10000007, false);
+                    var foreign =
+                            new emu.grasscutter.game.entity.EntityWeapon(
+                                    fixture.scene, 50016001, other);
+                    gun.setWeaponEntity(foreign);
+                    fixture.scene.getWeaponEntities().put(foreign.getId(), foreign);
+                    foreign.getGlobalAbilityValues().put("SGV_Foreign", 8f);
+                    foreign.getInstancedAbilities()
+                            .get(0)
+                            .getAbilitySpecials()
+                            .put("ServerSnapshot", 8f);
+                }
+                case 7 -> weapon.getCasterAvatar().setOwner(fixture.player);
+                default -> fail("Unknown fixture");
+            }
+            var proto = TpsWeaponSystem.toSceneWeaponInfo(player, gun);
+            assertFalse(proto.getAbilityInfo().getIsInited());
+            assertEquals(0, proto.getEntityId());
+            assertTrue(proto.getAbilityInfo().getAppliedAbilitiesList().isEmpty());
+            assertTrue(proto.getAbilityInfo().getSgvDynamicValueMapList().isEmpty());
+        }
+    }
+
+    @Test
+    void tpsAbilitySnapshotDoesNotCarryOldStateIntoAReplacementWeapon() throws Exception {
+        try (var fixture = new AbilityTestFixture()) {
+            var gun = gunWithAbilitySnapshot(fixture);
+            var old = gun.getWeaponEntity();
+            assertEquals(
+                    1,
+                    TpsWeaponSystem.toSceneWeaponInfo(player, gun)
+                            .getAbilityInfo()
+                            .getAppliedAbilitiesCount());
+            player.loggedIn = true;
+            TpsWeaponSystem.sendEquipChange(currentAvatar().getAvatar());
+            assertNotSame(old, gun.getWeaponEntity());
+            var packet =
+                    fixture.scene.packets.stream()
+                            .filter(p -> p.getOpcode() == PacketOpcodes.TpsEquipChangeNotify)
+                            .findFirst()
+                            .orElseThrow();
+            var proto =
+                    emu.grasscutter.net.proto.TpsEquipChangeNotifyOuterClass.TpsEquipChangeNotify
+                            .parseFrom(packet.getData())
+                            .getTpsWeaponList(0);
+            assertEquals(gun.getWeaponEntity().getId(), proto.getEntityId());
+            assertFalse(proto.getAbilityInfo().getIsInited());
+            assertTrue(proto.getAbilityInfo().getAppliedAbilitiesList().isEmpty());
+            assertTrue(proto.getAbilityInfo().getSgvDynamicValueMapList().isEmpty());
+        }
     }
 
     @Test
