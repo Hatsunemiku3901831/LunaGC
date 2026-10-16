@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "MusicGameBookSaveModsRspOuterClass";
+
+// Descriptive local name for current 7.1 native JPGBFOCHHNA (39113), opcode 238.
+message MusicGameBookSaveModsRsp {
+    repeated uint32 JNJDOLEBBOO = 12;
+    int32 retcode = 14;
+}

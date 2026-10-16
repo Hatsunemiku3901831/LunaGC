@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "MusicGameBookSaveModsReqOuterClass";
+
+// Descriptive local name for current 7.1 native FAGBLBIMBLK (55845), opcode 5759.
+message MusicGameBookSaveModsReq {
+    repeated uint32 JNJDOLEBBOO = 9;
+}
