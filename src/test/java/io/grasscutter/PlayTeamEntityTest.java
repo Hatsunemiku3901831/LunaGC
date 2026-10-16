@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.google.gson.*;
 import com.google.protobuf.ByteString;
+import com.google.protobuf.CodedInputStream;
 
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.binout.*;
@@ -23,9 +24,11 @@ import emu.grasscutter.game.world.*;
 import emu.grasscutter.game.world.sceneplay.*;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.AbilityInvokeArgumentOuterClass.AbilityInvokeArgument;
+import emu.grasscutter.net.proto.AbilityInvokeEntryHeadOuterClass.AbilityInvokeEntryHead;
 import emu.grasscutter.net.proto.AbilityInvokeEntryOuterClass.AbilityInvokeEntry;
 import emu.grasscutter.net.proto.AbilityScalarValueEntryOuterClass.AbilityScalarValueEntry;
 import emu.grasscutter.net.proto.AbilityStringOuterClass.AbilityString;
+import emu.grasscutter.net.proto.AbilitySyncStateInfoOuterClass.AbilitySyncStateInfo;
 import emu.grasscutter.net.proto.DelScenePlayTeamEntityNotifyOuterClass.DelScenePlayTeamEntityNotify;
 import emu.grasscutter.net.proto.SyncScenePlayTeamEntityNotifyOuterClass.SyncScenePlayTeamEntityNotify;
 import emu.grasscutter.scripts.*;
@@ -402,6 +405,228 @@ class PlayTeamEntityTest {
                 SyncScenePlayTeamEntityNotify.parseFrom(
                                 new PacketSyncScenePlayTeamEntityNotify(spectator).getData())
                         .getEntityInfoListCount());
+    }
+
+    private void setCarrierState(EntityPlayTeam entity, float value) {
+        entity.getInstancedAbilities().get(0).getAbilitySpecials().put("resyncParameter", value);
+        entity.getGlobalAbilityValues().put("SGV_ResyncMarker", value);
+        entity.getGlobalAbilityValues().put("SGV_ZeroMarker", 0f);
+        entity.getGlobalAbilityValues().put("SGV_Nonfinite", Float.NaN);
+        entity.getGlobalAbilityValues().put("PrivateMarker", 99f);
+    }
+
+    private void assertCarrierState(EntityPlayTeam entity, AbilitySyncStateInfo info, float value) {
+        assertFalse(info.getIsInited());
+        assertEquals(1, info.getAppliedAbilitiesCount());
+        var root = info.getAppliedAbilities(0);
+        assertEquals(
+                entity.getInstancedAbilities().get(0).getData().abilityName,
+                root.getAbilityName().getStr());
+        assertEquals(1, root.getInstancedAbilityId());
+        assertTrue(
+                root.getOverrideMapList().stream()
+                        .anyMatch(
+                                entry ->
+                                        entry.getKey().getStr().equals("resyncParameter")
+                                                && entry.getFloatValue() == value));
+        var variables = new HashMap<String, Float>();
+        info.getSgvDynamicValueMapList()
+                .forEach(entry -> variables.put(entry.getKey().getStr(), entry.getFloatValue()));
+        assertEquals(value, variables.get("SGV_ResyncMarker"));
+        assertEquals(0f, variables.get("SGV_ZeroMarker"));
+        assertFalse(variables.containsKey("SGV_Nonfinite"));
+        assertFalse(variables.containsKey("PrivateMarker"));
+        assertEquals(0, info.getAppliedModifiersCount());
+        assertEquals(0, info.getMixinRecoverInfosCount());
+    }
+
+    private byte[] wireField(byte[] bytes, int field) throws Exception {
+        var input = CodedInputStream.newInstance(bytes);
+        for (int tag; (tag = input.readTag()) != 0; ) {
+            if (tag >>> 3 == field) {
+                assertEquals(2, tag & 7);
+                return input.readByteArray();
+            }
+            input.skipField(tag);
+        }
+        return fail("Missing field " + field);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {70370001, 70370002, 70370003})
+    void lateSpectatorResyncCarriesEachParticipantsCurrentParametersAndSgvs(int gadget)
+            throws Exception {
+        readyBattle(MATCH, List.of(host, guest));
+        assertTrue(battles.setPlayTeamEntityGadgetId(MAIN, gadget));
+        assertTrue(
+                battles.prestart(
+                        MAIN, new ScenePlayBattleParameters(600, 10, 203, List.of(0L, 6500L))));
+        workers.close();
+        setCarrierState(carrier(host), 2);
+        setCarrierState(carrier(guest), 4);
+        var spectator = new AbilityTestFixture.TestPlayer();
+        ready(spectator, 10003, 3);
+        var packet = new PacketSyncScenePlayTeamEntityNotify(spectator);
+        var sync = SyncScenePlayTeamEntityNotify.parseFrom(packet.getData());
+        assertEquals(
+                List.of(10001, 10002),
+                sync.getEntityInfoListList().stream().map(e -> e.getPlayerUid()).toList());
+        for (var entry : sync.getEntityInfoListList()) {
+            var entity = carrier(entry.getPlayerUid() == host.getUid() ? host : guest);
+            assertEquals(entity.getId(), entry.getEntityId());
+            assertEquals(entity.getAuthorityPeerId(), entry.getAuthorityPeerId());
+            assertEquals(gadget, entry.getGadgetConfigId());
+            assertCarrierState(entity, entry.getAbilityInfo(), entity.getPlayer() == host ? 2 : 4);
+            assertArrayEquals(
+                    entry.getAbilityInfo().toByteArray(), wireField(entry.toByteArray(), 6));
+        }
+        assertArrayEquals(sync.getEntityInfoList(0).toByteArray(), wireField(packet.getData(), 4));
+        assertEquals(2, battles.getPlayTeamEntities().size());
+    }
+
+    @Test
+    void carrierResyncReadsFreshValuesWithoutChangingPreviousPacketOrReinitializingAbilities()
+            throws Exception {
+        start();
+        workers.close();
+        var entity = carrier(guest);
+        var ability = entity.getInstancedAbilities().get(0);
+        setCarrierState(entity, 2);
+        var before = entity.toPlayTeamProto();
+        setCarrierState(entity, 5);
+        assertCarrierState(entity, entity.toPlayTeamProto().getAbilityInfo(), 5);
+        assertCarrierState(entity, before.getAbilityInfo(), 2);
+        assertSame(ability, entity.getInstancedAbilities().get(0));
+        assertEquals(1, entity.getInstancedAbilities().size());
+        assertEquals(1, packets(25654).size());
+    }
+
+    @Test
+    void carrierServerVariablesDoNotRequireAppliedRootParameters() throws Exception {
+        start();
+        workers.close();
+        var entity = carrier(guest);
+        entity.getInstancedAbilities().clear();
+        entity.getGlobalAbilityValues().put("SGV_ResyncMarker", 0f);
+        var info = entity.toPlayTeamProto().getAbilityInfo();
+        assertFalse(info.getIsInited());
+        assertEquals(0, info.getAppliedAbilitiesCount());
+        assertTrue(
+                info.getSgvDynamicValueMapList().stream()
+                        .anyMatch(
+                                e ->
+                                        e.getKey().getStr().equals("SGV_ResyncMarker")
+                                                && e.getFloatValue() == 0));
+    }
+
+    @Test
+    void ownerParametersAndAuthoritativeServerVariablesReachCarrierResync() throws Exception {
+        start();
+        workers.close();
+        var entity = carrier(guest);
+        var scalar =
+                AbilityScalarValueEntry.newBuilder()
+                        .setKey(AbilityString.newBuilder().setStr("SGV_ClientMarker"))
+                        .setFloatValue(99)
+                        .build();
+        entity.getGlobalAbilityValues().put("SGV_ClientMarker", 7f);
+        var report = report(entity).toBuilder().setAbilityData(scalar.toByteString()).build();
+        assertFalse(host.getAbilityManager().acceptAbilityInvoke(report));
+        assertTrue(guest.getAbilityManager().acceptAbilityInvoke(report));
+        assertEquals(7f, entity.getGlobalAbilityValues().get("SGV_ClientMarker"));
+        var override =
+                report.toBuilder()
+                        .setHead(AbilityInvokeEntryHead.newBuilder().setInstancedAbilityId(1))
+                        .setArgumentType(
+                                AbilityInvokeArgument
+                                        .AbilityInvokeArgument_ABILITY_META_OVERRIDE_PARAM)
+                        .setAbilityData(
+                                scalar.toBuilder()
+                                        .setKey(AbilityString.newBuilder().setStr("ownerParameter"))
+                                        .setFloatValue(7)
+                                        .build()
+                                        .toByteString())
+                        .build();
+        assertTrue(guest.getAbilityManager().acceptAbilityInvoke(override));
+        assertFalse(
+                host.getAbilityManager()
+                        .acceptAbilityInvoke(
+                                override.toBuilder()
+                                        .setAbilityData(
+                                                scalar.toBuilder()
+                                                        .setKey(
+                                                                AbilityString.newBuilder()
+                                                                        .setStr("ownerParameter"))
+                                                        .setFloatValue(99)
+                                                        .build()
+                                                        .toByteString())
+                                        .build()));
+        var info = entity.toPlayTeamProto().getAbilityInfo();
+        assertTrue(
+                info.getSgvDynamicValueMapList().stream()
+                        .anyMatch(
+                                e ->
+                                        e.getKey().getStr().equals("SGV_ClientMarker")
+                                                && e.getFloatValue() == 7));
+        assertTrue(
+                info.getAppliedAbilitiesList().stream()
+                        .flatMap(a -> a.getOverrideMapList().stream())
+                        .anyMatch(
+                                e ->
+                                        e.getKey().getStr().equals("ownerParameter")
+                                                && e.getFloatValue() == 7));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"uid", "peer", "departure", "world"})
+    void staleCarrierCannotExposeItsAbilityStateBeforeNextCleanupTick(String cause)
+            throws Exception {
+        start();
+        workers.close();
+        var entity = carrier(guest);
+        setCarrierState(entity, 4);
+        assertCarrierState(entity, entity.toPlayTeamProto().getAbilityInfo(), 4);
+        switch (cause) {
+            case "uid" -> guest.setUid(99999);
+            case "peer" -> guest.setPeerId(99);
+            case "departure" -> scene.getPlayers().remove(guest);
+            case "world" -> guest.setWorld(environment.scene.getWorld());
+        }
+        assertEquals(
+                AbilitySyncStateInfo.getDefaultInstance(),
+                entity.toPlayTeamProto().getAbilityInfo());
+        assertTrue(
+                SyncScenePlayTeamEntityNotify.parseFrom(
+                                new PacketSyncScenePlayTeamEntityNotify(host).getData())
+                        .getEntityInfoListList()
+                        .stream()
+                        .noneMatch(e -> e.getEntityId() == entity.getId()));
+    }
+
+    @Test
+    void endingRoundClearsResyncDataWithoutErasingPreviousImmutablePacket() throws Exception {
+        start();
+        workers.close();
+        var entity = carrier(guest);
+        setCarrierState(entity, 4);
+        var before = entity.toPlayTeamProto();
+        assertCarrierState(entity, before.getAbilityInfo(), 4);
+        assertTrue(battles.addProgress(MAIN, 6500));
+        assertEquals(
+                AbilitySyncStateInfo.getDefaultInstance(),
+                entity.toPlayTeamProto().getAbilityInfo());
+        assertTrue(
+                SyncScenePlayTeamEntityNotify.parseFrom(
+                                new PacketSyncScenePlayTeamEntityNotify(host).getData())
+                        .getEntityInfoListList()
+                        .isEmpty());
+        assertEquals(
+                4f,
+                before.getAbilityInfo().getSgvDynamicValueMapList().stream()
+                        .filter(e -> e.getKey().getStr().equals("SGV_ResyncMarker"))
+                        .findFirst()
+                        .orElseThrow()
+                        .getFloatValue());
     }
 
     @Test

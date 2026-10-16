@@ -8,7 +8,6 @@ import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.props.EntityIdType;
 import emu.grasscutter.game.world.Position;
 import emu.grasscutter.game.world.Scene;
-import emu.grasscutter.net.proto.AbilitySyncStateInfoOuterClass.AbilitySyncStateInfo;
 import emu.grasscutter.net.proto.PlayTeamEntityInfoOuterClass.PlayTeamEntityInfo;
 import emu.grasscutter.net.proto.ProtEntityTypeOuterClass.ProtEntityType;
 import emu.grasscutter.net.proto.SceneEntityInfoOuterClass.SceneEntityInfo;
@@ -109,8 +108,8 @@ public final class EntityPlayTeam extends GameEntity {
                 .setPlayerUid(playerUid)
                 .setAuthorityPeerId(authorityPeerId)
                 .setGadgetConfigId(gadgetConfigId)
-                // The client initializes its configured gadget abilities from this initial state.
-                .setAbilityInfo(AbilitySyncStateInfo.getDefaultInstance())
+                // Keep native initialization enabled while restoring this participant's parameters.
+                .setAbilityInfo(getAbilityRoots().toSyncState())
                 .build();
     }
 
