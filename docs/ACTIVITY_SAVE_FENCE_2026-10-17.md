@@ -47,6 +47,24 @@
 夹具修正后，相同范围 30 套、411 项全部通过，0 失败、0 错误、0 跳过；
 其中活动保存保护自身有 34 项真实 Mongo 用例。最终结果见 `final-summary.json`。
 
+## 本机运行记录
+
+2026-10-17 07:54（UTC+8），代码提交 `643c7ae25ca9cbecd74f1d7f13e4eaba01d2cfff` 已在本机运行，
+进程为 `58648`。JAR 为 `debug/aster-mid-20261011/batch340/activity-save-guard.jar`，
+SHA-256 为 `64feed12464a59d6b72b2236b1fde6cdc93e4a691564dd1e70140993a9d50ebb`。
+应用类逐项匹配编译输出，默认资源与上一构建一致；未改动的嵌套任务类型也已比对执行字节码。
+
+旧服务在没有游戏进程和在线玩家时正常退出。新服务的 HTTP 8088、UDP 22101 由同一进程监听，
+健康与日志检查通过，死锁、在线玩家和保存队列失败均为 0。
+启动实际加载 67 个活动货币绑定，本地历史覆盖文件的 401 条排期归属和文件哈希保持原值。
+普通秘境目录启动／重载均为 116 条，参考目录为 266 条，参考增强开关仍关闭。
+
+Mongo 卷保持 `lunagc_mongo-data`，资源子模块及本地资源目录保持干净，
+均为 `dac2a9d43332ef51879522cf39da2831b0ca0543`。
+运行证据位于上述目录的 `runtime-start-proof.json`、`runtime-currency-proof.json`、
+`runtime-reload-proof.json`、`runtime-reference-proof.json` 及 `final-state.json`。
+本次没有启动客户端或修改真实玩家的活动余额，客户端玩法仍待验收。
+
 ## 后续范围
 
 这项保护约束同一活动文档的覆盖，不是完整商店或领奖事务。
