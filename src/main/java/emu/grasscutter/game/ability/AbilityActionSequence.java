@@ -45,7 +45,8 @@ final class AbilityActionSequence {
             "LPKOBOLMDBI", "ONJEHDDFFCH", "GKGBIPDLMMG", "DEOFBICNFHF", "CBHEIAINBAI",
             "AJPLICCNACO", "GPEMEIHPCCF", "FGDONAGOCFP");
     private static final Set<String> SELECTOR_FIELDS = Set.of("$type", "shapeName", "sizeRatio",
-            "campTargetType", "entityTypes", "entityTypePriority", "sortType", "topLimit");
+            "campTargetType", "entityTypes", "entityTypePriority", "sortType", "topLimit",
+            "centerBasedOn", "GLDMBEOHPHB");
     private static final Set<String> COMPARISONS = Set.of("Equal", "NotEqual", "MoreThan", "Greater",
             "MoreThanAndEqual", "MoreOrEqual", "GreaterOrEqual", "LessThan", "Lesser",
             "LessThanAndEqual", "LessAndEqual", "LessOrEqual", "LesserOrEqual");
@@ -209,6 +210,11 @@ final class AbilityActionSequence {
         }
         if(selector.containsKey("sizeRatio") && !(selector.get("sizeRatio") instanceof Number ratio
                 && ratio.doubleValue()==1d)) return false;
+        if(selector.containsKey("centerBasedOn") && !(selector.get("centerBasedOn") instanceof String center
+                && Set.of("Self", "Target", "Caster", "Owner", "CurLocalAvatar", "OriginOwner",
+                        "CasterOriginOwner").contains(center))) return false;
+        if(selector.containsKey("GLDMBEOHPHB")
+                && !AbilityTargetSelector.defaultSelectorBorn(selector.get("GLDMBEOHPHB"))) return false;
         if(selector.containsKey("campTargetType") && !(selector.get("campTargetType") instanceof String camp
                 && Set.of("Enemy","Alliance","SelfCamp","All").contains(camp))) return false;
         if(selector.containsKey("sortType") && !"Nearest".equals(selector.get("sortType"))) return false;
@@ -285,6 +291,11 @@ final class AbilityActionSequence {
                 if(action.type==AbilityModifierAction.Type.RemoveModifier) {
                     ability.removeModifier(target,action.modifierName);
                 } else {
+                    if(action.type==AbilityModifierAction.Type.ApplyModifier
+                            && AbilityModifierInterval.supported(ability,data,action.modifierName,target)) {
+                        AbilityModifierInterval.apply(ability,data,action.modifierName,target,current);
+                        continue;
+                    }
                     if(action.type==AbilityModifierAction.Type.ApplyModifier && "Unique".equals(data.stacking))
                         ability.removeModifier(target,action.modifierName);
                     AbilityModifierStacking.apply(ability,data,target,current);

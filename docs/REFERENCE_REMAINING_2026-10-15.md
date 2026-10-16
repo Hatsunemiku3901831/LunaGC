@@ -53,6 +53,7 @@
 | 道具主人存活期 | [实际主人、死亡／复活代次、离场、后台队伍及实体编号复用保护](GADGET_OWNER_LIFETIME_2026-10-16.md) |
 | 环境材质结束回调 | [三类封印宝箱、两类荆棘墙、原始 Lua、宝箱受击保护及完整开箱调用](ENVIRONMENTAL_MATERIALS_2026-10-16.md) |
 | 普通秘境挑战入口 | [首次／重试落点、朝向、选项与失败重开、生命周期保护及 20 个资源区块修复](DUNGEON_CHALLENGE_ENTRY_2026-10-16.md) |
+| 菈乌玛一命治疗结算 | [当前角色中心、自身回血、实际精通与命座参数、1.9 秒间隔、并发及客户端确认](LAUMA_C1_HEALING_2026-10-16.md) |
 | Windows 服务启动 | [JDK Selector 临时目录、带空格路径、真实 Java 启动及 HTTP／UDP 状态区分](WINDOWS_JAVA_STARTUP_2026-10-16.md) |
 | 最近有效锚点复活 | [当前点位类型、任务锁定、最近目的地、原地回退、坐标快照及请求响应归属](WORLD_RESPAWN_POINTS_2026-10-16.md) |
 | 全队倒下的任务失败 | [真实任务失败、复活顺序、并发去重和数据库保存](TEAM_WIPE_QUEST_FAILURE_2026-10-15.md) |
@@ -174,6 +175,6 @@ HunkyMeow 的大世界持久建造已在本地接入，并修正非持久模式�
 | --- | --- |
 | `EnvironmentalSealHelper.tryProcessAttack`，由 EntityGadget、EntityBaseGadget 和 OreMiningHelper 调用 | 五组资源的结束回调、原始 Lua／销毁、宝箱受击保护及解封后开箱已接入，见[验证记录](ENVIRONMENTAL_MATERIALS_2026-10-16.md)；真实元素耐久消耗与燃烧动画、其余材质继续核对，参考中的补偿数值单独记录 |
 | `DomainContinueSpawnHelper` 与 `DomainChallengeKeyHelper` | 已按实际机关类型接入首次／重试落点、朝向、选项准备与延迟隐藏、失败脚本重开及生命周期保护，修复 20 个资源区块引用；四个真实场景和既有传送／深渊保护通过[服务端回归](DUNGEON_CHALLENGE_ENTRY_2026-10-16.md)，落地碰撞、界面与完整多人挑战仍待客户端验收 |
-| `LaumaC1HealHelper` | 本地已存在通用反应回调、ApplyModifier 与 HealHP 路径；需以 `Avatar_Lauma_Constellation_1` 的真实资源验证范围、精通来源、反应确认、1.9 秒间隔及 20 秒监听窗口，分别比较参考的技能开始／GV 补偿和原资源行为，避免重复治疗 |
+| `LaumaC1HealHelper` | 已用实际资源、命座和角色验证治疗中心、自身回血、精通与加成、1.9 秒间隔及重复确认，见[治疗结算记录](LAUMA_C1_HEALING_2026-10-16.md)；20 秒监听、0.5 秒附加刷新、40 米传播、反应产生端及完整多人战斗仍需继续联动和实机验收，参考的 E／Q 与 GV 补偿未作为额外治疗入口 |
 
 上述核对不能由文件名比较得出，也不能凭通用处理器存在宣称整个角色或玩法已经完成。

@@ -155,7 +155,12 @@ public final class AbilityPeriodicHealing {
             }
             synchronized(state) {
                 long elapsed=now-state.start;
-                if(state.interval<=0 || elapsed<0 || (state.duration>0 && now-state.lifetimeStart>state.duration)) continue;
+                if(state.interval<=0 || elapsed<0) continue;
+                // A self-removal scheduled exactly at the lifetime boundary is cleanup, even
+                // when the scene tick arrives late. Expired healing pulses still cannot catch up.
+                if(state.duration>0 && now-state.lifetimeStart>state.duration
+                        && !AbilityModifierInterval.supported(state.controller.getAbility(),
+                            state.controller.getModifierData(),state.controller.getName(),entity)) continue;
                 long due=elapsed/state.interval;
                 if(due<=state.consumed) continue;
                 // A delayed scene tick coalesces missed pulses rather than producing a burst.

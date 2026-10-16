@@ -6,6 +6,7 @@ import emu.grasscutter.data.binout.AbilityModifier.AbilityModifierAction;
 import emu.grasscutter.game.ability.Ability;
 import emu.grasscutter.game.ability.AbilityCooldownInvocation;
 import emu.grasscutter.game.ability.AbilityModifierController;
+import emu.grasscutter.game.ability.AbilityModifierInterval;
 import emu.grasscutter.game.ability.PredicateEvaluator;
 import emu.grasscutter.game.entity.GameEntity;
 
@@ -29,6 +30,10 @@ public final class ActionApplyModifier extends AbilityActionHandler {
         }
         var modifierData = ability.getData().modifiers.get(action.modifierName);
         if (modifierData == null) return false;
+
+        if (AbilityModifierInterval.supported(ability, modifierData, action.modifierName, target))
+            return AbilityModifierInterval.apply(
+                    ability, modifierData, action.modifierName, target, () -> true);
 
         if ("Unique".equals(modifierData.stacking)) {
             ability.removeModifier(target, action.modifierName);

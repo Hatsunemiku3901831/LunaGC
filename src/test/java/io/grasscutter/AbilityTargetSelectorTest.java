@@ -11,8 +11,10 @@ import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.world.Position;
 import emu.grasscutter.net.proto.EvtCreateGadgetNotifyOuterClass.EvtCreateGadgetNotify;
 import emu.grasscutter.utils.JsonUtils;
-import java.util.*;
+
 import org.junit.jupiter.api.*;
+
+import java.util.*;
 
 class AbilityTargetSelectorTest {
     private AbilityTestFixture fixture;
@@ -25,34 +27,61 @@ class AbilityTargetSelectorTest {
         fixture.player.setWorld(fixture.scene.getWorld());
         partner = new AbilityTestFixture.TestPlayer();
         partner.setWorld(fixture.scene.getWorld());
-        ability = new Ability(JsonUtils.decode("{\"abilityName\":\"Test_TargetSelector\"}", AbilityData.class),
-                fixture.entity, fixture.player);
+        ability =
+                new Ability(
+                        JsonUtils.decode(
+                                "{\"abilityName\":\"Test_TargetSelector\"}", AbilityData.class),
+                        fixture.entity,
+                        fixture.player);
     }
 
     @AfterEach
-    void restore() { fixture.close(); }
+    void restore() {
+        fixture.close();
+    }
 
     private EntityAvatar avatar(Player owner) {
-        var avatar = new Avatar() {
-            @Override public Player getPlayer() { return owner; }
-        };
-        var entity = new EntityAvatar(fixture.scene, avatar) {
-            @Override public Position getPosition() { return new Position(); }
-        };
+        var avatar =
+                new Avatar() {
+                    @Override
+                    public Player getPlayer() {
+                        return owner;
+                    }
+                };
+        var entity =
+                new EntityAvatar(fixture.scene, avatar) {
+                    @Override
+                    public Position getPosition() {
+                        return new Position();
+                    }
+                };
         fixture.scene.getEntities().put(entity.getId(), entity);
         return entity;
     }
 
     private EntityClientGadget gadget(Player owner, int id, float x, float y) {
-        var entity = new EntityClientGadget(fixture.scene, owner, EvtCreateGadgetNotify.newBuilder()
-                .setEntityId(id).setInitPos(new Position(x, y, 0).toProto()).build());
+        var entity =
+                new EntityClientGadget(
+                        fixture.scene,
+                        owner,
+                        EvtCreateGadgetNotify.newBuilder()
+                                .setEntityId(id)
+                                .setInitPos(new Position(x, y, 0).toProto())
+                                .build());
         fixture.scene.getEntities().put(id, entity);
         return entity;
     }
 
     private Map<String, Object> selector(String camp, String type) {
-        return Map.of("$type", "SelectTargetsByShape", "campTargetType", camp,
-                "entityTypes", List.of(type), "shapeName", "CircleR20H10");
+        return Map.of(
+                "$type",
+                "SelectTargetsByShape",
+                "campTargetType",
+                camp,
+                "entityTypes",
+                List.of(type),
+                "shapeName",
+                "CircleR20H10");
     }
 
     private List<GameEntity> select(String camp, String type) {
@@ -101,8 +130,10 @@ class AbilityTargetSelectorTest {
     void missingAbilityPlayerDoesNotTurnUnownedGadgetsIntoAllies() {
         var enemy = gadget(null, 102, 4, 0);
         var ownerless = new Ability(ability.getData(), fixture.entity, null);
-        assertEquals(List.of(enemy), AbilityTargetSelector.select(selector("Enemy", "Gadget"),
-                ownerless, fixture.entity));
+        assertEquals(
+                List.of(enemy),
+                AbilityTargetSelector.select(
+                        selector("Enemy", "Gadget"), ownerless, fixture.entity));
     }
 
     @Test
@@ -115,11 +146,26 @@ class AbilityTargetSelectorTest {
         var config = new HashMap<>(selector("Enemy", "Gadget"));
         config.put("sortType", "Nearest");
         config.put("topLimit", 1);
-        assertEquals(List.of(nearest), AbilityTargetSelector.select(config, ability, fixture.entity));
+        assertEquals(
+                List.of(nearest), AbilityTargetSelector.select(config, ability, fixture.entity));
     }
 
     @Test
     void unsupportedSelectorKeepsTheExistingFallbackContract() {
-        assertNull(AbilityTargetSelector.select(Map.of("$type", "UnknownSelector"), ability, fixture.entity));
+        assertNull(
+                AbilityTargetSelector.select(
+                        Map.of("$type", "UnknownSelector"), ability, fixture.entity));
+    }
+
+    @Test
+    void unknown_or_unavailable_centers_cannot_fall_back_to_the_invoking_entity() {
+        var config = new HashMap<>(selector("All", "Avatar"));
+        config.put("centerBasedOn", "UnknownCenter");
+        avatar(fixture.player);
+        assertTrue(AbilityTargetSelector.select(config, ability, fixture.entity).isEmpty());
+        fixture.player.getTeamManager().getActiveTeam().clear();
+        config.put("centerBasedOn", "CurLocalAvatar");
+        assertTrue(AbilityTargetSelector.select(config, ability, fixture.entity).isEmpty());
+        assertTrue(fixture.player.getTeamManager().getActiveTeam().isEmpty());
     }
 }
