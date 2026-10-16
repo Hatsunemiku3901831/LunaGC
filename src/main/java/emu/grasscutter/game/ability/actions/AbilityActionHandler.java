@@ -96,7 +96,7 @@ public abstract class AbilityActionHandler {
         var teamManager = playerOwner != null ? playerOwner.getTeamManager() : null;
 
         return switch (target) {
-            case "Self", "Target", "Applier" -> entity;
+            case "Self", "Target", "Other", "Applier" -> entity;
             case "Caster", "Owner" -> ability.getOwner();
             case "Team" -> teamManager != null ? teamManager.getEntity() : null;
             case "OriginOwner", "CurLocalAvatar" -> teamManager != null

@@ -13,6 +13,73 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BooleanSupplier;
 
 public class AbilityModifierController {
+    private static final Object ATTACHMENTS = new Object();
+    private record Child(AbilityModifierController parent, GameEntity target, AbilityModifierController controller) {}
+    private final Set<Child> attachedChildren=new java.util.HashSet<>();
+    private volatile Child attachment;
+    private volatile boolean attachmentRevoked, attachmentsEnding;
+    private boolean auraDuration;
+
+    boolean ownsAuraDuration() { return auraDuration; }
+    boolean ownsAttachedDuration() { return auraDuration || attachment!=null && AbilityPartyAura.listener(modifierData); }
+
+    boolean auraCurrent() {
+        var callbacks=serverCallbacks;
+        var player=ability.getPlayerOwner();
+        if(!auraDuration || callbacks==null || attachmentsEnding || !callbacks.context.isCurrent()
+                || !(callbacks.target instanceof emu.grasscutter.game.entity.EntityTeam team)
+                || player==null || player.getTeamManager().getEntity()!=team || player.getScene()==null
+                || player.getWorld()!=player.getScene().getWorld()
+                || player.getScene().getScriptManager().isDestroyed()
+                || player.getWorld().getScenes().get(player.getScene().getId())!=player.getScene()) return false;
+        return ability.getOwner().getInstancedAbilities().contains(ability)
+                && callbacks.target.getAbilityModifierDuration().withinLifetime(this);
+    }
+
+    void closeAuraAttachments() { if(auraDuration) synchronized(ATTACHMENTS) { attachmentsEnding=true; } }
+
+    boolean attachmentCurrent() {
+        var binding=attachment;
+        if(binding==null) return true;
+        var parent=binding.parent;
+        return !attachmentRevoked && parent.auraCurrent();
+    }
+
+    void attachChild(GameEntity target, AbilityModifierController child) {
+        if(child==this) return;
+        boolean reject;
+        synchronized(target.getInstancedModifiers()) {
+            if(!target.getAbilityHpModifier().activeControllers().contains(child)) return;
+            synchronized(ATTACHMENTS) {
+                reject=!auraCurrent();
+                if(!reject) {
+                    var old=child.attachment;
+                    if(old!=null) old.parent.attachedChildren.remove(old);
+                    var binding=new Child(this,target,child);
+                    child.attachment=binding;child.attachmentRevoked=false;attachedChildren.add(binding);
+                }
+            }
+        }
+        if(reject) child.getAbility().removeModifierInstanceIf(target,child,true,()-> {
+            synchronized(ATTACHMENTS) { return child.attachment==null || child.attachment.parent==this; }
+        });
+    }
+
+    private void removeAttachedChildren() {
+        java.util.List<Child> snapshot;
+        synchronized(ATTACHMENTS) {
+            attachmentsEnding=true;
+            var own=attachment;
+            if(own!=null) { own.parent.attachedChildren.remove(own); attachmentRevoked=true; }
+            snapshot=new java.util.ArrayList<>(attachedChildren);attachedChildren.clear();
+        }
+        for(var child:snapshot) child.controller.getAbility().removeModifierInstanceIf(child.target,child.controller,true,()-> {
+            synchronized(ATTACHMENTS) {
+                if(child.controller.attachment!=child) return false;
+                child.controller.attachmentRevoked=true; return true;
+            }
+        });
+    }
     @Getter private Ability ability;
 
     @Getter private AbilityData abilityData;
@@ -133,7 +200,9 @@ public class AbilityModifierController {
         if(added==null || removed==null) return false;
         var callbacks=new ServerCallbacks(ability,target,added,removed);
         if(!callbacks.context.isCurrent()) return false;
-        serverCallbacks=callbacks; return true;
+        auraDuration=AbilityPartyAura.window(ability,modifierData,target);
+        serverCallbacks=callbacks;
+        return true;
     }
     public boolean hasServerCallbacks() {
         var callbacks=serverCallbacks;
@@ -169,6 +238,7 @@ public class AbilityModifierController {
         AbilityGlobalValueWatchers.runRemovalCallbacks(this::runRemovalCallbacks);
     }
     private void runRemovalCallbacks() {
+        removeAttachedChildren();
         var callbacks=serverCallbacks;
         if(callbacks!=null && callbacks.ended.compareAndSet(false,true))
             AbilityCooldownInvocation.run(this, () -> AbilityActionSequence.run(ability,modifierData.onRemoved,callbacks.target,callbacks.context::isCurrent));

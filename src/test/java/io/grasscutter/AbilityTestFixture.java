@@ -29,6 +29,8 @@ final class AbilityTestFixture implements AutoCloseable {
     private final boolean previousScripts;
 
     AbilityTestFixture() throws Exception {
+        if (emu.grasscutter.scripts.ScriptLoader.getEngine() == null)
+            emu.grasscutter.scripts.ScriptLoader.init();
         previousMode = Grasscutter.getRunMode();
         previousCombat = GameData.getConfigGlobalCombat();
         previousScripts = Grasscutter.getConfig().server.game.enableScriptInBigWorld;

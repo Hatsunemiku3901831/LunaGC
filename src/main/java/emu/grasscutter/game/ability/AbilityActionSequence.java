@@ -15,8 +15,8 @@ import java.util.function.BooleanSupplier;
 
 /** Validated resource sequences, including callbacks of explicitly referenced modifiers. */
 final class AbilityActionSequence {
-    private static final Set<String> TARGETS = Set.of("Self","Target","Applier","Owner","Caster",
-            "CurLocalAvatar","OriginOwner","CasterOriginOwner","AllPlayerAvatars","CurTeamAvatars");
+    private static final Set<String> TARGETS = Set.of("Self","Target","Other","Applier","Owner","Caster",
+            "CurLocalAvatar","OriginOwner","CasterOriginOwner","Team","AllPlayerAvatars","CurTeamAvatars");
     private static final Set<AbilityModifierAction.Type> ACTIONS = Set.of(
             AbilityModifierAction.Type.HealHP, AbilityModifierAction.Type.LoseHP,
             AbilityModifierAction.Type.SetGlobalValue, AbilityModifierAction.Type.SetGlobalValueV2,
@@ -152,7 +152,8 @@ final class AbilityActionSequence {
                 var modifier=data.modifiers.get(action.modifierName);
                 // Validate referenced callbacks, but only their own instances may claim them.
                 Set<AbilityModifierAction> referenced=Collections.newSetFromMap(new IdentityHashMap<>());
-                if(modifier==null || !AbilityModifierStacking.supported(modifier)
+                if(modifier==null || !(AbilityModifierStacking.supported(modifier)
+                        || "Team".equals(action.target) && AbilityPartyAura.windowShape(data,modifier))
                         || !collect(data,modifier.onAdded,referenced,validated,path,depth+1,false)
                         || !collect(data,modifier.onRemoved,referenced,validated,path,depth+1,false)) return false;
             }
@@ -316,6 +317,10 @@ final class AbilityActionSequence {
             if(!nativeFallback) return List.of();
         }
         var player=ability.getPlayerOwner();
+        if("AllPlayerAvatars".equals(action.target)) {
+            var auraTargets=AbilityPartyAura.targets(ability);
+            if(auraTargets!=null) return auraTargets;
+        }
         if("AllPlayerAvatars".equals(action.target) || "CurTeamAvatars".equals(action.target))
             return player==null?List.of():new ArrayList<>(new LinkedHashSet<>(player.getTeamManager().getActiveTeamSnapshot()));
         if(("CurLocalAvatar".equals(action.target) || "OriginOwner".equals(action.target))

@@ -388,8 +388,18 @@ public final class AbilityManager extends BasePlayerManager {
         executeMixin(ability, mixinData, abilityData, ability == null ? null : ability.getOwner());
     }
 
+    private static boolean ownsMixin(AbilityModifierController controller, AbilityMixinData mixin) {
+        var mixins=controller.getModifierData().modifierMixins;
+        return mixins!=null && Arrays.stream(mixins).anyMatch(candidate -> candidate==mixin);
+    }
+
     public void executeMixin(Ability ability, AbilityMixinData mixinData, ByteString abilityData,
                              GameEntity target) {
+        executeMixin(ability,mixinData,abilityData,target,()->true);
+    }
+
+    private void executeMixin(Ability ability, AbilityMixinData mixinData, ByteString abilityData,
+                              GameEntity target, java.util.function.BooleanSupplier callbackCurrent) {
 
         if (ability == null || mixinData == null || target == null) return;
 
@@ -404,18 +414,19 @@ public final class AbilityManager extends BasePlayerManager {
         }
 
         var context = new AbilityExecutionContext(ability, target, false, true);
-        if (!context.isCurrent()) return;
+        if (!context.isCurrent() || !callbackCurrent.getAsBoolean()) return;
         if (mixinData.type==AbilityMixinData.Type.CheckSubTagScanEntityMixin
                 || mixinData.type==AbilityMixinData.Type.TryEnterVehicleMixin
                 || mixinData.type==AbilityMixinData.Type.DoActionOnVehicleInteractPostMixin
                 || mixinData.type==AbilityMixinData.Type.TriggerVehicleOff
                 || mixinData.type==AbilityMixinData.Type.AvatarCombatMixin) {
             // Scan selection must be visible to the immediately following modifier attachment.
-            context.runIfCurrent(() -> handler.execute(ability,mixinData,abilityData,target));
+            context.runIfCurrent(() -> { if(callbackCurrent.getAsBoolean()) handler.execute(ability,mixinData,abilityData,target); });
             return;
         }
         eventExecutor.submit(
             () -> context.runIfCurrent(() -> {
+                if(!callbackCurrent.getAsBoolean()) return;
                 try {
                     if (!handler.execute(ability, mixinData, abilityData, target)) {
                         Grasscutter.getLogger()
@@ -820,8 +831,29 @@ public final class AbilityManager extends BasePlayerManager {
             var mixin = ability.getData().localIdToMixin.get(head.getLocalId());
 
             if (mixin != null) {
+                if(head.getInstancedModifierId()!=0 && invokedModifier==null) return;
+                if((head.getLocalId() & 7)==AbilityLocalIdGenerator.ConfigAbilitySubContainerType.MODIFIER_MIXIN.value) {
+                    if(invokedModifier==null) {
+                        var currentAbility=ability;
+                        synchronized(entity.getInstancedModifiers()) {
+                            var matches=entity.getAbilityHpModifier().activeControllers().stream()
+                                    .filter(c -> c.getAbility()==currentAbility && ownsMixin(c,mixin) && c.attachmentCurrent()).toList();
+                            if(matches.size()!=1) return;
+                            invokedModifier=matches.get(0);
+                        }
+                    } else if(!ownsMixin(invokedModifier,mixin)) return;
+                }
+                var callbackModifier=invokedModifier;
+                int callbackId=head.getInstancedModifierId();
                 Grasscutter.getLogger().trace("Executing mixin: {}", mixin);
-                executeMixin(ability, mixin, invoke.getAbilityData(), target);
+                executeMixin(ability, mixin, invoke.getAbilityData(), target,()-> {
+                    if(callbackModifier==null) return true;
+                    if(!callbackModifier.attachmentCurrent()) return false;
+                    synchronized(entity.getInstancedModifiers()) {
+                        return callbackId==0 ? entity.getAbilityHpModifier().activeControllers().contains(callbackModifier)
+                                : entity.getInstancedModifiers().get(callbackId)==callbackModifier;
+                    }
+                });
 
                 return;
             }

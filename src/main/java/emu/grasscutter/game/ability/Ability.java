@@ -154,6 +154,8 @@ public class Ability {
                         && (controller.hasServerCallbacks() || controller.hasAttachmentCallbacks() || controller.hasBindingCallbacks() || controller.hasAnimationCallbacks()))
                     endActions.add(controller::runServerOnRemoved);
                 if(controller.getAbility()==this && name.equals(controller.getName()))
+                    controller.closeAuraAttachments();
+                if(controller.getAbility()==this && name.equals(controller.getName()))
                     endActions.add(() -> AnimationModifierCallbacks.parentRemoved(target, controller));
             }
             var named = target.getAppliedAbilityModifiers().get(this);
@@ -179,8 +181,14 @@ public class Ability {
 
     /** Release one binding's controller, preserving independently attached same-name instances. */
     boolean removeModifierInstance(GameEntity target, AbilityModifierController modifier, boolean refresh) {
+        return removeModifierInstanceIf(target,modifier,refresh,()->true);
+    }
+
+    boolean removeModifierInstanceIf(GameEntity target, AbilityModifierController modifier, boolean refresh,
+                                     BooleanSupplier owned) {
         boolean removed;
         synchronized (target.getInstancedModifiers()) {
+            if(!owned.getAsBoolean()) return false;
             removed = target.getAbilityHpModifier().lifecycleControllers().contains(modifier);
             target.getInstancedModifiers().int2ObjectEntrySet().removeIf(entry -> {
                 if (entry.getValue() != modifier) return false;
@@ -206,6 +214,7 @@ public class Ability {
     }
 
     private void unregisterModifierLocked(GameEntity target, AbilityModifierController modifier) {
+        modifier.closeAuraAttachments();
         var named = target.getAppliedAbilityModifiers().get(this);
         var remainingServer = target.getAbilityHpModifier().unregisterServerStack(modifier);
         target.getAbilityPeriodicHealing().removed(modifier);
@@ -218,12 +227,27 @@ public class Ability {
         }
     }
 
+    void retireAuraModifierLocked(GameEntity target, AbilityModifierController modifier) {
+        modifier.closeAuraAttachments();
+        target.getInstancedModifiers().int2ObjectEntrySet().removeIf(entry -> {
+            if(entry.getValue()!=modifier) return false;
+            target.getAbilityPeriodicHealing().clientRemoved(entry.getIntKey(),modifier);
+            return true;
+        });
+        unregisterModifierLocked(target,modifier);
+    }
+
     boolean expireServerModifier(GameEntity target, AbilityModifierController modifier,
                                  BooleanSupplier currentTimer, Runnable onRemoved) {
         synchronized(target.getInstancedModifiers()) {
             if(!currentTimer.getAsBoolean()
                     || !target.getAbilityHpModifier().activeControllers().contains(modifier)
-                    || target.getInstancedModifiers().containsValue(modifier)) return false;
+                    || target.getInstancedModifiers().containsValue(modifier) && !modifier.ownsAttachedDuration()) return false;
+            if(modifier.ownsAttachedDuration()) target.getInstancedModifiers().int2ObjectEntrySet().removeIf(entry -> {
+                if(entry.getValue()!=modifier) return false;
+                target.getAbilityPeriodicHealing().clientRemoved(entry.getIntKey(),modifier);
+                return true;
+            });
             unregisterModifierLocked(target,modifier);
             target.getAbilityHpModifier().refresh(true);
         }

@@ -868,6 +868,10 @@ public class Scene {
 
         for (var player : getPlayers()) {
             if (player.getScene() != this) continue;
+            var team = player.getTeamManager().getEntity();
+            if (team != null && team.getPlayer() == player && team.getScene() == this
+                    && player.getWorld() == getWorld())
+                stage("a team's abilities", team::onAbilityTick);
             for (var avatar : player.getTeamManager().getActiveTeamSnapshot()) {
                 if (tickedAvatars.contains(avatar) || avatar.getScene() != this
                         || getEntities().get(avatar.getId()) != null) continue;

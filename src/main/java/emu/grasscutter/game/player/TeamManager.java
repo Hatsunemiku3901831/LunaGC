@@ -49,7 +49,13 @@ public final class TeamManager extends BasePlayerDataManager {
     private int currentTeamIndex;
     @Getter @Setter private int currentCharacterIndex;
     @Transient @Getter @Setter private TeamInfo mpTeam;
-    @Transient @Getter @Setter private EntityTeam entity;
+    @Transient @Getter private EntityTeam entity;
+
+    public void setEntity(EntityTeam entity) {
+        var previous=this.entity;
+        this.entity=entity;
+        if(previous!=null && previous!=entity) previous.invalidateAbilityLifecycle();
+    }
 
     @Transient private int useTemporarilyTeamIndex = -1;
     @Transient private List<TeamInfo> temporaryTeam;

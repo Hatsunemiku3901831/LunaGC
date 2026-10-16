@@ -34,6 +34,7 @@ class LaumaHealingTest {
     private static final String HEAL = "UNIQUE_Avatar_Lauma_Constellation_1_HealHP";
     private AbilityTestFixture fixture;
     private EntityAvatar lauma, active;
+    private EntityTeam team;
     private Ability ability;
     private final AtomicLong clock = new AtomicLong();
     private final List<Runnable> restores = new ArrayList<>();
@@ -52,6 +53,11 @@ class LaumaHealingTest {
         fixture = new AbilityTestFixture();
         fixture.player.setWorld(fixture.scene.getWorld());
         fixture.player.setUid(10001);
+        fixture.scene.getPlayers().add(fixture.player);
+        fixture.scene.getWorld().getPlayers().add(fixture.player);
+        fixture.scene.getWorld().getScenes().put(fixture.scene.getId(), fixture.scene);
+        team = new EntityTeam(fixture.player);
+        fixture.player.getTeamManager().setEntity(team);
         var talent =
                 JsonUtils.loadToList(
                                 Path.of(
@@ -102,6 +108,9 @@ class LaumaHealingTest {
         var periodic = GameEntity.class.getDeclaredField("abilityPeriodicHealing");
         periodic.setAccessible(true);
         periodic.set(lauma, new AbilityPeriodicHealing(lauma, clock::get));
+        duration.set(team, new AbilityModifierDuration(team, clock::get));
+        periodic.set(team, new AbilityPeriodicHealing(team, clock::get));
+        duration.set(active, new AbilityModifierDuration(active, clock::get));
     }
 
     @AfterEach
@@ -112,7 +121,8 @@ class LaumaHealingTest {
         fixture.close();
     }
 
-    private EntityAvatar avatar(Player owner, int avatarId, float x, float y, float z) {
+    private EntityAvatar avatar(Player owner, int avatarId, float x, float y, float z)
+            throws Exception {
         owner.setScene(fixture.scene);
         owner.setWorld(fixture.scene.getWorld());
         var position = new Position(x, y, z);
@@ -151,6 +161,12 @@ class LaumaHealingTest {
         entity.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, 100);
         owner.getTeamManager().getActiveTeam().add(entity);
         fixture.scene.getEntities().put(entity.getId(), entity);
+        var duration = GameEntity.class.getDeclaredField("abilityModifierDuration");
+        duration.setAccessible(true);
+        duration.set(entity, new AbilityModifierDuration(entity, clock::get));
+        var periodic = GameEntity.class.getDeclaredField("abilityPeriodicHealing");
+        periodic.setAccessible(true);
+        periodic.set(entity, new AbilityPeriodicHealing(entity, clock::get));
         return entity;
     }
 
@@ -409,5 +425,414 @@ class LaumaHealingTest {
         lauma.getAbilityModifierDuration().tick();
         lauma.getAbilityPeriodicHealing().tick();
         assertEquals(1100, hp(active));
+    }
+
+    private static final String TEAM = "UNIQUE_Avatar_Lauma_Constellation_1_TeamHandler";
+
+    private void startWindow() throws Exception {
+        startWindow(95);
+    }
+
+    private void startWindow(int instanceId) throws Exception {
+        assertTrue(ability.getManager().triggerAbility(lauma, ROOT));
+        assertTrue(ability.getModifiers(team).containsKey(TEAM));
+        var change =
+                emu.grasscutter.net.proto.AbilityMetaModifierChangeOuterClass
+                        .AbilityMetaModifierChange.newBuilder()
+                        .setAction(
+                                emu.grasscutter.net.proto.ModifierActionOuterClass.ModifierAction
+                                        .MODIFIER_ACTION_ADDED)
+                        .setParentAbilityName(
+                                emu.grasscutter.net.proto.AbilityStringOuterClass.AbilityString
+                                        .newBuilder()
+                                        .setStr(ROOT))
+                        .setModifierLocalId(
+                                new ArrayList<>(ability.getData().modifiers.keySet())
+                                        .indexOf(TEAM));
+        fixture.player
+                .getAbilityManager()
+                .onAbilityInvoke(
+                        AbilityInvokeEntry.newBuilder()
+                                .setEntityId(team.getId())
+                                .setArgumentType(
+                                        AbilityInvokeArgument
+                                                .AbilityInvokeArgument_ABILITY_META_MODIFIER_CHANGE)
+                                .setHead(
+                                        AbilityInvokeEntryHead.newBuilder()
+                                                .setTargetId(lauma.getId())
+                                                .setInstancedAbilityId(1)
+                                                .setInstancedModifierId(instanceId))
+                                .setAbilityData(change.build().toByteString())
+                                .build());
+        drain();
+        assertTrue(ability.getModifiers(lauma).containsKey(HANDLER));
+        assertEquals(100, hp(active));
+    }
+
+    @Test
+    void the_team_window_refreshes_listeners_every_half_second() throws Exception {
+        active.getPosition().setX(41);
+        startWindow();
+        assertFalse(ability.getModifiers(active).containsKey(HANDLER));
+        active.getPosition().setX(39.9f);
+        clock.set(499_999_000L);
+        team.onAbilityTick();
+        assertFalse(ability.getModifiers(active).containsKey(HANDLER));
+        clock.set(500_001_000L);
+        team.onAbilityTick();
+        assertTrue(ability.getModifiers(active).containsKey(HANDLER));
+    }
+
+    @Test
+    void the_confirmed_team_window_ends_after_twenty_seconds() throws Exception {
+        startWindow();
+        clock.set(20_000_001_000L);
+        team.onAbilityTick();
+        assertFalse(ability.getModifiers(team).containsKey(TEAM));
+        assertFalse(ability.getModifiers(active).containsKey(HANDLER));
+        assertFalse(ability.getModifiers(lauma).containsKey(HANDLER));
+    }
+
+    @Test
+    void removing_the_parent_window_clears_only_its_attached_listeners() throws Exception {
+        startWindow();
+        var other = new Ability(ability.getData(), lauma, fixture.player);
+        var unrelated =
+                new AbilityModifierController(
+                        other, other.getData(), other.getData().modifiers.get(HANDLER));
+        other.registerModifier(active, unrelated);
+        ability.removeModifier(team, TEAM);
+        assertFalse(ability.getModifiers(active).containsKey(HANDLER));
+        assertFalse(ability.getModifiers(lauma).containsKey(HANDLER));
+        assertSame(unrelated, other.getModifiers(active).get(HANDLER));
+    }
+
+    @Test
+    void nearby_players_receive_the_listener_but_out_of_range_players_do_not() throws Exception {
+        var nearbyPlayer = new AbilityTestFixture.TestPlayer();
+        var farPlayer = new AbilityTestFixture.TestPlayer();
+        var nearby = avatar(nearbyPlayer, 10000015, 39.9f, 0, 0);
+        var far = avatar(farPlayer, 10000016, 40.1f, 0, 0);
+        fixture.scene.getPlayers().addAll(List.of(nearbyPlayer, farPlayer));
+        fixture.scene.getWorld().getPlayers().addAll(List.of(nearbyPlayer, farPlayer));
+        startWindow();
+        assertTrue(ability.getModifiers(nearby).containsKey(HANDLER));
+        assertFalse(ability.getModifiers(far).containsKey(HANDLER));
+    }
+
+    @Test
+    void the_scene_tick_advances_the_team_ability_clock() {
+        var timed =
+                JsonUtils.decode(
+                        "{abilityName:'TeamClock',modifiers:{Clock:{duration:0.5}}}",
+                        AbilityData.class);
+        var root = new Ability(timed, team, fixture.player);
+        team.getInstancedAbilities().add(root);
+        root.registerModifier(
+                team, new AbilityModifierController(root, timed, timed.modifiers.get("Clock")));
+        clock.set(1_000_000_000L);
+        fixture.scene.onTick();
+        assertFalse(root.getModifiers(team).containsKey("Clock"));
+    }
+
+    private void showLauma() {
+        fixture.player.getTeamManager().setCurrentCharacterIndex(0);
+        fixture.scene.getEntities().put(lauma.getId(), lauma);
+        fixture.scene.getEntities().remove(active.getId());
+        active = lauma;
+    }
+
+    private void confirmListener(int id) throws Exception {
+        confirmListener(lauma, id);
+    }
+
+    private void confirmListener(EntityAvatar bearer, int id) throws Exception {
+        if (bearer.getInstancedAbilities().isEmpty())
+            bearer.getInstancedAbilities()
+                    .add(
+                            new Ability(
+                                    JsonUtils.decode(
+                                            "{abilityName:'ReceiverFixtureAbility'}",
+                                            AbilityData.class),
+                                    bearer,
+                                    bearer.getPlayer()));
+        var controller = ability.getModifiers(bearer).get(HANDLER);
+        assertNotNull(controller);
+        var change =
+                emu.grasscutter.net.proto.AbilityMetaModifierChangeOuterClass
+                        .AbilityMetaModifierChange.newBuilder()
+                        .setAction(
+                                emu.grasscutter.net.proto.ModifierActionOuterClass.ModifierAction
+                                        .MODIFIER_ACTION_ADDED)
+                        .setParentAbilityName(
+                                emu.grasscutter.net.proto.AbilityStringOuterClass.AbilityString
+                                        .newBuilder()
+                                        .setStr(ROOT))
+                        .setModifierLocalId(
+                                new ArrayList<>(ability.getData().modifiers.keySet())
+                                        .indexOf(HANDLER));
+        bearer.getPlayer()
+                .getAbilityManager()
+                .onAbilityInvoke(
+                        AbilityInvokeEntry.newBuilder()
+                                .setEntityId(bearer.getId())
+                                .setArgumentType(
+                                        AbilityInvokeArgument
+                                                .AbilityInvokeArgument_ABILITY_META_MODIFIER_CHANGE)
+                                .setHead(
+                                        AbilityInvokeEntryHead.newBuilder()
+                                                .setTargetId(lauma.getId())
+                                                .setInstancedAbilityId(1)
+                                                .setInstancedModifierId(id))
+                                .setAbilityData(change.build().toByteString())
+                                .build());
+        drain();
+        assertSame(controller, bearer.getInstancedModifiers().get(id));
+    }
+
+    private void invokeExistingListener(int id) throws Exception {
+        int local =
+                4 + (new ArrayList<>(ability.getData().modifiers.keySet()).indexOf(HANDLER) << 3);
+        fixture.player
+                .getAbilityManager()
+                .handleServerInvoke(
+                        AbilityInvokeEntry.newBuilder()
+                                .setEntityId(lauma.getId())
+                                .setArgumentType(
+                                        AbilityInvokeArgument
+                                                .AbilityInvokeArgument_ABILITY_MIXIN_DO_ACTION_BY_ELEMENT_REACTION)
+                                .setHead(
+                                        AbilityInvokeEntryHead.newBuilder()
+                                                .setInstancedAbilityId(1)
+                                                .setInstancedModifierId(id)
+                                                .setLocalId(local))
+                                .build());
+    }
+
+    @Test
+    void a_late_reaction_cannot_fall_back_to_the_root_after_its_listener_was_removed()
+            throws Exception {
+        showLauma();
+        startWindow();
+        confirmListener(71);
+        ability.removeModifier(team, TEAM);
+        assertFalse(lauma.getInstancedModifiers().containsKey(71));
+        invokeExistingListener(71);
+        drain();
+        assertEquals(100, hp(lauma));
+    }
+
+    @Test
+    void a_reaction_already_queued_before_the_window_ends_cannot_heal_after_removal()
+            throws Exception {
+        showLauma();
+        startWindow();
+        confirmListener(71);
+        var release = new CountDownLatch(1);
+        var ready = new CountDownLatch(4);
+        var blockers = new ArrayList<Future<?>>();
+        try {
+            for (int i = 0; i < 4; i++)
+                blockers.add(
+                        AbilityManager.eventExecutor.submit(
+                                () -> {
+                                    ready.countDown();
+                                    assertTrue(release.await(5, TimeUnit.SECONDS));
+                                    return null;
+                                }));
+            assertTrue(ready.await(3, TimeUnit.SECONDS));
+            invokeExistingListener(71);
+            ability.removeModifier(team, TEAM);
+        } finally {
+            release.countDown();
+            for (var task : blockers) task.get(6, TimeUnit.SECONDS);
+        }
+        drain();
+        assertEquals(100, hp(lauma));
+    }
+
+    @Test
+    void a_new_cast_gets_twenty_seconds_and_ignores_the_previous_client_removal() throws Exception {
+        startWindow();
+        var original = ability.getModifiers(team).get(TEAM);
+        clock.set(10_000_000_000L);
+        startWindow(96);
+        var current = ability.getModifiers(team).get(TEAM);
+        assertNotSame(original, current);
+        var removal =
+                emu.grasscutter.net.proto.AbilityMetaModifierChangeOuterClass
+                        .AbilityMetaModifierChange.newBuilder()
+                        .setAction(
+                                emu.grasscutter.net.proto.ModifierActionOuterClass.ModifierAction
+                                        .MODIFIER_ACTION_REMOVED)
+                        .setParentAbilityName(
+                                emu.grasscutter.net.proto.AbilityStringOuterClass.AbilityString
+                                        .newBuilder()
+                                        .setStr(ROOT));
+        fixture.player
+                .getAbilityManager()
+                .onAbilityInvoke(
+                        AbilityInvokeEntry.newBuilder()
+                                .setEntityId(team.getId())
+                                .setArgumentType(
+                                        AbilityInvokeArgument
+                                                .AbilityInvokeArgument_ABILITY_META_MODIFIER_CHANGE)
+                                .setHead(
+                                        AbilityInvokeEntryHead.newBuilder()
+                                                .setInstancedAbilityId(1)
+                                                .setInstancedModifierId(95))
+                                .setAbilityData(removal.build().toByteString())
+                                .build());
+        clock.set(20_000_001_000L);
+        team.onAbilityTick();
+        assertSame(current, ability.getModifiers(team).get(TEAM));
+        clock.set(30_000_001_000L);
+        team.onAbilityTick();
+        assertFalse(ability.getModifiers(team).containsKey(TEAM));
+    }
+
+    @Test
+    void a_listener_outside_the_aura_stops_refreshing_and_expires_after_two_seconds()
+            throws Exception {
+        var partner = new AbilityTestFixture.TestPlayer();
+        var ally = avatar(partner, 10000015, 39.9f, 0, 0);
+        fixture.scene.getPlayers().add(partner);
+        fixture.scene.getWorld().getPlayers().add(partner);
+        startWindow();
+        assertTrue(ability.getModifiers(ally).containsKey(HANDLER));
+        ally.getPosition().setX(41);
+        clock.set(500_000_000L);
+        team.onAbilityTick();
+        ally.onAbilityTick();
+        assertTrue(ability.getModifiers(ally).containsKey(HANDLER));
+        clock.set(2_000_001_000L);
+        team.onAbilityTick();
+        ally.onAbilityTick();
+        assertFalse(ability.getModifiers(ally).containsKey(HANDLER));
+    }
+
+    @Test
+    void an_invalidated_caster_clears_the_window_and_its_attached_listeners() throws Exception {
+        startWindow();
+        lauma.invalidateAbilityLifecycle();
+        team.onAbilityTick();
+        assertFalse(ability.getModifiers(team).containsKey(TEAM));
+        assertFalse(ability.getModifiers(active).containsKey(HANDLER));
+    }
+
+    @Test
+    void a_confirmed_listener_keeps_its_two_second_expiry_after_leaving_range() throws Exception {
+        startWindow();
+        confirmListener(active, 71);
+        active.getPosition().setX(41);
+        clock.set(2_000_001_000L);
+        team.onAbilityTick();
+        active.onAbilityTick();
+        assertFalse(ability.getModifiers(active).containsKey(HANDLER));
+        assertFalse(active.getInstancedModifiers().containsKey(71));
+    }
+
+    @Test
+    void a_confirmed_reaction_heals_within_the_window_and_stops_when_it_ends() throws Exception {
+        showLauma();
+        startWindow();
+        confirmListener(71);
+        invokeExistingListener(71);
+        drain();
+        assertEquals(600, hp(lauma));
+        clock.set(3_000_000_000L);
+        team.onAbilityTick();
+        lauma.onAbilityTick();
+        invokeExistingListener(71);
+        drain();
+        assertEquals(1100, hp(lauma));
+        clock.set(20_000_001_000L);
+        team.onAbilityTick();
+        invokeExistingListener(71);
+        drain();
+        assertEquals(1100, hp(lauma));
+    }
+
+    @Test
+    void the_actual_skill_trigger_can_start_the_window_from_a_controlled_callback()
+            throws Exception {
+        showLauma();
+        var spell =
+                JsonUtils.loadToList(
+                                Path.of(
+                                        "resources/BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_Lauma.json"),
+                                AbilityConfigData.class)
+                        .stream()
+                        .map(row -> row.Default)
+                        .filter(row -> "Avatar_Lauma_ElementalArt".equals(row.abilityName))
+                        .findFirst()
+                        .orElseThrow();
+        spell.initialize();
+        var trigger =
+                spell.localIdToAction.values().stream()
+                        .filter(
+                                action ->
+                                        action.type
+                                                        == AbilityModifier.AbilityModifierAction
+                                                                .Type.TriggerAbility
+                                                && ROOT.equals(action.abilityName))
+                        .findFirst()
+                        .orElseThrow();
+        assertTrue(
+                AbilityTalentResolver.unlocked(
+                        lauma.getAvatar(), spell.abilityName, "Lauma_Constellation_1"));
+        var wrapper =
+                JsonUtils.decode(
+                        "{abilityName:'Avatar_Lauma_ElementalArt',modifiers:{Pulse:{thinkInterval:0.5,duration:2}}}",
+                        AbilityData.class);
+        wrapper.modifiers.get("Pulse").onThinkInterval =
+                new AbilityModifier.AbilityModifierAction[] {trigger};
+        var root = new Ability(wrapper, lauma, fixture.player);
+        lauma.getInstancedAbilities().add(root);
+        root.registerModifier(
+                lauma,
+                new AbilityModifierController(root, wrapper, wrapper.modifiers.get("Pulse")));
+        clock.set(500_001_000L);
+        lauma.getAbilityPeriodicHealing().tick();
+        assertTrue(ability.getModifiers(team).containsKey(TEAM));
+        assertTrue(ability.getModifiers(active).containsKey(HANDLER));
+        assertEquals(100, hp(active));
+    }
+
+    @Test
+    void replacing_the_team_entity_closes_the_previous_window_and_listeners() throws Exception {
+        startWindow();
+        fixture.player.getTeamManager().setEntity(new EntityTeam(fixture.player));
+        assertFalse(ability.getModifiers(team).containsKey(TEAM));
+        assertFalse(ability.getModifiers(active).containsKey(HANDLER));
+    }
+
+    @Test
+    void an_expired_window_rejects_a_reaction_before_the_next_scene_tick() throws Exception {
+        showLauma();
+        startWindow();
+        confirmListener(71);
+        clock.set(20_000_001_000L);
+        invokeExistingListener(71);
+        drain();
+        assertEquals(100, hp(lauma));
+    }
+
+    @Test
+    void an_omitted_modifier_id_cannot_invoke_an_uninstalled_listener() throws Exception {
+        showLauma();
+        invokeExistingListener(0);
+        drain();
+        assertEquals(100, hp(lauma));
+        startWindow();
+        invokeExistingListener(0);
+        drain();
+        assertEquals(600, hp(lauma));
+        clock.set(3_000_000_000L);
+        lauma.onAbilityTick();
+        ability.removeModifier(team, TEAM);
+        invokeExistingListener(0);
+        drain();
+        assertEquals(600, hp(lauma));
     }
 }

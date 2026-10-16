@@ -31,7 +31,7 @@ public final class AbilityModifierDuration {
     }
     // Registration and removal share the entity's modifier registry lock.
     public void registered(AbilityModifierController controller) {
-        if(entity.getInstancedModifiers().containsValue(controller)) {
+        if(entity.getInstancedModifiers().containsValue(controller) && !controller.ownsAttachedDuration()) {
             if(controller.hasServerCallbacks() || controller.hasBindingCallbacks()) states.remove(controller);
             else states.keySet().removeIf(c->sameModifier(c,controller));
             return;
@@ -64,6 +64,12 @@ public final class AbilityModifierDuration {
     public void cancel(AbilityModifierController controller) { states.remove(controller); }
     public void clear() { states.clear(); }
 
+    boolean withinLifetime(AbilityModifierController controller) {
+        var state=states.get(controller);
+        return state!=null && state.duration>0 && clock.getAsLong()-state.start<state.duration
+                && state.context.isCurrent();
+    }
+
     // A refresh replaces the timer generation, retaining the controller and callback ownership.
     void restartLifetime(AbilityModifierController controller) {
         var previous=states.get(controller);
@@ -89,7 +95,11 @@ public final class AbilityModifierDuration {
         if(states.isEmpty()) return;
         long now=clock.getAsLong();
         for(var state:new ArrayList<>(states.values())) {
-            if(!state.context.isCurrent()) { states.remove(state.controller,state); continue; }
+            if(!state.context.isCurrent()) {
+                states.remove(state.controller,state);
+                if(state.controller.ownsAttachedDuration()) state.controller.getAbility().removeModifierInstance(entity,state.controller,true);
+                continue;
+            }
             boolean active;
             synchronized(entity.getInstancedModifiers()) {
                 active=entity.getAbilityHpModifier().activeControllers().contains(state.controller);

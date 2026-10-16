@@ -46,6 +46,8 @@ public final class ActionAttachModifier extends AbilityActionHandler {
         Grasscutter.getLogger().debug("[Ability] AttachModifier fallback target={}", action.target);
 
         if (!conditionsPass(ability, action, target)) return true;
+        if (emu.grasscutter.game.ability.AbilityPartyAura.attach(ability, modifierData, target))
+            return true;
         var modifier = new AbilityModifierController(ability, ability.getData(), modifierData);
         ability.registerModifier(target, modifier);
         if ("AllPlayerAvatars".equals(action.target))

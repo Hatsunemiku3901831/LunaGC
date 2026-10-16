@@ -47,6 +47,12 @@ public class EntityTeam extends GameEntity {
     }
 
     @Override
+    public void invalidateAbilityLifecycle() {
+        super.invalidateAbilityLifecycle();
+        emu.grasscutter.game.ability.AbilityPartyAura.clearTeam(this);
+    }
+
+    @Override
     public int getEntityTypeId() {
         return EntityIdType.TEAM.getId();
     }
