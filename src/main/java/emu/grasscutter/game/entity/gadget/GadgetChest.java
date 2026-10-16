@@ -17,9 +17,13 @@ import emu.grasscutter.scripts.constants.ScriptGadgetState;
 import emu.grasscutter.scripts.data.SceneGadget;
 import emu.grasscutter.server.packet.send.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class GadgetChest extends GadgetContent {
     private boolean interacting;
     private boolean normalOpened;
+    private final Set<Integer> rewardedScriptBossPlayers = new HashSet<>();
 
     public GadgetChest(EntityGadget gadget) {
         super(gadget);
@@ -29,9 +33,11 @@ public class GadgetChest extends GadgetContent {
      * @return Whether we should remove the gadget.
      */
     public synchronized boolean onInteract(Player player, GadgetInteractReq req) {
-        if (interacting || normalOpened) return false;
+        if (interacting || normalOpened || rewardedScriptBossPlayers.contains(player.getUid()))
+            return false;
         int state = getGadget().getState();
-        if (state == ScriptGadgetState.ChestBramble || state == ScriptGadgetState.ChestFrozen
+        if (state == ScriptGadgetState.ChestBramble
+                || state == ScriptGadgetState.ChestFrozen
                 || state == ScriptGadgetState.ChestRock) return false;
         interacting = true;
         try {
@@ -69,24 +75,34 @@ public class GadgetChest extends GadgetContent {
                     // Handle boss
                     // respawn.
                     // TODO:should return Retcode.RET_RESIN_NOT_ENOUGH ?
-                    if (player.getResinManager().useResin(chest.boss_chest.resin)
-                            && dropSystem.handleBossChestDrop(chest.drop_tag, player)) {
+                    if (dropSystem.handleBossChestDrop(
+                            chest.drop_tag, player, chest.boss_chest.resin)) {
+                        // Record delivery before mission and interaction notifications can reenter.
+                        rewardedScriptBossPlayers.add(player.getUid());
                         // Is it correct?
                         player.getBattlePassManager()
                                 .triggerMission(
                                         WatcherTriggerType.TRIGGER_WORLD_BOSS_REWARD,
                                         chest.boss_chest.monster_config_id,
                                         1);
-                        getGadget().updateState(ScriptGadgetState.ChestOpened);
+                        boolean exhausted =
+                                getGadget().getScene().getPlayers().stream()
+                                        .allMatch(
+                                                member ->
+                                                        rewardedScriptBossPlayers.contains(
+                                                                member.getUid()));
+                        if (exhausted) getGadget().updateState(ScriptGadgetState.ChestOpened);
                         player.sendPacket(
                                 new PacketGadgetInteractRsp(
                                         this.getGadget(),
                                         InteractTypeOuterClass.InteractType
                                                 .InteractType_INTERACT_OPEN_CHEST,
                                         InterOpType.InterOpType_INTER_OP_FINISH));
-                        return true;
+                        // EntityGadget interprets true as a request to delete the shared flower.
+                        return exhausted;
                     }
-                    // if failed,fallback to legacy drop system.
+                    // A failed paid claim must not fall through to the legacy preview grant.
+                    return false;
                 } else if (chest.boss_chest == null) {
                     // Normal chest drop
                     // only the owner of the world can open chests.
@@ -124,7 +140,7 @@ public class GadgetChest extends GadgetContent {
                 Grasscutter.getLogger()
                         .warn(
                                 "Can not solve chest drop: chest_drop_id = {} , drop_tag ="
-                                    + " {}.Fallback to legacy drop system.",
+                                        + " {}.Fallback to legacy drop system.",
                                 chest.chest_drop_id,
                                 chest.drop_tag);
             }
@@ -192,7 +208,7 @@ public class GadgetChest extends GadgetContent {
         }
     }
 
-    public void onBuildProto(SceneGadgetInfo.Builder gadgetInfo) {
+    public synchronized void onBuildProto(SceneGadgetInfo.Builder gadgetInfo) {
         if (getGadget().getMetaGadget() == null) {
             return;
         }
@@ -206,7 +222,10 @@ public class GadgetChest extends GadgetContent {
                             .setMonsterConfigId(bossChest.monster_config_id)
                             .setResin(bossChest.resin)
                             .addAllQualifyUidList(players)
-                            .addAllRemainUidList(players)
+                            .addAllRemainUidList(
+                                    players.stream()
+                                            .filter(uid -> !rewardedScriptBossPlayers.contains(uid))
+                                            .toList())
                             .build());
         }
     }

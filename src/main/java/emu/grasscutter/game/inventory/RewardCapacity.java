@@ -1,18 +1,18 @@
-package emu.grasscutter.game.dungeons;
+package emu.grasscutter.game.inventory;
 
-import emu.grasscutter.game.inventory.*;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.props.PlayerProperty;
 import emu.grasscutter.game.shop.BeyondCurrency;
 
 import java.util.*;
 
-/** Capacity projection for the complete rolled batch, including the condensed-resin debit. */
-final class DungeonRewardDelivery {
-    private DungeonRewardDelivery() {}
+/** Capacity projection for a complete rolled reward batch, including an optional resin debit. */
+public final class RewardCapacity {
+    private RewardCapacity() {}
 
     /** Caller holds the inventory monitor through this check, payment and delivery. */
-    static boolean canReceive(Player player, List<GameItem> rewards, boolean spendsCondensed) {
+    public static boolean canReceive(
+            Player player, List<GameItem> rewards, boolean spendsCondensed) {
         if (rewards == null || rewards.isEmpty()) return false;
         var inventory = player.getInventory();
         var cost = inventory.getItemById(220007);

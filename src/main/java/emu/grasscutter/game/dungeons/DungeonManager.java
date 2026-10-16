@@ -16,6 +16,7 @@ import emu.grasscutter.game.dungeons.enums.DungeonPassConditionType;
 import emu.grasscutter.game.dungeons.enums.DungeonSubType;
 import emu.grasscutter.game.dungeons.fallback.MissingDomainFallbackManager;
 import emu.grasscutter.game.inventory.GameItem;
+import emu.grasscutter.game.inventory.RewardCapacity;
 import emu.grasscutter.game.player.InvestigationHandbook;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.props.*;
@@ -200,7 +201,7 @@ public final class DungeonManager {
         var inventory = player.getInventory();
         synchronized (inventory) {
             boolean spendsCondensed = useCondensed && GAME_OPTIONS.resinOptions.resinUsage;
-            if (!DungeonRewardDelivery.canReceive(player, rewards, spendsCondensed)
+            if (!RewardCapacity.canReceive(player, rewards, spendsCondensed)
                     || !handleCost(player, useCondensed)) {
                 return false;
             }

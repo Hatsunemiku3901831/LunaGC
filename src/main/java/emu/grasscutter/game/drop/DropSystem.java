@@ -11,7 +11,9 @@ import emu.grasscutter.game.props.ActionReason;
 import emu.grasscutter.scripts.data.SceneMonster;
 import emu.grasscutter.server.game.*;
 import emu.grasscutter.server.packet.send.*;
+
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+
 import java.util.*;
 import java.util.function.IntUnaryOperator;
 
@@ -42,7 +44,9 @@ public final class DropSystem extends BaseGameSystem {
             }
         } catch (Exception ignored) {
             Grasscutter.getLogger()
-                    .error("Unable to load chest drop data. Please place ChestDrop.json in data folder.");
+                    .error(
+                            "Unable to load chest drop data. Please place ChestDrop.json in data"
+                                + " folder.");
         }
 
         try {
@@ -55,7 +59,9 @@ public final class DropSystem extends BaseGameSystem {
             }
         } catch (Exception ignored) {
             Grasscutter.getLogger()
-                    .error("Unable to load monster drop data. Please place MonsterDrop.json in data folder.");
+                    .error(
+                            "Unable to load monster drop data. Please place MonsterDrop.json in"
+                                + " data folder.");
         }
     }
 
@@ -108,7 +114,11 @@ public final class DropSystem extends BaseGameSystem {
         processDrop(dropData, 1, items);
         if (dropData.isFallToGround()) {
             dropItems(
-                    items, ActionReason.MonsterDie, monster, monster.getScene().getPlayers().get(0), true);
+                    items,
+                    ActionReason.MonsterDie,
+                    monster,
+                    monster.getScene().getPlayers().get(0),
+                    true);
         } else {
             for (Player p : monster.getScene().getPlayers()) {
                 p.getInventory().addItems(items, ActionReason.MonsterDie);
@@ -123,7 +133,8 @@ public final class DropSystem extends BaseGameSystem {
         List<GameItem> items = new ArrayList<>();
         processDrop(dropData, dropCount, items);
         if (dropData.isFallToGround()) {
-            dropItems(items, ActionReason.OpenChest, bornFrom, bornFrom.getWorld().getHost(), false);
+            dropItems(
+                    items, ActionReason.OpenChest, bornFrom, bornFrom.getWorld().getHost(), false);
         } else {
             bornFrom.getWorld().getHost().getInventory().addItems(items, ActionReason.OpenChest);
         }
@@ -137,13 +148,38 @@ public final class DropSystem extends BaseGameSystem {
     }
 
     public boolean handleBossChestDrop(String dropTag, Player player) {
-        int dropId = queryDropData(dropTag, bossLevel[player.getWorldLevel()], chestReward);
-        if (!dropTable.containsKey(dropId)) return false;
-        var dropData = dropTable.get(dropId);
+        return handleBossChestDrop(dropTag, player, 0);
+    }
+
+    /** Build the complete roll and check its admission before charging this script boss claim. */
+    public boolean handleBossChestDrop(String dropTag, Player player, int resinCost) {
+        if (player == null || dropTag == null || dropTag.isBlank() || resinCost < 0) return false;
         List<GameItem> items = new ArrayList<>();
-        processDrop(dropData, 1, items);
-        player.getInventory().addItems(items, ActionReason.OpenWorldBossChest);
-        player.sendPacket(new PacketGadgetAutoPickDropInfoNotify(items));
+        try {
+            int worldLevel = Math.min(bossLevel.length - 1, Math.max(0, player.getWorldLevel()));
+            int dropId = queryDropData(dropTag, bossLevel[worldLevel], chestReward);
+            if (dropId == 0 || !dropTable.containsKey(dropId)) return false;
+            processDrop(dropTable.get(dropId), 1, items);
+        } catch (RuntimeException invalid) {
+            Grasscutter.getLogger()
+                    .warn("Cannot build boss chest rewards for tag {}", dropTag, invalid);
+            return false;
+        }
+        var inventory = player.getInventory();
+        synchronized (inventory) {
+            if (!RewardCapacity.canReceive(player, items, false)
+                    || resinCost > 0 && !player.getResinManager().useResin(resinCost)) return false;
+            inventory.addItems(items, ActionReason.OpenWorldBossChest);
+        }
+        try {
+            player.sendPacket(new PacketGadgetAutoPickDropInfoNotify(items));
+        } catch (RuntimeException notificationFailure) {
+            Grasscutter.getLogger()
+                    .warn(
+                            "Cannot notify boss chest pickup for player {}",
+                            player.getUid(),
+                            notificationFailure);
+        }
         return true;
     }
 
@@ -267,15 +303,18 @@ public final class DropSystem extends BaseGameSystem {
         if (share) {
             for (var p : player.getScene().getPlayers()) {
                 p.getInventory().addItem(item, reason);
-                p.sendPacket(new PacketDropHintNotify(item.getItemId(), player.getPosition().toProto()));
+                p.sendPacket(
+                        new PacketDropHintNotify(item.getItemId(), player.getPosition().toProto()));
             }
         } else {
             player.getInventory().addItem(item, reason);
-            player.sendPacket(new PacketDropHintNotify(item.getItemId(), player.getPosition().toProto()));
+            player.sendPacket(
+                    new PacketDropHintNotify(item.getItemId(), player.getPosition().toProto()));
         }
     }
 
-    private void giveItems(List<GameItem> items, ActionReason reason, Player player, boolean share) {
+    private void giveItems(
+            List<GameItem> items, ActionReason reason, Player player, boolean share) {
         // don't know whether we need PacketDropHintNotify.
         if (share) {
             for (var p : player.getScene().getPlayers()) {
