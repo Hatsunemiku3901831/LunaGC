@@ -53,7 +53,8 @@
 `admission-red-results/` 是修正夹具后的初始失败，`owner-red-results/` 记录本轮的来源边界缺口；
 `quartz-release-results/` 与 `quartz-release.log` 为最终结果。
 `quartz-focused-results/` 和 `quartz-final-results/` 是补齐最后来源检查前的中间结果。
-当前两组旧模拟数据库测试的既有失败仍见[前置验证记录](USE_ON_GAIN_PICKUP_2026-10-16.md)。
+当时两组旧模拟数据库测试的既有失败见[前置验证记录](USE_ON_GAIN_PICKUP_2026-10-16.md)；
+后续已完成[五组业务夹具的存档适配](GUARDED_BUSINESS_TESTS_2026-10-16.md)，原有 188 项及相关 703 项回归通过。
 
 5 份新增或修改的 Java 输入及 `build.gradle` 已与构建容器逐字节核对。
 相对前置拾取构建，变化为本次 4 份生产源码对应的 5 个类，其中新增 `ScarletQuartz` 类；

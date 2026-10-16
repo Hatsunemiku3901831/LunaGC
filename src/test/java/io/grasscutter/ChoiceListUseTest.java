@@ -11,6 +11,7 @@ import emu.grasscutter.data.*;
 import emu.grasscutter.data.excels.*;
 import emu.grasscutter.database.*;
 import emu.grasscutter.game.inventory.*;
+import emu.grasscutter.game.player.GuardedPlayerTestStore;
 import emu.grasscutter.game.systems.InventorySystem;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.UseItemReqOuterClass.UseItemReq;
@@ -36,6 +37,7 @@ class ChoiceListUseTest {
     private GameItem source;
     private Field datastore;
     private Object previousDatastore;
+    private GuardedPlayerTestStore playerStore;
     private int saves, failSave;
     private final Gson gson = new Gson();
     private final Map<Map<?, ?>, Map<?, ?>> oldMaps = new IdentityHashMap<>();
@@ -65,12 +67,16 @@ class ChoiceListUseTest {
         datastore = DatabaseManager.class.getDeclaredField("gameDatastore");
         datastore.setAccessible(true);
         previousDatastore = datastore.get(null);
+        playerStore = new GuardedPlayerTestStore(player, () -> {
+            if (++saves == failSave) throw new IllegalStateException("Write fault");
+        });
         datastore.set(
                 null,
                 Proxy.newProxyInstance(
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
+                            if (method.getName().equals("getMapper")) return playerStore.datastore().getMapper();
                             if (method.getName().equals("save")
                                     || method.getName().equals("delete")) {
                                 if (args.length == 2 && ++saves == failSave)
@@ -89,6 +95,7 @@ class ChoiceListUseTest {
     void cleanup() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
         if (datastore != null) datastore.set(null, previousDatastore);
+        if (playerStore != null) playerStore.close();
         oldMaps.forEach(
                 (map, old) -> {
                     ((Map) map).clear();

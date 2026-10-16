@@ -12,6 +12,7 @@ import emu.grasscutter.game.avatar.Avatar;
 import emu.grasscutter.game.entity.EntityAvatar;
 import emu.grasscutter.game.inventory.*;
 import emu.grasscutter.game.managers.forging.ActiveForgeData;
+import emu.grasscutter.game.player.GuardedPlayerTestStore;
 import emu.grasscutter.game.props.PlayerProperty;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.ForgeQueueManipulateReqOuterClass.ForgeQueueManipulateReq;
@@ -45,12 +46,13 @@ class ForgeDropRewardFlowTest {
     private final List<Runnable> restore = new ArrayList<>();
     private java.lang.reflect.Field datastore;
     private Object oldDatastore;
+    private GuardedPlayerTestStore playerStore;
     private boolean oldResin;
     private int saves, failSave;
 
     static class RewardPlayer extends ForgeStartFlowTest.ForgePlayer {
-        boolean multiplayer, refuseProduct;
-        final Inventory inventory =
+        transient boolean multiplayer, refuseProduct;
+        final transient Inventory inventory =
                 new Inventory(this) {
                     @Override
                     public boolean addItem(GameItem item) {
@@ -149,12 +151,16 @@ class ForgeDropRewardFlowTest {
         datastore = DatabaseManager.class.getDeclaredField("gameDatastore");
         datastore.setAccessible(true);
         oldDatastore = datastore.get(null);
+        playerStore = new GuardedPlayerTestStore(player, () -> {
+            if (++saves == failSave) throw new IllegalStateException("Confirmation fault");
+        });
         datastore.set(
                 null,
                 Proxy.newProxyInstance(
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
+                            if (method.getName().equals("getMapper")) return playerStore.datastore().getMapper();
                             if (method.getName().equals("save")
                                     || method.getName().equals("delete")) {
                                 if (args.length == 2 && ++saves == failSave)
@@ -174,6 +180,7 @@ class ForgeDropRewardFlowTest {
     void cleanup() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
         if (datastore != null) datastore.set(null, oldDatastore);
+        if (playerStore != null) playerStore.close();
         Collections.reverse(restore);
         restore.forEach(Runnable::run);
         environment.close();

@@ -31,7 +31,7 @@
 扩展检查另发现两组旧测试夹具缺少存档版本隔离所需的 Mapper：
 `ChoiceListUseTest` 28 项中 12 项失败，`ForgeDropRewardFlowTest` 29 项中 21 项失败。
 分别恢复本次两份生产源码为未修改基线后，失败名称和断言内容完全一致。
-已保留这两组失败，没有计入上述通过项；这两组测试夹具仍需更新。
+已保留这两组失败，没有计入上述通过项；后续已完成[五组业务夹具的存档适配和完整回归](GUARDED_BUSINESS_TESTS_2026-10-16.md)。
 
 证据：`debug/aster-mid-20261011/batch309/` 中的 `admission-red-results/`、
 `admission-gate-results/`、`choice-baseline-results/`、`forge-baseline-results/` 和

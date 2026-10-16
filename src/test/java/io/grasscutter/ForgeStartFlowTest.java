@@ -10,6 +10,7 @@ import emu.grasscutter.data.excels.*;
 import emu.grasscutter.database.*;
 import emu.grasscutter.game.inventory.*;
 import emu.grasscutter.game.managers.forging.*;
+import emu.grasscutter.game.player.GuardedPlayerTestStore;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.ForgeQueueManipulateReqOuterClass.ForgeQueueManipulateReq;
@@ -38,13 +39,14 @@ class ForgeStartFlowTest {
     private Map<Integer, DropTableData> oldDrops;
     private java.lang.reflect.Field datastore;
     private Object oldDatastore;
+    private GuardedPlayerTestStore playerStore;
     private int confirmations, failConfirmation;
     private final Gson gson = new Gson();
     private boolean oldResinUsage;
 
     static class ForgePlayer extends InvestigationRewardTest.ClaimPlayer {
-        int resinMissionProgress;
-        final emu.grasscutter.game.battlepass.BattlePassManager battlePass =
+        transient int resinMissionProgress;
+        final transient emu.grasscutter.game.battlepass.BattlePassManager battlePass =
                 new emu.grasscutter.game.battlepass.BattlePassManager(this) {
                     @Override
                     public void triggerMission(WatcherTriggerType type, int param, int progress) {
@@ -61,9 +63,9 @@ class ForgeStartFlowTest {
             return battlePass;
         }
 
-        boolean refusePay, throwAfterPay;
-        Runnable afterPay;
-        final Inventory forgeInventory =
+        transient boolean refusePay, throwAfterPay;
+        transient Runnable afterPay;
+        final transient Inventory forgeInventory =
                 new Inventory(this) {
                     @Override
                     public boolean payItems(
@@ -109,12 +111,16 @@ class ForgeStartFlowTest {
         datastore = DatabaseManager.class.getDeclaredField("gameDatastore");
         datastore.setAccessible(true);
         oldDatastore = datastore.get(null);
+        playerStore = new GuardedPlayerTestStore(player, () -> {
+            if (++confirmations == failConfirmation) throw new IllegalStateException("Confirmation fault");
+        });
         datastore.set(
                 null,
                 Proxy.newProxyInstance(
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
+                            if (method.getName().equals("getMapper")) return playerStore.datastore().getMapper();
                             if (method.getName().equals("save")
                                     || method.getName().equals("delete")) {
                                 if (args.length == 2 && ++confirmations == failConfirmation)
@@ -134,6 +140,7 @@ class ForgeStartFlowTest {
     void cleanup() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
         if (datastore != null) datastore.set(null, oldDatastore);
+        if (playerStore != null) playerStore.close();
         GameData.getForgeDataMap().clear();
         GameData.getForgeDataMap().putAll(oldRecipes);
         GameData.getItemDataMap().clear();

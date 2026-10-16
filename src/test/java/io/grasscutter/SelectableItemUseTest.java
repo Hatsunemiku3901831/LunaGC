@@ -10,6 +10,7 @@ import emu.grasscutter.data.excels.*;
 import emu.grasscutter.data.excels.avatar.AvatarCostumeData;
 import emu.grasscutter.database.*;
 import emu.grasscutter.game.inventory.*;
+import emu.grasscutter.game.player.GuardedPlayerTestStore;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.game.props.ItemUseAction.*;
 import emu.grasscutter.game.shop.SpecialCosmeticShop;
@@ -83,16 +84,17 @@ class SelectableItemUseTest {
     private InventorySystem system;
     private Field datastore;
     private Object oldDatastore;
+    private GuardedPlayerTestStore playerStore;
     private final Gson gson = new Gson();
     private final Map<Map<?, ?>, Map<?, ?>> oldMaps = new IdentityHashMap<>();
     private int saves, failSave;
     private GameItem source;
 
     static class ChoicePlayer extends InvestigationRewardTest.ClaimPlayer {
-        boolean refusePayment, pretendPayment, refuseGrant, pretendGrant;
-        int grants, refuseAt;
-        Runnable afterGrant;
-        final Inventory choices =
+        transient boolean refusePayment, pretendPayment, refuseGrant, pretendGrant;
+        transient int grants, refuseAt;
+        transient Runnable afterGrant;
+        final transient Inventory choices =
                 new Inventory(this) {
                     @Override
                     public boolean removeItem(GameItem item, int count) {
@@ -151,12 +153,14 @@ class SelectableItemUseTest {
         datastore = DatabaseManager.class.getDeclaredField("gameDatastore");
         datastore.setAccessible(true);
         oldDatastore = datastore.get(null);
+        preparePlayerStore();
         datastore.set(
                 null,
                 Proxy.newProxyInstance(
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
+                            if (method.getName().equals("getMapper")) return playerStore.datastore().getMapper();
                             if (method.getName().equals("save")
                                     || method.getName().equals("delete")) {
                                 if (args.length == 2 && ++saves == failSave)
@@ -175,6 +179,7 @@ class SelectableItemUseTest {
     void cleanup() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
         if (datastore != null) datastore.set(null, oldDatastore);
+        if (playerStore != null) playerStore.close();
         oldMaps.forEach(
                 (map, old) -> {
                     ((Map) map).clear();
@@ -196,6 +201,16 @@ class SelectableItemUseTest {
                                         + limit
                                         + "}",
                                 ItemData.class));
+    }
+
+    private void preparePlayerStore() throws Exception {
+        if (playerStore != null) {
+            assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+            playerStore.close();
+        }
+        playerStore = new GuardedPlayerTestStore(player, () -> {
+            if (++saves == failSave) throw new IllegalStateException("Write fault");
+        });
     }
 
     private void reward(int id, List<ItemParamData> items) {
@@ -563,6 +578,7 @@ class SelectableItemUseTest {
             player.setSession(
                     new InvestigationRewardTest.ClaimSession(
                             environment.scene.getWorld().getServer(), player));
+            preparePlayerStore();
             assertTrue(player.getInventory().addItem(boxId, 1));
             source = player.getInventory().getItemById(boxId);
             assertNotNull(use(1, index + 1), "Box " + boxId + " option " + (index + 1));

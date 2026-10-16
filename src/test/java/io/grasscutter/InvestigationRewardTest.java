@@ -8,6 +8,7 @@ import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.data.excels.*;
 import emu.grasscutter.game.inventory.*;
+import emu.grasscutter.game.player.GuardedPlayerTestStore;
 import emu.grasscutter.game.player.*;
 import emu.grasscutter.game.props.PlayerProperty;
 import emu.grasscutter.net.packet.*;
@@ -33,10 +34,11 @@ class InvestigationRewardTest {
     private Map<Integer, ItemData> oldItems;
     private java.lang.reflect.Field datastoreField;
     private Object oldDatastore;
+    private GuardedPlayerTestStore playerStore;
     private final List<String> writes = new java.util.concurrent.CopyOnWriteArrayList<>();
 
     static class ClaimPlayer extends AbilityTestFixture.TestPlayer {
-        final Inventory inventory = new Inventory(this);
+        final transient Inventory inventory = new Inventory(this);
 
         @Override
         public Inventory getInventory() {
@@ -84,12 +86,20 @@ class InvestigationRewardTest {
                 emu.grasscutter.database.DatabaseManager.class.getDeclaredField("gameDatastore");
         datastoreField.setAccessible(true);
         oldDatastore = datastoreField.get(null);
+        playerStore = new GuardedPlayerTestStore(player, () -> {
+            try {
+                writes.add("player:" + state(60001));
+            } catch (Exception error) {
+                throw new IllegalStateException(error);
+            }
+        });
         datastoreField.set(
                 null,
                 java.lang.reflect.Proxy.newProxyInstance(
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
+                            if (method.getName().equals("getMapper")) return playerStore.datastore().getMapper();
                             if (method.getName().equals("save")) {
                                 if (args.length > 1) {
                                     var concern =
@@ -112,6 +122,7 @@ class InvestigationRewardTest {
         assertTrue(
                 emu.grasscutter.database.DatabaseHelper.awaitIdle(java.time.Duration.ofSeconds(5)));
         if (datastoreField != null) datastoreField.set(null, oldDatastore);
+        if (playerStore != null) playerStore.close();
         GameData.getInvestigationDataMap().clear();
         GameData.getInvestigationDataMap().putAll(oldChapters);
         GameData.getInvestigationTargetDataMap().clear();
@@ -462,6 +473,7 @@ class InvestigationRewardTest {
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
+                            if (method.getName().equals("getMapper")) return playerStore.datastore().getMapper();
                             if (method.getName().equals("save")
                                     && args[0] instanceof GameItem
                                     && args.length > 1)

@@ -59,9 +59,9 @@ final class AbilityTestFixture implements AutoCloseable {
     }
 
     static class TestPlayer extends Player {
-        private final TeamManager team = new TeamManager(this);
-        final List<BasePacket> packets = new CopyOnWriteArrayList<>();
-        private final SatiationManager satiation = new SatiationManager(this) {
+        private final transient TeamManager team = new TeamManager(this);
+        final transient List<BasePacket> packets = new CopyOnWriteArrayList<>();
+        private final transient SatiationManager satiation = new SatiationManager(this) {
             @Override public void updateSingleAvatar(emu.grasscutter.game.avatar.Avatar avatar, float time) {}
         };
         @Override public TeamManager getTeamManager() { return team; }
