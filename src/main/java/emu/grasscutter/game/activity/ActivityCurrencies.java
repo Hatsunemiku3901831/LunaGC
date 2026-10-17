@@ -122,6 +122,7 @@ public final class ActivityCurrencies {
         synchronized (binding.data()) {
             int before = stored(binding.data(), id);
             return !binding.data().hasUnconfirmedActivityCoins()
+                    && binding.data().allowsWatcherCredit(id, amount)
                     && before >= 0
                     && amount <= Integer.MAX_VALUE - (long) before;
         }
@@ -155,6 +156,7 @@ public final class ActivityCurrencies {
                 binding = candidate;
             }
             synchronized (binding.data()) {
+                if (binding.data().getPendingWatcherReward() != null) return false;
                 if (binding.data().hasUnconfirmedActivityCoins()) return false;
                 for (var cost : costs.entrySet()) {
                     int before = stored(binding.data(), cost.getKey());

@@ -23,7 +23,15 @@ public final class ActivityCoinReceipt {
     private ActivityCoinReceipt() {}
 
     ActivityCoinReceipt(PlayerActivityData data, Map<Integer, Integer> amounts, boolean credit) {
-        operationId = UUID.randomUUID().toString();
+        this(data, amounts, credit, null);
+    }
+
+    ActivityCoinReceipt(
+            PlayerActivityData data,
+            Map<Integer, Integer> amounts,
+            boolean credit,
+            String linkedOperation) {
+        operationId = linkedOperation == null ? UUID.randomUUID().toString() : linkedOperation;
         previousOperationId =
                 data.getLastCoinOperation() == null
                         ? null

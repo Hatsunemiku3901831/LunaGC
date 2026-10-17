@@ -1,0 +1,1129 @@
+{
+  "schema": 1,
+  "totals": {
+    "watcherRewards": 3932,
+    "genericWatcherRewards": 3932,
+    "itemRows": 10428
+  },
+  "itemTypes": {
+    "ITEM_FURNITURE": 115,
+    "ITEM_MATERIAL": 4285,
+    "ITEM_VIRTUAL": 6009,
+    "ITEM_WEAPON": 19
+  },
+  "uniqueUseOnGainItemIds": [
+    210062,
+    210091,
+    210100,
+    210111,
+    210234,
+    340016,
+    340020,
+    340022,
+    340029,
+    341001,
+    341002,
+    341801,
+    341802
+  ],
+  "unresolved": [
+    {
+      "activityId": 2007,
+      "watcherId": 1200701,
+      "rewardId": 3024001,
+      "itemId": 131,
+      "quantity": 50,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2007,
+      "watcherId": 1200702,
+      "rewardId": 3024002,
+      "itemId": 131,
+      "quantity": 50,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2007,
+      "watcherId": 1200703,
+      "rewardId": 3024003,
+      "itemId": 131,
+      "quantity": 50,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2007,
+      "watcherId": 1200704,
+      "rewardId": 3024004,
+      "itemId": 131,
+      "quantity": 50,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2007,
+      "watcherId": 1200705,
+      "rewardId": 3024005,
+      "itemId": 131,
+      "quantity": 50,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2007,
+      "watcherId": 1200706,
+      "rewardId": 3024006,
+      "itemId": 131,
+      "quantity": 50,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2007,
+      "watcherId": 1200707,
+      "rewardId": 3024007,
+      "itemId": 131,
+      "quantity": 50,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2007,
+      "watcherId": 1200708,
+      "rewardId": 3024008,
+      "itemId": 131,
+      "quantity": 50,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2007,
+      "watcherId": 1200709,
+      "rewardId": 3024009,
+      "itemId": 131,
+      "quantity": 50,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2007,
+      "watcherId": 1200710,
+      "rewardId": 3024010,
+      "itemId": 131,
+      "quantity": 50,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2007,
+      "watcherId": 1200711,
+      "rewardId": 3024011,
+      "itemId": 131,
+      "quantity": 50,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2007,
+      "watcherId": 1200712,
+      "rewardId": 3024012,
+      "itemId": 131,
+      "quantity": 50,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016006,
+      "rewardId": 3057101,
+      "itemId": 147,
+      "quantity": 40,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016007,
+      "rewardId": 3057102,
+      "itemId": 147,
+      "quantity": 40,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016008,
+      "rewardId": 3057103,
+      "itemId": 147,
+      "quantity": 40,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016009,
+      "rewardId": 3057104,
+      "itemId": 147,
+      "quantity": 40,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016010,
+      "rewardId": 3057105,
+      "itemId": 147,
+      "quantity": 40,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016011,
+      "rewardId": 3057106,
+      "itemId": 147,
+      "quantity": 40,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016012,
+      "rewardId": 3057107,
+      "itemId": 147,
+      "quantity": 40,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016013,
+      "rewardId": 3057109,
+      "itemId": 147,
+      "quantity": 40,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016015,
+      "rewardId": 3057301,
+      "itemId": 147,
+      "quantity": 50,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016016,
+      "rewardId": 3057302,
+      "itemId": 147,
+      "quantity": 50,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016017,
+      "rewardId": 3057303,
+      "itemId": 147,
+      "quantity": 50,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016018,
+      "rewardId": 3057201,
+      "itemId": 147,
+      "quantity": 20,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016019,
+      "rewardId": 3057202,
+      "itemId": 147,
+      "quantity": 20,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016020,
+      "rewardId": 3057203,
+      "itemId": 147,
+      "quantity": 20,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016021,
+      "rewardId": 3057204,
+      "itemId": 147,
+      "quantity": 20,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016022,
+      "rewardId": 3057205,
+      "itemId": 147,
+      "quantity": 40,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016023,
+      "rewardId": 3057206,
+      "itemId": 147,
+      "quantity": 20,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016024,
+      "rewardId": 3057207,
+      "itemId": 147,
+      "quantity": 20,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016025,
+      "rewardId": 3057208,
+      "itemId": 147,
+      "quantity": 20,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016026,
+      "rewardId": 3057209,
+      "itemId": 147,
+      "quantity": 20,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016027,
+      "rewardId": 3057210,
+      "itemId": 147,
+      "quantity": 40,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016028,
+      "rewardId": 3057211,
+      "itemId": 147,
+      "quantity": 20,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016029,
+      "rewardId": 3057212,
+      "itemId": 147,
+      "quantity": 20,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016030,
+      "rewardId": 3057213,
+      "itemId": 147,
+      "quantity": 20,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016031,
+      "rewardId": 3057214,
+      "itemId": 147,
+      "quantity": 20,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016032,
+      "rewardId": 3057215,
+      "itemId": 147,
+      "quantity": 40,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016033,
+      "rewardId": 3057401,
+      "itemId": 147,
+      "quantity": 20,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016034,
+      "rewardId": 3057402,
+      "itemId": 147,
+      "quantity": 20,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016035,
+      "rewardId": 3057403,
+      "itemId": 147,
+      "quantity": 20,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016036,
+      "rewardId": 3057404,
+      "itemId": 147,
+      "quantity": 20,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016038,
+      "rewardId": 3057405,
+      "itemId": 147,
+      "quantity": 20,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016039,
+      "rewardId": 3057406,
+      "itemId": 147,
+      "quantity": 20,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016040,
+      "rewardId": 3057407,
+      "itemId": 147,
+      "quantity": 20,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016042,
+      "rewardId": 3057419,
+      "itemId": 150,
+      "quantity": 100,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016043,
+      "rewardId": 3057420,
+      "itemId": 150,
+      "quantity": 100,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016044,
+      "rewardId": 3057421,
+      "itemId": 150,
+      "quantity": 100,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016045,
+      "rewardId": 3057108,
+      "itemId": 147,
+      "quantity": 40,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016046,
+      "rewardId": 3057422,
+      "itemId": 150,
+      "quantity": 100,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016047,
+      "rewardId": 3057423,
+      "itemId": 150,
+      "quantity": 100,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016048,
+      "rewardId": 3057424,
+      "itemId": 150,
+      "quantity": 100,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2016,
+      "watcherId": 12016049,
+      "rewardId": 3057408,
+      "itemId": 147,
+      "quantity": 20,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5190,
+      "watcherId": 15190001,
+      "rewardId": 3102101,
+      "itemId": 165,
+      "quantity": 1875,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5190,
+      "watcherId": 15190002,
+      "rewardId": 3102102,
+      "itemId": 165,
+      "quantity": 1875,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5190,
+      "watcherId": 15190003,
+      "rewardId": 3102103,
+      "itemId": 165,
+      "quantity": 1875,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5190,
+      "watcherId": 15190004,
+      "rewardId": 3102104,
+      "itemId": 165,
+      "quantity": 1875,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038201,
+      "rewardId": 3130211,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038202,
+      "rewardId": 3130212,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038203,
+      "rewardId": 3130213,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038204,
+      "rewardId": 3130221,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038205,
+      "rewardId": 3130222,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038206,
+      "rewardId": 3130223,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038207,
+      "rewardId": 3130224,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038208,
+      "rewardId": 3130231,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038209,
+      "rewardId": 3130232,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038210,
+      "rewardId": 3130233,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038211,
+      "rewardId": 3130241,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038212,
+      "rewardId": 3130242,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038213,
+      "rewardId": 3130243,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038214,
+      "rewardId": 3130244,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038215,
+      "rewardId": 3130251,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038216,
+      "rewardId": 3130252,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038217,
+      "rewardId": 3130253,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038218,
+      "rewardId": 3130261,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038219,
+      "rewardId": 3130262,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038220,
+      "rewardId": 3130263,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038221,
+      "rewardId": 3130264,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038222,
+      "rewardId": 3130111,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038223,
+      "rewardId": 3130112,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038224,
+      "rewardId": 3130113,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038225,
+      "rewardId": 3130131,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038226,
+      "rewardId": 3130132,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038227,
+      "rewardId": 3130133,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038228,
+      "rewardId": 3130151,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038229,
+      "rewardId": 3130152,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038230,
+      "rewardId": 3130153,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038231,
+      "rewardId": 3130121,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038232,
+      "rewardId": 3130122,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038233,
+      "rewardId": 3130123,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038234,
+      "rewardId": 3130141,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038235,
+      "rewardId": 3130142,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038236,
+      "rewardId": 3130143,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038237,
+      "rewardId": 3130161,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038238,
+      "rewardId": 3130162,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038239,
+      "rewardId": 3130163,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038240,
+      "rewardId": 3130214,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038241,
+      "rewardId": 3130234,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 2038,
+      "watcherId": 12038242,
+      "rewardId": 3130254,
+      "itemId": 165,
+      "quantity": 931,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5300,
+      "watcherId": 15300001,
+      "rewardId": 3148001,
+      "itemId": 165,
+      "quantity": 3000,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5300,
+      "watcherId": 15300002,
+      "rewardId": 3148002,
+      "itemId": 165,
+      "quantity": 3000,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5300,
+      "watcherId": 15300003,
+      "rewardId": 3148003,
+      "itemId": 165,
+      "quantity": 3000,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5300,
+      "watcherId": 15300004,
+      "rewardId": 3148004,
+      "itemId": 165,
+      "quantity": 3000,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5305,
+      "watcherId": 15305001,
+      "rewardId": 3460101,
+      "itemId": 165,
+      "quantity": 1200,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5305,
+      "watcherId": 15305002,
+      "rewardId": 3460102,
+      "itemId": 165,
+      "quantity": 1200,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5305,
+      "watcherId": 15305003,
+      "rewardId": 3460103,
+      "itemId": 165,
+      "quantity": 1200,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5305,
+      "watcherId": 15305004,
+      "rewardId": 3460104,
+      "itemId": 165,
+      "quantity": 1200,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5305,
+      "watcherId": 15305005,
+      "rewardId": 3460105,
+      "itemId": 165,
+      "quantity": 1200,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5305,
+      "watcherId": 15305006,
+      "rewardId": 3460106,
+      "itemId": 165,
+      "quantity": 1200,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5305,
+      "watcherId": 15305007,
+      "rewardId": 3460107,
+      "itemId": 165,
+      "quantity": 1200,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5305,
+      "watcherId": 15305008,
+      "rewardId": 3460108,
+      "itemId": 165,
+      "quantity": 1200,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5305,
+      "watcherId": 15305009,
+      "rewardId": 3460109,
+      "itemId": 165,
+      "quantity": 1200,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5305,
+      "watcherId": 15305010,
+      "rewardId": 3460110,
+      "itemId": 165,
+      "quantity": 1200,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5305,
+      "watcherId": 15305011,
+      "rewardId": 3460111,
+      "itemId": 165,
+      "quantity": 1200,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5305,
+      "watcherId": 15305012,
+      "rewardId": 3460112,
+      "itemId": 165,
+      "quantity": 1200,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5305,
+      "watcherId": 15305013,
+      "rewardId": 3460113,
+      "itemId": 165,
+      "quantity": 1200,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5305,
+      "watcherId": 15305014,
+      "rewardId": 3460114,
+      "itemId": 165,
+      "quantity": 1200,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5305,
+      "watcherId": 15305015,
+      "rewardId": 3460115,
+      "itemId": 165,
+      "quantity": 1200,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5305,
+      "watcherId": 15305016,
+      "rewardId": 3460116,
+      "itemId": 165,
+      "quantity": 1200,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5305,
+      "watcherId": 15305017,
+      "rewardId": 3460117,
+      "itemId": 165,
+      "quantity": 1200,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5323,
+      "watcherId": 15323001,
+      "rewardId": 3157001,
+      "itemId": 165,
+      "quantity": 3000,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5323,
+      "watcherId": 15323002,
+      "rewardId": 3157002,
+      "itemId": 165,
+      "quantity": 3000,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5323,
+      "watcherId": 15323003,
+      "rewardId": 3157003,
+      "itemId": 165,
+      "quantity": 3000,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5323,
+      "watcherId": 15323004,
+      "rewardId": 3157004,
+      "itemId": 165,
+      "quantity": 3000,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5323,
+      "watcherId": 15323005,
+      "rewardId": 3157005,
+      "itemId": 165,
+      "quantity": 3000,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5333,
+      "watcherId": 15333001,
+      "rewardId": 3162201,
+      "itemId": 165,
+      "quantity": 1072,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5333,
+      "watcherId": 15333002,
+      "rewardId": 3162202,
+      "itemId": 165,
+      "quantity": 1072,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5333,
+      "watcherId": 15333003,
+      "rewardId": 3162203,
+      "itemId": 165,
+      "quantity": 1072,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5333,
+      "watcherId": 15333004,
+      "rewardId": 3162204,
+      "itemId": 165,
+      "quantity": 1072,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5333,
+      "watcherId": 15333005,
+      "rewardId": 3162205,
+      "itemId": 165,
+      "quantity": 1072,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5333,
+      "watcherId": 15333006,
+      "rewardId": 3162206,
+      "itemId": 165,
+      "quantity": 1072,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5333,
+      "watcherId": 15333007,
+      "rewardId": 3162207,
+      "itemId": 165,
+      "quantity": 1072,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5333,
+      "watcherId": 15333008,
+      "rewardId": 3162208,
+      "itemId": 165,
+      "quantity": 1072,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5333,
+      "watcherId": 15333009,
+      "rewardId": 3162209,
+      "itemId": 165,
+      "quantity": 1072,
+      "reason": "unbound-virtual-reward"
+    },
+    {
+      "activityId": 5333,
+      "watcherId": 15333010,
+      "rewardId": 3162210,
+      "itemId": 165,
+      "quantity": 1072,
+      "reason": "unbound-virtual-reward"
+    }
+  ],
+  "missingDefinitions": [],
+  "inputSha256": {
+    "ActivityHistory.json": "6e884c4d87694f05f8ea5422260cdeada08a87cddaf960715d2a3b45750b2b26",
+    "ActivityShopOverallExcelConfigData.json": "5c2e15801e99a6c41c82363f71b70314571e73f4c706be516a0098ef92859fb4",
+    "BeyondCurrency.java": "03d1ee02ad806951c90f6bf9331e242efe345a055792d07283af67a10cd2fe70",
+    "HomeWorldFurnitureExcelConfigData.json": "c22bd93a7d71a68916d0339abe81b1b4d035a035a04bc5ae65e9fb68d46ee594",
+    "MaterialExcelConfigData.json": "b170f862af1cd9acf9ca5438cb915be0bf1ac65d1abb16d7ab64279160985fff",
+    "NewActivityExcelConfigData.json": "b41f134cac95fda01d824ebaa8b9b794141c0c429abefe22c8c91063594e395e",
+    "NewActivityWatcherConfigData.json": "c8f89994d803c81fdb656824f5d126f22c33b18452069f94f0f260ad0733bc53",
+    "ReliquaryExcelConfigData.json": "cbcdc1a87a1c95e5a3b3901dc180a3036a0cebf52d0c1489c8c1b2e90850ed60",
+    "RewardExcelConfigData.json": "d36c83544298dc55c8f8bdba2276daec5b36185ba15a6020ba72fe39b23cc20b",
+    "ShopGoodsExcelConfigData.json": "979059995c86889e0f7c3f4ccb6d031f572cee3db6454ffa9df5116f99c42d82",
+    "ShopType.java": "8bd3f09b28c46f3dd3abb40c5b230beb70fa5b511de9ec2ab14516432567d950",
+    "TpsWeaponExcelConfigData.json": "1134be51680369087c229f42347396a696077f4b64740c412b9dab8ab3716daf",
+    "WeaponExcelConfigData.json": "ebff448f160e29e68dbf821c794fc54277d25bd4e421ac1732ab34b303e056a0"
+  },
+  "originalQuantitiesUnchanged": true,
+  "clientGameplayVerified": false
+}

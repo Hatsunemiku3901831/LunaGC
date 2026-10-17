@@ -4,13 +4,10 @@ import dev.morphia.Datastore;
 import dev.morphia.annotations.*;
 
 import emu.grasscutter.data.GameData;
-import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.data.excels.activity.ActivityWatcherData;
 import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.game.activity.salesman.SalesmanSchedule;
-import emu.grasscutter.game.inventory.GameItem;
 import emu.grasscutter.game.player.Player;
-import emu.grasscutter.game.props.ActionReason;
 import emu.grasscutter.net.proto.ActivityWatcherInfoOuterClass;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.server.packet.send.PacketActivityUpdateWatcherNotify;
@@ -71,6 +68,37 @@ public class PlayerActivityData {
     @Setter(AccessLevel.NONE)
     Thread coinWriteThread;
 
+    @Setter(AccessLevel.NONE)
+    ActivityWatcherReceipt pendingWatcherReward;
+
+    @Setter(AccessLevel.NONE)
+    ActivityWatcherReceipt lastWatcherReward;
+
+    @Transient
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    ActivityWatcherRewards watcherRewards;
+
+    @Transient
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    Thread watcherWriteThread;
+
+    @Transient
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    Thread watcherGrantThread;
+
+    @Transient
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    ActivityWatcherReceipt.Line watcherGrantLine;
+
+    @Transient
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    boolean watcherCoinConsumed;
+
     @PostLoad
     private void onLoad(Document row, Datastore datastore) {
         saveGuard = new ActivitySaveGuard(this, row, datastore);
@@ -79,6 +107,22 @@ public class PlayerActivityData {
                         Document.class, com.mongodb.MongoClientSettings.getDefaultCodecRegistry());
         pendingCoinOperation = ActivityCoinReceipt.from(raw, "pendingCoinOperation");
         lastCoinOperation = ActivityCoinReceipt.from(raw, "lastCoinOperation");
+        pendingWatcherReward = ActivityWatcherReceipt.from(raw, "pendingWatcherReward");
+        lastWatcherReward = ActivityWatcherReceipt.from(raw, "lastWatcherReward");
+        if (pendingWatcherReward != null) {
+            pendingWatcherReward.owner(this);
+            ActivityWatcherReceipt.require(
+                    pendingWatcherReward.getStage() == ActivityWatcherReceipt.READY
+                            || pendingWatcherReward.getStage() == ActivityWatcherReceipt.STARTED,
+                    "活动领奖待处理阶段无效。");
+        }
+        if (lastWatcherReward != null) {
+            lastWatcherReward.owner(this);
+            ActivityWatcherReceipt.require(
+                    lastWatcherReward.getStage() == ActivityWatcherReceipt.COMPLETED
+                            || lastWatcherReward.getStage() == ActivityWatcherReceipt.CANCELLED,
+                    "活动领奖完成阶段无效。");
+        }
         if (pendingCoinOperation != null) {
             pendingCoinOperation.owner(this);
             ActivityCoinReceipt.require(
@@ -109,7 +153,79 @@ public class PlayerActivityData {
     }
 
     public boolean hasUnconfirmedActivityCoins() {
+        return hasUnconfirmedCoinMutation()
+                || pendingWatcherReward != null && watcherGrantThread != Thread.currentThread();
+    }
+
+    boolean hasUnconfirmedCoinMutation() {
         return unconfirmedActivityCoins || pendingCoinOperation != null || coinWriteThread != null;
+    }
+
+    void setPendingWatcherReward(ActivityWatcherReceipt r) {
+        pendingWatcherReward = r;
+    }
+
+    void setLastWatcherReward(ActivityWatcherReceipt r) {
+        lastWatcherReward = r;
+    }
+
+    public synchronized ActivityWatcherRewards getWatcherRewards() {
+        if (watcherRewards == null) watcherRewards = new ActivityWatcherRewards(this);
+        return watcherRewards;
+    }
+
+    boolean isWatcherWrite() {
+        return watcherWriteThread == Thread.currentThread();
+    }
+
+    void saveWatcherState() {
+        if (watcherWriteThread != null)
+            throw new IllegalStateException("Reentrant watcher reward save");
+        watcherWriteThread = Thread.currentThread();
+        try {
+            DatabaseHelper.saveGameSync(this);
+        } finally {
+            watcherWriteThread = null;
+        }
+    }
+
+    void beginWatcherGrant(ActivityWatcherReceipt.Line line) {
+        if (watcherGrantThread != null)
+            throw new IllegalStateException("Reentrant watcher reward delivery");
+        watcherGrantThread = Thread.currentThread();
+        watcherGrantLine = line;
+        watcherCoinConsumed = false;
+    }
+
+    void endWatcherGrant() {
+        watcherGrantThread = null;
+        watcherGrantLine = null;
+        watcherCoinConsumed = false;
+    }
+
+    boolean allowsWatcherCredit(int id, long count) {
+        return pendingWatcherReward == null
+                || watcherGrantThread == Thread.currentThread()
+                        && watcherGrantLine != null
+                        && watcherGrantLine.getCoinOperationId() != null
+                        && !watcherCoinConsumed
+                        && watcherGrantLine.getItemId() == id
+                        && watcherGrantLine.getCount() == count;
+    }
+
+    String claimWatcherCoin(Map<Integer, Integer> amounts, boolean credit) {
+        if (pendingWatcherReward == null) return null;
+        ActivityWatcherReceipt.require(
+                credit
+                        && watcherGrantThread == Thread.currentThread()
+                        && watcherGrantLine != null
+                        && !watcherCoinConsumed
+                        && watcherGrantLine.getCoinOperationId() != null
+                        && amounts.equals(
+                                Map.of(watcherGrantLine.getItemId(), watcherGrantLine.getCount())),
+                "活动领奖货币关联不符。");
+        watcherCoinConsumed = true;
+        return watcherGrantLine.getCoinOperationId();
     }
 
     void blockUnconfirmedActivityCoins() {
@@ -157,23 +273,15 @@ public class PlayerActivityData {
             String detail,
             Player player,
             ActivityHandler activityHandler) {
-        this(
-                id,
-                uid,
-                activityId,
-                scheduleId,
-                watcherInfoMap,
-                new HashMap<>(),
-                detail,
-                player,
-                activityHandler,
-                false,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null);
+        this.id = id;
+        this.uid = uid;
+        this.activityId = activityId;
+        this.scheduleId = scheduleId;
+        this.watcherInfoMap = watcherInfoMap;
+        this.activityCoins = new HashMap<>();
+        this.detail = detail;
+        this.player = player;
+        this.activityHandler = activityHandler;
     }
 
     public static PlayerActivityData getByPlayer(Player player, int activityId) {
@@ -235,40 +343,8 @@ public class PlayerActivityData {
             if (activityId == emu.grasscutter.game.activity.aster.AsterSchedule.ACTIVITY_ID)
                 return emu.grasscutter.game.activity.aster.AsterWatcherRewards.take(
                         this, watcherId);
-            return takeDefaultWatcherReward(watcherId);
+            return getWatcherRewards().take(watcherId);
         }
-    }
-
-    private synchronized int takeDefaultWatcherReward(int watcherId) {
-        if (player == null
-                || !player.getActivityManager().isActivityActive(activityId)
-                || player.getActivityManager().getPlayerActivityDataMap().get(activityId) != this) {
-            return Retcode.RET_ACTIVITY_CLOSE_VALUE;
-        }
-        var watcher = watcherInfoMap.get(watcherId);
-        if (watcher == null) return Retcode.RET_ACTIVITY_ITEM_ERROR_VALUE;
-        if (watcher.isTakenReward()) return Retcode.RET_ACTIVITY_WATCHER_REWARD_TAKEN_VALUE;
-        if (!watcher.isFinished()) return Retcode.RET_ACTIVITY_WATCHER_REWARD_NOT_FINISHED_VALUE;
-
-        var reward =
-                Optional.of(watcher)
-                        .map(WatcherInfo::getMetadata)
-                        .map(ActivityWatcherData::getRewardID)
-                        .map(id -> GameData.getRewardDataMap().get(id.intValue()));
-
-        if (reward.isEmpty()) {
-            return Retcode.RET_SVR_ERROR_VALUE;
-        }
-
-        List<GameItem> rewards = new ArrayList<>();
-        for (ItemParamData param : reward.get().getRewardItemList()) {
-            rewards.add(new GameItem(param.getId(), Math.max(param.getCount(), 1)));
-        }
-
-        player.getInventory().addItems(rewards, ActionReason.ActivityWatcher);
-        watcher.setTakenReward(true);
-        save();
-        return 0;
     }
 
     @Entity

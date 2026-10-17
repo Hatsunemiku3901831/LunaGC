@@ -132,8 +132,12 @@ public final class ActivitySaveGuard {
 
     public void save(Datastore datastore) {
         synchronized (data) {
-            if (data.hasUnconfirmedActivityCoins() && !data.isCoinWrite())
+            if (data.hasUnconfirmedCoinMutation() && !data.isCoinWrite())
                 throw new IllegalStateException("Activity coin write requires reconciliation");
+            if (data.getPendingWatcherReward() != null
+                    && !data.isWatcherWrite()
+                    && !data.isCoinWrite())
+                throw new IllegalStateException("Activity watcher reward requires reconciliation");
             resolvePending(datastore);
             if (storage == null) {
                 destination = datastore;
@@ -251,7 +255,11 @@ public final class ActivitySaveGuard {
     /** A new replay may reuse only this confirmed document identity, never an uncertain write. */
     ActivitySaveGuard forReplay(PlayerActivityData replacement) {
         synchronized (data) {
-            if (pending != null || conflicted || !exists || data.hasUnconfirmedActivityCoins())
+            if (pending != null
+                    || conflicted
+                    || !exists
+                    || data.hasUnconfirmedActivityCoins()
+                    || data.getPendingWatcherReward() != null)
                 throw new IllegalStateException("Activity replay requires confirmed saved state");
             resolvePending(destination);
             if (replacement.getUid() != uid || replacement.getActivityId() != activityId)

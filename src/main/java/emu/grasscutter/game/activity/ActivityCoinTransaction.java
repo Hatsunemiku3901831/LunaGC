@@ -26,7 +26,9 @@ public final class ActivityCoinTransaction {
     void commit(Map<Integer, Integer> amounts, boolean credit) {
         require(!data.hasUnconfirmedActivityCoins(), "活动货币仍有未确认操作。");
         data.getSaveGuard().resolvePending(DatabaseManager.getGameDatastore());
-        var receipt = new ActivityCoinReceipt(data, amounts, credit);
+        var receipt =
+                new ActivityCoinReceipt(
+                        data, amounts, credit, data.claimWatcherCoin(amounts, credit));
         if (data.getLastCoinOperation() != null) data.getLastCoinOperation().owner(data);
         data.setPendingCoinOperation(receipt);
         completionUnconfirmed = false;
@@ -261,6 +263,15 @@ public final class ActivityCoinTransaction {
         var player = actor();
         synchronized (player.getInventory()) {
             synchronized (data) {
+                require(
+                        data.getPendingWatcherReward() == null
+                                || data.getPendingWatcherReward().getLines().stream()
+                                        .noneMatch(
+                                                line ->
+                                                        Objects.equals(
+                                                                line.getCoinOperationId(),
+                                                                operationId)),
+                        "该货币操作属于活动领奖，请使用 activityrewards 核对并继续原计划。");
                 var receipt = operation(operationId);
                 var state = checked(receipt, true);
                 require(
