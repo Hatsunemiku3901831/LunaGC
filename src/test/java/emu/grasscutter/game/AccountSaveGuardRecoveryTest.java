@@ -8,6 +8,7 @@ import dev.morphia.*;
 import dev.morphia.query.experimental.filters.Filters;
 
 import emu.grasscutter.Grasscutter;
+import emu.grasscutter.database.DatabaseManager;
 
 import org.bson.Document;
 import org.junit.jupiter.api.*;
@@ -238,6 +239,133 @@ class AccountSaveGuardRecoveryTest {
         account.setToken("overflow-token");
         assertThrows(ArithmeticException.class, () -> save(account));
         assertEquals(before, row());
+    }
+
+    private static final String RESET_HASH =
+            at.favre.lib.crypto.bcrypt.BCrypt.withDefaults()
+                    .hashToString(4, "reset-fixture-password".toCharArray());
+
+    private void reset(Account account) {
+        account.getSaveGuard().resetPassword(store, RESET_HASH);
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void resetPublishesCredentialsInMemoryOnlyAfterRecognizingItsConfirmedWrite(boolean committed) {
+        var account = instrument();
+        fault.next = committed ? Fault.AFTER : Fault.DEFER;
+        assertThrows(IllegalStateException.class, () -> reset(account));
+        assertNull(account.getPassword());
+        assertEquals("original-token", account.getToken());
+        assertFalse(account.isPasswordRequired());
+        account.getSaveGuard().resolvePending(store);
+        assertEquals(committed, account.isPasswordRequired());
+        assertEquals(committed ? RESET_HASH : null, account.getPassword());
+        reset(account);
+        assertEquals(RESET_HASH, row().getString("password"));
+        assertNull(row().get("token"));
+        assertEquals(true, row().get("passwordRequired"));
+        if (!committed) assertFalse(fault.flush());
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void resetMetadataAcknowledgementLossCannotPublishUncommittedCredentials(boolean committed) {
+        var account = instrument();
+        fault.next = Fault.DEFER;
+        assertThrows(IllegalStateException.class, () -> reset(account));
+        fault.nextAdvance = committed ? Fault.AFTER : Fault.BEFORE;
+        assertThrows(
+                IllegalStateException.class, () -> account.getSaveGuard().resolvePending(store));
+        assertFalse(account.isPasswordRequired());
+        assertEquals("original-token", account.getToken());
+        reset(account);
+        var confirmed = row();
+        assertFalse(fault.flush());
+        assertEquals(confirmed, row());
+        assertTrue(account.isPasswordRequired());
+        assertNull(account.getToken());
+    }
+
+    @Test
+    void aResetWhichWinsBeforeMetadataAdvancePublishesItsOwnCredentials() {
+        var account = instrument();
+        fault.next = Fault.DEFER;
+        assertThrows(IllegalStateException.class, () -> reset(account));
+        fault.beforeAdvance = () -> assertTrue(fault.flush());
+        account.getSaveGuard().resolvePending(store);
+        assertTrue(account.isPasswordRequired());
+        assertEquals(RESET_HASH, account.getPassword());
+        assertNull(account.getToken());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"session", "v2-session", "login"})
+    void tokenGenerationResolvesALostResetAcknowledgementBeforeAssigningANewToken(String kind)
+            throws Exception {
+        var account = instrument();
+        fault.next = Fault.AFTER;
+        assertThrows(IllegalStateException.class, () -> reset(account));
+        var field = DatabaseManager.class.getDeclaredField("gameDatastore");
+        field.setAccessible(true);
+        Object previous = field.get(null);
+        var mode = Grasscutter.getRunMode();
+        try {
+            field.set(null, store);
+            Grasscutter.setRunModeOverride(Grasscutter.ServerRunMode.HYBRID);
+            String token =
+                    switch (kind) {
+                        case "session" -> account.generateSessionKey();
+                        case "v2-session" -> account.generateV2SessionKey();
+                        default -> account.generateLoginToken();
+                    };
+            assertNotNull(token);
+            assertEquals(token, row().getString(kind.equals("login") ? "token" : "sessionKey"));
+            assertTrue(account.isPasswordRequired());
+            assertEquals(RESET_HASH, row().getString("password"));
+        } finally {
+            field.set(null, previous);
+            Grasscutter.setRunModeOverride(mode);
+        }
+    }
+
+    @Test
+    void ordinarySavingAfterAnUncertainCommittedResetCannotRestoreOldCredentials() {
+        var account = instrument();
+        fault.next = Fault.AFTER;
+        assertThrows(IllegalStateException.class, () -> reset(account));
+        account.setEmail("later@fixture.invalid");
+        save(account);
+        assertEquals(RESET_HASH, row().getString("password"));
+        assertNull(row().get("token"));
+        assertEquals(true, row().get("passwordRequired"));
+        assertEquals("later@fixture.invalid", row().getString("email"));
+    }
+
+    @Test
+    void aStaleOrdinaryCopyCannotUndoAConfirmedReset() {
+        var stale = read();
+        var current = read();
+        reset(current);
+        var confirmed = row();
+        stale.setToken("old-restored-token");
+        assertThrows(IllegalStateException.class, () -> save(stale));
+        assertEquals(confirmed, row());
+    }
+
+    @Test
+    void anotherConfirmedResetCannotBeReplacedByAnOlderDelayedReset() {
+        var account = instrument();
+        fault.next = Fault.DEFER;
+        assertThrows(IllegalStateException.class, () -> reset(account));
+        var another = read();
+        another.getSaveGuard().resetPassword(store, "other-fixture-hash");
+        var confirmed = row();
+        assertThrows(
+                IllegalStateException.class, () -> account.getSaveGuard().resolvePending(store));
+        assertFalse(fault.flush());
+        assertEquals(confirmed, row());
+        assertFalse(account.isPasswordRequired());
     }
 
     enum Fault {

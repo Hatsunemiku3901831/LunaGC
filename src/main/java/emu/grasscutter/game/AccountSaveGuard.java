@@ -68,10 +68,16 @@ public final class AccountSaveGuard {
     private static final class Attempt {
         final AccountSaveStamp before, after;
         final Document document;
+        final String resetPassword;
         AccountSaveStamp barrier;
 
         Attempt(AccountSaveStamp before, Document document) {
+            this(before, document, null);
+        }
+
+        Attempt(AccountSaveStamp before, Document document, String resetPassword) {
             this.before = before;
+            this.resetPassword = resetPassword;
             after = AccountSaveStamp.next(before);
             this.document = document;
             document.put("saveStamp", after.document());
@@ -151,6 +157,31 @@ public final class AccountSaveGuard {
                 });
     }
 
+    /** Stage credentials in the exact CAS document; publish them in memory only on confirmation. */
+    public void resetPassword(Datastore store, String hash) {
+        if (hash == null || hash.isBlank())
+            throw new IllegalArgumentException("Password hash required");
+        DatabaseWriteBarrier.run(
+                () -> {
+                    synchronized (account) {
+                        resolvePendingAdmitted(store);
+                        if (storage == null) storage = factory.apply(store);
+                        var document = store.getMapper().toDocument(account);
+                        if (!id.equals(document.get("_id")))
+                            throw new IllegalStateException("Encoded account identity changed");
+                        document.put("password", hash);
+                        document.remove("token");
+                        document.remove("sessionKey");
+                        document.put("passwordRequired", true);
+                        pending = new Attempt(confirmed, document, hash);
+                        if (!storage.replace(
+                                AccountSaveStamp.condition(id, pending.before), pending.document))
+                            throw conflict();
+                        accept(pending.after);
+                    }
+                });
+    }
+
     private void resolvePendingAdmitted(Datastore store) {
         if (id == null || id.isBlank() || destination == null)
             throw new IllegalStateException(
@@ -191,6 +222,10 @@ public final class AccountSaveGuard {
     }
 
     private void accept(AccountSaveStamp stamp) {
+        if (pending != null
+                && pending.resetPassword != null
+                && AccountSaveStamp.same(stamp, pending.after))
+            account.acceptPasswordReset(pending.resetPassword);
         confirmed = stamp;
         account.setSaveStamp(stamp);
         pending = null;

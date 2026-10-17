@@ -8,6 +8,7 @@ import dev.morphia.Datastore;
 import dev.morphia.annotations.*;
 
 import emu.grasscutter.database.DatabaseHelper;
+import emu.grasscutter.database.DatabaseManager;
 import emu.grasscutter.utils.*;
 
 import org.bson.Document;
@@ -44,7 +45,30 @@ public class Account {
     @Collation(locale = "simple", caseLevel = true)
     private String username;
 
-    private String password; // Unused for now
+    private String password;
+    private boolean passwordRequired;
+
+    public boolean isPasswordRequired() {
+        return passwordRequired;
+    }
+
+    void acceptPasswordReset(String hash) {
+        password = hash;
+        token = null;
+        sessionKey = null;
+        passwordRequired = true;
+    }
+
+    public boolean matchesSessionKey(String provided) {
+        return provided != null
+                && !provided.isBlank()
+                && sessionKey != null
+                && sessionKey.equals(provided);
+    }
+
+    public boolean matchesLoginToken(String provided) {
+        return provided != null && !provided.isBlank() && token != null && token.equals(provided);
+    }
 
     private int reservedPlayerId;
     private String email;
@@ -155,12 +179,14 @@ public class Account {
     }
 
     public synchronized String generateSessionKey() {
+        getSaveGuard().resolvePending(DatabaseManager.getAccountDatastore());
         this.sessionKey = Utils.bytesToHex(Crypto.createSessionKey(32));
         DatabaseHelper.saveAccountSync(this);
         return this.sessionKey;
     }
 
     public synchronized String generateV2SessionKey() {
+        getSaveGuard().resolvePending(DatabaseManager.getAccountDatastore());
         this.sessionKey = "v2_" + Utils.bytesToHex(Crypto.createSessionKey(32));
         DatabaseHelper.saveAccountSync(this);
         return this.sessionKey;
@@ -275,6 +301,7 @@ public class Account {
 
     // TODO make unique
     public synchronized String generateLoginToken() {
+        getSaveGuard().resolvePending(DatabaseManager.getAccountDatastore());
         this.token = Utils.bytesToHex(Crypto.createSessionKey(32));
         DatabaseHelper.saveAccountSync(this);
         return this.token;

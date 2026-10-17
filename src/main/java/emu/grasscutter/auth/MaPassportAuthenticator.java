@@ -135,6 +135,9 @@ public class MaPassportAuthenticator {
             }
 
             // 同 appLoginByPassword：每次登录都发一个全新的 session key 并同步落库
+            if (account.isPasswordRequired()) {
+                return createLoginErrorResponse(-101, "Password login is required after a password reset");
+            }
             account.generateV2SessionKey();
 
             Grasscutter.getLogger().info("User " + mobile + " has successfully logged in (mobile captcha)");
@@ -168,6 +171,9 @@ public class MaPassportAuthenticator {
             // resume succeeds instead of failing with a "session key error".
             String requestToken = request.getToken();
             String accountSessionKey = account.getSessionKey();
+            if (account.isPasswordRequired() && !account.matchesSessionKey(requestToken)) {
+                return createTokenErrorResponse(-101, "For account safety, please log in again");
+            }
             if (requestToken == null) {
                 // The client sent neither a flat stoken nor a nested token. Adopting null would
                 // wipe the stored key and break every later resume, so keep the stored key and

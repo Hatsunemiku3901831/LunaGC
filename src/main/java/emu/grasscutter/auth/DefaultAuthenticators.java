@@ -23,6 +23,27 @@ import javax.crypto.Cipher;
 /** A class containing default authenticators. */
 public final class DefaultAuthenticators {
 
+    private static String decodePassword(LoginAccountRequestJson data, boolean tryEncrypted) {
+        if (data.password == null) return null;
+        if (!data.is_crypto && !tryEncrypted) return data.password;
+        try {
+            byte[] key = FileUtils.readResource("/keys/auth_private-key.der");
+            var factory = KeyFactory.getInstance("RSA");
+            var privateKey = factory.generatePrivate(new PKCS8EncodedKeySpec(key));
+            var cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            cipher.init(Cipher.DECRYPT_MODE, privateKey);
+            return new String(cipher.doFinal(Utils.base64Decode(data.password)), StandardCharsets.UTF_8);
+        } catch (Exception invalidEncryptedInput) {
+            return data.is_crypto ? null : data.password;
+        }
+    }
+
+    private static boolean passwordMatches(Account account, String provided) {
+        if (provided == null || account.getPassword() == null || account.getPassword().isEmpty()) return false;
+        try { return account.verifyPassword(provided); }
+        catch (IllegalArgumentException malformedStoredHash) { return false; }
+    }
+
     /** Handles the authentication request from the username and password form. */
     public static class PasswordAuthenticator implements Authenticator<LoginResultJson> {
         @Override
@@ -62,30 +83,13 @@ public final class DefaultAuthenticators {
                                             account.getId()));
                 }
             } else if (account != null) {
-                // Local/private-server convenience: an existing account accepts any password.
-                // The original first-login password lock + verification is disabled below (kept as
-                // comments, not deleted) so a forgotten or mistyped password can never lock the
-                // player out of their own server. Uncomment the block to restore strict checks.
-                // // Lock the entered password as the account password on first login
-                // // (covers both newly auto-created accounts and old accounts with an empty password).
-                // String rawPassword = requestData.password;
-                // if ((account.getPassword() == null || account.getPassword().isEmpty())
-                //         && rawPassword != null
-                //         && !rawPassword.isEmpty()) {
-                //     account.setPassword(
-                //             BCrypt.withDefaults().hashToString(10, rawPassword.toCharArray()));
-                //     account.save();
-                // }
-                // // Verify the password for accounts that have one set.
-                // if (account.getPassword() == null
-                //         || account.getPassword().isEmpty()
-                //         || account.verifyPassword(rawPassword)) {
-                //     successfulLogin = true;
-                // } else {
-                //     responseMessage = translate("messages.dispatch.account.password_error");
-                //     loggerMessage = translate("messages.dispatch.account.login_password_error", address);
-                // }
-                successfulLogin = true;
+                // Resetting a password explicitly opts this account into credential checks.
+                successfulLogin = !account.isPasswordRequired()
+                        || passwordMatches(account, decodePassword(requestData, false));
+                if (!successfulLogin) {
+                    responseMessage = translate("messages.dispatch.account.password_error");
+                    loggerMessage = translate("messages.dispatch.account.login_password_error", address);
+                }
             } else
                 loggerMessage = translate("messages.dispatch.account.account_login_exist_error", address);
 
@@ -120,24 +124,7 @@ public final class DefaultAuthenticators {
             String address = Utils.address(request.getContext());
             String responseMessage = translate("messages.dispatch.account.username_error");
             String loggerMessage = "";
-            String decryptedPassword = "";
-            try {
-                byte[] key = FileUtils.readResource("/keys/auth_private-key.der");
-                PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(key);
-                KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-                RSAPrivateKey private_key = (RSAPrivateKey) keyFactory.generatePrivate(keySpec);
-
-                Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-
-                cipher.init(Cipher.DECRYPT_MODE, private_key);
-
-                decryptedPassword =
-                        new String(
-                                cipher.doFinal(Utils.base64Decode(request.getPasswordRequest().password)),
-                                StandardCharsets.UTF_8);
-            } catch (Exception ignored) {
-                decryptedPassword = request.getPasswordRequest().password;
-            }
+            String decryptedPassword = decodePassword(requestData, true);
 
             if (decryptedPassword == null) {
                 successfulLogin = false;
@@ -150,11 +137,9 @@ public final class DefaultAuthenticators {
             // Check if account exists.
             if (account == null && ACCOUNT.autoCreate) {
                 // This account has been created AUTOMATICALLY. There will be no permissions added.
-                if (decryptedPassword.length() >= 8) {
-                    account = DatabaseHelper.createAccountWithUid(requestData.account, 0);
-                    account.setPassword(
-                            BCrypt.withDefaults().hashToString(12, decryptedPassword.toCharArray()));
-                    account.save();
+                if (decryptedPassword != null && decryptedPassword.length() >= 8) {
+                    account = DatabaseHelper.createAccountWithUid(requestData.account, 0,
+                            BCrypt.withDefaults().hashToString(12, decryptedPassword.toCharArray()), java.util.List.of());
 
                     // Check if the account was created successfully.
                     if (account == null) {
@@ -180,9 +165,7 @@ public final class DefaultAuthenticators {
                 }
             } else if (account != null) {
                 if (account.getPassword() != null && !account.getPassword().isEmpty()) {
-                    if (BCrypt.verifyer()
-                            .verify(decryptedPassword.toCharArray(), account.getPassword())
-                            .verified) {
+                    if (passwordMatches(account, decryptedPassword)) {
                         successfulLogin = true;
                     } else {
                         successfulLogin = false;
@@ -248,7 +231,7 @@ public final class DefaultAuthenticators {
             Account account = DatabaseHelper.getAccountById(requestData.uid);
 
             // Check if account exists/token is valid.
-            successfulLogin = account != null && account.getSessionKey().equals(requestData.token);
+            successfulLogin = account != null && account.matchesSessionKey(requestData.token);
 
             // Set response data.
             if (successfulLogin) {
@@ -307,7 +290,7 @@ public final class DefaultAuthenticators {
             // Lenient mode for private servers: if the stored session key differs (e.g. the
             // client cached a token from another server/play session), adopt the client's
             // token so the combo login succeeds instead of failing with a "session key error".
-            if (account != null) {
+            if (account != null && (!account.isPasswordRequired() || account.matchesSessionKey(loginData.token))) {
                 var sk = account.getSessionKey();
                 if (sk == null || !sk.equals(loginData.token)) {
                     Grasscutter.getLogger().info(

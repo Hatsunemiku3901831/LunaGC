@@ -64,7 +64,7 @@ public final class AccountCommand implements CommandHandler {
                                 CommandHandler.sendMessage(
                                         sender,
                                         "EXPERIMENTAL_RealPassword requires argument 2 to be a"
-                                            + " password, not a uid");
+                                                + " password, not a uid");
                                 CommandHandler.sendMessage(
                                         sender,
                                         "Usage: account create <username> <password> [uid]");
@@ -145,12 +145,13 @@ public final class AccountCommand implements CommandHandler {
                     return;
                 }
 
-                // Make sure player can't stay logged in with old password.
+                String passwordHash =
+                        BCrypt.withDefaults().hashToString(12, args.get(2).toCharArray());
+                AccountPasswordResetService.resetPassword(toUpdate, passwordHash);
                 kickAccount(toUpdate);
-                toUpdate.setPassword(
-                        BCrypt.withDefaults().hashToString(12, args.get(2).toCharArray()));
-                toUpdate.save();
-                CommandHandler.sendMessage(sender, "Password Updated.");
+                CommandHandler.sendMessage(
+                        sender,
+                        "Password Updated. Password login is required; existing tokens revoked.");
             }
             case "list" -> {
                 CommandHandler.sendMessage(
@@ -189,9 +190,11 @@ public final class AccountCommand implements CommandHandler {
     }
 
     private void kickAccount(Account account) {
-        Player player = Grasscutter.getGameServer().getPlayerByAccountId(account.getId());
-        if (player != null) {
-            player.getSession().close();
+        var server = Grasscutter.getGameServer();
+        if (server == null) return;
+        for (var player : server.getPlayers().values()) {
+            if (account.getId().equals(player.getAccountId()) && player.getSession() != null)
+                player.getSession().close();
         }
     }
 }
