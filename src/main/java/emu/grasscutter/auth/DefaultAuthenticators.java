@@ -395,6 +395,8 @@ public final class DefaultAuthenticators {
             // Prepare the request.
             var client = Grasscutter.getGameServer().getDispatchClient();
             var codec = DatabaseManager.getAccountDatastore();
+            var connection = client == null ? null : client.accountConnection();
+            if (connection == null) return null;
             return client.await(IDispatcher.JSON.toJsonTree(tokenRequest).getAsJsonObject(),
                     PacketIds.TokenValidateReq, PacketIds.TokenValidateRsp, packet -> {
                         var data = IDispatcher.decode(packet);
@@ -402,7 +404,8 @@ public final class DefaultAuthenticators {
                         var account = IDispatcher.decode(data.get("account"), Account.class);
                         return account != null && tokenRequest.uid.equals(account.getId())
                                 && account.matchesLoginToken(tokenRequest.token)
-                                ? AccountRemoteStorage.bind(account, codec, client) : null;
+                                && client.accountConnection() == connection
+                                ? AccountRemoteStorage.bind(account, codec, client, connection) : null;
                     });
         }
     }

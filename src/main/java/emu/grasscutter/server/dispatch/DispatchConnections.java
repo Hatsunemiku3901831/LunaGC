@@ -2,6 +2,7 @@ package emu.grasscutter.server.dispatch;
 
 import org.java_websocket.WebSocket;
 
+import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
@@ -20,6 +21,15 @@ final class DispatchConnections {
     synchronized Object identity(WebSocket peer) {
         Object generation = generations.get(peer);
         return generation != null && authenticated(peer) ? generation : null;
+    }
+
+    synchronized Map<WebSocket, Object> snapshot() {
+        var result = new IdentityHashMap<WebSocket, Object>();
+        generations.forEach(
+                (peer, generation) -> {
+                    if (authenticated(peer)) result.put(peer, generation);
+                });
+        return Collections.unmodifiableMap(result);
     }
 
     synchronized boolean send(WebSocket peer, Object generation, Runnable action) {

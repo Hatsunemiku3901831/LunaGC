@@ -10,16 +10,18 @@ import emu.grasscutter.Grasscutter.ServerRunMode;
 import emu.grasscutter.database.DatabaseManager;
 import emu.grasscutter.server.dispatch.*;
 
-/** One authoritative account read, pinned to its mode, datastore and dispatch client. */
+/** One authoritative account read, pinned to its mode, datastore and connection generation. */
 public final class AccountLookup {
     private final ServerRunMode mode;
     private final Datastore source;
     private final DispatchClient client;
+    private final Object connection;
 
     private AccountLookup(ServerRunMode mode, Datastore source, DispatchClient client) {
         this.mode = mode;
         this.source = source;
         this.client = client;
+        this.connection = client == null ? null : client.accountConnection();
     }
 
     public static AccountLookup capture() {
@@ -39,7 +41,11 @@ public final class AccountLookup {
             return false;
         var server = Grasscutter.getGameServer();
         return mode != ServerRunMode.GAME_ONLY
-                || server != null && client == server.getDispatchClient();
+                || server != null
+                        && client != null
+                        && client == server.getDispatchClient()
+                        && connection != null
+                        && connection == client.accountConnection();
     }
 
     public Account byId(String id) {
@@ -47,7 +53,7 @@ public final class AccountLookup {
     }
 
     Object authorityIdentity() {
-        return mode == ServerRunMode.GAME_ONLY ? client : source;
+        return mode == ServerRunMode.GAME_ONLY ? connection : source;
     }
 
     Datastore localAuthority() {
@@ -84,7 +90,7 @@ public final class AccountLookup {
                                     field.equals("accountId")
                                             ? account.getId()
                                             : account.getUsername())) return null;
-                    return AccountRemoteStorage.bind(account, source, client);
+                    return AccountRemoteStorage.bind(account, source, client, connection);
                 });
     }
 }

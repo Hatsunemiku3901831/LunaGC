@@ -7,6 +7,7 @@ import emu.grasscutter.Grasscutter;
 import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.database.DatabaseManager;
 import emu.grasscutter.game.HandbookActions;
+import emu.grasscutter.game.AccountLoginAdmission;
 import emu.grasscutter.server.event.dispatch.ServerMessageEvent;
 import emu.grasscutter.server.game.GameServer;
 import emu.grasscutter.server.http.handlers.GachaHandler;
@@ -15,6 +16,7 @@ import emu.grasscutter.utils.objects.HandbookBody;
 import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -40,6 +42,33 @@ public final class DispatchClient extends WebSocketClient implements IDispatcher
             });
     private final Executor handbookExecutor;
     private final Set<Integer> handbookPlayers = ConcurrentHashMap.newKeySet();
+    private static final Executor credentialTasks = new ThreadPoolExecutor(4, 4, 30, TimeUnit.SECONDS,
+            new ArrayBlockingQueue<>(64), action -> {
+                var thread = new Thread(action, "dispatch-credential-drain");
+                thread.setDaemon(true);
+                return thread;
+            });
+    private record RevokeKey(Object connection, CredentialRevocation.Request request) {}
+    private final ConcurrentMap<RevokeKey, CompletableFuture<Boolean>> revocations = new ConcurrentHashMap<>();
+    private final List<AccountLoginAdmission.Revocation> retiredWork = new ArrayList<>();
+    private volatile Object readyConnection;
+
+    /** Account snapshots are valid only for a fully admitted connection generation. */
+    public Object accountConnection() {
+        var connection = connectionIdentity(this);
+        return connection != null && connection == readyConnection ? connection : null;
+    }
+
+    public <T> CompletableFuture<T> asyncOnConnection(Object connection, JsonObject request,
+            int requestId, int responseId, Function<JsonElement, T> parser, Duration timeout) {
+        return DispatchRequests.request(this, this, connection, request, requestId, responseId, parser, timeout);
+    }
+
+    @Override
+    public <T> CompletableFuture<T> async(JsonObject request, int requestId, int responseId,
+            Function<JsonElement, T> parser, Duration timeout) {
+        return asyncOnConnection(connectionIdentity(this), request, requestId, responseId, parser, timeout);
+    }
 
     @Override
     public Object connectionIdentity(WebSocket peer) {
@@ -67,6 +96,80 @@ public final class DispatchClient extends WebSocketClient implements IDispatcher
         this.registerHandler(PacketIds.GetPlayerFieldsReq, this::fetchPlayerFields);
         this.registerHandler(PacketIds.GetPlayerByAccountReq, this::fetchPlayerByAccount);
         this.registerHandler(PacketIds.ServerMessageNotify, ServerMessageEvent::invoke);
+        this.registerHandler(PacketIds.CredentialRevokeReq, this::revokeCredentials);
+    }
+
+    private void revokeCredentials(WebSocket socket, JsonElement object) {
+        var reply = captureReply();
+        var request = CredentialRevocation.decode(object);
+        var connection = accountConnection();
+        var owner = Grasscutter.getGameServer();
+        if (connection == null || owner == null || owner.getDispatchClient() != this
+                || Grasscutter.getRunMode() != Grasscutter.ServerRunMode.GAME_ONLY) {
+            reply.send(request.response(false));
+            return;
+        }
+        // Publish the watermark on the receive thread, without waiting for old login work.
+        var drain = AccountLoginAdmission.revokeRemote(connection, request.accountId(), request.throughRevision());
+        var key = new RevokeKey(connection, request);
+        var created = new CompletableFuture<Boolean>();
+        var pending = revocations.putIfAbsent(key, created);
+        if (pending == null) {
+            pending = created;
+            try {
+                credentialTasks.execute(() -> {
+                    boolean confirmed = false;
+                    try {
+                        confirmed = drain.await(Duration.ofSeconds(30)) && accountConnection() == connection;
+                    } catch (InterruptedException interrupted) {
+                        Thread.currentThread().interrupt();
+                    } catch (RuntimeException failed) {
+                        getLogger().warn("Game connection revocation did not complete.");
+                    } finally {
+                        revocations.remove(key, created);
+                        created.complete(confirmed);
+                    }
+                });
+            } catch (RejectedExecutionException busy) {
+                revocations.remove(key, created);
+                created.complete(false);
+            }
+        }
+        pending.whenComplete((ok, failed) -> reply.send(request.response(failed == null && Boolean.TRUE.equals(ok))));
+    }
+
+    private void retireConnection(Object connection) {
+        readyConnection = null;
+        var work = AccountLoginAdmission.retireRemote(connection);
+        synchronized (retiredWork) { retiredWork.addAll(work); }
+    }
+
+    private boolean drainRetired(BooleanSupplier stillOwned) throws InterruptedException {
+        for (;;) {
+            if (!stillOwned.getAsBoolean()) return false;
+            final AccountLoginAdmission.Revocation work;
+            synchronized (retiredWork) {
+                if (retiredWork.isEmpty()) return true;
+                work = retiredWork.get(0);
+            }
+            if (work.await(Duration.ofSeconds(1)))
+                synchronized (retiredWork) { retiredWork.remove(work); }
+        }
+    }
+
+    private void openAfterRetirement(Object connection) {
+        try {
+            if (!drainRetired(() -> connectionIdentity(this) == connection)) return;
+            if (connectionIdentity(this) != connection) return;
+            readyConnection = connection;
+            this.sendMessage(PacketIds.LoginNotify, DISPATCH_INFO.dispatchKey);
+        } catch (InterruptedException interrupted) {
+            Thread.currentThread().interrupt();
+            close();
+        } catch (RuntimeException failed) {
+            getLogger().warn("Previous game connections did not retire; dispatch remains unavailable.");
+            close();
+        }
     }
 
     /**
@@ -246,10 +349,22 @@ public final class DispatchClient extends WebSocketClient implements IDispatcher
 
     @Override
     public void onOpen(ServerHandshake handshake) {
-        if (requestConnections.opened(this) != null)
+        var previous = requestConnections.opened(this);
+        if (previous != null) {
             failPendingRequests(new IllegalStateException("Dispatch connection replaced"));
-        // Attempt to handshake with the server.
-        this.sendMessage(PacketIds.LoginNotify, DISPATCH_INFO.dispatchKey);
+            retireConnection(previous);
+        }
+        // WebSocketClient resets its engine on reconnect, including its attachment.
+        setAttachment(true);
+        var connection = connectionIdentity(this);
+        final boolean ready;
+        synchronized (retiredWork) { ready = retiredWork.isEmpty(); }
+        if (ready) openAfterRetirement(connection);
+        else {
+            var opener = new Thread(() -> openAfterRetirement(connection), "dispatch-retire-before-open");
+            opener.setDaemon(true);
+            opener.start();
+        }
 
         this.getLogger().info("Dispatch connection opened.");
     }
@@ -266,7 +381,8 @@ public final class DispatchClient extends WebSocketClient implements IDispatcher
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
-        requestConnections.closed(this);
+        var previous = requestConnections.closed(this);
+        retireConnection(previous);
         this.failPendingRequests(new IllegalStateException("Dispatch connection closed"));
         this.getLogger().info("Dispatch connection closed.");
 
@@ -274,20 +390,33 @@ public final class DispatchClient extends WebSocketClient implements IDispatcher
         if (owner == null || owner.getDispatchClient() != this) return;
 
         // Attempt to reconnect.
-        new Thread(
+        var reconnect = new Thread(
                         () -> {
                             try {
                                 // Wait 5 seconds before reconnecting.
                                 Thread.sleep(5000L);
-                            } catch (Exception ignored) {
+                            } catch (InterruptedException interrupted) {
+                                Thread.currentThread().interrupt();
+                                return;
                             }
 
                             // Attempt to reconnect.
-                            if (Grasscutter.getGameServer() != owner || owner.getDispatchClient() != this) return;
+                            try {
+                                if (!drainRetired(() -> Grasscutter.getGameServer() == owner
+                                        && owner.getDispatchClient() == this && !isOpen())) return;
+                            } catch (InterruptedException interrupted) {
+                                Thread.currentThread().interrupt();
+                                return;
+                            } catch (RuntimeException failed) {
+                                getLogger().warn("Previous game connection retirement failed; reconnect withheld.");
+                                return;
+                            }
+                            if (Grasscutter.getGameServer() != owner || owner.getDispatchClient() != this || isOpen()) return;
                             owner.setDispatchClient(new DispatchClient(GameServer.getDispatchUrl()));
                             owner.getDispatchClient().connect();
-                        })
-                .start();
+                        }, "dispatch-reconnect-after-retirement");
+        reconnect.setDaemon(true);
+        reconnect.start();
     }
 
     @Override

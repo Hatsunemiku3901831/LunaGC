@@ -20,23 +20,39 @@ public final class AccountRemoteStorage implements AccountSaveGuard.Storage {
             JsonWriterSettings.builder().outputMode(JsonMode.EXTENDED).build();
     private final DispatchClient origin;
     private final Duration timeout;
+    private final Object connection;
 
-    private AccountRemoteStorage(DispatchClient origin, Duration timeout) {
+    private AccountRemoteStorage(DispatchClient origin, Object connection, Duration timeout) {
         this.origin = Objects.requireNonNull(origin, "Account owner client");
+        this.connection = Objects.requireNonNull(connection, "Account owner connection");
         this.timeout = Objects.requireNonNull(timeout, "Request timeout");
         if (timeout.isNegative() || timeout.isZero() || timeout.toNanos() <= 0)
             throw new IllegalArgumentException("Positive request timeout required");
     }
 
     public static Account bind(Account account, Datastore codec, DispatchClient origin) {
-        return bind(account, codec, origin, Duration.ofSeconds(5));
+        return bind(account, codec, origin, origin.accountConnection());
+    }
+
+    public static Account bind(
+            Account account, Datastore codec, DispatchClient origin, Object connection) {
+        return bind(account, codec, origin, connection, Duration.ofSeconds(5));
     }
 
     public static Account bind(
             Account account, Datastore codec, DispatchClient origin, Duration timeout) {
+        return bind(account, codec, origin, origin.accountConnection(), timeout);
+    }
+
+    private static Account bind(
+            Account account,
+            Datastore codec,
+            DispatchClient origin,
+            Object connection,
+            Duration timeout) {
         if (account == null) return null;
         Objects.requireNonNull(codec, "Account codec");
-        var storage = new AccountRemoteStorage(origin, timeout);
+        var storage = new AccountRemoteStorage(origin, connection, timeout);
         synchronized (account) {
             account.bindRemoteSaveState(codec.getMapper().toDocument(account), codec, storage);
         }
@@ -63,11 +79,14 @@ public final class AccountRemoteStorage implements AccountSaveGuard.Storage {
     }
 
     private JsonObject exchange(JsonObject data) {
+        if (origin.accountConnection() != connection)
+            throw new IllegalStateException("Account owner connection changed");
         if (Thread.currentThread().isInterrupted())
             throw new CompletionException(
                     new InterruptedException("Account owner request interrupted"));
         var future =
-                origin.async(
+                origin.asyncOnConnection(
+                        connection,
                         data,
                         PacketIds.AccountStorageReq,
                         PacketIds.AccountStorageRsp,
@@ -83,6 +102,8 @@ public final class AccountRemoteStorage implements AccountSaveGuard.Storage {
         } catch (ExecutionException failed) {
             throw new CompletionException(failed.getCause());
         }
+        if (origin.accountConnection() != connection)
+            throw new IllegalStateException("Account owner connection changed");
         if (reply == null
                 || !reply.has("ok")
                 || !reply.get("ok").isJsonPrimitive()

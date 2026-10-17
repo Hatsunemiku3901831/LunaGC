@@ -3,10 +3,12 @@ package emu.grasscutter.server.dispatch;
 import static emu.grasscutter.config.Configuration.DISPATCH_INFO;
 
 import com.google.gson.*;
+import dev.morphia.Datastore;
+import dev.morphia.query.experimental.filters.Filters;
 import emu.grasscutter.Grasscutter;
-import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.database.DatabaseManager;
 import emu.grasscutter.game.AccountRemoteStorage;
+import emu.grasscutter.game.Account;
 import emu.grasscutter.server.event.dispatch.ServerMessageEvent;
 import emu.grasscutter.utils.Crypto;
 import java.net.InetSocketAddress;
@@ -14,7 +16,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.*;
 import java.util.function.*;
 import lombok.Getter;
 import org.java_websocket.WebSocket;
@@ -29,6 +31,30 @@ public final class DispatchServer extends WebSocketServer implements IDispatcher
 
     @Getter private final Map<Integer, List<Consumer<JsonElement>>> callbacks = new HashMap<>();
     private final DispatchConnections requestConnections = new DispatchConnections();
+    private final Datastore accountOwner;
+
+    public boolean ownsAccounts(Datastore source) { return accountOwner != null && accountOwner == source; }
+
+    /** Freeze every authenticated recipient before sending; success requires every exact peer. */
+    public void revokeCredentials(Datastore source, String accountId, long throughRevision, Duration timeout) {
+        if (timeout == null || timeout.isZero() || timeout.isNegative())
+            throw new IllegalArgumentException("Positive revocation timeout required");
+        if (!ownsAccounts(source)) throw new IllegalStateException("Dispatch account authority changed");
+        var request = new CredentialRevocation.Request(accountId, throughRevision);
+        var pending = new ArrayList<CompletableFuture<Void>>();
+        requestConnections.snapshot().forEach((peer, generation) -> pending.add(
+                DispatchRequests.request(this, peer, generation, request.message(),
+                        PacketIds.CredentialRevokeReq, PacketIds.CredentialRevokeRsp,
+                        packet -> { request.confirm(packet); return null; }, timeout)));
+        try {
+            CompletableFuture.allOf(pending.toArray(CompletableFuture[]::new)).get();
+        } catch (InterruptedException interrupted) {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException("Password stored; game connection revocation is incomplete", interrupted);
+        } catch (ExecutionException failed) {
+            throw new IllegalStateException("Password stored; game connection revocation is incomplete", failed.getCause());
+        } finally { pending.forEach(future -> future.cancel(false)); }
+    }
 
     public <T> CompletableFuture<T> asyncTo(
             WebSocket peer, JsonObject request, int requestId, int responseId,
@@ -60,6 +86,7 @@ public final class DispatchServer extends WebSocketServer implements IDispatcher
      */
     public DispatchServer(String address, int port) {
         super(new InetSocketAddress(address, port));
+        accountOwner = DatabaseManager.getAccountDatastore();
 
         this.registerHandler(PacketIds.LoginNotify, this::handleLogin);
         this.registerHandler(PacketIds.TokenValidateReq, this::validateToken);
@@ -100,7 +127,7 @@ public final class DispatchServer extends WebSocketServer implements IDispatcher
         var token = message.get("token").getAsString();
 
         // Get the account from the database.
-        var account = DatabaseHelper.getAccountById(accountId);
+        var account = accountBy("_id", accountId);
         var valid = account != null && account.matchesLoginToken(token);
         // Create the response message.
         var response = new JsonObject();
@@ -120,15 +147,20 @@ public final class DispatchServer extends WebSocketServer implements IDispatcher
     private void fetchAccount(WebSocket socket, JsonElement object) {
         var message = IDispatcher.decode(object);
         var account = message.size() == 1 && message.has("accountId")
-                ? DatabaseHelper.getAccountById(message.get("accountId").getAsString())
+                ? accountBy("_id", message.get("accountId").getAsString())
                 : message.size() == 1 && message.has("username")
-                    ? DatabaseHelper.getAccountByName(message.get("username").getAsString()) : null;
+                    ? accountBy("username", message.get("username").getAsString()) : null;
         // Send the account.
         this.sendMessage(socket, PacketIds.GetAccountRsp, JSON.toJsonTree(account));
     }
 
+    private Account accountBy(String field, String value) {
+        return Objects.requireNonNull(accountOwner, "Account authority is unavailable")
+                .find(Account.class).filter(Filters.eq(field, value)).first();
+    }
+
     private void accountStorage(WebSocket socket, JsonElement object) {
-        var owner = DatabaseManager.getAccountDatastore();
+        var owner = accountOwner;
         JsonObject response;
         try {
             response = AccountRemoteStorage.serve(owner, IDispatcher.decode(object));

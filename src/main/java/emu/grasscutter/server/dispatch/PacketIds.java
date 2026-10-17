@@ -20,4 +20,6 @@ public interface PacketIds {
     int ServerMessageNotify = 12;
     int AccountStorageReq = 13;
     int AccountStorageRsp = 14;
+    int CredentialRevokeReq = 15;
+    int CredentialRevokeRsp = 16;
 }

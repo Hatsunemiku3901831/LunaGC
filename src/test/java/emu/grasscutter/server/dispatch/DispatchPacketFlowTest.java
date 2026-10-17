@@ -80,6 +80,8 @@ class DispatchPacketFlowTest {
         engine = new CaptureEngine(client);
         field(WebSocketClient.class, "engine").set(client, engine);
         client.setAttachment(true);
+        client.onOpen(null);
+        engine.sent.clear();
         peer =
                 (WebSocket)
                         Proxy.newProxyInstance(
@@ -88,6 +90,9 @@ class DispatchPacketFlowTest {
                                 (proxy, method, args) ->
                                         switch (method.getName()) {
                                             case "getAttachment" -> true;
+                                            case "isOpen" -> true;
+                                            case "getRemoteSocketAddress" -> new java.net
+                                                    .InetSocketAddress("127.0.0.1", 22100);
                                             case "send" -> {
                                                 if (failServerSend)
                                                     throw new IllegalStateException(
@@ -105,6 +110,7 @@ class DispatchPacketFlowTest {
         var connections =
                 (Collection<WebSocket>) field(WebSocketServer.class, "connections").get(server);
         connections.add(peer);
+        server.onOpen(peer, null);
         var local = new GameServer();
         field(GameServer.class, "players").set(local, new ConcurrentHashMap<>());
         local.setDispatchClient(client);
@@ -318,6 +324,11 @@ class DispatchPacketFlowTest {
 
         CaptureEngine(DispatchClient client) {
             super(client, new Draft_6455());
+        }
+
+        @Override
+        public boolean isOpen() {
+            return true;
         }
 
         @Override

@@ -32,6 +32,13 @@ public class Account {
         this.saveStamp = stamp;
     }
 
+    /** Revision zero denotes a legacy row that has not been stamped yet. */
+    public synchronized long getSaveRevision() {
+        if (saveStamp == null) return 0;
+        saveStamp.validate();
+        return saveStamp.document().getLong("revision");
+    }
+
     void installSaveGuard(AccountSaveGuard guard) {
         this.saveGuard = guard;
     }
