@@ -86,3 +86,21 @@ python tools/audit_learning_books.py --resources resources --check
   SHA-256：`11527109d2c2233b8d7da8765db841d5a5cdaaac5ddb11bf19c96de3c86bb448`。
 
 上述证据保留在本地忽略目录 `batch345`，资源统计工具与快照随源码提交。
+
+## 本地部署
+
+代码提交并推送 `d831a23f77ee25a0a4f5a7eb7e00d60a28dbb734`。
+2026-10-17 11:08（UTC+8）确认游戏未运行、玩家和待处理写入均为零后，
+通过 GM `stop` 正常停止旧进程 `22208`，使用上述构建启动进程 `36372`。
+
+- HTTP `8088` 和 UDP `22101` 由同一新进程监听；健康正常，无死锁、写入队列错误或启动错误。
+- GM 命令目录包含 `itemuse status` 以及 `resume`、`cancel`、`refund-cost`、`settle`；
+  权限为 `server.itemuse`，跨玩家权限仍由命令注解指定为 `server.itemuse.others`。
+- 实际库存索引 `ownerId_1_count_1` 存在，删除但数量为正的异常记录为零。
+- 普通掉落目录启动及独立重载均为 116 条，参考目录 266 条保持关闭；活动货币绑定仍为 67 个。
+- `activitycoins` 和 `activityrewards` 各四项操作正常注册。
+- Mongo 卷仍为 `lunagc_mongo-data`，开发资源和子模块均为
+  `dac2a9d43332ef51879522cf39da2831b0ca0543`；九个参考库仍为固定提交且工作区干净。
+
+部署仅检查服务、目录和索引，没有修改真实玩家的书、解锁状态或恢复计划，也没有启动游戏。
+客户端此前报错与实际学习画面仍未复验，不能将上述服务检查视作游戏内验收。
