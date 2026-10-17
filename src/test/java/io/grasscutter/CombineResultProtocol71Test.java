@@ -4,10 +4,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.google.protobuf.*;
 
+import emu.grasscutter.net.proto.CombineDataNotifyOuterClass.CombineDataNotify;
 import emu.grasscutter.net.proto.CombineReqOuterClass.CombineReq;
 import emu.grasscutter.net.proto.CombineRspOuterClass.CombineRsp;
 import emu.grasscutter.net.proto.ItemParamOuterClass.ItemParam;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
+import emu.grasscutter.server.packet.send.PacketCombineDataNotify;
 import emu.grasscutter.server.packet.send.PacketCombineRsp;
 
 import org.junit.jupiter.api.Test;
@@ -18,6 +20,22 @@ import java.util.*;
 
 /** Native CombineRsp parser and receiver multiplication, independent of generated field names. */
 class CombineResultProtocol71Test {
+    @Test
+    void nativeRecipeCatalogNotificationHasALiveOpcode() {
+        // Type 82833: native getter 0x152681b20 returns 28314.
+        assertEquals(28314, new PacketCombineDataNotify(List.of()).getOpcode());
+    }
+
+    @Test
+    void nativeRecipeCatalogListUsesFieldThirteen() throws Exception {
+        // Reader 0x152681a50 accepts packed/unpacked uint32 on field 13.
+        byte[] sample = {(byte) 0x6a, 4, (byte) 0xf9, 0x55, (byte) 0xfa, 0x55};
+        var packet = new PacketCombineDataNotify(List.of(11001, 11002));
+        assertArrayEquals(sample, packet.getData());
+        assertEquals(
+                List.of(11001, 11002), CombineDataNotify.parseFrom(sample).getCombineIdListList());
+    }
+
     private PacketCombineRsp result(int units, int total) {
         return new PacketCombineRsp(
                 CombineReq.newBuilder()

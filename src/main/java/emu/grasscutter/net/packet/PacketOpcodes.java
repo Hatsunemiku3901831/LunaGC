@@ -612,7 +612,7 @@ public final class PacketOpcodes {
     public static final int CheckUgcUpdateRsp = 29580;
     public static final int ClientLockGameTimeNotify = -143;
     public static final int CloseCommonTipsNotify = -144;
-    public static final int CombineDataNotify = -145;
+    public static final int CombineDataNotify = 28314; // 7.1 native type 82833.
     public static final int CookDataNotify = 29512;
     public static final int CookRecipeDataNotify = 666;
     public static final int DeleteFriendNotify = -146;

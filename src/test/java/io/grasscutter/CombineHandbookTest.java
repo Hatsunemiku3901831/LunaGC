@@ -41,6 +41,8 @@ class CombineHandbookTest {
     private Map<Integer, InvestigationTargetData> oldTargets;
     private Object oldDatastore;
     private java.lang.reflect.Field datastore;
+    private GuardedPlayerTestStore playerStore;
+    private emu.grasscutter.game.inventory.ObservedItemTestWrites itemWrites;
 
     static class CraftInventory extends Inventory {
         boolean refuseOutput, throwOutput;
@@ -69,7 +71,7 @@ class CombineHandbookTest {
     }
 
     static class CraftPlayer extends InvestigationRewardTest.ClaimPlayer {
-        final CraftInventory crafting = new CraftInventory(this);
+        final transient CraftInventory crafting = new CraftInventory(this);
 
         @Override
         public Inventory getInventory() {
@@ -121,12 +123,27 @@ class CombineHandbookTest {
         datastore = DatabaseManager.class.getDeclaredField("gameDatastore");
         datastore.setAccessible(true);
         oldDatastore = datastore.get(null);
+        playerStore = new GuardedPlayerTestStore(player, () -> {});
         datastore.set(
                 null,
                 Proxy.newProxyInstance(
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
-                        (proxy, method, args) -> method.getName().equals("save") ? args[0] : null));
+                        (proxy, method, args) -> {
+                            if (method.getName().equals("getMapper"))
+                                return playerStore.datastore().getMapper();
+                            if (method.getName().equals("save")) return args[0];
+                            if (method.getName().equals("delete"))
+                                return com.mongodb.client.result.DeleteResult.acknowledged(1);
+                            return null;
+                        }));
+        itemWrites =
+                new emu.grasscutter.game.inventory.ObservedItemTestWrites(
+                        player,
+                        playerStore.datastore(),
+                        DatabaseManager.getGameDatastore(),
+                        doc -> {},
+                        doc -> {});
         recipe(3, 1, 25);
         player.getInventory().addItem(112002, 6);
         player.packets.clear();
@@ -135,7 +152,9 @@ class CombineHandbookTest {
     @AfterEach
     void close() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
-        datastore.set(null, oldDatastore);
+        if (itemWrites != null) itemWrites.close();
+        if (datastore != null) datastore.set(null, oldDatastore);
+        if (playerStore != null) playerStore.close();
         GameData.getCombineDataMap().clear();
         GameData.getCombineDataMap().putAll(oldRecipes);
         GameData.getItemDataMap().clear();
