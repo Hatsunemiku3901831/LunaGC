@@ -114,6 +114,10 @@ public final class AccountSaveGuard {
         }
     }
 
+    public boolean belongsTo(Datastore source) {
+        return destination == source && id != null && id.equals(account.getId());
+    }
+
     /** Called only by insert-only account creation, which has already reserved the ID. */
     public static void insertNew(Account account, Datastore store) {
         DatabaseWriteBarrier.run(

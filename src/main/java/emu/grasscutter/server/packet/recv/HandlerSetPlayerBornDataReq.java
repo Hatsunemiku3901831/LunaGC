@@ -6,6 +6,7 @@ import emu.grasscutter.*;
 import emu.grasscutter.command.commands.SendMailCommand.MailBuilder;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.game.avatar.Avatar;
+import emu.grasscutter.game.AccountLoginAdmission;
 import emu.grasscutter.game.mail.Mail;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.net.packet.*;
@@ -18,6 +19,10 @@ public class HandlerSetPlayerBornDataReq extends PacketHandler {
 
     @Override
     public void handle(GameSession session, byte[] header, byte[] payload) throws Exception {
+        AccountLoginAdmission.step(session, () -> handleAdmitted(session, payload));
+    }
+
+    private void handleAdmitted(GameSession session, byte[] payload) throws Exception {
         SetPlayerBornDataReq req = SetPlayerBornDataReq.parseFrom(payload);
 
         // Sanity checks

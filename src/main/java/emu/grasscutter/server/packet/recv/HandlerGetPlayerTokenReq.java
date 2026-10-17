@@ -4,6 +4,8 @@ import static emu.grasscutter.config.Configuration.ACCOUNT;
 
 import emu.grasscutter.*;
 import emu.grasscutter.database.DatabaseHelper;
+import emu.grasscutter.game.Account;
+import emu.grasscutter.game.AccountLoginAdmission;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.GetPlayerTokenReqOuterClass.GetPlayerTokenReq;
@@ -27,26 +29,19 @@ public class HandlerGetPlayerTokenReq extends PacketHandler {
         var request = GetPlayerTokenReq.parseFrom(payload);
         var accountId = request.getAccountUid();
         var accountToken = request.getAccountToken();
+        AccountLoginAdmission.begin(session, accountId, accountToken,
+                account -> handleAuthenticated(session, request, account));
+    }
+
+    private void handleAuthenticated(GameSession session, GetPlayerTokenReq request, Account account) throws Exception {
+        var accountId = account.getId();
         var clientRandKey = request.getClientRandKey();
         var keyId = request.getKeyId();
-
-        var account = DispatchUtils.authenticate(accountId, accountToken);
-
-        if (account == null && !DebugConstants.ACCEPT_CLIENT_TOKEN) {
-            session.close();
-            return;
-        } else if (account == null && DebugConstants.ACCEPT_CLIENT_TOKEN) {
-            account = DispatchUtils.getAccountById(accountId);
-            if (account == null) {
-                session.close();
-                return;
-            }
-        }
 
         session.setAccount(account);
 
         boolean kicked = false;
-        var exists = Grasscutter.getGameServer().getPlayerByAccountId(accountId);
+        var exists = session.getServer().getPlayerByAccountId(accountId);
         if (exists != null) {
             var existsSession = exists.getSession();
             if (existsSession != session) {
@@ -63,7 +58,7 @@ public class HandlerGetPlayerTokenReq extends PacketHandler {
         if (!kicked) {
 
             if (ACCOUNT.maxPlayer > -1
-                    && Grasscutter.getGameServer().getPlayers().size() >= ACCOUNT.maxPlayer) {
+                    && session.getServer().getPlayers().size() >= ACCOUNT.maxPlayer) {
                 session.close();
                 return;
             }
@@ -89,7 +84,7 @@ public class HandlerGetPlayerTokenReq extends PacketHandler {
 
         session.setPlayer(player);
 
-        if (session.getAccount().isBanned()) {
+        if (session.getAccount().isBanActive()) {
             session.setState(SessionState.ACCOUNT_BANNED);
             session.send(
                     new PacketGetPlayerTokenRsp(

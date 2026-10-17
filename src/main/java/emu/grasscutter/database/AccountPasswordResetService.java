@@ -3,9 +3,12 @@ package emu.grasscutter.database;
 import dev.morphia.Datastore;
 
 import emu.grasscutter.game.Account;
+import emu.grasscutter.game.AccountLoginAdmission;
+import emu.grasscutter.server.game.GameSession;
 
 import java.time.Duration;
 import java.util.Objects;
+import java.util.Set;
 
 /** Drain admitted writes, then atomically confirm the password and both token revocations. */
 public final class AccountPasswordResetService {
@@ -23,8 +26,11 @@ public final class AccountPasswordResetService {
             throw new IllegalArgumentException("Password hash required");
         DatabaseWriteBarrier.requireMaintenanceCaller();
         Datastore destination = Objects.requireNonNull(DatabaseManager.getAccountDatastore());
+        Set<GameSession> revoked;
         try (var ignored = DatabaseWriteBarrier.acquire(timeout)) {
             account.getSaveGuard().resetPassword(destination, passwordHash);
+            revoked = AccountLoginAdmission.revokeLocal(destination, account.getId());
         }
+        AccountLoginAdmission.closeRevoked(revoked);
     }
 }

@@ -4,7 +4,6 @@ import static emu.grasscutter.utils.lang.Language.translate;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
-import emu.grasscutter.Grasscutter;
 import emu.grasscutter.command.*;
 import emu.grasscutter.config.Configuration;
 import emu.grasscutter.database.*;
@@ -148,7 +147,6 @@ public final class AccountCommand implements CommandHandler {
                 String passwordHash =
                         BCrypt.withDefaults().hashToString(12, args.get(2).toCharArray());
                 AccountPasswordResetService.resetPassword(toUpdate, passwordHash);
-                kickAccount(toUpdate);
                 CommandHandler.sendMessage(
                         sender,
                         "Password Updated. Password login is required; existing tokens revoked.");
@@ -187,14 +185,5 @@ public final class AccountCommand implements CommandHandler {
     private String getPlayerUid(Account account) {
         var player = DatabaseHelper.getPlayerByAccount(account, Player.class);
         return player == null ? "no UID" : String.valueOf(player.getUid());
-    }
-
-    private void kickAccount(Account account) {
-        var server = Grasscutter.getGameServer();
-        if (server == null) return;
-        for (var player : server.getPlayers().values()) {
-            if (account.getId().equals(player.getAccountId()) && player.getSession() != null)
-                player.getSession().close();
-        }
     }
 }

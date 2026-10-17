@@ -3,6 +3,7 @@ package emu.grasscutter.server.packet.recv;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.game.avatar.Avatar;
+import emu.grasscutter.game.AccountLoginAdmission;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.server.game.GameSession;
@@ -16,6 +17,10 @@ public class HandlerPlayerLoginReq extends PacketHandler {
 
     @Override
     public void handle(GameSession session, byte[] header, byte[] payload) throws Exception {
+        AccountLoginAdmission.step(session, () -> handleAdmitted(session));
+    }
+
+    private void handleAdmitted(GameSession session) throws Exception {
         if (session.getAccount() == null) {
             session.close();
             return;
@@ -75,11 +80,20 @@ public class HandlerPlayerLoginReq extends PacketHandler {
                             if (session.getState() != SessionState.PICKING_CHARACTER) return;
                             if (player.getAvatars().getAvatarCount() > 0) return;
 
-                            Grasscutter.getLogger()
-                                    .warn("[intro] no character creation after {}s, falling back to the default Traveler.",
-                                            seconds);
-                            createDefaultTraveler(player);
-                            player.onLogin();
+                            try {
+                                AccountLoginAdmission.step(session, () -> {
+                                    if (session.getPlayer() != player
+                                            || session.getState() != SessionState.PICKING_CHARACTER
+                                            || player.getAvatars().getAvatarCount() > 0) return;
+                                    Grasscutter.getLogger()
+                                            .warn("[intro] no character creation after {}s, falling back to the default Traveler.",
+                                                    seconds);
+                                    createDefaultTraveler(player);
+                                    player.onLogin();
+                                });
+                            } catch (Exception failed) {
+                                throw new IllegalStateException("Character creation fallback failed", failed);
+                            }
                         },
                         seconds);
     }

@@ -57,6 +57,10 @@ public final class GameServerPacketHandler {
     }
 
     public void handle(GameSession session, int opcode, byte[] header, byte[] payload) {
+        if (session.isLoginRevoked()) {
+            session.close();
+            return;
+        }
         PacketHandler handler = this.handlers.get(opcode);
 
         // 7.0 renumbered every message's fields (DropItemReq moved guid 15 -> 5 and pos 1 -> 12), so a

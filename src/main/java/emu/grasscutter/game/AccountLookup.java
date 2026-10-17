@@ -46,6 +46,14 @@ public final class AccountLookup {
         return read("accountId", id);
     }
 
+    Object authorityIdentity() {
+        return mode == ServerRunMode.GAME_ONLY ? client : source;
+    }
+
+    Datastore localAuthority() {
+        return mode == ServerRunMode.GAME_ONLY ? null : source;
+    }
+
     public Account byName(String username) {
         return read("username", username);
     }

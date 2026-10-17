@@ -6,6 +6,7 @@ import static emu.grasscutter.utils.lang.Language.translate;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.Grasscutter.ServerDebugMode;
 import emu.grasscutter.game.Account;
+import emu.grasscutter.game.AccountLoginAdmission;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.CombatInvocationsNotifyOuterClass.CombatInvocationsNotify;
@@ -19,7 +20,10 @@ import lombok.*;
 
 public class GameSession implements GameSessionManager.KcpChannel {
     private final GameServer server;
-    private GameSessionManager.KcpTunnel tunnel;
+    private volatile GameSessionManager.KcpTunnel tunnel;
+    @Getter private volatile boolean loginRevoked;
+    private final Object loginStateLock = new Object();
+    private final java.util.concurrent.atomic.AtomicBoolean closeRequested = new java.util.concurrent.atomic.AtomicBoolean();
 
     @Getter @Setter private volatile Account account;
     @Getter private volatile Player player;
@@ -46,7 +50,20 @@ public class GameSession implements GameSessionManager.KcpChannel {
     /** Packet classes already reported as having no current CmdId, so each is said once. */
     private static final java.util.Set<String> missingCmdIdReported =
             java.util.concurrent.ConcurrentHashMap.newKeySet();
-    @Getter @Setter private SessionState state;
+    @Getter private volatile SessionState state;
+
+    public void setState(SessionState state) {
+        synchronized (loginStateLock) {
+            if (!loginRevoked || state == SessionState.INACTIVE) this.state = state;
+        }
+    }
+
+    public void revokeLogin() {
+        synchronized (loginStateLock) {
+            loginRevoked = true;
+            state = SessionState.INACTIVE;
+        }
+    }
 
     @Getter private int clientTime;
     @Getter private long lastPingTime;
@@ -145,6 +162,7 @@ public class GameSession implements GameSessionManager.KcpChannel {
     }
 
     public void send(BasePacket packet) {
+        if (loginRevoked && packet.getOpcode() != PacketOpcodes.ServerDisconnectClientNotify) return;
 
         // The last word on cutscenes. The two places that build one already check this, so nothing
         // should reach here - it is logged rather than dropped silently precisely so that a
@@ -386,10 +404,12 @@ public class GameSession implements GameSessionManager.KcpChannel {
 
         @Override
         public void handleClose() {
+            AccountLoginAdmission.closed(this);
+            closeRequested.set(true);
             setState(SessionState.INACTIVE);
 
             Grasscutter.getLogger()
-                    .info(translate("messages.game.disconnect", this.getAddress().toString()));
+                    .info(translate("messages.game.disconnect", String.valueOf(this.getAddress())));
 
             if (this.isLoggedIn()) {
                 Player player = getPlayer();
@@ -399,17 +419,23 @@ public class GameSession implements GameSessionManager.KcpChannel {
             try {
                 send(new BasePacket(PacketOpcodes.ServerDisconnectClientNotify));
             } catch (Throwable ignore) {
-                Grasscutter.getLogger().warn("closing {} error", getAddress().getAddress().getHostAddress());
+                Grasscutter.getLogger().warn("closing {} error", String.valueOf(getAddress()));
             }
             tunnel = null;
         }
 
     public void close() {
-        tunnel.close();
+        AccountLoginAdmission.closed(this);
+        if (AccountLoginAdmission.deferTransportClose(this)) return;
+        var current = tunnel;
+        if (current != null && closeRequested.compareAndSet(false, true)) {
+            try { current.close(); }
+            catch (RuntimeException failed) { closeRequested.set(false); throw failed; }
+        }
     }
 
     public boolean isActive() {
-        return getState() == SessionState.ACTIVE;
+        return !loginRevoked && getState() == SessionState.ACTIVE;
     }
 
     /**
