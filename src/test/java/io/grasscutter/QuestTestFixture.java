@@ -150,12 +150,10 @@ abstract class QuestTestFixture {
         GameData.getQuestDataMap().clear();
         GameData.getMainQuestDataMap().clear();
         GameData.getQuestTalkMap().clear();
-        var rows =
-                gson.fromJson(
-                        Files.readString(
-                                Path.of("resources/ExcelBinOutput/QuestExcelConfigData.json")),
-                        QuestData[].class);
         var parents = Set.of(11005, 11103, 19090, 309);
+        var rows =
+                QuestFixtureResources.quests(
+                        Path.of("resources/ExcelBinOutput/QuestExcelConfigData.json"), parents);
         for (var row : rows)
             if (parents.contains(row.getMainId())) {
                 row.onLoad();
