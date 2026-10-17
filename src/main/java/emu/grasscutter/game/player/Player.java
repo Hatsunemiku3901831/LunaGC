@@ -627,7 +627,9 @@ public class Player implements PlayerHook, FieldFetch {
 
     public Account getAccount() {
         var cached = this.account;
-        return cached != null ? cached : refreshAccount();
+        if (cached != null) return cached;
+        var refreshed = refreshAccount();
+        return refreshed != null ? refreshed : this.account;
     }
 
     public synchronized void setAccount(Account account) {

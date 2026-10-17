@@ -163,6 +163,26 @@ class DispatchAccountRefreshTest {
         unchangedShadow();
     }
 
+    @Test
+    void concurrentColdReadsReturnTheNewerPublishedPresentationSnapshot() throws Exception {
+        player.setAccount(null);
+        var first = wire.jobs.submit(player::getAccount);
+        waitSent(1);
+        toOwner(0);
+        wire.first.setSessionKey("newer-owner-key");
+        wire.first.getSaveGuard().save(wire.accounts);
+        var second = wire.jobs.submit(player::getAccount);
+        waitSent(2);
+        toOwner(1);
+        wire.toClient(1);
+        var published = second.get(1, TimeUnit.SECONDS);
+        wire.toClient(0);
+        assertSame(published, first.get(1, TimeUnit.SECONDS));
+        assertSame(published, player.getAccount());
+        assertEquals("newer-owner-key", published.getSessionKey());
+        unchangedShadow();
+    }
+
     @ParameterizedTest
     @ValueSource(
             strings = {
