@@ -5,6 +5,8 @@ import static emu.grasscutter.config.Configuration.DISPATCH_INFO;
 import com.google.gson.*;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.database.DatabaseHelper;
+import emu.grasscutter.database.DatabaseManager;
+import emu.grasscutter.game.AccountRemoteStorage;
 import emu.grasscutter.server.event.dispatch.ServerMessageEvent;
 import emu.grasscutter.utils.Crypto;
 import java.net.InetSocketAddress;
@@ -37,6 +39,7 @@ public final class DispatchServer extends WebSocketServer implements IDispatcher
         this.registerHandler(PacketIds.LoginNotify, this::handleLogin);
         this.registerHandler(PacketIds.TokenValidateReq, this::validateToken);
         this.registerHandler(PacketIds.GetAccountReq, this::fetchAccount);
+        this.registerHandler(PacketIds.AccountStorageReq, this::accountStorage);
         this.registerHandler(PacketIds.ServerMessageNotify, ServerMessageEvent::invoke);
     }
 
@@ -97,6 +100,19 @@ public final class DispatchServer extends WebSocketServer implements IDispatcher
         var account = DatabaseHelper.getAccountById(accountId);
         // Send the account.
         this.sendMessage(socket, PacketIds.GetAccountRsp, JSON.toJsonTree(account));
+    }
+
+    private void accountStorage(WebSocket socket, JsonElement object) {
+        var owner = DatabaseManager.getAccountDatastore();
+        JsonObject response;
+        try {
+            response = AccountRemoteStorage.serve(owner, IDispatcher.decode(object));
+        } catch (RuntimeException failed) {
+            response = new JsonObject();
+            response.addProperty("ok", false);
+            this.getLogger().warn("Internal account storage request was not confirmed.");
+        }
+        this.sendMessage(socket, PacketIds.AccountStorageRsp, response);
     }
 
     /**

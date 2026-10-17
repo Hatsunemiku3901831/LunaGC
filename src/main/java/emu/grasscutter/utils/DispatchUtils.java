@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.auth.AuthenticationSystem.AuthenticationRequest;
 import emu.grasscutter.database.DatabaseHelper;
+import emu.grasscutter.database.DatabaseManager;
 import emu.grasscutter.game.*;
 import emu.grasscutter.server.dispatch.*;
 import emu.grasscutter.server.http.handlers.GachaHandler;
@@ -112,13 +113,18 @@ public interface DispatchUtils {
                 request.addProperty("accountId", accountId);
 
                 // Wait for the request to complete.
-                yield Grasscutter.getGameServer()
-                        .getDispatchClient()
+                var client = Grasscutter.getGameServer().getDispatchClient();
+                var codec = DatabaseManager.getAccountDatastore();
+                yield client
                         .await(
                                 request,
                                 PacketIds.GetAccountReq,
                                 PacketIds.GetAccountRsp,
-                                packet -> IDispatcher.decode(packet, Account.class));
+                                packet -> {
+                                    var account = IDispatcher.decode(packet, Account.class);
+                                    if (account == null || !accountId.equals(account.getId())) return null;
+                                    return AccountRemoteStorage.bind(account, codec, client);
+                                });
             }
             case HYBRID, DISPATCH_ONLY -> DatabaseHelper.getAccountById(accountId);
         };

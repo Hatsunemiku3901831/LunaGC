@@ -36,6 +36,13 @@ public class Account {
         this.saveGuard = guard;
     }
 
+    synchronized void bindRemoteSaveState(
+            Document document, Datastore codec, AccountSaveGuard.Storage storage) {
+        if (saveGuard != null)
+            throw new IllegalStateException("Account save state is already bound");
+        saveGuard = new AccountSaveGuard(this, document, codec, ignored -> storage);
+    }
+
     @PostLoad
     private void loadedSaveState(Document document, Datastore source) {
         saveGuard = new AccountSaveGuard(this, document, source);

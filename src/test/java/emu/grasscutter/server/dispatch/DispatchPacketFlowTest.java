@@ -37,16 +37,16 @@ import java.util.concurrent.*;
 /** Real dispatch encoders and handlers; only the byte transport and accounts are isolated. */
 class DispatchPacketFlowTest {
     private MongoClient mongo;
-    private Datastore game, accounts;
+    Datastore game, accounts;
     private Object oldGame, oldAccounts, oldServer, oldDispatch;
     private ServerRunMode oldMode;
-    private DispatchServer server;
-    private DispatchClient client;
-    private CaptureEngine engine;
+    DispatchServer server;
+    DispatchClient client;
+    CaptureEngine engine;
     private WebSocket peer;
-    private Account first, second;
-    private final List<byte[]> serverPackets = Collections.synchronizedList(new ArrayList<>());
-    private ExecutorService jobs;
+    Account first, second;
+    final List<byte[]> serverPackets = Collections.synchronizedList(new ArrayList<>());
+    ExecutorService jobs;
     private boolean failServerSend;
 
     @BeforeEach
@@ -134,7 +134,7 @@ class DispatchPacketFlowTest {
         }
     }
 
-    private static Field field(Class<?> type, String name) throws Exception {
+    static Field field(Class<?> type, String name) throws Exception {
         var f = type.getDeclaredField(name);
         f.setAccessible(true);
         return f;
@@ -146,25 +146,25 @@ class DispatchPacketFlowTest {
         assertEquals(count, packets.size());
     }
 
-    private JsonObject packet(byte[] bytes) {
+    JsonObject packet(byte[] bytes) {
         return client.decodeMessage(bytes.clone());
     }
 
-    private static byte[] encode(JsonObject packet) {
+    static byte[] encode(JsonObject packet) {
         byte[] bytes = IDispatcher.JSON.toJson(packet).getBytes(StandardCharsets.UTF_8);
         Crypto.xor(bytes, emu.grasscutter.config.Configuration.DISPATCH_INFO.encryptionKey);
         return bytes;
     }
 
-    private void toServer(int index) {
+    void toServer(int index) {
         server.onMessage(peer, ByteBuffer.wrap(engine.sent.get(index).clone()));
     }
 
-    private void toClient(int index) {
+    void toClient(int index) {
         client.onMessage(ByteBuffer.wrap(serverPackets.get(index).clone()));
     }
 
-    private Account authenticate(Account account, String token) {
+    Account authenticate(Account account, String token) {
         return new DefaultAuthenticators.SessionTokenValidator()
                 .authenticate(
                         AuthenticationSystem.AuthenticationRequest.builder()

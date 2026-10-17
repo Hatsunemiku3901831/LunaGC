@@ -8,7 +8,9 @@ import emu.grasscutter.Grasscutter;
 import emu.grasscutter.Grasscutter.ServerRunMode;
 import emu.grasscutter.auth.AuthenticationSystem.AuthenticationRequest;
 import emu.grasscutter.database.DatabaseHelper;
+import emu.grasscutter.database.DatabaseManager;
 import emu.grasscutter.game.Account;
+import emu.grasscutter.game.AccountRemoteStorage;
 import emu.grasscutter.server.dispatch.*;
 import emu.grasscutter.server.http.objects.*;
 import emu.grasscutter.utils.*;
@@ -392,13 +394,15 @@ public final class DefaultAuthenticators {
 
             // Prepare the request.
             var client = Grasscutter.getGameServer().getDispatchClient();
+            var codec = DatabaseManager.getAccountDatastore();
             return client.await(IDispatcher.JSON.toJsonTree(tokenRequest).getAsJsonObject(),
                     PacketIds.TokenValidateReq, PacketIds.TokenValidateRsp, packet -> {
                         var data = IDispatcher.decode(packet);
                         if (!data.get("valid").getAsBoolean()) return null;
                         var account = IDispatcher.decode(data.get("account"), Account.class);
                         return account != null && tokenRequest.uid.equals(account.getId())
-                                && account.matchesLoginToken(tokenRequest.token) ? account : null;
+                                && account.matchesLoginToken(tokenRequest.token)
+                                ? AccountRemoteStorage.bind(account, codec, client) : null;
                     });
         }
     }

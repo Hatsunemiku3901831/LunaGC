@@ -18,4 +18,6 @@ public interface PacketIds {
     int GetPlayerByAccountReq = 10;
     int GetPlayerByAccountRsp = 11;
     int ServerMessageNotify = 12;
+    int AccountStorageReq = 13;
+    int AccountStorageRsp = 14;
 }
