@@ -5,7 +5,7 @@ import emu.grasscutter.Grasscutter;
 import io.netty.util.concurrent.FastThreadLocalThread;
 
 import java.time.Duration;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +28,7 @@ public final class DatabaseWriteQueue extends ThreadPoolExecutor {
     private final AtomicLong coalesced = new AtomicLong();
     private final AtomicLong cancelled = new AtomicLong();
     private static final Object defaultScope = new Object();
-    private final Map<Object, Set<Object>> pending = new IdentityHashMap<>();
+    private final Map<Object, Map<Object, PendingSnapshot>> pending = new IdentityHashMap<>();
 
     public DatabaseWriteQueue(String name, int threads, int capacity) {
         super(
@@ -157,37 +157,90 @@ public final class DatabaseWriteQueue extends ThreadPoolExecutor {
     }
 
     private void saveSnapshotAdmitted(Object object, Object destination, Runnable write) {
+        final PendingSnapshot snapshot;
         synchronized (pending) {
             if (isShutdown()) {
                 rejected.incrementAndGet();
                 throw new RejectedExecutionException("Database queue is closed: " + name);
             }
-            var destinations =
-                    pending.computeIfAbsent(
-                            object, key -> Collections.newSetFromMap(new IdentityHashMap<>()));
-            if (!destinations.add(destination)) {
+            var destinations = pending.computeIfAbsent(object, key -> new IdentityHashMap<>());
+            var existing = destinations.get(destination);
+            if (existing != null) {
+                existing.followCurrent();
                 coalesced.incrementAndGet();
                 return;
             }
+            snapshot = new PendingSnapshot(object, destination, write);
+            destinations.put(destination, snapshot);
         }
+        var task = snapshot.task();
         try {
-            submit(
-                    () -> {
-                        removePending(object, destination);
-                        write.run();
-                    });
-        } catch (RuntimeException exception) {
-            removePending(object, destination);
+            execute(task);
+        } catch (RuntimeException | Error exception) {
+            task.cancel(false);
             throw exception;
         }
     }
 
-    private void removePending(Object object, Object destination) {
-        synchronized (pending) {
-            var destinations = pending.get(object);
-            if (destinations == null) return;
-            destinations.remove(destination);
-            if (destinations.isEmpty()) pending.remove(object);
+    /**
+     * Caller holds pending; a late completion cannot remove a newer snapshot of the same object.
+     */
+    private void removePending(PendingSnapshot snapshot) {
+        var destinations = pending.get(snapshot.object);
+        if (destinations == null || destinations.get(snapshot.destination) != snapshot) return;
+        destinations.remove(snapshot.destination);
+        if (destinations.isEmpty()) pending.remove(snapshot.object);
+    }
+
+    private final class PendingSnapshot {
+        final Object object, destination;
+        final Runnable write;
+        Set<DatabaseWriteFence> followers;
+
+        PendingSnapshot(Object object, Object destination, Runnable write) {
+            this.object = object;
+            this.destination = destination;
+            this.write = write;
+        }
+
+        // Only coalesced callers need extra references; the original task has its own permit.
+        void followCurrent() {
+            for (var fence : DatabaseWriteBarrier.currentFences()) {
+                if (followers == null) followers = new HashSet<>();
+                if (!followers.contains(fence)) {
+                    fence.retain();
+                    followers.add(fence);
+                }
+            }
+        }
+
+        FutureTask<Void> task() {
+            return new FutureTask<>(
+                    () -> {
+                        final Set<DatabaseWriteFence> inherited;
+                        synchronized (pending) {
+                            removePending(this);
+                            inherited = followers == null ? Set.of() : Set.copyOf(followers);
+                        }
+                        return DatabaseWriteBarrier.withFences(
+                                inherited,
+                                () -> {
+                                    write.run();
+                                    return null;
+                                });
+                    }) {
+                @Override
+                protected void done() {
+                    final Set<DatabaseWriteFence> released;
+                    synchronized (pending) {
+                        removePending(PendingSnapshot.this);
+                        released = followers == null ? Set.of() : followers;
+                        followers = null;
+                    }
+                    // Drain callbacks can acquire queue locks, so release outside pending.
+                    released.forEach(DatabaseWriteFence::release);
+                }
+            };
         }
     }
 

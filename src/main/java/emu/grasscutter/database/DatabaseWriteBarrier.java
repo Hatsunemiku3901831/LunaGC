@@ -1,6 +1,8 @@
 package emu.grasscutter.database;
 
 import java.time.Duration;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -10,6 +12,8 @@ import java.util.function.Supplier;
 public final class DatabaseWriteBarrier implements AutoCloseable {
     private static final Object gate = new Object();
     private static final ThreadLocal<Integer> depth = ThreadLocal.withInitial(() -> 0);
+    private static final ThreadLocal<Set<DatabaseWriteFence>> fences =
+            ThreadLocal.withInitial(Set::of);
     private static long admitted;
     private static boolean pending;
     private static Thread owner;
@@ -23,30 +27,62 @@ public final class DatabaseWriteBarrier implements AutoCloseable {
 
     static final class Permit implements AutoCloseable {
         private final AtomicBoolean closed = new AtomicBoolean();
+        private final Set<DatabaseWriteFence> tracked = currentFences();
+
+        Permit() {
+            tracked.forEach(DatabaseWriteFence::retain);
+        }
 
         Scope enter() {
-            return new Scope();
+            return new Scope(tracked);
         }
 
         public void close() {
-            if (closed.compareAndSet(false, true))
+            if (closed.compareAndSet(false, true)) {
                 synchronized (gate) {
                     admitted--;
                     gate.notifyAll();
                 }
+                tracked.forEach(DatabaseWriteFence::release);
+            }
         }
     }
 
     static final class Scope implements AutoCloseable {
         private final int before = depth.get();
+        private final Set<DatabaseWriteFence> beforeFences = currentFences();
 
-        Scope() {
+        Scope(Set<DatabaseWriteFence> tracked) {
             depth.set(before + 1);
+            fences.set(tracked);
         }
 
         public void close() {
             if (before == 0) depth.remove();
             else depth.set(before);
+            restoreFences(beforeFences);
+        }
+    }
+
+    static Set<DatabaseWriteFence> currentFences() {
+        return fences.get();
+    }
+
+    private static void restoreFences(Set<DatabaseWriteFence> previous) {
+        if (previous.isEmpty()) fences.remove();
+        else fences.set(previous);
+    }
+
+    static <T> T withFences(Set<DatabaseWriteFence> added, Supplier<T> operation) {
+        if (added.isEmpty()) return operation.get();
+        var previous = currentFences();
+        var inherited = new HashSet<>(previous);
+        inherited.addAll(added);
+        fences.set(Set.copyOf(inherited));
+        try {
+            return operation.get();
+        } finally {
+            restoreFences(previous);
         }
     }
 
@@ -56,8 +92,9 @@ public final class DatabaseWriteBarrier implements AutoCloseable {
             // A maintenance owner may only write synchronously, never dispatch new async work.
             if (owner != null || pending && depth.get() == 0)
                 throw new RejectedExecutionException("Database write maintenance is active");
+            var permit = new Permit();
             admitted++;
-            return new Permit();
+            return permit;
         }
     }
 
