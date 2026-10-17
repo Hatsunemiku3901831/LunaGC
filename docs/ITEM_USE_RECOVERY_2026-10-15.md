@@ -1,5 +1,7 @@
 # 食物故障记录的库存核对与结算
 
+`itemuse` 后续新增了[学习书的 resume／cancel](LEARNING_BOOK_PERSISTENCE_2026-10-17.md)；本页的 refund-cost／settle 仍只处理食物记录。
+
 食物执行发生未确认异常后，`pendingItemUse` 会阻止继续使用消耗品，避免重复执行回血或复活。
 新增 `itemuse` 管理命令，用实际存档核对并处理这条记录的库存成本。
 它不重新执行食物，也不推断、撤销或补发角色效果。

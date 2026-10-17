@@ -42,6 +42,7 @@ public class GameItem {
     @Getter private ItemSaveStamp saveStamp;
     @Getter private boolean deleted;
     @Getter private String foodRefundOperationId;
+    @Getter private String recipeUseOperationId;
     @Transient private transient ItemSaveGuard saveGuard;
 
     public synchronized ItemSaveGuard getSaveGuard() {
@@ -59,10 +60,15 @@ public class GameItem {
     }
 
     void acceptSaveState(
-            ItemSaveStamp stamp, boolean deleted, String foodRefund, boolean applyCount) {
+            ItemSaveStamp stamp,
+            boolean deleted,
+            String foodRefund,
+            String recipeUse,
+            boolean applyCount) {
         saveStamp = stamp;
         this.deleted = deleted;
         foodRefundOperationId = foodRefund;
+        recipeUseOperationId = recipeUse;
         if (deleted && applyCount) count = 0;
     }
 
@@ -71,7 +77,8 @@ public class GameItem {
         if (template.getInteger("ownerId", 0) != 0
                 || Boolean.TRUE.equals(template.get("deleted"))
                 || template.get("saveStamp") != null
-                || template.get("foodRefundOperationId") != null)
+                || template.get("foodRefundOperationId") != null
+                || template.get("recipeUseOperationId") != null)
             throw new IllegalStateException("Reward template already belongs to a saved item");
         var item = ds.getMapper().fromDocument(GameItem.class, template);
         if (item.getOwnerId() != 0
@@ -445,6 +452,11 @@ public class GameItem {
             Object refund = row.get("foodRefundOperationId");
             if (!(refund instanceof String op) || !UUID.fromString(op).toString().equals(op))
                 throw new IllegalStateException("Invalid stored food refund identity");
+        }
+        if (row.get("recipeUseOperationId") != null) {
+            Object value = row.get("recipeUseOperationId");
+            if (!(value instanceof String op) || !UUID.fromString(op).toString().equals(op))
+                throw new IllegalStateException("Invalid stored recipe use identity");
         }
         if (row.get("_id") != null) saveGuard = new ItemSaveGuard(this, row, source);
     }

@@ -174,6 +174,9 @@ public final class ItemUseRecovery {
     }
 
     public List<String> inspect() {
+        if (player.getPendingItemUse() != null
+                && "recipe".equals(player.getPendingItemUse().getKind()))
+            return new RecipeUseRecovery(player, save).inspect();
         synchronized (player.getInventory()) {
             flush();
             var stored = storedReceipt();
@@ -306,6 +309,11 @@ public final class ItemUseRecovery {
     }
 
     public void resolve(String operationId, String action) {
+        if (player.getPendingItemUse() != null
+                && "recipe".equals(player.getPendingItemUse().getKind())) {
+            new RecipeUseRecovery(player, save).resolve(operationId, action);
+            return;
+        }
         synchronized (player.getInventory()) {
             require(
                     "refund-cost".equals(action) || "settle".equals(action),

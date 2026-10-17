@@ -8,7 +8,7 @@ import java.util.*;
 
 @Command(
         label = "itemuse",
-        usage = {"status", "(refund-cost|settle) <operationId>"},
+        usage = {"status", "(refund-cost|settle|resume|cancel) <operationId>"},
         permission = "server.itemuse",
         permissionTargeted = "server.itemuse.others")
 public final class ItemUseCommand implements CommandHandler {
@@ -23,9 +23,17 @@ public final class ItemUseCommand implements CommandHandler {
         try {
             if (action.equals("status") && args.size() == 1)
                 recovery.inspect().forEach(line -> CommandHandler.sendMessage(sender, line));
-            else if ((action.equals("refund-cost") || action.equals("settle"))
+            else if ((action.equals("refund-cost")
+                            || action.equals("settle")
+                            || action.equals("resume")
+                            || action.equals("cancel"))
                     && args.size() == 2) {
                 recovery.resolve(args.get(1), action);
+                if (action.equals("resume") || action.equals("cancel")) {
+                    CommandHandler.sendMessage(
+                            sender, "已处理学习记录 uid=" + target.getUid() + " operation=" + args.get(1));
+                    return;
+                }
                 CommandHandler.sendMessage(
                         sender,
                         "已处理 uid="

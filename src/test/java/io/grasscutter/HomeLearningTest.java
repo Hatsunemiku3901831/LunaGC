@@ -43,6 +43,15 @@ class HomeLearningTest {
     }
 
     static class HomePlayer extends InvestigationRewardTest.ClaimPlayer {
+        transient boolean failLearningNotification;
+
+        @Override
+        public void sendPacket(emu.grasscutter.net.packet.BasePacket packet) {
+            if (failLearningNotification && LearningPersistenceChecks.unlockNotification(packet))
+                throw new IllegalStateException("Learning notification unavailable");
+            super.sendPacket(packet);
+        }
+
         transient boolean refuseRemoval, pretendRemoval;
         transient GameHome home;
         final transient Inventory inventory =
@@ -230,6 +239,57 @@ class HomeLearningTest {
         assertSame(source, use(source, 1));
         assertEquals(1, source.getCount());
         assertTrue(known(kind).contains(kind.target));
+    }
+
+    @ParameterizedTest
+    @EnumSource(Kind.class)
+    void learningPersistsItsFlagAndExactBookDebit(Kind kind) throws Exception {
+        var source = book(kind, String.valueOf(kind.target), 1);
+        assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        DatabaseHelper.saveGameSync(player);
+        assertSame(source, use(source, 1));
+        assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        var profile =
+                playerStore
+                        .datastore()
+                        .getMapper()
+                        .getCollection(emu.grasscutter.game.player.Player.class)
+                        .withDocumentClass(org.bson.Document.class)
+                        .find(new org.bson.Document("_id", player.getUid()))
+                        .first();
+        assertNotNull(profile);
+        var document =
+                kind == Kind.BGM
+                        ? playerStore
+                                .datastore()
+                                .getMapper()
+                                .getCollection(GameHome.class)
+                                .withDocumentClass(org.bson.Document.class)
+                                .find(new org.bson.Document("_id", player.home.getId()))
+                                .first()
+                        : profile;
+        assertNotNull(document);
+        String field =
+                switch (kind) {
+                    case FURNITURE -> "unlockedFurniture";
+                    case SUITE -> "unlockedFurnitureSuite";
+                    case BGM -> "unlockedHomeBgmList";
+                };
+        assertTrue(
+                document.getList(field, Integer.class, List.of()).contains(kind.target),
+                "The learned blueprint must survive a cold read");
+        var item =
+                playerStore
+                        .datastore()
+                        .getMapper()
+                        .getCollection(GameItem.class)
+                        .withDocumentClass(org.bson.Document.class)
+                        .find(new org.bson.Document("_id", source.getObjectId()))
+                        .first();
+        assertNotNull(item);
+        assertTrue(item.getBoolean("deleted", false));
+        assertEquals(0, item.getInteger("count"));
+        assertNull(profile.get("pendingItemUse"));
     }
 
     @ParameterizedTest
@@ -528,5 +588,285 @@ class HomeLearningTest {
                     case BGM -> 206;
                 },
                 checked);
+    }
+
+    static java.util.stream.Stream<org.junit.jupiter.params.provider.Arguments>
+            learningFailureCases() {
+        return java.util.Arrays.stream(Kind.values())
+                .flatMap(
+                        kind ->
+                                java.util.stream.Stream.of(
+                                                "intent",
+                                                "debit",
+                                                "paid",
+                                                "flag",
+                                                "confirmed",
+                                                "clear")
+                                        .flatMap(
+                                                phase ->
+                                                        java.util.stream.Stream.of(false, true)
+                                                                .map(
+                                                                        after ->
+                                                                                org.junit.jupiter
+                                                                                        .params
+                                                                                        .provider
+                                                                                        .Arguments
+                                                                                        .of(
+                                                                                                kind,
+                                                                                                phase,
+                                                                                                after))));
+    }
+
+    private GameItem interruptLearning(Kind kind, String phase, boolean after) throws Exception {
+        var source = book(kind, String.valueOf(kind.target), 1);
+        assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        DatabaseHelper.saveGameSync(player);
+        var fired = new java.util.concurrent.atomic.AtomicBoolean();
+        inventory =
+                new InventorySystem(
+                        environment.scene.getWorld().getServer(),
+                        () -> 100000,
+                        LearningPersistenceChecks.failure(player, phase, after, fired));
+        assertNull(use(source, 1));
+        assertTrue(fired.get(), "The requested business acknowledgement must have been reached");
+        assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        assertNotNull(player.getPendingItemUse());
+        return source;
+    }
+
+    private void coldLearningPlayer() throws Exception {
+        var fresh = new HomePlayer();
+        fresh.setSession(
+                new InvestigationRewardTest.ClaimSession(
+                        environment.scene.getWorld().getServer(), fresh));
+        fresh.home = LearningPersistenceChecks.restore(fresh, playerStore.datastore());
+        player = fresh;
+        inventory = new InventorySystem(environment.scene.getWorld().getServer());
+    }
+
+    @ParameterizedTest
+    @org.junit.jupiter.params.provider.MethodSource("learningFailureCases")
+    void interruptedLearningResumesWithoutAnotherBook(Kind kind, String phase, boolean after)
+            throws Exception {
+        var source = interruptLearning(kind, phase, after);
+        String operation = player.getPendingItemUse().getOperationId();
+        int beforeRetry = player.getInventory().getItemCountById(source.getItemId());
+        assertNull(use(source, 1));
+        assertEquals(beforeRetry, player.getInventory().getItemCountById(source.getItemId()));
+        if (phase.equals("clear") && after)
+            new ItemUseRecovery(player).resolve(operation, "resume");
+        coldLearningPlayer();
+        LearningPersistenceChecks.finishOrRetry(
+                player,
+                playerStore.datastore(),
+                source.getObjectId(),
+                () -> assertNotNull(use(player.getInventory().getItemById(source.getItemId()), 1)));
+        assertTrue(known(kind).contains(kind.target));
+        assertEquals(1 - 1, player.getInventory().getItemCountById(source.getItemId()));
+        assertEquals(
+                1 - 1,
+                LearningPersistenceChecks.item(playerStore.datastore(), source.getObjectId())
+                        .getInteger("count"));
+        assertThrows(
+                IllegalStateException.class,
+                () -> new ItemUseRecovery(player).resolve(operation, "resume"));
+    }
+
+    @ParameterizedTest
+    @EnumSource(Kind.class)
+    void paidLearningProofSurvivesLaterBookRefills(Kind kind) throws Exception {
+        var source = interruptLearning(kind, "paid", true);
+        coldLearningPlayer();
+        String operation = player.getPendingItemUse().getOperationId();
+        assertTrue(player.getInventory().addItem(source.getItemId(), 5));
+        assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        var recovery = new ItemUseRecovery(player);
+        assertThrows(
+                IllegalStateException.class, () -> recovery.resolve("another-operation", "resume"));
+        String profileBefore =
+                LearningPersistenceChecks.profile(playerStore.datastore(), player).toJson();
+        String itemBefore =
+                LearningPersistenceChecks.item(playerStore.datastore(), source.getObjectId())
+                        .toJson();
+        assertTrue(recovery.inspect().stream().anyMatch(row -> row.contains(operation)));
+        assertEquals(
+                profileBefore,
+                LearningPersistenceChecks.profile(playerStore.datastore(), player).toJson());
+        assertEquals(
+                itemBefore,
+                LearningPersistenceChecks.item(playerStore.datastore(), source.getObjectId())
+                        .toJson());
+        recovery.resolve(operation, "resume");
+        assertTrue(known(kind).contains(kind.target));
+        assertEquals(1 - 1 + 5, player.getInventory().getItemCountById(source.getItemId()));
+        assertEquals(
+                operation,
+                LearningPersistenceChecks.item(playerStore.datastore(), source.getObjectId())
+                        .getString("recipeUseOperationId"));
+        assertNull(player.getPendingItemUse());
+    }
+
+    @ParameterizedTest
+    @EnumSource(Kind.class)
+    void unspentLearningCanBeCancelledBeforeTryingAgain(Kind kind) throws Exception {
+        var source = interruptLearning(kind, "intent", true);
+        coldLearningPlayer();
+        String operation = player.getPendingItemUse().getOperationId();
+        new ItemUseRecovery(player).resolve(operation, "cancel");
+        assertFalse(known(kind).contains(kind.target));
+        assertEquals(1, player.getInventory().getItemCountById(source.getItemId()));
+        assertNull(
+                LearningPersistenceChecks.receipt(
+                        LearningPersistenceChecks.profile(playerStore.datastore(), player)));
+        assertNotNull(use(player.getInventory().getItemById(source.getItemId()), 1));
+        assertTrue(known(kind).contains(kind.target));
+        assertEquals(1 - 1, player.getInventory().getItemCountById(source.getItemId()));
+    }
+
+    @ParameterizedTest
+    @EnumSource(Kind.class)
+    void missingDebitProofCannotBeReplacedByAQuantityGuess(Kind kind) throws Exception {
+        var source = interruptLearning(kind, "paid", true);
+        var rows =
+                playerStore
+                        .datastore()
+                        .getMapper()
+                        .getCollection(GameItem.class)
+                        .withDocumentClass(org.bson.Document.class);
+        rows.updateOne(
+                new org.bson.Document("_id", source.getObjectId()),
+                new org.bson.Document("$unset", new org.bson.Document("recipeUseOperationId", "")));
+        coldLearningPlayer();
+        String operation = player.getPendingItemUse().getOperationId();
+        String beforeProfile =
+                LearningPersistenceChecks.profile(playerStore.datastore(), player).toJson();
+        assertThrows(
+                IllegalStateException.class,
+                () -> new ItemUseRecovery(player).resolve(operation, "resume"));
+        assertEquals(
+                beforeProfile,
+                LearningPersistenceChecks.profile(playerStore.datastore(), player).toJson());
+        assertFalse(known(kind).contains(kind.target));
+        assertEquals(1 - 1, player.getInventory().getItemCountById(source.getItemId()));
+    }
+
+    @ParameterizedTest
+    @EnumSource(Kind.class)
+    void nativeManagementCommandChecksPermissionsThenResumesTheSameLearning(Kind kind)
+            throws Exception {
+        var source = interruptLearning(kind, "paid", true);
+        coldLearningPlayer();
+        LearningPersistenceChecks.commandResume(player, playerStore.datastore());
+        assertTrue(known(kind).contains(kind.target));
+        assertEquals(1 - 1, player.getInventory().getItemCountById(source.getItemId()));
+    }
+
+    @ParameterizedTest
+    @EnumSource(Kind.class)
+    void changedBookDefinitionCannotRedirectTheStoredLearningPlan(Kind kind) throws Exception {
+        var source = interruptLearning(kind, "intent", true);
+        var changed =
+                JsonUtils.decode(
+                        "{id:60001,itemType:'ITEM_MATERIAL',materialType:'MATERIAL_CONSUME',stackLimit:99,useTarget:'ITEM_USE_TARGET_NONE',itemUse:[{useOp:'"
+                                + kind.op.name()
+                                + "',useParam:['999999']}]}",
+                        ItemData.class);
+        changed.onLoad();
+        GameData.getItemDataMap().put(source.getItemId(), changed);
+        coldLearningPlayer();
+        String operation = player.getPendingItemUse().getOperationId();
+        String beforeProfile =
+                LearningPersistenceChecks.profile(playerStore.datastore(), player).toJson();
+        String beforeItem =
+                LearningPersistenceChecks.item(playerStore.datastore(), source.getObjectId())
+                        .toJson();
+        assertThrows(
+                IllegalStateException.class,
+                () -> new ItemUseRecovery(player).resolve(operation, "resume"));
+        assertEquals(
+                beforeProfile,
+                LearningPersistenceChecks.profile(playerStore.datastore(), player).toJson());
+        assertEquals(
+                beforeItem,
+                LearningPersistenceChecks.item(playerStore.datastore(), source.getObjectId())
+                        .toJson());
+        assertFalse(known(kind).contains(kind.target));
+        new ItemUseRecovery(player).resolve(operation, "cancel");
+        assertNull(player.getPendingItemUse());
+        assertEquals(1, player.getInventory().getItemCountById(source.getItemId()));
+    }
+
+    @ParameterizedTest
+    @EnumSource(Kind.class)
+    void aLostUnlockNotificationCannotTurnPersistedLearningIntoAnotherCost(Kind kind)
+            throws Exception {
+        var source = book(kind, String.valueOf(kind.target), 1);
+        assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        DatabaseHelper.saveGameSync(player);
+        player.failLearningNotification = true;
+        player.setSession(
+                new LearningPersistenceChecks.MissingUnlockNotification(
+                        environment.scene.getWorld().getServer(), player));
+        assertNotNull(use(source, 1));
+        assertTrue(known(kind).contains(kind.target));
+        assertNull(player.getPendingItemUse());
+        assertNull(
+                LearningPersistenceChecks.receipt(
+                        LearningPersistenceChecks.profile(playerStore.datastore(), player)));
+        assertEquals(1 - 1, player.getInventory().getItemCountById(source.getItemId()));
+        assertNull(use(source, 1));
+        assertEquals(1 - 1, player.getInventory().getItemCountById(source.getItemId()));
+    }
+
+    @Test
+    void aDifferentHomeCannotReceiveThePendingBgmUnlock() throws Exception {
+        interruptLearning(Kind.BGM, "paid", true);
+        coldLearningPlayer();
+        String before = LearningPersistenceChecks.profile(playerStore.datastore(), player).toJson();
+        player.home.setOwnerUid(10002);
+        assertThrows(
+                IllegalStateException.class,
+                () ->
+                        new ItemUseRecovery(player)
+                                .resolve(player.getPendingItemUse().getOperationId(), "resume"));
+        assertEquals(
+                before,
+                LearningPersistenceChecks.profile(playerStore.datastore(), player).toJson());
+        assertFalse(known(Kind.BGM).contains(Kind.BGM.target));
+    }
+
+    static java.util.stream.Stream<org.junit.jupiter.params.provider.Arguments>
+            actualAckLossCases() {
+        return java.util.Arrays.stream(Kind.values())
+                .flatMap(
+                        kind ->
+                                java.util.stream.Stream.of(false, true)
+                                        .map(
+                                                clearing ->
+                                                        org.junit.jupiter.params.provider.Arguments
+                                                                .of(kind, clearing)));
+    }
+
+    @ParameterizedTest
+    @org.junit.jupiter.params.provider.MethodSource("actualAckLossCases")
+    void ownUncertainPlayerWriteIsRecognizedBeforeRecipeRecovery(Kind kind, boolean clearing)
+            throws Exception {
+        var source = book(kind, String.valueOf(kind.target), 1);
+        assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        DatabaseHelper.saveGameSync(player);
+        var fired = new java.util.concurrent.atomic.AtomicBoolean();
+        LearningPersistenceChecks.realAcknowledgementLoss(
+                player, playerStore.datastore(), clearing, fired);
+        assertNull(use(source, 1));
+        assertTrue(fired.get());
+        String operation = player.getPendingItemUse().getOperationId();
+        new ItemUseRecovery(player).resolve(operation, "resume");
+        assertNull(player.getPendingItemUse());
+        assertNull(
+                LearningPersistenceChecks.receipt(
+                        LearningPersistenceChecks.profile(playerStore.datastore(), player)));
+        assertTrue(known(kind).contains(kind.target));
+        assertEquals(1 - 1, player.getInventory().getItemCountById(source.getItemId()));
+        LearningPersistenceChecks.assertOneUnlockNotification(player, kind == Kind.BGM);
     }
 }

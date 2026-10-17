@@ -1067,6 +1067,12 @@ public class InventorySystem extends BaseGameSystem {
             return SelectedItemUse.use(player,item,params,(ItemUseProductAction)productActions.get(0))?item:null;
         }
         if (!params.optionIds.isEmpty()) return null;
+        if (RecipeItemUse.hasLearningAction(itemData)) {
+            boolean used = new RecipeItemUse(player, item, params, itemUseSave)
+                    .use(ready -> useItemDirect(itemData, params, ready));
+            if (!used && params.failureRetcode != null) throw new ItemUseException(params.failureRetcode);
+            return used ? item : null;
+        }
         if (FoodItemUse.isFood(itemData)) {
             boolean used = new FoodItemUse(player, item, params, itemUseSave)
                     .use(ready -> useItemDirect(itemData, params, ready));

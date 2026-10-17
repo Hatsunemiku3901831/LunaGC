@@ -20,6 +20,8 @@ public final class ItemUseReceipt {
     private String kind = "";
     private int targetAvatarId;
     private long targetGuid;
+    private int recipeTargetId;
+    private String recipeHomeId;
 
     public ItemUseReceipt() {}
 
@@ -59,6 +61,14 @@ public final class ItemUseReceipt {
         receipt.kind = "food";
         receipt.targetAvatarId = target == null ? 0 : target.getAvatarId();
         receipt.targetGuid = target == null ? 0 : target.getGuid();
+        return receipt;
+    }
+
+    static ItemUseReceipt recipe(GameItem source, int operation, int target, String homeId) {
+        var receipt = new ItemUseReceipt(source, 1, 0, operation, List.of());
+        receipt.kind = "recipe";
+        receipt.recipeTargetId = target;
+        receipt.recipeHomeId = homeId;
         return receipt;
     }
 

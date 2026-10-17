@@ -49,6 +49,7 @@ public final class ItemSaveGuard {
                                     .append("saveStamp", 1)
                                     .append("count", 1)
                                     .append("foodRefundOperationId", 1)
+                                    .append("recipeUseOperationId", 1)
                                     .append("deleted", 1))
                     .first();
         }
@@ -106,6 +107,72 @@ public final class ItemSaveGuard {
     private record FoodRefund(Player player, ItemUseReceipt receipt) {}
 
     private FoodRefund foodRefund;
+
+    private record RecipeDebit(Player player, ItemUseReceipt receipt) {}
+
+    private RecipeDebit recipeDebit;
+
+    void authorizeRecipeDebit(Player player, ItemUseReceipt receipt) {
+        synchronized (item) {
+            identity();
+            if (receipt == null
+                    || player.getPendingItemUse() != receipt
+                    || !"recipe".equals(receipt.getKind())
+                    || receipt.getState() != 1
+                    || receipt.getUsedCount() != 1
+                    || receipt.getSourceBefore() <= 0
+                    || player.getUid() != ownerId
+                    || receipt.getSourceId() != itemId
+                    || !id.toHexString().equals(receipt.getSourceObjectId())
+                    || item.getCount() != receipt.getSourceBefore()
+                    || !RecipeItemUse.matchesSource(item.getItemData(), receipt))
+                throw new IllegalStateException("Recipe debit does not match its reservation");
+            recipeDebit = new RecipeDebit(player, receipt);
+        }
+    }
+
+    private void validateRecipeDebit(Datastore ds, Copy state) {
+        var actor = recipeDebit.player();
+        var receipt = recipeDebit.receipt();
+        String op = receipt.getOperationId();
+        if (actor.getPendingItemUse() != receipt
+                || receipt.getState() != 1
+                || !UUID.fromString(op).toString().equals(op)
+                || item.getCount() != receipt.getSourceBefore() - 1
+                || !RecipeItemUse.matchesSource(item.getItemData(), receipt))
+            throw new IllegalStateException("Recipe debit intent changed");
+        var raw =
+                ds.getMapper()
+                        .getCollection(Player.class)
+                        .withDocumentClass(Document.class)
+                        .withReadPreference(ReadPreference.primary())
+                        .withReadConcern(ReadConcern.MAJORITY)
+                        .find(new Document("_id", ownerId))
+                        .projection(new Document("pendingItemUse", 1))
+                        .first();
+        var saved = raw == null ? null : raw.get("pendingItemUse", Document.class);
+        if (saved == null
+                || !op.equals(saved.getString("operationId"))
+                || !"recipe".equals(saved.getString("kind"))
+                || saved.getInteger("state", 0) != 1
+                || saved.getInteger("sourceId", 0) != itemId
+                || !id.toHexString().equals(saved.getString("sourceObjectId"))
+                || saved.getInteger("sourceBefore", 0) != receipt.getSourceBefore()
+                || saved.getInteger("usedCount", 0) != 1
+                || saved.getInteger("operation", 0) != receipt.getOperation()
+                || saved.getInteger("recipeTargetId", 0) != receipt.getRecipeTargetId())
+            throw new IllegalStateException("Recipe debit intent has not been acknowledged");
+        var stored = state.storage.read(id);
+        if (!state.exists
+                || state.deleted
+                || stored == null
+                || !owner(stored)
+                || terminal(stored)
+                || stored.getInteger("count", 0) != receipt.getSourceBefore()
+                || op.equals(stored.getString("recipeUseOperationId"))
+                || !ItemSaveStamp.same(state.confirmed, ItemSaveStamp.from(stored)))
+            throw state.conflict();
+    }
 
     /**
      * Only the persisted food refund phase can authorize restoring an original consumed identity.
@@ -268,6 +335,7 @@ public final class ItemSaveGuard {
                     state.pending.after,
                     state.deleted,
                     row.getString("foodRefundOperationId"),
+                    row.getString("recipeUseOperationId"),
                     false);
         }
     }
@@ -279,6 +347,8 @@ public final class ItemSaveGuard {
             var state = copy(ds);
             state.resolvePending();
             boolean refund = !deleting && foodRefund != null;
+            boolean recipe = recipeDebit != null;
+            if (recipe) validateRecipeDebit(ds, state);
             if (refund) validateFoodRefund(ds, state);
             if (!deleting && (state.deleted || item.isDeleted()) && !refund)
                 throw new IllegalStateException("Deleted item cannot be recreated");
@@ -296,6 +366,7 @@ public final class ItemSaveGuard {
             if (!owner(row)) throw new IllegalStateException("Encoded item identity changed");
             row.put("deleted", deleting);
             if (refund) row.put("foodRefundOperationId", foodRefund.receipt().getOperationId());
+            if (recipe) row.put("recipeUseOperationId", recipeDebit.receipt().getOperationId());
             if (deleting) row.put("count", 0);
             state.pending =
                     new Attempt(state.confirmed, row, !state.exists, deleting, state.deleted);
@@ -307,6 +378,7 @@ public final class ItemSaveGuard {
                     state.pending.after,
                     deleting,
                     state.pending.row.getString("foodRefundOperationId"),
+                    state.pending.row.getString("recipeUseOperationId"),
                     true);
         }
     }
@@ -356,6 +428,7 @@ public final class ItemSaveGuard {
                             pending.after,
                             pending.terminal,
                             pending.row.getString("foodRefundOperationId"),
+                            pending.row.getString("recipeUseOperationId"),
                             true);
                 } catch (MongoWriteException duplicate) {
                     if (duplicate.getError() == null
@@ -376,6 +449,7 @@ public final class ItemSaveGuard {
                         pending.barrier,
                         pending.beforeDeleted,
                         row.getString("foodRefundOperationId"),
+                        row.getString("recipeUseOperationId"),
                         false);
             else if (!recognize(storage.read(id))) throw conflict();
         }
@@ -389,6 +463,7 @@ public final class ItemSaveGuard {
                         pending.after,
                         pending.terminal,
                         row.getString("foodRefundOperationId"),
+                        row.getString("recipeUseOperationId"),
                         !pending.metadataOnly);
                 return true;
             }
@@ -398,18 +473,28 @@ public final class ItemSaveGuard {
                         pending.barrier,
                         pending.beforeDeleted,
                         row.getString("foodRefundOperationId"),
+                        row.getString("recipeUseOperationId"),
                         false);
                 return true;
             }
             return false;
         }
 
-        void accept(ItemSaveStamp stamp, boolean terminal, String refund, boolean businessWrite) {
+        void accept(
+                ItemSaveStamp stamp,
+                boolean terminal,
+                String refund,
+                String recipeUse,
+                boolean businessWrite) {
             confirmed = stamp;
             exists = true;
             deleted = terminal;
             pending = null;
-            item.acceptSaveState(stamp, terminal, refund, businessWrite);
+            item.acceptSaveState(stamp, terminal, refund, recipeUse, businessWrite);
+            if (businessWrite
+                    && recipeDebit != null
+                    && Objects.equals(recipeUse, recipeDebit.receipt().getOperationId()))
+                recipeDebit = null;
             if (businessWrite
                     && !terminal
                     && foodRefund != null

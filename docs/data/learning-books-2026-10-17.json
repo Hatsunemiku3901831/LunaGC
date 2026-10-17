@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "source": "ExcelBinOutput/MaterialExcelConfigData.json",
+  "sha256Lf": "b170f862af1cd9acf9ca5438cb915be0bf1ac65d1abb16d7ab64279160985fff",
+  "books": 2032,
+  "operations": {
+    "ITEM_USE_UNLOCK_COMBINE": 23,
+    "ITEM_USE_UNLOCK_COOK_RECIPE": 284,
+    "ITEM_USE_UNLOCK_FORGE": 44,
+    "ITEM_USE_UNLOCK_FURNITURE_FORMULA": 1366,
+    "ITEM_USE_UNLOCK_FURNITURE_SUITE": 109,
+    "ITEM_USE_UNLOCK_HOME_BGM": 206
+  },
+  "targets": {
+    "ITEM_USE_TARGET_NONE": 2032
+  },
+  "mixedActions": [],
+  "invalidParameters": [],
+  "onGainBooks": [],
+  "nonMaterialBooks": []
+}

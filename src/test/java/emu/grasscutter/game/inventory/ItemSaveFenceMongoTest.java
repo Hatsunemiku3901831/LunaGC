@@ -419,6 +419,102 @@ class ItemSaveFenceMongoTest {
         assertEquals(12, read().getCount());
     }
 
+    private GameItem learningIntent() {
+        definition =
+                new Gson()
+                        .fromJson(
+                                "{id:104003,itemType:'ITEM_MATERIAL',materialType:'MATERIAL_CONSUME',stackLimit:99999,useTarget:'ITEM_USE_TARGET_NONE',itemUse:[{useOp:'ITEM_USE_UNLOCK_COMBINE',useParam:['200']}]}",
+                                ItemData.class);
+        definition.onLoad();
+        GameData.getItemDataMap().put(ITEM, definition);
+        var item = seed();
+        player.setPendingItemUse(
+                ItemUseReceipt.recipe(
+                        item,
+                        emu.grasscutter.game.props.ItemUseOp.ITEM_USE_UNLOCK_COMBINE.getValue(),
+                        200,
+                        null));
+        DatabaseHelper.saveGameSync(player);
+        return item;
+    }
+
+    @Test
+    void aRecipeDebitProofSurvivesRefillAndFinalConsumption() {
+        var item = learningIntent();
+        var receipt = player.getPendingItemUse();
+        item.getSaveGuard().authorizeRecipeDebit(player, receipt);
+        item.setCount(9);
+        DatabaseHelper.saveGameSync(item);
+        assertEquals(receipt.getOperationId(), row().getString("recipeUseOperationId"));
+        item.setCount(15);
+        DatabaseHelper.saveGameSync(item);
+        item.setCount(0);
+        DatabaseHelper.saveGameSync(item);
+        assertTrue(row().getBoolean("deleted"));
+        assertEquals(receipt.getOperationId(), read().getRecipeUseOperationId());
+        assertTrue(DatabaseHelper.getInventoryItems(player).isEmpty());
+    }
+
+    @Test
+    void anUnacknowledgedRecipeIntentCannotWriteADebitProof() {
+        var item = learningIntent();
+        store.getDatabase()
+                .getCollection("players")
+                .updateOne(
+                        new Document("_id", UID),
+                        new Document("$unset", new Document("pendingItemUse", "")));
+        var before = row();
+        item.getSaveGuard().authorizeRecipeDebit(player, player.getPendingItemUse());
+        item.setCount(9);
+        assertThrows(IllegalStateException.class, () -> DatabaseHelper.saveGameSync(item));
+        assertEquals(before, row());
+    }
+
+    @Test
+    void cancellingAnUnpaidRecipeRetiresItsHeldDebitAndProofTogether() throws Exception {
+        var item = learningIntent();
+        var delayed = new DelayedItemSave(item, store, false, false);
+        item.getSaveGuard().authorizeRecipeDebit(player, player.getPendingItemUse());
+        item.setCount(9);
+        assertThrows(RuntimeException.class, () -> DatabaseHelper.saveGameSync(item));
+        var restored = read();
+        assertEquals(10, restored.getCount());
+        restored.getSaveGuard().confirmStoredVersion(store);
+        player.setPendingItemUse(null);
+        DatabaseHelper.saveGameSync(player);
+        assertFalse(delayed.release());
+        assertEquals(10, read().getCount());
+        assertNull(read().getRecipeUseOperationId());
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void anUnknownRecipeDebitKeepsItsProofThroughRetry(boolean after) throws Exception {
+        var item = learningIntent();
+        String operation = player.getPendingItemUse().getOperationId();
+        var delayed = new DelayedItemSave(item, store, false, after);
+        item.getSaveGuard().authorizeRecipeDebit(player, player.getPendingItemUse());
+        item.setCount(9);
+        assertThrows(RuntimeException.class, () -> DatabaseHelper.saveGameSync(item));
+        DatabaseHelper.saveGameSync(item);
+        assertEquals(9, read().getCount());
+        assertEquals(operation, read().getRecipeUseOperationId());
+        assertFalse(delayed.release());
+    }
+
+    @Test
+    void anOldCopyCannotEraseTheRecipeDebitProof() {
+        var item = learningIntent();
+        var old = read();
+        item.getSaveGuard().authorizeRecipeDebit(player, player.getPendingItemUse());
+        item.setCount(9);
+        DatabaseHelper.saveGameSync(item);
+        var saved = row();
+        old.setCount(10);
+        assertThrows(RuntimeException.class, () -> DatabaseHelper.saveGameSync(old));
+        assertEquals(saved, row());
+    }
+
     static final class Held implements AutoCloseable {
         final CountDownLatch release = new CountDownLatch(1);
 
