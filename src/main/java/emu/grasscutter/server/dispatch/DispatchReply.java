@@ -35,4 +35,9 @@ public final class DispatchReply {
                 && dispatcher.sendIfCurrent(
                         peer, connection, packetId, new DispatchRequests.Reply(requestId, payload));
     }
+
+    /** A preflight check for deferred work; it does not replace business admission. */
+    public boolean isCurrent() {
+        return !attempted.get() && dispatcher.connectionIdentity(peer) == connection;
+    }
 }

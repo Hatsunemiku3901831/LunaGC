@@ -5,6 +5,8 @@ import static emu.grasscutter.config.Configuration.DISPATCH_INFO;
 import com.google.gson.*;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.database.DatabaseHelper;
+import emu.grasscutter.database.DatabaseManager;
+import emu.grasscutter.game.HandbookActions;
 import emu.grasscutter.server.event.dispatch.ServerMessageEvent;
 import emu.grasscutter.server.game.GameServer;
 import emu.grasscutter.server.http.handlers.GachaHandler;
@@ -14,6 +16,8 @@ import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.*;
 import lombok.Getter;
 import org.java_websocket.WebSocket;
@@ -27,6 +31,15 @@ public final class DispatchClient extends WebSocketClient implements IDispatcher
 
     @Getter private final Map<Integer, List<Consumer<JsonElement>>> callbacks = new HashMap<>();
     private final DispatchConnections requestConnections = new DispatchConnections();
+    private static final AtomicInteger handbookThreadIds = new AtomicInteger();
+    private static final Executor handbookTasks = new ThreadPoolExecutor(0, 4, 30, TimeUnit.SECONDS,
+            new SynchronousQueue<>(), action -> {
+                var thread = new Thread(action, "dispatch-handbook-" + handbookThreadIds.incrementAndGet());
+                thread.setDaemon(true);
+                return thread;
+            });
+    private final Executor handbookExecutor;
+    private final Set<Integer> handbookPlayers = ConcurrentHashMap.newKeySet();
 
     @Override
     public Object connectionIdentity(WebSocket peer) {
@@ -39,7 +52,12 @@ public final class DispatchClient extends WebSocketClient implements IDispatcher
     }
 
     public DispatchClient(URI serverUri) {
+        this(serverUri, handbookTasks);
+    }
+
+    DispatchClient(URI serverUri, Executor handbookExecutor) {
         super(serverUri);
+        this.handbookExecutor = Objects.requireNonNull(handbookExecutor, "Handbook executor");
 
         // Mark this client as authenticated.
         this.setAttachment(true);
@@ -88,29 +106,78 @@ public final class DispatchClient extends WebSocketClient implements IDispatcher
      * @param object The packet data.
      */
     private void handleHandbookAction(WebSocket socket, JsonElement object) {
-        var message = IDispatcher.decode(object);
-        var actionStr = message.get("action").getAsString();
+        var reply = captureReply();
+        var owner = Grasscutter.getGameServer();
+        var mode = Grasscutter.getRunMode();
+        var game = DatabaseManager.getGameDatastore();
+        var accounts = DatabaseManager.getAccountDatastore();
+        if (owner == null || owner.getDispatchClient() != this
+                || mode == Grasscutter.ServerRunMode.DISPATCH_ONLY) {
+            reply.send(handbookError(503, "Game server is unavailable."));
+            return;
+        }
+        final JsonObject message;
+        final int playerId;
+        try {
+            message = IDispatcher.decode(object).deepCopy();
+            playerId = Integer.parseInt(message.getAsJsonObject("data").get("player").getAsString());
+        } catch (RuntimeException malformed) {
+            reply.send(handbookError(400, "Invalid handbook request."));
+            return;
+        }
+        // Broadcasts also reach servers that do not own this online player. They stay silent.
+        var player = owner.getPlayerByUid(playerId);
+        if (player == null) return;
+        if (!handbookPlayers.add(playerId)) {
+            reply.send(handbookError(503, "A handbook action for this player is still running."));
+            return;
+        }
+        try {
+            handbookExecutor.execute(() -> {
+                try {
+                    if (!reply.isCurrent()) return;
+                    if (Grasscutter.getGameServer() != owner || owner.getDispatchClient() != this
+                            || Grasscutter.getRunMode() != mode
+                            || DatabaseManager.getGameDatastore() != game
+                            || DatabaseManager.getAccountDatastore() != accounts
+                            || owner.getPlayerByUid(playerId) != player) {
+                        reply.send(handbookError(503, "Game server context changed."));
+                        return;
+                    }
+                    try {
+                        var response = performHandbookAction(message);
+                        if (response.getStatus() != 1) reply.send(response);
+                    } catch (IllegalArgumentException malformed) {
+                        reply.send(handbookError(400, "Invalid handbook request."));
+                    } catch (RuntimeException failed) {
+                        getLogger().warn("Internal handbook action did not complete.");
+                        reply.send(handbookError(500, "Handbook action did not complete."));
+                    }
+                } finally {
+                    handbookPlayers.remove(playerId);
+                }
+            });
+        } catch (RejectedExecutionException busy) {
+            handbookPlayers.remove(playerId);
+            reply.send(handbookError(503, "Game server is busy. Try again."));
+        } catch (RuntimeException | Error failed) {
+            handbookPlayers.remove(playerId);
+            throw failed;
+        }
+    }
+
+    private HandbookBody.Response handbookError(int status, String message) {
+        return HandbookBody.Response.builder().status(status).message(message).build();
+    }
+
+    private HandbookBody.Response performHandbookAction(JsonObject message) {
         var data = message.getAsJsonObject("data");
-
-        // Parse the action into an enum.
-        var action = HandbookBody.Action.valueOf(actionStr);
-
-        // Produce a handbook response.
-        var response =
-                DispatchUtils.performHandbookAction(
-                        action,
-                        switch (action) {
-                            case GRANT_AVATAR -> JsonUtils.decode(data, HandbookBody.GrantAvatar.class);
-                            case GIVE_ITEM -> JsonUtils.decode(data, HandbookBody.GiveItem.class);
-                            case TELEPORT_TO -> JsonUtils.decode(data, HandbookBody.TeleportTo.class);
-                            case SPAWN_ENTITY -> JsonUtils.decode(data, HandbookBody.SpawnEntity.class);
-                        });
-
-        // Check if the response's status is '1'.
-        if (response.getStatus() == 1) return;
-
-        // Send the response to the server.
-        this.sendMessage(PacketIds.GmTalkRsp, response);
+        return switch (HandbookBody.Action.valueOf(message.get("action").getAsString())) {
+            case GRANT_AVATAR -> HandbookActions.grantAvatar(JsonUtils.decode(data, HandbookBody.GrantAvatar.class));
+            case GIVE_ITEM -> HandbookActions.giveItem(JsonUtils.decode(data, HandbookBody.GiveItem.class));
+            case TELEPORT_TO -> HandbookActions.teleportTo(JsonUtils.decode(data, HandbookBody.TeleportTo.class));
+            case SPAWN_ENTITY -> HandbookActions.spawnEntity(JsonUtils.decode(data, HandbookBody.SpawnEntity.class));
+        };
     }
 
     /**
