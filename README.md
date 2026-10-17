@@ -14,6 +14,7 @@
 中断后可通过 `itemuse` 核对、继续或取消未扣费预留，见[学习书保存与恢复](docs/LEARNING_BOOK_PERSISTENCE_2026-10-17.md)。
 新账号使用原子编号与确认插入，避免异步计数重复和覆盖旧账号，见[账号创建](docs/ACCOUNT_CREATION_2026-10-17.md)。
 角色首次建档使用账号归属的持久 UID 预留，并保留并发首登和确认丢失后的原编号，见[角色 UID 预留](docs/PLAYER_UID_RESERVATIONS_2026-10-17.md)。
+账号删除等待退出和已接收写入完成，确认清理后返回，并保留 UID 归属记录，见[账号删除](docs/ACCOUNT_DELETION_2026-10-17.md)。
 协议与资源分析可使用[固定客户端字符串提取器](docs/CLIENT_LITERAL_EXTRACTION_2026-10-15.md)，支持编号查询、文本筛选及哈希校验。
 
 GM／控制台的 `build` 命令支持大世界持久放置、临时放置、查询和立即删除，

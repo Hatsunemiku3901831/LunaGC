@@ -301,9 +301,11 @@ public final class PlayerUidAllocator {
     }
 
     public static Reservation reserve(Account account) {
-        return new Context(
-                        DatabaseManager.getGameDatastore(), DatabaseManager.getAccountDatastore())
-                .reserveAccount(Objects.requireNonNull(account).getId());
+        var context =
+                new Context(
+                        DatabaseManager.getGameDatastore(), DatabaseManager.getAccountDatastore());
+        String id = Objects.requireNonNull(account).getId();
+        return DatabaseWriteBarrier.call(() -> context.reserveAccount(id));
     }
 
     private static void validate(Reservation reservation) {
@@ -356,6 +358,13 @@ public final class PlayerUidAllocator {
             Reservation reservation,
             Class<? extends Player> type,
             Supplier<? extends Player> factory) {
+        return DatabaseWriteBarrier.call(() -> createOrLoadAdmitted(reservation, type, factory));
+    }
+
+    private static Player createOrLoadAdmitted(
+            Reservation reservation,
+            Class<? extends Player> type,
+            Supplier<? extends Player> factory) {
         require(
                 reservation.accountId != null && reservation.kind.equals("account"),
                 "Account-owned UID reservation required");
@@ -381,16 +390,23 @@ public final class PlayerUidAllocator {
     }
 
     static int anonymous(int requested) {
-        return new Context(
-                        DatabaseManager.getGameDatastore(), DatabaseManager.getAccountDatastore())
-                .allocate(UUID.randomUUID().toString(), "anonymous", null, requested)
-                .uid();
+        var context =
+                new Context(
+                        DatabaseManager.getGameDatastore(), DatabaseManager.getAccountDatastore());
+        return DatabaseWriteBarrier.call(
+                () ->
+                        context.allocate(UUID.randomUUID().toString(), "anonymous", null, requested)
+                                .uid());
     }
 
     static void assignLegacy(Player player, int requested) {
         var context =
                 new Context(
                         DatabaseManager.getGameDatastore(), DatabaseManager.getAccountDatastore());
+        DatabaseWriteBarrier.run(() -> assignLegacyAdmitted(context, player, requested));
+    }
+
+    private static void assignLegacyAdmitted(Context context, Player player, int requested) {
         var accountId = player.getAccountId();
         var reservation =
                 accountId == null || accountId.isBlank()

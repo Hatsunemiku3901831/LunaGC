@@ -60,7 +60,7 @@ public final class DatabaseHelper {
         for (var queue : queues) {
             if (!queue.awaitIdle(Duration.ofNanos(Math.max(0, deadline - System.nanoTime())))) return false;
         }
-        return true;
+        return DatabaseWriteBarrier.awaitIdle(Duration.ofNanos(Math.max(0, deadline - System.nanoTime())));
     }
 
     /** Stop every pool together, then drain accepted work without discarding queued writes. */
@@ -103,23 +103,25 @@ public final class DatabaseHelper {
 
     /** Acknowledged writes for economic reservations; errors must reach the caller. */
     public static void saveGameSync(Object object) {
+        var datastore = DatabaseManager.getGameDatastore();
+        DatabaseWriteBarrier.run(() -> {
         synchronized (object) {
             if (object instanceof GameItem item) {
-                item.getSaveGuard().save(DatabaseManager.getGameDatastore());
+                item.getSaveGuard().save(datastore);
                 return;
             }
             if (object instanceof Player player) {
-                player.getSaveGuard().save(DatabaseManager.getGameDatastore());
+                player.getSaveGuard().save(datastore);
                 return;
             }
             if (object instanceof PlayerActivityData activity) {
-                activity.getSaveGuard().save(DatabaseManager.getGameDatastore());
+                activity.getSaveGuard().save(datastore);
                 return;
             }
             var concern = WriteConcern.MAJORITY.withJournal(true);
-            DatabaseManager.getGameDatastore()
-                    .save(object, new InsertOneOptions().writeConcern(concern));
+            datastore.save(object, new InsertOneOptions().writeConcern(concern));
         }
+        });
     }
 
     /**
@@ -218,7 +220,7 @@ public final class DatabaseHelper {
             List<String> permissions) {
         var game = DatabaseManager.getGameDatastore();
         var accounts = DatabaseManager.getAccountDatastore();
-        return AccountCreationService.create(game, accounts, username, reservedUid, password, permissions);
+        return DatabaseWriteBarrier.call(() -> AccountCreationService.create(game, accounts, username, reservedUid, password, permissions));
     }
 
     @Deprecated
@@ -283,69 +285,8 @@ public final class DatabaseHelper {
                 > 0;
     }
 
-    public static synchronized void deleteAccount(Account target) {
-        // To delete an account, we need to also delete all the other documents in the database that
-        // reference the account.
-        // This should optimally be wrapped inside a transaction, to make sure an error thrown mid-way
-        // does not leave the
-        // database in an inconsistent state, but unfortunately Mongo only supports that when we have a
-        // replica set ...
-
-        var gameDatastore = DatabaseManager.getGameDatastore();
-        var accountDatastore = DatabaseManager.getAccountDatastore();
-        String accountId = target.getId();
-        Player player = Grasscutter.getGameServer().getPlayerByAccountId(accountId);
-
-        // Close session first
-        if (player != null) {
-            player.getSession().close();
-        } else {
-            player = gameDatastore.find(Player.class).filter(Filters.eq("accountId", accountId)).first();
-            if (player == null) return;
-        }
-        int uid = player.getUid();
-        var gameDatabase = gameDatastore.getDatabase();
-
-        DatabaseHelper.asyncOperation(
-                () -> {
-                    // Delete data from collections
-                    gameDatabase
-                            .getCollection("achievements")
-                            .deleteMany(eq("uid", uid));
-                    gameDatabase.getCollection("activities").deleteMany(eq("uid", uid));
-                    gameDatabase.getCollection("homes").deleteMany(eq("ownerUid", uid));
-                    gameDatabase.getCollection("scene_buildings").deleteMany(eq("ownerUid", uid));
-                    gameDatabase.getCollection("mail").deleteMany(eq("ownerUid", uid));
-                    gameDatabase.getCollection("avatars").deleteMany(eq("ownerId", uid));
-                    gameDatabase.getCollection("gachas").deleteMany(eq("ownerId", uid));
-                    gameDatabase.getCollection("items").deleteMany(eq("ownerId", uid));
-                    gameDatabase.getCollection("quests").deleteMany(eq("ownerUid", uid));
-                    gameDatabase
-                            .getCollection("battlepass")
-                            .deleteMany(eq("ownerUid", uid));
-
-                    // Delete friendships.
-                    // Here, we need to make sure to not only delete the deleted account's friendships,
-                    // but also all friendship entries for that account's friends.
-                    gameDatabase
-                            .getCollection("friendships")
-                            .deleteMany(eq("ownerId", uid));
-                    gameDatabase
-                            .getCollection("friendships")
-                            .deleteMany(eq("friendId", uid));
-
-                    // Delete the player last.
-                    gameDatastore
-                            .find(Player.class)
-                            .filter(Filters.eq("id", uid))
-                            .delete();
-
-                    // Finally, delete the account itself.
-                    accountDatastore
-                            .find(Account.class)
-                            .filter(Filters.eq("id", accountId))
-                            .delete();
-                });
+    public static void deleteAccount(Account target) {
+        AccountDeletionService.delete(target);
     }
 
     public static <T> Stream<T> getByGameClass(Class<T> classType) {

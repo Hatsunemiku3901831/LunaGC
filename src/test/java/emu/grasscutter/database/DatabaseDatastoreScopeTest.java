@@ -246,10 +246,18 @@ class DatabaseDatastoreScopeTest {
             serverField.set(null,server);
             game(stores.first); dispatch(stores.first);
             var account=new Account(); account.setId(accountId);
-            try(var held=new HeldQueue(DatabaseHelper.getEventExecutor())) {
-                DatabaseHelper.deleteAccount(account);
-                game(stores.second); dispatch(stores.second); account.setId("changed");
-            }
+            var maintenance=Executors.newSingleThreadExecutor();
+            Future<?> deletion;
+            try {
+                try(var held=new HeldQueue(DatabaseHelper.getEventExecutor())) {
+                    deletion=maintenance.submit(()->DatabaseHelper.deleteAccount(account));
+                    long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);
+                    while(!DatabaseWriteBarrier.maintenanceActive()&&System.nanoTime()<deadline) Thread.sleep(1);
+                    assertTrue(DatabaseWriteBarrier.maintenanceActive());
+                    game(stores.second); dispatch(stores.second); account.setId("changed");
+                }
+                deletion.get(10,TimeUnit.SECONDS);
+            } finally { maintenance.shutdownNow(); }
             for(var row:ownerFields.entrySet()) {
                 assertEquals(0,stores.first.getDatabase().getCollection(row.getKey()).countDocuments(new Document(row.getValue(),uid)),row.getKey());
                 assertEquals(1,stores.first.getDatabase().getCollection(row.getKey()).countDocuments(new Document(row.getValue(),uid+1)),row.getKey());

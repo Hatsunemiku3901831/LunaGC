@@ -5,6 +5,7 @@ import com.mongodb.client.MongoCollection;
 
 import dev.morphia.Datastore;
 
+import emu.grasscutter.database.DatabaseWriteBarrier;
 import emu.grasscutter.game.player.Player;
 
 import org.bson.Document;
@@ -55,21 +56,26 @@ public final class ItemSaveGuard {
         }
 
         public void insert(Document row) {
-            collection.insertOne(row);
+            DatabaseWriteBarrier.run(() -> collection.insertOne(row));
         }
 
         public boolean replace(Document filter, Document row) {
-            return collection.replaceOne(filter, row).getModifiedCount() == 1;
+            return DatabaseWriteBarrier.call(
+                    () -> collection.replaceOne(filter, row).getModifiedCount() == 1);
         }
 
         public boolean advance(Document filter, ItemSaveStamp stamp) {
-            return collection
-                            .updateOne(
-                                    filter,
-                                    new Document(
-                                            "$set", new Document("saveStamp", stamp.document())))
-                            .getModifiedCount()
-                    == 1;
+            return DatabaseWriteBarrier.call(
+                    () ->
+                            collection
+                                            .updateOne(
+                                                    filter,
+                                                    new Document(
+                                                            "$set",
+                                                            new Document(
+                                                                    "saveStamp", stamp.document())))
+                                            .getModifiedCount()
+                                    == 1);
         }
     }
 

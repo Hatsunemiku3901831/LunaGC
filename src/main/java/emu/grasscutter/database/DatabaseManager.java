@@ -107,6 +107,10 @@ public final class DatabaseManager {
 
     /** Reserve in Mongo before returning; a queued counter save cannot reserve an ID. */
     static int reserveNextId(Datastore datastore, String name, int floor) {
+        return DatabaseWriteBarrier.call(() -> reserveNextIdAdmitted(datastore, name, floor));
+    }
+
+    private static int reserveNextIdAdmitted(Datastore datastore, String name, int floor) {
         if (floor < 0 || floor == Integer.MAX_VALUE)
             throw new IllegalStateException("No more IDs are available for " + name);
         var counters =
