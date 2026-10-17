@@ -26,12 +26,15 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 class FurnitureTakeFlowTest {
+    private emu.grasscutter.game.inventory.ObservedItemTestWrites itemWrites;
+    private emu.grasscutter.game.player.GuardedPlayerTestStore playerStore;
+
     static class CraftPlayer extends InvestigationRewardTest.ClaimPlayer {
-        GameHome home;
-        boolean refusePay, pretendPay, refuseGrant, pretendGrant;
-        int missions, grants;
-        Runnable afterGrant;
-        final Inventory inventory =
+        transient GameHome home;
+        transient boolean refusePay, pretendPay, refuseGrant, pretendGrant;
+        transient int missions, grants;
+        transient Runnable afterGrant;
+        final transient Inventory inventory =
                 new Inventory(this) {
                     @Override
                     public boolean payItem(int id, int count) {
@@ -56,7 +59,7 @@ class FurnitureTakeFlowTest {
                         return result;
                     }
                 };
-        final BattlePassManager battlepass =
+        final transient BattlePassManager battlepass =
                 new BattlePassManager() {
                     @Override
                     public void triggerMission(WatcherTriggerType type, int param, int progress) {
@@ -142,22 +145,43 @@ class FurnitureTakeFlowTest {
         datastore = DatabaseManager.class.getDeclaredField("gameDatastore");
         datastore.setAccessible(true);
         previousDatastore = datastore.get(null);
+        playerStore =
+                new emu.grasscutter.game.player.GuardedPlayerTestStore(
+                        player,
+                        () -> {
+                            if (emu.grasscutter.game.inventory.ObservedItemTestWrites
+                                            .isSynchronousWrite()
+                                    && ++saves == failSave)
+                                throw new IllegalStateException("Write fault");
+                        });
         datastore.set(
                 null,
                 Proxy.newProxyInstance(
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
+                            if (method.getName().equals("getMapper"))
+                                return playerStore.datastore().getMapper();
                             if (method.getName().equals("save")
                                     || method.getName().equals("delete")) {
                                 if (args.length == 2 && ++saves == failSave)
                                     throw new IllegalStateException("Write fault");
                                 if (method.getName().equals("delete"))
                                     return com.mongodb.client.result.DeleteResult.acknowledged(1);
-                                return args[0];
+                                return method.invoke(playerStore.datastore(), args);
                             }
                             return null;
                         }));
+        itemWrites =
+                new emu.grasscutter.game.inventory.ObservedItemTestWrites(
+                        player,
+                        playerStore.datastore(),
+                        DatabaseManager.getGameDatastore(),
+                        doc -> {
+                            if (++saves == failSave)
+                                throw new IllegalStateException("Item write fault");
+                        },
+                        doc -> {});
         session.responses.clear();
     }
 
@@ -165,6 +189,8 @@ class FurnitureTakeFlowTest {
     @SuppressWarnings({"rawtypes", "unchecked"})
     void cleanup() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        if (itemWrites != null) itemWrites.close();
+        if (playerStore != null) playerStore.close();
         datastore.set(null, previousDatastore);
         oldMaps.forEach(
                 (map, old) -> {
@@ -238,6 +264,33 @@ class FurnitureTakeFlowTest {
         slot.setBeginTime(Utils.getCurrentSeconds() - 3600);
         assertEquals(0, take(false).getRetcode());
         assertEquals(1, player.getInventory().getItemCountById(360101));
+        assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        var savedProduct =
+                playerStore
+                        .datastore()
+                        .getMapper()
+                        .getCollection(GameItem.class)
+                        .withDocumentClass(org.bson.Document.class)
+                        .find(
+                                new org.bson.Document("ownerId", player.getUid())
+                                        .append("itemId", 360101)
+                                        .append("count", 1))
+                        .first();
+        assertNotNull(savedProduct);
+        var savedHome =
+                playerStore
+                        .datastore()
+                        .getMapper()
+                        .getCollection(GameHome.class)
+                        .withDocumentClass(org.bson.Document.class)
+                        .find(new org.bson.Document("_id", player.home.getId()))
+                        .first();
+        assertNotNull(savedHome);
+        assertTrue(
+                savedHome
+                        .getList("furnitureMakeSlotItemList", org.bson.Document.class, List.of())
+                        .isEmpty());
+        assertNull(savedHome.get("pendingFurnitureTake"));
     }
 
     @Test

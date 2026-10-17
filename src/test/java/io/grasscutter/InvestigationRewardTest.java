@@ -8,8 +8,8 @@ import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.data.excels.*;
 import emu.grasscutter.game.inventory.*;
-import emu.grasscutter.game.player.GuardedPlayerTestStore;
 import emu.grasscutter.game.player.*;
+import emu.grasscutter.game.player.GuardedPlayerTestStore;
 import emu.grasscutter.game.props.PlayerProperty;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.PlayerInvestigationAllInfoNotifyOuterClass.PlayerInvestigationAllInfoNotify;
@@ -25,6 +25,8 @@ import java.util.function.Consumer;
 
 /** Reward reservation boundaries and actual protocol state, independent of the delivery double. */
 class InvestigationRewardTest {
+    private emu.grasscutter.game.inventory.ObservedItemTestWrites itemWrites;
+    private boolean failItemWrite;
     private AbilityTestFixture environment;
     private ClaimPlayer player;
     private final Gson gson = new Gson();
@@ -86,20 +88,24 @@ class InvestigationRewardTest {
                 emu.grasscutter.database.DatabaseManager.class.getDeclaredField("gameDatastore");
         datastoreField.setAccessible(true);
         oldDatastore = datastoreField.get(null);
-        playerStore = new GuardedPlayerTestStore(player, () -> {
-            try {
-                writes.add("player:" + state(60001));
-            } catch (Exception error) {
-                throw new IllegalStateException(error);
-            }
-        });
+        playerStore =
+                new GuardedPlayerTestStore(
+                        player,
+                        () -> {
+                            try {
+                                writes.add("player:" + state(60001));
+                            } catch (Exception error) {
+                                throw new IllegalStateException(error);
+                            }
+                        });
         datastoreField.set(
                 null,
                 java.lang.reflect.Proxy.newProxyInstance(
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
-                            if (method.getName().equals("getMapper")) return playerStore.datastore().getMapper();
+                            if (method.getName().equals("getMapper"))
+                                return playerStore.datastore().getMapper();
                             if (method.getName().equals("save")) {
                                 if (args.length > 1) {
                                     var concern =
@@ -115,12 +121,24 @@ class InvestigationRewardTest {
                             }
                             return null;
                         }));
+        itemWrites =
+                new emu.grasscutter.game.inventory.ObservedItemTestWrites(
+                        player,
+                        playerStore.datastore(),
+                        emu.grasscutter.database.DatabaseManager.getGameDatastore(),
+                        doc -> {
+                            writes.add("item:" + doc.getInteger("itemId"));
+                            if (failItemWrite)
+                                throw new IllegalStateException("Item acknowledgement failed");
+                        },
+                        doc -> {});
     }
 
     @AfterEach
     void close() throws Exception {
         assertTrue(
                 emu.grasscutter.database.DatabaseHelper.awaitIdle(java.time.Duration.ofSeconds(5)));
+        if (itemWrites != null) itemWrites.close();
         if (datastoreField != null) datastoreField.set(null, oldDatastore);
         if (playerStore != null) playerStore.close();
         GameData.getInvestigationDataMap().clear();
@@ -467,19 +485,7 @@ class InvestigationRewardTest {
 
     @Test
     void actualGrantFailureLeavesAReceiptThatCannotBeClaimedAgain() throws Exception {
-        datastoreField.set(
-                null,
-                java.lang.reflect.Proxy.newProxyInstance(
-                        dev.morphia.Datastore.class.getClassLoader(),
-                        new Class<?>[] {dev.morphia.Datastore.class},
-                        (proxy, method, args) -> {
-                            if (method.getName().equals("getMapper")) return playerStore.datastore().getMapper();
-                            if (method.getName().equals("save")
-                                    && args[0] instanceof GameItem
-                                    && args.length > 1)
-                                throw new IllegalStateException("Item acknowledgement failed");
-                            return args[0];
-                        }));
+        failItemWrite = true;
         assertEquals(Retcode.RET_SVR_ERROR_VALUE, actualTake());
         assertEquals(1, state(60001));
         int held = player.inventory.getItemCountById(104003);

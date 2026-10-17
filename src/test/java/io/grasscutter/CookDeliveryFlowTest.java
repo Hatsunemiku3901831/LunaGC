@@ -31,6 +31,7 @@ import java.util.*;
 
 /** Cooking must validate and confirm the actual dish batch before progress or success. */
 class CookDeliveryFlowTest {
+    private emu.grasscutter.game.inventory.ObservedItemTestWrites itemWrites;
     private static CookRecipeData actualRecipe;
     private static List<ItemData> actualItems;
     private AbilityTestFixture environment;
@@ -44,12 +45,12 @@ class CookDeliveryFlowTest {
     private int saves, failSave;
 
     static class CookPlayer extends InvestigationRewardTest.ClaimPlayer {
-        int progress, payments, grants, refuseNumber;
-        boolean refusePay, pretend, throwAfterPay;
+        transient int progress, payments, grants, refuseNumber;
+        transient boolean refusePay, pretend, throwAfterPay;
         @dev.morphia.annotations.Transient Runnable afterPay;
 
         @dev.morphia.annotations.Transient
-        final BattlePassManager pass =
+        final transient BattlePassManager pass =
                 new BattlePassManager(this) {
                     @Override
                     public void triggerMission(WatcherTriggerType type, int param, int amount) {
@@ -58,7 +59,7 @@ class CookDeliveryFlowTest {
                 };
 
         @dev.morphia.annotations.Transient
-        final Inventory inventory =
+        final transient Inventory inventory =
                 new Inventory(this) {
                     @Override
                     public boolean payItems(
@@ -168,6 +169,16 @@ class CookDeliveryFlowTest {
                             }
                             return null;
                         }));
+        itemWrites =
+                new emu.grasscutter.game.inventory.ObservedItemTestWrites(
+                        player,
+                        playerStore.datastore(),
+                        DatabaseManager.getGameDatastore(),
+                        doc -> {
+                            if (++saves == failSave)
+                                throw new IllegalStateException("Item write fault");
+                        },
+                        doc -> {});
         assertTrue(player.getInventory().addItem(100011, 100));
         assertTrue(player.getInventory().addItem(100064, 100));
         player.getUnlockedRecipies().put(1001, 5);
@@ -178,6 +189,7 @@ class CookDeliveryFlowTest {
     @AfterEach
     void cleanup() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        if (itemWrites != null) itemWrites.close();
         if (datastore != null) datastore.set(null, oldDatastore);
         if (playerStore != null) playerStore.close();
         Collections.reverse(restore);

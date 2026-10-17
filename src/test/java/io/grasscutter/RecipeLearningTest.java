@@ -30,6 +30,9 @@ import java.util.*;
  * Recipe learning must validate eligibility and real item consumption through the inventory entry.
  */
 class RecipeLearningTest {
+    private emu.grasscutter.game.inventory.ObservedItemTestWrites itemWrites;
+    private emu.grasscutter.game.player.GuardedPlayerTestStore playerStore;
+
     enum Kind {
         COMBINE(ItemUseOp.ITEM_USE_UNLOCK_COMBINE, PacketOpcodes.CombineFormulaDataNotify),
         FORGE(ItemUseOp.ITEM_USE_UNLOCK_FORGE, PacketOpcodes.ForgeFormulaDataNotify),
@@ -44,10 +47,10 @@ class RecipeLearningTest {
     }
 
     static class LearningPlayer extends InvestigationRewardTest.ClaimPlayer {
-        boolean refuseRemoval, pretendRemoval;
-        final ForgingManager forging = new ForgingManager(this);
-        final CookingManager cooking = new CookingManager(this);
-        final Inventory learningInventory =
+        transient boolean refuseRemoval, pretendRemoval;
+        final transient ForgingManager forging = new ForgingManager(this);
+        final transient CookingManager cooking = new CookingManager(this);
+        final transient Inventory learningInventory =
                 new Inventory(this) {
                     @Override
                     public boolean removeItem(GameItem item, int count) {
@@ -112,23 +115,36 @@ class RecipeLearningTest {
         datastore = DatabaseManager.class.getDeclaredField("gameDatastore");
         datastore.setAccessible(true);
         oldDatastore = datastore.get(null);
+        playerStore = new emu.grasscutter.game.player.GuardedPlayerTestStore(player, () -> {});
         datastore.set(
                 null,
                 Proxy.newProxyInstance(
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
-                            if (method.getName().equals("save")) return args[0];
+                            if (method.getName().equals("getMapper"))
+                                return playerStore.datastore().getMapper();
+                            if (method.getName().equals("save"))
+                                return method.invoke(playerStore.datastore(), args);
                             if (method.getName().equals("delete"))
                                 return com.mongodb.client.result.DeleteResult.acknowledged(1);
                             return null;
                         }));
+        itemWrites =
+                new emu.grasscutter.game.inventory.ObservedItemTestWrites(
+                        player,
+                        playerStore.datastore(),
+                        DatabaseManager.getGameDatastore(),
+                        doc -> {},
+                        doc -> {});
     }
 
     @AfterEach
     @SuppressWarnings({"rawtypes", "unchecked"})
     void cleanup() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        if (itemWrites != null) itemWrites.close();
+        if (playerStore != null) playerStore.close();
         if (datastore != null) datastore.set(null, oldDatastore);
         oldMaps.forEach(
                 (map, old) -> {

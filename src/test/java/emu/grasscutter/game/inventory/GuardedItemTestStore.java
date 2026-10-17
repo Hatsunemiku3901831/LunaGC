@@ -30,6 +30,20 @@ public final class GuardedItemTestStore {
             throws Exception {
         if (!store.getDatabase().getName().startsWith("lunagc_"))
             throw new IllegalArgumentException("Expected isolated fixture database");
+        bind(item, store, destination, loaded, false, before, after);
+    }
+
+    public static void bind(
+            GameItem item,
+            Datastore store,
+            Datastore destination,
+            boolean loaded,
+            boolean observeDeletionConfirmation,
+            Consumer<Document> before,
+            Consumer<Document> after)
+            throws Exception {
+        if (!store.getDatabase().getName().startsWith("lunagc_"))
+            throw new IllegalArgumentException("Expected isolated fixture database");
         var delegate = new ItemSaveGuard.MongoStorage(store);
         var id = item.ensurePersistenceId();
         var row = loaded ? delegate.collection.find(new Document("_id", id)).first() : null;
@@ -37,7 +51,34 @@ public final class GuardedItemTestStore {
         var wrapper =
                 new ItemSaveGuard.Storage() {
                     public Document read(org.bson.types.ObjectId id) {
-                        return delegate.read(id);
+                        var row = delegate.read(id);
+                        // A queued deletion can finish before the explicit economic save.
+                        // That save confirms the terminal row by reading it without a replacement.
+                        // Pending-write recovery and food authorization reads stay outside this
+                        // seam.
+                        if (observeDeletionConfirmation
+                                && row != null
+                                && Boolean.TRUE.equals(row.get("deleted"))
+                                && StackWalker.getInstance()
+                                        .walk(
+                                                frames ->
+                                                        frames.skip(1)
+                                                                .findFirst()
+                                                                .map(
+                                                                        frame ->
+                                                                                frame.getClassName()
+                                                                                                .equals(
+                                                                                                        ItemSaveGuard
+                                                                                                                .class
+                                                                                                                .getName())
+                                                                                        && frame.getMethodName()
+                                                                                                .equals(
+                                                                                                        "write"))
+                                                                .orElse(false))) {
+                            before.accept(row);
+                            after.accept(row);
+                        }
+                        return row;
                     }
 
                     public void insert(Document row) {

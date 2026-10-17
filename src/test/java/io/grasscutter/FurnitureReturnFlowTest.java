@@ -28,11 +28,14 @@ import java.time.Duration;
 import java.util.*;
 
 class FurnitureReturnFlowTest {
+    private emu.grasscutter.game.inventory.ObservedItemTestWrites itemWrites;
+    private emu.grasscutter.game.player.GuardedPlayerTestStore playerStore;
+
     static class ReturnPlayer extends InvestigationRewardTest.ClaimPlayer {
-        GameHome home;
-        int rejectId, pretendId, partialId, attempts, missions, materialCapacity = 100;
-        Runnable afterProduct;
-        final Inventory inventory =
+        transient GameHome home;
+        transient int rejectId, pretendId, partialId, attempts, missions, materialCapacity = 100;
+        transient Runnable afterProduct;
+        final transient Inventory inventory =
                 new Inventory(this) {
                     @Override
                     public InventoryTab getInventoryTab(ItemType type) {
@@ -80,7 +83,7 @@ class FurnitureReturnFlowTest {
                         return result;
                     }
                 };
-        final BattlePassManager bp =
+        final transient BattlePassManager bp =
                 new BattlePassManager() {
                     @Override
                     public void triggerMission(WatcherTriggerType type, int param, int amount) {
@@ -147,12 +150,23 @@ class FurnitureReturnFlowTest {
         datastore = DatabaseManager.class.getDeclaredField("gameDatastore");
         datastore.setAccessible(true);
         oldStore = datastore.get(null);
+        playerStore =
+                new emu.grasscutter.game.player.GuardedPlayerTestStore(
+                        player,
+                        () -> {
+                            if (emu.grasscutter.game.inventory.ObservedItemTestWrites
+                                            .isSynchronousWrite()
+                                    && ++saves == failSave)
+                                throw new IllegalStateException("Write fault");
+                        });
         datastore.set(
                 null,
                 Proxy.newProxyInstance(
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
+                            if (method.getName().equals("getMapper"))
+                                return playerStore.datastore().getMapper();
                             if (method.getName().equals("save")) {
                                 if (args.length == 2) {
                                     saves++;
@@ -167,18 +181,30 @@ class FurnitureReturnFlowTest {
                                     if (saves == failSave)
                                         throw new IllegalStateException("Write fault");
                                 }
-                                return args[0];
+                                return method.invoke(playerStore.datastore(), args);
                             }
                             if (method.getName().equals("delete"))
                                 return com.mongodb.client.result.DeleteResult.acknowledged(1);
                             return null;
                         }));
+        itemWrites =
+                new emu.grasscutter.game.inventory.ObservedItemTestWrites(
+                        player,
+                        playerStore.datastore(),
+                        DatabaseManager.getGameDatastore(),
+                        doc -> {
+                            if (++saves == failSave)
+                                throw new IllegalStateException("Item write fault");
+                        },
+                        doc -> {});
     }
 
     @AfterEach
     @SuppressWarnings({"rawtypes", "unchecked"})
     void cleanup() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        if (itemWrites != null) itemWrites.close();
+        if (playerStore != null) playerStore.close();
         datastore.set(null, oldStore);
         oldMaps.forEach(
                 (map, old) -> {

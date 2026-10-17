@@ -26,6 +26,9 @@ import java.time.Duration;
 import java.util.*;
 
 class HomeLearningTest {
+    private emu.grasscutter.game.inventory.ObservedItemTestWrites itemWrites;
+    private emu.grasscutter.game.player.GuardedPlayerTestStore playerStore;
+
     enum Kind {
         FURNITURE(ItemUseOp.ITEM_USE_UNLOCK_FURNITURE_FORMULA, 360101),
         SUITE(ItemUseOp.ITEM_USE_UNLOCK_FURNITURE_SUITE, 1),
@@ -40,9 +43,9 @@ class HomeLearningTest {
     }
 
     static class HomePlayer extends InvestigationRewardTest.ClaimPlayer {
-        boolean refuseRemoval, pretendRemoval;
-        GameHome home;
-        final Inventory inventory =
+        transient boolean refuseRemoval, pretendRemoval;
+        transient GameHome home;
+        final transient Inventory inventory =
                 new Inventory(this) {
                     @Override
                     public boolean removeItem(GameItem item, int count) {
@@ -114,23 +117,36 @@ class HomeLearningTest {
         datastore = DatabaseManager.class.getDeclaredField("gameDatastore");
         datastore.setAccessible(true);
         previousDatastore = datastore.get(null);
+        playerStore = new emu.grasscutter.game.player.GuardedPlayerTestStore(player, () -> {});
         datastore.set(
                 null,
                 Proxy.newProxyInstance(
                         Datastore.class.getClassLoader(),
                         new Class<?>[] {Datastore.class},
                         (proxy, method, args) -> {
-                            if (method.getName().equals("save")) return args[0];
+                            if (method.getName().equals("getMapper"))
+                                return playerStore.datastore().getMapper();
+                            if (method.getName().equals("save"))
+                                return method.invoke(playerStore.datastore(), args);
                             if (method.getName().equals("delete"))
                                 return com.mongodb.client.result.DeleteResult.acknowledged(1);
                             return null;
                         }));
+        itemWrites =
+                new emu.grasscutter.game.inventory.ObservedItemTestWrites(
+                        player,
+                        playerStore.datastore(),
+                        DatabaseManager.getGameDatastore(),
+                        doc -> {},
+                        doc -> {});
     }
 
     @AfterEach
     @SuppressWarnings({"rawtypes", "unchecked"})
     void cleanup() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        if (itemWrites != null) itemWrites.close();
+        if (playerStore != null) playerStore.close();
         if (datastore != null) datastore.set(null, previousDatastore);
         oldMaps.forEach(
                 (map, old) -> {

@@ -96,17 +96,18 @@ public final class ObservedItemTestWrites implements AutoCloseable {
                     store,
                     destination,
                     loaded,
+                    true,
                     doc -> {
-                        if (syncWrite()) before.accept(doc);
+                        if (isSynchronousWrite()) before.accept(doc);
                     },
                     doc -> {
-                        if (syncWrite()) after.accept(doc);
+                        if (isSynchronousWrite()) after.accept(doc);
                     });
             bound.add(item);
         }
     }
 
-    private static boolean syncWrite() {
+    public static boolean isSynchronousWrite() {
         return StackWalker.getInstance()
                 .walk(
                         frames ->

@@ -24,6 +24,8 @@ import java.util.*;
 
 /** Economic interruption may never be reported as a successful strongbox exchange or replayed. */
 class StrongboxDeliveryTest {
+    private emu.grasscutter.game.inventory.ObservedItemTestWrites itemWrites;
+    private emu.grasscutter.game.player.GuardedPlayerTestStore playerStore;
     private AbilityTestFixture environment;
     private ExchangePlayer player;
     private CombineManger manager;
@@ -37,10 +39,10 @@ class StrongboxDeliveryTest {
     private boolean invalidPlan;
 
     static class ExchangePlayer extends InvestigationRewardTest.ClaimPlayer {
-        int deletes, grants, refuseDelete, pretendDelete, refuseGrant, throwAfterDelete;
-        boolean pretendGrant, alterProfile;
-        Runnable afterDelete, afterGrant;
-        final Inventory inventory =
+        transient int deletes, grants, refuseDelete, pretendDelete, refuseGrant, throwAfterDelete;
+        transient boolean pretendGrant, alterProfile;
+        transient Runnable afterDelete, afterGrant;
+        final transient Inventory inventory =
                 new Inventory(this) {
                     @Override
                     public boolean removeItem(long guid) {
@@ -73,6 +75,13 @@ class StrongboxDeliveryTest {
         @Override
         public Inventory getInventory() {
             return inventory;
+        }
+    }
+
+    static class OtherExchangePlayer extends ExchangePlayer {
+        @Override
+        public int getUid() {
+            return 10002;
         }
     }
 
@@ -120,12 +129,23 @@ class StrongboxDeliveryTest {
         datastore = DatabaseManager.class.getDeclaredField("gameDatastore");
         datastore.setAccessible(true);
         oldDatastore = datastore.get(null);
+        playerStore =
+                new emu.grasscutter.game.player.GuardedPlayerTestStore(
+                        player,
+                        () -> {
+                            if (emu.grasscutter.game.inventory.ObservedItemTestWrites
+                                            .isSynchronousWrite()
+                                    && ++saves == failSave)
+                                throw new IllegalStateException("Write fault");
+                        });
         datastore.set(
                 null,
                 Proxy.newProxyInstance(
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
+                            if (method.getName().equals("getMapper"))
+                                return playerStore.datastore().getMapper();
                             if (method.getName().equals("save")
                                     || method.getName().equals("delete")) {
                                 if (args.length == 2 && ++saves == failSave)
@@ -138,10 +158,20 @@ class StrongboxDeliveryTest {
                                     identity.setAccessible(true);
                                     identity.set(item, new ObjectId());
                                 }
-                                return args[0];
+                                return method.invoke(playerStore.datastore(), args);
                             }
                             return null;
                         }));
+        itemWrites =
+                new emu.grasscutter.game.inventory.ObservedItemTestWrites(
+                        player,
+                        playerStore.datastore(),
+                        DatabaseManager.getGameDatastore(),
+                        doc -> {
+                            if (++saves == failSave)
+                                throw new IllegalStateException("Item write fault");
+                        },
+                        doc -> {});
         seed(player, 3);
         player.packets.clear();
     }
@@ -161,6 +191,8 @@ class StrongboxDeliveryTest {
     @SuppressWarnings({"rawtypes", "unchecked"})
     void cleanup() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        if (itemWrites != null) itemWrites.close();
+        if (playerStore != null) playerStore.close();
         datastore.set(null, oldDatastore);
         oldMaps.forEach(
                 (map, old) -> {
@@ -423,13 +455,8 @@ class StrongboxDeliveryTest {
         player.refuseGrant = 1;
         exchange(1);
         failed();
-        var other =
-                new ExchangePlayer() {
-                    @Override
-                    public int getUid() {
-                        return 10002;
-                    }
-                };
+        var other = new OtherExchangePlayer();
+        other.setUid(other.getUid());
         other.setSession(
                 new InvestigationRewardTest.ClaimSession(
                         environment.scene.getWorld().getServer(), other));

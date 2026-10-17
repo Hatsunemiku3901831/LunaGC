@@ -85,6 +85,7 @@ class SelectableItemUseTest {
     private Field datastore;
     private Object oldDatastore;
     private GuardedPlayerTestStore playerStore;
+    private ObservedItemTestWrites itemWrites;
     private final Gson gson = new Gson();
     private final Map<Map<?, ?>, Map<?, ?>> oldMaps = new IdentityHashMap<>();
     private int saves, failSave;
@@ -160,7 +161,8 @@ class SelectableItemUseTest {
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
-                            if (method.getName().equals("getMapper")) return playerStore.datastore().getMapper();
+                            if (method.getName().equals("getMapper"))
+                                return playerStore.datastore().getMapper();
                             if (method.getName().equals("save")
                                     || method.getName().equals("delete")) {
                                 if (args.length == 2 && ++saves == failSave)
@@ -171,6 +173,7 @@ class SelectableItemUseTest {
                             }
                             return null;
                         }));
+        observeItems();
         box("ITEM_USE_GRANT_SELECT_REWARD", "750000,750001");
     }
 
@@ -178,6 +181,7 @@ class SelectableItemUseTest {
     @SuppressWarnings({"rawtypes", "unchecked"})
     void cleanup() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        if (itemWrites != null) itemWrites.close();
         if (datastore != null) datastore.set(null, oldDatastore);
         if (playerStore != null) playerStore.close();
         oldMaps.forEach(
@@ -204,13 +208,35 @@ class SelectableItemUseTest {
     }
 
     private void preparePlayerStore() throws Exception {
+        boolean observing = itemWrites != null;
+        if (observing) {
+            itemWrites.close();
+            itemWrites = null;
+        }
         if (playerStore != null) {
             assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
             playerStore.close();
         }
-        playerStore = new GuardedPlayerTestStore(player, () -> {
-            if (++saves == failSave) throw new IllegalStateException("Write fault");
-        });
+        playerStore =
+                new GuardedPlayerTestStore(
+                        player,
+                        () -> {
+                            if (++saves == failSave) throw new IllegalStateException("Write fault");
+                        });
+        if (observing) observeItems();
+    }
+
+    private void observeItems() throws Exception {
+        itemWrites =
+                new ObservedItemTestWrites(
+                        player,
+                        playerStore.datastore(),
+                        DatabaseManager.getGameDatastore(),
+                        doc -> {
+                            if (++saves == failSave)
+                                throw new IllegalStateException("Item write fault");
+                        },
+                        doc -> {});
     }
 
     private void reward(int id, List<ItemParamData> items) {

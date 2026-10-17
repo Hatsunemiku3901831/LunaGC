@@ -27,6 +27,7 @@ import java.util.*;
 
 /** A durable combine attempt must block replay after any unconfirmed economic write. */
 class CombineReceiptFlowTest {
+    private emu.grasscutter.game.inventory.ObservedItemTestWrites itemWrites;
     private AbilityTestFixture environment;
     private ReceiptPlayer player;
     private CombineManger manager;
@@ -39,12 +40,12 @@ class CombineReceiptFlowTest {
     private boolean oldResin;
 
     static class ReceiptPlayer extends InvestigationRewardTest.ClaimPlayer {
-        boolean pretendPayment, throwAfterPayment, pretendOutput, refusePayment;
-        int refuseGrant, grants, payments;
+        transient boolean pretendPayment, throwAfterPayment, pretendOutput, refusePayment;
+        transient int refuseGrant, grants, payments;
         @dev.morphia.annotations.Transient Runnable afterPayment;
 
         @dev.morphia.annotations.Transient
-        final Inventory inventory =
+        final transient Inventory inventory =
                 new Inventory(this) {
                     @Override
                     public boolean payItems(
@@ -170,6 +171,16 @@ class CombineReceiptFlowTest {
                             }
                             return null;
                         }));
+        itemWrites =
+                new emu.grasscutter.game.inventory.ObservedItemTestWrites(
+                        player,
+                        playerStore.datastore(),
+                        DatabaseManager.getGameDatastore(),
+                        doc -> {
+                            if (++saves == failSave)
+                                throw new IllegalStateException("Item write fault");
+                        },
+                        doc -> {});
         assertTrue(player.getInventory().addItem(112002, 12));
         player.packets.clear();
     }
@@ -177,6 +188,7 @@ class CombineReceiptFlowTest {
     @AfterEach
     void cleanup() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        if (itemWrites != null) itemWrites.close();
         if (datastore != null) datastore.set(null, oldDatastore);
         if (playerStore != null) playerStore.close();
         Collections.reverse(restore);
