@@ -45,24 +45,18 @@ public interface IDispatcher {
      * @return The decoded JSON object.
      */
     static <T> T decode(JsonElement element, Class<T> type) {
-        if (element.isJsonObject()) {
-            return JSON.fromJson(element, type);
-        } else {
-            var data = element.getAsString();
-
-            // Check if the element starts and ends with quotes.
-            if (data.startsWith("\"") && data.endsWith("\"")) {
-                // Remove the quotes.
-                data = data.substring(1, data.length() - 1);
-            }
-
-            // Un-escape the data.
-            data = data.replaceAll("\\\\\"", "\"");
-            data = data.replaceAll("\\\\", "");
-
-            // De-serialize the data.
-            return JSON.fromJson(data, type);
-        }
+        if (element == null || element.isJsonNull()) return null;
+        if (type == String.class
+                && element.isJsonPrimitive()
+                && element.getAsJsonPrimitive().isString())
+            return JSON.fromJson(element.getAsString(), type);
+        var value = element;
+        for (int depth = 0;
+                depth < 3 && value.isJsonPrimitive() && value.getAsJsonPrimitive().isString();
+                depth++) value = JsonParser.parseString(value.getAsString());
+        if (value.isJsonPrimitive() && value.getAsJsonPrimitive().isString())
+            throw new JsonParseException("Too many dispatch JSON string envelopes");
+        return JSON.fromJson(value, type);
     }
 
     /**
