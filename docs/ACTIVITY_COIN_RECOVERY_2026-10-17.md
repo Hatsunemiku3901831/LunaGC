@@ -60,6 +60,24 @@ activitycoins @10001 cancel 2014 <operationId>
 延迟写入用例保留原始 CAS 条件和 BSON 文档，分别验证原写入先成功及恢复先成功时的结果。
 既有活动商店、熄星购买和恢复、任务进度、世界首领及秘境奖励也在相关回归中。
 
+## 本机运行记录
+
+2026-10-17 08:15（UTC+8），代码提交 `beb9685b3def474669902cb9f9871109d5ebb03d` 已在本机运行，
+进程为 `49372`。JAR 为 `debug/aster-mid-20261011/batch341/activity-coin-recovery.jar`，
+SHA-256 为 `3d1df2de834741b909a7c2543b9efdeec42ee1bc61f86a37b333f9fe7ab7b21e`。
+应用类逐项匹配编译输出，默认资源与上一构建一致，未变动的任务嵌套类型执行字节码也已比对。
+
+旧服务在无游戏进程、无在线玩家时正常退出。新服务的 HTTP 8088、UDP 22101、健康与日志检查通过，
+死锁、在线玩家和保存队列失败均为 0。GM 命令目录实际返回唯一的 `activitycoins`，
+包含四个操作及 `server.activitycoins` 权限；这是服务端注册验证，客户端游戏内操作仍待验收。
+
+启动实际加载 67 个活动货币绑定，本地历史覆盖文件的 401 条排期归属及哈希保持原值。
+普通秘境目录启动／重载均为 116 条，参考目录为 266 条，参考增强开关仍关闭。
+Mongo 卷保持 `lunagc_mongo-data`；资源子模块和本地资源目录均干净，保持
+`dac2a9d43332ef51879522cf39da2831b0ca0543`。
+证据见上述目录的 `runtime-start-proof.json`、`runtime-coin-command-proof.json`、
+`runtime-currency-proof.json`、重载证明及 `final-state.json`。
+
 ## 继续接入的范围
 
 这些入口处理活动货币文档内的收支和确认，不补发商店商品，也不修改任务领奖标志。
