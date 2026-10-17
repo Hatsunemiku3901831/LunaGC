@@ -126,6 +126,27 @@ public interface IDispatcher {
         DispatchRequests.failPending(getCallbacks(), cause);
     }
 
+    /** Capture inside a correlated request handler before handing work to another thread. */
+    default DispatchReply captureReply() {
+        return DispatchRequests.captureReply(this);
+    }
+
+    /** Endpoints that reuse a socket object override this with a connection generation token. */
+    default Object connectionIdentity(WebSocket peer) {
+        return peer;
+    }
+
+    default boolean sendIfCurrent(WebSocket peer, Object connection, int packetId, Object message) {
+        if (connection == null || connectionIdentity(peer) != connection) return false;
+        sendMessage(peer, packetId, message);
+        return true;
+    }
+
+    default void sendMessage(WebSocket peer, int packetId, Object message) {
+        if (peer != this) throw new UnsupportedOperationException("No targeted dispatch transport");
+        sendMessage(packetId, message);
+    }
+
     /**
      * Internally used method to broadcast a packet.
      *
@@ -162,6 +183,9 @@ public interface IDispatcher {
             serverMessage.addProperty("requestId", request.id());
             serverMessage.addProperty("replyId", request.replyId());
             serverMessage.addProperty("message", JSON.toJson(request.payload()));
+        } else if (message instanceof DispatchRequests.Reply reply) {
+            serverMessage.addProperty("responseTo", reply.id());
+            serverMessage.addProperty("message", JSON.toJson(reply.payload()));
         } else serverMessage.addProperty("message", JSON.toJson(message));
 
         return serverMessage;
@@ -169,7 +193,8 @@ public interface IDispatcher {
 
     default JsonObject encodeMessage(int packetId, Object message, WebSocket peer) {
         var packet = encodeMessage(packetId, message);
-        if (!(message instanceof DispatchRequests.Outbound)) {
+        if (!(message instanceof DispatchRequests.Outbound)
+                && !(message instanceof DispatchRequests.Reply)) {
             var request = DispatchRequests.replyTo(this, peer, packetId);
             if (request != null) packet.addProperty("responseTo", request);
         }
@@ -217,7 +242,7 @@ public interface IDispatcher {
         try (var scope = new DispatchRequests.Scope(this, socket, decoded)) {
             if (decoded.has("responseTo")) {
                 var requestId = DispatchRequests.identity(decoded, "responseTo");
-                var callbacks = DispatchRequests.take(getCallbacks(), packetId, requestId);
+                var callbacks = DispatchRequests.take(this, socket, packetId, requestId);
                 DispatchRequests.invoke(this, packetId, callbacks, packetData);
                 return;
             }
@@ -233,7 +258,7 @@ public interface IDispatcher {
             DispatchRequests.invoke(
                     this,
                     packetId,
-                    DispatchRequests.take(getCallbacks(), packetId, null),
+                    DispatchRequests.take(this, socket, packetId, null),
                     packetData);
         } catch (Exception exception) {
             this.getLogger().warn("Exception occurred while handling packet {}.", packetId);

@@ -12,7 +12,9 @@ import emu.grasscutter.utils.Crypto;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.*;
 import lombok.Getter;
 import org.java_websocket.WebSocket;
@@ -26,6 +28,29 @@ public final class DispatchServer extends WebSocketServer implements IDispatcher
     @Getter private final Map<Integer, BiConsumer<WebSocket, JsonElement>> handlers = new HashMap<>();
 
     @Getter private final Map<Integer, List<Consumer<JsonElement>>> callbacks = new HashMap<>();
+    private final DispatchConnections requestConnections = new DispatchConnections();
+
+    public <T> CompletableFuture<T> asyncTo(
+            WebSocket peer, JsonObject request, int requestId, int responseId,
+            Function<JsonElement, T> parser, Duration timeout) {
+        Objects.requireNonNull(peer, "Dispatch peer");
+        return DispatchRequests.request(this, peer, connectionIdentity(peer), request,
+                requestId, responseId, parser, timeout);
+    }
+
+    public CompletableFuture<JsonObject> asyncTo(WebSocket peer, JsonObject request, int requestId, int responseId) {
+        return asyncTo(peer, request, requestId, responseId, DEFAULT_PARSER, Duration.ofSeconds(5));
+    }
+
+    @Override
+    public Object connectionIdentity(WebSocket peer) {
+        return requestConnections.identity(peer);
+    }
+
+    @Override
+    public boolean sendIfCurrent(WebSocket peer, Object connection, int packetId, Object message) {
+        return requestConnections.send(peer, connection, () -> sendMessage(peer, packetId, message));
+    }
 
     /**
      * Constructs a new {@code DispatchServer} instance.
@@ -158,6 +183,9 @@ public final class DispatchServer extends WebSocketServer implements IDispatcher
 
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
+        var previous = requestConnections.opened(conn);
+        if (previous != null) DispatchRequests.failPending(getCallbacks(), conn, previous,
+                new IllegalStateException("Dispatch peer connection replaced"));
         this.getLogger().debug("Dispatch client connected from {}.", conn.getRemoteSocketAddress());
     }
 
@@ -174,6 +202,9 @@ public final class DispatchServer extends WebSocketServer implements IDispatcher
 
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
+        var previous = requestConnections.closed(conn);
+        if (previous != null) DispatchRequests.failPending(getCallbacks(), conn, previous,
+                new IllegalStateException("Dispatch peer connection closed"));
         this.getLogger().debug("Dispatch client disconnected from {}.", conn.getRemoteSocketAddress());
     }
 

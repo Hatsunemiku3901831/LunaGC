@@ -26,6 +26,17 @@ public final class DispatchClient extends WebSocketClient implements IDispatcher
     @Getter private final Map<Integer, BiConsumer<WebSocket, JsonElement>> handlers = new HashMap<>();
 
     @Getter private final Map<Integer, List<Consumer<JsonElement>>> callbacks = new HashMap<>();
+    private final DispatchConnections requestConnections = new DispatchConnections();
+
+    @Override
+    public Object connectionIdentity(WebSocket peer) {
+        return peer == this ? requestConnections.identity(peer) : null;
+    }
+
+    @Override
+    public boolean sendIfCurrent(WebSocket peer, Object connection, int packetId, Object message) {
+        return peer == this && requestConnections.send(peer, connection, () -> sendMessage(packetId, message));
+    }
 
     public DispatchClient(URI serverUri) {
         super(serverUri);
@@ -168,6 +179,8 @@ public final class DispatchClient extends WebSocketClient implements IDispatcher
 
     @Override
     public void onOpen(ServerHandshake handshake) {
+        if (requestConnections.opened(this) != null)
+            failPendingRequests(new IllegalStateException("Dispatch connection replaced"));
         // Attempt to handshake with the server.
         this.sendMessage(PacketIds.LoginNotify, DISPATCH_INFO.dispatchKey);
 
@@ -186,8 +199,12 @@ public final class DispatchClient extends WebSocketClient implements IDispatcher
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
+        requestConnections.closed(this);
         this.failPendingRequests(new IllegalStateException("Dispatch connection closed"));
         this.getLogger().info("Dispatch connection closed.");
+
+        var owner = Grasscutter.getGameServer();
+        if (owner == null || owner.getDispatchClient() != this) return;
 
         // Attempt to reconnect.
         new Thread(
@@ -199,9 +216,9 @@ public final class DispatchClient extends WebSocketClient implements IDispatcher
                             }
 
                             // Attempt to reconnect.
-                            Grasscutter.getGameServer()
-                                    .setDispatchClient(new DispatchClient(GameServer.getDispatchUrl()));
-                            Grasscutter.getGameServer().getDispatchClient().connect();
+                            if (Grasscutter.getGameServer() != owner || owner.getDispatchClient() != this) return;
+                            owner.setDispatchClient(new DispatchClient(GameServer.getDispatchUrl()));
+                            owner.getDispatchClient().connect();
                         })
                 .start();
     }
