@@ -1,16 +1,27 @@
 package emu.grasscutter.database;
 
+import static com.mongodb.client.model.Filters.*;
+import static com.mongodb.client.model.Updates.*;
+
 import static emu.grasscutter.config.Configuration.DATABASE;
 
 import com.mongodb.MongoCommandException;
+import com.mongodb.MongoWriteException;
+import com.mongodb.WriteConcern;
 import com.mongodb.client.*;
+import com.mongodb.client.model.FindOneAndUpdateOptions;
+import com.mongodb.client.model.ReturnDocument;
+
 import dev.morphia.*;
 import dev.morphia.annotations.Entity;
 import dev.morphia.mapping.*;
-import dev.morphia.query.experimental.filters.Filters;
+
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.Grasscutter.ServerRunMode;
 import emu.grasscutter.game.Account;
+
+import org.bson.BsonType;
+import org.bson.Document;
 
 public final class DatabaseManager {
     private static volatile Datastore gameDatastore;
@@ -60,8 +71,11 @@ public final class DatabaseManager {
             MongoClient dispatchMongoClient = MongoClients.create(DATABASE.server.connectionUri);
 
             dispatchDatastore =
-                    Morphia.createDatastore(dispatchMongoClient, DATABASE.server.collection, mapperOptions);
-            dispatchDatastore.getMapper().map(new Class<?>[] {DatabaseCounter.class, Account.class});
+                    Morphia.createDatastore(
+                            dispatchMongoClient, DATABASE.server.collection, mapperOptions);
+            dispatchDatastore
+                    .getMapper()
+                    .map(new Class<?>[] {DatabaseCounter.class, Account.class});
 
             // Ensure indexes for dispatch datastore
             ensureIndexes(dispatchDatastore);
@@ -91,24 +105,48 @@ public final class DatabaseManager {
         }
     }
 
-    public static synchronized int getNextId(Class<?> c) {
-        DatabaseCounter counter =
-                getGameDatastore()
-                        .find(DatabaseCounter.class)
-                        .filter(Filters.eq("_id", c.getSimpleName()))
-                        .first();
-        if (counter == null) {
-            counter = new DatabaseCounter(c.getSimpleName());
-        }
-
+    /** Reserve in Mongo before returning; a queued counter save cannot reserve an ID. */
+    static int reserveNextId(Datastore datastore, String name, int floor) {
+        if (floor < 0 || floor == Integer.MAX_VALUE)
+            throw new IllegalStateException("No more IDs are available for " + name);
+        var counters =
+                datastore
+                        .getDatabase()
+                        .getCollection("counters")
+                        .withWriteConcern(WriteConcern.MAJORITY.withJournal(true));
         try {
-            return counter.getNextId();
-        } finally {
-            DatabaseHelper.saveGameAsync(counter);
+            counters.insertOne(new Document("_id", name).append("count", (long) floor));
+        } catch (MongoWriteException duplicate) {
+            if (duplicate.getError() == null || duplicate.getError().getCode() != 11000)
+                throw duplicate;
         }
+        var valid =
+                and(
+                        eq("_id", name),
+                        or(type("count", BsonType.INT32), type("count", BsonType.INT64)),
+                        gte("count", 0L));
+        // Raise old counters without rolling back another server's already reserved IDs.
+        if (counters.updateOne(valid, max("count", (long) floor)).getMatchedCount() != 1)
+            throw new IllegalStateException("Invalid ID counter for " + name);
+        var reserved =
+                counters.findOneAndUpdate(
+                        and(valid, lt("count", (long) Integer.MAX_VALUE)),
+                        inc("count", 1L),
+                        new FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER));
+        if (reserved == null
+                || !(reserved.get("count") instanceof Number number)
+                || number.longValue() <= 0
+                || number.longValue() > Integer.MAX_VALUE)
+            throw new IllegalStateException("ID counter exhausted for " + name);
+        return number.intValue();
     }
 
-    public static synchronized int getNextId(Object o) {
+    public static int getNextId(Class<?> c) {
+        // Preserve the historical game-database counter in split dispatch installations.
+        return reserveNextId(getGameDatastore(), c.getSimpleName(), 10000);
+    }
+
+    public static int getNextId(Object o) {
         return getNextId(o.getClass());
     }
 }

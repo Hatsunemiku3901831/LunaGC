@@ -210,57 +210,20 @@ public final class DatabaseHelper {
     }
 
     public static Account createAccountWithUid(String username, int reservedUid) {
-        // Unique names only
-        if (DatabaseHelper.checkIfAccountExists(username)) {
-            return null;
-        }
+        return createAccountWithUid(username, reservedUid, null, List.of());
+    }
 
-        // Make sure there are no id collisions
-        if (reservedUid > 0) {
-            // Cannot make account with the same uid as the server console
-            if (reservedUid == GameConstants.SERVER_CONSOLE_UID) {
-                return null;
-            }
-
-            if (DatabaseHelper.checkIfAccountExists(reservedUid)) {
-                return null;
-            }
-
-            // Make sure no existing player already has this id.
-            if (DatabaseHelper.checkIfPlayerExists(reservedUid)) {
-                return null;
-            }
-        }
-
-        // Account
-        @SuppressWarnings("deprecation")
-        Account account = new Account();
-        account.setUsername(username);
-        account.setId(Integer.toString(DatabaseManager.getNextId(account)));
-
-        if (reservedUid > 0) {
-            account.setReservedPlayerUid(reservedUid);
-        }
-
-        DatabaseHelper.saveAccount(account);
-        return account;
+    /** Insert initial credentials and permissions together. The caller supplies the password hash. */
+    public static Account createAccountWithUid(String username, int reservedUid, String password,
+            List<String> permissions) {
+        var game = DatabaseManager.getGameDatastore();
+        var accounts = DatabaseManager.getAccountDatastore();
+        return AccountCreationService.create(game, accounts, username, reservedUid, password, permissions);
     }
 
     @Deprecated
     public static Account createAccountWithPassword(String username, String password) {
-        // Unique names only
-        Account exists = DatabaseHelper.getAccountByName(username);
-        if (exists != null) {
-            return null;
-        }
-
-        // Account
-        Account account = new Account();
-        account.setId(Integer.toString(DatabaseManager.getNextId(account)));
-        account.setUsername(username);
-        account.setPassword(password);
-        DatabaseHelper.saveAccount(account);
-        return account;
+        return createAccountWithUid(username, 0, password, List.of());
     }
 
     public static void saveAccount(Account account) {
