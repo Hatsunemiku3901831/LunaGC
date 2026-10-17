@@ -1,23 +1,27 @@
 package emu.grasscutter.game.activity;
 
-import dev.morphia.annotations.*;
 import dev.morphia.Datastore;
-import org.bson.Document;
+import dev.morphia.annotations.*;
+
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.data.excels.activity.ActivityWatcherData;
 import emu.grasscutter.database.DatabaseHelper;
-import emu.grasscutter.game.inventory.GameItem;
 import emu.grasscutter.game.activity.salesman.SalesmanSchedule;
+import emu.grasscutter.game.inventory.GameItem;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.props.ActionReason;
 import emu.grasscutter.net.proto.ActivityWatcherInfoOuterClass;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.server.packet.send.PacketActivityUpdateWatcherNotify;
 import emu.grasscutter.utils.JsonUtils;
-import java.util.*;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import org.bson.Document;
+
+import java.util.*;
 
 @Entity("activities")
 @Data
@@ -37,13 +41,56 @@ public class PlayerActivityData {
 
     @Transient Player player;
     @Transient ActivityHandler activityHandler;
-    @Transient @Getter(AccessLevel.NONE) @Setter(AccessLevel.NONE) volatile boolean unconfirmedActivityCoins;
-    @Setter(AccessLevel.NONE) ActivitySaveStamp saveStamp;
-    @Transient @Getter(AccessLevel.NONE) @Setter(AccessLevel.NONE) ActivitySaveGuard saveGuard;
+
+    @Transient
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    volatile boolean unconfirmedActivityCoins;
+
+    @Setter(AccessLevel.NONE)
+    ActivitySaveStamp saveStamp;
+
+    @Transient
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    ActivitySaveGuard saveGuard;
+
+    @Setter(AccessLevel.NONE)
+    ActivityCoinReceipt pendingCoinOperation;
+
+    @Setter(AccessLevel.NONE)
+    ActivityCoinReceipt lastCoinOperation;
+
+    @Transient
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    ActivityCoinTransaction coinTransaction;
+
+    @Transient
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    Thread coinWriteThread;
 
     @PostLoad
     private void onLoad(Document row, Datastore datastore) {
         saveGuard = new ActivitySaveGuard(this, row, datastore);
+        var raw =
+                row.toBsonDocument(
+                        Document.class, com.mongodb.MongoClientSettings.getDefaultCodecRegistry());
+        pendingCoinOperation = ActivityCoinReceipt.from(raw, "pendingCoinOperation");
+        lastCoinOperation = ActivityCoinReceipt.from(raw, "lastCoinOperation");
+        if (pendingCoinOperation != null) {
+            pendingCoinOperation.owner(this);
+            ActivityCoinReceipt.require(
+                    pendingCoinOperation.getStage() != ActivityCoinReceipt.CANCELLED,
+                    "待处理货币记录已经取消。");
+        }
+        if (lastCoinOperation != null) {
+            lastCoinOperation.owner(this);
+            ActivityCoinReceipt.require(
+                    lastCoinOperation.getStage() != ActivityCoinReceipt.PREPARED,
+                    "已完成货币记录仍处于准备阶段。");
+        }
     }
 
     public synchronized ActivitySaveGuard getSaveGuard() {
@@ -51,19 +98,82 @@ public class PlayerActivityData {
         return saveGuard;
     }
 
-    void setSaveStamp(ActivitySaveStamp stamp) { saveStamp = stamp; }
+    void setSaveStamp(ActivitySaveStamp stamp) {
+        saveStamp = stamp;
+    }
 
     synchronized void inheritSaveIdentity(PlayerActivityData previous) {
-        if (saveGuard != null) throw new IllegalStateException("Replay identity already initialized");
+        if (saveGuard != null)
+            throw new IllegalStateException("Replay identity already initialized");
         saveGuard = previous.getSaveGuard().forReplay(this);
     }
 
-    public boolean hasUnconfirmedActivityCoins() { return unconfirmedActivityCoins; }
-    void blockUnconfirmedActivityCoins() { unconfirmedActivityCoins = true; }
+    public boolean hasUnconfirmedActivityCoins() {
+        return unconfirmedActivityCoins || pendingCoinOperation != null || coinWriteThread != null;
+    }
 
-    public PlayerActivityData(String id, int uid, int activityId, int scheduleId,
-            Map<Integer, WatcherInfo> watcherInfoMap, String detail, Player player, ActivityHandler activityHandler) {
-        this(id, uid, activityId, scheduleId, watcherInfoMap, new HashMap<>(), detail, player, activityHandler, false, null, null);
+    void blockUnconfirmedActivityCoins() {
+        unconfirmedActivityCoins = true;
+    }
+
+    void confirmActivityCoins() {
+        unconfirmedActivityCoins = false;
+    }
+
+    void setPendingCoinOperation(ActivityCoinReceipt receipt) {
+        pendingCoinOperation = receipt;
+    }
+
+    void setLastCoinOperation(ActivityCoinReceipt receipt) {
+        lastCoinOperation = receipt;
+    }
+
+    boolean isCoinWrite() {
+        return coinWriteThread == Thread.currentThread();
+    }
+
+    void saveCoinState() {
+        if (coinWriteThread != null)
+            throw new IllegalStateException("Reentrant activity coin save");
+        coinWriteThread = Thread.currentThread();
+        try {
+            DatabaseHelper.saveGameSync(this);
+        } finally {
+            coinWriteThread = null;
+        }
+    }
+
+    public synchronized ActivityCoinTransaction getCoinTransaction() {
+        if (coinTransaction == null) coinTransaction = new ActivityCoinTransaction(this);
+        return coinTransaction;
+    }
+
+    public PlayerActivityData(
+            String id,
+            int uid,
+            int activityId,
+            int scheduleId,
+            Map<Integer, WatcherInfo> watcherInfoMap,
+            String detail,
+            Player player,
+            ActivityHandler activityHandler) {
+        this(
+                id,
+                uid,
+                activityId,
+                scheduleId,
+                watcherInfoMap,
+                new HashMap<>(),
+                detail,
+                player,
+                activityHandler,
+                false,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
     }
 
     public static PlayerActivityData getByPlayer(Player player, int activityId) {
@@ -72,13 +182,15 @@ public class PlayerActivityData {
 
     public void save() {
         // Acknowledged event documents must not race queued writes when the replay reuses their ID.
-        if (activityId == SalesmanSchedule.ACTIVITY_ID || activityId == emu.grasscutter.game.activity.aster.AsterSchedule.ACTIVITY_ID
+        if (activityId == SalesmanSchedule.ACTIVITY_ID
+                || activityId == emu.grasscutter.game.activity.aster.AsterSchedule.ACTIVITY_ID
                 || ActivityCurrencies.belongsTo(activityId)) saveSync();
         else DatabaseHelper.savePlayerActivityData(this);
     }
 
     public void saveSync() {
-        if (unconfirmedActivityCoins) throw new IllegalStateException("Activity coin write requires reconciliation");
+        if (hasUnconfirmedActivityCoins())
+            throw new IllegalStateException("Activity coin write requires reconciliation");
         DatabaseHelper.saveGameSync(this);
     }
 
@@ -101,27 +213,35 @@ public class PlayerActivityData {
     }
 
     public List<ActivityWatcherInfoOuterClass.ActivityWatcherInfo> getAllWatcherInfoList() {
-        return watcherInfoMap == null ? List.of() : watcherInfoMap.values().stream().map(WatcherInfo::toProto).toList();
+        return watcherInfoMap == null
+                ? List.of()
+                : watcherInfoMap.values().stream().map(WatcherInfo::toProto).toList();
     }
 
     public void setDetail(Object detail) {
         this.detail = JsonUtils.encode(detail);
     }
 
-    /** Restore an already serialized detail after an uncommitted change, without double encoding. */
-    public void setDetailJson(String detail) { this.detail = detail; }
+    /**
+     * Restore an already serialized detail after an uncommitted change, without double encoding.
+     */
+    public void setDetailJson(String detail) {
+        this.detail = detail;
+    }
 
     public int takeWatcherReward(int watcherId) {
         if (player == null) return Retcode.RET_ACTIVITY_CLOSE_VALUE;
         synchronized (player.getInventory()) {
             if (activityId == emu.grasscutter.game.activity.aster.AsterSchedule.ACTIVITY_ID)
-                return emu.grasscutter.game.activity.aster.AsterWatcherRewards.take(this, watcherId);
+                return emu.grasscutter.game.activity.aster.AsterWatcherRewards.take(
+                        this, watcherId);
             return takeDefaultWatcherReward(watcherId);
         }
     }
 
     private synchronized int takeDefaultWatcherReward(int watcherId) {
-        if (player == null || !player.getActivityManager().isActivityActive(activityId)
+        if (player == null
+                || !player.getActivityManager().isActivityActive(activityId)
                 || player.getActivityManager().getPlayerActivityDataMap().get(activityId) != this) {
             return Retcode.RET_ACTIVITY_CLOSE_VALUE;
         }

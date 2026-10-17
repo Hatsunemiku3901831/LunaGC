@@ -132,7 +132,7 @@ public final class ActivitySaveGuard {
 
     public void save(Datastore datastore) {
         synchronized (data) {
-            if (data.hasUnconfirmedActivityCoins())
+            if (data.hasUnconfirmedActivityCoins() && !data.isCoinWrite())
                 throw new IllegalStateException("Activity coin write requires reconciliation");
             resolvePending(datastore);
             if (storage == null) {
@@ -165,6 +165,14 @@ public final class ActivitySaveGuard {
             if (conflicted) throw conflict();
             if (confirmed != null) confirmed.validate();
             if (pending != null) resolve();
+        }
+    }
+
+    Document confirmedCondition(Datastore datastore) {
+        synchronized (data) {
+            resolvePending(datastore);
+            if (!exists) throw new IllegalStateException("Activity document is not confirmed");
+            return filter(confirmed, storedSchedule);
         }
     }
 

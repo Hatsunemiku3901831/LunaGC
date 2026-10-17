@@ -134,9 +134,7 @@ public final class ActivityCurrencies {
             if (binding == null) return false;
             synchronized (binding.data()) {
                 if (!canCredit(player, id, amount)) return false;
-                var values = copy(binding.data());
-                values.put(id, Math.addExact(stored(binding.data(), id), amount));
-                commit(binding.data(), values);
+                binding.data().getCoinTransaction().commit(Map.of(id, amount), true);
             }
             notifyBalance(player, binding);
             return true;
@@ -158,43 +156,29 @@ public final class ActivityCurrencies {
             }
             synchronized (binding.data()) {
                 if (binding.data().hasUnconfirmedActivityCoins()) return false;
-                var values = copy(binding.data());
                 for (var cost : costs.entrySet()) {
                     int before = stored(binding.data(), cost.getKey());
                     if (before < cost.getValue()) return false;
-                    values.put(cost.getKey(), before - cost.getValue());
                 }
-                commit(binding.data(), values);
+                binding.data().getCoinTransaction().commit(costs, false);
             }
             notifyBalance(player, binding);
             return true;
         }
     }
 
-    private static Map<Integer, Integer> copy(PlayerActivityData data) {
-        return data.getActivityCoins() == null
-                ? new HashMap<>()
-                : new HashMap<>(data.getActivityCoins());
-    }
-
-    private static void commit(PlayerActivityData data, Map<Integer, Integer> values) {
-        data.setActivityCoins(values);
-        try {
-            data.saveSync();
-        } catch (RuntimeException failure) {
-            // The write may have reached Mongo. Do not restore a stale balance or apply another
-            // delta.
-            data.blockUnconfirmedActivityCoins();
-            Grasscutter.getLogger()
-                    .error(
-                            "Activity currency acknowledgement failed for UID {}, activity {},"
-                                    + " schedule {}",
-                            data.getUid(),
-                            data.getActivityId(),
-                            data.getScheduleId(),
-                            failure);
-            throw failure;
-        }
+    static void notifyRecovered(PlayerActivityData data) {
+        var player = data.getPlayer();
+        var snapshot = ActivityManager.configurationSnapshot();
+        var config = snapshot.activities().get(data.getActivityId());
+        if (player == null
+                || config == null
+                || !config.isActiveAt(System.currentTimeMillis())
+                || data.getScheduleId() != config.getScheduleId()
+                || player.getActivityManager() == null
+                || player.getActivityManager().getPlayerActivityDataMap().get(data.getActivityId())
+                        != data) return;
+        notifyBalance(player, new Binding(snapshot, config, data));
     }
 
     private static void notifyBalance(Player player, Binding binding) {
