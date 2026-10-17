@@ -248,6 +248,11 @@ public class Account {
         this.banStartTime = banStartTime;
     }
 
+    /** Read-only ban decision for authorization; expiry cleanup is a separate write. */
+    public boolean isBanActive() {
+        return isBanned && (banEndTime <= 0 || banEndTime >= System.currentTimeMillis() / 1000);
+    }
+
     public boolean isBanned() {
         if (banEndTime > 0 && banEndTime < System.currentTimeMillis() / 1000) {
             this.isBanned = false;

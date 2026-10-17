@@ -6,6 +6,7 @@ import emu.grasscutter.Grasscutter;
 import emu.grasscutter.command.*;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.utils.Utils;
+
 import java.util.*;
 
 @Command(
@@ -35,7 +36,11 @@ public final class LanguageCommand implements CommandHandler {
         var actualLangCode = languageInst.getLanguageCode();
         var locale = Locale.forLanguageTag(actualLangCode);
         if (sender != null) {
-            var account = sender.getAccount();
+            var account = sender.refreshAccount();
+            if (account == null) {
+                CommandHandler.sendMessage(sender, "Account authorization is unavailable.");
+                return;
+            }
             account.setLocale(locale);
             account.save();
         } else {

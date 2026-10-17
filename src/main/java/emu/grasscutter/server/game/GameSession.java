@@ -21,8 +21,8 @@ public class GameSession implements GameSessionManager.KcpChannel {
     private final GameServer server;
     private GameSessionManager.KcpTunnel tunnel;
 
-    @Getter @Setter private Account account;
-    @Getter private Player player;
+    @Getter @Setter private volatile Account account;
+    @Getter private volatile Player player;
 
     @Getter private long encryptSeed = Crypto.ENCRYPT_SEED;
     private byte[] encryptKey = Crypto.ENCRYPT_KEY;

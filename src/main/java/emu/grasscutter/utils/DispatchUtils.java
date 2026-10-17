@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.auth.AuthenticationSystem.AuthenticationRequest;
 import emu.grasscutter.database.DatabaseHelper;
-import emu.grasscutter.database.DatabaseManager;
 import emu.grasscutter.game.*;
 import emu.grasscutter.server.dispatch.*;
 import emu.grasscutter.server.http.handlers.GachaHandler;
@@ -106,28 +105,11 @@ public interface DispatchUtils {
      * @return The account.
      */
     @Nullable static Account getAccountById(String accountId) {
-        return switch (Grasscutter.getRunMode()) {
-            case GAME_ONLY -> {
-                // Create a request for account information.
-                var request = new JsonObject();
-                request.addProperty("accountId", accountId);
+        return AccountLookup.capture().byId(accountId);
+    }
 
-                // Wait for the request to complete.
-                var client = Grasscutter.getGameServer().getDispatchClient();
-                var codec = DatabaseManager.getAccountDatastore();
-                yield client
-                        .await(
-                                request,
-                                PacketIds.GetAccountReq,
-                                PacketIds.GetAccountRsp,
-                                packet -> {
-                                    var account = IDispatcher.decode(packet, Account.class);
-                                    if (account == null || !accountId.equals(account.getId())) return null;
-                                    return AccountRemoteStorage.bind(account, codec, client);
-                                });
-            }
-            case HYBRID, DISPATCH_ONLY -> DatabaseHelper.getAccountById(accountId);
-        };
+    @Nullable static Account getAccountByName(String username) {
+        return AccountLookup.capture().byName(username);
     }
 
     /**

@@ -68,7 +68,7 @@ public final class GameServer extends KcpServer implements Iterable<Player> {
     private volatile long lastTickDurationMillis;
     private volatile long maxTickDurationMillis;
 
-    @Setter private DispatchClient dispatchClient;
+    @Setter private volatile DispatchClient dispatchClient;
 
     // Server systems
     private final InventorySystem inventorySystem;
@@ -251,9 +251,10 @@ public final class GameServer extends KcpServer implements Iterable<Player> {
     }
 
     public Player getPlayerByAccountId(String accountId) {
+        if (accountId == null || accountId.isBlank()) return null;
         Optional<Player> playerOpt =
                 getPlayers().values().stream()
-                        .filter(player -> player.getAccount().getId().equals(accountId))
+                        .filter(player -> accountId.equals(player.getAccountId()))
                         .findFirst();
         return playerOpt.orElse(null);
     }
@@ -301,14 +302,7 @@ public final class GameServer extends KcpServer implements Iterable<Player> {
     }
 
     public Account getAccountByName(String username) {
-        Optional<Player> playerOpt =
-                getPlayers().values().stream()
-                        .filter(player -> player.getAccount().getUsername().equals(username))
-                        .findFirst();
-        if (playerOpt.isPresent()) {
-            return playerOpt.get().getAccount();
-        }
-        return DatabaseHelper.getAccountByName(username);
+        return emu.grasscutter.utils.DispatchUtils.getAccountByName(username);
     }
 
     public synchronized void onTick() {

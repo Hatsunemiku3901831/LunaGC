@@ -7,6 +7,7 @@ import emu.grasscutter.command.*;
 import emu.grasscutter.command.Command.TargetRequirement;
 import emu.grasscutter.game.Account;
 import emu.grasscutter.game.player.Player;
+
 import java.util.List;
 
 @Command(
@@ -34,9 +35,10 @@ public final class PermissionCommand implements CommandHandler {
             permission = args.get(1);
         }
 
-        Account account = targetPlayer.getAccount();
+        Account account = targetPlayer.refreshAccount();
         if (account == null) {
-            CommandHandler.sendMessage(sender, translate(sender, "commands.permission.account_error"));
+            CommandHandler.sendMessage(
+                    sender, translate(sender, "commands.permission.account_error"));
             return;
         }
 
@@ -48,13 +50,16 @@ public final class PermissionCommand implements CommandHandler {
                 if (permission.isEmpty()) {
                     sendUsageMessage(sender);
                 } else if (account.addPermission(permission)) {
-                    CommandHandler.sendMessage(sender, translate(sender, "commands.permission.add"));
+                    CommandHandler.sendMessage(
+                            sender, translate(sender, "commands.permission.add"));
                 } else
-                    CommandHandler.sendMessage(sender, translate(sender, "commands.permission.has_error"));
+                    CommandHandler.sendMessage(
+                            sender, translate(sender, "commands.permission.has_error"));
                 break;
             case "remove":
                 if (account.removePermission(permission)) {
-                    CommandHandler.sendMessage(sender, translate(sender, "commands.permission.remove"));
+                    CommandHandler.sendMessage(
+                            sender, translate(sender, "commands.permission.remove"));
                 } else
                     CommandHandler.sendMessage(
                             sender, translate(sender, "commands.permission.not_have_error"));

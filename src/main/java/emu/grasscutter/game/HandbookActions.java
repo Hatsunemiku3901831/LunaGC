@@ -9,6 +9,7 @@ import emu.grasscutter.game.player.Player;
 import emu.grasscutter.game.props.ActionReason;
 import emu.grasscutter.server.packet.send.PacketAddNoGachaAvatarCardNotify;
 import emu.grasscutter.utils.objects.HandbookBody.*;
+
 import java.util.Objects;
 
 /** Commands executed by the handbook. */
@@ -22,9 +23,9 @@ public interface HandbookActions {
      */
     static boolean isAuthenticated(Player player, String token) {
         // Check properties.
-        if (player == null || token == null) return false;
-        // Compare the session key and token.
-        return player.getSessionKey().equals(token);
+        if (player == null || token == null || token.isBlank()) return false;
+        var account = player.refreshAccount();
+        return account != null && !account.isBanActive() && account.matchesSessionKey(token);
     }
 
     /**
@@ -75,7 +76,10 @@ public interface HandbookActions {
             player.sendPacket(new PacketAddNoGachaAvatarCardNotify(avatar, ActionReason.Gm));
             return Response.builder().status(200).message("Avatar granted.").build();
         } catch (NumberFormatException ignored) {
-            return Response.builder().status(500).message("Invalid player UID or avatar ID.").build();
+            return Response.builder()
+                    .status(500)
+                    .message("Invalid player UID or avatar ID.")
+                    .build();
         } catch (Exception exception) {
             Grasscutter.getLogger().debug("A handbook command error occurred.", exception);
             return Response.builder()
@@ -114,7 +118,10 @@ public interface HandbookActions {
                 return Response.builder().status(1).message("Player not authorized.").build();
             }
             if (itemData == null) {
-                return Response.builder().status(400).message("Invalid player UID or item ID.").build();
+                return Response.builder()
+                        .status(400)
+                        .message("Invalid player UID or item ID.")
+                        .build();
             }
 
             // Add the item to the player's inventory.
@@ -190,7 +197,10 @@ public interface HandbookActions {
 
             return Response.builder().status(200).message("Player teleported.").build();
         } catch (NumberFormatException ignored) {
-            return Response.builder().status(400).message("Invalid player UID or scene ID.").build();
+            return Response.builder()
+                    .status(400)
+                    .message("Invalid player UID or scene ID.")
+                    .build();
         } catch (Exception exception) {
             Grasscutter.getLogger().debug("A handbook command error occurred.", exception);
             return Response.builder()
@@ -242,13 +252,21 @@ public interface HandbookActions {
             // Create the entity.
             for (var i = 1; i <= request.getAmount(); i++) {
                 var entity =
-                        new EntityMonster(scene, entityData, player.getPosition(), player.getRotation(), level);
+                        new EntityMonster(
+                                scene,
+                                entityData,
+                                player.getPosition(),
+                                player.getRotation(),
+                                level);
                 scene.addEntity(entity);
             }
 
             return Response.builder().status(200).message("Entity(s) spawned.").build();
         } catch (NumberFormatException ignored) {
-            return Response.builder().status(400).message("Invalid player UID or entity ID.").build();
+            return Response.builder()
+                    .status(400)
+                    .message("Invalid player UID or entity ID.")
+                    .build();
         } catch (Exception exception) {
             Grasscutter.getLogger().debug("A handbook command error occurred.", exception);
             return Response.builder()

@@ -19,6 +19,7 @@
 密码重置确认保存后撤销旧令牌并请求退出；重置账号要求密码登录，见[密码重置](docs/ACCOUNT_PASSWORD_RESET_2026-10-17.md)。
 分离服务消息逐层解析并保留路径、引号和 BSON int64 文本，见[JSON 编解码](docs/DISPATCH_JSON_CODEC_2026-10-17.md)。
 分离服务返回的账号副本按原连接和读取版本保存，超时后先核对结果，见[远端账号保存](docs/DISPATCH_REMOTE_ACCOUNT_2026-10-17.md)。
+后台令牌、默认命令权限与账号编辑读取当前账号，刷新结果核对来源和会话，见[账号刷新](docs/ACCOUNT_REFRESH_2026-10-17.md)。
 分离服务的 RPC 使用逐次请求标识匹配响应，并清理超时回调，见[内部请求匹配](docs/DISPATCH_REQUEST_CORRELATION_2026-10-17.md)。
 协议与资源分析可使用[固定客户端字符串提取器](docs/CLIENT_LITERAL_EXTRACTION_2026-10-15.md)，支持编号查询、文本筛选及哈希校验。
 

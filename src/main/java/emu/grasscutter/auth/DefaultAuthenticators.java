@@ -429,7 +429,11 @@ public final class DefaultAuthenticators {
                 var player = Grasscutter.getGameServer().getPlayerByIpAddress(Utils.address(ctx));
                 if (player != null) {
                     // Get the player's session token.
-                    var sessionKey = player.getAccount().getSessionKey();
+                    var sessionKey = player.getSessionKey();
+                    if (sessionKey == null || sessionKey.isBlank()) {
+                        ctx.contentType(ContentType.TEXT_HTML).result(this.authPage);
+                        return;
+                    }
                     // Respond with the handbook auth page.
                     ctx.status(200)
                             .result(

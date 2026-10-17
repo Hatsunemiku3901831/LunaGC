@@ -3,6 +3,7 @@ package emu.grasscutter.command.commands;
 import emu.grasscutter.command.*;
 import emu.grasscutter.game.Account;
 import emu.grasscutter.game.player.Player;
+
 import java.util.List;
 
 @Command(
@@ -12,7 +13,7 @@ import java.util.List;
 public final class UnBanCommand implements CommandHandler {
 
     private boolean unBanAccount(Player targetPlayer) {
-        Account account = targetPlayer.getAccount();
+        Account account = targetPlayer.refreshAccount();
 
         if (account == null) {
             return false;

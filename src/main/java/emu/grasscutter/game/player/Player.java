@@ -100,9 +100,9 @@ public class Player implements PlayerHook, FieldFetch {
     @Getter
     private String accountId;
 
-    @Setter private transient Account account;
-    @Getter @Setter private transient GameSession session;
-    @Transient private String sessionKey;
+    private transient volatile Account account;
+    @Getter @Setter private transient volatile GameSession session;
+    private transient long accountRefreshSequence;
 
     @Getter private String nickname;
     @Getter private String signature;
@@ -626,22 +626,50 @@ public class Player implements PlayerHook, FieldFetch {
     }
 
     public Account getAccount() {
-        if (this.account == null) this.account = DatabaseHelper.getAccountById(this.accountId);
-        return this.account;
+        var cached = this.account;
+        return cached != null ? cached : refreshAccount();
+    }
+
+    public synchronized void setAccount(Account account) {
+        this.account = account;
+        accountRefreshSequence++;
+    }
+
+    /** Sensitive reads use a fresh snapshot; a late read cannot replace a newer cache or session. */
+    public Account refreshAccount() {
+        final String id;
+        final GameSession attached;
+        final Account attachedAccount;
+        final long request;
+        synchronized (this) {
+            id = this.accountId;
+            attached = this.session;
+            attachedAccount = attached == null ? null : attached.getAccount();
+            request = ++accountRefreshSequence;
+        }
+        var lookup = AccountLookup.capture();
+        final Account fresh;
+        try {
+            fresh = lookup.byId(id);
+        } catch (RuntimeException unavailable) {
+            return null;
+        }
+        synchronized (this) {
+            if (request != accountRefreshSequence || !java.util.Objects.equals(id, accountId)
+                    || attached != session || !lookup.isCurrent()
+                    || attached != null && attached.getAccount() != attachedAccount) return null;
+            if (fresh == null) return null;
+            this.account = fresh;
+            if (attached != null && attached.getPlayer() == this) attached.setAccount(fresh);
+            return fresh;
+        }
     }
 
     public String getSessionKey() {
-        if (this.sessionKey == null) {
-
-            if (this.account == null) {
-                this.account = DispatchUtils.getAccountById(this.getAccountId());
-            }
-            if (this.account == null) return "";
-
-            this.sessionKey = this.getAccount().getSessionKey();
-        }
-
-        return this.sessionKey;
+        var fresh = refreshAccount();
+        if (fresh == null || fresh.isBanActive()) return null;
+        var key = fresh.getSessionKey();
+        return key == null || key.isBlank() ? null : key;
     }
 
     public boolean isOnline() {

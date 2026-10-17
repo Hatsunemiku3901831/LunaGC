@@ -94,10 +94,10 @@ public final class DispatchServer extends WebSocketServer implements IDispatcher
      */
     private void fetchAccount(WebSocket socket, JsonElement object) {
         var message = IDispatcher.decode(object);
-        var accountId = message.get("accountId").getAsString();
-
-        // Get the account from the database.
-        var account = DatabaseHelper.getAccountById(accountId);
+        var account = message.size() == 1 && message.has("accountId")
+                ? DatabaseHelper.getAccountById(message.get("accountId").getAsString())
+                : message.size() == 1 && message.has("username")
+                    ? DatabaseHelper.getAccountByName(message.get("username").getAsString()) : null;
         // Send the account.
         this.sendMessage(socket, PacketIds.GetAccountRsp, JSON.toJsonTree(account));
     }

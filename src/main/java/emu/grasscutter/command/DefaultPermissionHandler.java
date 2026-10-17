@@ -11,14 +11,22 @@ public class DefaultPermissionHandler implements PermissionHandler {
 
     @Override
     public boolean checkPermission(
-            Player player, Player targetPlayer, String permissionNode, String permissionNodeTargeted) {
+            Player player,
+            Player targetPlayer,
+            String permissionNode,
+            String permissionNodeTargeted) {
         if (player == null) {
             return true;
         }
 
-        Account account = player.getAccount();
+        Account account = player.refreshAccount();
+        if (account == null || account.isBanActive()) {
+            CommandHandler.sendMessage(player, "Account authorization is unavailable.");
+            return false;
+        }
         if (player != targetPlayer) { // Additional permission required for targeting another player
-            if (!permissionNodeTargeted.isEmpty() && !account.hasPermission(permissionNodeTargeted)) {
+            if (!permissionNodeTargeted.isEmpty()
+                    && !account.hasPermission(permissionNodeTargeted)) {
                 CommandHandler.sendTranslatedMessage(player, "commands.generic.permission_error");
                 return false;
             }
