@@ -157,7 +157,7 @@ public final class DispatchClient extends WebSocketClient implements IDispatcher
      * @param message The message to send.
      */
     public void sendMessage(int packetId, Object message) {
-        var serverMessage = this.encodeMessage(packetId, message);
+        var serverMessage = this.encodeMessage(packetId, message, this);
         // Serialize the message into JSON.
         var serialized = JSON.toJson(serverMessage).getBytes(StandardCharsets.UTF_8);
         // Encrypt the message.
@@ -186,6 +186,7 @@ public final class DispatchClient extends WebSocketClient implements IDispatcher
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
+        this.failPendingRequests(new IllegalStateException("Dispatch connection closed"));
         this.getLogger().info("Dispatch connection closed.");
 
         // Attempt to reconnect.

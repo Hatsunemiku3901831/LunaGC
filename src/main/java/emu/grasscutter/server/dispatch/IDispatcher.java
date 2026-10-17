@@ -3,15 +3,19 @@ package emu.grasscutter.server.dispatch;
 import static emu.grasscutter.config.Configuration.DISPATCH_INFO;
 
 import com.google.gson.*;
+
 import emu.grasscutter.utils.Crypto;
 import emu.grasscutter.utils.JsonAdapters.ByteArrayAdapter;
 import emu.grasscutter.utils.objects.JObject;
+
+import org.java_websocket.WebSocket;
+import org.slf4j.Logger;
+
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.*;
-import org.java_websocket.WebSocket;
-import org.slf4j.Logger;
 
 public interface IDispatcher {
     Gson JSON =
@@ -73,13 +77,18 @@ public interface IDispatcher {
      */
     default <T> T await(
             JsonObject request, int requestId, int responseId, Function<JsonElement, T> parser) {
+        if (Thread.currentThread().isInterrupted()) return null;
         // Perform the setup for the request.
         var future = this.async(request, requestId, responseId, parser);
 
         try {
             // Try to return the value.
-            return future.get(5L, TimeUnit.SECONDS);
-        } catch (Exception ignored) {
+            return future.get();
+        } catch (InterruptedException interrupted) {
+            Thread.currentThread().interrupt();
+            future.cancel(false);
+            return null;
+        } catch (ExecutionException | CancellationException failed) {
             return null;
         }
     }
@@ -107,14 +116,20 @@ public interface IDispatcher {
      */
     default <T> CompletableFuture<T> async(
             JsonObject request, int requestId, int responseId, Function<JsonElement, T> parser) {
-        // Create the future.
-        var future = new CompletableFuture<T>();
-        // Listen for the response.
-        this.registerCallback(responseId, packet -> future.complete(parser.apply(packet)));
-        // Broadcast the packet.
-        this.sendMessage(requestId, request);
+        return async(request, requestId, responseId, parser, Duration.ofSeconds(5));
+    }
 
-        return future;
+    default <T> CompletableFuture<T> async(
+            JsonObject request,
+            int requestId,
+            int responseId,
+            Function<JsonElement, T> parser,
+            Duration timeout) {
+        return DispatchRequests.request(this, request, requestId, responseId, parser, timeout);
+    }
+
+    default void failPendingRequests(Throwable cause) {
+        DispatchRequests.failPending(getCallbacks(), cause);
     }
 
     /**
@@ -149,9 +164,22 @@ public interface IDispatcher {
         // Create a message from the message data.
         var serverMessage = new JsonObject();
         serverMessage.addProperty("packetId", packetId);
-        serverMessage.addProperty("message", JSON.toJson(message));
+        if (message instanceof DispatchRequests.Outbound request) {
+            serverMessage.addProperty("requestId", request.id());
+            serverMessage.addProperty("replyId", request.replyId());
+            serverMessage.addProperty("message", JSON.toJson(request.payload()));
+        } else serverMessage.addProperty("message", JSON.toJson(message));
 
         return serverMessage;
+    }
+
+    default JsonObject encodeMessage(int packetId, Object message, WebSocket peer) {
+        var packet = encodeMessage(packetId, message);
+        if (!(message instanceof DispatchRequests.Outbound)) {
+            var request = DispatchRequests.replyTo(this, peer, packetId);
+            if (request != null) packet.addProperty("responseTo", request);
+        }
+        return packet;
     }
 
     /**
@@ -170,7 +198,13 @@ public interface IDispatcher {
         }
 
         // Get the packet ID.
-        var packetId = decoded.get("packetId").getAsInt();
+        final int packetId;
+        try {
+            packetId = DispatchRequests.packetId(decoded, "packetId");
+        } catch (RuntimeException invalidId) {
+            this.getLogger().warn("Received invalid dispatch packet ID.");
+            return;
+        }
         // Get the packet data.
         var packetData = decoded.get("message");
 
@@ -178,14 +212,21 @@ public interface IDispatcher {
         if (packetId != PacketIds.LoginNotify) {
             if (socket.getAttachment() instanceof Boolean authenticated) {
                 if (!authenticated) {
-                    this.getLogger().warn("Received packet ID {} from unauthenticated client.", packetId);
+                    this.getLogger()
+                            .warn("Received packet ID {} from unauthenticated client.", packetId);
                     socket.close();
                     return;
                 }
             } else return;
         }
 
-        try {
+        try (var scope = new DispatchRequests.Scope(this, socket, decoded)) {
+            if (decoded.has("responseTo")) {
+                var requestId = DispatchRequests.identity(decoded, "responseTo");
+                var callbacks = DispatchRequests.take(getCallbacks(), packetId, requestId);
+                DispatchRequests.invoke(this, packetId, callbacks, packetData);
+                return;
+            }
             // Check if the packet ID is registered.
             if (this.getHandlers().containsKey(packetId)) {
                 // Get the handler.
@@ -195,13 +236,11 @@ public interface IDispatcher {
             }
 
             // Check if the packet ID has callbacks.
-            if (this.getCallbacks().containsKey(packetId)) {
-                // Get the callbacks.
-                var callbacks = this.getCallbacks().get(packetId);
-                // Call the callbacks.
-                callbacks.forEach(callback -> callback.accept(packetData));
-                callbacks.clear();
-            }
+            DispatchRequests.invoke(
+                    this,
+                    packetId,
+                    DispatchRequests.take(getCallbacks(), packetId, null),
+                    packetData);
         } catch (Exception exception) {
             this.getLogger().warn("Exception occurred while handling packet {}.", packetId);
             exception.printStackTrace();
@@ -230,12 +269,11 @@ public interface IDispatcher {
      * @param callback The callback to register.
      */
     default void registerCallback(int packetId, Consumer<JsonElement> callback) {
-        // Check if the packet ID has a list for callbacks.
-        if (!this.getCallbacks().containsKey(packetId))
-            this.getCallbacks().put(packetId, new LinkedList<>());
-
-        // Register the callback.
-        this.getCallbacks().get(packetId).add(callback);
+        Objects.requireNonNull(callback, "callback");
+        var callbacks = getCallbacks();
+        synchronized (callbacks) {
+            callbacks.computeIfAbsent(packetId, ignored -> new LinkedList<>()).add(callback);
+        }
     }
 
     /**

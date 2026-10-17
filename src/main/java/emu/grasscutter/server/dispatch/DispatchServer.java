@@ -132,7 +132,7 @@ public final class DispatchServer extends WebSocketServer implements IDispatcher
      * @param message The message to send.
      */
     public void sendMessage(WebSocket socket, int packetId, Object message) {
-        this.sendMessage(socket, this.encodeMessage(packetId, message));
+        this.sendMessage(socket, this.encodeMessage(packetId, message, socket));
     }
 
     @Override
