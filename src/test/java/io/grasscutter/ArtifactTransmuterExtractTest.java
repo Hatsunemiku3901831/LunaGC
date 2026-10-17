@@ -113,7 +113,7 @@ class ArtifactTransmuterExtractTest extends QuestTestFixture {
         item.setOwner(actual);
         actual.getInventory().getItems().put(item.getGuid(), item);
         actual.getInventory().getInventoryTab(item.getItemData().getItemType()).onAddItem(item);
-        store.save(item);
+        DatabaseHelper.saveGameSync(item);
         return item;
     }
 
@@ -221,6 +221,7 @@ class ArtifactTransmuterExtractTest extends QuestTestFixture {
                         .equal(10002)
                         .field("itemId")
                         .equal(75543)
+                        .filter(dev.morphia.query.experimental.filters.Filters.ne("deleted", true))
                         .count());
     }
 
@@ -326,7 +327,7 @@ class ArtifactTransmuterExtractTest extends QuestTestFixture {
         actual.setScene(player.getScene());
         replaceField(Player.class, actual, "teamManager", new TeamManager(actual));
         actual.getTeamManager().setEntity(new EntityTeam(actual));
-        for (var item : store.find(GameItem.class).field("ownerId").equal(10002)) {
+        for (var item : DatabaseHelper.getInventoryItems(actual)) {
             item.setOwner(actual);
             actual.getInventory().getItems().put(item.getGuid(), item);
             actual.getInventory().getInventoryTab(item.getItemType()).onAddItem(item);

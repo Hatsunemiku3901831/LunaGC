@@ -69,6 +69,8 @@ class ForgeRefundFlowTest {
         }
     }
 
+    private emu.grasscutter.game.inventory.ObservedItemTestWrites itemWrites;
+
     @BeforeEach
     void setup() throws Exception {
         environment = new AbilityTestFixture();
@@ -119,6 +121,16 @@ class ForgeRefundFlowTest {
                             }
                             return null;
                         }));
+        itemWrites =
+                new emu.grasscutter.game.inventory.ObservedItemTestWrites(
+                        player,
+                        playerStore.datastore(),
+                        DatabaseManager.getGameDatastore(),
+                        doc -> {
+                            if (++saves == failSave)
+                                throw new IllegalStateException("Item confirmation fault");
+                        },
+                        doc -> {});
         assertTrue(player.getInventory().addItem(101001, 100));
         assertTrue(player.getInventory().addItem(101002, 100));
         assertTrue(player.getInventory().addItem(101004, 100));
@@ -129,6 +141,7 @@ class ForgeRefundFlowTest {
     @AfterEach
     void cleanup() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        if (itemWrites != null) itemWrites.close();
         if (datastore != null) datastore.set(null, oldDatastore);
         if (playerStore != null) playerStore.close();
         GameData.getForgeDataMap().clear();

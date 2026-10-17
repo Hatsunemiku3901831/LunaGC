@@ -202,7 +202,10 @@ final class ArtifactTransmuterRecovery {
                         && receipt.getDefinedAfter() == receipt.getDefinedBefore() + 1,
                 "定向制作记录无效。");
         var item = live(receipt.getOutputObjectId());
-        agree(item, stored(receipt.getOutputObjectId()), receipt.getRewardId());
+        var persisted = stored(receipt.getOutputObjectId());
+        agree(item, persisted, receipt.getRewardId());
+        if (item == null && persisted != null && persisted.isDeleted())
+            return new Output(null, true);
         if (item != null) {
             require(matches(item, receipt), "制作产物已改变，不能重新发放或覆盖。");
             return new Output(item, true);
@@ -307,6 +310,11 @@ final class ArtifactTransmuterRecovery {
                                 && payments.stream().noneMatch(Payment::paid)
                                 && (receipt.getRewardCount() == 0 || !output.delivered()),
                         "只能取消材料和奖励均未改变的预留；已扣费记录请使用 resume。");
+                for (var payment : payments)
+                    payment.item()
+                            .getSaveGuard()
+                            .confirmStoredVersion(
+                                    emu.grasscutter.database.DatabaseManager.getGameDatastore());
                 clear(data, receipt);
             } else {
                 require(!applied || output.delivered(), "已结算记录的产物与存档不符。");

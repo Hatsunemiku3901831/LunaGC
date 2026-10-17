@@ -96,10 +96,7 @@ public final class DatabaseHelper {
         queue.saveSnapshot(object, datastore,
                 () -> {
                     synchronized (object) {
-                        // A queued stack save must respect a subsequent removal instead of recreating it.
-                        if (object instanceof GameItem item && item.getCount() <= 0)
-                            datastore.delete(item);
-                        else saveWithRetry(datastore, object);
+                        saveWithRetry(datastore, object);
                     }
                 });
     }
@@ -107,6 +104,10 @@ public final class DatabaseHelper {
     /** Acknowledged writes for economic reservations; errors must reach the caller. */
     public static void saveGameSync(Object object) {
         synchronized (object) {
+            if (object instanceof GameItem item) {
+                item.getSaveGuard().save(DatabaseManager.getGameDatastore());
+                return;
+            }
             if (object instanceof Player player) {
                 player.getSaveGuard().save(DatabaseManager.getGameDatastore());
                 return;
@@ -116,11 +117,8 @@ public final class DatabaseHelper {
                 return;
             }
             var concern = WriteConcern.MAJORITY.withJournal(true);
-            if (object instanceof GameItem item && item.getCount() <= 0)
-                DatabaseManager.getGameDatastore().delete(item, new DeleteOptions().writeConcern(concern));
-            else
-                DatabaseManager.getGameDatastore()
-                        .save(object, new InsertOneOptions().writeConcern(concern));
+            DatabaseManager.getGameDatastore()
+                    .save(object, new InsertOneOptions().writeConcern(concern));
         }
     }
 
@@ -138,7 +136,7 @@ public final class DatabaseHelper {
         try {
             saveGameObject(datastore, object);
         } catch (MongoWriteException e) {
-            if (object instanceof Player || object instanceof PlayerActivityData
+            if (object instanceof Player || object instanceof PlayerActivityData || object instanceof GameItem
                     || e.getError() == null || e.getError().getCode() != 11000) {
                 throw e;
             }
@@ -169,6 +167,7 @@ public final class DatabaseHelper {
     private static void saveGameObject(Datastore datastore, Object object) {
         if (object instanceof Player player) player.getSaveGuard().save(datastore);
         else if (object instanceof PlayerActivityData activity) activity.getSaveGuard().save(datastore);
+        else if (object instanceof GameItem item) item.getSaveGuard().save(datastore);
         else datastore.save(object);
     }
 
@@ -507,7 +506,7 @@ public final class DatabaseHelper {
         eventExecutorItem.submit(
                 () -> {
                     synchronized (item) {
-                        datastore.delete(item);
+                        item.getSaveGuard().delete(datastore);
                     }
                 });
     }
@@ -521,7 +520,7 @@ public final class DatabaseHelper {
     public static List<GameItem> getInventoryItems(Player player) {
         return DatabaseManager.getGameDatastore()
                 .find(GameItem.class)
-                .filter(Filters.eq("ownerId", player.getUid()))
+                .filter(Filters.eq("ownerId", player.getUid()), Filters.ne("deleted", true), Filters.gt("count", 0))
                 .stream()
                 .toList();
     }

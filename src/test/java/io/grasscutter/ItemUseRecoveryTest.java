@@ -89,6 +89,66 @@ class ItemUseRecoveryTest extends FoodUsePaymentPersistenceTest {
     }
 
     @Test
+    void cancellingAnUnspentCostRetiresItsDelayedOriginalDebit() throws Exception {
+        var delayed = new DelayedItemSave(food, store, false, false);
+        assertNull(use(new InventorySystem(player.server)));
+        var restored = read();
+        String id = operation(restored);
+        assertEquals(1, restored.getInventory().getItemCountById(food.getItemId()));
+        resolve(restored, id, "refund-cost");
+        assertFalse(delayed.release());
+        assertNull(read().getPendingItemUse());
+        assertEquals(1, read().getInventory().getItemCountById(food.getItemId()));
+    }
+
+    @Test
+    void aPersistedRefundIsNotRepeatedAfterThatFoodIsConsumedAgain() throws Exception {
+        var restored = interruptedAt(4, false);
+        String id = operation(restored);
+        assertThrows(
+                RuntimeException.class,
+                () ->
+                        resolve(
+                                restored,
+                                id,
+                                "refund-cost",
+                                value -> {
+                                    DatabaseHelper.saveGameSync(value);
+                                    if (value instanceof GameItem)
+                                        throw new IllegalStateException(
+                                                "Lost food refund acknowledgement");
+                                }));
+        assertTrue(restored.getInventory().removeItem(food.getItemId(), 1));
+        assertTrue(DatabaseHelper.awaitIdle(java.time.Duration.ofSeconds(5)));
+        var again = read();
+        resolve(again, id, "refund-cost");
+        assertNull(read().getPendingItemUse());
+        assertEquals(0, read().getInventory().getItemCountById(food.getItemId()));
+    }
+
+    @Test
+    void aRefundDecisionThatWasNotPersistedCannotReviveTheConsumedIdentity() throws Exception {
+        var restored = interruptedAt(4, false);
+        String id = operation(restored);
+        assertThrows(
+                RuntimeException.class,
+                () ->
+                        resolve(
+                                restored,
+                                id,
+                                "refund-cost",
+                                value -> {
+                                    if (value == restored
+                                            && restored.getPendingItemUse() != null
+                                            && restored.getPendingItemUse().getState() == 5) return;
+                                    DatabaseHelper.saveGameSync(value);
+                                }));
+        var again = read();
+        assertEquals(0, again.getInventory().getItemCountById(food.getItemId()));
+        assertEquals(2, again.getPendingItemUse().getState());
+    }
+
+    @Test
     void paidButUnstartedFoodCanRefundItsDeletedSourceAfterColdLoad() throws Exception {
         var restored = interruptedAt(4, false);
         assertEquals(2, restored.getPendingItemUse().getState());

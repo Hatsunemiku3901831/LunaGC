@@ -29,7 +29,7 @@ class NestedFoodPersistenceTest extends FoodUsePaymentPersistenceTest {
         item.setOwner(target);
         target.getInventory().getItems().put(item.getGuid(), item);
         target.getInventory().getInventoryTab(ItemType.ITEM_MATERIAL).onAddItem(item);
-        store.save(item);
+        emu.grasscutter.database.DatabaseHelper.saveGameSync(item);
         assertSame(
                 item,
                 new InventorySystem(player.server)

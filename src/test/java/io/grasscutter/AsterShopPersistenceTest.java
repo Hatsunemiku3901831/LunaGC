@@ -70,6 +70,7 @@ class AsterShopPersistenceTest {
             var field = DatabaseManager.class.getDeclaredField("gameDatastore");
             field.setAccessible(true);
             var original = field.get(null);
+            emu.grasscutter.game.inventory.ObservedItemTestWrites itemWrites = null;
             try {
                 assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
                 var store =
@@ -121,12 +122,31 @@ class AsterShopPersistenceTest {
                                     }
                                     return result;
                                 }));
-                GuardedActivityTestStore.bind(fixture.event.data, store, DatabaseManager.getGameDatastore(), true,
-                        ignored -> {}, document -> {
+                itemWrites =
+                        new emu.grasscutter.game.inventory.ObservedItemTestWrites(
+                                fixture.player,
+                                store,
+                                DatabaseManager.getGameDatastore(),
+                                doc -> {},
+                                doc -> {
+                                    if (itemSaves.incrementAndGet() == 1 && failure == 2) {
+                                        fault.set(true);
+                                        throw new IllegalStateException(
+                                                "Item write accepted, acknowledgement lost");
+                                    }
+                                });
+                GuardedActivityTestStore.bind(
+                        fixture.event.data,
+                        store,
+                        DatabaseManager.getGameDatastore(),
+                        true,
+                        ignored -> {},
+                        document -> {
                             int n = activitySaves.incrementAndGet();
                             if (failure == 1 && n == 1 || failure == 3 && n == 2) {
                                 fault.set(true);
-                                throw new IllegalStateException("Activity write accepted, acknowledgement lost");
+                                throw new IllegalStateException(
+                                        "Activity write accepted, acknowledgement lost");
                             }
                         });
                 var server = scene.scene.getWorld().getServer();
@@ -255,6 +275,7 @@ class AsterShopPersistenceTest {
                 }
             } finally {
                 assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+                if (itemWrites != null) itemWrites.close();
                 field.set(null, original);
                 client.getDatabase(database).drop();
             }

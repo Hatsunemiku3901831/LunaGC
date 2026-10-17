@@ -161,7 +161,7 @@ class ArtifactTransmuterDefineTest extends QuestTestFixture {
         item.setOwner(actual);
         actual.getInventory().getItems().put(item.getGuid(), item);
         actual.getInventory().getInventoryTab(item.getItemType()).onAddItem(item);
-        store.save(item);
+        DatabaseHelper.saveGameSync(item);
         return item;
     }
 
@@ -226,7 +226,7 @@ class ArtifactTransmuterDefineTest extends QuestTestFixture {
         actual = store.find(Player.class).field("id").equal(10002).first();
         assertNotNull(actual);
         attach();
-        for (var item : store.find(GameItem.class).field("ownerId").equal(10002)) {
+        for (var item : DatabaseHelper.getInventoryItems(actual)) {
             item.setOwner(actual);
             actual.getInventory().getItems().put(item.getGuid(), item);
             actual.getInventory().getInventoryTab(item.getItemType()).onAddItem(item);
@@ -333,7 +333,7 @@ class ArtifactTransmuterDefineTest extends QuestTestFixture {
     void insufficientElixirDoesNotAutomaticallyTopUpTheCurrency() throws Exception {
         var elixir = actual.getInventory().getItemById(105005);
         elixir.setCount(1);
-        store.save(elixir);
+        DatabaseHelper.saveGameSync(elixir);
         assertEquals(Retcode.RET_ITEM_COUNT_NOT_ENOUGH_VALUE, define(req(4)).getRetcode());
         assertEquals(1, elixir.getCount());
         assertTrue(artifacts().isEmpty());

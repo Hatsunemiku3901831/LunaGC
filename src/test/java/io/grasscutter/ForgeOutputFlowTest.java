@@ -50,11 +50,11 @@ class ForgeOutputFlowTest {
     private int saves, failSave;
 
     static class OutputPlayer extends InvestigationRewardTest.ClaimPlayer {
-        final BattlePassManager pass = new BattlePassManager(this);
-        Runnable afterGrant;
-        boolean refuseGrant, pretendGrant;
-        int rejectGrantNumber, grants;
-        final Inventory outputInventory =
+        final transient BattlePassManager pass = new BattlePassManager(this);
+        transient Runnable afterGrant;
+        transient boolean refuseGrant, pretendGrant;
+        transient int rejectGrantNumber, grants;
+        final transient Inventory outputInventory =
                 new Inventory(this) {
                     @Override
                     public boolean addItem(GameItem item) {
@@ -84,6 +84,9 @@ class ForgeOutputFlowTest {
             return pass;
         }
     }
+
+    private emu.grasscutter.game.player.GuardedPlayerTestStore guardedPlayer;
+    private emu.grasscutter.game.inventory.ObservedItemTestWrites itemWrites;
 
     @BeforeEach
     void setup() throws Exception {
@@ -136,12 +139,21 @@ class ForgeOutputFlowTest {
         datastore = DatabaseManager.class.getDeclaredField("gameDatastore");
         datastore.setAccessible(true);
         oldDatastore = datastore.get(null);
+        guardedPlayer =
+                new emu.grasscutter.game.player.GuardedPlayerTestStore(
+                        player,
+                        () -> {
+                            if (++saves == failSave)
+                                throw new IllegalStateException("Confirmation fault");
+                        });
         datastore.set(
                 null,
                 Proxy.newProxyInstance(
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
+                            if (method.getName().equals("getMapper"))
+                                return guardedPlayer.datastore().getMapper();
                             if (method.getName().equals("save")
                                     || method.getName().equals("delete")) {
                                 if (args.length == 2 && ++saves == failSave)
@@ -164,6 +176,16 @@ class ForgeOutputFlowTest {
         oldPlugin = pluginField.get(null);
         plugins = new PluginManager();
         pluginField.set(null, plugins);
+        itemWrites =
+                new emu.grasscutter.game.inventory.ObservedItemTestWrites(
+                        player,
+                        guardedPlayer.datastore(),
+                        DatabaseManager.getGameDatastore(),
+                        doc -> {
+                            if (++saves == failSave)
+                                throw new IllegalStateException("Item confirmation fault");
+                        },
+                        doc -> {});
         dispatcher = new GameServerPacketHandler(PacketHandler.class);
         player.packets.clear();
     }
@@ -171,6 +193,8 @@ class ForgeOutputFlowTest {
     @AfterEach
     void cleanup() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        if (itemWrites != null) itemWrites.close();
+        if (guardedPlayer != null) guardedPlayer.close();
         if (pluginField != null) pluginField.set(null, oldPlugin);
         if (datastore != null) datastore.set(null, oldDatastore);
         GameData.getForgeDataMap().clear();

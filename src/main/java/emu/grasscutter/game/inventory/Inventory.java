@@ -765,12 +765,14 @@ public class Inventory extends BasePlayerManager implements Iterable<GameItem> {
         if (item.getCount() == 0) {
             if (getItemByGuid(item.getGuid()) != null || tab.getItemById(item.getItemId()) != null
                     || tab.getSize() >= tab.getMaxCapacity()) return false;
+            item.getSaveGuard().authorizeFoodRefund(player,before,count);
             item.setCount(before);
             getItems().put(item.getGuid(), item);
             tab.onAddItem(item);
         } else {
             if (getItemByGuid(item.getGuid()) != item || tab.getItemById(item.getItemId()) != item)
                 return false;
+            item.getSaveGuard().authorizeFoodRefund(player,before,count);
             item.setCount(before);
         }
         return true;

@@ -41,7 +41,7 @@ class ConditionalFoodPersistenceTest extends FoodUsePaymentPersistenceTest {
         item.setOwner(target);
         target.getInventory().getItems().put(item.getGuid(), item);
         target.getInventory().getInventoryTab(ItemType.ITEM_MATERIAL).onAddItem(item);
-        store.save(item);
+        emu.grasscutter.database.DatabaseHelper.saveGameSync(item);
         assertSame(
                 item,
                 new InventorySystem(player.server)
@@ -55,6 +55,9 @@ class ConditionalFoodPersistenceTest extends FoodUsePaymentPersistenceTest {
                 savedAvatar().get("currentHp", Number.class).doubleValue(),
                 0.01);
         assertEquals(4050, savedAvatar().getInteger("satiation"));
-        assertNull(store.find(GameItem.class).field("id").equal(item.getObjectId()).first());
+        var consumed = store.find(GameItem.class).field("id").equal(item.getObjectId()).first();
+        assertNotNull(consumed);
+        assertTrue(consumed.isDeleted());
+        assertEquals(0, consumed.getCount());
     }
 }

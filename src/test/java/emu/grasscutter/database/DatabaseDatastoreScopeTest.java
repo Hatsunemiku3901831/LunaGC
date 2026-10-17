@@ -175,9 +175,9 @@ class DatabaseDatastoreScopeTest {
         }
     }
     private static GameItem item() { var value=new GameItem(); value.setItemId(202); value.setCount(7); return value; }
-    private static GameItem seedBoth(Stores stores) throws Exception {
-        var value=item(); stores.first.save(value); var copy=item();
-        var id=GameItem.class.getDeclaredField("id"); id.setAccessible(true); id.set(copy,id.get(value)); stores.second.save(copy);
+    private GameItem seedBoth(Stores stores) throws Exception {
+        var value=item();game(stores.first);DatabaseHelper.saveGameSync(value);var copy=item();
+        copy.restorePersistenceId(value.getObjectId());game(stores.second);DatabaseHelper.saveGameSync(copy);
         return value;
     }
     @Test void actualMongoSaveStaysInTheSubmittedInstanceAndSurvivesReconnect() throws Exception {
@@ -196,7 +196,8 @@ class DatabaseDatastoreScopeTest {
             try(var held=new HeldQueue(DatabaseHelper.getEventExecutorItem())) {
                 DatabaseHelper.deleteItem(value); game(stores.second);
             }
-            assertNull(stores.reconnect(true)); assertNotNull(stores.reconnect(false));
+            assertTrue(stores.reconnect(true).getBoolean("deleted"));assertEquals(0,stores.reconnect(true).getInteger("count"));
+            assertFalse(stores.reconnect(false).getBoolean("deleted"));assertEquals(7,stores.reconnect(false).getInteger("count"));
         }
     }
     @Test void actualMongoZeroCountSaveDeletesOnlyTheSubmittedInstancesItem() throws Exception {
@@ -205,7 +206,8 @@ class DatabaseDatastoreScopeTest {
             try(var held=new HeldQueue(DatabaseHelper.getEventExecutorItem())) {
                 DatabaseHelper.saveGameAsync(value); game(stores.second);
             }
-            assertNull(stores.reconnect(true)); assertEquals(7,stores.reconnect(false).getInteger("count"));
+            assertTrue(stores.reconnect(true).getBoolean("deleted"));assertEquals(0,stores.reconnect(true).getInteger("count"));
+            assertEquals(7,stores.reconnect(false).getInteger("count"));
         }
     }
     @Test void actualMongoCoalescingKeepsAWritesForEachSubmittedInstance() throws Exception {

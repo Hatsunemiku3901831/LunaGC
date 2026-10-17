@@ -78,6 +78,12 @@ final class ArtifactRecoveryStore {
     }
 
     void agree(GameItem live, GameItem stored, int itemId) {
+        if (live == null && stored != null && stored.getCount() == 0 && stored.isDeleted()) {
+            require(
+                    stored.getOwnerId() == player.getUid() && stored.getItemId() == itemId,
+                    "已消耗物品的归属与记录不符。");
+            return;
+        }
         require((live == null) == (stored == null), "背包与存档的物品存在状态不同，请重新登录后核对。");
         if (live == null) return;
         require(

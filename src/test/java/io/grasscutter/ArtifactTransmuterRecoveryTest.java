@@ -163,8 +163,9 @@ class ArtifactTransmuterRecoveryTest extends ArtifactTransmuterDefineTest {
         assertEquals(18, actual.getInventory().getItemCountById(105005));
     }
 
-    @Test
-    void recoveryRecognizesAnAlreadyPersistedDefinitionInsteadOfDeliveringAnother()
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void recoveryRecognizesAnAlreadyPersistedDefinitionInsteadOfDeliveringAnother(boolean consumed)
             throws Exception {
         var owner = actual;
         replaceField(
@@ -184,12 +185,33 @@ class ArtifactTransmuterRecoveryTest extends ArtifactTransmuterDefineTest {
         assertNotEquals(0, define(req(3)).getRetcode());
         var id = actual.getArtifactTransmuterData().getPending().getOperationId();
         var itemId = artifacts().get(0).getObjectId();
+        if (consumed) {
+            assertTrue(actual.getInventory().removeItem(artifacts().get(0), 1));
+            assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        }
         reload();
         recover(id, true);
         assertNull(readPending());
-        assertEquals(1, artifacts().size());
-        assertEquals(itemId, artifacts().get(0).getObjectId());
+        assertEquals(consumed ? 0 : 1, artifacts().size());
+        if (!consumed) assertEquals(itemId, artifacts().get(0).getObjectId());
+        else assertTrue(store.find(GameItem.class).field("id").equal(itemId).first().isDeleted());
         assertEquals(18, actual.getInventory().getItemCountById(105005));
+        assertEquals(1, actual.getArtifactTransmuterData().getDefinedCounts().get(15001));
+    }
+
+    @Test
+    void cancellingAnUnspentDefinitionRetiresItsDelayedCostWrite() throws Exception {
+        var id = interruptedDefinition("reserve");
+        var source = actual.getInventory().getItemById(105005);
+        var delayed = new DelayedItemSave(source, store, false, false);
+        int before = source.getCount();
+        source.setCount(before - 2);
+        assertThrows(RuntimeException.class, () -> DatabaseHelper.saveGameSync(source));
+        reload();
+        recover(id, false);
+        assertFalse(delayed.release());
+        assertNull(readPending());
+        assertEquals(before, actual.getInventory().getItemCountById(105005));
     }
 
     @ParameterizedTest

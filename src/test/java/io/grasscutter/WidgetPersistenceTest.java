@@ -70,7 +70,7 @@ class WidgetPersistenceTest extends QuestTestFixture {
             item.setOwner(actual);
             actual.getInventory().getItems().put(item.getGuid(), item);
             actual.getInventory().getInventoryTab(ItemType.ITEM_MATERIAL).onAddItem(item);
-            store.save(item);
+            DatabaseHelper.saveGameSync(item);
         }
         return actual;
     }
@@ -84,7 +84,7 @@ class WidgetPersistenceTest extends QuestTestFixture {
         restored.setScene(player.getScene());
         replaceField(Player.class, restored, "teamManager", new TeamManager(restored));
         restored.getTeamManager().setEntity(new EntityTeam(restored));
-        for (var item : store.find(GameItem.class).field("ownerId").equal(10002)) {
+        for (var item : DatabaseHelper.getInventoryItems(restored)) {
             item.setItemData(GameData.getItemDataMap().get(item.getItemId()));
             // Inventory.putItem assigns a fresh runtime GUID on real database restoration.
             item.setOwner(restored);

@@ -97,6 +97,9 @@ public final class ItemUseRecovery {
                         .equal(player.getUid())
                         .field("itemId")
                         .equal(receipt.getSourceId())
+                        .filter(
+                                dev.morphia.query.experimental.filters.Filters.ne("deleted", true),
+                                dev.morphia.query.experimental.filters.Filters.gt("count", 0))
                         .iterator()) {
             cursor.forEachRemaining(stored::add);
         }
@@ -106,10 +109,25 @@ public final class ItemUseRecovery {
                         .field("id")
                         .equal(new ObjectId(receipt.getSourceObjectId()))
                         .first();
+        if (byId != null
+                && Objects.equals(byId.getFoodRefundOperationId(), receipt.getOperationId())) {
+            require(
+                    Set.of(5, 6).contains(receipt.getState())
+                            && byId.getOwnerId() == player.getUid()
+                            && byId.getItemId() == receipt.getSourceId(),
+                    "已退款记录的归属或阶段不符。");
+            return new Cost(null, byId.getCount(), true);
+        }
         require(live.size() <= 1 && stored.size() == live.size(), "物品堆叠存在状态不同或同类堆叠不唯一，请重登后核对。");
         int count = 0;
         GameItem source = null;
-        if (live.isEmpty()) require(byId == null, "成本持久 ID 已被其他物品占用。");
+        if (live.isEmpty())
+            require(
+                    byId == null
+                            || byId.getOwnerId() == player.getUid()
+                                    && byId.getItemId() == receipt.getSourceId()
+                                    && byId.getCount() == 0,
+                    "成本持久 ID 已被其他物品占用。");
         else {
             source = live.get(0);
             var saved = stored.get(0);
@@ -242,11 +260,26 @@ public final class ItemUseRecovery {
             receipt.foodState(receipt.getState(), 5);
             save.accept(player);
         }
+        if (cost.before() && cost.item() != null)
+            cost.item().getSaveGuard().confirmStoredVersion(DatabaseManager.getGameDatastore());
         if (!cost.before()) {
             var source = cost.item();
             if (source == null) {
-                source = new GameItem(GameData.getItemDataMap().get(receipt.getSourceId()), 1);
-                source.restorePersistenceId(new ObjectId(receipt.getSourceObjectId()));
+                source =
+                        DatabaseManager.getGameDatastore()
+                                .find(GameItem.class)
+                                .field("id")
+                                .equal(new ObjectId(receipt.getSourceObjectId()))
+                                .first();
+                if (source == null) {
+                    source = new GameItem(GameData.getItemDataMap().get(receipt.getSourceId()), 1);
+                    source.restorePersistenceId(new ObjectId(receipt.getSourceObjectId()));
+                } else
+                    require(
+                            source.getOwnerId() == player.getUid()
+                                    && source.getItemId() == receipt.getSourceId()
+                                    && source.getCount() == 0,
+                            "退款原物品的归属或数量已改变。");
                 source.setOwner(
                         player); // Runtime GUIDs from a previous session must never be reused.
                 source.setCount(0);

@@ -47,9 +47,9 @@ class ExpeditionClaimTest {
     private final List<String> snapshots = new ArrayList<>();
 
     static class ExpeditionPlayer extends InvestigationRewardTest.ClaimPlayer {
-        boolean throwGrant, refuseGrant;
-        Runnable afterGrant;
-        final Inventory rewards =
+        transient boolean throwGrant, refuseGrant;
+        transient Runnable afterGrant;
+        final transient Inventory rewards =
                 new Inventory(this) {
                     @Override
                     public boolean addItem(ItemParamData item, ActionReason reason) {
@@ -68,6 +68,9 @@ class ExpeditionClaimTest {
             return rewards;
         }
     }
+
+    private emu.grasscutter.game.player.GuardedPlayerTestStore guardedPlayer;
+    private emu.grasscutter.game.inventory.ObservedItemTestWrites itemWrites;
 
     @BeforeEach
     void prepare() throws Exception {
@@ -119,12 +122,23 @@ class ExpeditionClaimTest {
         datastore = DatabaseManager.class.getDeclaredField("gameDatastore");
         datastore.setAccessible(true);
         previousDatastore = datastore.get(null);
+        guardedPlayer =
+                new emu.grasscutter.game.player.GuardedPlayerTestStore(
+                        player,
+                        () -> {
+                            confirmedSaves++;
+                            snapshots.add(gson.toJson(player.getExpeditionInfo()));
+                            if (confirmedSaves == failSaveAt)
+                                throw new IllegalStateException("Confirmation failed");
+                        });
         datastore.set(
                 null,
                 Proxy.newProxyInstance(
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
+                            if (method.getName().equals("getMapper"))
+                                return guardedPlayer.datastore().getMapper();
                             if (!method.getName().equals("save")) return null;
                             if (args.length == 2) {
                                 confirmedSaves++;
@@ -134,6 +148,17 @@ class ExpeditionClaimTest {
                             }
                             return args[0];
                         }));
+        itemWrites =
+                new emu.grasscutter.game.inventory.ObservedItemTestWrites(
+                        player,
+                        guardedPlayer.datastore(),
+                        DatabaseManager.getGameDatastore(),
+                        doc -> {
+                            confirmedSaves++;
+                            if (confirmedSaves == failSaveAt)
+                                throw new IllegalStateException("Item confirmation failed");
+                        },
+                        doc -> {});
         expedition(111, 101, 4, 1, Utils.getCurrentSeconds() - 14401);
         player.packets.clear();
     }
@@ -141,6 +166,8 @@ class ExpeditionClaimTest {
     @AfterEach
     void close() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        if (itemWrites != null) itemWrites.close();
+        if (guardedPlayer != null) guardedPlayer.close();
         if (datastore != null) datastore.set(null, previousDatastore);
         Collections.reverse(restore);
         restore.forEach(Runnable::run);

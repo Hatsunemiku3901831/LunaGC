@@ -94,7 +94,7 @@ class ArtifactReshapeTest extends ArtifactTransmuterDefineTest {
         }
         for (int i = 0; i < initialProps + 1; i++)
             item.getAppendPropIdList().add(item.getAppendPropIdList().get(0));
-        store.save(item);
+        DatabaseHelper.saveGameSync(item);
         return item;
     }
 
@@ -107,7 +107,7 @@ class ArtifactReshapeTest extends ArtifactTransmuterDefineTest {
         item.setLevel(21);
         item.getAppendPropIdList().clear();
         item.getAppendPropIdList().addAll(original);
-        store.save(item);
+        DatabaseHelper.saveGameSync(item);
         return item;
     }
 

@@ -78,7 +78,7 @@ class StatueOfferingPersistenceTest extends WidgetPersistenceTest {
         item.setOwner(actual);
         actual.getInventory().getItems().put(item.getGuid(), item);
         actual.getInventory().getInventoryTab(ItemType.ITEM_MATERIAL).onAddItem(item);
-        store.save(item);
+        DatabaseHelper.saveGameSync(item);
     }
 
     @Test

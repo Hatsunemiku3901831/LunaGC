@@ -88,6 +88,8 @@ class ForgeStartFlowTest {
         }
     }
 
+    private emu.grasscutter.game.inventory.ObservedItemTestWrites itemWrites;
+
     @BeforeEach
     void setup() throws Exception {
         environment = new AbilityTestFixture();
@@ -111,16 +113,21 @@ class ForgeStartFlowTest {
         datastore = DatabaseManager.class.getDeclaredField("gameDatastore");
         datastore.setAccessible(true);
         oldDatastore = datastore.get(null);
-        playerStore = new GuardedPlayerTestStore(player, () -> {
-            if (++confirmations == failConfirmation) throw new IllegalStateException("Confirmation fault");
-        });
+        playerStore =
+                new GuardedPlayerTestStore(
+                        player,
+                        () -> {
+                            if (++confirmations == failConfirmation)
+                                throw new IllegalStateException("Confirmation fault");
+                        });
         datastore.set(
                 null,
                 Proxy.newProxyInstance(
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
-                            if (method.getName().equals("getMapper")) return playerStore.datastore().getMapper();
+                            if (method.getName().equals("getMapper"))
+                                return playerStore.datastore().getMapper();
                             if (method.getName().equals("save")
                                     || method.getName().equals("delete")) {
                                 if (args.length == 2 && ++confirmations == failConfirmation)
@@ -131,6 +138,16 @@ class ForgeStartFlowTest {
                             }
                             return null;
                         }));
+        itemWrites =
+                new emu.grasscutter.game.inventory.ObservedItemTestWrites(
+                        player,
+                        playerStore.datastore(),
+                        DatabaseManager.getGameDatastore(),
+                        doc -> {
+                            if (++confirmations == failConfirmation)
+                                throw new IllegalStateException("Item confirmation fault");
+                        },
+                        doc -> {});
         assertTrue(player.getInventory().addItem(101001, 100));
         dispatcher = new GameServerPacketHandler(PacketHandler.class);
         player.packets.clear();
@@ -139,6 +156,7 @@ class ForgeStartFlowTest {
     @AfterEach
     void cleanup() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        if (itemWrites != null) itemWrites.close();
         if (datastore != null) datastore.set(null, oldDatastore);
         if (playerStore != null) playerStore.close();
         GameData.getForgeDataMap().clear();

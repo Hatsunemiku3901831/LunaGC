@@ -405,6 +405,19 @@ class ActivityWatcherRewardTest {
         assertNull(row().get("pendingWatcherReward"));
     }
 
+    @Test
+    void aConsumedNewInstanceStillProvesItsOriginalDeliveryAfterReconnect() throws Exception {
+        player.failPacket = PacketOpcodes.StoreItemChangeNotify;
+        assertNotEquals(0, claim());
+        assertTrue(player.getInventory().removeItem(MATERIAL, 5));
+        assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(10)));
+        cold();
+        assertEquals(0, claim());
+        assertTrue(taken());
+        assertEquals(0, player.getInventory().getItemCountById(MATERIAL));
+        assertTrue(DatabaseHelper.getInventoryItems(player).isEmpty());
+    }
+
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4})
     void liveRecoveryDoesNotRepeatAcknowledgedOrUnstartedRows(int nth) throws Exception {

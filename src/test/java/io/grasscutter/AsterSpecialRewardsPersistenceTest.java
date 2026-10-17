@@ -42,6 +42,7 @@ class AsterSpecialRewardsPersistenceTest {
             var field = DatabaseManager.class.getDeclaredField("gameDatastore");
             field.setAccessible(true);
             Object previous = field.get(null);
+            emu.grasscutter.game.inventory.ObservedItemTestWrites itemWrites = null;
             try {
                 assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
                 var store =
@@ -108,19 +109,44 @@ class AsterSpecialRewardsPersistenceTest {
                                     }
                                     return result;
                                 }));
-                GuardedActivityTestStore.bind(data, store, DatabaseManager.getGameDatastore(), true,
-                        ignored -> {}, document -> {
+                itemWrites =
+                        new emu.grasscutter.game.inventory.ObservedItemTestWrites(
+                                player,
+                                store,
+                                DatabaseManager.getGameDatastore(),
+                                doc -> {},
+                                doc -> {
+                                    int id = doc.getInteger("itemId");
+                                    if (failure == 2 && id == 15101
+                                            || failure == 6 && (id == 1131 || id == 221)) {
+                                        fault.set(true);
+                                        throw new IllegalStateException(
+                                                "Item write accepted, acknowledgement lost");
+                                    }
+                                });
+                GuardedActivityTestStore.bind(
+                        data,
+                        store,
+                        DatabaseManager.getGameDatastore(),
+                        true,
+                        ignored -> {},
+                        document -> {
                             int n = activitySaves.incrementAndGet();
                             if (failure == 1 && n == 1 || failure == 5 && n == 2) {
                                 fault.set(true);
-                                throw new IllegalStateException("Activity write accepted, acknowledgement lost");
+                                throw new IllegalStateException(
+                                        "Activity write accepted, acknowledgement lost");
                             }
                         });
-                emu.grasscutter.game.player.GuardedPlayerTestStore.loadSeededProfile(player, store,
-                        () -> {}, document -> {
+                emu.grasscutter.game.player.GuardedPlayerTestStore.loadSeededProfile(
+                        player,
+                        store,
+                        () -> {},
+                        document -> {
                             if (failure == 4) {
                                 fault.set(true);
-                                throw new IllegalStateException("Player write accepted, acknowledgement lost");
+                                throw new IllegalStateException(
+                                        "Player write accepted, acknowledgement lost");
                             }
                         });
                 assertEquals(0, AsterSpecialRewardDelivery.validate(player, 3000000));
@@ -218,6 +244,7 @@ class AsterSpecialRewardsPersistenceTest {
                 assertEquals(glitter, count(store, player.getUid(), 221));
             } finally {
                 assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+                if (itemWrites != null) itemWrites.close();
                 field.set(null, previous);
                 client.getDatabase(database).drop();
             }

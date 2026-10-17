@@ -12,6 +12,8 @@ import emu.grasscutter.game.props.*;
 import emu.grasscutter.utils.JsonUtils;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -252,8 +254,10 @@ class StatueOfferingRecoveryTest extends StatueOfferingPersistenceTest {
         assertEquals(5, done.getInventory().getItemCountById(305));
     }
 
-    @Test
-    void materialAcknowledgementBeforePlayerWriteKeepsTheReservedOutputIdentity() throws Exception {
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void materialAcknowledgementBeforePlayerWriteKeepsTheReservedOutputIdentity(boolean consumed)
+            throws Exception {
         var target = offerPlayer();
         stock(target, 107001, 2);
         new SotSManager(
@@ -270,9 +274,43 @@ class StatueOfferingRecoveryTest extends StatueOfferingPersistenceTest {
         ownWorld(restored);
         var id = restored.getInventory().getItemById(305).getObjectId();
         assertNotNull(pending(restored));
+        if (consumed) {
+            assertTrue(restored.getInventory().removeItem(305, 5));
+            assertTrue(DatabaseHelper.awaitIdle(java.time.Duration.ofSeconds(5)));
+            restored = read();
+            ownWorld(restored);
+        }
         recover(restored, pending(restored).getOperationId(), true);
-        completed(restored);
-        assertEquals(id, read().getInventory().getItemById(305).getObjectId());
+        if (!consumed) {
+            completed(restored);
+            assertEquals(id, read().getInventory().getItemById(305).getObjectId());
+        } else {
+            var done = read();
+            assertNull(done.getSotsManager().getCityInfo(1).getPendingOffer());
+            assertEquals(2, done.getSotsManager().getCityInfo(1).getLevel());
+            assertEquals(1, done.getInventory().getItemCountById(107001));
+            assertEquals(10, done.getPrimogems());
+            assertEquals(80, done.getExp());
+            assertEquals(0, done.getInventory().getItemCountById(305));
+            assertEquals(10700, done.getProperty(PlayerProperty.PROP_MAX_STAMINA));
+            assertTrue(store.find(GameItem.class).field("id").equal(id).first().isDeleted());
+        }
+    }
+
+    @Test
+    void cancellingAnUnspentOfferingRetiresItsDelayedCostWrite() throws Exception {
+        var target = interrupted(false, false);
+        String id = pending(target).getOperationId();
+        var source = target.getInventory().getItemById(107001);
+        var delayed = new DelayedItemSave(source, store, false, false);
+        source.setCount(1);
+        assertThrows(RuntimeException.class, () -> DatabaseHelper.saveGameSync(source));
+        var restored = read();
+        ownWorld(restored);
+        recover(restored, id, false);
+        assertFalse(delayed.release());
+        assertNull(read().getSotsManager().getCityInfo(1).getPendingOffer());
+        assertEquals(2, read().getInventory().getItemCountById(107001));
     }
 
     @Test

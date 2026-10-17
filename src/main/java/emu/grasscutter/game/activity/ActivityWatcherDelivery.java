@@ -221,9 +221,8 @@ final class ActivityWatcherDelivery {
         if (line.getKind() == EQUIPMENT)
             require(live(player, line.getObjectId()) == null, "活动装备实例已经存在，需先核对。");
         var offered =
-                DatabaseManager.getGameDatastore()
-                        .getMapper()
-                        .fromDocument(GameItem.class, Document.parse(line.getTemplate()));
+                GameItem.fromUnownedTemplate(
+                        DatabaseManager.getGameDatastore(), Document.parse(line.getTemplate()));
         require(offered.getOwnerId() == 0, "活动奖励模板已经拥有玩家。");
         starting.run();
         require(inventory.addItem(offered, ActionReason.ActivityWatcher), "活动奖励未被接受。");

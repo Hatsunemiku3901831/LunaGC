@@ -1,5 +1,6 @@
 package emu.grasscutter.game.inventory;
 
+import dev.morphia.Datastore;
 import dev.morphia.annotations.*;
 
 import emu.grasscutter.data.*;
@@ -26,16 +27,61 @@ import emu.grasscutter.utils.objects.WeightedList;
 
 import lombok.*;
 
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.util.*;
 
 @Entity(value = "items", useDiscriminator = false)
+@Indexes(@Index(fields = {@Field("ownerId"), @Field("count")}))
 public class GameItem {
     @Id private ObjectId id;
     @Indexed private int ownerId;
     @Getter @Setter private int itemId;
     @Getter @Setter private int count;
+    @Getter private ItemSaveStamp saveStamp;
+    @Getter private boolean deleted;
+    @Getter private String foodRefundOperationId;
+    @Transient private transient ItemSaveGuard saveGuard;
+
+    public synchronized ItemSaveGuard getSaveGuard() {
+        if (saveGuard == null) saveGuard = new ItemSaveGuard(this, null, null);
+        return saveGuard;
+    }
+
+    void setSaveStamp(ItemSaveStamp stamp) {
+        saveStamp = stamp;
+    }
+
+    void markDeleted() {
+        deleted = true;
+        count = 0;
+    }
+
+    void acceptSaveState(
+            ItemSaveStamp stamp, boolean deleted, String foodRefund, boolean applyCount) {
+        saveStamp = stamp;
+        this.deleted = deleted;
+        foodRefundOperationId = foodRefund;
+        if (deleted && applyCount) count = 0;
+    }
+
+    /** Templates are new unowned outputs, not copies loaded from the items collection. */
+    public static GameItem fromUnownedTemplate(Datastore ds, Document template) {
+        if (template.getInteger("ownerId", 0) != 0
+                || Boolean.TRUE.equals(template.get("deleted"))
+                || template.get("saveStamp") != null
+                || template.get("foodRefundOperationId") != null)
+            throw new IllegalStateException("Reward template already belongs to a saved item");
+        var item = ds.getMapper().fromDocument(GameItem.class, template);
+        if (item.getOwnerId() != 0
+                || item.getGuid() != 0
+                || item.isDeleted()
+                || item.getSaveStamp() != null)
+            throw new IllegalStateException("Invalid unowned item template");
+        item.saveGuard = null;
+        return item;
+    }
 
     @Transient @Getter private long guid; // Player unique id
     @Transient @Getter @Setter private transient volatile boolean reshapePending;
@@ -191,9 +237,11 @@ public class GameItem {
     public void setOwner(Player player) {
         this.ownerId = player.getUid();
         this.guid = player.getNextGameGuid();
-        this.reshapePending = this.id != null
-                && player.getArtifactTransmuterData().getReshapeCandidates()
-                        .containsKey(this.id.toHexString());
+        this.reshapePending =
+                this.id != null
+                        && player.getArtifactTransmuterData()
+                                .getReshapeCandidates()
+                                .containsKey(this.id.toHexString());
     }
 
     public void checkIsNew(Inventory inventory) {
@@ -384,11 +432,21 @@ public class GameItem {
         return needed > 0 && remaining > 0 && remaining <= needed ? selected : Set.of();
     }
 
-    @PostLoad
     public void onLoad() {
         if (this.itemData == null) {
             this.itemData = GameData.getItemDataMap().get(getItemId());
         }
+    }
+
+    @PostLoad
+    private void onLoadSaveState(Document row, Datastore source) {
+        onLoad();
+        if (row.get("foodRefundOperationId") != null) {
+            Object refund = row.get("foodRefundOperationId");
+            if (!(refund instanceof String op) || !UUID.fromString(op).toString().equals(op))
+                throw new IllegalStateException("Invalid stored food refund identity");
+        }
+        if (row.get("_id") != null) saveGuard = new ItemSaveGuard(this, row, source);
     }
 
     public void save() {
@@ -409,7 +467,8 @@ public class GameItem {
                         .setLevel(this.getLevel())
                         .setGadgetId(this.getItemData().getGadgetId())
                         .setAbilityInfo(
-                                getWeaponEntity() != null ? getWeaponEntity().getAbilityRoots().toSyncState()
+                                getWeaponEntity() != null
+                                        ? getWeaponEntity().getAbilityRoots().toSyncState()
                                         : AbilitySyncStateInfo.getDefaultInstance());
 
         if (this.getAffixes() != null && this.getAffixes().size() > 0) {

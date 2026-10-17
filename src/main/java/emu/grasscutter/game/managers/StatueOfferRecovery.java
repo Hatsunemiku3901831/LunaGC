@@ -253,6 +253,9 @@ final class StatueOfferRecovery {
                         .equal(player.getUid())
                         .field("itemId")
                         .equal(itemId)
+                        .filter(
+                                dev.morphia.query.experimental.filters.Filters.ne("deleted", true),
+                                dev.morphia.query.experimental.filters.Filters.gt("count", 0))
                         .iterator()) {
             cursor.forEachRemaining(stored::add);
         }
@@ -264,7 +267,12 @@ final class StatueOfferRecovery {
                         .equal(new ObjectId(objectId))
                         .first();
         if (live.isEmpty()) {
-            require(reserved == null, "预留持久 ID 已被其他物品占用。");
+            require(
+                    reserved == null
+                            || reserved.getOwnerId() == player.getUid()
+                                    && reserved.getItemId() == itemId
+                                    && reserved.getCount() == 0,
+                    "预留持久 ID 已被其他物品占用。");
             return 0;
         }
         var a = live.get(0);
@@ -439,7 +447,22 @@ final class StatueOfferRecovery {
                         "材料奖励数量或持久 ID 重复。");
                 count = stack(row.getId(), row.getObjectId());
             }
-            boolean after = count == row.getAfter() && matches(player, row, true);
+            boolean consumedOutput = false;
+            if (!row.isVirtual() && row.getBefore() == 0 && count == 0) {
+                var evidence =
+                        DatabaseManager.getGameDatastore()
+                                .find(GameItem.class)
+                                .field("id")
+                                .equal(new ObjectId(row.getObjectId()))
+                                .first();
+                consumedOutput =
+                        evidence != null
+                                && evidence.isDeleted()
+                                && evidence.getCount() == 0
+                                && evidence.getOwnerId() == player.getUid()
+                                && evidence.getItemId() == row.getId();
+            }
+            boolean after = consumedOutput || count == row.getAfter() && matches(player, row, true);
             boolean before = count == row.getBefore() && matches(player, row, false);
             require(after || before, "奖励 " + row.getId() + " 不等于发放前后快照。");
             require(!applied || after, "已结算记录的奖励与存档不符。");
@@ -480,6 +503,11 @@ final class StatueOfferRecovery {
                                 && player.getProperty(PlayerProperty.PROP_MAX_STAMINA)
                                         == receipt.getStaminaBefore(),
                         "只能取消未扣费且未发奖的预留；已扣费记录请使用 resume。");
+                if (receipt.getConsumed() > 0)
+                    player.getInventory()
+                            .getItemById(receipt.getItemId())
+                            .getSaveGuard()
+                            .confirmStoredVersion(DatabaseManager.getGameDatastore());
                 clear(checked.city(), receipt);
             } else {
                 var remaining = new ArrayList<ItemParamData>();

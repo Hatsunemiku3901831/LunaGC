@@ -75,7 +75,7 @@ class FoodUsePaymentPersistenceTest extends WidgetPersistenceTest {
         food.setOwner(target);
         target.getInventory().getItems().put(food.getGuid(), food);
         target.getInventory().getInventoryTab(ItemType.ITEM_MATERIAL).onAddItem(food);
-        store.save(food);
+        DatabaseHelper.saveGameSync(food);
     }
 
     @AfterEach
@@ -106,7 +106,13 @@ class FoodUsePaymentPersistenceTest extends WidgetPersistenceTest {
         assertNull(restored.getPendingItemUse());
         assertEquals(4900, savedAvatar().get("currentHp", Number.class).doubleValue());
         assertEquals(3000, savedAvatar().getInteger("satiation"));
-        assertNull(store.find(GameItem.class).field("id").equal(id).first());
+        var consumed = store.find(GameItem.class).field("id").equal(id).first();
+        assertNotNull(consumed);
+        assertTrue(consumed.isDeleted());
+        assertEquals(0, consumed.getCount());
+        assertTrue(
+                DatabaseHelper.getInventoryItems(restored).stream()
+                        .noneMatch(item -> item.getObjectId().equals(id)));
     }
 
     @Test
