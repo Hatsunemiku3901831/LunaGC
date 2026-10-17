@@ -1,0 +1,7 @@
+// 7.1 native type 74103 has no instance fields; CmdId 28982.
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "TakeAllForgeOutputReqOuterClass";
+
+message TakeAllForgeOutputReq {}

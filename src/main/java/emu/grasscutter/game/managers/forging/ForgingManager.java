@@ -14,6 +14,7 @@ import emu.grasscutter.net.proto.ForgeQueueDataOuterClass.ForgeQueueData;
 import emu.grasscutter.net.proto.ForgeQueueManipulateReqOuterClass.ForgeQueueManipulateReq;
 import emu.grasscutter.net.proto.ForgeQueueManipulateTypeOuterClass.ForgeQueueManipulateType;
 import emu.grasscutter.net.proto.ForgeStartReqOuterClass.ForgeStartReq;
+import emu.grasscutter.net.proto.ItemHintOuterClass.ItemHint;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.server.event.player.PlayerForgeItemEvent;
 import emu.grasscutter.server.packet.send.*;
@@ -22,6 +23,7 @@ import emu.grasscutter.utils.Utils;
 import java.util.*;
 
 public final class ForgingManager extends BasePlayerManager {
+    private boolean collectingAllOutputs;
 
     public ForgingManager(Player player) {
         super(player);
@@ -139,6 +141,10 @@ public final class ForgingManager extends BasePlayerManager {
 
     public synchronized void handleForgeStartReq(ForgeStartReq req) {
         synchronized (player.getInventory()) {
+            if (collectingAllOutputs) {
+                failStart(Retcode.RET_FAIL);
+                return;
+            }
             var active = player.getActiveForges();
             if (active.stream().anyMatch(queue -> queue == null || queue.isBusy())) {
                 failStart(Retcode.RET_SVR_ERROR);
@@ -311,7 +317,25 @@ public final class ForgingManager extends BasePlayerManager {
      * Forge queue manipulation (obtaining results and cancelling forges).
      **********/
     private synchronized void obtainItems(int queueId) {
-        int type = ForgeQueueManipulateType.ForgeQueueManipulateType_RECEIVE_OUTPUT_VALUE;
+        var result = collectOutput(queueId, Utils.getCurrentSeconds());
+        if (result.retcode() == 0) sendForgeQueueDataNotify(result.removed());
+        player.sendPacket(
+                new PacketForgeQueueManipulateRsp(
+                        result.retcode(),
+                        ForgeQueueManipulateType.ForgeQueueManipulateType_RECEIVE_OUTPUT_VALUE,
+                        result.output(),
+                        result.returns(),
+                        List.of()));
+    }
+
+    private record ForgeOutputResult(
+            int retcode, List<ItemHint> output, List<ItemHint> returns, boolean removed) {
+        static ForgeOutputResult failure(Retcode code) {
+            return new ForgeOutputResult(code.getNumber(), List.of(), List.of(), false);
+        }
+    }
+
+    private ForgeOutputResult collectOutput(int queueId, int currentTime) {
         var active = player.getActiveForges();
         var forge = active.get(queueId - 1);
         var definition = GameData.getForgeDataMap().get(forge.getForgeId());
@@ -323,13 +347,11 @@ public final class ForgingManager extends BasePlayerManager {
                 || forge.getCount() > definition.getQueueNum()
                 || forge.getForgeTime() <= 0
                 || forge.getTotalFinishTimestamp() <= 0) {
-            failManipulate(type, Retcode.RET_NOT_FOUND_CONFIG);
-            return;
+            return ForgeOutputResult.failure(Retcode.RET_NOT_FOUND_CONFIG);
         }
-        int finished = forge.getFinishedCount(Utils.getCurrentSeconds());
+        int finished = forge.getFinishedCount(currentTime);
         if (finished <= 0) {
-            failManipulate(type, Retcode.RET_FORGE_NO_FINISH_CAN_TAKE);
-            return;
+            return ForgeOutputResult.failure(Retcode.RET_FORGE_NO_FINISH_CAN_TAKE);
         }
         List<ItemParamData> products;
         try {
@@ -346,8 +368,7 @@ public final class ForgingManager extends BasePlayerManager {
                                 .toList();
             else throw new IllegalArgumentException("Unknown forge product receipt");
         } catch (RuntimeException invalid) {
-            failManipulate(type, Retcode.RET_NOT_FOUND_CONFIG);
-            return;
+            return ForgeOutputResult.failure(Retcode.RET_NOT_FOUND_CONFIG);
         }
         boolean confirmationStarted = false;
         try {
@@ -359,8 +380,7 @@ public final class ForgingManager extends BasePlayerManager {
                 var result = GameData.getItemDataMap().get(product.getId());
                 if (result == null || result.getId() != product.getId() || result.isUseOnGain()) {
                     forge.releaseOutputReservation();
-                    failManipulate(type, Retcode.RET_NOT_FOUND_CONFIG);
-                    return;
+                    return ForgeOutputResult.failure(Retcode.RET_NOT_FOUND_CONFIG);
                 }
                 if (result.getItemType() == ItemType.ITEM_VIRTUAL) {
                     experience.add(product);
@@ -370,16 +390,14 @@ public final class ForgingManager extends BasePlayerManager {
                 var weaponTab = player.getInventory().getInventoryTab(ItemType.ITEM_WEAPON);
                 if (!weapon && result.getItemType() != ItemType.ITEM_MATERIAL) {
                     forge.releaseOutputReservation();
-                    failManipulate(type, Retcode.RET_NOT_FOUND_CONFIG);
-                    return;
+                    return ForgeOutputResult.failure(Retcode.RET_NOT_FOUND_CONFIG);
                 }
                 if (weapon && (weaponTab == null || product.getCount() > weaponTab.getMaxCapacity())
                         || !weapon
                                 && (result.getStackLimit() <= 0
                                         || product.getCount() > result.getStackLimit())) {
                     forge.releaseOutputReservation();
-                    failManipulate(type, Retcode.RET_ITEM_EXCEED_LIMIT);
-                    return;
+                    return ForgeOutputResult.failure(Retcode.RET_ITEM_EXCEED_LIMIT);
                 }
                 for (int i = 0, entries = weapon ? product.getCount() : 1; i < entries; i++) {
                     var event =
@@ -387,8 +405,7 @@ public final class ForgingManager extends BasePlayerManager {
                                     player, new GameItem(result, weapon ? 1 : product.getCount()));
                     if (!event.call()) {
                         forge.releaseOutputReservation();
-                        failManipulate(type, Retcode.RET_FAIL);
-                        return;
+                        return ForgeOutputResult.failure(Retcode.RET_FAIL);
                     }
                     outputs.add(event.getItemForged());
                 }
@@ -401,13 +418,11 @@ public final class ForgingManager extends BasePlayerManager {
                         || data.getItemType() != ItemType.ITEM_MATERIAL
                         || data.isUseOnGain()) {
                     forge.releaseOutputReservation();
-                    failManipulate(type, Retcode.RET_NOT_FOUND_CONFIG);
-                    return;
+                    return ForgeOutputResult.failure(Retcode.RET_NOT_FOUND_CONFIG);
                 }
                 if (bonus.getCount() > data.getStackLimit()) {
                     forge.releaseOutputReservation();
-                    failManipulate(type, Retcode.RET_ITEM_EXCEED_LIMIT);
-                    return;
+                    return ForgeOutputResult.failure(Retcode.RET_ITEM_EXCEED_LIMIT);
                 }
                 delivery.add(new GameItem(data, bonus.getCount()));
             }
@@ -415,8 +430,7 @@ public final class ForgingManager extends BasePlayerManager {
             if (validation == 0) validation = ForgeExperienceDelivery.validate(player, experience);
             if (validation != 0) {
                 forge.releaseOutputReservation();
-                failManipulate(type, Retcode.forNumber(validation));
-                return;
+                return ForgeOutputResult.failure(Retcode.forNumber(validation));
             }
             confirmationStarted = true;
             DatabaseHelper.saveGameSync(player);
@@ -442,14 +456,8 @@ public final class ForgingManager extends BasePlayerManager {
             if (removed) active.remove(forge);
             else forge.acknowledgeOutput();
             DatabaseHelper.saveGameSync(player);
-            sendForgeQueueDataNotify(removed);
-            player.sendPacket(
-                    new PacketForgeQueueManipulateRsp(
-                            0,
-                            type,
-                            primaryHints,
-                            hints.subList(outputs.size(), hints.size()),
-                            List.of()));
+            return new ForgeOutputResult(
+                    0, primaryHints, hints.subList(outputs.size(), hints.size()), removed);
         } catch (RuntimeException failure) {
             if (confirmationStarted) {
                 forge.restoreOutputPending();
@@ -463,8 +471,88 @@ public final class ForgingManager extends BasePlayerManager {
                                 finished,
                                 failure);
             } else if (forge.getOutputState() == 1) forge.releaseOutputReservation();
-            failManipulate(type, Retcode.RET_SVR_ERROR);
+            return ForgeOutputResult.failure(Retcode.RET_SVR_ERROR);
         }
+    }
+
+    public synchronized void handleTakeAllForgeOutputReq() {
+        synchronized (player.getInventory()) {
+            var active = player.getActiveForges();
+            if (collectingAllOutputs
+                    || active.stream().anyMatch(forge -> forge == null || forge.isBusy())) {
+                player.sendPacket(
+                        new PacketTakeAllForgeOutputRsp(
+                                Retcode.RET_SVR_ERROR_VALUE, List.of(), List.of(), List.of()));
+                return;
+            }
+            collectingAllOutputs = true;
+            try {
+                int currentTime = Utils.getCurrentSeconds();
+                var output = new ArrayList<ItemHint>();
+                var returns = new ArrayList<ItemHint>();
+                var failures = new ArrayList<Integer>();
+                boolean changed = false, removed = false;
+                // Collection removes/reindexes queues; visit the original identities exactly once.
+                for (var forge : new ArrayList<>(active)) {
+                    if (forge.getFinishedCount(currentTime) <= 0) continue;
+                    int queueId = active.indexOf(forge) + 1;
+                    if (queueId <= 0) {
+                        failures.add(Retcode.RET_FAIL_VALUE);
+                        break;
+                    }
+                    var result = collectOutput(queueId, currentTime);
+                    if (result.retcode() != 0) {
+                        failures.add(result.retcode());
+                        // An uncertain save or partial grant must be reconciled before more grants.
+                        if (forge.isBusy()) break;
+                        continue;
+                    }
+                    output.addAll(result.output());
+                    returns.addAll(result.returns());
+                    changed = true;
+                    removed |= result.removed();
+                }
+                if (changed) sendForgeQueueDataNotify(removed);
+                player.sendPacket(
+                        new PacketTakeAllForgeOutputRsp(
+                                0, mergeForgeHints(output), mergeForgeHints(returns), failures));
+            } finally {
+                collectingAllOutputs = false;
+            }
+        }
+    }
+
+    private record ForgeHintKey(int itemId, long guid) {}
+
+    private static List<ItemHint> mergeForgeHints(List<ItemHint> hints) {
+        var result = new ArrayList<ItemHint>();
+        var indices = new HashMap<ForgeHintKey, Integer>();
+        for (var hint : hints) {
+            if (hint.getGuid() == 0) {
+                result.add(hint);
+                continue;
+            }
+            var key = new ForgeHintKey(hint.getItemId(), hint.getGuid());
+            var index = indices.get(key);
+            if (index == null) {
+                indices.put(key, result.size());
+                result.add(hint);
+                continue;
+            }
+            var previous = result.get(index);
+            long total = (long) previous.getCount() + hint.getCount();
+            if (total > Integer.MAX_VALUE) {
+                result.add(hint);
+                continue;
+            }
+            result.set(
+                    index,
+                    previous.toBuilder()
+                            .setCount((int) total)
+                            .setIsNew(previous.getIsNew() || hint.getIsNew())
+                            .build());
+        }
+        return result;
     }
 
     private void failManipulate(int type, Retcode code) {
@@ -549,6 +637,10 @@ public final class ForgingManager extends BasePlayerManager {
 
     public synchronized void handleForgeQueueManipulateReq(ForgeQueueManipulateReq req) {
         synchronized (player.getInventory()) {
+            if (collectingAllOutputs) {
+                failManipulate(req.getManipulateTypeValue(), Retcode.RET_FAIL);
+                return;
+            }
             // Get info from the request.
             int queueId = req.getForgeQueueId();
             var manipulateType = req.getManipulateType();

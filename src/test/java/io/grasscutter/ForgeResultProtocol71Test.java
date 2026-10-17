@@ -9,6 +9,7 @@ import emu.grasscutter.net.proto.ForgeQueueManipulateRspOuterClass.ForgeQueueMan
 import emu.grasscutter.net.proto.ForgeQueueManipulateTypeOuterClass.ForgeQueueManipulateType;
 import emu.grasscutter.net.proto.ItemHintOuterClass.ItemHint;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
+import emu.grasscutter.net.proto.TakeAllForgeOutputRspOuterClass.TakeAllForgeOutputRsp;
 import emu.grasscutter.server.packet.send.PacketForgeQueueManipulateRsp;
 
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,33 @@ import java.util.List;
 
 /** Byte samples follow the current native parser, independent of generated descriptors. */
 class ForgeResultProtocol71Test {
+    @Test
+    void takeAllFieldsUseTheCurrentNativeTags() {
+        var fields = TakeAllForgeOutputRsp.getDescriptor();
+        assertEquals(2, fields.findFieldByName("retcode").getNumber());
+        assertEquals(5, fields.findFieldByName("return_item_list").getNumber());
+        assertEquals(7, fields.findFieldByName("extra_output_item_list").getNumber());
+        assertEquals(9, fields.findFieldByName("fail_retcode_list").getNumber());
+        assertEquals(12, fields.findFieldByName("output_item_list").getNumber());
+    }
+
+    @Test
+    void nativeTakeAllSampleDecodesAllListsAndFailureCodes() throws Exception {
+        // Independently constructed from reader 0x1527708d0; not a captured packet.
+        byte[] sample = {
+            16, 1, 42, 4, 8, 11, 16, 2, 58, 4, 8, 22, 16, 3, 74, 2, 1, 2, 98, 4, 8, 33, 16, 4
+        };
+        var reply = TakeAllForgeOutputRsp.parseFrom(sample);
+        assertEquals(1, reply.getRetcode());
+        assertEquals(11, reply.getReturnItemList(0).getItemId());
+        assertEquals(2, reply.getReturnItemList(0).getCount());
+        assertEquals(22, reply.getExtraOutputItemList(0).getItemId());
+        assertEquals(3, reply.getExtraOutputItemList(0).getCount());
+        assertEquals(List.of(1, 2), reply.getFailRetcodeListList());
+        assertEquals(33, reply.getOutputItemList(0).getItemId());
+        assertEquals(4, reply.getOutputItemList(0).getCount());
+    }
+
     private static GameItem item(int id, int count, long guid) throws Exception {
         var item = new GameItem();
         item.setItemId(id);

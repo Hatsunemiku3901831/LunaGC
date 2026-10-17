@@ -1,0 +1,15 @@
+// 7.1 native type 57436: reader 0x1527708d0; item lists share ItemHint type 46593.
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "TakeAllForgeOutputRspOuterClass";
+
+import "ItemHint.proto";
+
+message TakeAllForgeOutputRsp {
+  int32 retcode = 2;
+  repeated ItemHint return_item_list = 5;
+  repeated ItemHint extra_output_item_list = 7;
+  repeated int32 fail_retcode_list = 9;
+  repeated ItemHint output_item_list = 12;
+}

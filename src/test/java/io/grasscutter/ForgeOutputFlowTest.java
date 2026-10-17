@@ -3,6 +3,7 @@ package io.grasscutter;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.google.gson.Gson;
+import com.google.protobuf.UnknownFieldSet;
 
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.*;
@@ -17,6 +18,8 @@ import emu.grasscutter.net.proto.ForgeQueueDataNotifyOuterClass.ForgeQueueDataNo
 import emu.grasscutter.net.proto.ForgeQueueManipulateReqOuterClass.ForgeQueueManipulateReq;
 import emu.grasscutter.net.proto.ForgeQueueManipulateRspOuterClass.ForgeQueueManipulateRsp;
 import emu.grasscutter.net.proto.ForgeStartReqOuterClass.ForgeStartReq;
+import emu.grasscutter.net.proto.ItemHintOuterClass.ItemHint;
+import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
 import emu.grasscutter.plugin.PluginManager;
 import emu.grasscutter.server.event.*;
 import emu.grasscutter.server.event.player.PlayerForgeItemEvent;
@@ -305,6 +308,268 @@ class ForgeOutputFlowTest {
     private ForgeQueueManipulateRsp take(int id) throws Exception {
         sendTake(id, 0);
         return last();
+    }
+
+    private UnknownFieldSet takeAll() throws Exception {
+        return takeAll(new byte[0]);
+    }
+
+    private UnknownFieldSet takeAll(byte[] payload) throws Exception {
+        // Native empty type 74103 has CmdId 28982; response type 57436 has CmdId 3416.
+        int before = player.packets.size();
+        request(28982, payload);
+        var reply =
+                player.packets.subList(before, player.packets.size()).stream()
+                        .filter(packet -> packet.getOpcode() == 3416)
+                        .reduce((a, b) -> b);
+        assertTrue(reply.isPresent(), "Take all must answer the client's dedicated request");
+        return UnknownFieldSet.parseFrom(reply.orElseThrow().getData());
+    }
+
+    private static int allRetcode(UnknownFieldSet reply) {
+        var values = reply.getField(2).getVarintList();
+        return values.isEmpty() ? 0 : values.get(0).intValue();
+    }
+
+    private static List<ItemHint> allHints(UnknownFieldSet reply, int tag) throws Exception {
+        var hints = new ArrayList<ItemHint>();
+        for (var encoded : reply.getField(tag).getLengthDelimitedList())
+            hints.add(ItemHint.parseFrom(encoded));
+        return hints;
+    }
+
+    private static List<Integer> allFailures(UnknownFieldSet reply) throws Exception {
+        var codes = new ArrayList<Integer>();
+        for (var value : reply.getField(9).getVarintList()) codes.add(value.intValue());
+        for (var packed : reply.getField(9).getLengthDelimitedList()) {
+            var values = packed.newCodedInput();
+            while (!values.isAtEnd()) codes.add(values.readInt32());
+        }
+        return codes;
+    }
+
+    @Test
+    void nativeTakeAllCollectsEveryCompletedQueueAndMergesMaterialHints() throws Exception {
+        target(60016, 10003, 20, "TRIGGER_DO_FORGE", "");
+        queue(2, 10);
+        queue(3, 20);
+        var result = takeAll();
+        assertEquals(0, allRetcode(result));
+        assertEquals(5, stock(104011));
+        assertTrue(player.getActiveForges().isEmpty());
+        var hints = allHints(result, 12);
+        assertEquals(1, hints.size());
+        assertEquals(5, hints.get(0).getCount());
+        assertEquals(player.getInventory().getItemById(104011).getGuid(), hints.get(0).getGuid());
+        assertEquals(5, progress(60016));
+        assertTrue(allFailures(result).isEmpty());
+        assertEquals(1, player.packets.stream().filter(p -> p.getOpcode() == 3416).count());
+        assertTrue(player.packets.stream().noneMatch(p -> p.getOpcode() == 22232));
+    }
+
+    @Test
+    void nativeTakeAllRejectsMalformedPacketWithoutGranting() throws Exception {
+        var ready = queue(2, 10);
+        assertNotEquals(0, allRetcode(takeAll(new byte[] {(byte) 0x80})));
+        assertEquals(0, stock(104011));
+        assertEquals(List.of(ready), player.getActiveForges());
+        assertEquals(0, saves);
+    }
+
+    @Test
+    void nativeTakeAllPreservesUnfinishedUnitsAndDoesNotSkipShiftedQueues() throws Exception {
+        queue(2, 10);
+        var partial = queue(3, 1100);
+        partial.setForgeTime(1000);
+        int started = partial.getStartTime();
+        var future = queue(2, -1000);
+        queue(1, 10);
+        var result = takeAll();
+        assertEquals(0, allRetcode(result));
+        assertEquals(4, stock(104011));
+        assertEquals(List.of(partial, future), player.getActiveForges());
+        assertEquals(2, partial.getCount());
+        assertEquals(started + 1000, partial.getStartTime());
+        assertEquals(0, receipt(partial));
+        assertEquals(2, future.getCount());
+        assertTrue(allFailures(result).isEmpty());
+        var lastNotice =
+                player.packets.stream()
+                        .filter(p -> p.getOpcode() == PacketOpcodes.ForgeQueueDataNotify)
+                        .reduce((a, b) -> b)
+                        .orElseThrow();
+        var notice = ForgeQueueDataNotify.parseFrom(lastNotice.getData());
+        assertEquals(Set.of(1, 2), notice.getForgeQueueMapMap().keySet());
+        assertEquals(2, notice.getForgeQueueMapOrThrow(1).getUnfinishCount());
+    }
+
+    @Test
+    void nativeTakeAllPreservesEveryWeaponGuid() throws Exception {
+        recipe(11401, 1);
+        queue(2, 10);
+        queue(1, 10);
+        var result = takeAll();
+        assertEquals(3, stock(11401));
+        var hints = allHints(result, 12);
+        assertEquals(3, hints.size());
+        assertEquals(3, hints.stream().map(ItemHint::getGuid).distinct().count());
+        assertTrue(hints.stream().allMatch(hint -> hint.getCount() == 1));
+        assertEquals(2, progress(60058));
+    }
+
+    @Test
+    void nativeTakeAllIncludesRecordedOreReturnsInTheNativeReturnList() throws Exception {
+        for (int count : List.of(2, 3)) {
+            var forge = queue(count, 20);
+            forge.capturePayment(
+                    List.of(new emu.grasscutter.data.common.ItemParamData(101001, count)),
+                    count,
+                    400);
+            forge.captureBonus(List.of(new emu.grasscutter.data.common.ItemParamData(101001, 1)));
+        }
+        var result = takeAll();
+        assertEquals(5, stock(104011));
+        assertEquals(5, stock(101001));
+        var returns = allHints(result, 5);
+        assertEquals(1, returns.size());
+        assertEquals(101001, returns.get(0).getItemId());
+        assertEquals(5, returns.get(0).getCount());
+        assertTrue(allHints(result, 7).isEmpty());
+    }
+
+    @Test
+    void nativeTakeAllKeepsFullBagQueueAndCollectsOtherAvailableProducts() throws Exception {
+        var blocked = queue(2, 10);
+        var other = queue(3, 20);
+        var data = gson.toJsonTree(GameData.getForgeDataMap().get(11001)).getAsJsonObject();
+        data.addProperty("id", 11002);
+        data.addProperty("resultItemId", 104012);
+        GameData.getForgeDataMap().put(11002, gson.fromJson(data, ForgeData.class));
+        other.setForgeId(11002);
+        assertTrue(player.getInventory().addItem(104011, 999));
+        var result = takeAll();
+        assertEquals(0, allRetcode(result));
+        assertEquals(999, stock(104011));
+        assertEquals(3, stock(104012));
+        assertEquals(List.of(blocked), player.getActiveForges());
+        assertEquals(List.of(Retcode.RET_ITEM_EXCEED_LIMIT_VALUE), allFailures(result));
+        assertEquals(0, receipt(blocked));
+    }
+
+    @Test
+    void nativeTakeAllCannotReplayAnUnconfirmedQueue() throws Exception {
+        var pending = queue(2, 10);
+        pending.reserveOutput(2);
+        queue(3, 20);
+        var result = takeAll();
+        assertNotEquals(0, allRetcode(result));
+        assertEquals(0, stock(104011));
+        assertEquals(2, player.getActiveForges().size());
+        assertEquals(1, receipt(pending));
+    }
+
+    @Test
+    void nativeTakeAllRetryNeverDuplicatesDeliveredItems() throws Exception {
+        queue(2, 10);
+        assertEquals(0, allRetcode(takeAll()));
+        var retry = takeAll();
+        assertEquals(0, allRetcode(retry));
+        assertTrue(allHints(retry, 12).isEmpty());
+        assertEquals(2, stock(104011));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {-1000, 0})
+    void nativeTakeAllWithoutReadyOutputLeavesQueuesUntouched(int elapsed) throws Exception {
+        var waiting = queue(2, elapsed);
+        waiting.setForgeTime(1000);
+        var result = takeAll();
+        assertEquals(0, allRetcode(result));
+        assertTrue(allHints(result, 12).isEmpty());
+        assertTrue(allFailures(result).isEmpty());
+        assertEquals(List.of(waiting), player.getActiveForges());
+        assertEquals(0, saves);
+    }
+
+    @Test
+    void nativeTakeAllConcurrentRequestsCollectEachQueueOnlyOnce() throws Exception {
+        queue(2, 10);
+        queue(3, 20);
+        var pool = Executors.newFixedThreadPool(2);
+        try {
+            for (var job :
+                    List.of(
+                            pool.submit(() -> request(28982, new byte[0])),
+                            pool.submit(() -> request(28982, new byte[0]))))
+                job.get(15, TimeUnit.SECONDS);
+        } finally {
+            pool.shutdownNow();
+        }
+        assertEquals(2, player.packets.stream().filter(p -> p.getOpcode() == 3416).count());
+        assertEquals(5, stock(104011));
+        assertTrue(player.getActiveForges().isEmpty());
+    }
+
+    @Test
+    void nativeTakeAllBlocksPluginReentryAcrossOtherQueues() throws Exception {
+        queue(2, 10);
+        queue(3, 20);
+        boolean[] checked = {false};
+        plugin(
+                event -> {
+                    if (checked[0]) return;
+                    checked[0] = true;
+                    try {
+                        assertNotEquals(0, allRetcode(takeAll()));
+                        assertNotEquals(0, take(2).getRetcode());
+                        assertEquals(0, stock(104011));
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+        var result = takeAll();
+        assertEquals(0, allRetcode(result));
+        assertEquals(5, stock(104011));
+        assertTrue(checked[0]);
+        assertTrue(player.getActiveForges().isEmpty());
+    }
+
+    @Test
+    void nativeTakeAllReportsPluginRefusalAndCollectsOtherQueues() throws Exception {
+        var blocked = queue(2, 10);
+        queue(3, 20);
+        plugin(
+                event -> {
+                    if (event.getItemForged().getCount() == 2) event.cancel();
+                });
+        var result = takeAll();
+        assertEquals(0, allRetcode(result));
+        assertEquals(3, stock(104011));
+        assertEquals(List.of(blocked), player.getActiveForges());
+        assertEquals(List.of(Retcode.RET_FAIL_VALUE), allFailures(result));
+        assertEquals(0, receipt(blocked));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4})
+    void nativeTakeAllStopsAfterUncertainDeliveryAndRetainsEarlierSuccess(int stage)
+            throws Exception {
+        queue(2, 10);
+        var uncertain = queue(3, 20);
+        var untouched = queue(1, 10);
+        failSave = 4 + stage;
+        var result = takeAll();
+        assertEquals(0, allRetcode(result));
+        assertEquals(List.of(Retcode.RET_SVR_ERROR_VALUE), allFailures(result));
+        assertEquals(2, allHints(result, 12).stream().mapToInt(ItemHint::getCount).sum());
+        assertEquals(List.of(uncertain, untouched), player.getActiveForges());
+        assertNotEquals(0, receipt(uncertain));
+        assertEquals(1, untouched.getCount());
+        int delivered = stock(104011);
+        assertEquals(stage == 1 ? 2 : 5, delivered);
+        failSave = 0;
+        assertNotEquals(0, allRetcode(takeAll()));
+        assertEquals(delivered, stock(104011));
     }
 
     private static int receipt(ActiveForgeData queue) {

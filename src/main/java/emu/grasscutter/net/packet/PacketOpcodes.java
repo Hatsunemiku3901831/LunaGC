@@ -2120,6 +2120,7 @@ public final class PacketOpcodes {
     public static final int StrangerChatReq = 29262;
     public static final int StrangerChatRsp = 4567;
     public static final int TakeAllForgeOutputRsp = 3416;
+    public static final int TakeAllForgeOutputReq = 28982; // 7.1 native empty type 74103.
     public static final int TakeBeyondBattlePassMissionPointReq = -344;
     public static final int TakeBeyondBattlePassMissionPointRsp = 6601;
     public static final int TakeBeyondBattlePassRewardReq = 27251;
