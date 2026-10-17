@@ -153,6 +153,19 @@ class AccountPasswordResetMongoTest {
     }
 
     @Test
+    void gameOnlyResetRejectsALocallyLoadedAccountInsteadOfChangingTheCodecDatabase() {
+        var before = row();
+        Grasscutter.setRunModeOverride(ServerRunMode.GAME_ONLY);
+        assertThrows(
+                IllegalStateException.class,
+                () ->
+                        AccountPasswordResetService.resetPassword(
+                                account, "fixture-wrong-authority"));
+        assertEquals(before, row());
+        assertEquals(0, dispatch.getDatabase().getCollection("accounts").countDocuments());
+    }
+
+    @Test
     void resetWaitsForAcceptedAccountWritesBeforeCompleting() throws Exception {
         var jobs = Executors.newSingleThreadExecutor();
         try {

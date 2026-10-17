@@ -9,6 +9,7 @@ import emu.grasscutter.config.Configuration;
 import emu.grasscutter.database.*;
 import emu.grasscutter.game.Account;
 import emu.grasscutter.game.player.Player;
+import emu.grasscutter.utils.DispatchUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -137,7 +138,7 @@ public final class AccountCommand implements CommandHandler {
                             sender, "Usage: account resetpass <username> <password>");
                     return;
                 }
-                Account toUpdate = DatabaseHelper.getAccountByName(username);
+                Account toUpdate = DispatchUtils.getAccountByName(username);
                 if (toUpdate == null) {
                     CommandHandler.sendMessage(
                             sender, translate(sender, "commands.account.no_account"));

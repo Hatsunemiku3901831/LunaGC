@@ -4,7 +4,9 @@ import com.google.gson.*;
 
 import dev.morphia.Datastore;
 
+import emu.grasscutter.database.DatabaseWriteBarrier;
 import emu.grasscutter.server.dispatch.*;
+import emu.grasscutter.server.game.GameSession;
 
 import org.bson.Document;
 import org.bson.json.JsonMode;
@@ -13,6 +15,7 @@ import org.bson.json.JsonWriterSettings;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.function.BooleanSupplier;
 
 /** Revision-checked account storage on the dispatch client that supplied the snapshot. */
 public final class AccountRemoteStorage implements AccountSaveGuard.Storage {
@@ -20,14 +23,19 @@ public final class AccountRemoteStorage implements AccountSaveGuard.Storage {
             JsonWriterSettings.builder().outputMode(JsonMode.EXTENDED).build();
     private final DispatchClient origin;
     private final Duration timeout;
+    private final Duration resetTimeout;
     private final Object connection;
 
-    private AccountRemoteStorage(DispatchClient origin, Object connection, Duration timeout) {
+    private AccountRemoteStorage(
+            DispatchClient origin, Object connection, Duration timeout, Duration resetTimeout) {
         this.origin = Objects.requireNonNull(origin, "Account owner client");
         this.connection = Objects.requireNonNull(connection, "Account owner connection");
         this.timeout = Objects.requireNonNull(timeout, "Request timeout");
+        this.resetTimeout = Objects.requireNonNull(resetTimeout, "Reset request timeout");
         if (timeout.isNegative() || timeout.isZero() || timeout.toNanos() <= 0)
             throw new IllegalArgumentException("Positive request timeout required");
+        if (resetTimeout.isNegative() || resetTimeout.isZero() || resetTimeout.toNanos() <= 0)
+            throw new IllegalArgumentException("Positive reset request timeout required");
     }
 
     public static Account bind(Account account, Datastore codec, DispatchClient origin) {
@@ -36,12 +44,13 @@ public final class AccountRemoteStorage implements AccountSaveGuard.Storage {
 
     public static Account bind(
             Account account, Datastore codec, DispatchClient origin, Object connection) {
-        return bind(account, codec, origin, connection, Duration.ofSeconds(5));
+        return bind(
+                account, codec, origin, connection, Duration.ofSeconds(5), Duration.ofSeconds(65));
     }
 
     public static Account bind(
             Account account, Datastore codec, DispatchClient origin, Duration timeout) {
-        return bind(account, codec, origin, origin.accountConnection(), timeout);
+        return bind(account, codec, origin, origin.accountConnection(), timeout, timeout);
     }
 
     private static Account bind(
@@ -49,10 +58,11 @@ public final class AccountRemoteStorage implements AccountSaveGuard.Storage {
             Datastore codec,
             DispatchClient origin,
             Object connection,
-            Duration timeout) {
+            Duration timeout,
+            Duration resetTimeout) {
         if (account == null) return null;
         Objects.requireNonNull(codec, "Account codec");
-        var storage = new AccountRemoteStorage(origin, connection, timeout);
+        var storage = new AccountRemoteStorage(origin, connection, timeout, resetTimeout);
         synchronized (account) {
             account.bindRemoteSaveState(codec.getMapper().toDocument(account), codec, storage);
         }
@@ -79,6 +89,10 @@ public final class AccountRemoteStorage implements AccountSaveGuard.Storage {
     }
 
     private JsonObject exchange(JsonObject data) {
+        return exchange(data, timeout);
+    }
+
+    private JsonObject exchange(JsonObject data, Duration requestTimeout) {
         if (origin.accountConnection() != connection)
             throw new IllegalStateException("Account owner connection changed");
         if (Thread.currentThread().isInterrupted())
@@ -91,7 +105,7 @@ public final class AccountRemoteStorage implements AccountSaveGuard.Storage {
                         PacketIds.AccountStorageReq,
                         PacketIds.AccountStorageRsp,
                         IDispatcher.DEFAULT_PARSER,
-                        timeout);
+                        requestTimeout);
         final JsonObject reply;
         try {
             reply = future.get();
@@ -134,7 +148,7 @@ public final class AccountRemoteStorage implements AccountSaveGuard.Storage {
         var data = request(operation, filter.getString("_id"));
         data.addProperty("filter", filter.toJson(BSON_JSON));
         data.addProperty(field, document.toJson(BSON_JSON));
-        var reply = exchange(data);
+        var reply = exchange(data, operation.equals("reset") ? resetTimeout : timeout);
         var modified = reply.get("modified");
         if (modified == null
                 || !modified.isJsonPrimitive()
@@ -146,6 +160,110 @@ public final class AccountRemoteStorage implements AccountSaveGuard.Storage {
     @Override
     public boolean replace(Document filter, Document document) {
         return write("replace", filter, "document", document);
+    }
+
+    @Override
+    public boolean remotePasswordReset() {
+        return true;
+    }
+
+    @Override
+    public boolean replaceForPasswordReset(Document filter, Document document) {
+        return write("reset", filter, "document", document);
+    }
+
+    @Override
+    public void confirmPasswordReset(Document document) {
+        var request = request("confirm-reset", document.getString("_id"));
+        request.addProperty("document", document.toJson(BSON_JSON));
+        var result = exchange(request, resetTimeout).get("confirmed");
+        if (result == null
+                || !result.isJsonPrimitive()
+                || !result.getAsJsonPrimitive().isBoolean()
+                || !result.getAsBoolean())
+            throw new IllegalStateException("Password reset revocation remains unconfirmed");
+    }
+
+    /** Reset requests can wait for login work and must not run on the WebSocket reader. */
+    public static boolean isPasswordReset(JsonObject request) {
+        String operation = text(request, "operation");
+        return operation.equals("reset") || operation.equals("confirm-reset");
+    }
+
+    private static AccountSaveStamp resetDocument(String id, Document document) {
+        var after = AccountSaveStamp.from(document);
+        if (!id.equals(document.get("_id"))
+                || after == null
+                || !(document.get("password") instanceof String hash)
+                || hash.isBlank()
+                || !Boolean.TRUE.equals(document.get("passwordRequired"))
+                || document.get("token") != null
+                || document.get("sessionKey") != null)
+            throw new IllegalArgumentException(
+                    "Exact password replacement and token revocation required");
+        return after;
+    }
+
+    private static void advancing(AccountSaveStamp before, AccountSaveStamp after) {
+        long expected =
+                before == null ? 1 : Math.addExact(before.document().getLong("revision"), 1);
+        if (after == null
+                || after.document().getLong("revision") != expected
+                || before != null
+                        && after.document()
+                                .getString("token")
+                                .equals(before.document().getString("token")))
+            throw new IllegalArgumentException(
+                    "Account revision must advance once with a fresh token");
+    }
+
+    /** The caller is the authenticated endpoint, with its original datastore and captured reply. */
+    public static JsonObject servePasswordReset(
+            DispatchServer dispatch, Datastore owner, JsonObject request, BooleanSupplier current) {
+        if (!dispatch.ownsAccounts(owner))
+            throw new IllegalStateException("Password reset authority differs");
+        String operation = text(request, "operation"), id = text(request, "accountId");
+        boolean confirm = operation.equals("confirm-reset");
+        if (!confirm && !operation.equals("reset"))
+            throw new IllegalArgumentException("Password reset operation required");
+        if (id.isBlank()) throw new IllegalArgumentException("Account ID required");
+        keys(
+                request,
+                confirm
+                        ? new String[] {"operation", "accountId", "document"}
+                        : new String[] {"operation", "accountId", "filter", "document"});
+        var document = Document.parse(text(request, "document"));
+        var after = resetDocument(id, document);
+        var storage = new AccountSaveGuard.MongoStorage(owner);
+        Document filter = confirm ? null : Document.parse(text(request, "filter"));
+        if (!confirm) advancing(before(id, filter), after);
+        Set<GameSession> local;
+        var response = new JsonObject();
+        try (var ignored = DatabaseWriteBarrier.acquire(Duration.ofSeconds(30))) {
+            if (!current.getAsBoolean())
+                throw new IllegalStateException("Password reset connection changed before commit");
+            if (confirm) {
+                var row = storage.passwordResetState(id);
+                if (row == null
+                        || !AccountSaveStamp.same(after, AccountSaveStamp.from(row))
+                        || !Boolean.TRUE.equals(row.get("passwordRequired"))
+                        || !Objects.equals(row.get("password"), document.get("password"))
+                        || row.get("token") != null
+                        || row.get("sessionKey") != null)
+                    throw new IllegalStateException("Stored password reset state differs");
+            } else if (!storage.replace(filter, document)) {
+                response.addProperty("ok", true);
+                response.addProperty("modified", false);
+                return response;
+            }
+            local = AccountLoginAdmission.revokeLocal(owner, id);
+        }
+        AccountLoginAdmission.closeRevoked(local);
+        dispatch.revokeCredentials(
+                owner, id, after.document().getLong("revision"), Duration.ofSeconds(30));
+        response.addProperty("ok", true);
+        response.addProperty(confirm ? "confirmed" : "modified", true);
+        return response;
     }
 
     @Override
@@ -180,15 +298,7 @@ public final class AccountRemoteStorage implements AccountSaveGuard.Storage {
                             : AccountSaveStamp.from(new Document("saveStamp", document));
             if (after == null || (replace && !id.equals(document.get("_id"))))
                 throw new IllegalArgumentException("Account write identity or stamp differs");
-            var stamp = after.document();
-            long expected =
-                    before == null ? 1 : Math.addExact(before.document().getLong("revision"), 1);
-            if (stamp.getLong("revision") != expected
-                    || (before != null
-                            && stamp.getString("token")
-                                    .equals(before.document().getString("token"))))
-                throw new IllegalArgumentException(
-                        "Account revision must advance once with a fresh token");
+            advancing(before, after);
             response.addProperty(
                     "modified",
                     replace ? storage.replace(filter, document) : storage.advance(filter, after));

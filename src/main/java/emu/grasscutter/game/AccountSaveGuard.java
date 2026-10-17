@@ -21,6 +21,16 @@ public final class AccountSaveGuard {
 
         boolean replace(Document filter, Document document);
 
+        default boolean replaceForPasswordReset(Document filter, Document document) {
+            return replace(filter, document);
+        }
+
+        default void confirmPasswordReset(Document document) {}
+
+        default boolean remotePasswordReset() {
+            return false;
+        }
+
         boolean advance(Document filter, AccountSaveStamp stamp);
     }
 
@@ -39,6 +49,17 @@ public final class AccountSaveGuard {
         public Document read(String id) {
             return rows.find(new Document("_id", id))
                     .projection(new Document("saveStamp", 1))
+                    .first();
+        }
+
+        Document passwordResetState(String id) {
+            return rows.find(new Document("_id", id))
+                    .projection(
+                            new Document("saveStamp", 1)
+                                    .append("password", 1)
+                                    .append("passwordRequired", 1)
+                                    .append("token", 1)
+                                    .append("sessionKey", 1))
                     .first();
         }
 
@@ -118,6 +139,14 @@ public final class AccountSaveGuard {
         return destination == source && id != null && id.equals(account.getId());
     }
 
+    public boolean usesRemoteStorage() {
+        synchronized (account) {
+            if (destination == null) return false;
+            if (storage == null) storage = factory.apply(destination);
+            return storage.remotePasswordReset();
+        }
+    }
+
     /** Called only by insert-only account creation, which has already reserved the ID. */
     public static void insertNew(Account account, Datastore store) {
         DatabaseWriteBarrier.run(
@@ -178,7 +207,7 @@ public final class AccountSaveGuard {
                         document.remove("sessionKey");
                         document.put("passwordRequired", true);
                         pending = new Attempt(confirmed, document, hash);
-                        if (!storage.replace(
+                        if (!storage.replaceForPasswordReset(
                                 AccountSaveStamp.condition(id, pending.before), pending.document))
                             throw conflict();
                         accept(pending.after);
@@ -215,6 +244,7 @@ public final class AccountSaveGuard {
         if (row == null) return false;
         var stamp = AccountSaveStamp.from(row);
         if (AccountSaveStamp.same(stamp, pending.after)) {
+            if (pending.resetPassword != null) storage.confirmPasswordReset(pending.document);
             accept(pending.after);
             return true;
         }

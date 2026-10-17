@@ -12,14 +12,19 @@ import dev.morphia.*;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.Grasscutter.ServerRunMode;
 import emu.grasscutter.auth.DefaultAuthentication;
+import emu.grasscutter.command.commands.AccountCommand;
+import emu.grasscutter.config.Configuration;
 import emu.grasscutter.game.*;
 import emu.grasscutter.net.packet.BasePacket;
 import emu.grasscutter.server.dispatch.*;
 import emu.grasscutter.server.game.*;
+import emu.grasscutter.utils.DispatchUtils;
 
 import org.bson.Document;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -279,6 +284,275 @@ class CredentialRevocationProcessTest {
         assertTrue(game.call("begin", Map.of("name", "new")).get("admitted").getAsBoolean());
     }
 
+    @Test
+    void aGameInitiatedResetRevokesConnectionsOnEveryGameBeforeSuccess() throws Exception {
+        var other = start("game", "ws://127.0.0.1:" + owner.ready.get().get("port").getAsInt());
+        game.call("begin", Map.of());
+        other.call("begin", Map.of());
+        game.call("capture-reset", Map.of());
+        game.call("close-write", Map.of());
+        game.call("remote-reset", Map.of());
+        assertTrue(uncheckedStatus(owner).get("passwordRequired").getAsBoolean());
+        for (var node : List.of(game, other))
+            assertTrue(uncheckedStatus(node).get("revoked").getAsBoolean());
+        assertEquals(0, game.call("reset-state", Map.of()).get("localRows").getAsInt());
+        assertEquals(1, uncheckedStatus(game).get("closeWrites").getAsInt());
+    }
+
+    @Test
+    void theGameConsoleResetCommandFindsTheAuthoritativeRemoteUsername() throws Exception {
+        game.call("begin", Map.of());
+        game.call("remote-command", Map.of());
+        assertTrue(uncheckedStatus(owner).get("passwordRequired").getAsBoolean());
+        assertFalse(uncheckedStatus(owner).get("tokenPresent").getAsBoolean());
+        assertTrue(uncheckedStatus(game).get("revoked").getAsBoolean());
+    }
+
+    @Test
+    void aGameInitiatedResetCanDrainAnAlreadyRunningLocalLoginStage() throws Exception {
+        game.call("begin", Map.of());
+        game.call("capture-reset", Map.of());
+        game.call("hold", Map.of("label", "stage"));
+        var stage = game.request("step", Map.of("label", "stage"));
+        entered(game, "stage");
+        var reset = game.request("remote-reset", Map.of());
+        eventually(() -> uncheckedStatus(owner).get("passwordRequired").getAsBoolean());
+        eventually(() -> uncheckedStatus(game).get("revoked").getAsBoolean());
+        assertFalse(reset.isDone());
+        game.call("release", Map.of("label", "stage"));
+        assertFalse(
+                stage.get(3, TimeUnit.SECONDS)
+                        .getAsJsonObject("result")
+                        .get("admitted")
+                        .getAsBoolean());
+        assertTrue(reset.get(3, TimeUnit.SECONDS).get("ok").getAsBoolean());
+    }
+
+    @Test
+    void aLostResetReplyRequiresAnExplicitConfirmationBeforePublishingCredentials()
+            throws Exception {
+        game.call("begin", Map.of());
+        game.call("capture-reset", Map.of("timeout", 600));
+        owner.call("hold", Map.of("label", "reply"));
+        owner.call("hold-storage", Map.of("label", "reply", "before", false));
+        assertFalse(
+                game.request("remote-reset", Map.of())
+                        .get(3, TimeUnit.SECONDS)
+                        .get("ok")
+                        .getAsBoolean());
+        entered(owner, "reply");
+        assertTrue(uncheckedStatus(owner).get("passwordRequired").getAsBoolean());
+        assertFalse(game.call("reset-state", Map.of()).get("required").getAsBoolean());
+        assertTrue(game.call("reset-state", Map.of()).get("oldToken").getAsBoolean());
+        long revision = uncheckedStatus(owner).get("revision").getAsLong();
+        game.call("resolve-reset", Map.of());
+        assertTrue(game.call("reset-state", Map.of()).get("required").getAsBoolean());
+        assertFalse(game.call("reset-state", Map.of()).get("oldToken").getAsBoolean());
+        assertEquals(revision, uncheckedStatus(owner).get("revision").getAsLong());
+        owner.call("release", Map.of("label", "reply"));
+        eventually(
+                () -> {
+                    try {
+                        return owner.call("observed", Map.of("label", "reply"))
+                                .get("finished")
+                                .getAsBoolean();
+                    } catch (Exception failed) {
+                        throw new AssertionError(failed);
+                    }
+                });
+        game.call("resolve-reset", Map.of());
+    }
+
+    @Test
+    void aMatchingStoredStampCannotReplaceAMissingGameAcknowledgment() throws Exception {
+        game.call("begin", Map.of());
+        game.call("capture-reset", Map.of("timeout", 600));
+        game.call("fail-close", Map.of());
+        assertFalse(
+                game.request("remote-reset", Map.of())
+                        .get(3, TimeUnit.SECONDS)
+                        .get("ok")
+                        .getAsBoolean());
+        long revision = uncheckedStatus(owner).get("revision").getAsLong();
+        game.call("ack-mode", Map.of("mode", "missing"));
+        assertFalse(
+                game.request("resolve-reset", Map.of())
+                        .get(3, TimeUnit.SECONDS)
+                        .get("ok")
+                        .getAsBoolean());
+        assertFalse(game.call("reset-state", Map.of()).get("required").getAsBoolean());
+        assertEquals(0, uncheckedStatus(game).get("closes").getAsInt());
+        game.call("ack-mode", Map.of("mode", "normal"));
+        game.call("resolve-reset", Map.of());
+        assertTrue(game.call("reset-state", Map.of()).get("required").getAsBoolean());
+        assertEquals(1, uncheckedStatus(game).get("closes").getAsInt());
+        assertEquals(revision, uncheckedStatus(owner).get("revision").getAsLong());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"password", "passwordRequired", "token", "sessionKey"})
+    void confirmationAlsoChecksTheExactPasswordPolicyAndRevokedTokens(String changed)
+            throws Exception {
+        game.call("begin", Map.of());
+        game.call("capture-reset", Map.of("timeout", 600));
+        game.call("fail-close", Map.of());
+        assertFalse(
+                game.request("remote-reset", Map.of())
+                        .get(3, TimeUnit.SECONDS)
+                        .get("ok")
+                        .getAsBoolean());
+        long revision = uncheckedStatus(owner).get("revision").getAsLong();
+        owner.call("tamper-reset", Map.of("field", changed));
+        assertFalse(
+                game.request("resolve-reset", Map.of())
+                        .get(3, TimeUnit.SECONDS)
+                        .get("ok")
+                        .getAsBoolean());
+        assertFalse(game.call("reset-state", Map.of()).get("required").getAsBoolean());
+        assertTrue(game.call("reset-state", Map.of()).get("oldToken").getAsBoolean());
+        assertEquals(revision, uncheckedStatus(owner).get("revision").getAsLong());
+    }
+
+    @Test
+    void anAdvancedOwnerRowCannotConfirmTheUncertainResetSnapshot() throws Exception {
+        game.call("begin", Map.of());
+        game.call("capture-reset", Map.of("timeout", 600));
+        game.call("fail-close", Map.of());
+        assertFalse(
+                game.request("remote-reset", Map.of())
+                        .get(3, TimeUnit.SECONDS)
+                        .get("ok")
+                        .getAsBoolean());
+        owner.call("new-token", Map.of());
+        long revision = uncheckedStatus(owner).get("revision").getAsLong();
+        assertFalse(
+                game.request("resolve-reset", Map.of())
+                        .get(3, TimeUnit.SECONDS)
+                        .get("ok")
+                        .getAsBoolean());
+        assertFalse(game.call("reset-state", Map.of()).get("required").getAsBoolean());
+        assertEquals(revision, uncheckedStatus(owner).get("revision").getAsLong());
+        assertTrue(uncheckedStatus(owner).get("tokenPresent").getAsBoolean());
+    }
+
+    @Test
+    void retiringAnUncommittedResetPreventsItsLateCasFromChangingCredentials() throws Exception {
+        game.call("begin", Map.of());
+        game.call("capture-reset", Map.of("timeout", 600));
+        owner.call("hold", Map.of("label", "before"));
+        owner.call("hold-storage", Map.of("label", "before", "before", true));
+        assertFalse(
+                game.request("remote-reset", Map.of())
+                        .get(3, TimeUnit.SECONDS)
+                        .get("ok")
+                        .getAsBoolean());
+        entered(owner, "before");
+        assertFalse(uncheckedStatus(owner).get("passwordRequired").getAsBoolean());
+        game.call("resolve-reset", Map.of());
+        long revision = uncheckedStatus(owner).get("revision").getAsLong();
+        owner.call("release", Map.of("label", "before"));
+        eventually(
+                () -> {
+                    try {
+                        return owner.call("observed", Map.of("label", "before:served"))
+                                .get("finished")
+                                .getAsBoolean();
+                    } catch (Exception failed) {
+                        throw new AssertionError(failed);
+                    }
+                });
+        assertFalse(uncheckedStatus(owner).get("passwordRequired").getAsBoolean());
+        assertFalse(uncheckedStatus(game).get("revoked").getAsBoolean());
+        assertEquals(revision, uncheckedStatus(owner).get("revision").getAsLong());
+        assertFalse(game.call("reset-state", Map.of()).get("required").getAsBoolean());
+        game.call("remote-reset", Map.of());
+        assertTrue(uncheckedStatus(game).get("revoked").getAsBoolean());
+    }
+
+    @Test
+    void anUncertainResetCannotBeConfirmedThroughAReplacementConnection() throws Exception {
+        game.call("begin", Map.of());
+        game.call("capture-reset", Map.of("timeout", 600));
+        game.call("fail-close", Map.of());
+        assertFalse(
+                game.request("remote-reset", Map.of())
+                        .get(3, TimeUnit.SECONDS)
+                        .get("ok")
+                        .getAsBoolean());
+        long revision = uncheckedStatus(owner).get("revision").getAsLong();
+        game.call("reconnect", Map.of());
+        assertFalse(
+                game.request("resolve-reset", Map.of())
+                        .get(3, TimeUnit.SECONDS)
+                        .get("ok")
+                        .getAsBoolean());
+        assertFalse(game.call("reset-state", Map.of()).get("required").getAsBoolean());
+        assertEquals(revision, uncheckedStatus(owner).get("revision").getAsLong());
+    }
+
+    @Test
+    void aStaleRemoteSnapshotCannotResetOrRevokeConnections() throws Exception {
+        game.call("begin", Map.of());
+        game.call("capture-reset", Map.of());
+        owner.call("new-token", Map.of());
+        long revision = uncheckedStatus(owner).get("revision").getAsLong();
+        assertFalse(
+                game.request("remote-reset", Map.of())
+                        .get(3, TimeUnit.SECONDS)
+                        .get("ok")
+                        .getAsBoolean());
+        assertFalse(uncheckedStatus(game).get("revoked").getAsBoolean());
+        assertFalse(uncheckedStatus(owner).get("passwordRequired").getAsBoolean());
+        assertEquals(revision, uncheckedStatus(owner).get("revision").getAsLong());
+        assertTrue(uncheckedStatus(owner).get("tokenPresent").getAsBoolean());
+    }
+
+    @Test
+    void twoGameNodesCannotBothCommitTheSameStartingResetVersion() throws Exception {
+        var other = start("game", "ws://127.0.0.1:" + owner.ready.get().get("port").getAsInt());
+        for (var node : List.of(game, other)) {
+            node.call("begin", Map.of());
+            node.call("capture-reset", Map.of());
+        }
+        var first = game.request("remote-reset", Map.of());
+        var second = other.request("remote-reset", Map.of());
+        boolean a = first.get(3, TimeUnit.SECONDS).get("ok").getAsBoolean();
+        boolean b = second.get(3, TimeUnit.SECONDS).get("ok").getAsBoolean();
+        assertNotEquals(a, b);
+        assertEquals(1, uncheckedStatus(owner).get("revision").getAsLong());
+        assertTrue(uncheckedStatus(game).get("revoked").getAsBoolean());
+        assertTrue(uncheckedStatus(other).get("revoked").getAsBoolean());
+    }
+
+    @Test
+    void aDisconnectedRequestCannotCommitAfterItsHeldWorkIsReleased() throws Exception {
+        game.call("begin", Map.of());
+        game.call("capture-reset", Map.of("timeout", 600));
+        owner.call("hold", Map.of("label", "before"));
+        owner.call("hold-storage", Map.of("label", "before", "before", true));
+        assertFalse(
+                game.request("remote-reset", Map.of())
+                        .get(3, TimeUnit.SECONDS)
+                        .get("ok")
+                        .getAsBoolean());
+        entered(owner, "before");
+        game.call("reconnect", Map.of());
+        owner.call("release", Map.of("label", "before"));
+        eventually(
+                () -> {
+                    try {
+                        return owner.call("observed", Map.of("label", "before:served"))
+                                .get("finished")
+                                .getAsBoolean();
+                    } catch (Exception failed) {
+                        throw new AssertionError(failed);
+                    }
+                });
+        assertFalse(uncheckedStatus(owner).get("passwordRequired").getAsBoolean());
+        assertEquals(0, uncheckedStatus(owner).get("revision").getAsLong());
+        assertTrue(game.call("begin", Map.of("name", "new")).get("admitted").getAsBoolean());
+    }
+
     private static JsonObject uncheckedStatus(Child child) {
         try {
             return child.call("status", Map.of());
@@ -473,6 +747,10 @@ class CredentialRevocationProcessTest {
                 finished = ConcurrentHashMap.newKeySet();
         final AtomicReference<String> heldRead = new AtomicReference<>();
         final AtomicReference<String> ackMode = new AtomicReference<>("normal");
+
+        record StorageDelay(String label, boolean before) {}
+
+        final AtomicReference<StorageDelay> delayedStorage = new AtomicReference<>();
         final DatabaseWriteQueue causalWrites = new DatabaseWriteQueue("revocation-fixture", 1, 16);
         final DatabaseWriteQueue unrelatedWrites =
                 new DatabaseWriteQueue("revocation-unrelated", 1, 16);
@@ -515,6 +793,42 @@ class CredentialRevocationProcessTest {
                                     login.accept(socket, data);
                                     if (Boolean.TRUE.equals(socket.getAttachment()))
                                         dispatch.sendMessage(socket, READY, new JsonObject());
+                                });
+                var storageHandler = dispatch.getHandlers().get(PacketIds.AccountStorageReq);
+                dispatch.getHandlers()
+                        .put(
+                                PacketIds.AccountStorageReq,
+                                (socket, data) -> {
+                                    var request = IDispatcher.decode(data);
+                                    var delay =
+                                            AccountRemoteStorage.isPasswordReset(request)
+                                                    ? delayedStorage.getAndSet(null)
+                                                    : null;
+                                    if (delay == null) {
+                                        storageHandler.accept(socket, data);
+                                        return;
+                                    }
+                                    var reply = dispatch.captureReply();
+                                    controls.execute(
+                                            () -> {
+                                                try {
+                                                    if (delay.before()) awaitHold(delay.label());
+                                                    var response =
+                                                            AccountRemoteStorage.servePasswordReset(
+                                                                    dispatch,
+                                                                    store,
+                                                                    request,
+                                                                    reply::isCurrent);
+                                                    if (!delay.before()) awaitHold(delay.label());
+                                                    reply.send(response);
+                                                } catch (RuntimeException failed) {
+                                                    var response = new JsonObject();
+                                                    response.addProperty("ok", false);
+                                                    reply.send(response);
+                                                } finally {
+                                                    finished.add(delay.label() + ":served");
+                                                }
+                                            });
                                 });
                 dispatch.start();
                 long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(5);
@@ -635,6 +949,11 @@ class CredentialRevocationProcessTest {
                     heldRead.set(label);
                     return empty;
                 }
+                case "hold-storage" -> {
+                    delayedStorage.set(
+                            new StorageDelay(label, request.get("before").getAsBoolean()));
+                    return empty;
+                }
                 case "ack-mode" -> {
                     ackMode.set(request.get("mode").getAsString());
                     return empty;
@@ -657,6 +976,23 @@ class CredentialRevocationProcessTest {
                     var account = DatabaseHelper.getAccountById(ACCOUNT_ID);
                     account.setToken("fixture-new-token");
                     DatabaseHelper.saveAccountSync(account);
+                }
+                if (command.equals("tamper-reset")) {
+                    String changed = request.get("field").getAsString();
+                    if (!Set.of("password", "passwordRequired", "token", "sessionKey")
+                            .contains(changed))
+                        throw new IllegalArgumentException("Fixture credential field required");
+                    store.getDatabase()
+                            .getCollection("accounts")
+                            .updateOne(
+                                    new Document("_id", ACCOUNT_ID),
+                                    new Document(
+                                            "$set",
+                                            new Document(
+                                                    changed,
+                                                    changed.equals("passwordRequired")
+                                                            ? false
+                                                            : "tampered-value")));
                 }
                 if (command.equals("cutoff"))
                     dispatch.revokeCredentials(
@@ -681,8 +1017,55 @@ class CredentialRevocationProcessTest {
                 return result;
             }
             String name = request.has("name") ? request.get("name").getAsString() : "old";
+            if (command.equals("capture-reset")) {
+                var account = DispatchUtils.getAccountByName("revocation-fixture");
+                if (request.has("timeout")) {
+                    account =
+                            IDispatcher.decode(IDispatcher.JSON.toJsonTree(account), Account.class);
+                    account =
+                            AccountRemoteStorage.bind(
+                                    account,
+                                    store,
+                                    client,
+                                    Duration.ofMillis(request.get("timeout").getAsLong()));
+                }
+                snapshots.put("reset", Objects.requireNonNull(account));
+                return empty;
+            }
+            if (command.equals("remote-command")) {
+                Configuration.ACCOUNT.EXPERIMENTAL_RealPassword = true;
+                new AccountCommand()
+                        .execute(
+                                null,
+                                null,
+                                List.of("resetpass", "revocation-fixture", "fixture-new-password"));
+                return empty;
+            }
+            if (command.equals("remote-reset")) {
+                AccountPasswordResetService.resetPassword(
+                        snapshots.get("reset"), "fixture-remote-hash");
+                return empty;
+            }
+            if (command.equals("resolve-reset")) {
+                snapshots.get("reset").getSaveGuard().resolvePending(store);
+                return empty;
+            }
+            if (command.equals("reset-state")) {
+                var account = snapshots.get("reset");
+                empty.addProperty("required", account.isPasswordRequired());
+                empty.addProperty("oldToken", account.matchesLoginToken(TOKEN));
+                empty.addProperty("revision", account.getSaveRevision());
+                empty.addProperty(
+                        "localRows",
+                        store.getDatabase().getCollection("accounts").countDocuments());
+                return empty;
+            }
             if (command.equals("fail-close")) {
                 sessions.get(name).failClose.set(true);
+                return empty;
+            }
+            if (command.equals("close-write")) {
+                sessions.get(name).closeWrite.set(true);
                 return empty;
             }
             if (command.equals("reconnect")) {
@@ -754,6 +1137,7 @@ class CredentialRevocationProcessTest {
             result.addProperty("revoked", session.isLoginRevoked());
             result.addProperty("closes", session.closes.get());
             result.addProperty("actions", session.actions.get());
+            result.addProperty("closeWrites", session.closeWrites.get());
             return result;
         }
 
@@ -770,6 +1154,8 @@ class CredentialRevocationProcessTest {
     private static final class ProbeSession extends GameSession {
         final AtomicInteger closes = new AtomicInteger(), actions = new AtomicInteger();
         final AtomicBoolean failClose = new AtomicBoolean();
+        final AtomicBoolean closeWrite = new AtomicBoolean();
+        final AtomicInteger closeWrites = new AtomicInteger();
 
         ProbeSession(GameServer server) {
             super(server);
@@ -792,6 +1178,8 @@ class CredentialRevocationProcessTest {
                         public void close() {
                             if (failClose.getAndSet(false))
                                 throw new IllegalStateException("Injected close failure");
+                            if (closeWrite.get())
+                                DatabaseWriteBarrier.run(closeWrites::incrementAndGet);
                             closes.incrementAndGet();
                             handleClose();
                         }

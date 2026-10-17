@@ -32,6 +32,12 @@ public final class DispatchServer extends WebSocketServer implements IDispatcher
     @Getter private final Map<Integer, List<Consumer<JsonElement>>> callbacks = new HashMap<>();
     private final DispatchConnections requestConnections = new DispatchConnections();
     private final Datastore accountOwner;
+    private static final Executor passwordResetTasks = new ThreadPoolExecutor(4, 4, 30, TimeUnit.SECONDS,
+            new ArrayBlockingQueue<>(64), action -> {
+                var thread = new Thread(action, "dispatch-owner-password-reset");
+                thread.setDaemon(true);
+                return thread;
+            });
 
     public boolean ownsAccounts(Datastore source) { return accountOwner != null && accountOwner == source; }
 
@@ -161,15 +167,38 @@ public final class DispatchServer extends WebSocketServer implements IDispatcher
 
     private void accountStorage(WebSocket socket, JsonElement object) {
         var owner = accountOwner;
+        var reply = captureReply();
+        final JsonObject request;
+        try {
+            request = IDispatcher.decode(object).deepCopy();
+            if (AccountRemoteStorage.isPasswordReset(request)) {
+                try {
+                    passwordResetTasks.execute(() -> {
+                        if (!reply.isCurrent()) return;
+                        try { reply.send(AccountRemoteStorage.servePasswordReset(this, owner, request, reply::isCurrent)); }
+                        catch (RuntimeException failed) { reply.send(unconfirmedStorage()); }
+                    });
+                } catch (RejectedExecutionException busy) { reply.send(unconfirmedStorage()); }
+                return;
+            }
+        } catch (RuntimeException malformed) {
+            reply.send(unconfirmedStorage());
+            return;
+        }
         JsonObject response;
         try {
-            response = AccountRemoteStorage.serve(owner, IDispatcher.decode(object));
+            response = AccountRemoteStorage.serve(owner, request);
         } catch (RuntimeException failed) {
-            response = new JsonObject();
-            response.addProperty("ok", false);
+            response = unconfirmedStorage();
             this.getLogger().warn("Internal account storage request was not confirmed.");
         }
         this.sendMessage(socket, PacketIds.AccountStorageRsp, response);
+    }
+
+    private JsonObject unconfirmedStorage() {
+        var response = new JsonObject();
+        response.addProperty("ok", false);
+        return response;
     }
 
     /**
