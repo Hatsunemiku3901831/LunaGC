@@ -67,6 +67,23 @@ python tools/audit_activity_watcher_rewards.py --output docs/data/activity-watch
 证据保存在本地忽略目录 `debug/aster-mid-20261011/batch342/`。
 测试未使用实际玩家数据库。旧 `ObjectId` 类型活动 ID 的额外夹具在解码阶段失败，
 没有到达业务路径；该尝试没有计作业务复现或本轮兼容性通过项。
-部署结果另行记录。
+
+## 本地部署
+
+代码已提交并推送 `1d2c761e61408d1612cdbfd170dfafbb6369637d`。
+本地构建 `debug/aster-mid-20261011/batch342/activity-watcher-rewards.jar`：
+
+```text
+SHA-256 1aa88ad5301995832d35ebf77057f3652f50e197e8c6228650a90e56d1837758
+```
+
+2026-10-17 08:51（UTC+8）确认无游戏进程、无在线玩家及待处理写入后，
+通过 GM `stop` 正常停止旧服务 `49372`，启动新服务 `12508`。
+
+- HTTP `8088` 与 UDP `22101` 由同一新进程监听，健康正常，无死锁与启动错误。
+- 普通秘境掉落目录启动和重载均为 116 条；独立参考目录为 266 条，增强开关保持关闭。
+- 实际加载 67 个活动货币绑定；GM 返回 `activityrewards` 与 `activitycoins` 的四项操作。
+- Mongo 卷仍为 `lunagc_mongo-data`；开发资源目录及子模块均为 `dac2a9d43332ef51879522cf39da2831b0ca0543`。
+- 核对完整 Java 源文件与构建目录、JAR 编译类和默认资源；没有启动游戏。
 
 服务端验证不能代替当前客户端实机验收。用户此前报告的游戏错误仍保留为待核对状态。
