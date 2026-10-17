@@ -13,6 +13,7 @@ import emu.grasscutter.game.managers.forging.*;
 import emu.grasscutter.game.player.GuardedPlayerTestStore;
 import emu.grasscutter.game.props.*;
 import emu.grasscutter.net.packet.*;
+import emu.grasscutter.net.proto.ForgeGetQueueDataRspOuterClass.ForgeGetQueueDataRsp;
 import emu.grasscutter.net.proto.ForgeQueueManipulateReqOuterClass.ForgeQueueManipulateReq;
 import emu.grasscutter.net.proto.ForgeQueueManipulateRspOuterClass.ForgeQueueManipulateRsp;
 import emu.grasscutter.net.proto.ForgeStartReqOuterClass.ForgeStartReq;
@@ -22,6 +23,7 @@ import emu.grasscutter.utils.Utils;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.lang.reflect.Proxy;
@@ -244,6 +246,49 @@ class ForgeStartFlowTest {
         assertEquals(1000, player.getMora());
         assertEquals(300000, player.getForgePoints());
         assertTrue(player.getActiveForges().isEmpty());
+    }
+
+    @ParameterizedTest
+    @CsvSource({"1,1", "4,1", "5,2", "9,2", "10,3", "14,3", "15,4", "45,4"})
+    void nativeQueueQueryInitializesTheForgePageCapacity(int rank, int queues) throws Exception {
+        player.setProperty(PlayerProperty.PROP_PLAYER_LEVEL, rank);
+        // The 7.1 page creates type 34384 at 0x14b161720, whose CmdId getter returns 26968.
+        request(26968, new byte[0]);
+        var packet = player.packets.stream().filter(p -> p.getOpcode() == 6800).findFirst();
+        assertTrue(packet.isPresent(), "Opening the forge page must receive its queue capacity");
+        var fields = com.google.protobuf.UnknownFieldSet.parseFrom(packet.orElseThrow().getData());
+        assertEquals(List.of((long) queues), fields.getField(7).getVarintList());
+        var reply = ForgeGetQueueDataRsp.parseFrom(packet.orElseThrow().getData());
+        assertEquals(0, reply.getRetcode());
+        assertEquals(queues, reply.getMaxQueueNum());
+        assertTrue(reply.getForgeQueueMapMap().isEmpty());
+        assertEquals(0, confirmations);
+        unchanged();
+    }
+
+    @Test
+    void nativeQueueQueryPreservesThePaidForgeAndItsProgress() throws Exception {
+        assertEquals(0, start(2));
+        var queue = player.getActiveForges().get(0);
+        queue.setStartTime(Utils.getCurrentSeconds() - 30);
+        int saved = confirmations;
+        player.packets.clear();
+
+        request(26968, new byte[0]);
+        var packet = player.packets.stream().filter(p -> p.getOpcode() == 6800).findFirst();
+        assertTrue(packet.isPresent(), "Reopening the forge page must return existing queues");
+        var reply = ForgeGetQueueDataRsp.parseFrom(packet.orElseThrow().getData());
+        assertEquals(4, reply.getMaxQueueNum());
+        var visible = reply.getForgeQueueMapOrThrow(1);
+        assertEquals(1, visible.getQueueId());
+        assertEquals(11001, visible.getForgeId());
+        assertEquals(2, visible.getFinishCount());
+        assertEquals(0, visible.getUnfinishCount());
+        assertEquals(96, stock());
+        assertEquals(990, player.getMora());
+        assertEquals(299200, player.getForgePoints());
+        assertEquals(saved, confirmations);
+        assertEquals(1, player.getActiveForges().size());
     }
 
     @Test

@@ -3,11 +3,35 @@ package io.grasscutter;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.google.protobuf.UnknownFieldSet;
+
 import emu.grasscutter.net.proto.ForgeQueueDataOuterClass.ForgeQueueData;
+import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
+import emu.grasscutter.server.packet.send.PacketForgeStartRsp;
+
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 /** 7.1 ForgeQueueData uses the tags the client reader stores on the queue object. */
 public final class ForgeProtocolTest {
+
+    @Test
+    public void startAcknowledgementUsesTheNativePacketId() {
+        // Type 33210 posts forge-start event 0x247; its native CmdId getter returns 7643.
+        assertEquals(7643, new PacketForgeStartRsp(Retcode.RET_SUCC).getOpcode());
+    }
+
+    @Test
+    public void startFailureUsesTheNativeRetcodeTag() throws Exception {
+        // Reader 0x14ae1a2f0 reads wire tag 0x40 into the sole int32 field at +0x18.
+        var packet = new PacketForgeStartRsp(Retcode.RET_FORGE_QUEUE_FULL);
+        var fields = UnknownFieldSet.parseFrom(packet.getData());
+        assertEquals(
+                List.of((long) Retcode.RET_FORGE_QUEUE_FULL.getNumber()),
+                fields.getField(8).getVarintList());
+        assertEquals(1, fields.asMap().size());
+    }
 
     @Test
     public void queueEntryUsesTheNativeFieldTags() {
@@ -26,7 +50,8 @@ public final class ForgeProtocolTest {
                         .toByteArray();
 
         assertArrayEquals(
-                new byte[] {0x08, 1, 0x10, 2, 0x18, 3, 0x38, 4, 0x48, 5, 0x50, 6, 0x68, 7}, encoded);
+                new byte[] {0x08, 1, 0x10, 2, 0x18, 3, 0x38, 4, 0x48, 5, 0x50, 6, 0x68, 7},
+                encoded);
     }
 
     @Test

@@ -1,4 +1,4 @@
-// Recovered from ForgeStartRspOuterClass.java's embedded descriptor; wire schema may predate 7.1.
+// 7.1 native type 33210: reader 0x14ae1a2f0, retcode at object +0x18.
 syntax = "proto3";
 
 package recovered.p_ForgeStartRsp;
@@ -6,5 +6,5 @@ option java_package = "emu.grasscutter.net.proto";
 option java_outer_classname = "ForgeStartRspOuterClass";
 
 message ForgeStartRsp {
-  int32 retcode = 10;
+  int32 retcode = 8;
 }

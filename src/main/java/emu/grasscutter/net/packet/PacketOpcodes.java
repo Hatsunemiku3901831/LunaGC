@@ -309,7 +309,7 @@ public final class PacketOpcodes {
     public static final int WorldChestOpenNotify = 28616;
     public static final int ForgeFormulaDataNotify = 28203;
     public static final int ForgeStartReq = 21223;
-    public static final int ForgeStartRsp = -42;
+    public static final int ForgeStartRsp = 7643; // 7.1 native type 33210, forge-start event 0x247.
     public static final int BlossomBriefInfoNotify = -43;
     public static final int GetShopReqNew = -44;
     public static final int GetShopRspNew = -45;
@@ -624,7 +624,7 @@ public final class PacketOpcodes {
     public static final int EvtBulletMoveNotify = 8146;
     public static final int FireworksLaunchDataNotify = 26777;
     public static final int FireworksReformDataNotify = 8597;
-    public static final int ForgeGetQueueDataReq = -152;
+    public static final int ForgeGetQueueDataReq = 26968; // 7.1 forge-page request, native type 34384.
     public static final int ForgeQueueManipulateReq = 2573;
     public static final int ForgeQueueManipulateRsp = 22232;
     public static final int FurnitureMakeStartReq = 22221;
