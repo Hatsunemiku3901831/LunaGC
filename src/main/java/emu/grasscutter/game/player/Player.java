@@ -1881,6 +1881,7 @@ public class Player implements PlayerHook, FieldFetch {
         session.send(new PacketItemCdGroupTimeNotify(this));
         this.getTeamManager().refreshTeamSkillLevelBonuses(false);
         session.send(new PacketAvatarDataNotify(this));
+        session.send(new PacketAvatarSelectionDataNotify());
         session.send(new PacketAvatarWeaponSkinDataNotify(this));
 
         this.getServer().getShopSystem().sendProductPriceCatalog(session);

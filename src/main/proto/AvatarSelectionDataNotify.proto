@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "AvatarSelectionDataNotifyOuterClass";
+
+// Purpose alias for native type 46070 (HPHDHDJHCGO), CmdId 21136.
+// Retain wire-based field names until the individual list semantics are recovered.
+// The receiver initializes player caches used by the avatar selection dialogs,
+// including synthesis, even when both lists are empty.
+message AvatarSelectionDataNotify {
+    repeated uint32 list_15 = 15; // HEHLEJIDIMM, native object +0x18.
+    repeated uint32 list_1 = 1;   // GNKAHMABFKE, native object +0x20.
+}

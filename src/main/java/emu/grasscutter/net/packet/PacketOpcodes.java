@@ -40,6 +40,8 @@ public final class PacketOpcodes {
     public static final int CombatInvocationsNotify = 6930;
     public static final int SceneTeamUpdateNotify = 29245;
     public static final int AvatarDataNotify = 27799;
+    // Native type 46070 (HPHDHDJHCGO); purpose alias for selection-cache initialization.
+    public static final int AvatarSelectionDataNotify = 21136;
     public static final int PlayerDataNotify = 3272;
     public static final int SceneEntityAppearNotify = 27685;
     public static final int SceneEntityDisappearNotify = 6253;
