@@ -75,9 +75,7 @@ public class MaPassportAuthenticator {
             
             Grasscutter.getLogger().debug("Generating session key");
             // Always generate a FRESH session key so the client never sees a reused/stale token.
-            String sessionKey = account.generateV2SessionKey();
-            // Persist the session key SYNCHRONOUSLY before the client uses it.
-            emu.grasscutter.database.DatabaseManager.getGameDatastore().save(account);
+            account.generateV2SessionKey(); // Confirms the versioned write on the account store.
             
             Grasscutter.getLogger().info("User " + username + " has successfully logged in");
             return createLoginSuccessResponse(account);
@@ -137,8 +135,7 @@ public class MaPassportAuthenticator {
             }
 
             // 同 appLoginByPassword：每次登录都发一个全新的 session key 并同步落库
-            String sessionKey = account.generateV2SessionKey();
-            emu.grasscutter.database.DatabaseManager.getGameDatastore().save(account);
+            account.generateV2SessionKey();
 
             Grasscutter.getLogger().info("User " + mobile + " has successfully logged in (mobile captcha)");
             LoginByPasswordResponseJson response = createLoginSuccessResponse(account);
@@ -185,7 +182,7 @@ public class MaPassportAuthenticator {
                                 + " new=" + requestToken.substring(0, Math.min(12, requestToken.length()))
                                 + ")");
                 account.setSessionKey(requestToken);
-                account.save();
+                DatabaseHelper.saveAccountSync(account);
             }
             
             Grasscutter.getLogger().debug("Ma-Passport token verification successful for: " + account.getUsername());

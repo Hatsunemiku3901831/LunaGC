@@ -79,6 +79,7 @@ class AccountDeletionMongoTest {
         target.setId(ACCOUNT_ID);
         target.setUsername("delete-fixture");
         accounts.insert(target);
+        target = accounts.find(Account.class).first();
     }
 
     private static Field field(Class<?> type, String name) throws Exception {

@@ -3,17 +3,42 @@ package emu.grasscutter.game;
 import static emu.grasscutter.config.Configuration.*;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+
+import dev.morphia.Datastore;
 import dev.morphia.annotations.*;
-import emu.grasscutter.Grasscutter;
+
 import emu.grasscutter.database.DatabaseHelper;
 import emu.grasscutter.utils.*;
+
+import org.bson.Document;
+
 import java.util.*;
 import java.util.stream.Stream;
-import org.bson.Document;
 
 @Entity(value = "accounts", useDiscriminator = false)
 public class Account {
     @Id private String id;
+
+    private AccountSaveStamp saveStamp;
+    @Transient private transient AccountSaveGuard saveGuard;
+
+    public synchronized AccountSaveGuard getSaveGuard() {
+        if (saveGuard == null) saveGuard = new AccountSaveGuard(this, null, null);
+        return saveGuard;
+    }
+
+    void setSaveStamp(AccountSaveStamp stamp) {
+        this.saveStamp = stamp;
+    }
+
+    void installSaveGuard(AccountSaveGuard guard) {
+        this.saveGuard = guard;
+    }
+
+    @PostLoad
+    private void loadedSaveState(Document document, Datastore source) {
+        saveGuard = new AccountSaveGuard(this, document, source);
+    }
 
     @Indexed(options = @IndexOptions(unique = true))
     @Collation(locale = "simple", caseLevel = true)
@@ -129,18 +154,18 @@ public class Account {
         this.sessionKey = sessionKey;
     }
 
-    public String generateSessionKey() {
+    public synchronized String generateSessionKey() {
         this.sessionKey = Utils.bytesToHex(Crypto.createSessionKey(32));
-        this.save();
+        DatabaseHelper.saveAccountSync(this);
         return this.sessionKey;
     }
 
-    public String generateV2SessionKey() {
+    public synchronized String generateV2SessionKey() {
         this.sessionKey = "v2_" + Utils.bytesToHex(Crypto.createSessionKey(32));
-        this.save();
+        DatabaseHelper.saveAccountSync(this);
         return this.sessionKey;
     }
-    
+
     public boolean verifyPassword(String password) {
         if (this.password == null || this.password.isEmpty()) {
             return true;
@@ -249,9 +274,9 @@ public class Account {
     }
 
     // TODO make unique
-    public String generateLoginToken() {
+    public synchronized String generateLoginToken() {
         this.token = Utils.bytesToHex(Crypto.createSessionKey(32));
-        this.save();
+        DatabaseHelper.saveAccountSync(this);
         return this.token;
     }
 

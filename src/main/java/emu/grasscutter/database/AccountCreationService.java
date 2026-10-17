@@ -10,6 +10,7 @@ import dev.morphia.Datastore;
 
 import emu.grasscutter.GameConstants;
 import emu.grasscutter.game.Account;
+import emu.grasscutter.game.AccountSaveGuard;
 
 import org.bson.Document;
 
@@ -68,7 +69,7 @@ final class AccountCreationService {
             account.setId(Integer.toString(DatabaseManager.reserveNextId(game, "Account", 10000)));
             if (!PlayerUidAllocator.claimNewAccountId(accounts, account.getId(), ownerId)) continue;
             try {
-                rows.insertOne(accounts.getMapper().toDocument(account));
+                AccountSaveGuard.insertNew(account, accounts);
                 return account;
             } catch (MongoWriteException duplicate) {
                 if (duplicate.getError() == null || duplicate.getError().getCode() != 11000)

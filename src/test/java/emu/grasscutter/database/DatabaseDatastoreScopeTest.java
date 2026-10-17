@@ -85,26 +85,32 @@ class DatabaseDatastoreScopeTest {
         assertEquals(1,first.saves.get()); assertEquals(0,second.saves.get());
     }
     @Test void queuedAccountSaveKeepsTheSelectedDispatchStore() throws Exception {
-        var first=new Recorder(); var second=new Recorder(); dispatch(first.store);
-        try(var held=new HeldQueue(DatabaseHelper.getEventExecutorAccount())) {
-            DatabaseHelper.saveAccountAsync(new Account()); dispatch(second.store);
+        try(var stores=new Stores()) {
+            var account=seedAccounts(stores); dispatch(stores.first);
+            try(var held=new HeldQueue(DatabaseHelper.getEventExecutorAccount())) {
+                account.setEmail("updated@example.invalid"); DatabaseHelper.saveAccountAsync(account); dispatch(stores.second);
+            }
+            assertAccountDestination(stores);
         }
-        assertEquals(1,first.saves.get()); assertEquals(0,second.saves.get());
     }
     @Test void queuedAccountSaveDoesNotChangeTargetsWhenRunModeChanges() throws Exception {
-        var first=new Recorder(); var second=new Recorder(); game(first.store); dispatch(second.store);
-        Grasscutter.setRunModeOverride(ServerRunMode.HYBRID);
-        try(var held=new HeldQueue(DatabaseHelper.getEventExecutorAccount())) {
-            DatabaseHelper.saveAccountAsync(new Account()); Grasscutter.setRunModeOverride(ServerRunMode.DISPATCH_ONLY);
+        try(var stores=new Stores()) {
+            var account=seedAccounts(stores); game(stores.first); dispatch(stores.second);
+            Grasscutter.setRunModeOverride(ServerRunMode.HYBRID);
+            try(var held=new HeldQueue(DatabaseHelper.getEventExecutorAccount())) {
+                account.setEmail("updated@example.invalid"); DatabaseHelper.saveAccountAsync(account); Grasscutter.setRunModeOverride(ServerRunMode.DISPATCH_ONLY);
+            }
+            assertAccountDestination(stores);
         }
-        assertEquals(1,first.saves.get()); assertEquals(0,second.saves.get());
     }
     @Test void queuedAccountObjectOnGameApiKeepsTheGameStore() throws Exception {
-        var first=new Recorder(); var second=new Recorder(); game(first.store);
-        try(var held=new HeldQueue(DatabaseHelper.getEventExecutorAccount())) {
-            DatabaseHelper.saveGameAsync(new Account()); game(second.store);
+        try(var stores=new Stores()) {
+            var account=seedAccounts(stores); game(stores.first);
+            try(var held=new HeldQueue(DatabaseHelper.getEventExecutorAccount())) {
+                account.setEmail("updated@example.invalid"); DatabaseHelper.saveGameAsync(account); game(stores.second);
+            }
+            assertAccountDestination(stores);
         }
-        assertEquals(1,first.saves.get()); assertEquals(0,second.saves.get());
     }
     @Test void concurrentModificationRetryKeepsTheOriginalStore() throws Exception {
         var first=new Recorder(); var second=new Recorder(); game(first.store);
@@ -175,6 +181,17 @@ class DatabaseDatastoreScopeTest {
         }
     }
     private static GameItem item() { var value=new GameItem(); value.setItemId(202); value.setCount(7); return value; }
+    private Account seedAccounts(Stores stores) {
+        for(var store:List.of(stores.first,stores.second)) {
+            store.getMapper().map(Account.class);
+            store.getDatabase().getCollection("accounts").insertOne(new Document("_id","scope-account-save").append("username","fixture").append("email","original@example.invalid"));
+        }
+        return stores.first.find(Account.class).filter(dev.morphia.query.experimental.filters.Filters.eq("_id","scope-account-save")).first();
+    }
+    private void assertAccountDestination(Stores stores) {
+        assertEquals("updated@example.invalid",stores.first.getDatabase().getCollection("accounts").find().first().getString("email"));
+        assertEquals("original@example.invalid",stores.second.getDatabase().getCollection("accounts").find().first().getString("email"));
+    }
     private GameItem seedBoth(Stores stores) throws Exception {
         var value=item();game(stores.first);DatabaseHelper.saveGameSync(value);var copy=item();
         copy.restorePersistenceId(value.getObjectId());game(stores.second);DatabaseHelper.saveGameSync(copy);

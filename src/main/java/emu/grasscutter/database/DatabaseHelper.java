@@ -79,8 +79,16 @@ public final class DatabaseHelper {
     public static void saveAccountAsync(Object object) {
         var datastore = DatabaseManager.getAccountDatastore();
         eventExecutorAccount.saveSnapshot(object, datastore, () -> {
-            synchronized (object) { datastore.save(object); }
+            synchronized (object) {
+                if (object instanceof Account account) account.getSaveGuard().save(datastore);
+                else datastore.save(object);
+            }
         });
+    }
+
+    public static void saveAccountSync(Account account) {
+        var datastore = DatabaseManager.getAccountDatastore();
+        account.getSaveGuard().save(datastore);
     }
 
     /**
@@ -106,6 +114,10 @@ public final class DatabaseHelper {
         var datastore = DatabaseManager.getGameDatastore();
         DatabaseWriteBarrier.run(() -> {
         synchronized (object) {
+            if (object instanceof Account account) {
+                account.getSaveGuard().save(datastore);
+                return;
+            }
             if (object instanceof GameItem item) {
                 item.getSaveGuard().save(datastore);
                 return;
@@ -138,7 +150,7 @@ public final class DatabaseHelper {
         try {
             saveGameObject(datastore, object);
         } catch (MongoWriteException e) {
-            if (object instanceof Player || object instanceof PlayerActivityData || object instanceof GameItem
+            if (object instanceof Account || object instanceof Player || object instanceof PlayerActivityData || object instanceof GameItem
                     || e.getError() == null || e.getError().getCode() != 11000) {
                 throw e;
             }
@@ -167,7 +179,8 @@ public final class DatabaseHelper {
     }
 
     private static void saveGameObject(Datastore datastore, Object object) {
-        if (object instanceof Player player) player.getSaveGuard().save(datastore);
+        if (object instanceof Account account) account.getSaveGuard().save(datastore);
+        else if (object instanceof Player player) player.getSaveGuard().save(datastore);
         else if (object instanceof PlayerActivityData activity) activity.getSaveGuard().save(datastore);
         else if (object instanceof GameItem item) item.getSaveGuard().save(datastore);
         else datastore.save(object);

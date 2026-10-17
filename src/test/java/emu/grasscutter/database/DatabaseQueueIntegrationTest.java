@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.mongodb.client.MongoClients;
 
-import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 
 import emu.grasscutter.Grasscutter;
@@ -15,7 +14,6 @@ import emu.grasscutter.game.inventory.GuardedItemTestStore;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Proxy;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -44,7 +42,6 @@ class DatabaseQueueIntegrationTest {
         assertTrue(DatabaseHelper.awaitIdle(java.time.Duration.ofSeconds(5)));
         var release = new CountDownLatch(1);
         var entered = new CountDownLatch(1);
-        var accountSaved = new CountDownLatch(1);
         var executor = (ThreadPoolExecutor) DatabaseHelper.getEventExecutor();
         var client = MongoClients.create(uri);
         var actual =
@@ -52,20 +49,15 @@ class DatabaseQueueIntegrationTest {
                         client,
                         "lunagc_queue_isolation_"
                                 + java.util.UUID.randomUUID().toString().replace("-", ""));
-        actual.getMapper().map(GameItem.class);
-        var datastore =
-                Proxy.newProxyInstance(
-                        Datastore.class.getClassLoader(),
-                        new Class<?>[] {Datastore.class},
-                        (proxy, method, args) -> {
-                            if (method.getName().equals("save") && args[0] instanceof Account) {
-                                accountSaved.countDown();
-                                return args[0];
-                            }
-                            return method.invoke(actual, args);
-                        });
-        field.set(null, datastore);
-        dispatch.set(null, datastore);
+        actual.getMapper().map(GameItem.class, Account.class);
+        actual.getDatabase()
+                .getCollection("accounts")
+                .insertOne(
+                        new org.bson.Document("_id", "queue-fixture")
+                                .append("username", "queue-fixture"));
+        var account = actual.find(Account.class).first();
+        field.set(null, actual);
+        dispatch.set(null, actual);
         try {
             for (int i = 0; i < executor.getCorePoolSize() + 8; i++) {
                 var item = new GameItem();
@@ -88,10 +80,24 @@ class DatabaseQueueIntegrationTest {
                 DatabaseHelper.saveGameAsync(item);
             }
             assertTrue(entered.await(2, TimeUnit.SECONDS));
-            DatabaseHelper.saveAccountAsync(new Account());
+            account.setEmail("saved@example.invalid");
+            DatabaseHelper.saveAccountAsync(account);
+            long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(1);
+            boolean saved = false;
+            do {
+                saved =
+                        "saved@example.invalid"
+                                .equals(
+                                        actual.getDatabase()
+                                                .getCollection("accounts")
+                                                .find()
+                                                .first()
+                                                .getString("email"));
+                if (!saved) Thread.sleep(5);
+            } while (!saved && System.nanoTime() < deadline);
             assertTrue(
-                    accountSaved.await(1, TimeUnit.SECONDS),
-                    "Login account writes must be isolated from a blocked item backlog");
+                    saved,
+                    "Login account writes must reach Mongo while item writes remain blocked");
         } finally {
             release.countDown();
             try {
