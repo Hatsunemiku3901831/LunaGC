@@ -401,34 +401,18 @@ public final class DatabaseHelper {
                 > 0;
     }
 
-    public static synchronized void generatePlayerUid(Player character, int reservedId) {
-        // Check if reserved id
-        int id;
-        if (reservedId > 0 && !checkIfPlayerExists(reservedId)) {
-            id = reservedId;
-            character.setUid(id);
-        } else {
-            do {
-                id = DatabaseManager.getNextId(character);
-            } while (checkIfPlayerExists(id));
-            character.setUid(id);
-        }
-
-        // Confirm creation before login managers can enqueue economic work for this profile.
-        DatabaseHelper.saveGameSync(character);
+    public static void generatePlayerUid(Player character, int reservedId) {
+        PlayerUidAllocator.assignLegacy(character, reservedId);
     }
 
-    public static synchronized int getNextPlayerId(int reservedId) {
-        // Check if reserved id
-        int id;
-        if (reservedId > 0 && !checkIfPlayerExists(reservedId)) {
-            id = reservedId;
-        } else {
-            do {
-                id = DatabaseManager.getNextId(Player.class);
-            } while (checkIfPlayerExists(id));
-        }
-        return id;
+    /** Legacy unbound allocation. Login must use the account-owned creation entry below. */
+    public static int getNextPlayerId(int reservedId) {
+        return PlayerUidAllocator.anonymous(reservedId);
+    }
+
+    public static Player getOrCreatePlayer(Account account, Class<? extends Player> type,
+            java.util.function.Supplier<? extends Player> factory) {
+        return PlayerUidAllocator.createOrLoad(PlayerUidAllocator.reserve(account), type, factory);
     }
 
     public static void savePlayer(Player character) {

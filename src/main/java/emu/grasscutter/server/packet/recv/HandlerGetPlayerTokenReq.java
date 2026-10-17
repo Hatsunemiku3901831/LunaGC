@@ -13,8 +13,10 @@ import emu.grasscutter.server.game.GameSession.SessionState;
 import emu.grasscutter.server.packet.send.PacketGetPlayerTokenRsp;
 import emu.grasscutter.utils.*;
 import emu.grasscutter.utils.helpers.ByteHelper;
+
 import java.nio.ByteBuffer;
 import java.security.Signature;
+
 import javax.crypto.Cipher;
 
 @Opcodes(PacketOpcodes.GetPlayerTokenReq)
@@ -51,7 +53,9 @@ public class HandlerGetPlayerTokenReq extends PacketHandler {
                 exists.onLogout();
                 existsSession.close();
                 Grasscutter.getLogger()
-                    .warn("Player {} was kicked due to duplicated login", account.getUsername());
+                        .warn(
+                                "Player {} was kicked due to duplicated login",
+                                account.getUsername());
                 kicked = true;
             }
         }
@@ -59,7 +63,7 @@ public class HandlerGetPlayerTokenReq extends PacketHandler {
         if (!kicked) {
 
             if (ACCOUNT.maxPlayer > -1
-                && Grasscutter.getGameServer().getPlayers().size() >= ACCOUNT.maxPlayer) {
+                    && Grasscutter.getGameServer().getPlayers().size() >= ACCOUNT.maxPlayer) {
                 session.close();
                 return;
             }
@@ -68,25 +72,31 @@ public class HandlerGetPlayerTokenReq extends PacketHandler {
         var event = new PlayerCreationEvent(session, Player.class);
         event.call();
 
-        var player = DatabaseHelper.getPlayerByAccount(account, event.getPlayerClass());
-
-        if (player == null) {
-            var nextPlayerUid =
-                DatabaseHelper.getNextPlayerId(session.getAccount().getReservedPlayerUid());
-
-            player =
-                event.getPlayerClass().getDeclaredConstructor(GameSession.class).newInstance(session);
-
-            DatabaseHelper.generatePlayerUid(player, nextPlayerUid);
-        }
+        var player =
+                DatabaseHelper.getOrCreatePlayer(
+                        account,
+                        event.getPlayerClass(),
+                        () -> {
+                            try {
+                                return event.getPlayerClass()
+                                        .getDeclaredConstructor(GameSession.class)
+                                        .newInstance(session);
+                            } catch (ReflectiveOperationException failed) {
+                                throw new IllegalStateException(
+                                        "Could not construct a new player", failed);
+                            }
+                        });
 
         session.setPlayer(player);
 
         if (session.getAccount().isBanned()) {
             session.setState(SessionState.ACCOUNT_BANNED);
             session.send(
-                new PacketGetPlayerTokenRsp(
-                    session, 21, "FORBID_CHEATING_PLUGINS", session.getAccount().getBanEndTime()));
+                    new PacketGetPlayerTokenRsp(
+                            session,
+                            21,
+                            "FORBID_CHEATING_PLUGINS",
+                            session.getAccount().getBanEndTime()));
             return;
         }
 
@@ -120,29 +130,40 @@ public class HandlerGetPlayerTokenReq extends PacketHandler {
                     // give up - which would mask the very thing the candidates were testing. The
                     // client reopens this exchange every 30-60 seconds by itself, so one candidate
                     // per request still covers the whole rotation in a few minutes.
-                    var rsp = new PacketGetPlayerTokenRsp(
-                            session,
-                            Utils.base64Encode(seedEncrypted),
-                            Utils.base64Encode(privateSignature.sign()),
-                            keyId);
+                    var rsp =
+                            new PacketGetPlayerTokenRsp(
+                                    session,
+                                    Utils.base64Encode(seedEncrypted),
+                                    Utils.base64Encode(privateSignature.sign()),
+                                    keyId);
                     session.send(rsp);
                     switchWireKey(session);
                 } catch (Exception ignored) {
 
-                    Grasscutter.getLogger().error("GetPlayerTokenReq RSA failed (key_id={}, clientRandKey len={}): {}",
-                        keyId,
-                        clientRandKey.isEmpty() ? 0 : Utils.base64Decode(clientRandKey).length,
-                        ignored.getClass().getSimpleName() + ": " + ignored.getMessage());
+                    Grasscutter.getLogger()
+                            .error(
+                                    "GetPlayerTokenReq RSA failed (key_id={}, clientRandKey"
+                                            + " len={}): {}",
+                                    keyId,
+                                    clientRandKey.isEmpty()
+                                            ? 0
+                                            : Utils.base64Decode(clientRandKey).length,
+                                    ignored.getClass().getSimpleName()
+                                            + ": "
+                                            + ignored.getMessage());
                     var clientBytes = Utils.base64Decode(clientRandKey);
                     var seed = ByteHelper.longToBytes(encryptSeed);
                     Crypto.xor(clientBytes, seed);
 
                     var base64str = Utils.base64Encode(clientBytes);
-                    session.send(new PacketGetPlayerTokenRsp(session, base64str, "bm90aGluZyBoZXJl", keyId));
+                    session.send(
+                            new PacketGetPlayerTokenRsp(
+                                    session, base64str, "bm90aGluZyBoZXJl", keyId));
                     // switchWireKey(session);
                     // The exchange failed, so the client cannot derive the session key from this
                     // degraded response -- it only ever got the seed XORed over its own ciphertext,
-                    // which is not the negotiated seed.  Switching the wire unilaterally would leave
+                    // which is not the negotiated seed.  Switching the wire unilaterally would
+                    // leave
                     // the client still sending on the dispatch key while every packet we send back
                     // goes out under a key it cannot reproduce, and the receive-side latch cannot
                     // fix our SEND path.  Stay on the dispatch key instead: the exchange is retried
@@ -161,12 +182,12 @@ public class HandlerGetPlayerTokenReq extends PacketHandler {
     /**
      * Moves the connection onto the negotiated session key.
      *
-     * <p>This used to be skipped on 7.x, because the client could not read our response and so never
-     * moved with us, and switching alone would have turned its pings - the only signal still coming
-     * back - into noise. That trade is gone: the session now works out which key a frame arrived
-     * under instead of assuming, so it follows the client either way and nothing is lost by
-     * switching. Keeping the skip would be actively harmful now, because the moment the field map is
-     * right the client switches and the server has to be there with it.
+     * <p>This used to be skipped on 7.x, because the client could not read our response and so
+     * never moved with us, and switching alone would have turned its pings - the only signal still
+     * coming back - into noise. That trade is gone: the session now works out which key a frame
+     * arrived under instead of assuming, so it follows the client either way and nothing is lost by
+     * switching. Keeping the skip would be actively harmful now, because the moment the field map
+     * is right the client switches and the server has to be there with it.
      */
     private static void switchWireKey(GameSession session) {
         session.setUseSecretKey(true);

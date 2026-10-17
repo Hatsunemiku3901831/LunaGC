@@ -14,6 +14,7 @@ import emu.grasscutter.game.Account;
 import org.bson.Document;
 
 import java.util.List;
+import java.util.UUID;
 
 /** Confirm insert-only creation on the stores selected at admission; never upsert an account. */
 final class AccountCreationService {
@@ -59,8 +60,13 @@ final class AccountCreationService {
         account.setPassword(password);
         initialPermissions.forEach(account::addPermission);
         if (reservedUid > 0) account.setReservedPlayerUid(reservedUid);
+        String ownerId = UUID.randomUUID().toString();
+        if (reservedUid > 0
+                && !PlayerUidAllocator.reserveForNewAccount(game, accounts, reservedUid, ownerId))
+            return null;
         for (int attempt = 0; attempt < MAX_ID_ATTEMPTS; attempt++) {
             account.setId(Integer.toString(DatabaseManager.reserveNextId(game, "Account", 10000)));
+            if (!PlayerUidAllocator.claimNewAccountId(accounts, account.getId(), ownerId)) continue;
             try {
                 rows.insertOne(accounts.getMapper().toDocument(account));
                 return account;
