@@ -156,4 +156,31 @@ class ShopCatalogTest {
                 ShopInfo.ShopRefreshType.SHOP_REFRESH_DAILY, ShopCatalog.copy(good).getShopRefreshType());
         assertTrue(ShopSystem.getShopNextRefreshTime(good) > 0);
     }
+
+    @Test
+    void generatedDeliveryPolicySurvivesLegacyOverridesButCannotBeAddedToCustomGoods() throws Exception {
+        var path = dir.resolve("artifact-policy.json");
+        var original = good();
+        original.setGoodsId(ArtifactShop.GOODS_ID_BASE);
+        original.setGoodsItem(new ItemParamData(201, 1));
+        original.setArtifactRoll(true);
+        var catalog = new ShopCatalog(path);
+        catalog.replaceBase(base(original));
+        assertTrue(catalog.active().get(902).get(0).isArtifactRoll(), "JSON copying keeps source metadata");
+        var gson = new Gson();
+        var legacyJson = gson.toJsonTree(original).getAsJsonObject();
+        legacyJson.remove("artifactRoll");
+        var legacyEdit = gson.fromJson(legacyJson, ShopInfo.class);
+        legacyEdit.setScoin(123);
+        catalog.edit(902, original.getGoodsId(), "save", legacyEdit);
+        var reloaded = new ShopCatalog(path);
+        reloaded.replaceBase(base(original));
+        assertTrue(reloaded.active().get(902).get(0).isArtifactRoll());
+        assertEquals(123, reloaded.active().get(902).get(0).getScoin());
+        var custom = good();
+        custom.setArtifactRoll(true);
+        int customId = reloaded.edit(902, 0, "save", custom);
+        assertFalse(reloaded.active().get(902).stream()
+                .filter(row -> row.getGoodsId() == customId).findFirst().orElseThrow().isArtifactRoll());
+    }
 }

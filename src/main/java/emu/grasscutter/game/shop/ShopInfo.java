@@ -30,6 +30,8 @@ public class ShopInfo {
     @Getter @Setter private int disableType = 0;
     @Getter @Setter private int secondarySheetId = 0;
     @Getter @Setter private int rotateId = 0;
+    /** Generated artifact delivery policy; ordinary goods may use any numeric ID. */
+    @Getter @Setter private boolean artifactRoll;
 
     private String refreshType;
     private transient ShopRefreshType shopRefreshType;

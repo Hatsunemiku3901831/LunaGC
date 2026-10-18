@@ -17,7 +17,7 @@ final class TpsMagazineSystem {
 
     /** Build a read-only view within the total shared by all weapons in the active party. */
     static Int2IntMap visible(Player player, GameItem additional) {
-        synchronized (player) {
+        synchronized (player.getInventory()) {
             var weapons = new LinkedHashSet<GameItem>();
             for (var entity : player.getTeamManager().getActiveTeamSnapshot())
                 if (entity != null)
@@ -47,7 +47,7 @@ final class TpsMagazineSystem {
         }
     }
 
-    /** Called under the player lock; null rejects the whole update before any state is changed. */
+    /** Called under the inventory transaction; null rejects the whole update before any state changes. */
     static Int2IntMap validate(
             Player player,
             Avatar avatar,

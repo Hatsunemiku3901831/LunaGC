@@ -167,7 +167,7 @@ public final class AbilityTalentResolver {
                 if (avatar != null && avatar.getPlayer() != null) player = avatar.getPlayer();
                 if (player == null) return null;
                 // Older weapon entities may have been created before the item was bound.
-                for (var entity : player.getTeamManager().getActiveTeam()) {
+                for (var entity : player.getTeamManager().getActiveTeamSnapshot()) {
                     var candidate = entity.getAvatar();
                     if (candidate == avatar
                             || (candidate.getWeapon() != null

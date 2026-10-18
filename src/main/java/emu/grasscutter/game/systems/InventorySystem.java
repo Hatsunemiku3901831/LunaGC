@@ -370,6 +370,17 @@ public class InventorySystem extends BaseGameSystem {
             long targetGuid,
             List<Long> foodWeaponGuidList,
             List<ItemParam> itemParamList) {
+        if (player == null || foodWeaponGuidList == null || itemParamList == null) return;
+        synchronized (player.getInventory()) {
+            upgradeWeaponLocked(player, targetGuid, foodWeaponGuidList, itemParamList);
+        }
+    }
+
+    private void upgradeWeaponLocked(
+            Player player,
+            long targetGuid,
+            List<Long> foodWeaponGuidList,
+            List<ItemParam> itemParamList) {
         GameItem weapon = player.getInventory().getItemByGuid(targetGuid);
 
         // Sanity checks
@@ -387,7 +398,9 @@ public class InventorySystem extends BaseGameSystem {
         // Get exp gain
         int expGain = 0, expGainFree = 0;
         List<GameItem> foodWeapons = new ArrayList<GameItem>();
+        var seenFood = new HashSet<Long>();
         for (long guid : foodWeaponGuidList) {
+            if (guid == targetGuid || !seenFood.add(guid)) return;
             GameItem food = player.getInventory().getItemByGuid(guid);
             if (food == null || !food.isDestroyable()) {
                 continue;
@@ -501,6 +514,13 @@ public class InventorySystem extends BaseGameSystem {
     }
 
     public void refineWeapon(Player player, long targetGuid, long feedGuid) {
+        if (player == null || targetGuid == feedGuid) return;
+        synchronized (player.getInventory()) {
+            refineWeaponLocked(player, targetGuid, feedGuid);
+        }
+    }
+
+    private void refineWeaponLocked(Player player, long targetGuid, long feedGuid) {
         GameItem weapon = player.getInventory().getItemByGuid(targetGuid);
         GameItem feed = player.getInventory().getItemByGuid(feedGuid);
 
@@ -984,7 +1004,7 @@ public class InventorySystem extends BaseGameSystem {
     }
 
     // Uses an item from the player's inventory.
-    public synchronized GameItem useItem(
+    public GameItem useItem(
             Player player,
             long targetGuid,
             long itemGuid,
@@ -994,7 +1014,46 @@ public class InventorySystem extends BaseGameSystem {
         return useItem(player, targetGuid, itemGuid, count, optionId, isEnterMpDungeonTeam, List.of());
     }
 
-    public synchronized GameItem useItem(
+    public GameItem useItem(
+            Player player,
+            long targetGuid,
+            long itemGuid,
+            int count,
+            int optionId,
+            boolean isEnterMpDungeonTeam,
+            List<Integer> optionIds) {
+        if (player == null) return null;
+        // Use-on-gain already owns this same monitor. A server-wide system monitor would
+        // invert that order and also let one player's blocked payment stall everyone else.
+        GameItem sceneItem;
+        ItemData sceneItemData;
+        synchronized (player.getInventory()) {
+            sceneItem = player.getInventory().getItemByGuid(itemGuid);
+            sceneItemData = sceneItem == null ? null : sceneItem.getItemData();
+            var actions = sceneItemData == null ? null : sceneItemData.getItemUseActions();
+            if (actions == null || actions.stream().noneMatch(ItemUseMakeGadget.class::isInstance))
+                return useItemLocked(player, targetGuid, itemGuid, count, optionId,
+                        isEnterMpDungeonTeam, optionIds);
+        }
+        // Gadget placement calls Scene.addEntity. Scene entry already owns Scene before the
+        // inventory, so release the read-only preview and enter in the same order. Effects and
+        // payment remain synchronous; no item is consumed before a failed placement.
+        synchronized (player.getSceneTransferLock()) {
+            var scene = player.getScene();
+            if (scene == null) return null;
+            synchronized (scene) {
+                synchronized (player.getInventory()) {
+                    if (player.getScene() != scene
+                            || player.getInventory().getItemByGuid(itemGuid) != sceneItem
+                            || sceneItem.getItemData() != sceneItemData) return null;
+                    return useItemLocked(player, targetGuid, itemGuid, count, optionId,
+                            isEnterMpDungeonTeam, optionIds);
+                }
+            }
+        }
+    }
+
+    private GameItem useItemLocked(
             Player player,
             long targetGuid,
             long itemGuid,
@@ -1101,8 +1160,11 @@ public class InventorySystem extends BaseGameSystem {
     }
 
     // Uses an item without checking the player's inventory.
-    public synchronized boolean useItemDirect(ItemData itemData, UseItemParams params) {
-        return useItemDirect(itemData, params, () -> true);
+    public boolean useItemDirect(ItemData itemData, UseItemParams params) {
+        if (params == null || params.player == null) return false;
+        synchronized (params.player.getInventory()) {
+            return useItemDirect(itemData, params, () -> true);
+        }
     }
 
     private boolean useItemDirect(ItemData itemData, UseItemParams params, java.util.function.BooleanSupplier ready) {

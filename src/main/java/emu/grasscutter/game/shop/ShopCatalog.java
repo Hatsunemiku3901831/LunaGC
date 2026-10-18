@@ -120,9 +120,8 @@ public final class ShopCatalog {
                     validate(shopType, goods);
                     if (current == null && entries.stream().anyMatch(e -> e.goods.getGoodsId() == id))
                         throw new IllegalArgumentException("商品编号已在其他商店使用。");
-                    if (id >= ArtifactShop.GOODS_ID_BASE
-                            && (current == null
-                                    || goods.getGoodsItem().getId() != current.goods.getGoodsItem().getId()
+                    if (current != null && current.goods.isArtifactRoll()
+                            && (goods.getGoodsItem().getId() != current.goods.getGoodsItem().getId()
                                     || goods.getGoodsItem().getCount() != 1))
                         throw new IllegalArgumentException("自动圣遗物商品只能修改价格和限购。");
                     edit.goods = goods;
@@ -183,6 +182,10 @@ public final class ShopCatalog {
             var key = edit.shopType + ":" + edit.goodsId;
             var original = rows.get(key);
             if (original == null && edit.goods == null) continue;
+            var goods = copy(edit.goods == null ? original.goods : edit.goods);
+            // The resource/generated source owns delivery semantics. Old GM JSON has no flag,
+            // and editing prices must neither strip generated rolls nor add them to normal goods.
+            goods.setArtifactRoll(original != null && original.goods.isArtifactRoll());
             rows.put(
                     key,
                     new Entry(
@@ -190,7 +193,7 @@ public final class ShopCatalog {
                             edit.enabled,
                             original == null,
                             true,
-                            copy(edit.goods == null ? original.goods : edit.goods)));
+                            goods));
         }
         var result = new Int2ObjectOpenHashMap<List<ShopInfo>>();
         rows.values().stream()

@@ -103,7 +103,7 @@ public final class SpecialCosmeticShop {
     }
 
     public static String purchaseFree(Player player, ShopInfo info) {
-        synchronized (player) {
+        synchronized (player.getInventory()) {
             int now = emu.grasscutter.utils.Utils.getCurrentSeconds();
             if (info == null
                     || info.getGoodsItem() == null

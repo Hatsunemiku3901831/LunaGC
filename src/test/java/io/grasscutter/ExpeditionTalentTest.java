@@ -27,7 +27,6 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
 
-import java.lang.reflect.Proxy;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.util.*;
@@ -47,6 +46,8 @@ class ExpeditionTalentTest {
     private Avatar avatar;
     private Object previousDatastore;
     private java.lang.reflect.Field datastore;
+    private GuardedPlayerTestStore playerStore;
+    private ObservedItemTestWrites itemWrites;
 
     @BeforeAll
     static void resources() throws Exception {
@@ -82,6 +83,7 @@ class ExpeditionTalentTest {
 
     @BeforeEach
     void prepare() throws Exception {
+        assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
         environment = new AbilityTestFixture();
         player = new InvestigationRewardTest.ClaimPlayer();
         player.setProperty(PlayerProperty.PROP_PLAYER_LEVEL, 45);
@@ -104,12 +106,12 @@ class ExpeditionTalentTest {
         datastore = DatabaseManager.class.getDeclaredField("gameDatastore");
         datastore.setAccessible(true);
         previousDatastore = datastore.get(null);
-        datastore.set(
-                null,
-                Proxy.newProxyInstance(
-                        dev.morphia.Datastore.class.getClassLoader(),
-                        new Class<?>[] {dev.morphia.Datastore.class},
-                        (proxy, method, args) -> method.getName().equals("save") ? args[0] : null));
+        // Claims now use conditional, acknowledged Player and item writes. A save-only proxy
+        // cannot supply the mapper or persisted versions required by those guards.
+        playerStore = new GuardedPlayerTestStore(player, () -> {});
+        datastore.set(null, playerStore.datastore());
+        itemWrites = new ObservedItemTestWrites(player, playerStore.datastore(),
+                playerStore.datastore(), ignored -> {}, ignored -> {});
         var server = environment.scene.getWorld().getServer();
         system = new ExpeditionSystem(server);
         var field = GameServer.class.getDeclaredField("expeditionSystem");
@@ -120,11 +122,22 @@ class ExpeditionTalentTest {
 
     @AfterEach
     void close() throws Exception {
-        assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
-        if (datastore != null) datastore.set(null, previousDatastore);
-        Collections.reverse(restore);
-        restore.forEach(Runnable::run);
-        if (environment != null) environment.close();
+        try {
+            assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        } finally {
+            try {
+                if (itemWrites != null) itemWrites.close();
+            } finally {
+                if (datastore != null) datastore.set(null, previousDatastore);
+                try {
+                    if (playerStore != null) playerStore.close();
+                } finally {
+                    Collections.reverse(restore);
+                    restore.forEach(Runnable::run);
+                    if (environment != null) environment.close();
+                }
+            }
+        }
     }
 
     private <K, V> void put(Map<K, V> map, K key, V value) {

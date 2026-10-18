@@ -247,58 +247,71 @@ public class FreeStore {
     }
     /** An operator's receipt makes retrying a timed-out request safe. */
     public String purchase(Player player, String key, String receipt) {
+        // Obtain inventory before Player: item-use actions already follow that order.
+        synchronized (player.getInventory()) {
+            return purchaseLocked(player, key, receipt);
+        }
+    }
+
+    private String purchaseLocked(Player player, String key, String receipt) {
         var p = find(key);
         if (receipt == null || !receipt.matches("[a-zA-Z0-9-]{16,80}"))
             throw new IllegalArgumentException("购买凭据无效。");
+        final String previous;
+        final int bought;
+        synchronized (player) {
+            previous = player.getFreePurchaseReceipts().get(receipt);
+            bought = player.getFreeProductPurchases().getOrDefault(p.key, 0);
+        }
+        if (previous != null) {
+            if (!previous.equals(key)) throw new IllegalArgumentException("凭据已用于其他商品。");
+            persist(player);
+            return "该次购买已经完成，未重复发放。";
+        }
+        if (!catalog.productEnabled(key)) throw new IllegalArgumentException("商品已下架。");
+        switch (p.kind) {
+            case "card" -> {
+                if (!player.rechargeMoonCard(p.days, p.amount, p.dailyAmount, p.maxDays))
+                    throw new IllegalArgumentException("月卡剩余天数不能超过 " + p.maxDays + " 天。");
+            }
+            case "pass" -> {
+                var pass = player.getBattlePassManager();
+                if (pass == null) throw new IllegalArgumentException("纪行尚未加载。");
+                if (p.playType == 3 && !pass.isPaid()) throw new IllegalArgumentException("请先解锁珍珠纪行。");
+                if (!pass.unlockPaid(p.playType == 2 || p.playType == 3 || p.playType == 5))
+                    throw new IllegalArgumentException("当前纪行已解锁该档位。");
+            }
+            case "beyond_crystals" -> {
+                var property = BeyondCurrency.propertyForItem(231);
+                int amount = Math.addExact(p.amount, bought == 0 ? p.firstBonus : p.bonus);
+                long balance = (long) player.getProperty(property) + amount;
+                if (balance > Integer.MAX_VALUE) throw new IllegalArgumentException("货币数量已达到上限。");
+                player.setProperty(property, (int) balance);
+            }
+            case "primogems", "crystals" -> {
+                int amount =
+                        p.amount + (p.kind.equals("crystals") ? bought == 0 ? p.firstBonus : p.bonus : 0);
+                if ((long) (p.kind.equals("primogems") ? player.getPrimogems() : player.getCrystals())
+                                + amount
+                        > Integer.MAX_VALUE) throw new IllegalArgumentException("货币数量已达到上限。");
+                if (!player
+                        .getInventory()
+                        .addItem(
+                                new GameItem(p.kind.equals("primogems") ? 201 : 203, amount), ActionReason.Shop))
+                    throw new IllegalArgumentException("物品发放失败。");
+            }
+            default -> throw new IllegalArgumentException("未支持的商品类型。");
+        }
+        // PlayerSaveGuard serializes these maps under Player. Keep only metadata mutation there;
+        // reward delivery above can execute gameplay callbacks and must remain outside it.
         synchronized (player) {
             var receipts = player.getFreePurchaseReceipts();
-            if (receipts.containsKey(receipt)) {
-                if (!receipts.get(receipt).equals(key)) throw new IllegalArgumentException("凭据已用于其他商品。");
-                persist(player);
-                return "该次购买已经完成，未重复发放。";
-            }
-            if (!catalog.productEnabled(key)) throw new IllegalArgumentException("商品已下架。");
-            switch (p.kind) {
-                case "card" -> {
-                    if (!player.rechargeMoonCard(p.days, p.amount, p.dailyAmount, p.maxDays))
-                        throw new IllegalArgumentException("月卡剩余天数不能超过 " + p.maxDays + " 天。");
-                }
-                case "pass" -> {
-                    var pass = player.getBattlePassManager();
-                    if (pass == null) throw new IllegalArgumentException("纪行尚未加载。");
-                    if (p.playType == 3 && !pass.isPaid()) throw new IllegalArgumentException("请先解锁珍珠纪行。");
-                    if (!pass.unlockPaid(p.playType == 2 || p.playType == 3 || p.playType == 5))
-                        throw new IllegalArgumentException("当前纪行已解锁该档位。");
-                }
-                case "beyond_crystals" -> {
-                    var property = BeyondCurrency.propertyForItem(231);
-                    int bought = player.getFreeProductPurchases().getOrDefault(p.key, 0);
-                    int amount = Math.addExact(p.amount, bought == 0 ? p.firstBonus : p.bonus);
-                    long balance = (long) player.getProperty(property) + amount;
-                    if (balance > Integer.MAX_VALUE) throw new IllegalArgumentException("货币数量已达到上限。");
-                    player.setProperty(property, (int) balance);
-                }
-                case "primogems", "crystals" -> {
-                    int bought = player.getFreeProductPurchases().getOrDefault(p.key, 0);
-                    int amount =
-                            p.amount + (p.kind.equals("crystals") ? bought == 0 ? p.firstBonus : p.bonus : 0);
-                    if ((long) (p.kind.equals("primogems") ? player.getPrimogems() : player.getCrystals())
-                                    + amount
-                            > Integer.MAX_VALUE) throw new IllegalArgumentException("货币数量已达到上限。");
-                    if (!player
-                            .getInventory()
-                            .addItem(
-                                    new GameItem(p.kind.equals("primogems") ? 201 : 203, amount), ActionReason.Shop))
-                        throw new IllegalArgumentException("物品发放失败。");
-                }
-                default -> throw new IllegalArgumentException("未支持的商品类型。");
-            }
             player.getFreeProductPurchases().merge(p.key, 1, Integer::sum);
             receipts.put(receipt, key);
             while (receipts.size() > 512) receipts.remove(receipts.keySet().iterator().next());
-            persist(player);
-            return "已免费购买：" + p.name + "（价格 0）。";
         }
+        persist(player);
+        return "已免费购买：" + p.name + "（价格 0）。";
     }
 
     protected void persist(Player player) {

@@ -56,7 +56,7 @@ public final class TpsSupplyTransaction {
     }
 
     public boolean grant(EntityAvatar recipient, List<Amount> amounts) {
-        synchronized (player) {
+        synchronized (player.getInventory()) {
             if (player.getPendingTpsSupply() != null
                     || player.getTpsReportTransaction().isPending()
                     || !TpsWeaponSystem.isSupplyRecipient(recipient)
@@ -99,7 +99,7 @@ public final class TpsSupplyTransaction {
                             effective,
                             limits,
                             gains);
-            player.setPendingTpsSupply(receipt);
+            synchronized (player) { player.setPendingTpsSupply(receipt); }
             finish(receipt);
             var packet = new BasePacket(PacketOpcodes.TpsAmmunitionChangeNotify);
             var notification = TpsAmmunitionChangeNotify.newBuilder();
@@ -115,26 +115,28 @@ public final class TpsSupplyTransaction {
     }
 
     private void finish(TpsSupplyReceipt receipt) {
-        // Queued player writes lock and serialize this same live object. Never wait for that
-        // queue while holding the player lock; each checkpoint below is acknowledged directly.
+        // Publish each coherent phase under Player for save snapshots, but perform acknowledged
+        // writes outside it. Inventory serializes the full supply with equipment and ammunition.
         save.run();
         if (receipt.getState() == 1) {
-            player.getTpsAmmunition().clear();
-            player.getTpsAmmunition().putAll(receipt.getAfter());
-            receipt.applied();
+            synchronized (player) {
+                player.getTpsAmmunition().clear();
+                player.getTpsAmmunition().putAll(receipt.getAfter());
+                receipt.applied();
+            }
             save.run();
         }
-        player.setPendingTpsSupply(null);
+        synchronized (player) { player.setPendingTpsSupply(null); }
         try {
             save.run();
         } catch (RuntimeException uncertain) {
-            player.setPendingTpsSupply(receipt);
+            synchronized (player) { player.setPendingTpsSupply(receipt); }
             throw uncertain;
         }
     }
 
     public String pending() {
-        synchronized (player) {
+        synchronized (player.getInventory()) {
             var receipt = player.getPendingTpsSupply();
             if (receipt == null) return "没有待处理的 TPS 补给。";
             return "TPS 补给 "
@@ -188,7 +190,7 @@ public final class TpsSupplyTransaction {
     }
 
     public String audit(String id) {
-        synchronized (player) {
+        synchronized (player.getInventory()) {
             var receipt = checked(id, false);
             return "TPS 补给核对通过："
                     + receipt.getOperationId()
@@ -199,7 +201,7 @@ public final class TpsSupplyTransaction {
     }
 
     public String resume(String id) {
-        synchronized (player) {
+        synchronized (player.getInventory()) {
             validatePending(id);
             player.resolvePendingSave();
             var receipt = checked(id, true);
@@ -210,16 +212,16 @@ public final class TpsSupplyTransaction {
     }
 
     public String cancel(String id) {
-        synchronized (player) {
+        synchronized (player.getInventory()) {
             validatePending(id);
             player.resolvePendingSave();
             var receipt = checked(id, true);
             require(receipt.getState() == 1, "弹药已进入完整结果阶段，不能取消，请 resume。");
-            player.setPendingTpsSupply(null);
+            synchronized (player) { player.setPendingTpsSupply(null); }
             try {
                 save.run();
             } catch (RuntimeException uncertain) {
-                player.setPendingTpsSupply(receipt);
+                synchronized (player) { player.setPendingTpsSupply(receipt); }
                 throw uncertain;
             }
             TpsWeaponSystem.sendSceneAmmunition(player);

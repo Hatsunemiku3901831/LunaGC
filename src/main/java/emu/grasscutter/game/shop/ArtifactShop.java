@@ -80,7 +80,7 @@ public class ArtifactShop {
                                     FightProperty.FIGHT_PROP_ELEMENT_MASTERY, 4d));
 
     /** The piece behind each of our goods ids. Empty while the shop is switched off. */
-    @Getter private final Int2ObjectMap<ItemData> goods = new Int2ObjectOpenHashMap<>();
+    @Getter private volatile Int2ObjectMap<ItemData> goods = Int2ObjectMaps.emptyMap();
 
     /**
      * Appends the artifact goods to the configured shop, replacing any listed by an earlier call.
@@ -90,20 +90,27 @@ public class ArtifactShop {
      */
     public void install(Int2ObjectMap<List<ShopInfo>> shopData) {
         var options = GAME_OPTIONS.artifactShop;
-        this.goods.clear();
-        shopData.values().forEach(list -> list.removeIf(sold -> sold.getGoodsId() >= GOODS_ID_BASE));
-        if (!options.enabled) return;
+        var next = new Int2ObjectOpenHashMap<ItemData>();
+        shopData.values().forEach(list -> list.removeIf(ShopInfo::isArtifactRoll));
+        if (!options.enabled) {
+            goods = Int2ObjectMaps.emptyMap();
+            return;
+        }
 
         var pieces = catalog();
-        if (pieces.isEmpty()) return;
+        if (pieces.isEmpty()) {
+            goods = Int2ObjectMaps.emptyMap();
+            return;
+        }
 
         var items = shopData.computeIfAbsent(options.shopId, k -> new ArrayList<ShopInfo>());
         int goodsId = GOODS_ID_BASE;
         for (ItemData piece : pieces) {
             items.add(makeGoods(goodsId, piece, options));
-            this.goods.put(goodsId, piece);
+            next.put(goodsId, piece);
             goodsId++;
         }
+        goods = Int2ObjectMaps.unmodifiable(next);
 
         Grasscutter.getLogger()
                 .info("Listed {} 5-star artifacts in shop {}.", pieces.size(), options.shopId);
@@ -112,6 +119,14 @@ public class ArtifactShop {
     /** The piece this goods id sells, or null when the id is not one of ours. */
     public ItemData getPiece(int goodsId) {
         return this.goods.get(goodsId);
+    }
+
+    /** A reload may reassign generated IDs; an accepted catalogue row keeps its item identity. */
+    public ItemData getPiece(ShopInfo row) {
+        if (row == null || !row.isArtifactRoll() || row.getGoodsItem() == null)
+            return null;
+        var piece = GameData.getItemDataMap().get(row.getGoodsItem().getId());
+        return piece != null && piece.getItemType() == ItemType.ITEM_RELIQUARY ? piece : null;
     }
 
     /** Rolls a piece the way a domain drop would, then levels it and applies the configured bias. */
@@ -167,6 +182,7 @@ public class ArtifactShop {
 
     private static ShopInfo makeGoods(int goodsId, ItemData piece, ArtifactShopOptions options) {
         var goods = new ShopInfo();
+        goods.setArtifactRoll(true);
         goods.setGoodsId(goodsId);
         goods.setGoodsItem(new ItemParamData(piece.getId(), 1));
         goods.setScoin(options.costMora);

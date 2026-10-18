@@ -94,7 +94,7 @@ public final class TpsAvatarSystem {
             player.getTeamManager().restoreTpsSelection();
             return;
         }
-        synchronized (player) {
+        synchronized (player.getInventory()) {
             if (player.getTeamManager().getTpsSceneAvatar() != null) return;
             if (!canEnter(player, scene.getSceneData()))
                 throw new IllegalStateException("TPS scene resources unavailable: " + scene.getId());

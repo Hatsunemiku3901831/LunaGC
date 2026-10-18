@@ -135,7 +135,7 @@ public final class TpsWeaponSystem {
     }
 
     public static int wear(Player player, long avatarGuid, List<Long> guids, boolean notify) {
-        synchronized (player) {
+        synchronized (player.getInventory()) {
             if(player.getTpsReportTransaction().isPending()) return Retcode.RET_FAIL_VALUE;
             var avatar = findAvatar(player, avatarGuid);
             if (avatar == null) return Retcode.RET_CAN_NOT_FIND_AVATAR_VALUE;
@@ -168,12 +168,16 @@ public final class TpsWeaponSystem {
                 changed.add(avatar);
             }
             boolean loadoutChanged;
-            if (TpsAvatarSystem.isTpsAvatar(avatar.getAvatarId())) {
-                loadoutChanged = !player.isTpsLoadoutInitialized() || !player.getTpsLoadout().equals(ids);
-                player.setTpsLoadoutInitialized(true);
-                player.getTpsLoadout().clear();
-                player.getTpsLoadout().addAll(ids);
-            } else loadoutChanged = player.getTpsLoadout().removeIf(ids::contains);
+            // PlayerSaveGuard snapshots under Player. Publish only plain state there;
+            // callbacks, modifier refresh and persistence remain outside that monitor.
+            synchronized (player) {
+                if (TpsAvatarSystem.isTpsAvatar(avatar.getAvatarId())) {
+                    loadoutChanged = !player.isTpsLoadoutInitialized() || !player.getTpsLoadout().equals(ids);
+                    player.setTpsLoadoutInitialized(true);
+                    player.getTpsLoadout().clear();
+                    player.getTpsLoadout().addAll(ids);
+                } else loadoutChanged = player.getTpsLoadout().removeIf(ids::contains);
+            }
             if (loadoutChanged) player.save();
             if (changed.isEmpty()) return Retcode.RET_SUCC_VALUE;
             if (!changed.contains(avatar)) changed.add(avatar);
@@ -228,14 +232,16 @@ public final class TpsWeaponSystem {
     }
 
     public static void onWeaponRemoved(Player player, GameItem item) {
-        synchronized (player) {
+        synchronized (player.getInventory()) {
             removeWeaponEntity(item);
             boolean magazineChanged = false;
             var data = GameData.getTpsWeaponDataMap().get(item.getItemId());
-            if (data != null && data.getAmmoSlotIds() != null)
-                for (Integer slot : data.getAmmoSlotIds())
-                    if (slot != null)
-                        magazineChanged |= player.getTpsMagazineAmmunition().remove(slot) != null;
+            synchronized (player) {
+                if (data != null && data.getAmmoSlotIds() != null)
+                    for (Integer slot : data.getAmmoSlotIds())
+                        if (slot != null)
+                            magazineChanged |= player.getTpsMagazineAmmunition().remove(slot) != null;
+            }
             for (var avatar : getWearers(player)) {
                 if (!avatar.getTpsWeaponIds().removeIf(id -> Objects.equals(id, item.getItemId())))
                     continue;
@@ -243,9 +249,11 @@ public final class TpsWeaponSystem {
                 avatar.recalcStats();
                 sendEquipChange(avatar);
             }
-            if (player.getTpsLoadout().removeIf(id -> Objects.equals(id, item.getItemId()))
-                    || magazineChanged)
-                player.save();
+            boolean loadoutChanged;
+            synchronized (player) {
+                loadoutChanged = player.getTpsLoadout().removeIf(id -> Objects.equals(id, item.getItemId()));
+            }
+            if (loadoutChanged || magazineChanged) player.save();
         }
     }
 
@@ -379,7 +387,7 @@ public final class TpsWeaponSystem {
 
     /** Server-authored supplies and costs persist the resulting total within resource limits. */
     public static int changeReserve(Player player, int id, int delta) {
-        synchronized (player) {
+        synchronized (player.getInventory()) {
             requireSupplySettled(player);
             var data = GameData.getTpsAmmunitionDataMap().get(id);
             if (data == null) return 0;
@@ -387,7 +395,7 @@ public final class TpsWeaponSystem {
             int after =
                     (int) Math.max(0L, Math.min((long) before + delta, ammunitionLimit(player, data)));
             if (before != after) {
-                player.getTpsAmmunition().put(id, after);
+                synchronized (player) { player.getTpsAmmunition().put(id, after); }
                 player.save();
             }
             return after;
@@ -397,7 +405,7 @@ public final class TpsWeaponSystem {
     public static boolean hasAmmunitionSpace(EntityAvatar recipient, int id) {
         var player = recipient == null ? null : recipient.getPlayer();
         if (player == null) return false;
-        synchronized (player) {
+        synchronized (player.getInventory()) {
             var data = GameData.getTpsAmmunitionDataMap().get(id);
             return player.getPendingTpsSupply()==null && !player.getTpsReportTransaction().isPending() && isSupplyRecipient(player, recipient) && data != null
                     && getReserve(player, id) < ammunitionLimit(player, data);
@@ -407,7 +415,7 @@ public final class TpsWeaponSystem {
     public static boolean isSupplyRecipient(EntityAvatar recipient) {
         var player=recipient==null?null:recipient.getPlayer();
         if(player==null) return false;
-        synchronized(player) { return isSupplyRecipient(player,recipient); }
+        synchronized(player.getInventory()) { return isSupplyRecipient(player,recipient); }
     }
 
     private static boolean isSupplyRecipient(Player player, EntityAvatar recipient) {
@@ -537,7 +545,7 @@ public final class TpsWeaponSystem {
     }
 
     public static void sendSceneAmmunition(Player player) {
-        synchronized (player) {
+        synchronized (player.getInventory()) {
             boolean hasWeapons = player.getTeamManager().getActiveTeamSnapshot().stream()
                     .anyMatch(entity -> entity != null && !ammunitionIds(entity.getAvatar()).isEmpty());
             if (!hasWeapons) return;
@@ -562,10 +570,12 @@ public final class TpsWeaponSystem {
     }
 
     public static void refillAmmunition(Player player) {
-        synchronized (player) {
+        synchronized (player.getInventory()) {
             requireSupplySettled(player);
+            var filled = new LinkedHashMap<Integer, Integer>();
             for (var data : GameData.getTpsAmmunitionDataMap().values())
-                player.getTpsAmmunition().put(data.getId(), ammunitionLimit(player, data));
+                filled.put(data.getId(), ammunitionLimit(player, data));
+            synchronized (player) { player.getTpsAmmunition().putAll(filled); }
             player.save();
             sendSceneAmmunition(player);
         }
@@ -578,7 +588,7 @@ public final class TpsWeaponSystem {
     public static boolean onAmmunitionInvoke(Player player, AbilityInvokeEntry invoke)
             throws InvalidProtocolBufferException {
         if (player == null || invoke == null) return false;
-        synchronized (player) {
+        synchronized (player.getInventory()) {
             if(player.getPendingTpsSupply()!=null || player.getTpsReportTransaction().isPending()) return false;
             var scene = player.getScene();
             var current = currentAvatar(player);

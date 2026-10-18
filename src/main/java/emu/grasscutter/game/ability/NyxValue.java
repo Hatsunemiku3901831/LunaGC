@@ -13,23 +13,23 @@ public final class NyxValue {
                                  DynamicFloat min, DynamicFloat max, boolean replace) {
         if (target == null || value == null) return false;
         var globals = target.getGlobalAbilityValues();
-        synchronized (globals) {
-            var properties = AbilityActionHandler.propertiesFor(ability);
-            if (target != ability.getOwner()) globals.forEach(properties::put);
-            float delta = value.get(properties, 0f);
-            float lower = min == null || min == DynamicFloat.ZERO
-                    ? properties.getOrDefault("NyxValueMin", 0f) : min.get(properties, 0f);
-            float upper = max == null || max == DynamicFloat.ZERO
-                    ? properties.getOrDefault("NyxValueMax", Float.MAX_VALUE) : max.get(properties, 0f);
-            if (!Float.isFinite(delta) || !Float.isFinite(lower) || !Float.isFinite(upper) || upper < lower) return false;
-            if (!replace && delta == 0f) return true;
-            float updated = Math.max(lower, Math.min(upper,
-                    (replace ? 0f : globals.getOrDefault("NyxValue", 0f)) + delta));
-            globals.put("NyxValue", updated);
-            target.onAbilityValueUpdate();
-            if (!AbilityManager.isServerOwnedChain() && target.getScene() != null) {
-                target.getScene().broadcastPacket(new PacketServerGlobalValueChangeNotify(target, "NyxValue", updated));
-            }
+        var properties = AbilityActionHandler.propertiesFor(ability);
+        if (target != ability.getOwner()) globals.forEach(properties::put);
+        float delta = value.get(properties, 0f);
+        float lower = min == null || min == DynamicFloat.ZERO
+                ? properties.getOrDefault("NyxValueMin", 0f) : min.get(properties, 0f);
+        float upper = max == null || max == DynamicFloat.ZERO
+                ? properties.getOrDefault("NyxValueMax", Float.MAX_VALUE) : max.get(properties, 0f);
+        if (!Float.isFinite(delta) || !Float.isFinite(lower) || !Float.isFinite(upper) || upper < lower) return false;
+        if (!replace && delta == 0f) return true;
+        // Ordinary global actions update this same key with compute. A separate monitor around
+        // get/put does not serialize with those writes and can discard an accepted gain or cost.
+        float updated = globals.compute("NyxValue", (key, previous) -> Math.max(lower,
+                Math.min(upper, (replace || previous == null ? 0f : previous) + delta)));
+        // Reconciliation may acquire player, scene and modifier locks; keep it outside the update.
+        target.onAbilityValueUpdate();
+        if (!AbilityManager.isServerOwnedChain() && target.getScene() != null) {
+            target.getScene().broadcastPacket(new PacketServerGlobalValueChangeNotify(target, "NyxValue", updated));
         }
         return true;
     }

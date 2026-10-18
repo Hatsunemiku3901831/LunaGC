@@ -34,13 +34,22 @@ public class PacketGetShopRsp extends BasePacket {
     }
 
     public static Shop buildShop(Player player, ShopSystem manager, int shopType, int currentTs) {
+        // Viewing a shop also creates and refreshes limits; serialize it with purchases.
+        synchronized (player.getInventory()) {
+            return buildShopLocked(player, manager, shopType, currentTs);
+        }
+    }
+
+    private static Shop buildShopLocked(
+            Player player, ShopSystem manager, int shopType, int currentTs) {
         Shop.Builder shop =
                 Shop.newBuilder().setShopType(shopType).setCityId(1).setCityReputationLevel(10);
         var access = ActivityShop.resolve(player, shopType, currentTs * 1000L);
         if (!access.isOpen()) return shop.build();
 
-        if (manager.getShopData().get(shopType) != null) {
-            List<ShopInfo> list = manager.getShopData().get(shopType);
+        // One response must use one catalogue snapshot even when GM reloads it concurrently.
+        List<ShopInfo> list = manager.getShopData().get(shopType);
+        if (list != null) {
             List<ShopGoods> goodsList = new ArrayList<>();
 
             for (ShopInfo info : list) {

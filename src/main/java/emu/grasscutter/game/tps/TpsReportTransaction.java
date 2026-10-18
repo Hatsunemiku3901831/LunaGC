@@ -68,7 +68,7 @@ public final class TpsReportTransaction {
             AbilityInvokeEntry invoke,
             Map<Integer, Integer> after,
             Map<Integer, Integer> magazinesAfter) {
-        synchronized (player) {
+        synchronized (player.getInventory()) {
             if (pending != null || player.getPendingTpsSupply() != null) return false;
             if (after.equals(player.getTpsAmmunition())
                     && magazinesAfter.equals(player.getTpsMagazineAmmunition())) return true;
@@ -88,21 +88,24 @@ public final class TpsReportTransaction {
             Map<Integer, Integer> ammunition,
             Map<Integer, Integer> magazines,
             TpsReportReceipt receipt) {
-        player.getTpsAmmunition().clear();
-        player.getTpsAmmunition().putAll(ammunition);
-        player.getTpsMagazineAmmunition().clear();
-        player.getTpsMagazineAmmunition().putAll(magazines);
-        player.setLastTpsReport(receipt);
+        // Keep both maps and their receipt indivisible to asynchronous PlayerSaveGuard snapshots.
+        synchronized (player) {
+            player.getTpsAmmunition().clear();
+            player.getTpsAmmunition().putAll(ammunition);
+            player.getTpsMagazineAmmunition().clear();
+            player.getTpsMagazineAmmunition().putAll(magazines);
+            player.setLastTpsReport(receipt);
+        }
     }
 
     public boolean isPending() {
-        synchronized (player) {
+        synchronized (player.getInventory()) {
             return pending != null;
         }
     }
 
     public String pending() {
-        synchronized (player) {
+        synchronized (player.getInventory()) {
             return pending == null
                     ? "没有待核对的 TPS 射击／换弹。"
                     : "TPS 射击／换弹 " + pending.receipt.getOperationId() + " 的写入未确认，请先 audit。";
@@ -152,7 +155,7 @@ public final class TpsReportTransaction {
     }
 
     public String audit(String id) {
-        synchronized (player) {
+        synchronized (player.getInventory()) {
             return checked(id, false)
                     ? "TPS 上报已完整写入；resume 可确认并同步当前数量。"
                     : "TPS 上报尚未写入；可 resume 原结果或 cancel。";
@@ -160,7 +163,7 @@ public final class TpsReportTransaction {
     }
 
     public String resume(String id) {
-        synchronized (player) {
+        synchronized (player.getInventory()) {
             validatePending(id);
             player.resolvePendingSave();
             if (!checked(id, true)) save.run();
@@ -171,7 +174,7 @@ public final class TpsReportTransaction {
     }
 
     public String cancel(String id) {
-        synchronized (player) {
+        synchronized (player.getInventory()) {
             validatePending(id);
             player.resolvePendingSave();
             require(!checked(id, true), "TPS 上报已完整写入，不能取消，请 resume。");

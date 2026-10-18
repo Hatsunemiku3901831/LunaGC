@@ -42,6 +42,17 @@ public class HandlerBuyGoodsReq extends PacketHandler {
         BuyGoodsReqOuterClass.BuyGoodsReq buyGoodsReq =
                 BuyGoodsReqOuterClass.BuyGoodsReq.parseFrom(payload);
         var player = session.getPlayer();
+        // A purchase owns its limit check, payment, delivery and final count as one operation.
+        // Use the inventory's existing transaction monitor, also used by activity exchanges.
+        synchronized (player.getInventory()) {
+            buy(session, player, buyGoodsReq);
+        }
+    }
+
+    private void buy(
+            GameSession session,
+            emu.grasscutter.game.player.Player player,
+            BuyGoodsReqOuterClass.BuyGoodsReq buyGoodsReq) {
         int currentTs = Utils.getCurrentSeconds();
         var activityShop =
                 ActivityShop.resolve(player, buyGoodsReq.getShopType(), currentTs * 1000L);
@@ -127,7 +138,11 @@ public class HandlerBuyGoodsReq extends PacketHandler {
             }
 
             var artifactShop = session.getServer().getShopSystem().getArtifactShop();
-            var piece = artifactShop.getPiece(sg.getGoodsId());
+            var piece = artifactShop.getPiece(sg);
+            if (sg.isArtifactRoll() && piece == null) {
+                session.send(new PacketBuyGoodsRsp(Retcode.RET_SHOP_CONTENT_NOT_MATCH));
+                continue;
+            }
             if (piece != null) {
                 // Artifacts do not stack, so a batch buy needs that many free slots. Asking before
                 // the payment keeps a full bag from swallowing the mora and handing back nothing.

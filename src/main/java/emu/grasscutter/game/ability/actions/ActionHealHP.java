@@ -136,7 +136,7 @@ public final class ActionHealHP extends AbilityActionHandler {
                 float baseAmount = finalAmount / abilityRatio;
                 var seen = new java.util.HashSet<Long>();
                 seen.add(furinaTarget.getAvatar().getGuid());
-                for (var member : player.getTeamManager().getActiveTeam()) {
+                for (var member : player.getTeamManager().getActiveTeamSnapshot()) {
                     if (!seen.add(member.getAvatar().getGuid())) continue;
                     float memberRatio = 1.0f;
                     if (!action.ignoreAbilityProperty)

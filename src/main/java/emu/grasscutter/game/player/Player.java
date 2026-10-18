@@ -384,6 +384,9 @@ public class Player implements PlayerHook, FieldFetch {
     @Transient private Scene scene;
     // World and scene transfers are serialized without using the player monitor used by skills.
     @Transient @Getter private final Object sceneTransferLock = new Object();
+    // Serialize lifecycle work without holding Player across inventory/ability callbacks.
+    @Transient private final Object tickLock = new Object();
+    @Transient private final Object dailyResetLock = new Object();
     @Transient @Getter private int weatherId = 0;
     @Transient @Getter private ClimateType climate = ClimateType.CLIMATE_SUNNY;
     @Transient @Getter private int areaId = 0;
@@ -1185,7 +1188,14 @@ public class Player implements PlayerHook, FieldFetch {
         return rechargeMoonCard(30, 300, 90, 180);
     }
 
-    public synchronized boolean rechargeMoonCard(
+    public boolean rechargeMoonCard(
+            int days, int crystals, int dailyPrimogems, int maxDays) {
+        synchronized (getInventory()) {
+            return rechargeMoonCardLocked(days, crystals, dailyPrimogems, maxDays);
+        }
+    }
+
+    private boolean rechargeMoonCardLocked(
             int days, int crystals, int dailyPrimogems, int maxDays) {
         int remain = getMoonCardRemainDays();
         if (days <= 0
@@ -1194,28 +1204,39 @@ public class Player implements PlayerHook, FieldFetch {
                 || (long) remain + days > maxDays
                 || (long) getCrystals() + crystals > Integer.MAX_VALUE) return false;
         if (!getInventory().addItem(new GameItem(203, crystals))) return false;
-        moonCard = true;
-        moonCardStartTime = moonCardDate(moonCardToday());
-        moonCardDuration = remain + days;
-        moonCardDailyPrimogems = dailyPrimogems;
+        synchronized (this) {
+            // PlayerSaveGuard snapshots these fields under the Player monitor.
+            moonCard = true;
+            moonCardStartTime = moonCardDate(moonCardToday());
+            moonCardDuration = remain + days;
+            moonCardDailyPrimogems = dailyPrimogems;
+        }
         getTodayMoonCard();
         save();
         return true;
     }
 
-    public synchronized void getTodayMoonCard() {
+    public void getTodayMoonCard() {
         getTodayMoonCard(moonCardToday());
     }
 
     private void getTodayMoonCard(LocalDate rewardDay) {
+        synchronized (getInventory()) {
+            claimMoonCardLocked(rewardDay);
+        }
+    }
+
+    private void claimMoonCardLocked(LocalDate rewardDay) {
         if (!moonCard) return;
         int remaining = getMoonCardRemainDays(rewardDay);
         if (remaining == 0) {
-            moonCard = false;
+            synchronized (this) { moonCard = false; }
             save();
             return;
         }
-        if (moonCardGetTimes == null) moonCardGetTimes = new HashSet<>();
+        synchronized (this) {
+            if (moonCardGetTimes == null) moonCardGetTimes = new HashSet<>();
+        }
         Date today = moonCardDate(rewardDay);
         // Existing saves used JVM-local midnight. Compare calendar days to preserve old claims.
         if (moonCardGetTimes.stream()
@@ -1229,8 +1250,10 @@ public class Player implements PlayerHook, FieldFetch {
         if ((long) getPrimogems() + reward > Integer.MAX_VALUE) return;
         if (!getInventory().addItem(new GameItem(201, reward), ActionReason.BlessingRedeemReward))
             return;
-        moonCardGetTimes.clear();
-        moonCardGetTimes.add(today);
+        synchronized (this) {
+            moonCardGetTimes.clear();
+            moonCardGetTimes.add(today);
+        }
         save();
         sendPacket(new PacketCardProductRewardNotify(remaining, reward));
     }
@@ -1606,7 +1629,13 @@ public class Player implements PlayerHook, FieldFetch {
         return true;
     }
 
-    public synchronized void onTick() {
+    public void onTick() {
+        synchronized (tickLock) {
+            tickPlayer();
+        }
+    }
+
+    private void tickPlayer() {
 
         long pingAge = System.currentTimeMillis() - this.getLastPingTime();
         if (pingAge > 60000) {
@@ -1638,10 +1667,13 @@ public class Player implements PlayerHook, FieldFetch {
         this.doDailyReset();
 
         var timeNow = Utils.getCurrentSeconds();
-        var needNotify = emu.grasscutter.game.expedition.ExpeditionClaims.refresh(this,timeNow);
-        if (needNotify) {
-            this.save();
-            this.sendPacket(new PacketAvatarExpeditionDataNotify(this.getExpeditionInfo()));
+        // Start, recall and claim all use Inventory; refresh and its packet need the same snapshot.
+        synchronized (getInventory()) {
+            var needNotify = emu.grasscutter.game.expedition.ExpeditionClaims.refresh(this,timeNow);
+            if (needNotify) {
+                this.save();
+                this.sendPacket(new PacketAvatarExpeditionDataNotify(this.getExpeditionInfo()));
+            }
         }
 
         this.getForgingManager().sendPlayerForgingUpdate();
@@ -1659,11 +1691,17 @@ public class Player implements PlayerHook, FieldFetch {
         this.getQuestManager().onTick();
     }
 
-    private synchronized void doDailyReset() {
+    private void doDailyReset() {
         doDailyReset(Instant.now());
     }
 
-    protected synchronized void doDailyReset(Instant now) {
+    protected void doDailyReset(Instant now) {
+        synchronized (dailyResetLock) {
+            resetDailyState(now);
+        }
+    }
+
+    private void resetDailyState(Instant now) {
         var battlePass = getBattlePassManager();
         if (battlePass != null && battlePass.refreshMissions(now)) {
             battlePass.triggerMission(WatcherTriggerType.TRIGGER_LOGIN);
@@ -1683,18 +1721,18 @@ public class Player implements PlayerHook, FieldFetch {
             return;
         }
 
-        this.setForgePoints(300_000);
-
         // The weekly-boss claim counter refreshes with the weekly reset. doDailyReset only runs
         // once per game day, so comparing the Monday that starts each week - rather than
         // "today is Monday" - still resets for a player who skips Monday and logs in on Tuesday.
         long lastWeekStart = GameCalendar.weekStart(lastResetDate).toEpochDay();
         long currentWeekStart = GameCalendar.weekStart(currentDate).toEpochDay();
-        if (currentWeekStart > lastWeekStart) {
-            this.setWeeklyBossChestNum(0);
+        synchronized (getInventory()) {
+            this.setForgePoints(300_000);
+            if (currentWeekStart > lastWeekStart) {
+                this.setWeeklyBossChestNum(0);
+            }
+            this.setResinBuyCount(0);
         }
-
-        this.setResinBuyCount(0);
 
         if (this.dailyTaskManager != null) {
             // Asked, not forced: the commissions keep their own record of which day they belong to,

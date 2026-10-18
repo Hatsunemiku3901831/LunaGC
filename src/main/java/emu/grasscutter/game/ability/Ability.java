@@ -353,7 +353,7 @@ public class Ability {
             return owner instanceof EntityAvatar avatarEntity ? avatarEntity : null;
         }
         String abilityName = data.abilityName;
-        for (var member : player.getTeamManager().getActiveTeam()) {
+        for (var member : player.getTeamManager().getActiveTeamSnapshot()) {
             var av = member.getAvatar();
             var avData = av.getAvatarData();
             if (avData == null) continue;

@@ -1192,7 +1192,7 @@ public final class AbilityManager extends BasePlayerManager {
                 instancedAbility = findExistingAbility(entity, head.getInstancedAbilityId(), resolvedParentName);
             }
             if (instancedAbility == null && fromParentName) {
-                for (var avatar : this.player.getTeamManager().getActiveTeam()) {
+                for (var avatar : this.player.getTeamManager().getActiveTeamSnapshot()) {
                     instancedAbility = findExistingAbility(avatar, head.getInstancedAbilityId(), resolvedParentName);
                     if (instancedAbility != null) break;
                 }
@@ -1419,7 +1419,7 @@ public final class AbilityManager extends BasePlayerManager {
                 boolean isChargedAttack = arlecchinoChargedAttackTime > arlecchinoESkillTime
                     && (System.currentTimeMillis() - arlecchinoChargedAttackTime) < 5000L;
                 if (isChargedAttack) {
-                    for (var teamMember : this.player.getTeamManager().getActiveTeam()) {
+                    for (var teamMember : this.player.getTeamManager().getActiveTeamSnapshot()) {
                         if (teamMember.getAvatar().getAvatarId() == 10000096) {
                             applyArlecchinoBoL(teamMember, prev.intValue());
                             break;

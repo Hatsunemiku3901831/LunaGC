@@ -220,13 +220,26 @@ public abstract class GameEntity {
         var properties = this.getFightProperties();
         if (properties == null) return;
 
-        float previous = properties.getOrDefault(id, 0f);
-        properties.put(id, value);
+        float previous;
+        synchronized (properties) {
+            previous = properties.getOrDefault(id, 0f);
+            properties.put(id, value);
+        }
         if (id == FightProperty.FIGHT_PROP_CUR_HP.getId()) abilityHealthEvents.changed(previous, value);
     }
 
     public void addFightProperty(FightProperty prop, float value) {
-        this.setFightProperty(prop.getId(), this.getFightProperty(prop) + value);
+        var properties = this.getFightProperties();
+        if (properties == null) return;
+
+        float previous;
+        float updated;
+        synchronized (properties) {
+            previous = properties.getOrDefault(prop.getId(), 0f);
+            updated = previous + value;
+            properties.put(prop.getId(), updated);
+        }
+        if (prop == FightProperty.FIGHT_PROP_CUR_HP) abilityHealthEvents.changed(previous, updated);
     }
 
     public float getFightProperty(FightProperty prop) {
@@ -313,28 +326,37 @@ public abstract class GameEntity {
     }
 
     public synchronized float heal(float amount, boolean mute) {
-        if (this.getFightProperties() == null || !Float.isFinite(amount) || amount <= 0f) {
+        var properties = this.getFightProperties();
+        if (properties == null || !Float.isFinite(amount) || amount <= 0f) {
             return 0f;
         }
 
-        float curHp = this.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP);
-        float maxHp = this.getFightProperty(FightProperty.FIGHT_PROP_MAX_HP);
-        float curHpDebt = this.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP_DEBTS);
-        if (!Float.isFinite(curHp) || !Float.isFinite(maxHp) || maxHp <= 0f
-                || !Float.isFinite(curHpDebt)) {
-            return 0f;
+        float curHp;
+        float toRepay;
+        float toHeal;
+        float remainingDebt;
+        synchronized (properties) {
+            curHp = properties.getOrDefault(FightProperty.FIGHT_PROP_CUR_HP.getId(), 0f);
+            float maxHp = properties.getOrDefault(FightProperty.FIGHT_PROP_MAX_HP.getId(), 0f);
+            float curHpDebt = properties.getOrDefault(FightProperty.FIGHT_PROP_CUR_HP_DEBTS.getId(), 0f);
+            if (!Float.isFinite(curHp) || !Float.isFinite(maxHp) || maxHp <= 0f
+                    || !Float.isFinite(curHpDebt)) {
+                return 0f;
+            }
+
+            // Damage and healing settle against the same HP value; healing pays debt first.
+            toRepay = Math.min(amount, Math.max(0f, curHpDebt));
+            toHeal = Math.min(Math.max(0f, maxHp - curHp), amount - toRepay);
+            remainingDebt = curHpDebt - toRepay;
+            if (toHeal > 0f) {
+                properties.put(FightProperty.FIGHT_PROP_CUR_HP.getId(), curHp + toHeal);
+            }
+            if (toRepay > 0f) {
+                properties.put(FightProperty.FIGHT_PROP_CUR_HP_DEBTS.getId(), remainingDebt);
+            }
         }
 
-        // Healing pays the outstanding debt first; only the remainder can restore health.
-        float toRepay = Math.min(amount, Math.max(0f, curHpDebt));
-        float toHeal = Math.min(Math.max(0f, maxHp - curHp), amount - toRepay);
-        float remainingDebt = curHpDebt - toRepay;
-        if (toHeal > 0f) {
-            this.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, curHp + toHeal);
-        }
-        if (toRepay > 0f) {
-            this.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP_DEBTS, remainingDebt);
-        }
+        if (toHeal > 0f) abilityHealthEvents.changed(curHp, curHp + toHeal);
 
         // Publish only after both values have been settled.
         if (getScene() != null) {
@@ -422,7 +444,8 @@ public abstract class GameEntity {
 
         if (!Float.isFinite(amount) || amount < 0f) return;
         if (this.isDead || deathProcessed.get()) return;
-        if (this.getFightProperties() == null || !hasFightProperty(FightProperty.FIGHT_PROP_CUR_HP)) {
+        var properties = this.getFightProperties();
+        if (properties == null || !hasFightProperty(FightProperty.FIGHT_PROP_CUR_HP)) {
             return;
         }
 
@@ -447,27 +470,33 @@ public abstract class GameEntity {
         }
 
         float effectiveDamage = 0;
-        float curHp = getFightProperty(FightProperty.FIGHT_PROP_CUR_HP);
-        if (protectedHp || combatState.lockHp() && respectLockHp) {
-            // Modifier shields also block lethal damage, independently of a gadget's base HP lock.
-        } else if (limbo || combatState.limbo()) {
-            float maxHp = getFightProperty(FightProperty.FIGHT_PROP_MAX_HP);
-            float curRatio = curHp / maxHp;
-            float threshold = Math.max(limbo ? limboHpThreshold : 0f, combatState.hpThreshold());
-            if (curRatio > threshold) {
-
+        float curHp;
+        float updatedHp;
+        // Resolve abilities and plugin callbacks before entering this numeric settlement lock.
+        // The callbacks below can enter modifier, player and scene locks, so run them after release.
+        synchronized (properties) {
+            if (this.isDead || deathProcessed.get()) return;
+            curHp = properties.getOrDefault(FightProperty.FIGHT_PROP_CUR_HP.getId(), 0f);
+            if (protectedHp || combatState.lockHp() && respectLockHp) {
+                // Modifier shields also block lethal damage, independently of a gadget's base HP lock.
+            } else if (limbo || combatState.limbo()) {
+                float maxHp = properties.getOrDefault(FightProperty.FIGHT_PROP_MAX_HP.getId(), 0f);
+                float curRatio = curHp / maxHp;
+                float threshold = Math.max(limbo ? limboHpThreshold : 0f, combatState.hpThreshold());
+                if (curRatio > threshold) {
+                    effectiveDamage = requestedDamage;
+                }
+                if (effectiveDamage >= curHp) {
+                    effectiveDamage = Math.max(0f, curHp - 1f);
+                }
+            } else if (curHp != Float.POSITIVE_INFINITY && (!lockHP || !respectLockHp)
+                    || lockHP && curHp <= requestedDamage) {
                 effectiveDamage = requestedDamage;
             }
-            if (effectiveDamage >= curHp) {
-
-                effectiveDamage = Math.max(0f, curHp - 1f);
-            }
-        } else if (curHp != Float.POSITIVE_INFINITY && (!lockHP || !respectLockHp)
-                || lockHP && curHp <= requestedDamage) {
-            effectiveDamage = requestedDamage;
+            updatedHp = curHp - effectiveDamage;
+            properties.put(FightProperty.FIGHT_PROP_CUR_HP.getId(), updatedHp);
         }
-
-        this.addFightProperty(FightProperty.FIGHT_PROP_CUR_HP, -effectiveDamage);
+        abilityHealthEvents.changed(curHp, updatedHp);
 
         if (Float.isFinite(curHp) && curHp > 0f && effectiveDamage > 0f)
             this.getWorld().getDamageLog().record(

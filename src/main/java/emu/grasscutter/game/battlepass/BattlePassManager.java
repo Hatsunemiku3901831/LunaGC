@@ -140,7 +140,15 @@ public class BattlePassManager extends BasePlayerDataManager {
         return paid || getTakenRewards().values().stream().anyMatch(BattlePassReward::isPaid);
     }
 
-    public synchronized boolean unlockPaid(boolean extra) {
+    public boolean unlockPaid(boolean extra) {
+        // Inventory deductions can trigger missions while holding their transaction monitor.
+        // Reward delivery must take these monitors in the same order.
+        synchronized (getPlayer().getInventory()) {
+            return unlockPaidLocked(extra);
+        }
+    }
+
+    private synchronized boolean unlockPaidLocked(boolean extra) {
         if (extra ? extraPaidRewardTaken : isPaid()) return false;
         var schedule =
                 GameData.getBattlePassScheduleDataMap().get(BattlePassScheduleData.currentId());
@@ -277,7 +285,14 @@ public class BattlePassManager extends BasePlayerDataManager {
         }
     }
 
-    public synchronized List<BattlePassRewardTakeOption> takeReward(
+    public List<BattlePassRewardTakeOption> takeReward(
+            List<BattlePassRewardTakeOption> options) {
+        synchronized (getPlayer().getInventory()) {
+            return takeRewardLocked(options);
+        }
+    }
+
+    private synchronized List<BattlePassRewardTakeOption> takeRewardLocked(
             List<BattlePassRewardTakeOption> options) {
         synchronizeSchedule();
         var claimed = new ArrayList<BattlePassRewardTakeOption>();
@@ -330,6 +345,12 @@ public class BattlePassManager extends BasePlayerDataManager {
     }
 
     public int buyLevels(int buyLevel) {
+        synchronized (getPlayer().getInventory()) {
+            return buyLevelsLocked(buyLevel);
+        }
+    }
+
+    private synchronized int buyLevelsLocked(int buyLevel) {
         int boughtLevels = Math.min(buyLevel, GameConstants.BATTLE_PASS_MAX_LEVEL - this.level);
 
         if (boughtLevels > 0) {
