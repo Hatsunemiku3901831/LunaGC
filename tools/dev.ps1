@@ -149,7 +149,7 @@ if ($Mode -eq 'start') {
         # & powershell.exe -NoProfile -ExecutionPolicy Bypass -File `
         #     (Join-Path $repo 'tools\serve.ps1') -Mode start -ServerArgs $ServerArgs
         if ($LASTEXITCODE -ne 0) {
-            Write-Host "server did not come up (serve.ps1 exit $LASTEXITCODE) -- run 'task serve' by hand"
+            Write-Host "server did not come up (serve.ps1 exit $LASTEXITCODE) -- run 'task dev:server' by hand"
             exit 1
         }
         $serverStarted = $true

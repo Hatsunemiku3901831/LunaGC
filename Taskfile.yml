@@ -5,7 +5,8 @@
 #
 #    task                 -> this list
 #    task build           -> build the patch DLL and the server jar
-#    task serve           -> start MongoDB + the server (detached, logs on disk)
+#    task serve           -> build and start the persistent Docker Compose runtime
+#    task dev:server      -> start the local Java development server
 #    task patch           -> install the client patch (builds first if needed)
 #    task patch:status    -> show which client files are patched right now
 #    task patch:reset     -> restore the pristine client files
@@ -127,25 +128,65 @@ tasks:
 
   # ------------------------------------------------------------------- serve
   serve:
-    desc: Start MongoDB and the LunaGC server (detached, survives this shell)
+    desc: Build and start the persistent Docker Compose runtime
+    cmds:
+      - task: runtime
+
+  serve:stop:
+    desc: Stop the Compose game service (MongoDB and volumes are retained)
+    cmds:
+      - task: runtime:stop
+
+  serve:status:
+    desc: Show Compose runtime health and published ports
+    cmds:
+      - task: runtime:status
+
+  serve:logs:
+    desc: Follow the Compose game service logs (Ctrl-C stops following only)
+    cmds:
+      - task: runtime:logs
+
+  runtime:
+    desc: Build the server and resources image, then start Compose detached and wait for health
+    cmds:
+      - powershell -NoProfile -ExecutionPolicy Bypass -File tools/runtime.ps1 -Mode start
+
+  runtime:build:
+    desc: Build the Compose runtime image without restarting the service
+    cmds:
+      - powershell -NoProfile -ExecutionPolicy Bypass -File tools/runtime.ps1 -Mode build
+
+  runtime:stop:
+    desc: Stop the Compose game service while retaining MongoDB and persistent state
+    cmds:
+      - powershell -NoProfile -ExecutionPolicy Bypass -File tools/runtime.ps1 -Mode stop
+
+  runtime:status:
+    desc: Show Compose runtime health and published ports
+    cmds:
+      - powershell -NoProfile -ExecutionPolicy Bypass -File tools/runtime.ps1 -Mode status
+
+  runtime:logs:
+    desc: Follow the Compose game service logs (Ctrl-C stops following only)
+    cmds:
+      - powershell -NoProfile -ExecutionPolicy Bypass -File tools/runtime.ps1 -Mode logs
+
+  dev:server:
+    desc: Start the local Java development server and shared Compose MongoDB
     deps: [build:jar]
     cmds:
       - powershell -NoProfile -ExecutionPolicy Bypass -File tools/serve.ps1 -Mode start
 
-  serve:stop:
-    desc: Stop the LunaGC server (MongoDB keeps running)
+  dev:server:stop:
+    desc: Stop the local Java development server (MongoDB keeps running)
     cmds:
       - powershell -NoProfile -ExecutionPolicy Bypass -File tools/serve.ps1 -Mode stop
 
-  serve:status:
-    desc: Show whether MongoDB, the dispatch server and the game server are up
+  dev:server:status:
+    desc: Show the local Java development server status
     cmds:
       - powershell -NoProfile -ExecutionPolicy Bypass -File tools/serve.ps1 -Mode status
-
-  serve:logs:
-    desc: Tail the server stdout/stderr logs
-    cmds:
-      - cmd: cmd /c "echo === stdout === & type start_stdout.log | more"
 
   runtime:snapshot:
     desc: 保存当前 Compose 服务的运行包和内置资源，不停止服务

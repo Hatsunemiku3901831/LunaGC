@@ -693,7 +693,7 @@ else is not.
 | Mode | Command | Resources | State |
 | --- | --- | --- | --- |
 | Windows development | `task dev` | A separate checkout selected by `.env.local`, or the `resources/` submodule | Shared Compose MongoDB volume; config/data in the working directory |
-| Docker Compose runtime | `docker compose up --build -d` | Pinned `resources/` submodule copied into the image | Shared Compose MongoDB volume; config/data in the server volume |
+| Docker Compose runtime | `task serve` / `task runtime` | Pinned `resources/` submodule copied into the image | Shared Compose MongoDB volume; config/data in the server volume |
 
 For a fresh checkout, install Git LFS, clone with submodules, and fetch the
 resource files:
@@ -937,7 +937,7 @@ Then:
    Git LFS is required for its larger files. For local development with a
    separate resource checkout, put
    `LUNAGC_RESOURCES_DIR=D:/Projects/Experiment/LunaGC-Resources` in the ignored
-   `.env.local`. `task serve` and `task dev` load this file and read that
+   `.env.local`. `task dev:server` and `task dev` load this file and read that
    directory directly. Restart the server after changing resources that are
    loaded at startup. For a direct `java -jar` launch, export the same
    environment variable in the shell.
@@ -947,7 +947,8 @@ Then:
    launcher registry. Set it only if the client lives outside the launcher.
 3. **Build.** `task build` makes both the patch DLL and the server jar. See below.
 4. **Patch the client.** `task patch`. See below.
-5. **Start the server.** `task serve`.
+5. **Start the server.** `task serve` builds and starts the persistent Compose
+   runtime. For local Java development, use `task dev:server` or `task dev`.
 
 On Windows, the server launcher creates `debug/java-sockets` for the JDK selector
 pipe. For a deeply nested checkout, set `LUNAGC_JAVA_SOCKET_DIR` in `.env.local`
@@ -970,19 +971,33 @@ A deployment then uses that same pinned commit via
 
 The Compose runtime builds the server jar and copies the checked-out resources
 submodule into the image. Initialize Git LFS before building; the Dockerfile
-rejects resource pointer files. The runtime does not read `.env.local`.
+rejects resource pointer files. Resources always come from the submodule during
+the runtime build. Machine-local development resource paths are not mounted.
 
 ```
 git lfs install
 git submodule update --init resources
 git -C resources lfs pull
-docker compose up --build -d
+task serve                  # alias: task runtime; build, detach, wait for health
+task serve:status           # alias: task runtime:status
 docker compose logs -f server
 ```
 
 Check container health with `docker compose ps`. The HTTP service should
 respond on `http://127.0.0.1:8088/` once startup finishes. Use
 `docker compose down` to stop the stack without deleting its data volumes.
+
+The launcher resolves this checkout from its own script path and always selects
+the `lunagc` Compose project. It returns after both services are healthy; closing
+the terminal, leaving Codex, or ending a development monitor does not stop them.
+Both services use `restart: unless-stopped`, so Docker restarts them after a
+daemon restart unless you explicitly stopped them. Docker Desktop must remain
+running. `task serve:logs` follows logs; Ctrl-C only stops following them.
+
+`task runtime:build` builds without restarting. `task serve:stop` (or
+`task runtime:stop`) stops only the game service and preserves MongoDB and both
+named volumes. Start it again with `task serve`. The equivalent direct command
+is `docker compose up --build --detach --wait --wait-timeout 300`.
 
 Set `LUNAGC_PUBLIC_ADDRESS` in `.env` (or in the shell) to the IP address or DNS
 name clients use to reach the machine. The default `127.0.0.1` is for testing
@@ -1031,12 +1046,19 @@ To switch back, close the development session and stop the local Java server:
 
 ```powershell
 task dev:stop
-task serve:stop
-docker compose up -d server
+task dev:server:stop
+task serve
 ```
 
 MongoDB stays running through either switch. Server config/data files remain
-specific to each mode; only database records are shared. An older `luna-mongo`
+specific to each mode; only database records are shared. When moving an existing
+development installation to runtime, back up the server state volume first,
+then copy its current `config.json`, `data/`, plugins and any referenced key files
+to the runtime state volume while the game service is stopped. Preserve the GM
+token and client-compatible keys, use container-reachable bind addresses, and
+check the GM page after the switch. The database URI and public address are
+overridden by the Compose environment. Do not replace a newer state volume with
+an older checkout. An older `luna-mongo`
 container is not used automatically. To migrate its data, stop database writers,
 back up both databases with `mongodump`, and restore the old `grasscutter` database
 into an empty Compose database using `mongorestore`. Verify document counts,
@@ -1098,36 +1120,36 @@ and other static state initialized by unit test fixtures.
 ## Running the server
 
 ```
-task serve          # start MongoDB's container check + the server, detached
-task serve:status   # is MongoDB up, is the dispatch server listening, is the game server up
-task serve:stop     # stop the server (MongoDB keeps running)
-task serve:logs     # page through start_stdout.log
+task serve          # build the image and start the persistent Compose runtime
+task serve:status   # show container health and published ports
+task serve:stop     # stop the game container; MongoDB and state remain
+task serve:logs     # follow container logs; Ctrl-C leaves the server running
 ```
 
-The server writes `start_stdout.log` and `start_stderr.log` in the repo root and
-survives the shell you started it from — it is a detached process, not a child of
-the task runner.
+Compose owns the runtime, and Docker retains its logs and persistent volumes.
+See [Docker Compose runtime](#docker-compose-runtime) for restart behavior and
+[the migration verification](docs/COMPOSE_RUNTIME_2026-10-18.md) for this checkout.
 
-Extra server arguments pass through with `-ServerArgs`. The useful one is
-`-debug`, which turns on DEBUG logging without packet spam:
+For local Java development, use `task dev:server`. Its logs are
+`start_stdout.log` and `start_stderr.log` in the repo root. Extra Java arguments
+can be supplied directly to the development launcher:
 
 ```
-task serve -ServerArgs "-debug"       # DEBUG logging, no packets
-task serve -ServerArgs "-debug all"   # DEBUG logging + every packet
+powershell -NoProfile -File tools/serve.ps1 -Mode start -ServerArgs "-debug"
 ```
 
 Quest progress is only logged at DEBUG. If you want to follow a quest chain in
 the log, `-debug` is required; `task dev` sets it for you.
 
-**Create an account before you log in.** `task serve` opens a visible console
-window for the server — type into it:
+**Create an account before you log in.** Open `http://localhost/gm`, authenticate
+with the configured GM token, leave target UID empty, and run:
 
 ```
 account create <name> <uid>
 ```
 
-There is no web panel by default. If you closed that window, the same command
-works from any shell that has the server's stdin; the console is the easy option.
+Use the GM page for runtime commands; attaching an interactive console to the
+container is unnecessary.
 
 ## Patching the client
 
@@ -1225,7 +1247,7 @@ not implement fires `UnimplementedRequestEvent`, and a listener files each one i
 `debug/dev-report/unimplemented.md`. Run the server on its own with
 
 ```
-task serve -ServerArgs '-dev'          # '-dev all' also logs every packet
+powershell -NoProfile -File tools/serve.ps1 -Mode start -ServerArgs '-dev'
 ```
 
 Three reasons are reported, and together they describe every way a player's action
