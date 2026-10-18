@@ -392,7 +392,11 @@ public class Scene {
         emu.grasscutter.game.tps.TpsWeaponSystem.releaseSceneWeapons(player, this);
         var team = player.getTeamManager().getActiveTeam();
 
-        team.forEach(e -> removeEntity(e, VisionType.VisionType_VISION_REMOVE));
+        // Lifecycle callbacks acquire Player, while player ticks acquire the active-team list.
+        // Release the list monitor before callbacks to avoid reversing that lock order.
+        for (var entity : player.getTeamManager().getActiveTeamSnapshot()) {
+            removeEntity(entity, VisionType.VisionType_VISION_REMOVE);
+        }
         team.clear();
         if (player.getTeamManager().endTpsSceneTeam(this)) player.save();
     }

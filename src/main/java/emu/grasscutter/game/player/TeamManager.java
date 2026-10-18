@@ -668,7 +668,7 @@ public final class TeamManager extends BasePlayerDataManager {
         if (save) this.trialAvatarTeam.copyFrom(this.getRegularTeamInfo());
         else if (tpsSceneAvatar == null) {
             var scene = this.getPlayer().getScene();
-            if (scene != null) this.getActiveTeam().forEach(entity ->
+            if (scene != null) this.getActiveTeamSnapshot().forEach(entity ->
                 scene.removeEntity(entity, VisionTypeOuterClass.VisionType.VisionType_VISION_REMOVE));
             this.getActiveTeam().clear();
         }
@@ -690,7 +690,7 @@ public final class TeamManager extends BasePlayerDataManager {
         this.getTrialAvatars().put(trialAvatar.getAvatarId(), trialAvatar);
         if (tpsSceneAvatar != null) return;
 
-        this.getActiveTeam()
+        this.getActiveTeamSnapshot()
             .forEach(
                 x ->
                     this.getPlayer()
@@ -767,7 +767,7 @@ public final class TeamManager extends BasePlayerDataManager {
             if (!this.isUsingTrialTeam()) this.setPreviousIndex(-1);
             return;
         }
-        if (scene != null) this.getActiveTeam().forEach(entity ->
+        if (scene != null) this.getActiveTeamSnapshot().forEach(entity ->
             scene.removeEntity(entity, VisionTypeOuterClass.VisionType.VisionType_VISION_REMOVE));
         this.getActiveTeam().clear();
         for (var id : this.getCurrentTeamInfo().getAvatars()) {
