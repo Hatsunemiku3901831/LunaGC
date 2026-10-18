@@ -360,9 +360,14 @@ class TrialAvatarLifecycleTest {
                 var raw = client.getDatabase(databaseName).getCollection("snapshots").find().first().get("team", org.bson.Document.class);
                 assertFalse(raw.containsKey("trialAvatars"));
                 assertFalse(raw.containsKey("trialAvatarTeam"));
+                assertFalse(raw.containsKey("questTeamWipe"));
                 assertEquals(306, raw.get("questTrialAvatarIds", org.bson.Document.class).getInteger("1"));
                 var loaded = datastore.find(Snapshot.class).first().team;
                 loaded.setPlayer(new Player());
+                var tracker = loaded.getQuestTeamWipe();
+                assertNotNull(tracker, "Loading a team must initialize its runtime wipe tracker");
+                assertSame(tracker, loaded.getQuestTeamWipe());
+                assertNotSame(manager.getQuestTeamWipe(), tracker);
                 assertEquals(original, loaded.getCurrentSinglePlayerTeamInfo().getAvatars());
                 assertFalse(loaded.isUsingTrialTeam());
                 assertEquals(306, loaded.getQuestTrialAvatarIds().get(1));

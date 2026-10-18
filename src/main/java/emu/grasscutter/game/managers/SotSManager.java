@@ -241,7 +241,7 @@ public class SotSManager extends BasePlayerManager {
     // autoRevive automatically revives all team members.
     public void autoRevive() {
         player.getTeamManager()
-                .getActiveTeam()
+                .getActiveTeamSnapshot()
                 .forEach(
                         entity -> {
                             boolean isAlive = entity.isAlive();

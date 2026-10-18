@@ -136,11 +136,11 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     @Transient
-    private transient emu.grasscutter.game.quest.QuestTeamWipe questTeamWipe;
+    private transient final emu.grasscutter.game.quest.QuestTeamWipe questTeamWipe =
+            new emu.grasscutter.game.quest.QuestTeamWipe(this);
 
-    public synchronized emu.grasscutter.game.quest.QuestTeamWipe getQuestTeamWipe() {
-        if (questTeamWipe == null)
-            questTeamWipe = new emu.grasscutter.game.quest.QuestTeamWipe(this);
+    public emu.grasscutter.game.quest.QuestTeamWipe getQuestTeamWipe() {
+        // Revival may hold Player or Scene; acquiring the team manager would reverse team edits.
         return questTeamWipe;
     }
 
@@ -1029,7 +1029,9 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public void applyVoidDamage() {
-        this.getActiveTeam()
+        // Damage can run ability callbacks that acquire Player or Scene. Never hold the party
+        // list monitor across those callbacks; player ticks also need to read this list.
+        this.getActiveTeamSnapshot()
             .forEach(
                 entity -> {
                     entity.damage(entity.getFightProperty(FightProperty.FIGHT_PROP_MAX_HP) * .1f);
@@ -1098,7 +1100,7 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public boolean reviveAvatar(Avatar avatar) {
-        for (EntityAvatar entity : this.getActiveTeam()) {
+        for (EntityAvatar entity : this.getActiveTeamSnapshot()) {
             if (entity.getAvatar() == avatar) {
                 if (!entity.revive(1f)) {
                     return false;
@@ -1113,7 +1115,7 @@ public final class TeamManager extends BasePlayerDataManager {
     }
 
     public boolean healAvatar(Avatar avatar, int healRate, int healAmount) {
-        for (EntityAvatar entity : this.getActiveTeam()) {
+        for (EntityAvatar entity : this.getActiveTeamSnapshot()) {
             if (entity.getAvatar() == avatar) {
                 if (!entity.isAlive()) {
                     return false;

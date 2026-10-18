@@ -65,6 +65,7 @@ public final class DungeonManager {
     @Setter @Getter private boolean towerDungeon = false;
 
     // Remember only the borrowed instances granted by this dungeon, separately for each player.
+    // Guarded by scene, including the team callbacks which mutate that scene.
     private final Map<Player, Map<Integer, Long>> grantedTrialAvatars = new HashMap<>();
 
     public DungeonManager(@NonNull Scene scene, @NonNull DungeonData dungeonData) {
@@ -415,37 +416,43 @@ public final class DungeonManager {
         applyTrialTeam(player, trialTeam);
     }
 
-    synchronized void applyTrialTeam(Player player, DungeonTrialTeam team) {
-        if (team == null || team.getTrialAvatarIds() == null || grantedTrialAvatars.containsKey(player)) return;
-        var manager = player.getTeamManager();
-        var ids = team.getTrialAvatarIds().stream().filter(Objects::nonNull).distinct()
-                .filter(id -> manager.getTrialAvatarGuid(id) == 0)
-                .filter(id -> {
-                    var params = manager.getTrialAvatarParam(id);
-                    return params.size() >= 2 && !manager.getTrialAvatars().containsKey(params.get(0));
-                }).toList();
-        if (ids.isEmpty()) return;
-        var introduced = new LinkedHashMap<Integer, Long>();
-        try {
-            manager.addTrialAvatars(ids);
-        } finally {
-            // A partial grant must also be cleaned on exit; existing quest grants are excluded.
-            for (int id : ids) {
-                long guid = manager.getTrialAvatarGuid(id);
-                if (guid != 0) introduced.put(id, guid);
+    void applyTrialTeam(Player player, DungeonTrialTeam team) {
+        // Dungeon exit already holds Scene. A separate DungeonManager monitor would invert
+        // that order when adding/removing party entities calls back into Scene.
+        synchronized (scene) {
+            if (team == null || team.getTrialAvatarIds() == null || grantedTrialAvatars.containsKey(player)) return;
+            var manager = player.getTeamManager();
+            var ids = team.getTrialAvatarIds().stream().filter(Objects::nonNull).distinct()
+                    .filter(id -> manager.getTrialAvatarGuid(id) == 0)
+                    .filter(id -> {
+                        var params = manager.getTrialAvatarParam(id);
+                        return params.size() >= 2 && !manager.getTrialAvatars().containsKey(params.get(0));
+                    }).toList();
+            if (ids.isEmpty()) return;
+            var introduced = new LinkedHashMap<Integer, Long>();
+            try {
+                manager.addTrialAvatars(ids);
+            } finally {
+                // A partial grant must also be cleaned on exit; existing quest grants are excluded.
+                for (int id : ids) {
+                    long guid = manager.getTrialAvatarGuid(id);
+                    if (guid != 0) introduced.put(id, guid);
+                }
+                if (!introduced.isEmpty()) grantedTrialAvatars.put(player, introduced);
             }
-            if (!introduced.isEmpty()) grantedTrialAvatars.put(player, introduced);
         }
     }
 
-    public synchronized void unsetTrialTeam(Player player) {
-        var introduced = grantedTrialAvatars.remove(player);
-        if (introduced == null) return;
-        var manager = player.getTeamManager();
-        var ids = introduced.entrySet().stream()
-                .filter(entry -> manager.getTrialAvatarGuid(entry.getKey()) == entry.getValue())
-                .map(Map.Entry::getKey).toList();
-        manager.removeTrialAvatar(ids);
+    public void unsetTrialTeam(Player player) {
+        synchronized (scene) {
+            var introduced = grantedTrialAvatars.remove(player);
+            if (introduced == null) return;
+            var manager = player.getTeamManager();
+            var ids = introduced.entrySet().stream()
+                    .filter(entry -> manager.getTrialAvatarGuid(entry.getKey()) == entry.getValue())
+                    .map(Map.Entry::getKey).toList();
+            manager.removeTrialAvatar(ids);
+        }
     }
 
     public void startDungeon() {
