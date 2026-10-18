@@ -44,7 +44,10 @@
 param(
     [Parameter()]
     [ValidateSet('apply', 'reset', 'status')]
-    [string] $Mode = 'status'
+    [string] $Mode = 'status',
+    # Legacy monitors may have sampled debris before a manual reset or another
+    # recovery completed. Recheck under the mutation lock; exit 3 means skipped.
+    [switch] $RecoverStranded
 )
 
 $ErrorActionPreference = 'Stop'
@@ -344,11 +347,23 @@ function Protect-Original([string] $current, [string] $bak, [string] $stale,
     }
     if (Test-Path $bak) {
         if (Test-BackupUsable $bak $isPatched) {
-            Write-Host "  pristine backup already present, not overwriting"
-            return
+            $oldHash = (Get-FileHash -LiteralPath $bak -Algorithm SHA256).Hash
+            $currentHash = (Get-FileHash -LiteralPath $current -Algorithm SHA256).Hash
+            if ($oldHash -eq $currentHash) {
+                Write-Host "  pristine backup already matches this client"
+                return
+            }
+            # Launcher updates replace the stock DLLs. Preserve the previous
+            # version before capturing the new one used by reset and swap.rs.
+            $archive = "$bak.previous.$($oldHash.ToLowerInvariant())"
+            if (-not (Test-Path -LiteralPath $archive)) {
+                [System.IO.File]::Copy($bak, $archive, $false)
+            }
+            Write-Host "  archived previous client original -> $archive"
+        } else {
+            Copy-File $bak $stale
+            Write-Host "  existing backup holds a patched build, quarantined -> $stale"
         }
-        Copy-File $bak $stale
-        Write-Host "  existing backup holds a patched build, quarantined -> $stale"
     }
     Copy-File $current $bak
     Write-Host "  captured pristine backup -> $bak"
@@ -373,6 +388,39 @@ function Remove-LiveCopies([string] $slotName) {
         }
     }
     return ,$removed
+}
+
+# Serialize every installer/resetter for this client, including the old dev
+# monitor and the Compose guard. Read all slot state only after acquiring the
+# lock, then check the process again: the game may have started while waiting.
+$mutationMutex = $null
+$ownsMutationMutex = $false
+try {
+if ($Mode -ne 'status') {
+    $normalizedGame = [System.IO.Path]::GetFullPath($game).TrimEnd('\', '/').ToLowerInvariant()
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    try {
+        $gameHash = ([BitConverter]::ToString($sha.ComputeHash(
+            [System.Text.Encoding]::UTF8.GetBytes($normalizedGame)))).Replace('-', '').ToLowerInvariant()
+    } finally { $sha.Dispose() }
+    $mutationMutex = New-Object System.Threading.Mutex($false, "Local\LunaGC.ClientPatch.Mutation.$gameHash")
+    try { $ownsMutationMutex = $mutationMutex.WaitOne(30000) }
+    catch [System.Threading.AbandonedMutexException] { $ownsMutationMutex = $true }
+    if (-not $ownsMutationMutex) { throw 'Another client patch operation is still running. Retry after it finishes.' }
+}
+
+$gamePids = @(Get-Process -Name YuanShen, GenshinImpact -ErrorAction SilentlyContinue)
+$inSession = $gamePids.Count -gt 0
+if ($Mode -ne 'status' -and $inSession) {
+    throw 'Please exit YuanShen/GenshinImpact before applying or resetting the patch. The running client keeps the old DLL mapped until it closes.'
+}
+if ($Mode -eq 'apply' -and $RecoverStranded) {
+    $strandedNow = @(Get-ChildItem -LiteralPath $plugins -File -ErrorAction SilentlyContinue |
+        Where-Object { $_.Name -like 'Astrolabe.dll.lunagc-live*' -or $_.Name -like 'AccountPlatNative.dll.lunagc-live*' })
+    if ($strandedNow.Count -eq 0) {
+        Write-Host 'No stranded patch copies remain; another recovery or explicit reset already handled them.'
+        exit 3
+    }
 }
 
 # --- status ----------------------------------------------------------------
@@ -414,13 +462,6 @@ Write-Host ("  backup       : {0}" -f $astBakLabel)
 # A running client changes what these readings mean: swap.rs has already parked
 # the patched image here and the on-disk slot holds the stock build for as long
 # as the session lasts.  Reported per-state so the two cases are not confused.
-$gamePids = @(Get-Process -Name YuanShen -ErrorAction SilentlyContinue)
-$inSession = $gamePids.Count -gt 0
-
-if ($Mode -ne 'status' -and $inSession) {
-    throw 'Please exit YuanShen before applying or resetting the patch. The running client keeps the old DLL mapped until it closes.'
-}
-
 if (Test-Path $astrolabeLive) {
     if ($inSession) {
         Write-Host ("  live copy    : LIVE -- the running client has the patched image")
@@ -479,8 +520,8 @@ if ($Mode -eq 'status') {
     # client is running -- the patched images are parked, not lost.  Only flag
     # a slot when it is stock AND no live copy explains it, and only call a
     # live copy stranded when no game owns it.
-    $astLiveThere = Test-Path $astrolabeLive
-    $platLiveThere = Test-Path $platLive
+    $astLiveThere = @(Get-ChildItem -LiteralPath $plugins -Filter 'Astrolabe.dll.lunagc-live*' -File -ErrorAction SilentlyContinue).Count -gt 0
+    $platLiveThere = @(Get-ChildItem -LiteralPath $plugins -Filter 'AccountPlatNative.dll.lunagc-live*' -File -ErrorAction SilentlyContinue).Count -gt 0
     if ($inSession) {
         Write-Host ''
         Write-Host ("client running (PID {0}) -- slots are swapped in-process," -f ($gamePids.Id -join ','))
@@ -491,12 +532,18 @@ if ($Mode -eq 'status') {
     if (-not (($platState -eq 'patched') -or ($inSession -and $platLiveThere))) { $problems += "AccountPlatNative : $platState" }
     if ($astBakLabel -ne 'pristine') { $problems += "Astrolabe backup : $astBakLabel" }
     if ($platBakLabel -ne 'pristine') { $problems += "AccountPlatNative backup : $platBakLabel" }
-    if ($origState -like 'STALE*') { $problems += "orig proxy : $origState" }
+    if ($origState -eq 'missing' -or $origState -like 'STALE*') { $problems += "orig proxy : $origState" }
     if ($platBytes -and -not $platKeyDone -and -not ($inSession -and $platLiveThere)) { $problems += 'passport key not swapped' }
     if ($platBytes -and -not $platUrlDone -and -not ($inSession -and $platLiveThere)) { $problems += 'dispatch URLs not redirected' }
     if ($astLiveThere  -and -not $inSession) { $problems += 'stranded live copy (Astrolabe) -- the last session died swapped' }
     if ($platLiveThere -and -not $inSession) { $problems += 'stranded live copy (AccountPlatNative) -- same' }
     if ($extState -eq 'missing') { $problems += 'ext.dll not built -- run `task build:patch`' }
+    if (-not $inSession -and $astState -eq 'patched' -and $extState -eq 'built') {
+        if ((Get-FileHash -LiteralPath $astrolabe -Algorithm SHA256).Hash -ne
+            (Get-FileHash -LiteralPath $extDll -Algorithm SHA256).Hash) {
+            $problems += 'installed Astrolabe patch differs from ext.dll -- reapply the current build'
+        }
+    }
     if ($problems.Count -gt 0) {
         Write-Host ''
         Write-Host ("not launch-ready ({0}):" -f $problems.Count)
@@ -656,4 +703,8 @@ if ($Mode -eq 'apply') {
     Write-Host ""
     Write-Host "patch applied -- start the server with 'task serve'"
     exit 0
+}
+} finally {
+    if ($ownsMutationMutex) { $mutationMutex.ReleaseMutex() }
+    if ($null -ne $mutationMutex) { $mutationMutex.Dispose() }
 }

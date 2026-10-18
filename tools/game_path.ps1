@@ -2,9 +2,10 @@
 #  Resolve the game install directory.
 #
 #  Priority:
-#    1. GAME_PATH from .env (task loads it into the environment)
-#    2. miHoYo launcher registry (HYP 1_1 / Genshin Impact keys)
-#    3. fail
+#    1. GAME_PATH from the process environment
+#    2. GAME_PATH from the checkout's .env.local, then .env
+#    3. miHoYo launcher registry (HYP 1_1 / Genshin Impact keys)
+#    4. fail
 #
 #  Prints ONLY the resolved path on stdout (this script is also used as a
 #  Taskfile variable, so it must not emit anything else).  Diagnostics go to
@@ -27,7 +28,25 @@ function Resolve-GamePath {
         return $envPath.Trim()
     }
 
-    # 2. launcher registry -- prefer the HYP (new launcher) hk4e_cn subkey,
+    # Detached helpers and direct PowerShell invocations do not pass through
+    # Task's dotenv loader. Read only this literal setting; never execute .env.
+    $repo = Split-Path -Parent $PSScriptRoot
+    foreach ($file in @('.env.local', '.env')) {
+        $envFile = Join-Path $repo $file
+        if (-not (Test-Path -LiteralPath $envFile -PathType Leaf)) { continue }
+        foreach ($line in Get-Content -LiteralPath $envFile -Encoding UTF8) {
+            if ($line -notmatch '^\s*GAME_PATH\s*=\s*(.*?)\s*$') { continue }
+            $value = $Matches[1].Trim()
+            if ($value.Length -ge 2 -and (
+                ($value.StartsWith('"') -and $value.EndsWith('"')) -or
+                ($value.StartsWith("'") -and $value.EndsWith("'")))) {
+                $value = $value.Substring(1, $value.Length - 2)
+            }
+            if ($value.Trim()) { return $value.Trim() }
+        }
+    }
+
+    # Launcher registry -- prefer the HYP (new launcher) hk4e_cn subkey,
     #    then scan every HYP game subkey, then the legacy single-launcher keys.
     $candidates = @()
     $candidates += 'HKCU:\Software\miHoYo\HYP\1_1\hk4e_cn'
@@ -60,7 +79,8 @@ if (-not $path) {
     [Console]::Error.WriteLine(
         "GAME_PATH is not set and no miHoYo launcher install was found in the registry.`n" +
         "Set GAME_PATH in .env to the directory that contains YuanShen.exe.")
-    exit 1
+    # Distinguish a server-only host from a configured but invalid install.
+    exit 2
 }
 if (-not (Test-GameRoot $path)) {
     [Console]::Error.WriteLine(

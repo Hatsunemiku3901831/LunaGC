@@ -222,7 +222,28 @@ tasks:
   patch:reset:
     desc: Restore the pristine client files from their backups
     cmds:
+      - powershell -NoProfile -ExecutionPolicy Bypass -File tools/client_patch_guard.ps1 -Mode stop
       - powershell -NoProfile -ExecutionPolicy Bypass -File tools/patch_game.ps1 -Mode reset
+
+  patch:check:
+    desc: Check and repair the client patch once (defers changes while the game runs)
+    cmds:
+      - powershell -NoProfile -ExecutionPolicy Bypass -File tools/client_patch_guard.ps1 -Mode check
+
+  patch:guard:
+    desc: Check the client patch and start its independent background recovery guard
+    cmds:
+      - powershell -NoProfile -ExecutionPolicy Bypass -File tools/client_patch_guard.ps1 -Mode start
+
+  patch:guard:status:
+    desc: Show client patch guard heartbeat and last recovery result
+    cmds:
+      - powershell -NoProfile -ExecutionPolicy Bypass -File tools/client_patch_guard.ps1 -Mode status
+
+  patch:guard:stop:
+    desc: Stop client patch monitoring without stopping the game or Compose
+    cmds:
+      - powershell -NoProfile -ExecutionPolicy Bypass -File tools/client_patch_guard.ps1 -Mode stop
 
   # -------------------------------------------------------------- game path
   game-path:

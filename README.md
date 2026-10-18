@@ -994,10 +994,39 @@ Both services use `restart: unless-stopped`, so Docker restarts them after a
 daemon restart unless you explicitly stopped them. Docker Desktop must remain
 running. `task serve:logs` follows logs; Ctrl-C only stops following them.
 
+On Windows, `task serve` also checks the local client patch and starts an
+independent background recovery guard after Compose is healthy. It uses
+`GAME_PATH` from the environment, `.env.local`, `.env`, or the launcher registry.
+With the game closed, an incomplete patch is restored and checked again. While
+the game runs, the guard leaves its files alone; after an abnormal exit it
+repairs stranded `.lunagc-live` files for the next launch. Repeated starts reuse
+the guard; changes to its scripts trigger a cooperative restart on the next
+start. Its status and logs are in the ignored `debug/client-patch/` directory.
+See [client patch recovery and validation](docs/CLIENT_PATCH_GUARD_2026-10-18.md).
+
+```
+task patch:check             # check/repair once; defer changes if the game runs
+task patch:guard             # start/reuse monitoring without rebuilding the server
+task patch:guard:status      # heartbeat and last recovery result
+task patch:guard:stop        # stop monitoring; leave game and Compose running
+task patch:reset             # stop monitoring, then restore the original client
+```
+
+The guard continues after the initiating command or terminal closes. It runs
+under the current Windows user and starts again with `task serve` or
+`task patch:guard` after a Windows restart/sign-out. A host without a client skips
+this step; set `LUNAGC_CLIENT_PATCH_GUARD=0` when invoking Task to opt out explicitly.
+This setting skips automatic startup; stop an existing guard with
+`task patch:guard:stop`.
+The patch must have been built with `task build:patch` or `task patch` first.
+Recovery errors are reported rather than treated as a successful patch check.
+
 `task runtime:build` builds without restarting. `task serve:stop` (or
 `task runtime:stop`) stops only the game service and preserves MongoDB and both
-named volumes. Start it again with `task serve`. The equivalent direct command
-is `docker compose up --build --detach --wait --wait-timeout 300`.
+named volumes. It keeps the client guard running to recover a game that exits
+later. Start the server again with `task serve`. The direct Docker command
+`docker compose up --build --detach --wait --wait-timeout 300` starts the
+containers; use `task patch:guard` separately if starting them this way.
 
 Set `LUNAGC_PUBLIC_ADDRESS` in `.env` (or in the shell) to the IP address or DNS
 name clients use to reach the machine. The default `127.0.0.1` is for testing
@@ -1210,15 +1239,17 @@ all three.
 
 ### If the game crashed or was force-closed
 
-The patch crate swaps a patched image into its slot while the game runs and moves
-it back when the process detaches. **A game that dies mid-session — a crash, a
-`taskkill /F`, a power loss — leaves that live copy stranded in the slot**, which
-means the file the next launch loads is the pristine one and the client is
-unpatched without anyone telling you.
+While the game runs, the patch keeps its loaded image in a `.lunagc-live` file
+and the original DLL in the normal on-disk location. Normal process detach puts
+the patch back. A crash, forced termination or power loss can skip that callback,
+leaving the next launch loading the original DLL.
 
-`task patch:status` catches this, and `task dev` fixes it automatically (see
-below). From the command line, just run `task patch` again — it detects the
-stranded copy and re-deploys.
+The guard started by `task serve` checks and recovers this after the game exits.
+If the monitor was stopped or Windows restarted, `task patch:guard` checks the
+current state before resuming monitoring. `task patch:status` reports readiness;
+`task patch:check` repairs once, and `task patch` also builds the patch if needed.
+Wait for recovery to finish before immediately reopening the game. Neither the
+guard nor a manual patch operation replaces DLLs while the game is running.
 
 ## Developer debug sessions — `task dev`
 

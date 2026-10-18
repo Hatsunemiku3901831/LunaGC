@@ -620,9 +620,20 @@ if (-not $SkipAutoFix -and $stranded.Count -gt 0) {
     $fixes += 'stranded live copy after an unclean exit - re-running the patch deploy'
     try {
         $out = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File `
-            (Join-Path $RepoDir 'tools\patch_game.ps1') -Mode apply 2>&1
+            (Join-Path $RepoDir 'tools\patch_game.ps1') -Mode apply -RecoverStranded 2>&1
+        $patchExit = $LASTEXITCODE
         $out | Select-Object -Last 6 | Out-File -Append -FilePath (Join-Path $OutDir 'autofix.log') -Encoding UTF8
-        $fixes += 'patch deploy complete; the client is patched for the next launch'
+        if ($patchExit -eq 3) {
+            $fixes += 'patch recovery skipped; another recovery or explicit reset already handled the stranded copies'
+        } else {
+            if ($patchExit -ne 0) { throw "patch deploy returned exit code $patchExit" }
+            $verify = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File `
+                (Join-Path $RepoDir 'tools\patch_game.ps1') -Mode status 2>&1
+            $verifyExit = $LASTEXITCODE
+            $verify | Select-Object -Last 6 | Out-File -Append -FilePath (Join-Path $OutDir 'autofix.log') -Encoding UTF8
+            if ($verifyExit -ne 0) { throw "patch verification returned exit code $verifyExit" }
+            $fixes += 'patch deploy complete; the client is patched for the next launch'
+        }
     } catch {
         $fixes += "patch deploy FAILED: $($_.Exception.Message) -- run 'task patch' by hand"
     }

@@ -36,10 +36,22 @@ class RuntimeTest(unittest.TestCase):
             f'@"{sys.executable}" "{fake_python}" %*\r\n', encoding="utf-8"
         )
         self.call_log = self.root / "calls.jsonl"
+        self.guard_log = self.root / "guard.jsonl"
+        (self.root / "tools/client_patch_guard.ps1").write_text(
+            "param([string] $Mode)\n"
+            "$calls = @(Get-Content -LiteralPath $env:RUNTIME_CALL_LOG)\n"
+            "@{ mode = $Mode; composeCalls = $calls.Count } | ConvertTo-Json -Compress | "
+            "Add-Content -LiteralPath $env:RUNTIME_GUARD_LOG\n"
+            "if ($env:RUNTIME_GUARD_FAIL -eq '1') { exit 7 }\n",
+            encoding="utf-8",
+        )
         self.env = os.environ.copy()
         self.env["PATH"] = str(fake_bin) + os.pathsep + self.env["PATH"]
         self.env["RUNTIME_CALL_LOG"] = str(self.call_log)
+        self.env["RUNTIME_GUARD_LOG"] = str(self.guard_log)
         self.env.pop("RUNTIME_FAIL_COMMAND", None)
+        self.env.pop("RUNTIME_GUARD_FAIL", None)
+        self.env.pop("LUNAGC_CLIENT_PATCH_GUARD", None)
 
     def launch(self, mode, fail=None):
         if fail:
@@ -87,6 +99,43 @@ class RuntimeTest(unittest.TestCase):
         result, calls = self.launch("status")
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertEqual([["ps", "--all"]], calls)
+
+    def guard_calls(self):
+        if not self.guard_log.exists():
+            return []
+        return [json.loads(line) for line in self.guard_log.read_text("utf-8-sig").splitlines()]
+
+    def test_start_starts_patch_guard_after_services_are_healthy(self):
+        result, _ = self.launch("start")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertEqual([{"mode": "start", "composeCalls": 2}], self.guard_calls())
+
+    def test_unhealthy_compose_does_not_start_patch_guard(self):
+        result, _ = self.launch("start", fail="up")
+        self.assertNotEqual(0, result.returncode)
+        self.assertEqual([], self.guard_calls())
+
+    def test_patch_guard_failure_is_reported(self):
+        self.env["RUNTIME_GUARD_FAIL"] = "1"
+        result, calls = self.launch("start")
+        self.assertNotEqual(0, result.returncode)
+        self.assertEqual(2, len(calls))
+
+    def test_server_only_mode_can_disable_patch_guard(self):
+        self.env["LUNAGC_CLIENT_PATCH_GUARD"] = "0"
+        result, _ = self.launch("start")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertEqual([], self.guard_calls())
+
+    def test_status_also_reports_patch_guard(self):
+        result, _ = self.launch("status")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertEqual([{"mode": "status", "composeCalls": 1}], self.guard_calls())
+
+    def test_server_stop_keeps_patch_guard_for_late_client_exit(self):
+        result, _ = self.launch("stop")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertEqual([], self.guard_calls())
 
 
 if __name__ == "__main__":

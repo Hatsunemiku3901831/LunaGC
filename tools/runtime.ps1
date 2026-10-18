@@ -30,16 +30,32 @@ function Invoke-Compose {
     }
 }
 
+function Invoke-ClientPatchGuard([string] $GuardMode) {
+    if ($env:LUNAGC_CLIENT_PATCH_GUARD -match '^(0|false|off)$') {
+        Write-Host 'Client patch guard disabled by LUNAGC_CLIENT_PATCH_GUARD.'
+        return
+    }
+    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File `
+        (Join-Path $repo 'tools\client_patch_guard.ps1') -Mode $GuardMode
+    if ($LASTEXITCODE -ne 0) {
+        throw "Client patch guard $GuardMode failed (exit $LASTEXITCODE). Compose services remain running; inspect the patch guard log."
+    }
+}
+
 switch ($Mode) {
     'start' {
         Invoke-Compose -Arguments @('build', 'server')
         Invoke-Compose -Arguments @(
             'up', '--detach', '--wait', '--wait-timeout', "$StartupTimeoutSeconds", 'mongo', 'server'
         )
+        Invoke-ClientPatchGuard 'start'
         Write-Host 'LunaGC is running in Docker Compose. Closing this terminal does not stop it.'
     }
     'build' { Invoke-Compose -Arguments @('build', 'server') }
     'stop' { Invoke-Compose -Arguments @('stop', 'server') }
-    'status' { Invoke-Compose -Arguments @('ps', '--all') }
+    'status' {
+        Invoke-Compose -Arguments @('ps', '--all')
+        Invoke-ClientPatchGuard 'status'
+    }
     'logs' { Invoke-Compose -Arguments @('logs', '--follow', '--tail', '100', 'server') }
 }
