@@ -597,6 +597,7 @@ public class TowerManager extends BasePlayerManager {
         int currentFloorId = getTowerData().currentFloorId;
         // Read before currentLevel is bumped below; the reward belongs to the chamber just cleared.
         int currentLevelId = getCurrentLevelId();
+        int completedLevelIndex = getCurrentLevel();
         if (!recordMap.containsKey(currentFloorId)) {
             recordMap.put(
                     currentFloorId,
@@ -626,13 +627,14 @@ public class TowerManager extends BasePlayerManager {
             var nextFloorId = this.getNextFloorId();
             if (nextFloorId > 0) {
                 recordMap.computeIfAbsent(nextFloorId, TowerLevelRecord::new);
-                player.getSession().send(new PacketTowerCurLevelRecordChangeNotify(nextFloorId, 1));
             }
-        } else {
-            player
-                    .getSession()
-                    .send(new PacketTowerCurLevelRecordChangeNotify(currentFloorId, getCurrentLevel()));
         }
+
+        // The native settlement page displays the completed chamber and computes its next
+        // button from that index. The server checkpoint has advanced, but the client should
+        // receive the next floor/chamber only when tryEnterLevel actually enters it.
+        player.getSession().send(
+                new PacketTowerCurLevelRecordChangeNotify(currentFloorId, completedLevelIndex));
 
         return granted;
     }

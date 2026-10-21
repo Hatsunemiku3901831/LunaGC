@@ -113,6 +113,7 @@ db.players.findOne(
 | 下半时间过多或不限时 | `evt.param2`、TPL_TIME、`HalfTime` 的场景／挑战身份和零预算校验 | 不能再用 600 减掉一次“剩余时间” |
 | 通关等待期间掉星 | 是否使用成功挑战冻结的 `finishedTime`、是否走了新分支 | 不能让异步脚本等待继续消耗成绩时间 |
 | 上半就结算或下半不结算 | passCond 50／51、Lua stage、成功事件回调与结算先后 | 挑战成功不自动等于整间成功 |
+| 第一间通关却提示少于六星，无法继续 | 嵌套结算 `continue_state=8` 应为 1，`next_floor_id=3` 应为空；当前间通知应仍为刚完成的间号 | 2026-10-22 已修复旧占位字段；同层换间不要求六星，不能靠补星绕过 |
 | 重试不生效 | 实际是哪条请求、检查点完整性、当前间是否已推进、`canRestartChamber` | 普通 DungeonRestartReq 当前明确拒绝深渊 |
 | 重登回大世界 | `recoverDungeonLoginLocation` 和持久返回地点 | 这是当前设计，不自动说明保存丢失 |
 | UI 星数与重新开页不同 | 增量 FloorRecordChangeNotify 的固定 levelId／条件与全量记录比较 | 不能只看 UI 断定 Mongo 星记录错误 |

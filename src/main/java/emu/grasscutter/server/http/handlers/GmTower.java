@@ -34,8 +34,8 @@ final class GmTower {
                                             selected == null ? 0 : selected.getScheduleId());
                                     result.addProperty(
                                             "protocolStatus",
-                                            "7.1 原生全量请求、选队响应、切队通知及部分字段仍未恢复；GM"
-                                                + " 入场复用服务端流程，不能证明原生界面完整可用。");
+                                            "原生入口、上下半切换与续挑战协议已修复；选队响应、祝福效果、"
+                                                + "星级领奖等仍有兼容缺口，整期玩法需继续验收。");
                                     result.add(
                                             "structurallyAvailable",
                                             new Gson().toJsonTree(system.getPlayableSchedules()));

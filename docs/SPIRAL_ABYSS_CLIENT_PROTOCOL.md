@@ -124,10 +124,10 @@
 | `finished_star_cond_list` | 15 | 从 1 到本次星数 |
 | `reward_item_list` | 9 | 本次首通入口返回的配置奖励列表 |
 | `is_success` | 14 | 当前挑战成功状态 |
-| `next_floor_id` | 50000 | 最后一间完成后查下一层 |
-| `continue_state` | 50001 | 0、1、2 三种继续状态 |
+| `next_floor_id` | 3 | 最后一间完成后查下一层 |
+| `continue_state` | 8 | 0 禁止继续、1 下一间、2 下一层；已核对原生 UI 分支 |
 
-因此继续按钮问题可能来自占位字段，而非 `hasNextLevel()` 算错。失败和退出使用普通 `BaseDungeonResult`，不能假定会携带同样的 Tower 明细。
+2026-10-22 已用原生 reader 和 UI 分支修复这两个占位字段，并修正结算前的当前间号通知时机；旧构建会在第一间后误报六星限制。失败和退出使用普通 `BaseDungeonResult`，不能假定会携带同样的 Tower 明细。
 
 ## 共用副本消息与按钮语义
 
