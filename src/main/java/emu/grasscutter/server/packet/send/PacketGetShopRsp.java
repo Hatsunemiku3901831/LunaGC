@@ -76,7 +76,13 @@ public class PacketGetShopRsp extends BasePacket {
                     goods.setBoughtNum(currentShopLimit.getHasBoughtInPeriod());
                     goods.setNextRefreshTime(currentShopLimit.getNextRefreshTime());
                 } else {
-                    player.addShopLimit(goods.getGoodsId(), 0, nextRefreshTime);
+                    // Single and batch response owners save once after catalog construction.
+                    // Saving each row here floods whole-player writes while holding Inventory,
+                    // and cosmetic ownership reads can then wait for those writes' Player lock.
+                    var limit = new ShopLimit();
+                    limit.setShopGoodId(goods.getGoodsId());
+                    limit.setNextRefreshTime(nextRefreshTime);
+                    player.getShopLimit().add(limit);
                     goods.setNextRefreshTime(nextRefreshTime);
                 }
 

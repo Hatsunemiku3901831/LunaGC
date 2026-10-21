@@ -28,3 +28,23 @@
 本机使用 `task.cmd serve` 正常停止旧服务、重建并启动便携服务。HTTP 8088 与 UDP 22101 均属于新 Java 进程，健康正常、死锁数为 0；启动记录的 JAR SHA-256 与文件一致，三个变化类的 JAR 字节与本次编译产物一致。启动日志识别出上述 66 个资源不一致的子任务，无启动异常。这些检查不替代客户端进入世界的确认。
 
 本机测试资料保存在忽略目录 `local/white-screen-fix/`，诊断资料在 `local/white-screen-audit/`；不提交玩家资料、连接凭据或运行日志。
+
+## 后续实机发现：七元素加载停在 98%
+
+修复上述任务异常后，实机已通过登录、场景初始化和 `EnterSceneDone`，客户端日志停在 `PostReady 0.98` 等待 `PostEnterSceneReq` 的响应。
+
+线程栈显示网络线程在构建批量商城列表时持有 `Inventory`，等待 `getBeyondCloset()` 的 `Player` 锁；数据库线程正在持 `Player` 编码和保存整份玩家文档，玩家 tick 又等待 `Inventory`。这次不是 JVM 检出的锁循环：后台保存仍在推进，但客户端请求和 tick 长时间停滞。
+
+商城列表原来为每个新商品调用 `addShopLimit()`，每次都提交整份玩家保存。当前全解锁存档约 13 MB，大量区域记录进一步放大了耗时。回归中查询 256 件商品产生 257 次保存，证明请求会自行制造大量与读取争锁的写入。
+
+追加修复：
+
+- 商城响应构造只在背包锁内初始化限购记录，由既有单店／批量响应入口在构造结束后保存一次；购买时的 `addShopLimit()` 保存语义保留。
+- 已初始化的 `BeyondCloset` 通过 volatile 引用读取，不再为每件商品争用 `Player` 锁；第一次读取仍同步创建唯一对象，内部所有权数据继续由 `BeyondCloset` 自身同步保护。
+- 不改动正式存档、区域解锁记录、余额或物品，不削弱保存版本与写入确认机制。
+
+`ShopBatchSaveTest` 覆盖真实批量请求、重复店铺、限购记录和购买保存；`PlayerBeyondClosetLockTest` 覆盖模拟存档占锁时的所有权读取，以及并发首次访问与所有权保留。修复前 3 项中 2 项失败，分别是 257 次保存和读取超时；修复后相关商城、装扮、玩家保存回归共 16 套件、146 项全部通过，0 失败、0 错误、0 跳过。
+
+再次执行便携 `task.cmd serve` 后，核对五个变化类与编译产物一致，运行 JAR SHA-256 为 `7251eb15a1fdb95c0ca885d2e9bfbfc744050d18e1336bfa7f06f8037e941cec`。实机客户端在同一次连接中记录 `PostReady 0.98 → OnPostEnterSceneRsp → Finish 1 → EnterScenePostFinish`，98% 到完成用时约 0.8 秒；随后角色仍在线，健康正常、tick 持续推进，保存队列无积压。完整运行证据在 `local/white-screen-fix/runtime-shop-verification.json` 与 `post-login-health.json`。
+
+另观察到一次已被场景阶段隔离的 `Scene.checkGroups` 空 `groups` 异常，后续 tick 与入场继续完成；它不在本次修复范围内，不能据本次入场成功推断所有场景脚本均完整。

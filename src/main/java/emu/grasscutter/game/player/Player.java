@@ -354,11 +354,17 @@ public class Player implements PlayerHook, FieldFetch {
     @Getter private Set<Integer> forcedFinishedQuests;
 
     private BeyondProgress beyondProgress;
-    private BeyondCloset beyondCloset;
+    private volatile BeyondCloset beyondCloset;
 
-    public synchronized BeyondCloset getBeyondCloset() {
-        if (beyondCloset == null) beyondCloset = new BeyondCloset();
-        return beyondCloset;
+    public BeyondCloset getBeyondCloset() {
+        // Catalog reads hold Inventory. Once initialized, they must not wait for a whole-player
+        // database snapshot to release Player; BeyondCloset protects its own ownership state.
+        var closet = beyondCloset;
+        if (closet != null) return closet;
+        synchronized (this) {
+            if (beyondCloset == null) beyondCloset = new BeyondCloset();
+            return beyondCloset;
+        }
     }
 
     public synchronized BeyondProgress getBeyondProgress() {
