@@ -1,2 +1,2 @@
-java -jar LunaGC-7.1.0.jar
-pause
+@echo off
+call "%~dp0Start-GS.cmd"

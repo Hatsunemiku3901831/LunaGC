@@ -5,7 +5,7 @@
 #
 #    task                 -> this list
 #    task build           -> build the patch DLL and the server jar
-#    task serve           -> build and start the persistent Docker Compose runtime
+#    task serve           -> build and start the configured persistent runtime
 #    task dev:server      -> start the local Java development server
 #    task patch           -> install the client patch (builds first if needed)
 #    task patch:status    -> show which client files are patched right now
@@ -128,47 +128,47 @@ tasks:
 
   # ------------------------------------------------------------------- serve
   serve:
-    desc: Build and start the persistent Docker Compose runtime
+    desc: Build and start the configured runtime (portable Windows or Docker Compose)
     cmds:
       - task: runtime
 
   serve:stop:
-    desc: Stop the Compose game service (MongoDB and volumes are retained)
+    desc: Stop the configured game service and retain saved data
     cmds:
       - task: runtime:stop
 
   serve:status:
-    desc: Show Compose runtime health and published ports
+    desc: Show configured runtime health and ports
     cmds:
       - task: runtime:status
 
   serve:logs:
-    desc: Follow the Compose game service logs (Ctrl-C stops following only)
+    desc: Follow the configured game service logs (Ctrl-C stops following only)
     cmds:
       - task: runtime:logs
 
   runtime:
-    desc: Build the server and resources image, then start Compose detached and wait for health
+    desc: Rebuild and start the selected runtime, then wait for health
     cmds:
       - powershell -NoProfile -ExecutionPolicy Bypass -File tools/runtime.ps1 -Mode start
 
   runtime:build:
-    desc: Build the Compose runtime image without restarting the service
+    desc: Build the selected runtime
     cmds:
       - powershell -NoProfile -ExecutionPolicy Bypass -File tools/runtime.ps1 -Mode build
 
   runtime:stop:
-    desc: Stop the Compose game service while retaining MongoDB and persistent state
+    desc: Stop the selected game service while retaining MongoDB and saved data
     cmds:
       - powershell -NoProfile -ExecutionPolicy Bypass -File tools/runtime.ps1 -Mode stop
 
   runtime:status:
-    desc: Show Compose runtime health and published ports
+    desc: Show selected runtime health and ports
     cmds:
       - powershell -NoProfile -ExecutionPolicy Bypass -File tools/runtime.ps1 -Mode status
 
   runtime:logs:
-    desc: Follow the Compose game service logs (Ctrl-C stops following only)
+    desc: Follow the selected game service logs (Ctrl-C stops following only)
     cmds:
       - powershell -NoProfile -ExecutionPolicy Bypass -File tools/runtime.ps1 -Mode logs
 

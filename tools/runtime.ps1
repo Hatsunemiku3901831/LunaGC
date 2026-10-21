@@ -12,6 +12,38 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $repo = Split-Path -Parent $PSScriptRoot
+$runtime = $env:LUNAGC_RUNTIME
+if ([string]::IsNullOrWhiteSpace($runtime)) {
+    foreach ($envName in @('.env.local', '.env')) {
+        $envFile = Join-Path $repo $envName
+        if (-not (Test-Path -LiteralPath $envFile)) { continue }
+        foreach ($line in Get-Content -LiteralPath $envFile) {
+            if ($line -match '^\s*LUNAGC_RUNTIME\s*=\s*["'']?([A-Za-z]+)["'']?\s*$') {
+                $runtime = $Matches[1]
+                break
+            }
+        }
+        if ($runtime) { break }
+    }
+}
+if ($runtime -eq 'portable') {
+    function Invoke-Portable([string] $Action) {
+        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $repo 'tools\local_windows.ps1') -Mode $Action
+        if ($LASTEXITCODE -ne 0) { throw "Portable LunaGC action failed: $Action" }
+    }
+    switch ($Mode) {
+        'start' {
+            Invoke-Portable 'stop'
+            Invoke-Portable 'build'
+            Invoke-Portable 'start'
+        }
+        'stop' { Invoke-Portable 'stop' }
+        'status' { Invoke-Portable 'status' }
+        'build' { Invoke-Portable 'build' }
+        'logs' { Get-Content -LiteralPath (Join-Path $repo 'local\logs\server-out.log') -Tail 100 -Wait }
+    }
+    exit 0
+}
 $composeFile = Join-Path $repo 'compose.yaml'
 if (-not (Test-Path -LiteralPath $composeFile -PathType Leaf)) {
     throw "Compose configuration not found: $composeFile"

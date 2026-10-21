@@ -1,5 +1,9 @@
 # LunaGC 7.1.0
 
+本机 Windows 便携部署说明见 [LOCAL-RUN.txt](LOCAL-RUN.txt)。已准备好环境的本机可双击
+`Play-GS.cmd` 启动服务与游戏，`Stop-GS.cmd` 正常保存并停止服务，`GS-Status.cmd` 检查运行状态。
+游戏目录由 `.env` 的 `GAME_PATH` 指定；便携依赖及日志位于忽略提交的 `local/`，玩家数据位于 `mongodata/`。
+
 外部项目的适配线索、已核对的本地缺口与后续验证清单见 [2026-10-03 外部实现调研](docs/UPSTREAM_RESEARCH_2026-10-03.md)。
 最新完成项、已有替代入口及仍待适配的范围见 [参考差异当前状态](docs/REFERENCE_REMAINING_2026-10-15.md)。
 脚本世界首领奖励已补齐扣费前校验、容量保护和同一奖励花的玩家去重，见[首领奖励领取保护](docs/BOSS_CHEST_REWARD_GUARD_2026-10-17.md)。
