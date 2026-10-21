@@ -65,6 +65,7 @@ public class TowerLevelData extends GameResource {
         if (star < 0 || conds == null || star >= conds.size()) {
             return TowerCondType.TOWER_COND_NONE;
         }
+        if (conds.get(star) == null) return TowerCondType.TOWER_COND_NONE;
         var condType = conds.get(star).towerCondType;
         return condType == null ? TowerCondType.TOWER_COND_NONE : condType;
     }
@@ -73,7 +74,9 @@ public class TowerLevelData extends GameResource {
         if (star < 0 || conds == null || star >= conds.size()) {
             return null;
         }
+        if (conds.get(star) == null) return null;
         var params = conds.get(star).argumentList;
+        if (params == null || params.size() < 2 || params.stream().anyMatch(java.util.Objects::isNull)) return null;
         return new TowerCondTimeParams(params.get(0), params.get(1));
     }
 
@@ -81,7 +84,9 @@ public class TowerLevelData extends GameResource {
         if (star < 0 || conds == null || star >= conds.size()) {
             return null;
         }
+        if (conds.get(star) == null) return null;
         var params = conds.get(star).argumentList;
+        if (params == null || params.size() < 3 || params.stream().anyMatch(java.util.Objects::isNull)) return null;
         return new TowerCondHpParams(params.get(0), params.get(1), params.get(2));
     }
 }

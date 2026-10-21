@@ -55,6 +55,15 @@ public abstract class GameEntity {
     @Getter @Setter private int blockId;
     @Getter @Setter private int configId;
     @Getter @Setter private int groupId;
+    @Getter private int originOwnerGroupId;
+    @Getter private int originOwnerConfigId;
+
+    /** Preserve script ownership after a summoner leaves the scene, including nested summons. */
+    protected void inheritScriptOrigin(GameEntity owner) {
+        if (owner == null || owner.getScene() != getScene()) return;
+        originOwnerGroupId = owner.originOwnerGroupId > 0 ? owner.originOwnerGroupId : owner.getGroupId();
+        originOwnerConfigId = owner.originOwnerGroupId > 0 ? owner.originOwnerConfigId : owner.getConfigId();
+    }
 
     @Getter @Setter private MotionState motionState;
     @Getter @Setter private int lastMoveSceneTimeMs;

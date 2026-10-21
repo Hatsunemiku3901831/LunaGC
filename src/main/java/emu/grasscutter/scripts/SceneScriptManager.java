@@ -1401,7 +1401,11 @@ public class SceneScriptManager {
 
             if (!scene.getDungeonBossCleanup().allowsMonsterCreation(monster.monster_id))
                 return null;
-            var data = GameData.getMonsterDataMap().get(monster.monster_id);
+            var tower = scene.getDungeonManager();
+            var profile = tower != null && tower.isTowerDungeon() ? tower.getTowerBattleProfile() : null;
+            var override = profile == null ? null : profile.override(group.id, monster.config_id);
+            int monsterId = override != null && override.monsterId() > 0 ? override.monsterId() : monster.monster_id;
+            var data = GameData.getMonsterDataMap().get(monsterId);
             if (data == null) return null;
 
             var level =
@@ -1410,13 +1414,14 @@ public class SceneScriptManager {
                                     group.id,
                                     getScene()
                                             .getLevelForMonster(monster.config_id, monster.level));
+            if (profile != null) level = profile.level(level, group.id, monster.config_id);
             var entity =
                     new EntityMonster(
                             getScene(),
                             data,
                             pos != null ? pos : monster.pos,
                             rot != null ? rot : monster.rot,
-                            level);
+                            level, group.id, monster.config_id, monster);
             entity.setGroupId(group.id);
             entity.setBlockId(group.block_id);
             entity.setConfigId(monster.config_id);
@@ -1439,7 +1444,11 @@ public class SceneScriptManager {
 
             if (!scene.getDungeonBossCleanup().allowsMonsterCreation(monster.monster_id))
                 return null;
-            var data = GameData.getMonsterDataMap().get(monster.monster_id);
+            var tower = scene.getDungeonManager();
+            var profile = tower != null && tower.isTowerDungeon() ? tower.getTowerBattleProfile() : null;
+            var override = profile == null ? null : profile.override(groupId, monster.config_id);
+            int monsterId = override != null && override.monsterId() > 0 ? override.monsterId() : monster.monster_id;
+            var data = GameData.getMonsterDataMap().get(monsterId);
 
             if (data == null) {
                 return null;
@@ -1453,9 +1462,11 @@ public class SceneScriptManager {
                                     getScene()
                                             .getLevelForMonster(monster.config_id, monster.level));
 
+            if (profile != null) level = profile.level(level, groupId, monster.config_id);
+
             // Spawn mob
             EntityMonster entity =
-                    new EntityMonster(getScene(), data, monster.pos, monster.rot, level);
+                    new EntityMonster(getScene(), data, monster.pos, monster.rot, level, groupId, monster.config_id, monster);
             entity.setGroupId(groupId);
             entity.setBlockId(blockId);
             entity.setConfigId(monster.config_id);

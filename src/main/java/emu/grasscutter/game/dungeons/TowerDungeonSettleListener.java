@@ -43,8 +43,7 @@ public class TowerDungeonSettleListener implements DungeonSettleListener {
             firstPassReward = towerManager.notifyCurLevelRecordChangeWhenDone(stars);
             scene.broadcastPacket(
                     new PacketTowerFloorRecordChangeNotify(
-                            towerManager.getCurrentFloorId(),
-                            stars,
+                            towerManager.getRecordMap().get(towerManager.getCurrentFloorId()),
                             towerManager.canEnterScheduleFloor()));
         }
 

@@ -54,7 +54,12 @@ public class EntityMonster extends GameEntity {
     @Getter private EntityWeapon weaponEntity;
     @Getter private Map<Integer, EntityMonster> summonTagMap;
     @Getter @Setter private int summonedTag;
-    @Getter @Setter private int ownerEntityId;
+    @Getter private int ownerEntityId;
+
+    public void setOwnerEntityId(int ownerEntityId) {
+        this.ownerEntityId = ownerEntityId;
+        inheritScriptOrigin(getScene().getEntityById(ownerEntityId));
+    }
     @Getter @Setter private int poseId;
     @Getter @Setter private int aiId = -1;
 
@@ -75,7 +80,20 @@ public class EntityMonster extends GameEntity {
 
     public EntityMonster(
             Scene scene, MonsterData monsterData, Position pos, Position rot, int level) {
+        this(scene, monsterData, pos, rot, level, 0, 0, null);
+    }
+
+    public EntityMonster(Scene scene, MonsterData monsterData, Position pos, Position rot,
+                         int level, int groupId, int configId, SceneMonster metadata) {
         super(scene);
+        // Script identity must exist before stats and abilities are initialized.
+        setGroupId(groupId);
+        setConfigId(configId);
+        this.metaMonster = metadata;
+        if (metadata != null) {
+            this.poseId = metadata.pose_id;
+            this.aiId = metadata.ai_config_id;
+        }
 
         this.id = this.getWorld().getNextEntityId(EntityIdType.MONSTER);
         this.monsterData = monsterData;
@@ -129,26 +147,12 @@ public class EntityMonster extends GameEntity {
     @Override
     public void initAbilities() {
         // Affix abilities
-        var optionalGroup =
-                this.getScene().getLoadedGroups().stream().filter(g -> g.id == this.getGroupId()).findAny();
-        List<Integer> affixes = null;
-        if (optionalGroup.isPresent()) {
-            var group = optionalGroup.get();
-
-            var monster = group.monsters.get(getConfigId());
-            if (monster != null) affixes = monster.affix;
-        }
-
-        if (monsterData != null) {
-            // TODO: Research if group affixes goes first
-            if (affixes == null) affixes = monsterData.getAffix();
-            else affixes.addAll(monsterData.getAffix());
-        }
+        var affixes = getEffectiveAffixes();
 
         if (affixes != null) {
             for (var affixId : affixes) {
                 var affix = GameData.getMonsterAffixDataMap().get(affixId.intValue());
-                if (!affix.isPreAdd()) continue;
+                if (affix == null || !affix.isPreAdd()) continue;
 
                 // Add the ability
                 for (var name : affix.getAbilityName()) {
@@ -169,19 +173,14 @@ public class EntityMonster extends GameEntity {
             }
         }
 
-        if (optionalGroup.isPresent()) {
-            var group = optionalGroup.get();
-            var monster = group.monsters.get(getConfigId());
-            if (monster != null && monster.isElite) {
-                this.addConfigAbility(
-                        GameData.getConfigGlobalCombat().getDefaultAbilities().getMonterEliteAbilityName());
-            }
+        if (this.metaMonster != null && this.metaMonster.isElite) {
+            this.addConfigAbility(GameData.getConfigGlobalCombat().getDefaultAbilities().getMonterEliteAbilityName());
         }
 
         if (affixes != null) {
             for (var affixId : affixes) {
                 var affix = GameData.getMonsterAffixDataMap().get(affixId.intValue());
-                if (affix.isPreAdd()) continue;
+                if (affix == null || affix.isPreAdd()) continue;
 
                 // Add the ability
                 for (var name : affix.getAbilityName()) {
@@ -424,36 +423,42 @@ public class EntityMonster extends GameEntity {
                                         + (this.getFightProperty(c.getBase())
                                                 * (1f + this.getFightProperty(c.getPercent())))));
 
-        // If in tower, scale max hp by
-        //   +50%: Floors 3 – 7
-        //  +100%: Floors 8 – 11
-        //  +150%: Floor 12
         var dungeonManager = getScene().getDungeonManager();
-        // recalcStats() runs from the constructor, so a monster can be built while the scene has no
-        // players yet (scene setup, or the teardown window in DungeonSystem.restartDungeon).
-        // Resolve the tower manager lazily so an empty player list can't blow up an ordinary spawn.
-        var players = getScene().getPlayers();
-        var towerManager = players.isEmpty() ? null : players.get(0).getTowerManager();
-        if (dungeonManager != null && dungeonManager.isTowerDungeon() && towerManager != null) {
-            var floor = towerManager.getCurrentFloorNumber();
-            float additionalScaleFactor = 0f;
-            if (floor >= 12) {
-                additionalScaleFactor = 1.5f;
-            } else if (floor >= 8) {
-                additionalScaleFactor = 1.f;
-            } else if (floor >= 3) {
-                additionalScaleFactor = .5f;
-            }
-
-            this.setFightProperty(
-                    FightProperty.FIGHT_PROP_MAX_HP,
-                    this.getFightProperty(FightProperty.FIGHT_PROP_MAX_HP) * (1 + additionalScaleFactor));
+        if (dungeonManager != null && dungeonManager.isTowerDungeon()) {
+            int floor = dungeonManager.getTowerFloorNumber();
+            if (floor == 0 && !getScene().getPlayers().isEmpty())
+                floor = getScene().getPlayers().get(0).getTowerManager().getCurrentFloorNumber();
+            var profile = dungeonManager.getTowerBattleProfile();
+            var override = profile.override(getGroupId(), getConfigId());
+            scaleStat(FightProperty.FIGHT_PROP_MAX_HP,
+                    emu.grasscutter.game.tower.TowerBattleProfile.floorHp(floor)
+                            * profile.hp() * (override == null ? 1 : override.hp()));
+            scaleStat(FightProperty.FIGHT_PROP_CUR_ATTACK,
+                    profile.attack() * (override == null ? 1 : override.attack()));
+            scaleStat(FightProperty.FIGHT_PROP_CUR_DEFENSE,
+                    profile.defense() * (override == null ? 1 : override.defense()));
         }
 
         // Set current hp
         this.setFightProperty(
                 FightProperty.FIGHT_PROP_CUR_HP,
                 this.getFightProperty(FightProperty.FIGHT_PROP_MAX_HP) * hpPercent);
+    }
+
+    private void scaleStat(FightProperty prop, double multiplier) {
+        setFightProperty(prop, (float) (getFightProperty(prop) * multiplier));
+    }
+
+    public static List<Integer> mergeAffixes(List<Integer> scene, List<Integer> base) {
+        var result = new LinkedHashSet<Integer>();
+        if (scene != null) result.addAll(scene);
+        if (base != null) result.addAll(base);
+        result.remove(null);
+        return List.copyOf(result);
+    }
+
+    public List<Integer> getEffectiveAffixes() {
+        return mergeAffixes(metaMonster == null ? null : metaMonster.affix, monsterData.getAffix());
     }
 
     @Override
@@ -498,7 +503,7 @@ public class EntityMonster extends GameEntity {
                         .setMonsterId(getMonsterId())
                         .setGroupId(this.getGroupId())
                         .setConfigId(this.getConfigId())
-                        .addAllAffixList(data.getAffix())
+                        .addAllAffixList(getEffectiveAffixes())
                         .setAuthorityPeerId(this.getWorld().getHostPeerId())
                         .setPoseId(this.getPoseId())
                         .setBlockId(this.getScene().getId())

@@ -221,6 +221,9 @@ class TowerSettlementOrderTest extends QuestTestFixture {
                 player.server,
                 "towerSystem",
                 new emu.grasscutter.game.tower.TowerSystem(player.server) {
+                    @Override public Selection captureSelection() {
+                        return new Selection(emu.grasscutter.game.tower.TowerBattleProfile.DEFAULT, List.of(6002));
+                    }
                     @Override
                     public int getNextFloorId(int floor) {
                         return 0;

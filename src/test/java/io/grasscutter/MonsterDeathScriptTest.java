@@ -387,6 +387,33 @@ class MonsterDeathScriptTest {
     }
 
     @Test
+    void abyssCleanupRemovesNestedSummonsAfterOwnerLeavesWithoutCountingKills() {
+        var owner = monster(group, 7009);
+        var otherOwner = monster(group(200), 7009);
+        var child = new EntityClientGadget(scene, environment.player,
+                EvtCreateGadgetNotify.newBuilder().setEntityId(4311).setOwnerEntityId(owner.getId()).build());
+        scene.addEntity(child);
+        var nested = new EntityClientGadget(scene, environment.player,
+                EvtCreateGadgetNotify.newBuilder().setEntityId(4312).setOwnerEntityId(child.getId()).build());
+        scene.addEntity(nested);
+        var unrelated = new EntityClientGadget(scene, environment.player,
+                EvtCreateGadgetNotify.newBuilder().setEntityId(4313).setOwnerEntityId(otherOwner.getId()).build());
+        scene.addEntity(unrelated);
+        scene.removeEntity(owner);
+        library.setSceneScriptManager(scripts);
+        library.setCurrentGroup(group);
+        int count = scene.getKilledMonsterCount();
+        assertEquals(0, library.DelAllSubEntityByOriginOwnerConfigId(7009));
+        assertNull(scene.getEntityById(4311));
+        assertNull(scene.getEntityById(4312));
+        assertSame(unrelated, scene.getEntityById(4313));
+        assertEquals(count, scene.getKilledMonsterCount());
+        assertEquals(0, library.DelAllSubEntityByOriginOwnerConfigId(7009));
+        library.setCurrentGroup(SceneGroup.of(group.id));
+        assertEquals(-1, library.DelAllSubEntityByOriginOwnerConfigId(7009));
+    }
+
+    @Test
     void staleGroupAndDestroyedSceneDoNotExecuteBeforeEvent() {
         var monster = monster(group, 1);
         group(100);

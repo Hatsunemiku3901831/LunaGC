@@ -83,6 +83,7 @@ public class EntityClientGadget extends EntityBaseGadget {
         }
 
         GameEntity ownerEntity = scene.getEntityById(this.ownerEntityId);
+        inheritScriptOrigin(ownerEntity);
         ownerEntity = findOwnerEntity(ownerEntity);
         this.originalOwnerEntityId = ownerEntity != null ? ownerEntity.getId() : this.ownerEntityId;
         this.combatOwner = ownerEntity instanceof EntityAvatar avatar && avatar.isAlive() ? avatar : null;

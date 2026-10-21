@@ -63,6 +63,19 @@ public final class DungeonManager {
     private int newestWayPoint = 0;
     @Getter private int startSceneTime = 0;
     @Setter @Getter private boolean towerDungeon = false;
+    @Getter private emu.grasscutter.game.tower.TowerBattleProfile towerBattleProfile =
+            emu.grasscutter.game.tower.TowerBattleProfile.DEFAULT;
+    @Getter private int towerFloorNumber;
+    private int towerMonsterLevel;
+
+    public void configureTower(emu.grasscutter.game.tower.TowerBattleProfile profile, int floor, int level) {
+        this.towerBattleProfile = java.util.Objects.requireNonNull(profile);
+        this.towerFloorNumber = floor;
+        this.towerMonsterLevel = level;
+    }
+
+    public int getTowerBaseMonsterLevel() { return towerMonsterLevel; }
+
 
     // Remember only the borrowed instances granted by this dungeon, separately for each player.
     // Guarded by scene, including the team callbacks which mutate that scene.
@@ -112,6 +125,7 @@ public final class DungeonManager {
     }
 
     public int getLevelForMonster(int id) {
+        if (isTowerDungeon() && towerMonsterLevel > 0) return towerMonsterLevel;
         if (isTowerDungeon() && !scene.getPlayers().isEmpty()) {
             // Tower dungeons have their own level setting in TowerLevelData. Monsters can be built
             // while the scene has no players yet, so fall through to the dungeon level there

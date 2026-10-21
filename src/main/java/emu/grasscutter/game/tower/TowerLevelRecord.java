@@ -69,4 +69,20 @@ public class TowerLevelRecord {
     public void setFloorStarRewardProgress(int floorStarRewardProgress) {
         this.floorStarRewardProgress = floorStarRewardProgress;
     }
+
+    public emu.grasscutter.net.proto.TowerFloorRecordOuterClass.TowerFloorRecord toProto() {
+        var builder = emu.grasscutter.net.proto.TowerFloorRecordOuterClass.TowerFloorRecord.newBuilder()
+                .setFloorId(floorId).setFloorStarRewardProgress(floorStarRewardProgress);
+        if (passedLevelMap != null) {
+            new TreeMap<>(passedLevelMap).forEach((id, stars) -> {
+                int count = Math.max(0, Math.min(3, stars));
+                builder.putPassedLevelMap(id, count);
+                builder.addPassedLevelRecordList(
+                        emu.grasscutter.net.proto.TowerLevelRecordOuterClass.TowerLevelRecord.newBuilder()
+                                .setLevelId(id).addAllSatisfiedCondList(
+                                        java.util.stream.IntStream.rangeClosed(1, count).boxed().toList()));
+            });
+        }
+        return builder.build();
+    }
 }

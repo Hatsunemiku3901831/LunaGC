@@ -8,6 +8,7 @@ import lombok.*;
 public class SceneMonster extends SceneObject {
     public int monster_id;
     public int pose_id;
+    public int ai_config_id = -1;
     public int drop_id;
     public int kill_score;
     public boolean disableWander;

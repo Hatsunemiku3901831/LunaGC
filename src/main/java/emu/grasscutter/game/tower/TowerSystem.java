@@ -22,10 +22,40 @@ import java.util.*;
  */
 public class TowerSystem extends BaseGameSystem {
 
-    /** Rotations change on the 1st and the 16th, at this hour, as they do in the game. */
+    /** Legacy private-server rotation cadence; historical dates come from the catalogue. */
     private static final int ROTATION_HOUR = 4;
 
     private TowerScheduleConfig towerScheduleConfig;
+    private TowerPresetStore presetStore;
+    private TowerCatalog catalog;
+
+    public synchronized TowerPresetStore getPresetStore() {
+        if (presetStore == null) {
+            try { presetStore = new TowerPresetStore(FileUtils.getDataUserPath("TowerPresets.json")); }
+            catch (IOException e) { throw new IllegalStateException("Cannot read TowerPresets.json", e); }
+        }
+        return presetStore;
+    }
+
+    public synchronized TowerCatalog getCatalog() {
+        if (catalog == null) catalog = new TowerCatalog();
+        return catalog;
+    }
+
+    public TowerBattleProfile getBattleProfile() { return getPresetStore().get().profile(); }
+
+    public record Selection(TowerBattleProfile profile, List<Integer> floors) {}
+
+    public synchronized Selection captureSelection() {
+        return new Selection(getBattleProfile(), List.copyOf(getAllFloors()));
+    }
+
+    public synchronized TowerPresetStore.State applyProfile(long revision, TowerBattleProfile profile) throws IOException {
+        getCatalog().validate(profile);
+        if (!getPlayableSchedules().contains(profile.scheduleId()))
+            throw new IllegalArgumentException("排期未通过当前资源依赖检查。");
+        return getPresetStore().save(revision, profile);
+    }
 
     /**
      * Rotations whose every chamber resolves to a scripted scene, ascending. Resolved on first use,
@@ -43,6 +73,8 @@ public class TowerSystem extends BaseGameSystem {
     }
 
     public synchronized void load() {
+        playableSchedules = null;
+        scriptedScenes.clear();
         try {
             towerScheduleConfig = DataLoader.loadClass("TowerSchedule.json", TowerScheduleConfig.class);
         } catch (Exception e) {
@@ -58,17 +90,8 @@ public class TowerSystem extends BaseGameSystem {
 
     /** Whether the scene behind a chamber holds anything to fight. */
     private boolean isScripted(int sceneId) {
-        return scriptedScenes.computeIfAbsent(
-                sceneId,
-                id -> {
-                    var dir = FileUtils.getScriptPath("Scene/" + id);
-                    if (!Files.isDirectory(dir)) return false;
-                    try (var stream = Files.newDirectoryStream(dir, "scene" + id + "_group*.lua")) {
-                        return stream.iterator().hasNext();
-                    } catch (IOException e) {
-                        return false;
-                    }
-                });
+        return scriptedScenes.computeIfAbsent(sceneId,
+                id -> TowerSceneResources.complete(FileUtils.getScriptPath(""), id));
     }
 
     /** Every floor a rotation can put a player on, corridor and schedule floors alike. */
@@ -98,7 +121,12 @@ public class TowerSystem extends BaseGameSystem {
                     GameData.getTowerLevelDataMap().values().stream()
                             .filter(level -> level.getLevelGroupId() == floorData.getLevelGroupId())
                             .toList();
-            if (levels.isEmpty()) return false;
+            if (levels.size() != 3) return false;
+            var ordered = levels.stream().sorted(java.util.Comparator.comparingInt(l -> l.getLevelIndex())).toList();
+            for (int i = 0; i < 3; i++) {
+                if (ordered.get(i).getLevelIndex() != i + 1
+                        || ordered.get(i).getLevelId() != ordered.get(0).getLevelId() + i) return false;
+            }
 
             for (var level : levels) {
                 var dungeon = GameData.getDungeonDataMap().get(level.getDungeonId());
@@ -198,29 +226,31 @@ public class TowerSystem extends BaseGameSystem {
 
     /** When the rotation on offer began. */
     public Date getScheduleStartTime() {
-        if (!isRotating()) return towerScheduleConfig.getScheduleStartTime();
+        if (getBattleProfile().scheduleId() > 0 || !isRotating()) return towerScheduleConfig.getScheduleStartTime();
         return periodStart(new Date()).getTime();
     }
 
     /** When it gives way to the next one. The client counts down to this. */
     public Date getNextScheduleChangeTime() {
-        if (!isRotating()) return towerScheduleConfig.getNextScheduleChangeTime();
+        if (getBattleProfile().scheduleId() > 0 || !isRotating()) return towerScheduleConfig.getNextScheduleChangeTime();
         return periodEnd(periodStart(new Date())).getTime();
     }
 
     // endregion
 
     public TowerScheduleData getCurrentTowerScheduleData() {
-        // A pinned id is served as asked, playable or not - that is what pinning is for.
-        int pinned = GAME_OPTIONS.tower.scheduleId;
+        // Both operator presets and legacy pins must pass the resource dependency check.
+        int managed = getBattleProfile().scheduleId();
+        int pinned = managed > 0 ? managed : GAME_OPTIONS.tower.scheduleId;
         if (pinned > 0) {
             var data = GameData.getTowerScheduleDataMap().get(pinned);
-            if (data != null) return data;
+            if (data != null && getPlayableSchedules().contains(pinned)) return data;
             Grasscutter.getLogger()
-                    .error("Spiral Abyss rotation {} does not exist; rotating instead.", pinned);
+                    .error("Spiral Abyss rotation {} is missing or incomplete; refusing this selection.", pinned);
+            return null;
         }
 
-        if (isRotating()) {
+        if (managed <= 0 && isRotating()) {
             var pool = getRotationPool();
             if (!pool.isEmpty()) {
                 int index = (int) Math.floorMod(periodOrdinal(periodStart(new Date())), pool.size());
@@ -237,9 +267,9 @@ public class TowerSystem extends BaseGameSystem {
             }
         }
 
-        // Nothing validated - fall back to whatever the config file names, so a resource set this
-        // check does not understand still opens the abyss rather than closing it entirely.
+        // The legacy fallback is also required to have complete scene dependencies.
         var fallback = GameData.getTowerScheduleDataMap().get(towerScheduleConfig.getScheduleId());
+        if (fallback != null && !isPlayable(fallback)) fallback = null;
         if (fallback == null) {
             Grasscutter.getLogger()
                     .error(

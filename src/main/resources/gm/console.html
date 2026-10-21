@@ -205,6 +205,7 @@
       <button class="tab" data-tab="notices">公告</button>
       <button class="tab" data-tab="mail">邮件</button>
       <button class="tab" data-tab="history">历史卡池</button>
+      <button class="tab" data-tab="abyss">深境螺旋</button>
       <button class="tab" data-tab="activities">往期活动</button>
       <button class="tab" data-tab="miliastra">千星资产</button>
     </div>
@@ -330,6 +331,43 @@
       <div class="pager" id="historyPagerBottom" aria-label="历史卡池底部分页"></div>
     </div>
 
+    <div class="pane" id="pane-abyss">
+      <h2>深境螺旋 · 历史排期与自定义 <button id="abyssRefresh" class="ghost">刷新</button></h2>
+      <p id="abyssSummary" class="empty"></p>
+      <p id="abyssStatus" role="status" aria-live="polite"></p>
+      <div class="row">
+        <label>年份 <select id="abyssYear"><option value="">全部</option><option>2022</option><option>2023</option><option>2024</option><option>2025</option><option>2026</option></select></label>
+        <label><input id="abyssAvailable" type="checkbox" checked> 仅显示脚本齐全的期数</label>
+      </div>
+      <div id="abyssPeriods" style="max-height:300px;overflow:auto;margin:12px 0"></div>
+      <div class="banner">
+        <h2>难度设置</h2>
+        <p>倍率叠加于本层的资源基础值；1 倍保留资源难度。已开始的本层和重试保持原设置，新选队生效。</p>
+        <div class="row">
+          <label>排期 <input id="abyssSchedule" type="number" readonly style="width:100px"></label>
+          <label>生命 × <input id="abyssHp" type="number" min="0.05" max="20" step="0.05" value="1" style="width:80px"></label>
+          <label>攻击 × <input id="abyssAttack" type="number" min="0.05" max="20" step="0.05" value="1" style="width:80px"></label>
+          <label>防御 × <input id="abyssDefense" type="number" min="0.05" max="20" step="0.05" value="1" style="width:80px"></label>
+          <label>等级偏移 <input id="abyssLevel" type="number" min="-90" max="100" step="1" value="0" style="width:85px"></label>
+        </div>
+        <details style="margin:12px 0"><summary>自定义怪物出生点</summary>
+          <p>从下方资源详情复制 groupId 与 configId。monsterId=0、level=0 沿用原配置；每项倍率必填。保留原脚本的数量、波次和位置。替换机制型 Boss 后需自行验证脚本兼容性。</p>
+          <textarea id="abyssOverrides" rows="5" style="width:100%" aria-label="怪物覆盖 JSON">[]</textarea>
+          <p class="empty">示例：[{"groupId":233746004,"configId":4001,"monsterId":0,"level":100,"hp":1.5,"attack":1,"defense":1}]</p>
+        </details>
+        <div class="row" style="margin-top:12px"><button id="abyssSave">应用自定义配置</button><button id="abyssExport" class="ghost">导出配置</button><label>导入配置 <input id="abyssImport" type="file" accept=".json" style="max-width:210px"></label></div>
+      </div>
+      <div class="banner" style="margin-top:12px">
+        <h2>进入第 8–12 层</h2>
+        <div class="row"><label>在线玩家 UID <input id="abyssUid" type="number" style="width:120px"></label><button id="abyssParty" class="ghost">读取角色</button><label>楼层 <select id="abyssFloor"><option>8</option><option>9</option><option>10</option><option>11</option><option selected>12</option></select></label></div>
+        <p>两队各选 1–4 人，不能重复。按住 Ctrl 可多选。进入后在游戏内操作工作台开始挑战。</p>
+        <div class="row"><label>上半队伍<br><select id="abyssUpper" multiple size="5" style="min-width:210px"></select></label><label>下半队伍<br><select id="abyssLower" multiple size="5" style="min-width:210px"></select></label></div>
+        <div class="row" style="margin-top:12px"><button id="abyssPlay">选队并入场</button><button id="abyssRetry" class="ghost">重试本间</button><button id="abyssNext" class="ghost">进入下一间</button><button id="abyssExit" class="ghost">退出深渊</button></div>
+        <p class="empty">入场使用服务端的双队、场景、计时和检查点流程。星级记录与奖励沿用现有存档；切换历史期数不会清档或重新发奖。</p>
+      </div>
+      <details style="margin-top:12px"><summary>原生客户端兼容状态</summary><p id="abyssProtocol"></p></details>
+      <h2>排期资源详情</h2><div id="abyssDetail" class="empty">选择一期查看第 8–12 层的怪物、位置、分组、套件和星级条件。</div>
+    </div>
     <div class="pane" id="pane-activities">
       <h2>往期活动 <button id="activityRefresh" class="ghost" style="padding:3px 10px;font-size:12px">刷新</button></h2>
       <p style="color:var(--dim);font-size:12px">按首次开放时间从早到晚排列。开启后显示本次复刻时间，在线玩家同步排期。
@@ -701,6 +739,7 @@ document.querySelectorAll(".tab").forEach(t => {
     if (t.dataset.tab === "items") ensureItems();
     if (t.dataset.tab === "history") loadHistory();
     if (t.dataset.tab === "activities") loadActivities();
+    if (t.dataset.tab === "abyss") loadAbyss();
     if (t.dataset.tab === "miliastra") loadMiliastra();
   };
 });
@@ -1976,6 +2015,92 @@ if (urlToken) {
 api("/gm/api/players")
   .then(() => { showWork(); loadCommands(); loadPlayers(); })
   .catch(() => showGate());
+
+// Spiral Abyss: resource evidence and immutable settings per run.
+let abyssData = null, abyssDetailSequence = 0, abyssBusy = false;
+function abyssStatus(message, error=false) { $("abyssStatus").textContent=message; $("abyssStatus").style.color=error?"var(--err)":"var(--ok)"; }
+async function abyssRequest(path, payload) {
+  const r=await api("/gm/api/abyss"+path, payload===undefined?undefined:{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+  if(!r.ok) throw new Error(r.json?.message||r.text||"操作失败");
+  return r.json;
+}
+function abyssFill(profile) {
+  $("abyssSchedule").value=profile.scheduleId;
+  $("abyssHp").value=profile.hp; $("abyssAttack").value=profile.attack; $("abyssDefense").value=profile.defense;
+  $("abyssLevel").value=profile.levelOffset; $("abyssOverrides").value=JSON.stringify(profile.monsters||[],null,2);
+}
+function abyssProfile() {
+  const p={scheduleId:Number($("abyssSchedule").value),hp:Number($("abyssHp").value),attack:Number($("abyssAttack").value),defense:Number($("abyssDefense").value),levelOffset:Number($("abyssLevel").value),monsters:JSON.parse($("abyssOverrides").value)};
+  if(!Number.isInteger(p.scheduleId)||p.scheduleId<=0||!Number.isInteger(p.levelOffset)||!Array.isArray(p.monsters)) throw new Error("请检查排期、整数等级偏移及怪物 JSON。");
+  for(const k of ["hp","attack","defense"]) if(!Number.isFinite(p[k])||p[k]<0.05||p[k]>20) throw new Error("倍率须在 0.05 至 20 之间。");
+  return p;
+}
+async function loadAbyss() {
+  try {
+    abyssData=await abyssRequest("");
+    const p=abyssData.settings.profile;
+    abyssFill({...p,scheduleId:p.scheduleId||abyssData.activeScheduleId});
+    $("abyssSummary").textContent=`当前排期 ${abyssData.activeScheduleId} · 目录 ${abyssData.periods.length} 期 · 脚本齐全 ${abyssData.periods.filter(x=>x.status==="scripted").length} 期。目录覆盖 2022–2026 的现有资源，缺失期数不以预览表补造。`;
+    $("abyssProtocol").textContent=abyssData.protocolStatus;
+    if(!$("abyssUid").value) $("abyssUid").value=$("target").value;
+    abyssRenderPeriods();
+  } catch(e) { abyssStatus(e.message,true); }
+}
+function abyssRenderPeriods() {
+  const root=$("abyssPeriods");root.replaceChildren();
+  if(!abyssData)return;
+  const periods=abyssData.periods.filter(p=>(!$("abyssYear").value||p.startsAt.startsWith($("abyssYear").value))&&(!$("abyssAvailable").checked||p.status==="scripted"));
+  if(!periods.length) { root.textContent="这一年尚无符合筛选的完整期数。取消勾选可查看缺失资料。";return; }
+  for(const p of periods) {
+    const row=document.createElement("div");row.className="row banner";row.style.marginBottom="6px";
+    const label=document.createElement("span");label.style.flex="1";label.textContent=`${p.startsAt.slice(0,10)} · #${p.scheduleId} · ${p.status==="scripted"?"脚本齐全（待实战验收）":"资料不全，已跳过"}${p.scheduleId===abyssData.activeScheduleId?" · 当前":""}`;
+    const view=document.createElement("button");view.className="ghost";view.textContent="详情 / 编辑";view.onclick=()=>{abyssFill(p.scheduleId===abyssData.settings.profile.scheduleId?abyssData.settings.profile:{scheduleId:p.scheduleId,hp:1,attack:1,defense:1,levelOffset:0,monsters:[]});abyssShowDetail(p.scheduleId);};
+    const apply=document.createElement("button");apply.textContent="一键启用原配置";apply.disabled=p.status!=="scripted"||abyssBusy;apply.onclick=()=>abyssSave({scheduleId:p.scheduleId,hp:1,attack:1,defense:1,levelOffset:0,monsters:[]});
+    row.append(label,view,apply);root.append(row);
+  }
+}
+async function abyssShowDetail(id) {
+  const seq=++abyssDetailSequence;$("abyssDetail").textContent="正在读取资源详情…";
+  try {
+    const p=await abyssRequest("/period/"+id);if(seq!==abyssDetailSequence)return;
+    const root=$("abyssDetail");root.replaceChildren();
+    const intro=document.createElement("p");intro.textContent=`#${p.scheduleId} · ${p.startsAt} 至 ${p.endsAt}（来源时区 ${p.timezone}）。生命为当前资源成长曲线计算的基础值，不含词缀、地脉及祝福；不代表已核准的历史官服数值。`;root.append(intro);
+    if(p.missing.length) {const pre=document.createElement("pre");pre.style.whiteSpace="pre-wrap";pre.textContent="缺失依赖：\n"+p.missing.join("\n");root.append(pre);}
+    for(const f of p.floors) {
+      const heading=document.createElement("h3");heading.textContent=`第 ${f.floor} 层 · floorId ${f.floorId} · 基础生命系数 ${f.baseHpMultiplier}`;root.append(heading);
+      for(const c of f.chambers) {
+        const detail=document.createElement("details");const summary=document.createElement("summary");summary.textContent=`第 ${c.chamber} 间 · Lv.${c.monsterLevel} · scene ${c.sceneId}`;detail.append(summary);
+        const stars=document.createElement("p");stars.textContent="星级条件："+c.starConditions.map(x=>x.towerCondType+" "+JSON.stringify(x.argumentList)).join(" / ");detail.append(stars);
+        for(const g of c.scene.groups.filter(g=>g.monsters.length)) {
+          const title=document.createElement("p");title.textContent=`组 ${g.groupId} · ${g.monsters.length} 个出生点`;detail.append(title);
+          const table=document.createElement("table");table.style.width="100%";
+          table.innerHTML="<thead><tr><th>配置 ID</th><th>怪物 / ID</th><th>资源基础生命</th><th>位置 / AI</th></tr></thead>";
+          const tbody=document.createElement("tbody");
+          for(const m of g.monsters) {
+            const row=document.createElement("tr");for(const value of [m.configId,`${m.name||m.stats?.monsterName||"未知"} / ${m.monsterId}`,m.resourceBaseHp?Math.round(m.resourceBaseHp).toLocaleString():"未计算",`${Object.values(m.position).join(", ")} / ${m.aiConfigId<0?"怪物默认":m.aiConfigId}`]) {const td=document.createElement("td");td.textContent=value;td.style.padding="5px";row.append(td);}tbody.append(row);
+          }
+          table.append(tbody);detail.append(table);
+          const source=document.createElement("pre");source.style.whiteSpace="pre-wrap";source.textContent="套件（并非直接的波次顺序）："+JSON.stringify(g.suites)+"\n挑战："+g.challengeCalls.join("\n")+"\n怪潮："+g.tideCalls.join("\n")+"\n脚本："+g.script;detail.append(source);
+        }
+        root.append(detail);
+      }
+    }
+  } catch(e) {if(seq===abyssDetailSequence) $("abyssDetail").textContent=e.message;}
+}
+async function abyssSave(profile) {
+  if(abyssBusy||!abyssData)return;abyssBusy=true;abyssRenderPeriods();$("abyssSave").disabled=true;
+  try {const r=await abyssRequest("/settings",{revision:abyssData.settings.revision,profile});await loadAbyss();abyssStatus(r.message);}
+  catch(e){abyssStatus(e.message,true);}finally{abyssBusy=false;$("abyssSave").disabled=false;abyssRenderPeriods();}
+}
+$("abyssRefresh").onclick=loadAbyss;$("abyssYear").onchange=abyssRenderPeriods;$("abyssAvailable").onchange=abyssRenderPeriods;
+$("abyssSave").onclick=()=>{try{abyssSave(abyssProfile());}catch(e){abyssStatus(e.message,true);}};
+$("abyssExport").onclick=()=>{try{const blob=new Blob([JSON.stringify({schemaVersion:1,profile:abyssProfile()},null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="abyss-profile.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}catch(e){abyssStatus(e.message,true);}};
+$("abyssImport").onchange=async()=>{try{const file=$("abyssImport").files[0];if(!file)return;if(file.size>200000)throw new Error("配置过大。");const data=JSON.parse(await file.text());if(data.schemaVersion!==1||!data.profile)throw new Error("不支持的配置格式。");abyssFill(data.profile);abyssProfile();abyssStatus("配置已填入，点击应用后生效。");}catch(e){abyssStatus(e.message,true);}};
+$("abyssParty").onclick=async()=>{try{const data=await abyssRequest("/party?uid="+encodeURIComponent($("abyssUid").value));for(const [index,key] of ["abyssUpper","abyssLower"].entries()){const select=$(key);select.replaceChildren();for(const a of data.avatars){const o=document.createElement("option");o.value=a.avatarId;o.textContent=`${a.name} · Lv.${a.level} · ${a.avatarId}`;o.selected=(data.selectedTeams[index]||[]).includes(a.avatarId);select.append(o);}}abyssStatus(`已读取 ${data.avatars.length} 名角色。`);}catch(e){abyssStatus(e.message,true);}};
+$("abyssPlay").onclick=async()=>{const button=$("abyssPlay");button.disabled=true;try{const teams=["abyssUpper","abyssLower"].map(id=>Array.from($(id).selectedOptions,o=>Number(o.value)));if(teams.some(t=>!t.length||t.length>4)||new Set(teams.flat()).size!==teams.flat().length)throw new Error("两队各选 1–4 名角色，且不能重复。");const r=await abyssRequest("/play",{uid:Number($("abyssUid").value),floor:Number($("abyssFloor").value),teams});abyssStatus(r.message);}catch(e){abyssStatus(e.message,true);}finally{button.disabled=false;}};
+for(const [id,action] of [["abyssRetry","retry"],["abyssNext","next"],["abyssExit","exit"]])$(id).onclick=async()=>{const button=$(id);button.disabled=true;try{const r=await abyssRequest("/action",{uid:Number($("abyssUid").value),action});abyssStatus(r.message);}catch(e){abyssStatus(e.message,true);}finally{button.disabled=false;}};
+
+if(location.hash === "#abyss") document.querySelector('[data-tab="abyss"]').click();
 </script>
 </body>
 </html>

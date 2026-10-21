@@ -26,6 +26,12 @@ public class TowerManager extends BasePlayerManager {
     @Getter private boolean inProgress;
     @Getter private int currentTimeLimit;
     private volatile HalfTime halfTime;
+    private TowerBattleProfile battleProfile;
+    private List<Integer> selectedFloors;
+
+    public TowerBattleProfile getBattleProfile() {
+        return battleProfile == null ? player.getServer().getTowerSystem().getBattleProfile() : battleProfile;
+    }
     private record HalfTime(
             Scene scene,
             DungeonManager manager,
@@ -270,8 +276,13 @@ public class TowerManager extends BasePlayerManager {
                 return false;
             }
             var firstLevel = getFirstLevelId(floor);
+            var selection = player.getServer().getTowerSystem().captureSelection();
+            if (!selection.floors().contains(floor))
+                return false;
             if (firstLevel <= 0 || !player.getTeamManager().trySetupTemporaryTeam(towerTeams))
                 return false;
+            battleProfile = selection.profile();
+            selectedFloors = selection.floors();
             getTowerData().currentFloorId = floorData.getFloorId();
             getTowerData().currentLevel = 0;
             getTowerData().currentLevelId = firstLevel;
@@ -537,12 +548,14 @@ public class TowerManager extends BasePlayerManager {
         }
 
         var levelData = getCurrentTowerLevelDataMap();
+        if (levelData == null) return 0;
         // 0-based indexing. "star" = 0 means checking for 1-star conditions.
         int star;
         for (star = 2; star >= 0; star--) {
             var cond = levelData.getCondType(star);
             if (cond == TowerLevelData.TowerCondType.TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN) {
                 var params = levelData.getTimeCond(star);
+                if (params == null) continue;
                 long elapsed =
                         challenge.isSuccess() && !challenge.inProgress()
                                 ? Math.max(0, challenge.getFinishedTime())
@@ -556,6 +569,7 @@ public class TowerManager extends BasePlayerManager {
                 }
             } else if (cond == TowerLevelData.TowerCondType.TOWER_COND_LEFT_HP_GREATER_THAN) {
                 var params = levelData.getHpCond(star);
+                if (params == null) continue;
                 var hpPercent = challenge.getGuardEntityHpPercent();
                 if (hpPercent >= params.getMinimumHpPercentage()) {
                     break;
@@ -595,7 +609,7 @@ public class TowerManager extends BasePlayerManager {
             if (passedLevelMap.containsKey(currentLevelId)) {
                 prevStars = prevRecord.getLevelStars(currentLevelId);
             }
-            if (stars > prevStars) {
+            if (!passedLevelMap.containsKey(currentLevelId) || stars > prevStars) {
                 recordMap.put(currentFloorId, prevRecord.setLevelStars(currentLevelId, stars));
             }
         }
@@ -661,19 +675,17 @@ public class TowerManager extends BasePlayerManager {
     }
 
     public int getNextFloorId() {
+        if (selectedFloors != null && !selectedFloors.isEmpty()) {
+            int index = selectedFloors.indexOf(getCurrentFloorId());
+            return index >= 0 && index + 1 < selectedFloors.size() ? selectedFloors.get(index + 1) : 0;
+        }
         return this.player
                 .getServer()
                 .getTowerSystem()
                 .getNextFloorId(this.getTowerData().currentFloorId);
     }
 
-    public boolean hasNextFloor() {
-        return this.player
-                        .getServer()
-                        .getTowerSystem()
-                        .getNextFloorId(this.getTowerData().currentFloorId)
-                > 0;
-    }
+    public boolean hasNextFloor() { return getNextFloorId() > 0; }
 
     public void clearEntry() {
         getTowerData().entryScene = 0;

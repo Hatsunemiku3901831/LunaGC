@@ -1,5 +1,7 @@
 # 深境螺旋排障验证与开发交接
 
+> **开发增量**：新增开发和部署记录见[历史配置与管理工具](SPIRAL_ABYSS_MANAGEMENT.md)。本轮实际修改运行代码与 GM 页面，必须执行 portable 重建部署。新增 `TowerManagementTest`、`TowerRecordRegressionTest`、`TowerSpawnIntegrationTest`、`TowerResourceIntegrationTest`，并扩展召唤物清理测试；下方 227 项为前一轮文档审计的历史结果。
+
 排查深渊时，先区分协议不可达、场景脚本问题、运行状态失配与存档／奖励问题，再选择测试。本文以[系统总览](SPIRAL_ABYSS_SYSTEM.md)的源码及资源基线为准，给出本机便携运行方式下的复现和交付要求。
 
 ## 本次验证结果

@@ -1444,6 +1444,22 @@ public class ScriptLib {
         return 0;
     }
 
+    public int DelAllSubEntityByOriginOwnerConfigId(int configId) {
+        var manager = getSceneScriptManagerOrNull();
+        var group = getCurrentGroup().orElse(null);
+        if (manager == null || group == null || configId <= 0) return -1;
+        var scene = manager.getScene();
+        synchronized (scene) {
+            if (!manager.allowsGroupCall(group)) return -1;
+            var children = scene.getEntities().values().stream()
+                    .filter(e -> e.getOriginOwnerGroupId() == group.id
+                            && e.getOriginOwnerConfigId() == configId).toList();
+            // Despawn, not a kill: this must not advance the monster tide or award drops.
+            scene.removeEntities(children, VisionType.VisionType_VISION_REMOVE);
+            return 0;
+        }
+    }
+
     public int RemoveExtraGroupSuite(int groupId, int suite) {
         logger.debug("[LUA] Call RemoveExtraGroupSuite with {},{}", groupId, suite);
         SceneGroup group = getSceneScriptManager().getGroupById(groupId);

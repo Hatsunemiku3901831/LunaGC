@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [ValidateSet('start', 'stop', 'status', 'play', 'patch', 'reset', 'gm', 'build', 'buildpatch')]
+    [ValidateSet('start', 'stop', 'status', 'play', 'patch', 'reset', 'gm', 'abyss', 'build', 'buildpatch')]
     [string] $Mode = 'status'
 )
 
@@ -206,7 +206,7 @@ function Start-ClientPatchGuard {
 $mutex = New-Object Threading.Mutex($false, ('Local\LunaGCNative-' + ($repo -replace '[^A-Za-z0-9]', '_')))
 $locked = $false
 try {
-    if ($Mode -in @('start', 'stop', 'play', 'gm', 'build')) {
+    if ($Mode -in @('start', 'stop', 'play', 'gm', 'abyss', 'build')) {
         $locked = $mutex.WaitOne(0)
         if (-not $locked) { throw 'Another local LunaGC server action is still in progress.' }
     }
@@ -245,6 +245,11 @@ try {
             Start-LocalServer
             $configuration = Get-Config
             Start-Process ($baseUrl + '/gm?token=' + [Uri]::EscapeDataString($configuration.server.gm.accessToken))
+        }
+        'abyss' {
+            Start-LocalServer
+            $configuration = Get-Config
+            Start-Process ($baseUrl + '/gm?token=' + [Uri]::EscapeDataString($configuration.server.gm.accessToken) + '#abyss')
         }
         'build' {
             if (Get-Server) { throw 'Stop LunaGC before rebuilding its JAR.' }

@@ -107,6 +107,19 @@ abstract class QuestTestFixture {
         player.setUid(10001);
         player.setProperty(PlayerProperty.PROP_PLAYER_LEVEL, 20);
         player.server = new GameServer();
+        // DISPATCH_ONLY does not construct game systems. Tower tests use synthetic floors;
+        // keep their immutable baseline independent of the operator's real preset file.
+        replaceField(GameServer.class, player.server, "towerSystem",
+                new emu.grasscutter.game.tower.TowerSystem(player.server) {
+                    @Override public emu.grasscutter.game.tower.TowerBattleProfile getBattleProfile() {
+                        return emu.grasscutter.game.tower.TowerBattleProfile.DEFAULT;
+                    }
+                    @Override public Selection captureSelection() {
+                        return new Selection(getBattleProfile(), GameData.getTowerFloorDataMap().values().stream()
+                                .sorted(java.util.Comparator.comparingInt(emu.grasscutter.data.excels.tower.TowerFloorData::getFloorIndex))
+                                .map(emu.grasscutter.data.excels.tower.TowerFloorData::getFloorId).toList());
+                    }
+                });
         replaceField(
                 GameServer.class, player.server, "questSystem", new QuestSystem(player.server));
         var oldCombat = GameData.getConfigGlobalCombat();

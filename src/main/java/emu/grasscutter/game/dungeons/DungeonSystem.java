@@ -172,6 +172,9 @@ public final class DungeonSystem extends BaseGameSystem {
                     data,
                     scene -> {
                         var dungeonManager = new DungeonManager(scene, data);
+                        dungeonManager.configureTower(player.getTowerManager().getBattleProfile(),
+                                player.getTowerManager().getCurrentFloorNumber(),
+                                player.getTowerManager().getCurrentMonsterLevel());
                         dungeonManager.setTowerDungeon(true);
                         scene.setDungeonManager(dungeonManager);
                         scene.setPrevScene(previousScene);
@@ -275,6 +278,8 @@ public final class DungeonSystem extends BaseGameSystem {
                                     dungeonData,
                                     fresh -> {
                                         var newManager = new DungeonManager(fresh, dungeonData);
+                                        if (isTower) newManager.configureTower(dungeonManager.getTowerBattleProfile(),
+                                                dungeonManager.getTowerFloorNumber(), dungeonManager.getTowerBaseMonsterLevel());
                                         newManager.setTowerDungeon(isTower);
                                         fresh.setDungeonManager(newManager);
                                         fresh.setPrevScene(prevScene);

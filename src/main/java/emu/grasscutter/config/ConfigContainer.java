@@ -526,7 +526,7 @@ public class ConfigContainer {
              *
              * <p>Only rotations this server can actually build are ever chosen: a rotation whose
              * floors point at dungeon scenes with no group scripts would open onto empty rooms, so
-             * those are skipped. Setting an id here serves it whether or not it passes that check.
+             * those are skipped. A fixed id must also pass the scene dependency check.
              */
             public int scheduleId = 0;
 

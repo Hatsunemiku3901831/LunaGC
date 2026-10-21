@@ -56,7 +56,7 @@ public class TowerResult extends BaseDungeonResult {
 
         var towerLevelEndNotify =
                 TowerLevelEndNotify.newBuilder()
-                        .setIsSuccess(challenge.isSuccess())
+                        .setIsSuccess(challenge != null && challenge.isSuccess())
                         .setContinueState(continueStatus);
 
         // The settle screen lists what the chamber paid out. A repeat clear of an already-rewarded

@@ -15,17 +15,15 @@ public class PacketTowerAllDataRsp extends BasePacket {
     public PacketTowerAllDataRsp(TowerSystem towerScheduleManager, TowerManager towerManager) {
         super(PacketOpcodes.TowerAllDataRsp);
 
+        var schedule = towerScheduleManager.getCurrentTowerScheduleData();
+        if (schedule == null) {
+            setData(TowerAllDataRsp.newBuilder().setRetcode(-1).build());
+            return;
+        }
+
         var recordList =
                 towerManager.getRecordMap().values().stream()
-                        .map(
-                                rec ->
-                                        TowerFloorRecord.newBuilder()
-                                                .setFloorId(rec.getFloorId())
-                                                .setFloorStarRewardProgress(rec.getFloorStarRewardProgress())
-                                                .putAllPassedLevelMap(rec.getPassedLevelMap())
-                                                .addAllPassedLevelRecordList(
-                                                        buildFromPassedLevelMap(rec.getPassedLevelMap()))
-                                                .build())
+                        .map(TowerLevelRecord::toProto)
                         .toList();
 
         var scheduleStart = DateHelper.getUnixTime(towerScheduleManager.getScheduleStartTime());
@@ -36,7 +34,7 @@ public class PacketTowerAllDataRsp extends BasePacket {
 
         TowerAllDataRsp proto =
                 TowerAllDataRsp.newBuilder()
-                        .setTowerScheduleId(towerScheduleManager.getCurrentTowerScheduleData().getScheduleId())
+                        .setTowerScheduleId(schedule.getScheduleId())
                         .addAllTowerFloorRecordList(recordList)
                         .setCurLevelRecord(TowerCurLevelRecord.newBuilder().setIsEmpty(true))
                         .setScheduleStartTime(scheduleStart)

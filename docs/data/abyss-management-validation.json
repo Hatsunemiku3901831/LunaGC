@@ -1,0 +1,180 @@
+{
+  "scope": "Abyss management, resource Lua validation, tower gameplay regressions, monster tides and summon cleanup; no live-client combat certification",
+  "totals": {
+    "tests": 342,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": [
+    {
+      "suite": "emu.grasscutter.server.packet.recv.TowerTeamRecoveryTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.DungeonGroupPersistenceTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.DungeonLoginRecoveryTest",
+      "tests": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.MonsterDeathScriptTest",
+      "tests": 23,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.MonsterTideTest",
+      "tests": 65,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.ScriptMonsterSpawnQueueTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerChamberCheckpointTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerChamberRetryTest",
+      "tests": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerEndNotificationTest",
+      "tests": 20,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerEntryOutcomeTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerHalfClockTest",
+      "tests": 27,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerManagementTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerPartyPersistenceTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerPartySelectionTest",
+      "tests": 25,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerPartyStableIdentityTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerRecordRegressionTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerResourceIntegrationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerSceneHandoffTest",
+      "tests": 23,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerSettlementOrderTest",
+      "tests": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerSpawnIntegrationTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "pythonCatalogTests": 3,
+  "javascriptSyntax": "node --check passed",
+  "resources": {
+    "cataloguePeriods": 90,
+    "scriptedPeriods": 26,
+    "scenes": 75,
+    "groups": 375,
+    "monsterDefinitions": 934
+  },
+  "deployment": {
+    "healthy": true,
+    "catalogueRecords": 90,
+    "activeScheduleId": 62,
+    "authenticationRejection": 403,
+    "invalidProfileRejection": 400,
+    "unavailablePeriodRejection": 400,
+    "staleRevisionRejection": 409,
+    "atomicReplaceVerified": true,
+    "jarSHA256": "5aa7c2488e404613dd11ffceb80c1cd1202df27266a95acd5b90a9b67e8abeb2",
+    "runtime": "portable",
+    "httpPort": 8088,
+    "gameUdpPort": 22101,
+    "browserVerified": [
+      "year filtering",
+      "unavailable periods disabled",
+      "period 62 floors 8-12 detail",
+      "difficulty and party controls rendered"
+    ]
+  }
+}
