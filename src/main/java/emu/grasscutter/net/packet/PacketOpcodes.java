@@ -434,7 +434,7 @@ public final class PacketOpcodes {
     public static final int TakeoffEquipRsp = 28988;
     public static final int SetBattlePassViewedReq = 23538;
     public static final int SetBattlePassViewedRsp = 20;
-    public static final int TowerAllDataReq = -87;
+    public static final int TowerAllDataReq = 27826;
     public static final int TowerAllDataRsp = 21818;
     public static final int TowerCurLevelRecordChangeNotify = 9479;
     public static final int EnterTrialAvatarActivityDungeonReq = 6473;
@@ -716,7 +716,7 @@ public final class PacketOpcodes {
     public static final int ReformFireworksRsp = -187;
     public static final int SetFriendEnterHomeOptionRsp = -188;
     public static final int ShowClientGuideNotify = -189;
-    public static final int TowerMiddleLevelChangeTeamNotify = -190;
+    public static final int TowerMiddleLevelChangeTeamNotify = 28798;
     public static final int UnlockedFurnitureFormulaDataNotify = -191;
     public static final int UnlockedFurnitureSuiteDataNotify = -192;
     public static final int SetReliquaryFavouriteReq = -193;

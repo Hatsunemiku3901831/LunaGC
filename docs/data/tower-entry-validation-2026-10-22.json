@@ -1,0 +1,160 @@
+{
+  "date": "2026-10-22",
+  "scope": "Native Abyss entry and upper/lower group visibility",
+  "regressionBeforeFix": {
+    "entryFailures": 3,
+    "groupVisibilityFailures": 1
+  },
+  "suites": [
+    {
+      "name": "emu.grasscutter.server.packet.recv.TowerTeamRecoveryTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "io.grasscutter.DungeonGroupPersistenceTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "io.grasscutter.DungeonLoginRecoveryTest",
+      "tests": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "io.grasscutter.TowerChamberCheckpointTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "io.grasscutter.TowerChamberRetryTest",
+      "tests": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "io.grasscutter.TowerEndNotificationTest",
+      "tests": 20,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "io.grasscutter.TowerEntryOutcomeTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "io.grasscutter.TowerEntryProtocol71Test",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "io.grasscutter.TowerGroupVisibilityTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "io.grasscutter.TowerHalfClockTest",
+      "tests": 27,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "io.grasscutter.TowerManagementTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "io.grasscutter.TowerPartyPersistenceTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "io.grasscutter.TowerPartySelectionTest",
+      "tests": 25,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "io.grasscutter.TowerPartyStableIdentityTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "io.grasscutter.TowerRecordRegressionTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "io.grasscutter.TowerResourceIntegrationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "io.grasscutter.TowerSceneHandoffTest",
+      "tests": 23,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "io.grasscutter.TowerSettlementOrderTest",
+      "tests": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "io.grasscutter.TowerSpawnIntegrationTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "totals": {
+    "tests": 255,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "deployment": {
+    "runtime": "portable",
+    "jarSHA256": "f8b6be884c519744498d4ac8e45a1fb6aa801ef07cc005565488893ff1e06c78",
+    "httpHealthy": true,
+    "gameUdpHealthy": true
+  },
+  "client": {
+    "entryPageConfirmed": true,
+    "upperBattleConfirmed": true,
+    "lowerBattleConfirmed": false
+  }
+}

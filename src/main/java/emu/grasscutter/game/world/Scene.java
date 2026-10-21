@@ -1203,6 +1203,21 @@ public class Scene {
 
     public Set<Integer> getPlayerActiveGroups(Player player) {
 
+        if (getDungeonManager() != null && getDungeonManager().isTowerDungeon()) {
+            // An Abyss chamber is one script unit. Its common clock/barriers and lower-half
+            // groups can live only in SUPER grids, which the overworld's entity-range cap
+            // deliberately skips. Load every static chamber group before any suite callback
+            // runs, and keep them active across the team swap. Lua still controls monster waves.
+            Set<Integer> chamberGroups = new HashSet<>();
+            for (var block : getScriptManager().getBlocks().values()) {
+                loadBlock(block);
+                if (block.groups != null)
+                    block.groups.values().stream().filter(group -> !group.dynamic_load)
+                            .map(group -> group.id).forEach(chamberGroups::add);
+            }
+            return chamberGroups;
+        }
+
         Position playerPosition = player.getPosition();
         Set<Integer> activeGroups = new HashSet<>();
         for (int i = 0; i < 4; i++) {

@@ -82,7 +82,7 @@ public class TowerTeamRecoveryTest {
     @Test
     @DisplayName("the mid-chamber team-change notify still builds and serialises to nothing")
     public void middleLevelChangeTeamNotifyLoads() {
-        // The 7.1 dump still has no named source or CmdId for this empty message.
+        // Native CFHJLLMBCPO (CmdId 28798) has no business fields.
         var proto =
                 emu.grasscutter.net.proto.TowerMiddleLevelChangeTeamNotifyOuterClass
                         .TowerMiddleLevelChangeTeamNotify.newBuilder()

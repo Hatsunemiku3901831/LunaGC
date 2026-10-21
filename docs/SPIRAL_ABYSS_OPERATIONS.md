@@ -103,12 +103,12 @@ db.players.findOne(
 
 | 症状 | 首查证据与入口 | 不应直接作出的判断 |
 | --- | --- | --- |
-| 打不开深渊总页或没有更新记录 | `TowerAllDataReq=-87` 是否已有新映射、未处理请求日志、开放状态 42／44及实际入口交互 | 不能只因存在 Handler 类就认定入口已接通 |
+| 打不开深渊总页或没有更新记录 | 检查 `TowerAllDataReq=27826` → `TowerAllDataRsp=21818`、开放状态 42／44及实际入口交互 | 2026-10-22 已修复旧负数编号与排期字段；核对运行 JAR 是否更新 |
 | 第九层锁定 | 全量包是否实际送达；前八层记录、最后入口层六星、第九层空记录、排期字段 | 不能只改数据库星数而忽略占位字段 |
 | 选了两队仍带大世界队伍 | `TowerTeamSelectReq` payload、成功日志、稳定身份、`restoreTemporaryTeams`；选择响应被丢弃情况 | 不能把两队顺序丢失误认成角色模型错误 |
 | 进本取消后队伍乱了 | `enterSceneWithTemporaryTeam` 与传送事件、原场景是否仍在、失败是否发成功响应 | 不能在迁移前先刷新旧场景实体 |
 | 进本空房或没有工作台 | 当前排期是否被强制固定；scene／block／group 文件，suite、组加载与 Lua warning | 有任意 group 文件不代表关卡完整 |
-| 上半结束后角色不出现 | `TowerMirrorTeamSetUp`、队伍 1 基转 0 基、`tryUseTemporaryTeam` 及 `spawnPlayer`；负 CmdId 通知 | 单纯多发队伍列表不一定生成角色实体 |
+| 上半结束后角色不出现 | 确认公共计时／下半组已加载，检查 TPL_TIME 写入错误；`TowerMirrorTeamSetUp`、`spawnPlayer` 与切队通知 `28798` | 实体距离保护曾跳过 SUPER 格子；深渊现应完整加载静态组 |
 | 下半技能一直灰 | 工作台是否到达 stage=1 分支、是否执行 `SetIsAllowUseSkill(1)`、CanUseSkill 包 | 不宜在 `onBegin()` 全局硬开技能掩盖脚本错误 |
 | 下半时间过多或不限时 | `evt.param2`、TPL_TIME、`HalfTime` 的场景／挑战身份和零预算校验 | 不能再用 600 减掉一次“剩余时间” |
 | 通关等待期间掉星 | 是否使用成功挑战冻结的 `finishedTime`、是否走了新分支 | 不能让异步脚本等待继续消耗成绩时间 |

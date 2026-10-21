@@ -1,4 +1,4 @@
-// Recovered from TowerAllDataReqOuterClass.java's embedded descriptor; wire schema may predate 7.1.
+// 7.1 KFKHJHAEBLC writer 0x152c45730; CmdId getter 0x152c45860.
 syntax = "proto3";
 
 package recovered.p_TowerAllDataReq;
@@ -6,5 +6,5 @@ option java_package = "emu.grasscutter.net.proto";
 option java_outer_classname = "TowerAllDataReqOuterClass";
 
 message TowerAllDataReq {
-  bool is_interact = 13;
+  bool is_interact = 14;
 }

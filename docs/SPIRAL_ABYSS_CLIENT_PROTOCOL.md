@@ -42,7 +42,7 @@
 
 当前 [patch](../patch/README.md) 是连接、加密及相关兼容模块。对 `patch/src` 的深渊关键词检索没有找到本玩法专用实现，不能靠已安装补丁推导深渊逻辑已经补齐。
 
-本次没有改动客户端文件，也没有运行游戏内挑战。类型及 getter 证据确认的是该二进制的结构；场景动画、界面跳转和完整包序列仍属于游戏内验收。
+原 2026-10-21 符号审计未改动客户端或运行挑战。2026-10-22 已完成原生页面、选队、进入上半场的联调，并修复公共脚本组加载与下半切换编号，见[入口与切队修复](SPIRAL_ABYSS_ENTRY_PROTOCOL_71.md)。完整玩法仍需逐阶段验收。
 
 ## 消息实现与传输状态
 
@@ -50,16 +50,16 @@
 
 | 消息 | CmdId | 当前 Java 实现和限制 |
 | --- | ---: | --- |
-| `TowerAllDataReq` | -87 | 有 Handler，但注册器跳过非正编号，因此不能按此常量注册真实网络入口 |
-| `TowerAllDataRsp` | 21818 | 有构造器；排期与时间等多个字段仍为 50000 段占位编号 |
+| `TowerAllDataReq` | 27826 | 原生页面与实际注册路由已验证；交互标记 field 14 |
+| `TowerAllDataRsp` | 21818 | 排期、起止时间、开放时间映射已恢复；其他未使用字段仍有占位 |
 | `TowerTeamSelectReq` | 20134 | 有 Handler，读取队伍并调用 `tryTeamSelect` |
 | `TowerTeamSelectRsp` | -88 | 有成功／失败构造器；当前本机 fan-out 无此映射，发送时被丢弃 |
 | `TowerEnterLevelReq` | 21373 | 有 Handler，只读取 `enter_point_id`；忽略 `_is_restart_floor` |
 | `TowerEnterLevelRsp` | 7393 | 有构造器；成功时固定返回祝福 ID 4、28、18 |
-| `TowerCurLevelRecordChangeNotify` | 9479 | 有构造器；当前层与间字段为占位编号，队伍信息留有 TODO |
+| `TowerCurLevelRecordChangeNotify` | 9479 | 当前层与间号已恢复为 9／10；队伍信息留有 TODO |
 | `TowerFloorRecordChangeNotify` | 7649 | 有构造器，但内容并非按完整存档生成，见下文 |
 | `TowerLevelStarCondNotify` | 20675 | 有构造器，单个条件里的两个字段仍占位 |
-| `TowerMiddleLevelChangeTeamNotify` | -190 | 空消息类型可构建，但本机没有可用发送映射；空描述符也不能靠现有 fan-out 自动恢复 |
+| `TowerMiddleLevelChangeTeamNotify` | 28798 | 对应原生空类型 CFHJLLMBCPO；真实发送通道已验证 |
 | `TowerLevelEndNotify` | 25538 | 有 proto；当前通过 `DungeonSettleNotify` 的嵌套字段发送，无独立发送器 |
 | `TowerBuffSelectReq` / `Rsp` | 4779 / 9661 | 有编号，当前未找到对应请求 Handler 和完整业务链 |
 | `TowerGetFloorStarRewardReq` / `Rsp` | 28279 / 5775 | 有编号，当前未找到领取处理器和领奖业务链 |
@@ -96,16 +96,16 @@
 
 ### 全量状态和增量状态
 
-`TowerAllDataRsp` 当前使用的普通编号包括 `retcode=15`、`cur_level_record=13`、`is_finished_entrance_floor=10`、`tower_floor_record_list=11`。关键待恢复字段包括：
+`TowerAllDataRsp` 当前使用的普通编号包括 `retcode=15`、`cur_level_record=13`、`is_finished_entrance_floor=10`、`tower_floor_record_list=11`。2026-10-22 已恢复以下入口字段：
 
 | 字段 | 当前源码编号 |
 | --- | ---: |
-| `tower_schedule_id` | 50000 |
-| `next_schedule_change_time` | 50002 |
-| `floor_open_time_map` | 50005 |
-| `schedule_start_time` | 50009 |
-| `TowerCurLevelRecord.cur_level_index` | 50000 |
-| `TowerCurLevelRecord.cur_floor_id` | 50001 |
+| `tower_schedule_id` | 4 |
+| `next_schedule_change_time` | 6 |
+| `floor_open_time_map` | 14 |
+| `schedule_start_time` | 1330 |
+| `TowerCurLevelRecord.cur_level_index` | 10 |
+| `TowerCurLevelRecord.cur_floor_id` | 9 |
 
 全量包固定 `cur_level_record.is_empty=true`。增量 `PacketTowerCurLevelRecordChangeNotify` 只设层、间，没有队伍、祝福和上／下半状态。保存进度再齐全，也不能据此认为客户端已经收到可恢复本轮的全部信息。
 
