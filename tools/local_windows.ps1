@@ -5,6 +5,9 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+# Task may inherit PowerShell 7's module path while invoking Windows PowerShell.
+# Load the matching utility module explicitly, including its Get-FileHash function.
+Import-Module (Join-Path $PSHOME 'Modules\Microsoft.PowerShell.Utility\Microsoft.PowerShell.Utility.psd1') -ErrorAction Stop
 $repo = Split-Path -Parent $PSScriptRoot
 Set-Location -LiteralPath $repo
 
@@ -149,12 +152,13 @@ function Start-LocalServer {
     }
     $socketDir = Join-Path $local 'java-sockets'
     New-Item -ItemType Directory -Path $socketDir -Force | Out-Null
+    $jarHash = (Get-FileHash -LiteralPath $jar -Algorithm SHA256).Hash
     $server = Start-Process -FilePath $java -ArgumentList @('-Xms512m', '-Xmx6g', '-Dfile.encoding=UTF-8',
         ('"-Djdk.net.unixdomain.tmpdir=' + $socketDir + '"'), '-jar', ('"' + $jar + '"'), '-noconsole') `
         -WorkingDirectory $repo -WindowStyle Hidden -RedirectStandardOutput (Join-Path $logDir 'server-out.log') `
         -RedirectStandardError (Join-Path $logDir 'server-err.log') -PassThru
     $state = [ordered]@{ started = (Get-Date).ToString('o'); pid = $server.Id; jar = $jar;
-        jarSHA256 = (Get-FileHash -LiteralPath $jar -Algorithm SHA256).Hash; gamePath = $env:GAME_PATH }
+        jarSHA256 = $jarHash; gamePath = $env:GAME_PATH }
     $state | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $local 'running.json') -Encoding UTF8
     Write-Host 'Loading LunaGC resources. The first start may take several minutes...'
     $deadline = (Get-Date).AddMinutes(5)
