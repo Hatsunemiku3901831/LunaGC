@@ -165,6 +165,17 @@
     "upperBattleConfirmed": true,
     "lowerBattleConfirmed": true,
     "firstChamberClearConfirmed": true,
-    "nextChamberConfirmed": false
+    "nextChamberConfirmed": true,
+    "ninthFloorClearConfirmed": true,
+    "tenthFloorAccessConfirmedByUser": true,
+    "allFloorsCombatConfirmed": false,
+    "continuationLogEvidence": {
+      "timezone": "Australia/Sydney",
+      "secondChamberEnteredAt": "2026-10-22T03:57:05+11:00",
+      "secondChamberDungeonId": 3507,
+      "thirdChamberEnteredAt": "2026-10-22T03:58:10+11:00",
+      "thirdChamberDungeonId": 3607,
+      "thirdChamberSettledAt": "2026-10-22T03:58:44+11:00"
+    }
   }
 }
