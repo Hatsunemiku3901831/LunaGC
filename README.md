@@ -4,6 +4,10 @@
 `Play-GS.cmd` 启动服务与游戏，`Stop-GS.cmd` 正常保存并停止服务，`GS-Status.cmd` 检查运行状态。
 游戏目录由 `.env` 的 `GAME_PATH` 指定；便携依赖及日志位于忽略提交的 `local/`，玩家数据位于 `mongodata/`。
 
+账号、登录、UID 归属与完整存档的总览见[账号与存档系统接手指南](docs/ACCOUNT_AND_SAVE_SYSTEM.md)。
+配套提供[数据模型与集合字典](docs/ACCOUNT_AND_SAVE_DATA_MODEL.md)和[备份恢复、排障与开发验证](docs/ACCOUNT_AND_SAVE_OPERATIONS.md)，
+适合新维护者和 AI 接手时优先阅读。
+
 外部项目的适配线索、已核对的本地缺口与后续验证清单见 [2026-10-03 外部实现调研](docs/UPSTREAM_RESEARCH_2026-10-03.md)。
 最新完成项、已有替代入口及仍待适配的范围见 [参考差异当前状态](docs/REFERENCE_REMAINING_2026-10-15.md)。
 脚本世界首领奖励已补齐扣费前校验、容量保护和同一奖励花的玩家去重，见[首领奖励领取保护](docs/BOSS_CHEST_REWARD_GUARD_2026-10-17.md)。
