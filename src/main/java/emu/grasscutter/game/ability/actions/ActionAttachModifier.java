@@ -50,6 +50,11 @@ public final class ActionAttachModifier extends AbilityActionHandler {
             return true;
         var modifier = new AbilityModifierController(ability, ability.getData(), modifierData);
         ability.registerModifier(target, modifier);
+        // AttachModifier children share the lifetime of the callback's parent. In particular,
+        // a monster phase's LockHP must end even if the client reports only the parent removal.
+        var scope = AbilityCooldownInvocation.capture();
+        if (scope != null && scope.controller() != null && scope.controller().getAbility() == ability)
+            scope.controller().attachChild(target, modifier);
         if ("AllPlayerAvatars".equals(action.target))
             AbilityCooldownInvocation.run(
                     modifier,

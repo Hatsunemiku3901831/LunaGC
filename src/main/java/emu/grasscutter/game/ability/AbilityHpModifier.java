@@ -140,7 +140,8 @@ public final class AbilityHpModifier {
     AbilityModifierController pendingAttachmentController(Ability ability,String name) {
         return controllers().stream().filter(c -> c.getAbility()==ability && name.equals(c.getName())
                 && c.isClientInstanceCurrent(entity)
-                && c.hasAttachmentCallbacks() && !entity.getInstancedModifiers().containsValue(c)).findFirst().orElse(null);
+                && (c.hasAttachmentCallbacks() || c.hasParentAttachment())
+                && !entity.getInstancedModifiers().containsValue(c)).findFirst().orElse(null);
     }
 
     /** Known expression keys on this bearer can identify a first, hashed global-value update. */

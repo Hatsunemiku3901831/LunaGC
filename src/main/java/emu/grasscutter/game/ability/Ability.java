@@ -154,7 +154,8 @@ public class Ability {
             endActions = new ArrayList<>(target.getAbilityModifierDuration().removalCallbacks(this,name));
             for(var controller:target.getAbilityHpModifier().lifecycleControllers()) {
                 if(controller.getAbility()==this && name.equals(controller.getName())
-                        && (controller.hasServerCallbacks() || controller.hasAttachmentCallbacks() || controller.hasBindingCallbacks() || controller.hasAnimationCallbacks()))
+                        && (controller.hasServerCallbacks() || controller.hasAttachmentCallbacks() || controller.hasBindingCallbacks()
+                            || controller.hasAnimationCallbacks() || controller.hasAttachedChildren()))
                     endActions.add(controller::runServerOnRemoved);
                 if(controller.getAbility()==this && name.equals(controller.getName()))
                     controller.closeAuraAttachments();

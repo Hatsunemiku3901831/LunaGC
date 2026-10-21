@@ -378,26 +378,7 @@ public class TowerManager extends BasePlayerManager {
                 return false;
             if (!player.getTeamManager().enterSceneWithTemporaryTeam(0, enter)) return false;
             if (!restoreChamberState()) return false;
-            var avatars =
-                    getTowerData().getAbyssAvatarIds().stream()
-                            .flatMap(Collection::stream)
-                            .map(id -> player.getAvatars().getAvatarById(id))
-                            .toList();
-            if (!player.getAbilityManager().getSkillCooldown().reset(avatars)) return false;
-            var groups = new HashSet<Integer>();
-            for (var avatar : avatars) {
-                var ids = new HashSet<>(avatar.getSkillInfoCharges().keySet());
-                var depot = avatar.getSkillDepot();
-                if (depot != null) {
-                    depot.getSkillsAndEnergySkill().forEach(ids::add);
-                    if (depot.getSubSkills() != null) ids.addAll(depot.getSubSkills());
-                }
-                for (var id : ids) {
-                    var skill = id == null ? null : GameData.getAvatarSkillDataMap().get(id);
-                    if (skill != null && skill.getShareCDID() > 0) groups.add(skill.getShareCDID());
-                }
-            }
-            groups.forEach(id -> player.getAbilityManager().getSharedCooldown().clear(id));
+            if (!resetSelectedCooldowns()) return false;
             inProgress = false;
             currentTimeLimit = 0;
             halfTime = null;
@@ -409,6 +390,30 @@ public class TowerManager extends BasePlayerManager {
             player.save();
             return true;
         }
+    }
+
+    private boolean resetSelectedCooldowns() {
+        var avatars =
+                getTowerData().getAbyssAvatarIds().stream()
+                        .flatMap(Collection::stream)
+                        .map(id -> player.getAvatars().getAvatarById(id))
+                        .toList();
+        if (!player.getAbilityManager().getSkillCooldown().reset(avatars)) return false;
+        var groups = new HashSet<Integer>();
+        for (var avatar : avatars) {
+            var ids = new HashSet<>(avatar.getSkillInfoCharges().keySet());
+            var depot = avatar.getSkillDepot();
+            if (depot != null) {
+                depot.getSkillsAndEnergySkill().forEach(ids::add);
+                if (depot.getSubSkills() != null) ids.addAll(depot.getSubSkills());
+            }
+            for (var id : ids) {
+                var skill = id == null ? null : GameData.getAvatarSkillDataMap().get(id);
+                if (skill != null && skill.getShareCDID() > 0) groups.add(skill.getShareCDID());
+            }
+        }
+        groups.forEach(id -> player.getAbilityManager().getSharedCooldown().clear(id));
+        return true;
     }
 
     public boolean restoreTemporaryTeams() {
@@ -488,6 +493,10 @@ public class TowerManager extends BasePlayerManager {
             if (levelData == null
                     || !GameData.getDungeonDataMap().containsKey(levelData.getDungeonId()))
                 return rejectEntry();
+            boolean freshFloor = getCurrentLevel() == 1 && getTowerData().chamberState == null;
+            var freshState = freshFloor ? TowerChamberState.newFloor(
+                    player, getCurrentFloorId(), getCurrentLevelId(), getTowerData().getAbyssAvatarIds()) : null;
+            if (freshFloor && freshState == null) return rejectEntry();
             int previousScene =
                     getTowerData().entryScene > 0 ? getTowerData().entryScene : source.getId();
             boolean entered =
@@ -507,6 +516,11 @@ public class TowerManager extends BasePlayerManager {
             halfTime = null;
             player.getScene().setPrevScene(previousScene);
             player.getScene().setPrevScenePoint(enterPointId);
+            // Only commit recovery after a successful scene handoff. A canceled entry must not heal.
+            if (freshState != null) {
+                if (!freshState.restore(player, getCurrentFloorId(), getCurrentLevelId(), getTowerData().getAbyssAvatarIds())
+                        || !resetSelectedCooldowns()) return rejectEntry();
+            }
             captureChamberState();
             notifyCurLevelRecordChange();
             player.getSession()

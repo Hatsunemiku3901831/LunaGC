@@ -12,6 +12,7 @@ import emu.grasscutter.game.avatar.Avatar;
 import emu.grasscutter.net.proto.AbilityMetaSpecialEnergyOuterClass;
 import emu.grasscutter.net.proto.DetailAbilityInfoOuterClass.DetailAbilityInfo;
 import emu.grasscutter.game.entity.EntityAvatar;
+import emu.grasscutter.game.entity.EntityMonster;
 import emu.grasscutter.game.entity.EntityClientGadget;
 import emu.grasscutter.game.entity.GameEntity;
 import emu.grasscutter.data.excels.ProudSkillData;
@@ -586,6 +587,12 @@ public final class AbilityManager extends BasePlayerManager {
         if (entity instanceof EntityAvatar avatarEntity && avatarEntity.getInstancedAbilities().isEmpty()) {
             initializeEntityAbilities(avatarEntity);
         }
+        if (entity instanceof EntityMonster monster && monster.getMonsterData().getId() == 24021101
+                && (invoke.getArgumentType() == AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_ACTION_SUMMON
+                    || invoke.getArgumentType() == AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_META_MODIFIER_CHANGE))
+            Grasscutter.getLogger().info("Perpetual Array invoke type={} ability={} modifier={} local={} bytes={}",
+                    invoke.getArgumentTypeValue(), invoke.getHead().getInstancedAbilityId(),
+                    invoke.getHead().getInstancedModifierId(), invoke.getHead().getLocalId(), invoke.getAbilityData().size());
         if (entity != null) {
             Grasscutter.getLogger()
                 .trace(

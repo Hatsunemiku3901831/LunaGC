@@ -64,7 +64,13 @@ public class ActionSummon extends AbilityActionHandler {
                         summonPosRot.hasRot()
                                 ? new Position(summonPosRot.getRot())
                                 : target.getRotation());
-        if (pos == null || rot == null) return false;
+        if (pos == null || rot == null) {
+            Grasscutter.getLogger().warn(
+                    "Monster summon has no resolved transform: ability={} monster={} tag={} payloadBytes={} hasPos={} hasRot={}",
+                    ability.getData().abilityName, action.monsterID, action.summonTag,
+                    abilityData.size(), summonPosRot.hasPos(), summonPosRot.hasRot());
+            return false;
+        }
         var monsterId = action.monsterID;
 
         var scene = target.getScene();
@@ -82,6 +88,9 @@ public class ActionSummon extends AbilityActionHandler {
         entity.setOwnerEntityId(target.getId());
         scene.addEntity(entity);
         scene.broadcastPacket(new PacketMonsterSummonTagNotify(ownerEntity));
+        if (ownerEntity.getMonsterData().getId() == 24021101)
+            Grasscutter.getLogger().info("Perpetual Array summoned monster={} tag={} entity={} at {}",
+                    monsterId, action.summonTag, entity.getId(), pos);
 
         Grasscutter.getLogger()
                 .trace(

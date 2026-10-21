@@ -477,6 +477,7 @@ public class AbilityModifier implements Serializable {
         public Integer shareCDType = 0;
         public int resistanceListID;
         public int monsterID;
+        @SerializedName(value = "summonTag", alternate = "PCLFAKBGHCI")
         public int summonTag;
 
         public AbilityModifierAction[] actions;

@@ -71,6 +71,21 @@ public final class TowerChamberState {
         return depot.getElementType() == null ? null : depot.getElementType().getCurEnergyProp();
     }
 
+    /** A new floor starts with a fully recovered roster; later chambers retain their costs. */
+    public static TowerChamberState newFloor(
+            Player player, int floor, int level, List<List<Integer>> selected) {
+        var result = capture(player, floor, level, selected);
+        if (result == null) return null;
+        result.avatars.forEach((id, state) -> {
+            var avatar = player.getAvatars().getAvatarById(id);
+            state.hp = avatar.getFightProperty(FightProperty.FIGHT_PROP_MAX_HP);
+            state.debt = 0;
+            var energy = energyProperty(avatar);
+            state.energy = energy == null ? 0 : maximumEnergy(avatar, energy);
+        });
+        return result;
+    }
+
     private static float maximumEnergy(Avatar avatar, FightProperty current) {
         return current == FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY
                 ? avatar.getFightProperty(FightProperty.FIGHT_PROP_MAX_SPECIAL_ENERGY)

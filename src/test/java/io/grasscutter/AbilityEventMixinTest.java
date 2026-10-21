@@ -184,7 +184,7 @@ class AbilityEventMixinTest {
                     JsonParser.parseString(
                                     Files.readString(
                                             Path.of(
-                                                    "/resources/BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_"
+                                                    "resources/BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_"
                                                             + name
                                                             + ".json")))
                             .getAsJsonArray();

@@ -107,6 +107,8 @@ db.players.findOne(
 | 第九层锁定 | 全量包是否实际送达；前八层记录、最后入口层六星、第九层空记录、排期字段 | 不能只改数据库星数而忽略占位字段 |
 | 选了两队仍带大世界队伍 | `TowerTeamSelectReq` payload、成功日志、稳定身份、`restoreTemporaryTeams`；选择响应被丢弃情况 | 不能把两队顺序丢失误认成角色模型错误 |
 | 进本取消后队伍乱了 | `enterSceneWithTemporaryTeam` 与传送事件、原场景是否仍在、失败是否发成功响应 | 不能在迁移前先刷新旧场景实体 |
+| 新楼层仍带伤或缺能量 | 第一间新轮次是否在交接成功后执行 `TowerChamberState.newFloor` 恢复、再捕获检查点 | 同层第二、三间应保留战斗消耗；取消入场不恢复 |
+| 恒常机关阵列分裂异常或阶段结束仍锁血 | `Perpetual Array invoke` 与 summon 日志、资源 summonTag、`Apparatus_Perpetual_LockHP` 的附加子状态生命周期 | 召唤标记不能统一为 0；父阶段结束需同步解除其附加 LockHP，见[专项说明](SPIRAL_ABYSS_FLOOR_STATE_AND_ARRAY.md) |
 | 进本空房或没有工作台 | 当前排期是否被强制固定；scene／block／group 文件，suite、组加载与 Lua warning | 有任意 group 文件不代表关卡完整 |
 | 上半结束后角色不出现 | 确认公共计时／下半组已加载，检查 TPL_TIME 写入错误；`TowerMirrorTeamSetUp`、`spawnPlayer` 与切队通知 `28798` | 实体距离保护曾跳过 SUPER 格子；深渊现应完整加载静态组 |
 | 下半技能一直灰 | 工作台是否到达 stage=1 分支、是否执行 `SetIsAllowUseSkill(1)`、CanUseSkill 包 | 不宜在 `onBegin()` 全局硬开技能掩盖脚本错误 |

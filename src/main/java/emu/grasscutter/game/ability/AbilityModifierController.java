@@ -44,22 +44,31 @@ public class AbilityModifierController {
                 && callbacks.target.getAbilityModifierDuration().withinLifetime(this);
     }
 
-    void closeAuraAttachments() { if(auraDuration) synchronized(ATTACHMENTS) { attachmentsEnding=true; } }
+    void closeAuraAttachments() { synchronized(ATTACHMENTS) { attachmentsEnding=true; } }
+
+    private boolean attachmentParentCurrent() {
+        return !attachmentsEnding && (auraDuration ? auraCurrent()
+                : application != null && isApplicationCurrent());
+    }
+
+    boolean hasParentAttachment() { return attachment != null; }
+
+    boolean hasAttachedChildren() { synchronized (ATTACHMENTS) { return !attachedChildren.isEmpty(); } }
 
     boolean attachmentCurrent() {
         var binding=attachment;
         if(binding==null) return true;
         var parent=binding.parent;
-        return !attachmentRevoked && parent.auraCurrent();
+        return !attachmentRevoked && parent.attachmentParentCurrent();
     }
 
-    void attachChild(GameEntity target, AbilityModifierController child) {
+    public void attachChild(GameEntity target, AbilityModifierController child) {
         if(child==this) return;
         boolean reject;
         synchronized(target.getInstancedModifiers()) {
             if(!target.getAbilityHpModifier().activeControllers().contains(child)) return;
             synchronized(ATTACHMENTS) {
-                reject=!auraCurrent();
+                reject=!attachmentParentCurrent();
                 if(!reject) {
                     var old=child.attachment;
                     if(old!=null) old.parent.attachedChildren.remove(old);

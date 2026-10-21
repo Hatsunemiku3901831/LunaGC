@@ -232,6 +232,59 @@ class TowerChamberRetryTest extends QuestTestFixture {
         assertTrue(player.getAbilityManager().getSharedCooldown().startAvatarSkill(81203, 0));
     }
 
+    private void selectFreshFloor() {
+        assertTrue(player.getTowerManager().tryTeamSelect(6002,
+                List.of(List.of(avatar(FIRST).getGuid()), List.of(avatar(SECOND).getGuid()))));
+    }
+
+    @Test
+    void newFloorRestoresBothTeamsBeforeSavingTheRetryCheckpoint() {
+        cooldowns();
+        avatar(FIRST).setCurrentHp(0);
+        avatar(FIRST).setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, 0);
+        selectFreshFloor();
+        assertTrue(player.getTowerManager().tryEnterLevel(16));
+        for (int id : List.of(FIRST, SECOND)) {
+            assertEquals(100, avatar(id).getCurrentHp());
+            assertEquals(0, avatar(id).getFightProperty(FightProperty.FIGHT_PROP_CUR_HP_DEBTS));
+            assertEquals(0, player.getAbilityManager().getSkillCooldown()
+                    .state(avatar(id), 81201, 2).getFullCdTimeListCount());
+        }
+        assertEquals(60, avatar(FIRST).getFightProperty(FightProperty.FIGHT_PROP_CUR_GRASS_ENERGY));
+        assertEquals(80, avatar(SECOND).getFightProperty(FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY));
+        assertTrue(player.getTeamManager().getCurrentAvatarEntity().isAlive());
+        assertEquals(82, avatar(OTHER).getCurrentHp());
+        assertEquals(1, player.getAbilityManager().getSkillCooldown()
+                .state(avatar(OTHER), 81201, 2).getFullCdTimeListCount());
+        assertFalse(player.getAbilityManager().getSharedCooldown().snapshot().containsKey(9901));
+        assertTrue(player.getAbilityManager().getSharedCooldown().snapshot().containsKey(9902));
+        avatar(FIRST).setCurrentHp(9);
+        avatar(FIRST).setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, 9);
+        assertTrue(player.getTowerManager().restoreChamberState());
+        assertEquals(100, avatar(FIRST).getCurrentHp());
+    }
+
+    @Test
+    void canceledNewFloorDoesNotRestoreHealthOrCooldowns() {
+        cooldowns();
+        selectFreshFloor();
+        event(PlayerTeleportEvent::cancel);
+        assertFalse(player.getTowerManager().tryEnterLevel(16));
+        assertEquals(7, avatar(FIRST).getCurrentHp());
+        assertEquals(48, avatar(SECOND).getFightProperty(FightProperty.FIGHT_PROP_CUR_HP_DEBTS));
+        assertEquals(2, player.getAbilityManager().getSkillCooldown()
+                .state(avatar(FIRST), 81201, 2).getFullCdTimeListCount());
+    }
+
+    @Test
+    void continuingWithinTheFloorKeepsConsumedHealthAndEnergy() throws Exception {
+        replaceField(TowerData.class, player.getTowerData(), "chamberState", null);
+        assertTrue(player.getTowerManager().tryEnterLevel(16));
+        assertEquals(7, avatar(FIRST).getCurrentHp());
+        assertEquals(0, avatar(SECOND).getFightProperty(FightProperty.FIGHT_PROP_CUR_SPECIAL_ENERGY));
+        assertEquals(2, player.getTowerManager().getCurrentLevel());
+    }
+
     @Test
     void retryKeepsCurrentChamberAndReturnsToTheUpperParty() throws Exception {
         assertTrue(system.tryRestartDungeon(player));

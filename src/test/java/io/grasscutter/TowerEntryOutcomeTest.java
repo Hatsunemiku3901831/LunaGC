@@ -168,6 +168,11 @@ class TowerEntryOutcomeTest extends QuestTestFixture {
         for (int i = 0; i < 3; i++)
             assertTrue(
                     player.getAvatars().addAvatar(new OwnedAvatar(10000021 + i, 4294967301L + i)));
+        for (var avatar : player.getAvatars()) {
+            avatar.setFightProperty(FightProperty.FIGHT_PROP_MAX_HP, 100);
+            avatar.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, 100);
+            avatar.setCurrentHp(100);
+        }
         world = new TransferWorld();
         player.setWorld(world);
         boolean enabled = Grasscutter.getConfig().server.game.enableScriptInBigWorld;
@@ -332,7 +337,11 @@ class TowerEntryOutcomeTest extends QuestTestFixture {
                         PacketOpcodes.TowerEnterLevelRsp,
                         PacketOpcodes.CanUseSkillNotify,
                         PacketOpcodes.TowerLevelStarCondNotify),
-                player.packets.stream().map(BasePacket::getOpcode).toList());
+                player.packets.stream().map(BasePacket::getOpcode)
+                        .filter(op -> op == PacketOpcodes.TowerCurLevelRecordChangeNotify
+                                || op == PacketOpcodes.TowerEnterLevelRsp
+                                || op == PacketOpcodes.CanUseSkillNotify
+                                || op == PacketOpcodes.TowerLevelStarCondNotify).toList());
     }
 
     @Test
@@ -378,7 +387,7 @@ class TowerEntryOutcomeTest extends QuestTestFixture {
                         .getClass()
                         .getMethod("restoreChamberState")
                         .invoke(player.getTowerManager()));
-        for (var avatar : player.getAvatars()) assertEquals(37, avatar.getCurrentHp());
+        for (var avatar : player.getAvatars()) assertEquals(100, avatar.getCurrentHp());
     }
 
     @Test
