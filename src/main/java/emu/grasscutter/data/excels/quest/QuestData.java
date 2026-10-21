@@ -55,6 +55,14 @@ public class QuestData extends GameResource {
         return subId;
     }
 
+    /** Excel-only objectives cannot be instantiated by GameMainQuest's chapter child list. */
+    public boolean hasMatchingChapter() {
+        var chapter = GameData.getMainQuestDataMap().get(this.mainId);
+        return chapter != null
+                && chapter.getId() == this.mainId
+                && Arrays.stream(chapter.getSubQuests()).anyMatch(child -> child.getSubId() == this.subId);
+    }
+
     public void onLoad() {
         if (this.acceptCond == null) this.automaticAcceptance = false;
         this.acceptCond =

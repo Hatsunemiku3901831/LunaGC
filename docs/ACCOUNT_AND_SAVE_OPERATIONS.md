@@ -255,6 +255,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Restore failed; retain the isolated target for
 | 保存确认超时 | 库中当前 stamp 和业务凭证，网络／数据库错误 | 假定请求没执行并重复扣费／发奖 |
 | 制作／领奖卡住 | pending 凭证、成本、产物实例与当前阶段 | 清空 pending、删除零数量物品、重复发奖 |
 | 任务似乎回退 | quests、player 全局变量、group 状态、资源和 suite 绑定 | 仅改 isFinished 或发送全完成通知 |
+| 开始游戏后白屏并反复提示重连 | `HandlerPlayerLoginReq` 异常、任务 Excel 与章节子任务集合、`quests.childQuests`；见[任务登录恢复](QUEST_LOGIN_ACCEPTANCE_2026-10-21.md) | 用 healthy=true 证明登录成功，或删除任务存档绕过异常 |
 | 掉线后位置异常 | 副本返回点、场景资源、登录修复分支 | 将所有副本／大世界位置统一重置 |
 | 家园没布局 | homes 的 ownerUid、sceneMap/mainHouseMap、资源兼容 | 覆盖或重新创建原家园文档 |
 | 健康正常但出现保存失败 | failed/rejected 增量、保存异常、Mongo 可用性、版本冲突 | 仅看 healthy=true 就关闭调查 |

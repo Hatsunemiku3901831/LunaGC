@@ -35,6 +35,7 @@ public final class QuestManager extends BasePlayerManager {
     @Getter private Int2ObjectMap<int[]> acceptProgressLists;
     @Getter private final List<Integer> loggedQuests;
     private final Set<Integer> deferredSavedChapters = ConcurrentHashMap.newKeySet();
+    private final Set<Integer> unavailableQuestStarts = ConcurrentHashMap.newKeySet();
 
     private long lastHourCheck = 0;
     private long lastDayCheck = 0;
@@ -436,6 +437,7 @@ public final class QuestManager extends BasePlayerManager {
     public GameMainQuest addMainQuest(QuestData questConfig) {
         // A resource mismatch must not turn an existing saved chapter into a fresh quest.
         if (deferredSavedChapters.contains(questConfig.getMainId())) return null;
+        if (!canInstantiateQuest(questConfig)) return null;
         var mainQuest = new GameMainQuest(getPlayer(), questConfig.getMainId());
         this.getMainQuests().put(mainQuest.getParentQuestId(), mainQuest);
         this.getPlayer().sendPacket(new PacketFinishedParentQuestUpdateNotify(mainQuest));
@@ -453,6 +455,7 @@ public final class QuestManager extends BasePlayerManager {
     }
 
     public GameQuest addQuest(@Nonnull QuestData questConfig) {
+        if (!canInstantiateQuest(questConfig)) return null;
         // Main quest
         var mainQuest = this.getMainQuestById(questConfig.getMainId());
 
@@ -464,12 +467,39 @@ public final class QuestManager extends BasePlayerManager {
 
         // Sub quest
         var quest = mainQuest.getChildQuestById(questConfig.getSubId());
+        // A saved chapter may predate this child. Keep its progress instead of recreating it,
+        // inventing completion state, or aborting the entire login at quest.start().
+        if (quest == null
+                || mainQuest.getParentQuestId() != questConfig.getMainId()
+                || quest.getMainQuestId() != questConfig.getMainId()
+                || quest.getSubQuestId() != questConfig.getSubId()) {
+            reportUnavailableQuest(questConfig, "saved chapter has no matching child");
+            return null;
+        }
+        unavailableQuestStarts.remove(questConfig.getId());
         // Forcefully start
         quest.start();
         // Check conditions.
         this.checkQuestAlreadyFulfilled(quest);
 
         return quest;
+    }
+
+    private boolean canInstantiateQuest(QuestData questConfig) {
+        if (questConfig.hasMatchingChapter()) return true;
+        reportUnavailableQuest(questConfig, "resource chapter does not declare this child");
+        return false;
+    }
+
+    private void reportUnavailableQuest(QuestData questConfig, String reason) {
+        if (!unavailableQuestStarts.add(questConfig.getId())) return;
+        Grasscutter.getLogger()
+                .warn(
+                        "Player {}: cannot start quest {} in chapter {} ({}). Existing progress was kept.",
+                        getPlayer().getUid(),
+                        questConfig.getId(),
+                        questConfig.getMainId(),
+                        reason);
     }
 
     public void startMainQuest(int mainQuestId) {
@@ -520,6 +550,13 @@ public final class QuestManager extends BasePlayerManager {
 
         potentialQuests.forEach(
                 questData -> {
+                    if (!questData.hasMatchingChapter()) return;
+                    var parent = this.getMainQuestById(questData.getMainId());
+                    // Automatic acceptance must not reopen a completed chapter, including when
+                    // an old save has unstarted or absent children. Explicit GM starts stay explicit.
+                    if (parent != null
+                            && (parent.isFinished()
+                                    || parent.getState() == ParentQuestState.PARENT_QUEST_STATE_FINISHED)) return;
                     if (this.wasSubQuestStarted(questData)) {
                         return;
                     }

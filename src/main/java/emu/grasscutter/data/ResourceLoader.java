@@ -669,6 +669,22 @@ public final class ResourceLoader {
             return;
         }
 
+        // Retain definitions for saved progress, but report objectives that chapter construction
+        // cannot produce. QuestManager excludes them from both automatic and explicit starts.
+        var unavailable =
+                GameData.getQuestDataMap().values().stream()
+                        .filter(quest -> !quest.hasMatchingChapter())
+                        .map(emu.grasscutter.data.excels.quest.QuestData::getId)
+                        .sorted()
+                        .toList();
+        if (!unavailable.isEmpty()) {
+            Grasscutter.getLogger()
+                    .warn(
+                            "{} quest definitions have no matching chapter child and cannot be started. First IDs: {}",
+                            unavailable.size(),
+                            unavailable.stream().limit(20).toList());
+        }
+
         try {
             val questEncryptionMap = GameData.getMainQuestEncryptionMap();
             var path = "QuestEncryptionKeys.json";
