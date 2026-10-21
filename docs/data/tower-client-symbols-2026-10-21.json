@@ -1,0 +1,645 @@
+{
+  "observedOn": "2026-10-21",
+  "scope": "Verified client metadata symbols only. UI responsibilities inferred from names; no full native control-flow or wire-field recovery. Source packet labels are not verified by an obfuscated native name.",
+  "binarySha256": "7f89938da606c1281659607d464702cddb9a09a7d4320a196630f60a811ec38e",
+  "metadataSha256": "469eccd43aa48fe7a2df4e1caf66fa1268a17f5a4a03fa209e1427e467cb0161",
+  "extractor": "tools/extract_client_type_names.py",
+  "symbols": [
+    {
+      "namespace": "MoleMole",
+      "name": "MonoTowerPage",
+      "typeIndex": 15034,
+      "fields": [
+        "_scrollAnimSpeed",
+        "_waitAnimTime",
+        "_floorPanel",
+        "_levelPanel",
+        "_teamPanel",
+        "_elementSwitch",
+        "_towerTitleRoot",
+        "_teamTitleRoot",
+        "_subTitleText",
+        "_titleText",
+        "_splashText",
+        "_imgBg2",
+        "_prefabPlugin",
+        "_monsterInfoBtn",
+        "_btnDragTipText",
+        "EMKNJCDEDOA"
+      ],
+      "methods": [
+        ".ctor",
+        "get_returnButton",
+        "get_btnDragTipText",
+        "get_btnDragTip",
+        "get_btnTeamStartCanvasGroup",
+        "set_showFloorFactorSelected",
+        "get_backButton",
+        "get_btnPresetTeam",
+        "get_bookButton",
+        "get_teamPanel",
+        "get_btnRightStickRight",
+        "get_resonanceButton",
+        "get_teamTitleRoot",
+        "get_levelPrevButton",
+        "set_showBookButton",
+        "get_avatarSortButton",
+        "get_subTitleText",
+        "get_floorBackButton",
+        "get_avatarSortDropDown",
+        "get_levelNextButton",
+        "get_rewardButton",
+        "get_avatarScreenButton",
+        "get_titleText",
+        "get_switchTeamButtonPS4",
+        "set_showCheckButton",
+        "get_backButtonCanvasGroup",
+        "get_towerTitleRoot",
+        "get_awardButtonPS4",
+        "get_waitAnimTime",
+        "get_buffButton",
+        "get_btnReset",
+        "get_scrollAnimSpeed",
+        "set_showImgBg2",
+        "get_checkAvatarButton",
+        "get_levelStartButton",
+        "get_levelPanel",
+        "get_teamStartButton",
+        "get_ruleButton",
+        "get_splashText",
+        "get_floorPanel",
+        "get_selectButtonPS4",
+        "get_btnTeamCancelDrag",
+        "get_startButton",
+        "get_monsterInfoBtn"
+      ]
+    },
+    {
+      "namespace": "MoleMole",
+      "name": "MonoTowerFloorPanel",
+      "typeIndex": 17938,
+      "fields": [
+        "_floorScroller",
+        "_floorExScroller",
+        "_starCountText",
+        "_progressText"
+      ],
+      "methods": [
+        ".ctor",
+        "get_floorExScroller",
+        "get_progressText",
+        "get_starCountText",
+        "get_floorScroller"
+      ]
+    },
+    {
+      "namespace": "MoleMole",
+      "name": "MonoTowerFloorItem",
+      "typeIndex": 19573,
+      "fields": [
+        "_rewardAnim",
+        "_floorText",
+        "_starCountText",
+        "_doubleTeamIcon",
+        "_actionBtn",
+        "_rewardBtn",
+        "_bgImage",
+        "_picNext",
+        "_picLock",
+        "AHBAIANIMMJ"
+      ],
+      "methods": [
+        ".ctor",
+        "get_floorText",
+        "get_rewardAnim",
+        "set_showPicLock",
+        "set_showNormalLayer",
+        "get_starCountText",
+        "get_actionBtn",
+        "set_showPicNext",
+        "set_isDoubleTeam",
+        "get_animator",
+        "get_bgImage",
+        "get_rewardBtn"
+      ]
+    },
+    {
+      "namespace": "MoleMole",
+      "name": "MonoTowerBuffDialog",
+      "typeIndex": 24541,
+      "fields": [
+        "_title",
+        "_timeText",
+        "_buffTextList",
+        "_returnBtn",
+        "_elementSwitch",
+        "_image",
+        "LABDHLCNNPO"
+      ],
+      "methods": [
+        ".ctor",
+        "get_buffTextList",
+        "set_title",
+        "get_image",
+        "get_timeText",
+        "get_returnBtn",
+        "get_buffScrollRect",
+        "get_closeButton"
+      ]
+    },
+    {
+      "namespace": "MoleMole",
+      "name": "MonoTowerEndExit",
+      "typeIndex": 35244,
+      "fields": [
+        "_elementSwitch",
+        "CurrStage",
+        "InfoText",
+        "_starGrp",
+        "_starList",
+        "_rewardGrp",
+        "_rewardScroller",
+        "_starLockColor"
+      ],
+      "methods": [
+        ".ctor",
+        "get_btnItemDetail",
+        "get_rewardGrp",
+        "get_starGrp",
+        "get_btnAgain",
+        "get_starLockColor",
+        "get_starList",
+        "get_btnExit",
+        "get_rewardScroller"
+      ]
+    },
+    {
+      "namespace": "MoleMole",
+      "name": "MonoTowerLevelPanel",
+      "typeIndex": 36989,
+      "fields": [
+        "_floorItem",
+        "_factorItemList",
+        "_levelScroller",
+        "_startFloorText",
+        "_doubleTeamText",
+        "_unlockText",
+        "_upOffset",
+        "_downOffset",
+        "_titleText"
+      ],
+      "methods": [
+        ".ctor",
+        "get_downOffset",
+        "get_unlockText",
+        "get_titleText",
+        "get_startFloorText",
+        "get_upOffset",
+        "get_doubleTeamText",
+        "get_levelScroller",
+        "get_floorItem",
+        "get_factorItemList"
+      ]
+    },
+    {
+      "namespace": "MoleMole",
+      "name": "MonoTowerEndWin",
+      "typeIndex": 41858,
+      "fields": [
+        "_elementSwitch",
+        "timeInfo",
+        "starOn",
+        "starOff",
+        "starConditionTxt",
+        "rewardPanel",
+        "firstPassRewardScroller",
+        "nextLevelTip",
+        "fadeInProtectDuration"
+      ],
+      "methods": [
+        ".ctor",
+        "get_exitContainer",
+        "get_continueContainer",
+        "get_detailContainer",
+        "get_rechallengeContainer"
+      ]
+    },
+    {
+      "namespace": "MoleMole",
+      "name": "MonoTowerBuffListDialog",
+      "typeIndex": 44846,
+      "fields": [
+        "_elementSwitch",
+        "_scroller",
+        "_closeBtn"
+      ],
+      "methods": [
+        ".ctor",
+        "get_closeBtn",
+        "get_closeButton",
+        "get_scroller"
+      ]
+    },
+    {
+      "namespace": "MoleMole",
+      "name": "MonoTowerBookDialog",
+      "typeIndex": 51437,
+      "fields": [
+        "_totalScroller",
+        "_titleText",
+        "_timeText",
+        "_layerRoomText",
+        "_avatarIconRoot",
+        "NKNKKDKNAEO",
+        "_towerDataList",
+        "_elementSwitch",
+        "_detailScrollRect"
+      ],
+      "methods": [
+        ".ctor",
+        "get_titleText",
+        "get_detailScrollRect",
+        "get_timeText",
+        "get_layerRoomText",
+        "get_towerDataList",
+        "get_avatarIconRoot",
+        "get_totalScroller",
+        "set_showOKButton",
+        "get_closeButton",
+        "set_showDetailButton",
+        "GetAvatarIcon"
+      ]
+    },
+    {
+      "namespace": "MoleMole",
+      "name": "MonoTowerTeamPanel",
+      "typeIndex": 56243,
+      "fields": [
+        "_avatarScroller",
+        "_avatarPanelTrans",
+        "_title",
+        "_singleTeamRoot",
+        "_doubleTeamRoot",
+        "_firstTeamBtn",
+        "_secondTeamBtn",
+        "_singleTeamScroller",
+        "_firstTeamScroller",
+        "_secondTeamScroller",
+        "_factorItemList",
+        "_teamColor1",
+        "_teamColor2",
+        "_firstTeamSwitchTeamBtnPSShowRoot",
+        "_secondTeamSwitchTeamBtnPSShowRoot",
+        "_presetTeamButtonText",
+        "_presetTeamButtonLine",
+        "_grpPresetTeamPSButton",
+        "_grpDragTips"
+      ],
+      "methods": [
+        ".ctor",
+        "get_presetTeamButtonLine",
+        "get_presetTeamButtonText",
+        "get_secondTeamBtn",
+        "get_firstTeamScroller",
+        "get_teamColor2",
+        "get_grpDragTips",
+        "get_factorItemList",
+        "get_firstTeamBtn",
+        "get_avatarScroller",
+        "get_secondTeamSwitchTeamBtnPSShowRoot",
+        "get_singleTeamRoot",
+        "get_teamColor1",
+        "get_firstTeamSwitchTeamBtnPSShowRoot",
+        "get_singleTeamScroller",
+        "get_doubleTeamRoot",
+        "get_title",
+        "get_secondTeamScroller",
+        "get_avatarPanelTrans",
+        "get_grpPresetTeamPSButton"
+      ]
+    },
+    {
+      "namespace": "MoleMole",
+      "name": "MonoTowerAppraisalRewardDialog",
+      "typeIndex": 64478,
+      "fields": [
+        "_floorText",
+        "_starText",
+        "_rewardScroller",
+        "_returnBtn",
+        "_elementSwitch"
+      ],
+      "methods": [
+        ".ctor",
+        "get_starText",
+        "get_returnBtn",
+        "get_closeButton",
+        "get_floorText",
+        "get_rewardScroller"
+      ]
+    },
+    {
+      "namespace": "MoleMole",
+      "name": "MonoTowerReviewDialog",
+      "typeIndex": 67856,
+      "fields": [
+        "_descText",
+        "_monthText",
+        "_layerNumText",
+        "_roomNumText",
+        "_starNumText",
+        "_returnBtn",
+        "_receiveGrp",
+        "_closeHintGrp",
+        "_receiveText",
+        "_elementSwitch"
+      ],
+      "methods": [
+        ".ctor",
+        "get_starNumText",
+        "get_roomNumText",
+        "get_returnBtn",
+        "get_receiveButton",
+        "get_closeButton",
+        "get_monthText",
+        "get_receiveGrp",
+        "get_layerNumText",
+        "get_descText",
+        "get_closeHintGrp",
+        "get_receiveText"
+      ]
+    },
+    {
+      "namespace": "MoleMole",
+      "name": "MonoTowerLevelItem",
+      "typeIndex": 67871,
+      "fields": [
+        "_levelText",
+        "_lockIcon",
+        "_starArray",
+        "_anim",
+        "_actionBtn"
+      ],
+      "methods": [
+        ".ctor",
+        "get_anim",
+        "get_levelText",
+        "get_starArray",
+        "get_actionBtn",
+        "get_lockIcon"
+      ]
+    },
+    {
+      "namespace": "MoleMole",
+      "name": "MonoTowerBegin",
+      "typeIndex": 72924,
+      "fields": [
+        "_elementSwitch",
+        "title",
+        "scroller",
+        "buffBtnGrp",
+        "buffIconButton",
+        "buffIconButtonPS4",
+        "iconList"
+      ],
+      "methods": [
+        ".ctor",
+        "get_uiContainer"
+      ]
+    },
+    {
+      "namespace": "MoleMole",
+      "name": "MonoTowerStageDialog",
+      "typeIndex": 81253,
+      "fields": [
+        "_titleText",
+        "_secondMonsterRoot",
+        "_firstMonsterIconRoot",
+        "_firstMonsterList",
+        "_secondMonsterList",
+        "_starOnArray",
+        "_starOffArray",
+        "_starTextArray",
+        "_returnBtn",
+        "_elementSwitch",
+        "_tabContainer",
+        "_psPrevBtn",
+        "_psNextBtn",
+        "_titleGrp",
+        "_tabGrp",
+        "_scroller"
+      ],
+      "methods": [
+        ".ctor",
+        "get_psNextBtn",
+        "get_scroller",
+        "get_psPrevBtn",
+        "get_secondMonsterList",
+        "get_starOnArray",
+        "get_firstMonsterIconRoot",
+        "get_firstMonsterList",
+        "get_tabContainer",
+        "get_titleGrp",
+        "get_returnBtn",
+        "get_secondMonsterRoot",
+        "get_starTextArray",
+        "get_starOffArray",
+        "get_titleText",
+        "get_closeButton",
+        "get_tabGrp"
+      ]
+    }
+  ],
+  "packetCandidates": [
+    {
+      "sourceName": "TowerAllDataReq",
+      "sourceOpcode": -87,
+      "nativeLiteralGetterMatches": []
+    },
+    {
+      "sourceName": "TowerAllDataRsp",
+      "sourceOpcode": 21818,
+      "nativeLiteralGetterMatches": [
+        {
+          "namespace": "",
+          "symbol": "OMPOFJHDDKG",
+          "typeIndex": 77199
+        }
+      ]
+    },
+    {
+      "sourceName": "TowerCurLevelRecordChangeNotify",
+      "sourceOpcode": 9479,
+      "nativeLiteralGetterMatches": [
+        {
+          "namespace": "",
+          "symbol": "DLGDIKGMBJB",
+          "typeIndex": 58100
+        }
+      ]
+    },
+    {
+      "sourceName": "TowerEnterLevelReq",
+      "sourceOpcode": 21373,
+      "nativeLiteralGetterMatches": [
+        {
+          "namespace": "",
+          "symbol": "NADIKODCFFI",
+          "typeIndex": 33319
+        }
+      ]
+    },
+    {
+      "sourceName": "TowerEnterLevelRsp",
+      "sourceOpcode": 7393,
+      "nativeLiteralGetterMatches": [
+        {
+          "namespace": "",
+          "symbol": "EPJHNHIINIM",
+          "typeIndex": 42183
+        }
+      ]
+    },
+    {
+      "sourceName": "TowerFloorRecordChangeNotify",
+      "sourceOpcode": 7649,
+      "nativeLiteralGetterMatches": [
+        {
+          "namespace": "",
+          "symbol": "HECGHHCMEJL",
+          "typeIndex": 12536
+        }
+      ]
+    },
+    {
+      "sourceName": "TowerLevelStarCondNotify",
+      "sourceOpcode": 20675,
+      "nativeLiteralGetterMatches": [
+        {
+          "namespace": "",
+          "symbol": "AGNFPPGHNDB",
+          "typeIndex": 51441
+        }
+      ]
+    },
+    {
+      "sourceName": "TowerTeamSelectReq",
+      "sourceOpcode": 20134,
+      "nativeLiteralGetterMatches": [
+        {
+          "namespace": "",
+          "symbol": "IOJLBMJIMFC",
+          "typeIndex": 15178
+        }
+      ]
+    },
+    {
+      "sourceName": "TowerTeamSelectRsp",
+      "sourceOpcode": -88,
+      "nativeLiteralGetterMatches": []
+    },
+    {
+      "sourceName": "TowerMiddleLevelChangeTeamNotify",
+      "sourceOpcode": -190,
+      "nativeLiteralGetterMatches": []
+    },
+    {
+      "sourceName": "TowerBriefDataNotify",
+      "sourceOpcode": 7704,
+      "nativeLiteralGetterMatches": [
+        {
+          "namespace": "",
+          "symbol": "FPIENHJGEBO",
+          "typeIndex": 23855
+        }
+      ]
+    },
+    {
+      "sourceName": "TowerBuffSelectReq",
+      "sourceOpcode": 4779,
+      "nativeLiteralGetterMatches": [
+        {
+          "namespace": "",
+          "symbol": "POINFCKJBMH",
+          "typeIndex": 35228
+        }
+      ]
+    },
+    {
+      "sourceName": "TowerBuffSelectRsp",
+      "sourceOpcode": 9661,
+      "nativeLiteralGetterMatches": [
+        {
+          "namespace": "",
+          "symbol": "KAINBMJKEOL",
+          "typeIndex": 81225
+        }
+      ]
+    },
+    {
+      "sourceName": "TowerDailyRewardProgressChangeNotify",
+      "sourceOpcode": 28053,
+      "nativeLiteralGetterMatches": [
+        {
+          "namespace": "",
+          "symbol": "NLOPKEBGEAP",
+          "typeIndex": 18061
+        }
+      ]
+    },
+    {
+      "sourceName": "TowerGetFloorStarRewardReq",
+      "sourceOpcode": 28279,
+      "nativeLiteralGetterMatches": [
+        {
+          "namespace": "",
+          "symbol": "ILPCMKAJFKE",
+          "typeIndex": 60337
+        }
+      ]
+    },
+    {
+      "sourceName": "TowerGetFloorStarRewardRsp",
+      "sourceOpcode": 5775,
+      "nativeLiteralGetterMatches": [
+        {
+          "namespace": "",
+          "symbol": "MMEDFBEGJNE",
+          "typeIndex": 30896
+        }
+      ]
+    },
+    {
+      "sourceName": "TowerLevelEndNotify",
+      "sourceOpcode": 25538,
+      "nativeLiteralGetterMatches": [
+        {
+          "namespace": "",
+          "symbol": "PPFBGNHJIPE",
+          "typeIndex": 60489
+        }
+      ]
+    },
+    {
+      "sourceName": "TowerRecordHandbookRsp",
+      "sourceOpcode": 29419,
+      "nativeLiteralGetterMatches": [
+        {
+          "namespace": "",
+          "symbol": "ILPDKFJGJKJ",
+          "typeIndex": 49106
+        }
+      ]
+    },
+    {
+      "sourceName": "TowerSurrenderReq",
+      "sourceOpcode": -265,
+      "nativeLiteralGetterMatches": []
+    },
+    {
+      "sourceName": "TowerSurrenderRsp",
+      "sourceOpcode": -266,
+      "nativeLiteralGetterMatches": []
+    }
+  ]
+}

@@ -8,6 +8,10 @@
 配套提供[数据模型与集合字典](docs/ACCOUNT_AND_SAVE_DATA_MODEL.md)和[备份恢复、排障与开发验证](docs/ACCOUNT_AND_SAVE_OPERATIONS.md)，
 适合新维护者和 AI 接手时优先阅读。
 
+深境螺旋的客户端界面、协议、服务端流程、Lua 场景与存档见[深境螺旋系统接手指南](docs/SPIRAL_ABYSS_SYSTEM.md)。
+配套提供[客户端与协议](docs/SPIRAL_ABYSS_CLIENT_PROTOCOL.md)、[数据与资源](docs/SPIRAL_ABYSS_DATA_AND_RESOURCES.md)及[排障与验证](docs/SPIRAL_ABYSS_OPERATIONS.md)，
+明确区分已测试的服务端行为、协议缺口和仍需游戏内确认的部分。
+
 外部项目的适配线索、已核对的本地缺口与后续验证清单见 [2026-10-03 外部实现调研](docs/UPSTREAM_RESEARCH_2026-10-03.md)。
 最新完成项、已有替代入口及仍待适配的范围见 [参考差异当前状态](docs/REFERENCE_REMAINING_2026-10-15.md)。
 脚本世界首领奖励已补齐扣费前校验、容量保护和同一奖励花的玩家去重，见[首领奖励领取保护](docs/BOSS_CHEST_REWARD_GUARD_2026-10-17.md)。

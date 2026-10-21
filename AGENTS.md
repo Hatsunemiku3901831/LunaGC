@@ -26,3 +26,9 @@
 - 涉及账号、认证、玩家数据或存档恢复时，先读 [系统接手指南](docs/ACCOUNT_AND_SAVE_SYSTEM.md)。
 - 字段归属、集合和索引见 [数据模型](docs/ACCOUNT_AND_SAVE_DATA_MODEL.md)；备份、排障和测试见 [运维与开发手册](docs/ACCOUNT_AND_SAVE_OPERATIONS.md)。
 - 这些资料记录具体源码基线；后续修改以当前代码为准，并同步更新受影响章节。
+
+## 深境螺旋接手资料
+
+- 涉及深渊选队、楼层、上下半、重试或结算时，先读 [系统接手指南](docs/SPIRAL_ABYSS_SYSTEM.md)。
+- 客户端类型、命令号与字段状态见 [客户端与协议](docs/SPIRAL_ABYSS_CLIENT_PROTOCOL.md)；排期、Lua、星级、奖励和存档见 [数据与资源](docs/SPIRAL_ABYSS_DATA_AND_RESOURCES.md)。
+- 排障、独立数据库测试和游戏内验收见 [运维与验证](docs/SPIRAL_ABYSS_OPERATIONS.md)。服务端测试通过不能代替真实客户端协议与玩法验收。

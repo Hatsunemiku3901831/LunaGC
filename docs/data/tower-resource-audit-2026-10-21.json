@@ -1,0 +1,7344 @@
+{
+  "schemaVersion": 1,
+  "scope": "Static source-resource audit; scripted candidates are not verified gameplay. Does not read runtime config or player data.",
+  "sourceCommit": "7eb9f1229ff62bdb57df3db18fca1523e383c8ef",
+  "resourceCommit": "dac2a9d43332ef51879522cf39da2831b0ca0543",
+  "sources": {
+    "resources/ExcelBinOutput/TowerScheduleExcelConfigData.json": {
+      "sha256": "69886550615583d0959652a0c7d6db9301cc1230c07716048d48ca0643381b91",
+      "rows": 126
+    },
+    "resources/ExcelBinOutput/TowerFloorExcelConfigData.json": {
+      "sha256": "0e83373e451c741a91b66575beba09ed3d9acde7c53e10e63b5d17fd368917a4",
+      "rows": 141
+    },
+    "resources/ExcelBinOutput/TowerLevelExcelConfigData.json": {
+      "sha256": "0c61e0c896efcf8cb1a05ef8faf179b755845447eb9cec6e49cc6d8466190fc3",
+      "rows": 423
+    },
+    "resources/ExcelBinOutput/DungeonExcelConfigData.json": {
+      "sha256": "640f338242ca6cf724d6d7b65a29c8331f9441f09a39dab82b9b5ee5b893bbea",
+      "rows": 2378
+    },
+    "resources/ExcelBinOutput/RewardExcelConfigData.json": {
+      "sha256": "a24c6db07afaff7b8d9658b53f53df5b210c22ddd44b628767a3871e490a12be",
+      "rows": 15306
+    },
+    "resources/ExcelBinOutput/TowerRewardExcelConfigData.json": {
+      "sha256": "f075846d66b22909aab19ded6d951fbb494b54c77051e92e1010a6a53e495086",
+      "rows": 180
+    },
+    "resources/ExcelBinOutput/TowerBuffExcelConfigData.json": {
+      "sha256": "84f44363491c9cd7284fcbd444d255af7bb32a797f8e68e15769c0b578675d7f",
+      "rows": 36
+    }
+  },
+  "scheduleCount": 126,
+  "playableCandidateCount": 62,
+  "playableCandidateIds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62
+  ],
+  "rejectedSchedules": {
+    "63": [
+      {
+        "floorId": 1054,
+        "levelId": 160,
+        "dungeonId": 3107,
+        "sceneId": 33747,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1054,
+        "levelId": 161,
+        "dungeonId": 3207,
+        "sceneId": 34747,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1054,
+        "levelId": 162,
+        "dungeonId": 3307,
+        "sceneId": 35747,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1055,
+        "levelId": 163,
+        "dungeonId": 3108,
+        "sceneId": 33748,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1055,
+        "levelId": 164,
+        "dungeonId": 3208,
+        "sceneId": 34748,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1055,
+        "levelId": 165,
+        "dungeonId": 3308,
+        "sceneId": 35748,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "64": [
+      {
+        "floorId": 1054,
+        "levelId": 160,
+        "dungeonId": 3107,
+        "sceneId": 33747,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1054,
+        "levelId": 161,
+        "dungeonId": 3207,
+        "sceneId": 34747,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1054,
+        "levelId": 162,
+        "dungeonId": 3307,
+        "sceneId": 35747,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1055,
+        "levelId": 163,
+        "dungeonId": 3108,
+        "sceneId": 33748,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1055,
+        "levelId": 164,
+        "dungeonId": 3208,
+        "sceneId": 34748,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1055,
+        "levelId": 165,
+        "dungeonId": 3308,
+        "sceneId": 35748,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "65": [
+      {
+        "floorId": 1054,
+        "levelId": 160,
+        "dungeonId": 3107,
+        "sceneId": 33747,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1054,
+        "levelId": 161,
+        "dungeonId": 3207,
+        "sceneId": 34747,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1054,
+        "levelId": 162,
+        "dungeonId": 3307,
+        "sceneId": 35747,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1055,
+        "levelId": 163,
+        "dungeonId": 3108,
+        "sceneId": 33748,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1055,
+        "levelId": 164,
+        "dungeonId": 3208,
+        "sceneId": 34748,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1055,
+        "levelId": 165,
+        "dungeonId": 3308,
+        "sceneId": 35748,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "66": [
+      {
+        "floorId": 1056,
+        "levelId": 166,
+        "dungeonId": 3109,
+        "sceneId": 33749,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1056,
+        "levelId": 167,
+        "dungeonId": 3209,
+        "sceneId": 34749,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1056,
+        "levelId": 168,
+        "dungeonId": 3309,
+        "sceneId": 35749,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1057,
+        "levelId": 169,
+        "dungeonId": 3110,
+        "sceneId": 33750,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1057,
+        "levelId": 170,
+        "dungeonId": 3210,
+        "sceneId": 34750,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1057,
+        "levelId": 171,
+        "dungeonId": 3610,
+        "sceneId": 35750,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "67": [
+      {
+        "floorId": 1056,
+        "levelId": 166,
+        "dungeonId": 3109,
+        "sceneId": 33749,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1056,
+        "levelId": 167,
+        "dungeonId": 3209,
+        "sceneId": 34749,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1056,
+        "levelId": 168,
+        "dungeonId": 3309,
+        "sceneId": 35749,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1057,
+        "levelId": 169,
+        "dungeonId": 3110,
+        "sceneId": 33750,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1057,
+        "levelId": 170,
+        "dungeonId": 3210,
+        "sceneId": 34750,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1057,
+        "levelId": 171,
+        "dungeonId": 3610,
+        "sceneId": 35750,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "68": [
+      {
+        "floorId": 1058,
+        "levelId": 172,
+        "dungeonId": 3111,
+        "sceneId": 33751,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1058,
+        "levelId": 173,
+        "dungeonId": 3211,
+        "sceneId": 34751,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1058,
+        "levelId": 174,
+        "dungeonId": 3611,
+        "sceneId": 35751,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1059,
+        "levelId": 176,
+        "dungeonId": 3212,
+        "sceneId": 34752,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1059,
+        "levelId": 177,
+        "dungeonId": 3612,
+        "sceneId": 35752,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "69": [
+      {
+        "floorId": 1058,
+        "levelId": 172,
+        "dungeonId": 3111,
+        "sceneId": 33751,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1058,
+        "levelId": 173,
+        "dungeonId": 3211,
+        "sceneId": 34751,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1058,
+        "levelId": 174,
+        "dungeonId": 3611,
+        "sceneId": 35751,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1059,
+        "levelId": 176,
+        "dungeonId": 3212,
+        "sceneId": 34752,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1059,
+        "levelId": 177,
+        "dungeonId": 3612,
+        "sceneId": 35752,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "70": [
+      {
+        "floorId": 1058,
+        "levelId": 172,
+        "dungeonId": 3111,
+        "sceneId": 33751,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1058,
+        "levelId": 173,
+        "dungeonId": 3211,
+        "sceneId": 34751,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1058,
+        "levelId": 174,
+        "dungeonId": 3611,
+        "sceneId": 35751,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1059,
+        "levelId": 176,
+        "dungeonId": 3212,
+        "sceneId": 34752,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1059,
+        "levelId": 177,
+        "dungeonId": 3612,
+        "sceneId": 35752,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "71": [
+      {
+        "floorId": 1060,
+        "levelId": 178,
+        "dungeonId": 3113,
+        "sceneId": 33753,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1060,
+        "levelId": 179,
+        "dungeonId": 3213,
+        "sceneId": 34753,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1060,
+        "levelId": 180,
+        "dungeonId": 3613,
+        "sceneId": 35753,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1061,
+        "levelId": 181,
+        "dungeonId": 3114,
+        "sceneId": 33754,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1061,
+        "levelId": 182,
+        "dungeonId": 3214,
+        "sceneId": 34754,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1061,
+        "levelId": 183,
+        "dungeonId": 3614,
+        "sceneId": 35754,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "72": [
+      {
+        "floorId": 1060,
+        "levelId": 178,
+        "dungeonId": 3113,
+        "sceneId": 33753,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1060,
+        "levelId": 179,
+        "dungeonId": 3213,
+        "sceneId": 34753,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1060,
+        "levelId": 180,
+        "dungeonId": 3613,
+        "sceneId": 35753,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1061,
+        "levelId": 181,
+        "dungeonId": 3114,
+        "sceneId": 33754,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1061,
+        "levelId": 182,
+        "dungeonId": 3214,
+        "sceneId": 34754,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1061,
+        "levelId": 183,
+        "dungeonId": 3614,
+        "sceneId": 35754,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "73": [
+      {
+        "floorId": 1060,
+        "levelId": 178,
+        "dungeonId": 3113,
+        "sceneId": 33753,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1060,
+        "levelId": 179,
+        "dungeonId": 3213,
+        "sceneId": 34753,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1060,
+        "levelId": 180,
+        "dungeonId": 3613,
+        "sceneId": 35753,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1061,
+        "levelId": 181,
+        "dungeonId": 3114,
+        "sceneId": 33754,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1061,
+        "levelId": 182,
+        "dungeonId": 3214,
+        "sceneId": 34754,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1061,
+        "levelId": 183,
+        "dungeonId": 3614,
+        "sceneId": 35754,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "74": [
+      {
+        "floorId": 1062,
+        "levelId": 184,
+        "dungeonId": 3115,
+        "sceneId": 33755,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1062,
+        "levelId": 185,
+        "dungeonId": 3215,
+        "sceneId": 34755,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1062,
+        "levelId": 186,
+        "dungeonId": 3615,
+        "sceneId": 35755,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1063,
+        "levelId": 187,
+        "dungeonId": 3116,
+        "sceneId": 33756,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1063,
+        "levelId": 188,
+        "dungeonId": 3216,
+        "sceneId": 34756,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1063,
+        "levelId": 189,
+        "dungeonId": 3616,
+        "sceneId": 35756,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "75": [
+      {
+        "floorId": 1062,
+        "levelId": 184,
+        "dungeonId": 3115,
+        "sceneId": 33755,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1062,
+        "levelId": 185,
+        "dungeonId": 3215,
+        "sceneId": 34755,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1062,
+        "levelId": 186,
+        "dungeonId": 3615,
+        "sceneId": 35755,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1063,
+        "levelId": 187,
+        "dungeonId": 3116,
+        "sceneId": 33756,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1063,
+        "levelId": 188,
+        "dungeonId": 3216,
+        "sceneId": 34756,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1063,
+        "levelId": 189,
+        "dungeonId": 3616,
+        "sceneId": 35756,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "76": [
+      {
+        "floorId": 1062,
+        "levelId": 184,
+        "dungeonId": 3115,
+        "sceneId": 33755,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1062,
+        "levelId": 185,
+        "dungeonId": 3215,
+        "sceneId": 34755,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1062,
+        "levelId": 186,
+        "dungeonId": 3615,
+        "sceneId": 35755,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1063,
+        "levelId": 187,
+        "dungeonId": 3116,
+        "sceneId": 33756,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1063,
+        "levelId": 188,
+        "dungeonId": 3216,
+        "sceneId": 34756,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1063,
+        "levelId": 189,
+        "dungeonId": 3616,
+        "sceneId": 35756,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "77": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1066,
+        "levelId": 196,
+        "dungeonId": 3119,
+        "sceneId": 33759,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1066,
+        "levelId": 197,
+        "dungeonId": 3219,
+        "sceneId": 34759,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1066,
+        "levelId": 198,
+        "dungeonId": 3619,
+        "sceneId": 35759,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1067,
+        "levelId": 199,
+        "dungeonId": 3120,
+        "sceneId": 33760,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1067,
+        "levelId": 200,
+        "dungeonId": 3220,
+        "sceneId": 34760,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1067,
+        "levelId": 201,
+        "dungeonId": 3620,
+        "sceneId": 35760,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "78": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1066,
+        "levelId": 196,
+        "dungeonId": 3119,
+        "sceneId": 33759,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1066,
+        "levelId": 197,
+        "dungeonId": 3219,
+        "sceneId": 34759,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1066,
+        "levelId": 198,
+        "dungeonId": 3619,
+        "sceneId": 35759,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1067,
+        "levelId": 199,
+        "dungeonId": 3120,
+        "sceneId": 33760,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1067,
+        "levelId": 200,
+        "dungeonId": 3220,
+        "sceneId": 34760,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1067,
+        "levelId": 201,
+        "dungeonId": 3620,
+        "sceneId": 35760,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "79": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1068,
+        "levelId": 202,
+        "dungeonId": 3121,
+        "sceneId": 33761,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1068,
+        "levelId": 203,
+        "dungeonId": 3221,
+        "sceneId": 34761,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1068,
+        "levelId": 204,
+        "dungeonId": 3621,
+        "sceneId": 35761,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1069,
+        "levelId": 205,
+        "dungeonId": 3122,
+        "sceneId": 33762,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1069,
+        "levelId": 206,
+        "dungeonId": 3222,
+        "sceneId": 34762,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1069,
+        "levelId": 207,
+        "dungeonId": 3622,
+        "sceneId": 35762,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "80": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1068,
+        "levelId": 202,
+        "dungeonId": 3121,
+        "sceneId": 33761,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1068,
+        "levelId": 203,
+        "dungeonId": 3221,
+        "sceneId": 34761,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1068,
+        "levelId": 204,
+        "dungeonId": 3621,
+        "sceneId": 35761,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1069,
+        "levelId": 205,
+        "dungeonId": 3122,
+        "sceneId": 33762,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1069,
+        "levelId": 206,
+        "dungeonId": 3222,
+        "sceneId": 34762,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1069,
+        "levelId": 207,
+        "dungeonId": 3622,
+        "sceneId": 35762,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "81": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1068,
+        "levelId": 202,
+        "dungeonId": 3121,
+        "sceneId": 33761,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1068,
+        "levelId": 203,
+        "dungeonId": 3221,
+        "sceneId": 34761,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1068,
+        "levelId": 204,
+        "dungeonId": 3621,
+        "sceneId": 35761,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1069,
+        "levelId": 205,
+        "dungeonId": 3122,
+        "sceneId": 33762,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1069,
+        "levelId": 206,
+        "dungeonId": 3222,
+        "sceneId": 34762,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1069,
+        "levelId": 207,
+        "dungeonId": 3622,
+        "sceneId": 35762,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "82": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1070,
+        "levelId": 208,
+        "dungeonId": 3123,
+        "sceneId": 33763,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1070,
+        "levelId": 209,
+        "dungeonId": 3223,
+        "sceneId": 34763,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1070,
+        "levelId": 210,
+        "dungeonId": 3623,
+        "sceneId": 35763,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1071,
+        "levelId": 211,
+        "dungeonId": 3124,
+        "sceneId": 33764,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1071,
+        "levelId": 212,
+        "dungeonId": 3224,
+        "sceneId": 34764,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1071,
+        "levelId": 213,
+        "dungeonId": 3624,
+        "sceneId": 35764,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "83": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1070,
+        "levelId": 208,
+        "dungeonId": 3123,
+        "sceneId": 33763,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1070,
+        "levelId": 209,
+        "dungeonId": 3223,
+        "sceneId": 34763,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1070,
+        "levelId": 210,
+        "dungeonId": 3623,
+        "sceneId": 35763,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1071,
+        "levelId": 211,
+        "dungeonId": 3124,
+        "sceneId": 33764,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1071,
+        "levelId": 212,
+        "dungeonId": 3224,
+        "sceneId": 34764,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1071,
+        "levelId": 213,
+        "dungeonId": 3624,
+        "sceneId": 35764,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "84": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1070,
+        "levelId": 208,
+        "dungeonId": 3123,
+        "sceneId": 33763,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1070,
+        "levelId": 209,
+        "dungeonId": 3223,
+        "sceneId": 34763,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1070,
+        "levelId": 210,
+        "dungeonId": 3623,
+        "sceneId": 35763,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1071,
+        "levelId": 211,
+        "dungeonId": 3124,
+        "sceneId": 33764,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1071,
+        "levelId": 212,
+        "dungeonId": 3224,
+        "sceneId": 34764,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1071,
+        "levelId": 213,
+        "dungeonId": 3624,
+        "sceneId": 35764,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "85": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1072,
+        "levelId": 214,
+        "dungeonId": 3125,
+        "sceneId": 33765,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1072,
+        "levelId": 215,
+        "dungeonId": 3225,
+        "sceneId": 34765,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1072,
+        "levelId": 216,
+        "dungeonId": 3625,
+        "sceneId": 35765,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1073,
+        "levelId": 217,
+        "dungeonId": 3126,
+        "sceneId": 33766,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1073,
+        "levelId": 218,
+        "dungeonId": 3226,
+        "sceneId": 34766,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1073,
+        "levelId": 219,
+        "dungeonId": 3626,
+        "sceneId": 35766,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "86": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1072,
+        "levelId": 214,
+        "dungeonId": 3125,
+        "sceneId": 33765,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1072,
+        "levelId": 215,
+        "dungeonId": 3225,
+        "sceneId": 34765,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1072,
+        "levelId": 216,
+        "dungeonId": 3625,
+        "sceneId": 35765,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1073,
+        "levelId": 217,
+        "dungeonId": 3126,
+        "sceneId": 33766,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1073,
+        "levelId": 218,
+        "dungeonId": 3226,
+        "sceneId": 34766,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1073,
+        "levelId": 219,
+        "dungeonId": 3626,
+        "sceneId": 35766,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "87": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1074,
+        "levelId": 220,
+        "dungeonId": 3127,
+        "sceneId": 33767,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1074,
+        "levelId": 221,
+        "dungeonId": 3227,
+        "sceneId": 34767,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1074,
+        "levelId": 222,
+        "dungeonId": 3627,
+        "sceneId": 35767,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1075,
+        "levelId": 223,
+        "dungeonId": 3128,
+        "sceneId": 33768,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1075,
+        "levelId": 224,
+        "dungeonId": 3228,
+        "sceneId": 34768,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1075,
+        "levelId": 225,
+        "dungeonId": 3628,
+        "sceneId": 35768,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "88": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1074,
+        "levelId": 220,
+        "dungeonId": 3127,
+        "sceneId": 33767,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1074,
+        "levelId": 221,
+        "dungeonId": 3227,
+        "sceneId": 34767,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1074,
+        "levelId": 222,
+        "dungeonId": 3627,
+        "sceneId": 35767,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1075,
+        "levelId": 223,
+        "dungeonId": 3128,
+        "sceneId": 33768,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1075,
+        "levelId": 224,
+        "dungeonId": 3228,
+        "sceneId": 34768,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1075,
+        "levelId": 225,
+        "dungeonId": 3628,
+        "sceneId": 35768,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "89": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1074,
+        "levelId": 220,
+        "dungeonId": 3127,
+        "sceneId": 33767,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1074,
+        "levelId": 221,
+        "dungeonId": 3227,
+        "sceneId": 34767,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1074,
+        "levelId": 222,
+        "dungeonId": 3627,
+        "sceneId": 35767,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1075,
+        "levelId": 223,
+        "dungeonId": 3128,
+        "sceneId": 33768,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1075,
+        "levelId": 224,
+        "dungeonId": 3228,
+        "sceneId": 34768,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1075,
+        "levelId": 225,
+        "dungeonId": 3628,
+        "sceneId": 35768,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "90": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1076,
+        "levelId": 226,
+        "dungeonId": 3129,
+        "sceneId": 33769,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1076,
+        "levelId": 227,
+        "dungeonId": 3229,
+        "sceneId": 34769,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1076,
+        "levelId": 228,
+        "dungeonId": 3629,
+        "sceneId": 35769,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1077,
+        "levelId": 229,
+        "dungeonId": 3130,
+        "sceneId": 33770,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1077,
+        "levelId": 230,
+        "dungeonId": 3230,
+        "sceneId": 34770,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1077,
+        "levelId": 231,
+        "dungeonId": 3630,
+        "sceneId": 35770,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "91": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1076,
+        "levelId": 226,
+        "dungeonId": 3129,
+        "sceneId": 33769,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1076,
+        "levelId": 227,
+        "dungeonId": 3229,
+        "sceneId": 34769,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1076,
+        "levelId": 228,
+        "dungeonId": 3629,
+        "sceneId": 35769,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1077,
+        "levelId": 229,
+        "dungeonId": 3130,
+        "sceneId": 33770,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1077,
+        "levelId": 230,
+        "dungeonId": 3230,
+        "sceneId": 34770,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1077,
+        "levelId": 231,
+        "dungeonId": 3630,
+        "sceneId": 35770,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "92": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1076,
+        "levelId": 226,
+        "dungeonId": 3129,
+        "sceneId": 33769,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1076,
+        "levelId": 227,
+        "dungeonId": 3229,
+        "sceneId": 34769,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1076,
+        "levelId": 228,
+        "dungeonId": 3629,
+        "sceneId": 35769,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1077,
+        "levelId": 229,
+        "dungeonId": 3130,
+        "sceneId": 33770,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1077,
+        "levelId": 230,
+        "dungeonId": 3230,
+        "sceneId": 34770,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1077,
+        "levelId": 231,
+        "dungeonId": 3630,
+        "sceneId": 35770,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "93": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1078,
+        "levelId": 232,
+        "dungeonId": 3131,
+        "sceneId": 33771,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1078,
+        "levelId": 233,
+        "dungeonId": 3231,
+        "sceneId": 34771,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1078,
+        "levelId": 234,
+        "dungeonId": 3631,
+        "sceneId": 35771,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1079,
+        "levelId": 235,
+        "dungeonId": 3132,
+        "sceneId": 33772,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1079,
+        "levelId": 236,
+        "dungeonId": 3232,
+        "sceneId": 34772,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1079,
+        "levelId": 237,
+        "dungeonId": 3632,
+        "sceneId": 35772,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "94": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1078,
+        "levelId": 232,
+        "dungeonId": 3131,
+        "sceneId": 33771,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1078,
+        "levelId": 233,
+        "dungeonId": 3231,
+        "sceneId": 34771,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1078,
+        "levelId": 234,
+        "dungeonId": 3631,
+        "sceneId": 35771,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1079,
+        "levelId": 235,
+        "dungeonId": 3132,
+        "sceneId": 33772,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1079,
+        "levelId": 236,
+        "dungeonId": 3232,
+        "sceneId": 34772,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1079,
+        "levelId": 237,
+        "dungeonId": 3632,
+        "sceneId": 35772,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "95": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1078,
+        "levelId": 232,
+        "dungeonId": 3131,
+        "sceneId": 33771,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1078,
+        "levelId": 233,
+        "dungeonId": 3231,
+        "sceneId": 34771,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1078,
+        "levelId": 234,
+        "dungeonId": 3631,
+        "sceneId": 35771,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1079,
+        "levelId": 235,
+        "dungeonId": 3132,
+        "sceneId": 33772,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1079,
+        "levelId": 236,
+        "dungeonId": 3232,
+        "sceneId": 34772,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1079,
+        "levelId": 237,
+        "dungeonId": 3632,
+        "sceneId": 35772,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "96": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1080,
+        "levelId": 238,
+        "dungeonId": 3133,
+        "sceneId": 33773,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1080,
+        "levelId": 239,
+        "dungeonId": 3233,
+        "sceneId": 34773,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1080,
+        "levelId": 240,
+        "dungeonId": 3633,
+        "sceneId": 35773,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1081,
+        "levelId": 241,
+        "dungeonId": 3134,
+        "sceneId": 33774,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1081,
+        "levelId": 242,
+        "dungeonId": 3234,
+        "sceneId": 34774,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1081,
+        "levelId": 243,
+        "dungeonId": 3634,
+        "sceneId": 35774,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "97": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1080,
+        "levelId": 238,
+        "dungeonId": 3133,
+        "sceneId": 33773,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1080,
+        "levelId": 239,
+        "dungeonId": 3233,
+        "sceneId": 34773,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1080,
+        "levelId": 240,
+        "dungeonId": 3633,
+        "sceneId": 35773,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1081,
+        "levelId": 241,
+        "dungeonId": 3134,
+        "sceneId": 33774,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1081,
+        "levelId": 242,
+        "dungeonId": 3234,
+        "sceneId": 34774,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1081,
+        "levelId": 243,
+        "dungeonId": 3634,
+        "sceneId": 35774,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "98": [
+      {
+        "floorId": 1064,
+        "levelId": 190,
+        "dungeonId": 3117,
+        "sceneId": 33757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 191,
+        "dungeonId": 3217,
+        "sceneId": 34757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1064,
+        "levelId": 192,
+        "dungeonId": 3617,
+        "sceneId": 35757,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 193,
+        "dungeonId": 3118,
+        "sceneId": 33758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 194,
+        "dungeonId": 3218,
+        "sceneId": 34758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1065,
+        "levelId": 195,
+        "dungeonId": 3618,
+        "sceneId": 35758,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1082,
+        "levelId": 244,
+        "dungeonId": 3135,
+        "sceneId": 33775,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1082,
+        "levelId": 245,
+        "dungeonId": 3235,
+        "sceneId": 34775,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1082,
+        "levelId": 246,
+        "dungeonId": 3635,
+        "sceneId": 35775,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1083,
+        "levelId": 247,
+        "dungeonId": 3136,
+        "sceneId": 33776,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1083,
+        "levelId": 248,
+        "dungeonId": 3236,
+        "sceneId": 34776,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1083,
+        "levelId": 249,
+        "dungeonId": 3636,
+        "sceneId": 35776,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "99": [
+      {
+        "floorId": 1084,
+        "levelId": 250,
+        "dungeonId": 3137,
+        "sceneId": 33777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 251,
+        "dungeonId": 3237,
+        "sceneId": 34777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 252,
+        "dungeonId": 3637,
+        "sceneId": 35777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 253,
+        "dungeonId": 3138,
+        "sceneId": 33778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 254,
+        "dungeonId": 3238,
+        "sceneId": 34778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 255,
+        "dungeonId": 3638,
+        "sceneId": 35778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1086,
+        "levelId": 256,
+        "dungeonId": 3139,
+        "sceneId": 33779,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1086,
+        "levelId": 257,
+        "dungeonId": 3239,
+        "sceneId": 34779,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1086,
+        "levelId": 258,
+        "dungeonId": 3639,
+        "sceneId": 35779,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1087,
+        "levelId": 259,
+        "dungeonId": 3140,
+        "sceneId": 33780,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1087,
+        "levelId": 260,
+        "dungeonId": 3240,
+        "sceneId": 34780,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1087,
+        "levelId": 261,
+        "dungeonId": 3640,
+        "sceneId": 35780,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "100": [
+      {
+        "floorId": 1084,
+        "levelId": 250,
+        "dungeonId": 3137,
+        "sceneId": 33777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 251,
+        "dungeonId": 3237,
+        "sceneId": 34777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 252,
+        "dungeonId": 3637,
+        "sceneId": 35777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 253,
+        "dungeonId": 3138,
+        "sceneId": 33778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 254,
+        "dungeonId": 3238,
+        "sceneId": 34778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 255,
+        "dungeonId": 3638,
+        "sceneId": 35778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1088,
+        "levelId": 262,
+        "dungeonId": 3141,
+        "sceneId": 33781,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1088,
+        "levelId": 263,
+        "dungeonId": 3241,
+        "sceneId": 34781,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1088,
+        "levelId": 264,
+        "dungeonId": 3641,
+        "sceneId": 35781,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1089,
+        "levelId": 265,
+        "dungeonId": 3142,
+        "sceneId": 33782,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1089,
+        "levelId": 266,
+        "dungeonId": 3242,
+        "sceneId": 34782,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1089,
+        "levelId": 267,
+        "dungeonId": 3642,
+        "sceneId": 35782,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "101": [
+      {
+        "floorId": 1084,
+        "levelId": 250,
+        "dungeonId": 3137,
+        "sceneId": 33777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 251,
+        "dungeonId": 3237,
+        "sceneId": 34777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 252,
+        "dungeonId": 3637,
+        "sceneId": 35777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 253,
+        "dungeonId": 3138,
+        "sceneId": 33778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 254,
+        "dungeonId": 3238,
+        "sceneId": 34778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 255,
+        "dungeonId": 3638,
+        "sceneId": 35778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1090,
+        "levelId": 268,
+        "dungeonId": 3143,
+        "sceneId": 33783,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1090,
+        "levelId": 269,
+        "dungeonId": 3243,
+        "sceneId": 34783,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1090,
+        "levelId": 270,
+        "dungeonId": 3643,
+        "sceneId": 35783,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1091,
+        "levelId": 271,
+        "dungeonId": 3144,
+        "sceneId": 33784,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1091,
+        "levelId": 272,
+        "dungeonId": 3244,
+        "sceneId": 34784,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1091,
+        "levelId": 273,
+        "dungeonId": 3644,
+        "sceneId": 35784,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "102": [
+      {
+        "floorId": 1084,
+        "levelId": 250,
+        "dungeonId": 3137,
+        "sceneId": 33777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 251,
+        "dungeonId": 3237,
+        "sceneId": 34777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 252,
+        "dungeonId": 3637,
+        "sceneId": 35777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 253,
+        "dungeonId": 3138,
+        "sceneId": 33778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 254,
+        "dungeonId": 3238,
+        "sceneId": 34778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 255,
+        "dungeonId": 3638,
+        "sceneId": 35778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1092,
+        "levelId": 274,
+        "dungeonId": 3145,
+        "sceneId": 33785,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1092,
+        "levelId": 275,
+        "dungeonId": 3245,
+        "sceneId": 34785,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1092,
+        "levelId": 276,
+        "dungeonId": 3645,
+        "sceneId": 35785,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1093,
+        "levelId": 277,
+        "dungeonId": 3146,
+        "sceneId": 33786,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1093,
+        "levelId": 278,
+        "dungeonId": 3246,
+        "sceneId": 34786,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1093,
+        "levelId": 279,
+        "dungeonId": 3646,
+        "sceneId": 35786,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "103": [
+      {
+        "floorId": 1084,
+        "levelId": 250,
+        "dungeonId": 3137,
+        "sceneId": 33777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 251,
+        "dungeonId": 3237,
+        "sceneId": 34777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 252,
+        "dungeonId": 3637,
+        "sceneId": 35777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 253,
+        "dungeonId": 3138,
+        "sceneId": 33778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 254,
+        "dungeonId": 3238,
+        "sceneId": 34778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 255,
+        "dungeonId": 3638,
+        "sceneId": 35778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1094,
+        "levelId": 280,
+        "dungeonId": 3147,
+        "sceneId": 33787,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1094,
+        "levelId": 281,
+        "dungeonId": 3247,
+        "sceneId": 34787,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1094,
+        "levelId": 282,
+        "dungeonId": 3647,
+        "sceneId": 35787,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1095,
+        "levelId": 283,
+        "dungeonId": 3148,
+        "sceneId": 33788,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1095,
+        "levelId": 284,
+        "dungeonId": 3248,
+        "sceneId": 34788,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1095,
+        "levelId": 285,
+        "dungeonId": 3648,
+        "sceneId": 35788,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "104": [
+      {
+        "floorId": 1084,
+        "levelId": 250,
+        "dungeonId": 3137,
+        "sceneId": 33777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 251,
+        "dungeonId": 3237,
+        "sceneId": 34777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 252,
+        "dungeonId": 3637,
+        "sceneId": 35777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 253,
+        "dungeonId": 3138,
+        "sceneId": 33778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 254,
+        "dungeonId": 3238,
+        "sceneId": 34778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 255,
+        "dungeonId": 3638,
+        "sceneId": 35778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1096,
+        "levelId": 286,
+        "dungeonId": 3149,
+        "sceneId": 33789,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1096,
+        "levelId": 287,
+        "dungeonId": 3249,
+        "sceneId": 34789,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1096,
+        "levelId": 288,
+        "dungeonId": 3649,
+        "sceneId": 35789,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1097,
+        "levelId": 289,
+        "dungeonId": 3150,
+        "sceneId": 33790,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1097,
+        "levelId": 290,
+        "dungeonId": 3250,
+        "sceneId": 34790,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1097,
+        "levelId": 291,
+        "dungeonId": 3650,
+        "sceneId": 35790,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "105": [
+      {
+        "floorId": 1084,
+        "levelId": 250,
+        "dungeonId": 3137,
+        "sceneId": 33777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 251,
+        "dungeonId": 3237,
+        "sceneId": 34777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 252,
+        "dungeonId": 3637,
+        "sceneId": 35777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 253,
+        "dungeonId": 3138,
+        "sceneId": 33778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 254,
+        "dungeonId": 3238,
+        "sceneId": 34778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 255,
+        "dungeonId": 3638,
+        "sceneId": 35778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1098,
+        "levelId": 292,
+        "dungeonId": 3151,
+        "sceneId": 33791,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1098,
+        "levelId": 293,
+        "dungeonId": 3251,
+        "sceneId": 34791,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1098,
+        "levelId": 294,
+        "dungeonId": 3651,
+        "sceneId": 35791,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1099,
+        "levelId": 295,
+        "dungeonId": 3152,
+        "sceneId": 33792,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1099,
+        "levelId": 296,
+        "dungeonId": 3252,
+        "sceneId": 34792,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1099,
+        "levelId": 297,
+        "dungeonId": 3652,
+        "sceneId": 35792,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "106": [
+      {
+        "floorId": 1084,
+        "levelId": 250,
+        "dungeonId": 3137,
+        "sceneId": 33777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 251,
+        "dungeonId": 3237,
+        "sceneId": 34777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 252,
+        "dungeonId": 3637,
+        "sceneId": 35777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 253,
+        "dungeonId": 3138,
+        "sceneId": 33778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 254,
+        "dungeonId": 3238,
+        "sceneId": 34778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 255,
+        "dungeonId": 3638,
+        "sceneId": 35778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1100,
+        "levelId": 298,
+        "dungeonId": 3153,
+        "sceneId": 33793,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1100,
+        "levelId": 299,
+        "dungeonId": 3253,
+        "sceneId": 34793,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1100,
+        "levelId": 300,
+        "dungeonId": 3653,
+        "sceneId": 35793,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1101,
+        "levelId": 301,
+        "dungeonId": 3154,
+        "sceneId": 33794,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1101,
+        "levelId": 302,
+        "dungeonId": 3254,
+        "sceneId": 34794,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1101,
+        "levelId": 303,
+        "dungeonId": 3654,
+        "sceneId": 35794,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "107": [
+      {
+        "floorId": 1084,
+        "levelId": 250,
+        "dungeonId": 3137,
+        "sceneId": 33777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 251,
+        "dungeonId": 3237,
+        "sceneId": 34777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 252,
+        "dungeonId": 3637,
+        "sceneId": 35777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 253,
+        "dungeonId": 3138,
+        "sceneId": 33778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 254,
+        "dungeonId": 3238,
+        "sceneId": 34778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 255,
+        "dungeonId": 3638,
+        "sceneId": 35778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1102,
+        "levelId": 304,
+        "dungeonId": 3155,
+        "sceneId": 33795,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1102,
+        "levelId": 305,
+        "dungeonId": 3255,
+        "sceneId": 34795,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1102,
+        "levelId": 306,
+        "dungeonId": 3655,
+        "sceneId": 35795,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1103,
+        "levelId": 307,
+        "dungeonId": 3156,
+        "sceneId": 33796,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1103,
+        "levelId": 308,
+        "dungeonId": 3256,
+        "sceneId": 34796,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1103,
+        "levelId": 309,
+        "dungeonId": 3656,
+        "sceneId": 35796,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "108": [
+      {
+        "floorId": 1084,
+        "levelId": 250,
+        "dungeonId": 3137,
+        "sceneId": 33777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 251,
+        "dungeonId": 3237,
+        "sceneId": 34777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 252,
+        "dungeonId": 3637,
+        "sceneId": 35777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 253,
+        "dungeonId": 3138,
+        "sceneId": 33778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 254,
+        "dungeonId": 3238,
+        "sceneId": 34778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 255,
+        "dungeonId": 3638,
+        "sceneId": 35778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1104,
+        "levelId": 310,
+        "dungeonId": 3157,
+        "sceneId": 33797,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1104,
+        "levelId": 311,
+        "dungeonId": 3257,
+        "sceneId": 34797,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1104,
+        "levelId": 312,
+        "dungeonId": 3657,
+        "sceneId": 35797,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1105,
+        "levelId": 313,
+        "dungeonId": 3158,
+        "sceneId": 33798,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1105,
+        "levelId": 314,
+        "dungeonId": 3258,
+        "sceneId": 34798,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1105,
+        "levelId": 315,
+        "dungeonId": 3658,
+        "sceneId": 35798,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "109": [
+      {
+        "floorId": 1084,
+        "levelId": 250,
+        "dungeonId": 3137,
+        "sceneId": 33777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 251,
+        "dungeonId": 3237,
+        "sceneId": 34777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 252,
+        "dungeonId": 3637,
+        "sceneId": 35777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 253,
+        "dungeonId": 3138,
+        "sceneId": 33778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 254,
+        "dungeonId": 3238,
+        "sceneId": 34778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 255,
+        "dungeonId": 3638,
+        "sceneId": 35778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1106,
+        "levelId": 316,
+        "dungeonId": 3159,
+        "sceneId": 33799,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1106,
+        "levelId": 317,
+        "dungeonId": 3160,
+        "sceneId": 34799,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1106,
+        "levelId": 318,
+        "dungeonId": 3161,
+        "sceneId": 35799,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1107,
+        "levelId": 319,
+        "dungeonId": 3162,
+        "sceneId": 33800,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1107,
+        "levelId": 320,
+        "dungeonId": 3163,
+        "sceneId": 33801,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1107,
+        "levelId": 321,
+        "dungeonId": 3164,
+        "sceneId": 33802,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "110": [
+      {
+        "floorId": 1084,
+        "levelId": 250,
+        "dungeonId": 3137,
+        "sceneId": 33777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 251,
+        "dungeonId": 3237,
+        "sceneId": 34777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1084,
+        "levelId": 252,
+        "dungeonId": 3637,
+        "sceneId": 35777,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 253,
+        "dungeonId": 3138,
+        "sceneId": 33778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 254,
+        "dungeonId": 3238,
+        "sceneId": 34778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1085,
+        "levelId": 255,
+        "dungeonId": 3638,
+        "sceneId": 35778,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1108,
+        "levelId": 322,
+        "dungeonId": 3165,
+        "sceneId": 33803,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1108,
+        "levelId": 323,
+        "dungeonId": 3166,
+        "sceneId": 33804,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1108,
+        "levelId": 324,
+        "dungeonId": 3167,
+        "sceneId": 33805,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1109,
+        "levelId": 325,
+        "dungeonId": 3168,
+        "sceneId": 33806,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1109,
+        "levelId": 326,
+        "dungeonId": 3169,
+        "sceneId": 33807,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1109,
+        "levelId": 327,
+        "dungeonId": 3170,
+        "sceneId": 33808,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "111": [
+      {
+        "floorId": 1110,
+        "levelId": 328,
+        "dungeonId": 3171,
+        "sceneId": 33809,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 329,
+        "dungeonId": 3172,
+        "sceneId": 33810,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 330,
+        "dungeonId": 3173,
+        "sceneId": 33811,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 331,
+        "dungeonId": 3174,
+        "sceneId": 33812,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 332,
+        "dungeonId": 3175,
+        "sceneId": 33813,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 333,
+        "dungeonId": 3176,
+        "sceneId": 33814,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1112,
+        "levelId": 334,
+        "dungeonId": 3177,
+        "sceneId": 33815,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1112,
+        "levelId": 335,
+        "dungeonId": 3178,
+        "sceneId": 33816,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1112,
+        "levelId": 336,
+        "dungeonId": 3179,
+        "sceneId": 33817,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1113,
+        "levelId": 337,
+        "dungeonId": 3180,
+        "sceneId": 33818,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1113,
+        "levelId": 338,
+        "dungeonId": 3181,
+        "sceneId": 33819,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1113,
+        "levelId": 339,
+        "dungeonId": 3182,
+        "sceneId": 33820,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "112": [
+      {
+        "floorId": 1110,
+        "levelId": 328,
+        "dungeonId": 3171,
+        "sceneId": 33809,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 329,
+        "dungeonId": 3172,
+        "sceneId": 33810,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 330,
+        "dungeonId": 3173,
+        "sceneId": 33811,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 331,
+        "dungeonId": 3174,
+        "sceneId": 33812,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 332,
+        "dungeonId": 3175,
+        "sceneId": 33813,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 333,
+        "dungeonId": 3176,
+        "sceneId": 33814,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1114,
+        "levelId": 340,
+        "dungeonId": 3183,
+        "sceneId": 33821,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1114,
+        "levelId": 341,
+        "dungeonId": 3184,
+        "sceneId": 33822,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1114,
+        "levelId": 342,
+        "dungeonId": 3185,
+        "sceneId": 33823,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1115,
+        "levelId": 343,
+        "dungeonId": 3186,
+        "sceneId": 33824,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1115,
+        "levelId": 344,
+        "dungeonId": 3187,
+        "sceneId": 33825,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1115,
+        "levelId": 345,
+        "dungeonId": 3188,
+        "sceneId": 33826,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "113": [
+      {
+        "floorId": 1110,
+        "levelId": 328,
+        "dungeonId": 3171,
+        "sceneId": 33809,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 329,
+        "dungeonId": 3172,
+        "sceneId": 33810,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 330,
+        "dungeonId": 3173,
+        "sceneId": 33811,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 331,
+        "dungeonId": 3174,
+        "sceneId": 33812,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 332,
+        "dungeonId": 3175,
+        "sceneId": 33813,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 333,
+        "dungeonId": 3176,
+        "sceneId": 33814,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1116,
+        "levelId": 346,
+        "dungeonId": 3189,
+        "sceneId": 33827,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1116,
+        "levelId": 347,
+        "dungeonId": 3190,
+        "sceneId": 33828,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1116,
+        "levelId": 348,
+        "dungeonId": 3191,
+        "sceneId": 33829,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1117,
+        "levelId": 349,
+        "dungeonId": 3192,
+        "sceneId": 33830,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1117,
+        "levelId": 350,
+        "dungeonId": 3193,
+        "sceneId": 33831,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1117,
+        "levelId": 351,
+        "dungeonId": 3194,
+        "sceneId": 33832,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "114": [
+      {
+        "floorId": 1110,
+        "levelId": 328,
+        "dungeonId": 3171,
+        "sceneId": 33809,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 329,
+        "dungeonId": 3172,
+        "sceneId": 33810,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 330,
+        "dungeonId": 3173,
+        "sceneId": 33811,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 331,
+        "dungeonId": 3174,
+        "sceneId": 33812,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 332,
+        "dungeonId": 3175,
+        "sceneId": 33813,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 333,
+        "dungeonId": 3176,
+        "sceneId": 33814,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1118,
+        "levelId": 352,
+        "dungeonId": 3195,
+        "sceneId": 33833,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1118,
+        "levelId": 353,
+        "dungeonId": 3196,
+        "sceneId": 33834,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1118,
+        "levelId": 354,
+        "dungeonId": 3197,
+        "sceneId": 33835,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1119,
+        "levelId": 355,
+        "dungeonId": 3198,
+        "sceneId": 33836,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1119,
+        "levelId": 356,
+        "dungeonId": 3199,
+        "sceneId": 33837,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1119,
+        "levelId": 357,
+        "dungeonId": 3259,
+        "sceneId": 33838,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "115": [
+      {
+        "floorId": 1110,
+        "levelId": 328,
+        "dungeonId": 3171,
+        "sceneId": 33809,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 329,
+        "dungeonId": 3172,
+        "sceneId": 33810,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 330,
+        "dungeonId": 3173,
+        "sceneId": 33811,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 331,
+        "dungeonId": 3174,
+        "sceneId": 33812,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 332,
+        "dungeonId": 3175,
+        "sceneId": 33813,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 333,
+        "dungeonId": 3176,
+        "sceneId": 33814,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1120,
+        "levelId": 358,
+        "dungeonId": 3260,
+        "sceneId": 33839,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1120,
+        "levelId": 359,
+        "dungeonId": 3261,
+        "sceneId": 33840,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1120,
+        "levelId": 360,
+        "dungeonId": 3262,
+        "sceneId": 33841,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1121,
+        "levelId": 361,
+        "dungeonId": 3263,
+        "sceneId": 33842,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1121,
+        "levelId": 362,
+        "dungeonId": 3264,
+        "sceneId": 33843,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1121,
+        "levelId": 363,
+        "dungeonId": 3265,
+        "sceneId": 33844,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "116": [
+      {
+        "floorId": 1110,
+        "levelId": 328,
+        "dungeonId": 3171,
+        "sceneId": 33809,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 329,
+        "dungeonId": 3172,
+        "sceneId": 33810,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 330,
+        "dungeonId": 3173,
+        "sceneId": 33811,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 331,
+        "dungeonId": 3174,
+        "sceneId": 33812,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 332,
+        "dungeonId": 3175,
+        "sceneId": 33813,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 333,
+        "dungeonId": 3176,
+        "sceneId": 33814,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1122,
+        "levelId": 364,
+        "dungeonId": 3266,
+        "sceneId": 33845,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1122,
+        "levelId": 365,
+        "dungeonId": 3267,
+        "sceneId": 33846,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1122,
+        "levelId": 366,
+        "dungeonId": 3268,
+        "sceneId": 33847,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1123,
+        "levelId": 367,
+        "dungeonId": 3269,
+        "sceneId": 33848,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1123,
+        "levelId": 368,
+        "dungeonId": 3270,
+        "sceneId": 33849,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1123,
+        "levelId": 369,
+        "dungeonId": 3271,
+        "sceneId": 33850,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "117": [
+      {
+        "floorId": 1110,
+        "levelId": 328,
+        "dungeonId": 3171,
+        "sceneId": 33809,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 329,
+        "dungeonId": 3172,
+        "sceneId": 33810,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 330,
+        "dungeonId": 3173,
+        "sceneId": 33811,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 331,
+        "dungeonId": 3174,
+        "sceneId": 33812,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 332,
+        "dungeonId": 3175,
+        "sceneId": 33813,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 333,
+        "dungeonId": 3176,
+        "sceneId": 33814,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1124,
+        "levelId": 370,
+        "dungeonId": 3272,
+        "sceneId": 33851,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1124,
+        "levelId": 371,
+        "dungeonId": 3273,
+        "sceneId": 33852,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1124,
+        "levelId": 372,
+        "dungeonId": 3274,
+        "sceneId": 33853,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1125,
+        "levelId": 373,
+        "dungeonId": 3275,
+        "sceneId": 33854,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1125,
+        "levelId": 374,
+        "dungeonId": 3276,
+        "sceneId": 33855,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1125,
+        "levelId": 375,
+        "dungeonId": 3277,
+        "sceneId": 33856,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "118": [
+      {
+        "floorId": 1110,
+        "levelId": 328,
+        "dungeonId": 3171,
+        "sceneId": 33809,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 329,
+        "dungeonId": 3172,
+        "sceneId": 33810,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 330,
+        "dungeonId": 3173,
+        "sceneId": 33811,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 331,
+        "dungeonId": 3174,
+        "sceneId": 33812,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 332,
+        "dungeonId": 3175,
+        "sceneId": 33813,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 333,
+        "dungeonId": 3176,
+        "sceneId": 33814,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1126,
+        "levelId": 376,
+        "dungeonId": 3278,
+        "sceneId": 33857,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1126,
+        "levelId": 377,
+        "dungeonId": 3279,
+        "sceneId": 33858,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1126,
+        "levelId": 378,
+        "dungeonId": 3280,
+        "sceneId": 33859,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1127,
+        "levelId": 379,
+        "dungeonId": 3281,
+        "sceneId": 33860,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1127,
+        "levelId": 380,
+        "dungeonId": 3282,
+        "sceneId": 33861,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1127,
+        "levelId": 381,
+        "dungeonId": 3283,
+        "sceneId": 33862,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "119": [
+      {
+        "floorId": 1110,
+        "levelId": 328,
+        "dungeonId": 3171,
+        "sceneId": 33809,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 329,
+        "dungeonId": 3172,
+        "sceneId": 33810,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 330,
+        "dungeonId": 3173,
+        "sceneId": 33811,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 331,
+        "dungeonId": 3174,
+        "sceneId": 33812,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 332,
+        "dungeonId": 3175,
+        "sceneId": 33813,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 333,
+        "dungeonId": 3176,
+        "sceneId": 33814,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1128,
+        "levelId": 382,
+        "dungeonId": 3284,
+        "sceneId": 33863,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1128,
+        "levelId": 383,
+        "dungeonId": 3285,
+        "sceneId": 33864,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1128,
+        "levelId": 384,
+        "dungeonId": 3286,
+        "sceneId": 33865,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1129,
+        "levelId": 385,
+        "dungeonId": 3287,
+        "sceneId": 33866,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1129,
+        "levelId": 386,
+        "dungeonId": 3288,
+        "sceneId": 33867,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1129,
+        "levelId": 387,
+        "dungeonId": 3289,
+        "sceneId": 33868,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "120": [
+      {
+        "floorId": 1110,
+        "levelId": 328,
+        "dungeonId": 3171,
+        "sceneId": 33809,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 329,
+        "dungeonId": 3172,
+        "sceneId": 33810,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 330,
+        "dungeonId": 3173,
+        "sceneId": 33811,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 331,
+        "dungeonId": 3174,
+        "sceneId": 33812,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 332,
+        "dungeonId": 3175,
+        "sceneId": 33813,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 333,
+        "dungeonId": 3176,
+        "sceneId": 33814,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1130,
+        "levelId": 388,
+        "dungeonId": 3290,
+        "sceneId": 33869,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1130,
+        "levelId": 389,
+        "dungeonId": 3291,
+        "sceneId": 33870,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1130,
+        "levelId": 390,
+        "dungeonId": 3292,
+        "sceneId": 33871,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1131,
+        "levelId": 391,
+        "dungeonId": 3293,
+        "sceneId": 33872,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1131,
+        "levelId": 392,
+        "dungeonId": 3294,
+        "sceneId": 33873,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1131,
+        "levelId": 393,
+        "dungeonId": 3295,
+        "sceneId": 33874,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "121": [
+      {
+        "floorId": 1110,
+        "levelId": 328,
+        "dungeonId": 3171,
+        "sceneId": 33809,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 329,
+        "dungeonId": 3172,
+        "sceneId": 33810,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1110,
+        "levelId": 330,
+        "dungeonId": 3173,
+        "sceneId": 33811,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 331,
+        "dungeonId": 3174,
+        "sceneId": 33812,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 332,
+        "dungeonId": 3175,
+        "sceneId": 33813,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1111,
+        "levelId": 333,
+        "dungeonId": 3176,
+        "sceneId": 33814,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1132,
+        "levelId": 394,
+        "dungeonId": 3659,
+        "sceneId": 33875,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1132,
+        "levelId": 395,
+        "dungeonId": 3660,
+        "sceneId": 33876,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1132,
+        "levelId": 396,
+        "dungeonId": 3661,
+        "sceneId": 33877,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1133,
+        "levelId": 397,
+        "dungeonId": 3662,
+        "sceneId": 33878,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1133,
+        "levelId": 398,
+        "dungeonId": 3663,
+        "sceneId": 33879,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1133,
+        "levelId": 399,
+        "dungeonId": 3664,
+        "sceneId": 33880,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "122": [
+      {
+        "floorId": 1134,
+        "levelId": 400,
+        "dungeonId": 3665,
+        "sceneId": 33881,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1134,
+        "levelId": 401,
+        "dungeonId": 3666,
+        "sceneId": 33882,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1134,
+        "levelId": 402,
+        "dungeonId": 3667,
+        "sceneId": 33883,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1135,
+        "levelId": 403,
+        "dungeonId": 3668,
+        "sceneId": 33884,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1135,
+        "levelId": 404,
+        "dungeonId": 3669,
+        "sceneId": 33885,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1135,
+        "levelId": 405,
+        "dungeonId": 3670,
+        "sceneId": 33886,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1136,
+        "levelId": 406,
+        "dungeonId": 3671,
+        "sceneId": 33887,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1136,
+        "levelId": 407,
+        "dungeonId": 3672,
+        "sceneId": 33888,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1136,
+        "levelId": 408,
+        "dungeonId": 3673,
+        "sceneId": 33889,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1137,
+        "levelId": 409,
+        "dungeonId": 3674,
+        "sceneId": 33890,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1137,
+        "levelId": 410,
+        "dungeonId": 3675,
+        "sceneId": 33891,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1137,
+        "levelId": 411,
+        "dungeonId": 3676,
+        "sceneId": 33892,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "123": [
+      {
+        "floorId": 1134,
+        "levelId": 400,
+        "dungeonId": 3665,
+        "sceneId": 33881,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1134,
+        "levelId": 401,
+        "dungeonId": 3666,
+        "sceneId": 33882,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1134,
+        "levelId": 402,
+        "dungeonId": 3667,
+        "sceneId": 33883,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1135,
+        "levelId": 403,
+        "dungeonId": 3668,
+        "sceneId": 33884,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1135,
+        "levelId": 404,
+        "dungeonId": 3669,
+        "sceneId": 33885,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1135,
+        "levelId": 405,
+        "dungeonId": 3670,
+        "sceneId": 33886,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1138,
+        "levelId": 412,
+        "dungeonId": 3677,
+        "sceneId": 33893,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1138,
+        "levelId": 413,
+        "dungeonId": 3678,
+        "sceneId": 33894,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1138,
+        "levelId": 414,
+        "dungeonId": 3679,
+        "sceneId": 33895,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1139,
+        "levelId": 415,
+        "dungeonId": 3680,
+        "sceneId": 33896,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1139,
+        "levelId": 416,
+        "dungeonId": 3681,
+        "sceneId": 33897,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1139,
+        "levelId": 417,
+        "dungeonId": 3682,
+        "sceneId": 33898,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "124": [
+      {
+        "floorId": 1134,
+        "levelId": 400,
+        "dungeonId": 3665,
+        "sceneId": 33881,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1134,
+        "levelId": 401,
+        "dungeonId": 3666,
+        "sceneId": 33882,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1134,
+        "levelId": 402,
+        "dungeonId": 3667,
+        "sceneId": 33883,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1135,
+        "levelId": 403,
+        "dungeonId": 3668,
+        "sceneId": 33884,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1135,
+        "levelId": 404,
+        "dungeonId": 3669,
+        "sceneId": 33885,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1135,
+        "levelId": 405,
+        "dungeonId": 3670,
+        "sceneId": 33886,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1140,
+        "levelId": 418,
+        "dungeonId": 3683,
+        "sceneId": 33899,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1140,
+        "levelId": 419,
+        "dungeonId": 3684,
+        "sceneId": 33900,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1140,
+        "levelId": 420,
+        "dungeonId": 3685,
+        "sceneId": 33901,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1141,
+        "levelId": 421,
+        "dungeonId": 3686,
+        "sceneId": 33902,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1141,
+        "levelId": 422,
+        "dungeonId": 3687,
+        "sceneId": 33903,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1141,
+        "levelId": 423,
+        "dungeonId": 3688,
+        "sceneId": 33904,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "20096": [
+      {
+        "floorId": 1134,
+        "levelId": 400,
+        "dungeonId": 3665,
+        "sceneId": 33881,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1134,
+        "levelId": 401,
+        "dungeonId": 3666,
+        "sceneId": 33882,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1134,
+        "levelId": 402,
+        "dungeonId": 3667,
+        "sceneId": 33883,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1135,
+        "levelId": 403,
+        "dungeonId": 3668,
+        "sceneId": 33884,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1135,
+        "levelId": 404,
+        "dungeonId": 3669,
+        "sceneId": 33885,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1135,
+        "levelId": 405,
+        "dungeonId": 3670,
+        "sceneId": 33886,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1138,
+        "levelId": 412,
+        "dungeonId": 3677,
+        "sceneId": 33893,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1138,
+        "levelId": 413,
+        "dungeonId": 3678,
+        "sceneId": 33894,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1138,
+        "levelId": 414,
+        "dungeonId": 3679,
+        "sceneId": 33895,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1139,
+        "levelId": 415,
+        "dungeonId": 3680,
+        "sceneId": 33896,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1139,
+        "levelId": 416,
+        "dungeonId": 3681,
+        "sceneId": 33897,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1139,
+        "levelId": 417,
+        "dungeonId": 3682,
+        "sceneId": 33898,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ],
+    "20097": [
+      {
+        "floorId": 1134,
+        "levelId": 400,
+        "dungeonId": 3665,
+        "sceneId": 33881,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1134,
+        "levelId": 401,
+        "dungeonId": 3666,
+        "sceneId": 33882,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1134,
+        "levelId": 402,
+        "dungeonId": 3667,
+        "sceneId": 33883,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1135,
+        "levelId": 403,
+        "dungeonId": 3668,
+        "sceneId": 33884,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1135,
+        "levelId": 404,
+        "dungeonId": 3669,
+        "sceneId": 33885,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1135,
+        "levelId": 405,
+        "dungeonId": 3670,
+        "sceneId": 33886,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1140,
+        "levelId": 418,
+        "dungeonId": 3683,
+        "sceneId": 33899,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1140,
+        "levelId": 419,
+        "dungeonId": 3684,
+        "sceneId": 33900,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1140,
+        "levelId": 420,
+        "dungeonId": 3685,
+        "sceneId": 33901,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1141,
+        "levelId": 421,
+        "dungeonId": 3686,
+        "sceneId": 33902,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1141,
+        "levelId": 422,
+        "dungeonId": 3687,
+        "sceneId": 33903,
+        "reason": "missing-dungeon-or-group-script"
+      },
+      {
+        "floorId": 1141,
+        "levelId": 423,
+        "dungeonId": 3688,
+        "sceneId": 33904,
+        "reason": "missing-dungeon-or-group-script"
+      }
+    ]
+  },
+  "selectionPolicy": "newest-scripted-candidate",
+  "selectedScheduleId": 62,
+  "selectedMonthlyLevelConfigId": 1755,
+  "selectedResourceRewardGroup": 4,
+  "floors": [
+    {
+      "floorId": 1001,
+      "floorIndex": 1,
+      "levelGroupId": 1,
+      "teamNum": 1,
+      "unlockStarCount": 6,
+      "floorLevelConfigId": 1200,
+      "overrideMonsterLevel": 25,
+      "levels": [
+        {
+          "levelId": 1,
+          "levelIndex": 1,
+          "dungeonId": 3310,
+          "firstPassRewardId": 621001,
+          "sceneId": 33100,
+          "passCond": 51,
+          "serverMonsterLevel": 25,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                90
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                150
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                210
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 5000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 3,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117001
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/33100/scene33100_group233100001.lua",
+            "resources/Scripts/Scene/33100/scene33100_group233100002.lua",
+            "resources/Scripts/Scene/33100/scene33100_group233100003.lua",
+            "resources/Scripts/Scene/33100/scene33100_group233100004.lua"
+          ]
+        },
+        {
+          "levelId": 2,
+          "levelIndex": 2,
+          "dungeonId": 3410,
+          "firstPassRewardId": 621002,
+          "sceneId": 34100,
+          "passCond": 51,
+          "serverMonsterLevel": 25,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                90
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                150
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                210
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 5000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 3,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117001
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/34100/scene34100_group234100001.lua",
+            "resources/Scripts/Scene/34100/scene34100_group234100002.lua",
+            "resources/Scripts/Scene/34100/scene34100_group234100003.lua",
+            "resources/Scripts/Scene/34100/scene34100_group234100004.lua"
+          ]
+        },
+        {
+          "levelId": 3,
+          "levelIndex": 3,
+          "dungeonId": 3510,
+          "firstPassRewardId": 621003,
+          "sceneId": 35100,
+          "passCond": 51,
+          "serverMonsterLevel": 25,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                90
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                150
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                210
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 5000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 3,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117001
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/35100/scene35100_group235100001.lua",
+            "resources/Scripts/Scene/35100/scene35100_group235100002.lua",
+            "resources/Scripts/Scene/35100/scene35100_group235100003.lua",
+            "resources/Scripts/Scene/35100/scene35100_group235100004.lua"
+          ]
+        }
+      ],
+      "threeConsecutiveLevels": true
+    },
+    {
+      "floorId": 1002,
+      "floorIndex": 2,
+      "levelGroupId": 2,
+      "teamNum": 1,
+      "unlockStarCount": 6,
+      "floorLevelConfigId": 1201,
+      "overrideMonsterLevel": 40,
+      "levels": [
+        {
+          "levelId": 4,
+          "levelIndex": 1,
+          "dungeonId": 3311,
+          "firstPassRewardId": 621004,
+          "sceneId": 33101,
+          "passCond": 51,
+          "serverMonsterLevel": 40,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                60
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                90
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                180
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 5000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 3,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117001
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/33101/scene33101_group233101001.lua",
+            "resources/Scripts/Scene/33101/scene33101_group233101002.lua",
+            "resources/Scripts/Scene/33101/scene33101_group233101003.lua",
+            "resources/Scripts/Scene/33101/scene33101_group233101004.lua"
+          ]
+        },
+        {
+          "levelId": 5,
+          "levelIndex": 2,
+          "dungeonId": 3411,
+          "firstPassRewardId": 621005,
+          "sceneId": 34101,
+          "passCond": 51,
+          "serverMonsterLevel": 40,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_LEFT_HP_GREATER_THAN",
+              "argumentList": [
+                234101003,
+                3030,
+                20
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_LEFT_HP_GREATER_THAN",
+              "argumentList": [
+                234101003,
+                3030,
+                40
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_LEFT_HP_GREATER_THAN",
+              "argumentList": [
+                234101003,
+                3030,
+                60
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 5000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 3,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117001
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/34101/scene34101_group234101001.lua",
+            "resources/Scripts/Scene/34101/scene34101_group234101002.lua",
+            "resources/Scripts/Scene/34101/scene34101_group234101003.lua",
+            "resources/Scripts/Scene/34101/scene34101_group234101004.lua"
+          ]
+        },
+        {
+          "levelId": 6,
+          "levelIndex": 3,
+          "dungeonId": 3511,
+          "firstPassRewardId": 621006,
+          "sceneId": 35101,
+          "passCond": 51,
+          "serverMonsterLevel": 40,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                60
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                90
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                180
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 5000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 3,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117001
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/35101/scene35101_group235101001.lua",
+            "resources/Scripts/Scene/35101/scene35101_group235101002.lua",
+            "resources/Scripts/Scene/35101/scene35101_group235101003.lua",
+            "resources/Scripts/Scene/35101/scene35101_group235101004.lua"
+          ]
+        }
+      ],
+      "threeConsecutiveLevels": true
+    },
+    {
+      "floorId": 1003,
+      "floorIndex": 3,
+      "levelGroupId": 3,
+      "teamNum": 1,
+      "unlockStarCount": 6,
+      "floorLevelConfigId": 1202,
+      "overrideMonsterLevel": 45,
+      "levels": [
+        {
+          "levelId": 7,
+          "levelIndex": 1,
+          "dungeonId": 3312,
+          "firstPassRewardId": 621007,
+          "sceneId": 33102,
+          "passCond": 51,
+          "serverMonsterLevel": 45,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                60
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                90
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                180
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 10000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 5,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 6,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117001
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/33102/scene33102_group233102001.lua",
+            "resources/Scripts/Scene/33102/scene33102_group233102002.lua",
+            "resources/Scripts/Scene/33102/scene33102_group233102003.lua",
+            "resources/Scripts/Scene/33102/scene33102_group233102004.lua"
+          ]
+        },
+        {
+          "levelId": 8,
+          "levelIndex": 2,
+          "dungeonId": 3412,
+          "firstPassRewardId": 621008,
+          "sceneId": 34102,
+          "passCond": 51,
+          "serverMonsterLevel": 45,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                60
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                90
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                180
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 10000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 5,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 6,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117001
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/34102/scene34102_group234102001.lua",
+            "resources/Scripts/Scene/34102/scene34102_group234102002.lua",
+            "resources/Scripts/Scene/34102/scene34102_group234102003.lua",
+            "resources/Scripts/Scene/34102/scene34102_group234102004.lua"
+          ]
+        },
+        {
+          "levelId": 9,
+          "levelIndex": 3,
+          "dungeonId": 3512,
+          "firstPassRewardId": 621009,
+          "sceneId": 35102,
+          "passCond": 51,
+          "serverMonsterLevel": 45,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                60
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                90
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                120
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 10000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 5,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 6,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 101105
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/35102/scene35102_group235102001.lua",
+            "resources/Scripts/Scene/35102/scene35102_group235102002.lua",
+            "resources/Scripts/Scene/35102/scene35102_group235102003.lua",
+            "resources/Scripts/Scene/35102/scene35102_group235102004.lua"
+          ]
+        }
+      ],
+      "threeConsecutiveLevels": true
+    },
+    {
+      "floorId": 1004,
+      "floorIndex": 4,
+      "levelGroupId": 4,
+      "teamNum": 1,
+      "unlockStarCount": 6,
+      "floorLevelConfigId": 1203,
+      "overrideMonsterLevel": 50,
+      "levels": [
+        {
+          "levelId": 10,
+          "levelIndex": 1,
+          "dungeonId": 3313,
+          "firstPassRewardId": 621010,
+          "sceneId": 33103,
+          "passCond": 51,
+          "serverMonsterLevel": 50,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                60
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                120
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                180
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 10000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 5,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 6,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117001
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/33103/scene33103_group233103001.lua",
+            "resources/Scripts/Scene/33103/scene33103_group233103002.lua",
+            "resources/Scripts/Scene/33103/scene33103_group233103003.lua",
+            "resources/Scripts/Scene/33103/scene33103_group233103004.lua"
+          ]
+        },
+        {
+          "levelId": 11,
+          "levelIndex": 2,
+          "dungeonId": 3413,
+          "firstPassRewardId": 621011,
+          "sceneId": 34103,
+          "passCond": 51,
+          "serverMonsterLevel": 50,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_LEFT_HP_GREATER_THAN",
+              "argumentList": [
+                234103003,
+                3024,
+                20
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_LEFT_HP_GREATER_THAN",
+              "argumentList": [
+                234103003,
+                3024,
+                40
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_LEFT_HP_GREATER_THAN",
+              "argumentList": [
+                234103003,
+                3024,
+                60
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 10000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 5,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 6,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117001
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/34103/scene34103_group234103001.lua",
+            "resources/Scripts/Scene/34103/scene34103_group234103002.lua",
+            "resources/Scripts/Scene/34103/scene34103_group234103003.lua",
+            "resources/Scripts/Scene/34103/scene34103_group234103004.lua"
+          ]
+        },
+        {
+          "levelId": 12,
+          "levelIndex": 3,
+          "dungeonId": 3513,
+          "firstPassRewardId": 621012,
+          "sceneId": 35103,
+          "passCond": 51,
+          "serverMonsterLevel": 50,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                60
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                90
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                1,
+                120
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 10000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 5,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 6,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117002
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/35103/scene35103_group235103001.lua",
+            "resources/Scripts/Scene/35103/scene35103_group235103002.lua",
+            "resources/Scripts/Scene/35103/scene35103_group235103003.lua",
+            "resources/Scripts/Scene/35103/scene35103_group235103004.lua"
+          ]
+        }
+      ],
+      "threeConsecutiveLevels": true
+    },
+    {
+      "floorId": 1005,
+      "floorIndex": 5,
+      "levelGroupId": 5,
+      "teamNum": 2,
+      "unlockStarCount": 6,
+      "floorLevelConfigId": 1306,
+      "overrideMonsterLevel": 55,
+      "levels": [
+        {
+          "levelId": 13,
+          "levelIndex": 1,
+          "dungeonId": 3341,
+          "firstPassRewardId": 621013,
+          "sceneId": 33401,
+          "passCond": 50,
+          "serverMonsterLevel": 55,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                180
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                300
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                420
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 15000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 6,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 8,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 5,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117001
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/33401/scene33401_group233401001.lua",
+            "resources/Scripts/Scene/33401/scene33401_group233401002.lua",
+            "resources/Scripts/Scene/33401/scene33401_group233401003.lua",
+            "resources/Scripts/Scene/33401/scene33401_group233401004.lua",
+            "resources/Scripts/Scene/33401/scene33401_group233401005.lua"
+          ]
+        },
+        {
+          "levelId": 14,
+          "levelIndex": 2,
+          "dungeonId": 3441,
+          "firstPassRewardId": 621014,
+          "sceneId": 34401,
+          "passCond": 50,
+          "serverMonsterLevel": 55,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                90
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                180
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                240
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 15000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 6,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 8,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 5,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117001
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/34401/scene34401_group234401001.lua",
+            "resources/Scripts/Scene/34401/scene34401_group234401002.lua",
+            "resources/Scripts/Scene/34401/scene34401_group234401003.lua",
+            "resources/Scripts/Scene/34401/scene34401_group234401004.lua",
+            "resources/Scripts/Scene/34401/scene34401_group234401005.lua"
+          ]
+        },
+        {
+          "levelId": 15,
+          "levelIndex": 3,
+          "dungeonId": 3541,
+          "firstPassRewardId": 621015,
+          "sceneId": 35401,
+          "passCond": 50,
+          "serverMonsterLevel": 55,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                180
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                300
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                420
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 15000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 6,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 8,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 5,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117002
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/35401/scene35401_group235401001.lua",
+            "resources/Scripts/Scene/35401/scene35401_group235401002.lua",
+            "resources/Scripts/Scene/35401/scene35401_group235401003.lua",
+            "resources/Scripts/Scene/35401/scene35401_group235401004.lua",
+            "resources/Scripts/Scene/35401/scene35401_group235401005.lua"
+          ]
+        }
+      ],
+      "threeConsecutiveLevels": true
+    },
+    {
+      "floorId": 1006,
+      "floorIndex": 6,
+      "levelGroupId": 6,
+      "teamNum": 2,
+      "unlockStarCount": 6,
+      "floorLevelConfigId": 1307,
+      "overrideMonsterLevel": 60,
+      "levels": [
+        {
+          "levelId": 16,
+          "levelIndex": 1,
+          "dungeonId": 3342,
+          "firstPassRewardId": 621016,
+          "sceneId": 33402,
+          "passCond": 50,
+          "serverMonsterLevel": 60,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                30
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                60
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                120
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 15000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 6,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 8,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 5,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117001
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/33402/scene33402_group233402001.lua",
+            "resources/Scripts/Scene/33402/scene33402_group233402002.lua",
+            "resources/Scripts/Scene/33402/scene33402_group233402003.lua",
+            "resources/Scripts/Scene/33402/scene33402_group233402004.lua",
+            "resources/Scripts/Scene/33402/scene33402_group233402005.lua"
+          ]
+        },
+        {
+          "levelId": 17,
+          "levelIndex": 2,
+          "dungeonId": 3442,
+          "firstPassRewardId": 621017,
+          "sceneId": 34402,
+          "passCond": 50,
+          "serverMonsterLevel": 60,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                90
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                180
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                270
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 15000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 6,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 8,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 5,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117002
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/34402/scene34402_group234402001.lua",
+            "resources/Scripts/Scene/34402/scene34402_group234402010.lua",
+            "resources/Scripts/Scene/34402/scene34402_group234402011.lua",
+            "resources/Scripts/Scene/34402/scene34402_group234402012.lua",
+            "resources/Scripts/Scene/34402/scene34402_group234402013.lua",
+            "resources/Scripts/Scene/34402/scene34402_group234402014.lua"
+          ]
+        },
+        {
+          "levelId": 18,
+          "levelIndex": 3,
+          "dungeonId": 3542,
+          "firstPassRewardId": 621018,
+          "sceneId": 35402,
+          "passCond": 50,
+          "serverMonsterLevel": 60,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                120
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                240
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                330
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 15000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 6,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 8,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 5,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117003
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/35402/scene35402_group235402001.lua",
+            "resources/Scripts/Scene/35402/scene35402_group235402002.lua",
+            "resources/Scripts/Scene/35402/scene35402_group235402003.lua",
+            "resources/Scripts/Scene/35402/scene35402_group235402004.lua",
+            "resources/Scripts/Scene/35402/scene35402_group235402005.lua"
+          ]
+        }
+      ],
+      "threeConsecutiveLevels": true
+    },
+    {
+      "floorId": 1007,
+      "floorIndex": 7,
+      "levelGroupId": 7,
+      "teamNum": 2,
+      "unlockStarCount": 6,
+      "floorLevelConfigId": 1308,
+      "overrideMonsterLevel": 65,
+      "levels": [
+        {
+          "levelId": 19,
+          "levelIndex": 1,
+          "dungeonId": 3343,
+          "firstPassRewardId": 621019,
+          "sceneId": 33403,
+          "passCond": 50,
+          "serverMonsterLevel": 65,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                120
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                300
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                420
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 20000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 7,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 10,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 5,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117001
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/33403/scene33403_group233403001.lua",
+            "resources/Scripts/Scene/33403/scene33403_group233403002.lua",
+            "resources/Scripts/Scene/33403/scene33403_group233403003.lua",
+            "resources/Scripts/Scene/33403/scene33403_group233403004.lua",
+            "resources/Scripts/Scene/33403/scene33403_group233403005.lua"
+          ]
+        },
+        {
+          "levelId": 20,
+          "levelIndex": 2,
+          "dungeonId": 3443,
+          "firstPassRewardId": 621020,
+          "sceneId": 34403,
+          "passCond": 50,
+          "serverMonsterLevel": 65,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                120
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                300
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                390
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 20000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 7,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 10,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 5,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117002
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/34403/scene34403_group234403001.lua",
+            "resources/Scripts/Scene/34403/scene34403_group234403010.lua",
+            "resources/Scripts/Scene/34403/scene34403_group234403011.lua",
+            "resources/Scripts/Scene/34403/scene34403_group234403012.lua",
+            "resources/Scripts/Scene/34403/scene34403_group234403013.lua",
+            "resources/Scripts/Scene/34403/scene34403_group234403014.lua"
+          ]
+        },
+        {
+          "levelId": 21,
+          "levelIndex": 3,
+          "dungeonId": 3543,
+          "firstPassRewardId": 621021,
+          "sceneId": 35403,
+          "passCond": 50,
+          "serverMonsterLevel": 65,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                120
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                330
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                450
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 20000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 7,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 10,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 5,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117003
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/35403/scene35403_group235403001.lua",
+            "resources/Scripts/Scene/35403/scene35403_group235403002.lua",
+            "resources/Scripts/Scene/35403/scene35403_group235403003.lua",
+            "resources/Scripts/Scene/35403/scene35403_group235403004.lua",
+            "resources/Scripts/Scene/35403/scene35403_group235403005.lua"
+          ]
+        }
+      ],
+      "threeConsecutiveLevels": true
+    },
+    {
+      "floorId": 1008,
+      "floorIndex": 8,
+      "levelGroupId": 8,
+      "teamNum": 2,
+      "unlockStarCount": 6,
+      "floorLevelConfigId": 1309,
+      "overrideMonsterLevel": 70,
+      "levels": [
+        {
+          "levelId": 22,
+          "levelIndex": 1,
+          "dungeonId": 3344,
+          "firstPassRewardId": 621022,
+          "sceneId": 33404,
+          "passCond": 50,
+          "serverMonsterLevel": 70,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                180
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                330
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                420
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 20000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 7,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 10,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 5,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117001
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/33404/scene33404_group233404001.lua",
+            "resources/Scripts/Scene/33404/scene33404_group233404002.lua",
+            "resources/Scripts/Scene/33404/scene33404_group233404003.lua",
+            "resources/Scripts/Scene/33404/scene33404_group233404004.lua",
+            "resources/Scripts/Scene/33404/scene33404_group233404005.lua"
+          ]
+        },
+        {
+          "levelId": 23,
+          "levelIndex": 2,
+          "dungeonId": 3444,
+          "firstPassRewardId": 621023,
+          "sceneId": 34404,
+          "passCond": 50,
+          "serverMonsterLevel": 70,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                180
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                300
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                360
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 20000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 7,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 10,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 5,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117002
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/34404/scene34404_group234404001.lua",
+            "resources/Scripts/Scene/34404/scene34404_group234404002.lua",
+            "resources/Scripts/Scene/34404/scene34404_group234404003.lua",
+            "resources/Scripts/Scene/34404/scene34404_group234404004.lua",
+            "resources/Scripts/Scene/34404/scene34404_group234404005.lua"
+          ]
+        },
+        {
+          "levelId": 24,
+          "levelIndex": 3,
+          "dungeonId": 3544,
+          "firstPassRewardId": 621024,
+          "sceneId": 35404,
+          "passCond": 50,
+          "serverMonsterLevel": 70,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                60
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                120
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                180
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 20000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 7,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 10,
+              "itemId": 104001
+            },
+            {
+              "itemCount": 5,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117003
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/35404/scene35404_group235404001.lua",
+            "resources/Scripts/Scene/35404/scene35404_group235404002.lua",
+            "resources/Scripts/Scene/35404/scene35404_group235404003.lua",
+            "resources/Scripts/Scene/35404/scene35404_group235404004.lua",
+            "resources/Scripts/Scene/35404/scene35404_group235404005.lua"
+          ]
+        }
+      ],
+      "threeConsecutiveLevels": true
+    },
+    {
+      "floorId": 1044,
+      "floorIndex": 9,
+      "levelGroupId": 44,
+      "teamNum": 2,
+      "unlockStarCount": 6,
+      "floorLevelConfigId": 1714,
+      "overrideMonsterLevel": 72,
+      "levels": [
+        {
+          "levelId": 130,
+          "levelIndex": 1,
+          "dungeonId": 3407,
+          "firstPassRewardId": 621025,
+          "sceneId": 33737,
+          "passCond": 50,
+          "serverMonsterLevel": 72,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                60
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                180
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                300
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 20000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 2,
+              "itemId": 104003
+            },
+            {
+              "itemCount": 3,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 5,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117002
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/33737/scene33737_group233737001.lua",
+            "resources/Scripts/Scene/33737/scene33737_group233737002.lua",
+            "resources/Scripts/Scene/33737/scene33737_group233737003.lua",
+            "resources/Scripts/Scene/33737/scene33737_group233737004.lua",
+            "resources/Scripts/Scene/33737/scene33737_group233737009.lua"
+          ]
+        },
+        {
+          "levelId": 131,
+          "levelIndex": 2,
+          "dungeonId": 3507,
+          "firstPassRewardId": 621026,
+          "sceneId": 34737,
+          "passCond": 50,
+          "serverMonsterLevel": 74,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                60
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                180
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                300
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 20000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 2,
+              "itemId": 104003
+            },
+            {
+              "itemCount": 3,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 5,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117002
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/34737/scene34737_group234737005.lua",
+            "resources/Scripts/Scene/34737/scene34737_group234737006.lua",
+            "resources/Scripts/Scene/34737/scene34737_group234737007.lua",
+            "resources/Scripts/Scene/34737/scene34737_group234737008.lua",
+            "resources/Scripts/Scene/34737/scene34737_group234737009.lua"
+          ]
+        },
+        {
+          "levelId": 132,
+          "levelIndex": 3,
+          "dungeonId": 3607,
+          "firstPassRewardId": 621027,
+          "sceneId": 35737,
+          "passCond": 50,
+          "serverMonsterLevel": 76,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                180
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                300
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                420
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 20000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 2,
+              "itemId": 104003
+            },
+            {
+              "itemCount": 3,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 5,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117003
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/35737/scene35737_group235737005.lua",
+            "resources/Scripts/Scene/35737/scene35737_group235737006.lua",
+            "resources/Scripts/Scene/35737/scene35737_group235737007.lua",
+            "resources/Scripts/Scene/35737/scene35737_group235737008.lua",
+            "resources/Scripts/Scene/35737/scene35737_group235737009.lua"
+          ]
+        }
+      ],
+      "threeConsecutiveLevels": true
+    },
+    {
+      "floorId": 1045,
+      "floorIndex": 10,
+      "levelGroupId": 45,
+      "teamNum": 2,
+      "unlockStarCount": 6,
+      "floorLevelConfigId": 1715,
+      "overrideMonsterLevel": 80,
+      "levels": [
+        {
+          "levelId": 133,
+          "levelIndex": 1,
+          "dungeonId": 3408,
+          "firstPassRewardId": 621028,
+          "sceneId": 33738,
+          "passCond": 50,
+          "serverMonsterLevel": 80,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                60
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                180
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                300
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 25000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 2,
+              "itemId": 104003
+            },
+            {
+              "itemCount": 3,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 6,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117002
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/33738/scene33738_group233738005.lua",
+            "resources/Scripts/Scene/33738/scene33738_group233738006.lua",
+            "resources/Scripts/Scene/33738/scene33738_group233738007.lua",
+            "resources/Scripts/Scene/33738/scene33738_group233738008.lua",
+            "resources/Scripts/Scene/33738/scene33738_group233738009.lua"
+          ]
+        },
+        {
+          "levelId": 134,
+          "levelIndex": 2,
+          "dungeonId": 3508,
+          "firstPassRewardId": 621029,
+          "sceneId": 34738,
+          "passCond": 50,
+          "serverMonsterLevel": 82,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                60
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                180
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                300
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 25000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 2,
+              "itemId": 104003
+            },
+            {
+              "itemCount": 3,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 6,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117002
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/34738/scene34738_group234738005.lua",
+            "resources/Scripts/Scene/34738/scene34738_group234738006.lua",
+            "resources/Scripts/Scene/34738/scene34738_group234738007.lua",
+            "resources/Scripts/Scene/34738/scene34738_group234738008.lua",
+            "resources/Scripts/Scene/34738/scene34738_group234738009.lua"
+          ]
+        },
+        {
+          "levelId": 135,
+          "levelIndex": 3,
+          "dungeonId": 3608,
+          "firstPassRewardId": 621030,
+          "sceneId": 35738,
+          "passCond": 50,
+          "serverMonsterLevel": 85,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                180
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                300
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                420
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 25000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 2,
+              "itemId": 104003
+            },
+            {
+              "itemCount": 3,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 6,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117003
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/35738/scene35738_group235738005.lua",
+            "resources/Scripts/Scene/35738/scene35738_group235738006.lua",
+            "resources/Scripts/Scene/35738/scene35738_group235738007.lua",
+            "resources/Scripts/Scene/35738/scene35738_group235738008.lua",
+            "resources/Scripts/Scene/35738/scene35738_group235738009.lua"
+          ]
+        }
+      ],
+      "threeConsecutiveLevels": true
+    },
+    {
+      "floorId": 1052,
+      "floorIndex": 11,
+      "levelGroupId": 52,
+      "teamNum": 2,
+      "unlockStarCount": 6,
+      "floorLevelConfigId": 1751,
+      "overrideMonsterLevel": 88,
+      "levels": [
+        {
+          "levelId": 154,
+          "levelIndex": 1,
+          "dungeonId": 3105,
+          "firstPassRewardId": 621031,
+          "sceneId": 33745,
+          "passCond": 50,
+          "serverMonsterLevel": 88,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_LEFT_HP_GREATER_THAN",
+              "argumentList": [
+                233745003,
+                3024,
+                20
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_LEFT_HP_GREATER_THAN",
+              "argumentList": [
+                233745003,
+                3024,
+                40
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_LEFT_HP_GREATER_THAN",
+              "argumentList": [
+                233745003,
+                3024,
+                60
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 30000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 2,
+              "itemId": 104003
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 6,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117002
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/33745/scene33745_group233745001.lua",
+            "resources/Scripts/Scene/33745/scene33745_group233745002.lua",
+            "resources/Scripts/Scene/33745/scene33745_group233745003.lua",
+            "resources/Scripts/Scene/33745/scene33745_group233745004.lua",
+            "resources/Scripts/Scene/33745/scene33745_group233745009.lua"
+          ]
+        },
+        {
+          "levelId": 155,
+          "levelIndex": 2,
+          "dungeonId": 3205,
+          "firstPassRewardId": 621032,
+          "sceneId": 34745,
+          "passCond": 50,
+          "serverMonsterLevel": 90,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                60
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                180
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                300
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 30000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 2,
+              "itemId": 104003
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 6,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117002
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/34745/scene34745_group234745005.lua",
+            "resources/Scripts/Scene/34745/scene34745_group234745006.lua",
+            "resources/Scripts/Scene/34745/scene34745_group234745007.lua",
+            "resources/Scripts/Scene/34745/scene34745_group234745008.lua",
+            "resources/Scripts/Scene/34745/scene34745_group234745009.lua"
+          ]
+        },
+        {
+          "levelId": 156,
+          "levelIndex": 3,
+          "dungeonId": 3305,
+          "firstPassRewardId": 621033,
+          "sceneId": 35745,
+          "passCond": 50,
+          "serverMonsterLevel": 92,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                180
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                300
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                420
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 30000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 2,
+              "itemId": 104003
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 6,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117003
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/35745/scene35745_group235745005.lua",
+            "resources/Scripts/Scene/35745/scene35745_group235745006.lua",
+            "resources/Scripts/Scene/35745/scene35745_group235745007.lua",
+            "resources/Scripts/Scene/35745/scene35745_group235745008.lua",
+            "resources/Scripts/Scene/35745/scene35745_group235745009.lua"
+          ]
+        }
+      ],
+      "threeConsecutiveLevels": true
+    },
+    {
+      "floorId": 1053,
+      "floorIndex": 12,
+      "levelGroupId": 53,
+      "teamNum": 2,
+      "unlockStarCount": 6,
+      "floorLevelConfigId": 1752,
+      "overrideMonsterLevel": 95,
+      "levels": [
+        {
+          "levelId": 157,
+          "levelIndex": 1,
+          "dungeonId": 3106,
+          "firstPassRewardId": 621034,
+          "sceneId": 33746,
+          "passCond": 50,
+          "serverMonsterLevel": 95,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                180
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                300
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                420
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 40000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 2,
+              "itemId": 104003
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 7,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117002
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/33746/scene33746_group233746001.lua",
+            "resources/Scripts/Scene/33746/scene33746_group233746002.lua",
+            "resources/Scripts/Scene/33746/scene33746_group233746003.lua",
+            "resources/Scripts/Scene/33746/scene33746_group233746004.lua",
+            "resources/Scripts/Scene/33746/scene33746_group233746005.lua"
+          ]
+        },
+        {
+          "levelId": 158,
+          "levelIndex": 2,
+          "dungeonId": 3206,
+          "firstPassRewardId": 621035,
+          "sceneId": 34746,
+          "passCond": 50,
+          "serverMonsterLevel": 98,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                180
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                300
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                420
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 40000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 2,
+              "itemId": 104003
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 7,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117002
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/34746/scene34746_group234746001.lua",
+            "resources/Scripts/Scene/34746/scene34746_group234746002.lua",
+            "resources/Scripts/Scene/34746/scene34746_group234746003.lua",
+            "resources/Scripts/Scene/34746/scene34746_group234746004.lua",
+            "resources/Scripts/Scene/34746/scene34746_group234746005.lua"
+          ]
+        },
+        {
+          "levelId": 159,
+          "levelIndex": 3,
+          "dungeonId": 3306,
+          "firstPassRewardId": 621036,
+          "sceneId": 35746,
+          "passCond": 50,
+          "serverMonsterLevel": 100,
+          "starConditions": [
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                180
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                300
+              ]
+            },
+            {
+              "towerCondType": "TOWER_COND_CHALLENGE_LEFT_TIME_MORE_THAN",
+              "argumentList": [
+                2,
+                420
+              ]
+            }
+          ],
+          "firstPassItems": [
+            {
+              "itemCount": 40000,
+              "itemId": 202
+            },
+            {
+              "itemCount": 2,
+              "itemId": 104003
+            },
+            {
+              "itemCount": 4,
+              "itemId": 104002
+            },
+            {
+              "itemCount": 7,
+              "itemId": 104013
+            },
+            {
+              "itemCount": 1,
+              "itemId": 117003
+            }
+          ],
+          "groupScripts": [
+            "resources/Scripts/Scene/35746/scene35746_group235746001.lua",
+            "resources/Scripts/Scene/35746/scene35746_group235746002.lua",
+            "resources/Scripts/Scene/35746/scene35746_group235746003.lua",
+            "resources/Scripts/Scene/35746/scene35746_group235746004.lua",
+            "resources/Scripts/Scene/35746/scene35746_group235746005.lua"
+          ]
+        }
+      ],
+      "threeConsecutiveLevels": true
+    }
+  ]
+}

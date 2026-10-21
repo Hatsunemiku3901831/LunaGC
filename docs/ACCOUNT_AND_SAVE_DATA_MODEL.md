@@ -113,7 +113,7 @@ items:                   { _id: ObjectId("000000000000000000000002"), ownerId: 2
 | 世界解锁 | `openStates`、`sceneTags`、`unlockedSceneAreas`、`unlockedScenePoints`、`forceLockedScenePoints`、`mapMarks` | 资源中的条件、场景 group 和任务进度 |
 | 任务辅助 | `questGlobalVariables`、`activeQuestTimers`、`forcedFinishedQuests`、`playedFirstLoginCutscene` | 真正父子任务在 `quests`；强制完成通知不等于完整任务数据 |
 | 角色与外观解锁 | `mainCharacterId`、`mainCharacterElement`、`nameCardList`、`flyCloakList`、`costumeList`、`traceEffectList`、`weaponSkinList` | 实际角色成长在 `avatars`，装备实例在 `items` |
-| 队伍与深渊 | `teamManager`、`towerData` | 临时队伍、场景能力与借用角色有独立生命周期；参考队伍持久化专题 |
+| 队伍与深渊 | `teamManager`、`towerData` | 临时队伍、场景能力与借用角色有独立生命周期；深渊字段与恢复边界见[深境螺旋数据与资源](SPIRAL_ABYSS_DATA_AND_RESOURCES.md#玩家持久字段字典) |
 | 图鉴与探索 | `codex`、`playerProgress`、`collectionRecordStore` | 资源 ID、图鉴旧档迁移和采集状态各自规则 |
 | 抽卡与购买 | `gachaInfo`、`shopLimit`、`freeProductPurchases`、`freePurchaseReceipts` | 抽卡历史在 `gachas`；卡池和商品定义在运行数据／资源 |
 | 学习解锁 | `unlockedForgingBlueprints`、`unlockedCombines`、`unlockedRecipies`、`unlockedFurniture`、`unlockedFurnitureSuite` | 学习书扣费记录及特定家园解锁 |

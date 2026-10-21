@@ -1,0 +1,109 @@
+{
+  "observedOn": "2026-10-21",
+  "sourceCommit": "7eb9f1229ff62bdb57df3db18fca1523e383c8ef",
+  "scope": "Service-side tests with isolated MongoDB. No native client gameplay acceptance.",
+  "gradleTestFilters": [
+    "*Tower*Test",
+    "*DungeonGroupPersistenceTest",
+    "*DungeonLoginRecoveryTest"
+  ],
+  "suites": [
+    {
+      "suite": "emu.grasscutter.server.packet.recv.TowerTeamRecoveryTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.DungeonGroupPersistenceTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.DungeonLoginRecoveryTest",
+      "tests": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerChamberCheckpointTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerChamberRetryTest",
+      "tests": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerEndNotificationTest",
+      "tests": 20,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerEntryOutcomeTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerHalfClockTest",
+      "tests": 27,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerPartyPersistenceTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerPartySelectionTest",
+      "tests": 25,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerPartyStableIdentityTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerSceneHandoffTest",
+      "tests": 23,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "io.grasscutter.TowerSettlementOrderTest",
+      "tests": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "totals": {
+    "tests": 227,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  }
+}
