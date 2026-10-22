@@ -1,5 +1,7 @@
 # LunaGC 7.1.0
 
+新机器或其他 Codex 接手部署，先读[一键部署与排障手册](docs/CODEX_ONE_CLICK_DEPLOY.md)：包含可复制任务说明、首次依赖准备、连续部署命令、运行验收及历史踩坑。
+
 本机 Windows 便携部署说明见 [LOCAL-RUN.txt](LOCAL-RUN.txt)。已准备好环境的本机可双击
 `Play-GS.cmd` 启动服务与游戏，`Stop-GS.cmd` 正常保存并停止服务，`GS-Status.cmd` 检查运行状态。
 游戏目录由 `.env` 的 `GAME_PATH` 指定；便携依赖及日志位于忽略提交的 `local/`，玩家数据位于 `mongodata/`。
