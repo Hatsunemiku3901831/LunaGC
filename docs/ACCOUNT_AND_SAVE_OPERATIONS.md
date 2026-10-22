@@ -74,6 +74,8 @@ $gsHealth.status.health | ConvertTo-Json -Depth 8
 
 魔导话题表不包含所有额外天赋（例如八重神子“被祈之证言”），应同时核对 `AvatarSkillDepotExcelConfigData.specialProudSkillOpens`。回归测试 `AvatarSpecialProudSkillPacketTest` 覆盖隔离数据库重载后的登录、展示、场景及技能库切换包；真实客户端天赋界面的锁定提示仍需游戏内复核。
 
+客户端会把两种被动合并到按技能组编号索引的字典，因此两种发送列表必须互斥。实机曾在同时发送八重神子 `585101` 到两个列表时报告 `ArgumentException: An item with the same key has already been added. Key: 5851`，随后天赋界面空白。所有上述快照及普通被动变化通知 `ProudSkillChangeNotify` 现在使用专门的普通被动投影，排除额外天赋；战斗逻辑仍读取完整的 `proudSkillList`。测试同时验证客户端合并时无重复组、普通/额外天赋完整、突破通知不会重新引入重复、内部存档集合未改变。
+
 ## MongoDB 只读查询模板
 
 以下是 **mongosh JavaScript**，不是 PowerShell。需先连接已核对的 MongoDB，并把库名、账号 ID 和 UID 换成实际目标。查询本身不调用游戏加载回调，不输出密码或登录令牌。在线状态不断变化时，各条查询不构成跨集合一致快照。

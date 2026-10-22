@@ -1225,6 +1225,13 @@ public class Avatar {
                 .distinct().boxed().toList();
     }
 
+    /** The client merges passive lists by group ID, so the two wire lists must be disjoint. */
+    public List<Integer> getInherentProudSkillList() {
+        if (proudSkillList == null) return List.of();
+        var special = new HashSet<>(getSpecialProudSkillList());
+        return proudSkillList.stream().filter(id -> !special.contains(id)).sorted().toList();
+    }
+
     public AvatarInfo toProto() {
         int fetterLevel = this.getFetterLevel();
         AvatarFetterInfo.Builder avatarFetter = AvatarFetterInfo.newBuilder().setExpLevel(fetterLevel);
@@ -1258,7 +1265,7 @@ public class Avatar {
                         .setSkillDepotId(this.getSkillDepotId())
                         .setCoreProudSkillLevel(this.getCoreProudSkillLevel())
                         .putAllSkillLevelMap(this.getSkillLevelMap())
-                        .addAllInherentProudSkillList(this.getProudSkillList())
+                        .addAllInherentProudSkillList(this.getInherentProudSkillList())
                         .addAllSpecialProudSkillList(this.getSpecialProudSkillList())
                         .putAllProudSkillExtraLevelMap(this.getProudSkillBonusMap())
                         .setAvatarType(this.getAvatarType())
@@ -1307,7 +1314,7 @@ public class Avatar {
                         .putAllFightPropMap(this.getFightProperties())
                         .setSkillDepotId(this.getSkillDepotId())
                         .setCoreProudSkillLevel(this.getCoreProudSkillLevel())
-                        .addAllInherentProudSkillList(this.getProudSkillList())
+                        .addAllInherentProudSkillList(this.getInherentProudSkillList())
                         .addAllSpecialProudSkillList(this.getSpecialProudSkillList())
                         .putAllSkillLevelMap(this.getSkillLevelMap())
                         .putAllProudSkillExtraLevelMap(this.getProudSkillBonusMap())
