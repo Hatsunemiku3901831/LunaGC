@@ -23,6 +23,18 @@ public enum LogicType {
     }
 
     public static boolean calculate(LogicType logicType, int[] progress) {
+        // Mixed expressions require their named operands and at least one trailing operand.
+        // Reject incomplete resource conditions before indexing or short-circuiting them.
+        int minimum =
+                logicType == null
+                        ? 0
+                        : switch (logicType) {
+                            case LOGIC_A_AND_ETCOR, LOGIC_A_OR_ETCAND -> 2;
+                            case LOGIC_A_AND_B_AND_ETCOR, LOGIC_A_OR_B_OR_ETCAND, LOGIC_A_AND_B_OR_ETCAND -> 3;
+                            default -> 0;
+                        };
+        if (progress.length < minimum) return false;
+
         if (progress.length == 0) {
             return true;
         }
