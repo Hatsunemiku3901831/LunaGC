@@ -127,6 +127,8 @@ ShopSystem 构造可能早于物品资源加载，因此初始自动目录为空
 
 对应 `primogems:1`–`:6` 仅发基础列数量，不带首购额外，不占用 crystals 的首购次数。购买次数不会因商店刷新自动重置；代码没有年度首充双倍重置机制。
 
+六档原生贴图来自客户端自己的 `UI_Mall_Purchase_Primogem1ststall` 至 `UI_Mall_Purchase_Primogem6thstall`，由 ProductMcoinDetailConfigData 的 `icon` 与 productId/configId 对应；服务端无需发送或重画图片。2026-10-23 的[点击免费充值](NATIVE_FREE_RECHARGE.md)使用同一套档位、资源和持久化次数，结晶价格仍显示 0。
+
 ### 千星事象凝核
 
 当前映射：`JIANADINMNE` → 基础，`PLELAKODHMN` → 首购额外，`HJGDAEMDFJO` → 后续额外。不能把 `AJEELGGGILF` 的展示总额当基础后再次加赠。

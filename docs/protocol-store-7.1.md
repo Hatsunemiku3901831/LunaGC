@@ -12,7 +12,7 @@ These are not copied from a different client version.
 | ProductPriceTier / 45455 | product ID = 8, price tier = 15 | writer `0x152404430`, tags `0x42`, `0x7a`; these differ from ShopCardProduct's fields 1 / 2 |
 | GetShopBatchReq / 12377 | packed shop types = 11 | codec constructor `0x1486033b0`, tag `0x5a` |
 | GetShopBatchRsp / 68803 | shops = 4, retcode = 10 | reader `0x147848850`, tags `0x22`, `0x50` |
-| Shop / 17784 | cards = 1, crystals = 9; goods = 4, shop type = 8 | reader `0x152917570`, nested types 51075 / 62721 |
+| Shop / 17784 | crystals = 1, cards = 9; goods = 4, shop type = 8 | reader `0x152917570`: tag 0x0a → offset 0x30 → generic type 62721; tag 0x4a → offset 0x18 → generic type 51075; shop 903 consumer `0x14c623716` iterates offset 0x30 |
 | ShopGoods / 79360 | min level = 11, purchase limit = 14, mora = 9, crystals = 15 | reader `0x14c846ab0`; consumer `0x149a58d60` maps offsets 0x74 / 0x8c / 0x5c to item IDs 201 / 202 / 203; level check `0x149a571f5` reads 0x88; limit check `0x149a57404` reads 0x78 |
 | ShopType / 57587 | RECOMMEND = 900, PACKAGE = 902, MCOIN = 903, PAIMON = 1001 | recovered numeric enum defaults; recommendation panel `0x14cfd78d9` tests shop type 0x384 |
 | ShopPlayProduct / 42863 | product ID = 1, price tier = 2, play type = 3 | writer tags at `0x152776713`, `0x15277678b`, `0x1527767f2` |
@@ -24,8 +24,11 @@ These are not copied from a different client version.
 | TakeBattlePassMissionPointRsp / 18629 / opcode 26251 | retcode = 8, mission IDs = 13 | reader `0x1497ab090`, tags `0x40`, `0x68` / `0x6a` |
 | BattlePassSchedule / 25940 | paid platform flags = 9, weekly points = 15 | reader `0x15304b350`; conversion `0x14d1222b0` maps field 9 to the flags tested with `Miscs.GetPlatFormCategory` at `0x14d125110` |
 
-The old Shop schema swapped its card and crystal lists. `StoreProtocolTest` now
-parses fixed wire fixtures using the observed tags. Unknown fields and unsupported
+The 2026-10-23 audit corrected an earlier misidentification in this document,
+the schema and its test: crystals are field 1 and cards are field 9. Generic type
+resolution using startup metadata plus the shop 903 consumer establishes the
+list identities; tag numbers alone did not. `StoreProtocolTest` now
+parses fixed wire fixtures using those independently checked identities. Unknown fields and unsupported
 concert/cloud products are left out; no unknown opcode has been invented.
 
 Product IDs, aliases, pack amounts, first/subsequent crystal bonuses and monthly

@@ -2,7 +2,7 @@
 
 配套：[总览](SHOP_AND_RECHARGE_SYSTEM.md) · [数据](SHOP_AND_RECHARGE_DATA.md) · [运维](SHOP_AND_RECHARGE_OPERATIONS.md)。核对日期 2026-10-22，基线 `519eb03386d19c4a62ecd74d4a83ac02427e0ba0`。
 
-本页数字来自当前 [PacketOpcodes.java](../src/main/java/emu/grasscutter/net/packet/PacketOpcodes.java) 和 [proto 源码](../src/main/proto)。客户端逆向依据见 [7.1 协议证据](protocol-store-7.1.md)；该资料绑定特定客户端哈希，本次没有重新逆向或启动游戏验证。字段存在、固定字节测试通过、客户端实际正常展示是三个不同层级。
+本页数字来自当前 [PacketOpcodes.java](../src/main/java/emu/grasscutter/net/packet/PacketOpcodes.java) 和 [proto 源码](../src/main/proto)。客户端逆向依据见 [7.1 协议证据](protocol-store-7.1.md)；2026-10-23 重新核对 Shop 列表及结晶完成流程，增量实机结果见[原生免费充值](NATIVE_FREE_RECHARGE.md)。其余内容保留上述基线。字段存在、固定字节测试通过、客户端实际正常展示是三个不同层级。
 
 ## 游戏请求入口
 
@@ -35,7 +35,7 @@ FreeStore 只加载总览列出的五类规范商品。Shop 中声明 concert �
 | GetShopmallDataRsp | shop_type=11，param=15，retcode=8，shop_type_list=7 |
 | GetShopBatchReq | packed shop_type_list=11 |
 | GetShopBatchRsp | shop_list=4，retcode=10 |
-| Shop | card_product_list=1，goods_list=4，shop_type=8，mcoin_product_list=9，city_id=11，beyond_mcoin_product_list=13 |
+| Shop | mcoin_product_list=1，goods_list=4，shop_type=8，card_product_list=9，city_id=11，beyond_mcoin_product_list=13 |
 | ShopGoods | max_level=1，goods_item=2，begin_time=4，goods_id=5，hcoin=6，cost_item_list=8，scoin=9，next_refresh_time=10，min_level=11，end_time=12，bought_num=13，single_limit=14，mcoin=15，beyond_mcoin=1068 |
 | BuyGoodsReq | shop_type=1，goods=8，buy_count=13 |
 | BuyGoodsRsp | retcode=4，goods_list=5，buy_count=7，shop_type=15 |
@@ -60,7 +60,7 @@ FreeStore 只加载总览列出的五类规范商品。Shop 中声明 concert �
 ### 常见协议陷阱
 
 - `ProductPriceTier` 的 productId/tier 是 8/15；不能复用 ShopCardProduct 的 1/2。
-- 月卡与结晶列表分别是 Shop 的 1/9；历史 schema 曾互换。
+- 月卡与结晶列表分别是 Shop 的 **9/1**。2026-10-23 重新核对泛型类型、字段偏移与消费端后纠正；旧文档与旧测试曾一起写反，不能继续作为证据。
 - 推荐页 900 和礼包页 902 都需要包含同一个月卡产品；只声明有 900 页签仍可能空白。
 - BuyGoodsRsp 使用 `goods_list`，不使用占位 `goods=50000`。当前 `buy_count` 返回**购买后本期已购份数**，不是这次新增份数；goods 内交付数量仍是每份数量。
 - 活动分页起止是 Unix 秒；Java 活动排期 Date 是毫秒，转换不能漏除 1000。
@@ -71,7 +71,9 @@ FreeStore 只加载总览列出的五类规范商品。Shop 中声明 concert �
 
 BuyGoods 常见返回名：未知商店/商品或非法算术为 `RET_SVR_ERROR`；活动关闭为 `RET_SHOP_NOT_OPEN`；条件、费用、资源不匹配常用 `RET_SHOP_CONTENT_NOT_MATCH`；限购为 `RET_SHOP_BATCH_BUY_COUNT_LIMIT`；容量为 `RET_PACK_EXCEED_MAX_WEIGHT`，熄星预检还可能返回 `RET_ITEM_EXCEED_LIMIT`。同一个错误码可能对应多个原因，排障需结合日志和服务端目录。
 
-RechargeReq 只捕获 `IllegalArgumentException` 并设 `retcode=1`，成功保持 0。保存异常、某些算术异常会向外传播，并不保证客户端一定收到标准失败回包。超时不能推断未发货。响应没有订单号、可重复使用的 receipt 或交易状态查询接口。
+RechargeReq 对非法请求返回 `retcode=1`；2026-10-23 起也捕获并记录运行时保存异常，回标准失败包。成功保持 0。结晶成功包的 product_id 为 `LunaGC.FreeRecharge:` + 规范产品 ID，只有 FreeStore 同步保存返回后才设置；随后重发 Shop 903 更新首购状态。本地补丁消费此标记，结束等待并跳过支付 SDK。其他产品保持原响应行为，不能据此宣称月卡/纪行也已完成原生跳支付验证。
+
+超时或失败不能推断未发货：既有 FreeStore 在持久化前已经修改内存和发送物品通知。响应没有订单号、可重复使用的 receipt 或交易状态查询接口。此改动不引入数据库事务，详见[原生免费充值实现](NATIVE_FREE_RECHARGE.md)。
 
 ## SDK 商品初始化与零价格表
 
@@ -86,10 +88,11 @@ sequenceDiagram
     S->>H: listPriceTier 或 listPriceTierV2
     H-->>S: 资源 tier 名 + 零价格 + 版本
     G-->>C: Shop 的卡/结晶产品 或纪行产品响应
-    Note over C,S: 原生显示和 checkout 仍需客户端验证
-    C->>G: RechargeReq（若客户端发出）
-    G->>G: FreeStore 免费发放
-    G-->>C: RechargeRsp
+    C->>G: 点击结晶卡片，RechargeReq
+    G->>G: FreeStore 免费发放并同步保存
+    G-->>C: 属性/物品通知 + 带本地标记的 RechargeRsp
+    C->>C: 补丁关闭等待，不调用支付 SDK
+    G-->>C: Shop 903 刷新首购次数
 ```
 
 HTTP 路径为：

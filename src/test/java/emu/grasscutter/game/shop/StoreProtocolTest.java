@@ -139,9 +139,12 @@ class StoreProtocolTest {
 
     @Test
     void cardAndCrystalsUseTheClientsDistinctLists() throws Exception {
-        // field 1: card with product ID "c"; field 9: crystals with product ID "m".
+        // 7.1 reader 0x152917570: field 1 -> offset 0x30, a list of type 62721
+        // (crystals); field 9 -> offset 0x18, a list of type 51075 (monthly card).
+        // Generic arguments and instance offsets were decoded from startup metadata,
+        // independently of the server schema. Shop 903 consumes offset 0x30.
         var shop =
-                ShopOuterClass.Shop.parseFrom(new byte[] {0x0a, 3, 0x0a, 1, 'c', 0x4a, 3, 0x0a, 1, 'm'});
+                ShopOuterClass.Shop.parseFrom(new byte[] {0x0a, 3, 0x0a, 1, 'm', 0x4a, 3, 0x0a, 1, 'c'});
         assertEquals("c", shop.getCardProductList(0).getProductId());
         assertEquals("m", shop.getMcoinProductList(0).getProductId());
     }

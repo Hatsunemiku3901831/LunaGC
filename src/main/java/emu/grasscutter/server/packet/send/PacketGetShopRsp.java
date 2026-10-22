@@ -16,6 +16,10 @@ import java.util.stream.Collectors;
 
 public class PacketGetShopRsp extends BasePacket {
     public PacketGetShopRsp(Player player, int shopType) {
+        this(player, Grasscutter.getGameServer().getShopSystem(), shopType);
+    }
+
+    public PacketGetShopRsp(Player player, ShopSystem manager, int shopType) {
         super(PacketOpcodes.GetShopRsp);
 
         this.setData(
@@ -23,7 +27,7 @@ public class PacketGetShopRsp extends BasePacket {
                         .setShop(
                                 buildShop(
                                         player,
-                                        Grasscutter.getGameServer().getShopSystem(),
+                                        manager,
                                         shopType))
                         .build());
         player.save();
