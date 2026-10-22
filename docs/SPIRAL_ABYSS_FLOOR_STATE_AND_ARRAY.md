@@ -48,4 +48,18 @@
 
 回归输入现在使用 `CodedOutputStream` 独立写原生字段，经过 `AbilityManager.onAbilityInvoke` 和四个实际动作 localId 验证召唤坐标、旋转、主人、等级和标记；另用不携带能力名的原生父子通知验证锁血解除。修复前两个用例失败，修复后通过。实机保护状态与分裂计数也记录到日志，用于继续核对阶段完成后的受伤能力。
 
-本次 88 套件、2,207 项相关回归全部通过，无失败、错误或跳过。23:13（Australia/Sydney）已便携部署，HTTP 健康、UDP 端口及运行 JAR SHA-256 核对通过：`2062269019c7855412f7815f540e7fe82a8e1d9eb01bdaa39eaa3c872c787056`。实机复测待用户反馈；[本次验证记录](data/tower-array-native-validation-2026-10-22.json)单独保留，未覆盖早先构建的证据。
+本次 88 套件、2,207 项相关回归全部通过，无失败、错误或跳过。23:13（Australia/Sydney）已便携部署，HTTP 健康、UDP 端口及运行 JAR SHA-256 核对通过：`2062269019c7855412f7815f540e7fe82a8e1d9eb01bdaa39eaa3c872c787056`。[本次验证记录](data/tower-array-native-validation-2026-10-22.json)单独保留，未覆盖早先构建的证据。2026-10-23 用户实测确认小怪出现，但击破小怪后 BOSS 仍不掉血，后续定位如下。
+
+## 同名状态遮蔽导致半秒锁血永久残留（2026-10-23）
+
+00:16:34 的实机日志确认四次召唤成功，包括强化机兵 `24020303`。00:16:50 已收到 `WeakStart`、分裂子状态和父状态的移除及 `Apparatus_Perpetual_Weak` 的新增；`_TRIGGER_TIMES=1`、`Limbo=false`、`Invincible=false`，但 `LockHP=true` 仍然残留。因此不能把这次不掉血继续归因于没有召唤或没有收到虚弱阶段。
+
+实际顺序中，客户端先报告 `Split_Temp_LockHP`，随后 `FirstSplit_Normal` 的移除回调在服务端创建同名的半秒状态。属性聚合 `activeControllers()` 对同名状态去重，客户端实例暂时遮蔽服务端实例。旧定时器错误地把这种遮蔽当成状态已注销，直接丢弃计时；客户端实例稍后移除，仍在注册表中的服务端实例便永久锁血。
+
+修复让定时器存活判断及到期删除使用完整注册集合 `lifecycleControllers()`。同名属性仍按原规则去重，客户端实例仍由客户端移除；被遮蔽的服务端状态按资源时长到期，只清理对应实例。没有按 BOSS ID 强行解除保护或改写阶段逻辑。
+
+`PerpetualArrayPhaseTest` 按上述实机顺序重放初始血量下限、半秒保护、首次分裂与虚弱通知，并使用可控时钟覆盖客户端实例遮蔽期间发生／不发生 tick 两种顺序。原生父引用保留本次实际观察到的 `ownerEntityId=0`，子实例按实际顺序显式移除。`AbilityModifierDurationTest` 另覆盖遮蔽期间到期与客户端先移除两种情况，检查属性去重、只清理服务端实例及结束回调仅一次。修复前共三项失败。新增伤害断言确认正常分裂期间不扣血、虚弱期间扣血。
+
+阶段日志增加仍注册的保护状态名称，便于实机直接区分 `LockHP`、`Split_Temp_LockHP` 与初始血量下限。真实客户端击破机兵后的扣血验收仍需本次新构建复测。
+
+本次 88 套件、2,211 项回归全部通过，无失败、错误或跳过。00:32（Australia/Sydney）已完成便携重建与重启；HTTP 健康、UDP 22101 及运行 JAR SHA-256 核对通过，三个改动类的 JAR 字节码也与本次编译产物一致。JAR SHA-256：`9d60d44244ff6e76be2e93ec0b50a1351ce2f2fdffa4b7ff43dbeb2f3fb0a6a4`；详见[本次验证记录](data/tower-array-duration-validation-2026-10-23.json)。

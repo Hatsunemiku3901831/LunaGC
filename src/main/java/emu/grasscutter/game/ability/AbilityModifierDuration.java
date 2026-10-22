@@ -102,7 +102,9 @@ public final class AbilityModifierDuration {
             }
             boolean active;
             synchronized(entity.getInstancedModifiers()) {
-                active=entity.getAbilityHpModifier().activeControllers().contains(state.controller);
+                // Same-name client instances mask pending server properties, not their lifetime.
+                // Dropping that timer would leave the pending state permanent after client removal.
+                active=entity.getAbilityHpModifier().lifecycleControllers().contains(state.controller);
             }
             if(!active) { states.remove(state.controller,state); continue; }
             if(state.duration<=0 || now-state.start<state.duration) continue;

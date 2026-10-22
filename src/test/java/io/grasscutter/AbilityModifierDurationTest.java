@@ -7,6 +7,8 @@ import emu.grasscutter.game.ability.*;
 import emu.grasscutter.game.props.FightProperty;
 import emu.grasscutter.utils.JsonUtils;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class AbilityModifierDurationTest {
     private AbilityTestFixture fixture;
@@ -54,6 +56,42 @@ class AbilityModifierDurationTest {
         fixture.entity.getInstancedModifiers().put(71,client); ability.registerModifier(fixture.entity,client);
         afterDeadline(); assertSame(client,fixture.entity.getInstancedModifiers().get(71));
         assertEquals(120,attack()); assertEquals(0,ended());
+    }
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void aPendingTimerKeepsAgingWhileTheSameNameClientInstanceMasksItsProperties(boolean expireWhileMasked) {
+        var now = new java.util.concurrent.atomic.AtomicLong();
+        var target = new AbilityTestFixture.TestEntity(fixture.scene) {
+            final AbilityModifierDuration duration = new AbilityModifierDuration(this, now::get);
+            @Override public AbilityModifierDuration getAbilityModifierDuration() { return duration; }
+        };
+        target.setId(43);
+        fixture.scene.getEntities().put(43, target);
+        target.setFightProperty(FightProperty.FIGHT_PROP_BASE_ATTACK, 100);
+        target.setFightProperty(FightProperty.FIGHT_PROP_CUR_ATTACK, 100);
+        configure(",\"duration\":0.5");
+        var client = new AbilityModifierController(ability, ability.getData(), ability.getData().modifiers.get("Buff"));
+        target.getInstancedModifiers().put(71, client);
+        ability.registerModifier(target, client);
+        var pending = new AbilityModifierController(ability, ability.getData(), ability.getData().modifiers.get("Buff"));
+        ability.registerModifier(target, pending);
+        assertEquals(120, target.getFightProperty(FightProperty.FIGHT_PROP_CUR_ATTACK), "same-name properties do not stack");
+        target.onTick(0);
+        now.set(500_000_000L);
+        if (expireWhileMasked) {
+            target.onTick(0);
+            assertSame(client, target.getInstancedModifiers().get(71));
+            assertFalse(ability.getModifiers(target).containsValue(pending), "expiry removes only the server instance");
+            assertEquals(1, target.getGlobalAbilityValues().getOrDefault("ended", 0f));
+        }
+        target.getInstancedModifiers().remove(71);
+        ability.unregisterModifier(target, client);
+        target.onTick(0);
+        assertEquals(100, target.getFightProperty(FightProperty.FIGHT_PROP_CUR_ATTACK));
+        assertFalse(ability.getModifiers(target).containsValue(pending));
+        assertEquals(1, target.getGlobalAbilityValues().getOrDefault("ended", 0f));
+        target.onTick(0);
+        assertEquals(1, target.getGlobalAbilityValues().getOrDefault("ended", 0f), "the expired instance ends once");
     }
     @Test void aPendingMultipleInstanceExpiresWithoutRemovingAnOlderClientInstance() throws Exception {
         configure(",\"stacking\":\"Multiple\"");

@@ -245,7 +245,7 @@ public class Ability {
                                  BooleanSupplier currentTimer, Runnable onRemoved) {
         synchronized(target.getInstancedModifiers()) {
             if(!currentTimer.getAsBoolean()
-                    || !target.getAbilityHpModifier().activeControllers().contains(modifier)
+                    || !target.getAbilityHpModifier().lifecycleControllers().contains(modifier)
                     || target.getInstancedModifiers().containsValue(modifier) && !modifier.ownsServerDuration()) return false;
             if(modifier.ownsServerDuration()) target.getInstancedModifiers().int2ObjectEntrySet().removeIf(entry -> {
                 if(entry.getValue()!=modifier) return false;

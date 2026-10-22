@@ -651,7 +651,8 @@
     "gameUdpHealthy": true
   },
   "clientVerification": {
-    "arraySummons": "pending",
-    "damageAfterPhase": "pending"
+    "reportedOn": "2026-10-23",
+    "arraySummons": "confirmed by user and four successful summon logs at 00:16:34 Australia/Sydney",
+    "damageAfterPhase": "failed: user reported boss still protected after enhanced minion defeat; follow-up diagnosis in SPIRAL_ABYSS_FLOOR_STATE_AND_ARRAY.md"
   }
 }

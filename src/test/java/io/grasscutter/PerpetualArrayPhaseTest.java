@@ -9,9 +9,13 @@ import java.io.ByteArrayOutputStream;
 import emu.grasscutter.data.ResourceLoader.AbilityConfigData;
 import emu.grasscutter.data.binout.AbilityData;
 import emu.grasscutter.game.ability.Ability;
+import emu.grasscutter.game.ability.AbilityCombatState;
+import emu.grasscutter.game.ability.AbilityGlobalValues;
+import emu.grasscutter.game.ability.AbilityModifierDuration;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.excels.monster.MonsterData;
 import emu.grasscutter.game.entity.EntityMonster;
+import emu.grasscutter.game.props.FightProperty;
 import emu.grasscutter.game.world.Position;
 import emu.grasscutter.net.proto.VectorOuterClass.Vector;
 import emu.grasscutter.net.proto.AbilityInvokeArgumentOuterClass.AbilityInvokeArgument;
@@ -50,13 +54,18 @@ class PerpetualArrayPhaseTest {
 
     private void nativeChange(AbilityTestFixture f, Ability ability, String name, int id,
                               boolean add, Integer parent, boolean invalidParent) throws Exception {
+        nativeChange(f, ability, name, id, add, parent, invalidParent, ability.getOwner().getId());
+    }
+
+    private void nativeChange(AbilityTestFixture f, Ability ability, String name, int id,
+                              boolean add, Integer parent, boolean invalidParent, int parentOwner) throws Exception {
         var bytes = new ByteArrayOutputStream();
         var writer = CodedOutputStream.newInstance(bytes);
         if (parent != null) {
             var attachment = new ByteArrayOutputStream();
             var child = CodedOutputStream.newInstance(attachment);
             if (invalidParent) child.writeBool(1, true);
-            child.writeUInt32(2, f.entity.getId());
+            child.writeUInt32(2, parentOwner);
             child.writeUInt32(3, parent);
             child.flush();
             writer.writeByteArray(1, attachment.toByteArray());
@@ -65,10 +74,66 @@ class PerpetualArrayPhaseTest {
         writer.writeInt32(11, new ArrayList<>(ability.getData().modifiers.keySet()).indexOf(name));
         writer.flush();
         f.player.getAbilityManager().onAbilityInvoke(AbilityInvokeEntry.newBuilder()
-                .setEntityId(f.entity.getId())
+                .setEntityId(ability.getOwner().getId())
                 .setArgumentType(AbilityInvokeArgument.AbilityInvokeArgument_ABILITY_META_MODIFIER_CHANGE)
                 .setHead(AbilityInvokeEntryHead.newBuilder().setInstancedAbilityId(add ? 1 : 0).setInstancedModifierId(id))
                 .setAbilityData(ByteString.copyFrom(bytes.toByteArray())).build());
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void nativeFirstSplitTransitionReleasesAllProtectionAfterEnhancedMinionDies(boolean tickWhileClientTempIsLive) throws Exception {
+        try (var f = new AbilityTestFixture()) {
+            var now = new java.util.concurrent.atomic.AtomicLong();
+            var boss = new AbilityTestFixture.TestEntity(f.scene) {
+                final AbilityModifierDuration duration = new AbilityModifierDuration(this, now::get);
+                @Override public AbilityModifierDuration getAbilityModifierDuration() { return duration; }
+            };
+            boss.setId(43);
+            f.scene.getEntities().put(boss.getId(), boss);
+            boss.setFightProperty(FightProperty.FIGHT_PROP_MAX_HP, 1000);
+            boss.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, 300);
+            var ability = new Ability(data("ShaderState"), boss, f.player);
+            boss.getInstancedAbilities().add(ability);
+            boss.getAbilityGlobalValueWatchers().refresh();
+            nativeChange(f, ability, "UNIQUE_Monster_Apparatus_Perpetual_FirstSplitManager", 3, true, null, false);
+            nativeChange(f, ability, "Monster_Apparatus_Perpetual_FirstSplit_Normal", 4, true, null, false);
+            assertEquals(0.3f, AbilityCombatState.read(boss).hpThreshold());
+
+            // 2026-10-23 live order: native temporary protection arrives BEFORE the
+            // global-value binding's onRemoved creates its server-side counterpart.
+            nativeChange(f, ability, "Split_Temp_LockHP", 12, true, null, false);
+            nativeChange(f, ability, "Monster_Apparatus_Perpetual_FirstSplit_Normal", 4, false, null, false);
+            nativeChange(f, ability, "UNIQUE_Monster_Apparatus_Perpetual_FirstSplitManager", 3, false, null, false);
+            nativeChange(f, ability, "UNIQUE_Monster_Apparatus_Perpetual_SecondSplitManager", 3, true, null, false);
+            AbilityGlobalValues.copy(ability, boss, "_TRIGGER_TIMES", 1);
+            nativeChange(f, ability, "Apparatus_Perpetual_LockHP", 4, true, null, false);
+            nativeChange(f, ability, "DenyLockOn", 5, true, 4, false, 0);
+            nativeChange(f, ability, "GhostToEmeny", 14, true, 4, false, 0);
+            nativeChange(f, ability, "LockHP", 16, true, 4, false, 0);
+            assertTrue(boss.isLockHP(), "the split stage still protects the boss");
+            assertFalse(AbilityCombatState.read(boss).limbo());
+
+            if (tickWhileClientTempIsLive) boss.onTick(0);
+            now.set(1_000_000_000L);
+            nativeChange(f, ability, "Split_Temp_LockHP", 12, false, null, false);
+            boss.onTick(0);
+            assertFalse(ability.getModifiers().containsKey("Split_Temp_LockHP"),
+                    "the half-second temporary lock must expire even when a client instance masked it");
+            assertTrue(boss.isLockHP(), "the real split-stage lock must remain until the phase ends");
+            boss.damage(50);
+            assertEquals(300, boss.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP));
+
+            nativeChange(f, ability, "Apparatus_Perpetual_ShaderState_WeakStart", 8, true, null, false);
+            nativeChange(f, ability, "LockHP", 16, false, null, false);
+            nativeChange(f, ability, "GhostToEmeny", 14, false, null, false);
+            nativeChange(f, ability, "DenyLockOn", 5, false, null, false);
+            nativeChange(f, ability, "Apparatus_Perpetual_LockHP", 4, false, null, false);
+            nativeChange(f, ability, "Apparatus_Perpetual_Weak", 2, true, null, false);
+            assertEquals(new AbilityCombatState(false, false, false, 0), AbilityCombatState.read(boss));
+            boss.damage(50);
+            assertEquals(250, boss.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP), "hits during weakness reduce HP again");
+        }
     }
 
     @ParameterizedTest

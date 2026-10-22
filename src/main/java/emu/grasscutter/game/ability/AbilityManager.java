@@ -1379,11 +1379,25 @@ public final class AbilityManager extends BasePlayerManager {
         entity.getAbilityGlobalValueWatchers().flushPending();
         if (entity instanceof EntityMonster monster && monster.getMonsterData().getId() == 24021101)
             Grasscutter.getLogger().info(
-                    "Perpetual Array modifier action={} instance={} local={} parent={}/{} protection={} splitCount={}",
+                    "Perpetual Array modifier action={} instance={} local={} parent={}/{} protection={} splitCount={} protectionModifiers={}",
                     modChange.getActionValue(), head.getInstancedModifierId(), modChange.getModifierLocalId(),
                     modChange.getAttachedInstancedModifier().getOwnerEntityId(),
                     modChange.getAttachedInstancedModifier().getInstancedModifierId(),
-                    AbilityCombatState.read(entity), entity.getGlobalAbilityValues().get("_TRIGGER_TIMES"));
+                    AbilityCombatState.read(entity), entity.getGlobalAbilityValues().get("_TRIGGER_TIMES"),
+                    protectionModifierNames(entity));
+    }
+
+    private static Set<String> protectionModifierNames(GameEntity entity) {
+        var names = new TreeSet<String>();
+        synchronized (entity.getInstancedModifiers()) {
+            for (var controller : entity.getAbilityHpModifier().lifecycleControllers()) {
+                var state = controller.getModifierData().state;
+                if (state == AbilityModifier.State.LockHP || state == AbilityModifier.State.Invincible
+                        || state == AbilityModifier.State.Limbo)
+                    names.add(controller.getAbilityData().abilityName + ":" + controller.getName());
+            }
+        }
+        return names;
     }
 
     /** Native adds often name only an instance and local index, without repeating the ability name. */
