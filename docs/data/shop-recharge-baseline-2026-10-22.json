@@ -1,0 +1,719 @@
+{
+  "schemaVersion": 1,
+  "auditedDate": "2026-10-22",
+  "sourceCommit": "519eb03386d19c4a62ecd74d4a83ac02427e0ba0",
+  "scope": "Source/resource baseline; excludes local runtime overrides, credentials and player data. Not a dump of the live catalog.",
+  "paymentMode": "FreeStore zero-price delivery; no real payment gateway",
+  "resourceSelection": "Server before ExcelBinOutput, tsj/json/tsv path priority; selected inputs for this baseline are JSON. Defaults listed separately, without resolving private runtime data overrides.",
+  "resources": [
+    {
+      "path": "resources/ExcelBinOutput/ShopGoodsExcelConfigData.json",
+      "rows": 5098,
+      "sha256": "09b6b146d194bbaf86bca55f795c817988879bc5681bb3cbc1f40e0a580bba2a"
+    },
+    {
+      "path": "resources/ExcelBinOutput/ShopRotateExcelConfigData.json",
+      "rows": 22,
+      "sha256": "186b71d07a3f5ae97230d72dea020c40bcf693d8a2af223b31f738a877ce6dad"
+    },
+    {
+      "path": "resources/ExcelBinOutput/ProductIdConfigData.json",
+      "rows": 228,
+      "sha256": "d3d5143a041a066f395f955ffec53ef3277e41612b2567f8e35eca288928fa4d"
+    },
+    {
+      "path": "resources/ExcelBinOutput/ProductCardDetailConfigData.json",
+      "rows": 1,
+      "sha256": "7cd0e6e01accda0037ea4368af930b0def33f99e546b33d5f8ad876d2817ad36"
+    },
+    {
+      "path": "resources/ExcelBinOutput/ProductMcoinDetailConfigData.json",
+      "rows": 6,
+      "sha256": "cc2fa0cb48009b970c8ba4d8c460f67e92b743234c4f5aa6e3e9be2e84a63e13"
+    },
+    {
+      "path": "resources/ExcelBinOutput/ProductBydMcoinDetailConfigData.json",
+      "rows": 6,
+      "sha256": "c78a6aeff9b3ae6789717421ae6781fa002a577433fb77c33734e2815472fcfc"
+    },
+    {
+      "path": "resources/ExcelBinOutput/ProductPlayDetailConfigData.json",
+      "rows": 5,
+      "sha256": "490c5c7117cd05a656fba4b8c9d380b11129778c2bef671fb958da24f5abcafc"
+    },
+    {
+      "path": "resources/ExcelBinOutput/ActivityShopOverallExcelConfigData.json",
+      "rows": 25,
+      "sha256": "70daa1b32d4cb1e0a592859924f799dee030419b26bce2d660dcbc860531b24a"
+    },
+    {
+      "path": "resources/ExcelBinOutput/ActivityShopSheetExcelConfigData.json",
+      "rows": 43,
+      "sha256": "0fdd156771070d5392d447e0bed45fcac00f712900568b8fca35011d37bccb2a"
+    },
+    {
+      "path": "resources/ExcelBinOutput/BattlePassScheduleExcelConfigData.json",
+      "rows": 53,
+      "sha256": "20c68d4df7e91b99079f3ae2eddc2fedaf65e2bc25d08e7d2d45f384d7be8aac"
+    },
+    {
+      "path": "resources/ExcelBinOutput/BattlePassRewardExcelConfigData.json",
+      "rows": 200,
+      "sha256": "b8c56a5966f18809a29a4ee61d2f8ea0230161a7e7a81deaa67fd9cb82bd6692"
+    },
+    {
+      "path": "resources/ExcelBinOutput/BattlePassMissionExcelConfigData.json",
+      "rows": 577,
+      "sha256": "c887a859bebadc1ca7268245aefc04e4f223aac7be6775f962f68bf89723de27"
+    },
+    {
+      "path": "resources/ExcelBinOutput/RewardExcelConfigData.json",
+      "rows": 15306,
+      "sha256": "a24c6db07afaff7b8d9658b53f53df5b210c22ddd44b628767a3871e490a12be"
+    },
+    {
+      "path": "src/main/resources/defaults/data/Shop.json",
+      "sha256": "5e1a4df83419acc1fcfd74b29d4ffe23904f990380085522d3a0e6f266d8902d"
+    },
+    {
+      "path": "src/main/resources/defaults/data/ShopChest.v2.json",
+      "sha256": "d150a70e6f67019d11c11455099fe0e324a5e0bdf68258bb1be4c80902020fa9"
+    },
+    {
+      "path": "src/main/resources/defaults/data/ActivityHistory.json",
+      "sha256": "78a690d9eaac0b6bad61b5e175f8ded97de3ea888afb34a52e93dca229e13164"
+    }
+  ],
+  "products": {
+    "normalization": "Derived using the FreeStore configId grouping and primary productId selection rules; disabledProducts not applied",
+    "total": 24,
+    "nativeCount": 18,
+    "tierCount": 11,
+    "entries": [
+      {
+        "key": "card:101",
+        "productId": "ys_chn_blessofmoon_tier5",
+        "kind": "card",
+        "amount": 300,
+        "firstBonus": 0,
+        "bonus": 0,
+        "days": 30,
+        "dailyAmount": 90,
+        "maxDays": 180,
+        "playType": 0,
+        "priceTier": "Tier_5",
+        "price": 0,
+        "aliases": [
+          "9NXJN7JXV445",
+          "9e764a3406984b9db3c5100a4d5ff683",
+          "YSPS4BLESSTIER05",
+          "YSPS5BLESSTIER05",
+          "cloudys_chn_blessofmoon_tier5",
+          "cloudysglbblessofmoontier5",
+          "ys_chn_blessofmoon_tier5",
+          "ys_glb_blessofmoon_tier5"
+        ]
+      },
+      {
+        "key": "primogems:1",
+        "productId": "",
+        "kind": "primogems",
+        "amount": 60,
+        "firstBonus": 0,
+        "bonus": 0,
+        "priceTier": "",
+        "price": 0,
+        "aliases": []
+      },
+      {
+        "key": "crystals:1",
+        "productId": "ys_chn_primogem1ststall_tier1",
+        "kind": "crystals",
+        "amount": 60,
+        "firstBonus": 60,
+        "bonus": 0,
+        "days": 0,
+        "dailyAmount": 0,
+        "maxDays": 0,
+        "playType": 0,
+        "priceTier": "Tier_1",
+        "price": 0,
+        "aliases": [
+          "9PP75K93DLPD",
+          "YSPS4VC1STTIER01",
+          "YSPS5VC1STTIER01",
+          "cloudys_chn_primogem1ststall_tier1",
+          "cloudysglbprimogem1ststalltier1",
+          "ec7ebdede72341aa8fb822a9e97fc4bf",
+          "ys_chn_primogem1ststall_tier1",
+          "ys_glb_primogem1ststall_tier1"
+        ]
+      },
+      {
+        "key": "primogems:2",
+        "productId": "",
+        "kind": "primogems",
+        "amount": 300,
+        "firstBonus": 0,
+        "bonus": 0,
+        "priceTier": "",
+        "price": 0,
+        "aliases": []
+      },
+      {
+        "key": "crystals:2",
+        "productId": "ys_chn_primogem2ndstall_tier5",
+        "kind": "crystals",
+        "amount": 300,
+        "firstBonus": 300,
+        "bonus": 30,
+        "days": 0,
+        "dailyAmount": 0,
+        "maxDays": 0,
+        "playType": 0,
+        "priceTier": "Tier_5",
+        "price": 0,
+        "aliases": [
+          "6727bb5a90484542a6f388b092a27033",
+          "9PKT7K5LZBLG",
+          "YSPS4VC2NDTIER05",
+          "YSPS5VC2NDTIER05",
+          "cloudys_chn_primogem2ndstall_tier5",
+          "cloudysglbprimogem2ndstalltier5",
+          "ys_chn_primogem2ndstall_tier5",
+          "ys_glb_primogem2ndstall_tier5"
+        ]
+      },
+      {
+        "key": "primogems:3",
+        "productId": "",
+        "kind": "primogems",
+        "amount": 980,
+        "firstBonus": 0,
+        "bonus": 0,
+        "priceTier": "",
+        "price": 0,
+        "aliases": []
+      },
+      {
+        "key": "crystals:3",
+        "productId": "ys_chn_primogem3rdstall_tier15",
+        "kind": "crystals",
+        "amount": 980,
+        "firstBonus": 980,
+        "bonus": 110,
+        "days": 0,
+        "dailyAmount": 0,
+        "maxDays": 0,
+        "playType": 0,
+        "priceTier": "Tier_15",
+        "price": 0,
+        "aliases": [
+          "9PH5M5R3GWRB",
+          "YSPS4VC3RDTIER15",
+          "YSPS5VC3RDTIER15",
+          "c08908aec82b45acba4e0de6687b37b2",
+          "cloudys_chn_primogem3rdstall_tier15",
+          "cloudysglbprimogem3rdstalltier15",
+          "ys_chn_primogem3rdstall_tier15",
+          "ys_glb_primogem3rdstall_tier15"
+        ]
+      },
+      {
+        "key": "primogems:4",
+        "productId": "",
+        "kind": "primogems",
+        "amount": 1980,
+        "firstBonus": 0,
+        "bonus": 0,
+        "priceTier": "",
+        "price": 0,
+        "aliases": []
+      },
+      {
+        "key": "crystals:4",
+        "productId": "ys_chn_primogem4thstall_tier30",
+        "kind": "crystals",
+        "amount": 1980,
+        "firstBonus": 1980,
+        "bonus": 260,
+        "days": 0,
+        "dailyAmount": 0,
+        "maxDays": 0,
+        "playType": 0,
+        "priceTier": "Tier_30",
+        "price": 0,
+        "aliases": [
+          "8d4c99afd9b04eb08e7a29cd285ef6ed",
+          "9NKVFQGS91PT",
+          "YSPS4VC4THTIER30",
+          "YSPS5VC4THTIER30",
+          "cloudys_chn_primogem4thstall_tier30",
+          "cloudysglbprimogem4thstalltier30",
+          "ys_chn_primogem4thstall_tier30",
+          "ys_glb_primogem4thstall_tier30"
+        ]
+      },
+      {
+        "key": "primogems:5",
+        "productId": "",
+        "kind": "primogems",
+        "amount": 3280,
+        "firstBonus": 0,
+        "bonus": 0,
+        "priceTier": "",
+        "price": 0,
+        "aliases": []
+      },
+      {
+        "key": "crystals:5",
+        "productId": "ys_chn_primogem5thstall_tier50",
+        "kind": "crystals",
+        "amount": 3280,
+        "firstBonus": 3280,
+        "bonus": 600,
+        "days": 0,
+        "dailyAmount": 0,
+        "maxDays": 0,
+        "playType": 0,
+        "priceTier": "Tier_50",
+        "price": 0,
+        "aliases": [
+          "4388ab4c203e4021b25ed39ad2e64a30",
+          "9MZ5N6PNTKX1",
+          "YSPS4VC5THTIER50",
+          "YSPS5VC5THTIER50",
+          "cloudys_chn_primogem5thstall_tier50",
+          "cloudysglbprimogem5thstalltier50",
+          "ys_chn_primogem5thstall_tier50",
+          "ys_glb_primogem5thstall_tier50"
+        ]
+      },
+      {
+        "key": "primogems:6",
+        "productId": "",
+        "kind": "primogems",
+        "amount": 6480,
+        "firstBonus": 0,
+        "bonus": 0,
+        "priceTier": "",
+        "price": 0,
+        "aliases": []
+      },
+      {
+        "key": "crystals:6",
+        "productId": "ys_chn_primogem6thstall_tier60",
+        "kind": "crystals",
+        "amount": 6480,
+        "firstBonus": 6480,
+        "bonus": 1600,
+        "days": 0,
+        "dailyAmount": 0,
+        "maxDays": 0,
+        "playType": 0,
+        "priceTier": "Tier_60",
+        "price": 0,
+        "aliases": [
+          "49604ce871b345bdb2d55ac838603757",
+          "9N58GRSNJJJB",
+          "YSPS4VC6THTIER60",
+          "YSPS5VC6THTIER60",
+          "cloudys_chn_primogem6thstall_tier60",
+          "cloudysglbprimogem6thstalltier60",
+          "ys_chn_primogem6thstall_tier60",
+          "ys_glb_primogem6thstall_tier60"
+        ]
+      },
+      {
+        "key": "beyond_crystals:10001",
+        "productId": "yschnbeyondgem1ststalltier1",
+        "kind": "beyond_crystals",
+        "amount": 60,
+        "firstBonus": 0,
+        "bonus": 0,
+        "days": 0,
+        "dailyAmount": 0,
+        "maxDays": 0,
+        "playType": 0,
+        "priceTier": "Tier_1",
+        "price": 0,
+        "aliases": [
+          "5b9acdcbdc1c4995a7428927f583796d",
+          "9MVTPHGXBM1M",
+          "YSPS5UC1STTIER01",
+          "cloudyschnbeyondgem1ststalltier1",
+          "cloudysglbbeyondgem1ststalltier1",
+          "yschnbeyondgem1ststalltier1",
+          "ysglbbeyondgem1ststalltier1"
+        ]
+      },
+      {
+        "key": "beyond_crystals:10002",
+        "productId": "yschnbeyondgem2ndstalltier5",
+        "kind": "beyond_crystals",
+        "amount": 270,
+        "firstBonus": 30,
+        "bonus": 30,
+        "days": 0,
+        "dailyAmount": 0,
+        "maxDays": 0,
+        "playType": 0,
+        "priceTier": "Tier_5",
+        "price": 0,
+        "aliases": [
+          "9NPD7878MNJM",
+          "YSPS5UC2NDTIER05",
+          "b1b63623e2a74249bed74af739ceec23",
+          "cloudyschnbeyondgem2ndstalltier5",
+          "cloudysglbbeyondgem2ndstalltier5",
+          "yschnbeyondgem2ndstalltier5",
+          "ysglbbeyondgem2ndstalltier5"
+        ]
+      },
+      {
+        "key": "beyond_crystals:10003",
+        "productId": "yschnbeyondgem3rdstalltier15",
+        "kind": "beyond_crystals",
+        "amount": 870,
+        "firstBonus": 110,
+        "bonus": 110,
+        "days": 0,
+        "dailyAmount": 0,
+        "maxDays": 0,
+        "playType": 0,
+        "priceTier": "Tier_15",
+        "price": 0,
+        "aliases": [
+          "6ed21de198fe48259b37c5232c925eb4",
+          "9NMCHCH7PQWX",
+          "YSPS5UC3RDTIER15",
+          "cloudyschnbeyondgem3rdstalltier15",
+          "cloudysglbbeyondgem3rdstalltier15",
+          "yschnbeyondgem3rdstalltier15",
+          "ysglbbeyondgem3rdstalltier15"
+        ]
+      },
+      {
+        "key": "beyond_crystals:10004",
+        "productId": "yschnbeyondgem4thstalltier30",
+        "kind": "beyond_crystals",
+        "amount": 1720,
+        "firstBonus": 260,
+        "bonus": 260,
+        "days": 0,
+        "dailyAmount": 0,
+        "maxDays": 0,
+        "playType": 0,
+        "priceTier": "Tier_30",
+        "price": 0,
+        "aliases": [
+          "270d0f2b054744c98b0abc883fec2aa8",
+          "9MWS5SRN4WDK",
+          "YSPS5UC4THTIER30",
+          "cloudyschnbeyondgem4thstalltier30",
+          "cloudysglbbeyondgem4thstalltier30",
+          "yschnbeyondgem4thstalltier30",
+          "ysglbbeyondgem4thstalltier30"
+        ]
+      },
+      {
+        "key": "beyond_crystals:10005",
+        "productId": "yschnbeyondgem5thstalltier50",
+        "kind": "beyond_crystals",
+        "amount": 2680,
+        "firstBonus": 600,
+        "bonus": 600,
+        "days": 0,
+        "dailyAmount": 0,
+        "maxDays": 0,
+        "playType": 0,
+        "priceTier": "Tier_50",
+        "price": 0,
+        "aliases": [
+          "00a36d8401e44447b6361a9ef8f7b3f5",
+          "9NCLG72B8XC6",
+          "YSPS5UC5THTIER50",
+          "cloudyschnbeyondgem5thstalltier50",
+          "cloudysglbbeyondgem5thstalltier50",
+          "yschnbeyondgem5thstalltier50",
+          "ysglbbeyondgem5thstalltier50"
+        ]
+      },
+      {
+        "key": "beyond_crystals:10006",
+        "productId": "yschnbeyondgem6thstalltier60",
+        "kind": "beyond_crystals",
+        "amount": 4880,
+        "firstBonus": 1600,
+        "bonus": 1600,
+        "days": 0,
+        "dailyAmount": 0,
+        "maxDays": 0,
+        "playType": 0,
+        "priceTier": "Tier_60",
+        "price": 0,
+        "aliases": [
+          "90d1c3d1acba42c29e824cc5ba0a9eba",
+          "9P9220Q9NHGR",
+          "YSPS5UC6THTIER60",
+          "cloudyschnbeyondgem6thstalltier60",
+          "cloudysglbbeyondgem6thstalltier60",
+          "yschnbeyondgem6thstalltier60",
+          "ysglbbeyondgem6thstalltier60"
+        ]
+      },
+      {
+        "key": "pass:201",
+        "productId": "ys_chn_bp_normal_tier10",
+        "kind": "pass",
+        "amount": 0,
+        "firstBonus": 0,
+        "bonus": 0,
+        "days": 0,
+        "dailyAmount": 0,
+        "maxDays": 0,
+        "playType": 1,
+        "priceTier": "Tier_10",
+        "price": 0,
+        "aliases": [
+          "3d16c426b6fc4bc1894ffdb7814af421",
+          "9PC95K0N3762",
+          "YSPS4BP003TIER10",
+          "YSPS5BP003TIER10",
+          "cloudys_chn_bp_normal_tier10",
+          "cloudysglbbpnormaltier10",
+          "ys_chn_bp_normal_tier10",
+          "ys_glb_bp_normal_tier10"
+        ]
+      },
+      {
+        "key": "pass:202",
+        "productId": "ys_chn_bp_extra_tier20",
+        "kind": "pass",
+        "amount": 0,
+        "firstBonus": 0,
+        "bonus": 0,
+        "days": 0,
+        "dailyAmount": 0,
+        "maxDays": 0,
+        "playType": 2,
+        "priceTier": "Tier_20",
+        "price": 0,
+        "aliases": [
+          "9P1260HTV868",
+          "YSPS4BP004TIER20",
+          "YSPS5BP004TIER20",
+          "b0396e65aaca4474a4d378a3b06c79fe",
+          "cloudys_chn_bp_extra_tier20",
+          "cloudysglbbpextratier20",
+          "ys_chn_bp_extra_tier20",
+          "ys_glb_bp_extra_tier20"
+        ]
+      },
+      {
+        "key": "pass:203",
+        "productId": "ys_chn_bp_upgrade_tier12",
+        "kind": "pass",
+        "amount": 0,
+        "firstBonus": 0,
+        "bonus": 0,
+        "days": 0,
+        "dailyAmount": 0,
+        "maxDays": 0,
+        "playType": 3,
+        "priceTier": "Tier_12",
+        "price": 0,
+        "aliases": [
+          "60adee55b47f48d29abb8b2f959eb9f9",
+          "9PJHD0FMPPBW",
+          "YSPS4UP003TIER12",
+          "YSPS5UP003TIER12",
+          "cloudys_chn_bp_upgrade_tier12",
+          "cloudysglbbpupgradetier12",
+          "ys_chn_bp_upgrade_tier12",
+          "ys_glb_bp_upgrade_tier12"
+        ]
+      },
+      {
+        "key": "pass:204",
+        "productId": "yschnbpnormaldiscounttierbp5",
+        "kind": "pass",
+        "amount": 0,
+        "firstBonus": 0,
+        "bonus": 0,
+        "days": 0,
+        "dailyAmount": 0,
+        "maxDays": 0,
+        "playType": 4,
+        "priceTier": "Tier_bp_5",
+        "price": 0,
+        "aliases": [
+          "9NVJ9T6LVXDR",
+          "9c6eb1f8ccde49269a2b3521e1bc44c9",
+          "YSPS5BP001TIER05",
+          "cloudyschnbpnormaldiscounttierbp5",
+          "cloudysglbbpnormaldiscounttierbp5",
+          "yschnbpnormaldiscounttierbp5",
+          "ysglbbpnormaldiscounttierbp5"
+        ]
+      },
+      {
+        "key": "pass:205",
+        "productId": "yschnbpextradiscounttierbp15",
+        "kind": "pass",
+        "amount": 0,
+        "firstBonus": 0,
+        "bonus": 0,
+        "days": 0,
+        "dailyAmount": 0,
+        "maxDays": 0,
+        "playType": 5,
+        "priceTier": "Tier_bp_15",
+        "price": 0,
+        "aliases": [
+          "715546e380574d3a8bc81e90ad2a94fa",
+          "9N33GQZ7056C",
+          "YSPS5BP002TIER15",
+          "cloudyschnbpextradiscounttierbp15",
+          "cloudysglbbpextradiscounttierbp15",
+          "yschnbpextradiscounttierbp15",
+          "ysglbbpextradiscounttierbp15"
+        ]
+      }
+    ]
+  },
+  "validation": {
+    "date": "2026-10-22",
+    "suiteCount": 17,
+    "totals": {
+      "tests": 151,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "suites": [
+      {
+        "name": "emu.grasscutter.game.shop.BattlePassFlowTest",
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "emu.grasscutter.game.shop.BattlePassInventoryLockTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "emu.grasscutter.game.shop.CosmeticProtocolTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "emu.grasscutter.game.shop.CostumeShopTest",
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "emu.grasscutter.game.shop.FreeStoreInventoryLockTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "emu.grasscutter.game.shop.FreeStoreTest",
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "emu.grasscutter.game.shop.ShopCatalogTest",
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "emu.grasscutter.game.shop.ShopPresentationTest",
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "emu.grasscutter.game.shop.SpecialCosmeticShopTest",
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "emu.grasscutter.game.shop.StoreProductInitializationTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "emu.grasscutter.game.shop.StoreProtocolTest",
+        "tests": 13,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "emu.grasscutter.server.http.handlers.StorePriceRoutesTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.ActivityShopTest",
+        "tests": 20,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.AsterBigShopTest",
+        "tests": 25,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.AsterShopTest",
+        "tests": 22,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.ShopBatchSaveTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.ShopTransactionConcurrencyTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ],
+    "realMongoFaultInjectionExecuted": false,
+    "gameClientAcceptanceExecuted": false,
+    "runtimeRedeployed": false
+  }
+}

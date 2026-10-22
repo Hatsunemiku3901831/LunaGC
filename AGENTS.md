@@ -32,3 +32,9 @@
 - 涉及深渊选队、楼层、上下半、重试或结算时，先读 [系统接手指南](docs/SPIRAL_ABYSS_SYSTEM.md)。
 - 客户端类型、命令号与字段状态见 [客户端与协议](docs/SPIRAL_ABYSS_CLIENT_PROTOCOL.md)；排期、Lua、星级、奖励和存档见 [数据与资源](docs/SPIRAL_ABYSS_DATA_AND_RESOURCES.md)。
 - 排障、独立数据库测试和游戏内验收见 [运维与验证](docs/SPIRAL_ABYSS_OPERATIONS.md)。服务端测试通过不能代替真实客户端协议与玩法验收。
+
+## 商城与充值接手资料
+
+- 涉及商品目录、兑换、充值、月卡、纪行购买或活动商店时，先读 [系统接手指南](docs/SHOP_AND_RECHARGE_SYSTEM.md)。当前充值是免费发放，不是已接入真实支付网关。
+- 资源优先级、商品与货币编号、限购及存档见 [数据与资源](docs/SHOP_AND_RECHARGE_DATA.md)；游戏包、SDK 价格与 GM API 见 [客户端与接口](docs/SHOP_AND_RECHARGE_PROTOCOL.md)。
+- 排障、恢复边界、测试和后续风险见 [运维与验证](docs/SHOP_AND_RECHARGE_OPERATIONS.md)。修改前区分普通商城、免费充值、通用活动币与熄星账本，不能将其中一条路径的保证套用到其他路径；同步更新受影响章节。

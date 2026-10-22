@@ -12,6 +12,10 @@
 配套提供[客户端与协议](docs/SPIRAL_ABYSS_CLIENT_PROTOCOL.md)、[数据与资源](docs/SPIRAL_ABYSS_DATA_AND_RESOURCES.md)及[排障与验证](docs/SPIRAL_ABYSS_OPERATIONS.md)，
 明确区分已测试的服务端行为、协议缺口和仍需游戏内确认的部分。
 
+商城、免费充值、月卡、纪行及活动兑换见[商城与充值系统接手指南](docs/SHOP_AND_RECHARGE_SYSTEM.md)。
+配套提供[数据与资源](docs/SHOP_AND_RECHARGE_DATA.md)、[客户端协议与 GM 接口](docs/SHOP_AND_RECHARGE_PROTOCOL.md)和[运维、验证与后续风险](docs/SHOP_AND_RECHARGE_OPERATIONS.md)，
+说明当前免费发放模式、各交易路径的保存边界，以及原生 SDK 和真实支付尚不具备的保证。
+
 外部项目的适配线索、已核对的本地缺口与后续验证清单见 [2026-10-03 外部实现调研](docs/UPSTREAM_RESEARCH_2026-10-03.md)。
 最新完成项、已有替代入口及仍待适配的范围见 [参考差异当前状态](docs/REFERENCE_REMAINING_2026-10-15.md)。
 脚本世界首领奖励已补齐扣费前校验、容量保护和同一奖励花的玩家去重，见[首领奖励领取保护](docs/BOSS_CHEST_REWARD_GUARD_2026-10-17.md)。
