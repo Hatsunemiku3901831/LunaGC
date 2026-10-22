@@ -68,6 +68,12 @@ $gsHealth.status.health | ConvertTo-Json -Depth 8
 
 健康计算见 [RuntimeDiagnostics](../src/main/java/emu/grasscutter/server/game/RuntimeDiagnostics.java)：逻辑循环未停滞、无检测到的死锁、队列等待占用低于 80%。失败计数和一次真实数据库读写成功不在这个布尔表达式里。停机日志出现 `Database shutdown timed out with unfinished writes` 时，不能把进程退出称为已完整保存。
 
+## 额外天赋显示锁定（2026-10-23）
+
+角色 `avatars.proudSkillList` 同时保存普通被动和额外天赋。仅检查该列表及任务完成记录，不能确认客户端已收到解锁状态：`AvatarInfo`、`ShowAvatarInfo`、`SceneAvatarInfo` 和 `AvatarSkillDepotChangeNotify` 必须填写专用 `special_proud_skill_list`。当前发送逻辑从所选技能库的特殊被动组与角色已拥有被动的交集生成该列表，保持存档与战斗被动列表不变。
+
+魔导话题表不包含所有额外天赋（例如八重神子“被祈之证言”），应同时核对 `AvatarSkillDepotExcelConfigData.specialProudSkillOpens`。回归测试 `AvatarSpecialProudSkillPacketTest` 覆盖隔离数据库重载后的登录、展示、场景及技能库切换包；真实客户端天赋界面的锁定提示仍需游戏内复核。
+
 ## MongoDB 只读查询模板
 
 以下是 **mongosh JavaScript**，不是 PowerShell。需先连接已核对的 MongoDB，并把库名、账号 ID 和 UID 换成实际目标。查询本身不调用游戏加载回调，不输出密码或登录令牌。在线状态不断变化时，各条查询不构成跨集合一致快照。

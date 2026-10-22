@@ -1215,6 +1215,16 @@ public class Avatar {
                 : 0;
     }
 
+    /** Special passives use a separate client field; combat stores all passives together. */
+    public List<Integer> getSpecialProudSkillList() {
+        if (skillDepot == null || skillDepot.getQuestProudSkillGroupIds() == null
+                || proudSkillList == null) return List.of();
+        return skillDepot.getQuestProudSkillGroupIds().intStream()
+                .map(group -> group * 100 + 1)
+                .filter(proudSkillList::contains)
+                .distinct().boxed().toList();
+    }
+
     public AvatarInfo toProto() {
         int fetterLevel = this.getFetterLevel();
         AvatarFetterInfo.Builder avatarFetter = AvatarFetterInfo.newBuilder().setExpLevel(fetterLevel);
@@ -1249,6 +1259,7 @@ public class Avatar {
                         .setCoreProudSkillLevel(this.getCoreProudSkillLevel())
                         .putAllSkillLevelMap(this.getSkillLevelMap())
                         .addAllInherentProudSkillList(this.getProudSkillList())
+                        .addAllSpecialProudSkillList(this.getSpecialProudSkillList())
                         .putAllProudSkillExtraLevelMap(this.getProudSkillBonusMap())
                         .setAvatarType(this.getAvatarType())
                         .setBornTime(this.getBornTime())
@@ -1297,6 +1308,7 @@ public class Avatar {
                         .setSkillDepotId(this.getSkillDepotId())
                         .setCoreProudSkillLevel(this.getCoreProudSkillLevel())
                         .addAllInherentProudSkillList(this.getProudSkillList())
+                        .addAllSpecialProudSkillList(this.getSpecialProudSkillList())
                         .putAllSkillLevelMap(this.getSkillLevelMap())
                         .putAllProudSkillExtraLevelMap(this.getProudSkillBonusMap())
                         .setFetterInfo(avatarFetter)
