@@ -36,7 +36,7 @@ public class PacketTowerAllDataRsp extends BasePacket {
                 TowerAllDataRsp.newBuilder()
                         .setTowerScheduleId(schedule.getScheduleId())
                         .addAllTowerFloorRecordList(recordList)
-                        .setCurLevelRecord(TowerCurLevelRecord.newBuilder().setIsEmpty(true))
+                        .setCurLevelRecord(towerManager.currentLevelRecord(towerManager.getCurrentLevel()))
                         .setScheduleStartTime(scheduleStart)
                         .setNextScheduleChangeTime(
                                 DateHelper.getUnixTime(towerScheduleManager.getNextScheduleChangeTime()))

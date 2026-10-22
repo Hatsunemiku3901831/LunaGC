@@ -1,5 +1,7 @@
 # 深境螺旋数据资源与存档
 
+> **2026-10-23 深秘降福增量**：新增 `TowerData.blessings`，加载卡片和每间候选权重。旧档空字段兼容、作用期与能力下发见[专项说明](SPIRAL_ABYSS_BLESSINGS.md)。下方原始审计中的三选一缺口由该说明覆盖，渊月祝福和地脉异常未纳入本次修复。
+
 > **开发增量**：本轮变更见[管理工具](SPIRAL_ABYSS_MANAGEMENT.md)。`TowerPresets.json` 的管理选择优先于旧 scheduleId；固定排期也须通过场景、区块、全部组及三间结构检查，不合格时拒绝选择。`load()` 会清候选／场景缓存。怪物数值使用每间预装的难度快照，不再依赖场景中已有玩家。星条件参数缺失返回 null；首次零星通关保留记录键。以下数据审计快照仍可用于追溯，行为差异以本段及新说明为准。
 
 深渊使用多个编号层级。排期选择楼层，楼层选择关卡组，关卡选择副本，副本选择场景，场景加载 Lua 组。玩家记录以资源 ID 为键保存；只改 UI 层号或把新版本表格覆盖进目录，不能保证这条链仍可运行。
@@ -44,8 +46,8 @@ scheduleId 62
 | --- | ---: | --- |
 | `TowerScheduleExcelConfigData.json` | 126 | `TowerScheduleData` 加载 ID、入口层、排期楼层和月度配置 ID |
 | `TowerFloorExcelConfigData.json` | 141 | `TowerFloorData` 加载 floorId、层号、关卡组、怪物备用等级、队伍数、楼层配置 ID |
-| `TowerLevelExcelConfigData.json` | 423 | `TowerLevelData` 加载间 ID／索引、组、副本、星条件、怪物等级和首通奖励 |
-| `TowerBuffExcelConfigData.json` | 36 | 有祝福配置资源；当前无完整选择／应用业务链 |
+| `TowerLevelExcelConfigData.json` | 423 | `TowerLevelData` 加载间 ID／索引、组、副本、星条件、怪物等级、首通奖励和三个祝福候选权重池 |
+| `TowerBuffExcelConfigData.json` | 36 | 深秘降福卡片、持续期与 buff 资源映射 |
 | `TowerRewardExcelConfigData.json` | 180 | 有 15 组、每组 12 层的奖励表；当前首通入口未按此表选择 rewardGroup |
 | `DungeonExcelConfigData.json` | 2378 | Tower 间指向的副本、场景、通关配置 |
 | `RewardExcelConfigData.json` | 见审计 | 首通 rewardId 最终解析到物品列表 |
@@ -55,7 +57,7 @@ scheduleId 62
 资源 README 明确这是围绕 7.1 组装并补入其他快照的社区资源集，不是完整官方客户端导出。表里存在某个字段，不代表 Java 类加载或业务使用它：
 
 - `TowerFloorData` 未加载 `unlockStarCount` 和各档星奖励 ID；当前选队入口也未用这些字段作服务器资格判定。
-- `TowerLevelData` 未加载 `argumentListUpper`、怪物预览列表和祝福候选权重字符串。星级读取 `argumentList`。
+- `TowerLevelData` 未加载 `argumentListUpper` 和怪物预览列表。星级读取 `argumentList`；祝福读取 `towerBuffConfigStrList`。
 - `TowerScheduleData` 未加载资源里的 `openTime`、`closeTime`、`rewardGroup`、`scheduleRewards`。显示时间来自另一路配置／算法。
 - `floorLevelConfigId`、`monthlyLevelConfigId` 虽存在字段／getter，当前深渊链未见相应效果应用调用；不能据此保证地脉异常与渊月祝福完整实现。
 - `TowerChallenge*`、`TowerDefense*` 资源属于其他系统，不能据文件名 Tower 就合并分析。
@@ -222,6 +224,7 @@ scheduleId 62
 | `record.floorStarRewardProgress` | 保存 | 星奖励进度字段；当前缺完整领取业务 |
 | `record.rewardedLevelIds` | 保存 | 已标记首通发放的间 ID 集合，旧档可缺失 |
 | `towerData.chamberState` | 保存 | 当前间入口角色快照 |
+| `towerData.blessings` | 保存 | 当前楼层各间选择、当前候选及候选刷新日；不保存运行 Ability 实例 |
 | `Player.towerManager` | 不保存 | 当前可能星数、挑战标志、半场计时等运行对象 |
 | `TeamManager.temporaryTeam` 及使用索引 | 不保存 | 当前会话的临时队伍与激活半场 |
 | `Player.dungeonReturnLocation` | 另一个持久字段 | 副本重登返回大世界的来源信息 |

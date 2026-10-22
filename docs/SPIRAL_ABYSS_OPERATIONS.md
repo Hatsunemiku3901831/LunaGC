@@ -1,5 +1,7 @@
 # 深境螺旋排障验证与开发交接
 
+> **2026-10-23 深秘降福修复**：最新选卡、作用期、效果与原生字段验证见[专项说明](SPIRAL_ABYSS_BLESSINGS.md)和[本轮验证记录](data/tower-blessing-validation-2026-10-23.json)。下面历史缺口表中的三选一缺口已修复；渊月祝福和地脉异常仍需单独验证。
+
 > **开发增量**：新增开发和部署记录见[历史配置与管理工具](SPIRAL_ABYSS_MANAGEMENT.md)。本轮实际修改运行代码与 GM 页面，必须执行 portable 重建部署。新增 `TowerManagementTest`、`TowerRecordRegressionTest`、`TowerSpawnIntegrationTest`、`TowerResourceIntegrationTest`，并扩展召唤物清理测试；下方 227 项为前一轮文档审计的历史结果。
 
 排查深渊时，先区分协议不可达、场景脚本问题、运行状态失配与存档／奖励问题，再选择测试。本文以[系统总览](SPIRAL_ABYSS_SYSTEM.md)的源码及资源基线为准，给出本机便携运行方式下的复现和交付要求。

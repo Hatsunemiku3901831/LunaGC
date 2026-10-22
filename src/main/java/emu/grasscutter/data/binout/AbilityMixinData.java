@@ -159,7 +159,7 @@ public class AbilityMixinData implements Serializable {
     @SerializedName("onTriggerSkill")
     public AbilityModifierAction[] onTriggerSkill;
 
-    @SerializedName("onTriggerUltimateSkill")
+    @SerializedName(value = "onTriggerUltimateSkill", alternate = "HMBEKPDBCEK")
     public AbilityModifierAction[] onTriggerUltimateSkill;
 
     public AbilityModifierAction[] IOKPLLOKGGJ;

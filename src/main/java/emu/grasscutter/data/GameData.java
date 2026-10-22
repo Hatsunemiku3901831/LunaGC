@@ -47,6 +47,7 @@ import emu.grasscutter.data.excels.scene.*;
 import emu.grasscutter.data.excels.tower.TowerFloorData;
 import emu.grasscutter.data.excels.tower.TowerLevelData;
 import emu.grasscutter.data.excels.tower.TowerScheduleData;
+import emu.grasscutter.data.excels.tower.TowerBuffData;
 import emu.grasscutter.data.excels.trial.*;
 import emu.grasscutter.data.excels.tps.*;
 import emu.grasscutter.data.excels.weapon.WeaponCurveData;
@@ -587,6 +588,10 @@ public final class GameData {
 
     @Getter
     private static final Int2ObjectMap<TowerFloorData> towerFloorDataMap =
+            new Int2ObjectOpenHashMap<>();
+
+    @Getter
+    private static final Int2ObjectMap<TowerBuffData> towerBuffDataMap =
             new Int2ObjectOpenHashMap<>();
 
     @Getter

@@ -306,6 +306,8 @@ public class EntityMonster extends GameEntity {
     public void onDeath(int killerId) {
         super.onDeath(killerId); // Invoke super class's onDeath() method.
         var scene = this.getScene();
+        if (scene.getDungeonManager() != null && scene.getDungeonManager().isTowerDungeon())
+            for (var player : scene.getPlayers()) player.getTowerManager().getBlessingEffects().onKill(this, killerId);
         var challenge = Optional.ofNullable(scene.getChallenge());
         var scriptManager = scene.getScriptManager();
 

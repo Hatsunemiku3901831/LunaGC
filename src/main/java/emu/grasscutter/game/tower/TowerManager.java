@@ -6,14 +6,21 @@ import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.common.ItemParamData;
 import emu.grasscutter.data.excels.dungeon.DungeonData;
+import emu.grasscutter.data.excels.tower.TowerBuffData;
 import emu.grasscutter.data.excels.tower.TowerLevelData;
+import emu.grasscutter.game.ability.TowerBlessingEffects;
 import emu.grasscutter.game.dungeons.*;
 import emu.grasscutter.game.dungeons.challenge.WorldChallenge;
 import emu.grasscutter.game.player.*;
-import emu.grasscutter.game.world.Scene;
 import emu.grasscutter.game.props.ActionReason;
+import emu.grasscutter.game.props.FightProperty;
+import emu.grasscutter.game.world.Scene;
 import emu.grasscutter.net.proto.RetcodeOuterClass.Retcode;
+import emu.grasscutter.net.proto.TowerCurLevelRecordOuterClass.TowerCurLevelRecord;
+import emu.grasscutter.net.proto.TowerTeamOuterClass.TowerTeam;
 import emu.grasscutter.server.packet.send.*;
+import emu.grasscutter.utils.GameCalendar;
+import java.time.Instant;
 import java.util.*;
 import java.util.function.BooleanSupplier;
 import lombok.*;
@@ -28,10 +35,17 @@ public class TowerManager extends BasePlayerManager {
     private volatile HalfTime halfTime;
     private TowerBattleProfile battleProfile;
     private List<Integer> selectedFloors;
+    @Getter private final TowerBlessingEffects blessingEffects;
+    private Scene blessingScene;
+    private int blessingLevelIndex;
+    private int blessingLevelId;
 
     public TowerBattleProfile getBattleProfile() {
-        return battleProfile == null ? player.getServer().getTowerSystem().getBattleProfile() : battleProfile;
+        return battleProfile == null
+                ? player.getServer().getTowerSystem().getBattleProfile()
+                : battleProfile;
     }
+
     private record HalfTime(
             Scene scene,
             DungeonManager manager,
@@ -43,6 +57,7 @@ public class TowerManager extends BasePlayerManager {
 
     public TowerManager(Player player) {
         super(player);
+        blessingEffects = new TowerBlessingEffects(player);
     }
 
     public TowerData getTowerData() {
@@ -71,6 +86,7 @@ public class TowerManager extends BasePlayerManager {
     }
 
     public void onTick() {
+        blessingEffects.refresh();
         var challenge = player.getScene().getChallenge();
         if (!inProgress || challenge == null || !challenge.inProgress()) return;
 
@@ -187,10 +203,10 @@ public class TowerManager extends BasePlayerManager {
      * actually rotate.
      *
      * <p>The schedule floors are gated twice: TowerAllDataRsp reports {@code
-     * is_finished_entrance_floor} from {@link #canEnterScheduleFloor()}, which wants six stars on
-     * the last entrance floor, and each floor's own {@code unlockStarCount} wants six stars on the
-     * one before it. Full nine-star records on every entrance floor satisfy both. Turn
-     * {@code game.tower.skipEntranceFloors} off to play floors 1-8 for real.
+     * is_finished_entrance_floor} from {@link #canEnterScheduleFloor()}, which wants six stars on the
+     * last entrance floor, and each floor's own {@code unlockStarCount} wants six stars on the one
+     * before it. Full nine-star records on every entrance floor satisfy both. Turn {@code
+     * game.tower.skipEntranceFloors} off to play floors 1-8 for real.
      */
     private void grantEntranceFloors(Map<Integer, TowerLevelRecord> recordMap) {
         if (!GAME_OPTIONS.tower.skipEntranceFloors) return;
@@ -277,8 +293,7 @@ public class TowerManager extends BasePlayerManager {
             }
             var firstLevel = getFirstLevelId(floor);
             var selection = player.getServer().getTowerSystem().captureSelection();
-            if (!selection.floors().contains(floor))
-                return false;
+            if (!selection.floors().contains(floor)) return false;
             if (firstLevel <= 0 || !player.getTeamManager().trySetupTemporaryTeam(towerTeams))
                 return false;
             battleProfile = selection.profile();
@@ -287,10 +302,12 @@ public class TowerManager extends BasePlayerManager {
             getTowerData().currentLevel = 0;
             getTowerData().currentLevelId = firstLevel;
             getTowerData().chamberState = null;
+            blessingEffects.clear();
+            blessingScene = null;
+            getTowerData().getBlessings().reset(floorData.getFloorId());
             halfTime = null;
             getTowerData()
-                    .rememberAbyssTeams(
-                            towerTeams, player.getTeamManager().getTemporaryTeamAvatarIds());
+                    .rememberAbyssTeams(towerTeams, player.getTeamManager().getTemporaryTeamAvatarIds());
 
             if (getTowerData().entryScene == 0) {
                 getTowerData().entryScene = player.getSceneId();
@@ -324,14 +341,10 @@ public class TowerManager extends BasePlayerManager {
             var data = getTowerData();
             if (data.chamberState != null
                     && data.chamberState.matches(
-                            getCurrentFloorId(), getCurrentLevelId(), data.getAbyssAvatarIds()))
-                return true;
+                            getCurrentFloorId(), getCurrentLevelId(), data.getAbyssAvatarIds())) return true;
             var state =
                     TowerChamberState.capture(
-                            player,
-                            getCurrentFloorId(),
-                            getCurrentLevelId(),
-                            data.getAbyssAvatarIds());
+                            player, getCurrentFloorId(), getCurrentLevelId(), data.getAbyssAvatarIds());
             if (state == null) return false;
             data.chamberState = state;
             player.save();
@@ -344,10 +357,7 @@ public class TowerManager extends BasePlayerManager {
             var state = getTowerData().chamberState;
             return state != null
                     && state.restore(
-                            player,
-                            getCurrentFloorId(),
-                            getCurrentLevelId(),
-                            getTowerData().getAbyssAvatarIds());
+                            player, getCurrentFloorId(), getCurrentLevelId(), getTowerData().getAbyssAvatarIds());
         }
     }
 
@@ -365,8 +375,7 @@ public class TowerManager extends BasePlayerManager {
                 && level != null
                 && level.getLevelGroupId() == floor.getLevelGroupId()
                 && level.getDungeonId() == dungeon.getId()
-                && data.getAbyssAvatarIds()
-                        .equals(player.getTeamManager().getTemporaryTeamAvatarIds())
+                && data.getAbyssAvatarIds().equals(player.getTeamManager().getTemporaryTeamAvatarIds())
                 && data.chamberState != null
                 && data.chamberState.canRestore(
                         player, getCurrentFloorId(), getCurrentLevelId(), data.getAbyssAvatarIds());
@@ -374,9 +383,9 @@ public class TowerManager extends BasePlayerManager {
 
     public boolean tryRestartChamber(DungeonData dungeon, BooleanSupplier enter) {
         synchronized (player.getSceneTransferLock()) {
-            if (enter == null || !restoreTemporaryTeams() || !canRestartChamber(dungeon))
-                return false;
+            if (enter == null || !restoreTemporaryTeams() || !canRestartChamber(dungeon)) return false;
             if (!player.getTeamManager().enterSceneWithTemporaryTeam(0, enter)) return false;
+            var offers = prepareBlessings();
             if (!restoreChamberState()) return false;
             if (!resetSelectedCooldowns()) return false;
             inProgress = false;
@@ -385,6 +394,10 @@ public class TowerManager extends BasePlayerManager {
             currentPossibleStars = STARS_PER_LEVEL;
             player.sendPacket(new PacketCanUseSkillNotify(false));
             notifyCurLevelRecordChange();
+            if (!offers.isEmpty())
+                player.sendPacket(
+                        new PacketTowerEnterLevelRsp(
+                                getCurrentFloorId(), getCurrentLevel(), Retcode.RET_SUCC, offers));
             player.sendPacket(
                     new PacketTowerLevelStarCondNotify(getCurrentFloorId(), getCurrentLevel(), 4));
             player.save();
@@ -426,9 +439,8 @@ public class TowerManager extends BasePlayerManager {
                     || data.currentLevel >= LEVELS_PER_FLOOR) return false;
             int firstLevel = getFirstLevelId(data.currentFloorId);
             var level = GameData.getTowerLevelDataMap().get(firstLevel + data.currentLevel);
-            if (firstLevel <= 0
-                    || level == null
-                    || level.getLevelGroupId() != floor.getLevelGroupId()) return false;
+            if (firstLevel <= 0 || level == null || level.getLevelGroupId() != floor.getLevelGroupId())
+                return false;
             var selected = getAbyssTeamGuids();
             var identities = data.getAbyssAvatarIds();
             boolean migrate = identities.isEmpty();
@@ -454,8 +466,7 @@ public class TowerManager extends BasePlayerManager {
                     || !player.getTeamManager().trySetupTemporaryTeam(selected)) return false;
             data.currentLevelId = firstLevel;
             if (migrate || !selected.equals(getAbyssTeamGuids())) {
-                data.rememberAbyssTeams(
-                        selected, player.getTeamManager().getTemporaryTeamAvatarIds());
+                data.rememberAbyssTeams(selected, player.getTeamManager().getTemporaryTeamAvatarIds());
                 player.save();
             }
             return true;
@@ -476,7 +487,9 @@ public class TowerManager extends BasePlayerManager {
         // number the client shows for the floor.
         var floorData = GameData.getTowerFloorDataMap().get(getCurrentFloorId());
         Grasscutter.getLogger()
-                .warn("No tower level data for level {}, falling back to the floor level", getCurrentLevelId());
+                .warn(
+                        "No tower level data for level {}, falling back to the floor level",
+                        getCurrentLevelId());
         return floorData != null ? floorData.getOverrideMonsterLevel() : 1;
     }
 
@@ -490,26 +503,36 @@ public class TowerManager extends BasePlayerManager {
             if (source == null || player.getWorld() == null || !restoreTemporaryTeams())
                 return rejectEntry();
             var levelData = getCurrentTowerLevelDataMap();
-            if (levelData == null
-                    || !GameData.getDungeonDataMap().containsKey(levelData.getDungeonId()))
+            if (levelData == null || !GameData.getDungeonDataMap().containsKey(levelData.getDungeonId()))
                 return rejectEntry();
             boolean freshFloor = getCurrentLevel() == 1 && getTowerData().chamberState == null;
-            var freshState = freshFloor ? TowerChamberState.newFloor(
-                    player, getCurrentFloorId(), getCurrentLevelId(), getTowerData().getAbyssAvatarIds()) : null;
+            var freshState =
+                    freshFloor
+                            ? TowerChamberState.newFloor(
+                                    player,
+                                    getCurrentFloorId(),
+                                    getCurrentLevelId(),
+                                    getTowerData().getAbyssAvatarIds())
+                            : null;
+            var resumeState = getTowerData().chamberState;
+            if (resumeState != null
+                    && !resumeState.matches(
+                            getCurrentFloorId(), getCurrentLevelId(), getTowerData().getAbyssAvatarIds()))
+                resumeState = null;
             if (freshFloor && freshState == null) return rejectEntry();
             int previousScene =
                     getTowerData().entryScene > 0 ? getTowerData().entryScene : source.getId();
             boolean entered =
-                    player.getTeamManager()
+                    player
+                            .getTeamManager()
                             .enterSceneWithTemporaryTeam(
                                     0,
                                     () ->
-                                            player.getServer()
+                                            player
+                                                    .getServer()
                                                     .getDungeonSystem()
                                                     .handoffDungeon(
-                                                            player,
-                                                            levelData.getDungeonId(),
-                                                            towerDungeonSettleListener));
+                                                            player, levelData.getDungeonId(), towerDungeonSettleListener));
             if (!entered) return rejectEntry();
             inProgress = false;
             currentTimeLimit = 0;
@@ -518,39 +541,196 @@ public class TowerManager extends BasePlayerManager {
             player.getScene().setPrevScenePoint(enterPointId);
             // Only commit recovery after a successful scene handoff. A canceled entry must not heal.
             if (freshState != null) {
-                if (!freshState.restore(player, getCurrentFloorId(), getCurrentLevelId(), getTowerData().getAbyssAvatarIds())
+                if (!freshState.restore(
+                                player,
+                                getCurrentFloorId(),
+                                getCurrentLevelId(),
+                                getTowerData().getAbyssAvatarIds())
                         || !resetSelectedCooldowns()) return rejectEntry();
             }
+            var offers = prepareBlessings();
+            if (freshState == null
+                    && resumeState != null
+                    && !resumeState.restore(
+                            player, getCurrentFloorId(), getCurrentLevelId(), getTowerData().getAbyssAvatarIds()))
+                return rejectEntry();
             captureChamberState();
             notifyCurLevelRecordChange();
-            player.getSession()
-                    .send(new PacketTowerEnterLevelRsp(getCurrentFloorId(), getCurrentLevel()));
+            player
+                    .getSession()
+                    .send(
+                            new PacketTowerEnterLevelRsp(
+                                    getCurrentFloorId(), getCurrentLevel(), Retcode.RET_SUCC, offers));
             player.getSession().send(new PacketCanUseSkillNotify(false));
             currentPossibleStars = 3;
-            player.getSession()
+            player
+                    .getSession()
                     .send(
                             new PacketTowerLevelStarCondNotify(
-                                    getCurrentFloorId(),
-                                    getCurrentLevel(),
-                                    currentPossibleStars + 1));
+                                    getCurrentFloorId(), getCurrentLevel(), currentPossibleStars + 1));
             return true;
         }
     }
 
     private boolean rejectEntry() {
-        player.getSession()
+        player
+                .getSession()
                 .send(
-                        new PacketTowerEnterLevelRsp(
-                                getCurrentFloorId(), getCurrentLevel(), Retcode.RET_FAIL));
+                        new PacketTowerEnterLevelRsp(getCurrentFloorId(), getCurrentLevel(), Retcode.RET_FAIL));
         return false;
     }
 
     public void notifyCurLevelRecordChange() {
-        player
-                .getSession()
-                .send(
-                        new PacketTowerCurLevelRecordChangeNotify(
-                                getTowerData().currentFloorId, getCurrentLevel()));
+        player.getSession().send(new PacketTowerCurLevelRecordChangeNotify(this, getCurrentLevel()));
+    }
+
+    private List<Integer> prepareBlessings() {
+        blessingScene = player.getScene();
+        blessingLevelIndex = getCurrentLevel();
+        blessingLevelId = getCurrentLevelId();
+        var offers =
+                getTowerData()
+                        .getBlessings()
+                        .prepare(
+                                getCurrentFloorId(),
+                                blessingLevelIndex,
+                                player.getUid(),
+                                GameCalendar.resetDay(Instant.now()).toEpochDay(),
+                                getCurrentTowerLevelDataMap());
+        refreshBlessingEffects();
+        player.save();
+        return offers;
+    }
+
+    public void refreshBlessingEffects() {
+        var scene = player.getScene();
+        if (player.getTeamManager().getTemporaryTeamIndex() < 0
+                || !getTowerData()
+                        .getAbyssAvatarIds()
+                        .equals(player.getTeamManager().getTemporaryTeamAvatarIds())) {
+            blessingEffects.clear();
+            return;
+        }
+        if (scene != null
+                && scene == blessingScene
+                && scene.getDungeonManager() != null
+                && scene.getDungeonManager().isTowerDungeon())
+            blessingEffects.activate(
+                    scene, getTowerData().getBlessings().active(getCurrentFloorId(), blessingLevelIndex));
+    }
+
+    public void leaveBlessingScene(Scene scene) {
+        if (scene == blessingScene) {
+            blessingEffects.clear();
+            blessingScene = null;
+        }
+    }
+
+    public boolean trySelectBlessing(int id) {
+        synchronized (player.getSceneTransferLock()) {
+            var scene = player.getScene();
+            var manager = scene == null ? null : scene.getDungeonManager();
+            var level = getCurrentTowerLevelDataMap();
+            if (scene == null
+                    || scene != blessingScene
+                    || manager == null
+                    || !manager.isTowerDungeon()
+                    || level == null
+                    || manager.getDungeonData() == null
+                    || level.getDungeonId() != manager.getDungeonData().getId()
+                    || getCurrentLevelId() != blessingLevelId
+                    || getCurrentLevel() != blessingLevelIndex
+                    || player.getTeamManager().getTemporaryTeamIndex() != 0
+                    || !getTowerData()
+                            .getAbyssAvatarIds()
+                            .equals(player.getTeamManager().getTemporaryTeamAvatarIds())) return false;
+            var state = getTowerData().getBlessings();
+            int previous = state.selected(getCurrentFloorId(), getCurrentLevel());
+            if (previous > 0) return previous == id;
+            var challenge = scene.getChallenge();
+            if (inProgress
+                    || challenge != null && (challenge.inProgress() || challenge.isSuccess())
+                    || !state.choose(getCurrentFloorId(), getCurrentLevel(), id)) return false;
+            var card = GameData.getTowerBuffDataMap().get(id);
+            if (card.getLastingType() == TowerBuffData.LastingType.TOWER_BUFF_LASTING_IMMEDIATE) {
+                healBlessingParty(card);
+            }
+            refreshBlessingEffects();
+            // The selected card is part of the battle entrance state, including HP% changes or
+            // an immediate heal. Retry restores this state without paying the card again.
+            getTowerData().chamberState =
+                    TowerChamberState.capture(
+                            player, getCurrentFloorId(), getCurrentLevelId(), getTowerData().getAbyssAvatarIds());
+            notifyCurLevelRecordChange();
+            player.save();
+            Grasscutter.getLogger()
+                    .info(
+                            "Tower blessing selected: floor {}, chamber {}, card {}",
+                            getCurrentFloorId(),
+                            getCurrentLevel(),
+                            id);
+            return true;
+        }
+    }
+
+    private void healBlessingParty(TowerBuffData card) {
+        var buff = GameData.getBuffDataMap().get(card.getBuffId());
+        var data = GameData.getAbilityData(buff.getAbilityName());
+        var modifier = data.modifiers.get(buff.getModifierName());
+        if (modifier.onAdded == null) return;
+        for (var party : getTowerData().getAbyssAvatarIds())
+            for (var id : party) {
+                var avatar = player.getAvatars().getAvatarById(id);
+                if (avatar == null) continue;
+                var entity = avatar.getAsEntity();
+                for (var action : modifier.onAdded) {
+                    if (action == null
+                            || action.type
+                                    != emu.grasscutter.data.binout.AbilityModifier.AbilityModifierAction.Type.HealHP)
+                        continue;
+                    float max = avatar.getFightProperty(FightProperty.FIGHT_PROP_MAX_HP);
+                    float ratio = action.amountByTargetMaxHPRatio.getConstant();
+                    float amount = max * ratio;
+                    if (!Float.isFinite(amount)
+                            || amount <= 0
+                            || avatar.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP) <= 0) continue;
+                    if (entity != null) entity.heal(amount);
+                    else
+                        synchronized (avatar.getFightProperties()) {
+                            float hp = avatar.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP);
+                            float debt = avatar.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP_DEBTS);
+                            float repaid = Math.min(amount, Math.max(0, debt));
+                            avatar.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP_DEBTS, debt - repaid);
+                            avatar.setFightProperty(
+                                    FightProperty.FIGHT_PROP_CUR_HP, Math.min(max, hp + amount - repaid));
+                        }
+                }
+                avatar.setCurrentHp(avatar.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP));
+                avatar.save();
+                player.sendPacket(new PacketAvatarFightPropNotify(avatar));
+            }
+    }
+
+    public TowerCurLevelRecord currentLevelRecord(int index) {
+        var record =
+                TowerCurLevelRecord.newBuilder().setCurFloorId(getCurrentFloorId()).setCurLevelIndex(index);
+        if (getCurrentFloorId() <= 0 || index < 1 || index > 3 || getAbyssTeamGuids().isEmpty())
+            return record.setIsEmpty(true).build();
+        record
+                .setCurFloorId(getCurrentFloorId())
+                .setCurLevelIndex(index)
+                .setIsUpperPart(player.getTeamManager().getTemporaryTeamIndex() != 1)
+                .addAllBuffIdList(getTowerData().getBlessings().active(getCurrentFloorId(), index));
+        int teamIndex = 0;
+        for (var party : getTowerData().getAbyssAvatarIds()) {
+            var team = TowerTeam.newBuilder().setTowerTeamId(++teamIndex);
+            for (var id : party) {
+                var avatar = player.getAvatars().getAvatarById(id);
+                if (avatar != null) team.addAvatarGuidList(avatar.getGuid());
+            }
+            record.addTowerTeamList(team);
+        }
+        return record.build();
     }
 
     public int getCurLevelStars() {
@@ -573,10 +753,7 @@ public class TowerManager extends BasePlayerManager {
                 long elapsed =
                         challenge.isSuccess() && !challenge.inProgress()
                                 ? Math.max(0, challenge.getFinishedTime())
-                                : Math.max(
-                                        0L,
-                                        (long) scene.getSceneTimeSeconds()
-                                                - challenge.getStartedAt());
+                                : Math.max(0L, (long) scene.getSceneTimeSeconds() - challenge.getStartedAt());
                 var timeRemaining = (long) challenge.getTimeLimit() - elapsed;
                 if (timeRemaining >= params.getMinimumTimeInSeconds()) {
                     break;
@@ -592,7 +769,7 @@ public class TowerManager extends BasePlayerManager {
                 Grasscutter.getLogger()
                         .error(
                                 "getCurLevelStars: Tower level {} has no or unknown condition"
-                                    + " defined for {} stars",
+                                        + " defined for {} stars",
                                 getCurrentLevelId(),
                                 star + 1);
                 continue;
@@ -629,8 +806,7 @@ public class TowerManager extends BasePlayerManager {
             }
         }
 
-        var granted =
-                grantFirstPassReward(recordMap.get(currentFloorId), currentLevelId, stars);
+        var granted = grantFirstPassReward(recordMap.get(currentFloorId), currentLevelId, stars);
 
         this.getTowerData().currentLevel++;
 
@@ -647,8 +823,7 @@ public class TowerManager extends BasePlayerManager {
         // The native settlement page displays the completed chamber and computes its next
         // button from that index. The server checkpoint has advanced, but the client should
         // receive the next floor/chamber only when tryEnterLevel actually enters it.
-        player.getSession().send(
-                new PacketTowerCurLevelRecordChangeNotify(currentFloorId, completedLevelIndex));
+        player.getSession().send(new PacketTowerCurLevelRecordChangeNotify(this, completedLevelIndex));
 
         return granted;
     }
@@ -660,8 +835,8 @@ public class TowerManager extends BasePlayerManager {
      * chamber returns nothing, and {@link #grantEntranceFloors} pre-marks the floors it skips so a
      * record that was never played for never yields loot either.
      *
-     * <p>Officially the reward only goes out on a chamber the player actually beat, which is the
-     * only path here - this is called from the settle listener on a completed dungeon.
+     * <p>Officially the reward only goes out on a chamber the player actually beat, which is the only
+     * path here - this is called from the settle listener on a completed dungeon.
      */
     private List<ItemParamData> grantFirstPassReward(
             TowerLevelRecord record, int levelId, int stars) {
@@ -701,7 +876,9 @@ public class TowerManager extends BasePlayerManager {
                 .getNextFloorId(this.getTowerData().currentFloorId);
     }
 
-    public boolean hasNextFloor() { return getNextFloorId() > 0; }
+    public boolean hasNextFloor() {
+        return getNextFloorId() > 0;
+    }
 
     public void clearEntry() {
         getTowerData().entryScene = 0;

@@ -26,6 +26,9 @@ public final class PlayerBuffManager extends BasePlayerManager {
     private final ScarletQuartz scarletQuartz;
     private int nextBuffUid;
 
+    /** Share UID allocation with scene-scoped buffs without putting them on the food expiry clock. */
+    public synchronized int reserveBuffUid() { return ++nextBuffUid; }
+
     public PlayerBuffManager(Player player) {
         this(player, System::currentTimeMillis);
     }

@@ -573,6 +573,7 @@ public final class TeamManager extends BasePlayerDataManager {
         }
 
         checkCurrentAvatarIsAlive(currentEntity);
+        this.player.getTowerManager().refreshBlessingEffects();
     }
 
     public void checkCurrentAvatarIsAlive(EntityAvatar currentEntity) {

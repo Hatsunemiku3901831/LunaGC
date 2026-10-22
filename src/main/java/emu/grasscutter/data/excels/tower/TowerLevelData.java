@@ -14,6 +14,7 @@ public class TowerLevelData extends GameResource {
     private int dungeonId;
     private List<TowerLevelCond> conds;
     private int monsterLevel;
+    private List<String> towerBuffConfigStrList;
 
     // RewardExcelConfigData id handed out the first time this chamber is cleared. Every row
     // carries one, so 0 means "not loaded" rather than "no reward".

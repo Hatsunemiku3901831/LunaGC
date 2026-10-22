@@ -25,15 +25,13 @@ import emu.grasscutter.server.event.player.PlayerTeleportEvent;
 import emu.grasscutter.server.game.GameSession;
 import emu.grasscutter.server.packet.recv.HandlerTowerEnterLevelReq;
 import emu.grasscutter.utils.FileUtils;
-
+import java.nio.file.*;
+import java.util.*;
+import java.util.function.Consumer;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import java.nio.file.*;
-import java.util.*;
-import java.util.function.Consumer;
 
 /** Actual tower/system calls with controlled transfer outcomes and owned avatar serialization. */
 class TowerEntryOutcomeTest extends QuestTestFixture {
@@ -80,6 +78,11 @@ class TowerEntryOutcomeTest extends QuestTestFixture {
 
         @Override
         public void recalcStats(boolean notify) {}
+
+        @Override
+        public Map<Integer, Integer> getSkillLevelMap() {
+            return Map.of();
+        }
 
         @Override
         public void save() {}
@@ -147,16 +150,14 @@ class TowerEntryOutcomeTest extends QuestTestFixture {
         oldLevels = new HashMap<>(GameData.getTowerLevelDataMap());
         oldDungeons = new HashMap<>(GameData.getDungeonDataMap());
         oldScenes = new HashMap<>(GameData.getSceneDataMap());
-        GameData.getSceneDataMap()
-                .put(4, gson.fromJson("{id:4,type:'SCENE_WORLD'}", SceneData.class));
+        GameData.getSceneDataMap().put(4, gson.fromJson("{id:4,type:'SCENE_WORLD'}", SceneData.class));
         GameData.getSceneDataMap()
                 .put(9, gson.fromJson("{id:9,type:'SCENE_DUNGEON'}", SceneData.class));
         GameData.getTowerFloorDataMap()
                 .put(
                         6002,
                         gson.fromJson(
-                                "{floorId:6002,floorIndex:5,levelGroupId:6201,teamNum:2}",
-                                TowerFloorData.class));
+                                "{floorId:6002,floorIndex:5,levelGroupId:6201,teamNum:2}", TowerFloorData.class));
         GameData.getTowerLevelDataMap()
                 .put(
                         6201,
@@ -166,8 +167,7 @@ class TowerEntryOutcomeTest extends QuestTestFixture {
         GameData.getDungeonDataMap()
                 .put(9001, gson.fromJson("{id:9001,sceneId:9,passCond:0}", EntryDungeonData.class));
         for (int i = 0; i < 3; i++)
-            assertTrue(
-                    player.getAvatars().addAvatar(new OwnedAvatar(10000021 + i, 4294967301L + i)));
+            assertTrue(player.getAvatars().addAvatar(new OwnedAvatar(10000021 + i, 4294967301L + i)));
         for (var avatar : player.getAvatars()) {
             avatar.setFightProperty(FightProperty.FIGHT_PROP_MAX_HP, 100);
             avatar.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, 100);
@@ -179,8 +179,7 @@ class TowerEntryOutcomeTest extends QuestTestFixture {
         Grasscutter.getConfig().server.game.enableScriptInBigWorld = false;
         try {
             source = new Scene(world, gson.fromJson("{id:4,type:'SCENE_WORLD'}", SceneData.class));
-            destination =
-                    new Scene(world, gson.fromJson("{id:9,type:'SCENE_DUNGEON'}", SceneData.class));
+            destination = new Scene(world, gson.fromJson("{id:9,type:'SCENE_DUNGEON'}", SceneData.class));
         } finally {
             Grasscutter.getConfig().server.game.enableScriptInBigWorld = enabled;
         }
@@ -189,7 +188,8 @@ class TowerEntryOutcomeTest extends QuestTestFixture {
         source.getPlayers().add(player);
         source.setPrevScene(77);
         source.setPrevScenePoint(88);
-        player.getTeamManager()
+        player
+                .getTeamManager()
                 .getCurrentSinglePlayerTeamInfo()
                 .getAvatars()
                 .addAll(List.of(10000021, 10000022));
@@ -200,10 +200,9 @@ class TowerEntryOutcomeTest extends QuestTestFixture {
         player.getTeamManager().setCurrentCharacterIndex(1);
         source.getEntities().put(secondEntity.getId(), secondEntity);
         assertTrue(
-                player.getTowerManager()
-                        .tryTeamSelect(
-                                6002,
-                                List.of(List.of(4294967301L, 4294967302L), List.of(4294967303L))));
+                player
+                        .getTowerManager()
+                        .tryTeamSelect(6002, List.of(List.of(4294967301L, 4294967302L), List.of(4294967303L))));
         replaceField(
                 emu.grasscutter.server.game.GameServer.class,
                 player.server,
@@ -245,6 +244,83 @@ class TowerEntryOutcomeTest extends QuestTestFixture {
         var field = TeamManager.class.getDeclaredField("useTemporarilyTeamIndex");
         field.setAccessible(true);
         return field.getInt(player.getTeamManager());
+    }
+
+    private TowerBlessingStateTest blessingResources(int firstCard) throws Exception {
+        TowerBlessingStateTest.resources();
+        var resources = new TowerBlessingStateTest();
+        resources.setup();
+        GameData.getTowerLevelDataMap()
+                .put(
+                        6201,
+                        gson.fromJson(
+                                "{levelId:6201,levelIndex:1,levelGroupId:6201,dungeonId:9001,towerBuffConfigStrList:['"
+                                        + firstCard
+                                        + ":100','28:100','18:100']}",
+                                TowerLevelData.class));
+        return resources;
+    }
+
+    @Test
+    void blessingSelectionReachesBothHalvesAndCannotBeChangedOrStackedByReplay() throws Exception {
+        var resources = blessingResources(2);
+        try {
+            var tower = player.getTowerManager();
+            assertFalse(tower.trySelectBlessing(2));
+            world.success = true;
+            assertTrue(tower.tryEnterLevel(123));
+            assertEquals(List.of(2, 28, 18), response().getTowerBuffIdListList());
+            assertFalse(tower.trySelectBlessing(1));
+            assertTrue(tower.trySelectBlessing(2));
+            assertTrue(tower.trySelectBlessing(2));
+            assertFalse(tower.trySelectBlessing(28));
+            for (var entity : player.getTeamManager().getActiveTeamSnapshot())
+                assertEquals(.08f, entity.getFightProperty(FightProperty.FIGHT_PROP_CRITICAL), .00001);
+            assertEquals(List.of(2), tower.currentLevelRecord(1).getBuffIdListList());
+            assertEquals(2, tower.currentLevelRecord(1).getTowerTeamListCount());
+            assertTrue(player.getTeamManager().tryUseTemporaryTeam(1));
+            assertEquals(
+                    .08f,
+                    player
+                            .getTeamManager()
+                            .getCurrentAvatarEntity()
+                            .getFightProperty(FightProperty.FIGHT_PROP_CRITICAL),
+                    .00001);
+            assertFalse(tower.trySelectBlessing(2));
+            tower.leaveBlessingScene(player.getScene());
+            for (var avatar : player.getAvatars())
+                assertEquals(0, avatar.getFightProperty(FightProperty.FIGHT_PROP_CRITICAL), .00001);
+        } finally {
+            resources.restore();
+        }
+    }
+
+    @Test
+    void immediateBlessingHealsBothPartiesOnceAndRetryRestoresItsCheckpoint() throws Exception {
+        var resources = blessingResources(19);
+        try {
+            var tower = player.getTowerManager();
+            world.success = true;
+            assertTrue(tower.tryEnterLevel(123));
+            // This represents a later chamber's carried damage, after the new-floor recovery.
+            for (var avatar : player.getAvatars())
+                avatar.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, 10);
+            assertTrue(tower.trySelectBlessing(19));
+            assertTrue(tower.trySelectBlessing(19));
+            for (var avatar : player.getAvatars())
+                assertEquals(35, avatar.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP));
+            assertTrue(tower.currentLevelRecord(1).getBuffIdListList().isEmpty());
+            for (var avatar : player.getAvatars())
+                avatar.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, 1);
+            assertTrue(tower.tryRestartChamber(GameData.getDungeonDataMap().get(9001), () -> true));
+            for (var avatar : player.getAvatars())
+                assertEquals(35, avatar.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP));
+            assertTrue(tower.trySelectBlessing(19));
+            for (var avatar : player.getAvatars())
+                assertEquals(35, avatar.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP));
+        } finally {
+            resources.restore();
+        }
     }
 
     private TowerEnterLevelRsp response() throws Exception {
@@ -307,8 +383,7 @@ class TowerEntryOutcomeTest extends QuestTestFixture {
 
     @ParameterizedTest
     @ValueSource(booleans = {false, true})
-    void absentWorldOrSceneReturnsFailureBeforeChangingParty(boolean missingWorld)
-            throws Exception {
+    void absentWorldOrSceneReturnsFailureBeforeChangingParty(boolean missingWorld) throws Exception {
         if (missingWorld) player.setWorld(null);
         else player.setScene(null);
         assertDoesNotThrow(() -> player.getTowerManager().enterLevel(123));
@@ -337,11 +412,15 @@ class TowerEntryOutcomeTest extends QuestTestFixture {
                         PacketOpcodes.TowerEnterLevelRsp,
                         PacketOpcodes.CanUseSkillNotify,
                         PacketOpcodes.TowerLevelStarCondNotify),
-                player.packets.stream().map(BasePacket::getOpcode)
-                        .filter(op -> op == PacketOpcodes.TowerCurLevelRecordChangeNotify
-                                || op == PacketOpcodes.TowerEnterLevelRsp
-                                || op == PacketOpcodes.CanUseSkillNotify
-                                || op == PacketOpcodes.TowerLevelStarCondNotify).toList());
+                player.packets.stream()
+                        .map(BasePacket::getOpcode)
+                        .filter(
+                                op ->
+                                        op == PacketOpcodes.TowerCurLevelRecordChangeNotify
+                                                || op == PacketOpcodes.TowerEnterLevelRsp
+                                                || op == PacketOpcodes.CanUseSkillNotify
+                                                || op == PacketOpcodes.TowerLevelStarCondNotify)
+                        .toList());
     }
 
     @Test
@@ -383,7 +462,8 @@ class TowerEntryOutcomeTest extends QuestTestFixture {
         }
         assertEquals(
                 true,
-                player.getTowerManager()
+                player
+                        .getTowerManager()
                         .getClass()
                         .getMethod("restoreChamberState")
                         .invoke(player.getTowerManager()));
@@ -393,7 +473,11 @@ class TowerEntryOutcomeTest extends QuestTestFixture {
     @Test
     void successfulNewChamberClearsPreviousChallengeBookkeeping() throws Exception {
         player.getTowerManager().onBegin();
-        replaceField(emu.grasscutter.game.tower.TowerManager.class, player.getTowerManager(), "currentTimeLimit", 600);
+        replaceField(
+                emu.grasscutter.game.tower.TowerManager.class,
+                player.getTowerManager(),
+                "currentTimeLimit",
+                600);
         world.success = true;
         assertTrue(player.getTowerManager().tryEnterLevel(123));
         assertFalse(player.getTowerManager().isInProgress());
@@ -403,7 +487,11 @@ class TowerEntryOutcomeTest extends QuestTestFixture {
     @Test
     void canceledNewChamberKeepsPreviousChallengeBookkeeping() throws Exception {
         player.getTowerManager().onBegin();
-        replaceField(emu.grasscutter.game.tower.TowerManager.class, player.getTowerManager(), "currentTimeLimit", 600);
+        replaceField(
+                emu.grasscutter.game.tower.TowerManager.class,
+                player.getTowerManager(),
+                "currentTimeLimit",
+                600);
         assertFalse(player.getTowerManager().tryEnterLevel(123));
         assertTrue(player.getTowerManager().isInProgress());
         assertEquals(600, player.getTowerManager().getCurrentTimeLimit());
@@ -424,10 +512,8 @@ class TowerEntryOutcomeTest extends QuestTestFixture {
                         event -> {
                             called[0] = true;
                             assertEquals(
-                                    List.of(firstEntity, secondEntity),
-                                    player.getTeamManager().getActiveTeam());
-                            assertSame(
-                                    secondEntity, source.getEntities().get(secondEntity.getId()));
+                                    List.of(firstEntity, secondEntity), player.getTeamManager().getActiveTeam());
+                            assertSame(secondEntity, source.getEntities().get(secondEntity.getId()));
                             assertFalse(source.getEntities().containsKey(firstEntity.getId()));
                             event.cancel();
                         })

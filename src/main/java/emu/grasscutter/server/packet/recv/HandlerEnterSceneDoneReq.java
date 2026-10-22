@@ -80,6 +80,7 @@ public class HandlerEnterSceneDoneReq extends PacketHandler {
         emu.grasscutter.game.tps.TpsWeaponSystem.sendSceneAmmunition(player);
         player.getAbilityManager().getSharedCooldown().synchronize();
         player.getAbilityManager().getSkillCooldown().synchronize();
+        player.getTowerManager().getBlessingEffects().resend();
 
         // Rsp
         session.send(new PacketEnterSceneDoneRsp(player));

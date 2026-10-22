@@ -1,0 +1,262 @@
+{
+  "observedOn": "2026-10-23",
+  "scope": "Per-chamber three-choice Benediction of the Abyss only; excludes Blessing of the Abyssal Moon and ley line effects.",
+  "resourceCommit": "dac2a9d43332ef51879522cf39da2831b0ca0543",
+  "resources": {
+    "cards": 36,
+    "chambers": 423,
+    "candidatePoolsPerChamber": 3
+  },
+  "tests": {
+    "result": "passed",
+    "mongoPort": 27027,
+    "isolatedDatabase": true,
+    "suites": [
+      {
+        "name": "emu.grasscutter.server.packet.recv.TowerTeamRecoveryTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.AbilitySkillCooldownTest",
+        "tests": 55,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.DungeonGroupPersistenceTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.DungeonLoginRecoveryTest",
+        "tests": 22,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.FoodBuffEffectsTest",
+        "tests": 22,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.TowerBlessingEffectsTest",
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.TowerBlessingPersistenceTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.TowerBlessingProtocolTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.TowerBlessingStateTest",
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.TowerChamberCheckpointTest",
+        "tests": 18,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.TowerChamberRetryTest",
+        "tests": 25,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.TowerContinuationProtocolTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.TowerEndNotificationTest",
+        "tests": 20,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.TowerEntryOutcomeTest",
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.TowerEntryProtocol71Test",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.TowerGroupVisibilityTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.TowerHalfClockTest",
+        "tests": 27,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.TowerManagementTest",
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.TowerPartyPersistenceTest",
+        "tests": 18,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.TowerPartySelectionTest",
+        "tests": 25,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.TowerPartyStableIdentityTest",
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.TowerRecordRegressionTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.TowerResourceIntegrationTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.TowerSceneHandoffTest",
+        "tests": 23,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.TowerSettlementOrderTest",
+        "tests": 22,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "io.grasscutter.TowerSpawnIntegrationTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ],
+    "totals": {
+      "tests": 360,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "suiteCount": 26,
+    "filters": [
+      "*Tower*Test",
+      "*DungeonGroupPersistenceTest",
+      "*DungeonLoginRecoveryTest",
+      "*AbilitySkillCooldownTest",
+      "*FoodBuffEffectsTest"
+    ]
+  },
+  "nativeProtocol": {
+    "binarySha256": "7f89938da606c1281659607d464702cddb9a09a7d4320a196630f60a811ec38e",
+    "metadataSha256": "469eccd43aa48fe7a2df4e1caf66fa1268a17f5a4a03fa209e1427e467cb0161",
+    "request": {
+      "opcode": 4779,
+      "nativeType": "POINFCKJBMH",
+      "writer": "0x14ae50ee0",
+      "towerBuffIdField": 12
+    },
+    "response": {
+      "opcode": 9661,
+      "nativeType": "KAINBMJKEOL",
+      "reader": "0x150745e20",
+      "towerBuffIdField": 4,
+      "retcodeField": 15
+    },
+    "serverBuffChange": {
+      "opcode": 20465,
+      "nativeType": "OCOMENAKIAH",
+      "nestedNativeType": "MCMEIDONPCI",
+      "checkedNestedFields": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "sourceEnum": {
+      "NORMAL": 0,
+      "SERVER_BUFF": 1,
+      "SERVER": 2
+    },
+    "actualDispatcherFrameTest": true
+  },
+  "runtime": {
+    "result": "pending portable rebuild and restart"
+  },
+  "nativeClientAcceptance": {
+    "result": "pending",
+    "checks": [
+      "three offered cards and selected-card acknowledgement",
+      "upper and lower halves",
+      "three consecutive chambers and floor stacking",
+      "retry and leave/resume",
+      "HP conditions and displayed fight properties",
+      "attack-category, movement and animation effects"
+    ]
+  }
+}

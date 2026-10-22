@@ -1,5 +1,7 @@
 # 深境螺旋客户端与协议说明
 
+> **2026-10-23 深秘降福增量**：[三选一专项说明](SPIRAL_ABYSS_BLESSINGS.md)记录选卡请求／响应字段、真实发送回归、当前祝福记录和原生服务端 buff 下发。本节旧快照中的固定卡片和“未找到 Handler”已被替换。
+
 > **开发增量**：本轮变更：`PacketTowerFloorRecordChangeNotify` 现在从完整实际记录生成，和全量响应共享 `TowerLevelRecord.toProto()`；不再把本间星数填入领奖进度，也不再固定 levelId=1／三星。没有猜测或修改未恢复的 CmdId／占位字段。新增 GM 入场／重试入口见[管理工具](SPIRAL_ABYSS_MANAGEMENT.md)，不能据此宣称原生客户端协议全部可用。
 
 客户端负责选层、选队、祝福卡片、计时与结算显示，服务端负责可接受状态、场景执行和进度记录。界面组件存在，只能说明客户端保留这类功能；服务端构建出 protobuf 对象，也不能证明消息已经在网络上发送或被当前客户端识别。
@@ -55,13 +57,13 @@
 | `TowerTeamSelectReq` | 20134 | 有 Handler，读取队伍并调用 `tryTeamSelect` |
 | `TowerTeamSelectRsp` | -88 | 有成功／失败构造器；当前本机 fan-out 无此映射，发送时被丢弃 |
 | `TowerEnterLevelReq` | 21373 | 有 Handler，只读取 `enter_point_id`；忽略 `_is_restart_floor` |
-| `TowerEnterLevelRsp` | 7393 | 有构造器；成功时固定返回祝福 ID 4、28、18 |
-| `TowerCurLevelRecordChangeNotify` | 9479 | 当前层与间号已恢复为 9／10；队伍信息留有 TODO |
+| `TowerEnterLevelRsp` | 7393 | 成功时返回当前间三组资源池生成的候选；已选卡的重试不重新抽选 |
+| `TowerCurLevelRecordChangeNotify` | 9479 | 同步当前层、间、有效祝福、稳定身份重绑后的双队和上下半 |
 | `TowerFloorRecordChangeNotify` | 7649 | 有构造器，但内容并非按完整存档生成，见下文 |
 | `TowerLevelStarCondNotify` | 20675 | 有构造器，单个条件里的两个字段仍占位 |
 | `TowerMiddleLevelChangeTeamNotify` | 28798 | 对应原生空类型 CFHJLLMBCPO；真实发送通道已验证 |
 | `TowerLevelEndNotify` | 25538 | 有 proto；当前通过 `DungeonSettleNotify` 的嵌套字段发送，无独立发送器 |
-| `TowerBuffSelectReq` / `Rsp` | 4779 / 9661 | 有编号，当前未找到对应请求 Handler 和完整业务链 |
+| `TowerBuffSelectReq` / `Rsp` | 4779 / 9661 | 已恢复 request field 12、response fields 4/15，并接入校验、保存与效果；真实发送路径有回归 |
 | `TowerGetFloorStarRewardReq` / `Rsp` | 28279 / 5775 | 有编号，当前未找到领取处理器和领奖业务链 |
 | `TowerSurrenderReq` / `Rsp` | -265 / -266 | 未解析编号，未找到独立放弃处理器 |
 | `TowerBriefDataNotify` | 7704 | 编号已列出，当前深渊链未填充对应简报 |
@@ -107,7 +109,7 @@
 | `TowerCurLevelRecord.cur_level_index` | 10 |
 | `TowerCurLevelRecord.cur_floor_id` | 9 |
 
-全量包固定 `cur_level_record.is_empty=true`。增量 `PacketTowerCurLevelRecordChangeNotify` 只设层、间，没有队伍、祝福和上／下半状态。保存进度再齐全，也不能据此认为客户端已经收到可恢复本轮的全部信息。
+全量包和增量 `PacketTowerCurLevelRecordChangeNotify` 共用当前记录构造：有有效本轮队伍时下发层、间、有效祝福、双队 GUID 和上／下半状态；无有效本轮队伍时标为空。GUID 由保存的稳定角色身份重新绑定，避免沿用上次登录的 GUID。
 
 `TowerFloorRecord` 的 `floor_id=14`、`passed_level_record_list=7`、`floor_star_reward_progress=10`、`passed_level_map=11`；`TowerLevelRecord` 的 `level_id=4`、`satisfied_cond_list=13`。
 
@@ -147,9 +149,7 @@
 
 ## 祝福与月度效果的实现边界
 
-资源包含 `TowerBuffExcelConfigData`、`towerBuffConfigStrList`、楼层 `floorLevelConfigId` 和排期 `monthlyLevelConfigId`。当前入场响应固定提供 `[4,28,18]`，不按候选权重生成；未找到 `TowerBuffSelectReq` 的完整 Handler、选择保存、持续期管理或效果应用链。
-
-资源中的 4 对应 `buffId=701004`、持续本层；28 和 18 分别对应 701028、701018，持续本间。这只能解释配置含义。发送 ID 不等于效果已应用，`monthlyLevelConfigId` 有字段和 getter 也不等于渊月祝福已生效。
+资源中的 `TowerBuffExcelConfigData` 和每间三个候选池已接入。入场按权重生成候选，选择保存到本轮状态，按本间／本层／立即生效管理，并安装原生服务端 buff。细节及实机边界见[专项说明](SPIRAL_ABYSS_BLESSINGS.md)。楼层 `floorLevelConfigId` 与排期 `monthlyLevelConfigId` 对应的地脉异常、渊月祝福仍需单独实现与验收。
 
 客户端有怪物预览组件，资源亦有 `firstMonsterList`、`secondMonsterList` 或较新预览索引；实际服务端出生怪物由 Lua 控制。混合年代资源可能使预览与实战不同，应逐组对照，不根据 UI 图标修写怪物属性。
 

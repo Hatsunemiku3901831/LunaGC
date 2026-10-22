@@ -540,6 +540,8 @@ public final class AbilityManager extends BasePlayerManager {
     }
 
     private boolean acceptAbilityInvokeCurrent(AbilityInvokeEntry invoke) throws Exception {
+        var towerBuffs = player.getTowerManager().getBlessingEffects();
+        if (towerBuffs.handles(invoke)) return towerBuffs.accept(invoke);
         // Metadata may carry the local ID of its originating action. It is still metadata,
         // and must not be redirected to handleServerInvoke's action/mixin dispatch.
         if (invoke.getArgumentType() == AbilityInvokeArgument.ABILITY_META_UPDATE_TPS_WEAPON_AMMUNITION) {
@@ -939,6 +941,7 @@ public final class AbilityManager extends BasePlayerManager {
 
         this.burstSkillId = skillId;
         this.burstCasterId = casterId;
+        player.getTowerManager().getBlessingEffects().onBurst(currentAvatar);
     }
 
     public void onSkillEnd(Player player) {

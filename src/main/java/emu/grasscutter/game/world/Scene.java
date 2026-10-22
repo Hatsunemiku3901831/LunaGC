@@ -324,6 +324,7 @@ public class Scene {
                 this.sealBattleManager.onPlayerLeaving(player);
                 this.scenePlayBattleManager.onPlayerLeaving(player);
                 emu.grasscutter.game.ability.NatsaurusVehicleHelper.takeAway(player);
+                player.getTowerManager().leaveBlessingScene(this);
                 getPlayers().remove(player);
                 player.setScene(null);
 

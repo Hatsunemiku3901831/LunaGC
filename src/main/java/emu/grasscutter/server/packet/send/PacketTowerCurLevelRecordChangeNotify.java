@@ -6,6 +6,11 @@ import emu.grasscutter.net.proto.TowerCurLevelRecordOuterClass.TowerCurLevelReco
 
 public class PacketTowerCurLevelRecordChangeNotify extends BasePacket {
 
+    public PacketTowerCurLevelRecordChangeNotify(emu.grasscutter.game.tower.TowerManager tower, int index) {
+        super(PacketOpcodes.TowerCurLevelRecordChangeNotify);
+        setData(TowerCurLevelRecordChangeNotify.newBuilder().setCurLevelRecord(tower.currentLevelRecord(index)));
+    }
+
     public PacketTowerCurLevelRecordChangeNotify(int curFloorId, int curLevelIndex) {
         super(PacketOpcodes.TowerCurLevelRecordChangeNotify);
 
