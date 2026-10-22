@@ -1,7 +1,11 @@
 [CmdletBinding()]
 param(
     [ValidateSet('start', 'stop', 'status', 'play', 'patch', 'reset', 'gm', 'abyss', 'build', 'buildpatch')]
-    [string] $Mode = 'status'
+    [string] $Mode = 'status',
+    [ValidateRange(1, 16384)]
+    [int] $GameWidth = 3840,
+    [ValidateRange(1, 16384)]
+    [int] $GameHeight = 1640
 )
 
 $ErrorActionPreference = 'Stop'
@@ -238,7 +242,11 @@ try {
             if (Get-Process -Name YuanShen -ErrorAction SilentlyContinue) { throw 'The game is already running.' }
             Set-ClientPatch 'apply'
             Start-ClientPatchGuard
-            Start-Process -FilePath (Join-Path $game 'YuanShen.exe') -WorkingDirectory $game | Out-Null
+            # Windowed mode keeps the requested size independent of fullscreen display modes.
+            Start-Process -FilePath (Join-Path $game 'YuanShen.exe') -WorkingDirectory $game `
+                -ArgumentList @('-screen-width', $GameWidth, '-screen-height', $GameHeight,
+                    '-screen-fullscreen', '0', '-popupwindow') | Out-Null
+            Write-Host "Requested game resolution: ${GameWidth}x${GameHeight} (borderless window)."
             Write-Host 'Game launched. Use the local account listed in LOCAL-RUN.txt.'
         }
         'gm' {
