@@ -104,7 +104,7 @@ sequenceDiagram
 
 ### 全量数据和解锁显示
 
-`HandlerTowerAllDataReq` 构建 `PacketTowerAllDataRsp`，后者读取全部 `recordMap`，同时发送传统 `passed_level_map` 与按条件序号表示的 `passed_level_record_list`。当前记录固定 `is_empty=true`，并未完整回传已保存队伍、当前半场和祝福。
+`HandlerTowerAllDataReq` 构建 `PacketTowerAllDataRsp`，后者读取全部 `recordMap`，同时发送传统 `passed_level_map` 与按条件序号表示的 `passed_level_record_list`。当前记录与增量通知共用构造，回传本轮队伍、半场和有效深秘降福；无有效本轮队伍时设置 `is_empty=true`。
 
 `canEnterScheduleFloor()` 只看最后一个入口层是否至少六星。默认补满前八层后，还会创建第一个排期层的空记录；这用于支持客户端的开放显示。选队入口本身没有根据前层星数或当前排期成员资格再做完整准入校验，不能把 UI 锁定当成服务端授权。
 

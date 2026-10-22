@@ -246,7 +246,96 @@
     "actualDispatcherFrameTest": true
   },
   "runtime": {
-    "result": "pending portable rebuild and restart"
+    "observed": "2026-10-23T08:03:42.3871706+11:00",
+    "result": "passed",
+    "mode": "portable",
+    "implementationCommit": "c3450be34195d41b46a356fc97da812ebaecce59",
+    "javaPid": 16984,
+    "mongoPid": 58884,
+    "httpPort": 8088,
+    "gameUdpPort": 22101,
+    "mongoPort": 27017,
+    "listenerOwnersVerified": true,
+    "jar": "C:\\GS\\LunaGC-7.1.0.jar",
+    "jarSHA256": "F82F8CE59F5EC6D78E7EFC43F3E256E1A477D72FD7A97CC1A605D52BAC0E5FE1",
+    "startupRecordHashMatches": true,
+    "jarProcessCommandLineVerified": true,
+    "health": {
+      "queues": [
+        {
+          "name": "default",
+          "capacity": 1024,
+          "queued": 0,
+          "active": 0,
+          "outstanding": 0,
+          "completed": 0,
+          "failed": 0,
+          "callerRuns": 0,
+          "rejected": 0,
+          "coalesced": 0,
+          "cancelled": 0,
+          "shutdown": false
+        },
+        {
+          "name": "account",
+          "capacity": 256,
+          "queued": 0,
+          "active": 0,
+          "outstanding": 0,
+          "completed": 0,
+          "failed": 0,
+          "callerRuns": 0,
+          "rejected": 0,
+          "coalesced": 0,
+          "cancelled": 0,
+          "shutdown": false
+        },
+        {
+          "name": "item",
+          "capacity": 2048,
+          "queued": 0,
+          "active": 0,
+          "outstanding": 0,
+          "completed": 0,
+          "failed": 0,
+          "callerRuns": 0,
+          "rejected": 0,
+          "coalesced": 0,
+          "cancelled": 0,
+          "shutdown": false
+        },
+        {
+          "name": "group",
+          "capacity": 1024,
+          "queued": 0,
+          "active": 0,
+          "outstanding": 0,
+          "completed": 0,
+          "failed": 0,
+          "callerRuns": 0,
+          "rejected": 0,
+          "coalesced": 0,
+          "cancelled": 0,
+          "shutdown": false
+        }
+      ],
+      "healthy": true,
+      "deadlockedThreads": 0,
+      "tick": {
+        "completed": 252,
+        "lastCompletedAtMillis": 1792703022307,
+        "ageMillis": 29,
+        "durationMillis": 0,
+        "maxDurationMillis": 2,
+        "stalled": false
+      },
+      "databaseOverloaded": false
+    },
+    "startupErrors": [],
+    "isolatedMongoStopped": true,
+    "buildExitCode": 0,
+    "buildCommand": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/local_windows.ps1 -Mode build",
+    "startupReadyConfirmed": true
   },
   "nativeClientAcceptance": {
     "result": "pending",
@@ -257,6 +346,33 @@
       "retry and leave/resume",
       "HP conditions and displayed fight properties",
       "attack-category, movement and animation effects"
+    ]
+  },
+  "patchCommit": "f2874103ab70afc56260ee12d1eaca96247933b2",
+  "backup": {
+    "path": "C:\\GS\\local\\backups\\abyss-blessings-20261023-080116",
+    "method": "physical cold copy after graceful server and MongoDB shutdown",
+    "fileSHA256Verified": true,
+    "checksummedFiles": 91,
+    "collectionCount": 18,
+    "documentCount": 28995,
+    "restoreValidation": {
+      "passed": true,
+      "port": 27028,
+      "databaseNames": "grasscutter",
+      "comparison": "All collection names, counts, raw BSON SHA-256 and indexes match",
+      "stopped": true,
+      "observed": "2026-10-23T08:02:18.7739100+11:00"
+    },
+    "preserved": [
+      "mongodata",
+      "local/data",
+      "config.json",
+      ".env",
+      ".env.local if present",
+      "previous JAR",
+      "runtime startup record",
+      "source and submodule versions"
     ]
   }
 }
