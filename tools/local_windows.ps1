@@ -5,7 +5,7 @@ param(
     [ValidateRange(1, 16384)]
     [int] $GameWidth = 3840,
     [ValidateRange(1, 16384)]
-    [int] $GameHeight = 1640
+    [int] $GameHeight = 1645
 )
 
 $ErrorActionPreference = 'Stop'
@@ -245,8 +245,8 @@ try {
             # Windowed mode keeps the requested size independent of fullscreen display modes.
             Start-Process -FilePath (Join-Path $game 'YuanShen.exe') -WorkingDirectory $game `
                 -ArgumentList @('-screen-width', $GameWidth, '-screen-height', $GameHeight,
-                    '-screen-fullscreen', '0', '-popupwindow') | Out-Null
-            Write-Host "Requested game resolution: ${GameWidth}x${GameHeight} (borderless window)."
+                    '-screen-fullscreen', '0') | Out-Null
+            Write-Host "Requested game resolution: ${GameWidth}x${GameHeight} (normal window)."
             Write-Host 'Game launched. Use the local account listed in LOCAL-RUN.txt.'
         }
         'gm' {
