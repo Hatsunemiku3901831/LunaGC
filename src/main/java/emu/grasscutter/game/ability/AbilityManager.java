@@ -1304,6 +1304,7 @@ public final class AbilityManager extends BasePlayerManager {
                 if (previous != null && previous != modifier) previous.getAbility().unregisterModifier(entity, previous, false);
                 instancedAbility.registerModifier(entity, modifier);
             }
+            linkNativeAttachedModifier(entity, modifier, modChange);
             onPossibleElementalBurst(instancedAbility, modifierData, invoke.getEntityId());
             if(previous!=null && previous!=modifier) previous.runServerOnRemoved();
 
@@ -1376,6 +1377,34 @@ public final class AbilityManager extends BasePlayerManager {
             Grasscutter.getLogger().debug("Unknown action");
         }
         entity.getAbilityGlobalValueWatchers().flushPending();
+        if (entity instanceof EntityMonster monster && monster.getMonsterData().getId() == 24021101)
+            Grasscutter.getLogger().info(
+                    "Perpetual Array modifier action={} instance={} local={} parent={}/{} protection={} splitCount={}",
+                    modChange.getActionValue(), head.getInstancedModifierId(), modChange.getModifierLocalId(),
+                    modChange.getAttachedInstancedModifier().getOwnerEntityId(),
+                    modChange.getAttachedInstancedModifier().getInstancedModifierId(),
+                    AbilityCombatState.read(entity), entity.getGlobalAbilityValues().get("_TRIGGER_TIMES"));
+    }
+
+    /** Native adds often name only an instance and local index, without repeating the ability name. */
+    private void linkNativeAttachedModifier(GameEntity entity, AbilityModifierController child,
+                                           AbilityMetaModifierChange change) {
+        if (!change.hasAttachedInstancedModifier()) return;
+        var reference = change.getAttachedInstancedModifier();
+        if (reference.getIsInvalid() || reference.getFPDAONBEBHKValue() != 0
+                || reference.getOwnerEntityId() != entity.getId()) return;
+        var parent = entity.getInstancedModifiers().get(reference.getInstancedModifierId());
+        if (parent == null || parent == child || parent.getAbility() != child.getAbility()
+                || !parent.isClientInstanceCurrent(entity)) return;
+        var actions = parent.getModifierData().onAdded;
+        // Bind only the direct same-bearer AttachModifier relationship present in the resource.
+        // A client reference cannot turn an independent ApplyModifier into an attached child.
+        if (actions != null && Arrays.stream(actions).anyMatch(action -> action != null
+                && action.type == AbilityModifierAction.Type.AttachModifier
+                && child.getName().equals(action.modifierName)
+                && action.otherTargets == null
+                && (action.target == null || "Self".equals(action.target))))
+            parent.attachChild(entity, child);
     }
 
     private void runVehicleAttachment(AbilityModifierController controller,GameEntity target,ByteString payload) {

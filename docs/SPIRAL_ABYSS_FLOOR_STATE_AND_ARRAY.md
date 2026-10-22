@@ -32,4 +32,20 @@
 
 便携部署于 2026-10-22 04:30（Australia/Sydney）完成，健康接口、UDP 22101 及运行 JAR 与本次构建一致性均通过；SHA-256：`70b7dd8e58b258a8c8db6fba14ccee8d8e13f985175cab7150f4662a6dfe6a88`。机器可读结果见[本次验证](data/tower-floor-array-validation-2026-10-22.json)。
 
-新楼层两队恢复、阵列四个小怪实际生成以及解除阶段保护后正常受伤，仍等待用户游戏内复测反馈。
+新楼层两队恢复尚未收到明确实测反馈。2026-10-22 晚间用户确认阵列问题依旧存在，下面记录进一步定位；此前测试与部署通过不能视为 BOSS 实战通过。
+
+## 原生召唤与附加状态通知修复
+
+22:59:05 实机记录四次 `ABILITY_ACTION_SUMMON=53`，动作 localId 分别为 `33315`、`33347`、`98899`、`33411`，每次 payload 为 24 字节。服务器均报告 `hasPos=false / hasRot=false`，所以没有创建小怪。此前测试用服务器自己的 protobuf builder 生成输入，未发现双方字段号不一致。
+
+按[本机 7.1 固定指纹](SPIRAL_ABYSS_ENTRY_PROTOCOL_71.md)只读核对原生代码：
+
+- 原生发送函数 `KHPDOPHGNHN.OHHDEHLCKJF`（`0x14c1657c0`）调用 `Miscs.GetPositionByBornType`，将位置写入 `GEPFCBAPAMC +0x18`，将旋转转换后的角度写入 `+0x20`，以参数编号 `0x35` 发送；另一召唤路径 `0x14c16e9f0` 使用同一消息。
+- `GEPFCBAPAMC` writer `0x1535fd5d0` 写入 tag `0x0a` 和 `0x22`；reader `0x1535fd9b0` 对应读取。故 `AbilityActionSummon.pos=1`、`rot=4`，修正原错误字段 11／10。
+- `AbilityAttachedModifier` 的原生 reader `PAPBNKBPCJK.NLGBJEEJDLG`（`0x147c1a320`）确认现有字段号 1、2、3、5、6；缺口是业务层未消费 `attached_instanced_modifier`。原生新增消息常只给根能力编号和本地状态索引，不重复能力名，不能依赖 `fromParentName` 触发服务端附加操作。
+
+新处理在客户端报告有效父实例时，绑定同一实体、同一能力且资源明示的直接 `AttachModifier` 关系。父实例结束时清理对应子实例；无效引用、非普通来源或独立 `ApplyModifier` 不建立这一关系。跨实体和任意嵌套附加关系不包含在本次扩展中。
+
+回归输入现在使用 `CodedOutputStream` 独立写原生字段，经过 `AbilityManager.onAbilityInvoke` 和四个实际动作 localId 验证召唤坐标、旋转、主人、等级和标记；另用不携带能力名的原生父子通知验证锁血解除。修复前两个用例失败，修复后通过。实机保护状态与分裂计数也记录到日志，用于继续核对阶段完成后的受伤能力。
+
+本次 88 套件、2,207 项相关回归全部通过，无失败、错误或跳过。23:13（Australia/Sydney）已便携部署，HTTP 健康、UDP 端口及运行 JAR SHA-256 核对通过：`2062269019c7855412f7815f540e7fe82a8e1d9eb01bdaa39eaa3c872c787056`。实机复测待用户反馈；[本次验证记录](data/tower-array-native-validation-2026-10-22.json)单独保留，未覆盖早先构建的证据。

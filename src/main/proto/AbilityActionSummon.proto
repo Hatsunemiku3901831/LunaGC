@@ -6,6 +6,7 @@ option java_outer_classname = "AbilityActionSummonOuterClass";
 import "Vector.proto";
 
 message AbilityActionSummon {
-	Vector rot = 10;
-	Vector pos = 11;
+	// 7.1 GEPFCBAPAMC; writer 0x1535fd5d0, native Summon sender 0x14c1657c0.
+	Vector pos = 1;
+	Vector rot = 4;
 }
