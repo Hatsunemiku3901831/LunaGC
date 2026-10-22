@@ -60,6 +60,12 @@
 
 `PerpetualArrayPhaseTest` 按上述实机顺序重放初始血量下限、半秒保护、首次分裂与虚弱通知，并使用可控时钟覆盖客户端实例遮蔽期间发生／不发生 tick 两种顺序。原生父引用保留本次实际观察到的 `ownerEntityId=0`，子实例按实际顺序显式移除。`AbilityModifierDurationTest` 另覆盖遮蔽期间到期与客户端先移除两种情况，检查属性去重、只清理服务端实例及结束回调仅一次。修复前共三项失败。新增伤害断言确认正常分裂期间不扣血、虚弱期间扣血。
 
-阶段日志增加仍注册的保护状态名称，便于实机直接区分 `LockHP`、`Split_Temp_LockHP` 与初始血量下限。真实客户端击破机兵后的扣血验收仍需本次新构建复测。
+阶段日志增加仍注册的保护状态名称，便于实机直接区分 `LockHP`、`Split_Temp_LockHP` 与初始血量下限。
 
 本次 88 套件、2,211 项回归全部通过，无失败、错误或跳过。00:32（Australia/Sydney）已完成便携重建与重启；HTTP 健康、UDP 22101 及运行 JAR SHA-256 核对通过，三个改动类的 JAR 字节码也与本次编译产物一致。JAR SHA-256：`9d60d44244ff6e76be2e93ec0b50a1351ce2f2fdffa4b7ff43dbeb2f3fb0a6a4`；详见[本次验证记录](data/tower-array-duration-validation-2026-10-23.json)。
+
+### 本次真实客户端验收通过
+
+2026-10-23 用户在上述构建重新挑战 12-1，明确确认“已正常掉血并击败 BOSS”。对应服务端记录：00:35:51 四个机兵成功召唤；00:35:52 `Split_Temp_LockHP` 已消失而正常分裂 `LockHP` 仍保留；00:36:02 强化机兵阶段结束后 `Invincible=false`、`LockHP=false`、`Limbo=false`，`protectionModifiers=[]`。召唤、阶段保护、虚弱后受伤与击败这条链路现已实机确认。
+
+该结果仅确认本次 12-1 阵列流程；新楼层双队状态恢复仍未收到独立实测反馈，不等于所有排期和所有 BOSS 已逐一验收。

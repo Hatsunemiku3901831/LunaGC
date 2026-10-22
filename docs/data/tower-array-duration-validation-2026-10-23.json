@@ -658,6 +658,21 @@
     ]
   },
   "clientVerification": {
-    "damageAfterPhase": "pending new build"
+    "date": "2026-10-23",
+    "timezone": "Australia/Sydney",
+    "damageAfterPhase": "confirmed",
+    "bossDefeated": "confirmed by user",
+    "userReport": "已正常掉血并击败 BOSS",
+    "liveEvidence": {
+      "fourSummonsAt": "00:35:51",
+      "temporaryLockRemovedAt": "00:35:52",
+      "phaseProtectionReleasedAt": "00:36:02",
+      "invincible": false,
+      "lockHp": false,
+      "limbo": false,
+      "hpThreshold": 0.0,
+      "protectionModifiers": []
+    },
+    "scope": "Native 12-1 Perpetual Mechanical Array in the deployed build; other rotations and floor-entry recovery not implied"
   }
 }
