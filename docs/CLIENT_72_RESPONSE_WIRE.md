@@ -34,9 +34,9 @@ A-04d3b 的范围是响应外层字段定位与标量受控读取。输入固定
 
 ## 已验证与未恢复内容
 
-TokenRsp GNHGKGCEFIO：tag 376、对象 +168、repeated uint32，packed key 3010，unpacked key 3008。KMLEGLIGNPH：tag 454、NNKFJMDCCMB 嵌套，内容仍未恢复。
+TokenRsp GNHGKGCEFIO：tag 376、对象 +168、repeated uint32，packed key 3010，unpacked key 3008。KMLEGLIGNPH：tag 454、NNKFJMDCCMB 嵌套；A-04d3b仅空envelope，后续独立叶子读写结果见下。
 
-LoginRsp 的 HIAJLCOHEFP 是 tag 470 / HMLAJHBHLOC（LoginReq 的研究 writer 已知，但响应 reader 尚未执行其非空内容）。另有 NNKFJMDCCMB、MDKGJAOEHIL、FAHEHGJDAME，消息列表 GHANJBIKPDH / LINNJHPIFAO，以及 map 值 DKFJJMGPCMD / ANDFHAFNBOJ 待恢复。三个 map 的泛型参数是 string→int32、uint64→DKFJJMGPCMD、uint32→ANDFHAFNBOJ；这些来自元数据，不能据此声称 entry 内容解析已通过。
+LoginRsp 的 HIAJLCOHEFP 是 tag 470 / HMLAJHBHLOC（LoginReq 的研究 writer 已知，但响应 reader 尚未执行其非空内容）。另有 NNKFJMDCCMB、MDKGJAOEHIL、FAHEHGJDAME，消息列表 GHANJBIKPDH / LINNJHPIFAO，以及 map 值 DKFJJMGPCMD / ANDFHAFNBOJ；独立叶子字段现已恢复，父容器非空集成仍待验。三个 map 的泛型参数是 string→int32、uint64→DKFJJMGPCMD、uint32→ANDFHAFNBOJ；这些来自元数据，不能据此声称 entry 内容解析已通过。
 
 实际 11 组受控验证：两个空输入；两类响应各两组全部字段（非零/零bool、负int32、uint32边界、大于2^53的uint64、非零double、ASCII/二进制字节、空嵌套envelope）；两条手写独立 wire；两组重复标量/错误wire分派；一组 packed/unpacked 混合列表。预期值直接与原生对象 store/helper 参数比较。
 
@@ -55,4 +55,22 @@ python tools/validate_protocol72.py --ready
 
 实际63项工具/映射回归通过；两次最终目标运行的完整报告和原始字段表逐字节一致。普通映射校验通过，ready 实际退出1，仍不能发布。证据位于 `local/migration72/evidence/responses-trace*.json`、`responses-determinism.json`；工具测试在 `logs/a04d3-reader-tests.log`。原始研究反汇编/扫描在 `analysis/reader-*`，不提交。
 
-下一项 A-04d3c：先恢复共享 NNKFJMDCCMB 的非空 reader 与 wire，再补其余七类响应嵌套/容器值（其中 HMLAJHBHLOC 已有 writer 证据）；随后确认 map entry/列表内容、重复嵌套合并与实际响应回调业务语义。外层观察不能当作完整响应 schema 复制到服务端。
+下一项 A-04d3c：将下述已恢复叶子接回父响应的非空嵌套路径，恢复map entry/列表内容与重复消息合并；HMLAJHBHLOC仍需reader/oneof非空路径。独立叶子通过不能替代父容器或客户端验收。
+
+
+## A-04d3c1：七个叶子消息双向恢复
+
+`trace_client72_response_leaves.py` 已对 NNKFJMDCCMB、MDKGJAOEHIL、FAHEHGJDAME、GHANJBIKPDH、LINNJHPIFAO、DKFJJMGPCMD、ANDFHAFNBOJ 恢复共30字段。输入为独立构造的非零/逐bool扰动/边界/空对象；先运行各自真实writer，再运行各自真实reader，将对象写入与原始输入比较。26组writer、27组reader（含一条额外手写wire）通过；protoc比较26次，另2条独立字节断言通过。第二次报告/字段表/Proto逐字节一致，最新工具回归64项通过。
+
+重要差异：GHANJBIKPDH（44443）的两个元数据int32是 **sfixed32**：PGEMKKCNEMJ +28 / tag13，EMBPDEHFOJK +24 / tag15。writer 14824F800 直接写key 6D/7D，并调用151766CA0逐字节写32位；reader 14824FBB0比较6D/7D并调用147521000逐字节拼装32位。这两段固定宽度函数实际执行，只对reader的底层单字节读取14751FD30使用有界模型。独立输入 `6dffffffff7d2c010000` 写回 +28=-1、+24=300；不能从C# int32推定protobuf int32。已加入此差异的回归测试。
+
+共享NNKFJMDCCMB（85772）的JJLJMLEJIIK（+40/tag1/uint32），EBMBKOOKKPD（+44/tag2/uint32），BFOFKNFHPJN（+32/tag3/string），HLFMBMBLHME（+24/tag4/string）。业务含义仍未知。其reader 1533D21A0与writer 1533D22B0均已执行非空输入。
+
+交付：[叶子字段表](../protocol/cn-7.2/response-leaf-wire-observations.json)、[研究Proto](../protocol/cn-7.2/response-leaves.proto)。父响应表的contentStatus=not-traced继续表示父容器内部路径尚未执行，不因独立叶子通过而自动晋级。
+
+```powershell
+python tools/trace_client72_response_leaves.py --client $env:GAME_PATH --output local/migration72/evidence/response-leaves-trace.json --mapping-output protocol/cn-7.2/response-leaf-wire-observations.json --proto-output protocol/cn-7.2/response-leaves.proto
+python tools/check_client72_response_leaves_proto.py --protoc $env:PROTOC72 --trace local/migration72/evidence/response-leaves-trace.json
+```
+
+本机证据为evidence/response-leaves-trace.json、response-leaves-protoc-check.json、response-leaves-determinism.json及logs/a04d3-leaf-tests.log。没有新增服务端协议或实际游戏验收。

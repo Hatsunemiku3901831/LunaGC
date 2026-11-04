@@ -116,7 +116,7 @@ class Reader72:
                                     value=value & ((1 << (size * 8)) - 1),
                                     source=hex(self.e.reg('rip')), observation='native-store'))
 
-    def run(self, index, data):
+    def run(self, index, data, entry=None):
         e = self.e; self.active = False; e.prepare(); e.heap_cursor = self.heap_floor
         if len(data) > CAPACITY: raise ValueError('Input exceeds fixture capacity')
         self.index, self.input = index, WireInput(data)
@@ -129,7 +129,7 @@ class Reader72:
             if f['type']['kind'] in ('class', 'genericinst', 'string'):
                 pointer = e.alloc(); self.pointers[pointer] = off; e.write(OBJECT + off, pointer)
         self.active = True
-        try: e.run(ENTRIES[index])
+        try: e.run(ENTRIES[index] if entry is None else entry)
         finally: self.active = False
         if self.input.position != len(data): raise ValueError('Reader returned before consuming fixture')
         for event in self.events:
@@ -154,6 +154,8 @@ def bind_fields(row, fixtures):
         result = dict(clientField=f['name'], objectOffset=f['offset'], tag=tags.pop(), acceptedWireTypes=wires,
                       type=kind, cardinality='singular', presence='implicit', packed=False, wireStatus='emulated-observation',
                       semanticStatus='unresolved', sources=sorted({e['source'] for e in events}))
+        if wires == [5] and kind in ('int32', 'uint32'):
+            result['type'] = 'sfixed32' if kind == 'int32' else 'fixed32'
         if kind == 'class':
             result['type'] = 'bytes' if t['name'] == 'PPGGBLPHADP' else 'message'
             if result['type'] == 'message': result.update(nestedType=t['name'], nestedTypeIndex=t['typeDefinition'], contentStatus='not-traced', presence='explicit')
@@ -166,7 +168,8 @@ def bind_fields(row, fixtures):
             result['contentStatus'] = 'modeled-helper' if t['typeDefinition'] == 35584 else 'not-traced'
             result['packed'] = t['typeDefinition'] == 35584
         expected = ([0, 2] if result['packed'] else [2] if result['cardinality'] != 'singular' or
-                    result['type'] in ('string', 'bytes', 'message') else [1] if kind == 'double' else [0])
+                    result['type'] in ('string', 'bytes', 'message') else [1] if kind == 'double' else
+                    [5] if result['type'] in ('fixed32', 'sfixed32') else [0])
         if wires != expected: raise ValueError('Metadata/wire representation mismatch')
         output.append(result)
     return sorted(output, key=lambda f: f['tag'])

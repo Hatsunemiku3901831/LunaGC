@@ -1,0 +1,55 @@
+// Generated from target observations. Research only; no runtime acceptance.
+// Enum fields use int32 storage until symbolic values are recovered.
+syntax = "proto3";
+package cn72.research;
+
+message NNKFJMDCCMB {
+  uint32 JJLJMLEJIIK = 1;
+  uint32 EBMBKOOKKPD = 2;
+  string BFOFKNFHPJN = 3;
+  string HLFMBMBLHME = 4;
+}
+
+message MDKGJAOEHIL {
+  uint32 KDMKODCHHIP = 1;
+  bool FBJOBGOBDIE = 2;
+  string MFHJIGAMNFK = 3;
+  string GFCEGMNDCKH = 4;
+  string DIDEGEOAEJN = 5;
+  string MCKEMGKBDKG = 6;
+  string LMMCPBMDBKP = 7;
+}
+
+message FAHEHGJDAME {
+  string ACPEPMIINBF = 1;
+  uint32 LCNMJGGNIND = 2;
+  uint32 GICIOGGEAFG = 3;
+}
+
+message GHANJBIKPDH {
+  sfixed32 PGEMKKCNEMJ = 13;
+  sfixed32 EMBPDEHFOJK = 15;
+}
+
+message LINNJHPIFAO {
+  uint32 OGAGAEJHBCA = 1;
+  uint32 ILJLGHBLKMP = 2;
+}
+
+message DKFJJMGPCMD {
+  uint64 KMGDOFBGCOK = 1;
+  bytes ENLMLLBMNCP = 2;
+  bytes LGAMIBMFBPL = 3;
+  uint32 HENCCAHJOKD = 4;
+  uint32 LDAODKOLJOM = 5;
+  bool CBDIBPCLADH = 6;
+  bool JIMIAMABPAN = 21;
+  bool LMOMIPMKKNI = 22;
+}
+
+message ANDFHAFNBOJ {
+  uint32 AGNINNCKBIG = 1;
+  uint32 LDAODKOLJOM = 2;
+  bytes JFMBDNNPKCM = 3;
+  bool LMOMIPMKKNI = 4;
+}

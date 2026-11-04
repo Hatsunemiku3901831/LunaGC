@@ -98,7 +98,7 @@ class ObservationBindingTest(unittest.TestCase):
         self.doc, self.profile, self.commands, self.wire, self.protected = [json.loads((root / name).read_text('utf8'))
             for name in ('mappings.json', 'profile.json', 'commands.json', 'wire-observations.json', 'token-wire-observations.json')]
         self.extra = [(name, json.loads((root / name).read_text('utf8')))
-                      for name in ('login-wire-observations.json', 'response-wire-observations.json')]
+                      for name in ('login-wire-observations.json', 'response-wire-observations.json', 'response-leaf-wire-observations.json')]
 
     def check(self):
         return validate_observations(self.doc, self.profile, self.commands, self.wire, self.protected, self.extra)

@@ -177,7 +177,7 @@ def main():
     wire = json.loads((args.directory / 'wire-observations.json').read_text('utf-8'))
     protected = json.loads((args.directory / 'token-wire-observations.json').read_text('utf-8'))
     extra = [(name, json.loads((args.directory / name).read_text('utf8')))
-             for name in ('login-wire-observations.json', 'response-wire-observations.json')]
+             for name in ('login-wire-observations.json', 'response-wire-observations.json', 'response-leaf-wire-observations.json')]
     errors.extend(validate_observations(document, profile, commands, wire, protected, extra))
     print(json.dumps({'mode': 'ready' if args.ready else 'research-structure', 'valid': not errors, 'errors': errors},
                      ensure_ascii=False, indent=2))

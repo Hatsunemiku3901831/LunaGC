@@ -57,5 +57,12 @@ class ReaderInputTest(unittest.TestCase):
         self.assertEqual('not-traced', result['contentStatus'])
         self.assertEqual(123, result['nestedTypeIndex'])
 
+    def test_int32_storage_does_not_imply_varint_wire(self):
+        row = {'fields': [dict(name='signed', offset=24, offsetKind='instance', type={'kind': 'int32'})]}
+        sample = lambda key: {'events': [dict(objectOffset=24, key=key, source='0x123')]}
+        self.assertEqual('sfixed32', bind_fields(row, [sample(125)])[0]['type'])
+        self.assertEqual('int32', bind_fields(row, [sample(120)])[0]['type'])
+        with self.assertRaises(ValueError): bind_fields(row, [sample(125), sample(120)])
+
 
 if __name__ == '__main__': unittest.main()
