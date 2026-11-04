@@ -96,6 +96,27 @@
       "inputFile": "binary",
       "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
       "location": "docs/CLIENT_72_NETWORK.md; 0x15120CBC0..CD40; 0x14E65CCD0; native GetMemoryUsageForProcessKB"
+    },
+    {
+      "id": "heartbeat-response-type",
+      "layer": "message",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_SIGNATURES.md; callback 0x15120DEA0 parameter MJGOAHFNCGC; registration 0x1507C2A99; dispatch 0x1507CC8F6 -> 0x1507CDA87 -> callback; shared heartbeat fields"
+    },
+    {
+      "id": "heartbeat-response-command",
+      "layer": "opcode",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_NETWORK.md; getter 0x15251F2E0; register 0x1507C2A99; dispatch 0x1507CC8F6"
+    },
+    {
+      "id": "heartbeat-response-wire",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "protocol/cn-7.2/wire-observations.json; reader 0x15251F300; size 0x15251EFC0"
     }
   ],
   "opcodes": [
@@ -149,23 +170,23 @@
     },
     {
       "semanticName": "PingReq",
-      "status": "candidate",
+      "status": "verified",
       "evidence": [
         "network-command-chain"
       ],
-      "ambiguities": [
-        "Static client type binding confirmed; stable business-name association still candidate"
-      ],
+      "ambiguities": [],
       "clientType": "LMINJCCKNDD",
       "cmdId": 26605
     },
     {
       "semanticName": "PingRsp",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "heartbeat-response-command"
+      ],
       "ambiguities": [],
-      "clientType": null,
-      "cmdId": null
+      "clientType": "MJGOAHFNCGC",
+      "cmdId": 25763
     },
     {
       "semanticName": "DoSetPlayerBornDataNotify",
@@ -389,13 +410,12 @@
     },
     {
       "semanticName": "PingReq",
-      "status": "candidate",
+      "status": "verified",
       "evidence": [
-        "heartbeat-candidate-sites"
+        "heartbeat-candidate-sites",
+        "heartbeat-response-type"
       ],
-      "ambiguities": [
-        "Independent response callback/business-name closure still required"
-      ],
+      "ambiguities": [],
       "clientType": "LMINJCCKNDD",
       "direction": "C2S",
       "aliases": [],
@@ -403,10 +423,12 @@
     },
     {
       "semanticName": "PingRsp",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "heartbeat-response-type"
+      ],
       "ambiguities": [],
-      "clientType": null,
+      "clientType": "MJGOAHFNCGC",
       "direction": "S2C",
       "aliases": [],
       "runtimeStatus": "not-tested"
@@ -799,10 +821,66 @@
     },
     {
       "semanticName": "PingRsp",
-      "status": "unresolved",
-      "evidence": [],
-      "ambiguities": [],
-      "fields": []
+      "status": "candidate",
+      "evidence": [
+        "heartbeat-response-wire"
+      ],
+      "ambiguities": [
+        "Raw wire confirmed; seq/client_time field naming uses request field identity; retcode business use not observed in callback; runtime pending"
+      ],
+      "fields": [
+        {
+          "semanticField": "seq",
+          "clientField": "AMLHAGPHMHN",
+          "tag": 1,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "candidate",
+          "evidence": [
+            "heartbeat-response-wire"
+          ],
+          "ambiguities": [
+            "Business field naming pending consumer behavior; static wire is confirmed"
+          ],
+          "wireStatus": "static-confirmed"
+        },
+        {
+          "semanticField": "client_time",
+          "clientField": "OILKPHNHCHB",
+          "tag": 6,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "candidate",
+          "evidence": [
+            "heartbeat-response-wire"
+          ],
+          "ambiguities": [
+            "Business field naming pending consumer behavior; static wire is confirmed"
+          ],
+          "wireStatus": "static-confirmed"
+        },
+        {
+          "semanticField": "retcode",
+          "clientField": "LDLIEKOAFBP",
+          "tag": 11,
+          "type": "int32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "candidate",
+          "evidence": [
+            "heartbeat-response-wire"
+          ],
+          "ambiguities": [
+            "Business field naming pending consumer behavior; static wire is confirmed"
+          ],
+          "wireStatus": "static-confirmed"
+        }
+      ]
     },
     {
       "semanticName": "DoSetPlayerBornDataNotify",

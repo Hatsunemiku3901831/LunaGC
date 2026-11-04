@@ -1,4 +1,4 @@
-"""Recover two reviewed, unprotected CN 7.2 serializers into research-only Proto.
+"""Recover reviewed, unprotected CN 7.2 readers/writers into research-only Proto.
 
 This is a bounded verifier for manually traced sites, not a general disassembler.
 It joins tag stores, field loads, known writer calls and recovered object fields.
@@ -38,6 +38,35 @@ WRITERS = {
     0x151765EF0: ('double', 1, bytes.fromhex('f30f7e57')),
     0x151748C40: ('float', 5, bytes.fromhex('f30f104f')),
 }
+READ_SITES = [(68111, 'MJGOAHFNCGC', [
+    (0x15251F360, 0x15251F371, 0x15251F376),
+    (0x15251F33F, 0x15251F38C, 0x15251F391),
+    (0x15251F344, 0x15251F355, 0x15251F35A)])]
+
+
+def recover_read_field(pe, fields, compare_va, call_va, store_va):
+    b = pe.data
+    compare = pe.offset(compare_va, 3, executable=True)
+    if b[compare:compare + 2] != b'\x83\xf8':
+        raise ValueError('Expected reviewed read-tag comparison')
+    key = b[compare + 2]
+    if key >= 128 or key & 7 or key < 8:
+        raise ValueError('Expected single-byte varint key')
+    call = pe.offset(call_va, 5, executable=True)
+    if b[call] != 0xE8 or call_va + 5 + struct.unpack_from('<i', b, call + 1)[0] != 0x147520110:
+        raise ValueError('Unreviewed varint32 reader')
+    store = pe.offset(store_va, 3, executable=True)
+    if store_va != call_va + 5 or b[store:store + 2] != b'\x89\x47':
+        raise ValueError('Expected reader result store')
+    offset = b[store + 2]
+    matches = [f for f in fields if f['offsetKind'] == 'instance' and f['offset'] == offset]
+    if len(matches) != 1 or matches[0]['type']['kind'] not in ('int32', 'uint32'):
+        raise ValueError('Read field layout/type mismatch')
+    field = matches[0]
+    return dict(clientField=field['name'], objectOffset=offset, tag=key >> 3, type=field['type']['kind'],
+                wireType=0, cardinality='singular', presence='implicit', packed=False,
+                wireStatus='static-confirmed', semanticStatus='unresolved',
+                evidence=dict(tagCompare=hex(compare_va), readerCall=hex(call_va), fieldStore=hex(store_va), reader='0x147520110'))
 
 
 def recover_field(pe, fields, tag_va, call_va):
@@ -84,11 +113,12 @@ def recover_field(pe, fields, tag_va, call_va):
 def recover_wire(pe, records):
     by_index = {r['index']: r for r in records}
     messages = []
-    for index, name, sites in SITES:
+    for index, name, sites in SITES + READ_SITES:
         row = by_index[index]
         if row['name'] != name:
             raise ValueError('Selected target type changed')
-        fields = [recover_field(pe, row['fields'], *site) for site in sites]
+        fn = recover_read_field if index in {r[0] for r in READ_SITES} else recover_field
+        fields = [fn(pe, row['fields'], *site) for site in sites]
         if len({f['tag'] for f in fields}) != len(fields):
             raise ValueError('Duplicate wire tag')
         actual = {f['name'] for f in row['fields'] if not int(f['type']['attributes'], 16) & 0x10}

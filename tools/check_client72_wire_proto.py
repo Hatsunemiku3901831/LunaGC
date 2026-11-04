@@ -78,6 +78,18 @@ class WireAssertions(unittest.TestCase):
         self.assertEqual(bytes.fromhex('550000c07f'), self.run_protoc('LMINJCCKNDD', b'HDLNEABIBJF: nan'))
         self.assertEqual(bytes.fromhex('29000000000000f07f'), self.run_protoc('LMINJCCKNDD', b'MHCBMOHFBCK: inf'))
 
+    def test_ping_response_nonzero_and_negative_error_wire(self):
+        expected = bytes.fromhex('08b424 3080e2cfaa06 58ffffffffffffffffff01')
+        text = b'AMLHAGPHMHN: 4660 OILKPHNHCHB: 1700000000 LDLIEKOAFBP: -1'
+        self.assertEqual(expected, self.run_protoc('MJGOAHFNCGC', text))
+        decoded = self.run_protoc('MJGOAHFNCGC', expected, 'decode')
+        self.assertIn(b'LDLIEKOAFBP: -1', decoded)
+        self.assertIn(b'AMLHAGPHMHN: 4660', decoded)
+
+    def test_ping_response_signed_error_is_not_zigzag(self):
+        self.assertEqual(bytes.fromhex('5801'), self.run_protoc('MJGOAHFNCGC', b'LDLIEKOAFBP: 1'))
+        self.run_protoc('MJGOAHFNCGC', b'LDLIEKOAFBP: 2147483648', success=False)
+
     def test_truncated_varint_bytes_fixed32_fixed64_rejected(self):
         for wire in ('0880', '1a02ff', '55000020', '29000000000000f8'):
             self.run_protoc('LMINJCCKNDD', bytes.fromhex(wire), 'decode', success=False)

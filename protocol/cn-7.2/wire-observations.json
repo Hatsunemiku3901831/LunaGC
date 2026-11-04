@@ -275,6 +275,68 @@
           }
         }
       ]
+    },
+    {
+      "typeIndex": 68111,
+      "clientType": "MJGOAHFNCGC",
+      "status": "static-wire-confirmed",
+      "runtimeStatus": "not-tested",
+      "fields": [
+        {
+          "clientField": "AMLHAGPHMHN",
+          "objectOffset": 24,
+          "tag": 1,
+          "type": "uint32",
+          "wireType": 0,
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "static-confirmed",
+          "semanticStatus": "unresolved",
+          "evidence": {
+            "tagCompare": "0x15251f360",
+            "readerCall": "0x15251f371",
+            "fieldStore": "0x15251f376",
+            "reader": "0x147520110"
+          }
+        },
+        {
+          "clientField": "OILKPHNHCHB",
+          "objectOffset": 28,
+          "tag": 6,
+          "type": "uint32",
+          "wireType": 0,
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "static-confirmed",
+          "semanticStatus": "unresolved",
+          "evidence": {
+            "tagCompare": "0x15251f33f",
+            "readerCall": "0x15251f38c",
+            "fieldStore": "0x15251f391",
+            "reader": "0x147520110"
+          }
+        },
+        {
+          "clientField": "LDLIEKOAFBP",
+          "objectOffset": 32,
+          "tag": 11,
+          "type": "int32",
+          "wireType": 0,
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "static-confirmed",
+          "semanticStatus": "unresolved",
+          "evidence": {
+            "tagCompare": "0x15251f344",
+            "readerCall": "0x15251f355",
+            "fieldStore": "0x15251f35a",
+            "reader": "0x147520110"
+          }
+        }
+      ]
     }
   ]
 }

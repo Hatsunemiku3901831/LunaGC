@@ -86,6 +86,8 @@ LUNAGC_CLIENT_PATCH_GUARD=0 只供服务研究禁用守护，不放开 play/patc
 
 方法/回调接手见 [CLIENT_72_SIGNATURES](docs/CLIENT_72_SIGNATURES.md)。已实现extract_client72_signatures：完整参数、BYREF、VAR/MVAR序号与闭合Action的Invoke参数；返回类型和泛型方法实例尚未恢复。client72-signatures.json通过method.index与typeIndex连接，actionCallbacks保存实例化参数；不得把声明指针0当作已恢复代码。
 
+PingRsp现在通过参数、注册和分派三路锁定：MJGOAHFNCGC/25763，读函数15251F300。extract_client72_wire已加入有符号/无符号32位reader证据，研究Proto共17字段。新增接手日志logs/p0-callback-tests.log、ping-mapping-tests.log；反汇编analysis/ping-handler-registration.txt、pingrsp-dispatch.txt、pingrsp-size.txt。相同数字的metadata初始化用途不作为CmdID证据。
+
 选择测试时，--tests紧跟test任务；serverSmokeTest单独调用，不要把过滤参数放在第二个任务后面。实际遇到的端口冲突证明测试与研发服务不能并行抢占22101。测试完成、释放端口后再部署；不要只看HTTP健康。
 
 ## 三层映射校验入口

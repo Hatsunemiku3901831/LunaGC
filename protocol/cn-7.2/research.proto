@@ -22,3 +22,9 @@ message LMINJCCKNDD {
   uint32 OILKPHNHCHB = 13; // object +0x2c
   uint32 AMLHAGPHMHN = 14; // object +0x28
 }
+
+message MJGOAHFNCGC {
+  uint32 AMLHAGPHMHN = 1; // object +0x18
+  uint32 OILKPHNHCHB = 6; // object +0x1c
+  int32 LDLIEKOAFBP = 11; // object +0x20
+}

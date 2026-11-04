@@ -28,8 +28,8 @@
 | GetPlayerTokenRsp | CLDBKDNJHFG / 37481 | 27808 | 字段形状唯一最近；尚缺响应回调独立命名证据，candidate。 |
 | PlayerLoginReq | KOHBOMDDFCB / 76410 | 23172 | 旧参考形状最近但多一个bool；自类型单元1458C3DF0在1512137BE分配，151213730起填充客户端设备/版本相关值；candidate。 |
 | PlayerLoginRsp | NDENMDAIAMC / 40503 | 20835 | 字段形状唯一最近；回调和新增语义未确认，candidate。 |
-| PingReq | LMINJCCKNDD / 64405 | 26605 | 自类型单元1458C39F0；15120CAC0和15120D8A0构造，15121EC30及15120F4CB周期调用；时间/帧率形状及内存采集共同支持心跳用途，业务名保持candidate至响应路径闭合。 |
-| PingRsp | 未确定 | 未确定 | 有80个相同基础字段形状候选；未凭3个标量选择。已尝试Clone类型单元与网络管理器引用相交，无直接命中；下一步追踪泛型回调签名/注册。 |
+| PingReq | LMINJCCKNDD / 64405 | 26605 | 自类型单元1458C39F0；15120CAC0和15120D8A0构造，15121EC30及15120F4CB周期调用；结合下述响应回调/共享字段确认静态心跳请求角色，实机待验。 |
+| PingRsp | MJGOAHFNCGC / 68111 | 25763 | 方法参数、注册25763、分派25763至15120DEA0与getter一致；与请求共享两个原始字段，静态确认为心跳响应。3个wire字段已恢复，业务字段名仍candidate。 |
 | PacketHead | LOPNMMJPFAJ / 27182 | 无（embedded） | 包对象+18所持有类型，封包写入header区；直接结构与读写证据，非独立command。 |
 
 旧7.1的名称/类型对应仅用于排列研究优先级，未作为7.2证据。候选结构比较报告、类型单元交叉引用、反汇编在 `local/migration72/analysis/`。元数据不会保留可直接信任的业务名称。
@@ -70,3 +70,21 @@ writer语义：1517662A0为32位varint、151766960为64位varint（7bit移位循
 本批实际测试：37项提取/结构/包号/wire/映射测试通过；`check_client72_wire_proto.py` 使用libprotoc 3.18.1编译研究Proto，9项独立wire断言通过。包括所有字段非零、超过32位与uint64最大值、二进制bytes、float/double、无符号越界、重复singular最后值、未知tag及截断拒绝。断言是由上述目标指令推导的**合成样本**，不是抓包，不是客户端运行结果；尚未覆盖登录错误返回、P0嵌套/列表或真实IFix路径。
 
 业务映射记录仅将PacketHead类型及2个业务字段标为verified；5个业务消息名仍candidate，其他语义未知。校验器同时比对commands/wire原始观察，避免候选记录混入旧号/旧tag。普通校验通过；`--ready`实际退出1，保持生成闸门关闭。未修改服务端协议、配置、补丁或资源，因此本批无需重启部署。
+
+## A-04d：PingRsp静态确认
+
+上述“五个业务名仍candidate”为前一检查点。当前PingReq/PingRsp静态消息角色及命令绑定已提升，Token/Login四个业务名仍candidate。依据 [参数恢复](CLIENT_72_SIGNATURES.md)，80个三标量候选中只有MJGOAHFNCGC直接作为网络管理器DHABIHPMOAH回调15120DEA0的参数。
+
+独立指令链：HBIJFOJIFAH在1507C2A99以word **25763** 注册，1507CC8F6比较同值并跳至1507CDA87；1507CDA9E读取包对象+10的消息，1507CDAA2调用上述强类型回调。getter15251F2E0也返回25763。回调15120DEB1标记网络状态，并撤销/清空待处理网络操作。与已确认的周期发送、消息中相同的AMLHAGPHMHN/OILKPHNHCHB字段共同确认心跳应答角色；没有仅靠旧版形状命名。
+
+注意151FB1A30也出现数值25763，但传给14052D0F0作元数据初始化索引，是已排除的假线索。不要将任意相同字面量都计为网络证据。
+
+| 原始字段 | 对象偏移 | tag | 目标类型 | 业务名称状态 |
+| --- | --- | --- | --- | --- |
+| AMLHAGPHMHN | +18 | 1 | uint32 | seq候选，和请求同名字段对应；回调不读取字段，消费语义仍需补证 |
+| OILKPHNHCHB | +1C | 6 | uint32 | client_time候选，和请求同名字段对应 |
+| LDLIEKOAFBP | +20 | 11 | int32 | retcode候选；签名/布局确认有符号，未观察回调使用该错误值 |
+
+读函数15251F300按08/30/58分派，分别在15251F376/391/35A写入对应偏移；32位reader都是147520110，不能只凭同一个helper把int32误写为uint32。类型由元数据独立确认，CalculateSize在15251F0A7检查符号，负值于15251F0ED取10字节，排除sint32/zigzag。
+
+原始观察和研究Proto现有3消息17字段，仍不进入服务端源集。本批44项工具/映射测试与11项独立wire检查通过，新增响应非零字段、负错误值10字节varint和signed上界测试；普通校验通过、ready保持失败。没有客户端运行验收。
