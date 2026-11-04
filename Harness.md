@@ -109,3 +109,5 @@ A-04d3b 接手：[响应外层wire](docs/CLIENT_72_RESPONSE_WIRE.md)。client72_
 A-04d3c1接手：trace_client72_response_leaves + check_client72_response_leaves_proto 已实现7叶子/30字段原生双向验证，产物response-leaf-wire-observations.json、response-leaves.proto；命令及sfixed32证据见响应专题末节。证据在evidence/response-leaves-*、logs/a04d3-leaf-tests.log。这些替代上述“先恢复NNKF”步骤；下一步执行父响应非空嵌套与容器，并保留合并行为/运行时ABI未知状态。
 
 当前本地检查点：606ea03（Login完整writer）、91d9791（响应外层reader与映射校验）、5fe24ad（7叶子双向wire）。A-04d3c尚需父容器非空/合并路径；接手优先读响应专题末节，固定输入后复现，原资源子模块差异继续保留。
+
+A-04d3c2接手：[map AOT](docs/CLIENT_72_MAP_AOT.md)记录7.2 MethodSpec/函数表恢复。extract_client72_map_aot现已实现，21条注册产物map-aot-observations.json，用于校验具体/shared map读取入口与adapter绑定；test_client72_map_aot覆盖表边界，证据map-aot-determinism.json/a04d3c-aot-tests.log。不可仅凭形状套用相邻泛型代码。

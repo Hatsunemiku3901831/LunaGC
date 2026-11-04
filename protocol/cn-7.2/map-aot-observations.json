@@ -1,0 +1,596 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "tableRows": 571447,
+  "methodSpecCapacity": 581626,
+  "pointerCount": 469946,
+  "bindings": [
+    {
+      "owner": 66214,
+      "ownerType": "LDGOFDLJAEC",
+      "method": ".ctor",
+      "methodDefinition": 548127,
+      "classInstance": 1541,
+      "arguments": [
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        },
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        }
+      ],
+      "methodSpec": 173823,
+      "tableIndex": 280350,
+      "pointerIndex": 83342,
+      "address": "0x157b22da0"
+    },
+    {
+      "owner": 66214,
+      "ownerType": "LDGOFDLJAEC",
+      "method": "MOMMACBEMEK",
+      "methodDefinition": 548134,
+      "classInstance": 1541,
+      "arguments": [
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        },
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        }
+      ],
+      "methodSpec": 173825,
+      "tableIndex": 280353,
+      "pointerIndex": 83344,
+      "address": "0x157b22e00"
+    },
+    {
+      "owner": 66214,
+      "ownerType": "LDGOFDLJAEC",
+      "method": ".ctor",
+      "methodDefinition": 548127,
+      "classInstance": 59,
+      "arguments": [
+        {
+          "kind": "uint64",
+          "attributes": "0x0",
+          "data": "0x140",
+          "byRef": false
+        },
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        }
+      ],
+      "methodSpec": 174131,
+      "tableIndex": 280357,
+      "pointerIndex": 83642,
+      "address": "0x155f7fb40"
+    },
+    {
+      "owner": 66214,
+      "ownerType": "LDGOFDLJAEC",
+      "method": "MOMMACBEMEK",
+      "methodDefinition": 548134,
+      "classInstance": 59,
+      "arguments": [
+        {
+          "kind": "uint64",
+          "attributes": "0x0",
+          "data": "0x140",
+          "byRef": false
+        },
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        }
+      ],
+      "methodSpec": 174141,
+      "tableIndex": 280360,
+      "pointerIndex": 83652,
+      "address": "0x155f7fba0"
+    },
+    {
+      "owner": 66210,
+      "ownerType": "CEHJEINDOIG",
+      "method": ".ctor",
+      "methodDefinition": 548066,
+      "classInstance": 32160,
+      "arguments": [
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        },
+        {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0x105f4",
+          "byRef": false,
+          "typeDefinition": 67060,
+          "name": "ANDFHAFNBOJ",
+          "namespace": ""
+        }
+      ],
+      "methodSpec": 89887,
+      "tableIndex": 280407,
+      "pointerIndex": 12935,
+      "address": "0x156d38a40"
+    },
+    {
+      "owner": 66210,
+      "ownerType": "CEHJEINDOIG",
+      "method": "FNNADLCNGFO",
+      "methodDefinition": 548078,
+      "classInstance": 32160,
+      "arguments": [
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        },
+        {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0x105f4",
+          "byRef": false,
+          "typeDefinition": 67060,
+          "name": "ANDFHAFNBOJ",
+          "namespace": ""
+        }
+      ],
+      "methodSpec": 89825,
+      "tableIndex": 280410,
+      "pointerIndex": 12943,
+      "address": "0x156d35a40"
+    },
+    {
+      "owner": 66210,
+      "ownerType": "CEHJEINDOIG",
+      "method": ".ctor",
+      "methodDefinition": 548066,
+      "classInstance": 1541,
+      "arguments": [
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        },
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        }
+      ],
+      "methodSpec": 174454,
+      "tableIndex": 280747,
+      "pointerIndex": 12935,
+      "address": "0x156d38a40"
+    },
+    {
+      "owner": 66210,
+      "ownerType": "CEHJEINDOIG",
+      "method": "FNNADLCNGFO",
+      "methodDefinition": 548078,
+      "classInstance": 1541,
+      "arguments": [
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        },
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        }
+      ],
+      "methodSpec": 174299,
+      "tableIndex": 280754,
+      "pointerIndex": 12943,
+      "address": "0x156d35a40"
+    },
+    {
+      "owner": 66210,
+      "ownerType": "CEHJEINDOIG",
+      "method": "set_Item",
+      "methodDefinition": 548074,
+      "classInstance": 1541,
+      "arguments": [
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        },
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        }
+      ],
+      "methodSpec": 174227,
+      "tableIndex": 280765,
+      "pointerIndex": 12829,
+      "address": "0x156d350e0"
+    },
+    {
+      "owner": 66210,
+      "ownerType": "CEHJEINDOIG",
+      "method": ".ctor",
+      "methodDefinition": 548066,
+      "classInstance": 32153,
+      "arguments": [
+        {
+          "kind": "uint64",
+          "attributes": "0x0",
+          "data": "0x140",
+          "byRef": false
+        },
+        {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0xdd17",
+          "byRef": false,
+          "typeDefinition": 56599,
+          "name": "DKFJJMGPCMD",
+          "namespace": ""
+        }
+      ],
+      "methodSpec": 89886,
+      "tableIndex": 280771,
+      "pointerIndex": 13916,
+      "address": "0x158915450"
+    },
+    {
+      "owner": 66210,
+      "ownerType": "CEHJEINDOIG",
+      "method": "FNNADLCNGFO",
+      "methodDefinition": 548078,
+      "classInstance": 32153,
+      "arguments": [
+        {
+          "kind": "uint64",
+          "attributes": "0x0",
+          "data": "0x140",
+          "byRef": false
+        },
+        {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0xdd17",
+          "byRef": false,
+          "typeDefinition": 56599,
+          "name": "DKFJJMGPCMD",
+          "namespace": ""
+        }
+      ],
+      "methodSpec": 89822,
+      "tableIndex": 280773,
+      "pointerIndex": 13920,
+      "address": "0x158912430"
+    },
+    {
+      "owner": 66210,
+      "ownerType": "CEHJEINDOIG",
+      "method": ".ctor",
+      "methodDefinition": 548066,
+      "classInstance": 59,
+      "arguments": [
+        {
+          "kind": "uint64",
+          "attributes": "0x0",
+          "data": "0x140",
+          "byRef": false
+        },
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        }
+      ],
+      "methodSpec": 180668,
+      "tableIndex": 280785,
+      "pointerIndex": 13916,
+      "address": "0x158915450"
+    },
+    {
+      "owner": 66210,
+      "ownerType": "CEHJEINDOIG",
+      "method": "FNNADLCNGFO",
+      "methodDefinition": 548078,
+      "classInstance": 59,
+      "arguments": [
+        {
+          "kind": "uint64",
+          "attributes": "0x0",
+          "data": "0x140",
+          "byRef": false
+        },
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        }
+      ],
+      "methodSpec": 180193,
+      "tableIndex": 280792,
+      "pointerIndex": 13920,
+      "address": "0x158912430"
+    },
+    {
+      "owner": 66210,
+      "ownerType": "CEHJEINDOIG",
+      "method": "set_Item",
+      "methodDefinition": 548074,
+      "classInstance": 59,
+      "arguments": [
+        {
+          "kind": "uint64",
+          "attributes": "0x0",
+          "data": "0x140",
+          "byRef": false
+        },
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        }
+      ],
+      "methodSpec": 180100,
+      "tableIndex": 280803,
+      "pointerIndex": 14520,
+      "address": "0x158911ae0"
+    },
+    {
+      "owner": 17964,
+      "ownerType": "IAPJMJINMNK",
+      "method": ".ctor",
+      "methodDefinition": 136471,
+      "classInstance": 146,
+      "arguments": [
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        },
+        {
+          "kind": "int32",
+          "attributes": "0x0",
+          "data": "0xfb",
+          "byRef": false
+        }
+      ],
+      "methodSpec": 181213,
+      "tableIndex": 304386,
+      "pointerIndex": 90314,
+      "address": "0x158dcc940"
+    },
+    {
+      "owner": 17964,
+      "ownerType": "IAPJMJINMNK",
+      "method": "MOMMACBEMEK",
+      "methodDefinition": 136478,
+      "classInstance": 146,
+      "arguments": [
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        },
+        {
+          "kind": "int32",
+          "attributes": "0x0",
+          "data": "0xfb",
+          "byRef": false
+        }
+      ],
+      "methodSpec": 181221,
+      "tableIndex": 304389,
+      "pointerIndex": 90322,
+      "address": "0x158dcc9b0"
+    },
+    {
+      "owner": 17961,
+      "ownerType": "LIFNBODIOAB",
+      "method": ".ctor",
+      "methodDefinition": 136414,
+      "classInstance": 146,
+      "arguments": [
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        },
+        {
+          "kind": "int32",
+          "attributes": "0x0",
+          "data": "0xfb",
+          "byRef": false
+        }
+      ],
+      "methodSpec": 178114,
+      "tableIndex": 304644,
+      "pointerIndex": 15284,
+      "address": "0x155f9b7d0"
+    },
+    {
+      "owner": 17961,
+      "ownerType": "LIFNBODIOAB",
+      "method": "FNNADLCNGFO",
+      "methodDefinition": 136431,
+      "classInstance": 146,
+      "arguments": [
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        },
+        {
+          "kind": "int32",
+          "attributes": "0x0",
+          "data": "0xfb",
+          "byRef": false
+        }
+      ],
+      "methodSpec": 178151,
+      "tableIndex": 304651,
+      "pointerIndex": 15279,
+      "address": "0x155f9be70"
+    },
+    {
+      "owner": 17961,
+      "ownerType": "LIFNBODIOAB",
+      "method": "set_Item",
+      "methodDefinition": 136450,
+      "classInstance": 146,
+      "arguments": [
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        },
+        {
+          "kind": "int32",
+          "attributes": "0x0",
+          "data": "0xfb",
+          "byRef": false
+        }
+      ],
+      "methodSpec": 178344,
+      "tableIndex": 304658,
+      "pointerIndex": 87621,
+      "address": "0x155f9dd30"
+    },
+    {
+      "owner": 17961,
+      "ownerType": "LIFNBODIOAB",
+      "method": ".ctor",
+      "methodDefinition": 136414,
+      "classInstance": 314,
+      "arguments": [
+        {
+          "kind": "string",
+          "attributes": "0x0",
+          "data": "0x125",
+          "byRef": false
+        },
+        {
+          "kind": "int32",
+          "attributes": "0x0",
+          "data": "0xfb",
+          "byRef": false
+        }
+      ],
+      "methodSpec": 89888,
+      "tableIndex": 304691,
+      "pointerIndex": 15284,
+      "address": "0x155f9b7d0"
+    },
+    {
+      "owner": 17961,
+      "ownerType": "LIFNBODIOAB",
+      "method": "FNNADLCNGFO",
+      "methodDefinition": 136431,
+      "classInstance": 314,
+      "arguments": [
+        {
+          "kind": "string",
+          "attributes": "0x0",
+          "data": "0x125",
+          "byRef": false
+        },
+        {
+          "kind": "int32",
+          "attributes": "0x0",
+          "data": "0xfb",
+          "byRef": false
+        }
+      ],
+      "methodSpec": 89820,
+      "tableIndex": 304696,
+      "pointerIndex": 15279,
+      "address": "0x155f9be70"
+    }
+  ],
+  "scope": "Selected static AOT registrations; synthetic RGCTX is not live runtime ABI"
+}
