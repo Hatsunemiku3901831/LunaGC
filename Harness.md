@@ -112,4 +112,4 @@ A-04d3请求入口：[Login完整wire](docs/CLIENT_72_LOGIN_WIRE.md)；trace_cli
 
 复现命令集中在对象图与AOT专题；最新证据local/migration72/evidence/response-graph-trace.json、response-graph-determinism.json、map-aot-determinism.json及logs/a04d3c-graph-tests.log。先检查输入hash，再检查AOT绑定、流limit/lookahead、已允许的native/helper与实际对象存储；不要跳过未知调用或越界错误。
 
-检查点：606ea03（Login writer）、91d9791（响应外层）、5fe24ad（7叶子）、ce45b47（map AOT）；本轮对象图功能提交见Project完成提交列。下一项为Token/Login业务回调及字段来源闭合，运行时ABI/IFix/实机单列验收。原资源子模块差异继续保留。
+检查点：606ea03（Login writer）、91d9791（响应外层）、5fe24ad（7叶子）、ce45b47（map AOT）、242b1fb（响应对象图）。下一项为Token/Login业务回调及字段来源闭合，运行时ABI/IFix/实机单列验收。原资源子模块差异继续保留。
