@@ -90,6 +90,8 @@ PingRsp现在通过参数、注册和分派三路锁定：MJGOAHFNCGC/25763，�
 
 保护入口接手见 [CLIENT_72_PROTECTED](docs/CLIENT_72_PROTECTED.md)：已实现trace_client72_token（单一目标writer、显式4 helper模型、执行预算/未知状态失败）及check_client72_token_proto；token-wire-observations.json/protected-token.proto均为离线研究产物。依赖requirements-client72-trace.txt只装入local/migration72/python，详细命令在专题；不用Docker/WSL。证据在evidence/token-protected-trace.json、token-protoc-check.json、token-determinism.json及logs/a04d-tests.log。Login52字段实验和两响应checkpoint在analysis/protected-probe-*.json，尚未纳入正式工具。下一步补Login的3个嵌套及bool逐项消歧，再扩展受控reader；不要把合成对象的空指针异常当作客户端缺陷。
 
+A-04d检查点：ce9e3ae（参数/泛型回调参数）、b87fe73（PingRsp）、4b15d73（Token保护writer）；最新参数摘要将901条Action类型引用与835个不同实例分开统计。正式工具运行前仍核对固定输入哈希；不要把本机实验脚本的支持范围套用于正式提取器。
+
 选择测试时，--tests紧跟test任务；serverSmokeTest单独调用，不要把过滤参数放在第二个任务后面。实际遇到的端口冲突证明测试与研发服务不能并行抢占22101。测试完成、释放端口后再部署；不要只看HTTP健康。
 
 ## 三层映射校验入口
