@@ -107,3 +107,5 @@ A-04d3a 接手：[Login完整原始wire](docs/CLIENT_72_LOGIN_WIRE.md)。新增c
 A-04d3b 接手：[响应外层wire](docs/CLIENT_72_RESPONSE_WIRE.md)。client72_reader提供有界输入，trace_client72_responses扫描实际保护分派并核对85外层字段，显式限制嵌套/map/message-list为空envelope。原始表response-wire-observations与login-wire-observations已接入validate_protocol72及mappings候选字段；错误tag/类型/容器参数/嵌套类型会拒绝，未观察内容不能晋级verified。证据为evidence/responses-trace.json、responses-determinism.json、logs/a04d3-reader-tests.log，详细命令见专题。接续先恢复NNKFJMDCCMB非空reader，不能用空envelope通过数替代内容验证。
 
 A-04d3c1接手：trace_client72_response_leaves + check_client72_response_leaves_proto 已实现7叶子/30字段原生双向验证，产物response-leaf-wire-observations.json、response-leaves.proto；命令及sfixed32证据见响应专题末节。证据在evidence/response-leaves-*、logs/a04d3-leaf-tests.log。这些替代上述“先恢复NNKF”步骤；下一步执行父响应非空嵌套与容器，并保留合并行为/运行时ABI未知状态。
+
+当前本地检查点：606ea03（Login完整writer）、91d9791（响应外层reader与映射校验）、5fe24ad（7叶子双向wire）。A-04d3c尚需父容器非空/合并路径；接手优先读响应专题末节，固定输入后复现，原资源子模块差异继续保留。
