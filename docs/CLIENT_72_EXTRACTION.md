@@ -48,7 +48,7 @@
 
 输出：`local/migration72/evidence/client72-metadata.json`，摘要 `extraction-summary.json`。此数据不提交。
 
-对零参方法仅统计严格 `mov ax, imm16; ret` 候选：新发现方法名 AMPEGOHOBJM 4,012 个；该名称共有 4,013 个方法，另一个为 `xor eax,eax; ret`。其他命中包括目录分隔符 getter，证明“返回 ushort 常量”不能自动当作 CmdID。工具输出字段名为 `literalU16Candidate`，没有发布 packetId。尚须通过基类/调用点/注册或实际发送链路确认其网络语义，再进入三层映射。
+基础提取对零参方法仅统计严格 `mov ax, imm16; ret` 候选：AMPEGOHOBJM 4,012 个；该名称共有 4,013 个方法，另一个为 `xor eax,eax; ret`。其他命中包括目录分隔符 getter，证明“返回 ushort 常量”不能自动当作 CmdID。基础工具仍输出 `literalU16Candidate`；后续 `extract_client72_commands.py` 结合父类/虚槽和发送封包证据确认静态网络用途，见 [网络研究](CLIENT_72_NETWORK.md)。业务名称和wire分层继续验证。
 
 泛型、父类和静态布局已按下节恢复；运行时方法替换、闭合泛型的实际布局与 ABI 尚未验证。没有更新服务端 PacketOpcodes/Proto/版本准入。客户端登录和入场未执行。
 

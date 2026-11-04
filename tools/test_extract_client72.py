@@ -5,10 +5,20 @@ import struct
 import tempfile
 import unittest
 
-from tools.extract_client72 import Names, PE, read_verified, literal_u16, method_extent
+from tools.extract_client72 import Names, PE, read_verified, literal_u16, method_extent, method_flags_slot
 
 
 class Client72Test(unittest.TestCase):
+    def test_method_flags_slot_independent_target_words(self):
+        # Actual target words, not values produced by an inverse encoder.
+        for index, flags, slot, expected in ((562051, 0x736D, 0x4D05, (0x9C4, 22)),
+                                            (533477, 0x9DBF, 0xE057, (0x8C4, 22)),
+                                            (533473, 0x63B5, 0x6646, (0xC6, 17)),
+                                            (533467, 0x1B27, 0x55E6, (0x1886, 65535))):
+            self.assertEqual(expected, method_flags_slot(index, flags, slot))
+        with self.assertRaises(ValueError):
+            method_flags_slot(-1, 0, 0)
+
     def test_method_table_includes_alignment_not_an_extra_method(self):
         self.assertEqual(741021, method_extent(19266548, 741021))
         self.assertEqual(2, method_extent(52, 2))

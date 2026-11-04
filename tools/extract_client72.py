@@ -114,6 +114,15 @@ def method_extent(size, count):
     return count
 
 
+def method_flags_slot(index, encoded_flags, encoded_slot):
+    """Metadata setup at 0x14051E5DA..0x14051E667; FFFF is nonvirtual slot."""
+    if type(index) is not int or not 0 <= index <= MASK32 or any(
+            type(v) is not int or not 0 <= v <= 0xFFFF for v in (encoded_flags, encoded_slot)):
+        raise ValueError('Invalid method index/word')
+    key = (((index * 0x1639) ^ 0x5E01C03B) * 0x106B250C17F34CCB + 0x069FFDCBE218FAF4) & MASK64
+    return ((encoded_flags ^ 0xDC05) - key) & 0xFFFF, (encoded_slot - key + 0x58B5) & 0xFFFF
+
+
 def extract(binary, metadata, *, members=False, startup=None, structures=False):
     pe = PE(binary)
     h = pe.offset(HEADER_VA, BODY)
@@ -369,8 +378,9 @@ def recover_members(pe, metadata, h, table, names, records, report):
             name_index = (number(metadata, m + 8) - key + 0xDE01C441) & MASK32
             address = number(binary, pointers + i * 8, "Q")
             count = ((metadata[m + 0x18] ^ 0xF9) - key) & 0xFF
+            flags, slot = method_flags_slot(i, number(metadata, m + 0x10, 'H'), number(metadata, m + 0x12, 'H'))
             method = dict(index=i, name=names.decode(name_index), nameIndex=hex(name_index),
-                          registeredAddress=hex(address), parameterCount=count)
+                          registeredAddress=hex(address), parameterCount=count, flags=hex(flags), virtualSlot=slot)
             if address:
                 offset = pe.offset(address, executable=True)
                 value = literal_u16(binary[offset:offset + 5]) if count == 0 else None

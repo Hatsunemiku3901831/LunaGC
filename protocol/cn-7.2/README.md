@@ -14,4 +14,4 @@ python tools/validate_protocol72.py --ready
 
 第一条为合成数据结构测试；普通校验只验证研究记录自洽，当前应通过。`--ready`要求所有层及P0闭包已核实，当前**必须失败**。它检查范围、别名/唯一包号、字段引用/容器和证据归属，不替代人工判断证据真实性，也不是Java/protoc生成器或客户端验收。
 
-AMPEGOHOBJM等返回常量仅在忽略的元数据报告里作为候选，尚未放入此正式映射表。未知处没有7.1正包号回退。研究过程与下一步见 [提取记录](../../docs/CLIENT_72_EXTRACTION.md) 和 [Project](../../Project.md)。
+`commands.json` 为固定哈希上恢复的4,012条静态CmdID→混淆类型绑定，已有两个发送入口和封/解包证据；4,007个不同值，5组重号保留歧义。它与业务映射分离，不能直接替换PacketOpcodes；业务名、网络域、运行时IFix覆盖仍需核实。可通过 `extract_client72_commands.py` 确定性再生成。证据见 [网络研究](../../docs/CLIENT_72_NETWORK.md)。未知处没有7.1正包号回退。接手见 [提取记录](../../docs/CLIENT_72_EXTRACTION.md) 和 [Project](../../Project.md)。
