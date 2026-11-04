@@ -213,7 +213,8 @@ class TypeResolver:
         kind = (bits >> 16) & 0xFF
         if kind not in KINDS:
             raise ValueError(f'Unknown reference kind {kind}')
-        result = dict(kind=KINDS[kind], attributes=hex(bits & 0xFFFF), data=hex(data))
+        # 0x1404EDCE4..0x1404EDD28 preserves the BYREF bit separately from attrs.
+        result = dict(kind=KINDS[kind], attributes=hex(bits & 0xFFFF), data=hex(data), byRef=bool(bits & 0x40000000))
         path = visiting | {index}
         definition = None
         if kind in (17, 18):

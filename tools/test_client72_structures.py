@@ -73,6 +73,13 @@ class Structures72Test(unittest.TestCase):
         self.assertEqual('uint32', result['elementType']['kind'])
         self.assertEqual(1, result['rank'])
 
+    def test_byref_flag_is_separate_from_element_kind_and_attributes(self):
+        struct.pack_into('<I', self.binary, 0x508, 0x40090002)
+        result = self.resolver().resolve_index(0)
+        self.assertEqual('uint32', result['kind'])
+        self.assertEqual('0x2', result['attributes'])
+        self.assertTrue(result['byRef'])
+
     def test_parent_links_and_cycle_detection(self):
         metadata = bytearray(3 * 70)
         for index, parent in enumerate((0xFFFFFFFF, 3, 1)):

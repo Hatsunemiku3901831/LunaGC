@@ -46,6 +46,8 @@ python tools/audit_client.py --client $env:GAME_PATH --output local/migration72/
 python tools/verify_client_manifest.py --client $env:GAME_PATH --output local/migration72/evidence/manifest-full.json
 python tools/extract_client72.py --client $env:GAME_PATH --members --output local/migration72/evidence/client72-metadata.json
 python tools/extract_client72.py --client $env:GAME_PATH --structures --output local/migration72/evidence/client72-structures.json
+python tools/extract_client72_signatures.py --client $env:GAME_PATH --output local/migration72/evidence/client72-signatures.json
+python -m unittest tools.test_client72_signatures tools.test_client72_structures -v
 python -m unittest tools.test_extract_client72 tools.test_client72_structures -v
 python tools/extract_client72_commands.py --client $env:GAME_PATH --output protocol/cn-7.2/commands.json
 python -m unittest tools.test_client72_commands -v
@@ -81,6 +83,8 @@ LUNAGC_CLIENT_PATCH_GUARD=0 只供服务研究禁用守护，不放开 play/patc
 6. 保存/玩法：按专题复现，留证据后修复，构建部署再实测。
 
 接手先读 Project 下一项与解除条件，再查看本文件入口及公共摘要；本机报告缺失须重新执行，不复制历史 PID/通过数。
+
+方法/回调接手见 [CLIENT_72_SIGNATURES](docs/CLIENT_72_SIGNATURES.md)。已实现extract_client72_signatures：完整参数、BYREF、VAR/MVAR序号与闭合Action的Invoke参数；返回类型和泛型方法实例尚未恢复。client72-signatures.json通过method.index与typeIndex连接，actionCallbacks保存实例化参数；不得把声明指针0当作已恢复代码。
 
 选择测试时，--tests紧跟test任务；serverSmokeTest单独调用，不要把过滤参数放在第二个任务后面。实际遇到的端口冲突证明测试与研发服务不能并行抢占22101。测试完成、释放端口后再部署；不要只看HTTP健康。
 
