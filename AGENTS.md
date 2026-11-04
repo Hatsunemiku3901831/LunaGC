@@ -1,44 +1,20 @@
 # 工作规范
 
-## 部署接手资料
+- 本分支只面向国服 7.2。7.1 资料仅供理解业务和恢复映射，不维护双版本、回退构建或旧客户端运行环境。
+- 接手先读 [README](README.md)、[Project](Project.md)、[Harness](Harness.md)、[迁移研究](docs/CLIENT_72_MIGRATION.md) 和 [部署手册](docs/CODEX_ONE_CLICK_DEPLOY.md)。Project 管任务和验收，Harness 管索引和复现；每批工作后更新实际状态。
+- 路径以当前 checkout 和本机 GAME_PATH 为准，不套用历史路径、PID、测试数量。启动前核对 .env/.env.local/config.json、子模块、进程与端口归属。
+- 使用 Windows 便携方式（LUNAGC_RUNTIME=portable），不部署 Docker/WSL 或启用虚拟化。入口为 tools/local_windows.ps1 及对应 .cmd。HTTP/SDK、MongoDB 固定端口须按源码核查，不能只改环境变量声称隔离。
+- 实际研究、开发、测试和部署；优先依赖满足的任务。缺资料先查本机、已有工具和可验证来源，记录尝试及解除条件，继续可独立工作。
+- 协议输入固定文件哈希；CmdID→类型、类型→语义、字段→wire 三层分别记录来源、歧义和验证状态。未知保持未知；不沿用未核实的旧地址、解码参数或正包号，不以改版本、跳过校验、静态命中、编译或健康通过代替实机验收。
+- 问题优先有效复现/回归测试。协议需独立样本或 wire 断言，覆盖非零、64 位、嵌套、列表、错误和边界；保留版本无关的账号、经济、保存回归。只改 Proto 源，通过 Gradle/protoc 生成 Java。
+- 使用独立测试数据库与运行数据；保留已有 mongodata/、local/data/。不清库、不强杀未知进程、不操作无关客户端。正常停止本项目旧进程后更新构建。
+- 修改运行代码、Proto、配置、补丁或资源后，完成对应构建、便携部署及日志/健康/TCP/UDP/PID/运行 JAR SHA-256 核对。前置条件不满足则记录未部署原因，不启动猜测协议。仅文档、离线研究工具或测试修改无需重启。
+- 每个独立验收项及时本地 Git 提交，不自动推送。先查差异归属，保留且不提交他人修改；子模块单独核对提交与父仓库引用。工作完成再交用户检查。
+- 机器路径、令牌、密码、客户端二进制、原始抓包、依赖、日志和数据库留在忽略目录。共享文档使用相对路径或配置变量；只提交脱敏证据摘要。
+- 阶段交付列任务 ID、修改、实际测试、客户端验收范围/缺口、本地提交、文档更新和下一项可执行任务。
 
-- 新机器部署、便携环境重建或部署排障时，先读 [Codex 一键部署与排障手册](docs/CODEX_ONE_CLICK_DEPLOY.md)。文档区分首次依赖准备和日常启动，按当前脚本核对后执行；不能把历史验证当作本机验收。
+涉及专题时先读，并同步受影响章节：
 
-## 本机部署约定（用户于 2026-10-21 明确指定）
-
-- 本机先使用 Windows 便携运行方式；只有用户以后明确要求时才部署 Docker、WSL 或启用虚拟化功能。
-- 项目目录为 `C:\GS`，游戏目录固定为 `C:\GAME\Genshi`。不要再使用旧的 Program Files 游戏目录。
-- 本机 `.env` 使用 `LUNAGC_RUNTIME=portable`；启动、停止和检查入口为 `Start-GS.cmd`、`Stop-GS.cmd`、`GS-Status.cmd`，游戏入口为 `Play-GS.cmd`。
-- 本机的运行环境更新以便携方式执行：重新构建所改动的程序，正常停止旧进程，启动新构建，检查健康接口、端口与运行 JAR 的 SHA-256。下文的 Docker 更新要求适用于以后经用户明确启用的 Compose 运行方式。
-- 保留 `mongodata/` 和 `local/data/`；本机路径、令牌、日志、依赖和数据库不提交到 Git。
-
-- 一个功能完成后及时在本地 Git 提交，避免未提交变动持续积累。无需联网或推送到 GitHub；只有用户明确要求时才执行远程推送。
-- 工作先做完再让用户检查；只有需要用户抉择或明确留待以后处理的事项才提前询问。
-- 发现问题或收到用户反馈时，通常先用单元测试复现并锁定问题，再修复；根据实际风险补充必要的集成验证。
-
-## 修复后的运行环境更新
-
-- 修改服务端代码、运行配置或镜像内置资源后，交付前必须重新构建并更新 Docker Compose 服务，确保游戏连接的是最新构建。
-- 完成相关测试后，在项目根目录执行 `task serve`（等同于 `task runtime`）。该任务从当前源码和资源构建镜像，后台启动 Compose 服务，并等待健康检查通过。
-- 更新后检查 Compose 服务状态、启动日志和健康接口，并核对运行容器的镜像 ID 或 JAR 校验值与本次构建一致。仅提交代码、生成本地 JAR 或测试通过，不算完成运行环境更新。
-- 保留 MongoDB 和服务状态的持久化卷；日常运行由 Compose 管理。关闭终端或结束 Codex 会话后，服务应继续运行。
-- 向用户说明本地 Git 提交结果、部署验证结果，以及仍需游戏内确认的部分。构建或部署失败时继续排查，并如实说明尚未更新成功。
-- 只有文档、测试等不影响运行内容的修改，无需重建或重启服务。
-
-## 账号与存档接手资料
-
-- 涉及账号、认证、玩家数据或存档恢复时，先读 [系统接手指南](docs/ACCOUNT_AND_SAVE_SYSTEM.md)。
-- 字段归属、集合和索引见 [数据模型](docs/ACCOUNT_AND_SAVE_DATA_MODEL.md)；备份、排障和测试见 [运维与开发手册](docs/ACCOUNT_AND_SAVE_OPERATIONS.md)。
-- 这些资料记录具体源码基线；后续修改以当前代码为准，并同步更新受影响章节。
-
-## 深境螺旋接手资料
-
-- 涉及深渊选队、楼层、上下半、重试或结算时，先读 [系统接手指南](docs/SPIRAL_ABYSS_SYSTEM.md)。
-- 客户端类型、命令号与字段状态见 [客户端与协议](docs/SPIRAL_ABYSS_CLIENT_PROTOCOL.md)；排期、Lua、星级、奖励和存档见 [数据与资源](docs/SPIRAL_ABYSS_DATA_AND_RESOURCES.md)。
-- 排障、独立数据库测试和游戏内验收见 [运维与验证](docs/SPIRAL_ABYSS_OPERATIONS.md)。服务端测试通过不能代替真实客户端协议与玩法验收。
-
-## 商城与充值接手资料
-
-- 涉及商品目录、兑换、充值、月卡、纪行购买或活动商店时，先读 [系统接手指南](docs/SHOP_AND_RECHARGE_SYSTEM.md)。当前充值是免费发放，不是已接入真实支付网关。
-- 资源优先级、商品与货币编号、限购及存档见 [数据与资源](docs/SHOP_AND_RECHARGE_DATA.md)；游戏包、SDK 价格与 GM API 见 [客户端与接口](docs/SHOP_AND_RECHARGE_PROTOCOL.md)。
-- 排障、恢复边界、测试和后续风险见 [运维与验证](docs/SHOP_AND_RECHARGE_OPERATIONS.md)。修改前区分普通商城、免费充值、通用活动币与熄星账本，不能将其中一条路径的保证套用到其他路径；同步更新受影响章节。
+- 账号/认证/存档：[系统](docs/ACCOUNT_AND_SAVE_SYSTEM.md)、[数据模型](docs/ACCOUNT_AND_SAVE_DATA_MODEL.md)、[运维](docs/ACCOUNT_AND_SAVE_OPERATIONS.md)。
+- 深境螺旋：[系统](docs/SPIRAL_ABYSS_SYSTEM.md)、[协议](docs/SPIRAL_ABYSS_CLIENT_PROTOCOL.md)、[资源](docs/SPIRAL_ABYSS_DATA_AND_RESOURCES.md)、[验证](docs/SPIRAL_ABYSS_OPERATIONS.md)。
+- 商城/充值/月卡/纪行/活动商店：[系统](docs/SHOP_AND_RECHARGE_SYSTEM.md)、[数据](docs/SHOP_AND_RECHARGE_DATA.md)、[接口](docs/SHOP_AND_RECHARGE_PROTOCOL.md)、[验证](docs/SHOP_AND_RECHARGE_OPERATIONS.md)。当前充值为免费发放；普通商城、通用活动币、熄星账本分别核查。
