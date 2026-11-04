@@ -31,7 +31,7 @@
 
 本机证据根 local/migration72/：evidence/ 放初始差异、客户端审计、安装检查；logs/ 放测试/构建/运行输出；analysis/ 放反汇编等未脱敏材料。共享摘要引用输入 SHA-256、相对路径和代码位置，不提交账号、令牌、原始抓包或二进制。
 
-已有工具为上表 audit、旧 extractor、Gradle/protoc、脚本测试、便携部署。计划新增（未实现）：安装清单检查、协议表面盘点/P0 图、三层映射校验/生成、目标提取器和独立 wire fixture。实现后补真实命令。
+新增已实现：verify_client_manifest（完整清单）、extract_client72（固定目标基础元数据）、inventory_protocol（静态协议表面与P0 import下界）。证据说明：[目标提取](docs/CLIENT_72_EXTRACTION.md)、[协议盘点](docs/CLIENT_72_PROTOCOL_INVENTORY.md)。尚未实现：完整P0调用图、泛型/父类/布局恢复、三层映射校验/生成和7.2 wire fixture。
 
 ## 可复现命令
 
@@ -43,7 +43,10 @@ git submodule status
 git -C resources status --short
 git -C patch status --short
 python tools/audit_client.py --client $env:GAME_PATH --output local/migration72/evidence/client-audit.json
-python -m unittest tools.test_audit_client tools.test_local_windows tools.test_patch_game tools.test_runtime -v
+python tools/verify_client_manifest.py --client $env:GAME_PATH --output local/migration72/evidence/manifest-full.json
+python tools/extract_client72.py --client $env:GAME_PATH --members --output local/migration72/evidence/client72-metadata.json
+python tools/inventory_protocol.py --output local/migration72/evidence/server-inventory.json
+python -m unittest tools.test_verify_client_manifest tools.test_extract_client72 tools.test_inventory_protocol tools.test_audit_client tools.test_local_windows tools.test_patch_game tools.test_runtime -v
 ```
 
 使用 local/runtime/jdk-17*/bin，设置 JAVA_HOME/PATH。Java 从 src/main/proto 生成到 build/generated/source/proto，禁止手改生成目录。
@@ -70,3 +73,5 @@ LUNAGC_CLIENT_PATCH_GUARD=0 只供服务研究禁用守护，不放开 play/patc
 6. 保存/玩法：按专题复现，留证据后修复，构建部署再实测。
 
 接手先读 Project 下一项与解除条件，再查看本文件入口及公共摘要；本机报告缺失须重新执行，不复制历史 PID/通过数。
+
+选择测试时，--tests紧跟test任务；serverSmokeTest单独调用，不要把过滤参数放在第二个任务后面。实际遇到的端口冲突证明测试与研发服务不能并行抢占22101。测试完成、释放端口后再部署；不要只看HTTP健康。
