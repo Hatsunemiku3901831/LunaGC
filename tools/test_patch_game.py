@@ -39,9 +39,12 @@ class PatchGameTest(unittest.TestCase):
         self.root = Path(self.directory.name).resolve()
         (self.root / "tools").mkdir()
         shutil.copy2(repo / "tools/patch_game.ps1", self.root / "tools/patch_game.ps1")
+        shutil.copy2(repo / "tools/portable_settings.ps1", self.root / "tools/portable_settings.ps1")
+        (self.root / "build.gradle").write_text("version = '7.1.0'\n", encoding="utf-8")
         self.game = self.root / "fake client"
         self.plugins = self.game / "YuanShen_Data/Plugins"
         self.plugins.mkdir(parents=True)
+        (self.game / "config.ini").write_text("[General]\ngame_version=7.1.0\n", encoding="utf-8")
         (self.game / "YuanShen.exe").write_bytes(b"fixture, not executable")
         (self.root / "tools/game_path.ps1").write_text(
             "Write-Output " + ps_quote(self.game), encoding="utf-8")
@@ -96,6 +99,24 @@ class PatchGameTest(unittest.TestCase):
         self.invoke("reset")
         self.assertEqual(self.ast_stock, self.ast.read_bytes())
         self.assertEqual(self.plat_stock, self.plat.read_bytes())
+
+    def test_new_client_is_rejected_without_writing_any_dll_or_backup(self):
+        before = self.snapshot()
+        (self.game / "config.ini").write_text("[General]\ngame_version=7.2.0\n", encoding="utf-8")
+        result = self.invoke("apply", success=False)
+        self.assertIn("Client version 7.2", result.stderr)
+        self.assertEqual(before, self.snapshot())
+
+    def test_reset_is_still_possible_after_client_version_changes(self):
+        self.invoke("apply")
+        (self.game / "config.ini").write_text("[General]\ngame_version=7.2.0\n", encoding="utf-8")
+        self.invoke("reset")
+        self.assertEqual(self.ast_stock, self.ast.read_bytes())
+        self.assertEqual(self.plat_stock, self.plat.read_bytes())
+
+    def test_same_minor_client_hotfix_is_allowed(self):
+        (self.game / "config.ini").write_text("[General]\ngame_version=7.1.1\n", encoding="utf-8")
+        self.invoke("apply")
 
     def test_status_rejects_missing_proxy_then_apply_repairs(self):
         self.invoke("apply")

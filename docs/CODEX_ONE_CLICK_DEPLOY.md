@@ -4,6 +4,8 @@
 
 本文面向“把本项目交给另一台电脑上的 Codex，从准备环境到部署验收”的场景。默认 Windows x64、本机国服 7.1 客户端、便携 Java/MongoDB。**首次部署需要准备依赖、完整资源和匹配客户端；现有启动脚本不是自动下载全部依赖的安装器。** Codex 按下文完成准备后，可以连续执行部署命令；日常使用只需双击启动入口。
 
+7.2 迁移工作区先读 [7.2 迁移现状](CLIENT_72_MIGRATION.md)。本文的旧机器路径只是示例；复制 Fork 后必须检查 `.env`、`.env.local` 和 `config.json` 是否仍引用另一份工作区。当前协议基线仍为 7.1，不能因目录名含 72 就安装到 7.2 客户端。
+
 ## 1. 直接复制给另一位 Codex
 
 ```text
@@ -154,7 +156,11 @@ LUNAGC_GAME_PORT=22101
 - `server.http.bindPort=8088`、`server.game.bindPort=22101`，两边 `bindAddress/accessAddress` 默认为 `127.0.0.1`。
 - 本机 HTTP 默认不启用 TLS；`server.gm.loopbackOnly=true`，保留本机新生成的管理令牌。
 
-本流程固定默认端口。补丁中的 HTTP/SDK 地址仍有硬编码 `127.0.0.1:8088`，**不能只改 `.env` 就换 HTTP 端口或连接远程服务器**。便携脚本还固定 MongoDB 27017、根目录 JAR 文件名及 `local/java-sockets`；不要误以为 `.env.example` 中所有 Compose/开发变量都适用于它。特别是 `LUNAGC_MONGO_URI`、`LUNAGC_MONGO_PORT`、`LUNAGC_JAR`、`LUNAGC_PUBLIC_ADDRESS`、`LUNAGC_RESOURCES_DIR` 和 `LUNAGC_JAVA_SOCKET_DIR` 不会替你重写这套便携路径/配置。
+本流程固定默认端口。补丁中的 HTTP/SDK 地址仍有硬编码 `127.0.0.1:8088`，**不能只改 `.env` 就换 HTTP 端口或连接远程服务器**。便携脚本仍固定 MongoDB 27017 和 `local/java-sockets`；`LUNAGC_MONGO_URI`、`LUNAGC_MONGO_PORT`、`LUNAGC_PUBLIC_ADDRESS` 和 `LUNAGC_JAVA_SOCKET_DIR` 不会重写便携配置。
+
+便携 JAR 默认名称现从 `build.gradle` 的数字版本派生，`LUNAGC_JAR` 可指定根目录内的简单 `.jar` 文件名，构建会同步传入 `-PjarFilename`。启动前检查资源、数据目录存在，拒绝引用工作区之外的数据路径以及其他 MongoDB 地址。外部资源目录须同时在 `config.json` 和 `LUNAGC_RESOURCES_DIR` 中明确指定；环境变量不会改写旧配置。这些检查不会移动存档或迁移数据库。
+
+补丁 apply/status 和便携游戏入口核对 `config.ini` 的主、次版本与源码版本；不同版本会报错，reset 仍可使用。版本一致只是前置检查，不证明协议或补丁兼容。仅运行服务时可设置 `LUNAGC_CLIENT_PATCH_GUARD=0`，此时 start/status 跳过客户端补丁操作和检查，play/patch 仍检查版本。
 
 ## 5. 准备完成后的连续部署命令
 
@@ -254,7 +260,7 @@ Get-Content -LiteralPath .\local\logs\server-out.log -Tail 60
 | 七元素加载卡 98% | [历史已复现](QUEST_LOGIN_ACCEPTANCE_2026-10-21.md)：批量商城逐商品保存大玩家文档，网络/tick 争锁 | 查 `PostEnterSceneReq`、线程栈与写入队列，确认包含 `7eb9f12` 后续修复；不是只看死锁数为 0 |
 | 健康 HTTP 503、切场景卡住 | [历史已复现](SCENE_TRANSFER_DEADLOCK_2026-10-18.md)：Player/队伍列表锁循环；503 也可能是积压/逻辑停滞 | 保存健康详情和线程栈，再按当前修复和正常停机流程处理；重启恢复不等于根因解决 |
 | 改了代码但行为没变化 | 当前 start 会复用健康进程；也可能用了旧 JAR/旧 ext.dll | 正常停服→构建→启动，核对 running.json、PID、hash；补丁更新需退出游戏重装再启动 |
-| 构建成功但找不到约定 JAR | [历史命名修复](JAR_NAMING_2026-10-16.md)或自定义 `-PjarFilename` | 便携入口固定根目录 `LunaGC-7.1.0.jar`；保持默认构建，不只设置 LUNAGC_JAR |
+| 构建成功但找不到约定 JAR | [历史命名修复](JAR_NAMING_2026-10-16.md)或手动构建名与便携设置不一致 | 通过便携 build 构建，默认跟随 `build.gradle`；`LUNAGC_JAR` 指定的文件名会传入 Gradle，不能只手动改名 |
 | 停服后 MongoDB 还在 | 设计行为：Stop 仅正常关闭游戏服务 | 不当成残留进程强杀；冷备需要另行干净关闭数据库 |
 | 正常停服 60 秒后仍未退出 | 候选原因：写入排空、死锁、GM stop 未成功 | 看日志和队列；脚本不会强杀。不要报告“已保存”，也不要覆盖仍运行的 JAR |
 | 开始游戏进入新号或“存档丢了” | 候选原因：指错库/数据目录、用了不同用户名、错误 UID 关联 | 按账号手册核对路由与归属；不重建账号、清库或改计数器来试错 |

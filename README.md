@@ -1,5 +1,7 @@
 # LunaGC 7.1.0
 
+此 Fork 的目标是迁移到 7.2，当前可验证的协议和资源基线仍是 7.1。现状、只读客户端审计及下一步验收见 [7.2 迁移记录](docs/CLIENT_72_MIGRATION.md)；不要仅修改版本号就视为完成适配。
+
 新机器或其他 Codex 接手部署，先读[一键部署与排障手册](docs/CODEX_ONE_CLICK_DEPLOY.md)：包含可复制任务说明、首次依赖准备、连续部署命令、运行验收及历史踩坑。
 
 本机 Windows 便携部署说明见 [LOCAL-RUN.txt](LOCAL-RUN.txt)。已准备好环境的本机可双击

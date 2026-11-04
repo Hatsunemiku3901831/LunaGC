@@ -64,6 +64,12 @@ $game = & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $repo '
 if (-not $game -or $LASTEXITCODE -ne 0) {
     throw "Could not resolve the game path. Set GAME_PATH in .env or install the miHoYo launcher."
 }
+# Reset remains available after a client update; apply/status must not present a
+# 7.1 patch installation as a launch-ready 7.2 environment.
+if ($Mode -ne 'reset') {
+    . (Join-Path $repo 'tools\portable_settings.ps1')
+    Assert-ClientVersion $repo $game
+}
 $plugins = Join-Path $game 'YuanShen_Data\Plugins'
 
 $astrolabe     = Join-Path $plugins 'Astrolabe.dll'

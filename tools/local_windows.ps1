@@ -33,7 +33,9 @@ foreach ($name in @('.env', '.env.local')) {
 
 $local = Join-Path $repo 'local'
 $logDir = Join-Path $local 'logs'
-$jar = Join-Path $repo 'LunaGC-7.1.0.jar'
+. (Join-Path $PSScriptRoot 'portable_settings.ps1')
+$jarName = Get-PortableJarName $repo
+$jar = Join-Path $repo $jarName
 $configFile = Join-Path $repo 'config.json'
 $httpPort = if ($env:LUNAGC_HTTP_PORT) { [int]$env:LUNAGC_HTTP_PORT } else { 8088 }
 $gamePort = if ($env:LUNAGC_GAME_PORT) { [int]$env:LUNAGC_GAME_PORT } else { 22101 }
@@ -68,11 +70,32 @@ function Get-Listener([int] $port) {
 
 function Get-Server {
     $process = Get-Listener $httpPort
-    if ($process -and ($process.Name -ne 'java.exe' -or
-        $process.CommandLine.IndexOf($jar, [StringComparison]::OrdinalIgnoreCase) -lt 0)) {
-        throw "Port $httpPort belongs to another application (PID $($process.ProcessId))."
+    if ($process) {
+        $runningJar = $null
+        if ($process.CommandLine -match '(?:^|\s)-jar\s+(?:"([^"]+)"|(\S+))') {
+            $runningJar = if ($Matches[1]) { $Matches[1] } else { $Matches[2] }
+        }
+        if ($process.Name -ne 'java.exe' -or -not $runningJar -or
+            -not [IO.Path]::IsPathRooted($runningJar) -or
+            (Split-Path -Parent ([IO.Path]::GetFullPath($runningJar))) -ne $repo) {
+            throw "Port $httpPort belongs to another application (PID $($process.ProcessId))."
+        }
+        # Keep stop usable when this checkout's selected version/JAR has changed.
+        $process | Add-Member -NotePropertyName LunaGCJarPath -NotePropertyValue $runningJar
     }
     return $process
+}
+
+function Assert-RunningArtifact($Process) {
+    if ($Process.LunaGCJarPath -ne $jar) { throw 'Stop LunaGC before switching to a different JAR.' }
+    $stateFile = Join-Path $local 'running.json'
+    if (-not (Test-Path -LiteralPath $stateFile)) { throw 'Startup JAR record missing; stop and start LunaGC to verify this build.' }
+    $state = Get-Content -LiteralPath $stateFile -Raw -Encoding UTF8 | ConvertFrom-Json
+    if ($state.pid -ne $Process.ProcessId -or $state.jar -ne $jar -or
+        -not (Test-Path -LiteralPath $jar) -or
+        $state.jarSHA256 -ne (Get-FileHash -LiteralPath $jar -Algorithm SHA256).Hash) {
+        throw 'Running JAR differs from its startup record; stop, rebuild and start LunaGC.'
+    }
 }
 
 function Get-Health {
@@ -116,8 +139,11 @@ function Invoke-GmCommand([string] $command) {
 }
 
 function Start-LocalServer {
+    $configuration = Get-Config
+    Assert-PortableConfig $repo $configuration $mongoPort
     $existing = Get-Server
     if ($existing) {
+        Assert-RunningArtifact $existing
         $health = Get-Health
         if (-not $health.status.health.healthy) { throw "Existing LunaGC is not healthy. Check $logDir." }
         Write-Host "LunaGC is already running (PID $($existing.ProcessId))."
@@ -125,13 +151,12 @@ function Start-LocalServer {
     }
     $java = Get-Java
     $mongod = Get-Mongod
-    if (-not (Test-Path -LiteralPath $jar)) { throw 'LunaGC-7.1.0.jar is missing.' }
-    $resource = Join-Path $repo 'resources\ExcelBinOutput\AvatarExcelConfigData.json'
+    if (-not (Test-Path -LiteralPath $jar)) { throw "Server JAR is missing: $jar" }
+    $resource = Join-Path (Resolve-PortablePath $repo $configuration.folderStructure.resources) 'ExcelBinOutput\AvatarExcelConfigData.json'
     if (-not (Test-Path -LiteralPath $resource)) { throw 'Resources are missing. Initialize the resources submodule first.' }
     if ((Get-Content -LiteralPath $resource -TotalCount 1) -match '^version https://git-lfs') {
         throw 'Resources are LFS pointers. Run git -C resources lfs pull first.'
     }
-    $configuration = Get-Config
     if ($configuration.server.http.bindPort -ne $httpPort -or $configuration.server.game.bindPort -ne $gamePort) {
         throw 'The .env ports and config.json ports must match.'
     }
@@ -197,14 +222,22 @@ function Stop-LocalServer {
 }
 
 function Set-ClientPatch([string] $action) {
+    if ($action -eq 'apply') { Assert-ConfiguredClientVersion }
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'patch_game.ps1') -Mode $action
     if ($LASTEXITCODE -ne 0) { throw "Client patch action failed: $action" }
 }
 
 function Start-ClientPatchGuard {
     if ($env:LUNAGC_CLIENT_PATCH_GUARD -match '^(0|false|off)$') { return }
+    Assert-ConfiguredClientVersion
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'client_patch_guard.ps1') -Mode start
     if ($LASTEXITCODE -ne 0) { throw 'Could not start client patch recovery.' }
+}
+
+function Assert-ConfiguredClientVersion {
+    $game = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'game_path.ps1')
+    if ($LASTEXITCODE -ne 0) { throw 'The game directory could not be resolved.' }
+    Assert-ClientVersion $repo $game
 }
 
 $mutex = New-Object Threading.Mutex($false, ('Local\LunaGCNative-' + ($repo -replace '[^A-Za-z0-9]', '_')))
@@ -215,19 +248,32 @@ try {
         if (-not $locked) { throw 'Another local LunaGC server action is still in progress.' }
     }
     switch ($Mode) {
-        'start' { Start-LocalServer; Start-ClientPatchGuard }
+        'start' {
+            if ($env:LUNAGC_CLIENT_PATCH_GUARD -notmatch '^(0|false|off)$') { Assert-ConfiguredClientVersion }
+            Start-LocalServer
+            Start-ClientPatchGuard
+        }
         'stop' { Stop-LocalServer }
         'status' {
             $server = Get-Server
+            if ($server) { Assert-RunningArtifact $server }
             $health = Get-Health
             $mongo = Get-Listener $mongoPort
             Write-Host "Game path: $env:GAME_PATH"
             Write-Host "MongoDB: $(if ($mongo) { 'running (PID ' + $mongo.ProcessId + ')' } else { 'stopped' })"
             Write-Host "LunaGC: $(if ($server) { 'running (PID ' + $server.ProcessId + ')' } else { 'stopped' })"
             Write-Host "Healthy: $([bool]$health.status.health.healthy)"
+            Write-Host "Server JAR: $jar"
             Write-Host "Logs: $logDir"
-            & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'patch_game.ps1') -Mode status
-            if ($LASTEXITCODE -ne 0 -or -not $health.status.health.healthy) { exit 1 }
+            $patchExit = 0
+            if ($env:LUNAGC_CLIENT_PATCH_GUARD -match '^(0|false|off)$') {
+                Write-Host 'Client patch check disabled (server-only mode).'
+            } else {
+                Assert-ConfiguredClientVersion
+                & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'patch_game.ps1') -Mode status
+                $patchExit = $LASTEXITCODE
+            }
+            if ($patchExit -ne 0 -or -not $server -or -not $health.status.health.healthy) { exit 1 }
         }
         'patch' { Set-ClientPatch 'apply' }
         'reset' {
@@ -236,6 +282,7 @@ try {
             Set-ClientPatch 'reset'
         }
         'play' {
+            Assert-ConfiguredClientVersion
             Start-LocalServer
             $game = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'game_path.ps1')
             if ($LASTEXITCODE -ne 0) { throw 'The game directory could not be resolved.' }
@@ -263,7 +310,7 @@ try {
             if (Get-Server) { throw 'Stop LunaGC before rebuilding its JAR.' }
             Get-Java | Out-Null
             $env:GRADLE_USER_HOME = Join-Path $local 'gradle'
-            & (Join-Path $repo 'gradlew.bat') --no-daemon jar -PskipHandbook=1
+            & (Join-Path $repo 'gradlew.bat') --no-daemon jar -PskipHandbook=1 "-PjarFilename=$([IO.Path]::GetFileNameWithoutExtension($jarName))"
             if ($LASTEXITCODE -ne 0) { throw 'Server build failed.' }
         }
         'buildpatch' {
