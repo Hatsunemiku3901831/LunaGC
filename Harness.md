@@ -31,7 +31,7 @@
 
 本机证据根 local/migration72/：evidence/ 放初始差异、客户端审计、安装检查；logs/ 放测试/构建/运行输出；analysis/ 放反汇编等未脱敏材料。共享摘要引用输入 SHA-256、相对路径和代码位置，不提交账号、令牌、原始抓包或二进制。
 
-新增已实现：verify_client_manifest（完整清单）、extract_client72（固定目标基础元数据）、inventory_protocol（静态协议表面与P0 import下界）。证据说明：[目标提取](docs/CLIENT_72_EXTRACTION.md)、[协议盘点](docs/CLIENT_72_PROTOCOL_INVENTORY.md)。尚未实现：完整P0调用图、泛型/父类/布局恢复、确定性源码生成和7.2 wire fixture。
+新增已实现：verify_client_manifest（完整清单）、extract_client72（固定目标基础元数据及泛型/父类/静态字段布局）、inventory_protocol（静态协议表面与P0 import下界）。证据说明：[目标提取](docs/CLIENT_72_EXTRACTION.md)、[协议盘点](docs/CLIENT_72_PROTOCOL_INVENTORY.md)。尚未实现：完整P0调用图、运行时闭合泛型ABI、确定性源码生成和完整7.2 wire fixture。
 
 ## 可复现命令
 
@@ -45,6 +45,8 @@ git -C patch status --short
 python tools/audit_client.py --client $env:GAME_PATH --output local/migration72/evidence/client-audit.json
 python tools/verify_client_manifest.py --client $env:GAME_PATH --output local/migration72/evidence/manifest-full.json
 python tools/extract_client72.py --client $env:GAME_PATH --members --output local/migration72/evidence/client72-metadata.json
+python tools/extract_client72.py --client $env:GAME_PATH --structures --output local/migration72/evidence/client72-structures.json
+python -m unittest tools.test_extract_client72 tools.test_client72_structures -v
 python tools/inventory_protocol.py --output local/migration72/evidence/server-inventory.json
 python -m unittest tools.test_verify_client_manifest tools.test_extract_client72 tools.test_inventory_protocol tools.test_audit_client tools.test_local_windows tools.test_patch_game tools.test_runtime -v
 ```

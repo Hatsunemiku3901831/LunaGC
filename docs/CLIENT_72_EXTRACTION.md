@@ -50,7 +50,7 @@
 
 对零参方法仅统计严格 `mov ax, imm16; ret` 候选：新发现方法名 AMPEGOHOBJM 4,012 个；该名称共有 4,013 个方法，另一个为 `xor eax,eax; ret`。其他命中包括目录分隔符 getter，证明“返回 ushort 常量”不能自动当作 CmdID。工具输出字段名为 `literalU16Candidate`，没有发布 packetId。尚须通过基类/调用点/注册或实际发送链路确认其网络语义，再进入三层映射。
 
-尚未恢复泛型实参、数组、父类、完整对象布局及运行时方法替换；注册基础指针不是实际加载后的 ABI 证明。没有恢复 7.2 业务名称、字段 tag 或完整 schema；没有更新服务端 PacketOpcodes/Proto/版本准入。客户端登录和入场未执行。
+泛型、父类和静态布局已按下节恢复；运行时方法替换、闭合泛型的实际布局与 ABI 尚未验证。没有更新服务端 PacketOpcodes/Proto/版本准入。客户端登录和入场未执行。
 
 测试包含取自固定目标元数据的三个小名称密文向量（无编码器自编自解）、哈希不匹配、名称和 PE 边界、不可执行地址、字面常量严格形状及方法表对齐回归。它们是提取器测试，不是游戏 wire 兼容测试。
 
@@ -60,6 +60,23 @@
 python -m unittest tools.test_verify_client_manifest tools.test_extract_client72 -v
 python tools/verify_client_manifest.py --client $env:GAME_PATH --output local/migration72/evidence/manifest-full.json
 python tools/extract_client72.py --client $env:GAME_PATH --members --output local/migration72/evidence/client72-metadata.json
+python tools/extract_client72.py --client $env:GAME_PATH --structures --output local/migration72/evidence/client72-structures.json
+python -m unittest tools.test_extract_client72 tools.test_client72_structures -v
 ```
 
 公开来源检索未获得可与当前目标关联的 7.2 协议/资源证据。核查线索包括 [Il2CppDumper-Genshin](https://github.com/R0xdeadc0de/Il2CppDumper-Genshin)、[ProtoDumper](https://github.com/66hh/ProtoDumper) 和 [cmdids-extraction](https://github.com/umaru-233/cmdids-extraction)，没有把工具的通用说明当作本目标已经支持的证据。本次恢复以本机目标反汇编和结构校验为依据。
+
+## A-04b 泛型、父类和静态字段布局
+
+以下均绑定本页三份输入哈希。完整输出 `client72-structures.json`，摘要 `structures-summary.json`，反汇编留在 `local/migration72/analysis/`。
+
+| 结构 | 7.2 解码与独立指令证据 |
+| --- | --- |
+| 泛型实例 | 0x14053F377–0x14053F476：startup 表偏移 `u32(header[D0]+E1492096)`，长度 `u32(header[44]+E42E197F)`，每8字节为 **instance、definition**；startup不加0x210。实例从 MetadataRegistration+70 的16字节 argc/argv 项取参，argv 指向注册类型引用。 |
+| 泛型/数组类型 | 0x140517680 的类型分派：kind21是泛型索引，kind29的data为元素引用指针，kind20的data指向元素指针/rank描述。VAR/MVAR保留参数索引，多维数组bounds仍未知。 |
+| 父类 | 0x15A4D746E–0x15A4D74C1：`u32(type[0]+A0A35767)`为父类型引用，FFFFFFFF表示无父类；type[10]是declaring type，不能当父类。System.Enum→ValueType→Object及容器/消息基类交叉核查。 |
+| 字段偏移 | 0x14051C6A8–0x14051C8D2：lookup=`210+u32(header[168]+B01C236D)`；layout=`210+u32(header[14C]+DE642132)`；offsets=`210+u32(header[154]+936A8A40)`。lookup按类型索引取有符号项，layout每12字节的+8给出首偏移索引。 |
+
+全量恢复411,433条泛型记录；所有实参与定义索引均校验，按实际字段/父类遍历解析92,612条类型引用。父链接88,083条，其中泛型父类1,571条；检查全图无环。76,011个含字段类型有静态布局记录：331,713个instance字段、1,264个static字段、75,382个literal字段、37,103个runtime待定字段。
+
+上述字段数相加为445,462。literal不分配对象存储；泛型定义中的零偏移及高位运行时标记不输出为有效instance offset。无字段类型不读取无意义layout项。原始size/flags字保留供后续研究，**不把它们宣称为完整对象大小或闭合泛型ABI**。结构测试6项加既有提取测试7项，共13项通过；包含嵌套泛型、7.2表顺序、越界/错位引用、递归/父类环、布局未知分类与越界失败。
