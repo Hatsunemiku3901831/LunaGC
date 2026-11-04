@@ -1,0 +1,700 @@
+{
+  "schemaVersion": 1,
+  "target": {
+    "version": "7.2.0",
+    "channel": 1,
+    "subChannel": 1
+  },
+  "closure": {
+    "status": "unresolved",
+    "evidence": [],
+    "ambiguities": [
+      "Seed list only; manager, event, scene and client-observed dependencies not closed"
+    ]
+  },
+  "requiredMessages": [
+    "GetPlayerTokenReq",
+    "GetPlayerTokenRsp",
+    "PlayerLoginReq",
+    "PlayerLoginRsp",
+    "PingReq",
+    "PingRsp",
+    "DoSetPlayerBornDataNotify",
+    "SetPlayerBornDataReq",
+    "SetPlayerBornDataRsp",
+    "PlayerDataNotify",
+    "PlayerStoreNotify",
+    "StoreWeightLimitNotify",
+    "AvatarDataNotify",
+    "PlayerEnterSceneNotify",
+    "EnterSceneReadyReq",
+    "EnterSceneReadyRsp",
+    "SceneInitFinishReq",
+    "SceneInitFinishRsp",
+    "EnterSceneDoneReq",
+    "EnterSceneDoneRsp",
+    "PostEnterSceneReq",
+    "PostEnterSceneRsp",
+    "UnionCmdNotify",
+    "PacketHead",
+    "QueryRegionListHttpRsp",
+    "QueryCurrRegionHttpRsp"
+  ],
+  "evidence": [],
+  "opcodes": [
+    {
+      "semanticName": "GetPlayerTokenReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "GetPlayerTokenRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "PlayerLoginReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "PlayerLoginRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "PingReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "PingRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "DoSetPlayerBornDataNotify",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "SetPlayerBornDataReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "SetPlayerBornDataRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "PlayerDataNotify",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "PlayerStoreNotify",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "StoreWeightLimitNotify",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "AvatarDataNotify",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "PlayerEnterSceneNotify",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "EnterSceneReadyReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "EnterSceneReadyRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "SceneInitFinishReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "SceneInitFinishRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "EnterSceneDoneReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "EnterSceneDoneRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "PostEnterSceneReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "PostEnterSceneRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "UnionCmdNotify",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "PacketHead",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "QueryRegionListHttpRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    },
+    {
+      "semanticName": "QueryCurrRegionHttpRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "cmdId": null
+    }
+  ],
+  "messages": [
+    {
+      "semanticName": "GetPlayerTokenReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "C2S",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "GetPlayerTokenRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "S2C",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "PlayerLoginReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "C2S",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "PlayerLoginRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "S2C",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "PingReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "C2S",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "PingRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "S2C",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "DoSetPlayerBornDataNotify",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "S2C",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "SetPlayerBornDataReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "C2S",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "SetPlayerBornDataRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "S2C",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "PlayerDataNotify",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "S2C",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "PlayerStoreNotify",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "S2C",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "StoreWeightLimitNotify",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "S2C",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "AvatarDataNotify",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "S2C",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "PlayerEnterSceneNotify",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "S2C",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "EnterSceneReadyReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "C2S",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "EnterSceneReadyRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "S2C",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "SceneInitFinishReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "C2S",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "SceneInitFinishRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "S2C",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "EnterSceneDoneReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "C2S",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "EnterSceneDoneRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "S2C",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "PostEnterSceneReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "C2S",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "PostEnterSceneRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "S2C",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "UnionCmdNotify",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "both",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "PacketHead",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "embedded",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "QueryRegionListHttpRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "HTTP",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "QueryCurrRegionHttpRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "clientType": null,
+      "direction": "HTTP",
+      "aliases": [],
+      "runtimeStatus": "not-tested"
+    }
+  ],
+  "schemas": [
+    {
+      "semanticName": "GetPlayerTokenReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "GetPlayerTokenRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "PlayerLoginReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "PlayerLoginRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "PingReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "PingRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "DoSetPlayerBornDataNotify",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "SetPlayerBornDataReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "SetPlayerBornDataRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "PlayerDataNotify",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "PlayerStoreNotify",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "StoreWeightLimitNotify",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "AvatarDataNotify",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "PlayerEnterSceneNotify",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "EnterSceneReadyReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "EnterSceneReadyRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "SceneInitFinishReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "SceneInitFinishRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "EnterSceneDoneReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "EnterSceneDoneRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "PostEnterSceneReq",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "PostEnterSceneRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "UnionCmdNotify",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "PacketHead",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "QueryRegionListHttpRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    },
+    {
+      "semanticName": "QueryCurrRegionHttpRsp",
+      "status": "unresolved",
+      "evidence": [],
+      "ambiguities": [],
+      "fields": []
+    }
+  ]
+}

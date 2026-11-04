@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "target": {
+    "version": "7.2.0",
+    "channel": 1,
+    "subChannel": 1
+  },
+  "files": {
+    "binary": {
+      "path": "YuanShen.exe",
+      "exists": true,
+      "size": 450927000,
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5"
+    },
+    "metadata": {
+      "path": "YuanShen_Data/Managed/Metadata/global-metadata.dat",
+      "exists": true,
+      "size": 83644188,
+      "sha256": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a"
+    },
+    "startup": {
+      "path": "YuanShen_Data/Managed/Metadata/startup-metadata.dat",
+      "exists": true,
+      "size": 4116148,
+      "sha256": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+    },
+    "sdk": {
+      "path": "YuanShen_Data/Plugins/AccountPlatNative.dll",
+      "exists": true,
+      "size": 9360280,
+      "sha256": "adecdf0bd5442e321b1b66b0ca9e98bef76d5067326aa4add5b75266055a6c25"
+    },
+    "astrolabe": {
+      "path": "YuanShen_Data/Plugins/Astrolabe.dll",
+      "exists": true,
+      "size": 2614168,
+      "sha256": "87e0a005ac46515156636af2120d3f824bcd28d69253e7d7235b959b54a0b442"
+    }
+  },
+  "evidence": "docs/CLIENT_72_EXTRACTION.md",
+  "extractionScope": "Static metadata; not CmdID, business names, wire schema, or runtime ABI",
+  "protocolMappingStatus": "unresolved"
+}
