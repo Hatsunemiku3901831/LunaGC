@@ -38,4 +38,35 @@
 
 TokenReq.WriteTo（1500C2660→15A4DCF40）、TokenRsp.Merge（148B7EA10→15A4DBA53）、LoginReq.WriteTo（152EEB470→15A4E48B5）、LoginRsp.Merge（14B89EC90→15A4DC5A8）入口均跳转到保护代码；线性反汇编无法恢复有效读写流程。未把后续填充字节当作指令或猜测tag。解除需恢复保护分派后的真实数据流，或在独立客户端运行中取得受控样本/读写观测。
 
-可独立继续：未保护的PacketHead、PingReq完整静态wire；业务构造/回调类型关系、嵌套泛型参数；登录P0依赖闭包。运行时IFix分支、保护入口和真实网络序列仍需验证。
+本批已继续完成未保护的PacketHead、PingReq静态wire（见下节）。下一步追踪业务构造/回调类型关系、嵌套泛型参数及登录P0依赖闭包。运行时IFix分支、保护入口和真实网络序列仍需验证。
+
+## 包头和心跳 wire
+
+`extract_client72_wire.py` 将人工复核的14个tag写入点，与紧接的字段加载、直接writer调用和目标元数据布局关联；拒绝未知指令、helper、字段缺失、重复tag、类型/偏移不一致。它只处理本节两个已审查的未保护函数，不是通用反汇编器。
+
+输出 [wire-observations.json](../protocol/cn-7.2/wire-observations.json) 保留每字段VA、原始名字和三层状态；[research.proto](../protocol/cn-7.2/research.proto) 使用原始混淆名字，仅供离线研究，没有接入src/main/proto或Java。全部字段是singular/implicit、非packed；其序列化条件和size计算也已人工复查。多维数组、嵌套容器不在这两个消息内，不能据此宣称P0容器验证完成。
+
+| 类型 | 对象偏移 | 原始字段 | tag / wire类型 | 业务状态 |
+| --- | --- | --- | --- | --- |
+| LOPNMMJPFAJ | 30 | MIBNHKIPDIM | 3 / uint32 | client_sequence_id静态确认：1472CE594递增且跳过0，1472CE5D0写入此字段 |
+| 同上 | 18 | BCNJAEDGBCK | 6 / uint64 | sent_ms静态确认：1472CE5EF–68C取时间差乘0.0001后写入；14E697558–592构造1970-01-01并转本地epoch |
+| 同上 | 20 | POAOKGCEJPF | 7 / uint32 | 未知 |
+| 同上 | 28 | KNKMLHHGPPE | 8 / uint32 | 未知 |
+| 同上 | 24 | BNHLJEGKGEM | 9 / uint32 | 未知 |
+| 同上 | 2C | FKKOHHCLCPH | 10 / uint32 | 未知 |
+| LMINJCCKNDD | 30 | LBEAJJBNBIF | 1 / uint64 | 构造处调用GetMemoryUsageForProcessKB后左移10；process_memory_bytes候选名称 |
+| 同上 | 40 | BFNKMJBHCKJ | 2 / uint32 | _cur_fps候选，来自浮点统计值转整数；统计对象语义待闭合 |
+| 同上 | 18 | IMEDCDCPICN | 3 / bytes | 业务未知；真实tag为3，不是旧schema的50000占位 |
+| 同上 | 38 | MHCBMOHFBCK | 5 / double | total_tick_time候选，来自145873360；累加来源待追踪 |
+| 同上 | 20 | BAHKGFLONLL | 9 / bytes | 业务未知；真实tag为9，不是旧schema的50001占位 |
+| 同上 | 44 | HDLNEABIBJF | 10 / float | ue_time候选，来自原生时间对象；具体时钟语义待闭合 |
+| 同上 | 2C | OILKPHNHCHB | 13 / uint32 | client_time候选，14E65CCD0从epoch计算秒数；时钟修正语义待闭合 |
+| 同上 | 28 | AMLHAGPHMHN | 14 / uint32 | seq候选，15120D8A0的第一个业务参数；现见调用传0，不能据此确认为递增序号 |
+
+偏移为十六进制。PacketHead的读函数14CD81610独立按18/30/38/40/48/50键分派至同一对象偏移，交叉确认全部6个字段。PingReq写函数15182BFE0已覆盖8个实例字段；其CalculateSize在15182BA30独立给出浮点固定宽度和其他字段的长度条件。
+
+writer语义：1517662A0为32位varint、151766960为64位varint（7bit移位循环）；151765EF0按低字节起写8字节；151748C40存float位并写4字节；151767530写长度后经147CF1DC0复制字节容器（含池化分支），不是嵌套消息writer。原始指令报告留analysis/，提取使用标准库，不依赖研究时的Capstone安装。
+
+本批实际测试：37项提取/结构/包号/wire/映射测试通过；`check_client72_wire_proto.py` 使用libprotoc 3.18.1编译研究Proto，9项独立wire断言通过。包括所有字段非零、超过32位与uint64最大值、二进制bytes、float/double、无符号越界、重复singular最后值、未知tag及截断拒绝。断言是由上述目标指令推导的**合成样本**，不是抓包，不是客户端运行结果；尚未覆盖登录错误返回、P0嵌套/列表或真实IFix路径。
+
+业务映射记录仅将PacketHead类型及2个业务字段标为verified；5个业务消息名仍candidate，其他语义未知。校验器同时比对commands/wire原始观察，避免候选记录混入旧号/旧tag。普通校验通过；`--ready`实际退出1，保持生成闸门关闭。未修改服务端协议、配置、补丁或资源，因此本批无需重启部署。

@@ -1,8 +1,10 @@
 """Synthetic validator fixtures; no fixture is asserted to be a real 7.2 message."""
 import copy
+import json
+from pathlib import Path
 import unittest
 
-from tools.validate_protocol72 import validate
+from tools.validate_protocol72 import validate, validate_observations
 
 
 class Mapping72Test(unittest.TestCase):
@@ -88,6 +90,35 @@ class Mapping72Test(unittest.TestCase):
         self.rejected('CN 7.2')
         self.doc['schemas'][0]['fields'][0].update(type='enum', enumValues={'VALUE': '1'})
         self.rejected('enum values')
+
+
+class ObservationBindingTest(unittest.TestCase):
+    def setUp(self):
+        root = Path(__file__).resolve().parents[1] / 'protocol/cn-7.2'
+        self.doc, self.profile, self.commands, self.wire = [json.loads((root / name).read_text('utf8'))
+            for name in ('mappings.json', 'profile.json', 'commands.json', 'wire-observations.json')]
+
+    def check(self):
+        return validate_observations(self.doc, self.profile, self.commands, self.wire)
+
+    def test_repository_research_consistency_and_not_ready(self):
+        self.assertEqual([], self.check())
+        self.assertEqual([], validate(self.doc, self.profile))
+        self.assertTrue(validate(self.doc, self.profile, ready=True))
+
+    def test_candidate_opcode_cannot_disagree_with_target_binding(self):
+        next(r for r in self.doc['opcodes'] if r['semanticName'] == 'PingReq')['cmdId'] = 20324
+        self.assertTrue(any('command binding' in e for e in self.check()))
+
+    def test_known_tag_or_width_cannot_be_replaced_by_old_schema(self):
+        row = next(r for r in self.doc['schemas'] if r['semanticName'] == 'PacketHead')
+        row['fields'][0]['tag'] = 1
+        row['fields'][1]['type'] = 'uint32'
+        self.assertEqual(2, len(self.check()))
+
+    def test_observations_require_the_same_input(self):
+        self.wire['inputSHA256']['YuanShen.exe'] = 'a' * 64
+        self.assertTrue(any('hash mismatch' in e for e in self.check()))
 
 
 if __name__ == '__main__':

@@ -40,47 +40,124 @@
     "QueryRegionListHttpRsp",
     "QueryCurrRegionHttpRsp"
   ],
-  "evidence": [],
+  "evidence": [
+    {
+      "id": "network-command-chain",
+      "layer": "opcode",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_NETWORK.md; 0x1472CE55D/0x147E04023/0x14A447EF2"
+    },
+    {
+      "id": "login-candidate-sites",
+      "layer": "message",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_NETWORK.md; 0x151220013/0x1512137BE; response shape candidates pending callbacks"
+    },
+    {
+      "id": "heartbeat-candidate-sites",
+      "layer": "message",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_NETWORK.md; 0x15120CAC0/0x15120D8A0/0x15121EC30"
+    },
+    {
+      "id": "packet-head-type",
+      "layer": "message",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_NETWORK.md; FBNMCCIAMBP+0x18 LOPNMMJPFAJ; 0x14A447E00/0x14A446CC0"
+    },
+    {
+      "id": "head-wire",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "protocol/cn-7.2/wire-observations.json; 0x14CD80D60 and independent reader 0x14CD81610"
+    },
+    {
+      "id": "heartbeat-wire",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "protocol/cn-7.2/wire-observations.json; 0x15182BFE0"
+    },
+    {
+      "id": "head-field-semantics",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_NETWORK.md; sequence 0x1472CE594..5D0; ms 0x1472CE5EF..68C; epoch 0x14E697558..592"
+    },
+    {
+      "id": "heartbeat-field-sources",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_NETWORK.md; 0x15120CBC0..CD40; 0x14E65CCD0; native GetMemoryUsageForProcessKB"
+    }
+  ],
   "opcodes": [
     {
       "semanticName": "GetPlayerTokenReq",
-      "status": "unresolved",
-      "evidence": [],
-      "ambiguities": [],
-      "clientType": null,
-      "cmdId": null
+      "status": "candidate",
+      "evidence": [
+        "network-command-chain"
+      ],
+      "ambiguities": [
+        "Static client type binding confirmed; stable business-name association still candidate"
+      ],
+      "clientType": "NJAALDCMHEP",
+      "cmdId": 24604
     },
     {
       "semanticName": "GetPlayerTokenRsp",
-      "status": "unresolved",
-      "evidence": [],
-      "ambiguities": [],
-      "clientType": null,
-      "cmdId": null
+      "status": "candidate",
+      "evidence": [
+        "network-command-chain"
+      ],
+      "ambiguities": [
+        "Static client type binding confirmed; stable business-name association still candidate"
+      ],
+      "clientType": "CLDBKDNJHFG",
+      "cmdId": 27808
     },
     {
       "semanticName": "PlayerLoginReq",
-      "status": "unresolved",
-      "evidence": [],
-      "ambiguities": [],
-      "clientType": null,
-      "cmdId": null
+      "status": "candidate",
+      "evidence": [
+        "network-command-chain"
+      ],
+      "ambiguities": [
+        "Static client type binding confirmed; stable business-name association still candidate"
+      ],
+      "clientType": "KOHBOMDDFCB",
+      "cmdId": 23172
     },
     {
       "semanticName": "PlayerLoginRsp",
-      "status": "unresolved",
-      "evidence": [],
-      "ambiguities": [],
-      "clientType": null,
-      "cmdId": null
+      "status": "candidate",
+      "evidence": [
+        "network-command-chain"
+      ],
+      "ambiguities": [
+        "Static client type binding confirmed; stable business-name association still candidate"
+      ],
+      "clientType": "NDENMDAIAMC",
+      "cmdId": 20835
     },
     {
       "semanticName": "PingReq",
-      "status": "unresolved",
-      "evidence": [],
-      "ambiguities": [],
-      "clientType": null,
-      "cmdId": null
+      "status": "candidate",
+      "evidence": [
+        "network-command-chain"
+      ],
+      "ambiguities": [
+        "Static client type binding confirmed; stable business-name association still candidate"
+      ],
+      "clientType": "LMINJCCKNDD",
+      "cmdId": 26605
     },
     {
       "semanticName": "PingRsp",
@@ -228,10 +305,12 @@
     },
     {
       "semanticName": "PacketHead",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "network-command-chain"
+      ],
       "ambiguities": [],
-      "clientType": null,
+      "clientType": "LOPNMMJPFAJ",
       "cmdId": null
     },
     {
@@ -254,50 +333,70 @@
   "messages": [
     {
       "semanticName": "GetPlayerTokenReq",
-      "status": "unresolved",
-      "evidence": [],
-      "ambiguities": [],
-      "clientType": null,
+      "status": "candidate",
+      "evidence": [
+        "login-candidate-sites"
+      ],
+      "ambiguities": [
+        "Independent response callback/business-name closure still required"
+      ],
+      "clientType": "NJAALDCMHEP",
       "direction": "C2S",
       "aliases": [],
       "runtimeStatus": "not-tested"
     },
     {
       "semanticName": "GetPlayerTokenRsp",
-      "status": "unresolved",
-      "evidence": [],
-      "ambiguities": [],
-      "clientType": null,
+      "status": "candidate",
+      "evidence": [
+        "login-candidate-sites"
+      ],
+      "ambiguities": [
+        "Independent response callback/business-name closure still required"
+      ],
+      "clientType": "CLDBKDNJHFG",
       "direction": "S2C",
       "aliases": [],
       "runtimeStatus": "not-tested"
     },
     {
       "semanticName": "PlayerLoginReq",
-      "status": "unresolved",
-      "evidence": [],
-      "ambiguities": [],
-      "clientType": null,
+      "status": "candidate",
+      "evidence": [
+        "login-candidate-sites"
+      ],
+      "ambiguities": [
+        "Independent response callback/business-name closure still required"
+      ],
+      "clientType": "KOHBOMDDFCB",
       "direction": "C2S",
       "aliases": [],
       "runtimeStatus": "not-tested"
     },
     {
       "semanticName": "PlayerLoginRsp",
-      "status": "unresolved",
-      "evidence": [],
-      "ambiguities": [],
-      "clientType": null,
+      "status": "candidate",
+      "evidence": [
+        "login-candidate-sites"
+      ],
+      "ambiguities": [
+        "Independent response callback/business-name closure still required"
+      ],
+      "clientType": "NDENMDAIAMC",
       "direction": "S2C",
       "aliases": [],
       "runtimeStatus": "not-tested"
     },
     {
       "semanticName": "PingReq",
-      "status": "unresolved",
-      "evidence": [],
-      "ambiguities": [],
-      "clientType": null,
+      "status": "candidate",
+      "evidence": [
+        "heartbeat-candidate-sites"
+      ],
+      "ambiguities": [
+        "Independent response callback/business-name closure still required"
+      ],
+      "clientType": "LMINJCCKNDD",
       "direction": "C2S",
       "aliases": [],
       "runtimeStatus": "not-tested"
@@ -484,10 +583,12 @@
     },
     {
       "semanticName": "PacketHead",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "packet-head-type"
+      ],
       "ambiguities": [],
-      "clientType": null,
+      "clientType": "LOPNMMJPFAJ",
       "direction": "embedded",
       "aliases": [],
       "runtimeStatus": "not-tested"
@@ -544,10 +645,157 @@
     },
     {
       "semanticName": "PingReq",
-      "status": "unresolved",
-      "evidence": [],
-      "ambiguities": [],
-      "fields": []
+      "status": "candidate",
+      "evidence": [
+        "heartbeat-wire"
+      ],
+      "ambiguities": [
+        "Raw fields complete for the static writer; business semantics remain incomplete; runtime IFix not observed"
+      ],
+      "fields": [
+        {
+          "semanticField": "process_memory_bytes",
+          "clientField": "LBEAJJBNBIF",
+          "tag": 1,
+          "type": "uint64",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "candidate",
+          "evidence": [
+            "heartbeat-wire",
+            "heartbeat-field-sources"
+          ],
+          "ambiguities": [
+            "Business field meaning not yet independently closed"
+          ],
+          "wireStatus": "static-confirmed"
+        },
+        {
+          "semanticField": "_cur_fps",
+          "clientField": "BFNKMJBHCKJ",
+          "tag": 2,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "candidate",
+          "evidence": [
+            "heartbeat-wire",
+            "heartbeat-field-sources"
+          ],
+          "ambiguities": [
+            "Business field meaning not yet independently closed"
+          ],
+          "wireStatus": "static-confirmed"
+        },
+        {
+          "semanticField": "unknown_field_3",
+          "clientField": "IMEDCDCPICN",
+          "tag": 3,
+          "type": "bytes",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "unresolved",
+          "evidence": [
+            "heartbeat-wire"
+          ],
+          "ambiguities": [
+            "Business field meaning not yet independently closed"
+          ],
+          "wireStatus": "static-confirmed"
+        },
+        {
+          "semanticField": "total_tick_time",
+          "clientField": "MHCBMOHFBCK",
+          "tag": 5,
+          "type": "double",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "candidate",
+          "evidence": [
+            "heartbeat-wire",
+            "heartbeat-field-sources"
+          ],
+          "ambiguities": [
+            "Business field meaning not yet independently closed"
+          ],
+          "wireStatus": "static-confirmed"
+        },
+        {
+          "semanticField": "unknown_field_9",
+          "clientField": "BAHKGFLONLL",
+          "tag": 9,
+          "type": "bytes",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "unresolved",
+          "evidence": [
+            "heartbeat-wire"
+          ],
+          "ambiguities": [
+            "Business field meaning not yet independently closed"
+          ],
+          "wireStatus": "static-confirmed"
+        },
+        {
+          "semanticField": "ue_time",
+          "clientField": "HDLNEABIBJF",
+          "tag": 10,
+          "type": "float",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "candidate",
+          "evidence": [
+            "heartbeat-wire",
+            "heartbeat-field-sources"
+          ],
+          "ambiguities": [
+            "Business field meaning not yet independently closed"
+          ],
+          "wireStatus": "static-confirmed"
+        },
+        {
+          "semanticField": "client_time",
+          "clientField": "OILKPHNHCHB",
+          "tag": 13,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "candidate",
+          "evidence": [
+            "heartbeat-wire",
+            "heartbeat-field-sources"
+          ],
+          "ambiguities": [
+            "Business field meaning not yet independently closed"
+          ],
+          "wireStatus": "static-confirmed"
+        },
+        {
+          "semanticField": "seq",
+          "clientField": "AMLHAGPHMHN",
+          "tag": 14,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "candidate",
+          "evidence": [
+            "heartbeat-wire",
+            "heartbeat-field-sources"
+          ],
+          "ambiguities": [
+            "Business field meaning not yet independently closed"
+          ],
+          "wireStatus": "static-confirmed"
+        }
+      ]
     },
     {
       "semanticName": "PingRsp",
@@ -677,10 +925,115 @@
     },
     {
       "semanticName": "PacketHead",
-      "status": "unresolved",
-      "evidence": [],
-      "ambiguities": [],
-      "fields": []
+      "status": "candidate",
+      "evidence": [
+        "head-wire"
+      ],
+      "ambiguities": [
+        "Raw fields complete for the static writer; business semantics remain incomplete; runtime IFix not observed"
+      ],
+      "fields": [
+        {
+          "semanticField": "client_sequence_id",
+          "clientField": "MIBNHKIPDIM",
+          "tag": 3,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "verified",
+          "evidence": [
+            "head-wire",
+            "head-field-semantics"
+          ],
+          "ambiguities": [],
+          "wireStatus": "static-confirmed"
+        },
+        {
+          "semanticField": "sent_ms",
+          "clientField": "BCNJAEDGBCK",
+          "tag": 6,
+          "type": "uint64",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "verified",
+          "evidence": [
+            "head-wire",
+            "head-field-semantics"
+          ],
+          "ambiguities": [],
+          "wireStatus": "static-confirmed"
+        },
+        {
+          "semanticField": "unknown_field_7",
+          "clientField": "POAOKGCEJPF",
+          "tag": 7,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "unresolved",
+          "evidence": [
+            "head-wire"
+          ],
+          "ambiguities": [
+            "Business field meaning not yet independently closed"
+          ],
+          "wireStatus": "static-confirmed"
+        },
+        {
+          "semanticField": "unknown_field_8",
+          "clientField": "KNKMLHHGPPE",
+          "tag": 8,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "unresolved",
+          "evidence": [
+            "head-wire"
+          ],
+          "ambiguities": [
+            "Business field meaning not yet independently closed"
+          ],
+          "wireStatus": "static-confirmed"
+        },
+        {
+          "semanticField": "unknown_field_9",
+          "clientField": "BNHLJEGKGEM",
+          "tag": 9,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "unresolved",
+          "evidence": [
+            "head-wire"
+          ],
+          "ambiguities": [
+            "Business field meaning not yet independently closed"
+          ],
+          "wireStatus": "static-confirmed"
+        },
+        {
+          "semanticField": "unknown_field_10",
+          "clientField": "FKKOHHCLCPH",
+          "tag": 10,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "unresolved",
+          "evidence": [
+            "head-wire"
+          ],
+          "ambiguities": [
+            "Business field meaning not yet independently closed"
+          ],
+          "wireStatus": "static-confirmed"
+        }
+      ]
     },
     {
       "semanticName": "QueryRegionListHttpRsp",

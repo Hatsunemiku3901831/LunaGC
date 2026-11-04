@@ -1,0 +1,280 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "scope": "Research-only raw names; not server-ready business schemas",
+  "evidence": "docs/CLIENT_72_NETWORK.md#包头和心跳-wire",
+  "messages": [
+    {
+      "typeIndex": 27182,
+      "clientType": "LOPNMMJPFAJ",
+      "status": "static-wire-confirmed",
+      "runtimeStatus": "not-tested",
+      "fields": [
+        {
+          "clientField": "MIBNHKIPDIM",
+          "objectOffset": 48,
+          "tag": 3,
+          "type": "uint32",
+          "wireType": 0,
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "static-confirmed",
+          "semanticStatus": "unresolved",
+          "evidence": {
+            "tagStore": "0x14cd80dc6",
+            "fieldLoad": "0x14cd80dcb",
+            "writerCall": "0x14cd80de2",
+            "writer": "0x1517662a0"
+          }
+        },
+        {
+          "clientField": "BCNJAEDGBCK",
+          "objectOffset": 24,
+          "tag": 6,
+          "type": "uint64",
+          "wireType": 0,
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "static-confirmed",
+          "semanticStatus": "unresolved",
+          "evidence": {
+            "tagStore": "0x14cd80e42",
+            "fieldLoad": "0x14cd80e47",
+            "writerCall": "0x14cd80e5e",
+            "writer": "0x151766960"
+          }
+        },
+        {
+          "clientField": "POAOKGCEJPF",
+          "objectOffset": 32,
+          "tag": 7,
+          "type": "uint32",
+          "wireType": 0,
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "static-confirmed",
+          "semanticStatus": "unresolved",
+          "evidence": {
+            "tagStore": "0x14cd80ebd",
+            "fieldLoad": "0x14cd80ec2",
+            "writerCall": "0x14cd80ed9",
+            "writer": "0x1517662a0"
+          }
+        },
+        {
+          "clientField": "KNKMLHHGPPE",
+          "objectOffset": 40,
+          "tag": 8,
+          "type": "uint32",
+          "wireType": 0,
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "static-confirmed",
+          "semanticStatus": "unresolved",
+          "evidence": {
+            "tagStore": "0x14cd80f38",
+            "fieldLoad": "0x14cd80f3d",
+            "writerCall": "0x14cd80f54",
+            "writer": "0x1517662a0"
+          }
+        },
+        {
+          "clientField": "BNHLJEGKGEM",
+          "objectOffset": 36,
+          "tag": 9,
+          "type": "uint32",
+          "wireType": 0,
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "static-confirmed",
+          "semanticStatus": "unresolved",
+          "evidence": {
+            "tagStore": "0x14cd80fb3",
+            "fieldLoad": "0x14cd80fb8",
+            "writerCall": "0x14cd80fcf",
+            "writer": "0x1517662a0"
+          }
+        },
+        {
+          "clientField": "FKKOHHCLCPH",
+          "objectOffset": 44,
+          "tag": 10,
+          "type": "uint32",
+          "wireType": 0,
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "static-confirmed",
+          "semanticStatus": "unresolved",
+          "evidence": {
+            "tagStore": "0x14cd8102e",
+            "fieldLoad": "0x14cd81033",
+            "writerCall": "0x14cd81050",
+            "writer": "0x1517662a0"
+          }
+        }
+      ]
+    },
+    {
+      "typeIndex": 64405,
+      "clientType": "LMINJCCKNDD",
+      "status": "static-wire-confirmed",
+      "runtimeStatus": "not-tested",
+      "fields": [
+        {
+          "clientField": "LBEAJJBNBIF",
+          "objectOffset": 48,
+          "tag": 1,
+          "type": "uint64",
+          "wireType": 0,
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "static-confirmed",
+          "semanticStatus": "unresolved",
+          "evidence": {
+            "tagStore": "0x15182c047",
+            "fieldLoad": "0x15182c04c",
+            "writerCall": "0x15182c063",
+            "writer": "0x151766960"
+          }
+        },
+        {
+          "clientField": "BFNKMJBHCKJ",
+          "objectOffset": 64,
+          "tag": 2,
+          "type": "uint32",
+          "wireType": 0,
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "static-confirmed",
+          "semanticStatus": "unresolved",
+          "evidence": {
+            "tagStore": "0x15182c0c2",
+            "fieldLoad": "0x15182c0c7",
+            "writerCall": "0x15182c0de",
+            "writer": "0x1517662a0"
+          }
+        },
+        {
+          "clientField": "IMEDCDCPICN",
+          "objectOffset": 24,
+          "tag": 3,
+          "type": "bytes",
+          "wireType": 2,
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "static-confirmed",
+          "semanticStatus": "unresolved",
+          "evidence": {
+            "tagStore": "0x15182c14d",
+            "fieldLoad": "0x15182c152",
+            "writerCall": "0x15182c159",
+            "writer": "0x151767530"
+          }
+        },
+        {
+          "clientField": "MHCBMOHFBCK",
+          "objectOffset": 56,
+          "tag": 5,
+          "type": "double",
+          "wireType": 1,
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "static-confirmed",
+          "semanticStatus": "unresolved",
+          "evidence": {
+            "tagStore": "0x15182c1c3",
+            "fieldLoad": "0x15182c1c8",
+            "writerCall": "0x15182c1e2",
+            "writer": "0x151765ef0"
+          }
+        },
+        {
+          "clientField": "BAHKGFLONLL",
+          "objectOffset": 32,
+          "tag": 9,
+          "type": "bytes",
+          "wireType": 2,
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "static-confirmed",
+          "semanticStatus": "unresolved",
+          "evidence": {
+            "tagStore": "0x15182c251",
+            "fieldLoad": "0x15182c256",
+            "writerCall": "0x15182c25d",
+            "writer": "0x151767530"
+          }
+        },
+        {
+          "clientField": "HDLNEABIBJF",
+          "objectOffset": 68,
+          "tag": 10,
+          "type": "float",
+          "wireType": 5,
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "static-confirmed",
+          "semanticStatus": "unresolved",
+          "evidence": {
+            "tagStore": "0x15182c2d1",
+            "fieldLoad": "0x15182c2d6",
+            "writerCall": "0x15182c2de",
+            "writer": "0x151748c40"
+          }
+        },
+        {
+          "clientField": "OILKPHNHCHB",
+          "objectOffset": 44,
+          "tag": 13,
+          "type": "uint32",
+          "wireType": 0,
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "static-confirmed",
+          "semanticStatus": "unresolved",
+          "evidence": {
+            "tagStore": "0x15182c33d",
+            "fieldLoad": "0x15182c342",
+            "writerCall": "0x15182c359",
+            "writer": "0x1517662a0"
+          }
+        },
+        {
+          "clientField": "AMLHAGPHMHN",
+          "objectOffset": 40,
+          "tag": 14,
+          "type": "uint32",
+          "wireType": 0,
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "static-confirmed",
+          "semanticStatus": "unresolved",
+          "evidence": {
+            "tagStore": "0x15182c3b8",
+            "fieldLoad": "0x15182c3bd",
+            "writerCall": "0x15182c3da",
+            "writer": "0x1517662a0"
+          }
+        }
+      ]
+    }
+  ]
+}

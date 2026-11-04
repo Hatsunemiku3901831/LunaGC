@@ -38,6 +38,6 @@
     }
   },
   "evidence": "docs/CLIENT_72_EXTRACTION.md",
-  "extractionScope": "Static metadata; not CmdID, business names, wire schema, or runtime ABI",
-  "protocolMappingStatus": "unresolved"
+  "extractionScope": "Static metadata, generics, parents, field layouts, command/type bindings, selected raw wire; runtime ABI not verified",
+  "protocolMappingStatus": "partial-research-not-ready"
 }

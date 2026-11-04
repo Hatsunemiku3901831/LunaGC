@@ -130,6 +130,34 @@ def validate(document, profile, *, ready=False):
     return errors
 
 
+def validate_observations(document, profile, commands, wire):
+    """Cross-check candidate claims too; static wire does not prove semantics."""
+    errors = []
+    expected = {row['path']: row['sha256'] for row in profile['files'].values()}
+    for label, table in [('commands', commands), ('wire', wire)]:
+        hashes = table.get('inputSHA256', {})
+        if not hashes or any(expected.get(path) != sha for path, sha in hashes.items()):
+            errors.append(f'{label}: observation input hash mismatch')
+    ids = {row['clientType']: row['cmdId'] for row in commands.get('commands', [])}
+    schemas = {row['clientType']: {f['clientField']: f for f in row['fields']}
+               for row in wire.get('messages', [])}
+    messages = {row['semanticName']: row for row in document['messages']}
+    for row in document['opcodes']:
+        if row.get('cmdId') is not None and row.get('clientType'):
+            if ids.get(row['clientType']) != row['cmdId']:
+                errors.append(f"{row['semanticName']}: static command binding mismatch")
+    for schema in document['schemas']:
+        name = schema['semanticName']
+        client_type = messages[name].get('clientType')
+        if client_type not in schemas:
+            continue
+        for field in schema['fields']:
+            raw = schemas[client_type].get(field.get('clientField'))
+            if raw is None or any(field.get(k) != raw[k] for k in ('tag', 'type', 'cardinality', 'presence', 'packed')):
+                errors.append(f"{name}/{field.get('semanticField')}: static wire binding mismatch")
+    return errors
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--directory', type=Path, default=Path(__file__).resolve().parents[1] / 'protocol/cn-7.2')
@@ -138,6 +166,9 @@ def main():
     document = json.loads((args.directory / 'mappings.json').read_text('utf-8'))
     profile = json.loads((args.directory / 'profile.json').read_text('utf-8'))
     errors = validate(document, profile, ready=args.ready)
+    commands = json.loads((args.directory / 'commands.json').read_text('utf-8'))
+    wire = json.loads((args.directory / 'wire-observations.json').read_text('utf-8'))
+    errors.extend(validate_observations(document, profile, commands, wire))
     print(json.dumps({'mode': 'ready' if args.ready else 'research-structure', 'valid': not errors, 'errors': errors},
                      ensure_ascii=False, indent=2))
     raise SystemExit(bool(errors))

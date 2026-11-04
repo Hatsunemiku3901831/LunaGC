@@ -31,7 +31,7 @@
 
 本机证据根 local/migration72/：evidence/ 放初始差异、客户端审计、安装检查；logs/ 放测试/构建/运行输出；analysis/ 放反汇编等未脱敏材料。共享摘要引用输入 SHA-256、相对路径和代码位置，不提交账号、令牌、原始抓包或二进制。
 
-新增已实现：verify_client_manifest（完整清单）、extract_client72（固定目标基础元数据及泛型/父类/静态字段布局）、inventory_protocol（静态协议表面与P0 import下界）。证据说明：[目标提取](docs/CLIENT_72_EXTRACTION.md)、[协议盘点](docs/CLIENT_72_PROTOCOL_INVENTORY.md)。尚未实现：完整P0调用图、运行时闭合泛型ABI、确定性源码生成和完整7.2 wire fixture。
+新增已实现：verify_client_manifest（完整清单）、extract_client72（固定目标基础元数据及泛型/父类/静态字段布局）、extract_client72_commands（静态包号）、extract_client72_wire（两消息研究Proto）、inventory_protocol（静态协议表面与P0 import下界）。证据说明：[目标提取](docs/CLIENT_72_EXTRACTION.md)、[网络与wire](docs/CLIENT_72_NETWORK.md)、[协议盘点](docs/CLIENT_72_PROTOCOL_INVENTORY.md)。尚未实现：完整P0调用图、运行时闭合泛型ABI、正式业务源码生成和完整7.2 wire fixture。
 
 ## 可复现命令
 
@@ -49,6 +49,10 @@ python tools/extract_client72.py --client $env:GAME_PATH --structures --output l
 python -m unittest tools.test_extract_client72 tools.test_client72_structures -v
 python tools/extract_client72_commands.py --client $env:GAME_PATH --output protocol/cn-7.2/commands.json
 python -m unittest tools.test_client72_commands -v
+python tools/extract_client72_wire.py --client $env:GAME_PATH --output protocol/cn-7.2/wire-observations.json --proto protocol/cn-7.2/research.proto
+python -m unittest tools.test_extract_client72 tools.test_client72_structures tools.test_client72_commands tools.test_client72_wire tools.test_validate_protocol72 -v
+# PROTOC72指定已经核对的本机protoc；本批用Gradle缓存的3.18.1
+python tools/check_client72_wire_proto.py --protoc $env:PROTOC72
 python tools/inventory_protocol.py --output local/migration72/evidence/server-inventory.json
 python -m unittest tools.test_verify_client_manifest tools.test_extract_client72 tools.test_inventory_protocol tools.test_audit_client tools.test_local_windows tools.test_patch_game tools.test_runtime -v
 ```
@@ -83,5 +87,7 @@ LUNAGC_CLIENT_PATCH_GUARD=0 只供服务研究禁用守护，不放开 play/patc
 ## 三层映射校验入口
 
 已建立 [protocol/cn-7.2](protocol/cn-7.2/README.md)。profile固定输入，mappings分opcodes/messages/schemas，完整闭包未确认。commands.json单独保存静态CmdID→混淆类型绑定，不自动提供业务名称。证据和保护入口阻塞见 [网络研究](docs/CLIENT_72_NETWORK.md)。运行 `python tools/validate_protocol72.py` 校验研究记录；`python tools/validate_protocol72.py --ready` 当前应退出1。未知不能作为正式常量生成。测试 `python -m unittest tools.test_validate_protocol72 -v` 使用合成模型，不是目标wire测试。
+
+wire-observations.json为目标tag/offset/类型/helper的静态观察；research.proto是原始混淆名的离线产物，不能复制为正式业务Proto。check_client72_wire_proto用手写目标wire断言，输入是合成值，非客户端抓包。本批复现证据：logs/p0-research-tests.log、wire-proto-tests.log；evidence/wire-summary.json、mapping-check.json、mapping-ready.json。commands与wire重复生成必须逐字节一致。接手保护入口先读CLIENT_72_NETWORK的VA和已尝试方法，原始反汇编在analysis/，不要把填充字节或IFix替代路径当作正常逻辑。
 
 本批构建/测试/部署索引：[CLIENT_72_RESEARCH_VALIDATION](docs/CLIENT_72_RESEARCH_VALIDATION.md)。完整失败快照full-test-results/、限定通过targeted-test-results/、汇总evidence/*-summary.json均在local/migration72/。运行验证deployment.json与jar-class-check.json；配置备份private-before/含敏感信息，仅本机读取。能力资源测试支持LUNAGC_RESOURCES_DIR，默认仓库resources/；历史/其他套件可能仍硬编码容器路径，执行前检查。
