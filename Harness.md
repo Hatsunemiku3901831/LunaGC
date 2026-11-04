@@ -79,3 +79,5 @@ LUNAGC_CLIENT_PATCH_GUARD=0 只供服务研究禁用守护，不放开 play/patc
 ## 三层映射校验入口
 
 已建立 [protocol/cn-7.2](protocol/cn-7.2/README.md)。profile固定输入，mappings分opcodes/messages/schemas，26个种子均未知，完整闭包未确认。运行 `python tools/validate_protocol72.py` 校验研究记录；`python tools/validate_protocol72.py --ready` 当前应退出1。未知不能作为正式常量生成。测试 `python -m unittest tools.test_validate_protocol72 -v` 使用合成模型，不是目标wire测试。
+
+本批构建/测试/部署索引：[CLIENT_72_RESEARCH_VALIDATION](docs/CLIENT_72_RESEARCH_VALIDATION.md)。完整失败快照full-test-results/、限定通过targeted-test-results/、汇总evidence/*-summary.json均在local/migration72/。运行验证deployment.json与jar-class-check.json；配置备份private-before/含敏感信息，仅本机读取。能力资源测试支持LUNAGC_RESOURCES_DIR，默认仓库resources/；历史/其他套件可能仍硬编码容器路径，执行前检查。

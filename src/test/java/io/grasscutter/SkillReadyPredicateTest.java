@@ -415,19 +415,21 @@ class SkillReadyPredicateTest {
     }
 
     void actual(String name, Set<Integer> expected) throws Exception {
+        var resourceRoot =
+                Path.of(System.getenv().getOrDefault("LUNAGC_RESOURCES_DIR", "resources"));
         var found = new ArrayList<JsonObject>();
         collect(
                 JsonParser.parseString(
                         Files.readString(
-                                Path.of(
-                                        "/resources/BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_"
+                                resourceRoot.resolve(
+                                        "BinOutput/Ability/Temp/AvatarAbilities/ConfigAbility_Avatar_"
                                                 + name
                                                 + ".json"))),
                 found);
         var ids = new HashSet<Integer>();
         var skills =
                 JsonUtils.loadToList(
-                        Path.of("/resources/ExcelBinOutput/AvatarSkillExcelConfigData.json"),
+                        resourceRoot.resolve("ExcelBinOutput/AvatarSkillExcelConfigData.json"),
                         AvatarSkillData.class);
         for (var node : found) ids.add(node.get("skillID").getAsInt());
         assertEquals(expected, ids);

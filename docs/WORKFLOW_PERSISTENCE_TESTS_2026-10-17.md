@@ -1,5 +1,9 @@
 # 制作、学习与领奖流程的真实保存夹具
 
+## 7.2 分支复核（2026-11-05）
+
+下文是历史工作记录，当前源码并未具备其中所有夹具调整。实际重新运行发现 `FurnitureStartFlowTest` 和 `CompoundHandbookTest` 仍使用只处理 `save` 的 Datastore 代理，正式物品条件写入调用 `getMapper()` 时返回 null；`FurnitureStartRecoveryTest` 的33项、`CompoundHandbookTest` 的12项在新JVM复查仍失败。不能把下文661项历史通过作为本分支现状。完整测试报告及下一步见 [Project](../Project.md) 的 V-01；需要迁移这些夹具并保留原经济断言，不能为使测试变绿跳过正式保存逻辑。
+
 ## 本轮发现
 
 在物品版本保护接入后，继续检查合成、烹饪、家具制作、配方学习、手册、选择礼包及还圣奥迹。

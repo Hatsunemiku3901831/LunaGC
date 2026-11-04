@@ -8,7 +8,7 @@
 | --- | --- |
 | 计划支持 | 新旧账号登录、选人、入场、基础玩法及后续内容，按 Project 分项验收 |
 | 已实现 | 继承业务/便携脚本，7.2安装清单校验、基础元数据提取、协议静态盘点；不代表业务已匹配7.2 |
-| 测试通过 | 提取/清单/盘点及脚本测试已执行，见Project；Java回归仍在验证，历史7.1结果不算目标证据 |
+| 测试通过 | 72项脚本、133项核心回归、2项HTTP冒烟、35项路径修复回归通过；完整集首次217项失败，见验证记录 |
 | 客户端验收通过 | 暂无；进入世界与完整玩法分别验收 |
 
 前置缺口：基础类型/字段/方法已恢复，泛型/父类/布局仍缺；缺已验证的三层映射和 7.2 资源来源；补丁需 ABI、对象布局与实机验证；本地安装清单7,830条大小/MD5已匹配。未知项不发布为正式包号或字段。
@@ -26,7 +26,7 @@ python -m unittest tools.test_audit_client tools.test_local_windows tools.test_p
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/local_windows.ps1 -Mode status
 ```
 
-当前 JAR 名称仍由 build.gradle 派生为 LunaGC-7.1.0.jar，并非可连接 7.2 的产物。Java 测试/集成测试先配置独立测试数据库，见 Harness。
+隔离研发服务已完成构建和健康/端口/JAR哈希核验，详见[本批验证](docs/CLIENT_72_RESEARCH_VALIDATION.md)。当前JAR仍由build.gradle派生为LunaGC-7.1.0.jar，并非可连接7.2的产物。Java 测试/集成测试先配置独立测试数据库，见 Harness。
 
 | 入口 | 作用与限制 |
 | --- | --- |
