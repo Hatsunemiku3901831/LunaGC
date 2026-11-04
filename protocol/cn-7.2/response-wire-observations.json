@@ -1,0 +1,1519 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "runtimeStatus": "not-tested",
+  "limitations": [
+    "Nested/map/message-list payloads empty only",
+    "ASCII string model",
+    "Synthetic mutable objects and initialized codecs",
+    "No runtime IFix/ABI acceptance"
+  ],
+  "messages": [
+    {
+      "typeIndex": 37481,
+      "clientType": "CLDBKDNJHFG",
+      "fields": [
+        {
+          "clientField": "KFLDOHAMPAN",
+          "objectOffset": 194,
+          "tag": 1,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a410a34"
+          ]
+        },
+        {
+          "clientField": "HLNLCJBLCMM",
+          "objectOffset": 236,
+          "tag": 2,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a3f4885"
+          ]
+        },
+        {
+          "clientField": "BHHECPBGDKB",
+          "objectOffset": 96,
+          "tag": 3,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "bytes",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x147cf2da8"
+          ]
+        },
+        {
+          "clientField": "GKODOLODOGC",
+          "objectOffset": 228,
+          "tag": 4,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a3dc72a"
+          ]
+        },
+        {
+          "clientField": "JEBFKCCKKPP",
+          "objectOffset": 80,
+          "tag": 5,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a440895"
+          ]
+        },
+        {
+          "clientField": "MCCMLHDDHAJ",
+          "objectOffset": 104,
+          "tag": 6,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a4786e8"
+          ]
+        },
+        {
+          "clientField": "CHOCAOJJPKC",
+          "objectOffset": 248,
+          "tag": 7,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint64",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a4833df"
+          ]
+        },
+        {
+          "clientField": "JDIKEKHHFFB",
+          "objectOffset": 64,
+          "tag": 8,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a4cccfd"
+          ]
+        },
+        {
+          "clientField": "PJAJDHBBMGB",
+          "objectOffset": 212,
+          "tag": 9,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a405fbc"
+          ]
+        },
+        {
+          "clientField": "PHEIMMPCLMP",
+          "objectOffset": 232,
+          "tag": 10,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a4c8cc8"
+          ]
+        },
+        {
+          "clientField": "EJHPCJMKBOM",
+          "objectOffset": 193,
+          "tag": 11,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a3e14e8"
+          ]
+        },
+        {
+          "clientField": "FBEFGOKJNFM",
+          "objectOffset": 224,
+          "tag": 12,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a3d6687"
+          ]
+        },
+        {
+          "clientField": "EHCHDIJEJEJ",
+          "objectOffset": 72,
+          "tag": 13,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a465ded"
+          ]
+        },
+        {
+          "clientField": "LDLIEKOAFBP",
+          "objectOffset": 260,
+          "tag": 14,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "int32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a3e5927"
+          ]
+        },
+        {
+          "clientField": "DAGAIOINCOO",
+          "objectOffset": 88,
+          "tag": 15,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "bytes",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x147cf2da8"
+          ]
+        },
+        {
+          "clientField": "MEFINEPJONK",
+          "objectOffset": 240,
+          "tag": 74,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a426640"
+          ]
+        },
+        {
+          "clientField": "GKBJLBAKMCJ",
+          "objectOffset": 136,
+          "tag": 208,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a42cc97"
+          ]
+        },
+        {
+          "clientField": "GNHGKGCEFIO",
+          "objectOffset": 168,
+          "tag": 376,
+          "acceptedWireTypes": [
+            0,
+            2
+          ],
+          "type": "uint32",
+          "cardinality": "repeated",
+          "presence": "implicit",
+          "packed": true,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x158db8e10"
+          ],
+          "contentStatus": "modeled-helper"
+        },
+        {
+          "clientField": "IJNBKLIHNJP",
+          "objectOffset": 144,
+          "tag": 410,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a408d9c"
+          ]
+        },
+        {
+          "clientField": "FMMLBHKFGDH",
+          "objectOffset": 208,
+          "tag": 440,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a3f4885"
+          ]
+        },
+        {
+          "clientField": "KMLEGLIGNPH",
+          "objectOffset": 112,
+          "tag": 454,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "message",
+          "cardinality": "singular",
+          "presence": "explicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x1474d7e60"
+          ],
+          "nestedType": "NNKFJMDCCMB",
+          "nestedTypeIndex": 85772,
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "CGDONMBOALA",
+          "objectOffset": 152,
+          "tag": 477,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a408d9c"
+          ]
+        },
+        {
+          "clientField": "ENBECCJFNIL",
+          "objectOffset": 241,
+          "tag": 646,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a46f8c8"
+          ]
+        },
+        {
+          "clientField": "FIHDHDLJBLC",
+          "objectOffset": 128,
+          "tag": 658,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a408d9c"
+          ]
+        },
+        {
+          "clientField": "PIALLCNIKEE",
+          "objectOffset": 160,
+          "tag": 808,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a460ff2"
+          ]
+        },
+        {
+          "clientField": "HCFFDGMAOAC",
+          "objectOffset": 184,
+          "tag": 838,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "bytes",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x147cf2da8"
+          ]
+        },
+        {
+          "clientField": "GCBLHKIJHPC",
+          "objectOffset": 120,
+          "tag": 954,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a484c08"
+          ]
+        },
+        {
+          "clientField": "DCHAEKJAMBA",
+          "objectOffset": 204,
+          "tag": 1031,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a3daebb"
+          ]
+        },
+        {
+          "clientField": "NGHMHALIAIO",
+          "objectOffset": 48,
+          "tag": 1170,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a459001"
+          ]
+        },
+        {
+          "clientField": "JNPMKMIMKCA",
+          "objectOffset": 220,
+          "tag": 1205,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a3da693"
+          ]
+        },
+        {
+          "clientField": "NFMJKLLKJPB",
+          "objectOffset": 192,
+          "tag": 1352,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a3eee22"
+          ]
+        },
+        {
+          "clientField": "MHNPBDMNCAA",
+          "objectOffset": 176,
+          "tag": 1417,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a440895"
+          ]
+        },
+        {
+          "clientField": "FGJNONFBDHO",
+          "objectOffset": 256,
+          "tag": 1497,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a4c233a"
+          ]
+        },
+        {
+          "clientField": "ANIBEAMGKDP",
+          "objectOffset": 32,
+          "tag": 1508,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a4a2e87"
+          ]
+        },
+        {
+          "clientField": "AHFLNIHHLNL",
+          "objectOffset": 196,
+          "tag": 1544,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a461c37"
+          ]
+        },
+        {
+          "clientField": "PJHOCPFACEK",
+          "objectOffset": 200,
+          "tag": 1570,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a43b8ea"
+          ]
+        },
+        {
+          "clientField": "HMJCMBNBLDL",
+          "objectOffset": 24,
+          "tag": 1726,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a479883"
+          ]
+        },
+        {
+          "clientField": "JJEGEAOIFOC",
+          "objectOffset": 40,
+          "tag": 1745,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a48f550"
+          ]
+        },
+        {
+          "clientField": "LJLGGDEBGKD",
+          "objectOffset": 216,
+          "tag": 1826,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a49fdb3"
+          ]
+        },
+        {
+          "clientField": "BGEAPNNMOCP",
+          "objectOffset": 56,
+          "tag": 1847,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a49d7d1"
+          ]
+        },
+        {
+          "clientField": "LGMEFCCONPE",
+          "objectOffset": 244,
+          "tag": 1915,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a454070"
+          ]
+        }
+      ],
+      "readerEntry": "0x148b7ea10",
+      "runtimeStatus": "not-tested",
+      "completeness": "outer-field-bindings-only"
+    },
+    {
+      "typeIndex": 40503,
+      "clientType": "NDENMDAIAMC",
+      "fields": [
+        {
+          "clientField": "CFFKHCLGAAB",
+          "objectOffset": 80,
+          "tag": 1,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "bytes",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x147cf2da8"
+          ]
+        },
+        {
+          "clientField": "KACKGOIGHKI",
+          "objectOffset": 220,
+          "tag": 2,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a44b090"
+          ]
+        },
+        {
+          "clientField": "IJNBKLIHNJP",
+          "objectOffset": 64,
+          "tag": 3,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a460ff2"
+          ]
+        },
+        {
+          "clientField": "GIKCIPFKPIH",
+          "objectOffset": 40,
+          "tag": 4,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "map",
+          "cardinality": "map",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x155f9be70"
+          ],
+          "keyType": "string",
+          "valueType": "int32",
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "KHJKGGNMAGJ",
+          "objectOffset": 240,
+          "tag": 5,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint64",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a45be1a"
+          ]
+        },
+        {
+          "clientField": "NBDGINFCIIK",
+          "objectOffset": 260,
+          "tag": 6,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a427da9"
+          ]
+        },
+        {
+          "clientField": "HKBHPGJADGA",
+          "objectOffset": 232,
+          "tag": 7,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a3ebff9"
+          ]
+        },
+        {
+          "clientField": "LDLIEKOAFBP",
+          "objectOffset": 224,
+          "tag": 8,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "int32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a417630"
+          ]
+        },
+        {
+          "clientField": "JOAEHNGDAPK",
+          "objectOffset": 216,
+          "tag": 10,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a4b2336"
+          ]
+        },
+        {
+          "clientField": "PJICEKGDLFM",
+          "objectOffset": 208,
+          "tag": 11,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a401342"
+          ]
+        },
+        {
+          "clientField": "CMFBIHHPCFL",
+          "objectOffset": 212,
+          "tag": 12,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "int32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a4599bd"
+          ]
+        },
+        {
+          "clientField": "PNKDIONMIGP",
+          "objectOffset": 205,
+          "tag": 14,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a4418d7"
+          ]
+        },
+        {
+          "clientField": "IFPCNHMNFGE",
+          "objectOffset": 207,
+          "tag": 15,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a4962af"
+          ]
+        },
+        {
+          "clientField": "FHCEHICKAIP",
+          "objectOffset": 104,
+          "tag": 61,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "message",
+          "cardinality": "singular",
+          "presence": "explicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x1474d7e60"
+          ],
+          "nestedType": "MDKGJAOEHIL",
+          "nestedTypeIndex": 81270,
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "GKODOLODOGC",
+          "objectOffset": 200,
+          "tag": 120,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a4ab630"
+          ]
+        },
+        {
+          "clientField": "GEFJDEHGHGI",
+          "objectOffset": 204,
+          "tag": 142,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a3f743f"
+          ]
+        },
+        {
+          "clientField": "EHCHDIJEJEJ",
+          "objectOffset": 144,
+          "tag": 154,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a4a2e87"
+          ]
+        },
+        {
+          "clientField": "HJOEAOKMIHD",
+          "objectOffset": 252,
+          "tag": 259,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a3d6609"
+          ]
+        },
+        {
+          "clientField": "HIHJANHKAMO",
+          "objectOffset": 160,
+          "tag": 265,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "map",
+          "cardinality": "map",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x158912430"
+          ],
+          "keyType": "uint64",
+          "nestedType": "DKFJJMGPCMD",
+          "nestedTypeIndex": 56599,
+          "valueType": "message",
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "ACKCOFBGOBG",
+          "objectOffset": 112,
+          "tag": 288,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "message",
+          "cardinality": "singular",
+          "presence": "explicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x1474d7e60"
+          ],
+          "nestedType": "FAHEHGJDAME",
+          "nestedTypeIndex": 81413,
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "JILJKLNFMMK",
+          "objectOffset": 223,
+          "tag": 389,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a4b75eb"
+          ]
+        },
+        {
+          "clientField": "AMFFCKBGFLH",
+          "objectOffset": 229,
+          "tag": 410,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a465950"
+          ]
+        },
+        {
+          "clientField": "CCDEHJGJFBD",
+          "objectOffset": 24,
+          "tag": 437,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a4660a7"
+          ]
+        },
+        {
+          "clientField": "PMABFENIPCO",
+          "objectOffset": 222,
+          "tag": 451,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a45959e"
+          ]
+        },
+        {
+          "clientField": "HIAJLCOHEFP",
+          "objectOffset": 32,
+          "tag": 470,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "message",
+          "cardinality": "singular",
+          "presence": "explicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x1474d7e60"
+          ],
+          "nestedType": "HMLAJHBHLOC",
+          "nestedTypeIndex": 21921,
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "BGEAPNNMOCP",
+          "objectOffset": 184,
+          "tag": 500,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a3e4ddb"
+          ]
+        },
+        {
+          "clientField": "NDIJJNPLONB",
+          "objectOffset": 206,
+          "tag": 548,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a414a4a"
+          ]
+        },
+        {
+          "clientField": "FJJDOOJKBDN",
+          "objectOffset": 56,
+          "tag": 558,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "message",
+          "cardinality": "repeated",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x158dc41f0"
+          ],
+          "nestedType": "LINNJHPIFAO",
+          "nestedTypeIndex": 45196,
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "NKLDPLCCLAE",
+          "objectOffset": 228,
+          "tag": 583,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a3ff3e5"
+          ]
+        },
+        {
+          "clientField": "HHMNDFCCNED",
+          "objectOffset": 248,
+          "tag": 646,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a4751c4"
+          ]
+        },
+        {
+          "clientField": "MIDCBCOAFLC",
+          "objectOffset": 192,
+          "tag": 744,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a4a2e3c"
+          ]
+        },
+        {
+          "clientField": "FCPOHNDGFMF",
+          "objectOffset": 152,
+          "tag": 831,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a48f550"
+          ]
+        },
+        {
+          "clientField": "CKBPPJMNJDJ",
+          "objectOffset": 221,
+          "tag": 972,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a40ec42"
+          ]
+        },
+        {
+          "clientField": "LCILAPOPGFA",
+          "objectOffset": 48,
+          "tag": 1018,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "message",
+          "cardinality": "repeated",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x158dc41f0"
+          ],
+          "nestedType": "GHANJBIKPDH",
+          "nestedTypeIndex": 44443,
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "BMKPNLLLMAO",
+          "objectOffset": 168,
+          "tag": 1218,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "map",
+          "cardinality": "map",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x156d35a40"
+          ],
+          "keyType": "uint32",
+          "nestedType": "ANDFHAFNBOJ",
+          "nestedTypeIndex": 67060,
+          "valueType": "message",
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "BCAADIFIJMN",
+          "objectOffset": 176,
+          "tag": 1255,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a4af39c"
+          ]
+        },
+        {
+          "clientField": "LBDHEONCLNL",
+          "objectOffset": 88,
+          "tag": 1314,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "message",
+          "cardinality": "singular",
+          "presence": "explicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x1474d7e60"
+          ],
+          "nestedType": "NNKFJMDCCMB",
+          "nestedTypeIndex": 85772,
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "HEEDMJDJFLF",
+          "objectOffset": 256,
+          "tag": 1331,
+          "acceptedWireTypes": [
+            0
+          ],
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a46d56d"
+          ]
+        },
+        {
+          "clientField": "MONEPNFKIML",
+          "objectOffset": 72,
+          "tag": 1337,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "message",
+          "cardinality": "singular",
+          "presence": "explicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x1474d7e60"
+          ],
+          "nestedType": "MDKGJAOEHIL",
+          "nestedTypeIndex": 81270,
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "MHNPBDMNCAA",
+          "objectOffset": 128,
+          "tag": 1363,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a3e9a56"
+          ]
+        },
+        {
+          "clientField": "BLLEFMDBOPJ",
+          "objectOffset": 136,
+          "tag": 1603,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "bytes",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x147cf2da8"
+          ]
+        },
+        {
+          "clientField": "NAACMBICAKP",
+          "objectOffset": 120,
+          "tag": 1792,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a45adec"
+          ]
+        },
+        {
+          "clientField": "PGKLJPPFEIO",
+          "objectOffset": 96,
+          "tag": 1805,
+          "acceptedWireTypes": [
+            2
+          ],
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a465ded"
+          ]
+        },
+        {
+          "clientField": "MHCBMOHFBCK",
+          "objectOffset": 264,
+          "tag": 1852,
+          "acceptedWireTypes": [
+            1
+          ],
+          "type": "double",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "sources": [
+            "0x15a4dc6a9"
+          ]
+        }
+      ],
+      "readerEntry": "0x14b89ec90",
+      "runtimeStatus": "not-tested",
+      "completeness": "outer-field-bindings-only"
+    }
+  ]
+}

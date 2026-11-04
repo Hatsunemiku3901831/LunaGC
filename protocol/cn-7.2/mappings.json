@@ -124,6 +124,20 @@
       "inputFile": "binary",
       "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
       "location": "docs/CLIENT_72_PROTECTED.md; fixed native 0x1500C2660; 3 controlled fixtures with explicit helper models; token-wire-observations.json"
+    },
+    {
+      "id": "login-protected-writer",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_LOGIN_WIRE.md; protocol/cn-7.2/login-wire-observations.json"
+    },
+    {
+      "id": "response-protected-reader",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_RESPONSE_WIRE.md; protocol/cn-7.2/response-wire-observations.json"
     }
   ],
   "opcodes": [
@@ -1134,24 +1148,2450 @@
     },
     {
       "semanticName": "GetPlayerTokenRsp",
-      "status": "unresolved",
-      "evidence": [],
-      "ambiguities": [],
-      "fields": []
+      "status": "candidate",
+      "evidence": [
+        "response-protected-reader"
+      ],
+      "ambiguities": [
+        "Raw outer wire observations only; business fields unresolved; nested client names are not stable semantic schemas; no runtime acceptance"
+      ],
+      "fields": [
+        {
+          "clientField": "KFLDOHAMPAN",
+          "tag": 1,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "HLNLCJBLCMM",
+          "tag": 2,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_2",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "BHHECPBGDKB",
+          "tag": 3,
+          "type": "bytes",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_3",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "GKODOLODOGC",
+          "tag": 4,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_4",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "JEBFKCCKKPP",
+          "tag": 5,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_5",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "MCCMLHDDHAJ",
+          "tag": 6,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_6",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "CHOCAOJJPKC",
+          "tag": 7,
+          "type": "uint64",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_7",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "JDIKEKHHFFB",
+          "tag": 8,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_8",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "PJAJDHBBMGB",
+          "tag": 9,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_9",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "PHEIMMPCLMP",
+          "tag": 10,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_10",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "EJHPCJMKBOM",
+          "tag": 11,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_11",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "FBEFGOKJNFM",
+          "tag": 12,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_12",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "EHCHDIJEJEJ",
+          "tag": 13,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_13",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "LDLIEKOAFBP",
+          "tag": 14,
+          "type": "int32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_14",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "DAGAIOINCOO",
+          "tag": 15,
+          "type": "bytes",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_15",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "MEFINEPJONK",
+          "tag": 74,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_74",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "GKBJLBAKMCJ",
+          "tag": 208,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_208",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "GNHGKGCEFIO",
+          "tag": 376,
+          "type": "uint32",
+          "cardinality": "repeated",
+          "presence": "implicit",
+          "packed": true,
+          "semanticField": "unknown_field_376",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation",
+          "contentStatus": "modeled-helper"
+        },
+        {
+          "clientField": "IJNBKLIHNJP",
+          "tag": 410,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_410",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "FMMLBHKFGDH",
+          "tag": 440,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_440",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "KMLEGLIGNPH",
+          "tag": 454,
+          "type": "message",
+          "cardinality": "singular",
+          "presence": "explicit",
+          "packed": false,
+          "semanticField": "unknown_field_454",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation",
+          "clientNestedType": "NNKFJMDCCMB",
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "CGDONMBOALA",
+          "tag": 477,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_477",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "ENBECCJFNIL",
+          "tag": 646,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_646",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "FIHDHDLJBLC",
+          "tag": 658,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_658",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "PIALLCNIKEE",
+          "tag": 808,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_808",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "HCFFDGMAOAC",
+          "tag": 838,
+          "type": "bytes",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_838",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "GCBLHKIJHPC",
+          "tag": 954,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_954",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "DCHAEKJAMBA",
+          "tag": 1031,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1031",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "NGHMHALIAIO",
+          "tag": 1170,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1170",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "JNPMKMIMKCA",
+          "tag": 1205,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1205",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "NFMJKLLKJPB",
+          "tag": 1352,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1352",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "MHNPBDMNCAA",
+          "tag": 1417,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1417",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "FGJNONFBDHO",
+          "tag": 1497,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1497",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "ANIBEAMGKDP",
+          "tag": 1508,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1508",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "AHFLNIHHLNL",
+          "tag": 1544,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1544",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "PJHOCPFACEK",
+          "tag": 1570,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1570",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "HMJCMBNBLDL",
+          "tag": 1726,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1726",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "JJEGEAOIFOC",
+          "tag": 1745,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1745",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "LJLGGDEBGKD",
+          "tag": 1826,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1826",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "BGEAPNNMOCP",
+          "tag": 1847,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1847",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "LGMEFCCONPE",
+          "tag": 1915,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1915",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        }
+      ]
     },
     {
       "semanticName": "PlayerLoginReq",
-      "status": "unresolved",
-      "evidence": [],
-      "ambiguities": [],
-      "fields": []
+      "status": "candidate",
+      "evidence": [
+        "login-protected-writer"
+      ],
+      "ambiguities": [
+        "Raw outer wire observations only; business fields unresolved; nested client names are not stable semantic schemas; no runtime acceptance"
+      ],
+      "fields": [
+        {
+          "clientField": "MCCMLHDDHAJ",
+          "tag": 1,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "ECAEIDMALFM",
+          "tag": 2,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_2",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "LDNJIHGCFON",
+          "tag": 3,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_3",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "LAFEHJFNDIB",
+          "tag": 4,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_4",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "BNAIJDNIBIC",
+          "tag": 5,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_5",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "EJHPCJMKBOM",
+          "tag": 6,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_6",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "CCCKKDAAEME",
+          "tag": 7,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_7",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "KHJKGGNMAGJ",
+          "tag": 8,
+          "type": "uint64",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_8",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "LCNMJGGNIND",
+          "tag": 9,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_9",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "GKODOLODOGC",
+          "tag": 10,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_10",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "JEBFKCCKKPP",
+          "tag": 11,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_11",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "HLNLCJBLCMM",
+          "tag": 12,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_12",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "NBDGINFCIIK",
+          "tag": 13,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_13",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "EGDHLKIDOID",
+          "tag": 14,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_14",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "LBOBFKPDBHE",
+          "tag": 15,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_15",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "JNPMKMIMKCA",
+          "tag": 60,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_60",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "COEFLDLMONK",
+          "tag": 115,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_115",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "FKNBPCAPKCJ",
+          "tag": 165,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_165",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "NGHMHALIAIO",
+          "tag": 190,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_190",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "KALFFFLADGM",
+          "tag": 213,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_213",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "PJICEKGDLFM",
+          "tag": 274,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_274",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "GPFPMHJGKFH",
+          "tag": 345,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_345",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "LGMEFCCONPE",
+          "tag": 361,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_361",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "LJLGGDEBGKD",
+          "tag": 364,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_364",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "DAGAIOINCOO",
+          "tag": 415,
+          "type": "bytes",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_415",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "COAMILMLPIC",
+          "tag": 473,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_473",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "GCBLHKIJHPC",
+          "tag": 492,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_492",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "LJGEIHAKLHH",
+          "tag": 552,
+          "type": "bytes",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_552",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "LDEIEFPNIEN",
+          "tag": 624,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_624",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "GGJNKLPEPFG",
+          "tag": 751,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_751",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "HDGALALKMCK",
+          "tag": 769,
+          "type": "message",
+          "cardinality": "singular",
+          "presence": "explicit",
+          "packed": false,
+          "semanticField": "unknown_field_769",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation",
+          "clientNestedType": "NBFMIBMFJIO"
+        },
+        {
+          "clientField": "PLOBPNJINMB",
+          "tag": 891,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_891",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "AJAJHFKLHBH",
+          "tag": 944,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_944",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "HIAJLCOHEFP",
+          "tag": 962,
+          "type": "message",
+          "cardinality": "singular",
+          "presence": "explicit",
+          "packed": false,
+          "semanticField": "unknown_field_962",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation",
+          "clientNestedType": "HMLAJHBHLOC"
+        },
+        {
+          "clientField": "DIJEIJEALKE",
+          "tag": 978,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_978",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "PNFFKLNLFMN",
+          "tag": 1090,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1090",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "KOKJAFONGAN",
+          "tag": 1105,
+          "type": "bytes",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1105",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "GJKKCNFPPGA",
+          "tag": 1168,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1168",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "AMLBGPGIJBD",
+          "tag": 1185,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1185",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "PJFPOHEKNEF",
+          "tag": 1295,
+          "type": "message",
+          "cardinality": "singular",
+          "presence": "explicit",
+          "packed": false,
+          "semanticField": "unknown_field_1295",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation",
+          "clientNestedType": "PBBDOCEDNIE"
+        },
+        {
+          "clientField": "AGPMKEEOBGD",
+          "tag": 1312,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1312",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "JNDGHFMPBOA",
+          "tag": 1327,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1327",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "HNNICOEFLAK",
+          "tag": 1492,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1492",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "PHEIMMPCLMP",
+          "tag": 1494,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1494",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "PMKEHCKOHFJ",
+          "tag": 1533,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1533",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "AHFLNIHHLNL",
+          "tag": 1601,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1601",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "JILJKLNFMMK",
+          "tag": 1640,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1640",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "HHMNDFCCNED",
+          "tag": 1657,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1657",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "FDEFONJLCAG",
+          "tag": 1710,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1710",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "BGEAPNNMOCP",
+          "tag": 1719,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1719",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "IJANGEDLOMK",
+          "tag": 1785,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1785",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "MHNPBDMNCAA",
+          "tag": 1790,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1790",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "OOGECEEANJA",
+          "tag": 1868,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1868",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "JFEGKNOHCMM",
+          "tag": 1931,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1931",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "KHJPHBAPAPE",
+          "tag": 1996,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1996",
+          "status": "unresolved",
+          "evidence": [
+            "login-protected-writer"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        }
+      ]
     },
     {
       "semanticName": "PlayerLoginRsp",
-      "status": "unresolved",
-      "evidence": [],
-      "ambiguities": [],
-      "fields": []
+      "status": "candidate",
+      "evidence": [
+        "response-protected-reader"
+      ],
+      "ambiguities": [
+        "Raw outer wire observations only; business fields unresolved; nested client names are not stable semantic schemas; no runtime acceptance"
+      ],
+      "fields": [
+        {
+          "clientField": "CFFKHCLGAAB",
+          "tag": 1,
+          "type": "bytes",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "KACKGOIGHKI",
+          "tag": 2,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_2",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "IJNBKLIHNJP",
+          "tag": 3,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_3",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "GIKCIPFKPIH",
+          "tag": 4,
+          "type": "map",
+          "cardinality": "map",
+          "presence": "implicit",
+          "packed": false,
+          "keyType": "string",
+          "valueType": "int32",
+          "semanticField": "unknown_field_4",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation",
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "KHJKGGNMAGJ",
+          "tag": 5,
+          "type": "uint64",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_5",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "NBDGINFCIIK",
+          "tag": 6,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_6",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "HKBHPGJADGA",
+          "tag": 7,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_7",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "LDLIEKOAFBP",
+          "tag": 8,
+          "type": "int32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_8",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "JOAEHNGDAPK",
+          "tag": 10,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_10",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "PJICEKGDLFM",
+          "tag": 11,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_11",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "CMFBIHHPCFL",
+          "tag": 12,
+          "type": "int32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_12",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "PNKDIONMIGP",
+          "tag": 14,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_14",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "IFPCNHMNFGE",
+          "tag": 15,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_15",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "FHCEHICKAIP",
+          "tag": 61,
+          "type": "message",
+          "cardinality": "singular",
+          "presence": "explicit",
+          "packed": false,
+          "semanticField": "unknown_field_61",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation",
+          "clientNestedType": "MDKGJAOEHIL",
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "GKODOLODOGC",
+          "tag": 120,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_120",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "GEFJDEHGHGI",
+          "tag": 142,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_142",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "EHCHDIJEJEJ",
+          "tag": 154,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_154",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "HJOEAOKMIHD",
+          "tag": 259,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_259",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "HIHJANHKAMO",
+          "tag": 265,
+          "type": "map",
+          "cardinality": "map",
+          "presence": "implicit",
+          "packed": false,
+          "keyType": "uint64",
+          "valueType": "message",
+          "semanticField": "unknown_field_265",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation",
+          "clientNestedType": "DKFJJMGPCMD",
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "ACKCOFBGOBG",
+          "tag": 288,
+          "type": "message",
+          "cardinality": "singular",
+          "presence": "explicit",
+          "packed": false,
+          "semanticField": "unknown_field_288",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation",
+          "clientNestedType": "FAHEHGJDAME",
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "JILJKLNFMMK",
+          "tag": 389,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_389",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "AMFFCKBGFLH",
+          "tag": 410,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_410",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "CCDEHJGJFBD",
+          "tag": 437,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_437",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "PMABFENIPCO",
+          "tag": 451,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_451",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "HIAJLCOHEFP",
+          "tag": 470,
+          "type": "message",
+          "cardinality": "singular",
+          "presence": "explicit",
+          "packed": false,
+          "semanticField": "unknown_field_470",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation",
+          "clientNestedType": "HMLAJHBHLOC",
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "BGEAPNNMOCP",
+          "tag": 500,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_500",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "NDIJJNPLONB",
+          "tag": 548,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_548",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "FJJDOOJKBDN",
+          "tag": 558,
+          "type": "message",
+          "cardinality": "repeated",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_558",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation",
+          "clientNestedType": "LINNJHPIFAO",
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "NKLDPLCCLAE",
+          "tag": 583,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_583",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "HHMNDFCCNED",
+          "tag": 646,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_646",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "MIDCBCOAFLC",
+          "tag": 744,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_744",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "FCPOHNDGFMF",
+          "tag": 831,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_831",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "CKBPPJMNJDJ",
+          "tag": 972,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_972",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "LCILAPOPGFA",
+          "tag": 1018,
+          "type": "message",
+          "cardinality": "repeated",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1018",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation",
+          "clientNestedType": "GHANJBIKPDH",
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "BMKPNLLLMAO",
+          "tag": 1218,
+          "type": "map",
+          "cardinality": "map",
+          "presence": "implicit",
+          "packed": false,
+          "keyType": "uint32",
+          "valueType": "message",
+          "semanticField": "unknown_field_1218",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation",
+          "clientNestedType": "ANDFHAFNBOJ",
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "BCAADIFIJMN",
+          "tag": 1255,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1255",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "LBDHEONCLNL",
+          "tag": 1314,
+          "type": "message",
+          "cardinality": "singular",
+          "presence": "explicit",
+          "packed": false,
+          "semanticField": "unknown_field_1314",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation",
+          "clientNestedType": "NNKFJMDCCMB",
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "HEEDMJDJFLF",
+          "tag": 1331,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1331",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "MONEPNFKIML",
+          "tag": 1337,
+          "type": "message",
+          "cardinality": "singular",
+          "presence": "explicit",
+          "packed": false,
+          "semanticField": "unknown_field_1337",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation",
+          "clientNestedType": "MDKGJAOEHIL",
+          "contentStatus": "not-traced"
+        },
+        {
+          "clientField": "MHNPBDMNCAA",
+          "tag": 1363,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1363",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "BLLEFMDBOPJ",
+          "tag": 1603,
+          "type": "bytes",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1603",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "NAACMBICAKP",
+          "tag": 1792,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1792",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "PGKLJPPFEIO",
+          "tag": 1805,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1805",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "MHCBMOHFBCK",
+          "tag": 1852,
+          "type": "double",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1852",
+          "status": "unresolved",
+          "evidence": [
+            "response-protected-reader"
+          ],
+          "ambiguities": [
+            "Business field meaning unresolved"
+          ],
+          "wireStatus": "emulated-observation"
+        }
+      ]
     },
     {
       "semanticName": "PingReq",

@@ -12,7 +12,7 @@ GLOBAL, HEAP, CAPACITY = 0x611000000, 0x612000000, 32768
 
 
 class Offline72:
-    def __init__(self, binary, library_directory, records):
+    def __init__(self, binary, library_directory, records, trace_instructions=True):
         self.U, self.R = load_emulator(library_directory)
         U = self.U; pe = PE(binary)
         image_size = number(binary, number(binary, 0x3c) + 24 + 56)
@@ -35,7 +35,10 @@ class Offline72:
         self.allowed, self.models, self.calls = [], {}, []
         self.heap_cursor = HEAP
         self.before_instruction = None
-        self.hooks = [self.uc.hook_add(U.UC_HOOK_CODE, self._code),
+        # Protected VM instructions need no Python callback unless collecting counts.
+        # Unicorn's count/time budgets still cover every executed instruction.
+        code_range = {} if trace_instructions else dict(begin=pe.base, end=0x15A2FFFFF)
+        self.hooks = [self.uc.hook_add(U.UC_HOOK_CODE, self._code, **code_range),
                       self.uc.hook_add(U.UC_HOOK_MEM_INVALID, self._invalid),
                       self.uc.hook_add(U.UC_HOOK_INTR, self._forbidden),
                       self.uc.hook_add(U.UC_HOOK_INSN, self._forbidden, None, 1, 0, self.R.UC_X86_INS_SYSCALL),

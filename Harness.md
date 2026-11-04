@@ -31,7 +31,7 @@
 
 本机证据根 local/migration72/：evidence/ 放初始差异、客户端审计、安装检查；logs/ 放测试/构建/运行输出；analysis/ 放反汇编等未脱敏材料。共享摘要引用输入 SHA-256、相对路径和代码位置，不提交账号、令牌、原始抓包或二进制。
 
-新增已实现：verify_client_manifest（完整清单）、extract_client72（固定目标基础元数据及泛型/父类/静态字段布局）、extract_client72_commands（静态包号）、extract_client72_wire（两消息研究Proto）、inventory_protocol（静态协议表面与P0 import下界）。证据说明：[目标提取](docs/CLIENT_72_EXTRACTION.md)、[网络与wire](docs/CLIENT_72_NETWORK.md)、[协议盘点](docs/CLIENT_72_PROTOCOL_INVENTORY.md)。尚未实现：完整P0调用图、运行时闭合泛型ABI、正式业务源码生成和完整7.2 wire fixture。
+新增已实现：verify_client_manifest（完整清单）、extract_client72（固定目标基础元数据及泛型/父类/静态字段布局）、extract_client72_commands（静态包号）、extract_client72_wire（包头/心跳研究Proto）、inventory_protocol（静态协议表面与P0 import下界）。证据说明：[目标提取](docs/CLIENT_72_EXTRACTION.md)、[网络与wire](docs/CLIENT_72_NETWORK.md)、[协议盘点](docs/CLIENT_72_PROTOCOL_INVENTORY.md)。尚未实现：完整P0调用图、运行时闭合泛型ABI、正式业务源码生成和完整7.2 wire fixture。
 
 ## 可复现命令
 
@@ -88,7 +88,7 @@ LUNAGC_CLIENT_PATCH_GUARD=0 只供服务研究禁用守护，不放开 play/patc
 
 PingRsp现在通过参数、注册和分派三路锁定：MJGOAHFNCGC/25763，读函数15251F300。extract_client72_wire已加入有符号/无符号32位reader证据，研究Proto共17字段。新增接手日志logs/p0-callback-tests.log、ping-mapping-tests.log；反汇编analysis/ping-handler-registration.txt、pingrsp-dispatch.txt、pingrsp-size.txt。相同数字的metadata初始化用途不作为CmdID证据。
 
-保护入口接手见 [CLIENT_72_PROTECTED](docs/CLIENT_72_PROTECTED.md)：已实现trace_client72_token（单一目标writer、显式4 helper模型、执行预算/未知状态失败）及check_client72_token_proto；token-wire-observations.json/protected-token.proto均为离线研究产物。依赖requirements-client72-trace.txt只装入local/migration72/python，详细命令在专题；不用Docker/WSL。证据在evidence/token-protected-trace.json、token-protoc-check.json、token-determinism.json及logs/a04d-tests.log。Login52字段实验和两响应checkpoint在analysis/protected-probe-*.json，尚未纳入正式工具。下一步补Login的3个嵌套及bool逐项消歧，再扩展受控reader；不要把合成对象的空指针异常当作客户端缺陷。
+保护入口接手见 [CLIENT_72_PROTECTED](docs/CLIENT_72_PROTECTED.md)：已实现trace_client72_token（单一目标writer、显式4 helper模型、执行预算/未知状态失败）及check_client72_token_proto；token-wire-observations.json/protected-token.proto均为离线研究产物。依赖requirements-client72-trace.txt只装入local/migration72/python，详细命令在专题；不用Docker/WSL。证据在evidence/token-protected-trace.json、token-protoc-check.json、token-determinism.json及logs/a04d-tests.log。早期Login52字段/响应checkpoint留在analysis/protected-probe-*.json，已由下述Login完整writer和响应外层reader取代；不要将合成对象异常当作客户端缺陷。
 
 A-04d检查点：ce9e3ae（参数/泛型回调参数）、b87fe73（PingRsp）、4b15d73（Token保护writer）；最新参数摘要将901条Action类型引用与835个不同实例分开统计。正式工具运行前仍核对固定输入哈希；不要把本机实验脚本的支持范围套用于正式提取器。
 
@@ -103,3 +103,5 @@ wire-observations.json为目标tag/offset/类型/helper的静态观察；researc
 本批构建/测试/部署索引：[CLIENT_72_RESEARCH_VALIDATION](docs/CLIENT_72_RESEARCH_VALIDATION.md)。完整失败快照full-test-results/、限定通过targeted-test-results/、汇总evidence/*-summary.json均在local/migration72/。运行验证deployment.json与jar-class-check.json；配置备份private-before/含敏感信息，仅本机读取。能力资源测试支持LUNAGC_RESOURCES_DIR，默认仓库resources/；历史/其他套件可能仍硬编码容器路径，执行前检查。
 
 A-04d3a 接手：[Login完整原始wire](docs/CLIENT_72_LOGIN_WIRE.md)。新增client72_emulator（有边界的共享离线CPU环境）、trace_client72_login（嵌套/oneof/列表/bool逐项扰动）、observed_proto72（研究Proto/原始夹具转换）、check_client72_login_proto及test_client72_login。复现命令和helper限制见专题；证据为evidence/login-trace.json、login-protoc-check.json、login-determinism.json和logs/a04d3-login-tests.log。替代上述52字段的旧实验检查点，正式工具现已覆盖55外层字段、12消息83字段；业务/枚举与响应reader仍分开验收。
+
+A-04d3b 接手：[响应外层wire](docs/CLIENT_72_RESPONSE_WIRE.md)。client72_reader提供有界输入，trace_client72_responses扫描实际保护分派并核对85外层字段，显式限制嵌套/map/message-list为空envelope。原始表response-wire-observations与login-wire-observations已接入validate_protocol72及mappings候选字段；错误tag/类型/容器参数/嵌套类型会拒绝，未观察内容不能晋级verified。证据为evidence/responses-trace.json、responses-determinism.json、logs/a04d3-reader-tests.log，详细命令见专题。接续先恢复NNKFJMDCCMB非空reader，不能用空envelope通过数替代内容验证。

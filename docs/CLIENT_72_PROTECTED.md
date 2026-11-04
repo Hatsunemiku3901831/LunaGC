@@ -49,4 +49,4 @@ python -m unittest tools.test_client72_protected tools.test_validate_protocol72 
 
 本批47项工具/结构/映射测试通过；已有包头/心跳11项独立wire检查通过；Token另有3次模拟与protoc比较、1条独立wire断言。映射普通校验通过，ready实际失败，未修改服务端协议源或部署。本页中的完整返回只指指定合成模型下的离线函数执行，不等于客户端登录或进入世界。
 
-A-04d3a 已解除 LoginReq 三嵌套与六bool歧义，55外层字段、12消息83字段的正式离线工具和50夹具见 [Login完整原始wire](CLIENT_72_LOGIN_WIRE.md)。上表保留早期实验来源，不代表当前Login工具支持范围。两个响应reader仍在推进，尚不能据此生成可连接服务端。
+A-04d3a 已解除 LoginReq 三嵌套与六bool歧义，55外层字段、12消息83字段的正式离线工具和50夹具见 [Login完整原始wire](CLIENT_72_LOGIN_WIRE.md)。上表保留早期实验来源，不代表当前Login工具支持范围。后续A-04d3b已恢复两个响应85外层字段，受控读取与未恢复内容见[响应wire](CLIENT_72_RESPONSE_WIRE.md)，尚不能据此生成可连接服务端。

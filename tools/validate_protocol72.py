@@ -130,18 +130,19 @@ def validate(document, profile, *, ready=False):
     return errors
 
 
-def validate_observations(document, profile, commands, wire, protected=None):
+def validate_observations(document, profile, commands, wire, protected=None, observations=()):
     """Cross-check candidate claims too; static wire does not prove semantics."""
     errors = []
     expected = {row['path']: row['sha256'] for row in profile['files'].values()}
-    tables = [('commands', commands), ('wire', wire)] + ([('protected', protected)] if protected else [])
+    tables = [('commands', commands), ('wire', wire)] + ([('protected', protected)] if protected else []) + list(observations)
     for label, table in tables:
         hashes = table.get('inputSHA256', {})
         if not hashes or any(expected.get(path) != sha for path, sha in hashes.items()):
             errors.append(f'{label}: observation input hash mismatch')
     ids = {row['clientType']: row['cmdId'] for row in commands.get('commands', [])}
     schemas = {row['clientType']: {f['clientField']: f for f in row['fields']}
-               for row in wire.get('messages', []) + ([protected] if protected else [])}
+               for row in wire.get('messages', []) + ([protected] if protected else []) +
+               [row for _, table in observations for row in table.get('messages', [])]}
     messages = {row['semanticName']: row for row in document['messages']}
     for row in document['opcodes']:
         if row.get('cmdId') is not None and row.get('clientType'):
@@ -154,8 +155,13 @@ def validate_observations(document, profile, commands, wire, protected=None):
             continue
         for field in schema['fields']:
             raw = schemas[client_type].get(field.get('clientField'))
-            if raw is None or any(field.get(k) != raw[k] for k in ('tag', 'type', 'cardinality', 'presence', 'packed')):
+            keys = ('tag', 'type', 'cardinality', 'presence', 'packed', 'keyType', 'valueType')
+            if raw is None or any(field.get(k) != raw.get(k) for k in keys):
                 errors.append(f"{name}/{field.get('semanticField')}: static wire binding mismatch")
+            elif field.get('clientNestedType') != raw.get('nestedType'):
+                errors.append(f"{name}/{field.get('semanticField')}: nested client type mismatch")
+            elif field.get('status') == 'verified' and raw.get('contentStatus') == 'not-traced':
+                errors.append(f"{name}/{field.get('semanticField')}: nested/container content not traced")
     return errors
 
 
@@ -170,7 +176,9 @@ def main():
     commands = json.loads((args.directory / 'commands.json').read_text('utf-8'))
     wire = json.loads((args.directory / 'wire-observations.json').read_text('utf-8'))
     protected = json.loads((args.directory / 'token-wire-observations.json').read_text('utf-8'))
-    errors.extend(validate_observations(document, profile, commands, wire, protected))
+    extra = [(name, json.loads((args.directory / name).read_text('utf8')))
+             for name in ('login-wire-observations.json', 'response-wire-observations.json')]
+    errors.extend(validate_observations(document, profile, commands, wire, protected, extra))
     print(json.dumps({'mode': 'ready' if args.ready else 'research-structure', 'valid': not errors, 'errors': errors},
                      ensure_ascii=False, indent=2))
     raise SystemExit(bool(errors))

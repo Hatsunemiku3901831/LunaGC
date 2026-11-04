@@ -19,3 +19,5 @@ python tools/validate_protocol72.py --ready
 `token-wire-observations.json`/`protected-token.proto`为TokenReq保护writer的28字段离线观察；`emulated-observation`与未保护函数的`static-confirmed`区分，helper和零全局模型限制见[保护入口研究](../../docs/CLIENT_72_PROTECTED.md)。mappings中这些字段保留unknown业务名，校验器核对它们与观察表的tag/类型一致；三组模拟输出与protoc比较通过仍不能解除服务端ready闸门。
 
 `commands.json` 为固定哈希上恢复的4,012条静态CmdID→混淆类型绑定，已有两个发送入口和封/解包证据；4,007个不同值，5组重号保留歧义。它与业务映射分离，不能直接替换PacketOpcodes；业务名、网络域、运行时IFix覆盖仍需核实。可通过 `extract_client72_commands.py` 确定性再生成。证据见 [网络研究](../../docs/CLIENT_72_NETWORK.md)。未知处没有7.1正包号回退。接手见 [提取记录](../../docs/CLIENT_72_EXTRACTION.md) 和 [Project](../../Project.md)。
+
+A-04d3新增login-wire-observations.json/login-research.proto：55外层字段、12消息83字段；response-wire-observations.json：两个响应85外层字段，contentStatus=not-traced表示内容尚未恢复。mappings.json只接入三类外层的unknown_field候选；clientNestedType是原始类型名，不是稳定业务schema。普通校验同时核对新表，ready仍失败。响应没有生成完整研究Proto，禁止以空message替代未知内容后宣称支持。

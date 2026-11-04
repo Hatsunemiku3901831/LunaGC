@@ -97,9 +97,11 @@ class ObservationBindingTest(unittest.TestCase):
         root = Path(__file__).resolve().parents[1] / 'protocol/cn-7.2'
         self.doc, self.profile, self.commands, self.wire, self.protected = [json.loads((root / name).read_text('utf8'))
             for name in ('mappings.json', 'profile.json', 'commands.json', 'wire-observations.json', 'token-wire-observations.json')]
+        self.extra = [(name, json.loads((root / name).read_text('utf8')))
+                      for name in ('login-wire-observations.json', 'response-wire-observations.json')]
 
     def check(self):
-        return validate_observations(self.doc, self.profile, self.commands, self.wire, self.protected)
+        return validate_observations(self.doc, self.profile, self.commands, self.wire, self.protected, self.extra)
 
     def test_repository_research_consistency_and_not_ready(self):
         self.assertEqual([], self.check())
@@ -119,6 +121,20 @@ class ObservationBindingTest(unittest.TestCase):
     def test_observations_require_the_same_input(self):
         self.wire['inputSHA256']['YuanShen.exe'] = 'a' * 64
         self.assertTrue(any('hash mismatch' in e for e in self.check()))
+
+    def test_login_boolean_binding_and_nested_client_type_are_checked(self):
+        row = next(r for r in self.doc['schemas'] if r['semanticName'] == 'PlayerLoginReq')
+        next(f for f in row['fields'] if f['tag'] == 6)['tag'] = 7
+        next(f for f in row['fields'] if f['tag'] == 769)['clientNestedType'] = 'OldClientType'
+        self.assertEqual(2, len(self.check()))
+
+    def test_response_map_and_unknown_content_cannot_be_promoted(self):
+        row = next(r for r in self.doc['schemas'] if r['semanticName'] == 'PlayerLoginRsp')
+        next(f for f in row['fields'] if f['tag'] == 265)['keyType'] = 'uint32'
+        next(f for f in row['fields'] if f['tag'] == 4)['status'] = 'verified'
+        errors = self.check()
+        self.assertEqual(2, len(errors))
+        self.assertTrue(any('content not traced' in e for e in errors))
 
 
 if __name__ == '__main__':
