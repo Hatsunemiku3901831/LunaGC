@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-静态结构、getter网络语义、Token/Login请求原始wire及两响应外层wire已恢复；阶段A响应非空嵌套与阶段B业务语义继续进行。隔离研发服务已部署，但没有7.2可连接构建，客户端验收全部待执行。本机路径、初始差异、报告和日志在忽略的 local/migration72/；公共摘要放 docs/ 和 protocol/cn-7.2/。
+静态结构、getter网络语义、Token/Login原始wire及响应非空对象图已完成离线恢复；阶段A业务回调闭合与阶段B业务语义继续进行。隔离研发服务已部署，但没有7.2可连接构建，客户端验收全部待执行。本机路径、初始差异、报告和日志在忽略的 local/migration72/；公共摘要放 docs/ 和 protocol/cn-7.2/。
 
 已有资源修改 ScriptSceneData/flat.luas.scenes.full_globals.lua.json 不属本批，不覆盖、不提交。patch 起点 f287410，resources 起点 dac2a9d。初查时Java/MongoDB归属本工作区且配置引用旧客户端/存档；随后隔离研发部署记录见ENV-01。下一次启动仍须重新核对配置与进程，不能将历史部署结果当作当前验收或清空原数据。
 
@@ -26,16 +26,17 @@
 | B-01 映射模型及校验 | A-02a | protocol/cn-7.2、validate_protocol72、11项测试 | 三层状态/来源/歧义/别名，字段容器/引用及目标哈希校验，未知可保存但拒绝ready | 已完成 | protocol/cn-7.2/README.md；99d5a6c | 继续研究真实映射；拆合并语义由证据人工审批 |
 | B-02 P0 三层映射 | A-03、A-04、B-01 | CmdID/message/field 表、wire fixture | 全部 P0 tag/类型/枚举/容器/嵌套有证据，非零/64 位/错误/边界测试 | 进行中 | docs/CLIENT_72_NETWORK.md；— | PacketHead/Ping静态wire已固化；补PingRsp、业务字段及保护入口 |
 | B-02a 包头/心跳静态wire | A-04b、A-04c、B-01 | extract_client72_wire、wire-observations、research.proto、check_client72_wire_proto | 14个实例字段tag/offset/标量/bytes与writer匹配、包头读写交叉、确定性生成、独立非零/64位/边界wire断言；业务未知保留未知 | 已完成 | CLIENT_72_NETWORK；p0-research-tests.log（37项）、wire-proto-tests.log（9项）；c9abee3 | 回调闭合前PingReq业务名仍candidate；不代替B-02或实机验收 |
-| A-04d 登录保护入口与回调类型 | A-04b、A-04c | 原生控制流、方法/泛型签名、受控观察工具 | Token/Login读写真实数据流有证据，响应回调与类型匹配；不得按保护字节线性猜测 | 进行中 | CLIENT_72_SIGNATURES、CLIENT_72_PROTECTED；— | 参数/PingRsp、Token/LoginReq及响应外层已恢复；继续响应内容及业务闭环 |
+| A-04d 登录保护入口与回调类型 | A-04b、A-04c | 原生控制流、方法/泛型签名、受控观察工具 | Token/Login读写真实数据流有证据，响应回调与类型匹配；不得按保护字节线性猜测 | 进行中 | CLIENT_72_SIGNATURES、CLIENT_72_PROTECTED；— | 参数/PingRsp、Token/Login wire对象图已离线恢复；继续业务回调/字段来源闭合 |
 | A-04d1 方法参数和Action回调参数 | A-04b | extract_client72_signatures、CLIENT_72_SIGNATURES、测试 | 全参数跨度连续/边界与引用校验，独立向量、BYREF及VAR/MVAR区别；闭合Action参数可复现，未恢复项明确保留 | 已完成 | client72-signatures.json、signatures-summary.json、signatures-tests.log（12项）；ce9e3ae | 555,919参数、901条Action引用/835实例；返回类型和泛型方法实例另验 |
 | B-02b PingRsp静态类型/指令/wire | A-04d1、A-04c、B-02a | extract_client72_wire、mappings、研究Proto、wire断言 | 回调类型/注册/分派/getter一致，3字段tag/偏移/有符号性，负错误值独立wire断言；静态与运行状态分离 | 已完成 | CLIENT_72_NETWORK；p0-callback-tests.log（44项）、wire-proto-tests.log（11项）；b87fe73 | MJGOAHFNCGC/25763；字段业务含义仍candidate，实机待验 |
 | A-04d2 TokenReq保护writer离线观测 | A-04d1 | trace_client72_token、token-wire-observations、protected-token.proto、protoc比较 | 3组受控输入完整返回，28字段全部对应/零默认，显式helper模型；重复输出一致，独立wire/protoc比较通过，业务未知不晋级 | 已完成 | CLIENT_72_PROTECTED、token-protected-trace.json、token-protoc-check.json、token-determinism.json；4b15d73 | 28字段业务名称/非ASCII/IFix/实机仍需验证 |
-| A-04d3 Login嵌套与Token/Login响应reader | A-04d2 | 离线输入模型、嵌套依赖、原始观察 | Login全字段及嵌套/列表，两个响应reader受控tag/value/错误路径，独立wire与边界验证 | 进行中 | CLIENT_72_LOGIN_WIRE、CLIENT_72_RESPONSE_WIRE；— | A-04d3a/b已完成；继续A-04d3c非空嵌套、map/list内容及错误边界 |
+| A-04d3 Login嵌套与Token/Login响应reader | A-04d2 | 离线输入模型、嵌套依赖、原始观察 | Login全字段及嵌套/列表，两个响应reader受控tag/value/错误路径，独立wire与边界验证 | 已完成 | CLIENT_72_LOGIN_WIRE、CLIENT_72_GRAPH_READERS；本批功能提交 | 限定离线受控wire；业务语义、运行时ABI与实机另验，继续A-04d/B-02 |
 | A-04d3a LoginReq完整原始wire及嵌套 | A-04d2 | trace_client72_login、login-wire-observations、login-research.proto、CLIENT_72_LOGIN_WIRE | 55外层字段、6bool逐个扰动、3嵌套闭包/列表/oneof，50原生夹具与protoc比较、3独立断言、重复输出一致；业务/枚举未知保留 | 已完成 | CLIENT_72_LOGIN_WIRE；login-trace/protoc-check/determinism、a04d3-login-tests.log；606ea03 | 响应reader与业务语义独立推进，不代替A-04d3总验收 |
 | A-04d3b 响应外层及标量受控reader | A-04d3a | client72_reader、trace_client72_responses、response-wire-observations、CLIENT_72_RESPONSE_WIRE | 元数据85实例字段全部外层定位；256扫描、11受控样本（负数/64位/double/列表/重复/错误wire）、独立字节断言、10模型拒绝；未恢复内容不得晋级 | 已完成 | responses-trace/determinism、a04d3-reader-tests.log；91d9791 | 不代表嵌套内容或游戏客户端通过；接A-04d3c |
-| A-04d3c 响应非空内容与合并行为 | A-04d3b | 嵌套reader、容器codec、独立fixture | 8类嵌套/值消息（含已有HML writer）及map entry、列表、重复消息合并、非空边界与独立wire验证 | 进行中 | CLIENT_72_RESPONSE_WIRE；— | 7新叶子已双向恢复；接回父消息非空路径、map/list及HML reader |
+| A-04d3c 响应非空内容与合并行为 | A-04d3b | 嵌套reader、容器codec、独立fixture | 8类嵌套/值消息（含已有HML writer）及map entry、列表、重复消息合并、非空边界与独立wire验证 | 已完成 | CLIENT_72_GRAPH_READERS；response-graph-trace/determinism；本批功能提交 | 34原始wire+34protoc输入、6拒绝路径通过；业务/实机状态不晋级 |
 | A-04d3c1 七个响应叶子双向wire | A-04d3b | trace_client72_response_leaves、叶子字段表/Proto、protoc检查 | 7类型30字段；26原生writer/27reader/26protoc/2独立断言通过，空值/负数/64位/bool与sfixed32区别，重复产物一致 | 已完成 | CLIENT_72_RESPONSE_WIRE；response-leaves-trace/protoc-check/determinism、a04d3-leaf-tests.log；5fe24ad | 只验独立叶子，继续父响应非空内容及合并行为 |
-| A-04d3c2 map泛型AOT注册关联 | A-04d3c1 | extract_client72_map_aot、map-aot-observations、CLIENT_72_MAP_AOT | 从目标代码恢复12/14字节表关系；全函数引用范围检查；具体/共享入口同址；21选定注册与4项边界测试、重复输出一致 | 已完成 | CLIENT_72_MAP_AOT；map-aot-determinism、a04d3c-aot-tests.log；本批功能提交 | 支持原生map adapter/SetItem执行，合成运行时上下文仍明确标注 |
+| A-04d3c2 map泛型AOT注册关联 | A-04d3c1 | extract_client72_map_aot、map-aot-observations、CLIENT_72_MAP_AOT | 从目标代码恢复12/14字节表关系；全函数引用范围检查；具体/共享入口同址；21选定注册与4项边界测试、重复输出一致 | 已完成 | CLIENT_72_MAP_AOT；map-aot-determinism、a04d3c-aot-tests.log；ce45b47 | 支持原生map adapter/SetItem执行，合成运行时上下文仍明确标注 |
+| A-04d3c3 原生响应对象图读取 | A-04d3c1、A-04d3c2 | client72_graph/map_runtime/graph_fixtures、trace_client72_graph、response-graph.proto/observations | 7叶子接回父响应、3map/列表/HML全部oneof分支及重复合并；34原始+34protoc输入、6边界拒绝、重复产物一致，模型边界明确 | 已完成 | CLIENT_72_GRAPH_READERS；response-graph-trace/determinism、a04d3c-graph-tests.log；本批功能提交 | 模型仍限定ASCII/基础无IFix路径；继续业务字段、枚举符号及回调身份确认 |
 | B-03 确定性生成 | B-01、B-02 | generator、PacketOpcodes、Proto | 只生成核实项，别名/引用检查，重复输出一致，protoc 编译，禁止旧号兜底 | 待开始 | — | 合成模型测试，再接真实映射 |
 | C-01 双向网络接入 | B-03 | GameSession、BasePacket、Handler 注册、UnionCmd/枚举 | 注册冲突失败、号/长度边界、内外分派、目标 wire 测试，构建部署 | 待开始 | — | 映射确认后替换旧表和专属断言 |
 | D-01 补丁和连接前置 | A-01、A-04 | patch、HTTP/SDK/dispatch/密钥 | 路由/渠道/版本/加密、各钩子 ABI/布局/实际加载验证 | 阻塞 | 旧特征仅静态扫描，缺目标 ABI；— | 分析必需钩子，区分商城可选项 |
@@ -50,7 +51,7 @@
 
 ## 阻塞与尝试
 
-- B-02：PingRsp的80候选歧义已由参数/注册/分派解除，见B-02b。Token/Login请求writer与响应外层reader已由有边界的离线CPU模型恢复；响应嵌套/容器非空内容仍未知。解除条件：完成A-04d3c与业务回调/字段含义独立确认，明确模拟helper和真实运行边界。
+- B-02：PingRsp的80候选歧义已由参数/注册/分派解除，见B-02b。Token/Login请求writer与响应非空对象图已在有边界离线模型中恢复，A-04d3c完成；业务回调身份、字段含义和枚举符号仍待独立确认。解除条件：业务来源闭合，保留模拟环境/真实运行分层，不能因wire通过晋级语义。
 - D-01：静态命中不是 ABI 证明；解除条件为 P0 钩子的参数/布局/加载和实际连接验证。
 - E-01：资源声明为 7.1 混合来源；须取得并核验 7.2 必需资源及引用，修改版本文字不能解除。
 - 安装一致性已核验：7,830条全部大小/MD5匹配；zip_tmp仍存在。此结果不认证清单来源、不代表运行热修复资源齐全。
@@ -61,7 +62,7 @@
 
 - 本批研究：安装全清单通过，目标静态提取与协议盘点工具已实现。53项研究/原有脚本测试、8项盘点测试通过（原始日志留local）；服务端基线构建通过。独立研发数据配置已准备，首次部署因测试JVM占用UDP未通过，正常停止并等测试退出后，最终部署健康、端口与JAR哈希均核对通过。
 
-下一项：A-04d3c 将7个已恢复叶子接入Token/LoginRsp非空嵌套，确认map/list内容和合并行为；同时沿已知构造入口确认TokenReq字段业务名。独立可做A-02动态包号、A-03管理器依赖。B-02整体仍未达到服务端生成条件。
+下一项：A-04d/B-02 从Token/Login响应注册、回调参数与使用点闭合业务身份；沿构造/消费入口确认字段业务名和枚举符号。独立可做A-02动态包号、A-03管理器依赖。B-02整体仍未达到服务端生成条件。
 
 - 验证补充：完整Java测试集实际运行10,563项，217失败、0跳过，已保留full-test-results和full-test-summary.json，不宣称全绿。新JVM单独重跑账号创建、UID预留、登录准入、写队列、写栅栏回归通过；共133项；HTTP冒烟2项通过。便携路径修复后SkillReadyPredicate35项通过；完整集没有再次全跑，仍不得宣称全绿。最终服务健康/TCP/UDP/hash核对通过，详情见docs/CLIENT_72_RESEARCH_VALIDATION.md。
 
@@ -82,3 +83,5 @@
 - 本轮功能提交：606ea03（A-04d3a Login完整writer）、91d9791（A-04d3b 响应外层reader/候选映射）、5fe24ad（A-04d3c1 七叶子双向wire），全部仅本地。服务端运行代码/主Proto/客户端未修改，无部署或重启；7.2新旧号与入场仍待验收。
 
 - A-04d3c当前：已沿原生ReadMessage/PushLimit/PopLimit完成28组父响应嵌套/map/list/oneof样本与28组protoc编码输入验证，6类拒绝路径通过；正在补充同分支/切换分支边界及最终回归。AOT前置已独立验收，A-04d3c整体暂不标完成。
+
+- A-04d3c完成：原生ReadMessage/limits、18消息137字段研究闭包、21条非空内容绑定；34组独立wire及34组protoc输入通过，6组拒绝（5条原生异常路径/1条helper边界）通过。map重复entry和重复value覆盖、普通消息/同case合并、oneof换case清除均有执行证据；75项回归通过。合成托管分配/RGCTX/字典底层模型明确记录，不能代替客户端验收。

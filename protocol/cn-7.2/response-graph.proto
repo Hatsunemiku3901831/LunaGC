@@ -1,0 +1,199 @@
+// Generated from target observations. Research only; no runtime acceptance.
+// Enum fields use int32 storage until symbolic values are recovered.
+syntax = "proto3";
+package cn72.research;
+
+message HMLAJHBHLOC {
+  bool OKAMAEKCEHL = 1;
+  KCIAPDNPNHE DAGHAJIBDPA = 2;
+  KEDIEGLJIMC AIAFEGAILDI = 3;
+  int32 KFPHCDOLFLO = 4;
+}
+
+message KENOJNPHCFO {
+  uint64 PDNGMNCDJKJ = 1;
+  bool NCHJPGAIOFK = 2;
+  uint32 CKOMAKMKPCH = 3;
+}
+
+message GGAHLPJMAHH {
+  int32 ILOMBFODOME = 1;
+}
+
+message CLDBKDNJHFG {
+  bool KFLDOHAMPAN = 1;
+  uint32 HLNLCJBLCMM = 2;
+  bytes BHHECPBGDKB = 3;
+  uint32 GKODOLODOGC = 4;
+  string JEBFKCCKKPP = 5;
+  string MCCMLHDDHAJ = 6;
+  uint64 CHOCAOJJPKC = 7;
+  string JDIKEKHHFFB = 8;
+  uint32 PJAJDHBBMGB = 9;
+  uint32 PHEIMMPCLMP = 10;
+  bool EJHPCJMKBOM = 11;
+  uint32 FBEFGOKJNFM = 12;
+  string EHCHDIJEJEJ = 13;
+  int32 LDLIEKOAFBP = 14;
+  bytes DAGAIOINCOO = 15;
+  bool MEFINEPJONK = 74;
+  string GKBJLBAKMCJ = 208;
+  repeated uint32 GNHGKGCEFIO = 376 [packed = true];
+  string IJNBKLIHNJP = 410;
+  uint32 FMMLBHKFGDH = 440;
+  NNKFJMDCCMB KMLEGLIGNPH = 454;
+  string CGDONMBOALA = 477;
+  bool ENBECCJFNIL = 646;
+  string FIHDHDLJBLC = 658;
+  string PIALLCNIKEE = 808;
+  bytes HCFFDGMAOAC = 838;
+  string GCBLHKIJHPC = 954;
+  uint32 DCHAEKJAMBA = 1031;
+  string NGHMHALIAIO = 1170;
+  uint32 JNPMKMIMKCA = 1205;
+  bool NFMJKLLKJPB = 1352;
+  string MHNPBDMNCAA = 1417;
+  uint32 FGJNONFBDHO = 1497;
+  string ANIBEAMGKDP = 1508;
+  uint32 AHFLNIHHLNL = 1544;
+  uint32 PJHOCPFACEK = 1570;
+  string HMJCMBNBLDL = 1726;
+  string JJEGEAOIFOC = 1745;
+  uint32 LJLGGDEBGKD = 1826;
+  string BGEAPNNMOCP = 1847;
+  uint32 LGMEFCCONPE = 1915;
+}
+
+message NDENMDAIAMC {
+  bytes CFFKHCLGAAB = 1;
+  bool KACKGOIGHKI = 2;
+  string IJNBKLIHNJP = 3;
+  map<string, int32> GIKCIPFKPIH = 4;
+  uint64 KHJKGGNMAGJ = 5;
+  uint32 NBDGINFCIIK = 6;
+  uint32 HKBHPGJADGA = 7;
+  int32 LDLIEKOAFBP = 8;
+  uint32 JOAEHNGDAPK = 10;
+  uint32 PJICEKGDLFM = 11;
+  int32 CMFBIHHPCFL = 12;
+  bool PNKDIONMIGP = 14;
+  bool IFPCNHMNFGE = 15;
+  MDKGJAOEHIL FHCEHICKAIP = 61;
+  uint32 GKODOLODOGC = 120;
+  bool GEFJDEHGHGI = 142;
+  string EHCHDIJEJEJ = 154;
+  uint32 HJOEAOKMIHD = 259;
+  map<uint64, DKFJJMGPCMD> HIHJANHKAMO = 265;
+  FAHEHGJDAME ACKCOFBGOBG = 288;
+  bool JILJKLNFMMK = 389;
+  bool AMFFCKBGFLH = 410;
+  string CCDEHJGJFBD = 437;
+  bool PMABFENIPCO = 451;
+  HMLAJHBHLOC HIAJLCOHEFP = 470;
+  string BGEAPNNMOCP = 500;
+  bool NDIJJNPLONB = 548;
+  repeated LINNJHPIFAO FJJDOOJKBDN = 558;
+  bool NKLDPLCCLAE = 583;
+  uint32 HHMNDFCCNED = 646;
+  string MIDCBCOAFLC = 744;
+  string FCPOHNDGFMF = 831;
+  bool CKBPPJMNJDJ = 972;
+  repeated GHANJBIKPDH LCILAPOPGFA = 1018;
+  map<uint32, ANDFHAFNBOJ> BMKPNLLLMAO = 1218;
+  string BCAADIFIJMN = 1255;
+  NNKFJMDCCMB LBDHEONCLNL = 1314;
+  uint32 HEEDMJDJFLF = 1331;
+  MDKGJAOEHIL MONEPNFKIML = 1337;
+  string MHNPBDMNCAA = 1363;
+  bytes BLLEFMDBOPJ = 1603;
+  string NAACMBICAKP = 1792;
+  string PGKLJPPFEIO = 1805;
+  double MHCBMOHFBCK = 1852;
+}
+
+message DKGNBDLKFKB {
+  uint32 GOGFALHBANH = 1;
+  uint32 CDDBAGEFIPP = 2;
+}
+
+message GHANJBIKPDH {
+  sfixed32 PGEMKKCNEMJ = 13;
+  sfixed32 EMBPDEHFOJK = 15;
+}
+
+message LINNJHPIFAO {
+  uint32 OGAGAEJHBCA = 1;
+  uint32 ILJLGHBLKMP = 2;
+}
+
+message GJKMGKBOLED {
+  uint32 JMHKHAPJADA = 1;
+  uint32 DOHJIJIJDEO = 2;
+}
+
+message KEDIEGLJIMC {
+  oneof content {
+    KHDFHMAMMBI case_11 = 11;
+    KENOJNPHCFO case_12 = 12;
+    GJKMGKBOLED case_13 = 13;
+    HBKBEAMNCFD case_14 = 14;
+  }
+}
+
+message DKFJJMGPCMD {
+  uint64 KMGDOFBGCOK = 1;
+  bytes ENLMLLBMNCP = 2;
+  bytes LGAMIBMFBPL = 3;
+  uint32 HENCCAHJOKD = 4;
+  uint32 LDAODKOLJOM = 5;
+  bool CBDIBPCLADH = 6;
+  bool JIMIAMABPAN = 21;
+  bool LMOMIPMKKNI = 22;
+}
+
+message KHDFHMAMMBI {
+  uint32 EDDLNIEOJEB = 1;
+  repeated uint64 JBFFIJNPDIL = 2 [packed = true];
+}
+
+message ANDFHAFNBOJ {
+  uint32 AGNINNCKBIG = 1;
+  uint32 LDAODKOLJOM = 2;
+  bytes JFMBDNNPKCM = 3;
+  bool LMOMIPMKKNI = 4;
+}
+
+message KCIAPDNPNHE {
+  oneof content {
+    DKGNBDLKFKB case_11 = 11;
+    GGAHLPJMAHH case_12 = 12;
+  }
+}
+
+message HBKBEAMNCFD {
+  bool EPMDKHGPKFG = 1;
+  uint32 IFJDHMHANFP = 2;
+}
+
+message MDKGJAOEHIL {
+  uint32 KDMKODCHHIP = 1;
+  bool FBJOBGOBDIE = 2;
+  string MFHJIGAMNFK = 3;
+  string GFCEGMNDCKH = 4;
+  string DIDEGEOAEJN = 5;
+  string MCKEMGKBDKG = 6;
+  string LMMCPBMDBKP = 7;
+}
+
+message FAHEHGJDAME {
+  string ACPEPMIINBF = 1;
+  uint32 LCNMJGGNIND = 2;
+  uint32 GICIOGGEAFG = 3;
+}
+
+message NNKFJMDCCMB {
+  uint32 JJLJMLEJIIK = 1;
+  uint32 EBMBKOOKKPD = 2;
+  string BFOFKNFHPJN = 3;
+  string HLFMBMBLHME = 4;
+}

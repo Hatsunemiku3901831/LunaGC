@@ -1,6 +1,6 @@
 # TokenRsp / LoginRsp 受控读取与外层 wire
 
-A-04d3b 的范围是响应外层字段定位与标量受控读取。输入固定为 [目标哈希](CLIENT_72_EXTRACTION.md)，工具 `trace_client72_responses.py`；离线环境同 [保护入口](CLIENT_72_PROTECTED.md)。**两个响应的嵌套内容、业务语义和真实登录仍未验收，A-04d3 整体仍在进行。**
+A-04d3b 的范围是响应外层字段定位与标量受控读取。输入固定为 [目标哈希](CLIENT_72_EXTRACTION.md)，工具 `trace_client72_responses.py`；离线环境同 [保护入口](CLIENT_72_PROTECTED.md)。**两个响应的嵌套内容、业务语义和真实登录仍未验收，本页记录A-04d3b/c1检查点；后续结果见[非空对象图](CLIENT_72_GRAPH_READERS.md)。**
 
 | 候选业务名 | 原始类型 / 索引 | 静态 CmdID | 受保护 reader | 外层实例字段 |
 | --- | --- | --- | --- | --- |
@@ -74,3 +74,5 @@ python tools/check_client72_response_leaves_proto.py --protoc $env:PROTOC72 --tr
 ```
 
 本机证据为evidence/response-leaves-trace.json、response-leaves-protoc-check.json、response-leaves-determinism.json及logs/a04d3-leaf-tests.log。没有新增服务端协议或实际游戏验收。
+
+后续A-04d3c已完成非空父子路径、map/list与HML oneof的离线验收，当前入口见[CLIENT_72_GRAPH_READERS](CLIENT_72_GRAPH_READERS.md)。本页旧表的not-traced限定在旧扫描工具，新内容证据保存在response-graph-observations，不能混作实机验收。

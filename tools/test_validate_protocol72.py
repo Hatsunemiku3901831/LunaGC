@@ -98,7 +98,8 @@ class ObservationBindingTest(unittest.TestCase):
         self.doc, self.profile, self.commands, self.wire, self.protected = [json.loads((root / name).read_text('utf8'))
             for name in ('mappings.json', 'profile.json', 'commands.json', 'wire-observations.json', 'token-wire-observations.json')]
         self.extra = [(name, json.loads((root / name).read_text('utf8')))
-                      for name in ('login-wire-observations.json', 'response-wire-observations.json', 'response-leaf-wire-observations.json')]
+                      for name in ('login-wire-observations.json', 'response-wire-observations.json', 'response-leaf-wire-observations.json',
+                                   'response-graph-observations.json', 'map-aot-observations.json')]
 
     def check(self):
         return validate_observations(self.doc, self.profile, self.commands, self.wire, self.protected, self.extra)
@@ -134,7 +135,12 @@ class ObservationBindingTest(unittest.TestCase):
         next(f for f in row['fields'] if f['tag'] == 4)['status'] = 'verified'
         errors = self.check()
         self.assertEqual(2, len(errors))
-        self.assertTrue(any('content not traced' in e for e in errors))
+        self.assertTrue(any('business field meaning unresolved' in e for e in errors))
+
+    def test_graph_content_cannot_change_a_known_tag(self):
+        graph=next(t for name,t in self.extra if name=='response-graph-observations.json')
+        graph['contentBindings'][0]['tag'] += 1
+        self.assertTrue(any('graph content binding mismatch' in e for e in self.check()))
 
 
 if __name__ == '__main__':

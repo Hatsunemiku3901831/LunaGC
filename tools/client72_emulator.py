@@ -14,7 +14,7 @@ GLOBAL, HEAP, CAPACITY = 0x611000000, 0x612000000, 32768
 class Offline72:
     def __init__(self, binary, library_directory, records, trace_instructions=True):
         self.U, self.R = load_emulator(library_directory)
-        U = self.U; pe = PE(binary)
+        U = self.U; pe = PE(binary); self.pe = pe
         image_size = number(binary, number(binary, 0x3c) + 24 + 56)
         if not 0 < image_size < 1 << 30:
             raise ValueError('Unexpected image size')
@@ -31,10 +31,13 @@ class Offline72:
         self.records = {r['index']: r for r in records}
         addresses = sorted({int(m['registeredAddress'], 16) for r in records for m in r['methods'] if m['registeredAddress'] != '0x0'})
         self.ends = dict(zip(addresses, addresses[1:]))
+        self.unwind_ranges = None
         self.context = self.uc.context_save()
         self.allowed, self.models, self.calls = [], {}, []
         self.heap_cursor = HEAP
         self.before_instruction = None
+        self.trace_instructions = trace_instructions
+        self.stub_cursor = END + 0x1000
         # Protected VM instructions need no Python callback unless collecting counts.
         # Unicorn's count/time budgets still cover every executed instruction.
         code_range = {} if trace_instructions else dict(begin=pe.base, end=0x15A2FFFFF)
@@ -43,6 +46,17 @@ class Offline72:
                       self.uc.hook_add(U.UC_HOOK_INTR, self._forbidden),
                       self.uc.hook_add(U.UC_HOOK_INSN, self._forbidden, None, 1, 0, self.R.UC_X86_INS_SYSCALL),
                       self.uc.hook_add(U.UC_HOOK_INSN, self._forbidden, None, 1, 0, self.R.UC_X86_INS_SYSENTER)]
+
+    def model_stub(self, callback):
+        """Synthetic managed-library callback, never confused with a client VA."""
+        if self.stub_cursor == END+0x1000:
+            self.uc.mem_map(self.stub_cursor, 4096)
+            if not self.trace_instructions:
+                self.hooks.append(self.uc.hook_add(self.U.UC_HOOK_CODE,self._code,begin=self.stub_cursor,end=self.stub_cursor+4095))
+        if self.stub_cursor >= END+0x2000: raise ValueError('Model stub capacity exceeded')
+        address=self.stub_cursor;self.stub_cursor+=16
+        self.uc.mem_write(address,b'\xc3');self.models[address]=callback
+        return address
 
     def close(self):
         for h in self.hooks:
@@ -69,6 +83,20 @@ class Offline72:
         if entry not in self.ends:
             raise ValueError('Missing native method extent')
         self.allowed.append((entry, self.ends[entry]))
+
+    def allow_unwind(self, entry):
+        """Allow one reviewed function, bounded by target PE exception records."""
+        if self.unwind_ranges is None:
+            b = self.pe.data; optional = number(b, 0x3c) + 24
+            rva, size = struct.unpack_from('<II', b, optional + 112 + 3 * 8)
+            if not size or size % 12: raise ValueError('Invalid PE exception directory')
+            offset = self.pe.offset(self.pe.base + rva, size)
+            self.unwind_ranges = {self.pe.base + start: self.pe.base + end
+                for start, end, _ in struct.iter_unpack('<III', b[offset:offset+size])}
+        end = self.unwind_ranges.get(entry)
+        if end is None or not entry < end: raise ValueError('Native entry lacks exact unwind extent')
+        self.pe.offset(entry, end-entry, executable=True)
+        if (entry, end) not in self.allowed: self.allowed.append((entry, end))
 
     def synthetic_type(self, cell):
         pointer = self.alloc(512); self.write(pointer + 0xc7, 1, 'B'); self.write(cell, pointer)
@@ -101,7 +129,9 @@ class Offline72:
     def _code(self, uc, address, size, _):
         self.steps += 1
         if self.before_instruction:
-            self.before_instruction(address)
+            try: self.before_instruction(address)
+            except (ValueError, KeyError) as error:
+                self.failure=f'{address:#x}: {error}'; uc.emu_stop(); return
         if address in self.models:
             self.calls.append(dict(address=hex(address), rcx=self.reg('rcx'), rdx=self.reg('rdx'), r8=self.reg('r8')))
             try:

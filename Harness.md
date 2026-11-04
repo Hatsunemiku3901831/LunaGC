@@ -102,12 +102,14 @@ wire-observations.json为目标tag/offset/类型/helper的静态观察；researc
 
 本批构建/测试/部署索引：[CLIENT_72_RESEARCH_VALIDATION](docs/CLIENT_72_RESEARCH_VALIDATION.md)。完整失败快照full-test-results/、限定通过targeted-test-results/、汇总evidence/*-summary.json均在local/migration72/。运行验证deployment.json与jar-class-check.json；配置备份private-before/含敏感信息，仅本机读取。能力资源测试支持LUNAGC_RESOURCES_DIR，默认仓库resources/；历史/其他套件可能仍硬编码容器路径，执行前检查。
 
-A-04d3a 接手：[Login完整原始wire](docs/CLIENT_72_LOGIN_WIRE.md)。新增client72_emulator（有边界的共享离线CPU环境）、trace_client72_login（嵌套/oneof/列表/bool逐项扰动）、observed_proto72（研究Proto/原始夹具转换）、check_client72_login_proto及test_client72_login。复现命令和helper限制见专题；证据为evidence/login-trace.json、login-protoc-check.json、login-determinism.json和logs/a04d3-login-tests.log。替代上述52字段的旧实验检查点，正式工具现已覆盖55外层字段、12消息83字段；业务/枚举与响应reader仍分开验收。
+A-04d3请求入口：[Login完整wire](docs/CLIENT_72_LOGIN_WIRE.md)；trace_client72_login、check_client72_login_proto、observed_proto72负责嵌套/oneof原生writer、研究Proto与原始夹具对照。login-wire-observations及login-research.proto是研究产物，枚举符号/业务语义不晋级。
 
-A-04d3b 接手：[响应外层wire](docs/CLIENT_72_RESPONSE_WIRE.md)。client72_reader提供有界输入，trace_client72_responses扫描实际保护分派并核对85外层字段，显式限制嵌套/map/message-list为空envelope。原始表response-wire-observations与login-wire-observations已接入validate_protocol72及mappings候选字段；错误tag/类型/容器参数/嵌套类型会拒绝，未观察内容不能晋级verified。证据为evidence/responses-trace.json、responses-determinism.json、logs/a04d3-reader-tests.log，详细命令见专题。接续先恢复NNKFJMDCCMB非空reader，不能用空envelope通过数替代内容验证。
+响应接手以[原生对象图](docs/CLIENT_72_GRAPH_READERS.md)为当前入口。[外层/叶子检查点](docs/CLIENT_72_RESPONSE_WIRE.md)保留trace_client72_responses及trace_client72_response_leaves的限定范围；新client72_graph实际执行父子ReadMessage/limits和oneof，client72_map_runtime提供显式托管存储模型，client72_graph_fixtures保存独立输入，trace_client72_graph完成34组原始/34组protoc输入与6组拒绝验证。response-graph.proto为18消息137字段，response-graph-observations补充21条内容绑定；旧表not-traced作为历史扫描状态保留。
 
-A-04d3c1接手：trace_client72_response_leaves + check_client72_response_leaves_proto 已实现7叶子/30字段原生双向验证，产物response-leaf-wire-observations.json、response-leaves.proto；命令及sfixed32证据见响应专题末节。证据在evidence/response-leaves-*、logs/a04d3-leaf-tests.log。这些替代上述“先恢复NNKF”步骤；下一步执行父响应非空嵌套与容器，并保留合并行为/运行时ABI未知状态。
+[map AOT注册](docs/CLIENT_72_MAP_AOT.md)：extract_client72_map_aot已恢复21条选定注册，核对具体/shared读取入口及adapter声明；运行对象图前从固定客户端重新提取并比对map-aot-observations。未知泛型方法不能按邻近地址或形状代入。
 
-当前本地检查点：606ea03（Login完整writer）、91d9791（响应外层reader与映射校验）、5fe24ad（7叶子双向wire）。A-04d3c尚需父容器非空/合并路径；接手优先读响应专题末节，固定输入后复现，原资源子模块差异继续保留。
+三层校验同时检查新内容绑定的tag、样本索引、目标hash；contentStatus=native-graph-observed只表示有边界离线内容证据，unknown_field仍不能verified。`python tools/validate_protocol72.py --ready`仍应失败。当前未改src/main/proto或部署服务，运行JAR不是7.2可连接产物。
 
-A-04d3c2接手：[map AOT](docs/CLIENT_72_MAP_AOT.md)记录7.2 MethodSpec/函数表恢复。extract_client72_map_aot现已实现，21条注册产物map-aot-observations.json，用于校验具体/shared map读取入口与adapter绑定；test_client72_map_aot覆盖表边界，证据map-aot-determinism.json/a04d3c-aot-tests.log。不可仅凭形状套用相邻泛型代码。
+复现命令集中在对象图与AOT专题；最新证据local/migration72/evidence/response-graph-trace.json、response-graph-determinism.json、map-aot-determinism.json及logs/a04d3c-graph-tests.log。先检查输入hash，再检查AOT绑定、流limit/lookahead、已允许的native/helper与实际对象存储；不要跳过未知调用或越界错误。
+
+检查点：606ea03（Login writer）、91d9791（响应外层）、5fe24ad（7叶子）、ce45b47（map AOT）；本轮对象图功能提交见Project完成提交列。下一项为Token/Login业务回调及字段来源闭合，运行时ABI/IFix/实机单列验收。原资源子模块差异继续保留。

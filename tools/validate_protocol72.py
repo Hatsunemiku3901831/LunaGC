@@ -143,6 +143,16 @@ def validate_observations(document, profile, commands, wire, protected=None, obs
     schemas = {row['clientType']: {f['clientField']: f for f in row['fields']}
                for row in wire.get('messages', []) + ([protected] if protected else []) +
                [row for _, table in observations for row in table.get('messages', [])]}
+    contents = {}
+    for _, table in observations:
+        for binding in table.get('contentBindings', []):
+            identity = (binding.get('clientType'), binding.get('clientField'))
+            raw = schemas.get(identity[0], {}).get(identity[1])
+            if (identity in contents or raw is None or raw.get('tag') != binding.get('tag') or
+                    binding.get('contentStatus') != 'native-graph-observed' or not binding.get('cases') or
+                    not set(binding['cases']).issubset(table.get('fixtureNames', []))):
+                errors.append(f'{identity}: graph content binding mismatch')
+            contents[identity] = binding
     messages = {row['semanticName']: row for row in document['messages']}
     for row in document['opcodes']:
         if row.get('cmdId') is not None and row.get('clientType'):
@@ -160,8 +170,12 @@ def validate_observations(document, profile, commands, wire, protected=None, obs
                 errors.append(f"{name}/{field.get('semanticField')}: static wire binding mismatch")
             elif field.get('clientNestedType') != raw.get('nestedType'):
                 errors.append(f"{name}/{field.get('semanticField')}: nested client type mismatch")
-            elif field.get('status') == 'verified' and raw.get('contentStatus') == 'not-traced':
+            elif field.get('status') == 'verified' and field.get('semanticField', '').startswith('unknown_field_'):
+                errors.append(f"{name}/{field.get('semanticField')}: business field meaning unresolved")
+            elif field.get('status') == 'verified' and raw.get('contentStatus') == 'not-traced' and (client_type,field.get('clientField')) not in contents:
                 errors.append(f"{name}/{field.get('semanticField')}: nested/container content not traced")
+            if field.get('contentStatus') == 'native-graph-observed' and (client_type,field.get('clientField')) not in contents:
+                errors.append(f"{name}/{field.get('semanticField')}: graph content evidence missing")
     return errors
 
 
@@ -177,7 +191,8 @@ def main():
     wire = json.loads((args.directory / 'wire-observations.json').read_text('utf-8'))
     protected = json.loads((args.directory / 'token-wire-observations.json').read_text('utf-8'))
     extra = [(name, json.loads((args.directory / name).read_text('utf8')))
-             for name in ('login-wire-observations.json', 'response-wire-observations.json', 'response-leaf-wire-observations.json')]
+             for name in ('login-wire-observations.json', 'response-wire-observations.json', 'response-leaf-wire-observations.json',
+                          'response-graph-observations.json', 'map-aot-observations.json')]
     errors.extend(validate_observations(document, profile, commands, wire, protected, extra))
     print(json.dumps({'mode': 'ready' if args.ready else 'research-structure', 'valid': not errors, 'errors': errors},
                      ensure_ascii=False, indent=2))

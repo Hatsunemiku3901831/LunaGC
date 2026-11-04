@@ -19,7 +19,10 @@ def render(messages):
         lines.append('message ' + identifier(msg['clientType']) + ' {')
         oneofs = {}
         for f in msg['fields']:
-            kind = identifier(f['nestedType']) if f['type'] == 'message' else identifier(f['type'])
+            if f['type']=='map':
+                value=identifier(f['nestedType']) if f['valueType']=='message' else identifier(f['valueType'])
+                kind=f"map<{identifier(f['keyType'])}, {value}>"
+            else: kind = identifier(f['nestedType']) if f['type'] == 'message' else identifier(f['type'])
             prefix = 'repeated ' if f['cardinality'] == 'repeated' else ''
             suffix = ' [packed = true]' if f['packed'] else ''
             line = f"{prefix}{kind} {identifier(f['clientField'])} = {f['tag']}{suffix};"
@@ -65,3 +68,25 @@ def compare_fixtures(protoc, proto, mapping, report):
         if result.stdout.hex() != sample['wire']:
             raise ValueError(f'protoc/native mismatch for {name}: {text}')
     return len(report['fixtures'])
+
+
+def result_text(index, result, schemas):
+    """Encode an independently expected object graph, never decode native bytes."""
+    fields={f['clientField']:f for f in schemas[index]['fields']};lines=[]
+    def scalar(kind,value):
+        if kind=='bool':return 'true' if value else 'false'
+        if kind in ('string','bytes'):
+            data=value.encode('ascii') if kind=='string' else bytes.fromhex(value['hex'])
+            return '"'+''.join('\\%03o'%b for b in data)+'"'
+        return str(value)
+    for name,value in result.items():
+        f=fields[name];identifier(name)
+        if f['cardinality']=='map':
+            for key,item in value.items():
+                key_text=scalar(f['keyType'],key)
+                part='value { '+result_text(f['nestedTypeIndex'],item,schemas)+' }' if f['valueType']=='message' else 'value: '+scalar(f['valueType'],item)
+                lines.append(name+' { key: '+key_text+' '+part+' }')
+        else:
+            for item in (value if f['cardinality']=='repeated' else [value]):
+                lines.append(name+' { '+result_text(f['nestedTypeIndex'],item,schemas)+' }' if f['type']=='message' else name+': '+scalar(f['type'],item))
+    return ' '.join(lines)

@@ -9,9 +9,10 @@ import struct
 class WireInput:
     def __init__(self, data):
         self.data, self.position, self.last_key = bytes(data), 0, 0
+        self.limit = len(self.data)
 
     def take(self, length):
-        if length < 0 or length > len(self.data) - self.position:
+        if not 0 <= self.position <= self.limit <= len(self.data) or length < 0 or length > self.limit - self.position:
             raise ValueError('Truncated or invalid length')
         start = self.position; self.position += length
         return self.data[start:self.position]
@@ -27,7 +28,7 @@ class WireInput:
         raise ValueError('Unterminated varint')
 
     def tag(self):
-        if self.position == len(self.data): self.last_key = 0; return 0
+        if self.position == self.limit: self.last_key = 0; return 0
         key = self.varint()
         if not 0 < key >> 3 < 1 << 29 or key & 7 not in (0, 1, 2, 5):
             raise ValueError('Unsupported or invalid tag')

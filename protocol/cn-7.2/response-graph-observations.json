@@ -1,0 +1,379 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "scope": "Offline base path, native nested/map/list/oneof control flow",
+  "runtimeStatus": "not-tested",
+  "validFixtures": 34,
+  "rejectedFixtures": 6,
+  "protocFixtures": 34,
+  "schemaMessages": 18,
+  "fields": 137,
+  "fixtureNames": [
+    "token_nested_merge",
+    "token_nested_explicit_zero",
+    "token_list_encodings",
+    "token_list_capacity",
+    "login_singular_leaves",
+    "message_list_append",
+    "string_map_duplicate_and_order",
+    "message_maps_all_leaf_fields",
+    "map_265_duplicate_entry_replaces",
+    "map_265_duplicate_value_replaces",
+    "map_1218_duplicate_entry_replaces",
+    "map_1218_duplicate_value_replaces",
+    "map_defaults",
+    "map_duplicate_key_in_entry",
+    "map_max_key_and_empty_replacement",
+    "hml_11_11",
+    "hml_11_12",
+    "hml_12_11",
+    "hml_12_12",
+    "hml_13_11",
+    "hml_13_12",
+    "hml_14_11",
+    "hml_14_12",
+    "oneof_same_message_merge",
+    "oneof_same_list_append",
+    "oneof_switch_and_return",
+    "oneof_empty_presence",
+    "oneof_pair_merge",
+    "oneof_bool_merge",
+    "oneof_list_to_bool_replaces",
+    "second_oneof_same_message_merge",
+    "second_oneof_same_enum_overwrites",
+    "second_oneof_same_and_switch",
+    "nested_unknown_and_wrong_wire"
+  ],
+  "contentBindings": [
+    {
+      "typeIndex": 21921,
+      "clientType": "HMLAJHBHLOC",
+      "clientField": "AIAFEGAILDI",
+      "tag": 3,
+      "contentStatus": "native-graph-observed",
+      "cases": [
+        "hml_11_11",
+        "hml_11_12",
+        "hml_12_11",
+        "hml_12_12",
+        "hml_13_11",
+        "hml_13_12",
+        "hml_14_11",
+        "hml_14_12",
+        "oneof_bool_merge",
+        "oneof_empty_presence",
+        "oneof_list_to_bool_replaces",
+        "oneof_pair_merge",
+        "oneof_same_list_append",
+        "oneof_same_message_merge",
+        "oneof_switch_and_return"
+      ]
+    },
+    {
+      "typeIndex": 21921,
+      "clientType": "HMLAJHBHLOC",
+      "clientField": "DAGHAJIBDPA",
+      "tag": 2,
+      "contentStatus": "native-graph-observed",
+      "cases": [
+        "hml_11_11",
+        "hml_11_12",
+        "hml_12_11",
+        "hml_12_12",
+        "hml_13_11",
+        "hml_13_12",
+        "hml_14_11",
+        "hml_14_12",
+        "second_oneof_same_and_switch",
+        "second_oneof_same_enum_overwrites",
+        "second_oneof_same_message_merge"
+      ]
+    },
+    {
+      "typeIndex": 37481,
+      "clientType": "CLDBKDNJHFG",
+      "clientField": "GNHGKGCEFIO",
+      "tag": 376,
+      "contentStatus": "native-graph-observed",
+      "cases": [
+        "token_list_capacity",
+        "token_list_encodings"
+      ]
+    },
+    {
+      "typeIndex": 37481,
+      "clientType": "CLDBKDNJHFG",
+      "clientField": "KMLEGLIGNPH",
+      "tag": 454,
+      "contentStatus": "native-graph-observed",
+      "cases": [
+        "nested_unknown_and_wrong_wire",
+        "token_nested_explicit_zero",
+        "token_nested_merge"
+      ]
+    },
+    {
+      "typeIndex": 40503,
+      "clientType": "NDENMDAIAMC",
+      "clientField": "ACKCOFBGOBG",
+      "tag": 288,
+      "contentStatus": "native-graph-observed",
+      "cases": [
+        "login_singular_leaves"
+      ]
+    },
+    {
+      "typeIndex": 40503,
+      "clientType": "NDENMDAIAMC",
+      "clientField": "BMKPNLLLMAO",
+      "tag": 1218,
+      "contentStatus": "native-graph-observed",
+      "cases": [
+        "map_1218_duplicate_entry_replaces",
+        "map_1218_duplicate_value_replaces",
+        "map_defaults",
+        "message_maps_all_leaf_fields"
+      ]
+    },
+    {
+      "typeIndex": 40503,
+      "clientType": "NDENMDAIAMC",
+      "clientField": "FHCEHICKAIP",
+      "tag": 61,
+      "contentStatus": "native-graph-observed",
+      "cases": [
+        "login_singular_leaves"
+      ]
+    },
+    {
+      "typeIndex": 40503,
+      "clientType": "NDENMDAIAMC",
+      "clientField": "FJJDOOJKBDN",
+      "tag": 558,
+      "contentStatus": "native-graph-observed",
+      "cases": [
+        "message_list_append"
+      ]
+    },
+    {
+      "typeIndex": 40503,
+      "clientType": "NDENMDAIAMC",
+      "clientField": "GIKCIPFKPIH",
+      "tag": 4,
+      "contentStatus": "native-graph-observed",
+      "cases": [
+        "map_defaults",
+        "string_map_duplicate_and_order"
+      ]
+    },
+    {
+      "typeIndex": 40503,
+      "clientType": "NDENMDAIAMC",
+      "clientField": "HIAJLCOHEFP",
+      "tag": 470,
+      "contentStatus": "native-graph-observed",
+      "cases": [
+        "hml_11_11",
+        "hml_11_12",
+        "hml_12_11",
+        "hml_12_12",
+        "hml_13_11",
+        "hml_13_12",
+        "hml_14_11",
+        "hml_14_12",
+        "oneof_bool_merge",
+        "oneof_empty_presence",
+        "oneof_list_to_bool_replaces",
+        "oneof_pair_merge",
+        "oneof_same_list_append",
+        "oneof_same_message_merge",
+        "oneof_switch_and_return",
+        "second_oneof_same_and_switch",
+        "second_oneof_same_enum_overwrites",
+        "second_oneof_same_message_merge"
+      ]
+    },
+    {
+      "typeIndex": 40503,
+      "clientType": "NDENMDAIAMC",
+      "clientField": "HIHJANHKAMO",
+      "tag": 265,
+      "contentStatus": "native-graph-observed",
+      "cases": [
+        "map_265_duplicate_entry_replaces",
+        "map_265_duplicate_value_replaces",
+        "map_defaults",
+        "map_duplicate_key_in_entry",
+        "map_max_key_and_empty_replacement",
+        "message_maps_all_leaf_fields"
+      ]
+    },
+    {
+      "typeIndex": 40503,
+      "clientType": "NDENMDAIAMC",
+      "clientField": "LBDHEONCLNL",
+      "tag": 1314,
+      "contentStatus": "native-graph-observed",
+      "cases": [
+        "login_singular_leaves"
+      ]
+    },
+    {
+      "typeIndex": 40503,
+      "clientType": "NDENMDAIAMC",
+      "clientField": "LCILAPOPGFA",
+      "tag": 1018,
+      "contentStatus": "native-graph-observed",
+      "cases": [
+        "message_list_append"
+      ]
+    },
+    {
+      "typeIndex": 40503,
+      "clientType": "NDENMDAIAMC",
+      "clientField": "MONEPNFKIML",
+      "tag": 1337,
+      "contentStatus": "native-graph-observed",
+      "cases": [
+        "login_singular_leaves"
+      ]
+    },
+    {
+      "typeIndex": 54602,
+      "clientType": "KEDIEGLJIMC",
+      "clientField": "case_11",
+      "tag": 11,
+      "contentStatus": "native-graph-observed",
+      "cases": [
+        "hml_11_11",
+        "hml_11_12",
+        "oneof_same_list_append"
+      ]
+    },
+    {
+      "typeIndex": 54602,
+      "clientType": "KEDIEGLJIMC",
+      "clientField": "case_12",
+      "tag": 12,
+      "contentStatus": "native-graph-observed",
+      "cases": [
+        "hml_12_11",
+        "hml_12_12",
+        "oneof_same_message_merge",
+        "oneof_switch_and_return"
+      ]
+    },
+    {
+      "typeIndex": 54602,
+      "clientType": "KEDIEGLJIMC",
+      "clientField": "case_13",
+      "tag": 13,
+      "contentStatus": "native-graph-observed",
+      "cases": [
+        "hml_13_11",
+        "hml_13_12",
+        "oneof_pair_merge"
+      ]
+    },
+    {
+      "typeIndex": 54602,
+      "clientType": "KEDIEGLJIMC",
+      "clientField": "case_14",
+      "tag": 14,
+      "contentStatus": "native-graph-observed",
+      "cases": [
+        "hml_14_11",
+        "hml_14_12",
+        "oneof_bool_merge",
+        "oneof_list_to_bool_replaces"
+      ]
+    },
+    {
+      "typeIndex": 59347,
+      "clientType": "KHDFHMAMMBI",
+      "clientField": "JBFFIJNPDIL",
+      "tag": 2,
+      "contentStatus": "native-graph-observed",
+      "cases": [
+        "hml_11_11",
+        "hml_11_12",
+        "oneof_same_list_append"
+      ]
+    },
+    {
+      "typeIndex": 70905,
+      "clientType": "KCIAPDNPNHE",
+      "clientField": "case_11",
+      "tag": 11,
+      "contentStatus": "native-graph-observed",
+      "cases": [
+        "hml_11_11",
+        "hml_12_11",
+        "hml_13_11",
+        "hml_14_11",
+        "second_oneof_same_message_merge"
+      ]
+    },
+    {
+      "typeIndex": 70905,
+      "clientType": "KCIAPDNPNHE",
+      "clientField": "case_12",
+      "tag": 12,
+      "contentStatus": "native-graph-observed",
+      "cases": [
+        "hml_11_12",
+        "hml_12_12",
+        "hml_13_12",
+        "hml_14_12",
+        "second_oneof_same_and_switch",
+        "second_oneof_same_enum_overwrites"
+      ]
+    }
+  ],
+  "nativeEntries": [
+    "0x14782f430",
+    "0x14824fbb0",
+    "0x148b7ea10",
+    "0x148c10e70",
+    "0x149a567d0",
+    "0x149ec4b80",
+    "0x14af76c60",
+    "0x14b074d00",
+    "0x14b25fa00",
+    "0x14b2a9f90",
+    "0x14b89ec90",
+    "0x14f2dd9a0",
+    "0x14fafe430",
+    "0x150887560",
+    "0x1516b1370",
+    "0x1533d21a0",
+    "0x153bf9a40",
+    "0x153c0c530",
+    "0x155f7fba0",
+    "0x155f9be70",
+    "0x155f9dd30",
+    "0x156d350e0",
+    "0x156d35a40",
+    "0x1571dcbe0",
+    "0x1571ddb10",
+    "0x1571ddd60",
+    "0x157b22e00",
+    "0x158911ae0",
+    "0x158912430",
+    "0x158db8bc0",
+    "0x158db8e10",
+    "0x158dc41f0",
+    "0x158dcc9b0"
+  ],
+  "limitations": [
+    "Managed allocation/default initialization modeled",
+    "Synthetic interface/RGCTX metadata and primitive delegate bindings",
+    "Managed dictionary lookup/insertion and linked node allocation modeled; native map setter handles duplicates",
+    "ASCII strings, fixed array capacity 64; no IFix or live process ABI acceptance",
+    "Business semantics and enum symbols unknown"
+  ]
+}

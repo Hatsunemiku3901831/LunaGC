@@ -4,6 +4,17 @@ from tools.trace_client72_responses import bind_fields
 
 
 class ReaderInputTest(unittest.TestCase):
+    def test_nested_limit_cannot_consume_parent_bytes(self):
+        r = WireInput(bytes.fromhex('08011002'))
+        r.limit = 2
+        self.assertEqual((8, 1, 0), (r.tag(), r.varint(), r.tag()))
+        with self.assertRaises(ValueError): r.take(1)
+        r.limit = 4
+        self.assertEqual((16, 2, 0), (r.tag(), r.varint(), r.tag()))
+        r = WireInput(bytes.fromhex('0a034142431001')); r.limit = 4
+        r.tag()
+        with self.assertRaises(ValueError): r.blob()
+
     def test_independent_nonzero_signed_and_64bit_wire(self):
         r = WireInput(bytes.fromhex('38818080808080801070ffffffffffffffffff01'))
         self.assertEqual(56, r.tag()); self.assertEqual(9007199254740993, r.varint())

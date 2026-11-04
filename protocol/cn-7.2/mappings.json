@@ -138,6 +138,13 @@
       "inputFile": "binary",
       "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
       "location": "docs/CLIENT_72_RESPONSE_WIRE.md; protocol/cn-7.2/response-wire-observations.json"
+    },
+    {
+      "id": "response-native-graph",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_GRAPH_READERS.md; protocol/cn-7.2/response-graph-observations.json"
     }
   ],
   "opcodes": [
@@ -1150,10 +1157,11 @@
       "semanticName": "GetPlayerTokenRsp",
       "status": "candidate",
       "evidence": [
-        "response-protected-reader"
+        "response-protected-reader",
+        "response-native-graph"
       ],
       "ambiguities": [
-        "Raw outer wire observations only; business fields unresolved; nested client names are not stable semantic schemas; no runtime acceptance"
+        "Raw response graph observed with explicit managed runtime models; business meanings and enum symbols unresolved; no live runtime acceptance"
       ],
       "fields": [
         {
@@ -1455,13 +1463,14 @@
           "semanticField": "unknown_field_376",
           "status": "unresolved",
           "evidence": [
-            "response-protected-reader"
+            "response-protected-reader",
+            "response-native-graph"
           ],
           "ambiguities": [
             "Business field meaning unresolved"
           ],
           "wireStatus": "emulated-observation",
-          "contentStatus": "modeled-helper"
+          "contentStatus": "native-graph-observed"
         },
         {
           "clientField": "IJNBKLIHNJP",
@@ -1507,14 +1516,15 @@
           "semanticField": "unknown_field_454",
           "status": "unresolved",
           "evidence": [
-            "response-protected-reader"
+            "response-protected-reader",
+            "response-native-graph"
           ],
           "ambiguities": [
             "Business field meaning unresolved"
           ],
           "wireStatus": "emulated-observation",
           "clientNestedType": "NNKFJMDCCMB",
-          "contentStatus": "not-traced"
+          "contentStatus": "native-graph-observed"
         },
         {
           "clientField": "CGDONMBOALA",
@@ -2812,10 +2822,11 @@
       "semanticName": "PlayerLoginRsp",
       "status": "candidate",
       "evidence": [
-        "response-protected-reader"
+        "response-protected-reader",
+        "response-native-graph"
       ],
       "ambiguities": [
-        "Raw outer wire observations only; business fields unresolved; nested client names are not stable semantic schemas; no runtime acceptance"
+        "Raw response graph observed with explicit managed runtime models; business meanings and enum symbols unresolved; no live runtime acceptance"
       ],
       "fields": [
         {
@@ -2881,13 +2892,14 @@
           "semanticField": "unknown_field_4",
           "status": "unresolved",
           "evidence": [
-            "response-protected-reader"
+            "response-protected-reader",
+            "response-native-graph"
           ],
           "ambiguities": [
             "Business field meaning unresolved"
           ],
           "wireStatus": "emulated-observation",
-          "contentStatus": "not-traced"
+          "contentStatus": "native-graph-observed"
         },
         {
           "clientField": "KHJKGGNMAGJ",
@@ -3052,14 +3064,15 @@
           "semanticField": "unknown_field_61",
           "status": "unresolved",
           "evidence": [
-            "response-protected-reader"
+            "response-protected-reader",
+            "response-native-graph"
           ],
           "ambiguities": [
             "Business field meaning unresolved"
           ],
           "wireStatus": "emulated-observation",
           "clientNestedType": "MDKGJAOEHIL",
-          "contentStatus": "not-traced"
+          "contentStatus": "native-graph-observed"
         },
         {
           "clientField": "GKODOLODOGC",
@@ -3141,14 +3154,15 @@
           "semanticField": "unknown_field_265",
           "status": "unresolved",
           "evidence": [
-            "response-protected-reader"
+            "response-protected-reader",
+            "response-native-graph"
           ],
           "ambiguities": [
             "Business field meaning unresolved"
           ],
           "wireStatus": "emulated-observation",
           "clientNestedType": "DKFJJMGPCMD",
-          "contentStatus": "not-traced"
+          "contentStatus": "native-graph-observed"
         },
         {
           "clientField": "ACKCOFBGOBG",
@@ -3160,14 +3174,15 @@
           "semanticField": "unknown_field_288",
           "status": "unresolved",
           "evidence": [
-            "response-protected-reader"
+            "response-protected-reader",
+            "response-native-graph"
           ],
           "ambiguities": [
             "Business field meaning unresolved"
           ],
           "wireStatus": "emulated-observation",
           "clientNestedType": "FAHEHGJDAME",
-          "contentStatus": "not-traced"
+          "contentStatus": "native-graph-observed"
         },
         {
           "clientField": "JILJKLNFMMK",
@@ -3247,14 +3262,15 @@
           "semanticField": "unknown_field_470",
           "status": "unresolved",
           "evidence": [
-            "response-protected-reader"
+            "response-protected-reader",
+            "response-native-graph"
           ],
           "ambiguities": [
             "Business field meaning unresolved"
           ],
           "wireStatus": "emulated-observation",
           "clientNestedType": "HMLAJHBHLOC",
-          "contentStatus": "not-traced"
+          "contentStatus": "native-graph-observed"
         },
         {
           "clientField": "BGEAPNNMOCP",
@@ -3300,14 +3316,15 @@
           "semanticField": "unknown_field_558",
           "status": "unresolved",
           "evidence": [
-            "response-protected-reader"
+            "response-protected-reader",
+            "response-native-graph"
           ],
           "ambiguities": [
             "Business field meaning unresolved"
           ],
           "wireStatus": "emulated-observation",
           "clientNestedType": "LINNJHPIFAO",
-          "contentStatus": "not-traced"
+          "contentStatus": "native-graph-observed"
         },
         {
           "clientField": "NKLDPLCCLAE",
@@ -3404,14 +3421,15 @@
           "semanticField": "unknown_field_1018",
           "status": "unresolved",
           "evidence": [
-            "response-protected-reader"
+            "response-protected-reader",
+            "response-native-graph"
           ],
           "ambiguities": [
             "Business field meaning unresolved"
           ],
           "wireStatus": "emulated-observation",
           "clientNestedType": "GHANJBIKPDH",
-          "contentStatus": "not-traced"
+          "contentStatus": "native-graph-observed"
         },
         {
           "clientField": "BMKPNLLLMAO",
@@ -3425,14 +3443,15 @@
           "semanticField": "unknown_field_1218",
           "status": "unresolved",
           "evidence": [
-            "response-protected-reader"
+            "response-protected-reader",
+            "response-native-graph"
           ],
           "ambiguities": [
             "Business field meaning unresolved"
           ],
           "wireStatus": "emulated-observation",
           "clientNestedType": "ANDFHAFNBOJ",
-          "contentStatus": "not-traced"
+          "contentStatus": "native-graph-observed"
         },
         {
           "clientField": "BCAADIFIJMN",
@@ -3461,14 +3480,15 @@
           "semanticField": "unknown_field_1314",
           "status": "unresolved",
           "evidence": [
-            "response-protected-reader"
+            "response-protected-reader",
+            "response-native-graph"
           ],
           "ambiguities": [
             "Business field meaning unresolved"
           ],
           "wireStatus": "emulated-observation",
           "clientNestedType": "NNKFJMDCCMB",
-          "contentStatus": "not-traced"
+          "contentStatus": "native-graph-observed"
         },
         {
           "clientField": "HEEDMJDJFLF",
@@ -3497,14 +3517,15 @@
           "semanticField": "unknown_field_1337",
           "status": "unresolved",
           "evidence": [
-            "response-protected-reader"
+            "response-protected-reader",
+            "response-native-graph"
           ],
           "ambiguities": [
             "Business field meaning unresolved"
           ],
           "wireStatus": "emulated-observation",
           "clientNestedType": "MDKGJAOEHIL",
-          "contentStatus": "not-traced"
+          "contentStatus": "native-graph-observed"
         },
         {
           "clientField": "MHNPBDMNCAA",

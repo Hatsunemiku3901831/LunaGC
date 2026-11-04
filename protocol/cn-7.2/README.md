@@ -23,3 +23,5 @@ python tools/validate_protocol72.py --ready
 A-04d3新增login-wire-observations.json/login-research.proto：55外层字段、12消息83字段；response-wire-observations.json：两个响应85外层字段，contentStatus=not-traced表示内容尚未恢复。mappings.json只接入三类外层的unknown_field候选；clientNestedType是原始类型名，不是稳定业务schema。普通校验同时核对新表，ready仍失败。响应没有生成完整研究Proto，禁止以空message替代未知内容后宣称支持。
 
 response-leaf-wire-observations.json/response-leaves.proto补充7个独立叶子30字段，含由原生读写证实的sfixed32；叶子有schema不意味着父容器内容已通过，response-wire-observations的not-traced状态继续保留。
+
+A-04d3c：response-graph.proto是18消息137字段的完整响应研究闭包；response-graph-observations用21条contentBindings补充非空内容证据。map-aot-observations来自目标MethodSpec/函数注册；校验器检查新表与原始字段一致性。native-graph-observed不等于业务verified或实机通过，mappings中的unknown_field保留unresolved，ready继续失败。详见docs/CLIENT_72_GRAPH_READERS.md。
