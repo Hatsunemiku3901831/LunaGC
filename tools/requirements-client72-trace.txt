@@ -1,0 +1,2 @@
+# Offline CPU observation only; install into ignored local/migration72/python.
+unicorn==2.1.4

@@ -130,17 +130,18 @@ def validate(document, profile, *, ready=False):
     return errors
 
 
-def validate_observations(document, profile, commands, wire):
+def validate_observations(document, profile, commands, wire, protected=None):
     """Cross-check candidate claims too; static wire does not prove semantics."""
     errors = []
     expected = {row['path']: row['sha256'] for row in profile['files'].values()}
-    for label, table in [('commands', commands), ('wire', wire)]:
+    tables = [('commands', commands), ('wire', wire)] + ([('protected', protected)] if protected else [])
+    for label, table in tables:
         hashes = table.get('inputSHA256', {})
         if not hashes or any(expected.get(path) != sha for path, sha in hashes.items()):
             errors.append(f'{label}: observation input hash mismatch')
     ids = {row['clientType']: row['cmdId'] for row in commands.get('commands', [])}
     schemas = {row['clientType']: {f['clientField']: f for f in row['fields']}
-               for row in wire.get('messages', [])}
+               for row in wire.get('messages', []) + ([protected] if protected else [])}
     messages = {row['semanticName']: row for row in document['messages']}
     for row in document['opcodes']:
         if row.get('cmdId') is not None and row.get('clientType'):
@@ -168,7 +169,8 @@ def main():
     errors = validate(document, profile, ready=args.ready)
     commands = json.loads((args.directory / 'commands.json').read_text('utf-8'))
     wire = json.loads((args.directory / 'wire-observations.json').read_text('utf-8'))
-    errors.extend(validate_observations(document, profile, commands, wire))
+    protected = json.loads((args.directory / 'token-wire-observations.json').read_text('utf-8'))
+    errors.extend(validate_observations(document, profile, commands, wire, protected))
     print(json.dumps({'mode': 'ready' if args.ready else 'research-structure', 'valid': not errors, 'errors': errors},
                      ensure_ascii=False, indent=2))
     raise SystemExit(bool(errors))

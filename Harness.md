@@ -88,6 +88,8 @@ LUNAGC_CLIENT_PATCH_GUARD=0 只供服务研究禁用守护，不放开 play/patc
 
 PingRsp现在通过参数、注册和分派三路锁定：MJGOAHFNCGC/25763，读函数15251F300。extract_client72_wire已加入有符号/无符号32位reader证据，研究Proto共17字段。新增接手日志logs/p0-callback-tests.log、ping-mapping-tests.log；反汇编analysis/ping-handler-registration.txt、pingrsp-dispatch.txt、pingrsp-size.txt。相同数字的metadata初始化用途不作为CmdID证据。
 
+保护入口接手见 [CLIENT_72_PROTECTED](docs/CLIENT_72_PROTECTED.md)：已实现trace_client72_token（单一目标writer、显式4 helper模型、执行预算/未知状态失败）及check_client72_token_proto；token-wire-observations.json/protected-token.proto均为离线研究产物。依赖requirements-client72-trace.txt只装入local/migration72/python，详细命令在专题；不用Docker/WSL。证据在evidence/token-protected-trace.json、token-protoc-check.json、token-determinism.json及logs/a04d-tests.log。Login52字段实验和两响应checkpoint在analysis/protected-probe-*.json，尚未纳入正式工具。下一步补Login的3个嵌套及bool逐项消歧，再扩展受控reader；不要把合成对象的空指针异常当作客户端缺陷。
+
 选择测试时，--tests紧跟test任务；serverSmokeTest单独调用，不要把过滤参数放在第二个任务后面。实际遇到的端口冲突证明测试与研发服务不能并行抢占22101。测试完成、释放端口后再部署；不要只看HTTP健康。
 
 ## 三层映射校验入口

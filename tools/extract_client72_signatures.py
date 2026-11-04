@@ -139,7 +139,8 @@ def recover(binary, metadata, startup):
                   parameterCount=sum(len(m['parameters']) for m in methods), methodsWithParameters=len(methods),
                   distinctParameterTypeReferences=len(references), genericParameterOffset=hex(generic_base),
                   byRefParameterCount=sum(references[str(p['typeIndex'])]['byRef'] for m in methods for p in m['parameters'] if p['typeIndex'] is not None),
-                  declaredActionCallbackTypes=len(callbacks),
+                  declaredActionCallbackTypeReferences=len(callbacks),
+                  distinctActionInstantiations=len({references[str(c['typeIndex'])]['genericIndex'] for c in callbacks}),
                   returnTypesStatus='not-recovered',
                   genericMethodSubstitutionStatus='not-recovered', runtimeStatus='not-tested')
     return dict(report=report, types=[{k: r[k] for k in ('index', 'name', 'namespace')} for r in records],

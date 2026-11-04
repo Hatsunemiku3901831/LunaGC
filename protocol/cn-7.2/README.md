@@ -16,4 +16,6 @@ python tools/validate_protocol72.py --ready
 
 `wire-observations.json`和`research.proto`由extract_client72_wire.py从三个已审查的目标读写函数生成，共17个字段；原始字段名字避免伪造业务含义。校验器同时比对原始command/wire表，候选也不能与目标号/tag/类型冲突。`check_client72_wire_proto.py --protoc ...`编译离线Proto并比较手写独立wire断言；合成数据不是客户端抓包或登录验收。研究Proto不进入服务端Gradle源集，完整业务生成器仍待开发。
 
+`token-wire-observations.json`/`protected-token.proto`为TokenReq保护writer的28字段离线观察；`emulated-observation`与未保护函数的`static-confirmed`区分，helper和零全局模型限制见[保护入口研究](../../docs/CLIENT_72_PROTECTED.md)。mappings中这些字段保留unknown业务名，校验器核对它们与观察表的tag/类型一致；三组模拟输出与protoc比较通过仍不能解除服务端ready闸门。
+
 `commands.json` 为固定哈希上恢复的4,012条静态CmdID→混淆类型绑定，已有两个发送入口和封/解包证据；4,007个不同值，5组重号保留歧义。它与业务映射分离，不能直接替换PacketOpcodes；业务名、网络域、运行时IFix覆盖仍需核实。可通过 `extract_client72_commands.py` 确定性再生成。证据见 [网络研究](../../docs/CLIENT_72_NETWORK.md)。未知处没有7.1正包号回退。接手见 [提取记录](../../docs/CLIENT_72_EXTRACTION.md) 和 [Project](../../Project.md)。

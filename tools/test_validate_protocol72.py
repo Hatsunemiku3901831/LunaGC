@@ -95,11 +95,11 @@ class Mapping72Test(unittest.TestCase):
 class ObservationBindingTest(unittest.TestCase):
     def setUp(self):
         root = Path(__file__).resolve().parents[1] / 'protocol/cn-7.2'
-        self.doc, self.profile, self.commands, self.wire = [json.loads((root / name).read_text('utf8'))
-            for name in ('mappings.json', 'profile.json', 'commands.json', 'wire-observations.json')]
+        self.doc, self.profile, self.commands, self.wire, self.protected = [json.loads((root / name).read_text('utf8'))
+            for name in ('mappings.json', 'profile.json', 'commands.json', 'wire-observations.json', 'token-wire-observations.json')]
 
     def check(self):
-        return validate_observations(self.doc, self.profile, self.commands, self.wire)
+        return validate_observations(self.doc, self.profile, self.commands, self.wire, self.protected)
 
     def test_repository_research_consistency_and_not_ready(self):
         self.assertEqual([], self.check())
