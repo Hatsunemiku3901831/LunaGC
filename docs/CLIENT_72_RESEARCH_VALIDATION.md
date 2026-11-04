@@ -26,7 +26,7 @@
 
 现有服务通过正常stop退出；本工作区中指向旧客户端的守护也通过协作stop退出。配置备份在private-before/，GAME_PATH已改为用户指定的目标，自动补丁守护关闭，play/patch版本检查保留。
 
-研发环境使用独立数据库名 `lunagc72_research`、`local/migration72/runtime-data/`（从仓库默认data复制），原数据库、mongodata、local/data均保留。测试使用独立mongod进程/端口27027及独立dbpath，运行服务使用已核对归属的便携MongoDB 27017；没有清库或迁移真实账号。
+研发环境使用独立数据库名 `lunagc72_research`、`local/migration72/runtime-data/`（从仓库默认data复制），原数据库、mongodata、local/data均保留。测试使用独立mongod进程/端口27027及独立dbpath，运行服务使用已核对归属的便携MongoDB 27017；没有清库或迁移真实账号。测试结束后27027已通过管理命令正常关闭，测试dbpath保留；研发服务及运行MongoDB继续运行。
 
 第一次启动因完整测试JVM占用22101而未通过，已正常停止；测试释放端口后重新启动成功。本次最终核对包括：HTTP健康、TCP8088与UDP22101同属当前JAR的Java进程、MongoDB可执行路径/dbpath、磁盘SHA-256与running.json启动记录一致、JAR内BuildConfig.class与本次编译一致。具体PID、绝对路径和完整SHA-256保存在evidence/deployment.json与jar-class-check.json，不复制为下次验收。
 
