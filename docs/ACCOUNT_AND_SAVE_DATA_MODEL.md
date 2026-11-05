@@ -10,6 +10,8 @@
 
 上述B0原始链现分别覆盖第一入口和第二协程恢复状态；两条路径均不改变字段语义未知或非持久内存状态的结论。
 
+响应原始tag3 bytes写客户端robot输入静态字段，tag658 string传入CalcVersionHash的secretKey参数；二者暂不套用旧Proto名字。生成的versionHash为客户端内存状态，不是账号密码/持久令牌，不新增数据库字段。
+
 ## 数据分层
 
 7.2请求key_id/tag1184是uint32密钥选择值，目标构造当前写4；与客户端私钥对应的4_Pub公钥用于响应加密。该值不入MongoDB，不与client_rand_key所用服务器公钥混同；证据与范围见会话研究A-04d5o。

@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-执行状态：用户2026-11-05已恢复推进。A-04d5k/B-02c8基线c7556a0；A-04d5l/5m/5n1已按各自限定验收收口并本地提交（46d422c/5dcf882/c9f6870）。A-04d5n2/5n3已提交；A-04d5n4已提交；A-04d5n5已完成第二协程恢复状态到B0/Token的限定验收，重复产物一致；A-04d5n/B-02c9仍进行中：tag965业务语义及完整调度未完成；A-04d5o/B-02c10已完成key_id限定验收；A-04d/B-02进行中，D-02未完成。
+执行状态：用户2026-11-05已恢复推进。A-04d5k/B-02c8基线c7556a0；A-04d5l/5m/5n1已按各自限定验收收口并本地提交（46d422c/5dcf882/c9f6870）。A-04d5n2/5n3已提交；A-04d5n4已提交；A-04d5n5已完成第二协程恢复状态到B0/Token的限定验收，重复产物一致；A-04d5n/B-02c9仍进行中：tag965业务语义及完整调度未完成；A-04d5o/B-02c10已完成key_id限定验收；A-04d5p已验到原生版本哈希返回；A-04d/B-02进行中，D-02未完成。
 
 静态结构、Token/Login原始wire及响应非空对象图已离线恢复；四个登录请求/响应业务身份与CmdID、36个字段来源、8枚举102符号现有目标证据。Token Handler入口至seed安装、UID和token保存已连续执行，后续Login参数链另有分段证据。Token已在明确初始化/OS夹具下贯通原生seed验签/加密、构造、wire与发送至封包入口；SDK认证回调的五个凭据/渠道字段也已接入原生构造和writer。Login亦已在旧Shell/非云夹具下构造并到封包入口。响应wire→原生解密/摘要/验签→密钥安装已在明确本地签名信任输入下贯通，3组4096字节Java对照及错误拒绝通过。真实SDK初始化、完整Handler、封包体及剩余字段继续研究，A-04d/B-02保持进行中。隔离研发服务已部署，但没有7.2可连接构建，客户端验收全部待执行。本机路径、初始差异、报告和日志在忽略的 local/migration72/；公共摘要放 docs/ 和 protocol/cn-7.2/。
 
@@ -65,6 +65,7 @@
 | A-04d5n4 第一分区入口连续到会话/Token | A-04d5n3、A-04d5h | SDK/提示模型、trace_client72_dispatch_session、摘要/测试 | JSON/原生密码学→配置→SDK包装/提示→B0原指针→同运行时seed/Token writer；6组边界、原Token5组不变、182回归与重复一致 | 已完成 | dispatch-session-observations.json、dispatch-session-determinism.json；4200ea6 | 第一入口关联已执行；第二协程151226CD0和tag965语义仍未验 |
 | A-04d5n5 第二协程恢复状态到会话/Token | A-04d5n4 | trace_client72_dispatch_coroutine、摘要/测试 | 实际MoveNext状态2/3→密码学/reader→第二B0 store→Token；状态表/闭包校验、8组含拒绝/边界、187回归与重复一致 | 已完成 | dispatch-coroutine-observations.json、dispatch-coroutine-determinism.json；2a71ddf | 不覆盖初始HTTP等待和B0后尾段；保留tag965未知，继续必要登录字段 |
 | A-04d5o / B-02c10 Token密钥选择字段 | A-04d5h、A-04d5i | trace_client72_key_selection、Java对照、映射/校验 | 原生tag1184=4、独立命名URL参数、唯一密钥匹配；3请求/6响应含错误key、192回归及重复产物一致 | 已完成 | key-selection-observations.json、key-selection-determinism.json；b89d855 | key_id按业务契约交叉证据确认；继续完整Handler/封包体及P0闭包，不代表D-02 |
+| A-04d5p Handler尾段robot输入与版本哈希 | A-04d5j | client72_version_hash、trace_client72_handler_tail、摘要/测试 | Handler入口连续到原生setter、版本拼接、ASCII/SHA1/Base64及返回；7组含空值/块边界/Unicode/坏签名，198回归及重复一致 | 已完成 | handler-tail-observations.json、handler-tail-determinism.json；本项提交 | 继续GameManager状态/回调到Login；tag3/tag658语义未知，不替代整Handler/实机 |
 | B-03 确定性生成 | B-01、B-02 | generator、PacketOpcodes、Proto | 只生成核实项，别名/引用检查，重复输出一致，protoc 编译，禁止旧号兜底 | 待开始 | — | 合成模型测试，再接真实映射 |
 | C-01 双向网络接入 | B-03 | GameSession、BasePacket、Handler 注册、UnionCmd/枚举 | 注册冲突失败、号/长度边界、内外分派、目标 wire 测试，构建部署 | 待开始 | — | 映射确认后替换旧表和专属断言 |
 | D-01 补丁和连接前置 | A-01、A-04 | patch、HTTP/SDK/dispatch/密钥 | 路由/渠道/版本/加密、各钩子 ABI/布局/实际加载验证 | 进行中 | CLIENT_72_PATCH_ABI；四入口参数前缀已验，密钥/加载未验 | 字符串工厂、原生RSA/验签、实际加载与路由；商城钩子另列 |
@@ -175,3 +176,5 @@
 - A-04d5n5：真实MoveNext151226CD0 state2/3恢复路径→密码学/30677 reader→第二B0 store→同运行时seed/Token。8原生样本、187回归、两次trace/摘要一致；坏签名/缺content分别到错误提示/日志入口，传输错误与state5各走实际边界。研究校验0、ready1（214未满足项）。两处分区原始关联已分别验证，tag965业务名仍未知；下一步优先核查必要登录字段，不以旧proto名称或常量4晋级。仅离线修改，无运行部署。
 
 - A-04d5o/B-02c10：请求tag1184=4、Miscs.GetGlobalDispatchUrl命名参数及唯一匹配公钥交叉确认key_id，累计36字段。3原生请求/6原生响应，正确key4与Java4096字节对照一致，错误key2/3/5不安装密钥；192项回归、二次产物一致，研究校验0/ready1（213未满足项）。名称是业务契约证据推断；明确局部URL/本地信任/Java响应夹具，未声称完整请求解密、实际SDK、补丁或D-02。只改研究工具/映射/文档，未部署；继续Handler尾段、封包体及P0闭包。
+
+- A-04d5p：Handler入口连续到原生robot输入setter、版本拼接、ASCII/SHA1/Base64与GLOBAL+11B90写入，终点15A4E0DC7。7原生样本、198研究回归、两次产物一致；研究校验0/ready1（213项）。注册类型核对纠正UTF8推断为ASCII，Unicode/NUL及SHA1块边界有独立断言；两响应字段仍unknown，不增加业务名称。版本来源与限定格式化/初始化缓存为显式夹具；未执行剩余Handler、Login连续链或D-02。无运行部署；下一段GameManager状态和Login调用。

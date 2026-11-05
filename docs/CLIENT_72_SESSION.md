@@ -419,3 +419,24 @@ python tools/validate_protocol72.py --ready
 ```
 
 证据`evidence/key-selection-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json`，日志`logs/key-selection-{run,repeat,focused-tests,regression}.log`。Java runner固定记录自身、MT64以及Crypto/Handler契约源码hash；不启动服务端。下一项从15A4E0D9A继续Handler尾段，或从14A447E00封包体补连续发送链；tag965语义继续unknown。B-02/A-04d整体及D-02均不晋级。
+
+## A-04d5p Handler尾段robot输入与原生版本哈希
+
+`trace_client72_handler_tail`在同一次执行中从1507BE0E0完成原有warmup/密码学/UID/token保存，越过旧实验停止点15A4E0D9A，运行1531E9EB0 setter、1531D02B0 GetUniversalGameVersion和15321A4D0 CalcVersionHash，停在返回地址15A4E0DC7。完整Handler及后续Login仍未执行；本项不增加协议业务名称，四登录消息仍36个业务字段。
+
+- response+60/BHHECPBGDKB/tag3 bytes真实reader→set_robotCheckLoginInputData→GLOBAL+11C18，原指针保持。预先放置非空、非池化的旧ByteString，覆盖新值替换与空值清除；池化引用计数/旧值释放不在范围。不要据此套用旧security_cmd_buffer名称。
+- GetGameVersionAndChangelist/1531D03D0的六个命名byref参数gameVer/engineCL/clientCL/resourceCL/silenceCL/dataCL由明确本地版本夹具提供。外层GetUniversalGameVersion的原生分支与String.Concat实际执行，结果为gameVer及非null的_R/resourceCL、_S/silenceCL、_D/dataCL；engineCL/clientCL不拼入该返回值。未执行本地版本文件/正则读取。
+- response+80/FIHDHDLJBLC/tag658 string传给CalcVersionHash的secretKey参数（另一个参数名version）。实际literal62885为`{0}{1}mhy2020`；仅此二字符串格式化为明确托管库模型，不推测字段名client_version_random_key。
+- **注册类型为420/ASCIIEncoding，不是UTF8Encoding。** 原交接中UTF-8推断已纠正：type cell1458894B0/usage699518独立恢复。实际虚表、ASCII fallback getter/默认设置/编码、1056 SHA1CryptoServiceProvider→1055 SHA1Internal、Buffer.BlockCopy、Base64均运行；结果原生写GLOBAL+11B90。该静态字段已有独立Login client_version_hash/tag1996来源/writer证据，本次没有把分段证据说成连续Login执行。
+- ASCII默认问号fallback缓存使用原生构造后的初始化对象，未跑线程锁缓存初始化。独立oracle逐UTF16 code unit转换ASCII，非ASCII单元替换问号，保留NUL；实际Unicode样本含BMP与代理对，结果为`V?????\0mhy2020`的14字节。SHA1由hashlib、Base64由独立库逐字节核对，未替换目标hash结果。
+
+7组：完整版本、全空、SHA1输入长度55/56/64、Unicode/NUL、坏响应签名。六组成功均保持robot原指针并更新hash；坏签名仍在15A4E0645拒绝，不读取版本来源、不进尾段、不改旧robot/hash。完整样本沿用明确本地签名信任输入；不代表原始服务器签名或真实SDK/网络。
+
+198项研究回归通过，两次trace/摘要逐字节一致；研究校验0，ready1（213项）。固定三份输入hash、命名参数、type-cell和literal来源均在正式工具校验。新增6测试覆盖错误编码/算法/字段关联、边界/拒绝、不得晋级未知语义和完整实机声明。只改离线工具/摘要/文档，无部署要求。
+
+```powershell
+python tools/trace_client72_handler_tail.py --client $env:GAME_PATH --output local/migration72/evidence/handler-tail-trace.json --summary-output protocol/cn-7.2/handler-tail-observations.json
+python -m unittest tools.test_client72_handler_tail
+```
+
+证据`evidence/handler-tail-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json`，日志`logs/handler-tail-{run,repeat,focused-tests,regression}.log`。下一段15A4E0DC7后读取GameManager.Instance/GLOBAL+B6D0；1507C0BB0可转1507C21B0，后者时间条件后从session+98读取token调用151213730。必须核对状态/环境输入及真实调用后再接Login，不能跳过未知分支。

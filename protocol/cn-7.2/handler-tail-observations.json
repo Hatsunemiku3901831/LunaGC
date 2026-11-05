@@ -1,0 +1,496 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "fixtureCount": 7,
+  "results": [
+    {
+      "name": "full-version",
+      "rejected": false,
+      "versionParts": [
+        "CNRELWin7.2.0",
+        "engine-unused",
+        "client-unused",
+        "123",
+        "456",
+        "789"
+      ],
+      "secret": "secret-A",
+      "robotHex": "726f626f7400ff",
+      "stop": "0x15a4e0dc7",
+      "tailEntries": 1,
+      "versionSourceCalls": 1,
+      "robotPointerPreserved": true,
+      "priorGlobalsUnchanged": false,
+      "nativeHashInputHex": "434e52454c57696e372e322e305f523132335f533435365f443738397365637265742d416d687932303230",
+      "nativeSHA1": "719dc4bbcd360dafe2c572ad2f0032af3b2bfaff",
+      "versionHash": "cZ3Eu802Da/ixXKtLwAyrzsr+v8=",
+      "nativeOperations": {
+        "101": 0,
+        "103": 0
+      },
+      "formats": [
+        {
+          "format": "{0}{1}mhy2020",
+          "inputs": [
+            "CNRELWin7.2.0_R123_S456_D789",
+            "secret-A"
+          ],
+          "result": "CNRELWin7.2.0_R123_S456_D789secret-Amhy2020"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "empty",
+      "rejected": false,
+      "versionParts": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "secret": "",
+      "robotHex": "",
+      "stop": "0x15a4e0dc7",
+      "tailEntries": 1,
+      "versionSourceCalls": 1,
+      "robotPointerPreserved": true,
+      "priorGlobalsUnchanged": false,
+      "nativeHashInputHex": "6d687932303230",
+      "nativeSHA1": "f16393f17bfa24487333264927d72d891dbce92d",
+      "versionHash": "8WOT8Xv6JEhzMyZJJ9ctiR286S0=",
+      "nativeOperations": {
+        "101": 0,
+        "103": 0
+      },
+      "formats": [
+        {
+          "format": "{0}{1}mhy2020",
+          "inputs": [
+            "",
+            ""
+          ],
+          "result": "mhy2020"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "sha1-length55",
+      "rejected": false,
+      "versionParts": [
+        "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv",
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "secret": "",
+      "robotHex": "80",
+      "stop": "0x15a4e0dc7",
+      "tailEntries": 1,
+      "versionSourceCalls": 1,
+      "robotPointerPreserved": true,
+      "priorGlobalsUnchanged": false,
+      "nativeHashInputHex": "7676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676766d687932303230",
+      "nativeSHA1": "9d0f5a755290fb601655200ffec7f624a96d3f81",
+      "versionHash": "nQ9adVKQ+2AWVSAP/sf2JKltP4E=",
+      "nativeOperations": {
+        "101": 0,
+        "103": 0
+      },
+      "formats": [
+        {
+          "format": "{0}{1}mhy2020",
+          "inputs": [
+            "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv",
+            ""
+          ],
+          "result": "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvmhy2020"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "sha1-length56",
+      "rejected": false,
+      "versionParts": [
+        "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv",
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "secret": "",
+      "robotHex": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "stop": "0x15a4e0dc7",
+      "tailEntries": 1,
+      "versionSourceCalls": 1,
+      "robotPointerPreserved": true,
+      "priorGlobalsUnchanged": false,
+      "nativeHashInputHex": "767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676766d687932303230",
+      "nativeSHA1": "daf9e865f50083aab36f2808b9925886d1b0896b",
+      "versionHash": "2vnoZfUAg6qzbygIuZJYhtGwiWs=",
+      "nativeOperations": {
+        "101": 0,
+        "103": 0
+      },
+      "formats": [
+        {
+          "format": "{0}{1}mhy2020",
+          "inputs": [
+            "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv",
+            ""
+          ],
+          "result": "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvmhy2020"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "sha1-length64",
+      "rejected": false,
+      "versionParts": [
+        "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv",
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "secret": "",
+      "robotHex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+      "stop": "0x15a4e0dc7",
+      "tailEntries": 1,
+      "versionSourceCalls": 1,
+      "robotPointerPreserved": true,
+      "priorGlobalsUnchanged": false,
+      "nativeHashInputHex": "7676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676766d687932303230",
+      "nativeSHA1": "c41abe1193bab9ea57a2801721f12e32c04c71e4",
+      "versionHash": "xBq+EZO6uepXooAXIfEuMsBMceQ=",
+      "nativeOperations": {
+        "101": 0,
+        "103": 0
+      },
+      "formats": [
+        {
+          "format": "{0}{1}mhy2020",
+          "inputs": [
+            "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv",
+            ""
+          ],
+          "result": "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvmhy2020"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "ascii-unicode",
+      "rejected": false,
+      "versionParts": [
+        "V",
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "secret": "\u5bc6\u94a5\u00e9\ud83d\udd11\u0000",
+      "robotHex": "00ff",
+      "stop": "0x15a4e0dc7",
+      "tailEntries": 1,
+      "versionSourceCalls": 1,
+      "robotPointerPreserved": true,
+      "priorGlobalsUnchanged": false,
+      "nativeHashInputHex": "563f3f3f3f3f006d687932303230",
+      "nativeSHA1": "fb660cb8ce42b767efa8c43eec5bc40764957053",
+      "versionHash": "+2YMuM5Ct2fvqMQ+7FvEB2SVcFM=",
+      "nativeOperations": {
+        "101": 0,
+        "103": 0
+      },
+      "formats": [
+        {
+          "format": "{0}{1}mhy2020",
+          "inputs": [
+            "V",
+            "\u5bc6\u94a5\u00e9\ud83d\udd11\u0000"
+          ],
+          "result": "V\u5bc6\u94a5\u00e9\ud83d\udd11\u0000mhy2020"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "invalid-signature",
+      "rejected": true,
+      "versionParts": [
+        "CNRELWin7.2.0",
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "secret": "secret-rejected",
+      "robotHex": "72656a6563746564",
+      "stop": "0x15a4e0645",
+      "tailEntries": 0,
+      "versionSourceCalls": 0,
+      "robotPointerPreserved": false,
+      "priorGlobalsUnchanged": true,
+      "nativeHashInputHex": null,
+      "nativeSHA1": null,
+      "versionHash": "prior-version-hash",
+      "nativeOperations": {
+        "101": 0,
+        "103": -7
+      },
+      "formats": [],
+      "passed": true
+    }
+  ],
+  "declarations": {
+    "types": [
+      {
+        "usageRow": 698841,
+        "cell": "0x145886c28",
+        "typeIndex": 441,
+        "name": "EncoderReplacementFallback"
+      },
+      {
+        "usageRow": 699157,
+        "cell": "0x145887d90",
+        "typeIndex": 430,
+        "name": "DecoderReplacementFallback"
+      },
+      {
+        "usageRow": 699518,
+        "cell": "0x1458894b0",
+        "typeIndex": 420,
+        "name": "ASCIIEncoding"
+      },
+      {
+        "usageRow": 699775,
+        "cell": "0x14588aa48",
+        "typeIndex": 1056,
+        "name": "SHA1CryptoServiceProvider"
+      },
+      {
+        "usageRow": 699905,
+        "cell": "0x14588b398",
+        "typeIndex": 1055,
+        "name": "SHA1Internal"
+      }
+    ],
+    "methods": [
+      {
+        "address": "0x1531e9eb0",
+        "name": "set_robotCheckLoginInputData",
+        "parameters": [
+          {
+            "name": "value",
+            "type": {
+              "kind": "class",
+              "attributes": "0x0",
+              "data": "0x468f",
+              "byRef": false,
+              "typeDefinition": 18063,
+              "name": "PPGGBLPHADP",
+              "namespace": ""
+            }
+          }
+        ]
+      },
+      {
+        "address": "0x1531d02b0",
+        "name": "GetUniversalGameVersion",
+        "parameters": []
+      },
+      {
+        "address": "0x1531d03d0",
+        "name": "GetGameVersionAndChangelist",
+        "parameters": [
+          {
+            "name": "gameVer",
+            "type": {
+              "kind": "string",
+              "attributes": "0x2",
+              "data": "0x125",
+              "byRef": true
+            }
+          },
+          {
+            "name": "engineCL",
+            "type": {
+              "kind": "string",
+              "attributes": "0x2",
+              "data": "0x125",
+              "byRef": true
+            }
+          },
+          {
+            "name": "clientCL",
+            "type": {
+              "kind": "string",
+              "attributes": "0x2",
+              "data": "0x125",
+              "byRef": true
+            }
+          },
+          {
+            "name": "resourceCL",
+            "type": {
+              "kind": "string",
+              "attributes": "0x2",
+              "data": "0x125",
+              "byRef": true
+            }
+          },
+          {
+            "name": "silenceCL",
+            "type": {
+              "kind": "string",
+              "attributes": "0x2",
+              "data": "0x125",
+              "byRef": true
+            }
+          },
+          {
+            "name": "dataCL",
+            "type": {
+              "kind": "string",
+              "attributes": "0x2",
+              "data": "0x125",
+              "byRef": true
+            }
+          }
+        ]
+      },
+      {
+        "address": "0x15321a4d0",
+        "name": "CalcVersionHash",
+        "parameters": [
+          {
+            "name": "version",
+            "type": {
+              "kind": "string",
+              "attributes": "0x0",
+              "data": "0x125",
+              "byRef": false
+            }
+          },
+          {
+            "name": "secretKey",
+            "type": {
+              "kind": "string",
+              "attributes": "0x0",
+              "data": "0x125",
+              "byRef": false
+            }
+          }
+        ]
+      }
+    ],
+    "literals": [
+      {
+        "usageRow": 778300,
+        "index": 40025,
+        "slot": 40025,
+        "cell": "0x145b180e8",
+        "value": "_S"
+      },
+      {
+        "usageRow": 782220,
+        "index": 61645,
+        "slot": 61645,
+        "cell": "0x145b42488",
+        "value": "_R"
+      },
+      {
+        "usageRow": 782221,
+        "index": 61646,
+        "slot": 61646,
+        "cell": "0x145b42490",
+        "value": "_D"
+      },
+      {
+        "usageRow": 782399,
+        "index": 62885,
+        "slot": 62885,
+        "cell": "0x145b44b48",
+        "value": "{0}{1}mhy2020"
+      }
+    ],
+    "encoding": "ASCIIEncoding",
+    "hash": "SHA1CryptoServiceProvider"
+  },
+  "fieldBindings": [
+    {
+      "typeIndex": 37481,
+      "clientField": "BHHECPBGDKB",
+      "objectOffset": 96,
+      "tag": 3,
+      "type": "bytes",
+      "consumer": "set_robotCheckLoginInputData",
+      "argument": "value",
+      "semanticStatus": "unresolved"
+    },
+    {
+      "typeIndex": 37481,
+      "clientField": "FIHDHDLJBLC",
+      "objectOffset": 128,
+      "tag": 658,
+      "type": "string",
+      "consumer": "CalcVersionHash",
+      "argument": "secretKey",
+      "semanticStatus": "unresolved"
+    }
+  ],
+  "entry": "0x1507be0e0",
+  "stop": "0x15a4e0dc7",
+  "output": {
+    "globalOffset": 72592,
+    "owner": "Miscs",
+    "field": "<versionHash>k__BackingField",
+    "loginTag": 1996,
+    "loginField": "client_version_hash",
+    "loginConsumption": "previous separate native source/writer proof"
+  },
+  "runtimeStatus": "not-tested",
+  "wholeHandlerExecuted": false,
+  "continuousLoginExecuted": false,
+  "modelsFrom": [
+    "handler-core-observations.json"
+  ],
+  "addedModels": [
+    "six named byref version components from GetGameVersionAndChangelist",
+    "String.Format for exact target literal and two nullable strings",
+    "managed allocations/type vtables; initialized native-constructed question-mark fallback caches",
+    "non-pooled ByteString prior value; valid UTF8 response string storage"
+  ],
+  "nativeExecuted": [
+    "robot input setter/equality",
+    "GetUniversalGameVersion concatenation",
+    "ASCII encoding/default fallbacks",
+    "SHA1CryptoServiceProvider/SHA1Internal",
+    "Buffer.BlockCopy",
+    "Base64 and versionHash store"
+  ],
+  "outsideScope": [
+    "real local version source parser",
+    "pooled/refcounted ByteString release",
+    "full general String.Format",
+    "remaining Handler branches and Login continuity",
+    "production trust/SDK initialization",
+    "real-client acceptance"
+  ]
+}
