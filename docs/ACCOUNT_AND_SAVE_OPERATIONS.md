@@ -22,7 +22,7 @@ HTTP/SDK 8088、MongoDB 27017等固定端口须按当前源码核查；游戏UDP
 
 `tools/local_windows.ps1` 启动时保存 `local/running.json`，包含进程 ID、JAR 路径和启动时 SHA-256。文件中的哈希只有与当前进程身份相符时才有意义；磁盘 JAR 后来被覆盖，不代表正在运行的 JVM 已加载新内容。
 
-7.2离线Token/响应密码学工具及复现入口见[Harness](../Harness.md)和[会话研究](CLIENT_72_SESSION.md)。这些工具不连接数据库，不替代新旧号、选人、场景和退出重登的D-02实机验收；已有mongodata和运行数据须保留。
+7.2离线Token/响应密码学及SDK认证来源工具的复现入口见[Harness](../Harness.md)和[会话研究](CLIENT_72_SESSION.md)。认证来源9组覆盖正常/可选字段、uint32上界/溢出和无效输入；使用虚构账号/令牌及明确JSON/SDK夹具，不执行真实认证或PlayerPrefs持久写入。这些工具不连接数据库，不替代新旧号、选人、场景和退出重登的D-02实机验收；已有mongodata和运行数据须保留。
 
 ## 只读排查的顺序
 

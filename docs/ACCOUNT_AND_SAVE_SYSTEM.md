@@ -4,7 +4,7 @@
 
 历史业务说明基线：2026-10-21，源码提交 `63f0fa7923ddd68c9c62e0dfb8cbcbc756d07371`。当前分支仅面向国服7.2，迁移任务和实际验收以[Project](../Project.md)为准；下述账号/保存机制不能证明旧协议仍可运行。本文依据内置实现；插件可以替换认证系统或玩家类，需要另行检查。
 
-7.2连接研究现已验证Token请求client_rand_key来源，并从响应Handler入口连续执行warmup选择、原生密码学、UID和会话token保存；后续Login参数链另有分段证据，见[会话研究](CLIENT_72_SESSION.md)。UID/tag9经会话+168和目标__LastUid__来源确认，PlayerPrefs仅用内存夹具。成功密码学样本明确使用离线本地签名信任输入；完整SDK认证、Handler及客户端登录尚未验收，本批未改账号准入或保存行为。
+7.2连接研究现已验证Token请求client_rand_key来源，并从响应Handler入口连续执行warmup选择、原生密码学、UID和会话token保存；后续Login参数链另有分段证据，见[会话研究](CLIENT_72_SESSION.md)。SDK认证回调的open_id/combo_token/account_type/guest及SDK渠道值已通过原生会话写入、Token构造和wire验证，分别对应account_uid/account_token/account_type/is_guest/channel_id。UID/tag9经会话+168和目标__LastUid__来源确认，PlayerPrefs仅用内存夹具。成功密码学样本明确使用离线本地签名信任输入；JSON容器/SDK返回值也是明确夹具，完整SDK认证、Handler及客户端登录尚未验收，本批未改账号准入或保存行为。
 
 配套资料：
 

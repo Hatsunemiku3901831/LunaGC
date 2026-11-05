@@ -222,6 +222,13 @@
       "inputFile": "binary",
       "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
       "location": "protocol/cn-7.2/handler-core-observations.json; tag9 -> response+D4 -> native 15217AA90 -> session+168 -> UInt32 formatter -> target __LastUid__ / PlayerPrefs; continuous Handler entry through crypto and token store"
+    },
+    {
+      "id": "token-sdk-auth-sources",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "protocol/cn-7.2/auth-sources-observations.json; native OnSDKLoginCB JSON open_id/combo_token/account_type/guest and SDK channel key -> session stores -> native Token constructor/seed/writer; JSON container/parser fixtures, not live auth"
     }
   ],
   "opcodes": [
@@ -745,7 +752,7 @@
         "token-protected-writer"
       ],
       "ambiguities": [
-        "28 raw fields observed offline; SDK subchannel and encrypted-client-seed source verified, remaining business fields unresolved; explicit runtime/OS inputs, not client acceptance"
+        "28 raw fields observed offline; SDK credentials/channel/guest, subchannel and encrypted client seed have verified provenance; other business fields and live authentication remain unresolved"
       ],
       "fields": [
         {
@@ -766,38 +773,40 @@
           "wireStatus": "emulated-observation"
         },
         {
-          "semanticField": "unknown_field_2",
+          "semanticField": "account_token",
           "clientField": "HCEBHLIPLOD",
           "tag": 2,
           "type": "string",
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "status": "unresolved",
+          "status": "verified",
           "evidence": [
-            "token-protected-writer"
+            "token-protected-writer",
+            "token-sdk-auth-sources"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "verificationScope": "Native SDK callback source checks/scalar getters/session stores -> native Token seed and constructor -> writer; explicit JSON parsing/container and SDK values, callback scheduling/live auth not tested"
         },
         {
-          "semanticField": "unknown_field_3",
+          "semanticField": "channel_id",
           "clientField": "LGMEFCCONPE",
           "tag": 3,
           "type": "uint32",
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "status": "unresolved",
+          "status": "verified",
           "evidence": [
-            "token-protected-writer"
+            "token-protected-writer",
+            "token-sdk-auth-sources"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "verificationScope": "Native SDK callback source checks/scalar getters/session stores -> native Token seed and constructor -> writer; explicit JSON parsing/container and SDK values, callback scheduling/live auth not tested"
         },
         {
           "semanticField": "unknown_field_4",
@@ -885,21 +894,22 @@
           "wireStatus": "emulated-observation"
         },
         {
-          "semanticField": "unknown_field_9",
+          "semanticField": "account_uid",
           "clientField": "JEBFKCCKKPP",
           "tag": 9,
           "type": "string",
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "status": "unresolved",
+          "status": "verified",
           "evidence": [
-            "token-protected-writer"
+            "token-protected-writer",
+            "token-sdk-auth-sources"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "verificationScope": "Native SDK callback source checks/scalar getters/session stores -> native Token seed and constructor -> writer; explicit JSON parsing/container and SDK values, callback scheduling/live auth not tested"
         },
         {
           "semanticField": "sub_channel_id",
@@ -919,21 +929,22 @@
           "verificationScope": "Native SDK key/wrapper to field and wire; encrypted seed helper is an explicit opaque boundary, not executed"
         },
         {
-          "semanticField": "unknown_field_11",
+          "semanticField": "is_guest",
           "clientField": "EJHPCJMKBOM",
           "tag": 11,
           "type": "bool",
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "status": "unresolved",
+          "status": "verified",
           "evidence": [
-            "token-protected-writer"
+            "token-protected-writer",
+            "token-sdk-auth-sources"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "verificationScope": "Native SDK callback source checks/scalar getters/session stores -> native Token seed and constructor -> writer; explicit JSON parsing/container and SDK values, callback scheduling/live auth not tested"
         },
         {
           "semanticField": "unknown_field_12",
@@ -987,21 +998,22 @@
           "wireStatus": "emulated-observation"
         },
         {
-          "semanticField": "unknown_field_15",
+          "semanticField": "account_type",
           "clientField": "HLNLCJBLCMM",
           "tag": 15,
           "type": "uint32",
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "status": "unresolved",
+          "status": "verified",
           "evidence": [
-            "token-protected-writer"
+            "token-protected-writer",
+            "token-sdk-auth-sources"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "verificationScope": "Native SDK callback source checks/scalar getters/session stores -> native Token seed and constructor -> writer; explicit JSON parsing/container and SDK values, callback scheduling/live auth not tested"
         },
         {
           "semanticField": "unknown_field_83",

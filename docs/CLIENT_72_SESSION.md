@@ -225,3 +225,28 @@ python -m unittest tools.test_client72_handler_core tools.test_client72_response
 ```
 
 证据`evidence/handler-core-{trace,determinism}.json`、`logs/handler-core-{run,tests}.log`及共享`handler-core-observations.json`。后续可继续15A4E0D9A后的动作，或从SDK ComboUserModel/LoginResultModel恢复TokenReq其余会话字段；不得用相似字段名直接配对。D-02、真实SDK/补丁/PlayerPrefs和后续Login调用者前缀仍未实机验收，无运行文件变更或重启。
+
+## A-04d5k / B-02c8 SDK认证来源到Token wire
+
+`trace_client72_auth_sources`执行14F1917D0至14F191E18的原生回调。目标日志自身标记为`LoginMainPageContext OnSDKLoginCB`。JSON解析/容器/字符串值、SDK返回字符串是明确模型；SimpleJSON.JSONNode的get_AsInt/get_AsUInt/get_AsBool原生getter、必需字段检查、会话写入继续执行。缺键类型从实际usage row701114、kind1缓存和类型引用解码为JSONLazyCreator9000，不能混用SDK另一套JSON库的类。
+
+| 业务字段 | 原始来源 | 会话偏移 | Token对象偏移 / tag / 类型 |
+| --- | --- | --- | --- |
+| account_uid | data.open_id | +78 | +18 / 9 / string |
+| account_token | data.combo_token | +F8 | +40 / 2 / string |
+| channel_id | SDK info_get_channel_id，UInt32解析 | +138 | +B0 / 3 / uint32 |
+| account_type | 可选data.account_type | +13C | +A4 / 15 / uint32 |
+| is_guest | 可选data.guest | +15F | +C4 / 11 / bool |
+
+成功来源片段之后，在同一会话存储上执行真实seed helper和完整Token构造，原生getter仍为24604，完整writer输出与独立wire解析逐字段比较。来源片段与构造片段分段执行，未宣称回调尾段/UI到发送调度已经连通。account_uid的高数字文本`9007199254740993`保持字符串，不转成玩家UID或浮点数。guest先被原生代码清零；缺少account_type时保留原值，本组夹具初始值为0。
+
+9组覆盖非零、uint32最大、可选字段缺失、account_type溢出、错误ret、缺open_id、空token、无效渠道和渠道溢出。前4组进入构造，account_type溢出按原生getter回落为0；后5组到明确拒绝/返回边界且凭据未被改写。未执行完整JSON解析/类型强转、实际SDK认证或网络。会话+B0→请求tag965等其他来源仍未知，不能因相似字段名晋级。
+
+160项研究工具/映射/资源审计回归通过，9组真实目标代码样本及共享摘要重复逐字节一致。为复用拆出的`construct_native_token`另重跑原5组完整Token，trace和摘要与原产物完全相同。研究校验通过，ready仍拒绝；五字段进入映射，累计35字段。
+
+```powershell
+python tools/trace_client72_auth_sources.py --client $env:GAME_PATH --output local/migration72/evidence/auth-sources-trace.json --summary-output protocol/cn-7.2/auth-sources-observations.json
+python -m unittest tools.test_client72_auth_sources tools.test_client72_token_complete tools.test_validate_protocol72 -v
+```
+
+证据`evidence/auth-sources-{trace,determinism}.json`、`logs/auth-sources-{focused-tests,tests}.log`，共享`auth-sources-observations.json`。仅离线工具、测试和文档变更，无运行部署。上一Handler核心提交b0ca919；本项收口后按用户要求暂停，交接见仓库根HANDOFF.md/HANDOFF2.md。恢复时继续回调尾段、会话+B0来源或封包体；D-02仍未完成。

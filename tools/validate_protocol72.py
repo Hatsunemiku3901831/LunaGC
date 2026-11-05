@@ -484,6 +484,38 @@ def validate_handler_core(document,profile,handler,wire):
     return errors
 
 
+def validate_auth_sources(document,profile,auth,wire):
+    errors=[]
+    hashes={profile['files'][k]['path']:profile['files'][k]['sha256'] for k in ('binary','metadata','startup')}
+    if auth.get('inputSHA256')!=hashes:errors.append('Auth sources: input mismatch')
+    expected=dict(entry='0x14f1917d0',successStop='0x14f191e18',earlyStop='0x14f192592',errorStop='0x14f191882',
+                  runtimeStatus='not-tested',wholeCallbackExecuted=False,nativeSeedHelperExecuted=True,cmdId=24604)
+    if any(auth.get(k)!=v for k,v in expected.items()):errors.append('Auth sources: execution scope mismatch')
+    required={(0x78,0x18,9,'string','account_uid','data.open_id'),(0xf8,0x40,2,'string','account_token','data.combo_token'),
+              (0x138,0xb0,3,'uint32','channel_id','SDK info_get_channel_id'),
+              (0x13c,0xa4,15,'uint32','account_type','data.account_type'),(0x15f,0xc4,11,'bool','is_guest','data.guest')}
+    bindings=auth.get('fieldBindings',[])
+    actual={(b.get('sessionOffset'),b.get('objectOffset'),b.get('tag'),b.get('type'),b.get('semanticField'),b.get('source')) for b in bindings}
+    if len(bindings)!=5 or actual!=required:errors.append('Auth sources: credential source set mismatch')
+    schema=next((s for s in document['schemas'] if s['semanticName']=='GetPlayerTokenReq'),{})
+    for b in bindings:
+        raw=[f for f in wire['fields'] if f.get('objectOffset')==b.get('objectOffset')]
+        mapped=[f for f in schema.get('fields',[]) if f.get('clientField')==b.get('clientField')]
+        if (b.get('typeIndex')!=82491 or b.get('status')!='verified' or len(raw)!=1 or
+                any(raw[0].get(k)!=b.get(k) for k in ('tag','type','clientField')) or len(mapped)!=1 or
+                'token-sdk-auth-sources' not in mapped[0].get('evidence',[]) or
+                any(mapped[0].get(k)!=b.get(k) for k in ('tag','type','semanticField','status'))):
+            errors.append('Auth sources: wire/semantic disagreement')
+    cases=[('nonzero',True),('uint32-max',True),('optional-absent',True),('account-type-overflow',True),
+           ('error-ret',False),('missing-open-id',False),('empty-token',False),('invalid-channel',False),('channel-overflow',False)]
+    if [(r.get('name'),r.get('accepted')) for r in auth.get('results',[])]!=cases:
+        errors.append('Auth sources: source acceptance/rejection cases changed')
+    declared=auth.get('declarations',{})
+    if any(declared.get(k)!=v for k,v in dict(jsonType=8987,lazyClassType=9000,lazyClassUsageRow=701114,lazyClassCell='0x145891a78').items()):
+        errors.append('Auth sources: JSON/lazy runtime identity mismatch')
+    return errors
+
+
 def validate_send_flow(document, profile, flow):
     errors=[]
     hashes={profile['files'][k]['path']:profile['files'][k]['sha256'] for k in ('binary','metadata','startup')}
@@ -545,6 +577,8 @@ def main():
     errors.extend(validate_response_crypto(document,profile,response_crypto,next(t for name,t in extra if name=='response-wire-observations.json')))
     handler_core=json.loads((args.directory/'handler-core-observations.json').read_text('utf8'))
     errors.extend(validate_handler_core(document,profile,handler_core,next(t for name,t in extra if name=='response-wire-observations.json')))
+    auth_sources=json.loads((args.directory/'auth-sources-observations.json').read_text('utf8'))
+    errors.extend(validate_auth_sources(document,profile,auth_sources,protected))
     send_flow=json.loads((args.directory/'send-flow-observations.json').read_text('utf8'))
     errors.extend(validate_send_flow(document,profile,send_flow))
     print(json.dumps({'mode': 'ready' if args.ready else 'research-structure', 'valid': not errors, 'errors': errors},
