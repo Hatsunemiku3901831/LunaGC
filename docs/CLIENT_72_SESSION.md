@@ -35,9 +35,9 @@ SessionRuntime72新增generate_client_seed：仅提供受控NextDouble结果，�
 
 此前12组4096字节Java对照与6组短输入拒绝同时重新通过，产物重复一致；工具回归106项通过。证据仍为session-seed-trace/observations/determinism，新增clientSeedSourceFixtures；日志client-seed-source-tests.log。
 
-15121DB40后续保护路径经已核对的原生ret thunk和堆分配后进入Shell操作0x64；当前停于其栈探测/SDK内部状态前置，尚未恢复加密字符串。该helper没有被模型化为默认成功。原始探索probe_token_seed.py及token-seed-path.json在忽略的analysis/，不能据此把Token完整构造、密文或签名标记通过。
+早期15121DB40保护路径进入Shell操作0x64后停于栈探测/SDK状态前置；现已由下文A-04d5g的正式工具推进到完整原生返回。SDK真实初始化仍未闭合，不能以夹具标志代替实机结果。
 
-后续探索已为CRT malloc/free和栈探测补充明确模型，推进到159B353C0/ArgumentNullException(string)入口，参数为目标literal5844 `inArray`；不是成功密文。所需145886060单元在目标usage row698585中为kind1/typeRef444861→System.ArgumentNullException162；Kind1跳表分支14052D2D0使用registration+48的类型缓存（145886000），不能套用literal的registration+58缓存。旁证四个既知Uri/Browser捕获/Token/Login类型也解析一致。这部分仍是忽略目录中的探索，未迁入正式可复跑工具；尚未区分未初始化SDK状态与其他缺失输入，不能把异常直接归因为客户端缺陷。下一步固定类型usage提取与失败路径，再追踪缺失的数组来源。
+此前ArgumentNullException(inArray)已确认来自夹具遗漏145B74508运行时空byte[]常量。补上该常量和String.Empty后，未初始化分支正常返回空字符串；不是客户端缺陷。类型usage的kind1/registration+48探索仍只作索引，不能套用literal的registration+58缓存。A-04d5g明确列出运行时常量夹具，不声称已执行整个metadata/SDK初始化。
 
 ## B-02c2 会话token保存和Login参数
 
@@ -110,7 +110,7 @@ token链本地提交0c12f2c。请求身份新增request-identity-observations.js
 
 ## A-04d5e / B-02c4 Token构造外段与SDK来源
 
-`trace_client72_token_constructor`从15121FF70执行至151214D20，**15121DB40的加密字符串结果明确由不透明夹具提供，未执行或验证其密码学内部**。报告固定`completion=constructor-with-opaque-seed-boundary`及`nativeExecuted=false`，不能将本项称为完整Token构造成功。此边界允许继续验证构造的其余部分，不改变A-04d5d记录的SDK阻塞。
+`trace_client72_token_constructor`从15121FF70执行至151214D20，**此工具仍将15121DB40的结果作为不透明输入**。报告固定`completion=constructor-with-opaque-seed-boundary`及`nativeExecuted=false`，不能将本项称为完整Token构造成功。下文A-04d5g已另行执行helper密码学内部；两项合并执行和SDK真实初始化仍待验证。
 
 继承Login所列的非云/旧Shell环境模型；额外限定SDK+c8为false，执行152758600的真实判断而不进入可选SDK预处理。实际旧Shell分支只调用操作5，ASCII GetString后的原始数据进入请求+50/tag1300；该字段业务含义仍未知。
 
@@ -145,3 +145,24 @@ python -m unittest tools.test_client72_send_flow tools.test_client72_token_const
 ```
 
 本机证据`evidence/send-flow-{trace,determinism}.json`、`logs/send-flow-tests.log`；共享摘要`send-flow-observations.json`。Token外段检查点本地提交423330e。
+
+## A-04d5g 完整seed helper的原生验签、加密与Base64
+
+`trace_client72_seed_crypto`从15121DB40执行到正常返回，原生代码生成/保存seed、构造密钥参数、验证公钥签名、进行RSA加密、复制到byte[]、生成Base64字符串。没有替换密码学helper或修改验签返回。SDK初始化标志145DCAEA8、Random.NextDouble、整数置换表、OS/TLS/堆与运行时常量是明确夹具；不代表客户端已正确初始化或可连接服务器。
+
+原生Shell操作100的参数块为64字节：+0/+8输入指针/长度，+10/+18输出指针/长度，+20/+28公钥指针/长度，+30/+38签名指针/长度。原始公钥缓冲272字节，实际268字节前补`30 82`成为270字节PKCS#1 DER；256字节附属块是该公钥的签名，不能误称seed密文。14078BAB0接收DER、签名与原生构造的根公钥PEM，140574A9A处观察真实返回。原生成功和Python整数RSA/完整PKCS#1 v1.5 SHA-256 DigestInfo比较一致，篡改任一签名或公钥字节均失败。
+
+公钥DER SHA-256为`7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e`，签名为`520da33620e8c69eff6b6b3d40fd699a4642583e3e33cd1b53aa19150633cf4d`；原始材料只留忽略目录。1406595F0接收8字节大端seed，140659AC0观察原生PKCS#1 v1.5编码块：`00 02`、245个非零填充字节、`00`和seed。用独立Python整数幂运算得到的256字节密文与原生结果全部相同，原生Convert输出344字符并与Python Base64双向核对。
+
+8组真实执行覆盖：未初始化；seed为0、800、8000000000000000、FFFFFFFFFFFFF800（十六进制）；相同seed改变熵输入；篡改签名；篡改公钥。5个有效输入成功，未初始化返回-2，两个验签失败返回-7，失败均返回空字符串且没有进入加密/请求熵。不同熵生成不同密文。native Path hash、所有夹具和共享摘要重复一致。3个独立oracle测试检查完整签名填充、消息变化、非零加密填充、64位seed、密文变化、截断与非法DER；连同既有研究/映射/盘点测试共146项通过。
+
+运行时模型包括：CRT/Unity/GC分配、跟踪释放、memcpy/memset；单线程临界区/TLS、模块句柄和onexit登记；固定进程/线程/时间；显式BCryptGenRandom字节。该API以NULL handle、flag=2请求系统随机源，夹具按[Microsoft接口定义](https://learn.microsoft.com/en-us/windows/win32/api/bcrypt/nf-bcrypt-bcryptgenrandom)写缓冲并返回STATUS_SUCCESS，未测试真实随机性。原生RNG混合、RSA、SHA-256和填充代码继续执行。Marshal.Copy的klass+B8元素宽度与托管byte[]、String.Empty/空数组、标准Convert字母表及字符串分配亦明确提供；没有宣称完整CLR初始化执行。
+
+此前Token外段已将helper返回值保存至请求+90并由writer写tag623/string；本项完成helper本身，两者尚为分开执行的证据。该字段可描述为“Base64 RSA加密的客户端seed来源”，但本批未自动套用旧字段业务名，也未晋级其他会话字段。SDK真实初始化入口、响应seed解密/验签、完整Token构造合并、封包/真实网络仍待验证；D-02未验收。旧补丁强制验签成功的钩子没有启用，也不能用作本项证据。
+
+```powershell
+python tools/trace_client72_seed_crypto.py --client $env:GAME_PATH --output local/migration72/evidence/seed-crypto-trace.json --summary-output protocol/cn-7.2/seed-crypto-observations.json
+python -m unittest tools.test_client72_seed_crypto -v
+```
+
+产物：`evidence/seed-crypto-{trace,determinism}.json`、`logs/seed-crypto-{run,tests}.log`、共享`seed-crypto-observations.json`。本批只改离线工具/测试/研究摘要，无运行代码、主Proto、配置、补丁或资源变更，无需重启。下一项将完整helper接入Token构造，再追踪响应密码学前段和SDK初始化。

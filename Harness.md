@@ -148,4 +148,6 @@ Token外段新增`trace_client72_token_constructor`：15121FF70→151214D20，15
 
 D-01入口：[CLIENT_72_PATCH_ABI](docs/CLIENT_72_PATCH_ABI.md)、`trace_client72_patch_abi`。四个命名方法的真实flags/参数与原生前缀已核对，Browser捕获布局另验；12原生样本、143项研究回归及重复产物通过。证据`evidence/patch-abi-{trace,determinism}.json`、`logs/patch-abi-tests.log`。仅参数前缀，不代表URI/字符串工厂/RSA函数完成或补丁实机加载；patch未变。下一步14052FBF0字符串工厂、原生RSA替换/验签数据流，或14A447E00封包体。发送链提交8638ea5，D-02仍待完整前置。
 
-Token helper探索更新：`analysis/probe_token_seed.py`已在明确CRT malloc/free/chkstk模型下到159B353C0，目标异常参数literal5844为inArray；没有成功密文。类型usage kind1分支/registration+48已定位，145886060→ArgumentNullException162，另四个既知类交叉一致。未正式验收/晋级；继续提取类型usage并定位数组的上游缺口。D-01a本地提交db5245e。工作期间AGENTS.md新增编码规范属他人修改，已读取并保留，不提交；resources原差异仍保留。
+Token helper早期inArray异常已定位为夹具遗漏运行时空byte[]常量，正式恢复结果以下段为准。类型usage kind1/registration+48探索仍仅作索引。D-01a本地提交db5245e。工作期间AGENTS.md新增编码规范属他人修改，已读取并保留，不提交；resources原差异仍保留。
+
+seed完整helper入口：`trace_client72_seed_crypto`、`client72_seed_crypto`，复现命令及模型边界见[会话研究A-04d5g](docs/CLIENT_72_SESSION.md#a-04d5g-完整seed-helper的原生验签加密与base64)。15121DB40已原生返回；5成功/1未初始化/2验签拒绝共8组，独立RSA/完整签名块/Base64对照通过，重复trace/摘要一致，146项研究回归通过。`evidence/seed-crypto-{trace,determinism}.json`、`logs/seed-crypto-{run,tests}.log`和`protocol/cn-7.2/seed-crypto-observations.json`。初始化标志/OS/TLS/熵/托管常量为显式夹具，验签不替换；没有实机或补丁验收。下一步合并Token外段与该helper，继续响应解密验签及SDK真实初始化；运行文件未改，无重启。

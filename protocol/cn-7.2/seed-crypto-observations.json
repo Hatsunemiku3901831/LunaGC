@@ -1,0 +1,250 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "entry": "0x15121db40",
+  "fixtureCount": 8,
+  "completion": "native-seed-helper-return-with-explicit-runtime-inputs",
+  "runtimeStatus": "not-tested",
+  "seedStorage": "0x14587d740",
+  "initializationFlagFixture": "0x145dcaea8",
+  "keyVerification": {
+    "entry": "0x14078bab0",
+    "result": "0x140574a9a",
+    "algorithm": "RSA PKCS1 v1.5 SHA256",
+    "forcedSuccess": false,
+    "independentOracle": "Python integer RSA and full DigestInfo/padding equality"
+  },
+  "encryption": {
+    "entry": "0x1406595f0",
+    "paddingResult": "0x140659ac0",
+    "algorithm": "RSA PKCS1 v1.5",
+    "plainBytes": 8,
+    "byteOrder": "big",
+    "cipherBytes": 256,
+    "base64Characters": 344
+  },
+  "requestBinding": {
+    "typeIndex": 82491,
+    "objectOffset": 144,
+    "tag": 623,
+    "type": "string",
+    "evidence": "token-constructor-observations.json",
+    "scope": "separately executed constructor binding"
+  },
+  "results": [
+    {
+      "randomDoubleHex": "0x1.0000000000000p-1",
+      "seedHex": "8000000000000000",
+      "initializedFixture": false,
+      "tamperedInput": null,
+      "entropyVariant": 0,
+      "ioctlReturn": -2,
+      "signatureAccepted": null,
+      "base64Length": 0,
+      "oracle": null,
+      "entropyCalls": [],
+      "keyEvidence": null,
+      "passed": true
+    },
+    {
+      "randomDoubleHex": "0x0.0p+0",
+      "seedHex": "0000000000000000",
+      "initializedFixture": true,
+      "tamperedInput": null,
+      "entropyVariant": 0,
+      "ioctlReturn": 0,
+      "signatureAccepted": true,
+      "base64Length": 344,
+      "oracle": {
+        "plainLength": 8,
+        "paddingLength": 245,
+        "cipherLength": 256,
+        "cipherSHA256": "63f23b7cfc602966c101ea4fb90f000a45c16246a5262969b33df174b64a6c9e",
+        "passed": true
+      },
+      "entropyCalls": [
+        {
+          "length": 32,
+          "sha256": "0477fd8e15bc68a8d1ce22781fdb90deddd7cdf657e527f95fc98bbe6918337e"
+        }
+      ],
+      "keyEvidence": {
+        "derSHA256": "7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e",
+        "signatureSHA256": "520da33620e8c69eff6b6b3d40fd699a4642583e3e33cd1b53aa19150633cf4d",
+        "rootPemSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d"
+      },
+      "passed": true
+    },
+    {
+      "randomDoubleHex": "0x1.0000000000000p-53",
+      "seedHex": "0000000000000800",
+      "initializedFixture": true,
+      "tamperedInput": null,
+      "entropyVariant": 0,
+      "ioctlReturn": 0,
+      "signatureAccepted": true,
+      "base64Length": 344,
+      "oracle": {
+        "plainLength": 8,
+        "paddingLength": 245,
+        "cipherLength": 256,
+        "cipherSHA256": "13e8b8a05a837767f4f9a2699b11aa6b789965cad9f353405702f787042c5e81",
+        "passed": true
+      },
+      "entropyCalls": [
+        {
+          "length": 32,
+          "sha256": "0477fd8e15bc68a8d1ce22781fdb90deddd7cdf657e527f95fc98bbe6918337e"
+        }
+      ],
+      "keyEvidence": {
+        "derSHA256": "7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e",
+        "signatureSHA256": "520da33620e8c69eff6b6b3d40fd699a4642583e3e33cd1b53aa19150633cf4d",
+        "rootPemSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d"
+      },
+      "passed": true
+    },
+    {
+      "randomDoubleHex": "0x1.0000000000000p-1",
+      "seedHex": "8000000000000000",
+      "initializedFixture": true,
+      "tamperedInput": null,
+      "entropyVariant": 0,
+      "ioctlReturn": 0,
+      "signatureAccepted": true,
+      "base64Length": 344,
+      "oracle": {
+        "plainLength": 8,
+        "paddingLength": 245,
+        "cipherLength": 256,
+        "cipherSHA256": "f663ccd60ee5d455d672477dffb2c8e6ab01ab0d9f25d35ef695543ffece96bc",
+        "passed": true
+      },
+      "entropyCalls": [
+        {
+          "length": 32,
+          "sha256": "0477fd8e15bc68a8d1ce22781fdb90deddd7cdf657e527f95fc98bbe6918337e"
+        }
+      ],
+      "keyEvidence": {
+        "derSHA256": "7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e",
+        "signatureSHA256": "520da33620e8c69eff6b6b3d40fd699a4642583e3e33cd1b53aa19150633cf4d",
+        "rootPemSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d"
+      },
+      "passed": true
+    },
+    {
+      "randomDoubleHex": "0x1.fffffffffffffp-1",
+      "seedHex": "fffffffffffff800",
+      "initializedFixture": true,
+      "tamperedInput": null,
+      "entropyVariant": 0,
+      "ioctlReturn": 0,
+      "signatureAccepted": true,
+      "base64Length": 344,
+      "oracle": {
+        "plainLength": 8,
+        "paddingLength": 245,
+        "cipherLength": 256,
+        "cipherSHA256": "0c09f17f1e523ab3bdb078077fbe5e6263809082e11446df4765f4fbc9595cdd",
+        "passed": true
+      },
+      "entropyCalls": [
+        {
+          "length": 32,
+          "sha256": "0477fd8e15bc68a8d1ce22781fdb90deddd7cdf657e527f95fc98bbe6918337e"
+        }
+      ],
+      "keyEvidence": {
+        "derSHA256": "7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e",
+        "signatureSHA256": "520da33620e8c69eff6b6b3d40fd699a4642583e3e33cd1b53aa19150633cf4d",
+        "rootPemSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d"
+      },
+      "passed": true
+    },
+    {
+      "randomDoubleHex": "0x1.0000000000000p-1",
+      "seedHex": "8000000000000000",
+      "initializedFixture": true,
+      "tamperedInput": null,
+      "entropyVariant": 37,
+      "ioctlReturn": 0,
+      "signatureAccepted": true,
+      "base64Length": 344,
+      "oracle": {
+        "plainLength": 8,
+        "paddingLength": 245,
+        "cipherLength": 256,
+        "cipherSHA256": "3898924ecb1ca5b09437d11bdddd4c8f7db179a808b71a55b4e27cd986ef7396",
+        "passed": true
+      },
+      "entropyCalls": [
+        {
+          "length": 32,
+          "sha256": "990f285dab2fc0d19e23c484ae29c8cf5e2a949a343c228980b3bcdd3e7ff6e0"
+        }
+      ],
+      "keyEvidence": {
+        "derSHA256": "7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e",
+        "signatureSHA256": "520da33620e8c69eff6b6b3d40fd699a4642583e3e33cd1b53aa19150633cf4d",
+        "rootPemSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d"
+      },
+      "passed": true
+    },
+    {
+      "randomDoubleHex": "0x1.0000000000000p-1",
+      "seedHex": "8000000000000000",
+      "initializedFixture": true,
+      "tamperedInput": "signature",
+      "entropyVariant": 0,
+      "ioctlReturn": -7,
+      "signatureAccepted": false,
+      "base64Length": 0,
+      "oracle": null,
+      "entropyCalls": [],
+      "keyEvidence": {
+        "derSHA256": "7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e",
+        "signatureSHA256": "2f5057041f0e05d5a1d68d9b643b53a1b40574a08eba2875065b9c6e47d7be58",
+        "rootPemSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d"
+      },
+      "passed": true
+    },
+    {
+      "randomDoubleHex": "0x1.0000000000000p-1",
+      "seedHex": "8000000000000000",
+      "initializedFixture": true,
+      "tamperedInput": "public-key",
+      "entropyVariant": 0,
+      "ioctlReturn": -7,
+      "signatureAccepted": false,
+      "base64Length": 0,
+      "oracle": null,
+      "entropyCalls": [],
+      "keyEvidence": {
+        "derSHA256": "040926fe420a95b4e17866aef9ba19e94731c14137c51102127e51af2fae8b0d",
+        "signatureSHA256": "520da33620e8c69eff6b6b3d40fd699a4642583e3e33cd1b53aa19150633cf4d",
+        "rootPemSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d"
+      },
+      "passed": true
+    }
+  ],
+  "models": [
+    "CRT/Unity/GC allocations, copy/fill and tracked frees",
+    "single-thread TLS/critical sections/module handle/onexit storage",
+    "fixed process/thread IDs and time; explicit BCrypt entropy bytes",
+    "Random.NextDouble, integer permutation table and byte[]/string storage",
+    "empty runtime array/string, standard Convert Base64 alphabet, target literals",
+    "explicit SDK initialized/uninitialized flag; default zero hotpatch state"
+  ],
+  "outsideScope": [
+    "legitimate SDK initialization and live entropy",
+    "response decryption/signature verification",
+    "whole Token constructor with this helper in one execution",
+    "network/IFix/new Shell",
+    "patch installation and real-client acceptance"
+  ]
+}

@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-静态结构、Token/Login原始wire及响应非空对象图已离线恢复；四个登录请求/响应业务身份与CmdID、26个字段来源、8枚举102符号现有目标证据。解密后seed与Java密钥逐字节一致，token保存/参数链已分段验证，Login构造在明确旧Shell/非云夹具中已到发送入口。Token完整构造/发送、解密验签及剩余字段继续研究，A-04d/B-02保持进行中。隔离研发服务已部署，但没有7.2可连接构建，客户端验收全部待执行。本机路径、初始差异、报告和日志在忽略的 local/migration72/；公共摘要放 docs/ 和 protocol/cn-7.2/。
+静态结构、Token/Login原始wire及响应非空对象图已离线恢复；四个登录请求/响应业务身份与CmdID、26个字段来源、8枚举102符号现有目标证据。解密后seed与Java密钥逐字节一致，token保存/参数链已分段验证，Login构造在明确旧Shell/非云夹具中已到发送入口。Token seed helper现已在明确初始化/OS夹具下完成原生验签、加密和Base64返回，独立RSA对照与错误输入拒绝通过；完整构造合并、响应解密验签及剩余字段继续研究，A-04d/B-02保持进行中。隔离研发服务已部署，但没有7.2可连接构建，客户端验收全部待执行。本机路径、初始差异、报告和日志在忽略的 local/migration72/；公共摘要放 docs/ 和 protocol/cn-7.2/。
 
 已有资源修改 ScriptSceneData/flat.luas.scenes.full_globals.lua.json 不属本批，不覆盖、不提交。patch 起点 f287410，resources 起点 dac2a9d。初查时Java/MongoDB归属本工作区且配置引用旧客户端/存档；随后隔离研发部署记录见ENV-01。下一次启动仍须重新核对配置与进程，不能将历史部署结果当作当前验收或清空原数据。
 
@@ -49,6 +49,7 @@
 | A-04d5d client seed来源 | A-04d5a | SessionRuntime72、session-seed-trace/observations | Random.NextDouble槽/2^64常量/原生转换/同值返回与保存，10组边界输入、既有18组后段及106项回归、重复一致 | 已完成 | CLIENT_72_SESSION、client-seed-source-tests.log；e716da8 | 15121DB40的Shell操作0x64/密文构造仍未知 |
 | A-04d5e / B-02c4 Token构造外段与SDK来源 | A-04d5c、A-04d5d | trace_client72_token_constructor、映射/边界校验 | 15121DB40明确opaque输入；其余构造到send入口，4组tag10来源与原始会话字段wire断言、133项回归、确定性 | 已完成 | CLIENT_72_SESSION、token-constructor-trace/determinism；423330e | 密文helper未执行，继续发送队列/会话来源与密码学前段 |
 | A-04d5f 两请求到封包入口 | A-04d5c、A-04d5e | trace_client72_send_flow、声明参数/虚槽/校验 | 明确选择传输夹具，原请求指针经信封/接口到封包+10、原生getter→+22；8组非零/64位/禁用/缺包装、138项回归、重复一致 | 已完成 | CLIENT_72_SESSION、send-flow-trace/determinism；8638ea5 | 14A447E00函数体、另一传输与真实启动状态/实机另验 |
+| A-04d5g seed字符串原生加密 | A-04d5d | client72_seed_crypto、trace_client72_seed_crypto、独立RSA断言 | 明确初始化/OS/托管夹具，完整helper返回；原生验签与加密、8组含零/64位边界/不同熵/未初始化/篡改，独立整数RSA/完整签名块与重复产物 | 已完成 | CLIENT_72_SESSION、seed-crypto-trace/observations/determinism；本批提交 | 接入Token整体构造，恢复真实SDK初始化和响应解密验签；不替代实机 |
 | B-03 确定性生成 | B-01、B-02 | generator、PacketOpcodes、Proto | 只生成核实项，别名/引用检查，重复输出一致，protoc 编译，禁止旧号兜底 | 待开始 | — | 合成模型测试，再接真实映射 |
 | C-01 双向网络接入 | B-03 | GameSession、BasePacket、Handler 注册、UnionCmd/枚举 | 注册冲突失败、号/长度边界、内外分派、目标 wire 测试，构建部署 | 待开始 | — | 映射确认后替换旧表和专属断言 |
 | D-01 补丁和连接前置 | A-01、A-04 | patch、HTTP/SDK/dispatch/密钥 | 路由/渠道/版本/加密、各钩子 ABI/布局/实际加载验证 | 进行中 | CLIENT_72_PATCH_ABI；四入口参数前缀已验，密钥/加载未验 | 字符串工厂、原生RSA/验签、实际加载与路由；商城钩子另列 |
@@ -65,8 +66,8 @@
 
 ## 阻塞与尝试
 
-- B-02：PingRsp歧义、四个登录身份/CmdID、26字段及8枚举102符号已闭合；请求writer与响应非空对象图已恢复。解密后seed、token保存/参数链已分段验证；完整构造/发送、seed前段解密/验签、其余字段与P0闭包未完成。Login指定旧Shell/非云环境已到151214D20发送入口；Token构造外段现已在15121DB40不透明边界下到发送入口；密文helper与新Shell仍有原生SDK环境缺口。不能给未知helper默认成功或自动扩展已确认字段。
-- D-01：四个命名HTTP/SDK/Marshal入口已有声明与原生参数前缀证据；字符串工厂完成、原生RSA/验签、P0钩子实际加载及连接仍未验。不能用前缀或旧签名返回值覆盖替代验收。
+- B-02：PingRsp歧义、四个登录身份/CmdID、26字段及8枚举102符号已闭合；请求writer与响应非空对象图已恢复。解密后seed、token保存/参数链已分段验证；完整构造/发送、响应seed解密/验签、其余字段与P0闭包未完成。Login指定旧Shell/非云环境已到151214D20发送入口；Token外段仍是独立opaque边界实验，15121DB40现已另行完整执行成功/失败路径，下一步合并执行。真实SDK初始化、新Shell和实机仍有缺口，不能自动扩展已确认字段。
+- D-01：四个命名HTTP/SDK/Marshal入口已有声明与原生参数前缀证据；seed原生RSA/公钥验签已有离线执行和独立对照。字符串工厂完成、本地服务密钥/签名替换方案、P0钩子实际加载及连接仍未验。不能用前缀或旧签名返回值覆盖替代验收。
 - E-01：运行资源仍为7.1混合来源。已固定7.2上游候选并核验七表/849引用，但其revision标签与本机内置文件数值集不同；热更新状态、必需Lua/场景/其余引用未闭合。不得覆盖资源或靠修改版本文字解除。
 - 安装一致性已核验：7,830条全部大小/MD5匹配；zip_tmp仍存在。此结果不认证清单来源、不代表运行热修复资源齐全。
 
@@ -76,7 +77,7 @@
 
 - 本批研究：安装全清单通过，目标静态提取与协议盘点工具已实现。53项研究/原有脚本测试、8项盘点测试通过（原始日志留local）；服务端基线构建通过。独立研发数据配置已准备，首次部署因测试JVM占用UDP未通过，正常停止并等测试退出后，最终部署健康、端口与JAR哈希均核对通过。
 
-下一项：A-04d/B-02 继续15121FF70的Token构造到151214D20发送队列、seed解密验签前段与剩余字段。Login指定环境构造、会话token链和四个登录身份已单独验收。A-02动态包号已复核；独立可做A-03管理器依赖及新找到7.2资源快照核查。B-02整体仍未达到服务端生成条件。
+下一项：A-04d/B-02 合并15121DB40原生seed helper与15121FF70外段，继续响应seed解密验签、SDK真实初始化及剩余字段。两请求到封包入口的链已单独验收。A-02动态包号已复核；独立可做A-03管理器依赖及7.2资源快照核查。B-02整体仍未达到服务端生成条件。
 
 - 验证补充：完整Java测试集实际运行10,563项，217失败、0跳过，已保留full-test-results和full-test-summary.json，不宣称全绿。新JVM单独重跑账号创建、UID预留、登录准入、写队列、写栅栏回归通过；共133项；HTTP冒烟2项通过。便携路径修复后SkillReadyPredicate35项通过；完整集没有再次全跑，仍不得宣称全绿。最终服务健康/TCP/UDP/hash核对通过，详情见docs/CLIENT_72_RESEARCH_VALIDATION.md。
 
@@ -129,3 +130,5 @@
 - D-01a：MakeInitialUrl/Browser.LoadURL/SDKUtil.RSAEncrypt/Marshal.PtrToStringAnsi四声明与原生参数传递交叉；12样本含force真假、byte长度/NUL/非对齐/null通过，143项研究回归和重复产物通过。D-01转进行中；未安装补丁、未执行RSA/字符串工厂完成或实际HTTP。patch/resources引用均未改，运行服务不重启，D-02仍未验收。
 
 - 接续探索：15121DB40在明确CRT内存/栈探测模型下进入ArgumentNullException(inArray)构造入口；仍无成功密文，原因尚未闭合。已定位类型usage缓存与5个目标单元供下一批正式提取验证；未知不晋级。AGENTS.md新增编码规范为工作中出现的他人修改，已读取遵循并保留，未纳入提交。
+
+- A-04d5g：纠正inArray异常为夹具遗漏运行时空数组；正式执行15121DB40原生公钥验签、seed加密、byte[]复制和Base64至返回。8组含未初始化、零/64位边界、不同熵、签名/公钥篡改全部通过，独立RSA/完整签名块比对及二次产物一致，146项研究回归通过。初始化/OS/托管状态明确为夹具，无验签成功替换；研究校验退出0、ready退出1。未改运行文件或部署，D-02仍未验收。下一项合并Token整体构造、响应密码学前段及真实SDK初始化；AGENTS/resources他人差异保留。
