@@ -24,6 +24,8 @@ Handler尾段已连续执行响应tag3到robot输入setter、tag658参与版本�
 
 A-04d5q已在明确Login/Full、SDK/旧Shell和本地信任输入下连续执行Handler→Login构造→发送封包入口；响应token与原生versionHash保持原指针进入Login。此为离线连接证据，不是账号实机认证，剩余Handler回栈后动作未执行。
 
+A-04d5w（6db47fe）已将上述链延伸到Login真实外层/嵌套序列化与完整帧，token/hash原指针及响应安装的key保持，独立protoc/Java对照通过。仍未返回整个Handler，也未执行完整认证/收帧调度或D-02；账号准入与保存代码未改变。A-03a现已按方法区分新号等待选人、默认角色兜底和已有角色登录源码路径，见[登录源码索引](CLIENT_72_LOGIN_SOURCE_GRAPH.md)；准入回调、管理器、保存与脚本等边界仍未闭合。
+
 ## AI 接手时先掌握的事实
 
 1. `Account.id` 是字符串账号 ID；`Player.id` 是整数玩家 UID；`Avatar.avatarId` 是角色配置 ID。三者不能互换。

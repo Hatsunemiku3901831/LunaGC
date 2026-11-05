@@ -55,7 +55,7 @@ A-02完成的是本次服务端源码表面盘点和人工动态来源复核，�
 
 工具把整个 Player.java 纳入保守根文件，故包含非登录调用，仍会遗漏间接管理器发送。这既不是最小集，也不能证明完整集。3个“未找到同名Proto”候选已人工区分：CutsceneBeginNotify 对应大小写不同的 CutSceneBeginNotify.proto；TeamHexenzirkelChangeNotify 使用手工 CodedOutputStream；WindSeedUID 是其他发送包的包装。不能宣称缺了三个必须补造的 Proto。
 
-A-03 下一步：把 Player.onLogin、World.tryAddPlayer 和场景 Handler 的调用边单独整理为人工复核清单；再结合7.2受控连接观察收敛必需集。目前没有实际客户端序列，完整性不得标记通过。
+A-03a现已完成[方法级登录/场景源码索引](CLIENT_72_LOGIN_SOURCE_GRAPH.md)：12源码/9根/80方法，13人工复核边及83候选边，1012未关联调用保留；61直接构造参数类型名和额外1工厂构造名都不代表必需消息集。下一步追踪管理器/事件/脚本并结合7.2受控连接观察收敛；目前没有实际客户端序列，A-03完整性不得标记通过。
 
 ```powershell
 python -m unittest tools.test_inventory_protocol -v

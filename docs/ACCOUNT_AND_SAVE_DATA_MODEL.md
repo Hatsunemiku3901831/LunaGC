@@ -14,6 +14,8 @@
 
 响应token/tag6→session+98→Login token/tag1及versionHash静态值→Login client_version_hash/tag1996现有连续原生指针/wire证据；全流程仍不新增MongoDB字段。响应tag1/3/658和Token请求tag965业务名继续未知。
 
+A-04d5w已在完整Login帧中核对这些来源与原指针，并验证原生安装的4096字节key用于整帧XOR；仍为连接内存状态，不新增持久字段。分区tag11到Ec2b初始key已有原始数据流证据（A-04d5v），其业务名不因此自动晋级。
+
 ## 数据分层
 
 7.2请求key_id/tag1184是uint32密钥选择值，目标构造当前写4；与客户端私钥对应的4_Pub公钥用于响应加密。该值不入MongoDB，不与client_rand_key所用服务器公钥混同；证据与范围见会话研究A-04d5o。

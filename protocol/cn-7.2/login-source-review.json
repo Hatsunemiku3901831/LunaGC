@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "scope": "Built-in legacy game entry source only",
+  "sourceSHA256": {
+    "src/main/java/emu/grasscutter/game/player/Player.java": "f080a4f521ebeb0467bcb09b84e993a68d147140046cea0e00898f5d9eee0b91",
+    "src/main/java/emu/grasscutter/game/world/Scene.java": "100d28f74ea1fe5291458d0ec0a4f898fa10cd7551fade2b95b8e6b6f4adcc35",
+    "src/main/java/emu/grasscutter/game/world/World.java": "3fe1b04b3c2681dd96a5206a60a0035952de827cf69a5dd6c7f0ff5e44768147",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerEnterSceneDoneReq.java": "ded9306c1008be0bc6a6d8f33b1f549c7b8faa505b1d8581909d55e4bde8a9ea",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerEnterSceneReadyReq.java": "28eb1a2a066f18614887e5312a9dd2f7da974fc616e30527e37812ac889b57a6",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerGetPlayerTokenReq.java": "179066bc7989479a4c4d2ca7b69f090552e4547b726538ff6e87de9deea95407",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerPingReq.java": "d662b07f75dfceb8741fb990f8270e38cdb626b67000d514c0f6ff60ee9c0596",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerPlayerLoginReq.java": "b7ddf5edfdcba87a2e8c01ed2f87bc7acfee5f3f4e42006bb1cf63d40e87ae40",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerPostEnterSceneReq.java": "0dea78b9a4623e28742db242b57a8f9e9db60b7f285d79fd6f92200be40e4edd",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerSceneInitFinishReq.java": "59c1acdc54f68632536a1942e1a4fe46fad6cc75edabb0ae1e9281170465b037",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBornDataReq.java": "5d92563da180a0f5e2b2788f4c5dfd39e3bae0dea6c60a7a822784c168f17101",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerUnionCmdNotify.java": "bd4b0a8fe550da32583f9f777d485b3a0d5c7b9ddabf2de0c3a41b8d50f8d1a5"
+  },
+  "roots": [
+    "emu.grasscutter.server.packet.recv.HandlerGetPlayerTokenReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerSetPlayerBornDataReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerEnterSceneReadyReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerSceneInitFinishReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerEnterSceneDoneReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerPostEnterSceneReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerPingReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerUnionCmdNotify#handle(GameSession,byte[],byte[])"
+  ],
+  "reviewedEdges": [
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#handleAdmitted(GameSession)",
+      "to": "emu.grasscutter.game.player.Player#onLogin()",
+      "kind": "invoke",
+      "selector": "player.onLogin",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#scheduleFallback(GameSession,Player)",
+      "to": "emu.grasscutter.game.player.Player#onLogin()",
+      "kind": "invoke",
+      "selector": "player.onLogin",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerSetPlayerBornDataReq#handleAdmitted(GameSession,byte[])",
+      "to": "emu.grasscutter.game.player.Player#onLogin()",
+      "kind": "invoke",
+      "selector": "session.getPlayer().onLogin",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.world.World#<init>(Player)",
+      "kind": "construct",
+      "selector": "World",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.world.World#tryAddPlayer(Player)",
+      "kind": "invoke",
+      "selector": "world.tryAddPlayer",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.game.world.World#<init>(Player)",
+      "to": "emu.grasscutter.game.world.World#<init>(Player,boolean)",
+      "kind": "invoke",
+      "selector": "this",
+      "argumentCount": 2,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.game.world.World#getSceneById(int)",
+      "to": "emu.grasscutter.game.world.Scene#<init>(World,SceneData)",
+      "kind": "construct",
+      "selector": "Scene",
+      "argumentCount": 2,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.game.world.World#addPlayerToWorld(Player,Integer,EntrySource,EntryAction)",
+      "to": "emu.grasscutter.game.world.Scene#addPlayer(Player)",
+      "kind": "invoke",
+      "selector": "scene.addPlayer",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerSceneInitFinishReq#handle(GameSession,byte[],byte[])",
+      "to": "emu.grasscutter.game.world.Scene#playerSceneInitialized(Player)",
+      "kind": "invoke",
+      "selector": "player.getScene().playerSceneInitialized",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerEnterSceneDoneReq#handle(GameSession,byte[],byte[])",
+      "to": "emu.grasscutter.game.world.Scene#spawnPlayer(Player)",
+      "kind": "invoke",
+      "selector": "player.getScene().spawnPlayer",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerEnterSceneDoneReq#handle(GameSession,byte[],byte[])",
+      "to": "emu.grasscutter.game.world.Scene#showOtherEntities(Player)",
+      "kind": "invoke",
+      "selector": "player.getScene().showOtherEntities",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerEnterSceneDoneReq#handle(GameSession,byte[],byte[])",
+      "to": "emu.grasscutter.game.world.Scene#loadNpcForPlayerEnter(Player)",
+      "kind": "invoke",
+      "selector": "player.getScene().loadNpcForPlayerEnter",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerEnterSceneDoneReq#handle(GameSession,byte[],byte[])",
+      "to": "emu.grasscutter.game.world.Scene#loadGroupForQuest(List<QuestGroupSuite>)",
+      "kind": "invoke",
+      "selector": "player.getScene().loadGroupForQuest",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    }
+  ],
+  "closureComplete": false,
+  "targetProtocolReady": false,
+  "openBoundaries": [
+    "manager/service methods and constructors outside selected files",
+    "Lombok/generated accessors and overload/virtual dispatch",
+    "event/plugin replacement and callback scheduling",
+    "scene scripts, resources and data-dependent notifications",
+    "implicit class/field initialization execution",
+    "actual CN72 client sequence and wire mappings"
+  ]
+}

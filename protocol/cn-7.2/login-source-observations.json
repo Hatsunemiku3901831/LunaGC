@@ -1,0 +1,2938 @@
+{
+  "schemaVersion": 1,
+  "scope": "method-scoped legacy source; no CN72 mapping",
+  "runtimeStatus": "not-tested",
+  "closureComplete": false,
+  "targetProtocolReady": false,
+  "javaAttributionExecuted": false,
+  "sourceSHA256": {
+    "src/main/java/emu/grasscutter/game/player/Player.java": "f080a4f521ebeb0467bcb09b84e993a68d147140046cea0e00898f5d9eee0b91",
+    "src/main/java/emu/grasscutter/game/world/Scene.java": "100d28f74ea1fe5291458d0ec0a4f898fa10cd7551fade2b95b8e6b6f4adcc35",
+    "src/main/java/emu/grasscutter/game/world/World.java": "3fe1b04b3c2681dd96a5206a60a0035952de827cf69a5dd6c7f0ff5e44768147",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerEnterSceneDoneReq.java": "ded9306c1008be0bc6a6d8f33b1f549c7b8faa505b1d8581909d55e4bde8a9ea",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerEnterSceneReadyReq.java": "28eb1a2a066f18614887e5312a9dd2f7da974fc616e30527e37812ac889b57a6",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerGetPlayerTokenReq.java": "179066bc7989479a4c4d2ca7b69f090552e4547b726538ff6e87de9deea95407",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerPingReq.java": "d662b07f75dfceb8741fb990f8270e38cdb626b67000d514c0f6ff60ee9c0596",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerPlayerLoginReq.java": "b7ddf5edfdcba87a2e8c01ed2f87bc7acfee5f3f4e42006bb1cf63d40e87ae40",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerPostEnterSceneReq.java": "0dea78b9a4623e28742db242b57a8f9e9db60b7f285d79fd6f92200be40e4edd",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerSceneInitFinishReq.java": "59c1acdc54f68632536a1942e1a4fe46fad6cc75edabb0ae1e9281170465b037",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBornDataReq.java": "5d92563da180a0f5e2b2788f4c5dfd39e3bae0dea6c60a7a822784c168f17101",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerUnionCmdNotify.java": "bd4b0a8fe550da32583f9f777d485b3a0d5c7b9ddabf2de0c3a41b8d50f8d1a5"
+  },
+  "roots": [
+    "emu.grasscutter.server.packet.recv.HandlerGetPlayerTokenReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerSetPlayerBornDataReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerEnterSceneReadyReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerSceneInitFinishReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerEnterSceneDoneReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerPostEnterSceneReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerPingReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerUnionCmdNotify#handle(GameSession,byte[],byte[])"
+  ],
+  "rootCount": 9,
+  "methodCount": 80,
+  "edgeCount": 96,
+  "edgeKinds": {
+    "reviewed-source-edge": 13,
+    "same-owner-unique-name-arity-candidate": 83
+  },
+  "unlinkedCallSiteCount": 1012,
+  "unlinkedKinds": {
+    "construct": 129,
+    "invoke": 880,
+    "reference": 3
+  },
+  "directArgumentCount": 78,
+  "directConstructedTypeCount": 61,
+  "directConstructedTypes": [
+    "BasePacket",
+    "PacketAllWidgetDataNotify",
+    "PacketAvatarAddNotify",
+    "PacketAvatarDataNotify",
+    "PacketAvatarSelectionDataNotify",
+    "PacketAvatarTeamUpdateNotify",
+    "PacketAvatarWeaponSkinDataNotify",
+    "PacketBattlePassAllDataNotify",
+    "PacketBeyondCosmeticDataNotify",
+    "PacketCardProductRewardNotify",
+    "PacketCodexDataFullNotify",
+    "PacketCombineDataNotify",
+    "PacketCutsceneBeginNotify",
+    "PacketEnterSceneDoneRsp",
+    "PacketEnterScenePeerNotify",
+    "PacketEnterSceneReadyRsp",
+    "PacketEntityFightPropChangeReasonNotify",
+    "PacketFinishedParentQuestNotify",
+    "PacketGetChatEmojiCollectionRsp",
+    "PacketGetPlayerTokenRsp",
+    "PacketGroupSuiteNotify",
+    "PacketHostPlayerNotify",
+    "PacketItemCdGroupTimeNotify",
+    "PacketPingRsp",
+    "PacketPlayerChatNotify",
+    "PacketPlayerDataNotify",
+    "PacketPlayerEnterSceneInfoNotify",
+    "PacketPlayerEnterSceneNotify",
+    "PacketPlayerGameTimeNotify",
+    "PacketPlayerLevelRewardUpdateNotify",
+    "PacketPlayerLoginRsp",
+    "PacketPlayerPropChangeNotify",
+    "PacketPlayerPropChangeReasonNotify",
+    "PacketPlayerPropNotify",
+    "PacketPlayerStoreNotify",
+    "PacketPlayerTimeNotify",
+    "PacketPlayerWorldSceneInfoListNotify",
+    "PacketPostEnterSceneRsp",
+    "PacketQuestGlobalVarNotify",
+    "PacketQuestListNotify",
+    "PacketSceneAreaWeatherNotify",
+    "PacketSceneDataNotify",
+    "PacketSceneEntityAppearNotify",
+    "PacketSceneForceUnlockNotify",
+    "PacketSceneInitFinishRsp",
+    "PacketScenePlayerInfoNotify",
+    "PacketScenePlayerLocationNotify",
+    "PacketSceneTeamUpdateNotify",
+    "PacketSceneTimeNotify",
+    "PacketServerTimeNotify",
+    "PacketStoreWeightLimitNotify",
+    "PacketSyncScenePlayTeamEntityNotify",
+    "PacketSyncTeamEntityNotify",
+    "PacketTeamHexenzirkelChangeNotify",
+    "PacketWidgetGadgetAllDataNotify",
+    "PacketWindSeedClientNotify",
+    "PacketWorldDataNotify",
+    "PacketWorldPlayerInfoNotify",
+    "PacketWorldPlayerLocationNotify",
+    "PacketWorldPlayerRTTNotify",
+    "PacketWorldWatcherAllDataNotify"
+  ],
+  "allConstructedTypeCount": 62,
+  "allConstructedTypes": [
+    "BasePacket",
+    "PacketAllWidgetDataNotify",
+    "PacketAvatarAddNotify",
+    "PacketAvatarDataNotify",
+    "PacketAvatarSelectionDataNotify",
+    "PacketAvatarTeamUpdateNotify",
+    "PacketAvatarWeaponSkinDataNotify",
+    "PacketBattlePassAllDataNotify",
+    "PacketBeyondCosmeticDataNotify",
+    "PacketCardProductRewardNotify",
+    "PacketCodexDataFullNotify",
+    "PacketCombineDataNotify",
+    "PacketCutsceneBeginNotify",
+    "PacketEnterSceneDoneRsp",
+    "PacketEnterScenePeerNotify",
+    "PacketEnterSceneReadyRsp",
+    "PacketEntityFightPropChangeReasonNotify",
+    "PacketFinishedParentQuestNotify",
+    "PacketGetChatEmojiCollectionRsp",
+    "PacketGetPlayerTokenRsp",
+    "PacketGroupSuiteNotify",
+    "PacketHostPlayerNotify",
+    "PacketItemCdGroupTimeNotify",
+    "PacketPingRsp",
+    "PacketPlayerChatNotify",
+    "PacketPlayerDataNotify",
+    "PacketPlayerEnterSceneInfoNotify",
+    "PacketPlayerEnterSceneNotify",
+    "PacketPlayerGameTimeNotify",
+    "PacketPlayerLevelRewardUpdateNotify",
+    "PacketPlayerLoginRsp",
+    "PacketPlayerPropChangeNotify",
+    "PacketPlayerPropChangeReasonNotify",
+    "PacketPlayerPropNotify",
+    "PacketPlayerStoreNotify",
+    "PacketPlayerTimeNotify",
+    "PacketPlayerWorldSceneInfoListNotify",
+    "PacketPostEnterSceneRsp",
+    "PacketQuestGlobalVarNotify",
+    "PacketQuestListNotify",
+    "PacketSceneAreaWeatherNotify",
+    "PacketSceneDataNotify",
+    "PacketSceneEntityAppearNotify",
+    "PacketSceneForceUnlockNotify",
+    "PacketSceneInitFinishRsp",
+    "PacketScenePlayerInfoNotify",
+    "PacketScenePlayerLocationNotify",
+    "PacketSceneTeamUpdateNotify",
+    "PacketSceneTimeNotify",
+    "PacketServerTimeNotify",
+    "PacketStoreWeightLimitNotify",
+    "PacketSyncScenePlayTeamEntityNotify",
+    "PacketSyncTeamEntityNotify",
+    "PacketTeamHexenzirkelChangeNotify",
+    "PacketWidgetGadgetAllDataNotify",
+    "PacketWindSeedClientNotify",
+    "PacketWindSeedUID",
+    "PacketWorldDataNotify",
+    "PacketWorldPlayerInfoNotify",
+    "PacketWorldPlayerLocationNotify",
+    "PacketWorldPlayerRTTNotify",
+    "PacketWorldWatcherAllDataNotify"
+  ],
+  "methods": [
+    {
+      "id": "emu.grasscutter.game.player.Player#applyStartingSceneTags()",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 904,
+      "sourceSHA256": "fba23ee3efed2f6bbdba886f5bd28dd1c4b33dbc7abc8017c6ce73595d1bc47c",
+      "callCount": 18,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#claimMoonCardLocked(LocalDate)",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 1235,
+      "sourceSHA256": "a54d13b5cb33b86f2bbd3f699fa63ad4fdcd71f9640aa8c39c653282b7a72695",
+      "callCount": 20,
+      "directPacketArguments": [
+        {
+          "callLine": 1264,
+          "constructionLine": 1264,
+          "receiverCall": "sendPacket",
+          "argument": 0,
+          "constructedType": "PacketCardProductRewardNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        }
+      ],
+      "packetConstructions": [
+        {
+          "line": 1264,
+          "constructedType": "PacketCardProductRewardNotify",
+          "lambdaDepth": 0
+        }
+      ]
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#doDailyReset()",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 1700,
+      "sourceSHA256": "8ad3ac951ad23e3baaee49f558580a2f027d67a2796dbe96281150c16ffba158",
+      "callCount": 2,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#doDailyReset(Instant)",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 1704,
+      "sourceSHA256": "8f46789aaa495a506ed96dc4e70d4016f72fe5e9287a23c9ad766335453c79cc",
+      "callCount": 1,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#getArtifactTransmuter()",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 196,
+      "sourceSHA256": "d96c7ec24f951e7dd973364d9728c1242c93ef81c2abc134595b3fc5e7d4b6e2",
+      "callCount": 2,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#getForgePoints()",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 865,
+      "sourceSHA256": "fa6ce717ec63adddb001a8817d839dd31e6756086dd0f2eb108594d7360949f9",
+      "callCount": 1,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#getMoonCardRemainDays(LocalDate)",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 1183,
+      "sourceSHA256": "83e13cdcbb8411eb3b6117bfba8902c353601dc21197bd738fd1907038ef5d10",
+      "callCount": 7,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#getMusicGameBook()",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 179,
+      "sourceSHA256": "6ec06d57a8b9bf95e3035e4eb3f3fc33694c26f9ada73be12706928273714b4d",
+      "callCount": 2,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#getPrimogems()",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 922,
+      "sourceSHA256": "6e9a13a12299c261b14149e9054abc7d9c16b92340822a4e265958825b31d7bd",
+      "callCount": 1,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#getProperty(PlayerProperty)",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 1106,
+      "sourceSHA256": "c215b7a9cfd4f76ebc4cab4a4051f50c5efbb089ec019ac227676b6fbd6997a2",
+      "callCount": 3,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#getPropertyMax(PlayerProperty)",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 2091,
+      "sourceSHA256": "dc898d1e53dd3e647959a7f0a62ca4d0f86ff78d3dc4508d53837194f57c5584",
+      "callCount": 4,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#getPropertyMin(PlayerProperty)",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 2083,
+      "sourceSHA256": "ca95b947e7b7758381444eb62c18a9601c72039883d87006b8dc131dcc4eeb6e",
+      "callCount": 2,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#getScene()",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 702,
+      "sourceSHA256": "c082f6ab0308d80da8d126d9f64bcb0c461247cbd1e02fb8766746c6d3718c0e",
+      "callCount": 0,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#getServer()",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 690,
+      "sourceSHA256": "c4f02df91f3b794cfbb867fb38b1354e2b51a6256edc3c0ce9e4e987fc713fd9",
+      "callCount": 2,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#getTodayMoonCard()",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 1225,
+      "sourceSHA256": "c334b9113f838df0679e40e870ff2e402c34091f3b71aad6cf22e6b4f62859c1",
+      "callCount": 2,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#getTodayMoonCard(LocalDate)",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 1229,
+      "sourceSHA256": "91c4ba9c5e7fbfb8e647e85504ecd6c6eb860ba69ac8dbf5ebaeb82961164517",
+      "callCount": 2,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#getUid()",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 624,
+      "sourceSHA256": "458b7ae227ffdba968637c6752275a86f612c1ae6360160e97a9d328620f4b75",
+      "callCount": 0,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#isOnline()",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 686,
+      "sourceSHA256": "2d23e133f7a7b67068e0374c422454a30ee2960731b71ff6a26d07cb9de2ae3e",
+      "callCount": 3,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#moonCardDate(LocalDate)",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 1167,
+      "sourceSHA256": "7e6fb13f201dcac4f8d376088cc78e4887275ebd75e955c1aaeaf388508208dd",
+      "callCount": 4,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#moonCardToday()",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 1163,
+      "sourceSHA256": "f1a1dfff40f7c2de16775428e9303062fa2a6afad4dc51f1ec3d84ef351c89dd",
+      "callCount": 2,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#onLogin()",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 1846,
+      "sourceSHA256": "49842e56d2677057723e5df40c1fbf3d09139943cfd8090b735854d54daf9e1c",
+      "callCount": 130,
+      "directPacketArguments": [
+        {
+          "callLine": 1922,
+          "constructionLine": 1922,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketPlayerDataNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1923,
+          "constructionLine": 1923,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketStoreWeightLimitNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1924,
+          "constructionLine": 1924,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketPlayerStoreNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1925,
+          "constructionLine": 1925,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketItemCdGroupTimeNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1927,
+          "constructionLine": 1927,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketAvatarDataNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1928,
+          "constructionLine": 1928,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketAvatarSelectionDataNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1929,
+          "constructionLine": 1929,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketAvatarWeaponSkinDataNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1936,
+          "constructionLine": 1936,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketFinishedParentQuestNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1949,
+          "constructionLine": 1949,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketBattlePassAllDataNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1950,
+          "constructionLine": 1950,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketWorldWatcherAllDataNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1951,
+          "constructionLine": 1951,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketBeyondCosmeticDataNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1952,
+          "constructionLine": 1952,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketQuestListNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1953,
+          "constructionLine": 1953,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketQuestGlobalVarNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1954,
+          "constructionLine": 1954,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketCodexDataFullNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1955,
+          "constructionLine": 1955,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketAllWidgetDataNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1961,
+          "constructionLine": 1961,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketWidgetGadgetAllDataNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1962,
+          "constructionLine": 1962,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketCombineDataNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1963,
+          "constructionLine": 1963,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketGetChatEmojiCollectionRsp",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1985,
+          "constructionLine": 1985,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketPlayerEnterSceneNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1986,
+          "constructionLine": 1986,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketPlayerLevelRewardUpdateNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        }
+      ],
+      "packetConstructions": [
+        {
+          "line": 1922,
+          "constructedType": "PacketPlayerDataNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1923,
+          "constructedType": "PacketStoreWeightLimitNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1924,
+          "constructedType": "PacketPlayerStoreNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1925,
+          "constructedType": "PacketItemCdGroupTimeNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1927,
+          "constructedType": "PacketAvatarDataNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1928,
+          "constructedType": "PacketAvatarSelectionDataNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1929,
+          "constructedType": "PacketAvatarWeaponSkinDataNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1936,
+          "constructedType": "PacketFinishedParentQuestNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1949,
+          "constructedType": "PacketBattlePassAllDataNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1950,
+          "constructedType": "PacketWorldWatcherAllDataNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1951,
+          "constructedType": "PacketBeyondCosmeticDataNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1952,
+          "constructedType": "PacketQuestListNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1953,
+          "constructedType": "PacketQuestGlobalVarNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1954,
+          "constructedType": "PacketCodexDataFullNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1955,
+          "constructedType": "PacketAllWidgetDataNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1961,
+          "constructedType": "PacketWidgetGadgetAllDataNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1962,
+          "constructedType": "PacketCombineDataNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1963,
+          "constructedType": "PacketGetChatEmojiCollectionRsp",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1985,
+          "constructedType": "PacketPlayerEnterSceneNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1986,
+          "constructedType": "PacketPlayerLevelRewardUpdateNotify",
+          "lambdaDepth": 0
+        }
+      ]
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#recoverDungeonLoginLocation()",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 1838,
+      "sourceSHA256": "3b6ea3bf8ba7e5668ff44be970c17087ab7588b61474084240a6c4b7b1a3633d",
+      "callCount": 9,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#resetDailyState(Instant)",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 1710,
+      "sourceSHA256": "7c88dfd4d3c92c4edf8dd7b79f58f21ed7695592e27add218651247c3e303efe",
+      "callCount": 28,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#save()",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 1770,
+      "sourceSHA256": "fca64cd85aa5779cc36dd011cd1736e8a46ae27283472155c8b0fbddff0014d8",
+      "callCount": 1,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#sendPacket(BasePacket)",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 1446,
+      "sourceSHA256": "604703865c08cf42e4ef784a23d204d0b0a97be754720d632587fb428463769c",
+      "callCount": 2,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#setForgePoints(int)",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 869,
+      "sourceSHA256": "3f48ada39e13e25b1cc2e3c5be91ebf0453986103dcbbae69c3f94128dbbf4c5",
+      "callCount": 2,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#setProperty(PlayerProperty,int,boolean)",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 1102,
+      "sourceSHA256": "bd7e5e6307c026bf8ed7a2bd9d75f2352e2d85490f57bb5442626b3da79b602a",
+      "callCount": 1,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.player.Player#setPropertyWithSanityCheck(PlayerProperty,int,boolean)",
+      "file": "src/main/java/emu/grasscutter/game/player/Player.java",
+      "line": 2103,
+      "sourceSHA256": "c53551d892c50fc0cc1b1f119ae6cbd50a66e9931a8727ad1977f5b7dabd3dda",
+      "callCount": 20,
+      "directPacketArguments": [
+        {
+          "callLine": 2119,
+          "constructionLine": 2120,
+          "receiverCall": "this.sendPacket",
+          "argument": 0,
+          "constructedType": "PacketPlayerPropChangeReasonNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 2126,
+          "constructionLine": 2127,
+          "receiverCall": "this.sendPacket",
+          "argument": 0,
+          "constructedType": "PacketPlayerPropChangeReasonNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 2133,
+          "constructionLine": 2134,
+          "receiverCall": "this.sendPacket",
+          "argument": 0,
+          "constructedType": "PacketPlayerPropChangeReasonNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 2142,
+          "constructionLine": 2142,
+          "receiverCall": "this.sendPacket",
+          "argument": 0,
+          "constructedType": "PacketPlayerPropNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 2143,
+          "constructionLine": 2143,
+          "receiverCall": "this.sendPacket",
+          "argument": 0,
+          "constructedType": "PacketPlayerPropChangeNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        }
+      ],
+      "packetConstructions": [
+        {
+          "line": 2120,
+          "constructedType": "PacketPlayerPropChangeReasonNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 2127,
+          "constructedType": "PacketPlayerPropChangeReasonNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 2134,
+          "constructedType": "PacketPlayerPropChangeReasonNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 2142,
+          "constructedType": "PacketPlayerPropNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 2143,
+          "constructedType": "PacketPlayerPropChangeNotify",
+          "lambdaDepth": 0
+        }
+      ]
+    },
+    {
+      "id": "emu.grasscutter.game.world.Scene#<init>(World,SceneData)",
+      "file": "src/main/java/emu/grasscutter/game/world/Scene.java",
+      "line": 123,
+      "sourceSHA256": "32829b4342050d75ca1031df43465f5ef5a7a95293dd4d280601bf29186701ed",
+      "callCount": 1,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.Scene#<init>(World,SceneData,boolean)",
+      "file": "src/main/java/emu/grasscutter/game/world/Scene.java",
+      "line": 127,
+      "sourceSHA256": "d60707b007076615c0f1e5f1f99765ed5fa67bf2f8893dfb6b0d30570d5a708c",
+      "callCount": 24,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.Scene#addEntity(GameEntity)",
+      "file": "src/main/java/emu/grasscutter/game/world/Scene.java",
+      "line": 434,
+      "sourceSHA256": "44f23740a51b49eec5e0e90eabf3147e7bf3298de833f8d9bad2bf0379aa59cb",
+      "callCount": 3,
+      "directPacketArguments": [
+        {
+          "callLine": 436,
+          "constructionLine": 436,
+          "receiverCall": "this.broadcastPacket",
+          "argument": 0,
+          "constructedType": "PacketSceneEntityAppearNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        }
+      ],
+      "packetConstructions": [
+        {
+          "line": 436,
+          "constructedType": "PacketSceneEntityAppearNotify",
+          "lambdaDepth": 0
+        }
+      ]
+    },
+    {
+      "id": "emu.grasscutter.game.world.Scene#addEntityDirectly(GameEntity)",
+      "file": "src/main/java/emu/grasscutter/game/world/Scene.java",
+      "line": 423,
+      "sourceSHA256": "3db8145ddd84326c23c9d5bb5afa60d8676f8122430dc17c890170a1f444090c",
+      "callCount": 11,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.Scene#addPlayer(Player)",
+      "file": "src/main/java/emu/grasscutter/game/world/Scene.java",
+      "line": 262,
+      "sourceSHA256": "71aa6ffccae65bb03b83d8e5847f8dc2a3a9ddb4363b6d799af186192a4bea82",
+      "callCount": 29,
+      "directPacketArguments": [
+        {
+          "callLine": 286,
+          "constructionLine": 286,
+          "receiverCall": "player.sendPacket",
+          "argument": 0,
+          "constructedType": "PacketAvatarAddNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 287,
+          "constructionLine": 287,
+          "receiverCall": "player.sendPacket",
+          "argument": 0,
+          "constructedType": "PacketAvatarTeamUpdateNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        }
+      ],
+      "packetConstructions": [
+        {
+          "line": 286,
+          "constructedType": "PacketAvatarAddNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 287,
+          "constructedType": "PacketAvatarTeamUpdateNotify",
+          "lambdaDepth": 0
+        }
+      ]
+    },
+    {
+      "id": "emu.grasscutter.game.world.Scene#broadcastPacket(BasePacket)",
+      "file": "src/main/java/emu/grasscutter/game/world/Scene.java",
+      "line": 1529,
+      "sourceSHA256": "8db3b49a5f7f65965890e95bde18b553ea9d227328ff7a94fd3aed0920271ba3",
+      "callCount": 3,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.Scene#getHost()",
+      "file": "src/main/java/emu/grasscutter/game/world/Scene.java",
+      "line": 174,
+      "sourceSHA256": "a1f805bc615d65603f6a1bc6b2554aeefad1f37907a7310ded3ba1ce86a165f4",
+      "callCount": 2,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.Scene#getId()",
+      "file": "src/main/java/emu/grasscutter/game/world/Scene.java",
+      "line": 162,
+      "sourceSHA256": "6e6d7a2766a766ad5b661dfa61fca4aa3b6d372fca5b6715a9f5ed123ae46d79",
+      "callCount": 1,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.Scene#isInScene(GameEntity)",
+      "file": "src/main/java/emu/grasscutter/game/world/Scene.java",
+      "line": 258,
+      "sourceSHA256": "d304bbadd78f170ad973be703fb5e32d14bbd9de5af376c7efc161729071d5ae",
+      "callCount": 2,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.Scene#loadGroupForQuest(List<QuestGroupSuite>)",
+      "file": "src/main/java/emu/grasscutter/game/world/Scene.java",
+      "line": 1613,
+      "sourceSHA256": "bbf6a0d4f8f8c08779857c7685f93388f79beb87de231829ccf09f8c4929c478",
+      "callCount": 10,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.Scene#loadNpcForPlayer(Player)",
+      "file": "src/main/java/emu/grasscutter/game/world/Scene.java",
+      "line": 1576,
+      "sourceSHA256": "3882935a7b38a44c215d63a4b5169888659de4f03a39d4754072e385ea1525d8",
+      "callCount": 34,
+      "directPacketArguments": [
+        {
+          "callLine": 1604,
+          "constructionLine": 1604,
+          "receiverCall": "this.broadcastPacket",
+          "argument": 0,
+          "constructedType": "PacketGroupSuiteNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        }
+      ],
+      "packetConstructions": [
+        {
+          "line": 1604,
+          "constructedType": "PacketGroupSuiteNotify",
+          "lambdaDepth": 0
+        }
+      ]
+    },
+    {
+      "id": "emu.grasscutter.game.world.Scene#loadNpcForPlayerEnter(Player)",
+      "file": "src/main/java/emu/grasscutter/game/world/Scene.java",
+      "line": 1571,
+      "sourceSHA256": "adf54279248cc87f27a8dec22725c2d6ef266f6c1e5f61570129c1b7b995d5e7",
+      "callCount": 4,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.Scene#playerSceneInitialized(Player)",
+      "file": "src/main/java/emu/grasscutter/game/world/Scene.java",
+      "line": 1030,
+      "sourceSHA256": "79c98f4d801c51e9b549143500ea7a922a05aa69b5084f955b6d2388bcad1381",
+      "callCount": 5,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.Scene#setupPlayerAvatars(Player)",
+      "file": "src/main/java/emu/grasscutter/game/world/Scene.java",
+      "line": 363,
+      "sourceSHA256": "c95b05b208a8f34681a8a479de7e656398c98dae0e80ef020e62154986b272e8",
+      "callCount": 26,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.Scene#showOtherEntities(Player)",
+      "file": "src/main/java/emu/grasscutter/game/world/Scene.java",
+      "line": 603,
+      "sourceSHA256": "0708c9ce046cf9b79045e4d8a168bb133587db8ae8aab86484b7b10d388c741e",
+      "callCount": 12,
+      "directPacketArguments": [
+        {
+          "callLine": 613,
+          "constructionLine": 613,
+          "receiverCall": "player.sendPacket",
+          "argument": 0,
+          "constructedType": "PacketSceneEntityAppearNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        }
+      ],
+      "packetConstructions": [
+        {
+          "line": 613,
+          "constructedType": "PacketSceneEntityAppearNotify",
+          "lambdaDepth": 0
+        }
+      ]
+    },
+    {
+      "id": "emu.grasscutter.game.world.Scene#spawnPlayer(Player)",
+      "file": "src/main/java/emu/grasscutter/game/world/Scene.java",
+      "line": 405,
+      "sourceSHA256": "971b2a4beec5999f78c3976d5cf411b2bb7ab1555df64cfb1182a5ffe8dc9b34",
+      "callCount": 15,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.World#<init>(Player)",
+      "file": "src/main/java/emu/grasscutter/game/world/World.java",
+      "line": 96,
+      "sourceSHA256": "cd7f5ba4e05d8a087cc4d5e4e2f0657ea23f9b59b1fd11ee4b6a65adc3357e01",
+      "callCount": 1,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.World#<init>(Player,boolean)",
+      "file": "src/main/java/emu/grasscutter/game/world/World.java",
+      "line": 100,
+      "sourceSHA256": "27dd039c53ed0061f483746f8230f96cc96a4e51bf6648536369a4679f8835f7",
+      "callCount": 9,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.World#addPlayerToWorld(Player,Integer,EntrySource,EntryAction)",
+      "file": "src/main/java/emu/grasscutter/game/world/World.java",
+      "line": 244,
+      "sourceSHA256": "d3097289f39790d31a911dd4f50058fc04d3c576bb0dd626a2c1f8b8d2db5403",
+      "callCount": 88,
+      "directPacketArguments": [
+        {
+          "callLine": 298,
+          "constructionLine": 298,
+          "receiverCall": "this.broadcastPacket",
+          "argument": 0,
+          "constructedType": "PacketPlayerChatNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        }
+      ],
+      "packetConstructions": [
+        {
+          "line": 298,
+          "constructedType": "PacketPlayerChatNotify",
+          "lambdaDepth": 0
+        }
+      ]
+    },
+    {
+      "id": "emu.grasscutter.game.world.World#broadcastPacket(BasePacket)",
+      "file": "src/main/java/emu/grasscutter/game/world/World.java",
+      "line": 1020,
+      "sourceSHA256": "d3667fa9f4b9886ca586446d46ce5c6a3973293ea7506f899ed55b7293a354d5",
+      "callCount": 3,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.World#completeDeparture(Departure)",
+      "file": "src/main/java/emu/grasscutter/game/world/World.java",
+      "line": 424,
+      "sourceSHA256": "d2ebb9a3dec32ccdd74575f1fe73cbd736d330d41bb378456bc457624b4dc3cc",
+      "callCount": 2,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.World#detachPlayer(Player,Scene)",
+      "file": "src/main/java/emu/grasscutter/game/world/World.java",
+      "line": 352,
+      "sourceSHA256": "7a07eb110866dd22c189da2d0a1186dced4334044ce37d55bec7867c9754a1f0",
+      "callCount": 11,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.World#disbandsOnHostLeave()",
+      "file": "src/main/java/emu/grasscutter/game/world/World.java",
+      "line": 348,
+      "sourceSHA256": "d29b824a21a97daa6508b7ed7d38024136738ffb6f1e9853cd818da97db9401a",
+      "callCount": 0,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.World#evacuateGuests(List<Player>)",
+      "file": "src/main/java/emu/grasscutter/game/world/World.java",
+      "line": 432,
+      "sourceSHA256": "3f78be0fa8680aac3e699d33407b013389f60fed1de68367fe2ceb384cf93264",
+      "callCount": 3,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.World#evacuationTimeMillis()",
+      "file": "src/main/java/emu/grasscutter/game/world/World.java",
+      "line": 437,
+      "sourceSHA256": "dfeaf84b0f5a04c38992a2c0d38f10aa675389460b11e338666b7301f2608dfc",
+      "callCount": 1,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.World#getNextPeerId()",
+      "file": "src/main/java/emu/grasscutter/game/world/World.java",
+      "line": 140,
+      "sourceSHA256": "26e46c2dfd6671db675dc571fc258090b8b3f7d7d9ccab8c29fa1bf3123c2775",
+      "callCount": 1,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.World#getPlayerCount()",
+      "file": "src/main/java/emu/grasscutter/game/world/World.java",
+      "line": 182,
+      "sourceSHA256": "0c2f4aebdc452b467a0cb8787ec13e07af69f209598fd70ba8d84e2f25e3c72f",
+      "callCount": 1,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.World#getSceneById(int)",
+      "file": "src/main/java/emu/grasscutter/game/world/World.java",
+      "line": 162,
+      "sourceSHA256": "f6a4f04a688750be176855644310045be93b1c38dd56c521cd83c6ae55b7a732",
+      "callCount": 7,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.World#peerIdForJoiningPlayer(Player)",
+      "file": "src/main/java/emu/grasscutter/game/world/World.java",
+      "line": 344,
+      "sourceSHA256": "d11ec6e3346014c8b248ba4b137db50455abfda7d32adef14f6a98dd0c6627a3",
+      "callCount": 1,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.World#registerScene(Scene)",
+      "file": "src/main/java/emu/grasscutter/game/world/World.java",
+      "line": 505,
+      "sourceSHA256": "02de7bf5dc4c3f6ff862fbbade466ec30d7fc064508647a26bc6879e891f0b1c",
+      "callCount": 3,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.World#retryGuestEvacuations()",
+      "file": "src/main/java/emu/grasscutter/game/world/World.java",
+      "line": 441,
+      "sourceSHA256": "f49556ca02ae2a044445fa70a79ff422efbaa2b101264017bf9b882dad40297f",
+      "callCount": 60,
+      "directPacketArguments": [
+        {
+          "callLine": 465,
+          "constructionLine": 465,
+          "receiverCall": "victim.sendPacket",
+          "argument": 0,
+          "constructedType": "PacketPlayerEnterSceneNotify",
+          "lambdaDepth": 1,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 466,
+          "constructionLine": 466,
+          "receiverCall": "victim.sendPacket",
+          "argument": 0,
+          "constructedType": "PacketEnterScenePeerNotify",
+          "lambdaDepth": 1,
+          "dynamicOpcode": false
+        }
+      ],
+      "packetConstructions": [
+        {
+          "line": 465,
+          "constructedType": "PacketPlayerEnterSceneNotify",
+          "lambdaDepth": 1
+        },
+        {
+          "line": 466,
+          "constructedType": "PacketEnterScenePeerNotify",
+          "lambdaDepth": 1
+        }
+      ]
+    },
+    {
+      "id": "emu.grasscutter.game.world.World#tryAddPlayer(Player)",
+      "file": "src/main/java/emu/grasscutter/game/world/World.java",
+      "line": 214,
+      "sourceSHA256": "ba79f49d5ffb5dbfb09eb750e22c42180e0aaabaab942224c1db8793c8eb427b",
+      "callCount": 1,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.game.world.World#updatePlayerInfos(Player)",
+      "file": "src/main/java/emu/grasscutter/game/world/World.java",
+      "line": 985,
+      "sourceSHA256": "25293e565bc0c07306330912c35fd23e57b48067bca6f2d8a23a34ce80ba6f81",
+      "callCount": 32,
+      "directPacketArguments": [
+        {
+          "callLine": 1008,
+          "constructionLine": 1008,
+          "receiverCall": "player.getSession().send",
+          "argument": 0,
+          "constructedType": "PacketWorldPlayerInfoNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1009,
+          "constructionLine": 1009,
+          "receiverCall": "player.getSession().send",
+          "argument": 0,
+          "constructedType": "PacketScenePlayerInfoNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1010,
+          "constructionLine": 1010,
+          "receiverCall": "player.getSession().send",
+          "argument": 0,
+          "constructedType": "PacketWorldPlayerRTTNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1013,
+          "constructionLine": 1013,
+          "receiverCall": "player.getSession().send",
+          "argument": 0,
+          "constructedType": "PacketSyncTeamEntityNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 1014,
+          "constructionLine": 1014,
+          "receiverCall": "player.getSession().send",
+          "argument": 0,
+          "constructedType": "PacketSyncScenePlayTeamEntityNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        }
+      ],
+      "packetConstructions": [
+        {
+          "line": 1008,
+          "constructedType": "PacketWorldPlayerInfoNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1009,
+          "constructedType": "PacketScenePlayerInfoNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1010,
+          "constructedType": "PacketWorldPlayerRTTNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1013,
+          "constructedType": "PacketSyncTeamEntityNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 1014,
+          "constructedType": "PacketSyncScenePlayTeamEntityNotify",
+          "lambdaDepth": 0
+        }
+      ]
+    },
+    {
+      "id": "emu.grasscutter.server.packet.recv.HandlerEnterSceneDoneReq#handle(GameSession,byte[],byte[])",
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerEnterSceneDoneReq.java",
+      "line": 19,
+      "sourceSHA256": "d0d76a0fe52e7709a9f8fda21d5ea11e3baba70a7a162531185bb912a0f47bf1",
+      "callCount": 62,
+      "directPacketArguments": [
+        {
+          "callLine": 30,
+          "constructionLine": 30,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketPlayerTimeNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 49,
+          "constructionLine": 49,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketWorldPlayerLocationNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 50,
+          "constructionLine": 50,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketScenePlayerLocationNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 51,
+          "constructionLine": 51,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketWorldPlayerRTTNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 55,
+          "constructionLine": 55,
+          "receiverCall": "avatarEntity.getWorld().broadcastPacket",
+          "argument": 0,
+          "constructedType": "PacketEntityFightPropChangeReasonNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 66,
+          "constructionLine": 66,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketGroupSuiteNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 86,
+          "constructionLine": 86,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketEnterSceneDoneRsp",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        }
+      ],
+      "packetConstructions": [
+        {
+          "line": 30,
+          "constructedType": "PacketPlayerTimeNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 49,
+          "constructedType": "PacketWorldPlayerLocationNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 50,
+          "constructedType": "PacketScenePlayerLocationNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 51,
+          "constructedType": "PacketWorldPlayerRTTNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 55,
+          "constructedType": "PacketEntityFightPropChangeReasonNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 66,
+          "constructedType": "PacketGroupSuiteNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 86,
+          "constructedType": "PacketEnterSceneDoneRsp",
+          "lambdaDepth": 0
+        }
+      ]
+    },
+    {
+      "id": "emu.grasscutter.server.packet.recv.HandlerEnterSceneReadyReq#handle(GameSession,byte[],byte[])",
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerEnterSceneReadyReq.java",
+      "line": 10,
+      "sourceSHA256": "15a77fc613986c43285e7d5f7f98dc89f395ef5b44c87acceeee700d8102530c",
+      "callCount": 6,
+      "directPacketArguments": [
+        {
+          "callLine": 12,
+          "constructionLine": 12,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketEnterScenePeerNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 13,
+          "constructionLine": 13,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketEnterSceneReadyRsp",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        }
+      ],
+      "packetConstructions": [
+        {
+          "line": 12,
+          "constructedType": "PacketEnterScenePeerNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 13,
+          "constructedType": "PacketEnterSceneReadyRsp",
+          "lambdaDepth": 0
+        }
+      ]
+    },
+    {
+      "id": "emu.grasscutter.server.packet.recv.HandlerGetPlayerTokenReq#handle(GameSession,byte[],byte[])",
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerGetPlayerTokenReq.java",
+      "line": 27,
+      "sourceSHA256": "265c5f2d695729181b1bb47964ab516b7d3ac09aa70ee08af8502fe30d774a18",
+      "callCount": 5,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.server.packet.recv.HandlerGetPlayerTokenReq#handleAuthenticated(GameSession,GetPlayerTokenReq,Account)",
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerGetPlayerTokenReq.java",
+      "line": 36,
+      "sourceSHA256": "cc1d2f9d69aa7d5dc4368de8d7e9a8f3fc1b21aca192ee2e692c04647e2433b0",
+      "callCount": 75,
+      "directPacketArguments": [
+        {
+          "callLine": 89,
+          "constructionLine": 90,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketGetPlayerTokenRsp",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 154,
+          "constructionLine": 155,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketGetPlayerTokenRsp",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 169,
+          "constructionLine": 169,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketGetPlayerTokenRsp",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 173,
+          "constructionLine": 173,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketGetPlayerTokenRsp",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        }
+      ],
+      "packetConstructions": [
+        {
+          "line": 90,
+          "constructedType": "PacketGetPlayerTokenRsp",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 129,
+          "constructedType": "PacketGetPlayerTokenRsp",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 155,
+          "constructedType": "PacketGetPlayerTokenRsp",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 169,
+          "constructedType": "PacketGetPlayerTokenRsp",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 173,
+          "constructedType": "PacketGetPlayerTokenRsp",
+          "lambdaDepth": 0
+        }
+      ]
+    },
+    {
+      "id": "emu.grasscutter.server.packet.recv.HandlerGetPlayerTokenReq#switchWireKey(GameSession)",
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerGetPlayerTokenReq.java",
+      "line": 187,
+      "sourceSHA256": "62047ff7b2f0cd6dd95cc1042345b0e8bb6cd62fe89510a3520a445257b1e0c9",
+      "callCount": 1,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.server.packet.recv.HandlerPingReq#handle(GameSession,byte[],byte[])",
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerPingReq.java",
+      "line": 12,
+      "sourceSHA256": "999b5d9bb30dcf513dcd0e24e8813513798b903f94997050eb1a69285e771cb1",
+      "callCount": 8,
+      "directPacketArguments": [
+        {
+          "callLine": 21,
+          "constructionLine": 21,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketPingRsp",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        }
+      ],
+      "packetConstructions": [
+        {
+          "line": 21,
+          "constructedType": "PacketPingRsp",
+          "lambdaDepth": 0
+        }
+      ]
+    },
+    {
+      "id": "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#createDefaultTraveler(Player)",
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerPlayerLoginReq.java",
+      "line": 101,
+      "sourceSHA256": "c11bcedfc35fa66ab02c22c00c2ccac7ebe30a46d23aa0faa4884f71751fb4ab",
+      "callCount": 12,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#handle(GameSession,byte[],byte[])",
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerPlayerLoginReq.java",
+      "line": 18,
+      "sourceSHA256": "94c79161b9f67ac125b140fd6069178b0548e4f070ca098f51a528edf824e5d5",
+      "callCount": 2,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#handleAdmitted(GameSession)",
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerPlayerLoginReq.java",
+      "line": 23,
+      "sourceSHA256": "1957c92af104657c186e97601248660d20cf23667ef1a76dcd020e3128286668",
+      "callCount": 24,
+      "directPacketArguments": [
+        {
+          "callLine": 47,
+          "constructionLine": 47,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "BasePacket",
+          "lambdaDepth": 0,
+          "dynamicOpcode": true
+        },
+        {
+          "callLine": 53,
+          "constructionLine": 53,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketPlayerLoginRsp",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 63,
+          "constructionLine": 63,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketPlayerLoginRsp",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        }
+      ],
+      "packetConstructions": [
+        {
+          "line": 47,
+          "constructedType": "BasePacket",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 53,
+          "constructedType": "PacketPlayerLoginRsp",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 63,
+          "constructedType": "PacketPlayerLoginRsp",
+          "lambdaDepth": 0
+        }
+      ]
+    },
+    {
+      "id": "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#scheduleFallback(GameSession,Player)",
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerPlayerLoginReq.java",
+      "line": 72,
+      "sourceSHA256": "e690f5d78f7188c333acfb33c1e7361ea7ed7a4c00805df198e0905e79e894bb",
+      "callCount": 16,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.server.packet.recv.HandlerPostEnterSceneReq#handle(GameSession,byte[],byte[])",
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerPostEnterSceneReq.java",
+      "line": 15,
+      "sourceSHA256": "7258716047edbcfd71cc6297ae5980ca817748b8b433309e47f671cbc4742e6f",
+      "callCount": 21,
+      "directPacketArguments": [
+        {
+          "callLine": 37,
+          "constructionLine": 37,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketPostEnterSceneRsp",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        }
+      ],
+      "packetConstructions": [
+        {
+          "line": 37,
+          "constructedType": "PacketPostEnterSceneRsp",
+          "lambdaDepth": 0
+        }
+      ]
+    },
+    {
+      "id": "emu.grasscutter.server.packet.recv.HandlerPostEnterSceneReq#playOpeningCutscene(emu.grasscutter.game.player.Player)",
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerPostEnterSceneReq.java",
+      "line": 43,
+      "sourceSHA256": "8307b596de6efa381ea293fb6cda40c3d176e5931ec6694dd27311f1581c239c",
+      "callCount": 5,
+      "directPacketArguments": [
+        {
+          "callLine": 49,
+          "constructionLine": 49,
+          "receiverCall": "player.sendPacket",
+          "argument": 0,
+          "constructedType": "PacketCutsceneBeginNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        }
+      ],
+      "packetConstructions": [
+        {
+          "line": 49,
+          "constructedType": "PacketCutsceneBeginNotify",
+          "lambdaDepth": 0
+        }
+      ]
+    },
+    {
+      "id": "emu.grasscutter.server.packet.recv.HandlerSceneInitFinishReq#applyColor(Configuration.GameOptions.WatermarkOptions)",
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerSceneInitFinishReq.java",
+      "line": 168,
+      "sourceSHA256": "ca003ab8277c014ad51556758aa042988a8d77b14cee3cb19403ece520bac2dc",
+      "callCount": 7,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.server.packet.recv.HandlerSceneInitFinishReq#buildWatermarkPacket()",
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerSceneInitFinishReq.java",
+      "line": 138,
+      "sourceSHA256": "657512222e83f1a06364a1eb071130df8e0db7e8e1512ad642004f1ec9ec8066",
+      "callCount": 14,
+      "directPacketArguments": [],
+      "packetConstructions": [
+        {
+          "line": 145,
+          "constructedType": "PacketWindSeedClientNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 157,
+          "constructedType": "PacketWindSeedClientNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 164,
+          "constructedType": "PacketWindSeedUID",
+          "lambdaDepth": 0
+        }
+      ]
+    },
+    {
+      "id": "emu.grasscutter.server.packet.recv.HandlerSceneInitFinishReq#handle(GameSession,byte[],byte[])",
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerSceneInitFinishReq.java",
+      "line": 17,
+      "sourceSHA256": "50e2a7376ba4094ac028a770409dd8579e7d892ee6df98b0bb8bf076e71f0d41",
+      "callCount": 72,
+      "directPacketArguments": [
+        {
+          "callLine": 24,
+          "constructionLine": 24,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketServerTimeNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 25,
+          "constructionLine": 25,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketWorldPlayerInfoNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 26,
+          "constructionLine": 26,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketWorldDataNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 27,
+          "constructionLine": 27,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketPlayerWorldSceneInfoListNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 28,
+          "constructionLine": 28,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketSceneForceUnlockNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 29,
+          "constructionLine": 29,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketHostPlayerNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 30,
+          "constructionLine": 30,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketSceneDataNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 32,
+          "constructionLine": 32,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketSceneTimeNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 33,
+          "constructionLine": 33,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketPlayerGameTimeNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 36,
+          "constructionLine": 36,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketPlayerEnterSceneInfoNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 46,
+          "constructionLine": 46,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketTeamHexenzirkelChangeNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 49,
+          "constructionLine": 49,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketSceneAreaWeatherNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 50,
+          "constructionLine": 50,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketScenePlayerInfoNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 51,
+          "constructionLine": 51,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketSceneTeamUpdateNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 53,
+          "constructionLine": 53,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketSyncTeamEntityNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 54,
+          "constructionLine": 54,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketSyncScenePlayTeamEntityNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        },
+        {
+          "callLine": 56,
+          "constructionLine": 56,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketSceneInitFinishRsp",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        }
+      ],
+      "packetConstructions": [
+        {
+          "line": 24,
+          "constructedType": "PacketServerTimeNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 25,
+          "constructedType": "PacketWorldPlayerInfoNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 26,
+          "constructedType": "PacketWorldDataNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 27,
+          "constructedType": "PacketPlayerWorldSceneInfoListNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 28,
+          "constructedType": "PacketSceneForceUnlockNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 29,
+          "constructedType": "PacketHostPlayerNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 30,
+          "constructedType": "PacketSceneDataNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 32,
+          "constructedType": "PacketSceneTimeNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 33,
+          "constructedType": "PacketPlayerGameTimeNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 36,
+          "constructedType": "PacketPlayerEnterSceneInfoNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 46,
+          "constructedType": "PacketTeamHexenzirkelChangeNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 49,
+          "constructedType": "PacketSceneAreaWeatherNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 50,
+          "constructedType": "PacketScenePlayerInfoNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 51,
+          "constructedType": "PacketSceneTeamUpdateNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 53,
+          "constructedType": "PacketSyncTeamEntityNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 54,
+          "constructedType": "PacketSyncScenePlayTeamEntityNotify",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 56,
+          "constructedType": "PacketSceneInitFinishRsp",
+          "lambdaDepth": 0
+        }
+      ]
+    },
+    {
+      "id": "emu.grasscutter.server.packet.recv.HandlerSceneInitFinishReq#sendSweep(GameSession,String[])",
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerSceneInitFinishReq.java",
+      "line": 89,
+      "sourceSHA256": "77848810bf70c17eaf242902efe385dafaca6f52b39170d8b45d7b1b5b42b97f",
+      "callCount": 23,
+      "directPacketArguments": [
+        {
+          "callLine": 128,
+          "constructionLine": 129,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "PacketWindSeedClientNotify",
+          "lambdaDepth": 0,
+          "dynamicOpcode": false
+        }
+      ],
+      "packetConstructions": [
+        {
+          "line": 129,
+          "constructedType": "PacketWindSeedClientNotify",
+          "lambdaDepth": 0
+        }
+      ]
+    },
+    {
+      "id": "emu.grasscutter.server.packet.recv.HandlerSetPlayerBornDataReq#handle(GameSession,byte[],byte[])",
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBornDataReq.java",
+      "line": 20,
+      "sourceSHA256": "a8f929753af5022842428b26e6bbab4d724a7522c45dd52fc364f548b974377e",
+      "callCount": 2,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    },
+    {
+      "id": "emu.grasscutter.server.packet.recv.HandlerSetPlayerBornDataReq#handleAdmitted(GameSession,byte[])",
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBornDataReq.java",
+      "line": 25,
+      "sourceSHA256": "8b9d6588b14546b25ae5f2afa843034f4c61a0e0820724a7a24f50f5c58b58e2",
+      "callCount": 40,
+      "directPacketArguments": [
+        {
+          "callLine": 84,
+          "constructionLine": 84,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "BasePacket",
+          "lambdaDepth": 0,
+          "dynamicOpcode": true
+        },
+        {
+          "callLine": 85,
+          "constructionLine": 85,
+          "receiverCall": "session.send",
+          "argument": 0,
+          "constructedType": "BasePacket",
+          "lambdaDepth": 0,
+          "dynamicOpcode": true
+        }
+      ],
+      "packetConstructions": [
+        {
+          "line": 84,
+          "constructedType": "BasePacket",
+          "lambdaDepth": 0
+        },
+        {
+          "line": 85,
+          "constructedType": "BasePacket",
+          "lambdaDepth": 0
+        }
+      ]
+    },
+    {
+      "id": "emu.grasscutter.server.packet.recv.HandlerUnionCmdNotify#handle(GameSession,byte[],byte[])",
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerUnionCmdNotify.java",
+      "line": 13,
+      "sourceSHA256": "287e911501c89648872d2739fe7feb011d3b4cabf1e2211da75b4a4f9206d4eb",
+      "callCount": 36,
+      "directPacketArguments": [],
+      "packetConstructions": []
+    }
+  ],
+  "sourceEdges": [
+    {
+      "source": "emu.grasscutter.game.world.World#getSceneById(int)",
+      "target": "emu.grasscutter.game.world.Scene#<init>(World,SceneData)",
+      "line": 173,
+      "selector": "Scene",
+      "kind": "construct",
+      "lambdaDepth": 0,
+      "basis": "reviewed-source-edge"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#onLogin()",
+      "target": "emu.grasscutter.game.world.World#<init>(Player)",
+      "line": 1871,
+      "selector": "World",
+      "kind": "construct",
+      "lambdaDepth": 0,
+      "basis": "reviewed-source-edge"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#onLogin()",
+      "target": "emu.grasscutter.game.world.World#tryAddPlayer(Player)",
+      "line": 1872,
+      "selector": "world.tryAddPlayer",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "reviewed-source-edge"
+    },
+    {
+      "source": "emu.grasscutter.game.world.World#addPlayerToWorld(Player,Integer,EntrySource,EntryAction)",
+      "target": "emu.grasscutter.game.world.Scene#addPlayer(Player)",
+      "line": 295,
+      "selector": "scene.addPlayer",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "reviewed-source-edge"
+    },
+    {
+      "source": "emu.grasscutter.server.packet.recv.HandlerEnterSceneDoneReq#handle(GameSession,byte[],byte[])",
+      "target": "emu.grasscutter.game.world.Scene#spawnPlayer(Player)",
+      "line": 33,
+      "selector": "player.getScene().spawnPlayer",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "reviewed-source-edge"
+    },
+    {
+      "source": "emu.grasscutter.server.packet.recv.HandlerEnterSceneDoneReq#handle(GameSession,byte[],byte[])",
+      "target": "emu.grasscutter.game.world.Scene#showOtherEntities(Player)",
+      "line": 46,
+      "selector": "player.getScene().showOtherEntities",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "reviewed-source-edge"
+    },
+    {
+      "source": "emu.grasscutter.server.packet.recv.HandlerEnterSceneDoneReq#handle(GameSession,byte[],byte[])",
+      "target": "emu.grasscutter.game.world.Scene#loadNpcForPlayerEnter(Player)",
+      "line": 58,
+      "selector": "player.getScene().loadNpcForPlayerEnter",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "reviewed-source-edge"
+    },
+    {
+      "source": "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#handleAdmitted(GameSession)",
+      "target": "emu.grasscutter.game.player.Player#onLogin()",
+      "line": 62,
+      "selector": "player.onLogin",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "reviewed-source-edge"
+    },
+    {
+      "source": "emu.grasscutter.server.packet.recv.HandlerEnterSceneDoneReq#handle(GameSession,byte[],byte[])",
+      "target": "emu.grasscutter.game.world.Scene#loadGroupForQuest(List<QuestGroupSuite>)",
+      "line": 63,
+      "selector": "player.getScene().loadGroupForQuest",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "reviewed-source-edge"
+    },
+    {
+      "source": "emu.grasscutter.server.packet.recv.HandlerSetPlayerBornDataReq#handleAdmitted(GameSession,byte[])",
+      "target": "emu.grasscutter.game.player.Player#onLogin()",
+      "line": 76,
+      "selector": "session.getPlayer().onLogin",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "reviewed-source-edge"
+    },
+    {
+      "source": "emu.grasscutter.server.packet.recv.HandlerSceneInitFinishReq#handle(GameSession,byte[],byte[])",
+      "target": "emu.grasscutter.game.world.Scene#playerSceneInitialized(Player)",
+      "line": 81,
+      "selector": "player.getScene().playerSceneInitialized",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "reviewed-source-edge"
+    },
+    {
+      "source": "emu.grasscutter.game.world.World#<init>(Player)",
+      "target": "emu.grasscutter.game.world.World#<init>(Player,boolean)",
+      "line": 97,
+      "selector": "this",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "reviewed-source-edge"
+    },
+    {
+      "source": "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#scheduleFallback(GameSession,Player)",
+      "target": "emu.grasscutter.game.player.Player#onLogin()",
+      "line": 92,
+      "selector": "player.onLogin",
+      "kind": "invoke",
+      "lambdaDepth": 2,
+      "basis": "reviewed-source-edge"
+    },
+    {
+      "source": "emu.grasscutter.game.world.Scene#playerSceneInitialized(Player)",
+      "target": "emu.grasscutter.game.world.Scene#getHost()",
+      "line": 1032,
+      "selector": "this.getHost",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#setProperty(PlayerProperty,int,boolean)",
+      "target": "emu.grasscutter.game.player.Player#setPropertyWithSanityCheck(PlayerProperty,int,boolean)",
+      "line": 1103,
+      "selector": "setPropertyWithSanityCheck",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#getTodayMoonCard()",
+      "target": "emu.grasscutter.game.player.Player#getTodayMoonCard(LocalDate)",
+      "line": 1226,
+      "selector": "getTodayMoonCard",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#getTodayMoonCard()",
+      "target": "emu.grasscutter.game.player.Player#moonCardToday()",
+      "line": 1226,
+      "selector": "moonCardToday",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#getTodayMoonCard(LocalDate)",
+      "target": "emu.grasscutter.game.player.Player#claimMoonCardLocked(LocalDate)",
+      "line": 1231,
+      "selector": "claimMoonCardLocked",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#claimMoonCardLocked(LocalDate)",
+      "target": "emu.grasscutter.game.player.Player#getMoonCardRemainDays(LocalDate)",
+      "line": 1237,
+      "selector": "getMoonCardRemainDays",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.Scene#<init>(World,SceneData)",
+      "target": "emu.grasscutter.game.world.Scene#<init>(World,SceneData,boolean)",
+      "line": 124,
+      "selector": "this",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#claimMoonCardLocked(LocalDate)",
+      "target": "emu.grasscutter.game.player.Player#save()",
+      "line": 1240,
+      "selector": "save",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#claimMoonCardLocked(LocalDate)",
+      "target": "emu.grasscutter.game.player.Player#moonCardDate(LocalDate)",
+      "line": 1246,
+      "selector": "moonCardDate",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#claimMoonCardLocked(LocalDate)",
+      "target": "emu.grasscutter.game.player.Player#getPrimogems()",
+      "line": 1256,
+      "selector": "getPrimogems",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#claimMoonCardLocked(LocalDate)",
+      "target": "emu.grasscutter.game.player.Player#save()",
+      "line": 1263,
+      "selector": "save",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#claimMoonCardLocked(LocalDate)",
+      "target": "emu.grasscutter.game.player.Player#sendPacket(BasePacket)",
+      "line": 1264,
+      "selector": "sendPacket",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.Scene#<init>(World,SceneData,boolean)",
+      "target": "emu.grasscutter.game.world.Scene#getId()",
+      "line": 135,
+      "selector": "getId",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.server.packet.recv.HandlerGetPlayerTokenReq#handleAuthenticated(GameSession,GetPlayerTokenReq,Account)",
+      "target": "emu.grasscutter.server.packet.recv.HandlerGetPlayerTokenReq#switchWireKey(GameSession)",
+      "line": 135,
+      "selector": "switchWireKey",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.server.packet.recv.HandlerSceneInitFinishReq#buildWatermarkPacket()",
+      "target": "emu.grasscutter.server.packet.recv.HandlerSceneInitFinishReq#applyColor(Configuration.GameOptions.WatermarkOptions)",
+      "line": 142,
+      "selector": "applyColor",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.Scene#loadNpcForPlayerEnter(Player)",
+      "target": "emu.grasscutter.game.world.Scene#loadNpcForPlayer(Player)",
+      "line": 1573,
+      "selector": "loadNpcForPlayer",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.Scene#loadNpcForPlayer(Player)",
+      "target": "emu.grasscutter.game.world.Scene#getId()",
+      "line": 1578,
+      "selector": "getId",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.Scene#loadNpcForPlayer(Player)",
+      "target": "emu.grasscutter.game.world.Scene#broadcastPacket(BasePacket)",
+      "line": 1604,
+      "selector": "this.broadcastPacket",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#doDailyReset()",
+      "target": "emu.grasscutter.game.player.Player#doDailyReset(Instant)",
+      "line": 1701,
+      "selector": "doDailyReset",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#doDailyReset(Instant)",
+      "target": "emu.grasscutter.game.player.Player#resetDailyState(Instant)",
+      "line": 1706,
+      "selector": "resetDailyState",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#resetDailyState(Instant)",
+      "target": "emu.grasscutter.game.player.Player#getTodayMoonCard(LocalDate)",
+      "line": 1724,
+      "selector": "getTodayMoonCard",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#resetDailyState(Instant)",
+      "target": "emu.grasscutter.game.player.Player#isOnline()",
+      "line": 1724,
+      "selector": "isOnline",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#resetDailyState(Instant)",
+      "target": "emu.grasscutter.game.player.Player#setForgePoints(int)",
+      "line": 1736,
+      "selector": "this.setForgePoints",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.World#getSceneById(int)",
+      "target": "emu.grasscutter.game.world.World#registerScene(Scene)",
+      "line": 174,
+      "selector": "this.registerScene",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#resetDailyState(Instant)",
+      "target": "emu.grasscutter.game.player.Player#save()",
+      "line": 1750,
+      "selector": "save",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#resetDailyState(Instant)",
+      "target": "emu.grasscutter.game.player.Player#isOnline()",
+      "line": 1751,
+      "selector": "isOnline",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#onLogin()",
+      "target": "emu.grasscutter.game.player.Player#applyStartingSceneTags()",
+      "line": 1858,
+      "selector": "this.applyStartingSceneTags",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#onLogin()",
+      "target": "emu.grasscutter.game.player.Player#recoverDungeonLoginLocation()",
+      "line": 1869,
+      "selector": "this.recoverDungeonLoginLocation",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#onLogin()",
+      "target": "emu.grasscutter.game.player.Player#getUid()",
+      "line": 1874,
+      "selector": "this.getUid",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#onLogin()",
+      "target": "emu.grasscutter.game.player.Player#getScene()",
+      "line": 1892,
+      "selector": "this.getScene",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#onLogin()",
+      "target": "emu.grasscutter.game.player.Player#getUid()",
+      "line": 1903,
+      "selector": "this.getUid",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#onLogin()",
+      "target": "emu.grasscutter.game.player.Player#setProperty(PlayerProperty,int,boolean)",
+      "line": 1914,
+      "selector": "this.setProperty",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#onLogin()",
+      "target": "emu.grasscutter.game.player.Player#setProperty(PlayerProperty,int,boolean)",
+      "line": 1916,
+      "selector": "this.setProperty",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#onLogin()",
+      "target": "emu.grasscutter.game.player.Player#doDailyReset()",
+      "line": 1918,
+      "selector": "this.doDailyReset",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#onLogin()",
+      "target": "emu.grasscutter.game.player.Player#getServer()",
+      "line": 1931,
+      "selector": "this.getServer",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#onLogin()",
+      "target": "emu.grasscutter.game.player.Player#getArtifactTransmuter()",
+      "line": 1956,
+      "selector": "getArtifactTransmuter",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#onLogin()",
+      "target": "emu.grasscutter.game.player.Player#getMusicGameBook()",
+      "line": 1957,
+      "selector": "getMusicGameBook",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#onLogin()",
+      "target": "emu.grasscutter.game.player.Player#getTodayMoonCard()",
+      "line": 1971,
+      "selector": "getTodayMoonCard",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#onLogin()",
+      "target": "emu.grasscutter.game.player.Player#getServer()",
+      "line": 1977,
+      "selector": "this.getServer",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#onLogin()",
+      "target": "emu.grasscutter.game.player.Player#getServer()",
+      "line": 1999,
+      "selector": "getServer",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#getPropertyMax(PlayerProperty)",
+      "target": "emu.grasscutter.game.player.Player#getProperty(PlayerProperty)",
+      "line": 2094,
+      "selector": "getProperty",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#getPropertyMax(PlayerProperty)",
+      "target": "emu.grasscutter.game.player.Player#getProperty(PlayerProperty)",
+      "line": 2095,
+      "selector": "getProperty",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#setPropertyWithSanityCheck(PlayerProperty,int,boolean)",
+      "target": "emu.grasscutter.game.player.Player#getPropertyMin(PlayerProperty)",
+      "line": 2112,
+      "selector": "this.getPropertyMin",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#setPropertyWithSanityCheck(PlayerProperty,int,boolean)",
+      "target": "emu.grasscutter.game.player.Player#getPropertyMax(PlayerProperty)",
+      "line": 2113,
+      "selector": "this.getPropertyMax",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#setPropertyWithSanityCheck(PlayerProperty,int,boolean)",
+      "target": "emu.grasscutter.game.player.Player#sendPacket(BasePacket)",
+      "line": 2119,
+      "selector": "this.sendPacket",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#setPropertyWithSanityCheck(PlayerProperty,int,boolean)",
+      "target": "emu.grasscutter.game.player.Player#sendPacket(BasePacket)",
+      "line": 2126,
+      "selector": "this.sendPacket",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#setPropertyWithSanityCheck(PlayerProperty,int,boolean)",
+      "target": "emu.grasscutter.game.player.Player#sendPacket(BasePacket)",
+      "line": 2133,
+      "selector": "this.sendPacket",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#setPropertyWithSanityCheck(PlayerProperty,int,boolean)",
+      "target": "emu.grasscutter.game.player.Player#sendPacket(BasePacket)",
+      "line": 2142,
+      "selector": "this.sendPacket",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#setPropertyWithSanityCheck(PlayerProperty,int,boolean)",
+      "target": "emu.grasscutter.game.player.Player#sendPacket(BasePacket)",
+      "line": 2143,
+      "selector": "this.sendPacket",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.World#tryAddPlayer(Player)",
+      "target": "emu.grasscutter.game.world.World#addPlayerToWorld(Player,Integer,EntrySource,EntryAction)",
+      "line": 215,
+      "selector": "addPlayerToWorld",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.World#addPlayerToWorld(Player,Integer,EntrySource,EntryAction)",
+      "target": "emu.grasscutter.game.world.World#getSceneById(int)",
+      "line": 252,
+      "selector": "this.getSceneById",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.Scene#addPlayer(Player)",
+      "target": "emu.grasscutter.game.world.Scene#getId()",
+      "line": 269,
+      "selector": "this.getId",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.World#addPlayerToWorld(Player,Integer,EntrySource,EntryAction)",
+      "target": "emu.grasscutter.game.world.World#peerIdForJoiningPlayer(Player)",
+      "line": 273,
+      "selector": "peerIdForJoiningPlayer",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.Scene#addPlayer(Player)",
+      "target": "emu.grasscutter.game.world.Scene#getId()",
+      "line": 278,
+      "selector": "this.getId",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.Scene#addPlayer(Player)",
+      "target": "emu.grasscutter.game.world.Scene#setupPlayerAvatars(Player)",
+      "line": 282,
+      "selector": "this.setupPlayerAvatars",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.World#addPlayerToWorld(Player,Integer,EntrySource,EntryAction)",
+      "target": "emu.grasscutter.game.world.World#broadcastPacket(BasePacket)",
+      "line": 298,
+      "selector": "this.broadcastPacket",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.World#addPlayerToWorld(Player,Integer,EntrySource,EntryAction)",
+      "target": "emu.grasscutter.game.world.World#detachPlayer(Player,Scene)",
+      "line": 307,
+      "selector": "detachPlayer",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.World#addPlayerToWorld(Player,Integer,EntrySource,EntryAction)",
+      "target": "emu.grasscutter.game.world.World#completeDeparture(Departure)",
+      "line": 334,
+      "selector": "completeDeparture",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.World#addPlayerToWorld(Player,Integer,EntrySource,EntryAction)",
+      "target": "emu.grasscutter.game.world.World#evacuateGuests(List<Player>)",
+      "line": 335,
+      "selector": "evacuateGuests",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.World#addPlayerToWorld(Player,Integer,EntrySource,EntryAction)",
+      "target": "emu.grasscutter.game.world.World#updatePlayerInfos(Player)",
+      "line": 336,
+      "selector": "updatePlayerInfos",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.World#addPlayerToWorld(Player,Integer,EntrySource,EntryAction)",
+      "target": "emu.grasscutter.game.world.World#getPlayerCount()",
+      "line": 339,
+      "selector": "this.getPlayerCount",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.World#addPlayerToWorld(Player,Integer,EntrySource,EntryAction)",
+      "target": "emu.grasscutter.game.world.World#updatePlayerInfos(Player)",
+      "line": 339,
+      "selector": "this.updatePlayerInfos",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.World#peerIdForJoiningPlayer(Player)",
+      "target": "emu.grasscutter.game.world.World#getNextPeerId()",
+      "line": 345,
+      "selector": "this.getNextPeerId",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.World#detachPlayer(Player,Scene)",
+      "target": "emu.grasscutter.game.world.World#disbandsOnHostLeave()",
+      "line": 357,
+      "selector": "this.disbandsOnHostLeave",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.server.packet.recv.HandlerPostEnterSceneReq#handle(GameSession,byte[],byte[])",
+      "target": "emu.grasscutter.server.packet.recv.HandlerPostEnterSceneReq#playOpeningCutscene(emu.grasscutter.game.player.Player)",
+      "line": 39,
+      "selector": "this.playOpeningCutscene",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.Scene#spawnPlayer(Player)",
+      "target": "emu.grasscutter.game.world.Scene#isInScene(GameEntity)",
+      "line": 407,
+      "selector": "this.isInScene",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.Scene#spawnPlayer(Player)",
+      "target": "emu.grasscutter.game.world.Scene#addEntity(GameEntity)",
+      "line": 416,
+      "selector": "this.addEntity",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.World#evacuateGuests(List<Player>)",
+      "target": "emu.grasscutter.game.world.World#retryGuestEvacuations()",
+      "line": 434,
+      "selector": "retryGuestEvacuations",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.Scene#addEntity(GameEntity)",
+      "target": "emu.grasscutter.game.world.Scene#addEntityDirectly(GameEntity)",
+      "line": 435,
+      "selector": "this.addEntityDirectly",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.Scene#addEntity(GameEntity)",
+      "target": "emu.grasscutter.game.world.Scene#broadcastPacket(BasePacket)",
+      "line": 436,
+      "selector": "this.broadcastPacket",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.World#retryGuestEvacuations()",
+      "target": "emu.grasscutter.game.world.World#evacuationTimeMillis()",
+      "line": 442,
+      "selector": "evacuationTimeMillis",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.world.World#retryGuestEvacuations()",
+      "target": "emu.grasscutter.game.world.World#evacuationTimeMillis()",
+      "line": 445,
+      "selector": "evacuationTimeMillis",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#handleAdmitted(GameSession)",
+      "target": "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#scheduleFallback(GameSession,Player)",
+      "line": 54,
+      "selector": "this.scheduleFallback",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#handleAdmitted(GameSession)",
+      "target": "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#createDefaultTraveler(Player)",
+      "line": 59,
+      "selector": "createDefaultTraveler",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.server.packet.recv.HandlerSceneInitFinishReq#handle(GameSession,byte[],byte[])",
+      "target": "emu.grasscutter.server.packet.recv.HandlerSceneInitFinishReq#sendSweep(GameSession,String[])",
+      "line": 64,
+      "selector": "sendSweep",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.server.packet.recv.HandlerSceneInitFinishReq#handle(GameSession,byte[],byte[])",
+      "target": "emu.grasscutter.server.packet.recv.HandlerSceneInitFinishReq#buildWatermarkPacket()",
+      "line": 66,
+      "selector": "buildWatermarkPacket",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#getForgePoints()",
+      "target": "emu.grasscutter.game.player.Player#getProperty(PlayerProperty)",
+      "line": 866,
+      "selector": "this.getProperty",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#setForgePoints(int)",
+      "target": "emu.grasscutter.game.player.Player#getForgePoints()",
+      "line": 870,
+      "selector": "this.getForgePoints",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.game.player.Player#getPrimogems()",
+      "target": "emu.grasscutter.game.player.Player#getProperty(PlayerProperty)",
+      "line": 923,
+      "selector": "this.getProperty",
+      "kind": "invoke",
+      "lambdaDepth": 0,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#handle(GameSession,byte[],byte[])",
+      "target": "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#handleAdmitted(GameSession)",
+      "line": 20,
+      "selector": "handleAdmitted",
+      "kind": "invoke",
+      "lambdaDepth": 1,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.server.packet.recv.HandlerSetPlayerBornDataReq#handle(GameSession,byte[],byte[])",
+      "target": "emu.grasscutter.server.packet.recv.HandlerSetPlayerBornDataReq#handleAdmitted(GameSession,byte[])",
+      "line": 22,
+      "selector": "handleAdmitted",
+      "kind": "invoke",
+      "lambdaDepth": 1,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.server.packet.recv.HandlerGetPlayerTokenReq#handle(GameSession,byte[],byte[])",
+      "target": "emu.grasscutter.server.packet.recv.HandlerGetPlayerTokenReq#handleAuthenticated(GameSession,GetPlayerTokenReq,Account)",
+      "line": 33,
+      "selector": "handleAuthenticated",
+      "kind": "invoke",
+      "lambdaDepth": 1,
+      "basis": "same-owner-unique-name-arity-candidate"
+    },
+    {
+      "source": "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#scheduleFallback(GameSession,Player)",
+      "target": "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#createDefaultTraveler(Player)",
+      "line": 91,
+      "selector": "createDefaultTraveler",
+      "kind": "invoke",
+      "lambdaDepth": 2,
+      "basis": "same-owner-unique-name-arity-candidate"
+    }
+  ],
+  "openBoundaries": [
+    "manager/service methods and constructors outside selected files",
+    "Lombok/generated accessors and overload/virtual dispatch",
+    "event/plugin replacement and callback scheduling",
+    "scene scripts, resources and data-dependent notifications",
+    "implicit class/field initialization execution",
+    "actual CN72 client sequence and wire mappings"
+  ],
+  "reviewSHA256": "b45f9b5d04c37ba5f1b54e67983436d218eba4812f6f22973916a1cd1c5c1d51",
+  "toolSourceSHA256": {
+    "tools/Client72JavaSurface.java": "4b3a1953eed3378cd6cd115218f56cb97d98bc41078db32a5c15df7e71d2d6d5",
+    "tools/client72_java_surface.py": "5dd4a9328e46635f87bef99c099840366ae312fd22d32172bd6aacc7b8939690",
+    "tools/review_client72_login_surface.py": "60e08252903cc8f16308d594f799a1dd2820f490a2123c6caef1da608c9be9b4"
+  },
+  "models": [
+    "JDK17 parse only; no dependency resolution or annotation processing",
+    "same-owner unique name/arity edges remain candidates",
+    "13 explicitly reviewed built-in receiver/constructor links",
+    "lambda depth is syntax, not evidence of immediate or asynchronous execution",
+    "direct constructor arguments to send-named calls are source candidates, not a complete required set"
+  ]
+}

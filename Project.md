@@ -4,9 +4,9 @@
 
 ## 当前阶段
 
-执行状态：用户2026-11-05已明确恢复，持续推进至D-02实机验收，目标active。A-04d5r/s完成独立封/收帧，A-04d5t/u/v贯通原生Token完整帧和第一分区Ec2b密钥来源；A-04d5w完成响应Handler/安装key→Login实际序列化与完整帧。继续A-03/P0闭包、真实响应收帧及SDK/连接前置。A-04d/B-02及A-04d5n/B-02c9整体仍进行中，tag965业务语义等缺口保留；D-02未完成。旧交接的暂停指令是历史记录，不再生效。
+执行状态：用户2026-11-06要求完成当前子任务后暂停并交接；A-03a方法级登录/场景源码索引已完成限定验收，本项收口后不启动下一任务。A-04d5w此前完成响应Handler/安装key→Login实际序列化与完整帧。A-03完整闭包、真实响应收帧及SDK/连接前置仍未完成，A-04d/B-02及A-04d5n/B-02c9整体不晋级；D-02未完成。最新恢复入口见HANDOFF2，须等用户恢复后继续。
 
-静态结构、Token/Login原始wire及响应非空对象图已离线恢复；四个登录请求/响应身份与CmdID、36个字段来源、8类默认枚举102符号及2类连接状态枚举20符号已有目标证据。明确夹具下已执行Token原生seed/构造/完整帧，以及响应Handler的密码学、安装key、UID/token、版本hash、Login/Full分支、Login构造/实际序列化/完整帧；独立protoc、Java key及错误路径均有验证。不等于整个Handler返回、SDK初始化、真实收帧调度或登录。真实启动已观察全局及UTF-8缓存ABI，最后调试目标已退出，原因unknown。A-03/A-04d/B-02与连接/资源前置继续；240研究回归不消除Java完整集既有217失败。Java及游戏当前未运行，HTTP/游戏端口无监听，MongoDB属本工作区；隔离研发基线部署是历史记录，目前没有7.2可连接构建或登录入场验收。本机路径和原始证据留忽略local/migration72，公共脱敏摘要在docs和protocol/cn-7.2。
+静态结构、Token/Login原始wire及响应非空对象图已离线恢复；四个登录请求/响应身份与CmdID、36个字段来源、8类默认枚举102符号及2类连接状态枚举20符号已有目标证据。明确夹具下已执行Token原生seed/构造/完整帧，以及响应Handler的密码学、安装key、UID/token、版本hash、Login/Full分支、Login构造/实际序列化/完整帧；独立protoc、Java key及错误路径均有验证。不等于整个Handler返回、SDK初始化、真实收帧调度或登录。真实启动已观察全局及UTF-8缓存ABI，最后调试目标已退出，原因unknown。A-03a提供12源码/9根/80方法的索引，1012未关联调用保留；248研究回归不消除Java完整集既有217失败。交接时复查Java及游戏均未运行，HTTP/游戏端口无监听，MongoDB属本工作区；隔离研发基线部署是历史记录，目前没有7.2可连接构建或登录入场验收。本机路径和原始证据留忽略local/migration72，公共脱敏摘要在docs和protocol/cn-7.2。
 
 已有资源修改 ScriptSceneData/flat.luas.scenes.full_globals.lua.json 不属本批，不覆盖、不提交。patch 起点 f287410，resources 起点 dac2a9d。初查时Java/MongoDB归属本工作区且配置引用旧客户端/存档；随后隔离研发部署记录见ENV-01。下一次启动仍须重新核对配置与进程，不能将历史部署结果当作当前验收或清空原数据。
 
@@ -22,6 +22,7 @@
 | A-02a 确定性静态盘点工具 | DOC-01 | inventory_protocol、8项测试 | 忽略注释/字符串、继承链排除发送类假冲突、动态项不猜测、重复输出一致 | 已完成 | server-inventory.json、inventory-tests.log；34ee887 | 作为A-02/A-03输入 |
 | A-02b 动态来源复核守卫 | A-02a | review_protocol72_surface、人工清单、7项测试 | 全17动态位置/40来源hash/常量绑定/37数字case；新增或漂移拒绝，开放边界不晋级，重复一致 | 已完成 | CLIENT_72_PROTOCOL_INVENTORY、evidence/server-surface-review.json；e87baa7 | C-01校验事件后最终包，禁候选兜底并拒绝注册冲突 |
 | A-03 登录入场依赖闭包 | A-02 | P0根、调用边、Proto引用图、复核表 | 完整覆盖新旧号、选人、初始化、场景、嵌套；人工和客户端复核 | 进行中 | 静态起点114名称/471文件，见协议盘点摘要；— | 追踪管理器/事件/脚本，结合真实序列收敛 |
+| A-03a 方法级登录/场景源码索引 | A-02b | Client72JavaSurface、client72_java_surface、review_client72_login_surface、复核表/摘要 | JDK17实际parse，注释/字符串/UTF16与CRLF/record/switch/lambda/匿名类/重载边界；固定源码/13条人工边，未关联调用和目标映射保持未知，重复一致 | 已完成 | CLIENT_72_LOGIN_SOURCE_GRAPH、login-source-observations.json；12源码/9根/80方法，96边中83仅候选；8新增/248回归、二次一致；本项提交 | 用户要求暂停；恢复后追管理器/事件/脚本；不代表A-03完整或7.2必需包集 |
 | A-04 7.2 提取器 | A-01 | extract_client72、profile、研究记录 | 类型/成员/泛型/父类/布局/注册与CmdID候选有证据，边界及抽样验证 | 进行中 | docs/CLIENT_72_EXTRACTION.md；— | 保护入口/回调参数及运行时闭合泛型ABI仍需恢复 |
 | A-04a 目标名称/字段/方法基础提取 | A-01 | extract_client72、7项测试 | 三份目标哈希守卫；独立名称向量；全部跨度/引用/代码地址校验；不把常量返回值标作包号 | 已完成 | client72-metadata.json、extraction-summary.json、提取研究摘要；34ee887 | 89,748类型/445,462字段/741,021方法供A-04后续分析 |
 | A-04b 泛型/父类/静态布局 | A-04a | extract_client72 --structures、test_client72_structures、提取摘要 | 全泛型行/引用边界、父图无环、字段存储分类；未知布局保留未知，目标全量运行和13项测试 | 已完成 | client72-structures.json、structures-summary.json、logs/structures-tests.log；2003432 | 运行时闭合泛型和多维bounds仍需另验；供wire字段定位 |
@@ -72,7 +73,7 @@
 | A-04d5t 连续原生Token到完整帧 | A-04d5h、A-04d5r | trace_client72_token_frame、摘要/测试 | 同CPU seed/构造/发送/实际size与writer/完整帧；6组含非ASCII/NUL/长字段/验签失败，独立全字段wire、222回归及重复一致 | 已完成 | token-frame-observations.json、token-frame-determinism.json；389fe4a | 帧初始key/SDK/OS仍明确夹具，继续真实key来源或Login/响应串联 |
 | A-04d5u 原生Ec2b与初始化 | A-04d5t、D-01b1 | client72_ec2b、trace_client72_ec2b、摘要/测试 | 原生注册/RNG初始化/完整Ec2b/managed结果；16组含地址/缓存/扰动/拒绝、独立固定pair与live状态、228回归及重复一致 | 已完成 | ec2b-observations.json、ec2b-determinism.json；0153d00 | 非空分区来源接续A-04d5v，物理截断语义不扩大 |
 | A-04d5v 分区Ec2b来源到Token完整帧 | A-04d5n4、A-04d5t、A-04d5u | trace_client72_dispatch_key_frame、摘要/测试 | 多RSA块真实解密/验签/reader→三次Ec2b→两配置XOR/清槽→最终key原指针→Token实际size/writer/帧；独立输入、跨周期/空key/错误魔数与重复回归 | 已完成 | dispatch-key-frame-observations.json、dispatch-key-frame-determinism.json；4原生样本、234回归、二次一致，旧三工具各6样本产物不变；2523513 | 继续Login/真实响应串联或P0/SDK；调度器/实机不在本项范围 |
-| A-04d5w 响应Handler到Login完整帧 | A-04d5q、A-04d5r | trace_client72_handler_login_frame、摘要/测试 | 原生响应密码学/安装key→Handler/Login构造→发送→实际序列化/完整帧；保留key/request/token/hash指针，独立protoc/Java key、边界/错误/重复回归 | 已完成 | handler-login-frame-observations.json、handler-login-frame-determinism.json；10原生样本、240回归、二次一致，Token原6组产物不变；本项提交 | 继续A-03/P0调用闭包或真实响应收帧，不代表整个Handler返回/实机 |
+| A-04d5w 响应Handler到Login完整帧 | A-04d5q、A-04d5r | trace_client72_handler_login_frame、摘要/测试 | 原生响应密码学/安装key→Handler/Login构造→发送→实际序列化/完整帧；保留key/request/token/hash指针，独立protoc/Java key、边界/错误/重复回归 | 已完成 | handler-login-frame-observations.json、handler-login-frame-determinism.json；10原生样本、240回归、二次一致，Token原6组产物不变；6db47fe | 继续A-03/P0调用闭包或真实响应收帧，不代表整个Handler返回/实机 |
 | B-03 确定性生成 | B-01、B-02 | generator、PacketOpcodes、Proto | 只生成核实项，别名/引用检查，重复输出一致，protoc 编译，禁止旧号兜底 | 待开始 | — | 合成模型测试，再接真实映射 |
 | C-01 双向网络接入 | B-03 | GameSession、BasePacket、Handler 注册、UnionCmd/枚举 | 注册冲突失败、号/长度边界、内外分派、目标 wire 测试，构建部署 | 待开始 | — | 映射确认后替换旧表和专属断言 |
 | D-01 补丁和连接前置 | A-01、A-04 | patch、HTTP/SDK/dispatch/密钥 | 路由/渠道/版本/加密、各钩子 ABI/布局/实际加载验证 | 进行中 | CLIENT_72_PATCH_ABI；四入口参数前缀已验，密钥/加载未验 | 字符串工厂、原生RSA/验签、实际加载与路由；商城钩子另列 |
@@ -204,3 +205,5 @@
 - 2026-11-06 A-04d5v：9块RSA分区响应经原生密码学/reader→三次Ec2b→两配置XOR/清槽→第三次key原指针保留→真实Token封包，4样本覆盖5314字节跨周期/Unicode/NUL/空key/错误魔数；234回归与二次产物一致，原三工具各6样本产物不变，校验0/ready1（213项）。配置模型原本读旧密文缓存，已改读实际内存；没有改客户端或跳校验。分区→Token调度器、业务未知字段和D-02不晋级。动态会话已将首次异常交给应用，现停mhypbase TLS，Global仍0；无运行代码修改或部署。下一项Login/响应/SDK及P0闭包。
 - D-01b2：真实Global建立，UTF-8两缓存同对象与3虚槽在两次运行均匹配声明，新增4处代码各32字节相同；key槽仍空，完整SDK/登录未验。纠正erun语义，改为con 1+run；实证研究hardware watch表删除后寄存器残留，清理自设watch后启动走得更远，但恢复软件观察仍以80000003退出，原因unknown。最后目标已结束，调试器保留；下一项离线Login/响应或退出机制独立核查，不部署猜测协议。
 - A-04d5w：10样本连续Handler→响应安装key→实际Login/Full→Login构造/队列→原生外层/68918嵌套size与writer→完整帧；4发送/6不发送，4560字节Unicode/NUL跨周期、32/64位包头，完整payload逐字节与独立protoc输入一致，9组key与Java一致。240研究回归、二次trace/摘要一致，Token原6组产物不变，校验0/ready1（213项）。实际执行ByteString写入和native byte copy，不借用opaque payload；未知语义不晋级，无运行部署。下一项A-03/P0闭包或真实响应收帧。
+
+- A-03a：JDK17实际语法解析固定12源码/9根/80方法，96边中13人工复核、83同owner名称/参数数量候选；1012未关联位置保留，61直接构造参数类型名及1间接工厂名不当作完整或最小必需包集。8新增/248研究回归、二次报告/摘要一致，校验0/ready1（213缺口）。源码新旧号/选人路径已分开；运行代码/协议/数据库/补丁不变，无部署或新增实机验收。用户要求完成当前项后暂停并按流程交接；恢复后继续管理器/事件/脚本边界，A-03与D-02不晋级。

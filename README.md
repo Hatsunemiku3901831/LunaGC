@@ -8,7 +8,7 @@
 | --- | --- |
 | 计划支持 | 新旧账号登录、选人、入场、基础玩法及后续内容，按 Project 分项验收 |
 | 已实现 | 继承业务/便携脚本，7.2安装清单、元数据/泛型/父类/静态布局提取、静态CmdID→类型表、服务协议盘点、登录原始wire与响应对象图离线读取；不代表业务已匹配7.2 |
-| 测试通过 | 当前240项研究工具/映射/资源审计回归通过；原生seed加密、响应解密验签/密钥Java对照、Handler核心、SDK认证来源、两处分区恢复路径、key_id密钥选择及Handler原生版本哈希、独立封/收帧及XOR、连续Token序列化封包及Ec2b验证通过；分区key到Token帧4样本、Handler到Login完整帧10样本与独立protoc/重复验证通过，具体范围见Harness；Java完整集既有217项失败未据此消除 |
+| 测试通过 | 当前248项研究工具/映射/资源审计回归通过；原生seed加密、响应解密验签/密钥Java对照、Handler核心、SDK认证来源、两处分区恢复路径、key_id密钥选择及Handler原生版本哈希、独立封/收帧及XOR、连续Token序列化封包及Ec2b验证通过；分区key到Token帧4样本、Handler到Login完整帧10样本与独立protoc/重复验证通过，具体范围见Harness；Java完整集既有217项失败未据此消除 |
 | 客户端验收通过 | 暂无；进入世界与完整玩法分别验收 |
 
 前置缺口：完整三层业务映射、其余枚举/字段语义、运行时泛型ABI/IFix和 7.2 资源来源；补丁仍需 ABI 与实机验证。本地安装清单7,830条大小/MD5已匹配；静态包号4,012条含5组未解决重号；包头/心跳请求与响应共17个静态wire字段已恢复，业务字段语义仍不完整，见[网络研究](docs/CLIENT_72_NETWORK.md)。未知项不发布为服务端正式包号或字段。
@@ -16,6 +16,8 @@
 另已完成555,919个方法参数及835个Action实例的参数恢复，并通过离线CPU模型观察TokenReq保护writer的28字段，见[签名研究](docs/CLIENT_72_SIGNATURES.md)和[保护入口](docs/CLIENT_72_PROTECTED.md)。后续[Login请求](docs/CLIENT_72_LOGIN_WIRE.md)已补齐55外层字段、12消息83字段；[两个响应](docs/CLIENT_72_RESPONSE_WIRE.md)已定位85外层字段，另7个叶子30字段已双向恢复；[非空响应对象图](docs/CLIENT_72_GRAPH_READERS.md)现已覆盖18消息137字段的离线读取、map/list与oneof合并行为，仍保留明确的托管运行环境模型限制。这些结果没有替换服务端协议或放开版本准入。
 
 [登录语义](docs/CLIENT_72_LOGIN_SEMANTICS.md)和[会话研究](docs/CLIENT_72_SESSION.md)已确认四个Token/Login请求/响应身份与CmdID、36个字段来源；默认枚举表8类102符号，另验证2类连接状态枚举20符号。限定夹具下已贯通分区Ec2b密钥来源到Token完整帧，以及响应Handler的密码学/安装key/版本hash到Login实际序列化和完整帧；包头/XOR/错误边界另有独立验证。真实响应收帧调度、完整Handler返回、SDK/补丁/资源前置及其余字段仍未验或未知；真实启动缓存ABI观察不代表登录入场通过。
+
+[登录源码索引](docs/CLIENT_72_LOGIN_SOURCE_GRAPH.md)已完成 A-03a：12份源码、9个入口、80个方法及13条人工调用边；候选边和未关联调用保持未验证，不代表完整P0闭包。用户要求本项完成后暂停，恢复入口见[详细交接](HANDOFF2.md)。
 
 [固定7.2资源候选](docs/CLIENT_72_RESOURCE_CANDIDATE.md)已完成七表与849条选定正引用审计；revision对齐、Lua/场景与完整最小资源仍待验证，未替换运行资源。
 
