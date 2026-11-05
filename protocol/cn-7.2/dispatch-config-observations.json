@@ -1,0 +1,514 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "fixtureCount": 6,
+  "results": [
+    {
+      "name": "empty",
+      "plainWire": "7210393030373139393235343734303939331a0d6a05696e6e657270ffffffff0f62027b7d6a027b7d5a00",
+      "stop": "0x1512124b9",
+      "errorMarker": null,
+      "readerCalls": 1,
+      "postParsePointerPreserved": true,
+      "value": null,
+      "operations": [
+        {
+          "operation": 101,
+          "nativeReturnRAX": "0x61200fd60"
+        },
+        {
+          "operation": 103,
+          "nativeReturnRAX": "0x1"
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "nativePlaintextSHA256": "adf8116233deff0ffc3075f380c7a10a4696502d9775225558b2d3c75f027d3d",
+      "regionReaderCalls": 1,
+      "regionAllocations": 1,
+      "region": {
+        "typeIndex": 67961,
+        "uint32": 0,
+        "text": "inner"
+      },
+      "configInputs": null,
+      "sessionB0Unchanged": true,
+      "configCalls": [
+        {
+          "mode": 1,
+          "arrays": [
+            "7b7d",
+            ""
+          ],
+          "receiverPreserved": true
+        },
+        {
+          "mode": 2,
+          "arrays": [
+            "7b7d",
+            ""
+          ],
+          "receiverPreserved": true
+        }
+      ],
+      "configReturns": [
+        {
+          "address": "0x151211dd5",
+          "nativeReturnRAX": "0xffd01",
+          "returnAL": 1,
+          "values": {
+            "downloadThreadNum": 0,
+            "showexception": 0,
+            "safeOptionalResourceCategories": [],
+            "secureOptionalResourcePolicyPlugins": []
+          }
+        },
+        {
+          "address": "0x151211e2c",
+          "nativeReturnRAX": "0xffd01",
+          "returnAL": 1,
+          "values": {
+            "downloadThreadNum": 0,
+            "showexception": 0,
+            "safeOptionalResourceCategories": [],
+            "secureOptionalResourcePolicyPlugins": []
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": 919,
+          "mode": 1
+        },
+        {
+          "id": 919,
+          "mode": 2
+        }
+      ],
+      "jsonHelperRejected": false,
+      "regionGlobals": {
+        "text": "inner",
+        "textCopy": "inner",
+        "uint32": 4294967295
+      }
+    },
+    {
+      "name": "first-settings",
+      "plainWire": "7210393030373139393235343734303939331a0d6a05696e6e657270ffffffff0f62557b22646f776e6c6f61645468726561644e756d223a372c2273686f77657863657074696f6e223a747275652c22736166654f7074696f6e616c5265736f7572636543617465676f72696573223a5b312c3330305d7d6a027b7d5a00",
+      "stop": "0x1512124b9",
+      "errorMarker": null,
+      "readerCalls": 1,
+      "postParsePointerPreserved": true,
+      "value": null,
+      "operations": [
+        {
+          "operation": 101,
+          "nativeReturnRAX": "0x61200fd60"
+        },
+        {
+          "operation": 103,
+          "nativeReturnRAX": "0x1"
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "nativePlaintextSHA256": "c2d6cb605fdc74392ae405bf080f8a26d59ad52b38674da65fd498006e7c220e",
+      "regionReaderCalls": 1,
+      "regionAllocations": 1,
+      "region": {
+        "typeIndex": 67961,
+        "uint32": 0,
+        "text": "inner"
+      },
+      "configInputs": null,
+      "sessionB0Unchanged": true,
+      "configCalls": [
+        {
+          "mode": 1,
+          "arrays": [
+            "7b22646f776e6c6f61645468726561644e756d223a372c2273686f77657863657074696f6e223a747275652c22736166654f7074696f6e616c5265736f7572636543617465676f72696573223a5b312c3330305d7d",
+            ""
+          ],
+          "receiverPreserved": true
+        },
+        {
+          "mode": 2,
+          "arrays": [
+            "7b7d",
+            ""
+          ],
+          "receiverPreserved": true
+        }
+      ],
+      "configReturns": [
+        {
+          "address": "0x151211dd5",
+          "nativeReturnRAX": "0xffd01",
+          "returnAL": 1,
+          "values": {
+            "downloadThreadNum": 7,
+            "showexception": 1,
+            "safeOptionalResourceCategories": [
+              1,
+              300
+            ],
+            "secureOptionalResourcePolicyPlugins": []
+          }
+        },
+        {
+          "address": "0x151211e2c",
+          "nativeReturnRAX": "0xffd01",
+          "returnAL": 1,
+          "values": {
+            "downloadThreadNum": 7,
+            "showexception": 1,
+            "safeOptionalResourceCategories": [],
+            "secureOptionalResourcePolicyPlugins": []
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": 919,
+          "mode": 1
+        },
+        {
+          "id": 919,
+          "mode": 2
+        }
+      ],
+      "jsonHelperRejected": false,
+      "regionGlobals": {
+        "text": "inner",
+        "textCopy": "inner",
+        "uint32": 4294967295
+      }
+    },
+    {
+      "name": "second-settings",
+      "plainWire": "7210393030373139393235343734303939331a0d6a05696e6e657270ffffffff0f62027b7d6a567b22646f776e6c6f61645468726561644e756d223a323134373438333634372c227365637572654f7074696f6e616c5265736f75726365506f6c696379506c7567696e73223a5b2d312c323134373438333634375d7d5a00",
+      "stop": "0x1512124b9",
+      "errorMarker": null,
+      "readerCalls": 1,
+      "postParsePointerPreserved": true,
+      "value": null,
+      "operations": [
+        {
+          "operation": 101,
+          "nativeReturnRAX": "0x61200fd60"
+        },
+        {
+          "operation": 103,
+          "nativeReturnRAX": "0x1"
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "nativePlaintextSHA256": "e16b155e677d86fa2e6bee86c21af3c4deaf5588aa0c1606799f221d316aa6e3",
+      "regionReaderCalls": 1,
+      "regionAllocations": 1,
+      "region": {
+        "typeIndex": 67961,
+        "uint32": 0,
+        "text": "inner"
+      },
+      "configInputs": null,
+      "sessionB0Unchanged": true,
+      "configCalls": [
+        {
+          "mode": 1,
+          "arrays": [
+            "7b7d",
+            ""
+          ],
+          "receiverPreserved": true
+        },
+        {
+          "mode": 2,
+          "arrays": [
+            "7b22646f776e6c6f61645468726561644e756d223a323134373438333634372c227365637572654f7074696f6e616c5265736f75726365506f6c696379506c7567696e73223a5b2d312c323134373438333634375d7d",
+            ""
+          ],
+          "receiverPreserved": true
+        }
+      ],
+      "configReturns": [
+        {
+          "address": "0x151211dd5",
+          "nativeReturnRAX": "0xffd01",
+          "returnAL": 1,
+          "values": {
+            "downloadThreadNum": 0,
+            "showexception": 0,
+            "safeOptionalResourceCategories": [],
+            "secureOptionalResourcePolicyPlugins": []
+          }
+        },
+        {
+          "address": "0x151211e2c",
+          "nativeReturnRAX": "0xffd01",
+          "returnAL": 1,
+          "values": {
+            "downloadThreadNum": 2147483647,
+            "showexception": 0,
+            "safeOptionalResourceCategories": [],
+            "secureOptionalResourcePolicyPlugins": [
+              -1,
+              2147483647
+            ]
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": 919,
+          "mode": 1
+        },
+        {
+          "id": 919,
+          "mode": 2
+        }
+      ],
+      "jsonHelperRejected": false,
+      "regionGlobals": {
+        "text": "inner",
+        "textCopy": "inner",
+        "uint32": 4294967295
+      }
+    },
+    {
+      "name": "signed-boundary",
+      "plainWire": "7210393030373139393235343734303939331a0d6a05696e6e657270ffffffff0f62217b22646f776e6c6f61645468726561644e756d223a2d323134373438333634387d6a207b22646f776e6c6f61645468726561644e756d223a323134373438333634387d5a00",
+      "stop": "0x1512124b9",
+      "errorMarker": null,
+      "readerCalls": 1,
+      "postParsePointerPreserved": true,
+      "value": null,
+      "operations": [
+        {
+          "operation": 101,
+          "nativeReturnRAX": "0x61200fd60"
+        },
+        {
+          "operation": 103,
+          "nativeReturnRAX": "0x1"
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "nativePlaintextSHA256": "7a1c321aaada62c466bbf5ec620948be845a27de6961cb35445176cece5c8f34",
+      "regionReaderCalls": 1,
+      "regionAllocations": 1,
+      "region": {
+        "typeIndex": 67961,
+        "uint32": 0,
+        "text": "inner"
+      },
+      "configInputs": null,
+      "sessionB0Unchanged": true,
+      "configCalls": [
+        {
+          "mode": 1,
+          "arrays": [
+            "7b22646f776e6c6f61645468726561644e756d223a2d323134373438333634387d",
+            ""
+          ],
+          "receiverPreserved": true
+        },
+        {
+          "mode": 2,
+          "arrays": [
+            "7b22646f776e6c6f61645468726561644e756d223a323134373438333634387d",
+            ""
+          ],
+          "receiverPreserved": true
+        }
+      ],
+      "configReturns": [
+        {
+          "address": "0x151211dd5",
+          "nativeReturnRAX": "0xffd01",
+          "returnAL": 1,
+          "values": {
+            "downloadThreadNum": -2147483648,
+            "showexception": 0,
+            "safeOptionalResourceCategories": [],
+            "secureOptionalResourcePolicyPlugins": []
+          }
+        },
+        {
+          "address": "0x151211e2c",
+          "nativeReturnRAX": "0xffd01",
+          "returnAL": 1,
+          "values": {
+            "downloadThreadNum": 0,
+            "showexception": 0,
+            "safeOptionalResourceCategories": [],
+            "secureOptionalResourcePolicyPlugins": []
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": 919,
+          "mode": 1
+        },
+        {
+          "id": 919,
+          "mode": 2
+        }
+      ],
+      "jsonHelperRejected": false,
+      "regionGlobals": {
+        "text": "inner",
+        "textCopy": "inner",
+        "uint32": 4294967295
+      }
+    },
+    {
+      "name": "bad-first-json",
+      "plainWire": "7210393030373139393235343734303939331a0d6a05696e6e657270ffffffff0f62017b6a027b7d5a00",
+      "stop": null,
+      "sessionB0Unchanged": true,
+      "configCalls": [
+        {
+          "mode": 1,
+          "arrays": [
+            "7b",
+            ""
+          ],
+          "receiverPreserved": true
+        }
+      ],
+      "configReturns": [],
+      "events": [],
+      "jsonHelperRejected": true,
+      "regionGlobals": null
+    },
+    {
+      "name": "bad-second-json",
+      "plainWire": "7210393030373139393235343734303939331a0d6a05696e6e657270ffffffff0f62027b7d6a017b5a00",
+      "stop": null,
+      "sessionB0Unchanged": true,
+      "configCalls": [
+        {
+          "mode": 1,
+          "arrays": [
+            "7b7d",
+            ""
+          ],
+          "receiverPreserved": true
+        },
+        {
+          "mode": 2,
+          "arrays": [
+            "7b",
+            ""
+          ],
+          "receiverPreserved": true
+        }
+      ],
+      "configReturns": [
+        {
+          "address": "0x151211dd5",
+          "nativeReturnRAX": "0xffd01",
+          "returnAL": 1,
+          "values": {
+            "downloadThreadNum": 0,
+            "showexception": 0,
+            "safeOptionalResourceCategories": [],
+            "secureOptionalResourcePolicyPlugins": []
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": 919,
+          "mode": 1
+        }
+      ],
+      "jsonHelperRejected": true,
+      "regionGlobals": null
+    }
+  ],
+  "entry": "0x151210540",
+  "stop": "0x1512124b9",
+  "semanticStatus": "unknown",
+  "runtimeStatus": "not-tested",
+  "wholeDispatchExecuted": false,
+  "models": [
+    "inherited local signing trust/JSON/managed allocations",
+    "cached ASCII Encoding.GetString",
+    "bounded JSON array/List<int> storage and boxed mode; native scalar getters/list writes execute",
+    "event manager with empty listener dictionary/list; native routing executes",
+    "initialized reviewed class flags; optional GLOBAL+E0F0 absent"
+  ],
+  "outsideScope": [
+    "nonempty dispatch-key decoding/XOR",
+    "SDK step at1512124E6 and following B0 store",
+    "registered event callbacks",
+    "second coroutine",
+    "full Region/schema semantics",
+    "actual client"
+  ]
+}

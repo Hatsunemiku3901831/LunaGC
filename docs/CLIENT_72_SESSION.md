@@ -329,3 +329,25 @@ python -m unittest tools.test_client72_dispatch_post tools.test_client72_dispatc
 ```
 
 证据`evidence/dispatch-post-{trace,trace-repeat,determinism,mapping-check,mapping-ready}.json`、`logs/dispatch-post-{run,repeat,regression}.log`。只改离线研究工具/测试/摘要/文档，不需部署或重启。下一步执行151204AC0内部的配置解码/解析，继而回到151211DD5；需使用有效配置样本，不能把本批任意bytes参数样本当作有效配置JSON。
+
+
+## A-04d5n3 两段配置消费、原生事件与Region全局写入
+
+`trace_client72_dispatch_config`在同次执行中从151210540经原生密码学/reader、两次151204AC0配置消费，到1512124B9；未把配置函数或事件派发替换成成功回调。该终点在下一SDK前置检查之前，尚未执行15275F080和B0写入。第一/第二调用的mode分别1/2，字节来源分别响应tag12/tag13，key/tag11明确为空；**非空key解码/XOR未覆盖**。
+
+显式初始化输入包括Encoding.utf8Encoding缓存、GlobalVars.SafeOptionalResourceCategories与SecureOptionalResourcePolicyPlugins的固定容量List<int>、类初始化标志、无监听器的事件manager。元数据声明核对这三处命名静态字段。JSON对象/数组和mode装箱仍为模型；原生JSON scalar getter、原生List清空/插入、配置两函数146D3F6E0/147517860、事件分发1532D6720→1532ECA40→空字典查找1565EE8D0真实执行。无注册监听器仅是夹具，不代表实际SDK/UI回调已运行；可选GLOBAL+E0F0保持缺省，目标分支真实跳过。
+
+固定wire独立使用tag12/tag13配置字节、tag3的Region、tag14高数字文本；Region tag13/string→+30→GLOBAL+6240及+6078，tag14/uint32→+140→14586CFB4，最终均与独立值一致。配置可选键来自目标literal，包括downloadThreadNum、showexception及两个列表键；这些配置键不用于推断tag965的业务语义。
+
+6组：空配置、第一段非零设置/列表、第二段Int32最大/负列表、Int32最小与溢出、第一段坏JSON、第二段坏JSON。容器预填123，实际缺键后清空；列表包含1、300、-1、2147483647；Int32溢出由真实scalar getter配合已声明解析helper返回0。两次原生配置返回分别在151211DD5/151211E2C观察；事件ID919携带对应mode。返回指令只设置DIL低字节再复制EDI，**不把完整EAX当整数1**；报告保留nativeReturnRAX并断言returnAL=1。最初全EAX断言失败已据原始指令修正，字段/list断言未删减。
+
+坏JSON由明确的JSON容器helper拒绝，不称原生JSON解析异常；第一段失败无完成事件，第二段失败仅第一段事件，均不进入Region后处理、不改session+B0。6原生样本及177研究回归通过，两次trace/摘要逐字节一致。研究校验0，ready1，业务映射仍35字段；D-02实机仍未验。
+
+```powershell
+python tools/trace_client72_dispatch_config.py --client $env:GAME_PATH --output local/migration72/evidence/dispatch-config-trace.json --summary-output protocol/cn-7.2/dispatch-config-observations.json
+python -m unittest tools.test_client72_dispatch_config tools.test_client72_dispatch_post tools.test_client72_dispatch_prefix tools.test_validate_protocol72 -v
+```
+
+证据`evidence/dispatch-config-{trace,trace-repeat,determinism,mapping-check,mapping-ready}.json`和`logs/dispatch-config-{run,repeat,regression}.log`。仅离线工具/研究摘要/测试/文档变更，无运行构建部署或重启。
+
+下一步：1512124B9读取GLOBAL+F2E0并要求非空，然后执行15275F080（SDK类型14237的方法）；不能跳过该调用接B0。探索中直接继续遇到缺singleton的原生NullReference分支，停在151212D8E，应恢复声明和初始化。15275F080会构造MiHoYo.SDK.JSONObject/JSONString/JSONBool、StringBuilder，调用SDK入口；其完整行为未验。候选type cell查询保留在忽略的analysis/probe_sdk_type_cells.py，固定目标usage行699017/699018/700517/700519/698608分别关联JSONObject4354/JSONNode4346/JSONString4356/JSONBool4358/StringBuilder452；不能将这些静态绑定当实际SDK成功。

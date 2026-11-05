@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-执行状态：用户2026-11-05已恢复推进。A-04d5k/B-02c8基线c7556a0；A-04d5l/5m/5n1已按各自限定验收收口并本地提交（46d422c/5dcf882/c9f6870）。A-04d5n2按限定范围已完成并重复核对至配置调用入口；A-04d5n/B-02c9仍进行中：继续配置函数内部至B0的连续路径、第二协程与tag965语义；A-04d/B-02进行中，D-02未完成。
+执行状态：用户2026-11-05已恢复推进。A-04d5k/B-02c8基线c7556a0；A-04d5l/5m/5n1已按各自限定验收收口并本地提交（46d422c/5dcf882/c9f6870）。A-04d5n2已提交；A-04d5n3已完成限定验收：两段配置、事件及Region全局写入，重复核对一致；A-04d5n/B-02c9仍进行中：继续SDK更新至B0的连续路径、第二协程与tag965语义；A-04d/B-02进行中，D-02未完成。
 
 静态结构、Token/Login原始wire及响应非空对象图已离线恢复；四个登录请求/响应业务身份与CmdID、35个字段来源、8枚举102符号现有目标证据。Token Handler入口至seed安装、UID和token保存已连续执行，后续Login参数链另有分段证据。Token已在明确初始化/OS夹具下贯通原生seed验签/加密、构造、wire与发送至封包入口；SDK认证回调的五个凭据/渠道字段也已接入原生构造和writer。Login亦已在旧Shell/非云夹具下构造并到封包入口。响应wire→原生解密/摘要/验签→密钥安装已在明确本地签名信任输入下贯通，3组4096字节Java对照及错误拒绝通过。真实SDK初始化、完整Handler、封包体及剩余字段继续研究，A-04d/B-02保持进行中。隔离研发服务已部署，但没有7.2可连接构建，客户端验收全部待执行。本机路径、初始差异、报告和日志在忽略的 local/migration72/；公共摘要放 docs/ 和 protocol/cn-7.2/。
 
@@ -58,9 +58,10 @@
 | A-04d5k / B-02c8 SDK认证来源到Token wire | A-04d5h、B-02c7 | trace_client72_auth_sources、五字段映射/校验 | 原生回调来源检查/写入→真实seed构造→getter24604/writer；9组含拒绝/可选字段/uint32边界，160项回归及重复产物 | 已完成 | CLIENT_72_SESSION、auth-sources-trace/observations/determinism；c7556a0 | 前段已收口；可选字段见A-04d5l，完整调度及B0来源关联继续A-04d5n |
 | A-04d5l 认证回调可选字段 | A-04d5k | trace_client72_auth_tail、摘要/测试 | 从入口连续到14F192325；六字段/清零/Int32边界/溢出、两个exact-one标志、B0不变，重复产物一致 | 已完成 | auth-tail-observations.json、auth-tail-determinism.json；46d422c | UI/调度尾段未执行，六字段不晋级协议语义 |
 | A-04d5m 分区候选源到B0/Token原始链 | A-04d5h、A-04d5l | trace_client72_dispatch_token、摘要/测试 | 两个post-parse片段、tag14 reader、真实seed构造/tag965 writer；8值样本/6缺对象边界、重复一致 | 已完成 | dispatch-token-observations.json、dispatch-token-determinism.json；5dcf882 | 源30677与协程实际绑定仍candidate；业务语义未知，不代表B-02完成 |
-| A-04d5n / B-02c9 分区来源关联与tag965语义 | A-04d5m、A-04d1 | 分区解析调用/类型证据、有效和错误样本、映射摘要 | 实际解析结果类型→B0写入调用关系闭合；业务来源独立证据及wire边界；未知不命名 | 进行中 | CLIENT_72_SESSION；前缀探索在忽略analysis/probe_dispatch_prefix.py | 前缀见A-04d5n1、嵌套至配置入口见n2；继续151204AC0配置内部到B0，第二协程与tag965业务语义未完成 |
+| A-04d5n / B-02c9 分区来源关联与tag965语义 | A-04d5m、A-04d1 | 分区解析调用/类型证据、有效和错误样本、映射摘要 | 实际解析结果类型→B0写入调用关系闭合；业务来源独立证据及wire边界；未知不命名 | 进行中 | CLIENT_72_SESSION；前缀探索在忽略analysis/probe_dispatch_prefix.py | 前缀见A-04d5n1、嵌套至配置入口见n2；配置内部见n3；继续1512124B9的SDK前置/15275F080到B0，第二协程与tag965业务语义未完成 |
 | A-04d5n1 分区JSON/密码学到实际reader | A-04d5m、A-04d5i | trace_client72_dispatch_prefix、摘要/测试 | 真实entry→Base64/RSA/SHA/验签→30677分配/reader→post-parse指针；3成功/3拒绝，独立RSA/明文/wire、169回归及重复一致 | 已完成 | dispatch-prefix-observations.json、dispatch-prefix-determinism.json；c9f6870 | 成功明确本地签名信任输入；后处理、第二协程、业务语义与实机未验 |
 | A-04d5n2 分区嵌套reader至配置入口 | A-04d5n1 | trace_client72_dispatch_post、摘要/测试 | 同次JSON/密码学→原生嵌套ReadMessage/limits/reader→配置参数；非零/uint32边界/重复合并/错误路径8组、回归及重复一致 | 已完成 | dispatch-post-observations.json、dispatch-post-determinism.json；c34ab42 | 不执行配置函数体；继续151204AC0至B0，业务语义未知 |
+| A-04d5n3 分区配置消费与Region全局写入 | A-04d5n2 | trace_client72_dispatch_config、摘要/测试 | 同次JSON/密码学→两次配置原生返回/事件→Region全局；6组含Int32边界/列表/坏JSON，177回归及重复一致 | 已完成 | dispatch-config-observations.json、dispatch-config-determinism.json；本项提交 | 继续1512124B9的SDK前置/15275F080至B0，不跳过SDK调用 |
 | B-03 确定性生成 | B-01、B-02 | generator、PacketOpcodes、Proto | 只生成核实项，别名/引用检查，重复输出一致，protoc 编译，禁止旧号兜底 | 待开始 | — | 合成模型测试，再接真实映射 |
 | C-01 双向网络接入 | B-03 | GameSession、BasePacket、Handler 注册、UnionCmd/枚举 | 注册冲突失败、号/长度边界、内外分派、目标 wire 测试，构建部署 | 待开始 | — | 映射确认后替换旧表和专属断言 |
 | D-01 补丁和连接前置 | A-01、A-04 | patch、HTTP/SDK/dispatch/密钥 | 路由/渠道/版本/加密、各钩子 ABI/布局/实际加载验证 | 进行中 | CLIENT_72_PATCH_ABI；四入口参数前缀已验，密钥/加载未验 | 字符串工厂、原生RSA/验签、实际加载与路由；商城钩子另列 |
@@ -163,3 +164,5 @@
 - A-04d5n1：原生151210540从JSON content/sign解析、Base64、操作101解密、SHA256、操作103验签到30677真实reader，并在151211BA1确认post-parse原指针。三成功明确本地签名信任输入；坏签名/原始信任下不匹配签名/缺content拒绝。6原生样本两次一致，33聚焦/169研究回归通过，研究校验0、ready1。修正未知元素class为SHA256Managed/uint数组夹具；返回寄存器原样记录，不猜成错误码。A-04d5n/B-02c9仍进行中，无运行部署或D-02实机通过。
 
 - A-04d5n2：同次JSON/原生密码学→原生Region嵌套读取/limits→151204AC0配置入口，8组含重复合并、非零/uint32最大、缺嵌套/负返回值/两类截断；173回归通过。trace/摘要二次逐字节一致，研究校验0、ready1。配置body/B0连续处理仍未验，业务35字段不变；仅离线工具/文档，无运行部署。下一项151204AC0实际配置解析到151211DD5，不能把任意bytes参数样本当有效JSON。
+
+- A-04d5n3：同次分区入口执行两段配置body和原生事件分发，随后Region到全局写入，终点1512124B9。6原生样本、177研究回归、两次trace/摘要逐字节一致，研究校验0、ready1。初次全EAX断言与实际低字节返回不符，现保留RAX并只断言原生AL；未删除字段/list断言。JSON/装箱/空监听器/初始化为明确模型，SDK调用与B0连续链未验；仅离线修改、无运行部署。
