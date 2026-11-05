@@ -1,5 +1,7 @@
 # 7.2 三层映射输入
 
+E-01b资源输入摘要新增[scene-resource-observations.json](scene-resource-observations.json)，复现与限定范围见[scene3审计](../../docs/CLIENT_72_SCENE_RESOURCES.md)。它只固定资源/读取依赖，不修改任何协议三层状态，resourceReady=false、runtime未验。
+
 2026-11-06 B-03a/C-01a：仅选人三件组已按verified三层证据确定性生成生产Proto与常量，来源/碰撞/旧号漂移均拒绝；工具`tools/generate_born72_sources.py --client $env:GAME_PATH [--check]`每次核对实际输入hash。生产三件组与空schema依据见[CLIENT_72_BORN](../../docs/CLIENT_72_BORN.md)。其余研究Proto不自动接入运行，完整协议仍不ready；本批272研究/495 Java选集通过，全部客户端runtime未验。源码/Proto矩阵现99构造/148种子/1140文件，原Notify缺根由目标证据接管后补齐；下方旧数值为历史。
 
 `profile.json` 固定目标版本/渠道与关键输入哈希；`mappings.json` 分别维护 opcodes、messages、schemas 三张表。26个登录/选人/入场种子中，Token/Login四个请求响应、PacketHead和PingReq/PingRsp的现有身份层已verified；字段层仍逐项保留未知/候选，完整schema未verified。旧段落为各研究检查点的历史范围，以mappings及最新矩阵为准。**空字段列表不代表实际空消息，当前没有完整正式协议。** P0完整闭包未确认，closure保持unresolved。

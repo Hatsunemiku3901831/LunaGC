@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+2026-11-06最新恢复：用户要求继续逐项推进至D-02实机验收，覆盖前批停止点。B-02e1原生成功继续正在取证；E-01b固定scene3审计见[场景资源](docs/CLIENT_72_SCENE_RESOURCES.md)。`audit_scene_resource72`要求固定commit/root/BinOutput/Scene/Point与Excel blob链，核对9源码hash；1823点、2817正引用无缺失，7新增/14资源回归及两次产物一致。未安装资源或启动服务/游戏；Lua来源和运行时revision仍未验。
+
 [AGENTS](AGENTS.md) 管规范，[README](README.md) 管能力说明，[Project](Project.md) 管任务验收；本文件维护索引与可复现流程，不重复长状态清单。目标仅国服 7.2。
 
 ## 仓库入口

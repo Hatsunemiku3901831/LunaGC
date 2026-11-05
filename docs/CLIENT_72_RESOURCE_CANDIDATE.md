@@ -53,4 +53,4 @@ python -m unittest tools.test_audit_resource72 -v
 
 7项资源审计测试、与现有研究工具合计113项通过；真实七表审计与摘要二次运行逐字节一致。共享摘要resource-candidate-observations.json不含原始资源行或机器路径。本机evidence/resource-candidate-{audit,determinism}.json、resource-source-*.json与logs/resource-candidate-all-tests.log保存完整证据。
 
-下一项是固定BinOutput/Scene子树及scene3依赖、对照客户端热更新revision，并沿A-03补充实际登录所需表。不能以这七张表的成功代替E-01或D-02。
+E-01b已接续完成固定BinOutput/Scene/Point子树、scene3点位及9份当前读取源码的限定审计：1,823点、2,817条正引用无缺失，新增7项及共14项资源回归通过，两次产物一致。Lua来源/运行时revision/实际加载仍未齐，见[scene3资源审计](CLIENT_72_SCENE_RESOURCES.md)。不能以这些离线通过代替E-01或D-02。
