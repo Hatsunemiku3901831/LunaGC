@@ -1,54 +1,64 @@
 # 国服7.2详细接续记录
 
-更新：2026-11-05。用户要求持续推进至D-02完成并验收；目标active，无暂停指令。D-02仍未完成，不能用离线工具通过替代实机验收。
+更新：2026-11-05。目标active，用户要求一直推进到D-02完成实机验收；没有暂停指令。D-02未完成，不得用离线研究通过替代实际客户端结果。
 
-## 当前状态与完成项
+## 当前状态与已完成
 
-本批起点08f8284；新研究提交`c158e0e`完成A-04d5n3限定验收。正式工具trace_client72_dispatch_config同次执行：151210540 JSON→原生RSA/SHA/验签→父/Region reader→两次151204AC0配置函数→两次原生事件分发→Region全局字段写入→1512124B9。没有跳过配置body或把事件函数替换为成功返回；下一SDK前置和SDK函数未执行。
+本批起点c44009f，研究提交`4200ea6`完成A-04d5n4限定验收。第一个分区入口151210540在同次CPU执行中经过JSON、原生RSA/SHA/验签、实际30677/Region reader、两次配置、SDK更新包装15275F080、提示分支，到151212983。15121297C原生把解析对象+20指针写入session+B0；前三个成功样本继而复用同一seed运行时完成真实Token构造/getter24604/writer，独立wire AA 3C确认进入tag965。没有从后处理片段重开或强写会话值。
 
-6原生样本：空配置、第一段非零/列表、第二段Int32最大/负列表、Int32最小/溢出、第一/第二段坏JSON。177研究回归通过，trace/摘要两次逐字节一致；研究校验0、ready1。业务命名仍35字段，tag14/tag965未知；A-04d5n/B-02c9、A-04d/B-02仍进行中。
+6原生样本、182研究回归通过，trace/摘要二次逐字节一致。原Token5组重跑报告与摘要和改动前逐字节相同。研究校验0、ready1。第一入口原始来源关联已确认；tag14/tag965业务名仍unknown，业务字段仍35。第二协程未验，A-04d5n/B-02c9及父任务仍进行中；B-03/C-01、D-01、E-01完整前置和D-02实机仍未完成。
 
-AGENTS.md和resources/ScriptSceneData/flat.luas.scenes.full_globals.lua.json为既有修改，保留且未提交。patch仍f2874103ab70afc56260ee12d1eaca96247933b2，resources仍dac2a9d43332ef51879522cf39da2831b0ca0543。只改离线工具/摘要/测试/文档，没有运行源码/Proto/补丁/配置/资源变更，没有操作数据库或客户端，不需重启。未来启动仍须重新核对.env/.env.local/config、进程/端口，使用portable。
+工作区既有AGENTS.md与resources/ScriptSceneData/flat.luas.scenes.full_globals.lua.json保留未提交。patch f2874103ab70afc56260ee12d1eaca96247933b2，resources dac2a9d43332ef51879522cf39da2831b0ca0543均未变。仅离线工具/测试/摘要/文档修改，不涉及运行Java/主Proto/配置/补丁/资源，不需部署重启。未操作数据库或客户端，后续启动须重新按portable核对配置/进程/端口。
 
-## 实际证据和复现
+## 工具与实际证据
 
-正式工具tools/trace_client72_dispatch_config.py、tools/test_client72_dispatch_config.py，共享protocol/cn-7.2/dispatch-config-observations.json。详细复现与模型边界见CLIENT_72_SESSION末尾A-04d5n3、Harness。
+- `tools/trace_client72_dispatch_session.py`：新连续链正式工具。
+- `tools/client72_sdk_update.py`：MiHoYo.SDK JSONObject/StringBuilder/字典池和存储、装箱/字符串桥接、OS数据源夹具；SDK业务函数真实执行。
+- `tools/client72_dispatch_notice.py`：Object[]/String/System.Object元数据、主线程1夹具；原生类型检查和提示分支执行。
+- `construct_native_token`新增可选seed复用参数；原调用路径不变。复用防止重复映射NativeCrypto的OS内存，两个精确RSA明文/padding观测点补足response工具的block追踪。
+- 共享摘要protocol/cn-7.2/dispatch-session-observations.json。
+- 本机证据local/migration72/evidence/dispatch-session-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json；logs/dispatch-session-{run,repeat,regression}.log。
+- 原Token回归evidence/token-complete-after-dispatch-session.json、-summary.json、-check.json；logs/token-complete-after-dispatch-session.log。
 
-本机local/migration72/evidence/dispatch-config-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json；logs/dispatch-config-{run,repeat,regression}.log。前批n2工具和证据保持不变。
+6组：高数字字符串9007199254740993、空源、不同源/语言、缺session、缺singleton、坏配置JSON。前三组真实store和Token；空值会话保留源指针而Token取默认空对象并省略tag965。缺session真实跳过store，缺singleton在151212D8E原生错误调用前停止，坏JSON由已声明helper拒绝，三者不构造Token。
 
-命名静态输入已核对Encoding.utf8Encoding（GLOBAL+24B8）、GlobalVars.SafeOptionalResourceCategories（+6248）和SecureOptionalResourcePolicyPlugins（+6160）。JSON容器、数组、装箱、类初始化与空事件注册为明确夹具；原生scalar getter/List clear/add、两配置body、事件1532D6720→1532ECA40→空字典FindEntry1565EE8D0实际执行。
+SDK第一份JSON包含app_id/app_version/area/compile_type/use_device_name，第二份CPU/GPU/Language；这些值来源于明确虚构app/version/设备/channel/language输入。cn/os、None/Sc/It均有独立预期。原生字典非空枚举、清空和归还均执行。
 
-两次配置从响应tag12/tag13接收ASCII JSON，key/tag11明确为空；非空key解码/XOR未验。列表预填123用于证明缺键清空，覆盖非零/负数/Int32最大。事件ID919携带mode1/2，只证明空监听器分派；真实注册回调未运行。Region tag13/string经+30到GLOBAL+6240/+6078，tag14/uint32经+140到14586CFB4均由非零独立wire验证。
+## 必须保留的模型边界
 
-## 当前未完成与下一步
+- 密码学初始化标志与原生SDK导出表是独立声明输入；导出表14572BC18为0，原生140AC4160/140AC4180按自身条件返回。不能称实际SDK已接收或初始化成功。
+- GLOBAL+F2E0为presence-only夹具，选定非IFix路径不解引用；不声称singleton初始化已恢复。
+- 提示路径未靠添加feature flag跳过。usage698601实际为Object[]，不是String[]。原生assignability检查、GetCurrentThreadId=1/主线程1比较和1471623F0→147161FA0执行；日志sink缺省为0，实际按缺sink返回，不代表真实UI回调。
+- 提示literal34435为`SDKServer - OnConnectRegionDispatch: GameBiz==Null`、code5000。这组合是离线研究夹具，不是可运行客户端初始化状态。
+- 第一入口到B0闭合并不等于整个dispatch完成：151212983后尾段/真实HTTP/SDK回调/IFix/实机仍未验。
 
-当前没有整体外部硬阻塞，可以继续研究。下一步从1512124B9读取GLOBAL+F2E0开始：缺该singleton时在151212D8E进入原生NullReference分支；不能设任意对象后声称真实初始化。它的正常分支接15275F080，必须恢复该函数真实行为后返回1512124EB，再继续至B0（15121297C）。第二协程和tag965业务来源仍需独立证据。后续B-03/C-01、D-01补丁加载/信任、E-01资源闭包和D-02完整实机顺序均未完成。
+## 下一项可执行工作：第二协程来源
 
-SDK函数声明：类型14237/BIFHKCHGMEO，方法IPKPEJOFHLB，entry15275F080；它构造MiHoYo.SDK.JSONObject等，读取SDK对象+68，命名Miscs.GetGameVersion1531DCB70、ConfigChannel.IEDHGBHKFAH14947D950；后续StringBuilder序列化、141447620及其他SDK数据源/字典操作仍未执行。函数元数据初始化组0x7ECB只新增1458AE590→82316/LFLFNKJGBEI，不能假定其他共享类型同组初始化。
+目前没有需要等待外部的整体硬阻塞。继续类型23192/NCIDAOJKFEI的MoveNext151226CD0，核实其实际解析对象到第二个B0 store151229560。
 
-静态type cell探索脚本analysis/probe_sdk_type_cells.py按固定目标metadata usage解码（非运行验收），已输出：
+本批已核对元数据和真实jump table：
 
-| usage行 | cell | 类型 |
-| --- | --- | --- |
-| 698608 | 145886158 | 452/System.Text.StringBuilder |
-| 698933 | 145887150 | Dictionary<string,string>闭合实例 |
-| 699017 | 1458875C8 | 4354/MiHoYo.SDK.JSONObject |
-| 699018 | 1458875D0 | 4346/MiHoYo.SDK.JSONNode |
-| 700517 | 14588F3E8 | 4356/MiHoYo.SDK.JSONString |
-| 700519 | 14588F408 | 4358/MiHoYo.SDK.JSONBool |
-| 710075 | 1458C3958 | 23189/DJKBKNPDKCL（mode装箱类型） |
+| state(+50) | 原生分支 |
+| --- | --- |
+| 0 | 151226DEA |
+| 1 | 151226E77 |
+| 2/3 | 151226D20 |
+| 4 | 151226DCD |
 
-SDK JSONObject .ctor1597AE4E0、Add1597C35D0可按已命名容器边界研究，但SDK业务调用不能直接强制成功；MiHoYo.SDK JSON与已有SimpleJSON是两套类型。后续1527571F0/15275F990同属14237；153D34030属82316，保持未验。反汇编已留analysis/disasm-15275f080.txt、disasm-15275f235.txt等。
+实例+20是23177/DHABIHPMOAH接收者，+18是23181/FCLFPIMPBAF闭包，+38是Action<IENBACJFBGI>。闭包字段+10/+18/+20为string、+28为int64、+30为enum1787。状态2/3分支读取闭包+18/+20字符串及+30枚举，随后走保护解析；业务名未知，不应先命名为content/sign。可从明确“HTTP完成/恢复状态”输入开始追踪，但必须记录未执行初始网络等待，不能冒充整个协程调度完成。
+
+进一步反汇编已留analysis/disasm-151226cd0.txt，既有dispatch-b0-coroutine.txt混入前一方法/大量填充，不要把其第一行当entry。该方法到15122A210前结束；+50范围外原生跳151229E5B。先真实执行恢复入口，看实际JSON/crypto/reader调用，不把第一入口证据自动扩展过去。
 
 ## 弯路与避坑
 
-- 最初配置返回断言用EAX==1失败；实际15120C059只写DIL=1，15120C06A再mov eax,edi，其他位残留。因此报告保留nativeReturnRAX并只断言已验证的AL=1；不要猜成int32错误码或截断指针。
-- 两个静态列表缺省时原生会清空。空集合夹具是按目标读写的+10数组/+18长度/+1C版本构建，不模拟业务清空成功。
-- config样本全部key为空；不能说已验证加密配置或实际SDK初始化。坏JSON为显式JSON helper拒绝，不是目标原生JSON parser错误实现验证。
-- 可选GLOBAL+E0F0缺省时14F8EF7B0真实返回；非空监听器/UI动作未验。
-- analysis/probe_dispatch_config.py、probe_dispatch_continuous.py是探索，正式证据由trace_client72_dispatch_config接管；continuous探索的NullReference在151212D8E，不是可用路径。
-- 不将n1/n2/n3相加称完整dispatch；SDK/B0缺口真实存在，不跳未知调用，不用版本文字/健康/编译替代实机。
+1. `SeedString72`不能在已有NativeCrypto的emulator中重复初始化，会UC_ERR_MAP。复用现有runtime，不重置会话/原生内存。
+2. response runtime对140580000..14077FFFF按block采样，导致seed oracle最初plain=None（不是加密值错误）。新增1406595F0/140659AC0精确观测后通过。
+3. 空tag14让Token选择默认空字符串对象，未必在Constructor72.strings表；按实际对象读取并先断言内容后登记观察，不写回期望值。
+4. Object[]的klass+AC是相对type cache偏移；145BC8AD0还需间接读取base。误少一层间接会把rcx变8而非对象类地址。当前工具按真实检查路径建模。
+5. SDK JSON与SimpleJSON不同；native string bridge初始化40字节描述符，借用存储的capacity=0；不能留旧栈数据触发不存在的释放。
+6. 语言77368已有目标符号；原Constructor填充高位哨兵不是合法SDK语言，本批独立输入0/2/15，不将其当协议字段变更。
+7. 所有未覆盖业务语义保持未知，不以编译/静态地址/工具通过代替D-02。
 
-## 交接与文档
+## 文档与交接
 
-README/Project/Harness/CLIENT_72_SESSION已同步。旧HANDOFF2先备份至local/migration72/handoffs/HANDOFF2.before-dispatch-config-c158e0e.md并核对SHA-256一致；HANDOFF.md只追加。研发未暂停，接续不需重新授权。全部本地提交，未推送；D-02的新旧测试号、选人、初始化/场景握手、心跳、退出重登全部仍待实机验收。
+README、Project、Harness、CLIENT_72_SESSION及三个ACCOUNT_AND_SAVE专题已同步。旧HANDOFF2先备份到local/migration72/handoffs/HANDOFF2.before-dispatch-session-4200ea6.md并核对SHA-256一致，HANDOFF.md仅追加。研发未暂停，下一轮不需要再次申请授权。全部本地提交，未推送。

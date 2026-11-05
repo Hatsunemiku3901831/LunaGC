@@ -29,3 +29,10 @@ Project已补齐提交号和验收/下一步（74ac0f0、54dfac1）。下一项�
 研究提交`c158e0e`：两次配置原生消费/事件返回和Region全局写入，终点1512124B9。6原生样本、177回归、重复trace/摘要一致，研究校验0/ready1。下一项GLOBAL+F2E0前置与SDK函数15275F080，随后才能继续B0；tag965语义未知，D-02未完成，目标active且未暂停。
 
 [HANDOFF2.md](HANDOFF2.md)含SDK类型绑定探索和返回寄存器避坑。覆盖前原详细交接已备份local/migration72/handoffs/HANDOFF2.before-dispatch-config-c158e0e.md并核对哈希。无运行部署，AGENTS/resources差异保留未提交，未推送。
+
+
+## 2026-11-05：A-04d5n4完成，第一分区入口到B0/Token原始链闭合
+
+研究提交`4200ea6`：同次分区JSON/密码学/配置/SDK包装/提示→B0原指针，再复用seed运行时到Token tag965。6原生样本、182回归、两次产物一致；原Token5组产物不变，研究校验0/ready1。第一入口原始关联已确认，字段业务名、第二协程和D-02仍未完成。
+
+下一项23192.MoveNext151226CD0的恢复状态及真实解析源；[HANDOFF2.md](HANDOFF2.md)含状态jump table和模型边界。原详细交接已备份local/migration72/handoffs/HANDOFF2.before-dispatch-session-4200ea6.md并核对哈希。目标active、无暂停，无运行部署；AGENTS/resources既有差异未提交，未推送。
