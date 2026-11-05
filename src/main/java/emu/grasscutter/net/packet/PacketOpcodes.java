@@ -264,9 +264,9 @@ public final class PacketOpcodes {
     public static final int WidgetCoolDownNotify = 3761;
     public static final int AllWidgetDataNotify = 599;
     public static final int WidgetGadgetDataNotify = 1325;
-    public static final int DoSetPlayerBornDataNotify = -27;
-    public static final int SetPlayerBornDataReq = 26105;
-    public static final int SetPlayerBornDataRsp = -28;
+    public static final int DoSetPlayerBornDataNotify = 5008;
+    public static final int SetPlayerBornDataReq = 8541;
+    public static final int SetPlayerBornDataRsp = 414;
     public static final int ScenePlayerLocationNotify = 26016;
     public static final int WorldPlayerLocationNotify = 7988;
     public static final int SetPlayerPropReq = 26049;
@@ -2347,7 +2347,6 @@ public final class PacketOpcodes {
     public static final int DCNOGEEFGFB = 23693;
     public static final int DDCHHDPGDIG = 7154;
     public static final int DDEHNBPLDIP = 4215;
-    public static final int DDINJLABBFI = 5008;
     public static final int DEAEILCILDB = 5234;
     public static final int DEAFGFEJEOO = 2056;
     public static final int DECGJNNCJJE = 24894;

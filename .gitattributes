@@ -1,5 +1,10 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+# Deterministic B-03a generated protocol sources, including Windows checkouts.
+src/main/proto/DoSetPlayerBornDataNotify.proto text eol=lf
+src/main/proto/SetPlayerBornDataReq.proto text eol=lf
+src/main/proto/SetPlayerBornDataRsp.proto text eol=lf
+src/main/java/emu/grasscutter/net/packet/PacketOpcodes.java text eol=lf
 # Preserve archived Lua bytes, including the original whitespace.
 src/main/resources/historical-scripts/**/*.lua text eol=lf -whitespace
 # Keep the original test fixture bytes on Windows and Linux.

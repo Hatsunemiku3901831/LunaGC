@@ -1,6 +1,6 @@
 # B-02d 选人三件组：固定7.2证据与Sol实现规格
 
-2026-11-06（Australia/Sydney）。**仅三件组的研究映射闭合，可供后续实现与回归；本轮到此停止，不开展B-03/C-01/D-02。** 没有运行服务端、启动客户端或使用动态调试/computer-use。这里的原生执行指Offline72在离线CPU中执行固定EXE的实际机器指令，不是Windows实机验收。
+2026-11-06（Australia/Sydney）。B-02d三件组研究已闭合；用户现已授权限定B-03a/C-01a实现。B-03a生成与生产wire接管已通过，C-01a业务/保存回归进行中；完整P0/补丁/资源前置未齐，不启动服务或客户端。下文原生执行指Offline72离线执行固定EXE机器指令，不是Windows实机验收；旧停止记录仅对应前一研究批。
 
 ## 输入与三层结果
 
@@ -37,9 +37,9 @@
 
 语义源分段证据而非完整点击链：提交前缀运行至真实昵称validator入口即停止；validator自身、UI显示、网络等待及完整成功继续路径未执行。成功分支到请求的调用边来自固定目标机器码复核；请求构造另从函数入口以显式参数执行。默认旅行者值由14E456280原生构造读出（10000007/10000005），SetupView另有配置行3覆盖逻辑，不能把默认值当作穷尽客户端所有配置。
 
-## 给Sol的实现与回归规格（下一批，未执行）
+## 给Sol的实现与回归规格（B-02d交付规格，本批按此实施）
 
-1. 只使用上表目标号/类型/字段。正式生产Proto/PacketOpcodes及handler改动属于另行授权的实现批；当前没有生成或接入运行代码。不要保留旧tag2 avatar_id、旧tag6 retcode或配置中的旧/负回包号作为回退。
+1. 只使用上表目标号/类型/字段。正式生产Proto/PacketOpcodes及handler改动已获本批限定授权；不要保留旧tag2 avatar_id、旧tag6 retcode或配置中的旧/负回包号作为回退。
 2. 请求只含nick_name=4、avatar_id=11，均proto3隐式presence；默认值省略，无嵌套依赖。语义名可保持现有Java调用约定。零长度消息合法wire与合法业务输入分开；入口按实际业务规范校验昵称/角色，不凭wire样本放宽。
 3. 通知有效payload是零字节，成功响应retcode=0也为零字节，但两者**包号和语义不同**。失败响应必须真实编码tag15，不能继续`new BasePacket`伪造所有响应为空。132触发命名错误路径，116为重复设置错误枚举；不要机械把内部错误都映射成132或116。
 4. 固定回归向量：Req(10000005,Aether)=`22064165746865725885ade204`；Req(uint32.max,x)=`22017858ffffffff0f`；Rsp132=`788401`；Rsp116=`7874`；Rsp-1=`78ffffffffffffffffff01`。研究工具还保留边界/Unicode和未知字段组，可作生产生成类的独立对照。
@@ -60,4 +60,12 @@ python tools/validate_protocol72.py --ready
 
 最后一条仍预期退出1。共享：[born-observations.json](../protocol/cn-7.2/born-observations.json)、研究Proto、mappings、更新后的login-proto-gap-matrix/review。本机：`evidence/born-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json`与`logs/born-{focused,repeat,regression}.log`；探索反汇编与候选排除保留忽略analysis，未提交客户端二进制或原始数据。
 
-避坑：最初全局literal搜索没有三件组名称；后从目标选人/命名调用链闭合，不能以字符串未命中认定不存在。形状筛选9个string+uint32只用于找候选，不能直接命名。请求clone内联CopyFrom，不能套用先前Token的固定clone调用位置；正式工具检查本类型自己的类槽。无生产改动，因此不重启/部署；不清库、不操作任何客户端。
+避坑：最初全局literal搜索没有三件组名称；后从目标选人/命名调用链闭合，不能以字符串未命中认定不存在。形状筛选9个string+uint32只用于找候选，不能直接命名。请求clone内联CopyFrom，不能套用先前Token的固定clone调用位置；正式工具检查本类型自己的类槽。B-02d本身没有生产改动；当前实现批的构建/未部署判定见下文，不清库、不操作任何客户端。
+
+## B-03a生产生成与独立wire接管
+
+`tools/generate_born72_sources.py --client $env:GAME_PATH`只生成三份生产Proto和PacketOpcodes三条常量；每次核对实际EXE/两metadata哈希、profile/三层状态、静态CmdID绑定与born原生摘要。未核实字段/别名/引用、旧号、正值冲突、无目标空schema证据均拒绝。移除旧表未引用的DDINJLABBFI=5008，未将其认作目标通知别名。其余遗留协议仍未接管，不是可连接7.2表。
+
+`--check`检查产物漂移且不写文件；首次生成和再次check的四产物SHA-256相同。三Proto与PacketOpcodes固定LF，避免Windows检出换行造成伪漂移。Java只经Gradle/protoc生成。6项生成回归及6项B-02d工具回归通过；`Protocol72BornCompatibilityTest`15项通过，覆盖独立原生向量、Unicode/NUL、uint32最大值、正负错误int32、重复/未知/错误wire、非法UTF-8和空通知/成功响应不同帧。三件组没有声明64位/嵌套/list字段，相应未知字段只验证跳过；原有复杂消息研究回归另行保留。
+
+证据在忽略目录`evidence/born-generation-{first,check}.json`、`logs/born-generation-tests.log`、`logs/born-implementation-focused.log`；均位于`local/migration72/`。没有将这些离线/Java结果晋级为runtime或客户端验收。
