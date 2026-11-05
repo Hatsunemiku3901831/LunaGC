@@ -131,3 +131,5 @@ Astra下一研究为现有B-02下DoSetPlayerBornDataNotify/SetPlayerBornDataReq/
 下一项B-02e为Astra最小取证：固定目标Rsp0→14CD68860完整继续与新旧号首批必需初始化/场景序列，新增必需消息逐层证据，不猜号/绕检查。范围、复现、模型/保存边界、测试/构建证据、未完成与避坑详见[HANDOFF2.md](HANDOFF2.md)及[CLIENT_72_BORN](docs/CLIENT_72_BORN.md)；本批未派发/执行该研究。
 
 覆盖HANDOFF2前已先备份至local/migration72/handoffs/HANDOFF2.before-born-implementation-8bd338f.md，字节/hash核验一致，SHA-256 8254eae519d5610454c670e00c4b6d49e1f1c0f2836ec95d12002769c1dfc086；报告evidence/handoff-born-implementation-backup-check.json。本文件只追加，历史停止/active记录保留，以本段和详细交接为当前状态。
+
+2026-11-06持续工作检查点：已按约定先逐字节备份原HANDOFF2至忽略local/migration72/handoffs并核对SHA-256，再覆盖详版。目标继续至D-02，未暂停/完成。d2969b5整合列表24样本、六类15字段非空嵌套与owner UID正常迁移；366研究通过，当前JAR2566f466…83fe（69c3672）、63输入、ready228。实际SDK/入场未验、服务未部署，原数据及他人差异保留。cb74432已委派B-02e7消费者及E-01c5真实生产Lua加载路径；当前边界、证据、未验构造/EOF、避坑与下一步详见[HANDOFF2](HANDOFF2.md)。本条仅追加接续信息，不表示停止持续任务。

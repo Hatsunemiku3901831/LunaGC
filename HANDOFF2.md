@@ -1,98 +1,64 @@
-# 国服7.2详细交接：B-03a/C-01a限定实现完成，取证前停止
+# 国服7.2持续工作检查点
 
-更新：2026-11-06（Australia/Sydney）。本次用户指令恢复选人三件组实现，覆盖旧B-02d研究停止点；要求先建卡、实现/回归/构建，遇需新增客户端取证的关键阻塞，做完其余独立项后整理Astra最小项并停止。**限定实现及可独立回归/构建均已完成，已停止新增开发/取证。** 没有派发Astra、创建新chat/子代理、启动服务/客户端或操作调试器。父任务未因局部通过晋级。
+更新：2026-11-06。当前目标仍是按Project依赖逐项实际开发、测试、本地提交，持续到D-02实机验收。**本文件是长任务接续检查点，不是暂停/停止或D-02完成。** 最新状态以Project/Harness与本机实时归属为准。此前要求限定停止的记录已被继续指令覆盖。
 
-## 当前状态与本地提交
+## 必须保留的约束
 
-| 提交 | 实际内容 |
-| --- | --- |
-| d2cfb14 | 先建B-03a/C-01a子卡，更新当前授权/验收与停止边界 |
-| c6bf035 | B-03a确定性生成器、三份生产Proto/三条包号、发送类、15项独立生产wire测试及规格 |
-| 87cda4c | 为扩展Guard中实际复现的/resources路径失败先建V-01d卡 |
-| 9fe3bb2 | V-01d只修FurnitureStartFlowTest默认资源路径，保留原配方/扣费断言 |
-| 8bd338f | C-01a显式选人、错误/幂等/确认保存、19项真实Mongo业务回归、原登录准入保护、源码审计/矩阵及文档 |
+- 用户禁止computer-use/UI操作；继续仅脚本/API，不调用CUA、不截图/模拟输入、不重复启动无关客户端。已有管理员x64dbg Automate由用户启动，动态调试授权持续有效。
+- 只面向国服7.2，Windows portable；不Docker/WSL、不过版本校验、不给未知协议号/tag/业务名补猜测。用户确认没有可追溯7.2 Lua，允许参考LunaGC7.1实现迁移；旧Lua与历史离线JAR依赖不冒称7.2导出，不维护旧客户端运行环境。
+- 用户授权重复工作、边界/规划/验收完整的任务交Sol，性价比优先；困难且值得才用Astra xhigh。当前两个Sol各自文件归属分开，不让其改共享摘要/矩阵/根配置。
+- 不推送。保留原mongodata/local/data；AGENTS.md既有11行和resources/ScriptSceneData/flat.luas.scenes.full_globals.lua.json差异不提交、不覆盖。patch固定f2874103ab70afc56260ee12d1eaca96247933b2，resources固定dac2a9d43332ef51879522cf39da2831b0ca0543。
+- 每次继续核对GAME_PATH、env/config、进程/端口/子模块；本机PID/路径/令牌/原始日志/数据库只留忽略目录。未知语义保持未知，编译/健康不代替实机。仅文档/离线工具/测试无需重启；运行改动前置未齐则记录不部署。
 
-均只本地提交，未推送。代码起点bed2e3c，分支7.2-dev。最后便携JAR内嵌代码提交8bd338f，后续收尾提交只改文档/交接，不需重建。B-03a/C-01a/V-01d限定项已完成；父B-03/C-01仍进行中，A-03/B-02完整闭包、D-01/E-01与D-02实机未完成。B-02e最小研究卡待开始，未执行。
+## 当前提交与完成项
 
-主入口：[CLIENT_72_BORN](docs/CLIENT_72_BORN.md)、[Project](Project.md)、[Harness](Harness.md)。源码/依赖摘要及矩阵在protocol/cn-7.2，原生B-02d证据仍为固定目标限定研究，runtimeStatus全部not-tested。
+本轮从a09e201继续，最新检查点代码/证据为d2969b5，随后cb74432只增加下一任务卡。均本地提交，未推送。关键提交：026ad9d场景资源、b68a8ab选人继续、dfd11d6继承Lua顶层、b5309b5场景通知reader/等待、caaf8ad阶段纠名、9408f41生产序列化修复、cd13b15正常消费、af573b9场景query、4e0aaf8列表消费、52f1945接口来源、69c3672 owner UID、d2969b5整合及六类非空嵌套。详细顺序用git log核对。
 
-## 已实现内容
+- B-02e1：原born39保留，继续33原生样本，媒体/计时器只登记/显式离线回调。20353仅两个uint32字段，业务名unknown。旧identity request称谓错误已纠正为stageValue等，原执行路径不变。
+- B-02e2：27748/type46311/BBECFDMDFJC身份为PlayerEnterSceneNotify，26外层wire、三float非空内容、clone/Copy与缓存等待；128发现/32正式。只晋级消息/指令身份，26业务字段未知。网络先1507AD120包装，config105/完整调度/入场未验。
+- B-02e3：14C8AE9A0是阶段时间写入，85949值10为OnPlayerEnterSceneNotify。13计时样本；正常14样本执行原reader、stage10、task allocation/reset/字典至153A18E80。uint64/list/字符串/高位保留，业务字段不命名。
+- B-02e4：19 query样本，实际153A18E80/153A357D0/156632D10，owner+90为Dictionary<uint32,uint32>，正式return声明未知。冷源GLOBAL+34730为Dictionary<uint32,type70859>；非空记录+80(hex)到14AEF9DB0止。两正常分支分别到153A3CB70或15881E210。
+- B-02e5：24列表样本（14返回/7错误/1IFix/2fallback），两消费者/InsertRange/类型查找执行原指令；Count/CopyTo/数组为明确模型。旧List身份、容量复用/扩容、size/version、partial clear均独立断言。首轮nonempty误判空的生成器问题已修，独立expectedItems目录防回归，失败快照保留。
+- B-02e6：6类（66040/36137/67761/25866/34133/69612）15字段，13writer/24reader/3拒绝与13独立protoc，双跑trace/摘要/Proto一致。两native错误helper和一输入模型拒绝分开。INTMAX空子消息仅在明确stream模型中返回，不声称实机接受或安全拒绝。六构造器分别执行；保护父构造分发未恢复，父分配只提供分别执行构造器已观测的默认存储。详见CLIENT_72_SCENE_NESTED。
 
-1. `tools/generate_born72_sources.py --client $env:GAME_PATH [--check]`每次核对实际EXE/两metadata SHA-256，以及profile、三层状态/证据、静态CmdID、born原生摘要、字段/别名/冲突。仅生成三份生产Proto及PacketOpcodes三条值，不猜候选、不回退旧号。三Proto/PacketOpcodes固定LF，Windows检出后check不产生换行伪差异。Java只由Gradle/protoc生成。
-2. 目标通知5008/PMNMDAIKALO为空schema；请求8541/JNJOMANHPCD为nick_name:string tag4、avatar_id:uint32 tag11；响应414/EODFLMDBPOG为retcode:int32 tag15。移除未引用的旧DDINJLABBFI=5008，未将它当作目标别名。其余遗留包表/Proto未被整体接管，不构成可连接7.2表。
-3. 新号进入PICKING_CHARACTER并发送目标通知，等待显式选择。删除NewAccountIntro配置、配置包号覆盖、enabled绕过、默认旅行者及15秒兜底；旧本机JSON同名键不再参与运行。旧号完成态冷读后不重新选人。
-4. 请求保持原AccountLoginAdmission。先校验一次旅行者ID、非空白且无控制字符昵称及实际资源；完整客户端昵称validator/长度/过滤规则未恢复，不能把这些基础服务策略说成复刻客户端。重复创建回116，不改名、不加角色/武器/队伍、不重复onLogin/欢迎。ACTIVE重复请求经路由到达幂等拒绝。
-5. 除明确重复116外，基本输入/资源拒绝、解析或保存失败回-1通用非零分支，不借用未验证命名枚举。132只作目标独立wire/错误分支验证，不将所有内部错误强映射为屏蔽词。非零响应真实编码tag15，不能用空BasePacket代替。成功响应retcode0与通知都为空payload，但opcode不同。
-6. 创建沿原Avatar/初始武器/队伍业务流程；用正式Item Guard、Avatar同步确认及Player Guard确认最终数据后才继续onLogin。保存失败发送非零、关闭会话，不在半成品内存上重试。实际故障注入证明Avatar/武器可先保存而Player未确认；冷读角色数与mainCharacterId完成态不一致时拒绝登录，保留数据核对，不清库或自动修复。
+## 资源/生产迁移结果
 
-没有新持久字段/集合，没有重写账号、经济或Guard算法。多集合不是事务；失败后不承诺回滚或欢迎邮件在异常重启后恰好一次。写后丢确认可能已持久化，重登须按真实冷读状态判断。
+E-01b固定DimbreathBot/AnimeGameData提交d54f6f0d423ded9d055bb740a3e5f3aa8f2667f1，CNRELWin7.2.0_R49086080_S49210135_D49230962；scene3点1823、正引用2817无缺。来源没有Scene/Block/Group/Common Lua。
 
-## 实际测试与复现
+固定继承脚本64块17806声明组，13616非dynamic实际执行，4190 dynamic仅声明。当前新JAR三CLI重跑：出生686成功（403静态/283dynamic）、5492正ID无缺；全静态inline13616成功，fast仅13209成功、407错误；95500以上引用中8缺ID70200012..19都在garbages.gadgets，不删组/补记录。脚本manifest13785文件/104 Common不变。
 
-- 首轮聚焦66项Java全部通过（18业务+33原登录准入+15wire）；补充半成品冷读后业务为19项。
-- 最终21套**495项Java，失败0/错误0/跳过0**。覆盖19业务、15独立wire、原33项登录准入，以及Account创建/UID预留、Account/Player/Item/Activity版本保护/恢复、写队列/屏障/栅栏和原221项家具/加工/手册经济保存选集。完整Java集没有重跑，历史217失败不据此扣减。
-- `BornDataFlowMongoTest`通过真实隔离Mongo和正式Player/Item Guard验证两旅行者×两任务模式、显式选择、重复幂等、错误不登录、凭据轮换、成功冷读、旧号不重选、保存前失败/写后丢确认及半成品冷读。
-- **onLogin和欢迎邮件仅是明确继续入口观察点**，不是完整初始化或实际邮件落库测试；网络为假KCP tunnel，没有服务端socket/客户端连接。不能用这19项宣称实机新旧号登录/世界入场通过。
-- 15项生产wire测试以B-02d原生/protoc十六进制向量为独立来源，包含uint32最大值、Unicode/NUL、正负int32、重复/未知/错误wire、非法UTF-8、空通知/成功响应不同完整帧。三件组无声明64位/嵌套/list，未知字段只验证跳过，复杂消息旧研究回归保留。
-- 首次扩展467项中1项失败，为FurnitureStartFlowTest默认/resources路径。保留失败快照，V-01d仅调整到LUNAGC_TEST_RESOURCES优先、其次LUNAGC_RESOURCES_DIR、缺省当前resources；1396合法配方和非法/扣费/容量断言不删不跳过。修后该31项及关联110项通过，再跑最终495全过。FurnitureTalentPlanTest等其他V-01范围未扩展。
-- **272项研究工具回归通过**：tools/test_client72*.py加test_extract_client72/test_validate_protocol72/test_audit_resource72/test_inventory_protocol/test_review_protocol72_surface/test_generate_born72_sources。研究校验退出0；ready仍退出1，204缺口。
-- 首次生成/再次check的四产物hash一致；6生成+6原born工具测试通过。研究矩阵两次完整生成相同。旧schema从d2cfb14取出后实际用protoc解码目标向量，证明旧avatar tag2/retcode tag6读不到目标业务字段；没有切换工作区源码来复现。
+E-01c2（9408f41）只修已复现四处：LuaSerializer数值字符串必须先判真实TSTRING，SceneRegion.radius改float，两个boolean显式setter。7生产JUnit先6失败后全过。实际全13616组/20871套件、34970格/60884成员两次完成，原5组异常、30字符串污染/同根30转换、1210截断、144+868漏绑消除；仅8缺ID保留。未执行trigger/action/完整SceneScriptManager/getGroupGrids/cache安装。
 
-本机证据统一在忽略的local/migration72/：
+E-01c3历史反射62缺口对应1390位置/1503组，其中2项实际经GroupLuaCall userdata注册。E-01c4仅新增4行GetSceneOwnerUid，返回当前Scene真正host.uid；42位置/317组正常只读契约有来源。真实LuaJ/userdata/event context测试9次先4失败后全过，owner不同于guest/首玩家，含1/10001/MAX_INT及后续avatar查询；没有猜缺owner或无效gadget返回。旧220方法正文/签名/调用选择器完全未变。当前public207、反射61缺口、2wrapper已注册、59未见入口/1468组；GetGadgetConfigId等仍未知。
 
-| 类型 | 位置 |
-| --- | --- |
-| 聚焦/修后/最终Java XML | born-focused-test-results/、born-changed-test-results/、born-guard-final-test-results/ |
-| 首次失败快照 | born-guard-before-test-results/、logs/born-guard-regression.log |
-| 最终495及研究272 | evidence/born-guard-final-summary.json、logs/born-guard-final.log、logs/born-research-regression.log |
-| 生成与旧schema复现 | evidence/born-generation-{first,check}.json、born-legacy-parser-reproduction.json；logs/born-generation-tests.log |
-| 源码/矩阵 | evidence/born-{source-surface-review,login-source,login-dependencies,matrix-repeat}.json；logs/born-source-regression.log |
-| 映射闸门 | evidence/born-implementation-mapping-{check,ready}.json |
-| 构建与环境 | evidence/born-build-check.json、born-implementation-{environment,final-environment}.json；logs/born-portable-build.log |
+## 当前构建、测试与门禁
 
-研究/源码复现仍须按Harness从当前.env解析GAME_PATH和便携JDK/protoc，不复制旧机器路径或PID。Mongo测试先显式设置独立LUNAGC_TEST_MONGO_URI和需要的其他测试变量，不指向正式库；本轮只用一台独立测试实例，不能宣称验证两台独立实例。
+当前根JAR（遗留文件名LunaGC-7.1.0.jar）SHA-256为2566f46604df80ddaad05801fb182a7217b9d057a2c8619e21fc54e49db083fe，BuildConfig为69c3672；portable构建24秒。六class与当次编译相同，四序列化class相对上个4dd1c47a…bbe7字节完全相同。旧4dd1 JAR备份仅作历史离线依赖，未启动旧版本。
 
-## 源码审计与文档状态
+366完整研究回归通过，结构校验0错误，ready仍228缺口。此前28套580项Java（原495账号/经济/保存+85区域/脚本）失败/错误/跳过均0；本次owner独立9项红绿另计，不能称同一589项执行。完整Java集未重跑，历史217失败保留。独立测试Mongo随机库正常关闭，复查仅admin/config/local，原Mongo27017保留；收尾辅助JVM因fat JAR logger死锁仅终止该已确认辅助进程，修正独有日志配置，未杀DB/服务/调试目标。
 
-为生产改动重新人工复核已删除的fallback边、选人player.onLogin选择器及对应hash，未放松漂移门禁：
+现63研究输入，唯一ScriptLib源码hash3b554d175c4028e0d30bc4727035f5f04d44f76a3d88b562b0d03227b4cfcdf2经人工复核。原dependency/matrix/API/JAR守卫均先实际拒绝；真实新compiled父报告与源一致后仅更新相应hash，不改算法。60→62替换五份摘要并增current API/list，62→63增nested；三层矩阵/候选/描述符/开放边界保持，recover双跑相同。A03完整/P0和父B03/C01仍未完成，raw wire新增不等于业务已恢复。
 
-- A-03a当前12源码/9根/81方法、95边（12人工、83候选）、1000未关联；62直接构造类型/63总类型。
-- A-03b当前48源码/294方法、408边（71人工、337候选）、2856未关联；10开放锚点保持open。
-- A-03c矩阵当前99构造、148引用/种子、1140描述符文件、1254声明/4786字段；1287源码/Proto与47研究输入固定hash。目标空通知正式接管后missingProtoRoots为空；不是缺文件就造空message。仍不声称最小/完整P0。
-- 三层矩阵及188字段状态不变：L1/L2各10V/138U；L3为3V/7C/138U，字段41V/9C/138U。5组静态重号/传输域未知/runtime未验保留；空schema已独立确认的Notify不再错误标成无字段证据。
-- 动态来源因移除两处配置包号减为15处/8组/40固定来源；当前3272常量、323 Handler/227启用正值/0静态冲突、626发送位置、2804 Proto。全域注册覆盖、SendPacketEvent最终包、FanOut、replay、UnionCmd/枚举等仍归父C-01，不因静态0冲突通过运行验收。
+没有部署/启动服务。最近核对无Java服务、HTTP TCP8088/游戏UDP22101/测试27027监听；健康和运行JAR无对象，不标通过。原Mongo27017属workspace。根config hash未变；配置fastRequire仍true。SDK/补丁/完整协议/资源前置未齐，不启动猜测协议。
 
-已同步Project、Harness、README、CLIENT_72_BORN、账号系统/数据模型/运维、源码索引/管理器依赖/Proto矩阵/协议盘点、protocol README及复核摘要。旧数值/停止段落按历史保留，当前入口明确标注新状态。
+## 实机动态状态
 
-## 构建、环境与未部署原因
+已有管理员x64dbg Automate会话与原游戏目标保留，最新只读核对running=true；三输入和实际代码两段32/26字节相同。阶段开关/IFix为0，真实数组长16且全零，两key槽空。开关关闭意味着全零不能证明没有请求/阶段；SDK认证、HTTP路由、补丁加载、登录/选人/入场均未通过。
 
-代码提交8bd338f后，`tools/local_windows.ps1 -Mode build`退出0，便携JDK17、Gradle/protoc及JAR构建成功。产物仍名LunaGC-7.1.0.jar，版本准入未修改，不能称为7.2可连接构建。SHA-256：`3a05ca88115f93a46bbb0ca334f54241f560a291fbb5b05fa2d42bb0f87aa522`。JAR内10个改动/生成类与build/classes逐字节匹配，BuildConfig包含8bd338f；旧NewAccountIntro配置类与scheduleFallback/createDefaultTraveler方法不存在。旧JAR已保存在忽略目录。
+早期连续150秒观察40次首次异常均核对事件/ex.code/addr后con1+普通run交应用，结束存活；此前分段重连事件缺口和80000003/80000004退出根因仍unknown。不要erun无条件传递所有首次异常，不盲目run或重复load；API.detach_session只断观察连接。若目标暂停先查当前异常/断点/事件。当前状态必须重新发现归属，不能沿用本机历史PID。
 
-**没有部署或启动服务/实机。** 完整成功继续/真实必需首包和P0闭包、D-01实际SDK/本地信任/补丁加载、E-01资源revision/Lua/场景均未齐。最终无Java/游戏进程，HTTP TCP8088、游戏UDP22101、测试TCP27027无监听；健康及运行JAR hash没有运行对象，不标为通过。原工作区Mongo27017保留；测试实例启动前核对空端口、新独立dbpath，结束时核对该dbpath及只剩admin/config/local后通过管理命令正常关闭，测试数据目录保留。
+## 正在进行与下一步
 
-.env的LUNAGC_RUNTIME=portable，.env.local不存在；GAME_PATH/配置/子模块/进程与端口已重新核对，敏感路径/配置只在本机报告。mongodata/、local/data/没有修改或清理；没有操作任何客户端、补丁、资源或既有调试器。
+cb74432已先建卡并委派两个Sol，Root继续主线，任务未停：
 
-主仓库AGENTS.md原有11行编码/交接规范修改、resources/ScriptSceneData/flat.luas.scenes.full_globals.lua.json原差异均保留未提交；不覆盖、不归入本批。子模块引用patch f2874103ab70afc56260ee12d1eaca96247933b2、resources dac2a9d43332ef51879522cf39da2831b0ca0543不变，patch无修改。全部提交仅本地。
+1. B-02e7 /root/scene_normal_native：仅新增scene-data工具/测试/专题，恢复153A16AA0从原+48/type69612消费。初读+28非零才进153A16B30，进一步到153A3CD60更新owner+1F8列表，零query分支止14AF3D130；25866在主body尾段，尚未到。原生body不建模，true/false实参和对象指针独立断言。新SceneNestedReader Graph格式与旧normal不同，不能修改旧fixture或偷换对象称连续成功。
+2. E-01c5 /root/scene_serialization_audit：仅新增实际生产ScriptLoader加载审计/测试/专题，独立workingDir/user.dir/config/data，不改根配置/生产/缓存。先合成local defs及真实407代表组，真实init/getScript/bindings/eval/必要Group.load，fast/inline各新进程；RequireFunction会吞Common错误、Group先loaded=true，必须看实际bindings/套件/独立attempt记录。整场可加只拒绝业务调用的观察边界，但不能当完整生产环境或返回假成功；require吞哨异常也必须在外侧记为未通过/范围外。
+3. Root正只读核对14AF3D130与14AEF9DB0声明/代码：前者是type26814静态uint32/string/79078列表相关方法（2参数），后者type58209单uint32值类型方法（0业务参数），**不是已证明同一包装类型**。目前仅缓存元数据探索，尚无正式执行结论；需固定三输入和参数签名后再建卡。冷源70859表的业务名未知，不按结构猜SceneExcel字段。
 
-## 当前阻塞与Astra最小研究项
+每个独立项实际验收后本地提交并更新Project/Harness。若新运行/配置更改，先保留旧证据、复核源码/JAR/真实新父输入再更新守卫；不要为绿色测试自动刷新hash。D-02依赖仍不满足，继续可独立研究/开发，不把交接检查点当目标完成。
 
-B-02e待开始，用户指定遇关键取证缺口后停止，本批未执行/派发：
+## 证据入口与避坑
 
-1. 固定CLIENT_72_BORN三输入hash。由已核实SetPlayerBornDataRsp Handler的0分支进入14CD68860，恢复完整成功继续函数的状态变化、真实发送和调用依赖。先做可离线验证的部分；模型边界、IFix/SDK前置保持显式。
-2. 新号与已有隔离测试号的受控目标证据，核对PlayerLoginRsp、DoSetPlayerBornDataNotify、成功Rsp和**第一批必需**初始化/场景消息的次序与门控。不能把本服务当前发送顺序当目标规格，也不能把源码全部通知直接认作客户端必需集。
-3. 只对实际必需的新消息闭合CmdID→类型、类型→语义、字段→wire，带独立非零/错误/边界样本。若仍缺真实SDK/补丁/收帧调度，记录最早阻塞入口与解除条件即停，不扩大所有玩法，不猜号/空schema/枚举。
+共享相对路径：protocol/cn-7.2/*observations.json、login-proto-gap-matrix/review、scene-nested-research.proto；专题CLIENT_72_SCENE_{WAIT,NORMAL,QUERY,LIST,NESTED,SCRIPT_API,OWNER_UID}等。原始证据/备份/JAR/日志/数据库在忽略local/migration72。重点scene-owner-{impact,delivery,build-artifact}、scene-owner-list-login-proto-review-check、scene-nested-{determinism,login-proto-review-check}.json及scene-owner-list-nested-research-regression.log。
 
-现有495项只能验证服务器业务/保存不变量，不能决定上述客户端顺序和完整P0；ready204缺口正是不能启动本构建的证据。完整昵称validator亦尚未执行，基础服务昵称政策不构成完整兼容结论。Astra应在前置允许时按脚本API/固定目标取证，历史禁止computer-use、绕过校验或沿用旧暂停地址仍有效；最后游戏目标已退出，调试器状态不得据旧记录推断。
-
-## 弯路与避坑
-
-- 旧空BasePacket把所有响应伪成成功；retcode0为空不代表非零也为空。负int32须10字节varint，不能用sint32/zigzag。
-- 旧tag2/avatar、tag6/retcode及旧26105请求不再是本三件组默认值；5008旧未引用常量也不是目标别名。目标空通知必须追溯声明/继承原生执行证据。
-- 生成成功、同schema往返、完整Java编译、健康或静态0冲突均不能替代独立wire和客户端验收。本轮JAR根本没有运行，不制造运行hash/健康结果。
-- 保存为多个集合，故障后先冷读，不能声称错误自动回滚或重发欢迎恰好一次；不在失败对象上重试，不清理半成品数据来绿测试。
-- 首次Guard失败实际是测试默认/resources路径；通过新资源路径重跑原断言，不能跳过实际1396配方或删冷读验证。完整V-01仍未验收。
-- 源码hash变了需更新人工调用边/父hash再重生成，不能仅改统计常量冒称复核。本批删除fallback边、更新选择器、复核两处配置消失并保留所有开放锚点；候选不晋级。
-
-## 交接备份
-
-覆盖本文之前，旧HANDOFF2已逐字节备份至`local/migration72/handoffs/HANDOFF2.before-born-implementation-8bd338f.md`，SHA-256 `8254eae519d5610454c670e00c4b6d49e1f1c0f2836ec95d12002769c1dfc086`，核验byteEqual=true；报告`local/migration72/evidence/handoff-born-implementation-backup-check.json`。旧B-02d及更早A-03c/V-01交接链保留于该备份和更早备份中。HANDOFF.md本轮只追加，不删除历史。
+精确重复测试原始文件时注意Windows raw CRLF hash与规范换行/JSON digest不同，不能混用。API工具默认父报告现在已与新JAR同步；旧baseline仍保留旧source/JAR hash，不能拿新源覆盖历史再宣称没变。原ScriptLib差异仅正常owner查询，GetGadgetConfigId错误契约仍未恢复；不能把gadget资源ID当configId。Native父构造默认存储/EOF模型与真runtime分开，绝不能以INTMAX夹具接受或compiled字段命中冒称实机验收。
