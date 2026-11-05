@@ -7,3 +7,11 @@
 **研发已暂停，D-02尚未完成/验收。未经用户恢复，不开始下一项。** 本批无运行代码/Proto/补丁/配置/资源改动或重启。AGENTS.md及resources既有修改已保留，未提交；未推送。
 
 详细状态、证据/复现入口、缺口、弯路和下一步请读[HANDOFF2.md](HANDOFF2.md)，再读[Project](Project.md)、[Harness](Harness.md)及[会话研究](docs/CLIENT_72_SESSION.md)。本次原HANDOFF2.md不存在，首次创建，无旧文件可备份；下次覆盖前须先备份。恢复后优先追踪回调尾段/session+B0→Token tag965，或封包体/Handler后段，再按B-03/C-01/D-01/E-01前置推进D-02实机验收。
+
+## 2026-11-05：用户已恢复推进，认证尾段/B0/分区解析前缀新增验收
+
+用户已恢复原目标，并强调Project.md按任务列表逐项维护。当前没有暂停指令；D-02仍未完成/未验收。新增A-04d5l（46d422c）、A-04d5m（5dcf882）、A-04d5n1（c9f6870）按限定范围已完成，A-04d5n/B-02c9及父任务仍进行中。最新169项研究回归、6组分区前缀原生样本与重复产物通过；业务字段仍35，tag965语义未知，ready仍退出1。
+
+Project已补齐提交号和验收/下一步（74ac0f0、54dfac1）。下一项是151211BA1之后到B0的连续处理、第二协程及业务语义；未改运行文件或部署。AGENTS/resources既有修改未提交，未推送。
+
+详见[HANDOFF2.md](HANDOFF2.md)、[Project](Project.md)、[Harness](Harness.md)、[会话研究](docs/CLIENT_72_SESSION.md)。本次覆盖前已将原HANDOFF2备份至忽略目录`local/migration72/handoffs/HANDOFF2.before-dispatch-prefix-c9f6870.md`并核对SHA-256一致。旧暂停段落仅为历史，不需要用户再次授权恢复。
