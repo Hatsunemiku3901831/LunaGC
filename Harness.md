@@ -252,3 +252,5 @@ B-02d收口：验收提交36eb486；先建卡3fc7e80。旧HANDOFF2已先备份�
 - 复现：`evidence/born-legacy-parser-reproduction.json`证明旧tag不能读出目标字段；首次467项的测试路径失败快照born-guard-before-test-results/保留，修后born-guard-final-test-results/和evidence/born-guard-final-summary.json核对495项。logs/born-{guard-final,research-regression}.log、evidence/born-{source-surface-review,login-source,login-dependencies,matrix-repeat,implementation-mapping-check,implementation-mapping-ready}.json都在local/migration72/。
 
 部署前置仍缺完整P0/成功继续与真实必需首包序列、D-01实际SDK/信任/补丁加载、E-01资源revision/Lua/场景；不启动服务/游戏，不改版本。Astra最小后续取证为B-02e，固定输入沿Rsp0→14CD68860的继续与新旧号序列核对，范围/停止条件见[CLIENT_72_BORN](docs/CLIENT_72_BORN.md)。
+
+最终收尾：C-01a代码/源码审计提交8bd338f；之后便携-Mode build退出0，JAR10类/代码提交相符、旧fallback/配置类均不存在。未部署，无HTTP/游戏/测试端口监听及Java/游戏进程，健康和运行JAR无对象不标通过；原Mongo保留，测试实例核对空测试库后正常关闭。报告evidence/born-{build-check,implementation-final-environment}.json及logs/born-portable-build.log。B-03a/C-01a/V-01d限定项完成；父任务仍进行中，已整理B-02e最小取证并停止新增工作，交接见HANDOFF2。

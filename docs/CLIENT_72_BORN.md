@@ -91,3 +91,11 @@ python tools/validate_protocol72.py --ready
 首项是B-02e：固定同一EXE/两metadata哈希，沿已核实SetPlayerBornDataRsp Handler的0分支进入`14CD68860`，核对完整继续函数的状态变化/发送/依赖；结合新号与已有测试号的受控连接证据，确定PlayerLoginRsp、DoSetPlayerBornDataNotify、成功Rsp与第一条必需初始化/场景消息的次序及门控。每新增必需消息分别给出CmdID→类型、类型→语义、字段→wire证据和非零/错误边界独立样本，不能把服务端现有发送顺序当目标规格。若仍需SDK/补丁/真实调度前置，记录最早缺失入口与解除条件即停，不扩大到全部玩法。
 
 复现起点是上述Java选集和ready204缺口；它们已能证明业务/保存不变量，却无法确定客户端完整成功继续、必需初始化闭包或实际收发。昵称完整validator仍未执行，仅基础服务策略已实现。D-01实际SDK/本地信任与补丁加载、E-01资源revision/Lua/场景也未齐；本批不新启动服务、游戏或调试目标，不修改版本准入或安装补丁。B-03/C-01父任务与D-02均不得因三件组通过晋级。
+
+## 构建、未部署判定与停止交接
+
+代码提交`8bd338f`后通过`tools/local_windows.ps1 -Mode build`便携构建（退出0），没有启动服务。磁盘产物仍名LunaGC-7.1.0.jar，版本准入未改，不能称为7.2可连接构建。SHA-256为`3a05ca88115f93a46bbb0ca334f54241f560a291fbb5b05fa2d42bb0f87aa522`；JAR内10个改动/生成类与build/classes逐字节一致，BuildConfig包含8bd338f，旧NewAccountIntro配置类与默认旅行者fallback方法均不存在。证据`evidence/born-build-check.json`与`logs/born-portable-build.log`位于local/migration72。
+
+前置未齐，明确**不部署、不启动游戏/服务或新增调试取证**。最终无Java/游戏进程、HTTP TCP8088/游戏UDP22101/测试TCP27027无监听；健康及运行JAR SHA-256无运行对象，不标通过。原工作区Mongo27017保留，独立测试实例检查只剩admin/config/local后已正常关闭，测试dbpath保留。未动mongodata/local/data、客户端、补丁、资源子模块或既有调试器。配置摘要/端口/PID/实际JARhash证据在`evidence/born-implementation-{environment,final-environment}.json`，不复制机器路径/PID至共享文档。
+
+限定子卡B-03a/C-01a与V-01d已完成，父B-03/C-01仍进行中，B-02e待开始；已按本次停止条件结束新增开发/取证。本地提交c6bf035/8bd338f/9fe3bb2，建卡d2cfb14/87cda4c；均未推送。交接先备份并验证旧HANDOFF2，再覆盖详细交接并只追加HANDOFF，见仓库两份交接。

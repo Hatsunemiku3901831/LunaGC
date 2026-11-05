@@ -121,3 +121,13 @@ Astra下一研究为现有B-02下DoSetPlayerBornDataNotify/SetPlayerBornDataReq/
 已达到“Sol能按明确规格实现回归即停止”的停止点，未进入B-03/C-01/D-02，没有运行集成/部署/客户端或动态调试。昵称validator仅到入口，未替换成功；wire错误模型、UI/SDK/完整成功继续等未验范围详见[研究与Sol规格](docs/CLIENT_72_BORN.md)。正式后续实现须用户另给Sol范围。
 
 原HANDOFF2先备份到local/migration72/handoffs/HANDOFF2.before-born-36eb486.md并核对字节/hash，SHA-256 7ba3b0d7d41c0423b489e878eeb0dec65ecde648b41fbd5dd5812e4f5bb664c9；详细状态/提交/测试/阻塞/避坑/复现与下一项见[HANDOFF2.md](HANDOFF2.md)。Java/游戏未运行，Mongo27017及两个既有调试器未操作；AGENTS/resources他人差异保留未提交。本HANDOFF仅追加，旧内容保留。
+
+## 2026-11-06 B-03a/C-01a限定实现完成，按取证停止条件交接
+
+本次指令已覆盖前批停止点并完成可独立的实现、回归和构建，现已停止新增开发/取证。建卡d2cfb14，B-03a生产生成/独立wire c6bf035，V-01d路径失败建卡87cda4c/修复9fe3bb2，C-01a业务/保存及源码矩阵8bd338f；均仅本地、未推送。三件组固定5008/8541/414及nick_name4/avatar_id11/retcode15，删除配置包号/超时/默认角色兜底，错误真实编码、重复幂等、确认保存后继续，半成品冷读拒绝误登录。
+
+最终495项Java（含19业务、15wire、原33准入及221经济保存选集）和272研究回归通过，失败/错误/跳过均0；ready仍拒绝204缺口，完整Java集未重跑。便携build退出0，JAR10类与编译产物/代码提交8bd338f匹配；完整成功继续/P0/SDK/补丁/资源前置未齐，未部署或启动服务/游戏。无Java/游戏与HTTP/游戏/测试监听；独立测试Mongo正常关闭，原Mongo/存档/运行数据/他人修改保留。onLogin/欢迎仅继续入口观察点，不是实机或实际邮件落库验收；父B-03/C-01仍进行中，D-02未验。
+
+下一项B-02e为Astra最小取证：固定目标Rsp0→14CD68860完整继续与新旧号首批必需初始化/场景序列，新增必需消息逐层证据，不猜号/绕检查。范围、复现、模型/保存边界、测试/构建证据、未完成与避坑详见[HANDOFF2.md](HANDOFF2.md)及[CLIENT_72_BORN](docs/CLIENT_72_BORN.md)；本批未派发/执行该研究。
+
+覆盖HANDOFF2前已先备份至local/migration72/handoffs/HANDOFF2.before-born-implementation-8bd338f.md，字节/hash核验一致，SHA-256 8254eae519d5610454c670e00c4b6d49e1f1c0f2836ec95d12002769c1dfc086；报告evidence/handoff-born-implementation-backup-check.json。本文件只追加，历史停止/active记录保留，以本段和详细交接为当前状态。
