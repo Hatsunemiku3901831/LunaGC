@@ -4,9 +4,9 @@
 
 ## 当前阶段
 
-2026-11-06最新指令：仅推进B-02d选人三件组研究；以下A-03c停止记录是历史。三件组证据闭合且Sol可按规格实现回归即停止，按规范备份交接。不进入B-03/C-01/D-02。
+2026-11-06最新指令：恢复B-03/C-01选人三件组的限定实现。先建子卡，按B-02d已核实规格完成确定性生成、生产Proto/包号、非零错误回包和新旧号业务回归，保留账号/经济/保存Guard；继续依赖满足的开发、测试和构建。遇需新增客户端取证的关键阻塞，先完成其余独立项，再整理复现及Astra最小研究项后停止。前置不齐不启动服务/实机，父任务不因局部通过晋级；此前停止记录均为历史。
 
-执行状态：B-02d选人三件组限定研究验收完成并停止；目标号/类型/业务与3字段wire闭合，可交Sol按CLIENT_72_BORN规格实施后续回归。39原生样本、独立wire/protoc、6新增/266研究回归与重复产物通过；普通校验0，ready1（204缺口）。B-02整体及A-03完整闭包仍未完成，B-03/C-01/D-02未开展；没有运行部署或实机验收。此前A-03c停止记录为历史。
+执行状态：接手差异已核对，B-02d三件组证据闭合；现开始B-03a/C-01a，尚未实施或验证。本批基线bed2e3c，AGENTS.md与resources既有差异保留不提交。B-02整体及A-03完整闭包仍未完成，没有运行部署或实机验收。
 
 静态结构、Token/Login原始wire及响应非空对象图已离线恢复；四个登录请求/响应身份与CmdID、36个字段来源、8类默认枚举102符号及2类连接状态枚举20符号已有目标证据。明确夹具下已执行Token原生seed/构造/完整帧，以及响应Handler的密码学、安装key、UID/token、版本hash、Login/Full分支、Login构造/实际序列化/完整帧；独立protoc、Java key及错误路径均有验证。不等于整个Handler返回、SDK初始化、真实收帧调度或登录。真实启动已观察全局及UTF-8缓存ABI，最后调试目标已退出，原因unknown。A-03a提供12源码/9根/80方法；A-03b扩展48源码/293方法/409边（337候选），2868未关联调用保留。A-03c给出97包构造/148引用种子/1139文件描述符依赖；缺根和未知三层均不晋级。260研究回归与221项Java经济/保存选集通过，不消除完整集历史217失败，完整集未重跑。交接时复查Java及游戏均未运行，HTTP/游戏端口无监听，MongoDB属本工作区；隔离研发基线部署是历史记录，目前没有7.2可连接构建或登录入场验收。本机路径和原始证据留忽略local/migration72，公共脱敏摘要在docs和protocol/cn-7.2。
 
@@ -79,8 +79,10 @@
 | A-04d5v 分区Ec2b来源到Token完整帧 | A-04d5n4、A-04d5t、A-04d5u | trace_client72_dispatch_key_frame、摘要/测试 | 多RSA块真实解密/验签/reader→三次Ec2b→两配置XOR/清槽→最终key原指针→Token实际size/writer/帧；独立输入、跨周期/空key/错误魔数与重复回归 | 已完成 | dispatch-key-frame-observations.json、dispatch-key-frame-determinism.json；4原生样本、234回归、二次一致，旧三工具各6样本产物不变；2523513 | 继续Login/真实响应串联或P0/SDK；调度器/实机不在本项范围 |
 | A-04d5w 响应Handler到Login完整帧 | A-04d5q、A-04d5r | trace_client72_handler_login_frame、摘要/测试 | 原生响应密码学/安装key→Handler/Login构造→发送→实际序列化/完整帧；保留key/request/token/hash指针，独立protoc/Java key、边界/错误/重复回归 | 已完成 | handler-login-frame-observations.json、handler-login-frame-determinism.json；10原生样本、240回归、二次一致，Token原6组产物不变；6db47fe | 继续A-03/P0调用闭包或真实响应收帧，不代表整个Handler返回/实机 |
 | B-02d 选人三件组三层证据 | A-03c、固定7.2输入 | born研究工具/独立wire与protoc/三层摘要/Sol实现规格 | 仅DoSetPlayerBornDataNotify及SetPlayerBornDataReq/Rsp；固定输入hash，目标注册/getter与业务调用独立关联；实际原生执行、独立wire/protoc、非零及错误边界，64位/嵌套/list按实际schema验证或明确不适用；未知不晋级、不伪造空消息；证据闭合且可按明确规格实现回归立即停止，不进入B-03/C-01/D-02 | 已完成 | CLIENT_72_BORN、born-observations；39原生/6新增/266回归、独立protoc及重复一致；本项提交 | 立即停止研究，交Sol按明确规格实现回归；不自动进入B-03/C-01/D-02 |
-| B-03 确定性生成 | B-01、B-02 | generator、PacketOpcodes、Proto | 只生成核实项，别名/引用检查，重复输出一致，protoc 编译，禁止旧号兜底 | 待开始 | — | 合成模型测试，再接真实映射 |
-| C-01 双向网络接入 | B-03 | GameSession、BasePacket、Handler 注册、UnionCmd/枚举 | 注册冲突失败、号/长度边界、内外分派、目标 wire 测试，构建部署 | 待开始 | — | 映射确认后替换旧表和专属断言 |
+| B-03 确定性生成 | B-01、B-02 | generator、PacketOpcodes、Proto | 只生成核实项，别名/引用检查，重复输出一致，protoc 编译，禁止旧号兜底 | 进行中 | 限定子卡B-03a；整体B-02/P0仍缺证据 | 全表/别名/引用仍待完整映射，局部通过不晋级 |
+| B-03a 选人三件组确定性生成与wire接管 | B-01、B-02d | 固定证据生成器、三件组生产Proto/目标常量、独立wire回归 | 仅5008/8541/414与nick_name4/avatar_id11/retcode15；校验输入hash/三层证据及引用/冲突，候选与旧号不兜底；二次生成一致及check漂移拒绝；Gradle/protoc生成Java；通知/成功空payload、非零/负值/Unicode/uint32/未知及错误边界独立断言 | 进行中 | CLIENT_72_BORN；尚未实现/测试 | 先锁定源码与已核实映射，实施生成/回归 |
+| C-01 双向网络接入 | B-03 | GameSession、BasePacket、Handler 注册、UnionCmd/枚举 | 注册冲突失败、号/长度边界、内外分派、目标 wire 测试，构建部署 | 进行中 | 限定子卡C-01a；全域分派/连接前置未齐 | 完整P0/网络接入与部署另验收，局部通过不晋级 |
+| C-01a 选人三件组业务接入与保存回归 | B-03a、B-02d | 通知/请求Handler/响应、新旧号登录门控、隔离Mongo回归、构建及部署判定 | 新号等待显式选人；重复创建不重复写/发放且错误不onLogin；非法输入/准入撤销不登录；成功确认持久化后继续；旧号不重选；非零错误真实编码tag15且无配置/旧号兜底；保留账号/经济/保存Guard选集；完成构建，前置不齐明确不部署、不启动服务/实机 | 进行中 | CLIENT_72_BORN；尚未实现/测试 | 先复现现有空错误/超时默认选人路径，再最小修改并回归 |
 | D-01 补丁和连接前置 | A-01、A-04 | patch、HTTP/SDK/dispatch/密钥 | 路由/渠道/版本/加密、各钩子 ABI/布局/实际加载验证 | 进行中 | CLIENT_72_PATCH_ABI；四入口参数前缀已验，密钥/加载未验 | 字符串工厂、原生RSA/验签、实际加载与路由；商城钩子另列 |
 | D-01a 命名HTTP/SDK入口参数 | A-04d1 | trace_client72_patch_abi、参数/捕获布局摘要 | 四声明static/instance/参数与原生前缀相符，12原生样本、143项研究回归、重复一致 | 已完成 | CLIENT_72_PATCH_ABI、patch-abi-trace/determinism；db5245e | 不含完整函数、RSA成功、钩子安装/加载或实机；继续D-01 |
 | D-01b 真实初始化动态观察 | A-01、用户动态调试授权 | 调试工具来源/摘要、进程/模块/断点证据 | 固定客户端、核对目标进程；观察真实初始化/密钥来源，不跳过检查、不以局部命中代替实机 | 进行中 | CLIENT_72_DYNAMIC_DEBUG、startup-observations.json；脚本API已接通，启动/代码/RNG状态已验 | 正式化Ec2b并连接分区/帧；SDK/实际登录仍未验 |
