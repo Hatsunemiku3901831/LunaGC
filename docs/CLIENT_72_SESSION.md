@@ -57,7 +57,25 @@ trace_client72_request_identity执行两个阶段→分配检查点、两个成�
 
 枚举总计8类型102符号；4条literal/22条原生常量验证通过。100项工具回归通过，identity trace/摘要二次生成逐字节一致。新增校验器检查精确阶段参数、常量、类型/Clone/CopyFrom/getter地址、响应身份和三层记录，保留runtimeStatus=not-tested。
 
-## 复现
+## A-04d5c / B-02c3 Login构造至发送入口
+
+新增trace_client72_login_constructor，从151213730执行两段保护续段，最终到151214D20入口；核对RCX仍为原发送器、RDX为原生路径分配并填充的请求对象。不是发送队列执行或实际发包验收。
+
+限定环境：目标运行时开关列表包含3628，执行原生旧Shell分支；CloudGame使用已初始化的非云缓存；可选环境功能列表为空；其余明确初始化为默认值。旧Shell操作3、0、1、2分别提供不同不透明ASCII字节，**不**将新Shell/IFix调用默认成功。ByteString构造/赋值、三个SDK包装、CloudGame检查和可选列表检查执行真实代码。所有执行触达的literal从目标usage/source解码后分配；没有用空字符串替代未知literal。
+
+| 稳定字段 | 目标来源 | 偏移 / tag / wire |
+| --- | --- | --- |
+| uapc | MiHoYoSDK.InvokeReturn(`info_get_uapc`) | +18 / 1533 / string |
+| channel_id | MiHoYoSDK.InvokeReturn(`info_get_channel_id`) → Number.TryParseUInt32 | +114 / 12 / uint32 |
+| sub_channel_id | MiHoYoSDK.InvokeReturn(`info_get_sub_channel_id`) → Number.TryParseUInt32 | +158 / 364 / uint32 |
+
+3组输入实际到达发送入口并交由完整原生writer：123/456、FFFFFFFF/0、溢出数字/无效文本。后两类解析失败走原生失败分支，保持字段0；uint32解析本身为明确限定十进制夹具的库模型。请求实际存储快照按已声明类型交给writer，嵌套设备消息也执行子writer；不是源环境值直接构造预期Proto。
+
+另外，旧Shell操作0/1/2按Encoding.GetString后拼接流入+A8/tag624/string，操作3流入+38/tag1105/bytes，均以独立tag与字节断言验证；**这两个字段的业务语义保持unresolved**。屏幕原生getter、Pbase来源、String.Concat/ASCII编码、托管对象/默认值、数字文化对象与stage操作为列明模型，未宣称系统环境和外部SDK实测。
+
+累计25个字段有明确业务来源。105项工具回归通过，三组构造trace/摘要二次生成逐字节相同。共享login-constructor-observations.json；本机evidence/login-constructor-{trace,determinism}.json与logs/login-constructor-tests.log。全局B-02、密码学前段、Token完整构造、C-01/D-01/E-01/D-02仍未完成。
+
+## 补充复现
 
 ```powershell
 # GAME_PATH / JAVA_HOME 先按 Harness 核对本机portable配置
@@ -67,6 +85,7 @@ python tools/trace_client72_token_flow.py --client $env:GAME_PATH --output local
 python tools/extract_client72_enums.py --client $env:GAME_PATH --output protocol/cn-7.2/enum-observations.json
 python tools/check_client72_metadata_values.py --client $env:GAME_PATH --output local/migration72/evidence/metadata-values-native-stage.json
 python tools/trace_client72_request_identity.py --client $env:GAME_PATH --output local/migration72/evidence/request-identity-trace.json --summary-output protocol/cn-7.2/request-identity-observations.json
+python tools/trace_client72_login_constructor.py --client $env:GAME_PATH --output local/migration72/evidence/login-constructor-trace.json --summary-output protocol/cn-7.2/login-constructor-observations.json
 ```
 
 共享摘要：protocol/cn-7.2/session-seed-observations.json。完整trace、重复生成报告：evidence/session-seed-trace.json、session-seed-determinism.json；回归：logs/session-all-tests.log。原始探索留analysis/。本批只改离线工具/测试/研究记录，不需要服务端重启；新旧号、选人、入场、重登均未实机验收。
@@ -74,3 +93,5 @@ python tools/trace_client72_request_identity.py --client $env:GAME_PATH --output
 token链共享摘要为session-token-observations.json；evidence/session-token-trace.json、session-token-determinism.json及logs/session-token-tests.log保存本批复现。seed检查点本地提交0f324eb。
 
 token链本地提交0c12f2c。请求身份新增request-identity-observations.json；evidence/request-identity-trace.json、request-identity-determinism.json，回归logs/request-identity-tests.log。后续执行线索：151213BE2→SDK `info_get_uapc`、CloudGame、PbaseMD5、设备子对象→151213FF7保护续段→151214D20发送队列；Token调用同一发送入口151220673。静态调用点不替代完整受控发送样本。
+
+请求身份检查点本地提交70f3e5b。上述Login构造链已按限定环境执行完成，下一项转15121FF70的Token构造、151214D20发送队列及Token成功路径的密码学前段；不要求重跑此前已经一致的writer/对象图样本。

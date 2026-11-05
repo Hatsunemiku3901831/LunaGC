@@ -187,6 +187,13 @@
       "inputFile": "binary",
       "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
       "location": "docs/CLIENT_72_SESSION.md; request-identity-observations.json; native stage enum, constructor self-class and command getters"
+    },
+    {
+      "id": "login-sdk-source",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_SESSION.md; login-constructor-observations.json; target SDK key wrappers through protected constructor and writer"
     }
   ],
   "opcodes": [
@@ -2108,14 +2115,13 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_12",
-          "status": "unresolved",
+          "semanticField": "channel_id",
+          "status": "verified",
           "evidence": [
-            "login-protected-writer"
+            "login-protected-writer",
+            "login-sdk-source"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
+          "ambiguities": [],
           "wireStatus": "emulated-observation"
         },
         {
@@ -2312,14 +2318,13 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_364",
-          "status": "unresolved",
+          "semanticField": "sub_channel_id",
+          "status": "verified",
           "evidence": [
-            "login-protected-writer"
+            "login-protected-writer",
+            "login-sdk-source"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
+          "ambiguities": [],
           "wireStatus": "emulated-observation"
         },
         {
@@ -2672,14 +2677,13 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_1533",
-          "status": "unresolved",
+          "semanticField": "uapc",
+          "status": "verified",
           "evidence": [
-            "login-protected-writer"
+            "login-protected-writer",
+            "login-sdk-source"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
+          "ambiguities": [],
           "wireStatus": "emulated-observation"
         },
         {

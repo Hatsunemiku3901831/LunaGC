@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "fixtureCount": 3,
+  "fieldBindings": [
+    {
+      "typeIndex": 76410,
+      "clientType": "KOHBOMDDFCB",
+      "clientField": "PMKEHCKOHFJ",
+      "objectOffset": 24,
+      "tag": 1533,
+      "type": "string",
+      "semanticField": "uapc",
+      "sourceKey": "info_get_uapc",
+      "status": "verified",
+      "scope": "native-sdk-key-to-wire"
+    },
+    {
+      "typeIndex": 76410,
+      "clientType": "KOHBOMDDFCB",
+      "clientField": "HLNLCJBLCMM",
+      "objectOffset": 276,
+      "tag": 12,
+      "type": "uint32",
+      "semanticField": "channel_id",
+      "sourceKey": "info_get_channel_id",
+      "status": "verified",
+      "scope": "native-sdk-key-to-wire"
+    },
+    {
+      "typeIndex": 76410,
+      "clientType": "KOHBOMDDFCB",
+      "clientField": "LJLGGDEBGKD",
+      "objectOffset": 344,
+      "tag": 364,
+      "type": "uint32",
+      "semanticField": "sub_channel_id",
+      "sourceKey": "info_get_sub_channel_id",
+      "status": "verified",
+      "scope": "native-sdk-key-to-wire"
+    }
+  ],
+  "entry": "0x151213730",
+  "stop": "0x151214d20",
+  "runtimeStatus": "not-tested",
+  "opaqueSourceBindings": [
+    {
+      "objectOffset": 168,
+      "tag": 624,
+      "type": "string",
+      "operations": [
+        0,
+        1,
+        2
+      ],
+      "semanticStatus": "unresolved"
+    },
+    {
+      "objectOffset": 56,
+      "tag": 1105,
+      "type": "bytes",
+      "operations": [
+        3
+      ],
+      "semanticStatus": "unresolved"
+    }
+  ],
+  "models": [
+    "explicit Miscs/SDK/platform/Pbase outputs",
+    "old Shell opaque bytes for operations 0..3",
+    "managed allocations and metadata literal strings",
+    "ASCII Encoding.GetString/String.Concat",
+    "bounded decimal UInt32 parse and culture provider",
+    "stage capture"
+  ],
+  "environment": [
+    "native flag-list contains 3628; old Shell branch",
+    "native cached non-cloud predicate",
+    "empty optional environment feature list",
+    "default zero optional global flags"
+  ],
+  "outsideScope": [
+    "new Shell provider",
+    "cloud path",
+    "IFix",
+    "send queue body/network",
+    "real client"
+  ]
+}

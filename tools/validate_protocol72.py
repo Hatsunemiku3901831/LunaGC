@@ -313,6 +313,38 @@ def validate_request_identities(document, profile, identity, enums, responses):
     return errors
 
 
+def validate_login_constructor(document, profile, constructor, wire):
+    errors=[]
+    hashes={profile['files'][k]['path']:profile['files'][k]['sha256'] for k in ('binary','metadata','startup')}
+    if constructor.get('inputSHA256')!=hashes:errors.append('Login constructor: input mismatch')
+    if constructor.get('entry')!='0x151213730' or constructor.get('stop')!='0x151214d20':
+        errors.append('Login constructor: execution boundaries mismatch')
+    expected={0x18:(1533,'string','uapc','info_get_uapc'),0x114:(12,'uint32','channel_id','info_get_channel_id'),
+              0x158:(364,'uint32','sub_channel_id','info_get_sub_channel_id')}
+    bindings=constructor.get('fieldBindings',[])
+    if len(bindings)!=3 or {b.get('objectOffset') for b in bindings}!=set(expected):
+        errors.append('Login constructor: SDK source binding set mismatch')
+    raw=next((m for m in wire.get('messages',[]) if m.get('typeIndex')==76410),{})
+    schema=next((s for s in document['schemas'] if s['semanticName']=='PlayerLoginReq'),{})
+    for b in bindings:
+        off=b.get('objectOffset')
+        if off not in expected:continue
+        tag,kind,name,key=expected[off]
+        required=dict(tag=tag,type=kind,semanticField=name,sourceKey=key,clientType='KOHBOMDDFCB',typeIndex=76410,
+                      status='verified',scope='native-sdk-key-to-wire')
+        if any(b.get(k)!=v for k,v in required.items()):errors.append('Login constructor: SDK key/field claim mismatch')
+        fields=[f for f in raw.get('fields',[]) if f.get('objectOffset')==off]
+        if len(fields)!=1 or any(b.get(k)!=fields[0].get(k) for k in ('tag','type','clientField')):
+            errors.append('Login constructor: raw wire disagreement')
+        mapped=[f for f in schema.get('fields',[]) if f.get('clientField')==b.get('clientField')]
+        if (len(mapped)!=1 or 'login-sdk-source' not in mapped[0].get('evidence',[]) or
+                any(mapped[0].get(k)!=b.get(k) for k in ('tag','type','semanticField','status'))):
+            errors.append('Login constructor: semantic mapping disagreement')
+    claims={f.get('clientField') for f in schema.get('fields',[]) if 'login-sdk-source' in f.get('evidence',[])}
+    if claims!={b.get('clientField') for b in bindings}:errors.append('Login constructor: undeclared SDK claim')
+    return errors
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--directory', type=Path, default=Path(__file__).resolve().parents[1] / 'protocol/cn-7.2')
@@ -336,6 +368,8 @@ def main():
                   if name in ('login-wire-observations.json','response-wire-observations.json')]))
     identity=json.loads((args.directory/'request-identity-observations.json').read_text('utf8'))
     errors.extend(validate_request_identities(document,profile,identity,semantic_tables[2],semantic_tables[0]))
+    constructor=json.loads((args.directory/'login-constructor-observations.json').read_text('utf8'))
+    errors.extend(validate_login_constructor(document,profile,constructor,semantic_tables[3]))
     print(json.dumps({'mode': 'ready' if args.ready else 'research-structure', 'valid': not errors, 'errors': errors},
                      ensure_ascii=False, indent=2))
     raise SystemExit(bool(errors))
