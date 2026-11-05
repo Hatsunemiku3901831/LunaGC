@@ -8,8 +8,8 @@ try:
 except ImportError:
     from extract_client72 import PE, HASHES, HEADER_VA, METADATA_REGISTRATION, BODY, MASK32, KINDS, number, span, read_verified, extract
 
-# Four protocol enums, two platform-source enums, and the request language source.
-SELECTED = (20469, 46236, 54603, 70906, 2411, 11253, 77368)
+# Protocol/oneof enums and platform/language/login-stage source domains.
+SELECTED = (20469, 46236, 54603, 70906, 2411, 11253, 77368, 85949)
 FORMATS = {'int8':'b','uint8':'B','int16':'h','uint16':'H','int32':'i','uint32':'I','int64':'q','uint64':'Q'}
 
 
@@ -66,7 +66,7 @@ def recover(binary, metadata, records):
               if f['type']['kind']=='valuetype']
     return dict(schemaVersion=1,inputSHA256=HASHES,defaultTable=hex(base),defaultTableBytes=size,
                 defaultData=hex(data),enums=selected,fieldBindings=bindings,
-                scope='Protocol enum and oneof symbols; platform-source enums are not network enum declarations')
+                scope='Protocol enum and oneof symbols; platform/language/stage sources are not automatically network enum declarations')
 
 
 def main():

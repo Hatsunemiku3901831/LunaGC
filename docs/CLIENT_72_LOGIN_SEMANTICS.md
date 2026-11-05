@@ -85,7 +85,7 @@ python tools/validate_protocol72.py --ready # 当前仍应退出1
 
 后续[会话研究](CLIENT_72_SESSION.md)已完成解密后seed片段、12组Java密钥对照与6组拒绝。此结果只补齐指定边界，不改变下面完整Handler/请求配对的未完成状态。
 
-- GetPlayerTokenReq、PlayerLoginReq 仍为业务候选；本批没有把反向响应的命名机械套到请求。下一项沿Token成功分支、会话token保存和Login发送参数，闭合请求/响应配对。
+- 后续A-04d5b已从目标阶段枚举、构造self-class及原生getter确认GetPlayerTokenReq/24604、PlayerLoginReq/23172，见[会话研究](CLIENT_72_SESSION.md)。B-02c2另完成两个token字段。完整请求构造/发送、其他字段与实机仍待验证。
 - Token handler 入口保护代码已可执行，探索成功分支在15A4DE262到达ByteString helper147CF3070。后续seed/密钥应用及状态初始化尚需明确对象和helper模型，不能将任意未建模调用默认返回成功。
 - Login构造在151213AC6进入保护续段；本批来源检查以此为明确终点，剩余41个外层字段业务名、token等重要来源另验。其他已知wire字段继续保持未知语义。
 - 共同配置包装151216140消费的字符串和NNKFJMDCCMB、bool具体语义仍未闭合。枚举原始符号/数值恢复不代表字段业务名称已确定。

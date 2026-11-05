@@ -268,6 +268,51 @@ def validate_session_token_flow(document, profile, flow, wire_tables):
     return errors
 
 
+def validate_request_identities(document, profile, identity, enums, responses):
+    errors=[]
+    hashes={profile['files'][k]['path']:profile['files'][k]['sha256'] for k in ('binary','metadata','startup')}
+    if identity.get('inputSHA256')!=hashes:errors.append('Request identity: target input mismatch')
+    declaration=identity.get('stageDeclaration',{})
+    if any(declaration.get(k)!=v for k,v in dict(entry='0x14c8ae9a0',methodIndex=711360,
+           parameterTypeIndex=675783,enumTypeIndex=85949,enumClientType='NEKEJMEIJBF').items()):
+        errors.append('Request identity: stage method/parameter declaration mismatch')
+    expected_enum=next((e for e in enums.get('enums',[]) if e.get('typeIndex')==85949),None)
+    if not expected_enum or identity.get('stageEnum')!=expected_enum:
+        errors.append('Request identity: stage constants disagree with enum observations')
+    symbols={v['symbol']:v['value'] for v in (expected_enum or {}).get('values',[])}
+    expected={'GetPlayerTokenReq':('NJAALDCMHEP',24604,'OnPlayerTokenReq',8,'GetPlayerTokenRsp','OnPlayerTokenRsp',9),
+              'PlayerLoginReq':('KOHBOMDDFCB',23172,'OnLoginReq',6,'PlayerLoginRsp','OnLoginRsp',7)}
+    native={'GetPlayerTokenReq':dict(typeIndex=82491,clone='0x1500c2190',selfClassCell='0x1458c5500',
+                                    copyFrom='0x1500c2240',getter='0x1500c4a50',constructorPrefix='0x15121fff5'),
+            'PlayerLoginReq':dict(typeIndex=76410,clone='0x152ef0480',selfClassCell='0x1458c3df0',
+                                 copyFrom='0x152ef0530',getter='0x152ef20f0',constructorPrefix='0x151213730')}
+    roles=identity.get('roles',[])
+    if len(roles)!=2 or {r.get('semanticName') for r in roles}!=set(expected):
+        errors.append('Request identity: missing/duplicate/extra role')
+    messages={m['semanticName']:m for m in document['messages']}
+    opcodes={o['semanticName']:o for o in document['opcodes']}
+    response_map={r['semanticName']:r for r in responses.get('roles',[])}
+    for role in roles:
+        name=role.get('semanticName')
+        if name not in expected:continue
+        client,cmd,symbol,value,rsp,rs,rv=expected[name]
+        required=dict(clientType=client,cmdId=cmd,stageSymbol=symbol,stageValue=value,responseName=rsp,
+                      responseStageSymbol=rs,responseStageValue=rv,status='verified',scope='native-stage-and-type-identity')
+        required.update(native[name])
+        if (any(role.get(k)!=v for k,v in required.items()) or symbols.get(symbol)!=value or symbols.get(rs)!=rv
+                or not all(role.get(k) for k in ('clone','selfClassCell','copyFrom','getter'))):
+            errors.append(f'{name}: stage/type/native binding mismatch')
+        response=response_map.get(rsp,{})
+        if any(role.get(k)!=response.get(v) for k,v in [('responseClientType','clientType'),('responseCmdId','cmdId'),('responseHandler','handler')]):
+            errors.append(f'{name}: paired response identity mismatch')
+        message,opcode=messages.get(name,{}),opcodes.get(name,{})
+        if (message.get('clientType')!=client or message.get('status')!='verified' or
+                'request-stage-identity' not in message.get('evidence',[]) or opcode.get('cmdId')!=cmd or
+                opcode.get('status')!='verified' or 'request-stage-command' not in opcode.get('evidence',[])):
+            errors.append(f'{name}: mapping does not match stage evidence')
+    return errors
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--directory', type=Path, default=Path(__file__).resolve().parents[1] / 'protocol/cn-7.2')
@@ -289,6 +334,8 @@ def main():
     flow=json.loads((args.directory/'session-token-observations.json').read_text('utf8'))
     errors.extend(validate_session_token_flow(document,profile,flow,[t for name,t in extra
                   if name in ('login-wire-observations.json','response-wire-observations.json')]))
+    identity=json.loads((args.directory/'request-identity-observations.json').read_text('utf8'))
+    errors.extend(validate_request_identities(document,profile,identity,semantic_tables[2],semantic_tables[0]))
     print(json.dumps({'mode': 'ready' if args.ready else 'research-structure', 'valid': not errors, 'errors': errors},
                      ensure_ascii=False, indent=2))
     raise SystemExit(bool(errors))

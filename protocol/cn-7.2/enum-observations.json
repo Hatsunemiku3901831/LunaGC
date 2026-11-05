@@ -759,6 +759,143 @@
         }
       ],
       "semanticStatus": "target-symbols-only"
+    },
+    {
+      "typeIndex": 85949,
+      "clientType": "NEKEJMEIJBF",
+      "namespace": "",
+      "underlyingType": "int32",
+      "values": [
+        {
+          "symbol": "OnGateClickContinue",
+          "value": 0,
+          "fieldIndex": 427280,
+          "defaultRow": 72992,
+          "typeIndex": 70,
+          "dataIndex": 647717
+        },
+        {
+          "symbol": "OnGateOpen",
+          "value": 1,
+          "fieldIndex": 427281,
+          "defaultRow": 72993,
+          "typeIndex": 70,
+          "dataIndex": 647721
+        },
+        {
+          "symbol": "OnGateAfterOpen",
+          "value": 2,
+          "fieldIndex": 427282,
+          "defaultRow": 72994,
+          "typeIndex": 70,
+          "dataIndex": 647725
+        },
+        {
+          "symbol": "OnGateAfterOpen_PreToLoadSceneIterStart",
+          "value": 3,
+          "fieldIndex": 427283,
+          "defaultRow": 72995,
+          "typeIndex": 70,
+          "dataIndex": 647729
+        },
+        {
+          "symbol": "OnGateAfterOpen_PreToLoadSceneIterReload",
+          "value": 4,
+          "fieldIndex": 427284,
+          "defaultRow": 72996,
+          "typeIndex": 70,
+          "dataIndex": 647733
+        },
+        {
+          "symbol": "OnGateAfterOpen_PreToLoadSceneIterEnd",
+          "value": 5,
+          "fieldIndex": 427285,
+          "defaultRow": 72997,
+          "typeIndex": 70,
+          "dataIndex": 647737
+        },
+        {
+          "symbol": "OnLoginReq",
+          "value": 6,
+          "fieldIndex": 427286,
+          "defaultRow": 72998,
+          "typeIndex": 70,
+          "dataIndex": 647741
+        },
+        {
+          "symbol": "OnLoginRsp",
+          "value": 7,
+          "fieldIndex": 427287,
+          "defaultRow": 72999,
+          "typeIndex": 70,
+          "dataIndex": 647745
+        },
+        {
+          "symbol": "OnPlayerTokenReq",
+          "value": 8,
+          "fieldIndex": 427288,
+          "defaultRow": 73000,
+          "typeIndex": 70,
+          "dataIndex": 647749
+        },
+        {
+          "symbol": "OnPlayerTokenRsp",
+          "value": 9,
+          "fieldIndex": 427289,
+          "defaultRow": 73001,
+          "typeIndex": 70,
+          "dataIndex": 647753
+        },
+        {
+          "symbol": "OnPlayerEnterSceneNotify",
+          "value": 10,
+          "fieldIndex": 427290,
+          "defaultRow": 73002,
+          "typeIndex": 70,
+          "dataIndex": 647757
+        },
+        {
+          "symbol": "OnShowLoadingPage",
+          "value": 11,
+          "fieldIndex": 427291,
+          "defaultRow": 73003,
+          "typeIndex": 70,
+          "dataIndex": 647761
+        },
+        {
+          "symbol": "OnShowLoadingPage_PreToLoadSceneIterStart",
+          "value": 12,
+          "fieldIndex": 427292,
+          "defaultRow": 73004,
+          "typeIndex": 70,
+          "dataIndex": 647765
+        },
+        {
+          "symbol": "OnShowLoadingPage_PreToLoadSceneIterReload",
+          "value": 13,
+          "fieldIndex": 427293,
+          "defaultRow": 73005,
+          "typeIndex": 70,
+          "dataIndex": 647769
+        },
+        {
+          "symbol": "OnShowLoadingPage_PreToLoadSceneIterEnd",
+          "value": 14,
+          "fieldIndex": 427294,
+          "defaultRow": 73006,
+          "typeIndex": 70,
+          "dataIndex": 647773
+        },
+        {
+          "symbol": "OnLoadingPageAppear",
+          "value": 15,
+          "fieldIndex": 427295,
+          "defaultRow": 73007,
+          "typeIndex": 70,
+          "dataIndex": 647777
+        }
+      ],
+      "semanticStatus": "target-symbols-only"
     }
   ],
   "fieldBindings": [
@@ -799,5 +936,5 @@
       "role": "oneof-discriminator"
     }
   ],
-  "scope": "Protocol enum and oneof symbols; platform-source enums are not network enum declarations"
+  "scope": "Protocol enum and oneof symbols; platform/language/stage sources are not automatically network enum declarations"
 }

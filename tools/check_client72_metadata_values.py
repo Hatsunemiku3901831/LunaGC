@@ -56,6 +56,8 @@ def check(e, binary, metadata, records):
         # Selected endpoints plus aliases exercise the complete table search.
         choices=[enum['values'][0],enum['values'][-1]]
         if enum['typeIndex']==2411:choices.extend(v for v in enum['values'] if v['symbol'] in ('MetroPlayerX86','WSAPlayerX86'))
+        if enum['typeIndex']==85949:choices.extend(v for v in enum['values'] if v['symbol'] in
+            ('OnLoginReq','OnLoginRsp','OnPlayerTokenReq','OnPlayerTokenRsp'))
         for value in choices:
             field=fields+(value['fieldIndex']-record['fieldStart'])*32
             e.write(field+8,(cls-0xACD2443BA132B32E)&((1<<64)-1))

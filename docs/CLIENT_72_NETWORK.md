@@ -24,9 +24,9 @@
 
 | 业务候选 | 目标类型 / 索引 | 静态 CmdID | 证据与状态 |
 | --- | --- | --- | --- |
-| GetPlayerTokenReq | NJAALDCMHEP / 82491 | 24604 | 与旧参考实例字段形状一致；Clone的自类型单元1458C5500在网络管理器151220013实际分配，15121FF70起填充平台/SDK相关值；业务命名仍candidate。 |
+| GetPlayerTokenReq | NJAALDCMHEP / 82491 | 24604 | 目标OnPlayerTokenReq阶段、声明Clone自类型单元1458C5500/同类型CopyFrom、151220013分配与原生getter闭合；静态verified，完整发送/实机另验。 |
 | GetPlayerTokenRsp | CLDBKDNJHFG / 37481 | 27808 | 已由目标自身OnGetPlayerTokenRsp标记、参数、注册/原生分派闭合；静态verified，见登录语义。 |
-| PlayerLoginReq | KOHBOMDDFCB / 76410 | 23172 | 旧参考形状最近但多一个bool；自类型单元1458C3DF0在1512137BE分配，151213730起填充客户端设备/版本相关值；candidate。 |
+| PlayerLoginReq | KOHBOMDDFCB / 76410 | 23172 | 目标OnLoginReq阶段、声明Clone自类型单元1458C3DF0/同类型CopyFrom、1512137BE分配与原生getter闭合；静态verified，完整发送/实机另验。 |
 | PlayerLoginRsp | NDENMDAIAMC / 40503 | 20835 | 已由目标自身OnPlayerLoginRsp标记、参数、注册/原生分派闭合；静态verified，见登录语义。 |
 | PingReq | LMINJCCKNDD / 64405 | 26605 | 自类型单元1458C39F0；15120CAC0和15120D8A0构造，15121EC30及15120F4CB周期调用；结合下述响应回调/共享字段确认静态心跳请求角色，实机待验。 |
 | PingRsp | MJGOAHFNCGC / 68111 | 25763 | 方法参数、注册25763、分派25763至15120DEA0与getter一致；与请求共享两个原始字段，静态确认为心跳响应。3个wire字段已恢复，业务字段名仍candidate。 |
@@ -92,5 +92,7 @@ writer语义：1517662A0为32位varint、151766960为64位varint（7bit移位循
 原始观察和研究Proto现有3消息17字段，仍不进入服务端源集。本批44项工具/映射测试与11项独立wire检查通过，新增响应非零字段、负错误值10字节varint和signed上界测试；普通校验通过、ready保持失败。没有客户端运行验收。
 
 ## 当前登录业务检查点
+
+最新检查点见[会话研究](CLIENT_72_SESSION.md)：四个登录身份/CmdID静态闭合，22字段来源、8枚举102符号。下段“当前只有两个请求配对仍candidate”为上一检查点，已由目标阶段命名证据取代；完整构造/发送与实机仍未完成。
 
 [登录语义](CLIENT_72_LOGIN_SEMANTICS.md)已确认GetPlayerTokenRsp/27808、PlayerLoginRsp/20835以及20个字段来源。上文“Token/Login四个业务名仍candidate”是旧检查点；当前只有两个请求配对仍candidate。网络管理器151221D70/1512160D0只转发共同配置，上游Handler为1507BE0E0/1507B7BE0。7枚举86原始符号已有目标常量证据；其余业务字段和真实客户端序列仍待验收，不生成正式运行协议。

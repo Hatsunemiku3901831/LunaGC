@@ -103,7 +103,7 @@ def recover(e, tables):
                            store='0x15a4e0d93',sessionType='HOMIEDIPBBJ',sessionOffset=0x98,
                            caller='0x1507c2211',call='0x1507c2218',constructor='0x151213730',
                            requestType='KOHBOMDDFCB',requestCmdId=23172,requestOffset=0xd8,requestTag=1),
-                unknown=['meaning of manager +1D8 argument','full request business pairing','remaining request fields'],
+                unknown=['meaning of manager +1D8 argument','complete constructor/send execution','remaining request fields'],
                 runtimeStatus='not-tested',scope='separately executed native fragments linked by actual stored pointers',
                 models=['ASCII reader/writer library boundaries','managed request allocation','stage bookkeeping capture'],
                 outsideScope=['pre-store seed/UID logic','caller reset/timer condition','constructor after first token store','real network send'])

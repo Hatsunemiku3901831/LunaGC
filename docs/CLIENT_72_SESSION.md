@@ -38,9 +38,24 @@ trace_client72_token_flow从独立响应wire `32 <length> <ASCII>` 开始，经�
 | 151213730→1512137F2 | 原生构造前缀将RDX存至KOHBOMDDFCB+D8；stage值6被捕获；分配和stage辅助操作明确模型化 |
 | 完整请求writer152EEB470 | 保存的token内容生成独立预期 `0A <length> <ASCII>`，即tag1；空值省略 |
 
-4组链路样本通过：两组非空、重复tag6取最后值、空token；参数覆盖0、1、80000000、FFFFFFFF。另1组缺会话原生拒绝通过。两字段以`token`进入三层表并标注有界来源；请求业务名仍candidate，不能由字段确认推导整包或发送已完成。
+4组链路样本通过：两组非空、重复tag6取最后值、空token；参数覆盖0、1、80000000、FFFFFFFF。另1组缺会话原生拒绝通过。两字段以`token`进入三层表并标注有界来源；本检查点未由字段确认推导整包或发送已完成，请求身份由下节另验。
 
 校验器增加session-token-observations三份输入hash完整性、固定store/caller/类型/CmdID/字段集合与wire/映射一致性检查，拒绝缺失/重复/额外字段和替换来源。95项工具回归通过。完整RSA/UID处理、调用者timer/reset、首个token存储后的构造、实际网络发送均在此实验之外。
+
+## A-04d5b 两个请求身份与CmdID
+
+追踪此前模型化的stage操作14C8AE9A0，元数据方法711360的参数538572/type675783指向枚举85949/NEKEJMEIJBF。从目标field-default表恢复其16个符号，**不按声明顺序赋值**；原生常量读取也核对了6/7/8/9及两端。
+
+| 请求业务身份 | 原生阶段标记 | 实际分配类型 / getter CmdID | 已确认响应阶段 |
+| --- | --- | --- | --- |
+| GetPlayerTokenReq | OnPlayerTokenReq=8，151220009→14C8AE9A0 | NJAALDCMHEP，1458C5500；1500C4A50返回24604 | OnPlayerTokenRsp=9；已由目标日志标记确认CLDBKDNJHFG/27808 |
+| PlayerLoginReq | OnLoginReq=6，1512137B4→14C8AE9A0 | KOHBOMDDFCB，1458C3DF0；152EF20F0返回23172 | OnLoginRsp=7；已由目标日志标记确认NDENMDAIAMC/20835 |
+
+trace_client72_request_identity执行两个阶段→分配检查点、两个成功响应到阶段操作的前缀、两个请求原生getter，共6组。请求self-class单元同时核对其声明类型Clone中的RIP相对load及同类型CopyFrom调用；不是只把合成类指针命名为预期类型。
+
+两个请求消息身份和CmdID现可标静态verified，四个登录请求/响应身份均闭合。**完整字段语义、完整构造/发送、密码学前段和实机仍未闭合，B-02整体仍不ready。** 本批不依赖完整构造得到身份，也不声称完成完整构造。Token前缀起点15121FFF5明确在SDK预处理之后；Login从151213730开始到分配调用；阶段业务操作本身仍是捕获模型。
+
+枚举总计8类型102符号；4条literal/22条原生常量验证通过。100项工具回归通过，identity trace/摘要二次生成逐字节一致。新增校验器检查精确阶段参数、常量、类型/Clone/CopyFrom/getter地址、响应身份和三层记录，保留runtimeStatus=not-tested。
 
 ## 复现
 
@@ -49,8 +64,13 @@ trace_client72_token_flow从独立响应wire `32 <length> <ASCII>` 开始，经�
 python tools/trace_client72_session.py --client $env:GAME_PATH --java-home $env:JAVA_HOME --output local/migration72/evidence/session-seed-trace.json --summary-output protocol/cn-7.2/session-seed-observations.json
 python -m unittest tools.test_client72_session tools.test_client72_login_semantics tools.test_client72_metadata_values tools.test_validate_protocol72 -v
 python tools/trace_client72_token_flow.py --client $env:GAME_PATH --output local/migration72/evidence/session-token-trace.json --summary-output protocol/cn-7.2/session-token-observations.json
+python tools/extract_client72_enums.py --client $env:GAME_PATH --output protocol/cn-7.2/enum-observations.json
+python tools/check_client72_metadata_values.py --client $env:GAME_PATH --output local/migration72/evidence/metadata-values-native-stage.json
+python tools/trace_client72_request_identity.py --client $env:GAME_PATH --output local/migration72/evidence/request-identity-trace.json --summary-output protocol/cn-7.2/request-identity-observations.json
 ```
 
 共享摘要：protocol/cn-7.2/session-seed-observations.json。完整trace、重复生成报告：evidence/session-seed-trace.json、session-seed-determinism.json；回归：logs/session-all-tests.log。原始探索留analysis/。本批只改离线工具/测试/研究记录，不需要服务端重启；新旧号、选人、入场、重登均未实机验收。
 
 token链共享摘要为session-token-observations.json；evidence/session-token-trace.json、session-token-determinism.json及logs/session-token-tests.log保存本批复现。seed检查点本地提交0f324eb。
+
+token链本地提交0c12f2c。请求身份新增request-identity-observations.json；evidence/request-identity-trace.json、request-identity-determinism.json，回归logs/request-identity-tests.log。后续执行线索：151213BE2→SDK `info_get_uapc`、CloudGame、PbaseMD5、设备子对象→151213FF7保护续段→151214D20发送队列；Token调用同一发送入口151220673。静态调用点不替代完整受控发送样本。

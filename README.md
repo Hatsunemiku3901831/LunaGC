@@ -8,14 +8,14 @@
 | --- | --- |
 | 计划支持 | 新旧账号登录、选人、入场、基础玩法及后续内容，按 Project 分项验收 |
 | 已实现 | 继承业务/便携脚本，7.2安装清单、元数据/泛型/父类/静态布局提取、静态CmdID→类型表、服务协议盘点、登录原始wire与响应对象图离线读取；不代表业务已匹配7.2 |
-| 测试通过 | 当前95项工具/映射回归通过；会话研究12组seed密钥逐字节Java对照、6短输入拒绝、5组token传递/拒绝通过；模型限制见研究文档，Java完整集既有217项失败未据此消除 |
+| 测试通过 | 当前100项工具/映射回归通过；会话研究12组seed密钥逐字节Java对照、6短输入拒绝、5组token传递/拒绝、6请求身份检查通过；模型限制见研究文档，Java完整集既有217项失败未据此消除 |
 | 客户端验收通过 | 暂无；进入世界与完整玩法分别验收 |
 
 前置缺口：完整三层业务映射、其余枚举/字段语义、运行时泛型ABI/IFix和 7.2 资源来源；补丁仍需 ABI 与实机验证。本地安装清单7,830条大小/MD5已匹配；静态包号4,012条含5组未解决重号；包头/心跳请求与响应共17个静态wire字段已恢复，业务字段语义仍不完整，见[网络研究](docs/CLIENT_72_NETWORK.md)。未知项不发布为服务端正式包号或字段。
 
 另已完成555,919个方法参数及835个Action实例的参数恢复，并通过离线CPU模型观察TokenReq保护writer的28字段，见[签名研究](docs/CLIENT_72_SIGNATURES.md)和[保护入口](docs/CLIENT_72_PROTECTED.md)。后续[Login请求](docs/CLIENT_72_LOGIN_WIRE.md)已补齐55外层字段、12消息83字段；[两个响应](docs/CLIENT_72_RESPONSE_WIRE.md)已定位85外层字段，另7个叶子30字段已双向恢复；[非空响应对象图](docs/CLIENT_72_GRAPH_READERS.md)现已覆盖18消息137字段的离线读取、map/list与oneof合并行为，仍保留明确的托管运行环境模型限制。这些结果没有替换服务端协议或放开版本准入。
 
-[登录语义](docs/CLIENT_72_LOGIN_SEMANTICS.md)已确认TokenRsp/LoginRsp的业务名与CmdID、20个字段来源及7枚举86符号；[会话研究](docs/CLIENT_72_SESSION.md)补充2个token字段及解密后seed片段。两个请求业务配对、完整解密/验签和其余字段仍保留候选/未知。
+[登录语义](docs/CLIENT_72_LOGIN_SEMANTICS.md)和[会话研究](docs/CLIENT_72_SESSION.md)已确认四个Token/Login请求/响应身份与CmdID、22个字段来源和8枚举102符号，并验证解密后seed片段。完整构造/发送、解密/验签和其余字段仍保留未验/未知。
 
 使用 Windows 便携方式。需要 JDK 17、便携 MongoDB、Python 3.11+（研究工具）、Git/LFS；补丁构建另需 Rust nightly 和 MSVC。依赖/本机配置不随 Git 交付。准备及排障见 [部署手册](docs/CODEX_ONE_CLICK_DEPLOY.md)，本分支约束和路径以 AGENTS、Project 和本机配置为准。
 

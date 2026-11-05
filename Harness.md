@@ -129,3 +129,5 @@ A-04d3请求入口：[Login完整wire](docs/CLIENT_72_LOGIN_WIRE.md)；trace_cli
 接续：响应+68→会话+98→1507C2211→151213730请求+D8需完成独立wire链；Login保护续段151213AC6已执行到环境类1458971C0检查。Shell新分支15A3CE060与解密/验签仍明确未知。任务状态以Project最新执行记录为准；只改离线研究工具无需重启运行服务。
 
 上述token链现由trace_client72_token_flow完成：4组response tag6→session+98→Login参数→request tag1及1组null会话拒绝；两个token字段进入映射，新增validate_session_token_flow约束hash/来源链/wire一致。复现命令见CLIENT_72_SESSION，报告evidence/session-token-trace.json、session-token-determinism.json及logs/session-token-tests.log（95项）。构造完整续段仍从analysis/probe_login_continue.py研究，当前旧Shell受控byte[]→ByteString之后到148A22560→1421C1DB0原生ret；接着追踪151214D20发送参数和响应配对。该忽略脚本只供探索，正式证据必须迁入工具后重复验证；不能把其环境哨兵当实机结果。
+
+请求身份新增trace_client72_request_identity：阶段方法14C8AE9A0的参数指向85949/NEKEJMEIJBF，原生常量和构造/响应前缀确认6/7/8/9四个命名阶段；声明类型Clone的self-class/CopyFrom与原生getter独立检查。两个请求身份/CmdID现静态verified，完整发送/全部字段/实机另列。8枚举102符号、4literal/22常量、6身份样本及100项回归通过；证据evidence/request-identity-{trace,determinism}.json、metadata-values-native-stage.json，日志request-identity-tests.log。seed/token本地提交0f324eb/0c12f2c；后续接151213BE2的SDK源、151213FF7续段和151214D20队列。研究ready仍应退出1。
