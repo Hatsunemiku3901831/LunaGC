@@ -189,3 +189,22 @@ python -m unittest tools.test_client72_dispatch_key_frame
 ```
 
 证据`evidence/dispatch-key-frame-*`、`logs/dispatch-key-frame-*`；共享摘要`protocol/cn-7.2/dispatch-key-frame-observations.json`。运行代码、主Proto、配置、补丁和资源均未改，无部署/重启。SDK/OS、本地签名信任输入、池/传输选择仍是明确夹具；第二协程非空key、Login/真实响应串联、P0闭包与D-02未完成。
+
+## A-04d5w 响应Handler到Login完整帧
+
+`trace_client72_handler_login_frame`先将独立响应wire交给原生reader，然后从1507BE0E0连续执行真实解密/摘要/验签、key安装、UID/token/版本hash、Login/Full分支与Action、Login构造/发送，直到14A447E00原生封包返回1472CD364。该返回仍在嵌套发送调用内，**不是整个Handler返回，也不是处理了PlayerLoginRsp**。
+
+Login类型76410槽13/17实际绑定152EF0D50/152EEB470；本构造产生的非空嵌套68918也执行实际CalculateSize/WriteTo。ByteString长度、长度前缀、内容写入及小块copy循环/native Buffer copy实际执行。池数组和构造数组使用已声明byte[] class布局，移除Frame的copy存储模型，避免将模型的返回约定套进需要bool结果的原生Buffer.BlockCopy。UTF-8转换、池/transport、旧Shell/SDK、时钟/gate/版本源和本地签名信任仍是明确夹具。
+
+原生Handler安装的GLOBAL+19580原指针及4096字节保留至帧返回，selector=0；没有给frame提供密钥。4成功帧分别354/364/304/4560字节，完整payload与从构造对象另建输入的protoc编码逐字节一致，完整帧另与独立端序/长度/包头/XOR表达式一致。覆盖零、高位UID/marker、uint32最大sequence、64位时间、空token/version、中文/补充字符/NUL及跨4096周期；token与hash原指针不变。非空列表/map/oneof构造输入不在本项范围。
+
+6个不发送样本为时钟等于/低于阈值、缺GameManager、缺gate、Medium包及错误响应签名，均不产生Login请求或帧。9个非坏签名样本安装key与Java参考逐字节相同。10原生样本、240研究回归、二次trace/摘要一致；提取共享attach_flow后的Token原6组产物逐字节不变。研究校验0/ready1（213项），未知语义不晋级。
+
+```powershell
+$env:GAME_PATH = & ./tools/game_path.ps1
+$gsProtoc = (Get-ChildItem local/gradle/caches/modules-2/files-2.1/com.google.protobuf/protoc/3.18.1 -Filter '*.exe' -Recurse | Select-Object -First 1).FullName
+python tools/trace_client72_handler_login_frame.py --client $env:GAME_PATH --java-home local/runtime/jdk-17.0.20.1+1 --protoc $gsProtoc --output local/migration72/evidence/handler-login-frame-trace.json --summary-output protocol/cn-7.2/handler-login-frame-observations.json
+python -m unittest tools.test_client72_handler_login_frame
+```
+
+JDK/protoc路径必须按当前便携安装核对；工具记录Java源码、protoc及研究Proto hash。证据evidence/handler-login-frame-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json与logs/handler-login-frame-{run,repeat,regression}.log；原Token回归为evidence/token-frame-login-regression.json。响应收帧/factory/网络调度未执行，无运行源码/主Proto/配置/补丁/资源改动，不部署或重启服务，D-02未验。

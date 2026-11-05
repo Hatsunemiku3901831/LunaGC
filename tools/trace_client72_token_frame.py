@@ -52,13 +52,19 @@ class TokenFrame72(Frame72):
         self.flow = None
 
     def attach(self,ctor,sequence,sent_ms):
+        flow = SendFlow72(self.e,ctor,82491,24604,sequence,sent_ms,'connected')
+        self.attach_flow(ctor,flow,82491)
+
+    def attach_flow(self,ctor,flow,index):
         e = self.e
-        self.flow = SendFlow72(e,ctor,82491,24604,sequence,sent_ms,'connected')
-        flow = self.flow
+        self.flow = flow
         cls = e.read(ctor.request)
-        for slot,address in ((13,0x1500C16E0),(17,0x1500C2660)):
-            slot_method(e.records[82491],slot,address)
+        methods = {82491:((13,0x1500C16E0),(17,0x1500C2660)),
+                   76410:((13,0x152EF0D50),(17,0x152EEB470))}[index]
+        for slot,address in methods:
+            slot_method(e.records[index],slot,address)
             e.write(cls+0xd0+slot*8,address)
+            e.allow(address)
         e.write(GLOBAL+0xa0d0,ctor.sender)
         transport_class = e.read(flow.transport)
         e.write(transport_class+0xd0+5*8,0x1472CE3B0)

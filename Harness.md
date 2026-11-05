@@ -208,3 +208,5 @@ Ec2b正式入口：`client72_ec2b`与`trace_client72_ec2b`，见[动态调试A-0
 动态启动补充：异常按原样交给应用处理后，目标继续并停在mhypbase.dll的TLS回调，Global仍0；未吞异常或修改校验。当前API状态/异常/日志为evidence/dynamic-startup-exception.json、dynamic-phase-13至15.json和logs/dynamic-phase-*.json；不能再按旧1411268C1暂停点运行脚本。后续只用Automate，禁止computer-use；下一步真实全局/SDK初始化或已知命名HTTP入口观察。
 
 D-01b2已完成真实全局/UTF-8缓存限定核对：两次运行同对象/三个虚槽与声明相等，另4处代码32字节相同；共享startup-runtime-observations.json，详见CLIENT_72_DYNAMIC_DEBUG末节。**最后目标已经退出，不能沿用旧暂停状态**；先查询is_debugging，活跃索引dynamic-active-session.json内PID也可能已结束。erun传递所有首次异常，后改con 1+run；本机hardware watch表删除后寄存器仍残留的现象已实证并清理自设观察点。退出原因仍unknown，不绕过检查；继续离线Login/响应，目标active。A-04d5v提交2523513。
+
+Handler→Login完整帧入口：`trace_client72_handler_login_frame`，见[网络研究A-04d5w](docs/CLIENT_72_NETWORK.md#a-04d5w-响应handler到login完整帧)。10原生样本（4发送/6不发送）、240研究回归、二次trace/摘要一致；Token原6组产物不变。evidence/handler-login-frame-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json、logs/handler-login-frame-{run,repeat,regression}.log及evidence/token-frame-login-regression.json。Login/68918 size与writer、ByteString/native copy执行，独立protoc比较全负载、Java比较安装key。仅响应reader→Handler至帧返回，非收帧/整个Handler/实机；无运行部署。D-01b2提交cf09603，当前真实客户端已退出，目标仍active。

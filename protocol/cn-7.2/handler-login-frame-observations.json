@@ -1,0 +1,842 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "fixtureCount": 10,
+  "results": [
+    {
+      "name": "login-full",
+      "mode": "send",
+      "stop": "0x1472cd364",
+      "stages": [
+        9,
+        6
+      ],
+      "frameReturned": true,
+      "frame": {
+        "length": 354,
+        "payloadLength": 337,
+        "sha256": "f46ee793237d1e7781c73e13a7df6a4dc7048d8566ec1d0b3e753ffa8456b5c4",
+        "payloadSHA256": "50c326e7eb88cf7488378a16303a7ef019ddb3c0fd2ff0ccb83e23fb96d7d653",
+        "sequence": 1,
+        "sentMs": 1234,
+        "cmdId": 23172,
+        "selector": 0,
+        "keyWrap": false,
+        "keyPointerPreserved": true,
+        "keyBytesPreserved": true,
+        "requestUnchanged": true,
+        "tokenHashPointersPreserved": true,
+        "protocPayloadMatch": true,
+        "independentFrameMatch": true,
+        "tokenUTF8Match": true,
+        "tokenByteLength": 13,
+        "boundNativeTypes": [
+          68918,
+          76410
+        ]
+      },
+      "sessionKeySHA256": "5d517d6c52800a32b573b136c7a469131670b869881157c2fa013f714b796df5",
+      "javaByteComparison": true,
+      "nativeKeyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "high-fields",
+      "mode": "send",
+      "stop": "0x1472cd364",
+      "stages": [
+        9,
+        6
+      ],
+      "frameReturned": true,
+      "frame": {
+        "length": 364,
+        "payloadLength": 340,
+        "sha256": "7b5a304ab4f19c9d2c7fd3dad948562b5b8cc882dc6e9de59d7b333a7e61cd0f",
+        "payloadSHA256": "6349181b802402d685257a1e59dc387768c27cb26a8ac7533553c0e94d0b4a9c",
+        "sequence": 4294967295,
+        "sentMs": 8589934660,
+        "cmdId": 23172,
+        "selector": 0,
+        "keyWrap": false,
+        "keyPointerPreserved": true,
+        "keyBytesPreserved": true,
+        "requestUnchanged": true,
+        "tokenHashPointersPreserved": true,
+        "protocPayloadMatch": true,
+        "independentFrameMatch": true,
+        "tokenUTF8Match": true,
+        "tokenByteLength": 16,
+        "boundNativeTypes": [
+          68918,
+          76410
+        ]
+      },
+      "sessionKeySHA256": "5d517d6c52800a32b573b136c7a469131670b869881157c2fa013f714b796df5",
+      "javaByteComparison": true,
+      "nativeKeyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "empty-token-version",
+      "mode": "send",
+      "stop": "0x1472cd364",
+      "stages": [
+        9,
+        6
+      ],
+      "frameReturned": true,
+      "frame": {
+        "length": 304,
+        "payloadLength": 292,
+        "sha256": "ee712e4c8ffa80d0e286e4e37d022b11f550b1c5d8a022bae21864712df0213f",
+        "payloadSHA256": "659d7a5ce9512ddfb9006d9471692fd6199805aec0e28de98d0b55dcc674c6a8",
+        "sequence": 0,
+        "sentMs": 0,
+        "cmdId": 23172,
+        "selector": 0,
+        "keyWrap": false,
+        "keyPointerPreserved": true,
+        "keyBytesPreserved": true,
+        "requestUnchanged": true,
+        "tokenHashPointersPreserved": true,
+        "protocPayloadMatch": true,
+        "independentFrameMatch": true,
+        "tokenUTF8Match": true,
+        "tokenByteLength": 0,
+        "boundNativeTypes": [
+          68918,
+          76410
+        ]
+      },
+      "sessionKeySHA256": "5d517d6c52800a32b573b136c7a469131670b869881157c2fa013f714b796df5",
+      "javaByteComparison": true,
+      "nativeKeyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "unicode-key-wrap",
+      "mode": "send",
+      "stop": "0x1472cd364",
+      "stages": [
+        9,
+        6
+      ],
+      "frameReturned": true,
+      "frame": {
+        "length": 4560,
+        "payloadLength": 4536,
+        "sha256": "fadebc3f95bb74f138fe0788f26ba9519a91d6f896d103ec782a9c8067c6da44",
+        "payloadSHA256": "0cbd8a06deea08deb358f9ee01449430739f9648ea7a579913bd3e63dbe2e96d",
+        "sequence": 4294967295,
+        "sentMs": 8589934660,
+        "cmdId": 23172,
+        "selector": 0,
+        "keyWrap": true,
+        "keyPointerPreserved": true,
+        "keyBytesPreserved": true,
+        "requestUnchanged": true,
+        "tokenHashPointersPreserved": true,
+        "protocPayloadMatch": true,
+        "independentFrameMatch": true,
+        "tokenUTF8Match": true,
+        "tokenByteLength": 4211,
+        "boundNativeTypes": [
+          68918,
+          76410
+        ]
+      },
+      "sessionKeySHA256": "5d517d6c52800a32b573b136c7a469131670b869881157c2fa013f714b796df5",
+      "javaByteComparison": true,
+      "nativeKeyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "clock-equal",
+      "mode": "delay",
+      "stop": "0x1507b9a50",
+      "stages": [
+        9
+      ],
+      "frameReturned": false,
+      "frame": null,
+      "sessionKeySHA256": "5d517d6c52800a32b573b136c7a469131670b869881157c2fa013f714b796df5",
+      "javaByteComparison": true,
+      "nativeKeyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "clock-below",
+      "mode": "delay",
+      "stop": "0x1507b9a50",
+      "stages": [
+        9
+      ],
+      "frameReturned": false,
+      "frame": null,
+      "sessionKeySHA256": "5d517d6c52800a32b573b136c7a469131670b869881157c2fa013f714b796df5",
+      "javaByteComparison": true,
+      "nativeKeyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "missing-game-manager",
+      "mode": "missing_manager",
+      "stop": "0x15a4e1b99",
+      "stages": [
+        9
+      ],
+      "frameReturned": false,
+      "frame": null,
+      "sessionKeySHA256": "5d517d6c52800a32b573b136c7a469131670b869881157c2fa013f714b796df5",
+      "javaByteComparison": true,
+      "nativeKeyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "missing-gate-state",
+      "mode": "missing_gate",
+      "stop": "0x1507c0cbd",
+      "stages": [
+        9
+      ],
+      "frameReturned": false,
+      "frame": null,
+      "sessionKeySHA256": "5d517d6c52800a32b573b136c7a469131670b869881157c2fa013f714b796df5",
+      "javaByteComparison": true,
+      "nativeKeyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "medium-package",
+      "mode": "medium_package",
+      "stop": "0x14bb767e3",
+      "stages": [
+        9
+      ],
+      "frameReturned": false,
+      "frame": null,
+      "sessionKeySHA256": "5d517d6c52800a32b573b136c7a469131670b869881157c2fa013f714b796df5",
+      "javaByteComparison": true,
+      "nativeKeyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "invalid-response-signature",
+      "mode": "bad_signature",
+      "stop": "0x15a4e0645",
+      "stages": [
+        9
+      ],
+      "frameReturned": false,
+      "frame": null,
+      "sessionKeySHA256": null,
+      "javaByteComparison": false,
+      "nativeKeyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "runtimeStatus": "not-tested",
+  "entry": "0x1507be0e0",
+  "frameEntry": "0x14a447e00",
+  "cmdId": 23172,
+  "continuousHandlerToFrameReturn": true,
+  "wholeHandlerReturned": false,
+  "frameKeySupplied": false,
+  "declarations": {
+    "tail": {
+      "types": [
+        {
+          "usageRow": 698841,
+          "cell": "0x145886c28",
+          "typeIndex": 441,
+          "name": "EncoderReplacementFallback"
+        },
+        {
+          "usageRow": 699157,
+          "cell": "0x145887d90",
+          "typeIndex": 430,
+          "name": "DecoderReplacementFallback"
+        },
+        {
+          "usageRow": 699518,
+          "cell": "0x1458894b0",
+          "typeIndex": 420,
+          "name": "ASCIIEncoding"
+        },
+        {
+          "usageRow": 699775,
+          "cell": "0x14588aa48",
+          "typeIndex": 1056,
+          "name": "SHA1CryptoServiceProvider"
+        },
+        {
+          "usageRow": 699905,
+          "cell": "0x14588b398",
+          "typeIndex": 1055,
+          "name": "SHA1Internal"
+        }
+      ],
+      "methods": [
+        {
+          "address": "0x1531e9eb0",
+          "name": "set_robotCheckLoginInputData",
+          "parameters": [
+            {
+              "name": "value",
+              "type": {
+                "kind": "class",
+                "attributes": "0x0",
+                "data": "0x468f",
+                "byRef": false,
+                "typeDefinition": 18063,
+                "name": "PPGGBLPHADP",
+                "namespace": ""
+              }
+            }
+          ]
+        },
+        {
+          "address": "0x1531d02b0",
+          "name": "GetUniversalGameVersion",
+          "parameters": []
+        },
+        {
+          "address": "0x1531d03d0",
+          "name": "GetGameVersionAndChangelist",
+          "parameters": [
+            {
+              "name": "gameVer",
+              "type": {
+                "kind": "string",
+                "attributes": "0x2",
+                "data": "0x125",
+                "byRef": true
+              }
+            },
+            {
+              "name": "engineCL",
+              "type": {
+                "kind": "string",
+                "attributes": "0x2",
+                "data": "0x125",
+                "byRef": true
+              }
+            },
+            {
+              "name": "clientCL",
+              "type": {
+                "kind": "string",
+                "attributes": "0x2",
+                "data": "0x125",
+                "byRef": true
+              }
+            },
+            {
+              "name": "resourceCL",
+              "type": {
+                "kind": "string",
+                "attributes": "0x2",
+                "data": "0x125",
+                "byRef": true
+              }
+            },
+            {
+              "name": "silenceCL",
+              "type": {
+                "kind": "string",
+                "attributes": "0x2",
+                "data": "0x125",
+                "byRef": true
+              }
+            },
+            {
+              "name": "dataCL",
+              "type": {
+                "kind": "string",
+                "attributes": "0x2",
+                "data": "0x125",
+                "byRef": true
+              }
+            }
+          ]
+        },
+        {
+          "address": "0x15321a4d0",
+          "name": "CalcVersionHash",
+          "parameters": [
+            {
+              "name": "version",
+              "type": {
+                "kind": "string",
+                "attributes": "0x0",
+                "data": "0x125",
+                "byRef": false
+              }
+            },
+            {
+              "name": "secretKey",
+              "type": {
+                "kind": "string",
+                "attributes": "0x0",
+                "data": "0x125",
+                "byRef": false
+              }
+            }
+          ]
+        }
+      ],
+      "literals": [
+        {
+          "usageRow": 778300,
+          "index": 40025,
+          "slot": 40025,
+          "cell": "0x145b180e8",
+          "value": "_S"
+        },
+        {
+          "usageRow": 782220,
+          "index": 61645,
+          "slot": 61645,
+          "cell": "0x145b42488",
+          "value": "_R"
+        },
+        {
+          "usageRow": 782221,
+          "index": 61646,
+          "slot": 61646,
+          "cell": "0x145b42490",
+          "value": "_D"
+        },
+        {
+          "usageRow": 782399,
+          "index": 62885,
+          "slot": 62885,
+          "cell": "0x145b44b48",
+          "value": "{0}{1}mhy2020"
+        }
+      ],
+      "encoding": "ASCIIEncoding",
+      "hash": "SHA1CryptoServiceProvider"
+    },
+    "transport": [
+      {
+        "ownerTypeIndex": 79029,
+        "methodIndex": 655015,
+        "parameterIndex": 503964,
+        "parameterTypeIndex": 165362,
+        "envelopeTypeIndex": 13973
+      },
+      {
+        "ownerTypeIndex": 68785,
+        "methodIndex": 569162,
+        "parameterIndex": 447221,
+        "parameterTypeIndex": 165362,
+        "envelopeTypeIndex": 13973
+      },
+      {
+        "ownerTypeIndex": 32016,
+        "methodIndex": 250987,
+        "parameterIndex": 197935,
+        "parameterTypeIndex": 165362,
+        "envelopeTypeIndex": 13973
+      }
+    ],
+    "types": [
+      {
+        "usageRow": 698995,
+        "cell": "0x145887448",
+        "typeIndex": 142,
+        "name": "Action"
+      },
+      {
+        "usageRow": 702787,
+        "cell": "0x14589a988",
+        "typeIndex": 82313,
+        "name": "PNLAGOKKFEN"
+      },
+      {
+        "usageRow": 708398,
+        "cell": "0x1458ba860",
+        "typeIndex": 63102,
+        "name": "OBLOCFOLEPD"
+      }
+    ],
+    "callback": {
+      "usageRow": 749199,
+      "cell": "0x145a00a40",
+      "kind": 3,
+      "methodDefinition": 467563,
+      "ownerType": 56238,
+      "target": "0x1507c0bb0"
+    },
+    "environmentEnums": [
+      {
+        "typeIndex": 11326,
+        "clientType": "WorldType",
+        "namespace": "",
+        "underlyingType": "int32",
+        "values": [
+          {
+            "symbol": "Invalid",
+            "value": -1,
+            "fieldIndex": 54264,
+            "defaultRow": 14577,
+            "typeIndex": 70,
+            "dataIndex": 326661
+          },
+          {
+            "symbol": "Login",
+            "value": 0,
+            "fieldIndex": 54265,
+            "defaultRow": 14578,
+            "typeIndex": 70,
+            "dataIndex": 326665
+          },
+          {
+            "symbol": "Home",
+            "value": 1,
+            "fieldIndex": 54266,
+            "defaultRow": 14579,
+            "typeIndex": 70,
+            "dataIndex": 326669
+          },
+          {
+            "symbol": "Level",
+            "value": 2,
+            "fieldIndex": 54267,
+            "defaultRow": 14580,
+            "typeIndex": 70,
+            "dataIndex": 326673
+          },
+          {
+            "symbol": "DevLevel",
+            "value": 3,
+            "fieldIndex": 54268,
+            "defaultRow": 14581,
+            "typeIndex": 70,
+            "dataIndex": 326677
+          },
+          {
+            "symbol": "BundleDownload",
+            "value": 4,
+            "fieldIndex": 54269,
+            "defaultRow": 14582,
+            "typeIndex": 70,
+            "dataIndex": 326681
+          },
+          {
+            "symbol": "LevelTestScene",
+            "value": 5,
+            "fieldIndex": 54270,
+            "defaultRow": 14583,
+            "typeIndex": 70,
+            "dataIndex": 326685
+          },
+          {
+            "symbol": "TestCutscene",
+            "value": 6,
+            "fieldIndex": 54271,
+            "defaultRow": 14584,
+            "typeIndex": 70,
+            "dataIndex": 326689
+          },
+          {
+            "symbol": "ScenicScanLevel",
+            "value": 7,
+            "fieldIndex": 54272,
+            "defaultRow": 14585,
+            "typeIndex": 70,
+            "dataIndex": 326693
+          },
+          {
+            "symbol": "TalkPreview",
+            "value": 8,
+            "fieldIndex": 54273,
+            "defaultRow": 14586,
+            "typeIndex": 70,
+            "dataIndex": 326697
+          },
+          {
+            "symbol": "ProfileEffects",
+            "value": 9,
+            "fieldIndex": 54274,
+            "defaultRow": 14587,
+            "typeIndex": 70,
+            "dataIndex": 326701
+          },
+          {
+            "symbol": "RagdollScene",
+            "value": 10,
+            "fieldIndex": 54275,
+            "defaultRow": 14588,
+            "typeIndex": 70,
+            "dataIndex": 326705
+          },
+          {
+            "symbol": "MoveTestScene",
+            "value": 11,
+            "fieldIndex": 54276,
+            "defaultRow": 14589,
+            "typeIndex": 70,
+            "dataIndex": 326709
+          },
+          {
+            "symbol": "PSPrepare",
+            "value": 12,
+            "fieldIndex": 54277,
+            "defaultRow": 14590,
+            "typeIndex": 70,
+            "dataIndex": 326713
+          }
+        ],
+        "semanticStatus": "target-symbols-only"
+      },
+      {
+        "typeIndex": 11334,
+        "clientType": "PackageType",
+        "namespace": "",
+        "underlyingType": "int32",
+        "values": [
+          {
+            "symbol": "None",
+            "value": 0,
+            "fieldIndex": 54308,
+            "defaultRow": 14612,
+            "typeIndex": 70,
+            "dataIndex": 326801
+          },
+          {
+            "symbol": "Less",
+            "value": 1,
+            "fieldIndex": 54309,
+            "defaultRow": 14613,
+            "typeIndex": 70,
+            "dataIndex": 326805
+          },
+          {
+            "symbol": "Medium",
+            "value": 2,
+            "fieldIndex": 54310,
+            "defaultRow": 14614,
+            "typeIndex": 70,
+            "dataIndex": 326809
+          },
+          {
+            "symbol": "PlayGo",
+            "value": 3,
+            "fieldIndex": 54311,
+            "defaultRow": 14615,
+            "typeIndex": 70,
+            "dataIndex": 326813
+          },
+          {
+            "symbol": "FastStart",
+            "value": 4,
+            "fieldIndex": 54312,
+            "defaultRow": 14616,
+            "typeIndex": 70,
+            "dataIndex": 326817
+          },
+          {
+            "symbol": "Full",
+            "value": 5,
+            "fieldIndex": 54313,
+            "defaultRow": 14617,
+            "typeIndex": 70,
+            "dataIndex": 326821
+          }
+        ],
+        "semanticStatus": "target-symbols-only"
+      }
+    ],
+    "worldChain": [
+      50103,
+      32,
+      59570,
+      24,
+      11326
+    ],
+    "packageAddress": "0x14586cf14",
+    "login": {
+      "clone": "0x152ef0480",
+      "selfClassCell": "0x1458c3df0",
+      "copyFrom": "0x152ef0530",
+      "getter": "0x152ef20f0"
+    }
+  },
+  "javaSourceSHA256": {
+    "tools/Client72SeedReference.java": "9d4886741c825bbd95d47688e606b724cb97a2b6a288e52f3778a07e38b8fcc1",
+    "src/main/java/emu/grasscutter/utils/algorithms/MersenneTwister64.java": "c46c8c05acf697fded0ef1685a0e64d6fb5a13933d10d07b3c387c36a6cabebb"
+  },
+  "protocSHA256": "9f243ff05a4b8e19e3f310959ec23686eed8464691490009de6c89e527ee2bef",
+  "researchProtoSHA256": "78902b4e735dc3e0e36a816674dedccb39d8e098096e4fac0191fd83e462701b",
+  "signingFixtureSHA256": "4830a2c186bf114d7523796a3360e13ea1bb667f1921e3253aab154133a7501e",
+  "models": [
+    "response reader inputs, local signed trust and OS/CRT storage",
+    "WorldType.Login/PackageType.Full and clock/gates from handler-login",
+    "old Shell/SDK and version source fixtures",
+    "pooled byte arrays/stream and UTF-8 conversion",
+    "declared message vtables and byte[] class layout; native copy executes"
+  ],
+  "outsideScope": [
+    "socket/real-client login",
+    "whole Handler return",
+    "nonempty list/map/oneof constructor inputs",
+    "real SDK/IFix startup and remaining semantic fields"
+  ]
+}

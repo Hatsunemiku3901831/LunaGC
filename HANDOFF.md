@@ -89,3 +89,9 @@ A-04d5u已提交0153d00；A-04d5v完成第一分区9块RSA→三次Ec2b/两配�
 A-04d5v已提交2523513。D-01b2完成两次真实UTF-8缓存同对象/3槽匹配及4处代码核对；SDK相关全局已出现但key槽仍空，完整SDK/登录未验。**最后目标已退出，原管理员调试器保留**；最新active-session中的target也已结束，勿沿用任何旧暂停点。
 
 erun是全部首次异常传递，已改con 1+run；本机hardware watch表删除后寄存器残留已实证并清理本研究观察点。清理后运行更远，恢复软件观察仍80000003退出，原因unknown，不跳过校验。下一项离线Handler→Login实际size/writer/完整帧。研究回归仍234，D-02未完成，目标active。详细恢复/避坑见[HANDOFF2](HANDOFF2.md)；覆盖前备份local/migration72/handoffs/HANDOFF2.before-startup-runtime-2523513.md且hash一致。无运行部署，他人差异保留，未推送。
+
+## 2026-11-06：Handler到Login完整帧完成，继续P0闭包
+
+A-04d5w已限定验收：10原生样本、240研究回归、二次产物一致；4成功完整帧含4560字节Unicode/NUL跨key周期，6非发送分支；全负载protoc一致，9组安装key与Java一致，原Token6组产物不变。未知语义不晋级，未执行整个Handler返回/真实响应收帧/实机，D-02未完成，目标active。
+
+下一项A-03调用闭包或响应收帧。D-01b2提交cf09603；当前无运行游戏目标，调试退出原因仍unknown。详见[HANDOFF2](HANDOFF2.md)；覆盖前旧文已备份local/migration72/handoffs/HANDOFF2.before-login-frame-cf09603.md并核验。无运行部署，他人差异保留，未推送。
