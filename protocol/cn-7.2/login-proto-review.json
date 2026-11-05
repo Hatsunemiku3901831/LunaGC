@@ -1292,7 +1292,7 @@
   },
   "evidenceSHA256": {
     "protocol/cn-7.2/profile.json": "afce9267696712860c9d4585c7b09b242ad993fa504c177f4466d51104328315",
-    "protocol/cn-7.2/mappings.json": "78e9b9fdb42b9fb71edd1b33c437fbea87c216d40da195a6b69935a1c1f1d806",
+    "protocol/cn-7.2/mappings.json": "e72a9161cc7420cde7f0ef59bcb82a23103172ca51d20c3213e952f90e918048",
     "protocol/cn-7.2/commands.json": "93376c770ff8362303817da1d03032f08495c04affc9ce1f7697470ff970d4a8",
     "protocol/cn-7.2/auth-sources-observations.json": "3d21f2e0b992bdcb253ddc3f4406b57327cc473b5b1b0474ba519de7c6795beb",
     "protocol/cn-7.2/auth-tail-observations.json": "be8c6e59ace621b3feb595c50a337d2166bd3b0124b681246e1bd8a5d11c622d",
@@ -1332,6 +1332,7 @@
     "protocol/cn-7.2/scene-grid-script-observations.json": "b334d02f25f4d0a3df300d3fd5d67f11d945b6c473df79e2ca1ff44d8ae8c7b8",
     "protocol/cn-7.2/scene-resource-observations.json": "7f0dadf9b2d24a2a7041162875ad568201f77f6671108693faf35be565d895e5",
     "protocol/cn-7.2/scene-script-observations.json": "a52346e5879b4cfa05d07e3d4f13e7952a40f39f3a210314cfee725180011970",
+    "protocol/cn-7.2/scene-wait-observations.json": "90c06a2dd594802768fde6beb9c3277e3e7bcc01fb59d791569cccd37abbe645",
     "protocol/cn-7.2/seed-crypto-observations.json": "cd6a06942deb70b9f066f437cda27504db3f529eaaf10a1ca52bee6836256418",
     "protocol/cn-7.2/send-flow-observations.json": "869486c5d79a8b993c8d89280ff3ac6f412a77c0e572052048d8f583e55c5fbc",
     "protocol/cn-7.2/session-seed-observations.json": "dae61a69b67f01b9bee03bb673272fe34907d276a1c3becb78e79d475b558929",

@@ -590,6 +590,34 @@ def validate_send_flow(document, profile, flow):
     return errors
 
 
+def validate_scene_wait(document, profile, table):
+    errors = []
+    hashes = {profile['files'][key]['path']: profile['files'][key]['sha256'] for key in ('binary', 'metadata', 'startup')}
+    if table.get('inputSHA256') != hashes: errors.append('Scene wait: input hash mismatch')
+    declaration = table.get('declarations', {})
+    expected = dict(typeIndex=46311, clientType='BBECFDMDFJC', cmdId=27748, getter='0x1523856a0', semanticName='PlayerEnterSceneNotify')
+    if any(declaration.get(key) != value for key, value in expected.items()): errors.append('Scene wait: identity declaration mismatch')
+    if (table.get('runtimeStatus') != 'not-tested' or table.get('targetProtocolReady') is not False or
+            table.get('closureComplete') is not False or len(table.get('fields', [])) != 26):
+        errors.append('Scene wait: bounded evidence scope mismatch')
+    try:
+        from .trace_client72_scene_wait import validate_fixtures
+    except ImportError:
+        from trace_client72_scene_wait import validate_fixtures
+    try:
+        validate_fixtures(table['observations'])
+    except ValueError as error:
+        errors.append('Scene wait: ' + str(error))
+    for key, evidence in (('opcodes', 'scene-enter-opcode'), ('messages', 'scene-enter-message')):
+        row = next(r for r in document[key] if r['semanticName'] == 'PlayerEnterSceneNotify')
+        if row.get('clientType') != 'BBECFDMDFJC' or row.get('status') != 'verified' or evidence not in row.get('evidence', []):
+            errors.append('Scene wait: mapped identity evidence mismatch')
+    schema = next(r for r in document['schemas'] if r['semanticName'] == 'PlayerEnterSceneNotify')
+    if schema.get('status') != 'candidate' or len(schema.get('fields', [])) != 26 or any(f['status'] != 'unresolved' for f in schema['fields']):
+        errors.append('Scene wait: unknown field semantics promoted')
+    return errors
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--directory', type=Path, default=Path(__file__).resolve().parents[1] / 'protocol/cn-7.2')
@@ -604,7 +632,11 @@ def main():
     extra = [(name, json.loads((args.directory / name).read_text('utf8')))
              for name in ('login-wire-observations.json', 'response-wire-observations.json', 'response-leaf-wire-observations.json',
                           'response-graph-observations.json', 'map-aot-observations.json', 'born-observations.json')]
+    scene_wait = json.loads((args.directory / 'scene-wait-observations.json').read_text('utf8'))
+    extra.append(('scene-wait', dict(inputSHA256=scene_wait['inputSHA256'], messages=[dict(
+        clientType=scene_wait['declarations']['clientType'], fields=scene_wait['fields'])])))
     errors.extend(validate_observations(document, profile, commands, wire, protected, extra))
+    errors.extend(validate_scene_wait(document, profile, scene_wait))
     semantic_tables=[json.loads((args.directory/name).read_text('utf8')) for name in
                      ('login-semantic-observations.json','login-literal-observations.json','enum-observations.json','login-wire-observations.json')]
     errors.extend(validate_login_semantics(document,profile,*semantic_tables))

@@ -1,5 +1,7 @@
 # 国服7.2选人成功继续：B-02e1限定证据
 
+后续B-02e2已恢复46311/27748的PlayerEnterSceneNotify身份、26外层字段及原生clone/等待，实际网络分发先经1507AD120包装；本页下方“下一项”的旧线索以[入场通知/缓存等待](CLIENT_72_SCENE_WAIT.md)为续篇。原33样本重跑摘要不变；正常入场/五类嵌套/包装有上下文和真实异步仍未完成。
+
 2026-11-06。B-02e1闭合的是固定目标的同步继续、Action绑定和明确异步入口。**B-02e父任务、完整初始化次序与D-02实机未完成，runtimeStatus仍为not-tested。** 本批没有启动客户端或服务，没有修改运行Java、Proto、补丁、配置或资源；离线工具/测试/文档不需要部署。
 
 入口：[选人三件组](CLIENT_72_BORN.md)、[取证工具](../tools/trace_client72_born_continue.py)、[脱敏摘要](../protocol/cn-7.2/born-continuation-observations.json)、[回归](../tools/test_client72_born_continue.py)。每次工具运行重新`read_verified`核对EXE和两份metadata的SHA-256，再`extract(..., structures=True)`恢复声明；与原B-02d完全相同的三输入。方法、类型usage、Action MethodInfo、字段偏移分别核对，不从临近指针猜类型。

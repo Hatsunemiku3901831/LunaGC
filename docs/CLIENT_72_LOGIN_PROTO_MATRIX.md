@@ -1,12 +1,14 @@
 # A-03c 候选消息、Proto依赖与7.2三层证据缺口矩阵
 
+2026-11-06 B-02e2：只更新PlayerEnterSceneNotify一行，27748/BBECFDMDFJC与业务身份verified，26外层业务字段均unresolved、schema candidate；输入53→54，唯一旧证据hash变更为mappings，新增3个分层证据。其余1287源码/Proto、99候选/1140描述符、147行矩阵及开放边界不变；人工复核后recover两次相同，305研究回归通过。研究结构校验0错误，ready204→228是显露26未知字段同时确认两层身份的结果，不代表可连接。详见[入场通知/缓存等待](CLIENT_72_SCENE_WAIT.md)，scene-wait-login-proto-{review-check,repeat}.json及scene-wait-research-regression.log留本机。
+
 2026-11-06 E-01c：人工复核仅新增scene-script、scene-grid-script、scene-grid-inline三份Lua输入摘要，研究输入50→53，其余1287源码/Proto、99候选/148行矩阵、1140描述符、三层状态及开放边界保持一致。原review更新hash后recover两次相同，完整294项研究回归通过，研究结构0错误/ready仍204缺口；证据scene-script-login-proto-{review-check,repeat}.json和scene-script-research-regression.log。Lua顶层结果不用于晋级协议或实机状态。
 
 2026-11-06继续批：新增born-continuation、scene-resource、startup-continuation三份摘要后，原门禁因输入集合变化拒绝。人工复核确认原1287源码/Proto、99构造/148引用与矩阵三层、1140描述符/1254声明/4786字段及开放边界均不变，仅研究输入由47增至50；更新原review后完整矩阵两次生成逐字节一致，288项研究回归通过。旧失败快照保留，不跳过测试或放松集合校验；三层/runtime不晋级。复核证据evidence/continuation-login-proto-review-check.json及完整日志位于忽略local/migration72。下文旧批输入数量为历史。
 
 2026-11-06，A-03c限定离线验收后，B-02d已补入选人证据，B-03a/C-01a现已接管三件组生产源码并重新复核矩阵。来源是A-03b固定方法并集及当前Proto，不能当作目标客户端最小/完整消息集。**A-03完整闭包与实机、B-03/C-01父任务及D-02仍未完成。** 实现/测试和停止取证边界见[选人三件组](CLIENT_72_BORN.md)。下述原97/1139及缺根记录保留为历史基线，当前结果如下。
 
-当前99构造候选、148引用/种子、1140描述符文件/1254声明/4786字段；1287源码/Proto与47研究输入固定hash，重复报告一致。生产DoSetPlayerBornDataNotify.proto已按目标空schema证据生成，missingProtoRoots为空；没有从遗留缺文件推断为空。动态BasePacket现只保留ItemAddHintNotify、packet复制和opcode变量三处，选人两处配置覆盖和负号回退已移除。三层矩阵/188字段及runtime未验状态不变；空schema已独立验证的Notify不再误列“无字段证据”缺口，其他空fields仍不视为合法空消息。表中来源数是原批快照，当前逐行来源以JSON为准。
+当前99构造候选、148引用/种子、1140描述符文件/1254声明/4786字段；1287源码/Proto与54研究输入固定hash，重复报告一致。生产DoSetPlayerBornDataNotify.proto已按目标空schema证据生成，missingProtoRoots为空；没有从遗留缺文件推断为空。动态BasePacket现只保留ItemAddHintNotify、packet复制和opcode变量三处，选人两处配置覆盖和负号回退已移除。三层矩阵现214条字段，runtime均未验；空schema已独立验证的Notify不再误列“无字段证据”缺口，其他空fields仍不视为合法空消息。表中来源数是原批快照，当前逐行来源以JSON为准。
 
 ## 候选与描述符范围
 
@@ -20,7 +22,7 @@
 
 ## 三层状态与缺口
 
-148行是引用/种子矩阵，含辅助Proto和HTTP/包头，不是148个网络消息。指令层与语义层各10 verified/138 unresolved：四Token/Login、PingReq/Rsp、无独立CmdID的PacketHead及B-02d选人三件组。字段层3 verified/7 candidate/138 unresolved；188条字段中41 verified（原38+选人3）、9 candidate、138 unresolved。一般空fields只代表缺证据；DoSetPlayerBornDataNotify例外由目标声明/父类/原生size/writer/reader独立确认无字段。5组静态重号、传输域unknown和未实机状态保留。没有把旧tag、类型拓扑、import或相似名称借给目标三层。
+148行是引用/种子矩阵，含辅助Proto和HTTP/包头，不是148个网络消息。指令层与语义层各11 verified/137 unresolved：四Token/Login、PingReq/Rsp、无独立CmdID的PacketHead、B-02d选人三件组和B-02e2入场通知。字段层3 verified/8 candidate/137 unresolved；214条字段中41 verified（原38+选人3）、9 candidate、164 unresolved。一般空fields只代表缺证据；DoSetPlayerBornDataNotify例外由目标声明/父类/原生size/writer/reader独立确认无字段。5组静态重号、传输域unknown和未实机状态保留。没有把旧tag、类型拓扑、import或相似名称借给目标三层。
 
 下表L1为CmdID→目标类型，L2为目标类型→语义，L3为字段→wire/业务证据。V/C/U分别为现有verified/candidate/unresolved字段数。所有行均runtime=not-tested、targetProtocolReady=false；详细歧义与证据不省略于JSON中。
 
@@ -111,7 +113,7 @@
 | PlayerChatNotify | 1 | unknown | unresolved | unresolved; V0/C0/U0 |
 | PlayerDataNotify | 2 | unknown | unresolved | unresolved; V0/C0/U0 |
 | PlayerEnterSceneInfoNotify | 1 | unknown | unresolved | unresolved; V0/C0/U0 |
-| PlayerEnterSceneNotify | 2 | unknown | unresolved | unresolved; V0/C0/U0 |
+| PlayerEnterSceneNotify | 2 | verified / 27748 / BBECFDMDFJC | verified | candidate; V0/C0/U26 |
 | PlayerGameTimeNotify | 1 | unknown | unresolved | unresolved; V0/C0/U0 |
 | PlayerHomeCompInfo | 1 | unknown | unresolved | unresolved; V0/C0/U0 |
 | PlayerHomeCompInfoNotify | 1 | unknown | unresolved | unresolved; V0/C0/U0 |

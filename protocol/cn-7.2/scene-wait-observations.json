@@ -1,0 +1,3603 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "declarations": {
+    "typeIndex": 46311,
+    "clientType": "BBECFDMDFJC",
+    "cmdId": 27748,
+    "getter": "0x1523856a0",
+    "semanticName": "PlayerEnterSceneNotify",
+    "semanticEvidence": "typed network handler plus native entry log and literal usage",
+    "runtimeStatus": "not-tested",
+    "registration": "0x1507c2a03",
+    "methods": [
+      {
+        "entry": "0x1507ad120",
+        "ownerType": 56238,
+        "methodIndex": 467349,
+        "parameterIndex": 380980,
+        "entry32SHA256": "7b08caed4f9f4ae45fff774fa21f43a322a558d2fa7d8adebbe4a422582d6a65"
+      },
+      {
+        "entry": "0x1507ad6f0",
+        "ownerType": 56238,
+        "methodIndex": 467802,
+        "parameterIndex": 381458,
+        "entry32SHA256": "029e64176308a2ad3b9fab1e727dd8cb4429fa45c8e66878ee22d657fd73bd89"
+      },
+      {
+        "entry": "0x1507b32d0",
+        "ownerType": 56238,
+        "methodIndex": 467384,
+        "parameterIndex": 381021,
+        "entry32SHA256": "b9ddc8b3e3b8d3eaabca63061e6e049d76daab109438e8c64f512f122c160632"
+      },
+      {
+        "entry": "0x14cd67260",
+        "ownerType": 18753,
+        "methodIndex": 142800,
+        "parameterIndex": 129008,
+        "entry32SHA256": "073a71f9b30c16543791a3af388b13b3f7364a62b2a54c6e6bef58c3fdd88b26"
+      },
+      {
+        "entry": "0x1523856b0",
+        "ownerType": 46311,
+        "methodIndex": 384109,
+        "entry32SHA256": "ecbe7216d294f61f10b850c8c5b8545a3aca0b70c670c67bcf73d444a63a417a"
+      },
+      {
+        "entry": "0x152387890",
+        "ownerType": 46311,
+        "methodIndex": 384104,
+        "entry32SHA256": "7b921fbac02090eeb6d9c935a377c5688ac90e3e3cab3baff6a94bd7b13b1353"
+      },
+      {
+        "entry": "0x152386c00",
+        "ownerType": 46311,
+        "methodIndex": 384111,
+        "entry32SHA256": "2d7121f869092f8cf1d58fdf203bd87490347a630f8439593e753fbec39b45bc"
+      },
+      {
+        "entry": "0x152386cb0",
+        "ownerType": 46311,
+        "methodIndex": 384114,
+        "entry32SHA256": "ae0ec38264990a5923123075377d58611c595f9ac3143a01282c37d1169ad0bf"
+      },
+      {
+        "entry": "0x154048d40",
+        "ownerType": 84343,
+        "methodIndex": 698523,
+        "entry32SHA256": "2a628f045df698bed8308dd324fc2cee425dbc8e0a6d0b1976709fdab183357b"
+      }
+    ],
+    "literals": [
+      {
+        "usageRow": 779811,
+        "index": 45993,
+        "slot": 45993,
+        "cell": "0x145b23b68",
+        "value": "Genshin Loading Log: OnReceivePlayerEnterSceneNotify {0}"
+      },
+      {
+        "usageRow": 779817,
+        "index": 46023,
+        "slot": 46023,
+        "cell": "0x145b23c58",
+        "value": "Beyond Transport Interrupt EnterDungeon, Invoke Client Reconnect"
+      },
+      {
+        "usageRow": 780351,
+        "index": 50090,
+        "slot": 50090,
+        "cell": "0x145b2bb70",
+        "value": "Genshin Loading Log: PlayerModule OnPlayerEnterSceneNotify"
+      },
+      {
+        "usageRow": 780698,
+        "index": 53019,
+        "slot": 53019,
+        "cell": "0x145b316f8",
+        "value": "Genshin Loading Log: LoadingManager OnPlayerEnterSceneNotify"
+      }
+    ],
+    "enum": {
+      "typeIndex": 86551,
+      "clientType": "ILGABKBIAIE",
+      "namespace": "",
+      "underlyingType": "int32",
+      "values": [
+        {
+          "symbol": "EnterNone",
+          "value": 0,
+          "fieldIndex": 431526,
+          "defaultRow": 74792,
+          "typeIndex": 70,
+          "dataIndex": 655220
+        },
+        {
+          "symbol": "EnterSelf",
+          "value": 1,
+          "fieldIndex": 431527,
+          "defaultRow": 74793,
+          "typeIndex": 70,
+          "dataIndex": 655224
+        },
+        {
+          "symbol": "EnterGoto",
+          "value": 2,
+          "fieldIndex": 431528,
+          "defaultRow": 74794,
+          "typeIndex": 70,
+          "dataIndex": 655228
+        },
+        {
+          "symbol": "EnterJump",
+          "value": 3,
+          "fieldIndex": 431529,
+          "defaultRow": 74795,
+          "typeIndex": 70,
+          "dataIndex": 655232
+        },
+        {
+          "symbol": "EnterOther",
+          "value": 4,
+          "fieldIndex": 431530,
+          "defaultRow": 74796,
+          "typeIndex": 70,
+          "dataIndex": 655236
+        },
+        {
+          "symbol": "EnterBack",
+          "value": 5,
+          "fieldIndex": 431531,
+          "defaultRow": 74797,
+          "typeIndex": 70,
+          "dataIndex": 655240
+        },
+        {
+          "symbol": "EnterDungeon",
+          "value": 6,
+          "fieldIndex": 431532,
+          "defaultRow": 74798,
+          "typeIndex": 70,
+          "dataIndex": 655244
+        },
+        {
+          "symbol": "EnterDungeonReplay",
+          "value": 7,
+          "fieldIndex": 431533,
+          "defaultRow": 74799,
+          "typeIndex": 70,
+          "dataIndex": 655248
+        },
+        {
+          "symbol": "EnterGotoByPortal",
+          "value": 8,
+          "fieldIndex": 431534,
+          "defaultRow": 74800,
+          "typeIndex": 70,
+          "dataIndex": 655252
+        },
+        {
+          "symbol": "EnterSelfHome",
+          "value": 9,
+          "fieldIndex": 431535,
+          "defaultRow": 74801,
+          "typeIndex": 70,
+          "dataIndex": 655256
+        },
+        {
+          "symbol": "EnterOtherHome",
+          "value": 10,
+          "fieldIndex": 431536,
+          "defaultRow": 74802,
+          "typeIndex": 70,
+          "dataIndex": 655260
+        },
+        {
+          "symbol": "EnterGotoRecreate",
+          "value": 11,
+          "fieldIndex": 431537,
+          "defaultRow": 74803,
+          "typeIndex": 70,
+          "dataIndex": 655264
+        },
+        {
+          "symbol": "EnterGotoByTpl",
+          "value": 12,
+          "fieldIndex": 431538,
+          "defaultRow": 74804,
+          "typeIndex": 70,
+          "dataIndex": 655268
+        },
+        {
+          "symbol": "EnterBeyond",
+          "value": 13,
+          "fieldIndex": 431539,
+          "defaultRow": 74805,
+          "typeIndex": 70,
+          "dataIndex": 655272
+        },
+        {
+          "symbol": "EnterHall",
+          "value": 14,
+          "fieldIndex": 431540,
+          "defaultRow": 74806,
+          "typeIndex": 70,
+          "dataIndex": 655276
+        }
+      ],
+      "semanticStatus": "target-symbols-only"
+    },
+    "fields": [
+      {
+        "clientField": "HHAFHFEPLPD",
+        "objectOffset": 24,
+        "declaration": {
+          "kind": "class",
+          "attributes": "0x1",
+          "data": "0x14977",
+          "byRef": false,
+          "typeDefinition": 84343,
+          "name": "BGDCNKAKGHI",
+          "namespace": ""
+        }
+      },
+      {
+        "clientField": "EMLMBEIBJHJ",
+        "objectOffset": 32,
+        "declaration": {
+          "kind": "genericinst",
+          "attributes": "0x21",
+          "data": "0x7346",
+          "byRef": false,
+          "genericIndex": 29510,
+          "instanceIndex": 11,
+          "arguments": [
+            {
+              "kind": "uint32",
+              "attributes": "0x0",
+              "data": "0x13f",
+              "byRef": false
+            }
+          ],
+          "typeDefinition": 35584,
+          "name": "DKHEEHDOEIK",
+          "namespace": ""
+        }
+      },
+      {
+        "clientField": "KFIJNBDGBAH",
+        "objectOffset": 40,
+        "declaration": {
+          "kind": "class",
+          "attributes": "0x1",
+          "data": "0x650a",
+          "byRef": false,
+          "typeDefinition": 25866,
+          "name": "ABJMLEPLFJG",
+          "namespace": ""
+        }
+      },
+      {
+        "clientField": "LFPEKBJIJNG",
+        "objectOffset": 48,
+        "declaration": {
+          "kind": "class",
+          "attributes": "0x1",
+          "data": "0x14977",
+          "byRef": false,
+          "typeDefinition": 84343,
+          "name": "BGDCNKAKGHI",
+          "namespace": ""
+        }
+      },
+      {
+        "clientField": "CPIINPOJLCM",
+        "objectOffset": 56,
+        "declaration": {
+          "kind": "string",
+          "attributes": "0x1",
+          "data": "0x125",
+          "byRef": false
+        }
+      },
+      {
+        "clientField": "BJMCOIFDONK",
+        "objectOffset": 64,
+        "declaration": {
+          "kind": "class",
+          "attributes": "0x1",
+          "data": "0x8555",
+          "byRef": false,
+          "typeDefinition": 34133,
+          "name": "HJLMHFHHJKM",
+          "namespace": ""
+        }
+      },
+      {
+        "clientField": "FEANOEECAIM",
+        "objectOffset": 72,
+        "declaration": {
+          "kind": "class",
+          "attributes": "0x1",
+          "data": "0x10fec",
+          "byRef": false,
+          "typeDefinition": 69612,
+          "name": "PCCNENMODDD",
+          "namespace": ""
+        }
+      },
+      {
+        "clientField": "ABIFGOBLNDN",
+        "objectOffset": 80,
+        "declaration": {
+          "kind": "class",
+          "attributes": "0x1",
+          "data": "0x14977",
+          "byRef": false,
+          "typeDefinition": 84343,
+          "name": "BGDCNKAKGHI",
+          "namespace": ""
+        }
+      },
+      {
+        "clientField": "CCKBJJPAGGG",
+        "objectOffset": 88,
+        "declaration": {
+          "kind": "class",
+          "attributes": "0x1",
+          "data": "0x108b1",
+          "byRef": false,
+          "typeDefinition": 67761,
+          "name": "HKDMELCIJGB",
+          "namespace": ""
+        }
+      },
+      {
+        "clientField": "NBBEIFOKKNG",
+        "objectOffset": 96,
+        "declaration": {
+          "kind": "class",
+          "attributes": "0x1",
+          "data": "0x101f8",
+          "byRef": false,
+          "typeDefinition": 66040,
+          "name": "NAECHMKLBEI",
+          "namespace": ""
+        }
+      },
+      {
+        "clientField": "CNABNLMHMII",
+        "objectOffset": 104,
+        "declaration": {
+          "kind": "uint64",
+          "attributes": "0x1",
+          "data": "0x140",
+          "byRef": false
+        }
+      },
+      {
+        "clientField": "DGIBDKELFNG",
+        "objectOffset": 112,
+        "declaration": {
+          "kind": "uint32",
+          "attributes": "0x1",
+          "data": "0x13f",
+          "byRef": false
+        }
+      },
+      {
+        "clientField": "LMKLCDPJOBJ",
+        "objectOffset": 116,
+        "declaration": {
+          "kind": "uint32",
+          "attributes": "0x1",
+          "data": "0x13f",
+          "byRef": false
+        }
+      },
+      {
+        "clientField": "AJMJGIKBOPO",
+        "objectOffset": 120,
+        "declaration": {
+          "kind": "uint32",
+          "attributes": "0x1",
+          "data": "0x13f",
+          "byRef": false
+        }
+      },
+      {
+        "clientField": "JMHKHAPJADA",
+        "objectOffset": 124,
+        "declaration": {
+          "kind": "uint32",
+          "attributes": "0x1",
+          "data": "0x13f",
+          "byRef": false
+        }
+      },
+      {
+        "clientField": "NBDGINFCIIK",
+        "objectOffset": 128,
+        "declaration": {
+          "kind": "uint32",
+          "attributes": "0x1",
+          "data": "0x13f",
+          "byRef": false
+        }
+      },
+      {
+        "clientField": "KLDLBMCOGFC",
+        "objectOffset": 132,
+        "declaration": {
+          "kind": "bool",
+          "attributes": "0x1",
+          "data": "0xae",
+          "byRef": false
+        }
+      },
+      {
+        "clientField": "OACAAAMNGFI",
+        "objectOffset": 133,
+        "declaration": {
+          "kind": "bool",
+          "attributes": "0x1",
+          "data": "0xae",
+          "byRef": false
+        }
+      },
+      {
+        "clientField": "EHONLMHNLDP",
+        "objectOffset": 136,
+        "declaration": {
+          "kind": "uint32",
+          "attributes": "0x1",
+          "data": "0x13f",
+          "byRef": false
+        }
+      },
+      {
+        "clientField": "CMAFDGGJDNK",
+        "objectOffset": 140,
+        "declaration": {
+          "kind": "uint32",
+          "attributes": "0x1",
+          "data": "0x13f",
+          "byRef": false
+        }
+      },
+      {
+        "clientField": "OHHFLAOMMEC",
+        "objectOffset": 144,
+        "declaration": {
+          "kind": "uint32",
+          "attributes": "0x1",
+          "data": "0x13f",
+          "byRef": false
+        }
+      },
+      {
+        "clientField": "MCCMGLDOECH",
+        "objectOffset": 148,
+        "declaration": {
+          "kind": "uint32",
+          "attributes": "0x1",
+          "data": "0x13f",
+          "byRef": false
+        }
+      },
+      {
+        "clientField": "NOEEBKJAFAG",
+        "objectOffset": 152,
+        "declaration": {
+          "kind": "valuetype",
+          "attributes": "0x1",
+          "data": "0x15217",
+          "byRef": false,
+          "typeDefinition": 86551,
+          "name": "ILGABKBIAIE",
+          "namespace": ""
+        }
+      },
+      {
+        "clientField": "JEPBJIIEFOM",
+        "objectOffset": 156,
+        "declaration": {
+          "kind": "uint32",
+          "attributes": "0x1",
+          "data": "0x13f",
+          "byRef": false
+        }
+      },
+      {
+        "clientField": "PKGEAAKBCNC",
+        "objectOffset": 160,
+        "declaration": {
+          "kind": "uint32",
+          "attributes": "0x1",
+          "data": "0x13f",
+          "byRef": false
+        }
+      },
+      {
+        "clientField": "IOLBHNOIGJN",
+        "objectOffset": 164,
+        "declaration": {
+          "kind": "uint32",
+          "attributes": "0x1",
+          "data": "0x13f",
+          "byRef": false
+        }
+      }
+    ]
+  },
+  "fields": [
+    {
+      "clientField": "PKGEAAKBCNC",
+      "objectOffset": 160,
+      "tag": 1,
+      "acceptedWireTypes": [
+        0
+      ],
+      "type": "uint32",
+      "cardinality": "singular",
+      "presence": "implicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x15a444580"
+      ]
+    },
+    {
+      "clientField": "CMAFDGGJDNK",
+      "objectOffset": 140,
+      "tag": 2,
+      "acceptedWireTypes": [
+        0
+      ],
+      "type": "uint32",
+      "cardinality": "singular",
+      "presence": "implicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x15a47fb06"
+      ]
+    },
+    {
+      "clientField": "IOLBHNOIGJN",
+      "objectOffset": 164,
+      "tag": 5,
+      "acceptedWireTypes": [
+        0
+      ],
+      "type": "uint32",
+      "cardinality": "singular",
+      "presence": "implicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x15a4106ed"
+      ]
+    },
+    {
+      "clientField": "CNABNLMHMII",
+      "objectOffset": 104,
+      "tag": 6,
+      "acceptedWireTypes": [
+        0
+      ],
+      "type": "uint64",
+      "cardinality": "singular",
+      "presence": "implicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x15a42fe64"
+      ]
+    },
+    {
+      "clientField": "JMHKHAPJADA",
+      "objectOffset": 124,
+      "tag": 7,
+      "acceptedWireTypes": [
+        0
+      ],
+      "type": "uint32",
+      "cardinality": "singular",
+      "presence": "implicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x15a490213"
+      ]
+    },
+    {
+      "clientField": "NOEEBKJAFAG",
+      "objectOffset": 152,
+      "tag": 8,
+      "acceptedWireTypes": [
+        0
+      ],
+      "type": "int32",
+      "cardinality": "singular",
+      "presence": "implicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x15a40d54e"
+      ],
+      "enumTypeIndex": 86551
+    },
+    {
+      "clientField": "MCCMGLDOECH",
+      "objectOffset": 148,
+      "tag": 10,
+      "acceptedWireTypes": [
+        0
+      ],
+      "type": "uint32",
+      "cardinality": "singular",
+      "presence": "implicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x15a3d826f"
+      ]
+    },
+    {
+      "clientField": "NBDGINFCIIK",
+      "objectOffset": 128,
+      "tag": 11,
+      "acceptedWireTypes": [
+        0
+      ],
+      "type": "uint32",
+      "cardinality": "singular",
+      "presence": "implicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x15a465382"
+      ]
+    },
+    {
+      "clientField": "KLDLBMCOGFC",
+      "objectOffset": 132,
+      "tag": 12,
+      "acceptedWireTypes": [
+        0
+      ],
+      "type": "bool",
+      "cardinality": "singular",
+      "presence": "implicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x15a3ed8da"
+      ]
+    },
+    {
+      "clientField": "EMLMBEIBJHJ",
+      "objectOffset": 32,
+      "tag": 13,
+      "acceptedWireTypes": [
+        0,
+        2
+      ],
+      "type": "uint32",
+      "cardinality": "repeated",
+      "presence": "implicit",
+      "packed": true,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x158db8e10"
+      ],
+      "contentStatus": "modeled-helper"
+    },
+    {
+      "clientField": "HHAFHFEPLPD",
+      "objectOffset": 24,
+      "tag": 14,
+      "acceptedWireTypes": [
+        2
+      ],
+      "type": "message",
+      "cardinality": "singular",
+      "presence": "explicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x1474d7e60"
+      ],
+      "nestedType": "BGDCNKAKGHI",
+      "nestedTypeIndex": 84343,
+      "contentStatus": "native-position-content-observed"
+    },
+    {
+      "clientField": "ABIFGOBLNDN",
+      "objectOffset": 80,
+      "tag": 15,
+      "acceptedWireTypes": [
+        2
+      ],
+      "type": "message",
+      "cardinality": "singular",
+      "presence": "explicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x1474d7e60"
+      ],
+      "nestedType": "BGDCNKAKGHI",
+      "nestedTypeIndex": 84343,
+      "contentStatus": "native-position-content-observed"
+    },
+    {
+      "clientField": "LMKLCDPJOBJ",
+      "objectOffset": 116,
+      "tag": 46,
+      "acceptedWireTypes": [
+        0
+      ],
+      "type": "uint32",
+      "cardinality": "singular",
+      "presence": "implicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x15a3f6beb"
+      ]
+    },
+    {
+      "clientField": "JEPBJIIEFOM",
+      "objectOffset": 156,
+      "tag": 157,
+      "acceptedWireTypes": [
+        0
+      ],
+      "type": "uint32",
+      "cardinality": "singular",
+      "presence": "implicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x15a3ef9f1"
+      ]
+    },
+    {
+      "clientField": "CPIINPOJLCM",
+      "objectOffset": 56,
+      "tag": 293,
+      "acceptedWireTypes": [
+        2
+      ],
+      "type": "string",
+      "cardinality": "singular",
+      "presence": "implicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x15a4786e8"
+      ]
+    },
+    {
+      "clientField": "NBBEIFOKKNG",
+      "objectOffset": 96,
+      "tag": 395,
+      "acceptedWireTypes": [
+        2
+      ],
+      "type": "message",
+      "cardinality": "singular",
+      "presence": "explicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x1474d7e60"
+      ],
+      "nestedType": "NAECHMKLBEI",
+      "nestedTypeIndex": 66040,
+      "contentStatus": "not-traced"
+    },
+    {
+      "clientField": "CCKBJJPAGGG",
+      "objectOffset": 88,
+      "tag": 739,
+      "acceptedWireTypes": [
+        2
+      ],
+      "type": "message",
+      "cardinality": "singular",
+      "presence": "explicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x1474d7e60"
+      ],
+      "nestedType": "HKDMELCIJGB",
+      "nestedTypeIndex": 67761,
+      "contentStatus": "not-traced"
+    },
+    {
+      "clientField": "LFPEKBJIJNG",
+      "objectOffset": 48,
+      "tag": 763,
+      "acceptedWireTypes": [
+        2
+      ],
+      "type": "message",
+      "cardinality": "singular",
+      "presence": "explicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x1474d7e60"
+      ],
+      "nestedType": "BGDCNKAKGHI",
+      "nestedTypeIndex": 84343,
+      "contentStatus": "native-position-content-observed"
+    },
+    {
+      "clientField": "OHHFLAOMMEC",
+      "objectOffset": 144,
+      "tag": 941,
+      "acceptedWireTypes": [
+        0
+      ],
+      "type": "uint32",
+      "cardinality": "singular",
+      "presence": "implicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x15a45ead6"
+      ]
+    },
+    {
+      "clientField": "EHONLMHNLDP",
+      "objectOffset": 136,
+      "tag": 957,
+      "acceptedWireTypes": [
+        0
+      ],
+      "type": "uint32",
+      "cardinality": "singular",
+      "presence": "implicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x15a4399b3"
+      ]
+    },
+    {
+      "clientField": "OACAAAMNGFI",
+      "objectOffset": 133,
+      "tag": 1345,
+      "acceptedWireTypes": [
+        0
+      ],
+      "type": "bool",
+      "cardinality": "singular",
+      "presence": "implicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x15a414a4a"
+      ]
+    },
+    {
+      "clientField": "BJMCOIFDONK",
+      "objectOffset": 64,
+      "tag": 1357,
+      "acceptedWireTypes": [
+        2
+      ],
+      "type": "message",
+      "cardinality": "singular",
+      "presence": "explicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x1474d7e60"
+      ],
+      "nestedType": "HJLMHFHHJKM",
+      "nestedTypeIndex": 34133,
+      "contentStatus": "not-traced"
+    },
+    {
+      "clientField": "AJMJGIKBOPO",
+      "objectOffset": 120,
+      "tag": 1583,
+      "acceptedWireTypes": [
+        0
+      ],
+      "type": "uint32",
+      "cardinality": "singular",
+      "presence": "implicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x15a47b73d"
+      ]
+    },
+    {
+      "clientField": "FEANOEECAIM",
+      "objectOffset": 72,
+      "tag": 1723,
+      "acceptedWireTypes": [
+        2
+      ],
+      "type": "message",
+      "cardinality": "singular",
+      "presence": "explicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x1474d7e60"
+      ],
+      "nestedType": "PCCNENMODDD",
+      "nestedTypeIndex": 69612,
+      "contentStatus": "not-traced"
+    },
+    {
+      "clientField": "KFIJNBDGBAH",
+      "objectOffset": 40,
+      "tag": 1964,
+      "acceptedWireTypes": [
+        2
+      ],
+      "type": "message",
+      "cardinality": "singular",
+      "presence": "explicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x1474d7e60"
+      ],
+      "nestedType": "ABJMLEPLFJG",
+      "nestedTypeIndex": 25866,
+      "contentStatus": "not-traced"
+    },
+    {
+      "clientField": "DGIBDKELFNG",
+      "objectOffset": 112,
+      "tag": 2008,
+      "acceptedWireTypes": [
+        0
+      ],
+      "type": "uint32",
+      "cardinality": "singular",
+      "presence": "implicit",
+      "packed": false,
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "sources": [
+        "0x15a4122bb"
+      ]
+    }
+  ],
+  "outerScanSamples": 128,
+  "outerScanScope": "bounded tags 1..2047 and wire types 0/2/1/5; complete instance-field coverage checked independently",
+  "positionFields": [
+    {
+      "objectOffset": 24,
+      "tag": 1,
+      "type": "float",
+      "cardinality": "singular",
+      "presence": "implicit",
+      "packed": false
+    },
+    {
+      "objectOffset": 28,
+      "tag": 3,
+      "type": "float",
+      "cardinality": "singular",
+      "presence": "implicit",
+      "packed": false
+    },
+    {
+      "objectOffset": 32,
+      "tag": 2,
+      "type": "float",
+      "cardinality": "singular",
+      "presence": "implicit",
+      "packed": false
+    }
+  ],
+  "fixtureCount": 32,
+  "runtimeStatus": "not-tested",
+  "closureComplete": false,
+  "targetProtocolReady": false,
+  "scope": "outer wire, position-only nested content and bounded network/born cache",
+  "fixtureProto": "// Wire fixture carrier, not a complete target schema. Opaque nested messages use bytes.\nsyntax=\"proto3\"; package cn72.scene_fixture;\nmessage Position { float f_18=1; float f_20=2; float f_1c=3; }\nmessage Outer {\n  uint32 f_a0=1;\n  uint32 f_8c=2;\n  uint32 f_a4=5;\n  uint64 f_68=6;\n  uint32 f_7c=7;\n  int32 f_98=8;\n  uint32 f_94=10;\n  uint32 f_80=11;\n  bool f_84=12;\n  uint32 f_74=46;\n  uint32 f_9c=157;\n  uint32 f_90=941;\n  uint32 f_88=957;\n  bool f_85=1345;\n  uint32 f_78=1583;\n  uint32 f_70=2008;\n  repeated uint32 f_20=13 [packed=true];\n  string f_38=293;\n  Position f_18=14;\n  Position f_50=15;\n  bytes f_60=395;\n  bytes f_58=739;\n  Position f_30=763;\n  bytes f_40=1357;\n  bytes f_48=1723;\n  bytes f_28=1964;\n}\n",
+  "protocSHA256": "9f243ff05a4b8e19e3f310959ec23686eed8464691490009de6c89e527ee2bef",
+  "models": [
+    "managed class/interface/constructor metadata and reference count=1",
+    "managed allocations, uint32 arrays/copy and codec delegate storage",
+    "tag/skip/raw-byte/float32/UTF-8 primitives with explicit WireInput rejection rules; uint32/uint64 varint bodies execute",
+    "named log/boxing/format sinks and explicit feature/config lookup inputs; wrapper context absent"
+  ],
+  "outsideScope": [
+    "remaining nested message content",
+    "formal business meaning of scalar/string/position fields and their consumer arithmetic",
+    "wrapper with a present context, normal scene entry after identity request, config105 recovery body, network handler suffix",
+    "IFix runtime overrides, SDK, media/timer scheduling, live packet order, production integration and D-02"
+  ],
+  "toolSourceSHA256": {
+    "tools/trace_client72_scene_wait.py": "73af923e711d19767fb210ebb89974c6ecfc3a01b460cc492a1464d99308beaf",
+    "tools/client72_scene_reader.py": "ca73c8fbdf58bdf1658643e3f3b8023b4ecc65e7a7cab393d5fcb5674f0fc146"
+  },
+  "fixtureKinds": {
+    "dispatch": 3,
+    "reader-clone": 6,
+    "reader-merge": 3,
+    "reader-rejection": 7,
+    "network-cache": 13
+  },
+  "observations": [
+    {
+      "kind": "dispatch",
+      "cmdId": 27748,
+      "originalPointerPreserved": true,
+      "executedHandler": false
+    },
+    {
+      "kind": "dispatch",
+      "cmdId": 0,
+      "originalPointerPreserved": false,
+      "executedHandler": false
+    },
+    {
+      "kind": "dispatch",
+      "cmdId": 65535,
+      "originalPointerPreserved": false,
+      "executedHandler": false
+    },
+    {
+      "kind": "reader-clone",
+      "name": "empty",
+      "wire": "",
+      "values": {},
+      "result": {
+        "wire": "",
+        "constructorDefaults": {
+          "rawStoredScalars": {
+            "0x68": 44592,
+            "0x70": 4294965939,
+            "0x74": 4294965485,
+            "0x78": 84312,
+            "0x7c": 4294906398,
+            "0x80": 4294941180,
+            "0x84": 0,
+            "0x85": 0,
+            "0x88": 4294945885,
+            "0x8c": 51452,
+            "0x90": 66462,
+            "0x94": 34696,
+            "0x98": 0,
+            "0x9c": 34963,
+            "0xa0": 9715,
+            "0xa4": 4294965886
+          },
+          "positionFloat32Bits": {
+            "0x18": null,
+            "0x28": null,
+            "0x30": null,
+            "0x40": null,
+            "0x48": null,
+            "0x50": null,
+            "0x58": null,
+            "0x60": null
+          },
+          "repeatedUint32": [],
+          "stringUTF8Hex": ""
+        },
+        "storedObject": {
+          "rawStoredScalars": {
+            "0x68": 44592,
+            "0x70": 4294965939,
+            "0x74": 4294965485,
+            "0x78": 84312,
+            "0x7c": 4294906398,
+            "0x80": 4294941180,
+            "0x84": 0,
+            "0x85": 0,
+            "0x88": 4294945885,
+            "0x8c": 51452,
+            "0x90": 66462,
+            "0x94": 34696,
+            "0x98": 0,
+            "0x9c": 34963,
+            "0xa0": 9715,
+            "0xa4": 4294965886
+          },
+          "positionFloat32Bits": {
+            "0x18": null,
+            "0x28": null,
+            "0x30": null,
+            "0x40": null,
+            "0x48": null,
+            "0x50": null,
+            "0x58": null,
+            "0x60": null
+          },
+          "repeatedUint32": [],
+          "stringUTF8Hex": ""
+        },
+        "stores": [],
+        "models": [
+          "0x1405336c0",
+          "0x1474d8100"
+        ]
+      },
+      "cloneDistinct": true,
+      "mutableChildrenDistinct": true,
+      "mutatedSourceCollections": [],
+      "cloneUnaffectedBySourceMutation": true,
+      "protocMatch": true
+    },
+    {
+      "kind": "reader-clone",
+      "name": "all-scalars",
+      "wire": "08a081d09101108c81d0910128a481d09101309180808080808080800138fc80d091014002509481d09101588081d091016001f002f480d09101e8099c81d09101e83a9081d09101e83b8881d09101885401f862f880d09101c07df080d09101",
+      "values": {
+        "0xa0": 305397920,
+        "0x8c": 305397900,
+        "0xa4": 305397924,
+        "0x68": 9223372036854775825,
+        "0x7c": 305397884,
+        "0x98": 2,
+        "0x94": 305397908,
+        "0x80": 305397888,
+        "0x84": true,
+        "0x74": 305397876,
+        "0x9c": 305397916,
+        "0x90": 305397904,
+        "0x88": 305397896,
+        "0x85": true,
+        "0x78": 305397880,
+        "0x70": 305397872
+      },
+      "result": {
+        "wire": "08a081d09101108c81d0910128a481d09101309180808080808080800138fc80d091014002509481d09101588081d091016001f002f480d09101e8099c81d09101e83a9081d09101e83b8881d09101885401f862f880d09101c07df080d09101",
+        "constructorDefaults": {
+          "rawStoredScalars": {
+            "0x68": 44592,
+            "0x70": 4294965939,
+            "0x74": 4294965485,
+            "0x78": 84312,
+            "0x7c": 4294906398,
+            "0x80": 4294941180,
+            "0x84": 0,
+            "0x85": 0,
+            "0x88": 4294945885,
+            "0x8c": 51452,
+            "0x90": 66462,
+            "0x94": 34696,
+            "0x98": 0,
+            "0x9c": 34963,
+            "0xa0": 9715,
+            "0xa4": 4294965886
+          },
+          "positionFloat32Bits": {
+            "0x18": null,
+            "0x28": null,
+            "0x30": null,
+            "0x40": null,
+            "0x48": null,
+            "0x50": null,
+            "0x58": null,
+            "0x60": null
+          },
+          "repeatedUint32": [],
+          "stringUTF8Hex": ""
+        },
+        "storedObject": {
+          "rawStoredScalars": {
+            "0x68": 9223372036854775825,
+            "0x70": 305397872,
+            "0x74": 305397876,
+            "0x78": 305397880,
+            "0x7c": 305397884,
+            "0x80": 305397888,
+            "0x84": 1,
+            "0x85": 1,
+            "0x88": 305397896,
+            "0x8c": 305397900,
+            "0x90": 305397904,
+            "0x94": 305397908,
+            "0x98": 2,
+            "0x9c": 305397916,
+            "0xa0": 305397920,
+            "0xa4": 305397924
+          },
+          "positionFloat32Bits": {
+            "0x18": null,
+            "0x28": null,
+            "0x30": null,
+            "0x40": null,
+            "0x48": null,
+            "0x50": null,
+            "0x58": null,
+            "0x60": null
+          },
+          "repeatedUint32": [],
+          "stringUTF8Hex": ""
+        },
+        "stores": [
+          {
+            "typeIndex": 46311,
+            "objectOffset": 160,
+            "size": 4,
+            "key": 8,
+            "value": 305397920,
+            "source": "0x15a444580"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 140,
+            "size": 4,
+            "key": 16,
+            "value": 305397900,
+            "source": "0x15a47fb06"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 164,
+            "size": 4,
+            "key": 40,
+            "value": 305397924,
+            "source": "0x15a4106ed"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 104,
+            "size": 8,
+            "key": 48,
+            "value": 9223372036854775825,
+            "source": "0x15a42fe64"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 124,
+            "size": 4,
+            "key": 56,
+            "value": 305397884,
+            "source": "0x15a490213"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 152,
+            "size": 4,
+            "key": 64,
+            "value": 2,
+            "source": "0x15a40d54e"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 148,
+            "size": 4,
+            "key": 80,
+            "value": 305397908,
+            "source": "0x15a3d826f"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 128,
+            "size": 4,
+            "key": 88,
+            "value": 305397888,
+            "source": "0x15a465382"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 132,
+            "size": 1,
+            "key": 96,
+            "value": 1,
+            "source": "0x15a3ed8da"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 116,
+            "size": 4,
+            "key": 368,
+            "value": 305397876,
+            "source": "0x15a3f6beb"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 156,
+            "size": 4,
+            "key": 1256,
+            "value": 305397916,
+            "source": "0x15a3ef9f1"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 144,
+            "size": 4,
+            "key": 7528,
+            "value": 305397904,
+            "source": "0x15a45ead6"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 136,
+            "size": 4,
+            "key": 7656,
+            "value": 305397896,
+            "source": "0x15a4399b3"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 133,
+            "size": 1,
+            "key": 10760,
+            "value": 1,
+            "source": "0x15a414a4a"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 120,
+            "size": 4,
+            "key": 12664,
+            "value": 305397880,
+            "source": "0x15a47b73d"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 112,
+            "size": 4,
+            "key": 16064,
+            "value": 305397872,
+            "source": "0x15a4122bb"
+          }
+        ],
+        "models": [
+          "0x1405336c0",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100"
+        ]
+      },
+      "cloneDistinct": true,
+      "mutableChildrenDistinct": true,
+      "mutatedSourceCollections": [],
+      "cloneUnaffectedBySourceMutation": true,
+      "protocMatch": true
+    },
+    {
+      "kind": "reader-clone",
+      "name": "scalar-boundaries",
+      "wire": "08ffffffff0f10ffffffff0f28ffffffff0f30ffffffffffffffffff0138ffffffff0f40ffffffffffffffffff0150ffffffff0f58ffffffff0f6001f002ffffffff0fe809ffffffff0fe83affffffff0fe83bffffffff0f885401f862ffffffff0fc07dffffffff0f",
+      "values": {
+        "0xa0": 4294967295,
+        "0x8c": 4294967295,
+        "0xa4": 4294967295,
+        "0x68": 18446744073709551615,
+        "0x7c": 4294967295,
+        "0x98": -1,
+        "0x94": 4294967295,
+        "0x80": 4294967295,
+        "0x84": true,
+        "0x74": 4294967295,
+        "0x9c": 4294967295,
+        "0x90": 4294967295,
+        "0x88": 4294967295,
+        "0x85": true,
+        "0x78": 4294967295,
+        "0x70": 4294967295
+      },
+      "result": {
+        "wire": "08ffffffff0f10ffffffff0f28ffffffff0f30ffffffffffffffffff0138ffffffff0f40ffffffffffffffffff0150ffffffff0f58ffffffff0f6001f002ffffffff0fe809ffffffff0fe83affffffff0fe83bffffffff0f885401f862ffffffff0fc07dffffffff0f",
+        "constructorDefaults": {
+          "rawStoredScalars": {
+            "0x68": 44592,
+            "0x70": 4294965939,
+            "0x74": 4294965485,
+            "0x78": 84312,
+            "0x7c": 4294906398,
+            "0x80": 4294941180,
+            "0x84": 0,
+            "0x85": 0,
+            "0x88": 4294945885,
+            "0x8c": 51452,
+            "0x90": 66462,
+            "0x94": 34696,
+            "0x98": 0,
+            "0x9c": 34963,
+            "0xa0": 9715,
+            "0xa4": 4294965886
+          },
+          "positionFloat32Bits": {
+            "0x18": null,
+            "0x28": null,
+            "0x30": null,
+            "0x40": null,
+            "0x48": null,
+            "0x50": null,
+            "0x58": null,
+            "0x60": null
+          },
+          "repeatedUint32": [],
+          "stringUTF8Hex": ""
+        },
+        "storedObject": {
+          "rawStoredScalars": {
+            "0x68": 18446744073709551615,
+            "0x70": 4294967295,
+            "0x74": 4294967295,
+            "0x78": 4294967295,
+            "0x7c": 4294967295,
+            "0x80": 4294967295,
+            "0x84": 1,
+            "0x85": 1,
+            "0x88": 4294967295,
+            "0x8c": 4294967295,
+            "0x90": 4294967295,
+            "0x94": 4294967295,
+            "0x98": 4294967295,
+            "0x9c": 4294967295,
+            "0xa0": 4294967295,
+            "0xa4": 4294967295
+          },
+          "positionFloat32Bits": {
+            "0x18": null,
+            "0x28": null,
+            "0x30": null,
+            "0x40": null,
+            "0x48": null,
+            "0x50": null,
+            "0x58": null,
+            "0x60": null
+          },
+          "repeatedUint32": [],
+          "stringUTF8Hex": ""
+        },
+        "stores": [
+          {
+            "typeIndex": 46311,
+            "objectOffset": 160,
+            "size": 4,
+            "key": 8,
+            "value": 4294967295,
+            "source": "0x15a444580"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 140,
+            "size": 4,
+            "key": 16,
+            "value": 4294967295,
+            "source": "0x15a47fb06"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 164,
+            "size": 4,
+            "key": 40,
+            "value": 4294967295,
+            "source": "0x15a4106ed"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 104,
+            "size": 8,
+            "key": 48,
+            "value": 18446744073709551615,
+            "source": "0x15a42fe64"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 124,
+            "size": 4,
+            "key": 56,
+            "value": 4294967295,
+            "source": "0x15a490213"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 152,
+            "size": 4,
+            "key": 64,
+            "value": 4294967295,
+            "source": "0x15a40d54e"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 148,
+            "size": 4,
+            "key": 80,
+            "value": 4294967295,
+            "source": "0x15a3d826f"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 128,
+            "size": 4,
+            "key": 88,
+            "value": 4294967295,
+            "source": "0x15a465382"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 132,
+            "size": 1,
+            "key": 96,
+            "value": 1,
+            "source": "0x15a3ed8da"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 116,
+            "size": 4,
+            "key": 368,
+            "value": 4294967295,
+            "source": "0x15a3f6beb"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 156,
+            "size": 4,
+            "key": 1256,
+            "value": 4294967295,
+            "source": "0x15a3ef9f1"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 144,
+            "size": 4,
+            "key": 7528,
+            "value": 4294967295,
+            "source": "0x15a45ead6"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 136,
+            "size": 4,
+            "key": 7656,
+            "value": 4294967295,
+            "source": "0x15a4399b3"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 133,
+            "size": 1,
+            "key": 10760,
+            "value": 1,
+            "source": "0x15a414a4a"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 120,
+            "size": 4,
+            "key": 12664,
+            "value": 4294967295,
+            "source": "0x15a47b73d"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 112,
+            "size": 4,
+            "key": 16064,
+            "value": 4294967295,
+            "source": "0x15a4122bb"
+          }
+        ],
+        "models": [
+          "0x1405336c0",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x14751fd30",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100"
+        ]
+      },
+      "cloneDistinct": true,
+      "mutableChildrenDistinct": true,
+      "mutatedSourceCollections": [],
+      "cloneUnaffectedBySourceMutation": true,
+      "protocMatch": true
+    },
+    {
+      "kind": "reader-clone",
+      "name": "unicode-nul",
+      "wire": "aa120be69785e4babaf09f9a8000",
+      "values": {
+        "0x38": "\u65c5\u4eba\ud83d\ude80\u0000"
+      },
+      "result": {
+        "wire": "aa120be69785e4babaf09f9a8000",
+        "constructorDefaults": {
+          "rawStoredScalars": {
+            "0x68": 44592,
+            "0x70": 4294965939,
+            "0x74": 4294965485,
+            "0x78": 84312,
+            "0x7c": 4294906398,
+            "0x80": 4294941180,
+            "0x84": 0,
+            "0x85": 0,
+            "0x88": 4294945885,
+            "0x8c": 51452,
+            "0x90": 66462,
+            "0x94": 34696,
+            "0x98": 0,
+            "0x9c": 34963,
+            "0xa0": 9715,
+            "0xa4": 4294965886
+          },
+          "positionFloat32Bits": {
+            "0x18": null,
+            "0x28": null,
+            "0x30": null,
+            "0x40": null,
+            "0x48": null,
+            "0x50": null,
+            "0x58": null,
+            "0x60": null
+          },
+          "repeatedUint32": [],
+          "stringUTF8Hex": ""
+        },
+        "storedObject": {
+          "rawStoredScalars": {
+            "0x68": 44592,
+            "0x70": 4294965939,
+            "0x74": 4294965485,
+            "0x78": 84312,
+            "0x7c": 4294906398,
+            "0x80": 4294941180,
+            "0x84": 0,
+            "0x85": 0,
+            "0x88": 4294945885,
+            "0x8c": 51452,
+            "0x90": 66462,
+            "0x94": 34696,
+            "0x98": 0,
+            "0x9c": 34963,
+            "0xa0": 9715,
+            "0xa4": 4294965886
+          },
+          "positionFloat32Bits": {
+            "0x18": null,
+            "0x28": null,
+            "0x30": null,
+            "0x40": null,
+            "0x48": null,
+            "0x50": null,
+            "0x58": null,
+            "0x60": null
+          },
+          "repeatedUint32": [],
+          "stringUTF8Hex": "e69785e4babaf09f9a8000"
+        },
+        "stores": [
+          {
+            "typeIndex": 46311,
+            "objectOffset": 56,
+            "size": 8,
+            "key": 2346,
+            "value": 26071802080,
+            "source": "0x15a4786e8"
+          }
+        ],
+        "models": [
+          "0x1405336c0",
+          "0x1474d8100",
+          "0x147500e70",
+          "0x1474d8100"
+        ]
+      },
+      "cloneDistinct": true,
+      "mutableChildrenDistinct": true,
+      "mutatedSourceCollections": [],
+      "cloneUnaffectedBySourceMutation": true,
+      "protocMatch": true
+    },
+    {
+      "kind": "reader-clone",
+      "name": "packed-list",
+      "wire": "6a09007f8001ffffffff0f",
+      "values": {
+        "0x20": [
+          0,
+          127,
+          128,
+          4294967295
+        ]
+      },
+      "result": {
+        "wire": "6a09007f8001ffffffff0f",
+        "constructorDefaults": {
+          "rawStoredScalars": {
+            "0x68": 44592,
+            "0x70": 4294965939,
+            "0x74": 4294965485,
+            "0x78": 84312,
+            "0x7c": 4294906398,
+            "0x80": 4294941180,
+            "0x84": 0,
+            "0x85": 0,
+            "0x88": 4294945885,
+            "0x8c": 51452,
+            "0x90": 66462,
+            "0x94": 34696,
+            "0x98": 0,
+            "0x9c": 34963,
+            "0xa0": 9715,
+            "0xa4": 4294965886
+          },
+          "positionFloat32Bits": {
+            "0x18": null,
+            "0x28": null,
+            "0x30": null,
+            "0x40": null,
+            "0x48": null,
+            "0x50": null,
+            "0x58": null,
+            "0x60": null
+          },
+          "repeatedUint32": [],
+          "stringUTF8Hex": ""
+        },
+        "storedObject": {
+          "rawStoredScalars": {
+            "0x68": 44592,
+            "0x70": 4294965939,
+            "0x74": 4294965485,
+            "0x78": 84312,
+            "0x7c": 4294906398,
+            "0x80": 4294941180,
+            "0x84": 0,
+            "0x85": 0,
+            "0x88": 4294945885,
+            "0x8c": 51452,
+            "0x90": 66462,
+            "0x94": 34696,
+            "0x98": 0,
+            "0x9c": 34963,
+            "0xa0": 9715,
+            "0xa4": 4294965886
+          },
+          "positionFloat32Bits": {
+            "0x18": null,
+            "0x28": null,
+            "0x30": null,
+            "0x40": null,
+            "0x48": null,
+            "0x50": null,
+            "0x58": null,
+            "0x60": null
+          },
+          "repeatedUint32": [
+            0,
+            127,
+            128,
+            4294967295
+          ],
+          "stringUTF8Hex": ""
+        },
+        "stores": [],
+        "models": [
+          "0x1405336c0",
+          "0x1474d8100",
+          "0x140514ee0",
+          "0x159c69af0",
+          "0x1474d8100"
+        ]
+      },
+      "cloneDistinct": true,
+      "mutableChildrenDistinct": true,
+      "mutatedSourceCollections": [
+        "uint32-list"
+      ],
+      "cloneUnaffectedBySourceMutation": true,
+      "protocMatch": true
+    },
+    {
+      "kind": "reader-clone",
+      "name": "nonempty-positions",
+      "wire": "720f0d0000a03f15000020c01d000070407a051d20008047da2f050d008000c3",
+      "values": {
+        "0x18": {
+          "24": 1.25,
+          "28": 3.75,
+          "32": -2.5
+        },
+        "0x30": {
+          "24": -128.5
+        },
+        "0x50": {
+          "28": 65536.25
+        }
+      },
+      "result": {
+        "wire": "720f0d0000a03f15000020c01d000070407a051d20008047da2f050d008000c3",
+        "constructorDefaults": {
+          "rawStoredScalars": {
+            "0x68": 44592,
+            "0x70": 4294965939,
+            "0x74": 4294965485,
+            "0x78": 84312,
+            "0x7c": 4294906398,
+            "0x80": 4294941180,
+            "0x84": 0,
+            "0x85": 0,
+            "0x88": 4294945885,
+            "0x8c": 51452,
+            "0x90": 66462,
+            "0x94": 34696,
+            "0x98": 0,
+            "0x9c": 34963,
+            "0xa0": 9715,
+            "0xa4": 4294965886
+          },
+          "positionFloat32Bits": {
+            "0x18": null,
+            "0x28": null,
+            "0x30": null,
+            "0x40": null,
+            "0x48": null,
+            "0x50": null,
+            "0x58": null,
+            "0x60": null
+          },
+          "repeatedUint32": [],
+          "stringUTF8Hex": ""
+        },
+        "storedObject": {
+          "rawStoredScalars": {
+            "0x68": 44592,
+            "0x70": 4294965939,
+            "0x74": 4294965485,
+            "0x78": 84312,
+            "0x7c": 4294906398,
+            "0x80": 4294941180,
+            "0x84": 0,
+            "0x85": 0,
+            "0x88": 4294945885,
+            "0x8c": 51452,
+            "0x90": 66462,
+            "0x94": 34696,
+            "0x98": 0,
+            "0x9c": 34963,
+            "0xa0": 9715,
+            "0xa4": 4294965886
+          },
+          "positionFloat32Bits": {
+            "0x18": [
+              1067450368,
+              1081081856,
+              3223322624
+            ],
+            "0x28": null,
+            "0x30": [
+              3271589888,
+              0,
+              0
+            ],
+            "0x40": null,
+            "0x48": null,
+            "0x50": [
+              0,
+              1199570976,
+              0
+            ],
+            "0x58": null,
+            "0x60": null
+          },
+          "repeatedUint32": [],
+          "stringUTF8Hex": ""
+        },
+        "stores": [
+          {
+            "typeIndex": 46311,
+            "objectOffset": 24,
+            "size": 8,
+            "key": 114,
+            "value": 26071802080,
+            "source": "0x15a464525"
+          },
+          {
+            "typeIndex": 84343,
+            "objectOffset": 24,
+            "size": 4,
+            "key": 13,
+            "value": 1067450368,
+            "source": "0x154048d98"
+          },
+          {
+            "typeIndex": 84343,
+            "objectOffset": 32,
+            "size": 4,
+            "key": 21,
+            "value": 3223322624,
+            "source": "0x154048da8"
+          },
+          {
+            "typeIndex": 84343,
+            "objectOffset": 28,
+            "size": 4,
+            "key": 29,
+            "value": 1081081856,
+            "source": "0x154048db8"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 80,
+            "size": 8,
+            "key": 122,
+            "value": 26071802592,
+            "source": "0x15a3ed793"
+          },
+          {
+            "typeIndex": 84343,
+            "objectOffset": 28,
+            "size": 4,
+            "key": 29,
+            "value": 1199570976,
+            "source": "0x154048db8"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 48,
+            "size": 8,
+            "key": 6106,
+            "value": 26071803104,
+            "source": "0x15a49b880"
+          },
+          {
+            "typeIndex": 84343,
+            "objectOffset": 24,
+            "size": 4,
+            "key": 13,
+            "value": 3271589888,
+            "source": "0x154048d98"
+          }
+        ],
+        "models": [
+          "0x1405336c0",
+          "0x1474d8100",
+          "0x1405336c0",
+          "0x1474d8100",
+          "0x1474e97e0",
+          "0x1474d8100",
+          "0x1474e97e0",
+          "0x1474d8100",
+          "0x1474e97e0",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1405336c0",
+          "0x1474d8100",
+          "0x1474e97e0",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1405336c0",
+          "0x1474d8100",
+          "0x1474e97e0",
+          "0x1474d8100",
+          "0x1474d8100"
+        ]
+      },
+      "cloneDistinct": true,
+      "mutableChildrenDistinct": true,
+      "mutatedSourceCollections": [
+        "position-0x18",
+        "position-0x50",
+        "position-0x30"
+      ],
+      "cloneUnaffectedBySourceMutation": true,
+      "protocMatch": true
+    },
+    {
+      "kind": "reader-merge",
+      "name": "duplicate-scalar-mixed-list-nested-merge",
+      "wire": "500150ffffffff0f68016a0602ffffffff0f680072050d0000a03f720515000020c0",
+      "result": {
+        "wire": "500150ffffffff0f68016a0602ffffffff0f680072050d0000a03f720515000020c0",
+        "constructorDefaults": {
+          "rawStoredScalars": {
+            "0x68": 44592,
+            "0x70": 4294965939,
+            "0x74": 4294965485,
+            "0x78": 84312,
+            "0x7c": 4294906398,
+            "0x80": 4294941180,
+            "0x84": 0,
+            "0x85": 0,
+            "0x88": 4294945885,
+            "0x8c": 51452,
+            "0x90": 66462,
+            "0x94": 34696,
+            "0x98": 0,
+            "0x9c": 34963,
+            "0xa0": 9715,
+            "0xa4": 4294965886
+          },
+          "positionFloat32Bits": {
+            "0x18": null,
+            "0x28": null,
+            "0x30": null,
+            "0x40": null,
+            "0x48": null,
+            "0x50": null,
+            "0x58": null,
+            "0x60": null
+          },
+          "repeatedUint32": [],
+          "stringUTF8Hex": ""
+        },
+        "storedObject": {
+          "rawStoredScalars": {
+            "0x68": 44592,
+            "0x70": 4294965939,
+            "0x74": 4294965485,
+            "0x78": 84312,
+            "0x7c": 4294906398,
+            "0x80": 4294941180,
+            "0x84": 0,
+            "0x85": 0,
+            "0x88": 4294945885,
+            "0x8c": 51452,
+            "0x90": 66462,
+            "0x94": 4294967295,
+            "0x98": 0,
+            "0x9c": 34963,
+            "0xa0": 9715,
+            "0xa4": 4294965886
+          },
+          "positionFloat32Bits": {
+            "0x18": [
+              1067450368,
+              0,
+              3223322624
+            ],
+            "0x28": null,
+            "0x30": null,
+            "0x40": null,
+            "0x48": null,
+            "0x50": null,
+            "0x58": null,
+            "0x60": null
+          },
+          "repeatedUint32": [
+            1,
+            2,
+            4294967295,
+            0
+          ],
+          "stringUTF8Hex": ""
+        },
+        "stores": [
+          {
+            "typeIndex": 46311,
+            "objectOffset": 148,
+            "size": 4,
+            "key": 80,
+            "value": 1,
+            "source": "0x15a3d826f"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 148,
+            "size": 4,
+            "key": 80,
+            "value": 4294967295,
+            "source": "0x15a3d826f"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 24,
+            "size": 8,
+            "key": 114,
+            "value": 26071802144,
+            "source": "0x15a464525"
+          },
+          {
+            "typeIndex": 84343,
+            "objectOffset": 24,
+            "size": 4,
+            "key": 13,
+            "value": 1067450368,
+            "source": "0x154048d98"
+          },
+          {
+            "typeIndex": 84343,
+            "objectOffset": 32,
+            "size": 4,
+            "key": 21,
+            "value": 3223322624,
+            "source": "0x154048da8"
+          }
+        ],
+        "models": [
+          "0x1405336c0",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x140514ee0",
+          "0x159c69af0",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1405336c0",
+          "0x1474d8100",
+          "0x1474e97e0",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474e97e0",
+          "0x1474d8100",
+          "0x1474d8100"
+        ]
+      }
+    },
+    {
+      "kind": "reader-merge",
+      "name": "wrong-wire-and-maximum-unknown-tag",
+      "wire": "520178f8ffffff0f80808080808080808001",
+      "result": {
+        "wire": "520178f8ffffff0f80808080808080808001",
+        "constructorDefaults": {
+          "rawStoredScalars": {
+            "0x68": 44592,
+            "0x70": 4294965939,
+            "0x74": 4294965485,
+            "0x78": 84312,
+            "0x7c": 4294906398,
+            "0x80": 4294941180,
+            "0x84": 0,
+            "0x85": 0,
+            "0x88": 4294945885,
+            "0x8c": 51452,
+            "0x90": 66462,
+            "0x94": 34696,
+            "0x98": 0,
+            "0x9c": 34963,
+            "0xa0": 9715,
+            "0xa4": 4294965886
+          },
+          "positionFloat32Bits": {
+            "0x18": null,
+            "0x28": null,
+            "0x30": null,
+            "0x40": null,
+            "0x48": null,
+            "0x50": null,
+            "0x58": null,
+            "0x60": null
+          },
+          "repeatedUint32": [],
+          "stringUTF8Hex": ""
+        },
+        "storedObject": {
+          "rawStoredScalars": {
+            "0x68": 44592,
+            "0x70": 4294965939,
+            "0x74": 4294965485,
+            "0x78": 84312,
+            "0x7c": 4294906398,
+            "0x80": 4294941180,
+            "0x84": 0,
+            "0x85": 0,
+            "0x88": 4294945885,
+            "0x8c": 51452,
+            "0x90": 66462,
+            "0x94": 34696,
+            "0x98": 0,
+            "0x9c": 34963,
+            "0xa0": 9715,
+            "0xa4": 4294965886
+          },
+          "positionFloat32Bits": {
+            "0x18": null,
+            "0x28": null,
+            "0x30": null,
+            "0x40": null,
+            "0x48": null,
+            "0x50": null,
+            "0x58": null,
+            "0x60": null
+          },
+          "repeatedUint32": [],
+          "stringUTF8Hex": ""
+        },
+        "stores": [],
+        "models": [
+          "0x1405336c0",
+          "0x1474d8100",
+          "0x1474d7bb0",
+          "0x1474d8100",
+          "0x1474d7bb0",
+          "0x1474d8100"
+        ]
+      }
+    },
+    {
+      "kind": "reader-merge",
+      "name": "explicit-wire-zero-replaces-encoded-constructor-defaults",
+      "wire": "080010002800300038004000500058006000f00200e80900e83a00e83b00885400f86200c07d00",
+      "result": {
+        "wire": "080010002800300038004000500058006000f00200e80900e83a00e83b00885400f86200c07d00",
+        "constructorDefaults": {
+          "rawStoredScalars": {
+            "0x68": 44592,
+            "0x70": 4294965939,
+            "0x74": 4294965485,
+            "0x78": 84312,
+            "0x7c": 4294906398,
+            "0x80": 4294941180,
+            "0x84": 0,
+            "0x85": 0,
+            "0x88": 4294945885,
+            "0x8c": 51452,
+            "0x90": 66462,
+            "0x94": 34696,
+            "0x98": 0,
+            "0x9c": 34963,
+            "0xa0": 9715,
+            "0xa4": 4294965886
+          },
+          "positionFloat32Bits": {
+            "0x18": null,
+            "0x28": null,
+            "0x30": null,
+            "0x40": null,
+            "0x48": null,
+            "0x50": null,
+            "0x58": null,
+            "0x60": null
+          },
+          "repeatedUint32": [],
+          "stringUTF8Hex": ""
+        },
+        "storedObject": {
+          "rawStoredScalars": {
+            "0x68": 0,
+            "0x70": 0,
+            "0x74": 0,
+            "0x78": 0,
+            "0x7c": 0,
+            "0x80": 0,
+            "0x84": 0,
+            "0x85": 0,
+            "0x88": 0,
+            "0x8c": 0,
+            "0x90": 0,
+            "0x94": 0,
+            "0x98": 0,
+            "0x9c": 0,
+            "0xa0": 0,
+            "0xa4": 0
+          },
+          "positionFloat32Bits": {
+            "0x18": null,
+            "0x28": null,
+            "0x30": null,
+            "0x40": null,
+            "0x48": null,
+            "0x50": null,
+            "0x58": null,
+            "0x60": null
+          },
+          "repeatedUint32": [],
+          "stringUTF8Hex": ""
+        },
+        "stores": [
+          {
+            "typeIndex": 46311,
+            "objectOffset": 160,
+            "size": 4,
+            "key": 8,
+            "value": 0,
+            "source": "0x15a444580"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 140,
+            "size": 4,
+            "key": 16,
+            "value": 0,
+            "source": "0x15a47fb06"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 164,
+            "size": 4,
+            "key": 40,
+            "value": 0,
+            "source": "0x15a4106ed"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 104,
+            "size": 8,
+            "key": 48,
+            "value": 0,
+            "source": "0x15a42fe64"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 124,
+            "size": 4,
+            "key": 56,
+            "value": 0,
+            "source": "0x15a490213"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 152,
+            "size": 4,
+            "key": 64,
+            "value": 0,
+            "source": "0x15a40d54e"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 148,
+            "size": 4,
+            "key": 80,
+            "value": 0,
+            "source": "0x15a3d826f"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 128,
+            "size": 4,
+            "key": 88,
+            "value": 0,
+            "source": "0x15a465382"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 132,
+            "size": 1,
+            "key": 96,
+            "value": 0,
+            "source": "0x15a3ed8da"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 116,
+            "size": 4,
+            "key": 368,
+            "value": 0,
+            "source": "0x15a3f6beb"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 156,
+            "size": 4,
+            "key": 1256,
+            "value": 0,
+            "source": "0x15a3ef9f1"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 144,
+            "size": 4,
+            "key": 7528,
+            "value": 0,
+            "source": "0x15a45ead6"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 136,
+            "size": 4,
+            "key": 7656,
+            "value": 0,
+            "source": "0x15a4399b3"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 133,
+            "size": 1,
+            "key": 10760,
+            "value": 0,
+            "source": "0x15a414a4a"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 120,
+            "size": 4,
+            "key": 12664,
+            "value": 0,
+            "source": "0x15a47b73d"
+          },
+          {
+            "typeIndex": 46311,
+            "objectOffset": 112,
+            "size": 4,
+            "key": 16064,
+            "value": 0,
+            "source": "0x15a4122bb"
+          }
+        ],
+        "models": [
+          "0x1405336c0",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x14751fd30",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x1474d8100",
+          "0x14751fd30",
+          "0x1474d8100",
+          "0x14751fd30",
+          "0x1474d8100"
+        ]
+      }
+    },
+    {
+      "kind": "reader-rejection",
+      "name": "varint-truncated",
+      "wire": "5080",
+      "error": "0x14751fd30: Truncated or invalid length",
+      "errorScope": "explicit-wire-or-storage-model"
+    },
+    {
+      "kind": "reader-rejection",
+      "name": "zero-tag",
+      "wire": "00",
+      "error": "0x1474d8100: Unsupported or invalid tag",
+      "errorScope": "explicit-wire-or-storage-model"
+    },
+    {
+      "kind": "reader-rejection",
+      "name": "varint-overflow",
+      "wire": "5080808080808080808080",
+      "error": "0x1509cb2b0: Native error branch: malformed-varint",
+      "errorScope": "native-branch"
+    },
+    {
+      "kind": "reader-rejection",
+      "name": "truncated-string",
+      "wire": "aa1201",
+      "error": "0x147500e70: Truncated or invalid length",
+      "errorScope": "explicit-wire-or-storage-model"
+    },
+    {
+      "kind": "reader-rejection",
+      "name": "truncated-nested",
+      "wire": "72050d00",
+      "error": "0x1474e97e0: Truncated or invalid length",
+      "errorScope": "explicit-wire-or-storage-model"
+    },
+    {
+      "kind": "reader-rejection",
+      "name": "nested-recursion-limit",
+      "wire": "72050d0000a03f",
+      "error": "0x1509cb410: Native error branch: recursion-limit",
+      "errorScope": "native-branch"
+    },
+    {
+      "kind": "reader-rejection",
+      "name": "truncated-packed",
+      "wire": "6a0280",
+      "error": "0x14751fd30: Truncated or invalid length",
+      "errorScope": "explicit-wire-or-storage-model"
+    },
+    {
+      "kind": "network-cache",
+      "name": "waiting-cache",
+      "wire": "388080808008400250ffffffff0f6a08008001ffffffff0f72050d0000a03f",
+      "trace": {
+        "entry": "0x1507ad6f0",
+        "stop": "0x1507ad859",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x612002f20",
+          "rdx": "0x610000000"
+        },
+        "instructions": 594,
+        "nativePathSHA256": "251624816a50ea01470656442a6d62700bced7d79f9df4ba36877cfc894c7faf",
+        "executedAddresses": null,
+        "models": [
+          "0x1531fdb80",
+          "0x14d581600",
+          "0x1405336c0",
+          "0x14051a870",
+          "0x1405336c0",
+          "0x140514ee0",
+          "0x159c69af0",
+          "0x159c69af0",
+          "0x1405336c0",
+          "0x14051a870"
+        ]
+      },
+      "logs": [
+        50090
+      ],
+      "queries": [
+        {
+          "kind": "feature",
+          "key": 6939,
+          "value": false
+        }
+      ],
+      "argumentObservations": [
+        {
+          "entry": "0x1507ad6f0",
+          "originalPointer": true
+        },
+        {
+          "entry": "0x14cd67260",
+          "originalPointer": true
+        },
+        {
+          "entry": "0x152386c00",
+          "originalPointer": true
+        }
+      ],
+      "executedNativeEntries": [
+        "0x1507ad6f0",
+        "0x1507b32d0",
+        "0x14cd67260",
+        "0x152387890",
+        "0x152386c00",
+        "0x152386cb0",
+        "0x158db7cd0"
+      ],
+      "wrapped": false,
+      "nullMessage": false,
+      "senderEnabled": true,
+      "bornPresent": true,
+      "initialBornFlags": [
+        1,
+        0
+      ],
+      "finalBornFlags": [
+        1,
+        0
+      ],
+      "uiState": 0,
+      "cachedCloneDistinct": true,
+      "cachedEqualsReader": true,
+      "senderD0": 47257,
+      "network1d0": 2147544550,
+      "raw94": 4294967295,
+      "raw7c": 2147483648,
+      "identityMode": null
+    },
+    {
+      "kind": "network-cache",
+      "name": "media-ready",
+      "wire": "388080808008400250ffffffff0f6a08008001ffffffff0f72050d0000a03f",
+      "trace": {
+        "entry": "0x1507ad6f0",
+        "stop": "0x14c8ae9a0",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x612002f20",
+          "rdx": "0x610000000"
+        },
+        "instructions": 604,
+        "nativePathSHA256": "6510dc5a694e58d575347fadbea652ac1ca64876aa77fd7867f9d18c1749bc6b",
+        "executedAddresses": null,
+        "models": [
+          "0x1531fdb80",
+          "0x14d581600",
+          "0x1405336c0",
+          "0x14051a870",
+          "0x1405336c0",
+          "0x140514ee0",
+          "0x159c69af0",
+          "0x159c69af0",
+          "0x1405336c0",
+          "0x14051a870"
+        ]
+      },
+      "logs": [
+        50090
+      ],
+      "queries": [
+        {
+          "kind": "feature",
+          "key": 6939,
+          "value": false
+        }
+      ],
+      "argumentObservations": [
+        {
+          "entry": "0x1507ad6f0",
+          "originalPointer": true
+        },
+        {
+          "entry": "0x14cd67260",
+          "originalPointer": true
+        },
+        {
+          "entry": "0x152386c00",
+          "originalPointer": true
+        }
+      ],
+      "executedNativeEntries": [
+        "0x1507ad6f0",
+        "0x1507b32d0",
+        "0x14cd67260",
+        "0x152387890",
+        "0x152386c00",
+        "0x152386cb0",
+        "0x158db7cd0"
+      ],
+      "wrapped": false,
+      "nullMessage": false,
+      "senderEnabled": true,
+      "bornPresent": true,
+      "initialBornFlags": [
+        1,
+        1
+      ],
+      "finalBornFlags": [
+        0,
+        0
+      ],
+      "uiState": 3,
+      "cachedCloneDistinct": true,
+      "cachedEqualsReader": true,
+      "senderD0": 47257,
+      "network1d0": 2147544550,
+      "raw94": 4294967295,
+      "raw7c": 2147483648,
+      "identityMode": 10
+    },
+    {
+      "kind": "network-cache",
+      "name": "born-inactive",
+      "wire": "388080808008400250ffffffff0f6a08008001ffffffff0f72050d0000a03f",
+      "trace": {
+        "entry": "0x1507ad6f0",
+        "stop": "0x14c8ae9a0",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x612002f20",
+          "rdx": "0x610000000"
+        },
+        "instructions": 125,
+        "nativePathSHA256": "d1ba2c6695537921dc24ef561e80e6ae46797cfdd03b5f70b88b055f050a2e07",
+        "executedAddresses": null,
+        "models": [
+          "0x1531fdb80",
+          "0x14d581600"
+        ]
+      },
+      "logs": [
+        50090
+      ],
+      "queries": [
+        {
+          "kind": "feature",
+          "key": 6939,
+          "value": false
+        }
+      ],
+      "argumentObservations": [
+        {
+          "entry": "0x1507ad6f0",
+          "originalPointer": true
+        },
+        {
+          "entry": "0x14cd67260",
+          "originalPointer": true
+        }
+      ],
+      "executedNativeEntries": [
+        "0x1507ad6f0",
+        "0x1507b32d0",
+        "0x14cd67260"
+      ],
+      "wrapped": false,
+      "nullMessage": false,
+      "senderEnabled": true,
+      "bornPresent": true,
+      "initialBornFlags": [
+        0,
+        0
+      ],
+      "finalBornFlags": [
+        0,
+        0
+      ],
+      "uiState": 0,
+      "cachedCloneDistinct": false,
+      "cachedEqualsReader": false,
+      "senderD0": 47257,
+      "network1d0": 2147544550,
+      "raw94": 4294967295,
+      "raw7c": 2147483648,
+      "identityMode": 10
+    },
+    {
+      "kind": "network-cache",
+      "name": "born-absent",
+      "wire": "388080808008400250ffffffff0f6a08008001ffffffff0f72050d0000a03f",
+      "trace": {
+        "entry": "0x1507ad6f0",
+        "stop": "0x14c8ae9a0",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x612002f20",
+          "rdx": "0x610000000"
+        },
+        "instructions": 123,
+        "nativePathSHA256": "7093c70169bd0fa327f0e6db0e85c930b0ebbf99fb8a2170641d965e089ce219",
+        "executedAddresses": null,
+        "models": [
+          "0x1531fdb80",
+          "0x14d581600"
+        ]
+      },
+      "logs": [
+        50090
+      ],
+      "queries": [
+        {
+          "kind": "feature",
+          "key": 6939,
+          "value": false
+        }
+      ],
+      "argumentObservations": [
+        {
+          "entry": "0x1507ad6f0",
+          "originalPointer": true
+        },
+        {
+          "entry": "0x14cd67260",
+          "originalPointer": true
+        }
+      ],
+      "executedNativeEntries": [
+        "0x1507ad6f0",
+        "0x1507b32d0",
+        "0x14cd67260"
+      ],
+      "wrapped": false,
+      "nullMessage": false,
+      "senderEnabled": true,
+      "bornPresent": false,
+      "initialBornFlags": [
+        1,
+        0
+      ],
+      "finalBornFlags": [
+        1,
+        0
+      ],
+      "uiState": 0,
+      "cachedCloneDistinct": false,
+      "cachedEqualsReader": false,
+      "senderD0": 47257,
+      "network1d0": 2147544550,
+      "raw94": 4294967295,
+      "raw7c": 2147483648,
+      "identityMode": 10
+    },
+    {
+      "kind": "network-cache",
+      "name": "feature-on",
+      "wire": "388080808008400250ffffffff0f6a08008001ffffffff0f72050d0000a03f",
+      "trace": {
+        "entry": "0x1507ad6f0",
+        "stop": "0x1507ad859",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x612002f20",
+          "rdx": "0x610000000"
+        },
+        "instructions": 578,
+        "nativePathSHA256": "62ca213b76cfb66c728a97fd716cf0e0a9e891d0c1424a92a7c87e6dea68a869",
+        "executedAddresses": null,
+        "models": [
+          "0x1531fdb80",
+          "0x14d581600",
+          "0x1405336c0",
+          "0x14051a870",
+          "0x1405336c0",
+          "0x140514ee0",
+          "0x159c69af0",
+          "0x159c69af0",
+          "0x1405336c0",
+          "0x14051a870"
+        ]
+      },
+      "logs": [
+        50090
+      ],
+      "queries": [
+        {
+          "kind": "feature",
+          "key": 6939,
+          "value": true
+        }
+      ],
+      "argumentObservations": [
+        {
+          "entry": "0x1507ad6f0",
+          "originalPointer": true
+        },
+        {
+          "entry": "0x14cd67260",
+          "originalPointer": true
+        },
+        {
+          "entry": "0x152386c00",
+          "originalPointer": true
+        }
+      ],
+      "executedNativeEntries": [
+        "0x1507ad6f0",
+        "0x1507b32d0",
+        "0x14cd67260",
+        "0x152387890",
+        "0x152386c00",
+        "0x152386cb0",
+        "0x158db7cd0"
+      ],
+      "wrapped": false,
+      "nullMessage": false,
+      "senderEnabled": true,
+      "bornPresent": true,
+      "initialBornFlags": [
+        1,
+        0
+      ],
+      "finalBornFlags": [
+        1,
+        0
+      ],
+      "uiState": 0,
+      "cachedCloneDistinct": true,
+      "cachedEqualsReader": true,
+      "senderD0": 47257,
+      "network1d0": 2147544550,
+      "raw94": 4294967295,
+      "raw7c": 2147483648,
+      "identityMode": null
+    },
+    {
+      "kind": "network-cache",
+      "name": "gate-not-ready",
+      "wire": "388080808008400250ffffffff0f6a08008001ffffffff0f72050d0000a03f",
+      "trace": {
+        "entry": "0x1507ad6f0",
+        "stop": "0x1507ad859",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x612002f20",
+          "rdx": "0x610000000"
+        },
+        "instructions": 612,
+        "nativePathSHA256": "56e7eb8cf11b08f5ea49b466cce0c787e6f97dec7c4a3ca332b709e6f485add9",
+        "executedAddresses": null,
+        "models": [
+          "0x1531fdb80",
+          "0x14d581600",
+          "0x1405336c0",
+          "0x14051a870",
+          "0x1405336c0",
+          "0x140514ee0",
+          "0x159c69af0",
+          "0x159c69af0",
+          "0x1405336c0",
+          "0x14051a870"
+        ]
+      },
+      "logs": [
+        50090
+      ],
+      "queries": [
+        {
+          "kind": "feature",
+          "key": 6939,
+          "value": false
+        }
+      ],
+      "argumentObservations": [
+        {
+          "entry": "0x1507ad6f0",
+          "originalPointer": true
+        },
+        {
+          "entry": "0x14cd67260",
+          "originalPointer": true
+        },
+        {
+          "entry": "0x152386c00",
+          "originalPointer": true
+        }
+      ],
+      "executedNativeEntries": [
+        "0x1507ad6f0",
+        "0x1507b32d0",
+        "0x14cd67260",
+        "0x152387890",
+        "0x152386c00",
+        "0x152386cb0",
+        "0x158db7cd0"
+      ],
+      "wrapped": false,
+      "nullMessage": false,
+      "senderEnabled": true,
+      "bornPresent": true,
+      "initialBornFlags": [
+        1,
+        0
+      ],
+      "finalBornFlags": [
+        1,
+        0
+      ],
+      "uiState": 0,
+      "cachedCloneDistinct": true,
+      "cachedEqualsReader": true,
+      "senderD0": 47257,
+      "network1d0": 2147544550,
+      "raw94": 4294967295,
+      "raw7c": 2147483648,
+      "identityMode": null
+    },
+    {
+      "kind": "network-cache",
+      "name": "gate-id-zero",
+      "wire": "388080808008400250ffffffff0f6a08008001ffffffff0f72050d0000a03f",
+      "trace": {
+        "entry": "0x1507ad6f0",
+        "stop": "0x1507ad859",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x612002f20",
+          "rdx": "0x610000000"
+        },
+        "instructions": 615,
+        "nativePathSHA256": "afafb58a0c224fe59781187c7dfadef5712732ffd42e8f8d0abd57c3b24e61a6",
+        "executedAddresses": null,
+        "models": [
+          "0x1531fdb80",
+          "0x14d581600",
+          "0x1405336c0",
+          "0x14051a870",
+          "0x1405336c0",
+          "0x140514ee0",
+          "0x159c69af0",
+          "0x159c69af0",
+          "0x1405336c0",
+          "0x14051a870"
+        ]
+      },
+      "logs": [
+        50090
+      ],
+      "queries": [
+        {
+          "kind": "feature",
+          "key": 6939,
+          "value": false
+        }
+      ],
+      "argumentObservations": [
+        {
+          "entry": "0x1507ad6f0",
+          "originalPointer": true
+        },
+        {
+          "entry": "0x14cd67260",
+          "originalPointer": true
+        },
+        {
+          "entry": "0x152386c00",
+          "originalPointer": true
+        }
+      ],
+      "executedNativeEntries": [
+        "0x1507ad6f0",
+        "0x1507b32d0",
+        "0x14cd67260",
+        "0x152387890",
+        "0x152386c00",
+        "0x152386cb0",
+        "0x158db7cd0"
+      ],
+      "wrapped": false,
+      "nullMessage": false,
+      "senderEnabled": true,
+      "bornPresent": true,
+      "initialBornFlags": [
+        1,
+        0
+      ],
+      "finalBornFlags": [
+        1,
+        0
+      ],
+      "uiState": 0,
+      "cachedCloneDistinct": true,
+      "cachedEqualsReader": true,
+      "senderD0": 47257,
+      "network1d0": 2147544550,
+      "raw94": 4294967295,
+      "raw7c": 2147483648,
+      "identityMode": null
+    },
+    {
+      "kind": "network-cache",
+      "name": "gate-config-missing",
+      "wire": "388080808008400250ffffffff0f6a08008001ffffffff0f72050d0000a03f",
+      "trace": {
+        "entry": "0x1507ad6f0",
+        "stop": "0x1507ad859",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x612002f20",
+          "rdx": "0x610000000"
+        },
+        "instructions": 624,
+        "nativePathSHA256": "f76c609ced38e30a77e8f337a2d73499b633c4d766b73f740406b85b800c1177",
+        "executedAddresses": null,
+        "models": [
+          "0x1531fdb80",
+          "0x14d581600",
+          "0x14a0e5e40",
+          "0x1405336c0",
+          "0x14051a870",
+          "0x1405336c0",
+          "0x140514ee0",
+          "0x159c69af0",
+          "0x159c69af0",
+          "0x1405336c0",
+          "0x14051a870"
+        ]
+      },
+      "logs": [
+        50090
+      ],
+      "queries": [
+        {
+          "kind": "feature",
+          "key": 6939,
+          "value": false
+        },
+        {
+          "kind": "config",
+          "key": 7,
+          "value": null
+        }
+      ],
+      "argumentObservations": [
+        {
+          "entry": "0x1507ad6f0",
+          "originalPointer": true
+        },
+        {
+          "entry": "0x14cd67260",
+          "originalPointer": true
+        },
+        {
+          "entry": "0x152386c00",
+          "originalPointer": true
+        }
+      ],
+      "executedNativeEntries": [
+        "0x1507ad6f0",
+        "0x1507b32d0",
+        "0x14cd67260",
+        "0x152387890",
+        "0x152386c00",
+        "0x152386cb0",
+        "0x158db7cd0"
+      ],
+      "wrapped": false,
+      "nullMessage": false,
+      "senderEnabled": true,
+      "bornPresent": true,
+      "initialBornFlags": [
+        1,
+        0
+      ],
+      "finalBornFlags": [
+        1,
+        0
+      ],
+      "uiState": 0,
+      "cachedCloneDistinct": true,
+      "cachedEqualsReader": true,
+      "senderD0": 47257,
+      "network1d0": 2147544550,
+      "raw94": 4294967295,
+      "raw7c": 2147483648,
+      "identityMode": null
+    },
+    {
+      "kind": "network-cache",
+      "name": "gate-config-other",
+      "wire": "388080808008400250ffffffff0f6a08008001ffffffff0f72050d0000a03f",
+      "trace": {
+        "entry": "0x1507ad6f0",
+        "stop": "0x1507ad859",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x612002f20",
+          "rdx": "0x610000000"
+        },
+        "instructions": 641,
+        "nativePathSHA256": "c601051f5f9654deb797cbd75ad38e2619a6484c97b5348b55aaf98627bafb4f",
+        "executedAddresses": null,
+        "models": [
+          "0x1531fdb80",
+          "0x14d581600",
+          "0x14a0e5e40",
+          "0x1405336c0",
+          "0x14051a870",
+          "0x1405336c0",
+          "0x140514ee0",
+          "0x159c69af0",
+          "0x159c69af0",
+          "0x1405336c0",
+          "0x14051a870"
+        ]
+      },
+      "logs": [
+        50090
+      ],
+      "queries": [
+        {
+          "kind": "feature",
+          "key": 6939,
+          "value": false
+        },
+        {
+          "kind": "config",
+          "key": 7,
+          "value": 104
+        }
+      ],
+      "argumentObservations": [
+        {
+          "entry": "0x1507ad6f0",
+          "originalPointer": true
+        },
+        {
+          "entry": "0x14cd67260",
+          "originalPointer": true
+        },
+        {
+          "entry": "0x152386c00",
+          "originalPointer": true
+        }
+      ],
+      "executedNativeEntries": [
+        "0x1507ad6f0",
+        "0x1507b32d0",
+        "0x14cd67260",
+        "0x152387890",
+        "0x152386c00",
+        "0x152386cb0",
+        "0x158db7cd0"
+      ],
+      "wrapped": false,
+      "nullMessage": false,
+      "senderEnabled": true,
+      "bornPresent": true,
+      "initialBornFlags": [
+        1,
+        0
+      ],
+      "finalBornFlags": [
+        1,
+        0
+      ],
+      "uiState": 0,
+      "cachedCloneDistinct": true,
+      "cachedEqualsReader": true,
+      "senderD0": 47257,
+      "network1d0": 2147544550,
+      "raw94": 4294967295,
+      "raw7c": 2147483648,
+      "identityMode": null
+    },
+    {
+      "kind": "network-cache",
+      "name": "gate-config-105-boundary",
+      "wire": "388080808008400250ffffffff0f6a08008001ffffffff0f72050d0000a03f",
+      "trace": {
+        "entry": "0x1507ad6f0",
+        "stop": "0x1507b3490",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x612002f20",
+          "rdx": "0x610000000"
+        },
+        "instructions": 119,
+        "nativePathSHA256": "45379b42952c04e955c796e7fa190acb435c5a8a10bc8be748faf1c7bfac76bc",
+        "executedAddresses": null,
+        "models": [
+          "0x1531fdb80",
+          "0x14d581600",
+          "0x14a0e5e40"
+        ]
+      },
+      "logs": [
+        50090
+      ],
+      "queries": [
+        {
+          "kind": "feature",
+          "key": 6939,
+          "value": false
+        },
+        {
+          "kind": "config",
+          "key": 7,
+          "value": 105
+        }
+      ],
+      "argumentObservations": [
+        {
+          "entry": "0x1507ad6f0",
+          "originalPointer": true
+        }
+      ],
+      "executedNativeEntries": [
+        "0x1507ad6f0",
+        "0x1507b32d0"
+      ],
+      "wrapped": false,
+      "nullMessage": false,
+      "senderEnabled": true,
+      "bornPresent": true,
+      "initialBornFlags": [
+        1,
+        0
+      ],
+      "finalBornFlags": [
+        1,
+        0
+      ],
+      "uiState": 0,
+      "cachedCloneDistinct": false,
+      "cachedEqualsReader": false,
+      "senderD0": 0,
+      "network1d0": 0,
+      "raw94": 4294967295,
+      "raw7c": 2147483648,
+      "identityMode": null
+    },
+    {
+      "kind": "network-cache",
+      "name": "sender-disabled",
+      "wire": "388080808008400250ffffffff0f6a08008001ffffffff0f72050d0000a03f",
+      "trace": {
+        "entry": "0x1507ad6f0",
+        "stop": "0x1507ad859",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x612002f20",
+          "rdx": "0x610000000"
+        },
+        "instructions": 591,
+        "nativePathSHA256": "3fbdd993555e8f238ca8999f6a92767a794bc713e64e6af2a399bbf6db50b665",
+        "executedAddresses": null,
+        "models": [
+          "0x1531fdb80",
+          "0x14d581600",
+          "0x1405336c0",
+          "0x14051a870",
+          "0x1405336c0",
+          "0x140514ee0",
+          "0x159c69af0",
+          "0x159c69af0",
+          "0x1405336c0",
+          "0x14051a870"
+        ]
+      },
+      "logs": [
+        50090
+      ],
+      "queries": [
+        {
+          "kind": "feature",
+          "key": 6939,
+          "value": false
+        }
+      ],
+      "argumentObservations": [
+        {
+          "entry": "0x1507ad6f0",
+          "originalPointer": true
+        },
+        {
+          "entry": "0x14cd67260",
+          "originalPointer": true
+        },
+        {
+          "entry": "0x152386c00",
+          "originalPointer": true
+        }
+      ],
+      "executedNativeEntries": [
+        "0x1507ad6f0",
+        "0x1507b32d0",
+        "0x14cd67260",
+        "0x152387890",
+        "0x152386c00",
+        "0x152386cb0",
+        "0x158db7cd0"
+      ],
+      "wrapped": false,
+      "nullMessage": false,
+      "senderEnabled": false,
+      "bornPresent": true,
+      "initialBornFlags": [
+        1,
+        0
+      ],
+      "finalBornFlags": [
+        1,
+        0
+      ],
+      "uiState": 0,
+      "cachedCloneDistinct": true,
+      "cachedEqualsReader": true,
+      "senderD0": 0,
+      "network1d0": 2147544550,
+      "raw94": 4294967295,
+      "raw7c": 2147483648,
+      "identityMode": null
+    },
+    {
+      "kind": "network-cache",
+      "name": "null-message",
+      "wire": "388080808008400250ffffffff0f6a08008001ffffffff0f72050d0000a03f",
+      "trace": {
+        "entry": "0x1507ad6f0",
+        "stop": "0x1507ada79",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x612002f20",
+          "rdx": "0x0"
+        },
+        "instructions": 32,
+        "nativePathSHA256": "89a1ce88a7d1bb3cf7b863401171ae64b63d77be347876d26b9c510323789623",
+        "executedAddresses": null,
+        "models": [
+          "0x1531fdb80"
+        ]
+      },
+      "logs": [
+        50090
+      ],
+      "queries": [],
+      "argumentObservations": [
+        {
+          "entry": "0x1507ad6f0",
+          "originalPointer": false
+        }
+      ],
+      "executedNativeEntries": [
+        "0x1507ad6f0"
+      ],
+      "wrapped": false,
+      "nullMessage": true,
+      "senderEnabled": true,
+      "bornPresent": true,
+      "initialBornFlags": [
+        1,
+        0
+      ],
+      "finalBornFlags": [
+        1,
+        0
+      ],
+      "uiState": 0,
+      "cachedCloneDistinct": false,
+      "cachedEqualsReader": false,
+      "senderD0": 0,
+      "network1d0": 0,
+      "raw94": 4294967295,
+      "raw7c": 2147483648,
+      "identityMode": null
+    },
+    {
+      "kind": "network-cache",
+      "name": "wrapper-absent-context",
+      "wire": "388080808008400250ffffffff0f6a08008001ffffffff0f72050d0000a03f",
+      "trace": {
+        "entry": "0x1507ad120",
+        "stop": "0x1507ad859",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x612002f20",
+          "rdx": "0x610000000"
+        },
+        "instructions": 690,
+        "nativePathSHA256": "e10bfea3a5e7de206cae6cecfdbbc20241b4cba3e0078847a8d59a032af870c8",
+        "executedAddresses": null,
+        "models": [
+          "0x140525c40",
+          "0x159ab12f0",
+          "0x1531fdb80",
+          "0x1531fdb80",
+          "0x14d581600",
+          "0x1405336c0",
+          "0x14051a870",
+          "0x1405336c0",
+          "0x140514ee0",
+          "0x159c69af0",
+          "0x159c69af0",
+          "0x1405336c0",
+          "0x14051a870"
+        ]
+      },
+      "logs": [
+        45993,
+        50090
+      ],
+      "queries": [
+        {
+          "kind": "wrapper-log-argument",
+          "value": 47257
+        },
+        {
+          "kind": "feature",
+          "key": 6939,
+          "value": false
+        }
+      ],
+      "argumentObservations": [
+        {
+          "entry": "0x1507ad6f0",
+          "originalPointer": true
+        },
+        {
+          "entry": "0x14cd67260",
+          "originalPointer": true
+        },
+        {
+          "entry": "0x152386c00",
+          "originalPointer": true
+        }
+      ],
+      "executedNativeEntries": [
+        "0x1507ad120",
+        "0x1507fd7d0",
+        "0x1517113f0",
+        "0x1507ad6f0",
+        "0x1507b32d0",
+        "0x14cd67260",
+        "0x152387890",
+        "0x152386c00",
+        "0x152386cb0",
+        "0x158db7cd0"
+      ],
+      "wrapped": true,
+      "nullMessage": false,
+      "senderEnabled": true,
+      "bornPresent": true,
+      "initialBornFlags": [
+        1,
+        0
+      ],
+      "finalBornFlags": [
+        1,
+        0
+      ],
+      "uiState": 0,
+      "cachedCloneDistinct": true,
+      "cachedEqualsReader": true,
+      "senderD0": 47257,
+      "network1d0": 2147544550,
+      "raw94": 4294967295,
+      "raw7c": 2147483648,
+      "identityMode": null
+    }
+  ]
+}

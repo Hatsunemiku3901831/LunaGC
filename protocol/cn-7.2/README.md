@@ -1,5 +1,7 @@
 # 7.2 三层映射输入
 
+B-02e2新增[scene-wait-observations](scene-wait-observations.json)，见[入场通知/缓存等待](../../docs/CLIENT_72_SCENE_WAIT.md)：27748/46311/PlayerEnterSceneNotify两层身份verified，26外层业务字段全部unknown/unresolved，三float非空/列表/原生clone与明确缓存/前置边界已执行。完整研究305通过，矩阵54输入受hash约束；研究校验通过，ready仍228缺口。没有把wire夹具载体中的opaque bytes当成完整消息schema或生成生产Proto。
+
 E-01b资源输入摘要新增[scene-resource-observations.json](scene-resource-observations.json)，复现与限定范围见[scene3审计](../../docs/CLIENT_72_SCENE_RESOURCES.md)。它只固定资源/读取依赖，不修改任何协议三层状态，resourceReady=false、runtime未验。
 
 E-01c新增[scene-script-observations](scene-script-observations.json)、[scene-grid-script-observations](scene-grid-script-observations.json)与[scene-grid-inline-observations](scene-grid-inline-observations.json)：固定旧实现对7.2实体表，出生块及全64块非dynamic顶层LuaJ实际求值，记录当前fastRequire的407错误和现有inline路径比较、8个garbage缺ID及62个缺成员。用户允许参考7.1迁移，来源仍明确继承；配置未改、生产序列化/触发器未运行。详见[脚本迁移](../../docs/CLIENT_72_SCENE_SCRIPT_MIGRATION.md)，resourceReady/runtime及协议状态均不晋级。
