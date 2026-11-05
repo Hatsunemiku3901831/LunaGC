@@ -226,3 +226,5 @@ V-01b补验：共用本夹具的FurniturePaidStartRecoveryTest原31项中27失�
 2026-11-06 V-01c：加工手册夹具改用真实Player/Item Guard及隔离Mongo，保留原18项断言和同步故障阶段；ProcessPlayer专用库存/标志/回调排除出BSON。新增真实手册进度、产物、未重复扣原料及失败后预留冷读，明确内存进度1而失败确认后的持久进度0，重试仍拒绝重复发放。修复前18项中12失败，现18项全过；与加工队列35、家具96、Player/Item保存保护45、手册领奖27合计221项通过，失败/错误/跳过均0，证据workflow-fixture-test-results/、evidence/workflow-fixture-summary.json及logs/workflow-fixture-regression.log（local/migration72）。原断言未删未放宽；未改生产逻辑，无部署/实机验收。完整Java集未重跑，历史217失败不据此扣减。
 
 2026-11-06 A-03b限定源码复核完成，见[登录管理器与事件依赖](docs/CLIENT_72_LOGIN_DEPENDENCIES.md)。48固定源码、293方法、409边（72人工调用位置/337候选），2868未关联保留；10处插件/替包/异步/脚本/服务开放锚点均未晋级。枚举合成跨度实际复现已修正，A-03a计数不变。14聚焦/254研究回归通过，两次报告/摘要相同。下一项A-03c候选消息/Proto及7.2三层缺口；A-03整体仍待完整闭包/实机。无运行变更、部署或实机调试。
+
+2026-11-06 A-03c限定离线验收完成，见[候选消息/Proto与三层缺口矩阵](docs/CLIENT_72_LOGIN_PROTO_MATRIX.md)：97包构造、148引用/种子、1139文件描述符依赖，缺DoSetPlayerBornDataNotify.proto如实保留。原三层状态及185字段不变；6新增/260研究回归、重复矩阵通过，研究校验0/ready1（213缺口）。V-01b/c经济/保存221项通过；完整Java集未重跑。按用户要求到此停止并交接Astra，下一研究为B-02选人三件组的独立7.2三层证据；A-03整体仍待完整闭包/实机。未改运行文件、未部署或调试。

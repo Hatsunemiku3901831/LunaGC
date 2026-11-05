@@ -37,3 +37,5 @@ python tools/validate_protocol72.py --ready
 14项聚焦检查通过；全研究选集254项通过。检查真实复核产物、两次一致、父表/源码hash漂移、开放边界漂移/禁止晋级、不可达手工边和枚举跨度。没有新增客户端逆向或实机调试，没有改运行代码/主Proto/配置，无部署；V-01b/c的221项Java通过是另一组实际回归，完整Java集未再跑。
 
 两次完整报告和共享摘要逐字节一致。本机`local/migration72/evidence/login-dependencies{,-repeat}.json`、`login-dependency-summary-repeat.json`、`login-dependency-determinism.json`，日志`logs/login-dependencies-{focused,regression}.log`。下一项A-03c消费本报告的来源方法与候选包构造，列出Proto及7.2三层证据缺口；不批准正式生成或运行。
+
+2026-11-06 A-03c限定离线验收完成，见[候选消息/Proto与三层缺口矩阵](CLIENT_72_LOGIN_PROTO_MATRIX.md)：97包构造、148引用/种子、1139文件描述符依赖，缺DoSetPlayerBornDataNotify.proto如实保留。原三层状态及185字段不变；6新增/260研究回归、重复矩阵通过，研究校验0/ready1（213缺口）。V-01b/c经济/保存221项通过；完整Java集未重跑。按用户要求到此停止并交接Astra，下一研究为B-02选人三件组的独立7.2三层证据；A-03整体仍待完整闭包/实机。未改运行文件、未部署或调试。

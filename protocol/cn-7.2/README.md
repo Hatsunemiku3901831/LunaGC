@@ -1,6 +1,6 @@
 # 7.2 三层映射输入
 
-`profile.json` 固定目标版本/渠道与关键输入哈希；`mappings.json` 分别维护 opcodes、messages、schemas 三张表。26个登录/选人/入场种子中，Token/Login各请求响应共4个业务名为candidate；PacketHead、PingReq/PingRsp静态消息角色已确认，业务字段仍逐项保留未知/候选。**空字段列表不代表实际空消息，当前没有完整正式协议。** P0完整闭包未确认，closure保持unresolved。
+`profile.json` 固定目标版本/渠道与关键输入哈希；`mappings.json` 分别维护 opcodes、messages、schemas 三张表。26个登录/选人/入场种子中，Token/Login四个请求响应、PacketHead和PingReq/PingRsp的现有身份层已verified；字段层仍逐项保留未知/候选，完整schema未verified。旧段落为各研究检查点的历史范围，以mappings及最新矩阵为准。**空字段列表不代表实际空消息，当前没有完整正式协议。** P0完整闭包未确认，closure保持unresolved。
 
 每条记录独立保留 status（unresolved/candidate/verified）、evidence、ambiguities。消息表另有方向、别名、runtimeStatus；字段表记录 semanticField/tag/type/cardinality/presence/packed/oneof、nestedType、enumValues或map键值。已验证字段必须写明presence和packed；枚举/嵌套/容器不能只保留一个wire type。
 
@@ -27,3 +27,5 @@ response-leaf-wire-observations.json/response-leaves.proto补充7个独立叶子
 A-04d3c：response-graph.proto是18消息137字段的完整响应研究闭包；response-graph-observations用21条contentBindings补充非空内容证据。map-aot-observations来自目标MethodSpec/函数注册；校验器检查新表与原始字段一致性。native-graph-observed不等于业务verified或实机通过，mappings中的unknown_field保留unresolved，ready继续失败。详见docs/CLIENT_72_GRAPH_READERS.md。
 
 登录业务证据：login-literal-observations.json为4条目标静态日志标记与usage落点；enum-observations.json为7枚举86符号及4个协议字段/oneof关联；login-semantic-observations.json为两个响应身份及20字段来源。详细模型边界见docs/CLIENT_72_LOGIN_SEMANTICS.md。只有有对应来源的字段晋级；两请求配对、其余字段及P0闭包仍未确认，--ready继续失败。
+
+2026-11-06 A-03c限定离线验收完成，见[候选消息/Proto与三层缺口矩阵](../../docs/CLIENT_72_LOGIN_PROTO_MATRIX.md)：97包构造、148引用/种子、1139文件描述符依赖，缺DoSetPlayerBornDataNotify.proto如实保留。原三层状态及185字段不变；6新增/260研究回归、重复矩阵通过，研究校验0/ready1（213缺口）。V-01b/c经济/保存221项通过；完整Java集未重跑。按用户要求到此停止并交接Astra，下一研究为B-02选人三件组的独立7.2三层证据；A-03整体仍待完整闭包/实机。未改运行文件、未部署或调试。
