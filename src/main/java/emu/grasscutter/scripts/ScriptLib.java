@@ -1181,6 +1181,10 @@ public class ScriptLib {
         return posToLua(entity != null ? entity.getRotation() : null);
     }
 
+    public int GetSceneOwnerUid() {
+        return getSceneScriptManager().getScene().getHost().getUid();
+    }
+
     public LuaTable GetSceneUidList() {
         logger.debug("[LUA] Call GetSceneUidList");
 
