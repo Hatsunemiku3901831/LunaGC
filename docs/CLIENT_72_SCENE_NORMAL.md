@@ -51,3 +51,5 @@ python -m unittest tools.test_client72_scene_normal tools.test_client72_scene_wa
 首次独立查找复现`Offline72.run`要求registered base method extent，而此闭合泛型只有PE unwind；修正为使用已核对的精确unwind范围直接执行至返回，不修改共用emulator或放宽全局执行范围。失败日志`logs/scene-normal-final-first.log`保留。本项只有离线工具、测试和文档；没有启动或修改服务、客户端、数据库、资源、配置或补丁，无部署。
 
 下一项可执行工作是核对`153A18E80`声明、原生前置与返回来源，先补明确输入再向后执行；也可独立恢复其余nested内容。仍需完整P0、SDK/补丁/资源与新旧号实机序列，父B-02e、B-02和D-02由主任务独立验收。
+
+主线整合：原draft字节SHA-256 d8a2aaa9…c1914a经固定来源和完整trace validator复核后，原样接入[共享摘要](../protocol/cn-7.2/scene-normal-observations.json)。完整研究327项通过；人工复核研究输入56→58时只新增本摘要与修复后Lua摘要，原矩阵全部三层/源码/Proto/候选/开放边界不变，recover两次一致。B-02e3限定项完成，B-02e4已建卡继续查询；本批未晋级未知业务或实机。

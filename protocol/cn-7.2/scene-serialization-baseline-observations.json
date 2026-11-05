@@ -1,0 +1,301 @@
+{
+  "blocks": 64,
+  "counts": {
+    "blockRectangleIndexesBuilt": 1,
+    "dynamicGroupsSkipped": 4190,
+    "evaluatedGroups": 13616,
+    "gadgetGridInputsUsingAbsentTargetVisionFallback": 52533,
+    "gridInputGroupsCompleted": 13611,
+    "gridInputs.gadgets": 62193,
+    "gridInputs.garbages.gadgets": 11410,
+    "gridInputs.group": 13611,
+    "gridInputs.monsters": 19227,
+    "gridInputs.npcs": 478,
+    "gridInputs.regions": 4328,
+    "groupPositionIndexesBuilt": 64,
+    "initializedSuites": 20862,
+    "objects.SceneConfig": 1,
+    "objects.SceneInitConfig": 13616,
+    "rows.block_rects": 64,
+    "rows.blocks": 64,
+    "rows.gadgets": 62239,
+    "rows.garbages.gadgets": 11410,
+    "rows.groups": 17806,
+    "rows.monsters": 19233,
+    "rows.npcs": 478,
+    "rows.regions": 4330,
+    "rows.suites": 20871,
+    "rows.triggers": 27133,
+    "rows.variables": 5008,
+    "serializedGroups": 13611,
+    "suiteBound.gadgets": 64927,
+    "suiteBound.monsters": 17475,
+    "suiteBound.regions": 4659,
+    "suiteBound.triggers": 29661,
+    "targetGadgetRowsWithVisionLevel": 6770,
+    "targetGadgetRowsWithoutVisionLevel": 24912
+  },
+  "declaredGroups": 17806,
+  "gridLayers": [
+    {
+      "cells": 28639,
+      "groupMemberships": 53274,
+      "layer": 0,
+      "sha256": "13a9bf7fb4b5cc0e1061abc532d0ba286d32e27547dc1a774fb0f7e8f22200bc"
+    },
+    {
+      "cells": 3086,
+      "groupMemberships": 3960,
+      "layer": 1,
+      "sha256": "3857d90d8d79d0f35350612d95d142f86d3fca5cfdd1c82a77f51e1c003ba782"
+    },
+    {
+      "cells": 167,
+      "groupMemberships": 266,
+      "layer": 2,
+      "sha256": "d20f2d2285f5a5bcf968137d297a172dc6f7c44b231bf92343171e84233171d9"
+    },
+    {
+      "cells": 6,
+      "groupMemberships": 17,
+      "layer": 3,
+      "sha256": "10dc9e0348751c21c568f91fe22e6adaf71c6db454905ab159c78054e6fa4687"
+    },
+    {
+      "cells": 2847,
+      "groupMemberships": 3119,
+      "layer": 4,
+      "sha256": "332be629d8a99577a9eeb9faf9b79b21a3d8e84e4618cf31db9cff45a911f5c5"
+    },
+    {
+      "cells": 202,
+      "groupMemberships": 210,
+      "layer": 5,
+      "sha256": "38dc8d0c23e8f2f821259057a9ffdf0886a1ec2501f030ae9c14e264b4fdf813"
+    }
+  ],
+  "ignoredSourceFields": {
+    "SceneGadget.FloorParam": 24,
+    "SceneGadget.arguments": 29,
+    "SceneGadget.autopick": 361,
+    "SceneGadget.cells": 34,
+    "SceneGadget.fishing_areas": 41,
+    "SceneGadget.fishing_id": 41,
+    "SceneGadget.guest_ban_drop": 1,
+    "SceneGadget.isFloor": 24,
+    "SceneGadget.is_enable_interact": 1066,
+    "SceneGadget.is_guest_can_operate": 8,
+    "SceneGadget.is_use_point_array": 868,
+    "SceneGadget.logic_state": 307,
+    "SceneGadget.offering_config": 3,
+    "SceneGadget.oneoff_reset_version": 82,
+    "SceneGadget.server_global_value_config": 348,
+    "SceneGadget.worktop_config": 83,
+    "SceneGroup.across_block": 29,
+    "SceneGroup.activity_revise_level_grow_id": 140,
+    "SceneGroup.area": 17751,
+    "SceneGroup.force_clean_sub_entity": 5,
+    "SceneGroup.force_unload_nodelay": 20,
+    "SceneGroup.garbages.monsters": 654,
+    "SceneGroup.garbages.npcs": 9,
+    "SceneGroup.garbages.regions": 171,
+    "SceneGroup.garbages.triggers": 680,
+    "SceneGroup.group_register_event_type_list": 90,
+    "SceneGroup.group_tag_list": 12,
+    "SceneGroup.is_ignore_world_level_revise": 43,
+    "SceneGroup.is_load_by_vision_type": 1,
+    "SceneGroup.life_cycle": 12,
+    "SceneGroup.limit_drop": 23,
+    "SceneGroup.load_strategy": 136,
+    "SceneGroup.related_level_tag_series_list": 1,
+    "SceneGroup.rely_start_world_level_limit_activity_id": 21,
+    "SceneGroup.unload_when_disconnect": 90,
+    "SceneGroup.vision_type": 3735,
+    "SceneGroup.weathers": 2,
+    "SceneInitConfig.father_quest": 9,
+    "SceneInitConfig.quest_config": 6,
+    "SceneInitConfig.secure_suite_index": 8,
+    "SceneInitConfig.sub_flow_type": 7,
+    "SceneMonster.ban_excel_drop": 33,
+    "SceneMonster.climate_area_id": 1264,
+    "SceneMonster.guest_ban_drop": 16,
+    "SceneMonster.isBlockOneoff": 5,
+    "SceneMonster.isElite": 144,
+    "SceneMonster.isOneoff": 187,
+    "SceneMonster.isPartner": 15,
+    "SceneMonster.logic_state": 323,
+    "SceneMonster.mark_flag": 29,
+    "SceneMonster.oneoff_reset_version": 21,
+    "SceneMonster.persistent": 14,
+    "SceneNPC.pointID": 10,
+    "SceneRegion.ability_group_list": 844,
+    "SceneRegion.team_ability_group_list": 63,
+    "SceneRegion.vision_type_list": 383,
+    "SceneSuite.npcs": 277,
+    "SceneTrigger.forbid_guest": 183,
+    "SceneTrigger.keyWord": 443,
+    "SceneTrigger.keyWordType": 32,
+    "SceneTrigger.tlog_tag": 109,
+    "SceneVar.config_id": 5008,
+    "SceneVar.variable_type": 322
+  },
+  "inputBlobs": [
+    {
+      "gitBlob": "ea71a56a5a1fc7623d87191b79458f8d99f98ecb",
+      "path": "ExcelBinOutput/GadgetExcelConfigData.json",
+      "sha256": "5debe3c457b0fddc5264620aff1a9585cb19f24408a7f1974291244415ee1411",
+      "size": 10437145
+    },
+    {
+      "gitBlob": "0d2d5eb481738cf185d59bd707a33006f020645e",
+      "path": "ExcelBinOutput/MonsterExcelConfigData.json",
+      "sha256": "b0efcdb6bca52eca8c2b89fe2e43f8f5a65bc1596fd250e7ddc375acd92989cc",
+      "size": 5255030
+    },
+    {
+      "gitBlob": "2fbafe717742da7647499d57bd4c905d83ce2397",
+      "path": "ExcelBinOutput/NpcExcelConfigData.json",
+      "sha256": "f2288db07452c3ae95da33c56da03db50760e9b321ce6e997933993c5595d32c",
+      "size": 7726862
+    }
+  ],
+  "issueCounts": {
+    "group-failure": 5,
+    "list-element-type": 30,
+    "missing-target-gadget": 8,
+    "numeric-coercion": 30,
+    "numeric-value-changed": 1210
+  },
+  "issueGroups": 470,
+  "issueManifestSHA256": "0e42ba988a36e1e1d8a1c96916c6d5ddc3a2e750b648f05795a5ad657eea1526",
+  "issuePathCounts": {
+    "group-failure:suites[].init": 5,
+    "list-element-type:suites[].triggers[]": 30,
+    "missing-target-gadget:garbages.gadgets": 8,
+    "numeric-coercion:suites[].triggers[]": 30,
+    "numeric-value-changed:regions[].radius": 1210
+  },
+  "legacyResourceCommit": "dac2a9d43332ef51879522cf39da2831b0ca0543",
+  "legacySourceIsNative72": false,
+  "limitations": [
+    "No ScriptLoader.init, SceneGroup.load, SceneScriptManager, GameData registry, events, cache, server or database",
+    "Grid algorithm transcribed from reviewed source, not a live getGroupGrids invocation",
+    "GadgetData directly Gson-deserialized from fixed target table; absent visionLevel uses existing zero fallback, unknown columns never renamed",
+    "All declared group positions indexed; only non-dynamic group bodies serialized",
+    "No trigger, action, ScriptLib business, region contains, entity spawn, network or client acceptance",
+    "Unknown source fields counted, not assigned new meanings; current constants are not independent CN72 enum evidence"
+  ],
+  "productionInfrastructureInitialized": false,
+  "regionShapeCounts": {
+    "1": 3836,
+    "2": 199,
+    "3": 29,
+    "4": 264
+  },
+  "requireMode": "inline",
+  "resourceReady": false,
+  "reviewedSources": {
+    "src/main/java/emu/grasscutter/Grasscutter.java": "38988046618236e4459d7870bb5b9d6517ae6b0a39f4b2c350044174a18942e8",
+    "src/main/java/emu/grasscutter/data/excels/GadgetData.java": "c8b1a417ee7305f6a1a451bb03f4733644531d2cd61dfb005da21ac0f2599a7e",
+    "src/main/java/emu/grasscutter/game/world/GridPosition.java": "723dceddf949bde958d810a288a9e26d7a37af6685fa35e4e4bca120bef21859",
+    "src/main/java/emu/grasscutter/game/world/Position.java": "157543f5cd3213bc28e1c90b8610e6ebef612bba587dccbf0200c93be1ddc529",
+    "src/main/java/emu/grasscutter/scripts/SceneIndexManager.java": "769a6b3e189c15239e2b805638326a88f3a62b6a3f4b0fe027952db3ab1b75a6",
+    "src/main/java/emu/grasscutter/scripts/SceneScriptManager.java": "e6c707e1eab5d439e6762a25a0591a2c798125d1e95cb3091a72127929b8b89e",
+    "src/main/java/emu/grasscutter/scripts/data/Explore.java": "4b8fbae851eaa5261358305791cf46921db45f081f04058758ad93ab7debdcab",
+    "src/main/java/emu/grasscutter/scripts/data/SceneBlock.java": "77714d52c8212b3bea610af8e73100737fdafafdd90346e64b72c8273822c186",
+    "src/main/java/emu/grasscutter/scripts/data/SceneBossChest.java": "620cd0f0512fd4b0a006e6ed5b163fa017daa8fd2c2acde2ce6c88c0b598c505",
+    "src/main/java/emu/grasscutter/scripts/data/SceneBusiness.java": "6b36ca0975fafd5279e86e37b749b42f627e890b63744ef38c766c2531247dde",
+    "src/main/java/emu/grasscutter/scripts/data/SceneConfig.java": "acb257241a54d3cbf477c19f2310c41317c548a05f2f6a5867f2bfd67a0a14a5",
+    "src/main/java/emu/grasscutter/scripts/data/SceneGadget.java": "fccdee73e1b1da968be909729ace0f7b23d2c7d56b05b9a2fe6418fa8e0144ac",
+    "src/main/java/emu/grasscutter/scripts/data/SceneGadgetCrucibleConfig.java": "80e34cc7f1c44fe3beae9109af5b5e03379daba045821a76f37a121426239f9f",
+    "src/main/java/emu/grasscutter/scripts/data/SceneGarbage.java": "f622d03459dbb7ac3720988cebf14f92911dcca0f996fd949e53a7e28cfc5e71",
+    "src/main/java/emu/grasscutter/scripts/data/SceneGroup.java": "7e899a4457920cdc304a9db55450b8eb20062ab25f127165432abd9f92d44f7e",
+    "src/main/java/emu/grasscutter/scripts/data/SceneInitConfig.java": "43093ddfc327330cf3da73413e7c7e604d72841ba454fea37a4d6ffbe2e368cf",
+    "src/main/java/emu/grasscutter/scripts/data/SceneMeta.java": "4708e0fa2c35dedd64d8af444d8524ac02d42747a475d996f7115b2db575198f",
+    "src/main/java/emu/grasscutter/scripts/data/SceneMonster.java": "ac92ded377141012ab073ae940706acb2b14fc3269305c8972b0ef5f2312c346",
+    "src/main/java/emu/grasscutter/scripts/data/SceneNPC.java": "8f4014aae569f41c002e1c7cc67e3a5d386a0f7f5d0f30972e13ad17fe5c30e6",
+    "src/main/java/emu/grasscutter/scripts/data/SceneObject.java": "e5b7ca6d9868e1a183b5ae2b755a67005d508f88dab9b04b66790181ae452d26",
+    "src/main/java/emu/grasscutter/scripts/data/ScenePoint.java": "c54ce44f5a7d7d7f6cef3f3caa14bae2a7aeb797ca72a263d5a685636e8353aa",
+    "src/main/java/emu/grasscutter/scripts/data/SceneRegion.java": "1fa2ed749d02ad23e4a151bd1aed7e7e7ceba7b212d84b6256a7267a5d0d7737",
+    "src/main/java/emu/grasscutter/scripts/data/SceneReplaceable.java": "2a729a204730d0c12aa48007691362fc32071a9421153a163efdbab2aa1720a6",
+    "src/main/java/emu/grasscutter/scripts/data/SceneSuite.java": "825f43f6b8506ff22d2154c1d01772c5f978cccdf86da18e478ac6788e7bccf6",
+    "src/main/java/emu/grasscutter/scripts/data/SceneTrigger.java": "bd622e53c383c40183f2c3a18f78f73a48c425abdeb6e42e36274cabd645c43a",
+    "src/main/java/emu/grasscutter/scripts/data/SceneVar.java": "93fb2c7f8119cc806f7cc41f77a02e7af473f34d8291755ab8f5bf770488986b",
+    "src/main/java/emu/grasscutter/scripts/data/ScriptArgs.java": "837fdf6d4e7a19e092a61da2c03adc362beef62c88f99ee71cd8d01bce783e1d",
+    "src/main/java/emu/grasscutter/scripts/serializer/LuaSerializer.java": "edc7da379f10a00d4a8ecd9eab7ebda4941113b5b98ad350e7c67e0d81d45e33",
+    "tools/Client72SceneScriptAudit.java": "49605e4cf2c66b282523cb3be0895b345bbe273b44e8c9c13e2568646e4668a0",
+    "tools/audit_scene_scripts72.py": "7c23f644e2efa4fb1d7c94eb4af814e67b6bbc34453e1fe03fc70fb344de065c"
+  },
+  "runtimeJarSHA256": "3a05ca88115f93a46bbb0ca334f54241f560a291fbb5b05fa2d42bb0f87aa522",
+  "runtimeStatus": "not-tested",
+  "schemaVersion": 1,
+  "scope": "direct production LuaSerializer, SceneSuite.init, RTree construction and source-equivalent grid-input model",
+  "scriptManifest": {
+    "commonFiles": 104,
+    "files": 13785,
+    "sha256": "47b783755a7c8f714a868db551f76a503092e0fd7895cc7a787e6060e651c02d"
+  },
+  "targetSource": {
+    "commit": "d54f6f0d423ded9d055bb740a3e5f3aa8f2667f1",
+    "date": "2026-11-04T01:04:00Z",
+    "repository": "https://github.com/DimbreathBot/AnimeGameData",
+    "treeSHA": "5b334e711319726c504da95dbfe6ebb26baaa7d3",
+    "versionLabel": "CNRELWin7.2.0_R49086080_S49210135_D49230962"
+  },
+  "toolSourceSHA256": {
+    "tools/Client72SceneSerializeAudit.java": "c676ab6de144cf2d25f80c8f6760ec8936a56f36f4731a5c79c3786d079407d7",
+    "tools/audit_scene_serialization72.py": "ec0797600045e70a0a6a72a89adf95c5bc970f32aeee66e29cb06d5a48e0a6c2"
+  },
+  "unboundDeclaredFieldExamples": {
+    "SceneGadget.is_use_point_array": {
+      "actual": "false",
+      "expectedSetter": "setIs_use_point_array",
+      "group": 133004460,
+      "path": "gadgets[460020].is_use_point_array",
+      "source": "true"
+    },
+    "SceneMonster.isElite": {
+      "actual": "false",
+      "expectedSetter": "setIsElite",
+      "group": 133001303,
+      "path": "monsters[4].isElite",
+      "source": "true"
+    }
+  },
+  "unboundDeclaredSourceFields": {
+    "SceneGadget.is_use_point_array": 868,
+    "SceneMonster.isElite": 144
+  },
+  "visionOptions": [
+    {
+      "gridWidth": 20,
+      "name": "VISION_LEVEL_NORMAL",
+      "visionRange": 80
+    },
+    {
+      "gridWidth": 40,
+      "name": "VISION_LEVEL_LITTLE_REMOTE",
+      "visionRange": 16
+    },
+    {
+      "gridWidth": 250,
+      "name": "VISION_LEVEL_REMOTE",
+      "visionRange": 1000
+    },
+    {
+      "gridWidth": 1000,
+      "name": "VISION_LEVEL_SUPER",
+      "visionRange": 4000
+    },
+    {
+      "gridWidth": 20,
+      "name": "VISION_LEVEL_NEARBY",
+      "visionRange": 40
+    },
+    {
+      "gridWidth": 20,
+      "name": "VISION_LEVEL_SUPER_NEARBY",
+      "visionRange": 20
+    }
+  ]
+}

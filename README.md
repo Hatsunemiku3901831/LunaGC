@@ -2,7 +2,7 @@
 
 目标是原生适配所提供的国服 7.2 客户端，包括网络指令、消息及字段、客户端补丁与资源。**尚未支持 7.2 登录或进入世界。** 本分支不维护 7.1 兼容；遗留版本号、Proto、包号仍是研究输入，不能视为目标协议。
 
-当前批（2026-11-06）：B-02e2限定核对27748/46311/PlayerEnterSceneNotify身份、26外层wire、非空三float/列表与原生clone缓存等待，32样本/两次一致、完整305研究回归通过；只晋级消息/指令身份，业务字段保持未知，见[入场通知研究](docs/CLIENT_72_SCENE_WAIT.md)。E-01b资源审计完成，E-01c固定旧实现对7.2表，inline离线比较13,616非dynamic组顶层求值成功，8个garbage ID/62个接口缺口仍保留（dfd11d6），见[脚本迁移](docs/CLIENT_72_SCENE_SCRIPT_MIGRATION.md)。D-01连续API观察150秒及后续只读复核原目标仍运行、key槽空；SDK/登录/入场未验。前批495项Java仅属前批结果，未改生产或部署，D-02未完成。状态以[Project](Project.md)为准，下方旧数量/停止记录为历史。
+当前批（2026-11-06）：[阶段计时](docs/CLIENT_72_STAGE_TIMING.md)13样本与[正常场景消费](docs/CLIENT_72_SCENE_NORMAL.md)14样本双跑一致，正常路径止于下一查询入口；26业务字段仍未知。[Lua最小修复](docs/CLIENT_72_SCENE_SERIALIZATION_FIXES.md)后13,616静态群组/20,871套件完成，原序列化问题消除，8个缺资源ID及接口/vision缺口保留。327项研究、580项Java选集全过，便携JAR已构建核对（4dd1c47a…bbe7）；完整协议/SDK/资源前置未齐，未部署。现有调试目标只读核对仍运行、key槽空，SDK/登录/入场和D-02均未验。状态以[Project](Project.md)为准，下方旧数量/停止记录为历史。
 
 接手顺序：[工作规范](AGENTS.md) → [任务与验收](Project.md) → [研发索引](Harness.md)。详细方法见 [迁移研究](docs/CLIENT_72_MIGRATION.md)。历史专题保留业务背景，不构成 7.2 验收。
 

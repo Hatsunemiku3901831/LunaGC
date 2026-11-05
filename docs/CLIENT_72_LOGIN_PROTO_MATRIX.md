@@ -1,5 +1,7 @@
 # A-03c 候选消息、Proto依赖与7.2三层证据缺口矩阵
 
+2026-11-06最新复核：新增修复前生产序列化baseline、修复后fixed与正常场景normal三份摘要，研究输入55→56→58；全部1287源码/Proto、148行三层矩阵、99候选/1140描述符、计数和开放边界逐结构保持。recover两次一致、327研究回归通过，研究结构0错误/ready仍228缺口。Lua修复及离线数据消费不晋级协议或实机；本机复核为scene-serialization-baseline-login-proto-review-check.json与scene-fixed-normal-login-proto-{review-check,repeat}.json。下方输入数量保留各历史检查点。
+
 2026-11-06计时纠名：54→55研究输入，新增stage-timing并更新born-continuation/scene-wait中误称identity request的字段名。结构复核确认旧样本路径/结果只修名，所有三层矩阵行、1287源码/Proto、候选/描述符和开放边界均不变。recover二次一致、311完整研究回归通过、ready仍228缺口；详见[阶段计时](CLIENT_72_STAGE_TIMING.md)。下方54为B-02e2历史检查点。
 
 2026-11-06 B-02e2：只更新PlayerEnterSceneNotify一行，27748/BBECFDMDFJC与业务身份verified，26外层业务字段均unresolved、schema candidate；输入53→54，唯一旧证据hash变更为mappings，新增3个分层证据。其余1287源码/Proto、99候选/1140描述符、147行矩阵及开放边界不变；人工复核后recover两次相同，305研究回归通过。研究结构校验0错误，ready204→228是显露26未知字段同时确认两层身份的结果，不代表可连接。详见[入场通知/缓存等待](CLIENT_72_SCENE_WAIT.md)，scene-wait-login-proto-{review-check,repeat}.json及scene-wait-research-regression.log留本机。
@@ -10,7 +12,7 @@
 
 2026-11-06，A-03c限定离线验收后，B-02d已补入选人证据，B-03a/C-01a现已接管三件组生产源码并重新复核矩阵。来源是A-03b固定方法并集及当前Proto，不能当作目标客户端最小/完整消息集。**A-03完整闭包与实机、B-03/C-01父任务及D-02仍未完成。** 实现/测试和停止取证边界见[选人三件组](CLIENT_72_BORN.md)。下述原97/1139及缺根记录保留为历史基线，当前结果如下。
 
-当前99构造候选、148引用/种子、1140描述符文件/1254声明/4786字段；1287源码/Proto与54研究输入固定hash，重复报告一致。生产DoSetPlayerBornDataNotify.proto已按目标空schema证据生成，missingProtoRoots为空；没有从遗留缺文件推断为空。动态BasePacket现只保留ItemAddHintNotify、packet复制和opcode变量三处，选人两处配置覆盖和负号回退已移除。三层矩阵现214条字段，runtime均未验；空schema已独立验证的Notify不再误列“无字段证据”缺口，其他空fields仍不视为合法空消息。表中来源数是原批快照，当前逐行来源以JSON为准。
+当前99构造候选、148引用/种子、1140描述符文件/1254声明/4786字段；1287源码/Proto与58研究输入固定hash，重复报告一致。生产DoSetPlayerBornDataNotify.proto已按目标空schema证据生成，missingProtoRoots为空；没有从遗留缺文件推断为空。动态BasePacket现只保留ItemAddHintNotify、packet复制和opcode变量三处，选人两处配置覆盖和负号回退已移除。三层矩阵现214条字段，runtime均未验；空schema已独立验证的Notify不再误列“无字段证据”缺口，其他空fields仍不视为合法空消息。表中来源数是原批快照，当前逐行来源以JSON为准。
 
 ## 候选与描述符范围
 

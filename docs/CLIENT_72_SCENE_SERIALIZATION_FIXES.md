@@ -46,3 +46,17 @@ $env:GRADLE_USER_HOME = Join-Path $PWD 'local/gradle'
 旧审计固定的生产源码hash现应拒绝这4处变化，不能自动刷新常量把拒绝隐藏。本批保持旧JAR与历史审计原样，根代理需人工复核这4类语义及新JAR，再正式更新守卫，重跑13,616组生产序列化/索引审计和重复性验证。原5组是否全部恢复、1,210条截断及1,012条setter缺口是否全部消失，需要该次真实整场重跑确认，本7项JUnit不替代它。
 
 8条缺Gadget ID、未知visionLevel、62个缺ScriptLib成员、当前fastRequire词法差异及实机协议/资源前置仍保留；本修复不补空业务实现、不删组、不改Lua或降低校验。
+
+## 主线整合、全场重跑及构建核查
+
+上节“没有生成JAR、守卫尚未更新”为子代理9408f41交付时状态。主线先保留原守卫实际拒绝记录，再逐文件审阅12增/3删及四类字节码；以Windows portable入口`./tools/local_windows.ps1 -Mode build`实际构建成功（25秒）。运行候选JAR SHA-256为`4dd1c47a0be92e67e0f938221d5a982122c903b232c906822cbce27ed4a4bbe7`，BuildConfig内嵌9408f41；四受影响class及BuildConfig与当次编译输出逐字节相同，javap确认float半径和两个显式setter。遗留JAR文件名不代表7.2准入完成。
+
+人工复核后只更新审计器的4源码hash和JAR守卫，不自动刷新未知依赖。相同固定脚本/7.2实体表/配置两次真实重跑：13,616非dynamic组均完成生产序列化和网格输入，20,871套件完成初始化；原5组失败、30字符串类型污染/30同根数值转换、1,210小数截断全部消除。isElite144/is_use_point_array868的未绑定计数消失。仅余8条missing-target-gadget，组/ID70200012至70200019保持；不补虚构记录。6层网格模型34,970格、60,884去重组成员；52,551普通gadget仍使用目标visionLevel缺失的既有0回退，未知含义不晋级。没有执行生产getGroupGrids、完整manager、trigger/action或实体生成。
+
+两次完整报告和脱敏摘要逐字节一致，生产基础设施class-init拒绝检查均通过。7项审计测试已改为断言实际修复结果，同时保留未知字段、非法shape/层/位置、错误转换和缺ID拒绝；27资源/脚本聚焦测试与327完整研究回归通过。进一步实际执行28套580项Java，失败/错误/跳过均0：原495项账号、选人、经济/保存选集，加7项生产序列化、区域成员和5套相关脚本共85项；完整Java集没有重跑，历史217失败不据此扣减。
+
+测试Mongo使用独立dbpath与随机库，原mongodata/local数据未改。收尾只读辅助程序首次因fat JAR的logback事件appender触发Grasscutter初始化死锁；保留线程栈，确认只终止本次卡住的辅助JVM，未终止测试/服务器/数据库。仅给辅助程序设置无appender日志配置后正常管理关闭测试Mongo；再打开同一测试目录只读确认仅admin/config/local并正常关闭。580项测试本身一次通过，没有因辅助收尾问题伪造重跑或清库。
+
+本机证据均相对local/migration72：evidence/scene-serialization-fix-{old-guard-rejection,build-artifact}.json、scene-serialization-fixed-{audit,repeat,summary-repeat}.json、scene-serialization-java-regression-summary.json和scene-serialization-test-mongo-final.json；Java XML在scene-serialization-java-test-results/，构建/测试/审计日志在logs/scene-serialization-*。历史基线SHA-256 a905793a…f3a5b与修后摘要3fe94edf…70a5c均已接入研究矩阵（55→56→58），协议三层和ready228缺口不变。
+
+已重新核对本机配置/源码端口、子模块及进程：没有本项目服务Java、HTTP TCP8088或游戏UDP22101监听；测试27027已关闭，原Mongo27017及现有调试目标保留。未部署原因仍为完整7.2 P0/SDK/补丁/资源前置不足；健康、运行PID/运行JAR SHA-256无验收对象，不标通过。E-01c2限定修复完成；E-01c/E-01/D-02保持未完成。

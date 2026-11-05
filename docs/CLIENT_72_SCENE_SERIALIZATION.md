@@ -1,5 +1,7 @@
 # E-01c：生产Lua序列化与scene3索引输入离线审计
 
+最新状态：以下失败分析为e3da792修复前的固定基线，保存在[baseline摘要](../protocol/cn-7.2/scene-serialization-baseline-observations.json)，不是当前修复结果。9408f41及主线复核后13,616组/20,871套件完成、仅8缺ID，见[最小修复与构建](CLIENT_72_SCENE_SERIALIZATION_FIXES.md)和[当前摘要](../protocol/cn-7.2/scene-serialization-observations.json)。当前工具人工复核后固定新JAR 4dd1c47a…bbe7及4份新源码hash；旧JAR 3a05ca88…a522只保留作历史离线类依赖，不是旧客户端运行环境。下方首次审计的“未修/未构建/草稿未接入”均为历史过程；两份摘要现均已接入矩阵。
+
 2026-11-06。延续[固定既有脚本迁移](CLIENT_72_SCENE_SCRIPT_MIGRATION.md)，本批只新增离线工具，不修改运行源码、Proto、配置、资源或缓存。**本限定审计已执行；E-01c、E-01、D-02及实机验收未完成。** 继承Lua仍为7.1实现参考，不能称为7.2原始导出。
 
 ## 入口、固定输入与安全边界
@@ -84,14 +86,14 @@ gadgets = {{config_id=2, gadget_id=7, pos={x=1,y=0,z=1}, is_use_point_array=true
 
 成功组贡献网格输入：monster19,227、gadget62,193、NPC478、region4,328、garbage gadget11,410、组位置13,611。6层实际构造的二维RTree共34,947格、60,846个去重组成员；每层有独立规范化格子/组集合SHA-256。**这只是13,611组的部分模型，5个失败组未贡献网格，不能作为完整scene3缓存安装。** 生产getGroupGrids本身、GameData加载器、事件/插件、邻块可见性查询、实体生成、网络和实机均未执行。当前4类region shape计数来自序列化后模型输入，没有额外恢复7.2枚举。
 
-## 测试与复现
+## 历史测试与当前修复后复现
 
 新增7项真实Java/LuaJ测试覆盖：inline局部变量、稀疏键/嵌套对象/套件绑定、dynamic过滤、负坐标网格、类型截断/boolean转换、未知字段、层越界/缺坐标/未知shape、普通与garbage不同vision路径、缺ID、真实顶层失败、源码漂移，以及数值字符串套件故障和两个setter缺口。连同既有脚本6项/资源14项，**27项聚焦回归通过**。不依赖尚未接入共享矩阵的摘要。
 
 ```powershell
 $env:GAME_PATH = & ./tools/game_path.ps1
 $sceneJdk = (Get-ChildItem local/runtime -Directory -Filter 'jdk-17*' | Select-Object -First 1).FullName
-python tools/audit_scene_serialization72.py --source local/migration72/sources/AnimeGameData/d54f6f0d423ded9d055bb740a3e5f3aa8f2667f1 --baseline resources --client $env:GAME_PATH --java-home $sceneJdk --runtime-jar LunaGC-7.1.0.jar --output local/migration72/evidence/scene-serialization-audit.json --summary-output local/migration72/evidence/scene-serialization-summary-draft.json
+python tools/audit_scene_serialization72.py --source local/migration72/sources/AnimeGameData/d54f6f0d423ded9d055bb740a3e5f3aa8f2667f1 --baseline resources --client $env:GAME_PATH --java-home $sceneJdk --runtime-jar LunaGC-7.1.0.jar --output local/migration72/evidence/scene-serialization-fixed-audit.json --summary-output protocol/cn-7.2/scene-serialization-observations.json
 python -m unittest tools.test_audit_scene_serialization72 tools.test_audit_scene_scripts72 tools.test_audit_scene_resource72 tools.test_audit_resource72 -v
 ```
 

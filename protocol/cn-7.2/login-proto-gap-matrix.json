@@ -1333,8 +1333,11 @@
     "protocol/cn-7.2/response-wire-observations.json": "bee9e1216960e47ae7dcad1f63afb8ac74e8f4aabd911e0c1c45fad5299c7063",
     "protocol/cn-7.2/scene-grid-inline-observations.json": "55075474ef471da55078d5f9acdae1096c587b83023c8cd47158c53c6e8398fe",
     "protocol/cn-7.2/scene-grid-script-observations.json": "b334d02f25f4d0a3df300d3fd5d67f11d945b6c473df79e2ca1ff44d8ae8c7b8",
+    "protocol/cn-7.2/scene-normal-observations.json": "dcf91313cb5135609133eda71671e3dc421562d9b13db241701dee6004c95cbe",
     "protocol/cn-7.2/scene-resource-observations.json": "7f0dadf9b2d24a2a7041162875ad568201f77f6671108693faf35be565d895e5",
     "protocol/cn-7.2/scene-script-observations.json": "a52346e5879b4cfa05d07e3d4f13e7952a40f39f3a210314cfee725180011970",
+    "protocol/cn-7.2/scene-serialization-baseline-observations.json": "ddda2f6e17688e2bba7f1596fd23f5ee2f19e0536659d6f297ebb5e878c883a5",
+    "protocol/cn-7.2/scene-serialization-observations.json": "767c6132b532bb0f1007d53add3c66b209dc2e9dece80678caa57b64e899a537",
     "protocol/cn-7.2/scene-wait-observations.json": "c6017a44d67a62a9003648d711a1f958e67cd3c2a2a9a8a4e0d77ca65542c29f",
     "protocol/cn-7.2/seed-crypto-observations.json": "cd6a06942deb70b9f066f437cda27504db3f529eaaf10a1ca52bee6836256418",
     "protocol/cn-7.2/send-flow-observations.json": "869486c5d79a8b993c8d89280ff3ac6f412a77c0e572052048d8f583e55c5fbc",
@@ -92223,7 +92226,7 @@
     "Nonzero/64-bit/nested/list/error/boundary wire regressions remain separate required evidence",
     "No protocol generation, runtime integration, client reverse engineering or client debugging"
   ],
-  "reviewSHA256": "848b4d3695e95dd5a618b586fe0b43b29da8f8e42d481b8b3c5923bc92388d8f",
+  "reviewSHA256": "65017013707cae417bcb553d1119054ea57cf6ef9be2b4d537642c1bff29d892",
   "toolSourceSHA256": {
     "tools/review_client72_login_proto.py": "5275dfcff776265aa745db564c5132f6f41c9e60173b20282f1059735fce36ff",
     "tools/Client72ProtoDependencies.java": "517838c3cd34b051c47205e71d45d2d3c99cc6bb4fb32379c34e0d0cea418f0a"

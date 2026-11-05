@@ -1,0 +1,1823 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "declarations": {
+    "scene": {
+      "typeIndex": 46311,
+      "clientType": "BBECFDMDFJC",
+      "cmdId": 27748,
+      "getter": "0x1523856a0",
+      "semanticName": "PlayerEnterSceneNotify",
+      "semanticEvidence": "typed network handler plus native entry log and literal usage",
+      "runtimeStatus": "not-tested",
+      "registration": "0x1507c2a03",
+      "methods": [
+        {
+          "entry": "0x1507ad120",
+          "ownerType": 56238,
+          "methodIndex": 467349,
+          "parameterIndex": 380980,
+          "entry32SHA256": "7b08caed4f9f4ae45fff774fa21f43a322a558d2fa7d8adebbe4a422582d6a65"
+        },
+        {
+          "entry": "0x1507ad6f0",
+          "ownerType": 56238,
+          "methodIndex": 467802,
+          "parameterIndex": 381458,
+          "entry32SHA256": "029e64176308a2ad3b9fab1e727dd8cb4429fa45c8e66878ee22d657fd73bd89"
+        },
+        {
+          "entry": "0x1507b32d0",
+          "ownerType": 56238,
+          "methodIndex": 467384,
+          "parameterIndex": 381021,
+          "entry32SHA256": "b9ddc8b3e3b8d3eaabca63061e6e049d76daab109438e8c64f512f122c160632"
+        },
+        {
+          "entry": "0x14cd67260",
+          "ownerType": 18753,
+          "methodIndex": 142800,
+          "parameterIndex": 129008,
+          "entry32SHA256": "073a71f9b30c16543791a3af388b13b3f7364a62b2a54c6e6bef58c3fdd88b26"
+        },
+        {
+          "entry": "0x1523856b0",
+          "ownerType": 46311,
+          "methodIndex": 384109,
+          "entry32SHA256": "ecbe7216d294f61f10b850c8c5b8545a3aca0b70c670c67bcf73d444a63a417a"
+        },
+        {
+          "entry": "0x152387890",
+          "ownerType": 46311,
+          "methodIndex": 384104,
+          "entry32SHA256": "7b921fbac02090eeb6d9c935a377c5688ac90e3e3cab3baff6a94bd7b13b1353"
+        },
+        {
+          "entry": "0x152386c00",
+          "ownerType": 46311,
+          "methodIndex": 384111,
+          "entry32SHA256": "2d7121f869092f8cf1d58fdf203bd87490347a630f8439593e753fbec39b45bc"
+        },
+        {
+          "entry": "0x152386cb0",
+          "ownerType": 46311,
+          "methodIndex": 384114,
+          "entry32SHA256": "ae0ec38264990a5923123075377d58611c595f9ac3143a01282c37d1169ad0bf"
+        },
+        {
+          "entry": "0x154048d40",
+          "ownerType": 84343,
+          "methodIndex": 698523,
+          "entry32SHA256": "2a628f045df698bed8308dd324fc2cee425dbc8e0a6d0b1976709fdab183357b"
+        }
+      ],
+      "literals": [
+        {
+          "usageRow": 779811,
+          "index": 45993,
+          "slot": 45993,
+          "cell": "0x145b23b68",
+          "value": "Genshin Loading Log: OnReceivePlayerEnterSceneNotify {0}"
+        },
+        {
+          "usageRow": 779817,
+          "index": 46023,
+          "slot": 46023,
+          "cell": "0x145b23c58",
+          "value": "Beyond Transport Interrupt EnterDungeon, Invoke Client Reconnect"
+        },
+        {
+          "usageRow": 780351,
+          "index": 50090,
+          "slot": 50090,
+          "cell": "0x145b2bb70",
+          "value": "Genshin Loading Log: PlayerModule OnPlayerEnterSceneNotify"
+        },
+        {
+          "usageRow": 780698,
+          "index": 53019,
+          "slot": 53019,
+          "cell": "0x145b316f8",
+          "value": "Genshin Loading Log: LoadingManager OnPlayerEnterSceneNotify"
+        }
+      ],
+      "enum": {
+        "typeIndex": 86551,
+        "clientType": "ILGABKBIAIE",
+        "namespace": "",
+        "underlyingType": "int32",
+        "values": [
+          {
+            "symbol": "EnterNone",
+            "value": 0,
+            "fieldIndex": 431526,
+            "defaultRow": 74792,
+            "typeIndex": 70,
+            "dataIndex": 655220
+          },
+          {
+            "symbol": "EnterSelf",
+            "value": 1,
+            "fieldIndex": 431527,
+            "defaultRow": 74793,
+            "typeIndex": 70,
+            "dataIndex": 655224
+          },
+          {
+            "symbol": "EnterGoto",
+            "value": 2,
+            "fieldIndex": 431528,
+            "defaultRow": 74794,
+            "typeIndex": 70,
+            "dataIndex": 655228
+          },
+          {
+            "symbol": "EnterJump",
+            "value": 3,
+            "fieldIndex": 431529,
+            "defaultRow": 74795,
+            "typeIndex": 70,
+            "dataIndex": 655232
+          },
+          {
+            "symbol": "EnterOther",
+            "value": 4,
+            "fieldIndex": 431530,
+            "defaultRow": 74796,
+            "typeIndex": 70,
+            "dataIndex": 655236
+          },
+          {
+            "symbol": "EnterBack",
+            "value": 5,
+            "fieldIndex": 431531,
+            "defaultRow": 74797,
+            "typeIndex": 70,
+            "dataIndex": 655240
+          },
+          {
+            "symbol": "EnterDungeon",
+            "value": 6,
+            "fieldIndex": 431532,
+            "defaultRow": 74798,
+            "typeIndex": 70,
+            "dataIndex": 655244
+          },
+          {
+            "symbol": "EnterDungeonReplay",
+            "value": 7,
+            "fieldIndex": 431533,
+            "defaultRow": 74799,
+            "typeIndex": 70,
+            "dataIndex": 655248
+          },
+          {
+            "symbol": "EnterGotoByPortal",
+            "value": 8,
+            "fieldIndex": 431534,
+            "defaultRow": 74800,
+            "typeIndex": 70,
+            "dataIndex": 655252
+          },
+          {
+            "symbol": "EnterSelfHome",
+            "value": 9,
+            "fieldIndex": 431535,
+            "defaultRow": 74801,
+            "typeIndex": 70,
+            "dataIndex": 655256
+          },
+          {
+            "symbol": "EnterOtherHome",
+            "value": 10,
+            "fieldIndex": 431536,
+            "defaultRow": 74802,
+            "typeIndex": 70,
+            "dataIndex": 655260
+          },
+          {
+            "symbol": "EnterGotoRecreate",
+            "value": 11,
+            "fieldIndex": 431537,
+            "defaultRow": 74803,
+            "typeIndex": 70,
+            "dataIndex": 655264
+          },
+          {
+            "symbol": "EnterGotoByTpl",
+            "value": 12,
+            "fieldIndex": 431538,
+            "defaultRow": 74804,
+            "typeIndex": 70,
+            "dataIndex": 655268
+          },
+          {
+            "symbol": "EnterBeyond",
+            "value": 13,
+            "fieldIndex": 431539,
+            "defaultRow": 74805,
+            "typeIndex": 70,
+            "dataIndex": 655272
+          },
+          {
+            "symbol": "EnterHall",
+            "value": 14,
+            "fieldIndex": 431540,
+            "defaultRow": 74806,
+            "typeIndex": 70,
+            "dataIndex": 655276
+          }
+        ],
+        "semanticStatus": "target-symbols-only"
+      },
+      "fields": [
+        {
+          "clientField": "HHAFHFEPLPD",
+          "objectOffset": 24,
+          "declaration": {
+            "kind": "class",
+            "attributes": "0x1",
+            "data": "0x14977",
+            "byRef": false,
+            "typeDefinition": 84343,
+            "name": "BGDCNKAKGHI",
+            "namespace": ""
+          }
+        },
+        {
+          "clientField": "EMLMBEIBJHJ",
+          "objectOffset": 32,
+          "declaration": {
+            "kind": "genericinst",
+            "attributes": "0x21",
+            "data": "0x7346",
+            "byRef": false,
+            "genericIndex": 29510,
+            "instanceIndex": 11,
+            "arguments": [
+              {
+                "kind": "uint32",
+                "attributes": "0x0",
+                "data": "0x13f",
+                "byRef": false
+              }
+            ],
+            "typeDefinition": 35584,
+            "name": "DKHEEHDOEIK",
+            "namespace": ""
+          }
+        },
+        {
+          "clientField": "KFIJNBDGBAH",
+          "objectOffset": 40,
+          "declaration": {
+            "kind": "class",
+            "attributes": "0x1",
+            "data": "0x650a",
+            "byRef": false,
+            "typeDefinition": 25866,
+            "name": "ABJMLEPLFJG",
+            "namespace": ""
+          }
+        },
+        {
+          "clientField": "LFPEKBJIJNG",
+          "objectOffset": 48,
+          "declaration": {
+            "kind": "class",
+            "attributes": "0x1",
+            "data": "0x14977",
+            "byRef": false,
+            "typeDefinition": 84343,
+            "name": "BGDCNKAKGHI",
+            "namespace": ""
+          }
+        },
+        {
+          "clientField": "CPIINPOJLCM",
+          "objectOffset": 56,
+          "declaration": {
+            "kind": "string",
+            "attributes": "0x1",
+            "data": "0x125",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "BJMCOIFDONK",
+          "objectOffset": 64,
+          "declaration": {
+            "kind": "class",
+            "attributes": "0x1",
+            "data": "0x8555",
+            "byRef": false,
+            "typeDefinition": 34133,
+            "name": "HJLMHFHHJKM",
+            "namespace": ""
+          }
+        },
+        {
+          "clientField": "FEANOEECAIM",
+          "objectOffset": 72,
+          "declaration": {
+            "kind": "class",
+            "attributes": "0x1",
+            "data": "0x10fec",
+            "byRef": false,
+            "typeDefinition": 69612,
+            "name": "PCCNENMODDD",
+            "namespace": ""
+          }
+        },
+        {
+          "clientField": "ABIFGOBLNDN",
+          "objectOffset": 80,
+          "declaration": {
+            "kind": "class",
+            "attributes": "0x1",
+            "data": "0x14977",
+            "byRef": false,
+            "typeDefinition": 84343,
+            "name": "BGDCNKAKGHI",
+            "namespace": ""
+          }
+        },
+        {
+          "clientField": "CCKBJJPAGGG",
+          "objectOffset": 88,
+          "declaration": {
+            "kind": "class",
+            "attributes": "0x1",
+            "data": "0x108b1",
+            "byRef": false,
+            "typeDefinition": 67761,
+            "name": "HKDMELCIJGB",
+            "namespace": ""
+          }
+        },
+        {
+          "clientField": "NBBEIFOKKNG",
+          "objectOffset": 96,
+          "declaration": {
+            "kind": "class",
+            "attributes": "0x1",
+            "data": "0x101f8",
+            "byRef": false,
+            "typeDefinition": 66040,
+            "name": "NAECHMKLBEI",
+            "namespace": ""
+          }
+        },
+        {
+          "clientField": "CNABNLMHMII",
+          "objectOffset": 104,
+          "declaration": {
+            "kind": "uint64",
+            "attributes": "0x1",
+            "data": "0x140",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "DGIBDKELFNG",
+          "objectOffset": 112,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "LMKLCDPJOBJ",
+          "objectOffset": 116,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "AJMJGIKBOPO",
+          "objectOffset": 120,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "JMHKHAPJADA",
+          "objectOffset": 124,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "NBDGINFCIIK",
+          "objectOffset": 128,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "KLDLBMCOGFC",
+          "objectOffset": 132,
+          "declaration": {
+            "kind": "bool",
+            "attributes": "0x1",
+            "data": "0xae",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "OACAAAMNGFI",
+          "objectOffset": 133,
+          "declaration": {
+            "kind": "bool",
+            "attributes": "0x1",
+            "data": "0xae",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "EHONLMHNLDP",
+          "objectOffset": 136,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "CMAFDGGJDNK",
+          "objectOffset": 140,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "OHHFLAOMMEC",
+          "objectOffset": 144,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "MCCMGLDOECH",
+          "objectOffset": 148,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "NOEEBKJAFAG",
+          "objectOffset": 152,
+          "declaration": {
+            "kind": "valuetype",
+            "attributes": "0x1",
+            "data": "0x15217",
+            "byRef": false,
+            "typeDefinition": 86551,
+            "name": "ILGABKBIAIE",
+            "namespace": ""
+          }
+        },
+        {
+          "clientField": "JEPBJIIEFOM",
+          "objectOffset": 156,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "PKGEAAKBCNC",
+          "objectOffset": 160,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "IOLBHNOIGJN",
+          "objectOffset": 164,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        }
+      ]
+    },
+    "stage": {
+      "methodIndex": 711360,
+      "entry": "0x14c8ae9a0",
+      "parameterIndex": 538572,
+      "parameterTypeIndex": 675783,
+      "enumTypeIndex": 85949,
+      "enumClientType": "NEKEJMEIJBF"
+    },
+    "bindings": [
+      {
+        "usageRow": 701228,
+        "cell": "0x145892570",
+        "sourceIndex": 478317,
+        "typeIndex": 11064,
+        "type": {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0x2b38",
+          "byRef": false,
+          "typeDefinition": 11064,
+          "name": "IAutoAllocRecycle",
+          "namespace": "MoleMole"
+        }
+      },
+      {
+        "usageRow": 710071,
+        "cell": "0x1458c3938",
+        "sourceIndex": 106228,
+        "typeIndex": 75453,
+        "type": {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0x126bd",
+          "byRef": false,
+          "typeDefinition": 75453,
+          "name": "NMCKLNDCNKA",
+          "namespace": ""
+        }
+      }
+    ],
+    "taskFields": [
+      {
+        "index": 374702,
+        "name": "CFFEALGPCJM",
+        "nameIndex": "0xb7f52e7",
+        "typeIndex": 444181,
+        "type": {
+          "kind": "string",
+          "attributes": "0x6",
+          "data": "0x125",
+          "byRef": false
+        },
+        "offset": 16,
+        "rawOffset": "0x10",
+        "offsetKind": "instance"
+      },
+      {
+        "index": 374703,
+        "name": "EKICPGLCFHD",
+        "nameIndex": "0xb7f52f2",
+        "typeIndex": 455434,
+        "type": {
+          "kind": "class",
+          "attributes": "0x1",
+          "data": "0x8c3",
+          "byRef": false,
+          "typeDefinition": 2243,
+          "name": "Coroutine",
+          "namespace": "UnityEngine"
+        },
+        "offset": 24,
+        "rawOffset": "0x18",
+        "offsetKind": "instance"
+      },
+      {
+        "index": 374704,
+        "name": "DGCBCBOJLGK",
+        "nameIndex": "0xb5dd94e",
+        "typeIndex": 455434,
+        "type": {
+          "kind": "class",
+          "attributes": "0x1",
+          "data": "0x8c3",
+          "byRef": false,
+          "typeDefinition": 2243,
+          "name": "Coroutine",
+          "namespace": "UnityEngine"
+        },
+        "offset": 32,
+        "rawOffset": "0x20",
+        "offsetKind": "instance"
+      },
+      {
+        "index": 374705,
+        "name": "EHLPEADMCAI",
+        "nameIndex": "0xb18c0e8",
+        "typeIndex": 445681,
+        "type": {
+          "kind": "uint32",
+          "attributes": "0x6",
+          "data": "0x13f",
+          "byRef": false
+        },
+        "offset": 40,
+        "rawOffset": "0x28",
+        "offsetKind": "instance"
+      },
+      {
+        "index": 374706,
+        "name": "DPDDLDIPDIC",
+        "nameIndex": "0xb1bf8cb",
+        "typeIndex": 445681,
+        "type": {
+          "kind": "uint32",
+          "attributes": "0x6",
+          "data": "0x13f",
+          "byRef": false
+        },
+        "offset": 44,
+        "rawOffset": "0x2c",
+        "offsetKind": "instance"
+      },
+      {
+        "index": 374707,
+        "name": "NGHAOFLBJLM",
+        "nameIndex": "0xb7f52fd",
+        "typeIndex": 445682,
+        "type": {
+          "kind": "uint64",
+          "attributes": "0x6",
+          "data": "0x140",
+          "byRef": false
+        },
+        "offset": 48,
+        "rawOffset": "0x30",
+        "offsetKind": "instance"
+      },
+      {
+        "index": 374708,
+        "name": "EKAJNENLKPM",
+        "nameIndex": "0xb229271",
+        "typeIndex": 651315,
+        "type": {
+          "kind": "valuetype",
+          "attributes": "0x1",
+          "data": "0x126c0",
+          "byRef": false,
+          "typeDefinition": 75456,
+          "name": "ELCLCAIHLED",
+          "namespace": ""
+        },
+        "offset": 56,
+        "rawOffset": "0x38",
+        "offsetKind": "instance"
+      },
+      {
+        "index": 374709,
+        "name": "EMAHGCKGPID",
+        "nameIndex": "0xb25d4b3",
+        "typeIndex": 445681,
+        "type": {
+          "kind": "uint32",
+          "attributes": "0x6",
+          "data": "0x13f",
+          "byRef": false
+        },
+        "offset": 60,
+        "rawOffset": "0x3c",
+        "offsetKind": "instance"
+      },
+      {
+        "index": 374710,
+        "name": "OOMECNAEDBH",
+        "nameIndex": "0xb7f5308",
+        "typeIndex": 444357,
+        "type": {
+          "kind": "bool",
+          "attributes": "0x6",
+          "data": "0xae",
+          "byRef": false
+        },
+        "offset": 64,
+        "rawOffset": "0x40",
+        "offsetKind": "instance"
+      },
+      {
+        "index": 374711,
+        "name": "PIGBPDNANNG",
+        "nameIndex": "0xb7f5313",
+        "typeIndex": 444357,
+        "type": {
+          "kind": "bool",
+          "attributes": "0x6",
+          "data": "0xae",
+          "byRef": false
+        },
+        "offset": 65,
+        "rawOffset": "0x41",
+        "offsetKind": "instance"
+      },
+      {
+        "index": 374712,
+        "name": "EBAHFLKIHGC",
+        "nameIndex": "0xb7f531e",
+        "typeIndex": 444357,
+        "type": {
+          "kind": "bool",
+          "attributes": "0x6",
+          "data": "0xae",
+          "byRef": false
+        },
+        "offset": 66,
+        "rawOffset": "0x42",
+        "offsetKind": "instance"
+      },
+      {
+        "index": 374713,
+        "name": "JMMEOBCBMOJ",
+        "nameIndex": "0xb193da3",
+        "typeIndex": 452098,
+        "type": {
+          "kind": "valuetype",
+          "attributes": "0x6",
+          "data": "0x919",
+          "byRef": false,
+          "typeDefinition": 2329,
+          "name": "Vector3",
+          "namespace": "UnityEngine"
+        },
+        "offset": 68,
+        "rawOffset": "0x44",
+        "offsetKind": "instance"
+      },
+      {
+        "index": 374714,
+        "name": "CJAAFEDGKKN",
+        "nameIndex": "0xb1f82e8",
+        "typeIndex": 651316,
+        "type": {
+          "kind": "valuetype",
+          "attributes": "0x6",
+          "data": "0x126be",
+          "byRef": false,
+          "typeDefinition": 75454,
+          "name": "AAOOCODHNAE",
+          "namespace": ""
+        },
+        "offset": 80,
+        "rawOffset": "0x50",
+        "offsetKind": "instance"
+      },
+      {
+        "index": 374715,
+        "name": "HDKJFBJFAMA",
+        "nameIndex": "0xb7f5329",
+        "typeIndex": 445681,
+        "type": {
+          "kind": "uint32",
+          "attributes": "0x6",
+          "data": "0x13f",
+          "byRef": false
+        },
+        "offset": 84,
+        "rawOffset": "0x54",
+        "offsetKind": "instance"
+      },
+      {
+        "index": 374716,
+        "name": "FJCNLAMCDBD",
+        "nameIndex": "0xb196b7e",
+        "typeIndex": 445681,
+        "type": {
+          "kind": "uint32",
+          "attributes": "0x6",
+          "data": "0x13f",
+          "byRef": false
+        },
+        "offset": 88,
+        "rawOffset": "0x58",
+        "offsetKind": "instance"
+      }
+    ],
+    "methods": [
+      {
+        "entry": "0x14cd67260",
+        "ownerType": 18753,
+        "methodIndex": 142800,
+        "name": "LDLBKNPDDNK"
+      },
+      {
+        "entry": "0x14cd5f7b0",
+        "ownerType": 18753,
+        "methodIndex": 142791,
+        "name": "BINGKDKAHNF"
+      },
+      {
+        "entry": "0x147b2ddf0",
+        "ownerType": 75453,
+        "methodIndex": 624611,
+        "name": "AutoAllocTypeFields"
+      },
+      {
+        "entry": "0x147b2f350",
+        "ownerType": 75453,
+        "methodIndex": 624616,
+        "name": "OnPoolAllocated"
+      },
+      {
+        "entry": "0x147b2f6a0",
+        "ownerType": 75453,
+        "methodIndex": 624618,
+        "name": "DMHBGJPPCGJ"
+      },
+      {
+        "entry": "0x147b2f460",
+        "ownerType": 75453,
+        "methodIndex": 624619,
+        "name": "OEDPLDCDOEK"
+      }
+    ]
+  },
+  "nativeCode": {
+    "0x14cd67260": {
+      "size": 1840,
+      "sha256": "e6c4f8ae8951231b8ffa3b0a4d93bf6e9d190ef002ee65b3cc958ddc7d5e9edf"
+    },
+    "0x14cd5f7b0": {
+      "size": 1056,
+      "sha256": "83aca4f6700da78ad8a57a87674485cd9aee9f17485274722e150f960d80d0a4"
+    },
+    "0x147b2ddf0": {
+      "size": 16,
+      "sha256": "6cf637b6adb3866fee3c03c42483e091ad167b130eeddd9918b8af755530c5cb"
+    },
+    "0x147b2f350": {
+      "size": 192,
+      "sha256": "64e61e66160a48425edb412f641e67270b7476c1c881d2705450d76ac41db503"
+    },
+    "0x147b2f6a0": {
+      "size": 496,
+      "sha256": "858a529592f60508682d2ec8f58a6295becfd9bdeaaf421a04539d331843ab5b"
+    },
+    "0x147b2f460": {
+      "size": 208,
+      "sha256": "4587775dd9ba9924e09db8baa387f3f92a0ee19e248385d1a71751eaa2511729"
+    },
+    "0x146e055f0": {
+      "size": 302,
+      "sha256": "8bc6efd936dc23942aac7454f774ef4524f4730c5cb81fa7033eb2aace1399fd"
+    },
+    "0x1578b66f0": {
+      "size": 663,
+      "sha256": "eb3bd9ba203b582c2e9b151b1ea8b369e0da775a6aeeccdf81f5b6450bff8b3b"
+    },
+    "0x1578b6a20": {
+      "size": 1533,
+      "sha256": "f44b4397eb8904f964a9dabd2e7b41782150871fa623870e4053f1fb2e61d39d"
+    }
+  },
+  "fixtureCount": 14,
+  "runtimeStatus": "not-tested",
+  "targetProtocolReady": false,
+  "boundary": "0x153a18e80",
+  "boundaryExecuted": false,
+  "scope": "reader original pointer -> stage10 -> native task allocation/reset/dictionary -> partial task consumption; stop before next query",
+  "models": [
+    "initialized metadata/classes and synthetic interface dispatch storage",
+    "pool borrow returns one explicitly supplied dirty task; null result also tested",
+    "fixed-capacity dictionary uint32 entries/buckets and generic binder storage; native lookup/insert execute",
+    "no timer/coroutine context; native 147B2F6A0 early-return executes",
+    "managed wire primitives/strings/list storage from SceneReader72; native reader arithmetic executes",
+    "typed log observation sink and StageRuntime72 explicit switch/array/clock"
+  ],
+  "outsideScope": [
+    "decoded94/7C/A0 business names/semantics",
+    "five untraced nested message contents",
+    "recycling existing key body, dictionary growth/custom comparer/free-list",
+    "timer/coroutine initialization and lifecycle",
+    "153A18E80 body/return and later scene consumers",
+    "real network ordering/SDK/media/client/complete scene entry or D-02"
+  ],
+  "toolSourceSHA256": {
+    "tools/trace_client72_scene_normal.py": "2f813e139343f6f66a327743de6ca4b9461b257e3e06db6c7088df2eb8b91a9c",
+    "tools/client72_scene_reader.py": "ca73c8fbdf58bdf1658643e3f3b8023b4ecc65e7a7cab393d5fcb5674f0fc146",
+    "tools/client72_stage_runtime.py": "8a91b9bdf477e804a35ec8a8fb9e945c0964639718e2de6ee723b5bdd7accdb0"
+  },
+  "observations": [
+    {
+      "name": "nonzero",
+      "decoded": [
+        3,
+        17,
+        42
+      ],
+      "raw94_7c_a0": [
+        34697,
+        4294906413,
+        9741
+      ],
+      "stop": "0x153a18e80",
+      "messagePointerPreserved": true,
+      "messageContentUnchanged": true,
+      "nextArguments": {
+        "receiverMatched": true,
+        "decoded7c": 17
+      },
+      "taskPointer": "0x6120037d0",
+      "oldTaskPointer": "0x6120038d0",
+      "currentTaskPointer": "0x6120037d0",
+      "previousTaskPointer": "0x0",
+      "borrowed": 1,
+      "taskRaw": {
+        "key58": 3,
+        "value28": 42,
+        "floatBits": [
+          1067450368,
+          3223322624,
+          1081081856
+        ],
+        "stringPointerMatched": true,
+        "resetWords": {
+          "0x2c": 0,
+          "0x30": 0,
+          "0x34": 0,
+          "0x38": 0,
+          "0x3c": 0,
+          "0x50": 0,
+          "0x54": 0
+        },
+        "flags40_41": [
+          1,
+          1
+        ]
+      },
+      "dictionary": {
+        "seed": null,
+        "entries": [
+          {
+            "hash": 3,
+            "next": -1,
+            "key": 3,
+            "value": "0x6120037d0"
+          }
+        ],
+        "lookupIndex": 0
+      },
+      "stage": {
+        "enabled": false,
+        "writes": [],
+        "clockCalls": []
+      }
+    },
+    {
+      "name": "uint32-high-bit",
+      "decoded": [
+        2147483648,
+        2147483649,
+        4275878552
+      ],
+      "raw94_7c_a0": [
+        2147518344,
+        2147422749,
+        4275866459
+      ],
+      "stop": "0x153a18e80",
+      "messagePointerPreserved": true,
+      "messageContentUnchanged": true,
+      "nextArguments": {
+        "receiverMatched": true,
+        "decoded7c": 2147483649
+      },
+      "taskPointer": "0x6120037d0",
+      "oldTaskPointer": "0x6120038d0",
+      "currentTaskPointer": "0x6120037d0",
+      "previousTaskPointer": "0x0",
+      "borrowed": 1,
+      "taskRaw": {
+        "key58": 2147483648,
+        "value28": 4275878552,
+        "floatBits": [
+          1067450368,
+          3223322624,
+          1081081856
+        ],
+        "stringPointerMatched": true,
+        "resetWords": {
+          "0x2c": 0,
+          "0x30": 0,
+          "0x34": 0,
+          "0x38": 0,
+          "0x3c": 0,
+          "0x50": 0,
+          "0x54": 0
+        },
+        "flags40_41": [
+          1,
+          1
+        ]
+      },
+      "dictionary": {
+        "seed": null,
+        "entries": [
+          {
+            "hash": 0,
+            "next": -1,
+            "key": 2147483648,
+            "value": "0x6120037d0"
+          }
+        ],
+        "lookupIndex": 0
+      },
+      "stage": {
+        "enabled": false,
+        "writes": [],
+        "clockCalls": []
+      }
+    },
+    {
+      "name": "uint32-maximum",
+      "decoded": [
+        4294967295,
+        4294967295,
+        4294967295
+      ],
+      "raw94_7c_a0": [
+        4294887269,
+        4294906399,
+        4294921922
+      ],
+      "stop": "0x153a18e80",
+      "messagePointerPreserved": true,
+      "messageContentUnchanged": true,
+      "nextArguments": {
+        "receiverMatched": true,
+        "decoded7c": 4294967295
+      },
+      "taskPointer": "0x6120037d0",
+      "oldTaskPointer": "0x6120038d0",
+      "currentTaskPointer": "0x6120037d0",
+      "previousTaskPointer": "0x0",
+      "borrowed": 1,
+      "taskRaw": {
+        "key58": 4294967295,
+        "value28": 4294967295,
+        "floatBits": [
+          1067450368,
+          3223322624,
+          1081081856
+        ],
+        "stringPointerMatched": true,
+        "resetWords": {
+          "0x2c": 0,
+          "0x30": 0,
+          "0x34": 0,
+          "0x38": 0,
+          "0x3c": 0,
+          "0x50": 0,
+          "0x54": 0
+        },
+        "flags40_41": [
+          1,
+          1
+        ]
+      },
+      "dictionary": {
+        "seed": null,
+        "entries": [
+          {
+            "hash": 2147483647,
+            "next": -1,
+            "key": 4294967295,
+            "value": "0x6120037d0"
+          }
+        ],
+        "lookupIndex": 0
+      },
+      "stage": {
+        "enabled": false,
+        "writes": [],
+        "clockCalls": []
+      }
+    },
+    {
+      "name": "decoded-zero",
+      "decoded": [
+        0,
+        0,
+        0
+      ],
+      "raw94_7c_a0": [
+        34696,
+        4294906398,
+        9715
+      ],
+      "stop": "0x153a18e80",
+      "messagePointerPreserved": true,
+      "messageContentUnchanged": true,
+      "nextArguments": {
+        "receiverMatched": true,
+        "decoded7c": 0
+      },
+      "taskPointer": "0x6120037d0",
+      "oldTaskPointer": "0x6120038d0",
+      "currentTaskPointer": "0x6120037d0",
+      "previousTaskPointer": "0x0",
+      "borrowed": 1,
+      "taskRaw": {
+        "key58": 0,
+        "value28": 0,
+        "floatBits": [
+          1067450368,
+          3223322624,
+          1081081856
+        ],
+        "stringPointerMatched": true,
+        "resetWords": {
+          "0x2c": 0,
+          "0x30": 0,
+          "0x34": 0,
+          "0x38": 0,
+          "0x3c": 0,
+          "0x50": 0,
+          "0x54": 0
+        },
+        "flags40_41": [
+          1,
+          1
+        ]
+      },
+      "dictionary": {
+        "seed": null,
+        "entries": [
+          {
+            "hash": 0,
+            "next": -1,
+            "key": 0,
+            "value": "0x6120037d0"
+          }
+        ],
+        "lookupIndex": 0
+      },
+      "stage": {
+        "enabled": false,
+        "writes": [],
+        "clockCalls": []
+      }
+    },
+    {
+      "name": "explicit-raw-zero",
+      "decoded": [
+        47256,
+        60902,
+        11837
+      ],
+      "raw94_7c_a0": [
+        0,
+        0,
+        0
+      ],
+      "stop": "0x153a18e80",
+      "messagePointerPreserved": true,
+      "messageContentUnchanged": true,
+      "nextArguments": {
+        "receiverMatched": true,
+        "decoded7c": 60902
+      },
+      "taskPointer": "0x6120037d0",
+      "oldTaskPointer": "0x6120038d0",
+      "currentTaskPointer": "0x6120037d0",
+      "previousTaskPointer": "0x0",
+      "borrowed": 1,
+      "taskRaw": {
+        "key58": 47256,
+        "value28": 11837,
+        "floatBits": [
+          1067450368,
+          3223322624,
+          1081081856
+        ],
+        "stringPointerMatched": true,
+        "resetWords": {
+          "0x2c": 0,
+          "0x30": 0,
+          "0x34": 0,
+          "0x38": 0,
+          "0x3c": 0,
+          "0x50": 0,
+          "0x54": 0
+        },
+        "flags40_41": [
+          1,
+          1
+        ]
+      },
+      "dictionary": {
+        "seed": null,
+        "entries": [
+          {
+            "hash": 47256,
+            "next": -1,
+            "key": 47256,
+            "value": "0x6120037d0"
+          }
+        ],
+        "lookupIndex": 0
+      },
+      "stage": {
+        "enabled": false,
+        "writes": [],
+        "clockCalls": []
+      }
+    },
+    {
+      "name": "stage-enabled",
+      "decoded": [
+        3,
+        17,
+        42
+      ],
+      "raw94_7c_a0": [
+        34697,
+        4294906413,
+        9741
+      ],
+      "stop": "0x153a18e80",
+      "messagePointerPreserved": true,
+      "messageContentUnchanged": true,
+      "nextArguments": {
+        "receiverMatched": true,
+        "decoded7c": 17
+      },
+      "taskPointer": "0x6120037d0",
+      "oldTaskPointer": "0x6120038d0",
+      "currentTaskPointer": "0x6120037d0",
+      "previousTaskPointer": "0x0",
+      "borrowed": 1,
+      "taskRaw": {
+        "key58": 3,
+        "value28": 42,
+        "floatBits": [
+          1067450368,
+          3223322624,
+          1081081856
+        ],
+        "stringPointerMatched": true,
+        "resetWords": {
+          "0x2c": 0,
+          "0x30": 0,
+          "0x34": 0,
+          "0x38": 0,
+          "0x3c": 0,
+          "0x50": 0,
+          "0x54": 0
+        },
+        "flags40_41": [
+          1,
+          1
+        ]
+      },
+      "dictionary": {
+        "seed": null,
+        "entries": [
+          {
+            "hash": 3,
+            "next": -1,
+            "key": 3,
+            "value": "0x6120037d0"
+          }
+        ],
+        "lookupIndex": 0
+      },
+      "stage": {
+        "enabled": true,
+        "writes": [
+          {
+            "index": 10,
+            "size": 4,
+            "bits": 1123434496,
+            "source": "0x14c8aea1e"
+          }
+        ],
+        "clockCalls": [
+          "context",
+          "double-value"
+        ]
+      }
+    },
+    {
+      "name": "current-task-slot",
+      "decoded": [
+        3,
+        17,
+        42
+      ],
+      "raw94_7c_a0": [
+        34697,
+        4294906413,
+        9741
+      ],
+      "stop": "0x153a18e80",
+      "messagePointerPreserved": true,
+      "messageContentUnchanged": true,
+      "nextArguments": {
+        "receiverMatched": true,
+        "decoded7c": 17
+      },
+      "taskPointer": "0x6120037d0",
+      "oldTaskPointer": "0x6120038d0",
+      "currentTaskPointer": "0x6120037d0",
+      "previousTaskPointer": "0x6120038d0",
+      "borrowed": 1,
+      "taskRaw": {
+        "key58": 3,
+        "value28": 42,
+        "floatBits": [
+          1067450368,
+          3223322624,
+          1081081856
+        ],
+        "stringPointerMatched": true,
+        "resetWords": {
+          "0x2c": 0,
+          "0x30": 0,
+          "0x34": 0,
+          "0x38": 0,
+          "0x3c": 0,
+          "0x50": 0,
+          "0x54": 0
+        },
+        "flags40_41": [
+          0,
+          0
+        ]
+      },
+      "dictionary": {
+        "seed": null,
+        "entries": [
+          {
+            "hash": 3,
+            "next": -1,
+            "key": 3,
+            "value": "0x6120037d0"
+          }
+        ],
+        "lookupIndex": 0
+      },
+      "stage": {
+        "enabled": false,
+        "writes": [],
+        "clockCalls": []
+      }
+    },
+    {
+      "name": "collision-preserves-entry",
+      "decoded": [
+        3,
+        17,
+        42
+      ],
+      "raw94_7c_a0": [
+        34697,
+        4294906413,
+        9741
+      ],
+      "stop": "0x153a18e80",
+      "messagePointerPreserved": true,
+      "messageContentUnchanged": true,
+      "nextArguments": {
+        "receiverMatched": true,
+        "decoded7c": 17
+      },
+      "taskPointer": "0x6120037d0",
+      "oldTaskPointer": "0x6120038d0",
+      "currentTaskPointer": "0x6120037d0",
+      "previousTaskPointer": "0x0",
+      "borrowed": 1,
+      "taskRaw": {
+        "key58": 3,
+        "value28": 42,
+        "floatBits": [
+          1067450368,
+          3223322624,
+          1081081856
+        ],
+        "stringPointerMatched": true,
+        "resetWords": {
+          "0x2c": 0,
+          "0x30": 0,
+          "0x34": 0,
+          "0x38": 0,
+          "0x3c": 0,
+          "0x50": 0,
+          "0x54": 0
+        },
+        "flags40_41": [
+          1,
+          1
+        ]
+      },
+      "dictionary": {
+        "seed": {
+          "key": 20,
+          "hash": 20,
+          "value": "0x6120038d0"
+        },
+        "entries": [
+          {
+            "hash": 20,
+            "next": -1,
+            "key": 20,
+            "value": "0x6120038d0"
+          },
+          {
+            "hash": 3,
+            "next": 0,
+            "key": 3,
+            "value": "0x6120037d0"
+          }
+        ],
+        "lookupIndex": 1
+      },
+      "stage": {
+        "enabled": false,
+        "writes": [],
+        "clockCalls": []
+      }
+    },
+    {
+      "name": "missing-dictionary",
+      "decoded": [
+        3,
+        17,
+        42
+      ],
+      "raw94_7c_a0": [
+        34697,
+        4294906413,
+        9741
+      ],
+      "stop": "0x1404c2be0",
+      "messagePointerPreserved": null,
+      "messageContentUnchanged": true,
+      "nextArguments": null,
+      "taskPointer": "0x6120037d0",
+      "oldTaskPointer": "0x6120038d0",
+      "currentTaskPointer": "0x0",
+      "previousTaskPointer": "0x0",
+      "borrowed": 0,
+      "taskRaw": {
+        "key58": 0,
+        "value28": 0,
+        "floatBits": [
+          0,
+          0,
+          0
+        ],
+        "stringPointerMatched": false,
+        "resetWords": {
+          "0x2c": 2779096485,
+          "0x30": 2779096485,
+          "0x34": 2779096485,
+          "0x38": 2779096485,
+          "0x3c": 2779096485,
+          "0x50": 2779096485,
+          "0x54": 2779096485
+        },
+        "flags40_41": [
+          165,
+          165
+        ]
+      },
+      "dictionary": {
+        "seed": null,
+        "entries": [],
+        "lookupIndex": null
+      },
+      "stage": {
+        "enabled": false,
+        "writes": [],
+        "clockCalls": []
+      }
+    },
+    {
+      "name": "missing-pool",
+      "decoded": [
+        3,
+        17,
+        42
+      ],
+      "raw94_7c_a0": [
+        34697,
+        4294906413,
+        9741
+      ],
+      "stop": "0x1404c2be0",
+      "messagePointerPreserved": null,
+      "messageContentUnchanged": true,
+      "nextArguments": null,
+      "taskPointer": "0x6120037d0",
+      "oldTaskPointer": "0x6120038d0",
+      "currentTaskPointer": "0x0",
+      "previousTaskPointer": "0x0",
+      "borrowed": 0,
+      "taskRaw": {
+        "key58": 0,
+        "value28": 0,
+        "floatBits": [
+          0,
+          0,
+          0
+        ],
+        "stringPointerMatched": false,
+        "resetWords": {
+          "0x2c": 2779096485,
+          "0x30": 2779096485,
+          "0x34": 2779096485,
+          "0x38": 2779096485,
+          "0x3c": 2779096485,
+          "0x50": 2779096485,
+          "0x54": 2779096485
+        },
+        "flags40_41": [
+          165,
+          165
+        ]
+      },
+      "dictionary": {
+        "seed": null,
+        "entries": [],
+        "lookupIndex": null
+      },
+      "stage": {
+        "enabled": false,
+        "writes": [],
+        "clockCalls": []
+      }
+    },
+    {
+      "name": "pool-null-result",
+      "decoded": [
+        3,
+        17,
+        42
+      ],
+      "raw94_7c_a0": [
+        34697,
+        4294906413,
+        9741
+      ],
+      "stop": "0x1404c2be0",
+      "messagePointerPreserved": null,
+      "messageContentUnchanged": true,
+      "nextArguments": null,
+      "taskPointer": "0x6120037d0",
+      "oldTaskPointer": "0x6120038d0",
+      "currentTaskPointer": "0x0",
+      "previousTaskPointer": "0x0",
+      "borrowed": 1,
+      "taskRaw": {
+        "key58": 0,
+        "value28": 0,
+        "floatBits": [
+          0,
+          0,
+          0
+        ],
+        "stringPointerMatched": false,
+        "resetWords": {
+          "0x2c": 2779096485,
+          "0x30": 2779096485,
+          "0x34": 2779096485,
+          "0x38": 2779096485,
+          "0x3c": 2779096485,
+          "0x50": 2779096485,
+          "0x54": 2779096485
+        },
+        "flags40_41": [
+          165,
+          165
+        ]
+      },
+      "dictionary": {
+        "seed": null,
+        "entries": [],
+        "lookupIndex": null
+      },
+      "stage": {
+        "enabled": false,
+        "writes": [],
+        "clockCalls": []
+      }
+    },
+    {
+      "name": "missing-three-float",
+      "decoded": [
+        3,
+        17,
+        42
+      ],
+      "raw94_7c_a0": [
+        34697,
+        4294906413,
+        9741
+      ],
+      "stop": "0x1404c2be0",
+      "messagePointerPreserved": null,
+      "messageContentUnchanged": true,
+      "nextArguments": null,
+      "taskPointer": "0x6120035d0",
+      "oldTaskPointer": "0x6120036d0",
+      "currentTaskPointer": "0x6120035d0",
+      "previousTaskPointer": "0x0",
+      "borrowed": 1,
+      "taskRaw": {
+        "key58": 3,
+        "value28": 42,
+        "floatBits": [
+          0,
+          0,
+          0
+        ],
+        "stringPointerMatched": true,
+        "resetWords": {
+          "0x2c": 0,
+          "0x30": 0,
+          "0x34": 0,
+          "0x38": 0,
+          "0x3c": 0,
+          "0x50": 0,
+          "0x54": 0
+        },
+        "flags40_41": [
+          1,
+          1
+        ]
+      },
+      "dictionary": {
+        "seed": null,
+        "entries": [
+          {
+            "hash": 3,
+            "next": -1,
+            "key": 3,
+            "value": "0x6120035d0"
+          }
+        ],
+        "lookupIndex": null
+      },
+      "stage": {
+        "enabled": false,
+        "writes": [],
+        "clockCalls": []
+      }
+    },
+    {
+      "name": "missing-next-owner",
+      "decoded": [
+        3,
+        17,
+        42
+      ],
+      "raw94_7c_a0": [
+        34697,
+        4294906413,
+        9741
+      ],
+      "stop": "0x1404c2be0",
+      "messagePointerPreserved": null,
+      "messageContentUnchanged": true,
+      "nextArguments": null,
+      "taskPointer": "0x6120037d0",
+      "oldTaskPointer": "0x6120038d0",
+      "currentTaskPointer": "0x6120037d0",
+      "previousTaskPointer": "0x0",
+      "borrowed": 1,
+      "taskRaw": {
+        "key58": 3,
+        "value28": 42,
+        "floatBits": [
+          1067450368,
+          3223322624,
+          1081081856
+        ],
+        "stringPointerMatched": true,
+        "resetWords": {
+          "0x2c": 0,
+          "0x30": 0,
+          "0x34": 0,
+          "0x38": 0,
+          "0x3c": 0,
+          "0x50": 0,
+          "0x54": 0
+        },
+        "flags40_41": [
+          1,
+          1
+        ]
+      },
+      "dictionary": {
+        "seed": null,
+        "entries": [
+          {
+            "hash": 3,
+            "next": -1,
+            "key": 3,
+            "value": "0x6120037d0"
+          }
+        ],
+        "lookupIndex": null
+      },
+      "stage": {
+        "enabled": false,
+        "writes": [],
+        "clockCalls": []
+      }
+    },
+    {
+      "name": "existing-key-boundary",
+      "decoded": [
+        3,
+        17,
+        42
+      ],
+      "raw94_7c_a0": [
+        34697,
+        4294906413,
+        9741
+      ],
+      "stop": "0x146e05720",
+      "messagePointerPreserved": null,
+      "messageContentUnchanged": true,
+      "nextArguments": null,
+      "taskPointer": "0x6120037d0",
+      "oldTaskPointer": "0x6120038d0",
+      "currentTaskPointer": "0x0",
+      "previousTaskPointer": "0x0",
+      "borrowed": 0,
+      "taskRaw": {
+        "key58": 0,
+        "value28": 0,
+        "floatBits": [
+          0,
+          0,
+          0
+        ],
+        "stringPointerMatched": false,
+        "resetWords": {
+          "0x2c": 2779096485,
+          "0x30": 2779096485,
+          "0x34": 2779096485,
+          "0x38": 2779096485,
+          "0x3c": 2779096485,
+          "0x50": 2779096485,
+          "0x54": 2779096485
+        },
+        "flags40_41": [
+          165,
+          165
+        ]
+      },
+      "dictionary": {
+        "seed": {
+          "key": 3,
+          "hash": 3,
+          "value": "0x6120038d0"
+        },
+        "entries": [
+          {
+            "hash": 3,
+            "next": -1,
+            "key": 3,
+            "value": "0x6120038d0"
+          }
+        ],
+        "lookupIndex": null
+      },
+      "stage": {
+        "enabled": false,
+        "writes": [],
+        "clockCalls": []
+      }
+    }
+  ]
+}

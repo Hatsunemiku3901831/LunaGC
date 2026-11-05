@@ -17,3 +17,5 @@ python -m unittest tools.test_client72_stage_timing tools.test_client72_born_con
 新工具使用`client72_stage_runtime.py`封装明确时钟/数组输入，可用于接下来的正常入场原生分支；没有提前定义未知场景业务。共享[观察摘要](../protocol/cn-7.2/stage-timing-observations.json)和修名后的旧摘要仍runtimeStatus=not-tested，三层字段与ready状态不变。B-02e3继续追踪阶段记录之后的加载任务/数据消费，父任务和D-02未完成。
 
 6项新增/26项聚焦、完整311项研究回归通过；计时13组及修名的旧33/32组均实际运行两次，trace/摘要逐字节一致。逐结构复核确认旧证据只变字段名和范围文字/工具hash，原生路径/地址/输入/结果不变。依赖门禁人工接入第55份研究输入及两个改名hash，全部源码/Proto/矩阵内容与开放边界不变，recover两次一致；研究校验通过，ready仍228缺口。复核证据为stage-correction-{determinism,login-proto-review-check,login-proto-repeat}.json，日志stage-correction-research-regression.log，均在忽略local/migration72。
+
+主线只读实机补充：重新核对三输入和实际模块两段代码（计时32字节、时钟包装26字节），原调试目标仍running；开关145878E41=0、IFix标志=0，真实数组长度16且各槽为0（64字节SHA-256 f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b）。只读脚本read_runtime_stages.py和stage-runtime-readonly.json留local/migration72，未暂停/继续/写内存。开关关闭时全零不能证明未发生SDK/请求或未走阶段，亦非原生时钟生命周期验收。B-02e3正常分支已完成，见[正常场景消费](CLIENT_72_SCENE_NORMAL.md)；完整研究现327通过。

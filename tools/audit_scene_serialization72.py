@@ -22,13 +22,13 @@ except ImportError:
     from audit_resource72 import index_table, verify_tree, read_client_evidence
 
 
-RUNTIME_SHA256 = '3a05ca88115f93a46bbb0ca334f54241f560a291fbb5b05fa2d42bb0f87aa522'
+RUNTIME_SHA256 = '4dd1c47a0be92e67e0f938221d5a982122c903b232c906822cbce27ed4a4bbe7'
 LEGACY_COMMIT = 'dac2a9d43332ef51879522cf39da2831b0ca0543'
 # Each interface/algorithm below was read before implementing the direct adapter.
 REVIEWED_SOURCES = {
     "tools/Client72SceneScriptAudit.java": "49605e4cf2c66b282523cb3be0895b345bbe273b44e8c9c13e2568646e4668a0",
     "tools/audit_scene_scripts72.py": "7c23f644e2efa4fb1d7c94eb4af814e67b6bbc34453e1fe03fc70fb344de065c",
-    "src/main/java/emu/grasscutter/scripts/serializer/LuaSerializer.java": "edc7da379f10a00d4a8ecd9eab7ebda4941113b5b98ad350e7c67e0d81d45e33",
+    "src/main/java/emu/grasscutter/scripts/serializer/LuaSerializer.java": "3f4c17056f0c83d0380345ba785164bec45133e87613380b6c51105cbc23302f",
     "src/main/java/emu/grasscutter/scripts/SceneScriptManager.java": "e6c707e1eab5d439e6762a25a0591a2c798125d1e95cb3091a72127929b8b89e",
     "src/main/java/emu/grasscutter/scripts/SceneIndexManager.java": "769a6b3e189c15239e2b805638326a88f3a62b6a3f4b0fe027952db3ab1b75a6",
     "src/main/java/emu/grasscutter/game/world/Position.java": "157543f5cd3213bc28e1c90b8610e6ebef612bba587dccbf0200c93be1ddc529",
@@ -40,17 +40,17 @@ REVIEWED_SOURCES = {
     "src/main/java/emu/grasscutter/scripts/data/SceneBossChest.java": "620cd0f0512fd4b0a006e6ed5b163fa017daa8fd2c2acde2ce6c88c0b598c505",
     "src/main/java/emu/grasscutter/scripts/data/SceneBusiness.java": "6b36ca0975fafd5279e86e37b749b42f627e890b63744ef38c766c2531247dde",
     "src/main/java/emu/grasscutter/scripts/data/SceneConfig.java": "acb257241a54d3cbf477c19f2310c41317c548a05f2f6a5867f2bfd67a0a14a5",
-    "src/main/java/emu/grasscutter/scripts/data/SceneGadget.java": "fccdee73e1b1da968be909729ace0f7b23d2c7d56b05b9a2fe6418fa8e0144ac",
+    "src/main/java/emu/grasscutter/scripts/data/SceneGadget.java": "ef19376933aef9eb56b74e810b08a6ac263ba28fc50eba79c0f849f646eeb9c9",
     "src/main/java/emu/grasscutter/scripts/data/SceneGadgetCrucibleConfig.java": "80e34cc7f1c44fe3beae9109af5b5e03379daba045821a76f37a121426239f9f",
     "src/main/java/emu/grasscutter/scripts/data/SceneGarbage.java": "f622d03459dbb7ac3720988cebf14f92911dcca0f996fd949e53a7e28cfc5e71",
     "src/main/java/emu/grasscutter/scripts/data/SceneGroup.java": "7e899a4457920cdc304a9db55450b8eb20062ab25f127165432abd9f92d44f7e",
     "src/main/java/emu/grasscutter/scripts/data/SceneInitConfig.java": "43093ddfc327330cf3da73413e7c7e604d72841ba454fea37a4d6ffbe2e368cf",
     "src/main/java/emu/grasscutter/scripts/data/SceneMeta.java": "4708e0fa2c35dedd64d8af444d8524ac02d42747a475d996f7115b2db575198f",
-    "src/main/java/emu/grasscutter/scripts/data/SceneMonster.java": "ac92ded377141012ab073ae940706acb2b14fc3269305c8972b0ef5f2312c346",
+    "src/main/java/emu/grasscutter/scripts/data/SceneMonster.java": "e6108cb63a71acdf1fafab398c7ce9571a8443ed7c800ba95811dfb3e4c78dad",
     "src/main/java/emu/grasscutter/scripts/data/SceneNPC.java": "8f4014aae569f41c002e1c7cc67e3a5d386a0f7f5d0f30972e13ad17fe5c30e6",
     "src/main/java/emu/grasscutter/scripts/data/SceneObject.java": "e5b7ca6d9868e1a183b5ae2b755a67005d508f88dab9b04b66790181ae452d26",
     "src/main/java/emu/grasscutter/scripts/data/ScenePoint.java": "c54ce44f5a7d7d7f6cef3f3caa14bae2a7aeb797ca72a263d5a685636e8353aa",
-    "src/main/java/emu/grasscutter/scripts/data/SceneRegion.java": "1fa2ed749d02ad23e4a151bd1aed7e7e7ceba7b212d84b6256a7267a5d0d7737",
+    "src/main/java/emu/grasscutter/scripts/data/SceneRegion.java": "d7068474765905a4e1a6cb1c52ee560b49fcd11524315dc69ce2f641e334e8f0",
     "src/main/java/emu/grasscutter/scripts/data/SceneReplaceable.java": "2a729a204730d0c12aa48007691362fc32071a9421153a163efdbab2aa1720a6",
     "src/main/java/emu/grasscutter/scripts/data/SceneSuite.java": "825f43f6b8506ff22d2154c1d01772c5f978cccdf86da18e478ac6788e7bccf6",
     "src/main/java/emu/grasscutter/scripts/data/SceneTrigger.java": "bd622e53c383c40183f2c3a18f78f73a48c425abdeb6e42e36274cabd645c43a",

@@ -61,14 +61,14 @@ suites={{monsters={8},gadgets={9000},regions={9},triggers={"never"}}}''', dynami
         self.assertFalse(report['legacySourceIsNative72'])
         self.assertEqual(summarize(report)['scriptManifest']['commonFiles'], 1)
 
-    def test_silent_numeric_boolean_coercion_and_unknown_fields_remain_observable(self):
+    def test_fractional_radius_preserved_and_other_coercion_or_unknowns_stay_visible(self):
         report = self.fixture('''gadgets={{config_id=1,gadget_id=7,pos={x=1,y=0,z=1},persistent=0,new_field=9}}
 regions={{config_id=2,shape=RegionShape.SPHERE,pos={x=1,y=0,z=1},radius=2.75}}
 suites={{gadgets={99}}}''')
         kinds = {row['kind'] for row in report['issues']}
-        self.assertEqual(kinds, {'numeric-value-changed', 'boolean-coercion', 'suite-reference-dropped'})
+        self.assertEqual(kinds, {'boolean-coercion', 'suite-reference-dropped'})
         self.assertEqual(report['ignoredSourceFields']['SceneGadget.new_field'], 1)
-        self.assertEqual(next(row['value'] for row in report['issues'] if row['kind'] == 'numeric-value-changed'), '2.75->2')
+        self.assertFalse(any(row['kind'] == 'numeric-value-changed' for row in report['issues']))
 
     def test_invalid_grid_layer_missing_position_and_unknown_region_enum_are_not_success(self):
         report = self.fixture('''gadgets={{config_id=1,gadget_id=7,vision_level=9,pos={x=1,y=0,z=1}}}
@@ -93,20 +93,17 @@ garbages={gadgets={{config_id=2,gadget_id=8,pos={x=41,y=0,z=1},vision_level=1}}}
         self.assertEqual(report['issues'][0]['kind'], 'group-failure')
         self.assertIn('real failure', report['issues'][0]['value'])
 
-    def test_production_suite_numeric_trigger_failure_and_boolean_setter_gap(self):
+    def test_numeric_trigger_strings_and_boolean_fields_bind_after_production_fix(self):
         report = self.fixture('''monsters={{config_id=1,monster_id=7,pos={x=1,y=0,z=1},isElite=true}}
 gadgets={{config_id=2,gadget_id=7,pos={x=1,y=0,z=1},is_use_point_array=true}}
-triggers={{name="TR"}}
+triggers={{name=tostring(52001)}}
 suites={{triggers={tostring(52001)}}}''')
-        self.assertEqual(report['unboundDeclaredSourceFields'], {'SceneMonster.isElite': 1, 'SceneGadget.is_use_point_array': 1})
-        self.assertEqual(report['unboundDeclaredFieldExamples']['SceneMonster.isElite']['actual'], 'false')
-        self.assertEqual(report['unboundDeclaredFieldExamples']['SceneGadget.is_use_point_array']['source'], 'true')
-        self.assertIn('list-element-type', {row['kind'] for row in report['issues']})
-        failure = next(row for row in report['issues'] if row['kind'] == 'group-failure')
-        self.assertEqual(failure['path'], 'suites[1].init')
-        self.assertIn('ClassCastException', failure['value'])
-        self.assertTrue(any('SceneSuite.init' in frame for frame in failure['frames']))
-        self.assertNotIn('serializedGroups', report['counts'])
+        self.assertEqual(report['unboundDeclaredSourceFields'], {})
+        self.assertEqual(report['unboundDeclaredFieldExamples'], {})
+        self.assertEqual(report['issues'], [])
+        self.assertEqual(report['counts']['serializedGroups'], 1)
+        self.assertEqual(report['counts']['initializedSuites'], 1)
+        self.assertEqual(report['counts']['suiteBound.triggers'], 1)
 
     def test_reviewed_source_drift_rejected(self):
         with tempfile.TemporaryDirectory(prefix='scene-serialization-guard-', dir=self.repo / 'local/migration72/analysis') as folder:

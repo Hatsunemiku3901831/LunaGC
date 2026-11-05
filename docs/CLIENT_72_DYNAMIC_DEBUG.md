@@ -95,3 +95,5 @@ python -m unittest tools.test_client72_ec2b
 共享摘要[startup-continuation-observations.json](../protocol/cn-7.2/startup-continuation-observations.json)只含输入hash、代码比对与脱敏范围。本机证据为evidence/continuation-startup-{load,01..06,managed-exception,continuous,live}.json，日志logs/continuation-startup-*，探索脚本analysis/observe_startup_{continuation,phase,continuous}.py，均在忽略local/migration72。分段脚本保留作失败过程，不作为推荐恢复入口。
 
 **最新目标保留运行，API索引为evidence/dynamic-active-session.json；下次必须实时核对。** API断开只断开观察连接，不会停止目标；不得重复load新客户端。若已暂停，先读取当前ex.*和断点/日志，不能无条件run。需要进一步观察时保持同一连接，或从已保存并重新验证的当前停止原因恢复。运行服务仍未启动，数据和客户端文件未修改。
+
+最新只读阶段存储核查：analysis/read_runtime_stages.py重验固定三输入及当前模块14C8AE9A0/141447A90代码32/26字节，仅读取开关和数组。目标running、两个key槽0；阶段开关和IFix均0，实际float数组长度16、全零、64字节SHA-256 f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b。开关关闭意味着零时间戳不能证明阶段或请求未发生；SDK/登录仍未验。报告evidence/stage-runtime-readonly.json与对应日志留忽略目录，不含共享PID/路径；没有再次load/run、暂停或写内存。

@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+2026-11-06最新整合：B-02e3限定完成，见[正常场景](docs/CLIENT_72_SCENE_NORMAL.md)与[阶段计时](docs/CLIENT_72_STAGE_TIMING.md)：13+14原生样本双跑一致，旧born39/continue33/wait32保留，查询153A18E80未执行，B-02e4继续。E-01c2修复与构建见[生产修复](docs/CLIENT_72_SCENE_SERIALIZATION_FIXES.md)：9408f41、7项先6失败后全过；13,616组/20,871套件两次完整，1,283问题降为8缺ID，setter缺口为空，网格模型34,970格/60,884成员。327研究/28套580项Java选集均失败/错误/跳过0；Java含前批495及85项区域/脚本，独立Mongo随机库已正常关闭且仅admin/config/local，原数据保留。JAR SHA-256 4dd1c47a0be92e67e0f938221d5a982122c903b232c906822cbce27ed4a4bbe7，内嵌9408f41；未部署，健康及运行JAR无对象。人工复核新增baseline/fixed/normal摘要，输入55→56→58，全部三层/源码/Proto/候选/开放边界不变，recover双跑，ready仍228。证据scene-serialization-fixed-*、scene-serialization-java-regression-summary.json、scene-fixed-normal-login-proto-*，研究日志scene-fixed-normal-research-regression.log均在local/migration72。E-01c3只做接口来源清单，父任务及D-02未完成。下文早期批次的“未改生产/未跑Java”仅为当时记录。
+
 2026-11-06最新恢复：用户要求继续逐项推进至D-02实机验收，覆盖前批停止点。B-02e1完成见下文；E-01b固定scene3审计见[场景资源](docs/CLIENT_72_SCENE_RESOURCES.md)。`audit_scene_resource72`要求固定commit/root/BinOutput/Scene/Point与Excel blob链，核对9源码hash；1823点、2817正引用无缺失，7新增/14资源回归及两次产物一致。资源尚未安装；当前真实调试目标状态见下一段，完整资源及运行时revision仍未验。
 
 本批动态启动已接续：见[动态研究最新节](docs/CLIENT_72_DYNAMIC_DEBUG.md#2026-11-06恢复连续api连接下的启动观察)。分段重连发现当前异常事件缺口；改为连续连接150秒，5入口代码相同/DR全0、40首次异常由事件及ex.code/addr核对后逐个交付，目标存活运行、两key槽空；SDK/登录/退出根因未验。当前目标保留，不再适用上段“未启动游戏”的较早状态；先实时核对dynamic-active-session，禁止无条件run或重复load。用户另允许参考7.1场景实现迁移到7.2，E-01c开始实际Lua/目标ID核查，保留来源和未知。
