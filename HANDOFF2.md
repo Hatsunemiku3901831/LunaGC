@@ -1,40 +1,54 @@
 # 国服7.2详细接续记录
 
-更新：2026-11-05。用户要求持续推进至D-02完成并验收；目标active，无暂停指令。D-02未完成，不能把离线工具验收当作实机通过。
+更新：2026-11-05。用户要求持续推进至D-02完成并验收；目标active，无暂停指令。D-02仍未完成，不能用离线工具通过替代实机验收。
 
 ## 当前状态与完成项
 
-本批接手0c08812，已阅读AGENTS、README、Project、Harness、迁移/部署手册、两份交接及账号/保存专题。当前本地研究提交`c34ab42`完成A-04d5n2限定验收：同次JSON/原生RSA/SHA/验签→30677父reader→67961嵌套ReadMessage/limits/reader→151204AC0配置入口。8原生样本，173研究回归；trace/摘要二次逐字节一致。研究校验退出0、ready退出1。所有协议业务命名仍35字段，tag14/tag965未知。
+本批起点08f8284；新研究提交`c158e0e`完成A-04d5n3限定验收。正式工具trace_client72_dispatch_config同次执行：151210540 JSON→原生RSA/SHA/验签→父/Region reader→两次151204AC0配置函数→两次原生事件分发→Region全局字段写入→1512124B9。没有跳过配置body或把事件函数替换为成功返回；下一SDK前置和SDK函数未执行。
 
-工作区既有AGENTS修改、resources内ScriptSceneData/flat.luas.scenes.full_globals.lua.json保留且未提交。patch f2874103ab70afc56260ee12d1eaca96247933b2，resources dac2a9d43332ef51879522cf39da2831b0ca0543，均未变。已核对本机.env使用portable和目标GAME_PATH，.env.local不存在；未启动/操作客户端或数据库，未修改运行代码/Proto/配置/补丁/资源，不需要部署重启。未来启动须重新核对配置、进程及固定端口归属。
+6原生样本：空配置、第一段非零/列表、第二段Int32最大/负列表、Int32最小/溢出、第一/第二段坏JSON。177研究回归通过，trace/摘要两次逐字节一致；研究校验0、ready1。业务命名仍35字段，tag14/tag965未知；A-04d5n/B-02c9、A-04d/B-02仍进行中。
 
-## 工具和实际证据
+AGENTS.md和resources/ScriptSceneData/flat.luas.scenes.full_globals.lua.json为既有修改，保留且未提交。patch仍f2874103ab70afc56260ee12d1eaca96247933b2，resources仍dac2a9d43332ef51879522cf39da2831b0ca0543。只改离线工具/摘要/测试/文档，没有运行源码/Proto/补丁/配置/资源变更，没有操作数据库或客户端，不需重启。未来启动仍须重新核对.env/.env.local/config、进程/端口，使用portable。
 
-- `tools/trace_client72_dispatch_post.py`、`tools/test_client72_dispatch_post.py`、共享`protocol/cn-7.2/dispatch-post-observations.json`。
-- 本机`local/migration72/evidence/dispatch-post-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json`；logs/dispatch-post-{run,repeat,regression}.log。
-- 8组：非零、空Region、UInt32最大、重复Region合并、缺Region、负int32、嵌套长度截断、嵌套varint截断。合并2次reader/1次分配；长度截断为原生异常分支，varint截断是显式wire-helper边界，二者不混称原生拒绝。
-- 配置实参rdx/r8来自响应tag12/tag11，原生ToByteArray后字节相同；mode=1/receiver不变。只验入口，不代表任意bytes是有效配置JSON。session+B0全样本保持未变。
-- Region67961 Clone读取1458DEE48、CopyFrom149BB5A00及reader slot19/149BB4EB0已核查。只覆盖选定字段，未宣称完整Region schema。
+## 实际证据和复现
 
-复现命令见CLIENT_72_SESSION末尾A-04d5n2与Harness。工具每次校验三份固定输入哈希。README/Project/Harness/会话研究已更新。前批n1及更早历史详见本次备份与Project，不要重复覆盖其范围。
+正式工具tools/trace_client72_dispatch_config.py、tools/test_client72_dispatch_config.py，共享protocol/cn-7.2/dispatch-config-observations.json。详细复现与模型边界见CLIENT_72_SESSION末尾A-04d5n3、Harness。
 
-## 未完成、阻塞和下一步
+本机local/migration72/evidence/dispatch-config-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json；logs/dispatch-config-{run,repeat,regression}.log。前批n2工具和证据保持不变。
 
-A-04d5n/B-02c9及A-04d/B-02仍进行中。没有必须等待外部才可做的整体硬阻塞：继续151204AC0配置函数内部，返回151211DD5，再贯通后处理至B0；第二协程和tag965业务来源另验。B-03/C-01尚不具备完整映射前置；D-01补丁实际加载/信任、E-01资源revision/场景/Lua仍未齐。D-02新旧测试号、选人、初始化、场景握手、心跳、退出重登全部未实测。
+命名静态输入已核对Encoding.utf8Encoding（GLOBAL+24B8）、GlobalVars.SafeOptionalResourceCategories（+6248）和SecureOptionalResourcePolicyPlugins（+6160）。JSON容器、数组、装箱、类初始化与空事件注册为明确夹具；原生scalar getter/List clear/add、两配置body、事件1532D6720→1532ECA40→空字典FindEntry1565EE8D0实际执行。
 
-最新探索：忽略脚本`analysis/probe_dispatch_config.py`、`analysis/dispatch-config-probe.log`。以{}配置/空key/模式1从151204AC0原生执行，目标literal34216日志为`Genshin Start Log: NetworkManager SetServerDispatchConfig isGlobal=`。原生代码对输入执行可选XOR，然后Encoding.GetString→JSON Parse→146D3F6E0配置字段消费。已允许146D3F6E0真实执行；未把该业务方法模拟成功。
+两次配置从响应tag12/tag13接收ASCII JSON，key/tag11明确为空；非空key解码/XOR未验。列表预填123用于证明缺键清空，覆盖非零/负数/Int32最大。事件ID919携带mode1/2，只证明空监听器分派；真实注册回调未运行。Region tag13/string经+30到GLOBAL+6240/+6078，tag14/uint32经+140到14586CFB4均由非零独立wire验证。
 
-目前可执行下一步：探索最后到1404C2BE0，返回地址151207A94（实际调用151207A8F），在secureOptionalResourcePolicyPlugins缺省路径遇到尚未设置的容器。查1512057D6以后的引用/相应GLOBAL槽，恢复明确初始化布局，继续真实执行，不把所有空指针替换成任意对象。Encoding缓存GLOBAL+24B8目前显式用既有Encoding模型，GLOBAL+6248是空集合存储夹具；它们只是离线初始化输入，不证明真实SDK初始化已完成。现有{}探索不列为正式验收。
+## 当前未完成与下一步
+
+当前没有整体外部硬阻塞，可以继续研究。下一步从1512124B9读取GLOBAL+F2E0开始：缺该singleton时在151212D8E进入原生NullReference分支；不能设任意对象后声称真实初始化。它的正常分支接15275F080，必须恢复该函数真实行为后返回1512124EB，再继续至B0（15121297C）。第二协程和tag965业务来源仍需独立证据。后续B-03/C-01、D-01补丁加载/信任、E-01资源闭包和D-02完整实机顺序均未完成。
+
+SDK函数声明：类型14237/BIFHKCHGMEO，方法IPKPEJOFHLB，entry15275F080；它构造MiHoYo.SDK.JSONObject等，读取SDK对象+68，命名Miscs.GetGameVersion1531DCB70、ConfigChannel.IEDHGBHKFAH14947D950；后续StringBuilder序列化、141447620及其他SDK数据源/字典操作仍未执行。函数元数据初始化组0x7ECB只新增1458AE590→82316/LFLFNKJGBEI，不能假定其他共享类型同组初始化。
+
+静态type cell探索脚本analysis/probe_sdk_type_cells.py按固定目标metadata usage解码（非运行验收），已输出：
+
+| usage行 | cell | 类型 |
+| --- | --- | --- |
+| 698608 | 145886158 | 452/System.Text.StringBuilder |
+| 698933 | 145887150 | Dictionary<string,string>闭合实例 |
+| 699017 | 1458875C8 | 4354/MiHoYo.SDK.JSONObject |
+| 699018 | 1458875D0 | 4346/MiHoYo.SDK.JSONNode |
+| 700517 | 14588F3E8 | 4356/MiHoYo.SDK.JSONString |
+| 700519 | 14588F408 | 4358/MiHoYo.SDK.JSONBool |
+| 710075 | 1458C3958 | 23189/DJKBKNPDKCL（mode装箱类型） |
+
+SDK JSONObject .ctor1597AE4E0、Add1597C35D0可按已命名容器边界研究，但SDK业务调用不能直接强制成功；MiHoYo.SDK JSON与已有SimpleJSON是两套类型。后续1527571F0/15275F990同属14237；153D34030属82316，保持未验。反汇编已留analysis/disasm-15275f080.txt、disasm-15275f235.txt等。
 
 ## 弯路与避坑
 
-1. n1成功样本只有tag14，缺Region时真实后处理走151211BDD错误处理入口；不能直接拼接成功地址到B0。
-2. Region为空class并非目标客户端缺陷；原生实际读取1458DEE48，先用Clone/CopyFrom/声明核对类型再模型化分配。
-3. ByteString字段还需允许原生147CF2D60赋值包装；不应绕过wrapper直接写字段。
-4. 配置函数入口前缀通过不代表配置被消费。原始cfg/key bytes用于参数传递断言，后续必须改为有效JSON/密钥夹具并验证真实解码。
-5. 不把任意返回RAX截成错误码，不跳未知调用，不用线性解释保护填充段替代原生执行。
-6. 继续保持错误UI/HTTP/IFix/实际运行时ABI和客户端验收独立；仅离线工具改动无需重启服务。
+- 最初配置返回断言用EAX==1失败；实际15120C059只写DIL=1，15120C06A再mov eax,edi，其他位残留。因此报告保留nativeReturnRAX并只断言已验证的AL=1；不要猜成int32错误码或截断指针。
+- 两个静态列表缺省时原生会清空。空集合夹具是按目标读写的+10数组/+18长度/+1C版本构建，不模拟业务清空成功。
+- config样本全部key为空；不能说已验证加密配置或实际SDK初始化。坏JSON为显式JSON helper拒绝，不是目标原生JSON parser错误实现验证。
+- 可选GLOBAL+E0F0缺省时14F8EF7B0真实返回；非空监听器/UI动作未验。
+- analysis/probe_dispatch_config.py、probe_dispatch_continuous.py是探索，正式证据由trace_client72_dispatch_config接管；continuous探索的NullReference在151212D8E，不是可用路径。
+- 不将n1/n2/n3相加称完整dispatch；SDK/B0缺口真实存在，不跳未知调用，不用版本文字/健康/编译替代实机。
 
-## 交接备份
+## 交接与文档
 
-本次覆盖前备份原HANDOFF2至`local/migration72/handoffs/HANDOFF2.before-dispatch-post-c34ab42.md`，已核对SHA-256相同。HANDOFF.md只追加。研发未暂停，下一轮接续不需再次授权；全部本地提交，未推送。
+README/Project/Harness/CLIENT_72_SESSION已同步。旧HANDOFF2先备份至local/migration72/handoffs/HANDOFF2.before-dispatch-config-c158e0e.md并核对SHA-256一致；HANDOFF.md只追加。研发未暂停，接续不需重新授权。全部本地提交，未推送；D-02的新旧测试号、选人、初始化/场景握手、心跳、退出重登全部仍待实机验收。

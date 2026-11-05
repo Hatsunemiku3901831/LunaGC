@@ -22,3 +22,10 @@ Project已补齐提交号和验收/下一步（74ac0f0、54dfac1）。下一项�
 本地提交`c34ab42`：分区JSON/原生密码学连续到Region嵌套读取及151204AC0配置入口。8原生样本、173研究回归，trace/摘要二次一致；研究校验0、ready1。A-04d5n/B-02c9仍进行中；D-02未完成，无客户端验收，目标active且未暂停。
 
 下一步151204AC0配置内部→151211DD5→B0；{}探索当前遇到容器初始化缺口，详见[HANDOFF2.md](HANDOFF2.md)。本次覆盖前原HANDOFF2已备份至忽略目录`local/migration72/handoffs/HANDOFF2.before-dispatch-post-c34ab42.md`并核对哈希。未改运行内容、不重启；AGENTS/resources既有修改保留未提交，未推送。
+
+
+## 2026-11-05：A-04d5n3完成，继续SDK更新至B0
+
+研究提交`c158e0e`：两次配置原生消费/事件返回和Region全局写入，终点1512124B9。6原生样本、177回归、重复trace/摘要一致，研究校验0/ready1。下一项GLOBAL+F2E0前置与SDK函数15275F080，随后才能继续B0；tag965语义未知，D-02未完成，目标active且未暂停。
+
+[HANDOFF2.md](HANDOFF2.md)含SDK类型绑定探索和返回寄存器避坑。覆盖前原详细交接已备份local/migration72/handoffs/HANDOFF2.before-dispatch-config-c158e0e.md并核对哈希。无运行部署，AGENTS/resources差异保留未提交，未推送。
