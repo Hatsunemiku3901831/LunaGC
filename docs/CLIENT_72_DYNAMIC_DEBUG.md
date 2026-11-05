@@ -42,3 +42,22 @@
 这些路径均相对local/migration72。当前目标保留在调试暂停点，不能把任务active误解为游戏正在运行。已设置两个命名软件断点和Global/RNG mask写入观察点，后续须核对现有断点再继续；不得强杀未知进程或重复启动客户端。
 
 启动脚本曾因PowerShell字符串数组拼接失去换行，已修正；提权重启没有继续原-cf脚本，界面输入也未生效。现已用Automate API成功读到内存和日志，不再依赖旧脚本或computer-use。用户无需再次为同一已授权研究确认动态调试；确需Windows安全对话框时仍由用户手动处理。
+
+
+## A-04d5u 原生Ec2b独立验收
+
+`client72_ec2b`首先实际执行1411267B0注册与1408AF2A0 RNG初始化，逐字节对照独立624字递推和上述真实5000字节hash，再执行1411268D0→1408BAEE0→1408BAD50→1408AF320。未替换cipher或成功结果。managed入口14146ADA0还实际读取数组长度、调用native decoder、经selector5取byte class、分配并复制4096字节结果；engine对象与managed分配是明确存储模型。
+
+`trace_client72_ec2b`固定仓库dispatchSeed.bin（2076字节，SHA256 2258b87182df6e8e679c15a86184ddaf8d4b5eda24cd81bf12e85bb8a9e00637）与dispatchKey.bin（4096字节，上文hash）作独立输入/参考，不启动旧客户端。16组覆盖原始pair、不同堆地址、缓存后重复、key/body单字节扰动、错误魔数/内部key长度/body长度、null、零/负声明长度、缺函数指针、managed成功/拒绝/null。成功pair五组结果逐字节相同；扰动组输出改变；raw拒绝保持A5输出哨兵，managed拒绝返回null且不分配。
+
+一个明确边界：raw decoder只对外部length做正值判断；声明length=1但**底层仍给完整2076字节**时会成功。本项不把该测试描述为实际截断managed数组通过，也不擅自增加运行防御或改变客户端。物理截断处理、分区来源/schema语义及连续帧仍待验证。
+
+```powershell
+$env:GAME_PATH = & ./tools/game_path.ps1
+python tools/trace_client72_ec2b.py --client $env:GAME_PATH --output local/migration72/evidence/ec2b-trace.json --summary-output protocol/cn-7.2/ec2b-observations.json
+python -m unittest tools.test_client72_ec2b
+```
+
+16原生样本、228研究回归、二次trace/摘要一致，研究校验0/ready1。只有离线工具/测试/摘要/文档变化，不部署运行服务。
+
+实时观察补充：在同一管理员调试会话，从1411267B0单步到函数ret1411268C1，确认145744EB8由0变为按实际基址重定位的1408BAEE0；暂停在ret前，未声称整个SDK初始化。报告evidence/dynamic-ec2b-registration.json。之后继续使用Automate接口，遵守用户禁止computer-use要求。

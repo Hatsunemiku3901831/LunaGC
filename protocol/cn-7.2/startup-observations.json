@@ -73,5 +73,13 @@
     "dispatch-to-initial-key continuous chain",
     "negative/boundary EC2b validation",
     "P0 protocol closure/server connection/live login/scene acceptance"
-  ]
+  ],
+  "registrationObservation": {
+    "entry": "0x1411267b0",
+    "stop": "0x1411268c1",
+    "slot": "0x145744eb8",
+    "beforeNull": true,
+    "target": "0x1408baee0",
+    "returned": false
+  }
 }

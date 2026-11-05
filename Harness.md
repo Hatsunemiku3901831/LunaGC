@@ -199,3 +199,6 @@ Handler→Login正式入口：`trace_client72_handler_login`，见[会话研究A
 
 
 动态研究改用脚本API：[CLIENT_72_DYNAMIC_DEBUG](docs/CLIENT_72_DYNAMIC_DEBUG.md)。用户明确禁止继续computer-use，已手动完成管理员启动与Automate插件加载；当前实时会话需通过API重新确认，勿新开客户端。D-01b1真实启动/5处代码/5000字节RNG状态与原生初始化交叉通过；evidence/dynamic-*.json和logs/dynamic-phase-*.json留本机。Ec2b原生单组探索已输出与仓库dispatchKey相同，正式化/分区串联尚待；analysis/probe_initial_key_native_init.py及evidence/initial-key-native-init-exploration.json。此前零RNG夹具导致取样不返回，不能靠扩大预算或强置成功绕过。下一项正式Ec2b和真实初始化来源，D-02仍未验。
+
+
+Ec2b正式入口：`client72_ec2b`与`trace_client72_ec2b`，见[动态调试A-04d5u](docs/CLIENT_72_DYNAMIC_DEBUG.md#a-04d5u-原生ec2b独立验收)。16原生样本、228回归、重复产物通过；evidence/ec2b-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json、logs/ec2b-{run,repeat,regression}.log。初始化实际执行1411267B0/1408AF2A0，完整解码不设成功模型，fixedpair/LIVE RNG/独立递推交叉；raw短声明不是物理截断。真实调试进程已另验注册目标写入，暂停1411268C1，见evidence/dynamic-ec2b-registration.json。下一项analysis/probe_dispatch_key.py探索非空key/RSA多块/配置XOR，未正式验收。
