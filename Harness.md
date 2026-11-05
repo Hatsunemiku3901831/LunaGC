@@ -127,3 +127,5 @@ A-04d3请求入口：[Login完整wire](docs/CLIENT_72_LOGIN_WIRE.md)；trace_cli
 会话研究新增入口：[CLIENT_72_SESSION](docs/CLIENT_72_SESSION.md)。trace_client72_session从明确的解密后检查点执行seed字节序/XOR、整数存储和MT64，12组Java独立逐字节对照与6组原生短输入拒绝。client72_session_runtime只模型化声明的托管分配/随机源/置换表，不模拟解密、验签、Shell成功。共享session-seed-observations.json；本机evidence/session-seed-trace.json、session-seed-determinism.json；91项回归在logs/session-all-tests.log。本项不代表完整Token成功路径或实机验收。
 
 接续：响应+68→会话+98→1507C2211→151213730请求+D8需完成独立wire链；Login保护续段151213AC6已执行到环境类1458971C0检查。Shell新分支15A3CE060与解密/验签仍明确未知。任务状态以Project最新执行记录为准；只改离线研究工具无需重启运行服务。
+
+上述token链现由trace_client72_token_flow完成：4组response tag6→session+98→Login参数→request tag1及1组null会话拒绝；两个token字段进入映射，新增validate_session_token_flow约束hash/来源链/wire一致。复现命令见CLIENT_72_SESSION，报告evidence/session-token-trace.json、session-token-determinism.json及logs/session-token-tests.log（95项）。构造完整续段仍从analysis/probe_login_continue.py研究，当前旧Shell受控byte[]→ByteString之后到148A22560→1421C1DB0原生ret；接着追踪151214D20发送参数和响应配对。该忽略脚本只供探索，正式证据必须迁入工具后重复验证；不能把其环境哨兵当实机结果。

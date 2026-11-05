@@ -1,6 +1,10 @@
 import unittest
+import copy
+import json
+from pathlib import Path
 from tools.client72_session_runtime import permutation_table, SessionRuntime72
 from tools.trace_client72_session import SEED_CASES
+from tools.validate_protocol72 import validate_session_token_flow
 
 
 class SessionFixtureTests(unittest.TestCase):
@@ -29,6 +33,35 @@ class SessionFixtureTests(unittest.TestCase):
         self.assertNotEqual(int.from_bytes(data,'little')^client,0xffffffffffffffff)
         self.assertEqual(cases['trailing-byte'][0][:8],cases['mixed'][0])
         self.assertTrue(any(client>>63 for _,client in cases.values()))
+
+
+class SessionTokenEvidenceTests(unittest.TestCase):
+    def setUp(self):
+        root=Path(__file__).resolve().parents[1]/'protocol/cn-7.2'
+        self.doc,self.profile,self.flow,self.login,self.response=[json.loads((root/name).read_text('utf8'))
+            for name in ('mappings.json','profile.json','session-token-observations.json',
+                         'login-wire-observations.json','response-wire-observations.json')]
+
+    def errors(self):return validate_session_token_flow(self.doc,self.profile,self.flow,[self.login,self.response])
+
+    def test_current_token_flow_matches_wire_and_mapping(self):self.assertEqual([],self.errors())
+
+    def test_missing_input_hash_and_substituted_chain_are_rejected(self):
+        self.flow['inputSHA256'].pop('YuanShen.exe');self.assertTrue(self.errors())
+        self.setUp();self.flow['chain']['sessionOffset']=0x90;self.assertTrue(self.errors())
+
+    def test_token_field_and_wire_cannot_be_renamed_or_promoted_by_substitution(self):
+        for key,value in [('tag',2),('semanticField','guessed'),('type','bytes'),('status','candidate')]:
+            original=copy.deepcopy(self.flow);self.flow['fieldBindings'][0][key]=value
+            self.assertTrue(self.errors());self.flow=original
+
+    def test_missing_duplicate_and_extra_bindings_fail(self):
+        original=copy.deepcopy(self.flow)
+        self.flow['fieldBindings'].pop();self.assertTrue(self.errors())
+        self.flow=copy.deepcopy(original);self.flow['fieldBindings'][1]=self.flow['fieldBindings'][0]
+        self.assertTrue(self.errors())
+        self.flow=copy.deepcopy(original);self.flow['fieldBindings'].append(copy.deepcopy(self.flow['fieldBindings'][0]))
+        self.assertTrue(self.errors())
 
 
 if __name__=='__main__':unittest.main()

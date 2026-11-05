@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "fieldBindings": [
+    {
+      "typeIndex": 37481,
+      "clientType": "CLDBKDNJHFG",
+      "clientField": "MCCMLHDDHAJ",
+      "objectOffset": 104,
+      "tag": 6,
+      "type": "string",
+      "semanticField": "token",
+      "status": "verified",
+      "scope": "bounded-session-credential-transfer"
+    },
+    {
+      "typeIndex": 76410,
+      "clientType": "KOHBOMDDFCB",
+      "clientField": "MCCMLHDDHAJ",
+      "objectOffset": 216,
+      "tag": 1,
+      "type": "string",
+      "semanticField": "token",
+      "status": "verified",
+      "scope": "bounded-session-credential-transfer"
+    }
+  ],
+  "fixtureCount": 5,
+  "chain": {
+    "responseType": "CLDBKDNJHFG",
+    "responseCmdId": 27808,
+    "responseOffset": 104,
+    "responseTag": 6,
+    "store": "0x15a4e0d93",
+    "sessionType": "HOMIEDIPBBJ",
+    "sessionOffset": 152,
+    "caller": "0x1507c2211",
+    "call": "0x1507c2218",
+    "constructor": "0x151213730",
+    "requestType": "KOHBOMDDFCB",
+    "requestCmdId": 23172,
+    "requestOffset": 216,
+    "requestTag": 1
+  },
+  "unknown": [
+    "meaning of manager +1D8 argument",
+    "full request business pairing",
+    "remaining request fields"
+  ],
+  "runtimeStatus": "not-tested",
+  "scope": "separately executed native fragments linked by actual stored pointers",
+  "models": [
+    "ASCII reader/writer library boundaries",
+    "managed request allocation",
+    "stage bookkeeping capture"
+  ],
+  "outsideScope": [
+    "pre-store seed/UID logic",
+    "caller reset/timer condition",
+    "constructor after first token store",
+    "real network send"
+  ]
+}

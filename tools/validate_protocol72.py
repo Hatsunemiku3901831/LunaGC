@@ -234,6 +234,40 @@ def validate_login_semantics(document, profile, semantics, literals, enums, wire
     return errors
 
 
+def validate_session_token_flow(document, profile, flow, wire_tables):
+    errors=[]
+    expected={profile['files'][key]['path']:profile['files'][key]['sha256'] for key in ('binary','metadata','startup')}
+    if flow.get('inputSHA256')!=expected:errors.append('Session token flow: input hashes incomplete/mismatched')
+    reviewed=dict(responseType='CLDBKDNJHFG',responseCmdId=27808,responseOffset=0x68,responseTag=6,
+                  store='0x15a4e0d93',sessionType='HOMIEDIPBBJ',sessionOffset=0x98,
+                  caller='0x1507c2211',call='0x1507c2218',constructor='0x151213730',
+                  requestType='KOHBOMDDFCB',requestCmdId=23172,requestOffset=0xd8,requestTag=1)
+    if flow.get('chain')!=reviewed:errors.append('Session token flow: reviewed store/caller/wire chain mismatch')
+    messages={m['semanticName']:m for m in document['messages']}
+    opcodes={m['semanticName']:m for m in document['opcodes']}
+    wire={m['clientType']:m for t in wire_tables for m in t['messages']}
+    bindings=flow.get('fieldBindings',[])
+    expected_bindings={('CLDBKDNJHFG',0x68,6),('KOHBOMDDFCB',0xd8,1)}
+    if len(bindings)!=2 or {(b.get('clientType'),b.get('objectOffset'),b.get('tag')) for b in bindings}!=expected_bindings:
+        errors.append('Session token flow: source/destination binding set mismatch')
+    for b in bindings:
+        fields=[f for m in document['schemas'] if messages.get(m['semanticName'],{}).get('clientType')==b.get('clientType')
+                for f in m['fields'] if f.get('clientField')==b.get('clientField')]
+        actual=[f for f in wire.get(b.get('clientType'),{}).get('fields',[]) if f.get('objectOffset')==b.get('objectOffset')]
+        if (b.get('scope')!='bounded-session-credential-transfer' or b.get('semanticField')!='token'
+                or b.get('status')!='verified' or b.get('type')!='string' or len(fields)!=1 or len(actual)!=1):
+            errors.append('Session token flow: invalid credential binding');continue
+        if any(actual[0].get(k)!=b.get(k) for k in ('tag','type','clientField')):
+            errors.append('Session token flow: wire observation disagreement')
+        if ('session-token-flow' not in fields[0].get('evidence',[]) or
+                any(fields[0].get(k)!=b.get(k) for k in ('tag','type','semanticField','status'))):
+            errors.append('Session token flow: mapping disagreement')
+    for name,client,cmd in (('GetPlayerTokenRsp','CLDBKDNJHFG',27808),('PlayerLoginReq','KOHBOMDDFCB',23172)):
+        if messages.get(name,{}).get('clientType')!=client or opcodes.get(name,{}).get('cmdId')!=cmd:
+            errors.append('Session token flow: command/type disagreement')
+    return errors
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--directory', type=Path, default=Path(__file__).resolve().parents[1] / 'protocol/cn-7.2')
@@ -252,6 +286,9 @@ def main():
     semantic_tables=[json.loads((args.directory/name).read_text('utf8')) for name in
                      ('login-semantic-observations.json','login-literal-observations.json','enum-observations.json','login-wire-observations.json')]
     errors.extend(validate_login_semantics(document,profile,*semantic_tables))
+    flow=json.loads((args.directory/'session-token-observations.json').read_text('utf8'))
+    errors.extend(validate_session_token_flow(document,profile,flow,[t for name,t in extra
+                  if name in ('login-wire-observations.json','response-wire-observations.json')]))
     print(json.dumps({'mode': 'ready' if args.ready else 'research-structure', 'valid': not errors, 'errors': errors},
                      ensure_ascii=False, indent=2))
     raise SystemExit(bool(errors))

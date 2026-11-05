@@ -24,8 +24,23 @@ Java对照只编译MersenneTwister64及离线runner到忽略目录，不加载�
 - Handler入口1507BE0E0成功前缀读取响应+B8；147CF3070在普通ByteString存储路径实际返回+18的数组。此前默认null数组的探索失败属于合成夹具限制。
 - 14D581600检查运行时列表是否含5714。两个分支目标literal为`[Shell] Old WarmupSwitch`/`[Shell] New WarmupSwitch`；后者进一步调用15A3CE060（0xCA）。已执行至内部读取140583A00，后续未恢复；没有将此调用模拟为成功。
 - 响应+98/+88进入Base64、原生密钥处理和摘要/校验区域；尚未通过完整独立密文与错误签名夹具。上面的解密后片段不能验证前段解密或验签。
-- 静态已见响应+68写会话+98，1507C2211读取同一会话成员传给151213730；后者写请求+D8。实际wire→保存→发送参数链另验，未凭静态发现晋级业务字段。
+- 响应+68写会话+98，1507C2211读取同一会话成员传给151213730；后者写请求+D8。该链已由下一节的独立wire与分段原生执行验证；未据此宣称完整Handler执行。
 - Login构造保护续段已越过151213AC6；148A22550跳1421C1F40（目标原生ret），后续需合成1458971C0类初始化状态并追踪下一真实调用。未知helper继续失败，不默认返回成功。
+
+## B-02c2 会话token保存和Login参数
+
+trace_client72_token_flow从独立响应wire `32 <length> <ASCII>` 开始，经真实TokenRsp reader将string写至CLDBKDNJHFG+68（tag6）。随后分别执行以下边界，实际存储的指针贯穿这些片段：
+
+| 边界 | 实际观察 |
+| --- | --- |
+| 15A4E0D74→15A4E0D9A | 15A4E0D93将响应+68存入HOMIEDIPBBJ+98；缺少会话对象到达原生null错误路径 |
+| 1507C21EB→151213730 | 从同一会话+98读出token作为RDX；RCX为GLOBAL+A0D0发送器；R8保留管理器+1D8的uint32，具体含义未知 |
+| 151213730→1512137F2 | 原生构造前缀将RDX存至KOHBOMDDFCB+D8；stage值6被捕获；分配和stage辅助操作明确模型化 |
+| 完整请求writer152EEB470 | 保存的token内容生成独立预期 `0A <length> <ASCII>`，即tag1；空值省略 |
+
+4组链路样本通过：两组非空、重复tag6取最后值、空token；参数覆盖0、1、80000000、FFFFFFFF。另1组缺会话原生拒绝通过。两字段以`token`进入三层表并标注有界来源；请求业务名仍candidate，不能由字段确认推导整包或发送已完成。
+
+校验器增加session-token-observations三份输入hash完整性、固定store/caller/类型/CmdID/字段集合与wire/映射一致性检查，拒绝缺失/重复/额外字段和替换来源。95项工具回归通过。完整RSA/UID处理、调用者timer/reset、首个token存储后的构造、实际网络发送均在此实验之外。
 
 ## 复现
 
@@ -33,6 +48,9 @@ Java对照只编译MersenneTwister64及离线runner到忽略目录，不加载�
 # GAME_PATH / JAVA_HOME 先按 Harness 核对本机portable配置
 python tools/trace_client72_session.py --client $env:GAME_PATH --java-home $env:JAVA_HOME --output local/migration72/evidence/session-seed-trace.json --summary-output protocol/cn-7.2/session-seed-observations.json
 python -m unittest tools.test_client72_session tools.test_client72_login_semantics tools.test_client72_metadata_values tools.test_validate_protocol72 -v
+python tools/trace_client72_token_flow.py --client $env:GAME_PATH --output local/migration72/evidence/session-token-trace.json --summary-output protocol/cn-7.2/session-token-observations.json
 ```
 
 共享摘要：protocol/cn-7.2/session-seed-observations.json。完整trace、重复生成报告：evidence/session-seed-trace.json、session-seed-determinism.json；回归：logs/session-all-tests.log。原始探索留analysis/。本批只改离线工具/测试/研究记录，不需要服务端重启；新旧号、选人、入场、重登均未实机验收。
+
+token链共享摘要为session-token-observations.json；evidence/session-token-trace.json、session-token-determinism.json及logs/session-token-tests.log保存本批复现。seed检查点本地提交0f324eb。

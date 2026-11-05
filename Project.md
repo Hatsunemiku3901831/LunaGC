@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-静态结构、Token/Login原始wire及响应非空对象图已离线恢复；两个响应业务名/CmdID、20个字段来源、7枚举86符号现有目标证据。两个请求业务配对及剩余字段继续研究，A-04d/B-02保持进行中。隔离研发服务已部署，但没有7.2可连接构建，客户端验收全部待执行。本机路径、初始差异、报告和日志在忽略的 local/migration72/；公共摘要放 docs/ 和 protocol/cn-7.2/。
+静态结构、Token/Login原始wire及响应非空对象图已离线恢复；两个响应业务名/CmdID、22个字段来源、7枚举86符号现有目标证据。解密后seed原生片段与Java密钥逐字节一致，会话token保存→Login参数→wire链已分段验证。两个请求业务配对及剩余字段继续研究，A-04d/B-02保持进行中。隔离研发服务已部署，但没有7.2可连接构建，客户端验收全部待执行。本机路径、初始差异、报告和日志在忽略的 local/migration72/；公共摘要放 docs/ 和 protocol/cn-7.2/。
 
 已有资源修改 ScriptSceneData/flat.luas.scenes.full_globals.lua.json 不属本批，不覆盖、不提交。patch 起点 f287410，resources 起点 dac2a9d。初查时Java/MongoDB归属本工作区且配置引用旧客户端/存档；随后隔离研发部署记录见ENV-01。下一次启动仍须重新核对配置与进程，不能将历史部署结果当作当前验收或清空原数据。
 
@@ -41,7 +41,8 @@
 | B-02c Token/Login身份与字段来源 | A-04d4a、A-04d3c | 登录语义观察表、native受控样本、候选表/校验 | 注册/分派/参数/目标自身标记闭合；字段来源与wire关联，未知保留，独立回归 | 进行中 | CLIENT_72_LOGIN_SEMANTICS；— | 两个上游响应身份/20字段已闭合；继续请求配对和其余字段 |
 | A-04d4b 两个上游响应身份 | A-04d4a、A-04d1 | trace_client72_login_semantics、literal/参数/getter/注册/分派证据 | 27808/20835实际分派、6独立wire错误前缀命中目标自身标记；4包装参数样本纠正层级 | 已完成 | CLIENT_72_LOGIN_SEMANTICS、login-semantics-trace；010f0c4 | 请求配对、完整成功/错误处理与实机仍另验 |
 | B-02c1 二十字段业务来源 | A-04d3c、A-04d4b | login-semantic-observations、mappings、校验和测试 | 14请求字段两组来源到原生wire；4响应全局消费者及2错误值，未知不晋级；87项回归、确定性复跑 | 已完成 | CLIENT_72_LOGIN_SEMANTICS、login-semantics-tests.log；010f0c4 | 剩余字段/请求配对；原始枚举与业务字段命名分别管理 |
-| A-04d5a 解密后seed与会话密钥 | A-04d4b | client72_session_runtime、trace_client72_session、Java独立对照 | 明确解密后边界，原生整数存储/字节序/XOR/MT64/4096字节写入；12组Java逐字节对照、6短输入原生拒绝、确定性复跑 | 已完成 | CLIENT_72_SESSION、session-seed-trace/determinism、session-all-tests.log；本项提交 | 前段解密/验签/Shell、会话token链与完整Handler仍待验证 |
+| A-04d5a 解密后seed与会话密钥 | A-04d4b | client72_session_runtime、trace_client72_session、Java独立对照 | 明确解密后边界，原生整数存储/字节序/XOR/MT64/4096字节写入；12组Java逐字节对照、6短输入原生拒绝、确定性复跑 | 已完成 | CLIENT_72_SESSION、session-seed-trace/determinism、session-all-tests.log；0f324eb | 前段解密/验签/Shell与完整Handler仍待验证 |
+| B-02c2 会话token保存与Login参数 | B-02c1、A-04d5a | trace_client72_token_flow、session-token-observations、映射/校验 | 独立响应tag6→原生会话+98保存→真实调用参数→构造+D8→请求tag1；4样本+缺会话拒绝、重复/空值/高参数、确定性及95项回归 | 已完成 | CLIENT_72_SESSION、session-token-trace/determinism；本项提交 | 请求发送/响应配对、+1D8语义与剩余业务字段仍待验 |
 | B-03 确定性生成 | B-01、B-02 | generator、PacketOpcodes、Proto | 只生成核实项，别名/引用检查，重复输出一致，protoc 编译，禁止旧号兜底 | 待开始 | — | 合成模型测试，再接真实映射 |
 | C-01 双向网络接入 | B-03 | GameSession、BasePacket、Handler 注册、UnionCmd/枚举 | 注册冲突失败、号/长度边界、内外分派、目标 wire 测试，构建部署 | 待开始 | — | 映射确认后替换旧表和专属断言 |
 | D-01 补丁和连接前置 | A-01、A-04 | patch、HTTP/SDK/dispatch/密钥 | 路由/渠道/版本/加密、各钩子 ABI/布局/实际加载验证 | 阻塞 | 旧特征仅静态扫描，缺目标 ABI；— | 分析必需钩子，区分商城可选项 |
@@ -98,3 +99,5 @@
 - 本地提交：a9ba540（A-04d4a标记/常量）、010f0c4（A-04d4b响应身份/B-02c1字段来源及语言域扩展）；未推送。A-04d/B-02整体保持进行中，未宣称7.2可登录。
 
 - A-04d5a：重新核对portable/GAME_PATH/研发库与Java/MongoDB进程归属，无客户端进程，保留resources原差异。解密后seed原生片段12组与现有Java MT64逐字节一致、6组短输入拒绝，91项工具回归通过，trace/摘要重复一致。未更改运行代码/主Proto/配置/补丁，无重启要求。当前继续会话token保存与Login调用参数、保护续段；完整解密/验签与D-02仍未验收，B-02不得晋级ready。
+
+- B-02c2：完成4组独立wire→会话保存→Login参数→完整writer检查和1组缺会话原生错误；2个token字段加入映射，累计22字段有来源。95项工具回归通过、普通校验通过、ready仍拒绝。Login保护续段已进一步观察旧Shell byte[]路径及ByteString包装，环境结果明确为受控输入；新Shell路径仍停在原生SDK内部。下一项为继续151213AC6续段到151214D20发送点，并关联TokenReq构造/响应注册；不把两请求晋级为完整已适配。仅离线研发，无部署，resources原修改保留。
