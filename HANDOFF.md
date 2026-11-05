@@ -15,3 +15,10 @@
 Project已补齐提交号和验收/下一步（74ac0f0、54dfac1）。下一项是151211BA1之后到B0的连续处理、第二协程及业务语义；未改运行文件或部署。AGENTS/resources既有修改未提交，未推送。
 
 详见[HANDOFF2.md](HANDOFF2.md)、[Project](Project.md)、[Harness](Harness.md)、[会话研究](docs/CLIENT_72_SESSION.md)。本次覆盖前已将原HANDOFF2备份至忽略目录`local/migration72/handoffs/HANDOFF2.before-dispatch-prefix-c9f6870.md`并核对SHA-256一致。旧暂停段落仅为历史，不需要用户再次授权恢复。
+
+
+## 2026-11-05：A-04d5n2完成，继续配置函数内部
+
+本地提交`c34ab42`：分区JSON/原生密码学连续到Region嵌套读取及151204AC0配置入口。8原生样本、173研究回归，trace/摘要二次一致；研究校验0、ready1。A-04d5n/B-02c9仍进行中；D-02未完成，无客户端验收，目标active且未暂停。
+
+下一步151204AC0配置内部→151211DD5→B0；{}探索当前遇到容器初始化缺口，详见[HANDOFF2.md](HANDOFF2.md)。本次覆盖前原HANDOFF2已备份至忽略目录`local/migration72/handoffs/HANDOFF2.before-dispatch-post-c34ab42.md`并核对哈希。未改运行内容、不重启；AGENTS/resources既有修改保留未提交，未推送。
