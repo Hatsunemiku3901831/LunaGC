@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-执行状态：用户2026-11-06要求完成当前子任务后暂停并交接；A-03a方法级登录/场景源码索引已完成限定验收，本项收口后不启动下一任务。A-04d5w此前完成响应Handler/安装key→Login实际序列化与完整帧。A-03完整闭包、真实响应收帧及SDK/连接前置仍未完成，A-04d/B-02及A-04d5n/B-02c9整体不晋级；D-02未完成。最新恢复入口见HANDOFF2，须等用户恢复后继续。
+执行状态：用户2026-11-06恢复，限定顺序为A-03a收尾→V-01b家具保存夹具→V-01c加工手册夹具→A-03b管理器/事件源码依赖→A-03c候选消息/Proto与7.2三层证据缺口矩阵。A-03c验收提交后停止；提前遇真实阻塞或需新增客户端逆向时，完成其余独立项后停止并交接。不开展B-03/C-01/D-02或实机调试。A-03整体仍待完整闭包及实机复核，不因子项完成晋级。
 
 静态结构、Token/Login原始wire及响应非空对象图已离线恢复；四个登录请求/响应身份与CmdID、36个字段来源、8类默认枚举102符号及2类连接状态枚举20符号已有目标证据。明确夹具下已执行Token原生seed/构造/完整帧，以及响应Handler的密码学、安装key、UID/token、版本hash、Login/Full分支、Login构造/实际序列化/完整帧；独立protoc、Java key及错误路径均有验证。不等于整个Handler返回、SDK初始化、真实收帧调度或登录。真实启动已观察全局及UTF-8缓存ABI，最后调试目标已退出，原因unknown。A-03a提供12源码/9根/80方法的索引，1012未关联调用保留；248研究回归不消除Java完整集既有217失败。交接时复查Java及游戏均未运行，HTTP/游戏端口无监听，MongoDB属本工作区；隔离研发基线部署是历史记录，目前没有7.2可连接构建或登录入场验收。本机路径和原始证据留忽略local/migration72，公共脱敏摘要在docs和protocol/cn-7.2。
 
@@ -22,7 +22,9 @@
 | A-02a 确定性静态盘点工具 | DOC-01 | inventory_protocol、8项测试 | 忽略注释/字符串、继承链排除发送类假冲突、动态项不猜测、重复输出一致 | 已完成 | server-inventory.json、inventory-tests.log；34ee887 | 作为A-02/A-03输入 |
 | A-02b 动态来源复核守卫 | A-02a | review_protocol72_surface、人工清单、7项测试 | 全17动态位置/40来源hash/常量绑定/37数字case；新增或漂移拒绝，开放边界不晋级，重复一致 | 已完成 | CLIENT_72_PROTOCOL_INVENTORY、evidence/server-surface-review.json；e87baa7 | C-01校验事件后最终包，禁候选兜底并拒绝注册冲突 |
 | A-03 登录入场依赖闭包 | A-02 | P0根、调用边、Proto引用图、复核表 | 完整覆盖新旧号、选人、初始化、场景、嵌套；人工和客户端复核 | 进行中 | 静态起点114名称/471文件，见协议盘点摘要；— | 追踪管理器/事件/脚本，结合真实序列收敛 |
-| A-03a 方法级登录/场景源码索引 | A-02b | Client72JavaSurface、client72_java_surface、review_client72_login_surface、复核表/摘要 | JDK17实际parse，注释/字符串/UTF16与CRLF/record/switch/lambda/匿名类/重载边界；固定源码/13条人工边，未关联调用和目标映射保持未知，重复一致 | 已完成 | CLIENT_72_LOGIN_SOURCE_GRAPH、login-source-observations.json；12源码/9根/80方法，96边中83仅候选；8新增/248回归、二次一致；00e0bee | 用户要求暂停；恢复后追管理器/事件/脚本；不代表A-03完整或7.2必需包集 |
+| A-03a 方法级登录/场景源码索引 | A-02b | Client72JavaSurface、client72_java_surface、review_client72_login_surface、复核表/摘要 | JDK17实际parse，注释/字符串/UTF16与CRLF/record/switch/lambda/匿名类/重载边界；固定源码/13条人工边，未关联调用和目标映射保持未知，重复一致 | 已完成 | CLIENT_72_LOGIN_SOURCE_GRAPH、login-source-observations.json；12源码/9根/80方法，96边中83仅候选；8新增/248回归、二次一致；00e0bee | 2026-11-06收尾复核通过；下一项V-01b，再A-03b；不代表A-03完整或7.2必需包集 |
+| A-03b 管理器/事件源码依赖复核 | A-03a、V-01c | 固定源码/人工入口边、管理器与事件边界表、可复现摘要/测试 | 从已索引登录/场景方法逐条定位管理器/服务/事件/脚本入口及内建调用，记录条件/异步/动态开放边界和源码hash；拒绝漂移、候选不晋级、重复输出一致；不宣称完整或实机闭包 | 待开始 | 本批先建卡；— | 按入口展开，开放插件/脚本保持未知 |
+| A-03c 候选消息/Proto与7.2三层缺口矩阵 | A-03b、B-01 | 源码候选到发送类/Proto依赖图、三层证据矩阵、工具/测试/摘要 | 每个候选有来源方法/构造、直接Proto与递归import/嵌套依赖；CmdID→类型、类型→语义、字段→wire分别列证据/歧义/缺口；未知不晋级，非零/64位/嵌套/list/错误边界既有证据不丢失，漂移及重复验证；A-03整体保持待实机 | 待开始 | 本批先建卡；— | 验收提交后停止并交接Astra下一研究项 |
 | A-04 7.2 提取器 | A-01 | extract_client72、profile、研究记录 | 类型/成员/泛型/父类/布局/注册与CmdID候选有证据，边界及抽样验证 | 进行中 | docs/CLIENT_72_EXTRACTION.md；— | 保护入口/回调参数及运行时闭合泛型ABI仍需恢复 |
 | A-04a 目标名称/字段/方法基础提取 | A-01 | extract_client72、7项测试 | 三份目标哈希守卫；独立名称向量；全部跨度/引用/代码地址校验；不把常量返回值标作包号 | 已完成 | client72-metadata.json、extraction-summary.json、提取研究摘要；34ee887 | 89,748类型/445,462字段/741,021方法供A-04后续分析 |
 | A-04b 泛型/父类/静态布局 | A-04a | extract_client72 --structures、test_client72_structures、提取摘要 | 全泛型行/引用边界、父图无环、字段存储分类；未知布局保留未知，目标全量运行和13项测试 | 已完成 | client72-structures.json、structures-summary.json、logs/structures-tests.log；2003432 | 运行时闭合泛型和多维bounds仍需另验；供wire字段定位 |
@@ -90,6 +92,8 @@
 | ENV-01 隔离便携研发基线 | A-01 | 本机配置、构建和部署报告 | 独立库/数据、旧数据保留、正常停服重建、健康/TCP/UDP/PID/JAR哈希核对；不冒充7.2 | 已完成 | docs/CLIENT_72_RESEARCH_VALIDATION.md、evidence/deployment.json；68d1732 | 目标协议前置齐全后再做D-02 |
 | V-01 全量回归失败归因与修复 | DOC-01 | 失败套件与保存夹具 | 每项有复现/根因/修复回归，保留经济/保存不变量；完整集重新验证 | 进行中 | 首次10563项中217失败；代表套件复查证据；— | 优先替换家具/加工save-only代理，继续审查其他失败 |
 | V-01a 修复能力测试便携资源路径 | V-01复现 | SkillReadyPredicateTest | 两处硬编码路径改为配置/相对根，原35项断言不删不跳过并通过 | 已完成 | logs/skill-ready-portable.log，35/0/0；68d1732 | 纳入后续全量回归 |
+| V-01b 家具保存夹具 | A-03a收尾、V-01复现 | FurnitureStartFlowTest/FurnitureStartRecoveryTest及必要测试夹具 | 先重现save-only代理失败；独立Mongo/随机测试库，物品/玩家/家园正式保存与冷读；保留扣费/失败阶段/防重入/容量/预留ID/重复领取断言，相关套件无失败跳过；不改生产语义 | 待开始 | 本批先建卡；— | 核对确认失败注入与真实BSON |
+| V-01c 加工手册夹具 | V-01b | CompoundHandbookTest及必要测试夹具 | 先复现；使用正式条件保存和独立Mongo/随机库，保留加工扣费/产出/手册/失败重试不重复收支及冷读断言，相关套件无失败跳过；不以空save/删断言修绿 | 待开始 | 本批先建卡；— | 限定修复后进入A-03b |
 
 ## 阻塞与尝试
 
@@ -207,3 +211,6 @@
 - A-04d5w：10样本连续Handler→响应安装key→实际Login/Full→Login构造/队列→原生外层/68918嵌套size与writer→完整帧；4发送/6不发送，4560字节Unicode/NUL跨周期、32/64位包头，完整payload逐字节与独立protoc输入一致，9组key与Java一致。240研究回归、二次trace/摘要一致，Token原6组产物不变，校验0/ready1（213项）。实际执行ByteString写入和native byte copy，不借用opaque payload；未知语义不晋级，无运行部署。下一项A-03/P0闭包或真实响应收帧。
 
 - A-03a：JDK17实际语法解析固定12源码/9根/80方法，96边中13人工复核、83同owner名称/参数数量候选；1012未关联位置保留，61直接构造参数类型名及1间接工厂名不当作完整或最小必需包集。8新增/248研究回归、二次报告/摘要一致，校验0/ready1（213缺口）。源码新旧号/选人路径已分开；运行代码/协议/数据库/补丁不变，无部署或新增实机验收。用户要求完成当前项后暂停并按流程交接；恢复后继续管理器/事件/脚本边界，A-03与D-02不晋级。
+
+
+2026-11-06 A-03a收尾：重新执行固定12源码/JDK17解析、8项聚焦测试和研究映射校验均通过；重生成摘要与已提交产物逐字节一致，ready仍退出1（213缺口）。`local/migration72/evidence/login-source-close{,-summary,-check,-ready}.json`为本机复核证据。本次用户指令覆盖旧暂停状态，依次推进V-01b/V-01c/A-03b/A-03c，A-03c提交后停止；禁止B-03/C-01/D-02及实机调试。A-03整体仍待完整闭包和实机复核。

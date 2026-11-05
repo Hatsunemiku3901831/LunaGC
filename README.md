@@ -17,7 +17,7 @@
 
 [登录语义](docs/CLIENT_72_LOGIN_SEMANTICS.md)和[会话研究](docs/CLIENT_72_SESSION.md)已确认四个Token/Login请求/响应身份与CmdID、36个字段来源；默认枚举表8类102符号，另验证2类连接状态枚举20符号。限定夹具下已贯通分区Ec2b密钥来源到Token完整帧，以及响应Handler的密码学/安装key/版本hash到Login实际序列化和完整帧；包头/XOR/错误边界另有独立验证。真实响应收帧调度、完整Handler返回、SDK/补丁/资源前置及其余字段仍未验或未知；真实启动缓存ABI观察不代表登录入场通过。
 
-[登录源码索引](docs/CLIENT_72_LOGIN_SOURCE_GRAPH.md)已完成 A-03a：12份源码、9个入口、80个方法及13条人工调用边；候选边和未关联调用保持未验证，不代表完整P0闭包。用户要求本项完成后暂停，恢复入口见[详细交接](HANDOFF2.md)。
+[登录源码索引](docs/CLIENT_72_LOGIN_SOURCE_GRAPH.md)已完成 A-03a：12份源码、9个入口、80个方法及13条人工调用边；候选边和未关联调用保持未验证，不代表完整P0闭包。2026-11-06已恢复限定离线工作，最终恢复入口见[详细交接](HANDOFF2.md)。
 
 [固定7.2资源候选](docs/CLIENT_72_RESOURCE_CANDIDATE.md)已完成七表与849条选定正引用审计；revision对齐、Lua/场景与完整最小资源仍待验证，未替换运行资源。
 
@@ -47,3 +47,6 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/local_windows.ps1 
 Proto Java 由 Gradle/protoc 生成，不编辑 build/generated。版本无关业务回归保留；旧协议断言在有证据的 7.2 fixture 接管后替换，不能删除后声称兼容。
 
 上游与署名：[girluh/LunaGC](https://github.com/girluh/LunaGC)（基于 Grasscutter）、[capyb2222/animegamepatch](https://github.com/capyb2222/animegamepatch)；Terax（nt）。资源来源和权属见 [资源 README](resources/README.md)。
+
+
+2026-11-06 A-03a收尾：重新执行固定12源码/JDK17解析、8项聚焦测试和研究映射校验均通过；重生成摘要与已提交产物逐字节一致，ready仍退出1（213缺口）。`local/migration72/evidence/login-source-close{,-summary,-check,-ready}.json`为本机复核证据。本次用户指令覆盖旧暂停状态，依次推进V-01b/V-01c/A-03b/A-03c，A-03c提交后停止；禁止B-03/C-01/D-02及实机调试。A-03整体仍待完整闭包和实机复核。

@@ -60,3 +60,7 @@ python tools/validate_protocol72.py --ready
 完整报告与摘要分别连续生成两次，逐字节一致。报告 SHA-256 为 `64194613a1e53d45369a2b06d3deffcd74bed4d69b280fe3f3b8be6a9b92ccdc`，摘要为 `8920466702325db2ba27837ab9d7588e2432049b858a3694e7f0350940055bf3`。研究映射校验退出 0；ready 退出 1，原 213 项缺口保留。
 
 本机证据位于忽略的 `local/migration72/`：`evidence/login-source-surface{,-repeat,-determinism}.json`、`evidence/login-source-summary-repeat.json`、`evidence/login-source-mapping-{check,ready}.json`、`logs/login-source-surface-{run,repeat,focused-tests,regression}.log`。完整报告含全部未关联位置，共享 `protocol/cn-7.2/login-source-observations.json` 保留计数、方法、候选边和边界，不含机器绝对路径或运行数据。
+
+## 2026-11-06 收尾复核
+
+固定源码重新解析及8项聚焦测试通过；共享摘要逐字节不变，研究校验通过，ready仍拒绝213缺口。用户恢复限定离线后续工作，新增验收卡已先写入Project；A-03整体仍待完整依赖闭包和实机复核。工作区AGENTS及resources既有差异保留。未改运行代码/Proto/配置，无部署或数据库操作。

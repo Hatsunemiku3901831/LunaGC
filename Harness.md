@@ -215,3 +215,6 @@ Handler→Login完整帧入口：`trace_client72_handler_login_frame`，见[网�
 A-03a方法级源码入口：`review_client72_login_surface.py`调用JDK17解析器`Client72JavaSurface.java`，复现及边界见[登录源码索引](docs/CLIENT_72_LOGIN_SOURCE_GRAPH.md)。固定12源码/9根，80方法/96边（13人工、83候选）；1012未关联调用及隐式初始化/管理器/事件/脚本边界保留。8新增/248研究回归、二次报告/摘要一致；`evidence/login-source-surface{,-repeat,-determinism}.json`、`evidence/login-source-summary-repeat.json`、`evidence/login-source-mapping-{check,ready}.json`和`logs/login-source-surface-{run,repeat,focused-tests,regression}.log`。源坐标使用原始UTF-16，hash规范CRLF，不能混算；61直接构造参数名/62总构造名不是7.2必需包集。用户要求本项完成后暂停，最新恢复资料见HANDOFF2；无运行代码变更或部署，D-02未验。上一A-04d5w提交6db47fe。
 
 暂停交接已完成：A-03a研发提交00e0bee，目标paused；旧HANDOFF2已备份并核验，最新恢复入口见[HANDOFF2](HANDOFF2.md)，HANDOFF仅追加。用户恢复前不启动下一任务。
+
+
+2026-11-06 A-03a收尾：重新执行固定12源码/JDK17解析、8项聚焦测试和研究映射校验均通过；重生成摘要与已提交产物逐字节一致，ready仍退出1（213缺口）。`local/migration72/evidence/login-source-close{,-summary,-check,-ready}.json`为本机复核证据。本次用户指令覆盖旧暂停状态，依次推进V-01b/V-01c/A-03b/A-03c，A-03c提交后停止；禁止B-03/C-01/D-02及实机调试。A-03整体仍待完整闭包和实机复核。
