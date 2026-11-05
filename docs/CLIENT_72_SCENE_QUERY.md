@@ -50,3 +50,5 @@ python -m unittest tools.test_client72_scene_query tools.test_client72_scene_nor
 新增10项为纯证据validator测试，不依赖尚未接入的共享query摘要；与原选集共51项通过。实际CLI逐组核对原生结果；最终19组trace/摘要执行两遍逐字节一致，核对在`evidence/scene-query-determinism.json`。旧normal14、born39、scene-wait32及128发现输入均实际重新执行，三份摘要与既有共享证据逐字节一致，见`evidence/scene-query-regression.json`及`logs/scene-query-regression-{normal,born,wait}.log`。首轮错误地预期新List的items已初始化，原生观测证明构造入口尚未执行，已改为明确的分配对象/null items边界；`logs/scene-query-first.log`保留。测试文件首次括号语法错误日志也保留，没有删除失败后伪称首轮通过。
 
 本项只有离线工具、测试与专题；原始报告、草稿摘要、重复/回归结果和失败日志均在忽略的`local/migration72/`，使用scene-query前缀。未更改Java/Proto/配置/补丁/资源，未启动服务、数据库或客户端，没有部署。下一项可独立恢复`15881E210`列表构造/复制或`153A3CB70`非零分支；真实初始化/decoder及完整P0/实机仍须另验。
+
+主线复核：af573b9三个文件已审阅；19组完整trace通过validator及来源hash复查，原draft SHA-256 b34c936d8cf95e3e948d0d6bdbb504728893c860d0e6617482e1f5e9d998ea8e原样接入[共享摘要](../protocol/cn-7.2/scene-query-observations.json)。研究输入58→59时全部源码/Proto、三层矩阵、计数、候选/描述符及开放边界逐结构不变，recover两次一致；337项完整研究回归通过，研究结构0错误/ready仍228缺口。B-02e4限定完成，B-02e5已建卡追踪两个消费者；只新增离线内容，无需重建/部署。

@@ -1331,6 +1331,7 @@
     "protocol/cn-7.2/scene-grid-inline-observations.json": "55075474ef471da55078d5f9acdae1096c587b83023c8cd47158c53c6e8398fe",
     "protocol/cn-7.2/scene-grid-script-observations.json": "b334d02f25f4d0a3df300d3fd5d67f11d945b6c473df79e2ca1ff44d8ae8c7b8",
     "protocol/cn-7.2/scene-normal-observations.json": "dcf91313cb5135609133eda71671e3dc421562d9b13db241701dee6004c95cbe",
+    "protocol/cn-7.2/scene-query-observations.json": "9ea007c1922aeb9f1e5f9d91aa93f065df1e1193d2e128c3477ee59d45566931",
     "protocol/cn-7.2/scene-resource-observations.json": "7f0dadf9b2d24a2a7041162875ad568201f77f6671108693faf35be565d895e5",
     "protocol/cn-7.2/scene-script-observations.json": "a52346e5879b4cfa05d07e3d4f13e7952a40f39f3a210314cfee725180011970",
     "protocol/cn-7.2/scene-serialization-baseline-observations.json": "ddda2f6e17688e2bba7f1596fd23f5ee2f19e0536659d6f297ebb5e878c883a5",
