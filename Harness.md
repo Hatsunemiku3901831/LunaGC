@@ -137,3 +137,5 @@ Login构造现由trace_client72_login_constructor在指定旧Shell/非云夹具�
 E-01候选资源入口：[固定7.2上游提交](https://github.com/DimbreathBot/AnimeGameData/commit/d54f6f0d423ded9d055bb740a3e5f3aa8f2667f1)。提交/根树已只读记录resource-source-heads.json、resource-source-tree.json，根目录包括ExcelBinOutput/BinOutput/TextMap，不含Lua Scripts目录；不能据此称最小资源齐全。后续使用固定commit取最小子树并核对客户端revision、字段与稳定ID，不更新resources引用。
 
 client seed来源已接入trace_client72_session：152F1B4D0执行NextDouble×2^64、编码、返回/全局同值保存；10组来源边界+既有18组后段复跑，106项回归通过。session-seed-trace新增clientSeedSourceFixtures，determinism已更新；日志client-seed-source-tests.log。Token密文helper15121DB40进入Shell 0x64仍未贯通，探索边界见CLIENT_72_SESSION。上一Login构造提交cde97d4；运行源码/配置未变，无重启。
+
+资源候选审计入口：[CLIENT_72_RESOURCE_CANDIDATE](docs/CLIENT_72_RESOURCE_CANDIDATE.md)、audit_resource72。固定commit d54f6f0d的真实根tree为5b334e71；API用commit查询的sha别名不能代替tree对象hash。七个blob均按大小/Git SHA-1/SHA-256核查，稳定ID和849条选定正引用已验证；内置revision不一致、Lua/场景/完整资源仍待验，不复制进resources。7资源测试+106研究测试通过；evidence/resource-candidate-{audit,determinism}.json及logs/resource-candidate-all-tests.log。client seed来源提交e716da8；继续Token Shell/发送队列与A-02动态旁路审计。

@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 1,
+  "upstream": {
+    "repository": "https://github.com/DimbreathBot/AnimeGameData",
+    "commit": "d54f6f0d423ded9d055bb740a3e5f3aa8f2667f1",
+    "treeSHA": "5b334e711319726c504da95dbfe6ebb26baaa7d3",
+    "versionLabel": "CNRELWin7.2.0_R49086080_S49210135_D49230962",
+    "date": "2026-11-04T01:04:00Z"
+  },
+  "rootTreeSHA": "5b334e711319726c504da95dbfe6ebb26baaa7d3",
+  "excelTreeSHA": "a7767d2efe82980a7dbefe716853e76e9c9a4276",
+  "sourceRevisionLabels": {
+    "R": "49086080",
+    "S": "49210135",
+    "D": "49230962"
+  },
+  "bundledRevisionFiles": {
+    "res_revision": {
+      "text": "49008628",
+      "sha256": "860f5ac3d85195eea5edd9631977a581215c2c53025787fa72232c6e84cd725e"
+    },
+    "data_revision": {
+      "text": "49008628",
+      "sha256": "860f5ac3d85195eea5edd9631977a581215c2c53025787fa72232c6e84cd725e"
+    },
+    "silence_revision": {
+      "text": "48722240",
+      "sha256": "69a17593e968eccd631ee38f9b0b7ecdf3a5750072cc355ccfa2df55281ab378"
+    }
+  },
+  "revisionValueSetsEqual": false,
+  "revisionScope": "bundled StreamingAssets files only; label-to-runtime hotfix alignment unverified",
+  "resourceReady": false,
+  "scope": "pinned candidate/input and selected stable-ID audit; no compatibility or deployment claim",
+  "gaps": [
+    "installed runtime hotfix/revision alignment",
+    "other mandatory tables and ID references",
+    "Lua scripts and scene resources",
+    "server schema/loader compatibility",
+    "real client entry acceptance"
+  ],
+  "client": {
+    "identity": {
+      "game_version": "7.2.0",
+      "channel": "1",
+      "sub_channel": "1"
+    },
+    "configSHA256": "1e1069a0c28e036ebf66f761992ed785ec92c391982eadbe4ec95ceccda4e50b"
+  },
+  "baselineGitCommit": "dac2a9d43332ef51879522cf39da2831b0ca0543",
+  "tables": [
+    {
+      "file": "AvatarExcelConfigData.json",
+      "stableKey": "id",
+      "sourceRows": 169,
+      "baselineRows": 167,
+      "sourceSHA256": "dbed6b4f540fe24f8d96dc46b545ac2f8c0d0197f38e4b9a4cac0762a569a897",
+      "baselineSHA256": "76156f45439b8cabc37b5689c59b98b22c3caa6dd15dc8cbde516e1a88c9a7cc",
+      "sourceGitBlob": "89068b5021ee7711fbf639b9c361607aaf5036b8",
+      "missingRequiredIds": [],
+      "unchanged": 0,
+      "added": 2,
+      "removed": 0,
+      "changed": 167,
+      "sharedValueChanged": 4,
+      "fieldPresenceChanged": 167
+    },
+    {
+      "file": "AvatarSkillDepotExcelConfigData.json",
+      "stableKey": "id",
+      "sourceRows": 171,
+      "baselineRows": 169,
+      "sourceSHA256": "c149f12cce4df46aa9af15701a107b42a45feb7716c7f13448ccb6d7b90258b8",
+      "baselineSHA256": "5222344049923059e3e34b5e55b2f1e64c4c0c2f6edae164ef91d88d0ae65d9e",
+      "sourceGitBlob": "f7770f01224583537156de91e0ec94ee9ff5115d",
+      "missingRequiredIds": [],
+      "unchanged": 0,
+      "added": 2,
+      "removed": 0,
+      "changed": 169,
+      "sharedValueChanged": 164,
+      "fieldPresenceChanged": 169
+    },
+    {
+      "file": "AvatarSkillExcelConfigData.json",
+      "stableKey": "id",
+      "sourceRows": 1176,
+      "baselineRows": 1149,
+      "sourceSHA256": "d799dcba02f383dae99fe32b3393408773f67001fe9622801366a524732102d7",
+      "baselineSHA256": "4e87d9632ac6a82d7a6e99cd55d0bff0e64921abb732488e1fdc6173a53297ad",
+      "sourceGitBlob": "f58ac30e0b62ee342ea11fc76d4e2b0d0613b24c",
+      "missingRequiredIds": [],
+      "unchanged": 0,
+      "added": 27,
+      "removed": 0,
+      "changed": 1149,
+      "sharedValueChanged": 818,
+      "fieldPresenceChanged": 1149
+    },
+    {
+      "file": "WeaponExcelConfigData.json",
+      "stableKey": "id",
+      "sourceRows": 288,
+      "baselineRows": 287,
+      "sourceSHA256": "a6e2fec1b1f6ba842c016fcde9a3f54b28a3c9b098d5e6271574720687f92f4e",
+      "baselineSHA256": "894e4b03ebc61c6ed1af345bea45d7958ab686180cc29e4f6d2ba12d3cb37126",
+      "sourceGitBlob": "9808d2d3debcc79bee048f6b383d0aa4ed38693d",
+      "missingRequiredIds": [],
+      "unchanged": 0,
+      "added": 1,
+      "removed": 0,
+      "changed": 287,
+      "sharedValueChanged": 214,
+      "fieldPresenceChanged": 284
+    },
+    {
+      "file": "PlayerLevelExcelConfigData.json",
+      "stableKey": "level",
+      "sourceRows": 60,
+      "baselineRows": 60,
+      "sourceSHA256": "a2d85dbd80f453116cf5d7791faa5f65b73b1e4ec6f55408cc4eb64fbb7df166",
+      "baselineSHA256": "dc667d8e0cfa94b7dd20352b5f47eb1ae303df1117f3b596d0f29488e55b4657",
+      "sourceGitBlob": "46170f3d872ee20cf6e1243be272779f5d0d9795",
+      "missingRequiredIds": [],
+      "unchanged": 0,
+      "added": 0,
+      "removed": 0,
+      "changed": 60,
+      "sharedValueChanged": 27,
+      "fieldPresenceChanged": 60
+    },
+    {
+      "file": "SceneExcelConfigData.json",
+      "stableKey": "id",
+      "sourceRows": 2431,
+      "baselineRows": 2377,
+      "sourceSHA256": "5a906393d1de46a6d397ae169cdcfb76a9ee77fc1c9e38dd3aec752656978550",
+      "baselineSHA256": "9dcdacb1403b09a4242a42f68a5b3f099bc29f9967139dec3f3ddf2fbf61e590",
+      "sourceGitBlob": "9f06ef286acb103789c813cee90a62965430d512",
+      "missingRequiredIds": [],
+      "unchanged": 329,
+      "added": 54,
+      "removed": 0,
+      "changed": 2048,
+      "sharedValueChanged": 2,
+      "fieldPresenceChanged": 2048
+    },
+    {
+      "file": "WorldLevelExcelConfigData.json",
+      "stableKey": "level",
+      "sourceRows": 9,
+      "baselineRows": 9,
+      "sourceSHA256": "cbd61eede5de7e86492bde96f46007e08dcca13e390ed2be0319659098279465",
+      "baselineSHA256": "d227ac71803ce2de88fdfdf8acb242be61532872f7024d0b977afa7c6e807ad9",
+      "sourceGitBlob": "3a9ed2bd0ef8b9e43840c39c3d1f9b9babf70434",
+      "missingRequiredIds": [],
+      "unchanged": 0,
+      "added": 0,
+      "removed": 0,
+      "changed": 9,
+      "sharedValueChanged": 0,
+      "fieldPresenceChanged": 9
+    }
+  ],
+  "references": {
+    "checkedPositiveReferences": 849,
+    "scope": "avatar skillDepotId/initialWeapon and depot skills/energySkill/attackModeSkill only",
+    "missingCount": 0
+  }
+}
