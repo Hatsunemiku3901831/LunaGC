@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "rawBinding": {
+    "sourceTypeIndex": 30677,
+    "sourceField": "DGHGFAELIDO",
+    "sourceOffset": 32,
+    "sourceTag": 14,
+    "sessionTypeIndex": 58013,
+    "sessionOffset": 176,
+    "requestTypeIndex": 82491,
+    "requestOffset": 112,
+    "requestTag": 965,
+    "type": "string"
+  },
+  "fixtureCount": 14,
+  "results": [
+    {
+      "name": "path0-nonzero",
+      "source": "source-fixture-A",
+      "expectedFieldWire": "aa3c10736f757263652d666978747572652d41",
+      "sessionPointerPreserved": true,
+      "requestPointerPreserved": true,
+      "passed": true
+    },
+    {
+      "name": "path0-empty",
+      "source": "",
+      "expectedFieldWire": "",
+      "sessionPointerPreserved": true,
+      "requestPointerPreserved": false,
+      "passed": true
+    },
+    {
+      "name": "path0-high-numeric-text",
+      "source": "9007199254740993",
+      "expectedFieldWire": "aa3c1039303037313939323534373430393933",
+      "sessionPointerPreserved": true,
+      "requestPointerPreserved": true,
+      "passed": true
+    },
+    {
+      "name": "path0-distinct",
+      "source": "source-fixture-B",
+      "expectedFieldWire": "aa3c10736f757263652d666978747572652d42",
+      "sessionPointerPreserved": true,
+      "requestPointerPreserved": true,
+      "passed": true
+    },
+    {
+      "name": "path0-missing-manager",
+      "unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "path0-missing-session",
+      "unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "path0-missing-source",
+      "unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "path1-nonzero",
+      "source": "source-fixture-A",
+      "expectedFieldWire": "aa3c10736f757263652d666978747572652d41",
+      "sessionPointerPreserved": true,
+      "requestPointerPreserved": true,
+      "passed": true
+    },
+    {
+      "name": "path1-empty",
+      "source": "",
+      "expectedFieldWire": "",
+      "sessionPointerPreserved": true,
+      "requestPointerPreserved": false,
+      "passed": true
+    },
+    {
+      "name": "path1-high-numeric-text",
+      "source": "9007199254740993",
+      "expectedFieldWire": "aa3c1039303037313939323534373430393933",
+      "sessionPointerPreserved": true,
+      "requestPointerPreserved": true,
+      "passed": true
+    },
+    {
+      "name": "path1-distinct",
+      "source": "source-fixture-B",
+      "expectedFieldWire": "aa3c10736f757263652d666978747572652d42",
+      "sessionPointerPreserved": true,
+      "requestPointerPreserved": true,
+      "passed": true
+    },
+    {
+      "name": "path1-missing-manager",
+      "unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "path1-missing-session",
+      "unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "path1-missing-source",
+      "unchanged": true,
+      "passed": true
+    }
+  ],
+  "paths": [
+    {
+      "entry": "0x151212949",
+      "stop": "0x151212983",
+      "missingManagerStop": "0x151212e11",
+      "missingSourceStop": "0x151212e7b"
+    },
+    {
+      "entry": "0x15122952d",
+      "stop": "0x151229567",
+      "missingManagerStop": "0x1512299df",
+      "missingSourceStop": "0x151229a49"
+    }
+  ],
+  "sourceAssociationStatus": "candidate",
+  "semanticStatus": "unknown",
+  "runtimeStatus": "not-tested",
+  "nativeSeedHelperExecuted": true,
+  "wholeDispatchExecuted": false,
+  "models": [
+    "existing bounded Reader72 ASCII helper and UTF-16 storage",
+    "source30677 object supplied explicitly at post-parse fragment; upstream association not proven",
+    "existing Token SDK/environment/OS/seed inputs"
+  ],
+  "outsideScope": [
+    "HTTP JSON content/sign decryption",
+    "actual coroutine-to-source30677 type binding",
+    "business name of tag965",
+    "full dispatch flow",
+    "real client/network"
+  ]
+}

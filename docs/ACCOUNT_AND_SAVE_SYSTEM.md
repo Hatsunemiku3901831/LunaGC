@@ -328,3 +328,5 @@ Guard 的 pending 尝试只在当前进程内存里，不是持久任务日志�
 | 本机启动停止 | [local_windows.ps1](../tools/local_windows.ps1)、[runtime.ps1](../tools/runtime.ps1) |
 
 7.2认证研究补充（A-04d5l）：认证回调六个可选session字段及缺省清零已离线验证，见[会话研究](CLIENT_72_SESSION.md)。这不改服务端账号策略/存档，也不代表SDK真实登录或D-02通过。
+
+7.2会话B0补充（A-04d5m）：分区候选响应tag14→session+B0→Token tag965已有分段原生证据；源类型关联仍candidate，业务名未知，不与account_token/tag2或响应token混用。见[会话研究](CLIENT_72_SESSION.md)，未改账号/存档运行行为。

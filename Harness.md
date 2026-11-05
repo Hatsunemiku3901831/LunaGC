@@ -165,3 +165,5 @@ SDK认证来源入口：`trace_client72_auth_sources`执行14F1917D0至14F191E18
 暂停交接：当前认证来源提交c7556a0；[HANDOFF.md](HANDOFF.md)为追加式简要记录，[HANDOFF2.md](HANDOFF2.md)为详细恢复入口。本次原HANDOFF2不存在，首次创建，无旧文件可备份。研发目标已暂停；用户恢复前不再执行下一子任务。AGENTS.md和resources既有差异保持未提交。
 
 认证可选字段入口：`trace_client72_auth_tail`，复现见[会话研究](docs/CLIENT_72_SESSION.md)。5原生样本、27聚焦回归、两次trace/摘要一致；六session字段及exact-one标志已验，B0不变，未晋级协议/实机。证据`evidence/auth-tail-{trace,determinism}.json`与`logs/auth-tail-tests.log`。用户已恢复推进，旧暂停段落是历史记录。
+
+分区候选源/B0入口：`trace_client72_dispatch_token`，复现和前缀探索边界见[会话研究A-04d5m](docs/CLIENT_72_SESSION.md#a-04d5m-分区候选源到sessionb0与token-tag965)。14原生样本、166研究回归、重复产物一致；30677 tag14供给两处post-parse片段后到session+B0和Token tag965。实际源类型关联仍candidate，语义unknown，ready仍拒绝，D-02未验。证据`evidence/dispatch-token-{trace,determinism}.json`和`logs/auth-tail-dispatch-regression.log`。

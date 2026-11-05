@@ -57,6 +57,7 @@
 | A-04d5j / B-02c7 Handler入口到UID/token保存 | A-04d5i、B-02c2 | trace_client72_handler_core、UID映射/校验 | 原生入口→old/new warmup→密码学→UID setter/__LastUid__→token原指针保存；4组零/高位/uint32最大/空token，157项回归及重复产物 | 已完成 | CLIENT_72_SESSION、handler-core-trace/observations/determinism；b0ca919 | stop后robot-check/版本/UI动作、SDK真实初始化/持久PlayerPrefs与剩余请求字段 |
 | A-04d5k / B-02c8 SDK认证来源到Token wire | A-04d5h、B-02c7 | trace_client72_auth_sources、五字段映射/校验 | 原生回调来源检查/写入→真实seed构造→getter24604/writer；9组含拒绝/可选字段/uint32边界，160项回归及重复产物 | 已完成 | CLIENT_72_SESSION、auth-sources-trace/observations/determinism；c7556a0 | 回调尾段/实际SDK调度、session+B0及其他未知字段；按用户要求收口后暂停 |
 | A-04d5l 认证回调可选字段 | A-04d5k | trace_client72_auth_tail、摘要/测试 | 从入口连续到14F192325；六字段/清零/Int32边界/溢出、两个exact-one标志、B0不变，重复产物一致 | 已完成 | auth-tail-observations.json、auth-tail-determinism.json；本批提交 | UI/调度尾段未执行，六字段不晋级协议语义 |
+| A-04d5m 分区候选源到B0/Token原始链 | A-04d5h、A-04d5l | trace_client72_dispatch_token、摘要/测试 | 两个post-parse片段、tag14 reader、真实seed构造/tag965 writer；8值样本/6缺对象边界、重复一致 | 已完成 | dispatch-token-observations.json、dispatch-token-determinism.json；本批提交 | 源30677与协程实际绑定仍candidate；业务语义未知，不代表B-02完成 |
 | B-03 确定性生成 | B-01、B-02 | generator、PacketOpcodes、Proto | 只生成核实项，别名/引用检查，重复输出一致，protoc 编译，禁止旧号兜底 | 待开始 | — | 合成模型测试，再接真实映射 |
 | C-01 双向网络接入 | B-03 | GameSession、BasePacket、Handler 注册、UnionCmd/枚举 | 注册冲突失败、号/长度边界、内外分派、目标 wire 测试，构建部署 | 待开始 | — | 映射确认后替换旧表和专属断言 |
 | D-01 补丁和连接前置 | A-01、A-04 | patch、HTTP/SDK/dispatch/密钥 | 路由/渠道/版本/加密、各钩子 ABI/布局/实际加载验证 | 进行中 | CLIENT_72_PATCH_ABI；四入口参数前缀已验，密钥/加载未验 | 字符串工厂、原生RSA/验签、实际加载与路由；商城钩子另列 |
@@ -151,3 +152,5 @@
 - A-04d5k/B-02c8：原生SDK认证回调来源检查/会话写入接入真实seed构造和Token writer，确认account_uid、account_token、channel_id、account_type、is_guest五字段，累计35字段。9组非零/高数字文本/uint32边界/缺省/拒绝通过；160项回归、二次产物和原Token5组重构回归产物一致。JSON容器/SDK值仍为明确夹具，完整回调/实际认证/封包体未执行；研究校验通过，ready仍拒绝。无运行代码/Proto/补丁/配置/资源变更或重启。上一Handler核心提交b0ca919。用户要求完成当前子任务后暂停并交接，本项收口后不再启动新任务；D-02保持待开始，恢复资料见HANDOFF.md/HANDOFF2.md。
 
 - A-04d5l：5组认证可选字段原生样本、27项聚焦回归通过，重复trace/摘要一致；session+B0未改写，登录语义字段仍35。仅离线工具/文档，无运行部署。B0写入新线索15121297C/151229560，源对象+20；候选30677 reader tag14待正式化，不沿用旧Proto名称。
+
+- A-04d5m：候选30677 tag14→+20→两处post-parse片段→session+B0→Token+70/tag965，14原生样本两次一致，166研究回归通过。非空保留原指针，空值会话保留但请求取默认空对象且writer省略。三层研究校验退出0、ready退出1；源类型关联/业务仍未知，登录35字段不变。运行文件未改，不部署、不以健康替代D-02。

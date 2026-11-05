@@ -263,3 +263,30 @@ python -m unittest tools.test_client72_auth_tail tools.test_client72_auth_source
 ```
 
 证据`evidence/auth-tail-{trace,determinism}.json`、`logs/auth-tail-tests.log`。接续UI边界14F192325；B0的另一来源探索已定位151212949/15122952D段落，源对象+20→session+B0，不能把这些原始偏移直接命名为旧协议字段。
+
+## A-04d5m 分区候选源到session+B0与Token tag965
+
+`trace_client72_dispatch_token`固定三份目标哈希，执行30677/IBOFGKFAEPI的真实reader153A598A0，独立wire字节`72 <length> <ASCII>`写入DGHGFAELIDO+20；随后分段运行下表两个实际写入片段，再从同一session执行真实seed helper/Token构造、getter24604及writer。**30677与实际协程上游解析结果的类型关联仍为candidate；tag965业务语义仍unknown。** 夹具明确把30677对象供给post-parse片段，不能把这一供给动作当作已经证明的运行时调用关系。
+
+| 入口 | 正常/缺session终点 | 缺manager终点 | 缺source终点 | 写入 |
+| --- | --- | --- | --- | --- |
+| 151212949 | 151212983 | 151212E11 | 151212E7B | 15121297C |
+| 15122952D | 151229567 | 1512299DF | 151229A49 | 151229560 |
+
+两处均从`[rbx]+20`读字符串，经GLOBAL+9E80的manager+180定位session，写+B0；Token构造再到请求+70/tag965。独立Token key字节`AA 3C`，测试不从观察表生成期望key。每路径4个源值（非零、空、高数字文本9007199254740993、另一不同字符串）及3个缺对象边界，共14组。非空源在session/request保持原指针，空源在session保留而请求使用默认空字符串对象，writer省略tag965；缺session正常跳过写入，缺manager/source到原生错误调用前停止，均不改原session、不进入构造。
+
+两次trace/共享摘要逐字节一致；30项聚焦回归、166项研究工具/映射/资源回归通过。摘要守卫拒绝将candidate/unknown改verified、把整个dispatch/实机标成功，亦拒绝把mappings中的unknown_field_965晋级。研究校验退出0、ready退出1；累计业务字段仍35。无运行代码/Proto/配置/补丁/资源修改，不需重启，不部署猜测协议。
+
+```powershell
+python tools/trace_client72_dispatch_token.py --client $env:GAME_PATH --output local/migration72/evidence/dispatch-token-trace.json --summary-output protocol/cn-7.2/dispatch-token-observations.json
+python -m unittest tools.test_client72_dispatch_token tools.test_client72_auth_tail tools.test_client72_auth_sources tools.test_client72_token_complete tools.test_validate_protocol72 -v
+```
+
+证据`evidence/dispatch-token-{trace,determinism,mapping-check,mapping-ready}.json`、`logs/dispatch-token-tests.log`与`logs/auth-tail-dispatch-regression.log`。新工具明确限定ASCII/string，不能扩展宣称全部HTTP响应、嵌套或网络数据覆盖。
+
+### 下一段探索与避坑
+
+- 固定目标literal34429/34433/34435为RegionDispatch相关日志；另一入口151210540接受string及Action<IENBACJFBGI>，原生实际读取JSON content/sign。忽略脚本`analysis/probe_dispatch_prefix.py`已运行到受控Base64/原生SDK后段，尚未完成合法响应解密/反序列化；不是正式验收。
+- 单凭字段布局符合、RegionDispatch日志、或旧QueryCurrRegionHttpRsp的tag14名称不足以晋级业务语义。需贯通真实解析调用的泛型/类型及有效响应输入。保留`analysis/b0-writes.json`扫描线索，1644个字节形状命中不是1644个真实session写入；按目标反汇编/来源逐项排除。
+- 前缀探索目前在15A4E2F49前的140514EE0请求未知元素class=0，属于夹具运行时元数据尚未恢复，不证明目标客户端缺陷。不得用通用任意数组分配/强制成功来消除此边界。`probe_dispatch_reader.py`的3/4/5嵌套扫描未完成也未列为通过。
+- 认证完整尾段仍从14F192325开始；当前A-04d5l只清除了可选字段段落缺口，UI/调度/实际SDK仍待验。D-02还需B-02/B-03/C-01/D-01/E-01完整前置及新旧账号实机序列。
