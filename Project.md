@@ -52,7 +52,7 @@
 | B-03 确定性生成 | B-01、B-02 | generator、PacketOpcodes、Proto | 只生成核实项，别名/引用检查，重复输出一致，protoc 编译，禁止旧号兜底 | 待开始 | — | 合成模型测试，再接真实映射 |
 | C-01 双向网络接入 | B-03 | GameSession、BasePacket、Handler 注册、UnionCmd/枚举 | 注册冲突失败、号/长度边界、内外分派、目标 wire 测试，构建部署 | 待开始 | — | 映射确认后替换旧表和专属断言 |
 | D-01 补丁和连接前置 | A-01、A-04 | patch、HTTP/SDK/dispatch/密钥 | 路由/渠道/版本/加密、各钩子 ABI/布局/实际加载验证 | 进行中 | CLIENT_72_PATCH_ABI；四入口参数前缀已验，密钥/加载未验 | 字符串工厂、原生RSA/验签、实际加载与路由；商城钩子另列 |
-| D-01a 命名HTTP/SDK入口参数 | A-04d1 | trace_client72_patch_abi、参数/捕获布局摘要 | 四声明static/instance/参数与原生前缀相符，12原生样本、143项研究回归、重复一致 | 已完成 | CLIENT_72_PATCH_ABI、patch-abi-trace/determinism；本批提交 | 不含完整函数、RSA成功、钩子安装/加载或实机；继续D-01 |
+| D-01a 命名HTTP/SDK入口参数 | A-04d1 | trace_client72_patch_abi、参数/捕获布局摘要 | 四声明static/instance/参数与原生前缀相符，12原生样本、143项研究回归、重复一致 | 已完成 | CLIENT_72_PATCH_ABI、patch-abi-trace/determinism；db5245e | 不含完整函数、RSA成功、钩子安装/加载或实机；继续D-01 |
 | D-02 最小入场 | C-01、D-01、E-01 | 隔离配置、日志、验收报告 | 新号选人、旧测试号登录、初始化/场景握手、心跳、退出重登实测 | 待开始 | 无客户端验收；— | 前置满足后停旧服、构建隔离部署 |
 | E-01 最小资源集 | A-01、A-03 | resources 来源、ID 差异/引用报告 | 固定 7.2 来源，必需表/脚本/文本/场景齐全，不覆盖既有修改 | 进行中 | CLIENT_72_RESOURCE_CANDIDATE；现有运行资源仍为7.1混合来源 | 固定候选已取得；继续revision、最小表/脚本/场景对齐 |
 | E-01a 固定资源候选与七表审计 | A-01 | audit_resource72、resource-candidate-observations | Git tree/blob/大小/SHA-256链、稳定ID差异、849正引用/必要ID、7项拒绝/边界测试与重复一致；不冒充资源ready | 已完成 | CLIENT_72_RESOURCE_CANDIDATE、resource-candidate-audit/determinism；本项提交 | E-01所需revision/场景/Lua与其他资源继续验证 |
@@ -127,3 +127,5 @@
 - A-04d5f：两请求构造结果经原生发送器/接口/AKFCDHJBCHD实现到14A447E00封包入口，原指针和24604/23172均保持；声明参数/虚槽有目标证据。8组含uint32上界/64位时间、禁用传输/缺包装通过，138项回归和确定性通过。封包函数体/加密/socket未执行，Token密文边界仍明确未知；没有实机验收或重启。下一项可推进封包边界、D-01命名HTTP/SDK入口ABI及会话字段上游来源。
 
 - D-01a：MakeInitialUrl/Browser.LoadURL/SDKUtil.RSAEncrypt/Marshal.PtrToStringAnsi四声明与原生参数传递交叉；12样本含force真假、byte长度/NUL/非对齐/null通过，143项研究回归和重复产物通过。D-01转进行中；未安装补丁、未执行RSA/字符串工厂完成或实际HTTP。patch/resources引用均未改，运行服务不重启，D-02仍未验收。
+
+- 接续探索：15121DB40在明确CRT内存/栈探测模型下进入ArgumentNullException(inArray)构造入口；仍无成功密文，原因尚未闭合。已定位类型usage缓存与5个目标单元供下一批正式提取验证；未知不晋级。AGENTS.md新增编码规范为工作中出现的他人修改，已读取遵循并保留，未纳入提交。

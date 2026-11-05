@@ -147,3 +147,5 @@ Token外段新增`trace_client72_token_constructor`：15121FF70→151214D20，15
 发送链新增`trace_client72_send_flow`：构造对象→151214D20信封→149935970接口槽4→所选AKFCDHJBCHD槽8→1472CD100→14A447E00入口。接口/桥接/实现的参数均独立解码为JKGIAOABCNP；8组包含高位sequence/64位时间、禁用和缺包装。138项回归、重复产物通过；`evidence/send-flow-{trace,determinism}.json`与`logs/send-flow-tests.log`。对象池/虚表/传输选择/时钟为明确夹具，未执行封包体、socket或实际客户端；复现和边界见[会话研究](docs/CLIENT_72_SESSION.md)。Token外段提交423330e。D-01可独立追踪命名MakeInitialUrl/Marshal.PtrToStringAnsi/SDKUtil.RSAEncrypt，不能只凭旧特征命中安装补丁。
 
 D-01入口：[CLIENT_72_PATCH_ABI](docs/CLIENT_72_PATCH_ABI.md)、`trace_client72_patch_abi`。四个命名方法的真实flags/参数与原生前缀已核对，Browser捕获布局另验；12原生样本、143项研究回归及重复产物通过。证据`evidence/patch-abi-{trace,determinism}.json`、`logs/patch-abi-tests.log`。仅参数前缀，不代表URI/字符串工厂/RSA函数完成或补丁实机加载；patch未变。下一步14052FBF0字符串工厂、原生RSA替换/验签数据流，或14A447E00封包体。发送链提交8638ea5，D-02仍待完整前置。
+
+Token helper探索更新：`analysis/probe_token_seed.py`已在明确CRT malloc/free/chkstk模型下到159B353C0，目标异常参数literal5844为inArray；没有成功密文。类型usage kind1分支/registration+48已定位，145886060→ArgumentNullException162，另四个既知类交叉一致。未正式验收/晋级；继续提取类型usage并定位数组的上游缺口。D-01a本地提交db5245e。工作期间AGENTS.md新增编码规范属他人修改，已读取并保留，不提交；resources原差异仍保留。

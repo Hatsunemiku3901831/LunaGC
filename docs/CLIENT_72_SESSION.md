@@ -37,6 +37,8 @@ SessionRuntime72新增generate_client_seed：仅提供受控NextDouble结果，�
 
 15121DB40后续保护路径经已核对的原生ret thunk和堆分配后进入Shell操作0x64；当前停于其栈探测/SDK内部状态前置，尚未恢复加密字符串。该helper没有被模型化为默认成功。原始探索probe_token_seed.py及token-seed-path.json在忽略的analysis/，不能据此把Token完整构造、密文或签名标记通过。
 
+后续探索已为CRT malloc/free和栈探测补充明确模型，推进到159B353C0/ArgumentNullException(string)入口，参数为目标literal5844 `inArray`；不是成功密文。所需145886060单元在目标usage row698585中为kind1/typeRef444861→System.ArgumentNullException162；Kind1跳表分支14052D2D0使用registration+48的类型缓存（145886000），不能套用literal的registration+58缓存。旁证四个既知Uri/Browser捕获/Token/Login类型也解析一致。这部分仍是忽略目录中的探索，未迁入正式可复跑工具；尚未区分未初始化SDK状态与其他缺失输入，不能把异常直接归因为客户端缺陷。下一步固定类型usage提取与失败路径，再追踪缺失的数组来源。
+
 ## B-02c2 会话token保存和Login参数
 
 trace_client72_token_flow从独立响应wire `32 <length> <ASCII>` 开始，经真实TokenRsp reader将string写至CLDBKDNJHFG+68（tag6）。随后分别执行以下边界，实际存储的指针贯穿这些片段：
