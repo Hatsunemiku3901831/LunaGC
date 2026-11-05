@@ -63,3 +63,10 @@ Handler尾段已单次探索到1531D03D0，实际执行response tag3 bytes→rob
 用户要求本项完成后先暂停再交接，目标工具已返回**paused**，研发已停止；用户明确恢复前不启动下一项。[HANDOFF2.md](HANDOFF2.md)记录完整现状、完成/未完成、边界、弯路和恢复计划。覆盖前旧详细交接已备份local/migration72/handoffs/HANDOFF2.before-pause-dc41c99.md，SHA256一致，核验报告在local/migration72/evidence/handoff-pause-backup-check.json。
 
 恢复首选14A447E00封包体/密钥使用或P0依赖闭包；当前停在嵌套发送函数中，不能宣称整个Handler返回。AGENTS/resources既有差异保留未提交，patch/resources引用不变，全部提交仅本地未推送。
+
+
+## 2026-11-05：已恢复，独立封/收帧验收完成
+
+用户明确恢复推进至D-02，目标active，没有暂停。A-04d5r（ae23ee7）完成独立原生封包/XOR，A-04d5s（b698f75）完成独立原生收帧/包头/错误边界；分别15/18原生样本，两次产物一致，最新216研究回归通过，研究校验0/ready1。factory/负载与key来源仍明确夹具，尚未串联真实消息/seed/Handler，不代表D-02或客户端通过。
+
+下一项真实payload/密钥串联或P0闭包，详见[HANDOFF2.md](HANDOFF2.md)。BitConverter.cctor漏初始化造成的探索假长度错误已修正；不要把模型问题当客户端故障。覆盖详细交接前已备份至忽略目录local/migration72/handoffs/HANDOFF2.before-frame-b698f75.md并核对哈希。无运行文件修改/部署；本轮Java及客户端未运行，只有本工作区MongoDB。AGENTS/resources原差异保留未提交，未推送。
