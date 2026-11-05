@@ -121,3 +121,5 @@ A-04d3请求入口：[Login完整wire](docs/CLIENT_72_LOGIN_WIRE.md)；trace_cli
 下一项：Token Handler 1507BE0E0成功路径从15A4DE262/147CF3070继续；追踪seed/会话token写入，再与1507C2218→151213730发送参数闭合请求配对。Login构造来源检查的明确终点为151213AC6；不把该前缀通过当成完整构造/登录成功。旧文档把151221D70/1512160D0称为响应回调的措辞已校正，当前以CLIENT_72_LOGIN_SEMANTICS为准。
 
 确定性证据：evidence/login-semantics-determinism.json记录trace、语义摘要、literal/enum表的重复输出SHA-256；本批研究校验mapping-check.json通过，mapping-ready.json仍拒绝发布。
+
+本轮接手提交：a9ba540（literal/enum基础）、010f0c4（响应身份、来源到wire、语义校验及文档）；均仅本地。源码/主Proto/运行服务未变，现有resources子模块差异未提交。
