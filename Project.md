@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-执行状态：用户2026-11-05已恢复推进。A-04d5k/B-02c8基线c7556a0；A-04d5l/5m已按各自限定验收收口并本地提交。当前按任务卡推进A-04d5n/B-02c9，追踪分区响应类型关联及tag965语义；A-04d/B-02进行中，D-02未完成。
+执行状态：用户2026-11-05已恢复推进。A-04d5k/B-02c8基线c7556a0；A-04d5l/5m/5n1已按各自限定验收收口并本地提交（46d422c/5dcf882/c9f6870）。A-04d5n/B-02c9仍进行中：分区前缀已确认实际30677 reader，继续后处理连续路径、第二协程与tag965语义；A-04d/B-02进行中，D-02未完成。
 
 静态结构、Token/Login原始wire及响应非空对象图已离线恢复；四个登录请求/响应业务身份与CmdID、35个字段来源、8枚举102符号现有目标证据。Token Handler入口至seed安装、UID和token保存已连续执行，后续Login参数链另有分段证据。Token已在明确初始化/OS夹具下贯通原生seed验签/加密、构造、wire与发送至封包入口；SDK认证回调的五个凭据/渠道字段也已接入原生构造和writer。Login亦已在旧Shell/非云夹具下构造并到封包入口。响应wire→原生解密/摘要/验签→密钥安装已在明确本地签名信任输入下贯通，3组4096字节Java对照及错误拒绝通过。真实SDK初始化、完整Handler、封包体及剩余字段继续研究，A-04d/B-02保持进行中。隔离研发服务已部署，但没有7.2可连接构建，客户端验收全部待执行。本机路径、初始差异、报告和日志在忽略的 local/migration72/；公共摘要放 docs/ 和 protocol/cn-7.2/。
 
@@ -59,7 +59,7 @@
 | A-04d5l 认证回调可选字段 | A-04d5k | trace_client72_auth_tail、摘要/测试 | 从入口连续到14F192325；六字段/清零/Int32边界/溢出、两个exact-one标志、B0不变，重复产物一致 | 已完成 | auth-tail-observations.json、auth-tail-determinism.json；46d422c | UI/调度尾段未执行，六字段不晋级协议语义 |
 | A-04d5m 分区候选源到B0/Token原始链 | A-04d5h、A-04d5l | trace_client72_dispatch_token、摘要/测试 | 两个post-parse片段、tag14 reader、真实seed构造/tag965 writer；8值样本/6缺对象边界、重复一致 | 已完成 | dispatch-token-observations.json、dispatch-token-determinism.json；5dcf882 | 源30677与协程实际绑定仍candidate；业务语义未知，不代表B-02完成 |
 | A-04d5n / B-02c9 分区来源关联与tag965语义 | A-04d5m、A-04d1 | 分区解析调用/类型证据、有效和错误样本、映射摘要 | 实际解析结果类型→B0写入调用关系闭合；业务来源独立证据及wire边界；未知不命名 | 进行中 | CLIENT_72_SESSION；前缀探索在忽略analysis/probe_dispatch_prefix.py | 前缀见A-04d5n1；继续151211BA1后的RegionInfo/配置处理到B0，第二协程与tag965业务语义未完成 |
-| A-04d5n1 分区JSON/密码学到实际reader | A-04d5m、A-04d5i | trace_client72_dispatch_prefix、摘要/测试 | 真实entry→Base64/RSA/SHA/验签→30677分配/reader→post-parse指针；3成功/3拒绝，独立RSA/明文/wire、169回归及重复一致 | 已完成 | dispatch-prefix-observations.json、dispatch-prefix-determinism.json；本批提交 | 成功明确本地签名信任输入；后处理、第二协程、业务语义与实机未验 |
+| A-04d5n1 分区JSON/密码学到实际reader | A-04d5m、A-04d5i | trace_client72_dispatch_prefix、摘要/测试 | 真实entry→Base64/RSA/SHA/验签→30677分配/reader→post-parse指针；3成功/3拒绝，独立RSA/明文/wire、169回归及重复一致 | 已完成 | dispatch-prefix-observations.json、dispatch-prefix-determinism.json；c9f6870 | 成功明确本地签名信任输入；后处理、第二协程、业务语义与实机未验 |
 | B-03 确定性生成 | B-01、B-02 | generator、PacketOpcodes、Proto | 只生成核实项，别名/引用检查，重复输出一致，protoc 编译，禁止旧号兜底 | 待开始 | — | 合成模型测试，再接真实映射 |
 | C-01 双向网络接入 | B-03 | GameSession、BasePacket、Handler 注册、UnionCmd/枚举 | 注册冲突失败、号/长度边界、内外分派、目标 wire 测试，构建部署 | 待开始 | — | 映射确认后替换旧表和专属断言 |
 | D-01 补丁和连接前置 | A-01、A-04 | patch、HTTP/SDK/dispatch/密钥 | 路由/渠道/版本/加密、各钩子 ABI/布局/实际加载验证 | 进行中 | CLIENT_72_PATCH_ABI；四入口参数前缀已验，密钥/加载未验 | 字符串工厂、原生RSA/验签、实际加载与路由；商城钩子另列 |
