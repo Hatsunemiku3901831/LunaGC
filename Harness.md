@@ -14,6 +14,8 @@ E-01c工具批提交dfd11d6，继续B-02e2（已先建卡）：46311/27748 reade
 
 B-02e2已限定完成，入口[入场通知/缓存等待](docs/CLIENT_72_SCENE_WAIT.md)：`trace_client72_scene_wait`固定三输入，实际128发现/32正式样本，26外层字段、3个非空三float对象、原生uint32/64 varint及列表/clone/CopyFrom；实际源修改不影响clone。27748分发先到1507AD120包装；空上下文的真实路径到内部1507AD6F0，再到14CD67260缓存等待，原指针保留；config105与identity(mode10)停在入口，未执行完整入场。named literal+声明/原生分发确认PlayerEnterSceneNotify身份，mappings只晋级身份两层，新增26未知业务字段；ready204→228。11新增/44聚焦、完整305研究回归通过，旧born39/continue33实际重跑摘要不变，trace/摘要二次一致。首轮聚焦1失败是把SDK/Astrolabe也当成工具声称输入，已改精确三输入且保留错误hash拒绝；日志均保留。矩阵仅该消息行变化，53→54证据输入/1287源码Proto、99候选/1140描述符与开放边界保持，recover重复一致；证据scene-wait-login-proto-{review-check,repeat}.json、logs/scene-wait-research-regression.log。未改生产/资源/配置，未部署。
 
+B-02e2提交b5309b5。B-02e3先建卡：复核发现前批将14C8AE9A0(10)称为identity request，实际85949枚举值10为OnPlayerEnterSceneNotify，函数按阶段下标向GLOBAL+191F8数组写入时钟；旧称需纠正，原停止地址/未执行结论不变。先做原生计时/修名，再追正常加载任务和字段消费。
+
 [AGENTS](AGENTS.md) 管规范，[README](README.md) 管能力说明，[Project](Project.md) 管任务验收；本文件维护索引与可复现流程，不重复长状态清单。目标仅国服 7.2。
 
 ## 仓库入口
