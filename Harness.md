@@ -206,3 +206,5 @@ Ec2b正式入口：`client72_ec2b`与`trace_client72_ec2b`，见[动态调试A-0
 分区key到真实Token帧入口：`trace_client72_dispatch_key_frame`，见[网络研究A-04d5v](docs/CLIENT_72_NETWORK.md#a-04d5v-分区密钥来源到token完整帧)。4原生样本、234回归、二次trace/摘要一致；原dispatch-config、dispatch-session、token-frame各6样本产物不变。证据evidence/dispatch-key-frame-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json、logs/dispatch-key-frame-{run,repeat,regression}.log；回归旧工具报告为evidence/*-key-regression.json。修复配置GetString读取旧密文字节缓存的问题，实际XOR与key源本身正确。两段入口调用之间只保留原key，未执行调度器；SDK/HTTP/实际客户端仍未验，不部署运行服务。A-04d5u提交0153d00。
 
 动态启动补充：异常按原样交给应用处理后，目标继续并停在mhypbase.dll的TLS回调，Global仍0；未吞异常或修改校验。当前API状态/异常/日志为evidence/dynamic-startup-exception.json、dynamic-phase-13至15.json和logs/dynamic-phase-*.json；不能再按旧1411268C1暂停点运行脚本。后续只用Automate，禁止computer-use；下一步真实全局/SDK初始化或已知命名HTTP入口观察。
+
+D-01b2已完成真实全局/UTF-8缓存限定核对：两次运行同对象/三个虚槽与声明相等，另4处代码32字节相同；共享startup-runtime-observations.json，详见CLIENT_72_DYNAMIC_DEBUG末节。**最后目标已经退出，不能沿用旧暂停状态**；先查询is_debugging，活跃索引dynamic-active-session.json内PID也可能已结束。erun传递所有首次异常，后改con 1+run；本机hardware watch表删除后寄存器仍残留的现象已实证并清理自设观察点。退出原因仍unknown，不绕过检查；继续离线Login/响应，目标active。A-04d5v提交2523513。

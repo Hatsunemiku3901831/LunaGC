@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "runtimeStatus": "startup-observed",
+  "clientLoginAccepted": false,
+  "wholeSDKInitialized": false,
+  "utf8Cache": {
+    "slots": [
+      "GLOBAL+0x24b8",
+      "GLOBAL+0x10770"
+    ],
+    "sameObject": true,
+    "observations": 2,
+    "virtualMethods": [
+      {
+        "slot": 11,
+        "originalAddress": "0x159c474f0",
+        "expectedAddress": "0x159c474f0",
+        "match": true
+      },
+      {
+        "slot": 19,
+        "originalAddress": "0x159c475d0",
+        "expectedAddress": "0x159c475d0",
+        "match": true
+      },
+      {
+        "slot": 34,
+        "originalAddress": "0x159b640b0",
+        "expectedAddress": "0x159b640b0",
+        "match": true
+      }
+    ]
+  },
+  "additionalCodeChecks": [
+    {
+      "originalVA": "0x15a3464c0",
+      "sha256": "f75de334ab9437e3d6f71a8d9ec0e12c7352a31c541244590610a7a5f51c4916",
+      "match": true
+    },
+    {
+      "originalVA": "0x15a366300",
+      "sha256": "fd672ffa8caab098a7edadbe9b0c99eff5eafb7ab31940ba7eb249fcfaabd9a4",
+      "match": true
+    },
+    {
+      "originalVA": "0x15997c290",
+      "sha256": "203752af647ab396e72f1e7049c23840817ac6d5af75b4baba40ecebc021f1e4",
+      "match": true
+    },
+    {
+      "originalVA": "0x14146ada0",
+      "sha256": "c89a3ed541295fb0329ffc26d73659c22b8d0f9bfb84fd1091ba691c88cf431e",
+      "match": true
+    }
+  ],
+  "globalSlotsNonNull": {
+    "0x24b8": true,
+    "0x10770": true,
+    "0x19580": false,
+    "0x19588": false,
+    "0xf2e0": true,
+    "0x9e80": true,
+    "0xa0d0": true
+  },
+  "seedInitializedFlag": "01",
+  "keySelector": "01",
+  "initialKeyInstalled": false,
+  "latestTargetState": "exited",
+  "startupTerminationCause": "unknown",
+  "lastExitCode": "0x80000003",
+  "debuggerObservations": {
+    "erunPassesAllFirstChanceExceptions": true,
+    "singleExceptionMethod": "con 1 then run",
+    "disabledAndRemovedHardwareEntriesRetainedDebugRegisters": true,
+    "ownedHardwareWatchRegistersCleared": true,
+    "pendingOwnRngWriteTrapHandled": true,
+    "clientPatchesOrCheckResultsModified": false
+  },
+  "firstChanceManagedException": {
+    "wrapper": "Il2CppExceptionWrapper",
+    "hresult": "0x80131530",
+    "messageEmpty": true,
+    "semanticType": "unknown"
+  },
+  "sources": [
+    "https://help.x64dbg.com/en/latest/commands/debug-control/erun.html",
+    "https://help.x64dbg.com/en/latest/commands/debug-control/DebugContinue.html"
+  ],
+  "outsideScope": [
+    "full SDK/authentication/HTTP routing",
+    "initial key consumer in real client",
+    "protection or debugger termination cause",
+    "D-02 login/scene acceptance"
+  ]
+}

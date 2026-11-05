@@ -92,10 +92,12 @@
     "exceptionDeliveredToApplication": true,
     "exceptionsSwallowed": false,
     "debugging": true,
-    "running": false
+    "running": false,
+    "historical": true
   },
   "offlineFollowupEvidence": [
     "ec2b-observations.json",
     "dispatch-key-frame-observations.json"
-  ]
+  ],
+  "currentStateEvidence": "startup-runtime-observations.json"
 }

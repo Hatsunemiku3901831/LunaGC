@@ -67,3 +67,17 @@ python -m unittest tools.test_client72_ec2b
 从注册函数ret继续后出现NTDLL中的首次访问异常，读址为主模块base+C0000002；原始指令/寄存器/栈已保存在忽略报告dynamic-startup-exception.json。通过Automate的`go(pass_exceptions=True)`将异常原样交给应用，未吞异常、未修改指令/返回值或关闭校验。应用继续加载系统库及mhypbase.dll，随后停在后者TLS回调（模块相对偏移5F58E4）；Global指针仍0。此阶段不认证整个SDK、反作弊状态或登录能力。
 
 实时报告dynamic-phase-13至15.json和对应日志；最新phase15确认is_debugging=true、is_running=false。后续必须重新查询会话及实际基址，不能继续沿用1411267B0/1411268C1作为当前暂停点。第一分区非空Ec2b来源到Token帧已由A-04d5v离线验证，详见[网络研究](CLIENT_72_NETWORK.md#a-04d5v-分区密钥来源到token完整帧)，与本段真实启动范围分开记录。
+## D-01b2真实全局、缓存ABI和调试器复现
+
+后续实际运行建立Global存储；两次快照中GLOBAL+24B8与+10770均指向同一UTF-8对象，其class虚槽11/19分别匹配类型463的159C474F0/159C475D0，槽34匹配类型443的159B640B0。另核对MakeInitialUrl、Browser.LoadURL、SDK.RSAEncrypt和Ec2b入口各32字节，全部与固定EXE相同。后一次Global+F2E0、+9E80、+A0D0已非空，原生seed初始化字节为1，selector为1，但两key槽仍空；不能据此宣布完整SDK或登录通过。
+
+**当前目标进程已退出，管理员调试器仍在。** 最新忽略会话索引为evidence/dynamic-active-session.json，指向的最后一次target已经结束；下次先查询is_debugging及系统进程。只有无其他目标时才能用现有管理员调试器重新load_executable，无需重复提权。单次软件断点在重启后可能不保留，应重新核对已加载模块/代码及断点表。
+
+启动调试暴露两项观察工具问题：
+
+- Automate的go(pass_exceptions=True)使用erun，按[官方说明](https://help.x64dbg.com/en/latest/commands/debug-control/erun.html)会传递全部首次异常，不是只传递当前异常。后续改用[DebugContinue](https://help.x64dbg.com/en/latest/commands/debug-control/DebugContinue.html)的`con 1`加普通run，仅交付当前异常，保留后续断点观察。前文将其写成单次传递不够准确，以本节为准。
+- 本机一次禁用、随后删除研究用两处hardware watch后，断点表已无条目，但直接读取DR0/DR1/DR6/DR7仍显示原研究地址及使能位；1408AF2AA的RNG写入触发了对应DR6.B1。已只清理本研究设置的调试寄存器，并处理这个明确属于观察点的待决trap，未跳过客户端指令或修改客户端检查结果。证据dynamic-repro3-{hardware-control,clear-hardware,owned-watch-cleanup}.json。不能只信断点表状态。
+
+控制复现先后记录退出码80000003/80000004。改用单次异常交付后仍出现80000004；清理残留后运行更远，Global/SDK对象建立，并观察到Il2CppExceptionWrapper、HResult80131530及空message。恢复软件观察后仍以80000003退出，未取得终止API断点调用现场。**退出原因unknown**，不能仅据状态码归因于保护、客户端缺陷或协议不兼容，也不绕过检查。SDK对象存在和语音库初始化日志不等于游戏认证成功。
+
+共享摘要[startup-runtime-observations.json](../protocol/cn-7.2/startup-runtime-observations.json)；忽略证据dynamic-utf8-cache.json、dynamic-utf8-cache-repro3.json、dynamic-global-state-repro3.json、dynamic-http-breakpoints-repro3.json、dynamic-managed-exception-repro3.json、dynamic-phase-repro*.json及对应日志。旧phase20/21和repro3快照均为历史状态，当前没有运行目标。研究回归仍234，D-02未验；下一步离线Login/真实响应连续封包或独立核查调试退出机制。

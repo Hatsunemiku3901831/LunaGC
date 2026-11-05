@@ -1,11 +1,12 @@
-# 国服7.2详细交接：分区密钥到Token完整帧
+# 国服7.2详细交接：分区密钥到Token帧及真实启动ABI
 
 更新：2026-11-06。用户要求持续按Project逐项推进至D-02实机验收；目标active，没有暂停指令。用户允许动态调试，已手动完成管理员启动和Automate加载，并明确禁止computer-use；以后只用脚本API。此文为持续工作检查点，不要求再次授权。
 
 ## 完成内容与当前状态
 
 - A-04d5u提交0153d00：原生Ec2b注册/RNG初始化/raw与managed解码16样本，228回归与重复产物通过，初始化与live5000字节及独立seed103递推一致。
-- A-04d5v本批已验收：第一分区9块RSA响应→原生解密/摘要/验签/reader→三次Ec2b→两配置XOR/清槽→最终key原指针→真实Token构造/发送/size/writer/完整帧。4原生样本、234研究回归、二次trace/摘要一致；原dispatch-config、dispatch-session、token-frame各6样本产物逐字节不变。本地提交见本检查点Git记录。
+- A-04d5v已提交2523513：第一分区9块RSA响应→原生解密/摘要/验签/reader→三次Ec2b→两配置XOR/清槽→最终key原指针→真实Token构造/发送/size/writer/完整帧。4原生样本、234研究回归、二次trace/摘要一致；原dispatch-config、dispatch-session、token-frame各6样本产物逐字节不变。
+- D-01b2限定验收完成：两次真实运行的UTF-8两缓存同对象/3虚槽均匹配目标声明；新增4处代码各32字节相同。后一次Global+F2E0/+9E80/+A0D0已非空，seed初始化字节1，selector1，key槽仍空。退出原因未知，不代表完整SDK/登录。
 - v没有提供初始frame key。30677 tag11/+40实际供给三个decoder调用，第三次原返回指针由151212942安装至GLOBAL+19588，之后Token保持原指针及内容。两配置分别使用前两次返回指针XOR，随后清槽。
 - 四样本：有效key的504字节帧、含中文/补充字符/NUL的5314字节跨4096周期帧、错误魔数Nope、空seed。后两组明确提供明文配置，最终key为空、Token帧保留明文；这只是目标行为，不自动改变服务端准入。
 - 分区与Token是同一emulator中的两次显式入口调用，调度器未执行。Token构造至frame返回连续，seed oracle在frame返回后才执行其额外native getter。
@@ -14,13 +15,17 @@
 
 ## 最新真实调试状态
 
-目标保留在原管理员调试会话中，**暂停于mhypbase.dll TLS回调，模块相对偏移5F58E4，Global仍0**。不要再把1411267B0/1411268C1当当前暂停点。
+**最后一个目标进程已退出，管理员调试器保留。** 当前没有暂停中的游戏目标；旧mhypbase/TLS/注册ret记录均为历史。重新研究前先核对is_debugging与系统进程，确认无其他客户端后可用原管理员调试器load_executable，不需重复提权或插件加载。
 
-从注册函数ret继续后，NTDLL出现首次访问异常，读取主模块base+C0000002；指令/寄存器/栈已记录。用`go(pass_exceptions=True)`把异常交给应用，未吞异常、改校验或强置返回值。应用随后加载系统库和mhypbase并停在TLS断点。phase15确认is_debugging=true、is_running=false，非SDK初始化或登录通过。
+本机PID/ASLR仅在忽略报告。Python入口`local/migration72/debug-venv/Scripts/python.exe`，X64DbgClient指向checkout内`local/runtime/x64dbg-2026.05.27/release/x64/x64dbg.exe`。最新索引`evidence/dynamic-active-session.json`的target也已结束；dynamic-startup-read.json仅是最早会话历史，不能再用其target PID。attach_session连接调试器；先is_debugging，再查询$pid/实际mod.main基址。debugging=false时不要把API的is_running=true误当游戏运行。detach_session只关闭接口，不是debuggee detach。
 
-本机PID/ASLR/接口端口只在忽略报告中。Python入口`local/migration72/debug-venv/Scripts/python.exe`，模块x64dbg_automate；X64DbgClient路径指向checkout内`local/runtime/x64dbg-2026.05.27/release/x64/x64dbg.exe`。从`evidence/dynamic-startup-read.json`读取session/target，再用API实时核对get_debugger_pid、eval_sync('$pid')、is_debugging/is_running、mod.main()。eval_sync返回tuple；每次用实际基址换算地址。attach_session连接现有调试器，不要start_session重复启动。detach_session只断开API，保留暂停目标；勿误用debuggee detach/terminate。
+关键纠正：go(pass_exceptions=True)实际erun会传递所有首次异常，不能用来只交付当前异常。以后确需让应用处理当前异常时，用`cmd_sync('con 1')`再普通go。官方依据与复现见CLIENT_72_DYNAMIC_DEBUG末节。正常客户端异常不吞、不改返回值，也不隐藏调试器或绕过保护。
 
-已有初始key入口14146ADA0软件断点、Global槽14586B600和RNG mask145EEB1DC硬件写观察点；继续前重读断点。用户提权/插件加载授权已完成，不重复问。最新证据为dynamic-startup-exception.json、dynamic-phase-13至15.json和logs/dynamic-phase-*.json。dynamic-current-state.json是注册ret时历史状态。analysis/dynamic_advance.py会实际继续进程，不能当只读查询；read_dynamic_rng.py/dynamic_ec2b_registration.py要求旧入口，勿原样重跑。
+本机两处研究hardware watch禁用/删除后，表已无条目而DR0/DR1/DR6/DR7仍残留，实际RNG写入触发了自设DR6.B1。已核对仅为本研究地址，清理自设调试寄存器并处理该待决研究trap；没有跳过客户端指令或修改检查结果。证据dynamic-repro3-{hardware-control,clear-hardware,owned-watch-cleanup}.json。以后不要只看断点表，避免重新引入残留。TLS自动停点设置已由1改为0以减少观察干扰，原值记录dynamic-repro-event-settings.json；此为专用调试器配置，不是客户端校验。
+
+退出记录：原运行80000003，两个复现80000004；改成con 1+run仍曾80000004。清理watch后运行更远，UTF-8/SDK对象和托管Il2CppExceptionWrapper已观察；HResult80131530、message为空，具体语义未命名。恢复软件观察后仍80000003退出，终止API断点没有调用现场，原因unknown。不能据此断言保护检查、客户端故障或协议不兼容。
+
+最新证据：dynamic-utf8-cache{,-repro3}.json、dynamic-global-state-repro3.json、dynamic-http-breakpoints-repro3.json、dynamic-managed-exception-repro3.json、dynamic-phase-repro*.json和对应日志。软件单次断点跨重启可能丢失；14146ADA0、15A3464C0、15A366300、15997C290都需重新核对代码/基址后设置。analysis/dynamic_advance.py会真正继续当前目标，且现在读取active-session并拒绝旧--pass-exceptions选项；--pass-current-exception才是当前单次交付。dynamic_deliver_observed_exception.py仅用于经过核对的NTDLL同一C0000005现场，不能泛化自动忽略异常。
 
 ## 正式工具与复现
 
@@ -56,7 +61,7 @@ v trace SHA256为2f8b9a4591e75fcad63c2779c47f35e9d0258659a05a40fae5fa13a8fc3ada9
 
 没有已确认的全局外部硬阻塞，目标继续active，不因检查点停止。
 
-1. 继续D-01b真实Global/SDK初始化，或命名HTTP入口15A3464C0、Browser15A366300前来源观察；先核对现有会话，不使用computer-use，不关闭校验。
+1. 优先独立推进离线Handler→Login实际size/writer/完整帧；76410槽13为152EF0D50，槽17为152EEB470。已有HandlerLogin72在14A447E00停止，必须延续原发送现场；Frame/Encoding/池模型不要污染前段密码学。可用现有3发送+拒绝/延迟样本作起点。
 2. 可独立推进Handler→Login真实writer/完整帧，或真实响应reader/密钥安装接回收帧。已有工具/slot证据可复用。
 3. A-03/B-02仍缺新旧号、选人、初始化/场景、嵌套/枚举业务闭包；B-03/C-01不得生成猜测映射。
 4. D-01本地信任配置/补丁实际加载/路由与E-01资源revision/Lua/场景未闭合；当前补丁不变，不能放开守卫启动猜测协议。
@@ -69,4 +74,4 @@ v trace SHA256为2f8b9a4591e75fcad63c2779c47f35e9d0258659a05a40fae5fa13a8fc3ada9
 
 AGENTS.md编码规范修改和resources/ScriptSceneData/flat.luas.scenes.full_globals.lua.json差异属他人，保留不提交。patch为f2874103ab70afc56260ee12d1eaca96247933b2，resources为dac2a9d43332ef51879522cf39da2831b0ca0543，引用不变。只本地提交，不推送。
 
-覆盖本文前旧HANDOFF2已备份至local/migration72/handoffs/HANDOFF2.before-dispatch-key-0153d00.md并逐字节/hash核验，报告evidence/handoff-dispatch-key-backup-check.json；旧hash为5b43cd74c0520e101a980ae6c86cfbc5355d12eaa4a3989c3e9cb8029ff3cda1。HANDOFF.md只追加，旧暂停段落仅历史。
+覆盖本文前旧HANDOFF2已备份至local/migration72/handoffs/HANDOFF2.before-startup-runtime-2523513.md并逐字节/hash核验，报告evidence/handoff-startup-runtime-backup-check.json；旧hash为8e8b572a3714319ca9d7c3aac75c4442103a5625729dac452c3f020189aec404。HANDOFF.md只追加，旧暂停段落仅历史。
