@@ -1,5 +1,7 @@
 # 7.2 三层映射输入
 
+2026-11-06 B-03a/C-01a：仅选人三件组已按verified三层证据确定性生成生产Proto与常量，来源/碰撞/旧号漂移均拒绝；工具`tools/generate_born72_sources.py --client $env:GAME_PATH [--check]`每次核对实际输入hash。生产三件组与空schema依据见[CLIENT_72_BORN](../../docs/CLIENT_72_BORN.md)。其余研究Proto不自动接入运行，完整协议仍不ready；本批272研究/495 Java选集通过，全部客户端runtime未验。源码/Proto矩阵现99构造/148种子/1140文件，原Notify缺根由目标证据接管后补齐；下方旧数值为历史。
+
 `profile.json` 固定目标版本/渠道与关键输入哈希；`mappings.json` 分别维护 opcodes、messages、schemas 三张表。26个登录/选人/入场种子中，Token/Login四个请求响应、PacketHead和PingReq/PingRsp的现有身份层已verified；字段层仍逐项保留未知/候选，完整schema未verified。旧段落为各研究检查点的历史范围，以mappings及最新矩阵为准。**空字段列表不代表实际空消息，当前没有完整正式协议。** P0完整闭包未确认，closure保持unresolved。
 
 每条记录独立保留 status（unresolved/candidate/verified）、evidence、ambiguities。消息表另有方向、别名、runtimeStatus；字段表记录 semanticField/tag/type/cardinality/presence/packed/oneof、nestedType、enumValues或map键值。已验证字段必须写明presence和packed；枚举/嵌套/容器不能只保留一个wire type。

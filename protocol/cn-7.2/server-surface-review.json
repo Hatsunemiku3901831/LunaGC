@@ -5,7 +5,7 @@
   "sourceSHA256": {
     "data/proto-fanout.json": "f19ac7ffaeb4c853f96f5188836ce0717e1b6c891e42564201a82d1b3702685c",
     "src/main/java/emu/grasscutter/DebugConstants.java": "9336247c74524049536d03641f09671be3ac94c786a6a1660715911155859c47",
-    "src/main/java/emu/grasscutter/config/ConfigContainer.java": "46f93f429a61858cd7af8466cb1e56943b85c80dc3c34cda276f73b19d3e4b3a",
+    "src/main/java/emu/grasscutter/config/ConfigContainer.java": "0f9c3d2c43904083856f9673dc51ba49254abafd33f109572c9ba1b1d9b2c41f",
     "src/main/java/emu/grasscutter/config/Configuration.java": "b8db10ea40b195f133be85d18782e4cfbd6a0e44ed0674528cd0a08a4cbcf96e",
     "src/main/java/emu/grasscutter/game/ability/AbilityManager.java": "c7eba664dde965b03bd82406b03381345b224729a15c1a58dc31d84176f600ba",
     "src/main/java/emu/grasscutter/game/activity/aster/AsterBigSceneController.java": "7dfa59f06818918308e7666eaa0fe7f0ef1c64c0c08cdc448e023b38e35c6141",
@@ -15,11 +15,11 @@
     "src/main/java/emu/grasscutter/game/player/InvestigationHandbook.java": "cf2a2b5c85b9a72ff7f10567a83b4a03de56bda3ef77bd6453e05da435057817",
     "src/main/java/emu/grasscutter/game/player/InvokeHandler.java": "78e7caaeaad0e7f834203da65fed4227a04e8716028bcb3d6527960ddfb9dd82",
     "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f",
-    "src/main/java/emu/grasscutter/net/packet/PacketOpcodes.java": "10e036d50be18ac5c54eec3c5f0cfe7c8f16475dc06344cd361b007497666d06",
+    "src/main/java/emu/grasscutter/net/packet/PacketOpcodes.java": "3075eb21f8cd3d218b3e8446c7badefdd9768c7e6f9f254eb6108ec5dfdda3a1",
     "src/main/java/emu/grasscutter/net/packet/PacketOpcodesUtils.java": "4b838183747ac97051f108e700ba4ffbe41bf47513163e6b1c1b370e65cd73d2",
     "src/main/java/emu/grasscutter/server/event/game/SendPacketEvent.java": "6691ed4aecda14e9254e35a44fb65204dd09cd47ed31b07fb0bdca526f45f697",
     "src/main/java/emu/grasscutter/server/game/FanOut.java": "193a80da6afe4bb0580394d540c712914cabb9e1cf901f3e4caeb2aebe4ae014",
-    "src/main/java/emu/grasscutter/server/game/GameServerPacketHandler.java": "e59ff937905916236aa4fc22af9c9c3385eb8732232265a9d274abf620f7beac",
+    "src/main/java/emu/grasscutter/server/game/GameServerPacketHandler.java": "d08de2e4d3af80f6d70859f480f7cd16087cc344b0619e0078a360392de11ac5",
     "src/main/java/emu/grasscutter/server/game/GameSession.java": "7e988eabf22c45ee87f6a689e10bafee0b645c3cc201582b99a0f759fea8a33d",
     "src/main/java/emu/grasscutter/server/http/handlers/GmHandler.java": "4fc337c3f43ed2b26ab88e2f8c88b794d8c3f5021f2cf075edc17034b7fc16c2",
     "src/main/java/emu/grasscutter/server/http/handlers/GmShop.java": "db8b3c0bf2c36aac3818c1316725ba4e5656f0edb68ccf392ac4051562b2b54a",
@@ -29,10 +29,10 @@
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerMpPlayGuestReplyInviteReq.java": "5c5a3a663adde1925256f2726efb94d3d7f9cf80065d2f1566fd83965fdd0b7f",
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerMpPlayOwnerCheckReq.java": "a353cfdf6b6ca2cd7a6fa6e3176373e1818bba882e33eec22f598ffc26893a7d",
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerMpPlayOwnerStartInviteReq.java": "cb6fed96244da5af832d44244ba8b50584a3a8a49710f654de93f383204342e6",
-    "src/main/java/emu/grasscutter/server/packet/recv/HandlerPlayerLoginReq.java": "b7ddf5edfdcba87a2e8c01ed2f87bc7acfee5f3f4e42006bb1cf63d40e87ae40",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerPlayerLoginReq.java": "80e78b7cb1f5baa420333ce00e33ec9a6661a0d32aac0ca2ae57a7ca71262499",
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerSceneInitFinishReq.java": "59c1acdc54f68632536a1942e1a4fe46fad6cc75edabb0ae1e9281170465b037",
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBirthdayReq.java": "1f776bc084ff235f763180ea0d493f2fa66c06eb16fab4512cba99c2b8473c4b",
-    "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBornDataReq.java": "5d92563da180a0f5e2b2788f4c5dfd39e3bae0dea6c60a7a822784c168f17101",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBornDataReq.java": "03450ff8337acbea944e725f9db7d5bbbf235006ecee36e19afaddbce824caab",
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerUnionCmdNotify.java": "bd4b0a8fe550da32583f9f777d485b3a0d5c7b9ddabf2de0c3a41b8d50f8d1a5",
     "src/main/java/emu/grasscutter/server/packet/send/PacketCrucibleMatch.java": "ed7742d4b837c43de85cb9fee07eb23fbfc9cbd26312a9543e2b86b0b4b6f0df",
     "src/main/java/emu/grasscutter/server/packet/send/PacketDailyTaskDataNotify.java": "0317e123c86f6a744e37bf0ecf38490428ee62dc68c80fc17f414a01058d1c4b",
@@ -79,20 +79,6 @@
       "expression": "packet.getOpcode()",
       "line": 227,
       "group": "combat-copy"
-    },
-    {
-      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerPlayerLoginReq.java",
-      "kind": "new BasePacket",
-      "expression": "intro.doSetPlayerBornDataNotify",
-      "line": 47,
-      "group": "intro-notify"
-    },
-    {
-      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBornDataReq.java",
-      "kind": "new BasePacket",
-      "expression": "rspCmdId",
-      "line": 84,
-      "group": "born-rsp"
     },
     {
       "file": "src/main/java/emu/grasscutter/server/packet/send/PacketCrucibleMatch.java",
@@ -206,26 +192,6 @@
       "finding": "仅CombatInvocationsNotify分支重建客户端序号并保留event替换后packet.getOpcode()；不是新增CmdID。SendPacketEvent可在现有负号检查之后替换包，C-01需检查最终包。",
       "legacyConstants": {
         "CombatInvocationsNotify": 6930
-      }
-    },
-    "intro-notify": {
-      "classification": "external-config",
-      "sources": [
-        "src/main/java/emu/grasscutter/server/packet/recv/HandlerPlayerLoginReq.java",
-        "src/main/java/emu/grasscutter/config/ConfigContainer.java"
-      ],
-      "finding": "newAccountIntro.enabled默认false；notify配置默认0，正值时构造空payload包。15秒默认旅行者兜底不能代替新号选人验收。",
-      "legacyConstants": {}
-    },
-    "born-rsp": {
-      "classification": "external-config",
-      "sources": [
-        "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBornDataReq.java",
-        "src/main/java/emu/grasscutter/config/ConfigContainer.java"
-      ],
-      "finding": "setPlayerBornDataRsp正配置优先，否则遗留命名负占位；当前发送空payload，尚无7.2空响应证据。",
-      "legacyConstants": {
-        "SetPlayerBornDataRsp": -28
       }
     },
     "crucible": {
@@ -534,17 +500,7 @@
     },
     {
       "file": "src/main/java/emu/grasscutter/config/ConfigContainer.java",
-      "line": 457,
-      "source": "public int doSetPlayerBornDataNotify = 0;"
-    },
-    {
-      "file": "src/main/java/emu/grasscutter/config/ConfigContainer.java",
-      "line": 458,
-      "source": "public int setPlayerBornDataRsp = 0;"
-    },
-    {
-      "file": "src/main/java/emu/grasscutter/config/ConfigContainer.java",
-      "line": 589,
+      "line": 569,
       "source": "public int cmdId = 0;"
     },
     {

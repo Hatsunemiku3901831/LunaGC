@@ -380,3 +380,5 @@ docs/ACCOUNT_AND_SAVE_DATA_MODEL.md 和 docs/ACCOUNT_AND_SAVE_OPERATIONS.md。
 三件组目标号及字段已限定离线验证，见[CLIENT_72_BORN](CLIENT_72_BORN.md)的完整实现/回归规格。通知5008、请求8541（nick_name4/avatar_id11）、响应414（retcode15）。仅更新研究映射，没有修改账号、持久数据模型、Guard、创建/保存逻辑；后续实现需保留入口业务校验、重复创建和保存回归。当前39原生样本与266研究回归不代表真实选人/创建角色/存档验收；本批未重跑Java经济保存集，未部署。
 
 V-01d（2026-11-06）：扩展Guard选集实际467项中1项失败，原因是FurnitureStartFlowTest默认读取/resources。只调整此测试入口路径：LUNAGC_TEST_RESOURCES优先，其次LUNAGC_RESOURCES_DIR，缺省当前checkout的resources；1396个合法/其他非法配方、扣费及容量断言保留。家具原31项和关联选集110项全部通过，无失败/错误/跳过。失败报告born-guard-before-test-results/与修后born-changed-test-results/、日志born-{guard-regression,changed-regression}.log均在local/migration72。完整Java集及FurnitureTalentPlanTest等其余V-01缺口未据此消除。
+
+C-01a最终回归（2026-11-06）：独立便携Mongo测试实例、随机测试库；21套495项Java全部通过，失败/错误/跳过均0，其中包含原221项经济/保存选集、新19项选人、15项wire及原33项登录准入。新号、旧号冷读、重复幂等、凭据轮换、保存前失败/写后丢确认和半成品冷读均有验证；onLogin与欢迎邮件只观察继续入口，不是客户端/实际邮件落库验收。报告evidence/born-guard-final-summary.json和born-guard-final-test-results/，日志logs/born-guard-final.log，均在local/migration72。完整Java集未重跑；新运行代码需构建，但P0/SDK/补丁/资源前置未齐，不启动服务/游戏，未部署原因与最小后续取证见CLIENT_72_BORN。

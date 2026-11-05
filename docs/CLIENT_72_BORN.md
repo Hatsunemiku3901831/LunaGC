@@ -1,6 +1,6 @@
 # B-02d 选人三件组：固定7.2证据与Sol实现规格
 
-2026-11-06（Australia/Sydney）。B-02d三件组研究已闭合；用户现已授权限定B-03a/C-01a实现。B-03a生成与生产wire接管已通过，C-01a业务/保存回归进行中；完整P0/补丁/资源前置未齐，不启动服务或客户端。下文原生执行指Offline72离线执行固定EXE机器指令，不是Windows实机验收；旧停止记录仅对应前一研究批。
+2026-11-06（Australia/Sydney）。B-02d三件组研究已闭合；用户现已授权限定B-03a/C-01a实现。B-03a生成与生产wire接管、C-01a业务/保存选集已通过；构建及停止交接见文末。完整P0/补丁/资源前置未齐，不启动服务或客户端。下文原生执行指Offline72离线执行固定EXE机器指令，不是Windows实机验收；旧停止记录仅对应前一研究批。
 
 ## 输入与三层结果
 
@@ -69,3 +69,25 @@ python tools/validate_protocol72.py --ready
 `--check`检查产物漂移且不写文件；首次生成和再次check的四产物SHA-256相同。三Proto与PacketOpcodes固定LF，避免Windows检出换行造成伪漂移。Java只经Gradle/protoc生成。6项生成回归及6项B-02d工具回归通过；`Protocol72BornCompatibilityTest`15项通过，覆盖独立原生向量、Unicode/NUL、uint32最大值、正负错误int32、重复/未知/错误wire、非法UTF-8和空通知/成功响应不同帧。三件组没有声明64位/嵌套/list字段，相应未知字段只验证跳过；原有复杂消息研究回归另行保留。
 
 证据在忽略目录`evidence/born-generation-{first,check}.json`、`logs/born-generation-tests.log`、`logs/born-implementation-focused.log`；均位于`local/migration72/`。没有将这些离线/Java结果晋级为runtime或客户端验收。
+
+## C-01a业务接入、回归与当前边界
+
+新号固定进入PICKING_CHARACTER并发送目标通知；删除NewAccountIntro配置包号、enabled绕过、15秒超时和默认角色创建。旧配置文件中相应旧键不再参与运行。选择请求只在真实准入检查通过后进入业务；路由允许ACTIVE中的重复请求到达幂等拒绝，不重复创建、改名、加队伍或发欢迎邮件。116仅用于已设置角色；其他基础输入/资源拒绝及解析/保存失败使用-1通用非零分支，不假称某个未验证的命名错误。132的真实编码另有独立wire断言，没有把内部失败映射成昵称屏蔽词。
+
+入口只核对一次旅行者ID、非空白/无控制字符昵称及所需角色/技能资源。昵称长度/过滤词/数字数量等完整客户端validator仍未知；这里明确是服务器基础输入策略，不宣称已执行或复刻客户端昵称校验，不依据wire极值或长名样本扩展业务承诺。
+
+沿现有addAvatar/初始武器/队伍路径创建，用正式Item Guard、Avatar同步确认和Player Guard确认最终对象，再调用onLogin；成功回包为414/空payload，失败回包真实写tag15。保存失败发送非零并关闭该会话，不在半成品内存对象上重试。故障注入实际复现“Avatar/武器已保存而Player未确认”；冷读后若角色数与mainCharacterId完成状态不一致则拒绝登录，保留数据供核对，不自动建默认角色或修复档案。确认丢失可能已写入，**不承诺跨集合回滚、持久创建事务或欢迎邮件在异常重启后恰好一次**；重登按实际冷读完成状态判断。
+
+`BornDataFlowMongoTest`19项使用随机隔离Mongo库和真实创建/Player+Item Guard，包含两旅行者×两任务模式、选择等待、重复请求、非法/旧tag/坏wire/缺资源、凭据轮换、保存前失败/写后丢确认与半成品冷读、成功冷读/旧号不重选。onLogin与欢迎邮件是明确观察入口，未执行完整初始化、真实邮件落库或客户端网络。`LocalLoginAdmissionMongoTest`原33项保留，原超时兜底准入断言随删除路径改为重复选人登录的原token复查；不弱化撤销/来源/派生写入保护。
+
+首轮66项聚焦通过；新增半成品冷读后，最终21套**495项Java回归，失败/错误/跳过均0**，含本批19业务+15独立wire、账号创建/UID/登录准入、Account/Player/Item/Activity Guard与恢复、写队列/屏障/栅栏，以及原221项家具/加工/手册经济保存选集。首次扩展467项有1个/resources测试路径失败，V-01d仅修路径，保留所有配方及扣费断言后再验。272项研究回归通过；研究校验0，ready仍1（204缺口）。完整Java集未重跑，不推算或消除历史217失败。
+
+源码索引同步人工复核删除的fallback边和改用player.onLogin的边，未放松hash门禁：A-03a当前81方法/95边（12人工、83候选）/1000未关联；A-03b当前294方法/408边（71人工、337候选）/2856未关联。矩阵99构造/148引用种子/1140描述符文件，生产空通知有目标证据后补齐原缺根；1287源码/Proto与47研究输入受hash约束，重复生成一致。三层状态、188字段及所有runtime未验结论不变。动态来源因两处配置包移除减为15处/8组，其他开放接口未闭合。
+
+本机证据：`born-guard-final-test-results/`、`evidence/born-guard-final-summary.json`、`logs/born-guard-final.log`、`logs/born-research-regression.log`、`evidence/born-{source-surface-review,login-source,login-dependencies,matrix-repeat}.json`。旧schema复现报告`evidence/born-legacy-parser-reproduction.json`用d2cfb14的Proto实际经protoc解码目标向量，确认旧avatar tag2/retcode tag6读不到目标业务字段；没有切换工作区源码或启动服务。
+
+## 需要Astra补取的最小证据（本批不执行）
+
+首项是B-02e：固定同一EXE/两metadata哈希，沿已核实SetPlayerBornDataRsp Handler的0分支进入`14CD68860`，核对完整继续函数的状态变化/发送/依赖；结合新号与已有测试号的受控连接证据，确定PlayerLoginRsp、DoSetPlayerBornDataNotify、成功Rsp与第一条必需初始化/场景消息的次序及门控。每新增必需消息分别给出CmdID→类型、类型→语义、字段→wire证据和非零/错误边界独立样本，不能把服务端现有发送顺序当目标规格。若仍需SDK/补丁/真实调度前置，记录最早缺失入口与解除条件即停，不扩大到全部玩法。
+
+复现起点是上述Java选集和ready204缺口；它们已能证明业务/保存不变量，却无法确定客户端完整成功继续、必需初始化闭包或实际收发。昵称完整validator仍未执行，仅基础服务策略已实现。D-01实际SDK/本地信任与补丁加载、E-01资源revision/Lua/场景也未齐；本批不新启动服务、游戏或调试目标，不修改版本准入或安装补丁。B-03/C-01父任务与D-02均不得因三件组通过晋级。

@@ -9,10 +9,10 @@
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerEnterSceneReadyReq.java": "28eb1a2a066f18614887e5312a9dd2f7da974fc616e30527e37812ac889b57a6",
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerGetPlayerTokenReq.java": "179066bc7989479a4c4d2ca7b69f090552e4547b726538ff6e87de9deea95407",
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerPingReq.java": "d662b07f75dfceb8741fb990f8270e38cdb626b67000d514c0f6ff60ee9c0596",
-    "src/main/java/emu/grasscutter/server/packet/recv/HandlerPlayerLoginReq.java": "b7ddf5edfdcba87a2e8c01ed2f87bc7acfee5f3f4e42006bb1cf63d40e87ae40",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerPlayerLoginReq.java": "80e78b7cb1f5baa420333ce00e33ec9a6661a0d32aac0ca2ae57a7ca71262499",
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerPostEnterSceneReq.java": "0dea78b9a4623e28742db242b57a8f9e9db60b7f285d79fd6f92200be40e4edd",
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerSceneInitFinishReq.java": "59c1acdc54f68632536a1942e1a4fe46fad6cc75edabb0ae1e9281170465b037",
-    "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBornDataReq.java": "5d92563da180a0f5e2b2788f4c5dfd39e3bae0dea6c60a7a822784c168f17101",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBornDataReq.java": "03450ff8337acbea944e725f9db7d5bbbf235006ecee36e19afaddbce824caab",
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerUnionCmdNotify.java": "bd4b0a8fe550da32583f9f777d485b3a0d5c7b9ddabf2de0c3a41b8d50f8d1a5"
   },
   "roots": [
@@ -37,19 +37,10 @@
       "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
     },
     {
-      "from": "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#scheduleFallback(GameSession,Player)",
-      "to": "emu.grasscutter.game.player.Player#onLogin()",
-      "kind": "invoke",
-      "selector": "player.onLogin",
-      "argumentCount": 0,
-      "occurrences": 1,
-      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
-    },
-    {
       "from": "emu.grasscutter.server.packet.recv.HandlerSetPlayerBornDataReq#handleAdmitted(GameSession,byte[])",
       "to": "emu.grasscutter.game.player.Player#onLogin()",
       "kind": "invoke",
-      "selector": "session.getPlayer().onLogin",
+      "selector": "player.onLogin",
       "argumentCount": 0,
       "occurrences": 1,
       "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"

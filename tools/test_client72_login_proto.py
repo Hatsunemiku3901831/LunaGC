@@ -29,13 +29,15 @@ class LoginProtoTests(unittest.TestCase):
                 self.assertEqual(matrix[original['semanticName']]['layers'][kind], original)
         self.assertFalse(actual['closureComplete'])
         self.assertFalse(actual['targetProtocolReady'])
-        self.assertEqual(actual['missingProtoRoots'], ['DoSetPlayerBornDataNotify.proto'])
-        self.assertNotIn('DoSetPlayerBornDataNotify.proto', actual['protoDependencies']['files'])
+        self.assertEqual(actual['missingProtoRoots'], [])
+        self.assertIn('DoSetPlayerBornDataNotify.proto', actual['protoDependencies']['files'])
+        self.assertTrue(matrix['DoSetPlayerBornDataNotify']['layers']['schemas']['emptySchemaEvidence'])
+        self.assertNotIn('schemas: no field evidence; this does not prove an empty target message',
+                         matrix['DoSetPlayerBornDataNotify']['gaps'])
         self.assertEqual(actual['commandTableScope']['transportDomainsStatus'], 'unresolved')
         self.assertEqual(len(actual['commandTableScope']['duplicateValues']), 5)
         dynamic = next(v for v in actual['packetCandidates'] if v['dynamicOpcode'])
         self.assertEqual({tuple(v['constructorArguments']) for v in dynamic['sourceSites']}, {
-            ('intro.doSetPlayerBornDataNotify',), ('rspCmdId',), ('PacketOpcodes.SetPlayerBornDataRsp',),
             ('PacketOpcodes.ItemAddHintNotify',), ('packet.getOpcode()', 'packet.shouldBuildHeader()'), ('opcode',)})
         self.assertIn('ItemAddHintNotify', matrix)
 

@@ -24,7 +24,6 @@ import emu.grasscutter.server.event.EventHandler;
 import emu.grasscutter.server.event.game.PlayerCreationEvent;
 import emu.grasscutter.server.game.*;
 import emu.grasscutter.server.packet.recv.*;
-import emu.grasscutter.server.scheduler.ServerTaskScheduler;
 
 import org.bson.Document;
 import org.junit.jupiter.api.*;
@@ -630,7 +629,7 @@ class LocalLoginAdmissionMongoTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"valid", "rotated"})
-    void theActuallyScheduledCharacterFallbackRevalidatesItsToken(String token) throws Exception {
+    void repeatedCharacterSelectionLoginRevalidatesItsOriginalToken(String token) throws Exception {
         managed();
         var reads = new AtomicInteger();
         var player =
@@ -639,8 +638,8 @@ class LocalLoginAdmissionMongoTest {
                             new AvatarStorage(this) {
                                 @Override
                                 public int getAvatarCount() {
-                                    if (reads.incrementAndGet() == 2) throw new FallbackReached();
-                                    return 0;
+                                    reads.incrementAndGet();
+                                    throw new PreparationTouched();
                                 }
                             };
 
@@ -652,28 +651,16 @@ class LocalLoginAdmissionMongoTest {
         field(Player.class, "accountId").set(player, ID);
         session.setPlayer(player);
         session.setState(GameSession.SessionState.PICKING_CHARACTER);
-        var scheduler = new ServerTaskScheduler();
-        field(GameServer.class, "scheduler").set(server, scheduler);
-        int oldDelay = GAME_OPTIONS.newAccountIntro.fallbackSeconds;
-        try {
-            GAME_OPTIONS.newAccountIntro.fallbackSeconds = 1;
-            var schedule =
-                    HandlerPlayerLoginReq.class.getDeclaredMethod(
-                            "scheduleFallback", GameSession.class, Player.class);
-            schedule.setAccessible(true);
-            schedule.invoke(new HandlerPlayerLoginReq(), session, player);
-        } finally {
-            GAME_OPTIONS.newAccountIntro.fallbackSeconds = oldDelay;
-        }
+        field(ResourceLoader.class, "loadedAll").set(null, true);
         if (token.equals("rotated")) {
             var current = account();
             current.setToken("rotated-token");
             DatabaseHelper.saveAccountSync(current);
-            assertDoesNotThrow(() -> scheduler.getTask(0).run());
-            assertEquals(1, reads.get());
+            assertDoesNotThrow(() -> new HandlerPlayerLoginReq().handle(session, new byte[0], new byte[0]));
+            assertEquals(0, reads.get());
         } else {
-            assertThrows(FallbackReached.class, () -> scheduler.getTask(0).run());
-            assertEquals(2, reads.get());
+            assertThrows(PreparationTouched.class, () -> new HandlerPlayerLoginReq().handle(session, new byte[0], new byte[0]));
+            assertEquals(1, reads.get());
         }
         assertEquals(1, session.closed.get());
     }
@@ -730,7 +717,6 @@ class LocalLoginAdmissionMongoTest {
 
     static final class PreparationTouched extends RuntimeException {}
 
-    static final class FallbackReached extends Error {}
 
     @dev.morphia.annotations.Entity(value = "players", useDiscriminator = false)
     public static class NoLoadPlayer extends Player {
@@ -753,7 +739,7 @@ class LocalLoginAdmissionMongoTest {
         }
 
         @Override
-        public void setNickname(String name) {
+        public int getMainCharacterId() {
             throw new PreparationTouched();
         }
     }

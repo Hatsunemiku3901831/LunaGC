@@ -48,7 +48,7 @@ def recover(repo,java_home,review_path):
                                               'tools/review_client72_login_surface.py')},
                 models=['JDK17 parse only; no dependency resolution or annotation processing',
                         'same-owner unique name/arity edges remain candidates',
-                        '13 explicitly reviewed built-in receiver/constructor links',
+                        '12 explicitly reviewed built-in receiver/constructor links; timed fallback removed by C-01a',
                         'lambda depth is syntax, not evidence of immediate or asynchronous execution',
                         'direct constructor arguments to send-named calls are source candidates, not a complete required set'])
     return report
@@ -58,15 +58,15 @@ def validate_summary(report):
     errors=[]
     expected=dict(schemaVersion=1,scope='method-scoped legacy source; no CN72 mapping',runtimeStatus='not-tested',
                   closureComplete=False,targetProtocolReady=False,javaAttributionExecuted=False,rootCount=9,
-                  methodCount=80,edgeCount=96,unlinkedCallSiteCount=1012,directConstructedTypeCount=61,allConstructedTypeCount=62,
-                  edgeKinds={'reviewed-source-edge':13,'same-owner-unique-name-arity-candidate':83})
+                  methodCount=81,edgeCount=95,unlinkedCallSiteCount=1000,directConstructedTypeCount=62,allConstructedTypeCount=63,
+                  edgeKinds={'reviewed-source-edge':12,'same-owner-unique-name-arity-candidate':83})
     if any(report.get(k)!=v for k,v in expected.items()):errors.append('Login source scope/count mismatch')
     if not report.get('openBoundaries') or not report.get('models') or len(report.get('sourceSHA256',{}))!=12:
         errors.append('Login source input or unresolved boundary missing')
     methods=report.get('methods',[]);edges=report.get('sourceEdges',[])
-    if len(methods)!=80 or len(edges)!=96 or len(report.get('roots',[]))!=9:errors.append('Login source graph incomplete')
+    if len(methods)!=81 or len(edges)!=95 or len(report.get('roots',[]))!=9:errors.append('Login source graph incomplete')
     packets=sorted({v['constructedType'] for row in methods for v in row.get('directPacketArguments',[])})
-    if packets!=report.get('directConstructedTypes') or len(packets)!=61:errors.append('Login source constructor inventory differs')
+    if packets!=report.get('directConstructedTypes') or len(packets)!=62:errors.append('Login source constructor inventory differs')
     constructions=sorted({v['constructedType'] for row in methods for v in row.get('packetConstructions',[])})
     if constructions!=report.get('allConstructedTypes') or set(constructions)-set(packets)!={'PacketWindSeedUID'}:
         errors.append('Indirect packet constructor evidence missing')

@@ -117,7 +117,8 @@ def gap_matrix(names, mapping, origins):
         for kind in tables:
             if layers[kind]['status'] != 'verified':
                 gaps.append(kind + ': identity/semantics/wire not fully verified')
-        if not fields:
+        if not fields and not (layers['schemas']['status'] == 'verified'
+                               and layers['schemas'].get('emptySchemaEvidence')):
             gaps.append('schemas: no field evidence; this does not prove an empty target message')
         if any(field['status'] != 'verified' for field in fields):
             gaps.append('schemas: unresolved or candidate business fields remain')

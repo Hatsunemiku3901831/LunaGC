@@ -7,7 +7,7 @@
 | 路径 | 作用 |
 | --- | --- |
 | src/main/java/emu/grasscutter/Grasscutter.java、build.gradle | 运行入口、版本、依赖、Gradle/protoc |
-| src/main/proto/ | 遗留协议源，尚未按 7.2 验证 |
+| src/main/proto/ | 三件组选人Proto已按B-02d生成；其余遗留源仍待7.2核实 |
 | src/main/java/emu/grasscutter/net/packet/ | PacketOpcodes、Opcodes、BasePacket、PacketOpcodesUtils |
 | src/main/java/emu/grasscutter/server/game/ | GameSession 解帧/加密、GameServerPacketHandler 注册/状态分发 |
 | src/main/java/emu/grasscutter/server/packet/recv/、send/ | Handler/发送包，直接依赖生成 Proto API |
@@ -240,3 +240,15 @@ V-01b补验：共用本夹具的FurniturePaidStartRecoveryTest原31项中27失�
 生产代码/Proto/配置/补丁未改，无部署或数据库测试；Java及游戏进程不存在，只有本工作区Mongo27017与两个既有调试器，均未操作。旧经济/保存221项通过仍属前批，本轮不冒称重跑。B-02d闭合后停止，给Sol的下一项规格在专题；不进入B-03/C-01/D-02。
 
 B-02d收口：验收提交36eb486；先建卡3fc7e80。旧HANDOFF2已先备份并核验，详细停止状态与Sol规格入口见HANDOFF2，HANDOFF只追加。本轮研究已停止，未推送。
+
+## B-03a/C-01a当前实现批（2026-11-06）
+
+本次指令覆盖前批停止点；任务先建卡d2cfb14。B-03a生成提交c6bf035，V-01d测试路径修复9fe3bb2；C-01a业务/源码复核已完成回归，构建与最终交接记录见详细交接。父B-03/C-01仍进行中；所有客户端runtime仍未验。
+
+- 生成：`python tools/generate_born72_sources.py --client $env:GAME_PATH`，重复用`--check`，实际输入hash与三层证据/引用/别名/冲突均受门禁；仅三件组，没有旧号兜底。Java由Gradle/protoc生成。
+- Java：最终21套495项，失败/错误/跳过均0；19项BornDataFlowMongoTest、15项Protocol72BornCompatibilityTest、原33项LocalLoginAdmissionMongoTest，以及账号/UID/Account/Player/Item/Activity Guard与恢复、写入队列/栅栏/屏障和原221项经济保存选集。独立测试Mongo/随机库，不接正式存档。完整集未重跑。
+- 研究：tools/test_client72*.py及test_extract_client72/test_validate_protocol72/test_audit_resource72/test_inventory_protocol/test_review_protocol72_surface/test_generate_born72_sources共272项通过；研究校验0，ready1（204缺口）。摘要/矩阵重生成重复一致，三层状态不晋级。
+- 源码审计：A-03a当前81方法/95边/1000未关联；A-03b当前294方法/408边/2856未关联，10开放锚点不变；矩阵99构造/148种子/1140文件，missingProtoRoots为空由目标通知证据正式接管，非猜空message；动态来源15处/8组。
+- 复现：`evidence/born-legacy-parser-reproduction.json`证明旧tag不能读出目标字段；首次467项的测试路径失败快照born-guard-before-test-results/保留，修后born-guard-final-test-results/和evidence/born-guard-final-summary.json核对495项。logs/born-{guard-final,research-regression}.log、evidence/born-{source-surface-review,login-source,login-dependencies,matrix-repeat,implementation-mapping-check,implementation-mapping-ready}.json都在local/migration72/。
+
+部署前置仍缺完整P0/成功继续与真实必需首包序列、D-01实际SDK/信任/补丁加载、E-01资源revision/Lua/场景；不启动服务/游戏，不改版本。Astra最小后续取证为B-02e，固定输入沿Rsp0→14CD68860的继续与新旧号序列核对，范围/停止条件见[CLIENT_72_BORN](docs/CLIENT_72_BORN.md)。

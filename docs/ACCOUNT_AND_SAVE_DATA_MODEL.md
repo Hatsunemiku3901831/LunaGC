@@ -117,6 +117,8 @@ items:                   { _id: ObjectId("000000000000000000000002"), ownerId: 2
 
 ## Player 内嵌进度
 
+C-01a选人实现（2026-11-06）未新增集合或持久字段。成功创建确认nickname/headImage/mainCharacterId/teamManager、独立avatars和初始武器items后再继续；Player/Item仍经原Guard。故障注入已验证独立角色可能先保存而Player未确认；重登时角色集合是否为空与mainCharacterId是否为0须一致，否则保留数据、拒绝继续并核对，不自动发默认角色或清理。该一致性判定不是持久事务凭证，不保证多集合原子写入或欢迎邮件恢复，具体回归边界见[选人实现](CLIENT_72_BORN.md)。
+
 [Player.java](../src/main/java/emu/grasscutter/game/player/Player.java) 的体积较大，按下面的业务域定位比逐字段浏览更直接。字段名称保留源码拼写，例如 `unlockedRecipies`。
 
 | 业务域 | 主要字段 | 还要一起检查 |
