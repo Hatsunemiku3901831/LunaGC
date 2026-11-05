@@ -394,6 +394,34 @@ def validate_token_constructor(document, profile, constructor, wire):
     return errors
 
 
+def validate_send_flow(document, profile, flow):
+    errors=[]
+    hashes={profile['files'][k]['path']:profile['files'][k]['sha256'] for k in ('binary','metadata','startup')}
+    if flow.get('inputSHA256')!=hashes:errors.append('Send flow: input mismatch')
+    if (flow.get('entry')!='0x151214d20' or flow.get('connectedStop')!='0x14a447e00' or
+            flow.get('frameBuilderExecuted') is not False or flow.get('runtimeStatus')!='not-tested'):
+        errors.append('Send flow: bounded execution claim mismatch')
+    signatures={(r.get('ownerTypeIndex'),r.get('methodIndex'),r.get('parameterIndex'),
+                 r.get('parameterTypeIndex'),r.get('envelopeTypeIndex')) for r in flow.get('transportParameterBindings',[])}
+    expected={(79029,655015,503964,165362,13973),(68785,569162,447221,165362,13973),(32016,250987,197935,165362,13973)}
+    if signatures!=expected or len(flow.get('transportParameterBindings',[]))!=3:
+        errors.append('Send flow: transport/envelope declaration mismatch')
+    requests=flow.get('requestBindings',[])
+    names={'GetPlayerTokenReq':(82491,24604,'0x15121ff70','0x1500c4a50','0x1458c5500'),
+           'PlayerLoginReq':(76410,23172,'0x151213730','0x152ef20f0','0x1458c3df0')}
+    if len(requests)!=2 or {r.get('semanticName') for r in requests}!=set(names):
+        errors.append('Send flow: request set mismatch')
+    opcodes={r['semanticName']:r for r in document['opcodes']}
+    for request in requests:
+        name=request.get('semanticName')
+        if name not in names:continue
+        if tuple(request.get(k) for k in ('typeIndex','cmdId','constructorEntry','commandGetter','selfClassCell'))!=names[name]:
+            errors.append('Send flow: request native binding mismatch')
+        if opcodes.get(name,{}).get('cmdId')!=request.get('cmdId'):
+            errors.append('Send flow: mapped command disagreement')
+    return errors
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--directory', type=Path, default=Path(__file__).resolve().parents[1] / 'protocol/cn-7.2')
@@ -421,6 +449,8 @@ def main():
     errors.extend(validate_login_constructor(document,profile,constructor,semantic_tables[3]))
     token_constructor=json.loads((args.directory/'token-constructor-observations.json').read_text('utf8'))
     errors.extend(validate_token_constructor(document,profile,token_constructor,protected))
+    send_flow=json.loads((args.directory/'send-flow-observations.json').read_text('utf8'))
+    errors.extend(validate_send_flow(document,profile,send_flow))
     print(json.dumps({'mode': 'ready' if args.ready else 'research-structure', 'valid': not errors, 'errors': errors},
                      ensure_ascii=False, indent=2))
     raise SystemExit(bool(errors))

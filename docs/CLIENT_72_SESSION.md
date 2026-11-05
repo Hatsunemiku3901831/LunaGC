@@ -124,3 +124,22 @@ python -m unittest tools.test_client72_token_constructor tools.test_client72_log
 ```
 
 证据：`evidence/token-constructor-{trace,determinism}.json`、`logs/token-constructor-tests.log`；共享摘要`token-constructor-observations.json`。下步接发送入口的原生路由/队列，或恢复会话字段的上游SDK来源；15121DB40的Shell 0x64与响应解密/验签继续独立处理。
+
+## A-04d5f 两请求到封包入口的原生路由
+
+`trace_client72_send_flow`将上面的两种构造结果接入151214D20，执行至14A447E00入口。**明确选择AKFCDHJBCHD传输实现及其连接状态作为离线夹具；未执行封包函数体、加密、socket，也未证明实际客户端选择此传输。** Token构造继续保留15121DB40 opaque边界。
+
+实际执行链为：151214D20将原请求指针存入JKGIAOABCNP信封+10→149935970按GBHBGOHOOAK接口槽4分派→AKFCDHJBCHD具体槽8/1472CCF80→1472CD100构造FBNMCCIAMBP封包对象，调用请求的原生命令getter，将word写入+22，并将同一请求指针写入+10→14A447E00入口。接口、桥接器、实现的参数分别从目标方法655015/569162/250987解码，均为typeRef165362/JKGIAOABCNP13973；不是只根据同名方法布置虚表。
+
+合成运行类按实际槽声明布置，接口offset=4（接口槽4→具体槽8）；显式提供对象池分配、空HashSet、MemoryStream存储、时钟和信封sequence。HashSet空表判断、MemoryStream.SetLength、消息getter、封包字段赋值和时钟计算均执行原生代码。1458715C0=true选择命令getter模式，14586D06A=false选择普通发送路径；这些启动开关的真实运行状态仍需D-01验证。
+
+每请求4组共8组通过：普通参数、sequence=FFFFFFFF且sent_ms=200000044（十六进制，超过32位）、传输禁用、发送器缺少传输包装。前两组分别实际取得24604/23172，整个请求对象字节未被修改；请求及包头再执行完整writer，token/opaque数据和独立包头wire断言一致。sequence来自显式信封输入，未宣称该路径负责递增。禁用分支分配信封但不分配封包对象；缺包装分支在分配信封前正常返回。
+
+138项研究/盘点测试通过，trace/摘要重复一致；研究映射校验通过、ready仍拒绝。`validate_send_flow`约束请求/getter/参数类型和停止边界，不允许将本项改称真实封包或实机成功。下一项继续封包函数体/另一传输与实际SDK前置，仍无运行源码变更或部署。
+
+```powershell
+python tools/trace_client72_send_flow.py --client $env:GAME_PATH --output local/migration72/evidence/send-flow-trace.json --summary-output protocol/cn-7.2/send-flow-observations.json
+python -m unittest tools.test_client72_send_flow tools.test_client72_token_constructor tools.test_validate_protocol72 -v
+```
+
+本机证据`evidence/send-flow-{trace,determinism}.json`、`logs/send-flow-tests.log`；共享摘要`send-flow-observations.json`。Token外段检查点本地提交423330e。
