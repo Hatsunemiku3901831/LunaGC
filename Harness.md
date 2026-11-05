@@ -196,3 +196,6 @@ Handler→Login正式入口：`trace_client72_handler_login`，见[会话研究A
 
 
 连续Token完整帧：`trace_client72_token_frame`，见[网络研究A-04d5t](docs/CLIENT_72_NETWORK.md#a-04d5t-连续token构造与真实序列化封包)。6原生样本、222研究回归，二次trace/摘要一致；evidence/token-frame-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json、logs/token-frame-{run,repeat,regression}.log。原生seed/构造/queue/size/writer/frame同CPU，不用opaque body；UTF-8缓存及编码方法、SDK/OS/初始key仍是明确夹具。Frame cctor单独执行后恢复栈END哨兵，避免SessionRuntime初始化误跳旧RETURN；不能把该夹具错误当目标故障。用户已允许按实际需要动态调试；本机官方固定x64dbg来源/摘要在evidence/debugger-{release,install}.json，二进制在忽略local/runtime，目标调试尚未验。
+
+
+动态研究改用脚本API：[CLIENT_72_DYNAMIC_DEBUG](docs/CLIENT_72_DYNAMIC_DEBUG.md)。用户明确禁止继续computer-use，已手动完成管理员启动与Automate插件加载；当前实时会话需通过API重新确认，勿新开客户端。D-01b1真实启动/5处代码/5000字节RNG状态与原生初始化交叉通过；evidence/dynamic-*.json和logs/dynamic-phase-*.json留本机。Ec2b原生单组探索已输出与仓库dispatchKey相同，正式化/分区串联尚待；analysis/probe_initial_key_native_init.py及evidence/initial-key-native-init-exploration.json。此前零RNG夹具导致取样不返回，不能靠扩大预算或强置成功绕过。下一项正式Ec2b和真实初始化来源，D-02仍未验。

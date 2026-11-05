@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "runtimeStatus": "startup-observed",
+  "clientLoginAccepted": false,
+  "wholeSDKInitialized": false,
+  "debugger": "x64dbg 2026.05.27",
+  "automationPlugin": "0.8.1-ghost_fungus",
+  "pythonClient": "0.9.2",
+  "controls": "script API on localhost; user completed elevation/plugin load; computer-use prohibited by user for further work",
+  "initialSystemBreakpointGlobalPointerWasNull": true,
+  "codeChecks": [
+    {
+      "originalVA": "0x1411267b0",
+      "bytes": 32,
+      "sha256": "0a972942011a68437c2cb120baf0228ba8b9591267e85004488102de66bac348",
+      "match": true
+    },
+    {
+      "originalVA": "0x14146ada0",
+      "bytes": 32,
+      "sha256": "c89a3ed541295fb0329ffc26d73659c22b8d0f9bfb84fd1091ba691c88cf431e",
+      "match": true
+    },
+    {
+      "originalVA": "0x1408bad50",
+      "bytes": 32,
+      "sha256": "bea41fb5fddf996d1a08d077bace1e4fdb3e2eebf8aed4920bfc5c0245349465",
+      "match": true
+    },
+    {
+      "originalVA": "0x14a447e00",
+      "bytes": 32,
+      "sha256": "d0dbb4de60c1579e48a308a763c2dbcce7173591e1a9daa154194b8f8e628572",
+      "match": true
+    },
+    {
+      "originalVA": "0x15121ff70",
+      "bytes": 32,
+      "sha256": "99ff23bed50a8f62b94dc9f0e1c420538b2805919108b7fb9139137cb2301be0",
+      "match": true
+    }
+  ],
+  "observedStop": "0x1411267b0",
+  "globalPointerStillNull": true,
+  "rngState": {
+    "bytes": 5000,
+    "sha256": "65357cbadcb1fa79ad0f588baf140f0378176037228b8e5f2d75cb4eb07b823f",
+    "index": 624,
+    "mask": 4294967295,
+    "nativeInitializer": "0x1408af2a0",
+    "nativeInitializerMatchesLive": true,
+    "independent624WordRecurrenceSeed": 103,
+    "independentRecurrenceMatches": true
+  },
+  "ec2bExploration": {
+    "formalAcceptance": false,
+    "initializer": "0x1411267b0",
+    "entry": "0x1411268d0",
+    "nativeTarget": "0x1408baee0",
+    "returnAL": 1,
+    "outputBytes": 4096,
+    "outputMatchesRepositoryReference": true,
+    "outputSHA256": "20f0d259406a01c02c55bfdc57f69c90c1257222d721a141ccbe55ccfaa77eb0",
+    "seedSHA256": "2258b87182df6e8e679c15a86184ddaf8d4b5eda24cd81bf12e85bb8a9e00637"
+  },
+  "outsideScope": [
+    "SDK completion/authentication",
+    "dispatch-to-initial-key continuous chain",
+    "negative/boundary EC2b validation",
+    "P0 protocol closure/server connection/live login/scene acceptance"
+  ]
+}

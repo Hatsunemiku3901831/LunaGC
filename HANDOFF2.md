@@ -1,12 +1,22 @@
-# 国服7.2详细交接：已恢复，独立封/收帧验收完成
+# 国服7.2详细交接：Token完整帧与动态启动基线
 
-更新：2026-11-05。用户本轮明确要求继续按Project逐项推进，直到D-02完成并通过实机验收。目标工具状态为active，**没有暂停指令**；旧暂停交接只属历史。此文为持续工作检查点，不是请求再次授权。D-02尚未完成，不能标记complete或用离线研究替代客户端验收。
+更新：2026-11-05。用户本轮明确要求继续按Project逐项推进，直到D-02完成并通过实机验收。目标工具状态为active，**没有暂停指令**；旧暂停交接只属历史。用户已允许动态调试，并已完成管理员启动与Automate热加载；用户明确禁止继续使用computer-use。此文为持续工作检查点，不是请求再次授权。D-02尚未完成，不能标记complete或用离线研究替代客户端验收。
 
-## 当前状态与提交
+## 最新进展与实时恢复入口
+
+- `389fe4a`完成A-04d5t：同CPU真实seed/Token构造/发送/size/保护writer/完整帧；6原生样本、222研究回归，两次产物相同。非ASCII/NUL与跨4096字节周期、未初始化/坏签名均验。初始frame key仍显式数组，尚未与真实dispatch源串联。
+- D-01b1实际动态观察：Automate API已接通；5处运行代码各32字节与固定EXE相同，目标经过TLS/PE入口现暂停于1411267B0。全局指针尚0；5000字节RNG与1408AF2A0原生初始化、seed103独立递推一致。不是SDK/登录验收。
+- 当前调试器与目标PID/ASLR/端口在local/migration72/evidence/dynamic-startup-read.json与dynamic-phase-12.json。**必须先用API确认现有会话，不要重新启动目标，不要使用computer-use。** 两个TCP接口已核实只监听127.0.0.1；用户授权和管理员会话继续有效，无需重复询问。
+- 初始Ec2b探索：1411267B0实际注册145744EB8→1408BAEE0；1411268D0验证Ec2b结构并调用1408BAD50。以前零RNG导致预算耗尽，恢复原生初始化后单组输出与仓库dispatchKey逐字节相同。尚未正式化，不晋级字段或整项。
+- 下一步优先正式化Ec2b及分区响应→key槽→Token帧；动态会话可继续观察SDK/来源。详情[动态调试](docs/CLIENT_72_DYNAMIC_DEBUG.md)；探索工具analysis/probe_initial_key_native_init.py，报告evidence/initial-key-native-init-exploration.json。
+- token-frame trace SHA256 c61336b1a02413ddf0e4ed374b059cd6e6496796f9269c16d89fd0ee79237921，summary f334981bf2205763930dbf54498dcbe12b0875c2077321344123bba971cab432。evidence/token-frame-*和logs/token-frame-*为完整本机证据。
+- 本次覆盖前备份到local/migration72/handoffs/HANDOFF2.before-token-frame-389fe4a.md，哈希相等；evidence/handoff-token-frame-backup-check.json。下面原两项细节保留供复现，旧216数量由本节222更新。
+
+## 前两项状态与提交
 
 - `ae23ee7`：A-04d5r独立原生封包14A447E00完整返回，15原生样本与210研究回归通过。
 - `b698f75`：A-04d5s独立原生收帧14A446CC0，18原生样本与216研究回归通过。
-- 上项`dc41c99`连续Handler→Login→发送封包入口仍成立。新工具目前独立执行，**尚未与上项Handler/真实payload或seed安装串联**。
+- 上项`dc41c99`连续Handler→Login→发送封包入口仍成立。新工具目前独立执行，**尚未与上项Handler串联；Token的真实payload/seed构造串联现见最新A-04d5t**。
 - 研究校验退出0，ready退出1，213项缺口未消除；四登录消息36个业务字段不变。响应tag1/3/658和Token请求tag965仍unknown。
 - 本批只改离线研究工具、测试、脱敏摘要及文档，没有运行Java/主Proto/补丁/配置/资源改动，没有部署或客户端实测。
 - Java完整测试集原有217项失败仍待处理；216是本批Python研究回归数量，不等于Java回归通过。
@@ -78,7 +88,7 @@ python tools/validate_protocol72.py --ready
 
 ## 本机状态与文档
 
-已核对.env的GAME_PATH/portable/端口、config资源/隔离数据与库名；.env.local不存在。本轮Java及客户端未运行，8088/TCP和22101/UDP无监听，只有本工作区便携MongoDB监听27017，数据仍在原mongodata。未访问/清理数据库、未启动服务或客户端。以后启动仍须重新核对路径、PID、端口及运行JAR hash，不能复用历史部署结果。
+已核对.env的GAME_PATH/portable/端口、config资源/隔离数据与库名；.env.local不存在。此前封/收帧批Java及客户端未运行；当前客户端在已核对调试器中暂停，8088/TCP和22101/UDP无监听，只有本工作区便携MongoDB监听27017，数据仍在原mongodata。未访问/清理数据库、未启动服务或客户端。以后启动仍须重新核对路径、PID、端口及运行JAR hash，不能复用历史部署结果。
 
 分支7.2-dev，无新工作树；patch仍f2874103ab70afc56260ee12d1eaca96247933b2，resources仍dac2a9d43332ef51879522cf39da2831b0ca0543。AGENTS.md已有编码规范修改及resources/ScriptSceneData/flat.luas.scenes.full_globals.lua.json差异保留，未纳入提交。全部提交仅本地，未推送。
 
