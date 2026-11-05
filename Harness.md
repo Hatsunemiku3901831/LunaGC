@@ -163,3 +163,5 @@ Handler核心入口：`trace_client72_handler_core`从1507BE0E0到15A4E0D9A，�
 SDK认证来源入口：`trace_client72_auth_sources`执行14F1917D0至14F191E18的来源检查/写入，再用同一会话执行真实seed构造及Token writer；account_uid/tag9、account_token/tag2、channel_id/tag3、account_type/tag15、is_guest/tag11确认，累计35字段。9组含正常/缺省/uint32边界/拒绝通过，160项回归及重复产物通过；原完整Token5组重构回归产物不变。JSON容器和SDK值为明确夹具，原生scalar getter/缺键类型检查继续执行；未执行回调尾段/UI或实际认证调度。证据`evidence/auth-sources-{trace,determinism}.json`、`logs/auth-sources-{focused-tests,tests}.log`及共享`auth-sources-observations.json`；复现见[会话研究](docs/CLIENT_72_SESSION.md)。Handler核心提交b0ca919。按用户要求本项收口后暂停，恢复入口与探索避坑见[详细交接](HANDOFF2.md)；D-02未完成，无运行部署。
 
 暂停交接：当前认证来源提交c7556a0；[HANDOFF.md](HANDOFF.md)为追加式简要记录，[HANDOFF2.md](HANDOFF2.md)为详细恢复入口。本次原HANDOFF2不存在，首次创建，无旧文件可备份。研发目标已暂停；用户恢复前不再执行下一子任务。AGENTS.md和resources既有差异保持未提交。
+
+认证可选字段入口：`trace_client72_auth_tail`，复现见[会话研究](docs/CLIENT_72_SESSION.md)。5原生样本、27聚焦回归、两次trace/摘要一致；六session字段及exact-one标志已验，B0不变，未晋级协议/实机。证据`evidence/auth-tail-{trace,determinism}.json`与`logs/auth-tail-tests.log`。用户已恢复推进，旧暂停段落是历史记录。

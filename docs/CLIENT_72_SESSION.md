@@ -250,3 +250,16 @@ python -m unittest tools.test_client72_auth_sources tools.test_client72_token_co
 ```
 
 证据`evidence/auth-sources-{trace,determinism}.json`、`logs/auth-sources-{focused-tests,tests}.log`，共享`auth-sources-observations.json`。仅离线工具、测试和文档变更，无运行部署。上一Handler核心提交b0ca919；本项收口后按用户要求暂停，交接见仓库根HANDOFF.md/HANDOFF2.md。恢复时继续回调尾段、会话+B0来源或封包体；D-02仍未完成。
+
+## A-04d5l 认证可选字段段落（已恢复推进）
+
+2026-11-05用户已恢复研发，旧暂停记录仅为历史。`trace_client72_auth_tail`从14F1917D0连续执行至14F192325，复用已声明JSON/SDK模型；两个setter和JSON字符串转换1471685A0实际执行。六个来源：data.allow_community→session+120、allow_ugc→+124、allow_pay→+118、country→+E0、age_group→+184、lrsag→+16C。除country/string外均为int32，不因allow名称视为bool。community/ugc额外全局标志仅在值恰好1时为真。
+
+5组为非零、零、signed边界、全缺省、Int32溢出；会话先填非零以证实缺字段清零，country缺省为空指针。两次trace及摘要逐字节一致，27项聚焦回归通过。上述段落不改session+B0；**不新增协议语义**，累计仍35字段。UI/调度/实际SDK及D-02未验；工具不触碰运行服务、数据库或客户端进程，无重启要求。
+
+```powershell
+python tools/trace_client72_auth_tail.py --client $env:GAME_PATH --output local/migration72/evidence/auth-tail-trace.json --summary-output protocol/cn-7.2/auth-tail-observations.json
+python -m unittest tools.test_client72_auth_tail tools.test_client72_auth_sources tools.test_client72_token_complete tools.test_validate_protocol72 -v
+```
+
+证据`evidence/auth-tail-{trace,determinism}.json`、`logs/auth-tail-tests.log`。接续UI边界14F192325；B0的另一来源探索已定位151212949/15122952D段落，源对象+20→session+B0，不能把这些原始偏移直接命名为旧协议字段。

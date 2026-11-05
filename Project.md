@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-执行状态：A-04d5k/B-02c8已收口并提交c7556a0，按用户2026-11-05要求暂停研发并完成交接。任务卡保留各项实际验收状态；恢复前先读[简略交接](HANDOFF.md)和[详细交接](HANDOFF2.md)，D-02未完成。
+执行状态：用户2026-11-05已恢复推进。A-04d5k/B-02c8基线c7556a0；A-04d5l认证可选字段段落已离线验收。正在追踪分区响应→session+B0→Token tag965；A-04d/B-02进行中，D-02未完成。
 
 静态结构、Token/Login原始wire及响应非空对象图已离线恢复；四个登录请求/响应业务身份与CmdID、35个字段来源、8枚举102符号现有目标证据。Token Handler入口至seed安装、UID和token保存已连续执行，后续Login参数链另有分段证据。Token已在明确初始化/OS夹具下贯通原生seed验签/加密、构造、wire与发送至封包入口；SDK认证回调的五个凭据/渠道字段也已接入原生构造和writer。Login亦已在旧Shell/非云夹具下构造并到封包入口。响应wire→原生解密/摘要/验签→密钥安装已在明确本地签名信任输入下贯通，3组4096字节Java对照及错误拒绝通过。真实SDK初始化、完整Handler、封包体及剩余字段继续研究，A-04d/B-02保持进行中。隔离研发服务已部署，但没有7.2可连接构建，客户端验收全部待执行。本机路径、初始差异、报告和日志在忽略的 local/migration72/；公共摘要放 docs/ 和 protocol/cn-7.2/。
 
@@ -56,6 +56,7 @@
 | A-04d5i / B-02c6 响应wire到密钥安装 | A-04d5a、A-04d5g | client72_response_crypto、trace_client72_response_crypto、字段映射/校验 | 原生reader→解密→SHA256→验签→XOR/MT64；明确本地签名信任输入，8组含3组Java逐字节对照和错误拒绝，块/指令轨迹重复一致，155项回归 | 已完成 | CLIENT_72_SESSION、response-crypto-trace/observations/determinism；caa7bea | SDK warmup/真实初始化、完整Handler与本地补丁实际信任配置/加载，非实机验收 |
 | A-04d5j / B-02c7 Handler入口到UID/token保存 | A-04d5i、B-02c2 | trace_client72_handler_core、UID映射/校验 | 原生入口→old/new warmup→密码学→UID setter/__LastUid__→token原指针保存；4组零/高位/uint32最大/空token，157项回归及重复产物 | 已完成 | CLIENT_72_SESSION、handler-core-trace/observations/determinism；b0ca919 | stop后robot-check/版本/UI动作、SDK真实初始化/持久PlayerPrefs与剩余请求字段 |
 | A-04d5k / B-02c8 SDK认证来源到Token wire | A-04d5h、B-02c7 | trace_client72_auth_sources、五字段映射/校验 | 原生回调来源检查/写入→真实seed构造→getter24604/writer；9组含拒绝/可选字段/uint32边界，160项回归及重复产物 | 已完成 | CLIENT_72_SESSION、auth-sources-trace/observations/determinism；c7556a0 | 回调尾段/实际SDK调度、session+B0及其他未知字段；按用户要求收口后暂停 |
+| A-04d5l 认证回调可选字段 | A-04d5k | trace_client72_auth_tail、摘要/测试 | 从入口连续到14F192325；六字段/清零/Int32边界/溢出、两个exact-one标志、B0不变，重复产物一致 | 已完成 | auth-tail-observations.json、auth-tail-determinism.json；本批提交 | UI/调度尾段未执行，六字段不晋级协议语义 |
 | B-03 确定性生成 | B-01、B-02 | generator、PacketOpcodes、Proto | 只生成核实项，别名/引用检查，重复输出一致，protoc 编译，禁止旧号兜底 | 待开始 | — | 合成模型测试，再接真实映射 |
 | C-01 双向网络接入 | B-03 | GameSession、BasePacket、Handler 注册、UnionCmd/枚举 | 注册冲突失败、号/长度边界、内外分派、目标 wire 测试，构建部署 | 待开始 | — | 映射确认后替换旧表和专属断言 |
 | D-01 补丁和连接前置 | A-01、A-04 | patch、HTTP/SDK/dispatch/密钥 | 路由/渠道/版本/加密、各钩子 ABI/布局/实际加载验证 | 进行中 | CLIENT_72_PATCH_ABI；四入口参数前缀已验，密钥/加载未验 | 字符串工厂、原生RSA/验签、实际加载与路由；商城钩子另列 |
@@ -148,3 +149,5 @@
 - A-04d5j/B-02c7：从1507BE0E0连续执行至15A4E0D9A，覆盖warmup选择、完整密码学、会话UID与token保存；tag9→+D4→session+168→目标__LastUid__确定uid，累计30字段。4组含0/80000000/FFFFFFFF、空token及0/8字节warmup；新warmup分别返回-2/-1后仍继续，未冒称SDK初始化成功。157项回归、二次产物及独立response工具重构回归通过，ready仍拒绝；仅离线开发，无运行部署。上一密码学提交caa7bea；下一项后续Handler动作/剩余账号字段和D-01实际信任配置。
 
 - A-04d5k/B-02c8：原生SDK认证回调来源检查/会话写入接入真实seed构造和Token writer，确认account_uid、account_token、channel_id、account_type、is_guest五字段，累计35字段。9组非零/高数字文本/uint32边界/缺省/拒绝通过；160项回归、二次产物和原Token5组重构回归产物一致。JSON容器/SDK值仍为明确夹具，完整回调/实际认证/封包体未执行；研究校验通过，ready仍拒绝。无运行代码/Proto/补丁/配置/资源变更或重启。上一Handler核心提交b0ca919。用户要求完成当前子任务后暂停并交接，本项收口后不再启动新任务；D-02保持待开始，恢复资料见HANDOFF.md/HANDOFF2.md。
+
+- A-04d5l：5组认证可选字段原生样本、27项聚焦回归通过，重复trace/摘要一致；session+B0未改写，登录语义字段仍35。仅离线工具/文档，无运行部署。B0写入新线索15121297C/151229560，源对象+20；候选30677 reader tag14待正式化，不沿用旧Proto名称。

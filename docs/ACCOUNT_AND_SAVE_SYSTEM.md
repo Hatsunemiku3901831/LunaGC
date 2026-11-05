@@ -326,3 +326,5 @@ Guard 的 pending 尝试只在当前进程内存里，不是持久任务日志�
 | 玩家、物品、活动的并发保护 | [PlayerSaveGuard](../src/main/java/emu/grasscutter/game/player/PlayerSaveGuard.java)、[ItemSaveGuard](../src/main/java/emu/grasscutter/game/inventory/ItemSaveGuard.java)、[ActivitySaveGuard](../src/main/java/emu/grasscutter/game/activity/ActivitySaveGuard.java) |
 | 停服与健康 | [Grasscutter.onShutdown](../src/main/java/emu/grasscutter/Grasscutter.java)、[GameServer.onServerShutdown](../src/main/java/emu/grasscutter/server/game/GameServer.java)、[RuntimeDiagnostics](../src/main/java/emu/grasscutter/server/game/RuntimeDiagnostics.java) |
 | 本机启动停止 | [local_windows.ps1](../tools/local_windows.ps1)、[runtime.ps1](../tools/runtime.ps1) |
+
+7.2认证研究补充（A-04d5l）：认证回调六个可选session字段及缺省清零已离线验证，见[会话研究](CLIENT_72_SESSION.md)。这不改服务端账号策略/存档，也不代表SDK真实登录或D-02通过。

@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "entry": "0x14f1917d0",
+  "stop": "0x14f192325",
+  "declarations": {
+    "jsonType": 8987,
+    "slots": [
+      {
+        "slot": 6,
+        "name": "get_Item",
+        "address": "0x147167df0"
+      },
+      {
+        "slot": 8,
+        "name": "get_Value",
+        "address": "0x147167e10"
+      },
+      {
+        "slot": 14,
+        "name": "ContainsKey",
+        "address": "0x147167e80"
+      },
+      {
+        "slot": 22,
+        "name": "get_AsInt",
+        "address": "0x1471680c0"
+      },
+      {
+        "slot": 24,
+        "name": "get_AsUInt",
+        "address": "0x147168150"
+      },
+      {
+        "slot": 34,
+        "name": "get_AsBool",
+        "address": "0x147168440"
+      }
+    ],
+    "lazyClassType": 9000,
+    "lazyClassUsageRow": 701114,
+    "lazyClassCell": "0x145891a78"
+  },
+  "fixtureCount": 5,
+  "results": [
+    {
+      "name": "nonzero",
+      "input": {
+        "allow_community": 1,
+        "allow_ugc": 2,
+        "allow_pay": 3,
+        "country": "CN",
+        "age_group": 4,
+        "lrsag": 5
+      },
+      "session": {
+        "allow_community": 1,
+        "allow_ugc": 2,
+        "allow_pay": 3,
+        "country": "CN",
+        "age_group": 4,
+        "lrsag": 5
+      },
+      "exactOneFlags": [
+        1,
+        0
+      ],
+      "b0Unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "zero",
+      "input": {
+        "allow_community": 0,
+        "allow_ugc": 0,
+        "allow_pay": 0,
+        "country": "",
+        "age_group": 0,
+        "lrsag": 0
+      },
+      "session": {
+        "allow_community": 0,
+        "allow_ugc": 0,
+        "allow_pay": 0,
+        "country": "",
+        "age_group": 0,
+        "lrsag": 0
+      },
+      "exactOneFlags": [
+        0,
+        0
+      ],
+      "b0Unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "signed-boundaries",
+      "input": {
+        "allow_community": -1,
+        "allow_ugc": 1,
+        "allow_pay": -2147483648,
+        "country": "ZZ",
+        "age_group": 2147483647,
+        "lrsag": -2147483648
+      },
+      "session": {
+        "allow_community": -1,
+        "allow_ugc": 1,
+        "allow_pay": -2147483648,
+        "country": "ZZ",
+        "age_group": 2147483647,
+        "lrsag": -2147483648
+      },
+      "exactOneFlags": [
+        0,
+        1
+      ],
+      "b0Unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "absent",
+      "input": {},
+      "session": {
+        "allow_community": 0,
+        "allow_ugc": 0,
+        "allow_pay": 0,
+        "country": "",
+        "age_group": 0,
+        "lrsag": 0
+      },
+      "exactOneFlags": [
+        0,
+        0
+      ],
+      "b0Unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "overflow",
+      "input": {
+        "allow_community": 2147483648,
+        "allow_ugc": -2147483649,
+        "allow_pay": 2147483648,
+        "country": "CN",
+        "age_group": 2147483648,
+        "lrsag": -2147483649
+      },
+      "session": {
+        "allow_community": 0,
+        "allow_ugc": 0,
+        "allow_pay": 0,
+        "country": "CN",
+        "age_group": 0,
+        "lrsag": 0
+      },
+      "exactOneFlags": [
+        0,
+        0
+      ],
+      "b0Unchanged": true,
+      "passed": true
+    }
+  ],
+  "sessionBindings": [
+    {
+      "source": "data.allow_community",
+      "sessionOffset": 288,
+      "type": "int32"
+    },
+    {
+      "source": "data.allow_ugc",
+      "sessionOffset": 292,
+      "type": "int32"
+    },
+    {
+      "source": "data.allow_pay",
+      "sessionOffset": 280,
+      "type": "int32"
+    },
+    {
+      "source": "data.country",
+      "sessionOffset": 224,
+      "type": "string"
+    },
+    {
+      "source": "data.age_group",
+      "sessionOffset": 388,
+      "type": "int32"
+    },
+    {
+      "source": "data.lrsag",
+      "sessionOffset": 364,
+      "type": "int32"
+    }
+  ],
+  "semanticPromotions": [],
+  "wholeCallbackExecuted": false,
+  "runtimeStatus": "not-tested",
+  "models": [
+    "existing AuthSources72 JSON/SDK/runtime fixtures; native scalar getters execute",
+    "prior optional session fields initialized to nonzero fixture values"
+  ],
+  "outsideScope": [
+    "UI/scheduling after stop",
+    "actual SDK login",
+    "protocol semantics for these fields",
+    "real client"
+  ]
+}
