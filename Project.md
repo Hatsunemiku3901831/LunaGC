@@ -48,10 +48,11 @@
 | A-04d5c / B-02c3 Login构造与SDK来源 | A-04d5b、B-02c2 | trace_client72_login_constructor、SDK字段映射与校验 | 明确旧Shell/非云输入，真实保护构造到发送入口；3组来源→对象→writer，UInt32上界/溢出/无效、未知Shell语义不晋级、105项回归和重复一致 | 已完成 | CLIENT_72_SESSION、login-constructor-trace/determinism；cde97d4 | Token构造、发送队列、其余字段及密码学前段 |
 | A-04d5d client seed来源 | A-04d5a | SessionRuntime72、session-seed-trace/observations | Random.NextDouble槽/2^64常量/原生转换/同值返回与保存，10组边界输入、既有18组后段及106项回归、重复一致 | 已完成 | CLIENT_72_SESSION、client-seed-source-tests.log；e716da8 | 15121DB40的Shell操作0x64/密文构造仍未知 |
 | A-04d5e / B-02c4 Token构造外段与SDK来源 | A-04d5c、A-04d5d | trace_client72_token_constructor、映射/边界校验 | 15121DB40明确opaque输入；其余构造到send入口，4组tag10来源与原始会话字段wire断言、133项回归、确定性 | 已完成 | CLIENT_72_SESSION、token-constructor-trace/determinism；423330e | 密文helper未执行，继续发送队列/会话来源与密码学前段 |
-| A-04d5f 两请求到封包入口 | A-04d5c、A-04d5e | trace_client72_send_flow、声明参数/虚槽/校验 | 明确选择传输夹具，原请求指针经信封/接口到封包+10、原生getter→+22；8组非零/64位/禁用/缺包装、138项回归、重复一致 | 已完成 | CLIENT_72_SESSION、send-flow-trace/determinism；本批提交 | 14A447E00函数体、另一传输与真实启动状态/实机另验 |
+| A-04d5f 两请求到封包入口 | A-04d5c、A-04d5e | trace_client72_send_flow、声明参数/虚槽/校验 | 明确选择传输夹具，原请求指针经信封/接口到封包+10、原生getter→+22；8组非零/64位/禁用/缺包装、138项回归、重复一致 | 已完成 | CLIENT_72_SESSION、send-flow-trace/determinism；8638ea5 | 14A447E00函数体、另一传输与真实启动状态/实机另验 |
 | B-03 确定性生成 | B-01、B-02 | generator、PacketOpcodes、Proto | 只生成核实项，别名/引用检查，重复输出一致，protoc 编译，禁止旧号兜底 | 待开始 | — | 合成模型测试，再接真实映射 |
 | C-01 双向网络接入 | B-03 | GameSession、BasePacket、Handler 注册、UnionCmd/枚举 | 注册冲突失败、号/长度边界、内外分派、目标 wire 测试，构建部署 | 待开始 | — | 映射确认后替换旧表和专属断言 |
-| D-01 补丁和连接前置 | A-01、A-04 | patch、HTTP/SDK/dispatch/密钥 | 路由/渠道/版本/加密、各钩子 ABI/布局/实际加载验证 | 阻塞 | 旧特征仅静态扫描，缺目标 ABI；— | 分析必需钩子，区分商城可选项 |
+| D-01 补丁和连接前置 | A-01、A-04 | patch、HTTP/SDK/dispatch/密钥 | 路由/渠道/版本/加密、各钩子 ABI/布局/实际加载验证 | 进行中 | CLIENT_72_PATCH_ABI；四入口参数前缀已验，密钥/加载未验 | 字符串工厂、原生RSA/验签、实际加载与路由；商城钩子另列 |
+| D-01a 命名HTTP/SDK入口参数 | A-04d1 | trace_client72_patch_abi、参数/捕获布局摘要 | 四声明static/instance/参数与原生前缀相符，12原生样本、143项研究回归、重复一致 | 已完成 | CLIENT_72_PATCH_ABI、patch-abi-trace/determinism；本批提交 | 不含完整函数、RSA成功、钩子安装/加载或实机；继续D-01 |
 | D-02 最小入场 | C-01、D-01、E-01 | 隔离配置、日志、验收报告 | 新号选人、旧测试号登录、初始化/场景握手、心跳、退出重登实测 | 待开始 | 无客户端验收；— | 前置满足后停旧服、构建隔离部署 |
 | E-01 最小资源集 | A-01、A-03 | resources 来源、ID 差异/引用报告 | 固定 7.2 来源，必需表/脚本/文本/场景齐全，不覆盖既有修改 | 进行中 | CLIENT_72_RESOURCE_CANDIDATE；现有运行资源仍为7.1混合来源 | 固定候选已取得；继续revision、最小表/脚本/场景对齐 |
 | E-01a 固定资源候选与七表审计 | A-01 | audit_resource72、resource-candidate-observations | Git tree/blob/大小/SHA-256链、稳定ID差异、849正引用/必要ID、7项拒绝/边界测试与重复一致；不冒充资源ready | 已完成 | CLIENT_72_RESOURCE_CANDIDATE、resource-candidate-audit/determinism；本项提交 | E-01所需revision/场景/Lua与其他资源继续验证 |
@@ -65,7 +66,7 @@
 ## 阻塞与尝试
 
 - B-02：PingRsp歧义、四个登录身份/CmdID、26字段及8枚举102符号已闭合；请求writer与响应非空对象图已恢复。解密后seed、token保存/参数链已分段验证；完整构造/发送、seed前段解密/验签、其余字段与P0闭包未完成。Login指定旧Shell/非云环境已到151214D20发送入口；Token构造外段现已在15121DB40不透明边界下到发送入口；密文helper与新Shell仍有原生SDK环境缺口。不能给未知helper默认成功或自动扩展已确认字段。
-- D-01：静态命中不是 ABI 证明；解除条件为 P0 钩子的参数/布局/加载和实际连接验证。
+- D-01：四个命名HTTP/SDK/Marshal入口已有声明与原生参数前缀证据；字符串工厂完成、原生RSA/验签、P0钩子实际加载及连接仍未验。不能用前缀或旧签名返回值覆盖替代验收。
 - E-01：运行资源仍为7.1混合来源。已固定7.2上游候选并核验七表/849引用，但其revision标签与本机内置文件数值集不同；热更新状态、必需Lua/场景/其余引用未闭合。不得覆盖资源或靠修改版本文字解除。
 - 安装一致性已核验：7,830条全部大小/MD5匹配；zip_tmp仍存在。此结果不认证清单来源、不代表运行热修复资源齐全。
 
@@ -124,3 +125,5 @@
 - A-04d5e/B-02c4：Token构造外段在明确opaque密文helper边界下到达发送入口，SDK sub_channel_id→tag10新增为第26字段；6原始会话来源及5其他原始来源保持未知语义。4组原生/wire样本、133项回归和确定性复跑通过；ready仍拒绝。未改运行代码/配置/资源，无部署，D-02仍待前置。
 
 - A-04d5f：两请求构造结果经原生发送器/接口/AKFCDHJBCHD实现到14A447E00封包入口，原指针和24604/23172均保持；声明参数/虚槽有目标证据。8组含uint32上界/64位时间、禁用传输/缺包装通过，138项回归和确定性通过。封包函数体/加密/socket未执行，Token密文边界仍明确未知；没有实机验收或重启。下一项可推进封包边界、D-01命名HTTP/SDK入口ABI及会话字段上游来源。
+
+- D-01a：MakeInitialUrl/Browser.LoadURL/SDKUtil.RSAEncrypt/Marshal.PtrToStringAnsi四声明与原生参数传递交叉；12样本含force真假、byte长度/NUL/非对齐/null通过，143项研究回归和重复产物通过。D-01转进行中；未安装补丁、未执行RSA/字符串工厂完成或实际HTTP。patch/resources引用均未改，运行服务不重启，D-02仍未验收。

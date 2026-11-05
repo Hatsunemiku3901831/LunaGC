@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "declarations": [
+    {
+      "ownerTypeIndex": 2910,
+      "owner": "WebRequestUtils",
+      "methodIndex": 23459,
+      "name": "MakeInitialUrl",
+      "entry": "0x15a3464c0",
+      "static": true,
+      "parameters": [
+        {
+          "name": "targetUrl",
+          "kind": "string",
+          "typeIndex": 33,
+          "register": "rcx"
+        },
+        {
+          "name": "localUrl",
+          "kind": "string",
+          "typeIndex": 33,
+          "register": "rdx"
+        }
+      ]
+    },
+    {
+      "ownerTypeIndex": 8135,
+      "owner": "Browser",
+      "methodIndex": 60229,
+      "name": "LoadURL",
+      "entry": "0x15a366300",
+      "static": false,
+      "parameters": [
+        {
+          "name": "url",
+          "kind": "string",
+          "typeIndex": 33,
+          "register": "rdx"
+        },
+        {
+          "name": "force",
+          "kind": "bool",
+          "typeIndex": 308,
+          "register": "r8"
+        }
+      ]
+    },
+    {
+      "ownerTypeIndex": 4389,
+      "owner": "SDKUtil",
+      "methodIndex": 33239,
+      "name": "RSAEncrypt",
+      "entry": "0x15997c290",
+      "static": true,
+      "parameters": [
+        {
+          "name": "publickey",
+          "kind": "string",
+          "typeIndex": 33,
+          "register": "rcx"
+        },
+        {
+          "name": "content",
+          "kind": "string",
+          "typeIndex": 33,
+          "register": "rdx"
+        }
+      ]
+    },
+    {
+      "ownerTypeIndex": 1140,
+      "owner": "Marshal",
+      "methodIndex": 9392,
+      "name": "PtrToStringAnsi",
+      "entry": "0x159c21c90",
+      "static": true,
+      "parameters": [
+        {
+          "name": "ptr",
+          "kind": "intptr",
+          "typeIndex": 495,
+          "register": "rcx"
+        }
+      ]
+    }
+  ],
+  "fixtureCount": 12,
+  "browserCaptureTypeIndex": 8146,
+  "httpUriConsumer": "0x15a1103f0",
+  "scope": "named-hook-entry-argument-prefixes",
+  "patchInstalled": false,
+  "runtimeStatus": "not-tested",
+  "models": [
+    "managed string and receiver storage",
+    "typed Uri/capture allocation only",
+    "explicit initialized Browser metadata-cache flag"
+  ],
+  "outsideScope": [
+    "HTTP routing/URI function completion",
+    "native string factory conversion/allocation",
+    "RSA encryption/decryption/signature verification",
+    "trampoline relocation and live loading",
+    "startup/hotfix-selected code",
+    "native_sdk shop hooks",
+    "real client acceptance"
+  ]
+}
