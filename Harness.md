@@ -10,6 +10,8 @@ E-01c迁移输入检查：[脚本迁移](docs/CLIENT_72_SCENE_SCRIPT_MIGRATION.m
 
 E-01c工具批完整研究选集294项通过，logs/scene-script-research-regression.log；研究校验0错误、ready仍204缺口。人工复核仅新增上述三份Lua摘要，原1287源码/Proto、148行三层矩阵、99候选/1140描述符与开放边界均不变，证据输入50→53；重新recover两次输出相同，evidence/scene-script-login-proto-{review-check,repeat}.json。不修改门禁逻辑，也不把离线Lua结果用作协议证据。
 
+E-01c工具批提交dfd11d6，继续B-02e2（已先建卡）：46311/27748 reader、网络1507AD6F0和14CD67260缓存等待。先恢复原生存储/外层wire与必要非空嵌套，未知不据旧语义命名；完整正常场景分支、媒体异步和实机仍是后续工作。
+
 [AGENTS](AGENTS.md) 管规范，[README](README.md) 管能力说明，[Project](Project.md) 管任务验收；本文件维护索引与可复现流程，不重复长状态清单。目标仅国服 7.2。
 
 ## 仓库入口
