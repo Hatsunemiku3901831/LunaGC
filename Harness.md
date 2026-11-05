@@ -167,3 +167,5 @@ SDK认证来源入口：`trace_client72_auth_sources`执行14F1917D0至14F191E18
 认证可选字段入口：`trace_client72_auth_tail`，复现见[会话研究](docs/CLIENT_72_SESSION.md)。5原生样本、27聚焦回归、两次trace/摘要一致；六session字段及exact-one标志已验，B0不变，未晋级协议/实机。证据`evidence/auth-tail-{trace,determinism}.json`与`logs/auth-tail-tests.log`。用户已恢复推进，旧暂停段落是历史记录。
 
 分区候选源/B0入口：`trace_client72_dispatch_token`，复现和前缀探索边界见[会话研究A-04d5m](docs/CLIENT_72_SESSION.md#a-04d5m-分区候选源到sessionb0与token-tag965)。14原生样本、166研究回归、重复产物一致；30677 tag14供给两处post-parse片段后到session+B0和Token tag965。实际源类型关联仍candidate，语义unknown，ready仍拒绝，D-02未验。证据`evidence/dispatch-token-{trace,determinism}.json`和`logs/auth-tail-dispatch-regression.log`。
+
+分区解析前缀：`trace_client72_dispatch_prefix`，入口/信任输入/复现见[会话研究A-04d5n1](docs/CLIENT_72_SESSION.md#a-04d5n1-分区json到实际响应reader)。6原生样本、33聚焦/169研究回归，两次trace/摘要一致；原生JSON消费→解密/摘要/验签→30677 reader→post-parse原指针。成功明确本地签名信任，后处理/第二协程/语义/实机未验；A-04d5n/B-02c9进行中。证据`evidence/dispatch-prefix-{trace,determinism}.json`、`logs/dispatch-prefix-regression.log`。

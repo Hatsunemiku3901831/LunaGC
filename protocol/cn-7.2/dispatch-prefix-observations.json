@@ -1,0 +1,251 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "fixtureCount": 6,
+  "results": [
+    {
+      "name": "local-nonzero",
+      "accepted": true,
+      "plainWire": "7209666978747572652d41",
+      "localTrust": true,
+      "stop": "0x151211ba1",
+      "errorMarker": null,
+      "readerCalls": 1,
+      "postParsePointerPreserved": true,
+      "value": "fixture-A",
+      "operations": [
+        {
+          "operation": 101,
+          "nativeReturnRAX": "0x61200e690"
+        },
+        {
+          "operation": 103,
+          "nativeReturnRAX": "0x1"
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "nativePlaintextSHA256": "d5c4713bcb906df1d7d0951e9678e07882e8fb57b325de9cc5348349dd3d0c57",
+      "passed": true
+    },
+    {
+      "name": "local-empty",
+      "accepted": true,
+      "plainWire": "7200",
+      "localTrust": true,
+      "stop": "0x151211ba1",
+      "errorMarker": null,
+      "readerCalls": 1,
+      "postParsePointerPreserved": true,
+      "value": "",
+      "operations": [
+        {
+          "operation": 101,
+          "nativeReturnRAX": "0x61200e690"
+        },
+        {
+          "operation": 103,
+          "nativeReturnRAX": "0x1"
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "nativePlaintextSHA256": "96229c0a1dcb79d7d50913f882e3144961b5616140ded9ab844bd685e08e3a30",
+      "passed": true
+    },
+    {
+      "name": "local-high-text",
+      "accepted": true,
+      "plainWire": "721039303037313939323534373430393933",
+      "localTrust": true,
+      "stop": "0x151211ba1",
+      "errorMarker": null,
+      "readerCalls": 1,
+      "postParsePointerPreserved": true,
+      "value": "9007199254740993",
+      "operations": [
+        {
+          "operation": 101,
+          "nativeReturnRAX": "0x61200e690"
+        },
+        {
+          "operation": 103,
+          "nativeReturnRAX": "0x1"
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "nativePlaintextSHA256": "a32e19960b814c5143a5129c36e9fcc9efa72b4f211615a3db4b315964ae22c0",
+      "passed": true
+    },
+    {
+      "name": "bad-sign",
+      "accepted": false,
+      "plainWire": "7209666978747572652d41",
+      "localTrust": true,
+      "stop": "0x147161b60",
+      "errorMarker": "[RegionDispatch] DecryptRegionDispatch Decrypt VerifyHash Fail",
+      "readerCalls": 0,
+      "postParsePointerPreserved": false,
+      "value": null,
+      "operations": [
+        {
+          "operation": 101,
+          "nativeReturnRAX": "0x61200e690"
+        },
+        {
+          "operation": 103,
+          "nativeReturnRAX": "0x0"
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "nativePlaintextSHA256": null,
+      "passed": true
+    },
+    {
+      "name": "stock-trust-reject",
+      "accepted": false,
+      "plainWire": "7209666978747572652d41",
+      "localTrust": false,
+      "stop": "0x147161b60",
+      "errorMarker": "[RegionDispatch] DecryptRegionDispatch Decrypt VerifyHash Fail",
+      "readerCalls": 0,
+      "postParsePointerPreserved": false,
+      "value": null,
+      "operations": [
+        {
+          "operation": 101,
+          "nativeReturnRAX": "0x61200e690"
+        },
+        {
+          "operation": 103,
+          "nativeReturnRAX": "0x0"
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "native": true
+        }
+      ],
+      "nativePlaintextSHA256": null,
+      "passed": true
+    },
+    {
+      "name": "missing-content",
+      "accepted": false,
+      "plainWire": "7209666978747572652d41",
+      "localTrust": true,
+      "stop": "0x147161b60",
+      "errorMarker": "[RegionDispatch] DecryptRegionDispatch Decrypt inputJson Content is Null",
+      "readerCalls": 0,
+      "postParsePointerPreserved": false,
+      "value": null,
+      "operations": [],
+      "keyChecks": [],
+      "nativePlaintextSHA256": null,
+      "passed": true
+    }
+  ],
+  "entry": "0x151210540",
+  "successStop": "0x151211ba1",
+  "rejectStop": "0x147161b60",
+  "sourceTypeIndex": 30677,
+  "sourceField": "DGHGFAELIDO",
+  "sourceOffset": 32,
+  "sourceTag": 14,
+  "selfClassCell": "0x1458c3cc0",
+  "nativeReader": "0x153a598a0",
+  "nativeByteArrayMerge": "0x147ea0940",
+  "semanticStatus": "unknown",
+  "runtimeStatus": "not-tested",
+  "wholeDispatchExecuted": false,
+  "signingKeySHA256": "4830a2c186bf114d7523796a3360e13ea1bb667f1921e3253aab154133a7501e",
+  "clientPublicKeySHA256": "591445eaed578dd6431f11e69fbb13df0dfd46a682348e111305c6a848725e78",
+  "models": [
+    "JSON parsing/lookup/storage from AuthSources72",
+    "native crypto runtime from ResponseCrypto72",
+    "declared closure/stream/response allocation and reader slot19 metadata",
+    "bounded ASCII wire helper and UTF-16 storage",
+    "local success: explicit signed server public-key/root input for operation103 only"
+  ],
+  "outsideScope": [
+    "HTTP transport",
+    "stock-trust successful server response",
+    "remaining RegionInfo fields",
+    "post-parse dispatch/second coroutine",
+    "business name for tag14/tag965",
+    "actual SDK/client"
+  ]
+}

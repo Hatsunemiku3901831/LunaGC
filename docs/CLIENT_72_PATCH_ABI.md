@@ -37,3 +37,5 @@ python -m unittest tools.test_client72_patch_abi -v
 证据：`local/migration72/evidence/patch-abi-{trace,determinism}.json`、`logs/patch-abi-tests.log`；共享摘要`protocol/cn-7.2/patch-abi-observations.json`。仅离线工具、测试和文档变更，无需构建/重启现有服务或补丁。
 
 密钥接续（A-04d5g～5i）：原生seed加密和响应解密/摘要/验签到密钥安装现已有执行证据，见[会话研究](CLIENT_72_SESSION.md)。响应成功夹具使用一致的本地根公钥、内置私钥签名、服务器公钥及其签名；真实验证代码全部通过，错误输入被拒绝。此结果给D-01提供保留验签的本地信任配置方向，尚未实现/安装运行补丁，也不证明SDK初始化或实际连接。旧KEY_SIGN_CHECK强制返回成功仍不能作为验收证据。
+
+分区前缀补充（A-04d5n1）：151210540真实JSON消费、Base64、操作101解密/SHA256/操作103验签及30677 reader已在明确本地签名信任输入下通过；错误签名真实拒绝。见[会话研究](CLIENT_72_SESSION.md)。这不证明HTTP路由、实际补丁/信任输入配置已加载，D-01和D-02仍未完成。

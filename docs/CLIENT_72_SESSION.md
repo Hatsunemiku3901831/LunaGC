@@ -290,3 +290,24 @@ python -m unittest tools.test_client72_dispatch_token tools.test_client72_auth_t
 - 单凭字段布局符合、RegionDispatch日志、或旧QueryCurrRegionHttpRsp的tag14名称不足以晋级业务语义。需贯通真实解析调用的泛型/类型及有效响应输入。保留`analysis/b0-writes.json`扫描线索，1644个字节形状命中不是1644个真实session写入；按目标反汇编/来源逐项排除。
 - 前缀探索目前在15A4E2F49前的140514EE0请求未知元素class=0，属于夹具运行时元数据尚未恢复，不证明目标客户端缺陷。不得用通用任意数组分配/强制成功来消除此边界。`probe_dispatch_reader.py`的3/4/5嵌套扫描未完成也未列为通过。
 - 认证完整尾段仍从14F192325开始；当前A-04d5l只清除了可选字段段落缺口，UI/调度/实际SDK仍待验。D-02还需B-02/B-03/C-01/D-01/E-01完整前置及新旧账号实机序列。
+
+## A-04d5n1 分区JSON到实际响应reader
+
+`trace_client72_dispatch_prefix`从151210540真实入口执行至151211BA1。JSON容器/SDK环境为已声明夹具；原生检查content/sign、Base64、操作101私钥验签/解密、SHA256Managed、操作103公钥验签/数据签名验证，随后实际分配30677/IBOFGKFAEPI并调用147EA0940 byte[] merge及其slot19 reader153A598A0。解析对象原指针保存到`[rbp+A8]`指向的槽中，供后续原生分区处理读取。这里不再手工将30677放入post-parse槽；A-04d5m保留其当时两片段的candidate范围，不能将新结果扩展到未执行的第二协程。
+
+目标Clone153A597F0实际读取1458C3CC0，并调用同类型CopyFrom153A594A0；工具检查这两条原始指令及声明slot19，防止按相似布局替换源类型。byte[] merge本体原生执行，分配的流存储/slot19元数据和ASCII wire底层helper为明确模型；不宣称完整托管运行时ABI或所有嵌套字段。
+
+成功输入的`content`是独立RSA/PKCS1编码的tag14 wire；使用仓库4_Pub.der公钥，原生私钥及其原始签名信任保持不变。`sign`由仓库SigningKey独立签署明文。**只在操作103的验证器输入处提供一致的本地服务器公钥、该公钥签名及根公钥**，真实验签算法/结果/分支不替换。两次密钥验签均与独立RSA oracle比较；原生SHA256与hashlib一致，解密后byte[]与独立明文逐字节一致，实际reader的+20字段与tag14字符串一致。该结果提供D-01信任配置研究输入，不代表实际补丁已安装或原始服务器签名通过。
+
+六组：非空、空字符串、高数字文本9007199254740993三个本地信任成功；篡改数据签名、原始信任下不匹配签名、缺content三个拒绝。前两种拒绝实际到`[RegionDispatch] DecryptRegionDispatch Decrypt VerifyHash Fail`；缺content到`... inputJson Content is Null`。全部拒绝未调用响应reader。输入没有RegionInfo等其余字段，所以成功只表示到post-parse边界，不代表完整分区流程可以成功。
+
+两次trace/摘要逐字节一致；33聚焦、169研究回归通过，研究校验退出0、ready退出1。对未知的SDK返回寄存器仅记录完整RAX，不将其猜为有符号错误码。tag14/tag965业务语义仍未知，登录语义35字段不变。
+
+```powershell
+python tools/trace_client72_dispatch_prefix.py --client $env:GAME_PATH --output local/migration72/evidence/dispatch-prefix-trace.json --summary-output protocol/cn-7.2/dispatch-prefix-observations.json
+python -m unittest tools.test_client72_dispatch_prefix tools.test_client72_dispatch_token tools.test_client72_auth_tail tools.test_client72_auth_sources tools.test_client72_token_complete tools.test_validate_protocol72 -v
+```
+
+证据`evidence/dispatch-prefix-{trace,determinism,mapping-check,mapping-ready}.json`，`logs/dispatch-prefix-{focused-tests,regression}.log`；共享摘要不含私钥/机器路径/实际账号。上节class=0缺口已定位为SHA256Managed/uint数组运行时状态遗漏并由既有ResponseCrypto72模型解决，不是客户端缺陷。
+
+下一项A-04d5n/B-02c9：从151211BA1恢复RegionInfo/配置消费至B0的连续路径，验证第二协程的源类型，再寻找业务名称的独立来源。认证UI/调度14F192325之后、封包体和D-01实际加载仍未验；这些缺口不能用本项通过代替。仅离线工具/测试/研究文档变化，无运行代码/Proto/配置/补丁/资源变更，无需重启；D-02尚未完成。
