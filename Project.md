@@ -4,9 +4,9 @@
 
 ## 当前阶段
 
-执行状态：用户2026-11-05已恢复推进。A-04d5k/B-02c8基线c7556a0；A-04d5l/5m/5n1已按各自限定验收收口并本地提交（46d422c/5dcf882/c9f6870）。A-04d5n2/5n3已提交；A-04d5n4已提交；A-04d5n5已完成第二协程恢复状态到B0/Token的限定验收，重复产物一致；A-04d5n/B-02c9仍进行中：tag965业务语义及完整调度未完成；A-04d/B-02进行中，D-02未完成。
+执行状态：用户2026-11-05已恢复推进。A-04d5k/B-02c8基线c7556a0；A-04d5l/5m/5n1已按各自限定验收收口并本地提交（46d422c/5dcf882/c9f6870）。A-04d5n2/5n3已提交；A-04d5n4已提交；A-04d5n5已完成第二协程恢复状态到B0/Token的限定验收，重复产物一致；A-04d5n/B-02c9仍进行中：tag965业务语义及完整调度未完成；A-04d5o/B-02c10已完成key_id限定验收；A-04d/B-02进行中，D-02未完成。
 
-静态结构、Token/Login原始wire及响应非空对象图已离线恢复；四个登录请求/响应业务身份与CmdID、35个字段来源、8枚举102符号现有目标证据。Token Handler入口至seed安装、UID和token保存已连续执行，后续Login参数链另有分段证据。Token已在明确初始化/OS夹具下贯通原生seed验签/加密、构造、wire与发送至封包入口；SDK认证回调的五个凭据/渠道字段也已接入原生构造和writer。Login亦已在旧Shell/非云夹具下构造并到封包入口。响应wire→原生解密/摘要/验签→密钥安装已在明确本地签名信任输入下贯通，3组4096字节Java对照及错误拒绝通过。真实SDK初始化、完整Handler、封包体及剩余字段继续研究，A-04d/B-02保持进行中。隔离研发服务已部署，但没有7.2可连接构建，客户端验收全部待执行。本机路径、初始差异、报告和日志在忽略的 local/migration72/；公共摘要放 docs/ 和 protocol/cn-7.2/。
+静态结构、Token/Login原始wire及响应非空对象图已离线恢复；四个登录请求/响应业务身份与CmdID、36个字段来源、8枚举102符号现有目标证据。Token Handler入口至seed安装、UID和token保存已连续执行，后续Login参数链另有分段证据。Token已在明确初始化/OS夹具下贯通原生seed验签/加密、构造、wire与发送至封包入口；SDK认证回调的五个凭据/渠道字段也已接入原生构造和writer。Login亦已在旧Shell/非云夹具下构造并到封包入口。响应wire→原生解密/摘要/验签→密钥安装已在明确本地签名信任输入下贯通，3组4096字节Java对照及错误拒绝通过。真实SDK初始化、完整Handler、封包体及剩余字段继续研究，A-04d/B-02保持进行中。隔离研发服务已部署，但没有7.2可连接构建，客户端验收全部待执行。本机路径、初始差异、报告和日志在忽略的 local/migration72/；公共摘要放 docs/ 和 protocol/cn-7.2/。
 
 已有资源修改 ScriptSceneData/flat.luas.scenes.full_globals.lua.json 不属本批，不覆盖、不提交。patch 起点 f287410，resources 起点 dac2a9d。初查时Java/MongoDB归属本工作区且配置引用旧客户端/存档；随后隔离研发部署记录见ENV-01。下一次启动仍须重新核对配置与进程，不能将历史部署结果当作当前验收或清空原数据。
 
@@ -27,7 +27,7 @@
 | A-04b 泛型/父类/静态布局 | A-04a | extract_client72 --structures、test_client72_structures、提取摘要 | 全泛型行/引用边界、父图无环、字段存储分类；未知布局保留未知，目标全量运行和13项测试 | 已完成 | client72-structures.json、structures-summary.json、logs/structures-tests.log；2003432 | 运行时闭合泛型和多维bounds仍需另验；供wire字段定位 |
 | A-04c getter网络语义和静态包号 | A-04b | extract_client72_commands、commands.json、CLIENT_72_NETWORK | 两个发送调用点与封/解包闭环，槽/祖先/方法字向量及歧义测试，确定性提取；不冒充业务名称 | 已完成 | 网络研究摘要、commands-summary.json、commands-tests.log；333b628 | 4,012类型/4,007值；5组重号域未知；追踪业务与热修复 |
 | B-01 映射模型及校验 | A-02a | protocol/cn-7.2、validate_protocol72、11项测试 | 三层状态/来源/歧义/别名，字段容器/引用及目标哈希校验，未知可保存但拒绝ready | 已完成 | protocol/cn-7.2/README.md；99d5a6c | 继续研究真实映射；拆合并语义由证据人工审批 |
-| B-02 P0 三层映射 | A-03、A-04、B-01 | CmdID/message/field 表、wire fixture | 全部 P0 tag/类型/枚举/容器/嵌套有证据，非零/64 位/错误/边界测试 | 进行中 | CLIENT_72_NETWORK、CLIENT_72_SESSION；— | 四个登录身份/35字段来源已确认；继续完整Handler、剩余字段和P0闭包 |
+| B-02 P0 三层映射 | A-03、A-04、B-01 | CmdID/message/field 表、wire fixture | 全部 P0 tag/类型/枚举/容器/嵌套有证据，非零/64 位/错误/边界测试 | 进行中 | CLIENT_72_NETWORK、CLIENT_72_SESSION；— | 四个登录身份/36字段来源已确认；继续完整Handler、剩余字段和P0闭包 |
 | B-02a 包头/心跳静态wire | A-04b、A-04c、B-01 | extract_client72_wire、wire-observations、research.proto、check_client72_wire_proto | 14个实例字段tag/offset/标量/bytes与writer匹配、包头读写交叉、确定性生成、独立非零/64位/边界wire断言；业务未知保留未知 | 已完成 | CLIENT_72_NETWORK；p0-research-tests.log（37项）、wire-proto-tests.log（9项）；c9abee3 | 回调闭合前PingReq业务名仍candidate；不代替B-02或实机验收 |
 | A-04d 登录保护入口与回调类型 | A-04b、A-04c | 原生控制流、方法/泛型签名、受控观察工具 | Token/Login读写真实数据流有证据，响应回调与类型匹配；不得按保护字节线性猜测 | 进行中 | CLIENT_72_SIGNATURES、CLIENT_72_PROTECTED、CLIENT_72_SESSION；— | 请求/响应身份、seed后段/token链已确认；继续完整保护构造/成功处理与未覆盖字段 |
 | A-04d1 方法参数和Action回调参数 | A-04b | extract_client72_signatures、CLIENT_72_SIGNATURES、测试 | 全参数跨度连续/边界与引用校验，独立向量、BYREF及VAR/MVAR区别；闭合Action参数可复现，未恢复项明确保留 | 已完成 | client72-signatures.json、signatures-summary.json、signatures-tests.log（12项）；ce9e3ae | 555,919参数、901条Action引用/835实例；返回类型和泛型方法实例另验 |
@@ -64,6 +64,7 @@
 | A-04d5n3 分区配置消费与Region全局写入 | A-04d5n2 | trace_client72_dispatch_config、摘要/测试 | 同次JSON/密码学→两次配置原生返回/事件→Region全局；6组含Int32边界/列表/坏JSON，177回归及重复一致 | 已完成 | dispatch-config-observations.json、dispatch-config-determinism.json；c158e0e | 继续1512124B9的SDK前置/15275F080至B0，不跳过SDK调用 |
 | A-04d5n4 第一分区入口连续到会话/Token | A-04d5n3、A-04d5h | SDK/提示模型、trace_client72_dispatch_session、摘要/测试 | JSON/原生密码学→配置→SDK包装/提示→B0原指针→同运行时seed/Token writer；6组边界、原Token5组不变、182回归与重复一致 | 已完成 | dispatch-session-observations.json、dispatch-session-determinism.json；4200ea6 | 第一入口关联已执行；第二协程151226CD0和tag965语义仍未验 |
 | A-04d5n5 第二协程恢复状态到会话/Token | A-04d5n4 | trace_client72_dispatch_coroutine、摘要/测试 | 实际MoveNext状态2/3→密码学/reader→第二B0 store→Token；状态表/闭包校验、8组含拒绝/边界、187回归与重复一致 | 已完成 | dispatch-coroutine-observations.json、dispatch-coroutine-determinism.json；2a71ddf | 不覆盖初始HTTP等待和B0后尾段；保留tag965未知，继续必要登录字段 |
+| A-04d5o / B-02c10 Token密钥选择字段 | A-04d5h、A-04d5i | trace_client72_key_selection、Java对照、映射/校验 | 原生tag1184=4、独立命名URL参数、唯一密钥匹配；3请求/6响应含错误key、192回归及重复产物一致 | 已完成 | key-selection-observations.json、key-selection-determinism.json；本项提交 | key_id按业务契约交叉证据确认；继续完整Handler/封包体及P0闭包，不代表D-02 |
 | B-03 确定性生成 | B-01、B-02 | generator、PacketOpcodes、Proto | 只生成核实项，别名/引用检查，重复输出一致，protoc 编译，禁止旧号兜底 | 待开始 | — | 合成模型测试，再接真实映射 |
 | C-01 双向网络接入 | B-03 | GameSession、BasePacket、Handler 注册、UnionCmd/枚举 | 注册冲突失败、号/长度边界、内外分派、目标 wire 测试，构建部署 | 待开始 | — | 映射确认后替换旧表和专属断言 |
 | D-01 补丁和连接前置 | A-01、A-04 | patch、HTTP/SDK/dispatch/密钥 | 路由/渠道/版本/加密、各钩子 ABI/布局/实际加载验证 | 进行中 | CLIENT_72_PATCH_ABI；四入口参数前缀已验，密钥/加载未验 | 字符串工厂、原生RSA/验签、实际加载与路由；商城钩子另列 |
@@ -172,3 +173,5 @@
 - A-04d5n4：第一分区入口同次JSON/密码学/配置/SDK包装/提示→B0原指针，再复用seed运行时到Token tag965；6原生样本、182回归、两次trace/摘要一致，原Token5组trace/摘要不变。导出表/日志sink未初始化等离线夹具明确；不是实际SDK或实机成功。缺session跳过store，缺singleton/坏JSON不构造Token；业务35字段、tag965未知、ready仍1。下一项23192.MoveNext151226CD0的第二分区解析关联。仅离线修改，无运行部署。
 
 - A-04d5n5：真实MoveNext151226CD0 state2/3恢复路径→密码学/30677 reader→第二B0 store→同运行时seed/Token。8原生样本、187回归、两次trace/摘要一致；坏签名/缺content分别到错误提示/日志入口，传输错误与state5各走实际边界。研究校验0、ready1（214未满足项）。两处分区原始关联已分别验证，tag965业务名仍未知；下一步优先核查必要登录字段，不以旧proto名称或常量4晋级。仅离线修改，无运行部署。
+
+- A-04d5o/B-02c10：请求tag1184=4、Miscs.GetGlobalDispatchUrl命名参数及唯一匹配公钥交叉确认key_id，累计36字段。3原生请求/6原生响应，正确key4与Java4096字节对照一致，错误key2/3/5不安装密钥；192项回归、二次产物一致，研究校验0/ready1（213未满足项）。名称是业务契约证据推断；明确局部URL/本地信任/Java响应夹具，未声称完整请求解密、实际SDK、补丁或D-02。只改研究工具/映射/文档，未部署；继续Handler尾段、封包体及P0闭包。

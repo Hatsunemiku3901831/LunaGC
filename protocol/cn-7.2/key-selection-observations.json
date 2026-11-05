@@ -1,0 +1,355 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "fixtureCount": 6,
+  "results": [
+    {
+      "name": "selected-0",
+      "requestIndex": 0,
+      "selectedKeyId": 4,
+      "matchesRequest": true,
+      "clientSeedHex": "0000000000000000",
+      "serverSeedHex": "0000000000000001",
+      "plaintextHex": "0000000000000001",
+      "nativeOperations": {
+        "101": 0,
+        "103": 0
+      },
+      "stop": "0x15a4e0d4b",
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "sessionKeyInstalled": true,
+      "sessionKeySHA256": "4d235f8b8074f4f73d66bca8276cc3b56332a02d6864c9aa55df3c5accfe7eb2",
+      "javaByteComparison": true,
+      "passed": true
+    },
+    {
+      "name": "selected-1",
+      "requestIndex": 1,
+      "selectedKeyId": 4,
+      "matchesRequest": true,
+      "clientSeedHex": "8000000000000000",
+      "serverSeedHex": "fedcba9876543210",
+      "plaintextHex": "7edcba9876543210",
+      "nativeOperations": {
+        "101": 0,
+        "103": 0
+      },
+      "stop": "0x15a4e0d4b",
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "sessionKeyInstalled": true,
+      "sessionKeySHA256": "a01ff09b0d84cac7ea7c207f61abeffd22232cbf910bc06d5bc68c4d3f3b3dbf",
+      "javaByteComparison": true,
+      "passed": true
+    },
+    {
+      "name": "selected-2",
+      "requestIndex": 2,
+      "selectedKeyId": 4,
+      "matchesRequest": true,
+      "clientSeedHex": "fffffffffffff800",
+      "serverSeedHex": "ffffffffffffffff",
+      "plaintextHex": "00000000000007ff",
+      "nativeOperations": {
+        "101": 0,
+        "103": 0
+      },
+      "stop": "0x15a4e0d4b",
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "sessionKeyInstalled": true,
+      "sessionKeySHA256": "5d517d6c52800a32b573b136c7a469131670b869881157c2fa013f714b796df5",
+      "javaByteComparison": true,
+      "passed": true
+    },
+    {
+      "name": "wrong-key-2",
+      "requestIndex": 1,
+      "selectedKeyId": 2,
+      "matchesRequest": false,
+      "clientSeedHex": "8000000000000000",
+      "serverSeedHex": "fedcba9876543210",
+      "plaintextHex": "7edcba9876543210",
+      "nativeOperations": {
+        "101": -7,
+        "103": -7
+      },
+      "stop": "0x15a4e0645",
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "sessionKeyInstalled": false,
+      "sessionKeySHA256": null,
+      "javaByteComparison": false,
+      "passed": true
+    },
+    {
+      "name": "wrong-key-3",
+      "requestIndex": 1,
+      "selectedKeyId": 3,
+      "matchesRequest": false,
+      "clientSeedHex": "8000000000000000",
+      "serverSeedHex": "fedcba9876543210",
+      "plaintextHex": "7edcba9876543210",
+      "nativeOperations": {
+        "101": -7,
+        "103": -7
+      },
+      "stop": "0x15a4e0645",
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "sessionKeyInstalled": false,
+      "sessionKeySHA256": null,
+      "javaByteComparison": false,
+      "passed": true
+    },
+    {
+      "name": "wrong-key-5",
+      "requestIndex": 1,
+      "selectedKeyId": 5,
+      "matchesRequest": false,
+      "clientSeedHex": "8000000000000000",
+      "serverSeedHex": "fedcba9876543210",
+      "plaintextHex": "7edcba9876543210",
+      "nativeOperations": {
+        "101": -7,
+        "103": -7
+      },
+      "stop": "0x15a4e0645",
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "sessionKeyInstalled": false,
+      "sessionKeySHA256": null,
+      "javaByteComparison": false,
+      "passed": true
+    }
+  ],
+  "fieldBinding": {
+    "typeIndex": 82491,
+    "clientField": "FMMLBHKFGDH",
+    "objectOffset": 152,
+    "tag": 1184,
+    "type": "uint32",
+    "semanticField": "key_id",
+    "status": "verified",
+    "nativeValue": 4,
+    "store": "0x151220094"
+  },
+  "semanticBasis": "Contract inference: native request selector matches independently named dispatch key_id and only interoperable response public key",
+  "urlArgument": {
+    "method": "Miscs.GetGlobalDispatchUrl",
+    "entry": "0x1531e0a10",
+    "literal": {
+      "index": 61981,
+      "value": "&key_id="
+    },
+    "value": 4,
+    "formatterMethodIndex": 3829,
+    "formatKind": "uint32",
+    "formatterExecuted": false,
+    "concatExecuted": false,
+    "formattedStringFixture": "4",
+    "numberTrace": {
+      "entry": "0x1531e0d76",
+      "stop": "0x159c1abd0",
+      "completion": "bounded-fragment",
+      "liveIn": {
+        "rsp": "0x600100008"
+      },
+      "instructions": 7,
+      "nativePathSHA256": "a8d3f884059cf0a82b4d973cb4419ceab9aede7b97c9567acaccbb97f424a7b8",
+      "executedAddresses": {
+        "0x1531e0d76": 1,
+        "0x1531e0d7b": 1,
+        "0x1531e0d7d": 1,
+        "0x1531e0d82": 1,
+        "0x1531e0d85": 1,
+        "0x159ad6130": 1,
+        "0x159c1abd0": 1
+      },
+      "models": [
+        "0x159ad6130"
+      ]
+    },
+    "concatTrace": {
+      "entry": "0x1531e0d8a",
+      "stop": "0x159a8e9d0",
+      "completion": "bounded-fragment",
+      "liveIn": {
+        "rsp": "0x600100008",
+        "rsi": "0x612003480",
+        "rax": "0x6120034d0"
+      },
+      "instructions": 5,
+      "nativePathSHA256": "5da91487bcea12616c50e9dbfd5dc3603a0905afeca905c5e27d593991e1f61c",
+      "executedAddresses": {
+        "0x1531e0d8a": 1,
+        "0x1531e0d91": 1,
+        "0x1531e0d94": 1,
+        "0x1531e0d97": 1,
+        "0x159a8e9d0": 1
+      },
+      "models": []
+    }
+  },
+  "publicKeyFiles": {
+    "2": {
+      "path": "src/main/resources/keys/game_keys/2_Pub.der",
+      "sha256": "5190afd21667be9ecc88d58e74f5385b07f6ce0e86eb012062a55f1273a86890",
+      "matchesNativePrivate": false
+    },
+    "3": {
+      "path": "src/main/resources/keys/game_keys/3_Pub.der",
+      "sha256": "283e077dd055700dfbad5cffdd1a8e3b085f7be307b53e2444f5030156bff013",
+      "matchesNativePrivate": false
+    },
+    "4": {
+      "path": "src/main/resources/keys/game_keys/4_Pub.der",
+      "sha256": "591445eaed578dd6431f11e69fbb13df0dfd46a682348e111305c6a848725e78",
+      "matchesNativePrivate": true
+    },
+    "5": {
+      "path": "src/main/resources/keys/game_keys/5_Pub.der",
+      "sha256": "b640dbc7907dc0588d4ea11ea9ca1c313a8ab6974f5436f6b43dad456c72d84f",
+      "matchesNativePrivate": false
+    }
+  },
+  "javaSourceSHA256": {
+    "tools/Client72KeySelectionReference.java": "1cf0eb3e3b3781f6ac670687e2fe89ab3b2ae37ee838a1dad25d366a33fd6fb2",
+    "src/main/java/emu/grasscutter/utils/algorithms/MersenneTwister64.java": "c46c8c05acf697fded0ef1685a0e64d6fb5a13933d10d07b3c387c36a6cabebb",
+    "src/main/java/emu/grasscutter/utils/Crypto.java": "a1ae5a4418879d882de61dc21ad638e3066c2a0c7c4921b097caef143aca681a",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerGetPlayerTokenReq.java": "71498e66012dda2e8578ae60df7b72e2d76096ed13578956d97a189254473fe6"
+  },
+  "nativePrivateDerSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+  "runtimeStatus": "not-tested",
+  "wholeExchangeExecuted": false,
+  "keyVerificationForced": false,
+  "trustInputReplacements": [
+    "native private-key signature",
+    "server public key and signature",
+    "root PEM input"
+  ],
+  "modelsFrom": [
+    "token-complete-observations.json",
+    "response-crypto-observations.json"
+  ],
+  "outsideScope": [
+    "full GetGlobalDispatchUrl body/HTTP",
+    "original-server valid signature",
+    "local-server request seed decryption",
+    "SDK initialization and production trust patch",
+    "whole Handler/frame/socket",
+    "real-client acceptance"
+  ],
+  "requestResults": [
+    {
+      "variant": 0,
+      "selector": 4,
+      "selectorWire": "804a04",
+      "clientSeedHex": "0000000000000000",
+      "passed": true
+    },
+    {
+      "variant": 1,
+      "selector": 4,
+      "selectorWire": "804a04",
+      "clientSeedHex": "8000000000000000",
+      "passed": true
+    },
+    {
+      "variant": 2,
+      "selector": 4,
+      "selectorWire": "804a04",
+      "clientSeedHex": "fffffffffffff800",
+      "passed": true
+    }
+  ]
+}

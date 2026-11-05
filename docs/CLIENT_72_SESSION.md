@@ -397,3 +397,25 @@ python -m unittest tools.test_client72_dispatch_coroutine tools.test_client72_di
 证据`evidence/dispatch-coroutine-{trace,trace-repeat,determinism,mapping-check,mapping-ready}.json`，`logs/dispatch-coroutine-{run,repeat,regression}.log`。仅离线工具/摘要/测试/文档变化，无运行部署或重启。共享模型未改，未重跑无关服务端测试宣称全绿。
 
 下一项：保留tag965未知，优先核查Token请求其余服务端准入必需字段与会话发送/Handler剩余路径。当前HandlerGetPlayerTokenReq实际读取account_uid/account_token/client_rand_key/key_id，前三者已验证，key_id尚未确认。请求tag1184/+98存在原生常量4来源，但常量值本身不足以命名。尤其不要混淆seed加密的服务器公钥与分区/响应解密的客户端公钥：已有seed原生DER SHA-256为7427ee11…，与仓库4_Pub.der的内层PKCS1 SHA-256 c5dae228…不同；须做独立密钥选择/密码学互操作证据，不能由文件名或4直接下结论。
+
+## A-04d5o / B-02c10 Token key_id的命名与密钥选择
+
+`trace_client72_key_selection`从三份固定哈希输入重新恢复3组完整原生Token构造/seed helper及writer，观察151220094写request+98=4，独立wire断言tag1184/uint32为`80 4a 04`。字段FMMLBHKFGDH现在按以下交叉证据映射为`key_id`，累计业务字段36个。该名称是与现有服务端契约相符的证据推断，不声称混淆字段的原始名字已被解密。
+
+1. 独立命名方法Miscs.GetGlobalDispatchUrl/1531E0A10在1531E0D7D传UInt32常量4，在1531E0D8A读取literal61981（usage782238/cell145B42F08）的`&key_id=`。两个实际片段分别停止于NumberFormatter.NumberToString/159C1ABD0和String.Concat/159A8E9D0；元数据确认UInt32/IFormatProvider重载。格式化结果`4`是第二片段显式输入，完整格式化、Concat、URL创建及HTTP不在执行范围。
+2. 原生响应操作101读出的私钥modulus/exponent只匹配仓库`game_keys/4_Pub.der`。只存摘要，不导出私钥材料；2/3/5公钥均不同。
+3. `Client72KeySelectionReference.java`按真实请求的4选择公钥，用JCA RSA/PKCS1和SHA256withRSA生成响应；固定0x42非零padding只用于离线确定性。独立Python整数RSA/签名断言与JCA逐字节比较，再将JCA结果编码为响应wire交给目标reader及原生解密/验签/密钥安装。
+4. 三组client seed为0、0x8000000000000000、0xfffffffffffff800，server seed为1、0xfedcba9876543210、0xffffffffffffffff。原生还原server seed并生成的4096字节密钥与仓库实际MersenneTwister64逐字节一致。分别将选择值改为2、3、5进行对照，所有密钥签名仍有效，但操作101/103均返回-7，走15A4E0645且不安装密钥。
+
+注意两个密钥方向不同：请求client_rand_key仍由目标原始服务器公钥加密；4_Pub用于客户端解密的响应方向。Java夹具从已验证的原生client seed数值开始，**没有用本地SigningKey去假装解开原始服务器公钥密文**。成功仍显式替换私钥签名、服务器公钥及签名、根PEM输入；没有替换任何验签结果。原始服务器信任、本地信任补丁、完整请求响应交换、Handler尾段、封包体及实机都未验。
+
+3请求、6响应和2个命名参数片段通过，两次trace/摘要逐字节一致；新增5项映射反例测试，总192项研究回归通过。研究校验退出0；ready退出1，剩余213项。仅更新研究映射，未改主Proto/运行Java/补丁/配置/资源，不需部署重启。
+
+```powershell
+python tools/trace_client72_key_selection.py --client $env:GAME_PATH --java-home $env:JAVA_HOME --output local/migration72/evidence/key-selection-trace.json --summary-output protocol/cn-7.2/key-selection-observations.json
+python -m unittest tools.test_client72_key_selection
+python tools/validate_protocol72.py
+python tools/validate_protocol72.py --ready
+```
+
+证据`evidence/key-selection-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json`，日志`logs/key-selection-{run,repeat,focused-tests,regression}.log`。Java runner固定记录自身、MT64以及Crypto/Handler契约源码hash；不启动服务端。下一项从15A4E0D9A继续Handler尾段，或从14A447E00封包体补连续发送链；tag965语义继续unknown。B-02/A-04d整体及D-02均不晋级。

@@ -10,6 +10,8 @@
 
 ## 本机运行约定
 
+key_id研究新增3组原生请求与6组JCA响应对照、192项研究回归：正确key4的会话密钥与Java逐字节相等，错误key2/3/5原生拒绝且不安装密钥。复现见会话研究A-04d5o；仅离线工具/研究映射变化，没有启动客户端、连接数据库或部署运行服务。
+
 以 [AGENTS.md](../AGENTS.md) 为准：使用当前checkout和本机`GAME_PATH`，启动前核对`.env`、`.env.local`、`config.json`及进程/端口归属。当前国服7.2分支使用Windows便携方式（`LUNAGC_RUNTIME=portable`），不部署Docker/WSL或启用虚拟化，不沿用历史路径/PID。
 
 | 入口 | 用途与注意点 |

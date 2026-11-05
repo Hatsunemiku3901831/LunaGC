@@ -6,6 +6,8 @@
 
 7.2连接研究现已验证Token请求client_rand_key来源，并从响应Handler入口连续执行warmup选择、原生密码学、UID和会话token保存；后续Login参数链另有分段证据，见[会话研究](CLIENT_72_SESSION.md)。SDK认证回调的open_id/combo_token/account_type/guest及SDK渠道值已通过原生会话写入、Token构造和wire验证，分别对应account_uid/account_token/account_type/is_guest/channel_id。UID/tag9经会话+168和目标__LastUid__来源确认，PlayerPrefs仅用内存夹具。成功密码学样本明确使用离线本地签名信任输入；JSON容器/SDK返回值也是明确夹具，完整SDK认证、Handler及客户端登录尚未验收，本批未改账号准入或保存行为。
 
+7.2请求key_id/tag1184已通过原生构造、命名dispatch参数及响应密钥选择对照确认，见会话研究A-04d5o。它选择客户端响应解密公钥，不是account_type、账号ID或持久凭据；本地成功样本仍依赖明确的签名信任输入，不代表实际认证通过。
+
 配套资料：
 
 - [数据模型与集合字典](ACCOUNT_AND_SAVE_DATA_MODEL.md)：字段、关联、索引、保存范围与恢复凭证。

@@ -516,6 +516,52 @@ def validate_auth_sources(document,profile,auth,wire):
     return errors
 
 
+def validate_key_selection(document, profile, selection, wire):
+    errors=[]
+    hashes={profile['files'][k]['path']:profile['files'][k]['sha256'] for k in ('binary','metadata','startup')}
+    if selection.get('inputSHA256')!=hashes:errors.append('Key selection: input mismatch')
+    if any(selection.get(k)!=v for k,v in dict(runtimeStatus='not-tested',wholeExchangeExecuted=False,
+                                               keyVerificationForced=False,fixtureCount=6).items()):
+        errors.append('Key selection: execution scope mismatch')
+    binding=selection.get('fieldBinding',{})
+    expected=dict(typeIndex=82491,clientField='FMMLBHKFGDH',objectOffset=0x98,tag=1184,type='uint32',
+                  semanticField='key_id',status='verified',nativeValue=4,store='0x151220094')
+    if binding!=expected:errors.append('Key selection: field/value/store mismatch')
+    raw=[f for f in wire['fields'] if f['objectOffset']==0x98]
+    schema=next((s for s in document['schemas'] if s['semanticName']=='GetPlayerTokenReq'),{})
+    mapped=[f for f in schema.get('fields',[]) if 'token-key-selection' in f.get('evidence',[])]
+    if (len(raw)!=1 or any(raw[0].get(k)!=binding.get(k) for k in ('tag','type','clientField')) or len(mapped)!=1 or
+            any(mapped[0].get(k)!=binding.get(k) for k in ('tag','type','clientField','semanticField','status'))):
+        errors.append('Key selection: raw/semantic disagreement')
+    url=selection.get('urlArgument',{})
+    if (any(url.get(k)!=v for k,v in dict(method='Miscs.GetGlobalDispatchUrl',entry='0x1531e0a10',value=4,
+            formatterMethodIndex=3829,formatKind='uint32',formatterExecuted=False,concatExecuted=False,
+            formattedStringFixture='4').items()) or url.get('literal')!={'index':61981,'value':'&key_id='}):
+        errors.append('Key selection: independent named URL argument mismatch')
+    requests=selection.get('requestResults',[])
+    if [(r.get('selector'),r.get('selectorWire'),r.get('clientSeedHex'),r.get('passed')) for r in requests]!=[
+            (4,'804a04',seed,True) for seed in ('0000000000000000','8000000000000000','fffffffffffff800')]:
+        errors.append('Key selection: native request cases changed')
+    files=selection.get('publicKeyFiles',{})
+    if (set(files)!={'2','3','4','5'} or [k for k,v in files.items() if v.get('matchesNativePrivate')]!=['4'] or
+            any(v.get('path')!=f'src/main/resources/keys/game_keys/{k}_Pub.der' for k,v in files.items())):
+        errors.append('Key selection: unique public/private association changed')
+    cases=[(f'selected-{i}',i,4,True) for i in range(3)]+[(f'wrong-key-{k}',1,k,False) for k in (2,3,5)]
+    results=selection.get('results',[])
+    if [(r.get('name'),r.get('requestIndex'),r.get('selectedKeyId'),r.get('matchesRequest')) for r in results]!=cases:
+        errors.append('Key selection: differential case set changed')
+    for r,(_,_,_,selected) in zip(results,cases):
+        if (r.get('nativeOperations')!={'101':0 if selected else -7,'103':0 if selected else -7} or
+                r.get('stop')!=('0x15a4e0d4b' if selected else '0x15a4e0645') or
+                r.get('sessionKeyInstalled')!=selected or r.get('javaByteComparison')!=selected or not r.get('passed') or
+                bool(r.get('sessionKeySHA256'))!=selected or
+                [(k.get('operation'),k.get('oracle'),k.get('native')) for k in r.get('keyChecks',[])]!=[(101,True,True),(103,True,True)]):
+            errors.append('Key selection: native crypto/key installation outcome mismatch')
+    if selection.get('trustInputReplacements')!=['native private-key signature','server public key and signature','root PEM input']:
+        errors.append('Key selection: missing explicit local trust inputs')
+    return errors
+
+
 def validate_send_flow(document, profile, flow):
     errors=[]
     hashes={profile['files'][k]['path']:profile['files'][k]['sha256'] for k in ('binary','metadata','startup')}
@@ -579,6 +625,8 @@ def main():
     errors.extend(validate_handler_core(document,profile,handler_core,next(t for name,t in extra if name=='response-wire-observations.json')))
     auth_sources=json.loads((args.directory/'auth-sources-observations.json').read_text('utf8'))
     errors.extend(validate_auth_sources(document,profile,auth_sources,protected))
+    key_selection=json.loads((args.directory/'key-selection-observations.json').read_text('utf8'))
+    errors.extend(validate_key_selection(document,profile,key_selection,protected))
     send_flow=json.loads((args.directory/'send-flow-observations.json').read_text('utf8'))
     errors.extend(validate_send_flow(document,profile,send_flow))
     print(json.dumps({'mode': 'ready' if args.ready else 'research-structure', 'valid': not errors, 'errors': errors},

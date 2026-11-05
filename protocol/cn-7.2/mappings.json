@@ -229,6 +229,13 @@
       "inputFile": "binary",
       "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
       "location": "protocol/cn-7.2/auth-sources-observations.json; native OnSDKLoginCB JSON open_id/combo_token/account_type/guest and SDK channel key -> session stores -> native Token constructor/seed/writer; JSON container/parser fixtures, not live auth"
+    },
+    {
+      "id": "token-key-selection",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "protocol/cn-7.2/key-selection-observations.json; native 151220094 -> tag1184, Miscs.GetGlobalDispatchUrl &key_id=4, JCA-selected response keys and native differential rejection"
     }
   ],
   "opcodes": [
@@ -1153,20 +1160,19 @@
           "wireStatus": "emulated-observation"
         },
         {
-          "semanticField": "unknown_field_1184",
+          "semanticField": "key_id",
           "clientField": "FMMLBHKFGDH",
           "tag": 1184,
           "type": "uint32",
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "status": "unresolved",
+          "status": "verified",
           "evidence": [
-            "token-protected-writer"
+            "token-protected-writer",
+            "token-key-selection"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
+          "ambiguities": [],
           "wireStatus": "emulated-observation"
         },
         {
