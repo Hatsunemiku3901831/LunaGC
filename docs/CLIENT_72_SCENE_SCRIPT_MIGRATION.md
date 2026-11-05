@@ -1,5 +1,7 @@
 # E-01c：参考既有实现迁移scene3脚本
 
+接口来源后续：52f1945的实际词法/公开/包装注册审计确认原62是反射基线，其中ExecuteGroupLua/ExecuteActiveGroupLua两项已由userdata注册；其余60在复核入口未找到实现，涉及1469静态组。171名称逐13,616组与原编译集合一致；这仍不证明调用可达性或参数兼容，见[API清单](CLIENT_72_SCENE_SCRIPT_API.md)。owner UID只读查询已单独建E-01c4卡，尚未完成生产迁移。
+
 后续生产消费已实际推进：e3da792首次生产审计保留5套件失败/1,210半径截断/两个setter漏绑；9408f41最小修复与两次全13,616静态群组/20,871套件重跑已消除这些问题，327研究/580 Java选集通过，见[生产审计历史基线](CLIENT_72_SCENE_SERIALIZATION.md)及[修复/构建](CLIENT_72_SCENE_SERIALIZATION_FIXES.md)。8缺ID、vision、fastRequire、ScriptLib实际调用和实机仍未完成，E-01c3正做接口来源审计。下方“生产序列化未执行”为首次顶层工具批次历史；原三份顶层摘要固定旧JAR离线类依赖，精确复现可用local/migration72/artifacts/pre-scene-serialization-fix-LunaGC.jar，新JAR不会冒称旧摘要hash不变。
 
 2026-11-06（Australia/Sydney）。用户确认没有7.2 Scene/Block/Group/Common Lua来源，允许参考LunaGC7.1实现尝试迁移。本项据此核对固定既有脚本与目标7.2表；**没有把原脚本冒称7.2原始导出，E-01c/E-01/D-02均未完成。** 尚未改写或安装脚本，也没有以空返回/默认成功补齐缺失接口。

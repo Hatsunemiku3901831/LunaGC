@@ -1336,6 +1336,7 @@
     "protocol/cn-7.2/scene-normal-observations.json": "dcf91313cb5135609133eda71671e3dc421562d9b13db241701dee6004c95cbe",
     "protocol/cn-7.2/scene-query-observations.json": "9ea007c1922aeb9f1e5f9d91aa93f065df1e1193d2e128c3477ee59d45566931",
     "protocol/cn-7.2/scene-resource-observations.json": "7f0dadf9b2d24a2a7041162875ad568201f77f6671108693faf35be565d895e5",
+    "protocol/cn-7.2/scene-script-api-baseline-observations.json": "4cefd6cc53e9122067677d3e60c46dae0e6c12ef56ea02d5421e0591984fde5e",
     "protocol/cn-7.2/scene-script-observations.json": "a52346e5879b4cfa05d07e3d4f13e7952a40f39f3a210314cfee725180011970",
     "protocol/cn-7.2/scene-serialization-baseline-observations.json": "ddda2f6e17688e2bba7f1596fd23f5ee2f19e0536659d6f297ebb5e878c883a5",
     "protocol/cn-7.2/scene-serialization-observations.json": "767c6132b532bb0f1007d53add3c66b209dc2e9dece80678caa57b64e899a537",
@@ -92227,7 +92228,7 @@
     "Nonzero/64-bit/nested/list/error/boundary wire regressions remain separate required evidence",
     "No protocol generation, runtime integration, client reverse engineering or client debugging"
   ],
-  "reviewSHA256": "5c654cd0e12170f1e110c0dac014beebd9ee86409ccfeb1abc2f60e61520203c",
+  "reviewSHA256": "f5fc714a7e45832caf3308417a47c44c30c91c0d20bccc69d986c294b8f08091",
   "toolSourceSHA256": {
     "tools/review_client72_login_proto.py": "5275dfcff776265aa745db564c5132f6f41c9e60173b20282f1059735fce36ff",
     "tools/Client72ProtoDependencies.java": "517838c3cd34b051c47205e71d45d2d3c99cc6bb4fb32379c34e0d0cea418f0a"

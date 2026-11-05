@@ -119,3 +119,5 @@ python -m unittest tools.test_audit_scene_script_api72 -v
 真实固定输入运行两次，报告与摘要均逐字节一致；证据`local/migration72/evidence/scene-script-api-{audit,repeat,summary-draft,summary-repeat,determinism}.json`，日志同前缀及`scene-script-api-tests.log`。摘要草稿不含原始行字节/机器路径，供主任务统一接入，本批不新增共享observations或改Project/Harness。
 
 仅离线工具/测试/文档，无运行代码构建部署或重启要求。没有调用缺API，没有改变既有脚本、缓存、8条缺Gadget ID、visionLevel未知、fastRequire配置或实机前置；研究API名称及源码候选不能提升resourceReady或替代真实入场。
+
+主线接入：固定来源、19份源码及9测试经复核；原draft SHA-256 143aac4cddfff82a26911b1a45d1018ef839d665ad71a2a29a995afc8e977c8f原样保存为[迁移前基线](../protocol/cn-7.2/scene-script-api-baseline-observations.json)。它是第60份研究输入，原矩阵/源码/三层不变、recover两次一致；当前工作树358研究选集通过（含并行列表测试12项）。E-01c3限定完成；E-01c4将单独对GetSceneOwnerUid做真实Lua桥接红绿验证，届时必须保留本历史基线并复核源码/构建变化，不能把本报告称为修改后当前状态。

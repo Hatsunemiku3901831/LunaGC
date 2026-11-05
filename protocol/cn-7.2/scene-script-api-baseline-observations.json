@@ -1,0 +1,1241 @@
+{
+  "boundaryCounts": {},
+  "counts": {
+    "files": 13785,
+    "filesWithUtf8Replacement": 0,
+    "groupsWithParentMissingMembers": 1503,
+    "groupsWithoutReviewedMissingRegistration": 1469,
+    "lexicalMembers": 171,
+    "missingMemberSites": 1390,
+    "missingWithoutReviewedRegistration": 60,
+    "parentDirectMembers": 171,
+    "parentMissingMembers": 62,
+    "registeredWrappersAmongParentMissing": 2,
+    "sourcePublicScriptLibMethods": 206,
+    "staticGroups": 13616
+  },
+  "dynamicAndValueBoundariesSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "entriesSHA256": "7e5a904a564b608cb66d40f80e932315a1c307b0ce70a3fe8ead8799b88a59ea",
+  "evaluatedScriptManifest": {
+    "commonFiles": 104,
+    "files": 13785,
+    "sha256": "47b783755a7c8f714a868db551f76a503092e0fd7895cc7a787e6060e651c02d"
+  },
+  "legacyResourceCommit": "dac2a9d43332ef51879522cf39da2831b0ca0543",
+  "legacySourceIsNative72": false,
+  "lexicalCompiledReconciliationSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "lexicalMembers": [
+    "ActiveChallenge",
+    "AddChallengeDuration",
+    "AddEntityGlobalFloatValueByConfigId",
+    "AddExhibitionAccumulableData",
+    "AddExhibitionReplaceableData",
+    "AddExtraFlowSuite",
+    "AddExtraGroupSuite",
+    "AddPlayerGroupVisionType",
+    "AddQuestProgress",
+    "AddSceneTag",
+    "AddTeamServerGlobalValue",
+    "AssignPlayerShowTemplateReminder",
+    "AttachChildChallenge",
+    "AutoMonsterTide",
+    "BeginCameraSceneLook",
+    "BeginCameraSceneLookWithTemplate",
+    "CancelGroupTimerEvent",
+    "ChangeDeathZone",
+    "ChangeGroupGadget",
+    "ChangeGroupTempValue",
+    "ChangeGroupVariableValue",
+    "ChangeGroupVariableValueByGroup",
+    "ChangeToTargetLevelTag",
+    "CheckIsInGroup",
+    "CheckIsInMpMode",
+    "CheckRemainGadgetCountByGroupId",
+    "CheckSceneTag",
+    "ClearExhibitionReplaceableData",
+    "ClearPlayerEyePoint",
+    "ContinueTimeAxis",
+    "CreateFatherChallenge",
+    "CreateGadget",
+    "CreateGadgetByConfigIdByPos",
+    "CreateGadgetByParamTable",
+    "CreateGroupTimerEvent",
+    "CreateGroupVariable",
+    "CreateMonster",
+    "CreateMonsterByConfigIdByPos",
+    "CreateMonsterFaceAvatar",
+    "DelPlayerGroupVisionType",
+    "DelSceneTag",
+    "DelWorktopOption",
+    "DelWorktopOptionByGroupId",
+    "EndTimeAxis",
+    "EnterWeatherArea",
+    "ExecuteActiveGroupLua",
+    "ExecuteGroupLua",
+    "ForbidPlayerRegionVision",
+    "ForceRefreshAuthorityByConfigId",
+    "GetActivityOpenAndCloseTimeByScheduleId",
+    "GetAranaraCollectableCountByTypeAndState",
+    "GetAvatarEntityIdByUid",
+    "GetChainLevel",
+    "GetContextGroupId",
+    "GetCurTriggerCount",
+    "GetCurrentLevelTagVec",
+    "GetDeathZoneStatus",
+    "GetEntityIdByConfigId",
+    "GetEntityType",
+    "GetExhibitionReplaceableData",
+    "GetGadgetAbilityFloatValue",
+    "GetGadgetConfigId",
+    "GetGadgetIdByEntityId",
+    "GetGadgetStateByConfigId",
+    "GetGameHour",
+    "GetGameTimePassed",
+    "GetGroupAliveMonsterList",
+    "GetGroupLogicStateValue",
+    "GetGroupMonsterCount",
+    "GetGroupMonsterCountByGroupId",
+    "GetGroupSuite",
+    "GetGroupTempValue",
+    "GetGroupVariableValue",
+    "GetGroupVariableValueByGroup",
+    "GetHostQuestState",
+    "GetLevelTagNameById",
+    "GetOfferingLevel",
+    "GetOpeningDungeonListByRosterId",
+    "GetPlatformArrayInfoByPointId",
+    "GetPlatformPointArray",
+    "GetPosByEntityId",
+    "GetQuestState",
+    "GetRegionConfigId",
+    "GetRegionEntityCount",
+    "GetRotationByEntityId",
+    "GetSceneOwnerUid",
+    "GetSceneUidList",
+    "GetServerTime",
+    "GetServerTimeByWeek",
+    "GetTeamServerGlobalValue",
+    "GetUidByTeamEntityId",
+    "GoToFlowSuite",
+    "GoToGroupSuite",
+    "InitTimeAxis",
+    "IsChallengeStartedByChallengeId",
+    "IsInRegion",
+    "IsPlayerAllAvatarDie",
+    "IsPlayerTransmittable",
+    "KillEntityByConfigId",
+    "KillExtraGroupSuite",
+    "KillGroupEntity",
+    "KillMonsterTide",
+    "LockMonsterHp",
+    "MarkGroupLuaAction",
+    "MarkPlayerAction",
+    "ModifyFatherChallengeProperty",
+    "MoveAvatarByPointArray",
+    "PauseTimeAxis",
+    "PlayCutScene",
+    "PlayCutSceneWithParam",
+    "PrintContextLog",
+    "PrintGroupWarning",
+    "PrintLog",
+    "RecieveAllAranaraCollectionByType",
+    "RefreshGroup",
+    "RemoveEntityByConfigId",
+    "RemoveExtraFlowSuite",
+    "RemoveExtraGroupSuite",
+    "RevertPlayerRegionVision",
+    "ScenePlaySound",
+    "SendServerMessageByLuaKey",
+    "SetChainLevel",
+    "SetChallengeDuration",
+    "SetEntityServerGlobalValueByConfigId",
+    "SetEnvironmentEffectState",
+    "SetFlowSuite",
+    "SetGadgetEnableInteract",
+    "SetGadgetHp",
+    "SetGadgetStateByConfigId",
+    "SetGadgetTalkByConfigId",
+    "SetGroupDead",
+    "SetGroupGadgetStateByConfigId",
+    "SetGroupLogicStateValue",
+    "SetGroupReplaceable",
+    "SetGroupTempValue",
+    "SetGroupVariableValue",
+    "SetGroupVariableValueByGroup",
+    "SetHandballGalleryBallPosAndRot",
+    "SetLimitOptimization",
+    "SetMonsterBattleByGroup",
+    "SetMonsterHp",
+    "SetPlatformPointArray",
+    "SetPlatformRouteId",
+    "SetPlayerEyePoint",
+    "SetPlayerEyePointStream",
+    "SetPlayerGroupVisionType",
+    "SetPlayerStartGallery",
+    "SetTeamServerGlobalValue",
+    "SetWeatherAreaState",
+    "SetWorktopOptions",
+    "SetWorktopOptionsByGroupId",
+    "ShowReminder",
+    "ShowReminderByUid",
+    "ShowReminderRadius",
+    "SkipTeyvatTime",
+    "StartChallenge",
+    "StartFatherChallenge",
+    "StartGallery",
+    "StartPlatform",
+    "StartSealBattle",
+    "StopChallenge",
+    "StopGallery",
+    "StopPlatform",
+    "SwitchSceneEnvAnimal",
+    "TransPlayerToPos",
+    "TryReallocateEntityAuthority",
+    "TrySetPlayerEyePoint",
+    "UnfreezeGroupLimit",
+    "UnlockForce",
+    "UnlockMonsterHp",
+    "UnlockScenePoint"
+  ],
+  "limitations": [
+    "No Lua function, trigger/action or ScriptLib is executed",
+    "Call syntax is not execution or runtime reachability; no alias/local shadow resolution",
+    "No indirect _G/rawget/metatable/eval resolution; zero observed direct boundaries does not close these paths",
+    "Static require graph is a provenance candidate; conditional/function require reachability remains open",
+    "Parent direct bytecode scan sees adjacent global references only, not all dynamic or aliased calls",
+    "Group/site provenance intersects compiled member names, not per-site bytecode locations",
+    "Near names alone are not implementation candidates; existing wrappers are not CN72 contract evidence",
+    "Only listed reviewed business sources; absence there is not proof of absence in all plugins/services"
+  ],
+  "missingMembers": [
+    {
+      "businessCandidateCount": 1,
+      "callSyntaxSites": 1,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "AddChallengeDuration",
+      "sites": 1,
+      "staticGroups": 12
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 22,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "AddEntityGlobalFloatValueByConfigId",
+      "sites": 22,
+      "staticGroups": 12
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 2,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "AddExhibitionAccumulableData",
+      "sites": 2,
+      "staticGroups": 1
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 1,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "AddExhibitionReplaceableData",
+      "sites": 1,
+      "staticGroups": 12
+    },
+    {
+      "businessCandidateCount": 1,
+      "callSyntaxSites": 139,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "AddExtraFlowSuite",
+      "sites": 139,
+      "staticGroups": 79
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 1,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "BeginCameraSceneLookWithTemplate",
+      "sites": 1,
+      "staticGroups": 1
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 6,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "ChangeDeathZone",
+      "sites": 6,
+      "staticGroups": 35
+    },
+    {
+      "businessCandidateCount": 1,
+      "callSyntaxSites": 9,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "ChangeGroupTempValue",
+      "sites": 9,
+      "staticGroups": 31
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 1,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "ClearExhibitionReplaceableData",
+      "sites": 1,
+      "staticGroups": 12
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 1,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "ContinueTimeAxis",
+      "sites": 1,
+      "staticGroups": 5
+    },
+    {
+      "businessCandidateCount": 1,
+      "callSyntaxSites": 14,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "CreateGadgetByConfigIdByPos",
+      "sites": 14,
+      "staticGroups": 100
+    },
+    {
+      "businessCandidateCount": 1,
+      "callSyntaxSites": 3,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "CreateGadgetByParamTable",
+      "sites": 3,
+      "staticGroups": 14
+    },
+    {
+      "businessCandidateCount": 1,
+      "callSyntaxSites": 1,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "CreateGroupVariable",
+      "sites": 1,
+      "staticGroups": 1
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 2,
+      "implementationStatus": "registered-wrapper-present-contract-unverified",
+      "member": "ExecuteActiveGroupLua",
+      "sites": 2,
+      "staticGroups": 1
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 12,
+      "implementationStatus": "registered-wrapper-present-contract-unverified",
+      "member": "ExecuteGroupLua",
+      "sites": 12,
+      "staticGroups": 90
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 5,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "ForbidPlayerRegionVision",
+      "sites": 5,
+      "staticGroups": 20
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 1,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "GetAranaraCollectableCountByTypeAndState",
+      "sites": 1,
+      "staticGroups": 1
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 14,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "GetChainLevel",
+      "sites": 14,
+      "staticGroups": 182
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 2,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "GetCurrentLevelTagVec",
+      "sites": 2,
+      "staticGroups": 4
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 131,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "GetDeathZoneStatus",
+      "sites": 131,
+      "staticGroups": 307
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 3,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "GetExhibitionReplaceableData",
+      "sites": 3,
+      "staticGroups": 13
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 9,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "GetGadgetAbilityFloatValue",
+      "sites": 9,
+      "staticGroups": 21
+    },
+    {
+      "businessCandidateCount": 1,
+      "callSyntaxSites": 54,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "GetGadgetConfigId",
+      "sites": 54,
+      "staticGroups": 413
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 1,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "GetGameTimePassed",
+      "sites": 1,
+      "staticGroups": 1
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 2,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "GetGroupAliveMonsterList",
+      "sites": 2,
+      "staticGroups": 35
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 8,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "GetGroupLogicStateValue",
+      "sites": 8,
+      "staticGroups": 8
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 1,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "GetLevelTagNameById",
+      "sites": 1,
+      "staticGroups": 3
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 1,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "GetOfferingLevel",
+      "sites": 1,
+      "staticGroups": 1
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 3,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "GetPlatformArrayInfoByPointId",
+      "sites": 3,
+      "staticGroups": 89
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 1,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "GetPlatformPointArray",
+      "sites": 1,
+      "staticGroups": 16
+    },
+    {
+      "businessCandidateCount": 1,
+      "callSyntaxSites": 42,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "GetSceneOwnerUid",
+      "sites": 42,
+      "staticGroups": 317
+    },
+    {
+      "businessCandidateCount": 1,
+      "callSyntaxSites": 247,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "GoToFlowSuite",
+      "sites": 247,
+      "staticGroups": 149
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 4,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "IsChallengeStartedByChallengeId",
+      "sites": 4,
+      "staticGroups": 6
+    },
+    {
+      "businessCandidateCount": 1,
+      "callSyntaxSites": 6,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "IsInRegion",
+      "sites": 6,
+      "staticGroups": 11
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 1,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "IsPlayerTransmittable",
+      "sites": 1,
+      "staticGroups": 12
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 3,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "LockMonsterHp",
+      "sites": 3,
+      "staticGroups": 2
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 6,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "MarkGroupLuaAction",
+      "sites": 6,
+      "staticGroups": 138
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 1,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "PauseTimeAxis",
+      "sites": 1,
+      "staticGroups": 5
+    },
+    {
+      "businessCandidateCount": 1,
+      "callSyntaxSites": 19,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "PrintGroupWarning",
+      "sites": 19,
+      "staticGroups": 126
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 1,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "RecieveAllAranaraCollectionByType",
+      "sites": 1,
+      "staticGroups": 1
+    },
+    {
+      "businessCandidateCount": 1,
+      "callSyntaxSites": 20,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "RemoveExtraFlowSuite",
+      "sites": 20,
+      "staticGroups": 20
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 5,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "RevertPlayerRegionVision",
+      "sites": 5,
+      "staticGroups": 20
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 6,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "SetChainLevel",
+      "sites": 6,
+      "staticGroups": 8
+    },
+    {
+      "businessCandidateCount": 1,
+      "callSyntaxSites": 1,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "SetChallengeDuration",
+      "sites": 1,
+      "staticGroups": 12
+    },
+    {
+      "businessCandidateCount": 1,
+      "callSyntaxSites": 175,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "SetFlowSuite",
+      "sites": 175,
+      "staticGroups": 126
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 7,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "SetGadgetHp",
+      "sites": 7,
+      "staticGroups": 4
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 5,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "SetGadgetTalkByConfigId",
+      "sites": 5,
+      "staticGroups": 2
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 242,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "SetGroupDead",
+      "sites": 242,
+      "staticGroups": 242
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 82,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "SetGroupLogicStateValue",
+      "sites": 82,
+      "staticGroups": 314
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 4,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "SetLimitOptimization",
+      "sites": 4,
+      "staticGroups": 7
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 8,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "SetMonsterHp",
+      "sites": 8,
+      "staticGroups": 3
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 6,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "SetPlayerEyePoint",
+      "sites": 6,
+      "staticGroups": 16
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 4,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "SetPlayerEyePointStream",
+      "sites": 4,
+      "staticGroups": 7
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 13,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "SetPlayerGroupVisionType",
+      "sites": 13,
+      "staticGroups": 31
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 2,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "SetPlayerStartGallery",
+      "sites": 2,
+      "staticGroups": 9
+    },
+    {
+      "businessCandidateCount": 1,
+      "callSyntaxSites": 4,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "ShowReminderByUid",
+      "sites": 4,
+      "staticGroups": 111
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 2,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "SkipTeyvatTime",
+      "sites": 2,
+      "staticGroups": 13
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 1,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "StartChallenge",
+      "sites": 1,
+      "staticGroups": 1
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 6,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "SwitchSceneEnvAnimal",
+      "sites": 6,
+      "staticGroups": 8
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 10,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "TrySetPlayerEyePoint",
+      "sites": 10,
+      "staticGroups": 10
+    },
+    {
+      "businessCandidateCount": 0,
+      "callSyntaxSites": 2,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "UnlockMonsterHp",
+      "sites": 2,
+      "staticGroups": 1
+    },
+    {
+      "businessCandidateCount": 1,
+      "callSyntaxSites": 4,
+      "implementationStatus": "not-found-in-reviewed-public-and-registered-surface",
+      "member": "UnlockScenePoint",
+      "sites": 4,
+      "staticGroups": 3
+    }
+  ],
+  "parentReportSHA256": "c88375db6075a8a5c78401f79b8eb4f0a40fa85f8009fd4f99dafea74a5969a0",
+  "parentSummarySHA256": "55075474ef471da55078d5f9acdae1096c587b83023c8cd47158c53c6e8398fe",
+  "publicNameReconciliation": {
+    "parentMissingNowPublic": [],
+    "sourceMissingWithoutParent": []
+  },
+  "reconciliationCounts": {
+    "groups": 0,
+    "unresolvedRequires": 0
+  },
+  "registeredSurface": {
+    "AddScenePlayBattleProgress": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/ScenePlayBattleLua.java",
+        "line": 17,
+        "logsUnimplemented": false,
+        "lookupEvidence": {
+          "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+          "line": 133,
+          "logsUnimplemented": false,
+          "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+          "name": "get",
+          "owner": "ScriptLibUserdata",
+          "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+        },
+        "methodSHA256": "f8e88a6e646b926feb438419f1236bcb56eb793c3e31a13d0148ad18d306816a",
+        "name": "functions",
+        "owner": "ScenePlayBattleLua",
+        "registration": "reviewed literal registry -> userdata sceneBattleFunctions",
+        "runtimeStatus": "not-executed",
+        "signature": "static Map<String, LuaValue> functions()"
+      }
+    ],
+    "AddTeamEntityGlobalFloatValue": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+        "line": 133,
+        "logsUnimplemented": false,
+        "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+        "name": "get",
+        "owner": "ScriptLibUserdata",
+        "registration": "explicit userdata get switch",
+        "runtimeStatus": "not-executed",
+        "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+      }
+    ],
+    "AddTeamServerGlobalValue": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+        "line": 133,
+        "logsUnimplemented": false,
+        "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+        "name": "get",
+        "owner": "ScriptLibUserdata",
+        "registration": "explicit userdata get switch",
+        "runtimeStatus": "not-executed",
+        "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+      }
+    ],
+    "AutoMonsterTide": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/MonsterTideLua.java",
+        "line": 14,
+        "logsUnimplemented": false,
+        "lookupEvidence": {
+          "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+          "line": 133,
+          "logsUnimplemented": false,
+          "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+          "name": "get",
+          "owner": "ScriptLibUserdata",
+          "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+        },
+        "methodSHA256": "98a7a7d9eecd511aaa8ea17f7e98477d90272408d9693842729ec529a282a37b",
+        "name": "functions",
+        "owner": "MonsterTideLua",
+        "registration": "reviewed literal registry -> userdata tideFunctions",
+        "runtimeStatus": "not-executed",
+        "signature": "static Map<String, LuaValue> functions()"
+      }
+    ],
+    "CancelGroupTimerEvent": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/GroupTimerLua.java",
+        "line": 14,
+        "logsUnimplemented": false,
+        "lookupEvidence": {
+          "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+          "line": 133,
+          "logsUnimplemented": false,
+          "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+          "name": "get",
+          "owner": "ScriptLibUserdata",
+          "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+        },
+        "methodSHA256": "509dedd7b00f0b0f39b4f0cc37b7ed49aa1458239d44dcf5a4dc88f377ac21fc",
+        "name": "functions",
+        "owner": "GroupTimerLua",
+        "registration": "reviewed literal registry -> userdata timerFunctions",
+        "runtimeStatus": "not-executed",
+        "signature": "static Map<String, LuaValue> functions()"
+      }
+    ],
+    "ContinueAutoMonster": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/MonsterTideLua.java",
+        "line": 14,
+        "logsUnimplemented": false,
+        "lookupEvidence": {
+          "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+          "line": 133,
+          "logsUnimplemented": false,
+          "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+          "name": "get",
+          "owner": "ScriptLibUserdata",
+          "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+        },
+        "methodSHA256": "98a7a7d9eecd511aaa8ea17f7e98477d90272408d9693842729ec529a282a37b",
+        "name": "functions",
+        "owner": "MonsterTideLua",
+        "registration": "reviewed literal registry -> userdata tideFunctions",
+        "runtimeStatus": "not-executed",
+        "signature": "static Map<String, LuaValue> functions()"
+      }
+    ],
+    "CreateGroupTimerEvent": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/GroupTimerLua.java",
+        "line": 14,
+        "logsUnimplemented": false,
+        "lookupEvidence": {
+          "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+          "line": 133,
+          "logsUnimplemented": false,
+          "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+          "name": "get",
+          "owner": "ScriptLibUserdata",
+          "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+        },
+        "methodSHA256": "509dedd7b00f0b0f39b4f0cc37b7ed49aa1458239d44dcf5a4dc88f377ac21fc",
+        "name": "functions",
+        "owner": "GroupTimerLua",
+        "registration": "reviewed literal registry -> userdata timerFunctions",
+        "runtimeStatus": "not-executed",
+        "signature": "static Map<String, LuaValue> functions()"
+      }
+    ],
+    "CreateScenePlayGeneralRewardGadget": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+        "line": 133,
+        "logsUnimplemented": false,
+        "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+        "name": "get",
+        "owner": "ScriptLibUserdata",
+        "registration": "explicit userdata get switch",
+        "runtimeStatus": "not-executed",
+        "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+      }
+    ],
+    "EndMonsterTide": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/MonsterTideLua.java",
+        "line": 14,
+        "logsUnimplemented": false,
+        "lookupEvidence": {
+          "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+          "line": 133,
+          "logsUnimplemented": false,
+          "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+          "name": "get",
+          "owner": "ScriptLibUserdata",
+          "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+        },
+        "methodSHA256": "98a7a7d9eecd511aaa8ea17f7e98477d90272408d9693842729ec529a282a37b",
+        "name": "functions",
+        "owner": "MonsterTideLua",
+        "registration": "reviewed literal registry -> userdata tideFunctions",
+        "runtimeStatus": "not-executed",
+        "signature": "static Map<String, LuaValue> functions()"
+      }
+    ],
+    "ExecuteActiveGroupLua": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/GroupLuaCall.java",
+        "line": 15,
+        "logsUnimplemented": false,
+        "lookupEvidence": {
+          "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+          "line": 133,
+          "logsUnimplemented": false,
+          "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+          "name": "get",
+          "owner": "ScriptLibUserdata",
+          "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+        },
+        "methodSHA256": "73e0e3a36db9137f571ae23802ba06fdceab3fbe9bed4670b5ddfb3390354314",
+        "name": "functions",
+        "owner": "GroupLuaCall",
+        "registration": "reviewed literal registry -> userdata groupFunctions",
+        "runtimeStatus": "not-executed",
+        "signature": "static Map<String, LuaValue> functions()"
+      }
+    ],
+    "ExecuteGroupLua": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/GroupLuaCall.java",
+        "line": 15,
+        "logsUnimplemented": false,
+        "lookupEvidence": {
+          "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+          "line": 133,
+          "logsUnimplemented": false,
+          "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+          "name": "get",
+          "owner": "ScriptLibUserdata",
+          "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+        },
+        "methodSHA256": "73e0e3a36db9137f571ae23802ba06fdceab3fbe9bed4670b5ddfb3390354314",
+        "name": "functions",
+        "owner": "GroupLuaCall",
+        "registration": "reviewed literal registry -> userdata groupFunctions",
+        "runtimeStatus": "not-executed",
+        "signature": "static Map<String, LuaValue> functions()"
+      }
+    ],
+    "GetScenePlayBattleHostUid": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/ScenePlayBattleLua.java",
+        "line": 17,
+        "logsUnimplemented": false,
+        "lookupEvidence": {
+          "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+          "line": 133,
+          "logsUnimplemented": false,
+          "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+          "name": "get",
+          "owner": "ScriptLibUserdata",
+          "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+        },
+        "methodSHA256": "f8e88a6e646b926feb438419f1236bcb56eb793c3e31a13d0148ad18d306816a",
+        "name": "functions",
+        "owner": "ScenePlayBattleLua",
+        "registration": "reviewed literal registry -> userdata sceneBattleFunctions",
+        "runtimeStatus": "not-executed",
+        "signature": "static Map<String, LuaValue> functions()"
+      }
+    ],
+    "GetScenePlayBattleType": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/ScenePlayBattleLua.java",
+        "line": 17,
+        "logsUnimplemented": false,
+        "lookupEvidence": {
+          "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+          "line": 133,
+          "logsUnimplemented": false,
+          "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+          "name": "get",
+          "owner": "ScriptLibUserdata",
+          "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+        },
+        "methodSHA256": "f8e88a6e646b926feb438419f1236bcb56eb793c3e31a13d0148ad18d306816a",
+        "name": "functions",
+        "owner": "ScenePlayBattleLua",
+        "registration": "reviewed literal registry -> userdata sceneBattleFunctions",
+        "runtimeStatus": "not-executed",
+        "signature": "static Map<String, LuaValue> functions()"
+      }
+    ],
+    "GetScenePlayBattleUidValue": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/ScenePlayBattleLua.java",
+        "line": 17,
+        "logsUnimplemented": false,
+        "lookupEvidence": {
+          "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+          "line": 133,
+          "logsUnimplemented": false,
+          "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+          "name": "get",
+          "owner": "ScriptLibUserdata",
+          "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+        },
+        "methodSHA256": "f8e88a6e646b926feb438419f1236bcb56eb793c3e31a13d0148ad18d306816a",
+        "name": "functions",
+        "owner": "ScenePlayBattleLua",
+        "registration": "reviewed literal registry -> userdata sceneBattleFunctions",
+        "runtimeStatus": "not-executed",
+        "signature": "static Map<String, LuaValue> functions()"
+      }
+    ],
+    "GetTeamServerGlobalValue": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+        "line": 133,
+        "logsUnimplemented": false,
+        "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+        "name": "get",
+        "owner": "ScriptLibUserdata",
+        "registration": "explicit userdata get switch",
+        "runtimeStatus": "not-executed",
+        "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+      }
+    ],
+    "InitTimeAxis": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+        "line": 133,
+        "logsUnimplemented": false,
+        "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+        "name": "get",
+        "owner": "ScriptLibUserdata",
+        "registration": "explicit userdata get switch",
+        "runtimeStatus": "not-executed",
+        "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+      }
+    ],
+    "KillMonsterTide": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/MonsterTideLua.java",
+        "line": 14,
+        "logsUnimplemented": false,
+        "lookupEvidence": {
+          "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+          "line": 133,
+          "logsUnimplemented": false,
+          "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+          "name": "get",
+          "owner": "ScriptLibUserdata",
+          "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+        },
+        "methodSHA256": "98a7a7d9eecd511aaa8ea17f7e98477d90272408d9693842729ec529a282a37b",
+        "name": "functions",
+        "owner": "MonsterTideLua",
+        "registration": "reviewed literal registry -> userdata tideFunctions",
+        "runtimeStatus": "not-executed",
+        "signature": "static Map<String, LuaValue> functions()"
+      }
+    ],
+    "PauseAutoMonsterTide": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/MonsterTideLua.java",
+        "line": 14,
+        "logsUnimplemented": false,
+        "lookupEvidence": {
+          "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+          "line": 133,
+          "logsUnimplemented": false,
+          "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+          "name": "get",
+          "owner": "ScriptLibUserdata",
+          "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+        },
+        "methodSHA256": "98a7a7d9eecd511aaa8ea17f7e98477d90272408d9693842729ec529a282a37b",
+        "name": "functions",
+        "owner": "MonsterTideLua",
+        "registration": "reviewed literal registry -> userdata tideFunctions",
+        "runtimeStatus": "not-executed",
+        "signature": "static Map<String, LuaValue> functions()"
+      }
+    ],
+    "PrestartScenePlayBattle": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/ScenePlayBattleLua.java",
+        "line": 17,
+        "logsUnimplemented": false,
+        "lookupEvidence": {
+          "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+          "line": 133,
+          "logsUnimplemented": false,
+          "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+          "name": "get",
+          "owner": "ScriptLibUserdata",
+          "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+        },
+        "methodSHA256": "f8e88a6e646b926feb438419f1236bcb56eb793c3e31a13d0148ad18d306816a",
+        "name": "functions",
+        "owner": "ScenePlayBattleLua",
+        "registration": "reviewed literal registry -> userdata sceneBattleFunctions",
+        "runtimeStatus": "not-executed",
+        "signature": "static Map<String, LuaValue> functions()"
+      }
+    ],
+    "PrintLog": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+        "line": 133,
+        "logsUnimplemented": false,
+        "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+        "name": "get",
+        "owner": "ScriptLibUserdata",
+        "registration": "explicit userdata get switch",
+        "runtimeStatus": "not-executed",
+        "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+      }
+    ],
+    "ScenePlayBattleUidOp": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/ScenePlayBattleLua.java",
+        "line": 17,
+        "logsUnimplemented": false,
+        "lookupEvidence": {
+          "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+          "line": 133,
+          "logsUnimplemented": false,
+          "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+          "name": "get",
+          "owner": "ScriptLibUserdata",
+          "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+        },
+        "methodSHA256": "f8e88a6e646b926feb438419f1236bcb56eb793c3e31a13d0148ad18d306816a",
+        "name": "functions",
+        "owner": "ScenePlayBattleLua",
+        "registration": "reviewed literal registry -> userdata sceneBattleFunctions",
+        "runtimeStatus": "not-executed",
+        "signature": "static Map<String, LuaValue> functions()"
+      }
+    ],
+    "SetScenePlayBattlePlayTeamEntityGadgetId": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/ScenePlayBattleLua.java",
+        "line": 17,
+        "logsUnimplemented": false,
+        "lookupEvidence": {
+          "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+          "line": 133,
+          "logsUnimplemented": false,
+          "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+          "name": "get",
+          "owner": "ScriptLibUserdata",
+          "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+        },
+        "methodSHA256": "f8e88a6e646b926feb438419f1236bcb56eb793c3e31a13d0148ad18d306816a",
+        "name": "functions",
+        "owner": "ScenePlayBattleLua",
+        "registration": "reviewed literal registry -> userdata sceneBattleFunctions",
+        "runtimeStatus": "not-executed",
+        "signature": "static Map<String, LuaValue> functions()"
+      }
+    ],
+    "SetScenePlayBattleUidValue": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/ScenePlayBattleLua.java",
+        "line": 17,
+        "logsUnimplemented": false,
+        "lookupEvidence": {
+          "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+          "line": 133,
+          "logsUnimplemented": false,
+          "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+          "name": "get",
+          "owner": "ScriptLibUserdata",
+          "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+        },
+        "methodSHA256": "f8e88a6e646b926feb438419f1236bcb56eb793c3e31a13d0148ad18d306816a",
+        "name": "functions",
+        "owner": "ScenePlayBattleLua",
+        "registration": "reviewed literal registry -> userdata sceneBattleFunctions",
+        "runtimeStatus": "not-executed",
+        "signature": "static Map<String, LuaValue> functions()"
+      }
+    ],
+    "SetTeamEntityGlobalFloatValue": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+        "line": 133,
+        "logsUnimplemented": false,
+        "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+        "name": "get",
+        "owner": "ScriptLibUserdata",
+        "registration": "explicit userdata get switch",
+        "runtimeStatus": "not-executed",
+        "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+      }
+    ],
+    "SetTeamServerGlobalValue": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+        "line": 133,
+        "logsUnimplemented": false,
+        "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+        "name": "get",
+        "owner": "ScriptLibUserdata",
+        "registration": "explicit userdata get switch",
+        "runtimeStatus": "not-executed",
+        "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+      }
+    ],
+    "ShowTemplateReminder": [
+      {
+        "file": "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java",
+        "line": 133,
+        "logsUnimplemented": false,
+        "methodSHA256": "1ed569205caf7bc3a9e3e9370400e2d83c4e2a72cafdf0bf28add0b1996c9921",
+        "name": "get",
+        "owner": "ScriptLibUserdata",
+        "registration": "explicit userdata get switch",
+        "runtimeStatus": "not-executed",
+        "signature": "@Override\r\npublic LuaValue get(LuaValue key)"
+      }
+    ]
+  },
+  "resourceReady": false,
+  "reviewedSources": {
+    "src/main/java/emu/grasscutter/game/dungeons/challenge/WorldChallenge.java": "507f3bb0fdfd140e980084ce50b7da57a4f5dce2ea1e56f13302a45b4dd3528b",
+    "src/main/java/emu/grasscutter/game/dungeons/challenge/trigger/KillMonsterTimeIncTrigger.java": "8edfb1a533fa02e243d1c846bc36962a614ecbfe068ecab6779a3978b183f908",
+    "src/main/java/emu/grasscutter/game/entity/GameEntity.java": "91f3fe982ea91b6028106866d5e616b3968693f113792c096eaa61398140ba56",
+    "src/main/java/emu/grasscutter/game/player/Player.java": "f080a4f521ebeb0467bcb09b84e993a68d147140046cea0e00898f5d9eee0b91",
+    "src/main/java/emu/grasscutter/game/player/PlayerProgressManager.java": "1b8a66ff0b8ab4827ba3b8149d3edd64ad47aa305ac4a02bc51748f587208960",
+    "src/main/java/emu/grasscutter/game/world/Scene.java": "100d28f74ea1fe5291458d0ec0a4f898fa10cd7551fade2b95b8e6b6f4adcc35",
+    "src/main/java/emu/grasscutter/game/world/World.java": "3fe1b04b3c2681dd96a5206a60a0035952de827cf69a5dd6c7f0ff5e44768147",
+    "src/main/java/emu/grasscutter/scripts/GroupLuaCall.java": "ab0d0f59ba44ed4ca76e80a7e09e1dec2e43457ea7cf28d0978e6419c29be1d8",
+    "src/main/java/emu/grasscutter/scripts/GroupTimerLua.java": "5fbc7ab94fc36d1c64646ded091f897b4f2a43b04c902d966696dd8df82a9b57",
+    "src/main/java/emu/grasscutter/scripts/MonsterTideLua.java": "c2def0a3229ed951c66e7ec06769fe4671e6dff9cd7507069686a54f58ad4ee1",
+    "src/main/java/emu/grasscutter/scripts/ScenePlayBattleLua.java": "035b10c07d610d5fcdec9a48e9dddc319f7d75e8ae8e483a80c7cdfba0144b34",
+    "src/main/java/emu/grasscutter/scripts/ScenePlayRewardLua.java": "a62dcd288cdd0ab7e25c1a9ab5e6a9aa3b547fb25dcc5ed4a96e558996479301",
+    "src/main/java/emu/grasscutter/scripts/SceneScriptManager.java": "e6c707e1eab5d439e6762a25a0591a2c798125d1e95cb3091a72127929b8b89e",
+    "src/main/java/emu/grasscutter/scripts/SceneTimeAxis.java": "16c3f73598a9566e6d96436dd8063ff45c4a864c7f8ad94076badaf980d6d9ba",
+    "src/main/java/emu/grasscutter/scripts/ScriptLib.java": "d5d5a2f74227ed26a01b9dde816b9dd63919ab17726fe015963fc8daf46baee1",
+    "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java": "691ac41d63b2fcca6833c989293d7f4df7ddd98261d21162badd90e3c1b102b5",
+    "src/main/java/emu/grasscutter/scripts/ScriptLoader.java": "ff7a09590df7038fa1c9ab48f347ebe8f0845bc67360d967844908b715324cc1",
+    "src/main/java/emu/grasscutter/scripts/TemplateReminderLua.java": "fba2ad78f57dcecf1d16332e80576cdc9a2843a9cb2f63bfaaa0f7e57a97140d",
+    "src/main/java/emu/grasscutter/scripts/data/SceneRegion.java": "d7068474765905a4e1a6cb1c52ee560b49fcd11524315dc69ce2f641e334e8f0"
+  },
+  "runtimeStatus": "not-executed",
+  "schemaVersion": 1,
+  "scope": "fixed legacy scene3 lexical API sites, parent compiled-name reconciliation and reviewed Java declarations only",
+  "sourceTextEncoding": "UTF-8, replacing invalid sequences as parent Java reader; exact original line bytes separately base64 encoded",
+  "toolSourceSHA256": {
+    "tools/Client72SceneApiSurface.java": "552ce874cf7f07bfa07ba73baf86edcd870469fc759990b201fcc2d3508e4a43",
+    "tools/audit_scene_script_api72.py": "d9abcdb74435df6b35afac227c0291cb329979c55a2881d59c5d806b278092d7"
+  }
+}
