@@ -192,7 +192,7 @@
     "dynamicWithMissingMembers": 0,
     "static": 13616,
     "staticEvaluated": 13616,
-    "staticWithMissingMembers": 1503
+    "staticWithMissingMembers": 1502
   },
   "inputBlobs": [
     {
@@ -258,7 +258,6 @@
     "GetOfferingLevel",
     "GetPlatformArrayInfoByPointId",
     "GetPlatformPointArray",
-    "GetSceneOwnerUid",
     "GoToFlowSuite",
     "IsChallengeStartedByChallengeId",
     "IsInRegion",
@@ -293,11 +292,11 @@
   ],
   "requireMode": "inline",
   "resourceReady": false,
-  "runtimeJarSHA256": "3a05ca88115f93a46bbb0ca334f54241f560a291fbb5b05fa2d42bb0f87aa522",
+  "runtimeJarSHA256": "2566f46604df80ddaad05801fb182a7217b9d057a2c8619e21fc54e49db083fe",
   "runtimeStatus": "not-tested",
   "schemaVersion": 1,
   "scope": "legacy all-scene3 non-dynamic grid-input LuaJ declaration evaluation and selected target IDs only",
-  "scriptLibSourceSHA256": "d5d5a2f74227ed26a01b9dde816b9dd63919ab17726fe015963fc8daf46baee1",
+  "scriptLibSourceSHA256": "3b554d175c4028e0d30bc4727035f5f04d44f76a3d88b562b0d03227b4cfcdf2",
   "selectedBlocks": [
     3001,
     3002,

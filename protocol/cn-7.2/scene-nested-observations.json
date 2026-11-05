@@ -1,0 +1,3335 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "declarations": {
+    "bindings": [
+      {
+        "typeIndex": 25866,
+        "usageRow": 702419,
+        "sourceIndex": 177918,
+        "cell": "0x145898760",
+        "type": {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0x650a",
+          "byRef": false,
+          "typeDefinition": 25866,
+          "name": "ABJMLEPLFJG",
+          "namespace": ""
+        },
+        "fields": [
+          {
+            "index": 127022,
+            "name": "CCPNEAHIIMG",
+            "nameIndex": "0xb335fec",
+            "typeIndex": 481907,
+            "type": {
+              "kind": "genericinst",
+              "attributes": "0x21",
+              "data": "0x7346",
+              "byRef": false,
+              "genericIndex": 29510,
+              "instanceIndex": 11,
+              "arguments": [
+                {
+                  "kind": "uint32",
+                  "attributes": "0x0",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              ],
+              "typeDefinition": 35584,
+              "name": "DKHEEHDOEIK",
+              "namespace": ""
+            },
+            "offset": 24,
+            "rawOffset": "0x18",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 127023,
+            "name": "CMLLGFDGONC",
+            "nameIndex": "0xb335ff7",
+            "typeIndex": 481907,
+            "type": {
+              "kind": "genericinst",
+              "attributes": "0x21",
+              "data": "0x7346",
+              "byRef": false,
+              "genericIndex": 29510,
+              "instanceIndex": 11,
+              "arguments": [
+                {
+                  "kind": "uint32",
+                  "attributes": "0x0",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              ],
+              "typeDefinition": 35584,
+              "name": "DKHEEHDOEIK",
+              "namespace": ""
+            },
+            "offset": 32,
+            "rawOffset": "0x20",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 127024,
+            "name": "JOHODEGOLBH",
+            "nameIndex": "0xb336002",
+            "typeIndex": 481907,
+            "type": {
+              "kind": "genericinst",
+              "attributes": "0x21",
+              "data": "0x7346",
+              "byRef": false,
+              "genericIndex": 29510,
+              "instanceIndex": 11,
+              "arguments": [
+                {
+                  "kind": "uint32",
+                  "attributes": "0x0",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              ],
+              "typeDefinition": 35584,
+              "name": "DKHEEHDOEIK",
+              "namespace": ""
+            },
+            "offset": 40,
+            "rawOffset": "0x28",
+            "offsetKind": "instance"
+          }
+        ],
+        "methods": [
+          {
+            "index": 200790,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x14bcf8bd0",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 200795,
+            "name": "MOMMACBEMEK",
+            "nameIndex": "0xb187c99",
+            "registeredAddress": "0x14bcf8cf0",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 19
+          },
+          {
+            "index": 200793,
+            "name": "CAIINKNGKDM",
+            "nameIndex": "0xb187cd0",
+            "registeredAddress": "0x14bcf8b20",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 17
+          }
+        ]
+      },
+      {
+        "typeIndex": 66040,
+        "usageRow": 705266,
+        "sourceIndex": 359110,
+        "cell": "0x1458a8c18",
+        "type": {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0x101f8",
+          "byRef": false,
+          "typeDefinition": 66040,
+          "name": "NAECHMKLBEI",
+          "namespace": ""
+        },
+        "fields": [
+          {
+            "index": 326198,
+            "name": "IDEBKCPKHLE",
+            "nameIndex": "0xb485007",
+            "typeIndex": 444106,
+            "type": {
+              "kind": "bool",
+              "attributes": "0x1",
+              "data": "0xae",
+              "byRef": false
+            },
+            "offset": 24,
+            "rawOffset": "0x18",
+            "offsetKind": "instance"
+          }
+        ],
+        "methods": [
+          {
+            "index": 546781,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x153f9fb20",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 546787,
+            "name": "MOMMACBEMEK",
+            "nameIndex": "0xb187c99",
+            "registeredAddress": "0x153f9fa70",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 19
+          },
+          {
+            "index": 546784,
+            "name": "CAIINKNGKDM",
+            "nameIndex": "0xb187cd0",
+            "registeredAddress": "0x153f9f920",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 17
+          }
+        ]
+      },
+      {
+        "typeIndex": 67761,
+        "usageRow": 705267,
+        "sourceIndex": 364259,
+        "cell": "0x1458a8c20",
+        "type": {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0x108b1",
+          "byRef": false,
+          "typeDefinition": 67761,
+          "name": "HKDMELCIJGB",
+          "namespace": ""
+        },
+        "fields": [
+          {
+            "index": 334588,
+            "name": "KIGPDCAEFBG",
+            "nameIndex": "0xb745f72",
+            "typeIndex": 481907,
+            "type": {
+              "kind": "genericinst",
+              "attributes": "0x21",
+              "data": "0x7346",
+              "byRef": false,
+              "genericIndex": 29510,
+              "instanceIndex": 11,
+              "arguments": [
+                {
+                  "kind": "uint32",
+                  "attributes": "0x0",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              ],
+              "typeDefinition": 35584,
+              "name": "DKHEEHDOEIK",
+              "namespace": ""
+            },
+            "offset": 24,
+            "rawOffset": "0x18",
+            "offsetKind": "instance"
+          }
+        ],
+        "methods": [
+          {
+            "index": 561207,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x14bf3a950",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 561211,
+            "name": "MOMMACBEMEK",
+            "nameIndex": "0xb187c99",
+            "registeredAddress": "0x14bf3a8b0",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 19
+          },
+          {
+            "index": 561212,
+            "name": "CAIINKNGKDM",
+            "nameIndex": "0xb187cd0",
+            "registeredAddress": "0x14bf3a9a0",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 17
+          }
+        ]
+      },
+      {
+        "typeIndex": 34133,
+        "usageRow": 705268,
+        "sourceIndex": 227141,
+        "cell": "0x1458a8c28",
+        "type": {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0x8555",
+          "byRef": false,
+          "typeDefinition": 34133,
+          "name": "HJLMHFHHJKM",
+          "namespace": ""
+        },
+        "fields": [
+          {
+            "index": 167271,
+            "name": "CHLGKOLGMAB",
+            "nameIndex": "0xb272107",
+            "typeIndex": 444102,
+            "type": {
+              "kind": "string",
+              "attributes": "0x1",
+              "data": "0x125",
+              "byRef": false
+            },
+            "offset": 24,
+            "rawOffset": "0x18",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 167272,
+            "name": "GFNFNHBAPEO",
+            "nameIndex": "0xb34fb5a",
+            "typeIndex": 527022,
+            "type": {
+              "kind": "class",
+              "attributes": "0x1",
+              "data": "0x8d29",
+              "byRef": false,
+              "typeDefinition": 36137,
+              "name": "HIGIKLLJCHJ",
+              "namespace": ""
+            },
+            "offset": 32,
+            "rawOffset": "0x20",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 167273,
+            "name": "CFKCADIKFKG",
+            "nameIndex": "0xb34fb70",
+            "typeIndex": 444102,
+            "type": {
+              "kind": "string",
+              "attributes": "0x1",
+              "data": "0x125",
+              "byRef": false
+            },
+            "offset": 40,
+            "rawOffset": "0x28",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 167274,
+            "name": "LMJCCCMCMKN",
+            "nameIndex": "0xb264ed4",
+            "typeIndex": 444106,
+            "type": {
+              "kind": "bool",
+              "attributes": "0x1",
+              "data": "0xae",
+              "byRef": false
+            },
+            "offset": 48,
+            "rawOffset": "0x30",
+            "offsetKind": "instance"
+          }
+        ],
+        "methods": [
+          {
+            "index": 286114,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x149b5f620",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 286117,
+            "name": "MOMMACBEMEK",
+            "nameIndex": "0xb187c99",
+            "registeredAddress": "0x149b5ece0",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 19
+          },
+          {
+            "index": 286119,
+            "name": "CAIINKNGKDM",
+            "nameIndex": "0xb187cd0",
+            "registeredAddress": "0x149b5f0f0",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 17
+          }
+        ]
+      },
+      {
+        "typeIndex": 69612,
+        "usageRow": 705269,
+        "sourceIndex": 371125,
+        "cell": "0x1458a8c30",
+        "type": {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0x10fec",
+          "byRef": false,
+          "typeDefinition": 69612,
+          "name": "PCCNENMODDD",
+          "namespace": ""
+        },
+        "fields": [
+          {
+            "index": 343437,
+            "name": "EMLMBEIBJHJ",
+            "nameIndex": "0xb48dd41",
+            "typeIndex": 481907,
+            "type": {
+              "kind": "genericinst",
+              "attributes": "0x21",
+              "data": "0x7346",
+              "byRef": false,
+              "genericIndex": 29510,
+              "instanceIndex": 11,
+              "arguments": [
+                {
+                  "kind": "uint32",
+                  "attributes": "0x0",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              ],
+              "typeDefinition": 35584,
+              "name": "DKHEEHDOEIK",
+              "namespace": ""
+            },
+            "offset": 24,
+            "rawOffset": "0x18",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 343438,
+            "name": "KFIJNBDGBAH",
+            "nameIndex": "0xb48dd2b",
+            "typeIndex": 557333,
+            "type": {
+              "kind": "class",
+              "attributes": "0x1",
+              "data": "0x650a",
+              "byRef": false,
+              "typeDefinition": 25866,
+              "name": "ABJMLEPLFJG",
+              "namespace": ""
+            },
+            "offset": 32,
+            "rawOffset": "0x20",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 343439,
+            "name": "IJGLLGECEOI",
+            "nameIndex": "0xb76d052",
+            "typeIndex": 444309,
+            "type": {
+              "kind": "uint32",
+              "attributes": "0x1",
+              "data": "0x13f",
+              "byRef": false
+            },
+            "offset": 40,
+            "rawOffset": "0x28",
+            "offsetKind": "instance"
+          }
+        ],
+        "methods": [
+          {
+            "index": 576538,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x14d0e9e10",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 576539,
+            "name": "MOMMACBEMEK",
+            "nameIndex": "0xb187c99",
+            "registeredAddress": "0x14d0e9630",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 19
+          },
+          {
+            "index": 576546,
+            "name": "CAIINKNGKDM",
+            "nameIndex": "0xb187cd0",
+            "registeredAddress": "0x14d0e9bc0",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 17
+          }
+        ]
+      },
+      {
+        "typeIndex": 36137,
+        "usageRow": 187787,
+        "sourceIndex": 239473,
+        "cell": "0x1458dae08",
+        "type": {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0x8d29",
+          "byRef": false,
+          "typeDefinition": 36137,
+          "name": "HIGIKLLJCHJ",
+          "namespace": ""
+        },
+        "fields": [
+          {
+            "index": 176544,
+            "name": "KDMKODCHHIP",
+            "nameIndex": "0xb212b8e",
+            "typeIndex": 444309,
+            "type": {
+              "kind": "uint32",
+              "attributes": "0x1",
+              "data": "0x13f",
+              "byRef": false
+            },
+            "offset": 24,
+            "rawOffset": "0x18",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 176545,
+            "name": "OMNCEDDCKJF",
+            "nameIndex": "0xb470cd3",
+            "typeIndex": 444106,
+            "type": {
+              "kind": "bool",
+              "attributes": "0x1",
+              "data": "0xae",
+              "byRef": false
+            },
+            "offset": 28,
+            "rawOffset": "0x1c",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 176546,
+            "name": "JKJBAOEKNKE",
+            "nameIndex": "0xb1990ee",
+            "typeIndex": 444971,
+            "type": {
+              "kind": "uint64",
+              "attributes": "0x1",
+              "data": "0x140",
+              "byRef": false
+            },
+            "offset": 32,
+            "rawOffset": "0x20",
+            "offsetKind": "instance"
+          }
+        ],
+        "methods": [
+          {
+            "index": 303321,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x14ef01060",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 303327,
+            "name": "MOMMACBEMEK",
+            "nameIndex": "0xb187c99",
+            "registeredAddress": "0x14ef01160",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 19
+          },
+          {
+            "index": 303323,
+            "name": "CAIINKNGKDM",
+            "nameIndex": "0xb187cd0",
+            "registeredAddress": "0x14ef00cf0",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 17
+          }
+        ]
+      }
+    ],
+    "scene": {
+      "typeIndex": 46311,
+      "clientType": "BBECFDMDFJC",
+      "cmdId": 27748,
+      "getter": "0x1523856a0",
+      "semanticName": "PlayerEnterSceneNotify",
+      "semanticEvidence": "typed network handler plus native entry log and literal usage",
+      "runtimeStatus": "not-tested",
+      "registration": "0x1507c2a03",
+      "methods": [
+        {
+          "entry": "0x1507ad120",
+          "ownerType": 56238,
+          "methodIndex": 467349,
+          "parameterIndex": 380980,
+          "entry32SHA256": "7b08caed4f9f4ae45fff774fa21f43a322a558d2fa7d8adebbe4a422582d6a65"
+        },
+        {
+          "entry": "0x1507ad6f0",
+          "ownerType": 56238,
+          "methodIndex": 467802,
+          "parameterIndex": 381458,
+          "entry32SHA256": "029e64176308a2ad3b9fab1e727dd8cb4429fa45c8e66878ee22d657fd73bd89"
+        },
+        {
+          "entry": "0x1507b32d0",
+          "ownerType": 56238,
+          "methodIndex": 467384,
+          "parameterIndex": 381021,
+          "entry32SHA256": "b9ddc8b3e3b8d3eaabca63061e6e049d76daab109438e8c64f512f122c160632"
+        },
+        {
+          "entry": "0x14cd67260",
+          "ownerType": 18753,
+          "methodIndex": 142800,
+          "parameterIndex": 129008,
+          "entry32SHA256": "073a71f9b30c16543791a3af388b13b3f7364a62b2a54c6e6bef58c3fdd88b26"
+        },
+        {
+          "entry": "0x1523856b0",
+          "ownerType": 46311,
+          "methodIndex": 384109,
+          "entry32SHA256": "ecbe7216d294f61f10b850c8c5b8545a3aca0b70c670c67bcf73d444a63a417a"
+        },
+        {
+          "entry": "0x152387890",
+          "ownerType": 46311,
+          "methodIndex": 384104,
+          "entry32SHA256": "7b921fbac02090eeb6d9c935a377c5688ac90e3e3cab3baff6a94bd7b13b1353"
+        },
+        {
+          "entry": "0x152386c00",
+          "ownerType": 46311,
+          "methodIndex": 384111,
+          "entry32SHA256": "2d7121f869092f8cf1d58fdf203bd87490347a630f8439593e753fbec39b45bc"
+        },
+        {
+          "entry": "0x152386cb0",
+          "ownerType": 46311,
+          "methodIndex": 384114,
+          "entry32SHA256": "ae0ec38264990a5923123075377d58611c595f9ac3143a01282c37d1169ad0bf"
+        },
+        {
+          "entry": "0x154048d40",
+          "ownerType": 84343,
+          "methodIndex": 698523,
+          "entry32SHA256": "2a628f045df698bed8308dd324fc2cee425dbc8e0a6d0b1976709fdab183357b"
+        }
+      ],
+      "literals": [
+        {
+          "usageRow": 779811,
+          "index": 45993,
+          "slot": 45993,
+          "cell": "0x145b23b68",
+          "value": "Genshin Loading Log: OnReceivePlayerEnterSceneNotify {0}"
+        },
+        {
+          "usageRow": 779817,
+          "index": 46023,
+          "slot": 46023,
+          "cell": "0x145b23c58",
+          "value": "Beyond Transport Interrupt EnterDungeon, Invoke Client Reconnect"
+        },
+        {
+          "usageRow": 780351,
+          "index": 50090,
+          "slot": 50090,
+          "cell": "0x145b2bb70",
+          "value": "Genshin Loading Log: PlayerModule OnPlayerEnterSceneNotify"
+        },
+        {
+          "usageRow": 780698,
+          "index": 53019,
+          "slot": 53019,
+          "cell": "0x145b316f8",
+          "value": "Genshin Loading Log: LoadingManager OnPlayerEnterSceneNotify"
+        }
+      ],
+      "enum": {
+        "typeIndex": 86551,
+        "clientType": "ILGABKBIAIE",
+        "namespace": "",
+        "underlyingType": "int32",
+        "values": [
+          {
+            "symbol": "EnterNone",
+            "value": 0,
+            "fieldIndex": 431526,
+            "defaultRow": 74792,
+            "typeIndex": 70,
+            "dataIndex": 655220
+          },
+          {
+            "symbol": "EnterSelf",
+            "value": 1,
+            "fieldIndex": 431527,
+            "defaultRow": 74793,
+            "typeIndex": 70,
+            "dataIndex": 655224
+          },
+          {
+            "symbol": "EnterGoto",
+            "value": 2,
+            "fieldIndex": 431528,
+            "defaultRow": 74794,
+            "typeIndex": 70,
+            "dataIndex": 655228
+          },
+          {
+            "symbol": "EnterJump",
+            "value": 3,
+            "fieldIndex": 431529,
+            "defaultRow": 74795,
+            "typeIndex": 70,
+            "dataIndex": 655232
+          },
+          {
+            "symbol": "EnterOther",
+            "value": 4,
+            "fieldIndex": 431530,
+            "defaultRow": 74796,
+            "typeIndex": 70,
+            "dataIndex": 655236
+          },
+          {
+            "symbol": "EnterBack",
+            "value": 5,
+            "fieldIndex": 431531,
+            "defaultRow": 74797,
+            "typeIndex": 70,
+            "dataIndex": 655240
+          },
+          {
+            "symbol": "EnterDungeon",
+            "value": 6,
+            "fieldIndex": 431532,
+            "defaultRow": 74798,
+            "typeIndex": 70,
+            "dataIndex": 655244
+          },
+          {
+            "symbol": "EnterDungeonReplay",
+            "value": 7,
+            "fieldIndex": 431533,
+            "defaultRow": 74799,
+            "typeIndex": 70,
+            "dataIndex": 655248
+          },
+          {
+            "symbol": "EnterGotoByPortal",
+            "value": 8,
+            "fieldIndex": 431534,
+            "defaultRow": 74800,
+            "typeIndex": 70,
+            "dataIndex": 655252
+          },
+          {
+            "symbol": "EnterSelfHome",
+            "value": 9,
+            "fieldIndex": 431535,
+            "defaultRow": 74801,
+            "typeIndex": 70,
+            "dataIndex": 655256
+          },
+          {
+            "symbol": "EnterOtherHome",
+            "value": 10,
+            "fieldIndex": 431536,
+            "defaultRow": 74802,
+            "typeIndex": 70,
+            "dataIndex": 655260
+          },
+          {
+            "symbol": "EnterGotoRecreate",
+            "value": 11,
+            "fieldIndex": 431537,
+            "defaultRow": 74803,
+            "typeIndex": 70,
+            "dataIndex": 655264
+          },
+          {
+            "symbol": "EnterGotoByTpl",
+            "value": 12,
+            "fieldIndex": 431538,
+            "defaultRow": 74804,
+            "typeIndex": 70,
+            "dataIndex": 655268
+          },
+          {
+            "symbol": "EnterBeyond",
+            "value": 13,
+            "fieldIndex": 431539,
+            "defaultRow": 74805,
+            "typeIndex": 70,
+            "dataIndex": 655272
+          },
+          {
+            "symbol": "EnterHall",
+            "value": 14,
+            "fieldIndex": 431540,
+            "defaultRow": 74806,
+            "typeIndex": 70,
+            "dataIndex": 655276
+          }
+        ],
+        "semanticStatus": "target-symbols-only"
+      },
+      "fields": [
+        {
+          "clientField": "HHAFHFEPLPD",
+          "objectOffset": 24,
+          "declaration": {
+            "kind": "class",
+            "attributes": "0x1",
+            "data": "0x14977",
+            "byRef": false,
+            "typeDefinition": 84343,
+            "name": "BGDCNKAKGHI",
+            "namespace": ""
+          }
+        },
+        {
+          "clientField": "EMLMBEIBJHJ",
+          "objectOffset": 32,
+          "declaration": {
+            "kind": "genericinst",
+            "attributes": "0x21",
+            "data": "0x7346",
+            "byRef": false,
+            "genericIndex": 29510,
+            "instanceIndex": 11,
+            "arguments": [
+              {
+                "kind": "uint32",
+                "attributes": "0x0",
+                "data": "0x13f",
+                "byRef": false
+              }
+            ],
+            "typeDefinition": 35584,
+            "name": "DKHEEHDOEIK",
+            "namespace": ""
+          }
+        },
+        {
+          "clientField": "KFIJNBDGBAH",
+          "objectOffset": 40,
+          "declaration": {
+            "kind": "class",
+            "attributes": "0x1",
+            "data": "0x650a",
+            "byRef": false,
+            "typeDefinition": 25866,
+            "name": "ABJMLEPLFJG",
+            "namespace": ""
+          }
+        },
+        {
+          "clientField": "LFPEKBJIJNG",
+          "objectOffset": 48,
+          "declaration": {
+            "kind": "class",
+            "attributes": "0x1",
+            "data": "0x14977",
+            "byRef": false,
+            "typeDefinition": 84343,
+            "name": "BGDCNKAKGHI",
+            "namespace": ""
+          }
+        },
+        {
+          "clientField": "CPIINPOJLCM",
+          "objectOffset": 56,
+          "declaration": {
+            "kind": "string",
+            "attributes": "0x1",
+            "data": "0x125",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "BJMCOIFDONK",
+          "objectOffset": 64,
+          "declaration": {
+            "kind": "class",
+            "attributes": "0x1",
+            "data": "0x8555",
+            "byRef": false,
+            "typeDefinition": 34133,
+            "name": "HJLMHFHHJKM",
+            "namespace": ""
+          }
+        },
+        {
+          "clientField": "FEANOEECAIM",
+          "objectOffset": 72,
+          "declaration": {
+            "kind": "class",
+            "attributes": "0x1",
+            "data": "0x10fec",
+            "byRef": false,
+            "typeDefinition": 69612,
+            "name": "PCCNENMODDD",
+            "namespace": ""
+          }
+        },
+        {
+          "clientField": "ABIFGOBLNDN",
+          "objectOffset": 80,
+          "declaration": {
+            "kind": "class",
+            "attributes": "0x1",
+            "data": "0x14977",
+            "byRef": false,
+            "typeDefinition": 84343,
+            "name": "BGDCNKAKGHI",
+            "namespace": ""
+          }
+        },
+        {
+          "clientField": "CCKBJJPAGGG",
+          "objectOffset": 88,
+          "declaration": {
+            "kind": "class",
+            "attributes": "0x1",
+            "data": "0x108b1",
+            "byRef": false,
+            "typeDefinition": 67761,
+            "name": "HKDMELCIJGB",
+            "namespace": ""
+          }
+        },
+        {
+          "clientField": "NBBEIFOKKNG",
+          "objectOffset": 96,
+          "declaration": {
+            "kind": "class",
+            "attributes": "0x1",
+            "data": "0x101f8",
+            "byRef": false,
+            "typeDefinition": 66040,
+            "name": "NAECHMKLBEI",
+            "namespace": ""
+          }
+        },
+        {
+          "clientField": "CNABNLMHMII",
+          "objectOffset": 104,
+          "declaration": {
+            "kind": "uint64",
+            "attributes": "0x1",
+            "data": "0x140",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "DGIBDKELFNG",
+          "objectOffset": 112,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "LMKLCDPJOBJ",
+          "objectOffset": 116,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "AJMJGIKBOPO",
+          "objectOffset": 120,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "JMHKHAPJADA",
+          "objectOffset": 124,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "NBDGINFCIIK",
+          "objectOffset": 128,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "KLDLBMCOGFC",
+          "objectOffset": 132,
+          "declaration": {
+            "kind": "bool",
+            "attributes": "0x1",
+            "data": "0xae",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "OACAAAMNGFI",
+          "objectOffset": 133,
+          "declaration": {
+            "kind": "bool",
+            "attributes": "0x1",
+            "data": "0xae",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "EHONLMHNLDP",
+          "objectOffset": 136,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "CMAFDGGJDNK",
+          "objectOffset": 140,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "OHHFLAOMMEC",
+          "objectOffset": 144,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "MCCMGLDOECH",
+          "objectOffset": 148,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "NOEEBKJAFAG",
+          "objectOffset": 152,
+          "declaration": {
+            "kind": "valuetype",
+            "attributes": "0x1",
+            "data": "0x15217",
+            "byRef": false,
+            "typeDefinition": 86551,
+            "name": "ILGABKBIAIE",
+            "namespace": ""
+          }
+        },
+        {
+          "clientField": "JEPBJIIEFOM",
+          "objectOffset": 156,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "PKGEAAKBCNC",
+          "objectOffset": 160,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        },
+        {
+          "clientField": "IOLBHNOIGJN",
+          "objectOffset": 164,
+          "declaration": {
+            "kind": "uint32",
+            "attributes": "0x1",
+            "data": "0x13f",
+            "byRef": false
+          }
+        }
+      ]
+    },
+    "initializedMetadataGuard": {
+      "address": "0x145b8be66",
+      "value": 1,
+      "scope": "149B5ECE0 lazy metadata setup; IFix not enabled"
+    }
+  },
+  "nativeCode": {
+    "0x153f9fb20": {
+      "size": 16,
+      "sha256": "6cf637b6adb3866fee3c03c42483e091ad167b130eeddd9918b8af755530c5cb"
+    },
+    "0x14ef01060": {
+      "size": 16,
+      "sha256": "6cf637b6adb3866fee3c03c42483e091ad167b130eeddd9918b8af755530c5cb"
+    },
+    "0x14bf3a950": {
+      "size": 80,
+      "sha256": "5ee5d4fc47f2a777156ad6bd81463500f066cbafe4ddfaaa0329699fc4bcfee6"
+    },
+    "0x14bcf8bd0": {
+      "size": 208,
+      "sha256": "cce2052afb7be216fe8d05c4680a82999568499ec5b5a13fae7fd13d60acf7ca"
+    },
+    "0x149b5f620": {
+      "size": 32,
+      "sha256": "c1aca554b5243960adb2a3eb29d5e1042c824458d988a32d375b42944bae8069"
+    },
+    "0x14d0e9e10": {
+      "size": 80,
+      "sha256": "13f77f8bbf3f8675197a7d4f850846f82a9b7ec1d2207e6a4390eca157a8d0f3"
+    },
+    "0x153f9fa70": {
+      "size": 160,
+      "sha256": "2f149ce31b83874f850519a7c5d353db53ad0a148ef93c21a42a3f4167ef2fab"
+    },
+    "0x14ef01160": {
+      "size": 336,
+      "sha256": "d1866e3df4205d3e0a67f023bfeecd6b08f94db60dcc3cf26ec2c1d0b7693b92"
+    },
+    "0x14bf3a8b0": {
+      "size": 160,
+      "sha256": "7190f7e28178600749e0135ca0c9dcc4cb1e2825e83c2fe0e9cee6c1f4156091"
+    },
+    "0x14bcf8cf0": {
+      "size": 384,
+      "sha256": "8c3650b6a35e6d9df8c20bd9942e9e35c0ba4d475ea26686b84818a411d2517c"
+    },
+    "0x149b5ece0": {
+      "size": 432,
+      "sha256": "e1c4e81e76022a0458e59cb8628e257d72739118a3ce750ec8b42927aafe16bc"
+    },
+    "0x14d0e9630": {
+      "size": 432,
+      "sha256": "62acfd53751dab13f17247d0f062e447f1c77cda292a0b27a34f07a68eae4800"
+    },
+    "0x153f9f920": {
+      "size": 304,
+      "sha256": "509a721fa5ebf98da2025e81c705bdd34645ce0a066339d718b80db30700d529"
+    },
+    "0x14ef00cf0": {
+      "size": 880,
+      "sha256": "ffb935a571c64fa13eaeac8b565d52d8b1cba9e94b6f0d4a1a4d06ed957ecfaa"
+    },
+    "0x14bf3a9a0": {
+      "size": 96,
+      "sha256": "624d35923c966cdbb01e452601235eb6d19f128379f9f4d6322cd259663490ca"
+    },
+    "0x14bcf8b20": {
+      "size": 176,
+      "sha256": "5cf8038486c1066a8194c774b92cdce2737842e029c08099d422b8e0b3061a0e"
+    },
+    "0x149b5f0f0": {
+      "size": 944,
+      "sha256": "1ea5f3411f3ee9592770cc415f6d5fc19efb578f9567c4f62eb6c7e73d6b682c"
+    },
+    "0x14d0e9bc0": {
+      "size": 592,
+      "sha256": "4a66a7e0e5dd03f08ea5be149d27890bd47d86b9144f34525be9bbf90a647f3f"
+    },
+    "0x14bf3a880": {
+      "size": 48,
+      "sha256": "0563ea13dc7083b95681e53b91d4a40d365bf48c505ddfaeb8dfdbcc76ccede7"
+    },
+    "0x14bcf8ac0": {
+      "size": 96,
+      "sha256": "22a84b0c9bbed3d5cba1e19f56e148be48f2e97cc03f83becc22b3bea3530d78"
+    },
+    "0x14d0e9b90": {
+      "size": 48,
+      "sha256": "2e0a7605aa7bb12a881ba250eeaa1e340bbade2c537b3b728a5ba9392b55e222"
+    }
+  },
+  "messages": [
+    {
+      "typeIndex": 66040,
+      "clientType": "NAECHMKLBEI",
+      "fields": [
+        {
+          "clientField": "IDEBKCPKHLE",
+          "objectOffset": 24,
+          "tag": 3,
+          "wireType": 0,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved"
+        }
+      ],
+      "writerEntry": "0x153f9f920",
+      "readerEntry": "0x153f9fa70",
+      "constructorEntry": "0x153f9fb20",
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "typeIndex": 36137,
+      "clientType": "HIGIKLLJCHJ",
+      "fields": [
+        {
+          "clientField": "JKJBAOEKNKE",
+          "objectOffset": 32,
+          "tag": 1,
+          "wireType": 0,
+          "type": "uint64",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "KDMKODCHHIP",
+          "objectOffset": 24,
+          "tag": 2,
+          "wireType": 0,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "OMNCEDDCKJF",
+          "objectOffset": 28,
+          "tag": 3,
+          "wireType": 0,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved"
+        }
+      ],
+      "writerEntry": "0x14ef00cf0",
+      "readerEntry": "0x14ef01160",
+      "constructorEntry": "0x14ef01060",
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "typeIndex": 67761,
+      "clientType": "HKDMELCIJGB",
+      "fields": [
+        {
+          "clientField": "KIGPDCAEFBG",
+          "objectOffset": 24,
+          "tag": 10,
+          "wireType": 2,
+          "type": "uint32",
+          "cardinality": "repeated",
+          "presence": "implicit",
+          "packed": true,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved"
+        }
+      ],
+      "writerEntry": "0x14bf3a9a0",
+      "readerEntry": "0x14bf3a8b0",
+      "constructorEntry": "0x14bf3a950",
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "typeIndex": 25866,
+      "clientType": "ABJMLEPLFJG",
+      "fields": [
+        {
+          "clientField": "CCPNEAHIIMG",
+          "objectOffset": 24,
+          "tag": 1,
+          "wireType": 2,
+          "type": "uint32",
+          "cardinality": "repeated",
+          "presence": "implicit",
+          "packed": true,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "JOHODEGOLBH",
+          "objectOffset": 40,
+          "tag": 6,
+          "wireType": 2,
+          "type": "uint32",
+          "cardinality": "repeated",
+          "presence": "implicit",
+          "packed": true,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "CMLLGFDGONC",
+          "objectOffset": 32,
+          "tag": 7,
+          "wireType": 2,
+          "type": "uint32",
+          "cardinality": "repeated",
+          "presence": "implicit",
+          "packed": true,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved"
+        }
+      ],
+      "writerEntry": "0x14bcf8b20",
+      "readerEntry": "0x14bcf8cf0",
+      "constructorEntry": "0x14bcf8bd0",
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "typeIndex": 34133,
+      "clientType": "HJLMHFHHJKM",
+      "fields": [
+        {
+          "clientField": "GFNFNHBAPEO",
+          "objectOffset": 32,
+          "tag": 1,
+          "wireType": 2,
+          "type": "message",
+          "cardinality": "singular",
+          "presence": "explicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "nestedType": "HIGIKLLJCHJ",
+          "nestedTypeIndex": 36137
+        },
+        {
+          "clientField": "CFKCADIKFKG",
+          "objectOffset": 40,
+          "tag": 6,
+          "wireType": 2,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "CHLGKOLGMAB",
+          "objectOffset": 24,
+          "tag": 13,
+          "wireType": 2,
+          "type": "string",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "LMJCCCMCMKN",
+          "objectOffset": 48,
+          "tag": 15,
+          "wireType": 0,
+          "type": "bool",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved"
+        }
+      ],
+      "writerEntry": "0x149b5f0f0",
+      "readerEntry": "0x149b5ece0",
+      "constructorEntry": "0x149b5f620",
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "typeIndex": 69612,
+      "clientType": "PCCNENMODDD",
+      "fields": [
+        {
+          "clientField": "KFIJNBDGBAH",
+          "objectOffset": 32,
+          "tag": 1,
+          "wireType": 2,
+          "type": "message",
+          "cardinality": "singular",
+          "presence": "explicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved",
+          "nestedType": "ABJMLEPLFJG",
+          "nestedTypeIndex": 25866
+        },
+        {
+          "clientField": "IJGLLGECEOI",
+          "objectOffset": 40,
+          "tag": 11,
+          "wireType": 0,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "EMLMBEIBJHJ",
+          "objectOffset": 24,
+          "tag": 13,
+          "wireType": 2,
+          "type": "uint32",
+          "cardinality": "repeated",
+          "presence": "implicit",
+          "packed": true,
+          "wireStatus": "emulated-observation",
+          "semanticStatus": "unresolved"
+        }
+      ],
+      "writerEntry": "0x14d0e9bc0",
+      "readerEntry": "0x14d0e9630",
+      "constructorEntry": "0x14d0e9e10",
+      "runtimeStatus": "not-tested"
+    }
+  ],
+  "rejections": [
+    {
+      "name": "negative-child-length",
+      "wire": "0affffffff0f",
+      "error": "0x1509cafa0: Native error branch: negative-length",
+      "helper": "0x1509cafa0",
+      "origin": "native-error-branch",
+      "helperIsModel": true,
+      "nativeInstructions": 183
+    },
+    {
+      "name": "truncated-child-input",
+      "wire": "0a0208",
+      "error": "0x14751fd30: Truncated or invalid length",
+      "helper": "0x14751fd30",
+      "origin": "bounded-input-model",
+      "helperIsModel": true,
+      "nativeInstructions": 244
+    },
+    {
+      "name": "child-recursion-limit",
+      "wire": "0a020801",
+      "error": "0x1509cb410: Native error branch: recursion-limit",
+      "helper": "0x1509cb410",
+      "origin": "native-error-branch",
+      "helperIsModel": true,
+      "nativeInstructions": 136
+    }
+  ],
+  "separatelyExecutedConstructorDefaults": {
+    "66040": {
+      "typeIndex": 66040,
+      "fields": {
+        "0x18": 0
+      }
+    },
+    "36137": {
+      "typeIndex": 36137,
+      "fields": {
+        "0x18": 0,
+        "0x1c": 0,
+        "0x20": 0
+      }
+    },
+    "67761": {
+      "typeIndex": 67761,
+      "fields": {
+        "0x18": []
+      }
+    },
+    "25866": {
+      "typeIndex": 25866,
+      "fields": {
+        "0x18": [],
+        "0x20": [],
+        "0x28": []
+      }
+    },
+    "34133": {
+      "typeIndex": 34133,
+      "fields": {
+        "0x18": "",
+        "0x20": null,
+        "0x28": "",
+        "0x30": 0
+      }
+    },
+    "69612": {
+      "typeIndex": 69612,
+      "fields": {
+        "0x18": [],
+        "0x20": null,
+        "0x28": 0
+      }
+    }
+  },
+  "runtimeStatus": "not-tested",
+  "targetProtocolReady": false,
+  "businessSemantics": "unresolved",
+  "models": [
+    "initialized metadata/classes and constructor reflection; lazy metadata guard supplied initialized",
+    "managed allocation, UTF-8 string conversion and bounded array storage",
+    "parent child-allocation storage initialized from separately executed constructor defaults; protected-parent constructor dispatch not recovered",
+    "writer string/message bytes and repeated codec emission; native message selection/tag/writer executes",
+    "native ReadMessage/limits/constructors/readers/uint32 repeated bodies execute"
+  ],
+  "outsideScope": [
+    "business field names",
+    "IFix bodies and real managed ABI",
+    "protected-parent constructor dispatch and physical stream refill/EOF ABI; INTMAX empty-child fixture accepted, not a production safety conclusion",
+    "network/SDK/media/full scene entry/D-02"
+  ],
+  "independentProtocFixtures": 13,
+  "protocSHA256": "9f243ff05a4b8e19e3f310959ec23686eed8464691490009de6c89e527ee2bef",
+  "toolSourceSHA256": {
+    "tools/trace_client72_scene_nested.py": "2b2eb8009301d4f333e0be54a0dc3d201e623838cb4f2fbfa35257bba7873cb1",
+    "tools/client72_scene_nested.py": "7a06c75fe3cddda79e6065b18d82072a194c38bb3a599db186feee57a74c3c4b",
+    "tools/client72_scene_reader.py": "ca73c8fbdf58bdf1658643e3f3b8023b4ecc65e7a7cab393d5fcb5674f0fc146"
+  },
+  "writerFixtureCount": 13,
+  "readerFixtureCount": 24,
+  "observations": [
+    {
+      "name": "66040-nonzero",
+      "independentWire": false,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 66040,
+        "fields": {
+          "0x18": 1
+        }
+      },
+      "storedObject": {
+        "typeIndex": 66040,
+        "fields": {
+          "0x18": 1
+        }
+      },
+      "executedReaders": [
+        "0x153f9fa70"
+      ],
+      "executedConstructors": [
+        "0x153f9fb20"
+      ],
+      "models": [
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "66040-zero",
+      "independentWire": false,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 66040,
+        "fields": {
+          "0x18": 0
+        }
+      },
+      "storedObject": {
+        "typeIndex": 66040,
+        "fields": {
+          "0x18": 0
+        }
+      },
+      "executedReaders": [
+        "0x153f9fa70"
+      ],
+      "executedConstructors": [
+        "0x153f9fb20"
+      ],
+      "models": [
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "36137-nonzero",
+      "independentWire": false,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 36137,
+        "fields": {
+          "0x18": 305397784,
+          "0x1c": 1,
+          "0x20": 18364758542507835424
+        }
+      },
+      "storedObject": {
+        "typeIndex": 36137,
+        "fields": {
+          "0x18": 305397784,
+          "0x1c": 1,
+          "0x20": 18364758542507835424
+        }
+      },
+      "executedReaders": [
+        "0x14ef01160"
+      ],
+      "executedConstructors": [
+        "0x14ef01060"
+      ],
+      "models": [
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "36137-zero",
+      "independentWire": false,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 36137,
+        "fields": {
+          "0x18": 0,
+          "0x1c": 0,
+          "0x20": 0
+        }
+      },
+      "storedObject": {
+        "typeIndex": 36137,
+        "fields": {
+          "0x18": 0,
+          "0x1c": 0,
+          "0x20": 0
+        }
+      },
+      "executedReaders": [
+        "0x14ef01160"
+      ],
+      "executedConstructors": [
+        "0x14ef01060"
+      ],
+      "models": [
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "67761-nonzero",
+      "independentWire": false,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 67761,
+        "fields": {
+          "0x18": [
+            305397784,
+            2147483672
+          ]
+        }
+      },
+      "storedObject": {
+        "typeIndex": 67761,
+        "fields": {
+          "0x18": [
+            305397784,
+            2147483672
+          ]
+        }
+      },
+      "executedReaders": [
+        "0x14bf3a8b0"
+      ],
+      "executedConstructors": [
+        "0x14bf3a950"
+      ],
+      "models": [
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "67761-zero",
+      "independentWire": false,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 67761,
+        "fields": {
+          "0x18": []
+        }
+      },
+      "storedObject": {
+        "typeIndex": 67761,
+        "fields": {
+          "0x18": []
+        }
+      },
+      "executedReaders": [
+        "0x14bf3a8b0"
+      ],
+      "executedConstructors": [
+        "0x14bf3a950"
+      ],
+      "models": [
+        "0x1405336c0",
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "25866-nonzero",
+      "independentWire": false,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 25866,
+        "fields": {
+          "0x18": [
+            305397784,
+            2147483672
+          ],
+          "0x20": [
+            305397792,
+            2147483680
+          ],
+          "0x28": [
+            305397800,
+            2147483688
+          ]
+        }
+      },
+      "storedObject": {
+        "typeIndex": 25866,
+        "fields": {
+          "0x18": [
+            305397784,
+            2147483672
+          ],
+          "0x20": [
+            305397792,
+            2147483680
+          ],
+          "0x28": [
+            305397800,
+            2147483688
+          ]
+        }
+      },
+      "executedReaders": [
+        "0x14bcf8cf0"
+      ],
+      "executedConstructors": [
+        "0x14bcf8bd0"
+      ],
+      "models": [
+        "0x1405336c0",
+        "0x1405336c0",
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "25866-zero",
+      "independentWire": false,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 25866,
+        "fields": {
+          "0x18": [],
+          "0x20": [],
+          "0x28": []
+        }
+      },
+      "storedObject": {
+        "typeIndex": 25866,
+        "fields": {
+          "0x18": [],
+          "0x20": [],
+          "0x28": []
+        }
+      },
+      "executedReaders": [
+        "0x14bcf8cf0"
+      ],
+      "executedConstructors": [
+        "0x14bcf8bd0"
+      ],
+      "models": [
+        "0x1405336c0",
+        "0x1405336c0",
+        "0x1405336c0",
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "34133-nonzero",
+      "independentWire": false,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 34133,
+        "fields": {
+          "0x18": "e5b58ce5a597f09f8c9933343133335f323400",
+          "0x20": {
+            "typeIndex": 36137,
+            "fields": {
+              "0x18": 305397784,
+              "0x1c": 1,
+              "0x20": 18364758542507835424
+            }
+          },
+          "0x28": "e5b58ce5a597f09f8c9933343133335f343000",
+          "0x30": 1
+        }
+      },
+      "storedObject": {
+        "typeIndex": 34133,
+        "fields": {
+          "0x18": "e5b58ce5a597f09f8c9933343133335f323400",
+          "0x20": {
+            "typeIndex": 36137,
+            "fields": {
+              "0x18": 305397784,
+              "0x1c": 1,
+              "0x20": 18364758542507835424
+            }
+          },
+          "0x28": "e5b58ce5a597f09f8c9933343133335f343000",
+          "0x30": 1
+        }
+      },
+      "executedReaders": [
+        "0x14ef01160",
+        "0x149b5ece0"
+      ],
+      "executedConstructors": [
+        "0x14ef01060",
+        "0x149b5f620"
+      ],
+      "models": [
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x14051a870",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x147500e70",
+        "0x1474d8100",
+        "0x147500e70",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "34133-zero",
+      "independentWire": false,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 34133,
+        "fields": {
+          "0x18": "",
+          "0x20": null,
+          "0x28": "",
+          "0x30": 0
+        }
+      },
+      "storedObject": {
+        "typeIndex": 34133,
+        "fields": {
+          "0x18": "",
+          "0x20": null,
+          "0x28": "",
+          "0x30": 0
+        }
+      },
+      "executedReaders": [
+        "0x149b5ece0"
+      ],
+      "executedConstructors": [
+        "0x149b5f620"
+      ],
+      "models": [
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "69612-nonzero",
+      "independentWire": false,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            305397784,
+            2147483672
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                305397784,
+                2147483672
+              ],
+              "0x20": [
+                305397792,
+                2147483680
+              ],
+              "0x28": [
+                305397800,
+                2147483688
+              ]
+            }
+          },
+          "0x28": 305397800
+        }
+      },
+      "storedObject": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            305397784,
+            2147483672
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                305397784,
+                2147483672
+              ],
+              "0x20": [
+                305397792,
+                2147483680
+              ],
+              "0x28": [
+                305397800,
+                2147483688
+              ]
+            }
+          },
+          "0x28": 305397800
+        }
+      },
+      "executedReaders": [
+        "0x14bcf8cf0",
+        "0x14d0e9630"
+      ],
+      "executedConstructors": [
+        "0x14bcf8bd0",
+        "0x14d0e9e10"
+      ],
+      "models": [
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x14051a870",
+        "0x1405336c0",
+        "0x1405336c0",
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "69612-zero",
+      "independentWire": false,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [],
+          "0x20": null,
+          "0x28": 0
+        }
+      },
+      "storedObject": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [],
+          "0x20": null,
+          "0x28": 0
+        }
+      },
+      "executedReaders": [
+        "0x14d0e9630"
+      ],
+      "executedConstructors": [
+        "0x14d0e9e10"
+      ],
+      "models": [
+        "0x1405336c0",
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "36137-maximum",
+      "independentWire": false,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 36137,
+        "fields": {
+          "0x18": 4294967295,
+          "0x1c": 1,
+          "0x20": 18446744073709551615
+        }
+      },
+      "storedObject": {
+        "typeIndex": 36137,
+        "fields": {
+          "0x18": 4294967295,
+          "0x1c": 1,
+          "0x20": 18446744073709551615
+        }
+      },
+      "executedReaders": [
+        "0x14ef01160"
+      ],
+      "executedConstructors": [
+        "0x14ef01060"
+      ],
+      "models": [
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "scene-all-nonempty",
+      "independentWire": false,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 46311,
+        "fields": {
+          "0xa0": 2147483808,
+          "0x8c": 2147483788,
+          "0xa4": 2147483812,
+          "0x68": 18364758544493064720,
+          "0x7c": 2147483772,
+          "0x98": 2,
+          "0x94": 2147483796,
+          "0x80": 2147483776,
+          "0x84": 1,
+          "0x74": 2147483764,
+          "0x9c": 2147483804,
+          "0x90": 2147483792,
+          "0x88": 2147483784,
+          "0x85": 1,
+          "0x78": 2147483768,
+          "0x70": 2147483760,
+          "0x20": [
+            0,
+            1,
+            2147483648,
+            4294967295,
+            1
+          ],
+          "0x38": "e585a5e59cbae5b58ce5a597f09f8c9900",
+          "0x18": {
+            "typeIndex": 84343,
+            "fields": {
+              "0x18": 1067450368,
+              "0x1c": 1081081856,
+              "0x20": 3223322624
+            }
+          },
+          "0x50": {
+            "typeIndex": 84343,
+            "fields": {
+              "0x18": 1067450368,
+              "0x1c": 1081081856,
+              "0x20": 3223322624
+            }
+          },
+          "0x60": {
+            "typeIndex": 66040,
+            "fields": {
+              "0x18": 1
+            }
+          },
+          "0x58": {
+            "typeIndex": 67761,
+            "fields": {
+              "0x18": [
+                305397784,
+                2147483672
+              ]
+            }
+          },
+          "0x30": {
+            "typeIndex": 84343,
+            "fields": {
+              "0x18": 1067450368,
+              "0x1c": 1081081856,
+              "0x20": 3223322624
+            }
+          },
+          "0x40": {
+            "typeIndex": 34133,
+            "fields": {
+              "0x18": "e5b58ce5a597f09f8c9933343133335f323400",
+              "0x20": {
+                "typeIndex": 36137,
+                "fields": {
+                  "0x18": 305397784,
+                  "0x1c": 1,
+                  "0x20": 18364758542507835424
+                }
+              },
+              "0x28": "e5b58ce5a597f09f8c9933343133335f343000",
+              "0x30": 1
+            }
+          },
+          "0x48": {
+            "typeIndex": 69612,
+            "fields": {
+              "0x18": [
+                305397784,
+                2147483672
+              ],
+              "0x20": {
+                "typeIndex": 25866,
+                "fields": {
+                  "0x18": [
+                    305397784,
+                    2147483672
+                  ],
+                  "0x20": [
+                    305397792,
+                    2147483680
+                  ],
+                  "0x28": [
+                    305397800,
+                    2147483688
+                  ]
+                }
+              },
+              "0x28": 305397800
+            }
+          },
+          "0x28": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                305397784,
+                2147483672
+              ],
+              "0x20": [
+                305397792,
+                2147483680
+              ],
+              "0x28": [
+                305397800,
+                2147483688
+              ]
+            }
+          }
+        }
+      },
+      "storedObject": {
+        "typeIndex": 46311,
+        "fields": {
+          "0x18": {
+            "typeIndex": 84343,
+            "fields": {
+              "0x18": 1067450368,
+              "0x1c": 1081081856,
+              "0x20": 3223322624
+            }
+          },
+          "0x20": [
+            0,
+            1,
+            2147483648,
+            4294967295,
+            1
+          ],
+          "0x28": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                305397784,
+                2147483672
+              ],
+              "0x20": [
+                305397792,
+                2147483680
+              ],
+              "0x28": [
+                305397800,
+                2147483688
+              ]
+            }
+          },
+          "0x30": {
+            "typeIndex": 84343,
+            "fields": {
+              "0x18": 1067450368,
+              "0x1c": 1081081856,
+              "0x20": 3223322624
+            }
+          },
+          "0x38": "e585a5e59cbae5b58ce5a597f09f8c9900",
+          "0x40": {
+            "typeIndex": 34133,
+            "fields": {
+              "0x18": "e5b58ce5a597f09f8c9933343133335f323400",
+              "0x20": {
+                "typeIndex": 36137,
+                "fields": {
+                  "0x18": 305397784,
+                  "0x1c": 1,
+                  "0x20": 18364758542507835424
+                }
+              },
+              "0x28": "e5b58ce5a597f09f8c9933343133335f343000",
+              "0x30": 1
+            }
+          },
+          "0x48": {
+            "typeIndex": 69612,
+            "fields": {
+              "0x18": [
+                305397784,
+                2147483672
+              ],
+              "0x20": {
+                "typeIndex": 25866,
+                "fields": {
+                  "0x18": [
+                    305397784,
+                    2147483672
+                  ],
+                  "0x20": [
+                    305397792,
+                    2147483680
+                  ],
+                  "0x28": [
+                    305397800,
+                    2147483688
+                  ]
+                }
+              },
+              "0x28": 305397800
+            }
+          },
+          "0x50": {
+            "typeIndex": 84343,
+            "fields": {
+              "0x18": 1067450368,
+              "0x1c": 1081081856,
+              "0x20": 3223322624
+            }
+          },
+          "0x58": {
+            "typeIndex": 67761,
+            "fields": {
+              "0x18": [
+                305397784,
+                2147483672
+              ]
+            }
+          },
+          "0x60": {
+            "typeIndex": 66040,
+            "fields": {
+              "0x18": 1
+            }
+          },
+          "0x68": 18364758544493064720,
+          "0x70": 2147483760,
+          "0x74": 2147483764,
+          "0x78": 2147483768,
+          "0x7c": 2147483772,
+          "0x80": 2147483776,
+          "0x84": 1,
+          "0x85": 1,
+          "0x88": 2147483784,
+          "0x8c": 2147483788,
+          "0x90": 2147483792,
+          "0x94": 2147483796,
+          "0x98": 2,
+          "0x9c": 2147483804,
+          "0xa0": 2147483808,
+          "0xa4": 2147483812
+        }
+      },
+      "executedReaders": [
+        "0x153f9fa70",
+        "0x14ef01160",
+        "0x14bf3a8b0",
+        "0x14bcf8cf0",
+        "0x149b5ece0",
+        "0x14d0e9630",
+        "0x1523856b0"
+      ],
+      "executedConstructors": [
+        "0x14ef01060",
+        "0x14bcf8bd0",
+        "0x152387890"
+      ],
+      "models": [
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x147500e70",
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x1474e97e0",
+        "0x1474d8100",
+        "0x1474e97e0",
+        "0x1474d8100",
+        "0x1474e97e0",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x1474e97e0",
+        "0x1474d8100",
+        "0x1474e97e0",
+        "0x1474d8100",
+        "0x1474e97e0",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x1474e97e0",
+        "0x1474d8100",
+        "0x1474e97e0",
+        "0x1474d8100",
+        "0x1474e97e0",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x14051a870",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x147500e70",
+        "0x1474d8100",
+        "0x147500e70",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x14051a870",
+        "0x1405336c0",
+        "0x1405336c0",
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "66040-explicit-false",
+      "independentWire": true,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 66040,
+        "fields": {
+          "0x18": 0
+        }
+      },
+      "storedObject": {
+        "typeIndex": 66040,
+        "fields": {
+          "0x18": 0
+        }
+      },
+      "executedReaders": [
+        "0x153f9fa70"
+      ],
+      "executedConstructors": [
+        "0x153f9fb20"
+      ],
+      "models": [
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "66040-bool-two-normalized",
+      "independentWire": true,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 66040,
+        "fields": {
+          "0x18": 1
+        }
+      },
+      "storedObject": {
+        "typeIndex": 66040,
+        "fields": {
+          "0x18": 1
+        }
+      },
+      "executedReaders": [
+        "0x153f9fa70"
+      ],
+      "executedConstructors": [
+        "0x153f9fb20"
+      ],
+      "models": [
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "66040-known-number-wrong-wire-skipped",
+      "independentWire": true,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 66040,
+        "fields": {
+          "0x18": 0
+        }
+      },
+      "storedObject": {
+        "typeIndex": 66040,
+        "fields": {
+          "0x18": 0
+        }
+      },
+      "executedReaders": [
+        "0x153f9fa70"
+      ],
+      "executedConstructors": [
+        "0x153f9fb20"
+      ],
+      "models": [
+        "0x1474d8100",
+        "0x1474d7bb0",
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "36137-independent-max",
+      "independentWire": true,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 36137,
+        "fields": {
+          "0x18": 4294967295,
+          "0x1c": 1,
+          "0x20": 18446744073709551615
+        }
+      },
+      "storedObject": {
+        "typeIndex": 36137,
+        "fields": {
+          "0x18": 4294967295,
+          "0x1c": 1,
+          "0x20": 18446744073709551615
+        }
+      },
+      "executedReaders": [
+        "0x14ef01160"
+      ],
+      "executedConstructors": [
+        "0x14ef01060"
+      ],
+      "models": [
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "67761-packed",
+      "independentWire": true,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 67761,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295,
+            1
+          ]
+        }
+      },
+      "storedObject": {
+        "typeIndex": 67761,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295,
+            1
+          ]
+        }
+      },
+      "executedReaders": [
+        "0x14bf3a8b0"
+      ],
+      "executedConstructors": [
+        "0x14bf3a950"
+      ],
+      "models": [
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x14751fd30",
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "67761-unpacked",
+      "independentWire": true,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 67761,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295,
+            1
+          ]
+        }
+      },
+      "storedObject": {
+        "typeIndex": 67761,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295,
+            1
+          ]
+        }
+      },
+      "executedReaders": [
+        "0x14bf3a8b0"
+      ],
+      "executedConstructors": [
+        "0x14bf3a950"
+      ],
+      "models": [
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "67761-mixed-duplicates",
+      "independentWire": true,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 67761,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295,
+            1,
+            1,
+            2147483648,
+            4294967295,
+            1
+          ]
+        }
+      },
+      "storedObject": {
+        "typeIndex": 67761,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295,
+            1,
+            1,
+            2147483648,
+            4294967295,
+            1
+          ]
+        }
+      },
+      "executedReaders": [
+        "0x14bf3a8b0"
+      ],
+      "executedConstructors": [
+        "0x14bf3a950"
+      ],
+      "models": [
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "34133-duplicate-child-explicit-zero",
+      "independentWire": true,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 34133,
+        "fields": {
+          "0x18": "",
+          "0x20": {
+            "typeIndex": 36137,
+            "fields": {
+              "0x18": 0,
+              "0x1c": 1,
+              "0x20": 18364758544493064720
+            }
+          },
+          "0x28": "",
+          "0x30": 0
+        }
+      },
+      "storedObject": {
+        "typeIndex": 34133,
+        "fields": {
+          "0x18": "",
+          "0x20": {
+            "typeIndex": 36137,
+            "fields": {
+              "0x18": 0,
+              "0x1c": 1,
+              "0x20": 18364758544493064720
+            }
+          },
+          "0x28": "",
+          "0x30": 0
+        }
+      },
+      "executedReaders": [
+        "0x14ef01160",
+        "0x149b5ece0"
+      ],
+      "executedConstructors": [
+        "0x14ef01060",
+        "0x149b5f620"
+      ],
+      "models": [
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x14051a870",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "scene-duplicate-nested-explicit-zero",
+      "independentWire": true,
+      "boundaryScope": null,
+      "expected": {
+        "typeIndex": 46311,
+        "fields": {
+          "0xa0": 2147483808,
+          "0x8c": 2147483788,
+          "0xa4": 2147483812,
+          "0x68": 18364758544493064720,
+          "0x7c": 2147483772,
+          "0x98": 2,
+          "0x94": 2147483796,
+          "0x80": 2147483776,
+          "0x84": 1,
+          "0x74": 2147483764,
+          "0x9c": 2147483804,
+          "0x90": 2147483792,
+          "0x88": 2147483784,
+          "0x85": 1,
+          "0x78": 2147483768,
+          "0x70": 2147483760,
+          "0x20": [
+            0,
+            1,
+            2147483648,
+            4294967295,
+            1
+          ],
+          "0x38": "e585a5e59cbae5b58ce5a597f09f8c9900",
+          "0x18": {
+            "typeIndex": 84343,
+            "fields": {
+              "0x18": 1067450368,
+              "0x1c": 1081081856,
+              "0x20": 3223322624
+            }
+          },
+          "0x50": {
+            "typeIndex": 84343,
+            "fields": {
+              "0x18": 1067450368,
+              "0x1c": 1081081856,
+              "0x20": 3223322624
+            }
+          },
+          "0x60": {
+            "typeIndex": 66040,
+            "fields": {
+              "0x18": 1
+            }
+          },
+          "0x58": {
+            "typeIndex": 67761,
+            "fields": {
+              "0x18": [
+                305397784,
+                2147483672
+              ]
+            }
+          },
+          "0x30": {
+            "typeIndex": 84343,
+            "fields": {
+              "0x18": 1067450368,
+              "0x1c": 1081081856,
+              "0x20": 3223322624
+            }
+          },
+          "0x40": {
+            "typeIndex": 34133,
+            "fields": {
+              "0x18": "e5b58ce5a597f09f8c9933343133335f323400",
+              "0x20": {
+                "typeIndex": 36137,
+                "fields": {
+                  "0x18": 0,
+                  "0x1c": 1,
+                  "0x20": 18364758542507835424
+                }
+              },
+              "0x28": "",
+              "0x30": 0
+            }
+          },
+          "0x48": {
+            "typeIndex": 69612,
+            "fields": {
+              "0x18": [
+                305397784,
+                2147483672
+              ],
+              "0x20": {
+                "typeIndex": 25866,
+                "fields": {
+                  "0x18": [
+                    305397784,
+                    2147483672
+                  ],
+                  "0x20": [
+                    305397792,
+                    2147483680
+                  ],
+                  "0x28": [
+                    305397800,
+                    2147483688
+                  ]
+                }
+              },
+              "0x28": 305397800
+            }
+          },
+          "0x28": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                305397784,
+                2147483672
+              ],
+              "0x20": [
+                305397792,
+                2147483680
+              ],
+              "0x28": [
+                305397800,
+                2147483688
+              ]
+            }
+          }
+        }
+      },
+      "storedObject": {
+        "typeIndex": 46311,
+        "fields": {
+          "0x18": {
+            "typeIndex": 84343,
+            "fields": {
+              "0x18": 1067450368,
+              "0x1c": 1081081856,
+              "0x20": 3223322624
+            }
+          },
+          "0x20": [
+            0,
+            1,
+            2147483648,
+            4294967295,
+            1
+          ],
+          "0x28": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                305397784,
+                2147483672
+              ],
+              "0x20": [
+                305397792,
+                2147483680
+              ],
+              "0x28": [
+                305397800,
+                2147483688
+              ]
+            }
+          },
+          "0x30": {
+            "typeIndex": 84343,
+            "fields": {
+              "0x18": 1067450368,
+              "0x1c": 1081081856,
+              "0x20": 3223322624
+            }
+          },
+          "0x38": "e585a5e59cbae5b58ce5a597f09f8c9900",
+          "0x40": {
+            "typeIndex": 34133,
+            "fields": {
+              "0x18": "e5b58ce5a597f09f8c9933343133335f323400",
+              "0x20": {
+                "typeIndex": 36137,
+                "fields": {
+                  "0x18": 0,
+                  "0x1c": 1,
+                  "0x20": 18364758542507835424
+                }
+              },
+              "0x28": "",
+              "0x30": 0
+            }
+          },
+          "0x48": {
+            "typeIndex": 69612,
+            "fields": {
+              "0x18": [
+                305397784,
+                2147483672
+              ],
+              "0x20": {
+                "typeIndex": 25866,
+                "fields": {
+                  "0x18": [
+                    305397784,
+                    2147483672
+                  ],
+                  "0x20": [
+                    305397792,
+                    2147483680
+                  ],
+                  "0x28": [
+                    305397800,
+                    2147483688
+                  ]
+                }
+              },
+              "0x28": 305397800
+            }
+          },
+          "0x50": {
+            "typeIndex": 84343,
+            "fields": {
+              "0x18": 1067450368,
+              "0x1c": 1081081856,
+              "0x20": 3223322624
+            }
+          },
+          "0x58": {
+            "typeIndex": 67761,
+            "fields": {
+              "0x18": [
+                305397784,
+                2147483672
+              ]
+            }
+          },
+          "0x60": {
+            "typeIndex": 66040,
+            "fields": {
+              "0x18": 1
+            }
+          },
+          "0x68": 18364758544493064720,
+          "0x70": 2147483760,
+          "0x74": 2147483764,
+          "0x78": 2147483768,
+          "0x7c": 2147483772,
+          "0x80": 2147483776,
+          "0x84": 1,
+          "0x85": 1,
+          "0x88": 2147483784,
+          "0x8c": 2147483788,
+          "0x90": 2147483792,
+          "0x94": 2147483796,
+          "0x98": 2,
+          "0x9c": 2147483804,
+          "0xa0": 2147483808,
+          "0xa4": 2147483812
+        }
+      },
+      "executedReaders": [
+        "0x153f9fa70",
+        "0x14ef01160",
+        "0x14bf3a8b0",
+        "0x14bcf8cf0",
+        "0x149b5ece0",
+        "0x14d0e9630",
+        "0x1523856b0"
+      ],
+      "executedConstructors": [
+        "0x14ef01060",
+        "0x14bcf8bd0",
+        "0x152387890"
+      ],
+      "models": [
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x147500e70",
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x1474e97e0",
+        "0x1474d8100",
+        "0x1474e97e0",
+        "0x1474d8100",
+        "0x1474e97e0",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x1474e97e0",
+        "0x1474d8100",
+        "0x1474e97e0",
+        "0x1474d8100",
+        "0x1474e97e0",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x1474e97e0",
+        "0x1474d8100",
+        "0x1474e97e0",
+        "0x1474d8100",
+        "0x1474e97e0",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x14051a870",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x147500e70",
+        "0x1474d8100",
+        "0x147500e70",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x14051a870",
+        "0x1405336c0",
+        "0x1405336c0",
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x140514ee0",
+        "0x159c69af0",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100",
+        "0x147500e70",
+        "0x1474d8100",
+        "0x14751fd30",
+        "0x1474d8100",
+        "0x1474d8100"
+      ]
+    },
+    {
+      "name": "INTMAX-empty-child-fixture-accepted",
+      "independentWire": true,
+      "boundaryScope": "accepted only under this explicit stream/EOF model; physical refill/EOF ABI unverified",
+      "expected": {
+        "typeIndex": 34133,
+        "fields": {
+          "0x18": "",
+          "0x20": {
+            "typeIndex": 36137,
+            "fields": {
+              "0x18": 0,
+              "0x1c": 0,
+              "0x20": 0
+            }
+          },
+          "0x28": "",
+          "0x30": 0
+        }
+      },
+      "storedObject": {
+        "typeIndex": 34133,
+        "fields": {
+          "0x18": "",
+          "0x20": {
+            "typeIndex": 36137,
+            "fields": {
+              "0x18": 0,
+              "0x1c": 0,
+              "0x20": 0
+            }
+          },
+          "0x28": "",
+          "0x30": 0
+        }
+      },
+      "executedReaders": [
+        "0x14ef01160",
+        "0x149b5ece0"
+      ],
+      "executedConstructors": [
+        "0x14ef01060",
+        "0x149b5f620"
+      ],
+      "models": [
+        "0x1474d8100",
+        "0x1405336c0",
+        "0x14051a870",
+        "0x1474d8100",
+        "0x1474d8100"
+      ]
+    }
+  ]
+}

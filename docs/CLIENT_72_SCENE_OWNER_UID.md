@@ -63,3 +63,11 @@ $env:GRADLE_USER_HOME = Join-Path $PWD 'local/gradle'
 旧API审计的verify_sources已实际以`Review changed API dependency: .../ScriptLib.java`拒绝新源码，原日志为`scene-owner-uid-old-api-guard-rejection.log`。没有更新任何旧hash、源码索引或观察摘要来让门禁变绿。ScriptLib属于协议依赖源码，主任务需人工复核新增只读边及受影响源码/方法hash，再重建JAR、复核脚本/API审计和完整研究选集。
 
 本批聚焦Gradle已编译生产/测试源码，没有执行完整Java测试集，没有生成/替换运行JAR或便携部署。完整7.2协议准入未满足，未启动服务器、数据库或客户端；JAR构建、运行前置与未部署原因交由主任务继续核对。缺owner、无有效scene manager等非正常上下文没有新造返回契约；GetGadgetConfigId的错误语义及其余API/资源/实机缺口仍保持未知。
+
+## 主线构建与证据整合
+
+主线实际Windows portable构建成功（24秒），JAR SHA-256 `2566f46604df80ddaad05801fb182a7217b9d057a2c8619e21fc54e49db083fe`，BuildConfig内嵌69c3672；ScriptLib、BuildConfig和四序列化修复class与当次编译输出相同，原四class相对上一JAR字节未变。原4dd1c47a…bbe7 JAR仅保留历史离线证据。独立JDK源码比较确认删除唯一4行后与旧源完全相同，旧220方法/构造正文、签名/public及调用选择器不变，public206→207；原48源码图逐结构仅源hash/review变化，现有节点/边/候选及开放边界不变。
+
+三个原始门禁都真实拒绝新ScriptLib，serialization另真实拒绝新JAR。人工复核后仅更新相应源/JAR及真实父report/summary hash，未改算法。新JAR三种脚本CLI重跑：出生686通过、inline13,616通过、fast407错误/8缺ID保持；当前API反射61中2wrapper已有、59未见入口，owner42处/317组从缺口移除，但完整无缺组只增1，不能称317组业务通过。生产序列化13,616组/20,871套件再双跑，所有数据/网格/8问题与前修复结果相同，仅JAR/tool指纹变化。
+
+人工复核后研究输入60→62→63，唯一ScriptLib源码hash更新，全部三层/Proto/候选/开放边界不变，recover双跑一致；366研究回归全过。此前580项Java与本批隔离owner9项分开记录，未重复完整Java集。证据scene-owner-{impact,delivery,build-artifact}和scene-owner-list-login-proto-review-check.json均在local/migration72；没有连接正式存档或部署。P0/SDK/补丁/资源仍未齐，运行PID/健康/运行JAR无验收对象，D-02未完成。

@@ -22,7 +22,7 @@ except ImportError:
     from audit_resource72 import index_table, verify_tree, read_client_evidence
 
 
-RUNTIME_SHA256 = '4dd1c47a0be92e67e0f938221d5a982122c903b232c906822cbce27ed4a4bbe7'
+RUNTIME_SHA256 = '2566f46604df80ddaad05801fb182a7217b9d057a2c8619e21fc54e49db083fe'
 LEGACY_COMMIT = 'dac2a9d43332ef51879522cf39da2831b0ca0543'
 # Each interface/algorithm below was read before implementing the direct adapter.
 REVIEWED_SOURCES = {

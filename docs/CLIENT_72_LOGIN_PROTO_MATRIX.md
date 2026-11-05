@@ -1,5 +1,7 @@
 # A-03c 候选消息、Proto依赖与7.2三层证据缺口矩阵
 
+2026-11-06当前63输入：owner只读API迁移后，唯一源码hash变更ScriptLib（旧220方法原样、新方法未进入原48源码图），三脚本/依赖/serialization五份摘要真实重跑后替换，另新增当前API与列表摘要（60→62）；非空嵌套摘要使62→63。两次人工复核均保持三层矩阵、Proto描述符、候选、计数和开放边界；recover各双跑一致，366研究回归通过、研究结构0/ready228。没有用API可调用或新raw字段wire晋级业务语义/实机。证据scene-owner-list-login-proto-review-check.json和scene-nested-login-proto-review-check.json。
+
 2026-11-06 E-01c3复核：scene-script-api-baseline为第60份固定输入，记录生产owner UID迁移前接口基线。新增一份输入hash，其余1287源码/Proto、三层矩阵/计数、候选/描述符和开放边界均不变，recover两次一致；358当前工作树研究选集通过，含API9与并行列表12项。没有用接口注册/词法引用晋级协议或实机。后续若改ScriptLib，现有源守卫必须拒绝，不能把旧基线静默称当前。
 
 2026-11-06 B-02e4复核：scene-query摘要为第59份输入；19原生样本双跑一致，337研究回归通过，旧normal14/born39/wait32重跑不变。新增一份输入hash，全部1287源码/Proto、148行三层、候选/描述符、计数与开放边界均不变，recover两次一致，ready仍228。证据scene-query-login-proto-{review-check,repeat}.json；列表消费者body和业务字段语义尚未覆盖。
@@ -16,7 +18,7 @@
 
 2026-11-06，A-03c限定离线验收后，B-02d已补入选人证据，B-03a/C-01a现已接管三件组生产源码并重新复核矩阵。来源是A-03b固定方法并集及当前Proto，不能当作目标客户端最小/完整消息集。**A-03完整闭包与实机、B-03/C-01父任务及D-02仍未完成。** 实现/测试和停止取证边界见[选人三件组](CLIENT_72_BORN.md)。下述原97/1139及缺根记录保留为历史基线，当前结果如下。
 
-当前99构造候选、148引用/种子、1140描述符文件/1254声明/4786字段；1287源码/Proto与60研究输入固定hash，重复报告一致。生产DoSetPlayerBornDataNotify.proto已按目标空schema证据生成，missingProtoRoots为空；没有从遗留缺文件推断为空。动态BasePacket现只保留ItemAddHintNotify、packet复制和opcode变量三处，选人两处配置覆盖和负号回退已移除。三层矩阵现214条字段，runtime均未验；空schema已独立验证的Notify不再误列“无字段证据”缺口，其他空fields仍不视为合法空消息。表中来源数是原批快照，当前逐行来源以JSON为准。
+当前99构造候选、148引用/种子、1140描述符文件/1254声明/4786字段；1287源码/Proto与63研究输入固定hash，重复报告一致。生产DoSetPlayerBornDataNotify.proto已按目标空schema证据生成，missingProtoRoots为空；没有从遗留缺文件推断为空。动态BasePacket现只保留ItemAddHintNotify、packet复制和opcode变量三处，选人两处配置覆盖和负号回退已移除。三层矩阵现214条字段，runtime均未验；空schema已独立验证的Notify不再误列“无字段证据”缺口，其他空fields仍不视为合法空消息。表中来源数是原批快照，当前逐行来源以JSON为准。
 
 ## 候选与描述符范围
 

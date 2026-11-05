@@ -1,5 +1,7 @@
 # E-01c3：固定scene3脚本API缺口与实现边界
 
+当前与历史：以下62/60为52f1945迁移前固定基线，保存在baseline摘要；69c3672只新增正常owner UID查询后，实际新JAR/父编译清单与源码重新审计，当前public207、反射61、其中2wrapper已有、59未见入口（1468组）、1348位置。其余61条来源只54处Java定位行精确+4，body hash/契约/开放边界不变。当前[摘要](../protocol/cn-7.2/scene-script-api-observations.json)及[owner迁移](CLIENT_72_SCENE_OWNER_UID.md)另列。原守卫先实际拒绝；人工只复核一个源hash和真实新父report/summary hash，算法未改。默认父文件已与当前摘要同步，当前CLI可复现；历史基线必须用原固定源码/证据，不冒称仍为当前。
+
 2026-11-06。本项是[继承Lua迁移](CLIENT_72_SCENE_SCRIPT_MIGRATION.md)的限定离线来源审计；没有执行trigger/action、实例化ScriptLib、调用业务或启动服务器/客户端。脚本仍标为旧实现参考，**E-01c、E-01和D-02均未完成，resourceReady=false。** 本批不改生产代码、资源、配置、既有审计或共享观察/门禁。
 
 ## 固定输入和实际核对

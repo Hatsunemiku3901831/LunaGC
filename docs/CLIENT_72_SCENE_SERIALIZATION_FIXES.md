@@ -60,3 +60,5 @@ $env:GRADLE_USER_HOME = Join-Path $PWD 'local/gradle'
 本机证据均相对local/migration72：evidence/scene-serialization-fix-{old-guard-rejection,build-artifact}.json、scene-serialization-fixed-{audit,repeat,summary-repeat}.json、scene-serialization-java-regression-summary.json和scene-serialization-test-mongo-final.json；Java XML在scene-serialization-java-test-results/，构建/测试/审计日志在logs/scene-serialization-*。历史基线SHA-256 a905793a…f3a5b与修后摘要3fe94edf…70a5c均已接入研究矩阵（55→56→58），协议三层和ready228缺口不变。
 
 已重新核对本机配置/源码端口、子模块及进程：没有本项目服务Java、HTTP TCP8088或游戏UDP22101监听；测试27027已关闭，原Mongo27017及现有调试目标保留。未部署原因仍为完整7.2 P0/SDK/补丁/资源前置不足；健康、运行PID/运行JAR SHA-256无验收对象，不标通过。E-01c2限定修复完成；E-01c/E-01/D-02保持未完成。
+
+后续E-01c4构建：当前JAR变为2566f46604df80ddaad05801fb182a7217b9d057a2c8619e21fc54e49db083fe（69c3672），只增加owner UID正常查询，四序列化修复class与4dd1c47a…bbe7完全相同。旧JAR守卫实际拒绝后人工更新，当前整场报告/摘要再双跑一致；与上一修复报告相比，全部数据/文件/问题/网格逐结构相同，仅JAR与审计tool指纹变化。共享当前摘要已更新，旧基线/前修复原始报告保留；不重复声称580 Java是本次新JAR上的整套执行，owner独立9项红绿另见专题。仍未部署或实机。

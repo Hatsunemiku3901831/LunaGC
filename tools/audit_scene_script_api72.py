@@ -18,12 +18,12 @@ import tempfile
 
 LEGACY_COMMIT = 'dac2a9d43332ef51879522cf39da2831b0ca0543'
 MANIFEST_SHA256 = '47b783755a7c8f714a868db551f76a503092e0fd7895cc7a787e6060e651c02d'
-SUMMARY_SHA256 = '55075474ef471da55078d5f9acdae1096c587b83023c8cd47158c53c6e8398fe'
-REPORT_SHA256 = 'c88375db6075a8a5c78401f79b8eb4f0a40fa85f8009fd4f99dafea74a5969a0'
+SUMMARY_SHA256 = '9ffd79a3b9321485e2d870fe2bfccd89db0eddc0f0f71d62a778020c8e7b97cf'
+REPORT_SHA256 = 'b99d5deeb475e2dae3269e7946f574d001230e98d9ae18c212b39ad4eada3a7d'
 REVIEWED_SOURCES = {
     'src/main/java/emu/grasscutter/game/player/Player.java': 'f080a4f521ebeb0467bcb09b84e993a68d147140046cea0e00898f5d9eee0b91',
     'src/main/java/emu/grasscutter/game/entity/GameEntity.java': '91f3fe982ea91b6028106866d5e616b3968693f113792c096eaa61398140ba56',
-    "src/main/java/emu/grasscutter/scripts/ScriptLib.java": "d5d5a2f74227ed26a01b9dde816b9dd63919ab17726fe015963fc8daf46baee1",
+    "src/main/java/emu/grasscutter/scripts/ScriptLib.java": "3b554d175c4028e0d30bc4727035f5f04d44f76a3d88b562b0d03227b4cfcdf2",
     "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java": "691ac41d63b2fcca6833c989293d7f4df7ddd98261d21162badd90e3c1b102b5",
     "src/main/java/emu/grasscutter/scripts/GroupLuaCall.java": "ab0d0f59ba44ed4ca76e80a7e09e1dec2e43457ea7cf28d0978e6419c29be1d8",
     "src/main/java/emu/grasscutter/scripts/MonsterTideLua.java": "c2def0a3229ed951c66e7ec06769fe4671e6dff9cd7507069686a54f58ad4ee1",

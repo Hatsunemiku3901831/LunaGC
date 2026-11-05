@@ -216,7 +216,7 @@
     "tools/Client72SceneScriptAudit.java": "49605e4cf2c66b282523cb3be0895b345bbe273b44e8c9c13e2568646e4668a0",
     "tools/audit_scene_scripts72.py": "7c23f644e2efa4fb1d7c94eb4af814e67b6bbc34453e1fe03fc70fb344de065c"
   },
-  "runtimeJarSHA256": "4dd1c47a0be92e67e0f938221d5a982122c903b232c906822cbce27ed4a4bbe7",
+  "runtimeJarSHA256": "2566f46604df80ddaad05801fb182a7217b9d057a2c8619e21fc54e49db083fe",
   "runtimeStatus": "not-tested",
   "schemaVersion": 1,
   "scope": "direct production LuaSerializer, SceneSuite.init, RTree construction and source-equivalent grid-input model",
@@ -234,7 +234,7 @@
   },
   "toolSourceSHA256": {
     "tools/Client72SceneSerializeAudit.java": "c676ab6de144cf2d25f80c8f6760ec8936a56f36f4731a5c79c3786d079407d7",
-    "tools/audit_scene_serialization72.py": "9d55282779b6023e3d2aa0a291fac3085acd78aa6a777920a2a267170654b983"
+    "tools/audit_scene_serialization72.py": "eef35ea94c19647fee7c0d7ce1e38538d9a54409b4c5a6d1beee2b446195b9d7"
   },
   "unboundDeclaredFieldExamples": {},
   "unboundDeclaredSourceFields": {},

@@ -55,3 +55,5 @@ python -m unittest tools.test_client72_scene_list tools.test_client72_scene_quer
 原始报告/草稿摘要及全部运行日志仅写忽略的`local/migration72/`，使用scene-list前缀。未更改运行代码、Proto、配置、补丁、资源或共用工具，没有启动服务/数据库/客户端或部署。
 
 下一项可沿返回后的场景调用继续，或独立恢复`158820740`枚举路线；完整资源/SDK/网络时序及D-02仍须实机验收。
+
+主线整合：24组正式完整trace和摘要经独立目录/原生存储/模型边界复核，原draft 5a3b6455…e19c原样接入[共享摘要](../protocol/cn-7.2/scene-list-observations.json)。B-02e5限定完成；366完整研究回归通过，三层/实际入场状态不晋级。同步owner源码复核后输入60→62，再加nested为63；所有候选/描述符/开放边界保持，旧39/32/14/19原生回归摘要不变。

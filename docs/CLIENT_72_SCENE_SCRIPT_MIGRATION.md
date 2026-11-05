@@ -1,5 +1,7 @@
 # E-01c：参考既有实现迁移scene3脚本
 
+当前迁移后状态：GetSceneOwnerUid正常查询已真实桥接红绿并提交69c3672。新JAR 2566f466…83fe下三种脚本CLI实际重跑，出生686全过、全静态inline13,616全过、fast407错误与8缺ID均保持；缺成员反射61（旧62减owner），其中2个userdata包装已注册，59在复核入口未找到实现，涉及1468组。原Lua/manifest/组/ID/逐条问题不变；当前摘要已接入矩阵，原基线保留。下方52f1945的62/60及旧JAR为历史，不适用当前计数。当前复现命令使用根LunaGC-7.1.0.jar（遗留文件名），须核对2566f466…83fe；GetGadgetConfigId、fastRequire/vision/revision和实机仍未验。
+
 接口来源后续：52f1945的实际词法/公开/包装注册审计确认原62是反射基线，其中ExecuteGroupLua/ExecuteActiveGroupLua两项已由userdata注册；其余60在复核入口未找到实现，涉及1469静态组。171名称逐13,616组与原编译集合一致；这仍不证明调用可达性或参数兼容，见[API清单](CLIENT_72_SCENE_SCRIPT_API.md)。owner UID只读查询已单独建E-01c4卡，尚未完成生产迁移。
 
 后续生产消费已实际推进：e3da792首次生产审计保留5套件失败/1,210半径截断/两个setter漏绑；9408f41最小修复与两次全13,616静态群组/20,871套件重跑已消除这些问题，327研究/580 Java选集通过，见[生产审计历史基线](CLIENT_72_SCENE_SERIALIZATION.md)及[修复/构建](CLIENT_72_SCENE_SERIALIZATION_FIXES.md)。8缺ID、vision、fastRequire、ScriptLib实际调用和实机仍未完成，E-01c3正做接口来源审计。下方“生产序列化未执行”为首次顶层工具批次历史；原三份顶层摘要固定旧JAR离线类依赖，精确复现可用local/migration72/artifacts/pre-scene-serialization-fix-LunaGC.jar，新JAR不会冒称旧摘要hash不变。
@@ -57,9 +59,9 @@ inline正引用细分装置73,649、怪物21,451、NPC 500。62个缺ScriptLib�
 ```powershell
 $env:GAME_PATH = & ./tools/game_path.ps1
 $sceneJdk = (Get-ChildItem local/runtime -Directory -Filter 'jdk-17*' | Select-Object -First 1).FullName
-python tools/audit_scene_scripts72.py --source local/migration72/sources/AnimeGameData/d54f6f0d423ded9d055bb740a3e5f3aa8f2667f1 --baseline resources --client $env:GAME_PATH --java-home $sceneJdk --runtime-jar local/migration72/artifacts/pre-scene-serialization-fix-LunaGC.jar --output local/migration72/evidence/scene-script-audit.json --summary-output protocol/cn-7.2/scene-script-observations.json
-python tools/audit_scene_scripts72.py --source local/migration72/sources/AnimeGameData/d54f6f0d423ded9d055bb740a3e5f3aa8f2667f1 --baseline resources --client $env:GAME_PATH --java-home $sceneJdk --runtime-jar local/migration72/artifacts/pre-scene-serialization-fix-LunaGC.jar --all-static --output local/migration72/evidence/scene-grid-script-audit.json --summary-output protocol/cn-7.2/scene-grid-script-observations.json
-python tools/audit_scene_scripts72.py --source local/migration72/sources/AnimeGameData/d54f6f0d423ded9d055bb740a3e5f3aa8f2667f1 --baseline resources --client $env:GAME_PATH --java-home $sceneJdk --runtime-jar local/migration72/artifacts/pre-scene-serialization-fix-LunaGC.jar --all-static --require-mode inline --output local/migration72/evidence/scene-grid-inline-audit.json --summary-output protocol/cn-7.2/scene-grid-inline-observations.json
+python tools/audit_scene_scripts72.py --source local/migration72/sources/AnimeGameData/d54f6f0d423ded9d055bb740a3e5f3aa8f2667f1 --baseline resources --client $env:GAME_PATH --java-home $sceneJdk --runtime-jar LunaGC-7.1.0.jar --output local/migration72/evidence/scene-script-audit.json --summary-output protocol/cn-7.2/scene-script-observations.json
+python tools/audit_scene_scripts72.py --source local/migration72/sources/AnimeGameData/d54f6f0d423ded9d055bb740a3e5f3aa8f2667f1 --baseline resources --client $env:GAME_PATH --java-home $sceneJdk --runtime-jar LunaGC-7.1.0.jar --all-static --output local/migration72/evidence/scene-grid-script-audit.json --summary-output protocol/cn-7.2/scene-grid-script-observations.json
+python tools/audit_scene_scripts72.py --source local/migration72/sources/AnimeGameData/d54f6f0d423ded9d055bb740a3e5f3aa8f2667f1 --baseline resources --client $env:GAME_PATH --java-home $sceneJdk --runtime-jar LunaGC-7.1.0.jar --all-static --require-mode inline --output local/migration72/evidence/scene-grid-inline-audit.json --summary-output protocol/cn-7.2/scene-grid-inline-observations.json
 python -m unittest tools.test_audit_scene_scripts72 -v
 ```
 

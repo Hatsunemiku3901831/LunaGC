@@ -1,0 +1,2918 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "declarations": {
+    "query": {
+      "normal": {
+        "scene": {
+          "typeIndex": 46311,
+          "clientType": "BBECFDMDFJC",
+          "cmdId": 27748,
+          "getter": "0x1523856a0",
+          "semanticName": "PlayerEnterSceneNotify",
+          "semanticEvidence": "typed network handler plus native entry log and literal usage",
+          "runtimeStatus": "not-tested",
+          "registration": "0x1507c2a03",
+          "methods": [
+            {
+              "entry": "0x1507ad120",
+              "ownerType": 56238,
+              "methodIndex": 467349,
+              "parameterIndex": 380980,
+              "entry32SHA256": "7b08caed4f9f4ae45fff774fa21f43a322a558d2fa7d8adebbe4a422582d6a65"
+            },
+            {
+              "entry": "0x1507ad6f0",
+              "ownerType": 56238,
+              "methodIndex": 467802,
+              "parameterIndex": 381458,
+              "entry32SHA256": "029e64176308a2ad3b9fab1e727dd8cb4429fa45c8e66878ee22d657fd73bd89"
+            },
+            {
+              "entry": "0x1507b32d0",
+              "ownerType": 56238,
+              "methodIndex": 467384,
+              "parameterIndex": 381021,
+              "entry32SHA256": "b9ddc8b3e3b8d3eaabca63061e6e049d76daab109438e8c64f512f122c160632"
+            },
+            {
+              "entry": "0x14cd67260",
+              "ownerType": 18753,
+              "methodIndex": 142800,
+              "parameterIndex": 129008,
+              "entry32SHA256": "073a71f9b30c16543791a3af388b13b3f7364a62b2a54c6e6bef58c3fdd88b26"
+            },
+            {
+              "entry": "0x1523856b0",
+              "ownerType": 46311,
+              "methodIndex": 384109,
+              "entry32SHA256": "ecbe7216d294f61f10b850c8c5b8545a3aca0b70c670c67bcf73d444a63a417a"
+            },
+            {
+              "entry": "0x152387890",
+              "ownerType": 46311,
+              "methodIndex": 384104,
+              "entry32SHA256": "7b921fbac02090eeb6d9c935a377c5688ac90e3e3cab3baff6a94bd7b13b1353"
+            },
+            {
+              "entry": "0x152386c00",
+              "ownerType": 46311,
+              "methodIndex": 384111,
+              "entry32SHA256": "2d7121f869092f8cf1d58fdf203bd87490347a630f8439593e753fbec39b45bc"
+            },
+            {
+              "entry": "0x152386cb0",
+              "ownerType": 46311,
+              "methodIndex": 384114,
+              "entry32SHA256": "ae0ec38264990a5923123075377d58611c595f9ac3143a01282c37d1169ad0bf"
+            },
+            {
+              "entry": "0x154048d40",
+              "ownerType": 84343,
+              "methodIndex": 698523,
+              "entry32SHA256": "2a628f045df698bed8308dd324fc2cee425dbc8e0a6d0b1976709fdab183357b"
+            }
+          ],
+          "literals": [
+            {
+              "usageRow": 779811,
+              "index": 45993,
+              "slot": 45993,
+              "cell": "0x145b23b68",
+              "value": "Genshin Loading Log: OnReceivePlayerEnterSceneNotify {0}"
+            },
+            {
+              "usageRow": 779817,
+              "index": 46023,
+              "slot": 46023,
+              "cell": "0x145b23c58",
+              "value": "Beyond Transport Interrupt EnterDungeon, Invoke Client Reconnect"
+            },
+            {
+              "usageRow": 780351,
+              "index": 50090,
+              "slot": 50090,
+              "cell": "0x145b2bb70",
+              "value": "Genshin Loading Log: PlayerModule OnPlayerEnterSceneNotify"
+            },
+            {
+              "usageRow": 780698,
+              "index": 53019,
+              "slot": 53019,
+              "cell": "0x145b316f8",
+              "value": "Genshin Loading Log: LoadingManager OnPlayerEnterSceneNotify"
+            }
+          ],
+          "enum": {
+            "typeIndex": 86551,
+            "clientType": "ILGABKBIAIE",
+            "namespace": "",
+            "underlyingType": "int32",
+            "values": [
+              {
+                "symbol": "EnterNone",
+                "value": 0,
+                "fieldIndex": 431526,
+                "defaultRow": 74792,
+                "typeIndex": 70,
+                "dataIndex": 655220
+              },
+              {
+                "symbol": "EnterSelf",
+                "value": 1,
+                "fieldIndex": 431527,
+                "defaultRow": 74793,
+                "typeIndex": 70,
+                "dataIndex": 655224
+              },
+              {
+                "symbol": "EnterGoto",
+                "value": 2,
+                "fieldIndex": 431528,
+                "defaultRow": 74794,
+                "typeIndex": 70,
+                "dataIndex": 655228
+              },
+              {
+                "symbol": "EnterJump",
+                "value": 3,
+                "fieldIndex": 431529,
+                "defaultRow": 74795,
+                "typeIndex": 70,
+                "dataIndex": 655232
+              },
+              {
+                "symbol": "EnterOther",
+                "value": 4,
+                "fieldIndex": 431530,
+                "defaultRow": 74796,
+                "typeIndex": 70,
+                "dataIndex": 655236
+              },
+              {
+                "symbol": "EnterBack",
+                "value": 5,
+                "fieldIndex": 431531,
+                "defaultRow": 74797,
+                "typeIndex": 70,
+                "dataIndex": 655240
+              },
+              {
+                "symbol": "EnterDungeon",
+                "value": 6,
+                "fieldIndex": 431532,
+                "defaultRow": 74798,
+                "typeIndex": 70,
+                "dataIndex": 655244
+              },
+              {
+                "symbol": "EnterDungeonReplay",
+                "value": 7,
+                "fieldIndex": 431533,
+                "defaultRow": 74799,
+                "typeIndex": 70,
+                "dataIndex": 655248
+              },
+              {
+                "symbol": "EnterGotoByPortal",
+                "value": 8,
+                "fieldIndex": 431534,
+                "defaultRow": 74800,
+                "typeIndex": 70,
+                "dataIndex": 655252
+              },
+              {
+                "symbol": "EnterSelfHome",
+                "value": 9,
+                "fieldIndex": 431535,
+                "defaultRow": 74801,
+                "typeIndex": 70,
+                "dataIndex": 655256
+              },
+              {
+                "symbol": "EnterOtherHome",
+                "value": 10,
+                "fieldIndex": 431536,
+                "defaultRow": 74802,
+                "typeIndex": 70,
+                "dataIndex": 655260
+              },
+              {
+                "symbol": "EnterGotoRecreate",
+                "value": 11,
+                "fieldIndex": 431537,
+                "defaultRow": 74803,
+                "typeIndex": 70,
+                "dataIndex": 655264
+              },
+              {
+                "symbol": "EnterGotoByTpl",
+                "value": 12,
+                "fieldIndex": 431538,
+                "defaultRow": 74804,
+                "typeIndex": 70,
+                "dataIndex": 655268
+              },
+              {
+                "symbol": "EnterBeyond",
+                "value": 13,
+                "fieldIndex": 431539,
+                "defaultRow": 74805,
+                "typeIndex": 70,
+                "dataIndex": 655272
+              },
+              {
+                "symbol": "EnterHall",
+                "value": 14,
+                "fieldIndex": 431540,
+                "defaultRow": 74806,
+                "typeIndex": 70,
+                "dataIndex": 655276
+              }
+            ],
+            "semanticStatus": "target-symbols-only"
+          },
+          "fields": [
+            {
+              "clientField": "HHAFHFEPLPD",
+              "objectOffset": 24,
+              "declaration": {
+                "kind": "class",
+                "attributes": "0x1",
+                "data": "0x14977",
+                "byRef": false,
+                "typeDefinition": 84343,
+                "name": "BGDCNKAKGHI",
+                "namespace": ""
+              }
+            },
+            {
+              "clientField": "EMLMBEIBJHJ",
+              "objectOffset": 32,
+              "declaration": {
+                "kind": "genericinst",
+                "attributes": "0x21",
+                "data": "0x7346",
+                "byRef": false,
+                "genericIndex": 29510,
+                "instanceIndex": 11,
+                "arguments": [
+                  {
+                    "kind": "uint32",
+                    "attributes": "0x0",
+                    "data": "0x13f",
+                    "byRef": false
+                  }
+                ],
+                "typeDefinition": 35584,
+                "name": "DKHEEHDOEIK",
+                "namespace": ""
+              }
+            },
+            {
+              "clientField": "KFIJNBDGBAH",
+              "objectOffset": 40,
+              "declaration": {
+                "kind": "class",
+                "attributes": "0x1",
+                "data": "0x650a",
+                "byRef": false,
+                "typeDefinition": 25866,
+                "name": "ABJMLEPLFJG",
+                "namespace": ""
+              }
+            },
+            {
+              "clientField": "LFPEKBJIJNG",
+              "objectOffset": 48,
+              "declaration": {
+                "kind": "class",
+                "attributes": "0x1",
+                "data": "0x14977",
+                "byRef": false,
+                "typeDefinition": 84343,
+                "name": "BGDCNKAKGHI",
+                "namespace": ""
+              }
+            },
+            {
+              "clientField": "CPIINPOJLCM",
+              "objectOffset": 56,
+              "declaration": {
+                "kind": "string",
+                "attributes": "0x1",
+                "data": "0x125",
+                "byRef": false
+              }
+            },
+            {
+              "clientField": "BJMCOIFDONK",
+              "objectOffset": 64,
+              "declaration": {
+                "kind": "class",
+                "attributes": "0x1",
+                "data": "0x8555",
+                "byRef": false,
+                "typeDefinition": 34133,
+                "name": "HJLMHFHHJKM",
+                "namespace": ""
+              }
+            },
+            {
+              "clientField": "FEANOEECAIM",
+              "objectOffset": 72,
+              "declaration": {
+                "kind": "class",
+                "attributes": "0x1",
+                "data": "0x10fec",
+                "byRef": false,
+                "typeDefinition": 69612,
+                "name": "PCCNENMODDD",
+                "namespace": ""
+              }
+            },
+            {
+              "clientField": "ABIFGOBLNDN",
+              "objectOffset": 80,
+              "declaration": {
+                "kind": "class",
+                "attributes": "0x1",
+                "data": "0x14977",
+                "byRef": false,
+                "typeDefinition": 84343,
+                "name": "BGDCNKAKGHI",
+                "namespace": ""
+              }
+            },
+            {
+              "clientField": "CCKBJJPAGGG",
+              "objectOffset": 88,
+              "declaration": {
+                "kind": "class",
+                "attributes": "0x1",
+                "data": "0x108b1",
+                "byRef": false,
+                "typeDefinition": 67761,
+                "name": "HKDMELCIJGB",
+                "namespace": ""
+              }
+            },
+            {
+              "clientField": "NBBEIFOKKNG",
+              "objectOffset": 96,
+              "declaration": {
+                "kind": "class",
+                "attributes": "0x1",
+                "data": "0x101f8",
+                "byRef": false,
+                "typeDefinition": 66040,
+                "name": "NAECHMKLBEI",
+                "namespace": ""
+              }
+            },
+            {
+              "clientField": "CNABNLMHMII",
+              "objectOffset": 104,
+              "declaration": {
+                "kind": "uint64",
+                "attributes": "0x1",
+                "data": "0x140",
+                "byRef": false
+              }
+            },
+            {
+              "clientField": "DGIBDKELFNG",
+              "objectOffset": 112,
+              "declaration": {
+                "kind": "uint32",
+                "attributes": "0x1",
+                "data": "0x13f",
+                "byRef": false
+              }
+            },
+            {
+              "clientField": "LMKLCDPJOBJ",
+              "objectOffset": 116,
+              "declaration": {
+                "kind": "uint32",
+                "attributes": "0x1",
+                "data": "0x13f",
+                "byRef": false
+              }
+            },
+            {
+              "clientField": "AJMJGIKBOPO",
+              "objectOffset": 120,
+              "declaration": {
+                "kind": "uint32",
+                "attributes": "0x1",
+                "data": "0x13f",
+                "byRef": false
+              }
+            },
+            {
+              "clientField": "JMHKHAPJADA",
+              "objectOffset": 124,
+              "declaration": {
+                "kind": "uint32",
+                "attributes": "0x1",
+                "data": "0x13f",
+                "byRef": false
+              }
+            },
+            {
+              "clientField": "NBDGINFCIIK",
+              "objectOffset": 128,
+              "declaration": {
+                "kind": "uint32",
+                "attributes": "0x1",
+                "data": "0x13f",
+                "byRef": false
+              }
+            },
+            {
+              "clientField": "KLDLBMCOGFC",
+              "objectOffset": 132,
+              "declaration": {
+                "kind": "bool",
+                "attributes": "0x1",
+                "data": "0xae",
+                "byRef": false
+              }
+            },
+            {
+              "clientField": "OACAAAMNGFI",
+              "objectOffset": 133,
+              "declaration": {
+                "kind": "bool",
+                "attributes": "0x1",
+                "data": "0xae",
+                "byRef": false
+              }
+            },
+            {
+              "clientField": "EHONLMHNLDP",
+              "objectOffset": 136,
+              "declaration": {
+                "kind": "uint32",
+                "attributes": "0x1",
+                "data": "0x13f",
+                "byRef": false
+              }
+            },
+            {
+              "clientField": "CMAFDGGJDNK",
+              "objectOffset": 140,
+              "declaration": {
+                "kind": "uint32",
+                "attributes": "0x1",
+                "data": "0x13f",
+                "byRef": false
+              }
+            },
+            {
+              "clientField": "OHHFLAOMMEC",
+              "objectOffset": 144,
+              "declaration": {
+                "kind": "uint32",
+                "attributes": "0x1",
+                "data": "0x13f",
+                "byRef": false
+              }
+            },
+            {
+              "clientField": "MCCMGLDOECH",
+              "objectOffset": 148,
+              "declaration": {
+                "kind": "uint32",
+                "attributes": "0x1",
+                "data": "0x13f",
+                "byRef": false
+              }
+            },
+            {
+              "clientField": "NOEEBKJAFAG",
+              "objectOffset": 152,
+              "declaration": {
+                "kind": "valuetype",
+                "attributes": "0x1",
+                "data": "0x15217",
+                "byRef": false,
+                "typeDefinition": 86551,
+                "name": "ILGABKBIAIE",
+                "namespace": ""
+              }
+            },
+            {
+              "clientField": "JEPBJIIEFOM",
+              "objectOffset": 156,
+              "declaration": {
+                "kind": "uint32",
+                "attributes": "0x1",
+                "data": "0x13f",
+                "byRef": false
+              }
+            },
+            {
+              "clientField": "PKGEAAKBCNC",
+              "objectOffset": 160,
+              "declaration": {
+                "kind": "uint32",
+                "attributes": "0x1",
+                "data": "0x13f",
+                "byRef": false
+              }
+            },
+            {
+              "clientField": "IOLBHNOIGJN",
+              "objectOffset": 164,
+              "declaration": {
+                "kind": "uint32",
+                "attributes": "0x1",
+                "data": "0x13f",
+                "byRef": false
+              }
+            }
+          ]
+        },
+        "stage": {
+          "methodIndex": 711360,
+          "entry": "0x14c8ae9a0",
+          "parameterIndex": 538572,
+          "parameterTypeIndex": 675783,
+          "enumTypeIndex": 85949,
+          "enumClientType": "NEKEJMEIJBF"
+        },
+        "bindings": [
+          {
+            "usageRow": 701228,
+            "cell": "0x145892570",
+            "sourceIndex": 478317,
+            "typeIndex": 11064,
+            "type": {
+              "kind": "class",
+              "attributes": "0x0",
+              "data": "0x2b38",
+              "byRef": false,
+              "typeDefinition": 11064,
+              "name": "IAutoAllocRecycle",
+              "namespace": "MoleMole"
+            }
+          },
+          {
+            "usageRow": 710071,
+            "cell": "0x1458c3938",
+            "sourceIndex": 106228,
+            "typeIndex": 75453,
+            "type": {
+              "kind": "class",
+              "attributes": "0x0",
+              "data": "0x126bd",
+              "byRef": false,
+              "typeDefinition": 75453,
+              "name": "NMCKLNDCNKA",
+              "namespace": ""
+            }
+          }
+        ],
+        "taskFields": [
+          {
+            "index": 374702,
+            "name": "CFFEALGPCJM",
+            "nameIndex": "0xb7f52e7",
+            "typeIndex": 444181,
+            "type": {
+              "kind": "string",
+              "attributes": "0x6",
+              "data": "0x125",
+              "byRef": false
+            },
+            "offset": 16,
+            "rawOffset": "0x10",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 374703,
+            "name": "EKICPGLCFHD",
+            "nameIndex": "0xb7f52f2",
+            "typeIndex": 455434,
+            "type": {
+              "kind": "class",
+              "attributes": "0x1",
+              "data": "0x8c3",
+              "byRef": false,
+              "typeDefinition": 2243,
+              "name": "Coroutine",
+              "namespace": "UnityEngine"
+            },
+            "offset": 24,
+            "rawOffset": "0x18",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 374704,
+            "name": "DGCBCBOJLGK",
+            "nameIndex": "0xb5dd94e",
+            "typeIndex": 455434,
+            "type": {
+              "kind": "class",
+              "attributes": "0x1",
+              "data": "0x8c3",
+              "byRef": false,
+              "typeDefinition": 2243,
+              "name": "Coroutine",
+              "namespace": "UnityEngine"
+            },
+            "offset": 32,
+            "rawOffset": "0x20",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 374705,
+            "name": "EHLPEADMCAI",
+            "nameIndex": "0xb18c0e8",
+            "typeIndex": 445681,
+            "type": {
+              "kind": "uint32",
+              "attributes": "0x6",
+              "data": "0x13f",
+              "byRef": false
+            },
+            "offset": 40,
+            "rawOffset": "0x28",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 374706,
+            "name": "DPDDLDIPDIC",
+            "nameIndex": "0xb1bf8cb",
+            "typeIndex": 445681,
+            "type": {
+              "kind": "uint32",
+              "attributes": "0x6",
+              "data": "0x13f",
+              "byRef": false
+            },
+            "offset": 44,
+            "rawOffset": "0x2c",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 374707,
+            "name": "NGHAOFLBJLM",
+            "nameIndex": "0xb7f52fd",
+            "typeIndex": 445682,
+            "type": {
+              "kind": "uint64",
+              "attributes": "0x6",
+              "data": "0x140",
+              "byRef": false
+            },
+            "offset": 48,
+            "rawOffset": "0x30",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 374708,
+            "name": "EKAJNENLKPM",
+            "nameIndex": "0xb229271",
+            "typeIndex": 651315,
+            "type": {
+              "kind": "valuetype",
+              "attributes": "0x1",
+              "data": "0x126c0",
+              "byRef": false,
+              "typeDefinition": 75456,
+              "name": "ELCLCAIHLED",
+              "namespace": ""
+            },
+            "offset": 56,
+            "rawOffset": "0x38",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 374709,
+            "name": "EMAHGCKGPID",
+            "nameIndex": "0xb25d4b3",
+            "typeIndex": 445681,
+            "type": {
+              "kind": "uint32",
+              "attributes": "0x6",
+              "data": "0x13f",
+              "byRef": false
+            },
+            "offset": 60,
+            "rawOffset": "0x3c",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 374710,
+            "name": "OOMECNAEDBH",
+            "nameIndex": "0xb7f5308",
+            "typeIndex": 444357,
+            "type": {
+              "kind": "bool",
+              "attributes": "0x6",
+              "data": "0xae",
+              "byRef": false
+            },
+            "offset": 64,
+            "rawOffset": "0x40",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 374711,
+            "name": "PIGBPDNANNG",
+            "nameIndex": "0xb7f5313",
+            "typeIndex": 444357,
+            "type": {
+              "kind": "bool",
+              "attributes": "0x6",
+              "data": "0xae",
+              "byRef": false
+            },
+            "offset": 65,
+            "rawOffset": "0x41",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 374712,
+            "name": "EBAHFLKIHGC",
+            "nameIndex": "0xb7f531e",
+            "typeIndex": 444357,
+            "type": {
+              "kind": "bool",
+              "attributes": "0x6",
+              "data": "0xae",
+              "byRef": false
+            },
+            "offset": 66,
+            "rawOffset": "0x42",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 374713,
+            "name": "JMMEOBCBMOJ",
+            "nameIndex": "0xb193da3",
+            "typeIndex": 452098,
+            "type": {
+              "kind": "valuetype",
+              "attributes": "0x6",
+              "data": "0x919",
+              "byRef": false,
+              "typeDefinition": 2329,
+              "name": "Vector3",
+              "namespace": "UnityEngine"
+            },
+            "offset": 68,
+            "rawOffset": "0x44",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 374714,
+            "name": "CJAAFEDGKKN",
+            "nameIndex": "0xb1f82e8",
+            "typeIndex": 651316,
+            "type": {
+              "kind": "valuetype",
+              "attributes": "0x6",
+              "data": "0x126be",
+              "byRef": false,
+              "typeDefinition": 75454,
+              "name": "AAOOCODHNAE",
+              "namespace": ""
+            },
+            "offset": 80,
+            "rawOffset": "0x50",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 374715,
+            "name": "HDKJFBJFAMA",
+            "nameIndex": "0xb7f5329",
+            "typeIndex": 445681,
+            "type": {
+              "kind": "uint32",
+              "attributes": "0x6",
+              "data": "0x13f",
+              "byRef": false
+            },
+            "offset": 84,
+            "rawOffset": "0x54",
+            "offsetKind": "instance"
+          },
+          {
+            "index": 374716,
+            "name": "FJCNLAMCDBD",
+            "nameIndex": "0xb196b7e",
+            "typeIndex": 445681,
+            "type": {
+              "kind": "uint32",
+              "attributes": "0x6",
+              "data": "0x13f",
+              "byRef": false
+            },
+            "offset": 88,
+            "rawOffset": "0x58",
+            "offsetKind": "instance"
+          }
+        ],
+        "methods": [
+          {
+            "entry": "0x14cd67260",
+            "ownerType": 18753,
+            "methodIndex": 142800,
+            "name": "LDLBKNPDDNK"
+          },
+          {
+            "entry": "0x14cd5f7b0",
+            "ownerType": 18753,
+            "methodIndex": 142791,
+            "name": "BINGKDKAHNF"
+          },
+          {
+            "entry": "0x147b2ddf0",
+            "ownerType": 75453,
+            "methodIndex": 624611,
+            "name": "AutoAllocTypeFields"
+          },
+          {
+            "entry": "0x147b2f350",
+            "ownerType": 75453,
+            "methodIndex": 624616,
+            "name": "OnPoolAllocated"
+          },
+          {
+            "entry": "0x147b2f6a0",
+            "ownerType": 75453,
+            "methodIndex": 624618,
+            "name": "DMHBGJPPCGJ"
+          },
+          {
+            "entry": "0x147b2f460",
+            "ownerType": 75453,
+            "methodIndex": 624619,
+            "name": "OEDPLDCDOEK"
+          }
+        ]
+      },
+      "bindings": [
+        {
+          "usageRow": 700095,
+          "cell": "0x14588ca20",
+          "sourceIndex": 5203,
+          "type": {
+            "kind": "genericinst",
+            "attributes": "0x0",
+            "data": "0x12f5",
+            "byRef": false,
+            "genericIndex": 4853,
+            "instanceIndex": 11,
+            "arguments": [
+              {
+                "kind": "uint32",
+                "attributes": "0x0",
+                "data": "0x13f",
+                "byRef": false
+              }
+            ],
+            "typeDefinition": 1255,
+            "name": "List`1",
+            "namespace": "System.Collections.Generic"
+          }
+        },
+        {
+          "usageRow": 702224,
+          "cell": "0x1458975f0",
+          "sourceIndex": 32774,
+          "type": {
+            "kind": "genericinst",
+            "attributes": "0x0",
+            "data": "0x781e",
+            "byRef": false,
+            "genericIndex": 30750,
+            "instanceIndex": 3723,
+            "arguments": [
+              {
+                "kind": "uint32",
+                "attributes": "0x0",
+                "data": "0x13f",
+                "byRef": false
+              },
+              {
+                "kind": "uint32",
+                "attributes": "0x0",
+                "data": "0x13f",
+                "byRef": false
+              }
+            ],
+            "typeDefinition": 1222,
+            "name": "Dictionary`2",
+            "namespace": "System.Collections.Generic"
+          }
+        }
+      ],
+      "cacheField": {
+        "index": 304800,
+        "name": "OBNPMJHMHAF",
+        "nameIndex": "0xb6c8817",
+        "typeIndex": 482280,
+        "type": {
+          "kind": "genericinst",
+          "attributes": "0x1",
+          "data": "0x781e",
+          "byRef": false,
+          "genericIndex": 30750,
+          "instanceIndex": 3723,
+          "arguments": [
+            {
+              "kind": "uint32",
+              "attributes": "0x0",
+              "data": "0x13f",
+              "byRef": false
+            },
+            {
+              "kind": "uint32",
+              "attributes": "0x0",
+              "data": "0x13f",
+              "byRef": false
+            }
+          ],
+          "typeDefinition": 1222,
+          "name": "Dictionary`2",
+          "namespace": "System.Collections.Generic"
+        },
+        "offset": 144,
+        "rawOffset": "0x90",
+        "offsetKind": "instance"
+      },
+      "sourceGlobalOwner": 66294,
+      "sourceGlobalField": {
+        "index": 327426,
+        "name": "FNLANEFCGPE",
+        "nameIndex": "0xb1895f2",
+        "typeIndex": 629672,
+        "type": {
+          "kind": "genericinst",
+          "attributes": "0x11",
+          "data": "0x4ed5b",
+          "byRef": false,
+          "genericIndex": 322907,
+          "instanceIndex": 42688,
+          "arguments": [
+            {
+              "kind": "uint32",
+              "attributes": "0x0",
+              "data": "0x13f",
+              "byRef": false
+            },
+            {
+              "kind": "class",
+              "attributes": "0x0",
+              "data": "0x114cb",
+              "byRef": false,
+              "typeDefinition": 70859,
+              "name": "IMHFELDKMFA",
+              "namespace": ""
+            }
+          ],
+          "typeDefinition": 1222,
+          "name": "Dictionary`2",
+          "namespace": "System.Collections.Generic"
+        },
+        "offset": null,
+        "rawOffset": "0x4034730",
+        "offsetKind": "runtime"
+      },
+      "sourceRecordField": {
+        "index": 349818,
+        "name": "PGEALOPDPOF",
+        "nameIndex": "0xb7865d2",
+        "typeIndex": 481973,
+        "type": {
+          "kind": "valuetype",
+          "attributes": "0x4",
+          "data": "0xe361",
+          "byRef": false,
+          "typeDefinition": 58209,
+          "name": "COJIPHBKKGB",
+          "namespace": ""
+        },
+        "offset": 128,
+        "rawOffset": "0x80",
+        "offsetKind": "instance"
+      },
+      "methods": [
+        {
+          "entry": "0x153a18e80",
+          "ownerType": 61485,
+          "method": {
+            "index": 510349,
+            "name": "HGKMCFILCLB",
+            "nameIndex": "0xb6c9b16",
+            "registeredAddress": "0x153a18e80",
+            "parameterCount": 1,
+            "flags": "0x86",
+            "virtualSlot": 65535
+          },
+          "parameters": [
+            {
+              "kind": "uint32",
+              "attributes": "0x0",
+              "data": "0x13f",
+              "byRef": false
+            }
+          ],
+          "returnTypeStatus": "not-recovered"
+        },
+        {
+          "entry": "0x153a357d0",
+          "ownerType": 61485,
+          "method": {
+            "index": 510275,
+            "name": "FCEFPKCKLIM",
+            "nameIndex": "0xb6c97bc",
+            "registeredAddress": "0x153a357d0",
+            "parameterCount": 0,
+            "flags": "0x886",
+            "virtualSlot": 65535
+          },
+          "parameters": [],
+          "returnTypeStatus": "not-recovered"
+        },
+        {
+          "entry": "0x153a3cb70",
+          "ownerType": 61485,
+          "method": {
+            "index": 510351,
+            "name": "IAINIFFHOEC",
+            "nameIndex": "0xb6c9b37",
+            "registeredAddress": "0x153a3cb70",
+            "parameterCount": 2,
+            "flags": "0x86",
+            "virtualSlot": 65535
+          },
+          "parameters": [
+            {
+              "kind": "uint32",
+              "attributes": "0x0",
+              "data": "0x13f",
+              "byRef": false
+            },
+            {
+              "kind": "genericinst",
+              "attributes": "0x0",
+              "data": "0x7346",
+              "byRef": false,
+              "genericIndex": 29510,
+              "instanceIndex": 11,
+              "arguments": [
+                {
+                  "kind": "uint32",
+                  "attributes": "0x0",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              ],
+              "typeDefinition": 35584,
+              "name": "DKHEEHDOEIK",
+              "namespace": ""
+            }
+          ],
+          "returnTypeStatus": "not-recovered"
+        }
+      ],
+      "returnStorage": "uint32 value at entries+32+index*16+12; method return declaration is not recovered"
+    },
+    "bindings": [
+      {
+        "usageRow": 698791,
+        "cell": "0x1458869f0",
+        "sourceIndex": 28866,
+        "type": {
+          "kind": "szarray",
+          "attributes": "0x0",
+          "data": "0x142e62a90",
+          "byRef": false,
+          "elementType": {
+            "kind": "uint32",
+            "attributes": "0x0",
+            "data": "0x13f",
+            "byRef": false
+          },
+          "rank": 1
+        }
+      },
+      {
+        "usageRow": 704087,
+        "cell": "0x1458a1ec0",
+        "sourceIndex": 127,
+        "type": {
+          "kind": "genericinst",
+          "attributes": "0x0",
+          "data": "0x73",
+          "byRef": false,
+          "genericIndex": 115,
+          "instanceIndex": 11,
+          "arguments": [
+            {
+              "kind": "uint32",
+              "attributes": "0x0",
+              "data": "0x13f",
+              "byRef": false
+            }
+          ],
+          "typeDefinition": 1244,
+          "name": "ICollection`1",
+          "namespace": "System.Collections.Generic"
+        }
+      }
+    ],
+    "ownerCacheField": {
+      "index": 304794,
+      "name": "CMFGIBMFCCM",
+      "nameIndex": "0xb6c87d5",
+      "typeIndex": 490933,
+      "type": {
+        "kind": "genericinst",
+        "attributes": "0x1",
+        "data": "0xb03f",
+        "byRef": false,
+        "genericIndex": 45119,
+        "instanceIndex": 5211,
+        "arguments": [
+          {
+            "kind": "uint32",
+            "attributes": "0x0",
+            "data": "0x13f",
+            "byRef": false
+          },
+          {
+            "kind": "genericinst",
+            "attributes": "0x0",
+            "data": "0x12f5",
+            "byRef": false,
+            "genericIndex": 4853,
+            "instanceIndex": 11,
+            "arguments": [
+              {
+                "kind": "uint32",
+                "attributes": "0x0",
+                "data": "0x13f",
+                "byRef": false
+              }
+            ],
+            "typeDefinition": 1255,
+            "name": "List`1",
+            "namespace": "System.Collections.Generic"
+          }
+        ],
+        "typeDefinition": 1222,
+        "name": "Dictionary`2",
+        "namespace": "System.Collections.Generic"
+      },
+      "offset": 96,
+      "rawOffset": "0x60",
+      "offsetKind": "instance"
+    },
+    "collectionInterface": {
+      "index": 1244,
+      "name": "ICollection`1",
+      "namespace": "System.Collections.Generic",
+      "nameIndex": "0xd02521c",
+      "namespaceIndex": "0x1a024942",
+      "fieldStart": 4294967295,
+      "fieldCount": 0,
+      "fields": [],
+      "methodStart": 10341,
+      "methodCount": 7,
+      "methods": [
+        {
+          "index": 10341,
+          "name": "get_Count",
+          "nameIndex": "0x900112d",
+          "registeredAddress": "0x0",
+          "parameterCount": 0,
+          "flags": "0xdc6",
+          "virtualSlot": 0
+        },
+        {
+          "index": 10342,
+          "name": "get_IsReadOnly",
+          "nameIndex": "0xe00396e",
+          "registeredAddress": "0x0",
+          "parameterCount": 0,
+          "flags": "0xdc6",
+          "virtualSlot": 1
+        },
+        {
+          "index": 10343,
+          "name": "Add",
+          "nameIndex": "0x30007e1",
+          "registeredAddress": "0x0",
+          "parameterCount": 1,
+          "flags": "0x5c6",
+          "virtualSlot": 2
+        },
+        {
+          "index": 10344,
+          "name": "Clear",
+          "nameIndex": "0x50007dc",
+          "registeredAddress": "0x0",
+          "parameterCount": 0,
+          "flags": "0x5c6",
+          "virtualSlot": 3
+        },
+        {
+          "index": 10345,
+          "name": "Contains",
+          "nameIndex": "0x800842d",
+          "registeredAddress": "0x0",
+          "parameterCount": 1,
+          "flags": "0x5c6",
+          "virtualSlot": 4
+        },
+        {
+          "index": 10346,
+          "name": "CopyTo",
+          "nameIndex": "0x6003903",
+          "registeredAddress": "0x0",
+          "parameterCount": 2,
+          "flags": "0x5c6",
+          "virtualSlot": 5
+        },
+        {
+          "index": 10347,
+          "name": "Remove",
+          "nameIndex": "0x6001ebc",
+          "registeredAddress": "0x0",
+          "parameterCount": 1,
+          "flags": "0x5c6",
+          "virtualSlot": 6
+        }
+      ],
+      "parent": null,
+      "fieldLayout": null
+    },
+    "repeatedMethods": [
+      {
+        "index": 297480,
+        "name": "CopyTo",
+        "nameIndex": "0x6003903",
+        "registeredAddress": "0x0",
+        "parameterCount": 2,
+        "flags": "0xc6",
+        "virtualSlot": 34
+      },
+      {
+        "index": 297488,
+        "name": "CopyTo",
+        "nameIndex": "0x6003903",
+        "registeredAddress": "0x0",
+        "parameterCount": 2,
+        "flags": "0xc6",
+        "virtualSlot": 42
+      },
+      {
+        "index": 297491,
+        "name": "get_Count",
+        "nameIndex": "0x900112d",
+        "registeredAddress": "0x0",
+        "parameterCount": 0,
+        "flags": "0x8c6",
+        "virtualSlot": 33
+      }
+    ],
+    "listFields": [
+      {
+        "index": 5850,
+        "name": "_items",
+        "nameIndex": "0x60080d9",
+        "typeIndex": 448489,
+        "type": {
+          "kind": "szarray",
+          "attributes": "0x1",
+          "data": "0x14353a170",
+          "byRef": false,
+          "elementType": {
+            "kind": "var",
+            "attributes": "0x0",
+            "data": "0x180",
+            "byRef": false
+          },
+          "rank": 1
+        },
+        "offset": null,
+        "rawOffset": "0x0",
+        "offsetKind": "runtime"
+      },
+      {
+        "index": 5851,
+        "name": "_size",
+        "nameIndex": "0x5023166",
+        "typeIndex": 444079,
+        "type": {
+          "kind": "int32",
+          "attributes": "0x1",
+          "data": "0xfb",
+          "byRef": false
+        },
+        "offset": null,
+        "rawOffset": "0x0",
+        "offsetKind": "runtime"
+      },
+      {
+        "index": 5852,
+        "name": "_version",
+        "nameIndex": "0x80012bb",
+        "typeIndex": 444079,
+        "type": {
+          "kind": "int32",
+          "attributes": "0x1",
+          "data": "0xfb",
+          "byRef": false
+        },
+        "offset": null,
+        "rawOffset": "0x0",
+        "offsetKind": "runtime"
+      }
+    ],
+    "closedMethodStatus": "List constructor/InsertRange PE bodies observed; base generic registered pointers are zero; runtime generic ABI not recovered"
+  },
+  "nativeCode": {
+    "0x153a3cb70": {
+      "size": 496,
+      "sha256": "b8db172178adaa5050af51e6691b27ac5ba8741dd1f96e98cdba22f1e75196ab"
+    },
+    "0x15881e210": {
+      "size": 468,
+      "sha256": "787a1694f8d387a0b83a819a7a265b2d601fdb445ddcb2bf5e4369a5b4a03bab"
+    },
+    "0x15881f800": {
+      "size": 1386,
+      "sha256": "5f3f94da9f82017cbfb071aa4a533f16a773ca1fd85d7481418867d05927100e"
+    },
+    "0x14051b7b0": {
+      "size": 2232,
+      "sha256": "9e9c1da4044e39f809b8a06a63a1f0eef7a38e36b5da6b9a8dbc287ed1ab263f"
+    },
+    "0x1578b66f0": {
+      "size": 663,
+      "sha256": "eb3bd9ba203b582c2e9b151b1ea8b369e0da775a6aeeccdf81f5b6450bff8b3b"
+    },
+    "0x1578b6a20": {
+      "size": 1533,
+      "sha256": "f44b4397eb8904f964a9dabd2e7b41782150871fa623870e4053f1fb2e61d39d"
+    }
+  },
+  "fixtureCount": 24,
+  "runtimeStatus": "not-tested",
+  "targetProtocolReady": false,
+  "fallbackBodyExecuted": false,
+  "models": [
+    "normal/query explicit storage reused without changing existing files",
+    "initialized synthetic ICollection metadata; actual native assignability/interface dispatch executes",
+    "ICollection.Count reads the actual reader object count; CopyTo copies its raw uint32 array with declared bounds",
+    "managed uint32 arrays/allocation/copy from SceneReader72; fixed cache dictionary and generic binder storage"
+  ],
+  "outsideScope": [
+    "IEnumerable fallback158820740 body",
+    "actual runtime closed generic ABI/IFix implementations",
+    "unknown scene business meanings",
+    "scene code after consumer returns",
+    "SDK/media/network order/live scene entry/D-02"
+  ],
+  "toolSourceSHA256": {
+    "tools/client72_scene_list.py": "cde453f40f6888bf7231988fae71d6e5d30a799efc390d7e3e8e5ae0c9d6f743",
+    "tools/trace_client72_scene_list.py": "2b3254c0c296a4c014bfdfa067461394fe38ad4d7c51716d8008a89286a6bd8c",
+    "tools/trace_client72_scene_query.py": "98051438ab743f4dbd678573ecbab75f116b5a03edd5276198560d26037e519f",
+    "tools/trace_client72_scene_normal.py": "2f813e139343f6f66a327743de6ca4b9461b257e3e06db6c7088df2eb8b91a9c",
+    "tools/client72_scene_reader.py": "ca73c8fbdf58bdf1658643e3f3b8023b4ecc65e7a7cab393d5fcb5674f0fc146",
+    "tools/client72_stage_runtime.py": "8a91b9bdf477e804a35ec8a8fb9e945c0964639718e2de6ee723b5bdd7accdb0"
+  },
+  "observations": [
+    {
+      "name": "ctor-empty",
+      "expectedItems": [],
+      "key": 17,
+      "stop": "0x620005000",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x612001ec0",
+      "nativeListWrites": [
+        {
+          "offset": "0x10",
+          "size": 8,
+          "value": 26071806864,
+          "source": "0x15881e387"
+        }
+      ],
+      "listBefore": null,
+      "listAfter": {
+        "pointer": "0x612003b50",
+        "arrayPointer": "0x612003390",
+        "size": 0,
+        "version": 0,
+        "capacity": 0,
+        "items": [],
+        "rawArray": []
+      },
+      "oldArrayAfter": [],
+      "dictionary": [],
+      "interfaceCalls": [
+        {
+          "kind": "ICollection.Count",
+          "count": 0
+        }
+      ],
+      "allocatedLists": []
+    },
+    {
+      "name": "ctor-nonempty",
+      "expectedItems": [
+        1,
+        2147483648,
+        4294967295
+      ],
+      "key": 17,
+      "stop": "0x620005000",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x6120020e0",
+      "nativeListWrites": [
+        {
+          "offset": "0x10",
+          "size": 8,
+          "value": 26071808992,
+          "source": "0x15881e2bd"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 3,
+          "source": "0x15881e3c6"
+        }
+      ],
+      "listBefore": null,
+      "listAfter": {
+        "pointer": "0x612003b90",
+        "arrayPointer": "0x612003be0",
+        "size": 3,
+        "version": 0,
+        "capacity": 3,
+        "items": [
+          1,
+          2147483648,
+          4294967295
+        ],
+        "rawArray": [
+          1,
+          2147483648,
+          4294967295
+        ]
+      },
+      "oldArrayAfter": [],
+      "dictionary": [],
+      "interfaceCalls": [
+        {
+          "kind": "ICollection.Count",
+          "count": 3
+        },
+        {
+          "kind": "ICollection.CopyTo",
+          "count": 3,
+          "destinationIndex": 0
+        }
+      ],
+      "allocatedLists": []
+    },
+    {
+      "name": "ctor-duplicates",
+      "expectedItems": [
+        7,
+        7,
+        0,
+        2147483648,
+        7,
+        4294967295
+      ],
+      "key": 17,
+      "stop": "0x620005000",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x6120020e0",
+      "nativeListWrites": [
+        {
+          "offset": "0x10",
+          "size": 8,
+          "value": 26071808992,
+          "source": "0x15881e2bd"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 6,
+          "source": "0x15881e3c6"
+        }
+      ],
+      "listBefore": null,
+      "listAfter": {
+        "pointer": "0x612003b90",
+        "arrayPointer": "0x612003be0",
+        "size": 6,
+        "version": 0,
+        "capacity": 6,
+        "items": [
+          7,
+          7,
+          0,
+          2147483648,
+          7,
+          4294967295
+        ],
+        "rawArray": [
+          7,
+          7,
+          0,
+          2147483648,
+          7,
+          4294967295
+        ]
+      },
+      "oldArrayAfter": [],
+      "dictionary": [],
+      "interfaceCalls": [
+        {
+          "kind": "ICollection.Count",
+          "count": 6
+        },
+        {
+          "kind": "ICollection.CopyTo",
+          "count": 6,
+          "destinationIndex": 0
+        }
+      ],
+      "allocatedLists": []
+    },
+    {
+      "name": "nz-new-empty",
+      "expectedItems": [],
+      "key": 17,
+      "stop": "0x620005000",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x612001ec0",
+      "nativeListWrites": [
+        {
+          "offset": "0x10",
+          "size": 8,
+          "value": 26071806864,
+          "source": "0x153a3cbcb"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 1,
+          "source": "0x153a3cc54"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 0,
+          "source": "0x153a3cc57"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 2,
+          "source": "0x15881fd1e"
+        }
+      ],
+      "listBefore": null,
+      "listAfter": {
+        "pointer": "0x612003b50",
+        "arrayPointer": "0x612003390",
+        "size": 0,
+        "version": 2,
+        "capacity": 0,
+        "items": [],
+        "rawArray": []
+      },
+      "oldArrayAfter": [],
+      "dictionary": [
+        {
+          "hash": 17,
+          "next": -1,
+          "key": 17,
+          "value": "0x612003b50"
+        }
+      ],
+      "interfaceCalls": [
+        {
+          "kind": "ICollection.Count",
+          "count": 0
+        }
+      ],
+      "allocatedLists": [
+        "0x612003b50"
+      ]
+    },
+    {
+      "name": "nz-new-nonempty",
+      "expectedItems": [
+        1,
+        2147483648,
+        4294967295
+      ],
+      "key": 17,
+      "stop": "0x620005000",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x6120020e0",
+      "nativeListWrites": [
+        {
+          "offset": "0x10",
+          "size": 8,
+          "value": 26071806928,
+          "source": "0x153a3cbcb"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 1,
+          "source": "0x153a3cc54"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 0,
+          "source": "0x153a3cc57"
+        },
+        {
+          "offset": "0x10",
+          "size": 8,
+          "value": 26071808992,
+          "source": "0x15881fc2c"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 3,
+          "source": "0x15881fd19"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 2,
+          "source": "0x15881fd1e"
+        }
+      ],
+      "listBefore": null,
+      "listAfter": {
+        "pointer": "0x612003b90",
+        "arrayPointer": "0x612003be0",
+        "size": 3,
+        "version": 2,
+        "capacity": 4,
+        "items": [
+          1,
+          2147483648,
+          4294967295
+        ],
+        "rawArray": [
+          1,
+          2147483648,
+          4294967295,
+          0
+        ]
+      },
+      "oldArrayAfter": [],
+      "dictionary": [
+        {
+          "hash": 17,
+          "next": -1,
+          "key": 17,
+          "value": "0x612003b90"
+        }
+      ],
+      "interfaceCalls": [
+        {
+          "kind": "ICollection.Count",
+          "count": 3
+        },
+        {
+          "kind": "ICollection.CopyTo",
+          "count": 3,
+          "destinationIndex": 0
+        }
+      ],
+      "allocatedLists": [
+        "0x612003b90"
+      ]
+    },
+    {
+      "name": "nz-new-duplicates",
+      "expectedItems": [
+        7,
+        7,
+        0,
+        2147483648,
+        7,
+        4294967295
+      ],
+      "key": 17,
+      "stop": "0x620005000",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x6120020e0",
+      "nativeListWrites": [
+        {
+          "offset": "0x10",
+          "size": 8,
+          "value": 26071806928,
+          "source": "0x153a3cbcb"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 1,
+          "source": "0x153a3cc54"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 0,
+          "source": "0x153a3cc57"
+        },
+        {
+          "offset": "0x10",
+          "size": 8,
+          "value": 26071808992,
+          "source": "0x15881fc2c"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 6,
+          "source": "0x15881fd19"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 2,
+          "source": "0x15881fd1e"
+        }
+      ],
+      "listBefore": null,
+      "listAfter": {
+        "pointer": "0x612003b90",
+        "arrayPointer": "0x612003be0",
+        "size": 6,
+        "version": 2,
+        "capacity": 6,
+        "items": [
+          7,
+          7,
+          0,
+          2147483648,
+          7,
+          4294967295
+        ],
+        "rawArray": [
+          7,
+          7,
+          0,
+          2147483648,
+          7,
+          4294967295
+        ]
+      },
+      "oldArrayAfter": [],
+      "dictionary": [
+        {
+          "hash": 17,
+          "next": -1,
+          "key": 17,
+          "value": "0x612003b90"
+        }
+      ],
+      "interfaceCalls": [
+        {
+          "kind": "ICollection.Count",
+          "count": 6
+        },
+        {
+          "kind": "ICollection.CopyTo",
+          "count": 6,
+          "destinationIndex": 0
+        }
+      ],
+      "allocatedLists": [
+        "0x612003b90"
+      ]
+    },
+    {
+      "name": "nz-existing-capacity",
+      "expectedItems": [
+        1,
+        2147483648,
+        4294967295
+      ],
+      "key": 17,
+      "stop": "0x620005000",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x6120020e0",
+      "nativeListWrites": [
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 10,
+          "source": "0x153a3cc54"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 0,
+          "source": "0x153a3cc57"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 3,
+          "source": "0x15881fd19"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 11,
+          "source": "0x15881fd1e"
+        }
+      ],
+      "listBefore": {
+        "pointer": "0x612003a90",
+        "arrayPointer": "0x612003ae0",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "listAfter": {
+        "pointer": "0x612003a90",
+        "arrayPointer": "0x612003ae0",
+        "size": 3,
+        "version": 11,
+        "capacity": 8,
+        "items": [
+          1,
+          2147483648,
+          4294967295
+        ],
+        "rawArray": [
+          1,
+          2147483648,
+          4294967295,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "oldArrayAfter": [
+        1,
+        2147483648,
+        4294967295,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "dictionary": [
+        {
+          "hash": 17,
+          "next": -1,
+          "key": 17,
+          "value": "0x612003a90"
+        }
+      ],
+      "interfaceCalls": [
+        {
+          "kind": "ICollection.Count",
+          "count": 3
+        },
+        {
+          "kind": "ICollection.CopyTo",
+          "count": 3,
+          "destinationIndex": 0
+        }
+      ],
+      "allocatedLists": []
+    },
+    {
+      "name": "nz-existing-grow",
+      "expectedItems": [
+        1,
+        2147483648,
+        4294967295
+      ],
+      "key": 17,
+      "stop": "0x620005000",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x6120020e0",
+      "nativeListWrites": [
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 10,
+          "source": "0x153a3cc54"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 0,
+          "source": "0x153a3cc57"
+        },
+        {
+          "offset": "0x10",
+          "size": 8,
+          "value": 26071809040,
+          "source": "0x15881fc2c"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 3,
+          "source": "0x15881fd19"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 11,
+          "source": "0x15881fd1e"
+        }
+      ],
+      "listBefore": {
+        "pointer": "0x612003a90",
+        "arrayPointer": "0x612003ae0",
+        "size": 1,
+        "version": 9,
+        "capacity": 1,
+        "items": [
+          99
+        ],
+        "rawArray": [
+          99
+        ]
+      },
+      "listAfter": {
+        "pointer": "0x612003a90",
+        "arrayPointer": "0x612003c10",
+        "size": 3,
+        "version": 11,
+        "capacity": 3,
+        "items": [
+          1,
+          2147483648,
+          4294967295
+        ],
+        "rawArray": [
+          1,
+          2147483648,
+          4294967295
+        ]
+      },
+      "oldArrayAfter": [
+        99
+      ],
+      "dictionary": [
+        {
+          "hash": 17,
+          "next": -1,
+          "key": 17,
+          "value": "0x612003a90"
+        }
+      ],
+      "interfaceCalls": [
+        {
+          "kind": "ICollection.Count",
+          "count": 3
+        },
+        {
+          "kind": "ICollection.CopyTo",
+          "count": 3,
+          "destinationIndex": 0
+        }
+      ],
+      "allocatedLists": []
+    },
+    {
+      "name": "nz-existing-empty",
+      "expectedItems": [],
+      "key": 17,
+      "stop": "0x620005000",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x612001ec0",
+      "nativeListWrites": [
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 10,
+          "source": "0x153a3cc54"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 0,
+          "source": "0x153a3cc57"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 11,
+          "source": "0x15881fd1e"
+        }
+      ],
+      "listBefore": {
+        "pointer": "0x612003a50",
+        "arrayPointer": "0x612003aa0",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "listAfter": {
+        "pointer": "0x612003a50",
+        "arrayPointer": "0x612003aa0",
+        "size": 0,
+        "version": 11,
+        "capacity": 8,
+        "items": [],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "oldArrayAfter": [
+        99,
+        88,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "dictionary": [
+        {
+          "hash": 17,
+          "next": -1,
+          "key": 17,
+          "value": "0x612003a50"
+        }
+      ],
+      "interfaceCalls": [
+        {
+          "kind": "ICollection.Count",
+          "count": 0
+        }
+      ],
+      "allocatedLists": []
+    },
+    {
+      "name": "nz-null-dictionary",
+      "expectedItems": [
+        1,
+        2147483648,
+        4294967295
+      ],
+      "key": 17,
+      "stop": "0x1404c2be0",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x6120020e0",
+      "nativeListWrites": [],
+      "listBefore": null,
+      "listAfter": null,
+      "oldArrayAfter": [],
+      "dictionary": [],
+      "interfaceCalls": [],
+      "allocatedLists": []
+    },
+    {
+      "name": "nz-null-entry",
+      "expectedItems": [
+        1,
+        2147483648,
+        4294967295
+      ],
+      "key": 17,
+      "stop": "0x1404c2be0",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x6120020e0",
+      "nativeListWrites": [],
+      "listBefore": {
+        "pointer": "0x612003a90",
+        "arrayPointer": "0x612003ae0",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "listAfter": {
+        "pointer": "0x612003a90",
+        "arrayPointer": "0x612003ae0",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "oldArrayAfter": [
+        99,
+        88,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "dictionary": [
+        {
+          "hash": 17,
+          "next": -1,
+          "key": 17,
+          "value": "0x0"
+        }
+      ],
+      "interfaceCalls": [],
+      "allocatedLists": []
+    },
+    {
+      "name": "nz-null-entries",
+      "expectedItems": [
+        1,
+        2147483648,
+        4294967295
+      ],
+      "key": 17,
+      "stop": "0x1404c2be0",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x6120020e0",
+      "nativeListWrites": [],
+      "listBefore": null,
+      "listAfter": null,
+      "oldArrayAfter": [],
+      "dictionary": [],
+      "interfaceCalls": [],
+      "allocatedLists": []
+    },
+    {
+      "name": "nz-bounds-entry",
+      "expectedItems": [
+        1,
+        2147483648,
+        4294967295
+      ],
+      "key": 17,
+      "stop": "0x1404c2650",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x6120020e0",
+      "nativeListWrites": [],
+      "listBefore": null,
+      "listAfter": null,
+      "oldArrayAfter": [],
+      "dictionary": [],
+      "interfaceCalls": [],
+      "allocatedLists": []
+    },
+    {
+      "name": "ctor-null-target",
+      "expectedItems": [
+        1,
+        2147483648,
+        4294967295
+      ],
+      "key": 17,
+      "stop": "0x1404c2be0",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x6120020e0",
+      "nativeListWrites": [],
+      "listBefore": null,
+      "listAfter": {
+        "pointer": "0x612003b90",
+        "arrayPointer": "0x0",
+        "size": 0,
+        "version": 0,
+        "capacity": 0,
+        "items": [],
+        "rawArray": []
+      },
+      "oldArrayAfter": [],
+      "dictionary": [],
+      "interfaceCalls": [],
+      "allocatedLists": []
+    },
+    {
+      "name": "ctor-null-source",
+      "expectedItems": [
+        1,
+        2147483648,
+        4294967295
+      ],
+      "key": 17,
+      "stop": "0x159ca4980",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x6120020e0",
+      "nativeListWrites": [],
+      "listBefore": null,
+      "listAfter": {
+        "pointer": "0x612003b90",
+        "arrayPointer": "0x0",
+        "size": 0,
+        "version": 0,
+        "capacity": 0,
+        "items": [],
+        "rawArray": []
+      },
+      "oldArrayAfter": [],
+      "dictionary": [],
+      "interfaceCalls": [],
+      "allocatedLists": []
+    },
+    {
+      "name": "nz-null-source",
+      "expectedItems": [
+        1,
+        2147483648,
+        4294967295
+      ],
+      "key": 17,
+      "stop": "0x159ca4980",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x6120020e0",
+      "nativeListWrites": [
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 10,
+          "source": "0x153a3cc54"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 0,
+          "source": "0x153a3cc57"
+        }
+      ],
+      "listBefore": {
+        "pointer": "0x612003a90",
+        "arrayPointer": "0x612003ae0",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "listAfter": {
+        "pointer": "0x612003a90",
+        "arrayPointer": "0x612003ae0",
+        "size": 0,
+        "version": 10,
+        "capacity": 8,
+        "items": [],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "oldArrayAfter": [
+        99,
+        88,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "dictionary": [
+        {
+          "hash": 17,
+          "next": -1,
+          "key": 17,
+          "value": "0x612003a90"
+        }
+      ],
+      "interfaceCalls": [],
+      "allocatedLists": []
+    },
+    {
+      "name": "nz-ifix",
+      "expectedItems": [
+        1,
+        2147483648,
+        4294967295
+      ],
+      "key": 17,
+      "stop": "0x14e129150",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x6120020e0",
+      "nativeListWrites": [],
+      "listBefore": null,
+      "listAfter": null,
+      "oldArrayAfter": [],
+      "dictionary": [],
+      "interfaceCalls": [],
+      "allocatedLists": []
+    },
+    {
+      "name": "ctor-noncollection",
+      "expectedItems": [
+        1,
+        2147483648,
+        4294967295
+      ],
+      "key": 17,
+      "stop": "0x158820740",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x6120020e0",
+      "nativeListWrites": [
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 0,
+          "source": "0x15881e325"
+        },
+        {
+          "offset": "0x10",
+          "size": 8,
+          "value": 26071806928,
+          "source": "0x15881e333"
+        }
+      ],
+      "listBefore": null,
+      "listAfter": {
+        "pointer": "0x612003b90",
+        "arrayPointer": "0x6120033d0",
+        "size": 0,
+        "version": 0,
+        "capacity": 0,
+        "items": [],
+        "rawArray": []
+      },
+      "oldArrayAfter": [],
+      "dictionary": [],
+      "interfaceCalls": [],
+      "allocatedLists": []
+    },
+    {
+      "name": "nz-noncollection",
+      "expectedItems": [
+        1,
+        2147483648,
+        4294967295
+      ],
+      "key": 17,
+      "stop": "0x158820740",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x6120020e0",
+      "nativeListWrites": [
+        {
+          "offset": "0x10",
+          "size": 8,
+          "value": 26071806928,
+          "source": "0x153a3cbcb"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 1,
+          "source": "0x153a3cc54"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 0,
+          "source": "0x153a3cc57"
+        }
+      ],
+      "listBefore": null,
+      "listAfter": {
+        "pointer": "0x612003b90",
+        "arrayPointer": "0x6120033d0",
+        "size": 0,
+        "version": 1,
+        "capacity": 0,
+        "items": [],
+        "rawArray": []
+      },
+      "oldArrayAfter": [],
+      "dictionary": [
+        {
+          "hash": 17,
+          "next": -1,
+          "key": 17,
+          "value": "0x612003b90"
+        }
+      ],
+      "interfaceCalls": [],
+      "allocatedLists": [
+        "0x612003b90"
+      ]
+    },
+    {
+      "name": "scene-zero-empty",
+      "expectedItems": [],
+      "key": 17,
+      "stop": "0x14cd675a2",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x612001ec0",
+      "nativeListWrites": [
+        {
+          "offset": "0x10",
+          "size": 8,
+          "value": 26071814208,
+          "source": "0x15881e387"
+        }
+      ],
+      "listBefore": null,
+      "listAfter": {
+        "pointer": "0x612005800",
+        "arrayPointer": "0x612005040",
+        "size": 0,
+        "version": 0,
+        "capacity": 0,
+        "items": [],
+        "rawArray": []
+      },
+      "oldArrayAfter": [],
+      "dictionary": [],
+      "interfaceCalls": [
+        {
+          "kind": "ICollection.Count",
+          "count": 0
+        }
+      ],
+      "allocatedLists": [
+        "0x612005800"
+      ]
+    },
+    {
+      "name": "scene-zero-duplicates",
+      "expectedItems": [
+        7,
+        7,
+        0,
+        2147483648,
+        7,
+        4294967295
+      ],
+      "key": 17,
+      "stop": "0x14cd675a2",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x6120020e0",
+      "nativeListWrites": [
+        {
+          "offset": "0x10",
+          "size": 8,
+          "value": 26071816336,
+          "source": "0x15881e2bd"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 6,
+          "source": "0x15881e3c6"
+        }
+      ],
+      "listBefore": null,
+      "listAfter": {
+        "pointer": "0x612005840",
+        "arrayPointer": "0x612005890",
+        "size": 6,
+        "version": 0,
+        "capacity": 6,
+        "items": [
+          7,
+          7,
+          0,
+          2147483648,
+          7,
+          4294967295
+        ],
+        "rawArray": [
+          7,
+          7,
+          0,
+          2147483648,
+          7,
+          4294967295
+        ]
+      },
+      "oldArrayAfter": [],
+      "dictionary": [],
+      "interfaceCalls": [
+        {
+          "kind": "ICollection.Count",
+          "count": 6
+        },
+        {
+          "kind": "ICollection.CopyTo",
+          "count": 6,
+          "destinationIndex": 0
+        }
+      ],
+      "allocatedLists": [
+        "0x612005840"
+      ]
+    },
+    {
+      "name": "scene-nz-new",
+      "expectedItems": [
+        1,
+        2147483648,
+        4294967295
+      ],
+      "key": 17,
+      "stop": "0x14cd67450",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x6120020e0",
+      "nativeListWrites": [
+        {
+          "offset": "0x10",
+          "size": 8,
+          "value": 26071814272,
+          "source": "0x153a3cbcb"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 1,
+          "source": "0x153a3cc54"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 0,
+          "source": "0x153a3cc57"
+        },
+        {
+          "offset": "0x10",
+          "size": 8,
+          "value": 26071816336,
+          "source": "0x15881fc2c"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 3,
+          "source": "0x15881fd19"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 2,
+          "source": "0x15881fd1e"
+        }
+      ],
+      "listBefore": null,
+      "listAfter": {
+        "pointer": "0x612005840",
+        "arrayPointer": "0x612005890",
+        "size": 3,
+        "version": 2,
+        "capacity": 4,
+        "items": [
+          1,
+          2147483648,
+          4294967295
+        ],
+        "rawArray": [
+          1,
+          2147483648,
+          4294967295,
+          0
+        ]
+      },
+      "oldArrayAfter": [],
+      "dictionary": [
+        {
+          "hash": 17,
+          "next": -1,
+          "key": 17,
+          "value": "0x612005840"
+        }
+      ],
+      "interfaceCalls": [
+        {
+          "kind": "ICollection.Count",
+          "count": 3
+        },
+        {
+          "kind": "ICollection.CopyTo",
+          "count": 3,
+          "destinationIndex": 0
+        }
+      ],
+      "allocatedLists": [
+        "0x612005840"
+      ]
+    },
+    {
+      "name": "scene-nz-existing",
+      "expectedItems": [
+        7,
+        7,
+        0,
+        2147483648,
+        7,
+        4294967295
+      ],
+      "key": 17,
+      "stop": "0x14cd67450",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x6120020e0",
+      "nativeListWrites": [
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 10,
+          "source": "0x153a3cc54"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 0,
+          "source": "0x153a3cc57"
+        },
+        {
+          "offset": "0x10",
+          "size": 8,
+          "value": 26071816384,
+          "source": "0x15881fc2c"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 6,
+          "source": "0x15881fd19"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 11,
+          "source": "0x15881fd1e"
+        }
+      ],
+      "listBefore": {
+        "pointer": "0x612005740",
+        "arrayPointer": "0x612005790",
+        "size": 1,
+        "version": 9,
+        "capacity": 1,
+        "items": [
+          99
+        ],
+        "rawArray": [
+          99
+        ]
+      },
+      "listAfter": {
+        "pointer": "0x612005740",
+        "arrayPointer": "0x6120058c0",
+        "size": 6,
+        "version": 11,
+        "capacity": 6,
+        "items": [
+          7,
+          7,
+          0,
+          2147483648,
+          7,
+          4294967295
+        ],
+        "rawArray": [
+          7,
+          7,
+          0,
+          2147483648,
+          7,
+          4294967295
+        ]
+      },
+      "oldArrayAfter": [
+        99
+      ],
+      "dictionary": [
+        {
+          "hash": 17,
+          "next": -1,
+          "key": 17,
+          "value": "0x612005740"
+        }
+      ],
+      "interfaceCalls": [
+        {
+          "kind": "ICollection.Count",
+          "count": 6
+        },
+        {
+          "kind": "ICollection.CopyTo",
+          "count": 6,
+          "destinationIndex": 0
+        }
+      ],
+      "allocatedLists": []
+    },
+    {
+      "name": "scene-nz-high",
+      "expectedItems": [
+        1,
+        2147483648,
+        4294967295
+      ],
+      "key": 2147483649,
+      "stop": "0x14cd67450",
+      "sourcePointer": "0x612001ee0",
+      "sourceUnchanged": true,
+      "sourceArrayPointer": "0x6120020e0",
+      "nativeListWrites": [
+        {
+          "offset": "0x10",
+          "size": 8,
+          "value": 26071814272,
+          "source": "0x153a3cbcb"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 1,
+          "source": "0x153a3cc54"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 0,
+          "source": "0x153a3cc57"
+        },
+        {
+          "offset": "0x10",
+          "size": 8,
+          "value": 26071816336,
+          "source": "0x15881fc2c"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 3,
+          "source": "0x15881fd19"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 2,
+          "source": "0x15881fd1e"
+        }
+      ],
+      "listBefore": null,
+      "listAfter": {
+        "pointer": "0x612005840",
+        "arrayPointer": "0x612005890",
+        "size": 3,
+        "version": 2,
+        "capacity": 4,
+        "items": [
+          1,
+          2147483648,
+          4294967295
+        ],
+        "rawArray": [
+          1,
+          2147483648,
+          4294967295,
+          0
+        ]
+      },
+      "oldArrayAfter": [],
+      "dictionary": [
+        {
+          "hash": 1,
+          "next": -1,
+          "key": 2147483649,
+          "value": "0x612005840"
+        }
+      ],
+      "interfaceCalls": [
+        {
+          "kind": "ICollection.Count",
+          "count": 3
+        },
+        {
+          "kind": "ICollection.CopyTo",
+          "count": 3,
+          "destinationIndex": 0
+        }
+      ],
+      "allocatedLists": [
+        "0x612005840"
+      ]
+    }
+  ]
+}
