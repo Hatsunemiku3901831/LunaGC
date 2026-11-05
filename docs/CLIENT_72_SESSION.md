@@ -23,7 +23,7 @@ Java对照只编译MersenneTwister64及离线runner到忽略目录，不加载�
 
 - Handler入口1507BE0E0成功前缀读取响应+B8；147CF3070在普通ByteString存储路径实际返回+18的数组。此前默认null数组的探索失败属于合成夹具限制。
 - 14D581600检查运行时列表是否含5714。两个分支目标literal为`[Shell] Old WarmupSwitch`/`[Shell] New WarmupSwitch`；后者进一步调用15A3CE060（0xCA）。已执行至内部读取140583A00，后续未恢复；没有将此调用模拟为成功。
-- 响应+98/+88进入Base64、原生密钥处理和摘要/校验区域；尚未通过完整独立密文与错误签名夹具。上面的解密后片段不能验证前段解密或验签。
+- 响应+98/+88的最新探索已实际执行Base64、原生私钥验签/解密、托管SHA-256及错误响应签名拒绝，详见末尾接续记录；正式可复跑夹具与有效响应签名仍待完成。上面的解密后片段本身不能验证前段解密或验签。
 - 响应+68写会话+98，1507C2211读取同一会话成员传给151213730；后者写请求+D8。该链已由下一节的独立wire与分段原生执行验证；未据此宣称完整Handler执行。
 - Login构造保护续段已越过151213AC6；148A22550跳1421C1F40（目标原生ret），后续需合成1458971C0类初始化状态并追踪下一真实调用。未知helper继续失败，不默认返回成功。
 
@@ -181,3 +181,13 @@ python -m unittest tools.test_client72_token_complete tools.test_client72_seed_c
 ```
 
 证据`evidence/token-complete-{trace,determinism}.json`、`logs/token-complete-{run,tests}.log`，共享`token-complete-observations.json`。旧token-constructor/send-flow表保留其当时opaque实验范围，新表记录消除此边界的实际执行。研究校验通过、ready仍拒绝；无运行文件变更或重启。A-04d5g本地提交823762e。下一项为响应seed解密/验签、真实SDK初始化或封包函数体，D-02仍未验收。
+
+## 响应密码学接续探索（未正式验收）
+
+`analysis/probe_response_crypto.py`从15A4DE707进入响应前段，显式提供响应+98/tag477和+88/tag208的Base64字符串。前者送Shell操作101，参数含1192字节内置私钥及256字节私钥签名；后者送操作103，参与响应数据签名验证。内置私钥签名通过真实原生校验，也通过独立RSA/SHA-256计算；其公钥部分只与仓库game_keys/4_Pub.der匹配。独立公钥运算生成的密文由原生解密为预期8字节非零输入FEDCBA9876543210，返回0。
+
+随后SHA256Managed的Initialize/HashCore/HashFinal、Array.Clear及HashAlgorithm.Dispose执行，摘要与hashlib一致。为此提供类型/虚表、byte/uint数组布局、目标metadata中唯一匹配的SHA常量表、数组Clone/类型检查及GC.SuppressFinalize登记边界；没有替换摘要运算。操作103构造的公钥及其签名，与Token请求seed加密所用的272/256字节缓冲完全相同；真实公钥签名验证通过，无效全零响应签名返回-7，结果0，控制流停在15A4E0645错误日志调用前，未进入15A4E064F密钥安装后段。
+
+完整指令观察下解密执行45,744,307条，已得到正确明文。随后为探索速度仅省略140580000..140780000密码学库区域的逐指令Python回调，CPU指令仍执行，结果一致；正式工具应补上明确的块级轨迹，不能把省略后的计数当总指令数。私钥/原始密钥材料不提交，只存忽略目录；摘要`evidence/response-crypto-exploration.json`。
+
+当前仓库SigningKey与目标公钥不匹配，不能构造“目标原始信任配置下的有效服务器签名”或将旧补丁强制返回成功作为证据。下一项先正式化已成功的解密/摘要/拒绝路径，再研究本地服务端一致的密钥、签名与信任配置；任何替换都须实际通过验证算法。SDK warmup/真实初始化、完整Handler和实机仍未知。此探索未晋级响应字段/整体任务，149项测试结果仍仅对应上文已提交的工具。
