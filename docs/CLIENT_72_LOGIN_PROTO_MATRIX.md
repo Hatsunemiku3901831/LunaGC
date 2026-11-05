@@ -1,5 +1,7 @@
 # A-03c 候选消息、Proto依赖与7.2三层证据缺口矩阵
 
+2026-11-06暂停前最终复核：当前65输入，新增[scene-data](CLIENT_72_SCENE_DATA.md)及[生产加载](CLIENT_72_PRODUCTION_SCENE_LOAD.md)两份脱敏摘要，原63输入hash保持。1287源码/Proto、148行三层/计数、99候选、1140描述符及开放边界逐结构不变，旧review实际以输入集合漂移拒绝；人工复核后recover双跑一致，384研究回归通过、研究结构0/ready228。原始raw SHA与本矩阵规范换行digest分开，不把缓存消费或Lua加载结果晋级业务语义、runtime或D-02。证据scene-pause-login-proto-review-check.json和scene-pause-first-input-set-rejection.txt留忽略目录。按用户要求已停止新增工作，详细交接见HANDOFF2；下方为历史检查点。
+
 2026-11-06当前63输入：owner只读API迁移后，唯一源码hash变更ScriptLib（旧220方法原样、新方法未进入原48源码图），三脚本/依赖/serialization五份摘要真实重跑后替换，另新增当前API与列表摘要（60→62）；非空嵌套摘要使62→63。两次人工复核均保持三层矩阵、Proto描述符、候选、计数和开放边界；recover各双跑一致，366研究回归通过、研究结构0/ready228。没有用API可调用或新raw字段wire晋级业务语义/实机。证据scene-owner-list-login-proto-review-check.json和scene-nested-login-proto-review-check.json。
 
 2026-11-06 E-01c3复核：scene-script-api-baseline为第60份固定输入，记录生产owner UID迁移前接口基线。新增一份输入hash，其余1287源码/Proto、三层矩阵/计数、候选/描述符和开放边界均不变，recover两次一致；358当前工作树研究选集通过，含API9与并行列表12项。没有用接口注册/词法引用晋级协议或实机。后续若改ScriptLib，现有源守卫必须拒绝，不能把旧基线静默称当前。

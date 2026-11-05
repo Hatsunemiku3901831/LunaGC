@@ -1,5 +1,7 @@
 # E-01c：参考既有实现迁移scene3脚本
 
+2026-11-06实际生产加载补充（E-01c5，9aa8ca7）：[真实ScriptLoader/SceneGroup审计](CLIENT_72_PRODUCTION_SCENE_LOAD.md)发现fast437组部分求值/481错误，inline13,616组零错误；两模式均loaded=true但540组binding、453组typed对象不同。多require的currentBindings丢失路径新增30错误组，已用纯声明真实复现。此为固定顺序/单JVM每模式、带业务调用边界的生产审计；下文407是既有纯求值模型结果，不改写为生产数。8测试、两轮正式报告一致；原工具hash顺序问题及失败保留。根fastRequire仍true，未修生产/改资源/部署，按用户要求收尾暂停，完整API/vision/revision/实机仍未验。
+
 当前迁移后状态：GetSceneOwnerUid正常查询已真实桥接红绿并提交69c3672。新JAR 2566f466…83fe下三种脚本CLI实际重跑，出生686全过、全静态inline13,616全过、fast407错误与8缺ID均保持；缺成员反射61（旧62减owner），其中2个userdata包装已注册，59在复核入口未找到实现，涉及1468组。原Lua/manifest/组/ID/逐条问题不变；当前摘要已接入矩阵，原基线保留。下方52f1945的62/60及旧JAR为历史，不适用当前计数。当前复现命令使用根LunaGC-7.1.0.jar（遗留文件名），须核对2566f466…83fe；GetGadgetConfigId、fastRequire/vision/revision和实机仍未验。
 
 接口来源后续：52f1945的实际词法/公开/包装注册审计确认原62是反射基线，其中ExecuteGroupLua/ExecuteActiveGroupLua两项已由userdata注册；其余60在复核入口未找到实现，涉及1469静态组。171名称逐13,616组与原编译集合一致；这仍不证明调用可达性或参数兼容，见[API清单](CLIENT_72_SCENE_SCRIPT_API.md)。owner UID只读查询已单独建E-01c4卡，尚未完成生产迁移。

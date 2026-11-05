@@ -1,0 +1,5714 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "declarations": {
+    "nested": {
+      "bindings": [
+        {
+          "typeIndex": 25866,
+          "usageRow": 702419,
+          "sourceIndex": 177918,
+          "cell": "0x145898760",
+          "type": {
+            "kind": "class",
+            "attributes": "0x0",
+            "data": "0x650a",
+            "byRef": false,
+            "typeDefinition": 25866,
+            "name": "ABJMLEPLFJG",
+            "namespace": ""
+          },
+          "fields": [
+            {
+              "index": 127022,
+              "name": "CCPNEAHIIMG",
+              "nameIndex": "0xb335fec",
+              "typeIndex": 481907,
+              "type": {
+                "kind": "genericinst",
+                "attributes": "0x21",
+                "data": "0x7346",
+                "byRef": false,
+                "genericIndex": 29510,
+                "instanceIndex": 11,
+                "arguments": [
+                  {
+                    "kind": "uint32",
+                    "attributes": "0x0",
+                    "data": "0x13f",
+                    "byRef": false
+                  }
+                ],
+                "typeDefinition": 35584,
+                "name": "DKHEEHDOEIK",
+                "namespace": ""
+              },
+              "offset": 24,
+              "rawOffset": "0x18",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 127023,
+              "name": "CMLLGFDGONC",
+              "nameIndex": "0xb335ff7",
+              "typeIndex": 481907,
+              "type": {
+                "kind": "genericinst",
+                "attributes": "0x21",
+                "data": "0x7346",
+                "byRef": false,
+                "genericIndex": 29510,
+                "instanceIndex": 11,
+                "arguments": [
+                  {
+                    "kind": "uint32",
+                    "attributes": "0x0",
+                    "data": "0x13f",
+                    "byRef": false
+                  }
+                ],
+                "typeDefinition": 35584,
+                "name": "DKHEEHDOEIK",
+                "namespace": ""
+              },
+              "offset": 32,
+              "rawOffset": "0x20",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 127024,
+              "name": "JOHODEGOLBH",
+              "nameIndex": "0xb336002",
+              "typeIndex": 481907,
+              "type": {
+                "kind": "genericinst",
+                "attributes": "0x21",
+                "data": "0x7346",
+                "byRef": false,
+                "genericIndex": 29510,
+                "instanceIndex": 11,
+                "arguments": [
+                  {
+                    "kind": "uint32",
+                    "attributes": "0x0",
+                    "data": "0x13f",
+                    "byRef": false
+                  }
+                ],
+                "typeDefinition": 35584,
+                "name": "DKHEEHDOEIK",
+                "namespace": ""
+              },
+              "offset": 40,
+              "rawOffset": "0x28",
+              "offsetKind": "instance"
+            }
+          ],
+          "methods": [
+            {
+              "index": 200790,
+              "name": ".ctor",
+              "nameIndex": "0x5000022",
+              "registeredAddress": "0x14bcf8bd0",
+              "parameterCount": 0,
+              "flags": "0x1886",
+              "virtualSlot": 65535
+            },
+            {
+              "index": 200795,
+              "name": "MOMMACBEMEK",
+              "nameIndex": "0xb187c99",
+              "registeredAddress": "0x14bcf8cf0",
+              "parameterCount": 1,
+              "flags": "0xc6",
+              "virtualSlot": 19
+            },
+            {
+              "index": 200793,
+              "name": "CAIINKNGKDM",
+              "nameIndex": "0xb187cd0",
+              "registeredAddress": "0x14bcf8b20",
+              "parameterCount": 1,
+              "flags": "0xc6",
+              "virtualSlot": 17
+            }
+          ]
+        },
+        {
+          "typeIndex": 66040,
+          "usageRow": 705266,
+          "sourceIndex": 359110,
+          "cell": "0x1458a8c18",
+          "type": {
+            "kind": "class",
+            "attributes": "0x0",
+            "data": "0x101f8",
+            "byRef": false,
+            "typeDefinition": 66040,
+            "name": "NAECHMKLBEI",
+            "namespace": ""
+          },
+          "fields": [
+            {
+              "index": 326198,
+              "name": "IDEBKCPKHLE",
+              "nameIndex": "0xb485007",
+              "typeIndex": 444106,
+              "type": {
+                "kind": "bool",
+                "attributes": "0x1",
+                "data": "0xae",
+                "byRef": false
+              },
+              "offset": 24,
+              "rawOffset": "0x18",
+              "offsetKind": "instance"
+            }
+          ],
+          "methods": [
+            {
+              "index": 546781,
+              "name": ".ctor",
+              "nameIndex": "0x5000022",
+              "registeredAddress": "0x153f9fb20",
+              "parameterCount": 0,
+              "flags": "0x1886",
+              "virtualSlot": 65535
+            },
+            {
+              "index": 546787,
+              "name": "MOMMACBEMEK",
+              "nameIndex": "0xb187c99",
+              "registeredAddress": "0x153f9fa70",
+              "parameterCount": 1,
+              "flags": "0xc6",
+              "virtualSlot": 19
+            },
+            {
+              "index": 546784,
+              "name": "CAIINKNGKDM",
+              "nameIndex": "0xb187cd0",
+              "registeredAddress": "0x153f9f920",
+              "parameterCount": 1,
+              "flags": "0xc6",
+              "virtualSlot": 17
+            }
+          ]
+        },
+        {
+          "typeIndex": 67761,
+          "usageRow": 705267,
+          "sourceIndex": 364259,
+          "cell": "0x1458a8c20",
+          "type": {
+            "kind": "class",
+            "attributes": "0x0",
+            "data": "0x108b1",
+            "byRef": false,
+            "typeDefinition": 67761,
+            "name": "HKDMELCIJGB",
+            "namespace": ""
+          },
+          "fields": [
+            {
+              "index": 334588,
+              "name": "KIGPDCAEFBG",
+              "nameIndex": "0xb745f72",
+              "typeIndex": 481907,
+              "type": {
+                "kind": "genericinst",
+                "attributes": "0x21",
+                "data": "0x7346",
+                "byRef": false,
+                "genericIndex": 29510,
+                "instanceIndex": 11,
+                "arguments": [
+                  {
+                    "kind": "uint32",
+                    "attributes": "0x0",
+                    "data": "0x13f",
+                    "byRef": false
+                  }
+                ],
+                "typeDefinition": 35584,
+                "name": "DKHEEHDOEIK",
+                "namespace": ""
+              },
+              "offset": 24,
+              "rawOffset": "0x18",
+              "offsetKind": "instance"
+            }
+          ],
+          "methods": [
+            {
+              "index": 561207,
+              "name": ".ctor",
+              "nameIndex": "0x5000022",
+              "registeredAddress": "0x14bf3a950",
+              "parameterCount": 0,
+              "flags": "0x1886",
+              "virtualSlot": 65535
+            },
+            {
+              "index": 561211,
+              "name": "MOMMACBEMEK",
+              "nameIndex": "0xb187c99",
+              "registeredAddress": "0x14bf3a8b0",
+              "parameterCount": 1,
+              "flags": "0xc6",
+              "virtualSlot": 19
+            },
+            {
+              "index": 561212,
+              "name": "CAIINKNGKDM",
+              "nameIndex": "0xb187cd0",
+              "registeredAddress": "0x14bf3a9a0",
+              "parameterCount": 1,
+              "flags": "0xc6",
+              "virtualSlot": 17
+            }
+          ]
+        },
+        {
+          "typeIndex": 34133,
+          "usageRow": 705268,
+          "sourceIndex": 227141,
+          "cell": "0x1458a8c28",
+          "type": {
+            "kind": "class",
+            "attributes": "0x0",
+            "data": "0x8555",
+            "byRef": false,
+            "typeDefinition": 34133,
+            "name": "HJLMHFHHJKM",
+            "namespace": ""
+          },
+          "fields": [
+            {
+              "index": 167271,
+              "name": "CHLGKOLGMAB",
+              "nameIndex": "0xb272107",
+              "typeIndex": 444102,
+              "type": {
+                "kind": "string",
+                "attributes": "0x1",
+                "data": "0x125",
+                "byRef": false
+              },
+              "offset": 24,
+              "rawOffset": "0x18",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 167272,
+              "name": "GFNFNHBAPEO",
+              "nameIndex": "0xb34fb5a",
+              "typeIndex": 527022,
+              "type": {
+                "kind": "class",
+                "attributes": "0x1",
+                "data": "0x8d29",
+                "byRef": false,
+                "typeDefinition": 36137,
+                "name": "HIGIKLLJCHJ",
+                "namespace": ""
+              },
+              "offset": 32,
+              "rawOffset": "0x20",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 167273,
+              "name": "CFKCADIKFKG",
+              "nameIndex": "0xb34fb70",
+              "typeIndex": 444102,
+              "type": {
+                "kind": "string",
+                "attributes": "0x1",
+                "data": "0x125",
+                "byRef": false
+              },
+              "offset": 40,
+              "rawOffset": "0x28",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 167274,
+              "name": "LMJCCCMCMKN",
+              "nameIndex": "0xb264ed4",
+              "typeIndex": 444106,
+              "type": {
+                "kind": "bool",
+                "attributes": "0x1",
+                "data": "0xae",
+                "byRef": false
+              },
+              "offset": 48,
+              "rawOffset": "0x30",
+              "offsetKind": "instance"
+            }
+          ],
+          "methods": [
+            {
+              "index": 286114,
+              "name": ".ctor",
+              "nameIndex": "0x5000022",
+              "registeredAddress": "0x149b5f620",
+              "parameterCount": 0,
+              "flags": "0x1886",
+              "virtualSlot": 65535
+            },
+            {
+              "index": 286117,
+              "name": "MOMMACBEMEK",
+              "nameIndex": "0xb187c99",
+              "registeredAddress": "0x149b5ece0",
+              "parameterCount": 1,
+              "flags": "0xc6",
+              "virtualSlot": 19
+            },
+            {
+              "index": 286119,
+              "name": "CAIINKNGKDM",
+              "nameIndex": "0xb187cd0",
+              "registeredAddress": "0x149b5f0f0",
+              "parameterCount": 1,
+              "flags": "0xc6",
+              "virtualSlot": 17
+            }
+          ]
+        },
+        {
+          "typeIndex": 69612,
+          "usageRow": 705269,
+          "sourceIndex": 371125,
+          "cell": "0x1458a8c30",
+          "type": {
+            "kind": "class",
+            "attributes": "0x0",
+            "data": "0x10fec",
+            "byRef": false,
+            "typeDefinition": 69612,
+            "name": "PCCNENMODDD",
+            "namespace": ""
+          },
+          "fields": [
+            {
+              "index": 343437,
+              "name": "EMLMBEIBJHJ",
+              "nameIndex": "0xb48dd41",
+              "typeIndex": 481907,
+              "type": {
+                "kind": "genericinst",
+                "attributes": "0x21",
+                "data": "0x7346",
+                "byRef": false,
+                "genericIndex": 29510,
+                "instanceIndex": 11,
+                "arguments": [
+                  {
+                    "kind": "uint32",
+                    "attributes": "0x0",
+                    "data": "0x13f",
+                    "byRef": false
+                  }
+                ],
+                "typeDefinition": 35584,
+                "name": "DKHEEHDOEIK",
+                "namespace": ""
+              },
+              "offset": 24,
+              "rawOffset": "0x18",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 343438,
+              "name": "KFIJNBDGBAH",
+              "nameIndex": "0xb48dd2b",
+              "typeIndex": 557333,
+              "type": {
+                "kind": "class",
+                "attributes": "0x1",
+                "data": "0x650a",
+                "byRef": false,
+                "typeDefinition": 25866,
+                "name": "ABJMLEPLFJG",
+                "namespace": ""
+              },
+              "offset": 32,
+              "rawOffset": "0x20",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 343439,
+              "name": "IJGLLGECEOI",
+              "nameIndex": "0xb76d052",
+              "typeIndex": 444309,
+              "type": {
+                "kind": "uint32",
+                "attributes": "0x1",
+                "data": "0x13f",
+                "byRef": false
+              },
+              "offset": 40,
+              "rawOffset": "0x28",
+              "offsetKind": "instance"
+            }
+          ],
+          "methods": [
+            {
+              "index": 576538,
+              "name": ".ctor",
+              "nameIndex": "0x5000022",
+              "registeredAddress": "0x14d0e9e10",
+              "parameterCount": 0,
+              "flags": "0x1886",
+              "virtualSlot": 65535
+            },
+            {
+              "index": 576539,
+              "name": "MOMMACBEMEK",
+              "nameIndex": "0xb187c99",
+              "registeredAddress": "0x14d0e9630",
+              "parameterCount": 1,
+              "flags": "0xc6",
+              "virtualSlot": 19
+            },
+            {
+              "index": 576546,
+              "name": "CAIINKNGKDM",
+              "nameIndex": "0xb187cd0",
+              "registeredAddress": "0x14d0e9bc0",
+              "parameterCount": 1,
+              "flags": "0xc6",
+              "virtualSlot": 17
+            }
+          ]
+        },
+        {
+          "typeIndex": 36137,
+          "usageRow": 187787,
+          "sourceIndex": 239473,
+          "cell": "0x1458dae08",
+          "type": {
+            "kind": "class",
+            "attributes": "0x0",
+            "data": "0x8d29",
+            "byRef": false,
+            "typeDefinition": 36137,
+            "name": "HIGIKLLJCHJ",
+            "namespace": ""
+          },
+          "fields": [
+            {
+              "index": 176544,
+              "name": "KDMKODCHHIP",
+              "nameIndex": "0xb212b8e",
+              "typeIndex": 444309,
+              "type": {
+                "kind": "uint32",
+                "attributes": "0x1",
+                "data": "0x13f",
+                "byRef": false
+              },
+              "offset": 24,
+              "rawOffset": "0x18",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 176545,
+              "name": "OMNCEDDCKJF",
+              "nameIndex": "0xb470cd3",
+              "typeIndex": 444106,
+              "type": {
+                "kind": "bool",
+                "attributes": "0x1",
+                "data": "0xae",
+                "byRef": false
+              },
+              "offset": 28,
+              "rawOffset": "0x1c",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 176546,
+              "name": "JKJBAOEKNKE",
+              "nameIndex": "0xb1990ee",
+              "typeIndex": 444971,
+              "type": {
+                "kind": "uint64",
+                "attributes": "0x1",
+                "data": "0x140",
+                "byRef": false
+              },
+              "offset": 32,
+              "rawOffset": "0x20",
+              "offsetKind": "instance"
+            }
+          ],
+          "methods": [
+            {
+              "index": 303321,
+              "name": ".ctor",
+              "nameIndex": "0x5000022",
+              "registeredAddress": "0x14ef01060",
+              "parameterCount": 0,
+              "flags": "0x1886",
+              "virtualSlot": 65535
+            },
+            {
+              "index": 303327,
+              "name": "MOMMACBEMEK",
+              "nameIndex": "0xb187c99",
+              "registeredAddress": "0x14ef01160",
+              "parameterCount": 1,
+              "flags": "0xc6",
+              "virtualSlot": 19
+            },
+            {
+              "index": 303323,
+              "name": "CAIINKNGKDM",
+              "nameIndex": "0xb187cd0",
+              "registeredAddress": "0x14ef00cf0",
+              "parameterCount": 1,
+              "flags": "0xc6",
+              "virtualSlot": 17
+            }
+          ]
+        }
+      ],
+      "scene": {
+        "typeIndex": 46311,
+        "clientType": "BBECFDMDFJC",
+        "cmdId": 27748,
+        "getter": "0x1523856a0",
+        "semanticName": "PlayerEnterSceneNotify",
+        "semanticEvidence": "typed network handler plus native entry log and literal usage",
+        "runtimeStatus": "not-tested",
+        "registration": "0x1507c2a03",
+        "methods": [
+          {
+            "entry": "0x1507ad120",
+            "ownerType": 56238,
+            "methodIndex": 467349,
+            "parameterIndex": 380980,
+            "entry32SHA256": "7b08caed4f9f4ae45fff774fa21f43a322a558d2fa7d8adebbe4a422582d6a65"
+          },
+          {
+            "entry": "0x1507ad6f0",
+            "ownerType": 56238,
+            "methodIndex": 467802,
+            "parameterIndex": 381458,
+            "entry32SHA256": "029e64176308a2ad3b9fab1e727dd8cb4429fa45c8e66878ee22d657fd73bd89"
+          },
+          {
+            "entry": "0x1507b32d0",
+            "ownerType": 56238,
+            "methodIndex": 467384,
+            "parameterIndex": 381021,
+            "entry32SHA256": "b9ddc8b3e3b8d3eaabca63061e6e049d76daab109438e8c64f512f122c160632"
+          },
+          {
+            "entry": "0x14cd67260",
+            "ownerType": 18753,
+            "methodIndex": 142800,
+            "parameterIndex": 129008,
+            "entry32SHA256": "073a71f9b30c16543791a3af388b13b3f7364a62b2a54c6e6bef58c3fdd88b26"
+          },
+          {
+            "entry": "0x1523856b0",
+            "ownerType": 46311,
+            "methodIndex": 384109,
+            "entry32SHA256": "ecbe7216d294f61f10b850c8c5b8545a3aca0b70c670c67bcf73d444a63a417a"
+          },
+          {
+            "entry": "0x152387890",
+            "ownerType": 46311,
+            "methodIndex": 384104,
+            "entry32SHA256": "7b921fbac02090eeb6d9c935a377c5688ac90e3e3cab3baff6a94bd7b13b1353"
+          },
+          {
+            "entry": "0x152386c00",
+            "ownerType": 46311,
+            "methodIndex": 384111,
+            "entry32SHA256": "2d7121f869092f8cf1d58fdf203bd87490347a630f8439593e753fbec39b45bc"
+          },
+          {
+            "entry": "0x152386cb0",
+            "ownerType": 46311,
+            "methodIndex": 384114,
+            "entry32SHA256": "ae0ec38264990a5923123075377d58611c595f9ac3143a01282c37d1169ad0bf"
+          },
+          {
+            "entry": "0x154048d40",
+            "ownerType": 84343,
+            "methodIndex": 698523,
+            "entry32SHA256": "2a628f045df698bed8308dd324fc2cee425dbc8e0a6d0b1976709fdab183357b"
+          }
+        ],
+        "literals": [
+          {
+            "usageRow": 779811,
+            "index": 45993,
+            "slot": 45993,
+            "cell": "0x145b23b68",
+            "value": "Genshin Loading Log: OnReceivePlayerEnterSceneNotify {0}"
+          },
+          {
+            "usageRow": 779817,
+            "index": 46023,
+            "slot": 46023,
+            "cell": "0x145b23c58",
+            "value": "Beyond Transport Interrupt EnterDungeon, Invoke Client Reconnect"
+          },
+          {
+            "usageRow": 780351,
+            "index": 50090,
+            "slot": 50090,
+            "cell": "0x145b2bb70",
+            "value": "Genshin Loading Log: PlayerModule OnPlayerEnterSceneNotify"
+          },
+          {
+            "usageRow": 780698,
+            "index": 53019,
+            "slot": 53019,
+            "cell": "0x145b316f8",
+            "value": "Genshin Loading Log: LoadingManager OnPlayerEnterSceneNotify"
+          }
+        ],
+        "enum": {
+          "typeIndex": 86551,
+          "clientType": "ILGABKBIAIE",
+          "namespace": "",
+          "underlyingType": "int32",
+          "values": [
+            {
+              "symbol": "EnterNone",
+              "value": 0,
+              "fieldIndex": 431526,
+              "defaultRow": 74792,
+              "typeIndex": 70,
+              "dataIndex": 655220
+            },
+            {
+              "symbol": "EnterSelf",
+              "value": 1,
+              "fieldIndex": 431527,
+              "defaultRow": 74793,
+              "typeIndex": 70,
+              "dataIndex": 655224
+            },
+            {
+              "symbol": "EnterGoto",
+              "value": 2,
+              "fieldIndex": 431528,
+              "defaultRow": 74794,
+              "typeIndex": 70,
+              "dataIndex": 655228
+            },
+            {
+              "symbol": "EnterJump",
+              "value": 3,
+              "fieldIndex": 431529,
+              "defaultRow": 74795,
+              "typeIndex": 70,
+              "dataIndex": 655232
+            },
+            {
+              "symbol": "EnterOther",
+              "value": 4,
+              "fieldIndex": 431530,
+              "defaultRow": 74796,
+              "typeIndex": 70,
+              "dataIndex": 655236
+            },
+            {
+              "symbol": "EnterBack",
+              "value": 5,
+              "fieldIndex": 431531,
+              "defaultRow": 74797,
+              "typeIndex": 70,
+              "dataIndex": 655240
+            },
+            {
+              "symbol": "EnterDungeon",
+              "value": 6,
+              "fieldIndex": 431532,
+              "defaultRow": 74798,
+              "typeIndex": 70,
+              "dataIndex": 655244
+            },
+            {
+              "symbol": "EnterDungeonReplay",
+              "value": 7,
+              "fieldIndex": 431533,
+              "defaultRow": 74799,
+              "typeIndex": 70,
+              "dataIndex": 655248
+            },
+            {
+              "symbol": "EnterGotoByPortal",
+              "value": 8,
+              "fieldIndex": 431534,
+              "defaultRow": 74800,
+              "typeIndex": 70,
+              "dataIndex": 655252
+            },
+            {
+              "symbol": "EnterSelfHome",
+              "value": 9,
+              "fieldIndex": 431535,
+              "defaultRow": 74801,
+              "typeIndex": 70,
+              "dataIndex": 655256
+            },
+            {
+              "symbol": "EnterOtherHome",
+              "value": 10,
+              "fieldIndex": 431536,
+              "defaultRow": 74802,
+              "typeIndex": 70,
+              "dataIndex": 655260
+            },
+            {
+              "symbol": "EnterGotoRecreate",
+              "value": 11,
+              "fieldIndex": 431537,
+              "defaultRow": 74803,
+              "typeIndex": 70,
+              "dataIndex": 655264
+            },
+            {
+              "symbol": "EnterGotoByTpl",
+              "value": 12,
+              "fieldIndex": 431538,
+              "defaultRow": 74804,
+              "typeIndex": 70,
+              "dataIndex": 655268
+            },
+            {
+              "symbol": "EnterBeyond",
+              "value": 13,
+              "fieldIndex": 431539,
+              "defaultRow": 74805,
+              "typeIndex": 70,
+              "dataIndex": 655272
+            },
+            {
+              "symbol": "EnterHall",
+              "value": 14,
+              "fieldIndex": 431540,
+              "defaultRow": 74806,
+              "typeIndex": 70,
+              "dataIndex": 655276
+            }
+          ],
+          "semanticStatus": "target-symbols-only"
+        },
+        "fields": [
+          {
+            "clientField": "HHAFHFEPLPD",
+            "objectOffset": 24,
+            "declaration": {
+              "kind": "class",
+              "attributes": "0x1",
+              "data": "0x14977",
+              "byRef": false,
+              "typeDefinition": 84343,
+              "name": "BGDCNKAKGHI",
+              "namespace": ""
+            }
+          },
+          {
+            "clientField": "EMLMBEIBJHJ",
+            "objectOffset": 32,
+            "declaration": {
+              "kind": "genericinst",
+              "attributes": "0x21",
+              "data": "0x7346",
+              "byRef": false,
+              "genericIndex": 29510,
+              "instanceIndex": 11,
+              "arguments": [
+                {
+                  "kind": "uint32",
+                  "attributes": "0x0",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              ],
+              "typeDefinition": 35584,
+              "name": "DKHEEHDOEIK",
+              "namespace": ""
+            }
+          },
+          {
+            "clientField": "KFIJNBDGBAH",
+            "objectOffset": 40,
+            "declaration": {
+              "kind": "class",
+              "attributes": "0x1",
+              "data": "0x650a",
+              "byRef": false,
+              "typeDefinition": 25866,
+              "name": "ABJMLEPLFJG",
+              "namespace": ""
+            }
+          },
+          {
+            "clientField": "LFPEKBJIJNG",
+            "objectOffset": 48,
+            "declaration": {
+              "kind": "class",
+              "attributes": "0x1",
+              "data": "0x14977",
+              "byRef": false,
+              "typeDefinition": 84343,
+              "name": "BGDCNKAKGHI",
+              "namespace": ""
+            }
+          },
+          {
+            "clientField": "CPIINPOJLCM",
+            "objectOffset": 56,
+            "declaration": {
+              "kind": "string",
+              "attributes": "0x1",
+              "data": "0x125",
+              "byRef": false
+            }
+          },
+          {
+            "clientField": "BJMCOIFDONK",
+            "objectOffset": 64,
+            "declaration": {
+              "kind": "class",
+              "attributes": "0x1",
+              "data": "0x8555",
+              "byRef": false,
+              "typeDefinition": 34133,
+              "name": "HJLMHFHHJKM",
+              "namespace": ""
+            }
+          },
+          {
+            "clientField": "FEANOEECAIM",
+            "objectOffset": 72,
+            "declaration": {
+              "kind": "class",
+              "attributes": "0x1",
+              "data": "0x10fec",
+              "byRef": false,
+              "typeDefinition": 69612,
+              "name": "PCCNENMODDD",
+              "namespace": ""
+            }
+          },
+          {
+            "clientField": "ABIFGOBLNDN",
+            "objectOffset": 80,
+            "declaration": {
+              "kind": "class",
+              "attributes": "0x1",
+              "data": "0x14977",
+              "byRef": false,
+              "typeDefinition": 84343,
+              "name": "BGDCNKAKGHI",
+              "namespace": ""
+            }
+          },
+          {
+            "clientField": "CCKBJJPAGGG",
+            "objectOffset": 88,
+            "declaration": {
+              "kind": "class",
+              "attributes": "0x1",
+              "data": "0x108b1",
+              "byRef": false,
+              "typeDefinition": 67761,
+              "name": "HKDMELCIJGB",
+              "namespace": ""
+            }
+          },
+          {
+            "clientField": "NBBEIFOKKNG",
+            "objectOffset": 96,
+            "declaration": {
+              "kind": "class",
+              "attributes": "0x1",
+              "data": "0x101f8",
+              "byRef": false,
+              "typeDefinition": 66040,
+              "name": "NAECHMKLBEI",
+              "namespace": ""
+            }
+          },
+          {
+            "clientField": "CNABNLMHMII",
+            "objectOffset": 104,
+            "declaration": {
+              "kind": "uint64",
+              "attributes": "0x1",
+              "data": "0x140",
+              "byRef": false
+            }
+          },
+          {
+            "clientField": "DGIBDKELFNG",
+            "objectOffset": 112,
+            "declaration": {
+              "kind": "uint32",
+              "attributes": "0x1",
+              "data": "0x13f",
+              "byRef": false
+            }
+          },
+          {
+            "clientField": "LMKLCDPJOBJ",
+            "objectOffset": 116,
+            "declaration": {
+              "kind": "uint32",
+              "attributes": "0x1",
+              "data": "0x13f",
+              "byRef": false
+            }
+          },
+          {
+            "clientField": "AJMJGIKBOPO",
+            "objectOffset": 120,
+            "declaration": {
+              "kind": "uint32",
+              "attributes": "0x1",
+              "data": "0x13f",
+              "byRef": false
+            }
+          },
+          {
+            "clientField": "JMHKHAPJADA",
+            "objectOffset": 124,
+            "declaration": {
+              "kind": "uint32",
+              "attributes": "0x1",
+              "data": "0x13f",
+              "byRef": false
+            }
+          },
+          {
+            "clientField": "NBDGINFCIIK",
+            "objectOffset": 128,
+            "declaration": {
+              "kind": "uint32",
+              "attributes": "0x1",
+              "data": "0x13f",
+              "byRef": false
+            }
+          },
+          {
+            "clientField": "KLDLBMCOGFC",
+            "objectOffset": 132,
+            "declaration": {
+              "kind": "bool",
+              "attributes": "0x1",
+              "data": "0xae",
+              "byRef": false
+            }
+          },
+          {
+            "clientField": "OACAAAMNGFI",
+            "objectOffset": 133,
+            "declaration": {
+              "kind": "bool",
+              "attributes": "0x1",
+              "data": "0xae",
+              "byRef": false
+            }
+          },
+          {
+            "clientField": "EHONLMHNLDP",
+            "objectOffset": 136,
+            "declaration": {
+              "kind": "uint32",
+              "attributes": "0x1",
+              "data": "0x13f",
+              "byRef": false
+            }
+          },
+          {
+            "clientField": "CMAFDGGJDNK",
+            "objectOffset": 140,
+            "declaration": {
+              "kind": "uint32",
+              "attributes": "0x1",
+              "data": "0x13f",
+              "byRef": false
+            }
+          },
+          {
+            "clientField": "OHHFLAOMMEC",
+            "objectOffset": 144,
+            "declaration": {
+              "kind": "uint32",
+              "attributes": "0x1",
+              "data": "0x13f",
+              "byRef": false
+            }
+          },
+          {
+            "clientField": "MCCMGLDOECH",
+            "objectOffset": 148,
+            "declaration": {
+              "kind": "uint32",
+              "attributes": "0x1",
+              "data": "0x13f",
+              "byRef": false
+            }
+          },
+          {
+            "clientField": "NOEEBKJAFAG",
+            "objectOffset": 152,
+            "declaration": {
+              "kind": "valuetype",
+              "attributes": "0x1",
+              "data": "0x15217",
+              "byRef": false,
+              "typeDefinition": 86551,
+              "name": "ILGABKBIAIE",
+              "namespace": ""
+            }
+          },
+          {
+            "clientField": "JEPBJIIEFOM",
+            "objectOffset": 156,
+            "declaration": {
+              "kind": "uint32",
+              "attributes": "0x1",
+              "data": "0x13f",
+              "byRef": false
+            }
+          },
+          {
+            "clientField": "PKGEAAKBCNC",
+            "objectOffset": 160,
+            "declaration": {
+              "kind": "uint32",
+              "attributes": "0x1",
+              "data": "0x13f",
+              "byRef": false
+            }
+          },
+          {
+            "clientField": "IOLBHNOIGJN",
+            "objectOffset": 164,
+            "declaration": {
+              "kind": "uint32",
+              "attributes": "0x1",
+              "data": "0x13f",
+              "byRef": false
+            }
+          }
+        ]
+      },
+      "initializedMetadataGuard": {
+        "address": "0x145b8be66",
+        "value": 1,
+        "scope": "149B5ECE0 lazy metadata setup; IFix not enabled"
+      }
+    },
+    "listPrefix": {
+      "query": {
+        "normal": {
+          "scene": {
+            "typeIndex": 46311,
+            "clientType": "BBECFDMDFJC",
+            "cmdId": 27748,
+            "getter": "0x1523856a0",
+            "semanticName": "PlayerEnterSceneNotify",
+            "semanticEvidence": "typed network handler plus native entry log and literal usage",
+            "runtimeStatus": "not-tested",
+            "registration": "0x1507c2a03",
+            "methods": [
+              {
+                "entry": "0x1507ad120",
+                "ownerType": 56238,
+                "methodIndex": 467349,
+                "parameterIndex": 380980,
+                "entry32SHA256": "7b08caed4f9f4ae45fff774fa21f43a322a558d2fa7d8adebbe4a422582d6a65"
+              },
+              {
+                "entry": "0x1507ad6f0",
+                "ownerType": 56238,
+                "methodIndex": 467802,
+                "parameterIndex": 381458,
+                "entry32SHA256": "029e64176308a2ad3b9fab1e727dd8cb4429fa45c8e66878ee22d657fd73bd89"
+              },
+              {
+                "entry": "0x1507b32d0",
+                "ownerType": 56238,
+                "methodIndex": 467384,
+                "parameterIndex": 381021,
+                "entry32SHA256": "b9ddc8b3e3b8d3eaabca63061e6e049d76daab109438e8c64f512f122c160632"
+              },
+              {
+                "entry": "0x14cd67260",
+                "ownerType": 18753,
+                "methodIndex": 142800,
+                "parameterIndex": 129008,
+                "entry32SHA256": "073a71f9b30c16543791a3af388b13b3f7364a62b2a54c6e6bef58c3fdd88b26"
+              },
+              {
+                "entry": "0x1523856b0",
+                "ownerType": 46311,
+                "methodIndex": 384109,
+                "entry32SHA256": "ecbe7216d294f61f10b850c8c5b8545a3aca0b70c670c67bcf73d444a63a417a"
+              },
+              {
+                "entry": "0x152387890",
+                "ownerType": 46311,
+                "methodIndex": 384104,
+                "entry32SHA256": "7b921fbac02090eeb6d9c935a377c5688ac90e3e3cab3baff6a94bd7b13b1353"
+              },
+              {
+                "entry": "0x152386c00",
+                "ownerType": 46311,
+                "methodIndex": 384111,
+                "entry32SHA256": "2d7121f869092f8cf1d58fdf203bd87490347a630f8439593e753fbec39b45bc"
+              },
+              {
+                "entry": "0x152386cb0",
+                "ownerType": 46311,
+                "methodIndex": 384114,
+                "entry32SHA256": "ae0ec38264990a5923123075377d58611c595f9ac3143a01282c37d1169ad0bf"
+              },
+              {
+                "entry": "0x154048d40",
+                "ownerType": 84343,
+                "methodIndex": 698523,
+                "entry32SHA256": "2a628f045df698bed8308dd324fc2cee425dbc8e0a6d0b1976709fdab183357b"
+              }
+            ],
+            "literals": [
+              {
+                "usageRow": 779811,
+                "index": 45993,
+                "slot": 45993,
+                "cell": "0x145b23b68",
+                "value": "Genshin Loading Log: OnReceivePlayerEnterSceneNotify {0}"
+              },
+              {
+                "usageRow": 779817,
+                "index": 46023,
+                "slot": 46023,
+                "cell": "0x145b23c58",
+                "value": "Beyond Transport Interrupt EnterDungeon, Invoke Client Reconnect"
+              },
+              {
+                "usageRow": 780351,
+                "index": 50090,
+                "slot": 50090,
+                "cell": "0x145b2bb70",
+                "value": "Genshin Loading Log: PlayerModule OnPlayerEnterSceneNotify"
+              },
+              {
+                "usageRow": 780698,
+                "index": 53019,
+                "slot": 53019,
+                "cell": "0x145b316f8",
+                "value": "Genshin Loading Log: LoadingManager OnPlayerEnterSceneNotify"
+              }
+            ],
+            "enum": {
+              "typeIndex": 86551,
+              "clientType": "ILGABKBIAIE",
+              "namespace": "",
+              "underlyingType": "int32",
+              "values": [
+                {
+                  "symbol": "EnterNone",
+                  "value": 0,
+                  "fieldIndex": 431526,
+                  "defaultRow": 74792,
+                  "typeIndex": 70,
+                  "dataIndex": 655220
+                },
+                {
+                  "symbol": "EnterSelf",
+                  "value": 1,
+                  "fieldIndex": 431527,
+                  "defaultRow": 74793,
+                  "typeIndex": 70,
+                  "dataIndex": 655224
+                },
+                {
+                  "symbol": "EnterGoto",
+                  "value": 2,
+                  "fieldIndex": 431528,
+                  "defaultRow": 74794,
+                  "typeIndex": 70,
+                  "dataIndex": 655228
+                },
+                {
+                  "symbol": "EnterJump",
+                  "value": 3,
+                  "fieldIndex": 431529,
+                  "defaultRow": 74795,
+                  "typeIndex": 70,
+                  "dataIndex": 655232
+                },
+                {
+                  "symbol": "EnterOther",
+                  "value": 4,
+                  "fieldIndex": 431530,
+                  "defaultRow": 74796,
+                  "typeIndex": 70,
+                  "dataIndex": 655236
+                },
+                {
+                  "symbol": "EnterBack",
+                  "value": 5,
+                  "fieldIndex": 431531,
+                  "defaultRow": 74797,
+                  "typeIndex": 70,
+                  "dataIndex": 655240
+                },
+                {
+                  "symbol": "EnterDungeon",
+                  "value": 6,
+                  "fieldIndex": 431532,
+                  "defaultRow": 74798,
+                  "typeIndex": 70,
+                  "dataIndex": 655244
+                },
+                {
+                  "symbol": "EnterDungeonReplay",
+                  "value": 7,
+                  "fieldIndex": 431533,
+                  "defaultRow": 74799,
+                  "typeIndex": 70,
+                  "dataIndex": 655248
+                },
+                {
+                  "symbol": "EnterGotoByPortal",
+                  "value": 8,
+                  "fieldIndex": 431534,
+                  "defaultRow": 74800,
+                  "typeIndex": 70,
+                  "dataIndex": 655252
+                },
+                {
+                  "symbol": "EnterSelfHome",
+                  "value": 9,
+                  "fieldIndex": 431535,
+                  "defaultRow": 74801,
+                  "typeIndex": 70,
+                  "dataIndex": 655256
+                },
+                {
+                  "symbol": "EnterOtherHome",
+                  "value": 10,
+                  "fieldIndex": 431536,
+                  "defaultRow": 74802,
+                  "typeIndex": 70,
+                  "dataIndex": 655260
+                },
+                {
+                  "symbol": "EnterGotoRecreate",
+                  "value": 11,
+                  "fieldIndex": 431537,
+                  "defaultRow": 74803,
+                  "typeIndex": 70,
+                  "dataIndex": 655264
+                },
+                {
+                  "symbol": "EnterGotoByTpl",
+                  "value": 12,
+                  "fieldIndex": 431538,
+                  "defaultRow": 74804,
+                  "typeIndex": 70,
+                  "dataIndex": 655268
+                },
+                {
+                  "symbol": "EnterBeyond",
+                  "value": 13,
+                  "fieldIndex": 431539,
+                  "defaultRow": 74805,
+                  "typeIndex": 70,
+                  "dataIndex": 655272
+                },
+                {
+                  "symbol": "EnterHall",
+                  "value": 14,
+                  "fieldIndex": 431540,
+                  "defaultRow": 74806,
+                  "typeIndex": 70,
+                  "dataIndex": 655276
+                }
+              ],
+              "semanticStatus": "target-symbols-only"
+            },
+            "fields": [
+              {
+                "clientField": "HHAFHFEPLPD",
+                "objectOffset": 24,
+                "declaration": {
+                  "kind": "class",
+                  "attributes": "0x1",
+                  "data": "0x14977",
+                  "byRef": false,
+                  "typeDefinition": 84343,
+                  "name": "BGDCNKAKGHI",
+                  "namespace": ""
+                }
+              },
+              {
+                "clientField": "EMLMBEIBJHJ",
+                "objectOffset": 32,
+                "declaration": {
+                  "kind": "genericinst",
+                  "attributes": "0x21",
+                  "data": "0x7346",
+                  "byRef": false,
+                  "genericIndex": 29510,
+                  "instanceIndex": 11,
+                  "arguments": [
+                    {
+                      "kind": "uint32",
+                      "attributes": "0x0",
+                      "data": "0x13f",
+                      "byRef": false
+                    }
+                  ],
+                  "typeDefinition": 35584,
+                  "name": "DKHEEHDOEIK",
+                  "namespace": ""
+                }
+              },
+              {
+                "clientField": "KFIJNBDGBAH",
+                "objectOffset": 40,
+                "declaration": {
+                  "kind": "class",
+                  "attributes": "0x1",
+                  "data": "0x650a",
+                  "byRef": false,
+                  "typeDefinition": 25866,
+                  "name": "ABJMLEPLFJG",
+                  "namespace": ""
+                }
+              },
+              {
+                "clientField": "LFPEKBJIJNG",
+                "objectOffset": 48,
+                "declaration": {
+                  "kind": "class",
+                  "attributes": "0x1",
+                  "data": "0x14977",
+                  "byRef": false,
+                  "typeDefinition": 84343,
+                  "name": "BGDCNKAKGHI",
+                  "namespace": ""
+                }
+              },
+              {
+                "clientField": "CPIINPOJLCM",
+                "objectOffset": 56,
+                "declaration": {
+                  "kind": "string",
+                  "attributes": "0x1",
+                  "data": "0x125",
+                  "byRef": false
+                }
+              },
+              {
+                "clientField": "BJMCOIFDONK",
+                "objectOffset": 64,
+                "declaration": {
+                  "kind": "class",
+                  "attributes": "0x1",
+                  "data": "0x8555",
+                  "byRef": false,
+                  "typeDefinition": 34133,
+                  "name": "HJLMHFHHJKM",
+                  "namespace": ""
+                }
+              },
+              {
+                "clientField": "FEANOEECAIM",
+                "objectOffset": 72,
+                "declaration": {
+                  "kind": "class",
+                  "attributes": "0x1",
+                  "data": "0x10fec",
+                  "byRef": false,
+                  "typeDefinition": 69612,
+                  "name": "PCCNENMODDD",
+                  "namespace": ""
+                }
+              },
+              {
+                "clientField": "ABIFGOBLNDN",
+                "objectOffset": 80,
+                "declaration": {
+                  "kind": "class",
+                  "attributes": "0x1",
+                  "data": "0x14977",
+                  "byRef": false,
+                  "typeDefinition": 84343,
+                  "name": "BGDCNKAKGHI",
+                  "namespace": ""
+                }
+              },
+              {
+                "clientField": "CCKBJJPAGGG",
+                "objectOffset": 88,
+                "declaration": {
+                  "kind": "class",
+                  "attributes": "0x1",
+                  "data": "0x108b1",
+                  "byRef": false,
+                  "typeDefinition": 67761,
+                  "name": "HKDMELCIJGB",
+                  "namespace": ""
+                }
+              },
+              {
+                "clientField": "NBBEIFOKKNG",
+                "objectOffset": 96,
+                "declaration": {
+                  "kind": "class",
+                  "attributes": "0x1",
+                  "data": "0x101f8",
+                  "byRef": false,
+                  "typeDefinition": 66040,
+                  "name": "NAECHMKLBEI",
+                  "namespace": ""
+                }
+              },
+              {
+                "clientField": "CNABNLMHMII",
+                "objectOffset": 104,
+                "declaration": {
+                  "kind": "uint64",
+                  "attributes": "0x1",
+                  "data": "0x140",
+                  "byRef": false
+                }
+              },
+              {
+                "clientField": "DGIBDKELFNG",
+                "objectOffset": 112,
+                "declaration": {
+                  "kind": "uint32",
+                  "attributes": "0x1",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              },
+              {
+                "clientField": "LMKLCDPJOBJ",
+                "objectOffset": 116,
+                "declaration": {
+                  "kind": "uint32",
+                  "attributes": "0x1",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              },
+              {
+                "clientField": "AJMJGIKBOPO",
+                "objectOffset": 120,
+                "declaration": {
+                  "kind": "uint32",
+                  "attributes": "0x1",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              },
+              {
+                "clientField": "JMHKHAPJADA",
+                "objectOffset": 124,
+                "declaration": {
+                  "kind": "uint32",
+                  "attributes": "0x1",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              },
+              {
+                "clientField": "NBDGINFCIIK",
+                "objectOffset": 128,
+                "declaration": {
+                  "kind": "uint32",
+                  "attributes": "0x1",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              },
+              {
+                "clientField": "KLDLBMCOGFC",
+                "objectOffset": 132,
+                "declaration": {
+                  "kind": "bool",
+                  "attributes": "0x1",
+                  "data": "0xae",
+                  "byRef": false
+                }
+              },
+              {
+                "clientField": "OACAAAMNGFI",
+                "objectOffset": 133,
+                "declaration": {
+                  "kind": "bool",
+                  "attributes": "0x1",
+                  "data": "0xae",
+                  "byRef": false
+                }
+              },
+              {
+                "clientField": "EHONLMHNLDP",
+                "objectOffset": 136,
+                "declaration": {
+                  "kind": "uint32",
+                  "attributes": "0x1",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              },
+              {
+                "clientField": "CMAFDGGJDNK",
+                "objectOffset": 140,
+                "declaration": {
+                  "kind": "uint32",
+                  "attributes": "0x1",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              },
+              {
+                "clientField": "OHHFLAOMMEC",
+                "objectOffset": 144,
+                "declaration": {
+                  "kind": "uint32",
+                  "attributes": "0x1",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              },
+              {
+                "clientField": "MCCMGLDOECH",
+                "objectOffset": 148,
+                "declaration": {
+                  "kind": "uint32",
+                  "attributes": "0x1",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              },
+              {
+                "clientField": "NOEEBKJAFAG",
+                "objectOffset": 152,
+                "declaration": {
+                  "kind": "valuetype",
+                  "attributes": "0x1",
+                  "data": "0x15217",
+                  "byRef": false,
+                  "typeDefinition": 86551,
+                  "name": "ILGABKBIAIE",
+                  "namespace": ""
+                }
+              },
+              {
+                "clientField": "JEPBJIIEFOM",
+                "objectOffset": 156,
+                "declaration": {
+                  "kind": "uint32",
+                  "attributes": "0x1",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              },
+              {
+                "clientField": "PKGEAAKBCNC",
+                "objectOffset": 160,
+                "declaration": {
+                  "kind": "uint32",
+                  "attributes": "0x1",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              },
+              {
+                "clientField": "IOLBHNOIGJN",
+                "objectOffset": 164,
+                "declaration": {
+                  "kind": "uint32",
+                  "attributes": "0x1",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              }
+            ]
+          },
+          "stage": {
+            "methodIndex": 711360,
+            "entry": "0x14c8ae9a0",
+            "parameterIndex": 538572,
+            "parameterTypeIndex": 675783,
+            "enumTypeIndex": 85949,
+            "enumClientType": "NEKEJMEIJBF"
+          },
+          "bindings": [
+            {
+              "usageRow": 701228,
+              "cell": "0x145892570",
+              "sourceIndex": 478317,
+              "typeIndex": 11064,
+              "type": {
+                "kind": "class",
+                "attributes": "0x0",
+                "data": "0x2b38",
+                "byRef": false,
+                "typeDefinition": 11064,
+                "name": "IAutoAllocRecycle",
+                "namespace": "MoleMole"
+              }
+            },
+            {
+              "usageRow": 710071,
+              "cell": "0x1458c3938",
+              "sourceIndex": 106228,
+              "typeIndex": 75453,
+              "type": {
+                "kind": "class",
+                "attributes": "0x0",
+                "data": "0x126bd",
+                "byRef": false,
+                "typeDefinition": 75453,
+                "name": "NMCKLNDCNKA",
+                "namespace": ""
+              }
+            }
+          ],
+          "taskFields": [
+            {
+              "index": 374702,
+              "name": "CFFEALGPCJM",
+              "nameIndex": "0xb7f52e7",
+              "typeIndex": 444181,
+              "type": {
+                "kind": "string",
+                "attributes": "0x6",
+                "data": "0x125",
+                "byRef": false
+              },
+              "offset": 16,
+              "rawOffset": "0x10",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 374703,
+              "name": "EKICPGLCFHD",
+              "nameIndex": "0xb7f52f2",
+              "typeIndex": 455434,
+              "type": {
+                "kind": "class",
+                "attributes": "0x1",
+                "data": "0x8c3",
+                "byRef": false,
+                "typeDefinition": 2243,
+                "name": "Coroutine",
+                "namespace": "UnityEngine"
+              },
+              "offset": 24,
+              "rawOffset": "0x18",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 374704,
+              "name": "DGCBCBOJLGK",
+              "nameIndex": "0xb5dd94e",
+              "typeIndex": 455434,
+              "type": {
+                "kind": "class",
+                "attributes": "0x1",
+                "data": "0x8c3",
+                "byRef": false,
+                "typeDefinition": 2243,
+                "name": "Coroutine",
+                "namespace": "UnityEngine"
+              },
+              "offset": 32,
+              "rawOffset": "0x20",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 374705,
+              "name": "EHLPEADMCAI",
+              "nameIndex": "0xb18c0e8",
+              "typeIndex": 445681,
+              "type": {
+                "kind": "uint32",
+                "attributes": "0x6",
+                "data": "0x13f",
+                "byRef": false
+              },
+              "offset": 40,
+              "rawOffset": "0x28",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 374706,
+              "name": "DPDDLDIPDIC",
+              "nameIndex": "0xb1bf8cb",
+              "typeIndex": 445681,
+              "type": {
+                "kind": "uint32",
+                "attributes": "0x6",
+                "data": "0x13f",
+                "byRef": false
+              },
+              "offset": 44,
+              "rawOffset": "0x2c",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 374707,
+              "name": "NGHAOFLBJLM",
+              "nameIndex": "0xb7f52fd",
+              "typeIndex": 445682,
+              "type": {
+                "kind": "uint64",
+                "attributes": "0x6",
+                "data": "0x140",
+                "byRef": false
+              },
+              "offset": 48,
+              "rawOffset": "0x30",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 374708,
+              "name": "EKAJNENLKPM",
+              "nameIndex": "0xb229271",
+              "typeIndex": 651315,
+              "type": {
+                "kind": "valuetype",
+                "attributes": "0x1",
+                "data": "0x126c0",
+                "byRef": false,
+                "typeDefinition": 75456,
+                "name": "ELCLCAIHLED",
+                "namespace": ""
+              },
+              "offset": 56,
+              "rawOffset": "0x38",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 374709,
+              "name": "EMAHGCKGPID",
+              "nameIndex": "0xb25d4b3",
+              "typeIndex": 445681,
+              "type": {
+                "kind": "uint32",
+                "attributes": "0x6",
+                "data": "0x13f",
+                "byRef": false
+              },
+              "offset": 60,
+              "rawOffset": "0x3c",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 374710,
+              "name": "OOMECNAEDBH",
+              "nameIndex": "0xb7f5308",
+              "typeIndex": 444357,
+              "type": {
+                "kind": "bool",
+                "attributes": "0x6",
+                "data": "0xae",
+                "byRef": false
+              },
+              "offset": 64,
+              "rawOffset": "0x40",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 374711,
+              "name": "PIGBPDNANNG",
+              "nameIndex": "0xb7f5313",
+              "typeIndex": 444357,
+              "type": {
+                "kind": "bool",
+                "attributes": "0x6",
+                "data": "0xae",
+                "byRef": false
+              },
+              "offset": 65,
+              "rawOffset": "0x41",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 374712,
+              "name": "EBAHFLKIHGC",
+              "nameIndex": "0xb7f531e",
+              "typeIndex": 444357,
+              "type": {
+                "kind": "bool",
+                "attributes": "0x6",
+                "data": "0xae",
+                "byRef": false
+              },
+              "offset": 66,
+              "rawOffset": "0x42",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 374713,
+              "name": "JMMEOBCBMOJ",
+              "nameIndex": "0xb193da3",
+              "typeIndex": 452098,
+              "type": {
+                "kind": "valuetype",
+                "attributes": "0x6",
+                "data": "0x919",
+                "byRef": false,
+                "typeDefinition": 2329,
+                "name": "Vector3",
+                "namespace": "UnityEngine"
+              },
+              "offset": 68,
+              "rawOffset": "0x44",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 374714,
+              "name": "CJAAFEDGKKN",
+              "nameIndex": "0xb1f82e8",
+              "typeIndex": 651316,
+              "type": {
+                "kind": "valuetype",
+                "attributes": "0x6",
+                "data": "0x126be",
+                "byRef": false,
+                "typeDefinition": 75454,
+                "name": "AAOOCODHNAE",
+                "namespace": ""
+              },
+              "offset": 80,
+              "rawOffset": "0x50",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 374715,
+              "name": "HDKJFBJFAMA",
+              "nameIndex": "0xb7f5329",
+              "typeIndex": 445681,
+              "type": {
+                "kind": "uint32",
+                "attributes": "0x6",
+                "data": "0x13f",
+                "byRef": false
+              },
+              "offset": 84,
+              "rawOffset": "0x54",
+              "offsetKind": "instance"
+            },
+            {
+              "index": 374716,
+              "name": "FJCNLAMCDBD",
+              "nameIndex": "0xb196b7e",
+              "typeIndex": 445681,
+              "type": {
+                "kind": "uint32",
+                "attributes": "0x6",
+                "data": "0x13f",
+                "byRef": false
+              },
+              "offset": 88,
+              "rawOffset": "0x58",
+              "offsetKind": "instance"
+            }
+          ],
+          "methods": [
+            {
+              "entry": "0x14cd67260",
+              "ownerType": 18753,
+              "methodIndex": 142800,
+              "name": "LDLBKNPDDNK"
+            },
+            {
+              "entry": "0x14cd5f7b0",
+              "ownerType": 18753,
+              "methodIndex": 142791,
+              "name": "BINGKDKAHNF"
+            },
+            {
+              "entry": "0x147b2ddf0",
+              "ownerType": 75453,
+              "methodIndex": 624611,
+              "name": "AutoAllocTypeFields"
+            },
+            {
+              "entry": "0x147b2f350",
+              "ownerType": 75453,
+              "methodIndex": 624616,
+              "name": "OnPoolAllocated"
+            },
+            {
+              "entry": "0x147b2f6a0",
+              "ownerType": 75453,
+              "methodIndex": 624618,
+              "name": "DMHBGJPPCGJ"
+            },
+            {
+              "entry": "0x147b2f460",
+              "ownerType": 75453,
+              "methodIndex": 624619,
+              "name": "OEDPLDCDOEK"
+            }
+          ]
+        },
+        "bindings": [
+          {
+            "usageRow": 700095,
+            "cell": "0x14588ca20",
+            "sourceIndex": 5203,
+            "type": {
+              "kind": "genericinst",
+              "attributes": "0x0",
+              "data": "0x12f5",
+              "byRef": false,
+              "genericIndex": 4853,
+              "instanceIndex": 11,
+              "arguments": [
+                {
+                  "kind": "uint32",
+                  "attributes": "0x0",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              ],
+              "typeDefinition": 1255,
+              "name": "List`1",
+              "namespace": "System.Collections.Generic"
+            }
+          },
+          {
+            "usageRow": 702224,
+            "cell": "0x1458975f0",
+            "sourceIndex": 32774,
+            "type": {
+              "kind": "genericinst",
+              "attributes": "0x0",
+              "data": "0x781e",
+              "byRef": false,
+              "genericIndex": 30750,
+              "instanceIndex": 3723,
+              "arguments": [
+                {
+                  "kind": "uint32",
+                  "attributes": "0x0",
+                  "data": "0x13f",
+                  "byRef": false
+                },
+                {
+                  "kind": "uint32",
+                  "attributes": "0x0",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              ],
+              "typeDefinition": 1222,
+              "name": "Dictionary`2",
+              "namespace": "System.Collections.Generic"
+            }
+          }
+        ],
+        "cacheField": {
+          "index": 304800,
+          "name": "OBNPMJHMHAF",
+          "nameIndex": "0xb6c8817",
+          "typeIndex": 482280,
+          "type": {
+            "kind": "genericinst",
+            "attributes": "0x1",
+            "data": "0x781e",
+            "byRef": false,
+            "genericIndex": 30750,
+            "instanceIndex": 3723,
+            "arguments": [
+              {
+                "kind": "uint32",
+                "attributes": "0x0",
+                "data": "0x13f",
+                "byRef": false
+              },
+              {
+                "kind": "uint32",
+                "attributes": "0x0",
+                "data": "0x13f",
+                "byRef": false
+              }
+            ],
+            "typeDefinition": 1222,
+            "name": "Dictionary`2",
+            "namespace": "System.Collections.Generic"
+          },
+          "offset": 144,
+          "rawOffset": "0x90",
+          "offsetKind": "instance"
+        },
+        "sourceGlobalOwner": 66294,
+        "sourceGlobalField": {
+          "index": 327426,
+          "name": "FNLANEFCGPE",
+          "nameIndex": "0xb1895f2",
+          "typeIndex": 629672,
+          "type": {
+            "kind": "genericinst",
+            "attributes": "0x11",
+            "data": "0x4ed5b",
+            "byRef": false,
+            "genericIndex": 322907,
+            "instanceIndex": 42688,
+            "arguments": [
+              {
+                "kind": "uint32",
+                "attributes": "0x0",
+                "data": "0x13f",
+                "byRef": false
+              },
+              {
+                "kind": "class",
+                "attributes": "0x0",
+                "data": "0x114cb",
+                "byRef": false,
+                "typeDefinition": 70859,
+                "name": "IMHFELDKMFA",
+                "namespace": ""
+              }
+            ],
+            "typeDefinition": 1222,
+            "name": "Dictionary`2",
+            "namespace": "System.Collections.Generic"
+          },
+          "offset": null,
+          "rawOffset": "0x4034730",
+          "offsetKind": "runtime"
+        },
+        "sourceRecordField": {
+          "index": 349818,
+          "name": "PGEALOPDPOF",
+          "nameIndex": "0xb7865d2",
+          "typeIndex": 481973,
+          "type": {
+            "kind": "valuetype",
+            "attributes": "0x4",
+            "data": "0xe361",
+            "byRef": false,
+            "typeDefinition": 58209,
+            "name": "COJIPHBKKGB",
+            "namespace": ""
+          },
+          "offset": 128,
+          "rawOffset": "0x80",
+          "offsetKind": "instance"
+        },
+        "methods": [
+          {
+            "entry": "0x153a18e80",
+            "ownerType": 61485,
+            "method": {
+              "index": 510349,
+              "name": "HGKMCFILCLB",
+              "nameIndex": "0xb6c9b16",
+              "registeredAddress": "0x153a18e80",
+              "parameterCount": 1,
+              "flags": "0x86",
+              "virtualSlot": 65535
+            },
+            "parameters": [
+              {
+                "kind": "uint32",
+                "attributes": "0x0",
+                "data": "0x13f",
+                "byRef": false
+              }
+            ],
+            "returnTypeStatus": "not-recovered"
+          },
+          {
+            "entry": "0x153a357d0",
+            "ownerType": 61485,
+            "method": {
+              "index": 510275,
+              "name": "FCEFPKCKLIM",
+              "nameIndex": "0xb6c97bc",
+              "registeredAddress": "0x153a357d0",
+              "parameterCount": 0,
+              "flags": "0x886",
+              "virtualSlot": 65535
+            },
+            "parameters": [],
+            "returnTypeStatus": "not-recovered"
+          },
+          {
+            "entry": "0x153a3cb70",
+            "ownerType": 61485,
+            "method": {
+              "index": 510351,
+              "name": "IAINIFFHOEC",
+              "nameIndex": "0xb6c9b37",
+              "registeredAddress": "0x153a3cb70",
+              "parameterCount": 2,
+              "flags": "0x86",
+              "virtualSlot": 65535
+            },
+            "parameters": [
+              {
+                "kind": "uint32",
+                "attributes": "0x0",
+                "data": "0x13f",
+                "byRef": false
+              },
+              {
+                "kind": "genericinst",
+                "attributes": "0x0",
+                "data": "0x7346",
+                "byRef": false,
+                "genericIndex": 29510,
+                "instanceIndex": 11,
+                "arguments": [
+                  {
+                    "kind": "uint32",
+                    "attributes": "0x0",
+                    "data": "0x13f",
+                    "byRef": false
+                  }
+                ],
+                "typeDefinition": 35584,
+                "name": "DKHEEHDOEIK",
+                "namespace": ""
+              }
+            ],
+            "returnTypeStatus": "not-recovered"
+          }
+        ],
+        "returnStorage": "uint32 value at entries+32+index*16+12; method return declaration is not recovered"
+      },
+      "bindings": [
+        {
+          "usageRow": 698791,
+          "cell": "0x1458869f0",
+          "sourceIndex": 28866,
+          "type": {
+            "kind": "szarray",
+            "attributes": "0x0",
+            "data": "0x142e62a90",
+            "byRef": false,
+            "elementType": {
+              "kind": "uint32",
+              "attributes": "0x0",
+              "data": "0x13f",
+              "byRef": false
+            },
+            "rank": 1
+          }
+        },
+        {
+          "usageRow": 704087,
+          "cell": "0x1458a1ec0",
+          "sourceIndex": 127,
+          "type": {
+            "kind": "genericinst",
+            "attributes": "0x0",
+            "data": "0x73",
+            "byRef": false,
+            "genericIndex": 115,
+            "instanceIndex": 11,
+            "arguments": [
+              {
+                "kind": "uint32",
+                "attributes": "0x0",
+                "data": "0x13f",
+                "byRef": false
+              }
+            ],
+            "typeDefinition": 1244,
+            "name": "ICollection`1",
+            "namespace": "System.Collections.Generic"
+          }
+        }
+      ],
+      "ownerCacheField": {
+        "index": 304794,
+        "name": "CMFGIBMFCCM",
+        "nameIndex": "0xb6c87d5",
+        "typeIndex": 490933,
+        "type": {
+          "kind": "genericinst",
+          "attributes": "0x1",
+          "data": "0xb03f",
+          "byRef": false,
+          "genericIndex": 45119,
+          "instanceIndex": 5211,
+          "arguments": [
+            {
+              "kind": "uint32",
+              "attributes": "0x0",
+              "data": "0x13f",
+              "byRef": false
+            },
+            {
+              "kind": "genericinst",
+              "attributes": "0x0",
+              "data": "0x12f5",
+              "byRef": false,
+              "genericIndex": 4853,
+              "instanceIndex": 11,
+              "arguments": [
+                {
+                  "kind": "uint32",
+                  "attributes": "0x0",
+                  "data": "0x13f",
+                  "byRef": false
+                }
+              ],
+              "typeDefinition": 1255,
+              "name": "List`1",
+              "namespace": "System.Collections.Generic"
+            }
+          ],
+          "typeDefinition": 1222,
+          "name": "Dictionary`2",
+          "namespace": "System.Collections.Generic"
+        },
+        "offset": 96,
+        "rawOffset": "0x60",
+        "offsetKind": "instance"
+      },
+      "collectionInterface": {
+        "index": 1244,
+        "name": "ICollection`1",
+        "namespace": "System.Collections.Generic",
+        "nameIndex": "0xd02521c",
+        "namespaceIndex": "0x1a024942",
+        "fieldStart": 4294967295,
+        "fieldCount": 0,
+        "fields": [],
+        "methodStart": 10341,
+        "methodCount": 7,
+        "methods": [
+          {
+            "index": 10341,
+            "name": "get_Count",
+            "nameIndex": "0x900112d",
+            "registeredAddress": "0x0",
+            "parameterCount": 0,
+            "flags": "0xdc6",
+            "virtualSlot": 0
+          },
+          {
+            "index": 10342,
+            "name": "get_IsReadOnly",
+            "nameIndex": "0xe00396e",
+            "registeredAddress": "0x0",
+            "parameterCount": 0,
+            "flags": "0xdc6",
+            "virtualSlot": 1
+          },
+          {
+            "index": 10343,
+            "name": "Add",
+            "nameIndex": "0x30007e1",
+            "registeredAddress": "0x0",
+            "parameterCount": 1,
+            "flags": "0x5c6",
+            "virtualSlot": 2
+          },
+          {
+            "index": 10344,
+            "name": "Clear",
+            "nameIndex": "0x50007dc",
+            "registeredAddress": "0x0",
+            "parameterCount": 0,
+            "flags": "0x5c6",
+            "virtualSlot": 3
+          },
+          {
+            "index": 10345,
+            "name": "Contains",
+            "nameIndex": "0x800842d",
+            "registeredAddress": "0x0",
+            "parameterCount": 1,
+            "flags": "0x5c6",
+            "virtualSlot": 4
+          },
+          {
+            "index": 10346,
+            "name": "CopyTo",
+            "nameIndex": "0x6003903",
+            "registeredAddress": "0x0",
+            "parameterCount": 2,
+            "flags": "0x5c6",
+            "virtualSlot": 5
+          },
+          {
+            "index": 10347,
+            "name": "Remove",
+            "nameIndex": "0x6001ebc",
+            "registeredAddress": "0x0",
+            "parameterCount": 1,
+            "flags": "0x5c6",
+            "virtualSlot": 6
+          }
+        ],
+        "parent": null,
+        "fieldLayout": null
+      },
+      "repeatedMethods": [
+        {
+          "index": 297480,
+          "name": "CopyTo",
+          "nameIndex": "0x6003903",
+          "registeredAddress": "0x0",
+          "parameterCount": 2,
+          "flags": "0xc6",
+          "virtualSlot": 34
+        },
+        {
+          "index": 297488,
+          "name": "CopyTo",
+          "nameIndex": "0x6003903",
+          "registeredAddress": "0x0",
+          "parameterCount": 2,
+          "flags": "0xc6",
+          "virtualSlot": 42
+        },
+        {
+          "index": 297491,
+          "name": "get_Count",
+          "nameIndex": "0x900112d",
+          "registeredAddress": "0x0",
+          "parameterCount": 0,
+          "flags": "0x8c6",
+          "virtualSlot": 33
+        }
+      ],
+      "listFields": [
+        {
+          "index": 5850,
+          "name": "_items",
+          "nameIndex": "0x60080d9",
+          "typeIndex": 448489,
+          "type": {
+            "kind": "szarray",
+            "attributes": "0x1",
+            "data": "0x14353a170",
+            "byRef": false,
+            "elementType": {
+              "kind": "var",
+              "attributes": "0x0",
+              "data": "0x180",
+              "byRef": false
+            },
+            "rank": 1
+          },
+          "offset": null,
+          "rawOffset": "0x0",
+          "offsetKind": "runtime"
+        },
+        {
+          "index": 5851,
+          "name": "_size",
+          "nameIndex": "0x5023166",
+          "typeIndex": 444079,
+          "type": {
+            "kind": "int32",
+            "attributes": "0x1",
+            "data": "0xfb",
+            "byRef": false
+          },
+          "offset": null,
+          "rawOffset": "0x0",
+          "offsetKind": "runtime"
+        },
+        {
+          "index": 5852,
+          "name": "_version",
+          "nameIndex": "0x80012bb",
+          "typeIndex": 444079,
+          "type": {
+            "kind": "int32",
+            "attributes": "0x1",
+            "data": "0xfb",
+            "byRef": false
+          },
+          "offset": null,
+          "rawOffset": "0x0",
+          "offsetKind": "runtime"
+        }
+      ],
+      "closedMethodStatus": "List constructor/InsertRange PE bodies observed; base generic registered pointers are zero; runtime generic ABI not recovered"
+    },
+    "methods": [
+      {
+        "entry": "0x153a16aa0",
+        "ownerType": 61485,
+        "method": {
+          "index": 510062,
+          "name": "MILNAHNKJMA",
+          "nameIndex": "0xb6c8e27",
+          "registeredAddress": "0x153a16aa0",
+          "parameterCount": 2,
+          "flags": "0x86",
+          "virtualSlot": 65535
+        },
+        "parameters": [
+          {
+            "kind": "class",
+            "attributes": "0x0",
+            "data": "0x10fec",
+            "byRef": false,
+            "typeDefinition": 69612,
+            "name": "PCCNENMODDD",
+            "namespace": ""
+          },
+          {
+            "kind": "bool",
+            "attributes": "0x0",
+            "data": "0xae",
+            "byRef": false
+          }
+        ]
+      },
+      {
+        "entry": "0x153a16b30",
+        "ownerType": 61485,
+        "method": {
+          "index": 510299,
+          "name": "LCIGNKLAEBL",
+          "nameIndex": "0xb6c98e5",
+          "registeredAddress": "0x153a16b30",
+          "parameterCount": 3,
+          "flags": "0x86",
+          "virtualSlot": 65535
+        },
+        "parameters": [
+          {
+            "kind": "uint32",
+            "attributes": "0x0",
+            "data": "0x13f",
+            "byRef": false
+          },
+          {
+            "kind": "genericinst",
+            "attributes": "0x0",
+            "data": "0x7346",
+            "byRef": false,
+            "genericIndex": 29510,
+            "instanceIndex": 11,
+            "arguments": [
+              {
+                "kind": "uint32",
+                "attributes": "0x0",
+                "data": "0x13f",
+                "byRef": false
+              }
+            ],
+            "typeDefinition": 35584,
+            "name": "DKHEEHDOEIK",
+            "namespace": ""
+          },
+          {
+            "kind": "bool",
+            "attributes": "0x1010",
+            "data": "0xae",
+            "byRef": false
+          }
+        ]
+      },
+      {
+        "entry": "0x153a3cd60",
+        "ownerType": 61485,
+        "method": {
+          "index": 510309,
+          "name": "EAFDKEJIEDF",
+          "nameIndex": "0xb6c9953",
+          "registeredAddress": "0x153a3cd60",
+          "parameterCount": 3,
+          "flags": "0x81",
+          "virtualSlot": 65535
+        },
+        "parameters": [
+          {
+            "kind": "uint32",
+            "attributes": "0x0",
+            "data": "0x13f",
+            "byRef": false
+          },
+          {
+            "kind": "genericinst",
+            "attributes": "0x0",
+            "data": "0x7346",
+            "byRef": false,
+            "genericIndex": 29510,
+            "instanceIndex": 11,
+            "arguments": [
+              {
+                "kind": "uint32",
+                "attributes": "0x0",
+                "data": "0x13f",
+                "byRef": false
+              }
+            ],
+            "typeDefinition": 35584,
+            "name": "DKHEEHDOEIK",
+            "namespace": ""
+          },
+          {
+            "kind": "bool",
+            "attributes": "0x0",
+            "data": "0xae",
+            "byRef": false
+          }
+        ]
+      }
+    ],
+    "cacheField": {
+      "index": 304830,
+      "name": "AJNGOCGNOCN",
+      "nameIndex": "0xb3d8cf5",
+      "typeIndex": 490933,
+      "type": {
+        "kind": "genericinst",
+        "attributes": "0x1",
+        "data": "0xb03f",
+        "byRef": false,
+        "genericIndex": 45119,
+        "instanceIndex": 5211,
+        "arguments": [
+          {
+            "kind": "uint32",
+            "attributes": "0x0",
+            "data": "0x13f",
+            "byRef": false
+          },
+          {
+            "kind": "genericinst",
+            "attributes": "0x0",
+            "data": "0x12f5",
+            "byRef": false,
+            "genericIndex": 4853,
+            "instanceIndex": 11,
+            "arguments": [
+              {
+                "kind": "uint32",
+                "attributes": "0x0",
+                "data": "0x13f",
+                "byRef": false
+              }
+            ],
+            "typeDefinition": 1255,
+            "name": "List`1",
+            "namespace": "System.Collections.Generic"
+          }
+        ],
+        "typeDefinition": 1222,
+        "name": "Dictionary`2",
+        "namespace": "System.Collections.Generic"
+      },
+      "offset": 504,
+      "rawOffset": "0x1f8",
+      "offsetKind": "instance"
+    },
+    "caller": {
+      "entry": "0x14cd67467",
+      "bytes": "488b56484531c0e82df6ca06",
+      "sourceOffset": "0x48",
+      "boolValue": 0,
+      "messageType": 69612
+    }
+  },
+  "nativeCode": {
+    "0x153a16aa0": {
+      "size": 144,
+      "sha256": "7c7e9fad35fe5c920ffd674503b4c22f21cf49437185b6b2dfc2fbe70a66823b"
+    },
+    "0x153a16b30": {
+      "size": 1760,
+      "sha256": "0968c36a87566fbd2becf1bdcf3eca9cb85f32957416a5b276f525962e6aa45e"
+    },
+    "0x153a3cd60": {
+      "size": 3312,
+      "sha256": "ac57f010cec22fabf9666f984563711e5a49801e52db3473e124a58e024c446c"
+    }
+  },
+  "fixtureCount": 16,
+  "outcomeCounts": {
+    "nextHelperEntry": 7,
+    "earlyReturn": 4,
+    "nativeNullEntry": 2,
+    "ifixEntry": 3
+  },
+  "businessSemantics": "unresolved",
+  "stopsObservedBeforeInstruction": true,
+  "runtimeStatus": "not-tested",
+  "targetProtocolReady": false,
+  "unknownBodyExecuted": false,
+  "child25866ConsumerExecuted": false,
+  "models": [
+    "constructor defaults individually observed in ORDER before parent allocation; parent managed construction dispatch/physical EOF remain unverified",
+    "Graph view adapter delegates same CPU/object to native run_message(SCENE)",
+    "explicit absent-key query storage and independent owner+1F8 existing List<uint32> cache",
+    "initialized metadata; known managed ICollection Count/CopyTo/array allocation storage from prior list fixture"
+  ],
+  "outsideScope": [
+    "14AF3D130 body/return and later cache/system behavior",
+    "25866 downstream14FCDCAB0 consumption",
+    "bool-dependent later network/system branch",
+    "real parent constructor dispatch/physical buffer refill/EOF",
+    "IFix implementations",
+    "unknown field business names/complete scene entry/SDK/network ordering/D-02"
+  ],
+  "toolSourceSHA256": {
+    "tools/client72_scene_data.py": "9ca19dbbc73a8b785ad9f39af4a9a1007078cc561c7cf13408f5993b89cd9058",
+    "tools/trace_client72_scene_data.py": "14d3e3d599170cade5375dd35fe8ff9c21929ec45102ce60f2a10d321342dd45",
+    "tools/client72_scene_nested.py": "7a06c75fe3cddda79e6065b18d82072a194c38bb3a599db186feee57a74c3c4b",
+    "tools/trace_client72_scene_nested.py": "2b2eb8009301d4f333e0be54a0dc3d201e623838cb4f2fbfa35257bba7873cb1",
+    "tools/client72_scene_list.py": "cde453f40f6888bf7231988fae71d6e5d30a799efc390d7e3e8e5ae0c9d6f743",
+    "tools/trace_client72_scene_list.py": "2b3254c0c296a4c014bfdfa067461394fe38ad4d7c51716d8008a89286a6bd8c",
+    "tools/trace_client72_scene_query.py": "98051438ab743f4dbd678573ecbab75f116b5a03edd5276198560d26037e519f",
+    "tools/trace_client72_scene_normal.py": "2f813e139343f6f66a327743de6ca4b9461b257e3e06db6c7088df2eb8b91a9c"
+  },
+  "constructorDefaults": [
+    {
+      "typeIndex": 66040,
+      "storedObject": {
+        "typeIndex": 66040,
+        "fields": {
+          "0x18": 0
+        }
+      },
+      "constructor": "0x153f9fb20"
+    },
+    {
+      "typeIndex": 36137,
+      "storedObject": {
+        "typeIndex": 36137,
+        "fields": {
+          "0x18": 0,
+          "0x1c": 0,
+          "0x20": 0
+        }
+      },
+      "constructor": "0x14ef01060"
+    },
+    {
+      "typeIndex": 67761,
+      "storedObject": {
+        "typeIndex": 67761,
+        "fields": {
+          "0x18": []
+        }
+      },
+      "constructor": "0x14bf3a950"
+    },
+    {
+      "typeIndex": 25866,
+      "storedObject": {
+        "typeIndex": 25866,
+        "fields": {
+          "0x18": [],
+          "0x20": [],
+          "0x28": []
+        }
+      },
+      "constructor": "0x14bcf8bd0"
+    },
+    {
+      "typeIndex": 34133,
+      "storedObject": {
+        "typeIndex": 34133,
+        "fields": {
+          "0x18": "",
+          "0x20": null,
+          "0x28": "",
+          "0x30": 0
+        }
+      },
+      "constructor": "0x149b5f620"
+    },
+    {
+      "typeIndex": 69612,
+      "storedObject": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [],
+          "0x20": null,
+          "0x28": 0
+        }
+      },
+      "constructor": "0x14d0e9e10"
+    }
+  ],
+  "observations": [
+    {
+      "name": "default",
+      "suppliedBool": 0,
+      "expected": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [],
+          "0x20": null,
+          "0x28": 0
+        }
+      },
+      "stop": "0x620007000",
+      "messagePointer": "0x610000000",
+      "sourceListPointer": "0x6120036c0",
+      "child25866Pointer": "0x0",
+      "graphBefore": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [],
+          "0x20": null,
+          "0x28": 0
+        }
+      },
+      "graphAfter": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [],
+          "0x20": null,
+          "0x28": 0
+        }
+      },
+      "ingress": [
+        {
+          "entry": "0x153a16aa0",
+          "ownerMatches": true,
+          "messageMatches": true,
+          "flag": 0
+        }
+      ],
+      "cacheBefore": {
+        "pointer": "0x612005630",
+        "arrayPointer": "0x612005680",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "cacheAfter": {
+        "pointer": "0x612005630",
+        "arrayPointer": "0x612005680",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "nativeListWrites": [],
+      "dictionary": [
+        {
+          "hash": 0,
+          "next": -1,
+          "key": 0,
+          "value": "0x612005630"
+        }
+      ],
+      "interfaceCalls": [],
+      "unknownArguments": null
+    },
+    {
+      "name": "null-message",
+      "suppliedBool": 0,
+      "expected": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "stop": "0x620007000",
+      "messagePointer": "0x610000000",
+      "sourceListPointer": "0x6120036c0",
+      "child25866Pointer": "0x612003900",
+      "graphBefore": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "graphAfter": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "ingress": [
+        {
+          "entry": "0x153a16aa0",
+          "ownerMatches": true,
+          "messageMatches": false,
+          "flag": 0
+        }
+      ],
+      "cacheBefore": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "cacheAfter": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "nativeListWrites": [],
+      "dictionary": [
+        {
+          "hash": 17,
+          "next": -1,
+          "key": 17,
+          "value": "0x612006530"
+        }
+      ],
+      "interfaceCalls": [],
+      "unknownArguments": null
+    },
+    {
+      "name": "zero-key-nonempty",
+      "suppliedBool": 1,
+      "expected": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 0
+        }
+      },
+      "stop": "0x620007000",
+      "messagePointer": "0x610000000",
+      "sourceListPointer": "0x6120036c0",
+      "child25866Pointer": "0x612003900",
+      "graphBefore": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 0
+        }
+      },
+      "graphAfter": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 0
+        }
+      },
+      "ingress": [
+        {
+          "entry": "0x153a16aa0",
+          "ownerMatches": true,
+          "messageMatches": true,
+          "flag": 1
+        }
+      ],
+      "cacheBefore": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "cacheAfter": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "nativeListWrites": [],
+      "dictionary": [
+        {
+          "hash": 0,
+          "next": -1,
+          "key": 0,
+          "value": "0x612006530"
+        }
+      ],
+      "interfaceCalls": [],
+      "unknownArguments": null
+    },
+    {
+      "name": "empty-list",
+      "suppliedBool": 0,
+      "expected": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [],
+              "0x20": [],
+              "0x28": []
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "stop": "0x14af3d130",
+      "messagePointer": "0x610000000",
+      "sourceListPointer": "0x6120036c0",
+      "child25866Pointer": "0x6120038c0",
+      "graphBefore": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [],
+              "0x20": [],
+              "0x28": []
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "graphAfter": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [],
+              "0x20": [],
+              "0x28": []
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "ingress": [
+        {
+          "entry": "0x153a16aa0",
+          "ownerMatches": true,
+          "messageMatches": true,
+          "flag": 0
+        },
+        {
+          "entry": "0x153a16b30",
+          "ownerMatches": true,
+          "rawKey": 17,
+          "sourceListMatches": true,
+          "flag": 0
+        },
+        {
+          "entry": "0x153a3cd60",
+          "ownerMatches": true,
+          "rawKey": 17,
+          "sourceListMatches": true,
+          "flag": 0
+        }
+      ],
+      "cacheBefore": {
+        "pointer": "0x612006430",
+        "arrayPointer": "0x612006480",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "cacheAfter": {
+        "pointer": "0x612006430",
+        "arrayPointer": "0x612006480",
+        "size": 0,
+        "version": 11,
+        "capacity": 8,
+        "items": [],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "nativeListWrites": [
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 10,
+          "source": "0x153a3d86b"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 0,
+          "source": "0x153a3d86e"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 11,
+          "source": "0x15881fd1e"
+        }
+      ],
+      "dictionary": [
+        {
+          "hash": 17,
+          "next": -1,
+          "key": 17,
+          "value": "0x612006430"
+        }
+      ],
+      "interfaceCalls": [
+        {
+          "kind": "Count",
+          "dataList": true,
+          "count": 0
+        }
+      ],
+      "unknownArguments": {
+        "cacheListMatches": true,
+        "listPointer": "0x612006430",
+        "rawKey": 17,
+        "items": []
+      }
+    },
+    {
+      "name": "nonempty-false",
+      "suppliedBool": 0,
+      "expected": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "stop": "0x14af3d130",
+      "messagePointer": "0x610000000",
+      "sourceListPointer": "0x6120036c0",
+      "child25866Pointer": "0x612003900",
+      "graphBefore": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "graphAfter": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "ingress": [
+        {
+          "entry": "0x153a16aa0",
+          "ownerMatches": true,
+          "messageMatches": true,
+          "flag": 0
+        },
+        {
+          "entry": "0x153a16b30",
+          "ownerMatches": true,
+          "rawKey": 17,
+          "sourceListMatches": true,
+          "flag": 0
+        },
+        {
+          "entry": "0x153a3cd60",
+          "ownerMatches": true,
+          "rawKey": 17,
+          "sourceListMatches": true,
+          "flag": 0
+        }
+      ],
+      "cacheBefore": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "cacheAfter": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 3,
+        "version": 11,
+        "capacity": 8,
+        "items": [
+          1,
+          2147483648,
+          4294967295
+        ],
+        "rawArray": [
+          1,
+          2147483648,
+          4294967295,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "nativeListWrites": [
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 10,
+          "source": "0x153a3d86b"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 0,
+          "source": "0x153a3d86e"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 3,
+          "source": "0x15881fd19"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 11,
+          "source": "0x15881fd1e"
+        }
+      ],
+      "dictionary": [
+        {
+          "hash": 17,
+          "next": -1,
+          "key": 17,
+          "value": "0x612006530"
+        }
+      ],
+      "interfaceCalls": [
+        {
+          "kind": "Count",
+          "dataList": true,
+          "count": 3
+        },
+        {
+          "kind": "CopyTo",
+          "dataList": true,
+          "count": 3,
+          "index": 0
+        }
+      ],
+      "unknownArguments": {
+        "cacheListMatches": true,
+        "listPointer": "0x612006530",
+        "rawKey": 17,
+        "items": [
+          1,
+          2147483648,
+          4294967295
+        ]
+      }
+    },
+    {
+      "name": "nonempty-true",
+      "suppliedBool": 1,
+      "expected": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "stop": "0x14af3d130",
+      "messagePointer": "0x610000000",
+      "sourceListPointer": "0x6120036c0",
+      "child25866Pointer": "0x612003900",
+      "graphBefore": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "graphAfter": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "ingress": [
+        {
+          "entry": "0x153a16aa0",
+          "ownerMatches": true,
+          "messageMatches": true,
+          "flag": 1
+        },
+        {
+          "entry": "0x153a16b30",
+          "ownerMatches": true,
+          "rawKey": 17,
+          "sourceListMatches": true,
+          "flag": 1
+        },
+        {
+          "entry": "0x153a3cd60",
+          "ownerMatches": true,
+          "rawKey": 17,
+          "sourceListMatches": true,
+          "flag": 1
+        }
+      ],
+      "cacheBefore": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "cacheAfter": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 3,
+        "version": 11,
+        "capacity": 8,
+        "items": [
+          1,
+          2147483648,
+          4294967295
+        ],
+        "rawArray": [
+          1,
+          2147483648,
+          4294967295,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "nativeListWrites": [
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 10,
+          "source": "0x153a3d86b"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 0,
+          "source": "0x153a3d86e"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 3,
+          "source": "0x15881fd19"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 11,
+          "source": "0x15881fd1e"
+        }
+      ],
+      "dictionary": [
+        {
+          "hash": 17,
+          "next": -1,
+          "key": 17,
+          "value": "0x612006530"
+        }
+      ],
+      "interfaceCalls": [
+        {
+          "kind": "Count",
+          "dataList": true,
+          "count": 3
+        },
+        {
+          "kind": "CopyTo",
+          "dataList": true,
+          "count": 3,
+          "index": 0
+        }
+      ],
+      "unknownArguments": {
+        "cacheListMatches": true,
+        "listPointer": "0x612006530",
+        "rawKey": 17,
+        "items": [
+          1,
+          2147483648,
+          4294967295
+        ]
+      }
+    },
+    {
+      "name": "high-key",
+      "suppliedBool": 1,
+      "expected": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 2147483649
+        }
+      },
+      "stop": "0x14af3d130",
+      "messagePointer": "0x610000000",
+      "sourceListPointer": "0x6120036c0",
+      "child25866Pointer": "0x612003900",
+      "graphBefore": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 2147483649
+        }
+      },
+      "graphAfter": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 2147483649
+        }
+      },
+      "ingress": [
+        {
+          "entry": "0x153a16aa0",
+          "ownerMatches": true,
+          "messageMatches": true,
+          "flag": 1
+        },
+        {
+          "entry": "0x153a16b30",
+          "ownerMatches": true,
+          "rawKey": 2147483649,
+          "sourceListMatches": true,
+          "flag": 1
+        },
+        {
+          "entry": "0x153a3cd60",
+          "ownerMatches": true,
+          "rawKey": 2147483649,
+          "sourceListMatches": true,
+          "flag": 1
+        }
+      ],
+      "cacheBefore": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "cacheAfter": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 3,
+        "version": 11,
+        "capacity": 8,
+        "items": [
+          1,
+          2147483648,
+          4294967295
+        ],
+        "rawArray": [
+          1,
+          2147483648,
+          4294967295,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "nativeListWrites": [
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 10,
+          "source": "0x153a3d86b"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 0,
+          "source": "0x153a3d86e"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 3,
+          "source": "0x15881fd19"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 11,
+          "source": "0x15881fd1e"
+        }
+      ],
+      "dictionary": [
+        {
+          "hash": 1,
+          "next": -1,
+          "key": 2147483649,
+          "value": "0x612006530"
+        }
+      ],
+      "interfaceCalls": [
+        {
+          "kind": "Count",
+          "dataList": true,
+          "count": 3
+        },
+        {
+          "kind": "CopyTo",
+          "dataList": true,
+          "count": 3,
+          "index": 0
+        }
+      ],
+      "unknownArguments": {
+        "cacheListMatches": true,
+        "listPointer": "0x612006530",
+        "rawKey": 2147483649,
+        "items": [
+          1,
+          2147483648,
+          4294967295
+        ]
+      }
+    },
+    {
+      "name": "maximum-key-duplicates",
+      "suppliedBool": 0,
+      "expected": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            7,
+            7,
+            0,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 4294967295
+        }
+      },
+      "stop": "0x14af3d130",
+      "messagePointer": "0x610000000",
+      "sourceListPointer": "0x6120036c0",
+      "child25866Pointer": "0x612003900",
+      "graphBefore": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            7,
+            7,
+            0,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 4294967295
+        }
+      },
+      "graphAfter": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            7,
+            7,
+            0,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 4294967295
+        }
+      },
+      "ingress": [
+        {
+          "entry": "0x153a16aa0",
+          "ownerMatches": true,
+          "messageMatches": true,
+          "flag": 0
+        },
+        {
+          "entry": "0x153a16b30",
+          "ownerMatches": true,
+          "rawKey": 4294967295,
+          "sourceListMatches": true,
+          "flag": 0
+        },
+        {
+          "entry": "0x153a3cd60",
+          "ownerMatches": true,
+          "rawKey": 4294967295,
+          "sourceListMatches": true,
+          "flag": 0
+        }
+      ],
+      "cacheBefore": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "cacheAfter": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 5,
+        "version": 11,
+        "capacity": 8,
+        "items": [
+          7,
+          7,
+          0,
+          2147483648,
+          4294967295
+        ],
+        "rawArray": [
+          7,
+          7,
+          0,
+          2147483648,
+          4294967295,
+          0,
+          0,
+          0
+        ]
+      },
+      "nativeListWrites": [
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 10,
+          "source": "0x153a3d86b"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 0,
+          "source": "0x153a3d86e"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 5,
+          "source": "0x15881fd19"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 11,
+          "source": "0x15881fd1e"
+        }
+      ],
+      "dictionary": [
+        {
+          "hash": 2147483647,
+          "next": -1,
+          "key": 4294967295,
+          "value": "0x612006530"
+        }
+      ],
+      "interfaceCalls": [
+        {
+          "kind": "Count",
+          "dataList": true,
+          "count": 5
+        },
+        {
+          "kind": "CopyTo",
+          "dataList": true,
+          "count": 5,
+          "index": 0
+        }
+      ],
+      "unknownArguments": {
+        "cacheListMatches": true,
+        "listPointer": "0x612006530",
+        "rawKey": 4294967295,
+        "items": [
+          7,
+          7,
+          0,
+          2147483648,
+          4294967295
+        ]
+      }
+    },
+    {
+      "name": "missing-cache-dictionary",
+      "suppliedBool": 0,
+      "expected": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "stop": "0x1404c2be0",
+      "messagePointer": "0x610000000",
+      "sourceListPointer": "0x6120036c0",
+      "child25866Pointer": "0x612003900",
+      "graphBefore": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "graphAfter": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "ingress": [
+        {
+          "entry": "0x153a16aa0",
+          "ownerMatches": true,
+          "messageMatches": true,
+          "flag": 0
+        },
+        {
+          "entry": "0x153a16b30",
+          "ownerMatches": true,
+          "rawKey": 17,
+          "sourceListMatches": true,
+          "flag": 0
+        },
+        {
+          "entry": "0x153a3cd60",
+          "ownerMatches": true,
+          "rawKey": 17,
+          "sourceListMatches": true,
+          "flag": 0
+        }
+      ],
+      "cacheBefore": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "cacheAfter": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "nativeListWrites": [],
+      "dictionary": [
+        {
+          "hash": 17,
+          "next": -1,
+          "key": 17,
+          "value": "0x612006530"
+        }
+      ],
+      "interfaceCalls": [],
+      "unknownArguments": null
+    },
+    {
+      "name": "null-cache-entry",
+      "suppliedBool": 1,
+      "expected": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "stop": "0x1404c2be0",
+      "messagePointer": "0x610000000",
+      "sourceListPointer": "0x6120036c0",
+      "child25866Pointer": "0x612003900",
+      "graphBefore": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "graphAfter": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "ingress": [
+        {
+          "entry": "0x153a16aa0",
+          "ownerMatches": true,
+          "messageMatches": true,
+          "flag": 1
+        },
+        {
+          "entry": "0x153a16b30",
+          "ownerMatches": true,
+          "rawKey": 17,
+          "sourceListMatches": true,
+          "flag": 1
+        },
+        {
+          "entry": "0x153a3cd60",
+          "ownerMatches": true,
+          "rawKey": 17,
+          "sourceListMatches": true,
+          "flag": 1
+        }
+      ],
+      "cacheBefore": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "cacheAfter": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "nativeListWrites": [],
+      "dictionary": [
+        {
+          "hash": 17,
+          "next": -1,
+          "key": 17,
+          "value": "0x0"
+        }
+      ],
+      "interfaceCalls": [],
+      "unknownArguments": null
+    },
+    {
+      "name": "data-ifix",
+      "suppliedBool": 1,
+      "expected": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "stop": "0x14e2a9fe0",
+      "messagePointer": "0x610000000",
+      "sourceListPointer": "0x6120036c0",
+      "child25866Pointer": "0x612003900",
+      "graphBefore": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "graphAfter": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "ingress": [
+        {
+          "entry": "0x153a16aa0",
+          "ownerMatches": true,
+          "messageMatches": true,
+          "flag": 1
+        }
+      ],
+      "cacheBefore": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "cacheAfter": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "nativeListWrites": [],
+      "dictionary": [
+        {
+          "hash": 17,
+          "next": -1,
+          "key": 17,
+          "value": "0x612006530"
+        }
+      ],
+      "interfaceCalls": [],
+      "unknownArguments": null
+    },
+    {
+      "name": "first-ifix",
+      "suppliedBool": 0,
+      "expected": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "stop": "0x14de7acc0",
+      "messagePointer": "0x610000000",
+      "sourceListPointer": "0x6120036c0",
+      "child25866Pointer": "0x612003900",
+      "graphBefore": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "graphAfter": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "ingress": [
+        {
+          "entry": "0x153a16aa0",
+          "ownerMatches": true,
+          "messageMatches": true,
+          "flag": 0
+        },
+        {
+          "entry": "0x153a16b30",
+          "ownerMatches": true,
+          "rawKey": 17,
+          "sourceListMatches": true,
+          "flag": 0
+        }
+      ],
+      "cacheBefore": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "cacheAfter": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "nativeListWrites": [],
+      "dictionary": [
+        {
+          "hash": 17,
+          "next": -1,
+          "key": 17,
+          "value": "0x612006530"
+        }
+      ],
+      "interfaceCalls": [],
+      "unknownArguments": null
+    },
+    {
+      "name": "cache-ifix",
+      "suppliedBool": 1,
+      "expected": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            7,
+            7,
+            0,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "stop": "0x14de7acc0",
+      "messagePointer": "0x610000000",
+      "sourceListPointer": "0x6120036c0",
+      "child25866Pointer": "0x612003900",
+      "graphBefore": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            7,
+            7,
+            0,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "graphAfter": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            7,
+            7,
+            0,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 17
+        }
+      },
+      "ingress": [
+        {
+          "entry": "0x153a16aa0",
+          "ownerMatches": true,
+          "messageMatches": true,
+          "flag": 1
+        },
+        {
+          "entry": "0x153a16b30",
+          "ownerMatches": true,
+          "rawKey": 17,
+          "sourceListMatches": true,
+          "flag": 1
+        },
+        {
+          "entry": "0x153a3cd60",
+          "ownerMatches": true,
+          "rawKey": 17,
+          "sourceListMatches": true,
+          "flag": 1
+        }
+      ],
+      "cacheBefore": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "cacheAfter": {
+        "pointer": "0x612006530",
+        "arrayPointer": "0x612006580",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "nativeListWrites": [],
+      "dictionary": [
+        {
+          "hash": 17,
+          "next": -1,
+          "key": 17,
+          "value": "0x612006530"
+        }
+      ],
+      "interfaceCalls": [],
+      "unknownArguments": null
+    },
+    {
+      "name": "scene-zero-key",
+      "suppliedBool": 0,
+      "expected": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 0
+        }
+      },
+      "stop": "0x14cd67473",
+      "messagePointer": "0x612003b30",
+      "sourceListPointer": "0x612003d30",
+      "child25866Pointer": "0x612003f70",
+      "graphBefore": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 0
+        }
+      },
+      "graphAfter": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 0
+        }
+      },
+      "ingress": [
+        {
+          "entry": "0x153a16aa0",
+          "ownerMatches": true,
+          "messageMatches": true,
+          "flag": 0
+        }
+      ],
+      "cacheBefore": {
+        "pointer": "0x612009270",
+        "arrayPointer": "0x6120092c0",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "cacheAfter": {
+        "pointer": "0x612009270",
+        "arrayPointer": "0x6120092c0",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "nativeListWrites": [],
+      "dictionary": [
+        {
+          "hash": 0,
+          "next": -1,
+          "key": 0,
+          "value": "0x612009270"
+        }
+      ],
+      "interfaceCalls": [
+        {
+          "kind": "Count",
+          "dataList": false,
+          "count": 3
+        },
+        {
+          "kind": "CopyTo",
+          "dataList": false,
+          "count": 3,
+          "index": 0
+        }
+      ],
+      "unknownArguments": null,
+      "originalMessage48Pointer": "0x612003b30"
+    },
+    {
+      "name": "scene-nonempty",
+      "suppliedBool": 0,
+      "expected": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            7,
+            7,
+            0,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 23
+        }
+      },
+      "stop": "0x14af3d130",
+      "messagePointer": "0x612003b30",
+      "sourceListPointer": "0x612003d30",
+      "child25866Pointer": "0x612003f70",
+      "graphBefore": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            7,
+            7,
+            0,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 23
+        }
+      },
+      "graphAfter": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            7,
+            7,
+            0,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 23
+        }
+      },
+      "ingress": [
+        {
+          "entry": "0x153a16aa0",
+          "ownerMatches": true,
+          "messageMatches": true,
+          "flag": 0
+        },
+        {
+          "entry": "0x153a16b30",
+          "ownerMatches": true,
+          "rawKey": 23,
+          "sourceListMatches": true,
+          "flag": 0
+        },
+        {
+          "entry": "0x153a3cd60",
+          "ownerMatches": true,
+          "rawKey": 23,
+          "sourceListMatches": true,
+          "flag": 0
+        }
+      ],
+      "cacheBefore": {
+        "pointer": "0x612009270",
+        "arrayPointer": "0x6120092c0",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "cacheAfter": {
+        "pointer": "0x612009270",
+        "arrayPointer": "0x6120092c0",
+        "size": 5,
+        "version": 11,
+        "capacity": 8,
+        "items": [
+          7,
+          7,
+          0,
+          2147483648,
+          4294967295
+        ],
+        "rawArray": [
+          7,
+          7,
+          0,
+          2147483648,
+          4294967295,
+          0,
+          0,
+          0
+        ]
+      },
+      "nativeListWrites": [
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 10,
+          "source": "0x153a3d86b"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 0,
+          "source": "0x153a3d86e"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 5,
+          "source": "0x15881fd19"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 11,
+          "source": "0x15881fd1e"
+        }
+      ],
+      "dictionary": [
+        {
+          "hash": 23,
+          "next": -1,
+          "key": 23,
+          "value": "0x612009270"
+        }
+      ],
+      "interfaceCalls": [
+        {
+          "kind": "Count",
+          "dataList": false,
+          "count": 3
+        },
+        {
+          "kind": "CopyTo",
+          "dataList": false,
+          "count": 3,
+          "index": 0
+        },
+        {
+          "kind": "Count",
+          "dataList": true,
+          "count": 5
+        },
+        {
+          "kind": "CopyTo",
+          "dataList": true,
+          "count": 5,
+          "index": 0
+        }
+      ],
+      "unknownArguments": {
+        "cacheListMatches": true,
+        "listPointer": "0x612009270",
+        "rawKey": 23,
+        "items": [
+          7,
+          7,
+          0,
+          2147483648,
+          4294967295
+        ]
+      },
+      "originalMessage48Pointer": "0x612003b30"
+    },
+    {
+      "name": "scene-high-key",
+      "suppliedBool": 0,
+      "expected": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 2147483649
+        }
+      },
+      "stop": "0x14af3d130",
+      "messagePointer": "0x612003b30",
+      "sourceListPointer": "0x612003d30",
+      "child25866Pointer": "0x612003f70",
+      "graphBefore": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 2147483649
+        }
+      },
+      "graphAfter": {
+        "typeIndex": 69612,
+        "fields": {
+          "0x18": [
+            1,
+            2147483648,
+            4294967295
+          ],
+          "0x20": {
+            "typeIndex": 25866,
+            "fields": {
+              "0x18": [
+                11,
+                2147483648,
+                11
+              ],
+              "0x20": [
+                0,
+                4294967295
+              ],
+              "0x28": [
+                23,
+                23,
+                2147483649
+              ]
+            }
+          },
+          "0x28": 2147483649
+        }
+      },
+      "ingress": [
+        {
+          "entry": "0x153a16aa0",
+          "ownerMatches": true,
+          "messageMatches": true,
+          "flag": 0
+        },
+        {
+          "entry": "0x153a16b30",
+          "ownerMatches": true,
+          "rawKey": 2147483649,
+          "sourceListMatches": true,
+          "flag": 0
+        },
+        {
+          "entry": "0x153a3cd60",
+          "ownerMatches": true,
+          "rawKey": 2147483649,
+          "sourceListMatches": true,
+          "flag": 0
+        }
+      ],
+      "cacheBefore": {
+        "pointer": "0x612009270",
+        "arrayPointer": "0x6120092c0",
+        "size": 2,
+        "version": 9,
+        "capacity": 8,
+        "items": [
+          99,
+          88
+        ],
+        "rawArray": [
+          99,
+          88,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "cacheAfter": {
+        "pointer": "0x612009270",
+        "arrayPointer": "0x6120092c0",
+        "size": 3,
+        "version": 11,
+        "capacity": 8,
+        "items": [
+          1,
+          2147483648,
+          4294967295
+        ],
+        "rawArray": [
+          1,
+          2147483648,
+          4294967295,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "nativeListWrites": [
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 10,
+          "source": "0x153a3d86b"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 0,
+          "source": "0x153a3d86e"
+        },
+        {
+          "offset": "0x18",
+          "size": 4,
+          "value": 3,
+          "source": "0x15881fd19"
+        },
+        {
+          "offset": "0x1c",
+          "size": 4,
+          "value": 11,
+          "source": "0x15881fd1e"
+        }
+      ],
+      "dictionary": [
+        {
+          "hash": 1,
+          "next": -1,
+          "key": 2147483649,
+          "value": "0x612009270"
+        }
+      ],
+      "interfaceCalls": [
+        {
+          "kind": "Count",
+          "dataList": false,
+          "count": 3
+        },
+        {
+          "kind": "CopyTo",
+          "dataList": false,
+          "count": 3,
+          "index": 0
+        },
+        {
+          "kind": "Count",
+          "dataList": true,
+          "count": 3
+        },
+        {
+          "kind": "CopyTo",
+          "dataList": true,
+          "count": 3,
+          "index": 0
+        }
+      ],
+      "unknownArguments": {
+        "cacheListMatches": true,
+        "listPointer": "0x612009270",
+        "rawKey": 2147483649,
+        "items": [
+          1,
+          2147483648,
+          4294967295
+        ]
+      },
+      "originalMessage48Pointer": "0x612003b30"
+    }
+  ]
+}
