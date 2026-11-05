@@ -1,53 +1,59 @@
 # 国服7.2详细接续记录
 
-更新：2026-11-05。目标active，无暂停指令；用户要求一直推进到D-02完成并通过实机验收。D-02未完成，不能把离线工具通过替代实机结果。
+更新：2026-11-05。目标active，无暂停指令；用户要求一直推进到D-02完成并实机验收。D-02未完成，离线结果不能替代实机。当前研究提交`b89d855`，上一交接提交459eca2。
 
 ## 当前状态与已完成
 
-本批起点dfd027d，研究提交`2a71ddf`完成A-04d5n5限定验收。第二协程23192/NCIDAOJKFEI.MoveNext151226CD0从明确恢复状态2/3执行：闭包JSON→原生Base64/RSA/SHA/验签→实际30677/Region reader→配置/SDK包装/提示→第二B0 store151229560；终点151229567。三个成功样本继续复用同一seed运行时到真实Token构造/getter24604/writer tag965。
+A-04d5o/B-02c10完成Token必需字段key_id限定验收。原生构造151220094写request+98=4，writer为tag1184/uint32，独立wire804a04。另在Miscs.GetGlobalDispatchUrl发现并执行命名参数片段：UInt32常量4与literal61981 `&key_id=`。客户端响应私钥仅匹配4_Pub.der；Java按原生请求值选择该公钥产生响应，三个成功样本的原生4096字节会话密钥与现有Java MT64相等；故意改用2/3/5均原生拒绝，无密钥安装。
 
-8原生样本、187研究回归通过，两次trace/摘要逐字节一致；研究校验0，ready1，当前ready报告214未满足项。两处分区入口的原始类型/字段来源关联现在各有执行证据，tag14/tag965业务名仍没有独立证据，业务命名仍35字段。A-04d5n/B-02c9、A-04d/B-02整体仍进行中。
+key_id名称为业务契约交叉证据推断，不是声称解密了混淆字段名。累计四个登录消息36业务字段（另有2个PacketHead字段，映射总verified字段38），8枚举102符号。tag965仍unknown，不借旧proto命名。A-04d/B-02整体仍进行中，D-02未开始实机验收。
 
-AGENTS.md和resources/ScriptSceneData/flat.luas.scenes.full_globals.lua.json为既有修改，保留未提交；patch f2874103ab70afc56260ee12d1eaca96247933b2和resources dac2a9d43332ef51879522cf39da2831b0ca0543均未变。本批只改离线工具/测试/摘要/文档，无运行Java/主Proto/配置/补丁/资源修改，没有操作数据库或客户端，不需部署重启。后续启动仍须核对本机配置/进程/端口，使用portable。
+本批3请求/6响应/2命名参数片段、192研究回归通过。两次trace和摘要逐字节一致；研究校验0，ready1（213项未满足）。Java全量集此前217失败没有消除。运行Java/主Proto/配置/补丁/资源均未改，只改研究工具、映射、文档，不需部署重启。未启动客户端、未操作数据库。
 
-## 新工具与证据
+既有AGENTS.md编码规范修改和resources/ScriptSceneData/flat.luas.scenes.full_globals.lua.json继续保留未提交。patch HEAD f2874103ab70afc56260ee12d1eaca96247933b2、resources HEAD dac2a9d43332ef51879522cf39da2831b0ca0543未变；未推送。
 
-正式入口tools/trace_client72_dispatch_coroutine.py，测试tools/test_client72_dispatch_coroutine.py，共享protocol/cn-7.2/dispatch-coroutine-observations.json。复现命令及模型边界见CLIENT_72_SESSION末尾A-04d5n5和Harness。
+## 工具与证据
 
-本机local/migration72/evidence/dispatch-coroutine-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json；logs/dispatch-coroutine-{run,repeat,regression}.log。shared SDK/notice/seed模型本批未改，不重跑无关运行服务来冒充验证。
+正式入口tools/trace_client72_key_selection.py，Java对照tools/Client72KeySelectionReference.java；测试tools/test_client72_key_selection.py，validate_protocol72已接入约束，mapping研究表key_id已verified。
 
-样本：state2/source-A、state3/空值、state3/9007199254740993；坏签名；缺content；闭包错误文本；状态码520；非法state5。前三组连续store并到Token，空值省略tag965。其余均不调用reader/SDK、不改B0、不构造Token。
+共享protocol/cn-7.2/key-selection-observations.json；本机local/migration72/evidence/key-selection-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json；logs/key-selection-{run,repeat,focused-tests,regression}.log。复现命令见CLIENT_72_SESSION的A-04d5o。
 
-## 第二协程实际边界
+固定输入仍是extract_client72.HASHES三份文件。trace SHA256=8660ffaaf609c3eed42452c0b7e712154fe0cd93fd26c4589ad36ee498fff2a0；summary SHA256=c5c488772ceecf02c5a6e46845706e4379bc275ff19d55c42f4671cdddc6e92d。
 
-- state(+50) jump table15122A1F8：0→151226DEA，1→151226E77，2/3→151226D20，4→151226DCD。state5范围检查到151229E5B，保持5。恢复2/3先将状态写-1。
-- 实例+18为23181/FCLFPIMPBAF闭包，+20为23177/DHABIHPMOAH接收者。闭包+18供JSON字符串，+20错误字符串、+30元数据System.Net.HttpStatusCode；输入200走成功路径，520走特定错误分支，不猜520的目标业务名称。
-- post-parse1512287E8核对[rbp+98]槽持有实际parsed原指针。两个配置返回1512289DC/151228A33，分别AL=1；第二SDK路径另经153D33980转15275F080。
-- 原生额外包装1471685A0、159BC3AC0、159BD48D0、14F8F0AE0、152754190、15276B740均已实际执行，未用成功stub替代。
-- 坏签名到14713C680错误提示入口，标记`[RegionDispatch] DecryptRegionDispatch Decrypt VerifyHash Fail`；缺content到147161B60日志入口，标记`[RegionDispatch] DecryptRegionDispatch Decrypt inputJson Content is Null`。两者不是同一错误边界。
-- 非空错误文本或状态520到151226F28，停止在重试/错误恢复之前。state0/1初始HTTP创建/等待、B0后尾段/回调均未执行。
-- 沿用n4全部显式模型：本地签名信任、JSON/集合/装箱、SDK导出表/日志sink未初始化、单线程OS、presence-only singleton。不能称真实SDK初始化/网络或完整协程调度通过。
+研究回归选集：全部tools/test_client72*.py，加test_extract_client72、test_validate_protocol72、test_audit_resource72、test_inventory_protocol、test_review_protocol72_surface，共192项。仅运行相关研究，不用服务器健康冒充客户端通过。
 
-## 下一项可执行任务与剩余缺口
+## 本批边界与避坑
 
-没有全局外部硬阻塞。保留tag965未知，不在没有新来源时反复重做已闭合的原始链。当前源码HandlerGetPlayerTokenReq实际读取account_uid/account_token/client_rand_key/key_id；前三者已核对，key_id仍是登录准入必需缺口。可优先继续A-04d/B-02该字段的独立目标证据，以及Handler后段/封包体；A-03最小P0闭包和D-01/E-01独立工作也仍可做。
+- 命名URL证据是两个原生片段：1531E0D76→159C1ABD0（formatter入口），1531E0D8A→159A8E9D0（Concat入口）。formatter声明参数为string/uint32/IFormatProvider，method3829；第二段格式化字符串4为显式输入。完整URL/HTTP未执行。
+- literal61981的usageRow782238/cell145B42F08，所属命名方法Miscs.GetGlobalDispatchUrl/1531E0A10。不能将搜索命中或常量4单独当证据。
+- 成功响应仍显式本地签名信任：私钥签名、服务器公钥及签名、根PEM输入。验证过程/结果未替换。
+- 请求seed加密使用原始服务器公钥（DER SHA7427ee11...）；客户端响应解密对应4_Pub（内层DER SHA c5dae228...），两者不同。Java本项从已验证的原生client seed数值生成响应，没有假装用本地SigningKey解开原始请求密文。完整交换/实际信任补丁另验。
+- Java固定0x42 padding只作离线确定性，与独立Python整数RSA/签名逐字节比较；真实私钥仅内存，公共摘要只hash。
+- 不修改原Token/Response共享模型；新工具复用现有验证路径。已有旧观察表unknown标签属于当时边界，不为新语义改写历史证据。
 
-请求tag1184/object+98有原生常量4，已由旧token-constructor观察表保留，但**常量4/文件名本身不能给字段命名**。已有trace_client72_response_crypto.discover_private_key在固定目标中提取客户端私钥材料，其modulus/exponent独立匹配且只匹配src/main/resources/keys/game_keys/4_Pub.der（共享response-crypto-observations已有publicKeyMatches）。可以在保持私钥仅本机的前提下补真正的密钥选择/互操作/错误key对照，再判断语义是否足够；不足继续unknown，不为推进而强行verified。
+## 已开始的下一项：Handler尾段
 
-本批只读核查发现：seed加密使用的服务器公钥原生DER SHA-256为7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e，而4_Pub.der内层PKCS1为c5dae22817432f2cd5670a1f89056460943743282e576d0e6ab01a93ef27d1c0。二者不是同一类密钥；4_Pub用于客户端响应/分区解密方向，不能说“请求seed用了4_Pub，所以4就是key_id”。实际服务端响应加密选择在HandlerGetPlayerTokenReq的Crypto.EncryptionKeys.get(keyId)，需结合真实wire和目标解密验证，而非仅名字推断。
+本机探索脚本local/migration72/analysis/probe_handler_tail.py已实际从1507BE0E0连续执行既有warmup/密码学/UID/token保存，再越过旧STOP15A4E0D9A，执行Miscs.set_robotCheckLoginInputData/1531E9EB0，停在1531D03D0（GetUniversalGameVersion的内部GetGameVersionAndChangelist入口）。
 
-tag965旧QueryCurrRegionHttpRsp.proto同tag名_connect_gate_ticket只是7.1参考。当前grep确认运行Handler没有消费该名字，不能以此删除字段或修改ready标准。后续若仍无独立语义来源，记录缺口并继续能解除其他登录前置的工作。
+响应原始tag3/bytes/BHHECPBGDKB/object+60经setter写GLOBAL+11C18，同一个ByteString原指针、含NUL/FF的非空输入已观察相等；4096密钥仍安装。此为单次探索，没有进正式工具/重复/边界样本/语义映射。报告evidence/handler-tail-exploration.json、logs/handler-tail-exploration.log，不能称已验收。
 
-D-02全部实机内容仍未执行：新旧测试号、选人、初始化/场景握手、心跳、退出重登。B-03/C-01未接完整7.2映射；D-01实际补丁/信任/加载、E-01资源revision/场景/Lua仍未齐。
+探索复用HandlerCore72，仅在旧STOP地址绕开旧实验的停止回调，继续执行真实指令；不跳过目标调用/验证。新增允许1531E9EB0、147CF2160（ByteString等号）、1531D02B0（GetUniversalGameVersion）。当前ByteString为非池化/非引用计数夹具，GLOBAL+11C18初始空；池化/旧值释放路径未测。
 
-## 弯路与避坑
+命名后续：
+- Handler 15A4E0DA3读取response+60→1531E9EB0；15A4E0DB2调用1531D02B0；15A4E0DB7读取response+80→15321A4D0 CalcVersionHash。
+- 1531D03D0=Miscs.GetGameVersionAndChangelist，六个byref string参数gameVer/engineCL/clientCL/resourceCL/silenceCL/dataCL（method94240，param98600..98605）；实现读取本地版本配置，含StringBuilder/Regex之类对象，尚未跑体。
+- 15321A4D0=Miscs.CalcVersionHash（method94441），param99075 version/string，99076 secretKey/string；不是直接名为client_version_random_key。响应+80是tag658/string/FIHDHDLJBLC，目前保持unknown。
+- CalcVersionHash内format调用159AB12F0→SHA1类/UTF8→HashAlgorithm.ComputeHash159BB9650→Base64 159BC3080→GLOBAL+11B90；可优先恢复完整密码学到已知Login hash来源。不要硬替换hash计算为成功。
+- Handler 15A4E0DCE之后检查GLOBAL+B6D0及分支，随后1507C0BB0/1507C0D30/1507C1080（同owner56238/HBIJFOJIFAH），这些后段未执行。
 
-1. 第二协程的坏签名不是第一入口的统一日志停点。最初工具在14713C680未知调用停下，已追踪目标错误标记并分开记录；不把错误UI执行完成作为验收。
-2. 保护段不能线性反汇编填充。使用实际MoveNext恢复入口，而非直接从151227092跳进解密；后者会遗漏状态和闭包检查。
-3. 原SDK/提示模型没有升级为实机初始化；仍不要添加feature flag或成功返回去跳未知调用。
-4. 复用seed runtime、RSA两个精确观测点、Object[]双层type-cache间接、空源默认字符串观察的注意事项见此前备份和n4专题。原Token5组此前已回归不变，本批未改这些工具。
-5. 未改任何运行文件，无需用重启代替研究验收；已有数据/他人差异保留。
+可选下一步：在明确版本来源夹具下继续GetUniversalGameVersion和CalcVersionHash；或保持未知继续封包体14A447E00/A-03闭包。不能用原始bytes送进robot setter就套旧security_cmd_buffer名称。
+
+## 未完成与解除条件
+
+没有全局外部硬阻塞。D-02仍需B-02全部P0语义/wire闭包、B-03生成/C-01接入、D-01真实路由/补丁加载/信任、E-01revision/场景/Lua最小资源等；新旧测试号、选人、初始化/场景握手、心跳、退出重登全部未实测。未知保持未知，继续依赖满足的开发研究。
+
+启动前重新核对当前checkout/.env/.env.local/config.json、GAME_PATH、portable、子模块/进程/端口归属。保留mongodata/local/data与隔离库，不操作无关客户端或强杀未知进程。
 
 ## 文档与交接
 
-README/Project/Harness/CLIENT_72_SESSION及三个账号专题已同步。覆盖前旧HANDOFF2已备份local/migration72/handoffs/HANDOFF2.before-dispatch-coroutine-2a71ddf.md并核对SHA-256一致；HANDOFF.md只追加。研发未暂停，无需重新申请恢复；所有提交仅本地，未推送。
+README/Project/Harness/CLIENT_72_SESSION及三个账号专题已更新。覆盖前HANDOFF2已备份local/migration72/handoffs/HANDOFF2.before-key-selection-b89d855.md并验证SHA256相等；HANDOFF.md追加。目标持续active，不需另请用户恢复。
