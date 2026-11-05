@@ -131,7 +131,10 @@ public final class Client72JavaSurface {
             }
             emit(declaration);
             if (node.getInitializer() != null) {
-                method = begin("<field:" + node.getName() + ">", node.getInitializer(), "<initializer>", List.of());
+                // javac supplies an implicit new EnumType for enum constants with no source end.
+                Tree span = positions.getEndPosition(unit, node.getInitializer()) < 0
+                    ? node : node.getInitializer();
+                method = begin("<field:" + node.getName() + ">", span, "<initializer>", List.of());
                 scan(node.getInitializer(), unused);
                 emit(method.row);
                 method = null;
@@ -165,7 +168,8 @@ public final class Client72JavaSurface {
             return super.visitMethodInvocation(node, unused);
         }
         @Override public Void visitNewClass(NewClassTree node, Void unused) {
-            call("construct", node, node.getIdentifier().toString(), node.getArguments());
+            if (positions.getEndPosition(unit, node) >= 0)
+                call("construct", node, node.getIdentifier().toString(), node.getArguments());
             return super.visitNewClass(node, unused);
         }
         @Override public Void visitMemberReference(MemberReferenceTree node, Void unused) {

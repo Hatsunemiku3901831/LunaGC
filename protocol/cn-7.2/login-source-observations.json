@@ -2924,7 +2924,7 @@
   ],
   "reviewSHA256": "b45f9b5d04c37ba5f1b54e67983436d218eba4812f6f22973916a1cd1c5c1d51",
   "toolSourceSHA256": {
-    "tools/Client72JavaSurface.java": "4b3a1953eed3378cd6cd115218f56cb97d98bc41078db32a5c15df7e71d2d6d5",
+    "tools/Client72JavaSurface.java": "f28d4605a864d71126c5d1460c50ea5c080f52ca14581eaa1aa5b0098754327a",
     "tools/client72_java_surface.py": "5dd4a9328e46635f87bef99c099840366ae312fd22d32172bd6aacc7b8939690",
     "tools/review_client72_login_surface.py": "60e08252903cc8f16308d594f799a1dd2820f490a2123c6caef1da608c9be9b4"
   },

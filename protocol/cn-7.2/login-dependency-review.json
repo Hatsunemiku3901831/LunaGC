@@ -1,0 +1,861 @@
+{
+  "schemaVersion": 1,
+  "scope": "A-03b built-in login managers and event/script entry source union; not runtime closure",
+  "sourceSHA256": {
+    "src/main/java/emu/grasscutter/game/AccountLoginAdmission.java": "d6eb2a04584b0431084f5daae2cbade5eff8e609b677789256ddab0109c074ed",
+    "src/main/java/emu/grasscutter/game/achievement/Achievements.java": "95b58a72a17188be59654af298267adf0089ff2d1eb786d07aa6c603dec48af5",
+    "src/main/java/emu/grasscutter/game/activity/ActivityManager.java": "078ed8622ce7b9cb6e3496ec9733d645b11aca2912faa9e027bd64b1c6314af6",
+    "src/main/java/emu/grasscutter/game/battlepass/BattlePassManager.java": "a3e3a5fdc5ba5c46aa17ad1c4256f3154c3e98d25060e4a4aeef194f4d4f0e17",
+    "src/main/java/emu/grasscutter/game/dailytask/DailyTaskManager.java": "3c046df28965954c3674816bb3789db315a0f6ffce1b7153382e6e254e7cc4b6",
+    "src/main/java/emu/grasscutter/game/dungeons/DungeonManager.java": "a483f99b940b1277dea6cac160fcef4b83e7d291f0e3f428e5912a3d76157071",
+    "src/main/java/emu/grasscutter/game/home/GameHome.java": "ae87d4df1a344a48acd5d98a221c5fe377b1b6a030fc8fa70548007c696f2304",
+    "src/main/java/emu/grasscutter/game/home/HomeWorld.java": "69b8a11779b4038b06bcb788af828f64fdbf44bbf876b8a8c540c3d995c2af37",
+    "src/main/java/emu/grasscutter/game/mail/BirthdayMailSystem.java": "af3464476c24b188f51cef6c8b7fdd9756cd0903e391a4f607226c2929a6d7ab",
+    "src/main/java/emu/grasscutter/game/mail/MailHandler.java": "47678dd8eb3b0ff29f94e096e19f49959ab6379c718662d0fb64eedd68c3d7a6",
+    "src/main/java/emu/grasscutter/game/managers/cooking/CookingCompoundManager.java": "53b11fe838ea93f8b12e11bd7d9bcf2cf56af1f51f084d6c9b6711c0274c3ca6",
+    "src/main/java/emu/grasscutter/game/managers/cooking/CookingManager.java": "c28906de9ffd5f65dd6816b0cf3984179598eeea13993f8297178a0640038dc0",
+    "src/main/java/emu/grasscutter/game/managers/cooking/EscoffierCooking.java": "7837d1a189cf3f9c7d323775aec6848b26b7a2e20982084c347e8f6790d02990",
+    "src/main/java/emu/grasscutter/game/managers/forging/ForgingManager.java": "f22281871fc317607f7ad394650607d32cad894b65d8566200d3b386c768d193",
+    "src/main/java/emu/grasscutter/game/managers/FurnitureManager.java": "73f83f3e93af8504de6c40336a4dd9d06683ca7ec23df1118095de09527be284",
+    "src/main/java/emu/grasscutter/game/managers/ResinManager.java": "5cb91bf6e240e6e613a0c96d0310a0febb65a53d3603f875bd0b46127cc5e283",
+    "src/main/java/emu/grasscutter/game/managers/SotSManager.java": "e42e25428502ff0a5d377e5e486dfc32a7ae1b3ecc313e9a0e11d559400da507",
+    "src/main/java/emu/grasscutter/game/player/InvestigationHandbook.java": "cf2a2b5c85b9a72ff7f10567a83b4a03de56bda3ef77bd6453e05da435057817",
+    "src/main/java/emu/grasscutter/game/player/MusicGameBook.java": "ce0bdf19a18c64a40ca805262fa0c37e768d8f41295fac59446bb7d0243a6858",
+    "src/main/java/emu/grasscutter/game/player/Player.java": "f080a4f521ebeb0467bcb09b84e993a68d147140046cea0e00898f5d9eee0b91",
+    "src/main/java/emu/grasscutter/game/player/PlayerCodex.java": "09b1db342911b8814f69447eaf2e13de601c64c3bede50e04c53d14efa2c8d71",
+    "src/main/java/emu/grasscutter/game/player/PlayerProgressManager.java": "1b8a66ff0b8ab4827ba3b8149d3edd64ad47aa305ac4a02bc51748f587208960",
+    "src/main/java/emu/grasscutter/game/player/TeamManager.java": "f9502abdbb5faa26aba5b15f20fff15ef3ae2b9576b137554e1a50e7228898b1",
+    "src/main/java/emu/grasscutter/game/quest/ForcedQuests.java": "ffea34acb86629d0307eaa54ce04e6104a34357234ab4361101be8007472ff82",
+    "src/main/java/emu/grasscutter/game/quest/QuestManager.java": "a3400f3cbf3bdbb9f15c2df6de21259c501497024f86b4362bdcb50b861ee49e",
+    "src/main/java/emu/grasscutter/game/reliquary/ArtifactTransmuter.java": "ffec72ecf5b8f50b00ebe2306f2c16acd544bdf84bed9b293f5768f0deab6da3",
+    "src/main/java/emu/grasscutter/game/shop/ShopSystem.java": "2cd289fded49b2bfbe3287fad1e273d642df66a77441c04fedb4a5f70918dca4",
+    "src/main/java/emu/grasscutter/game/world/Scene.java": "100d28f74ea1fe5291458d0ec0a4f898fa10cd7551fade2b95b8e6b6f4adcc35",
+    "src/main/java/emu/grasscutter/game/world/sceneplay/ScenePlayBattleManager.java": "13794c14ceb20c8a17b57886f381556e10a1d4ec557edc17764cb0d84a10603f",
+    "src/main/java/emu/grasscutter/game/world/World.java": "3fe1b04b3c2681dd96a5206a60a0035952de827cf69a5dd6c7f0ff5e44768147",
+    "src/main/java/emu/grasscutter/plugin/PluginManager.java": "c5a47244b050922e24dab4fe56c38ee6bc7f14e053e13e4ef1dd72f1c142480c",
+    "src/main/java/emu/grasscutter/scripts/SceneScriptManager.java": "e6c707e1eab5d439e6762a25a0591a2c798125d1e95cb3091a72127929b8b89e",
+    "src/main/java/emu/grasscutter/scripts/ScriptLib.java": "d5d5a2f74227ed26a01b9dde816b9dd63919ab17726fe015963fc8daf46baee1",
+    "src/main/java/emu/grasscutter/server/event/Event.java": "fd1885ea901e27e5f86668cecebb9926e1f8b0714465ee044d4181b6c9442ed1",
+    "src/main/java/emu/grasscutter/server/event/game/SendPacketEvent.java": "6691ed4aecda14e9254e35a44fb65204dd09cd47ed31b07fb0bdca526f45f697",
+    "src/main/java/emu/grasscutter/server/event/player/PlayerJoinEvent.java": "6145718d871ea78063352d80987cea0c77c24e25fb2668f7766beefb827fdfa1",
+    "src/main/java/emu/grasscutter/server/event/types/PlayerEvent.java": "40567ca0404309097b50edf6645e9b8d596b5304eaf6648e4e56b6eabda04e55",
+    "src/main/java/emu/grasscutter/server/game/GameServer.java": "3d6c770a1b37b27752f94995ff36822589c6d2de902c0816dbee47f0b9902223",
+    "src/main/java/emu/grasscutter/server/game/GameSession.java": "7e988eabf22c45ee87f6a689e10bafee0b645c3cc201582b99a0f759fea8a33d",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerEnterSceneDoneReq.java": "ded9306c1008be0bc6a6d8f33b1f549c7b8faa505b1d8581909d55e4bde8a9ea",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerEnterSceneReadyReq.java": "28eb1a2a066f18614887e5312a9dd2f7da974fc616e30527e37812ac889b57a6",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerGetPlayerTokenReq.java": "179066bc7989479a4c4d2ca7b69f090552e4547b726538ff6e87de9deea95407",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerPingReq.java": "d662b07f75dfceb8741fb990f8270e38cdb626b67000d514c0f6ff60ee9c0596",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerPlayerLoginReq.java": "b7ddf5edfdcba87a2e8c01ed2f87bc7acfee5f3f4e42006bb1cf63d40e87ae40",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerPostEnterSceneReq.java": "0dea78b9a4623e28742db242b57a8f9e9db60b7f285d79fd6f92200be40e4edd",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerSceneInitFinishReq.java": "59c1acdc54f68632536a1942e1a4fe46fad6cc75edabb0ae1e9281170465b037",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBornDataReq.java": "5d92563da180a0f5e2b2788f4c5dfd39e3bae0dea6c60a7a822784c168f17101",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerUnionCmdNotify.java": "bd4b0a8fe550da32583f9f777d485b3a0d5c7b9ddabf2de0c3a41b8d50f8d1a5"
+  },
+  "roots": [
+    "emu.grasscutter.server.packet.recv.HandlerGetPlayerTokenReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerSetPlayerBornDataReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerEnterSceneReadyReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerSceneInitFinishReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerEnterSceneDoneReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerPostEnterSceneReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerPingReq#handle(GameSession,byte[],byte[])",
+    "emu.grasscutter.server.packet.recv.HandlerUnionCmdNotify#handle(GameSession,byte[],byte[])"
+  ],
+  "reviewedEdges": [
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#handleAdmitted(GameSession)",
+      "to": "emu.grasscutter.game.player.Player#onLogin()",
+      "kind": "invoke",
+      "selector": "player.onLogin",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerPlayerLoginReq#scheduleFallback(GameSession,Player)",
+      "to": "emu.grasscutter.game.player.Player#onLogin()",
+      "kind": "invoke",
+      "selector": "player.onLogin",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerSetPlayerBornDataReq#handleAdmitted(GameSession,byte[])",
+      "to": "emu.grasscutter.game.player.Player#onLogin()",
+      "kind": "invoke",
+      "selector": "session.getPlayer().onLogin",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.world.World#<init>(Player)",
+      "kind": "construct",
+      "selector": "World",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.world.World#tryAddPlayer(Player)",
+      "kind": "invoke",
+      "selector": "world.tryAddPlayer",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.game.world.World#<init>(Player)",
+      "to": "emu.grasscutter.game.world.World#<init>(Player,boolean)",
+      "kind": "invoke",
+      "selector": "this",
+      "argumentCount": 2,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.game.world.World#getSceneById(int)",
+      "to": "emu.grasscutter.game.world.Scene#<init>(World,SceneData)",
+      "kind": "construct",
+      "selector": "Scene",
+      "argumentCount": 2,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.game.world.World#addPlayerToWorld(Player,Integer,EntrySource,EntryAction)",
+      "to": "emu.grasscutter.game.world.Scene#addPlayer(Player)",
+      "kind": "invoke",
+      "selector": "scene.addPlayer",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerSceneInitFinishReq#handle(GameSession,byte[],byte[])",
+      "to": "emu.grasscutter.game.world.Scene#playerSceneInitialized(Player)",
+      "kind": "invoke",
+      "selector": "player.getScene().playerSceneInitialized",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerEnterSceneDoneReq#handle(GameSession,byte[],byte[])",
+      "to": "emu.grasscutter.game.world.Scene#spawnPlayer(Player)",
+      "kind": "invoke",
+      "selector": "player.getScene().spawnPlayer",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerEnterSceneDoneReq#handle(GameSession,byte[],byte[])",
+      "to": "emu.grasscutter.game.world.Scene#showOtherEntities(Player)",
+      "kind": "invoke",
+      "selector": "player.getScene().showOtherEntities",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerEnterSceneDoneReq#handle(GameSession,byte[],byte[])",
+      "to": "emu.grasscutter.game.world.Scene#loadNpcForPlayerEnter(Player)",
+      "kind": "invoke",
+      "selector": "player.getScene().loadNpcForPlayerEnter",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerEnterSceneDoneReq#handle(GameSession,byte[],byte[])",
+      "to": "emu.grasscutter.game.world.Scene#loadGroupForQuest(List<QuestGroupSuite>)",
+      "kind": "invoke",
+      "selector": "player.getScene().loadGroupForQuest",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.activity.ActivityManager#<init>(Player,boolean)",
+      "kind": "construct",
+      "selector": "ActivityManager",
+      "argumentCount": 2,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.player.PlayerCodex#onLogin()",
+      "kind": "invoke",
+      "selector": "this.getCodex().onLogin",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.managers.SotSManager#startRecovery()",
+      "kind": "invoke",
+      "selector": "this.getSotsManager().startRecovery",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.player.TeamManager#repairPersistentTeams()",
+      "kind": "invoke",
+      "selector": "this.getTeamManager().repairPersistentTeams",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.player.TeamManager#applyAbilities(Scene)",
+      "kind": "invoke",
+      "selector": "this.getTeamManager().applyAbilities",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.quest.QuestManager#onLogin()",
+      "kind": "invoke",
+      "selector": "getQuestManager().onLogin",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.player.TeamManager#refreshTeamSkillLevelBonuses(boolean)",
+      "kind": "invoke",
+      "selector": "this.getTeamManager().refreshTeamSkillLevelBonuses",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.shop.ShopSystem#sendProductPriceCatalog(GameSession)",
+      "kind": "invoke",
+      "selector": "this.getServer().getShopSystem().sendProductPriceCatalog",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.player.PlayerProgressManager#onPlayerLogin()",
+      "kind": "invoke",
+      "selector": "this.getProgressManager().onPlayerLogin",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.player.InvestigationHandbook#onPlayerLogin(Player)",
+      "kind": "invoke",
+      "selector": "InvestigationHandbook.onPlayerLogin",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.quest.ForcedQuests#apply(Player,Collection<Integer>)",
+      "kind": "invoke",
+      "selector": "emu.grasscutter.game.quest.ForcedQuests.apply",
+      "argumentCount": 2,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.quest.ForcedQuests#notify(Player,Collection<Integer>)",
+      "kind": "invoke",
+      "selector": "emu.grasscutter.game.quest.ForcedQuests.notify",
+      "argumentCount": 2,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.reliquary.ArtifactTransmuter#onLogin()",
+      "kind": "invoke",
+      "selector": "getArtifactTransmuter().onLogin",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.player.MusicGameBook#onLogin()",
+      "kind": "invoke",
+      "selector": "getMusicGameBook().onLogin",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.achievement.Achievements#onLogin(Player)",
+      "kind": "invoke",
+      "selector": "this.achievements.onLogin",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.managers.forging.ForgingManager#sendForgeDataNotify()",
+      "kind": "invoke",
+      "selector": "this.forgingManager.sendForgeDataNotify",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.managers.ResinManager#onPlayerLogin()",
+      "kind": "invoke",
+      "selector": "this.resinManager.onPlayerLogin",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.managers.cooking.CookingManager#sendCookDataNotify()",
+      "kind": "invoke",
+      "selector": "this.cookingManager.sendCookDataNotify",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.managers.cooking.EscoffierCooking#sync(Player)",
+      "kind": "invoke",
+      "selector": "EscoffierCooking.sync",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.managers.cooking.CookingCompoundManager#onPlayerLogin()",
+      "kind": "invoke",
+      "selector": "this.cookingCompoundManager.onPlayerLogin",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.player.TeamManager#onPlayerLogin()",
+      "kind": "invoke",
+      "selector": "this.teamManager.onPlayerLogin",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.battlepass.BattlePassManager#triggerMission(WatcherTriggerType)",
+      "kind": "invoke",
+      "selector": "this.getBattlePassManager().triggerMission",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.managers.FurnitureManager#onLogin()",
+      "kind": "invoke",
+      "selector": "this.furnitureManager.onLogin",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.server.game.GameServer#getHomeWorldOrCreate(Player)",
+      "kind": "invoke",
+      "selector": "this.getServer().getHomeWorldOrCreate",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.home.GameHome#onOwnerLogin(Player)",
+      "kind": "invoke",
+      "selector": "home.onOwnerLogin",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.activity.ActivityManager#onPlayerLogin()",
+      "kind": "invoke",
+      "selector": "this.activityManager.onPlayerLogin",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.server.event.player.PlayerJoinEvent#<init>(Player)",
+      "kind": "construct",
+      "selector": "PlayerJoinEvent",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.server.event.Event#call()",
+      "kind": "invoke",
+      "selector": "event.call",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.server.game.GameServer#registerPlayer(Player)",
+      "kind": "invoke",
+      "selector": "getServer().registerPlayer",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "to": "emu.grasscutter.game.player.TeamManager#restoreQuestTrialAvatars()",
+      "kind": "invoke",
+      "selector": "this.getTeamManager().restoreQuestTrialAvatars",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#resetDailyState(Instant)",
+      "to": "emu.grasscutter.game.battlepass.BattlePassManager#refreshMissions(Instant)",
+      "kind": "invoke",
+      "selector": "battlePass.refreshMissions",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#resetDailyState(Instant)",
+      "to": "emu.grasscutter.game.battlepass.BattlePassManager#triggerMission(WatcherTriggerType)",
+      "kind": "invoke",
+      "selector": "battlePass.triggerMission",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#resetDailyState(Instant)",
+      "to": "emu.grasscutter.game.mail.BirthdayMailSystem#checkAndSend(Player,LocalDate)",
+      "kind": "invoke",
+      "selector": "BirthdayMailSystem.checkAndSend",
+      "argumentCount": 2,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#resetDailyState(Instant)",
+      "to": "emu.grasscutter.game.dailytask.DailyTaskManager#resetDailyTasksForNewDay(Instant)",
+      "kind": "invoke",
+      "selector": "this.dailyTaskManager.resetDailyTasksForNewDay",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#resetDailyState(Instant)",
+      "to": "emu.grasscutter.game.activity.ActivityManager#onDailyReset(long)",
+      "kind": "invoke",
+      "selector": "activityManager.onDailyReset",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.quest.QuestManager#onLogin()",
+      "to": "emu.grasscutter.game.activity.ActivityManager#triggerActivityConditions()",
+      "kind": "invoke",
+      "selector": "this.player.getActivityManager().triggerActivityConditions",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.server.event.Event#call()",
+      "to": "emu.grasscutter.plugin.PluginManager#invokeEvent(Event)",
+      "kind": "invoke",
+      "selector": "pluginManager.invokeEvent",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.plugin.PluginManager#invokeEvent(Event)",
+      "to": "emu.grasscutter.plugin.PluginManager#invokeHandler(Event,EventHandler<T>)",
+      "kind": "invoke",
+      "selector": "this.invokeHandler",
+      "argumentCount": 2,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.server.event.player.PlayerJoinEvent#<init>(Player)",
+      "to": "emu.grasscutter.server.event.types.PlayerEvent#<init>(Player)",
+      "kind": "invoke",
+      "selector": "super",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.server.game.GameSession#send(BasePacket)",
+      "to": "emu.grasscutter.server.event.Event#call()",
+      "kind": "invoke",
+      "selector": "event.call",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.world.Scene#playerSceneInitialized(Player)",
+      "to": "emu.grasscutter.game.world.sceneplay.ScenePlayBattleManager#sendTo(Player)",
+      "kind": "invoke",
+      "selector": "this.scenePlayBattleManager.sendTo",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerPostEnterSceneReq#handle(GameSession,byte[],byte[])",
+      "to": "emu.grasscutter.game.dungeons.DungeonManager#startDungeon()",
+      "kind": "invoke",
+      "selector": "dungeonManager.startDungeon",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerGetPlayerTokenReq#handleAuthenticated(GameSession,GetPlayerTokenReq,Account)",
+      "to": "emu.grasscutter.game.player.Player#loadFromDatabase()",
+      "kind": "invoke",
+      "selector": "player.loadFromDatabase",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerGetPlayerTokenReq#handleAuthenticated(GameSession,GetPlayerTokenReq,Account)",
+      "to": "emu.grasscutter.server.event.Event#call()",
+      "kind": "invoke",
+      "selector": "event.call",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#sendPacket(BasePacket)",
+      "to": "emu.grasscutter.server.game.GameSession#send(BasePacket)",
+      "kind": "invoke",
+      "selector": "this.getSession().send",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.world.Scene#<init>(World,SceneData,boolean)",
+      "to": "emu.grasscutter.scripts.SceneScriptManager#<init>(Scene,boolean)",
+      "kind": "construct",
+      "selector": "SceneScriptManager",
+      "argumentCount": 2,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.server.game.GameServer#getHomeWorldOrCreate(Player)",
+      "to": "emu.grasscutter.game.home.HomeWorld#<init>(GameServer,Player)",
+      "kind": "construct",
+      "selector": "HomeWorld",
+      "argumentCount": 2,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.server.game.GameSession#send(BasePacket)",
+      "to": "emu.grasscutter.server.event.game.SendPacketEvent#<init>(GameSession,BasePacket)",
+      "kind": "construct",
+      "selector": "SendPacketEvent",
+      "argumentCount": 2,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Declared receiver in source; conditions/data and virtual/plugin behavior remain open"
+    },
+    {
+      "from": "emu.grasscutter.scripts.SceneScriptManager#<init>(Scene,boolean)",
+      "to": "emu.grasscutter.scripts.SceneScriptManager#init()",
+      "kind": "reference",
+      "selector": "this::init",
+      "argumentCount": null,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Explicit entry/callback source; varargs expanded at call; thread/executor ordering and Lua/quest dispatch remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.world.Scene#loadGroupForQuest(List<QuestGroupSuite>)",
+      "to": "emu.grasscutter.scripts.SceneScriptManager#refreshGroup(SceneGroupInstance,int,boolean)",
+      "kind": "invoke",
+      "selector": "scriptManager.refreshGroup",
+      "argumentCount": 3,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Explicit entry/callback source; varargs expanded at call; thread/executor ordering and Lua/quest dispatch remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#loadFromDatabase()",
+      "to": "emu.grasscutter.game.quest.QuestManager#loadFromDatabase()",
+      "kind": "invoke",
+      "selector": "this.getQuestManager().loadFromDatabase",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Explicit entry/callback source; varargs expanded at call; thread/executor ordering and Lua/quest dispatch remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#loadFromDatabase()",
+      "to": "emu.grasscutter.game.mail.MailHandler#loadFromDatabase()",
+      "kind": "reference",
+      "selector": "this.getMailHandler()::loadFromDatabase",
+      "argumentCount": null,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Explicit entry/callback source; varargs expanded at call; thread/executor ordering and Lua/quest dispatch remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#loadFromDatabase()",
+      "to": "emu.grasscutter.game.player.Player#loadBattlePassManager()",
+      "kind": "reference",
+      "selector": "this::loadBattlePassManager",
+      "argumentCount": null,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Explicit entry/callback source; varargs expanded at call; thread/executor ordering and Lua/quest dispatch remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#loadFromDatabase()",
+      "to": "emu.grasscutter.game.dailytask.DailyTaskManager#onPlayerLogin()",
+      "kind": "invoke",
+      "selector": "this.dailyTaskManager.onPlayerLogin",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Explicit entry/callback source; varargs expanded at call; thread/executor ordering and Lua/quest dispatch remain open"
+    },
+    {
+      "from": "emu.grasscutter.game.home.HomeWorld#<init>(GameServer,Player)",
+      "to": "emu.grasscutter.game.home.GameHome#getByUid(Integer)",
+      "kind": "invoke",
+      "selector": "GameHome.getByUid",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Explicit entry/callback source; varargs expanded at call; thread/executor ordering and Lua/quest dispatch remain open"
+    },
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerPostEnterSceneReq#handle(GameSession,byte[],byte[])",
+      "to": "emu.grasscutter.game.quest.QuestManager#queueEvent(QuestContent,int[])",
+      "kind": "invoke",
+      "selector": "questManager.queueEvent",
+      "argumentCount": 2,
+      "occurrences": 3,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Explicit entry/callback source; varargs expanded at call; thread/executor ordering and Lua/quest dispatch remain open"
+    },
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerPostEnterSceneReq#handle(GameSession,byte[],byte[])",
+      "to": "emu.grasscutter.game.quest.QuestManager#queueEvent(QuestContent,int[])",
+      "kind": "invoke",
+      "selector": "questManager.queueEvent",
+      "argumentCount": 3,
+      "occurrences": 1,
+      "basis": "Reviewed built-in source receiver/constructor; no runtime or target-protocol claim",
+      "reviewNote": "Explicit entry/callback source; varargs expanded at call; thread/executor ordering and Lua/quest dispatch remain open"
+    }
+  ],
+  "closureComplete": false,
+  "targetProtocolReady": false,
+  "openBoundaries": [
+    "Java parse only; same-owner name/arity candidates, inherited/Lombok accessors and virtual/overloaded targets are not attributed",
+    "New/returning/intro/fallback paths are a source union, not a required CN72 message sequence",
+    "PlayerCreationEvent can replace Player class; PlayerJoinEvent can cancel after ACTIVE; SendPacketEvent can replace/cancel final packet",
+    "PluginManager invokes a runtime listener registry; callbacks and external plugins remain open",
+    "QuestManager queueEvent/executor, MainQuest rewind/checkProgress and activity handler/watcher dispatch remain data-dependent",
+    "SceneScriptManager Lua/group/timer callbacks, scene controllers and resource-conditioned entities remain open",
+    "Database load/UID/save service descendants, async tasks and implicit field/class initialization are not closed",
+    "AccountLoginAdmission callback/dispatch, UnionCmd inner dispatch and FanOut configuration remain open; A-02b source guards still apply",
+    "CN72 client identity/wire evidence and actual new/returning character/scene sequences remain independent and untested"
+  ],
+  "parentReview": "protocol/cn-7.2/login-source-review.json",
+  "parentReviewSHA256": "b45f9b5d04c37ba5f1b54e67983436d218eba4812f6f22973916a1cd1c5c1d51",
+  "boundarySites": [
+    {
+      "from": "emu.grasscutter.plugin.PluginManager#invokeHandler(Event,EventHandler<T>)",
+      "selector": "handler.getCallback().consume",
+      "kind": "invoke",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "status": "open",
+      "reason": "Runtime plugin registry callback; external code and packet replacement are not statically closed"
+    },
+    {
+      "from": "emu.grasscutter.scripts.SceneScriptManager#<init>(Scene,boolean)",
+      "selector": "this::init",
+      "kind": "reference",
+      "argumentCount": null,
+      "occurrences": 1,
+      "status": "open",
+      "reason": "New Thread starts initialization; a source reference does not prove completion before scene entry"
+    },
+    {
+      "from": "emu.grasscutter.game.world.Scene#playerSceneInitialized(Player)",
+      "selector": "callback.run",
+      "kind": "invoke",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "status": "open",
+      "reason": "afterHostInitCallbacks is a mutable runtime queue"
+    },
+    {
+      "from": "emu.grasscutter.server.game.GameSession#send(BasePacket)",
+      "selector": "event.getPacket",
+      "kind": "invoke",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "status": "open",
+      "reason": "SendPacketEvent can replace the packet after opcode checks; final runtime protocol still requires C-01"
+    },
+    {
+      "from": "emu.grasscutter.server.game.GameSession#send(BasePacket)",
+      "selector": "FanOut.send",
+      "kind": "invoke",
+      "argumentCount": 2,
+      "occurrences": 1,
+      "status": "open",
+      "reason": "Configured legacy fanout is not a CN72 mapping; A-02b review is independent"
+    },
+    {
+      "from": "emu.grasscutter.server.packet.recv.HandlerGetPlayerTokenReq#handleAuthenticated(GameSession,GetPlayerTokenReq,Account)",
+      "selector": "event.getPlayerClass",
+      "kind": "invoke",
+      "argumentCount": 0,
+      "occurrences": 2,
+      "status": "open",
+      "reason": "PlayerCreationEvent can substitute the concrete Player class and reflection factory"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#loadFromDatabase()",
+      "selector": "runner.submit",
+      "kind": "invoke",
+      "argumentCount": 1,
+      "occurrences": 6,
+      "status": "open",
+      "reason": "Parallel load tasks and save/UID service descendants are not fully expanded"
+    },
+    {
+      "from": "emu.grasscutter.game.player.Player#onLogin()",
+      "selector": "event.isCanceled",
+      "kind": "invoke",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "status": "open",
+      "reason": "PlayerJoinEvent cancellation after ACTIVE closes session; source union does not prove successful registration"
+    },
+    {
+      "from": "emu.grasscutter.game.quest.QuestManager#onLogin()",
+      "selector": "quest.rewind",
+      "kind": "invoke",
+      "argumentCount": 0,
+      "occurrences": 1,
+      "status": "open",
+      "reason": "Resource/persisted MainQuest definitions drive rewind and subsequent notifications"
+    },
+    {
+      "from": "emu.grasscutter.game.activity.ActivityManager#refreshActivitiesLocked()",
+      "selector": "item.getActivityHandler().onLoadPlayerActivityData",
+      "kind": "invoke",
+      "argumentCount": 1,
+      "occurrences": 1,
+      "status": "open",
+      "reason": "Runtime activity handler and watcher implementation depend on schedule/resources"
+    }
+  ]
+}

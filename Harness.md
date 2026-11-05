@@ -224,3 +224,5 @@ A-03a方法级源码入口：`review_client72_login_surface.py`调用JDK17解析
 V-01b补验：共用本夹具的FurniturePaidStartRecoveryTest原31项中27失败，本次31项全过。三个真实Mongo/确认丢失样本现在复用夹具隔离库，显式重新绑定代理目标的Item Guard，按第二次家园同步确认注入故障；保留冷读付款、重试和整批队列断言。共用GuardedPlayerTestStore映射选项对齐生产storeEmpties(true)/storeNulls(false)，避免空队列被夹具省略。三套家具合计96项全过；本机workflow-fixture-test-results/、workflow-fixture-summary.json及logs/workflow-fixture-regression.log。扩查FurnitureTalentPlanTest仍因硬编码/resources初始化失败（历史全量同因），属于V-01未修范围，未删/跳过或宣称全量通过。
 
 2026-11-06 V-01c：加工手册夹具改用真实Player/Item Guard及隔离Mongo，保留原18项断言和同步故障阶段；ProcessPlayer专用库存/标志/回调排除出BSON。新增真实手册进度、产物、未重复扣原料及失败后预留冷读，明确内存进度1而失败确认后的持久进度0，重试仍拒绝重复发放。修复前18项中12失败，现18项全过；与加工队列35、家具96、Player/Item保存保护45、手册领奖27合计221项通过，失败/错误/跳过均0，证据workflow-fixture-test-results/、evidence/workflow-fixture-summary.json及logs/workflow-fixture-regression.log（local/migration72）。原断言未删未放宽；未改生产逻辑，无部署/实机验收。完整Java集未重跑，历史217失败不据此扣减。
+
+2026-11-06 A-03b限定源码复核完成，见[登录管理器与事件依赖](docs/CLIENT_72_LOGIN_DEPENDENCIES.md)。48固定源码、293方法、409边（72人工调用位置/337候选），2868未关联保留；10处插件/替包/异步/脚本/服务开放锚点均未晋级。枚举合成跨度实际复现已修正，A-03a计数不变。14聚焦/254研究回归通过，两次报告/摘要相同。下一项A-03c候选消息/Proto及7.2三层缺口；A-03整体仍待完整闭包/实机。无运行变更、部署或实机调试。

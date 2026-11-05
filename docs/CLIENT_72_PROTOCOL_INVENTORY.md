@@ -63,3 +63,5 @@ python tools/inventory_protocol.py --output local/migration72/evidence/server-in
 python -m unittest tools.test_inventory_protocol tools.test_review_protocol72_surface -v
 python tools/review_protocol72_surface.py --output local/migration72/evidence/server-surface-review.json
 ```
+
+2026-11-06 A-03b限定源码复核完成，见[登录管理器与事件依赖](CLIENT_72_LOGIN_DEPENDENCIES.md)。48固定源码、293方法、409边（72人工调用位置/337候选），2868未关联保留；10处插件/替包/异步/脚本/服务开放锚点均未晋级。枚举合成跨度实际复现已修正，A-03a计数不变。14聚焦/254研究回归通过，两次报告/摘要相同。下一项A-03c候选消息/Proto及7.2三层缺口；A-03整体仍待完整闭包/实机。无运行变更、部署或实机调试。

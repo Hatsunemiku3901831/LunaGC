@@ -23,7 +23,7 @@
 | A-02b 动态来源复核守卫 | A-02a | review_protocol72_surface、人工清单、7项测试 | 全17动态位置/40来源hash/常量绑定/37数字case；新增或漂移拒绝，开放边界不晋级，重复一致 | 已完成 | CLIENT_72_PROTOCOL_INVENTORY、evidence/server-surface-review.json；e87baa7 | C-01校验事件后最终包，禁候选兜底并拒绝注册冲突 |
 | A-03 登录入场依赖闭包 | A-02 | P0根、调用边、Proto引用图、复核表 | 完整覆盖新旧号、选人、初始化、场景、嵌套；人工和客户端复核 | 进行中 | 静态起点114名称/471文件，见协议盘点摘要；— | 追踪管理器/事件/脚本，结合真实序列收敛 |
 | A-03a 方法级登录/场景源码索引 | A-02b | Client72JavaSurface、client72_java_surface、review_client72_login_surface、复核表/摘要 | JDK17实际parse，注释/字符串/UTF16与CRLF/record/switch/lambda/匿名类/重载边界；固定源码/13条人工边，未关联调用和目标映射保持未知，重复一致 | 已完成 | CLIENT_72_LOGIN_SOURCE_GRAPH、login-source-observations.json；12源码/9根/80方法，96边中83仅候选；8新增/248回归、二次一致；00e0bee | 2026-11-06收尾复核通过；下一项V-01b，再A-03b；不代表A-03完整或7.2必需包集 |
-| A-03b 管理器/事件源码依赖复核 | A-03a、V-01c | 固定源码/人工入口边、管理器与事件边界表、可复现摘要/测试 | 从已索引登录/场景方法逐条定位管理器/服务/事件/脚本入口及内建调用，记录条件/异步/动态开放边界和源码hash；拒绝漂移、候选不晋级、重复输出一致；不宣称完整或实机闭包 | 待开始 | 本批先建卡；— | 按入口展开，开放插件/脚本保持未知 |
+| A-03b 管理器/事件源码依赖复核 | A-03a、V-01c | 固定源码/人工入口边、管理器与事件边界表、可复现摘要/测试 | 从已索引登录/场景方法逐条定位管理器/服务/事件/脚本入口及内建调用，记录条件/异步/动态开放边界和源码hash；拒绝漂移、候选不晋级、重复输出一致；不宣称完整或实机闭包 | 已完成 | CLIENT_72_LOGIN_DEPENDENCIES、login-dependency-observations；48源码/293方法/70人工规格、14聚焦/254回归/重复一致，本项提交 | 下一项A-03c；A-03整体仍待实机复核 |
 | A-03c 候选消息/Proto与7.2三层缺口矩阵 | A-03b、B-01 | 源码候选到发送类/Proto依赖图、三层证据矩阵、工具/测试/摘要 | 每个候选有来源方法/构造、直接Proto与递归import/嵌套依赖；CmdID→类型、类型→语义、字段→wire分别列证据/歧义/缺口；未知不晋级，非零/64位/嵌套/list/错误边界既有证据不丢失，漂移及重复验证；A-03整体保持待实机 | 待开始 | 本批先建卡；— | 验收提交后停止并交接Astra下一研究项 |
 | A-04 7.2 提取器 | A-01 | extract_client72、profile、研究记录 | 类型/成员/泛型/父类/布局/注册与CmdID候选有证据，边界及抽样验证 | 进行中 | docs/CLIENT_72_EXTRACTION.md；— | 保护入口/回调参数及运行时闭合泛型ABI仍需恢复 |
 | A-04a 目标名称/字段/方法基础提取 | A-01 | extract_client72、7项测试 | 三份目标哈希守卫；独立名称向量；全部跨度/引用/代码地址校验；不把常量返回值标作包号 | 已完成 | client72-metadata.json、extraction-summary.json、提取研究摘要；34ee887 | 89,748类型/445,462字段/741,021方法供A-04后续分析 |
@@ -220,3 +220,5 @@
 V-01b补验：共用本夹具的FurniturePaidStartRecoveryTest原31项中27失败，本次31项全过。三个真实Mongo/确认丢失样本现在复用夹具隔离库，显式重新绑定代理目标的Item Guard，按第二次家园同步确认注入故障；保留冷读付款、重试和整批队列断言。共用GuardedPlayerTestStore映射选项对齐生产storeEmpties(true)/storeNulls(false)，避免空队列被夹具省略。三套家具合计96项全过；本机workflow-fixture-test-results/、workflow-fixture-summary.json及logs/workflow-fixture-regression.log。扩查FurnitureTalentPlanTest仍因硬编码/resources初始化失败（历史全量同因），属于V-01未修范围，未删/跳过或宣称全量通过。
 
 2026-11-06 V-01c：加工手册夹具改用真实Player/Item Guard及隔离Mongo，保留原18项断言和同步故障阶段；ProcessPlayer专用库存/标志/回调排除出BSON。新增真实手册进度、产物、未重复扣原料及失败后预留冷读，明确内存进度1而失败确认后的持久进度0，重试仍拒绝重复发放。修复前18项中12失败，现18项全过；与加工队列35、家具96、Player/Item保存保护45、手册领奖27合计221项通过，失败/错误/跳过均0，证据workflow-fixture-test-results/、evidence/workflow-fixture-summary.json及logs/workflow-fixture-regression.log（local/migration72）。原断言未删未放宽；未改生产逻辑，无部署/实机验收。完整Java集未重跑，历史217失败不据此扣减。
+
+2026-11-06 A-03b限定源码复核完成，见[登录管理器与事件依赖](docs/CLIENT_72_LOGIN_DEPENDENCIES.md)。48固定源码、293方法、409边（72人工调用位置/337候选），2868未关联保留；10处插件/替包/异步/脚本/服务开放锚点均未晋级。枚举合成跨度实际复现已修正，A-03a计数不变。14聚焦/254研究回归通过，两次报告/摘要相同。下一项A-03c候选消息/Proto及7.2三层缺口；A-03整体仍待完整闭包/实机。无运行变更、部署或实机调试。

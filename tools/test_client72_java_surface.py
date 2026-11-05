@@ -80,6 +80,14 @@ class Fixture {
         self.assertEqual([v['constructedType'] for v in graph['methods'][0]['packetConstructions']],
                          ['PacketLocal','PacketNested','PacketDirect'])
 
+    def test_enum_constants_do_not_invent_source_constructor_spans(self):
+        rows=self.parse('enum State { EMPTY, VALUE(value()); State(){} State(int x){} static int value(){return 1;} }')
+        fields=[v for v in rows if v['kind']=='method' and v['name'].startswith('<field:')]
+        self.assertEqual(len(fields),2)
+        self.assertTrue(all(v['endUTF16']>=v['startUTF16'] for v in fields))
+        self.assertEqual([c['selector'] for v in fields for c in v['calls']],['State','value'])
+        self.assertTrue(all(c['endUTF16']>=c['startUTF16'] for v in fields for c in v['calls']))
+
     def test_overload_ambiguity_is_not_guessed(self):
         rows=self.parse('class Fixture { void entry(){ run(1); } void run(int x){} void run(String x){} }')
         graph=source_graph(rows,['Fixture#entry()'],[])
