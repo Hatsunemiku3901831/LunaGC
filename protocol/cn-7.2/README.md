@@ -25,3 +25,5 @@ A-04d3新增login-wire-observations.json/login-research.proto：55外层字段�
 response-leaf-wire-observations.json/response-leaves.proto补充7个独立叶子30字段，含由原生读写证实的sfixed32；叶子有schema不意味着父容器内容已通过，response-wire-observations的not-traced状态继续保留。
 
 A-04d3c：response-graph.proto是18消息137字段的完整响应研究闭包；response-graph-observations用21条contentBindings补充非空内容证据。map-aot-observations来自目标MethodSpec/函数注册；校验器检查新表与原始字段一致性。native-graph-observed不等于业务verified或实机通过，mappings中的unknown_field保留unresolved，ready继续失败。详见docs/CLIENT_72_GRAPH_READERS.md。
+
+登录业务证据：login-literal-observations.json为4条目标静态日志标记与usage落点；enum-observations.json为7枚举86符号及4个协议字段/oneof关联；login-semantic-observations.json为两个响应身份及20字段来源。详细模型边界见docs/CLIENT_72_LOGIN_SEMANTICS.md。只有有对应来源的字段晋级；两请求配对、其余字段及P0闭包仍未确认，--ready继续失败。

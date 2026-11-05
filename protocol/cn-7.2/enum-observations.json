@@ -622,6 +622,181 @@
         }
       ],
       "semanticStatus": "target-symbols-only"
+    },
+    {
+      "typeIndex": 77368,
+      "clientType": "DCIIBLHGNIN",
+      "namespace": "",
+      "underlyingType": "int32",
+      "values": [
+        {
+          "symbol": "LanguageNone",
+          "value": 0,
+          "fieldIndex": 387534,
+          "defaultRow": 68104,
+          "typeIndex": 70,
+          "dataIndex": 623826
+        },
+        {
+          "symbol": "LanguageEn",
+          "value": 1,
+          "fieldIndex": 387535,
+          "defaultRow": 68105,
+          "typeIndex": 70,
+          "dataIndex": 623830
+        },
+        {
+          "symbol": "LanguageSc",
+          "value": 2,
+          "fieldIndex": 387536,
+          "defaultRow": 68106,
+          "typeIndex": 70,
+          "dataIndex": 623834
+        },
+        {
+          "symbol": "LanguageTc",
+          "value": 3,
+          "fieldIndex": 387537,
+          "defaultRow": 68107,
+          "typeIndex": 70,
+          "dataIndex": 623838
+        },
+        {
+          "symbol": "LanguageFr",
+          "value": 4,
+          "fieldIndex": 387538,
+          "defaultRow": 68108,
+          "typeIndex": 70,
+          "dataIndex": 623842
+        },
+        {
+          "symbol": "LanguageDe",
+          "value": 5,
+          "fieldIndex": 387539,
+          "defaultRow": 68109,
+          "typeIndex": 70,
+          "dataIndex": 623846
+        },
+        {
+          "symbol": "LanguageEs",
+          "value": 6,
+          "fieldIndex": 387540,
+          "defaultRow": 68110,
+          "typeIndex": 70,
+          "dataIndex": 623850
+        },
+        {
+          "symbol": "LanguagePt",
+          "value": 7,
+          "fieldIndex": 387541,
+          "defaultRow": 68111,
+          "typeIndex": 70,
+          "dataIndex": 623854
+        },
+        {
+          "symbol": "LanguageRu",
+          "value": 8,
+          "fieldIndex": 387542,
+          "defaultRow": 68112,
+          "typeIndex": 70,
+          "dataIndex": 623858
+        },
+        {
+          "symbol": "LanguageJp",
+          "value": 9,
+          "fieldIndex": 387543,
+          "defaultRow": 68113,
+          "typeIndex": 70,
+          "dataIndex": 623862
+        },
+        {
+          "symbol": "LanguageKr",
+          "value": 10,
+          "fieldIndex": 387544,
+          "defaultRow": 68114,
+          "typeIndex": 70,
+          "dataIndex": 623866
+        },
+        {
+          "symbol": "LanguageTh",
+          "value": 11,
+          "fieldIndex": 387545,
+          "defaultRow": 68115,
+          "typeIndex": 70,
+          "dataIndex": 623870
+        },
+        {
+          "symbol": "LanguageVn",
+          "value": 12,
+          "fieldIndex": 387546,
+          "defaultRow": 68116,
+          "typeIndex": 70,
+          "dataIndex": 623874
+        },
+        {
+          "symbol": "LanguageId",
+          "value": 13,
+          "fieldIndex": 387547,
+          "defaultRow": 68117,
+          "typeIndex": 70,
+          "dataIndex": 623878
+        },
+        {
+          "symbol": "LanguageTr",
+          "value": 14,
+          "fieldIndex": 387548,
+          "defaultRow": 68118,
+          "typeIndex": 70,
+          "dataIndex": 623882
+        },
+        {
+          "symbol": "LanguageIt",
+          "value": 15,
+          "fieldIndex": 387549,
+          "defaultRow": 68119,
+          "typeIndex": 70,
+          "dataIndex": 623886
+        }
+      ],
+      "semanticStatus": "target-symbols-only"
+    }
+  ],
+  "fieldBindings": [
+    {
+      "typeIndex": 21921,
+      "clientType": "HMLAJHBHLOC",
+      "clientField": "KFPHCDOLFLO",
+      "objectOffset": 44,
+      "enumTypeIndex": 20469,
+      "enumClientType": "DLEEHOLOJKM",
+      "role": "wire-enum-field"
+    },
+    {
+      "typeIndex": 31708,
+      "clientType": "GGAHLPJMAHH",
+      "clientField": "ILOMBFODOME",
+      "objectOffset": 24,
+      "enumTypeIndex": 46236,
+      "enumClientType": "KBOEJJBMALM",
+      "role": "wire-enum-field"
+    },
+    {
+      "typeIndex": 54602,
+      "clientType": "KEDIEGLJIMC",
+      "clientField": "EBJAMFMOAJO",
+      "objectOffset": 32,
+      "enumTypeIndex": 54603,
+      "enumClientType": "HGPBEGGCNED",
+      "role": "oneof-discriminator"
+    },
+    {
+      "typeIndex": 70905,
+      "clientType": "KCIAPDNPNHE",
+      "clientField": "EBJAMFMOAJO",
+      "objectOffset": 32,
+      "enumTypeIndex": 70906,
+      "enumClientType": "JBJNJEAMIEL",
+      "role": "oneof-discriminator"
     }
   ],
   "scope": "Protocol enum and oneof symbols; platform-source enums are not network enum declarations"

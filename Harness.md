@@ -112,6 +112,12 @@ A-04d3请求入口：[Login完整wire](docs/CLIENT_72_LOGIN_WIRE.md)；trace_cli
 
 复现命令集中在对象图与AOT专题；最新证据local/migration72/evidence/response-graph-trace.json、response-graph-determinism.json、map-aot-determinism.json及logs/a04d3c-graph-tests.log。先检查输入hash，再检查AOT绑定、流limit/lookahead、已允许的native/helper与实际对象存储；不要跳过未知调用或越界错误。
 
-检查点：606ea03（Login writer）、91d9791（响应外层）、5fe24ad（7叶子）、ce45b47（map AOT）、242b1fb（响应对象图）。下一项为Token/Login业务回调及字段来源闭合，运行时ABI/IFix/实机单列验收。原资源子模块差异继续保留。
+检查点：606ea03（Login writer）、91d9791（响应外层）、5fe24ad（7叶子）、ce45b47（map AOT）、242b1fb（响应对象图）。下一项以末尾登录语义检查点为准，运行时ABI/IFix/实机单列验收。原资源子模块差异继续保留。
 
-登录语义接手：[标记与枚举](docs/CLIENT_72_LOGIN_SEMANTICS.md)。新增 extract_client72_literals/enums 从目标全局usage与field-default表恢复4条标记和6枚举70符号；check_client72_metadata_values执行原生字节解码和常量读取，证据为 evidence/metadata-values-native.json。网络管理器的两个强类型包装只处理共享配置；完整响应身份从上游Handler、分派与目标日志标记继续确认。
+登录语义接手：[标记与枚举](docs/CLIENT_72_LOGIN_SEMANTICS.md)。新增 extract_client72_literals/enums 从目标全局usage与field-default表恢复4条标记和6枚举70符号；check_client72_metadata_values执行原生字节解码和常量读取，证据为 evidence/metadata-values-native.json。现已确认两个上游响应Handler；网络管理器的两个强类型包装只处理共享配置，不能替代完整Handler。
+
+当前登录语义入口：trace_client72_login_semantics，摘要 protocol/cn-7.2/login-semantic-observations.json；详细 evidence/login-semantics-trace.json，回归 logs/login-semantics-tests.log。17组原生检查和87项回归通过；2个响应身份、20字段来源与wire闭合；枚举扩展至7类型86符号、4个嵌套字段/判别器关联。validate_protocol72同时检查语义标记、类型/指令、字段来源、oneof枚举与wire，不自动晋级剩余未知。
+
+下一项：Token Handler 1507BE0E0成功路径从15A4DE262/147CF3070继续；追踪seed/会话token写入，再与1507C2218→151213730发送参数闭合请求配对。Login构造来源检查的明确终点为151213AC6；不把该前缀通过当成完整构造/登录成功。旧文档把151221D70/1512160D0称为响应回调的措辞已校正，当前以CLIENT_72_LOGIN_SEMANTICS为准。
+
+确定性证据：evidence/login-semantics-determinism.json记录trace、语义摘要、literal/enum表的重复输出SHA-256；本批研究校验mapping-check.json通过，mapping-ready.json仍拒绝发布。

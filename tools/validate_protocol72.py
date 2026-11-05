@@ -179,6 +179,61 @@ def validate_observations(document, profile, commands, wire, protected=None, obs
     return errors
 
 
+def validate_login_semantics(document, profile, semantics, literals, enums, wire):
+    """Bind semantic claims to bounded target observations, not name resemblance."""
+    errors=[]
+    expected={r['path']:r['sha256'] for r in profile['files'].values()}
+    for label,table in [('login semantics',semantics),('login literals',literals),('enums',enums)]:
+        hashes=table.get('inputSHA256',{})
+        if not hashes or any(expected.get(p)!=s for p,s in hashes.items()):errors.append(f'{label}: input hash mismatch')
+    labels={r['index']:r for r in literals.get('literals',[])}
+    roles={r['semanticName']:r for r in semantics.get('roles',[])}
+    messages={r['semanticName']:r for r in document['messages']}
+    opcodes={r['semanticName']:r for r in document['opcodes']}
+    for name,message in messages.items():
+        if 'login-handler-identity' in message.get('evidence',[]) and name not in roles:
+            errors.append(f'{name}: Handler identity observation missing')
+    for name,role in roles.items():
+        marker=labels.get(role.get('literalIndex'),{}).get('value','')
+        if marker!=f'[Login] On{name}: ' or not role.get('declarationCheck'):
+            errors.append(f'{name}: missing target Handler identity evidence')
+        if messages.get(name,{}).get('clientType')!=role['clientType'] or opcodes.get(name,{}).get('cmdId')!=role['cmdId']:
+            errors.append(f'{name}: Handler/command/type disagreement')
+    bindings={}
+    for row in semantics.get('fieldBindings',[]):
+        key=(row.get('clientType'),row.get('clientField'))
+        if key in bindings or not row.get('source') or row.get('scope')!='bounded-native-data-flow':
+            errors.append(f'{key}: invalid semantic observation')
+        bindings[key]=row
+    for schema in document['schemas']:
+        msg=messages.get(schema['semanticName'],{})
+        for field in schema['fields']:
+            if 'login-source-semantics' not in field.get('evidence',[]):continue
+            row=bindings.get((msg.get('clientType'),field.get('clientField')), {})
+            if any(field.get(k)!=row.get(k) for k in ('semanticField','tag','type','status')):
+                errors.append(f"{schema['semanticName']}/{field.get('semanticField')}: semantic source binding mismatch")
+    enum_map={r['clientType']:r for r in enums.get('enums',[])}
+    if len(enum_map)!=len(enums.get('enums',[])):errors.append('Duplicate enum type')
+    for binding in bindings.values():
+        source_enum=binding.get('source',{}).get('enumClientType')
+        if source_enum and source_enum not in enum_map:errors.append('Semantic source enum missing')
+    wire_map={r['clientType']:r for r in wire.get('messages',[])}
+    for binding in enums.get('fieldBindings',[]):
+        enum=enum_map.get(binding.get('enumClientType'),{})
+        values=enum.get('values',[])
+        if not values or len({v['symbol'] for v in values})!=len(values):
+            errors.append('Enum symbol set missing/duplicated');continue
+        fields=wire_map.get(binding.get('clientType'),{}).get('fields',[])
+        if binding.get('role')=='oneof-discriminator':
+            tags={f['discriminatorValue'] for f in fields if f.get('discriminatorOffset')==binding['objectOffset']}
+            if {v['value'] for v in values}!={0}|tags:errors.append('Enum oneof values disagree with native wire cases')
+        else:
+            found=[f for f in fields if f['clientField']==binding.get('clientField')]
+            if len(found)!=1 or found[0].get('enumClientType')!=binding.get('enumClientType') or found[0]['objectOffset']!=binding['objectOffset']:
+                errors.append('Enum field declaration/wire binding mismatch')
+    return errors
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--directory', type=Path, default=Path(__file__).resolve().parents[1] / 'protocol/cn-7.2')
@@ -194,6 +249,9 @@ def main():
              for name in ('login-wire-observations.json', 'response-wire-observations.json', 'response-leaf-wire-observations.json',
                           'response-graph-observations.json', 'map-aot-observations.json')]
     errors.extend(validate_observations(document, profile, commands, wire, protected, extra))
+    semantic_tables=[json.loads((args.directory/name).read_text('utf8')) for name in
+                     ('login-semantic-observations.json','login-literal-observations.json','enum-observations.json','login-wire-observations.json')]
+    errors.extend(validate_login_semantics(document,profile,*semantic_tables))
     print(json.dumps({'mode': 'ready' if args.ready else 'research-structure', 'valid': not errors, 'errors': errors},
                      ensure_ascii=False, indent=2))
     raise SystemExit(bool(errors))

@@ -24,10 +24,10 @@ System.Action的901条参数类型引用（对应835个不同泛型实例）完�
 | 声明类型 / 方法 VA | 参数类型 | 用途与边界 |
 | --- | --- | --- |
 | DHABIHPMOAH / 15120DEA0 | MJGOAHFNCGC | 心跳响应回调；CmdID25763注册/分派与getter一致，wire见网络研究 |
-| DHABIHPMOAH / 1512160D0 | NDENMDAIAMC、bool | PlayerLoginRsp候选进入实际响应回调；bool尚不命名 |
-| DHABIHPMOAH / 151221D70 | CLDBKDNJHFG、bool | GetPlayerTokenRsp候选进入实际响应回调；bool尚不命名 |
-| HBIJFOJIFAH / 1507B7BE0 | NDENMDAIAMC | 更上游响应处理入口 |
-| HBIJFOJIFAH / 1507BE0E0、1507C0B60 | CLDBKDNJHFG | 更上游响应处理入口 |
+| DHABIHPMOAH / 1512160D0 | NDENMDAIAMC、bool | Login响应的共同配置包装；不等于完整Handler，bool尚不命名 |
+| DHABIHPMOAH / 151221D70 | CLDBKDNJHFG、bool | Token响应的共同配置包装；不等于完整Handler，bool尚不命名 |
+| HBIJFOJIFAH / 1507B7BE0 | NDENMDAIAMC | 上游完整Handler（身份确认见登录语义） |
+| HBIJFOJIFAH / 1507BE0E0、1507C0B60 | CLDBKDNJHFG | 1507BE0E0为上游完整Handler；1507C0B60基础分支只返回true |
 
 静态参数表恢复不等于执行回调；Token/Login业务名称仍需结合完整流程核实，保护读写入口另行追踪。方法有参数但注册指针为0（例如泛型Invoke）是声明，不捏造可执行地址。
 
@@ -41,3 +41,5 @@ python tools/extract_client72_signatures.py --client $env:GAME_PATH --output loc
 ```
 
 接续先按method.index连接参数，按typeIndex查共享typeReferences；不要把genericParameterPosition与全局generic参数索引混用。可在actionCallbacks查看具体Invoke参数。原始指令`analysis/method-signature-accessor.txt`、`inflate-type.txt`绑定本页输入哈希；旧的全量metadata报告不含本项新增参数。
+
+后续校正与验收见[登录语义](CLIENT_72_LOGIN_SEMANTICS.md)：两个上游Handler已通过参数、CmdID注册/分派及目标自身日志标记确认；151221D70/1512160D0经4组原生检查确认为共同配置包装。参数类型一致本身不能证明完整业务角色。

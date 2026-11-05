@@ -1,0 +1,375 @@
+{
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "roles": [
+    {
+      "semanticName": "GetPlayerTokenRsp",
+      "clientType": "CLDBKDNJHFG",
+      "typeIndex": 37481,
+      "cmdId": 27808,
+      "handler": "0x1507be0e0",
+      "literalIndex": 46129,
+      "registration": "0x1507c2a4e",
+      "dispatch": "0x1507cd80b",
+      "declarationCheck": {
+        "handlerMethod": 467417,
+        "parameterIndex": 381061,
+        "parameterType": 246246,
+        "getter": "0x148b7e780",
+        "registrationFunction": "0x1532ed560"
+      }
+    },
+    {
+      "semanticName": "PlayerLoginRsp",
+      "clientType": "NDENMDAIAMC",
+      "typeIndex": 40503,
+      "cmdId": 20835,
+      "handler": "0x1507b7be0",
+      "literalIndex": 46063,
+      "registration": "0x1507c29e5",
+      "dispatch": "0x1507ce3da",
+      "declarationCheck": {
+        "handlerMethod": 467396,
+        "parameterIndex": 381034,
+        "parameterType": 260940,
+        "getter": "0x14b89ec80",
+        "registrationFunction": "0x1532ed560"
+      }
+    }
+  ],
+  "fieldBindings": [
+    {
+      "typeIndex": 37481,
+      "clientType": "CLDBKDNJHFG",
+      "clientField": "LDLIEKOAFBP",
+      "objectOffset": 260,
+      "tag": 14,
+      "type": "int32",
+      "semanticField": "retcode",
+      "source": {
+        "handler": "0x1507be0e0",
+        "literalIndex": 46129
+      },
+      "status": "verified",
+      "scope": "bounded-native-data-flow"
+    },
+    {
+      "typeIndex": 40503,
+      "clientType": "NDENMDAIAMC",
+      "clientField": "LDLIEKOAFBP",
+      "objectOffset": 224,
+      "tag": 8,
+      "type": "int32",
+      "semanticField": "retcode",
+      "source": {
+        "handler": "0x1507b7be0",
+        "literalIndex": 46063
+      },
+      "status": "verified",
+      "scope": "bounded-native-data-flow"
+    },
+    {
+      "typeIndex": 40503,
+      "clientType": "NDENMDAIAMC",
+      "clientField": "BCAADIFIJMN",
+      "objectOffset": 176,
+      "tag": 1255,
+      "type": "string",
+      "semanticField": "client_silence_md5",
+      "source": {
+        "owner": "GlobalVars",
+        "field": "SILENCE_DATA_MD5",
+        "rawOffset": "0x40060f0"
+      },
+      "status": "verified",
+      "scope": "bounded-native-data-flow"
+    },
+    {
+      "typeIndex": 40503,
+      "clientType": "NDENMDAIAMC",
+      "clientField": "CCDEHJGJFBD",
+      "objectOffset": 24,
+      "tag": 437,
+      "type": "string",
+      "semanticField": "client_md5",
+      "source": {
+        "owner": "GlobalVars",
+        "field": "DATA_MD5",
+        "rawOffset": "0x4006148"
+      },
+      "status": "verified",
+      "scope": "bounded-native-data-flow"
+    },
+    {
+      "typeIndex": 40503,
+      "clientType": "NDENMDAIAMC",
+      "clientField": "NAACMBICAKP",
+      "objectOffset": 120,
+      "tag": 1792,
+      "type": "string",
+      "semanticField": "client_version_suffix",
+      "source": {
+        "owner": "GlobalVars",
+        "field": "DATA_VERSION_SUFFIX",
+        "rawOffset": "0x4006110"
+      },
+      "status": "verified",
+      "scope": "bounded-native-data-flow"
+    },
+    {
+      "typeIndex": 40503,
+      "clientType": "NDENMDAIAMC",
+      "clientField": "MIDCBCOAFLC",
+      "objectOffset": 192,
+      "tag": 744,
+      "type": "string",
+      "semanticField": "client_silence_version_suffix",
+      "source": {
+        "owner": "GlobalVars",
+        "field": "SILENCE_DATA_VERSION_SUFFIX",
+        "rawOffset": "0x40061a0"
+      },
+      "status": "verified",
+      "scope": "bounded-native-data-flow"
+    },
+    {
+      "typeIndex": 76410,
+      "clientType": "KOHBOMDDFCB",
+      "clientField": "KALFFFLADGM",
+      "objectOffset": 80,
+      "tag": 213,
+      "type": "string",
+      "semanticField": "fp_id",
+      "source": {
+        "owner": "Miscs",
+        "method": "GetFPID",
+        "entry": "0x1531ec530"
+      },
+      "status": "verified",
+      "scope": "bounded-native-data-flow"
+    },
+    {
+      "typeIndex": 76410,
+      "clientType": "KOHBOMDDFCB",
+      "clientField": "LCNMJGGNIND",
+      "objectOffset": 200,
+      "tag": 9,
+      "type": "string",
+      "semanticField": "client_version",
+      "source": {
+        "owner": "Miscs",
+        "method": "GetUniversalGameVersion",
+        "entry": "0x1531d02b0"
+      },
+      "status": "verified",
+      "scope": "bounded-native-data-flow"
+    },
+    {
+      "typeIndex": 76410,
+      "clientType": "KOHBOMDDFCB",
+      "clientField": "GKODOLODOGC",
+      "objectOffset": 340,
+      "tag": 10,
+      "type": "uint32",
+      "semanticField": "platform_type",
+      "source": {
+        "owner": "Miscs",
+        "method": "GetServerPlatformType",
+        "entry": "0x1531e0f20"
+      },
+      "status": "verified",
+      "scope": "bounded-native-data-flow"
+    },
+    {
+      "typeIndex": 76410,
+      "clientType": "KOHBOMDDFCB",
+      "clientField": "CCCKKDAAEME",
+      "objectOffset": 192,
+      "tag": 7,
+      "type": "string",
+      "semanticField": "device_name",
+      "source": {
+        "owner": "Miscs",
+        "method": "GetDeviceName",
+        "entry": "0x1531dc9d0"
+      },
+      "status": "verified",
+      "scope": "bounded-native-data-flow"
+    },
+    {
+      "typeIndex": 76410,
+      "clientType": "KOHBOMDDFCB",
+      "clientField": "ECAEIDMALFM",
+      "objectOffset": 72,
+      "tag": 2,
+      "type": "string",
+      "semanticField": "system_version",
+      "source": {
+        "owner": "Miscs",
+        "method": "GetSystemVersion",
+        "entry": "0x1531c1bd0"
+      },
+      "status": "verified",
+      "scope": "bounded-native-data-flow"
+    },
+    {
+      "typeIndex": 76410,
+      "clientType": "KOHBOMDDFCB",
+      "clientField": "LBOBFKPDBHE",
+      "objectOffset": 160,
+      "tag": 15,
+      "type": "string",
+      "semanticField": "device_info",
+      "source": {
+        "owner": "Miscs",
+        "method": "GetDeviceInfo",
+        "entry": "0x15320e900"
+      },
+      "status": "verified",
+      "scope": "bounded-native-data-flow"
+    },
+    {
+      "typeIndex": 76410,
+      "clientType": "KOHBOMDDFCB",
+      "clientField": "JFEGKNOHCMM",
+      "objectOffset": 292,
+      "tag": 1931,
+      "type": "uint32",
+      "semanticField": "network_ip",
+      "source": {
+        "owner": "Miscs",
+        "method": "GetNetworkIP",
+        "entry": "0x1531d91a0"
+      },
+      "status": "verified",
+      "scope": "bounded-native-data-flow"
+    },
+    {
+      "typeIndex": 76410,
+      "clientType": "KOHBOMDDFCB",
+      "clientField": "IJANGEDLOMK",
+      "objectOffset": 40,
+      "tag": 1785,
+      "type": "string",
+      "semanticField": "client_ip_str",
+      "source": {
+        "owner": "Miscs",
+        "method": "GetNetworkIPString",
+        "entry": "0x1531ed5d0"
+      },
+      "status": "verified",
+      "scope": "bounded-native-data-flow"
+    },
+    {
+      "typeIndex": 76410,
+      "clientType": "KOHBOMDDFCB",
+      "clientField": "LJGEIHAKLHH",
+      "objectOffset": 224,
+      "tag": 552,
+      "type": "bytes",
+      "semanticField": "robot_check_output",
+      "source": {
+        "owner": "Miscs",
+        "method": "GetRobotCheckOutput",
+        "entry": "0x1531caf00"
+      },
+      "status": "verified",
+      "scope": "bounded-native-data-flow"
+    },
+    {
+      "typeIndex": 76410,
+      "clientType": "KOHBOMDDFCB",
+      "clientField": "GPFPMHJGKFH",
+      "objectOffset": 32,
+      "tag": 345,
+      "type": "string",
+      "semanticField": "cps",
+      "source": {
+        "owner": "Miscs",
+        "method": "GetCPS",
+        "entry": "0x1531e7f90"
+      },
+      "status": "verified",
+      "scope": "bounded-native-data-flow"
+    },
+    {
+      "typeIndex": 76410,
+      "clientType": "KOHBOMDDFCB",
+      "clientField": "PLOBPNJINMB",
+      "objectOffset": 64,
+      "tag": 891,
+      "type": "string",
+      "semanticField": "game_version",
+      "source": {
+        "owner": "Miscs",
+        "method": "GetGameVersion",
+        "entry": "0x1531dcb70"
+      },
+      "status": "verified",
+      "scope": "bounded-native-data-flow"
+    },
+    {
+      "typeIndex": 76410,
+      "clientType": "KOHBOMDDFCB",
+      "clientField": "KHJPHBAPAPE",
+      "objectOffset": 96,
+      "tag": 1996,
+      "type": "string",
+      "semanticField": "client_version_hash",
+      "source": {
+        "owner": "Miscs",
+        "field": "<versionHash>k__BackingField",
+        "rawOffset": "0x4011b90"
+      },
+      "status": "verified",
+      "scope": "bounded-native-data-flow"
+    },
+    {
+      "typeIndex": 76410,
+      "clientType": "KOHBOMDDFCB",
+      "clientField": "LAFEHJFNDIB",
+      "objectOffset": 284,
+      "tag": 4,
+      "type": "uint32",
+      "semanticField": "language_type",
+      "source": {
+        "owner": "PBNJKAMEJAI",
+        "field": "GKJCGMHJLHM",
+        "rawOffset": "0x20055b0",
+        "enumClientType": "DCIIBLHGNIN"
+      },
+      "status": "verified",
+      "scope": "bounded-native-data-flow"
+    },
+    {
+      "typeIndex": 76410,
+      "clientType": "KOHBOMDDFCB",
+      "clientField": "PJICEKGDLFM",
+      "objectOffset": 280,
+      "tag": 274,
+      "type": "uint32",
+      "semanticField": "client_data_version",
+      "source": {
+        "owner": "GlobalVars",
+        "field": "DATA_VERSION",
+        "rawOffset": "0x20019a4"
+      },
+      "status": "verified",
+      "scope": "bounded-native-data-flow"
+    }
+  ],
+  "runtimeStatus": "not-tested",
+  "models": [
+    "ASCII/bytes wire helpers",
+    "mutable synthetic objects",
+    "formatting provider and integer formatter",
+    "environment source returns",
+    "stage bookkeeping and reset helper",
+    "request allocation; constructor prefix stops before protected continuation"
+  ],
+  "fixtureCount": 17,
+  "schemaVersion": 1
+}

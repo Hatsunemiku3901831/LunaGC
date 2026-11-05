@@ -145,6 +145,27 @@
       "inputFile": "binary",
       "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
       "location": "docs/CLIENT_72_GRAPH_READERS.md; protocol/cn-7.2/response-graph-observations.json"
+    },
+    {
+      "id": "login-handler-identity",
+      "layer": "message",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_LOGIN_SEMANTICS.md; protocol/cn-7.2/login-semantic-observations.json; native controlled prefix + wire evidence"
+    },
+    {
+      "id": "login-handler-command",
+      "layer": "opcode",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_LOGIN_SEMANTICS.md; protocol/cn-7.2/login-semantic-observations.json; native controlled prefix + wire evidence"
+    },
+    {
+      "id": "login-source-semantics",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_LOGIN_SEMANTICS.md; protocol/cn-7.2/login-semantic-observations.json; native controlled prefix + wire evidence"
     }
   ],
   "opcodes": [
@@ -162,15 +183,15 @@
     },
     {
       "semanticName": "GetPlayerTokenRsp",
-      "status": "candidate",
+      "status": "verified",
       "evidence": [
-        "network-command-chain"
+        "network-command-chain",
+        "login-handler-command"
       ],
-      "ambiguities": [
-        "Static client type binding confirmed; stable business-name association still candidate"
-      ],
+      "ambiguities": [],
       "clientType": "CLDBKDNJHFG",
-      "cmdId": 27808
+      "cmdId": 27808,
+      "verificationScope": "Static registration/signature and bounded native dispatch/error prefix; runtime not tested"
     },
     {
       "semanticName": "PlayerLoginReq",
@@ -186,15 +207,15 @@
     },
     {
       "semanticName": "PlayerLoginRsp",
-      "status": "candidate",
+      "status": "verified",
       "evidence": [
-        "network-command-chain"
+        "network-command-chain",
+        "login-handler-command"
       ],
-      "ambiguities": [
-        "Static client type binding confirmed; stable business-name association still candidate"
-      ],
+      "ambiguities": [],
       "clientType": "NDENMDAIAMC",
-      "cmdId": 20835
+      "cmdId": 20835,
+      "verificationScope": "Static registration/signature and bounded native dispatch/error prefix; runtime not tested"
     },
     {
       "semanticName": "PingReq",
@@ -387,7 +408,7 @@
         "login-candidate-sites"
       ],
       "ambiguities": [
-        "Independent response callback/business-name closure still required"
+        "Response identity is confirmed; success-flow request/response pairing and session token provenance still require closure"
       ],
       "clientType": "NJAALDCMHEP",
       "direction": "C2S",
@@ -396,17 +417,17 @@
     },
     {
       "semanticName": "GetPlayerTokenRsp",
-      "status": "candidate",
+      "status": "verified",
       "evidence": [
-        "login-candidate-sites"
+        "login-candidate-sites",
+        "login-handler-identity"
       ],
-      "ambiguities": [
-        "Independent response callback/business-name closure still required"
-      ],
+      "ambiguities": [],
       "clientType": "CLDBKDNJHFG",
       "direction": "S2C",
       "aliases": [],
-      "runtimeStatus": "not-tested"
+      "runtimeStatus": "not-tested",
+      "verificationScope": "Static registration/signature and bounded native dispatch/error prefix; runtime not tested"
     },
     {
       "semanticName": "PlayerLoginReq",
@@ -415,7 +436,7 @@
         "login-candidate-sites"
       ],
       "ambiguities": [
-        "Independent response callback/business-name closure still required"
+        "Response identity is confirmed; success-flow request/response pairing and session token provenance still require closure"
       ],
       "clientType": "KOHBOMDDFCB",
       "direction": "C2S",
@@ -424,17 +445,17 @@
     },
     {
       "semanticName": "PlayerLoginRsp",
-      "status": "candidate",
+      "status": "verified",
       "evidence": [
-        "login-candidate-sites"
+        "login-candidate-sites",
+        "login-handler-identity"
       ],
-      "ambiguities": [
-        "Independent response callback/business-name closure still required"
-      ],
+      "ambiguities": [],
       "clientType": "NDENMDAIAMC",
       "direction": "S2C",
       "aliases": [],
-      "runtimeStatus": "not-tested"
+      "runtimeStatus": "not-tested",
+      "verificationScope": "Static registration/signature and bounded native dispatch/error prefix; runtime not tested"
     },
     {
       "semanticName": "PingReq",
@@ -1392,15 +1413,15 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_14",
-          "status": "unresolved",
+          "semanticField": "retcode",
+          "status": "verified",
           "evidence": [
-            "response-protected-reader"
+            "response-protected-reader",
+            "login-source-semantics"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "verificationScope": "Bounded native source/consumer and wire; complete business lifecycle not tested"
         },
         {
           "clientField": "DAGAIOINCOO",
@@ -1902,15 +1923,15 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_2",
-          "status": "unresolved",
+          "semanticField": "system_version",
+          "status": "verified",
           "evidence": [
-            "login-protected-writer"
+            "login-protected-writer",
+            "login-source-semantics"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "verificationScope": "Bounded native source/consumer and wire; complete business lifecycle not tested"
         },
         {
           "clientField": "LDNJIHGCFON",
@@ -1936,15 +1957,15 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_4",
-          "status": "unresolved",
+          "semanticField": "language_type",
+          "status": "verified",
           "evidence": [
-            "login-protected-writer"
+            "login-protected-writer",
+            "login-source-semantics"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "verificationScope": "Bounded native source/consumer and wire; complete business lifecycle not tested"
         },
         {
           "clientField": "BNAIJDNIBIC",
@@ -1987,15 +2008,15 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_7",
-          "status": "unresolved",
+          "semanticField": "device_name",
+          "status": "verified",
           "evidence": [
-            "login-protected-writer"
+            "login-protected-writer",
+            "login-source-semantics"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "verificationScope": "Bounded native source/consumer and wire; complete business lifecycle not tested"
         },
         {
           "clientField": "KHJKGGNMAGJ",
@@ -2021,15 +2042,15 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_9",
-          "status": "unresolved",
+          "semanticField": "client_version",
+          "status": "verified",
           "evidence": [
-            "login-protected-writer"
+            "login-protected-writer",
+            "login-source-semantics"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "verificationScope": "Bounded native source/consumer and wire; complete business lifecycle not tested"
         },
         {
           "clientField": "GKODOLODOGC",
@@ -2038,15 +2059,15 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_10",
-          "status": "unresolved",
+          "semanticField": "platform_type",
+          "status": "verified",
           "evidence": [
-            "login-protected-writer"
+            "login-protected-writer",
+            "login-source-semantics"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "verificationScope": "Bounded native source/consumer and wire; complete business lifecycle not tested"
         },
         {
           "clientField": "JEBFKCCKKPP",
@@ -2123,15 +2144,15 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_15",
-          "status": "unresolved",
+          "semanticField": "device_info",
+          "status": "verified",
           "evidence": [
-            "login-protected-writer"
+            "login-protected-writer",
+            "login-source-semantics"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "verificationScope": "Bounded native source/consumer and wire; complete business lifecycle not tested"
         },
         {
           "clientField": "JNPMKMIMKCA",
@@ -2208,15 +2229,15 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_213",
-          "status": "unresolved",
+          "semanticField": "fp_id",
+          "status": "verified",
           "evidence": [
-            "login-protected-writer"
+            "login-protected-writer",
+            "login-source-semantics"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "verificationScope": "Bounded native source/consumer and wire; complete business lifecycle not tested"
         },
         {
           "clientField": "PJICEKGDLFM",
@@ -2225,15 +2246,15 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_274",
-          "status": "unresolved",
+          "semanticField": "client_data_version",
+          "status": "verified",
           "evidence": [
-            "login-protected-writer"
+            "login-protected-writer",
+            "login-source-semantics"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "verificationScope": "Bounded native source/consumer and wire; complete business lifecycle not tested"
         },
         {
           "clientField": "GPFPMHJGKFH",
@@ -2242,15 +2263,15 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_345",
-          "status": "unresolved",
+          "semanticField": "cps",
+          "status": "verified",
           "evidence": [
-            "login-protected-writer"
+            "login-protected-writer",
+            "login-source-semantics"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "verificationScope": "Bounded native source/consumer and wire; complete business lifecycle not tested"
         },
         {
           "clientField": "LGMEFCCONPE",
@@ -2344,15 +2365,15 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_552",
-          "status": "unresolved",
+          "semanticField": "robot_check_output",
+          "status": "verified",
           "evidence": [
-            "login-protected-writer"
+            "login-protected-writer",
+            "login-source-semantics"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "verificationScope": "Bounded native source/consumer and wire; complete business lifecycle not tested"
         },
         {
           "clientField": "LDEIEFPNIEN",
@@ -2413,15 +2434,15 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_891",
-          "status": "unresolved",
+          "semanticField": "game_version",
+          "status": "verified",
           "evidence": [
-            "login-protected-writer"
+            "login-protected-writer",
+            "login-source-semantics"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "verificationScope": "Bounded native source/consumer and wire; complete business lifecycle not tested"
         },
         {
           "clientField": "AJAJHFKLHBH",
@@ -2738,15 +2759,15 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_1785",
-          "status": "unresolved",
+          "semanticField": "client_ip_str",
+          "status": "verified",
           "evidence": [
-            "login-protected-writer"
+            "login-protected-writer",
+            "login-source-semantics"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "verificationScope": "Bounded native source/consumer and wire; complete business lifecycle not tested"
         },
         {
           "clientField": "MHNPBDMNCAA",
@@ -2789,15 +2810,15 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_1931",
-          "status": "unresolved",
+          "semanticField": "network_ip",
+          "status": "verified",
           "evidence": [
-            "login-protected-writer"
+            "login-protected-writer",
+            "login-source-semantics"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "verificationScope": "Bounded native source/consumer and wire; complete business lifecycle not tested"
         },
         {
           "clientField": "KHJPHBAPAPE",
@@ -2806,15 +2827,15 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_1996",
-          "status": "unresolved",
+          "semanticField": "client_version_hash",
+          "status": "verified",
           "evidence": [
-            "login-protected-writer"
+            "login-protected-writer",
+            "login-source-semantics"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "verificationScope": "Bounded native source/consumer and wire; complete business lifecycle not tested"
         }
       ]
     },
@@ -2959,15 +2980,15 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_8",
-          "status": "unresolved",
+          "semanticField": "retcode",
+          "status": "verified",
           "evidence": [
-            "response-protected-reader"
+            "response-protected-reader",
+            "login-source-semantics"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "verificationScope": "Bounded native source/consumer and wire; complete business lifecycle not tested"
         },
         {
           "clientField": "JOAEHNGDAPK",
@@ -3225,15 +3246,15 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_437",
-          "status": "unresolved",
+          "semanticField": "client_md5",
+          "status": "verified",
           "evidence": [
-            "response-protected-reader"
+            "response-protected-reader",
+            "login-source-semantics"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "verificationScope": "Bounded native source/consumer and wire; complete business lifecycle not tested"
         },
         {
           "clientField": "PMABFENIPCO",
@@ -3367,15 +3388,15 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_744",
-          "status": "unresolved",
+          "semanticField": "client_silence_version_suffix",
+          "status": "verified",
           "evidence": [
-            "response-protected-reader"
+            "response-protected-reader",
+            "login-source-semantics"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "verificationScope": "Bounded native source/consumer and wire; complete business lifecycle not tested"
         },
         {
           "clientField": "FCPOHNDGFMF",
@@ -3460,15 +3481,15 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_1255",
-          "status": "unresolved",
+          "semanticField": "client_silence_md5",
+          "status": "verified",
           "evidence": [
-            "response-protected-reader"
+            "response-protected-reader",
+            "login-source-semantics"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "verificationScope": "Bounded native source/consumer and wire; complete business lifecycle not tested"
         },
         {
           "clientField": "LBDHEONCLNL",
@@ -3568,15 +3589,15 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_1792",
-          "status": "unresolved",
+          "semanticField": "client_version_suffix",
+          "status": "verified",
           "evidence": [
-            "response-protected-reader"
+            "response-protected-reader",
+            "login-source-semantics"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "verificationScope": "Bounded native source/consumer and wire; complete business lifecycle not tested"
         },
         {
           "clientField": "PGKLJPPFEIO",

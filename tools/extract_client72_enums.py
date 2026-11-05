@@ -4,12 +4,12 @@ import json
 import struct
 from pathlib import Path
 try:
-    from .extract_client72 import PE, HASHES, HEADER_VA, BODY, MASK32, number, span, read_verified, extract
+    from .extract_client72 import PE, HASHES, HEADER_VA, METADATA_REGISTRATION, BODY, MASK32, KINDS, number, span, read_verified, extract
 except ImportError:
-    from extract_client72 import PE, HASHES, HEADER_VA, BODY, MASK32, number, span, read_verified, extract
+    from extract_client72 import PE, HASHES, HEADER_VA, METADATA_REGISTRATION, BODY, MASK32, KINDS, number, span, read_verified, extract
 
-# Four reachable protocol enums and two independent platform-source enums.
-SELECTED = (20469, 46236, 54603, 70906, 2411, 11253)
+# Four protocol enums, two platform-source enums, and the request language source.
+SELECTED = (20469, 46236, 54603, 70906, 2411, 11253, 77368)
 FORMATS = {'int8':'b','uint8':'B','int16':'h','uint16':'H','int32':'i','uint32':'I','int64':'q','uint64':'Q'}
 
 
@@ -50,10 +50,22 @@ def recover(binary, metadata, records):
     size=number(binary,h+0x1f4)^0x159a5178
     data=BODY+((number(binary,h+0x1cc)+0x9c0bd319)&MASK32)
     table=defaults(metadata,base,size,sum(len(r['fields']) for r in records))
+    mr=pe.offset(METADATA_REGISTRATION);count=(number(binary,mr+0x8c)+0xce67355c)&MASK32
+    refs=pe.offset(number(binary,mr,'Q'),count*16)
+    if any(r['typeIndex']>=count for r in table.values()):raise ValueError('Default type reference out of bounds')
     by_id={r['index']:r for r in records}
     selected=[symbols(by_id[i],table,metadata,data) for i in SELECTED]
+    for enum in selected:
+        for value in enum['values']:
+            kind=(number(binary,refs+value['typeIndex']*16+8)>>16)&255
+            if KINDS.get(kind)!=enum['underlyingType']:raise ValueError('Constant storage/enum underlying type disagree')
+    bindings=[dict(typeIndex=i,clientType=by_id[i]['name'],clientField=f['name'],objectOffset=f['offset'],
+                   enumTypeIndex=f['type']['typeDefinition'],enumClientType=f['type']['name'],
+                   role='oneof-discriminator' if i in (54602,70905) else 'wire-enum-field')
+              for i in (21921,31708,54602,70905) for f in by_id[i]['fields']
+              if f['type']['kind']=='valuetype']
     return dict(schemaVersion=1,inputSHA256=HASHES,defaultTable=hex(base),defaultTableBytes=size,
-                defaultData=hex(data),enums=selected,
+                defaultData=hex(data),enums=selected,fieldBindings=bindings,
                 scope='Protocol enum and oneof symbols; platform-source enums are not network enum declarations')
 
 

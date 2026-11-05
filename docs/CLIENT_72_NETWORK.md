@@ -25,9 +25,9 @@
 | 业务候选 | 目标类型 / 索引 | 静态 CmdID | 证据与状态 |
 | --- | --- | --- | --- |
 | GetPlayerTokenReq | NJAALDCMHEP / 82491 | 24604 | 与旧参考实例字段形状一致；Clone的自类型单元1458C5500在网络管理器151220013实际分配，15121FF70起填充平台/SDK相关值；业务命名仍candidate。 |
-| GetPlayerTokenRsp | CLDBKDNJHFG / 37481 | 27808 | 字段形状唯一最近；尚缺响应回调独立命名证据，candidate。 |
+| GetPlayerTokenRsp | CLDBKDNJHFG / 37481 | 27808 | 已由目标自身OnGetPlayerTokenRsp标记、参数、注册/原生分派闭合；静态verified，见登录语义。 |
 | PlayerLoginReq | KOHBOMDDFCB / 76410 | 23172 | 旧参考形状最近但多一个bool；自类型单元1458C3DF0在1512137BE分配，151213730起填充客户端设备/版本相关值；candidate。 |
-| PlayerLoginRsp | NDENMDAIAMC / 40503 | 20835 | 字段形状唯一最近；回调和新增语义未确认，candidate。 |
+| PlayerLoginRsp | NDENMDAIAMC / 40503 | 20835 | 已由目标自身OnPlayerLoginRsp标记、参数、注册/原生分派闭合；静态verified，见登录语义。 |
 | PingReq | LMINJCCKNDD / 64405 | 26605 | 自类型单元1458C39F0；15120CAC0和15120D8A0构造，15121EC30及15120F4CB周期调用；结合下述响应回调/共享字段确认静态心跳请求角色，实机待验。 |
 | PingRsp | MJGOAHFNCGC / 68111 | 25763 | 方法参数、注册25763、分派25763至15120DEA0与getter一致；与请求共享两个原始字段，静态确认为心跳响应。3个wire字段已恢复，业务字段名仍candidate。 |
 | PacketHead | LOPNMMJPFAJ / 27182 | 无（embedded） | 包对象+18所持有类型，封包写入header区；直接结构与读写证据，非独立command。 |
@@ -90,3 +90,7 @@ writer语义：1517662A0为32位varint、151766960为64位varint（7bit移位循
 读函数15251F300按08/30/58分派，分别在15251F376/391/35A写入对应偏移；32位reader都是147520110，不能只凭同一个helper把int32误写为uint32。类型由元数据独立确认，CalculateSize在15251F0A7检查符号，负值于15251F0ED取10字节，排除sint32/zigzag。
 
 原始观察和研究Proto现有3消息17字段，仍不进入服务端源集。本批44项工具/映射测试与11项独立wire检查通过，新增响应非零字段、负错误值10字节varint和signed上界测试；普通校验通过、ready保持失败。没有客户端运行验收。
+
+## 当前登录业务检查点
+
+[登录语义](CLIENT_72_LOGIN_SEMANTICS.md)已确认GetPlayerTokenRsp/27808、PlayerLoginRsp/20835以及20个字段来源。上文“Token/Login四个业务名仍candidate”是旧检查点；当前只有两个请求配对仍candidate。网络管理器151221D70/1512160D0只转发共同配置，上游Handler为1507BE0E0/1507B7BE0。7枚举86原始符号已有目标常量证据；其余业务字段和真实客户端序列仍待验收，不生成正式运行协议。
