@@ -99,6 +99,7 @@
 | V-01a 修复能力测试便携资源路径 | V-01复现 | SkillReadyPredicateTest | 两处硬编码路径改为配置/相对根，原35项断言不删不跳过并通过 | 已完成 | logs/skill-ready-portable.log，35/0/0；68d1732 | 纳入后续全量回归 |
 | V-01b 家具保存夹具 | A-03a收尾、V-01复现 | FurnitureStartFlowTest/FurnitureStartRecoveryTest及必要测试夹具 | 先重现save-only代理失败；独立Mongo/随机测试库，物品/玩家/家园正式保存与冷读；保留扣费/失败阶段/防重入/容量/预留ID/重复领取断言，相关套件无失败跳过；不改生产语义 | 已完成 | workflow-fixture-summary.json；家具96/0/0/0；03f2a99、b53fda2 | V-01c亦已完成；全量集未重跑 |
 | V-01c 加工手册夹具 | V-01b | CompoundHandbookTest及必要测试夹具 | 先复现；使用正式条件保存和独立Mongo/随机库，保留加工扣费/产出/手册/失败重试不重复收支及冷读断言，相关套件无失败跳过；不以空save/删断言修绿 | 已完成 | workflow-fixture-summary.json；18项及共221项回归全过；8dd87a3 | A-03b/c亦已完成并停止；V-01整体未完成 |
+| V-01d 家具资源测试便携路径 | C-01a扩展Guard实际失败 | FurnitureStartFlowTest | 复现默认/resources缺文件；保持LUNAGC_TEST_RESOURCES优先，再用LUNAGC_RESOURCES_DIR或当前resources；原全部配方/扣费/容量断言不删不跳过，家具/经济保存选集重跑 | 进行中 | born-guard-regression.log：467项中1项NoSuchFileException，其余466通过 | 仅修已复现的测试路径，不扩展家具业务或其他夹具 |
 
 ## 阻塞与尝试
 
