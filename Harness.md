@@ -190,3 +190,6 @@ Handler→Login正式入口：`trace_client72_handler_login`，见[会话研究A
 
 
 恢复推进与封包入口：用户已恢复，旧暂停记录为历史，目标active。`trace_client72_frame`执行14A447E00完整返回；15原生样本、210研究回归和重复产物通过，见[网络研究A-04d5r](docs/CLIENT_72_NETWORK.md#a-04d5r-独立封包函数与整帧xor)。`evidence/frame-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json`和`logs/frame-{run,repeat,regression}.log`为本机证据。负载writer/size、两槽密钥与池化存储是显式夹具，包头size/writer、端序、MemoryStream和XOR/清理执行原生代码。下一项14A446CC0收帧边界或构造/密钥串联，不能称整个Handler/实机通过。本轮Java未运行，原部署记录不是当前服务状态；没有运行文件变化，不重启。
+
+
+原生收帧入口：`trace_client72_frame_reader`，见[网络研究A-04d5s](docs/CLIENT_72_NETWORK.md#a-04d5s-独立收帧解密包头及错误边界)。18原生样本、216研究回归、重复产物通过；`evidence/frame-reader-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json`与`logs/frame-reader-{run,repeat,regression}.log`。实际BitConverter.cctor/包头reader/标量helper/端序/XOR/尾标记执行，factory与body消费是明确模型。早期探索漏IsLittleEndian初始化导致假长度错误，正式执行159B548E0修正，不能当客户端故障。下一项真实payload与seed串联或P0闭包；D-02未验，目标active。

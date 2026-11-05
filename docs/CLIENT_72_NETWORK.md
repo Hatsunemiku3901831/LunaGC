@@ -121,3 +121,33 @@ python tools/validate_protocol72.py --ready
 共享摘要`protocol/cn-7.2/frame-observations.json`固定三输入SHA-256；15原生样本两次trace/摘要一致，210项研究回归通过。6项新增回归覆盖独立帧字节、32位长度和摘要错误/边界降级拒绝；研究校验0，ready仍1，业务字段不晋级。报告与日志见Harness。仅离线工具/测试/文档变更，无运行部署，D-02未完成。
 
 下一步14A446CC0入口已有静态核对：同一selector选槽，原地XOR后读前导、command/两长度，再读包头和消息工厂；尚未原生执行。不能由发送函数通过推断接收错误/截断/尾标记行为已验。
+
+
+## A-04d5s 独立收帧解密包头及错误边界
+
+`trace_client72_frame_reader`从14A446CC0执行到ret或声明的原生抛错入口。复用Frame72池/存储模型，另明确factory151A853D0返回虚构消息、body Merge消费指定窗口，不能称真实消息工厂/反序列化执行。PacketHead的14CD81610及CodedInputStream tag、uint32/uint64、边界helper都直接执行，未替换为Python wire解析器。基类67861槽11→1495C9D60为空原生ret，配合1495AA480实际增加生命周期计数；这是虚构基类消息，不代表目标业务消息的子对象处理。
+
+声明类型173 BitConverter的.cctor159B548E0真实写14586B610=1。早期探索未初始化此静态值，导致offset6的非对齐32位读按另一端序解释，出现假长度不足；正式工具每个样本先执行.cctor并记录原生trace。没有修改目标读取代码或手写解密结果。
+
+18样本含命令0/32767/32768/65535、uint32/uint64上界、重复singular最后值、65536字节体、两槽4096字节key回绕、明确参数指定的明文分支、坏帧/截断/坏tag/错key及尾随字节。收帧原地XOR逐字节回到独立输入，次数匹配输入长度；包头值、body窗口、factory收到的命令、生命周期计数和消费长度都有断言。
+
+| 输入 | 原生结果/边界 | body消费 |
+| --- | --- | --- |
+| 正常/高位/重复字段/尾随字节 | 返回1 | 是；窗口精确对应body |
+| null byte[] | 返回4 | 否 |
+| 不足12字节 | 返回5 | 否 |
+| 前导错误/错key | 返回6 | 否 |
+| 帧长度少于声明长度 | 返回2 | 否 |
+| 尾标记错误 | 返回7 | 是；reader未在此路径归池 |
+| header截断varint | 1509CB360原生异常构造入口 | 否 |
+| header零tag | 1509CB150原生异常构造入口 | 否 |
+
+尾标记在body reader之后校验；正常尾随三字节仍返回1，packetLength只包含首帧，XOR则覆盖传入的全部长度。本项只记录目标行为，不修改服务端边界策略，也不推断真实业务reader对坏帧是否有副作用。压缩/替换delegate、真实工厂与负载schema、实际密钥来源、socket/Handler和D-02仍未验。
+
+```powershell
+$env:GAME_PATH = & ./tools/game_path.ps1
+python tools/trace_client72_frame_reader.py --client $env:GAME_PATH --output local/migration72/evidence/frame-reader-trace.json --summary-output protocol/cn-7.2/frame-reader-observations.json
+python -m unittest tools.test_client72_frame_reader
+```
+
+18原生样本二次trace/摘要逐字节一致，216研究回归通过，研究校验0/ready1；首次独立测试把12字节header手算成11，核对明确字节向量后修正测试预期，没有改变原生结果。共享摘要固定输入hash；日志及确定性报告见Harness。没有运行代码/Proto/配置/补丁/资源改动，不部署。下一步真实payload/密钥来源串联或P0闭包。

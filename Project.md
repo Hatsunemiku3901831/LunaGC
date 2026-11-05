@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-执行状态：用户2026-11-05已明确恢复，持续推进至D-02实机验收，目标active。A-04d5q已完成连续Handler→Login→发送封包入口的限定验收；A-04d5r已完成独立封包函数/密钥选择边界，继续收帧及负载/密钥来源串联。A-04d/B-02及A-04d5n/B-02c9整体仍进行中，tag965业务语义等缺口保留；D-02未完成。旧交接的暂停指令是历史记录，不再生效。
+执行状态：用户2026-11-05已明确恢复，持续推进至D-02实机验收，目标active。A-04d5q已完成连续Handler→Login→发送封包入口的限定验收；A-04d5r/s已完成独立封/收帧及密钥选择边界，继续真实负载/密钥来源串联或P0闭包。A-04d/B-02及A-04d5n/B-02c9整体仍进行中，tag965业务语义等缺口保留；D-02未完成。旧交接的暂停指令是历史记录，不再生效。
 
 静态结构、Token/Login原始wire及响应非空对象图已离线恢复；四个登录请求/响应业务身份与CmdID、36个字段来源、默认枚举表8类102符号及另2类连接状态枚举20符号现有目标证据。Token Handler入口至seed安装、UID/token保存、版本哈希、实际Login/Full分支、Login构造和发送封包入口已在明确夹具下连续执行；不等于整个Handler返回或真实登录。Token已在明确初始化/OS夹具下贯通原生seed验签/加密、构造、wire与发送至封包入口；SDK认证回调的五个凭据/渠道字段也已接入原生构造和writer。Login亦已在旧Shell/非云夹具下构造并到封包入口。响应wire→原生解密/摘要/验签→密钥安装已在明确本地签名信任输入下贯通，3组4096字节Java对照及错误拒绝通过。独立封包函数已在明确负载/密钥输入下完成；真实SDK初始化、完整Handler、封包与构造/密钥来源串联及剩余字段继续研究，A-04d/B-02保持进行中。隔离研发服务曾完成基线部署；本轮核对Java未运行、HTTP/游戏端口未监听，MongoDB属本工作区。目前没有7.2可连接构建，客户端验收全部待执行。本机路径、初始差异、报告和日志在忽略的 local/migration72/；公共摘要放 docs/ 和 protocol/cn-7.2/。
 
@@ -67,7 +67,8 @@
 | A-04d5o / B-02c10 Token密钥选择字段 | A-04d5h、A-04d5i | trace_client72_key_selection、Java对照、映射/校验 | 原生tag1184=4、独立命名URL参数、唯一密钥匹配；3请求/6响应含错误key、192回归及重复产物一致 | 已完成 | key-selection-observations.json、key-selection-determinism.json；b89d855 | key_id按业务契约交叉证据确认；继续完整Handler/封包体及P0闭包，不代表D-02 |
 | A-04d5p Handler尾段robot输入与版本哈希 | A-04d5j | client72_version_hash、trace_client72_handler_tail、摘要/测试 | Handler入口连续到原生setter、版本拼接、ASCII/SHA1/Base64及返回；7组含空值/块边界/Unicode/坏签名，198回归及重复一致 | 已完成 | handler-tail-observations.json、handler-tail-determinism.json；e1a0194 | 继续GameManager状态/回调到Login；tag3/tag658语义未知，不替代整Handler/实机 |
 | A-04d5q Handler连续到Login与发送入口 | A-04d5p、A-04d5c、A-04d5f | trace_client72_handler_login、声明/条件/指针/wire证据 | 实际Login/Full→Action→Login构造→封包入口；9组含32/64位、空值、时钟/缺对象/包类型/坏签名，204回归及重复一致 | 已完成 | handler-login-observations.json、handler-login-determinism.json；dc41c99 | 已恢复；继续封包体/P0闭包，不能宣称实机或整个Handler返回 |
-| A-04d5r 独立封包函数与循环XOR | A-04d5f | trace_client72_frame、摘要/测试 | 原生包头size/writer、帧/长度/端序/整帧XOR/清理返回；高位命令、64位包头、65536字节体、两密钥/循环/缺失/拒绝，独立字节与重复验证 | 已完成 | frame-observations.json、frame-determinism.json；15原生样本、210回归、两次产物一致；本项提交 | 负载writer和密钥来源为明确输入，继续串联/收帧，不晋级实机 |
+| A-04d5r 独立封包函数与循环XOR | A-04d5f | trace_client72_frame、摘要/测试 | 原生包头size/writer、帧/长度/端序/整帧XOR/清理返回；高位命令、64位包头、65536字节体、两密钥/循环/缺失/拒绝，独立字节与重复验证 | 已完成 | frame-observations.json、frame-determinism.json；15原生样本、210回归、两次产物一致；ae23ee7 | 负载writer和密钥来源为明确输入，继续串联/收帧，不晋级实机 |
+| A-04d5s 独立收帧/解密与错误边界 | A-04d5r | trace_client72_frame_reader、摘要/测试 | 原生端序初始化/XOR/包头reader/长度与标记校验；18组高位/64位/重复/截断/坏tag/错key/尾随字节、独立输入与重复一致 | 已完成 | frame-reader-observations.json、frame-reader-determinism.json；216回归；本项提交 | factory/负载reader为明确模型，继续真实消息与密钥串联，不晋级客户端验收 |
 | B-03 确定性生成 | B-01、B-02 | generator、PacketOpcodes、Proto | 只生成核实项，别名/引用检查，重复输出一致，protoc 编译，禁止旧号兜底 | 待开始 | — | 合成模型测试，再接真实映射 |
 | C-01 双向网络接入 | B-03 | GameSession、BasePacket、Handler 注册、UnionCmd/枚举 | 注册冲突失败、号/长度边界、内外分派、目标 wire 测试，构建部署 | 待开始 | — | 映射确认后替换旧表和专属断言 |
 | D-01 补丁和连接前置 | A-01、A-04 | patch、HTTP/SDK/dispatch/密钥 | 路由/渠道/版本/加密、各钩子 ABI/布局/实际加载验证 | 进行中 | CLIENT_72_PATCH_ABI；四入口参数前缀已验，密钥/加载未验 | 字符串工厂、原生RSA/验签、实际加载与路由；商城钩子另列 |
@@ -184,3 +185,5 @@
 - A-04d5q：连续Handler→实际Login/Full状态→Action→完整Login构造→队列/transport/getter23172→14A447E00，token/hash原指针、wire和32/64位包头核对通过。9原生样本、204回归、两次产物一致；原默认枚举输出不变。研究校验0/ready1（213项），8组已安装密钥与Java逐字节相等。未知字段不晋级，无运行部署或D-02实机验收。用户要求当前子任务完成后暂停：本项收口后不启动下一任务，完成备份式交接。
 
 - 2026-11-05恢复推进：A-04d5r独立封包函数14A447E00完整返回；原生包头size/writer、端序、MemoryStream、XOR/清理，15样本含65536字节体、命令32767/32768/65535、uint64上界、两密钥循环和4拒绝。210研究回归及重复trace/摘要通过，研究校验0/ready1；未知业务字段未晋级。负载size/writer和密钥数组是明确输入，尚未串联上项构造/seed安装，也未执行收帧/socket/实机。仅离线工具/测试/文档，无部署。本轮配置portable、GAME_PATH已核对，Java/客户端未运行，只有本工作区MongoDB；既有AGENTS/resources差异保留。下一项收帧边界及发送链串联。
+
+- A-04d5s：14A446CC0独立收帧18原生样本、216研究回归、两次trace/摘要一致；BitConverter原生.cctor补足小端静态初始化，包头reader/标量helper直接执行。原生错误码4/5/6/2/7及两个非法header抛错入口验证；负载在尾标记前消费，尾随字节不计入packetLength。factory/负载reader为明确模型，非真实schema/Handler/实机；普通校验0/ready1。未改运行文件，无部署。下一项串联真实登录消息和密钥来源或A-03 P0闭包。
