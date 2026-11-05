@@ -425,6 +425,38 @@ def validate_token_complete(document, profile, complete, wire):
     return errors
 
 
+def validate_response_crypto(document,profile,crypto,wire):
+    errors=[]
+    hashes={profile['files'][k]['path']:profile['files'][k]['sha256'] for k in ('binary','metadata','startup')}
+    if crypto.get('inputSHA256')!=hashes:errors.append('Response crypto: input mismatch')
+    expected=dict(entry='0x15a4de707',successStop='0x15a4e0d4b',rejectionStop='0x15a4e0645',
+                  shortStop='0x159ca4ea0',runtimeStatus='not-tested',wholeHandlerExecuted=False,keyVerificationForced=False)
+    if any(crypto.get(k)!=v for k,v in expected.items()):errors.append('Response crypto: scope mismatch')
+    bindings=crypto.get('fieldBindings',[])
+    actual={(b.get('objectOffset'),b.get('tag'),b.get('clientField'),b.get('semanticField')) for b in bindings}
+    if len(bindings)!=2 or actual!={(0x98,477,'CGDONMBOALA','server_rand_key'),(0x88,208,'GKBJLBAKMCJ','sign')}:
+        errors.append('Response crypto: field source set mismatch')
+    schema=next((s for s in document['schemas'] if s['semanticName']=='GetPlayerTokenRsp'),{})
+    message=next((m for m in wire['messages'] if m['typeIndex']==37481),{})
+    for binding in bindings:
+        raw=[f for f in message.get('fields',[]) if f.get('objectOffset')==binding.get('objectOffset')]
+        mapped=[f for f in schema.get('fields',[]) if f.get('clientField')==binding.get('clientField')]
+        if (binding.get('typeIndex')!=37481 or binding.get('type')!='string' or binding.get('status')!='verified' or
+                len(raw)!=1 or any(raw[0].get(k)!=binding.get(k) for k in ('tag','type','clientField')) or
+                len(mapped)!=1 or 'response-native-crypto' not in mapped[0].get('evidence',[]) or
+                any(mapped[0].get(k)!=binding.get(k) for k in ('tag','type','semanticField','status'))):
+            errors.append('Response crypto: wire/semantic binding disagreement')
+    results=crypto.get('results',[])
+    expected_cases=[('local-zero','local',True,True),('local-high64','local',True,True),('local-trailing','local',True,True),
+                    ('stock-invalid-signature','stock',False,False),('local-invalid-signature','local',False,False),
+                    ('local-invalid-key-signature','local',False,False),('local-invalid-cipher','local',False,False),
+                    ('local-short-seed','local',True,False)]
+    if [(r.get('name'),r.get('trust'),r.get('signatureAccepted'),r.get('javaByteComparison')) for r in results]!=expected_cases:
+        errors.append('Response crypto: trust/success/rejection cases changed')
+    if len(crypto.get('trustInputReplacements',[]))!=3:errors.append('Response crypto: omitted local trust fixture boundary')
+    return errors
+
+
 def validate_send_flow(document, profile, flow):
     errors=[]
     hashes={profile['files'][k]['path']:profile['files'][k]['sha256'] for k in ('binary','metadata','startup')}
@@ -482,6 +514,8 @@ def main():
     errors.extend(validate_token_constructor(document,profile,token_constructor,protected))
     token_complete=json.loads((args.directory/'token-complete-observations.json').read_text('utf8'))
     errors.extend(validate_token_complete(document,profile,token_complete,protected))
+    response_crypto=json.loads((args.directory/'response-crypto-observations.json').read_text('utf8'))
+    errors.extend(validate_response_crypto(document,profile,response_crypto,next(t for name,t in extra if name=='response-wire-observations.json')))
     send_flow=json.loads((args.directory/'send-flow-observations.json').read_text('utf8'))
     errors.extend(validate_send_flow(document,profile,send_flow))
     print(json.dumps({'mode': 'ready' if args.ready else 'research-structure', 'valid': not errors, 'errors': errors},

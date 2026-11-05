@@ -23,7 +23,7 @@ Java对照只编译MersenneTwister64及离线runner到忽略目录，不加载�
 
 - Handler入口1507BE0E0成功前缀读取响应+B8；147CF3070在普通ByteString存储路径实际返回+18的数组。此前默认null数组的探索失败属于合成夹具限制。
 - 14D581600检查运行时列表是否含5714。两个分支目标literal为`[Shell] Old WarmupSwitch`/`[Shell] New WarmupSwitch`；后者进一步调用15A3CE060（0xCA）。已执行至内部读取140583A00，后续未恢复；没有将此调用模拟为成功。
-- 响应+98/+88的最新探索已实际执行Base64、原生私钥验签/解密、托管SHA-256及错误响应签名拒绝，详见末尾接续记录；正式可复跑夹具与有效响应签名仍待完成。上面的解密后片段本身不能验证前段解密或验签。
+- 响应+98/+88现已由A-04d5i正式工具从wire接入Base64、原生私钥验签/解密、托管SHA-256、响应验签及密钥安装；成功明确使用本地签名信任输入。完整Handler/真实SDK初始化与补丁仍待验；上面的解密后片段本身不能验证前段。
 - 响应+68写会话+98，1507C2211读取同一会话成员传给151213730；后者写请求+D8。该链已由下一节的独立wire与分段原生执行验证；未据此宣称完整Handler执行。
 - Login构造保护续段已越过151213AC6；148A22550跳1421C1F40（目标原生ret），后续需合成1458971C0类初始化状态并追踪下一真实调用。未知helper继续失败，不默认返回成功。
 
@@ -191,3 +191,20 @@ python -m unittest tools.test_client72_token_complete tools.test_client72_seed_c
 完整指令观察下解密执行45,744,307条，已得到正确明文。随后为探索速度仅省略140580000..140780000密码学库区域的逐指令Python回调，CPU指令仍执行，结果一致；正式工具应补上明确的块级轨迹，不能把省略后的计数当总指令数。私钥/原始密钥材料不提交，只存忽略目录；摘要`evidence/response-crypto-exploration.json`。
 
 当前仓库SigningKey与目标公钥不匹配，不能构造“目标原始信任配置下的有效服务器签名”或将旧补丁强制返回成功作为证据。下一项先正式化已成功的解密/摘要/拒绝路径，再研究本地服务端一致的密钥、签名与信任配置；任何替换都须实际通过验证算法。SDK warmup/真实初始化、完整Handler和实机仍未知。此探索未晋级响应字段/整体任务，149项测试结果仍仅对应上文已提交的工具。
+
+## A-04d5i / B-02c6 响应wire、真实验签与会话密钥
+
+正式工具`trace_client72_response_crypto`以独立tag477和208的wire输入真实TokenRsp reader，接入15A4DE707至15A4E0D4B。原生Base64、RSA私钥验签/解密、SHA256Managed、响应签名验证、seed XOR和两阶段MT64均实际执行；成功后得到4096字节密钥并清除145878FC0。托管字符串reader提供真实UTF-16存储，字段保存/分派仍由目标reader执行。两个字段业务契约据此确定为+98/CGDONMBOALA/tag477 `server_rand_key`及+88/GKBJLBAKMCJ/tag208 `sign`，三层映射累计29字段。
+
+有效响应使用**明确的本地签名信任输入**：从本仓库SigningKey读取离线夹具，为原生内置解密私钥DER及本地服务器公钥DER分别签名，在各操作输入处提供签名/公钥，并为原生公钥验签器提供对应根公钥PEM。原生验签返回值与结果字段均未覆盖，两次密钥验签及响应数据验签全部执行，并与独立RSA验证一致。原始目标私钥不替换，其公钥部分独立匹配仓库4_Pub.der；原始请求加密/响应验签公钥仍交叉核对为同一DER。该夹具证明密码学/字段数据流及一致信任输入下的行为，不证明原始服务器签名、真实SDK或补丁已加载。
+
+8组覆盖：本地零seed、高64位seed、9字节尾随输入；原始信任下无效响应签名；本地无效响应签名、内置私钥签名错误、无效密文；合法签名但7字节短seed。前3组完整结果与现有Java MT64逐字节一致；原生SHA-256均与hashlib一致。签名/密文错误到15A4E0645拒绝分支，短seed在159CA4EA0拒绝；均不安装密钥、不清标志，保存的client seed也不变。短seed用例说明验签成功仍不能替代后续长度验收。
+
+密码学库140580000..140780000改用原生基本块轨迹，其他区域保持逐指令轨迹；两者单独记录数量与SHA-256，绝不把块数或区域指令数当总指令数。指令/时间预算和系统指令拦截仍覆盖整个执行，RSA计算没有被模型替换。新增模型仅为SHA类/虚槽/数组存储、目标metadata常量数据、byte[] Clone/类型判断和GC.SuppressFinalize边界；原生摘要与Array.Clear/Dispose继续执行。8组全套trace/摘要二次运行逐字节一致；155项工具/映射/盘点回归通过，普通校验通过、ready仍退出1。
+
+```powershell
+python tools/trace_client72_response_crypto.py --client $env:GAME_PATH --java-home $env:JAVA_HOME --output local/migration72/evidence/response-crypto-trace.json --summary-output protocol/cn-7.2/response-crypto-observations.json
+python -m unittest tools.test_client72_response_crypto tools.test_client72_rsa_fixture tools.test_validate_protocol72 -v
+```
+
+默认签名夹具文件为仓库`src/main/resources/keys/SigningKey.der`，仅记录输入哈希；私钥及目标原始材料不写入共享产物。证据为`evidence/response-crypto-{trace,determinism}.json`、`logs/response-crypto-{run,tests}.log`和共享`response-crypto-observations.json`。仅离线工具/测试/研究文档变更，没有运行代码/Proto/补丁/资源变更，无需重启。下一步追踪SDK warmup/完整Handler前缀及实际本地信任配置，D-02仍未验收。

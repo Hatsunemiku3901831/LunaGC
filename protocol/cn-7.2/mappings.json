@@ -208,6 +208,13 @@
       "inputFile": "binary",
       "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
       "location": "protocol/cn-7.2/token-complete-observations.json; native 15121DB40 RSA/PKCS1 seed -> 151220057 -> request+90 -> tag623; existing HandlerGetPlayerTokenReq clientRandKey decryption contract"
+    },
+    {
+      "id": "response-native-crypto",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "protocol/cn-7.2/response-crypto-observations.json; independent tag477/208 reader -> native RSA decryption/SHA256/signature verify -> seed XOR/MT64; explicit local signed-key trust inputs, not live acceptance"
     }
   ],
   "opcodes": [
@@ -1502,15 +1509,16 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_208",
-          "status": "unresolved",
+          "semanticField": "sign",
+          "status": "verified",
           "evidence": [
-            "response-protected-reader"
+            "response-protected-reader",
+            "response-native-crypto"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "verificationScope": "Native wire -> RSA ciphertext / SHA256 signature inputs -> successful key installation and independent error rejection; success uses explicit locally signed key/root fixtures"
         },
         {
           "clientField": "GNHGKGCEFIO",
@@ -1592,15 +1600,16 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_477",
-          "status": "unresolved",
+          "semanticField": "server_rand_key",
+          "status": "verified",
           "evidence": [
-            "response-protected-reader"
+            "response-protected-reader",
+            "response-native-crypto"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "verificationScope": "Native wire -> RSA ciphertext / SHA256 signature inputs -> successful key installation and independent error rejection; success uses explicit locally signed key/root fixtures"
         },
         {
           "clientField": "ENBECCJFNIL",

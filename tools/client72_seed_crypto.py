@@ -6,6 +6,7 @@ No Windows API is called on the host and no live client state is changed.
 """
 import base64
 import hashlib
+import struct
 try:
     from .extract_client72 import number
     from .client72_emulator import STACK
@@ -41,6 +42,21 @@ class NativeCrypto72:
                 'GetLastError':lambda:self.last_error,'SetLastError':self.set_error}
         self.imports=import_slots(e.pe)
         for name,callback in models.items():e.write(self.imports[name],e.model_stub(callback))
+
+    def trace_library_blocks(self):
+        """Keep real crypto execution; trace hot native code by basic block.
+
+        Models, managed code and protected VM code retain instruction hooks.
+        The instruction/time budgets and global forbidden-instruction hooks
+        still cover the whole emulation. Counts below are blocks, not opcodes.
+        """
+        e=self.e;self.library_blocks=0;self.library_digest=hashlib.sha256()
+        e.uc.hook_del(e.hooks.pop(0))
+        e.hooks.extend((e.uc.hook_add(e.U.UC_HOOK_CODE,e._code,begin=1,end=0x14057ffff),
+                        e.uc.hook_add(e.U.UC_HOOK_CODE,e._code,begin=0x140780000,end=0xffffffffffffffff)))
+        def block(uc,address,size,data):
+            self.library_blocks+=1;self.library_digest.update(struct.pack('<QI',address,size))
+        e.hooks.append(e.uc.hook_add(e.U.UC_HOOK_BLOCK,block,begin=0x140580000,end=0x14077ffff))
 
     def allocate(self):
         n=self.e.reg('rcx');p=self.e.alloc(n);self.allocations[p]=n;return p

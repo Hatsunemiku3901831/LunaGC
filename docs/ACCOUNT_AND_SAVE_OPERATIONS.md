@@ -6,7 +6,7 @@
 
 ## 本机运行约定
 
-以 [AGENTS.md](../AGENTS.md) 为准：项目在 `C:\GS`，游戏在 `C:\GAME\Genshi`，使用 Windows 便携方式，`.env` 中 `LUNAGC_RUNTIME=portable`。只有用户以后明确要求，才改用 Docker、WSL 或虚拟化部署。
+以 [AGENTS.md](../AGENTS.md) 为准：使用当前checkout和本机`GAME_PATH`，启动前核对`.env`、`.env.local`、`config.json`及进程/端口归属。当前国服7.2分支使用Windows便携方式（`LUNAGC_RUNTIME=portable`），不部署Docker/WSL或启用虚拟化，不沿用历史路径/PID。
 
 | 入口 | 用途与注意点 |
 | --- | --- |
@@ -18,9 +18,11 @@
 | [Rebuild-GS.cmd](../Rebuild-GS.cmd) | 服务已停时使用便携 JDK 从源码构建 |
 | `task.cmd serve` | 按当前 runtime 选择更新方式；本机 portable 路径应保持不变 |
 
-本机默认 HTTP 8088、游戏 UDP 22101、MongoDB 27017；HTTP 和游戏端口可由配置／环境覆盖。检查时必须确认监听进程身份，不能仅凭端口被占用就认为运行的是此项目。
+HTTP/SDK 8088、MongoDB 27017等固定端口须按当前源码核查；游戏UDP基线为22101。不能仅改环境变量声称隔离，也不能仅凭端口被占用就认为运行的是此项目。
 
 `tools/local_windows.ps1` 启动时保存 `local/running.json`，包含进程 ID、JAR 路径和启动时 SHA-256。文件中的哈希只有与当前进程身份相符时才有意义；磁盘 JAR 后来被覆盖，不代表正在运行的 JVM 已加载新内容。
+
+7.2离线Token/响应密码学工具及复现入口见[Harness](../Harness.md)和[会话研究](CLIENT_72_SESSION.md)。这些工具不连接数据库，不替代新旧号、选人、场景和退出重登的D-02实机验收；已有mongodata和运行数据须保留。
 
 ## 只读排查的顺序
 
