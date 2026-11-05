@@ -452,7 +452,8 @@ class FurnitureStartFlowTest {
 
     @Test
     void currentRecipesStartWithConfirmedCanonicalCapacity() throws Exception {
-        Path root = Path.of(System.getenv().getOrDefault("LUNAGC_TEST_RESOURCES", "/resources"));
+        Path root = Path.of(System.getenv().getOrDefault("LUNAGC_TEST_RESOURCES",
+                System.getenv().getOrDefault("LUNAGC_RESOURCES_DIR", "resources")));
         for (String kind : List.of("Material", "HomeWorldFurniture")) {
             var definitions =
                     gson.fromJson(
