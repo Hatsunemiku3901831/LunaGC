@@ -394,6 +394,37 @@ def validate_token_constructor(document, profile, constructor, wire):
     return errors
 
 
+def validate_token_complete(document, profile, complete, wire):
+    errors=[]
+    hashes={profile['files'][k]['path']:profile['files'][k]['sha256'] for k in ('binary','metadata','startup')}
+    if complete.get('inputSHA256')!=hashes:errors.append('Token complete: input mismatch')
+    expected=dict(entry='0x15121ff70',helper='0x15121db40',helperNativeExecuted=True,
+                  constructorStop='0x151214d20',sendStop='0x14a447e00',frameBuilderExecuted=False,
+                  runtimeStatus='not-tested',semanticName='GetPlayerTokenReq',typeIndex=82491,cmdId=24604)
+    if any(complete.get(k)!=v for k,v in expected.items()):errors.append('Token complete: execution/identity boundary mismatch')
+    binding=complete.get('seedBinding',{})
+    expected_binding=dict(objectOffset=0x90,tag=623,type='string',clientField='JFCLDBKLKDF',
+                          semanticField='client_rand_key',status='verified')
+    if any(binding.get(k)!=v for k,v in expected_binding.items()):errors.append('Token complete: seed binding mismatch')
+    raw=[f for f in wire.get('fields',[]) if f.get('objectOffset')==0x90]
+    if len(raw)!=1 or any(raw[0].get(k)!=binding.get(k) for k in ('tag','type','clientField')):
+        errors.append('Token complete: wire disagreement')
+    schema=next((s for s in document['schemas'] if s['semanticName']=='GetPlayerTokenReq'),{})
+    mapped=[f for f in schema.get('fields',[]) if 'token-native-seed' in f.get('evidence',[])]
+    if len(mapped)!=1 or any(mapped[0].get(k)!=binding.get(k) for k in ('tag','type','clientField','semanticField','status')):
+        errors.append('Token complete: semantic mapping disagreement')
+    results=complete.get('results',[])
+    actual=[(r.get('seedHex'),r.get('initializedFixture'),r.get('tamperedInput'),r.get('ioctlReturn'),
+             r.get('seedWireLength'),r.get('cmdId'),r.get('constructorStillSendsOnEmptySeed'),r.get('passed')) for r in results]
+    required=[('0000000000000000',True,None,0,344,24604,False,True),
+              ('8000000000000000',True,None,0,344,24604,False,True),
+              ('fffffffffffff800',True,None,0,344,24604,False,True),
+              ('8000000000000000',False,None,-2,0,24604,True,True),
+              ('8000000000000000',True,'signature',-7,0,24604,True,True)]
+    if actual!=required:errors.append('Token complete: native success/rejection cases changed')
+    return errors
+
+
 def validate_send_flow(document, profile, flow):
     errors=[]
     hashes={profile['files'][k]['path']:profile['files'][k]['sha256'] for k in ('binary','metadata','startup')}
@@ -449,6 +480,8 @@ def main():
     errors.extend(validate_login_constructor(document,profile,constructor,semantic_tables[3]))
     token_constructor=json.loads((args.directory/'token-constructor-observations.json').read_text('utf8'))
     errors.extend(validate_token_constructor(document,profile,token_constructor,protected))
+    token_complete=json.loads((args.directory/'token-complete-observations.json').read_text('utf8'))
+    errors.extend(validate_token_complete(document,profile,token_complete,protected))
     send_flow=json.loads((args.directory/'send-flow-observations.json').read_text('utf8'))
     errors.extend(validate_send_flow(document,profile,send_flow))
     print(json.dumps({'mode': 'ready' if args.ready else 'research-structure', 'valid': not errors, 'errors': errors},

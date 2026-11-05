@@ -201,6 +201,13 @@
       "inputFile": "binary",
       "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
       "location": "docs/CLIENT_72_SESSION.md; token-constructor-observations.json; native SDK key to tag10 with explicit opaque 15121DB40 boundary"
+    },
+    {
+      "id": "token-native-seed",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "protocol/cn-7.2/token-complete-observations.json; native 15121DB40 RSA/PKCS1 seed -> 151220057 -> request+90 -> tag623; existing HandlerGetPlayerTokenReq clientRandKey decryption contract"
     }
   ],
   "opcodes": [
@@ -724,7 +731,7 @@
         "token-protected-writer"
       ],
       "ambiguities": [
-        "28 raw fields observed offline, semantic names unresolved; ASCII helper model and non-IFix path only; not runtime acceptance"
+        "28 raw fields observed offline; SDK subchannel and encrypted-client-seed source verified, remaining business fields unresolved; explicit runtime/OS inputs, not client acceptance"
       ],
       "fields": [
         {
@@ -1017,21 +1024,22 @@
           "wireStatus": "emulated-observation"
         },
         {
-          "semanticField": "unknown_field_623",
+          "semanticField": "client_rand_key",
           "clientField": "JFCLDBKLKDF",
           "tag": 623,
           "type": "string",
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "status": "unresolved",
+          "status": "verified",
           "evidence": [
-            "token-protected-writer"
+            "token-protected-writer",
+            "token-native-seed"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "verificationScope": "Native key verification and client-seed RSA/Base64 helper -> same constructor return pointer -> request store -> writer; explicit runtime initialization/OS inputs, no real-client claim"
         },
         {
           "semanticField": "unknown_field_645",

@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "fixtureCount": 5,
+  "entry": "0x15121ff70",
+  "helper": "0x15121db40",
+  "helperNativeExecuted": true,
+  "constructorStop": "0x151214d20",
+  "sendStop": "0x14a447e00",
+  "frameBuilderExecuted": false,
+  "runtimeStatus": "not-tested",
+  "semanticName": "GetPlayerTokenReq",
+  "typeIndex": 82491,
+  "cmdId": 24604,
+  "getterAssociation": {
+    "clone": "0x1500c2190",
+    "selfClassCell": "0x1458c5500",
+    "copyFrom": "0x1500c2240",
+    "getter": "0x1500c4a50"
+  },
+  "transportParameterBindings": [
+    {
+      "ownerTypeIndex": 79029,
+      "methodIndex": 655015,
+      "parameterIndex": 503964,
+      "parameterTypeIndex": 165362,
+      "envelopeTypeIndex": 13973
+    },
+    {
+      "ownerTypeIndex": 68785,
+      "methodIndex": 569162,
+      "parameterIndex": 447221,
+      "parameterTypeIndex": 165362,
+      "envelopeTypeIndex": 13973
+    },
+    {
+      "ownerTypeIndex": 32016,
+      "methodIndex": 250987,
+      "parameterIndex": 197935,
+      "parameterTypeIndex": 165362,
+      "envelopeTypeIndex": 13973
+    }
+  ],
+  "seedBinding": {
+    "objectOffset": 144,
+    "tag": 623,
+    "type": "string",
+    "clientField": "JFCLDBKLKDF",
+    "sourceSemantic": "Base64 RSA-encrypted big-endian client seed",
+    "semanticField": "client_rand_key",
+    "status": "verified",
+    "businessNameBasis": "Existing server clientRandKey contract: Base64 -> RSA/PKCS1 -> big-endian uint64"
+  },
+  "results": [
+    {
+      "variant": 0,
+      "seedHex": "0000000000000000",
+      "initializedFixture": true,
+      "tamperedInput": null,
+      "ioctlReturn": 0,
+      "seedWireLength": 344,
+      "cmdId": 24604,
+      "constructorStillSendsOnEmptySeed": false,
+      "passed": true
+    },
+    {
+      "variant": 1,
+      "seedHex": "8000000000000000",
+      "initializedFixture": true,
+      "tamperedInput": null,
+      "ioctlReturn": 0,
+      "seedWireLength": 344,
+      "cmdId": 24604,
+      "constructorStillSendsOnEmptySeed": false,
+      "passed": true
+    },
+    {
+      "variant": 2,
+      "seedHex": "fffffffffffff800",
+      "initializedFixture": true,
+      "tamperedInput": null,
+      "ioctlReturn": 0,
+      "seedWireLength": 344,
+      "cmdId": 24604,
+      "constructorStillSendsOnEmptySeed": false,
+      "passed": true
+    },
+    {
+      "variant": 3,
+      "seedHex": "8000000000000000",
+      "initializedFixture": false,
+      "tamperedInput": null,
+      "ioctlReturn": -2,
+      "seedWireLength": 0,
+      "cmdId": 24604,
+      "constructorStillSendsOnEmptySeed": true,
+      "passed": true
+    },
+    {
+      "variant": 4,
+      "seedHex": "8000000000000000",
+      "initializedFixture": true,
+      "tamperedInput": "signature",
+      "ioctlReturn": -7,
+      "seedWireLength": 0,
+      "cmdId": 24604,
+      "constructorStillSendsOnEmptySeed": true,
+      "passed": true
+    }
+  ],
+  "modelsFrom": [
+    "seed-crypto-observations.json",
+    "token-constructor-observations.json",
+    "send-flow-observations.json"
+  ],
+  "replacedModel": "Only the opaque 15121DB40 result is removed; native helper executes",
+  "outsideScope": [
+    "actual SDK initialization/transport selection",
+    "response cryptography",
+    "remaining business semantics",
+    "frame builder body, encryption/socket",
+    "new Shell/IFix",
+    "real-client acceptance"
+  ]
+}

@@ -166,3 +166,18 @@ python -m unittest tools.test_client72_seed_crypto -v
 ```
 
 产物：`evidence/seed-crypto-{trace,determinism}.json`、`logs/seed-crypto-{run,tests}.log`、共享`seed-crypto-observations.json`。本批只改离线工具/测试/研究摘要，无运行代码、主Proto、配置、补丁或资源变更，无需重启。下一项将完整helper接入Token构造，再追踪响应密码学前段和SDK初始化。
+
+## A-04d5h / B-02c5 完整Token构造与client_rand_key
+
+`trace_client72_token_complete`现在从15121FF70开始，在同一原生执行中调用完整15121DB40，观察返回地址151220057及其原始返回指针，确认该指针直接保存到Token请求+90，再到151214D20发送入口。此工具移除了opaque seed结果模型；其他SDK、Shell操作5、OS、托管和初始化夹具继续明确保留。后续原生发送链把同一请求交给14A447E00，实际getter为24604；封包函数体仍未执行。
+
+writer输出JFCLDBKLKDF/tag623/string与原生Base64结果一致。其业务语义为“RSA/PKCS#1加密的8字节大端客户端seed，经Base64传输”，与现有HandlerGetPlayerTokenReq的`clientRandKey`消费契约（Base64解码→RSA/PKCS1解密→ByteBuffer大端getLong）对应。因此字段映射命名为`client_rand_key`，这是业务契约名称匹配，并非声称客户端混淆名已解密。三层表累计27个字段有来源；literal4/tag1184尚不命名key_id，其他会话字段也不随之晋级。
+
+5组贯通：seed为0、8000000000000000、FFFFFFFFFFFFF800，未初始化，篡改签名。前三组原生验签/独立RSA一致、tag623长度344；后两组helper分别返回-2/-7后生成空字符串，外层仍到发送/封包入口，tag623按proto默认空值不输出。这是实际客户端代码行为；不能用发送成功替代seed成功或服务器接受。全部保持24604、原请求指针和SDK tag10=456。补充3项映射测试拒绝错误命令、wire tag、opaque冒充原生、实机冒称、遗漏失败及把失败称为不发送；149项回归通过，独立seed工具重构后8组产物未变，完整Token工具重复一致。
+
+```powershell
+python tools/trace_client72_token_complete.py --client $env:GAME_PATH --output local/migration72/evidence/token-complete-trace.json --summary-output protocol/cn-7.2/token-complete-observations.json
+python -m unittest tools.test_client72_token_complete tools.test_client72_seed_crypto tools.test_validate_protocol72 -v
+```
+
+证据`evidence/token-complete-{trace,determinism}.json`、`logs/token-complete-{run,tests}.log`，共享`token-complete-observations.json`。旧token-constructor/send-flow表保留其当时opaque实验范围，新表记录消除此边界的实际执行。研究校验通过、ready仍拒绝；无运行文件变更或重启。A-04d5g本地提交823762e。下一项为响应seed解密/验签、真实SDK初始化或封包函数体，D-02仍未验收。

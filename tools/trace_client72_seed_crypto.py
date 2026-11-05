@@ -36,7 +36,7 @@ class SeedString72:
         self.tamper=tamper;self.checkpoints=Counter();self.digest=hashlib.sha256()
         self.der=self.signature=self.root=self.plain=self.padded=None
         self.signature_result=None;self.ioctl_return=None
-        for address in (0x152F1B4D0,0x159BC3080,0x159BC34C0):e.allow(address)
+        for address in (ENTRY,0x152F1B4D0,0x159BC3080,0x159BC34C0):e.allow(address)
         e.allowed.extend(((0x148A22550,0x148A22555),(0x148A22560,0x148A22565)))
         # Marshal.Copy reads element width at klass+b8; the array allocator
         # receives a byte element class and supplies a separate byte[] class.
@@ -93,6 +93,11 @@ class SeedString72:
     def run(self,sample,initialized,tamper):
         e=self.e;e.before_instruction=self.observe
         result=self.session.call(ENTRY,e.alloc(1024))
+        return self.finish(result,sample,initialized,tamper)
+
+    def finish(self,result,sample,initialized,tamper):
+        """Check a returned helper value, also reusable after the outer constructor."""
+        e=self.e
         text=bytes(e.uc.mem_read(result+20,e.read(result+16,'I')*2)).decode('utf-16-le')
         trace=dict(instructions=e.steps,nativePathSHA256=self.digest.hexdigest(),
                    checkpoints={hex(k):v for k,v in sorted(self.checkpoints.items())},
