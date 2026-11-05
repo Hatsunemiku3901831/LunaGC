@@ -231,3 +231,5 @@ V-01b补验：共用本夹具的FurniturePaidStartRecoveryTest原31项中27失�
 交接收口：A-03c验收提交411d522后停止，无下一研究动作。旧HANDOFF2先备份并逐字节/hash核验，HANDOFF仅追加；详细入口见[HANDOFF2](HANDOFF2.md)。测试Mongo已正常关闭，原Mongo/数据/他人差异保留；无运行部署或客户端调试。
 
 2026-11-06 B-02d：仅选人三件组研究闭合；5008/PMNMDAIKALO（目标确认空schema）、8541/JNJOMANHPCD（nick_name4、avatar_id11）、414/EODFLMDBPOG（retcode15）。39组限定原生执行、6聚焦与266研究回归全过，二次trace/摘要一致；三层只晋级这三条和3字段，204项ready缺口保留。原生消息reader错误来自显式WireInput边界，昵称validator只到入口，未绕过/伪造成功；具体限制与Sol实现规格见CLIENT_72_BORN。没有修改生产Java/Proto/配置/补丁/资源，无部署，Java与客户端未运行；Mongo27017和现有调试器未操作。已到用户停止点，后续只做文档/本地提交/备份交接。
+
+B-02d收口：验收提交36eb486；先建卡3fc7e80。旧HANDOFF2已先备份并核验，详细停止状态与Sol规格入口见HANDOFF2，HANDOFF只追加。本轮研究已停止，未推送。

@@ -113,3 +113,11 @@ A-04d5w已限定验收：10原生样本、240研究回归、二次产物一致�
 A-03b固定48源码/293方法，2868未关联和开放插件/脚本/异步边界保留；A-03c记录97包构造/148引用种子/1139描述符文件，缺DoSetPlayerBornDataNotify.proto如实保留。未知三层不晋级，A-03整体仍待完整闭包及实机复核。未开展B-03/C-01/D-02或实机调试，无运行文件变更/部署。独立测试Mongo27027已正常关闭，原数据库/运行数据/他人修改保留，未推送。
 
 Astra下一研究为现有B-02下DoSetPlayerBornDataNotify/SetPlayerBornDataReq/Rsp三件组的独立7.2三层证据；如拆子ID须先建验收卡，尚未启动。详见[HANDOFF2.md](HANDOFF2.md)和[缺口矩阵说明](docs/CLIENT_72_LOGIN_PROTO_MATRIX.md)。覆盖前旧HANDOFF2已备份`local/migration72/handoffs/HANDOFF2.before-login-proto-411d522.md`并逐字节/hash核验，SHA256 ae0144399f616f4a6264e94712770990addaa156ae3c1942ec781f25110169cf，报告evidence/handoff-login-proto-backup-check.json。本文仅追加，旧active/暂停段落均为历史，以本次停止点为准。
+
+## 2026-11-06 B-02d选人三件组闭合后停止
+
+先建子卡提交3fc7e80，限定研究验收提交36eb486，均未推送。目标三层：DoSetPlayerBornDataNotify=5008/PMNMDAIKALO（目标原生确认空schema）；SetPlayerBornDataReq=8541/JNJOMANHPCD（nick_name4、avatar_id11）；SetPlayerBornDataRsp=414/EODFLMDBPOG（retcode15）。39组限定原生样本、独立wire/protoc、6新增/266研究回归通过，二次trace/摘要逐字节相同，校验0/ready1（204缺口）。其他unknown、P0及实机状态不晋级。
+
+已达到“Sol能按明确规格实现回归即停止”的停止点，未进入B-03/C-01/D-02，没有运行集成/部署/客户端或动态调试。昵称validator仅到入口，未替换成功；wire错误模型、UI/SDK/完整成功继续等未验范围详见[研究与Sol规格](docs/CLIENT_72_BORN.md)。正式后续实现须用户另给Sol范围。
+
+原HANDOFF2先备份到local/migration72/handoffs/HANDOFF2.before-born-36eb486.md并核对字节/hash，SHA-256 7ba3b0d7d41c0423b489e878eeb0dec65ecde648b41fbd5dd5812e4f5bb664c9；详细状态/提交/测试/阻塞/避坑/复现与下一项见[HANDOFF2.md](HANDOFF2.md)。Java/游戏未运行，Mongo27017及两个既有调试器未操作；AGENTS/resources他人差异保留未提交。本HANDOFF仅追加，旧内容保留。

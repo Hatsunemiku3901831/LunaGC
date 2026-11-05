@@ -238,3 +238,5 @@ V-01b补验：共用本夹具的FurniturePaidStartRecoveryTest原31项中27失�
 本机证据`evidence/born-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready,final-environment}.json`，日志`logs/born-{focused,repeat,regression}.log`。实际执行三getter/分派/请求构造与writer/size/响应reader与Handler、目标继承空schema；wire primitive/UTF-8/UI存储为显式模型，真实昵称validator、客户端/SDK/队列/完整成功继续均未验。不得将空通知等同于所有Rsp为空。
 
 生产代码/Proto/配置/补丁未改，无部署或数据库测试；Java及游戏进程不存在，只有本工作区Mongo27017与两个既有调试器，均未操作。旧经济/保存221项通过仍属前批，本轮不冒称重跑。B-02d闭合后停止，给Sol的下一项规格在专题；不进入B-03/C-01/D-02。
+
+B-02d收口：验收提交36eb486；先建卡3fc7e80。旧HANDOFF2已先备份并核验，详细停止状态与Sol规格入口见HANDOFF2，HANDOFF只追加。本轮研究已停止，未推送。
