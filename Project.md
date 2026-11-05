@@ -1,10 +1,10 @@
 # 国服 7.2 任务与验收
 
-更新：2026-11-05。仅面向 7.2；主仓库起点 d372f62（7.2-dev）。状态只用：待开始 / 进行中 / 阻塞 / 已完成。全部验收条件满足才完成。
+更新：2026-11-06。仅面向 7.2；主仓库起点 d372f62（7.2-dev）。状态只用：待开始 / 进行中 / 阻塞 / 已完成。全部验收条件满足才完成。
 
 ## 当前阶段
 
-执行状态：用户2026-11-05已明确恢复，持续推进至D-02实机验收，目标active。A-04d5q已完成连续Handler→Login→发送封包入口的限定验收；A-04d5r/s已完成独立封/收帧及密钥选择边界，A-04d5t已贯通真实Token构造/size/writer/封包；A-04d5u已完成原生Ec2b独立验证，继续分区来源→密钥槽/帧、Login/响应或P0闭包。A-04d/B-02及A-04d5n/B-02c9整体仍进行中，tag965业务语义等缺口保留；D-02未完成。旧交接的暂停指令是历史记录，不再生效。
+执行状态：用户2026-11-05已明确恢复，持续推进至D-02实机验收，目标active。A-04d5q已完成连续Handler→Login→发送封包入口的限定验收；A-04d5r/s完成独立封/收帧，A-04d5t贯通真实Token构造/size/writer/封包；A-04d5u/v完成原生Ec2b和第一分区来源→密钥槽→Token帧。继续Login/真实响应串联、P0闭包及SDK/连接前置。A-04d/B-02及A-04d5n/B-02c9整体仍进行中，tag965业务语义等缺口保留；D-02未完成。旧交接的暂停指令是历史记录，不再生效。
 
 静态结构、Token/Login原始wire及响应非空对象图已离线恢复；四个登录请求/响应业务身份与CmdID、36个字段来源、默认枚举表8类102符号及另2类连接状态枚举20符号现有目标证据。Token Handler入口至seed安装、UID/token保存、版本哈希、实际Login/Full分支、Login构造和发送封包入口已在明确夹具下连续执行；不等于整个Handler返回或真实登录。Token已在明确初始化/OS夹具下贯通原生seed验签/加密、构造、wire与发送至封包入口；SDK认证回调的五个凭据/渠道字段也已接入原生构造和writer。Login亦已在旧Shell/非云夹具下构造并到封包入口。响应wire→原生解密/摘要/验签→密钥安装已在明确本地签名信任输入下贯通，3组4096字节Java对照及错误拒绝通过。独立封包函数已在明确负载/密钥输入下完成；真实SDK初始化、完整Handler、封包与构造/密钥来源串联及剩余字段继续研究，A-04d/B-02保持进行中。隔离研发服务曾完成基线部署；本轮核对Java未运行、HTTP/游戏端口未监听，MongoDB属本工作区。目前没有7.2可连接构建，客户端验收全部待执行。本机路径、初始差异、报告和日志在忽略的 local/migration72/；公共摘要放 docs/ 和 protocol/cn-7.2/。
 
@@ -70,7 +70,8 @@
 | A-04d5r 独立封包函数与循环XOR | A-04d5f | trace_client72_frame、摘要/测试 | 原生包头size/writer、帧/长度/端序/整帧XOR/清理返回；高位命令、64位包头、65536字节体、两密钥/循环/缺失/拒绝，独立字节与重复验证 | 已完成 | frame-observations.json、frame-determinism.json；15原生样本、210回归、两次产物一致；ae23ee7 | 负载writer和密钥来源为明确输入，继续串联/收帧，不晋级实机 |
 | A-04d5s 独立收帧/解密与错误边界 | A-04d5r | trace_client72_frame_reader、摘要/测试 | 原生端序初始化/XOR/包头reader/长度与标记校验；18组高位/64位/重复/截断/坏tag/错key/尾随字节、独立输入与重复一致 | 已完成 | frame-reader-observations.json、frame-reader-determinism.json；216回归；b698f75 | factory/负载reader为明确模型，继续真实消息与密钥串联，不晋级客户端验收 |
 | A-04d5t 连续原生Token到完整帧 | A-04d5h、A-04d5r | trace_client72_token_frame、摘要/测试 | 同CPU seed/构造/发送/实际size与writer/完整帧；6组含非ASCII/NUL/长字段/验签失败，独立全字段wire、222回归及重复一致 | 已完成 | token-frame-observations.json、token-frame-determinism.json；389fe4a | 帧初始key/SDK/OS仍明确夹具，继续真实key来源或Login/响应串联 |
-| A-04d5u 原生Ec2b与初始化 | A-04d5t、D-01b1 | client72_ec2b、trace_client72_ec2b、摘要/测试 | 原生注册/RNG初始化/完整Ec2b/managed结果；16组含地址/缓存/扰动/拒绝、独立固定pair与live状态、228回归及重复一致 | 已完成 | ec2b-observations.json、ec2b-determinism.json；本项提交 | 分区配置的非空key连接仍待验，物理截断语义不扩大 |
+| A-04d5u 原生Ec2b与初始化 | A-04d5t、D-01b1 | client72_ec2b、trace_client72_ec2b、摘要/测试 | 原生注册/RNG初始化/完整Ec2b/managed结果；16组含地址/缓存/扰动/拒绝、独立固定pair与live状态、228回归及重复一致 | 已完成 | ec2b-observations.json、ec2b-determinism.json；0153d00 | 非空分区来源接续A-04d5v，物理截断语义不扩大 |
+| A-04d5v 分区Ec2b来源到Token完整帧 | A-04d5n4、A-04d5t、A-04d5u | trace_client72_dispatch_key_frame、摘要/测试 | 多RSA块真实解密/验签/reader→三次Ec2b→两配置XOR/清槽→最终key原指针→Token实际size/writer/帧；独立输入、跨周期/空key/错误魔数与重复回归 | 已完成 | dispatch-key-frame-observations.json、dispatch-key-frame-determinism.json；4原生样本、234回归、二次一致，旧三工具各6样本产物不变；本项提交 | 继续Login/真实响应串联或P0/SDK；调度器/实机不在本项范围 |
 | B-03 确定性生成 | B-01、B-02 | generator、PacketOpcodes、Proto | 只生成核实项，别名/引用检查，重复输出一致，protoc 编译，禁止旧号兜底 | 待开始 | — | 合成模型测试，再接真实映射 |
 | C-01 双向网络接入 | B-03 | GameSession、BasePacket、Handler 注册、UnionCmd/枚举 | 注册冲突失败、号/长度边界、内外分派、目标 wire 测试，构建部署 | 待开始 | — | 映射确认后替换旧表和专属断言 |
 | D-01 补丁和连接前置 | A-01、A-04 | patch、HTTP/SDK/dispatch/密钥 | 路由/渠道/版本/加密、各钩子 ABI/布局/实际加载验证 | 进行中 | CLIENT_72_PATCH_ABI；四入口参数前缀已验，密钥/加载未验 | 字符串工厂、原生RSA/验签、实际加载与路由；商城钩子另列 |
@@ -197,3 +198,5 @@
 - D-01b1：用户完成管理员启动及Automate加载，按其要求停止computer-use；脚本API核对真实模块5处32字节，经过TLS/PE入口停1411267B0，Global尚未初始化。RNG状态5000字节与1408AF2A0原生初始化及独立seed103递推相同；Ec2b单组探索输出与仓库dispatchKey相同但尚未正式验收。目标当前保留调试暂停，未连猜测协议服务；D-02未完成，整体目标active。详见CLIENT_72_DYNAMIC_DEBUG。
 
 - A-04d5u：16组原生Ec2b含raw/managed包装，固定seed/key逐字节、地址变化/缓存重复一致，扰动输出改变，错误输入不写输出/不分配。原生初始化与live5000字节和独立递推相符；228回归、二次trace/摘要一致，校验0/ready1。长度参数仅检查正值，短声明测试保留完整2076字节底层存储，不声称真实截断数组安全。动态调试另核实1411267B0→1411268C1原生注册指针写入，当前暂停ret，未声称SDK完成；下一项分区来源→key槽/帧。无运行部署。
+
+- 2026-11-06 A-04d5v：9块RSA分区响应经原生密码学/reader→三次Ec2b→两配置XOR/清槽→第三次key原指针保留→真实Token封包，4样本覆盖5314字节跨周期/Unicode/NUL/空key/错误魔数；234回归与二次产物一致，原三工具各6样本产物不变，校验0/ready1（213项）。配置模型原本读旧密文缓存，已改读实际内存；没有改客户端或跳校验。分区→Token调度器、业务未知字段和D-02不晋级。动态会话已将首次异常交给应用，现停mhypbase TLS，Global仍0；无运行代码修改或部署。下一项Login/响应/SDK及P0闭包。

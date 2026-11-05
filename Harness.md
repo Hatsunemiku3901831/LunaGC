@@ -202,3 +202,7 @@ Handler→Login正式入口：`trace_client72_handler_login`，见[会话研究A
 
 
 Ec2b正式入口：`client72_ec2b`与`trace_client72_ec2b`，见[动态调试A-04d5u](docs/CLIENT_72_DYNAMIC_DEBUG.md#a-04d5u-原生ec2b独立验收)。16原生样本、228回归、重复产物通过；evidence/ec2b-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json、logs/ec2b-{run,repeat,regression}.log。初始化实际执行1411267B0/1408AF2A0，完整解码不设成功模型，fixedpair/LIVE RNG/独立递推交叉；raw短声明不是物理截断。真实调试进程已另验注册目标写入，暂停1411268C1，见evidence/dynamic-ec2b-registration.json。下一项analysis/probe_dispatch_key.py探索非空key/RSA多块/配置XOR，未正式验收。
+
+分区key到真实Token帧入口：`trace_client72_dispatch_key_frame`，见[网络研究A-04d5v](docs/CLIENT_72_NETWORK.md#a-04d5v-分区密钥来源到token完整帧)。4原生样本、234回归、二次trace/摘要一致；原dispatch-config、dispatch-session、token-frame各6样本产物不变。证据evidence/dispatch-key-frame-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json、logs/dispatch-key-frame-{run,repeat,regression}.log；回归旧工具报告为evidence/*-key-regression.json。修复配置GetString读取旧密文字节缓存的问题，实际XOR与key源本身正确。两段入口调用之间只保留原key，未执行调度器；SDK/HTTP/实际客户端仍未验，不部署运行服务。A-04d5u提交0153d00。
+
+动态启动补充：异常按原样交给应用处理后，目标继续并停在mhypbase.dll的TLS回调，Global仍0；未吞异常或修改校验。当前API状态/异常/日志为evidence/dynamic-startup-exception.json、dynamic-phase-13至15.json和logs/dynamic-phase-*.json；不能再按旧1411268C1暂停点运行脚本。后续只用Automate，禁止computer-use；下一步真实全局/SDK初始化或已知命名HTTP入口观察。

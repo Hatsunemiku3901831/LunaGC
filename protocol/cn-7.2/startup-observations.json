@@ -81,5 +81,21 @@
     "beforeNull": true,
     "target": "0x1408baee0",
     "returned": false
-  }
+  },
+  "latestStartupObservation": {
+    "module": "mhypbase.dll",
+    "relativeOffset": "0x5f58e4",
+    "stopKind": "TLS callback breakpoint",
+    "globalPointerNull": true,
+    "firstChanceException": "0xc0000005",
+    "faultReadRelativeToMainModule": "0xc0000002",
+    "exceptionDeliveredToApplication": true,
+    "exceptionsSwallowed": false,
+    "debugging": true,
+    "running": false
+  },
+  "offlineFollowupEvidence": [
+    "ec2b-observations.json",
+    "dispatch-key-frame-observations.json"
+  ]
 }

@@ -61,3 +61,9 @@ python -m unittest tools.test_client72_ec2b
 16原生样本、228研究回归、二次trace/摘要一致，研究校验0/ready1。只有离线工具/测试/摘要/文档变化，不部署运行服务。
 
 实时观察补充：在同一管理员调试会话，从1411267B0单步到函数ret1411268C1，确认145744EB8由0变为按实际基址重定位的1408BAEE0；暂停在ret前，未声称整个SDK初始化。报告evidence/dynamic-ec2b-registration.json。之后继续使用Automate接口，遵守用户禁止computer-use要求。
+
+## 2026-11-06后续启动状态
+
+从注册函数ret继续后出现NTDLL中的首次访问异常，读址为主模块base+C0000002；原始指令/寄存器/栈已保存在忽略报告dynamic-startup-exception.json。通过Automate的`go(pass_exceptions=True)`将异常原样交给应用，未吞异常、未修改指令/返回值或关闭校验。应用继续加载系统库及mhypbase.dll，随后停在后者TLS回调（模块相对偏移5F58E4）；Global指针仍0。此阶段不认证整个SDK、反作弊状态或登录能力。
+
+实时报告dynamic-phase-13至15.json和对应日志；最新phase15确认is_debugging=true、is_running=false。后续必须重新查询会话及实际基址，不能继续沿用1411267B0/1411268C1作为当前暂停点。第一分区非空Ec2b来源到Token帧已由A-04d5v离线验证，详见[网络研究](CLIENT_72_NETWORK.md#a-04d5v-分区密钥来源到token完整帧)，与本段真实启动范围分开记录。

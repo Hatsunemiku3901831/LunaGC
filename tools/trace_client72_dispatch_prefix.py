@@ -101,12 +101,12 @@ class DispatchPrefix72(AuthSources72):
             if address==REJECT:self.error_marker=self.text(e.reg('rdx'))
             e.uc.emu_stop()
 
-    def run_prefix(self,payload):
+    def run_prefix(self,payload,*,timeout_us=90_000_000,instruction_limit=100_000_000):
         e=self.e;e.uc.context_restore(e.context);e.calls=[];e.failure=None;e.steps=0
         for k,v in dict(rsp=STACK+0x100008,rcx=self.sender,rdx=self.string(json.dumps(payload)),r8=0).items():
             e.uc.reg_write(getattr(e.R,'UC_X86_REG_'+k.upper()),v)
         e.before_instruction=self.observe
-        e.uc.emu_start(ENTRY,END,timeout=90_000_000,count=100_000_000)
+        e.uc.emu_start(ENTRY,END,timeout=timeout_us,count=instruction_limit)
         e.before_instruction=None
         if e.failure or self.stop is None:raise ValueError(e.failure or 'Dispatch prefix budget exhausted')
         value=None;pointer_match=False

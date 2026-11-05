@@ -29,7 +29,7 @@ except ImportError:
     from trace_client72_token import parse_wire
 
 
-def construct_native_token(e,ctor,binary,metadata,sample,initialized,tamper=None,*,seed=None):
+def construct_native_token(e,ctor,binary,metadata,sample,initialized,tamper=None,*,seed=None,continue_send=None):
     """Reusable real seed helper + constructor, preserving prior source calls."""
     e.models.pop(OPAQUE_HELPER)
     if seed is None:
@@ -65,6 +65,7 @@ def construct_native_token(e,ctor,binary,metadata,sample,initialized,tamper=None
         raise ValueError('Native seed return pointer was not preserved into Token request')
     if ctor.stages[stage_start:]!=[8] or ctor.sdk_calls[sdk_start:]!=['info_get_sub_channel_id'] or ctor.shell_calls[shell_start:]!=[5]:
         raise ValueError('Token source sequence changed')
+    if continue_send is not None:continue_send()
     return seed.finish(returned[0],sample,initialized,tamper),returned[0]
 
 

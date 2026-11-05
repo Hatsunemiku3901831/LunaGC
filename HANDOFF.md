@@ -77,3 +77,9 @@ Handler尾段已单次探索到1531D03D0，实际执行response tag3 bytes→rob
 `389fe4a`完成A-04d5t，6原生样本、222研究回归、重复产物一致。用户允许动态调试并手动完成提权/Automate加载，随后明确禁止computer-use；以后只用脚本API。D-01b1真实启动5处代码及RNG状态交叉已验，目标当前暂停1411267B0；会话详情在忽略dynamic报告，先重新核对，不重启新客户端。
 
 Ec2b单组探索已验证原生初始化后输出与仓库dispatchKey相同，下一步正式化并串联分区来源；D-02未完成，目标active。详见[HANDOFF2](HANDOFF2.md)与[动态调试](docs/CLIENT_72_DYNAMIC_DEBUG.md)。覆盖前已备份旧HANDOFF2至local/migration72/handoffs/HANDOFF2.before-token-frame-389fe4a.md并核对哈希。无运行源码/配置/补丁改动或部署，AGENTS/resources差异保留，未推送。
+
+## 2026-11-06：分区密钥到Token帧完成，继续active
+
+A-04d5u已提交0153d00；A-04d5v完成第一分区9块RSA→三次Ec2b/两配置XOR→最终key原指针→真实Token完整帧。4原生样本、234研究回归、二次产物一致，旧三工具各6样本产物不变，校验0/ready1（213项）。调度器/SDK/实机不在本项范围，D-02未完成，目标active。
+
+真实调试已将首次异常交给应用处理，当前停mhypbase.dll TLS，Global仍0；勿沿用旧注册入口暂停点，只用Automate，禁止computer-use。下一项真实SDK/HTTP入口、Login/响应串联或P0闭包。详见[HANDOFF2](HANDOFF2.md)。旧详细交接已备份local/migration72/handoffs/HANDOFF2.before-dispatch-key-0153d00.md并核对hash。无运行文件改动或部署，AGENTS/resources他人差异保留，未推送。

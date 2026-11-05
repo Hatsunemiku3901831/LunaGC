@@ -93,6 +93,14 @@ class DispatchConfig72(DispatchPost72):
             self.json_error=True
             raise
 
+    def get_string(self):
+        # Config uses the cached UTF-8 instance. Native XOR mutates the array,
+        # so the allocation-time array_values snapshot is not the input now.
+        e=self.e; pointer=e.reg('rdx')
+        if e.reg('rcx')!=self.encoding or pointer not in self.array_values:
+            raise ValueError('Unexpected config encoding receiver or array')
+        return self.string(bytes(e.uc.mem_read(pointer+32,e.read(pointer+24))).decode('utf-8'))
+
     def snapshot(self):
         e=self.e
         values={name:e.read(address,fmt) for name,(address,fmt) in SCALARS.items()}

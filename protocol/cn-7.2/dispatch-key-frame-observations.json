@@ -1,0 +1,219 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "keyFileSHA256": {
+    "dispatchSeed.bin": "2258b87182df6e8e679c15a86184ddaf8d4b5eda24cd81bf12e85bb8a9e00637",
+    "dispatchKey.bin": "20f0d259406a01c02c55bfdc57f69c90c1257222d721a141ccbe55ccfaa77eb0"
+  },
+  "fixtureCount": 4,
+  "results": [
+    {
+      "name": "repository-pair",
+      "rsaBlocks": 9,
+      "dispatchStop": "0x151212983",
+      "nativePlaintextMatch": true,
+      "keyCalls": 3,
+      "keyAllocations": 3,
+      "keyLength": 4096,
+      "keySHA256": "20f0d259406a01c02c55bfdc57f69c90c1257222d721a141ccbe55ccfaa77eb0",
+      "sourceSHA256": "2258b87182df6e8e679c15a86184ddaf8d4b5eda24cd81bf12e85bb8a9e00637",
+      "configPlaintexts": [
+        "{\"downloadThreadNum\":7}",
+        "{\"showexception\":true}"
+      ],
+      "configKeyCleared": [
+        true,
+        true
+      ],
+      "configValues": {
+        "downloadThreadNum": 7,
+        "showexception": 1,
+        "safeOptionalResourceCategories": [],
+        "secureOptionalResourcePolicyPlugins": []
+      },
+      "frame": {
+        "frameLength": 504,
+        "bodyLength": 492,
+        "frameSHA256": "a39b1d4815e1d552a8ae480f3b33c896e2286c5d4e77cb3649f15ff7280d00be",
+        "bodySHA256": "b57808f82edfd5e5767637c05b174f2d1f7c7a6f141d3aa7d2ba9c893be68c51",
+        "sequence": 0,
+        "sentMs": 0,
+        "cmdId": 24604,
+        "keyPointerPreserved": true,
+        "keyBytesPreserved": true,
+        "requestPointerPreserved": true,
+        "seedPointerPreserved": true,
+        "allTokenFieldsMatch": true,
+        "source965Match": true,
+        "seedIndependentOracle": true,
+        "plainFrame": false,
+        "keyWrap": false
+      },
+      "passed": true
+    },
+    {
+      "name": "unicode-key-wrap",
+      "rsaBlocks": 9,
+      "dispatchStop": "0x151212983",
+      "nativePlaintextMatch": true,
+      "keyCalls": 3,
+      "keyAllocations": 3,
+      "keyLength": 4096,
+      "keySHA256": "20f0d259406a01c02c55bfdc57f69c90c1257222d721a141ccbe55ccfaa77eb0",
+      "sourceSHA256": "2258b87182df6e8e679c15a86184ddaf8d4b5eda24cd81bf12e85bb8a9e00637",
+      "configPlaintexts": [
+        "{\"downloadThreadNum\":7}",
+        "{\"showexception\":true}"
+      ],
+      "configKeyCleared": [
+        true,
+        true
+      ],
+      "configValues": {
+        "downloadThreadNum": 7,
+        "showexception": 1,
+        "safeOptionalResourceCategories": [],
+        "secureOptionalResourcePolicyPlugins": []
+      },
+      "frame": {
+        "frameLength": 5314,
+        "bodyLength": 5290,
+        "frameSHA256": "557ecae39b285b72382d069dea1234fbf5340f39e4bd90c611cda792710a8c6d",
+        "bodySHA256": "b6776ef8e2427b04910a9758b53158ae4ed5061cc39407902181d1b8bf559132",
+        "sequence": 4294967295,
+        "sentMs": 8589934660,
+        "cmdId": 24604,
+        "keyPointerPreserved": true,
+        "keyBytesPreserved": true,
+        "requestPointerPreserved": true,
+        "seedPointerPreserved": true,
+        "allTokenFieldsMatch": true,
+        "source965Match": true,
+        "seedIndependentOracle": true,
+        "plainFrame": false,
+        "keyWrap": true
+      },
+      "passed": true
+    },
+    {
+      "name": "invalid-magic-plaintext",
+      "rsaBlocks": 1,
+      "dispatchStop": "0x151212983",
+      "nativePlaintextMatch": true,
+      "keyCalls": 3,
+      "keyAllocations": 0,
+      "keyLength": 0,
+      "keySHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourceSHA256": "7bf1556708efd0d8af6050f592ae25a5b6fdd4f7d15ae3ed6deb43b5a26c6ff8",
+      "configPlaintexts": [
+        "{\"downloadThreadNum\":7}",
+        "{\"showexception\":true}"
+      ],
+      "configKeyCleared": [
+        true,
+        true
+      ],
+      "configValues": {
+        "downloadThreadNum": 7,
+        "showexception": 1,
+        "safeOptionalResourceCategories": [],
+        "secureOptionalResourcePolicyPlugins": []
+      },
+      "frame": {
+        "frameLength": 516,
+        "bodyLength": 492,
+        "frameSHA256": "63131c4b73828b2172e9c606d77bfa4a0ae2b9deb7eaa782129d7859445d6d85",
+        "bodySHA256": "bb280e81329f1fbc9bcc4436c4a6b56fa5772d2b41cd934b500e0cfb82d95a1a",
+        "sequence": 4294967295,
+        "sentMs": 8589934660,
+        "cmdId": 24604,
+        "keyPointerPreserved": true,
+        "keyBytesPreserved": true,
+        "requestPointerPreserved": true,
+        "seedPointerPreserved": true,
+        "allTokenFieldsMatch": true,
+        "source965Match": true,
+        "seedIndependentOracle": true,
+        "plainFrame": true,
+        "keyWrap": false
+      },
+      "passed": true
+    },
+    {
+      "name": "empty-key-plaintext",
+      "rsaBlocks": 1,
+      "dispatchStop": "0x151212983",
+      "nativePlaintextMatch": true,
+      "keyCalls": 0,
+      "keyAllocations": 0,
+      "keyLength": 0,
+      "keySHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "configPlaintexts": [
+        "{\"downloadThreadNum\":7}",
+        "{\"showexception\":true}"
+      ],
+      "configKeyCleared": [
+        true,
+        true
+      ],
+      "configValues": {
+        "downloadThreadNum": 7,
+        "showexception": 1,
+        "safeOptionalResourceCategories": [],
+        "secureOptionalResourcePolicyPlugins": []
+      },
+      "frame": {
+        "frameLength": 516,
+        "bodyLength": 492,
+        "frameSHA256": "5c8a9904c522996bfc68987950d5be0bc93f2513799222552da36aa5adb9770f",
+        "bodySHA256": "4885c6f991783a21d697216566957511e38929df3e8515f6d512466c500ce244",
+        "sequence": 4294967295,
+        "sentMs": 8589934660,
+        "cmdId": 24604,
+        "keyPointerPreserved": true,
+        "keyBytesPreserved": true,
+        "requestPointerPreserved": true,
+        "seedPointerPreserved": true,
+        "allTokenFieldsMatch": true,
+        "source965Match": true,
+        "seedIndependentOracle": true,
+        "plainFrame": true,
+        "keyWrap": false
+      },
+      "passed": true
+    }
+  ],
+  "sourceTypeIndex": 30677,
+  "sourceTag": 11,
+  "sourceOffset": 64,
+  "semanticStatus": "unknown",
+  "runtimeStatus": "not-tested",
+  "dispatchEntry": "0x151210540",
+  "dispatchStop": "0x151212983",
+  "keyDecoder": "0x14146ada0",
+  "keySlot": "GLOBAL+0x19588",
+  "keyStore": "0x151212942",
+  "tokenEntry": "0x15121ff70",
+  "frameEntry": "0x14a447e00",
+  "schedulerExecuted": false,
+  "frameKeySupplied": false,
+  "models": [
+    "JSON/SDK/storage from dispatch-session",
+    "native crypto OS/CRT and local signed trust inputs",
+    "Ec2b engine selector5 and byte[] allocation",
+    "cached UTF-8 reads actual mutated array bytes",
+    "pooled stream/transport selection from token-frame"
+  ],
+  "outsideScope": [
+    "HTTP and dispatch-to-Token scheduler",
+    "SDK initialization and patch loading",
+    "second dispatch coroutine with nonempty Ec2b",
+    "source business name",
+    "socket and real-client acceptance"
+  ]
+}

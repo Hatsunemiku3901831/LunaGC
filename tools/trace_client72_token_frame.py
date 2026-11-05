@@ -32,9 +32,10 @@ except ImportError:
 
 
 class TokenFrame72(Frame72):
-    def __init__(self,e):
-        self.key = bytes((i*19+7)%256 for i in range(4096))
-        super().__init__(e,0,b'',0,0,bytes((i*37+11)%256 for i in range(4096)),self.key,0)
+    def __init__(self,e,*,initial_key=bytes((i*19+7)%256 for i in range(4096)),
+                 session_key=bytes((i*37+11)%256 for i in range(4096))):
+        self.key = initial_key
+        super().__init__(e,0,b'',0,0,session_key,self.key,0)
         self.encoding = e.alloc()
         cls = e.alloc(512)
         e.write(self.encoding,cls)

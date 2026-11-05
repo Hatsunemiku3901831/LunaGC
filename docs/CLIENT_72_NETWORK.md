@@ -172,3 +172,20 @@ python -m unittest tools.test_client72_token_frame
 6原生样本重复trace/摘要一致，222研究回归通过；研究校验0/ready1。没有运行Java/Proto/配置/补丁/资源修改，无部署。SDK/OS/old Shell、所选transport、缓存/池和初始frame key仍为明确夹具；尚未覆盖socket、真实Login/响应串联或D-02。首轮组合错误源于独立.cctor把初始栈返回地址留为RETURN，后续SessionRuntime初始化误跳；现仅恢复研究harness END哨兵，未改变目标代码。
 
 用户2026-11-05补充允许按实际情况动态调试。本机已准备[x64dbg官方固定发布2026.05.27](https://github.com/x64dbg/x64dbg/releases/tag/2026.05.27)，ZIP按官方GitHub资产SHA-256 d41966dfc5b435a372798245300ca0ab7bb8e48bdbf48512c6fb20fcca427697核验；放在忽略local/runtime，不注册系统调试器。来源与下载报告在local/migration72/evidence/debugger-{release,install}.json。下一步受控启动观察仍需记录真实PID/模块/状态，工具准备不构成动态或实机验收。
+## A-04d5v 分区密钥来源到Token完整帧
+
+`trace_client72_dispatch_key_frame`以固定仓库Ec2b seed/key对作独立输入，构造9个RSA块的分区响应。151210540的原生解密、SHA256、验签及30677 reader执行后，tag11/+40的bytes分别供给两次配置函数和最终密钥安装。三次14146ADA0实际返回的4096字节均等于参考key；两次配置以原返回指针执行XOR并在返回前清空GLOBAL+19588，随后151212942保存第三个原生返回指针。
+
+同一emulator保留该指针和内容，再显式调用Token构造入口；Token原生seed/构造→原发送调用→实际CalculateSize/保护writer→完整帧连续执行。工具没有提供初始帧密钥，也未重新安装解码结果。独立全字段wire、帧表达式及指针不变断言验证实际使用分区来源的key。分区到Token的调度器没有执行；两次入口调用的边界明确保留，不能声称完整HTTP/认证调度或实机通过。
+
+四组原生样本通过：504字节普通帧、5314字节含中文/补充字符/NUL的跨4096周期帧、错误魔数`Nope`及空seed。后两者配置明确提供明文，实际Ec2b返回null或不调用，最终key为空、Token帧保留明文；这是固定目标的行为记录，不自动改变服务端准入策略。包头覆盖0/uint32上界及64位时间，tag965保留原分区source，但其业务语义仍unknown。234研究回归、二次trace/摘要一致；原dispatch-config、dispatch-session、token-frame各6样本重跑产物逐字节不变。研究校验0/ready1（213项）。
+
+修复了配置研究模型：原生XOR修改byte[]后，Encoding.GetString必须读取实际内存，不能继续取分配时缓存的密文字节。该缓存错误曾造成ASCII解码异常，非客户端故障。当前配置UTF-8转换为严格编码模型，畸形UTF-8替换策略不在验收范围。Frame的池化Array.Copy模型延后到实际发送时安装，分区期间继续执行原生copy，避免模型污染。
+
+```powershell
+$env:GAME_PATH = & ./tools/game_path.ps1
+python tools/trace_client72_dispatch_key_frame.py --client $env:GAME_PATH --output local/migration72/evidence/dispatch-key-frame-trace.json --summary-output protocol/cn-7.2/dispatch-key-frame-observations.json
+python -m unittest tools.test_client72_dispatch_key_frame
+```
+
+证据`evidence/dispatch-key-frame-*`、`logs/dispatch-key-frame-*`；共享摘要`protocol/cn-7.2/dispatch-key-frame-observations.json`。运行代码、主Proto、配置、补丁和资源均未改，无部署/重启。SDK/OS、本地签名信任输入、池/传输选择仍是明确夹具；第二协程非空key、Login/真实响应串联、P0闭包与D-02未完成。
