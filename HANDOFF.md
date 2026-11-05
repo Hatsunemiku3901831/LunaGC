@@ -49,3 +49,9 @@ Project已补齐提交号和验收/下一步（74ac0f0、54dfac1）。下一项�
 研究提交`b89d855`：原生tag1184、命名dispatch key_id参数及密钥选择对照确认key_id；3请求/6响应，192项研究回归，两次产物一致。研究校验0/ready1（213项），四登录消息36业务字段，tag965仍未知，D-02未完成。
 
 Handler尾段已单次探索到1531D03D0，实际执行response tag3 bytes→robot setter→GLOBAL+11C18；尚未正式验收或命名。下一步版本来源/CalcVersionHash，再继续Handler或封包体，见[HANDOFF2.md](HANDOFF2.md)。原详细交接已备份local/migration72/handoffs/HANDOFF2.before-key-selection-b89d855.md并核对哈希。目标active、无暂停；无运行部署，AGENTS/resources差异保留未提交，未推送。
+
+## 2026-11-05：A-04d5p完成，Handler→Login连接已有单组探索
+
+研究提交`e1a0194`：连续Handler入口→robot输入setter→版本拼接→原生ASCII/SHA1/Base64返回；7原生样本、198研究回归、两次产物一致，研究校验0/ready1（213项）。更正编码为ASCII；两响应字段仍未知，D-02未完成，无运行部署。
+
+下一项q已单次连续跑到封包入口14A447E00，token/hash原指针进入Login，阶段[9,6]。仍待正式化与边界回归；WorldType.Login=0/Level=2、PackageType.Full=5/PlayGo=3不可混淆，详见[HANDOFF2.md](HANDOFF2.md)。原详细交接已备份local/migration72/handoffs/HANDOFF2.before-handler-tail-e1a0194.md并核对哈希。目标active；AGENTS/resources差异保留未提交，未推送。

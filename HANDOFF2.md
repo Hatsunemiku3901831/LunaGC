@@ -1,59 +1,59 @@
 # 国服7.2详细接续记录
 
-更新：2026-11-05。目标active，无暂停指令；用户要求一直推进到D-02完成并实机验收。D-02未完成，离线结果不能替代实机。当前研究提交`b89d855`，上一交接提交459eca2。
+更新：2026-11-05。目标active，无暂停指令；用户要求持续到D-02完成并实机验收。当前正式研究提交e1a0194，前一检查点defc23a/b89d855。D-02仍未完成。
 
-## 当前状态与已完成
+## 本批完成与实际验证
 
-A-04d5o/B-02c10完成Token必需字段key_id限定验收。原生构造151220094写request+98=4，writer为tag1184/uint32，独立wire804a04。另在Miscs.GetGlobalDispatchUrl发现并执行命名参数片段：UInt32常量4与literal61981 `&key_id=`。客户端响应私钥仅匹配4_Pub.der；Java按原生请求值选择该公钥产生响应，三个成功样本的原生4096字节会话密钥与现有Java MT64相等；故意改用2/3/5均原生拒绝，无密钥安装。
+A-04d5p正式完成Handler入口到robot输入/原生版本哈希的限定验收。工具tools/client72_version_hash.py、tools/trace_client72_handler_tail.py；摘要protocol/cn-7.2/handler-tail-observations.json；新增6测试。7原生样本、198研究回归通过，trace/摘要二次逐字节一致。研究校验0，ready1（213项未满足）。四登录消息仍36业务字段（含PacketHead总verified38），8枚举102符号；本批两响应字段不命名。
 
-key_id名称为业务契约交叉证据推断，不是声称解密了混淆字段名。累计四个登录消息36业务字段（另有2个PacketHead字段，映射总verified字段38），8枚举102符号。tag965仍unknown，不借旧proto命名。A-04d/B-02整体仍进行中，D-02未开始实机验收。
+实际连续执行1507BE0E0→原有warmup/RSA/SHA/验签/seed/UID/token保存→1531E9EB0 setter→1531D02B0版本拼接→15321A4D0哈希→15A4E0DC7返回。tag3 bytes/BHHECPBGDKB/object+60写GLOBAL+11C18，保持原指针；tag658 string/FIHDHDLJBLC/object+80是CalcVersionHash的secretKey参数，业务语义仍unknown。
 
-本批3请求/6响应/2命名参数片段、192研究回归通过。两次trace和摘要逐字节一致；研究校验0，ready1（213项未满足）。Java全量集此前217失败没有消除。运行Java/主Proto/配置/补丁/资源均未改，只改研究工具、映射、文档，不需部署重启。未启动客户端、未操作数据库。
+原生编码是420 ASCIIEncoding，**不是旧交接推断的UTF8**。SHA1CryptoServiceProvider1056→SHA1Internal1055、ASCII/default fallback、Buffer.BlockCopy、Base64都实际执行；GLOBAL+11B90已有Login client_version_hash/tag1996分段来源证明，正式p项没有连续执行Login。
 
-既有AGENTS.md编码规范修改和resources/ScriptSceneData/flat.luas.scenes.full_globals.lua.json继续保留未提交。patch HEAD f2874103ab70afc56260ee12d1eaca96247933b2、resources HEAD dac2a9d43332ef51879522cf39da2831b0ca0543未变；未推送。
+版本六byref来源GetGameVersionAndChangelist/1531D03D0为明确夹具，外层拼接真实执行，只用gameVer与_R/resourceCL、_S/silenceCL、_D/dataCL；engineCL/clientCL不拼入。只为exact literal62885 `{0}{1}mhy2020`提供双字符串format库模型。两个标准问号fallback对象经真实constructor初始化后放缓存，不跑锁/缓存初建。
 
-## 工具与证据
+样本：完整版本、全空、SHA1输入55/56/64字节、含BMP/代理对/NUL、坏签名。Unicode输入实际ASCII逐UTF16单元替换为问号（代理对两个问号），NUL保留；独立hashlib/base64逐字节相等。坏签名止15A4E0645，不进尾段、不改预先非空robot/hash。robot仅非池化ByteString，引用计数/释放不在范围。
 
-正式入口tools/trace_client72_key_selection.py，Java对照tools/Client72KeySelectionReference.java；测试tools/test_client72_key_selection.py，validate_protocol72已接入约束，mapping研究表key_id已verified。
+## 正式证据与复现
 
-共享protocol/cn-7.2/key-selection-observations.json；本机local/migration72/evidence/key-selection-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json；logs/key-selection-{run,repeat,focused-tests,regression}.log。复现命令见CLIENT_72_SESSION的A-04d5o。
+本机local/migration72/evidence/handler-tail-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json，logs/handler-tail-{run,repeat,focused-tests,regression}.log。复现见docs/CLIENT_72_SESSION的A-04d5p。
 
-固定输入仍是extract_client72.HASHES三份文件。trace SHA256=8660ffaaf609c3eed42452c0b7e712154fe0cd93fd26c4589ad36ee498fff2a0；summary SHA256=c5c488772ceecf02c5a6e46845706e4379bc275ff19d55c42f4671cdddc6e92d。
+trace SHA256=526715c656d9dc5622a947782fec0ac541940d5cb70faaf4cb8856b475862acd；summary SHA256=967b7b9524afa3e87e7e6316248cd6a9938a5d80c6c0e68ec2b9344146c3b0bf。
 
-研究回归选集：全部tools/test_client72*.py，加test_extract_client72、test_validate_protocol72、test_audit_resource72、test_inventory_protocol、test_review_protocol72_surface，共192项。仅运行相关研究，不用服务器健康冒充客户端通过。
+全研究回归为tools/test_client72*.py加test_extract_client72、test_validate_protocol72、test_audit_resource72、test_inventory_protocol、test_review_protocol72_surface，共198。Java全量集既有217失败未消除。本批不改运行Java/主Proto/配置/补丁/资源，未启动服务/客户端/数据库，不需部署重启。
 
-## 本批边界与避坑
+## 下一项A-04d5q：已成功的连接探索，尚未正式验收
 
-- 命名URL证据是两个原生片段：1531E0D76→159C1ABD0（formatter入口），1531E0D8A→159A8E9D0（Concat入口）。formatter声明参数为string/uint32/IFormatProvider，method3829；第二段格式化字符串4为显式输入。完整URL/HTTP未执行。
-- literal61981的usageRow782238/cell145B42F08，所属命名方法Miscs.GetGlobalDispatchUrl/1531E0A10。不能将搜索命中或常量4单独当证据。
-- 成功响应仍显式本地签名信任：私钥签名、服务器公钥及签名、根PEM输入。验证过程/结果未替换。
-- 请求seed加密使用原始服务器公钥（DER SHA7427ee11...）；客户端响应解密对应4_Pub（内层DER SHA c5dae228...），两者不同。Java本项从已验证的原生client seed数值生成响应，没有假装用本地SigningKey解开原始请求密文。完整交换/实际信任补丁另验。
-- Java固定0x42 padding只作离线确定性，与独立Python整数RSA/签名逐字节比较；真实私钥仅内存，公共摘要只hash。
-- 不修改原Token/Response共享模型；新工具复用现有验证路径。已有旧观察表unknown标签属于当时边界，不为新语义改写历史证据。
+local/migration72/analysis/probe_handler_login.py已在同次原生执行中从1507BE0E0连续到**14A447E00封包入口**。过程中真实Handler→版本哈希→WorldType.Login/PackageType.Full分支→原生Action调用→1507C0BB0→1507C21B0→151213730完整Login构造→151214D20发送队列/transport/getter23172。没有重置CPU或把token/hash回填请求；请求+D8保留response+68的token原指针，请求+60保留GLOBAL+11B90的hash原指针。输出wire tag1=t、tag9=CNRELWin7.2.0_R123_S456_D789、tag1996=R1+LkJ1jGeV6p3CW0BVqprFAT4M=；阶段[9,6]，会话密钥4096字节。
 
-## 已开始的下一项：Handler尾段
+单次探索报告evidence/handler-login-exploration.json、日志logs/handler-login-exploration.log。仍只有一组成功；没有正式工具/样本覆盖/重复/测试/提交，不称通过实机或完整Handler返回（在嵌套发送函数里停止）。下一步迁入正式工具，核查全部初始化来源、补缺GameManager/时钟条件/坏签名等边界并重复验证。继续保留明确SDK/旧Shell/版本/传输夹具。
 
-本机探索脚本local/migration72/analysis/probe_handler_tail.py已实际从1507BE0E0连续执行既有warmup/密码学/UID/token保存，再越过旧STOP15A4E0D9A，执行Miscs.set_robotCheckLoginInputData/1531E9EB0，停在1531D03D0（GetUniversalGameVersion的内部GetGameVersionAndChangelist入口）。
+### 连接实验使用的独立声明与原生路径
 
-响应原始tag3/bytes/BHHECPBGDKB/object+60经setter写GLOBAL+11C18，同一个ByteString原指针、含NUL/FF的非空输入已观察相等；4096密钥仍安装。此为单次探索，没有进正式工具/重复/边界样本/语义映射。报告evidence/handler-tail-exploration.json、logs/handler-tail-exploration.log，不能称已验收。
+- GameManager.Instance为50103静态raw0x400B6D0；实例+20字段FAKHICOBBBO类型59570/LLNNNEEBKEP，该对象+18是WorldType11326。默认表独立恢复：Login=0、Home=1、Level=2，Invalid=-1。**不能用Level=2或null状态绕过普通登录分支**。探索明确WorldType.Login=0。
+- GlobalVars.packageType raw0x2001904、地址14586CF14，类型11334/PackageType；None0/Less1/Medium2/PlayGo3/FastStart4/Full5。**3不是平台Windows编号**；探索明确Full5，实际安装运行值尚未测量。
+- 两份探索枚举证据worldtype-exploration.json、package-type-exploration.json来自固定目标默认表，脚本probe_worldtype.py/probe_package_type.py临时选择已有enum恢复器；正式化应独立核验并记录，不依赖忽略目录结果。
+- Login分支15A4E16C9构造Action，最终14BB76740在Full输入下原生调用该Action；不是模型直接调用回调。
+- MethodInfo cell145A00A40独立usageRow749199，source0x6007226B（kind3，methodDefinition467563），slot76104，method cache注册+10=14596C000。目标方法owner56238/HBIJFOJIFAH.EAIJKILEHFE/1507C0BB0。探索只按此独立映射提供methodInfo+8指针，不猜回调地址。
+- 类型usage：698995/cell145887448→142 System.Action；702787/cell14589A988→82313 PNLAGOKKFEN；708398/cell1458BA860→63102 OBLOCFOLEPD。脚本probe_handler_gate_types.py、probe_handler_delegate.py可查。
+- 已有GLOBAL+A070辅助对象的+30放明确缓存配置（无需临时假造配置parser成功），14A9CD540原生返回缓存；+76默认false。GLOBAL+111B0放原始presence对象，+3B=false走原生立即分支，具体来源/字段业务名仍未知，正式化需声明此夹具或继续追来源。
+- Engine clock：141447780→141705750→1419D9F00真实执行，selector7读1457A98B0+7*8的初始化指针，其+a0 double=100，经cvtpd2ps比较manager+208默认0。不要猜该clock的业务名或单位；完整初始化/真实时钟未测。
+- SendFlow72在151214D20首次进入时安装（不重置CPU），依旧明确已连接AKFCDHJBCHD传输选择/对象池/sequenceFFFFFFFF和sent_ms200000044输入；真实getter23172，停止封包体之前。
 
-探索复用HandlerCore72，仅在旧STOP地址绕开旧实验的停止回调，继续执行真实指令；不跳过目标调用/验证。新增允许1531E9EB0、147CF2160（ByteString等号）、1531D02B0（GetUniversalGameVersion）。当前ByteString为非池化/非引用计数夹具，GLOBAL+11C18初始空；池化/旧值释放路径未测。
+### 组合模型的两个已修正问题
 
-命名后续：
-- Handler 15A4E0DA3读取response+60→1531E9EB0；15A4E0DB2调用1531D02B0；15A4E0DB7读取response+80→15321A4D0 CalcVersionHash。
-- 1531D03D0=Miscs.GetGameVersionAndChangelist，六个byref string参数gameVer/engineCL/clientCL/resourceCL/silenceCL/dataCL（method94240，param98600..98605）；实现读取本地版本配置，含StringBuilder/Regex之类对象，尚未跑体。
-- 15321A4D0=Miscs.CalcVersionHash（method94441），param99075 version/string，99076 secretKey/string；不是直接名为client_version_random_key。响应+80是tag658/string/FIHDHDLJBLC，目前保持unknown。
-- CalcVersionHash内format调用159AB12F0→SHA1类/UTF8→HashAlgorithm.ComputeHash159BB9650→Base64 159BC3080→GLOBAL+11B90；可优先恢复完整密码学到已知Login hash来源。不要硬替换hash计算为成功。
-- Handler 15A4E0DCE之后检查GLOBAL+B6D0及分支，随后1507C0BB0/1507C0D30/1507C1080（同owner56238/HBIJFOJIFAH），这些后段未执行。
+1. 必须先安装Constructor72环境再安装HandlerTail72，避免后装Constructor覆盖刚算出的GLOBAL+11B90。Ctor创建的原始account+50来源需保留给Handler新会话；遗漏会在151213836走真实null错误边界151214817/int3。没有修改目标指令绕过，已补回原始夹具值，不给该字段猜业务名。
+2. 两模型共享同一个NumberFormatInfo：将ctor.provider与rt.provider统一。否则Login TryParseUInt32模型因provider对象不一致停止；这不是游戏协议错误，已修正模型组合。
+3. Constructor的text读取实际托管UTF16内存，以消费Handler/原生Concat产生的字符串。提前关闭Ctor literal hook，保留Handler唯一hook；不要再重复加载两套literal。实际文件中已移除Ctor对1531D02B0和159A8D050的模型，让GetUniversalGameVersion及双/三字符串Concat都原生执行。
+4. flags列表同时提供5714（既有old warmup）与3628（既有old Shell），各分支由真实Contains选择；不能只保留一个导致跑到尚未验证的新Shell路径。
+5. 探索新增允许1507C0BB0、1507C21B0、14BB76740、14A9CD540。其余仍执行已声明函数或停止未知调用；不要插成功stub。当前未继续封包体或Handler回栈后的SDK/UI动作。
 
-可选下一步：在明确版本来源夹具下继续GetUniversalGameVersion和CalcVersionHash；或保持未知继续封包体14A447E00/A-03闭包。不能用原始bytes送进robot setter就套旧security_cmd_buffer名称。
+## 整体未完成与工作区
 
-## 未完成与解除条件
+D-02仍需A-03/P0映射闭包、B-03生成/C-01接入、D-01实机补丁/信任/路由、E-01资源revision/场景/Lua等。新旧测试号、选人、初始化/场景握手、心跳、退出重登全部未实测。没有全局外部硬阻塞，继续q连接正式化与封包体等依赖满足工作。
 
-没有全局外部硬阻塞。D-02仍需B-02全部P0语义/wire闭包、B-03生成/C-01接入、D-01真实路由/补丁加载/信任、E-01revision/场景/Lua最小资源等；新旧测试号、选人、初始化/场景握手、心跳、退出重登全部未实测。未知保持未知，继续依赖满足的开发研究。
+本批正式新增仍是离线研究，无部署要求；下一次启动必须重查GAME_PATH/portable/.env/.env.local/config.json、进程和端口归属，保留旧数据库与local/data。既有AGENTS.md修改及resources/ScriptSceneData/flat.luas.scenes.full_globals.lua.json保留未提交。patch f2874103ab70afc56260ee12d1eaca96247933b2、resources dac2a9d43332ef51879522cf39da2831b0ca0543未动。全部提交仅本地。
 
-启动前重新核对当前checkout/.env/.env.local/config.json、GAME_PATH、portable、子模块/进程/端口归属。保留mongodata/local/data与隔离库，不操作无关客户端或强杀未知进程。
+## 交接文档
 
-## 文档与交接
-
-README/Project/Harness/CLIENT_72_SESSION及三个账号专题已更新。覆盖前HANDOFF2已备份local/migration72/handoffs/HANDOFF2.before-key-selection-b89d855.md并验证SHA256相等；HANDOFF.md追加。目标持续active，不需另请用户恢复。
+README/Project/Harness/CLIENT_72_SESSION及账号三文档已同步p正式范围；q探索入口同步Project/Harness。覆盖前原HANDOFF2已备份local/migration72/handoffs/HANDOFF2.before-handler-tail-e1a0194.md并核对SHA256一致；HANDOFF.md只追加。目标继续active，无暂停，不需再询问用户是否继续。
