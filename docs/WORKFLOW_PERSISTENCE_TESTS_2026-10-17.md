@@ -40,3 +40,5 @@
 当前生产实现与部署边界见[物品保存保护](ITEM_SAVE_FENCE_2026-10-17.md)。
 
 2026-11-06 V-01b：家具两套夹具由save-only代理改为独立Mongo真实Player/Item Guard及GameHome保存，故障计数只消费同步确认；测试专用home/库存/回调不入BSON。原31+34=65项通过（失败/错误/跳过均0），六阶段故障、防重复扣费、队列/回执和模糊确认恢复断言保留；新增材料及家园冷读。复现前家具65项中40失败，原始报告fixture-before-test-results/，修复后furniture-fixture-test-results/与logs/furniture-fixture-after.log（均在local/migration72）。只改测试，无生产/Proto/配置变更，无部署或客户端验收；V-01完整集尚未重跑，不推算剩余失败数量。
+
+V-01b补验：共用本夹具的FurniturePaidStartRecoveryTest原31项中27失败，本次31项全过。三个真实Mongo/确认丢失样本现在复用夹具隔离库，显式重新绑定代理目标的Item Guard，按第二次家园同步确认注入故障；保留冷读付款、重试和整批队列断言。共用GuardedPlayerTestStore映射选项对齐生产storeEmpties(true)/storeNulls(false)，避免空队列被夹具省略。三套家具合计96项全过；本机workflow-fixture-test-results/、workflow-fixture-summary.json及logs/workflow-fixture-regression.log。扩查FurnitureTalentPlanTest仍因硬编码/resources初始化失败（历史全量同因），属于V-01未修范围，未删/跳过或宣称全量通过。

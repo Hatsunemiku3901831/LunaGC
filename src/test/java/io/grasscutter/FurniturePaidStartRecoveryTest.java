@@ -353,109 +353,96 @@ class FurniturePaidStartRecoveryTest {
     @ValueSource(ints = {0, 1, 2})
     void actualMongoPaymentAndAmbiguousQueueWritesSurviveReload(int ambiguity) throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
-        String uri = System.getenv("LUNAGC_TEST_MONGO_URI");
-        assertNotNull(uri);
-        var name = "lunagc_test_paid191_" + UUID.randomUUID().toString().replace("-", "");
         var field = DatabaseManager.class.getDeclaredField("gameDatastore");
         field.setAccessible(true);
         var previous = field.get(null);
-        try (var client = com.mongodb.client.MongoClients.create(uri)) {
-            var store =
-                    dev.morphia.Morphia.createDatastore(
-                            client,
-                            name,
-                            dev.morphia.mapping.MapperOptions.builder()
-                                    .storeEmpties(true)
-                                    .storeNulls(false)
-                                    .build());
-            store.getMapper().map(GameHome.class, GameItem.class);
-            try {
-                player.home.setId("paid-start");
-                store.save(player.inventory.getItemById(101311));
-                store.save(player.inventory.getItemById(101312));
-                var writes = new java.util.concurrent.atomic.AtomicInteger();
+        var store = common.fixture.actualStore();
+        try {
+            player.home.setId("paid-start");
+            var writes = new java.util.concurrent.atomic.AtomicInteger();
+            field.set(
+                    null,
+                    proxy(
+                            store,
+                            (method, args) -> {
+                                if (method.getName().equals("save")
+                                        && args.length == 2
+                                        && args[0] instanceof GameHome
+                                        && writes.incrementAndGet() == 2)
+                                    throw new IllegalStateException(
+                                            "Interrupted paid home save");
+                            },
+                            false));
+            try (var itemWrites = new emu.grasscutter.game.inventory.ObservedItemTestWrites(
+                    player, store, DatabaseManager.getGameDatastore(), ignored -> {}, ignored -> {})) {
+                assertEquals(Retcode.RET_SVR_ERROR_VALUE, common.fixture.start().getRetcode());
+                assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+            }
+            player.home = store.find(GameHome.class).first();
+            assertNotNull(player.home);
+            assertEquals(2, player.home.getPendingFurnitureStart().getState());
+            assertTrue(player.home.getFurnitureMakeSlotItemList().isEmpty());
+            assertEquals(
+                    36,
+                    store.find(GameItem.class)
+                            .filter(
+                                    dev.morphia.query.experimental.filters.Filters.eq(
+                                            "itemId", 101311))
+                            .first()
+                            .getCount());
+            assertEquals(
+                    18,
+                    store.find(GameItem.class)
+                            .filter(
+                                    dev.morphia.query.experimental.filters.Filters.eq(
+                                            "itemId", 101312))
+                            .first()
+                            .getCount());
+            field.set(null, store);
+            if (ambiguity != 0)
                 field.set(
                         null,
                         proxy(
                                 store,
                                 (method, args) -> {
-                                    if (method.getName().equals("save")
-                                            && args.length == 2
-                                            && writes.incrementAndGet() == 4)
+                                    if (method.getName().equals("save") && args.length == 2)
                                         throw new IllegalStateException(
-                                                "Interrupted paid home save");
+                                                "Queue saved; acknowledgement lost");
                                 },
-                                false));
-                assertEquals(Retcode.RET_SVR_ERROR_VALUE, common.fixture.start().getRetcode());
-                assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
-                player.home = store.find(GameHome.class).first();
-                assertNotNull(player.home);
-                assertEquals(2, player.home.getPendingFurnitureStart().getState());
+                                true));
+            assertEquals(
+                    ambiguity == 0 ? 0 : Retcode.RET_SVR_ERROR_VALUE,
+                    common.query().getRetcode());
+            if (ambiguity != 0) {
+                assertNotNull(player.home.getPendingFurnitureStart());
                 assertTrue(player.home.getFurnitureMakeSlotItemList().isEmpty());
-                assertEquals(
-                        36,
-                        store.find(GameItem.class)
-                                .filter(
-                                        dev.morphia.query.experimental.filters.Filters.eq(
-                                                "itemId", 101311))
-                                .first()
-                                .getCount());
-                assertEquals(
-                        18,
-                        store.find(GameItem.class)
-                                .filter(
-                                        dev.morphia.query.experimental.filters.Filters.eq(
-                                                "itemId", 101312))
-                                .first()
-                                .getCount());
-                field.set(null, store);
-                if (ambiguity != 0)
-                    field.set(
-                            null,
-                            proxy(
-                                    store,
-                                    (method, args) -> {
-                                        if (method.getName().equals("save") && args.length == 2)
-                                            throw new IllegalStateException(
-                                                    "Queue saved; acknowledgement lost");
-                                    },
-                                    true));
-                assertEquals(
-                        ambiguity == 0 ? 0 : Retcode.RET_SVR_ERROR_VALUE,
-                        common.query().getRetcode());
-                if (ambiguity != 0) {
-                    assertNotNull(player.home.getPendingFurnitureStart());
-                    assertTrue(player.home.getFurnitureMakeSlotItemList().isEmpty());
-                }
-                field.set(null, store);
-                if (ambiguity == 2) assertEquals(0, common.query().getRetcode());
-                player.home = store.find(GameHome.class).first();
-                assertNotNull(player.home);
-                assertNull(player.home.getPendingFurnitureStart());
-                assertEquals(1, player.home.getFurnitureMakeSlotItemList().size());
-                assertEquals(0, common.query().getRetcode());
-                common.costsStillPaidOnce(1);
-                assertEquals(
-                        36,
-                        store.find(GameItem.class)
-                                .filter(
-                                        dev.morphia.query.experimental.filters.Filters.eq(
-                                                "itemId", 101311))
-                                .first()
-                                .getCount());
-                assertEquals(
-                        18,
-                        store.find(GameItem.class)
-                                .filter(
-                                        dev.morphia.query.experimental.filters.Filters.eq(
-                                                "itemId", 101312))
-                                .first()
-                                .getCount());
-            } finally {
-                field.set(null, previous);
-                assertTrue(name.startsWith("lunagc_test_paid191_"));
-                client.getDatabase(name).drop();
             }
+            field.set(null, store);
+            if (ambiguity == 2) assertEquals(0, common.query().getRetcode());
+            player.home = store.find(GameHome.class).first();
+            assertNotNull(player.home);
+            assertNull(player.home.getPendingFurnitureStart());
+            assertEquals(1, player.home.getFurnitureMakeSlotItemList().size());
+            assertEquals(0, common.query().getRetcode());
+            common.costsStillPaidOnce(1);
+            assertEquals(
+                    36,
+                    store.find(GameItem.class)
+                            .filter(
+                                    dev.morphia.query.experimental.filters.Filters.eq(
+                                            "itemId", 101311))
+                            .first()
+                            .getCount());
+            assertEquals(
+                    18,
+                    store.find(GameItem.class)
+                            .filter(
+                                    dev.morphia.query.experimental.filters.Filters.eq(
+                                            "itemId", 101312))
+                            .first()
+                            .getCount());
+        } finally {
+            field.set(null, previous);
         }
     }
 

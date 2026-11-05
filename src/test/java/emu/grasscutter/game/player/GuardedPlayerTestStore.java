@@ -40,7 +40,8 @@ public final class GuardedPlayerTestStore implements AutoCloseable, PlayerSaveGu
         this.beforeWrite = Objects.requireNonNull(beforeWrite);
         this.afterWrite = Objects.requireNonNull(afterWrite);
         client = MongoClients.create(uri);
-        store = Morphia.createDatastore(client, name);
+        store = Morphia.createDatastore(client, name,
+                dev.morphia.mapping.MapperOptions.builder().storeEmpties(true).storeNulls(false).build());
         try {
             store.getMapper().map(Player.class);
             delegate = new PlayerSaveGuard.MongoStorage(store);

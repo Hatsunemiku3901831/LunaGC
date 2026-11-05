@@ -125,6 +125,10 @@ class FurnitureStartFlowTest {
             throw new IllegalStateException("Write fault");
     }
 
+    dev.morphia.Datastore actualStore() {
+        return playerStore.datastore();
+    }
+
     void assertStoredCosts(int wood, int other) {
         var items = playerStore.datastore().getDatabase().getCollection("items");
         assertEquals(wood, items.find(new org.bson.Document("itemId", 101311)).first().getInteger("count"));
