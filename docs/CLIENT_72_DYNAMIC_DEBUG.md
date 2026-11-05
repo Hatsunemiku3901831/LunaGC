@@ -81,3 +81,17 @@ python -m unittest tools.test_client72_ec2b
 控制复现先后记录退出码80000003/80000004。改用单次异常交付后仍出现80000004；清理残留后运行更远，Global/SDK对象建立，并观察到Il2CppExceptionWrapper、HResult80131530及空message。恢复软件观察后仍以80000003退出，未取得终止API断点调用现场。**退出原因unknown**，不能仅据状态码归因于保护、客户端缺陷或协议不兼容，也不绕过检查。SDK对象存在和语音库初始化日志不等于游戏认证成功。
 
 共享摘要[startup-runtime-observations.json](../protocol/cn-7.2/startup-runtime-observations.json)；忽略证据dynamic-utf8-cache.json、dynamic-utf8-cache-repro3.json、dynamic-global-state-repro3.json、dynamic-http-breakpoints-repro3.json、dynamic-managed-exception-repro3.json、dynamic-phase-repro*.json及对应日志。旧phase20/21和repro3快照均为历史状态，当前没有运行目标。研究回归仍234，D-02未验；下一步离线Login/真实响应连续封包或独立核查调试退出机制。
+
+## 2026-11-06恢复：连续API连接下的启动观察
+
+恢复后重新发现本工作区的管理员Automate会话，确认无现存debuggee/游戏或Java进程，再按本机GAME_PATH加载固定三输入。5个不同入口各32字节与当前EXE相同：1411267B0、14A447E00、159C21C90、15A3464C0、15A366300。新目标的硬件断点表为空，DR0/1/2/3/6/7均为0；没有沿用旧PID、模块基址或暂停地址。
+
+第一次分段API观察仍以80000003退出，未命中HTTP/Browser/Marshal或终止API观察点。复核发现，API断开期间应用可以停在下一个异常；重连的PUB/SUB事件流不包含之前事件，旧脚本可能在未分类该暂停原因时run。另一次初次订阅后立即run未收到事件，已留unknownStop。本次不把分段退出称为全程受控回放，也不据此归因保护、客户端或协议。
+
+随后改为**同一连接连续观察150秒**：在每个新停止事件收到后才决定继续，并用调试器ex.code()/ex.addr()独立核对异常码和地址。共记录37个首次C0000005、1个首次406D1388和2个首次E06D7363；各个已观测首次异常均用con 1后普通run交给应用处理，没有第二次异常或进程退出事件。观察结束及后续只读核对均为debugging=true、running=true，Global已建立，两游戏帧key槽仍空。只有启动局部证据，没有SDK认证、补丁加载、帧收发、登录选人或D-02验收。
+
+命令语义按[x64dbg DebugContinue](https://help.x64dbg.com/en/latest/commands/debug-control/DebugContinue.html)与[异常表达式](https://help.x64dbg.com/en/latest/introduction/Expression-functions.html#exceptions)核对；未用erun跳过后续首次观察，也未吞掉已分类异常。一次连续运行存活不能证明退出根因已修复，两个观察方法的时序不同；原退出原因仍unknown。HTTP/Browser/Marshal观察点在150秒区间内未命中，不等于这些函数不会调用或其ABI已完成验收。
+
+共享摘要[startup-continuation-observations.json](../protocol/cn-7.2/startup-continuation-observations.json)只含输入hash、代码比对与脱敏范围。本机证据为evidence/continuation-startup-{load,01..06,managed-exception,continuous,live}.json，日志logs/continuation-startup-*，探索脚本analysis/observe_startup_{continuation,phase,continuous}.py，均在忽略local/migration72。分段脚本保留作失败过程，不作为推荐恢复入口。
+
+**最新目标保留运行，API索引为evidence/dynamic-active-session.json；下次必须实时核对。** API断开只断开观察连接，不会停止目标；不得重复load新客户端。若已暂停，先读取当前ex.*和断点/日志，不能无条件run。需要进一步观察时保持同一连接，或从已保存并重新验证的当前停止原因恢复。运行服务仍未启动，数据和客户端文件未修改。

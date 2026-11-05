@@ -1299,6 +1299,7 @@
     "protocol/cn-7.2/commands.json": "93376c770ff8362303817da1d03032f08495c04affc9ce1f7697470ff970d4a8",
     "protocol/cn-7.2/auth-sources-observations.json": "3d21f2e0b992bdcb253ddc3f4406b57327cc473b5b1b0474ba519de7c6795beb",
     "protocol/cn-7.2/auth-tail-observations.json": "be8c6e59ace621b3feb595c50a337d2166bd3b0124b681246e1bd8a5d11c622d",
+    "protocol/cn-7.2/born-continuation-observations.json": "43a4faff90aea078b6d8e7abc632c1550c961186f1f6ffa056befed5646ee736",
     "protocol/cn-7.2/born-observations.json": "0c1332a98c25a06431fe853def7e060d08ca77630b865d3cfbb8089d0903d943",
     "protocol/cn-7.2/dispatch-config-observations.json": "3fd04f75214e44c14da2f84d293a276c4ae0da1240eb13b6d8ac487d640aa09d",
     "protocol/cn-7.2/dispatch-coroutine-observations.json": "b3632585637840a33a46f9a55ae62afae8aa86dbc45ac1fcfb591a1eba489182",
@@ -1330,10 +1331,12 @@
     "protocol/cn-7.2/response-graph-observations.json": "6413aad68857d61f87cd5e51c39a73db255217f36fa55d44161c5ea39d6f24f1",
     "protocol/cn-7.2/response-leaf-wire-observations.json": "474725f661cbafab71a8489223f8b7c1fcf3084f8911620f49f5848ef963d7c5",
     "protocol/cn-7.2/response-wire-observations.json": "bee9e1216960e47ae7dcad1f63afb8ac74e8f4aabd911e0c1c45fad5299c7063",
+    "protocol/cn-7.2/scene-resource-observations.json": "7f0dadf9b2d24a2a7041162875ad568201f77f6671108693faf35be565d895e5",
     "protocol/cn-7.2/seed-crypto-observations.json": "cd6a06942deb70b9f066f437cda27504db3f529eaaf10a1ca52bee6836256418",
     "protocol/cn-7.2/send-flow-observations.json": "869486c5d79a8b993c8d89280ff3ac6f412a77c0e572052048d8f583e55c5fbc",
     "protocol/cn-7.2/session-seed-observations.json": "dae61a69b67f01b9bee03bb673272fe34907d276a1c3becb78e79d475b558929",
     "protocol/cn-7.2/session-token-observations.json": "8e5211e77bdd7d68f6f80096cfa217bc3db0191b9f85313b68f5cc893c0af6f2",
+    "protocol/cn-7.2/startup-continuation-observations.json": "4e97dc101b2474e956d8b05f10832ff0116f12a77ceb54e5e16f46489c4b5b10",
     "protocol/cn-7.2/startup-observations.json": "2550bc04ec13208e2eba5b7adc65f7875c02016bbea6035d8cabfeabb0f18461",
     "protocol/cn-7.2/startup-runtime-observations.json": "219ca5da5f2286d27721c10d8aaa69e5cb585a0ae8ca0fb5bb168acebeda0909",
     "protocol/cn-7.2/token-complete-observations.json": "b3b4ed38e94c4f95389c255311f4439b3eef183275c6fa9dcc2c4ee12207774a",
@@ -91636,7 +91639,7 @@
     "Nonzero/64-bit/nested/list/error/boundary wire regressions remain separate required evidence",
     "No protocol generation, runtime integration, client reverse engineering or client debugging"
   ],
-  "reviewSHA256": "1930ae19d801dfa6c18f72c4531200f50efa504b39e225d832514330f9da0e4b",
+  "reviewSHA256": "8b1010ed937722e653cdf0f27c8f2246fbfbfc18d03ec31cc0e77266e4835afe",
   "toolSourceSHA256": {
     "tools/review_client72_login_proto.py": "5275dfcff776265aa745db564c5132f6f41c9e60173b20282f1059735fce36ff",
     "tools/Client72ProtoDependencies.java": "517838c3cd34b051c47205e71d45d2d3c99cc6bb4fb32379c34e0d0cea418f0a"

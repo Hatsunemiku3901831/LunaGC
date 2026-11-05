@@ -52,3 +52,7 @@ Scene/Point及引用表按固定Git对象下载到忽略目录，工具自身不
 新增7项与原资源7项共14项聚焦回归通过。真实审计和摘要均运行两次，逐字节一致；证据为`local/migration72/evidence/scene-resource-{audit,repeat,summary-repeat,determinism}.json`，日志为`local/migration72/logs/scene-resource-{audit,focused-tests}.log`。共享[摘要](../protocol/cn-7.2/scene-resource-observations.json)不含机器路径/原始资源行。仅离线工具/测试/摘要/文档变更，无构建部署或重启要求。
 
 下一项是取得可追溯的7.2 Scene/Block/Group/Common脚本及运行时revision证据，再按实际入场闭包检查引用和加载行为。父E-01保持进行中，不以本项审计替代完整资源或客户端验收。
+
+后续来源核查：现有resources引用的四个公开仓库中，invoker-bot main仍固定为当前dac2a9d且无tag，Merprose2仅7.0分支/历史tag，另外两处API返回404；本机现有候选未增加Scripts来源。原始响应摘要在evidence/scene-lua-source-search.json，不将404推论为所有来源均不存在。
+
+用户随后明确目前没有这些7.2 Lua来源，允许参考LunaGC7.1的实现尝试迁移。E-01c据此转向固定旧实现→实际Lua加载/目标7.2资源ID与接口核对→明确适配的路径；可以编写迁移实现，但来源仍标旧实现/本项目适配，不伪称7.2原始导出，也不自动解除revision、协议或实机验收。

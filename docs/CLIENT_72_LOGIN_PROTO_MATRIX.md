@@ -1,5 +1,7 @@
 # A-03c 候选消息、Proto依赖与7.2三层证据缺口矩阵
 
+2026-11-06继续批：新增born-continuation、scene-resource、startup-continuation三份摘要后，原门禁因输入集合变化拒绝。人工复核确认原1287源码/Proto、99构造/148引用与矩阵三层、1140描述符/1254声明/4786字段及开放边界均不变，仅研究输入由47增至50；更新原review后完整矩阵两次生成逐字节一致，288项研究回归通过。旧失败快照保留，不跳过测试或放松集合校验；三层/runtime不晋级。复核证据evidence/continuation-login-proto-review-check.json及完整日志位于忽略local/migration72。下文旧批输入数量为历史。
+
 2026-11-06，A-03c限定离线验收后，B-02d已补入选人证据，B-03a/C-01a现已接管三件组生产源码并重新复核矩阵。来源是A-03b固定方法并集及当前Proto，不能当作目标客户端最小/完整消息集。**A-03完整闭包与实机、B-03/C-01父任务及D-02仍未完成。** 实现/测试和停止取证边界见[选人三件组](CLIENT_72_BORN.md)。下述原97/1139及缺根记录保留为历史基线，当前结果如下。
 
 当前99构造候选、148引用/种子、1140描述符文件/1254声明/4786字段；1287源码/Proto与47研究输入固定hash，重复报告一致。生产DoSetPlayerBornDataNotify.proto已按目标空schema证据生成，missingProtoRoots为空；没有从遗留缺文件推断为空。动态BasePacket现只保留ItemAddHintNotify、packet复制和opcode变量三处，选人两处配置覆盖和负号回退已移除。三层矩阵/188字段及runtime未验状态不变；空schema已独立验证的Notify不再误列“无字段证据”缺口，其他空fields仍不视为合法空消息。表中来源数是原批快照，当前逐行来源以JSON为准。

@@ -67,3 +67,5 @@ python -m unittest tools.test_client72_born_continue tools.test_client72_born -v
 ```
 
 本机完整trace、第二次trace/summary、确定性比对、旧born重跑和测试日志保留`local/migration72/`忽略目录。共享摘要只包含输入hash、目标地址/声明、脱敏向量、模型边界及执行路径hash；不包含客户端二进制、原始抓包、真实凭据、机器路径或运行PID。
+
+主任务复核收口：公共门禁按原规则接纳本摘要和独立场景/启动摘要，仅新增三份输入（47→50），原源码/Proto和三层矩阵内容均不变；两次矩阵生成相同，包含新增资源7项后的完整研究选集为288项全部通过。首次281项中1项漂移拒绝保留于原日志。D-01实际客户端启动由主任务另做，不能混入本工具的33组离线或runtime状态。

@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "codeChecks": [
+    {
+      "va": "0x1411267b0",
+      "sha256": "0a972942011a68437c2cb120baf0228ba8b9591267e85004488102de66bac348",
+      "match": true
+    },
+    {
+      "va": "0x14a447e00",
+      "sha256": "d0dbb4de60c1579e48a308a763c2dbcce7173591e1a9daa154194b8f8e628572",
+      "match": true
+    },
+    {
+      "va": "0x159c21c90",
+      "sha256": "b1d43d87095c1a3de17d21704e4486c00f8a7a4a356e314c458be36d1ed7ff8c",
+      "match": true
+    },
+    {
+      "va": "0x15a3464c0",
+      "sha256": "f75de334ab9437e3d6f71a8d9ec0e12c7352a31c541244590610a7a5f51c4916",
+      "match": true
+    },
+    {
+      "va": "0x15a366300",
+      "sha256": "fd672ffa8caab098a7edadbe9b0c99eff5eafb7ab31940ba7eb249fcfaabd9a4",
+      "match": true
+    }
+  ],
+  "initialHardwareBreakpointCount": 0,
+  "initialDebugRegistersAllZero": true,
+  "continuousConnection": true,
+  "observedSeconds": 150,
+  "observedFirstChanceEvents": {
+    "0x406d1388": 1,
+    "0xc0000005": 37,
+    "0xe06d7363": 2
+  },
+  "observedSecondChanceEvents": 0,
+  "allObservedFirstChanceEventsCheckedAgainstDebuggerExpressions": true,
+  "exitEventsObserved": [],
+  "aliveAtObservationEnd": true,
+  "runningAtObservationEnd": true,
+  "latestReadOnlyState": {
+    "debugging": true,
+    "running": true,
+    "globalInitialized": true,
+    "keySlotsEmpty": true
+  },
+  "runtimeStatus": "startup-only",
+  "scope": "unmodified fixed-client startup under existing debugger; not login/patch/connection acceptance",
+  "limitations": [
+    "phase-based earlier run exited 0x80000003 but reconnects could miss current exception events; not a controlled causal comparison",
+    "no observed HTTP/browser/Marshal observation breakpoint in this interval",
+    "no SDK authentication, local patch loading, frames, character selection or world entry",
+    "application startup activity after API disconnect is outside captured continuous interval"
+  ]
+}

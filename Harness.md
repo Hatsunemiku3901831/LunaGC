@@ -2,6 +2,10 @@
 
 2026-11-06最新恢复：用户要求继续逐项推进至D-02实机验收，覆盖前批停止点。B-02e1原生成功继续正在取证；E-01b固定scene3审计见[场景资源](docs/CLIENT_72_SCENE_RESOURCES.md)。`audit_scene_resource72`要求固定commit/root/BinOutput/Scene/Point与Excel blob链，核对9源码hash；1823点、2817正引用无缺失，7新增/14资源回归及两次产物一致。未安装资源或启动服务/游戏；Lua来源和运行时revision仍未验。
 
+本批动态启动已接续：见[动态研究最新节](docs/CLIENT_72_DYNAMIC_DEBUG.md#2026-11-06恢复连续api连接下的启动观察)。分段重连发现当前异常事件缺口；改为连续连接150秒，5入口代码相同/DR全0、40首次异常由事件及ex.code/addr核对后逐个交付，目标存活运行、两key槽空；SDK/登录/退出根因未验。当前目标保留，不再适用上段“未启动游戏”的较早状态；先实时核对dynamic-active-session，禁止无条件run或重复load。用户另允许参考7.1场景实现迁移到7.2，E-01c开始实际Lua/目标ID核查，保留来源和未知。
+
+B-02e1已提交b68a8ab，入口[选人继续](docs/CLIENT_72_BORN_CONTINUATION.md)：33原生样本/9新增测试、原born39样本重跑摘要不变，两次trace/摘要相同。未知消息20353的两个uint32字段有独立wire/protoc，正式业务名unknown；媒体/定时器仅登记或手动离线回调，完整异步/网络次序未验。完整研究选集288项全过；首次281中1项新增证据清单漂移失败保留，人工复核仅新增born-continuation/scene-resource/startup-continuation三份摘要，原1287源码/Proto、148行矩阵/三层状态、99候选/1140描述符及开放锚点均不变，50研究输入受hash约束。证据evidence/continuation-login-proto-{review-check,repeat}.json、logs/continuation-research-regression.log；不把门禁拒绝隐藏或放宽。
+
 [AGENTS](AGENTS.md) 管规范，[README](README.md) 管能力说明，[Project](Project.md) 管任务验收；本文件维护索引与可复现流程，不重复长状态清单。目标仅国服 7.2。
 
 ## 仓库入口
