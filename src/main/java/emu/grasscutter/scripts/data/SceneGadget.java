@@ -39,4 +39,8 @@ public class SceneGadget extends SceneObject {
     public void setIsOneoff(boolean isOneoff) {
         this.isOneoff = isOneoff;
     }
+
+    public void setIs_use_point_array(boolean is_use_point_array) {
+        this.is_use_point_array = is_use_point_array;
+    }
 }

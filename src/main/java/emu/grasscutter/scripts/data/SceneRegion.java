@@ -14,7 +14,7 @@ public class SceneRegion {
     // for CUBIC
     public Position size;
     // for SPHERE
-    public int radius;
+    public float radius;
     public int area_id;
     public float height;
     public List<Position> point_array;

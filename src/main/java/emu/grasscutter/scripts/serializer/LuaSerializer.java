@@ -94,12 +94,13 @@ public class LuaSerializer implements Serializer {
 
                     if (keyValue.istable()) {
                         object = serialize(type, null, keyValue.checktable());
+                    } else if (keyValue.type() == LuaValue.TSTRING) {
+                        // Numeric strings also satisfy LuaJ's isint()/isnumber().
+                        object = (T) keyValue.tojstring();
                     } else if (keyValue.isint()) {
                         object = (T) (Integer) keyValue.toint();
                     } else if (keyValue.isnumber()) {
                         object = (T) (Float) keyValue.tofloat(); // terrible...
-                    } else if (keyValue.isstring()) {
-                        object = (T) keyValue.tojstring();
                     } else if (keyValue.isboolean()) {
                         object = (T) (Boolean) keyValue.toboolean();
                     } else {

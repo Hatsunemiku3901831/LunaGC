@@ -17,4 +17,8 @@ public class SceneMonster extends SceneObject {
     public String drop_tag;
     public List<Integer> affix;
     public boolean isElite;
+
+    public void setIsElite(boolean isElite) {
+        this.isElite = isElite;
+    }
 }
