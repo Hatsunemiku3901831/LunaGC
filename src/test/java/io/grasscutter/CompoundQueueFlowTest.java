@@ -43,9 +43,9 @@ class CompoundQueueFlowTest {
     private int saves, failSave;
 
     static class ProcessPlayer extends InvestigationRewardTest.ClaimPlayer {
-        boolean refuse, throwGrant;
+        @dev.morphia.annotations.Transient boolean refuse, throwGrant;
         @dev.morphia.annotations.Transient Runnable afterGrant;
-        final Inventory processInventory =
+        @dev.morphia.annotations.Transient final Inventory processInventory =
                 new Inventory(this) {
                     @Override
                     public boolean addItem(ItemParamData item, ActionReason reason) {

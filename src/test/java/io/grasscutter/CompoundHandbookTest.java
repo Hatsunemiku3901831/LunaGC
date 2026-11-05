@@ -20,6 +20,7 @@ import emu.grasscutter.utils.*;
 import org.junit.jupiter.api.*;
 
 import java.lang.reflect.Proxy;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.util.*;
@@ -35,6 +36,8 @@ class CompoundHandbookTest {
     private Map<Integer, InvestigationTargetData> oldTargets;
     private Object oldDatastore;
     private java.lang.reflect.Field datastore;
+    private emu.grasscutter.game.player.GuardedPlayerTestStore playerStore;
+    private ObservedItemTestWrites itemWrites;
     private int confirmed, failSave;
     private final List<Integer> confirmedProgress = new ArrayList<>();
 
@@ -70,28 +73,43 @@ class CompoundHandbookTest {
         datastore = DatabaseManager.class.getDeclaredField("gameDatastore");
         datastore.setAccessible(true);
         oldDatastore = datastore.get(null);
+        playerStore = new emu.grasscutter.game.player.GuardedPlayerTestStore(player,
+                this::confirmWrite, document -> {
+                    if (ObservedItemTestWrites.isSynchronousWrite())
+                        confirmedProgress.add(document.getEmbedded(
+                                List.of("playerProgress", "investigation", "targets", "60017"), 0));
+                });
         datastore.set(
                 null,
                 Proxy.newProxyInstance(
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
-                            if (!method.getName().equals("save")) return null;
-                            if (args.length == 2) {
-                                if (++confirmed == failSave)
-                                    throw new IllegalStateException("Confirmation fault");
-                                if (args[0] == player) confirmedProgress.add(progress());
+                            if (method.getName().equals("save") && args.length == 2) confirmWrite();
+                            try {
+                                return method.invoke(playerStore.datastore(), args);
+                            } catch (InvocationTargetException failure) {
+                                throw failure.getCause();
                             }
-                            return args[0];
                         }));
+        itemWrites = new ObservedItemTestWrites(player, playerStore.datastore(),
+                DatabaseManager.getGameDatastore(), ignored -> confirmWrite(), ignored -> {});
         assertTrue(player.getInventory().addItem(100017, 20));
+        assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
         player.packets.clear();
+    }
+
+    private void confirmWrite() {
+        if (ObservedItemTestWrites.isSynchronousWrite() && ++confirmed == failSave)
+            throw new IllegalStateException("Confirmation fault");
     }
 
     @AfterEach
     void cleanup() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        if (itemWrites != null) itemWrites.close();
         if (datastore != null) datastore.set(null, oldDatastore);
+        if (playerStore != null) playerStore.close();
         GameData.getCompoundDataMap().clear();
         GameData.getCompoundDataMap().putAll(oldRecipes);
         GameData.getItemDataMap().clear();
@@ -145,6 +163,21 @@ class CompoundHandbookTest {
 
     private int progress() {
         return player.getPlayerProgress().getInvestigation().get(60017);
+    }
+
+    private void assertStoredClaim(int units, int output) {
+        var row = LearningPersistenceChecks.profile(playerStore.datastore(), player);
+        assertNotNull(row);
+        assertEquals(units, row.getEmbedded(
+                List.of("playerProgress", "investigation", "targets", "60017"), 0));
+        assertFalse(row.containsKey("processInventory"));
+        assertFalse(row.containsKey("afterGrant"));
+        var item = playerStore.datastore().getDatabase().getCollection("items")
+                .find(new org.bson.Document("itemId", 110001)).first();
+        assertNotNull(item);
+        assertEquals(output, item.getInteger("count"));
+        assertEquals(20, playerStore.datastore().getDatabase().getCollection("items")
+                .find(new org.bson.Document("itemId", 100017)).first().getInteger("count"));
     }
 
     private void ready(int id, int count) {
@@ -210,6 +243,7 @@ class CompoundHandbookTest {
                         .orElseThrow();
         assertEquals(2, target.getProgress());
         assertEquals(2, confirmedProgress.get(confirmedProgress.size() - 1));
+        assertStoredClaim(2, 2);
     }
 
     @Test
@@ -255,6 +289,7 @@ class CompoundHandbookTest {
         ready(1001, 1);
         assertEquals(0, take(1, 0, false));
         assertEquals(1, progress());
+        assertStoredClaim(1, 5);
         assertEquals(5, player.getInventory().getItemCountById(110001));
     }
 
@@ -329,6 +364,10 @@ class CompoundHandbookTest {
         assertNotEquals(0, take(1, 0, false));
         assertEquals(1, progress());
         assertEquals(1, player.getInventory().getItemCountById(110001));
+        // Progress changed in memory before its confirmation failed; the durable claim stays reserved.
+        assertStoredClaim(0, 1);
+        assertFalse(LearningPersistenceChecks.profile(playerStore.datastore(), player)
+                .get("activeCookCompounds", org.bson.Document.class).isEmpty());
     }
 
     @Test
