@@ -1,0 +1,238 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "fixtureCount": 18,
+  "javaSourceSHA256": {
+    "tools/Client72SeedReference.java": "9d4886741c825bbd95d47688e606b724cb97a2b6a288e52f3778a07e38b8fcc1",
+    "src/main/java/emu/grasscutter/utils/algorithms/MersenneTwister64.java": "c46c8c05acf697fded0ef1685a0e64d6fb5a13933d10d07b3c387c36a6cabebb"
+  },
+  "runtimeStatus": "not-tested",
+  "scope": "post-decryption native seed suffix only",
+  "observedAlgorithm": "big-endian first 8 decrypted bytes XOR uint64 client seed; MT64 first output reseeds a second MT64; discard one output; 512 big-endian uint64 outputs",
+  "boundaries": {
+    "entry": "0x15a4e064f",
+    "stop": "0x15a4e0d4b",
+    "outsideScope": [
+      "RSA decryption/signature verification",
+      "Shell warmup",
+      "IFix",
+      "full Token Handler",
+      "real client"
+    ]
+  },
+  "models": [
+    "managed object/array allocation with class and size allowlist",
+    "thread-local System.Random object with controlled Next value",
+    "16x256 bijective runtime storage table; native encoder/decoder execute"
+  ],
+  "comparisons": [
+    {
+      "name": "zero",
+      "permutation": [
+        1,
+        0
+      ],
+      "randomValue": 305419896,
+      "decryptedInputHex": "0000000000000000",
+      "clientSeedHex": "0000000000000000",
+      "keySHA256": "4e9e927e41b4a46e746dd83cbead2819be86f3c841a62581d41d538479e3a51e",
+      "javaByteComparison": true,
+      "passed": true
+    },
+    {
+      "name": "high64",
+      "permutation": [
+        1,
+        0
+      ],
+      "randomValue": 305419896,
+      "decryptedInputHex": "fedcba9876543210",
+      "clientSeedHex": "0123456789abcdef",
+      "keySHA256": "5d517d6c52800a32b573b136c7a469131670b869881157c2fa013f714b796df5",
+      "javaByteComparison": true,
+      "passed": true
+    },
+    {
+      "name": "msb",
+      "permutation": [
+        1,
+        0
+      ],
+      "randomValue": 305419896,
+      "decryptedInputHex": "8000000000000000",
+      "clientSeedHex": "0000000000000000",
+      "keySHA256": "58687cf7c3c1fe2593672261da9f360fe1c7acbb6f90fa9849567180acb80d88",
+      "javaByteComparison": true,
+      "passed": true
+    },
+    {
+      "name": "client-msb",
+      "permutation": [
+        1,
+        0
+      ],
+      "randomValue": 305419896,
+      "decryptedInputHex": "0000000000000001",
+      "clientSeedHex": "8000000000000000",
+      "keySHA256": "c6e4ccaa0d91c84da1e3b0249366527d1d9352186626946df948baf5c9b59772",
+      "javaByteComparison": true,
+      "passed": true
+    },
+    {
+      "name": "mixed",
+      "permutation": [
+        1,
+        0
+      ],
+      "randomValue": 305419896,
+      "decryptedInputHex": "0102030405060708",
+      "clientSeedHex": "1020304050607080",
+      "keySHA256": "60ca6c4f991f51878f26fecfb825df8a77bef538b44d596ac437e3a529e1e5fa",
+      "javaByteComparison": true,
+      "passed": true
+    },
+    {
+      "name": "trailing-byte",
+      "permutation": [
+        1,
+        0
+      ],
+      "randomValue": 305419896,
+      "decryptedInputHex": "0102030405060708ff",
+      "clientSeedHex": "1020304050607080",
+      "keySHA256": "60ca6c4f991f51878f26fecfb825df8a77bef538b44d596ac437e3a529e1e5fa",
+      "javaByteComparison": true,
+      "passed": true
+    },
+    {
+      "name": "reject-length-0",
+      "permutation": [
+        1,
+        0
+      ],
+      "passed": true
+    },
+    {
+      "name": "reject-length-1",
+      "permutation": [
+        1,
+        0
+      ],
+      "passed": true
+    },
+    {
+      "name": "reject-length-7",
+      "permutation": [
+        1,
+        0
+      ],
+      "passed": true
+    },
+    {
+      "name": "zero",
+      "permutation": [
+        197,
+        41
+      ],
+      "randomValue": 2147483646,
+      "decryptedInputHex": "0000000000000000",
+      "clientSeedHex": "0000000000000000",
+      "keySHA256": "4e9e927e41b4a46e746dd83cbead2819be86f3c841a62581d41d538479e3a51e",
+      "javaByteComparison": true,
+      "passed": true
+    },
+    {
+      "name": "high64",
+      "permutation": [
+        197,
+        41
+      ],
+      "randomValue": 2147483646,
+      "decryptedInputHex": "fedcba9876543210",
+      "clientSeedHex": "0123456789abcdef",
+      "keySHA256": "5d517d6c52800a32b573b136c7a469131670b869881157c2fa013f714b796df5",
+      "javaByteComparison": true,
+      "passed": true
+    },
+    {
+      "name": "msb",
+      "permutation": [
+        197,
+        41
+      ],
+      "randomValue": 2147483646,
+      "decryptedInputHex": "8000000000000000",
+      "clientSeedHex": "0000000000000000",
+      "keySHA256": "58687cf7c3c1fe2593672261da9f360fe1c7acbb6f90fa9849567180acb80d88",
+      "javaByteComparison": true,
+      "passed": true
+    },
+    {
+      "name": "client-msb",
+      "permutation": [
+        197,
+        41
+      ],
+      "randomValue": 2147483646,
+      "decryptedInputHex": "0000000000000001",
+      "clientSeedHex": "8000000000000000",
+      "keySHA256": "c6e4ccaa0d91c84da1e3b0249366527d1d9352186626946df948baf5c9b59772",
+      "javaByteComparison": true,
+      "passed": true
+    },
+    {
+      "name": "mixed",
+      "permutation": [
+        197,
+        41
+      ],
+      "randomValue": 2147483646,
+      "decryptedInputHex": "0102030405060708",
+      "clientSeedHex": "1020304050607080",
+      "keySHA256": "60ca6c4f991f51878f26fecfb825df8a77bef538b44d596ac437e3a529e1e5fa",
+      "javaByteComparison": true,
+      "passed": true
+    },
+    {
+      "name": "trailing-byte",
+      "permutation": [
+        197,
+        41
+      ],
+      "randomValue": 2147483646,
+      "decryptedInputHex": "0102030405060708ff",
+      "clientSeedHex": "1020304050607080",
+      "keySHA256": "60ca6c4f991f51878f26fecfb825df8a77bef538b44d596ac437e3a529e1e5fa",
+      "javaByteComparison": true,
+      "passed": true
+    },
+    {
+      "name": "reject-length-0",
+      "permutation": [
+        197,
+        41
+      ],
+      "passed": true
+    },
+    {
+      "name": "reject-length-1",
+      "permutation": [
+        197,
+        41
+      ],
+      "passed": true
+    },
+    {
+      "name": "reject-length-7",
+      "permutation": [
+        197,
+        41
+      ],
+      "passed": true
+    }
+  ]
+}

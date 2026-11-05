@@ -123,3 +123,7 @@ A-04d3请求入口：[Login完整wire](docs/CLIENT_72_LOGIN_WIRE.md)；trace_cli
 确定性证据：evidence/login-semantics-determinism.json记录trace、语义摘要、literal/enum表的重复输出SHA-256；本批研究校验mapping-check.json通过，mapping-ready.json仍拒绝发布。
 
 本轮接手提交：a9ba540（literal/enum基础）、010f0c4（响应身份、来源到wire、语义校验及文档）；均仅本地。源码/主Proto/运行服务未变，现有resources子模块差异未提交。
+
+会话研究新增入口：[CLIENT_72_SESSION](docs/CLIENT_72_SESSION.md)。trace_client72_session从明确的解密后检查点执行seed字节序/XOR、整数存储和MT64，12组Java独立逐字节对照与6组原生短输入拒绝。client72_session_runtime只模型化声明的托管分配/随机源/置换表，不模拟解密、验签、Shell成功。共享session-seed-observations.json；本机evidence/session-seed-trace.json、session-seed-determinism.json；91项回归在logs/session-all-tests.log。本项不代表完整Token成功路径或实机验收。
+
+接续：响应+68→会话+98→1507C2211→151213730请求+D8需完成独立wire链；Login保护续段151213AC6已执行到环境类1458971C0检查。Shell新分支15A3CE060与解密/验签仍明确未知。任务状态以Project最新执行记录为准；只改离线研究工具无需重启运行服务。
