@@ -169,3 +169,5 @@ SDK认证来源入口：`trace_client72_auth_sources`执行14F1917D0至14F191E18
 分区候选源/B0入口：`trace_client72_dispatch_token`，复现和前缀探索边界见[会话研究A-04d5m](docs/CLIENT_72_SESSION.md#a-04d5m-分区候选源到sessionb0与token-tag965)。14原生样本、166研究回归、重复产物一致；30677 tag14供给两处post-parse片段后到session+B0和Token tag965。实际源类型关联仍candidate，语义unknown，ready仍拒绝，D-02未验。证据`evidence/dispatch-token-{trace,determinism}.json`和`logs/auth-tail-dispatch-regression.log`。
 
 分区解析前缀：`trace_client72_dispatch_prefix`，入口/信任输入/复现见[会话研究A-04d5n1](docs/CLIENT_72_SESSION.md#a-04d5n1-分区json到实际响应reader)。6原生样本、33聚焦/169研究回归，两次trace/摘要一致；原生JSON消费→解密/摘要/验签→30677 reader→post-parse原指针。成功明确本地签名信任，后处理/第二协程/语义/实机未验；A-04d5n/B-02c9进行中。证据`evidence/dispatch-prefix-{trace,determinism}.json`、`logs/dispatch-prefix-regression.log`。
+
+分区后处理入口：`trace_client72_dispatch_post`，复现/模型边界见[会话研究A-04d5n2](docs/CLIENT_72_SESSION.md#a-04d5n2-分区嵌套读取到配置处理入口)。JSON/原生密码学连续到实际Region嵌套reader，再至151204AC0配置入口；8原生样本、173研究回归通过。证据`evidence/dispatch-post-{trace,determinism}.json`及`logs/dispatch-post-regression.log`。只覆盖选定Region字段/配置实参；配置函数体、B0连续路径、第二协程、tag965语义和D-02均未验，不部署猜测协议。

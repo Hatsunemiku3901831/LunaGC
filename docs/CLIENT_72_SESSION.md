@@ -311,3 +311,21 @@ python -m unittest tools.test_client72_dispatch_prefix tools.test_client72_dispa
 证据`evidence/dispatch-prefix-{trace,determinism,mapping-check,mapping-ready}.json`，`logs/dispatch-prefix-{focused-tests,regression}.log`；共享摘要不含私钥/机器路径/实际账号。上节class=0缺口已定位为SHA256Managed/uint数组运行时状态遗漏并由既有ResponseCrypto72模型解决，不是客户端缺陷。
 
 下一项A-04d5n/B-02c9：从151211BA1恢复RegionInfo/配置消费至B0的连续路径，验证第二协程的源类型，再寻找业务名称的独立来源。认证UI/调度14F192325之后、封包体和D-01实际加载仍未验；这些缺口不能用本项通过代替。仅离线工具/测试/研究文档变化，无运行代码/Proto/配置/补丁/资源变更，无需重启；D-02尚未完成。
+
+
+## A-04d5n2 分区嵌套读取到配置处理入口
+
+`trace_client72_dispatch_post`在同次执行中从151210540经过已验证JSON/原生密码学，继续越过151211BA1，到151204AC0配置函数入口；中间不重置CPU、不替换成功分支。新增Region类型67961/IENBACJFBGI由真实父reader分配，Clone149BB5950读取1458DEE48和调用149BB5A00的原始指令、slot19/149BB4EB0分别核对。托管分配/接口表是明确模型；ReadMessage1474D7E60、PushLimit/PopLimit及具体reader原生执行。只覆盖选定字段，不声称完整Region闭包。
+
+独立固定wire包含响应tag3/message→+48；嵌套tag2/uint32→+13C、tag13/string→+30；响应tag12/bytes→+18和tag11/bytes→+40经原生ByteString.ToByteArray147CF3070传入配置函数rdx/r8，r9d=1，receiver不变。三层语义没有晋级；tag14/tag965仍未知。配置入口到B0尚未贯通。
+
+8组样本：非零、空Region、UInt32最大、重复Region合并、缺Region、负int32、嵌套长度截断、嵌套varint截断。重复字段两次执行同一reader，只分配一个对象并保留两次输入值；缺Region/负返回值在151211BDD进入错误处理分支（没有执行整个错误UI，不能称已完成错误恢复）。长度截断实际进入原生truncated-message；varint截断由显式bounded-wire-helper拒绝，两者区分记录。所有样本session+B0未改变。
+
+成功仍使用n1明确的本地签名信任输入，真实验签与RSA oracle一致；未安装补丁、没有HTTP/SDK/客户端验收。8组原生样本及173项研究回归通过，trace/摘要两次逐字节一致；研究校验退出0、ready退出1。错误样本允许解析中产生部分对象，不把这些对象当作成功或提交给后处理。
+
+```powershell
+python tools/trace_client72_dispatch_post.py --client $env:GAME_PATH --output local/migration72/evidence/dispatch-post-trace.json --summary-output protocol/cn-7.2/dispatch-post-observations.json
+python -m unittest tools.test_client72_dispatch_post tools.test_client72_dispatch_prefix tools.test_client72_dispatch_token tools.test_validate_protocol72 -v
+```
+
+证据`evidence/dispatch-post-{trace,trace-repeat,determinism,mapping-check,mapping-ready}.json`、`logs/dispatch-post-{run,repeat,regression}.log`。只改离线研究工具/测试/摘要/文档，不需部署或重启。下一步执行151204AC0内部的配置解码/解析，继而回到151211DD5；需使用有效配置样本，不能把本批任意bytes参数样本当作有效配置JSON。

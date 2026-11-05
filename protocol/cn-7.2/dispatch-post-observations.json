@@ -1,0 +1,367 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "fixtureCount": 8,
+  "results": [
+    {
+      "name": "nonzero",
+      "plainWire": "7207666978747572651a0a10ac026a05696e6e657262036366675a036b6579",
+      "outcome": "config",
+      "stop": "0x151204ac0",
+      "errorMarker": null,
+      "readerCalls": 1,
+      "postParsePointerPreserved": true,
+      "value": null,
+      "operations": [
+        {
+          "operation": 101,
+          "nativeReturnRAX": "0x61200eba0"
+        },
+        {
+          "operation": 103,
+          "nativeReturnRAX": "0x1"
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "nativePlaintextSHA256": "8ae3890c7d5580edbebc2b85db5407a9f848f05ae71b121dacbf683ccf8bf39a",
+      "regionReaderCalls": 1,
+      "regionAllocations": 1,
+      "region": {
+        "typeIndex": 67961,
+        "uint32": 300,
+        "text": "inner"
+      },
+      "configInputs": {
+        "receiverPreserved": true,
+        "mode": 1,
+        "arrays": [
+          "636667",
+          "6b6579"
+        ]
+      },
+      "sessionB0Unchanged": true
+    },
+    {
+      "name": "empty-region",
+      "plainWire": "72001a00",
+      "outcome": "config",
+      "stop": "0x151204ac0",
+      "errorMarker": null,
+      "readerCalls": 1,
+      "postParsePointerPreserved": true,
+      "value": null,
+      "operations": [
+        {
+          "operation": 101,
+          "nativeReturnRAX": "0x61200eba0"
+        },
+        {
+          "operation": 103,
+          "nativeReturnRAX": "0x1"
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "nativePlaintextSHA256": "ef1a6a9db96bc4bf7c9b976e02b1baa1f095ac39efd8c6f31be6f6e5a80c71ca",
+      "regionReaderCalls": 1,
+      "regionAllocations": 1,
+      "region": {
+        "typeIndex": 67961,
+        "uint32": 0,
+        "text": ""
+      },
+      "configInputs": {
+        "receiverPreserved": true,
+        "mode": 1,
+        "arrays": [
+          "",
+          ""
+        ]
+      },
+      "sessionB0Unchanged": true
+    },
+    {
+      "name": "uint32-max",
+      "plainWire": "7201391a0610ffffffff0f",
+      "outcome": "config",
+      "stop": "0x151204ac0",
+      "errorMarker": null,
+      "readerCalls": 1,
+      "postParsePointerPreserved": true,
+      "value": null,
+      "operations": [
+        {
+          "operation": 101,
+          "nativeReturnRAX": "0x61200eba0"
+        },
+        {
+          "operation": 103,
+          "nativeReturnRAX": "0x1"
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "nativePlaintextSHA256": "dd439793b58765f75d24ee7c24f9eb0b41e2b2524c9eb04de7ec5825eceb20ce",
+      "regionReaderCalls": 1,
+      "regionAllocations": 1,
+      "region": {
+        "typeIndex": 67961,
+        "uint32": 4294967295,
+        "text": ""
+      },
+      "configInputs": {
+        "receiverPreserved": true,
+        "mode": 1,
+        "arrays": [
+          "",
+          ""
+        ]
+      },
+      "sessionB0Unchanged": true
+    },
+    {
+      "name": "merge-region",
+      "plainWire": "7207666978747572651a0310ac021a076a05696e6e6572",
+      "outcome": "config",
+      "stop": "0x151204ac0",
+      "errorMarker": null,
+      "readerCalls": 1,
+      "postParsePointerPreserved": true,
+      "value": null,
+      "operations": [
+        {
+          "operation": 101,
+          "nativeReturnRAX": "0x61200eba0"
+        },
+        {
+          "operation": 103,
+          "nativeReturnRAX": "0x1"
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "nativePlaintextSHA256": "00e984969424732ddbab52f21c77b7ec407404c2caedff8c77b60e71f57f6e59",
+      "regionReaderCalls": 2,
+      "regionAllocations": 1,
+      "region": {
+        "typeIndex": 67961,
+        "uint32": 300,
+        "text": "inner"
+      },
+      "configInputs": {
+        "receiverPreserved": true,
+        "mode": 1,
+        "arrays": [
+          "",
+          ""
+        ]
+      },
+      "sessionB0Unchanged": true
+    },
+    {
+      "name": "missing-region",
+      "plainWire": "720766697874757265",
+      "outcome": "error-route",
+      "stop": "0x151211bdd",
+      "errorMarker": null,
+      "readerCalls": 1,
+      "postParsePointerPreserved": true,
+      "value": null,
+      "operations": [
+        {
+          "operation": 101,
+          "nativeReturnRAX": "0x61200eba0"
+        },
+        {
+          "operation": 103,
+          "nativeReturnRAX": "0x1"
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "nativePlaintextSHA256": "b44f40cf23a78473bba76349a133fcf5a439ac2186b930358a050942599ce609",
+      "regionReaderCalls": 0,
+      "regionAllocations": 0,
+      "region": null,
+      "configInputs": null,
+      "sessionB0Unchanged": true
+    },
+    {
+      "name": "negative-ret",
+      "plainWire": "08ffffffffffffffffff017201391a00",
+      "outcome": "error-route",
+      "stop": "0x151211bdd",
+      "errorMarker": null,
+      "readerCalls": 1,
+      "postParsePointerPreserved": true,
+      "value": null,
+      "operations": [
+        {
+          "operation": 101,
+          "nativeReturnRAX": "0x61200eba0"
+        },
+        {
+          "operation": 103,
+          "nativeReturnRAX": "0x1"
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "nativePlaintextSHA256": "e21822339a65dba21ec913cf1213fc268ffc4fb490964ed517aa000f5fc149ee",
+      "regionReaderCalls": 1,
+      "regionAllocations": 1,
+      "region": {
+        "typeIndex": 67961,
+        "uint32": 0,
+        "text": ""
+      },
+      "configInputs": null,
+      "sessionB0Unchanged": true
+    },
+    {
+      "name": "truncated-region",
+      "plainWire": "7201391a0a10ac02",
+      "outcome": "wire-reject",
+      "stop": null,
+      "wireError": "native-truncated-message",
+      "postParsePointerPreserved": false,
+      "regionReaderCalls": 1,
+      "regionAllocations": 1,
+      "region": {
+        "typeIndex": 67961,
+        "uint32": 300,
+        "text": ""
+      },
+      "configInputs": null,
+      "sessionB0Unchanged": true
+    },
+    {
+      "name": "truncated-scalar",
+      "plainWire": "7201391a021080",
+      "outcome": "wire-reject",
+      "stop": null,
+      "wireError": "bounded-wire-helper",
+      "postParsePointerPreserved": false,
+      "regionReaderCalls": 1,
+      "regionAllocations": 1,
+      "region": {
+        "typeIndex": 67961,
+        "uint32": 0,
+        "text": ""
+      },
+      "configInputs": null,
+      "sessionB0Unchanged": true
+    }
+  ],
+  "entry": "0x151210540",
+  "configStop": "0x151204ac0",
+  "errorRouteStop": "0x151211bdd",
+  "regionTypeIndex": 67961,
+  "regionClassCell": "0x1458dee48",
+  "regionReader": "0x149bb4eb0",
+  "semanticStatus": "unknown",
+  "runtimeStatus": "not-tested",
+  "wholeDispatchExecuted": false,
+  "models": [
+    "explicit local signing trust and JSON/OS fixtures inherited from DispatchPrefix72",
+    "managed Region allocation/interface metadata; native ReadMessage/limits/reader execute",
+    "bounded ASCII/string/byte/scalar helpers; allocation initializes absent fields"
+  ],
+  "outsideScope": [
+    "config helper body",
+    "post-config/B0 store",
+    "second coroutine",
+    "tag14/tag965 semantics",
+    "complete Region schema",
+    "actual SDK/HTTP/client"
+  ]
+}
