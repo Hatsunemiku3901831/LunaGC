@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "fixtureCount": 4,
+  "fieldBindings": [
+    {
+      "typeIndex": 82491,
+      "clientType": "NJAALDCMHEP",
+      "clientField": "LJLGGDEBGKD",
+      "objectOffset": 180,
+      "tag": 10,
+      "type": "uint32",
+      "semanticField": "sub_channel_id",
+      "sourceKey": "info_get_sub_channel_id",
+      "status": "verified",
+      "scope": "native-sdk-key-to-wire"
+    }
+  ],
+  "entry": "0x15121ff70",
+  "stop": "0x151214d20",
+  "runtimeStatus": "not-tested",
+  "completion": "constructor-with-opaque-seed-boundary",
+  "opaqueSeedBoundary": {
+    "address": "0x15121db40",
+    "nativeExecuted": false,
+    "objectOffset": 144,
+    "tag": 623,
+    "type": "string",
+    "semanticStatus": "unresolved"
+  },
+  "rawSessionBindings": [
+    {
+      "sessionOffset": 120,
+      "objectOffset": 24,
+      "tag": 9,
+      "type": "string",
+      "semanticStatus": "unresolved"
+    },
+    {
+      "sessionOffset": 248,
+      "objectOffset": 64,
+      "tag": 2,
+      "type": "string",
+      "semanticStatus": "unresolved"
+    },
+    {
+      "sessionOffset": 176,
+      "objectOffset": 112,
+      "tag": 965,
+      "type": "string",
+      "semanticStatus": "unresolved"
+    },
+    {
+      "sessionOffset": 312,
+      "objectOffset": 176,
+      "tag": 3,
+      "type": "uint32",
+      "semanticStatus": "unresolved"
+    },
+    {
+      "sessionOffset": 316,
+      "objectOffset": 164,
+      "tag": 15,
+      "type": "uint32",
+      "semanticStatus": "unresolved"
+    },
+    {
+      "sessionOffset": 351,
+      "objectOffset": 196,
+      "tag": 11,
+      "type": "bool",
+      "semanticStatus": "unresolved"
+    }
+  ],
+  "rawOtherBindings": [
+    {
+      "objectOffset": 80,
+      "tag": 1300,
+      "type": "string",
+      "source": "old Shell operation 5",
+      "semanticStatus": "unresolved"
+    },
+    {
+      "objectOffset": 152,
+      "tag": 1184,
+      "type": "uint32",
+      "source": "literal 4",
+      "semanticStatus": "unresolved"
+    },
+    {
+      "objectOffset": 120,
+      "tag": 83,
+      "type": "string",
+      "source": "global +18190",
+      "semanticStatus": "unresolved"
+    },
+    {
+      "objectOffset": 188,
+      "tag": 1206,
+      "type": "uint32",
+      "source": "0x145878704",
+      "semanticStatus": "unresolved"
+    },
+    {
+      "objectOffset": 192,
+      "tag": 561,
+      "type": "uint32",
+      "source": "0x145878700",
+      "semanticStatus": "unresolved"
+    }
+  ],
+  "models": [
+    "explicit opaque managed string result at 15121DB40; no cryptography success claim",
+    "explicit Miscs/SDK/platform inputs",
+    "old Shell opaque bytes for operation 5",
+    "managed allocations and target metadata literal strings",
+    "ASCII Encoding.GetString",
+    "bounded decimal UInt32 parse and culture provider",
+    "stage capture"
+  ],
+  "environment": [
+    "native flag-list contains 3628; old Shell branch",
+    "native cached non-cloud predicate",
+    "SDK +c8 false; no optional pre-login SDK action",
+    "default zero optional global flags"
+  ],
+  "outsideScope": [
+    "15121DB40 encrypted seed construction and Shell 0x64",
+    "new Shell provider",
+    "cloud path",
+    "IFix",
+    "send queue body/network",
+    "real client"
+  ]
+}

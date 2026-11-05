@@ -105,3 +105,22 @@ token链共享摘要为session-token-observations.json；evidence/session-token-
 token链本地提交0c12f2c。请求身份新增request-identity-observations.json；evidence/request-identity-trace.json、request-identity-determinism.json，回归logs/request-identity-tests.log。后续执行线索：151213BE2→SDK `info_get_uapc`、CloudGame、PbaseMD5、设备子对象→151213FF7保护续段→151214D20发送队列；Token调用同一发送入口151220673。静态调用点不替代完整受控发送样本。
 
 请求身份检查点本地提交70f3e5b。上述Login构造链已按限定环境执行完成，下一项转15121FF70的Token构造、151214D20发送队列及Token成功路径的密码学前段；不要求重跑此前已经一致的writer/对象图样本。
+
+## A-04d5e / B-02c4 Token构造外段与SDK来源
+
+`trace_client72_token_constructor`从15121FF70执行至151214D20，**15121DB40的加密字符串结果明确由不透明夹具提供，未执行或验证其密码学内部**。报告固定`completion=constructor-with-opaque-seed-boundary`及`nativeExecuted=false`，不能将本项称为完整Token构造成功。此边界允许继续验证构造的其余部分，不改变A-04d5d记录的SDK阻塞。
+
+继承Login所列的非云/旧Shell环境模型；额外限定SDK+c8为false，执行152758600的真实判断而不进入可选SDK预处理。实际旧Shell分支只调用操作5，ASCII GetString后的原始数据进入请求+50/tag1300；该字段业务含义仍未知。
+
+目标SDK包装152758AC0实际解码并使用`info_get_sub_channel_id`（literal13490），TryParseUInt32结果写入TokenReq+B4，原生writer输出**tag10/uint32/sub_channel_id**。4组输入456、FFFFFFFF、溢出、无效文本通过；失败走原生默认0路径。此字段进入映射，累计26个有界业务字段来源。
+
+六个会话来源只记录原始偏移：+78→请求+18/tag9、+F8→+40/tag2、+B0→+70/tag965、+138→+B0/tag3、+13C→+A4/tag15、+15F→+C4/tag11。验证非空/空字符串、非零/uint32上界和bool真假，不按旧schema或邻近字段猜业务名称。另验证opaque helper→+90/tag623、常量4→+98/tag1184、三个未命名全局→tag83/1206/561。这里也不将常量4命名为key_id。构造原生路径将145878FC0置1，与解密后置0的观察对应，其业务名仍未晋级。
+
+四组原生构造到发送入口、完整writer及独立tag/type/value断言通过；133项研究/映射/盘点测试通过（前113项+盘点8项+复核7项+本项5项）。trace与摘要重复一致，普通映射校验通过、ready退出1。校验器拒绝源key/tag/type漂移、额外SDK语义声明及把不透明密码学边界改称执行成功。未修改运行源码/主Proto/配置/补丁/资源，无重启；D-02仍未验收。
+
+```powershell
+python tools/trace_client72_token_constructor.py --client $env:GAME_PATH --output local/migration72/evidence/token-constructor-trace.json --summary-output protocol/cn-7.2/token-constructor-observations.json
+python -m unittest tools.test_client72_token_constructor tools.test_client72_login_constructor tools.test_validate_protocol72 -v
+```
+
+证据：`evidence/token-constructor-{trace,determinism}.json`、`logs/token-constructor-tests.log`；共享摘要`token-constructor-observations.json`。下步接发送入口的原生路由/队列，或恢复会话字段的上游SDK来源；15121DB40的Shell 0x64与响应解密/验签继续独立处理。

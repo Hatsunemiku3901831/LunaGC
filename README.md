@@ -15,7 +15,7 @@
 
 另已完成555,919个方法参数及835个Action实例的参数恢复，并通过离线CPU模型观察TokenReq保护writer的28字段，见[签名研究](docs/CLIENT_72_SIGNATURES.md)和[保护入口](docs/CLIENT_72_PROTECTED.md)。后续[Login请求](docs/CLIENT_72_LOGIN_WIRE.md)已补齐55外层字段、12消息83字段；[两个响应](docs/CLIENT_72_RESPONSE_WIRE.md)已定位85外层字段，另7个叶子30字段已双向恢复；[非空响应对象图](docs/CLIENT_72_GRAPH_READERS.md)现已覆盖18消息137字段的离线读取、map/list与oneof合并行为，仍保留明确的托管运行环境模型限制。这些结果没有替换服务端协议或放开版本准入。
 
-[登录语义](docs/CLIENT_72_LOGIN_SEMANTICS.md)和[会话研究](docs/CLIENT_72_SESSION.md)已确认四个Token/Login请求/响应身份与CmdID、25个字段来源和8枚举102符号，并验证解密后seed及指定环境Login构造。Token完整构造、发送、解密/验签和其余字段仍保留未验/未知。
+[登录语义](docs/CLIENT_72_LOGIN_SEMANTICS.md)和[会话研究](docs/CLIENT_72_SESSION.md)已确认四个Token/Login请求/响应身份与CmdID、26个字段来源和8枚举102符号，并验证解密后seed及指定环境Login构造。Token完整构造、发送、解密/验签和其余字段仍保留未验/未知。
 
 [固定7.2资源候选](docs/CLIENT_72_RESOURCE_CANDIDATE.md)已完成七表与849条选定正引用审计；revision对齐、Lua/场景与完整最小资源仍待验证，未替换运行资源。
 

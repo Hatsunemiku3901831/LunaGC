@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-静态结构、Token/Login原始wire及响应非空对象图已离线恢复；四个登录请求/响应业务身份与CmdID、25个字段来源、8枚举102符号现有目标证据。解密后seed与Java密钥逐字节一致，token保存/参数链已分段验证，Login构造在明确旧Shell/非云夹具中已到发送入口。Token完整构造/发送、解密验签及剩余字段继续研究，A-04d/B-02保持进行中。隔离研发服务已部署，但没有7.2可连接构建，客户端验收全部待执行。本机路径、初始差异、报告和日志在忽略的 local/migration72/；公共摘要放 docs/ 和 protocol/cn-7.2/。
+静态结构、Token/Login原始wire及响应非空对象图已离线恢复；四个登录请求/响应业务身份与CmdID、26个字段来源、8枚举102符号现有目标证据。解密后seed与Java密钥逐字节一致，token保存/参数链已分段验证，Login构造在明确旧Shell/非云夹具中已到发送入口。Token完整构造/发送、解密验签及剩余字段继续研究，A-04d/B-02保持进行中。隔离研发服务已部署，但没有7.2可连接构建，客户端验收全部待执行。本机路径、初始差异、报告和日志在忽略的 local/migration72/；公共摘要放 docs/ 和 protocol/cn-7.2/。
 
 已有资源修改 ScriptSceneData/flat.luas.scenes.full_globals.lua.json 不属本批，不覆盖、不提交。patch 起点 f287410，resources 起点 dac2a9d。初查时Java/MongoDB归属本工作区且配置引用旧客户端/存档；随后隔离研发部署记录见ENV-01。下一次启动仍须重新核对配置与进程，不能将历史部署结果当作当前验收或清空原数据。
 
@@ -16,16 +16,16 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | DOC-01 接手骨架 | 无 | AGENTS、README、Project、Harness | 职责分明、路径/便携约束正确、已知与计划分离，核对脚本和 diff | 已完成 | 四份文档；3af414d | 后续批次持续更新 |
 | A-01 固定客户端和环境 | DOC-01 | audit_client、verify_client_manifest、输入摘要 | 版本/渠道/关键 SHA-256、逐清单大小/摘要、Git/进程/配置/依赖归属；明确缺件 | 已完成 | docs/CLIENT_72_EXTRACTION.md、local/migration72/evidence/manifest-full.json；34ee887 | 输入改变后重新核验；来源认证/游戏验收另列 |
-| A-02 服务端协议表面 | DOC-01 | inventory_protocol、报告、旁路清单 | 实际 Handler/发送包/别名/负占位/配置/字面量全盘点，动态调用人工复核 | 已完成 | CLIENT_72_PROTOCOL_INVENTORY、server-surface-review.json；本批提交 | 17位置/10组来源已复核；开放插件/配置边界交A-03/C-01，不代表运行期闭包 |
+| A-02 服务端协议表面 | DOC-01 | inventory_protocol、报告、旁路清单 | 实际 Handler/发送包/别名/负占位/配置/字面量全盘点，动态调用人工复核 | 已完成 | CLIENT_72_PROTOCOL_INVENTORY、server-surface-review.json；e87baa7 | 17位置/10组来源已复核；开放插件/配置边界交A-03/C-01，不代表运行期闭包 |
 | A-02a 确定性静态盘点工具 | DOC-01 | inventory_protocol、8项测试 | 忽略注释/字符串、继承链排除发送类假冲突、动态项不猜测、重复输出一致 | 已完成 | server-inventory.json、inventory-tests.log；34ee887 | 作为A-02/A-03输入 |
-| A-02b 动态来源复核守卫 | A-02a | review_protocol72_surface、人工清单、7项测试 | 全17动态位置/40来源hash/常量绑定/37数字case；新增或漂移拒绝，开放边界不晋级，重复一致 | 已完成 | CLIENT_72_PROTOCOL_INVENTORY、evidence/server-surface-review.json；本批提交 | C-01校验事件后最终包，禁候选兜底并拒绝注册冲突 |
+| A-02b 动态来源复核守卫 | A-02a | review_protocol72_surface、人工清单、7项测试 | 全17动态位置/40来源hash/常量绑定/37数字case；新增或漂移拒绝，开放边界不晋级，重复一致 | 已完成 | CLIENT_72_PROTOCOL_INVENTORY、evidence/server-surface-review.json；e87baa7 | C-01校验事件后最终包，禁候选兜底并拒绝注册冲突 |
 | A-03 登录入场依赖闭包 | A-02 | P0根、调用边、Proto引用图、复核表 | 完整覆盖新旧号、选人、初始化、场景、嵌套；人工和客户端复核 | 进行中 | 静态起点114名称/471文件，见协议盘点摘要；— | 追踪管理器/事件/脚本，结合真实序列收敛 |
 | A-04 7.2 提取器 | A-01 | extract_client72、profile、研究记录 | 类型/成员/泛型/父类/布局/注册与CmdID候选有证据，边界及抽样验证 | 进行中 | docs/CLIENT_72_EXTRACTION.md；— | 保护入口/回调参数及运行时闭合泛型ABI仍需恢复 |
 | A-04a 目标名称/字段/方法基础提取 | A-01 | extract_client72、7项测试 | 三份目标哈希守卫；独立名称向量；全部跨度/引用/代码地址校验；不把常量返回值标作包号 | 已完成 | client72-metadata.json、extraction-summary.json、提取研究摘要；34ee887 | 89,748类型/445,462字段/741,021方法供A-04后续分析 |
 | A-04b 泛型/父类/静态布局 | A-04a | extract_client72 --structures、test_client72_structures、提取摘要 | 全泛型行/引用边界、父图无环、字段存储分类；未知布局保留未知，目标全量运行和13项测试 | 已完成 | client72-structures.json、structures-summary.json、logs/structures-tests.log；2003432 | 运行时闭合泛型和多维bounds仍需另验；供wire字段定位 |
 | A-04c getter网络语义和静态包号 | A-04b | extract_client72_commands、commands.json、CLIENT_72_NETWORK | 两个发送调用点与封/解包闭环，槽/祖先/方法字向量及歧义测试，确定性提取；不冒充业务名称 | 已完成 | 网络研究摘要、commands-summary.json、commands-tests.log；333b628 | 4,012类型/4,007值；5组重号域未知；追踪业务与热修复 |
 | B-01 映射模型及校验 | A-02a | protocol/cn-7.2、validate_protocol72、11项测试 | 三层状态/来源/歧义/别名，字段容器/引用及目标哈希校验，未知可保存但拒绝ready | 已完成 | protocol/cn-7.2/README.md；99d5a6c | 继续研究真实映射；拆合并语义由证据人工审批 |
-| B-02 P0 三层映射 | A-03、A-04、B-01 | CmdID/message/field 表、wire fixture | 全部 P0 tag/类型/枚举/容器/嵌套有证据，非零/64 位/错误/边界测试 | 进行中 | CLIENT_72_NETWORK、CLIENT_72_SESSION；— | 四个登录身份/25字段来源已确认；继续完整构造/发送、剩余字段和P0闭包 |
+| B-02 P0 三层映射 | A-03、A-04、B-01 | CmdID/message/field 表、wire fixture | 全部 P0 tag/类型/枚举/容器/嵌套有证据，非零/64 位/错误/边界测试 | 进行中 | CLIENT_72_NETWORK、CLIENT_72_SESSION；— | 四个登录身份/26字段来源已确认；继续完整构造/发送、剩余字段和P0闭包 |
 | B-02a 包头/心跳静态wire | A-04b、A-04c、B-01 | extract_client72_wire、wire-observations、research.proto、check_client72_wire_proto | 14个实例字段tag/offset/标量/bytes与writer匹配、包头读写交叉、确定性生成、独立非零/64位/边界wire断言；业务未知保留未知 | 已完成 | CLIENT_72_NETWORK；p0-research-tests.log（37项）、wire-proto-tests.log（9项）；c9abee3 | 回调闭合前PingReq业务名仍candidate；不代替B-02或实机验收 |
 | A-04d 登录保护入口与回调类型 | A-04b、A-04c | 原生控制流、方法/泛型签名、受控观察工具 | Token/Login读写真实数据流有证据，响应回调与类型匹配；不得按保护字节线性猜测 | 进行中 | CLIENT_72_SIGNATURES、CLIENT_72_PROTECTED、CLIENT_72_SESSION；— | 请求/响应身份、seed后段/token链已确认；继续完整保护构造/成功处理与未覆盖字段 |
 | A-04d1 方法参数和Action回调参数 | A-04b | extract_client72_signatures、CLIENT_72_SIGNATURES、测试 | 全参数跨度连续/边界与引用校验，独立向量、BYREF及VAR/MVAR区别；闭合Action参数可复现，未恢复项明确保留 | 已完成 | client72-signatures.json、signatures-summary.json、signatures-tests.log（12项）；ce9e3ae | 555,919参数、901条Action引用/835实例；返回类型和泛型方法实例另验 |
@@ -39,7 +39,7 @@
 | A-04d3c2 map泛型AOT注册关联 | A-04d3c1 | extract_client72_map_aot、map-aot-observations、CLIENT_72_MAP_AOT | 从目标代码恢复12/14字节表关系；全函数引用范围检查；具体/共享入口同址；21选定注册与4项边界测试、重复输出一致 | 已完成 | CLIENT_72_MAP_AOT；map-aot-determinism、a04d3c-aot-tests.log；ce45b47 | 支持原生map adapter/SetItem执行，合成运行时上下文仍明确标注 |
 | A-04d3c3 原生响应对象图读取 | A-04d3c1、A-04d3c2 | client72_graph/map_runtime/graph_fixtures、trace_client72_graph、response-graph.proto/observations | 7叶子接回父响应、3map/列表/HML全部oneof分支及重复合并；34原始+34protoc输入、6边界拒绝、重复产物一致，模型边界明确 | 已完成 | CLIENT_72_GRAPH_READERS；response-graph-trace/determinism、a04d3c-graph-tests.log；242b1fb | 模型仍限定ASCII/基础无IFix路径；继续业务字段、枚举符号及回调身份确认 |
 | A-04d4a 登录标记与枚举常量 | A-04d1、A-04d3c | extract_client72_literals/enums、check_client72_metadata_values、原始符号表 | 目标usage source/slot分别恢复、4标记原生解码；6枚举70符号、14原生常量读取、5边界/独立向量测试通过 | 已完成 | CLIENT_72_LOGIN_SEMANTICS；metadata-values-native.json；a9ba540 | 连接Handler、业务字段与wire；平台来源枚举不当作网络枚举 |
-| B-02c Token/Login身份与字段来源 | A-04d4a、A-04d3c | 登录语义观察表、native受控样本、候选表/校验 | 注册/分派/参数/目标自身标记闭合；字段来源与wire关联，未知保留，独立回归 | 进行中 | CLIENT_72_LOGIN_SEMANTICS、CLIENT_72_SESSION；— | 四个登录身份/25字段已闭合；继续其余字段与完整受控业务路径 |
+| B-02c Token/Login身份与字段来源 | A-04d4a、A-04d3c | 登录语义观察表、native受控样本、候选表/校验 | 注册/分派/参数/目标自身标记闭合；字段来源与wire关联，未知保留，独立回归 | 进行中 | CLIENT_72_LOGIN_SEMANTICS、CLIENT_72_SESSION；— | 四个登录身份/26字段已闭合；继续其余字段与完整受控业务路径 |
 | A-04d4b 两个上游响应身份 | A-04d4a、A-04d1 | trace_client72_login_semantics、literal/参数/getter/注册/分派证据 | 27808/20835实际分派、6独立wire错误前缀命中目标自身标记；4包装参数样本纠正层级 | 已完成 | CLIENT_72_LOGIN_SEMANTICS、login-semantics-trace；010f0c4 | 请求配对、完整成功/错误处理与实机仍另验 |
 | B-02c1 二十字段业务来源 | A-04d3c、A-04d4b | login-semantic-observations、mappings、校验和测试 | 14请求字段两组来源到原生wire；4响应全局消费者及2错误值，未知不晋级；87项回归、确定性复跑 | 已完成 | CLIENT_72_LOGIN_SEMANTICS、login-semantics-tests.log；010f0c4 | 剩余字段/请求配对；原始枚举与业务字段命名分别管理 |
 | A-04d5a 解密后seed与会话密钥 | A-04d4b | client72_session_runtime、trace_client72_session、Java独立对照 | 明确解密后边界，原生整数存储/字节序/XOR/MT64/4096字节写入；12组Java逐字节对照、6短输入原生拒绝、确定性复跑 | 已完成 | CLIENT_72_SESSION、session-seed-trace/determinism、session-all-tests.log；0f324eb | 前段解密/验签/Shell与完整Handler仍待验证 |
@@ -47,6 +47,7 @@
 | A-04d5b 请求身份与阶段配对 | A-04d4b、B-02c2 | trace_client72_request_identity、阶段枚举、映射/校验 | 阶段方法签名/原生常量/请求构造self-class/响应前缀/原生getter交叉，6组样本和100项回归、重复一致 | 已完成 | CLIENT_72_SESSION、request-identity-trace/determinism；70f3e5b | 四个登录身份已闭合，完整构造/发送及字段闭包仍待验 |
 | A-04d5c / B-02c3 Login构造与SDK来源 | A-04d5b、B-02c2 | trace_client72_login_constructor、SDK字段映射与校验 | 明确旧Shell/非云输入，真实保护构造到发送入口；3组来源→对象→writer，UInt32上界/溢出/无效、未知Shell语义不晋级、105项回归和重复一致 | 已完成 | CLIENT_72_SESSION、login-constructor-trace/determinism；cde97d4 | Token构造、发送队列、其余字段及密码学前段 |
 | A-04d5d client seed来源 | A-04d5a | SessionRuntime72、session-seed-trace/observations | Random.NextDouble槽/2^64常量/原生转换/同值返回与保存，10组边界输入、既有18组后段及106项回归、重复一致 | 已完成 | CLIENT_72_SESSION、client-seed-source-tests.log；e716da8 | 15121DB40的Shell操作0x64/密文构造仍未知 |
+| A-04d5e / B-02c4 Token构造外段与SDK来源 | A-04d5c、A-04d5d | trace_client72_token_constructor、映射/边界校验 | 15121DB40明确opaque输入；其余构造到send入口，4组tag10来源与原始会话字段wire断言、133项回归、确定性 | 已完成 | CLIENT_72_SESSION、token-constructor-trace/determinism；本批提交 | 密文helper未执行，继续发送队列/会话来源与密码学前段 |
 | B-03 确定性生成 | B-01、B-02 | generator、PacketOpcodes、Proto | 只生成核实项，别名/引用检查，重复输出一致，protoc 编译，禁止旧号兜底 | 待开始 | — | 合成模型测试，再接真实映射 |
 | C-01 双向网络接入 | B-03 | GameSession、BasePacket、Handler 注册、UnionCmd/枚举 | 注册冲突失败、号/长度边界、内外分派、目标 wire 测试，构建部署 | 待开始 | — | 映射确认后替换旧表和专属断言 |
 | D-01 补丁和连接前置 | A-01、A-04 | patch、HTTP/SDK/dispatch/密钥 | 路由/渠道/版本/加密、各钩子 ABI/布局/实际加载验证 | 阻塞 | 旧特征仅静态扫描，缺目标 ABI；— | 分析必需钩子，区分商城可选项 |
@@ -62,7 +63,7 @@
 
 ## 阻塞与尝试
 
-- B-02：PingRsp歧义、四个登录身份/CmdID、25字段及8枚举102符号已闭合；请求writer与响应非空对象图已恢复。解密后seed、token保存/参数链已分段验证；完整构造/发送、seed前段解密/验签、其余字段与P0闭包未完成。Login指定旧Shell/非云环境已到151214D20发送入口；Token构造与新Shell分支仍有原生SDK环境缺口。不能给未知helper默认成功或自动扩展已确认字段。
+- B-02：PingRsp歧义、四个登录身份/CmdID、26字段及8枚举102符号已闭合；请求writer与响应非空对象图已恢复。解密后seed、token保存/参数链已分段验证；完整构造/发送、seed前段解密/验签、其余字段与P0闭包未完成。Login指定旧Shell/非云环境已到151214D20发送入口；Token构造外段现已在15121DB40不透明边界下到发送入口；密文helper与新Shell仍有原生SDK环境缺口。不能给未知helper默认成功或自动扩展已确认字段。
 - D-01：静态命中不是 ABI 证明；解除条件为 P0 钩子的参数/布局/加载和实际连接验证。
 - E-01：运行资源仍为7.1混合来源。已固定7.2上游候选并核验七表/849引用，但其revision标签与本机内置文件数值集不同；热更新状态、必需Lua/场景/其余引用未闭合。不得覆盖资源或靠修改版本文字解除。
 - 安装一致性已核验：7,830条全部大小/MD5匹配；zip_tmp仍存在。此结果不认证清单来源、不代表运行热修复资源齐全。
@@ -73,7 +74,7 @@
 
 - 本批研究：安装全清单通过，目标静态提取与协议盘点工具已实现。53项研究/原有脚本测试、8项盘点测试通过（原始日志留local）；服务端基线构建通过。独立研发数据配置已准备，首次部署因测试JVM占用UDP未通过，正常停止并等测试退出后，最终部署健康、端口与JAR哈希均核对通过。
 
-下一项：A-04d/B-02 继续15121FF70的Token构造到151214D20发送队列、seed解密验签前段与剩余字段。Login指定环境构造、会话token链和四个登录身份已单独验收。独立可做A-02动态包号、A-03管理器依赖及新找到7.2资源快照核查。B-02整体仍未达到服务端生成条件。
+下一项：A-04d/B-02 继续15121FF70的Token构造到151214D20发送队列、seed解密验签前段与剩余字段。Login指定环境构造、会话token链和四个登录身份已单独验收。A-02动态包号已复核；独立可做A-03管理器依赖及新找到7.2资源快照核查。B-02整体仍未达到服务端生成条件。
 
 - 验证补充：完整Java测试集实际运行10,563项，217失败、0跳过，已保留full-test-results和full-test-summary.json，不宣称全绿。新JVM单独重跑账号创建、UID预留、登录准入、写队列、写栅栏回归通过；共133项；HTTP冒烟2项通过。便携路径修复后SkillReadyPredicate35项通过；完整集没有再次全跑，仍不得宣称全绿。最终服务健康/TCP/UDP/hash核对通过，详情见docs/CLIENT_72_RESEARCH_VALIDATION.md。
 
@@ -118,3 +119,5 @@
 - E-01a：新增只读audit_resource72，校验固定commit→真实根tree→Excel tree→七个blob的完整性并比较稳定ID；849条选定正引用、必要选人/入场ID无缺失，记录新增/共同值/字段有无差异。内置revision与上游标签不同且Lua/场景未闭合，resourceReady=false；E-01转进行中，不标完成。7资源测试与现有106项合计113通过，真实审计重复一致。未修改/提交resources或运行配置，无部署。
 
 - A-02/A-02b：完成17动态位置来源、37数字case域及5类开放边界复核，新增40源码hash清单与漂移拒绝工具。15项盘点/复核测试通过，重复报告一致；源码盘点标完成，运行插件/P0闭包/7.2协议仍未验收。明确C-01需校验事件后最终包、拒绝候选兜底与注册覆盖。未改运行代码、Proto、配置或资源，无部署；继续Token构造和发送队列。
+
+- A-04d5e/B-02c4：Token构造外段在明确opaque密文helper边界下到达发送入口，SDK sub_channel_id→tag10新增为第26字段；6原始会话来源及5其他原始来源保持未知语义。4组原生/wire样本、133项回归和确定性复跑通过；ready仍拒绝。未改运行代码/配置/资源，无部署，D-02仍待前置。
