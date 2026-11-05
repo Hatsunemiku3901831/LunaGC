@@ -44,7 +44,7 @@ def symbols(row, table, metadata, data_base):
                 underlyingType=kind,values=values,semanticStatus='target-symbols-only')
 
 
-def recover(binary, metadata, records):
+def recover(binary, metadata, records, *, indices=SELECTED):
     pe=PE(binary);h=pe.offset(HEADER_VA)
     base=BODY+((number(binary,h+0x1d8)+0xde66f77a)&MASK32)
     size=number(binary,h+0x1f4)^0x159a5178
@@ -54,7 +54,7 @@ def recover(binary, metadata, records):
     refs=pe.offset(number(binary,mr,'Q'),count*16)
     if any(r['typeIndex']>=count for r in table.values()):raise ValueError('Default type reference out of bounds')
     by_id={r['index']:r for r in records}
-    selected=[symbols(by_id[i],table,metadata,data) for i in SELECTED]
+    selected=[symbols(by_id[i],table,metadata,data) for i in indices]
     for enum in selected:
         for value in enum['values']:
             kind=(number(binary,refs+value['typeIndex']*16+8)>>16)&255

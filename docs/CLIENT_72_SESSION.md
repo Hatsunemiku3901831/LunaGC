@@ -440,3 +440,29 @@ python -m unittest tools.test_client72_handler_tail
 ```
 
 证据`evidence/handler-tail-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json`，日志`logs/handler-tail-{run,repeat,focused-tests,regression}.log`。下一段15A4E0DC7后读取GameManager.Instance/GLOBAL+B6D0；1507C0BB0可转1507C21B0，后者时间条件后从session+98读取token调用151213730。必须核对状态/环境输入及真实调用后再接Login，不能跳过未知分支。
+
+## A-04d5q 连续Handler到Login构造与发送封包入口
+
+正式入口`trace_client72_handler_login`。同一CPU执行从1507BE0E0经原有warmup/密码学/UID/token保存、版本哈希、实际Login/Full状态分支、Action调用、1507C0BB0/1507C21B0、151213730完整Login构造、151214D20发送队列/接口/具体传输，停止14A447E00封包体入口。阶段真实记录[9,6]。发送仍处于Handler嵌套调用中，没有返回整个Handler，没有执行封包体/XOR/socket或实机登录。
+
+响应token原指针经session+98到request+D8/tag1，原生GLOBAL+11B90 hash原指针到request+60/tag1996；实际版本拼接还进入tag9。三成功样本分别覆盖非零、UInt32全1与大于32位的sent_ms、高数字token文本、空token/空版本与零包头，独立wire断言通过。发送前后request对象逐字节不变，包内CmdID由实际getter取得23172。SendFlow72只在真正进入151214D20时安装其既有对象池/传输输入，不重置CPU、不回填token/hash。
+
+独立恢复的运行声明与输入：
+
+- GameManager50103.Instance raw0x400B6D0→实例+20类型59570→+18 WorldType11326。默认常量Login=0、Level=2。GlobalVars.packageType raw0x2001904/14586CF14为PackageType11334，Full=5、Medium=2、PlayGo=3；不能将2当普通登录或3当Windows平台。
+- Action的MethodInfo cell145A00A40由usageRow749199/kind3/method467563独立绑定owner56238、目标1507C0BB0；实际14BB76A31尾调用保留目标、receiver和MethodInfo。类型usage698995/702787/708398分别绑定Action142、82313及闭包63102。
+- 明确GameManager Login、Full包状态、辅助对象+30缓存配置（+76=false）、GLOBAL+111B0原始presence/+3B=false，以及engine selector7时钟storage。这些是离线输入，不声称已读取真实启动状态；raw gate字段业务名仍未知。native clock读取、double→float、与manager+208比较均执行。
+- Constructor环境先于Handler安装，保留原account+50输入并共享NumberFormatInfo；关闭Ctor重复literal hook，保留单一实际字符串存储。移除Ctor对GetUniversalGameVersion和双字符串Concat的模型，使版本拼接实际执行。SDK/设备/old Shell输出与传输选择仍为已有明确夹具。
+
+9组分支：三成功；时钟相等/小于门槛→1507B9A50延迟处理入口；缺GameManager→15A4E1B99；缺gate对象→1507C0CBD；Medium包且配置标志false→14BB767E3下载分支；坏签名→15A4E0645。后三类前置/时钟/包状态停止均发生在密钥安装后，不能统称密码学拒绝；只有坏签名没有安装密钥。六非发送样本均未构造Login。所有8组已安装密钥与独立Java MT64 4096字节相等。
+
+默认enum提取器增加可选indices，以复用完整默认表/类型校验。原8枚举102符号默认输出与修改前逐字节一致；本报告另保存WorldType/PackageType两类20符号，不将其自动声明为网络枚举。响应tag1/3/658及Token请求tag965保持未知，四登录消息业务字段仍36。
+
+204项研究回归通过；9组trace/摘要二次逐字节一致，研究校验0、ready1（213项未满足）。本地信任替换明确保持为私钥签名、服务器公钥及签名、根PEM输入；不替换验证结果。没有运行Java/主Proto/配置/补丁/资源修改，不需部署重启。
+
+```powershell
+python tools/trace_client72_handler_login.py --client $env:GAME_PATH --java-home $env:JAVA_HOME --output local/migration72/evidence/handler-login-trace.json --summary-output protocol/cn-7.2/handler-login-observations.json
+python -m unittest tools.test_client72_handler_login
+```
+
+证据`evidence/handler-login-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json`及`enum-after-handler-login-check.json`，日志`logs/handler-login-{run,repeat,focused-tests,regression}.log`。本项完成后按用户要求暂停；后续须待用户恢复再继续14A447E00封包体或P0依赖闭包，不自动启动下一项。
