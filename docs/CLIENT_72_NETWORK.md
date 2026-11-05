@@ -151,3 +151,24 @@ python -m unittest tools.test_client72_frame_reader
 ```
 
 18原生样本二次trace/摘要逐字节一致，216研究回归通过，研究校验0/ready1；首次独立测试把12字节header手算成11，核对明确字节向量后修正测试预期，没有改变原生结果。共享摘要固定输入hash；日志及确定性报告见Harness。没有运行代码/Proto/配置/补丁/资源改动，不部署。下一步真实payload/密钥来源串联或P0闭包。
+
+
+## A-04d5t 连续Token构造与真实序列化封包
+
+`trace_client72_token_frame`在同次CPU运行中从15121FF70执行原生seed helper验签/加密/Base64、Token字段构造、151214D20队列/选定transport，再进入14A447E00调用Token真实槽13 CalculateSize1500C16E0及槽17保护writer1500C2660，最终完整帧返回到原调用者。仅在首次send入口安装显式池/虚表/stream存储，**不重置CPU/寄存器、不复制request字段、不回填seed到request**。Frame72遗留opaque body回调在本类明确拒绝调用。
+
+原始request指针经envelope/packet不变，seed helper返回指针仍是request+90/tag623；整个request对象在封包前后逐字节不变。按已独立恢复的全部28字段表，对实际内存值和解密后的wire逐字段比较，拒绝额外/重复字段。完整加密帧再与独立帧表达式比较；header与body长度由真实size/writer生成，不传入预计算payload。
+
+编码来源：Encoding类型443的命名utf8Encoding静态槽raw040024B8，先放入明确缓存实例，再执行1517676B0.cctor实际写GLOBAL+10770。虚槽11 GetByteCount(string)、19 GetBytes(string,int,int,byte[],int)声明已核对，编码操作以Python严格UTF-8作为明确模型；实际string writer15171FE80的ASCII快速分支/非ASCII输出分支及size1517204C0均执行原生代码。不覆盖无效UTF-16代理对/真实编码器初始化；不可将它与版本hash的ASCIIEncoding混淆。
+
+6组：seed零值/最大Random输入、中文+补充字符+NUL、四个1000字符来源令帧长4486越过4096字节周期、未初始化、坏签名。4成功seed结果344字节Base64；两错误样本原生返回空seed但外层仍完成发送（分别184字节帧），没有强迫密码学成功。两槽4096字节frame key是明确数组，构造器自身把selector写1，确认选中GLOBAL+19588；**真实初始frame key来源仍未验**。
+
+```powershell
+$env:GAME_PATH = & ./tools/game_path.ps1
+python tools/trace_client72_token_frame.py --client $env:GAME_PATH --output local/migration72/evidence/token-frame-trace.json --summary-output protocol/cn-7.2/token-frame-observations.json
+python -m unittest tools.test_client72_token_frame
+```
+
+6原生样本重复trace/摘要一致，222研究回归通过；研究校验0/ready1。没有运行Java/Proto/配置/补丁/资源修改，无部署。SDK/OS/old Shell、所选transport、缓存/池和初始frame key仍为明确夹具；尚未覆盖socket、真实Login/响应串联或D-02。首轮组合错误源于独立.cctor把初始栈返回地址留为RETURN，后续SessionRuntime初始化误跳；现仅恢复研究harness END哨兵，未改变目标代码。
+
+用户2026-11-05补充允许按实际情况动态调试。本机已准备[x64dbg官方固定发布2026.05.27](https://github.com/x64dbg/x64dbg/releases/tag/2026.05.27)，ZIP按官方GitHub资产SHA-256 d41966dfc5b435a372798245300ca0ab7bb8e48bdbf48512c6fb20fcca427697核验；放在忽略local/runtime，不注册系统调试器。来源与下载报告在local/migration72/evidence/debugger-{release,install}.json。下一步受控启动观察仍需记录真实PID/模块/状态，工具准备不构成动态或实机验收。

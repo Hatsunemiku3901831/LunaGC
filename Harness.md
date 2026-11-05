@@ -193,3 +193,6 @@ Handler→Login正式入口：`trace_client72_handler_login`，见[会话研究A
 
 
 原生收帧入口：`trace_client72_frame_reader`，见[网络研究A-04d5s](docs/CLIENT_72_NETWORK.md#a-04d5s-独立收帧解密包头及错误边界)。18原生样本、216研究回归、重复产物通过；`evidence/frame-reader-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json`与`logs/frame-reader-{run,repeat,regression}.log`。实际BitConverter.cctor/包头reader/标量helper/端序/XOR/尾标记执行，factory与body消费是明确模型。早期探索漏IsLittleEndian初始化导致假长度错误，正式执行159B548E0修正，不能当客户端故障。下一项真实payload与seed串联或P0闭包；D-02未验，目标active。
+
+
+连续Token完整帧：`trace_client72_token_frame`，见[网络研究A-04d5t](docs/CLIENT_72_NETWORK.md#a-04d5t-连续token构造与真实序列化封包)。6原生样本、222研究回归，二次trace/摘要一致；evidence/token-frame-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json、logs/token-frame-{run,repeat,regression}.log。原生seed/构造/queue/size/writer/frame同CPU，不用opaque body；UTF-8缓存及编码方法、SDK/OS/初始key仍是明确夹具。Frame cctor单独执行后恢复栈END哨兵，避免SessionRuntime初始化误跳旧RETURN；不能把该夹具错误当目标故障。用户已允许按实际需要动态调试；本机官方固定x64dbg来源/摘要在evidence/debugger-{release,install}.json，二进制在忽略local/runtime，目标调试尚未验。

@@ -1,0 +1,199 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "runtimeStatus": "not-tested",
+  "fixtureCount": 6,
+  "results": [
+    {
+      "name": "zero-seed",
+      "cmdId": 24604,
+      "stages": [
+        8
+      ],
+      "requestPointerPreserved": true,
+      "requestUnchanged": true,
+      "seedPointerPreserved": true,
+      "seedWireLength": 344,
+      "signatureAccepted": true,
+      "ioctlReturn": 0,
+      "frameLength": 520,
+      "payloadLength": 508,
+      "frameSHA256": "5cd56868b13767131ac2caaf68c6ce94a41b61fa63e5cfc9a00095a8bacd547b",
+      "payloadSHA256": "fb5625b20168de397dce493088381fe8bfd3bdde4aed015f4e12559104800631",
+      "headerWire": "",
+      "selector": 1,
+      "encodingCalls": {
+        "GetByteCount": 14
+      },
+      "nativePathSHA256": "1edf97c67b815b487baa0653d137fbe0b6bdcf2e0367e226b70d59e085477382",
+      "allFieldWireComparison": true
+    },
+    {
+      "name": "high-seed",
+      "cmdId": 24604,
+      "stages": [
+        8
+      ],
+      "requestPointerPreserved": true,
+      "requestUnchanged": true,
+      "seedPointerPreserved": true,
+      "seedWireLength": 344,
+      "signatureAccepted": true,
+      "ioctlReturn": 0,
+      "frameLength": 535,
+      "payloadLength": 511,
+      "frameSHA256": "2e1ddc68bfeed02d98adc876f6b3339a7a9ed2a6801ca73d48ebf3ab92c79cca",
+      "payloadSHA256": "9af9a62d7936132ff4d50ab87012220bb8386b5d6c7b5bba697ede38340a8b95",
+      "headerWire": "18ffffffff0f30c480808020",
+      "selector": 1,
+      "encodingCalls": {
+        "GetByteCount": 14
+      },
+      "nativePathSHA256": "0b2901c7d419f7aeb794f0951fb0988653e940294696bcdadf2429a93024dc0c",
+      "allFieldWireComparison": true
+    },
+    {
+      "name": "unicode",
+      "cmdId": 24604,
+      "stages": [
+        8
+      ],
+      "requestPointerPreserved": true,
+      "requestUnchanged": true,
+      "seedPointerPreserved": true,
+      "seedWireLength": 344,
+      "signatureAccepted": true,
+      "ioctlReturn": 0,
+      "frameLength": 550,
+      "payloadLength": 526,
+      "frameSHA256": "3b1cee537629abdc14815ed98f33f01e06449b6a2797ed8d7cdbec8c0d0cd79f",
+      "payloadSHA256": "f388a50f6de5c905444605cc97b847c9bf6106e15deca15fe2ad200d11820d14",
+      "headerWire": "18ffffffff0f30c480808020",
+      "selector": 1,
+      "encodingCalls": {
+        "GetByteCount": 14,
+        "GetBytes": 4
+      },
+      "nativePathSHA256": "f058d0e9c2c39610387b1ec46e6290a96f651dc3b47bba246e7fce8b7786b312",
+      "allFieldWireComparison": true
+    },
+    {
+      "name": "key-wrap",
+      "cmdId": 24604,
+      "stages": [
+        8
+      ],
+      "requestPointerPreserved": true,
+      "requestUnchanged": true,
+      "seedPointerPreserved": true,
+      "seedWireLength": 344,
+      "signatureAccepted": true,
+      "ioctlReturn": 0,
+      "frameLength": 4486,
+      "payloadLength": 4462,
+      "frameSHA256": "a13e75d618623455a7b08aab8908a557ce285bb9ab209190d7d10158f155d16e",
+      "payloadSHA256": "a8bcd3c9feb42c2b66283dbd94efd2f10e552efdd26939cab3d2cf81de79999c",
+      "headerWire": "18ffffffff0f30c480808020",
+      "selector": 1,
+      "encodingCalls": {
+        "GetByteCount": 14
+      },
+      "nativePathSHA256": "d3958e244c9785b0d664c6c731cca0addec2e0436ccfece7e2dd19bc7e24a1ae",
+      "allFieldWireComparison": true
+    },
+    {
+      "name": "not-initialized",
+      "cmdId": 24604,
+      "stages": [
+        8
+      ],
+      "requestPointerPreserved": true,
+      "requestUnchanged": true,
+      "seedPointerPreserved": true,
+      "seedWireLength": 0,
+      "signatureAccepted": null,
+      "ioctlReturn": -2,
+      "frameLength": 184,
+      "payloadLength": 160,
+      "frameSHA256": "26e47eb04730cb6a50f4f008d2dabb58f82a0e5767505f981cb23dfbbb671c22",
+      "payloadSHA256": "0932be3b38810a4ce00acae518f82ea5c638dc3158bddf08a6d5c0d5510fb190",
+      "headerWire": "18ffffffff0f30c480808020",
+      "selector": 1,
+      "encodingCalls": {
+        "GetByteCount": 12
+      },
+      "nativePathSHA256": "0623f868516b44d736096f5421e10a0fa973b5e4cdff7ef1ab8dbe9f68ee6191",
+      "allFieldWireComparison": true
+    },
+    {
+      "name": "bad-signature",
+      "cmdId": 24604,
+      "stages": [
+        8
+      ],
+      "requestPointerPreserved": true,
+      "requestUnchanged": true,
+      "seedPointerPreserved": true,
+      "seedWireLength": 0,
+      "signatureAccepted": false,
+      "ioctlReturn": -7,
+      "frameLength": 184,
+      "payloadLength": 160,
+      "frameSHA256": "b33b6c5ccddc0429a7481622b3f3e63e8fb17c15ce7af5d84cf2b941621d50a4",
+      "payloadSHA256": "8d3792345e1132f5301825937cbb0f6c64c700b0b6ca00e6f0c55adeda4dfa63",
+      "headerWire": "18ffffffff0f30c480808020",
+      "selector": 1,
+      "encodingCalls": {
+        "GetByteCount": 12
+      },
+      "nativePathSHA256": "dc26572f18cbd9a801b6bde555256bcd040f3fedc25bbda1bea7dd18be197e9a",
+      "allFieldWireComparison": true
+    }
+  ],
+  "transportParameterBindings": [
+    {
+      "ownerTypeIndex": 79029,
+      "methodIndex": 655015,
+      "parameterIndex": 503964,
+      "parameterTypeIndex": 165362,
+      "envelopeTypeIndex": 13973
+    },
+    {
+      "ownerTypeIndex": 68785,
+      "methodIndex": 569162,
+      "parameterIndex": 447221,
+      "parameterTypeIndex": 165362,
+      "envelopeTypeIndex": 13973
+    },
+    {
+      "ownerTypeIndex": 32016,
+      "methodIndex": 250987,
+      "parameterIndex": 197935,
+      "parameterTypeIndex": 165362,
+      "envelopeTypeIndex": 13973
+    }
+  ],
+  "continuousTokenFrame": true,
+  "payloadWriterExecuted": true,
+  "payloadSizeExecuted": true,
+  "seedHelperExecuted": true,
+  "wholeHandlerReturned": false,
+  "socketExecuted": false,
+  "models": [
+    "Token constructor SDK/platform/old Shell and native crypto OS/storage fixtures",
+    "SendFlow72 explicitly selected transport, vtables, clock/sequence and pool storage",
+    "Frame72 pooled arrays/Array.Copy; no opaque body callbacks are executed",
+    "cached UTF-8 Encoding.GetByteCount/GetBytes; native string writer fast/slow branches execute",
+    "explicit two 4096-byte frame-key arrays; constructor itself switches selector to1"
+  ],
+  "outsideScope": [
+    "real initial frame-key source",
+    "actual SDK/startup/IFix",
+    "Login/response receive integration",
+    "socket/complete Handler/live client"
+  ]
+}
