@@ -215,6 +215,13 @@
       "inputFile": "binary",
       "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
       "location": "protocol/cn-7.2/response-crypto-observations.json; independent tag477/208 reader -> native RSA decryption/SHA256/signature verify -> seed XOR/MT64; explicit local signed-key trust inputs, not live acceptance"
+    },
+    {
+      "id": "token-handler-uid",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "protocol/cn-7.2/handler-core-observations.json; tag9 -> response+D4 -> native 15217AA90 -> session+168 -> UInt32 formatter -> target __LastUid__ / PlayerPrefs; continuous Handler entry through crypto and token store"
     }
   ],
   "opcodes": [
@@ -1373,15 +1380,16 @@
           "cardinality": "singular",
           "presence": "implicit",
           "packed": false,
-          "semanticField": "unknown_field_9",
-          "status": "unresolved",
+          "semanticField": "uid",
+          "status": "verified",
           "evidence": [
-            "response-protected-reader"
+            "response-protected-reader",
+            "token-handler-uid"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "wireStatus": "emulated-observation"
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "verificationScope": "Native reader and Handler through crypto, UID setter and token save; explicit in-memory PlayerPrefs/UInt32 formatting and local signed trust inputs"
         },
         {
           "clientField": "PHEIMMPCLMP",

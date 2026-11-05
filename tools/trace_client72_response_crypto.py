@@ -33,14 +33,7 @@ def response_wire(cipher,signature):
     return b'\xea\x1d'+varint(len(cipher_text))+cipher_text+b'\x82\x0d'+varint(len(signature_text))+signature_text
 
 
-def recover(binary,metadata,records,libraries,signer,java_home,root):
-    fields=[];response=next(r for r in records if r['index']==37481)
-    for off,tag,name in ((0x98,477,'server_rand_key'),(0x88,208,'sign')):
-        field=next(f for f in response['fields'] if f.get('offsetKind')=='instance' and f['offset']==off)
-        if field['type']['kind']!='string':raise ValueError('Response crypto field is not string')
-        fields.append(dict(typeIndex=37481,clientType=response['name'],clientField=field['name'],
-                           objectOffset=off,tag=tag,type='string',semanticField=name,status='verified',
-                           scope='native-wire-to-crypto-under-declared-trust-inputs'))
+def discover_private_key(binary,metadata,records,libraries):
     e=Offline72(binary,libraries,records,True);reader=None;runtime=None
     try:
         reader=CryptoResponseReader72(e);reader.run(37481,response_wire(bytes(256),bytes(256)))
@@ -52,6 +45,18 @@ def recover(binary,metadata,records,libraries,signer,java_home,root):
         if runtime:runtime.close()
         if reader:reader.close()
         e.close()
+    return private_der,private_signature,material_trace
+
+
+def recover(binary,metadata,records,libraries,signer,java_home,root):
+    fields=[];response=next(r for r in records if r['index']==37481)
+    for off,tag,name in ((0x98,477,'server_rand_key'),(0x88,208,'sign')):
+        field=next(f for f in response['fields'] if f.get('offsetKind')=='instance' and f['offset']==off)
+        if field['type']['kind']!='string':raise ValueError('Response crypto field is not string')
+        fields.append(dict(typeIndex=37481,clientType=response['name'],clientField=field['name'],
+                           objectOffset=off,tag=tag,type='string',semanticField=name,status='verified',
+                           scope='native-wire-to-crypto-under-declared-trust-inputs'))
+    private_der,private_signature,material_trace=discover_private_key(binary,metadata,records,libraries)
     client_key=private_numbers(private_der)
     if client_key[1].bit_length()!=2048 or signer[1].bit_length()!=2048:raise ValueError('Expected 2048-bit fixture keys')
     public_matches=[]

@@ -140,17 +140,20 @@ class ResponseCrypto72(SeedString72):
         if address in (SUCCESS,REJECT,SHORT,0x159CA4C40):self.stop=address;e.uc.emu_stop()
 
     def run_response(self):
+        return self.run_native(ENTRY,dict(rsp=self.frame-0x80,rbp=self.frame,r13=self.manager))
+
+    def run_native(self,entry,registers):
         e=self.e;e.uc.context_restore(e.context);e.calls=[];e.failure=None;e.steps=0
         e.write(self.frame+0x100,OBJECT)
-        for name,value in dict(rsp=self.frame-0x80,rbp=self.frame,r13=self.manager).items():
+        for name,value in registers.items():
             e.uc.reg_write(getattr(e.R,'UC_X86_REG_'+name.upper()),value)
         for stop in (SHORT,0x159CA4C40):e.allowed.append((stop,stop+1))
         e.before_instruction=self.observe_response
-        e.uc.emu_start(ENTRY,END,timeout=90_000_000,count=100_000_000)
+        e.uc.emu_start(entry,END,timeout=90_000_000,count=100_000_000)
         e.before_instruction=None
         if e.failure or self.stop is None:raise ValueError(e.failure or 'Response fragment budget exhausted')
         p=e.read(GLOBAL+0x19580);key=bytes(e.uc.mem_read(p+32,e.read(p+24))) if p else None
-        trace=dict(entry=hex(ENTRY),stop=hex(self.stop),observedInstructionsOutsideLibrary=e.steps,
+        trace=dict(entry=hex(entry),stop=hex(self.stop),observedInstructionsOutsideLibrary=e.steps,
                    instructionPathSHA256=self.path_digest.hexdigest(),nativeLibraryBlocks=self.native.library_blocks,
                    nativeLibraryBlockSHA256=self.native.library_digest.hexdigest(),
                    blockTraceRange=['0x140580000','0x140780000'],visits={hex(k):v for k,v in sorted(self.visits.items())},

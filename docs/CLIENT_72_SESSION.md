@@ -208,3 +208,20 @@ python -m unittest tools.test_client72_response_crypto tools.test_client72_rsa_f
 ```
 
 默认签名夹具文件为仓库`src/main/resources/keys/SigningKey.der`，仅记录输入哈希；私钥及目标原始材料不写入共享产物。证据为`evidence/response-crypto-{trace,determinism}.json`、`logs/response-crypto-{run,tests}.log`和共享`response-crypto-observations.json`。仅离线工具/测试/研究文档变更，没有运行代码/Proto/补丁/资源变更，无需重启。下一步追踪SDK warmup/完整Handler前缀及实际本地信任配置，D-02仍未验收。
+
+## A-04d5j / B-02c7 Handler入口至UID/token保存
+
+`trace_client72_handler_core`从真实1507BE0E0入口执行至15A4E0D9A，连续覆盖stage9、ByteString解包、warmup分支、上述原生密码学和seed安装、UID setter及会话token保存。此处不再从解密边界或token store中段开始；仍停在后续robot-check/version/UI动作之前，不能称整个Handler完成。4组均使用明确本地签名信任输入和非云环境，密钥与Java对照一致。
+
+独立输入tag9/uint32→响应PJAJDHBBMGB+ D4→15217AA90→会话+168，随后目标cctor153D333E0把literal57480 `__LastUid__`保存到GLOBAL+2B708，153D34300经NumberFormatter.NumberToString和PlayerPrefs写入。NumberFormatter方法3829的三个参数独立解析为string、uint32、IFormatProvider；PlayerPrefs命名wrapper实际跳到141454050/140973BC0。默认十进制格式和PlayerPrefs内存记录为明确模型，未写宿主注册表/客户端存档。0、1、80000000、FFFFFFFF（十六进制）均保持uint32意义；因此映射`uid → tag9`，累计30字段。响应token原指针同时保存到session+98，空/非空均验证。
+
+目标运行flag-list是否含5714决定Old/New WarmupSwitch。旧分支仅记录原生日志后继续；新分支实际调用操作202，参数块16字节。空byte[]返回-2，当前8字节fixture返回-1，Handler不检查该返回值而继续密码学与会话保存。这里既没有替换warmup调用，也没有证明新warmup成功或SDK真实初始化；tag838字节的业务含义仍未知。日志/stage只做捕获，empty cache的原生Clear路径及非云判断继续执行。
+
+4组原生样本、157项回归通过，trace/摘要重复逐字节一致；为复用拆出的密钥发现/执行入口也重跑原有8组response工具，产物与caa7bea相同。研究校验通过，ready仍退出1。新映射守卫拒绝UID/账号ID互换、错误tag/有符号类型/保存位置，以及把-2/-1改称warmup成功或整个Handler已执行。
+
+```powershell
+python tools/trace_client72_handler_core.py --client $env:GAME_PATH --java-home $env:JAVA_HOME --output local/migration72/evidence/handler-core-trace.json --summary-output protocol/cn-7.2/handler-core-observations.json
+python -m unittest tools.test_client72_handler_core tools.test_client72_response_crypto tools.test_validate_protocol72 -v
+```
+
+证据`evidence/handler-core-{trace,determinism}.json`、`logs/handler-core-{run,tests}.log`及共享`handler-core-observations.json`。后续可继续15A4E0D9A后的动作，或从SDK ComboUserModel/LoginResultModel恢复TokenReq其余会话字段；不得用相似字段名直接配对。D-02、真实SDK/补丁/PlayerPrefs和后续Login调用者前缀仍未实机验收，无运行文件变更或重启。

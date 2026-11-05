@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "fixtureCount": 4,
+  "declarations": {
+    "formatterMethodIndex": 3829,
+    "formatKind": "uint32",
+    "prefsKeyLiteral": 57480,
+    "prefsKey": "__LastUid__"
+  },
+  "entry": "0x1507be0e0",
+  "stop": "0x15a4e0d9a",
+  "runtimeStatus": "not-tested",
+  "wholeHandlerExecuted": false,
+  "fieldBinding": {
+    "typeIndex": 37481,
+    "clientField": "PJAJDHBBMGB",
+    "objectOffset": 212,
+    "tag": 9,
+    "type": "uint32",
+    "semanticField": "uid",
+    "status": "verified",
+    "sessionOffset": 360,
+    "prefsKey": "__LastUid__"
+  },
+  "results": [
+    {
+      "oldWarmup": true,
+      "uid": 1,
+      "tokenHex": "68616e646c65725f746f6b656e5f41",
+      "warmup": [],
+      "keySHA256": "5d517d6c52800a32b573b136c7a469131670b869881157c2fa013f714b796df5",
+      "uidSaved": true,
+      "tokenPointerPreserved": true,
+      "prefs": [
+        [
+          "__LastUid__",
+          "1"
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "oldWarmup": false,
+      "uid": 4294967295,
+      "tokenHex": "68616e646c65725f746f6b656e5f42",
+      "warmup": [
+        {
+          "operation": 202,
+          "size": 16,
+          "length": 0,
+          "return": -2
+        }
+      ],
+      "keySHA256": "5d517d6c52800a32b573b136c7a469131670b869881157c2fa013f714b796df5",
+      "uidSaved": true,
+      "tokenPointerPreserved": true,
+      "prefs": [
+        [
+          "__LastUid__",
+          "4294967295"
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "oldWarmup": false,
+      "uid": 2147483648,
+      "tokenHex": "",
+      "warmup": [
+        {
+          "operation": 202,
+          "size": 16,
+          "length": 8,
+          "return": -1
+        }
+      ],
+      "keySHA256": "5d517d6c52800a32b573b136c7a469131670b869881157c2fa013f714b796df5",
+      "uidSaved": true,
+      "tokenPointerPreserved": true,
+      "prefs": [
+        [
+          "__LastUid__",
+          "2147483648"
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "oldWarmup": true,
+      "uid": 0,
+      "tokenHex": "",
+      "warmup": [],
+      "keySHA256": "5d517d6c52800a32b573b136c7a469131670b869881157c2fa013f714b796df5",
+      "uidSaved": true,
+      "tokenPointerPreserved": true,
+      "prefs": [
+        [
+          "__LastUid__",
+          "0"
+        ]
+      ],
+      "passed": true
+    }
+  ],
+  "javaSourceSHA256": {
+    "tools/Client72SeedReference.java": "9d4886741c825bbd95d47688e606b724cb97a2b6a288e52f3778a07e38b8fcc1",
+    "src/main/java/emu/grasscutter/utils/algorithms/MersenneTwister64.java": "c46c8c05acf697fded0ef1685a0e64d6fb5a13933d10d07b3c387c36a6cabebb"
+  },
+  "modelsFrom": [
+    "response-crypto-observations.json"
+  ],
+  "addedModels": [
+    "LogToServer/stage capture",
+    "default UInt32 formatting with declared provider",
+    "in-memory PlayerPrefs set/save",
+    "initialized metadata caches, empty cache container, non-cloud environment",
+    "explicit runtime flag-list selects old/new warmup branch"
+  ],
+  "outsideScope": [
+    "actual PlayerPrefs persistence",
+    "successful new warmup/real SDK initialization",
+    "post-token robot-check/version/UI actions",
+    "whole Handler/live client"
+  ],
+  "signingFixtureFileSHA256": "4830a2c186bf114d7523796a3360e13ea1bb667f1921e3253aab154133a7501e"
+}

@@ -457,6 +457,33 @@ def validate_response_crypto(document,profile,crypto,wire):
     return errors
 
 
+def validate_handler_core(document,profile,handler,wire):
+    errors=[]
+    hashes={profile['files'][k]['path']:profile['files'][k]['sha256'] for k in ('binary','metadata','startup')}
+    if handler.get('inputSHA256')!=hashes:errors.append('Handler core: input mismatch')
+    expected=dict(entry='0x1507be0e0',stop='0x15a4e0d9a',runtimeStatus='not-tested',wholeHandlerExecuted=False)
+    if any(handler.get(k)!=v for k,v in expected.items()):errors.append('Handler core: execution scope mismatch')
+    binding=handler.get('fieldBinding',{})
+    required=dict(typeIndex=37481,clientField='PJAJDHBBMGB',objectOffset=0xd4,tag=9,type='uint32',
+                  semanticField='uid',status='verified',sessionOffset=0x168,prefsKey='__LastUid__')
+    if binding!=required:errors.append('Handler core: UID binding mismatch')
+    raw=[f for m in wire['messages'] if m['typeIndex']==37481 for f in m['fields'] if f['objectOffset']==0xd4]
+    schema=next((s for s in document['schemas'] if s['semanticName']=='GetPlayerTokenRsp'),{})
+    mapped=[f for f in schema.get('fields',[]) if 'token-handler-uid' in f.get('evidence',[])]
+    if (len(raw)!=1 or any(raw[0].get(k)!=binding.get(k) for k in ('tag','type','clientField')) or
+            len(mapped)!=1 or any(mapped[0].get(k)!=binding.get(k) for k in ('tag','type','clientField','semanticField','status'))):
+        errors.append('Handler core: raw/semantic UID disagreement')
+    rows=handler.get('results',[])
+    if [(r.get('oldWarmup'),r.get('uid')) for r in rows]!=[(True,1),(False,0xffffffff),(False,0x80000000),(True,0)]:
+        errors.append('Handler core: UID/warmup fixture set mismatch')
+    for r in rows:
+        expected_warmup=[] if r.get('oldWarmup') else [{'operation':202,'size':16,
+            'length':0 if r.get('uid')==0xffffffff else 8,'return':-2 if r.get('uid')==0xffffffff else -1}]
+        if r.get('warmup')!=expected_warmup or not r.get('uidSaved') or not r.get('tokenPointerPreserved'):
+            errors.append('Handler core: warmup result or session store mismatch')
+    return errors
+
+
 def validate_send_flow(document, profile, flow):
     errors=[]
     hashes={profile['files'][k]['path']:profile['files'][k]['sha256'] for k in ('binary','metadata','startup')}
@@ -516,6 +543,8 @@ def main():
     errors.extend(validate_token_complete(document,profile,token_complete,protected))
     response_crypto=json.loads((args.directory/'response-crypto-observations.json').read_text('utf8'))
     errors.extend(validate_response_crypto(document,profile,response_crypto,next(t for name,t in extra if name=='response-wire-observations.json')))
+    handler_core=json.loads((args.directory/'handler-core-observations.json').read_text('utf8'))
+    errors.extend(validate_handler_core(document,profile,handler_core,next(t for name,t in extra if name=='response-wire-observations.json')))
     send_flow=json.loads((args.directory/'send-flow-observations.json').read_text('utf8'))
     errors.extend(validate_send_flow(document,profile,send_flow))
     print(json.dumps({'mode': 'ready' if args.ready else 'research-structure', 'valid': not errors, 'errors': errors},
