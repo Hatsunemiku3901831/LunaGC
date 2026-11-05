@@ -95,3 +95,12 @@ erun是全部首次异常传递，已改con 1+run；本机hardware watch表删�
 A-04d5w已限定验收：10原生样本、240研究回归、二次产物一致；4成功完整帧含4560字节Unicode/NUL跨key周期，6非发送分支；全负载protoc一致，9组安装key与Java一致，原Token6组产物不变。未知语义不晋级，未执行整个Handler返回/真实响应收帧/实机，D-02未完成，目标active。
 
 下一项A-03调用闭包或响应收帧。D-01b2提交cf09603；当前无运行游戏目标，调试退出原因仍unknown。详见[HANDOFF2](HANDOFF2.md)；覆盖前旧文已备份local/migration72/handoffs/HANDOFF2.before-login-frame-cf09603.md并核验。无运行部署，他人差异保留，未推送。
+
+
+## 2026-11-06 A-03a完成后暂停交接
+
+按用户最新要求，完成当前A-03a后已暂停研发（目标paused），不开始下一子任务。研发提交00e0bee：方法级登录/场景源码索引，12源码/9根/80方法，13人工边与83候选边，1012未关联调用保留；61直接构造参数类型名/62总构造名不是7.2完整或最小消息集。8新增/248研究回归、二次产物一致，研究校验0/ready1（213缺口）；Java历史217失败未消除。
+
+详细状态、前期6db47fe的Login完整帧证据、真实调试退出状态、弯路、复现和下一步见[HANDOFF2.md](HANDOFF2.md)。覆盖前已备份并验证旧HANDOFF2，备份local/migration72/handoffs/HANDOFF2.before-login-source-6db47fe.md，报告evidence/handoff-login-source-backup-check.json，SHA256 e9b0812da232ecadd20d842ea1b17167b9569146472d78be4c33e288613c2f75。
+
+本批仅离线工具/测试/摘要/文档，无部署、数据库变更或新增实机验收。交接复查Java/游戏均未运行，HTTP/游戏端口无监听，MongoDB及调试器保留；不沿用历史PID/暂停地址。禁止computer-use仍有效。AGENTS.md及resources既有差异不提交，不推送。Project、Harness、README、协议盘点、登录源码说明和账号专题已同步。D-02未完成；恢复后下一项是按A-03a的未关联位置继续Player.onLogin管理器/事件/脚本调用及Proto依赖，不自动恢复执行。
