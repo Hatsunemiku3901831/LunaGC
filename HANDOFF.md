@@ -104,3 +104,12 @@ A-04d5w已限定验收：10原生样本、240研究回归、二次产物一致�
 详细状态、前期6db47fe的Login完整帧证据、真实调试退出状态、弯路、复现和下一步见[HANDOFF2.md](HANDOFF2.md)。覆盖前已备份并验证旧HANDOFF2，备份local/migration72/handoffs/HANDOFF2.before-login-source-6db47fe.md，报告evidence/handoff-login-source-backup-check.json，SHA256 e9b0812da232ecadd20d842ea1b17167b9569146472d78be4c33e288613c2f75。
 
 本批仅离线工具/测试/摘要/文档，无部署、数据库变更或新增实机验收。交接复查Java/游戏均未运行，HTTP/游戏端口无监听，MongoDB及调试器保留；不沿用历史PID/暂停地址。禁止computer-use仍有效。AGENTS.md及resources既有差异不提交，不推送。Project、Harness、README、协议盘点、登录源码说明和账号专题已同步。D-02未完成；恢复后下一项是按A-03a的未关联位置继续Player.onLogin管理器/事件/脚本调用及Proto依赖，不自动恢复执行。
+
+
+## 2026-11-06：A-03c限定验收提交后停止，交接Astra
+
+按本次限定顺序完成A-03a收尾（801834d）、V-01b家具真实保存夹具（03f2a99/b53fda2）、V-01c加工手册夹具（8dd87a3）、A-03b管理器/事件源码复核（a250354）、A-03c候选消息/Proto与三层缺口矩阵（411d522），现已停止研发。221项Java经济/保存回归及260项研究回归通过；ready仍拒绝213缺口，完整Java集未重跑，历史217失败不据此扣减。
+
+A-03b固定48源码/293方法，2868未关联和开放插件/脚本/异步边界保留；A-03c记录97包构造/148引用种子/1139描述符文件，缺DoSetPlayerBornDataNotify.proto如实保留。未知三层不晋级，A-03整体仍待完整闭包及实机复核。未开展B-03/C-01/D-02或实机调试，无运行文件变更/部署。独立测试Mongo27027已正常关闭，原数据库/运行数据/他人修改保留，未推送。
+
+Astra下一研究为现有B-02下DoSetPlayerBornDataNotify/SetPlayerBornDataReq/Rsp三件组的独立7.2三层证据；如拆子ID须先建验收卡，尚未启动。详见[HANDOFF2.md](HANDOFF2.md)和[缺口矩阵说明](docs/CLIENT_72_LOGIN_PROTO_MATRIX.md)。覆盖前旧HANDOFF2已备份`local/migration72/handoffs/HANDOFF2.before-login-proto-411d522.md`并逐字节/hash核验，SHA256 ae0144399f616f4a6264e94712770990addaa156ae3c1942ec781f25110169cf，报告evidence/handoff-login-proto-backup-check.json。本文仅追加，旧active/暂停段落均为历史，以本次停止点为准。

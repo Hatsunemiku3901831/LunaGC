@@ -1,110 +1,110 @@
-# 国服7.2详细交接：A-03a源码索引完成，按用户要求暂停
+# 国服7.2详细交接：A-03c限定验收提交后停止，交给Astra研究选人证据
 
-更新：2026-11-06。用户最新要求“完成当前子任务之后先暂停，然后按照要求完成交接”。A-03a已完成并提交00e0bee；研发目标已设为paused，未启动下一子任务。以下后续动作须等用户明确恢复后执行。D-02未完成，也没有7.2登录入场实机验收。
+更新：2026-11-06（用户时区Australia/Sydney）。本批用户指令已执行完：A-03a收尾→V-01b家具保存夹具→V-01c加工手册夹具→A-03b管理器/事件源码依赖→A-03c候选消息/Proto与三层缺口矩阵。**A-03c已验收提交411d522，研发按要求停止。没有启动下一研究项。** 只做本交接文档收口。不开展B-03/C-01/D-02或实机调试；此前动态调试授权不覆盖本次禁止。A-03整体仍进行中、待完整闭包与实机复核，B-02、连接、资源前置不晋级。
 
-用户允许按实际需要动态调试，并已手动完成管理员x64dbg启动和Automate加载；明确禁止computer-use。恢复后仍只用脚本API，不重复要求用户加载已准备的插件，先查实际会话状态。
+开始已读AGENTS/README/Project/Harness/两交接/迁移与部署及账号专题，核对起点ad52c3e及工作区：AGENTS编码规范/交接规范、resources单文件变化属他人，不覆盖、不提交。最新用户指令覆盖旧“等恢复”段落；现在新的停止点是A-03c完成，不是全部目标完成或所有独立项外部阻塞。
 
-## 当前子任务 A-03a：已完成与验证
+## 本批交付和本地提交（均未推送）
 
-研发提交 **00e0bee**：方法级登录/场景源码索引。新增tools/Client72JavaSurface.java、client72_java_surface.py、review_client72_login_surface.py及8项测试；复核输入为protocol/cn-7.2/login-source-review.json，共享摘要为login-source-observations.json，说明见[CLIENT_72_LOGIN_SOURCE_GRAPH](docs/CLIENT_72_LOGIN_SOURCE_GRAPH.md)。
+| ID | 实际结果 | 本地提交 |
+| --- | --- | --- |
+| A-03a收尾 | 重新执行JDK解析/8聚焦，摘要与原值相同，研究校验0、ready1；先建立四个新增子项验收卡 | 801834d（原实现00e0bee） |
+| V-01b | 家具save-only代理换为真实Player/Item Guard、实际GameHome保存和冷读；31+34两套通过；补验PaidStart31项及确认丢失/代理目标重新绑定后，家具共96项通过 | 03f2a99、b53fda2 |
+| V-01c | 加工手册真实Player/Item写入，保留18原测试并加BSON进度/产物/原料/失败预留冷读；共用ProcessPlayer库存/标志/回调排除持久化 | 8dd87a3 |
+| A-03b | 固定48源码/9根/293方法，70人工边规格展开72位置，337同owner候选边，共409边；2868未关联调用、10开放锚点保留 | a250354 |
+| A-03c | 97包构造候选/148 Proto引用与种子，147现有根经protoc展开1139文件/1253类型/4786字段；缺DoSetPlayerBornDataNotify.proto；三层证据矩阵不晋级未知 | 411d522 |
 
-- 固定12份遗留服务端源码、9个Handler根、80个方法、96条边。其中13条是人工复核边，83条仅为同owner唯一名称/参数数量候选；1012未关联调用保留，不代表1012个未知消息。
-- 61个直接构造参数类型名含BasePacket；总构造类型名62，额外PacketWindSeedUID来自工厂返回。Player.onLogin有20个直接构造参数。均不代表完整/最小7.2消息集，不与A-02的114名称/471文件口径混算。
-- JDK17实际parse，不执行项目/注解处理或符号归属；字段/初始化器和匿名/局部类分别记录。候选边、重载歧义、管理器/服务/事件/脚本/隐式初始化均不自动晋级。closureComplete=false、targetProtocolReady=false、runtimeStatus=not-tested。
-- 新号intro启用时进入PICKING_CHARACTER、按配置可发通知、先LoginRsp后等待选人；旧号先Player.onLogin再LoginRsp；无角色且intro关闭会创建默认旅行者。超时兜底另有lambda和状态检查，不能据此验收真实选人。SetBorn走准入/角色与资源检查、保存、onLogin、配置响应及欢迎邮件；服务端业务源码不等于客户端协议证据。
-- 8项聚焦测试及248项研究回归通过。覆盖Unicode/CRLF原始UTF-16位置、record/switch、lambda/匿名类/字段作用域、间接构造、重载、漂移和禁止晋级。两次完整报告/摘要逐字节相同，研究映射校验0/ready1（213项缺口）。未重跑Java完整项目测试，历史217失败未解决。
-- 运行代码/Proto/配置/补丁/资源没有改动；没有部署、数据库修改或新增实机验收。README、Project、Harness、协议盘点及三份账号专题文档已同步；AGENTS和resources他人差异保持未提交。
+Project任务卡、Harness索引、README、源码/协议研究及账号/商城接口专题已同步。没有新增生产持久字段，没有修改生产Java、主Proto、PacketOpcodes、版本准入、配置、patch或resources。测试/离线工具/摘要/文档无需运行服务重建部署。
 
-复现（checkout根；JDK路径按本机核对）：
+## 实际测试与不能推算的范围
+
+- 修复前本次实际复现83项中52失败：FurnitureStartFlow31/7失败，FurnitureStartRecovery34/33失败，CompoundHandbook18/12失败。后续扩查PaidStart31项在历史完整集中27失败；本批补修后31项全过。
+- 最终Java8套共221项，失败/错误/跳过均0：FurnitureStartFlow31、FurnitureStartRecovery34、FurniturePaidStartRecovery31、CompoundHandbook18、CompoundQueueFlow35、InvestigationReward27、ItemSaveFenceMongo35、PlayerSaveFenceMongo10。
+- 原扣费、容量、六阶段故障、防重入、确认丢失、并发查询、预留实例、完整批队列、重复领取与保存断言保留；没有删断言、跳过或改生产语义使测试变绿。新增材料/家园/手册与产物冷读。
+- 家具共享GuardedPlayerTestStore的MapperOptions对齐生产storeEmpties(true)/storeNulls(false)；自定义home/库存/回调不入BSON。仅同步确认消费故障编号，异步保存不消费。
+- 手册故障样本：保存确认失败时内存进度1，但BSON仍进度0且保留领取预留，产物只有1；重试仍拒绝重复发放。不能把内存1当已确认入库1。
+- A-03b14聚焦/254研究回归通过；A-03c6新增/最终260研究回归通过；两次完整矩阵逐字节一致，protoc descriptor hash一致。保留原非零/64位/嵌套/list/map/错误/边界wire测试；本批未新做目标原生trace或客户端样本。
+- 研究映射校验退出0，ready退出1，原213项缺口保持。mappings.json/commands/研究wire表均未改，A-03c逐层复制并比对原字段/状态。
+- 完整Java集未再次运行：历史10,563项中217失败不能扣减或宣称修完。扩查FurnitureTalentPlanTest仍因硬编码/resources初始化失败，与历史同因；仍属V-01剩余项，本批未修改它。没有把普通回归或protoc编译当7.2客户端验收。
+
+本机local/migration72（忽略）：fixture-before-test-results/、furniture-fixture-test-results/、workflow-fixture-test-results/，evidence/workflow-fixture-summary.json，logs/save-fixture-before.log、furniture-fixture-after.log、furniture-paid-fixture-after.log、compound-handbook-after.log、workflow-fixture-regression.log。曾有失败的中间补验报告/日志保留，最终以workflow-fixture-test-results和221项汇总为准。
+
+## A-03b源码与A-03c矩阵入口
+
+先读[管理器/事件依赖](docs/CLIENT_72_LOGIN_DEPENDENCIES.md)及[完整缺口矩阵说明](docs/CLIENT_72_LOGIN_PROTO_MATRIX.md)。机器产物：
+
+- protocol/cn-7.2/login-dependency-review.json：父A-03a复核hash、48文件hash、70边规格、10开放调用位置。
+- login-dependency-observations.json：293方法/409边，false完整性与not-tested运行状态；完整未关联位置在本机evidence/login-dependencies.json。
+- login-proto-review.json：1284源码/Proto和46份研究输入hash、缺根列表；不存在的根不能静默创建空schema。
+- login-proto-gap-matrix.json：packetCandidates保留来源/行/lambda/直接与间接/继承/Proto，protoDependencies记录imports、完整owner/typeName/枚举，messageMatrix148行分别保留L1/L2/L3状态、证据、歧义与缺口；evidenceCatalog保留目标输入hash/证据位置。
+
+矩阵SHA-256：184141f56dc7d8db7f46cb569ddb8d5904509b4dadd0470e21958d036f1b3045。它的148行含辅助Proto、HTTP/包头和原种子，不是148个网络必需消息。97构造也不是7.2完整/最小集。只解析了源码并集和显式引用，未执行符号归属、隐式初始化或证明条件实际发生。
+
+L1与L2各7 verified/141 unresolved：四Token/Login请求响应、PingReq/Rsp、无独立CmdID的PacketHead。L3为7 candidate/141 unresolved；185字段中38 verified（Token/Login业务36+包头2）、9 candidate、138 unresolved。原5组静态重号和传输域unknown保留；不能借旧tag、import或拓扑把字段晋级。
+
+BasePacket实际6处构造：配置intro.doSetPlayerBornDataNotify、rspCmdId、旧符号SetPlayerBornDataRsp、旧符号ItemAddHintNotify、packet运行时复制、opcode变量。ItemAddHintNotify只按旧符号加入依赖根；都没有计算为7.2包号。DoSetPlayerBornDataNotify没有旧Proto文件并不证明目标为空。
+
+开放边界包括：PlayerCreationEvent替换Player类、PlayerJoinEvent在ACTIVE后取消、SendPacketEvent替包/取消、外部插件注册表、任务rewind/checkProgress/队列、Activity运行时handler/watcher、SceneScriptManager线程/Lua/group/timer、场景控制器、数据库/UID/保存服务后代、并发加载、UnionCmd内层与FanOut配置。2868未关联位置多含库/getter，不是2868条客户端逆向任务。A-03整体尚未闭合。
+
+复现（checkout根；路径重新查本机，不能套用历史绝对路径）：
 
 ```powershell
-python tools/review_client72_login_surface.py --java-home local/runtime/jdk-17.0.20.1+1 --output local/migration72/evidence/login-source-surface.json --summary-output protocol/cn-7.2/login-source-observations.json
-python -m unittest tools.test_client72_java_surface -v
+$env:JAVA_HOME = (Get-ChildItem local/runtime -Directory -Filter 'jdk-17*' | Select-Object -First 1).FullName
+$env:PROTOC72 = (Get-ChildItem local/gradle/caches/modules-2/files-2.1/com.google.protobuf/protoc/3.18.1 -Recurse -Filter '*.exe' | Select-Object -First 1).FullName
+$env:PROTOBUF_JAVA72 = (Get-ChildItem local/gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java/3.19.6 -Recurse -Filter '*.jar' | Select-Object -First 1).FullName
+python tools/review_client72_login_dependencies.py --java-home $env:JAVA_HOME --output local/migration72/evidence/login-dependencies.json --summary-output protocol/cn-7.2/login-dependency-observations.json
+python tools/review_client72_login_proto.py --java-home $env:JAVA_HOME --protoc $env:PROTOC72 --protobuf-java $env:PROTOBUF_JAVA72 --output local/migration72/evidence/login-proto-recheck.json
+python -m unittest tools.test_client72_java_surface tools.test_client72_login_dependencies tools.test_client72_login_proto -v
 python tools/validate_protocol72.py
 python tools/validate_protocol72.py --ready
 ```
 
-本机证据：evidence/login-source-surface{,-repeat,-determinism}.json、evidence/login-source-summary-repeat.json、evidence/login-source-mapping-{check,ready}.json，日志logs/login-source-surface-{run,repeat,focused-tests,regression}.log。完整报告hash为64194613a1e53d45369a2b06d3deffcd74bed4d69b280fe3f3b8be6a9b92ccdc；共享摘要hash为8920466702325db2ba27837ab9d7588e2432049b858a3694e7f0350940055bf3。所有原始报告与工具临时编译产物留忽略目录。
+最后一条预期退出1。完整研究选集仍为tools/test_client72*.py加test_extract_client72、test_validate_protocol72、test_audit_resource72、test_inventory_protocol、test_review_protocol72_surface，目前260项。只运行这些测试不代表重新执行所有原生trace；本批没有重跑前期原生工具。
 
-## 此前原生与动态研究成果
+重复性证据：evidence/login-dependency-determinism.json、login-proto-determinism.json、login-proto-gap-matrix-repeat.json、login-proto-mapping-{check,ready}.json；logs/login-dependencies-{focused,regression}.log、login-proto-{focused,regression}.log。
 
-- A-04d5u提交0153d00：原生Ec2b注册/RNG初始化/raw与managed解码16样本，228回归与重复产物通过，初始化与live5000字节及独立seed103递推一致。
-- A-04d5v已提交2523513：第一分区9块RSA响应→原生解密/摘要/验签/reader→三次Ec2b→两配置XOR/清槽→最终key原指针→真实Token构造/发送/size/writer/完整帧。4原生样本、234研究回归、二次trace/摘要一致；原dispatch-config、dispatch-session、token-frame各6样本产物逐字节不变。
-- D-01b2已提交cf09603：两次真实运行的UTF-8两缓存同对象/3虚槽均匹配目标声明；新增4处代码各32字节相同。后一次Global+F2E0/+9E80/+A0D0已非空，seed初始化字节1，selector1，key槽仍空。退出原因未知，不代表完整SDK/登录。
-- A-04d5w已提交6db47fe：响应reader之后，1507BE0E0→原生密码学/安装key→Handler/Login构造→外层与68918实际size/writer→完整frame返回1472CD364，连续执行。10样本中4帧354/364/304/4560字节，含Unicode/NUL和跨key周期；6延迟/缺对象/Medium/坏签名均未发送。全负载独立protoc一致，9组安装key与Java一致；240研究回归、二次产物一致，原Token6组产物不变。未返回整个Handler，未执行响应收帧/factory/socket或实际登录。
-- v没有提供初始frame key。30677 tag11/+40实际供给三个decoder调用，第三次原返回指针由151212942安装至GLOBAL+19588，之后Token保持原指针及内容。两配置分别使用前两次返回指针XOR，随后清槽。
-- 四样本：有效key的504字节帧、含中文/补充字符/NUL的5314字节跨4096周期帧、错误魔数Nope、空seed。后两组明确提供明文配置，最终key为空、Token帧保留明文；这只是目标行为，不自动改变服务端准入。
-- 分区与Token是同一emulator中的两次显式入口调用，调度器未执行。Token构造至frame返回连续，seed oracle在frame返回后才执行其额外native getter。
-- 研究校验0/ready1，213缺口仍在；四登录消息36业务字段不变。tag965和分区key源业务名等未知项不晋级。B-02整体未完成，D-02无登录入场验收。
-- Java完整集历史217项失败未消除；最新248是研究Python回归数，不能当Java全绿。
+## Astra下一研究项（尚未启动）
 
-## 最新真实调试状态
+**首选现有B-02下的新号选人三件组：DoSetPlayerBornDataNotify、SetPlayerBornDataReq、SetPlayerBornDataRsp。** 目前三层都缺目标证据，而旧服务端在intro启用时先LoginRsp/等待选人，收到Born后才进Player.onLogin；默认旅行者/超时兜底不能代替选人验收。
 
-**最后一个目标进程已退出，管理员调试器保留。** 当前没有暂停中的游戏目标；旧mhypbase/TLS/注册ret记录均为历史。重新研究前先核对is_debugging与系统进程，确认无其他客户端后可用原管理员调试器load_executable，不需重复提权或插件加载。
+1. Astra先读取Project、Harness和两篇本批研究说明，查询矩阵这三行与BasePacket具体源码位置；如拆新子ID，先建验收卡，范围明确为研究证据，不开始B-03/C-01/D-02。
+2. 优先复用固定7.2元数据、命令表、签名、literal及已有离线工具，从已验证Token/Login锚点沿目标自身调用/注册恢复三件组身份。不预填地址、旧号、字段或解码常量，冲突/重号/未解保持unknown。
+3. CmdID→类型、类型→业务、字段→wire分开留来源/歧义/状态；取得独立wire/protoc及非零/64位/嵌套/list/错误/边界证据后才逐项晋级。无需完整时序证据的源码研究可独立继续，但不能把整文件/条件并集当最小消息集。
+4. 后续再研究EnterSceneReady/SceneInitFinish/EnterSceneDone/PostEnterScene及初始化快照；真实收帧/SDK/补丁/资源前置仍为独立未完项。若必须新增客户端逆向/动态调试，须先按最新用户范围重新授权任务；本批不执行。
 
-本机PID/ASLR仅在忽略报告。Python入口`local/migration72/debug-venv/Scripts/python.exe`，X64DbgClient指向checkout内`local/runtime/x64dbg-2026.05.27/release/x64/x64dbg.exe`。最新索引`evidence/dynamic-active-session.json`的target也已结束；dynamic-startup-read.json仅是最早会话历史，不能再用其target PID。attach_session连接调试器；先is_debugging，再查询$pid/实际mod.main基址。debugging=false时不要把API的is_running=true误当游戏运行。detach_session只关闭接口，不是debuggee detach。
+用户现在要求停止，不自动开始上述动作。Astra必须在用户后续恢复的范围内研究；本次没有给它派发新chat/子代理。
 
-关键纠正：go(pass_exceptions=True)实际erun会传递所有首次异常，不能用来只交付当前异常。以后确需让应用处理当前异常时，用`cmd_sync('con 1')`再普通go。官方依据与复现见CLIENT_72_DYNAMIC_DEBUG末节。正常客户端异常不吞、不改返回值，也不隐藏调试器或绕过保护。
+## 当前阻塞/未完成，不是已修复结论
 
-本机两处研究hardware watch禁用/删除后，表已无条目而DR0/DR1/DR6/DR7仍残留，实际RNG写入触发了自设DR6.B1。已核对仅为本研究地址，清理自设调试寄存器并处理该待决研究trap；没有跳过客户端指令或修改检查结果。证据dynamic-repro3-{hardware-control,clear-hardware,owned-watch-cleanup}.json。以后不要只看断点表，避免重新引入残留。TLS自动停点设置已由1改为0以减少观察干扰，原值记录dynamic-repro-event-settings.json；此为专用调试器配置，不是客户端校验。
+- B-02字段/身份闭包仍不完整；DoSet/Born与场景/初始化消息三层大多unknown。tag965与若干响应字段业务名也仍unknown。
+- A-04d完整Handler返回、真实收帧调度、SDK初始化、补丁实际信任/加载/路由和7.2资源revision/Lua/场景仍未闭合。
+- D-02没有新号选人、旧号登录、入场、稳定心跳、退出重登的实机验收。本批明确未开展。
+- V-01其余失败、完整集及家具天赋硬编码路径尚未解决。不得从本批221通过倒推完整失败数。
 
-退出记录：原运行80000003，两个复现80000004；改成con 1+run仍曾80000004。清理watch后运行更远，UTF-8/SDK对象和托管Il2CppExceptionWrapper已观察；HResult80131530、message为空，具体语义未命名。恢复软件观察后仍80000003退出，终止API断点没有调用现场，原因unknown。不能据此断言保护检查、客户端故障或协议不兼容。
-
-最新证据：dynamic-utf8-cache{,-repro3}.json、dynamic-global-state-repro3.json、dynamic-http-breakpoints-repro3.json、dynamic-managed-exception-repro3.json、dynamic-phase-repro*.json和对应日志。软件单次断点跨重启可能丢失；14146ADA0、15A3464C0、15A366300、15997C290都需重新核对代码/基址后设置。analysis/dynamic_advance.py会真正继续当前目标，且现在读取active-session并拒绝旧--pass-exceptions选项；--pass-current-exception才是当前单次交付。dynamic_deliver_observed_exception.py仅用于经过核对的NTDLL同一C0000005现场，不能泛化自动忽略异常。
-
-## 正式工具与复现
-
-最新w入口`trace_client72_handler_login_frame.py`，参数--client、--java-home、--protoc、--output、--summary-output。当前便携JDK为local/runtime/jdk-17.0.20.1+1；protoc在local/gradle的com.google.protobuf/protoc/3.18.1缓存，具体路径重新查找，不能套用另一机器绝对路径。完整命令见CLIENT_72_NETWORK末节。
-
-LoginFrame72复用TokenFrame72.attach_flow绑定已存在的SendFlow，Handler观察器只在原发送现场添加池/虚表存储，不重置CPU。类型76410的152EF0D50/152EEB470与实际非空子类68918均原生执行。ByteString长度/写入、14A721B00小块copy、1404D7630原生Buffer copy执行；数组补齐已声明byte[] class，不使用原Frame copy模型。旧copy存储模型返回0，本段Buffer.BlockCopy会消费bool结果，不能直接套用；这里执行原生函数，不强置成功。
-
-w证据为evidence/handler-login-frame-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json与logs/handler-login-frame-{run,repeat,regression}.log；原Token对照evidence/token-frame-login-regression.json。trace SHA256为2ea7746534fbc2c346084f1873c1a2cf4d55fc1791a9a249a7dd09e3682cd9df，summary为bec5774c147d249ff7e963a68b633da4930d3297b1ecacbd68a2d8386ebb95f2。下面v入口和证据仍有效。
-
-- client72_ec2b.py实际执行注册1411267B0、RNG初始化1408AF2A0、1411268D0→1408BAEE0→1408BAD50→1408AF320；engine selector5和managed分配为明确模型。
-- trace_client72_dispatch_key_frame.py使用固定seed/key独立输入；大JSON按实际长度分配，9块RSA专用360秒/600M预算，旧prefix默认预算不变。
-- DispatchConfig72.get_string读native XOR后的实际内存，用严格UTF-8模型；畸形UTF-8替换策略未验。
-- construct_native_token新增可选continue_send，在seed oracle之前继续原发送现场；默认行为保持。TokenFrame72可显式不给key，旧默认夹具与产物不变。
-
-```powershell
-$env:GAME_PATH = & ./tools/game_path.ps1
-python tools/trace_client72_dispatch_key_frame.py --client $env:GAME_PATH --output local/migration72/evidence/dispatch-key-frame-trace.json --summary-output protocol/cn-7.2/dispatch-key-frame-observations.json
-python -m unittest tools.test_client72_dispatch_key_frame
-python tools/validate_protocol72.py
-python tools/validate_protocol72.py --ready
-```
-
-全研究回归选集为tools/test_client72*.py，另加test_extract_client72、test_validate_protocol72、test_audit_resource72、test_inventory_protocol、test_review_protocol72_surface，当前248/0。原生运行必须单独执行trace工具，不能仅校验摘要就称原生已复现。
-
-证据位于忽略local/migration72：evidence/dispatch-key-frame-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json及logs/dispatch-key-frame-{run,repeat,regression}.log。旧三工具为evidence/{dispatch-config,dispatch-session,token-frame}-key-regression.json及对应summary/log。
-
-v trace SHA256为2f8b9a4591e75fcad63c2779c47f35e9d0258659a05a40fae5fa13a8fc3ada9f；summary为4f4839c19b1dfeb05a96e143764a2206eda7fd1c93c31691da4b2ceb628048ca。共享摘要protocol/cn-7.2/dispatch-key-frame-observations.json只含hash/合成值/范围。详细边界见CLIENT_72_NETWORK、CLIENT_72_DYNAMIC_DEBUG、Project和Harness。
+此前关键原生检查点仍有效：0153d00 Ec2b16样本；2523513分区key→Token4样本；cf09603真实UTF-8/全局ABI局部观察；6db47fe Handler→Login实际序列化/完整帧10样本（4发送/6非发送）。完整帧不代表整个Handler/真实socket收帧/登录。前期原始证据及模型边界见网络/会话/动态调试专题；旧详细交接完整保存在本次备份及git ad52c3e:HANDOFF2.md。
 
 ## 弯路与避坑
 
-1. 配置ASCII错误来自模型读取分配时缓存的旧密文；native XOR实际正确，改读真实内存解决，不能称客户端解密失败。
-2. Frame的池化Array.Copy模型提前安装会污染分区native copy。现在分区期间移除该模型，发送现场才安装。
-3. seed.finish会另行执行getter做oracle；必须先在原发送现场继续frame，不能finish后把RIP误当send。
-4. 跨周期样本最初修改account+B0，覆盖了tag965源。现只扩大两个凭据字符串和device输入，保留B0原source，最终5314字节。
-5. 独立wire测试曾将23/22字节JSON手算成22/21，已纠正固定hex长度，未改原生输入/行为。
-6. 命令入口曾报PowerShell7的pwsh.dll不存在，显式使用系统WindowsPowerShell可继续；不修理无关安装。其重定向可能生成UTF-16日志，正式工具JSON自身固定UTF-8，读取日志注意BOM。
-7. A-03a测试一度把规范LF字符串坐标与Windows原始CRLF文件坐标混比。解析器的UTF-16位置正确，已修正测试按原文件计算；hash仍规范CRLF→LF。不要通过改位置或吞语法错误使测试通过。
-8. lambda深度只是语法信息，不能推断回调时机。直接new参数与变量/工厂返回严格分开；PacketWindSeedUID不能丢掉，也不能伪称直接发送。当前工具会拒绝方法ID碰撞；未执行符号归属和隐式初始化，不能宣称完整Java调用图。
+1. save-only代理不能给当前Guard提供真实mapper或条件确认。只把getMapper补为非null而仍空save不算真实保存夹具；使用隔离Mongo及正式Guard，再冷读核对。
+2. 切换Datastore代理后，已绑定Item Guard的目标也须显式重新绑定；否则会在材料确认前失败，故障编号跑到错误阶段。PaidStart三个真实样本已据此修正，未改生产Guard。
+3. 默认Morphia省略空集合会让冷读队列变null；测试映射必须对齐生产storeEmpties(true)/storeNulls(false)，不能放宽队列断言掩盖问题。
+4. 新增冷读时曾把5产物样本误写成1，以及把“内存已更新但确认失败”的进度误认成持久成功；已修正新断言并保持原经济断言不动。最终221通过；中间失败日志保留。
+5. JDK enum无参数常量有合成initializer end=-1。扫描器现在用真实字段跨度，不输出无源码末端的合成构造；参数调用不丢失。A-03a方法/边/构造数量不变，但toolSourceSHA256改变，新旧摘要hash不能混比。
+6. 初次protoc包含缺失的DoSet种子会报找不到文件；正确处理是记录missingProtoRoots，编译其余147现有根，而不是伪造空Proto或抹掉缺口。新增依赖或缺根变化会触发复核守卫。
+7. Packet前缀不是完整包识别规则：工具同时看BasePacket继承并沿父类收Proto；动态旧符号ItemAddHintNotify也需保留。直接send参数与间接构造、旧Proto与7.2schema严格区分。
+8. 临时只读Mongo核查最初错误地把完整游戏JAR用作classpath，加载了事件日志Appender，引起Grasscutter类初始化互等。确认是自建InspectResearchTestMongo辅助进程后停止它；改为仅Mongo驱动jar的classpath即可正常查询/关闭测试库。没有启动游戏服务，未强杀未知进程/数据库。线程栈test-mongo-inspect-threads.log保留；以后独立DB工具勿用完整游戏JAR。
+9. 前期动态调试的erun会传递所有首次异常、硬件观察表删除后DR寄存器可能残留、最后游戏目标已退出原因unknown；历史ASLR/PID/暂停点无效。本批禁止调试，勿因交接保留旧授权就连接或继续目标。禁止computer-use仍有效。
 
-## 未完成与下一步
+## 环境、数据与停止状态
 
-当前停止原因是用户明确要求暂停，目标paused；不是宣称所有独立工作被外部条件阻塞。A-03闭包、B-02映射、D-01补丁/信任/路由、E-01资源以及Java失败仍是未完成前置。恢复后按以下顺序推进，不在暂停期间自行执行。
+本机沿用7.2-dev当前checkout，LUNAGC_RUNTIME=portable，GAME_PATH从已核对.env解析，.env.local不存在；config仍指向本工作区的隔离研发库/运行数据，原mongodata/、local/data/保留。本批没有使用Docker/WSL/虚拟化。
 
-1. 优先继续A-03管理器/服务边界：使用A-03a的evidence/login-source-surface.json中unlinkedCallSites，从Player.onLogin的任务/活动/队伍/家园/邮件等实际调用逐个定位；把新增源码hash和人工边单独复核，再追消息构造/Proto引用。不盲目把所有未关联调用算作协议缺口，也不将整个管理器文件算作必需消息集；按实际边界另建子项。该后续尚未开始。
-2. 亦可独立把真实响应reader/密钥安装接回原生收帧，明确factory/对象分配来源；已有FrameReader、Handler/graph工具可复用。不要只调用prepare重置CPU后声称连续收帧。
-3. A-03/B-02仍缺新旧号、选人、初始化/场景、嵌套/枚举业务闭包；B-03/C-01不得生成猜测映射。
-4. D-01本地信任配置/补丁实际加载/路由与E-01资源revision/Lua/场景未闭合；当前补丁不变，不能放开守卫启动猜测协议。
-5. D-02须新号选人、旧号登录、初始化/场景握手、稳定心跳、退出重登实测；离线回归和启动暂停均不替代。
-6. V-01 Java217失败仍需逐项归因/修复，保留账号、经济、保存不变量。
+只为测试正常启动独立27027实例，dbpath为local/migration72/test-mongo；夹具随机UUID库结束后drop仅自己的库。最后检查该路径匹配且无随机夹具库残留，已有lunagc72_research及admin/config/local保留，未清库。随后用管理shutdown命令正常关闭27027，Mongo日志exitCode0；测试dbpath不删除。证据logs/test-mongo-fixture-{inspect,shutdown}.log及test-mongo/mongo.log。
 
-## 工作区与备份
+交接前只读复查：Java及YuanShen均未运行；HTTP8088、UDP22101、测试27027无监听；原27017便携MongoDB仍属本工作区并保留。没有操作旧调试器或无关客户端。最新归属证据evidence/login-proto-final-processes.json，PID和绝对路径不复制到共享文档。下次运行仍须重新核对.env/config/端口/进程/JAR hash，不沿用旧部署结论。
 
-分支7.2-dev，沿用checkout。A-03a本批仅离线工具、测试、脱敏摘要和文档，无运行Java/主Proto/配置/补丁/资源改动，无需部署/重启。已核对GAME_PATH、portable和端口，.env.local不存在；Java未运行，便携MongoDB归属本工作区。交接时再次只读核对Java/游戏进程不存在、HTTP8088/UDP22101无监听、便携MongoDB27017归属本工作区；两个x64dbg进程保留。记录evidence/login-source-handoff-processes.json。未停止MongoDB或调试器；PID及原始路径不写共享文档。运行前仍须实时核对配置/PID/端口/JAR SHA256。保留原mongodata及local/data。
+patch引用f2874103ab70afc56260ee12d1eaca96247933b2，resources引用dac2a9d43332ef51879522cf39da2831b0ca0543不变。AGENTS.md及resources/ScriptSceneData/flat.luas.scenes.full_globals.lua.json既有差异仍保留未提交，主仓库及子模块未推送。
 
-AGENTS.md编码规范修改和resources/ScriptSceneData/flat.luas.scenes.full_globals.lua.json差异属他人，保留不提交。patch为f2874103ab70afc56260ee12d1eaca96247933b2，resources为dac2a9d43332ef51879522cf39da2831b0ca0543，引用不变。只本地提交，不推送。
+## 交接备份
 
-覆盖本文前旧HANDOFF2已备份至local/migration72/handoffs/HANDOFF2.before-login-source-6db47fe.md并逐字节/hash核验；报告evidence/handoff-login-source-backup-check.json，旧hash为e9b0812da232ecadd20d842ea1b17167b9569146472d78be4c33e288613c2f75。该备份包含此前完整帧与动态启动检查点，更早备份仍保留。HANDOFF.md仅追加本次简要交接。最新暂停指令有效，旧active段落仅历史；用户恢复前不继续研发。
+覆盖本文前，旧HANDOFF2已先备份到`local/migration72/handoffs/HANDOFF2.before-login-proto-411d522.md`，逐字节一致，SHA-256 `ae0144399f616f4a6264e94712770990addaa156ae3c1942ec781f25110169cf`；核验报告`local/migration72/evidence/handoff-login-proto-backup-check.json`。该备份包含前期动态调试详细入口、原生完整帧参数与历史避坑，不因本文收敛本批范围而丢失。HANDOFF.md仅追加本次摘要及本文引导，原内容不删减。
