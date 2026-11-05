@@ -257,14 +257,14 @@ def recover(b,m,s,records,libraries,protoc_path):
                 e.prepare();h=Continuation72(e,decl);closure=e.alloc();e.write(closure+0x18,h.owner)
                 e.write(h.born+0x1a,1,'B')
                 e.write(h.born+0x10,h.scene if scene_present else 0);e.synthetic_type(0x1458ad418)
-                requests=[]
+                stages=[]
                 if not scene_present:
-                    e.models[0x14c8ae9a0]=lambda:requests.append(e.reg('ecx')) or 0
+                    e.models[0x14c8ae9a0]=lambda:stages.append(e.reg('ecx')) or 0
                     e.models[0x1531fdb80]=lambda:0
                 trace=h.run(callback,{0x14c8ae9a0,REJECT} if scene_present else {REJECT},closure)
                 fixtures.append(dict(kind='callback-scene-boundary',callback=hex(callback),scenePresent=scene_present,
-                    stop=trace['stop'],trace=trace,identityRequestMode=e.reg('ecx') if scene_present else requests[0],
-                    identityRequestExecuted=False,bornFlags=[e.read(h.born+i,'B') for i in (0x19,0x1a)]))
+                    stop=trace['stop'],trace=trace,stageValue=e.reg('ecx') if scene_present else stages[0],
+                    stageBodyExecuted=False,bornFlags=[e.read(h.born+i,'B') for i in (0x19,0x1a)]))
                 e.models.pop(0x14c8ae9a0,None);e.models.pop(0x1531fdb80,None)
         # A missing subtitle/config lookup is an explicit EMPTY resource table,
         # never a fabricated positive lookup. The real mapper returns null, and
@@ -342,7 +342,7 @@ def validate_fixtures(fixtures):
             expected=row['inputDuration'] if row['viewPresent'] and row['handlePresent'] else 0.0
             if row['duration']!=expected or row['timerExecuted'] or row['stop']!='0x14ee38f40':raise ValueError('Timer boundary mismatch')
         elif kind=='callback-scene-boundary':
-            if row['stop']!=('0x14c8ae9a0' if row['scenePresent'] else hex(REJECT)) or row['identityRequestMode']!=10 or row['identityRequestExecuted'] or row['bornFlags']!=[0,0]:raise ValueError('Scene prerequisite boundary mismatch')
+            if row['stop']!=('0x14c8ae9a0' if row['scenePresent'] else hex(REJECT)) or row['stageValue']!=10 or row['stageBodyExecuted'] or row['bornFlags']!=[0,0]:raise ValueError('Scene prerequisite boundary mismatch')
         elif kind=='ifix-boundary':
             if row['stop']!=hex(IFIX) or row['executed'] or row['sends']:raise ValueError('IFix boundary mismatch')
         elif kind=='empty-media-config-queue':

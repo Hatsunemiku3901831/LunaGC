@@ -66,7 +66,7 @@ class BornContinuationTest(unittest.TestCase):
         with self.assertRaises(ValueError):validate_fixtures(rows)
 
     def test_missing_scene_and_ifix_remain_boundaries(self):
-        for kind,key in (('callback-scene-boundary','identityRequestExecuted'),('ifix-boundary','executed')):
+        for kind,key in (('callback-scene-boundary','stageBodyExecuted'),('ifix-boundary','executed')):
             rows=self.rows();next(r for r in rows if r['kind']==kind)[key]=True
             with self.assertRaises(ValueError):validate_fixtures(rows)
 

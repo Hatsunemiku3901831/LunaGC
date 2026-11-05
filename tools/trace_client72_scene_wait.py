@@ -293,7 +293,7 @@ def network_fixture(reader, name, values, born_flag=1, media_flag=0, born_presen
                finalBornFlags=[e.read(born + 0x19, 'B'), e.read(born + 0x1A, 'B')], uiState=e.read(ui + 0x33C, 'I'),
                cachedCloneDistinct=bool(cached and cached != OBJECT), cachedEqualsReader=bool(cached and cloned == result['storedObject']),
                senderD0=e.read(sender + 0xD0, 'I'), network1d0=e.read(network + 0x1D0, 'I'),
-               raw94=e.read(OBJECT + 0x94, 'I'), raw7c=e.read(OBJECT + 0x7C, 'I'), identityMode=e.reg('ecx') if trace['stop'] == '0x14c8ae9a0' else None)
+               raw94=e.read(OBJECT + 0x94, 'I'), raw7c=e.read(OBJECT + 0x7C, 'I'), stageValue=e.reg('ecx') if trace['stop'] == '0x14c8ae9a0' else None)
     if cached and (not row['cachedCloneDistinct'] or not row['cachedEqualsReader']): raise ValueError('Network cache did not preserve reader object through actual clone')
     return row
 
@@ -342,7 +342,7 @@ def recover(binary, metadata, startup, records, libraries, protoc):
                         'tag/skip/raw-byte/float32/UTF-8 primitives with explicit WireInput rejection rules; uint32/uint64 varint bodies execute',
                         'named log/boxing/format sinks and explicit feature/config lookup inputs; wrapper context absent'],
                 outsideScope=['remaining nested message content', 'formal business meaning of scalar/string/position fields and their consumer arithmetic',
-                              'wrapper with a present context, normal scene entry after identity request, config105 recovery body, network handler suffix',
+                              'wrapper with a present context, normal scene entry after stage timestamp recorder, config105 recovery body, network handler suffix',
                               'IFix runtime overrides, SDK, media/timer scheduling, live packet order, production integration and D-02'])
 
 
@@ -377,8 +377,8 @@ def validate_fixtures(rows):
         if (row['senderD0'], row['network1d0']) != (first, second): raise ValueError('Native scalar consumer arithmetic mismatch')
         if row['wrapped'] and row['queries'][0] != dict(kind='wrapper-log-argument', value=first):
             raise ValueError('Wrapper source/decoded scalar mismatch')
-        if name == 'media-ready' and (row['finalBornFlags'] != [0, 0] or row['uiState'] != 3 or row['identityMode'] != 10):
-            raise ValueError('Ready-cache identity boundary mismatch')
+        if name == 'media-ready' and (row['finalBornFlags'] != [0, 0] or row['uiState'] != 3 or row['stageValue'] != 10):
+            raise ValueError('Ready-cache stage boundary mismatch')
 
 
 def main():

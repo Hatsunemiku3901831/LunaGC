@@ -1370,8 +1370,8 @@
       "callback": "0x153d70f80",
       "scenePresent": true,
       "stop": "0x14c8ae9a0",
-      "identityRequestMode": 10,
-      "identityRequestExecuted": false,
+      "stageValue": 10,
+      "stageBodyExecuted": false,
       "bornFlags": [
         0,
         0
@@ -1382,8 +1382,8 @@
       "callback": "0x153d70f80",
       "scenePresent": false,
       "stop": "0x1404c2be0",
-      "identityRequestMode": 10,
-      "identityRequestExecuted": false,
+      "stageValue": 10,
+      "stageBodyExecuted": false,
       "bornFlags": [
         0,
         0
@@ -1394,8 +1394,8 @@
       "callback": "0x153d71010",
       "scenePresent": true,
       "stop": "0x14c8ae9a0",
-      "identityRequestMode": 10,
-      "identityRequestExecuted": false,
+      "stageValue": 10,
+      "stageBodyExecuted": false,
       "bornFlags": [
         0,
         0
@@ -1406,8 +1406,8 @@
       "callback": "0x153d71010",
       "scenePresent": false,
       "stop": "0x1404c2be0",
-      "identityRequestMode": 10,
-      "identityRequestExecuted": false,
+      "stageValue": 10,
+      "stageBodyExecuted": false,
       "bornFlags": [
         0,
         0

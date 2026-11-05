@@ -1,5 +1,7 @@
 # 7.2 三层映射输入
 
+B-02e3计时纠名新增[stage-timing-observations](stage-timing-observations.json)，并把旧摘要误称identity request的三个键修为stageValue/stageBodyExecuted。14C8AE9A0是85949/OnPlayerEnterSceneNotify阶段计时；13原生样本、311完整研究回归、两次一致，55研究输入受hash约束。三层字段与runtime不晋级，见[计时证据](../../docs/CLIENT_72_STAGE_TIMING.md)。
+
 B-02e2新增[scene-wait-observations](scene-wait-observations.json)，见[入场通知/缓存等待](../../docs/CLIENT_72_SCENE_WAIT.md)：27748/46311/PlayerEnterSceneNotify两层身份verified，26外层业务字段全部unknown/unresolved，三float非空/列表/原生clone与明确缓存/前置边界已执行。完整研究305通过，矩阵54输入受hash约束；研究校验通过，ready仍228缺口。没有把wire夹具载体中的opaque bytes当成完整消息schema或生成生产Proto。
 
 E-01b资源输入摘要新增[scene-resource-observations.json](scene-resource-observations.json)，复现与限定范围见[scene3审计](../../docs/CLIENT_72_SCENE_RESOURCES.md)。它只固定资源/读取依赖，不修改任何协议三层状态，resourceReady=false、runtime未验。

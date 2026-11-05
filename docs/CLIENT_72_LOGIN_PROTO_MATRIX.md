@@ -1,5 +1,7 @@
 # A-03c 候选消息、Proto依赖与7.2三层证据缺口矩阵
 
+2026-11-06计时纠名：54→55研究输入，新增stage-timing并更新born-continuation/scene-wait中误称identity request的字段名。结构复核确认旧样本路径/结果只修名，所有三层矩阵行、1287源码/Proto、候选/描述符和开放边界均不变。recover二次一致、311完整研究回归通过、ready仍228缺口；详见[阶段计时](CLIENT_72_STAGE_TIMING.md)。下方54为B-02e2历史检查点。
+
 2026-11-06 B-02e2：只更新PlayerEnterSceneNotify一行，27748/BBECFDMDFJC与业务身份verified，26外层业务字段均unresolved、schema candidate；输入53→54，唯一旧证据hash变更为mappings，新增3个分层证据。其余1287源码/Proto、99候选/1140描述符、147行矩阵及开放边界不变；人工复核后recover两次相同，305研究回归通过。研究结构校验0错误，ready204→228是显露26未知字段同时确认两层身份的结果，不代表可连接。详见[入场通知/缓存等待](CLIENT_72_SCENE_WAIT.md)，scene-wait-login-proto-{review-check,repeat}.json及scene-wait-research-regression.log留本机。
 
 2026-11-06 E-01c：人工复核仅新增scene-script、scene-grid-script、scene-grid-inline三份Lua输入摘要，研究输入50→53，其余1287源码/Proto、99候选/148行矩阵、1140描述符、三层状态及开放边界保持一致。原review更新hash后recover两次相同，完整294项研究回归通过，研究结构0错误/ready仍204缺口；证据scene-script-login-proto-{review-check,repeat}.json和scene-script-research-regression.log。Lua顶层结果不用于晋级协议或实机状态。

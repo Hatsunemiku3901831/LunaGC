@@ -1051,11 +1051,11 @@
   "outsideScope": [
     "remaining nested message content",
     "formal business meaning of scalar/string/position fields and their consumer arithmetic",
-    "wrapper with a present context, normal scene entry after identity request, config105 recovery body, network handler suffix",
+    "wrapper with a present context, normal scene entry after stage timestamp recorder, config105 recovery body, network handler suffix",
     "IFix runtime overrides, SDK, media/timer scheduling, live packet order, production integration and D-02"
   ],
   "toolSourceSHA256": {
-    "tools/trace_client72_scene_wait.py": "73af923e711d19767fb210ebb89974c6ecfc3a01b460cc492a1464d99308beaf",
+    "tools/trace_client72_scene_wait.py": "d00c0938bb651db375aef5a23af9091a745523f09a65dbb29ecee9b18c90b5b7",
     "tools/client72_scene_reader.py": "ca73c8fbdf58bdf1658643e3f3b8023b4ecc65e7a7cab393d5fcb5674f0fc146"
   },
   "fixtureKinds": {
@@ -2654,7 +2654,7 @@
       "network1d0": 2147544550,
       "raw94": 4294967295,
       "raw7c": 2147483648,
-      "identityMode": null
+      "stageValue": null
     },
     {
       "kind": "network-cache",
@@ -2737,7 +2737,7 @@
       "network1d0": 2147544550,
       "raw94": 4294967295,
       "raw7c": 2147483648,
-      "identityMode": 10
+      "stageValue": 10
     },
     {
       "kind": "network-cache",
@@ -2804,7 +2804,7 @@
       "network1d0": 2147544550,
       "raw94": 4294967295,
       "raw7c": 2147483648,
-      "identityMode": 10
+      "stageValue": 10
     },
     {
       "kind": "network-cache",
@@ -2871,7 +2871,7 @@
       "network1d0": 2147544550,
       "raw94": 4294967295,
       "raw7c": 2147483648,
-      "identityMode": 10
+      "stageValue": 10
     },
     {
       "kind": "network-cache",
@@ -2954,7 +2954,7 @@
       "network1d0": 2147544550,
       "raw94": 4294967295,
       "raw7c": 2147483648,
-      "identityMode": null
+      "stageValue": null
     },
     {
       "kind": "network-cache",
@@ -3037,7 +3037,7 @@
       "network1d0": 2147544550,
       "raw94": 4294967295,
       "raw7c": 2147483648,
-      "identityMode": null
+      "stageValue": null
     },
     {
       "kind": "network-cache",
@@ -3120,7 +3120,7 @@
       "network1d0": 2147544550,
       "raw94": 4294967295,
       "raw7c": 2147483648,
-      "identityMode": null
+      "stageValue": null
     },
     {
       "kind": "network-cache",
@@ -3209,7 +3209,7 @@
       "network1d0": 2147544550,
       "raw94": 4294967295,
       "raw7c": 2147483648,
-      "identityMode": null
+      "stageValue": null
     },
     {
       "kind": "network-cache",
@@ -3298,7 +3298,7 @@
       "network1d0": 2147544550,
       "raw94": 4294967295,
       "raw7c": 2147483648,
-      "identityMode": null
+      "stageValue": null
     },
     {
       "kind": "network-cache",
@@ -3366,7 +3366,7 @@
       "network1d0": 0,
       "raw94": 4294967295,
       "raw7c": 2147483648,
-      "identityMode": null
+      "stageValue": null
     },
     {
       "kind": "network-cache",
@@ -3449,7 +3449,7 @@
       "network1d0": 2147544550,
       "raw94": 4294967295,
       "raw7c": 2147483648,
-      "identityMode": null
+      "stageValue": null
     },
     {
       "kind": "network-cache",
@@ -3503,7 +3503,7 @@
       "network1d0": 0,
       "raw94": 4294967295,
       "raw7c": 2147483648,
-      "identityMode": null
+      "stageValue": null
     },
     {
       "kind": "network-cache",
@@ -3597,7 +3597,7 @@
       "network1d0": 2147544550,
       "raw94": 4294967295,
       "raw7c": 2147483648,
-      "identityMode": null
+      "stageValue": null
     }
   ]
 }

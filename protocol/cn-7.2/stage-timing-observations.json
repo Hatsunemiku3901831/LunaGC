@@ -1,0 +1,592 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "stageDeclaration": {
+    "methodIndex": 711360,
+    "entry": "0x14c8ae9a0",
+    "parameterIndex": 538572,
+    "parameterTypeIndex": 675783,
+    "enumTypeIndex": 85949,
+    "enumClientType": "NEKEJMEIJBF"
+  },
+  "stageEnum": {
+    "typeIndex": 85949,
+    "clientType": "NEKEJMEIJBF",
+    "namespace": "",
+    "underlyingType": "int32",
+    "values": [
+      {
+        "symbol": "OnGateClickContinue",
+        "value": 0,
+        "fieldIndex": 427280,
+        "defaultRow": 72992,
+        "typeIndex": 70,
+        "dataIndex": 647717
+      },
+      {
+        "symbol": "OnGateOpen",
+        "value": 1,
+        "fieldIndex": 427281,
+        "defaultRow": 72993,
+        "typeIndex": 70,
+        "dataIndex": 647721
+      },
+      {
+        "symbol": "OnGateAfterOpen",
+        "value": 2,
+        "fieldIndex": 427282,
+        "defaultRow": 72994,
+        "typeIndex": 70,
+        "dataIndex": 647725
+      },
+      {
+        "symbol": "OnGateAfterOpen_PreToLoadSceneIterStart",
+        "value": 3,
+        "fieldIndex": 427283,
+        "defaultRow": 72995,
+        "typeIndex": 70,
+        "dataIndex": 647729
+      },
+      {
+        "symbol": "OnGateAfterOpen_PreToLoadSceneIterReload",
+        "value": 4,
+        "fieldIndex": 427284,
+        "defaultRow": 72996,
+        "typeIndex": 70,
+        "dataIndex": 647733
+      },
+      {
+        "symbol": "OnGateAfterOpen_PreToLoadSceneIterEnd",
+        "value": 5,
+        "fieldIndex": 427285,
+        "defaultRow": 72997,
+        "typeIndex": 70,
+        "dataIndex": 647737
+      },
+      {
+        "symbol": "OnLoginReq",
+        "value": 6,
+        "fieldIndex": 427286,
+        "defaultRow": 72998,
+        "typeIndex": 70,
+        "dataIndex": 647741
+      },
+      {
+        "symbol": "OnLoginRsp",
+        "value": 7,
+        "fieldIndex": 427287,
+        "defaultRow": 72999,
+        "typeIndex": 70,
+        "dataIndex": 647745
+      },
+      {
+        "symbol": "OnPlayerTokenReq",
+        "value": 8,
+        "fieldIndex": 427288,
+        "defaultRow": 73000,
+        "typeIndex": 70,
+        "dataIndex": 647749
+      },
+      {
+        "symbol": "OnPlayerTokenRsp",
+        "value": 9,
+        "fieldIndex": 427289,
+        "defaultRow": 73001,
+        "typeIndex": 70,
+        "dataIndex": 647753
+      },
+      {
+        "symbol": "OnPlayerEnterSceneNotify",
+        "value": 10,
+        "fieldIndex": 427290,
+        "defaultRow": 73002,
+        "typeIndex": 70,
+        "dataIndex": 647757
+      },
+      {
+        "symbol": "OnShowLoadingPage",
+        "value": 11,
+        "fieldIndex": 427291,
+        "defaultRow": 73003,
+        "typeIndex": 70,
+        "dataIndex": 647761
+      },
+      {
+        "symbol": "OnShowLoadingPage_PreToLoadSceneIterStart",
+        "value": 12,
+        "fieldIndex": 427292,
+        "defaultRow": 73004,
+        "typeIndex": 70,
+        "dataIndex": 647765
+      },
+      {
+        "symbol": "OnShowLoadingPage_PreToLoadSceneIterReload",
+        "value": 13,
+        "fieldIndex": 427293,
+        "defaultRow": 73005,
+        "typeIndex": 70,
+        "dataIndex": 647769
+      },
+      {
+        "symbol": "OnShowLoadingPage_PreToLoadSceneIterEnd",
+        "value": 14,
+        "fieldIndex": 427294,
+        "defaultRow": 73006,
+        "typeIndex": 70,
+        "dataIndex": 647773
+      },
+      {
+        "symbol": "OnLoadingPageAppear",
+        "value": 15,
+        "fieldIndex": 427295,
+        "defaultRow": 73007,
+        "typeIndex": 70,
+        "dataIndex": 647777
+      }
+    ],
+    "semanticStatus": "target-symbols-only"
+  },
+  "timingEntry": "0x14c8ae9a0",
+  "clockWrapper": "0x141447a90",
+  "enableFlag": "0x145878e41",
+  "arrayGlobalOffset": "0x191f8",
+  "codeSHA256": {
+    "0x14c8ae9a0": "4126d6cc394ebf01df4c3f2782f1744ff813bb2569a48f0466f260423ae05511",
+    "0x141447a90": "0fc9e482953345fb8493f8c5a2043e8aa683c9fbec7682a4df44b615080093c9"
+  },
+  "semanticCorrection": "14C8AE9A0(10) records the OnPlayerEnterSceneNotify stage timestamp; it is not an identity/network request",
+  "fixtureCount": 13,
+  "runtimeStatus": "not-tested",
+  "targetProtocolReady": false,
+  "scope": "actual stage gate/array store and native double-to-float wrapper under explicit clock storage",
+  "models": [
+    "initialized metadata/class",
+    "fixed managed float array and enabled flag",
+    "native clock context and double value",
+    "original null-array helper observation; IFix target stopped before execution"
+  ],
+  "outsideScope": [
+    "live clock initialization/OS time source",
+    "actual stage enable lifecycle",
+    "IFix implementation",
+    "normal scene data consumers after this recorder, SDK/socket/client acceptance"
+  ],
+  "toolSourceSHA256": {
+    "tools/client72_stage_runtime.py": "8a91b9bdf477e804a35ec8a8fb9e945c0964639718e2de6ee723b5bdd7accdb0",
+    "tools/trace_client72_stage_timing.py": "6aab10a4dcbdaf380630709bcb9b3df500100d3876547c14d6bae071093c13e0"
+  },
+  "observations": [
+    {
+      "name": "enabled-scene-stage",
+      "stageValue": 10,
+      "enabled": true,
+      "arrayLength": 16,
+      "arrayPresent": true,
+      "clockDouble": 123.125,
+      "clockCalls": [
+        "context",
+        "double-value"
+      ],
+      "sentinelBits": 3323613696,
+      "arrayBits": [
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        1123434496,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696
+      ],
+      "writes": [
+        {
+          "index": 10,
+          "size": 4,
+          "bits": 1123434496,
+          "source": "0x14c8aea1e"
+        }
+      ],
+      "error": null,
+      "nativeInstructions": 43,
+      "models": [
+        "0x141705750",
+        "0x1417063f0"
+      ]
+    },
+    {
+      "name": "zero-stage-zero-clock",
+      "stageValue": 0,
+      "enabled": true,
+      "arrayLength": 16,
+      "arrayPresent": true,
+      "clockDouble": 0.0,
+      "clockCalls": [
+        "context",
+        "double-value"
+      ],
+      "sentinelBits": 3323613696,
+      "arrayBits": [
+        0,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696
+      ],
+      "writes": [
+        {
+          "index": 0,
+          "size": 4,
+          "bits": 0,
+          "source": "0x14c8aea1e"
+        }
+      ],
+      "error": null,
+      "nativeInstructions": 43,
+      "models": [
+        "0x141705750",
+        "0x1417063f0"
+      ]
+    },
+    {
+      "name": "last-stage-float-rounding",
+      "stageValue": 15,
+      "enabled": true,
+      "arrayLength": 16,
+      "arrayPresent": true,
+      "clockDouble": 16777217.0,
+      "clockCalls": [
+        "context",
+        "double-value"
+      ],
+      "sentinelBits": 3323613696,
+      "arrayBits": [
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        1266679808
+      ],
+      "writes": [
+        {
+          "index": 15,
+          "size": 4,
+          "bits": 1266679808,
+          "source": "0x14c8aea1e"
+        }
+      ],
+      "error": null,
+      "nativeInstructions": 43,
+      "models": [
+        "0x141705750",
+        "0x1417063f0"
+      ]
+    },
+    {
+      "name": "disabled",
+      "stageValue": 10,
+      "enabled": false,
+      "arrayLength": 16,
+      "arrayPresent": true,
+      "clockDouble": 123.125,
+      "clockCalls": [],
+      "sentinelBits": 3323613696,
+      "arrayBits": [
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696
+      ],
+      "writes": [],
+      "error": null,
+      "nativeInstructions": 17,
+      "models": []
+    },
+    {
+      "name": "disabled-null-array",
+      "stageValue": 10,
+      "enabled": false,
+      "arrayLength": 16,
+      "arrayPresent": false,
+      "clockDouble": 123.125,
+      "clockCalls": [],
+      "sentinelBits": 3323613696,
+      "arrayBits": [
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696
+      ],
+      "writes": [],
+      "error": null,
+      "nativeInstructions": 17,
+      "models": []
+    },
+    {
+      "name": "negative-null-array",
+      "stageValue": -1,
+      "enabled": true,
+      "arrayLength": 16,
+      "arrayPresent": false,
+      "clockDouble": 123.125,
+      "clockCalls": [],
+      "sentinelBits": 3323613696,
+      "arrayBits": [
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696
+      ],
+      "writes": [],
+      "error": null,
+      "nativeInstructions": 15,
+      "models": []
+    },
+    {
+      "name": "minimum-int32",
+      "stageValue": -2147483648,
+      "enabled": true,
+      "arrayLength": 16,
+      "arrayPresent": true,
+      "clockDouble": 123.125,
+      "clockCalls": [],
+      "sentinelBits": 3323613696,
+      "arrayBits": [
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696
+      ],
+      "writes": [],
+      "error": null,
+      "nativeInstructions": 15,
+      "models": []
+    },
+    {
+      "name": "past-array",
+      "stageValue": 16,
+      "enabled": true,
+      "arrayLength": 16,
+      "arrayPresent": true,
+      "clockDouble": 123.125,
+      "clockCalls": [],
+      "sentinelBits": 3323613696,
+      "arrayBits": [
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696
+      ],
+      "writes": [],
+      "error": null,
+      "nativeInstructions": 26,
+      "models": []
+    },
+    {
+      "name": "empty-array",
+      "stageValue": 0,
+      "enabled": true,
+      "arrayLength": 0,
+      "arrayPresent": true,
+      "clockDouble": 123.125,
+      "clockCalls": [],
+      "sentinelBits": 3323613696,
+      "arrayBits": [],
+      "writes": [],
+      "error": null,
+      "nativeInstructions": 26,
+      "models": []
+    },
+    {
+      "name": "maximum-int32",
+      "stageValue": 2147483647,
+      "enabled": true,
+      "arrayLength": 16,
+      "arrayPresent": true,
+      "clockDouble": 123.125,
+      "clockCalls": [],
+      "sentinelBits": 3323613696,
+      "arrayBits": [
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696
+      ],
+      "writes": [],
+      "error": null,
+      "nativeInstructions": 26,
+      "models": []
+    },
+    {
+      "name": "enabled-null-array",
+      "stageValue": 10,
+      "enabled": true,
+      "arrayLength": 16,
+      "arrayPresent": false,
+      "clockDouble": 123.125,
+      "clockCalls": [],
+      "sentinelBits": 3323613696,
+      "arrayBits": [
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696
+      ],
+      "writes": [],
+      "error": "native-null-array",
+      "nativeInstructions": 22,
+      "models": [
+        "0x1404c2be0"
+      ]
+    },
+    {
+      "name": "index-equals-length",
+      "stageValue": 10,
+      "enabled": true,
+      "arrayLength": 10,
+      "arrayPresent": true,
+      "clockDouble": 123.125,
+      "clockCalls": [],
+      "sentinelBits": 3323613696,
+      "arrayBits": [
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696,
+        3323613696
+      ],
+      "writes": [],
+      "error": null,
+      "nativeInstructions": 26,
+      "models": []
+    },
+    {
+      "name": "ifix-boundary",
+      "stageValue": 10,
+      "stop": "0x14dd8d150",
+      "executed": false
+    }
+  ]
+}

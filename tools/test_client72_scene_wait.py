@@ -84,7 +84,7 @@ class SceneWaitTests(unittest.TestCase):
         self.assertTrue({'0x1507ad120', '0x1507fd7d0', '0x1517113f0', '0x1507ad6f0', '0x14cd67260', '0x152386c00', '0x152386cb0'} <= set(row['executedNativeEntries']))
         self.assertTrue(all(v['originalPointer'] for v in row['argumentObservations']))
 
-    def test_cache_wait_cannot_claim_identity_or_share_source_storage(self):
+    def test_cache_wait_cannot_claim_stage_completion_or_share_source_storage(self):
         for key, value in [('cachedCloneDistinct', False), ('cachedEqualsReader', False), ('finalBornFlags', [0, 0]), ('uiState', 3)]:
             rows = self.rows(); next(r for r in rows if r.get('name') == 'waiting-cache')[key] = value
             with self.assertRaises(ValueError): validate_fixtures(rows)
