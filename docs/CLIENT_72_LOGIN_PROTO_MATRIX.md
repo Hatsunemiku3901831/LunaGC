@@ -1,5 +1,7 @@
 # A-03c 候选消息、Proto依赖与7.2三层证据缺口矩阵
 
+2026-11-06 E-01c：人工复核仅新增scene-script、scene-grid-script、scene-grid-inline三份Lua输入摘要，研究输入50→53，其余1287源码/Proto、99候选/148行矩阵、1140描述符、三层状态及开放边界保持一致。原review更新hash后recover两次相同，完整294项研究回归通过，研究结构0错误/ready仍204缺口；证据scene-script-login-proto-{review-check,repeat}.json和scene-script-research-regression.log。Lua顶层结果不用于晋级协议或实机状态。
+
 2026-11-06继续批：新增born-continuation、scene-resource、startup-continuation三份摘要后，原门禁因输入集合变化拒绝。人工复核确认原1287源码/Proto、99构造/148引用与矩阵三层、1140描述符/1254声明/4786字段及开放边界均不变，仅研究输入由47增至50；更新原review后完整矩阵两次生成逐字节一致，288项研究回归通过。旧失败快照保留，不跳过测试或放松集合校验；三层/runtime不晋级。复核证据evidence/continuation-login-proto-review-check.json及完整日志位于忽略local/migration72。下文旧批输入数量为历史。
 
 2026-11-06，A-03c限定离线验收后，B-02d已补入选人证据，B-03a/C-01a现已接管三件组生产源码并重新复核矩阵。来源是A-03b固定方法并集及当前Proto，不能当作目标客户端最小/完整消息集。**A-03完整闭包与实机、B-03/C-01父任务及D-02仍未完成。** 实现/测试和停止取证边界见[选人三件组](CLIENT_72_BORN.md)。下述原97/1139及缺根记录保留为历史基线，当前结果如下。

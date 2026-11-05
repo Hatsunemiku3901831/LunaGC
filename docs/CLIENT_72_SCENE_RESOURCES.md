@@ -56,3 +56,5 @@ Scene/Point及引用表按固定Git对象下载到忽略目录，工具自身不
 后续来源核查：现有resources引用的四个公开仓库中，invoker-bot main仍固定为当前dac2a9d且无tag，Merprose2仅7.0分支/历史tag，另外两处API返回404；本机现有候选未增加Scripts来源。原始响应摘要在evidence/scene-lua-source-search.json，不将404推论为所有来源均不存在。
 
 用户随后明确目前没有这些7.2 Lua来源，允许参考LunaGC7.1的实现尝试迁移。E-01c据此转向固定旧实现→实际Lua加载/目标7.2资源ID与接口核对→明确适配的路径；可以编写迁移实现，但来源仍标旧实现/本项目适配，不伪称7.2原始导出，也不自动解除revision、协议或实机验收。
+
+E-01c已实际检查出生块686组，并扩展64块全部非dynamic索引输入：当前fastRequire=true有407顶层错误，现有inline路径离线比较13,616组全部能求值；95,600正实体引用中8条garbage装置缺ID、62个ScriptLib成员缺实现，仍未验证生产序列化/触发器和实机。具体工具、6新增/20聚焦回归与下一步见[脚本迁移](CLIENT_72_SCENE_SCRIPT_MIGRATION.md)，配置未改，E-01c保持进行中。

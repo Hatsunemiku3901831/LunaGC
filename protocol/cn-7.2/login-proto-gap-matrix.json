@@ -1331,7 +1331,10 @@
     "protocol/cn-7.2/response-graph-observations.json": "6413aad68857d61f87cd5e51c39a73db255217f36fa55d44161c5ea39d6f24f1",
     "protocol/cn-7.2/response-leaf-wire-observations.json": "474725f661cbafab71a8489223f8b7c1fcf3084f8911620f49f5848ef963d7c5",
     "protocol/cn-7.2/response-wire-observations.json": "bee9e1216960e47ae7dcad1f63afb8ac74e8f4aabd911e0c1c45fad5299c7063",
+    "protocol/cn-7.2/scene-grid-inline-observations.json": "55075474ef471da55078d5f9acdae1096c587b83023c8cd47158c53c6e8398fe",
+    "protocol/cn-7.2/scene-grid-script-observations.json": "b334d02f25f4d0a3df300d3fd5d67f11d945b6c473df79e2ca1ff44d8ae8c7b8",
     "protocol/cn-7.2/scene-resource-observations.json": "7f0dadf9b2d24a2a7041162875ad568201f77f6671108693faf35be565d895e5",
+    "protocol/cn-7.2/scene-script-observations.json": "a52346e5879b4cfa05d07e3d4f13e7952a40f39f3a210314cfee725180011970",
     "protocol/cn-7.2/seed-crypto-observations.json": "cd6a06942deb70b9f066f437cda27504db3f529eaaf10a1ca52bee6836256418",
     "protocol/cn-7.2/send-flow-observations.json": "869486c5d79a8b993c8d89280ff3ac6f412a77c0e572052048d8f583e55c5fbc",
     "protocol/cn-7.2/session-seed-observations.json": "dae61a69b67f01b9bee03bb673272fe34907d276a1c3becb78e79d475b558929",
@@ -91639,7 +91642,7 @@
     "Nonzero/64-bit/nested/list/error/boundary wire regressions remain separate required evidence",
     "No protocol generation, runtime integration, client reverse engineering or client debugging"
   ],
-  "reviewSHA256": "8b1010ed937722e653cdf0f27c8f2246fbfbfc18d03ec31cc0e77266e4835afe",
+  "reviewSHA256": "1ea52b83ef8afcb1893f16c96569744d8e25d2b96be1a23744c369b81b1c6795",
   "toolSourceSHA256": {
     "tools/review_client72_login_proto.py": "5275dfcff776265aa745db564c5132f6f41c9e60173b20282f1059735fce36ff",
     "tools/Client72ProtoDependencies.java": "517838c3cd34b051c47205e71d45d2d3c99cc6bb4fb32379c34e0d0cea418f0a"
