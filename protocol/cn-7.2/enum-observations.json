@@ -1,0 +1,628 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "defaultTable": "0x916620",
+  "defaultTableBytes": 915840,
+  "defaultData": "0x2791de4",
+  "enums": [
+    {
+      "typeIndex": 20469,
+      "clientType": "DLEEHOLOJKM",
+      "namespace": "",
+      "underlyingType": "int32",
+      "values": [
+        {
+          "symbol": "None",
+          "value": 0,
+          "fieldIndex": 96815,
+          "defaultRow": 19271,
+          "typeIndex": 70,
+          "dataIndex": 358162
+        },
+        {
+          "symbol": "BeyondPlay",
+          "value": 1,
+          "fieldIndex": 96816,
+          "defaultRow": 19272,
+          "typeIndex": 70,
+          "dataIndex": 358166
+        },
+        {
+          "symbol": "BeyondEdit",
+          "value": 2,
+          "fieldIndex": 96817,
+          "defaultRow": 19273,
+          "typeIndex": 70,
+          "dataIndex": 358170
+        },
+        {
+          "symbol": "HallMain",
+          "value": 3,
+          "fieldIndex": 96818,
+          "defaultRow": 19274,
+          "typeIndex": 70,
+          "dataIndex": 358174
+        },
+        {
+          "symbol": "HallEdit",
+          "value": 4,
+          "fieldIndex": 96819,
+          "defaultRow": 19275,
+          "typeIndex": 70,
+          "dataIndex": 358178
+        },
+        {
+          "symbol": "BackPlayerWorld",
+          "value": 5,
+          "fieldIndex": 96820,
+          "defaultRow": 19276,
+          "typeIndex": 70,
+          "dataIndex": 358182
+        },
+        {
+          "symbol": "BackPlayerWorldDefault",
+          "value": 6,
+          "fieldIndex": 96821,
+          "defaultRow": 19277,
+          "typeIndex": 70,
+          "dataIndex": 358186
+        },
+        {
+          "symbol": "JoinPlayerWorld",
+          "value": 7,
+          "fieldIndex": 96822,
+          "defaultRow": 19278,
+          "typeIndex": 70,
+          "dataIndex": 358190
+        },
+        {
+          "symbol": "JoinHome",
+          "value": 8,
+          "fieldIndex": 96823,
+          "defaultRow": 19279,
+          "typeIndex": 70,
+          "dataIndex": 358194
+        }
+      ],
+      "semanticStatus": "target-symbols-only"
+    },
+    {
+      "typeIndex": 46236,
+      "clientType": "KBOEJJBMALM",
+      "namespace": "",
+      "underlyingType": "int32",
+      "values": [
+        {
+          "symbol": "GameProcessNormal",
+          "value": 0,
+          "fieldIndex": 228151,
+          "defaultRow": 39296,
+          "typeIndex": 70,
+          "dataIndex": 453316
+        },
+        {
+          "symbol": "GameProcessUgc",
+          "value": 1,
+          "fieldIndex": 228152,
+          "defaultRow": 39297,
+          "typeIndex": 70,
+          "dataIndex": 453320
+        },
+        {
+          "symbol": "GameProcessHall",
+          "value": 2,
+          "fieldIndex": 228153,
+          "defaultRow": 39298,
+          "typeIndex": 70,
+          "dataIndex": 453324
+        }
+      ],
+      "semanticStatus": "target-symbols-only"
+    },
+    {
+      "typeIndex": 54603,
+      "clientType": "HGPBEGGCNED",
+      "namespace": "",
+      "underlyingType": "int32",
+      "values": [
+        {
+          "symbol": "None",
+          "value": 0,
+          "fieldIndex": 271490,
+          "defaultRow": 47417,
+          "typeIndex": 70,
+          "dataIndex": 526480
+        },
+        {
+          "symbol": "BeyondWorldInfo",
+          "value": 11,
+          "fieldIndex": 271491,
+          "defaultRow": 47418,
+          "typeIndex": 70,
+          "dataIndex": 526484
+        },
+        {
+          "symbol": "HallWorldInfo",
+          "value": 12,
+          "fieldIndex": 271492,
+          "defaultRow": 47419,
+          "typeIndex": 70,
+          "dataIndex": 526488
+        },
+        {
+          "symbol": "PlayerWorldInfo",
+          "value": 13,
+          "fieldIndex": 271493,
+          "defaultRow": 47420,
+          "typeIndex": 70,
+          "dataIndex": 526492
+        },
+        {
+          "symbol": "PlayerWorldAnchorPointInfo",
+          "value": 14,
+          "fieldIndex": 271494,
+          "defaultRow": 47421,
+          "typeIndex": 70,
+          "dataIndex": 526496
+        }
+      ],
+      "semanticStatus": "target-symbols-only"
+    },
+    {
+      "typeIndex": 70906,
+      "clientType": "JBJNJEAMIEL",
+      "namespace": "",
+      "underlyingType": "int32",
+      "values": [
+        {
+          "symbol": "None",
+          "value": 0,
+          "fieldIndex": 350025,
+          "defaultRow": 57737,
+          "typeIndex": 70,
+          "dataIndex": 577907
+        },
+        {
+          "symbol": "SpecificGameserver",
+          "value": 11,
+          "fieldIndex": 350026,
+          "defaultRow": 57738,
+          "typeIndex": 70,
+          "dataIndex": 577911
+        },
+        {
+          "symbol": "MinloadGameserver",
+          "value": 12,
+          "fieldIndex": 350027,
+          "defaultRow": 57739,
+          "typeIndex": 70,
+          "dataIndex": 577915
+        }
+      ],
+      "semanticStatus": "target-symbols-only"
+    },
+    {
+      "typeIndex": 2411,
+      "clientType": "RuntimePlatform",
+      "namespace": "UnityEngine",
+      "underlyingType": "int32",
+      "values": [
+        {
+          "symbol": "OSXEditor",
+          "value": 0,
+          "fieldIndex": 10502,
+          "defaultRow": 4164,
+          "typeIndex": 70,
+          "dataIndex": 144002
+        },
+        {
+          "symbol": "OSXPlayer",
+          "value": 1,
+          "fieldIndex": 10503,
+          "defaultRow": 4165,
+          "typeIndex": 70,
+          "dataIndex": 144006
+        },
+        {
+          "symbol": "WindowsPlayer",
+          "value": 2,
+          "fieldIndex": 10504,
+          "defaultRow": 4166,
+          "typeIndex": 70,
+          "dataIndex": 144010
+        },
+        {
+          "symbol": "OSXWebPlayer",
+          "value": 3,
+          "fieldIndex": 10505,
+          "defaultRow": 4167,
+          "typeIndex": 70,
+          "dataIndex": 144014
+        },
+        {
+          "symbol": "OSXDashboardPlayer",
+          "value": 4,
+          "fieldIndex": 10506,
+          "defaultRow": 4168,
+          "typeIndex": 70,
+          "dataIndex": 144018
+        },
+        {
+          "symbol": "WindowsWebPlayer",
+          "value": 5,
+          "fieldIndex": 10507,
+          "defaultRow": 4169,
+          "typeIndex": 70,
+          "dataIndex": 144022
+        },
+        {
+          "symbol": "WindowsEditor",
+          "value": 7,
+          "fieldIndex": 10508,
+          "defaultRow": 4170,
+          "typeIndex": 70,
+          "dataIndex": 144026
+        },
+        {
+          "symbol": "IPhonePlayer",
+          "value": 8,
+          "fieldIndex": 10509,
+          "defaultRow": 4171,
+          "typeIndex": 70,
+          "dataIndex": 144030
+        },
+        {
+          "symbol": "XBOX360",
+          "value": 10,
+          "fieldIndex": 10510,
+          "defaultRow": 4172,
+          "typeIndex": 70,
+          "dataIndex": 144034
+        },
+        {
+          "symbol": "PS3",
+          "value": 9,
+          "fieldIndex": 10511,
+          "defaultRow": 4173,
+          "typeIndex": 70,
+          "dataIndex": 144038
+        },
+        {
+          "symbol": "Android",
+          "value": 11,
+          "fieldIndex": 10512,
+          "defaultRow": 4174,
+          "typeIndex": 70,
+          "dataIndex": 144042
+        },
+        {
+          "symbol": "NaCl",
+          "value": 12,
+          "fieldIndex": 10513,
+          "defaultRow": 4175,
+          "typeIndex": 70,
+          "dataIndex": 144046
+        },
+        {
+          "symbol": "FlashPlayer",
+          "value": 15,
+          "fieldIndex": 10514,
+          "defaultRow": 4176,
+          "typeIndex": 70,
+          "dataIndex": 144050
+        },
+        {
+          "symbol": "LinuxPlayer",
+          "value": 13,
+          "fieldIndex": 10515,
+          "defaultRow": 4177,
+          "typeIndex": 70,
+          "dataIndex": 144054
+        },
+        {
+          "symbol": "LinuxEditor",
+          "value": 16,
+          "fieldIndex": 10516,
+          "defaultRow": 4178,
+          "typeIndex": 70,
+          "dataIndex": 144058
+        },
+        {
+          "symbol": "WebGLPlayer",
+          "value": 17,
+          "fieldIndex": 10517,
+          "defaultRow": 4179,
+          "typeIndex": 70,
+          "dataIndex": 144062
+        },
+        {
+          "symbol": "MetroPlayerX86",
+          "value": 18,
+          "fieldIndex": 10518,
+          "defaultRow": 4180,
+          "typeIndex": 70,
+          "dataIndex": 144066
+        },
+        {
+          "symbol": "WSAPlayerX86",
+          "value": 18,
+          "fieldIndex": 10519,
+          "defaultRow": 4181,
+          "typeIndex": 70,
+          "dataIndex": 144070
+        },
+        {
+          "symbol": "MetroPlayerX64",
+          "value": 19,
+          "fieldIndex": 10520,
+          "defaultRow": 4182,
+          "typeIndex": 70,
+          "dataIndex": 144074
+        },
+        {
+          "symbol": "WSAPlayerX64",
+          "value": 19,
+          "fieldIndex": 10521,
+          "defaultRow": 4183,
+          "typeIndex": 70,
+          "dataIndex": 144078
+        },
+        {
+          "symbol": "MetroPlayerARM",
+          "value": 20,
+          "fieldIndex": 10522,
+          "defaultRow": 4184,
+          "typeIndex": 70,
+          "dataIndex": 144082
+        },
+        {
+          "symbol": "WSAPlayerARM",
+          "value": 20,
+          "fieldIndex": 10523,
+          "defaultRow": 4185,
+          "typeIndex": 70,
+          "dataIndex": 144086
+        },
+        {
+          "symbol": "WP8Player",
+          "value": 21,
+          "fieldIndex": 10524,
+          "defaultRow": 4186,
+          "typeIndex": 70,
+          "dataIndex": 144090
+        },
+        {
+          "symbol": "BlackBerryPlayer",
+          "value": 22,
+          "fieldIndex": 10525,
+          "defaultRow": 4187,
+          "typeIndex": 70,
+          "dataIndex": 144094
+        },
+        {
+          "symbol": "TizenPlayer",
+          "value": 23,
+          "fieldIndex": 10526,
+          "defaultRow": 4188,
+          "typeIndex": 70,
+          "dataIndex": 144098
+        },
+        {
+          "symbol": "PSP2",
+          "value": 24,
+          "fieldIndex": 10527,
+          "defaultRow": 4189,
+          "typeIndex": 70,
+          "dataIndex": 144102
+        },
+        {
+          "symbol": "PS4",
+          "value": 25,
+          "fieldIndex": 10528,
+          "defaultRow": 4190,
+          "typeIndex": 70,
+          "dataIndex": 144106
+        },
+        {
+          "symbol": "PSM",
+          "value": 26,
+          "fieldIndex": 10529,
+          "defaultRow": 4191,
+          "typeIndex": 70,
+          "dataIndex": 144110
+        },
+        {
+          "symbol": "XboxOne",
+          "value": 27,
+          "fieldIndex": 10530,
+          "defaultRow": 4192,
+          "typeIndex": 70,
+          "dataIndex": 144114
+        },
+        {
+          "symbol": "SamsungTVPlayer",
+          "value": 28,
+          "fieldIndex": 10531,
+          "defaultRow": 4193,
+          "typeIndex": 70,
+          "dataIndex": 144118
+        },
+        {
+          "symbol": "WiiU",
+          "value": 30,
+          "fieldIndex": 10532,
+          "defaultRow": 4194,
+          "typeIndex": 70,
+          "dataIndex": 144122
+        },
+        {
+          "symbol": "tvOS",
+          "value": 31,
+          "fieldIndex": 10533,
+          "defaultRow": 4195,
+          "typeIndex": 70,
+          "dataIndex": 144126
+        },
+        {
+          "symbol": "Switch",
+          "value": 32,
+          "fieldIndex": 10534,
+          "defaultRow": 4196,
+          "typeIndex": 70,
+          "dataIndex": 144130
+        },
+        {
+          "symbol": "PS5",
+          "value": 33,
+          "fieldIndex": 10535,
+          "defaultRow": 4197,
+          "typeIndex": 70,
+          "dataIndex": 144134
+        },
+        {
+          "symbol": "XboxScarlett",
+          "value": 34,
+          "fieldIndex": 10536,
+          "defaultRow": 4198,
+          "typeIndex": 70,
+          "dataIndex": 144138
+        },
+        {
+          "symbol": "OpenHarmony",
+          "value": 35,
+          "fieldIndex": 10537,
+          "defaultRow": 4199,
+          "typeIndex": 70,
+          "dataIndex": 144142
+        }
+      ],
+      "semanticStatus": "target-symbols-only"
+    },
+    {
+      "typeIndex": 11253,
+      "clientType": "PlatformType",
+      "namespace": "",
+      "underlyingType": "int32",
+      "values": [
+        {
+          "symbol": "CloudAndroid",
+          "value": 0,
+          "fieldIndex": 53677,
+          "defaultRow": 14533,
+          "typeIndex": 70,
+          "dataIndex": 326285
+        },
+        {
+          "symbol": "CloudIos",
+          "value": 1,
+          "fieldIndex": 53678,
+          "defaultRow": 14534,
+          "typeIndex": 70,
+          "dataIndex": 326289
+        },
+        {
+          "symbol": "CloudPc",
+          "value": 2,
+          "fieldIndex": 53679,
+          "defaultRow": 14535,
+          "typeIndex": 70,
+          "dataIndex": 326293
+        },
+        {
+          "symbol": "CloudWeb",
+          "value": 3,
+          "fieldIndex": 53680,
+          "defaultRow": 14536,
+          "typeIndex": 70,
+          "dataIndex": 326297
+        },
+        {
+          "symbol": "CloudMac",
+          "value": 4,
+          "fieldIndex": 53681,
+          "defaultRow": 14537,
+          "typeIndex": 70,
+          "dataIndex": 326301
+        },
+        {
+          "symbol": "CloudTv",
+          "value": 5,
+          "fieldIndex": 53682,
+          "defaultRow": 14538,
+          "typeIndex": 70,
+          "dataIndex": 326305
+        },
+        {
+          "symbol": "CloudThirdPartyMobile",
+          "value": 6,
+          "fieldIndex": 53683,
+          "defaultRow": 14539,
+          "typeIndex": 70,
+          "dataIndex": 326309
+        },
+        {
+          "symbol": "CloudThirdPartyPc",
+          "value": 7,
+          "fieldIndex": 53684,
+          "defaultRow": 14540,
+          "typeIndex": 70,
+          "dataIndex": 326313
+        },
+        {
+          "symbol": "CloudWebAndroid",
+          "value": 8,
+          "fieldIndex": 53685,
+          "defaultRow": 14541,
+          "typeIndex": 70,
+          "dataIndex": 326317
+        },
+        {
+          "symbol": "CloudWebIos",
+          "value": 9,
+          "fieldIndex": 53686,
+          "defaultRow": 14542,
+          "typeIndex": 70,
+          "dataIndex": 326321
+        },
+        {
+          "symbol": "CloudWebPc",
+          "value": 10,
+          "fieldIndex": 53687,
+          "defaultRow": 14543,
+          "typeIndex": 70,
+          "dataIndex": 326325
+        },
+        {
+          "symbol": "CloudWebMac",
+          "value": 11,
+          "fieldIndex": 53688,
+          "defaultRow": 14544,
+          "typeIndex": 70,
+          "dataIndex": 326329
+        },
+        {
+          "symbol": "CloudWebTouch",
+          "value": 12,
+          "fieldIndex": 53689,
+          "defaultRow": 14545,
+          "typeIndex": 70,
+          "dataIndex": 326333
+        },
+        {
+          "symbol": "CloudWebKeyboard",
+          "value": 13,
+          "fieldIndex": 53690,
+          "defaultRow": 14546,
+          "typeIndex": 70,
+          "dataIndex": 326337
+        }
+      ],
+      "semanticStatus": "target-symbols-only"
+    }
+  ],
+  "scope": "Protocol enum and oneof symbols; platform-source enums are not network enum declarations"
+}

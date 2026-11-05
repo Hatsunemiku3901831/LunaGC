@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "globalGroup": 314557,
+  "literalSlotCount": 87252,
+  "literals": [
+    {
+      "usageRow": 779819,
+      "index": 46063,
+      "slot": 46063,
+      "cell": "0x145b23d98",
+      "value": "[Login] OnPlayerLoginRsp: "
+    },
+    {
+      "usageRow": 779839,
+      "index": 46128,
+      "slot": 46128,
+      "cell": "0x145b23fa0",
+      "value": "[Login] OnGetPlayerTokenRsp Decrypt Seed Fail"
+    },
+    {
+      "usageRow": 779840,
+      "index": 46129,
+      "slot": 46129,
+      "cell": "0x145b23fa8",
+      "value": "[Login] OnGetPlayerTokenRsp: "
+    },
+    {
+      "usageRow": 779851,
+      "index": 46140,
+      "slot": 46140,
+      "cell": "0x145b24000",
+      "value": "OnGetPlayerTokenRsp"
+    }
+  ],
+  "scope": "Selected compile-time literals; not live client logs"
+}

@@ -113,3 +113,5 @@ A-04d3请求入口：[Login完整wire](docs/CLIENT_72_LOGIN_WIRE.md)；trace_cli
 复现命令集中在对象图与AOT专题；最新证据local/migration72/evidence/response-graph-trace.json、response-graph-determinism.json、map-aot-determinism.json及logs/a04d3c-graph-tests.log。先检查输入hash，再检查AOT绑定、流limit/lookahead、已允许的native/helper与实际对象存储；不要跳过未知调用或越界错误。
 
 检查点：606ea03（Login writer）、91d9791（响应外层）、5fe24ad（7叶子）、ce45b47（map AOT）、242b1fb（响应对象图）。下一项为Token/Login业务回调及字段来源闭合，运行时ABI/IFix/实机单列验收。原资源子模块差异继续保留。
+
+登录语义接手：[标记与枚举](docs/CLIENT_72_LOGIN_SEMANTICS.md)。新增 extract_client72_literals/enums 从目标全局usage与field-default表恢复4条标记和6枚举70符号；check_client72_metadata_values执行原生字节解码和常量读取，证据为 evidence/metadata-values-native.json。网络管理器的两个强类型包装只处理共享配置；完整响应身份从上游Handler、分派与目标日志标记继续确认。
