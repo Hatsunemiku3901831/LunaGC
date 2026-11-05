@@ -96,3 +96,28 @@ writer语义：1517662A0为32位varint、151766960为64位varint（7bit移位循
 最新检查点见[会话研究](CLIENT_72_SESSION.md)：四个登录身份/CmdID静态闭合，22字段来源、8枚举102符号。下段“当前只有两个请求配对仍candidate”为上一检查点，已由目标阶段命名证据取代；完整构造/发送与实机仍未完成。
 
 [登录语义](CLIENT_72_LOGIN_SEMANTICS.md)已确认GetPlayerTokenRsp/27808、PlayerLoginRsp/20835以及20个字段来源。上文“Token/Login四个业务名仍candidate”是旧检查点；当前只有两个请求配对仍candidate。网络管理器151221D70/1512160D0只转发共同配置，上游Handler为1507BE0E0/1507B7BE0。7枚举86原始符号已有目标常量证据；其余业务字段和真实客户端序列仍待验收，不生成正式运行协议。
+
+
+## A-04d5r 独立封包函数与整帧XOR
+
+用户2026-11-05已恢复推进。`trace_client72_frame`从14A447E00入口到真实ret后的合成返回哨兵，执行包头CalculateSize/WriteTo及其varint writer、网络端序转换、MemoryStream.SetLength/Write/GetBuffer、整帧循环XOR和writer清理/归池。声明核对MemoryStream类型597槽29→159BCDA20、所选传输类型32016槽5→1472CE3B0，后者经实际接口getter返回+90池对象。
+
+独立Python字节表达式与11组成功输出逐字节相等：`4567 | command:u16be | headerLength:u16be | bodyLength:u32be | header | body | 89AB`。无key/空key保留明文；否则从帧首第0字节开始，以`key[i % key.length]`异或整个帧（包含前后标记）。native selector145878FC0=0读取GLOBAL+19580，=1读取+19588；两槽放入不同显式数组，验证选择和4096字节回绕，不声称本项验证了真实启动密钥来源。所选槽为空时不会尝试另一槽。这是原生观察，不改变运行安全策略。
+
+15组样本：零帧、7/8/9字节payload边界、命令32767/32768/65535、uint32/uint64上界包头、65536字节body验证32位长度、两槽4103字节body循环、所选key缺失/空数组，以及缺message/stream/header和只读stream。缺message/stream原生返回false；缺header停在14A448572错误分支入口；只读stream停159B46B50抛错helper，不模拟异常后行为。原生XOR实际循环次数等于整帧长度，密钥数组未改变；清理后writer buffer/position已清空。
+
+明确模型边界：payload的CalculateSize/WriteTo是指定字节夹具，不是实际Token/Login writer；Array.Copy底层存储复制与对象池分配/归还为受检模型，容量预置，不覆盖stream扩容/非零origin。没有改动目标指令、替换包头序列化/端序/XOR结果；没有执行socket、实际客户端、收帧或与上项Handler/seed安装串联。数值命令边界不新增业务CmdID映射，tag965等业务名保持未知。
+
+复现：
+
+```powershell
+$env:GAME_PATH = & ./tools/game_path.ps1
+python tools/trace_client72_frame.py --client $env:GAME_PATH --output local/migration72/evidence/frame-trace.json --summary-output protocol/cn-7.2/frame-observations.json
+python -m unittest tools.test_client72_frame
+python tools/validate_protocol72.py
+python tools/validate_protocol72.py --ready
+```
+
+共享摘要`protocol/cn-7.2/frame-observations.json`固定三输入SHA-256；15原生样本两次trace/摘要一致，210项研究回归通过。6项新增回归覆盖独立帧字节、32位长度和摘要错误/边界降级拒绝；研究校验0，ready仍1，业务字段不晋级。报告与日志见Harness。仅离线工具/测试/文档变更，无运行部署，D-02未完成。
+
+下一步14A446CC0入口已有静态核对：同一selector选槽，原地XOR后读前导、command/两长度，再读包头和消息工厂；尚未原生执行。不能由发送函数通过推断接收错误/截断/尾标记行为已验。

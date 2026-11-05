@@ -187,3 +187,6 @@ Handler到Login连接探索：`local/migration72/analysis/probe_handler_login.py
 Handler→Login正式入口：`trace_client72_handler_login`，见[会话研究A-04d5q](docs/CLIENT_72_SESSION.md#a-04d5q-连续handler到login构造与发送封包入口)。实际Login/Full→Action→Login构造→发送getter23172/封包入口，token/hash原指针及wire相符；9原生样本、204回归、两次产物一致，原枚举输出不变。6非发送样本覆盖时钟边界/缺状态/Medium包/坏签名；不声称完整Handler返回、SDK真实初始化或D-02。正式工具取代前段单组探索作验收依据。本项已完成，按用户最新要求暂停并交接；恢复后继续封包体或P0闭包。
 
 暂停交接检查点：研发提交dc41c99，A-04d5q限定验收完成；目标状态paused，用户恢复前不继续执行。旧HANDOFF2已备份并核验，最新恢复入口与缺口见[HANDOFF2.md](HANDOFF2.md)，简要历史见[HANDOFF.md](HANDOFF.md)。D-02未完成，无实机验收或运行部署。
+
+
+恢复推进与封包入口：用户已恢复，旧暂停记录为历史，目标active。`trace_client72_frame`执行14A447E00完整返回；15原生样本、210研究回归和重复产物通过，见[网络研究A-04d5r](docs/CLIENT_72_NETWORK.md#a-04d5r-独立封包函数与整帧xor)。`evidence/frame-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready}.json`和`logs/frame-{run,repeat,regression}.log`为本机证据。负载writer/size、两槽密钥与池化存储是显式夹具，包头size/writer、端序、MemoryStream和XOR/清理执行原生代码。下一项14A446CC0收帧边界或构造/密钥串联，不能称整个Handler/实机通过。本轮Java未运行，原部署记录不是当前服务状态；没有运行文件变化，不重启。
