@@ -368,3 +368,5 @@ docs/ACCOUNT_AND_SAVE_DATA_MODEL.md 和 docs/ACCOUNT_AND_SAVE_OPERATIONS.md。
 同步更新相关文档，提交并推送，说明验证结果和仍需游戏内确认的部分。
 本次具体需求：在此填入要修复或实现的行为及可观察的验收条件。
 ```
+
+2026-11-06 V-01b：家具两套夹具由save-only代理改为独立Mongo真实Player/Item Guard及GameHome保存，故障计数只消费同步确认；测试专用home/库存/回调不入BSON。原31+34=65项通过（失败/错误/跳过均0），六阶段故障、防重复扣费、队列/回执和模糊确认恢复断言保留；新增材料及家园冷读。复现前家具65项中40失败，原始报告fixture-before-test-results/，修复后furniture-fixture-test-results/与logs/furniture-fixture-after.log（均在local/migration72）。只改测试，无生产/Proto/配置变更，无部署或客户端验收；V-01完整集尚未重跑，不推算剩余失败数量。

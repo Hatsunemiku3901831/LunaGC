@@ -24,10 +24,10 @@ import java.util.*;
 
 class FurnitureStartFlowTest {
     static class CraftPlayer extends InvestigationRewardTest.ClaimPlayer {
-        GameHome home;
-        boolean refuse, pretend;
-        Runnable afterPay;
-        final Inventory inventory =
+        @dev.morphia.annotations.Transient GameHome home;
+        @dev.morphia.annotations.Transient boolean refuse, pretend;
+        @dev.morphia.annotations.Transient Runnable afterPay;
+        @dev.morphia.annotations.Transient final Inventory inventory =
                 new Inventory(this) {
                     @Override
                     public boolean payItem(int id, int count) {
@@ -58,6 +58,8 @@ class FurnitureStartFlowTest {
     private AbilityTestFixture environment;
     private Field datastore;
     private Object previousDatastore;
+    private emu.grasscutter.game.player.GuardedPlayerTestStore playerStore;
+    private ObservedItemTestWrites itemWrites;
     private int saves, failSave;
     private final Gson gson = new Gson();
     private final Map<Map<?, ?>, Map<?, ?>> oldMaps = new IdentityHashMap<>();
@@ -77,6 +79,7 @@ class FurnitureStartFlowTest {
                         environment.scene.getWorld().getServer(), player));
         player.home =
                 GameHome.of()
+                        .id("furniture-test-home")
                         .ownerUid(player.getUid())
                         .player(player)
                         .level(1)
@@ -95,31 +98,46 @@ class FurnitureStartFlowTest {
         datastore = DatabaseManager.class.getDeclaredField("gameDatastore");
         datastore.setAccessible(true);
         previousDatastore = datastore.get(null);
+        playerStore = new emu.grasscutter.game.player.GuardedPlayerTestStore(player, this::confirmWrite);
+        playerStore.datastore().getMapper().map(GameHome.class);
         datastore.set(
                 null,
                 Proxy.newProxyInstance(
                         dev.morphia.Datastore.class.getClassLoader(),
                         new Class<?>[] {dev.morphia.Datastore.class},
                         (proxy, method, args) -> {
-                            if (method.getName().equals("save")
-                                    || method.getName().equals("delete")) {
-                                if (args.length == 2 && ++saves == failSave)
-                                    throw new IllegalStateException("Write fault");
-                                if (method.getName().equals("delete"))
-                                    return com.mongodb.client.result.DeleteResult.acknowledged(1);
-                                return args[0];
+                            if (method.getName().equals("save") && args.length == 2) confirmWrite();
+                            try {
+                                return method.invoke(playerStore.datastore(), args);
+                            } catch (InvocationTargetException failure) {
+                                throw failure.getCause();
                             }
-                            return null;
                         }));
+        itemWrites = new ObservedItemTestWrites(player, playerStore.datastore(),
+                DatabaseManager.getGameDatastore(), ignored -> confirmWrite(), ignored -> {});
         assertTrue(player.inventory.addItem(101311, 40));
         assertTrue(player.inventory.addItem(101312, 20));
+        assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+    }
+
+    private void confirmWrite() {
+        if (ObservedItemTestWrites.isSynchronousWrite() && ++saves == failSave)
+            throw new IllegalStateException("Write fault");
+    }
+
+    void assertStoredCosts(int wood, int other) {
+        var items = playerStore.datastore().getDatabase().getCollection("items");
+        assertEquals(wood, items.find(new org.bson.Document("itemId", 101311)).first().getInteger("count"));
+        assertEquals(other, items.find(new org.bson.Document("itemId", 101312)).first().getInteger("count"));
     }
 
     @AfterEach
     @SuppressWarnings({"rawtypes", "unchecked"})
     void cleanup() throws Exception {
         assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(5)));
+        if (itemWrites != null) itemWrites.close();
         datastore.set(null, previousDatastore);
+        if (playerStore != null) playerStore.close();
         oldMaps.forEach(
                 (map, old) -> {
                     ((Map) map).clear();
@@ -202,6 +220,11 @@ class FurnitureStartFlowTest {
         assertEquals(1, player.home.getFurnitureMakeSlotItemList().size());
         assertTrue(saves >= 6);
         assertNull(pending());
+        assertStoredCosts(36, 18);
+        var stored = playerStore.datastore().find(GameHome.class).first();
+        assertNotNull(stored);
+        assertEquals(1, stored.getFurnitureMakeSlotItemList().size());
+        assertNull(stored.getPendingFurnitureStart());
     }
 
     @Test

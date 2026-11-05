@@ -92,7 +92,7 @@
 | ENV-01 隔离便携研发基线 | A-01 | 本机配置、构建和部署报告 | 独立库/数据、旧数据保留、正常停服重建、健康/TCP/UDP/PID/JAR哈希核对；不冒充7.2 | 已完成 | docs/CLIENT_72_RESEARCH_VALIDATION.md、evidence/deployment.json；68d1732 | 目标协议前置齐全后再做D-02 |
 | V-01 全量回归失败归因与修复 | DOC-01 | 失败套件与保存夹具 | 每项有复现/根因/修复回归，保留经济/保存不变量；完整集重新验证 | 进行中 | 首次10563项中217失败；代表套件复查证据；— | 优先替换家具/加工save-only代理，继续审查其他失败 |
 | V-01a 修复能力测试便携资源路径 | V-01复现 | SkillReadyPredicateTest | 两处硬编码路径改为配置/相对根，原35项断言不删不跳过并通过 | 已完成 | logs/skill-ready-portable.log，35/0/0；68d1732 | 纳入后续全量回归 |
-| V-01b 家具保存夹具 | A-03a收尾、V-01复现 | FurnitureStartFlowTest/FurnitureStartRecoveryTest及必要测试夹具 | 先重现save-only代理失败；独立Mongo/随机测试库，物品/玩家/家园正式保存与冷读；保留扣费/失败阶段/防重入/容量/预留ID/重复领取断言，相关套件无失败跳过；不改生产语义 | 待开始 | 本批先建卡；— | 核对确认失败注入与真实BSON |
+| V-01b 家具保存夹具 | A-03a收尾、V-01复现 | FurnitureStartFlowTest/FurnitureStartRecoveryTest及必要测试夹具 | 先重现save-only代理失败；独立Mongo/随机测试库，物品/玩家/家园正式保存与冷读；保留扣费/失败阶段/防重入/容量/预留ID/重复领取断言，相关套件无失败跳过；不改生产语义 | 已完成 | furniture-fixture-summary.json；65/0/0/0，本项提交 | 下一项V-01c；全量集未重跑 |
 | V-01c 加工手册夹具 | V-01b | CompoundHandbookTest及必要测试夹具 | 先复现；使用正式条件保存和独立Mongo/随机库，保留加工扣费/产出/手册/失败重试不重复收支及冷读断言，相关套件无失败跳过；不以空save/删断言修绿 | 待开始 | 本批先建卡；— | 限定修复后进入A-03b |
 
 ## 阻塞与尝试
@@ -214,3 +214,5 @@
 
 
 2026-11-06 A-03a收尾：重新执行固定12源码/JDK17解析、8项聚焦测试和研究映射校验均通过；重生成摘要与已提交产物逐字节一致，ready仍退出1（213缺口）。`local/migration72/evidence/login-source-close{,-summary,-check,-ready}.json`为本机复核证据。本次用户指令覆盖旧暂停状态，依次推进V-01b/V-01c/A-03b/A-03c，A-03c提交后停止；禁止B-03/C-01/D-02及实机调试。A-03整体仍待完整闭包和实机复核。
+
+2026-11-06 V-01b：家具两套夹具由save-only代理改为独立Mongo真实Player/Item Guard及GameHome保存，故障计数只消费同步确认；测试专用home/库存/回调不入BSON。原31+34=65项通过（失败/错误/跳过均0），六阶段故障、防重复扣费、队列/回执和模糊确认恢复断言保留；新增材料及家园冷读。复现前家具65项中40失败，原始报告fixture-before-test-results/，修复后furniture-fixture-test-results/与logs/furniture-fixture-after.log（均在local/migration72）。只改测试，无生产/Proto/配置变更，无部署或客户端验收；V-01完整集尚未重跑，不推算剩余失败数量。

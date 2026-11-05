@@ -96,6 +96,7 @@ class FurnitureStartRecoveryTest {
                 player.home.getCraftedFurnitureIds() != null
                         && player.home.getCraftedFurnitureIds().contains(360101));
         assertEquals(0, player.home.getExp());
+        fixture.assertStoredCosts(40 - 4 * count, 20 - 2 * count);
     }
 
     @ParameterizedTest
