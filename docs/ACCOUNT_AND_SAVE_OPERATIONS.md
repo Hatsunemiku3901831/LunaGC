@@ -6,6 +6,8 @@
 
 新增分区连续链6组、182项研究回归及原Token5组重跑通过；SDK导出/日志sink未初始化、容器/OS输入为明确离线夹具，不连接数据库或实际SDK，不替代D-02验收。复现见会话研究A-04d5n4。
 
+第二分区协程新增8组原生样本、187项研究回归；state2/3是明确恢复夹具，传输错误仅验到错误分支入口，不代表实机网络重试或账号登录通过。
+
 ## 本机运行约定
 
 以 [AGENTS.md](../AGENTS.md) 为准：使用当前checkout和本机`GAME_PATH`，启动前核对`.env`、`.env.local`、`config.json`及进程/端口归属。当前国服7.2分支使用Windows便携方式（`LUNAGC_RUNTIME=portable`），不部署Docker/WSL或启用虚拟化，不沿用历史路径/PID。

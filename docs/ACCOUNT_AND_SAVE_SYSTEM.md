@@ -16,6 +16,8 @@
 
 第一分区入口到session+B0及Token tag965已有连续离线数据流，SDK更新包装与提示路径在明确初始化夹具下执行；B0字段的业务语义仍未知，不等于账号认证成功，见会话研究A-04d5n4。
 
+第二分区协程state2/3恢复路径到B0/Token亦已有独立执行证据（A-04d5n5）；不包括初始HTTP等待、完整调度或真实SDK认证，tag965语义仍未知。
+
 ## AI 接手时先掌握的事实
 
 1. `Account.id` 是字符串账号 ID；`Player.id` 是整数玩家 UID；`Avatar.avatarId` 是角色配置 ID。三者不能互换。

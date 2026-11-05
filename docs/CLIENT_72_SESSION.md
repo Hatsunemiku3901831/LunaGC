@@ -375,3 +375,25 @@ python -m unittest tools.test_client72_dispatch_session tools.test_client72_disp
 ```
 
 证据`evidence/dispatch-session-{trace,trace-repeat,determinism,mapping-check,mapping-ready}.json`、`logs/dispatch-session-{run,repeat,regression}.log`；原Token回归`evidence/token-complete-after-dispatch-session{-summary,-check}.json`。下一项第二协程：元数据类型23192/NCIDAOJKFEI，MoveNext151226CD0，实例+50为状态，+20为DHABIHPMOAH接收者，+18为23181闭包，+38为Action<IENBACJFBGI>。尚未执行其实际解密/解析来源，不把第一入口证据直接移过去；tag965独立业务来源亦待恢复。
+
+
+## A-04d5n5 第二协程恢复状态到B0及Token
+
+`trace_client72_dispatch_coroutine`从23192/NCIDAOJKFEI.MoveNext151226CD0的真实入口执行；state2/3及已完成响应闭包是明确输入，未执行state0/1创建请求/网络等待。核对原生jump table15122A1F8的五项、state+50、接收者+20、闭包+18与23181闭包字段；闭包+30元数据为System.Net.HttpStatusCode，夹具值200/520分别进入实际分支，不给520虚构目标业务名称。
+
+正常路径从闭包+18读取JSON，原生检查content/sign，JSON字符串转换1471685A0、Base64 wrapper159BC3AC0和HashAlgorithm.Dispose159BD48D0均实际执行；其余密码学与目标信任输入沿用已声明模型。147EA0940/30677 reader实际读取独立明文，并在1512287E8核对`[rbp+98]`指向的post-parse对象原指针。后处理真实经过14F8F0AE0、152754190、15276B740、153D33980等与第一入口不同的包装，最终151229560写session+B0，终点151229567。已有SDK/提示模型边界继续适用，不把非IFix包装内的ret说成实际IFix或SDK回调成功。
+
+3组成功使用state2非空、state3空、state3高数字文本9007199254740993；同一会话再接真实seed/Token构造与writer。空值依旧省略tag965，高数字字符串不丢精度。2/3均真实进入151226D20并将状态写-1，不把直接跳保护解析作为协程入口验证。
+
+5组拒绝/边界：坏签名到14713C680错误提示入口，目标标记VerifyHash Fail；缺content到147161B60日志入口，目标标记inputJson Content is Null；闭包错误文本非空或状态码520到151226F28传输错误处理分支；state5由真实范围检查到151229E5B。均未调用reader/SDK或写B0，不构造Token。错误提示/UI和重试恢复在边界外；最初误用第一入口统一拒绝地址的预期已根据实际执行纠正，两条错误入口分开记录。
+
+8原生样本、187研究回归通过，两次trace/摘要逐字节一致；研究校验0/ready1。两处分区来源到B0的原始类型关联现在均有各自执行证据；tag14/tag965业务名称仍没有独立来源，不因旧QueryCurrRegionHttpRsp.proto同tag的_connect_gate_ticket名称而晋级。A-04d5n/B-02c9及父任务保持进行中。
+
+```powershell
+python tools/trace_client72_dispatch_coroutine.py --client $env:GAME_PATH --output local/migration72/evidence/dispatch-coroutine-trace.json --summary-output protocol/cn-7.2/dispatch-coroutine-observations.json
+python -m unittest tools.test_client72_dispatch_coroutine tools.test_client72_dispatch_session tools.test_client72_token_complete tools.test_validate_protocol72 -v
+```
+
+证据`evidence/dispatch-coroutine-{trace,trace-repeat,determinism,mapping-check,mapping-ready}.json`，`logs/dispatch-coroutine-{run,repeat,regression}.log`。仅离线工具/摘要/测试/文档变化，无运行部署或重启。共享模型未改，未重跑无关服务端测试宣称全绿。
+
+下一项：保留tag965未知，优先核查Token请求其余服务端准入必需字段与会话发送/Handler剩余路径。当前HandlerGetPlayerTokenReq实际读取account_uid/account_token/client_rand_key/key_id，前三者已验证，key_id尚未确认。请求tag1184/+98存在原生常量4来源，但常量值本身不足以命名。尤其不要混淆seed加密的服务器公钥与分区/响应解密的客户端公钥：已有seed原生DER SHA-256为7427ee11…，与仓库4_Pub.der的内层PKCS1 SHA-256 c5dae228…不同；须做独立密钥选择/密码学互操作证据，不能由文件名或4直接下结论。

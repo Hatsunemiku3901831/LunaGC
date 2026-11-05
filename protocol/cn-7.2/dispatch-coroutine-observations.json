@@ -1,0 +1,291 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "fixtureCount": 8,
+  "results": [
+    {
+      "name": "state2",
+      "state": 2,
+      "mode": "normal",
+      "plainWire": "7208736f757263652d411a0062027b7d6a027b7d5a00",
+      "stop": "0x151229567",
+      "stateAfter": -1,
+      "readerCalls": 1,
+      "postParsePointerPreserved": true,
+      "storeExecuted": true,
+      "sessionPointerPreserved": true,
+      "sessionUnchanged": false,
+      "errorMarker": null,
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "configReturns": [
+        {
+          "address": "0x1512289dc",
+          "returnAL": 1
+        },
+        {
+          "address": "0x151228a33",
+          "returnAL": 1
+        }
+      ],
+      "sdkEntries": 1,
+      "nativePlaintextSHA256": "d40c826e1fbb3ef1ac992bdcba4492bf4215e8740ff1ca6c139b9187c028ccaf",
+      "tokenFieldWire": "aa3c08736f757263652d41",
+      "cmdId": 24604
+    },
+    {
+      "name": "state3-empty",
+      "state": 3,
+      "mode": "normal",
+      "plainWire": "72001a0062027b7d6a027b7d5a00",
+      "stop": "0x151229567",
+      "stateAfter": -1,
+      "readerCalls": 1,
+      "postParsePointerPreserved": true,
+      "storeExecuted": true,
+      "sessionPointerPreserved": true,
+      "sessionUnchanged": false,
+      "errorMarker": null,
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "configReturns": [
+        {
+          "address": "0x1512289dc",
+          "returnAL": 1
+        },
+        {
+          "address": "0x151228a33",
+          "returnAL": 1
+        }
+      ],
+      "sdkEntries": 1,
+      "nativePlaintextSHA256": "8e7a15bc0e5bb37c108f8e524cfa4bee1120f79f9ad7396f248b810daab2681c",
+      "tokenFieldWire": "",
+      "cmdId": 24604
+    },
+    {
+      "name": "state3-high",
+      "state": 3,
+      "mode": "normal",
+      "plainWire": "7210393030373139393235343734303939331a0062027b7d6a027b7d5a00",
+      "stop": "0x151229567",
+      "stateAfter": -1,
+      "readerCalls": 1,
+      "postParsePointerPreserved": true,
+      "storeExecuted": true,
+      "sessionPointerPreserved": true,
+      "sessionUnchanged": false,
+      "errorMarker": null,
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "configReturns": [
+        {
+          "address": "0x1512289dc",
+          "returnAL": 1
+        },
+        {
+          "address": "0x151228a33",
+          "returnAL": 1
+        }
+      ],
+      "sdkEntries": 1,
+      "nativePlaintextSHA256": "8bfbcddf35783c2b8bdf75f4c27fffb77d4d12a1f5343854e0b0941f962f8f02",
+      "tokenFieldWire": "aa3c1039303037313939323534373430393933",
+      "cmdId": 24604
+    },
+    {
+      "name": "bad-sign",
+      "state": 2,
+      "mode": "bad-sign",
+      "plainWire": "7206756e757365641a0062027b7d6a027b7d5a00",
+      "stop": "0x14713c680",
+      "stateAfter": -1,
+      "readerCalls": 0,
+      "postParsePointerPreserved": false,
+      "storeExecuted": false,
+      "sessionPointerPreserved": false,
+      "sessionUnchanged": true,
+      "errorMarker": "[RegionDispatch] DecryptRegionDispatch Decrypt VerifyHash Fail",
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "native": true
+        }
+      ],
+      "configReturns": [],
+      "sdkEntries": 0,
+      "nativePlaintextSHA256": null,
+      "tokenFieldWire": null,
+      "cmdId": null
+    },
+    {
+      "name": "missing-content",
+      "state": 2,
+      "mode": "missing-content",
+      "plainWire": "7206756e757365641a0062027b7d6a027b7d5a00",
+      "stop": "0x147161b60",
+      "stateAfter": -1,
+      "readerCalls": 0,
+      "postParsePointerPreserved": false,
+      "storeExecuted": false,
+      "sessionPointerPreserved": false,
+      "sessionUnchanged": true,
+      "errorMarker": "[RegionDispatch] DecryptRegionDispatch Decrypt inputJson Content is Null",
+      "keyChecks": [],
+      "configReturns": [],
+      "sdkEntries": 0,
+      "nativePlaintextSHA256": null,
+      "tokenFieldWire": null,
+      "cmdId": null
+    },
+    {
+      "name": "transport-error",
+      "state": 3,
+      "mode": "transport-error",
+      "plainWire": "7206756e757365641a0062027b7d6a027b7d5a00",
+      "stop": "0x151226f28",
+      "stateAfter": -1,
+      "readerCalls": 0,
+      "postParsePointerPreserved": false,
+      "storeExecuted": false,
+      "sessionPointerPreserved": false,
+      "sessionUnchanged": true,
+      "errorMarker": null,
+      "keyChecks": [],
+      "configReturns": [],
+      "sdkEntries": 0,
+      "nativePlaintextSHA256": null,
+      "tokenFieldWire": null,
+      "cmdId": null
+    },
+    {
+      "name": "status520",
+      "state": 2,
+      "mode": "status520",
+      "plainWire": "7206756e757365641a0062027b7d6a027b7d5a00",
+      "stop": "0x151226f28",
+      "stateAfter": -1,
+      "readerCalls": 0,
+      "postParsePointerPreserved": false,
+      "storeExecuted": false,
+      "sessionPointerPreserved": false,
+      "sessionUnchanged": true,
+      "errorMarker": null,
+      "keyChecks": [],
+      "configReturns": [],
+      "sdkEntries": 0,
+      "nativePlaintextSHA256": null,
+      "tokenFieldWire": null,
+      "cmdId": null
+    },
+    {
+      "name": "invalid-state",
+      "state": 5,
+      "mode": "invalid-state",
+      "plainWire": "7206756e757365641a0062027b7d6a027b7d5a00",
+      "stop": "0x151229e5b",
+      "stateAfter": 5,
+      "readerCalls": 0,
+      "postParsePointerPreserved": false,
+      "storeExecuted": false,
+      "sessionPointerPreserved": false,
+      "sessionUnchanged": true,
+      "errorMarker": null,
+      "keyChecks": [],
+      "configReturns": [],
+      "sdkEntries": 0,
+      "nativePlaintextSHA256": null,
+      "tokenFieldWire": null,
+      "cmdId": null
+    }
+  ],
+  "entry": "0x151226cd0",
+  "postParse": "0x1512287e8",
+  "stop": "0x151229567",
+  "binding": {
+    "typeIndex": 23192,
+    "closureTypeIndex": 23181,
+    "stateOffset": 80,
+    "httpStatusTypeIndex": 1787,
+    "jumpTable": "0x15122a1f8",
+    "targets": [
+      "0x151226dea",
+      "0x151226e77",
+      "0x151226d20",
+      "0x151226d20",
+      "0x151226dcd"
+    ]
+  },
+  "semanticStatus": "unknown",
+  "runtimeStatus": "not-tested",
+  "wholeCoroutineExecuted": false,
+  "sourceAssociation": "native-resumed-coroutine-to-session",
+  "models": [
+    "inherited dispatch/config/SDK/notice/OS fixtures, explicit local signing trust",
+    "coroutine state2/3 and completed response closure supplied as inputs; no HTTP performed"
+  ],
+  "outsideScope": [
+    "state0/1 request creation and HTTP waiting",
+    "retry/error recovery after transport branch",
+    "tail after B0 including callbacks",
+    "actual SDK/UI/IFix",
+    "tag14/tag965 business name",
+    "actual client"
+  ]
+}
