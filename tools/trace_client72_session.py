@@ -6,6 +6,7 @@ No RSA/Shell/IFix success is invented, and no server/client process is started.
 import argparse
 import hashlib
 import json
+import math
 from pathlib import Path
 import subprocess
 import tempfile
@@ -47,12 +48,14 @@ def java_keys(java_home, seeds, root):
 def recover(binary, records, libraries, java_home, root):
     seeds = [int.from_bytes(data[:8],'big') ^ client for _,data,client in SEED_CASES]
     reference, source_hashes = java_keys(java_home, seeds, root)
-    fixtures = []
+    fixtures = [];source_fixtures=[]
     for multiplier,shift,random_value in ((1,0,0x12345678),(197,41,0x7ffffffe)):
         e = Offline72(binary, libraries, records, True)
         try:
             e.prepare()
             runtime = SessionRuntime72(e, multiplier, shift, random_value)
+            for sample in (0.0,2**-53,0.5,0.123456789,math.nextafter(1.0,0.0)):
+                source_fixtures.append(dict(permutation=[multiplier,shift],**runtime.generate_client_seed(sample)))
             for (name,data,client),expected in zip(SEED_CASES,reference):
                 trace,key = runtime.seed_suffix(data,client)
                 if key != expected:
@@ -70,8 +73,9 @@ def recover(binary, records, libraries, java_home, root):
         finally:
             e.close()
     return dict(schemaVersion=1, inputSHA256=HASHES, fixtureCount=len(fixtures), fixtures=fixtures,
+                clientSeedSourceFixtures=source_fixtures,
                 javaSourceSHA256=source_hashes, runtimeStatus='not-tested',
-                scope='post-decryption native seed suffix only',
+                scope='native client-seed source and post-decryption suffix; encrypted string construction excluded',
                 observedAlgorithm='big-endian first 8 decrypted bytes XOR uint64 client seed; MT64 first output reseeds a second MT64; discard one output; 512 big-endian uint64 outputs',
                 boundaries=dict(entry='0x15a4e064f', stop='0x15a4e0d4b',
                                 outsideScope=['RSA decryption/signature verification','Shell warmup','IFix','full Token Handler','real client']),
@@ -98,7 +102,7 @@ def main():
     for path,value in ((a.output,report),(a.summary_output,summary)):
         path.parent.mkdir(parents=True,exist_ok=True)
         path.write_text(json.dumps(value,indent=2)+'\n','utf8')
-    print(json.dumps(dict(fixtures=report['fixtureCount'],javaComparisons=12,nativeRejections=6)))
+    print(json.dumps(dict(fixtures=report['fixtureCount'],clientSeedSources=len(report['clientSeedSourceFixtures']),javaComparisons=12,nativeRejections=6)))
 
 
 if __name__=='__main__':main()

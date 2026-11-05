@@ -27,6 +27,16 @@ Java对照只编译MersenneTwister64及离线runner到忽略目录，不加载�
 - 响应+68写会话+98，1507C2211读取同一会话成员传给151213730；后者写请求+D8。该链已由下一节的独立wire与分段原生执行验证；未据此宣称完整Handler执行。
 - Login构造保护续段已越过151213AC6；148A22550跳1421C1F40（目标原生ret），后续需合成1458971C0类初始化状态并追踪下一真实调用。未知helper继续失败，不默认返回成功。
 
+## A-04d5d client seed来源与保存
+
+Token字符串构造15121DB40首先调用152F1B4D0。目标System.Random类型280的槽8为NextDouble；原生代码调用此槽后乘1422404F0的double常量`2^64`，执行uint64转换，再经14CB58BD0编码，将同一16字节同时返回并存到14587D740。该存储正是A-04d5a后续XOR的输入。
+
+SessionRuntime72新增generate_client_seed：仅提供受控NextDouble结果，缩放/转换/整数编码/全局保存均执行原生代码，并用独立表达式和真实decoder核对。两套置换表各5组输入（0、2^-53、0.5、0.123456789、1的前一个double）共10组通过；0.5得到8000000000000000，最高输入得到FFFFFFFFFFFFF800。工具拒绝NaN/无穷/负数/1及非数值；没有把这组受控随机值当成客户端真实随机性测试。
+
+此前12组4096字节Java对照与6组短输入拒绝同时重新通过，产物重复一致；工具回归106项通过。证据仍为session-seed-trace/observations/determinism，新增clientSeedSourceFixtures；日志client-seed-source-tests.log。
+
+15121DB40后续保护路径经已核对的原生ret thunk和堆分配后进入Shell操作0x64；当前停于其栈探测/SDK内部状态前置，尚未恢复加密字符串。该helper没有被模型化为默认成功。原始探索probe_token_seed.py及token-seed-path.json在忽略的analysis/，不能据此把Token完整构造、密文或签名标记通过。
+
 ## B-02c2 会话token保存和Login参数
 
 trace_client72_token_flow从独立响应wire `32 <length> <ASCII>` 开始，经真实TokenRsp reader将string写至CLDBKDNJHFG+68（tag6）。随后分别执行以下边界，实际存储的指针贯穿这些片段：

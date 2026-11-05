@@ -6,6 +6,7 @@ This module does not model RSA, signature verification, Shell or IFix success.
 """
 from collections import Counter
 import hashlib
+import math
 import struct
 try:
     from .client72_emulator import GLOBAL, OBJECT, STACK, END
@@ -70,6 +71,13 @@ class SessionRuntime72:
         random_class = e.alloc(512)
         e.write(self.random, random_class)
         e.write(random_class + 0xf8, e.model_stub(lambda: random_value))
+        self.next_double_value = 0.0
+        def next_double():
+            if e.reg('rcx') != self.random:
+                raise ValueError('Unexpected Random.NextDouble receiver')
+            e.uc.reg_write(e.R.UC_X86_REG_XMM0, int.from_bytes(struct.pack('<d', self.next_double_value), 'little'))
+            return 0
+        e.write(random_class + 0x110, e.model_stub(next_double))
         # 149A75140 obtains the thread-local System.Random. TLS construction is
         # replaced by this declared object; no session operation is stubbed.
         e.models[0x149A75140] = lambda: self.random
@@ -90,6 +98,30 @@ class SessionRuntime72:
         self.call(0x14B770850)  # Native .cctor sets N=312 and M=156.
         if (e.read(0x145880A44,'I'),e.read(0x145880A40,'I')) != (312,156):
             raise ValueError('Native MT64 dimensions changed')
+
+    def generate_client_seed(self, sample):
+        if type(sample) not in (int,float) or not math.isfinite(sample) or not 0 <= sample < 1:
+            raise ValueError('Random.NextDouble fixture outside [0,1)')
+        e=self.e
+        methods=[m for m in e.records[280]['methods'] if m.get('virtualSlot')==8]
+        if len(methods)!=1 or methods[0]['name']!='NextDouble' or methods[0]['parameterCount']:
+            raise ValueError('Random.NextDouble virtual-slot declaration mismatch')
+        if e.read(0x1422404F0,'d') != float(1<<64):
+            raise ValueError('Native client-seed scale changed')
+        self.next_double_value=float(sample)
+        e.write(GLOBAL+0x255b0,self.random)
+        e.allow(0x152F1B4D0)
+        result=e.alloc(16)
+        self.call(0x152F1B4D0,result)
+        instructions=e.steps
+        expected=int(float(sample)*(1<<64))
+        if bytes(e.uc.mem_read(result,16))!=bytes(e.uc.mem_read(0x14587D740,16)):
+            raise ValueError('Client seed return/global storage differ')
+        actual=self.call(0x14CB58170,0x14587D740)
+        if actual!=expected or self.call(0x14CB58170,result)!=expected:
+            raise ValueError('Native client seed disagrees with independent double scaling')
+        return dict(randomDoubleHex=float(sample).hex(),seedHex=f'{actual:016x}',
+                    nativeEntry='0x152f1b4d0',savedAt='0x14587d740',instructions=instructions,passed=True)
 
     def array(self, length, width=1):
         if type(length) is not int or not 0 <= length <= 4096 or width not in (1,8):

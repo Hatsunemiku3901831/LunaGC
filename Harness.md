@@ -135,3 +135,5 @@ A-04d3请求入口：[Login完整wire](docs/CLIENT_72_LOGIN_WIRE.md)；trace_cli
 Login构造现由trace_client72_login_constructor在指定旧Shell/非云夹具中到达151214D20；不含队列/网络执行。SDK包装实际读取3条目标literal，uapc/tag1533、channel_id/tag12、sub_channel_id/tag364来源到原生writer闭合，UInt32边界/失败覆盖。2个Shell字段只保留原始来源，不命名。新增校验validate_login_constructor，105项回归与三组构造重复一致；evidence/login-constructor-{trace,determinism}.json、logs/login-constructor-tests.log。请求身份提交70f3e5b；下一项Token构造15121FF70/队列及密码学前段。正式工具取代相应探索脚本，复现见CLIENT_72_SESSION。
 
 E-01候选资源入口：[固定7.2上游提交](https://github.com/DimbreathBot/AnimeGameData/commit/d54f6f0d423ded9d055bb740a3e5f3aa8f2667f1)。提交/根树已只读记录resource-source-heads.json、resource-source-tree.json，根目录包括ExcelBinOutput/BinOutput/TextMap，不含Lua Scripts目录；不能据此称最小资源齐全。后续使用固定commit取最小子树并核对客户端revision、字段与稳定ID，不更新resources引用。
+
+client seed来源已接入trace_client72_session：152F1B4D0执行NextDouble×2^64、编码、返回/全局同值保存；10组来源边界+既有18组后段复跑，106项回归通过。session-seed-trace新增clientSeedSourceFixtures，determinism已更新；日志client-seed-source-tests.log。Token密文helper15121DB40进入Shell 0x64仍未贯通，探索边界见CLIENT_72_SESSION。上一Login构造提交cde97d4；运行源码/配置未变，无重启。

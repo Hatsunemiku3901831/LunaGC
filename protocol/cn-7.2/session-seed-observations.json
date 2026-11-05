@@ -6,12 +6,134 @@
     "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
   },
   "fixtureCount": 18,
+  "clientSeedSourceFixtures": [
+    {
+      "permutation": [
+        1,
+        0
+      ],
+      "randomDoubleHex": "0x0.0p+0",
+      "seedHex": "0000000000000000",
+      "nativeEntry": "0x152f1b4d0",
+      "savedAt": "0x14587d740",
+      "instructions": 502,
+      "passed": true
+    },
+    {
+      "permutation": [
+        1,
+        0
+      ],
+      "randomDoubleHex": "0x1.0000000000000p-53",
+      "seedHex": "0000000000000800",
+      "nativeEntry": "0x152f1b4d0",
+      "savedAt": "0x14587d740",
+      "instructions": 502,
+      "passed": true
+    },
+    {
+      "permutation": [
+        1,
+        0
+      ],
+      "randomDoubleHex": "0x1.0000000000000p-1",
+      "seedHex": "8000000000000000",
+      "nativeEntry": "0x152f1b4d0",
+      "savedAt": "0x14587d740",
+      "instructions": 502,
+      "passed": true
+    },
+    {
+      "permutation": [
+        1,
+        0
+      ],
+      "randomDoubleHex": "0x1.f9add3739635fp-4",
+      "seedHex": "1f9add3739635f00",
+      "nativeEntry": "0x152f1b4d0",
+      "savedAt": "0x14587d740",
+      "instructions": 502,
+      "passed": true
+    },
+    {
+      "permutation": [
+        1,
+        0
+      ],
+      "randomDoubleHex": "0x1.fffffffffffffp-1",
+      "seedHex": "fffffffffffff800",
+      "nativeEntry": "0x152f1b4d0",
+      "savedAt": "0x14587d740",
+      "instructions": 502,
+      "passed": true
+    },
+    {
+      "permutation": [
+        197,
+        41
+      ],
+      "randomDoubleHex": "0x0.0p+0",
+      "seedHex": "0000000000000000",
+      "nativeEntry": "0x152f1b4d0",
+      "savedAt": "0x14587d740",
+      "instructions": 502,
+      "passed": true
+    },
+    {
+      "permutation": [
+        197,
+        41
+      ],
+      "randomDoubleHex": "0x1.0000000000000p-53",
+      "seedHex": "0000000000000800",
+      "nativeEntry": "0x152f1b4d0",
+      "savedAt": "0x14587d740",
+      "instructions": 502,
+      "passed": true
+    },
+    {
+      "permutation": [
+        197,
+        41
+      ],
+      "randomDoubleHex": "0x1.0000000000000p-1",
+      "seedHex": "8000000000000000",
+      "nativeEntry": "0x152f1b4d0",
+      "savedAt": "0x14587d740",
+      "instructions": 502,
+      "passed": true
+    },
+    {
+      "permutation": [
+        197,
+        41
+      ],
+      "randomDoubleHex": "0x1.f9add3739635fp-4",
+      "seedHex": "1f9add3739635f00",
+      "nativeEntry": "0x152f1b4d0",
+      "savedAt": "0x14587d740",
+      "instructions": 502,
+      "passed": true
+    },
+    {
+      "permutation": [
+        197,
+        41
+      ],
+      "randomDoubleHex": "0x1.fffffffffffffp-1",
+      "seedHex": "fffffffffffff800",
+      "nativeEntry": "0x152f1b4d0",
+      "savedAt": "0x14587d740",
+      "instructions": 502,
+      "passed": true
+    }
+  ],
   "javaSourceSHA256": {
     "tools/Client72SeedReference.java": "9d4886741c825bbd95d47688e606b724cb97a2b6a288e52f3778a07e38b8fcc1",
     "src/main/java/emu/grasscutter/utils/algorithms/MersenneTwister64.java": "c46c8c05acf697fded0ef1685a0e64d6fb5a13933d10d07b3c387c36a6cabebb"
   },
   "runtimeStatus": "not-tested",
-  "scope": "post-decryption native seed suffix only",
+  "scope": "native client-seed source and post-decryption suffix; encrypted string construction excluded",
   "observedAlgorithm": "big-endian first 8 decrypted bytes XOR uint64 client seed; MT64 first output reseeds a second MT64; discard one output; 512 big-endian uint64 outputs",
   "boundaries": {
     "entry": "0x15a4e064f",

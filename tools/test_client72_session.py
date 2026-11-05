@@ -1,6 +1,7 @@
 import unittest
 import copy
 import json
+import math
 from pathlib import Path
 from tools.client72_session_runtime import permutation_table, SessionRuntime72
 from tools.trace_client72_session import SEED_CASES
@@ -33,6 +34,12 @@ class SessionFixtureTests(unittest.TestCase):
         self.assertNotEqual(int.from_bytes(data,'little')^client,0xffffffffffffffff)
         self.assertEqual(cases['trailing-byte'][0][:8],cases['mixed'][0])
         self.assertTrue(any(client>>63 for _,client in cases.values()))
+
+    def test_random_source_refuses_values_outside_its_real_domain(self):
+        runtime=object.__new__(SessionRuntime72)
+        for value in (-0.1,1.0,float('nan'),float('inf'),True,'0.5'):
+            with self.assertRaises(ValueError):runtime.generate_client_seed(value)
+        self.assertEqual(int(math.nextafter(1.0,0.0)*(1<<64)),0xfffffffffffff800)
 
 
 class SessionTokenEvidenceTests(unittest.TestCase):
