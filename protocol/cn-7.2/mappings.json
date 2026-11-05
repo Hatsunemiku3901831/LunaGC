@@ -236,6 +236,27 @@
       "inputFile": "binary",
       "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
       "location": "protocol/cn-7.2/key-selection-observations.json; native 151220094 -> tag1184, Miscs.GetGlobalDispatchUrl &key_id=4, JCA-selected response keys and native differential rejection"
+    },
+    {
+      "id": "born-opcode",
+      "layer": "opcode",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "protocol/cn-7.2/born-observations.json; docs/CLIENT_72_BORN.md; bounded native dispatch/selection/constructor/reader/size, independent wire and protoc"
+    },
+    {
+      "id": "born-message",
+      "layer": "message",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "protocol/cn-7.2/born-observations.json; docs/CLIENT_72_BORN.md; bounded native dispatch/selection/constructor/reader/size, independent wire and protoc"
+    },
+    {
+      "id": "born-field",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "protocol/cn-7.2/born-observations.json; docs/CLIENT_72_BORN.md; bounded native dispatch/selection/constructor/reader/size, independent wire and protoc"
     }
   ],
   "opcodes": [
@@ -307,27 +328,33 @@
     },
     {
       "semanticName": "DoSetPlayerBornDataNotify",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "born-opcode"
+      ],
       "ambiguities": [],
-      "clientType": null,
-      "cmdId": null
+      "clientType": "PMNMDAIKALO",
+      "cmdId": 5008
     },
     {
       "semanticName": "SetPlayerBornDataReq",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "born-opcode"
+      ],
       "ambiguities": [],
-      "clientType": null,
-      "cmdId": null
+      "clientType": "JNJOMANHPCD",
+      "cmdId": 8541
     },
     {
       "semanticName": "SetPlayerBornDataRsp",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "born-opcode"
+      ],
       "ambiguities": [],
-      "clientType": null,
-      "cmdId": null
+      "clientType": "EODFLMDBPOG",
+      "cmdId": 414
     },
     {
       "semanticName": "PlayerDataNotify",
@@ -550,30 +577,36 @@
     },
     {
       "semanticName": "DoSetPlayerBornDataNotify",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "born-message"
+      ],
       "ambiguities": [],
-      "clientType": null,
+      "clientType": "PMNMDAIKALO",
       "direction": "S2C",
       "aliases": [],
       "runtimeStatus": "not-tested"
     },
     {
       "semanticName": "SetPlayerBornDataReq",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "born-message"
+      ],
       "ambiguities": [],
-      "clientType": null,
+      "clientType": "JNJOMANHPCD",
       "direction": "C2S",
       "aliases": [],
       "runtimeStatus": "not-tested"
     },
     {
       "semanticName": "SetPlayerBornDataRsp",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "born-message"
+      ],
       "ambiguities": [],
-      "clientType": null,
+      "clientType": "EODFLMDBPOG",
       "direction": "S2C",
       "aliases": [],
       "runtimeStatus": "not-tested"
@@ -3923,24 +3956,84 @@
     },
     {
       "semanticName": "DoSetPlayerBornDataNotify",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "born-field"
+      ],
       "ambiguities": [],
-      "fields": []
+      "fields": [],
+      "scope": "fixed-input bounded native/protoc; no runtime acceptance",
+      "emptySchemaEvidence": "type69319 has no own fields/overrides; base67861 size/writer/skip-reader actually executed"
     },
     {
       "semanticName": "SetPlayerBornDataReq",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "born-field"
+      ],
       "ambiguities": [],
-      "fields": []
+      "fields": [
+        {
+          "clientField": "FPOLBCIBIOB",
+          "objectOffset": 24,
+          "tag": 4,
+          "type": "string",
+          "semanticField": "nick_name",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "verified",
+          "wireStatus": "emulated-observation",
+          "evidence": [
+            "born-field"
+          ],
+          "ambiguities": []
+        },
+        {
+          "clientField": "NLNJDCDLHHE",
+          "objectOffset": 32,
+          "tag": 11,
+          "type": "uint32",
+          "semanticField": "avatar_id",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "verified",
+          "wireStatus": "emulated-observation",
+          "evidence": [
+            "born-field"
+          ],
+          "ambiguities": []
+        }
+      ],
+      "scope": "fixed-input bounded native/protoc; no runtime acceptance"
     },
     {
       "semanticName": "SetPlayerBornDataRsp",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "born-field"
+      ],
       "ambiguities": [],
-      "fields": []
+      "fields": [
+        {
+          "clientField": "LDLIEKOAFBP",
+          "objectOffset": 24,
+          "tag": 15,
+          "type": "int32",
+          "semanticField": "retcode",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "verified",
+          "wireStatus": "emulated-observation",
+          "evidence": [
+            "born-field"
+          ],
+          "ambiguities": []
+        }
+      ],
+      "scope": "fixed-input bounded native/protoc; no runtime acceptance"
     },
     {
       "semanticName": "PlayerDataNotify",

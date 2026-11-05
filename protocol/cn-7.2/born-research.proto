@@ -1,0 +1,10 @@
+// Research-only B-02d; target-native evidence, not a production generated schema.
+syntax = "proto3";
+package born72;
+// The actual type 69319 inherits zero size/writer and skip-only reader.
+message DoSetPlayerBornDataNotify {}
+message SetPlayerBornDataReq {
+  string nick_name = 4;
+  uint32 avatar_id = 11;
+}
+message SetPlayerBornDataRsp { int32 retcode = 15; }

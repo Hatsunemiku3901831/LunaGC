@@ -374,3 +374,7 @@ docs/ACCOUNT_AND_SAVE_DATA_MODEL.md 和 docs/ACCOUNT_AND_SAVE_OPERATIONS.md。
 2026-11-06 V-01c：加工手册夹具改用真实Player/Item Guard及隔离Mongo，保留原18项断言和同步故障阶段；ProcessPlayer专用库存/标志/回调排除出BSON。新增真实手册进度、产物、未重复扣原料及失败后预留冷读，明确内存进度1而失败确认后的持久进度0，重试仍拒绝重复发放。修复前18项中12失败，现18项全过；与加工队列35、家具96、Player/Item保存保护45、手册领奖27合计221项通过，失败/错误/跳过均0，证据workflow-fixture-test-results/、evidence/workflow-fixture-summary.json及logs/workflow-fixture-regression.log（local/migration72）。原断言未删未放宽；未改生产逻辑，无部署/实机验收。完整Java集未重跑，历史217失败不据此扣减。
 
 2026-11-06 A-03c限定离线验收完成，见[候选消息/Proto与三层缺口矩阵](CLIENT_72_LOGIN_PROTO_MATRIX.md)：97包构造、148引用/种子、1139文件描述符依赖，缺DoSetPlayerBornDataNotify.proto如实保留。原三层状态及185字段不变；6新增/260研究回归、重复矩阵通过，研究校验0/ready1（213缺口）。V-01b/c经济/保存221项通过；完整Java集未重跑。按用户要求到此停止并交接Astra，下一研究为B-02选人三件组的独立7.2三层证据；A-03整体仍待完整闭包/实机。未改运行文件、未部署或调试。
+
+### 7.2选人研究补充（2026-11-06，B-02d）
+
+三件组目标号及字段已限定离线验证，见[CLIENT_72_BORN](CLIENT_72_BORN.md)的完整实现/回归规格。通知5008、请求8541（nick_name4/avatar_id11）、响应414（retcode15）。仅更新研究映射，没有修改账号、持久数据模型、Guard、创建/保存逻辑；后续实现需保留入口业务校验、重复创建和保存回归。当前39原生样本与266研究回归不代表真实选人/创建角色/存档验收；本批未重跑Java经济保存集，未部署。

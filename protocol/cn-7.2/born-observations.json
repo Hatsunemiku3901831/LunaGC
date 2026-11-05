@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "roles": [
+    {
+      "semanticName": "DoSetPlayerBornDataNotify",
+      "typeIndex": 69319,
+      "clientType": "PMNMDAIKALO",
+      "cmdId": 5008,
+      "getter": "0x1528aebe0",
+      "handler": "0x1507d25d0",
+      "registration": "0x1507c2b20",
+      "parameterIndex": 381470
+    },
+    {
+      "semanticName": "SetPlayerBornDataReq",
+      "typeIndex": 29956,
+      "clientType": "JNJOMANHPCD",
+      "cmdId": 8541,
+      "getter": "0x14cc44780",
+      "clone": "0x14cc44460",
+      "selfClassCell": "0x1458c5458",
+      "copyScope": "inlined own-field copy"
+    },
+    {
+      "semanticName": "SetPlayerBornDataRsp",
+      "typeIndex": 34385,
+      "clientType": "EODFLMDBPOG",
+      "cmdId": 414,
+      "getter": "0x15374aa50",
+      "handler": "0x1507d2820",
+      "registration": "0x1507c2b2f",
+      "parameterIndex": 381293
+    }
+  ],
+  "messages": [
+    {
+      "semanticName": "DoSetPlayerBornDataNotify",
+      "clientType": "PMNMDAIKALO",
+      "typeIndex": 69319,
+      "fields": [],
+      "status": "verified",
+      "scope": "fixed-input bounded-native schema; not live acceptance"
+    },
+    {
+      "semanticName": "SetPlayerBornDataReq",
+      "clientType": "JNJOMANHPCD",
+      "typeIndex": 29956,
+      "fields": [
+        {
+          "clientField": "FPOLBCIBIOB",
+          "objectOffset": 24,
+          "tag": 4,
+          "type": "string",
+          "semanticField": "nick_name",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "verified",
+          "wireStatus": "emulated-observation"
+        },
+        {
+          "clientField": "NLNJDCDLHHE",
+          "objectOffset": 32,
+          "tag": 11,
+          "type": "uint32",
+          "semanticField": "avatar_id",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "verified",
+          "wireStatus": "emulated-observation"
+        }
+      ],
+      "status": "verified",
+      "scope": "fixed-input bounded-native schema; not live acceptance"
+    },
+    {
+      "semanticName": "SetPlayerBornDataRsp",
+      "clientType": "EODFLMDBPOG",
+      "typeIndex": 34385,
+      "fields": [
+        {
+          "clientField": "LDLIEKOAFBP",
+          "objectOffset": 24,
+          "tag": 15,
+          "type": "int32",
+          "semanticField": "retcode",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "status": "verified",
+          "wireStatus": "emulated-observation"
+        }
+      ],
+      "status": "verified",
+      "scope": "fixed-input bounded-native schema; not live acceptance"
+    }
+  ],
+  "fixtureCount": 39,
+  "namedErrors": {
+    "RetRepeatSetPlayerBornData": 116,
+    "RetNicknameWordIllegal": 132,
+    "NicknameWordIllegal": 850
+  },
+  "runtimeStatus": "not-tested",
+  "scope": "bounded-native-trio-evidence",
+  "models": [
+    "UI base constructor storage and named rendering sinks; text input virtual getter",
+    "initialized class/storage objects; IFix absent fixture",
+    "managed message allocation",
+    "UTF-8 conversion and string size",
+    "reader scalar/tag/skip primitives with explicit rejection rules",
+    "UI/error/event/success sinks and platform=0"
+  ],
+  "outsideScope": [
+    "live socket/SDK/UI validation and rendering",
+    "actual dispatch registration lifecycle",
+    "request queue and SDK tail",
+    "full success continuation",
+    "B-03/C-01/D-02"
+  ],
+  "protocSHA256": "9f243ff05a4b8e19e3f310959ec23686eed8464691490009de6c89e527ee2bef",
+  "fixtureKinds": {
+    "dispatch": 4,
+    "malformed-reader": 8,
+    "name-input-to-validator": 1,
+    "notify-handler": 3,
+    "notify-selection-entry": 1,
+    "reader-boundary": 3,
+    "request": 7,
+    "request-null-rejection": 1,
+    "response": 7,
+    "selection-defaults": 1,
+    "selection-name-page": 3
+  }
+}

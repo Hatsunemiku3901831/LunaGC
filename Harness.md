@@ -230,3 +230,11 @@ V-01b补验：共用本夹具的FurniturePaidStartRecoveryTest原31项中27失�
 2026-11-06 A-03c限定离线验收完成，见[候选消息/Proto与三层缺口矩阵](docs/CLIENT_72_LOGIN_PROTO_MATRIX.md)：97包构造、148引用/种子、1139文件描述符依赖，缺DoSetPlayerBornDataNotify.proto如实保留。原三层状态及185字段不变；6新增/260研究回归、重复矩阵通过，研究校验0/ready1（213缺口）。V-01b/c经济/保存221项通过；完整Java集未重跑。按用户要求到此停止并交接Astra，下一研究为B-02选人三件组的独立7.2三层证据；A-03整体仍待完整闭包/实机。未改运行文件、未部署或调试。
 
 交接收口：A-03c验收提交411d522后停止，无下一研究动作。旧HANDOFF2先备份并逐字节/hash核验，HANDOFF仅追加；详细入口见[HANDOFF2](HANDOFF2.md)。测试Mongo已正常关闭，原Mongo/数据/他人差异保留；无运行部署或客户端调试。
+
+## B-02d选人三件组停止点（2026-11-06）
+
+入口[CLIENT_72_BORN](docs/CLIENT_72_BORN.md)：`trace_client72_born.py`固定3输入hash，39组限定原生样本、独立wire/protoc；`test_client72_born`6项全过，原260项研究加本项共266项全过（无失败/错误/跳过）。二次trace和摘要逐字节一致。研究校验退出0，ready退出1/204缺口。三条状态为研究verified、runtime仍not-tested；字段总188（41V/9C/138U）。矩阵L1/L2各10V/138U，L3为3V/7C/138U，遗留缺根不变。
+
+本机证据`evidence/born-{trace,trace-repeat,summary-repeat,determinism,mapping-check,mapping-ready,final-environment}.json`，日志`logs/born-{focused,repeat,regression}.log`。实际执行三getter/分派/请求构造与writer/size/响应reader与Handler、目标继承空schema；wire primitive/UTF-8/UI存储为显式模型，真实昵称validator、客户端/SDK/队列/完整成功继续均未验。不得将空通知等同于所有Rsp为空。
+
+生产代码/Proto/配置/补丁未改，无部署或数据库测试；Java及游戏进程不存在，只有本工作区Mongo27017与两个既有调试器，均未操作。旧经济/保存221项通过仍属前批，本轮不冒称重跑。B-02d闭合后停止，给Sol的下一项规格在专题；不进入B-03/C-01/D-02。

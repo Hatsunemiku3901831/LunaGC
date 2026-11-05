@@ -1292,10 +1292,11 @@
   },
   "evidenceSHA256": {
     "protocol/cn-7.2/profile.json": "afce9267696712860c9d4585c7b09b242ad993fa504c177f4466d51104328315",
-    "protocol/cn-7.2/mappings.json": "ce6e43cfdb7cd77a6066e68cfc720f6595c77ee6444324986449b3a7c5986944",
+    "protocol/cn-7.2/mappings.json": "78e9b9fdb42b9fb71edd1b33c437fbea87c216d40da195a6b69935a1c1f1d806",
     "protocol/cn-7.2/commands.json": "93376c770ff8362303817da1d03032f08495c04affc9ce1f7697470ff970d4a8",
     "protocol/cn-7.2/auth-sources-observations.json": "3d21f2e0b992bdcb253ddc3f4406b57327cc473b5b1b0474ba519de7c6795beb",
     "protocol/cn-7.2/auth-tail-observations.json": "be8c6e59ace621b3feb595c50a337d2166bd3b0124b681246e1bd8a5d11c622d",
+    "protocol/cn-7.2/born-observations.json": "0c1332a98c25a06431fe853def7e060d08ca77630b865d3cfbb8089d0903d943",
     "protocol/cn-7.2/dispatch-config-observations.json": "3fd04f75214e44c14da2f84d293a276c4ae0da1240eb13b6d8ac487d640aa09d",
     "protocol/cn-7.2/dispatch-coroutine-observations.json": "b3632585637840a33a46f9a55ae62afae8aa86dbc45ac1fcfb591a1eba489182",
     "protocol/cn-7.2/dispatch-key-frame-observations.json": "984fadd1494d5537d44c995e635fa8dc7afc9a846faddab0f647b3f19280158b",
@@ -83003,40 +83004,53 @@
       "layers": {
         "opcodes": {
           "semanticName": "DoSetPlayerBornDataNotify",
-          "status": "unresolved",
-          "evidence": [],
+          "status": "verified",
+          "evidence": [
+            "born-opcode"
+          ],
           "ambiguities": [],
-          "clientType": null,
-          "cmdId": null
+          "clientType": "PMNMDAIKALO",
+          "cmdId": 5008
         },
         "messages": {
           "semanticName": "DoSetPlayerBornDataNotify",
-          "status": "unresolved",
-          "evidence": [],
+          "status": "verified",
+          "evidence": [
+            "born-message"
+          ],
           "ambiguities": [],
-          "clientType": null,
+          "clientType": "PMNMDAIKALO",
           "direction": "S2C",
           "aliases": [],
           "runtimeStatus": "not-tested"
         },
         "schemas": {
           "semanticName": "DoSetPlayerBornDataNotify",
-          "status": "unresolved",
-          "evidence": [],
+          "status": "verified",
+          "evidence": [
+            "born-field"
+          ],
           "ambiguities": [],
-          "fields": []
+          "fields": [],
+          "scope": "fixed-input bounded native/protoc; no runtime acceptance",
+          "emptySchemaEvidence": "type69319 has no own fields/overrides; base67861 size/writer/skip-reader actually executed"
         }
       },
       "fieldStatusCounts": {},
       "gaps": [
-        "opcodes: identity/semantics/wire not fully verified",
-        "messages: identity/semantics/wire not fully verified",
-        "schemas: identity/semantics/wire not fully verified",
         "schemas: no field evidence; this does not prove an empty target message",
         "runtime: no actual CN72 client sequence acceptance"
       ],
       "targetProtocolReady": false,
-      "targetCommandBindings": []
+      "targetCommandBindings": [
+        {
+          "typeIndex": 69319,
+          "clientType": "PMNMDAIKALO",
+          "cmdId": 5008,
+          "getter": "0x1528aebe0",
+          "methodIndex": 574101
+        }
+      ]
     },
     {
       "legacyName": "EnterSceneDoneReq",
@@ -90339,40 +90353,86 @@
       "layers": {
         "opcodes": {
           "semanticName": "SetPlayerBornDataReq",
-          "status": "unresolved",
-          "evidence": [],
+          "status": "verified",
+          "evidence": [
+            "born-opcode"
+          ],
           "ambiguities": [],
-          "clientType": null,
-          "cmdId": null
+          "clientType": "JNJOMANHPCD",
+          "cmdId": 8541
         },
         "messages": {
           "semanticName": "SetPlayerBornDataReq",
-          "status": "unresolved",
-          "evidence": [],
+          "status": "verified",
+          "evidence": [
+            "born-message"
+          ],
           "ambiguities": [],
-          "clientType": null,
+          "clientType": "JNJOMANHPCD",
           "direction": "C2S",
           "aliases": [],
           "runtimeStatus": "not-tested"
         },
         "schemas": {
           "semanticName": "SetPlayerBornDataReq",
-          "status": "unresolved",
-          "evidence": [],
+          "status": "verified",
+          "evidence": [
+            "born-field"
+          ],
           "ambiguities": [],
-          "fields": []
+          "fields": [
+            {
+              "clientField": "FPOLBCIBIOB",
+              "objectOffset": 24,
+              "tag": 4,
+              "type": "string",
+              "semanticField": "nick_name",
+              "cardinality": "singular",
+              "presence": "implicit",
+              "packed": false,
+              "status": "verified",
+              "wireStatus": "emulated-observation",
+              "evidence": [
+                "born-field"
+              ],
+              "ambiguities": []
+            },
+            {
+              "clientField": "NLNJDCDLHHE",
+              "objectOffset": 32,
+              "tag": 11,
+              "type": "uint32",
+              "semanticField": "avatar_id",
+              "cardinality": "singular",
+              "presence": "implicit",
+              "packed": false,
+              "status": "verified",
+              "wireStatus": "emulated-observation",
+              "evidence": [
+                "born-field"
+              ],
+              "ambiguities": []
+            }
+          ],
+          "scope": "fixed-input bounded native/protoc; no runtime acceptance"
         }
       },
-      "fieldStatusCounts": {},
+      "fieldStatusCounts": {
+        "verified": 2
+      },
       "gaps": [
-        "opcodes: identity/semantics/wire not fully verified",
-        "messages: identity/semantics/wire not fully verified",
-        "schemas: identity/semantics/wire not fully verified",
-        "schemas: no field evidence; this does not prove an empty target message",
         "runtime: no actual CN72 client sequence acceptance"
       ],
       "targetProtocolReady": false,
-      "targetCommandBindings": []
+      "targetCommandBindings": [
+        {
+          "typeIndex": 29956,
+          "clientType": "JNJOMANHPCD",
+          "cmdId": 8541,
+          "getter": "0x14cc44780",
+          "methodIndex": 233911
+        }
+      ]
     },
     {
       "legacyName": "SetPlayerBornDataRsp",
@@ -90384,40 +90444,70 @@
       "layers": {
         "opcodes": {
           "semanticName": "SetPlayerBornDataRsp",
-          "status": "unresolved",
-          "evidence": [],
+          "status": "verified",
+          "evidence": [
+            "born-opcode"
+          ],
           "ambiguities": [],
-          "clientType": null,
-          "cmdId": null
+          "clientType": "EODFLMDBPOG",
+          "cmdId": 414
         },
         "messages": {
           "semanticName": "SetPlayerBornDataRsp",
-          "status": "unresolved",
-          "evidence": [],
+          "status": "verified",
+          "evidence": [
+            "born-message"
+          ],
           "ambiguities": [],
-          "clientType": null,
+          "clientType": "EODFLMDBPOG",
           "direction": "S2C",
           "aliases": [],
           "runtimeStatus": "not-tested"
         },
         "schemas": {
           "semanticName": "SetPlayerBornDataRsp",
-          "status": "unresolved",
-          "evidence": [],
+          "status": "verified",
+          "evidence": [
+            "born-field"
+          ],
           "ambiguities": [],
-          "fields": []
+          "fields": [
+            {
+              "clientField": "LDLIEKOAFBP",
+              "objectOffset": 24,
+              "tag": 15,
+              "type": "int32",
+              "semanticField": "retcode",
+              "cardinality": "singular",
+              "presence": "implicit",
+              "packed": false,
+              "status": "verified",
+              "wireStatus": "emulated-observation",
+              "evidence": [
+                "born-field"
+              ],
+              "ambiguities": []
+            }
+          ],
+          "scope": "fixed-input bounded native/protoc; no runtime acceptance"
         }
       },
-      "fieldStatusCounts": {},
+      "fieldStatusCounts": {
+        "verified": 1
+      },
       "gaps": [
-        "opcodes: identity/semantics/wire not fully verified",
-        "messages: identity/semantics/wire not fully verified",
-        "schemas: identity/semantics/wire not fully verified",
-        "schemas: no field evidence; this does not prove an empty target message",
         "runtime: no actual CN72 client sequence acceptance"
       ],
       "targetProtocolReady": false,
-      "targetCommandBindings": []
+      "targetCommandBindings": [
+        {
+          "typeIndex": 34385,
+          "clientType": "EODFLMDBPOG",
+          "cmdId": 414,
+          "getter": "0x15374aa50",
+          "methodIndex": 287988
+        }
+      ]
     },
     {
       "legacyName": "StoreType",
@@ -91395,6 +91485,27 @@
       "inputFile": "binary",
       "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
       "location": "protocol/cn-7.2/key-selection-observations.json; native 151220094 -> tag1184, Miscs.GetGlobalDispatchUrl &key_id=4, JCA-selected response keys and native differential rejection"
+    },
+    {
+      "id": "born-opcode",
+      "layer": "opcode",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "protocol/cn-7.2/born-observations.json; docs/CLIENT_72_BORN.md; bounded native dispatch/selection/constructor/reader/size, independent wire and protoc"
+    },
+    {
+      "id": "born-message",
+      "layer": "message",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "protocol/cn-7.2/born-observations.json; docs/CLIENT_72_BORN.md; bounded native dispatch/selection/constructor/reader/size, independent wire and protoc"
+    },
+    {
+      "id": "born-field",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "protocol/cn-7.2/born-observations.json; docs/CLIENT_72_BORN.md; bounded native dispatch/selection/constructor/reader/size, independent wire and protoc"
     }
   ],
   "commandTableScope": {
@@ -91473,7 +91584,7 @@
     "Nonzero/64-bit/nested/list/error/boundary wire regressions remain separate required evidence",
     "No protocol generation, runtime integration, client reverse engineering or client debugging"
   ],
-  "reviewSHA256": "1d7b8ad5c209b1ffc6fb933102d484a1387bd3d9d6e594b8b5072db352cd5cbe",
+  "reviewSHA256": "a070dffae82db91a299060f425249f00996ed5b7af621c6e22e84ab66c9622ae",
   "toolSourceSHA256": {
     "tools/review_client72_login_proto.py": "8c58a212f25af2d50d5ad0ab4090d0c637fa0844ce38785d725808ddd069963f",
     "tools/Client72ProtoDependencies.java": "517838c3cd34b051c47205e71d45d2d3c99cc6bb4fb32379c34e0d0cea418f0a"

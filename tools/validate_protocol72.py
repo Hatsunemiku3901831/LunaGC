@@ -603,7 +603,7 @@ def main():
     protected = json.loads((args.directory / 'token-wire-observations.json').read_text('utf-8'))
     extra = [(name, json.loads((args.directory / name).read_text('utf8')))
              for name in ('login-wire-observations.json', 'response-wire-observations.json', 'response-leaf-wire-observations.json',
-                          'response-graph-observations.json', 'map-aot-observations.json')]
+                          'response-graph-observations.json', 'map-aot-observations.json', 'born-observations.json')]
     errors.extend(validate_observations(document, profile, commands, wire, protected, extra))
     semantic_tables=[json.loads((args.directory/name).read_text('utf8')) for name in
                      ('login-semantic-observations.json','login-literal-observations.json','enum-observations.json','login-wire-observations.json')]

@@ -1,6 +1,6 @@
 # A-03c 候选消息、Proto依赖与7.2三层证据缺口矩阵
 
-2026-11-06，限定离线验收完成。来源是A-03b固定方法并集与当前遗留Proto，不是目标客户端最小/完整消息集。**A-03整体仍待完整闭包与实机复核；B-03/C-01/D-02均未开展。A-03c验收提交后停止。**
+2026-11-06，A-03c限定离线验收完成；B-02d已补入选人三件组独立目标证据。来源是A-03b固定方法并集与当前遗留Proto，不是目标客户端最小/完整消息集。**A-03整体仍待完整闭包与实机复核；B-03/C-01/D-02均未开展。本轮B-02d闭合后停止，规格见[选人三件组](CLIENT_72_BORN.md)。**
 
 ## 候选与描述符范围
 
@@ -14,7 +14,7 @@
 
 ## 三层状态与缺口
 
-148行是引用/种子矩阵，含辅助Proto和HTTP/包头，不是148个网络消息。指令层与语义层各7 verified/141 unresolved：四Token/Login、PingReq/Rsp及无独立CmdID的PacketHead。字段层7 candidate/141 unresolved；185条现有字段中38 verified（Token/Login业务36+包头2）、9 candidate、138 unresolved。空fields只代表缺证据，不证明目标为空。5组静态重号、传输域unknown和未实机状态保留。没有把旧tag、类型拓扑、import或相似名称借给目标三层。
+148行是引用/种子矩阵，含辅助Proto和HTTP/包头，不是148个网络消息。指令层与语义层各10 verified/138 unresolved：四Token/Login、PingReq/Rsp、无独立CmdID的PacketHead及B-02d选人三件组。字段层3 verified/7 candidate/138 unresolved；188条字段中41 verified（原38+选人3）、9 candidate、138 unresolved。一般空fields只代表缺证据；DoSetPlayerBornDataNotify例外由目标声明/父类/原生size/writer/reader独立确认无字段。5组静态重号、传输域unknown和未实机状态保留。没有把旧tag、类型拓扑、import或相似名称借给目标三层。
 
 下表L1为CmdID→目标类型，L2为目标类型→语义，L3为字段→wire/业务证据。V/C/U分别为现有verified/candidate/unresolved字段数。所有行均runtime=not-tested、targetProtocolReady=false；详细歧义与证据不省略于JSON中。
 
@@ -58,7 +58,7 @@
 | CutSceneBeginNotify | 1 | unknown | unresolved | unresolved; V0/C0/U0 |
 | DelScenePlayTeamEntityNotify | 1 | unknown | unresolved | unresolved; V0/C0/U0 |
 | DetailAbilityInfo | 1 | unknown | unresolved | unresolved; V0/C0/U0 |
-| DoSetPlayerBornDataNotify | 1 | unknown | unresolved | unresolved; V0/C0/U0 |
+| DoSetPlayerBornDataNotify | 1 | verified / 5008 / PMNMDAIKALO | verified | verified; V0/C0/U0，目标空schema已独立验证 |
 | EnterSceneDoneReq | 2 | unknown | unresolved | unresolved; V0/C0/U0 |
 | EnterSceneDoneRsp | 2 | unknown | unresolved | unresolved; V0/C0/U0 |
 | EnterScenePeerNotify | 1 | unknown | unresolved | unresolved; V0/C0/U0 |
@@ -148,8 +148,8 @@
 | SceneTimeNotify | 1 | unknown | unresolved | unresolved; V0/C0/U0 |
 | ServerGlobalValueChangeNotify | 1 | unknown | unresolved | unresolved; V0/C0/U0 |
 | ServerTimeNotify | 1 | unknown | unresolved | unresolved; V0/C0/U0 |
-| SetPlayerBornDataReq | 2 | unknown | unresolved | unresolved; V0/C0/U0 |
-| SetPlayerBornDataRsp | 2 | unknown | unresolved | unresolved; V0/C0/U0 |
+| SetPlayerBornDataReq | 2 | verified / 8541 / JNJOMANHPCD | verified | verified; V2/C0/U0 |
+| SetPlayerBornDataRsp | 2 | verified / 414 / EODFLMDBPOG | verified | verified; V1/C0/U0 |
 | StoreType | 2 | unknown | unresolved | unresolved; V0/C0/U0 |
 | StoreWeightLimitNotify | 2 | unknown | unresolved | unresolved; V0/C0/U0 |
 | SyncScenePlayTeamEntityNotify | 1 | unknown | unresolved | unresolved; V0/C0/U0 |
@@ -188,3 +188,7 @@ python tools/validate_protocol72.py --ready
 ## 停止点与Astra下一研究项
 
 本项只登记缺口；需要新的客户端证据的工作到此停止。建议Astra在现有B-02内优先研究“新号选人三件组”：DoSetPlayerBornDataNotify、SetPlayerBornDataReq、SetPlayerBornDataRsp。先查固定7.2元数据/注册/调用与已有研究工具，分别取得CmdID→类型、类型→业务、字段→wire证据，并核对新号等待选人到Player.onLogin的实际分支；没有独立证据保持unknown。新增子ID必须先建验收卡。此建议尚未启动，不预填地址/包号；场景握手及初始化消息群列其后。插件/脚本/资源条件的源码边界和真实收帧调度也尚未闭合。不得跳到正式生成、网络接入或实机调试。
+
+## B-02d更新（2026-11-06）
+
+只增加三件组目标证据，来源数量以JSON为准；遗留Proto依赖与缺根仍不变。47份研究输入纳入复核（新增born-observations），mappings对应三层已更新；矩阵重生成并由回归再次复现。39原生样本、6新增/266研究回归，研究校验0/ready1（204缺口）。原未知字段、传输域和实机状态不变；具体证据边界及Sol规格见[CLIENT_72_BORN](CLIENT_72_BORN.md)。下述旧“下一步”仅历史，本轮到此停止。
