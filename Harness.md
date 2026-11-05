@@ -173,3 +173,5 @@ SDK认证来源入口：`trace_client72_auth_sources`执行14F1917D0至14F191E18
 分区后处理入口：`trace_client72_dispatch_post`，复现/模型边界见[会话研究A-04d5n2](docs/CLIENT_72_SESSION.md#a-04d5n2-分区嵌套读取到配置处理入口)。JSON/原生密码学连续到实际Region嵌套reader，再至151204AC0配置入口；8原生样本、173研究回归通过。证据`evidence/dispatch-post-{trace,determinism}.json`及`logs/dispatch-post-regression.log`。只覆盖选定Region字段/配置实参；配置函数体、B0连续路径、第二协程、tag965语义和D-02均未验，不部署猜测协议。
 
 分区配置消费：`trace_client72_dispatch_config`，见[会话研究A-04d5n3](docs/CLIENT_72_SESSION.md#a-04d5n3-两段配置消费原生事件与region全局写入)。同次入口→两次配置/原生事件→Region全局写入，终点1512124B9；6原生样本、177研究回归通过，证据`evidence/dispatch-config-{trace,determinism}.json`和`logs/dispatch-config-regression.log`。SDK调用15275F080、非空key、事件真实监听器、B0连续路径及实机未验。最初返回EAX断言不成立，现保留完整RAX及明确低字节；不要把地址残余猜为错误码。
+
+第一分区连续链：`trace_client72_dispatch_session`及SDK/提示模型，见[会话研究A-04d5n4](docs/CLIENT_72_SESSION.md#a-04d5n4-第一分区入口连续到b0及token原始wire)。第一入口→原生配置/SDK包装/提示→session+B0原指针→复用seed运行时/Token tag965，6原生样本、182研究回归；原Token5组trace/摘要不变。证据`evidence/dispatch-session-{trace,determinism}.json`、`logs/dispatch-session-regression.log`。导出表和日志sink未初始化/JSON存储等夹具明确，非真实SDK初始化；第二协程、业务名和D-02仍未验。后续从23192.MoveNext151226CD0恢复其解析源。

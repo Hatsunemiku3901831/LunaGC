@@ -6,6 +6,8 @@
 
 国服7.2的client_rand_key、server_rand_key、sign及派生会话密钥是连接协议/内存状态，当前研究未新增MongoDB字段或执行存档迁移。Token请求account_uid/tag9来源是SDK的open_id字符串，account_token/tag2来源是combo_token字符串；响应uid/tag9为uint32，响应token/tag6经会话传给Login token/tag1。这些字段身份不同，不因tag相同或名称相似合并。已确认的wire、会话token传递及其验收边界见[会话研究](CLIENT_72_SESSION.md)，不能将加密seed与持久账号令牌或玩家UID混同。
 
+分区响应原始tag14→客户端session+B0→Token tag965现有第一入口连续证据；它仍是语义未知的内存字符串，不新增MongoDB字段，不把它命名为账号token或持久凭据。
+
 ## 数据分层
 
 | 层次 | 数据位置 | 作用 |

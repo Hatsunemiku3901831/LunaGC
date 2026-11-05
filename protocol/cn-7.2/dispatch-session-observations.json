@@ -1,0 +1,296 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "fixtureCount": 6,
+  "results": [
+    {
+      "name": "high-text",
+      "source": "9007199254740993",
+      "mode": "normal",
+      "stop": "0x151212983",
+      "storeExecuted": true,
+      "sessionPointerPreserved": true,
+      "sessionUnchanged": false,
+      "postParsePointerPreserved": true,
+      "jsonHelperRejected": false,
+      "sdkEntries": 1,
+      "sdkOutputs": [
+        {
+          "entry": "0x140ac4160",
+          "value": {
+            "app_id": "sdk_app_fixture",
+            "app_version": "7.2.0-fixture",
+            "area": "cn",
+            "compile_type": "release",
+            "use_device_name": true
+          }
+        },
+        {
+          "entry": "0x140ac4180",
+          "value": {
+            "CPU": "cpu-fixture",
+            "GPU": "gpu-fixture",
+            "Language": "LanguageSc"
+          }
+        }
+      ],
+      "dictionaryReleases": [
+        {
+          "entriesBeforeClear": 1,
+          "countAfterClear": 0
+        }
+      ],
+      "noticeCalls": [
+        {
+          "code": 5000,
+          "argument": "SDKServer - OnConnectRegionDispatch: GameBiz==Null"
+        }
+      ],
+      "nativeCastCalls": 1,
+      "tokenFieldWire": "aa3c1039303037313939323534373430393933",
+      "cmdId": 24604
+    },
+    {
+      "name": "empty",
+      "source": "",
+      "mode": "normal",
+      "stop": "0x151212983",
+      "storeExecuted": true,
+      "sessionPointerPreserved": true,
+      "sessionUnchanged": false,
+      "postParsePointerPreserved": true,
+      "jsonHelperRejected": false,
+      "sdkEntries": 1,
+      "sdkOutputs": [
+        {
+          "entry": "0x140ac4160",
+          "value": {
+            "app_id": "sdk_app_fixture",
+            "app_version": "7.2.0-fixture",
+            "area": "os",
+            "compile_type": "release",
+            "use_device_name": true
+          }
+        },
+        {
+          "entry": "0x140ac4180",
+          "value": {
+            "CPU": "cpu-fixture",
+            "GPU": "gpu-fixture",
+            "Language": "LanguageNone"
+          }
+        }
+      ],
+      "dictionaryReleases": [
+        {
+          "entriesBeforeClear": 1,
+          "countAfterClear": 0
+        }
+      ],
+      "noticeCalls": [
+        {
+          "code": 5000,
+          "argument": "SDKServer - OnConnectRegionDispatch: GameBiz==Null"
+        }
+      ],
+      "nativeCastCalls": 1,
+      "tokenFieldWire": "",
+      "cmdId": 24604
+    },
+    {
+      "name": "distinct",
+      "source": "source-B",
+      "mode": "normal",
+      "stop": "0x151212983",
+      "storeExecuted": true,
+      "sessionPointerPreserved": true,
+      "sessionUnchanged": false,
+      "postParsePointerPreserved": true,
+      "jsonHelperRejected": false,
+      "sdkEntries": 1,
+      "sdkOutputs": [
+        {
+          "entry": "0x140ac4160",
+          "value": {
+            "app_id": "sdk_app_fixture",
+            "app_version": "7.2.0-fixture",
+            "area": "cn",
+            "compile_type": "release",
+            "use_device_name": true
+          }
+        },
+        {
+          "entry": "0x140ac4180",
+          "value": {
+            "CPU": "cpu-fixture",
+            "GPU": "gpu-fixture",
+            "Language": "LanguageIt"
+          }
+        }
+      ],
+      "dictionaryReleases": [
+        {
+          "entriesBeforeClear": 1,
+          "countAfterClear": 0
+        }
+      ],
+      "noticeCalls": [
+        {
+          "code": 5000,
+          "argument": "SDKServer - OnConnectRegionDispatch: GameBiz==Null"
+        }
+      ],
+      "nativeCastCalls": 1,
+      "tokenFieldWire": "aa3c08736f757263652d42",
+      "cmdId": 24604
+    },
+    {
+      "name": "no-session",
+      "source": "unused",
+      "mode": "no-session",
+      "stop": "0x151212983",
+      "storeExecuted": false,
+      "sessionPointerPreserved": false,
+      "sessionUnchanged": true,
+      "postParsePointerPreserved": true,
+      "jsonHelperRejected": false,
+      "sdkEntries": 1,
+      "sdkOutputs": [
+        {
+          "entry": "0x140ac4160",
+          "value": {
+            "app_id": "sdk_app_fixture",
+            "app_version": "7.2.0-fixture",
+            "area": "cn",
+            "compile_type": "release",
+            "use_device_name": true
+          }
+        },
+        {
+          "entry": "0x140ac4180",
+          "value": {
+            "CPU": "cpu-fixture",
+            "GPU": "gpu-fixture",
+            "Language": "LanguageSc"
+          }
+        }
+      ],
+      "dictionaryReleases": [
+        {
+          "entriesBeforeClear": 1,
+          "countAfterClear": 0
+        }
+      ],
+      "noticeCalls": [
+        {
+          "code": 5000,
+          "argument": "SDKServer - OnConnectRegionDispatch: GameBiz==Null"
+        }
+      ],
+      "nativeCastCalls": 1,
+      "tokenFieldWire": null,
+      "cmdId": null
+    },
+    {
+      "name": "no-singleton",
+      "source": "unused",
+      "mode": "no-singleton",
+      "stop": "0x151212d8e",
+      "storeExecuted": false,
+      "sessionPointerPreserved": false,
+      "sessionUnchanged": true,
+      "postParsePointerPreserved": true,
+      "jsonHelperRejected": false,
+      "sdkEntries": 0,
+      "sdkOutputs": [],
+      "dictionaryReleases": [],
+      "noticeCalls": [],
+      "nativeCastCalls": 0,
+      "tokenFieldWire": null,
+      "cmdId": null
+    },
+    {
+      "name": "bad-config",
+      "source": "unused",
+      "mode": "bad-config",
+      "stop": null,
+      "storeExecuted": false,
+      "sessionPointerPreserved": false,
+      "sessionUnchanged": true,
+      "postParsePointerPreserved": true,
+      "jsonHelperRejected": true,
+      "sdkEntries": 0,
+      "sdkOutputs": [],
+      "dictionaryReleases": [],
+      "noticeCalls": [],
+      "nativeCastCalls": 0,
+      "tokenFieldWire": null,
+      "cmdId": null
+    }
+  ],
+  "entry": "0x151210540",
+  "stop": "0x151212983",
+  "missingSingletonStop": "0x151212d8e",
+  "typeBindings": [
+    {
+      "usageRow": 699017,
+      "cell": "0x1458875c8",
+      "typeIndex": 4354,
+      "kind": "class"
+    },
+    {
+      "usageRow": 700517,
+      "cell": "0x14588f3e8",
+      "typeIndex": 4356,
+      "kind": "class"
+    },
+    {
+      "usageRow": 700519,
+      "cell": "0x14588f408",
+      "typeIndex": 4358,
+      "kind": "class"
+    },
+    {
+      "usageRow": 698608,
+      "cell": "0x145886158",
+      "typeIndex": 452,
+      "kind": "class"
+    },
+    {
+      "usageRow": 706335,
+      "cell": "0x1458aee08",
+      "typeIndex": 77368,
+      "kind": "valuetype"
+    },
+    {
+      "usageRow": 698601,
+      "cell": "0x145886110",
+      "typeIndex": null,
+      "kind": "szarray"
+    }
+  ],
+  "semanticStatus": "unknown",
+  "runtimeStatus": "not-tested",
+  "wholeDispatchExecuted": false,
+  "firstEntryAssociation": "native-continuous-to-session",
+  "secondCoroutineAssociation": "not-tested",
+  "nativeSeedHelperReused": true,
+  "models": [
+    "inherited dispatch trust/JSON/config fixtures",
+    "SDK JSONObject/StringBuilder, dictionary pool/storage, Enum.ToString and native string bridge",
+    "explicit app/version/CPU/GPU/channel/language inputs; empty preference backend and uninitialized native SDK export table",
+    "presence-only singleton +F2E0; normal non-IFix path never dereferences it",
+    "Object[]/String/System.Object metadata, OS thread1/main thread1; log sink uninitialized"
+  ],
+  "outsideScope": [
+    "actual SDK initialization/export callbacks",
+    "actual diagnostic sink/UI",
+    "remaining dispatch tail/second coroutine",
+    "tag14/tag965 business semantics",
+    "frame builder/socket/actual client"
+  ]
+}

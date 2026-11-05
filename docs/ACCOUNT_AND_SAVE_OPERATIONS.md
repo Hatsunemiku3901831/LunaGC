@@ -4,6 +4,8 @@
 
 文中的备份、恢复、重置、删除和测试命令是操作模板，本次文档分析没有执行这些数据变更。模板包含占位路径时必须先替换并检查目标。
 
+新增分区连续链6组、182项研究回归及原Token5组重跑通过；SDK导出/日志sink未初始化、容器/OS输入为明确离线夹具，不连接数据库或实际SDK，不替代D-02验收。复现见会话研究A-04d5n4。
+
 ## 本机运行约定
 
 以 [AGENTS.md](../AGENTS.md) 为准：使用当前checkout和本机`GAME_PATH`，启动前核对`.env`、`.env.local`、`config.json`及进程/端口归属。当前国服7.2分支使用Windows便携方式（`LUNAGC_RUNTIME=portable`），不部署Docker/WSL或启用虚拟化，不沿用历史路径/PID。

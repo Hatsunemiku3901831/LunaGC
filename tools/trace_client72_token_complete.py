@@ -29,11 +29,24 @@ except ImportError:
     from trace_client72_token import parse_wire
 
 
-def construct_native_token(e,ctor,binary,metadata,sample,initialized,tamper=None):
+def construct_native_token(e,ctor,binary,metadata,sample,initialized,tamper=None,*,seed=None):
     """Reusable real seed helper + constructor, preserving prior source calls."""
     e.models.pop(OPAQUE_HELPER)
-    seed=SeedString72(e,binary,metadata,sample,initialized,0,tamper)
-    seed.close()  # Use the outer constructor's target-literal storage.
+    if seed is None:
+        seed=SeedString72(e,binary,metadata,sample,initialized,0,tamper)
+        seed.close()  # Use the outer constructor's target-literal storage.
+    else:
+        # Reuse the already installed OS/crypto runtime after dispatch. Mapping
+        # another NativeCrypto72 over the same emulator would destroy continuity.
+        if seed.e is not e or e.read(0x145DCAEA8,'B')!=int(initialized):
+            raise ValueError('Existing seed runtime/initialization fixture differs')
+        seed.session.next_double_value=sample
+        seed.tamper=tamper
+        seed.native.entropy_calls=[]
+        # Response crypto traces this hot region by block. Seed's independent
+        # plaintext/padding oracle also needs these two exact instruction inputs.
+        for address in (0x1406595F0,0x140659AC0):
+            e.hooks.append(e.uc.hook_add(e.U.UC_HOOK_CODE,e._code,begin=address,end=address))
     returned=[];gates=[];sdk_start=len(ctor.sdk_calls);stage_start=len(ctor.stages);shell_start=len(ctor.shell_calls)
     def observe(address):
         seed.observe(address)

@@ -351,3 +351,27 @@ python -m unittest tools.test_client72_dispatch_config tools.test_client72_dispa
 证据`evidence/dispatch-config-{trace,trace-repeat,determinism,mapping-check,mapping-ready}.json`和`logs/dispatch-config-{run,repeat,regression}.log`。仅离线工具/研究摘要/测试/文档变更，无运行构建部署或重启。
 
 下一步：1512124B9读取GLOBAL+F2E0并要求非空，然后执行15275F080（SDK类型14237的方法）；不能跳过该调用接B0。探索中直接继续遇到缺singleton的原生NullReference分支，停在151212D8E，应恢复声明和初始化。15275F080会构造MiHoYo.SDK.JSONObject/JSONString/JSONBool、StringBuilder，调用SDK入口；其完整行为未验。候选type cell查询保留在忽略的analysis/probe_sdk_type_cells.py，固定目标usage行699017/699018/700517/700519/698608分别关联JSONObject4354/JSONNode4346/JSONString4356/JSONBool4358/StringBuilder452；不能将这些静态绑定当实际SDK成功。
+
+
+## A-04d5n4 第一分区入口连续到B0及Token原始wire
+
+`trace_client72_dispatch_session`从151210540在同次CPU执行中完成JSON/原生密码学、30677 reader及Region、两段配置、15275F080 SDK更新包装、提示分支，再到151212983。原生15121297C确实把解析对象+20原指针写入session+B0；成功样本随后复用同一密码学运行时执行真实Token seed helper/构造/getter24604/writer，独立key字节AA 3C证明同值进入tag965。**只闭合第一入口原始关联，tag14/tag965业务名称仍未知，第二协程和dispatch后续尾段未验。**
+
+SDK模型`client72_sdk_update`区分MiHoYo.SDK JSON与既有SimpleJSON；固定usage行核对JSONObject4354、JSONString4356、JSONBool4358、StringBuilder452、语言枚举77368。JSONObject.Add/WriteToStringBuilder、StringBuilder.ctor/ToString的声明参数和slot均核对，容器/字符串桥接/池/字典存储为显式模型。SDK包装15275F080、ConfigChannel匹配、偏好查询的空backend路径、1527571F0/15275F990、语言传递、字典原生枚举与清空、原生导出包装实际执行。
+
+第一份SDK输出包含app_id/app_version/area/compile_type/use_device_name；第二份含CPU/GPU/Language。app/version/CPU/GPU/channel/language均为已声明离线输入，未读取机器设备或真实账号。原生SDK导出表14572BC18明确未初始化，140AC4160/140AC4180实际按目标代码返回，**不代表真实SDK接收或初始化成功**。GLOBAL+F2E0仅为该非IFix路径所测的presence夹具，不宣称执行singleton初始化。
+
+提示分支没有通过加feature flag跳过。`client72_dispatch_notice`按usage698601恢复Object[]（并非String[]）及String/System.Object元数据，原生assignability、线程ID比较、1471623F0→147161FA0真实执行；目标literal为`SDKServer - OnConnectRegionDispatch: GameBiz==Null`，code5000。声明OS线程1/主线程1、日志sink未初始化，原生按缺sink返回；不代表真实界面回调/完整GameBiz初始化。不得把该离线状态组合称作可启动的真实客户端环境。
+
+6组为高数字文本9007199254740993、空字符串、不同源值/语言、缺session、缺singleton、坏配置JSON。前三组连续store并到Token；空源在会话保留原指针，Token选择默认空对象且省略tag965。缺session真实跳过store，缺singleton在151212D8E的原生错误调用前停止，坏JSON由已声明helper拒绝，均不产生Token。SDK区域覆盖cn/os，语言覆盖None/Sc/It；字典非空枚举后实际清空再归还。
+
+`construct_native_token`新增可选已有seed运行时参数，避免重复映射同一OS内存。复用时保留内存/会话数据，增加RSA明文和padding两个精确观测点；原response性能模型按block追踪该区间，所以缺这两个点时最初oracle采不到plain，不能误判算法失败。真实验签/加密结果不替换。原Token5组重跑trace/摘要与修改前逐字节一致。空源另按原生返回对象读取UTF-16值后注册观察，不将默认字符串强写为期望值。
+
+6原生样本、182研究回归通过，两次trace/摘要逐字节一致；研究校验0、ready1，业务35字段不变。原有账号/经济/存档运行代码未改；仅离线工具/测试/摘要/文档修改，无构建部署/重启。
+
+```powershell
+python tools/trace_client72_dispatch_session.py --client $env:GAME_PATH --output local/migration72/evidence/dispatch-session-trace.json --summary-output protocol/cn-7.2/dispatch-session-observations.json
+python -m unittest tools.test_client72_dispatch_session tools.test_client72_dispatch_config tools.test_client72_token_complete tools.test_validate_protocol72 -v
+```
+
+证据`evidence/dispatch-session-{trace,trace-repeat,determinism,mapping-check,mapping-ready}.json`、`logs/dispatch-session-{run,repeat,regression}.log`；原Token回归`evidence/token-complete-after-dispatch-session{-summary,-check}.json`。下一项第二协程：元数据类型23192/NCIDAOJKFEI，MoveNext151226CD0，实例+50为状态，+20为DHABIHPMOAH接收者，+18为23181闭包，+38为Action<IENBACJFBGI>。尚未执行其实际解密/解析来源，不把第一入口证据直接移过去；tag965独立业务来源亦待恢复。
