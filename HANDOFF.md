@@ -36,3 +36,10 @@ Project已补齐提交号和验收/下一步（74ac0f0、54dfac1）。下一项�
 研究提交`4200ea6`：同次分区JSON/密码学/配置/SDK包装/提示→B0原指针，再复用seed运行时到Token tag965。6原生样本、182回归、两次产物一致；原Token5组产物不变，研究校验0/ready1。第一入口原始关联已确认，字段业务名、第二协程和D-02仍未完成。
 
 下一项23192.MoveNext151226CD0的恢复状态及真实解析源；[HANDOFF2.md](HANDOFF2.md)含状态jump table和模型边界。原详细交接已备份local/migration72/handoffs/HANDOFF2.before-dispatch-session-4200ea6.md并核对哈希。目标active、无暂停，无运行部署；AGENTS/resources既有差异未提交，未推送。
+
+
+## 2026-11-05：A-04d5n5完成，继续必要登录字段
+
+研究提交`2a71ddf`：第二协程真实state2/3恢复入口→密码学/reader→第二B0 store→Token tag965。8原生样本、187回归、两次产物一致，研究校验0/ready1；两条分区原始关联均已验证，业务名/完整HTTP调度/实机仍未验。
+
+下一步优先核查Token准入必需字段（key_id尚未确认）、Handler后段/封包体；tag965继续未知。两类公钥不能混同，详见[HANDOFF2.md](HANDOFF2.md)。原详细交接备份local/migration72/handoffs/HANDOFF2.before-dispatch-coroutine-2a71ddf.md已核对哈希。目标active、无暂停，无运行部署；AGENTS/resources既有差异保留未提交，未推送。
