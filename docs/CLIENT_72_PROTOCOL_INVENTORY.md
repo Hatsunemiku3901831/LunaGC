@@ -18,17 +18,29 @@
 
 一个实际误报已被锁定并修正：发送类 PacketQuestUpdateQuestVarRsp 带有 @Opcodes 注解，但不继承 PacketHandler；不能与请求 Handler 算作注册冲突。另有 setter 声明不能作为 setOpcode 调用。工具按继承链和成员调用形式区分，测试覆盖前者。
 
-## 必须继续复核的旁路
+## 已复核的动态来源与接入限制
 
 - `HandlerPlayerLoginReq`：配置 `newAccountIntro.doSetPlayerBornDataNotify`，且有默认旅行者超时兜底；7.2 新账号验收不能以兜底跳过选人。
 - `HandlerSetPlayerBornDataReq`：`newAccountIntro.setPlayerBornDataRsp` 覆盖，当前命名常量为负占位；需真实7.2响应序列。
-- `InvestigationHandbook`、`PacketCrucibleMatch`、`PacketMpPlay`：通过函数参数传入 opcode，继续追踪所有调用者。
+- `InvestigationHandbook`：private helper的3个调用分别传入调查全量/目标/章节通知常量。`PacketCrucibleMatch`、`PacketMpPlay`的private构造函数分别只有8/7个同类工厂调用，均传命名常量；外部活动控制器和Handler不能通过工厂参数指定opcode。
 - `FanOut` / `data/proto-fanout.json`：外部候选目标及原包号重写；未验证的旧号不能成为新构建兜底。
 - `PacketWindSeedClientNotify`、WindSeedUID/Windy 包装、`HandlerSceneInitFinishReq`：配置 cmdId、payloadField 与 sweep；调试试探不是正式映射证据。
 - `DailyTaskProto` 的三条 *_CMD 是 PacketOpcodes 的间接引用，不能把局部求值未完成误称为目标未知三条新包号。
 - `GameSession`、`DebugConstants`、`PacketOpcodesUtils`：发送设置、禁用/循环/调试列表、帧读取范围；`UnionCmdNotify.message_id` 和 Combat/Ability 枚举分派另行验收。
 
-配置候选和动态位置均在报告内，尚未完成所有调用者/字面量分派的人工闭包审查，A-02整体保持进行中。
+17个间接位置已逐个归入10组：3组private常量链、1组常量别名、4组运行配置、1组公开replay API、1组事件后的包复制。清单为 `protocol/cn-7.2/server-surface-review.json`，固定40份相关源码/数据的UTF-8规范换行SHA-256；记录的是遗留服务端来源，不将其中任何数字晋级为7.2包号。
+
+`review_protocol72_surface`重新盘点并比对全部动态位置（文件/行/表达式/调用形式），检查常量绑定、源码摘要、配置候选和数字case；新位置、同数量表达式替换、来源改变都要求重新人工复核。server/net范围的37个数字case属于祈愿类型、商城类型、脚本参数索引和生日月份；没有直接数字参数发送。Combat/Ability使用生成枚举域，Ability的`typeVal > 100`只过滤日志；这些域仍需B-02独立映射。
+
+本次明确了5类接入边界：
+
+- `SendPacketEvent`在初始opcode检查后可以替换包，且BasePacket提供公开setOpcode；replayPacket主源码无调用者仍不能排除插件。C-01须验证最终包，而非只验证原包。
+- `registerPacketHandler`当前用put覆盖同号；静态0冲突不能代替运行期冲突拒绝。`PacketOpcodesUtils`同值别名名称取决于反射覆盖顺序，B-03需明确规范名。
+- UnionCmd将message_id/body递归交给相同handle，内外层wire、状态限制和递归边界分别验收；Combat/Ability/ForwardType不与CmdID混用。
+- BasePacket将opcode和header长度截断写uint16，C-01需显式范围及帧边界断言；magic 0x4567/0x89ab不是命令号。
+- FanOut外部候选/字段重写、Lua sweep、选人配置仍是开放输入。`cmdId()`本身在负配置时也会回退旧常量，禁用取决于调用者。不能沿用源码中“错误候选号无害”的假设。认证旁路保持关闭，运行config/env/插件在部署时另查。
+
+A-02完成的是本次服务端源码表面盘点和人工动态来源复核，未声称插件运行期或P0调用图完整。A-03、B-02和C-01继续处理这些明确边界。15项测试（原盘点8项+复核7项）通过；两次报告SHA-256均为 `e2f6516faf292a1e7d8dfd0ceefefe505ccad0450bc9dc82fc27411d8c72b609`，`protocolReady`固定false。
 
 ## 登录和入场闭包起点
 
@@ -48,4 +60,6 @@ A-03 下一步：把 Player.onLogin、World.tryAddPlayer 和场景 Handler 的�
 ```powershell
 python -m unittest tools.test_inventory_protocol -v
 python tools/inventory_protocol.py --output local/migration72/evidence/server-inventory.json
+python -m unittest tools.test_inventory_protocol tools.test_review_protocol72_surface -v
+python tools/review_protocol72_surface.py --output local/migration72/evidence/server-surface-review.json
 ```

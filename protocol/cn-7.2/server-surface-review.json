@@ -1,0 +1,608 @@
+{
+  "schemaVersion": 1,
+  "scope": "server-source-baseline",
+  "date": "2026-11-05",
+  "sourceSHA256": {
+    "data/proto-fanout.json": "f19ac7ffaeb4c853f96f5188836ce0717e1b6c891e42564201a82d1b3702685c",
+    "src/main/java/emu/grasscutter/DebugConstants.java": "9336247c74524049536d03641f09671be3ac94c786a6a1660715911155859c47",
+    "src/main/java/emu/grasscutter/config/ConfigContainer.java": "46f93f429a61858cd7af8466cb1e56943b85c80dc3c34cda276f73b19d3e4b3a",
+    "src/main/java/emu/grasscutter/config/Configuration.java": "b8db10ea40b195f133be85d18782e4cfbd6a0e44ed0674528cd0a08a4cbcf96e",
+    "src/main/java/emu/grasscutter/game/ability/AbilityManager.java": "c7eba664dde965b03bd82406b03381345b224729a15c1a58dc31d84176f600ba",
+    "src/main/java/emu/grasscutter/game/activity/aster/AsterBigSceneController.java": "7dfa59f06818918308e7666eaa0fe7f0ef1c64c0c08cdc448e023b38e35c6141",
+    "src/main/java/emu/grasscutter/game/activity/crucible/CrucibleMatchSystem.java": "ba90ac63d2423daf6bdd859032bed95ceaada2210ccdb6b266aefab602b84b96",
+    "src/main/java/emu/grasscutter/game/activity/crucible/CrucibleSceneController.java": "96bfd0558f96744fffdca499dce1404d34396ad17d0129f7e0ad9c0fa1aa20c2",
+    "src/main/java/emu/grasscutter/game/dailytask/DailyTaskProto.java": "3e70e86a5933f1f13b4e4925158d84066b787b0e5b84671d6a28dd8fdf624450",
+    "src/main/java/emu/grasscutter/game/player/InvestigationHandbook.java": "cf2a2b5c85b9a72ff7f10567a83b4a03de56bda3ef77bd6453e05da435057817",
+    "src/main/java/emu/grasscutter/game/player/InvokeHandler.java": "78e7caaeaad0e7f834203da65fed4227a04e8716028bcb3d6527960ddfb9dd82",
+    "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f",
+    "src/main/java/emu/grasscutter/net/packet/PacketOpcodes.java": "10e036d50be18ac5c54eec3c5f0cfe7c8f16475dc06344cd361b007497666d06",
+    "src/main/java/emu/grasscutter/net/packet/PacketOpcodesUtils.java": "4b838183747ac97051f108e700ba4ffbe41bf47513163e6b1c1b370e65cd73d2",
+    "src/main/java/emu/grasscutter/server/event/game/SendPacketEvent.java": "6691ed4aecda14e9254e35a44fb65204dd09cd47ed31b07fb0bdca526f45f697",
+    "src/main/java/emu/grasscutter/server/game/FanOut.java": "193a80da6afe4bb0580394d540c712914cabb9e1cf901f3e4caeb2aebe4ae014",
+    "src/main/java/emu/grasscutter/server/game/GameServerPacketHandler.java": "e59ff937905916236aa4fc22af9c9c3385eb8732232265a9d274abf620f7beac",
+    "src/main/java/emu/grasscutter/server/game/GameSession.java": "7e988eabf22c45ee87f6a689e10bafee0b645c3cc201582b99a0f759fea8a33d",
+    "src/main/java/emu/grasscutter/server/http/handlers/GmHandler.java": "4fc337c3f43ed2b26ab88e2f8c88b794d8c3f5021f2cf075edc17034b7fc16c2",
+    "src/main/java/emu/grasscutter/server/http/handlers/GmShop.java": "db8b3c0bf2c36aac3818c1316725ba4e5656f0edb68ccf392ac4051562b2b54a",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerAbilityInvocationsNotify.java": "ca26751aaf5ad9a8f0d415633a42763c5f95d4778f73fb564ae6b5860b6ab655",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerClientScriptEventNotify.java": "51aeeeb7a5a8d5f75c28dede6ead949677394fc6a068abbe6c74066241fa8cfc",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerCombatInvocationsNotify.java": "437b12e6762eff012f632d5413486709f4bdf00d41be0b56ddf1eebb223792e0",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerMpPlayGuestReplyInviteReq.java": "5c5a3a663adde1925256f2726efb94d3d7f9cf80065d2f1566fd83965fdd0b7f",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerMpPlayOwnerCheckReq.java": "a353cfdf6b6ca2cd7a6fa6e3176373e1818bba882e33eec22f598ffc26893a7d",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerMpPlayOwnerStartInviteReq.java": "cb6fed96244da5af832d44244ba8b50584a3a8a49710f654de93f383204342e6",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerPlayerLoginReq.java": "b7ddf5edfdcba87a2e8c01ed2f87bc7acfee5f3f4e42006bb1cf63d40e87ae40",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerSceneInitFinishReq.java": "59c1acdc54f68632536a1942e1a4fe46fad6cc75edabb0ae1e9281170465b037",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBirthdayReq.java": "1f776bc084ff235f763180ea0d493f2fa66c06eb16fab4512cba99c2b8473c4b",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBornDataReq.java": "5d92563da180a0f5e2b2788f4c5dfd39e3bae0dea6c60a7a822784c168f17101",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerUnionCmdNotify.java": "bd4b0a8fe550da32583f9f777d485b3a0d5c7b9ddabf2de0c3a41b8d50f8d1a5",
+    "src/main/java/emu/grasscutter/server/packet/send/PacketCrucibleMatch.java": "ed7742d4b837c43de85cb9fee07eb23fbfc9cbd26312a9543e2b86b0b4b6f0df",
+    "src/main/java/emu/grasscutter/server/packet/send/PacketDailyTaskDataNotify.java": "0317e123c86f6a744e37bf0ecf38490428ee62dc68c80fc17f414a01058d1c4b",
+    "src/main/java/emu/grasscutter/server/packet/send/PacketDailyTaskProgressNotify.java": "29daf554b40302b2b261c88abb4416f290fdb94d40eb57f672456290481941b8",
+    "src/main/java/emu/grasscutter/server/packet/send/PacketMpPlay.java": "436d085014b04a482670857cf9655af8f8a13f4c3000162f5ff9021f21d6f4fa",
+    "src/main/java/emu/grasscutter/server/packet/send/PacketWindSeedClientNotify.java": "c57a9b41018a3e9a1549776a9d1d5c2403b94a45dcca65616a455ee72ba7c3ea",
+    "src/main/java/emu/grasscutter/server/packet/send/PacketWindSeedUID.java": "1e81ab7536201b0c03b9f50ee1cd31f4ed6bb8bf8b8a0467d2158a4697ac8b5d",
+    "src/main/java/emu/grasscutter/server/packet/send/PacketWindy.java": "5f0bbd562a022bef5106ed9109d360d380411b916d58bebafbd999cbfef3af4d",
+    "src/main/java/emu/grasscutter/server/packet/send/PacketWorldOwnerDailyTaskNotify.java": "84d1a9e2cff24ba910a2086cc1a62b3e7005361d4019621fa89340a5546cbf59",
+    "src/main/java/emu/grasscutter/utils/FileUtils.java": "5da9bb7ba187c0ba49b846a095a446167a142779e0f97b35e168c6b90f43a2d0"
+  },
+  "dynamicSites": [
+    {
+      "file": "src/main/java/emu/grasscutter/game/player/InvestigationHandbook.java",
+      "kind": "new BasePacket",
+      "expression": "opcode",
+      "line": 318,
+      "group": "investigation"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/game/FanOut.java",
+      "kind": "new BasePacket",
+      "expression": "target.cmdId",
+      "line": 76,
+      "group": "fanout"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/game/FanOut.java",
+      "kind": "new BasePacket",
+      "expression": "target.cmdId",
+      "line": 77,
+      "group": "fanout"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/game/GameSession.java",
+      "kind": "new BasePacket",
+      "expression": "opcode",
+      "line": 152,
+      "group": "replay"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/game/GameSession.java",
+      "kind": "new BasePacket",
+      "expression": "packet.getOpcode()",
+      "line": 227,
+      "group": "combat-copy"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerPlayerLoginReq.java",
+      "kind": "new BasePacket",
+      "expression": "intro.doSetPlayerBornDataNotify",
+      "line": 47,
+      "group": "intro-notify"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBornDataReq.java",
+      "kind": "new BasePacket",
+      "expression": "rspCmdId",
+      "line": 84,
+      "group": "born-rsp"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/send/PacketCrucibleMatch.java",
+      "kind": "super",
+      "expression": "opcode",
+      "line": 20,
+      "group": "crucible"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/send/PacketDailyTaskDataNotify.java",
+      "kind": "super",
+      "expression": "DailyTaskProto.DATA_NOTIFY_CMD",
+      "line": 9,
+      "group": "daily"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/send/PacketDailyTaskProgressNotify.java",
+      "kind": "super",
+      "expression": "DailyTaskProto.PROGRESS_NOTIFY_CMD",
+      "line": 9,
+      "group": "daily"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/send/PacketMpPlay.java",
+      "kind": "super",
+      "expression": "opcode",
+      "line": 14,
+      "group": "mp-play"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/send/PacketWindSeedClientNotify.java",
+      "kind": "super",
+      "expression": "cmdId()",
+      "line": 68,
+      "group": "wind"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/send/PacketWindSeedClientNotify.java",
+      "kind": "super",
+      "expression": "cmdId()",
+      "line": 81,
+      "group": "wind"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/send/PacketWindSeedClientNotify.java",
+      "kind": "super",
+      "expression": "cmdId",
+      "line": 87,
+      "group": "wind"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/send/PacketWindSeedUID.java",
+      "kind": "super",
+      "expression": "PacketWindSeedClientNotify.cmdId()",
+      "line": 8,
+      "group": "wind"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/send/PacketWindy.java",
+      "kind": "super",
+      "expression": "PacketWindSeedClientNotify.cmdId()",
+      "line": 8,
+      "group": "wind"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/send/PacketWorldOwnerDailyTaskNotify.java",
+      "kind": "super",
+      "expression": "DailyTaskProto.WORLD_OWNER_NOTIFY_CMD",
+      "line": 10,
+      "group": "daily"
+    }
+  ],
+  "groups": {
+    "investigation": {
+      "classification": "private-constant-chain",
+      "sources": [
+        "src/main/java/emu/grasscutter/game/player/InvestigationHandbook.java"
+      ],
+      "finding": "private send仅由同类三个调用点传入命名常量；不接受外部CmdID。仅闭合服务端来源，不验证7.2映射。",
+      "legacyConstants": {
+        "PlayerInvestigationAllInfoNotify": 20026,
+        "PlayerInvestigationTargetNotify": 5903,
+        "PlayerInvestigationNotify": 25214
+      }
+    },
+    "fanout": {
+      "classification": "external-config",
+      "sources": [
+        "src/main/java/emu/grasscutter/server/game/FanOut.java",
+        "src/main/java/emu/grasscutter/server/game/GameSession.java",
+        "src/main/java/emu/grasscutter/utils/FileUtils.java"
+      ],
+      "finding": "GameSession非正opcode调用FanOut；从运行数据目录proto-fanout.json读取候选CmdID及字段重写，按旧descriptor字段名改tag。来源开放，候选不是7.2证据。",
+      "legacyConstants": {}
+    },
+    "replay": {
+      "classification": "external-api",
+      "sources": [
+        "src/main/java/emu/grasscutter/server/game/GameSession.java"
+      ],
+      "finding": "public replayPacket(int,String)接收调用方CmdID和插件文件字节；主源码无调用者，但外部插件可调用，不能称为封闭来源。",
+      "legacyConstants": {}
+    },
+    "combat-copy": {
+      "classification": "post-event-copy",
+      "sources": [
+        "src/main/java/emu/grasscutter/server/game/GameSession.java",
+        "src/main/java/emu/grasscutter/server/event/game/SendPacketEvent.java",
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java"
+      ],
+      "finding": "仅CombatInvocationsNotify分支重建客户端序号并保留event替换后packet.getOpcode()；不是新增CmdID。SendPacketEvent可在现有负号检查之后替换包，C-01需检查最终包。",
+      "legacyConstants": {
+        "CombatInvocationsNotify": 6930
+      }
+    },
+    "intro-notify": {
+      "classification": "external-config",
+      "sources": [
+        "src/main/java/emu/grasscutter/server/packet/recv/HandlerPlayerLoginReq.java",
+        "src/main/java/emu/grasscutter/config/ConfigContainer.java"
+      ],
+      "finding": "newAccountIntro.enabled默认false；notify配置默认0，正值时构造空payload包。15秒默认旅行者兜底不能代替新号选人验收。",
+      "legacyConstants": {}
+    },
+    "born-rsp": {
+      "classification": "external-config",
+      "sources": [
+        "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBornDataReq.java",
+        "src/main/java/emu/grasscutter/config/ConfigContainer.java"
+      ],
+      "finding": "setPlayerBornDataRsp正配置优先，否则遗留命名负占位；当前发送空payload，尚无7.2空响应证据。",
+      "legacyConstants": {
+        "SetPlayerBornDataRsp": -28
+      }
+    },
+    "crucible": {
+      "classification": "private-constant-chain",
+      "sources": [
+        "src/main/java/emu/grasscutter/server/packet/send/PacketCrucibleMatch.java",
+        "src/main/java/emu/grasscutter/game/activity/crucible/CrucibleMatchSystem.java"
+      ],
+      "finding": "private构造函数仅由同类8个new调用传命名常量；外部CrucibleMatchSystem调用公开业务工厂且不能传opcode。",
+      "legacyConstants": {
+        "PlayerStartMatchRsp": 1006,
+        "PlayerCancelMatchRsp": 24288,
+        "PlayerMatchInfoNotify": 28008,
+        "PlayerMatchSuccNotify": 29718,
+        "PlayerMatchStopNotify": 20667,
+        "PlayerMatchAgreedResultNotify": 6439,
+        "PlayerGuestConfirmMatchRsp": 27953,
+        "PlayerConfirmMatchRsp": 2735
+      }
+    },
+    "daily": {
+      "classification": "constant-alias",
+      "sources": [
+        "src/main/java/emu/grasscutter/game/dailytask/DailyTaskProto.java",
+        "src/main/java/emu/grasscutter/server/packet/send/PacketDailyTaskDataNotify.java",
+        "src/main/java/emu/grasscutter/server/packet/send/PacketDailyTaskProgressNotify.java",
+        "src/main/java/emu/grasscutter/server/packet/send/PacketWorldOwnerDailyTaskNotify.java"
+      ],
+      "finding": "DailyTaskProto的DATA_NOTIFY_CMD/PROGRESS_NOTIFY_CMD/WORLD_OWNER_NOTIFY_CMD分别直接引用下面三个PacketOpcodes常量；不是三个新的未知包号。",
+      "legacyConstants": {
+        "DailyTaskDataNotify": 2841,
+        "DailyTaskProgressNotify": 26904,
+        "WorldOwnerDailyTaskNotify": 28004
+      }
+    },
+    "mp-play": {
+      "classification": "private-constant-chain",
+      "sources": [
+        "src/main/java/emu/grasscutter/server/packet/send/PacketMpPlay.java",
+        "src/main/java/emu/grasscutter/game/activity/crucible/CrucibleSceneController.java",
+        "src/main/java/emu/grasscutter/game/activity/aster/AsterBigSceneController.java",
+        "src/main/java/emu/grasscutter/server/packet/recv/HandlerMpPlayOwnerCheckReq.java",
+        "src/main/java/emu/grasscutter/server/packet/recv/HandlerMpPlayOwnerStartInviteReq.java",
+        "src/main/java/emu/grasscutter/server/packet/recv/HandlerMpPlayGuestReplyInviteReq.java"
+      ],
+      "finding": "private构造函数仅由同类7个new调用传命名常量；外部2个活动控制器/3个Handler调用工厂，业务参数不包含opcode。",
+      "legacyConstants": {
+        "MpPlayOwnerCheckRsp": 8829,
+        "MpPlayOwnerStartInviteRsp": 8056,
+        "MpPlayOwnerInviteNotify": 25124,
+        "MpPlayGuestReplyInviteRsp": 2563,
+        "MpPlayGuestReplyNotify": 21009,
+        "MpPlayInviteResultNotify": 22704,
+        "MpPlayPrepareInterruptNotify": 7851
+      }
+    },
+    "wind": {
+      "classification": "external-config",
+      "sources": [
+        "src/main/java/emu/grasscutter/server/packet/send/PacketWindSeedClientNotify.java",
+        "src/main/java/emu/grasscutter/server/packet/send/PacketWindSeedUID.java",
+        "src/main/java/emu/grasscutter/server/packet/send/PacketWindy.java",
+        "src/main/java/emu/grasscutter/server/packet/recv/HandlerSceneInitFinishReq.java",
+        "src/main/java/emu/grasscutter/config/ConfigContainer.java"
+      ],
+      "finding": "cmdId()用正配置否则旧WindSeedType1Notify，payloadField非正回退5；显式构造函数/sweep允许调用方CmdID/tag。disabled()由调用者另查，cmdId()本身负配置仍会回退。不能假定错误候选号无害；C-01禁止未知候选发送。",
+      "legacyConstants": {
+        "WindSeedType1Notify": 29056
+      }
+    }
+  },
+  "numericCases": [
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmHandler.java",
+      "line": 728,
+      "expression": "100"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmHandler.java",
+      "line": 729,
+      "expression": "200"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmHandler.java",
+      "line": 730,
+      "expression": "301, 400"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmHandler.java",
+      "line": 731,
+      "expression": "302"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmHandler.java",
+      "line": 732,
+      "expression": "500"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmHandler.java",
+      "line": 740,
+      "expression": "100"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmHandler.java",
+      "line": 741,
+      "expression": "200"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmHandler.java",
+      "line": 742,
+      "expression": "301"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmHandler.java",
+      "line": 743,
+      "expression": "302"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmHandler.java",
+      "line": 744,
+      "expression": "400"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmHandler.java",
+      "line": 745,
+      "expression": "500"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmShop.java",
+      "line": 21,
+      "expression": "900"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmShop.java",
+      "line": 22,
+      "expression": "902"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmShop.java",
+      "line": 23,
+      "expression": "903"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmShop.java",
+      "line": 24,
+      "expression": "1001"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmShop.java",
+      "line": 25,
+      "expression": "1052"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmShop.java",
+      "line": 26,
+      "expression": "100000"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmShop.java",
+      "line": 27,
+      "expression": "101000"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmShop.java",
+      "line": 28,
+      "expression": "102000"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmShop.java",
+      "line": 29,
+      "expression": "103000"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmShop.java",
+      "line": 30,
+      "expression": "104000"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/http/handlers/GmShop.java",
+      "line": 31,
+      "expression": "105000"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerClientScriptEventNotify.java",
+      "line": 27,
+      "expression": "0"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerClientScriptEventNotify.java",
+      "line": 28,
+      "expression": "1"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerClientScriptEventNotify.java",
+      "line": 29,
+      "expression": "2"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBirthdayReq.java",
+      "line": 56,
+      "expression": "1"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBirthdayReq.java",
+      "line": 57,
+      "expression": "3"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBirthdayReq.java",
+      "line": 58,
+      "expression": "5"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBirthdayReq.java",
+      "line": 59,
+      "expression": "7"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBirthdayReq.java",
+      "line": 60,
+      "expression": "8"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBirthdayReq.java",
+      "line": 61,
+      "expression": "10"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBirthdayReq.java",
+      "line": 62,
+      "expression": "12"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBirthdayReq.java",
+      "line": 64,
+      "expression": "4"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBirthdayReq.java",
+      "line": 65,
+      "expression": "6"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBirthdayReq.java",
+      "line": 66,
+      "expression": "9"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBirthdayReq.java",
+      "line": 67,
+      "expression": "11"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBirthdayReq.java",
+      "line": 69,
+      "expression": "2"
+    }
+  ],
+  "numericDomains": {
+    "src/main/java/emu/grasscutter/server/http/handlers/GmHandler.java": "gachaType业务分类，非网络CmdID",
+    "src/main/java/emu/grasscutter/server/http/handlers/GmShop.java": "shopType商城分类，非网络CmdID",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerClientScriptEventNotify.java": "参数列表索引0..2，非网络CmdID",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerSetPlayerBirthdayReq.java": "生日月份1..12，非网络CmdID"
+  },
+  "numericSends": [],
+  "configurationCandidates": [
+    {
+      "file": "src/main/java/emu/grasscutter/config/ConfigContainer.java",
+      "line": 152,
+      "source": "public String packets =             ;"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/config/ConfigContainer.java",
+      "line": 245,
+      "source": "public boolean useUniquePacketKey = true;"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/config/ConfigContainer.java",
+      "line": 268,
+      "source": "public ServerDebugMode logPackets = ServerDebugMode.NONE;"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/config/ConfigContainer.java",
+      "line": 270,
+      "source": "public boolean isShowPacketPayload = false;"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/config/ConfigContainer.java",
+      "line": 272,
+      "source": "public boolean isShowLoopPackets = false;"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/config/ConfigContainer.java",
+      "line": 321,
+      "source": "public ServerDebugMode logPackets = ServerDebugMode.ALL;"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/config/ConfigContainer.java",
+      "line": 324,
+      "source": "public boolean isShowPacketPayload = false;"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/config/ConfigContainer.java",
+      "line": 327,
+      "source": "public boolean isShowLoopPackets = false;"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/config/ConfigContainer.java",
+      "line": 457,
+      "source": "public int doSetPlayerBornDataNotify = 0;"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/config/ConfigContainer.java",
+      "line": 458,
+      "source": "public int setPlayerBornDataRsp = 0;"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/config/ConfigContainer.java",
+      "line": 589,
+      "source": "public int cmdId = 0;"
+    },
+    {
+      "file": "src/main/java/emu/grasscutter/config/Configuration.java",
+      "line": 45,
+      "source": "private static final String PACKETS_FOLDER = config.folderStructure.packets;"
+    }
+  ],
+  "openBoundaries": [
+    {
+      "sources": [
+        "src/main/java/emu/grasscutter/server/game/GameServerPacketHandler.java",
+        "src/main/java/emu/grasscutter/net/packet/PacketOpcodesUtils.java",
+        "src/main/java/emu/grasscutter/net/packet/PacketOpcodes.java"
+      ],
+      "finding": "当前静态227正号Handler无冲突，但registerPacketHandler以put覆盖重号；反射名称表同值别名被后项覆盖，反射顺序不是规范名证据。插件/反射运行期来源未封闭。",
+      "nextTask": "B-03 / C-01"
+    },
+    {
+      "sources": [
+        "src/main/java/emu/grasscutter/server/packet/recv/HandlerUnionCmdNotify.java",
+        "src/main/java/emu/grasscutter/server/game/GameServerPacketHandler.java"
+      ],
+      "finding": "UnionCmd取message_id/body递归进入同一个handle；内部包也受会话状态条件，外层/内层schema和CmdID需分别验证，并限制递归/边界。没有额外正数字分派。",
+      "nextTask": "B-02 / C-01"
+    },
+    {
+      "sources": [
+        "src/main/java/emu/grasscutter/server/packet/recv/HandlerCombatInvocationsNotify.java",
+        "src/main/java/emu/grasscutter/server/packet/recv/HandlerAbilityInvocationsNotify.java",
+        "src/main/java/emu/grasscutter/game/ability/AbilityManager.java",
+        "src/main/java/emu/grasscutter/game/player/InvokeHandler.java"
+      ],
+      "finding": "Combat/Ability使用生成枚举分派嵌套bytes，ForwardType控制转发；Ability的typeVal>100仅日志过滤。枚举数字属于独立域，不能当作CmdID验证。未验证7.2枚举/嵌套语义。",
+      "nextTask": "B-02 / C-01"
+    },
+    {
+      "sources": [
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java",
+        "src/main/java/emu/grasscutter/server/game/GameSession.java"
+      ],
+      "finding": "BasePacket将opcode/header长度截断写uint16，缺显式范围拒绝；GameSession外层解帧/密钥切换另需目标帧和长度测试。0x4567/0x89ab是帧magic，不是CmdID。",
+      "nextTask": "C-01"
+    },
+    {
+      "sources": [
+        "src/main/java/emu/grasscutter/DebugConstants.java",
+        "src/main/java/emu/grasscutter/config/ConfigContainer.java",
+        "src/main/java/emu/grasscutter/config/Configuration.java"
+      ],
+      "finding": "ACCEPT_CLIENT_TOKEN=false；日志白/黑名单、loop/banned列表只影响观测而非映射。运行config.json/env/插件内容本清单不读取，部署前须独立核查，禁止token旁路。",
+      "nextTask": "C-01 / D-01"
+    }
+  ],
+  "limitations": [
+    "Lexical/source review is not runtime plugin closure or a complete Java call graph.",
+    "All numeric values under legacyConstants describe current server source only; none are promoted to target 7.2 mappings.",
+    "Source hashes use UTF-8 text with universal newlines, matching inventory_protocol.",
+    "Runtime config, external plugins, target client ordering and full P0 closure require separate verification."
+  ]
+}
