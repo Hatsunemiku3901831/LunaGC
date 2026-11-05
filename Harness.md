@@ -185,3 +185,5 @@ Handler尾段入口：`trace_client72_handler_tail`及`client72_version_hash`，
 Handler到Login连接探索：`local/migration72/analysis/probe_handler_login.py`，单次从1507BE0E0连续到14A447E00，实际Login/Full分支/Action→Login构造→发送getter23172，token/hash原指针与wire相符。仅探索，尚未正式验收。类型/方法usage、WorldType和PackageType、组合模型修正及后续边界见[HANDOFF2](HANDOFF2.md)；下一项A-04d5q。WorldType.Level=2与PackageType.PlayGo=3不能误当登录/Windows条件。
 
 Handler→Login正式入口：`trace_client72_handler_login`，见[会话研究A-04d5q](docs/CLIENT_72_SESSION.md#a-04d5q-连续handler到login构造与发送封包入口)。实际Login/Full→Action→Login构造→发送getter23172/封包入口，token/hash原指针及wire相符；9原生样本、204回归、两次产物一致，原枚举输出不变。6非发送样本覆盖时钟边界/缺状态/Medium包/坏签名；不声称完整Handler返回、SDK真实初始化或D-02。正式工具取代前段单组探索作验收依据。本项已完成，按用户最新要求暂停并交接；恢复后继续封包体或P0闭包。
+
+暂停交接检查点：研发提交dc41c99，A-04d5q限定验收完成；目标状态paused，用户恢复前不继续执行。旧HANDOFF2已备份并核验，最新恢复入口与缺口见[HANDOFF2.md](HANDOFF2.md)，简要历史见[HANDOFF.md](HANDOFF.md)。D-02未完成，无实机验收或运行部署。

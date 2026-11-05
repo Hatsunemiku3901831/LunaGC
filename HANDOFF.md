@@ -55,3 +55,11 @@ Handler尾段已单次探索到1531D03D0，实际执行response tag3 bytes→rob
 研究提交`e1a0194`：连续Handler入口→robot输入setter→版本拼接→原生ASCII/SHA1/Base64返回；7原生样本、198研究回归、两次产物一致，研究校验0/ready1（213项）。更正编码为ASCII；两响应字段仍未知，D-02未完成，无运行部署。
 
 下一项q已单次连续跑到封包入口14A447E00，token/hash原指针进入Login，阶段[9,6]。仍待正式化与边界回归；WorldType.Login=0/Level=2、PackageType.Full=5/PlayGo=3不可混淆，详见[HANDOFF2.md](HANDOFF2.md)。原详细交接已备份local/migration72/handoffs/HANDOFF2.before-handler-tail-e1a0194.md并核对哈希。目标active；AGENTS/resources差异保留未提交，未推送。
+
+## 2026-11-05：A-04d5q完成，按用户要求暂停
+
+当前子任务A-04d5q已正式完成并提交`dc41c99`：连续Token Handler→真实Login/Full状态/Action→Login构造→发送封包入口。9原生样本、204研究回归、二次产物一致；8组已安装密钥与Java逐字节相等，原默认枚举输出不变。研究校验0/ready1（213项）。没有运行部署或实机验收，D-02仍未完成，未知字段继续未知。
+
+用户要求本项完成后先暂停再交接，目标工具已返回**paused**，研发已停止；用户明确恢复前不启动下一项。[HANDOFF2.md](HANDOFF2.md)记录完整现状、完成/未完成、边界、弯路和恢复计划。覆盖前旧详细交接已备份local/migration72/handoffs/HANDOFF2.before-pause-dc41c99.md，SHA256一致，核验报告在local/migration72/evidence/handoff-pause-backup-check.json。
+
+恢复首选14A447E00封包体/密钥使用或P0依赖闭包；当前停在嵌套发送函数中，不能宣称整个Handler返回。AGENTS/resources既有差异保留未提交，patch/resources引用不变，全部提交仅本地未推送。
