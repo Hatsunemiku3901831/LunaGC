@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+Avatar最后装备查询小项已审：9查询/回退样本及3真实GUID注册，主线7断言/第三native同双跑。完整槽查询及+248回退闭合；本轮六项离线难点收口，余enum/cold初始化、同源装备/技能资源、池与实体生命周期具体输入见专题末表，g2仍未完成。
+
 Avatar Sorted精确构造已主线审核：7原生/7独立断言/第三native同双跑，SortedDictionary→KeyValuePairComparer→Comparer→TreeSet→SortedSet真实返回并写+1c0；cold/missing/null分别止步。仅选定构造，enum HashSet与完整handler仍未闭，装备查询小链继续。
 
 Scene线本轮收口：80154非零必要性经过当前sender/旧Proto/目标字段独立复核仍未知，后置精确实机/来源输入，不扩战斗。两已验卡保留，完整SceneInfo/实体/handler未晋级。

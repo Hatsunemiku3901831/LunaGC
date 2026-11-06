@@ -1,0 +1,441 @@
+{
+  "task": "F-03d3f4d2-equipment-lookup",
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "inputContracts": {
+    "avatar-deep-observations.json": "fc08a41533290f671693ac1a0a0ec3608ac56c1cd93cc039f2c681f8102a44c7",
+    "avatar-deep-suffix-observations.json": "5e03ba3486470055450cc4233f8cf3a500680569d874e5e8b1e1efad5b9e58c6"
+  },
+  "declarations": {
+    "functions": {
+      "0x151845920": {
+        "end": "0x151845a26",
+        "nativeBytesSHA256": "a51084c37f50e522a68df4d88275022465d3ffe2345257f81710a301df72ffce"
+      },
+      "0x15183e450": {
+        "end": "0x15183e502",
+        "nativeBytesSHA256": "c67976795169fe86711282fe0d21c486551bf85c30d4321e0f0da334deed3d01"
+      }
+    },
+    "hierarchy": [
+      {
+        "typeIndex": 51522,
+        "parent": {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0x6453",
+          "byRef": false,
+          "typeDefinition": 25683,
+          "name": "DABBDHNPMOI",
+          "namespace": "",
+          "typeIndex": 500829
+        }
+      },
+      {
+        "typeIndex": 87122,
+        "parent": {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0x6453",
+          "byRef": false,
+          "typeDefinition": 25683,
+          "name": "DABBDHNPMOI",
+          "namespace": "",
+          "typeIndex": 500829
+        }
+      },
+      {
+        "typeIndex": 25683,
+        "parent": {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0x119b8",
+          "byRef": false,
+          "typeDefinition": 72120,
+          "name": "BIDHKJJOJKH",
+          "namespace": "",
+          "typeIndex": 159707
+        }
+      }
+    ],
+    "guidGetter": {
+      "index": 597113,
+      "name": "INIOMMGOEMI",
+      "nameIndex": "0xb1d4196",
+      "registeredAddress": "0x148aa58e0",
+      "parameterCount": 0,
+      "flags": "0x9c6",
+      "virtualSlot": 25
+    }
+  },
+  "native": {
+    "registrations": [
+      {
+        "type": 51522,
+        "guid": 18446744073709551615,
+        "slot": 6,
+        "setter": {
+          "entry": "0x148aa58d0",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008",
+            "rcx": "0x61203b2d0",
+            "rdx": "0xffffffffffffffff"
+          },
+          "instructions": 3,
+          "nativePathSHA256": "699ac9c44f96efb96fb778f1508862cc84b33392e7fecfaa627b46d0ca46b32d",
+          "models": [],
+          "nativeEntries": [
+            "0x148aa58d0"
+          ]
+        },
+        "registration": {
+          "entry": "0x14e9b2a80",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008",
+            "rcx": "0x61202b540",
+            "rdx": "0x61203b2d0"
+          },
+          "instructions": 143,
+          "nativePathSHA256": "6685c1e04df8fd74d3a8cf63ec32450311506e1114db1825df5ae18185f79e53",
+          "models": [],
+          "nativeEntries": [
+            "0x14e9b2a80",
+            "0x156f6f850"
+          ]
+        }
+      },
+      {
+        "type": 51522,
+        "guid": 8589934593,
+        "slot": 6,
+        "setter": {
+          "entry": "0x148aa58d0",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008",
+            "rcx": "0x61203b7f0",
+            "rdx": "0x200000001"
+          },
+          "instructions": 3,
+          "nativePathSHA256": "699ac9c44f96efb96fb778f1508862cc84b33392e7fecfaa627b46d0ca46b32d",
+          "models": [],
+          "nativeEntries": [
+            "0x148aa58d0"
+          ]
+        },
+        "registration": {
+          "entry": "0x14e9b2a80",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008",
+            "rcx": "0x61202b540",
+            "rdx": "0x61203b7f0"
+          },
+          "instructions": 143,
+          "nativePathSHA256": "6685c1e04df8fd74d3a8cf63ec32450311506e1114db1825df5ae18185f79e53",
+          "models": [],
+          "nativeEntries": [
+            "0x14e9b2a80",
+            "0x156f6f850"
+          ]
+        }
+      },
+      {
+        "type": 87122,
+        "guid": 4294967297,
+        "slot": 1,
+        "setter": {
+          "entry": "0x148aa58d0",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008",
+            "rcx": "0x61203bd10",
+            "rdx": "0x100000001"
+          },
+          "instructions": 3,
+          "nativePathSHA256": "699ac9c44f96efb96fb778f1508862cc84b33392e7fecfaa627b46d0ca46b32d",
+          "models": [],
+          "nativeEntries": [
+            "0x148aa58d0"
+          ]
+        },
+        "registration": {
+          "entry": "0x14e9b2a80",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008",
+            "rcx": "0x61202b540",
+            "rdx": "0x61203bd10"
+          },
+          "instructions": 161,
+          "nativePathSHA256": "9de9c4d00b128210e4b215bf84e7967f2c7631548fe49fdd8901d71b09da9778",
+          "models": [],
+          "nativeEntries": [
+            "0x14e9b2a80",
+            "0x156f6f850"
+          ]
+        }
+      }
+    ],
+    "fixtures": [
+      {
+        "name": "lookup-missing-and-wrong-class-before-weapon",
+        "guids": [
+          999,
+          9223372036854775809,
+          18446744073709551615,
+          4294967297
+        ],
+        "slot": 6,
+        "foundGuid": 18446744073709551615,
+        "trace": {
+          "entry": "0x151845920",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008",
+            "rcx": "0x6120372b0",
+            "rdx": "0x6"
+          },
+          "instructions": 508,
+          "nativePathSHA256": "4acbee21fb8935e73ee8a69096990bdd1d4c4a993e3f2651a5cf2146bcfd0389",
+          "models": [],
+          "nativeEntries": [
+            "0x14e9b2c60",
+            "0x151845920",
+            "0x156f6f510"
+          ]
+        }
+      },
+      {
+        "name": "lookup-reliquary-slot",
+        "guids": [
+          18446744073709551615,
+          4294967297
+        ],
+        "slot": 1,
+        "foundGuid": 4294967297,
+        "trace": {
+          "entry": "0x151845920",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008",
+            "rcx": "0x6120372b0",
+            "rdx": "0x1"
+          },
+          "instructions": 420,
+          "nativePathSHA256": "b0fdb7764e44c73b945bdb69ec22b8f071270d4f2bf2c3b948306c46a420230b",
+          "models": [],
+          "nativeEntries": [
+            "0x14e9b2c60",
+            "0x151845920",
+            "0x156f6f510"
+          ]
+        }
+      },
+      {
+        "name": "lookup-first-matching-weapon",
+        "guids": [
+          8589934593,
+          18446744073709551615
+        ],
+        "slot": 6,
+        "foundGuid": 8589934593,
+        "trace": {
+          "entry": "0x151845920",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008",
+            "rcx": "0x6120372b0",
+            "rdx": "0x6"
+          },
+          "instructions": 208,
+          "nativePathSHA256": "250464194f0ff5975d5907a91dee9ed3d203196702e30254d66a062e7faad74d",
+          "models": [],
+          "nativeEntries": [
+            "0x14e9b2c60",
+            "0x151845920",
+            "0x156f6f510"
+          ]
+        }
+      },
+      {
+        "name": "lookup-missing-slot",
+        "guids": [
+          8589934593,
+          4294967297
+        ],
+        "slot": 7,
+        "foundGuid": null,
+        "trace": {
+          "entry": "0x151845920",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008",
+            "rcx": "0x6120372b0",
+            "rdx": "0x7"
+          },
+          "instructions": 405,
+          "nativePathSHA256": "ef1537cebffd59fbb4f4480fb4b38d8382bb90fe87865cb3be6e07444b8a0877",
+          "models": [],
+          "nativeEntries": [
+            "0x14e9b2c60",
+            "0x151845920",
+            "0x156f6f510"
+          ]
+        }
+      },
+      {
+        "name": "lookup-empty",
+        "guids": [],
+        "slot": 6,
+        "foundGuid": null,
+        "trace": {
+          "entry": "0x151845920",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008",
+            "rcx": "0x6120372b0",
+            "rdx": "0x6"
+          },
+          "instructions": 25,
+          "nativePathSHA256": "a8779c46defa88297f51b816ce46054eccaaa7adbfca393de54266d6d9e890bb",
+          "models": [],
+          "nativeEntries": [
+            "0x151845920"
+          ]
+        }
+      },
+      {
+        "name": "guid-fallback-explicit-high",
+        "inputGuid": 9223372036854775961,
+        "guids": [],
+        "stored": 9223372036854775961,
+        "trace": {
+          "entry": "0x15183e450",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008",
+            "rcx": "0x6120372b0",
+            "rdx": "0x8000000000000099"
+          },
+          "instructions": 13,
+          "nativePathSHA256": "bb92a0dedea7ea11b7f2ed26ad416ee1a5d2204e97a76e1b1d8bd63ca1c4363b",
+          "models": [],
+          "nativeEntries": [
+            "0x15183e450"
+          ]
+        }
+      },
+      {
+        "name": "guid-fallback-zero-finds-first",
+        "inputGuid": 0,
+        "guids": [
+          8589934593,
+          18446744073709551615
+        ],
+        "stored": 8589934593,
+        "trace": {
+          "entry": "0x15183e450",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008",
+            "rcx": "0x6120372b0",
+            "rdx": "0x0"
+          },
+          "instructions": 230,
+          "nativePathSHA256": "ec65978b745c3e1784687027c27958dc5d4bd6c6ed2ad0bdf9944bc0fc3cb935",
+          "models": [],
+          "nativeEntries": [
+            "0x14e9b2c60",
+            "0x15183e450",
+            "0x151845920",
+            "0x156f6f510"
+          ]
+        }
+      },
+      {
+        "name": "guid-fallback-zero-no-weapon",
+        "inputGuid": 0,
+        "guids": [
+          4294967297
+        ],
+        "stored": 0,
+        "trace": {
+          "entry": "0x15183e450",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008",
+            "rcx": "0x6120372b0",
+            "rdx": "0x0"
+          },
+          "instructions": 236,
+          "nativePathSHA256": "91181e134d9927a07b371cded684a9dba0b89117badd16798924612f6202d1db",
+          "models": [],
+          "nativeEntries": [
+            "0x14e9b2c60",
+            "0x15183e450",
+            "0x151845920",
+            "0x156f6f510"
+          ]
+        }
+      },
+      {
+        "name": "null-list-before-native-error",
+        "trace": {
+          "entry": "0x151845920",
+          "stop": "0x1518459da",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008",
+            "rcx": "0x6120372b0",
+            "rdx": "0x6"
+          },
+          "instructions": 13,
+          "nativePathSHA256": "acb4fd7e7544153b0effcef487cda6d7d3ece13dfd7af36e3945544743bc3064",
+          "models": [],
+          "nativeEntries": [
+            "0x151845920"
+          ]
+        }
+      }
+    ]
+  },
+  "completeSlotLookup": true,
+  "completeEquipmentAssignment": false,
+  "completeAvatarHandler": false,
+  "completeConstructor": false,
+  "runtimeStatus": "not-tested",
+  "targetProtocolReady": false,
+  "sourceSHA256": {
+    "tools/client72_avatar_deep_equipment.py": "100dee0f631d217356428ac1515e774e367ec91bf061dc0ae09a2f1f16c8b172",
+    "tools/client72_avatar_deep.py": "3293c8fa8d5b049c64676614d8b2033c550bda0761060d34918b9d63f85c9320",
+    "tools/client72_avatar_initializer.py": "9df1101b6204d371e2e60be593b843d1c1e91a690e9df2444498bde4df49b3b9",
+    "tools/client72_avatar_contract.py": "74383f9c724767bb0ff3e1d9f0436b516a328f6858154063a846a03733b68491",
+    "tools/client72_emulator.py": "8007d2594ef8058a4f2a9f1c24094fb5d2551a202b4e52154876cdfe77a17c3c",
+    "tools/client72_session_runtime.py": "c6ff407e33416869a855cfa86e97c3f63a9d24019ac0f6e6dfc74a959bfe1439"
+  },
+  "models": [
+    "Managed model classes and initialized state are explicit fixtures based on metadata inheritance; no equipment model ctor or resource parser is asserted.",
+    "GUID setter, manager registration/query and UInt64 dictionary bodies are inherited native execution; +68 list storage is an explicit prepared managed list.",
+    "Slot lookup and +248 GUID setter/fallback execute fully; equipment factory/assignment/list mutation/refresh remain separate."
+  ]
+}

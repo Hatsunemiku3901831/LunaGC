@@ -199,3 +199,36 @@ enum canonicalization依赖`145bc8ef0`运行时pointer cell，当前不是file-b
 冷comparer在158878154的未知metadata/reflection前停，缺TreeSet context在157601ac3前停，null根在1570f6675原生错误helper之前停；均不装成功桩。早期probe误把某零偏移标签写为treeCount，独立布局审核后移除：没有执行get_Count/VersionCheck，不拿任意零内存当树状态语义。
 
 7原生/7独立断言及主线第三回放同双跑：完整`2d66f279652f711bdd44a4e54c44c775092e3cd0ddf98f2d43c902136d1db0ff`，摘要`549566564c42c653c05b11a26a73ef249d2e2e8cba0dca75efaa0e4648ed1401`。证明`local/migration72/astra-main/avatar-sorted-review.json`，原始`astra-avatar/sorted-final-{first,repeat}-*.json`。复现`python tools/client72_avatar_deep_sorted.py --client <GAME_PATH> --output <独立原始路径> --observations <独立摘要路径>`及`python -m unittest tools.test_client72_avatar_deep_sorted -v`。旧“Sorted精确构造完全未执行”已被本段限定结果取代，完整constructor/handler/g2仍false。
+
+## 装备槽查询与GUID回退：最后一条独立小链
+
+依赖复核发现 `151845920` 和 `15183e450` 不依赖未知资源解析、enum HashSet或真实实体，因而没有将其留作笼统阻塞。独立 `client72_avatar_deep_equipment.py` 在metadata确认的51522/87122→25683继承夹具中，通过实际GUID setter、实际管理器注册与UInt64字典注册三个模型；随后完整执行槽查询和GUID回退。`model+68`为显式准备的有序managed列表，未伪称由完整装备赋值流程生成。
+
+9组新样本验证：缺GUID和错误模型class被跳过；Weapon槽6、Relic槽1按真正模型+48筛选；有多个相同槽时取列表中首个匹配；缺槽/空列表返回0；`2^64-1`、高32位不同GUID均保持。`15183e450`的显式非零参数直接覆盖model+248，不额外查槽；参数0改查槽6，有匹配时保存其完整GUID，无匹配时将旧777清成0。人为null列表在`1518459da`原生错误call前止，与有效空列表返回0分开。
+
+7项独立断言通过，两次新进程字节相同：完整`dc9e25d5cd3cf8a263f3af7735910594bd5f0da450fd93c3ee16fbfc5251b58d`（72391 bytes），摘要`00af1f1883fa1b7d82e317f4d4bd6179c0999c2af4390dcc3b3e164b76c72ece`（13759 bytes）。共享`avatar-deep-equipment-observations.json`与摘要相同；原始在`astra-avatar/equipment-final-{first,repeat}-{native,summary}.json`，比对/测试为`equipment-determinism.json`、`equipment-tests-final.log`。该结果闭合查询/回退本身，不闭合factory创建、槽替换、List增删/growth或refresh。
+
+```powershell
+python tools/client72_avatar_deep_equipment.py --client <GAME_PATH> --output <独立原始路径> --observations <独立摘要路径>
+python -m unittest tools.test_client72_avatar_deep_equipment -v
+```
+
+## 本轮最终难点与缺输入审计
+
+本表覆盖本轮最后状态，优先于前文逐批停止点。完成的是各自列明的独立验收项；`F-03d3f4d2`完整Avatar构造/handler及生产g2继续未完成。没有将“能够继续拆函数”当作已经有合法完整初始化输入，也没有用未知callee成功桩、空资源/零分配、编译或健康填补缺口。
+
+| 原难点 | 本轮最终结果 | 当前缺输入/依赖与准确解除条件 |
+| --- | --- | --- |
+| 三类间接ctor与继承 | class RGCTX表和三个准确方法身份已恢复；List三处真实stores、Sorted comparer/TreeSet五方法完整选定链及model+1c0真实store已验 | **构造本体只余enum HashSet目标与初始化状态未闭**。需要20060闭合实例的实际callee选择/default-class状态；`145bc8ef0`的runtime值不在文件中，限定初始化来源搜索没有真实指令命中，不能任选flag或套其它enum。最小新输入为自然构造时enumContext `145a30968→MethodInfo→class+30→slot+18→MethodInfo+8`与flag/default-class的准确对应，或恢复能独立证明这些值的静态初始化生产路径；本轮没有实机授权/观察 |
+| HashSet/Sorted comparer cold路径 | warm comparer/opaque已初始化指针条件显式，实际保存链已验；cold在原生metadata/reflection入口前准确停 | 要验冷启动必须有reflection class/default comparer创建所需的真实初始化上下文。warm通过不证明真实首次构造必为warm；不扩大通用运行时模型来默认成功。需自然初始化证据或完整有来源的typed反射ABI，再选择实际分支 |
+| 空装备必经refresh | `15183f290`池请求及旧派生列表清理实际执行，新的明确入口为151843490；没有跳过它到技能后缀 | refresh进一步读取GLOBAL+34900资源、构建派生项并创建/调用比较delegate。当前未有与初始装备和模型生命周期一致的目标缓存/派生项合同。不能将缓存null或空列表用作“业务必要状态已满足”的替代；需真实目标资源输入及该delegate的typed接收状态，按已有原生入口继续 |
+| 非空装备赋值与槽 | typed Weapon→51522、Relic→87122工厂身份准确；Relic字段/编码赋值片段、完整槽查询和Weapon GUID回退均验 | factory生成对象、完整槽替换和List增删/growth尚未闭。需与真实Store对象一致的物品ID/GUID、7.2资源包装、等级/affix来源及已构造装备模型；旧Java投影itemID0、native控制10001和真实初始weapon11101不能拼成同一来源。当前独立可执行的纯查询/回退已完成，其余要在这些输入合同齐全后连续验收 |
+| depot+68和技能后缀 | tag13→+68配对与编码参数、两个技能字典清旧通过；资源分支独立恢复+68/+6c parser，二者不再混淆 | tag15/17 map、tag14/35列表和技能对象/排序/效果的真实来源仍未批准；实际depot选择与资源默认也不等价。需要同一角色当前depot、原始技能对象/资源cache及已恢复保存状态，不能猜map为空或把现有Java近名getter直接接入；依赖资源语义和初始化顺序，非协议raw缺字段 |
+| 61980池与重复更新 | ctor不清脏payload、reset/CopyFrom及给定池rent后的真实wrapper/header/handler+24已验 | 真实池租借是否先清payload、引用计数/异常状态未观察；不能推定池总是新对象。需实际池生命周期与被调用virtual实例的来源；当前报告已给出脏对象反例，禁止zero allocator代替合同 |
+| tag29后缀 | 六模式位图和顺序、清辅助字典、逐位交付参数已验 | 实际差异应用依赖尚未构造完整的enum HashSet/model+1e8及后续模式状态/效果；直接依赖第一行。不会选0使比较无效果然后称完整 |
+| tag38后缀 | 在有来源的typed合成cache中完整选择函数返回；两真实资源名称/缓存类型/getter/loader到I/O边界已闭 | 当前缺真实`AvatarOrnamentGroup/AvatarOrnament`文件解析、cache-builder状态、完整默认记录和Java业务来源。候选JSON不能直接当客户端已加载cache。待这些输入有来源后才能做生产投影；本轮已完成不依赖真实文件内容的消费者/来源研究 |
+| g2全链与实机 | 字段/编码/目标调用顺序、已验Javagetter和清旧/保留/覆盖差异有本文规格 | 仍需完整构造/必经后缀、同源Java库存/角色/资源投影、最终SavedVitals恢复时机及实际scene/entity/监听者状态。所有实机新旧号、选人、入场、心跳和退出重登均未执行；无法由受控无scene分支推出正式入场通过 |
+
+因此下一步的具体输入是enum/context与cold初始化证据、同源装备/技能资源对象和真实池/scene生命周期；本轮不继续创建忽略这些条件的成熟夹具。用户当前只允许离线，任何实机读取/调试、部署或生产sender接入均未发生。相关协议/账号/保存代码、Proto、配置、补丁、资源及原数据库保持原样；本代理没有Git提交，所有独立项由主线审核后本地提交、不推送。
+
+装备小项主线独立7断言及第三原生完整/摘要同双跑，已核typed继承、真实UInt64注册/查询和空指针拒绝；证明`local/migration72/astra-main/avatar-equipment-review.json`，日志同前缀。主线未执行生产接入或新增实机观察。
