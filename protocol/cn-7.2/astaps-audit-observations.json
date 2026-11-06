@@ -12,7 +12,7 @@
   },
   "targetMapping": {
     "file": "protocol/cn-7.2/mappings.json",
-    "sha256": "e3749bb1a0041d21371940d0028e33f26578ff0b2f2b02fec009ba97a212d28c",
+    "sha256": "08fcb1ef9413eab6a85f51e5c357369725b8e87c0e96e87e8326e5d3d5b780b7",
     "hashConvention": "UTF-8 LF"
   },
   "protoSourceTree": {
@@ -51,12 +51,12 @@
     "duplicatePositiveOpcodeValues": 13,
     "documentedLegacyMessages": 105,
     "documentedLegacyFields": 218,
-    "targetMessages": 23,
-    "targetFields": 248,
-    "matchingTargetOuterShape": 156,
+    "targetMessages": 29,
+    "targetFields": 278,
+    "matchingTargetOuterShape": 185,
     "missingTargetTags": 92,
-    "targetOuterShapeConflicts": 0,
-    "verifiedSemanticConflicts": 5
+    "targetOuterShapeConflicts": 1,
+    "verifiedSemanticConflicts": 6
   },
   "compilation": {
     "success": true,
@@ -4428,6 +4428,113 @@
       }
     },
     {
+      "message": "PlayerStoreNotify",
+      "clientType": "CAIHCNHAMHB",
+      "targetCmdId": 20892,
+      "astaOpcode": {
+        "value": 20892,
+        "line": 1254,
+        "legacy71": 22160
+      },
+      "opcodeMatches": true,
+      "astaSchema": {
+        "file": "src/main/proto/PlayerStoreNotify.proto",
+        "line": 8
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "MBEEKCPJBEL",
+            "tag": 2,
+            "type": "message",
+            "cardinality": "repeated",
+            "packed": false,
+            "semanticField": "item_list",
+            "status": "verified",
+            "clientNestedType": "NDGHFPMJFIM"
+          },
+          "proposedFieldName": "item_list",
+          "astaAtSameTag": {
+            "name": "item_list",
+            "tag": 2,
+            "declaredType": "Item",
+            "cardinality": "repeated",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerStoreNotify.proto",
+            "line": 9,
+            "type": "message",
+            "typeName": "Item",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "PAKLDABINMP",
+            "tag": 8,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_8",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "PAKLDABINMP",
+          "astaAtSameTag": {
+            "name": "weight_limit",
+            "tag": 8,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerStoreNotify.proto",
+            "line": 11,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "CLFJNKKFONI",
+            "tag": 14,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "store_type",
+            "status": "verified"
+          },
+          "proposedFieldName": "store_type",
+          "astaAtSameTag": {
+            "name": "store_type",
+            "tag": 14,
+            "declaredType": "StoreType",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerStoreNotify.proto",
+            "line": 10,
+            "type": "enum",
+            "typeName": "StoreType",
+            "packed": false
+          },
+          "sameOuterShape": false,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 3,
+        "asta": 3,
+        "matchingOuterShape": 2,
+        "outerShapeConflict": 1,
+        "missingTargetTags": 0,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
       "message": "StoreWeightLimitNotify",
       "clientType": "KNCCLAJAEEC",
       "targetCmdId": 22609,
@@ -6247,6 +6354,854 @@
         "outerShapeConflict": 0,
         "missingTargetTags": 0,
         "verifiedSemanticConflict": 2
+      }
+    },
+    {
+      "message": "Item",
+      "clientType": "NDGHFPMJFIM",
+      "targetCmdId": null,
+      "astaOpcode": null,
+      "opcodeMatches": null,
+      "astaSchema": {
+        "file": "src/main/proto/Item.proto",
+        "line": 12
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "PJAGIOHBKLD",
+            "tag": 1,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "item_id",
+            "status": "verified"
+          },
+          "proposedFieldName": "item_id",
+          "astaAtSameTag": {
+            "name": "item_id",
+            "tag": 1,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Item.proto",
+            "line": 14,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FBLKPHOCBIK",
+            "tag": 2,
+            "type": "uint64",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "guid",
+            "status": "verified"
+          },
+          "proposedFieldName": "guid",
+          "astaAtSameTag": {
+            "name": "guid",
+            "tag": 2,
+            "declaredType": "uint64",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Item.proto",
+            "line": 13,
+            "type": "uint64",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FLPGMLOFAKP_5",
+            "tag": 5,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "material",
+            "status": "verified",
+            "clientNestedType": "KKOPHGDBCEO"
+          },
+          "proposedFieldName": "material",
+          "astaAtSameTag": {
+            "name": "material",
+            "tag": 5,
+            "declaredType": "Material",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": "detail",
+            "file": "src/main/proto/Item.proto",
+            "line": 16,
+            "type": "message",
+            "typeName": "Material",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FLPGMLOFAKP_6",
+            "tag": 6,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "equip",
+            "status": "verified",
+            "clientNestedType": "BNDIKNLDLOJ"
+          },
+          "proposedFieldName": "equip",
+          "astaAtSameTag": {
+            "name": "equip",
+            "tag": 6,
+            "declaredType": "Equip",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": "detail",
+            "file": "src/main/proto/Item.proto",
+            "line": 17,
+            "type": "message",
+            "typeName": "Equip",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FLPGMLOFAKP_7",
+            "tag": 7,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_7",
+            "status": "unresolved",
+            "clientNestedType": "JOPADICJMPJ"
+          },
+          "proposedFieldName": "FLPGMLOFAKP_7",
+          "astaAtSameTag": {
+            "name": "furniture",
+            "tag": 7,
+            "declaredType": "Furniture",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": "detail",
+            "file": "src/main/proto/Item.proto",
+            "line": 18,
+            "type": "message",
+            "typeName": "Furniture",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FLPGMLOFAKP_8",
+            "tag": 8,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_8",
+            "status": "unresolved",
+            "clientNestedType": "MKFCDFEEAAL"
+          },
+          "proposedFieldName": "FLPGMLOFAKP_8",
+          "astaAtSameTag": {
+            "name": "beyond_material",
+            "tag": 8,
+            "declaredType": "_BeyondMaterial",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": "detail",
+            "file": "src/main/proto/Item.proto",
+            "line": 19,
+            "type": "message",
+            "typeName": "_BeyondMaterial",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FLPGMLOFAKP_9",
+            "tag": 9,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_9",
+            "status": "unresolved",
+            "clientNestedType": "MIEKLLOFKOJ"
+          },
+          "proposedFieldName": "FLPGMLOFAKP_9",
+          "astaAtSameTag": {
+            "name": "facility",
+            "tag": 9,
+            "declaredType": "_Facility",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": "detail",
+            "file": "src/main/proto/Item.proto",
+            "line": 20,
+            "type": "message",
+            "typeName": "_Facility",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FLPGMLOFAKP_10",
+            "tag": 10,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_10",
+            "status": "unresolved",
+            "clientNestedType": "JLAGHMMLDCA"
+          },
+          "proposedFieldName": "FLPGMLOFAKP_10",
+          "astaAtSameTag": {
+            "name": "tps_weapon",
+            "tag": 10,
+            "declaredType": "_TpsWeapon",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": "detail",
+            "file": "src/main/proto/Item.proto",
+            "line": 21,
+            "type": "message",
+            "typeName": "_TpsWeapon",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 8,
+        "asta": 8,
+        "matchingOuterShape": 8,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 0,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
+      "message": "Material",
+      "clientType": "KKOPHGDBCEO",
+      "targetCmdId": null,
+      "astaOpcode": null,
+      "opcodeMatches": null,
+      "astaSchema": {
+        "file": "src/main/proto/Material.proto",
+        "line": 7
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "GNHFNECPAHD",
+            "tag": 1,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "count",
+            "status": "verified"
+          },
+          "proposedFieldName": "count",
+          "astaAtSameTag": {
+            "name": "count",
+            "tag": 1,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Material.proto",
+            "line": 9,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "PNGOHOKGKHP",
+            "tag": 2,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_2",
+            "status": "unresolved",
+            "clientNestedType": "JDDDHIGLMGJ"
+          },
+          "proposedFieldName": "PNGOHOKGKHP",
+          "astaAtSameTag": {
+            "name": "delete_info",
+            "tag": 2,
+            "declaredType": "MaterialDeleteInfo",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Material.proto",
+            "line": 8,
+            "type": "message",
+            "typeName": "MaterialDeleteInfo",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 2,
+        "asta": 2,
+        "matchingOuterShape": 2,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 0,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
+      "message": "Equip",
+      "clientType": "BNDIKNLDLOJ",
+      "targetCmdId": null,
+      "astaOpcode": null,
+      "opcodeMatches": null,
+      "astaSchema": {
+        "file": "src/main/proto/Equip.proto",
+        "line": 8
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "FAPABAJBMAK",
+            "tag": 3,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "is_locked",
+            "status": "verified"
+          },
+          "proposedFieldName": "is_locked",
+          "astaAtSameTag": {
+            "name": "is_locked",
+            "tag": 3,
+            "declaredType": "bool",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Equip.proto",
+            "line": 9,
+            "type": "bool",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FLPGMLOFAKP_1",
+            "tag": 1,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "reliquary",
+            "status": "verified",
+            "clientNestedType": "JBBEOMJDLFM"
+          },
+          "proposedFieldName": "reliquary",
+          "astaAtSameTag": {
+            "name": "reliquary",
+            "tag": 1,
+            "declaredType": "Reliquary",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": "detail",
+            "file": "src/main/proto/Equip.proto",
+            "line": 11,
+            "type": "message",
+            "typeName": "Reliquary",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FLPGMLOFAKP_2",
+            "tag": 2,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "weapon",
+            "status": "verified",
+            "clientNestedType": "FNECPDFLEHN"
+          },
+          "proposedFieldName": "weapon",
+          "astaAtSameTag": {
+            "name": "weapon",
+            "tag": 2,
+            "declaredType": "Weapon",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": "detail",
+            "file": "src/main/proto/Equip.proto",
+            "line": 12,
+            "type": "message",
+            "typeName": "Weapon",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 3,
+        "asta": 3,
+        "matchingOuterShape": 3,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 0,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
+      "message": "Weapon",
+      "clientType": "FNECPDFLEHN",
+      "targetCmdId": null,
+      "astaOpcode": null,
+      "opcodeMatches": null,
+      "astaSchema": {
+        "file": "src/main/proto/Weapon.proto",
+        "line": 5
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "JMGKMMFNABP",
+            "tag": 4,
+            "type": "map",
+            "cardinality": "map",
+            "packed": false,
+            "semanticField": "affix_map",
+            "status": "verified",
+            "keyType": "uint32",
+            "valueType": "uint32"
+          },
+          "proposedFieldName": "affix_map",
+          "astaAtSameTag": {
+            "name": "affix_map",
+            "tag": 4,
+            "declaredType": "map<uint32, uint32>",
+            "cardinality": "map",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Weapon.proto",
+            "line": 6,
+            "type": "map",
+            "mapKeyType": "uint32",
+            "mapValueType": "uint32",
+            "mapValueTypeName": null,
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FLGGIMBHFOO",
+            "tag": 6,
+            "type": "uint32",
+            "cardinality": "repeated",
+            "packed": true,
+            "semanticField": "unknown_field_6",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "FLGGIMBHFOO",
+          "astaAtSameTag": {
+            "name": "_awaken_point_id_list",
+            "tag": 6,
+            "declaredType": "uint32",
+            "cardinality": "repeated",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Weapon.proto",
+            "line": 7,
+            "type": "uint32",
+            "typeName": null,
+            "packed": true
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "NILMBAGDEAL",
+            "tag": 2,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "exp",
+            "status": "verified"
+          },
+          "proposedFieldName": "exp",
+          "astaAtSameTag": {
+            "name": "exp",
+            "tag": 2,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Weapon.proto",
+            "line": 10,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "KFDCBKBPPGL",
+            "tag": 3,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "promote_level",
+            "status": "verified"
+          },
+          "proposedFieldName": "promote_level",
+          "astaAtSameTag": {
+            "name": "promote_level",
+            "tag": 3,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Weapon.proto",
+            "line": 9,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "NJAGFJINHMA",
+            "tag": 1,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "level",
+            "status": "verified"
+          },
+          "proposedFieldName": "level",
+          "astaAtSameTag": {
+            "name": "level",
+            "tag": 1,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Weapon.proto",
+            "line": 8,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "MNCFEDPDEAG",
+            "tag": 5,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_5",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "MNCFEDPDEAG",
+          "astaAtSameTag": {
+            "name": "OGKCBEGGBHF",
+            "tag": 5,
+            "declaredType": "bool",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Weapon.proto",
+            "line": 11,
+            "type": "bool",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 6,
+        "asta": 6,
+        "matchingOuterShape": 6,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 0,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
+      "message": "Reliquary",
+      "clientType": "JBBEOMJDLFM",
+      "targetCmdId": null,
+      "astaOpcode": null,
+      "opcodeMatches": null,
+      "astaSchema": {
+        "file": "src/main/proto/Reliquary.proto",
+        "line": 5
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "FOFCJMPCEBB",
+            "tag": 5,
+            "type": "uint32",
+            "cardinality": "repeated",
+            "packed": true,
+            "semanticField": "unknown_field_5",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "FOFCJMPCEBB",
+          "astaAtSameTag": {
+            "name": "append_prop_id_list",
+            "tag": 5,
+            "declaredType": "uint32",
+            "cardinality": "repeated",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Reliquary.proto",
+            "line": 7,
+            "type": "uint32",
+            "typeName": null,
+            "packed": true
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "IMEGOOADEBF",
+            "tag": 7,
+            "type": "uint32",
+            "cardinality": "repeated",
+            "packed": true,
+            "semanticField": "unknown_field_7",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "IMEGOOADEBF",
+          "astaAtSameTag": {
+            "name": "_purchased_append_prop_id_list",
+            "tag": 7,
+            "declaredType": "uint32",
+            "cardinality": "repeated",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Reliquary.proto",
+            "line": 6,
+            "type": "uint32",
+            "typeName": null,
+            "packed": true
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "IHKPPDPBEML",
+            "tag": 8,
+            "type": "uint32",
+            "cardinality": "repeated",
+            "packed": true,
+            "semanticField": "unknown_field_8",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "IHKPPDPBEML",
+          "astaAtSameTag": {
+            "name": "_definite_append_prop_id_list",
+            "tag": 8,
+            "declaredType": "uint32",
+            "cardinality": "repeated",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Reliquary.proto",
+            "line": 8,
+            "type": "uint32",
+            "typeName": null,
+            "packed": true
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "KFDCBKBPPGL",
+            "tag": 3,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_3",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "KFDCBKBPPGL",
+          "astaAtSameTag": {
+            "name": "promote_level",
+            "tag": 3,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Reliquary.proto",
+            "line": 11,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "OJDKGGHBKKK",
+            "tag": 4,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_4",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "OJDKGGHBKKK",
+          "astaAtSameTag": {
+            "name": "main_prop_id",
+            "tag": 4,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Reliquary.proto",
+            "line": 10,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "NILMBAGDEAL",
+            "tag": 2,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_2",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "NILMBAGDEAL",
+          "astaAtSameTag": {
+            "name": "exp",
+            "tag": 2,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Reliquary.proto",
+            "line": 12,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "CGKIGPFDFOF",
+            "tag": 6,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "is_star",
+            "status": "verified"
+          },
+          "proposedFieldName": "is_star",
+          "astaAtSameTag": {
+            "name": "_is_relic_starred",
+            "tag": 6,
+            "declaredType": "bool",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Reliquary.proto",
+            "line": 9,
+            "type": "bool",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": true
+        },
+        {
+          "target": {
+            "clientField": "NJAGFJINHMA",
+            "tag": 1,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "level",
+            "status": "verified"
+          },
+          "proposedFieldName": "level",
+          "astaAtSameTag": {
+            "name": "level",
+            "tag": 1,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Reliquary.proto",
+            "line": 13,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 8,
+        "asta": 8,
+        "matchingOuterShape": 8,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 0,
+        "verifiedSemanticConflict": 1
       }
     }
   ],

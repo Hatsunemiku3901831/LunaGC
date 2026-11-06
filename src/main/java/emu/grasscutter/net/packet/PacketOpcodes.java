@@ -87,7 +87,7 @@ public final class PacketOpcodes {
     public static final int PlayerGameTimeNotify = 21032;
     public static final int PlayerSetPauseReq = 5963;
     public static final int PlayerSetPauseRsp = -4;
-    public static final int PlayerStoreNotify = 22160;
+    public static final int PlayerStoreNotify = 20892;
     public static final int SceneAreaWeatherNotify = 29947;
     public static final int SceneDataNotify = 29381;
     public static final int SceneTimeNotify = 1307;

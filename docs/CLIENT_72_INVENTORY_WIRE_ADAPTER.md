@@ -1,5 +1,7 @@
 # F-03d2c1：独立库存raw Java适配器
 
+后续F-03d2c2已将本独立适配器用于库存最小发送链，详见[有限生产接入](CLIENT_72_INVENTORY_PRODUCTION.md)。以下“未接入”与旧构建数字准确描述c1验收时点；本适配器的raw字段和生成合同在c2保持不变。
+
 本项把[完整库存raw图](CLIENT_72_INVENTORY_GRAPH.md)的15类47个字段生成到独立`cn72.inventorywire` Proto namespace。全部字段/消息保留目标raw名；没有修改旧`PlayerStoreNotify`/`Item`、GameItem、任何发送包、正式包号或三层业务状态。此适配器尚未接入运行发送链，不能当作库存初始化或D-02完成。
 
 `tools/generate_inventory72_wire.py`每次读取并校验实际客户端三输入，再固定已验`inventory-graph-observations.json`的完整JSON内容。其canonical UTF-8 LF摘要为`b21904536dc21997f2ee9c1ecb2761e63d521f8cebb72a7320620ec7b3660fe8`；原本机CRLF文件字节摘要`ca45b0d9b038cd46fc35943924ca77ae46c8fbae82c06e131245e03f43d95b18`未改变。canonical指纹仅统一换行表示，不省略字段、样本或模型边界；任何字段、分支、packing、原生输入/结果、runtime或未知状态改变都拒绝。输出仅`src/main/proto/Client72InventoryWire.proto`，Java由Gradle/protoc生成。

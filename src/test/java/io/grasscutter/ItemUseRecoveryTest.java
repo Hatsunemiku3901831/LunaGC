@@ -464,13 +464,13 @@ class ItemUseRecoveryTest extends FoodUsePaymentPersistenceTest {
                         packet.getData());
         assertTrue(
                 inventory.getItemListList().stream()
-                        .anyMatch(x -> x.getItemId() == 220003 && x.getGuid() == otherGuid));
+                        .anyMatch(x -> x.getPJAGIOHBKLD() == 220003 && x.getFBLKPHOCBIK() == otherGuid));
         assertTrue(
                 inventory.getItemListList().stream()
                         .anyMatch(
                                 x ->
-                                        x.getItemId() == food.getItemId()
-                                                && x.getMaterial().getCount() == 1));
+                                        x.getPJAGIOHBKLD() == food.getItemId()
+                                                && x.getFLPGMLOFAKP5().getGNHFNECPAHD() == 1));
     }
 
     @Test

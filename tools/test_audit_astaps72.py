@@ -174,8 +174,9 @@ message SourceChild {
         self.assertEqual(audit.COMMIT, summary['reference']['commit'])
         self.assertEqual(audit.PROTO_DIGEST, summary['protoSourceTree']['sha256'])
         self.assertEqual(audit.MAPPING_SHA256, summary['targetMapping']['sha256'])
-        self.assertEqual((248, 156, 92, 5), tuple(summary['counts'][k] for k in
+        self.assertEqual((278, 185, 92, 6), tuple(summary['counts'][k] for k in
             ('targetFields', 'matchingTargetOuterShape', 'missingTargetTags', 'verifiedSemanticConflicts')))
+        self.assertEqual(1, summary['counts']['targetOuterShapeConflicts'])
         self.assertEqual((967, 567, 12), tuple(summary['counts'][k] for k in ('parkedFields', 'zeroOpcodes', 'negativeOpcodes')))
         self.assertTrue(summary['compilation']['success'])
         self.assertTrue(summary['parkedWireCheck']['independentWireAssert'])

@@ -116,7 +116,7 @@
     "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerPropChangeReasonNotify.java": "0618b35ce2704c7dfe4fc8c290624bdb6404ebbba2b6eaf7aae8b4197426980e",
     "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerPropNotify.java": "8875c4536d83e3880947363864e051fa3cffa34732d776ce12d58a438b0c9fda",
     "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerRechargeDataNotify.java": "63dc822fc5a5050d6ebe31b79955a0937c633121c6150dcfae5f24162545b435",
-    "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerStoreNotify.java": "dd9e84e47c390d9e450dd4631706916dec3a914ee20da6f8675b2b6847a627dd",
+    "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerStoreNotify.java": "6486bc3bd9c4337d6dfc3381a716e6c6a57c3c2388d41a758b72dd9278a95437",
     "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerTimeNotify.java": "c4ccfd945279cff1c545577e55c61c3d209d9369cc86f8ea15c6a12199b1c022",
     "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerWorldSceneInfoListNotify.java": "297b2dc3345222f5b56f79949943521c16527217b417e5ce293afbb568151455",
     "src/main/java/emu/grasscutter/server/packet/send/PacketPostEnterSceneRsp.java": "072fa88f5e40ca5c717a2a769b7a8611d08712acd692d5d942331d84bcdf02d0",
@@ -333,6 +333,7 @@
     "src/main/proto/ChessActivityDetailInfo.proto": "93757d600c6b958542594f0b87de6edcbcf994c8be5d5f5842bf838e86f20362",
     "src/main/proto/ChildQuest.proto": "9f7108f768c5d07d94a5adfdd54562d9f599878b6f27517900bba7b6f1f42fed",
     "src/main/proto/Client72EnterSceneNested.proto": "4f6b0e60ddb1d00d1c8062ede749e1fbc22ac489cd4ef4eb1859e479ad81bb73",
+    "src/main/proto/Client72InventoryWire.proto": "2ee7e9ab45073b575e2641cf46c1a02802880e054bfcdb08990674ac68cf8248",
     "src/main/proto/Client72LoginNested.proto": "e8b0861d58b1716fa0a3e2926bc430e47345f68238ff286c128c02e56f52e421",
     "src/main/proto/Client72PlayerDataNested.proto": "7f5fc766109b40281701bc3d05099326201eb3c9f7c7dabc239963397dc89edc",
     "src/main/proto/Client72SceneHandshakeNested.proto": "4b5e9c08cff259e03bd477452d5ecba1d013901f94a124ef3f9d5cb8a2b92175",
@@ -921,7 +922,7 @@
     "src/main/proto/PlayerPropNotify.proto": "963111d946a5ddc6439160eada5cc2a28ddb0b98e3a2548188906311f9a6fd88",
     "src/main/proto/PlayerRTTInfo.proto": "ef313f776e4e52e2b8bd1cc5624c67aade189909a3ae2b37114f894ffcb0cb8c",
     "src/main/proto/PlayerRechargeDataNotify.proto": "b77d3fbf25e9bbb0e97f404d4015fa9db296556301e0814bfb0d55d147e575de",
-    "src/main/proto/PlayerStoreNotify.proto": "db4312d723e0d3bae3b8731e65118181b55108dcf906b443912bec29d39a1dc2",
+    "src/main/proto/PlayerStoreNotify.proto": "2d6b5f82fd96f075ffbf62a0deced0b56daef0d097c3e8974374f4adf5f2eb05",
     "src/main/proto/PlayerTimeNotify.proto": "ca5cce7b7f8502a08e60c17b4a00b354ca637b22f6986bd261c9cbb99ab13a5b",
     "src/main/proto/PlayerWidgetInfo.proto": "d32b43c8c6192009bee7488180b6e2c6356a616d4d3a5fa0b2591c5ba671069d",
     "src/main/proto/PlayerWorldLocationInfo.proto": "f956e8e5f86cf2549bbbf1effc2ac184ab76f6fa5899b16d01f90a98c9a5e44f",
@@ -1276,19 +1277,24 @@
   },
   "evidenceSHA256": {
     "protocol/cn-7.2/profile.json": "afce9267696712860c9d4585c7b09b242ad993fa504c177f4466d51104328315",
-    "protocol/cn-7.2/mappings.json": "e3749bb1a0041d21371940d0028e33f26578ff0b2f2b02fec009ba97a212d28c",
+    "protocol/cn-7.2/mappings.json": "08fcb1ef9413eab6a85f51e5c357369725b8e87c0e96e87e8326e5d3d5b780b7",
     "protocol/cn-7.2/commands.json": "93376c770ff8362303817da1d03032f08495c04affc9ce1f7697470ff970d4a8",
-    "protocol/cn-7.2/astaps-audit-observations.json": "5f2c5104a6797aec77582137424995b9062b5df9085cdc8b590d9af7fafd400c",
+    "protocol/cn-7.2/astaps-audit-observations.json": "2735b2c47a4de3974719a9f1081b3978dd4442a318f5e5fc5805cd7424a80efa",
     "protocol/cn-7.2/astaps-implementation-observations.json": "85e0ffcfa2f4908064bb269538e0dd4692a2159662ecff71fce5ae5e0ee07036",
     "protocol/cn-7.2/auth-sources-observations.json": "3d21f2e0b992bdcb253ddc3f4406b57327cc473b5b1b0474ba519de7c6795beb",
     "protocol/cn-7.2/auth-tail-observations.json": "be8c6e59ace621b3feb595c50a337d2166bd3b0124b681246e1bd8a5d11c622d",
+    "protocol/cn-7.2/avatar-complex-outer-observations.json": "6e77e831754ff64fb9d176aabdb6dd543bc4ff4fa32471e0c56688e550b2e283",
+    "protocol/cn-7.2/avatar-contract-observations.json": "fa3b50fe281ccd586d4e5813dc14c50ba94098a5c392075b081e729b238f237a",
     "protocol/cn-7.2/avatar-core-observations.json": "aba3f915e10d3639280c2e8eacc9ce5935c80efc48c22f4056dfa7bfd73f8739",
     "protocol/cn-7.2/avatar-items-observations.json": "56c56457a02d1c3fed5db07e4739be19ba2947ef55835427d2b7886f62fbc403",
     "protocol/cn-7.2/avatar-outer-observations.json": "6ddc5e023c81f443e09280fcd393fa5754b688687aa83acc280ce61874bc3f93",
+    "protocol/cn-7.2/avatar-primitive-leaves-observations.json": "a06172883f3e3aab2b18be2b0cc5d43b88be8e8f2853b2dbfc595ab1e5e8ba06",
     "protocol/cn-7.2/avatar-trees-observations.json": "b2ff7cce8d9c5cc53442842f970510fbec17da1cc13fb837d55f060837e323be",
+    "protocol/cn-7.2/avatar-unions-observations.json": "1d41ebd4f3332c5fb0a36d8ba513d4d270cfb94b0dcb7030f9f6611228c3a961",
     "protocol/cn-7.2/born-continuation-observations.json": "568b4eda08a5d69f71a4dac35e763e664a04724f51de8c59b8c7e39f3271675c",
     "protocol/cn-7.2/born-observations.json": "0c1332a98c25a06431fe853def7e060d08ca77630b865d3cfbb8089d0903d943",
     "protocol/cn-7.2/cmd1017-domain-observations.json": "c9461188f5b9f4b2a54b0de642f327761ddb0e644af991f62d467f24d0a649db",
+    "protocol/cn-7.2/debug-channel-observations.json": "654204c6152d4161581cdcaf4c81986b6af7ba8861099222a7b16641b0b238d2",
     "protocol/cn-7.2/dispatch-config-observations.json": "3fd04f75214e44c14da2f84d293a276c4ae0da1240eb13b6d8ac487d640aa09d",
     "protocol/cn-7.2/dispatch-coroutine-observations.json": "b3632585637840a33a46f9a55ae62afae8aa86dbc45ac1fcfb591a1eba489182",
     "protocol/cn-7.2/dispatch-key-frame-observations.json": "984fadd1494d5537d44c995e635fa8dc7afc9a846faddab0f647b3f19280158b",
@@ -1299,6 +1305,7 @@
     "protocol/cn-7.2/ec2b-observations.json": "929a1519eed2abc7d4f141fd96a75872427803defaaae44665b3a4931de1ee0f",
     "protocol/cn-7.2/enter-scene-contract-observations.json": "f773e13babbee98f914563437e6019a8928d13b04957c630400fcd4c05641837",
     "protocol/cn-7.2/enum-observations.json": "bcb24a9ac63000ea06e1e575216f9f97d0a0dd1f3aa2f0ffee992f3238473a2f",
+    "protocol/cn-7.2/equip-contract-observations.json": "a4c71df6fbdc31c7ed44a12849c7cad8df21a226165b2a2468bbb8db5724c3bc",
     "protocol/cn-7.2/frame-observations.json": "5fcc2e56c69233875244feac2aa09e78b177fbfe66807b5ca63c1f5bc81218e9",
     "protocol/cn-7.2/frame-reader-observations.json": "33f29e00aa77970b7998174cf6083871f66757cc91d4498753e8f952d3b8bf00",
     "protocol/cn-7.2/handler-core-observations.json": "2650b8336f3b51e3e47283f1528d94979e68e29e7183eba20d1a2b558e57dd0f",
@@ -3072,11 +3079,11 @@
         }
       ],
       "javaSourceSHA256": {
-        "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerStoreNotify.java": "dd9e84e47c390d9e450dd4631706916dec3a914ee20da6f8675b2b6847a627dd",
+        "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerStoreNotify.java": "6486bc3bd9c4337d6dfc3381a716e6c6a57c3c2388d41a758b72dd9278a95437",
         "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
       },
       "directProtoReferences": [
-        "Item.proto",
+        "Client72InventoryWire.proto",
         "PacketHead.proto",
         "PlayerStoreNotify.proto",
         "StoreType.proto"
@@ -4068,6 +4075,7 @@
     "ChangeHpReason.proto",
     "ChatEmojiCollectionData.proto",
     "ChatInfo.proto",
+    "Client72InventoryWire.proto",
     "Client72LoginNested.proto",
     "Client72PlayerDataNested.proto",
     "Client72SceneHandshakeNested.proto",
@@ -4089,6 +4097,7 @@
     "EnterSceneReadyRsp.proto",
     "EnterType.proto",
     "EntityFightPropChangeReasonNotify.proto",
+    "Equip.proto",
     "FinishedParentQuestNotify.proto",
     "FinishedParentQuestUpdateNotify.proto",
     "ForgeDataNotify.proto",
@@ -4117,6 +4126,7 @@
     "ItemCdGroupTimeNotify.proto",
     "MPLevelEntityInfo.proto",
     "MapLayerInfo.proto",
+    "Material.proto",
     "MusicGameBookAllDataNotify.proto",
     "MusicGameThemeUnlockNotify.proto",
     "OpenStateChangeNotify.proto",
@@ -4156,6 +4166,7 @@
     "QuestGlobalVarNotify.proto",
     "QuestListNotify.proto",
     "RegionInfo.proto",
+    "Reliquary.proto",
     "ReliquaryOfferDataNotify.proto",
     "ResinChangeNotify.proto",
     "SceneAreaWeatherNotify.proto",
@@ -4187,6 +4198,7 @@
     "UnlockedFurnitureSuiteDataNotify.proto",
     "Vector.proto",
     "VisionType.proto",
+    "Weapon.proto",
     "WidgetGadgetAllDataNotify.proto",
     "WorldDataNotify.proto",
     "WorldPlayerInfoNotify.proto",
@@ -5569,6 +5581,11 @@
       "Client72EnterSceneNested.proto": {
         "package": "",
         "javaOuterClass": "Client72EnterSceneNestedOuterClass",
+        "imports": []
+      },
+      "Client72InventoryWire.proto": {
+        "package": "cn72.inventorywire",
+        "javaOuterClass": "Client72InventoryWireOuterClass",
         "imports": []
       },
       "Client72LoginNested.proto": {
@@ -9310,8 +9327,7 @@
         "package": "",
         "javaOuterClass": "PlayerStoreNotifyOuterClass",
         "imports": [
-          "Item.proto",
-          "StoreType.proto"
+          "Client72InventoryWire.proto"
         ]
       },
       "PlayerTimeNotify.proto": {
@@ -17877,6 +17893,106 @@
         "file": "_WispCageState.proto",
         "kind": "enum",
         "mapEntry": false
+      },
+      ".cn72.inventorywire.BNDIKNLDLOJ": {
+        "file": "Client72InventoryWire.proto",
+        "kind": "message",
+        "mapEntry": false
+      },
+      ".cn72.inventorywire.CAIHCNHAMHB": {
+        "file": "Client72InventoryWire.proto",
+        "kind": "message",
+        "mapEntry": false
+      },
+      ".cn72.inventorywire.DFPLPBLIEEK": {
+        "file": "Client72InventoryWire.proto",
+        "kind": "message",
+        "mapEntry": false
+      },
+      ".cn72.inventorywire.DFPLPBLIEEK.ALNBHHEJLKPEntry": {
+        "file": "Client72InventoryWire.proto",
+        "kind": "message",
+        "mapEntry": true
+      },
+      ".cn72.inventorywire.FNECPDFLEHN": {
+        "file": "Client72InventoryWire.proto",
+        "kind": "message",
+        "mapEntry": false
+      },
+      ".cn72.inventorywire.FNECPDFLEHN.JMGKMMFNABPEntry": {
+        "file": "Client72InventoryWire.proto",
+        "kind": "message",
+        "mapEntry": true
+      },
+      ".cn72.inventorywire.JBBEOMJDLFM": {
+        "file": "Client72InventoryWire.proto",
+        "kind": "message",
+        "mapEntry": false
+      },
+      ".cn72.inventorywire.JDDDHIGLMGJ": {
+        "file": "Client72InventoryWire.proto",
+        "kind": "message",
+        "mapEntry": false
+      },
+      ".cn72.inventorywire.JLAGHMMLDCA": {
+        "file": "Client72InventoryWire.proto",
+        "kind": "message",
+        "mapEntry": false
+      },
+      ".cn72.inventorywire.JLAGHMMLDCA.JMGKMMFNABPEntry": {
+        "file": "Client72InventoryWire.proto",
+        "kind": "message",
+        "mapEntry": true
+      },
+      ".cn72.inventorywire.JOPADICJMPJ": {
+        "file": "Client72InventoryWire.proto",
+        "kind": "message",
+        "mapEntry": false
+      },
+      ".cn72.inventorywire.KKOPHGDBCEO": {
+        "file": "Client72InventoryWire.proto",
+        "kind": "message",
+        "mapEntry": false
+      },
+      ".cn72.inventorywire.KNNPHAOJMAH": {
+        "file": "Client72InventoryWire.proto",
+        "kind": "message",
+        "mapEntry": false
+      },
+      ".cn72.inventorywire.MCBNNKGKJCI": {
+        "file": "Client72InventoryWire.proto",
+        "kind": "message",
+        "mapEntry": false
+      },
+      ".cn72.inventorywire.MCBNNKGKJCI.ALNBHHEJLKPEntry": {
+        "file": "Client72InventoryWire.proto",
+        "kind": "message",
+        "mapEntry": true
+      },
+      ".cn72.inventorywire.MIEKLLOFKOJ": {
+        "file": "Client72InventoryWire.proto",
+        "kind": "message",
+        "mapEntry": false
+      },
+      ".cn72.inventorywire.MKFCDFEEAAL": {
+        "file": "Client72InventoryWire.proto",
+        "kind": "message",
+        "mapEntry": false
+      },
+      ".cn72.inventorywire.NDGHFPMJFIM": {
+        "file": "Client72InventoryWire.proto",
+        "kind": "message",
+        "mapEntry": false
+      },
+      ".cn72.inventorywire.PEMOFGMDGHP": {
+        "file": "Client72InventoryWire.proto",
+        "kind": "message",
+        "mapEntry": false
+      },
+      ".cn72.inventorywire.PEMOFGMDGHP.ALNBHHEJLKPEntry": {
+        "file": "Client72InventoryWire.proto",
+        "kind": "message",
+        "mapEntry": true
       },
       ".recovered.p_AvatarWeaponSkin.AvatarWeaponSkin": {
         "file": "AvatarWeaponSkin.proto",
@@ -58200,10 +58316,10 @@
         "file": "PlayerStoreNotify.proto",
         "owner": ".PlayerStoreNotify",
         "name": "item_list",
-        "legacyTag": 6,
+        "legacyTag": 2,
         "type": "TYPE_MESSAGE",
         "label": "LABEL_REPEATED",
-        "typeName": ".Item",
+        "typeName": ".cn72.inventorywire.NDGHFPMJFIM",
         "oneofIndex": null,
         "explicitPacked": null,
         "proto3Optional": false
@@ -58211,23 +58327,23 @@
       {
         "file": "PlayerStoreNotify.proto",
         "owner": ".PlayerStoreNotify",
-        "name": "weight_limit",
-        "legacyTag": 9,
+        "name": "PAKLDABINMP",
+        "legacyTag": 8,
         "type": "TYPE_UINT32",
         "label": "LABEL_OPTIONAL",
         "typeName": null,
-        "oneofIndex": null,
+        "oneofIndex": 0,
         "explicitPacked": null,
-        "proto3Optional": false
+        "proto3Optional": true
       },
       {
         "file": "PlayerStoreNotify.proto",
         "owner": ".PlayerStoreNotify",
         "name": "store_type",
-        "legacyTag": 11,
-        "type": "TYPE_ENUM",
+        "legacyTag": 14,
+        "type": "TYPE_UINT32",
         "label": "LABEL_OPTIONAL",
-        "typeName": ".StoreType",
+        "typeName": null,
         "oneofIndex": null,
         "explicitPacked": null,
         "proto3Optional": false
@@ -75537,6 +75653,690 @@
         "proto3Optional": false
       },
       {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.BNDIKNLDLOJ",
+        "name": "FLPGMLOFAKP_1",
+        "legacyTag": 1,
+        "type": "TYPE_MESSAGE",
+        "label": "LABEL_OPTIONAL",
+        "typeName": ".cn72.inventorywire.JBBEOMJDLFM",
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.BNDIKNLDLOJ",
+        "name": "FLPGMLOFAKP_2",
+        "legacyTag": 2,
+        "type": "TYPE_MESSAGE",
+        "label": "LABEL_OPTIONAL",
+        "typeName": ".cn72.inventorywire.FNECPDFLEHN",
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.BNDIKNLDLOJ",
+        "name": "FAPABAJBMAK",
+        "legacyTag": 3,
+        "type": "TYPE_BOOL",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 1,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.CAIHCNHAMHB",
+        "name": "MBEEKCPJBEL",
+        "legacyTag": 2,
+        "type": "TYPE_MESSAGE",
+        "label": "LABEL_REPEATED",
+        "typeName": ".cn72.inventorywire.NDGHFPMJFIM",
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.CAIHCNHAMHB",
+        "name": "PAKLDABINMP",
+        "legacyTag": 8,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.CAIHCNHAMHB",
+        "name": "CLFJNKKFONI",
+        "legacyTag": 14,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 1,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.DFPLPBLIEEK",
+        "name": "ALNBHHEJLKP",
+        "legacyTag": 1,
+        "type": "TYPE_MESSAGE",
+        "label": "LABEL_REPEATED",
+        "typeName": ".cn72.inventorywire.DFPLPBLIEEK.ALNBHHEJLKPEntry",
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.DFPLPBLIEEK",
+        "name": "PGDAIKELICG",
+        "legacyTag": 2,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.DFPLPBLIEEK",
+        "name": "MNBPLFPCJLG",
+        "legacyTag": 3,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 1,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.DFPLPBLIEEK.ALNBHHEJLKPEntry",
+        "name": "key",
+        "legacyTag": 1,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.DFPLPBLIEEK.ALNBHHEJLKPEntry",
+        "name": "value",
+        "legacyTag": 2,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.FNECPDFLEHN",
+        "name": "NJAGFJINHMA",
+        "legacyTag": 1,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.FNECPDFLEHN",
+        "name": "NILMBAGDEAL",
+        "legacyTag": 2,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 1,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.FNECPDFLEHN",
+        "name": "KFDCBKBPPGL",
+        "legacyTag": 3,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 2,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.FNECPDFLEHN",
+        "name": "JMGKMMFNABP",
+        "legacyTag": 4,
+        "type": "TYPE_MESSAGE",
+        "label": "LABEL_REPEATED",
+        "typeName": ".cn72.inventorywire.FNECPDFLEHN.JMGKMMFNABPEntry",
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.FNECPDFLEHN",
+        "name": "MNCFEDPDEAG",
+        "legacyTag": 5,
+        "type": "TYPE_BOOL",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 3,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.FNECPDFLEHN",
+        "name": "FLGGIMBHFOO",
+        "legacyTag": 6,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_REPEATED",
+        "typeName": null,
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.FNECPDFLEHN.JMGKMMFNABPEntry",
+        "name": "key",
+        "legacyTag": 1,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.FNECPDFLEHN.JMGKMMFNABPEntry",
+        "name": "value",
+        "legacyTag": 2,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.JBBEOMJDLFM",
+        "name": "NJAGFJINHMA",
+        "legacyTag": 1,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.JBBEOMJDLFM",
+        "name": "NILMBAGDEAL",
+        "legacyTag": 2,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 1,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.JBBEOMJDLFM",
+        "name": "KFDCBKBPPGL",
+        "legacyTag": 3,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 2,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.JBBEOMJDLFM",
+        "name": "OJDKGGHBKKK",
+        "legacyTag": 4,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 3,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.JBBEOMJDLFM",
+        "name": "FOFCJMPCEBB",
+        "legacyTag": 5,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_REPEATED",
+        "typeName": null,
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.JBBEOMJDLFM",
+        "name": "CGKIGPFDFOF",
+        "legacyTag": 6,
+        "type": "TYPE_BOOL",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 4,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.JBBEOMJDLFM",
+        "name": "IMEGOOADEBF",
+        "legacyTag": 7,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_REPEATED",
+        "typeName": null,
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.JBBEOMJDLFM",
+        "name": "IHKPPDPBEML",
+        "legacyTag": 8,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_REPEATED",
+        "typeName": null,
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.JDDDHIGLMGJ",
+        "name": "IJPBJCNCDEC",
+        "legacyTag": 1,
+        "type": "TYPE_BOOL",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 1,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.JDDDHIGLMGJ",
+        "name": "PNGOHOKGKHP_2",
+        "legacyTag": 2,
+        "type": "TYPE_MESSAGE",
+        "label": "LABEL_OPTIONAL",
+        "typeName": ".cn72.inventorywire.PEMOFGMDGHP",
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.JDDDHIGLMGJ",
+        "name": "PNGOHOKGKHP_3",
+        "legacyTag": 3,
+        "type": "TYPE_MESSAGE",
+        "label": "LABEL_OPTIONAL",
+        "typeName": ".cn72.inventorywire.KNNPHAOJMAH",
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.JDDDHIGLMGJ",
+        "name": "PNGOHOKGKHP_4",
+        "legacyTag": 4,
+        "type": "TYPE_MESSAGE",
+        "label": "LABEL_OPTIONAL",
+        "typeName": ".cn72.inventorywire.DFPLPBLIEEK",
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.JLAGHMMLDCA",
+        "name": "EIBDIEHEAKF",
+        "legacyTag": 2,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_REPEATED",
+        "typeName": null,
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.JLAGHMMLDCA",
+        "name": "JMGKMMFNABP",
+        "legacyTag": 3,
+        "type": "TYPE_MESSAGE",
+        "label": "LABEL_REPEATED",
+        "typeName": ".cn72.inventorywire.JLAGHMMLDCA.JMGKMMFNABPEntry",
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.JLAGHMMLDCA.JMGKMMFNABPEntry",
+        "name": "key",
+        "legacyTag": 1,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.JLAGHMMLDCA.JMGKMMFNABPEntry",
+        "name": "value",
+        "legacyTag": 2,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.JOPADICJMPJ",
+        "name": "GNHFNECPAHD",
+        "legacyTag": 1,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.KKOPHGDBCEO",
+        "name": "GNHFNECPAHD",
+        "legacyTag": 1,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.KKOPHGDBCEO",
+        "name": "PNGOHOKGKHP",
+        "legacyTag": 2,
+        "type": "TYPE_MESSAGE",
+        "label": "LABEL_OPTIONAL",
+        "typeName": ".cn72.inventorywire.JDDDHIGLMGJ",
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.KNNPHAOJMAH",
+        "name": "BHOHKJOCNOL",
+        "legacyTag": 1,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.MCBNNKGKJCI",
+        "name": "ALNBHHEJLKP",
+        "legacyTag": 1,
+        "type": "TYPE_MESSAGE",
+        "label": "LABEL_REPEATED",
+        "typeName": ".cn72.inventorywire.MCBNNKGKJCI.ALNBHHEJLKPEntry",
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.MCBNNKGKJCI.ALNBHHEJLKPEntry",
+        "name": "key",
+        "legacyTag": 1,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.MCBNNKGKJCI.ALNBHHEJLKPEntry",
+        "name": "value",
+        "legacyTag": 2,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.MIEKLLOFKOJ",
+        "name": "GNHFNECPAHD",
+        "legacyTag": 1,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.MKFCDFEEAAL",
+        "name": "GNHFNECPAHD",
+        "legacyTag": 1,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.MKFCDFEEAAL",
+        "name": "PNGOHOKGKHP",
+        "legacyTag": 2,
+        "type": "TYPE_MESSAGE",
+        "label": "LABEL_OPTIONAL",
+        "typeName": ".cn72.inventorywire.MCBNNKGKJCI",
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.NDGHFPMJFIM",
+        "name": "PJAGIOHBKLD",
+        "legacyTag": 1,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 1,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.NDGHFPMJFIM",
+        "name": "FBLKPHOCBIK",
+        "legacyTag": 2,
+        "type": "TYPE_UINT64",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 2,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.NDGHFPMJFIM",
+        "name": "FLPGMLOFAKP_5",
+        "legacyTag": 5,
+        "type": "TYPE_MESSAGE",
+        "label": "LABEL_OPTIONAL",
+        "typeName": ".cn72.inventorywire.KKOPHGDBCEO",
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.NDGHFPMJFIM",
+        "name": "FLPGMLOFAKP_6",
+        "legacyTag": 6,
+        "type": "TYPE_MESSAGE",
+        "label": "LABEL_OPTIONAL",
+        "typeName": ".cn72.inventorywire.BNDIKNLDLOJ",
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.NDGHFPMJFIM",
+        "name": "FLPGMLOFAKP_7",
+        "legacyTag": 7,
+        "type": "TYPE_MESSAGE",
+        "label": "LABEL_OPTIONAL",
+        "typeName": ".cn72.inventorywire.JOPADICJMPJ",
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.NDGHFPMJFIM",
+        "name": "FLPGMLOFAKP_8",
+        "legacyTag": 8,
+        "type": "TYPE_MESSAGE",
+        "label": "LABEL_OPTIONAL",
+        "typeName": ".cn72.inventorywire.MKFCDFEEAAL",
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.NDGHFPMJFIM",
+        "name": "FLPGMLOFAKP_9",
+        "legacyTag": 9,
+        "type": "TYPE_MESSAGE",
+        "label": "LABEL_OPTIONAL",
+        "typeName": ".cn72.inventorywire.MIEKLLOFKOJ",
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.NDGHFPMJFIM",
+        "name": "FLPGMLOFAKP_10",
+        "legacyTag": 10,
+        "type": "TYPE_MESSAGE",
+        "label": "LABEL_OPTIONAL",
+        "typeName": ".cn72.inventorywire.JLAGHMMLDCA",
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.PEMOFGMDGHP",
+        "name": "ALNBHHEJLKP",
+        "legacyTag": 1,
+        "type": "TYPE_MESSAGE",
+        "label": "LABEL_REPEATED",
+        "typeName": ".cn72.inventorywire.PEMOFGMDGHP.ALNBHHEJLKPEntry",
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.PEMOFGMDGHP",
+        "name": "MNBPLFPCJLG",
+        "legacyTag": 2,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": true
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.PEMOFGMDGHP.ALNBHHEJLKPEntry",
+        "name": "key",
+        "legacyTag": 1,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72InventoryWire.proto",
+        "owner": ".cn72.inventorywire.PEMOFGMDGHP.ALNBHHEJLKPEntry",
+        "name": "value",
+        "legacyTag": 2,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
         "file": "AvatarWeaponSkin.proto",
         "owner": ".recovered.p_AvatarWeaponSkin.AvatarWeaponSkin",
         "name": "expire_time",
@@ -81509,7 +82309,7 @@
         "legacyValue": 3
       }
     ],
-    "descriptorSHA256": "12ec2daa4abaf7de2857655e55a65bc063e09c221f867cf81d42a32fd7e61177",
+    "descriptorSHA256": "2cc57bb7982a8d12d02ceb7f9a0de91198a585d8f2671948f528998fa116112b",
     "protocVersion": "libprotoc 3.18.1",
     "warningCount": 0
   },
@@ -82681,6 +83481,49 @@
       "targetCommandBindings": []
     },
     {
+      "legacyName": "Client72InventoryWire",
+      "sourceOrigins": [
+        "PacketPlayerStoreNotify"
+      ],
+      "sourceNameIsTargetEvidence": false,
+      "layers": {
+        "opcodes": {
+          "semanticName": "Client72InventoryWire",
+          "status": "unresolved",
+          "evidence": [],
+          "ambiguities": [
+            "No CN72 evidence row; legacy type/name is not a target mapping"
+          ]
+        },
+        "messages": {
+          "semanticName": "Client72InventoryWire",
+          "status": "unresolved",
+          "evidence": [],
+          "ambiguities": [
+            "No CN72 evidence row; legacy type/name is not a target mapping"
+          ]
+        },
+        "schemas": {
+          "semanticName": "Client72InventoryWire",
+          "status": "unresolved",
+          "evidence": [],
+          "ambiguities": [
+            "No CN72 evidence row; legacy type/name is not a target mapping"
+          ]
+        }
+      },
+      "fieldStatusCounts": {},
+      "gaps": [
+        "opcodes: identity/semantics/wire not fully verified",
+        "messages: identity/semantics/wire not fully verified",
+        "schemas: identity/semantics/wire not fully verified",
+        "schemas: no field evidence; this does not prove an empty target message",
+        "runtime: no actual CN72 client sequence acceptance"
+      ],
+      "targetProtocolReady": false,
+      "targetCommandBindings": []
+    },
+    {
       "legacyName": "Client72LoginNested",
       "sourceOrigins": [
         "PacketPlayerLoginRsp"
@@ -83824,6 +84667,141 @@
         "messages: identity/semantics/wire not fully verified",
         "schemas: identity/semantics/wire not fully verified",
         "schemas: no field evidence; this does not prove an empty target message",
+        "runtime: no actual CN72 client sequence acceptance"
+      ],
+      "targetProtocolReady": false,
+      "targetCommandBindings": []
+    },
+    {
+      "legacyName": "Equip",
+      "sourceOrigins": [
+        "verified target nested dependency: Item/equip; no runtime necessity claim"
+      ],
+      "sourceNameIsTargetEvidence": false,
+      "layers": {
+        "opcodes": {
+          "semanticName": "Equip",
+          "status": "verified",
+          "clientType": "BNDIKNLDLOJ",
+          "ambiguities": [],
+          "evidence": [
+            "inventory-equip-embedded"
+          ],
+          "verificationScope": "Inferred native inventory/equip purpose alias; no recovered English spelling or client acceptance",
+          "cmdId": null
+        },
+        "messages": {
+          "semanticName": "Equip",
+          "status": "verified",
+          "clientType": "BNDIKNLDLOJ",
+          "ambiguities": [],
+          "evidence": [
+            "inventory-equip-identity"
+          ],
+          "verificationScope": "Inferred native inventory/equip purpose alias; no recovered English spelling or client acceptance",
+          "direction": "embedded",
+          "aliases": [],
+          "runtimeStatus": "not-tested",
+          "semanticNameBasis": "inferred-native-purpose"
+        },
+        "schemas": {
+          "semanticName": "Equip",
+          "status": "verified",
+          "fields": [
+            {
+              "clientField": "FAPABAJBMAK",
+              "objectOffset": 32,
+              "tag": 3,
+              "type": "bool",
+              "cardinality": "singular",
+              "acceptedWireTypes": [
+                0
+              ],
+              "semanticField": "is_locked",
+              "status": "verified",
+              "evidence": [
+                "inventory-wire",
+                "inventory-equip-fields"
+              ],
+              "ambiguities": [],
+              "packed": false,
+              "presence": "implicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "applicationEncoding": {
+                "wireFalseToModel": 1,
+                "wireTrueToModel": 2,
+                "targetEnumType": 85101
+              }
+            },
+            {
+              "clientField": "FLPGMLOFAKP_1",
+              "objectOffset": 24,
+              "tag": 1,
+              "type": "message",
+              "cardinality": "singular",
+              "nestedTypeIndex": 74063,
+              "oneof": "raw_detail",
+              "discriminatorOffset": 36,
+              "discriminatorValue": 1,
+              "acceptedWireTypes": [
+                2
+              ],
+              "semanticField": "reliquary",
+              "status": "verified",
+              "evidence": [
+                "inventory-wire",
+                "inventory-equip-fields"
+              ],
+              "ambiguities": [],
+              "packed": false,
+              "presence": "oneof",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "clientNestedType": "JBBEOMJDLFM",
+              "nestedType": "Reliquary"
+            },
+            {
+              "clientField": "FLPGMLOFAKP_2",
+              "objectOffset": 24,
+              "tag": 2,
+              "type": "message",
+              "cardinality": "singular",
+              "nestedTypeIndex": 64947,
+              "oneof": "raw_detail",
+              "discriminatorOffset": 36,
+              "discriminatorValue": 2,
+              "acceptedWireTypes": [
+                2
+              ],
+              "semanticField": "weapon",
+              "status": "verified",
+              "evidence": [
+                "inventory-wire",
+                "inventory-equip-fields"
+              ],
+              "ambiguities": [],
+              "packed": false,
+              "presence": "oneof",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "clientNestedType": "FNECPDFLEHN",
+              "nestedType": "Weapon"
+            }
+          ],
+          "evidence": [
+            "inventory-wire",
+            "inventory-material-fields",
+            "inventory-equip-fields"
+          ],
+          "ambiguities": [],
+          "verificationScope": "Complete selected raw schema; only bounded native field meanings approved; no live acceptance"
+        }
+      },
+      "fieldStatusCounts": {
+        "verified": 3
+      },
+      "gaps": [
         "runtime: no actual CN72 client sequence acceptance"
       ],
       "targetProtocolReady": false,
@@ -86053,41 +87031,262 @@
     {
       "legacyName": "Item",
       "sourceOrigins": [
-        "PacketPlayerStoreNotify"
+        "verified target nested dependency: PlayerStoreNotify/item_list; no runtime necessity claim"
       ],
       "sourceNameIsTargetEvidence": false,
       "layers": {
         "opcodes": {
           "semanticName": "Item",
-          "status": "unresolved",
-          "evidence": [],
-          "ambiguities": [
-            "No CN72 evidence row; legacy type/name is not a target mapping"
-          ]
+          "status": "verified",
+          "clientType": "NDGHFPMJFIM",
+          "ambiguities": [],
+          "evidence": [
+            "inventory-item-embedded"
+          ],
+          "verificationScope": "Inferred native inventory/equip purpose alias; no recovered English spelling or client acceptance",
+          "cmdId": null
         },
         "messages": {
           "semanticName": "Item",
-          "status": "unresolved",
-          "evidence": [],
-          "ambiguities": [
-            "No CN72 evidence row; legacy type/name is not a target mapping"
-          ]
+          "status": "verified",
+          "clientType": "NDGHFPMJFIM",
+          "ambiguities": [],
+          "evidence": [
+            "inventory-item-identity"
+          ],
+          "verificationScope": "Inferred native inventory/equip purpose alias; no recovered English spelling or client acceptance",
+          "direction": "embedded",
+          "aliases": [],
+          "runtimeStatus": "not-tested",
+          "semanticNameBasis": "inferred-native-purpose"
         },
         "schemas": {
           "semanticName": "Item",
-          "status": "unresolved",
-          "evidence": [],
+          "status": "candidate",
+          "fields": [
+            {
+              "clientField": "PJAGIOHBKLD",
+              "objectOffset": 40,
+              "tag": 1,
+              "type": "uint32",
+              "cardinality": "singular",
+              "acceptedWireTypes": [
+                0
+              ],
+              "semanticField": "item_id",
+              "status": "verified",
+              "evidence": [
+                "inventory-wire",
+                "inventory-material-fields"
+              ],
+              "ambiguities": [],
+              "packed": false,
+              "presence": "implicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested"
+            },
+            {
+              "clientField": "FBLKPHOCBIK",
+              "objectOffset": 32,
+              "tag": 2,
+              "type": "uint64",
+              "cardinality": "singular",
+              "acceptedWireTypes": [
+                0
+              ],
+              "semanticField": "guid",
+              "status": "verified",
+              "evidence": [
+                "inventory-wire",
+                "inventory-material-fields"
+              ],
+              "ambiguities": [],
+              "packed": false,
+              "presence": "implicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested"
+            },
+            {
+              "clientField": "FLPGMLOFAKP_5",
+              "objectOffset": 24,
+              "tag": 5,
+              "type": "message",
+              "cardinality": "singular",
+              "nestedTypeIndex": 63442,
+              "oneof": "raw_detail",
+              "discriminatorOffset": 44,
+              "discriminatorValue": 5,
+              "acceptedWireTypes": [
+                2
+              ],
+              "semanticField": "material",
+              "status": "verified",
+              "evidence": [
+                "inventory-wire",
+                "inventory-material-fields"
+              ],
+              "ambiguities": [],
+              "packed": false,
+              "presence": "oneof",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "clientNestedType": "KKOPHGDBCEO",
+              "nestedType": "Material"
+            },
+            {
+              "clientField": "FLPGMLOFAKP_6",
+              "objectOffset": 24,
+              "tag": 6,
+              "type": "message",
+              "cardinality": "singular",
+              "nestedTypeIndex": 44169,
+              "oneof": "raw_detail",
+              "discriminatorOffset": 44,
+              "discriminatorValue": 6,
+              "acceptedWireTypes": [
+                2
+              ],
+              "semanticField": "equip",
+              "status": "verified",
+              "evidence": [
+                "inventory-wire",
+                "inventory-equip-fields"
+              ],
+              "ambiguities": [],
+              "packed": false,
+              "presence": "oneof",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "clientNestedType": "BNDIKNLDLOJ",
+              "nestedType": "Equip"
+            },
+            {
+              "clientField": "FLPGMLOFAKP_7",
+              "objectOffset": 24,
+              "tag": 7,
+              "type": "message",
+              "cardinality": "singular",
+              "nestedTypeIndex": 51247,
+              "oneof": "raw_detail",
+              "discriminatorOffset": 44,
+              "discriminatorValue": 7,
+              "acceptedWireTypes": [
+                2
+              ],
+              "semanticField": "unknown_field_7",
+              "status": "unresolved",
+              "evidence": [
+                "inventory-wire"
+              ],
+              "ambiguities": [
+                "Business meaning unresolved"
+              ],
+              "packed": false,
+              "presence": "oneof",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "clientNestedType": "JOPADICJMPJ"
+            },
+            {
+              "clientField": "FLPGMLOFAKP_8",
+              "objectOffset": 24,
+              "tag": 8,
+              "type": "message",
+              "cardinality": "singular",
+              "nestedTypeIndex": 63899,
+              "oneof": "raw_detail",
+              "discriminatorOffset": 44,
+              "discriminatorValue": 8,
+              "acceptedWireTypes": [
+                2
+              ],
+              "semanticField": "unknown_field_8",
+              "status": "unresolved",
+              "evidence": [
+                "inventory-wire"
+              ],
+              "ambiguities": [
+                "Business meaning unresolved"
+              ],
+              "packed": false,
+              "presence": "oneof",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "clientNestedType": "MKFCDFEEAAL"
+            },
+            {
+              "clientField": "FLPGMLOFAKP_9",
+              "objectOffset": 24,
+              "tag": 9,
+              "type": "message",
+              "cardinality": "singular",
+              "nestedTypeIndex": 40274,
+              "oneof": "raw_detail",
+              "discriminatorOffset": 44,
+              "discriminatorValue": 9,
+              "acceptedWireTypes": [
+                2
+              ],
+              "semanticField": "unknown_field_9",
+              "status": "unresolved",
+              "evidence": [
+                "inventory-wire"
+              ],
+              "ambiguities": [
+                "Business meaning unresolved"
+              ],
+              "packed": false,
+              "presence": "oneof",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "clientNestedType": "MIEKLLOFKOJ"
+            },
+            {
+              "clientField": "FLPGMLOFAKP_10",
+              "objectOffset": 24,
+              "tag": 10,
+              "type": "message",
+              "cardinality": "singular",
+              "nestedTypeIndex": 14095,
+              "oneof": "raw_detail",
+              "discriminatorOffset": 44,
+              "discriminatorValue": 10,
+              "acceptedWireTypes": [
+                2
+              ],
+              "semanticField": "unknown_field_10",
+              "status": "unresolved",
+              "evidence": [
+                "inventory-wire"
+              ],
+              "ambiguities": [
+                "Business meaning unresolved"
+              ],
+              "packed": false,
+              "presence": "oneof",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "clientNestedType": "JLAGHMMLDCA"
+            }
+          ],
+          "evidence": [
+            "inventory-wire",
+            "inventory-material-fields",
+            "inventory-equip-fields"
+          ],
           "ambiguities": [
-            "No CN72 evidence row; legacy type/name is not a target mapping"
-          ]
+            "Unconsumed raw business fields remain unresolved"
+          ],
+          "verificationScope": "Complete selected raw schema; only bounded native field meanings approved; no live acceptance"
         }
       },
-      "fieldStatusCounts": {},
+      "fieldStatusCounts": {
+        "unresolved": 4,
+        "verified": 4
+      },
       "gaps": [
-        "opcodes: identity/semantics/wire not fully verified",
-        "messages: identity/semantics/wire not fully verified",
         "schemas: identity/semantics/wire not fully verified",
-        "schemas: no field evidence; this does not prove an empty target message",
+        "schemas: unresolved or candidate business fields remain",
         "runtime: no actual CN72 client sequence acceptance"
       ],
       "targetProtocolReady": false,
@@ -86260,6 +87459,111 @@
         "messages: identity/semantics/wire not fully verified",
         "schemas: identity/semantics/wire not fully verified",
         "schemas: no field evidence; this does not prove an empty target message",
+        "runtime: no actual CN72 client sequence acceptance"
+      ],
+      "targetProtocolReady": false,
+      "targetCommandBindings": []
+    },
+    {
+      "legacyName": "Material",
+      "sourceOrigins": [
+        "verified target nested dependency: Item/material; no runtime necessity claim"
+      ],
+      "sourceNameIsTargetEvidence": false,
+      "layers": {
+        "opcodes": {
+          "semanticName": "Material",
+          "status": "verified",
+          "clientType": "KKOPHGDBCEO",
+          "ambiguities": [],
+          "evidence": [
+            "inventory-material-embedded"
+          ],
+          "verificationScope": "Inferred native inventory/equip purpose alias; no recovered English spelling or client acceptance",
+          "cmdId": null
+        },
+        "messages": {
+          "semanticName": "Material",
+          "status": "verified",
+          "clientType": "KKOPHGDBCEO",
+          "ambiguities": [],
+          "evidence": [
+            "inventory-material-identity"
+          ],
+          "verificationScope": "Inferred native inventory/equip purpose alias; no recovered English spelling or client acceptance",
+          "direction": "embedded",
+          "aliases": [],
+          "runtimeStatus": "not-tested",
+          "semanticNameBasis": "inferred-native-purpose"
+        },
+        "schemas": {
+          "semanticName": "Material",
+          "status": "candidate",
+          "fields": [
+            {
+              "clientField": "GNHFNECPAHD",
+              "objectOffset": 32,
+              "tag": 1,
+              "type": "uint32",
+              "cardinality": "singular",
+              "acceptedWireTypes": [
+                0
+              ],
+              "semanticField": "count",
+              "status": "verified",
+              "evidence": [
+                "inventory-wire",
+                "inventory-material-fields"
+              ],
+              "ambiguities": [],
+              "packed": false,
+              "presence": "implicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested"
+            },
+            {
+              "clientField": "PNGOHOKGKHP",
+              "objectOffset": 24,
+              "tag": 2,
+              "type": "message",
+              "cardinality": "singular",
+              "nestedTypeIndex": 28471,
+              "acceptedWireTypes": [
+                2
+              ],
+              "semanticField": "unknown_field_2",
+              "status": "unresolved",
+              "evidence": [
+                "inventory-wire"
+              ],
+              "ambiguities": [
+                "Business meaning unresolved"
+              ],
+              "packed": false,
+              "presence": "explicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "clientNestedType": "JDDDHIGLMGJ"
+            }
+          ],
+          "evidence": [
+            "inventory-wire",
+            "inventory-material-fields",
+            "inventory-equip-fields"
+          ],
+          "ambiguities": [
+            "Unconsumed raw business fields remain unresolved"
+          ],
+          "verificationScope": "Complete selected raw schema; only bounded native field meanings approved; no live acceptance"
+        }
+      },
+      "fieldStatusCounts": {
+        "unresolved": 1,
+        "verified": 1
+      },
+      "gaps": [
+        "schemas: identity/semantics/wire not fully verified",
+        "schemas: unresolved or candidate business fields remain",
         "runtime: no actual CN72 client sequence acceptance"
       ],
       "targetProtocolReady": false,
@@ -90167,40 +91471,136 @@
       "layers": {
         "opcodes": {
           "semanticName": "PlayerStoreNotify",
-          "status": "unresolved",
-          "evidence": [],
+          "status": "verified",
+          "evidence": [
+            "inventory-command"
+          ],
           "ambiguities": [],
-          "clientType": null,
-          "cmdId": null
+          "clientType": "CAIHCNHAMHB",
+          "cmdId": 20892,
+          "verificationScope": "Inferred native inventory/equip purpose alias; no recovered English spelling or client acceptance"
         },
         "messages": {
           "semanticName": "PlayerStoreNotify",
-          "status": "unresolved",
-          "evidence": [],
+          "status": "verified",
+          "evidence": [
+            "inventory-identity"
+          ],
           "ambiguities": [],
-          "clientType": null,
+          "clientType": "CAIHCNHAMHB",
           "direction": "S2C",
           "aliases": [],
-          "runtimeStatus": "not-tested"
+          "runtimeStatus": "not-tested",
+          "verificationScope": "Inferred native inventory/equip purpose alias; no recovered English spelling or client acceptance",
+          "semanticNameBasis": "inferred-native-purpose"
         },
         "schemas": {
           "semanticName": "PlayerStoreNotify",
-          "status": "unresolved",
-          "evidence": [],
-          "ambiguities": [],
-          "fields": []
+          "status": "candidate",
+          "evidence": [
+            "inventory-wire",
+            "inventory-material-fields",
+            "inventory-equip-fields"
+          ],
+          "ambiguities": [
+            "Unconsumed raw business fields remain unresolved"
+          ],
+          "fields": [
+            {
+              "clientField": "MBEEKCPJBEL",
+              "objectOffset": 24,
+              "tag": 2,
+              "type": "message",
+              "cardinality": "repeated",
+              "nestedTypeIndex": 65333,
+              "acceptedWireTypes": [
+                2
+              ],
+              "semanticField": "item_list",
+              "status": "verified",
+              "evidence": [
+                "inventory-wire",
+                "inventory-material-fields"
+              ],
+              "ambiguities": [],
+              "packed": false,
+              "presence": "implicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "clientNestedType": "NDGHFPMJFIM",
+              "nestedType": "Item"
+            },
+            {
+              "clientField": "PAKLDABINMP",
+              "objectOffset": 32,
+              "tag": 8,
+              "type": "uint32",
+              "cardinality": "singular",
+              "acceptedWireTypes": [
+                0
+              ],
+              "semanticField": "unknown_field_8",
+              "status": "unresolved",
+              "evidence": [
+                "inventory-wire"
+              ],
+              "ambiguities": [
+                "Business meaning unresolved"
+              ],
+              "packed": false,
+              "presence": "implicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested"
+            },
+            {
+              "clientField": "CLFJNKKFONI",
+              "objectOffset": 36,
+              "tag": 14,
+              "type": "uint32",
+              "cardinality": "singular",
+              "acceptedWireTypes": [
+                0
+              ],
+              "semanticField": "store_type",
+              "status": "verified",
+              "evidence": [
+                "inventory-wire",
+                "inventory-material-fields"
+              ],
+              "ambiguities": [],
+              "packed": false,
+              "presence": "implicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "applicationEnumValues": {
+                "StoreNone": 0,
+                "StorePack": 1,
+                "StoreDepot": 2
+              }
+            }
+          ],
+          "verificationScope": "Complete selected raw schema; only bounded native field meanings approved; no live acceptance"
         }
       },
-      "fieldStatusCounts": {},
+      "fieldStatusCounts": {
+        "unresolved": 1,
+        "verified": 2
+      },
       "gaps": [
-        "opcodes: identity/semantics/wire not fully verified",
-        "messages: identity/semantics/wire not fully verified",
         "schemas: identity/semantics/wire not fully verified",
-        "schemas: no field evidence; this does not prove an empty target message",
+        "schemas: unresolved or candidate business fields remain",
         "runtime: no actual CN72 client sequence acceptance"
       ],
       "targetProtocolReady": false,
-      "targetCommandBindings": []
+      "targetCommandBindings": [
+        {
+          "typeIndex": 68537,
+          "clientType": "CAIHCNHAMHB",
+          "cmdId": 20892,
+          "getter": "0x149420040",
+          "methodIndex": 567152
+        }
+      ]
     },
     {
       "legacyName": "PlayerTimeNotify",
@@ -91071,6 +92471,248 @@
         "messages: identity/semantics/wire not fully verified",
         "schemas: identity/semantics/wire not fully verified",
         "schemas: no field evidence; this does not prove an empty target message",
+        "runtime: no actual CN72 client sequence acceptance"
+      ],
+      "targetProtocolReady": false,
+      "targetCommandBindings": []
+    },
+    {
+      "legacyName": "Reliquary",
+      "sourceOrigins": [
+        "verified target nested dependency: Equip/reliquary; no runtime necessity claim"
+      ],
+      "sourceNameIsTargetEvidence": false,
+      "layers": {
+        "opcodes": {
+          "semanticName": "Reliquary",
+          "status": "verified",
+          "clientType": "JBBEOMJDLFM",
+          "ambiguities": [],
+          "evidence": [
+            "inventory-reliquary-embedded"
+          ],
+          "verificationScope": "Inferred native inventory/equip purpose alias; no recovered English spelling or client acceptance",
+          "cmdId": null
+        },
+        "messages": {
+          "semanticName": "Reliquary",
+          "status": "verified",
+          "clientType": "JBBEOMJDLFM",
+          "ambiguities": [],
+          "evidence": [
+            "inventory-reliquary-identity"
+          ],
+          "verificationScope": "Inferred native inventory/equip purpose alias; no recovered English spelling or client acceptance",
+          "direction": "embedded",
+          "aliases": [],
+          "runtimeStatus": "not-tested",
+          "semanticNameBasis": "inferred-native-purpose"
+        },
+        "schemas": {
+          "semanticName": "Reliquary",
+          "status": "candidate",
+          "fields": [
+            {
+              "clientField": "FOFCJMPCEBB",
+              "objectOffset": 24,
+              "type": "uint32",
+              "cardinality": "repeated",
+              "packed": true,
+              "tag": 5,
+              "acceptedWireTypes": [
+                0,
+                2
+              ],
+              "semanticField": "unknown_field_5",
+              "status": "unresolved",
+              "evidence": [
+                "inventory-wire"
+              ],
+              "ambiguities": [
+                "Business meaning unresolved"
+              ],
+              "presence": "implicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested"
+            },
+            {
+              "clientField": "IMEGOOADEBF",
+              "objectOffset": 32,
+              "type": "uint32",
+              "cardinality": "repeated",
+              "packed": true,
+              "tag": 7,
+              "acceptedWireTypes": [
+                0,
+                2
+              ],
+              "semanticField": "unknown_field_7",
+              "status": "unresolved",
+              "evidence": [
+                "inventory-wire"
+              ],
+              "ambiguities": [
+                "Business meaning unresolved"
+              ],
+              "presence": "implicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested"
+            },
+            {
+              "clientField": "IHKPPDPBEML",
+              "objectOffset": 40,
+              "type": "uint32",
+              "cardinality": "repeated",
+              "packed": true,
+              "tag": 8,
+              "acceptedWireTypes": [
+                0,
+                2
+              ],
+              "semanticField": "unknown_field_8",
+              "status": "unresolved",
+              "evidence": [
+                "inventory-wire"
+              ],
+              "ambiguities": [
+                "Business meaning unresolved"
+              ],
+              "presence": "implicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested"
+            },
+            {
+              "clientField": "KFDCBKBPPGL",
+              "objectOffset": 48,
+              "type": "uint32",
+              "cardinality": "singular",
+              "tag": 3,
+              "acceptedWireTypes": [
+                0
+              ],
+              "semanticField": "unknown_field_3",
+              "status": "unresolved",
+              "evidence": [
+                "inventory-wire"
+              ],
+              "ambiguities": [
+                "Business meaning unresolved"
+              ],
+              "packed": false,
+              "presence": "implicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested"
+            },
+            {
+              "clientField": "OJDKGGHBKKK",
+              "objectOffset": 52,
+              "type": "uint32",
+              "cardinality": "singular",
+              "tag": 4,
+              "acceptedWireTypes": [
+                0
+              ],
+              "semanticField": "unknown_field_4",
+              "status": "unresolved",
+              "evidence": [
+                "inventory-wire"
+              ],
+              "ambiguities": [
+                "Business meaning unresolved"
+              ],
+              "packed": false,
+              "presence": "implicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested"
+            },
+            {
+              "clientField": "NILMBAGDEAL",
+              "objectOffset": 56,
+              "type": "uint32",
+              "cardinality": "singular",
+              "tag": 2,
+              "acceptedWireTypes": [
+                0
+              ],
+              "semanticField": "unknown_field_2",
+              "status": "unresolved",
+              "evidence": [
+                "inventory-wire"
+              ],
+              "ambiguities": [
+                "Business meaning unresolved"
+              ],
+              "packed": false,
+              "presence": "implicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested"
+            },
+            {
+              "clientField": "CGKIGPFDFOF",
+              "objectOffset": 60,
+              "type": "bool",
+              "cardinality": "singular",
+              "tag": 6,
+              "acceptedWireTypes": [
+                0
+              ],
+              "semanticField": "is_star",
+              "status": "verified",
+              "evidence": [
+                "inventory-wire",
+                "inventory-equip-fields"
+              ],
+              "ambiguities": [],
+              "packed": false,
+              "presence": "implicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "applicationEncoding": {
+                "wireFalseToModel": 1,
+                "wireTrueToModel": 2,
+                "targetEnumType": 73539
+              }
+            },
+            {
+              "clientField": "NJAGFJINHMA",
+              "objectOffset": 64,
+              "type": "uint32",
+              "cardinality": "singular",
+              "tag": 1,
+              "acceptedWireTypes": [
+                0
+              ],
+              "semanticField": "level",
+              "status": "verified",
+              "evidence": [
+                "inventory-wire",
+                "inventory-equip-fields"
+              ],
+              "ambiguities": [],
+              "packed": false,
+              "presence": "implicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested"
+            }
+          ],
+          "evidence": [
+            "inventory-wire",
+            "inventory-material-fields",
+            "inventory-equip-fields"
+          ],
+          "ambiguities": [
+            "Unconsumed raw business fields remain unresolved"
+          ],
+          "verificationScope": "Complete selected raw schema; only bounded native field meanings approved; no live acceptance"
+        }
+      },
+      "fieldStatusCounts": {
+        "unresolved": 6,
+        "verified": 2
+      },
+      "gaps": [
+        "schemas: identity/semantics/wire not fully verified",
+        "schemas: unresolved or candidate business fields remain",
         "runtime: no actual CN72 client sequence acceptance"
       ],
       "targetProtocolReady": false,
@@ -92859,6 +94501,197 @@
       "targetCommandBindings": []
     },
     {
+      "legacyName": "Weapon",
+      "sourceOrigins": [
+        "verified target nested dependency: Equip/weapon; no runtime necessity claim"
+      ],
+      "sourceNameIsTargetEvidence": false,
+      "layers": {
+        "opcodes": {
+          "semanticName": "Weapon",
+          "status": "verified",
+          "clientType": "FNECPDFLEHN",
+          "ambiguities": [],
+          "evidence": [
+            "inventory-weapon-embedded"
+          ],
+          "verificationScope": "Inferred native inventory/equip purpose alias; no recovered English spelling or client acceptance",
+          "cmdId": null
+        },
+        "messages": {
+          "semanticName": "Weapon",
+          "status": "verified",
+          "clientType": "FNECPDFLEHN",
+          "ambiguities": [],
+          "evidence": [
+            "inventory-weapon-identity"
+          ],
+          "verificationScope": "Inferred native inventory/equip purpose alias; no recovered English spelling or client acceptance",
+          "direction": "embedded",
+          "aliases": [],
+          "runtimeStatus": "not-tested",
+          "semanticNameBasis": "inferred-native-purpose"
+        },
+        "schemas": {
+          "semanticName": "Weapon",
+          "status": "candidate",
+          "fields": [
+            {
+              "clientField": "JMGKMMFNABP",
+              "objectOffset": 24,
+              "type": "map",
+              "cardinality": "map",
+              "keyType": "uint32",
+              "valueType": "uint32",
+              "tag": 4,
+              "acceptedWireTypes": [
+                2
+              ],
+              "semanticField": "affix_map",
+              "status": "verified",
+              "evidence": [
+                "inventory-wire",
+                "inventory-equip-fields"
+              ],
+              "ambiguities": [],
+              "packed": false,
+              "presence": "implicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested"
+            },
+            {
+              "clientField": "FLGGIMBHFOO",
+              "objectOffset": 32,
+              "type": "uint32",
+              "cardinality": "repeated",
+              "packed": true,
+              "tag": 6,
+              "acceptedWireTypes": [
+                0,
+                2
+              ],
+              "semanticField": "unknown_field_6",
+              "status": "unresolved",
+              "evidence": [
+                "inventory-wire"
+              ],
+              "ambiguities": [
+                "Business meaning unresolved"
+              ],
+              "presence": "implicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested"
+            },
+            {
+              "clientField": "NILMBAGDEAL",
+              "objectOffset": 40,
+              "type": "uint32",
+              "cardinality": "singular",
+              "tag": 2,
+              "acceptedWireTypes": [
+                0
+              ],
+              "semanticField": "exp",
+              "status": "verified",
+              "evidence": [
+                "inventory-wire",
+                "inventory-equip-fields"
+              ],
+              "ambiguities": [],
+              "packed": false,
+              "presence": "implicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested"
+            },
+            {
+              "clientField": "KFDCBKBPPGL",
+              "objectOffset": 44,
+              "type": "uint32",
+              "cardinality": "singular",
+              "tag": 3,
+              "acceptedWireTypes": [
+                0
+              ],
+              "semanticField": "promote_level",
+              "status": "verified",
+              "evidence": [
+                "inventory-wire",
+                "inventory-equip-fields"
+              ],
+              "ambiguities": [],
+              "packed": false,
+              "presence": "implicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested"
+            },
+            {
+              "clientField": "NJAGFJINHMA",
+              "objectOffset": 48,
+              "type": "uint32",
+              "cardinality": "singular",
+              "tag": 1,
+              "acceptedWireTypes": [
+                0
+              ],
+              "semanticField": "level",
+              "status": "verified",
+              "evidence": [
+                "inventory-wire",
+                "inventory-equip-fields"
+              ],
+              "ambiguities": [],
+              "packed": false,
+              "presence": "implicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested"
+            },
+            {
+              "clientField": "MNCFEDPDEAG",
+              "objectOffset": 52,
+              "type": "bool",
+              "cardinality": "singular",
+              "tag": 5,
+              "acceptedWireTypes": [
+                0
+              ],
+              "semanticField": "unknown_field_5",
+              "status": "unresolved",
+              "evidence": [
+                "inventory-wire"
+              ],
+              "ambiguities": [
+                "Business meaning unresolved"
+              ],
+              "packed": false,
+              "presence": "implicit",
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested"
+            }
+          ],
+          "evidence": [
+            "inventory-wire",
+            "inventory-material-fields",
+            "inventory-equip-fields"
+          ],
+          "ambiguities": [
+            "Unconsumed raw business fields remain unresolved"
+          ],
+          "verificationScope": "Complete selected raw schema; only bounded native field meanings approved; no live acceptance"
+        }
+      },
+      "fieldStatusCounts": {
+        "unresolved": 2,
+        "verified": 4
+      },
+      "gaps": [
+        "schemas: identity/semantics/wire not fully verified",
+        "schemas: unresolved or candidate business fields remain",
+        "runtime: no actual CN72 client sequence acceptance"
+      ],
+      "targetProtocolReady": false,
+      "targetCommandBindings": []
+    },
+    {
       "legacyName": "WidgetGadgetAllDataNotify",
       "sourceOrigins": [
         "PacketWidgetGadgetAllDataNotify"
@@ -93417,6 +95250,111 @@
       "inputFile": "binary",
       "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
       "location": "player-data-contract-observations.json: five limited source-to-native-model/SDK/DateTime bindings; other tags unknown"
+    },
+    {
+      "id": "inventory-command",
+      "layer": "opcode",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "inventory-contract-observations.json and equip-contract-observations.json: native command/type or embedded raw binding; no live acceptance"
+    },
+    {
+      "id": "inventory-identity",
+      "layer": "message",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "inventory-contract-observations.json and equip-contract-observations.json: independent native reset/resource/model/role-slot purpose; original English spelling not recovered"
+    },
+    {
+      "id": "inventory-item-embedded",
+      "layer": "opcode",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "inventory-contract-observations.json and equip-contract-observations.json: native command/type or embedded raw binding; no live acceptance"
+    },
+    {
+      "id": "inventory-item-identity",
+      "layer": "message",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "inventory-contract-observations.json and equip-contract-observations.json: independent native reset/resource/model/role-slot purpose; original English spelling not recovered"
+    },
+    {
+      "id": "inventory-material-embedded",
+      "layer": "opcode",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "inventory-contract-observations.json and equip-contract-observations.json: native command/type or embedded raw binding; no live acceptance"
+    },
+    {
+      "id": "inventory-material-identity",
+      "layer": "message",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "inventory-contract-observations.json and equip-contract-observations.json: independent native reset/resource/model/role-slot purpose; original English spelling not recovered"
+    },
+    {
+      "id": "inventory-equip-embedded",
+      "layer": "opcode",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "inventory-contract-observations.json and equip-contract-observations.json: native command/type or embedded raw binding; no live acceptance"
+    },
+    {
+      "id": "inventory-equip-identity",
+      "layer": "message",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "inventory-contract-observations.json and equip-contract-observations.json: independent native reset/resource/model/role-slot purpose; original English spelling not recovered"
+    },
+    {
+      "id": "inventory-weapon-embedded",
+      "layer": "opcode",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "inventory-contract-observations.json and equip-contract-observations.json: native command/type or embedded raw binding; no live acceptance"
+    },
+    {
+      "id": "inventory-weapon-identity",
+      "layer": "message",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "inventory-contract-observations.json and equip-contract-observations.json: independent native reset/resource/model/role-slot purpose; original English spelling not recovered"
+    },
+    {
+      "id": "inventory-reliquary-embedded",
+      "layer": "opcode",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "inventory-contract-observations.json and equip-contract-observations.json: native command/type or embedded raw binding; no live acceptance"
+    },
+    {
+      "id": "inventory-reliquary-identity",
+      "layer": "message",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "inventory-contract-observations.json and equip-contract-observations.json: independent native reset/resource/model/role-slot purpose; original English spelling not recovered"
+    },
+    {
+      "id": "inventory-wire",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "inventory-graph-observations.json: complete 15-type/47-field native raw graph and independent nonempty/merge/oneof/map/list/error samples"
+    },
+    {
+      "id": "inventory-material-fields",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "inventory-contract-observations.json: six bounded native inventory/material field bindings"
+    },
+    {
+      "id": "inventory-equip-fields",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "equip-contract-observations.json: ten bounded native Equip/Weapon/Reliquary bindings; no server-refinement conversion approval"
     }
   ],
   "commandTableScope": {
@@ -93470,11 +95408,11 @@
   "counts": {
     "packetCandidates": 98,
     "dynamicPacketCandidates": 1,
-    "protoRootFiles": 151,
-    "protoFiles": 1121,
-    "descriptorTypes": 1258,
-    "descriptorFields": 4810,
-    "messageMatrix": 151
+    "protoRootFiles": 156,
+    "protoFiles": 1122,
+    "descriptorTypes": 1278,
+    "descriptorFields": 4867,
+    "messageMatrix": 156
   },
   "openBoundaries": [
     "Java parse only; same-owner name/arity candidates, inherited/Lombok accessors and virtual/overloaded targets are not attributed",
@@ -93495,7 +95433,7 @@
     "Nonzero/64-bit/nested/list/error/boundary wire regressions remain separate required evidence",
     "No protocol generation, runtime integration, client reverse engineering or client debugging"
   ],
-  "reviewSHA256": "c374805fa7c4ca650a78d9f180499ced7c948435f68f035c3c4507b3806ee18f",
+  "reviewSHA256": "f7442c07b2895e692f4f93e9a66f37344adb3f50e24149a4b7e6cb70441d58f3",
   "toolSourceSHA256": {
     "tools/review_client72_login_proto.py": "d2b4c962bd883227550e6e7eebb8e6f40176c640619740fe74308ec5d8c751e4",
     "tools/Client72ProtoDependencies.java": "517838c3cd34b051c47205e71d45d2d3c99cc6bb4fb32379c34e0d0cea418f0a"

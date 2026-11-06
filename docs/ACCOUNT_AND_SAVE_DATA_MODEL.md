@@ -174,6 +174,8 @@ C-01a选人实现（2026-11-06）未新增集合或持久字段。成功创建�
 
 [GameItem](../src/main/java/emu/grasscutter/game/inventory/GameItem.java) 同时服务材料堆叠、武器、圣遗物等类型。共同字段包括 `_id`、`ownerId`、`itemId`、`count`、`saveStamp`、`deleted`；装备还有等级、经验、突破、精炼、词条、锁定、装备归属及 TPS 配件等字段。
 
+7.2的[库存有限发送适配](CLIENT_72_INVENTORY_PRODUCTION.md)独立投影已验wire，不改变这些持久字段或GameItem.toProto供其它旧消息使用的结构。服务端refinement到目标affix level key的关系未验，发送端暂不提供affix_map；不能据客户端未展示或未发送字段清理已有精炼、词条或其它物品数据。
+
 `ItemSaveGuard` 的条件包含实例 ID、所属玩家、物品种类、旧版本和删除状态。同一种 `itemId` 的两件装备不能互相替代。定向圣遗物和重塑候选还保留具体词条与原物品标识，修复时不能仅按总数量对账。
 
 | 状态 | 存储表现 | 处理规则 |

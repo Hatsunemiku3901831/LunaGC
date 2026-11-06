@@ -862,6 +862,13 @@ def main():
     player_data = [json.loads((args.directory / name).read_text('utf8')) for name in
                    ('player-data-wire-observations.json', 'player-data-contract-observations.json')]
     errors.extend(validate_player_data(document, profile, *player_data))
+    try:
+        from .client72_inventory_mapping import validate_inventory
+    except ImportError:
+        from client72_inventory_mapping import validate_inventory
+    inventory = [json.loads((args.directory / name).read_text('utf8')) for name in
+                 ('inventory-graph-observations.json', 'inventory-contract-observations.json', 'equip-contract-observations.json')]
+    errors.extend(validate_inventory(document, profile, *inventory))
     print(json.dumps({'mode': 'ready' if args.ready else 'research-structure', 'valid': not errors, 'errors': errors},
                      ensure_ascii=False, indent=2))
     raise SystemExit(bool(errors))

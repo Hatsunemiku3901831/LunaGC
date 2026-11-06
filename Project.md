@@ -4,6 +4,10 @@
 
 ## 当前阶段
 
+最新指令：完成当前F-03d2c2及已在途限定验证、通过验收后暂停并交接，不再开启后续任务。库存实际11份Java包已通过目标原生分段消费；独立Mongo47套829 Java、667研究、八个生成检查全部通过，失败/错误/跳过0。当前正在完成对应便携构建与产物/运行现场核对，尚不以此标记D-02。
+
+本次人工review89→95证据、1268→1269源码/Proto，只有库存sender/root及新增raw import变化，原有其它源码/映射与开放边界保持；156根/矩阵、1122描述符文件、1278类型/4867字段，两次recover一致。Avatar合同工具末尾空行修正使单项源hash变化，旧守卫再次拒绝、逐内容核对仅此差异后双recover。三层33行/278字段，结构0错误、ready224项仍拒绝；原23条Asta对照保持，新六条带来1处uint32/enum表示差异，未放宽审计。
+
 后续F-03d3d摘要已逐项受审：88→89输入，仅新增avatar-items，原88份hash/1268源及三层/151行/1121描述符/4810字段/开放边界保持，旧review先拒绝后两次recover一致；该项8新增/85关联原生研究通过。下段600研究仍是88输入阶段的完整执行，不把两次执行混成新总数。
 
 最新生产项F-03d1c（9a9853e）限定完成：PlayerData两类型9raw/5业务字段及等级最小sender，11 Java与3实际Java包→原生consumer、7生成器/47映射关联、六生成检查通过；独立Mongo45套778 Java全过，初轮40个隔离路径失败保留并补只读输入后重跑。后续b47a490独立库存适配器36 Java/4生成守卫通过。最新600研究回归全过（失败/错误/跳过0，约65秒），统一review84→88证据（库存合同、Avatar core/trees、Marshal），原84份hash/1268源码与Proto、151根/矩阵/1121描述符/4810字段和开放边界不变，两次recover一致。三层28行/248字段，结构0错误、ready拒绝208条（原205，增加来自显式枚举未知字段），不晋级完整P0或实机。
@@ -25,7 +29,7 @@
 | F-03d2b1 库存替换用途与Material六字段 | F-03d2a完整raw图 | fb6440d；19通知/22交付/21 Material+1缺资源、5拒绝、9新增/59关联及双跑；实际clear/构造/数量/64位GUID哈希索引分段执行，6业务字段限定通过；单例/分类fanout/UI/实机未验，非材料分支仍unknown | 已完成 |
 | F-03d2b2 Weapon/Equip最小用途及字段合同 | F-03d2b1、已有15类raw图 | 23b50b3；10字段、22原生/26模型/26角色槽片段、8拒绝、10新增/69关联及双跑；具名6资源/模型/slot交叉，锁/星enum1/2、Weapon level/exp/promote/affix key已验；旧refinement转换、其它Relic字段/完整构造/角色fanout未验，生产不改 | 已完成 |
 | F-03d2c1 库存独立raw Java适配器 | F-03d2a完整15类47wire图 | b47a490；独立namespace15类47raw，36 Java（含32原生对象向量）/4生成守卫及固定hash检查通过；旧root2独立断言失败保留，新适配器显式零/oneof/map/list/64位/错误通过；portable22秒JAR5db5d3b2…28fd73，仅70新raw class/3元信息变化，其余45948保持；旧sender/业务映射未改、前置不足未部署 | 已完成 |
-| F-03d2c2 库存有限生产接入 | b1先做已验Material红测；三层/生产阶段待b2验收、c1已过 | 固定完整raw图及两个独立业务合同，接管20892/root2/14，未知root8不发；只发送有已验字段和明确服务端来源的最小Material/Equip分支，保留未知原名/oneof/list/map，不改共享旧Item/Equip/Weapon/Reliquary或GameItem存储；producer独立wire/原生消费/64位/空值、生成守卫、账号经济保存回归与portable构建；完整前置不足不部署 | 进行中 |
+| F-03d2c2 库存有限生产接入 | b1/b2及c1已验合同 | 20892/root2/14及最小Material/Weapon/Reliquary，root8与refinement→affix key不猜测；15新Java/57定向、11实际producer包→原生、47套829隔离Java、667研究/八生成检查通过；共享旧物品Proto/GameItem保持，待对应portable构建及产物核对后收口，完整前置不足不部署 | 进行中 |
 | F-03d2a 68537/65333库存raw闭包 | F-03d1a方法、本地固定三输入 | a1/a2/a3限定完成；15类47wire、1920扫描/32非空组合图/6拒绝、8新增/54关联及双跑；独立native oneof/map/list/merge已验，身份和字段业务仍unknown，不迁生产 | 已完成 |
 | F-03d2a1 库存15类型依赖与原始外层 | F-03d2a固定输入/全部usage来源 | a81f84b；15类型42存储依赖，512扫描/21图/5拒绝、8新增/38关联及双跑；root/Item外层+2叶子13wire限定通过，其他非空nested范围拒绝，fullStoreRawClosure=false | 已完成 |
 | F-03d2a2 uint32 map与packed列表 | F-03d2a1 | eec23d2；6类22wire，5map/5list；768扫描/29图/3模型拒绝，8新增/46关联及双跑；公共runtime未改 | 已完成 |
@@ -36,14 +40,14 @@
 | F-03d3c Avatar两个小树非空raw闭包 | F-03d3b | 24caff2；先审6类18存储/16引用后768扫描确认18wire，20独立图/10拒绝、8新增/77关联及双跑一致；同形两对象独立值、singular合并/list追加实跑；两树限定闭包true，完整Avatar/身份仍false/unknown | 已完成 |
 | F-03d3d Avatar的16352/71717与双Item列表 | F-03d3c、已验库存14 Item类44wire图（原15类47含Store根3字段） | 8a03338；新2/6+复用14/44共16类50wire，2048扫描/44图/10拒绝、8新增/85关联及双跑；完整37外字段组合两份列表各9非空Item，所有16reader进入；53824非空仍拒绝，完整Avatar/身份不晋级 | 已完成 |
 | F-03d3e1 53824外层与两叶子 | F-03d3d及完整静态usage审计 | 6e0e274；3类18wire、384扫描/22图/9拒绝、8新增/93关联双跑；string/u32具体reader/adapter/ctor/setter、Unicode/NUL/u32上界/重复0及完整外层组合实跑，34045非空拒绝/身份未知 | 已完成 |
-| F-03d3e2 上层union及列表 | F-03d3e1 | 限85344/80101/62912/77771/70808/51162/34045七类36存储下界，string/u32 boxed union、float和message-list非空；51050非空拒绝，原生/oneof/错误/双跑，不晋级业务 | 进行中 |
-| F-03d3e3 标量与primitive列表叶子 | F-03d3e2 | 限21518/38218/48088/51614/67498/68918及12876/18849/31113/65248/66229共11类43存储下界；float-list具体AOT/native adapter及signed标量、零/边界/packed-unpacked/错误/双跑 | 待开始 |
+| F-03d3e2 上层union及列表 | F-03d3e1 | 786ec86；7类36wire、896扫描/27图/9拒绝、8新增101关联及双跑；boxed string/u32与float位值/同形列表非空，51050非空仍拒绝，完整Avatar/业务不晋级 | 已完成 |
+| F-03d3e3 标量与primitive列表叶子 | F-03d3e2 | c85ec3e；11类43wire、1408扫描/33图/7拒绝、8新增109关联/双跑；float helper仅原生前缀、13 AOT及实际4字节store、64元素和bit边界已验；65扩容为模型缺口非客户端上限，e4尚未实质开始并按用户要求暂停 | 已完成 |
 | F-03d3e4 signed列表与同形子字段 | F-03d3e3 | 限19829/21103/89623三类40存储下界，复用68918；int32-list具体AOT/packed-unpacked、同形字段独立非零值/零/错误/双跑 | 待开始 |
 | F-03d3e5 中层list与int64 | F-03d3e3/e4 | 限87867/57431/29317/45040/63939五类24存储下界；复用已验e3/e4，叶子list/同形subtree/完整64位、非空/错误/双跑 | 待开始 |
 | F-03d3e6 大标量节点与signed列表 | F-03d3e3/e4 | 限58639/64949两类36存储下界，三同形48088字段独立值、signed list/64位/零/边界/错误/双跑 | 待开始 |
 | F-03d3e7 多份message列表中层 | F-03d3e3/e6 | 限63008/22404两类29存储下界，多份同形msg-list独立非空元素、不串用、合并/错误/双跑 | 待开始 |
 | F-03d3e8 双Object与完整复杂图 | F-03d3e1至e7 | 限51050一类12存储下界；两Object的boxed-u32与tag100 message需独立证据/扫描至128，完整53824及AvatarInfo/Avatar组合、全部非空依赖/oneof切换/错误/双跑；不得用空壳批准完整图或业务名 | 待开始 |
-| F-03d3f1 Avatar初始化用途与最小字段语义 | 已验root/48178 raw子集、F-03d2b2 GUID→角色装备链；完整raw另等e8 | 沿typed root1507CEE50及实际分发/模型/具名Avatar资源证明用途，优先avatar_list、avatar_id/guid/equip_guid_list/prop_map及最小属性ID；cur_avatar_guid须独立当前控制链证据才批；资源/字典/64位/非零/错误/双跑，FightProp/其余字段未知不命名，不迁生产 | 进行中 |
+| F-03d3f1 Avatar初始化用途与最小字段语义 | 已验root/48178子集及Equip合同，完整raw另等e8 | 36a4669；5字段/3属性ID，22通知/25应用/24分配/54属性/44装备槽交付/7拒绝，10新增79关联及双跑；具名Avatar资源/原生u64字典和int64→double消费通过，cur_avatar_guid/FightProp/完整Handler未知，未迁生产，已停止后续工作 | 已完成 |
 | E-01c6 嵌套require调用者bindings恢复 | E-01c5已复现成功置null/异常残留 | b74cd16；6例先5失败后全过，6套32 Lua及8加载审计全过；portable25秒JAR7ca18e10…e8f5f、9class相符，其余45935不变；双轮整场fast407/449、inline0，30错误组恢复且无新增；完整前置不足未部署，local/资源/实机不晋级 | 已完成 |
 | F-04a SDK/补丁/资源前置现场复核 | 当前checkout/config/GAME_PATH、三输入与现有会话 | 三哈希/参考clean/归属已验；API会话无target；两个status退出1及6个revision候选；源码旧强制验签钩子与字符串工厂缺口保留，见CLIENT_72_RUNTIME_PREREQUISITES；仅核对不代表F-04完成 | 已完成 |
 | F-04b 保留验签的本地信任供给合同 | F-04a、既有原生seed/response/dispatch密码学 | 6b72887；14原生/23次key验签（4成功10拒绝）、18关联和双跑；COPY只R13、CHECK只R8/root第五参数，返回/flags不变；未知key不供给；未装钩子/未导出私钥 | 已完成 |
@@ -51,7 +55,7 @@
 | F-04c2 便携入口的信任文件路径供给 | F-04c明确LUNAGC_TRUST_BUNDLE接口 | 9新增+13原便携=22真实PowerShell测试全过；副作用前查文件/绝对路径及实际patch子进程继承，版本守卫实际拒绝且客户端hash保持；server-only保留；不替代DLL材料校验或既有调试器环境，见CLIENT_72_TRUST_LAUNCHER | 已完成 |
 | D-01b3 恢复真实启动与字符串/分配上下文观察 | 固定三输入/SDK/插件归属、原D-01b异常证据、现有Automate会话 | 仅在无其他目标时用已有调试器加载本项目原始客户端，不装未验补丁/服务；同通道捕获并逐次原样交付首次异常，二次异常停；核已知代码及真实初始化/非空Marshal自然调用，分清工具模型缺口/目标退出，禁止强置结果或沿旧PID | 进行中 |
 | D-01b3a 真实TLS来源与Marshal存储模型 | D-01b3已复现141CAD123/141CA72CF | 038132e；自然E06暂停两份Global/TLS/UTF8、4代码窗live同固定EXE，GC+19D0/CRT+1A50/页表非零；17 native Marshal+转换返回、独立UTF16/双跑、12聚焦通过；CRT/GC仍模型，live Marshal未命中，末80000004/前80000003及PUB缺口不归因 | 已完成 |
-| D-01b4 独立目标复现调试观察通道 | D-01b3无目标/末事件缺失，管理员API归属已核 | 在忽略目录自建合成Windows目标，独立重现首次AV/C++异常原样交付、pause和单硬件执行点/PUB事件；先核空会话/无游戏/DR归属，不操作游戏或未知进程、不改客户端/检查；比较API/log/目标存活/事件，严格区分工具通道缺陷与游戏原因，形成可复现证据/解除条件 | 进行中 |
+| D-01b4 独立目标复现调试观察通道 | D-01b3无目标/末事件缺失 | 14df545；5模式双跑10自有进程均OS退出0/PUB EXIT/STOP/log闭合，8守卫过；裸con与con0差异、弱load判定及新load日志游标已复现，未复现旧游戏末事件缺口，退出根因仍unknown；最终无target/相关进程/HW，D01b5未执行并按要求暂停 | 已完成 |
 
 2026-11-06本批F-02b1/b2、F-03a/b/c限定融合验收完成，按用户要求暂停；暂不D-02实机。运行代码提交`4bbf9fd`：完整LoginReq/两响应及嵌套21类198字段，八个场景握手、容量5字段、进入场景通知四字段及8类44字段raw闭包已接入。未知字段保留原名且不发送；完整初始化/P0、SDK/补丁/资源及实际客户端序列仍未验。
 

@@ -1,5 +1,15 @@
 # 研发索引与执行骨架
 
+当前收口F-03d2c2：[库存有限生产接入](docs/CLIENT_72_INVENTORY_PRODUCTION.md)，15 producer/57定向、11实际Java包→目标原生消费、独立Mongo47套829 Java和667研究（约52秒）全部通过，八生成检查无漂移。`generate_inventory72_sources.py --client $env:GAME_PATH --check`与`Protocol72PlayerStoreContractTest`为新入口；本机完整回归驱动`analysis/run_player_store_research.py`、`analysis/run_player_store_java_regression.ps1`和原始证据`evidence/player-store-*`。等待对应portable构建及产物核对后按用户最新要求暂停，不开后续卡；完整P0/SDK/资源和D-02未验。
+
+统一review95证据/1269源、156根/矩阵、1122描述符/1278类型/4867字段，人工逐差异后双recover；结构0/ready224。证明`evidence/player-store-{mapping-review,astaps-review,proto-review-check,surface-review,final-avatar-source-review,generator-checks}.json`，新旧守卫拒绝与中间摘要源hash变化保留。Asta原23条结果不变，新六条的1处store_type uint32/enum表示差异明确记录，未放宽外形校验。
+
+在途研究已各自收口并停止：e2 `786ec86`（7类36wire/8新增101关联）、e3 `c85ec3e`（11类43wire/8新增109关联）及[Avatar最小消费](docs/CLIENT_72_AVATAR_CONTRACT.md) `36a4669`（5字段/3属性ID、22通知/25模型应用/7拒绝、10新增79关联），均正式双跑。e4只做只读入口查询，未实质执行。完整Avatar raw/生产与当前控制角色链保持未验。
+
+D-01b4：[独立调试通道](docs/CLIENT_72_DEBUG_CHANNEL.md)，14df545；`python -m unittest tools.test_debug_channel72 -v`，8守卫及两轮5模式全过，10自有进程的CPU/OS/PUB/log闭合。合成con0负例可恢复，但没有证明旧游戏退出原因；最终只读现场证明`evidence/debug-channel-pause-final-readonly.json`，无target/相关进程/HW。后续D01b5观察未执行，按最新要求撤回。
+
+下方旧统计和“继续”记录均为历史，以本段、Project和最终HANDOFF2的暂停状态为准。
+
 F-03d2b2：[装备最小合同](docs/CLIENT_72_EQUIP_CONTRACT.md)，23b50b3；22样本/26模型/26角色槽片段/8拒绝，10新增/69关联及双跑通过，十字段限定完成。affix_map是目标资源group→内部level key；不能据此批准旧GameItem.refinement原值或减1，生产接管c2另审。F-03d3e1：[复杂Avatar外层](docs/CLIENT_72_AVATAR_COMPLEX_OUTER.md)，6e0e274；3类18wire/384扫描/22图/9拒绝、8新增93关联双跑，34045非空仍拒绝。这两份新摘要在89之后待下一批统一review。
 
 F-03d3d：[双Item列表](docs/CLIENT_72_AVATAR_ITEMS.md)，8a03338；16类50wire、2048扫描/44图/10拒绝、8新增/85关联双跑通过，两份Item列表各9个非空独立元素。该摘要已受审加入89输入，原88份hash/1268源/三层/151行/描述符和开放边界保持，双跑证明`evidence/avatar-items-proto-review-check.json`。最后53824静态闭包为34类238存储，与已有raw无重叠；按Project e1至e8独立取证，18/36/43/40/24/36/29/12仅存储下界，不能当已验wire数。
