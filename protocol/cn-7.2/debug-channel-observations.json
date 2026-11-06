@@ -1,0 +1,265 @@
+{
+  "schemaVersion": 1,
+  "task": "D-01b4",
+  "fixtureSHA256": "54b68323ec091af156788d08cb36d412f3d812cd6b596cc9c21978766f5196b7",
+  "fixtureSourceSHA256": "2e3c36a17b3bcc5627a63bfc5954b69c6b83e7df2ce7d2d3eb3e968a841406ff",
+  "debuggerFiles": {
+    "x64dbg.exe": "68d6afc2cc5a5bfd74a1b4066c0651254661355a0e384524cd1a8772adb95092",
+    "x64dbg.dll": "dc9d5ff18d6e5fc9d667a2c2bc8fa9cce15fa5e0da9728222259a4525d542c0f",
+    "plugins/x64dbg-automate.dp64": "c68f468cdfc3b0beef2ad3f1afdf8465d36cc1274fc874600eb4c5301ac1fcac",
+    "plugins/libzmq-mt-4_3_5.dll": "008828618c4abb16f63d146370fa9af5150ba024ba9bd7e16b6181d5a14d6303"
+  },
+  "pythonClientVersion": "0.9.2",
+  "gameLoaded": false,
+  "realClientExitCause": "unknown",
+  "finalDebugging": false,
+  "finalRelevantProcesses": 0,
+  "caseCount": 5,
+  "results": [
+    {
+      "name": "baseline",
+      "freshCreateSystemStop": true,
+      "initialHardwareClean": true,
+      "nativeExceptionStops": 2,
+      "exceptionSequence": [
+        "c0000005",
+        "e06d7363"
+      ],
+      "allExceptionsMatchedAndFirstChance": true,
+      "ownedTrapReclassified": [],
+      "pauseObserved": false,
+      "pauseHelperResult": null,
+      "hardwareHit": false,
+      "hardwareSlot": null,
+      "hardwareHitAtOwnedAddress": true,
+      "hardwareCleared": true,
+      "hardwareAPICleared": true,
+      "hardwareCleanupPreservedCPU": true,
+      "finalPhase": 40,
+      "avCaught": 1,
+      "cppCaught": 1,
+      "markerCalls": 3,
+      "osHandleAvailable": true,
+      "osExitCode": 0,
+      "osSignaled": true,
+      "debuggerStopped": true,
+      "pubExitCodes": [
+        0
+      ],
+      "pubEventCounts": {
+        "EVENT_BREAKPOINT": 1,
+        "EVENT_CREATE_PROCESS": 1,
+        "EVENT_EXCEPTION": 2,
+        "EVENT_EXIT_PROCESS": 1,
+        "EVENT_PAUSE_DEBUG": 4,
+        "EVENT_RESUME_DEBUG": 4,
+        "EVENT_STOP_DEBUG": 1,
+        "EVENT_SYSTEMBREAKPOINT": 1
+      },
+      "exitZeroLogged": true,
+      "logEvicted": 0,
+      "completed": true
+    },
+    {
+      "name": "pause-con",
+      "freshCreateSystemStop": true,
+      "initialHardwareClean": true,
+      "nativeExceptionStops": 2,
+      "exceptionSequence": [
+        "c0000005",
+        "e06d7363"
+      ],
+      "allExceptionsMatchedAndFirstChance": true,
+      "ownedTrapReclassified": [],
+      "pauseObserved": true,
+      "pauseHelperResult": true,
+      "hardwareHit": false,
+      "hardwareSlot": null,
+      "hardwareHitAtOwnedAddress": true,
+      "hardwareCleared": true,
+      "hardwareAPICleared": true,
+      "hardwareCleanupPreservedCPU": true,
+      "finalPhase": 40,
+      "avCaught": 1,
+      "cppCaught": 1,
+      "markerCalls": 3,
+      "osHandleAvailable": true,
+      "osExitCode": 0,
+      "osSignaled": true,
+      "debuggerStopped": true,
+      "pubExitCodes": [
+        0
+      ],
+      "pubEventCounts": {
+        "EVENT_BREAKPOINT": 1,
+        "EVENT_CREATE_PROCESS": 1,
+        "EVENT_EXCEPTION": 2,
+        "EVENT_EXIT_PROCESS": 1,
+        "EVENT_PAUSE_DEBUG": 5,
+        "EVENT_RESUME_DEBUG": 5,
+        "EVENT_STOP_DEBUG": 1,
+        "EVENT_SYSTEMBREAKPOINT": 1
+      },
+      "exitZeroLogged": true,
+      "logEvicted": 0,
+      "completed": true
+    },
+    {
+      "name": "pause-con0",
+      "freshCreateSystemStop": true,
+      "initialHardwareClean": true,
+      "nativeExceptionStops": 2,
+      "exceptionSequence": [
+        "c0000005",
+        "e06d7363",
+        "80000003"
+      ],
+      "allExceptionsMatchedAndFirstChance": true,
+      "ownedTrapReclassified": [
+        {
+          "code": "80000003",
+          "sameAddress": true
+        }
+      ],
+      "pauseObserved": true,
+      "pauseHelperResult": true,
+      "hardwareHit": false,
+      "hardwareSlot": null,
+      "hardwareHitAtOwnedAddress": true,
+      "hardwareCleared": true,
+      "hardwareAPICleared": true,
+      "hardwareCleanupPreservedCPU": true,
+      "finalPhase": 40,
+      "avCaught": 1,
+      "cppCaught": 1,
+      "markerCalls": 3,
+      "osHandleAvailable": true,
+      "osExitCode": 0,
+      "osSignaled": true,
+      "debuggerStopped": true,
+      "pubExitCodes": [
+        0
+      ],
+      "pubEventCounts": {
+        "EVENT_BREAKPOINT": 1,
+        "EVENT_CREATE_PROCESS": 1,
+        "EVENT_EXCEPTION": 3,
+        "EVENT_EXIT_PROCESS": 1,
+        "EVENT_PAUSE_DEBUG": 6,
+        "EVENT_RESUME_DEBUG": 6,
+        "EVENT_STOP_DEBUG": 1,
+        "EVENT_SYSTEMBREAKPOINT": 1
+      },
+      "exitZeroLogged": true,
+      "logEvicted": 0,
+      "completed": true
+    },
+    {
+      "name": "hw-con",
+      "freshCreateSystemStop": true,
+      "initialHardwareClean": true,
+      "nativeExceptionStops": 2,
+      "exceptionSequence": [
+        "c0000005",
+        "e06d7363"
+      ],
+      "allExceptionsMatchedAndFirstChance": true,
+      "ownedTrapReclassified": [],
+      "pauseObserved": false,
+      "pauseHelperResult": null,
+      "hardwareHit": true,
+      "hardwareSlot": 0,
+      "hardwareHitAtOwnedAddress": true,
+      "hardwareCleared": true,
+      "hardwareAPICleared": true,
+      "hardwareCleanupPreservedCPU": true,
+      "finalPhase": 40,
+      "avCaught": 1,
+      "cppCaught": 1,
+      "markerCalls": 3,
+      "osHandleAvailable": true,
+      "osExitCode": 0,
+      "osSignaled": true,
+      "debuggerStopped": true,
+      "pubExitCodes": [
+        0
+      ],
+      "pubEventCounts": {
+        "EVENT_BREAKPOINT": 2,
+        "EVENT_CREATE_PROCESS": 1,
+        "EVENT_EXCEPTION": 2,
+        "EVENT_EXIT_PROCESS": 1,
+        "EVENT_PAUSE_DEBUG": 5,
+        "EVENT_RESUME_DEBUG": 5,
+        "EVENT_STOP_DEBUG": 1,
+        "EVENT_SYSTEMBREAKPOINT": 1
+      },
+      "exitZeroLogged": true,
+      "logEvicted": 0,
+      "completed": true
+    },
+    {
+      "name": "hw-con0",
+      "freshCreateSystemStop": true,
+      "initialHardwareClean": true,
+      "nativeExceptionStops": 2,
+      "exceptionSequence": [
+        "c0000005",
+        "e06d7363",
+        "80000004"
+      ],
+      "allExceptionsMatchedAndFirstChance": true,
+      "ownedTrapReclassified": [
+        {
+          "code": "80000004",
+          "sameAddress": true
+        }
+      ],
+      "pauseObserved": false,
+      "pauseHelperResult": null,
+      "hardwareHit": true,
+      "hardwareSlot": 0,
+      "hardwareHitAtOwnedAddress": true,
+      "hardwareCleared": true,
+      "hardwareAPICleared": true,
+      "hardwareCleanupPreservedCPU": true,
+      "finalPhase": 40,
+      "avCaught": 1,
+      "cppCaught": 1,
+      "markerCalls": 3,
+      "osHandleAvailable": true,
+      "osExitCode": 0,
+      "osSignaled": true,
+      "debuggerStopped": true,
+      "pubExitCodes": [
+        0
+      ],
+      "pubEventCounts": {
+        "EVENT_BREAKPOINT": 2,
+        "EVENT_CREATE_PROCESS": 1,
+        "EVENT_EXCEPTION": 3,
+        "EVENT_EXIT_PROCESS": 1,
+        "EVENT_PAUSE_DEBUG": 6,
+        "EVENT_RESUME_DEBUG": 6,
+        "EVENT_STOP_DEBUG": 1,
+        "EVENT_SYSTEMBREAKPOINT": 1
+      },
+      "exitZeroLogged": true,
+      "logEvicted": 0,
+      "completed": true
+    }
+  ],
+  "controlContract": {
+    "applicationFirstChance": "matched EVENT_EXCEPTION and ex.code/addr/firstchance, then con 1 and run",
+    "ownedDebuggerStop": "bare con and run; con 0 is a deliberate negative test",
+    "readyGate": "fresh CREATE_PROCESS and SYSTEMBREAKPOINT plus matching PID/debugging/paused",
+    "completionGate": "owned OS process handle plus native progress, EXIT/STOP PUB and debugger log",
+    "logCursor": "reset to zero on each fresh debug initialization; never reuse the previous target cursor"
+  },
+  "limitations": [
+    "Synthetic target only; no explanation of the game exit is inferred",
+    "Negative cases recover the known owned trap with bare con and exit zero; they do not reproduce fatal game exits",
+    "Raw timing, PID, addresses, gate names and progress ticks are intentionally omitted",
+    "PUB completeness here does not establish that every real-client session is complete"
+  ]
+}
