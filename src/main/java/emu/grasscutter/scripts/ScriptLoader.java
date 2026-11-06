@@ -156,14 +156,12 @@ public class ScriptLoader {
      * @return The result of the evaluation.
      */
     public static Object eval(CompiledScript script, Bindings bindings) throws ScriptException {
-        // Set the current bindings.
-        currentBindings.set(bindings);
-        // Evaluate the script.
-        var result = script.eval(bindings);
-        // Clear the current bindings.
-        currentBindings.set(null);
-
-        return result;
+        var previousBindings = currentBindings.getAndSet(bindings);
+        try {
+            return script.eval(bindings);
+        } finally {
+            currentBindings.set(previousBindings);
+        }
     }
 
     static final class RequireFunction extends OneArgFunction {
