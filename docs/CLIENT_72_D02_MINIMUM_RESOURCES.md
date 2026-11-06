@@ -252,3 +252,29 @@ $env:GRADLE_USER_HOME = (Resolve-Path local/gradle).Path
 $env:LUNAGC_RUNTIME = 'portable'
 ./gradlew.bat --no-daemon test --tests emu.grasscutter.scripts.D02Group601CreateTest -PskipHandbook=1 -I local/migration72/d02-r3-group601-replay/d02-test.init.gradle --console=plain
 ```
+
+## 子合同 I：每日委派持久化及动态组边界
+
+`src/test/java/emu/grasscutter/game/dailytask/D02DailyRuntimeMongoTest.java` 使用真实 `DailyTaskManager.onPlayerLogin`、独立 MongoDB 和真实保存及同 UID 新 Player 冷读。第十轮是 **1 项测试**通过（失败、错误、跳过均为 0），不是十项测试：受控 level 1、新库和两个分别初始化的非持久 scene3 夹具中，daily 尚未生成时 `loadActiveGroups` 返回 0；生成 4 条后冷读、同日再次登录不重抽，第二场景的调用返回 4，四个实际初始 suite 的 14 个 monster config 均查到实体。那次随机结果任务为 `32290/32314/32272/32282`，组为 `133302164/133301195/133315145/133303185`，不是固定结果。第九轮同库另一次结果 4 组 11 个 monster config；所有原始结果均位于 `local/migration72/d02-r3-daily-runtime-fcce07a744a148689663eb146307e1cd/`。当次只断言按 config 查询到非空实体；后续扩展的类型和 ID 断言见 J，不据此声称初始组完整可用。
+
+输入是混合夹具：当前旧 producer 的 DailyTask、DailyTaskLevel、DailyTaskReward 表、scene3 Lua 和 GlobalCombat，加上固定候选 commit `d54f6f0d423ded9d055bb740a3e5f3aa8f2667f1` 的 Monster 与 MonsterCurve 表。目标 Monster 和 Curve 的 Git blob 分别为 `0d2d5eb481738cf185d59bd707a33006f020645e`、`eac2a23c119e7e327044192a11089c561f58144f`，SHA-256 分别为 `b0efcdb6bca52eca8c2b89fe2e43f8f5a65bc1596fd250e7ddc375acd92989cc`、`3014983fd6292b612c040fb4106d6bfe10aef2da0ceffcba01bd10872b832f84`。旧 DailyTask 表 SHA-256 `44e9de619028ac8fa2f329b565486de6df020d9aae9f2ec61703023e68687048`，旧 GlobalCombat 见 E；I 阶段测试对这四项 hash 有断言，J 另加 Gadget。测试执行当前源码 classes，根 JAR SHA-256 `dfdebbda0352055540c44a54e2eebfd4ffdfe679db74270044d3d55aeb006ec3` 用于独立 Mongo 正常关闭辅助程序，并非测试类来源。
+
+首轮直接执行完整 Player 属性初始化，因未提供网络 session 而失败；第二轮真实生成并保存后在 Packet 发送边界因空 session 失败；第三轮对已绑定 manager 调用加载，未产生新对象，冷读断言失败；第五轮真实场景缺 GlobalCombat；第七轮未加载 Monster 表，组加载返回 4 但首个怪物实体为空。均保留原日志。加入真实缺失资源后才进行相应断言；第四、第九、第十轮分别通过不同范围。测试用 Player 子类只记录 `PacketDailyTaskDataNotify` 的构造及交付边界，没有向网络发送，也未断言目标协议 wire。隔离 Mongo 用专属目录和 UUID 库，测试结束保留，真实 admin shutdown 后日志显示 exitCode 0；原 27017 未操作。
+
+此合同用两个受控场景模拟 daily 生成前后调用，并未运行 `Player.loadFromDatabase` 的后台线程、完整 EnterSceneDone handler、实际账号或客户端；动态组的事件后代、网络通知和其他随机组均未闭合。运行前需要协调独占 Gradle 和 27027，准备固定候选资源、便携 JDK17/Mongo 和上述 hash 的根 JAR。下面脚本创建唯一目录及数据库、保留测试结果和数据库，并只在核对监听 PID/目录归属后对其发正常 shutdown；已按 J 完整实跑。
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/audit_d02_daily_runtime72.ps1
+```
+
+## 子合同 J：实际随机组的初始实体身份
+
+在 I 的基础上通过真实 `ResourceLoader` 增加候选 Gadget 表，并按每个实际随机组的 active suite 逐 config 断言 `EntityMonster` / `EntityGadget` 类型及其资源 ID；同时断言 suite 中声明的怪物、装置 config 均解析出来。一次新的唯一测试库运行，仍为 **1 项测试**、0 失败/错误/跳过：任务 `15207/15600/15302/15601` 对应 `133101104/133104406/133103292/133102555`，4 组初始 suite 共 **23 个怪物及 41 个装置**逐一通过类型、ID 断言，4 组 NPC 列表均空。实际组由随机选择决定；此结果不涵盖其他组或玩家保存状态。测试继续验证真实保存、冷读和同日不重抽，以及两个受控已初始化场景在生成前/后的 `loadActiveGroups` 返回 0/4。
+
+固定候选 Gadget SHA-256 `5debe3c457b0fddc5264620aff1a9585cb19f24408a7f1974291244415ee1411`，Monster/Curve 和旧 daily/combat 见 I。旧 DailyTaskLevel 和 DailyTaskReward 的 SHA-256 为 `1eabd15e6d0bf810c97eef57cb3b24067fb19dd1a78112702380a1d573503964`、`3e8fd31291d833ab39f2069ea21539c9d1b04ace80e50fb3762cb603f74935f9`；旧 scene3.lua 为 `d547a2ebeb1292358685d8f317bf6b5676a53327e42aa618f18ef361cd32a9f9`。四个实际组 Lua SHA-256 依上述组顺序分别为 `ab9a974e8321e3e759a49110469f25d7edfcc305c1c6403ae6c80fa7933ff26a`、`ffe23d8733f075c4ce319327f973c3aa8bd0ffa144a9faa8398c22bd7170c08a`、`0d3e2dfa0555c72816c8da7d68f7a298923a617002276a1372142e2196897915`、`97d931df6d37ff2054f5d6612bcab434d8f013b2fe1f105e8e6a69d365f6cef8`。这些是本次实际输入指纹；可复现脚本不强制抽到相同组。
+
+当前测试源码 SHA-256 `4d0df007a8f8f5231241f3081c0a9f6383b53b4bb32173ad4b3505ba2107bdc8`，class `9ac082bce062c611a9e5ec0a9157a8e6fd035c2251ee7824bfbce92077c3958c`，XML `382aa9d10eafcc9a37f372b59f14115dc3784232eebf6512ccea81760f9a26d0`。原证据及完整输入指纹在 `local/migration72/d02-r3-daily-replay-a7bd7db7bca549e19bdc39cd457a90e9/`。驱动第一次在 Windows PowerShell 将编译器 stderr 提示当异常提前停止，Mongo 正常关闭；修正原生命令提示处理后新库运行返回 0、XML 确认 1 项未跳过，Mongo 正常 shutdown exitCode 0、27027 释放，原 27017 保持。首次失败保存在 `local/migration72/d02-r3-daily-replay-09a47bdb6295456992bc4b4a5131fe2f/`。
+
+主线审核了最终测试源码、实际编译class、该次新XML及逐实体输出，独立重算13份输入指纹全部相同，并核Mongo最后的正常退出记录；未重复执行随机测试。审核证明在`local/migration72/evidence/d02-r3-daily-main-review.json`，原XML为1项通过，不能将I历史轮次或主线审核再计为新增测试。
+
+四组初始 trigger 均有 ANY_MONSTER_DIE，其中组 `133104406` 另有 ANY_MONSTER_LIVE；后者由怪物 tick 发出，测试未执行 tick。场景装入会提交 GROUP_REFRESH/GROUP_LOAD，真实装置 onCreate 会提交 GADGET_CREATE；这些异步事件及后代未等待或断言，不能由实体通过推断 action 执行成功。实际 Player 后台调度、完整 Done、战斗死亡、协议网络和客户端仍未验证；R3/resourceReady 未完成。

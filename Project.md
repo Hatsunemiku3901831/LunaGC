@@ -6,6 +6,8 @@
 
 ## 当前阶段
 
+E-01d1i～j已审：[最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)I/J与独立复现驱动在唯一Mongo27027库实际完成1项测试，真实daily生成/保存/新Player冷读/同日不重抽及两场景0/4边界通过；本次随机4组的23怪物/41装置逐config验证类型和资源ID，NPC均空。主线核源码/class/XML、13输入hash及正常shutdown exit0，未重复执行该随机测试，不把各历史轮次相加。旧daily/Lua/combat与候选Monster/Curve/Gadget是明确混合夹具；异步事件后代、后台调度、完整Done/网络/客户端仍待。继续出生点25组真实初始实体，R3/resourceReady不晋级。
+
 F-03d3f3已验：[队伍与当前Team消费](docs/CLIENT_72_AVATAR_TEAM.md)独立证明root tag5的Team ID映射、child tag2名称/tag12有序Avatar GUID成员，以及root tag12选择当前Team；具名TeamNameRefresh/CurrentTeamChanged与实际写入、GUID查找相互印证。13组wire/42次消费/9拒绝，主线35定向和第三全新原生回放通过，完整/摘要与代理双跑逐字节相同。仅批准四字段的限定消费关系；完整Handler、Rename、保存、实体效果及root3当前控制GUID仍未验，不改映射/ready或生产发送。继续Avatar状态、属性与非空场景实体合同。
 
 E-01d1f～h已审核：[最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)实际生产getGroupGrids及出生点25组成立；fast449错/inline0，不把网格相同当Lua行为相同。主线独立逐cell比较六层规范网格与摘要/旧模型hash全部相同，并纠正一字符手写raw指纹；31初始region均不含出生点，任务/保存套件仍开放。真实能力loader28引用命中与缺Wind9缺失反例经主线独立javac/JVM复验；601真实GADGET_CREATE/Worktop选项2项及源码/class/XML已审，当前sender799及wire未验，尚未联网。只关有限资源/事件合同，R3/resourceReady仍false；继续独立库验证日常实际生成与动态组。
@@ -84,6 +86,7 @@ E-01d1a（D02-R3子合同A）已验收：固定候选commit/tree/blob四表，�
 | F-03d3g1 独立完整Avatar raw适配器 | F-03d3e8及固定11来源 | 独立65类372wire/7 oneof/13 map/42 packed；275新Java+36库存、8新Python/22关联、主线22及生成check通过；268实际Java→native双跑及主线第三完整/摘要相同，负零/64位/复制/merge/错误差异明确，旧schema/sender/opcode未改。未批准生产发送或runtime | 已完成 |
 | F-03d3f1 Avatar初始化用途与最小字段语义 | 已验root/48178子集及Equip合同，完整raw另等e8 | 36a4669；5字段/3属性ID，22通知/25应用/24分配/54属性/44装备槽交付/7拒绝，10新增79关联及双跑；具名Avatar资源/原生u64字典和int64→double消费通过，cur_avatar_guid/FightProp/完整Handler未知，未迁生产，已停止后续工作 | 已完成 |
 | F-03d3f3 Team映射与当前Team消费 | f1、f2a、e8及固定三输入 | 四字段、13组wire/42消费/9拒绝；原生Team名称事件/去重/qword扩容/当前选择/GUID查找及零值边界已验。10新增/35关联与主线35通过，第三全新原生完整/摘要与双跑相同；完整Handler/保存/场景与root3当前控制语义不晋级 | 已完成 |
+| E-01d1i～j 日常持久化及初始实体 | R3固定候选表、旧daily/Lua/combat、独立Mongo | 唯一新库真实1项通过，生成4/保存/新Player冷读/同日不重抽、生成前后场景0/4；23怪物/41装置逐类型/资源ID已验。主线13输入hash/source/class/XML及正常关闭审核；受控调度不代表后台/完整Done，自动事件后代/其它随机组/目标协议未验 | 已完成 |
 | E-01c6 嵌套require调用者bindings恢复 | E-01c5已复现成功置null/异常残留 | b74cd16；6例先5失败后全过，6套32 Lua及8加载审计全过；portable25秒JAR7ca18e10…e8f5f、9class相符，其余45935不变；双轮整场fast407/449、inline0，30错误组恢复且无新增；完整前置不足未部署，local/资源/实机不晋级 | 已完成 |
 | F-04a SDK/补丁/资源前置现场复核 | 当前checkout/config/GAME_PATH、三输入与现有会话 | 三哈希/参考clean/归属已验；API会话无target；两个status退出1及6个revision候选；源码旧强制验签钩子与字符串工厂缺口保留，见CLIENT_72_RUNTIME_PREREQUISITES；仅核对不代表F-04完成 | 已完成 |
 | F-04b 保留验签的本地信任供给合同 | F-04a、既有原生seed/response/dispatch密码学 | 6b72887；14原生/23次key验签（4成功10拒绝）、18关联和双跑；COPY只R13、CHECK只R8/root第五参数，返回/flags不变；未知key不供给；未装钩子/未导出私钥 | 已完成 |

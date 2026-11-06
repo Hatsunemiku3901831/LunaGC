@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+E-01d1i～j：[最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)I/J、`D02DailyRuntimeMongoTest`和`tools/audit_d02_daily_runtime72.ps1`。驱动新UUID目录/独立27027库实际1项通过，23怪物/41装置逐config类型/ID，真实保存/冷读/同日不重抽及两场景0/4；主线只审该次源码/class/XML与13输入hash、正常shutdown，不另算一次测试。原始`local/migration72/d02-r3-daily-replay-a7bd7db7bca549e19bdc39cd457a90e9/`，主线`evidence/d02-r3-daily-main-review.json`。PowerShell5日志为UTF-16，原生stderr提示处理首失败保留；必须串行Gradle/27027，数据库保留。未等待自动Lua事件或运行tick/完整Done/网络，继续出生点实体，不晋级R3。
+
 F-03d3f3：[队伍与当前Team](docs/CLIENT_72_AVATAR_TEAM.md)，`client72_avatar_team.py`/`test_client72_avatar_team`；四字段限定消费、13独立wire/42选择消费/9拒绝。主线35定向及第三新进程原生回放与双跑完整/摘要同SHA `e5167295…9eceb9`/`3a085032…93073`，证据`evidence/avatar-team-main-{native,summary,review}.json`、`logs/avatar-team-main-{tests,native}.log`。具名事件与真实字典写入/成员去重/64位查询已审；完整handler、保存、非空fallback/override、场景效果和root3当前控制GUID未知。不改mapping/ready/sender，继续f4a状态及完整SceneInfo。
 
 E-01d1f～h：[最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)F/G/H与`d02-resource-observations.json`；tracked `Client72D02ResourceAudit`实际网格/初始suite，`Client72D02AbilityAudit`实际28引用与9缺失反例，`D02Group601CreateTest`真实工作台事件2项。主线独立复算六层cache规范hash（`evidence/d02-r3-grid-main-review.json`）及能力两正常/一反例新JVM与原报告同hash；601 XML/class/source核对通过，无DB/HTTP/Dispatch。fast449/inline0、任务动态组及799目标wire缺口保持，当前daily独立Mongo定向卡占用27027/Gradle，不能同时启停/构建。
