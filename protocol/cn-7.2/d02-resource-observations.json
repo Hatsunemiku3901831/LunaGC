@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "scope": "isolated production scene grid and fixed-position initial-suite inspection; no client acceptance",
+  "resourceReady": false,
+  "clientRuntimeTested": false,
+  "candidateCommit": "d54f6f0d423ded9d055bb740a3e5f3aa8f2667f1",
+  "candidateRootTree": "5b334e711319726c504da95dbfe6ebb26baaa7d3",
+  "legacyScriptsCommit": "dac2a9d43332ef51879522cf39da2831b0ca0543",
+  "runtimeJarSHA256": "eee183715cf27c5d2c25da0591c890f4c144116317ba0bf0afe8bb0030aeae0e",
+  "sceneId": 3,
+  "position": [2747, 194, -1719],
+  "sourceConfig": {"fastRequire": true, "enableScriptInBigWorld": true, "questingEnabled": true, "preventEntityError": true},
+  "gridCellsByLayer": [28645, 3103, 167, 6, 2847, 202],
+  "canonicalGridSHA256": [
+    "2ec65cebde80be3f27e3e62359f5e33c7503544f23a03589f27aec1d3189f87a",
+    "d1698f1023b83bd744dab95fa43d4f39d9a24d0c4a7d318fb056eaf07eb6b639",
+    "d20f2d2285f5a5bcf968137d297a172dc6f7c44b231bf92343171e84233171d9",
+    "10dc9e0348751c21c568f91fe22e6adaf71c6db454905ab159c78054e6fa4687",
+    "332be629d8a99577a9eeb9faf9b79b21a3d8e84e4618cf31db9cff45a911f5c5",
+    "38dc8d0c23e8f2f821259057a9ffdf0886a1ec2501f030ae9c14e264b4fdf813"
+  ],
+  "selectedGroups": [133003022, 133003024, 133003025, 133003032, 133003105, 133003128, 133003275, 133003288, 133003289, 133003313, 133003317, 133003332, 133003333, 133003426, 133003429, 133003504, 133003505, 133003601, 133003785, 133003801, 133003802, 133003803, 133003804, 133003807, 133003901],
+  "fast": {"effectiveFastRequire": true, "errors": 449, "businessAttempts": 0, "rawReportSHA256": "2b491baedba9429d9d9c328858bbeb9dbd60c0d78e99e2a9f45644c8eb417d11"},
+  "inline": {"effectiveFastRequire": false, "errors": 0, "businessAttempts": 0, "rawReportSHA256": "c5405bc99161dcb442df7981a400a7e821e75ee2a790d19f85662f99c4c7761b"},
+  "firstFastAttempt": "Observation logging was disabled; its zero-error count is invalid and excluded from conclusions.",
+  "gridComparison": "All six normalized production grid maps and selected groups agree across modes and with the prior inline serializer model; this does not prove equivalent Lua bindings, triggers, scene runtime or client entry.",
+  "initialSuiteAudit": {
+    "groups": 25,
+    "randomSuiteDeclarations": 16,
+    "initialRegionCandidates": 31,
+    "regionsContainingStartingPosition": 0,
+    "regionEvaluationUnknown": 0,
+    "groupLoadTriggerGroups": [133003505],
+    "gadgetCreateTriggerGroups": [133003505, 133003601],
+    "reportSHA256": "03fdc36889737211bdbbb975eeb89a4ea6ca6c9af542eeca1f83fb74681a950d",
+    "scope": "fresh initial-suite candidates only, no saved group state, task additions, region event dispatch or player movement"
+  },
+  "open": ["runtime hot-update revision", "dynamic quest and daily groups", "initial entity and trigger side effects outside audited bounded cases", "CN 7.2 wire identities and fields", "actual client entry and relog"]
+}

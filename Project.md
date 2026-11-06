@@ -6,6 +6,8 @@
 
 ## 当前阶段
 
+E-01d1f～h已审核：[最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)实际生产getGroupGrids及出生点25组成立；fast449错/inline0，不把网格相同当Lua行为相同。主线独立逐cell比较六层规范网格与摘要/旧模型hash全部相同，并纠正一字符手写raw指纹；31初始region均不含出生点，任务/保存套件仍开放。真实能力loader28引用命中与缺Wind9缺失反例经主线独立javac/JVM复验；601真实GADGET_CREATE/Worktop选项2项及源码/class/XML已审，当前sender799及wire未验，尚未联网。只关有限资源/事件合同，R3/resourceReady仍false；继续独立库验证日常实际生成与动态组。
+
 F-03d3f2b已验：[场景入场角色来源](docs/CLIENT_72_SCENE_ENTRY_IDENTITY.md)由具名21761/type34208的tag12/u32实际读入管理器，再经真实store写scene+284并接具名GetLocalAvatarConfigId；五外字段128扫描、10限定图/3模型拒绝，6新增/21关联及双新进程完整/摘要一致。三nested仅空envelope、完整Handler/效果/实体生成未验，root3仍不批准当前控制GUID。继续非空SceneInfo及队伍/实体关联，不以本前缀晋级完整入场。
 
 2026-11-06最新用户指令已明确恢复持续开发，覆盖此前所有“当前子任务验收后暂停”限制。接手HEAD `6f5c99e`；D02-R0源码依赖台账已`13c3f85`验收，当前推进R1协议、R2真实启动/连接、R3最小资源，再按R4→R5→R6汇合。目标仅国服7.2/Windows portable的新旧号登录、显式选人、完整初始化/场景握手、实际落地、连续心跳及退出重登；D-02尚无全部实机通过证据，不将活动检查点当暂停。

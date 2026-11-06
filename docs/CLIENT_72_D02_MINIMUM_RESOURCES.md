@@ -141,3 +141,114 @@ $env:GRADLE_USER_HOME = (Resolve-Path local/gradle).Path
 $env:LUNAGC_RUNTIME = 'portable'
 ./gradlew.bat --no-daemon test --tests emu.grasscutter.scripts.D02Group505LoadTest -PskipHandbook=1 -I local/migration72/d02-r3-group505-replay/d02-test.init.gradle --console=plain
 ```
+
+## 子合同 F：生产网格和出生点初始 suite
+
+固定旧脚本、候选 Scene/Gadget 表、旧 GlobalCombat 与归档 JAR `eee183715cf27c5d2c25da0591c890f4c144116317ba0bf0afe8bb0030aeae0e`，在独立 JVM 调用真实 `SceneScriptManager.getGroupGrids` 和 `Scene.getPlayerActiveGroups`，位置 `(2747,194,-1719)`。fast 的实际配置和有效值均为 true，记录 449 个 Lua 加载错误；同输入仅改 inline 后错误为 0。两者均无业务边界调用，六层网格分别 28645/3103/167/6/2847/202 个格，规范化完整网格及出生点 25 组相等。首次 fast 实验未打开缺失脚本日志，零错误计数无效；上述结论采用打开日志后的重跑。两模式并不因此证明 Lua 绑定或运行行为等价。
+
+对该 25 组另行使用真实 `SceneGroup.load` 检查可能初始 suite，16 组声明随机 suite；按现有生产 `findInitSuiteIndex(0)` 实际索引规则检查，31 个候选 region 在出生坐标的 `contains` 均为 false。初始 suite 包含 GROUP_LOAD 的为 505，包含 GADGET_CREATE 的为 505 和 601；这只是静态候选，真实事件见 E 和 H。该检查没有派发 region 事件、执行场景 tick、读取存档或添加任务动态组。原始报告与重复报告位于忽略的 `local/migration72/d02-r3-real-grid-{fast-observe,inline}/` 和 `local/migration72/d02-r3-suite-v3{,-repeat}/`；脱敏摘要见 `protocol/cn-7.2/d02-resource-observations.json`。跟踪 helper 已按以下代码实跑，fast/inline 报告 SHA-256 分别为 `1100155338d25a14f9d676e9cf636537f558367407738dc954b44383299050f2` 和 `a7f5c875398d282791e68f9923864e42db4f9bfa7f56bcf18ff4a444e00262a5`；suite 报告 `03fdc36889737211bdbbb975eeb89a4ea6ca6c9af542eeca1f83fb74681a950d` 与先前重复一致。跟踪版新增组快照，故 fast/inline 报告 hash 与早期探针不同；该复现直接对照格数和组 ID，六层完整规范化网格的相等性来自早期探针的独立比较。
+
+以下从已跟踪 Java 源编译并运行独立复现，先通过现有审计门禁校验脚本、资源和旧归档，再核对候选表 Git blob；每种模式新建目录。需已有对应候选文件、树证据与两个归档 JAR，输出记录到各自目录。运行前协调其他构建；本命令只用 javac，不启动服务器或数据库。
+
+```powershell
+@'
+from pathlib import Path
+import hashlib, json, subprocess, sys, zipfile
+r=Path('.').resolve(); sys.path.insert(0,str(r/'tools'))
+import audit_production_scene_load72 as g
+from audit_resource72 import verify_tree, git_hash
+jar=r/'local/migration72/builds/LunaGC-before-avatar-wire-62a86fb.jar'
+old=r/'local/migration72/builds/LunaGC-before-player-data-7ca18e10.jar'
+assert hashlib.sha256(jar.read_bytes()).hexdigest()=='eee183715cf27c5d2c25da0591c890f4c144116317ba0bf0afe8bb0030aeae0e'
+review=dict(g.REVIEWED_SOURCES); review['src/main/java/emu/grasscutter/scripts/ScriptLoader.java']=g.REQUIRE_BINDINGS_LOADER_SHA256
+g.verify_inputs(r,r/'resources',r/'local/migration72/evidence/scene-grid-inline-audit.json',old,runtime_sha256=g.REQUIRE_BINDINGS_RUNTIME_SHA256,reviewed_sources=review)
+with zipfile.ZipFile(jar) as a, zipfile.ZipFile(old) as b:
+ for name in ['emu/grasscutter/scripts/ScriptLoader.class','emu/grasscutter/scripts/SceneScriptManager.class','emu/grasscutter/scripts/data/SceneGroup.class','emu/grasscutter/data/server/Grid.class','emu/grasscutter/scripts/SceneIndexManager.class','emu/grasscutter/game/world/Scene.class']: assert a.read(name)==b.read(name)
+src=r/'local/migration72/sources/AnimeGameData/d54f6f0d423ded9d055bb740a3e5f3aa8f2667f1/ExcelBinOutput'
+entries=verify_tree(json.loads((r/'local/migration72/evidence/resource-source-ExcelBinOutput-tree.json').read_text(encoding='utf8')))
+for name in ['GadgetExcelConfigData.json','SceneExcelConfigData.json']:
+ raw=(src/name).read_bytes(); assert len(raw)==entries[name]['size'] and git_hash('blob',raw)==entries[name]['sha']
+combat=r/'resources/BinOutput/Common/ConfigGlobalCombat.json'
+assert hashlib.sha256(combat.read_bytes()).hexdigest()=='df4b1d9dce5756251195995a4c30ae40f66c792735bb0977d166dd988f9965c0'
+jdk=next((r/'local/runtime').glob('jdk-17*')); out=r/'local/migration72/d02-r3-grid-replay'; out.mkdir(exist_ok=False); classes=out/'classes'; classes.mkdir()
+sources=['Client72SceneScriptAudit.java','Client72SceneSerializeAudit.java','Client72ProductionSceneLoadAudit.java','Client72D02ResourceAudit.java']
+subprocess.run([str(jdk/'bin/javac.exe'),'-encoding','UTF-8','-cp',str(jar),'-d',str(classes),*[str(r/'tools'/s) for s in sources]],check=True)
+rootcfg=json.loads((r/'config.json').read_text(encoding='utf8')); game=rootcfg['server']['game']; assert game['gameOptions']['isPreventEntityError'] is True
+for mode in ['fast','inline','suite']:
+ w=out/mode; w.mkdir(); cfg={'version':14,'folderStructure':{'resources':str(r/'resources'),'scripts':str(r/'resources/Scripts'),**{x:str(w/x) for x in ['data','plugins','cache','packets']}},'server':{'fastRequire':mode!='inline','game':{'enableScriptInBigWorld':True,'visionOptions':game['visionOptions'],'gameOptions':{'isPreventEntityError':True}}}}
+ (w/'config.json').write_text(json.dumps(cfg),encoding='utf8'); result=w/'result.json'
+ main='Client72D02SuiteAudit' if mode=='suite' else 'Client72D02RealGridAudit'
+ args=[str(result)] if mode=='suite' else [str(combat),str(src/'GadgetExcelConfigData.json'),str(src/'SceneExcelConfigData.json'),str(result)]
+ p=subprocess.run([str(jdk/'bin/java.exe'),'-Xmx2g','-Dfile.encoding=UTF-8','-Xlog:class+init=info:file=class-init.log','-cp',str(classes)+';'+str(jar),main,*args],cwd=w,capture_output=True)
+ (w/'stdout.log').write_bytes(p.stdout); (w/'stderr.log').write_bytes(p.stderr); p.check_returncode()
+ lines=(w/'class-init.log').read_text(encoding='utf8').splitlines()
+ assert not any("Initializing '"+x in line for x in ['emu/grasscutter/database/','emu/grasscutter/server/http/HttpServer','emu/grasscutter/server/dispatch/DispatchServer'] for line in lines)
+ data=json.loads(result.read_text(encoding='utf8')); print(mode,'errors',len(data['errors']),'attempts',len(data['businessAttempts']),'sha256',hashlib.sha256(result.read_bytes()).hexdigest())
+fast=json.loads((out/'fast/result.json').read_text(encoding='utf8')); inline=json.loads((out/'inline/result.json').read_text(encoding='utf8'))
+assert fast['groupIds']==inline['groupIds'] and fast['gridCells']==inline['gridCells']
+print('selected groups and grid counts agree; compare normalized full maps using the recorded summary')
+'@ | python -
+```
+
+## 子合同 G：受控主角能力定义引用
+
+`tools/Client72D02AbilityAudit.java` 固定候选 8 个 BinOutput 文件、3 个 loader 相关源码 hash 与归档 JAR hash，隔离调用真实 `loadAbilityEmbryos` 和 `loadAbilityModifiers`。PlayerBoy、PlayerGirl 的受控基础及元素能力名称共 28 次引用均找到定义；两个新 JVM 的正常报告逐字节一致，SHA-256 `75bd293d69a559a55ecc9c288958e26a801ca3be441acadad4a7d18d628a1b1a`。反例仅不加载 Wind 定义文件，准确报告 9 个缺失引用，报告 SHA-256 `dac698ee78119ba8e14d11d3e95f7da7a2baf222fa8a43abfb0cec59861ec5c2`。原始证据为 `local/migration72/d02-r3-ability-contract-{first,repeat,missing}/`，class-init 未见数据库、服务或 ScriptLoader 初始化。本实验没有证明客户端能力语义、运行版本或完整资源闭包；候选 group 不能直接整体覆盖旧资源。
+
+`missing-wind` 是审计预期反例：该模式成功识别 9 项缺失后正常返回 0，并非资源完整。早期另一个故意使用非法 group 名称的探针以非零退出，两者不是同一测试或退出合同。
+
+下列复现使用源码内置的输入 hash 门禁、独立目录和归档 JAR；候选文件须已放在 `local/migration72/d02-r3-candidate/BinOutput`，不得使用根 JAR 替换固定归档。
+
+```powershell
+@'
+from pathlib import Path
+import subprocess,json,hashlib
+r=Path('.').resolve(); jar=r/'local/migration72/builds/LunaGC-before-avatar-wire-62a86fb.jar'
+jdk=next((r/'local/runtime').glob('jdk-17*')); bin=r/'local/migration72/d02-r3-candidate/BinOutput'
+out=r/'local/migration72/d02-r3-ability-replay'; out.mkdir(exist_ok=False); classes=out/'classes'; classes.mkdir()
+subprocess.run([str(jdk/'bin/javac.exe'),'-encoding','UTF-8','-cp',str(jar),'-d',str(classes),str(r/'tools/Client72D02AbilityAudit.java')],check=True)
+for label,mode in [('first','normal'),('repeat','normal'),('missing','missing-wind')]:
+ w=out/label; w.mkdir(); (w/'resources/BinOutput').mkdir(parents=True); (w/'resources/ExcelBinOutput').mkdir(parents=True)
+ (w/'config.json').write_text(json.dumps({'version':14,'folderStructure':{x:str(w/x) for x in ['resources','scripts','data','plugins','cache','packets']}}),encoding='utf8')
+ result=w/'result.json'; p=subprocess.run([str(jdk/'bin/java.exe'),'-Dfile.encoding=UTF-8','-Xlog:class+init=info:file=class-init.log','-cp',str(classes)+';'+str(jar),'Client72D02AbilityAudit',str(r),str(bin),mode,str(result)],cwd=w,capture_output=True,timeout=60)
+ (w/'stdout.log').write_bytes(p.stdout); (w/'stderr.log').write_bytes(p.stderr); p.check_returncode()
+ lines=(w/'class-init.log').read_text(encoding='utf8').splitlines()
+ assert not any("Initializing '"+x in line for x in ['emu/grasscutter/database/','emu/grasscutter/server/game/GameServer','emu/grasscutter/server/http/HttpServer','emu/grasscutter/server/dispatch/DispatchServer','emu/grasscutter/scripts/ScriptLoader'] for line in lines)
+ data=json.loads(result.read_text(encoding='utf8')); print(label,'checked',data['checked'],'missing',len(data['missing']),'sha256',hashlib.sha256(result.read_bytes()).hexdigest())
+assert (out/'first/result.json').read_bytes()==(out/'repeat/result.json').read_bytes()
+'@ | python -
+```
+
+## 子合同 H：601 组装置创建事件
+
+`src/test/java/emu/grasscutter/scripts/D02Group601CreateTest.java` 在独立 JVM 使用真实 Scene、组、实体、ScriptLoader、事件派发和 ScriptLib，执行初始 suite 的 EVENT_GADGET_CREATE。2 项通过、失败/错误/跳过均为 0：Default 状态的 70510013 真实触发 `SetWorktopOptionsByGroupId`，产生 option 173；另一组同 configId 的反事实装置未受影响。受控非 Default 条件不改变选项也不广播。测试捕获真实 `PacketWorktopOptionNotify` 的构造及场景广播边界，当前生产包号为 799，payload 所见为实体 ID 和 option 173；**该号和字段尚未验证为国服 7.2 wire**，测试未连接客户端或发送网络包。
+
+本次测试没有启动 GameServer、HTTP 或数据库；资源和缓存属于独立 JVM，GameData、runMode、脚本开关在结束时恢复。固定 group Lua SHA-256 `f7c117fa210345e73ffab39d3225f740fcedf27f8dd9beaf4e0db2191e1abc0e`，候选 Gadget 表和旧 GlobalCombat hash 与 E 相同。测试源码 SHA-256 `259c236daf5cd153eb56bfcf1cb8cb6de5fd3943bf21b0e31429578d4b1c723b`，class `b63fa8d7474e4a115323de035558af63bc1a1d9237baa2f1d93efe87bb06a27d`；原报告、日志和 class-init 证据在 `local/migration72/d02-r3-group601-test/`。未覆盖完整 scene tick、实际存档或客户端。
+
+复现前须与其他构建串行。以下生成独立配置、数据和缓存目录，只执行该测试；测试本身核对输入 hash。
+
+```powershell
+@'
+from pathlib import Path
+import json
+r=Path('.').resolve(); w=r/'local/migration72/d02-r3-group601-replay'; w.mkdir(parents=True,exist_ok=False)
+cfg={'version':14,'folderStructure':{'resources':str(r/'resources'),'scripts':str(r/'resources/Scripts'),**{x:str(w/x) for x in ['data','plugins','cache','packets']}},'server':{'fastRequire':True}}
+(w/'config.json').write_text(json.dumps(cfg),encoding='utf8')
+init=r"""allprojects {
+ tasks.withType(Test).configureEach {
+  workingDir rootProject.file('local/migration72/d02-r3-group601-replay')
+  systemProperty 'user.dir', rootProject.file('local/migration72/d02-r3-group601-replay').absolutePath
+  systemProperty 'd02.resources', rootProject.file('resources').absolutePath
+  systemProperty 'd02.gadgetTable', rootProject.file('local/migration72/sources/AnimeGameData/d54f6f0d423ded9d055bb740a3e5f3aa8f2667f1/ExcelBinOutput/GadgetExcelConfigData.json').absolutePath
+  environment 'LUNAGC_RESOURCES_DIR', rootProject.file('resources').absolutePath
+  jvmArgs '-Xlog:class+init=info:file=' + rootProject.file('local/migration72/d02-r3-group601-replay/class-init.log').absolutePath.replace('\\', '/')
+ }
+}
+"""
+(w/'d02-test.init.gradle').write_text(init,encoding='utf8')
+'@ | python -
+$d02Jdk = Get-ChildItem local/runtime -Directory -Filter 'jdk-17*' | Select-Object -First 1
+$env:JAVA_HOME = $d02Jdk.FullName
+$env:GRADLE_USER_HOME = (Resolve-Path local/gradle).Path
+$env:LUNAGC_RUNTIME = 'portable'
+./gradlew.bat --no-daemon test --tests emu.grasscutter.scripts.D02Group601CreateTest -PskipHandbook=1 -I local/migration72/d02-r3-group601-replay/d02-test.init.gradle --console=plain
+```
