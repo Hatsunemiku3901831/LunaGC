@@ -1,0 +1,316 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "sourceSHA256": {
+    "tools/client72_scene_request_contract.py": "705977c4a9805053a690a12b120920567c311f58b5a3cd7d1ad219e391f8479f",
+    "tools/client72_scene_handshake.py": "1a4dd459a33d5a7443f84a90e4304311963f7ee5008386aef60763c63b449f8b",
+    "tools/client72_emulator.py": "8007d2594ef8058a4f2a9f1c24094fb5d2551a202b4e52154876cdfe77a17c3c",
+    "tools/trace_client72_login.py": "2dcf89a710aafbd8b2719a04fbf70b545f12a055b21b0ad3fba946b7bca42002",
+    "tools/client72_session_runtime.py": "c6ff407e33416869a855cfa86e97c3f63a9d24019ac0f6e6dfc74a959bfe1439",
+    "protocol/cn-7.2/scene-handshake-observations.json": "b2ff1ac423fc3f1685715a261452359265a7dd0bfdb2821b6af3c55866ad8847"
+  },
+  "runtimeStatus": "not-tested",
+  "targetProtocolReady": false,
+  "fixtureCount": 8,
+  "roles": [
+    {
+      "semanticName": "EnterSceneReadyReq",
+      "typeIndex": 74391,
+      "clientType": "DEDHOOCBHCL",
+      "cmdId": 5046,
+      "getter": "0x14734bc40",
+      "entry": "0x15121e560",
+      "parameter": {
+        "kind": "uint32",
+        "attributes": "0x0",
+        "data": "0x13f",
+        "byRef": false
+      },
+      "registration": null,
+      "selfClassCell": "0x1458c4cc0",
+      "literal": {
+        "usageRow": 777327,
+        "index": 34850,
+        "slot": 34850,
+        "cell": "0x145b0df30",
+        "value": "Genshin Loading Log: NetworkManager RequestEnterSceneReady token:{0}"
+      },
+      "literalSite": "0x15121e597",
+      "commandDomainAmbiguity": null,
+      "bindingStatus": "verified-offline",
+      "semanticStatus": "verified-offline",
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "SceneInitFinishReq",
+      "typeIndex": 20380,
+      "clientType": "MLIHBBENFFA",
+      "cmdId": 4905,
+      "getter": "0x1518de890",
+      "entry": "0x1512242b0",
+      "parameter": {
+        "kind": "uint32",
+        "attributes": "0x0",
+        "data": "0x13f",
+        "byRef": false
+      },
+      "registration": null,
+      "selfClassCell": "0x1458c5570",
+      "literal": {
+        "usageRow": 777349,
+        "index": 34990,
+        "slot": 34990,
+        "cell": "0x145b0e390",
+        "value": "Genshin Loading Log: NetworkManager RequestSceneInitFinish"
+      },
+      "literalSite": "0x1512242cc",
+      "commandDomainAmbiguity": null,
+      "bindingStatus": "verified-offline",
+      "semanticStatus": "verified-offline",
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "EnterSceneDoneReq",
+      "typeIndex": 63999,
+      "clientType": "HDPGCNCMACO",
+      "cmdId": 1017,
+      "getter": "0x14a75bee0",
+      "entry": "0x15121e380",
+      "parameter": {
+        "kind": "uint32",
+        "attributes": "0x0",
+        "data": "0x13f",
+        "byRef": false
+      },
+      "registration": null,
+      "selfClassCell": "0x1458c4c98",
+      "literal": {
+        "usageRow": 777325,
+        "index": 34845,
+        "slot": 34845,
+        "cell": "0x145b0df08",
+        "value": "Genshin Loading Log: NetworkManager RequestEnterSceneDone"
+      },
+      "literalSite": "0x15121e399",
+      "commandDomainAmbiguity": "1017 also occurs on a different target type; no global alias merge",
+      "bindingStatus": "verified-offline",
+      "semanticStatus": "verified-offline",
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "PostEnterSceneReq",
+      "typeIndex": 74076,
+      "clientType": "AHBJNPDFDMJ",
+      "cmdId": 1696,
+      "getter": "0x14c964430",
+      "entry": "0x151226220",
+      "parameter": {
+        "kind": "uint32",
+        "attributes": "0x0",
+        "data": "0x13f",
+        "byRef": false
+      },
+      "registration": null,
+      "selfClassCell": "0x14589cb50",
+      "literal": {
+        "usageRow": 777376,
+        "index": 35045,
+        "slot": 35045,
+        "cell": "0x145b0e548",
+        "value": "Genshin Loading Log: NetworkManager RequesetPostEnterSceneReq"
+      },
+      "literalSite": "0x15122623a",
+      "commandDomainAmbiguity": null,
+      "bindingStatus": "verified-offline",
+      "semanticStatus": "verified-offline",
+      "runtimeStatus": "not-tested"
+    }
+  ],
+  "inverseBindings": [
+    {
+      "typeIndex": 74391,
+      "wireToLogical": "u32(raw - 0x4c01) XOR 0xe8c3",
+      "omittedRawValue": 0,
+      "omittedLogicalToken": 4294925116
+    },
+    {
+      "typeIndex": 20380,
+      "wireToLogical": "u32(raw - 0xf8cd) XOR 0x5673",
+      "omittedRawValue": 0,
+      "omittedLogicalToken": 4294922560
+    },
+    {
+      "typeIndex": 63999,
+      "wireToLogical": "u32(raw + 0x8609) XOR 0x2034",
+      "omittedRawValue": 0,
+      "omittedLogicalToken": 42557
+    },
+    {
+      "typeIndex": 74076,
+      "wireToLogical": "u32(raw + 0xb3b6) XOR 0x4902",
+      "omittedRawValue": 0,
+      "omittedLogicalToken": 64180
+    }
+  ],
+  "scope": "Full native request application construction and writer; raw-zero plus adjacent logical input",
+  "absentFieldContract": "Request writer omits raw zero. Decode missing request token as raw zero; never substitute response native-constructor defaults.",
+  "models": [
+    "Frozen Writer72 integer/byte sinks and Post-double sink; field selection/full writer bodies execute natively",
+    "Existing managed allocations, initialized classes and logging boundaries from scene-handshake request probes"
+  ],
+  "outsideScope": [
+    "Native request reader/server error-code or retry policy",
+    "Request-token comparison policy, scene side effects and full initialization lifecycle",
+    "Socket, actual scheduler, production runtime and real-client acceptance"
+  ],
+  "fixtures": [
+    {
+      "name": "EnterSceneReadyReq",
+      "typeIndex": 74391,
+      "cmdId": 5046,
+      "logicalToken": 4294925116,
+      "rawToken": 0,
+      "constructorRawDefault": 79044,
+      "tokenFieldEmitted": false,
+      "wire": "",
+      "writer": "0x14734ba00",
+      "applicationEntry": "0x15121e560",
+      "doubleBits": null,
+      "trace": {
+        "entry": "0x15121e560",
+        "stop": "0x15120d730",
+        "nativePathSHA256": "4ac199d8895c12fa94c972d432843e57df03450150189e1eaaef0f89736df64d"
+      }
+    },
+    {
+      "name": "EnterSceneReadyReq",
+      "typeIndex": 74391,
+      "cmdId": 5046,
+      "logicalToken": 4294925117,
+      "rawToken": 4294967295,
+      "constructorRawDefault": 79044,
+      "tokenFieldEmitted": true,
+      "wire": "18ffffffff0f",
+      "writer": "0x14734ba00",
+      "applicationEntry": "0x15121e560",
+      "doubleBits": null,
+      "trace": {
+        "entry": "0x15121e560",
+        "stop": "0x15120d730",
+        "nativePathSHA256": "4ac199d8895c12fa94c972d432843e57df03450150189e1eaaef0f89736df64d"
+      }
+    },
+    {
+      "name": "SceneInitFinishReq",
+      "typeIndex": 20380,
+      "cmdId": 4905,
+      "logicalToken": 4294922560,
+      "rawToken": 0,
+      "constructorRawDefault": 85824,
+      "tokenFieldEmitted": false,
+      "wire": "",
+      "writer": "0x1518de8a0",
+      "applicationEntry": "0x1512242b0",
+      "doubleBits": null,
+      "trace": {
+        "entry": "0x1512242b0",
+        "stop": "0x15120d730",
+        "nativePathSHA256": "bf9d25866e4230ba07e56f2f59094b11e3ea6a6edf03440246a6850b4aec3b4e"
+      }
+    },
+    {
+      "name": "SceneInitFinishReq",
+      "typeIndex": 20380,
+      "cmdId": 4905,
+      "logicalToken": 4294922561,
+      "rawToken": 4294967295,
+      "constructorRawDefault": 85824,
+      "tokenFieldEmitted": true,
+      "wire": "58ffffffff0f",
+      "writer": "0x1518de8a0",
+      "applicationEntry": "0x1512242b0",
+      "doubleBits": null,
+      "trace": {
+        "entry": "0x1512242b0",
+        "stop": "0x15120d730",
+        "nativePathSHA256": "bf9d25866e4230ba07e56f2f59094b11e3ea6a6edf03440246a6850b4aec3b4e"
+      }
+    },
+    {
+      "name": "EnterSceneDoneReq",
+      "typeIndex": 63999,
+      "cmdId": 1017,
+      "logicalToken": 42557,
+      "rawToken": 0,
+      "constructorRawDefault": 4294941227,
+      "tokenFieldEmitted": false,
+      "wire": "",
+      "writer": "0x14a75c040",
+      "applicationEntry": "0x15121e380",
+      "doubleBits": null,
+      "trace": {
+        "entry": "0x15121e380",
+        "stop": "0x15120d730",
+        "nativePathSHA256": "7740be7ba4dedd661d8117fc3d3e6ec09e5c97659a397d39c9da6dd4582f390f"
+      }
+    },
+    {
+      "name": "EnterSceneDoneReq",
+      "typeIndex": 63999,
+      "cmdId": 1017,
+      "logicalToken": 42558,
+      "rawToken": 1,
+      "constructorRawDefault": 4294941227,
+      "tokenFieldEmitted": true,
+      "wire": "6001",
+      "writer": "0x14a75c040",
+      "applicationEntry": "0x15121e380",
+      "doubleBits": null,
+      "trace": {
+        "entry": "0x15121e380",
+        "stop": "0x15120d730",
+        "nativePathSHA256": "7740be7ba4dedd661d8117fc3d3e6ec09e5c97659a397d39c9da6dd4582f390f"
+      }
+    },
+    {
+      "name": "PostEnterSceneReq",
+      "typeIndex": 74076,
+      "cmdId": 1696,
+      "logicalToken": 64180,
+      "rawToken": 0,
+      "constructorRawDefault": 4294939980,
+      "tokenFieldEmitted": false,
+      "wire": "090100000000004043",
+      "writer": "0x14c963fc0",
+      "applicationEntry": "0x151226220",
+      "doubleBits": "4340000000000001",
+      "trace": {
+        "entry": "0x151226220",
+        "stop": "0x15120d730",
+        "nativePathSHA256": "5be8458e9882832739e7f4d979f6c7e8dbcdaab181a7bc79cb4d18769c9972f3"
+      }
+    },
+    {
+      "name": "PostEnterSceneReq",
+      "typeIndex": 74076,
+      "cmdId": 1696,
+      "logicalToken": 64181,
+      "rawToken": 1,
+      "constructorRawDefault": 4294939980,
+      "tokenFieldEmitted": true,
+      "wire": "0901000000000040433001",
+      "writer": "0x14c963fc0",
+      "applicationEntry": "0x151226220",
+      "doubleBits": "4340000000000001",
+      "trace": {
+        "entry": "0x151226220",
+        "stop": "0x15120d730",
+        "nativePathSHA256": "5be8458e9882832739e7f4d979f6c7e8dbcdaab181a7bc79cb4d18769c9972f3"
+      }
+    }
+  ]
+}

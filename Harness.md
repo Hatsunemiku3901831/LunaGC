@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+F-03追加复现：[request-contract](docs/CLIENT_72_SCENE_REQUEST_CONTRACT.md)（8 native writer边界、5测试、双跑相同）与[1017域](docs/CLIENT_72_CMD1017_DOMAIN.md)（3 native出站流样本、5测试、双跑相同）。请求缺tag必须按raw0解码；Done42557/Post64180是正常本地范围值。生产入口关联有12项独立回归，另15项握手含响应编码raw0必须显式发送的边界。上游忽略payload、当前解析后丢弃payload都不作为完整握手验收。
+
 F-03研究新入口：[scene-handshake](docs/CLIENT_72_SCENE_HANDSHAKE.md)由`tools/client72_scene_handshake.py`固定输入复现116原生结果/10类20字段/13业务绑定，10测试；[store-weight-contract](docs/CLIENT_72_STORE_WEIGHT_CONTRACT.md)由`tools/client72_store_weight_contract.py`复现12次真实字典路由和5字段容量目的地，8测试。两份trace/摘要均双跑一致。握手response的构造默认与显式raw0分记，Java optional只是存在性适配；DoneReq1017的另一域仍单独核查。`generate_scene72_sources.py`只接管这8握手和容量消息；Notify生产字段另列Project F-03c，当前尚未验收接入。
 
 本批新增独立入口：[response合同](docs/CLIENT_72_RESPONSE_CONTRACT.md)（`tools/client72_response_contract.py`、6原生夹具/两轮一致，RSA最小4字段与tag61子1/3/4/5）；[初始化raw](docs/CLIENT_72_INITIALIZATION_WIRE.md)（`tools/trace_client72_initialization.py`、134原生reader/5模型拒绝/8字段，身份candidate，历史21136坐标不沿用）。`generate_login72_contract.py`可生成21类198字段闭包，`check_login72_contract.py`将生产protoc与50原生writer/34原生响应图/6拒绝独立比较；完整集及构建结果由本批收尾记录，不复制旧通过数。

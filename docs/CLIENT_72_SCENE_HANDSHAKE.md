@@ -1,5 +1,7 @@
 # F-03：八个场景握手与编码值边界
 
+后续融合补充：[请求省略边界](CLIENT_72_SCENE_REQUEST_CONTRACT.md)独立执行8个构造/writer，确认缺字段按raw0逆变换，不能沿用响应默认；[1017域](CLIENT_72_CMD1017_DOMAIN.md)实际分清正常Game C2S与另一beyond/WPF出站流，保留全局重号。生产入口已一次解析并关联当前Player token，失配在发送/状态变更前走现有packet-handler异常路径，不猜错误码、不加未证阶段时序或重发策略。Java先红12项中4失配失败，后请求12项与握手15项全过；整批账号/经济/保存验收由本轮收尾记录。
+
 2026-11-06。固定国服7.2三输入，完成八个Ready/Init/Done/Post请求响应的目标身份、20个raw字段/10类型，以及八个token、四个retcode和PlayerEnterSceneNotify token的13条业务绑定。工具为`tools/client72_scene_handshake.py`，机器契约为[观察摘要](../protocol/cn-7.2/scene-handshake-observations.json)的`roles`、`messages`、`semanticBindings`、`responsePresenceContract`。只做离线研究，不启动客户端、调试目标或服务；本项不修改生产源码、mappings和父任务状态，不代表F-03完整初始化或D-02完成。
 
 所有输入由`extract_client72.HASHES`重新校验并提取，未引用Asta包号、setter名称或旧客户端地址来晋级。Asta固定参考`a49f51aa6f2787ffbc25cee46801b70dee860d23`只作为父批背景，本工具无需其运行文件，也未复制其实现或生成类。既有[scene-wait](CLIENT_72_SCENE_WAIT.md)、[scene-nested](CLIENT_72_SCENE_NESTED.md)及研究Proto的原始SHA-256固定在`REUSED_EVIDENCE`，沿用其非空uint64/列表/字符串边界，不把历史原生样本称为本轮重跑。
