@@ -46,3 +46,9 @@
 独立Mongo关联回归实际50套875项全部通过，失败/错误/跳过0（其中包含网络43，不能与绿测重复相加）。原47套账号/经济/保存/Lua/协议及CombatSessionSequence和两网络套件使用独立运行目录；关闭前仅admin/config/local，Mongo正常退出且27027释放。证据目录`local/migration72/offline-sol-terra/mongo-e825b6f516564e888f0b4d5bce19d2da/`。首轮新cwd漏接相对输入导致41个路径失败，目录`mongo-8c106c20b11743a8a73280ccc13b74fc/`保留；补齐既有夹具的resources/protocol/src输入后重跑，无产品或断言修改。
 
 本阶段仍不部署游戏服务；生产修复的portable打包与class/JAR核验由阶段收尾记录，不以编译或上述注册成功代替D-02实机。
+
+## 1B：E-01d1n3 Chapter 与资源前置
+
+[章节专题](CLIENT_72_D02_CHAPTER_LOAD.md)固定目标commit/tree/blob，两个独立JVM真实loader逐行字段/末次写索引核对通过：436安装，339/326键，零键98/111行，30302均无命中、0 ERROR、loadedAll=false。报告SHA `47524bc3879665f68350650dcc7c94a4ab604fc3a11d4963919a3a7176814a62`。成熟n2夹具新增显式目标表模式，独立Mongo实际2项全过；两条启动构造2/64包、没有ChapterState增量，BSON/新Player冷读和真实manager未就绪拒绝保持。
+
+沿loadAll调用顺序建立152资源注解/161文件引用清单，候选tree156有blob、5不在tree，现有24个引用逐blob一致；不猜未知键、不混称全部P0。清单不覆盖完整动态引用或运行revision。目标QuestExcel拒绝、未知字段及必要资源完整性仍阻塞自然就绪，2B正向重绑定没有执行，不伪造loadedAll。

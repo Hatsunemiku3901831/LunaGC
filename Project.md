@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+E-01d1n3本轮限定验收完成：目标ChapterExcel实际双JVM436安装/339及326键，30302无begin/end；新增目标表模式经独立Mongo真实303启动/保存2项全过、2/64包无ChapterState增量，loadedAll=false门禁保留。152注解/161表引用机械清单与准确缺口见[章节专题](docs/CLIENT_72_D02_CHAPTER_LOAD.md)。E-01/R3与2B正向重绑定继续阻塞，未启动真实loadAll或客户端。
+
 本轮进展：C-01b有限网络入口已红40/24→绿43全过，真实扫描324/启用227/注册227/冲突0；50套875项关联回归与120研究、9生成检查通过，原始路径夹具失败保留。源码review只精确更新3/1/2个相关指纹和对应依赖摘要，116输入的三层/required/runtime不变，生产打包及阶段收尾继续。目标Chapter真实双JVM436安装/339及326索引、目标表模式303启动/保存2项通过，正式资源就绪及正向manager重绑仍未满足。具体见[本轮离线记录](docs/CLIENT_72_SOL_TERRA_OFFLINE.md)、[网络](docs/CLIENT_72_NETWORK_BOUNDARIES.md)、[章节](docs/CLIENT_72_D02_CHAPTER_LOAD.md)。
 
 2026-11-07限定恢复：用户已覆盖历史暂停，按[Sol/Terra离线前置路线](#d02-offline-sol-terra)持续执行静态、无人值守及证据明确的实现/验证；客户端、调试器、补丁安装、服务部署与 Astra 均禁做。本轮接手 `4b04a1d`。证据0已主线逐项复核并同步108→116输入：8新增、startup仅追加一个历史对照，107旧摘要/1269生产来源及三层/required/runtime/矩阵保持；24定向通过、结构0/ready224拒绝，双recover一致。当前继续C-01实际入口红绿、Chapter/真实加载前置和g2有限Java来源投影；条件满足才正向Quest重绑定。细节及本轮证据见[离线执行](docs/CLIENT_72_SOL_TERRA_OFFLINE.md)。下方暂停段均为历史，不扩大本轮实机授权；D-02仍未完成。

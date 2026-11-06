@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+E-01d1n3：[章节实际加载](docs/CLIENT_72_D02_CHAPTER_LOAD.md)，入口`tools/audit_d02_chapter_{manifest,run}.py`与`tools/D02ChapterAudit.java`。真实双JVM结果SHA `47524bc3…6814a62`；可选`d02.chapterExcel`新增目标表模式由主线在`offline-sol-terra/mongo-8c106c20b11743a8a73280ccc13b74fc/chapter-start/`运行2项全过，包类2/64无ChapterState、BSON/冷读及未就绪manager拒绝保持。首个实例正常关闭，保留303库；不能据此进入2B。脚本固定旧dfde archive作loader对照，不随根JAR更新擅自换输入。
+
 C-01b实际红绿及主线来源复核：`local/migration72/offline-sol-terra/network-{red,green,source-review}/`；Frame36+注册7通过、扫描324/227/227/0，旧来源拒绝和精确同步双recover保持三层/required/runtime。`associated-research/`实际120、`generation-checks/`9入口全过。关联Java50套875/0及正常Mongo shutdown在`mongo-e825b6f516564e888f0b4d5bce19d2da/`；首轮缺相对输入的41路径失败在`mongo-8c106c20b11743a8a73280ccc13b74fc/`，不要将其初始化失败1项与完整Inventory36项口径混加。所有上述目录相对`local/migration72/offline-sol-terra/`；生产打包/最终现场随后补充。
 
 2026-11-07限定离线执行已恢复，边界与依赖见[本轮记录](docs/CLIENT_72_SOL_TERRA_OFFLINE.md)、Project Sol/Terra路线。接手清点`local/migration72/offline-sol-terra/initial-inventory.json`；Terra枚举后主线独立核原始引用/提交/历史tool hash，review108→116，原107摘要/1269生产来源、三层/required/runtime不变。旧review拒绝、精确接纳、双recover一致及24测试/结构0/ready224在`offline-sol-terra/evidence-integration/`；audit报告SHA `f0bb0bdf…99da81`。后续C-01/Chapter/g2准备仍独立验收，不接Avatar正式sender，不启动游戏/调试器/补丁/服务或Astra；旧暂停与测试数按历史读取。

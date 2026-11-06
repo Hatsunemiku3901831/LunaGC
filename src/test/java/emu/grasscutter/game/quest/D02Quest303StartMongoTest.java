@@ -51,6 +51,7 @@ final class D02Quest303StartMongoTest {
     private static Map<Integer, MainQuestData> chapters;
     private static Map<String, List<QuestData>> conditions;
     private static Map<Integer, Integer> talks;
+    private static Map<Integer, ChapterData> chapterRows, chapterBegin, chapterEnd;
     private static ConfigGlobalCombat combat;
     private static Grasscutter.ServerRunMode priorMode;
     private static boolean priorScripts, priorQuesting;
@@ -92,6 +93,9 @@ final class D02Quest303StartMongoTest {
         priorStore = DatabaseManager.getGameDatastore(); setStore(store);
         quests = new HashMap<>(GameData.getQuestDataMap()); chapters = new HashMap<>(GameData.getMainQuestDataMap());
         conditions = new HashMap<>(GameData.getBeginCondQuestMap()); talks = new HashMap<>(GameData.getQuestTalkMap());
+        chapterRows = new HashMap<>(GameData.getChapterDataMap());
+        chapterBegin = new HashMap<>(ChapterData.getBeginQuestChapterMap());
+        chapterEnd = new HashMap<>(ChapterData.getEndQuestChapterMap());
         combat = GameData.getConfigGlobalCombat(); priorScripts = config.server.game.enableScriptInBigWorld;
         priorQuesting = config.server.game.gameOptions.questing.enabled;
         var mode = Grasscutter.class.getDeclaredField("runModeOverride"); mode.setAccessible(true); priorMode = (Grasscutter.ServerRunMode) mode.get(null);
@@ -114,7 +118,19 @@ final class D02Quest303StartMongoTest {
         GameData.getMainQuestDataMap().put(chapter.getId(), chapter); chapter.onLoad();
         assertEquals(303, chapter.getId()); assertEquals(63, chapter.getSubQuests().length);
         assertEquals(63, GameData.getQuestDataMap().size()); assertTrue(GameData.getBeginCondQuestMap().isEmpty());
-        assertFalse(ChapterData.getBeginQuestChapterMap().containsKey(30302), "target ChapterExcel not loaded in this fixture");
+        String chapterExcel = System.getProperty("d02.chapterExcel");
+        if (chapterExcel != null) {
+            Path chapterFile = Path.of(chapterExcel);
+            requireHash(chapterFile, "6c291ee3b5ca1e29b1b4395c1e13103d1965e1ce687eb3e0364e08dfcc55f164");
+            GameData.getChapterDataMap().clear();
+            ChapterData.getBeginQuestChapterMap().clear(); ChapterData.getEndQuestChapterMap().clear();
+            load.invoke(null, ChapterData.class, chapterFile, GameData.getChapterDataMap());
+            assertEquals(436, GameData.getChapterDataMap().size());
+            assertEquals(339, ChapterData.getBeginQuestChapterMap().size());
+            assertEquals(326, ChapterData.getEndQuestChapterMap().size());
+            assertFalse(ChapterData.getEndQuestChapterMap().containsKey(30302));
+        }
+        assertFalse(ChapterData.getBeginQuestChapterMap().containsKey(30302), "30302 has no begin index in this fixture");
         assertFalse(ResourceLoader.isLoadedAll());
     }
 
@@ -134,6 +150,9 @@ final class D02Quest303StartMongoTest {
         if (chapters != null) { GameData.getMainQuestDataMap().clear(); GameData.getMainQuestDataMap().putAll(chapters); }
         if (conditions != null) { GameData.getBeginCondQuestMap().clear(); GameData.getBeginCondQuestMap().putAll(conditions); }
         if (talks != null) { GameData.getQuestTalkMap().clear(); GameData.getQuestTalkMap().putAll(talks); }
+        if (chapterRows != null) { GameData.getChapterDataMap().clear(); GameData.getChapterDataMap().putAll(chapterRows); }
+        if (chapterBegin != null) { ChapterData.getBeginQuestChapterMap().clear(); ChapterData.getBeginQuestChapterMap().putAll(chapterBegin); }
+        if (chapterEnd != null) { ChapterData.getEndQuestChapterMap().clear(); ChapterData.getEndQuestChapterMap().putAll(chapterEnd); }
         GameData.setConfigGlobalCombat(combat); Grasscutter.getConfig().server.game.enableScriptInBigWorld = priorScripts;
         Grasscutter.getConfig().server.game.gameOptions.questing.enabled = priorQuesting; Grasscutter.setRunModeOverride(priorMode);
         setStore(priorStore); if (client != null) client.close(); // Preserve isolated database.
@@ -163,7 +182,10 @@ final class D02Quest303StartMongoTest {
         assertEquals(62, started.getMainQuest().getChildQuests().values().stream().filter(q -> q.getState() == QuestState.QUEST_STATE_UNSTARTED).count());
         assertArrayEquals(new int[] {0}, started.getFinishProgressList());
         assertTrue(started.getMainQuest().getQuestGroupSuites().isEmpty());
-        assertEquals(List.of("PacketFinishedParentQuestUpdateNotify", "PacketQuestListUpdateNotify"), player.packets.stream().map(p -> p.getClass().getSimpleName()).toList());
+        var packetClasses = player.packets.stream().map(p -> p.getClass().getSimpleName()).toList();
+        assertEquals(List.of("PacketFinishedParentQuestUpdateNotify", "PacketQuestListUpdateNotify"), packetClasses);
+        assertFalse(packetClasses.contains("PacketChapterStateNotify"));
+        System.out.println("D02_303_DIRECT_PACKETS " + packetClasses);
         drain(); var raw = bson(210001, "direct-bson.json");
         var cold = player(210001); var saved = DatabaseHelper.getAllQuests(cold);
         assertEquals(1, saved.size()); assertEquals(303, saved.get(0).getParentQuestId());
@@ -187,6 +209,9 @@ final class D02Quest303StartMongoTest {
         assertEquals(63, main.getChildQuests().size());
         assertEquals(63, main.getChildQuests().values().stream().filter(q -> q.getState() == QuestState.QUEST_STATE_UNFINISHED).count());
         drain(); bson(210002, "statue-bson.json");
+        var packetClasses = player.packets.stream().map(p -> p.getClass().getSimpleName()).toList();
+        assertFalse(packetClasses.contains("PacketChapterStateNotify"));
+        System.out.println("D02_303_STATUE_PACKETS " + packetClasses);
         assertEquals(64, player.packets.size());
         assertEquals("PacketFinishedParentQuestUpdateNotify", player.packets.get(0).getClass().getSimpleName());
         assertEquals(63, player.packets.stream().filter(p -> p.getClass().getSimpleName().equals("PacketQuestListUpdateNotify")).count());
