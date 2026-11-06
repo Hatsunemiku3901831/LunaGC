@@ -1,5 +1,7 @@
 # E-01d1m：D-02 任务入场依赖与候选字段缺口
 
+2026-11-07[资源深入研究](CLIENT_72_RESOURCE_DEEP_RESEARCH.md)已实际确认BGH字符串解析及已知消费链筛选GAME_TIME_TICK18、排除LuaNotify20。不能将此证据当param_str alias；LogicType对象/缺acceptCond不可从现输入无损恢复，需有来源的blob/exporter或接受规则。303显式路径及既有拒绝不变。
+
 本专题是源码和固定数据的只读核查，不代表真实目标客户端任务、完整入场或 D-02 通过。当前生产配置及研究夹具指向旧 producer 资源，服务未部署；下述目标候选数据没有部署。账号/保存约束见 [系统](ACCOUNT_AND_SAVE_SYSTEM.md)、[数据模型](ACCOUNT_AND_SAVE_DATA_MODEL.md) 和 [运维](ACCOUNT_AND_SAVE_OPERATIONS.md)。旧账号的任务、角色和存档不能删除或重建来绕过初始化。
 
 ## 输入及证据边界

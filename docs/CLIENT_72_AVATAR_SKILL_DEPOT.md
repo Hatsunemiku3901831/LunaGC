@@ -1,5 +1,7 @@
 # 7.2 AvatarInfo depot 与当前队伍资源消费有限合同
 
+2026-11-07新增[资源深入研究](CLIENT_72_RESOURCE_DEEP_RESEARCH.md)已实际验证目标parser对+68/+6c缺省编码零及独立非零，LHFO完整外层/元素和条件查询；[Avatar深入](CLIENT_72_AVATAR_DEEP_RESEARCH.md)另验证+68/tag13消费。候选JSON缺键不等于已验二进制缺flag，energySkill/attackModeSkill别名仍未批准。下方原范围保留为历史。
+
 任务 `F-03d3f4c / D02-R1`。目标是独立解释 `AvatarInfo/48178 tag11 BLBHOJMCOJN/+0xc4`，延续 f3 当前队伍成员消费者此前在 `151a9ed62` 的停止点。这里只提出 **AvatarSkillDepotExcelConfigData 资源 ID** 的有限语义供主线审核；不修改 Proto、sender、opcode、mappings、资源加载 alias、ready 或公共 runtime。`runtimeStatus=not-tested`、`targetProtocolReady=false`，完整 Avatar/Team handler 与入场必要性未验。
 
 ## 目标、来源和最小实验

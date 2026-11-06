@@ -1,5 +1,7 @@
 # 7.2 固定资源候选审计（E-01a）
 
+2026-11-07[资源深入研究](CLIENT_72_RESOURCE_DEEP_RESEARCH.md)已关闭指定depot/条件parser默认、完整LHFO外层和BGH的GameTime selector子合同；实际候选JSON→字段/flag桥梁、acceptCond和运行时revision选择仍缺，不批准转换或resourceReady。候选与原resources均未改。
+
 本页是候选输入与差异验收，**不是E-01最小资源集或D-02实机验收**。没有修改resources子模块、其引用、运行配置或现有数据。
 
 ## 来源固定
