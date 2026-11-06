@@ -30,7 +30,7 @@
 | E-01c6 嵌套require调用者bindings恢复 | E-01c5已复现成功置null/异常残留 | b74cd16；6例先5失败后全过，6套32 Lua及8加载审计全过；portable25秒JAR7ca18e10…e8f5f、9class相符，其余45935不变；双轮整场fast407/449、inline0，30错误组恢复且无新增；完整前置不足未部署，local/资源/实机不晋级 | 已完成 |
 | F-04a SDK/补丁/资源前置现场复核 | 当前checkout/config/GAME_PATH、三输入与现有会话 | 三哈希/参考clean/归属已验；API会话无target；两个status退出1及6个revision候选；源码旧强制验签钩子与字符串工厂缺口保留，见CLIENT_72_RUNTIME_PREREQUISITES；仅核对不代表F-04完成 | 已完成 |
 | F-04b 保留验签的本地信任供给合同 | F-04a、既有原生seed/response/dispatch密码学 | 6b72887；14原生/23次key验签（4成功10拒绝）、18关联和双跑；COPY只R13、CHECK只R8/root第五参数，返回/flags不变；未知key不供给；未装钩子/未导出私钥 | 已完成 |
-| F-04c 将已验信任输入接入7.2补丁 | F-04b正式合同、当前patch归属与本地工具链 | 本机明确以现有SigningKey同时供server与root签名者；只支持固定7.2，移除强置验签结果；不输出目标私钥；实际callback/ilhook ABI/拒绝回归、Rust构建/产物哈希；子模块独立提交/父引用核对；完整前置不足不安装或改版本 | 进行中 |
+| F-04c 将已验信任输入接入7.2补丁 | F-04b正式合同、当前patch归属与本地工具链 | patch3675ea7/父工具b5d5881；已审6文件及精确依赖2.3.0，删除强置验签结果；50 Rust/25 Python、6实际ilhook ABI/11原生密码学样本双跑；release DLL dec47347…13cd4c；仅供输入/保留原生验签，不导出目标私钥，前置不足未安装，全DLL/SDK/实机未验 | 已完成 |
 | F-04c2 便携入口的信任文件路径供给 | F-04c明确LUNAGC_TRUST_BUNDLE接口 | 9新增+13原便携=22真实PowerShell测试全过；副作用前查文件/绝对路径及实际patch子进程继承，版本守卫实际拒绝且客户端hash保持；server-only保留；不替代DLL材料校验或既有调试器环境，见CLIENT_72_TRUST_LAUNCHER | 已完成 |
 | D-01b3 恢复真实启动与字符串/分配上下文观察 | 固定三输入/SDK/插件归属、原D-01b异常证据、现有Automate会话 | 仅在无其他目标时用已有调试器加载本项目原始客户端，不装未验补丁/服务；同通道捕获并逐次原样交付首次异常，二次异常停；核已知代码及真实初始化/非空Marshal自然调用，分清工具模型缺口/目标退出，禁止强置结果或沿旧PID | 进行中 |
 

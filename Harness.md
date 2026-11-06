@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+F-04c：[正式信任补丁](docs/CLIENT_72_TRUST_PATCH.md)，patch `3675ea7`已按6文件差异和生产回调/实际ilhook ABI证据审阅接收。50 Rust/25 Python、6 ABI与11原生密码学样本均过，双跑一致；DLL仅本机构建，未安装，全DLL/SDK/D-02不晋级。portable信任路径接线另见F-04c2，既有调试器仍需独立环境核对。
+
 F-03d3a：[Avatar raw外层](docs/CLIENT_72_AVATAR_OUTER.md)，`python -m unittest tools.test_client72_avatar_outer -v`；384扫描/19原生图/5拒绝双跑，8新增/62关联通过。3类14wire限定完成；65类368存储和85 AOT仅静态依赖。AvatarInfo非空仍拒绝，继续Project F-03d3b，不把候选身份或完整闭包晋级。
 
 F-04c2：[便携信任路径供给](docs/CLIENT_72_TRUST_LAUNCHER.md)，`python -m unittest tools.test_client72_trust_launcher tools.test_local_windows -v`实际22项全过；新子进程继承/副作用前缺文件拒绝/版本守卫保持。底层材料校验和既有管理员调试器环境不据此晋级。原始红绿与真实版本拒绝日志为`local/migration72/logs/trust-launcher-*`，证明`evidence/trust-launcher-verification.json`。

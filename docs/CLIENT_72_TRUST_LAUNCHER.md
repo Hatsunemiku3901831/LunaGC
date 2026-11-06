@@ -4,7 +4,7 @@
 
 ## 行为
 
-`Resolve-ClientTrustBundlePath`从显式环境变量读取路径；未指定时选择当前checkout下生成器的默认输出`local/migration72/trust/client72-trust.json`。相对路径按checkout解析为绝对路径，空文件名/目录或缺文件会在入口报错；函数不创建材料、不修改环境或客户端文件。
+`Resolve-ClientTrustBundlePath`从显式环境变量读取路径；未指定或为空时选择当前checkout下生成器的默认输出`local/migration72/trust/client72-trust.json`。相对路径按checkout解析为绝对路径，目录或缺文件会在入口报错；函数不创建材料、不修改环境或客户端文件。
 
 `tools/local_windows.ps1`在play、patch及启用客户端guard的start入口先验原有客户端版本，再解析信任文件路径、设置本进程环境，随后进入服务/补丁/客户端操作。新启动的PowerShell、guard和游戏子进程继承该绝对路径。禁用客户端guard的server-only start保持原有行为，build/status/reset不新增材料依赖；两个内部补丁/guard函数原有重复版本校验移到调用入口，入口校验后按正常流程执行。
 
