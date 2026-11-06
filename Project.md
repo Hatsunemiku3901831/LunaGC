@@ -25,6 +25,7 @@
 | F-03d2b1 库存替换用途与Material六字段 | F-03d2a完整raw图 | fb6440d；19通知/22交付/21 Material+1缺资源、5拒绝、9新增/59关联及双跑；实际clear/构造/数量/64位GUID哈希索引分段执行，6业务字段限定通过；单例/分类fanout/UI/实机未验，非材料分支仍unknown | 已完成 |
 | F-03d2b2 Weapon/Equip最小用途及字段合同 | F-03d2b1、已有15类raw图 | 限Item.tag6→44169及其oneof74063/64947；两支用具名Weapon/Reliquary资源与实际模型/角色装备slot双链各自证明，level/exp/promote和必要affix list/map逐字段验，不沿上游命名；64位/错分支/oneof/错误/双跑，未知保持unknown、不迁生产 | 进行中 |
 | F-03d2c1 库存独立raw Java适配器 | F-03d2a完整15类47wire图 | b47a490；独立namespace15类47raw，36 Java（含32原生对象向量）/4生成守卫及固定hash检查通过；旧root2独立断言失败保留，新适配器显式零/oneof/map/list/64位/错误通过；portable22秒JAR5db5d3b2…28fd73，仅70新raw class/3元信息变化，其余45948保持；旧sender/业务映射未改、前置不足未部署 | 已完成 |
+| F-03d2c2 库存有限生产接入 | b1先做已验Material红测；三层/生产阶段待b2验收、c1已过 | 固定完整raw图及两个独立业务合同，接管20892/root2/14，未知root8不发；只发送有已验字段和明确服务端来源的最小Material/Equip分支，保留未知原名/oneof/list/map，不改共享旧Item/Equip/Weapon/Reliquary或GameItem存储；producer独立wire/原生消费/64位/空值、生成守卫、账号经济保存回归与portable构建；完整前置不足不部署 | 进行中 |
 | F-03d2a 68537/65333库存raw闭包 | F-03d1a方法、本地固定三输入 | a1/a2/a3限定完成；15类47wire、1920扫描/32非空组合图/6拒绝、8新增/54关联及双跑；独立native oneof/map/list/merge已验，身份和字段业务仍unknown，不迁生产 | 已完成 |
 | F-03d2a1 库存15类型依赖与原始外层 | F-03d2a固定输入/全部usage来源 | a81f84b；15类型42存储依赖，512扫描/21图/5拒绝、8新增/38关联及双跑；root/Item外层+2叶子13wire限定通过，其他非空nested范围拒绝，fullStoreRawClosure=false | 已完成 |
 | F-03d2a2 uint32 map与packed列表 | F-03d2a1 | eec23d2；6类22wire，5map/5list；768扫描/29图/3模型拒绝，8新增/46关联及双跑；公共runtime未改 | 已完成 |
