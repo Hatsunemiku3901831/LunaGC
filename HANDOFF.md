@@ -176,3 +176,6 @@ B-02e7限定原生部分消费51f7cd2、E-01c5实际生产Lua加载审计9aa8ca7
 ## 2026-11-06 D-02恢复后的活动检查点
 
 最新用户明确恢复并覆盖所有旧暂停，持续推进至D-02全部实机通过；本条不代表暂停。R0台账13c3f85、资源引用bd2d9f8、Avatar e4/e5/e6为3be6e19/de1c499/4f0e5c6、Hero/本地角色来源ba9daf5已本地提交未推送；e7/e8、真实启动通道与scene3真实触发仍在并行推进。两轮原始启动均退出，第二轮干净DR/裸con仍80000003，原因unknown；不冒称SDK/实机通过。原resources差异/配置/数据保持，未部署猜测服务。详细已完成/在途归属/失败/下一步见覆盖前已备份核验的[HANDOFF2](HANDOFF2.md)；Project/Harness持续更新。
+
+
+2026-11-07活动交接（持续开发，不暂停）：D02-R0台账及Avatar e4～e8、g1独立raw适配器、f2a/f2b限定语义、R2有界对照、R3有限资源事件已审并本地提交；HEAD写入前2aeecee，JAR dfdebbda…006ec3内嵌c667344、portable30秒/逐class核对，前置未齐未部署。原始客户端留在R2自有budget pause，不能按旧无target记录另load；daily独立Mongo已正常关闭。f3 Team与daily最终1test待主线审，HTTP实际Java→native在途，REA/Ghidra注册健康且公共CLI可用、MCP当前未暴露。完整状态、失败/模型边界/文件归属和下一可执行动作见[HANDOFF2](HANDOFF2.md)；旧H2已先备份核hash，H1仅追加，D-02实机尚未通过。
