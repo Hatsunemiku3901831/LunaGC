@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+E-01d1a / D02-R3：新增`python -m tools.audit_d02_resources72`固定四表与受控两角色/四depot引用，完整参数及局限见[最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)。`python -m unittest tools.test_audit_d02_resources72 tools.test_audit_resource72 -v`实际10项通过；主线报告`evidence/d02-r3-avatar-references-main-review.json`与原双跑逐字节相同。仅存在性子合同，revision/递归资源/真实加载仍待后继，不重复计算旧849引用或大套件。
+
 本轮D02-R0：[入场依赖台账](docs/CLIENT_72_D02_ENTRY_DEPENDENCIES.md)已受主线审核；98候选/132源码位置登记无缺项，13/49源码hash无漂移，实际recover为81方法/98边与294方法/411边/2854未关联。证据`evidence/d02-r0-{source,dependencies}{,-summary}.json`、`d02-r0-ledger-review.json`；协议结构0、ready仍224拒绝。R0只关闭依赖台账，不晋级完整P0或runtime；接着R1 raw/语义、R2有界真实启动和R3最小资源分别消除已登记阻塞。
 
 2026-11-06最新恢复：用户明确要求持续推进至D-02，覆盖下方历史暂停。接手`6f5c99e`，复核证据`local/migration72/evidence/d02-resume-inventory.json`；三输入/SDK/Astrolabe、配置及子模块归属已核，原resources差异和Mongo保留，无服务或游戏目标。D02-R0先建立实际路径依赖台账，随后按[Project路线](Project.md#d02-route)推进R1/R2/R3、R4/R5/R6；既有测试数字不当成本轮重跑，活动检查点不暂停。
