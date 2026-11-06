@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+F-03d3e7：[多份message列表](docs/CLIENT_72_AVATAR_MULTI_LISTS.md)，`trace_client72_avatar_multi_lists.py`/`test_client72_avatar_multi_lists`；两类29wire、256扫描/14图/9拒绝，8新增/146关联及主线8定向通过。主线第三新进程完整/摘要与双跑同为`a4fc50e5…89fc46b`/`51d4ef4a…2dc33f6`，证据`evidence/avatar-multi-lists-*`；六具体message-list独立AOT和同形非空列表分离已验，继续e8，不晋级业务或实机。
+
 F-03d3e6：[大节点与signed列表](docs/CLIENT_72_AVATAR_LARGE_NODES.md)，`trace_client72_avatar_large_nodes.py`/`test_client72_avatar_large_nodes`；两类36wire、256扫描/13图/9拒绝，8新增/138关联及主线8定向通过。主线第三新进程完整/摘要与双跑同为`6c503f33…a33e02c`/`be201804…21a9bf5`，证据`evidence/avatar-large-nodes-*`；无生产/配置/资源改动，继续e7/e8。
 
 F-03d3f2a：[Hero与本地角色来源](docs/CLIENT_72_AVATAR_CONTROL.md)，`client72_avatar_control.py`及`test_client72_avatar_control`；7原生图，5新增/15关联通过，完整/摘要双新进程逐字节一致。证据`evidence/avatar-control-{native,native2,summary,summary2}.json`，日志`logs/avatar-control-run{1,2}.log`。只证明root3的具名Hero消费与另一路本地实体ID来源，不批准当前控制GUID，继续+0x284的场景消息写入合同。
