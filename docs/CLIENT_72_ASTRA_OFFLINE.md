@@ -26,3 +26,29 @@
 当前源码`Player.onLogin`构造AvatarData；`HandlerSceneInitFinishReq`构造PlayerEnterSceneInfo，随后才构造SceneTeamUpdate。客户端s2a另已证明首个Avatar未注册会结束整个列表。这两类证据分别约束实现顺序，但不等于目标网络完整handler或实机顺序已验。未来不得因旧sender的Weapon字段名给目标type51522定名。
 
 本轮不操作客户端/调试器、不部署/安装补丁、不改生产sender/共享Proto/版本准入/根配置。实机或不可取得输入成为必要条件时记录任务、输入、失败、排除项、最小观察/解除条件及后继，再转其它独立难点。可离线必要项耗尽后停止，备份核验HANDOFF2再覆盖，HANDOFF仅追加；每项验收及时本地提交、不推送。D-02仍未完成。
+
+## 已验收结果及交付规格入口
+
+各行均有代理双新进程和主线独立第三回放逐字节一致；测试数按各自范围记录，不将重叠关联套件相加。原始输入、完整轨迹、失败和证明在忽略目录；共享摘要只保留限定证据。
+
+| 项目 | 实际新增范围 | 主线验证/提交 |
+| --- | --- | --- |
+| Avatar f4d2第一项 | 61980 ctor/reset/pool边界、空装备清理、Relic赋值、技能字典清理、+68/tag13 | 23组原生、11断言；`0da1e37` |
+| Avatar suffix | tag29六模式位图、tag38完整选择/清旧、typed Weapon/Relic工厂 | 17组（含48 bit片段）、22关联断言；`1487d28` |
+| Avatar ornament来源 | 两个具名表getter/loader和cache类型，止文件I/O前 | 4条路径、5断言；`0572e7a` |
+| Avatar Sorted构造 | 五具体ctor完整选定链、+1c0 store与cold/missing/null停止 | 7组原生、7断言；`979a526` |
+| Avatar装备查询 | 9槽查询/GUID回退样本、3实际注册 | 7断言；`0703e8d` |
+| Avatar rgctx/List | 精确class表/MethodSpec、引用类型canonicalizer、三个继承List stores | 6组原生、7断言；`cdf2d76` |
+| Scene第一项 | 非空retain/release、World/Beyond条件、替换时序、前后缀 | 36原生场景/3 wire拒绝、39关联；`5389b1f` |
+| Scene CopyFrom/hash | 77771双list深复制和旧值清理、真实u32字典碰撞/高位/Unicode/默认边界 | 15原生场景、48关联；`1529a5e` |
+| 资源 n4a | 完整depot/条件parser默认/非零/错误、BGH有限消费 | 15完整解析/1边界/5拒绝、10断言；`be6c00c` |
+| 资源 n4b | depot→LHFO数组wrapper→元素parser→首参数查询及类型反例 | 5完整/4拒绝、15关联；`d961556` |
+| 资源 n4c | 已知BGH消费者selector确为GameTime18，LuaNotify20不命中 | 8原生场景、19关联；`7e0e039` |
+
+详细字段、值转换、对象状态、调用顺序、Java来源/缺口和禁止触碰范围分别在[Avatar规格](CLIENT_72_AVATAR_DEEP_RESEARCH.md)、[Scene规格](CLIENT_72_SCENE_DEEP_RESEARCH.md)、[资源规格](CLIENT_72_RESOURCE_DEEP_RESEARCH.md)。这些是**限定研究与隔离适配验收规格**，完整g2/SceneInfo生产合同尚未闭合，不能当成正式sender实现许可。
+
+Sol/Terra接管时可直接按已验literal/独立样本复验，并在未来授权下把已核getter与独立adapter连接成隔离测试；必须保持完整GUID、原tag类型、显式零/省略差异、顺序、retain/copy区别和错误边界。不得先把未知字段接旧Proto、发空能力/空复杂Object，或将资源未知变成0/default。正式实现前仍需逐项满足专题的完整构造、真实资源/存档来源和业务消费门槛；本轮未启动该实现或全面回归。
+
+资源剩余准确输入为：可溯源的实际资源blob/exporter字段映射、缺失server acceptance规则、LuaNotify20真实键匹配、运行时revision选择。Scene剩余为自然stage/能力注册、实体组件/生命周期、完整handler，以及80154非零入场必要性；80154已核当前sender/旧Proto无独立来源，不扩战斗。实机或外部输入的最小入口/观察/解除条件均在对应专题末表，不能以健康、编译或静态命中替代。
+
+统一review已从116精确增至127，旧116摘要与1269生产来源均保持，三层/required/runtime/矩阵其余字段无变化；旧拒绝、双恢复一致和24定向检查见`local/migration72/astra-main/evidence-integration/`。研究结构0错误，ready仍224拒绝。没有全面Java/研究回归、构建、部署或客户端执行。

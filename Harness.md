@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+本轮统一review证据：`local/migration72/astra-main/evidence-integration/`保存旧拒绝、前后矩阵、11新增精确hash、双recover证明、24定向日志及structure/ready结果。review按UTF-8/LF文本hash，与报告字节hash分开；116→127仅增受审摘要，不重新签旧工具或更新生产来源。
+
 `client72_avatar_deep_equipment.py`主线7项及第三完整`dc9e25d5…51b58d`/摘要`00af1f18…c72ece`同双跑，证明`local/migration72/astra-main/avatar-equipment-review.json`。Avatar六套新增实际48项（代理最终联合检查），主线按项复验，不叠加历史次数。
 
 `client72_avatar_deep_sorted.py`主线7项及第三完整`2d66f279…1db0ff`/摘要`54956656…ed1401`同双跑，证明`local/migration72/astra-main/avatar-sorted-review.json`。五具体ctor不是成功模型；分配/上下文和warm opaque comparer明确，未执行冷创建或树操作。

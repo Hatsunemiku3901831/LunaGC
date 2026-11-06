@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+统一证据已主线精确整合116→127：11个本轮已审摘要加入，旧116/1269生产来源及三层/required/runtime/矩阵其余字段全部保持，旧review真实拒绝留存，双recover一致。24定向检查通过、结构0错误/ready224拒绝；不重跑全面回归或构建。
+
 Avatar最后装备查询小项已审：9查询/回退样本及3真实GUID注册，主线7断言/第三native同双跑。完整槽查询及+248回退闭合；本轮六项离线难点收口，余enum/cold初始化、同源装备/技能资源、池与实体生命周期具体输入见专题末表，g2仍未完成。
 
 Avatar Sorted精确构造已主线审核：7原生/7独立断言/第三native同双跑，SortedDictionary→KeyValuePairComparer→Comparer→TreeSet→SortedSet真实返回并写+1c0；cold/missing/null分别止步。仅选定构造，enum HashSet与完整handler仍未闭，装备查询小链继续。
