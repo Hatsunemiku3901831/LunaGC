@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+F-03d3f4b：[初始化FightProp](docs/CLIENT_72_AVATAR_FIGHT_PROPS.md)，`client72_avatar_fight_props.py`/`test_client72_avatar_fight_props`；23组wire/24应用/5错误、12新增/58关联，主线58和第三原生同双跑，完整/摘要SHA `af225811…2f2793`/`66113992…d940e`。证明`evidence/avatar-fight-props-main-review.json`、主线原生/摘要及测试日志同`avatar-fight-props-main-*`前缀。省略map清旧值，float30710与f1 double不同；7个ID及HP事件/watcher/有限UI块之外未知，不批准生产或完整战斗，继续f4c。
+
 E-01d1m：[Quest入场台账](docs/CLIENT_72_D02_QUEST_ENTRY.md)，固定旧/目标QuestExcel和chapter303，ProgressManager实际条件调用30302、旧2101001组套件、QuestBinFallback/自动索引与旧档deferred边界分开。主线静态证明`evidence/d02-r3-quest-entry-main-review.json`（四数据/配置hash、17814分布、16/63及61/29计数），未新增loader/Gradle/DB/客户端执行。历史五行红测`d02-r3-quest-red/`复用，不加alias/关quest；下一按专题做隔离303真实加载与条件启动。
 
 本批统一review：`login-proto-review.json`/`login-proto-gap-matrix.json`由95→108，仅13份已审已提交摘要新增，原95 hash/1269生产源码/三层/156矩阵及描述符/开放边界保持，旧守卫拒绝后双recover一致。24项`test_client72_login_proto`/`test_validate_protocol72`通过，结构0/ready224，独立Avatar生成`--check`无漂移；原始`logs/active-d02-proto-*`及`logs/active-d02-avatar-wire-check.log`、证明`evidence/active-d02-proto-review-check.json`。该范围截至f06100f，之后未审新摘要须继续独立review，不自动rehash或升级ready；独立Avatar adapter的65类未伪装成生产已引用。

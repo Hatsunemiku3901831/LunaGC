@@ -8,6 +8,8 @@
 
 ## 当前阶段
 
+F-03d3f4b已审：[初始化FightProp](docs/CLIENT_72_AVATAR_FIGHT_PROPS.md)证明tag7的float map清理/写入、7个目标具名ID、HP事件及真实watcher/有限UI调用；省略或部分map会清旧值，不能据可编码省略推定业务可省略。23组wire/24次应用/5错误，主线58定向及第三新进程完整/摘要与双跑逐字节一致。仅接受该限定消费，全部属性公式、完整handler/实体效果和实际生产输入仍未知；继续技能depot及必要初始化合同，不扩完整战斗。
+
 E-01d1m只读台账已审：[Quest入场依赖](docs/CLIENT_72_D02_QUEST_ENTRY.md)明确登录ProgressManager对303/30302的条件查询/显式addQuest、旧2101001动态组后代及旧号deferred边界。主线独立重算四数据/配置hash及17814行分布、16/63章节子项、61/29 Excel行，与源码核同。目标Quest三个LogicType字段形状冲突、缺acceptCond和BGH字符串字段仍未转换；63行静态形状不代替实际Fallback，下一做隔离303真实加载/显式路径，不关闭quest或删旧档求绿。
 
 统一review本批已核：95→108输入只追加13份已逐项审核且已提交的raw/语义/资源/启动/HTTP摘要，原95 hash和1269生产源码hash全部保持；98发送候选、156根/矩阵、1122描述符/1278类型/4867字段、三层状态及开放边界不变。旧review先拒绝，人工限定新增集后两次recover一致；24项矩阵/校验定向与Avatar raw生成check通过，结构0、ready仍224拒绝。不自动把独立65类适配器算进尚未接入的生产依赖，也不借索引同步晋级R4/部署/实机。证明`evidence/active-d02-proto-review-check.json`。
@@ -103,6 +105,7 @@ E-01d1a（D02-R3子合同A）已验收：固定候选commit/tree/blob四表，�
 | F-03d3f1 Avatar初始化用途与最小字段语义 | 已验root/48178子集及Equip合同，完整raw另等e8 | 36a4669；5字段/3属性ID，22通知/25应用/24分配/54属性/44装备槽交付/7拒绝，10新增79关联及双跑；具名Avatar资源/原生u64字典和int64→double消费通过，cur_avatar_guid/FightProp/完整Handler未知，未迁生产，已停止后续工作 | 已完成 |
 | F-03d3f3 Team映射与当前Team消费 | f1、f2a、e8及固定三输入 | 四字段、13组wire/42消费/9拒绝；原生Team名称事件/去重/qword扩容/当前选择/GUID查找及零值边界已验。10新增/35关联与主线35通过，第三全新原生完整/摘要与双跑相同；完整Handler/保存/场景与root3当前控制语义不晋级 | 已完成 |
 | F-03d3f4a Avatar生命状态应用 | f1/f2a/f2b/f3/e8及固定三输入 | tag4/u32经独立参数/模型enum57376及371/16、75/82具名事件证明用途；26样本/28应用/5错误，11新增/46关联及主线46/第三原生与双跑一致。实体虚调用/投递前止步，字段入场必要性和完整效果未验 | 已完成 |
+| F-03d3f4b Avatar初始FightProp有限消费 | f1/f3/f4a/e8及固定三输入 | tag7 map真实清理/编码/写入，7个具名ID、HP事件/watcher/有限UI块已审；23样本/24应用/5错误，主线58与第三原生同双跑。省略清旧值，业务数值/完整handler/入场必要性仍待 | 已完成 |
 | E-01d1i～j 日常持久化及初始实体 | R3固定候选表、旧daily/Lua/combat、独立Mongo | 唯一新库真实1项通过，生成4/保存/新Player冷读/同日不重抽、生成前后场景0/4；23怪物/41装置逐类型/资源ID已验。主线13输入hash/source/class/XML及正常关闭审核；受控调度不代表后台/完整Done，自动事件后代/其它随机组/目标协议未验 | 已完成 |
 | E-01d1k 出生点实际初始实体 | R3生产网格/固定表、Gather、旧Lua/combat/drop | 真实25组/checkGroups，隔离inline1项通过/0加载ERROR，逐实体类型与ID、自然601 option173已验；fast1项失败449保留，根config不改。主线35输入及source/class/XML/351静态重建引用审核，无重复测试；其他异步/完整调度/网络仍未知 | 已完成 |
 | E-01d1l 出生初始本组自动事件 | K所选25suite、既有505/601事件合同 | 有限订阅表与505自然onLoadGroup1项通过，真实action返回计数1/4及门箱状态/0 ERROR；主线补block必要输入hash后独立新JVM1项通过，重叠不相加。跨组/插件/其它suite/完整异步后代与客户端未验 | 已完成 |
