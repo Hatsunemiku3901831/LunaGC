@@ -13,8 +13,19 @@
 - 机器路径、令牌、密码、客户端二进制、原始抓包、依赖、日志和数据库留在忽略目录。共享文档使用相对路径或配置变量；只提交脱敏证据摘要。
 - 阶段交付列任务 ID、修改、实际测试、客户端验收范围/缺口、本地提交、文档更新和下一项可执行任务。
 
+# 编码规范
+- 不要为猜测出来、几乎不会发生的竞态或安全边界情况加复杂度。真觉得要加，先说清楚具体会怎么出错、概率多大、要多写多少代码，我同意了再做。不要悄悄扩大改动范围。
+- 外部传进来的数据，只在入口那一层校验一次。往里传已经确定类型的值，内部不要反复做防御性检查。
+- 不要提前抽只用一次的函数。只有会复用、包住了确实复杂的逻辑，或者它代表一个能起清楚名字的概念时才抽。
+- 主函数只写正常流程，校验和细节放到它下面的小函数里。
+- 入口只校验一次，拒绝重复判空和滥用 try/catch；单次逻辑不乱抽函数，低概率防御先征求同意
+
 涉及专题时先读，并同步受影响章节：
 
 - 账号/认证/存档：[系统](docs/ACCOUNT_AND_SAVE_SYSTEM.md)、[数据模型](docs/ACCOUNT_AND_SAVE_DATA_MODEL.md)、[运维](docs/ACCOUNT_AND_SAVE_OPERATIONS.md)。
 - 深境螺旋：[系统](docs/SPIRAL_ABYSS_SYSTEM.md)、[协议](docs/SPIRAL_ABYSS_CLIENT_PROTOCOL.md)、[资源](docs/SPIRAL_ABYSS_DATA_AND_RESOURCES.md)、[验证](docs/SPIRAL_ABYSS_OPERATIONS.md)。
 - 商城/充值/月卡/纪行/活动商店：[系统](docs/SHOP_AND_RECHARGE_SYSTEM.md)、[数据](docs/SHOP_AND_RECHARGE_DATA.md)、[接口](docs/SHOP_AND_RECHARGE_PROTOCOL.md)、[验证](docs/SHOP_AND_RECHARGE_OPERATIONS.md)。当前充值为免费发放；普通商城、通用活动币、熄星账本分别核查。
+
+
+# 交接流程（每次进行交接的时候按照以下工作流）
+先备份原HANDOFF2.md，然后覆盖HANDOFF2.md写入详细的交接文档（如果没有就生成），内容包括当前状态，已完成内容，未完成内容，当前阻塞，走的弯路和如何避坑，下一步计划动作，然后HANDOFF.md写入简略交接和HANDOFF2.md的引导。HANDOFF.md持续维护，如果没有特殊情况和要求，HANDOFF.md只增加写入不删减
