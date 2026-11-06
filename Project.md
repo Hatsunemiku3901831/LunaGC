@@ -8,6 +8,8 @@
 
 ## 当前阶段
 
+E-01d1n1已审：[目标303实际恢复](docs/CLIENT_72_D02_QUEST_303_RECOVERY.md)由真实Excel loader保留30302拒绝1/安装0，再经真实MainQuestData.onLoad/Fallback安装63个子项；逐项ID/order、63条件与136 exec参数均匹配，63项auto=false/索引0。主线审核11源码/37 archive class，按文档独立编译并跑两个新JVM，报告同代理最终SHA。未知字段/文本和目标语义未扩大解释，未启DB或启动任务；下一做真实显式30302及独立保存冷读。
+
 F-03d3s1已审：[SceneInfo有限raw图](docs/CLIENT_72_SCENE_INFO_RAW.md)补9类36字段、1152扫描/40成功/21拒绝；83320的tag2/3独立证明为fixed32，不能照metadata uint32写varint。主线28关联及第三新进程完整/摘要与双跑逐字节一致；18295/34208非空图实际进入36/42 reader。72829仅空外壳且非空显式拒绝、54267/Object后代仍未知；下一沿实际场景消费者确定必要分支、GUID/实体关联与等待条件，不将所有未闭战斗分支直接推入P0或用空对象批准发送。
 
 F-03d3f4b已审：[初始化FightProp](docs/CLIENT_72_AVATAR_FIGHT_PROPS.md)证明tag7的float map清理/写入、7个目标具名ID、HP事件及真实watcher/有限UI调用；省略或部分map会清旧值，不能据可编码省略推定业务可省略。23组wire/24次应用/5错误，主线58定向及第三新进程完整/摘要与双跑逐字节一致。仅接受该限定消费，全部属性公式、完整handler/实体效果和实际生产输入仍未知；继续技能depot及必要初始化合同，不扩完整战斗。
@@ -113,6 +115,7 @@ E-01d1a（D02-R3子合同A）已验收：固定候选commit/tree/blob四表，�
 | E-01d1k 出生点实际初始实体 | R3生产网格/固定表、Gather、旧Lua/combat/drop | 真实25组/checkGroups，隔离inline1项通过/0加载ERROR，逐实体类型与ID、自然601 option173已验；fast1项失败449保留，根config不改。主线35输入及source/class/XML/351静态重建引用审核，无重复测试；其他异步/完整调度/网络仍未知 | 已完成 |
 | E-01d1l 出生初始本组自动事件 | K所选25suite、既有505/601事件合同 | 有限订阅表与505自然onLoadGroup1项通过，真实action返回计数1/4及门箱状态/0 ERROR；主线补block必要输入hash后独立新JVM1项通过，重叠不相加。跨组/插件/其它suite/完整异步后代与客户端未验 | 已完成 |
 | E-01d1m Quest入场必要性及目标字段缺口台账 | 登录/进度/任务源码、固定旧/目标四数据 | 303/30302条件查询/显式路径、旧动态组及deferred边界与目标17814字段冲突已登记；主线重算数据/配置hash及分布，未重跑五行红测或实际Fallback。只完成只读台账，资源/语义/保存与R3仍开放 | 已完成 |
+| E-01d1n1 目标303真实loader/Fallback | m固定四数据、固定dfde JAR及37 class | Excel负例拒绝1/安装0；BIN 63子项、63条件/136 exec匹配、自动索引0；主线文档独立编译及双新JVM同报告。未启任务/DB/客户端，未知字段及保存待n2 | 已完成 |
 | E-01c6 嵌套require调用者bindings恢复 | E-01c5已复现成功置null/异常残留 | b74cd16；6例先5失败后全过，6套32 Lua及8加载审计全过；portable25秒JAR7ca18e10…e8f5f、9class相符，其余45935不变；双轮整场fast407/449、inline0，30错误组恢复且无新增；完整前置不足未部署，local/资源/实机不晋级 | 已完成 |
 | F-04a SDK/补丁/资源前置现场复核 | 当前checkout/config/GAME_PATH、三输入与现有会话 | 三哈希/参考clean/归属已验；API会话无target；两个status退出1及6个revision候选；源码旧强制验签钩子与字符串工厂缺口保留，见CLIENT_72_RUNTIME_PREREQUISITES；仅核对不代表F-04完成 | 已完成 |
 | F-04b 保留验签的本地信任供给合同 | F-04a、既有原生seed/response/dispatch密码学 | 6b72887；14原生/23次key验签（4成功10拒绝）、18关联和双跑；COPY只R13、CHECK只R8/root第五参数，返回/flags不变；未知key不供给；未装钩子/未导出私钥 | 已完成 |

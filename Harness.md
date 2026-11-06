@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+E-01d1n1：[目标303恢复](docs/CLIENT_72_D02_QUEST_303_RECOVERY.md)、`Client72Quest303Audit.java`；目标Excel负例拒绝1/安装0，真实章节onLoad/Fallback安装63、63条件/136 exec逐项匹配、auto索引0。主线11源码/37 class核同并按文档javac+双新JVM独立复现，报告SHA `d34b13d5…5a184`；证明`evidence/d02-r3-quest303-main-review.json`，原始`d02-r3-quest303-n1-replay-c316f14e2e9d44c5a4193987ebdf66d3/`。无数据库/任务启动/保存/客户端，未知字段不加alias，继续n2。
+
 F-03d3s1：[SceneInfo有限raw](docs/CLIENT_72_SCENE_INFO_RAW.md)，`trace_client72_scene_info_raw.py`/`test_client72_scene_info_raw`；9类36字段、1152扫描/40成功/21拒绝，主线28关联及第三原生同双跑，完整/摘要SHA `74cd8618…6a7ab`/`f52f41a8…7f7c75`。证明`evidence/scene-info-raw-main-review.json`、主线输出/日志同`scene-info-raw-main-*`前缀。83320 tag2/3实际fixed32；64→65增长是模型边界。72829仅空外壳、非空拒绝，完整SceneInfo/生产未知；先沿实际消费者确定必要分支及实体关联，再定Object后继范围。
 
 F-03d3f4b：[初始化FightProp](docs/CLIENT_72_AVATAR_FIGHT_PROPS.md)，`client72_avatar_fight_props.py`/`test_client72_avatar_fight_props`；23组wire/24应用/5错误、12新增/58关联，主线58和第三原生同双跑，完整/摘要SHA `af225811…2f2793`/`66113992…d940e`。证明`evidence/avatar-fight-props-main-review.json`、主线原生/摘要及测试日志同`avatar-fight-props-main-*`前缀。省略map清旧值，float30710与f1 double不同；7个ID及HP事件/watcher/有限UI块之外未知，不批准生产或完整战斗，继续f4c。
