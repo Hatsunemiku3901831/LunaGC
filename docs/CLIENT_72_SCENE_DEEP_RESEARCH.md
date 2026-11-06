@@ -155,3 +155,15 @@ python -m unittest tools.test_client72_scene_deep_followup tools.test_client72_s
 正式双新进程 `followup-final-{a,b}-native.json` 均418,551 bytes，SHA `9fdbe3e0d1c76925c7bdaf0d60196a2a64d1cabdf621aadc0034b1e9834ef6f6`；summary均101,415 bytes，SHA `755ff3ad04ec69684b608de36667619746ec7421b463a5728b32f292b613e974`，与共享后继摘要相同。末次25.380秒；守卫日志 `followup-tests.log`。主线独立第三复验另记。
 
 后继主线48项关联及第三原生报告/摘要同双跑；已审核rgctx类型展开、Clone名称/入口、真实字典调用与默认/错误分支。证明`local/migration72/astra-main/scene-followup-review.json`，日志同前缀；仅批准所列77771复制和受控表查询范围，不批准全部非空图或自然注册。
+
+### 最终必要性退出：80154非零列表后置
+
+完成后继后又实际核对了下一入口 `1507E44F0`，没有因为“小卡完成”直接停止。固定三输入重新提取表明：目标49723/tag3的80154元素为u32/+18与float/+1C；网络对象type56238的+110为原字段 `DDIPEPCDALN`、具体 `Dictionary<uint32,float>/instance5971`。typed Handler会调用该方法，但其内部还检查现有本地实体状态；这证明调用边，**不能单独证明D-02必须发送非空内容或给出该u32的业务身份**。
+
+当前生产全部 `TeamEnterSceneInfo.newBuilder` 只命中 `PacketPlayerEnterSceneInfoNotify.java`，仅设置teamEntityId、teamAbilityInfo和abilityControlBlock。旧Proto虽另有同形 `JFAHOBMFLFE/IDAKPKNODGC`（id/cur_value），当前Java/测试没有相关add/set使用；同形不能证明它与目标80154同义，更不能制造生产getter或默认一条非零值。已审7.2证据仍只批准80154的raw字段，没有独立业务名、账号/保存来源或实际非空D02样本。
+
+同owner原生范围另进行了有界+110引用搜索，得到17个方法候选，其中包含大量栈偏移及其它receiver的误命中；没有把这些候选称为真实消费者或全程序无引用证明。可复核原始 `necessity-result.json`、`necessity-final.log` 固定三输入及五份生产/旧Proto来源hash，留在本卡忽略目录。这里仅作必要性结论，不新增已批准业务映射。
+
+因此本轮不扩这份未知浮点状态为战斗研究。具体解除输入是：新号与旧测试号自然21761处理时，在 `1507D16D0/1507E44F0` 记录实际列表count及每项u32/float、SceneScriptData.stageType、本地实体+426、+110字典处理前后；同时找与这些key对应的服务端真实保存/资源来源。若有非空样本，下一项只沿 `1507E4773/1507E4776→1553C8AF0` 核值和语义；若均为空，也不自动批准删通知或省略其它字段，仍需完成整个handler与入场。当前无该独立输入，非空必要性保持未知；原客户端/调试器本轮未操作。
+
+Scene线本轮退出范围：首项及CopyFrom/hash后继已经实际执行、独立守卫、双跑和主线第三复验；完整构造/复杂图、自然能力注册、stage/44512实体生命周期、完整handler和D-02实机仍开放。后续实机应观察上述精确入口及生命周期，不重复已验raw扫描，也不为保持工作量扩展未证明的战斗分支。

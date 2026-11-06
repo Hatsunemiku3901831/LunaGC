@@ -1,5 +1,7 @@
 # F-03d3s2a：SceneInfo 身份关联有限消费合同
 
+2026-11-07后继见[Scene深入研究](CLIENT_72_SCENE_DEEP_RESEARCH.md)：retain/release、两份77771深复制、hash表真实查找、World/Beyond条件和替换时序已限定验收。与Avatar精确typed工厂交叉后，仅51522的Weapon来源分支获weapon-role关联，不把全部51522定名。80154非零必要性/自然资源/实体及完整handler仍待输入，旧摘要保持。
+
 2026-11-07，D02-R1，有限身份关联合同已通过主线独立审核。固定国服 7.2 三输入；只新增离线工具、测试与脱敏摘要，不接入生产。
 
 ## 目标与证据缺口
