@@ -69,3 +69,40 @@ python -m unittest tools.test_client72_player_data -v
 两次原生运行的完整报告与摘要均逐字节相同，摘要SHA-256为`455a353974185c885622759247a19b94c905c037545232b29e3cede189bb8cf6`；本机核对见`local/migration72/evidence/player-data-determinism.json`。8项新增回归、包含graph/initialization/reader/literal的42项关联研究回归通过。首关联运行的旧literal测试因缺PYTHONPATH导入失败，设置`PYTHONPATH=tools`后原测试未修改即全42通过；未把该首失败隐去。
 
 模型边界为托管分配、ASCII字符串、boxing、primitive input、generic runtime context、固定容量64的map lookup/insertion及linked-node allocation；原生setter执行重复key覆盖。没有IFix/live ABI、网络分发、handler完整返回、UI或客户端验收，也没有该图不存在的repeated-list覆盖。只改离线工具/测试/摘要/文档，无需重启服务。下一可执行项为F-03d1b独立具名链，d1身份仍unresolved。
+
+## F-03d2a1：库存依赖全清单、外层与两标量叶子
+
+本子卡单独完成root68537、Item65333外层/oneof绑定和51247/40274两个单uint32叶子的raw图，**完整库存raw闭包仍未完成**。工具[trace_client72_player_store.py](../tools/trace_client72_player_store.py)每次重读上述三哈希，重新提取metadata/Cmd，并独立解码全部有界usage组的source与destination。正式摘要[player-store-outer-observations.json](../protocol/cn-7.2/player-store-outer-observations.json)保留15类型、42实例存储字段的完整依赖审计，明确区分四个已恢复schema与11个未恢复schema。
+
+| 目标类型 | reader | 递归边与剩余工作 |
+| --- | --- | --- |
+| 68537/CAIHCNHAMHB | `0x1494200e0` | tag2消息列表→65333；tag8/+20 uint32；tag14/+24为enum55345的32位raw存储，不恢复额外枚举语义 |
+| 65333/NDGHFPMJFIM | `0x14b8a55e0` | tag1/+28 uint32；tag2/+20 uint64；Object+18与判别+2c承载tag5..10六个message oneof分支 |
+| 63442/KKOPHGDBCEO | `0x152ee3080` | Item tag5→本类；nested→28471及一个uint32；内容留a3 |
+| 44169/BNDIKNLDLOJ | `0x15408aee0` | Item tag6→本类；bool及oneof→74063/64947；内容留a3 |
+| 51247/JOPADICJMPJ | `0x14c06c450` | Item tag7；tag1/+18 uint32，已验 |
+| 63899/MKFCDFEEAAL | `0x153de6130` | Item tag8；nested→61085及uint32；内容留a3 |
+| 40274/MIEKLLOFKOJ | `0x1518c3a80` | Item tag9；tag1/+18 uint32，已验 |
+| 14095/JLAGHMMLDCA | `0x149c5c150` | Item tag10；map<uint32,uint32>及packed uint32 list，留a2 |
+| 28471/JDDDHIGLMGJ | `0x148fc60e0` | bool及oneof→28473/28474/28475，留a3 |
+| 28473/PEMOFGMDGHP | `0x14e457f70` | map<uint32,uint32>及uint32，留a2 |
+| 28474/KNNPHAOJMAH | `0x14a870410` | uint32，留a3 |
+| 28475/DFPLPBLIEEK | `0x152274ca0` | map<uint32,uint32>及两个uint32，留a2 |
+| 64947/FNECPDFLEHN | `0x1504d7b30` | map<uint32,uint32>、packed uint32 list、三个uint32及bool，留a2 |
+| 74063/JBBEOMJDLFM | `0x147744650` | 三个packed uint32 list、四个uint32及bool，留a2 |
+| 61085/MCBNNKGKJCI | `0x14b6fab30` | map<uint32,uint32>，留a2 |
+
+最初只查global usage组会漏掉28473/28474/28475。实际reader `0x148fc60e0`还从非global组初始化的class cells加载这三类；正式审计遍历从首usage到global组结尾的全部有界记录，逐层结合实例field与reader/.cctor RIP class引用，最终固定15类型集合。42只是metadata存储槽数量，不能当作完整wire字段数；三个oneof的共享Object/判别会展开更多wire字段。
+
+Item六分支的tag与判别均为5/6/7/8/9/10，分别动态分配上表63442/44169/51247/63899/40274/14095，并进入实际ReadMessage和相应reader返回。未恢复的四个直接子分支只运行空envelope，结果显式写`empty-envelope-only`；传入非空63442会被本工具拒绝，没有把空壳当完整nested schema。后续a2/a3必须提供非空内容和组合图后才可关闭完整父项。
+
+本卡512次有界扫描覆盖四个所选类型的tag1..32/wire0/1/2/5，共13个wire字段分支；另21次原生图覆盖u32/u64上界、>2^53、双元素消息列表、空列表元素、六个oneof分支外壳、重复/错wire、两个标量叶子、同分支遗漏保留与显式零覆盖、分支切换后旧值清除。独立wire `082a108180808080808010`直接验证Item u32=42、u64=9007199254740993；`120408011002120608034a020804`验证root消息列表的两个独立Item。原生具体reader、list append与ReadMessage/limits执行；托管分配、metadata-usage初始化、primitive输入及列表runtime context为明确fixture。
+
+五个拒绝分别记录zero-tag、截断varint、u64溢出、nested列表截断及未恢复非空子图。前四在显式WireInput原语模型拒绝，nested列表已走原生ReadMessage但最终拒绝来自原语模型；最后是明确scope拒绝，不称客户端安全边界或完整错误处理验收。
+
+```powershell
+python tools/trace_client72_player_store.py --client $env:GAME_PATH --output local/migration72/evidence/player-store-outer-native.json --observations local/migration72/evidence/player-store-outer-summary.json
+python -m unittest tools.test_client72_player_store -v
+```
+
+新8项与包含它们的38项关联研究回归通过；两轮完整报告和摘要均逐字节一致，摘要SHA-256为`2c14b416e5e18d868bde7d645939f6ea9c2a936761967e555e92538c2d11e20f`，见本机`player-store-outer-determinism.json`。Cmd20892→68537是固定目标静态绑定，PlayerStore/Item/Material/Furniture等业务名仍只作候选，没有晋级身份、生产Proto或运行发送合同。无需Gradle/服务/数据库/客户端操作。
