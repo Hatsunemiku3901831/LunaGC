@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+F-03d2b2：[装备最小合同](docs/CLIENT_72_EQUIP_CONTRACT.md)，23b50b3；22样本/26模型/26角色槽片段/8拒绝，10新增/69关联及双跑通过，十字段限定完成。affix_map是目标资源group→内部level key；不能据此批准旧GameItem.refinement原值或减1，生产接管c2另审。F-03d3e1：[复杂Avatar外层](docs/CLIENT_72_AVATAR_COMPLEX_OUTER.md)，6e0e274；3类18wire/384扫描/22图/9拒绝、8新增93关联双跑，34045非空仍拒绝。这两份新摘要在89之后待下一批统一review。
+
 F-03d3d：[双Item列表](docs/CLIENT_72_AVATAR_ITEMS.md)，8a03338；16类50wire、2048扫描/44图/10拒绝、8新增/85关联双跑通过，两份Item列表各9个非空独立元素。该摘要已受审加入89输入，原88份hash/1268源/三层/151行/描述符和开放边界保持，双跑证明`evidence/avatar-items-proto-review-check.json`。最后53824静态闭包为34类238存储，与已有raw无重叠；按Project e1至e8独立取证，18/36/43/40/24/36/29/12仅存储下界，不能当已验wire数。
 
 阶段复核：`local/migration72/analysis/run_post_adapter_research.py`本机实际600项研究回归全过（约65秒）；原始日志/summary为`logs/post-adapter-research-regression.log`、`evidence/post-adapter-research-regression-summary.json`。人工review新增inventory-contract/avatar-core/avatar-trees/marshal-storage四摘要，84→88输入，旧84份/1268源及三层/151行/1121描述符/4810字段/开放边界保持，旧守卫拒绝后双跑一致，证明`evidence/post-adapter-proto-review-check.json`。结构0错误/ready208，D-02未验。
