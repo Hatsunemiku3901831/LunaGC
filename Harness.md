@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+2026-11-06最新恢复入口：[运行前置](docs/CLIENT_72_RUNTIME_PREREQUISITES.md)、Project F-02c/F-03d/E-01c6；用户已恢复持续D-02，历史暂停不再生效。当前三输入重验成功、原数据/他人差异保留、Automate只读会话无target；不沿旧PID继续。原始复核证据为`local/migration72/evidence/resume-d02-*`，两个status退出1分别是版本守卫拒绝/无服务，不代表已部署。新增工具/测试验收后及时更新本索引。
+
 2026-11-06 F-02b/F-03本批限定融合已验收并暂停，运行提交4bbf9fd，D-02未执行。468研究/43套761 Java/五生成检查全过；结构0/ready205。便携构建24秒，JAR `570d64f4f1680ab023c7eda7f2e930ebf5eba79791030e8499100ca8f2799bf5`内嵌4bbf9fd，92变化+114新增class匹配编译、109账号/Guard/Lua保持。前置不足未部署、无服务/测试监听；客户端目标当前未见原因未知，未操作调试器。下文更早的数量与暂停均为历史，当前以Project/HANDOFF2为准。
 
 复现索引：`generate_login72_contract.py --client $env:GAME_PATH --check`（21类198字段）；`check_login72_contract.py`（50 writer/34 native graph/6拒绝）；`generate_scene72_sources.py`（八握手/容量）；`generate_enter_scene72_sources.py`（8类44字段/四字段最小Notify）；旧`generate_login72_slice.py`及`generate_born72_sources.py`仍零漂移。研究用`test_client72*.py`及13个旧选集/4个新生成校验模块，精确76模块/468测试清单在`local/migration72/evidence/f02b-f03-final-research-regression-summary.json`。Java43套/761及独立库清理见`f02b-f03-final-java-regression-summary.json`；Native/API/raw证据与首次失败全部留忽略local目录。
