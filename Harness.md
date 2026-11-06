@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+**2026-11-07最新：Astra限定离线研究进行中。** 计划和证据边界见[本轮攻坚](docs/CLIENT_72_ASTRA_OFFLINE.md)；主线清点在`local/migration72/astra-main/initial-{inventory,processes}.json`，三线原始证据分别在`astra-avatar/`、`astra-scene/`、`astra-resources/`。旧raw、网络、Chapter及Java有限投影直接复用，不按历史测试数报告新执行。禁止实机/部署/生产接入。
+
 **本轮最终状态（2026-11-07）**：限定Sol/Terra离线前置已收口，D-02未完成；精确任务/队列和下一步在[HANDOFF2](HANDOFF2.md)，总记录[CLIENT_72_SOL_TERRA_OFFLINE](docs/CLIENT_72_SOL_TERRA_OFFLINE.md)。证据统一目录`local/migration72/offline-sol-terra/`，`closeout-proof.json`按批次记录XML/hash/构建，`handoff-{backup,written}.json`证明备份与HANDOFF原前缀；旧失败均保留。最终50套875关联、120研究、9生成检查、目标Chapter模式2项、投影1项及原生双跑均按各自范围通过，不叠加重叠数量。生产JAR `f475dbf6…8cade8`内嵌8c1fb85，8变化class/46296保持；stopped/Healthy=false，未部署，原数据/配置/resources差异保持。所有子代理已完成，无自有测试进程或8088/22101/27027监听。下方历史阶段信息不覆盖本段。
 
 章节收尾反射实测：`tools/D02ChapterAudit.java`实际getResourceDefClasses/私有priority sets/真实getMapByResourceDef，152类逐注解/优先级/map均符静态清单。最终两个JVM报告SHA `3b5d7799…f6f25a`、目录`offline-sol-terra/chapter-audit/run-dae689a49a2f4f5fa2dd7cd4cb1b261d/`；Map.of键序首次字节不一致及相等对象保留`run-b8f3bcd8209b4dc3ae16e23eee6c3039/`，不把重复加载计成新增测试。根生产JAR不受离线驱动修改影响。
