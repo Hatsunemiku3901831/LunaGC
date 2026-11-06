@@ -8,6 +8,8 @@
 
 ## 当前阶段
 
+统一review本批已核：95→108输入只追加13份已逐项审核且已提交的raw/语义/资源/启动/HTTP摘要，原95 hash和1269生产源码hash全部保持；98发送候选、156根/矩阵、1122描述符/1278类型/4867字段、三层状态及开放边界不变。旧review先拒绝，人工限定新增集后两次recover一致；24项矩阵/校验定向与Avatar raw生成check通过，结构0、ready仍224拒绝。不自动把独立65类适配器算进尚未接入的生产依赖，也不借索引同步晋级R4/部署/实机。证明`evidence/active-d02-proto-review-check.json`。
+
 D-01b5d已审：[RegionList](docs/CLIENT_72_REGION_LIST.md)由独立caller/具名literal/class/codec确认87445→13336，三HTTP支和SDK InitEnv来源只作静态链；六实际Java/八native/三拒绝，主线13文件重生成、22定向及第三native与双跑逐字节一致。九个raw字段可消费，完整callback/Base64原生/HTTP传输/路由与信任仍未验。窗口读取被Windows以error5拒绝，无伪图；用户随后明确重启，依e新现场继续，不将d冻结时的保留目标状态当最新运行验收。
 
 E-01d1l已审：[最小资源L](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)将本次25个实际初始suite的三类自动事件缩到505/601本组订阅；自然505生产onLoadGroup单项通过，1次GROUP_LOAD及4次GADGET_CREATE的同步Lua调用已返回，门Default/箱ChestLocked、0 ERROR。主线补齐必经block3003输入hash后在新JVM独立复跑1项通过，未手动派发或强制状态。只关这些本组/所选suite合同，跨组/插件/异步后代和其它随机suite仍未知；继续登录必经Quest303/30302与目标资源字段取证。

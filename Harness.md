@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+本批统一review：`login-proto-review.json`/`login-proto-gap-matrix.json`由95→108，仅13份已审已提交摘要新增，原95 hash/1269生产源码/三层/156矩阵及描述符/开放边界保持，旧守卫拒绝后双recover一致。24项`test_client72_login_proto`/`test_validate_protocol72`通过，结构0/ready224，独立Avatar生成`--check`无漂移；原始`logs/active-d02-proto-*`及`logs/active-d02-avatar-wire-check.log`、证明`evidence/active-d02-proto-review-check.json`。该范围截至f06100f，之后未审新摘要须继续独立review，不自动rehash或升级ready；独立Avatar adapter的65类未伪装成生产已引用。
+
 用户2026-11-07最新要求“重启游戏，再进行观察”：旧保留pause限制已覆盖，D-01b5e由R2独占先核旧target→结束/OS+PUB+log闭合→新load固定原始客户端，单一GlobalDispatch入口、120秒预算。下方b/c/d暂停上下文均为各阶段历史，不能直接当最新PID/目标或阻止已授权重启；无服务部署，其他开发继续。
 
 D-01b5d：[RegionList](docs/CLIENT_72_REGION_LIST.md)、`Client72RegionListFixture`、`trace_client72_region_list.py`/`test_client72_region_list`；主线独立13文件重生成、22测试及第三native同双跑，完整/摘要SHA `e17f8443…79d8c`/`04bb034e…8dd57`。原始`d02-region-list/main-review/`、证明`evidence/d02-r2-region-list-main-review.json`。87445/13336具名caller/class/codec来源及三HTTP支静态交叉已审，九raw字段消费不替代完整callback/路由/自然SDK；target窗口PrintWindow error5没有产出图像，用户已授权e重启。
