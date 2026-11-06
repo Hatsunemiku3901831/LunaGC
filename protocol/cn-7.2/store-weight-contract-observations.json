@@ -1,0 +1,2685 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "typeIndex": 28836,
+  "clientType": "KNCCLAJAEEC",
+  "cmdId": 22609,
+  "semanticName": "StoreWeightLimitNotify",
+  "semanticIdentityStatus": "verified-offline-purpose-alias",
+  "identityInference": "Independent target command registration/dispatch, typed store receiver and named store/item enum capacity application establish the notification role. No official message-name literal was found; canonical name remains a server purpose alias.",
+  "declarations": {
+    "rawEvidenceSHA256": "45b2565a33c10862946ed226b5408d8fc51c2f8640178d2d47c4a1e14327f4f4",
+    "typedConsumers": [
+      {
+        "entry": "0x153cbc210",
+        "ownerTypeIndex": 54747,
+        "owner": "KKLMBGOADJM",
+        "method": "AKCCKHDEPDP",
+        "parameter": {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0x70a4",
+          "byRef": false,
+          "typeDefinition": 28836,
+          "name": "KNCCLAJAEEC",
+          "namespace": ""
+        }
+      },
+      {
+        "entry": "0x14e3d6da0",
+        "ownerTypeIndex": 59658,
+        "owner": "IOHHDBCNLPJ",
+        "method": "HFCGADDPEAD",
+        "parameter": {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0x70a4",
+          "byRef": false,
+          "typeDefinition": 28836,
+          "name": "KNCCLAJAEEC",
+          "namespace": ""
+        }
+      }
+    ],
+    "enums": [
+      {
+        "typeIndex": 55345,
+        "clientType": "CCGFGECDMKL",
+        "namespace": "",
+        "underlyingType": "int32",
+        "values": [
+          {
+            "symbol": "StoreNone",
+            "value": 0,
+            "fieldIndex": 274524,
+            "defaultRow": 47725,
+            "typeIndex": 70,
+            "dataIndex": 528262
+          },
+          {
+            "symbol": "StorePack",
+            "value": 1,
+            "fieldIndex": 274525,
+            "defaultRow": 47726,
+            "typeIndex": 70,
+            "dataIndex": 528266
+          },
+          {
+            "symbol": "StoreDepot",
+            "value": 2,
+            "fieldIndex": 274526,
+            "defaultRow": 47727,
+            "typeIndex": 70,
+            "dataIndex": 528270
+          }
+        ],
+        "semanticStatus": "target-symbols-only"
+      },
+      {
+        "typeIndex": 34819,
+        "clientType": "MBAMMBNKDGF",
+        "namespace": "",
+        "underlyingType": "int32",
+        "values": [
+          {
+            "symbol": "ITEM_NONE",
+            "value": 0,
+            "fieldIndex": 170641,
+            "defaultRow": 32315,
+            "typeIndex": 70,
+            "dataIndex": 418618
+          },
+          {
+            "symbol": "ITEM_VIRTUAL",
+            "value": 1,
+            "fieldIndex": 170642,
+            "defaultRow": 32316,
+            "typeIndex": 70,
+            "dataIndex": 418622
+          },
+          {
+            "symbol": "ITEM_MATERIAL",
+            "value": 2,
+            "fieldIndex": 170643,
+            "defaultRow": 32317,
+            "typeIndex": 70,
+            "dataIndex": 418626
+          },
+          {
+            "symbol": "ITEM_RELIQUARY",
+            "value": 3,
+            "fieldIndex": 170644,
+            "defaultRow": 32318,
+            "typeIndex": 70,
+            "dataIndex": 418630
+          },
+          {
+            "symbol": "ITEM_WEAPON",
+            "value": 4,
+            "fieldIndex": 170645,
+            "defaultRow": 32319,
+            "typeIndex": 70,
+            "dataIndex": 418634
+          },
+          {
+            "symbol": "ITEM_DISPLAY",
+            "value": 5,
+            "fieldIndex": 170646,
+            "defaultRow": 32320,
+            "typeIndex": 70,
+            "dataIndex": 418638
+          },
+          {
+            "symbol": "ITEM_FURNITURE",
+            "value": 6,
+            "fieldIndex": 170647,
+            "defaultRow": 32321,
+            "typeIndex": 70,
+            "dataIndex": 418642
+          },
+          {
+            "symbol": "ITEM_BEYOND_MATERIAL",
+            "value": 7,
+            "fieldIndex": 170648,
+            "defaultRow": 32322,
+            "typeIndex": 70,
+            "dataIndex": 418646
+          },
+          {
+            "symbol": "ITEM_BEYOND_HALL_FACILITY",
+            "value": 8,
+            "fieldIndex": 170649,
+            "defaultRow": 32323,
+            "typeIndex": 70,
+            "dataIndex": 418650
+          },
+          {
+            "symbol": "ITEM_TPS_WEAPON",
+            "value": 9,
+            "fieldIndex": 170650,
+            "defaultRow": 32324,
+            "typeIndex": 70,
+            "dataIndex": 418654
+          }
+        ],
+        "semanticStatus": "target-symbols-only"
+      }
+    ],
+    "dictionaryField": {
+      "index": 296078,
+      "name": "NKFNGBCJFAE",
+      "nameIndex": "0xb6a306d",
+      "typeIndex": 613570,
+      "type": {
+        "kind": "genericinst",
+        "attributes": "0x1",
+        "data": "0x4da3e",
+        "byRef": false,
+        "genericIndex": 318014,
+        "instanceIndex": 41968,
+        "arguments": [
+          {
+            "kind": "valuetype",
+            "attributes": "0x0",
+            "data": "0x8803",
+            "byRef": false,
+            "typeDefinition": 34819,
+            "name": "MBAMMBNKDGF",
+            "namespace": ""
+          },
+          {
+            "kind": "uint32",
+            "attributes": "0x0",
+            "data": "0x13f",
+            "byRef": false
+          }
+        ],
+        "typeDefinition": 1222,
+        "name": "Dictionary`2",
+        "namespace": "System.Collections.Generic"
+      },
+      "offset": 120,
+      "rawOffset": "0x78",
+      "offsetKind": "instance"
+    },
+    "commandGetter": {
+      "index": 224759,
+      "name": "AMPEGOHOBJM",
+      "nameIndex": "0xb1887e1",
+      "registeredAddress": "0x14fd44ff0",
+      "parameterCount": 0,
+      "flags": "0x8c4",
+      "virtualSlot": 22,
+      "literalU16Candidate": 22609
+    },
+    "dispatchCompare": "0x153cbb8f9",
+    "dispatchForward": "0x153cbbd4c",
+    "commandRegistration": "0x153cbff84",
+    "capacityBoundaryLiteral": {
+      "usageRow": 74835,
+      "index": 25222,
+      "slot": 25222,
+      "cell": "0x145afb250",
+      "value": "SHOP_ITEM_LIMITED",
+      "initializationGroup": "0x71c6"
+    },
+    "capacityReadbackParameters": [
+      {
+        "kind": "valuetype",
+        "attributes": "0x0",
+        "data": "0x8803",
+        "byRef": false,
+        "typeDefinition": 34819,
+        "name": "MBAMMBNKDGF",
+        "namespace": ""
+      },
+      {
+        "kind": "int32",
+        "attributes": "0x2",
+        "data": "0xfb",
+        "byRef": true
+      },
+      {
+        "kind": "uint32",
+        "attributes": "0x2",
+        "data": "0x13f",
+        "byRef": true
+      }
+    ],
+    "nativeEntry32SHA256": {
+      "0x14fd44980": "9d61c90dc52e6c4d2606182164a1b15c48417757efd1f5777fd13f8f88ca5e8d",
+      "0x14fd45000": "9d89cb2de3f715f70c19dab6a4e3e57f212a765a2a4e8fdee4e530fc7ab27baf",
+      "0x153cbb460": "7623d0fdafa633946464c1f3d3ad87600d4335e41c5b0b28e992cbaac26c2cce",
+      "0x153cbc210": "4cc8e50f111bfde65f8ed6aaa6632558e888c0884cd433c2468324e8007a436b",
+      "0x14e3d6da0": "327549ed38c7b2919d85e6ed08ded18481f169355368050ae08331dae6781335",
+      "0x14e3d6c60": "ede7a7a417bfff1f172fc5c9ddb5d8bc22d3815a290002df79d286c44da80359",
+      "0x157d1a480": "bb2ff382afc971627d67e682c64d61d07c2c277d5d0c7e08ce9a9c4cfc0e9898",
+      "0x14e3d7d70": "cde687e339fd503e44a9e5358f341bec9a1eb7b5d8c1aca06f4dbc5ecd621dc8",
+      "0x157d19fe0": "80e02798eb7eba056b63c395c3254998c5d6cc9d94146fade1c50ccb9888b7d0",
+      "0x14e3e3190": "f5da40df9d531f50ecb7900205c36b469ee635db6567696096ca8a2a5e5d78f3"
+    }
+  },
+  "registration": {
+    "commands": [
+      20892,
+      22609
+    ],
+    "trace": {
+      "entry": "0x153cbff50",
+      "stop": "0x153cbff90",
+      "completion": "bounded-fragment",
+      "liveIn": {
+        "rsp": "0x600100008",
+        "rcx": "0x612000c00",
+        "rdx": "0x612000d00"
+      },
+      "instructions": 20,
+      "nativePathSHA256": "d52e03df7c7dfd80493a4788dcb551b802449240103e91feff0b5b2034585497",
+      "executedAddresses": {
+        "0x1532ed560": 2,
+        "0x153cbff50": 1,
+        "0x153cbff51": 1,
+        "0x153cbff52": 1,
+        "0x153cbff56": 1,
+        "0x153cbff59": 1,
+        "0x153cbff5c": 1,
+        "0x153cbff63": 1,
+        "0x153cbff69": 1,
+        "0x153cbff6c": 1,
+        "0x153cbff72": 1,
+        "0x153cbff75": 1,
+        "0x153cbff79": 1,
+        "0x153cbff7c": 1,
+        "0x153cbff81": 1,
+        "0x153cbff84": 1,
+        "0x153cbff88": 1,
+        "0x153cbff8b": 1,
+        "0x153cbff90": 1
+      },
+      "models": [
+        "0x1532ed560",
+        "0x1532ed560"
+      ]
+    },
+    "scope": "prefix through target registration; registration table itself is an explicit sink"
+  },
+  "constructor": {
+    "entry": "0x14fd44980",
+    "fixtures": [
+      {
+        "initialRawValue": 0,
+        "actualFields": {
+          "0x18": 0,
+          "0x1c": 0,
+          "0x20": 0,
+          "0x24": 0,
+          "0x28": 0,
+          "0x2c": 0,
+          "0x30": 0,
+          "0x34": 0
+        },
+        "nativeInstructions": 1,
+        "completion": "constructor-returned"
+      },
+      {
+        "initialRawValue": 305419896,
+        "actualFields": {
+          "0x18": 305419896,
+          "0x1c": 305419896,
+          "0x20": 305419896,
+          "0x24": 305419896,
+          "0x28": 305419896,
+          "0x2c": 305419896,
+          "0x30": 305419896,
+          "0x34": 305419896
+        },
+        "nativeInstructions": 1,
+        "completion": "constructor-returned"
+      }
+    ],
+    "scope": "Actual constructor leaves zero and sentinel storage unchanged; managed zero allocation is an explicit fixture, not a constructor-provided gameplay default"
+  },
+  "nativeNullBoundaries": [
+    {
+      "name": "null-message",
+      "trace": {
+        "entry": "0x153cbc210",
+        "stop": "0x1404c2be0",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x612000e00",
+          "rdx": "0x0"
+        },
+        "instructions": 10,
+        "nativePathSHA256": "4e01877a6d6c22714ffdaf4e2042a833383a75e1e07359c31c11d6877b8b940c",
+        "executedAddresses": {
+          "0x1404c2be0": 1,
+          "0x153cbc210": 1,
+          "0x153cbc211": 1,
+          "0x153cbc215": 1,
+          "0x153cbc218": 1,
+          "0x153cbc21b": 1,
+          "0x153cbc222": 1,
+          "0x153cbc224": 1,
+          "0x153cbc227": 1,
+          "0x153cbc294": 1
+        },
+        "models": []
+      },
+      "scope": "Actual native null branch reaches throw helper; helper body not executed"
+    },
+    {
+      "name": "missing-pack-instance",
+      "trace": {
+        "entry": "0x153cbb460",
+        "stop": "0x1404c2be0",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x612001c40",
+          "rdx": "0x612001d40"
+        },
+        "instructions": 48,
+        "nativePathSHA256": "1aa0b4987c8637f03011cd9ccd9bf6c1513043fc8f8773d911e6680f70ebf9d2",
+        "executedAddresses": {
+          "0x1404c2be0": 1,
+          "0x153cbb460": 1,
+          "0x153cbb464": 1,
+          "0x153cbb467": 1,
+          "0x153cbb46a": 1,
+          "0x153cbb471": 1,
+          "0x153cbb477": 1,
+          "0x153cbb47a": 1,
+          "0x153cbb480": 1,
+          "0x153cbb485": 1,
+          "0x153cbb48b": 1,
+          "0x153cbb48d": 1,
+          "0x153cbb493": 1,
+          "0x153cbb569": 1,
+          "0x153cbb56f": 1,
+          "0x153cbb6d9": 1,
+          "0x153cbb6df": 1,
+          "0x153cbb8ed": 1,
+          "0x153cbb8f3": 1,
+          "0x153cbb8f9": 1,
+          "0x153cbb8ff": 1,
+          "0x153cbbd3c": 1,
+          "0x153cbbd3f": 1,
+          "0x153cbbd45": 1,
+          "0x153cbbd49": 1,
+          "0x153cbbd4c": 1,
+          "0x153cbc210": 1,
+          "0x153cbc211": 1,
+          "0x153cbc215": 1,
+          "0x153cbc218": 1,
+          "0x153cbc21b": 1,
+          "0x153cbc222": 1,
+          "0x153cbc224": 1,
+          "0x153cbc227": 1,
+          "0x153cbc229": 1,
+          "0x153cbc22d": 1,
+          "0x153cbc234": 1,
+          "0x153cbc236": 1,
+          "0x153cbc23a": 1,
+          "0x153cbc23f": 1,
+          "0x153cbc244": 1,
+          "0x153cbc248": 1,
+          "0x153cbc24c": 1,
+          "0x153cbc250": 1,
+          "0x153cbc257": 1,
+          "0x153cbc25b": 1,
+          "0x153cbc25e": 1,
+          "0x153cbc2c0": 1
+        },
+        "models": []
+      },
+      "scope": "Actual native route check reaches throw helper before application; helper body not executed"
+    }
+  ],
+  "downstreamCapacityBoundaries": {
+    "fixtures": [
+      {
+        "currentCountSource": 0,
+        "appliedMaterialLimit": 141,
+        "currentCountReadback": 0,
+        "limitReadback": 141,
+        "belowLimit": true,
+        "trace": {
+          "entry": "0x14e3e32d1",
+          "stop": "0x14e3e3385",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008"
+          },
+          "instructions": 174,
+          "nativePathSHA256": "04f8b6221a7dac5222cfa1e9ccf10445c12ce10bdf8dd972613d65328f6b1fd3",
+          "executedAddresses": {
+            "0x14e3d7d70": 1,
+            "0x14e3d7d71": 1,
+            "0x14e3d7d73": 1,
+            "0x14e3d7d75": 1,
+            "0x14e3d7d76": 1,
+            "0x14e3d7d77": 1,
+            "0x14e3d7d78": 1,
+            "0x14e3d7d7c": 1,
+            "0x14e3d7d81": 1,
+            "0x14e3d7d89": 1,
+            "0x14e3d7d8c": 1,
+            "0x14e3d7d8f": 1,
+            "0x14e3d7d92": 1,
+            "0x14e3d7d95": 1,
+            "0x14e3d7d9c": 1,
+            "0x14e3d7da2": 1,
+            "0x14e3d7da9": 1,
+            "0x14e3d7daf": 1,
+            "0x14e3d7db5": 1,
+            "0x14e3d7db9": 1,
+            "0x14e3d7dbc": 1,
+            "0x14e3d7dc2": 1,
+            "0x14e3d7dc6": 1,
+            "0x14e3d7dca": 1,
+            "0x14e3d7dd1": 1,
+            "0x14e3d7dd4": 1,
+            "0x14e3d7dd8": 1,
+            "0x14e3d7ddc": 1,
+            "0x14e3d7ddf": 1,
+            "0x14e3d7de5": 1,
+            "0x14e3d7de8": 1,
+            "0x14e3d7dec": 1,
+            "0x14e3d7def": 1,
+            "0x14e3d7df4": 1,
+            "0x14e3d7df6": 1,
+            "0x14e3d7df8": 1,
+            "0x14e3d7dfc": 1,
+            "0x14e3d7dff": 1,
+            "0x14e3d7e05": 1,
+            "0x14e3d7e08": 1,
+            "0x14e3d7e0e": 1,
+            "0x14e3d7e10": 1,
+            "0x14e3d7e14": 1,
+            "0x14e3d7e19": 1,
+            "0x14e3d7e1d": 1,
+            "0x14e3d7e23": 1,
+            "0x14e3d7e26": 1,
+            "0x14e3d7e2c": 1,
+            "0x14e3d7e2f": 1,
+            "0x14e3d7e32": 1,
+            "0x14e3d7e34": 1,
+            "0x14e3d7e38": 1,
+            "0x14e3d7e3c": 1,
+            "0x14e3d7e3f": 1,
+            "0x14e3d7e45": 1,
+            "0x14e3d7e4c": 1,
+            "0x14e3d7e4f": 1,
+            "0x14e3d7e53": 1,
+            "0x14e3d7e57": 1,
+            "0x14e3d7e5a": 1,
+            "0x14e3d7e60": 1,
+            "0x14e3d7e63": 1,
+            "0x14e3d7e66": 1,
+            "0x14e3d7e6b": 1,
+            "0x14e3d7e6d": 1,
+            "0x14e3d7e71": 1,
+            "0x14e3d7e73": 1,
+            "0x14e3d7e77": 1,
+            "0x14e3d7e7a": 1,
+            "0x14e3d7e80": 1,
+            "0x14e3d7e83": 1,
+            "0x14e3d7e85": 1,
+            "0x14e3d7e87": 1,
+            "0x14e3d7e8b": 1,
+            "0x14e3d7e8f": 1,
+            "0x14e3d7e91": 1,
+            "0x14e3d7e99": 1,
+            "0x14e3d7e9b": 1,
+            "0x14e3d7e9e": 1,
+            "0x14e3d7ea2": 1,
+            "0x14e3d7ea3": 1,
+            "0x14e3d7ea4": 1,
+            "0x14e3d7ea5": 1,
+            "0x14e3d7ea7": 1,
+            "0x14e3d7ea9": 1,
+            "0x14e3d7eaa": 1,
+            "0x14e3e32d1": 1,
+            "0x14e3e32d8": 1,
+            "0x14e3e32df": 1,
+            "0x14e3e32e2": 1,
+            "0x14e3e32e8": 1,
+            "0x14e3e32ed": 1,
+            "0x14e3e32f2": 1,
+            "0x14e3e32f7": 1,
+            "0x14e3e32fc": 1,
+            "0x14e3e3301": 1,
+            "0x14e3e3305": 1,
+            "0x14e3e3308": 1,
+            "0x14e3e330b": 1,
+            "0x14e3e3385": 1,
+            "0x1573d2d90": 1,
+            "0x157d19fe0": 1,
+            "0x157d19fe2": 1,
+            "0x157d19fe4": 1,
+            "0x157d19fe6": 1,
+            "0x157d19fe8": 1,
+            "0x157d19fe9": 1,
+            "0x157d19fea": 1,
+            "0x157d19feb": 1,
+            "0x157d19fec": 1,
+            "0x157d19ff0": 1,
+            "0x157d19ff4": 1,
+            "0x157d19ff7": 1,
+            "0x157d19ffd": 1,
+            "0x157d1a000": 1,
+            "0x157d1a003": 1,
+            "0x157d1a007": 1,
+            "0x157d1a00b": 1,
+            "0x157d1a00e": 1,
+            "0x157d1a012": 1,
+            "0x157d1a015": 1,
+            "0x157d1a0a7": 1,
+            "0x157d1a0ae": 1,
+            "0x157d1a0b1": 1,
+            "0x157d1a0b7": 1,
+            "0x157d1a0be": 1,
+            "0x157d1a0c4": 1,
+            "0x157d1a0c9": 1,
+            "0x157d1a0d3": 1,
+            "0x157d1a0d8": 1,
+            "0x157d1a0dd": 1,
+            "0x157d1a0e4": 1,
+            "0x157d1a0ec": 1,
+            "0x157d1a0f1": 1,
+            "0x157d1a0f7": 1,
+            "0x157d1a0f9": 1,
+            "0x157d1a0ff": 1,
+            "0x157d1a103": 1,
+            "0x157d1a105": 1,
+            "0x157d1a107": 1,
+            "0x157d1a109": 1,
+            "0x157d1a10b": 1,
+            "0x157d1a111": 1,
+            "0x157d1a114": 1,
+            "0x157d1a11a": 1,
+            "0x157d1a11c": 1,
+            "0x157d1a121": 1,
+            "0x157d1a123": 1,
+            "0x157d1a126": 1,
+            "0x157d1a128": 1,
+            "0x157d1a12e": 1,
+            "0x157d1a132": 1,
+            "0x157d1a134": 1,
+            "0x157d1a136": 1,
+            "0x157d1a139": 1,
+            "0x157d1a13b": 1,
+            "0x157d1a140": 1,
+            "0x157d1a143": 1,
+            "0x157d1a147": 1,
+            "0x157d1a14a": 1,
+            "0x157d1a14c": 1,
+            "0x157d1a151": 1,
+            "0x157d1a354": 1,
+            "0x157d1a356": 1,
+            "0x157d1a35a": 1,
+            "0x157d1a35b": 1,
+            "0x157d1a35c": 1,
+            "0x157d1a35d": 1,
+            "0x157d1a35e": 1,
+            "0x157d1a360": 1,
+            "0x157d1a362": 1,
+            "0x157d1a364": 1,
+            "0x157d1a366": 1,
+            "0x620001000": 1
+          },
+          "models": [
+            "0x1573d2d90",
+            "0x620001000"
+          ]
+        }
+      },
+      {
+        "currentCountSource": 140,
+        "appliedMaterialLimit": 141,
+        "currentCountReadback": 140,
+        "limitReadback": 141,
+        "belowLimit": true,
+        "trace": {
+          "entry": "0x14e3e32d1",
+          "stop": "0x14e3e3385",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008"
+          },
+          "instructions": 174,
+          "nativePathSHA256": "04f8b6221a7dac5222cfa1e9ccf10445c12ce10bdf8dd972613d65328f6b1fd3",
+          "executedAddresses": {
+            "0x14e3d7d70": 1,
+            "0x14e3d7d71": 1,
+            "0x14e3d7d73": 1,
+            "0x14e3d7d75": 1,
+            "0x14e3d7d76": 1,
+            "0x14e3d7d77": 1,
+            "0x14e3d7d78": 1,
+            "0x14e3d7d7c": 1,
+            "0x14e3d7d81": 1,
+            "0x14e3d7d89": 1,
+            "0x14e3d7d8c": 1,
+            "0x14e3d7d8f": 1,
+            "0x14e3d7d92": 1,
+            "0x14e3d7d95": 1,
+            "0x14e3d7d9c": 1,
+            "0x14e3d7da2": 1,
+            "0x14e3d7da9": 1,
+            "0x14e3d7daf": 1,
+            "0x14e3d7db5": 1,
+            "0x14e3d7db9": 1,
+            "0x14e3d7dbc": 1,
+            "0x14e3d7dc2": 1,
+            "0x14e3d7dc6": 1,
+            "0x14e3d7dca": 1,
+            "0x14e3d7dd1": 1,
+            "0x14e3d7dd4": 1,
+            "0x14e3d7dd8": 1,
+            "0x14e3d7ddc": 1,
+            "0x14e3d7ddf": 1,
+            "0x14e3d7de5": 1,
+            "0x14e3d7de8": 1,
+            "0x14e3d7dec": 1,
+            "0x14e3d7def": 1,
+            "0x14e3d7df4": 1,
+            "0x14e3d7df6": 1,
+            "0x14e3d7df8": 1,
+            "0x14e3d7dfc": 1,
+            "0x14e3d7dff": 1,
+            "0x14e3d7e05": 1,
+            "0x14e3d7e08": 1,
+            "0x14e3d7e0e": 1,
+            "0x14e3d7e10": 1,
+            "0x14e3d7e14": 1,
+            "0x14e3d7e19": 1,
+            "0x14e3d7e1d": 1,
+            "0x14e3d7e23": 1,
+            "0x14e3d7e26": 1,
+            "0x14e3d7e2c": 1,
+            "0x14e3d7e2f": 1,
+            "0x14e3d7e32": 1,
+            "0x14e3d7e34": 1,
+            "0x14e3d7e38": 1,
+            "0x14e3d7e3c": 1,
+            "0x14e3d7e3f": 1,
+            "0x14e3d7e45": 1,
+            "0x14e3d7e4c": 1,
+            "0x14e3d7e4f": 1,
+            "0x14e3d7e53": 1,
+            "0x14e3d7e57": 1,
+            "0x14e3d7e5a": 1,
+            "0x14e3d7e60": 1,
+            "0x14e3d7e63": 1,
+            "0x14e3d7e66": 1,
+            "0x14e3d7e6b": 1,
+            "0x14e3d7e6d": 1,
+            "0x14e3d7e71": 1,
+            "0x14e3d7e73": 1,
+            "0x14e3d7e77": 1,
+            "0x14e3d7e7a": 1,
+            "0x14e3d7e80": 1,
+            "0x14e3d7e83": 1,
+            "0x14e3d7e85": 1,
+            "0x14e3d7e87": 1,
+            "0x14e3d7e8b": 1,
+            "0x14e3d7e8f": 1,
+            "0x14e3d7e91": 1,
+            "0x14e3d7e99": 1,
+            "0x14e3d7e9b": 1,
+            "0x14e3d7e9e": 1,
+            "0x14e3d7ea2": 1,
+            "0x14e3d7ea3": 1,
+            "0x14e3d7ea4": 1,
+            "0x14e3d7ea5": 1,
+            "0x14e3d7ea7": 1,
+            "0x14e3d7ea9": 1,
+            "0x14e3d7eaa": 1,
+            "0x14e3e32d1": 1,
+            "0x14e3e32d8": 1,
+            "0x14e3e32df": 1,
+            "0x14e3e32e2": 1,
+            "0x14e3e32e8": 1,
+            "0x14e3e32ed": 1,
+            "0x14e3e32f2": 1,
+            "0x14e3e32f7": 1,
+            "0x14e3e32fc": 1,
+            "0x14e3e3301": 1,
+            "0x14e3e3305": 1,
+            "0x14e3e3308": 1,
+            "0x14e3e330b": 1,
+            "0x14e3e3385": 1,
+            "0x1573d2d90": 1,
+            "0x157d19fe0": 1,
+            "0x157d19fe2": 1,
+            "0x157d19fe4": 1,
+            "0x157d19fe6": 1,
+            "0x157d19fe8": 1,
+            "0x157d19fe9": 1,
+            "0x157d19fea": 1,
+            "0x157d19feb": 1,
+            "0x157d19fec": 1,
+            "0x157d19ff0": 1,
+            "0x157d19ff4": 1,
+            "0x157d19ff7": 1,
+            "0x157d19ffd": 1,
+            "0x157d1a000": 1,
+            "0x157d1a003": 1,
+            "0x157d1a007": 1,
+            "0x157d1a00b": 1,
+            "0x157d1a00e": 1,
+            "0x157d1a012": 1,
+            "0x157d1a015": 1,
+            "0x157d1a0a7": 1,
+            "0x157d1a0ae": 1,
+            "0x157d1a0b1": 1,
+            "0x157d1a0b7": 1,
+            "0x157d1a0be": 1,
+            "0x157d1a0c4": 1,
+            "0x157d1a0c9": 1,
+            "0x157d1a0d3": 1,
+            "0x157d1a0d8": 1,
+            "0x157d1a0dd": 1,
+            "0x157d1a0e4": 1,
+            "0x157d1a0ec": 1,
+            "0x157d1a0f1": 1,
+            "0x157d1a0f7": 1,
+            "0x157d1a0f9": 1,
+            "0x157d1a0ff": 1,
+            "0x157d1a103": 1,
+            "0x157d1a105": 1,
+            "0x157d1a107": 1,
+            "0x157d1a109": 1,
+            "0x157d1a10b": 1,
+            "0x157d1a111": 1,
+            "0x157d1a114": 1,
+            "0x157d1a11a": 1,
+            "0x157d1a11c": 1,
+            "0x157d1a121": 1,
+            "0x157d1a123": 1,
+            "0x157d1a126": 1,
+            "0x157d1a128": 1,
+            "0x157d1a12e": 1,
+            "0x157d1a132": 1,
+            "0x157d1a134": 1,
+            "0x157d1a136": 1,
+            "0x157d1a139": 1,
+            "0x157d1a13b": 1,
+            "0x157d1a140": 1,
+            "0x157d1a143": 1,
+            "0x157d1a147": 1,
+            "0x157d1a14a": 1,
+            "0x157d1a14c": 1,
+            "0x157d1a151": 1,
+            "0x157d1a354": 1,
+            "0x157d1a356": 1,
+            "0x157d1a35a": 1,
+            "0x157d1a35b": 1,
+            "0x157d1a35c": 1,
+            "0x157d1a35d": 1,
+            "0x157d1a35e": 1,
+            "0x157d1a360": 1,
+            "0x157d1a362": 1,
+            "0x157d1a364": 1,
+            "0x157d1a366": 1,
+            "0x620001000": 1
+          },
+          "models": [
+            "0x1573d2d90",
+            "0x620001000"
+          ]
+        }
+      },
+      {
+        "currentCountSource": 141,
+        "appliedMaterialLimit": 141,
+        "currentCountReadback": 141,
+        "limitReadback": 141,
+        "belowLimit": false,
+        "trace": {
+          "entry": "0x14e3e32d1",
+          "stop": "0x14e3e330d",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008"
+          },
+          "instructions": 174,
+          "nativePathSHA256": "e816f1551f95f1c49d17314b704781a9904c014a0bf1127db718e6bb5c4c450c",
+          "executedAddresses": {
+            "0x14e3d7d70": 1,
+            "0x14e3d7d71": 1,
+            "0x14e3d7d73": 1,
+            "0x14e3d7d75": 1,
+            "0x14e3d7d76": 1,
+            "0x14e3d7d77": 1,
+            "0x14e3d7d78": 1,
+            "0x14e3d7d7c": 1,
+            "0x14e3d7d81": 1,
+            "0x14e3d7d89": 1,
+            "0x14e3d7d8c": 1,
+            "0x14e3d7d8f": 1,
+            "0x14e3d7d92": 1,
+            "0x14e3d7d95": 1,
+            "0x14e3d7d9c": 1,
+            "0x14e3d7da2": 1,
+            "0x14e3d7da9": 1,
+            "0x14e3d7daf": 1,
+            "0x14e3d7db5": 1,
+            "0x14e3d7db9": 1,
+            "0x14e3d7dbc": 1,
+            "0x14e3d7dc2": 1,
+            "0x14e3d7dc6": 1,
+            "0x14e3d7dca": 1,
+            "0x14e3d7dd1": 1,
+            "0x14e3d7dd4": 1,
+            "0x14e3d7dd8": 1,
+            "0x14e3d7ddc": 1,
+            "0x14e3d7ddf": 1,
+            "0x14e3d7de5": 1,
+            "0x14e3d7de8": 1,
+            "0x14e3d7dec": 1,
+            "0x14e3d7def": 1,
+            "0x14e3d7df4": 1,
+            "0x14e3d7df6": 1,
+            "0x14e3d7df8": 1,
+            "0x14e3d7dfc": 1,
+            "0x14e3d7dff": 1,
+            "0x14e3d7e05": 1,
+            "0x14e3d7e08": 1,
+            "0x14e3d7e0e": 1,
+            "0x14e3d7e10": 1,
+            "0x14e3d7e14": 1,
+            "0x14e3d7e19": 1,
+            "0x14e3d7e1d": 1,
+            "0x14e3d7e23": 1,
+            "0x14e3d7e26": 1,
+            "0x14e3d7e2c": 1,
+            "0x14e3d7e2f": 1,
+            "0x14e3d7e32": 1,
+            "0x14e3d7e34": 1,
+            "0x14e3d7e38": 1,
+            "0x14e3d7e3c": 1,
+            "0x14e3d7e3f": 1,
+            "0x14e3d7e45": 1,
+            "0x14e3d7e4c": 1,
+            "0x14e3d7e4f": 1,
+            "0x14e3d7e53": 1,
+            "0x14e3d7e57": 1,
+            "0x14e3d7e5a": 1,
+            "0x14e3d7e60": 1,
+            "0x14e3d7e63": 1,
+            "0x14e3d7e66": 1,
+            "0x14e3d7e6b": 1,
+            "0x14e3d7e6d": 1,
+            "0x14e3d7e71": 1,
+            "0x14e3d7e73": 1,
+            "0x14e3d7e77": 1,
+            "0x14e3d7e7a": 1,
+            "0x14e3d7e80": 1,
+            "0x14e3d7e83": 1,
+            "0x14e3d7e85": 1,
+            "0x14e3d7e87": 1,
+            "0x14e3d7e8b": 1,
+            "0x14e3d7e8f": 1,
+            "0x14e3d7e91": 1,
+            "0x14e3d7e99": 1,
+            "0x14e3d7e9b": 1,
+            "0x14e3d7e9e": 1,
+            "0x14e3d7ea2": 1,
+            "0x14e3d7ea3": 1,
+            "0x14e3d7ea4": 1,
+            "0x14e3d7ea5": 1,
+            "0x14e3d7ea7": 1,
+            "0x14e3d7ea9": 1,
+            "0x14e3d7eaa": 1,
+            "0x14e3e32d1": 1,
+            "0x14e3e32d8": 1,
+            "0x14e3e32df": 1,
+            "0x14e3e32e2": 1,
+            "0x14e3e32e8": 1,
+            "0x14e3e32ed": 1,
+            "0x14e3e32f2": 1,
+            "0x14e3e32f7": 1,
+            "0x14e3e32fc": 1,
+            "0x14e3e3301": 1,
+            "0x14e3e3305": 1,
+            "0x14e3e3308": 1,
+            "0x14e3e330b": 1,
+            "0x14e3e330d": 1,
+            "0x1573d2d90": 1,
+            "0x157d19fe0": 1,
+            "0x157d19fe2": 1,
+            "0x157d19fe4": 1,
+            "0x157d19fe6": 1,
+            "0x157d19fe8": 1,
+            "0x157d19fe9": 1,
+            "0x157d19fea": 1,
+            "0x157d19feb": 1,
+            "0x157d19fec": 1,
+            "0x157d19ff0": 1,
+            "0x157d19ff4": 1,
+            "0x157d19ff7": 1,
+            "0x157d19ffd": 1,
+            "0x157d1a000": 1,
+            "0x157d1a003": 1,
+            "0x157d1a007": 1,
+            "0x157d1a00b": 1,
+            "0x157d1a00e": 1,
+            "0x157d1a012": 1,
+            "0x157d1a015": 1,
+            "0x157d1a0a7": 1,
+            "0x157d1a0ae": 1,
+            "0x157d1a0b1": 1,
+            "0x157d1a0b7": 1,
+            "0x157d1a0be": 1,
+            "0x157d1a0c4": 1,
+            "0x157d1a0c9": 1,
+            "0x157d1a0d3": 1,
+            "0x157d1a0d8": 1,
+            "0x157d1a0dd": 1,
+            "0x157d1a0e4": 1,
+            "0x157d1a0ec": 1,
+            "0x157d1a0f1": 1,
+            "0x157d1a0f7": 1,
+            "0x157d1a0f9": 1,
+            "0x157d1a0ff": 1,
+            "0x157d1a103": 1,
+            "0x157d1a105": 1,
+            "0x157d1a107": 1,
+            "0x157d1a109": 1,
+            "0x157d1a10b": 1,
+            "0x157d1a111": 1,
+            "0x157d1a114": 1,
+            "0x157d1a11a": 1,
+            "0x157d1a11c": 1,
+            "0x157d1a121": 1,
+            "0x157d1a123": 1,
+            "0x157d1a126": 1,
+            "0x157d1a128": 1,
+            "0x157d1a12e": 1,
+            "0x157d1a132": 1,
+            "0x157d1a134": 1,
+            "0x157d1a136": 1,
+            "0x157d1a139": 1,
+            "0x157d1a13b": 1,
+            "0x157d1a140": 1,
+            "0x157d1a143": 1,
+            "0x157d1a147": 1,
+            "0x157d1a14a": 1,
+            "0x157d1a14c": 1,
+            "0x157d1a151": 1,
+            "0x157d1a354": 1,
+            "0x157d1a356": 1,
+            "0x157d1a35a": 1,
+            "0x157d1a35b": 1,
+            "0x157d1a35c": 1,
+            "0x157d1a35d": 1,
+            "0x157d1a35e": 1,
+            "0x157d1a360": 1,
+            "0x157d1a362": 1,
+            "0x157d1a364": 1,
+            "0x157d1a366": 1,
+            "0x620001000": 1
+          },
+          "models": [
+            "0x1573d2d90",
+            "0x620001000"
+          ]
+        }
+      },
+      {
+        "currentCountSource": 142,
+        "appliedMaterialLimit": 141,
+        "currentCountReadback": 142,
+        "limitReadback": 141,
+        "belowLimit": false,
+        "trace": {
+          "entry": "0x14e3e32d1",
+          "stop": "0x14e3e330d",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008"
+          },
+          "instructions": 174,
+          "nativePathSHA256": "e816f1551f95f1c49d17314b704781a9904c014a0bf1127db718e6bb5c4c450c",
+          "executedAddresses": {
+            "0x14e3d7d70": 1,
+            "0x14e3d7d71": 1,
+            "0x14e3d7d73": 1,
+            "0x14e3d7d75": 1,
+            "0x14e3d7d76": 1,
+            "0x14e3d7d77": 1,
+            "0x14e3d7d78": 1,
+            "0x14e3d7d7c": 1,
+            "0x14e3d7d81": 1,
+            "0x14e3d7d89": 1,
+            "0x14e3d7d8c": 1,
+            "0x14e3d7d8f": 1,
+            "0x14e3d7d92": 1,
+            "0x14e3d7d95": 1,
+            "0x14e3d7d9c": 1,
+            "0x14e3d7da2": 1,
+            "0x14e3d7da9": 1,
+            "0x14e3d7daf": 1,
+            "0x14e3d7db5": 1,
+            "0x14e3d7db9": 1,
+            "0x14e3d7dbc": 1,
+            "0x14e3d7dc2": 1,
+            "0x14e3d7dc6": 1,
+            "0x14e3d7dca": 1,
+            "0x14e3d7dd1": 1,
+            "0x14e3d7dd4": 1,
+            "0x14e3d7dd8": 1,
+            "0x14e3d7ddc": 1,
+            "0x14e3d7ddf": 1,
+            "0x14e3d7de5": 1,
+            "0x14e3d7de8": 1,
+            "0x14e3d7dec": 1,
+            "0x14e3d7def": 1,
+            "0x14e3d7df4": 1,
+            "0x14e3d7df6": 1,
+            "0x14e3d7df8": 1,
+            "0x14e3d7dfc": 1,
+            "0x14e3d7dff": 1,
+            "0x14e3d7e05": 1,
+            "0x14e3d7e08": 1,
+            "0x14e3d7e0e": 1,
+            "0x14e3d7e10": 1,
+            "0x14e3d7e14": 1,
+            "0x14e3d7e19": 1,
+            "0x14e3d7e1d": 1,
+            "0x14e3d7e23": 1,
+            "0x14e3d7e26": 1,
+            "0x14e3d7e2c": 1,
+            "0x14e3d7e2f": 1,
+            "0x14e3d7e32": 1,
+            "0x14e3d7e34": 1,
+            "0x14e3d7e38": 1,
+            "0x14e3d7e3c": 1,
+            "0x14e3d7e3f": 1,
+            "0x14e3d7e45": 1,
+            "0x14e3d7e4c": 1,
+            "0x14e3d7e4f": 1,
+            "0x14e3d7e53": 1,
+            "0x14e3d7e57": 1,
+            "0x14e3d7e5a": 1,
+            "0x14e3d7e60": 1,
+            "0x14e3d7e63": 1,
+            "0x14e3d7e66": 1,
+            "0x14e3d7e6b": 1,
+            "0x14e3d7e6d": 1,
+            "0x14e3d7e71": 1,
+            "0x14e3d7e73": 1,
+            "0x14e3d7e77": 1,
+            "0x14e3d7e7a": 1,
+            "0x14e3d7e80": 1,
+            "0x14e3d7e83": 1,
+            "0x14e3d7e85": 1,
+            "0x14e3d7e87": 1,
+            "0x14e3d7e8b": 1,
+            "0x14e3d7e8f": 1,
+            "0x14e3d7e91": 1,
+            "0x14e3d7e99": 1,
+            "0x14e3d7e9b": 1,
+            "0x14e3d7e9e": 1,
+            "0x14e3d7ea2": 1,
+            "0x14e3d7ea3": 1,
+            "0x14e3d7ea4": 1,
+            "0x14e3d7ea5": 1,
+            "0x14e3d7ea7": 1,
+            "0x14e3d7ea9": 1,
+            "0x14e3d7eaa": 1,
+            "0x14e3e32d1": 1,
+            "0x14e3e32d8": 1,
+            "0x14e3e32df": 1,
+            "0x14e3e32e2": 1,
+            "0x14e3e32e8": 1,
+            "0x14e3e32ed": 1,
+            "0x14e3e32f2": 1,
+            "0x14e3e32f7": 1,
+            "0x14e3e32fc": 1,
+            "0x14e3e3301": 1,
+            "0x14e3e3305": 1,
+            "0x14e3e3308": 1,
+            "0x14e3e330b": 1,
+            "0x14e3e330d": 1,
+            "0x1573d2d90": 1,
+            "0x157d19fe0": 1,
+            "0x157d19fe2": 1,
+            "0x157d19fe4": 1,
+            "0x157d19fe6": 1,
+            "0x157d19fe8": 1,
+            "0x157d19fe9": 1,
+            "0x157d19fea": 1,
+            "0x157d19feb": 1,
+            "0x157d19fec": 1,
+            "0x157d19ff0": 1,
+            "0x157d19ff4": 1,
+            "0x157d19ff7": 1,
+            "0x157d19ffd": 1,
+            "0x157d1a000": 1,
+            "0x157d1a003": 1,
+            "0x157d1a007": 1,
+            "0x157d1a00b": 1,
+            "0x157d1a00e": 1,
+            "0x157d1a012": 1,
+            "0x157d1a015": 1,
+            "0x157d1a0a7": 1,
+            "0x157d1a0ae": 1,
+            "0x157d1a0b1": 1,
+            "0x157d1a0b7": 1,
+            "0x157d1a0be": 1,
+            "0x157d1a0c4": 1,
+            "0x157d1a0c9": 1,
+            "0x157d1a0d3": 1,
+            "0x157d1a0d8": 1,
+            "0x157d1a0dd": 1,
+            "0x157d1a0e4": 1,
+            "0x157d1a0ec": 1,
+            "0x157d1a0f1": 1,
+            "0x157d1a0f7": 1,
+            "0x157d1a0f9": 1,
+            "0x157d1a0ff": 1,
+            "0x157d1a103": 1,
+            "0x157d1a105": 1,
+            "0x157d1a107": 1,
+            "0x157d1a109": 1,
+            "0x157d1a10b": 1,
+            "0x157d1a111": 1,
+            "0x157d1a114": 1,
+            "0x157d1a11a": 1,
+            "0x157d1a11c": 1,
+            "0x157d1a121": 1,
+            "0x157d1a123": 1,
+            "0x157d1a126": 1,
+            "0x157d1a128": 1,
+            "0x157d1a12e": 1,
+            "0x157d1a132": 1,
+            "0x157d1a134": 1,
+            "0x157d1a136": 1,
+            "0x157d1a139": 1,
+            "0x157d1a13b": 1,
+            "0x157d1a140": 1,
+            "0x157d1a143": 1,
+            "0x157d1a147": 1,
+            "0x157d1a14a": 1,
+            "0x157d1a14c": 1,
+            "0x157d1a151": 1,
+            "0x157d1a354": 1,
+            "0x157d1a356": 1,
+            "0x157d1a35a": 1,
+            "0x157d1a35b": 1,
+            "0x157d1a35c": 1,
+            "0x157d1a35d": 1,
+            "0x157d1a35e": 1,
+            "0x157d1a360": 1,
+            "0x157d1a362": 1,
+            "0x157d1a364": 1,
+            "0x157d1a366": 1,
+            "0x620001000": 1
+          },
+          "models": [
+            "0x1573d2d90",
+            "0x620001000"
+          ]
+        }
+      }
+    ],
+    "appliedLimitSourceFixture": "duplicate-wire-last-wins",
+    "scope": "Native item-enum count/limit getter, real capacity dictionary lookup and current<limit branch execute; current-item lookup/index and item-count storage are explicit inputs. Stops before SHOP_ITEM_LIMITED lookup/UI or function return epilogue."
+  },
+  "bindings": [
+    {
+      "tag": 6,
+      "clientField": "CLFJNKKFONI",
+      "objectOffset": 48,
+      "semanticField": "store_type",
+      "evidence": "Target enum StorePack=1/StoreDepot=2 and native route selection",
+      "valueEncoding": "identity",
+      "status": "verified-offline"
+    },
+    {
+      "tag": 1,
+      "clientField": "PHDOBIIMHLB",
+      "objectOffset": 28,
+      "semanticField": "reliquary_count_limit",
+      "targetItemSymbol": "ITEM_RELIQUARY",
+      "targetItemValue": 3,
+      "valueEncoding": "identity-uint32",
+      "evidence": "Real native receiver loads -> Dictionary<target item enum,uint32> native insertion and overwrite",
+      "status": "verified-offline"
+    },
+    {
+      "tag": 9,
+      "clientField": "CKHIAGMBNCC",
+      "objectOffset": 40,
+      "semanticField": "weapon_count_limit",
+      "targetItemSymbol": "ITEM_WEAPON",
+      "targetItemValue": 4,
+      "valueEncoding": "identity-uint32",
+      "evidence": "Real native receiver loads -> Dictionary<target item enum,uint32> native insertion and overwrite",
+      "status": "verified-offline"
+    },
+    {
+      "tag": 14,
+      "clientField": "GGGJAGOKMCI",
+      "objectOffset": 52,
+      "semanticField": "material_count_limit",
+      "targetItemSymbol": "ITEM_MATERIAL",
+      "targetItemValue": 2,
+      "valueEncoding": "identity-uint32",
+      "evidence": "Real native receiver loads -> Dictionary<target item enum,uint32> native insertion and overwrite",
+      "status": "verified-offline"
+    },
+    {
+      "tag": 5,
+      "clientField": "NAEDDJBKCFC",
+      "objectOffset": 32,
+      "semanticField": "furniture_count_limit",
+      "targetItemSymbol": "ITEM_FURNITURE",
+      "targetItemValue": 6,
+      "valueEncoding": "identity-uint32",
+      "evidence": "Real native receiver loads -> Dictionary<target item enum,uint32> native insertion and overwrite",
+      "status": "verified-offline"
+    }
+  ],
+  "unresolvedFields": [
+    {
+      "clientField": "PAKLDABINMP",
+      "objectOffset": 44,
+      "tag": 2,
+      "type": "uint32",
+      "typeDefinition": null,
+      "wireType": 0,
+      "cardinality": "singular",
+      "packed": false,
+      "evidence": {
+        "reader": "0x14fd45000",
+        "nativeStore": "0x14fd45071"
+      },
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "consumerObservation": "Not read by the executed normal dispatcher/wrapper/application path"
+    },
+    {
+      "clientField": "ADCHFHMCOJG",
+      "objectOffset": 24,
+      "tag": 4,
+      "type": "uint32",
+      "typeDefinition": null,
+      "wireType": 0,
+      "cardinality": "singular",
+      "packed": false,
+      "evidence": {
+        "reader": "0x14fd45000",
+        "nativeStore": "0x14fd4515a"
+      },
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "consumerObservation": "Not read by the executed normal dispatcher/wrapper/application path"
+    },
+    {
+      "clientField": "DECHDEGPBOE",
+      "objectOffset": 36,
+      "tag": 7,
+      "type": "uint32",
+      "typeDefinition": null,
+      "wireType": 0,
+      "cardinality": "singular",
+      "packed": false,
+      "evidence": {
+        "reader": "0x14fd45000",
+        "nativeStore": "0x14fd450a8"
+      },
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved",
+      "consumerObservation": "Not read by the executed normal dispatcher/wrapper/application path"
+    }
+  ],
+  "fixtureCount": 11,
+  "dispatcherExecutions": 12,
+  "fixtures": [
+    {
+      "name": "unregistered-command",
+      "command": 65535,
+      "results": [
+        {
+          "wire": "080b1016202c28373001384d4863708d01",
+          "readerEvents": [
+            {
+              "key": 8,
+              "objectOffset": 28,
+              "size": 4,
+              "value": 11,
+              "source": "0x14fd45120",
+              "observation": "native-store"
+            },
+            {
+              "key": 16,
+              "objectOffset": 44,
+              "size": 4,
+              "value": 22,
+              "source": "0x14fd45071",
+              "observation": "native-store"
+            },
+            {
+              "key": 32,
+              "objectOffset": 24,
+              "size": 4,
+              "value": 44,
+              "source": "0x14fd4515a",
+              "observation": "native-store"
+            },
+            {
+              "key": 40,
+              "objectOffset": 32,
+              "size": 4,
+              "value": 55,
+              "source": "0x14fd450d7",
+              "observation": "native-store"
+            },
+            {
+              "key": 48,
+              "objectOffset": 48,
+              "size": 4,
+              "value": 1,
+              "source": "0x14fd4513d",
+              "observation": "native-store"
+            },
+            {
+              "key": 56,
+              "objectOffset": 36,
+              "size": 4,
+              "value": 77,
+              "source": "0x14fd450a8",
+              "observation": "native-store"
+            },
+            {
+              "key": 72,
+              "objectOffset": 40,
+              "size": 4,
+              "value": 99,
+              "source": "0x14fd45177",
+              "observation": "native-store"
+            },
+            {
+              "key": 112,
+              "objectOffset": 52,
+              "size": 4,
+              "value": 141,
+              "source": "0x14fd45103",
+              "observation": "native-store"
+            }
+          ],
+          "packetFieldReads": [],
+          "executedNativeEntries": [
+            "0x153cbb460"
+          ],
+          "nativePathSHA256": "ce4457886c64acea08af60dea604b610f921409e8fa49c7ccd497a21d5114dee",
+          "nativeInstructions": 27,
+          "packLimits": {},
+          "depotLimits": {},
+          "events": [],
+          "models": [],
+          "completion": "reader-and-dispatcher-returned"
+        }
+      ]
+    },
+    {
+      "name": "independent-pack",
+      "command": 22609,
+      "results": [
+        {
+          "wire": "080b1016202c28373001384d4863708d01",
+          "readerEvents": [
+            {
+              "key": 8,
+              "objectOffset": 28,
+              "size": 4,
+              "value": 11,
+              "source": "0x14fd45120",
+              "observation": "native-store"
+            },
+            {
+              "key": 16,
+              "objectOffset": 44,
+              "size": 4,
+              "value": 22,
+              "source": "0x14fd45071",
+              "observation": "native-store"
+            },
+            {
+              "key": 32,
+              "objectOffset": 24,
+              "size": 4,
+              "value": 44,
+              "source": "0x14fd4515a",
+              "observation": "native-store"
+            },
+            {
+              "key": 40,
+              "objectOffset": 32,
+              "size": 4,
+              "value": 55,
+              "source": "0x14fd450d7",
+              "observation": "native-store"
+            },
+            {
+              "key": 48,
+              "objectOffset": 48,
+              "size": 4,
+              "value": 1,
+              "source": "0x14fd4513d",
+              "observation": "native-store"
+            },
+            {
+              "key": 56,
+              "objectOffset": 36,
+              "size": 4,
+              "value": 77,
+              "source": "0x14fd450a8",
+              "observation": "native-store"
+            },
+            {
+              "key": 72,
+              "objectOffset": 40,
+              "size": 4,
+              "value": 99,
+              "source": "0x14fd45177",
+              "observation": "native-store"
+            },
+            {
+              "key": 112,
+              "objectOffset": 52,
+              "size": 4,
+              "value": 141,
+              "source": "0x14fd45103",
+              "observation": "native-store"
+            }
+          ],
+          "packetFieldReads": [
+            {
+              "objectOffset": 48,
+              "size": 4,
+              "instruction": "0x153cbc229"
+            },
+            {
+              "objectOffset": 28,
+              "size": 4,
+              "instruction": "0x14e3d6dc5"
+            },
+            {
+              "objectOffset": 40,
+              "size": 4,
+              "instruction": "0x14e3d6e18"
+            },
+            {
+              "objectOffset": 52,
+              "size": 4,
+              "instruction": "0x14e3d6e6b"
+            },
+            {
+              "objectOffset": 32,
+              "size": 4,
+              "instruction": "0x14e3d6ebe"
+            }
+          ],
+          "executedNativeEntries": [
+            "0x153cbb460",
+            "0x153cbc210",
+            "0x14e3d6da0",
+            "0x157d1a480",
+            "0x14e3d6c60"
+          ],
+          "nativePathSHA256": "246c2ec2ac5aa24676631fde6809823c4c4bdd9a8b57a95ad4ee221548f01a4b",
+          "nativeInstructions": 630,
+          "packLimits": {
+            "3": 11,
+            "4": 99,
+            "2": 141,
+            "6": 55
+          },
+          "depotLimits": {},
+          "events": [
+            "190100000000000000000000000000000000000000000000"
+          ],
+          "models": [
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x1532d6720"
+          ],
+          "completion": "reader-and-dispatcher-returned"
+        }
+      ]
+    },
+    {
+      "name": "depot",
+      "command": 22609,
+      "results": [
+        {
+          "wire": "080b283730024863708d01",
+          "readerEvents": [
+            {
+              "key": 8,
+              "objectOffset": 28,
+              "size": 4,
+              "value": 11,
+              "source": "0x14fd45120",
+              "observation": "native-store"
+            },
+            {
+              "key": 40,
+              "objectOffset": 32,
+              "size": 4,
+              "value": 55,
+              "source": "0x14fd450d7",
+              "observation": "native-store"
+            },
+            {
+              "key": 48,
+              "objectOffset": 48,
+              "size": 4,
+              "value": 2,
+              "source": "0x14fd4513d",
+              "observation": "native-store"
+            },
+            {
+              "key": 72,
+              "objectOffset": 40,
+              "size": 4,
+              "value": 99,
+              "source": "0x14fd45177",
+              "observation": "native-store"
+            },
+            {
+              "key": 112,
+              "objectOffset": 52,
+              "size": 4,
+              "value": 141,
+              "source": "0x14fd45103",
+              "observation": "native-store"
+            }
+          ],
+          "packetFieldReads": [
+            {
+              "objectOffset": 48,
+              "size": 4,
+              "instruction": "0x153cbc229"
+            },
+            {
+              "objectOffset": 28,
+              "size": 4,
+              "instruction": "0x14e3d6dc5"
+            },
+            {
+              "objectOffset": 40,
+              "size": 4,
+              "instruction": "0x14e3d6e18"
+            },
+            {
+              "objectOffset": 52,
+              "size": 4,
+              "instruction": "0x14e3d6e6b"
+            },
+            {
+              "objectOffset": 32,
+              "size": 4,
+              "instruction": "0x14e3d6ebe"
+            }
+          ],
+          "executedNativeEntries": [
+            "0x153cbb460",
+            "0x153cbc210",
+            "0x14e3d6da0",
+            "0x157d1a480",
+            "0x14e3d6c60"
+          ],
+          "nativePathSHA256": "246c2ec2ac5aa24676631fde6809823c4c4bdd9a8b57a95ad4ee221548f01a4b",
+          "nativeInstructions": 630,
+          "packLimits": {},
+          "depotLimits": {
+            "3": 11,
+            "4": 99,
+            "2": 141,
+            "6": 55
+          },
+          "events": [
+            "190100000000000000000000000000000000000000000000"
+          ],
+          "models": [
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x1532d6720"
+          ],
+          "completion": "reader-and-dispatcher-returned"
+        }
+      ]
+    },
+    {
+      "name": "store-none-falls-through-pack",
+      "command": 22609,
+      "results": [
+        {
+          "wire": "080b283730004863708d01",
+          "readerEvents": [
+            {
+              "key": 8,
+              "objectOffset": 28,
+              "size": 4,
+              "value": 11,
+              "source": "0x14fd45120",
+              "observation": "native-store"
+            },
+            {
+              "key": 40,
+              "objectOffset": 32,
+              "size": 4,
+              "value": 55,
+              "source": "0x14fd450d7",
+              "observation": "native-store"
+            },
+            {
+              "key": 48,
+              "objectOffset": 48,
+              "size": 4,
+              "value": 0,
+              "source": "0x14fd4513d",
+              "observation": "native-store"
+            },
+            {
+              "key": 72,
+              "objectOffset": 40,
+              "size": 4,
+              "value": 99,
+              "source": "0x14fd45177",
+              "observation": "native-store"
+            },
+            {
+              "key": 112,
+              "objectOffset": 52,
+              "size": 4,
+              "value": 141,
+              "source": "0x14fd45103",
+              "observation": "native-store"
+            }
+          ],
+          "packetFieldReads": [
+            {
+              "objectOffset": 48,
+              "size": 4,
+              "instruction": "0x153cbc229"
+            },
+            {
+              "objectOffset": 28,
+              "size": 4,
+              "instruction": "0x14e3d6dc5"
+            },
+            {
+              "objectOffset": 40,
+              "size": 4,
+              "instruction": "0x14e3d6e18"
+            },
+            {
+              "objectOffset": 52,
+              "size": 4,
+              "instruction": "0x14e3d6e6b"
+            },
+            {
+              "objectOffset": 32,
+              "size": 4,
+              "instruction": "0x14e3d6ebe"
+            }
+          ],
+          "executedNativeEntries": [
+            "0x153cbb460",
+            "0x153cbc210",
+            "0x14e3d6da0",
+            "0x157d1a480",
+            "0x14e3d6c60"
+          ],
+          "nativePathSHA256": "246c2ec2ac5aa24676631fde6809823c4c4bdd9a8b57a95ad4ee221548f01a4b",
+          "nativeInstructions": 630,
+          "packLimits": {
+            "3": 11,
+            "4": 99,
+            "2": 141,
+            "6": 55
+          },
+          "depotLimits": {},
+          "events": [
+            "190100000000000000000000000000000000000000000000"
+          ],
+          "models": [
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x1532d6720"
+          ],
+          "completion": "reader-and-dispatcher-returned"
+        }
+      ]
+    },
+    {
+      "name": "unknown-store-falls-through-pack",
+      "command": 22609,
+      "results": [
+        {
+          "wire": "080b283730ffffffff0f4863708d01",
+          "readerEvents": [
+            {
+              "key": 8,
+              "objectOffset": 28,
+              "size": 4,
+              "value": 11,
+              "source": "0x14fd45120",
+              "observation": "native-store"
+            },
+            {
+              "key": 40,
+              "objectOffset": 32,
+              "size": 4,
+              "value": 55,
+              "source": "0x14fd450d7",
+              "observation": "native-store"
+            },
+            {
+              "key": 48,
+              "objectOffset": 48,
+              "size": 4,
+              "value": 4294967295,
+              "source": "0x14fd4513d",
+              "observation": "native-store"
+            },
+            {
+              "key": 72,
+              "objectOffset": 40,
+              "size": 4,
+              "value": 99,
+              "source": "0x14fd45177",
+              "observation": "native-store"
+            },
+            {
+              "key": 112,
+              "objectOffset": 52,
+              "size": 4,
+              "value": 141,
+              "source": "0x14fd45103",
+              "observation": "native-store"
+            }
+          ],
+          "packetFieldReads": [
+            {
+              "objectOffset": 48,
+              "size": 4,
+              "instruction": "0x153cbc229"
+            },
+            {
+              "objectOffset": 28,
+              "size": 4,
+              "instruction": "0x14e3d6dc5"
+            },
+            {
+              "objectOffset": 40,
+              "size": 4,
+              "instruction": "0x14e3d6e18"
+            },
+            {
+              "objectOffset": 52,
+              "size": 4,
+              "instruction": "0x14e3d6e6b"
+            },
+            {
+              "objectOffset": 32,
+              "size": 4,
+              "instruction": "0x14e3d6ebe"
+            }
+          ],
+          "executedNativeEntries": [
+            "0x153cbb460",
+            "0x153cbc210",
+            "0x14e3d6da0",
+            "0x157d1a480",
+            "0x14e3d6c60"
+          ],
+          "nativePathSHA256": "246c2ec2ac5aa24676631fde6809823c4c4bdd9a8b57a95ad4ee221548f01a4b",
+          "nativeInstructions": 630,
+          "packLimits": {
+            "3": 11,
+            "4": 99,
+            "2": 141,
+            "6": 55
+          },
+          "depotLimits": {},
+          "events": [
+            "190100000000000000000000000000000000000000000000"
+          ],
+          "models": [
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x1532d6720"
+          ],
+          "completion": "reader-and-dispatcher-returned"
+        }
+      ]
+    },
+    {
+      "name": "unconsumed-fields-perturbed",
+      "command": 22609,
+      "results": [
+        {
+          "wire": "080b1016202c28373001384d4863708d0110ffffffff0f20ffffffff0f38ffffffff0f",
+          "readerEvents": [
+            {
+              "key": 8,
+              "objectOffset": 28,
+              "size": 4,
+              "value": 11,
+              "source": "0x14fd45120",
+              "observation": "native-store"
+            },
+            {
+              "key": 16,
+              "objectOffset": 44,
+              "size": 4,
+              "value": 22,
+              "source": "0x14fd45071",
+              "observation": "native-store"
+            },
+            {
+              "key": 32,
+              "objectOffset": 24,
+              "size": 4,
+              "value": 44,
+              "source": "0x14fd4515a",
+              "observation": "native-store"
+            },
+            {
+              "key": 40,
+              "objectOffset": 32,
+              "size": 4,
+              "value": 55,
+              "source": "0x14fd450d7",
+              "observation": "native-store"
+            },
+            {
+              "key": 48,
+              "objectOffset": 48,
+              "size": 4,
+              "value": 1,
+              "source": "0x14fd4513d",
+              "observation": "native-store"
+            },
+            {
+              "key": 56,
+              "objectOffset": 36,
+              "size": 4,
+              "value": 77,
+              "source": "0x14fd450a8",
+              "observation": "native-store"
+            },
+            {
+              "key": 72,
+              "objectOffset": 40,
+              "size": 4,
+              "value": 99,
+              "source": "0x14fd45177",
+              "observation": "native-store"
+            },
+            {
+              "key": 112,
+              "objectOffset": 52,
+              "size": 4,
+              "value": 141,
+              "source": "0x14fd45103",
+              "observation": "native-store"
+            },
+            {
+              "key": 16,
+              "objectOffset": 44,
+              "size": 4,
+              "value": 4294967295,
+              "source": "0x14fd45071",
+              "observation": "native-store"
+            },
+            {
+              "key": 32,
+              "objectOffset": 24,
+              "size": 4,
+              "value": 4294967295,
+              "source": "0x14fd4515a",
+              "observation": "native-store"
+            },
+            {
+              "key": 56,
+              "objectOffset": 36,
+              "size": 4,
+              "value": 4294967295,
+              "source": "0x14fd450a8",
+              "observation": "native-store"
+            }
+          ],
+          "packetFieldReads": [
+            {
+              "objectOffset": 48,
+              "size": 4,
+              "instruction": "0x153cbc229"
+            },
+            {
+              "objectOffset": 28,
+              "size": 4,
+              "instruction": "0x14e3d6dc5"
+            },
+            {
+              "objectOffset": 40,
+              "size": 4,
+              "instruction": "0x14e3d6e18"
+            },
+            {
+              "objectOffset": 52,
+              "size": 4,
+              "instruction": "0x14e3d6e6b"
+            },
+            {
+              "objectOffset": 32,
+              "size": 4,
+              "instruction": "0x14e3d6ebe"
+            }
+          ],
+          "executedNativeEntries": [
+            "0x153cbb460",
+            "0x153cbc210",
+            "0x14e3d6da0",
+            "0x157d1a480",
+            "0x14e3d6c60"
+          ],
+          "nativePathSHA256": "246c2ec2ac5aa24676631fde6809823c4c4bdd9a8b57a95ad4ee221548f01a4b",
+          "nativeInstructions": 630,
+          "packLimits": {
+            "3": 11,
+            "4": 99,
+            "2": 141,
+            "6": 55
+          },
+          "depotLimits": {},
+          "events": [
+            "190100000000000000000000000000000000000000000000"
+          ],
+          "models": [
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x1532d6720"
+          ],
+          "completion": "reader-and-dispatcher-returned"
+        }
+      ]
+    },
+    {
+      "name": "uint32-upper-bound",
+      "command": 22609,
+      "results": [
+        {
+          "wire": "08ffffffff0f28ffffffff0f300148ffffffff0f70ffffffff0f",
+          "readerEvents": [
+            {
+              "key": 8,
+              "objectOffset": 28,
+              "size": 4,
+              "value": 4294967295,
+              "source": "0x14fd45120",
+              "observation": "native-store"
+            },
+            {
+              "key": 40,
+              "objectOffset": 32,
+              "size": 4,
+              "value": 4294967295,
+              "source": "0x14fd450d7",
+              "observation": "native-store"
+            },
+            {
+              "key": 48,
+              "objectOffset": 48,
+              "size": 4,
+              "value": 1,
+              "source": "0x14fd4513d",
+              "observation": "native-store"
+            },
+            {
+              "key": 72,
+              "objectOffset": 40,
+              "size": 4,
+              "value": 4294967295,
+              "source": "0x14fd45177",
+              "observation": "native-store"
+            },
+            {
+              "key": 112,
+              "objectOffset": 52,
+              "size": 4,
+              "value": 4294967295,
+              "source": "0x14fd45103",
+              "observation": "native-store"
+            }
+          ],
+          "packetFieldReads": [
+            {
+              "objectOffset": 48,
+              "size": 4,
+              "instruction": "0x153cbc229"
+            },
+            {
+              "objectOffset": 28,
+              "size": 4,
+              "instruction": "0x14e3d6dc5"
+            },
+            {
+              "objectOffset": 40,
+              "size": 4,
+              "instruction": "0x14e3d6e18"
+            },
+            {
+              "objectOffset": 52,
+              "size": 4,
+              "instruction": "0x14e3d6e6b"
+            },
+            {
+              "objectOffset": 32,
+              "size": 4,
+              "instruction": "0x14e3d6ebe"
+            }
+          ],
+          "executedNativeEntries": [
+            "0x153cbb460",
+            "0x153cbc210",
+            "0x14e3d6da0",
+            "0x157d1a480",
+            "0x14e3d6c60"
+          ],
+          "nativePathSHA256": "246c2ec2ac5aa24676631fde6809823c4c4bdd9a8b57a95ad4ee221548f01a4b",
+          "nativeInstructions": 630,
+          "packLimits": {
+            "3": 4294967295,
+            "4": 4294967295,
+            "2": 4294967295,
+            "6": 4294967295
+          },
+          "depotLimits": {},
+          "events": [
+            "190100000000000000000000000000000000000000000000"
+          ],
+          "models": [
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x1532d6720"
+          ],
+          "completion": "reader-and-dispatcher-returned"
+        }
+      ]
+    },
+    {
+      "name": "explicit-zero",
+      "command": 22609,
+      "results": [
+        {
+          "wire": "08002800300148007000",
+          "readerEvents": [
+            {
+              "key": 8,
+              "objectOffset": 28,
+              "size": 4,
+              "value": 0,
+              "source": "0x14fd45120",
+              "observation": "native-store"
+            },
+            {
+              "key": 40,
+              "objectOffset": 32,
+              "size": 4,
+              "value": 0,
+              "source": "0x14fd450d7",
+              "observation": "native-store"
+            },
+            {
+              "key": 48,
+              "objectOffset": 48,
+              "size": 4,
+              "value": 1,
+              "source": "0x14fd4513d",
+              "observation": "native-store"
+            },
+            {
+              "key": 72,
+              "objectOffset": 40,
+              "size": 4,
+              "value": 0,
+              "source": "0x14fd45177",
+              "observation": "native-store"
+            },
+            {
+              "key": 112,
+              "objectOffset": 52,
+              "size": 4,
+              "value": 0,
+              "source": "0x14fd45103",
+              "observation": "native-store"
+            }
+          ],
+          "packetFieldReads": [
+            {
+              "objectOffset": 48,
+              "size": 4,
+              "instruction": "0x153cbc229"
+            },
+            {
+              "objectOffset": 28,
+              "size": 4,
+              "instruction": "0x14e3d6dc5"
+            },
+            {
+              "objectOffset": 40,
+              "size": 4,
+              "instruction": "0x14e3d6e18"
+            },
+            {
+              "objectOffset": 52,
+              "size": 4,
+              "instruction": "0x14e3d6e6b"
+            },
+            {
+              "objectOffset": 32,
+              "size": 4,
+              "instruction": "0x14e3d6ebe"
+            }
+          ],
+          "executedNativeEntries": [
+            "0x153cbb460",
+            "0x153cbc210",
+            "0x14e3d6da0",
+            "0x157d1a480",
+            "0x14e3d6c60"
+          ],
+          "nativePathSHA256": "246c2ec2ac5aa24676631fde6809823c4c4bdd9a8b57a95ad4ee221548f01a4b",
+          "nativeInstructions": 630,
+          "packLimits": {
+            "3": 0,
+            "4": 0,
+            "2": 0,
+            "6": 0
+          },
+          "depotLimits": {},
+          "events": [
+            "190100000000000000000000000000000000000000000000"
+          ],
+          "models": [
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x1532d6720"
+          ],
+          "completion": "reader-and-dispatcher-returned"
+        }
+      ]
+    },
+    {
+      "name": "omitted-fields-managed-zero",
+      "command": 22609,
+      "results": [
+        {
+          "wire": "",
+          "readerEvents": [],
+          "packetFieldReads": [
+            {
+              "objectOffset": 48,
+              "size": 4,
+              "instruction": "0x153cbc229"
+            },
+            {
+              "objectOffset": 28,
+              "size": 4,
+              "instruction": "0x14e3d6dc5"
+            },
+            {
+              "objectOffset": 40,
+              "size": 4,
+              "instruction": "0x14e3d6e18"
+            },
+            {
+              "objectOffset": 52,
+              "size": 4,
+              "instruction": "0x14e3d6e6b"
+            },
+            {
+              "objectOffset": 32,
+              "size": 4,
+              "instruction": "0x14e3d6ebe"
+            }
+          ],
+          "executedNativeEntries": [
+            "0x153cbb460",
+            "0x153cbc210",
+            "0x14e3d6da0",
+            "0x157d1a480",
+            "0x14e3d6c60"
+          ],
+          "nativePathSHA256": "246c2ec2ac5aa24676631fde6809823c4c4bdd9a8b57a95ad4ee221548f01a4b",
+          "nativeInstructions": 630,
+          "packLimits": {
+            "3": 0,
+            "4": 0,
+            "2": 0,
+            "6": 0
+          },
+          "depotLimits": {},
+          "events": [
+            "190100000000000000000000000000000000000000000000"
+          ],
+          "models": [
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x1532d6720"
+          ],
+          "completion": "reader-and-dispatcher-returned"
+        }
+      ]
+    },
+    {
+      "name": "existing-dictionary-overwrite",
+      "command": 22609,
+      "results": [
+        {
+          "wire": "080b1016202c28373001384d4863708d01",
+          "readerEvents": [
+            {
+              "key": 8,
+              "objectOffset": 28,
+              "size": 4,
+              "value": 11,
+              "source": "0x14fd45120",
+              "observation": "native-store"
+            },
+            {
+              "key": 16,
+              "objectOffset": 44,
+              "size": 4,
+              "value": 22,
+              "source": "0x14fd45071",
+              "observation": "native-store"
+            },
+            {
+              "key": 32,
+              "objectOffset": 24,
+              "size": 4,
+              "value": 44,
+              "source": "0x14fd4515a",
+              "observation": "native-store"
+            },
+            {
+              "key": 40,
+              "objectOffset": 32,
+              "size": 4,
+              "value": 55,
+              "source": "0x14fd450d7",
+              "observation": "native-store"
+            },
+            {
+              "key": 48,
+              "objectOffset": 48,
+              "size": 4,
+              "value": 1,
+              "source": "0x14fd4513d",
+              "observation": "native-store"
+            },
+            {
+              "key": 56,
+              "objectOffset": 36,
+              "size": 4,
+              "value": 77,
+              "source": "0x14fd450a8",
+              "observation": "native-store"
+            },
+            {
+              "key": 72,
+              "objectOffset": 40,
+              "size": 4,
+              "value": 99,
+              "source": "0x14fd45177",
+              "observation": "native-store"
+            },
+            {
+              "key": 112,
+              "objectOffset": 52,
+              "size": 4,
+              "value": 141,
+              "source": "0x14fd45103",
+              "observation": "native-store"
+            }
+          ],
+          "packetFieldReads": [
+            {
+              "objectOffset": 48,
+              "size": 4,
+              "instruction": "0x153cbc229"
+            },
+            {
+              "objectOffset": 28,
+              "size": 4,
+              "instruction": "0x14e3d6dc5"
+            },
+            {
+              "objectOffset": 40,
+              "size": 4,
+              "instruction": "0x14e3d6e18"
+            },
+            {
+              "objectOffset": 52,
+              "size": 4,
+              "instruction": "0x14e3d6e6b"
+            },
+            {
+              "objectOffset": 32,
+              "size": 4,
+              "instruction": "0x14e3d6ebe"
+            }
+          ],
+          "executedNativeEntries": [
+            "0x153cbb460",
+            "0x153cbc210",
+            "0x14e3d6da0",
+            "0x157d1a480",
+            "0x14e3d6c60"
+          ],
+          "nativePathSHA256": "246c2ec2ac5aa24676631fde6809823c4c4bdd9a8b57a95ad4ee221548f01a4b",
+          "nativeInstructions": 630,
+          "packLimits": {
+            "3": 11,
+            "4": 99,
+            "2": 141,
+            "6": 55
+          },
+          "depotLimits": {},
+          "events": [
+            "190100000000000000000000000000000000000000000000"
+          ],
+          "models": [
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x1532d6720"
+          ],
+          "completion": "reader-and-dispatcher-returned"
+        },
+        {
+          "wire": "0807280830014809700a",
+          "readerEvents": [
+            {
+              "key": 8,
+              "objectOffset": 28,
+              "size": 4,
+              "value": 7,
+              "source": "0x14fd45120",
+              "observation": "native-store"
+            },
+            {
+              "key": 40,
+              "objectOffset": 32,
+              "size": 4,
+              "value": 8,
+              "source": "0x14fd450d7",
+              "observation": "native-store"
+            },
+            {
+              "key": 48,
+              "objectOffset": 48,
+              "size": 4,
+              "value": 1,
+              "source": "0x14fd4513d",
+              "observation": "native-store"
+            },
+            {
+              "key": 72,
+              "objectOffset": 40,
+              "size": 4,
+              "value": 9,
+              "source": "0x14fd45177",
+              "observation": "native-store"
+            },
+            {
+              "key": 112,
+              "objectOffset": 52,
+              "size": 4,
+              "value": 10,
+              "source": "0x14fd45103",
+              "observation": "native-store"
+            }
+          ],
+          "packetFieldReads": [
+            {
+              "objectOffset": 48,
+              "size": 4,
+              "instruction": "0x153cbc229"
+            },
+            {
+              "objectOffset": 28,
+              "size": 4,
+              "instruction": "0x14e3d6dc5"
+            },
+            {
+              "objectOffset": 40,
+              "size": 4,
+              "instruction": "0x14e3d6e18"
+            },
+            {
+              "objectOffset": 52,
+              "size": 4,
+              "instruction": "0x14e3d6e6b"
+            },
+            {
+              "objectOffset": 32,
+              "size": 4,
+              "instruction": "0x14e3d6ebe"
+            }
+          ],
+          "executedNativeEntries": [
+            "0x153cbb460",
+            "0x153cbc210",
+            "0x14e3d6da0",
+            "0x157d1a480",
+            "0x14e3d6c60"
+          ],
+          "nativePathSHA256": "f3a6074fcdb6a234b8ae94a44dee289d2bbe5e22d0d102ad0a9d77741b01ea70",
+          "nativeInstructions": 570,
+          "packLimits": {
+            "3": 7,
+            "4": 9,
+            "2": 10,
+            "6": 8
+          },
+          "depotLimits": {},
+          "events": [
+            "190100000000000000000000000000000000000000000000",
+            "190100000000000000000000000000000000000000000000"
+          ],
+          "models": [
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x1532d6720"
+          ],
+          "completion": "reader-and-dispatcher-returned"
+        }
+      ]
+    },
+    {
+      "name": "duplicate-wire-last-wins",
+      "command": 22609,
+      "results": [
+        {
+          "wire": "080b1016202c28373001384d4863708d010807",
+          "readerEvents": [
+            {
+              "key": 8,
+              "objectOffset": 28,
+              "size": 4,
+              "value": 11,
+              "source": "0x14fd45120",
+              "observation": "native-store"
+            },
+            {
+              "key": 16,
+              "objectOffset": 44,
+              "size": 4,
+              "value": 22,
+              "source": "0x14fd45071",
+              "observation": "native-store"
+            },
+            {
+              "key": 32,
+              "objectOffset": 24,
+              "size": 4,
+              "value": 44,
+              "source": "0x14fd4515a",
+              "observation": "native-store"
+            },
+            {
+              "key": 40,
+              "objectOffset": 32,
+              "size": 4,
+              "value": 55,
+              "source": "0x14fd450d7",
+              "observation": "native-store"
+            },
+            {
+              "key": 48,
+              "objectOffset": 48,
+              "size": 4,
+              "value": 1,
+              "source": "0x14fd4513d",
+              "observation": "native-store"
+            },
+            {
+              "key": 56,
+              "objectOffset": 36,
+              "size": 4,
+              "value": 77,
+              "source": "0x14fd450a8",
+              "observation": "native-store"
+            },
+            {
+              "key": 72,
+              "objectOffset": 40,
+              "size": 4,
+              "value": 99,
+              "source": "0x14fd45177",
+              "observation": "native-store"
+            },
+            {
+              "key": 112,
+              "objectOffset": 52,
+              "size": 4,
+              "value": 141,
+              "source": "0x14fd45103",
+              "observation": "native-store"
+            },
+            {
+              "key": 8,
+              "objectOffset": 28,
+              "size": 4,
+              "value": 7,
+              "source": "0x14fd45120",
+              "observation": "native-store"
+            }
+          ],
+          "packetFieldReads": [
+            {
+              "objectOffset": 48,
+              "size": 4,
+              "instruction": "0x153cbc229"
+            },
+            {
+              "objectOffset": 28,
+              "size": 4,
+              "instruction": "0x14e3d6dc5"
+            },
+            {
+              "objectOffset": 40,
+              "size": 4,
+              "instruction": "0x14e3d6e18"
+            },
+            {
+              "objectOffset": 52,
+              "size": 4,
+              "instruction": "0x14e3d6e6b"
+            },
+            {
+              "objectOffset": 32,
+              "size": 4,
+              "instruction": "0x14e3d6ebe"
+            }
+          ],
+          "executedNativeEntries": [
+            "0x153cbb460",
+            "0x153cbc210",
+            "0x14e3d6da0",
+            "0x157d1a480",
+            "0x14e3d6c60"
+          ],
+          "nativePathSHA256": "246c2ec2ac5aa24676631fde6809823c4c4bdd9a8b57a95ad4ee221548f01a4b",
+          "nativeInstructions": 630,
+          "packLimits": {
+            "3": 7,
+            "4": 99,
+            "2": 141,
+            "6": 55
+          },
+          "depotLimits": {},
+          "events": [
+            "190100000000000000000000000000000000000000000000"
+          ],
+          "models": [
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x620001000",
+            "0x1532d6720"
+          ],
+          "completion": "reader-and-dispatcher-returned"
+        }
+      ]
+    }
+  ],
+  "runtimeStatus": "not-tested",
+  "targetProtocolReady": false,
+  "limitations": [
+    "Only IFix-absent normal paths; no client process/network or event listener execution",
+    "Initialized pack/depot dictionaries with capacity17 and explicit generic metadata; no allocator/resize coverage",
+    "Enum hash is an explicit identity callback; native key equality, bucket/entry insertion and overwrite execute",
+    "WireInput reader primitives remain explicit fixtures; no new reader scan or native malformed-input acceptance claim",
+    "Event281 is captured at the real send call and acknowledged as an explicit void sink; subscribers are not executed",
+    "Tag2/tag4/tag7 have no business assignment here; Asta weight_limit tag2 is not promoted",
+    "Downstream current-material lookup/index and current-count storage are explicit inputs; the limit lookup and current<limit comparison are native. No UI or full material admission function executes",
+    "No nested/list/uint64 fields exist in this slice; no such coverage claimed"
+  ]
+}

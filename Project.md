@@ -12,10 +12,13 @@
 | F-02b2 响应builder实际发送合同 | 复用Token密码学/Handler和LoginRsp全局消费来源，剔除旧号/parked/伪签名；保留账号准入/确认保存 | retcode错误分支、RSA成功和不切错key、资源版本非空字段由target消费验证；不发无来源值 | 进行中 |
 | F-03a 场景握手三层及值编码 | Ready/Init/Done/Post命名literal/typed callback→消息→wire；应用token/retcode算术与原始字段分记 | 固定native执行/独立非零边界/失败分支，8包及用到nested，不凭Asta名称或旧常量猜配 | 进行中 |
 | F-03b 初始化最小消息 | 既有P0来源图、Asta候选和本地reader/消费证据，优先PlayerData/StoreWeight等小闭包 | 明确身份/字段/来源/未知；独立wire和受影响业务/保存回归，不扩无关玩法 | 进行中 |
+| F-03c 进入场景通知生产合同 | 复用既有15237/27748及26字段、6层nested的目标reader；从现有builder所需字段追到具名消费，单独复核值编码 | 仅接入具名来源和独立native样本已足的字段；嵌套float/64位及token链；其余原名并省略，不沿用7.1 setter或Asta推断 | 进行中 |
 
 运行代码/Proto变更后做JDK17便携构建及产物/进程/日志/端口核对；完整前置未齐不部署，D-02不验收。本批完成后再备份核验HANDOFF2、只追加HANDOFF。
 
 本批研究验收：F-02b2的[最小响应合同](docs/CLIENT_72_RESPONSE_CONTRACT.md)新增6原生夹具，tag61四字段具名全局目的地和next1337/7边界闭合，工具/摘要两轮相同；最小RSA4字段/retcode-only与既有crypto/Handler4组摘要重跑一致。F-03b的[初始化raw切片](docs/CLIENT_72_INITIALIZATION_WIRE.md)134原生reader/8字段/5模型拒绝、6测试及双跑一致；21136/46070历史选择通知坐标已证不能沿用。以上仅研究合同，不等于父项、运行接入或实机完成；对应生产回归/构建与场景8握手正在实施。
+
+F-03新增已验研究：[八握手合同](docs/CLIENT_72_SCENE_HANDSHAKE.md)116原生有限结果、10类20字段、13条业务绑定，10聚焦测试；请求/响应token及retcode值变换和缺省/raw0分别验证，DoneReq的1017重号域继续独立复核。[容量消费合同](docs/CLIENT_72_STORE_WEIGHT_CONTRACT.md)12次完整native接收/分发/真实字典插入，5字段目的地和enum/容量阈值另验，8聚焦测试；3字段保持未知。两份合同均双跑一致，仅离线研究验收，生产回归/源码矩阵/构建仍待本批收口。
 
 本轮收尾：F-01及F-02a限定验收完成，按最新用户要求暂停；F-02/F-02b/F-03仍阻塞，F-04/F-05/D-02未验。提交73dd759（计划）、45e22ce（来源/差异）、4324cd7（四schema融合），均仅本地。399研究、4套43协议及关联、独立Mongo29套589账号/经济/保存/Lua各自全过，完整Java未重跑；结构0/ready228。便携构建23秒、JAR a8c2d893…53a8f8内嵌4324cd7；30变化class与编译输出一致，163个Guard/Player/脚本class保持。TCP8088/UDP22101/测试Mongo27027均无监听，无服务PID；健康/运行JAR无对象。完整P0/SDK/补丁/资源前置不齐且本轮不推进新实机，故未部署；原数据、原调试进程树与AGENTS/resources差异保持。详细备份和恢复入口见HANDOFF2。
 

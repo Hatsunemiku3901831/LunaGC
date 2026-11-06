@@ -1,0 +1,2880 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "runtimeStatus": "not-tested",
+  "targetProtocolReady": false,
+  "scope": "Eight scene handshakes, raw schemas and bounded native token/retcode arithmetic; no client process",
+  "roles": [
+    {
+      "semanticName": "EnterSceneReadyReq",
+      "typeIndex": 74391,
+      "clientType": "DEDHOOCBHCL",
+      "cmdId": 5046,
+      "getter": "0x14734bc40",
+      "entry": "0x15121e560",
+      "parameter": {
+        "kind": "uint32",
+        "attributes": "0x0",
+        "data": "0x13f",
+        "byRef": false
+      },
+      "registration": null,
+      "selfClassCell": "0x1458c4cc0",
+      "literal": {
+        "usageRow": 777327,
+        "index": 34850,
+        "slot": 34850,
+        "cell": "0x145b0df30",
+        "value": "Genshin Loading Log: NetworkManager RequestEnterSceneReady token:{0}"
+      },
+      "literalSite": "0x15121e597",
+      "commandDomainAmbiguity": null,
+      "bindingStatus": "verified-offline",
+      "semanticStatus": "verified-offline",
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "EnterSceneReadyRsp",
+      "typeIndex": 17278,
+      "clientType": "MMLHNEJIFHG",
+      "cmdId": 9948,
+      "getter": "0x147964530",
+      "entry": "0x1507d4d70",
+      "parameter": {
+        "kind": "class",
+        "attributes": "0x0",
+        "data": "0x437e",
+        "byRef": false,
+        "typeDefinition": 17278,
+        "name": "MMLHNEJIFHG",
+        "namespace": ""
+      },
+      "registration": "0x1507c2d0f",
+      "selfClassCell": null,
+      "literal": {
+        "usageRow": 780259,
+        "index": 49584,
+        "slot": 49584,
+        "cell": "0x145b2aba0",
+        "value": "Genshin Loading Log: PlayerModule OnEnterSceneReadyRsp"
+      },
+      "literalSite": "0x1507d4db5",
+      "commandDomainAmbiguity": null,
+      "bindingStatus": "verified-offline",
+      "semanticStatus": "verified-offline",
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "SceneInitFinishReq",
+      "typeIndex": 20380,
+      "clientType": "MLIHBBENFFA",
+      "cmdId": 4905,
+      "getter": "0x1518de890",
+      "entry": "0x1512242b0",
+      "parameter": {
+        "kind": "uint32",
+        "attributes": "0x0",
+        "data": "0x13f",
+        "byRef": false
+      },
+      "registration": null,
+      "selfClassCell": "0x1458c5570",
+      "literal": {
+        "usageRow": 777349,
+        "index": 34990,
+        "slot": 34990,
+        "cell": "0x145b0e390",
+        "value": "Genshin Loading Log: NetworkManager RequestSceneInitFinish"
+      },
+      "literalSite": "0x1512242cc",
+      "commandDomainAmbiguity": null,
+      "bindingStatus": "verified-offline",
+      "semanticStatus": "verified-offline",
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "SceneInitFinishRsp",
+      "typeIndex": 36349,
+      "clientType": "NBCLHOLLHLK",
+      "cmdId": 21392,
+      "getter": "0x14e7a8c30",
+      "entry": "0x1507c5b10",
+      "parameter": {
+        "kind": "class",
+        "attributes": "0x0",
+        "data": "0x8dfd",
+        "byRef": false,
+        "typeDefinition": 36349,
+        "name": "NBCLHOLLHLK",
+        "namespace": ""
+      },
+      "registration": "0x1507c2a8a",
+      "selfClassCell": null,
+      "literal": {
+        "usageRow": 779858,
+        "index": 46170,
+        "slot": 46170,
+        "cell": "0x145b240f0",
+        "value": "Genshin Loading Log: PlayerModule OnSceneInitFinishRsp"
+      },
+      "literalSite": "0x1507c5b2a",
+      "commandDomainAmbiguity": null,
+      "bindingStatus": "verified-offline",
+      "semanticStatus": "verified-offline",
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "EnterSceneDoneReq",
+      "typeIndex": 63999,
+      "clientType": "HDPGCNCMACO",
+      "cmdId": 1017,
+      "getter": "0x14a75bee0",
+      "entry": "0x15121e380",
+      "parameter": {
+        "kind": "uint32",
+        "attributes": "0x0",
+        "data": "0x13f",
+        "byRef": false
+      },
+      "registration": null,
+      "selfClassCell": "0x1458c4c98",
+      "literal": {
+        "usageRow": 777325,
+        "index": 34845,
+        "slot": 34845,
+        "cell": "0x145b0df08",
+        "value": "Genshin Loading Log: NetworkManager RequestEnterSceneDone"
+      },
+      "literalSite": "0x15121e399",
+      "commandDomainAmbiguity": "1017 also occurs on a different target type; no global alias merge",
+      "bindingStatus": "verified-offline",
+      "semanticStatus": "verified-offline",
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "EnterSceneDoneRsp",
+      "typeIndex": 74698,
+      "clientType": "FIMHLLEPCBH",
+      "cmdId": 298,
+      "getter": "0x148198950",
+      "entry": "0x1507d50d0",
+      "parameter": {
+        "kind": "class",
+        "attributes": "0x0",
+        "data": "0x123ca",
+        "byRef": false,
+        "typeDefinition": 74698,
+        "name": "FIMHLLEPCBH",
+        "namespace": ""
+      },
+      "registration": "0x1507c2d1e",
+      "selfClassCell": null,
+      "literal": {
+        "usageRow": 780317,
+        "index": 49965,
+        "slot": 49965,
+        "cell": "0x145b2b788",
+        "value": "Genshin Loading Log: PlayerModule OnEnterSceneDoneRsp"
+      },
+      "literalSite": "0x1507d5107",
+      "commandDomainAmbiguity": null,
+      "bindingStatus": "verified-offline",
+      "semanticStatus": "verified-offline",
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "PostEnterSceneReq",
+      "typeIndex": 74076,
+      "clientType": "AHBJNPDFDMJ",
+      "cmdId": 1696,
+      "getter": "0x14c964430",
+      "entry": "0x151226220",
+      "parameter": {
+        "kind": "uint32",
+        "attributes": "0x0",
+        "data": "0x13f",
+        "byRef": false
+      },
+      "registration": null,
+      "selfClassCell": "0x14589cb50",
+      "literal": {
+        "usageRow": 777376,
+        "index": 35045,
+        "slot": 35045,
+        "cell": "0x145b0e548",
+        "value": "Genshin Loading Log: NetworkManager RequesetPostEnterSceneReq"
+      },
+      "literalSite": "0x15122623a",
+      "commandDomainAmbiguity": null,
+      "bindingStatus": "verified-offline",
+      "semanticStatus": "verified-offline",
+      "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "PostEnterSceneRsp",
+      "typeIndex": 51326,
+      "clientType": "ODANIDKHMMG",
+      "cmdId": 26760,
+      "getter": "0x149671460",
+      "entry": "0x1507eee50",
+      "parameter": {
+        "kind": "class",
+        "attributes": "0x0",
+        "data": "0xc87e",
+        "byRef": false,
+        "typeDefinition": 51326,
+        "name": "ODANIDKHMMG",
+        "namespace": ""
+      },
+      "registration": "0x1507c2a6c",
+      "selfClassCell": null,
+      "literal": {
+        "usageRow": 780266,
+        "index": 49650,
+        "slot": 49650,
+        "cell": "0x145b2adb0",
+        "value": "Genshin Loading Log: PlayerModule OnPostEnterSceneRsp"
+      },
+      "literalSite": "0x1507eee9c",
+      "commandDomainAmbiguity": null,
+      "bindingStatus": "verified-offline",
+      "semanticStatus": "verified-offline",
+      "runtimeStatus": "not-tested"
+    }
+  ],
+  "messages": [
+    {
+      "typeIndex": 74391,
+      "clientType": "DEDHOOCBHCL",
+      "fields": [
+        {
+          "clientField": "MCCMGLDOECH",
+          "objectOffset": 24,
+          "tag": 3,
+          "type": "uint32",
+          "nestedTypeIndex": null,
+          "wireType": 0,
+          "semanticStatus": "unresolved",
+          "cardinality": "singular"
+        }
+      ],
+      "methods": [
+        {
+          "method": {
+            "index": 614514,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x14734bd30",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          "entry32SHA256": "5c0844e577c344c745ea69421ca7f066222286b8fe2acbdbf060095ec446ab75"
+        },
+        {
+          "method": {
+            "index": 614516,
+            "name": "CAIINKNGKDM",
+            "nameIndex": "0xb187cd0",
+            "registeredAddress": "0x14734ba00",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 17
+          },
+          "entry32SHA256": "e3d596b1462c3fe347675e5315e0217dd30124095e36c25b2009f8143aa40e3c"
+        }
+      ]
+    },
+    {
+      "typeIndex": 17278,
+      "clientType": "MMLHNEJIFHG",
+      "fields": [
+        {
+          "clientField": "MCCMGLDOECH",
+          "objectOffset": 24,
+          "tag": 2,
+          "type": "uint32",
+          "nestedTypeIndex": null,
+          "wireType": 0,
+          "semanticStatus": "unresolved",
+          "cardinality": "singular"
+        },
+        {
+          "clientField": "LDLIEKOAFBP",
+          "objectOffset": 28,
+          "tag": 12,
+          "type": "int32",
+          "nestedTypeIndex": null,
+          "wireType": 0,
+          "semanticStatus": "unresolved",
+          "cardinality": "singular"
+        }
+      ],
+      "methods": [
+        {
+          "method": {
+            "index": 130779,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x147964510",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          "entry32SHA256": "5d9164a9a138622e3bcfd8e8e4834e2f177751297e3b8cd793f62687de6891b5"
+        },
+        {
+          "method": {
+            "index": 130786,
+            "name": "MOMMACBEMEK",
+            "nameIndex": "0xb187c99",
+            "registeredAddress": "0x147964650",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 19
+          },
+          "entry32SHA256": "837a0ed79609c2f9742d66ae9ebbd4150322810124c38bd59b036463699f0caa"
+        }
+      ]
+    },
+    {
+      "typeIndex": 20380,
+      "clientType": "MLIHBBENFFA",
+      "fields": [
+        {
+          "clientField": "MCCMGLDOECH",
+          "objectOffset": 24,
+          "tag": 11,
+          "type": "uint32",
+          "nestedTypeIndex": null,
+          "wireType": 0,
+          "semanticStatus": "unresolved",
+          "cardinality": "singular"
+        }
+      ],
+      "methods": [
+        {
+          "method": {
+            "index": 156889,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x1518dea70",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          "entry32SHA256": "ac47057774c05a66a0680802475bff1e47a6f02ab9edbd718bcb04a3c5bc181a"
+        },
+        {
+          "method": {
+            "index": 156896,
+            "name": "CAIINKNGKDM",
+            "nameIndex": "0xb187cd0",
+            "registeredAddress": "0x1518de8a0",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 17
+          },
+          "entry32SHA256": "eebf05e493713f04b380f58c18d2d25905b9a4c6a3fa07c59e8b9ef286211a16"
+        }
+      ]
+    },
+    {
+      "typeIndex": 36349,
+      "clientType": "NBCLHOLLHLK",
+      "fields": [
+        {
+          "clientField": "MCCMGLDOECH",
+          "objectOffset": 24,
+          "tag": 1,
+          "type": "uint32",
+          "nestedTypeIndex": null,
+          "wireType": 0,
+          "semanticStatus": "unresolved",
+          "cardinality": "singular"
+        },
+        {
+          "clientField": "LDLIEKOAFBP",
+          "objectOffset": 28,
+          "tag": 7,
+          "type": "int32",
+          "nestedTypeIndex": null,
+          "wireType": 0,
+          "semanticStatus": "unresolved",
+          "cardinality": "singular"
+        }
+      ],
+      "methods": [
+        {
+          "method": {
+            "index": 304850,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x14e7a8c40",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          "entry32SHA256": "b422b187047c319e782df4a6cdcf2aafa518c24ead0c4c262f0c2837e6329264"
+        },
+        {
+          "method": {
+            "index": 304854,
+            "name": "MOMMACBEMEK",
+            "nameIndex": "0xb187c99",
+            "registeredAddress": "0x14e7a8b40",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 19
+          },
+          "entry32SHA256": "675315433e2ce9f75973eeea183aecbc7a5db0f18b1ee63dde6074e990c6ba6c"
+        }
+      ]
+    },
+    {
+      "typeIndex": 63999,
+      "clientType": "HDPGCNCMACO",
+      "fields": [
+        {
+          "clientField": "MCCMGLDOECH",
+          "objectOffset": 24,
+          "tag": 12,
+          "type": "uint32",
+          "nestedTypeIndex": null,
+          "wireType": 0,
+          "semanticStatus": "unresolved",
+          "cardinality": "singular"
+        }
+      ],
+      "methods": [
+        {
+          "method": {
+            "index": 530428,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x14a75c170",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          "entry32SHA256": "f8f0ec32fa94a067f48731718ca66107140625c654372b97781e30bff9567c4c"
+        },
+        {
+          "method": {
+            "index": 530434,
+            "name": "CAIINKNGKDM",
+            "nameIndex": "0xb187cd0",
+            "registeredAddress": "0x14a75c040",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 17
+          },
+          "entry32SHA256": "73de73a628941374ea2076212af378e8a8e79a84a77d56e7d13d71c227cbbeee"
+        }
+      ]
+    },
+    {
+      "typeIndex": 74698,
+      "clientType": "FIMHLLEPCBH",
+      "fields": [
+        {
+          "clientField": "MFLHLEMFIGI",
+          "objectOffset": 24,
+          "tag": 12,
+          "type": "message",
+          "nestedTypeIndex": 82602,
+          "wireType": 2,
+          "semanticStatus": "unresolved",
+          "cardinality": "singular"
+        },
+        {
+          "clientField": "LDLIEKOAFBP",
+          "objectOffset": 32,
+          "tag": 6,
+          "type": "int32",
+          "nestedTypeIndex": null,
+          "wireType": 0,
+          "semanticStatus": "unresolved",
+          "cardinality": "singular"
+        },
+        {
+          "clientField": "MCCMGLDOECH",
+          "objectOffset": 36,
+          "tag": 4,
+          "type": "uint32",
+          "nestedTypeIndex": null,
+          "wireType": 0,
+          "semanticStatus": "unresolved",
+          "cardinality": "singular"
+        }
+      ],
+      "methods": [
+        {
+          "method": {
+            "index": 618251,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x148198940",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          "entry32SHA256": "12d6ec3adc01aad5be426bd3c719acedeb2ba2e8b48316d0b14c46c4e046d8ff"
+        },
+        {
+          "method": {
+            "index": 618254,
+            "name": "MOMMACBEMEK",
+            "nameIndex": "0xb187c99",
+            "registeredAddress": "0x148198570",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 19
+          },
+          "entry32SHA256": "22b5234a4443773e8518533150e52f8583aed7d4f388d360f2ad444117c939d3"
+        }
+      ]
+    },
+    {
+      "typeIndex": 74076,
+      "clientType": "AHBJNPDFDMJ",
+      "fields": [
+        {
+          "clientField": "MHCBMOHFBCK",
+          "objectOffset": 24,
+          "tag": 1,
+          "type": "double",
+          "nestedTypeIndex": null,
+          "wireType": 1,
+          "semanticStatus": "unresolved",
+          "cardinality": "singular"
+        },
+        {
+          "clientField": "MCCMGLDOECH",
+          "objectOffset": 32,
+          "tag": 6,
+          "type": "uint32",
+          "nestedTypeIndex": null,
+          "wireType": 0,
+          "semanticStatus": "unresolved",
+          "cardinality": "singular"
+        }
+      ],
+      "methods": [
+        {
+          "method": {
+            "index": 612202,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x14c963fb0",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          "entry32SHA256": "5be90a269d8c47bd8a617847d988f1315c9d67b143dfaf9a06fcb69a7e13f7bf"
+        },
+        {
+          "method": {
+            "index": 612203,
+            "name": "CAIINKNGKDM",
+            "nameIndex": "0xb187cd0",
+            "registeredAddress": "0x14c963fc0",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 17
+          },
+          "entry32SHA256": "320dc5dc7ba486e9da6e0d06034ba0b6d0d288d2b5f67f961e9cbcb285209a22"
+        }
+      ]
+    },
+    {
+      "typeIndex": 51326,
+      "clientType": "ODANIDKHMMG",
+      "fields": [
+        {
+          "clientField": "LDLIEKOAFBP",
+          "objectOffset": 24,
+          "tag": 6,
+          "type": "int32",
+          "nestedTypeIndex": null,
+          "wireType": 0,
+          "semanticStatus": "unresolved",
+          "cardinality": "singular"
+        },
+        {
+          "clientField": "MCCMGLDOECH",
+          "objectOffset": 28,
+          "tag": 2,
+          "type": "uint32",
+          "nestedTypeIndex": null,
+          "wireType": 0,
+          "semanticStatus": "unresolved",
+          "cardinality": "singular"
+        }
+      ],
+      "methods": [
+        {
+          "method": {
+            "index": 426811,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x1496712a0",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          "entry32SHA256": "60e91cd87f2a1969b51cbc1b4fc5fe5bef0f3454b0e0da41f84426d1e186817d"
+        },
+        {
+          "method": {
+            "index": 426819,
+            "name": "MOMMACBEMEK",
+            "nameIndex": "0xb187c99",
+            "registeredAddress": "0x149671480",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 19
+          },
+          "entry32SHA256": "f304a7bbf5a5d770ba29e96203faaf57691981297900563983b44a3bf571526b"
+        }
+      ]
+    },
+    {
+      "typeIndex": 82602,
+      "clientType": "NFIGDMDEDBC",
+      "fields": [
+        {
+          "clientField": "DFDHCAIKMAI",
+          "objectOffset": 24,
+          "tag": 1,
+          "type": "message",
+          "nestedTypeIndex": 84343,
+          "wireType": 2,
+          "semanticStatus": "unresolved",
+          "cardinality": "singular"
+        },
+        {
+          "clientField": "LLHEBIHGDAE",
+          "objectOffset": 32,
+          "tag": 11,
+          "type": "uint32",
+          "nestedTypeIndex": null,
+          "wireType": 0,
+          "semanticStatus": "unresolved",
+          "cardinality": "singular"
+        },
+        {
+          "clientField": "ADMHCDNJLAI",
+          "objectOffset": 36,
+          "tag": 3,
+          "type": "uint32",
+          "nestedTypeIndex": null,
+          "wireType": 0,
+          "semanticStatus": "unresolved",
+          "cardinality": "singular"
+        }
+      ],
+      "methods": [
+        {
+          "method": {
+            "index": 684120,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x15330d820",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          "entry32SHA256": "9158f9bd2d4e5eef9f9302b48c48e4694ed034adc4d9cd6c172eef9db438000d"
+        },
+        {
+          "method": {
+            "index": 684129,
+            "name": "MOMMACBEMEK",
+            "nameIndex": "0xb187c99",
+            "registeredAddress": "0x15330ddd0",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 19
+          },
+          "entry32SHA256": "3e4f275170051625015e322368f1f28f02fe54565856d1f61147a91848893d96"
+        },
+        {
+          "method": {
+            "index": 684125,
+            "name": "CAIINKNGKDM",
+            "nameIndex": "0xb187cd0",
+            "registeredAddress": "0x15330d8b0",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 17
+          },
+          "entry32SHA256": "47faefc48212c7aeb9ad5d816b06ede9a4e2722461827a2e8382b7bbdbab6b88"
+        }
+      ]
+    },
+    {
+      "typeIndex": 84343,
+      "clientType": "BGDCNKAKGHI",
+      "fields": [
+        {
+          "clientField": "CJMJBINEBAG",
+          "objectOffset": 24,
+          "tag": 1,
+          "type": "float",
+          "nestedTypeIndex": null,
+          "wireType": 5,
+          "semanticStatus": "unresolved",
+          "cardinality": "singular"
+        },
+        {
+          "clientField": "MGICHKNKDKO",
+          "objectOffset": 28,
+          "tag": 3,
+          "type": "float",
+          "nestedTypeIndex": null,
+          "wireType": 5,
+          "semanticStatus": "unresolved",
+          "cardinality": "singular"
+        },
+        {
+          "clientField": "ALOKJBKPLGA",
+          "objectOffset": 32,
+          "tag": 2,
+          "type": "float",
+          "nestedTypeIndex": null,
+          "wireType": 5,
+          "semanticStatus": "unresolved",
+          "cardinality": "singular"
+        }
+      ],
+      "methods": [
+        {
+          "method": {
+            "index": 698513,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x154048960",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          "entry32SHA256": "91f8ac22f7a4e8c3bc57ee5a4e4304d5237c3d8c838b86b70e420fcba296c5ba"
+        },
+        {
+          "method": {
+            "index": 698523,
+            "name": "MOMMACBEMEK",
+            "nameIndex": "0xb187c99",
+            "registeredAddress": "0x154048d40",
+            "parameterCount": 1,
+            "flags": "0xc6",
+            "virtualSlot": 19
+          },
+          "entry32SHA256": "2a628f045df698bed8308dd324fc2cee425dbc8e0a6d0b1976709fdab183357b"
+        }
+      ]
+    }
+  ],
+  "typeUsages": [
+    {
+      "usageRow": 702415,
+      "sourceIndex": 63833,
+      "typeIndex": 84343,
+      "cell": "0x145898730"
+    },
+    {
+      "usageRow": 703121,
+      "sourceIndex": 385319,
+      "typeIndex": 74076,
+      "cell": "0x14589cb50"
+    },
+    {
+      "usageRow": 710189,
+      "sourceIndex": 351934,
+      "typeIndex": 63999,
+      "cell": "0x1458c4c98"
+    },
+    {
+      "usageRow": 710190,
+      "sourceIndex": 385898,
+      "typeIndex": 74391,
+      "cell": "0x1458c4cc0"
+    },
+    {
+      "usageRow": 710293,
+      "sourceIndex": 134204,
+      "typeIndex": 20380,
+      "cell": "0x1458c5570"
+    },
+    {
+      "usageRow": 716261,
+      "sourceIndex": 410235,
+      "typeIndex": 82602,
+      "cell": "0x1458e3ec8"
+    },
+    {
+      "usageRow": 716263,
+      "sourceIndex": 327147,
+      "typeIndex": 74698,
+      "cell": "0x1458e3ed8"
+    },
+    {
+      "usageRow": 723688,
+      "sourceIndex": 92793,
+      "typeIndex": 17278,
+      "cell": "0x14590e0e0"
+    },
+    {
+      "usageRow": 724414,
+      "sourceIndex": 240275,
+      "typeIndex": 36349,
+      "cell": "0x145911b20"
+    },
+    {
+      "usageRow": 724526,
+      "sourceIndex": 306795,
+      "typeIndex": 51326,
+      "cell": "0x145911eb0"
+    },
+    {
+      "usageRow": 240698,
+      "sourceIndex": 657896,
+      "typeIndex": 78239,
+      "cell": "0x1458ecbc8"
+    }
+  ],
+  "tokenLiterals": [
+    {
+      "literal": {
+        "usageRow": 780694,
+        "index": 52998,
+        "slot": 52998,
+        "cell": "0x145b31650",
+        "value": "[Loading] LoadingTask GetLoadingTask is Null token:"
+      },
+      "site": "0x14cd5fa05"
+    },
+    {
+      "literal": {
+        "usageRow": 782019,
+        "index": 60411,
+        "slot": 60411,
+        "cell": "0x145b3fdf8",
+        "value": "Genshin Loading Log: OnPostEnterSceneRspSuccess token:{0}"
+      },
+      "site": "0x15255c03e"
+    }
+  ],
+  "postCoroutine": {
+    "typeIndex": 78239,
+    "entry": "0x150724560",
+    "selfClassCell": "0x1458ecbc8",
+    "tokenField": {
+      "index": 391433,
+      "name": "FJCNLAMCDBD",
+      "nameIndex": "0xb196b7e",
+      "typeIndex": 445681,
+      "type": {
+        "kind": "uint32",
+        "attributes": "0x6",
+        "data": "0x13f",
+        "byRef": false
+      },
+      "offset": 48,
+      "rawOffset": "0x30",
+      "offsetKind": "instance"
+    }
+  },
+  "postDispatchWrapper": {
+    "entry": "0x1507d1cf0",
+    "method": {
+      "index": 467829,
+      "name": "CPIBDBPHAKC",
+      "nameIndex": "0xb654cb5",
+      "registeredAddress": "0x1507d1cf0",
+      "parameterCount": 1,
+      "flags": "0x81",
+      "virtualSlot": 65535
+    },
+    "typeIndex": 51326,
+    "forwardsAt": "0x1507d1da2",
+    "target": "0x1507eee50",
+    "execution": "dispatcher to wrapper only"
+  },
+  "reusedEvidenceSHA256": {
+    "scene-wait-observations.json": "d7cc253e567a935dc3ff7575cdd4d807df1b8789d318aa7535524e635b1ba5ef",
+    "scene-nested-observations.json": "ae91950a67ea8beefb030ba4165eecfc1fd45acca1c6ac64278abf5c411d3098",
+    "scene-nested-research.proto": "316fa5fb18234b1d808ace1bf16418ac2f2267f21ba1db3b944b1d1e96231e35"
+  },
+  "semanticBindings": [
+    {
+      "typeIndex": 74391,
+      "objectOffset": 24,
+      "tag": 3,
+      "name": "enter_scene_token",
+      "status": "verified-offline",
+      "applicationToWire": "u32((token XOR 0xe8c3) + 0x4c01)",
+      "evidence": "Named token literal34850; actual argument to constructor then actual writer"
+    },
+    {
+      "typeIndex": 46311,
+      "objectOffset": 148,
+      "tag": 10,
+      "name": "enter_scene_token",
+      "status": "verified-offline",
+      "wireToApplication": "u32(raw + 0x5889) XOR 0xe011",
+      "evidence": "Actual notification reader -> 14cd615a0 -> 15121e560 -> Ready send boundary"
+    },
+    {
+      "typeIndex": 20380,
+      "objectOffset": 24,
+      "tag": 11,
+      "name": "enter_scene_token",
+      "status": "verified-offline",
+      "applicationToWire": "u32((token XOR 0x5673) + 0xf8cd)",
+      "evidence": "Level argument -> actual Init invocation and named LoadingTask token diagnostic"
+    },
+    {
+      "typeIndex": 63999,
+      "objectOffset": 24,
+      "tag": 12,
+      "name": "enter_scene_token",
+      "status": "verified-offline",
+      "applicationToWire": "u32((token XOR 0x2034) - 0x8609)",
+      "evidence": "Native Level producer block passes same preserved token to verified Init and Done constructors"
+    },
+    {
+      "typeIndex": 74076,
+      "objectOffset": 32,
+      "tag": 6,
+      "name": "enter_scene_token",
+      "status": "verified-offline",
+      "applicationToWire": "u32((token XOR 0x4902) - 0xb3b6)",
+      "evidence": "Verified Done response token -> native Level forwarding/coroutine field30 -> native Post invocation block; scheduler not executed"
+    },
+    {
+      "typeIndex": 17278,
+      "objectOffset": 28,
+      "tag": 12,
+      "name": "retcode",
+      "status": "verified-offline",
+      "applicationToWire": "u32((code XOR 0x83be) + 0x1077)",
+      "evidence": "Independent wire -> actual native reader -> own handler success/error diagnostic prefix"
+    },
+    {
+      "typeIndex": 36349,
+      "objectOffset": 28,
+      "tag": 7,
+      "name": "retcode",
+      "status": "verified-offline",
+      "applicationToWire": "u32(code - 0xa488) XOR 0x7530",
+      "evidence": "Independent wire -> actual native reader -> own handler success/error diagnostic prefix"
+    },
+    {
+      "typeIndex": 74698,
+      "objectOffset": 32,
+      "tag": 6,
+      "name": "retcode",
+      "status": "verified-offline",
+      "applicationToWire": "u32((code XOR 0x6d20) - 0xbeac)",
+      "evidence": "Independent wire -> actual native reader -> own handler success/error diagnostic prefix"
+    },
+    {
+      "typeIndex": 51326,
+      "objectOffset": 24,
+      "tag": 6,
+      "name": "retcode",
+      "status": "verified-offline",
+      "applicationToWire": "u32(code - 0xf7c) XOR 0x73b7",
+      "evidence": "Independent wire -> actual native reader -> own handler success/error diagnostic prefix"
+    },
+    {
+      "typeIndex": 17278,
+      "objectOffset": 24,
+      "tag": 2,
+      "name": "enter_scene_token",
+      "status": "verified-offline",
+      "applicationToWire": "u32(token + 0xe034) XOR 0x21be",
+      "evidence": "Independent raw wire -> actual response handler -> actual LoadingTask lookup -> named token diagnostic literal52998"
+    },
+    {
+      "typeIndex": 36349,
+      "objectOffset": 24,
+      "tag": 1,
+      "name": "enter_scene_token",
+      "status": "verified-offline",
+      "applicationToWire": "u32(token - 0x4765) XOR 0xc7cb",
+      "evidence": "Independent raw wire -> actual response handler -> actual LoadingTask lookup -> named token diagnostic literal52998"
+    },
+    {
+      "typeIndex": 74698,
+      "objectOffset": 36,
+      "tag": 4,
+      "name": "enter_scene_token",
+      "status": "verified-offline",
+      "applicationToWire": "u32((token XOR 0xbf71) - 0x860b)",
+      "evidence": "Independent raw wire -> actual response handler -> actual LoadingTask lookup -> named token diagnostic literal52998"
+    },
+    {
+      "typeIndex": 51326,
+      "objectOffset": 28,
+      "tag": 2,
+      "name": "enter_scene_token",
+      "status": "verified-offline",
+      "applicationToWire": "u32((token XOR 0xe67b) + 0x4885)",
+      "evidence": "Independent raw wire -> actual response handler -> actual LoadingTask lookup -> named token diagnostic literal52998"
+    }
+  ],
+  "responsePresenceContract": [
+    {
+      "typeIndex": 17278,
+      "retcode": {
+        "objectOffset": 28,
+        "tag": 12,
+        "absentRawDefault": 37941,
+        "absentLogicalDefault": 0,
+        "explicitRawZeroLogicalValue": -37833
+      },
+      "token": {
+        "objectOffset": 24,
+        "tag": 2,
+        "absentRawDefault": 49546,
+        "absentLogicalDefault": 0,
+        "explicitRawZeroLogicalValue": 4294918538
+      },
+      "adapterRequirement": "Preserve field presence: omitted field keeps target constructor default; explicit wire zero overwrites it. A Java optional field would be adapter representation, not recovered target Proto syntax."
+    },
+    {
+      "typeIndex": 36349,
+      "retcode": {
+        "objectOffset": 28,
+        "tag": 7,
+        "absentRawDefault": 4294913608,
+        "absentLogicalDefault": 0,
+        "explicitRawZeroLogicalValue": 72120
+      },
+      "token": {
+        "objectOffset": 24,
+        "tag": 1,
+        "absentRawDefault": 4294934352,
+        "absentLogicalDefault": 0,
+        "explicitRawZeroLogicalValue": 69424
+      },
+      "adapterRequirement": "Preserve field presence: omitted field keeps target constructor default; explicit wire zero overwrites it. A Java optional field would be adapter representation, not recovered target Proto syntax."
+    },
+    {
+      "typeIndex": 74698,
+      "retcode": {
+        "objectOffset": 32,
+        "tag": 6,
+        "absentRawDefault": 4294946420,
+        "absentLogicalDefault": 0,
+        "explicitRawZeroLogicalValue": 54156
+      },
+      "token": {
+        "objectOffset": 36,
+        "tag": 4,
+        "absentRawDefault": 14694,
+        "absentLogicalDefault": 0,
+        "explicitRawZeroLogicalValue": 14714
+      },
+      "adapterRequirement": "Preserve field presence: omitted field keeps target constructor default; explicit wire zero overwrites it. A Java optional field would be adapter representation, not recovered target Proto syntax."
+    },
+    {
+      "typeIndex": 51326,
+      "retcode": {
+        "objectOffset": 24,
+        "tag": 6,
+        "absentRawDefault": 4294935347,
+        "absentLogicalDefault": 0,
+        "explicitRawZeroLogicalValue": 33587
+      },
+      "token": {
+        "objectOffset": 28,
+        "tag": 2,
+        "absentRawDefault": 77568,
+        "absentLogicalDefault": 0,
+        "explicitRawZeroLogicalValue": 4294922496
+      },
+      "adapterRequirement": "Preserve field presence: omitted field keeps target constructor default; explicit wire zero overwrites it. A Java optional field would be adapter representation, not recovered target Proto syntax."
+    }
+  ],
+  "dispatchFixtures": [
+    {
+      "cmdId": 9948,
+      "handler": "0x1507d4d70",
+      "originalPointer": true
+    },
+    {
+      "cmdId": 21392,
+      "handler": "0x1507c5b10",
+      "originalPointer": true
+    },
+    {
+      "cmdId": 298,
+      "handler": "0x1507d50d0",
+      "originalPointer": true
+    },
+    {
+      "cmdId": 26760,
+      "handler": "0x1507d1cf0",
+      "originalPointer": true
+    },
+    {
+      "cmdId": 0,
+      "handler": null,
+      "originalPointer": true
+    },
+    {
+      "cmdId": 65535,
+      "handler": null,
+      "originalPointer": true
+    }
+  ],
+  "rejections": [
+    {
+      "name": "zero-tag",
+      "origin": "bounded-input-model",
+      "error": "0x1474d8100: Unsupported or invalid tag"
+    },
+    {
+      "name": "truncated-varint",
+      "origin": "bounded-input-model",
+      "error": "0x14751fd30: Truncated or invalid length"
+    },
+    {
+      "name": "negative-child-length",
+      "origin": "native-error-branch",
+      "error": "0x1509cafa0: Native error branch: negative-length"
+    },
+    {
+      "name": "recursion-limit",
+      "origin": "native-error-branch",
+      "error": "0x1509cb410: Native error branch: recursion-limit"
+    }
+  ],
+  "outsideScope": [
+    "Managed allocation/reflection, formatting and raw-byte stream refill/EOF are bounded models; IFix disabled.",
+    "Response constructors and declared success/error prefixes execute; later gameplay/error recovery and actual transport do not.",
+    "Post response dispatch first enters wrapper 1507D1CF0; full wrapper continuation is not claimed.",
+    "Notify remaining 25 field business names and other scene nested business semantics remain unresolved.",
+    "All eight tokens bound through named target diagnostics and native producer data flow; some producer blocks have explicit live-in context, not full scheduler execution.",
+    "Post request double source is observed static cell 145873360; business name is unresolved.",
+    "No complete required initialization sequence, service deployment, new/old-account client acceptance or D-02."
+  ],
+  "protoSHA256": "a626162680503d46dd48ffd6c986125a422a8bd456b3248560eb9bda4cdda605",
+  "requestObservations": [
+    {
+      "name": "EnterSceneReadyReq-0",
+      "typeIndex": 74391,
+      "token": 0,
+      "storedToken": 79044,
+      "constructorToken": 79044,
+      "wire": "18c4e904",
+      "doubleBits": null,
+      "protocMatch": true,
+      "requestPointerPreserved": true,
+      "entry": "0x15121e560",
+      "stop": "0x15120d730",
+      "nativePathSHA256": "4ac199d8895c12fa94c972d432843e57df03450150189e1eaaef0f89736df64d"
+    },
+    {
+      "name": "EnterSceneReadyReq-1",
+      "typeIndex": 74391,
+      "token": 1,
+      "storedToken": 79043,
+      "constructorToken": 79044,
+      "wire": "18c3e904",
+      "doubleBits": null,
+      "protocMatch": true,
+      "requestPointerPreserved": true,
+      "entry": "0x15121e560",
+      "stop": "0x15120d730",
+      "nativePathSHA256": "4ac199d8895c12fa94c972d432843e57df03450150189e1eaaef0f89736df64d"
+    },
+    {
+      "name": "EnterSceneReadyReq-2147483648",
+      "typeIndex": 74391,
+      "token": 2147483648,
+      "storedToken": 2147562692,
+      "constructorToken": 79044,
+      "wire": "18c4e9848008",
+      "doubleBits": null,
+      "protocMatch": true,
+      "requestPointerPreserved": true,
+      "entry": "0x15121e560",
+      "stop": "0x15120d730",
+      "nativePathSHA256": "4ac199d8895c12fa94c972d432843e57df03450150189e1eaaef0f89736df64d"
+    },
+    {
+      "name": "EnterSceneReadyReq-4294967295",
+      "typeIndex": 74391,
+      "token": 4294967295,
+      "storedToken": 4294927165,
+      "constructorToken": 79044,
+      "wire": "18bdc6fdff0f",
+      "doubleBits": null,
+      "protocMatch": true,
+      "requestPointerPreserved": true,
+      "entry": "0x15121e560",
+      "stop": "0x15120d730",
+      "nativePathSHA256": "4ac199d8895c12fa94c972d432843e57df03450150189e1eaaef0f89736df64d"
+    },
+    {
+      "name": "SceneInitFinishReq-0",
+      "typeIndex": 20380,
+      "token": 0,
+      "storedToken": 85824,
+      "constructorToken": 85824,
+      "wire": "58c09e05",
+      "doubleBits": null,
+      "protocMatch": true,
+      "requestPointerPreserved": true,
+      "entry": "0x1512242b0",
+      "stop": "0x15120d730",
+      "nativePathSHA256": "bf9d25866e4230ba07e56f2f59094b11e3ea6a6edf03440246a6850b4aec3b4e"
+    },
+    {
+      "name": "SceneInitFinishReq-1",
+      "typeIndex": 20380,
+      "token": 1,
+      "storedToken": 85823,
+      "constructorToken": 85824,
+      "wire": "58bf9e05",
+      "doubleBits": null,
+      "protocMatch": true,
+      "requestPointerPreserved": true,
+      "entry": "0x1512242b0",
+      "stop": "0x15120d730",
+      "nativePathSHA256": "bf9d25866e4230ba07e56f2f59094b11e3ea6a6edf03440246a6850b4aec3b4e"
+    },
+    {
+      "name": "SceneInitFinishReq-2147483648",
+      "typeIndex": 20380,
+      "token": 2147483648,
+      "storedToken": 2147569472,
+      "constructorToken": 85824,
+      "wire": "58c09e858008",
+      "doubleBits": null,
+      "protocMatch": true,
+      "requestPointerPreserved": true,
+      "entry": "0x1512242b0",
+      "stop": "0x15120d730",
+      "nativePathSHA256": "bf9d25866e4230ba07e56f2f59094b11e3ea6a6edf03440246a6850b4aec3b4e"
+    },
+    {
+      "name": "SceneInitFinishReq-4294967295",
+      "typeIndex": 20380,
+      "token": 4294967295,
+      "storedToken": 41561,
+      "constructorToken": 85824,
+      "wire": "58d9c402",
+      "doubleBits": null,
+      "protocMatch": true,
+      "requestPointerPreserved": true,
+      "entry": "0x1512242b0",
+      "stop": "0x15120d730",
+      "nativePathSHA256": "bf9d25866e4230ba07e56f2f59094b11e3ea6a6edf03440246a6850b4aec3b4e"
+    },
+    {
+      "name": "EnterSceneDoneReq-0",
+      "typeIndex": 63999,
+      "token": 0,
+      "storedToken": 4294941227,
+      "constructorToken": 4294941227,
+      "wire": "60abb4feff0f",
+      "doubleBits": null,
+      "protocMatch": true,
+      "requestPointerPreserved": true,
+      "entry": "0x15121e380",
+      "stop": "0x15120d730",
+      "nativePathSHA256": "7740be7ba4dedd661d8117fc3d3e6ec09e5c97659a397d39c9da6dd4582f390f"
+    },
+    {
+      "name": "EnterSceneDoneReq-1",
+      "typeIndex": 63999,
+      "token": 1,
+      "storedToken": 4294941228,
+      "constructorToken": 4294941227,
+      "wire": "60acb4feff0f",
+      "doubleBits": null,
+      "protocMatch": true,
+      "requestPointerPreserved": true,
+      "entry": "0x15121e380",
+      "stop": "0x15120d730",
+      "nativePathSHA256": "7740be7ba4dedd661d8117fc3d3e6ec09e5c97659a397d39c9da6dd4582f390f"
+    },
+    {
+      "name": "EnterSceneDoneReq-2147483648",
+      "typeIndex": 63999,
+      "token": 2147483648,
+      "storedToken": 2147457579,
+      "constructorToken": 4294941227,
+      "wire": "60abb4feff07",
+      "doubleBits": null,
+      "protocMatch": true,
+      "requestPointerPreserved": true,
+      "entry": "0x15121e380",
+      "stop": "0x15120d730",
+      "nativePathSHA256": "7740be7ba4dedd661d8117fc3d3e6ec09e5c97659a397d39c9da6dd4582f390f"
+    },
+    {
+      "name": "EnterSceneDoneReq-4294967295",
+      "typeIndex": 63999,
+      "token": 4294967295,
+      "storedToken": 4294924738,
+      "constructorToken": 4294941227,
+      "wire": "60c2b3fdff0f",
+      "doubleBits": null,
+      "protocMatch": true,
+      "requestPointerPreserved": true,
+      "entry": "0x15121e380",
+      "stop": "0x15120d730",
+      "nativePathSHA256": "7740be7ba4dedd661d8117fc3d3e6ec09e5c97659a397d39c9da6dd4582f390f"
+    },
+    {
+      "name": "PostEnterSceneReq-0",
+      "typeIndex": 74076,
+      "token": 0,
+      "storedToken": 4294939980,
+      "constructorToken": 4294939980,
+      "wire": "30ccaafeff0f",
+      "doubleBits": 0,
+      "protocMatch": true,
+      "requestPointerPreserved": true,
+      "entry": "0x151226220",
+      "stop": "0x15120d730",
+      "nativePathSHA256": "5be8458e9882832739e7f4d979f6c7e8dbcdaab181a7bc79cb4d18769c9972f3"
+    },
+    {
+      "name": "PostEnterSceneReq-1",
+      "typeIndex": 74076,
+      "token": 1,
+      "storedToken": 4294939981,
+      "constructorToken": 4294939980,
+      "wire": "0900000000a01cc8c030cdaafeff0f",
+      "doubleBits": 13891384524144640000,
+      "protocMatch": true,
+      "requestPointerPreserved": true,
+      "entry": "0x151226220",
+      "stop": "0x15120d730",
+      "nativePathSHA256": "5be8458e9882832739e7f4d979f6c7e8dbcdaab181a7bc79cb4d18769c9972f3"
+    },
+    {
+      "name": "PostEnterSceneReq-2147483648",
+      "typeIndex": 74076,
+      "token": 2147483648,
+      "storedToken": 2147456332,
+      "constructorToken": 4294939980,
+      "wire": "09010000000000404330ccaafeff07",
+      "doubleBits": 4845873199050653697,
+      "protocMatch": true,
+      "requestPointerPreserved": true,
+      "entry": "0x151226220",
+      "stop": "0x15120d730",
+      "nativePathSHA256": "5be8458e9882832739e7f4d979f6c7e8dbcdaab181a7bc79cb4d18769c9972f3"
+    },
+    {
+      "name": "PostEnterSceneReq-4294967295",
+      "typeIndex": 74076,
+      "token": 4294967295,
+      "storedToken": 4294902599,
+      "constructorToken": 4294939980,
+      "wire": "09010000000000404330c786fcff0f",
+      "doubleBits": 4845873199050653697,
+      "protocMatch": true,
+      "requestPointerPreserved": true,
+      "entry": "0x151226220",
+      "stop": "0x15120d730",
+      "nativePathSHA256": "5be8458e9882832739e7f4d979f6c7e8dbcdaab181a7bc79cb4d18769c9972f3"
+    }
+  ],
+  "readerObservations": [
+    {
+      "name": "17278-empty",
+      "wire": "",
+      "expected": {
+        "typeIndex": 17278,
+        "fields": {
+          "0x18": 49546,
+          "0x1c": 37941
+        }
+      },
+      "storedObject": {
+        "typeIndex": 17278,
+        "fields": {
+          "0x18": 49546,
+          "0x1c": 37941
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 17278,
+        "fields": {
+          "0x18": 49546,
+          "0x1c": 37941
+        }
+      },
+      "protocMatch": true
+    },
+    {
+      "name": "17278-nonzero",
+      "wire": "10b4a4f0f60f6081808080f8ffffffff01",
+      "expected": {
+        "typeIndex": 17278,
+        "fields": {
+          "0x18": 4275835444,
+          "0x1c": 2147483649
+        }
+      },
+      "storedObject": {
+        "typeIndex": 17278,
+        "fields": {
+          "0x18": 4275835444,
+          "0x1c": 2147483649
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 17278,
+        "fields": {
+          "0x18": 49546,
+          "0x1c": 37941
+        }
+      },
+      "protocMatch": true
+    },
+    {
+      "name": "17278-maximum",
+      "wire": "10ffffffff0f60ffffffffffffffffff01",
+      "expected": {
+        "typeIndex": 17278,
+        "fields": {
+          "0x18": 4294967295,
+          "0x1c": 4294967295
+        }
+      },
+      "storedObject": {
+        "typeIndex": 17278,
+        "fields": {
+          "0x18": 4294967295,
+          "0x1c": 4294967295
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 17278,
+        "fields": {
+          "0x18": 49546,
+          "0x1c": 37941
+        }
+      },
+      "protocMatch": true
+    },
+    {
+      "name": "17278-duplicate-explicit-zero",
+      "wire": "1011100060116000",
+      "expected": {
+        "typeIndex": 17278,
+        "fields": {
+          "0x18": 0,
+          "0x1c": 0
+        }
+      },
+      "storedObject": {
+        "typeIndex": 17278,
+        "fields": {
+          "0x18": 0,
+          "0x1c": 0
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 17278,
+        "fields": {
+          "0x18": 49546,
+          "0x1c": 37941
+        }
+      },
+      "protocMatch": false
+    },
+    {
+      "name": "17278-wrong-wire",
+      "wire": "120100620100",
+      "expected": {
+        "typeIndex": 17278,
+        "fields": {
+          "0x18": 49546,
+          "0x1c": 37941
+        }
+      },
+      "storedObject": {
+        "typeIndex": 17278,
+        "fields": {
+          "0x18": 49546,
+          "0x1c": 37941
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 17278,
+        "fields": {
+          "0x18": 49546,
+          "0x1c": 37941
+        }
+      },
+      "protocMatch": false
+    },
+    {
+      "name": "36349-empty",
+      "wire": "",
+      "expected": {
+        "typeIndex": 36349,
+        "fields": {
+          "0x18": 4294934352,
+          "0x1c": 4294913608
+        }
+      },
+      "storedObject": {
+        "typeIndex": 36349,
+        "fields": {
+          "0x18": 4294934352,
+          "0x1c": 4294913608
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 36349,
+        "fields": {
+          "0x18": 4294934352,
+          "0x1c": 4294913608
+        }
+      },
+      "protocMatch": true
+    },
+    {
+      "name": "36349-nonzero",
+      "wire": "08b4a4f0f60f3881808080f8ffffffff01",
+      "expected": {
+        "typeIndex": 36349,
+        "fields": {
+          "0x18": 4275835444,
+          "0x1c": 2147483649
+        }
+      },
+      "storedObject": {
+        "typeIndex": 36349,
+        "fields": {
+          "0x18": 4275835444,
+          "0x1c": 2147483649
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 36349,
+        "fields": {
+          "0x18": 4294934352,
+          "0x1c": 4294913608
+        }
+      },
+      "protocMatch": true
+    },
+    {
+      "name": "36349-maximum",
+      "wire": "08ffffffff0f38ffffffffffffffffff01",
+      "expected": {
+        "typeIndex": 36349,
+        "fields": {
+          "0x18": 4294967295,
+          "0x1c": 4294967295
+        }
+      },
+      "storedObject": {
+        "typeIndex": 36349,
+        "fields": {
+          "0x18": 4294967295,
+          "0x1c": 4294967295
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 36349,
+        "fields": {
+          "0x18": 4294934352,
+          "0x1c": 4294913608
+        }
+      },
+      "protocMatch": true
+    },
+    {
+      "name": "36349-duplicate-explicit-zero",
+      "wire": "0811080038113800",
+      "expected": {
+        "typeIndex": 36349,
+        "fields": {
+          "0x18": 0,
+          "0x1c": 0
+        }
+      },
+      "storedObject": {
+        "typeIndex": 36349,
+        "fields": {
+          "0x18": 0,
+          "0x1c": 0
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 36349,
+        "fields": {
+          "0x18": 4294934352,
+          "0x1c": 4294913608
+        }
+      },
+      "protocMatch": false
+    },
+    {
+      "name": "36349-wrong-wire",
+      "wire": "0a01003a0100",
+      "expected": {
+        "typeIndex": 36349,
+        "fields": {
+          "0x18": 4294934352,
+          "0x1c": 4294913608
+        }
+      },
+      "storedObject": {
+        "typeIndex": 36349,
+        "fields": {
+          "0x18": 4294934352,
+          "0x1c": 4294913608
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 36349,
+        "fields": {
+          "0x18": 4294934352,
+          "0x1c": 4294913608
+        }
+      },
+      "protocMatch": false
+    },
+    {
+      "name": "74698-empty",
+      "wire": "",
+      "expected": {
+        "typeIndex": 74698,
+        "fields": {
+          "0x18": null,
+          "0x20": 4294946420,
+          "0x24": 14694
+        }
+      },
+      "storedObject": {
+        "typeIndex": 74698,
+        "fields": {
+          "0x18": null,
+          "0x20": 4294946420,
+          "0x24": 14694
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 74698,
+        "fields": {
+          "0x18": null,
+          "0x20": 4294946420,
+          "0x24": 14694
+        }
+      },
+      "protocMatch": true
+    },
+    {
+      "name": "74698-nonzero",
+      "wire": "20b4a4f0f60f3081808080f8ffffffff01",
+      "expected": {
+        "typeIndex": 74698,
+        "fields": {
+          "0x18": null,
+          "0x20": 2147483649,
+          "0x24": 4275835444
+        }
+      },
+      "storedObject": {
+        "typeIndex": 74698,
+        "fields": {
+          "0x18": null,
+          "0x20": 2147483649,
+          "0x24": 4275835444
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 74698,
+        "fields": {
+          "0x18": null,
+          "0x20": 4294946420,
+          "0x24": 14694
+        }
+      },
+      "protocMatch": true
+    },
+    {
+      "name": "74698-maximum",
+      "wire": "20ffffffff0f30ffffffffffffffffff01",
+      "expected": {
+        "typeIndex": 74698,
+        "fields": {
+          "0x18": null,
+          "0x20": 4294967295,
+          "0x24": 4294967295
+        }
+      },
+      "storedObject": {
+        "typeIndex": 74698,
+        "fields": {
+          "0x18": null,
+          "0x20": 4294967295,
+          "0x24": 4294967295
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 74698,
+        "fields": {
+          "0x18": null,
+          "0x20": 4294946420,
+          "0x24": 14694
+        }
+      },
+      "protocMatch": true
+    },
+    {
+      "name": "74698-duplicate-explicit-zero",
+      "wire": "2011200030113000",
+      "expected": {
+        "typeIndex": 74698,
+        "fields": {
+          "0x18": null,
+          "0x20": 0,
+          "0x24": 0
+        }
+      },
+      "storedObject": {
+        "typeIndex": 74698,
+        "fields": {
+          "0x18": null,
+          "0x20": 0,
+          "0x24": 0
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 74698,
+        "fields": {
+          "0x18": null,
+          "0x20": 4294946420,
+          "0x24": 14694
+        }
+      },
+      "protocMatch": false
+    },
+    {
+      "name": "74698-wrong-wire",
+      "wire": "220100320100",
+      "expected": {
+        "typeIndex": 74698,
+        "fields": {
+          "0x18": null,
+          "0x20": 4294946420,
+          "0x24": 14694
+        }
+      },
+      "storedObject": {
+        "typeIndex": 74698,
+        "fields": {
+          "0x18": null,
+          "0x20": 4294946420,
+          "0x24": 14694
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 74698,
+        "fields": {
+          "0x18": null,
+          "0x20": 4294946420,
+          "0x24": 14694
+        }
+      },
+      "protocMatch": false
+    },
+    {
+      "name": "51326-empty",
+      "wire": "",
+      "expected": {
+        "typeIndex": 51326,
+        "fields": {
+          "0x18": 4294935347,
+          "0x1c": 77568
+        }
+      },
+      "storedObject": {
+        "typeIndex": 51326,
+        "fields": {
+          "0x18": 4294935347,
+          "0x1c": 77568
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 51326,
+        "fields": {
+          "0x18": 4294935347,
+          "0x1c": 77568
+        }
+      },
+      "protocMatch": true
+    },
+    {
+      "name": "51326-nonzero",
+      "wire": "10b4a4f0f60f3081808080f8ffffffff01",
+      "expected": {
+        "typeIndex": 51326,
+        "fields": {
+          "0x18": 2147483649,
+          "0x1c": 4275835444
+        }
+      },
+      "storedObject": {
+        "typeIndex": 51326,
+        "fields": {
+          "0x18": 2147483649,
+          "0x1c": 4275835444
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 51326,
+        "fields": {
+          "0x18": 4294935347,
+          "0x1c": 77568
+        }
+      },
+      "protocMatch": true
+    },
+    {
+      "name": "51326-maximum",
+      "wire": "10ffffffff0f30ffffffffffffffffff01",
+      "expected": {
+        "typeIndex": 51326,
+        "fields": {
+          "0x18": 4294967295,
+          "0x1c": 4294967295
+        }
+      },
+      "storedObject": {
+        "typeIndex": 51326,
+        "fields": {
+          "0x18": 4294967295,
+          "0x1c": 4294967295
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 51326,
+        "fields": {
+          "0x18": 4294935347,
+          "0x1c": 77568
+        }
+      },
+      "protocMatch": true
+    },
+    {
+      "name": "51326-duplicate-explicit-zero",
+      "wire": "1011100030113000",
+      "expected": {
+        "typeIndex": 51326,
+        "fields": {
+          "0x18": 0,
+          "0x1c": 0
+        }
+      },
+      "storedObject": {
+        "typeIndex": 51326,
+        "fields": {
+          "0x18": 0,
+          "0x1c": 0
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 51326,
+        "fields": {
+          "0x18": 4294935347,
+          "0x1c": 77568
+        }
+      },
+      "protocMatch": false
+    },
+    {
+      "name": "51326-wrong-wire",
+      "wire": "120100320100",
+      "expected": {
+        "typeIndex": 51326,
+        "fields": {
+          "0x18": 4294935347,
+          "0x1c": 77568
+        }
+      },
+      "storedObject": {
+        "typeIndex": 51326,
+        "fields": {
+          "0x18": 4294935347,
+          "0x1c": 77568
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 51326,
+        "fields": {
+          "0x18": 4294935347,
+          "0x1c": 77568
+        }
+      },
+      "protocMatch": false
+    },
+    {
+      "name": "done-nonempty-nested",
+      "wire": "621d0a0f0d0000a03f15000020c01d0000804718ffffffff0f58818080800820ffffffff0f30f4dcfeffffffffffff01",
+      "expected": {
+        "typeIndex": 74698,
+        "fields": {
+          "0x18": {
+            "typeIndex": 82602,
+            "fields": {
+              "0x18": {
+                "typeIndex": 84343,
+                "fields": {
+                  "0x18": 1067450368,
+                  "0x1c": 1199570944,
+                  "0x20": 3223322624
+                }
+              },
+              "0x20": 2147483649,
+              "0x24": 4294967295
+            }
+          },
+          "0x20": 4294946420,
+          "0x24": 4294967295
+        }
+      },
+      "storedObject": {
+        "typeIndex": 74698,
+        "fields": {
+          "0x18": {
+            "typeIndex": 82602,
+            "fields": {
+              "0x18": {
+                "typeIndex": 84343,
+                "fields": {
+                  "0x18": 1067450368,
+                  "0x1c": 1199570944,
+                  "0x20": 3223322624
+                }
+              },
+              "0x20": 2147483649,
+              "0x24": 4294967295
+            }
+          },
+          "0x20": 4294946420,
+          "0x24": 4294967295
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 74698,
+        "fields": {
+          "0x18": null,
+          "0x20": 4294946420,
+          "0x24": 14694
+        }
+      },
+      "protocMatch": false
+    },
+    {
+      "name": "done-duplicate-nested-explicit-zero",
+      "wire": "621d0a0f0d0000a03f15000020c01d0000804718ffffffff0f58818080800820ffffffff0f30f4dcfeffffffffffff01620b0a050d0000000018005800",
+      "expected": {
+        "typeIndex": 74698,
+        "fields": {
+          "0x18": {
+            "typeIndex": 82602,
+            "fields": {
+              "0x18": {
+                "typeIndex": 84343,
+                "fields": {
+                  "0x18": 0,
+                  "0x1c": 1199570944,
+                  "0x20": 3223322624
+                }
+              },
+              "0x20": 0,
+              "0x24": 0
+            }
+          },
+          "0x20": 4294946420,
+          "0x24": 4294967295
+        }
+      },
+      "storedObject": {
+        "typeIndex": 74698,
+        "fields": {
+          "0x18": {
+            "typeIndex": 82602,
+            "fields": {
+              "0x18": {
+                "typeIndex": 84343,
+                "fields": {
+                  "0x18": 0,
+                  "0x1c": 1199570944,
+                  "0x20": 3223322624
+                }
+              },
+              "0x20": 0,
+              "0x24": 0
+            }
+          },
+          "0x20": 4294946420,
+          "0x24": 4294967295
+        }
+      },
+      "constructorDefaults": {
+        "typeIndex": 74698,
+        "fields": {
+          "0x18": null,
+          "0x20": 4294946420,
+          "0x24": 14694
+        }
+      },
+      "protocMatch": false
+    }
+  ],
+  "semanticObservations": [
+    {
+      "name": "17278-retcode-logical-0",
+      "typeIndex": 17278,
+      "logicalRetcode": 0,
+      "fieldPresent": true,
+      "rawRetcode": 37941,
+      "observedRetcodeBits": 0,
+      "wire": "60b5a802",
+      "branch": "success-prefix",
+      "stop": "0x1507d4f41",
+      "nativePathSHA256": "292ad4f2066dd05dc13553db42f9fdb54a9a0a0c264c54c3cdc2dd221caea46d"
+    },
+    {
+      "name": "17278-retcode-logical-1",
+      "typeIndex": 17278,
+      "logicalRetcode": 1,
+      "fieldPresent": true,
+      "rawRetcode": 37942,
+      "observedRetcodeBits": 1,
+      "wire": "60b6a802",
+      "branch": "error-diagnostic-prefix",
+      "stop": "0x1507c5e10",
+      "nativePathSHA256": "6c28d912ab323d54473735a97c678c01b9d18b62023febe2137f9badbd19e943"
+    },
+    {
+      "name": "17278-retcode-logical--1",
+      "typeIndex": 17278,
+      "logicalRetcode": -1,
+      "fieldPresent": true,
+      "rawRetcode": 4294937784,
+      "observedRetcodeBits": 4294967295,
+      "wire": "60b899feffffffffffff01",
+      "branch": "error-diagnostic-prefix",
+      "stop": "0x1507c5e10",
+      "nativePathSHA256": "6c28d912ab323d54473735a97c678c01b9d18b62023febe2137f9badbd19e943"
+    },
+    {
+      "name": "17278-retcode-logical--2147483648",
+      "typeIndex": 17278,
+      "logicalRetcode": -2147483648,
+      "fieldPresent": true,
+      "rawRetcode": 2147521589,
+      "observedRetcodeBits": 2147483648,
+      "wire": "60b5a88280f8ffffffff01",
+      "branch": "error-diagnostic-prefix",
+      "stop": "0x1507c5e10",
+      "nativePathSHA256": "6c28d912ab323d54473735a97c678c01b9d18b62023febe2137f9badbd19e943"
+    },
+    {
+      "name": "17278-retcode-logical-2147483647",
+      "typeIndex": 17278,
+      "logicalRetcode": 2147483647,
+      "fieldPresent": true,
+      "rawRetcode": 2147454136,
+      "observedRetcodeBits": 2147483647,
+      "wire": "60b899feff07",
+      "branch": "error-diagnostic-prefix",
+      "stop": "0x1507c5e10",
+      "nativePathSHA256": "14969d31eb35799e72d555e1c1e17321608b7c963617883b17b12a72e99b53f2"
+    },
+    {
+      "name": "17278-retcode-raw-zero--37833",
+      "typeIndex": 17278,
+      "logicalRetcode": -37833,
+      "fieldPresent": true,
+      "rawRetcode": 0,
+      "observedRetcodeBits": 4294929463,
+      "wire": "6000",
+      "branch": "error-diagnostic-prefix",
+      "stop": "0x1507c5e10",
+      "nativePathSHA256": "6c28d912ab323d54473735a97c678c01b9d18b62023febe2137f9badbd19e943"
+    },
+    {
+      "name": "17278-retcode-missing-0",
+      "typeIndex": 17278,
+      "logicalRetcode": 0,
+      "fieldPresent": false,
+      "rawRetcode": 37941,
+      "observedRetcodeBits": 0,
+      "wire": "",
+      "branch": "success-prefix",
+      "stop": "0x1507d4f41",
+      "nativePathSHA256": "292ad4f2066dd05dc13553db42f9fdb54a9a0a0c264c54c3cdc2dd221caea46d"
+    },
+    {
+      "name": "36349-retcode-logical-0",
+      "typeIndex": 36349,
+      "logicalRetcode": 0,
+      "fieldPresent": true,
+      "rawRetcode": 4294913608,
+      "observedRetcodeBits": 0,
+      "wire": "38c8dcfcffffffffffff01",
+      "branch": "success-prefix",
+      "stop": "0x1507c5d7c",
+      "nativePathSHA256": "1a82f491e07a1cefed91587086587c7be9fedfc50c26c9bce64a66ca904d4f65"
+    },
+    {
+      "name": "36349-retcode-logical-1",
+      "typeIndex": 36349,
+      "logicalRetcode": 1,
+      "fieldPresent": true,
+      "rawRetcode": 4294913609,
+      "observedRetcodeBits": 1,
+      "wire": "38c9dcfcffffffffffff01",
+      "branch": "error-diagnostic-prefix",
+      "stop": "0x1507c5e10",
+      "nativePathSHA256": "c88f0b587be64cbda696e719675ecc6924ca773c423391c7148414c3b297e786"
+    },
+    {
+      "name": "36349-retcode-logical--1",
+      "typeIndex": 36349,
+      "logicalRetcode": -1,
+      "fieldPresent": true,
+      "rawRetcode": 4294913607,
+      "observedRetcodeBits": 4294967295,
+      "wire": "38c7dcfcffffffffffff01",
+      "branch": "error-diagnostic-prefix",
+      "stop": "0x1507c5e10",
+      "nativePathSHA256": "c88f0b587be64cbda696e719675ecc6924ca773c423391c7148414c3b297e786"
+    },
+    {
+      "name": "36349-retcode-logical--2147483648",
+      "typeIndex": 36349,
+      "logicalRetcode": -2147483648,
+      "fieldPresent": true,
+      "rawRetcode": 2147429960,
+      "observedRetcodeBits": 2147483648,
+      "wire": "38c8dcfcff07",
+      "branch": "error-diagnostic-prefix",
+      "stop": "0x1507c5e10",
+      "nativePathSHA256": "c88f0b587be64cbda696e719675ecc6924ca773c423391c7148414c3b297e786"
+    },
+    {
+      "name": "36349-retcode-logical-2147483647",
+      "typeIndex": 36349,
+      "logicalRetcode": 2147483647,
+      "fieldPresent": true,
+      "rawRetcode": 2147429959,
+      "observedRetcodeBits": 2147483647,
+      "wire": "38c7dcfcff07",
+      "branch": "error-diagnostic-prefix",
+      "stop": "0x1507c5e10",
+      "nativePathSHA256": "9ae00c6775feb17e798845f36525bcf0f36fc5fe5450750b74bdae63d8c1d807"
+    },
+    {
+      "name": "36349-retcode-raw-zero-72120",
+      "typeIndex": 36349,
+      "logicalRetcode": 72120,
+      "fieldPresent": true,
+      "rawRetcode": 0,
+      "observedRetcodeBits": 72120,
+      "wire": "3800",
+      "branch": "error-diagnostic-prefix",
+      "stop": "0x1507c5e10",
+      "nativePathSHA256": "9ae00c6775feb17e798845f36525bcf0f36fc5fe5450750b74bdae63d8c1d807"
+    },
+    {
+      "name": "36349-retcode-missing-0",
+      "typeIndex": 36349,
+      "logicalRetcode": 0,
+      "fieldPresent": false,
+      "rawRetcode": 4294913608,
+      "observedRetcodeBits": 0,
+      "wire": "",
+      "branch": "success-prefix",
+      "stop": "0x1507c5d7c",
+      "nativePathSHA256": "1a82f491e07a1cefed91587086587c7be9fedfc50c26c9bce64a66ca904d4f65"
+    },
+    {
+      "name": "74698-retcode-logical-0",
+      "typeIndex": 74698,
+      "logicalRetcode": 0,
+      "fieldPresent": true,
+      "rawRetcode": 4294946420,
+      "observedRetcodeBits": 0,
+      "wire": "30f4dcfeffffffffffff01",
+      "branch": "success-prefix",
+      "stop": "0x1507d51f2",
+      "nativePathSHA256": "b5438e31d0386131ea2246021596c6dd3ce3473380880787e3f8105e9016bf9e"
+    },
+    {
+      "name": "74698-retcode-logical-1",
+      "typeIndex": 74698,
+      "logicalRetcode": 1,
+      "fieldPresent": true,
+      "rawRetcode": 4294946421,
+      "observedRetcodeBits": 1,
+      "wire": "30f5dcfeffffffffffff01",
+      "branch": "error-diagnostic-prefix",
+      "stop": "0x147161b60",
+      "nativePathSHA256": "c2a1a8336b65e034dc2386bbae3cdaa73e851947dec8093cf232b7b6d7429a81"
+    },
+    {
+      "name": "74698-retcode-logical--1",
+      "typeIndex": 74698,
+      "logicalRetcode": -1,
+      "fieldPresent": true,
+      "rawRetcode": 4294890547,
+      "observedRetcodeBits": 4294967295,
+      "wire": "30b3a8fbffffffffffff01",
+      "branch": "error-diagnostic-prefix",
+      "stop": "0x147161b60",
+      "nativePathSHA256": "c2a1a8336b65e034dc2386bbae3cdaa73e851947dec8093cf232b7b6d7429a81"
+    },
+    {
+      "name": "74698-retcode-logical--2147483648",
+      "typeIndex": 74698,
+      "logicalRetcode": -2147483648,
+      "fieldPresent": true,
+      "rawRetcode": 2147462772,
+      "observedRetcodeBits": 2147483648,
+      "wire": "30f4dcfeff07",
+      "branch": "error-diagnostic-prefix",
+      "stop": "0x147161b60",
+      "nativePathSHA256": "c2a1a8336b65e034dc2386bbae3cdaa73e851947dec8093cf232b7b6d7429a81"
+    },
+    {
+      "name": "74698-retcode-logical-2147483647",
+      "typeIndex": 74698,
+      "logicalRetcode": 2147483647,
+      "fieldPresent": true,
+      "rawRetcode": 2147406899,
+      "observedRetcodeBits": 2147483647,
+      "wire": "30b3a8fbff07",
+      "branch": "error-diagnostic-prefix",
+      "stop": "0x147161b60",
+      "nativePathSHA256": "c2a1a8336b65e034dc2386bbae3cdaa73e851947dec8093cf232b7b6d7429a81"
+    },
+    {
+      "name": "74698-retcode-raw-zero-54156",
+      "typeIndex": 74698,
+      "logicalRetcode": 54156,
+      "fieldPresent": true,
+      "rawRetcode": 0,
+      "observedRetcodeBits": 54156,
+      "wire": "3000",
+      "branch": "error-diagnostic-prefix",
+      "stop": "0x147161b60",
+      "nativePathSHA256": "c2a1a8336b65e034dc2386bbae3cdaa73e851947dec8093cf232b7b6d7429a81"
+    },
+    {
+      "name": "74698-retcode-missing-0",
+      "typeIndex": 74698,
+      "logicalRetcode": 0,
+      "fieldPresent": false,
+      "rawRetcode": 4294946420,
+      "observedRetcodeBits": 0,
+      "wire": "",
+      "branch": "success-prefix",
+      "stop": "0x1507d51f2",
+      "nativePathSHA256": "b5438e31d0386131ea2246021596c6dd3ce3473380880787e3f8105e9016bf9e"
+    },
+    {
+      "name": "51326-retcode-logical-0",
+      "typeIndex": 51326,
+      "logicalRetcode": 0,
+      "fieldPresent": true,
+      "rawRetcode": 4294935347,
+      "observedRetcodeBits": 0,
+      "wire": "30b386feffffffffffff01",
+      "branch": "success-prefix",
+      "stop": "0x1507eeed9",
+      "nativePathSHA256": "905e1eccdcad16a1643d39dde2d1ed47c8bfe05f84157b153e46124f6d8d3b7b"
+    },
+    {
+      "name": "51326-retcode-logical-1",
+      "typeIndex": 51326,
+      "logicalRetcode": 1,
+      "fieldPresent": true,
+      "rawRetcode": 4294935346,
+      "observedRetcodeBits": 1,
+      "wire": "30b286feffffffffffff01",
+      "branch": "error-diagnostic-prefix",
+      "stop": "0x147161b60",
+      "nativePathSHA256": "08378a0bf8bc130ddf16815c3ce933acfbba11f7a8ca79cd432e43e891151e30"
+    },
+    {
+      "name": "51326-retcode-logical--1",
+      "typeIndex": 51326,
+      "logicalRetcode": -1,
+      "fieldPresent": true,
+      "rawRetcode": 4294935348,
+      "observedRetcodeBits": 4294967295,
+      "wire": "30b486feffffffffffff01",
+      "branch": "error-diagnostic-prefix",
+      "stop": "0x147161b60",
+      "nativePathSHA256": "08378a0bf8bc130ddf16815c3ce933acfbba11f7a8ca79cd432e43e891151e30"
+    },
+    {
+      "name": "51326-retcode-logical--2147483648",
+      "typeIndex": 51326,
+      "logicalRetcode": -2147483648,
+      "fieldPresent": true,
+      "rawRetcode": 2147451699,
+      "observedRetcodeBits": 2147483648,
+      "wire": "30b386feff07",
+      "branch": "error-diagnostic-prefix",
+      "stop": "0x147161b60",
+      "nativePathSHA256": "08378a0bf8bc130ddf16815c3ce933acfbba11f7a8ca79cd432e43e891151e30"
+    },
+    {
+      "name": "51326-retcode-logical-2147483647",
+      "typeIndex": 51326,
+      "logicalRetcode": 2147483647,
+      "fieldPresent": true,
+      "rawRetcode": 2147451700,
+      "observedRetcodeBits": 2147483647,
+      "wire": "30b486feff07",
+      "branch": "error-diagnostic-prefix",
+      "stop": "0x147161b60",
+      "nativePathSHA256": "08378a0bf8bc130ddf16815c3ce933acfbba11f7a8ca79cd432e43e891151e30"
+    },
+    {
+      "name": "51326-retcode-raw-zero-33587",
+      "typeIndex": 51326,
+      "logicalRetcode": 33587,
+      "fieldPresent": true,
+      "rawRetcode": 0,
+      "observedRetcodeBits": 33587,
+      "wire": "3000",
+      "branch": "error-diagnostic-prefix",
+      "stop": "0x147161b60",
+      "nativePathSHA256": "08378a0bf8bc130ddf16815c3ce933acfbba11f7a8ca79cd432e43e891151e30"
+    },
+    {
+      "name": "51326-retcode-missing-0",
+      "typeIndex": 51326,
+      "logicalRetcode": 0,
+      "fieldPresent": false,
+      "rawRetcode": 4294935347,
+      "observedRetcodeBits": 0,
+      "wire": "",
+      "branch": "success-prefix",
+      "stop": "0x1507eeed9",
+      "nativePathSHA256": "905e1eccdcad16a1643d39dde2d1ed47c8bfe05f84157b153e46124f6d8d3b7b"
+    }
+  ],
+  "sceneTokenObservations": [
+    {
+      "rawNotificationToken": 0,
+      "logicalToken": 47256,
+      "rawReadyToken": 40028,
+      "sourceField": {
+        "typeIndex": 46311,
+        "objectOffset": 148,
+        "tag": 10
+      },
+      "targetField": {
+        "typeIndex": 74391,
+        "objectOffset": 24,
+        "tag": 3
+      },
+      "originalNotificationObject": true,
+      "nativePathSHA256": "19553c41c864b69cea28a9e43e40473cbe77b9fc49ed52e1b7aac3ade2330b93"
+    },
+    {
+      "rawNotificationToken": 1,
+      "logicalToken": 47259,
+      "rawReadyToken": 40025,
+      "sourceField": {
+        "typeIndex": 46311,
+        "objectOffset": 148,
+        "tag": 10
+      },
+      "targetField": {
+        "typeIndex": 74391,
+        "objectOffset": 24,
+        "tag": 3
+      },
+      "originalNotificationObject": true,
+      "nativePathSHA256": "19553c41c864b69cea28a9e43e40473cbe77b9fc49ed52e1b7aac3ade2330b93"
+    },
+    {
+      "rawNotificationToken": 2147483648,
+      "logicalToken": 2147530904,
+      "rawReadyToken": 2147523676,
+      "sourceField": {
+        "typeIndex": 46311,
+        "objectOffset": 148,
+        "tag": 10
+      },
+      "targetField": {
+        "typeIndex": 74391,
+        "objectOffset": 24,
+        "tag": 3
+      },
+      "originalNotificationObject": true,
+      "nativePathSHA256": "19553c41c864b69cea28a9e43e40473cbe77b9fc49ed52e1b7aac3ade2330b93"
+    },
+    {
+      "rawNotificationToken": 4294967295,
+      "logicalToken": 47257,
+      "rawReadyToken": 40027,
+      "sourceField": {
+        "typeIndex": 46311,
+        "objectOffset": 148,
+        "tag": 10
+      },
+      "targetField": {
+        "typeIndex": 74391,
+        "objectOffset": 24,
+        "tag": 3
+      },
+      "originalNotificationObject": true,
+      "nativePathSHA256": "19553c41c864b69cea28a9e43e40473cbe77b9fc49ed52e1b7aac3ade2330b93"
+    }
+  ],
+  "responseTokenObservations": [
+    {
+      "name": "17278-token-missing",
+      "typeIndex": 17278,
+      "logicalToken": 0,
+      "rawToken": 49546,
+      "fieldPresent": false,
+      "observedNamedToken": 0,
+      "wire": "60b6a802",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "1eeb5568c9c206bbaa86663b21d4c9ea17d9dc23b68b5b9b899b07f9e51520c1"
+    },
+    {
+      "name": "17278-token-raw-zero",
+      "typeIndex": 17278,
+      "logicalToken": 4294918538,
+      "rawToken": 0,
+      "fieldPresent": true,
+      "observedNamedToken": 4294918538,
+      "wire": "60b6a8021000",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "1eeb5568c9c206bbaa86663b21d4c9ea17d9dc23b68b5b9b899b07f9e51520c1"
+    },
+    {
+      "name": "17278-token-zero",
+      "typeIndex": 17278,
+      "logicalToken": 0,
+      "rawToken": 49546,
+      "fieldPresent": true,
+      "observedNamedToken": 0,
+      "wire": "60b6a802108a8303",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "1eeb5568c9c206bbaa86663b21d4c9ea17d9dc23b68b5b9b899b07f9e51520c1"
+    },
+    {
+      "name": "17278-token-one",
+      "typeIndex": 17278,
+      "logicalToken": 1,
+      "rawToken": 49547,
+      "fieldPresent": true,
+      "observedNamedToken": 1,
+      "wire": "60b6a802108b8303",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "1eeb5568c9c206bbaa86663b21d4c9ea17d9dc23b68b5b9b899b07f9e51520c1"
+    },
+    {
+      "name": "17278-token-high",
+      "typeIndex": 17278,
+      "logicalToken": 2147483648,
+      "rawToken": 2147533194,
+      "fieldPresent": true,
+      "observedNamedToken": 2147483648,
+      "wire": "60b6a802108a83838008",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "1eeb5568c9c206bbaa86663b21d4c9ea17d9dc23b68b5b9b899b07f9e51520c1"
+    },
+    {
+      "name": "17278-token-maximum",
+      "typeIndex": 17278,
+      "logicalToken": 4294967295,
+      "rawToken": 49549,
+      "fieldPresent": true,
+      "observedNamedToken": 4294967295,
+      "wire": "60b6a802108d8303",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "1eeb5568c9c206bbaa86663b21d4c9ea17d9dc23b68b5b9b899b07f9e51520c1"
+    },
+    {
+      "name": "36349-token-missing",
+      "typeIndex": 36349,
+      "logicalToken": 0,
+      "rawToken": 4294934352,
+      "fieldPresent": false,
+      "observedNamedToken": 0,
+      "wire": "38c9dcfcffffffffffff01",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "a6ccd7971bbf999fcc3c723f51562511ff6256ddbc1c55c4fd325ddbdd737d48"
+    },
+    {
+      "name": "36349-token-raw-zero",
+      "typeIndex": 36349,
+      "logicalToken": 69424,
+      "rawToken": 0,
+      "fieldPresent": true,
+      "observedNamedToken": 69424,
+      "wire": "38c9dcfcffffffffffff010800",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "a6ccd7971bbf999fcc3c723f51562511ff6256ddbc1c55c4fd325ddbdd737d48"
+    },
+    {
+      "name": "36349-token-zero",
+      "typeIndex": 36349,
+      "logicalToken": 0,
+      "rawToken": 4294934352,
+      "fieldPresent": true,
+      "observedNamedToken": 0,
+      "wire": "38c9dcfcffffffffffff0108d0fefdff0f",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "a6ccd7971bbf999fcc3c723f51562511ff6256ddbc1c55c4fd325ddbdd737d48"
+    },
+    {
+      "name": "36349-token-one",
+      "typeIndex": 36349,
+      "logicalToken": 1,
+      "rawToken": 4294934359,
+      "fieldPresent": true,
+      "observedNamedToken": 1,
+      "wire": "38c9dcfcffffffffffff0108d7fefdff0f",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "a6ccd7971bbf999fcc3c723f51562511ff6256ddbc1c55c4fd325ddbdd737d48"
+    },
+    {
+      "name": "36349-token-high",
+      "typeIndex": 36349,
+      "logicalToken": 2147483648,
+      "rawToken": 2147450704,
+      "fieldPresent": true,
+      "observedNamedToken": 2147483648,
+      "wire": "38c9dcfcffffffffffff0108d0fefdff07",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "a6ccd7971bbf999fcc3c723f51562511ff6256ddbc1c55c4fd325ddbdd737d48"
+    },
+    {
+      "name": "36349-token-maximum",
+      "typeIndex": 36349,
+      "logicalToken": 4294967295,
+      "rawToken": 4294934353,
+      "fieldPresent": true,
+      "observedNamedToken": 4294967295,
+      "wire": "38c9dcfcffffffffffff0108d1fefdff0f",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "a6ccd7971bbf999fcc3c723f51562511ff6256ddbc1c55c4fd325ddbdd737d48"
+    },
+    {
+      "name": "74698-token-missing",
+      "typeIndex": 74698,
+      "logicalToken": 0,
+      "rawToken": 14694,
+      "fieldPresent": false,
+      "observedNamedToken": 0,
+      "wire": "30f5dcfeffffffffffff01",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "369c9e33142d24eb72c0e48cc0508ec7ec96b845f27a0c5604072f171afc5e89"
+    },
+    {
+      "name": "74698-token-raw-zero",
+      "typeIndex": 74698,
+      "logicalToken": 14714,
+      "rawToken": 0,
+      "fieldPresent": true,
+      "observedNamedToken": 14714,
+      "wire": "30f5dcfeffffffffffff012000",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "369c9e33142d24eb72c0e48cc0508ec7ec96b845f27a0c5604072f171afc5e89"
+    },
+    {
+      "name": "74698-token-zero",
+      "typeIndex": 74698,
+      "logicalToken": 0,
+      "rawToken": 14694,
+      "fieldPresent": true,
+      "observedNamedToken": 0,
+      "wire": "30f5dcfeffffffffffff0120e672",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "369c9e33142d24eb72c0e48cc0508ec7ec96b845f27a0c5604072f171afc5e89"
+    },
+    {
+      "name": "74698-token-one",
+      "typeIndex": 74698,
+      "logicalToken": 1,
+      "rawToken": 14693,
+      "fieldPresent": true,
+      "observedNamedToken": 1,
+      "wire": "30f5dcfeffffffffffff0120e572",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "369c9e33142d24eb72c0e48cc0508ec7ec96b845f27a0c5604072f171afc5e89"
+    },
+    {
+      "name": "74698-token-high",
+      "typeIndex": 74698,
+      "logicalToken": 2147483648,
+      "rawToken": 2147498342,
+      "fieldPresent": true,
+      "observedNamedToken": 2147483648,
+      "wire": "30f5dcfeffffffffffff0120e6f2808008",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "369c9e33142d24eb72c0e48cc0508ec7ec96b845f27a0c5604072f171afc5e89"
+    },
+    {
+      "name": "74698-token-maximum",
+      "typeIndex": 74698,
+      "logicalToken": 4294967295,
+      "rawToken": 4294883971,
+      "fieldPresent": true,
+      "observedNamedToken": 4294967295,
+      "wire": "30f5dcfeffffffffffff012083f5faff0f",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "369c9e33142d24eb72c0e48cc0508ec7ec96b845f27a0c5604072f171afc5e89"
+    },
+    {
+      "name": "51326-token-missing",
+      "typeIndex": 51326,
+      "logicalToken": 0,
+      "rawToken": 77568,
+      "fieldPresent": false,
+      "observedNamedToken": 0,
+      "wire": "30b286feffffffffffff01",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "da7c5314c8432a188a89640d005df80749d62965b964e25d0cbd2e387bd7f254"
+    },
+    {
+      "name": "51326-token-raw-zero",
+      "typeIndex": 51326,
+      "logicalToken": 4294922496,
+      "rawToken": 0,
+      "fieldPresent": true,
+      "observedNamedToken": 4294922496,
+      "wire": "30b286feffffffffffff011000",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "da7c5314c8432a188a89640d005df80749d62965b964e25d0cbd2e387bd7f254"
+    },
+    {
+      "name": "51326-token-zero",
+      "typeIndex": 51326,
+      "logicalToken": 0,
+      "rawToken": 77568,
+      "fieldPresent": true,
+      "observedNamedToken": 0,
+      "wire": "30b286feffffffffffff011080de04",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "da7c5314c8432a188a89640d005df80749d62965b964e25d0cbd2e387bd7f254"
+    },
+    {
+      "name": "51326-token-one",
+      "typeIndex": 51326,
+      "logicalToken": 1,
+      "rawToken": 77567,
+      "fieldPresent": true,
+      "observedNamedToken": 1,
+      "wire": "30b286feffffffffffff0110ffdd04",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "da7c5314c8432a188a89640d005df80749d62965b964e25d0cbd2e387bd7f254"
+    },
+    {
+      "name": "51326-token-high",
+      "typeIndex": 51326,
+      "logicalToken": 2147483648,
+      "rawToken": 2147561216,
+      "fieldPresent": true,
+      "observedNamedToken": 2147483648,
+      "wire": "30b286feffffffffffff011080de848008",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "da7c5314c8432a188a89640d005df80749d62965b964e25d0cbd2e387bd7f254"
+    },
+    {
+      "name": "51326-token-maximum",
+      "typeIndex": 51326,
+      "logicalToken": 4294967295,
+      "rawToken": 4294926857,
+      "fieldPresent": true,
+      "observedNamedToken": 4294967295,
+      "wire": "30b286feffffffffffff011089c4fdff0f",
+      "namedLiteralIndex": 52998,
+      "lookupResult": "missing-key-native",
+      "nativePathSHA256": "da7c5314c8432a188a89640d005df80749d62965b964e25d0cbd2e387bd7f254"
+    }
+  ],
+  "requestTokenLinkObservations": [
+    {
+      "name": "init-token-0",
+      "typeIndex": 20380,
+      "token": 0,
+      "requestEntryCaptured": "0x1512242b0",
+      "namedLiteralIndex": 52998,
+      "source": "full Level entry -> request entry capture -> actual LoadingTask missing-key diagnostic",
+      "nativePathSHA256": "c385413eb31296735e30452eee726853a2e2b2d578ec94a134eab3502704d78c",
+      "entry": "0x14828c930",
+      "stop": "0x14cd5fa0f",
+      "producerPathSHA256": null
+    },
+    {
+      "name": "done-token-0",
+      "typeIndex": 63999,
+      "token": 0,
+      "source": "reviewed native producer block, same saved argument as verified Init token; preceding gates not executed",
+      "nativePathSHA256": "f382b6f1268754b02c8e2f842742512ec673a8d2d5dba2647abb9bf8c0355c76",
+      "entry": "0x14828c751",
+      "stop": "0x14828c789",
+      "producerPathSHA256": null
+    },
+    {
+      "name": "post-token-0",
+      "typeIndex": 74076,
+      "token": 0,
+      "source": "actual Done reader -> declared Loading block -> Level forwarding/allocation; separate declared coroutine block -> Post request entry",
+      "schedulerExecuted": false,
+      "nativePathSHA256": "47cfc37cf877cb8ffd95dba34b2fd87091fb9a3ffdc8dcaf6f2ed516fba97493",
+      "entry": "0x14cd6719e",
+      "stop": "0x14828c1d0",
+      "producerPathSHA256": "de6642ca976f30f45821f6165821c33a8763cd3af325b929dd70819ac55c6b76"
+    },
+    {
+      "name": "init-token-1",
+      "typeIndex": 20380,
+      "token": 1,
+      "requestEntryCaptured": "0x1512242b0",
+      "namedLiteralIndex": 52998,
+      "source": "full Level entry -> request entry capture -> actual LoadingTask missing-key diagnostic",
+      "nativePathSHA256": "c385413eb31296735e30452eee726853a2e2b2d578ec94a134eab3502704d78c",
+      "entry": "0x14828c930",
+      "stop": "0x14cd5fa0f",
+      "producerPathSHA256": null
+    },
+    {
+      "name": "done-token-1",
+      "typeIndex": 63999,
+      "token": 1,
+      "source": "reviewed native producer block, same saved argument as verified Init token; preceding gates not executed",
+      "nativePathSHA256": "f382b6f1268754b02c8e2f842742512ec673a8d2d5dba2647abb9bf8c0355c76",
+      "entry": "0x14828c751",
+      "stop": "0x14828c789",
+      "producerPathSHA256": null
+    },
+    {
+      "name": "post-token-1",
+      "typeIndex": 74076,
+      "token": 1,
+      "source": "actual Done reader -> declared Loading block -> Level forwarding/allocation; separate declared coroutine block -> Post request entry",
+      "schedulerExecuted": false,
+      "nativePathSHA256": "47cfc37cf877cb8ffd95dba34b2fd87091fb9a3ffdc8dcaf6f2ed516fba97493",
+      "entry": "0x14cd6719e",
+      "stop": "0x14828c1d0",
+      "producerPathSHA256": "de6642ca976f30f45821f6165821c33a8763cd3af325b929dd70819ac55c6b76"
+    },
+    {
+      "name": "init-token-2147483648",
+      "typeIndex": 20380,
+      "token": 2147483648,
+      "requestEntryCaptured": "0x1512242b0",
+      "namedLiteralIndex": 52998,
+      "source": "full Level entry -> request entry capture -> actual LoadingTask missing-key diagnostic",
+      "nativePathSHA256": "c385413eb31296735e30452eee726853a2e2b2d578ec94a134eab3502704d78c",
+      "entry": "0x14828c930",
+      "stop": "0x14cd5fa0f",
+      "producerPathSHA256": null
+    },
+    {
+      "name": "done-token-2147483648",
+      "typeIndex": 63999,
+      "token": 2147483648,
+      "source": "reviewed native producer block, same saved argument as verified Init token; preceding gates not executed",
+      "nativePathSHA256": "f382b6f1268754b02c8e2f842742512ec673a8d2d5dba2647abb9bf8c0355c76",
+      "entry": "0x14828c751",
+      "stop": "0x14828c789",
+      "producerPathSHA256": null
+    },
+    {
+      "name": "post-token-2147483648",
+      "typeIndex": 74076,
+      "token": 2147483648,
+      "source": "actual Done reader -> declared Loading block -> Level forwarding/allocation; separate declared coroutine block -> Post request entry",
+      "schedulerExecuted": false,
+      "nativePathSHA256": "47cfc37cf877cb8ffd95dba34b2fd87091fb9a3ffdc8dcaf6f2ed516fba97493",
+      "entry": "0x14cd6719e",
+      "stop": "0x14828c1d0",
+      "producerPathSHA256": "de6642ca976f30f45821f6165821c33a8763cd3af325b929dd70819ac55c6b76"
+    },
+    {
+      "name": "init-token-4294967295",
+      "typeIndex": 20380,
+      "token": 4294967295,
+      "requestEntryCaptured": "0x1512242b0",
+      "namedLiteralIndex": 52998,
+      "source": "full Level entry -> request entry capture -> actual LoadingTask missing-key diagnostic",
+      "nativePathSHA256": "c385413eb31296735e30452eee726853a2e2b2d578ec94a134eab3502704d78c",
+      "entry": "0x14828c930",
+      "stop": "0x14cd5fa0f",
+      "producerPathSHA256": null
+    },
+    {
+      "name": "done-token-4294967295",
+      "typeIndex": 63999,
+      "token": 4294967295,
+      "source": "reviewed native producer block, same saved argument as verified Init token; preceding gates not executed",
+      "nativePathSHA256": "f382b6f1268754b02c8e2f842742512ec673a8d2d5dba2647abb9bf8c0355c76",
+      "entry": "0x14828c751",
+      "stop": "0x14828c789",
+      "producerPathSHA256": null
+    },
+    {
+      "name": "post-token-4294967295",
+      "typeIndex": 74076,
+      "token": 4294967295,
+      "source": "actual Done reader -> declared Loading block -> Level forwarding/allocation; separate declared coroutine block -> Post request entry",
+      "schedulerExecuted": false,
+      "nativePathSHA256": "47cfc37cf877cb8ffd95dba34b2fd87091fb9a3ffdc8dcaf6f2ed516fba97493",
+      "entry": "0x14cd6719e",
+      "stop": "0x14828c1d0",
+      "producerPathSHA256": "de6642ca976f30f45821f6165821c33a8763cd3af325b929dd70819ac55c6b76"
+    }
+  ]
+}

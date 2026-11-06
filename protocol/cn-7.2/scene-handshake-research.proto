@@ -1,0 +1,53 @@
+// Research raw-wire carrier. Application arithmetic is separate; not runtime-ready.
+syntax = "proto3";
+package cn72.scene_handshake;
+
+message DEDHOOCBHCL {
+  uint32 MCCMGLDOECH = 3; // raw object +0x18
+}
+
+message MMLHNEJIFHG {
+  uint32 MCCMGLDOECH = 2; // raw object +0x18
+  int32 LDLIEKOAFBP = 12; // raw object +0x1c
+}
+
+message MLIHBBENFFA {
+  uint32 MCCMGLDOECH = 11; // raw object +0x18
+}
+
+message NBCLHOLLHLK {
+  uint32 MCCMGLDOECH = 1; // raw object +0x18
+  int32 LDLIEKOAFBP = 7; // raw object +0x1c
+}
+
+message HDPGCNCMACO {
+  uint32 MCCMGLDOECH = 12; // raw object +0x18
+}
+
+message FIMHLLEPCBH {
+  uint32 MCCMGLDOECH = 4; // raw object +0x24
+  int32 LDLIEKOAFBP = 6; // raw object +0x20
+  NFIGDMDEDBC MFLHLEMFIGI = 12; // raw object +0x18
+}
+
+message AHBJNPDFDMJ {
+  double MHCBMOHFBCK = 1; // raw object +0x18
+  uint32 MCCMGLDOECH = 6; // raw object +0x20
+}
+
+message ODANIDKHMMG {
+  uint32 MCCMGLDOECH = 2; // raw object +0x1c
+  int32 LDLIEKOAFBP = 6; // raw object +0x18
+}
+
+message NFIGDMDEDBC {
+  BGDCNKAKGHI DFDHCAIKMAI = 1; // raw object +0x18
+  uint32 ADMHCDNJLAI = 3; // raw object +0x24
+  uint32 LLHEBIHGDAE = 11; // raw object +0x20
+}
+
+message BGDCNKAKGHI {
+  float CJMJBINEBAG = 1; // raw object +0x18
+  float ALOKJBKPLGA = 2; // raw object +0x20
+  float MGICHKNKDKO = 3; // raw object +0x1c
+}
