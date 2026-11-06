@@ -1,5 +1,7 @@
 # 给 Codex 的 Windows 一键部署与排障手册
 
+2026-11-07当前构建为C-01b生产修复8c1fb85的Windows portable产物：27.5秒构建，JAR SHA-256 `f475dbf6d91bac591a9b4346726b935171764b446b9ab64e6a8734b44c8cade8`。8变化class逐字节匹配编译、46296保持，没有新增/删除；VERSION仍7.1.0，是迁移产物。后续0c22864/05de04b/777da12只改测试/离线工具/文档，不重复打包。**本轮明确未部署游戏服务、未安装补丁或操作客户端/调试器**；stopped/Healthy=false、8088/22101/27027无监听，运行PID/JAR无对象，原Mongo27017/配置/数据保持。完整P0/SDK/必要资源及实机合同仍缺；不要按下方旧R2保留target记录load或启动。当前交接见[HANDOFF2](../HANDOFF2.md)，产物证明`local/migration72/offline-sol-terra/portable-build/artifact-proof.json`。
+
 2026-11-07当前构建：独立Avatar raw适配器c667344经portable入口30秒打包，JAR SHA-256 `dfdebbda0352055540c44a54e2eebfd4ffdfe679db74270044d3d55aeb006ec3`。282新增raw class及3元信息变化与编译输出相同，其余46019旧class保持；完整P0/SDK/资源合同未齐，尚未部署或装补丁。服务stopped/Healthy=false，8088TCP/22101UDP/27027无监听，原Mongo27017保留；R2原始客户端留在已核自有pause，禁止按旧无target段落另load。开发持续推进，历史暂停段落不生效；实际记录见Project/Harness及[适配器](CLIENT_72_AVATAR_WIRE_ADAPTER.md)。
 
 便携信任文件供给已接线，见[F-04c2](CLIENT_72_TRUST_LAUNCHER.md)：play/patch及启用客户端guard的start在版本校验后、服务/补丁副作用前检查`LUNAGC_TRUST_BUNDLE`（默认当前checkout的`local/migration72/trust/client72-trust.json`）文件并供绝对路径给新子进程。9新增+13旧入口22项实际PowerShell通过；DLL仍负责固定输入/材料/原生验签，既有调试器不会继承本轮新环境。当前前置仍不足，不安装、不通过改版本放行。

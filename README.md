@@ -1,5 +1,7 @@
 # LunaGC CN 7.2 开发分支
 
+2026-11-07本轮限定离线工作已收口：证据108→116、C-01b网络入口红绿、目标Chapter真实加载/通知及有限Java Avatar来源投影已分项本地提交，未推送。50套875项关联Java、120研究、9生成检查通过；portable JAR `f475dbf6…8cade8`内嵌8c1fb85，8变化class匹配编译、46296保持，未部署。原数据/配置/resources差异保留；本轮未启动或操作游戏/调试器/补丁、未调用Astra。完整Avatar/SceneInfo、必要资源语义/revision、QuestManager正向重绑和D-02全部实机条件仍未完成。当前状态与准确后继见[HANDOFF2](HANDOFF2.md)、[本轮记录](docs/CLIENT_72_SOL_TERRA_OFFLINE.md)；下方暂停/继续、PID与数字均按历史批次读取。
+
 2026-11-07最新状态：按用户要求，当前四项HTTP真实路由/签名拒绝、单HW观察前置、SceneInfo身份关联和Avatar构造片段均已验收并本地提交，**现已暂停，不开启新任务**。原始游戏HW轮未启动，便携游戏服务未部署；新旧号登录/选人、完整初始化、实际入场、心跳及退出重登仍未通过实机验收。详细证据、备份核验、未完成项和恢复步骤见[HANDOFF2](HANDOFF2.md)，简要历史见[HANDOFF](HANDOFF.md)。下方为各历史阶段记录，执行状态以本段及Project最新决定为准。
 
 2026-11-07最新：用户要求重启本项目游戏后继续观察，覆盖旧保留pause决定；R2按新归属/OS/日志串行结束旧target并启动固定原始客户端，单一有来源入口/120秒预算。RegionList实际Java→原生第三复验与双跑一致，仍未部署服务或完成D-02。旧暂停、PID和客户端上下文均按各阶段历史读取，当前任务见Project/Harness。

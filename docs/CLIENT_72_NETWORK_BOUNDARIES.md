@@ -45,3 +45,5 @@
 当前状态为**C-01/R4本卡有限边界红绿通过，关联回归、源码review精确hash同步、Windows portable构建及class/JAR核对由主线继续收口**。未知业务/映射/Union、全域C-01、R4完整汇合与D-02均不关闭；没有客户端验收或运行部署结果。
 
 构建与部署：生产修复须由主线完成受影响回归、Windows portable构建及class/JAR核对；完整P0/SDK/资源合同不足及本阶段排除部署/实机，记录未部署原因，不启动猜测协议服务。
+
+主线阶段收尾已完成：50套875关联Java、120研究和9生成检查通过；对应来源review精确同步并保持三层/required/runtime，旧拒绝与双recover保留。生产提交`8c1fb85`实际portable构建27.5秒成功，JAR `f475dbf6d91bac591a9b4346726b935171764b446b9ab64e6a8734b44c8cade8`，8变化class匹配编译、46296不变，无新增/删除。server-only status为stopped/Healthy=false，未部署/未客户端验收，运行PID/JAR无对象；完整C-01和R4不晋级。证据在`local/migration72/offline-sol-terra/portable-build/`，详细交接见HANDOFF2。

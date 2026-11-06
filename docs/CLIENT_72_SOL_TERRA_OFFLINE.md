@@ -58,3 +58,11 @@
 [投影专题](CLIENT_72_AVATAR_JAVA_PROJECTION.md)以真实Avatar/TeamInfo/TeamManager/GameItem getter生成独立raw适配器测试输出，明确只读输入；不调用旧Avatar.toProto。修改后的Java1项通过，覆盖非零/高位GUID/map/list/零值存在性、正逆序属性插入确定性及同一物品实际Store GUID关联。两次全新原生回放逐字节一致，SHA `0d608af88c56b20be36c73deb34fc36075811105fd095a5d0f1f64ee5c418c14`；只验f1身份/属性/装备与f3队伍片段。
 
 首次Team枚举接口复用和第二次ASCII字符串模型错误保留；按已验独立runtime与Team UTF-8 reader正确组合后通过，未新建ABI/未知调用模型。Store ID0与原生row ID10001不作身份一致性断言，仅GUID关联。f4a/b/c、s2a的来源和省略边界另列规格表；完整Avatar构造、15183f290等后缀、复杂SceneInfo仍阻塞正式g2，不以准备段接生产。
+
+## 3：构建、现场与停止检查
+
+真实反射152类/注解文件/优先级与实际GameData map已补核，最终章节双JVM报告同SHA `3b5d7799…f6f25a`；保留Map.of键序第一次字节不一致，有序输出后通过，不增加生产范围。Chapter/通知、有限投影、网络与索引的可执行出口均已完成；资源自然就绪/正向重绑定、完整构造/场景、自然SDK/HTTP/实机和正式g2均仍依赖准确的深度或实机证据，不继续猜测。
+
+生产提交8c1fb85的portable构建27.5秒成功；JAR SHA-256 `f475dbf6d91bac591a9b4346726b935171764b446b9ab64e6a8734b44c8cade8`，8变化class均匹配编译、46296保持、无增删。未部署，status退出1表示stopped/Healthy=false，没有运行PID/JAR；原Mongo保留，自有测试进程0、8088/22101/27027无监听，五客户端输入及配置/原数据/resources差异核同。仅后续离线工具/测试/文档变更，不重复打包。
+
+本地提交：证据c34808f、网络8c1fb85、章节0c22864、投影05de04b、反射777da12；最后文档提交以git log为准，未推送。Project/Harness及各专题、README、迁移/部署和账号保存三文档已同步。HANDOFF2先备份核验再覆盖、HANDOFF仅追加并核原字节前缀；具体队列、输入、最小复现、尝试/排除、解除条件、被阻塞后继和下一步见[HANDOFF2](../HANDOFF2.md)。**本轮无需值守且适合Sol/Terra的工作已收口，D-02仍未完成。**

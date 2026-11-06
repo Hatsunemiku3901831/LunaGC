@@ -193,3 +193,10 @@ B-02e7限定原生部分消费51f7cd2、E-01c5实际生产Lua加载审计9aa8ca7
 收口只读清点无游戏/Java/观察器，仅原Mongo27017及两既有调试器；8088 TCP、22101 TCP/UDP、测试27027无监听。原resources差异/配置/五固定输入/JAR hash保持，原数据和测试库保留。根JAR仍dfdebbda…006ec3/内嵌c667344、实际版本7.1.0，不是可连接目标7.2的产物；未部署便携游戏服务，新旧号登录/选人/完整握手/实际世界/心跳/退出重登均未实机通过。统一review最新108输入之后的新独立摘要尚未汇入，不把旧ready结果算本轮重跑。
 
 旧HANDOFF2已先备份并逐字节/hash核同，再覆盖本次详细交接；HANDOFF原字节前缀保持、只追加。备份为local/migration72/handoffs/HANDOFF2.before-current-cards-pause-0554bd4-20261106T155805Z.md，证明为evidence/d02-current-cards-pause-handoff-{backup,written}.json；最终现场为evidence/d02-final-pause-inventory.json。完整提交、验收范围、首个未知调用、失败尝试、避坑和用户恢复后的顺序见[HANDOFF2.md](HANDOFF2.md)。当前暂停覆盖此前“持续/没有暂停”活动检查点；全部本地提交，未推送。
+
+
+## 2026-11-07 Sol/Terra限定离线前置收口
+
+本轮无需值守且适合Sol/Terra的工作已收口，D-02仍未完成。c34808f精确同步108→116证据；8c1fb85修复真实网络入口并红40/24→绿43，生产扫描324/227/227/0；0c22864目标Chapter/真实303通知保存2项，777da12实际152反射与有序双JVM；05de04b有限Java来源投影1项及原生双跑同SHA。最终关联50套875/0、120研究、9生成检查通过；portable JAR f475dbf6…8cade8内嵌8c1fb85，8变化class匹配、46296保持，未部署。原数据/配置/resources差异保留，自有进程及8088/22101/27027清点无对象，原Mongo保持。实机、Astra、正式g2和自然资源/Quest正向重绑定仍阻塞；完整实机验收不由离线替代。
+
+覆盖前已备份并核验HANDOFF2；本文件仅追加且原字节前缀核同。详细完成/提交、首次失败、真实与未修改范围、准确输入/复现、实机与Astra队列、解除条件和下一步见[HANDOFF2](HANDOFF2.md)及[离线执行](docs/CLIENT_72_SOL_TERRA_OFFLINE.md)。
