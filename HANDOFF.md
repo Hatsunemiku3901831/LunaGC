@@ -152,3 +152,11 @@ B-02e7限定原生部分消费51f7cd2、E-01c5实际生产Lua加载审计9aa8ca7
 ## 2026-11-06 F-02b/F-03限定融合验收后暂停
 
 运行接入4bbf9fd，本批native分项def036e/a5fe305/d0cddb0/fbe99d5，未推送。468研究/43套761 Java/五生成检查通过，portable构建24秒；JAR 570d64f4f1680ab023c7eda7f2e930ebf5eba79791030e8499100ca8f2799bf5。74证据/1267源、150根/矩阵，结构0/ready205；完整初始化/P0/SDK/场景落地和D-02未验。原H2已先备份/hash核验再覆盖，详见[HANDOFF2](HANDOFF2.md)。前置不足未部署，无项目服务或测试库监听；原客户端目标当前未见、原因unknown，本轮未操作调试器，不按旧PID直接恢复。AGENTS/resources原差异、配置/子模块/原数据保护。按用户要求暂停，恢复后从完整初始化/Notify未知目的地和连续keyselector继续。
+
+## 2026-11-06：持续D-02中途检查点，未暂停
+
+用户已恢复持续推进，旧暂停不再生效。F-02c（75bafc7）、F-03d1a（0cd95ef）、d2a1（a81f84b）、d2a2（eec23d2）、F-04a/b（540a077/6b72887）及E-01c6（b74cd16/8a91d41）限定验收完成。80模块496研究实际全过，32 Lua/8实际加载通过；统一review74→79，仅加5摘要且原三层/1267源/Proto/开放边界不变，ready仍205。新a2尚待下一次统一review/研究复跑，不计入496。
+
+当前portable JAR7ca18e10…e8f5f（b74cd16），整场两轮fast437→407错误组、inline仍0；未部署/未新增实机，D-02未完成。F-03d1b具名链、d2a3组合图及F-04c正式保留验签补丁正在三子代理推进；不得误还原patch在制差异。AGENTS原改动由外部f4354ef提交，resources原差异保留。只用脚本/API，API无target，不沿旧PID。
+
+详见[HANDOFF2](HANDOFF2.md)的在途归属/证据/失败/后续。覆盖前旧详细交接已备份至local/migration72/handoffs/HANDOFF2.before-resume-checkpoint-2ae4ca3.md并逐字节/hash一致，证明evidence/resume-d02-handoff-checkpoint-backup.json；本简交接仅追加。此为中途检查点，持续active，不是新的暂停指令。

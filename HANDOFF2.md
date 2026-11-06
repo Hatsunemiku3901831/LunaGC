@@ -1,53 +1,58 @@
-# F-02b / F-03 融合验收后暂停交接
+# D-02持续推进中的中途检查点（未暂停）
 
-2026-11-06。用户最新范围为恢复F-02b/F-03融合、优先本地证据、对应回归/文档后暂停，暂不D-02。**本批限定融合已验收并暂停；完整P0、客户端登录/场景与D-02仍未完成。** 原HANDOFF2已先备份至`local/migration72/backups/HANDOFF2-before-f02b-f03-4b566f9-20261106.md`并逐字节/hash核验，证据`local/migration72/evidence/f02b-f03-handoff-backup-proof.json`。HANDOFF只追加，未重写历史。
+2026-11-06。用户最新指令已恢复持续推进，目标为逐个完成Project并实际通过D-02；没有新的暂停指令，下面不是终止研发交接。此前“融合后暂停”仅历史。原HANDOFF2已先备份到`local/migration72/handoffs/HANDOFF2.before-resume-checkpoint-2ae4ca3.md`并逐字节/hash核对；原SHA-256为`d727bdacc1f1ade8a923125abcb2a5e900412e960a519b3c252be0994bfdf84d`，证明`evidence/resume-d02-handoff-checkpoint-backup.json`。
 
-## 当前提交和来源
+## 接手、约束与现场
 
-接手4b566f9；本地提交0ebe663（计划）、def036e（最小响应/初始化raw）、a5fe305（八握手/容量）、d0cddb0（请求省略/1017域）、fbe99d5（位置40原生）、4bbf9fd（运行接入/回归/三层及源码矩阵）。最后交接为文档提交，运行JAR固定内嵌4bbf9fd；未推送。
+接手65fc59a。仅Windows portable，禁止computer-use，只用脚本/API；目标三输入每个正式研究工具都重读HASHES。本地Asta参考a49f51aa6f2787ffbc25cee46801b70dee860d23/干净已复核，不跟随上游。旧7.1仅业务参考，不维护双客户端；未知不命名、不发、不因编译/健康放行。原Mongo27017、mongodata/local/data、资源差异和本机配置保留，不推送。
 
-Asta固定MeChen618/AstaPS `a49f51aa6f2787ffbc25cee46801b70dee860d23`、tree `9940bf7756ce5ff8be8a836a4485a645b490c2e1`，收尾HEAD/干净均复核。参考在忽略`local/migration72/references/AstaPS-7.2.155`，保留GPLv3/上游署名，不整仓合并或复制生成Java。三目标输入仍以`protocol/cn-7.2/profile.json`及`tools/extract_client72.py`为准；5个生成器均实际重读三文件哈希并check无漂移。本地account_type/tag15、sub_channel_id/tag10、LoginRsp两MD5语义优先，上游两个MD5冲突未消除。仅Windows portable、脚本/API，无Docker/WSL/computer-use。
+AGENTS原修改在本轮被外部提交f4354ef（不是代理提交），内容和hash保持；不要将其归入本批实现。resources/ScriptSceneData既有修改仍保留未提交。patch初始引用f2874103目前由trust_contract子代理开发，父引用尚未接受；不要把该在制改动当外部垃圾还原。三代理正在推进：receive_key做PlayerData具名链，initialization_audit做库存raw a3，trust_contract做正式trust补丁；主线维护Project/Harness/统一review/构建与部署前置。
 
-## 已完成的限定融合
+只读Automate核对当前一个本地API会话is_debugging=false，无游戏目标；原两个调试器不动，不沿历史PID/run/load。最新构建后核对仅27017监听，8088/22101/27027无服务/测试监听，无YuanShen或服务-jar进程；观察到一个本工作区GradleDaemon，不是服务，不强杀。具体归属在忽略`evidence/resume-d02-{runtime-inventory,debugger-sessions,postbuild-runtime}.json`。config及资源既有文件hash对前批不变。
 
-| ID | 修改与验收范围 |
+## 已完成并本地提交
+
+| 子项 | 提交/实际限定验收 |
 | --- | --- |
-| F-02b1 | GetPlayerTokenRsp41/PlayerLoginReq55/PlayerLoginRsp44字段及18 raw nested58，共21类198字段；3已验CmdID。只改Proto源，经Gradle/protoc生成Java。原名保留未知，nested optional只作为Java显式0/false/空串合并适配。50 native writer/34 native响应图/6错误拒绝独立验证 |
-| F-02b2 | Token成功只uid/token/sign/server_rand_key；错误retcode-only。key<=0在准入前拒绝；RSA失败去掉伪签名/异或假seed/切key。实际JCA加密/解密/XOR/验签成功与%%/AQ==失败通过，UID/账号保存路径保留。LoginRsp资源61只子1/3/4/5，不发未知版本/UID/旧440/658。连续收帧key selector仍缺 |
-| F-03a | Ready5046/9948、Init4905/21392、Done1017/298、Post1696/26760，10类20 raw字段；8 token/4 retcode及Notify token应用变换独立。请求parse一次并逆变换后关联当前Player token，失配在所有游戏副作用前走既有异常路径；不造retcode/时序策略。缺字段照raw0解码，Done42557/Post64180正常可过；Rsp编码raw0必须显式发。15+12 Java通过 |
-| F-03b | 容量28836/22609：8 raw字段/5具名，pack enum+relic/weapon/material/furniture容量；3未知不发、不命名总weight。134 reader、12真实字典路由、enum/阈值及容量6 Java；服务器经济总量Guard不动。历史选择缓存21136/46070已非目标坐标，停用正号与onLogin发送；显式DoSet/SetPlayerBorn与确认保存保留 |
-| F-03c | Notify27748只scene_id/type/token/非空pos；8类44 raw字段完整，Vector3轴另验。40 native=31+6 Default/DirectlySetPos+3独立QuickV3，两轮一致；wire12/producer8及三套入场/成员/复活81通过。保留7个public构造、LOADING/随机token；不发送未命名world/time/UID/dungeon/transaction/region，不称头像实际落地 |
+| 计划/恢复 | 8ee5176/540a077及后续Project拆卡；最新持续指令覆盖旧暂停 |
+| F-04a现场前置 | 540a077；三hash、参考clean、端口/进程、API无target；patch/status实际退出1（版本守卫/无服务），未修改版本或安装 |
+| F-02c连续状态收帧 | 75bafc7；同Offline72 Token安装selector0/session key→Login帧→接收回调/真实factory字典/reader/分发；11原生6入队5拒绝，32关联，双跑一致。三次工具调用不是真实线程调度/完整Handler返回 |
+| F-03d1a PlayerData raw下界 | 0cd95ef；2类型9wire，256扫描/14图/4模型拒绝，8新增/42关联及双跑。PropValue候选有boxed int64/float oneof，不能迁旧三标量。消息身份仍unresolved |
+| F-03d2a1库存外层 | a81f84b；15类型42存储依赖，512扫描/21图/5拒绝，8新增/38关联及双跑；只root/Item外层+2叶子13wire，其他非空nested范围拒绝，fullStoreRawClosure=false |
+| F-03d2a2库存容器 | eec23d2；6类22wire，5个map<u32,u32>/5列表；768扫描/29图/3模型拒绝，8新增/46关联及双跑。原生3723 adapter/setter、.cctor/packed-unpacked append真实执行；尚未接入本轮统一矩阵/完整研究复跑，a3继续 |
+| E-01c6 require最小修复 | b74cd16/8a91d41；eval只getAndSet+finally恢复前绑定。新6例先5失败后全绿，6套32 Lua及8实际加载审计通过；没有改变local defs、吞错策略、fastRequire或资源 |
+| F-04b保留验签输入合同 | 6b72887；14原生/23次key验签（4成功10拒绝）、18关联及双跑。COPY140572059只供R13，CHECK140574A95调用前供R8和root第五参数，返回/flags不改。未知key不供给；未安装钩子/未导出目标私钥 |
+| 统一review/496回归 | 2ae4ca3；原74证据hash/1267源、三层/源码/Proto/开放边界不变，只加5摘要到79；两次recover同。80模块496研究实际全过，0失败/错误/跳过，45.125秒；结构0错误、ready仍205缺口 |
 
-三层当前27行：Cmd/类型21 verified/6 unresolved；schema10 verified/11 candidate/6 unresolved；239字段65 verified/9 candidate/165 unresolved。Vector是已具名embedded用途别名，原target类仍BGDCNKAKGHI。闭包unresolved，结构0错误，ready205缺口（接手228）。Asta当前21目标类型/239字段，147同形/92缺tag/0形状冲突、2 MD5语义冲突；实现审计仍是c9aafa6基线，不能当当前源码。
+五份已统一审核的新摘要：receive-key、player-data-wire、player-store-outer、require-bindings-scene-load、trust-contract。inventory-container是随后eec23d2新增，下一次必须重新人工复核输入集，不能直接放宽守卫。
 
-source review13源/81方法/98边（16人工82候选）/998未关联；dependency49源/294方法/411边（75人工336候选）/2854未关联，4条requireCurrent static边明确复核，旧人工边及开放边界不丢。Proto review74证据/1267源码与Proto、98候选/150根及矩阵/1120文件/1257声明/4806字段；28旧输入变化、4新增、24仅依赖退场，63旧证据hash保持。verified nested依赖使Vector入矩阵，不是编译或同名自动批准。旧review拒绝与两轮恢复证据在`local/migration72/evidence/f03-final-proto-review-check.json`和`analysis/fusion-source-review/`。
+各工具、专题、生成入口见Harness与Project。旧761 Java（独立Mongo）/完整Java历史217失败没有本批重跑，不扣减或冒称。当前32 Lua不需要Mongo，本轮未启动数据库或服务。
 
-## 实际测试、构建和环境
+## 当前构建与整场证据
 
-- 最终研究76模块/468项，fail/error/skip全0，43.906秒；`evidence/f02b-f03-final-research-regression-summary.json`。
-- 最终独立Mongo43套/761项Java，fail/error/skip全0；`evidence/f02b-f03-final-java-regression-summary.json`及`f02b-f03-final-java-test-results/`。包含账号/经济/保存/Lua、显式选人、协议及入场/成员/复活；不是全Java集，全Java历史217失败未在此全量重跑。
-- 三次使用新独立Mongo目录/27027，均正常shutdown，之前仅admin/config/local；原27017/原数据未动。中间38套660通过，最后新增Notify20与世界三套81后为43套761，不能将二次结果重复相加。
-- 五生成检查：`generate_login72_slice.py`、`generate_born72_sources.py`、`generate_login72_contract.py`、`generate_scene72_sources.py`、`generate_enter_scene72_sources.py`，均`--client $env:GAME_PATH --check`无漂移；调用入口见Harness。
-- 实际`tools/local_windows.ps1 -Mode build`24秒，JAR `570d64f4f1680ab023c7eda7f2e930ebf5eba79791030e8499100ca8f2799bf5`、内嵌4bbf9fd；92变化/114新增class与编译输出一致，109账号/Guard/Lua类字节保持。Player及其行号相关类变化对应移除旧选择缓存发送；3旧LoginRsp map holder被raw字段替换。旧JAR a8c2d893…53a8f8已校验备份`local/migration72/builds/LunaGC-before-f02b-f03-a8c2d893.jar`。
-- `-Mode status`退出1表示无服务器，HTTP8088/UDP22101/测试27027无监听，无服务PID/健康/运行JAR对象。**未部署、未安装补丁、未D-02**，原因完整P0/SDK/信任/补丁/资源前置不齐。解除条件是这些前置逐项验证后再部署独立运行数据，核对日志/健康/TCP/UDP/PID/运行JAR SHA；不靠改版本、跳校验放行。
-- .env portable、.env.local无、GAME_PATH实际目录留本机配置；config SHA `0e94caea6e33aa0d75fbd041726c188121f1eb9f0ff69787c0c5bb84d4975a45`及fastRequire=true未改。patch f2874103ab70afc56260ee12d1eaca96247933b2、resources dac2a9d43332ef51879522cf39da2831b0ca0543；AGENTS/resources原差异hash保持且未提交。
-- 收尾仅原Mongo与两个既有x64dbg进程，**原YuanShen目标当前未见，退出原因unknown**。本轮未用调试API/客户端操作，不能拿旧PID/旧暂停状态无条件run/load。具体进程/本机路径只在忽略`evidence/f02b-f03-final-runtime-check.json`，此处不复制机器标识。
+实际`tools/local_windows.ps1 -Mode build`25秒成功，JAR SHA-256为`7ca18e10c056fd0715e57cdbbb13b4607e324362675a7127b2ed28b5269e8f5f`，内嵌b74cd16。6个ScriptLoader/嵌套class与编译输出一致，3个构建信息相关class也相符；两个调用者javap仅内联提交字符串变化，45,935其他class字节不变，无新增class。原570d64f4 JAR已校验备份在忽略builds目录。
 
-## 复现、弯路和限制
+旧loader守卫先实际拒绝ScriptLoader变更，再只为显式`--loader-review require-bindings`固定新JAR及一个loader source hash，另18源码及脚本manifest不变。两轮各13,616组真实fast/inline加载，报告/摘要逐字节一致。fast437组/481事件→407组/449事件，30错误组恢复、无新增；30组typed对象和33组bindings改变。inline所有bindings/typed对象对旧报告不变，仍0错误。两模式仍512组bindings/426组typed对象不同，不称词法问题已全部解决。resourceReady=false、无trigger/action/实体/客户端验收。
 
-响应旧schema4/4失败、merge4中3失败、初始化15中7失败、握手14中10失败、请求12中4失配漏关联、Notify producer7/7及raw12/12失败均保留。nested默认proto3 merge会丢第二消息显式0/false/空，optional只是Java适配，不能称原target语法。请求writer省略raw0，不能套响应reader的constructor默认logical0；否则会误拒正常42557/64180。1017全局两条仍保留，只有正常Game C2S与另一beyond/WPF流出站已分清，不能叫22065 Game S2C/旧MonsterChess。
+证据：`evidence/require-bindings-{old-guard-rejection,build-artifact,scene-load-determinism}.json`、完整两轮scene-load报告/摘要及同前缀logs；统一研究/审核在`resume-d02-research-regression-summary.json`、`resume-d02-proto-review-check.json`及同前缀日志。原始数据/机器路径只在忽略local。
 
-首660 Java有6测试前提问题：既有账号测试无加密前提2项、RSA全send=1断言3项、旧21608断言1项；修正夹具保存/恢复配置、仅TokenRsp单回复及目标包号断言后全过，未绕生产入口。Player新号构造本来还先发其他初始化包，不能把Token单回复说成全流程只有1包。Notify新BG类型暴露6个旧getter编译点，三业务测试改为实际三轴和四tag合同；宿主/等级改验服务器业务状态，不虚构未知wire字段。
+## 正在进行与确切缺口
 
-研究首468有1个Vector语义行未入Proto矩阵的KeyError，修复为verified字段的嵌套依赖索引，并实际双跑/全468再过；未放宽未知字段/源哈希。一次本地review辅助脚本误用已刷新报告作差异起点导致assert，后固定从4b566f9只读还原基线，精确允许清单和原63摘要核对通过，失败日志保留。位置命名最初只查RIP-load漏掉CMP类引用；正常mode0/3与QuickV3独立具名路径分验，不能模拟未知接口槽返回成功或把模式7冒充正常分支。
+1. **F-03d1b**：Astra已跑通tag8→模型58013/+70→SDK role_name，子tag1=10013/boxed tag2=42→真实属性setter/模型回调→SDK role_level。外map key故意不同仍按子id消费；tag13经过接收延迟/DateTime到时钟源。拟独立验有限字段；消息身份、tag5/tag7等未闭。10035缩放旧预期被native拒绝，实际目标常量为100.0，失败保留。等待正式样本双跑/专题，不据进度消息提前晋级。
+2. **F-03d2a3**：Sol继续剩余三层oneof、同分支CopyFrom合并/切换及完整组合。a1/a2有界卡完成不等于15类型全图。d2业务身份、AvatarData d3仍未闭/未发送。新摘要先local草稿，复制protocol前通知主线避免review中途漂移。
+3. **F-04c**：Astra正在patch子模块正式接入。已验明140572059是memset前，R8=DER长度+1，不是268本身；140574A95是验签call前，旧+5写RAX成功必须删除。预制bundle只保存root公钥/本地公钥/两类签名及固定输入/来源hash；目标私钥只在内存用于预签，不导出。本机明确复用现有SigningKey作为server/root签名者。须完成真实ilhook2.3.0 JmpBack RSP/第五参数/寄存器/flags验证、实际callback拒绝回归、Rust构建、DLL hash，子模块独立commit后主线再收父引用。SDK RSA/HTTP/其他旧模块不在本卡新验范围。
+4. **运行供给未闭**：DLL当前方案要求LUNAGC_TRUST_BUNDLE；既有管理员debugger早于该env启动，PowerShell设置不会注入既有debugger。不得改未知进程环境碰运气。后续要有实际launcher预检/环境传递或明确本地bundle位置，再谈实际加载。ModuleManager错误恢复、DLL完整代理/SDK初始化未验。
+5. **字符串工厂**：本机离线探索空串经Marshal→工厂返回；非空URL在141CAD123缺native allocator上下文。再加显式allocator存储探索仅单ASCII成功，较长URL在141CA72CF仍停止；这是夹具缺口，不是客户端故障，不返回假成功补未知helper，不作为正式工厂/GC验收。
+6. **资源/代理与D-02**：固定候选R/S/D与内置revision集合不同，运行时热更新仍未证；Lua剩余local/API/8缺ID等未消除。Astrolabe实际47 named exports与proxy声明集合相同，但仅名称集合核对；5个旧NEUTRALIZE及ccp/memguard控制没有本批7.2实机验证。完整P0/SDK/资源/代理前置仍不足，不改版本、跳验签或启动猜测协议。
 
-完整SDK初始化/来源信任、完整Token/Login Handler和连续接收key selector、初始化全序列、场景后续协程/落地都未验。部分native managed helper和UI/事件调度有明确模型边界，见各专题；不把静态命中、当前构建、raw图或健康当客户端成功。
+## 失败与避坑
 
-## 用户恢复后的可执行顺序
+- 统一review首次在recover间遇到另一个已授权子代理正式摘要落盘，输入集漂移正确拒绝；已保存中途review，恢复原批准清单，等正式稳定后明确审核五份，再双跑成功。后续通过发布短窗协调，不能隐藏拒绝。
+- JAR比较初稿反复枚举ZIP名导致慢，仅停止本任务已确认辅助Python；改集合后发现两个内联BuildConfig调用者，javap核对只有提交字符串变化。不能把比较辅助脚本断言失败当生产异常。
+- full研究496只包含当时已提交80模块，后续a2/在制生成器等须另验；不要把新文件存在当已跑过。
+- Native/boxed/map/UTF8/SDK/OS等模型边界按各专题保留，不用空nested、静态命中、编译或端口健康代替原生/客户端。
+- 不调用computer-use、不重启未知进程、不清正式库、不还原资源他人差异、不自动推送。版本守卫保持，build成功不是允许play。
 
-1. 先读AGENTS、README、Project、Harness、迁移/部署及本交接；复核checkout/config/GAME_PATH三哈希、子模块、参考HEAD/clean和端口/进程。目标当前缺席，先核对调试器会话，勿直接重复load/run；本批没有授权推进D-02。
-2. F-03父项：优先复用本地P0来源及已有raw图，补PlayerData/PlayerStore/Avatar等最小初始化消费者；Notify未知world/time/owner UID/dungeon/transaction/region逐具名源验证，不重做8类44字段reader。`CLIENT_72_ENTER_SCENE_CONTRACT.md`保留manager+100、static time、PlayerModule+1D8等明确下一跳，算术相同不证明业务名。
-3. F-02父项：恢复连续实际收帧选择key来源及SDK/完整Handler证据，保留账号准入/UID/显式选人/确认保存/经济Guard/Lua。上游0/旧号/20000+/推断都仅候选，本地15/10和MD5冲突证据优先。
-4. F-04/P0前置满足后才做Windows portable独立部署和实际日志/健康/TCP/UDP/PID/运行JAR验证；随后用户恢复实机范围时逐验新号显式选人、旧测试号登录、场景握手、心跳、退出重登。当前D-02全部未验。每批本地分项提交、不推送；交接先备份核验H2后覆盖，H1只追加。
+## 下一步顺序
 
-文档已维护Project/README/Harness、迁移/部署、Asta融合/审计、源码/Proto矩阵、账号三篇及登录/响应/初始化/场景专题。原始二进制、日志、依赖、数据库和本机路径仍留忽略目录。
+继续当前三分支到独立卡验收→及时更新Project/Harness/专题与本地commit→接纳新的已审摘要、保持旧输入/三层/开放边界并重做review→对应原生/Java/Rust测试和产物核查。F-04c完成后主线逐diff审核子模块及父引用，再解决真实加载/SDK/字符串工厂与最小资源前置。只有完整依赖满足才按portable隔离运行库/数据部署，核对日志/健康/TCP/UDP/PID/运行JAR SHA，然后逐项实际新号显式选人、旧测试号、初始化/场景握手、心跳、退出重登。当前D-02仍未完成，任务持续active；本检查点不要求用户再次授权恢复。
