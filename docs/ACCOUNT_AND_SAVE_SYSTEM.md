@@ -1,5 +1,7 @@
 # 账号与存档系统接手指南
 
+2026-11-07[Astra离线研究](CLIENT_72_ASTRA_OFFLINE.md)未改账号/保存代码或数据库，未执行新的loadAll/正向QuestManager。Avatar最终装备/属性/SavedVitals时序和资源未知不能填零的约束写入后续规格；客户端登录/退出重登仍未验，具体缺输入见HANDOFF2。
+
 2026-11-07离线前置只增强网络边界与测试，账号/保存生产实现及门禁未改。目标Chapter加入真实303启动夹具后，两项保存/BSON/新Player冷读及未就绪manager拒绝通过；自然loadAll、必要资源及正向manager重绑定仍未满足。50套875关联回归通过、独立Mongo正常关闭，不代表新旧号实机。最新范围见[离线执行](CLIENT_72_SOL_TERRA_OFFLINE.md)、[章节验证](CLIENT_72_D02_CHAPTER_LOAD.md)及HANDOFF2。
 
 2026-11-06本轮F-02c确认Token安装key后同原生内存状态的LoginRsp选key/收帧合同；F-04b确认保留真实验签的本地输入供给及坏key/root/签名拒绝，见[收帧](CLIENT_72_RECEIVE_KEY.md)与[信任合同](CLIENT_72_TRUST_CONTRACT.md)。它们没有改变账号准入/UID/确认保存或Mongo字段，不代表真实线程调度、补丁加载、SDK认证或D-02完成。本轮496研究/32 Lua通过，前批761 Java与完整集历史失败未重跑。

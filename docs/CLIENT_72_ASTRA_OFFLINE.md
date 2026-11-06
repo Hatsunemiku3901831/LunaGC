@@ -1,5 +1,7 @@
 # D-02 Astra 限定离线攻坚（2026-11-07）
 
+**最终状态：本轮限定离线攻坚已收口并停止。** 共11项独立研究双跑与主线第三回放核同；完整Avatar/g2/SceneInfo、资源就绪/Quest正向重绑和D-02实机未完成。全部代理和自有离线进程结束，未进入生产实现/全面回归/实机/部署；准确交接见[HANDOFF2](../HANDOFF2.md)。
+
 本轮仅恢复 Avatar、SceneInfo 和必要资源语义研究，不恢复完整 D-02 开发、生产接入、全面回归或实机。接手 HEAD `4b1a696`；主仓库无未提交修改，resources 仅既有 `ScriptSceneData/flat.luas.scenes.full_globals.lua.json` 差异。五份 profile 输入已重新核 SHA-256；初始清点位于忽略目录 `local/migration72/astra-main/initial-{inventory,processes}.json`。旧网络边界、raw 图/适配器、Chapter/303 和有限 Java 投影直接复用，历史测试数不作本轮执行数。
 
 ## 先规划的难点表
@@ -52,3 +54,5 @@ Sol/Terra接管时可直接按已验literal/独立样本复验，并在未来授
 资源剩余准确输入为：可溯源的实际资源blob/exporter字段映射、缺失server acceptance规则、LuaNotify20真实键匹配、运行时revision选择。Scene剩余为自然stage/能力注册、实体组件/生命周期、完整handler，以及80154非零入场必要性；80154已核当前sender/旧Proto无独立来源，不扩战斗。实机或外部输入的最小入口/观察/解除条件均在对应专题末表，不能以健康、编译或静态命中替代。
 
 统一review已从116精确增至127，旧116摘要与1269生产来源均保持，三层/required/runtime/矩阵其余字段无变化；旧拒绝、双恢复一致和24定向检查见`local/migration72/astra-main/evidence-integration/`。研究结构0错误，ready仍224拒绝。没有全面Java/研究回归、构建、部署或客户端执行。
+
+最终现场核查`astra-main/final-inventory.json`：五客户端输入、五保护文件、5240生产文件保持，patch clean/resources原dirty不变，无游戏/Java/自有研究进程和8088/22101/27027监听。仅原Mongo27017保留，两既有调试器未动。交接备份已核验、HANDOFF仅追加并验证原字节前缀；没有新构建/部署或运行健康成功声明。

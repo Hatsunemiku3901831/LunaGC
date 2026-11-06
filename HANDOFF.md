@@ -200,3 +200,8 @@ B-02e7限定原生部分消费51f7cd2、E-01c5实际生产Lua加载审计9aa8ca7
 本轮无需值守且适合Sol/Terra的工作已收口，D-02仍未完成。c34808f精确同步108→116证据；8c1fb85修复真实网络入口并红40/24→绿43，生产扫描324/227/227/0；0c22864目标Chapter/真实303通知保存2项，777da12实际152反射与有序双JVM；05de04b有限Java来源投影1项及原生双跑同SHA。最终关联50套875/0、120研究、9生成检查通过；portable JAR f475dbf6…8cade8内嵌8c1fb85，8变化class匹配、46296保持，未部署。原数据/配置/resources差异保留，自有进程及8088/22101/27027清点无对象，原Mongo保持。实机、Astra、正式g2和自然资源/Quest正向重绑定仍阻塞；完整实机验收不由离线替代。
 
 覆盖前已备份并核验HANDOFF2；本文件仅追加且原字节前缀核同。详细完成/提交、首次失败、真实与未修改范围、准确输入/复现、实机与Astra队列、解除条件和下一步见[HANDOFF2](HANDOFF2.md)及[离线执行](docs/CLIENT_72_SOL_TERRA_OFFLINE.md)。
+
+
+## 2026-11-07 Astra限定离线攻坚收口
+
+仅Avatar/SceneInfo/必要资源深研，11项双跑及主线第三原生核同，127证据/24定向检查通过，结构0/ready224仍拒绝。六Avatar、两Scene、三资源项已本地分项提交，统一整合2501423；没有生产实现/全面回归/客户端/调试器/补丁/部署。完整g2、SceneInfo、自然资源/正向QuestManager及D-02未完成。具体结果、Sol/Terra限定规格、最小缺输入/实机观察、全部提交与失败记录见[HANDOFF2](HANDOFF2.md)及[总记录](docs/CLIENT_72_ASTRA_OFFLINE.md)。原HANDOFF2已逐字节备份核验，证明local/migration72/astra-main/handoff-backup.json；原resources/config/data保持，所有代理/自有离线进程收口。停止，不自动开启后继实现。

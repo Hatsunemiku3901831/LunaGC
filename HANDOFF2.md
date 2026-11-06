@@ -1,117 +1,87 @@
-# D-02 Sol/Terra 限定离线前置交接（2026-11-07）
+# D-02 Astra 限定离线攻坚交接（2026-11-07）
 
-**本轮无需值守且适合Sol/Terra的工作已收口。D-02仍未完成。** 用户已恢复历史暂停，但仅授权静态、无人值守自动执行、证据明确的实现和验证；本轮没有启动或操作原始游戏客户端、调试器，没有安装补丁、部署游戏服务或调用Astra。所有有价值且依赖已满足的现有离线项已逐项检查，剩余项均依赖下文实机/深度证据门槛，不为保持忙碌重复既有oracle或开发无关功能。
+本轮可独立离线推进的限定攻坚已收口并停止；**D-02未完成，完整Avatar constructor/handler、正式g2、完整SceneInfo、资源就绪和正向QuestManager重绑定均未通过。** 只执行研究工具、研究测试和文档，没有Sol/Terra生产实现、全面回归、客户端/调试器操作、自然SDK/HTTP观察、补丁安装或游戏部署。
 
-仅面向国服7.2 / Windows portable。新旧号登录、新号显式选人、完整初始化和场景握手、实际入场、连续心跳、退出重登及归属保存均无本轮实机通过证明。研究、健康、构建和隔离数据库测试均不能替代这些条件。
+本交接覆盖旧暂停决定，但不授权后续实机或生产接入。仅国服7.2、Windows portable。三个GPT6 Astra xhigh子代理均完成，主线逐项审核并第三新进程复验；未推送。
 
-## 1. 接手、交接备份与现场
+## 1. 接手、保护现场与备份
 
-接手分支7.2-dev，HEAD `4b04a1d`。原未提交内容只有resources内既有 `ScriptSceneData/flat.luas.scenes.full_globals.lua.json`，未改、未暂存、未提交。当前交接写入前HEAD `777da12`，之后只做文档/交接提交；最终HEAD以git log -1为准。不自动推送。
+接手HEAD `4b1a696`，本轮研究整合提交`2501423`，收尾文档提交以git log为准。接手只有resources中既有`ScriptSceneData/flat.luas.scenes.full_globals.lua.json`差异，未改/未暂存/未提交。patch=`3675ea789c71a6667c995f104271d1e031c34018` clean；resources=`dac2a9d43332ef51879522cf39da2831b0ca0543`及原dirty保持。
 
-覆盖本文件前已逐字节备份并核验：
+原HANDOFF2覆盖前已备份并逐字节/hash核验：
 
-- `local/migration72/handoffs/HANDOFF2.before-offline-sol-terra-05de04b-20261106T185257Z.md`，29,345 bytes，SHA-256 `a360240f2cc9b4a6bc80bdc54ff326d5a83fa0d0e70d0a52568abc62f809c870`。
-- HANDOFF原文件另备份于同目录同后缀的HANDOFF文件，29,652 bytes，SHA `cd8950c0f39c53f18e32a789af8e479760cca927528d15d82b41b617600220e9`；本轮只追加，写后核验原字节前缀不变。
-- 备份证明 `local/migration72/offline-sol-terra/handoff-backup.json`，写入和前缀证明同目录 `handoff-written.json`。文件名时间为UTC，用户日期按Australia/Sydney。
+- `local/migration72/handoffs/HANDOFF2.before-astra-offline-0da1e37-20261106T200222Z.md`，17330 bytes，SHA-256 `d05688e343a335604ab45349600a04cbc915e82d2a932f7d272fe895e519d1f0`。
+- HANDOFF原文另备份同目录`HANDOFF.before-astra-offline-0da1e37-20261106T200222Z.md`，30716 bytes，SHA `23d18678d71345aa026da56d57d84bcbcc03b218a64942af6c2b1c27f434a262`；本轮只追加并核原字节前缀。
+- 备份/写入证明为`local/migration72/astra-main/handoff-{backup,written}.json`。文件名UTC，用户日期Australia/Sydney。
 
-接手和收尾只读清点分别为同目录 `initial-inventory.json`、`final-inventory.json`。五份profile固定客户端输入全部匹配；AGENTS、.env、config、resources原差异hash保持；无.env.local。GAME_PATH用tools/game_path.ps1解析，不在此抄本机路径。原mongodata和local/data均保留。patch HEAD `3675ea789c71a6667c995f104271d1e031c34018` clean；resources HEAD `dac2a9d43332ef51879522cf39da2831b0ca0543`及原dirty保持。
+首末清点在同目录`initial-inventory.json`、`initial-processes.json`、`final-inventory.json`、`final-processes.json`。五份固定profile输入全部匹配；AGENTS、.env、config、生产JAR和原资源dirty文件hash均保持；无.env.local。GAME_PATH从本机tools/game_path.ps1取，不抄历史机器路径。5240个已跟踪生产文件字节不变；原mongodata/local/data未操作。
 
-收尾无游戏/Java/本轮自有测试进程，8088 TCP、22101 TCP/UDP、27027无监听；原Mongo27017 PID/归属保持，未操作原库。两既有调试器保持未动；仅OS进程清点，不查询或操作debugger API、点库、target。上次已记录的持久点属于历史，不能据本轮OS清点声称点库为空。所有测试运行目录、数据库文件、原始失败和日志留在忽略目录，没有无人认领的后台实验。全部子代理已完成。
+收尾无游戏/Java/本轮自有研究Python进程；8088 TCP、22101 TCP/UDP、27027无监听；原Mongo27017及两既有调试器未动，仅只读OS清点，未查询debugger API/点库/target。无后台自有实验。没有新构建，原portable JAR SHA仍`f475dbf6d91bac591a9b4346726b935171764b446b9ab64e6a8734b44c8cade8`；没有运行JAR/健康通过对象。纯研究改动无需重启，也没有部署授权。
 
-## 2. 已完成任务与本地提交
+## 2. Astra已攻克的独立验收项
 
-| 任务 | 本轮实际结果 | 本地提交 |
+每项均为明确managed/分配/容器/输入模型下实际原生路径或注明静态范围；不是客户端进程执行。全部11个工具产物均双新进程与主线第三回放逐字节相同。各批关联数量有重叠，不相加。
+
+| 任务 | 结果/实际验证 | 本地提交 |
 | --- | --- | --- |
-| A-03/B-01/R0/R4 证据0 | 主线独立核提交、原始引用与主线proof；108→116输入，八新增和startup一个追加历史对照，旧拒绝保留、双recover一致；原107摘要/1269生产来源及三层/required/runtime不变 | `c34808f` |
-| C-01b 网络入口 | 真实收包/注册/事件替包红40项24失败；只修GameSession、BasePacket、GameServerPacketHandler；绿36帧+7注册全过，扫描324/启用227/注册227/冲突0 | `8c1fb85` |
-| E-01d1n3 Chapter/通知 | 固定目标Chapter真实双JVM436安装，begin/end339/326，30302无命中，0 ERROR；独立Mongo新增目标表模式2项全过，真实303启动2/64包无ChapterState增量，BSON/新Player冷读及未就绪manager拒绝保持 | `0c22864` |
-| F-03d3g2-prep | 实际Avatar/Team/GameItem getter→独立raw adapter→既有f1/f3片段；最终Java1项全过，确定性、非零/64位/map/list/显式零及真实Store GUID关联；两新进程原生相同 | `05de04b` |
-| E-01d1n3 反射收尾 | 真实ResourceLoader反射152类、注解/优先级/实际GameData map逐项与清单相符，五优先级8/7/128/9/0；有序输出双新JVM一致 | `777da12` |
+| f4d2第一项 | 61980 ctor/reset/pool边界、空装备清理、Relic赋值片段、技能字典清理、+68/tag13；23原生组/11断言 | `0da1e37` |
+| f4d2 suffix | tag29六模式位图、tag38完整选择/清旧、精确Weapon/Relic工厂；17组含48 bit片段、22关联 | `1487d28` |
+| f4d2 ornament来源 | 两具名Ornament表/getter/loader/cache，4路径至I/O前、5断言 | `0572e7a` |
+| f4d2 rgctx/List | 1116 class ranges、精确MethodSpec/实参、reference canonicalizer、三List stores；6原生/7断言 | `cdf2d76` |
+| f4d2 Sorted | 五构造器精确链、真实+1c0 store、cold/missing/null停止；7原生/7断言 | `979a526` |
+| f4d2 equipment | 9槽查询/完整GUID回退、3实际注册、7断言 | `0703e8d` |
+| s2后继第一项 | retain/release、World/Beyond、实体替换时序/handler片段；36场景+3wire拒绝、39关联 | `5389b1f` |
+| s2 CopyFrom/hash | 77771双list深复制/旧值清理，真实u32碰撞/高位/Unicode/默认；15场景、48关联 | `1529a5e` |
+| R3 n4a | depot/条件完整parser、默认/非零/BGH有限消费；15解析/1边界/5拒绝、10断言 | `be6c00c` |
+| R3 n4b | LHFO外层数组→slot4元素parser→查询；5完整/4拒绝、15关联 | `d961556` |
+| R3 n4c | 8 selector样本，GameTime18与LuaNotify20分离；19关联 | `7e0e039` |
+| 统一证据 | 116→127精确增量、旧来源保持、双recover同、24定向通过；结构0/ready224拒绝 | `2501423` |
 
-主线使用获授权的gpt-6.1-terra做证据枚举、章节工具和投影准备，gpt-6.1-sol/xhigh做网络红测及限定修复；不是仅凭代理总结验收。共享Gradle、Mongo启停、Git均由主线串行协调；代理没有启动服务/客户端/调试器。
+Avatar六套新增最终联合48断言是代理执行，主线已逐项运行并第三复验。Scene最终48含旧28和新20；资源最终19含10+5+4。没有全面Java、Mongo、Chapter重新加载或原raw扫描，也没有把旧成果重新计数。
 
-## 3. 实际测试、证据和构建
+主线11份`*-review.json`及测试/原生日志在`local/migration72/astra-main/`；各专题给完整hash、精确命令、实际停止点和模型。原始反汇编、失败、完整轨迹留`astra-avatar/`、`astra-scene/`、`astra-resources/`，不提交二进制/日志/数据库。
 
-各批次数不相加，后轮含重叠：
+统一review旧116摘要及1269生产来源hash保持；新增11受审摘要。三层、required、openBoundaries、runtimeStatus、closureComplete、targetProtocolReady和矩阵其余字段不变。旧review对新输入真实拒绝留存，review使用UTF-8/LF文本hash，原生报告按字节hash，两者不得混用。详细证明`astra-main/evidence-integration/proof.json`。
 
-- 网络红40项/24预期失败，绿网络43项全过；network-green目录另有投影初版1项XML，不计网络43。原始 `offline-sol-terra/network-{red,green}/test-results/`。
-- 关联回归最终50套875项全过、0失败/错误/跳过，涵盖账号/经济/保存/Lua、有限协议及CombatSessionSequence、两网络套件。目录 `offline-sol-terra/mongo-e825b6f516564e888f0b4d5bce19d2da/`；关闭前仅admin/config/local，正常shutdown、27027释放。原47套是既有选集来源，不套用历史829等数量。
-- Chapter目标表模式实际2项全过，目录 `offline-sol-terra/mongo-8c106c20b11743a8a73280ccc13b74fc/chapter-start/`。其后首轮关联844项有41路径失败，保留原XML；不是本两项失败。该Mongo正常shutdown，303测试库/BSON保留。
-- 120项定向研究全过；一次错误模块名造成的导入失败保留，改正确test_client72_java_surface入口后通过。9个实际生成器check全部无漂移。日志同目录associated-research/、generation-checks/。
-- 最终投影Java1项全过；原生两个新进程报告字节相同，SHA `0d608af88c56b20be36c73deb34fc36075811105fd095a5d0f1f64ee5c418c14`，`offline-sol-terra/avatar-projection/{java-final,native-final}/`。
-- Chapter最早不含反射的报告SHA `47524bc3879665f68350650dcc7c94a4ab604fc3a11d4963919a3a7176814a62`保留；最终含真实反射的两JVM报告SHA `3b5d7799d11317aae890b62462d9a77b250bac7b515efc13c008e72f5bf6f25a`，目录 `offline-sol-terra/chapter-audit/run-dae689a49a2f4f5fa2dd7cd4cb1b261d/`。重复章节加载不累计新测试数。
-- 最终结构0错误，ready退出1、224缺口；未改三层、required、ready逻辑或runtime。108→116及生产修复后两次精确review的原拒绝、来源差异和双recover均保留。表面只更新3个来源、49源依赖只更新GameSession、Proto只更新GameSession/BasePacket与相应依赖摘要；294方法/411边、98候选/156矩阵、1122文件/1278类型/4867字段及开放边界保持。
+## 3. 可交Sol/Terra的规格与当前许可
 
-上述目录都位于 `local/migration72/`。总证明 `offline-sol-terra/closeout-proof.json`，专题入口见下文；不提交原始客户端、日志、轨迹或数据库。
+[总记录](docs/CLIENT_72_ASTRA_OFFLINE.md)及[Avatar规格](docs/CLIENT_72_AVATAR_DEEP_RESEARCH.md)、[Scene规格](docs/CLIENT_72_SCENE_DEEP_RESEARCH.md)、[资源规格](docs/CLIENT_72_RESOURCE_DEEP_RESEARCH.md)列字段/编码/枚举来源、对象状态/调用顺序、允许/必须保留/禁止猜测、真实Java getter缺口、改动文件和验收出口。
 
-### 生产构建与未部署范围
+当前可直接执行的是复验固定工具、按已核getter与独立adapter建立**隔离测试投影**；不批准正式g2/Scene sender。生产接入需未来任务授权且完整合同齐备。具体约束：
 
-实际 `tools/local_windows.ps1 -Mode build` 成功，约27.5秒，JAR仍名LunaGC-7.1.0.jar，VERSION仍7.1.0（迁移产物，不是已可连接7.2交付）。SHA `f475dbf6d91bac591a9b4346726b935171764b446b9ab64e6a8734b44c8cade8`，内嵌生产提交8c1fb85。
+- Avatar身份/三属性/Team复用既有Java投影；GUID为完整uint64，属性显式零oneof保持。生命态/FightProp不能取旧常量，必须在库存装备最终恢复和completeLoadingVitals后取真实值。
+- depot当前保存值、资源默认值和网络值分开；+68/tag13与+6c元素查询分开。原始二进制parser缺flag会编码零，但候选JSON缺键尚无独立桥梁，不能给energySkill等猜alias。
+- tag29是所证六模式位图的限定用途，实际差异应用依赖未闭enum HashSet；tag38是Ornament选择候选ID的限定用途，Java getter与真实资源值仍缺。
+- Scene先有Avatar注册；Avatar能力retain与附属能力CopyFrom不同。只证明77771双非空list复制，其他复杂list不泛化。两个hash必须fixed32、查表与默认行为保留，人工注册表不是生产数据。
+- 51522仅准确typed Weapon工厂分支可关联weapon-role，不能给全部用途/slot7定名。旧实体两路径写ID时序不同，不能假设失败都保旧。
+- Quest对象字段不能置LOGIC_NONE求绿；BGH已知消费者是GameTime18，不能推出LuaNotify20 alias；acceptCond缺失不能靠旧表创造。
 
-相对固定dfde旧JAR：没有新增/删除class，8变化class（3运行外层、2对应内部/编译类、3构建信息类）逐字节等于本次编译，另外46,296类保持；包括账号、经济、保存、Lua、Avatar/共享Proto均保持。证明 `offline-sol-terra/portable-build/artifact-proof.json`，build/status日志同目录。05de04b/0c22864/777da12仅测试/离线工具/文档，不影响生产字节，无需为它们重复打包。固定dfde副本继续供既有研究工具，不替换其输入hash。
+应修改范围与具体文件见专题；本轮禁止生产sender、共享Proto、版本准入、根配置、资源/补丁。未来确实接Proto时只改源并由Gradle/protoc生成，不手改生成Java。完整合同前不以raw齐全、可编码省略或片段返回充当最小发送许可。
 
-**未部署游戏服务，未构建或安装补丁。** 用户本轮明确排除部署/实机，且完整P0/SDK/必要资源合同仍不足。server-only只读status退出1，对应stopped/Healthy=false，客户端补丁检查关闭；没有服务PID/运行JAR/健康成功对象。HTTP8088、游戏UDP22101、生产Mongo固定27017仍按源码约束，不拿临时端口或测试27027冒充部署隔离。
+## 4. 必须实机或外部输入的准确队列
 
-## 4. 修改范围和保留范围
+| 任务/问题 | 已知事实与最小新输入/观察 | 解除条件及后继 |
+| --- | --- | --- |
+| f4d2 enum/cold初始化 | 精确method15591已知，enum flag cell145bc8ef0非file-backed；有界写址搜索无真实指令候选，不证明无初始化。自然构造时记录145a30968的MethodInfo→class+30→slot+18→callee及flag/default-class；或有来源静态初始化路径 | 准确20060共享callee和cold comparer状态；否则不选有利flag。阻塞完整ctor/tag29/g2 |
+| f4d2装备/技能/池 | 纯槽查询和GUID回退已做；完整refresh止151843490，需GLOBAL+34900同源资源/派生项/delegate状态；赋值需真实Store同物品ID/GUID/affix和模型，技能需当前depot/对象/缓存，池需真实清理责任 | 有来源输入后才连续验完整构造/后缀，不拼接itemID0、10001、11101，不假设空装备无操作。阻塞R1/g2 |
+| tag38实际资源 | 两表身份及loader入口已证；缺实际blob、parser/cache-builder和完整默认记录/Java来源 | 取得同源资源输入可离线继续；否则不能发默认空list |
+| Scene生命周期/必要性 | 自然stage/44512组件实体、AddAbilityString/default来源、其他非空list和完整handler未验。80154无独立非零D02来源 | 记录21761/1507D16D0/1507E44F0实际列表、stage、entity+426、+110前后；实体创建/teardown与owner一致。无非空必要证据不扩战斗 |
+| R3转换/接受规则 | 候选JSON无可信raw→field桥梁，30302无acceptCond，BGH当前路径排除Lua20 | 同版本实际blob/exporter映射及server acceptance源；Lua20非空字段与真实进度键。阻塞真实资源加载/2B/g2值 |
+| revision与自然就绪 | 内置R/D49008628、S48722240和候选标签不同；无运行时选择证明 | 在单独授权观察中记录必要loader实际blob/revision/hash；自然loadAll且必要map/引用/ERROR有效后才正向QuestManager重绑 |
+| D02 R2/R4-R6 | SDK/HTTP/Marshal/信任补丁、完整P0、部署前合同及新旧号实机仍缺，本轮未做 | 未来另授权实机，重核现场归属。R1/R2/R3齐→R4汇合→portable部署核验→新旧号选人/入场/心跳/退出重登；未全部实测不能完成D-02 |
 
-生产只修改三个网络入口：uint16读取与分配前完整窗口一次校验；最终build拒绝域外opcode/header；公开注册冲突和超界在catch外明确失败，保留首Handler/NoResponse策略。合法帧/密钥/业务号/Union/FanOut及业务实现保持；同类重复也拒绝，没有编造别名/幂等规则或添加低概率竞态框架。
+上述不是“所有剩余问题绝对只能实机”：来源完整的输入可使部分继续离线；本轮没有取得这些能区分假设的输入。每条尝试、失败、排除项和具体入口见专题末表，不能原样重跑同一个未知/冷导入以保持忙碌。
 
-Chapter新增的是离线审计和测试可选资源输入，不改资源表/Java资源定义或loadedAll。Avatar新增的是独立测试输出与原生成器消费者，不改Avatar.toProto、PacketAvatarDataNotify、共享Proto、opcode或正式生产发送。Store夹具ID0与原生库存row ID10001仅关联完整GUID，不宣称物品ID/资源一致。
+## 5. 失败与避坑
 
-真实资源表仍含未知语义/版本关系。根fastRequire=true、Quest开启/forceFinish关闭、配置/补丁/信任材料/原数据及resources原dirty保持。没有删有效存档、空对象、默认成功、删required或跳校验求绿。
+保留所有原始失败。主要为：61980在callee处emu_stop后观察器仍跑同地址model，改为caller call之前止且不改公共runtime；Sorted重载测试误写14778改14780并加参数断言；Scene pool flag RIP算错6字节由红测纠正；共用hash检查点误作miss-only，由命中/默认/空名独立样本纠正；LHFO类型registry漏一层间接按真实访问修夹具；rgctx原始字节误命中由.pdata指令边界排除；Sorted任意零偏移误标treeCount后删除未经证实标签。
 
-## 5. 失败、弯路与避坑
+主线比较器首次误用不存在summary-3文件名，改实际summary-4核同；suffix首次漏--native只产静态报告，保留且不计原生，最终正确参数第三回放通过。未改生产、取消错误/边界断言或将未知callee设成功。
 
-1. review按UTF-8通用换行文本hash，不能拿字节hash机械重签。历史观察器bfdf/d4f293/当前2298和六处Lua旧工具指纹均有对应Git快照，保留各执行版本。旧review对漂移的拒绝没有删。主线一次比较器漏剔除嵌套javaSourceSHA256而失败，仅修比较器后确认所有语义不变。
-2. 新cwd必须接齐既有测试的相对resources/protocol/src输入；首轮41个NoSuchFileException原样保留。修本轮驱动，复用既有夹具的输入连接，所有可写data/cache/DB独立；不改产品/断言。首次错误模块名也不称产品回归失败。
-3. 原生TeamRuntime覆盖属性枚举接口，不能拿它直接执行f1 prop；独立f1/f3 context分开。含Unicode组合消息须用已有Team UTF-8 reader，原f1 ASCII模型会拒绝。两次失败在avatar-projection/保留；没有加新ABI或未知调用成功桩。
-4. 审计输出不要依赖Map.of跨JVM键序。新增反射输出首轮两JSON对象相同、字节不同，保留run-b8f3bcd8209b4dc3ae16e23eee6c3039；有序map后双跑通过，没放宽字节一致断言。
-5. loadedAll=false的真实拒绝不是正向manager恢复；Chapter无30302命中也不是允许删通知或任务。加载器多处捕错后继续，最终标志本身不证明必要记录/引用齐全。
-6. 新JAR无运行实例，不能报告运行SHA或健康成功。旧PID、debugger API空表、持久点历史和GAME_PATH均不照抄；本轮不触碰调试器。
+REA target-free检查得到加密metadata magic unsupported，未重复大规模冷导入；用既有固定输入专用解码/Capstone/Unicorn。Windows进程清点不可把无关Python/MCP进程当本轮残留强杀；只退出已识别自有实验。
 
-## 6. 剩余阻塞、实机与Astra队列
+## 6. 下一步与停止状态
 
-### F-03d3f4d2 / R1：完整Avatar构造与必经后缀（Astra队列）
+本轮结束，不启动Sol/Terra生产实现/全面回归、不启动实机或部署。下一项可执行动作是按上表取得能解除阻塞的最小输入；若获得可溯源blob或初始化静态路径，先计划并复验对应离线合同，再更新明确规格。实机必须另有授权并重核当前checkout、GAME_PATH、profile、配置、进程/端口/持久点，不能照抄旧PID或点库。
 
-目标是闭合完整非空Avatar初始化与必要发送集合。固定输入为profile五hash、e8/f4d1已审摘要；实际只四段ctor/12容器store，probe2止15183f290，cold probe4止未知metadata，非空装备止15184a5f0，三个间接构造未知，技能必读depot+68。最小复现/日志在CLIENT_72_AVATAR_INITIALIZER和local/migration72/evidence/avatar-initializer-main-{native,summary,review}.json，旧最小计划analysis/avatar-init-minimum-plan.md保留。
-
-已排除151849670是完整初始化、+6c可代替+68、零写等于默认构造等说法。未知为enum HashSet/comparer/继承构造、必经装备/技能/对象池及tag29/38后缀，涉及复杂rgctx/生命周期，本轮不发明新模型或重复盲试。解除条件：匹配固定输入的实际完整路径/非空样本、ABI和必要字段集合独立验证；然后才可由Sol/Terra做正式g2。它阻塞g2主体、R1/R4/R5/R6；本轮仍可独立的网络/章节/有限投影已经完成。
-
-### F-03d3s2后继 / R1：复杂SceneInfo与实体（Astra队列）
-
-目标完整非空能力、附属模型、实体创建/teardown及handler返回。固定s1/s2a摘要和profile；实际仅9类36raw和四字段身份关联，非空能力止151846096未知retain，复杂Object/能力及生命周期未闭。最小复现和轨迹见CLIENT_72_SCENE_INFO_RAW、CLIENT_72_SCENE_INFO_CONTRACT与evidence/scene-info-raw-main-*、scene-contract-main-*。
-
-排除同形附属51522就叫Weapon、raw空壳可替代复杂对象；其余间接调用/生命周期仍未知，需要Astra或相应实机样本。解除条件是完整消费者/非空样本和Java数据来源三者闭合，不省略未知必需消息。阻塞R1/R4/R6，已完成的有限投影不接管它。
-
-### E-01/R3 与2B：自然资源就绪、Quest正向冷读（深度语义/实机依赖）
-
-目标保存→新Player→真实QuestManager重绑定且状态/进度/归属/BSON一致。固定候选commit d54f6f0d423ded9d055bb740a3e5f3aa8f2667f1/tree5b334e711319726c504da95dbfe6ebb26baaa7d3、目标Quest SHA c8561299f543456573b0fa16404e210bcd2ecf84ce5006eb63dd4b2845137a87、303 BIN与Chapter输入见专题。实际目标30302 Excel拒绝1/安装0、BIN fallback63；本轮Chapter/通知/保存通过但loadedAll全程false，真实manager门禁拒绝。期望是自然loadAll完成且必要记录/索引/日志有效，再允许正向2B。
-
-最小复现复用n1的Client72Quest303Audit和n3的目标表模式，docs/CLIENT_72_D02_QUEST_{ENTRY,303_RECOVERY,303_START}.md及CLIENT_72_D02_CHAPTER_LOAD.md给出固定hash/驱动；本轮失败/成功/BSON在上述独立目录。已尝试真实Excel/BIN/索引/直接及Progress启动，排除缺Chapter必然新增303通知；未知LogicType对象、acceptCond/BGH、depot/ability实际语义及候选revision与客户端加载关系。全表抓取不能单独解决这些语义，不能换旧表或手设loadedAll。因此本轮不执行2B，不声称知道loadAll首个运行失败点。
-
-解除条件：必要资源/字段含义有独立证据，实际生产loadAll自然完成且必需数据、日志、引用有效，再用唯一Mongo库跑正向manager并保留负例。FightProp真实计算时机/完整性、depot当前资源和默认值、根fast/inline及异步后代仍依赖这个门槛，不从空/零模型生成正式初始化。阻塞R3、2B、g2真实值、R4及入场；本轮152反射/静态清单/章节出口已完成。
-
-### D-01b5g / R2：原始游戏HW与自然SDK/HTTP（实机队列）
-
-目标自然入口/返回、SDK/HTTP/Marshal或准确首个退出现场。固定profile客户端及既有单HW专题；历史单SW37.766秒退出80000003、WER同点但无自然入口证据，g-preflight只验合成。最小复现/日志为CLIENT_72_SINGLE_HARDWARE_OBSERVER、STARTUP_OBSERVER及d02-r2-d01b5e-main-review、single-hardware-main-review。已尝试历史软件点/合成对照，排除通用con1解释；真实退出原因和自然调用仍未知。
-
-本轮原始客户端/调试器均禁做，不另扩成熟调试fixture、不调用Astra。解除条件是明确恢复实机授权后，重新核OS/目标/持久点归属，再主线独占一次既有120秒有界HW入口→返回观察；失败不无新增证据重复load。阻塞R2/R4/R5/R6。
-
-### D-01b5h1/F-04 / R2-R4：正式7.2版本、SDK/信任/补丁ABI
-
-固定h1归档JAR/fixture与profile。实际h1已验证真实临时HTTP路由产生正式加密签名的版本拒绝，本轮复用，因为HTTP/序列化/密码学无变更；新JAR仍7.1.0。期望完整目标版本/自然SDK回调/信任及加载合同；原h1驱动/原生消费和首次失败见HTTP_DISPATCH及HTTP_ROUTE专题。
-
-不以7.1请求、改字符串、关验签或健康求绿。仍未知自然SDK完整消费、必要钩子ABI、信任传递和实际DLL加载；实机更适合区分假设，复杂ABI放Astra队列。解除条件是R1/R2/R3部署前合同及R4充分证据，然后正常形成7.2产物、复验受控HTTP及授权实机；阻塞R4-R6。
-
-### R4/R5/R6及输入/权限状态
-
-R4完整P0汇合仍依赖上述三线，队伍/世界/实体、聚合内层、业务顺序和runtime闭包不因网络边界通过而完成。R5明确本轮不部署，R6全部客户端条件后置；不是把子合同重标runtime或删除required后继续。没有遗漏本轮可自行取得、边界明确且有价值的独立实现任务；未发现另一个只缺可公开下载文件就能解除的权限/输入分支。需要用户未来决定的是恢复哪类实机/深度范围，不需等待答复才能做的本轮工作均已完成。
-
-## 7. 下一步顺序与文档
-
-1. 继续时先核最新HEAD、差异、五输入、配置、进程/端口及原数据，复用本轮已验合同。不机械重跑旧大套或把新JAR当已部署。
-2. 按授权恢复Astra队列完整Avatar/SceneInfo/资源语义，或按实机队列做一次成熟HW自然观察。两类授权本轮均未恢复，不能自动开始。
-3. 必要资源自然满足后，先跑唯一库正向QuestManager重绑定（保留未就绪负例）；g2仅在完整构造/必要集合闭合后正式接入。未知继续未知。
-4. R1/R2/R3部署前合同齐后R4汇合→用户恢复部署范围后的portable部署核日志/健康/TCP/UDP/PID/运行JAR SHA→R6旧号/新号显式选人、初始化/实际入场、连续心跳和退出重登。全部实测通过才宣布D-02完成。
-
-Project管理任务/验收，Harness管理入口；本轮总记录docs/CLIENT_72_SOL_TERRA_OFFLINE.md，三个专题为NETWORK_BOUNDARIES、D02_CHAPTER_LOAD、AVATAR_JAVA_PROJECTION。README、CLIENT_72_MIGRATION、CODEX_ONE_CLICK_DEPLOY及账号/保存运维同步当前范围。HANDOFF仅追加本轮简述和本文件引导。未推送。
+README、Project、Harness、迁移/部署手册及Avatar/Scene/资源/Quest/账号保存相关章节同步；HANDOFF只追加本轮引导。所有本轮修改已分项本地提交，无push。完整客户端登录、选人、入场和D-02验收仍未通过。

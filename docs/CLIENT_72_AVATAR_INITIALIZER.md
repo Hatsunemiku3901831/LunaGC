@@ -1,5 +1,7 @@
 # 7.2 Avatar 构造精确片段与省略消费边界
 
+2026-11-07后继[Avatar深入研究](CLIENT_72_AVATAR_DEEP_RESEARCH.md)已恢复精确rgctx表、继承List三stores和Sorted comparer/TreeSet完整选定链，推进空装备/非空赋值片段、完整槽查询/回退、depot+68、池、tag29/38及两表来源。下方f4d1旧停止点保留，最终缺口以新专题末表为准：enum/cold初始化、同源资源/模型/生命周期仍阻塞完整ctor/handler/g2。
+
 任务 `F-03d3f4d1 / D02-R1`。本卡修正继续沿用f1零分配对象会产生的假缺项判断，执行真实18163构造器的可验证片段、必经子构造和有限省略消费者，建立完整handler尚未闭合的准确停止表。**完整构造器未验，完整Avatar handler未验，入场必要性未建立。** 没有把未知间接调用做成成功stub。
 
 仅新增独立工具、测试、摘要及本文档；旧runtime、Proto/Java、sender、opcode、mapping、资源和配置保持原样。`completeConstructor=false`、`completeAvatarHandler=false`、`runtimeStatus=not-tested`、`targetProtocolReady=false`。按最新暂停要求，此项收口后不启动f4d2、g2或其它新研究。

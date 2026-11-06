@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+**2026-11-07本轮最终索引**：[Astra离线收口](docs/CLIENT_72_ASTRA_OFFLINE.md)、[HANDOFF2](HANDOFF2.md)；11份主线`*-review.json`、127输入整合/24测试/结构0及ready224、首末清点和交接备份/前缀证明都在`local/migration72/astra-main/`。六Avatar/两Scene/三资源工具各双跑+主线第三原生核同，详细命令/模型/停止点在三专题。5240生产文件及五固定输入/保护文件核同，无本轮进程或8088/22101/27027监听，原Mongo/调试器未动；未构建/部署，D-02未完成。
+
 本轮统一review证据：`local/migration72/astra-main/evidence-integration/`保存旧拒绝、前后矩阵、11新增精确hash、双recover证明、24定向日志及structure/ready结果。review按UTF-8/LF文本hash，与报告字节hash分开；116→127仅增受审摘要，不重新签旧工具或更新生产来源。
 
 `client72_avatar_deep_equipment.py`主线7项及第三完整`dc9e25d5…51b58d`/摘要`00af1f18…c72ece`同双跑，证明`local/migration72/astra-main/avatar-equipment-review.json`。Avatar六套新增实际48项（代理最终联合检查），主线按项复验，不叠加历史次数。

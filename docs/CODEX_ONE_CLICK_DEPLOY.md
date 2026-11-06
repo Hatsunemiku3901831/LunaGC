@@ -1,5 +1,7 @@
 # 给 Codex 的 Windows 一键部署与排障手册
 
+2026-11-07 Astra轮只改离线研究工具/测试/文档，不需重建/重启，且用户明确禁止部署/安装补丁/客户端调试。原f475dbf6…8cade8磁盘JAR、配置、五输入和子模块保持，无服务/运行JAR/健康通过对象；原Mongo27017未动。完整P0/SDK/必要资源及实机仍缺，不能由研究收口启动本手册部署步骤。详见[HANDOFF2](../HANDOFF2.md)。
+
 2026-11-07当前构建为C-01b生产修复8c1fb85的Windows portable产物：27.5秒构建，JAR SHA-256 `f475dbf6d91bac591a9b4346726b935171764b446b9ab64e6a8734b44c8cade8`。8变化class逐字节匹配编译、46296保持，没有新增/删除；VERSION仍7.1.0，是迁移产物。后续0c22864/05de04b/777da12只改测试/离线工具/文档，不重复打包。**本轮明确未部署游戏服务、未安装补丁或操作客户端/调试器**；stopped/Healthy=false、8088/22101/27027无监听，运行PID/JAR无对象，原Mongo27017/配置/数据保持。完整P0/SDK/必要资源及实机合同仍缺；不要按下方旧R2保留target记录load或启动。当前交接见[HANDOFF2](../HANDOFF2.md)，产物证明`local/migration72/offline-sol-terra/portable-build/artifact-proof.json`。
 
 2026-11-07当前构建：独立Avatar raw适配器c667344经portable入口30秒打包，JAR SHA-256 `dfdebbda0352055540c44a54e2eebfd4ffdfe679db74270044d3d55aeb006ec3`。282新增raw class及3元信息变化与编译输出相同，其余46019旧class保持；完整P0/SDK/资源合同未齐，尚未部署或装补丁。服务stopped/Healthy=false，8088TCP/22101UDP/27027无监听，原Mongo27017保留；R2原始客户端留在已核自有pause，禁止按旧无target段落另load。开发持续推进，历史暂停段落不生效；实际记录见Project/Harness及[适配器](CLIENT_72_AVATAR_WIRE_ADAPTER.md)。
