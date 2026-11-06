@@ -310,3 +310,25 @@ $env:GRADLE_USER_HOME = (Resolve-Path local/gradle).Path
 $env:LUNAGC_RUNTIME = 'portable'
 ./gradlew.bat --no-daemon test --tests emu.grasscutter.scripts.D02BirthInitialEntitiesTest -PskipHandbook=1 -I (Join-Path $d02Work 'birth.init.gradle') --console=plain
 ```
+
+## 子合同 L：本次出生初始 suite 的自动事件
+
+范围是 K 的一次 inline 实际选中 25 组及其打印的 active suite，不代表其他随机 suite、任务动态组、插件或跨组调用闭包。生产 `Scene.onLoadGroup` 对已选 suite 注册触发器并提交 GROUP_REFRESH、GROUP_LOAD；真实 gadget 加入场景时的 `EntityGadget.onCreate` 提交 GADGET_CREATE。提交返回的 Future 在这些入口没有向本测试暴露；不能用另一个事件完成或队列暂空推断所有异步事件已完成。
+
+| 本次已选组及 suite | GROUP_REFRESH | GROUP_LOAD | GADGET_CREATE |
+| --- | --- | --- | --- |
+| 133003505 / 1 | 无本组订阅 | `GROUP_LOAD_505010` | `GADGET_CREATE_505007` |
+| 133003601 / 1 | 无本组订阅 | 无本组订阅 | `GADGET_CREATE_601005` |
+| 133003429 / 2 和其余 22 组 / 1 | 无本组订阅 | 无本组订阅 | 无本组订阅 |
+
+其余 22 组按 K 的 XML 所列为 022、024、025、032、105、128、275、288、289、313、317、332、333、426、504、785、801、802、803、804、807、901（均省略共同前缀 `133003`）。无本组订阅只说明本次注册列表对这三种事件没有该组的 trigger；不排除其他组、插件、后续 suite 或动态注册。K 对 25 个组 Lua 的文本核查没有发现字面直接 `require`，这也不能排除传递或动态调用。
+
+505 的 GROUP_LOAD condition 为空，生产 `callScriptFunc` 对空函数返回 true；其 action 分别读取 505001/505002 的状态，仅当读取为 -1 或 GearStart 时，将同组 505003/505004 设为 Default 并移除对应门。自然默认状态的真实生产 `scene.onLoadGroup` 由新定向测试执行：等待真实 `triggerInvocations` 的 `GROUP_LOAD_505010=1` 和 `GADGET_CREATE_505007=4`，观察两门保持 Default、两箱保持 ChestLocked，捕获 ERROR 为 0。生产 `callTrigger` 在同步 `callScriptFunc(action)` 返回之后才递增该计数，因此它证明对应 Lua action 调用返回，不证明任意后代事件或后续清理均完成。505007 的 condition 调用 `PrintContextLog` 后返回 true，action 为空；四次计数包括这些 condition 和空 action 返回。505 GearStart / 门缺失时的真实 ScriptLib 状态修改、移除和跨组隔离反例见 E，并非本次自然条件已触发。
+
+601 的 601005 condition 要求本次创建的 config 为 601002 且状态 Default；action 对同组 601002 调用 `SetWorktopOptionsByGroupId(...,{173})`。K 真实生产加载观察到了 option 173，H 的独立真实事件测试验证了该操作和广播构造边界；K 的状态观察不证明其他回调完成。601 的 `GADGET_STATE_CHANGE_601003` 条件为状态 GearStart，成立后 `AddExtraGroupSuite(133003601,2)`；那是状态变化后代，不能因为初始创建就称其触发。region、死亡、选项交互及其后代均未由本合同运行。
+
+505 自然自动事件首轮定向实验实际 **1 项通过、失败/错误/跳过为 0**，inline 独立 config、非持久 scene，真实 ScriptLoader/Scene/ScriptLib，未手动派发或强制状态；未启动数据库、HTTP、DispatchServer或网络服务。首轮测试源码 SHA-256 `29cf2ccdd82397267c2aac1ceb9671ca7a0679ce4828133e59d77ce360af22bb`，class `e43611e5b202143c555354c1b929cf2a90f1f4ea5a3f018a8607a19f0c9d18f7`，XML `1e6a13e28c0eebc0c4c03e0feb25d83de83c711ed16607539fd0b80160dd0a13`；完整日志和独立配置在 `local/migration72/d02-r3-birth-505-auto-24d65087686842f583882188b953dcb7/`。根 fast 配置及其 449 个错误仍按 K 保留，目标 wire、运行 revision、真实后台调度和客户端未证；不据此标记 R3 完成。
+
+主线核实`findGroupById`真实读取`scene3_block3003.lua`，在测试中增加该必经输入的SHA-256 `40732841be0e294fe02d80131a5436a6a9ba1ebe78eb5b8468e8a9e500ab9676`断言，其余行为/断言不改。使用新目录/JVM独立复跑仍为1项通过，计数、自然状态和0 ERROR相同，无DB/HTTP/Dispatch初始化。最终源码SHA-256 `9538db08f0dce9afd4add978a7df319450a07d0cd1cb9919e46f9c4a7e01132b`，class `4be887948e043ee8e61b6a62a6b16c9f14832bc03a3c8f95c280eb40bb2265fb`，XML `6268ba9d984f7f52fe6587fddb58bb2f254b1401394e071c24cf29f9e2599b96`。六份固定资源输入与最终产物记录在`local/migration72/evidence/d02-r3-birth-505-main-review.json`，目录`d02-r3-birth-505-main-8b8d50fc7c974a7c8fccb65f0abcf43b/`；首轮与主线重叠，不相加为两个新验收测试。
+
+复现时按 K 的 Python 块生成新独立 config 和 init 脚本，将其中的测试类改为 `emu.grasscutter.scripts.D02Birth505AutoEventTest`，其余输入与 Gradle 参数保持相同。该定向测试只加载实际 505 组并执行生产自动派发，不重新运行 K 的 25 组网格测试；运行前仍须协调 Gradle。旧 505 Lua、scene3.lua、block3003、GlobalCombat、DropTable 和候选 Gadget 文件都由测试校验 hash。

@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+E-01d1l：[最小资源L](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)、`D02Birth505AutoEventTest`；25个所选suite三类本组订阅有限表，505生产自然加载的1次GROUP_LOAD/4次GADGET_CREATE调用返回、门Default/箱ChestLocked与0 ERROR。主线核计数发生在action返回后，增加实际block3003 hash并按K独立配置复现1项通过；最终source/class/XML在`evidence/d02-r3-birth-505-main-review.json`，目录`d02-r3-birth-505-main-8b8d50fc7c974a7c8fccb65f0abcf43b/`。无DB/HTTP/Dispatch/网络或手动派发，计数不等于后代异步结束，R3仍未完成。
+
 E-01d1k：[最小资源K](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)、`D02BirthInitialEntitiesTest`；真实出生点25组/初始suite、逐实体类型/ID、自然601 option173，inline1项通过0 ERROR；fast第三轮1失败449 ERROR，根fast保持。主线35输入/source/class/XML核同，351重建引用逐项对固定Lua，区分52/299静态统计和真实循环断言，证明`evidence/d02-r3-birth-main-review.json`；原始`d02-r3-birth-inline-86563b38420d4457b5a25ff91e4a1eb1/`及fast失败目录见K。无DB/HTTP/Dispatch，按K命令独立配置/JVM/cache复现；其余初始事件/实际调度/revision/客户端未验，继续L。
 
 F-03d3f4a：[生命状态](docs/CLIENT_72_AVATAR_STATE.md)，`client72_avatar_state.py`/`test_client72_avatar_state`；26样本/28实际应用/5错误、11新增/46关联，主线46与第三新进程原生均过，完整/摘要同SHA `cebfefdb…fe748`/`6cbc46b1…f4cc9`。主线证明`evidence/avatar-state-main-review.json`及`avatar-state-main-{native,summary}.json`、日志同前缀。enum57376、真实+2cc写及具名事件已审；scene/entity输入和对象池分配是显式模型，下游效果/IFix/入场省略必要性未验。REA首次冷分析超时不列为成功证据，后续延长预算分析独立，不与Unicorn来源混同。继续f4b FightProp。
