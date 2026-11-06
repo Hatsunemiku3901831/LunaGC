@@ -12,6 +12,8 @@ F-03d3e7限定验收：两类29wire、256扫描/14图/9拒绝，六种message-li
 
 D-01b5a（D02-R2观察子合同）已审核：[有界启动观察](docs/CLIENT_72_STARTUP_OBSERVER.md)保留两次游戏退出与三自有进程复现。第二轮39停点双API一致/DR全0，12.625秒后OS/PUB/log同为80000003；两轮独立WER均指factory RVA52FBF0，未取得自然Marshal/SDK/HTTP调用。16离线守卫主线复跑通过，五份raw hash/源码hash与共享摘要逐项核同；不晋级启动/连接。下一单变量撤五个主模块点、保留相同三终止点及120秒通道，按新证据决定后续，不盲重载。
 
+F-03d3e8完成raw闭包：[双Object及完整Avatar raw图](docs/CLIENT_72_AVATAR_COMPLETE_RAW.md)。51050的12存储实际11wire、512扫描/24图/9拒绝；完整复杂34类237wire、AvatarInfo62类、Avatar65类372wire均实际进入全量reader并无untracedType。10新增/166关联及主线10定向通过，主线第三全新原生回放与双跑完整/摘要逐字节相同。只批准raw闭包，业务/完整发送/targetProtocolReady/runtime不晋级；继续独立适配器及语义，不用完整raw替代D-02。
+
 F-03d3f2a限定完成：[Hero/本地角色消费](docs/CLIENT_72_AVATAR_CONTROL.md)实际将root tag3经GUID模型索引接到具名SetHeroMoveRatio，而GetLocalAvatarConfigId另用场景管理器+0x284；7个独立原生图/15关联测试及双新进程一致。不批准`cur_avatar_guid`，不把夹具中的两类实体关联当实际入场/切人；F-03d3f2继续找场景控制实体写入与队伍来源，映射/ready保持。
 
 E-01d1a（D02-R3子合同A）已验收：固定候选commit/tree/blob四表，受控角色10000005/10000007→武器11101及501/504/701/704四depot的skills/subSkills/energySkill/attackModeSkill正引用全存在；0保持空引用。3新增及原资源7项共10聚焦测试通过，主线独立重跑报告SHA `a5974ef3…f5698f`与两份代理报告相同。标准模块入口首次导入失败已修并真实复验；天赋/成长/突破/能力/武器后代及revision、真实加载仍未知，R3父项/resourceReady不晋级。见[最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)；仅离线工具/测试/文档，未部署。
@@ -52,7 +54,7 @@ E-01d1a（D02-R3子合同A）已验收：固定候选commit/tree/blob四表，�
 | F-03d2a1 库存15类型依赖与原始外层 | F-03d2a固定输入/全部usage来源 | a81f84b；15类型42存储依赖，512扫描/21图/5拒绝、8新增/38关联及双跑；root/Item外层+2叶子13wire限定通过，其他非空nested范围拒绝，fullStoreRawClosure=false | 已完成 |
 | F-03d2a2 uint32 map与packed列表 | F-03d2a1 | eec23d2；6类22wire，5map/5list；768扫描/29图/3模型拒绝，8新增/46关联及双跑；公共runtime未改 | 已完成 |
 | F-03d2a3 嵌套oneof及库存组合图 | F-03d2a1/a2 | 9fd871e；15类47wire、1920扫描/32图/6拒绝，8新增/54关联及双跑；6 Item非空分支、3组oneof、map clear/copy/list append真实执行，身份/业务不晋级 | 已完成 |
-| F-03d3 AvatarData递归Avatar闭包 | F-03d1方法、本地固定输入 | 20143批量Avatar用途及5字段/3属性ID已f1独立证明；raw仍缺e4至e8，完整Team/Rename/当前角色链及生产未验，不发送猜测字段 | 进行中 |
+| F-03d3 AvatarData递归Avatar闭包 | F-03d1方法、本地固定输入 | 20143批量Avatar用途及5字段/3属性ID已f1独立证明；e1～e8完成65类372wire raw闭包，完整Team/Rename/当前角色链及生产未验，不发送猜测字段 | 进行中 |
 | F-03d3a Avatar候选依赖与raw外层下界 | F-03d1a/d2a方法、本地固定三输入 | 2cfe1e4；3类14wire、384扫描/19原生图/5拒绝、8新增/62关联及双跑一致；65类368存储/37容器85 AOT仅静态审计；AvatarInfo非空拒绝，身份unknown/fullAvatarRawClosure=false | 已完成 |
 | F-03d3b AvatarInfo外层与四叶子raw下界 | F-03d3a、已有78350 raw图 | 7470ef6；6类53wire、1536扫描/24独立图/11拒绝、9新增/69关联及双跑一致；共享reader codec冲突先红后专用上下文修复，公共runtime未改；复杂四子图非空拒绝/fullAvatarRawClosure=false，不迁生产 | 已完成 |
 | F-03d3c Avatar两个小树非空raw闭包 | F-03d3b | 24caff2；先审6类18存储/16引用后768扫描确认18wire，20独立图/10拒绝、8新增/77关联及双跑一致；同形两对象独立值、singular合并/list追加实跑；两树限定闭包true，完整Avatar/身份仍false/unknown | 已完成 |
@@ -64,7 +66,7 @@ E-01d1a（D02-R3子合同A）已验收：固定候选commit/tree/blob四表，�
 | F-03d3e5 中层list与int64 | F-03d3e3/e4 | 五类24wire/640扫描/21图/8拒绝，10AOT；同形子图、多份非空list、signed int64 min/max/高位及零/错误已验。8新增及130关联通过，主线8定向/第三新进程原生重跑与代理双跑完整/摘要相同；完整复杂图与业务/runtime不晋级 | 已完成 |
 | F-03d3e6 大标量节点与signed列表 | F-03d3e3/e4 | 两类36wire/256扫描/13图/9拒绝，6AOT；三同形48088独立值/合并、signed真实Add、三uint64换位与零/错误通过。8新增及138关联、主线8定向/第三原生进程与双跑完整/摘要相同；完整复杂图/业务/runtime不晋级 | 已完成 |
 | F-03d3e7 多份message列表中层 | F-03d3e3/e6 | 两类29wire/256扫描/14图/9拒绝，12具体AOT；多份同形msg-list独立非空/追加、signed Add、uint64交换与合并/零/错误已验。8新增/146关联、主线8定向及第三原生回放与双跑完整/摘要逐字节相同；完整Avatar与业务/runtime不晋级 | 已完成 |
-| F-03d3e8 双Object与完整复杂图 | F-03d3e1至e7 | 限51050一类12存储下界；两Object的boxed-u32与tag100 message需独立证据/扫描至128，完整53824及AvatarInfo/Avatar组合、全部非空依赖/oneof切换/错误/双跑；不得用空壳批准完整图或业务名 | 待开始 |
+| F-03d3e8 双Object与完整复杂图 | F-03d3e1至e7 | 51050的12存储→11wire/512扫描、24图/9拒绝；tag100复制与双Object独立、全部非空复杂34类237wire/Avatar65类372wire完整reader进入。10新增/166关联及主线10定向、第三原生重跑与双跑完整/摘要相同。只raw闭包true，业务/发送/runtime仍未验 | 已完成 |
 | F-03d3f1 Avatar初始化用途与最小字段语义 | 已验root/48178子集及Equip合同，完整raw另等e8 | 36a4669；5字段/3属性ID，22通知/25应用/24分配/54属性/44装备槽交付/7拒绝，10新增79关联及双跑；具名Avatar资源/原生u64字典和int64→double消费通过，cur_avatar_guid/FightProp/完整Handler未知，未迁生产，已停止后续工作 | 已完成 |
 | E-01c6 嵌套require调用者bindings恢复 | E-01c5已复现成功置null/异常残留 | b74cd16；6例先5失败后全过，6套32 Lua及8加载审计全过；portable25秒JAR7ca18e10…e8f5f、9class相符，其余45935不变；双轮整场fast407/449、inline0，30错误组恢复且无新增；完整前置不足未部署，local/资源/实机不晋级 | 已完成 |
 | F-04a SDK/补丁/资源前置现场复核 | 当前checkout/config/GAME_PATH、三输入与现有会话 | 三哈希/参考clean/归属已验；API会话无target；两个status退出1及6个revision候选；源码旧强制验签钩子与字符串工厂缺口保留，见CLIENT_72_RUNTIME_PREREQUISITES；仅核对不代表F-04完成 | 已完成 |

@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+F-03d3e8：[完整Avatar raw图](docs/CLIENT_72_AVATAR_COMPLETE_RAW.md)，`trace_client72_avatar_complete_raw.py`/`test_client72_avatar_complete_raw`。新51050的11wire/512扫描、24图/9拒绝；完整复杂34类237wire/Avatar65类372wire均实际reader进入，双Object及tag100真实复制已验。10新增/166关联和主线10定向通过，第三新进程完整/摘要与双跑同为`5556baf4…db0961`/`37c90e4d…def837`，证据`evidence/avatar-complete-raw-*`；raw true与业务/runtime false分开，继续独立适配器和必要语义。
+
 D-01b5a / D02-R2：[启动观察](docs/CLIENT_72_STARTUP_OBSERVER.md)，`observe_client72_startup.py`/`test_client72_startup_observer`。两游戏退出的OS/PUB/log与WER闭合，三自有进程复现系统→EP的旧DR恢复；第二游戏39停点DR0仍80000003，未获自然SDK/HTTP/Marshal。主线重跑8新+8旧守卫共16项、核五raw hash及源码/摘要一致；证据`evidence/d02-r2-*`，共享摘要SHA`d815dfac…f2d2d`。下一零主模块点单变量对照，父R2不晋级；不按弱running状态或旧数据库点直接run/load。
 
 F-03d3e7：[多份message列表](docs/CLIENT_72_AVATAR_MULTI_LISTS.md)，`trace_client72_avatar_multi_lists.py`/`test_client72_avatar_multi_lists`；两类29wire、256扫描/14图/9拒绝，8新增/146关联及主线8定向通过。主线第三新进程完整/摘要与双跑同为`a4fc50e5…89fc46b`/`51d4ef4a…2dc33f6`，证据`evidence/avatar-multi-lists-*`；六具体message-list独立AOT和同形非空列表分离已验，继续e8，不晋级业务或实机。
