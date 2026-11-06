@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+Avatar Sorted精确构造已主线审核：7原生/7独立断言/第三native同双跑，SortedDictionary→KeyValuePairComparer→Comparer→TreeSet→SortedSet真实返回并写+1c0；cold/missing/null分别止步。仅选定构造，enum HashSet与完整handler仍未闭，装备查询小链继续。
+
 Scene线本轮收口：80154非零必要性经过当前sender/旧Proto/目标字段独立复核仍未知，后置精确实机/来源输入，不扩战斗。两已验卡保留，完整SceneInfo/实体/handler未晋级。
 
 Scene后继第二项主线48关联/第三native同双跑：7复制+8真实hash查询场景；精确rgctx Clone接口、77771双列表深拷贝及旧bool/list清理、u32高位/碰撞/Unicode/缺key默认均已验。完整能力/自然注册表/后继状态消费者与实体仍未闭。

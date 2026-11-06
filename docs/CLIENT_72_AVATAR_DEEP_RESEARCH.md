@@ -189,3 +189,13 @@ python -m unittest tools.test_client72_avatar_deep_rgctx -v
 6组原生/7独立断言及主线第三回放同双跑：完整`9c3adfd698677c4cb83464c2bbc81819862361eff2a84d3dd76f33aa451f133e`，摘要`a8b29f1916799b754669bb1f609fd89f9a8427466217db1460a9503d7df642e0`；证明`local/migration72/astra-main/avatar-rgctx-review.json`。首次把原始MOV/LEA byte命中误当指令，独立边界断言失败后修为.pdata反汇编核对：1 raw/0有效，保留原报告和失败。搜索限REX.W RIP MOV/LEA，不是全二进制无初始化证明。
 
 enum canonicalization依赖`145bc8ef0`运行时pointer cell，当前不是file-backed且其实际值未观测；不能任选flag或套同形int/u32 comparer。SortedDictionary已恢复准确重载14780，后续comparer/TreeSet精确链继续离线研究。复现：`python tools/client72_avatar_deep_rgctx.py --client <GAME_PATH> --output <独立原始路径> --observations <独立摘要路径>`，`python -m unittest tools.test_client72_avatar_deep_rgctx -v`。上述结果替代“34054中段三个stores未执行”的旧边界，但完整constructor/handler/g2仍false。
+
+## SortedDictionary comparer/TreeSet选定构造已验
+
+独立`client72_avatar_deep_sorted.py`按精确class定义恢复2034/+20的2046 KeyValuePairComparer、+28的method14879、+30的2049 TreeSet<KeyValuePair>、+38的method14886；2046继承Comparer ctor10271，2049继承SortedSet ctor14994。实际类型仍是32758/51041；共享body注册为32758/Object，引用canonicalization复用已审结果，key32758父类是ValueType而非Enum，不依赖未观测enum flag。
+
+五个实际AOT依次为14780/1570f65b0、14879/158878110、10271/1560f5700、14886/157601a80、14994/156381bf0。给定非null comparer、null→warm cached comparer均完整返回，真正保存树/包装comparer/原comparer指针；Avatar片段15183ff1a→15183ff7a以全新/旧指针两组真实写model+1c0。typed分配、已初始化class/MethodInfo/rgctx、opaque comparer输入是明确模型，未执行comparer创建/比较、完整树操作或完整Avatar ctor。
+
+冷comparer在158878154的未知metadata/reflection前停，缺TreeSet context在157601ac3前停，null根在1570f6675原生错误helper之前停；均不装成功桩。早期probe误把某零偏移标签写为treeCount，独立布局审核后移除：没有执行get_Count/VersionCheck，不拿任意零内存当树状态语义。
+
+7原生/7独立断言及主线第三回放同双跑：完整`2d66f279652f711bdd44a4e54c44c775092e3cd0ddf98f2d43c902136d1db0ff`，摘要`549566564c42c653c05b11a26a73ef249d2e2e8cba0dca75efaa0e4648ed1401`。证明`local/migration72/astra-main/avatar-sorted-review.json`，原始`astra-avatar/sorted-final-{first,repeat}-*.json`。复现`python tools/client72_avatar_deep_sorted.py --client <GAME_PATH> --output <独立原始路径> --observations <独立摘要路径>`及`python -m unittest tools.test_client72_avatar_deep_sorted -v`。旧“Sorted精确构造完全未执行”已被本段限定结果取代，完整constructor/handler/g2仍false。

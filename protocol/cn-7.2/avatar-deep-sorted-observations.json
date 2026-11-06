@@ -1,0 +1,894 @@
+{
+  "task": "F-03d3f4d2-sorted",
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "inputContracts": {
+    "avatar-deep-observations.json": "fc08a41533290f671693ac1a0a0ec3608ac56c1cd93cc039f2c681f8102a44c7",
+    "avatar-deep-rgctx-observations.json": "a8b29f1916799b754669bb1f609fd89f9a8427466217db1460a9503d7df642e0"
+  },
+  "declarations": {
+    "actualArguments": [
+      {
+        "kind": "valuetype",
+        "attributes": "0x0",
+        "data": "0x7ff6",
+        "byRef": false,
+        "typeDefinition": 32758,
+        "name": "AEGLMBIBKNP",
+        "namespace": ""
+      },
+      {
+        "kind": "class",
+        "attributes": "0x0",
+        "data": "0xc761",
+        "byRef": false,
+        "typeDefinition": 51041,
+        "name": "IPJAICIDGHH",
+        "namespace": ""
+      }
+    ],
+    "keyTypeParent": {
+      "kind": "class",
+      "attributes": "0x0",
+      "data": "0x195",
+      "byRef": false,
+      "typeDefinition": 405,
+      "name": "ValueType",
+      "namespace": "System",
+      "typeIndex": 430405
+    },
+    "treeFields": [
+      {
+        "index": 9583,
+        "name": "root",
+        "nameIndex": "0x4000559",
+        "typeIndex": 450957,
+        "type": {
+          "kind": "genericinst",
+          "attributes": "0x1",
+          "data": "0x63047",
+          "byRef": false,
+          "genericIndex": 405575,
+          "instanceIndex": 54684,
+          "arguments": [
+            {
+              "kind": "var",
+              "attributes": "0x0",
+              "data": "0x1c4",
+              "byRef": false
+            }
+          ],
+          "typeDefinition": 2059,
+          "name": "Node",
+          "namespace": ""
+        },
+        "offset": null,
+        "rawOffset": "0x0",
+        "offsetKind": "runtime"
+      },
+      {
+        "index": 9584,
+        "name": "comparer",
+        "nameIndex": "0x8003475",
+        "typeIndex": 450959,
+        "type": {
+          "kind": "genericinst",
+          "attributes": "0x1",
+          "data": "0x63048",
+          "byRef": false,
+          "genericIndex": 405576,
+          "instanceIndex": 54684,
+          "arguments": [
+            {
+              "kind": "var",
+              "attributes": "0x0",
+              "data": "0x1c4",
+              "byRef": false
+            }
+          ],
+          "typeDefinition": 1245,
+          "name": "IComparer`1",
+          "namespace": "System.Collections.Generic"
+        },
+        "offset": null,
+        "rawOffset": "0x0",
+        "offsetKind": "runtime"
+      },
+      {
+        "index": 9585,
+        "name": "count",
+        "nameIndex": "0x5001fe9",
+        "typeIndex": 444079,
+        "type": {
+          "kind": "int32",
+          "attributes": "0x1",
+          "data": "0xfb",
+          "byRef": false
+        },
+        "offset": null,
+        "rawOffset": "0x0",
+        "offsetKind": "runtime"
+      },
+      {
+        "index": 9586,
+        "name": "version",
+        "nameIndex": "0x70019e7",
+        "typeIndex": 444079,
+        "type": {
+          "kind": "int32",
+          "attributes": "0x1",
+          "data": "0xfb",
+          "byRef": false
+        },
+        "offset": null,
+        "rawOffset": "0x0",
+        "offsetKind": "runtime"
+      },
+      {
+        "index": 9587,
+        "name": "_syncRoot",
+        "nameIndex": "0x902315d",
+        "typeIndex": 444734,
+        "type": {
+          "kind": "object",
+          "attributes": "0x81",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        },
+        "offset": null,
+        "rawOffset": "0x0",
+        "offsetKind": "runtime"
+      }
+    ],
+    "contexts": [
+      {
+        "owner": 2034,
+        "slot": 2,
+        "word": "0x80a7496",
+        "kind": 2,
+        "type": {
+          "kind": "genericinst",
+          "attributes": "0x0",
+          "data": "0x641f9",
+          "byRef": false,
+          "genericIndex": 410105,
+          "instanceIndex": 54639,
+          "arguments": [
+            {
+              "kind": "valuetype",
+              "attributes": "0x0",
+              "data": "0x7ff6",
+              "byRef": false,
+              "typeDefinition": 32758,
+              "name": "AEGLMBIBKNP",
+              "namespace": ""
+            },
+            {
+              "kind": "class",
+              "attributes": "0x0",
+              "data": "0xc761",
+              "byRef": false,
+              "typeDefinition": 51041,
+              "name": "IPJAICIDGHH",
+              "namespace": ""
+            }
+          ],
+          "typeDefinition": 2046,
+          "name": "KeyValuePairComparer",
+          "namespace": ""
+        }
+      },
+      {
+        "owner": 2034,
+        "slot": 3,
+        "word": "0xc08c5a5",
+        "kind": 3,
+        "methodSpec": 574885,
+        "methodDefinition": 14879,
+        "arguments": [
+          {
+            "kind": "valuetype",
+            "attributes": "0x0",
+            "data": "0x7ff6",
+            "byRef": false,
+            "typeDefinition": 32758,
+            "name": "AEGLMBIBKNP",
+            "namespace": ""
+          },
+          {
+            "kind": "class",
+            "attributes": "0x0",
+            "data": "0xc761",
+            "byRef": false,
+            "typeDefinition": 51041,
+            "name": "IPJAICIDGHH",
+            "namespace": ""
+          }
+        ],
+        "methodInstance": -1
+      },
+      {
+        "owner": 2034,
+        "slot": 4,
+        "word": "0x80a7497",
+        "kind": 2,
+        "type": {
+          "kind": "genericinst",
+          "attributes": "0x0",
+          "data": "0x62fed",
+          "byRef": false,
+          "genericIndex": 405485,
+          "instanceIndex": 54640,
+          "arguments": [
+            {
+              "kind": "genericinst",
+              "attributes": "0x0",
+              "data": "0x62fee",
+              "byRef": false,
+              "genericIndex": 405486,
+              "instanceIndex": 54639,
+              "arguments": [
+                {
+                  "kind": "valuetype",
+                  "attributes": "0x0",
+                  "data": "0x7ff6",
+                  "byRef": false,
+                  "typeDefinition": 32758,
+                  "name": "AEGLMBIBKNP",
+                  "namespace": ""
+                },
+                {
+                  "kind": "class",
+                  "attributes": "0x0",
+                  "data": "0xc761",
+                  "byRef": false,
+                  "typeDefinition": 51041,
+                  "name": "IPJAICIDGHH",
+                  "namespace": ""
+                }
+              ],
+              "typeDefinition": 1217,
+              "name": "KeyValuePair`2",
+              "namespace": "System.Collections.Generic"
+            }
+          ],
+          "typeDefinition": 2049,
+          "name": "TreeSet`1",
+          "namespace": "System.Collections.Generic"
+        }
+      },
+      {
+        "owner": 2034,
+        "slot": 5,
+        "word": "0xc08c5a6",
+        "kind": 3,
+        "methodSpec": 574886,
+        "methodDefinition": 14886,
+        "arguments": [
+          {
+            "kind": "genericinst",
+            "attributes": "0x0",
+            "data": "0x62fee",
+            "byRef": false,
+            "genericIndex": 405486,
+            "instanceIndex": 54639,
+            "arguments": [
+              {
+                "kind": "valuetype",
+                "attributes": "0x0",
+                "data": "0x7ff6",
+                "byRef": false,
+                "typeDefinition": 32758,
+                "name": "AEGLMBIBKNP",
+                "namespace": ""
+              },
+              {
+                "kind": "class",
+                "attributes": "0x0",
+                "data": "0xc761",
+                "byRef": false,
+                "typeDefinition": 51041,
+                "name": "IPJAICIDGHH",
+                "namespace": ""
+              }
+            ],
+            "typeDefinition": 1217,
+            "name": "KeyValuePair`2",
+            "namespace": "System.Collections.Generic"
+          }
+        ],
+        "methodInstance": -1
+      },
+      {
+        "owner": 2046,
+        "slot": 0,
+        "word": "0xc08c5e5",
+        "kind": 3,
+        "methodSpec": 574949,
+        "methodDefinition": 10271,
+        "arguments": [
+          {
+            "kind": "genericinst",
+            "attributes": "0x0",
+            "data": "0x63018",
+            "byRef": false,
+            "genericIndex": 405528,
+            "instanceIndex": 54661,
+            "arguments": [
+              {
+                "kind": "valuetype",
+                "attributes": "0x0",
+                "data": "0x7ff6",
+                "byRef": false,
+                "typeDefinition": 32758,
+                "name": "AEGLMBIBKNP",
+                "namespace": ""
+              },
+              {
+                "kind": "class",
+                "attributes": "0x0",
+                "data": "0xc761",
+                "byRef": false,
+                "typeDefinition": 51041,
+                "name": "IPJAICIDGHH",
+                "namespace": ""
+              }
+            ],
+            "typeDefinition": 1217,
+            "name": "KeyValuePair`2",
+            "namespace": "System.Collections.Generic"
+          }
+        ],
+        "methodInstance": -1
+      },
+      {
+        "owner": 2049,
+        "slot": 1,
+        "word": "0xc08c5e8",
+        "kind": 3,
+        "methodSpec": 574952,
+        "methodDefinition": 14994,
+        "arguments": [
+          {
+            "kind": "genericinst",
+            "attributes": "0x0",
+            "data": "0x62fee",
+            "byRef": false,
+            "genericIndex": 405486,
+            "instanceIndex": 54639,
+            "arguments": [
+              {
+                "kind": "valuetype",
+                "attributes": "0x0",
+                "data": "0x7ff6",
+                "byRef": false,
+                "typeDefinition": 32758,
+                "name": "AEGLMBIBKNP",
+                "namespace": ""
+              },
+              {
+                "kind": "class",
+                "attributes": "0x0",
+                "data": "0xc761",
+                "byRef": false,
+                "typeDefinition": 51041,
+                "name": "IPJAICIDGHH",
+                "namespace": ""
+              }
+            ],
+            "typeDefinition": 1217,
+            "name": "KeyValuePair`2",
+            "namespace": "System.Collections.Generic"
+          }
+        ],
+        "methodInstance": -1
+      }
+    ],
+    "canonicalAOT": [
+      {
+        "owner": 1230,
+        "classInstance": 12375,
+        "method": ".ctor",
+        "methodDefinition": 10271,
+        "tableIndex": 375280,
+        "methodSpec": 252158,
+        "pointerIndex": 160565,
+        "address": "0x1560f5700",
+        "arguments": [
+          {
+            "kind": "genericinst",
+            "attributes": "0x0",
+            "data": "0x17385",
+            "byRef": false,
+            "genericIndex": 95109,
+            "instanceIndex": 12374,
+            "arguments": [
+              {
+                "kind": "valuetype",
+                "attributes": "0x0",
+                "data": "0x7ff6",
+                "byRef": false,
+                "typeDefinition": 32758,
+                "name": "AEGLMBIBKNP",
+                "namespace": ""
+              },
+              {
+                "kind": "object",
+                "attributes": "0x0",
+                "data": "0x173",
+                "byRef": false,
+                "typeDefinition": 371,
+                "name": "Object",
+                "namespace": "System"
+              }
+            ],
+            "typeDefinition": 1217,
+            "name": "KeyValuePair`2",
+            "namespace": "System.Collections.Generic"
+          }
+        ]
+      },
+      {
+        "owner": 2046,
+        "classInstance": 12374,
+        "method": ".ctor",
+        "methodDefinition": 14879,
+        "tableIndex": 488401,
+        "methodSpec": 509481,
+        "pointerIndex": 415617,
+        "address": "0x158878110",
+        "arguments": [
+          {
+            "kind": "valuetype",
+            "attributes": "0x0",
+            "data": "0x7ff6",
+            "byRef": false,
+            "typeDefinition": 32758,
+            "name": "AEGLMBIBKNP",
+            "namespace": ""
+          },
+          {
+            "kind": "object",
+            "attributes": "0x0",
+            "data": "0x173",
+            "byRef": false,
+            "typeDefinition": 371,
+            "name": "Object",
+            "namespace": "System"
+          }
+        ]
+      },
+      {
+        "owner": 2034,
+        "classInstance": 12374,
+        "method": ".ctor",
+        "methodDefinition": 14780,
+        "tableIndex": 488501,
+        "methodSpec": 471717,
+        "pointerIndex": 377998,
+        "address": "0x1570f65b0",
+        "arguments": [
+          {
+            "kind": "valuetype",
+            "attributes": "0x0",
+            "data": "0x7ff6",
+            "byRef": false,
+            "typeDefinition": 32758,
+            "name": "AEGLMBIBKNP",
+            "namespace": ""
+          },
+          {
+            "kind": "object",
+            "attributes": "0x0",
+            "data": "0x173",
+            "byRef": false,
+            "typeDefinition": 371,
+            "name": "Object",
+            "namespace": "System"
+          }
+        ]
+      },
+      {
+        "owner": 2056,
+        "classInstance": 12375,
+        "method": ".ctor",
+        "methodDefinition": 14994,
+        "tableIndex": 489276,
+        "methodSpec": 485758,
+        "pointerIndex": 391969,
+        "address": "0x156381bf0",
+        "arguments": [
+          {
+            "kind": "genericinst",
+            "attributes": "0x0",
+            "data": "0x17385",
+            "byRef": false,
+            "genericIndex": 95109,
+            "instanceIndex": 12374,
+            "arguments": [
+              {
+                "kind": "valuetype",
+                "attributes": "0x0",
+                "data": "0x7ff6",
+                "byRef": false,
+                "typeDefinition": 32758,
+                "name": "AEGLMBIBKNP",
+                "namespace": ""
+              },
+              {
+                "kind": "object",
+                "attributes": "0x0",
+                "data": "0x173",
+                "byRef": false,
+                "typeDefinition": 371,
+                "name": "Object",
+                "namespace": "System"
+              }
+            ],
+            "typeDefinition": 1217,
+            "name": "KeyValuePair`2",
+            "namespace": "System.Collections.Generic"
+          }
+        ]
+      },
+      {
+        "owner": 2049,
+        "classInstance": 12375,
+        "method": ".ctor",
+        "methodDefinition": 14886,
+        "tableIndex": 489889,
+        "methodSpec": 514278,
+        "pointerIndex": 420414,
+        "address": "0x157601a80",
+        "arguments": [
+          {
+            "kind": "genericinst",
+            "attributes": "0x0",
+            "data": "0x17385",
+            "byRef": false,
+            "genericIndex": 95109,
+            "instanceIndex": 12374,
+            "arguments": [
+              {
+                "kind": "valuetype",
+                "attributes": "0x0",
+                "data": "0x7ff6",
+                "byRef": false,
+                "typeDefinition": 32758,
+                "name": "AEGLMBIBKNP",
+                "namespace": ""
+              },
+              {
+                "kind": "object",
+                "attributes": "0x0",
+                "data": "0x173",
+                "byRef": false,
+                "typeDefinition": 371,
+                "name": "Object",
+                "namespace": "System"
+              }
+            ],
+            "typeDefinition": 1217,
+            "name": "KeyValuePair`2",
+            "namespace": "System.Collections.Generic"
+          }
+        ]
+      }
+    ],
+    "comparer": {
+      "cell": "0x145943100",
+      "type": {
+        "kind": "genericinst",
+        "attributes": "0x0",
+        "data": "0x173bf",
+        "byRef": false,
+        "genericIndex": 95167,
+        "instanceIndex": 12363,
+        "arguments": [
+          {
+            "kind": "valuetype",
+            "attributes": "0x0",
+            "data": "0x7ff6",
+            "byRef": false,
+            "typeDefinition": 32758,
+            "name": "AEGLMBIBKNP",
+            "namespace": ""
+          }
+        ],
+        "typeDefinition": 1230,
+        "name": "Comparer`1",
+        "namespace": "System.Collections.Generic"
+      }
+    },
+    "functions": {
+      "0x1570f65b0": {
+        "end": "0x1570f6736",
+        "nativeBytesSHA256": "61c0a8e305fafb723e68e7f2a2f0a7d1ea63a322ebc9df5655d669dd04d5d613"
+      },
+      "0x158878110": {
+        "end": "0x1588781ab",
+        "nativeBytesSHA256": "6cfbb39e4a74418a49a7b4a81284ad68b9925bf99871022a332155721f5bdb47"
+      },
+      "0x1560f5700": {
+        "end": "0x1560f5714",
+        "nativeBytesSHA256": "2e3eed06f4181bbb17e05304fcf6ee1d942afeb107b3ff81b480fa626d6e77d4"
+      },
+      "0x157601a80": {
+        "end": "0x157601af4",
+        "nativeBytesSHA256": "62136df1c10da7a1887d9f42b70e46dc6256a0880849fa6d8d2bf0dc85a97a39"
+      },
+      "0x156381bf0": {
+        "end": "0x156381c38",
+        "nativeBytesSHA256": "e9056ea89c37cfdbe9f59b4e74c9900ee45e2b84be6c4ab93fa86d84ee7131dd"
+      }
+    }
+  },
+  "native": [
+    {
+      "name": "sorted-ctor-supplied",
+      "treeType": 2049,
+      "pairType": 2046,
+      "comparerPreserved": true,
+      "trace": {
+        "entry": "0x1570f65b0",
+        "stop": "0x620000100",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x612038210",
+          "rdx": "0x6120381d0",
+          "r8": "0x612037bb0"
+        },
+        "instructions": 120,
+        "nativePathSHA256": "41d43b2e7e8468de05e6a9125fd9d6203c3ae599b52b0043e23c68abf7b3046e",
+        "models": [
+          "0x1405336c0",
+          "0x1405336c0"
+        ],
+        "nativeEntries": [
+          "0x1560f5700",
+          "0x156381bf0",
+          "0x1570f65b0",
+          "0x157601a80",
+          "0x158878110"
+        ]
+      }
+    },
+    {
+      "name": "sorted-ctor-warm-default",
+      "treeType": 2049,
+      "pairType": 2046,
+      "comparerPreserved": true,
+      "trace": {
+        "entry": "0x1570f65b0",
+        "stop": "0x620000100",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x612038670",
+          "rdx": "0x0",
+          "r8": "0x612037bb0"
+        },
+        "instructions": 126,
+        "nativePathSHA256": "fb1bd8a917be53cfa344ec1b7dcb4a464c40dbabada3ed114bad3338091e809d",
+        "models": [
+          "0x1405336c0",
+          "0x1405336c0"
+        ],
+        "nativeEntries": [
+          "0x1560f5700",
+          "0x156381bf0",
+          "0x1570f65b0",
+          "0x157601a80",
+          "0x158878110"
+        ]
+      }
+    },
+    {
+      "name": "avatar-sorted-fragment-fresh",
+      "rootType": 2034,
+      "treeType": 2049,
+      "pairType": 2046,
+      "comparerPreserved": true,
+      "actualRootArguments": [
+        {
+          "kind": "valuetype",
+          "attributes": "0x0",
+          "data": "0x7ff6",
+          "byRef": false,
+          "typeDefinition": 32758,
+          "name": "AEGLMBIBKNP",
+          "namespace": ""
+        },
+        {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0xc761",
+          "byRef": false,
+          "typeDefinition": 51041,
+          "name": "IPJAICIDGHH",
+          "namespace": ""
+        }
+      ],
+      "trace": {
+        "entry": "0x15183ff1a",
+        "stop": "0x15183ff7a",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "r14": "0x6120372b0"
+        },
+        "instructions": 149,
+        "nativePathSHA256": "a1d3464b55b69c88f567de661c510579013e2da8b4ad3fcf34cb25e17b383ac5",
+        "models": [
+          "0x1405336c0",
+          "0x1405336c0",
+          "0x1405336c0",
+          "0x1405336c0"
+        ],
+        "nativeEntries": [
+          "0x15183ff1a",
+          "0x1560f5700",
+          "0x156381bf0",
+          "0x1570f65b0",
+          "0x157601a80",
+          "0x158878110"
+        ]
+      }
+    },
+    {
+      "name": "avatar-sorted-fragment-old",
+      "rootType": 2034,
+      "treeType": 2049,
+      "pairType": 2046,
+      "comparerPreserved": true,
+      "actualRootArguments": [
+        {
+          "kind": "valuetype",
+          "attributes": "0x0",
+          "data": "0x7ff6",
+          "byRef": false,
+          "typeDefinition": 32758,
+          "name": "AEGLMBIBKNP",
+          "namespace": ""
+        },
+        {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0xc761",
+          "byRef": false,
+          "typeDefinition": 51041,
+          "name": "IPJAICIDGHH",
+          "namespace": ""
+        }
+      ],
+      "trace": {
+        "entry": "0x15183ff1a",
+        "stop": "0x15183ff7a",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "r14": "0x6120372b0"
+        },
+        "instructions": 149,
+        "nativePathSHA256": "a1d3464b55b69c88f567de661c510579013e2da8b4ad3fcf34cb25e17b383ac5",
+        "models": [
+          "0x1405336c0",
+          "0x1405336c0",
+          "0x1405336c0",
+          "0x1405336c0"
+        ],
+        "nativeEntries": [
+          "0x15183ff1a",
+          "0x1560f5700",
+          "0x156381bf0",
+          "0x1570f65b0",
+          "0x157601a80",
+          "0x158878110"
+        ]
+      }
+    },
+    {
+      "name": "cold-comparer-before-reflection",
+      "rootUnwritten": true,
+      "trace": {
+        "entry": "0x1570f65b0",
+        "stop": "0x158878154",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x612039ad0",
+          "rdx": "0x0",
+          "r8": "0x612037bb0"
+        },
+        "instructions": 60,
+        "nativePathSHA256": "83b1185eb36df0f89ed2076ba969f2c18cd57f8a46070d3ec8f3f497b7298fa1",
+        "models": [
+          "0x1405336c0"
+        ],
+        "nativeEntries": [
+          "0x1560f5700",
+          "0x1570f65b0",
+          "0x158878110"
+        ]
+      }
+    },
+    {
+      "name": "null-root-before-native-error-helper",
+      "trace": {
+        "entry": "0x1570f65b0",
+        "stop": "0x1570f6675",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x0",
+          "rdx": "0x6120381d0",
+          "r8": "0x612037bb0"
+        },
+        "instructions": 9,
+        "nativePathSHA256": "c5ba5b59e493caf05992bf667b59b3d1375dc9986836e7cafe24ac5c9e0de148",
+        "models": [],
+        "nativeEntries": [
+          "0x1570f65b0"
+        ]
+      }
+    },
+    {
+      "name": "missing-tree-base-context-before-resolver",
+      "rootUnwritten": true,
+      "trace": {
+        "entry": "0x1570f65b0",
+        "stop": "0x157601ac3",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x612039ad0",
+          "rdx": "0x6120381d0",
+          "r8": "0x612037bb0"
+        },
+        "instructions": 94,
+        "nativePathSHA256": "6adf9bbb7c9447f8685bac61f007b36048d24ad6db9173811f6441a1c47737e5",
+        "models": [
+          "0x1405336c0",
+          "0x1405336c0"
+        ],
+        "nativeEntries": [
+          "0x1560f5700",
+          "0x1570f65b0",
+          "0x157601a80",
+          "0x158878110"
+        ]
+      }
+    }
+  ],
+  "completeSelectedSortedConstructor": true,
+  "completeConstructor": false,
+  "completeAvatarHandler": false,
+  "runtimeStatus": "not-tested",
+  "targetProtocolReady": false,
+  "sourceSHA256": {
+    "tools/client72_avatar_deep_sorted.py": "7fd555d7aa539e99e05f85846ba27e247e83c5b9e3d455717f85975077eab3f7",
+    "tools/client72_avatar_deep.py": "3293c8fa8d5b049c64676614d8b2033c550bda0761060d34918b9d63f85c9320",
+    "tools/client72_avatar_initializer.py": "9df1101b6204d371e2e60be593b843d1c1e91a690e9df2444498bde4df49b3b9",
+    "tools/extract_client72.py": "7d1c75162f77c0fe0df154aa1240c142ad3f6af3295c89cc3d7b85372d3cb97d",
+    "tools/extract_client72_signatures.py": "ee92527f3607be774c28be694d6f57e9eed3aa40068b7b584979e27b6470c349",
+    "tools/client72_emulator.py": "8007d2594ef8058a4f2a9f1c24094fb5d2551a202b4e52154876cdfe77a17c3c",
+    "tools/client72_session_runtime.py": "c6ff407e33416869a855cfa86e97c3f63a9d24019ac0f6e6dfc74a959bfe1439"
+  },
+  "models": [
+    "Typed managed allocation and initialized class/MethodInfo/RGCTX storage are explicit fixtures based on recovered definitions.",
+    "Non-null and warm cached IComparer<32758> pointers are opaque; their creation and comparison operations are not executed.",
+    "Native SortedDictionary, KeyValuePairComparer, Comparer base ctor, TreeSet and SortedSet constructors execute; cold cache stops before unknown metadata/reflection.",
+    "Reference-value generic sharing reuses the reviewed canonicalizer; actual context types retain51041, never replace original model type arguments with Object."
+  ],
+  "unresolved": [
+    "Avatar enum HashSet target/comparer initialization remains open; no enum-sharing runtime option is selected.",
+    "Complete Avatar handler, nonempty tree operations, cold comparer creation and real client initialization are not established."
+  ]
+}
