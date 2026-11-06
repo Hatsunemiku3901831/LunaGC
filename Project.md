@@ -14,6 +14,9 @@
 | F-03d1b PlayerData业务身份及字段来源 | F-03d1a、typed handler1507BC0E0及Player模型 | 独立目标literal/具名调用链闭合；禁止按上游或NICKNAME孤立字串批准；没有命名证据保持unknown | 待开始 |
 | F-03d2 PlayerStore递归Item闭包 | F-03d1方法、本地固定输入 | 20892仅候选；先核Item/oneof闭包及独立身份/wire，未验不得发送 | 待开始 |
 | F-03d2a 68537/65333库存raw闭包 | F-03d1a方法、本地固定三输入 | 先固定实际Item/oneof及所有必要nested依赖，独立native/wire/错误/list/64位与双跑；若闭包超出本项先列缺口再分卡，身份未闭不进生产 | 进行中 |
+| F-03d2a1 库存15类型依赖与原始外层 | F-03d2a固定输入/全部usage来源 | 15类型/42实例存储依赖及AOT，Item六分支、两个单u32叶子和根原始字段；跨usage不可漏掉嵌套类型，空嵌套不算完整图；独立wire/边界/双跑 | 进行中 |
+| F-03d2a2 uint32 map与packed列表 | F-03d2a1 | 专用真实primitive-map adapter/setter与5承载类，非空/重复key/显式0/边界/packed&unpacked、独立wire及双跑；不改共享工具的已验合同 | 待开始 |
+| F-03d2a3 嵌套oneof及库存组合图 | F-03d2a1/a2 | 三层实际oneof、同分支merge/切换/默认/列表/嵌套/错误全组合，15类型raw闭包完整才验；身份和业务字段另验不晋级 | 待开始 |
 | F-03d3 AvatarData递归Avatar闭包 | F-03d1方法、本地固定输入 | 20143仅候选；AvatarInfo/Team/Rename及packed64位闭包，未验不得发送 | 待开始 |
 | E-01c6 嵌套require调用者bindings恢复 | E-01c5已复现成功置null/异常残留 | b74cd16；6例先5失败后全过，6套32 Lua及8加载审计全过；portable25秒JAR7ca18e10…e8f5f、9class相符，其余45935不变；双轮整场fast407/449、inline0，30错误组恢复且无新增；完整前置不足未部署，local/资源/实机不晋级 | 已完成 |
 | F-04a SDK/补丁/资源前置现场复核 | 当前checkout/config/GAME_PATH、三输入与现有会话 | 三哈希/参考clean/归属已验；API会话无target；两个status退出1及6个revision候选；源码旧强制验签钩子与字符串工厂缺口保留，见CLIENT_72_RUNTIME_PREREQUISITES；仅核对不代表F-04完成 | 已完成 |
