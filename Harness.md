@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+资源深入第一项：`client72_resource_deep.py`、`test_client72_resource_deep`主线10项通过；第三native SHA `05c6d8ee…413692`、摘要`5d0f7487…6c69d7`同双跑，`local/migration72/astra-main/resource-review.json`及同前缀日志；关键parser/codec实际运行，字符串/分配为明确模型，未运行loadAll/DB。命令见[专题](docs/CLIENT_72_RESOURCE_DEEP_RESEARCH.md)。
+
 F-03d3f4d2第一项：`client72_avatar_deep.py --native`、`test_client72_avatar_deep`主线11项通过；第三完整报告SHA `1f937e7d…9cb16`、摘要`fc08a415…2a44c7`与双跑一致，证明`local/migration72/astra-main/avatar-review.json`，命令/模型/真实停止点见[专题](docs/CLIENT_72_AVATAR_DEEP_RESEARCH.md)。未纳入统一review的新增摘要由主线最终精确整合；不晋级ready。
 
 **2026-11-07最新：Astra限定离线研究进行中。** 计划和证据边界见[本轮攻坚](docs/CLIENT_72_ASTRA_OFFLINE.md)；主线清点在`local/migration72/astra-main/initial-{inventory,processes}.json`，三线原始证据分别在`astra-avatar/`、`astra-scene/`、`astra-resources/`。旧raw、网络、Chapter及Java有限投影直接复用，不按历史测试数报告新执行。禁止实机/部署/生产接入。

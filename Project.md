@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+E-01/R3资源深入第一项已主线审核：15完整parser样本、1消费者边界、5拒绝，10独立断言及第三新进程同双跑；depot+68/+6c默认/编码、LHFO条件元素和BGH字符串限定消费成立。JSON桥梁/自动接受/自然loadAll/revision未闭；外层LHFO与条件关联继续。见[资源深入研究](docs/CLIENT_72_RESOURCE_DEEP_RESEARCH.md)。
+
 F-03d3f4d2第一项已主线审核：23组新原生片段、11独立断言及第三新进程与代理双跑相同；61980构造/reset/pool边界、空装备清理、非空赋值和depot+68/tag13编码已验。完整构造/handler/g2未闭，tag29/38及有据后缀继续离线研究。见[Avatar深入研究](docs/CLIENT_72_AVATAR_DEEP_RESEARCH.md)。
 
 **2026-11-07最新限定恢复：Astra离线攻坚进行中。** 仅恢复F-03d3f4d2、SceneInfo后继与E-01/R3必要资源深度研究；不恢复实机、部署、生产接入或Sol/Terra实现。接手4b1a696，五固定输入复核匹配；难点/最小实验/失败出口和分工见[攻坚计划](docs/CLIENT_72_ASTRA_OFFLINE.md)。下方Sol/Terra收口和暂停均为历史阶段，D-02未完成。

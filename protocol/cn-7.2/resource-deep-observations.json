@@ -1,0 +1,2776 @@
+{
+  "schemaVersion": 1,
+  "task": "E-01/R3-resource-deep",
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "priorInputs": {
+    "local/migration72/d02-r3-candidate/ExcelBinOutput/QuestExcelConfigData.json": "c8561299f543456573b0fa16404e210bcd2ecf84ce5006eb63dd4b2845137a87",
+    "local/migration72/d02-r3-candidate/BinOutput/Quest/303.json": "aaf6901da4c30528047c1210bc636f810b368d5fb2f19aad6369bbb956dd3cca",
+    "protocol/cn-7.2/avatar-skill-depot-observations.json": "a8a7b4ce71869c4af88e3bf8164413ed109c7d6e051478d1e682b19e5d0e1a95"
+  },
+  "declarations": {
+    "types": [
+      {
+        "index": 22284,
+        "name": "ALFCDOBDDFP",
+        "fields": [
+          {
+            "name": "LHFOOPMJHBN",
+            "offset": 16,
+            "kind": "szarray",
+            "typeDefinition": null,
+            "elementType": {
+              "kind": "class",
+              "attributes": "0x0",
+              "data": "0x9d6e",
+              "byRef": false,
+              "typeDefinition": 40302,
+              "name": "CGKGCLDHAHE",
+              "namespace": ""
+            }
+          },
+          {
+            "name": "FJNOKIIOHAJ",
+            "offset": 24,
+            "kind": "szarray",
+            "typeDefinition": null,
+            "elementType": {
+              "kind": "class",
+              "attributes": "0x0",
+              "data": "0x13ce7",
+              "byRef": false,
+              "typeDefinition": 81127,
+              "name": "BLGGAMFFGNL",
+              "namespace": ""
+            }
+          },
+          {
+            "name": "PGGPHFNJBBM",
+            "offset": 32,
+            "kind": "szarray",
+            "typeDefinition": null,
+            "elementType": {
+              "kind": "string",
+              "attributes": "0x0",
+              "data": "0x125",
+              "byRef": false
+            }
+          },
+          {
+            "name": "DEGJNDCIFLE",
+            "offset": 40,
+            "kind": "szarray",
+            "typeDefinition": null,
+            "elementType": {
+              "kind": "valuetype",
+              "attributes": "0x0",
+              "data": "0xe361",
+              "byRef": false,
+              "typeDefinition": 58209,
+              "name": "COJIPHBKKGB",
+              "namespace": ""
+            }
+          },
+          {
+            "name": "EBEDHBBEBIJ",
+            "offset": 48,
+            "kind": "szarray",
+            "typeDefinition": null,
+            "elementType": {
+              "kind": "valuetype",
+              "attributes": "0x0",
+              "data": "0xe361",
+              "byRef": false,
+              "typeDefinition": 58209,
+              "name": "COJIPHBKKGB",
+              "namespace": ""
+            }
+          },
+          {
+            "name": "AFPKIMBPIOJ",
+            "offset": 56,
+            "kind": "szarray",
+            "typeDefinition": null,
+            "elementType": {
+              "kind": "valuetype",
+              "attributes": "0x0",
+              "data": "0xe361",
+              "byRef": false,
+              "typeDefinition": 58209,
+              "name": "COJIPHBKKGB",
+              "namespace": ""
+            }
+          },
+          {
+            "name": "GKICIOBDGNJ",
+            "offset": 64,
+            "kind": "string",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "OKIMBIINBEM",
+            "offset": 72,
+            "kind": "string",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "KDFIDKMKBJF",
+            "offset": 80,
+            "kind": "valuetype",
+            "typeDefinition": 58209,
+            "elementType": null
+          },
+          {
+            "name": "KDLEOKGKEAN",
+            "offset": 84,
+            "kind": "valuetype",
+            "typeDefinition": 58209,
+            "elementType": null
+          },
+          {
+            "name": "JMAAKJANEMD",
+            "offset": 88,
+            "kind": "valuetype",
+            "typeDefinition": 58209,
+            "elementType": null
+          },
+          {
+            "name": "ANKCCHHEMOH",
+            "offset": 92,
+            "kind": "valuetype",
+            "typeDefinition": 58209,
+            "elementType": null
+          },
+          {
+            "name": "PMOPBFJAMOB",
+            "offset": 96,
+            "kind": "valuetype",
+            "typeDefinition": 73925,
+            "elementType": null
+          },
+          {
+            "name": "LNCNFOGJIBK",
+            "offset": 100,
+            "kind": "valuetype",
+            "typeDefinition": 58209,
+            "elementType": null
+          },
+          {
+            "name": "OADEJHBGKHO",
+            "offset": 104,
+            "kind": "valuetype",
+            "typeDefinition": 58209,
+            "elementType": null
+          },
+          {
+            "name": "HEGEDDGIFLL",
+            "offset": 108,
+            "kind": "valuetype",
+            "typeDefinition": 58209,
+            "elementType": null
+          },
+          {
+            "name": "EGKMODKAHHK",
+            "offset": 112,
+            "kind": "valuetype",
+            "typeDefinition": 58209,
+            "elementType": null
+          }
+        ],
+        "methods": [
+          {
+            "index": 171935,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x148328b50",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 171936,
+            "name": "CNLIBMNOALB",
+            "nameIndex": "0xb187df6",
+            "registeredAddress": "0x148328b60",
+            "parameterCount": 1,
+            "flags": "0x3c3",
+            "virtualSlot": 4
+          }
+        ]
+      },
+      {
+        "index": 40302,
+        "name": "CGKGCLDHAHE",
+        "fields": [
+          {
+            "name": "HGNPCIHMABD",
+            "offset": 16,
+            "kind": "szarray",
+            "typeDefinition": null,
+            "elementType": {
+              "kind": "valuetype",
+              "attributes": "0x0",
+              "data": "0xe361",
+              "byRef": false,
+              "typeDefinition": 58209,
+              "name": "COJIPHBKKGB",
+              "namespace": ""
+            }
+          },
+          {
+            "name": "FINHFCNILNN",
+            "offset": 24,
+            "kind": "valuetype",
+            "typeDefinition": 85159,
+            "elementType": null
+          },
+          {
+            "name": "ELMCBLCOEEK",
+            "offset": 28,
+            "kind": "valuetype",
+            "typeDefinition": 58209,
+            "elementType": null
+          }
+        ],
+        "methods": [
+          {
+            "index": 337164,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x15113cba0",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 337165,
+            "name": "CNLIBMNOALB",
+            "nameIndex": "0xb187df6",
+            "registeredAddress": "0x15113cbb0",
+            "parameterCount": 1,
+            "flags": "0x3c3",
+            "virtualSlot": 4
+          },
+          {
+            "index": 337166,
+            "name": "CNLIBMNOALB",
+            "nameIndex": "0xb187df6",
+            "registeredAddress": "0x15113ce30",
+            "parameterCount": 2,
+            "flags": "0x93",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 337167,
+            "name": "HPKPKAEJPNK",
+            "nameIndex": "0xb4d604e",
+            "registeredAddress": "0x15113cf70",
+            "parameterCount": 0,
+            "flags": "0x86",
+            "virtualSlot": 65535
+          }
+        ]
+      },
+      {
+        "index": 69472,
+        "name": "HOFCNOMNAME",
+        "fields": [
+          {
+            "name": "MENIHLEKBHJ",
+            "offset": 16,
+            "kind": "szarray",
+            "typeDefinition": null,
+            "elementType": {
+              "kind": "int32",
+              "attributes": "0x0",
+              "data": "0xfb",
+              "byRef": false
+            }
+          },
+          {
+            "name": "BGHPAKBEPND",
+            "offset": 24,
+            "kind": "string",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "HBAJJNPCCCN",
+            "offset": 32,
+            "kind": "uint32",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "IELLPMKLAIO",
+            "offset": 36,
+            "kind": "valuetype",
+            "typeDefinition": 36721,
+            "elementType": null
+          }
+        ],
+        "methods": [
+          {
+            "index": 575416,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x14ef42c00",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 575417,
+            "name": "InitEmpty",
+            "nameIndex": "0x9187e59",
+            "registeredAddress": "0x14ef42c10",
+            "parameterCount": 0,
+            "flags": "0x1e6",
+            "virtualSlot": 4
+          },
+          {
+            "index": 575418,
+            "name": "CNLIBMNOALB",
+            "nameIndex": "0xb187df6",
+            "registeredAddress": "0x14ef42c70",
+            "parameterCount": 2,
+            "flags": "0x93",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 575419,
+            "name": "CNLIBMNOALB",
+            "nameIndex": "0xb187df6",
+            "registeredAddress": "0x14ef42dd0",
+            "parameterCount": 1,
+            "flags": "0x83",
+            "virtualSlot": 65535
+          }
+        ]
+      },
+      {
+        "index": 87244,
+        "name": "PBMAEKLONOD",
+        "fields": [
+          {
+            "name": "AIHMLNEOBPC",
+            "offset": 16,
+            "kind": "class",
+            "typeDefinition": 33481,
+            "elementType": null
+          },
+          {
+            "name": "DHMILBMDOCI",
+            "offset": 24,
+            "kind": "szarray",
+            "typeDefinition": null,
+            "elementType": {
+              "kind": "uint32",
+              "attributes": "0x0",
+              "data": "0x13f",
+              "byRef": false
+            }
+          },
+          {
+            "name": "CCACCHDAOFJ",
+            "offset": 32,
+            "kind": "class",
+            "typeDefinition": 86578,
+            "elementType": null
+          },
+          {
+            "name": "FKEABBKFLNC",
+            "offset": 40,
+            "kind": "string",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "LOAAALAIFOM",
+            "offset": 48,
+            "kind": "szarray",
+            "typeDefinition": null,
+            "elementType": {
+              "kind": "class",
+              "attributes": "0x0",
+              "data": "0xba96",
+              "byRef": false,
+              "typeDefinition": 47766,
+              "name": "GJBGEMHHGOO",
+              "namespace": ""
+            }
+          },
+          {
+            "name": "JLEGEBHJGHC",
+            "offset": 56,
+            "kind": "szarray",
+            "typeDefinition": null,
+            "elementType": {
+              "kind": "class",
+              "attributes": "0x0",
+              "data": "0x10f60",
+              "byRef": false,
+              "typeDefinition": 69472,
+              "name": "HOFCNOMNAME",
+              "namespace": ""
+            }
+          },
+          {
+            "name": "FJIAOLOOHMH",
+            "offset": 64,
+            "kind": "szarray",
+            "typeDefinition": null,
+            "elementType": {
+              "kind": "class",
+              "attributes": "0x0",
+              "data": "0xba96",
+              "byRef": false,
+              "typeDefinition": 47766,
+              "name": "GJBGEMHHGOO",
+              "namespace": ""
+            }
+          },
+          {
+            "name": "JDPJGMGGOEM",
+            "offset": 72,
+            "kind": "szarray",
+            "typeDefinition": null,
+            "elementType": {
+              "kind": "class",
+              "attributes": "0x0",
+              "data": "0x10f60",
+              "byRef": false,
+              "typeDefinition": 69472,
+              "name": "HOFCNOMNAME",
+              "namespace": ""
+            }
+          },
+          {
+            "name": "LOKIEKHKBAD",
+            "offset": 80,
+            "kind": "szarray",
+            "typeDefinition": null,
+            "elementType": {
+              "kind": "uint32",
+              "attributes": "0x0",
+              "data": "0x13f",
+              "byRef": false
+            }
+          },
+          {
+            "name": "NBDGPHODOMK",
+            "offset": 88,
+            "kind": "szarray",
+            "typeDefinition": null,
+            "elementType": {
+              "kind": "uint32",
+              "attributes": "0x0",
+              "data": "0x13f",
+              "byRef": false
+            }
+          },
+          {
+            "name": "GPEFLBCLFNE",
+            "offset": 96,
+            "kind": "class",
+            "typeDefinition": 21108,
+            "elementType": null
+          },
+          {
+            "name": "BKEKBPAKKJD",
+            "offset": 104,
+            "kind": "string",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "NGEKHKKAPAC",
+            "offset": 112,
+            "kind": "uint32",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "HCELDNIOALO",
+            "offset": 116,
+            "kind": "valuetype",
+            "typeDefinition": 56833,
+            "elementType": null
+          },
+          {
+            "name": "BELGPNNFFMK",
+            "offset": 120,
+            "kind": "valuetype",
+            "typeDefinition": 25746,
+            "elementType": null
+          },
+          {
+            "name": "MLAKDHPKFNF",
+            "offset": 124,
+            "kind": "valuetype",
+            "typeDefinition": 56833,
+            "elementType": null
+          },
+          {
+            "name": "CIIAEFKBNHG",
+            "offset": 128,
+            "kind": "valuetype",
+            "typeDefinition": 56833,
+            "elementType": null
+          },
+          {
+            "name": "GGJFGPELLJC",
+            "offset": 132,
+            "kind": "uint32",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "ELINDOGFDIG",
+            "offset": 136,
+            "kind": "int32",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "IODMEMDMIDL",
+            "offset": 140,
+            "kind": "uint32",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "BCEGKELMJGA",
+            "offset": 144,
+            "kind": "valuetype",
+            "typeDefinition": 87483,
+            "elementType": null
+          },
+          {
+            "name": "HNDKLLJHIDH",
+            "offset": 148,
+            "kind": "uint32",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "MFJGCCOJNJH",
+            "offset": 152,
+            "kind": "uint32",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "CAAEIBJCIIC",
+            "offset": 156,
+            "kind": "bool",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "CBFHGGPPEDH",
+            "offset": 157,
+            "kind": "bool",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "PDBMHKPLIHM",
+            "offset": 158,
+            "kind": "bool",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "MENBBDAIAOE",
+            "offset": 159,
+            "kind": "bool",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "LPJGGAMOMGB",
+            "offset": 160,
+            "kind": "valuetype",
+            "typeDefinition": 81019,
+            "elementType": null
+          },
+          {
+            "name": "GHGAFFPHGGK",
+            "offset": 164,
+            "kind": "valuetype",
+            "typeDefinition": 71924,
+            "elementType": null
+          },
+          {
+            "name": "MBALIEJBKKB",
+            "offset": 168,
+            "kind": "bool",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "LBGDEICGBKK",
+            "offset": 169,
+            "kind": "bool",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "KJNEFNCFBIB",
+            "offset": 172,
+            "kind": "uint32",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "HMOHMAMGPAG",
+            "offset": 176,
+            "kind": "uint32",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "GNFGCNDCDDL",
+            "offset": 180,
+            "kind": "int32",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "NLFGDGMBDOA",
+            "offset": 184,
+            "kind": "uint32",
+            "typeDefinition": null,
+            "elementType": null
+          }
+        ],
+        "methods": [
+          {
+            "index": 721796,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x15351a640",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 721797,
+            "name": "LKFBBGMNGPB",
+            "nameIndex": "0xb8fc79c",
+            "registeredAddress": "0x153518a70",
+            "parameterCount": 0,
+            "flags": "0x86",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 721798,
+            "name": "CNLIBMNOALB",
+            "nameIndex": "0xb187df6",
+            "registeredAddress": "0x153518c80",
+            "parameterCount": 1,
+            "flags": "0x83",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 721799,
+            "name": "InitEmpty",
+            "nameIndex": "0x9187e59",
+            "registeredAddress": "0x15351a270",
+            "parameterCount": 0,
+            "flags": "0x1e6",
+            "virtualSlot": 4
+          },
+          {
+            "index": 721800,
+            "name": "IABNBMEKNAF",
+            "nameIndex": "0xb8fc7a7",
+            "registeredAddress": "0x15351a380",
+            "parameterCount": 1,
+            "flags": "0x96",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 721801,
+            "name": "IPADKAJFGEO",
+            "nameIndex": "0xb8fc7b2",
+            "registeredAddress": "0x15351a650",
+            "parameterCount": 0,
+            "flags": "0x86",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 721802,
+            "name": "KOEANPFCMNH",
+            "nameIndex": "0xb63d7d6",
+            "registeredAddress": "0x153518b40",
+            "parameterCount": 0,
+            "flags": "0x886",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 721803,
+            "name": "CNLIBMNOALB",
+            "nameIndex": "0xb187df6",
+            "registeredAddress": "0x15351a6a0",
+            "parameterCount": 2,
+            "flags": "0x93",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 721804,
+            "name": "ADNEILCBIBC",
+            "nameIndex": "0xb8fc7bd",
+            "registeredAddress": "0x15351a430",
+            "parameterCount": 1,
+            "flags": "0x91",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 721805,
+            "name": "FJGHDGKCGNO",
+            "nameIndex": "0xb8fc7c8",
+            "registeredAddress": "0x153518b50",
+            "parameterCount": 2,
+            "flags": "0x81",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 721806,
+            "name": "NKNNONFONPF",
+            "nameIndex": "0xb63d6b8",
+            "registeredAddress": "0x15351a800",
+            "parameterCount": 0,
+            "flags": "0x86",
+            "virtualSlot": 65535
+          }
+        ]
+      },
+      {
+        "index": 33481,
+        "name": "EEJCNAJFIJK",
+        "fields": [
+          {
+            "name": "FFPNDAIJCIB",
+            "offset": 16,
+            "kind": "string",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "MENIHLEKBHJ",
+            "offset": 24,
+            "kind": "szarray",
+            "typeDefinition": null,
+            "elementType": {
+              "kind": "string",
+              "attributes": "0x0",
+              "data": "0x125",
+              "byRef": false
+            }
+          },
+          {
+            "name": "MHLPNFLDKHJ",
+            "offset": 32,
+            "kind": "string",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "IELLPMKLAIO",
+            "offset": 40,
+            "kind": "valuetype",
+            "typeDefinition": 75148,
+            "elementType": null
+          },
+          {
+            "name": "MBKMPOKJODN",
+            "offset": 44,
+            "kind": "valuetype",
+            "typeDefinition": 71982,
+            "elementType": null
+          },
+          {
+            "name": "KHJKBDPANHL",
+            "offset": 48,
+            "kind": "valuetype",
+            "typeDefinition": 40895,
+            "elementType": null
+          },
+          {
+            "name": "JCEDGAJGDPD",
+            "offset": 52,
+            "kind": "uint32",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "OONFDFJKCIB",
+            "offset": 56,
+            "kind": "valuetype",
+            "typeDefinition": 80382,
+            "elementType": null
+          },
+          {
+            "name": "GNIPJAPMBOJ",
+            "offset": 60,
+            "kind": "uint32",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "GJDOPEKCPNE",
+            "offset": 64,
+            "kind": "valuetype",
+            "typeDefinition": 39232,
+            "elementType": null
+          },
+          {
+            "name": "OFPIIHBHDAB",
+            "offset": 68,
+            "kind": "uint32",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "EMHMMNBFGHI",
+            "offset": 72,
+            "kind": "uint32",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "HCHMHGBFEKA",
+            "offset": 76,
+            "kind": "uint32",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "EKDJPDJNPDI",
+            "offset": 80,
+            "kind": "valuetype",
+            "typeDefinition": 20524,
+            "elementType": null
+          },
+          {
+            "name": "JBIKFBKFKCE",
+            "offset": 84,
+            "kind": "valuetype",
+            "typeDefinition": 55642,
+            "elementType": null
+          },
+          {
+            "name": "GCOGMAEBNGL",
+            "offset": 88,
+            "kind": "uint32",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "JDNODOFKFMG",
+            "offset": 92,
+            "kind": "uint32",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "NNBAGCEOGCH",
+            "offset": 96,
+            "kind": "valuetype",
+            "typeDefinition": 76563,
+            "elementType": null
+          }
+        ],
+        "methods": [
+          {
+            "index": 281028,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x14f91fb00",
+            "parameterCount": 6,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 281029,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x14f91fbd0",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 281030,
+            "name": "InitEmpty",
+            "nameIndex": "0x9187e59",
+            "registeredAddress": "0x14f91fb30",
+            "parameterCount": 0,
+            "flags": "0x1e6",
+            "virtualSlot": 4
+          },
+          {
+            "index": 281031,
+            "name": "CNLIBMNOALB",
+            "nameIndex": "0xb187df6",
+            "registeredAddress": "0x14f91fbe0",
+            "parameterCount": 1,
+            "flags": "0x83",
+            "virtualSlot": 65535
+          }
+        ]
+      },
+      {
+        "index": 21108,
+        "name": "INODNKBKOHE",
+        "fields": [
+          {
+            "name": "AELNJJECCEL",
+            "offset": 16,
+            "kind": "string",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "LCLLNDOEJHP",
+            "offset": 24,
+            "kind": "string",
+            "typeDefinition": null,
+            "elementType": null
+          },
+          {
+            "name": "IELLPMKLAIO",
+            "offset": 32,
+            "kind": "valuetype",
+            "typeDefinition": 66953,
+            "elementType": null
+          }
+        ],
+        "methods": [
+          {
+            "index": 162558,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x148f916b0",
+            "parameterCount": 2,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 162559,
+            "name": ".ctor",
+            "nameIndex": "0x5000022",
+            "registeredAddress": "0x148f92000",
+            "parameterCount": 0,
+            "flags": "0x1886",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 162560,
+            "name": "CNLIBMNOALB",
+            "nameIndex": "0xb187df6",
+            "registeredAddress": "0x148f916c0",
+            "parameterCount": 1,
+            "flags": "0x83",
+            "virtualSlot": 65535
+          },
+          {
+            "index": 162561,
+            "name": "InitEmpty",
+            "nameIndex": "0x9187e59",
+            "registeredAddress": "0x148f92010",
+            "parameterCount": 0,
+            "flags": "0x1e6",
+            "virtualSlot": 4
+          }
+        ]
+      }
+    ],
+    "enums": [
+      {
+        "typeIndex": 36721,
+        "clientType": "MLFBGMMGKED",
+        "namespace": "",
+        "underlyingType": "int32",
+        "values": [
+          {
+            "symbol": "QUEST_CONTENT_NONE",
+            "value": 0,
+            "fieldIndex": 179262,
+            "defaultRow": 33496,
+            "typeIndex": 70,
+            "dataIndex": 423923
+          },
+          {
+            "symbol": "QUEST_CONTENT_KILL_MONSTER",
+            "value": 1,
+            "fieldIndex": 179263,
+            "defaultRow": 33497,
+            "typeIndex": 70,
+            "dataIndex": 423927
+          },
+          {
+            "symbol": "QUEST_CONTENT_COMPLETE_TALK",
+            "value": 2,
+            "fieldIndex": 179264,
+            "defaultRow": 33498,
+            "typeIndex": 70,
+            "dataIndex": 423931
+          },
+          {
+            "symbol": "QUEST_CONTENT_MONSTER_DIE",
+            "value": 3,
+            "fieldIndex": 179265,
+            "defaultRow": 33499,
+            "typeIndex": 70,
+            "dataIndex": 423935
+          },
+          {
+            "symbol": "QUEST_CONTENT_FINISH_PLOT",
+            "value": 4,
+            "fieldIndex": 179266,
+            "defaultRow": 33500,
+            "typeIndex": 70,
+            "dataIndex": 423939
+          },
+          {
+            "symbol": "QUEST_CONTENT_OBTAIN_ITEM",
+            "value": 5,
+            "fieldIndex": 179267,
+            "defaultRow": 33501,
+            "typeIndex": 70,
+            "dataIndex": 423943
+          },
+          {
+            "symbol": "QUEST_CONTENT_TRIGGER_FIRE",
+            "value": 6,
+            "fieldIndex": 179268,
+            "defaultRow": 33502,
+            "typeIndex": 70,
+            "dataIndex": 423947
+          },
+          {
+            "symbol": "QUEST_CONTENT_CLEAR_GROUP_MONSTER",
+            "value": 7,
+            "fieldIndex": 179269,
+            "defaultRow": 33503,
+            "typeIndex": 70,
+            "dataIndex": 423951
+          },
+          {
+            "symbol": "QUEST_CONTENT_NOT_FINISH_PLOT",
+            "value": 8,
+            "fieldIndex": 179270,
+            "defaultRow": 33504,
+            "typeIndex": 70,
+            "dataIndex": 423955
+          },
+          {
+            "symbol": "QUEST_CONTENT_ENTER_DUNGEON",
+            "value": 9,
+            "fieldIndex": 179271,
+            "defaultRow": 33505,
+            "typeIndex": 70,
+            "dataIndex": 423959
+          },
+          {
+            "symbol": "QUEST_CONTENT_ENTER_MY_WORLD",
+            "value": 10,
+            "fieldIndex": 179272,
+            "defaultRow": 33506,
+            "typeIndex": 70,
+            "dataIndex": 423963
+          },
+          {
+            "symbol": "QUEST_CONTENT_FINISH_DUNGEON",
+            "value": 11,
+            "fieldIndex": 179273,
+            "defaultRow": 33507,
+            "typeIndex": 70,
+            "dataIndex": 423967
+          },
+          {
+            "symbol": "QUEST_CONTENT_DESTROY_GADGET",
+            "value": 12,
+            "fieldIndex": 179274,
+            "defaultRow": 33508,
+            "typeIndex": 70,
+            "dataIndex": 423971
+          },
+          {
+            "symbol": "QUEST_CONTENT_OBTAIN_MATERIAL_WITH_SUBTYPE",
+            "value": 13,
+            "fieldIndex": 179275,
+            "defaultRow": 33509,
+            "typeIndex": 70,
+            "dataIndex": 423975
+          },
+          {
+            "symbol": "QUEST_CONTENT_NICK_NAME",
+            "value": 14,
+            "fieldIndex": 179276,
+            "defaultRow": 33510,
+            "typeIndex": 70,
+            "dataIndex": 423979
+          },
+          {
+            "symbol": "QUEST_CONTENT_WORKTOP_SELECT",
+            "value": 15,
+            "fieldIndex": 179277,
+            "defaultRow": 33511,
+            "typeIndex": 70,
+            "dataIndex": 423983
+          },
+          {
+            "symbol": "QUEST_CONTENT_SEAL_BATTLE_RESULT",
+            "value": 16,
+            "fieldIndex": 179278,
+            "defaultRow": 33512,
+            "typeIndex": 70,
+            "dataIndex": 423987
+          },
+          {
+            "symbol": "QUEST_CONTENT_ENTER_ROOM",
+            "value": 17,
+            "fieldIndex": 179279,
+            "defaultRow": 33513,
+            "typeIndex": 70,
+            "dataIndex": 423991
+          },
+          {
+            "symbol": "QUEST_CONTENT_GAME_TIME_TICK",
+            "value": 18,
+            "fieldIndex": 179280,
+            "defaultRow": 33514,
+            "typeIndex": 70,
+            "dataIndex": 423995
+          },
+          {
+            "symbol": "QUEST_CONTENT_FAIL_DUNGEON",
+            "value": 19,
+            "fieldIndex": 179281,
+            "defaultRow": 33515,
+            "typeIndex": 70,
+            "dataIndex": 423999
+          },
+          {
+            "symbol": "QUEST_CONTENT_LUA_NOTIFY",
+            "value": 20,
+            "fieldIndex": 179282,
+            "defaultRow": 33516,
+            "typeIndex": 70,
+            "dataIndex": 424003
+          },
+          {
+            "symbol": "QUEST_CONTENT_TEAM_DEAD",
+            "value": 21,
+            "fieldIndex": 179283,
+            "defaultRow": 33517,
+            "typeIndex": 70,
+            "dataIndex": 424007
+          },
+          {
+            "symbol": "QUEST_CONTENT_COMPLETE_ANY_TALK",
+            "value": 22,
+            "fieldIndex": 179284,
+            "defaultRow": 33518,
+            "typeIndex": 70,
+            "dataIndex": 424011
+          },
+          {
+            "symbol": "QUEST_CONTENT_UNLOCK_TRANS_POINT",
+            "value": 23,
+            "fieldIndex": 179285,
+            "defaultRow": 33519,
+            "typeIndex": 70,
+            "dataIndex": 424015
+          },
+          {
+            "symbol": "QUEST_CONTENT_ADD_QUEST_PROGRESS",
+            "value": 24,
+            "fieldIndex": 179286,
+            "defaultRow": 33520,
+            "typeIndex": 70,
+            "dataIndex": 424019
+          },
+          {
+            "symbol": "QUEST_CONTENT_INTERACT_GADGET",
+            "value": 25,
+            "fieldIndex": 179287,
+            "defaultRow": 33521,
+            "typeIndex": 70,
+            "dataIndex": 424023
+          },
+          {
+            "symbol": "QUEST_CONTENT_DAILY_TASK_COMP_FINISH",
+            "value": 26,
+            "fieldIndex": 179288,
+            "defaultRow": 33522,
+            "typeIndex": 70,
+            "dataIndex": 424027
+          },
+          {
+            "symbol": "QUEST_CONTENT_FINISH_ITEM_GIVING",
+            "value": 27,
+            "fieldIndex": 179289,
+            "defaultRow": 33523,
+            "typeIndex": 70,
+            "dataIndex": 424031
+          },
+          {
+            "symbol": "QUEST_CONTENT_SKILL",
+            "value": 107,
+            "fieldIndex": 179290,
+            "defaultRow": 33524,
+            "typeIndex": 70,
+            "dataIndex": 424035
+          },
+          {
+            "symbol": "QUEST_CONTENT_CITY_LEVEL_UP",
+            "value": 109,
+            "fieldIndex": 179291,
+            "defaultRow": 33525,
+            "typeIndex": 70,
+            "dataIndex": 424039
+          },
+          {
+            "symbol": "QUEST_CONTENT_PATTERN_GROUP_CLEAR_MONSTER",
+            "value": 110,
+            "fieldIndex": 179292,
+            "defaultRow": 33526,
+            "typeIndex": 70,
+            "dataIndex": 424043
+          },
+          {
+            "symbol": "QUEST_CONTENT_ITEM_LESS_THAN",
+            "value": 111,
+            "fieldIndex": 179293,
+            "defaultRow": 33527,
+            "typeIndex": 70,
+            "dataIndex": 424047
+          },
+          {
+            "symbol": "QUEST_CONTENT_PLAYER_LEVEL_UP",
+            "value": 112,
+            "fieldIndex": 179294,
+            "defaultRow": 33528,
+            "typeIndex": 70,
+            "dataIndex": 424051
+          },
+          {
+            "symbol": "QUEST_CONTENT_DUNGEON_OPEN_STATUE",
+            "value": 113,
+            "fieldIndex": 179295,
+            "defaultRow": 33529,
+            "typeIndex": 70,
+            "dataIndex": 424055
+          },
+          {
+            "symbol": "QUEST_CONTENT_UNLOCK_AREA",
+            "value": 114,
+            "fieldIndex": 179296,
+            "defaultRow": 33530,
+            "typeIndex": 70,
+            "dataIndex": 424059
+          },
+          {
+            "symbol": "QUEST_CONTENT_OPEN_CHEST_WITH_GADGET_ID",
+            "value": 115,
+            "fieldIndex": 179297,
+            "defaultRow": 33531,
+            "typeIndex": 70,
+            "dataIndex": 424063
+          },
+          {
+            "symbol": "QUEST_CONTENT_UNLOCK_TRANS_POINT_WITH_TYPE",
+            "value": 116,
+            "fieldIndex": 179298,
+            "defaultRow": 33532,
+            "typeIndex": 70,
+            "dataIndex": 424067
+          },
+          {
+            "symbol": "QUEST_CONTENT_FINISH_DAILY_DUNGEON",
+            "value": 117,
+            "fieldIndex": 179299,
+            "defaultRow": 33533,
+            "typeIndex": 70,
+            "dataIndex": 424071
+          },
+          {
+            "symbol": "QUEST_CONTENT_FINISH_WEEKLY_DUNGEON",
+            "value": 118,
+            "fieldIndex": 179300,
+            "defaultRow": 33534,
+            "typeIndex": 70,
+            "dataIndex": 424075
+          },
+          {
+            "symbol": "QUEST_CONTENT_QUEST_VAR_EQUAL",
+            "value": 119,
+            "fieldIndex": 179301,
+            "defaultRow": 33535,
+            "typeIndex": 70,
+            "dataIndex": 424079
+          },
+          {
+            "symbol": "QUEST_CONTENT_QUEST_VAR_GREATER",
+            "value": 120,
+            "fieldIndex": 179302,
+            "defaultRow": 33536,
+            "typeIndex": 70,
+            "dataIndex": 424083
+          },
+          {
+            "symbol": "QUEST_CONTENT_QUEST_VAR_LESS",
+            "value": 121,
+            "fieldIndex": 179303,
+            "defaultRow": 33537,
+            "typeIndex": 70,
+            "dataIndex": 424087
+          },
+          {
+            "symbol": "QUEST_CONTENT_OBTAIN_VARIOUS_ITEM",
+            "value": 122,
+            "fieldIndex": 179304,
+            "defaultRow": 33538,
+            "typeIndex": 70,
+            "dataIndex": 424091
+          },
+          {
+            "symbol": "QUEST_CONTENT_FINISH_TOWER_LEVEL",
+            "value": 123,
+            "fieldIndex": 179305,
+            "defaultRow": 33539,
+            "typeIndex": 70,
+            "dataIndex": 424095
+          },
+          {
+            "symbol": "QUEST_CONTENT_BARGAIN_SUCC",
+            "value": 124,
+            "fieldIndex": 179306,
+            "defaultRow": 33540,
+            "typeIndex": 70,
+            "dataIndex": 424099
+          },
+          {
+            "symbol": "QUEST_CONTENT_BARGAIN_FAIL",
+            "value": 125,
+            "fieldIndex": 179307,
+            "defaultRow": 33541,
+            "typeIndex": 70,
+            "dataIndex": 424103
+          },
+          {
+            "symbol": "QUEST_CONTENT_ITEM_LESS_THAN_BARGAIN",
+            "value": 126,
+            "fieldIndex": 179308,
+            "defaultRow": 33542,
+            "typeIndex": 70,
+            "dataIndex": 424107
+          },
+          {
+            "symbol": "QUEST_CONTENT_ACTIVITY_TRIGGER_FAILED",
+            "value": 127,
+            "fieldIndex": 179309,
+            "defaultRow": 33543,
+            "typeIndex": 70,
+            "dataIndex": 424111
+          },
+          {
+            "symbol": "QUEST_CONTENT_MAIN_COOP_ENTER_SAVE_POINT",
+            "value": 128,
+            "fieldIndex": 179310,
+            "defaultRow": 33544,
+            "typeIndex": 70,
+            "dataIndex": 424115
+          },
+          {
+            "symbol": "QUEST_CONTENT_ANY_MANUAL_TRANSPORT",
+            "value": 129,
+            "fieldIndex": 179311,
+            "defaultRow": 33545,
+            "typeIndex": 70,
+            "dataIndex": 424119
+          },
+          {
+            "symbol": "QUEST_CONTENT_USE_ITEM",
+            "value": 130,
+            "fieldIndex": 179312,
+            "defaultRow": 33546,
+            "typeIndex": 70,
+            "dataIndex": 424123
+          },
+          {
+            "symbol": "QUEST_CONTENT_MAIN_COOP_ENTER_ANY_SAVE_POINT",
+            "value": 131,
+            "fieldIndex": 179313,
+            "defaultRow": 33547,
+            "typeIndex": 70,
+            "dataIndex": 424127
+          },
+          {
+            "symbol": "QUEST_CONTENT_ENTER_MY_HOME_WORLD",
+            "value": 132,
+            "fieldIndex": 179314,
+            "defaultRow": 33548,
+            "typeIndex": 70,
+            "dataIndex": 424131
+          },
+          {
+            "symbol": "QUEST_CONTENT_ENTER_MY_WORLD_SCENE",
+            "value": 133,
+            "fieldIndex": 179315,
+            "defaultRow": 33549,
+            "typeIndex": 70,
+            "dataIndex": 424135
+          },
+          {
+            "symbol": "QUEST_CONTENT_TIME_VAR_GT_EQ",
+            "value": 134,
+            "fieldIndex": 179316,
+            "defaultRow": 33550,
+            "typeIndex": 70,
+            "dataIndex": 424139
+          },
+          {
+            "symbol": "QUEST_CONTENT_TIME_VAR_PASS_DAY",
+            "value": 135,
+            "fieldIndex": 179317,
+            "defaultRow": 33551,
+            "typeIndex": 70,
+            "dataIndex": 424143
+          },
+          {
+            "symbol": "QUEST_CONTENT_QUEST_STATE_EQUAL",
+            "value": 136,
+            "fieldIndex": 179318,
+            "defaultRow": 33552,
+            "typeIndex": 70,
+            "dataIndex": 424147
+          },
+          {
+            "symbol": "QUEST_CONTENT_QUEST_STATE_NOT_EQUAL",
+            "value": 137,
+            "fieldIndex": 179319,
+            "defaultRow": 33553,
+            "typeIndex": 70,
+            "dataIndex": 424151
+          },
+          {
+            "symbol": "QUEST_CONTENT_UNLOCKED_RECIPE",
+            "value": 138,
+            "fieldIndex": 179320,
+            "defaultRow": 33554,
+            "typeIndex": 70,
+            "dataIndex": 424155
+          },
+          {
+            "symbol": "QUEST_CONTENT_NOT_UNLOCKED_RECIPE",
+            "value": 139,
+            "fieldIndex": 179321,
+            "defaultRow": 33555,
+            "typeIndex": 70,
+            "dataIndex": 424159
+          },
+          {
+            "symbol": "QUEST_CONTENT_FISHING_SUCC",
+            "value": 140,
+            "fieldIndex": 179322,
+            "defaultRow": 33556,
+            "typeIndex": 70,
+            "dataIndex": 424163
+          },
+          {
+            "symbol": "QUEST_CONTENT_ENTER_ROGUE_DUNGEON",
+            "value": 141,
+            "fieldIndex": 179323,
+            "defaultRow": 33557,
+            "typeIndex": 70,
+            "dataIndex": 424167
+          },
+          {
+            "symbol": "QUEST_CONTENT_USE_WIDGET",
+            "value": 142,
+            "fieldIndex": 179324,
+            "defaultRow": 33558,
+            "typeIndex": 70,
+            "dataIndex": 424171
+          },
+          {
+            "symbol": "QUEST_CONTENT_CAPTURE_SUCC",
+            "value": 143,
+            "fieldIndex": 179325,
+            "defaultRow": 33559,
+            "typeIndex": 70,
+            "dataIndex": 424175
+          },
+          {
+            "symbol": "QUEST_CONTENT_CAPTURE_USE_CAPTURETAG_LIST",
+            "value": 144,
+            "fieldIndex": 179326,
+            "defaultRow": 33560,
+            "typeIndex": 70,
+            "dataIndex": 424179
+          },
+          {
+            "symbol": "QUEST_CONTENT_CAPTURE_USE_MATERIAL_LIST",
+            "value": 145,
+            "fieldIndex": 179327,
+            "defaultRow": 33561,
+            "typeIndex": 70,
+            "dataIndex": 424183
+          },
+          {
+            "symbol": "QUEST_CONTENT_ENTER_VEHICLE",
+            "value": 147,
+            "fieldIndex": 179328,
+            "defaultRow": 33562,
+            "typeIndex": 70,
+            "dataIndex": 424187
+          },
+          {
+            "symbol": "QUEST_CONTENT_SCENE_LEVEL_TAG_EQ",
+            "value": 148,
+            "fieldIndex": 179329,
+            "defaultRow": 33563,
+            "typeIndex": 70,
+            "dataIndex": 424191
+          },
+          {
+            "symbol": "QUEST_CONTENT_LEAVE_SCENE",
+            "value": 149,
+            "fieldIndex": 179330,
+            "defaultRow": 33564,
+            "typeIndex": 70,
+            "dataIndex": 424195
+          },
+          {
+            "symbol": "QUEST_CONTENT_LEAVE_SCENE_RANGE",
+            "value": 150,
+            "fieldIndex": 179331,
+            "defaultRow": 33565,
+            "typeIndex": 70,
+            "dataIndex": 424199
+          },
+          {
+            "symbol": "QUEST_CONTENT_IRODORI_FINISH_FLOWER_COMBINATION",
+            "value": 151,
+            "fieldIndex": 179332,
+            "defaultRow": 33566,
+            "typeIndex": 70,
+            "dataIndex": 424203
+          },
+          {
+            "symbol": "QUEST_CONTENT_IRODORI_POETRY_REACH_MIN_PROGRESS",
+            "value": 152,
+            "fieldIndex": 179333,
+            "defaultRow": 33567,
+            "typeIndex": 70,
+            "dataIndex": 424207
+          },
+          {
+            "symbol": "QUEST_CONTENT_IRODORI_POETRY_FINISH_FILL_POETRY",
+            "value": 153,
+            "fieldIndex": 179334,
+            "defaultRow": 33568,
+            "typeIndex": 70,
+            "dataIndex": 424211
+          },
+          {
+            "symbol": "QUEST_CONTENT_ACTIVITY_TRIGGER_UPDATE",
+            "value": 154,
+            "fieldIndex": 179335,
+            "defaultRow": 33569,
+            "typeIndex": 70,
+            "dataIndex": 424215
+          },
+          {
+            "symbol": "QUEST_CONTENT_GADGET_STATE_CHANGE",
+            "value": 155,
+            "fieldIndex": 179336,
+            "defaultRow": 33570,
+            "typeIndex": 70,
+            "dataIndex": 424219
+          },
+          {
+            "symbol": "QUEST_CONTENT_LEAVE_SCENE_RANGE_AND_ROOM",
+            "value": 156,
+            "fieldIndex": 179337,
+            "defaultRow": 33571,
+            "typeIndex": 70,
+            "dataIndex": 424223
+          },
+          {
+            "symbol": "QUEST_CONTENT_GCG_LEVEL_WIN",
+            "value": 157,
+            "fieldIndex": 179338,
+            "defaultRow": 33572,
+            "typeIndex": 70,
+            "dataIndex": 424227
+          },
+          {
+            "symbol": "QUEST_CONTENT_AVATAR_RENAME_COMPLETE",
+            "value": 158,
+            "fieldIndex": 179339,
+            "defaultRow": 33573,
+            "typeIndex": 70,
+            "dataIndex": 424231
+          },
+          {
+            "symbol": "QUEST_CONTENT_GCG_GUIDE_PROGRESS",
+            "value": 159,
+            "fieldIndex": 179340,
+            "defaultRow": 33574,
+            "typeIndex": 70,
+            "dataIndex": 424235
+          },
+          {
+            "symbol": "QUEST_CONTENT_QUEST_GLOBAL_VAR_EQUAL",
+            "value": 160,
+            "fieldIndex": 179341,
+            "defaultRow": 33575,
+            "typeIndex": 70,
+            "dataIndex": 424239
+          },
+          {
+            "symbol": "QUEST_CONTENT_QUEST_GLOBAL_VAR_GREATER",
+            "value": 161,
+            "fieldIndex": 179342,
+            "defaultRow": 33576,
+            "typeIndex": 70,
+            "dataIndex": 424243
+          },
+          {
+            "symbol": "QUEST_CONTENT_QUEST_GLOBAL_VAR_LESS",
+            "value": 162,
+            "fieldIndex": 179343,
+            "defaultRow": 33577,
+            "typeIndex": 70,
+            "dataIndex": 424247
+          },
+          {
+            "symbol": "QUEST_CONTENT_ACHIEVEMENT_ISACHIEVED",
+            "value": 163,
+            "fieldIndex": 179344,
+            "defaultRow": 33578,
+            "typeIndex": 70,
+            "dataIndex": 424251
+          },
+          {
+            "symbol": "QUEST_CONTENT_EVENTS_ITEM_STATUS",
+            "value": 164,
+            "fieldIndex": 179345,
+            "defaultRow": 33579,
+            "typeIndex": 70,
+            "dataIndex": 424255
+          },
+          {
+            "symbol": "QUEST_CONTENT_ACHIEVEMENT_STATE_EQUAL",
+            "value": 165,
+            "fieldIndex": 179346,
+            "defaultRow": 33580,
+            "typeIndex": 70,
+            "dataIndex": 424259
+          },
+          {
+            "symbol": "QUEST_CONTENT_EXHIBITION_ACCUMULATE_GT_EQ",
+            "value": 166,
+            "fieldIndex": 179347,
+            "defaultRow": 33581,
+            "typeIndex": 70,
+            "dataIndex": 424263
+          },
+          {
+            "symbol": "QUEST_CONTENT_UNLOCK_ANY_TRANS_POINT",
+            "value": 167,
+            "fieldIndex": 179348,
+            "defaultRow": 33582,
+            "typeIndex": 70,
+            "dataIndex": 424267
+          },
+          {
+            "symbol": "QUEST_CONTENT_ITEM_NUM_EQUAL",
+            "value": 168,
+            "fieldIndex": 179349,
+            "defaultRow": 33583,
+            "typeIndex": 70,
+            "dataIndex": 424271
+          },
+          {
+            "symbol": "QUEST_CONTENT_ITEM_NUM_GREATER",
+            "value": 169,
+            "fieldIndex": 179350,
+            "defaultRow": 33584,
+            "typeIndex": 70,
+            "dataIndex": 424275
+          },
+          {
+            "symbol": "QUEST_CONTENT_ITEM_NUM_LESS",
+            "value": 170,
+            "fieldIndex": 179351,
+            "defaultRow": 33585,
+            "typeIndex": 70,
+            "dataIndex": 424279
+          },
+          {
+            "symbol": "QUEST_CONTENT_QUEST_VAR_NOT_EQUAL",
+            "value": 171,
+            "fieldIndex": 179352,
+            "defaultRow": 33586,
+            "typeIndex": 70,
+            "dataIndex": 424283
+          },
+          {
+            "symbol": "QUEST_CONTENT_QUEST_GLOBAL_VAR_NOT_EQUAL",
+            "value": 172,
+            "fieldIndex": 179353,
+            "defaultRow": 33587,
+            "typeIndex": 70,
+            "dataIndex": 424287
+          },
+          {
+            "symbol": "QUEST_CONTENT_SHOP_SELL_OUT",
+            "value": 173,
+            "fieldIndex": 179354,
+            "defaultRow": 33588,
+            "typeIndex": 70,
+            "dataIndex": 424291
+          },
+          {
+            "symbol": "QUEST_CONTENT_QUEST_CHECK_EQUAL",
+            "value": 174,
+            "fieldIndex": 179355,
+            "defaultRow": 33589,
+            "typeIndex": 70,
+            "dataIndex": 424295
+          },
+          {
+            "symbol": "QUEST_CONTENT_QUEST_CHECK_VALUE",
+            "value": 175,
+            "fieldIndex": 179356,
+            "defaultRow": 33590,
+            "typeIndex": 70,
+            "dataIndex": 424299
+          },
+          {
+            "symbol": "QUEST_CONTENT_PRESENT_AT_SPECIFIC_SCENE",
+            "value": 177,
+            "fieldIndex": 179357,
+            "defaultRow": 33591,
+            "typeIndex": 70,
+            "dataIndex": 424303
+          },
+          {
+            "symbol": "QUEST_CONTENT_MISC_RENAME_COMPLETE",
+            "value": 179,
+            "fieldIndex": 179358,
+            "defaultRow": 33592,
+            "typeIndex": 70,
+            "dataIndex": 424307
+          },
+          {
+            "symbol": "QUEST_CONTENT_ENTER_FEATURE_TAG_VEHICLE",
+            "value": 180,
+            "fieldIndex": 179359,
+            "defaultRow": 33593,
+            "typeIndex": 70,
+            "dataIndex": 424311
+          },
+          {
+            "symbol": "QUEST_CONTENT_LEAVE_FEATURE_TAG_VEHICLE",
+            "value": 181,
+            "fieldIndex": 179360,
+            "defaultRow": 33594,
+            "typeIndex": 70,
+            "dataIndex": 424315
+          },
+          {
+            "symbol": "QUEST_CONTENT_LEAVE_VEHICLE",
+            "value": 182,
+            "fieldIndex": 179361,
+            "defaultRow": 33595,
+            "typeIndex": 70,
+            "dataIndex": 424319
+          },
+          {
+            "symbol": "QUEST_CONTENT_ABYSS_WAR_LEVEL_STATE_EQUAL",
+            "value": 183,
+            "fieldIndex": 179362,
+            "defaultRow": 33596,
+            "typeIndex": 70,
+            "dataIndex": 424323
+          },
+          {
+            "symbol": "QUEST_CONTENT_ABYSS_WAR_ACCOUNT_DATA_IN_INTERVAL",
+            "value": 184,
+            "fieldIndex": 179363,
+            "defaultRow": 33597,
+            "typeIndex": 70,
+            "dataIndex": 424327
+          },
+          {
+            "symbol": "QUEST_CONTENT_ABYSS_WAR_LIMIT_REIGON_STATE_EQUAL",
+            "value": 185,
+            "fieldIndex": 179364,
+            "defaultRow": 33598,
+            "typeIndex": 70,
+            "dataIndex": 424331
+          },
+          {
+            "symbol": "QUEST_CONTENT_PARENT_QUEST_STATE_EQUAL",
+            "value": 186,
+            "fieldIndex": 179365,
+            "defaultRow": 33599,
+            "typeIndex": 70,
+            "dataIndex": 424335
+          },
+          {
+            "symbol": "QUEST_CONTENT_PLAYER_HAVE_AVATAR",
+            "value": 187,
+            "fieldIndex": 179366,
+            "defaultRow": 33600,
+            "typeIndex": 70,
+            "dataIndex": 424339
+          },
+          {
+            "symbol": "QUEST_CONTENT_FINISH_ANY_FOOD_COOK",
+            "value": 188,
+            "fieldIndex": 179367,
+            "defaultRow": 33601,
+            "typeIndex": 70,
+            "dataIndex": 424343
+          },
+          {
+            "symbol": "QUEST_CONTENT_TIME_VAR_PASS_REFRESH_POLICY",
+            "value": 189,
+            "fieldIndex": 179368,
+            "defaultRow": 33602,
+            "typeIndex": 70,
+            "dataIndex": 424347
+          },
+          {
+            "symbol": "QUEST_CONTENT_SCENERY_STATE_EQUAL",
+            "value": 190,
+            "fieldIndex": 179369,
+            "defaultRow": 33603,
+            "typeIndex": 70,
+            "dataIndex": 424351
+          },
+          {
+            "symbol": "QUEST_CONTENT_AVATAR_FETTER_EQUAL_GREATER",
+            "value": 191,
+            "fieldIndex": 179370,
+            "defaultRow": 33604,
+            "typeIndex": 70,
+            "dataIndex": 424355
+          },
+          {
+            "symbol": "QUEST_CONTENT_ACTIVITY_END",
+            "value": 192,
+            "fieldIndex": 179371,
+            "defaultRow": 33605,
+            "typeIndex": 70,
+            "dataIndex": 424359
+          },
+          {
+            "symbol": "QUEST_CONTENT_AVATAR_CAPTURE_ANIMAL",
+            "value": 193,
+            "fieldIndex": 179372,
+            "defaultRow": 33606,
+            "typeIndex": 70,
+            "dataIndex": 424363
+          },
+          {
+            "symbol": "QUEST_CONTENT_TPS_GLASSES_CHAT_PROGRESS_EQUAL",
+            "value": 194,
+            "fieldIndex": 179373,
+            "defaultRow": 33607,
+            "typeIndex": 70,
+            "dataIndex": 424367
+          },
+          {
+            "symbol": "QUEST_CONTENT_SPECIFIC_WIDGET_ATTACHED",
+            "value": 195,
+            "fieldIndex": 179374,
+            "defaultRow": 33608,
+            "typeIndex": 70,
+            "dataIndex": 424371
+          },
+          {
+            "symbol": "QUEST_CONTENT_CALL_PLAYER_TRAIN_IN_RANGE",
+            "value": 196,
+            "fieldIndex": 179375,
+            "defaultRow": 33609,
+            "typeIndex": 70,
+            "dataIndex": 424375
+          },
+          {
+            "symbol": "QUEST_CONTENT_PLACE_OCCUPIED",
+            "value": 197,
+            "fieldIndex": 179376,
+            "defaultRow": 33610,
+            "typeIndex": 70,
+            "dataIndex": 424379
+          },
+          {
+            "symbol": "QUEST_CONTENT_PLACE_NOT_OCCUPIED",
+            "value": 198,
+            "fieldIndex": 179377,
+            "defaultRow": 33611,
+            "typeIndex": 70,
+            "dataIndex": 424383
+          }
+        ],
+        "semanticStatus": "target-symbols-only"
+      },
+      {
+        "typeIndex": 85159,
+        "clientType": "FJMIBELOLJG",
+        "namespace": "",
+        "underlyingType": "int32",
+        "values": [
+          {
+            "symbol": "SPECIAL_PROUD_SKILL_OPEN_CONDITION_TYPE_NONE",
+            "value": 0,
+            "fieldIndex": 423548,
+            "defaultRow": 72473,
+            "typeIndex": 70,
+            "dataIndex": 645461
+          },
+          {
+            "symbol": "SPECIAL_PROUD_SKILL_OPEN_CONDITION_TYPE_QUEST_FINISH",
+            "value": 1,
+            "fieldIndex": 423549,
+            "defaultRow": 72474,
+            "typeIndex": 70,
+            "dataIndex": 645465
+          }
+        ],
+        "semanticStatus": "target-symbols-only"
+      },
+      {
+        "typeIndex": 75148,
+        "clientType": "QuestGuideType",
+        "namespace": "MoleMole.Config",
+        "underlyingType": "int32",
+        "values": [
+          {
+            "symbol": "QUEST_GUIDE_NONE",
+            "value": 0,
+            "fieldIndex": 373239,
+            "defaultRow": 63625,
+            "typeIndex": 70,
+            "dataIndex": 604763
+          },
+          {
+            "symbol": "QUEST_GUIDE_LOCATION",
+            "value": 1,
+            "fieldIndex": 373240,
+            "defaultRow": 63626,
+            "typeIndex": 70,
+            "dataIndex": 604767
+          },
+          {
+            "symbol": "QUEST_GUIDE_NPC",
+            "value": 2,
+            "fieldIndex": 373241,
+            "defaultRow": 63627,
+            "typeIndex": 70,
+            "dataIndex": 604771
+          },
+          {
+            "symbol": "QUEST_GUIDE_GADGET",
+            "value": 3,
+            "fieldIndex": 373242,
+            "defaultRow": 63628,
+            "typeIndex": 70,
+            "dataIndex": 604775
+          },
+          {
+            "symbol": "QUEST_GUIDE_SHOW_OR_HIDE_NPC",
+            "value": 4,
+            "fieldIndex": 373243,
+            "defaultRow": 63629,
+            "typeIndex": 70,
+            "dataIndex": 604779
+          },
+          {
+            "symbol": "QUEST_GUIDE_DUNGEON_ENTRY",
+            "value": 5,
+            "fieldIndex": 373244,
+            "defaultRow": 63630,
+            "typeIndex": 70,
+            "dataIndex": 604783
+          }
+        ],
+        "semanticStatus": "target-symbols-only"
+      },
+      {
+        "typeIndex": 56833,
+        "clientType": "QuestShowType",
+        "namespace": "MoleMole.Config",
+        "underlyingType": "int32",
+        "values": [
+          {
+            "symbol": "QUEST_SHOW",
+            "value": 0,
+            "fieldIndex": 282412,
+            "defaultRow": 49219,
+            "typeIndex": 70,
+            "dataIndex": 535116
+          },
+          {
+            "symbol": "QUEST_HIDDEN",
+            "value": 1,
+            "fieldIndex": 282413,
+            "defaultRow": 49220,
+            "typeIndex": 70,
+            "dataIndex": 535120
+          }
+        ],
+        "semanticStatus": "target-symbols-only"
+      }
+    ],
+    "selectedLiterals": [
+      {
+        "usageRow": 776930,
+        "index": 33609,
+        "slot": 33609,
+        "cell": "0x145b0b868",
+        "value": "Data/_BinOutput/IndexDic/MainQuestIndex"
+      },
+      {
+        "usageRow": 779685,
+        "index": 45482,
+        "slot": 45482,
+        "cell": "0x145b22b70",
+        "value": "Data/_ExcelBinOutput/AvatarSkillDepotExcelConfigData"
+      }
+    ],
+    "exactQuestExcelLiteralInGlobalGroup": [],
+    "negativeSearchScope": "Exact string in the decoded global literal usage group only; not all dynamically formed paths",
+    "nativeFunctions": [
+      {
+        "entry": "0x148328b60",
+        "nextRegisteredEntry": "0x14832a190",
+        "bytes": 5680,
+        "sha256": "015337bbdf23ccd1df45a64712dd57f706be0740446563d333a0e50dc3ed0c91"
+      },
+      {
+        "entry": "0x15113cbb0",
+        "nextRegisteredEntry": "0x15113ce30",
+        "bytes": 640,
+        "sha256": "c0b94695ae3f7e3bd852c5c9793855698a70d7381ba9973df1fb6df60df4f843"
+      },
+      {
+        "entry": "0x14ef42dd0",
+        "nextRegisteredEntry": "0x14ef434e0",
+        "bytes": 1808,
+        "sha256": "4572a53500f378a00e81094249a9342bb760b304a4193f252d8d89c97a03fb51"
+      },
+      {
+        "entry": "0x14aefa090",
+        "nextRegisteredEntry": "0x14aefa130",
+        "bytes": 160,
+        "sha256": "ca677b81f166264a8261091718100bddc9fe6a20b976c7cae7ba40d2ce7a0215"
+      },
+      {
+        "entry": "0x14aef9db0",
+        "nextRegisteredEntry": "0x14aef9e60",
+        "bytes": 176,
+        "sha256": "b55b38fa6a616a9c2d26d11a484f117f3d09d9ab0ff1c251b3a632e77e74fc54"
+      },
+      {
+        "entry": "0x148328b50",
+        "nextRegisteredEntry": "0x148328b60",
+        "bytes": 16,
+        "sha256": "6cf637b6adb3866fee3c03c42483e091ad167b130eeddd9918b8af755530c5cb"
+      },
+      {
+        "entry": "0x15113cf70",
+        "nextRegisteredEntry": "0x15113cff0",
+        "bytes": 128,
+        "sha256": "a9b8270b571c5b33f2fac725ad9772cdc1b939bedc55a572a332aeb4c07c4c93"
+      },
+      {
+        "entry": "0x149987a80",
+        "nextRegisteredEntry": "0x149987c80",
+        "bytes": 512,
+        "sha256": "49b999bf6ec6a3462ea34fdfd30a4e0b6240813513a706356d95bd19ecc41c73"
+      },
+      {
+        "entry": "0x1487cbb80",
+        "nextRegisteredEntry": "0x1487cbc20",
+        "bytes": 160,
+        "sha256": "ba6f4246c2308e09702fd42d0b2f585b672113f674eb32ca51fc53de80312c14"
+      }
+    ]
+  },
+  "native": {
+    "depotCases": [
+      {
+        "first": null,
+        "second": null,
+        "decoded": [
+          0,
+          0
+        ],
+        "bytesConsumed": 4,
+        "priorLogicalValue": 777,
+        "ctor": {
+          "entry": "0x148328b50",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 2,
+          "nativePathSHA256": "3414fdc1b7f32c850b045c7b56161cd609419d9f5e7beefbf638b64367e969d8",
+          "models": []
+        },
+        "trace": {
+          "entry": "0x148328b60",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 506,
+          "nativePathSHA256": "db4cf11fdf1163123b42636870e91c5f66aa5dc767816222d26d31b2f7dbb9ab",
+          "models": []
+        }
+      },
+      {
+        "first": 0,
+        "second": 0,
+        "decoded": [
+          0,
+          0
+        ],
+        "bytesConsumed": 12,
+        "priorLogicalValue": 777,
+        "ctor": {
+          "entry": "0x148328b50",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 2,
+          "nativePathSHA256": "3414fdc1b7f32c850b045c7b56161cd609419d9f5e7beefbf638b64367e969d8",
+          "models": []
+        },
+        "trace": {
+          "entry": "0x148328b60",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 538,
+          "nativePathSHA256": "c30b566be5d259597e2615810881fc1b7bc1379388be21e8ac93277621cefd69",
+          "models": []
+        }
+      },
+      {
+        "first": 123,
+        "second": null,
+        "decoded": [
+          123,
+          0
+        ],
+        "bytesConsumed": 8,
+        "priorLogicalValue": 777,
+        "ctor": {
+          "entry": "0x148328b50",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 2,
+          "nativePathSHA256": "3414fdc1b7f32c850b045c7b56161cd609419d9f5e7beefbf638b64367e969d8",
+          "models": []
+        },
+        "trace": {
+          "entry": "0x148328b60",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 522,
+          "nativePathSHA256": "96d4237d4135a6fff98ff7fd963c7b034b75c0bb76fa606ba12ca21839509599",
+          "models": []
+        }
+      },
+      {
+        "first": null,
+        "second": 456,
+        "decoded": [
+          0,
+          456
+        ],
+        "bytesConsumed": 8,
+        "priorLogicalValue": 777,
+        "ctor": {
+          "entry": "0x148328b50",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 2,
+          "nativePathSHA256": "3414fdc1b7f32c850b045c7b56161cd609419d9f5e7beefbf638b64367e969d8",
+          "models": []
+        },
+        "trace": {
+          "entry": "0x148328b60",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 522,
+          "nativePathSHA256": "ae4d2ae45b96d9c7e4e22e755246778c108a508ea111a205f5d1d6cb644b38f3",
+          "models": []
+        }
+      },
+      {
+        "first": 4294967295,
+        "second": 2147483649,
+        "decoded": [
+          4294967295,
+          2147483649
+        ],
+        "bytesConsumed": 12,
+        "priorLogicalValue": 777,
+        "ctor": {
+          "entry": "0x148328b50",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 2,
+          "nativePathSHA256": "3414fdc1b7f32c850b045c7b56161cd609419d9f5e7beefbf638b64367e969d8",
+          "models": []
+        },
+        "trace": {
+          "entry": "0x148328b60",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 538,
+          "nativePathSHA256": "c30b566be5d259597e2615810881fc1b7bc1379388be21e8ac93277621cefd69",
+          "models": []
+        }
+      }
+    ],
+    "specialCases": [
+      {
+        "input": {
+          "group": null,
+          "params": null,
+          "kind": null
+        },
+        "actual": {
+          "group": 0,
+          "params": [],
+          "kind": 0
+        },
+        "queriedParameter": 0,
+        "bytesConsumed": 2,
+        "trace": {
+          "entry": "0x15113cbb0",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 95,
+          "nativePathSHA256": "0094563cd44e286598508e294268107259824b418d7c9e504899782a727d2ba4",
+          "models": []
+        },
+        "lookup": {
+          "entry": "0x15113cf70",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 11,
+          "nativePathSHA256": "28e8e2bdb7282938f945e9b3253a76f3088453a8b0cfe2ce62eca5af10eb5572",
+          "models": []
+        }
+      },
+      {
+        "input": {
+          "group": 0,
+          "params": [],
+          "kind": 0
+        },
+        "actual": {
+          "group": 0,
+          "params": [],
+          "kind": 0
+        },
+        "queriedParameter": 0,
+        "bytesConsumed": 14,
+        "trace": {
+          "entry": "0x15113cbb0",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 129,
+          "nativePathSHA256": "6491ea8f055e150ffe0a605effcd4062720f7b85ab95bb60e1891e56816709d0",
+          "models": []
+        },
+        "lookup": {
+          "entry": "0x15113cf70",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 11,
+          "nativePathSHA256": "28e8e2bdb7282938f945e9b3253a76f3088453a8b0cfe2ce62eca5af10eb5572",
+          "models": []
+        }
+      },
+      {
+        "input": {
+          "group": 901,
+          "params": [
+            30302,
+            2147483649
+          ],
+          "kind": 1
+        },
+        "actual": {
+          "group": 901,
+          "params": [
+            30302,
+            2147483649
+          ],
+          "kind": 1
+        },
+        "queriedParameter": 30302,
+        "bytesConsumed": 22,
+        "trace": {
+          "entry": "0x15113cbb0",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 271,
+          "nativePathSHA256": "54b497f2babc2926257e0ba7ccfb37ce57f1c89b89a1469acb33354421017fb0",
+          "models": [
+            "0x140514ee0"
+          ]
+        },
+        "lookup": {
+          "entry": "0x15113cf70",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 66,
+          "nativePathSHA256": "f537884804bc5f41132e30434b614f9d37edec2b76be1f1135bb693a2274827f",
+          "models": []
+        }
+      },
+      {
+        "input": {
+          "group": 4294967295,
+          "params": [
+            4294967295
+          ],
+          "kind": 1
+        },
+        "actual": {
+          "group": 4294967295,
+          "params": [
+            4294967295
+          ],
+          "kind": 1
+        },
+        "queriedParameter": 4294967295,
+        "bytesConsumed": 18,
+        "trace": {
+          "entry": "0x15113cbb0",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 206,
+          "nativePathSHA256": "ccdb2ebae6e4a0eaa96919c111710822880ede4f17ee76f5f8fafb671f530c6d",
+          "models": [
+            "0x140514ee0"
+          ]
+        },
+        "lookup": {
+          "entry": "0x15113cf70",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 66,
+          "nativePathSHA256": "f537884804bc5f41132e30434b614f9d37edec2b76be1f1135bb693a2274827f",
+          "models": []
+        }
+      },
+      {
+        "input": {
+          "group": 17,
+          "params": [
+            30302
+          ],
+          "kind": 777
+        },
+        "actual": {
+          "group": 17,
+          "params": [
+            30302
+          ],
+          "kind": 777
+        },
+        "queriedParameter": 0,
+        "bytesConsumed": 18,
+        "trace": {
+          "entry": "0x15113cbb0",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 206,
+          "nativePathSHA256": "ccdb2ebae6e4a0eaa96919c111710822880ede4f17ee76f5f8fafb671f530c6d",
+          "models": [
+            "0x140514ee0"
+          ]
+        },
+        "lookup": {
+          "entry": "0x15113cf70",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 11,
+          "nativePathSHA256": "28e8e2bdb7282938f945e9b3253a76f3088453a8b0cfe2ce62eca5af10eb5572",
+          "models": []
+        }
+      }
+    ],
+    "conditionCases": [
+      {
+        "input": {
+          "text": null,
+          "values": null,
+          "kind": 20,
+          "count": null
+        },
+        "actual": {
+          "text": "",
+          "values": [],
+          "kind": 20,
+          "count": 0
+        },
+        "bytesConsumed": 5,
+        "trace": {
+          "entry": "0x14ef42dd0",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 67,
+          "nativePathSHA256": "2d729f6c32947568a778e8dd5914f8bd96c08d64441da7bd08e282dab953d94b",
+          "models": []
+        }
+      },
+      {
+        "input": {
+          "text": "",
+          "values": [],
+          "kind": 20,
+          "count": 0
+        },
+        "actual": {
+          "text": "",
+          "values": [],
+          "kind": 20,
+          "count": 0
+        },
+        "bytesConsumed": 15,
+        "trace": {
+          "entry": "0x14ef42dd0",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 104,
+          "nativePathSHA256": "c0310516a62fef5e1d6d544c1b09b838574dcbcca17d609307ce0a2c33866061",
+          "models": []
+        }
+      },
+      {
+        "input": {
+          "text": "2101001",
+          "values": [
+            -1,
+            0,
+            2147483647
+          ],
+          "kind": 20,
+          "count": 4294967295
+        },
+        "actual": {
+          "text": "2101001",
+          "values": [
+            -1,
+            0,
+            2147483647
+          ],
+          "kind": 20,
+          "count": 4294967295
+        },
+        "bytesConsumed": 34,
+        "trace": {
+          "entry": "0x14ef42dd0",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 220,
+          "nativePathSHA256": "bd84b4c14577ef64d1c76e3537cc8ac122238df5610476a3f1ed7a76b4125077",
+          "models": [
+            "0x140514ee0",
+            "0x141fdf9c0",
+            "0x141fdf310",
+            "0x14f0de820"
+          ]
+        }
+      },
+      {
+        "input": {
+          "text": "1,24",
+          "values": [
+            17
+          ],
+          "kind": 18,
+          "count": 2
+        },
+        "actual": {
+          "text": "1,24",
+          "values": [
+            17
+          ],
+          "kind": 18,
+          "count": 2
+        },
+        "bytesConsumed": 23,
+        "trace": {
+          "entry": "0x14ef42dd0",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 190,
+          "nativePathSHA256": "82b1317055737ce2ec4c39a09c0f5ce2807d2229ba7d4dae52bc8efc7d420404",
+          "models": [
+            "0x140514ee0",
+            "0x141fdf9c0",
+            "0x141fdf310",
+            "0x14f0de820"
+          ]
+        }
+      },
+      {
+        "input": {
+          "text": "任务\u0000x",
+          "values": [
+            30302,
+            0
+          ],
+          "kind": 20,
+          "count": 1
+        },
+        "actual": {
+          "text": "任务\u0000x",
+          "values": [
+            30302,
+            0
+          ],
+          "kind": 20,
+          "count": 1
+        },
+        "bytesConsumed": 31,
+        "trace": {
+          "entry": "0x14ef42dd0",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "instructions": 219,
+          "nativePathSHA256": "3cd655b871499c4083a54a7f572fcf7e6c043e2356dda37be45e96a8e69de76c",
+          "models": [
+            "0x140514ee0",
+            "0x141fdf9c0",
+            "0x14f0de820"
+          ]
+        }
+      }
+    ],
+    "consumerCases": [
+      {
+        "name": "condition-string-comma-split-boundary",
+        "text": "1,24",
+        "separator": 44,
+        "trace": {
+          "entry": "0x149987a80",
+          "stop": "0x159aacf80",
+          "completion": "bounded-fragment",
+          "instructions": 35,
+          "nativePathSHA256": "3f7054f88fb31b05d6422c3b60fb50737bc146686fba127ab60deb38ea18fd73",
+          "models": [
+            "0x140514ee0"
+          ]
+        },
+        "gameTimeEvaluationExecuted": false,
+        "luaNotifyEvaluationExecuted": false
+      }
+    ],
+    "rejectionCases": [
+      {
+        "name": "depot-empty",
+        "bytesConsumed": 0,
+        "trace": {
+          "entry": "0x148328b60",
+          "stop": "0x1404c2650",
+          "completion": "bounded-fragment",
+          "instructions": 28,
+          "nativePathSHA256": "1919100761ea11bceeba1305fc4a1f5c6bd3b9dfb81db50ac53f1790066136e1",
+          "models": []
+        },
+        "exceptionHelperExecuted": false
+      },
+      {
+        "name": "depot-missing-scalar",
+        "bytesConsumed": 4,
+        "trace": {
+          "entry": "0x148328b60",
+          "stop": "0x1404c2650",
+          "completion": "bounded-fragment",
+          "instructions": 219,
+          "nativePathSHA256": "6233ef0e284fdad950a8f9e7bc756e92a2ac9ed234f83d7ebd0b30c8be52cd8f",
+          "models": []
+        },
+        "exceptionHelperExecuted": false
+      },
+      {
+        "name": "special-missing-id",
+        "bytesConsumed": 2,
+        "trace": {
+          "entry": "0x15113cbb0",
+          "stop": "0x1404c2650",
+          "completion": "bounded-fragment",
+          "instructions": 35,
+          "nativePathSHA256": "0a82efc62c7aa7b1a43791467dd02df73b730762a10c34aaa081ce6c5d32565e",
+          "models": []
+        },
+        "exceptionHelperExecuted": false
+      },
+      {
+        "name": "condition-missing-enum",
+        "bytesConsumed": 1,
+        "trace": {
+          "entry": "0x14ef42dd0",
+          "stop": "0x1404c2650",
+          "completion": "bounded-fragment",
+          "instructions": 50,
+          "nativePathSHA256": "0c65c009c6e038d031107a21300cfbde364d547cd0314bfa544508a87f4b100f",
+          "models": []
+        },
+        "exceptionHelperExecuted": false
+      },
+      {
+        "name": "depot-null-reader",
+        "trace": {
+          "entry": "0x148328b60",
+          "stop": "0x1404c2be0",
+          "completion": "bounded-fragment",
+          "instructions": 17,
+          "nativePathSHA256": "452ffdecc62f4633f33cafcc81afd4f5d032080b11191259b133793c78ef7547",
+          "models": []
+        },
+        "exceptionHelperExecuted": false
+      }
+    ]
+  },
+  "allocationModels": [
+    {
+      "site": "0x15113ccca",
+      "count": 2,
+      "element": "encoded uint32 type58209",
+      "width": 4,
+      "scope": "Managed array storage model; element type follows this reviewed caller, not a live type object"
+    },
+    {
+      "site": "0x15113ccca",
+      "count": 1,
+      "element": "encoded uint32 type58209",
+      "width": 4,
+      "scope": "Managed array storage model; element type follows this reviewed caller, not a live type object"
+    },
+    {
+      "site": "0x15113ccca",
+      "count": 1,
+      "element": "encoded uint32 type58209",
+      "width": 4,
+      "scope": "Managed array storage model; element type follows this reviewed caller, not a live type object"
+    },
+    {
+      "site": "0x14ef42ea3",
+      "count": 3,
+      "element": "int32",
+      "width": 4,
+      "scope": "Managed array storage model; element type follows this reviewed caller, not a live type object"
+    },
+    {
+      "site": "0x14ef42ea3",
+      "count": 1,
+      "element": "int32",
+      "width": 4,
+      "scope": "Managed array storage model; element type follows this reviewed caller, not a live type object"
+    },
+    {
+      "site": "0x149987adc",
+      "count": 1,
+      "element": "char",
+      "width": 2,
+      "scope": "Managed array storage model; element type follows this reviewed caller, not a live type object"
+    },
+    {
+      "site": "0x14ef42ea3",
+      "count": 2,
+      "element": "int32",
+      "width": 4,
+      "scope": "Managed array storage model; element type follows this reviewed caller, not a live type object"
+    }
+  ],
+  "stringConversionModels": [
+    {
+      "plainHex": "32313031303031",
+      "text": "2101001"
+    },
+    {
+      "plainHex": "312c3234",
+      "text": "1,24"
+    },
+    {
+      "plainHex": "e4bbbbe58aa10078",
+      "text": "任务\u0000x"
+    }
+  ],
+  "candidate": {
+    "commit": "d54f6f0d423ded9d055bb740a3e5f3aa8f2667f1",
+    "rootTree": "5b334e711319726c504da95dbfe6ebb26baaa7d3",
+    "releaseLabel": "CNRELWin7.2.0_R49086080_S49210135_D49230962",
+    "selectedSubId": 30302,
+    "excelCanonicalSHA256": "f6201b6c6c6f5f5c13eaee13f8826e80a12a9828886190b8641ea76022234339",
+    "binCanonicalSHA256": "1b5325e272aae0da7edd70db8130abc77b9db0259c733fddc89b6fdb96c4a317",
+    "excelShapes": {
+      "acceptCondComb": "dict",
+      "finishCondComb": "dict",
+      "failCondComb": "str",
+      "acceptCond": "absent"
+    },
+    "binAcceptCondPresent": false,
+    "JSONToNativeFieldBridgeVerified": false,
+    "automaticAcceptanceRecoverableFromTheseInputs": false,
+    "aliasesApproved": []
+  },
+  "bundledRevisions": {
+    "res_revision": {
+      "text": "49008628",
+      "sha256": "860f5ac3d85195eea5edd9631977a581215c2c53025787fa72232c6e84cd725e"
+    },
+    "data_revision": {
+      "text": "49008628",
+      "sha256": "860f5ac3d85195eea5edd9631977a581215c2c53025787fa72232c6e84cd725e"
+    },
+    "silence_revision": {
+      "text": "48722240",
+      "sha256": "69a17593e968eccd631ee38f9b0b7ecdf3a5750072cc355ccfa2df55281ab378"
+    }
+  },
+  "runtimeStatus": "not-tested",
+  "resourceReady": false,
+  "targetProtocolReady": false,
+  "limitations": [
+    "Fresh target metadata and CPU execution; no client process, resource file IO, Java loadAll, database or deployment.",
+    "Binary parser fixtures are independently authored, not extracted installed resource blobs or JSON-to-binary conversions.",
+    "Managed arrays/strings and memory-library operations are explicit models; native field transformations, branches and stores execute.",
+    "String conversion helper is modeled at its observed UTF8 buffer/cursor boundary; no Lua condition evaluator is modeled.",
+    "Absent binary flag is not proof that a missing candidate JSON key maps to that flag.",
+    "Default constructor RET does not initialize encoded integers; logical zero is established by the binary parser.",
+    "No English energySkill/attackModeSkill or Quest LogicType/acceptCond/BGH alias is approved.",
+    "Candidate release-label versus installed hot-update resource alignment remains unknown."
+  ],
+  "sourceSHA256": {
+    "tools/client72_resource_deep.py": "95787d9e4cf3b941bb17045986ffa6234352818bb89e0d02ece9094b1c78e265",
+    "tools/client72_emulator.py": "8007d2594ef8058a4f2a9f1c24094fb5d2551a202b4e52154876cdfe77a17c3c",
+    "tools/client72_session_runtime.py": "c6ff407e33416869a855cfa86e97c3f63a9d24019ac0f6e6dfc74a959bfe1439",
+    "tools/extract_client72.py": "7d1c75162f77c0fe0df154aa1240c142ad3f6af3295c89cc3d7b85372d3cb97d",
+    "tools/extract_client72_enums.py": "ee00b4a92ec81a97e3e54a56e8a38f0d0f556e69d7ec5b7203497e307b18cc93",
+    "tools/extract_client72_literals.py": "865c6f7f8fbcea164fa535a12eabc3c9d67ebb1fd0ef3f12c5ec7a1898dce6ed",
+    "tools/audit_resource72.py": "2364681fc931cc68b7deed6a72fd2b3eca8279dbe5c058361f5e9153af256683"
+  }
+}
