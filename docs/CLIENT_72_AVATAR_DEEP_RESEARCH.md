@@ -146,3 +146,9 @@ python -m unittest tools.test_client72_avatar_deep tools.test_client72_avatar_de
 ```
 
 第二项主线22关联断言及第三原生完整/摘要与上述双跑核同，证明`local/migration72/astra-main/avatar-suffix-review.json`。首次调用漏`--native`只产出静态报告，保留且不计原生；最终带该参数执行并核每个实际stop/model。未修改production或推广完整合同。
+
+## tag38具名资源来源与主线复验
+
+独立`client72_avatar_deep_ornaments.py`重提literal29427/40297、精确getter/loader与cache类型，确认两表为`AvatarOrnamentGroupExcelConfigData`（owner28604/cache+13b70/type61286）和`AvatarOrnamentExcelConfigData`（owner39027/cache+1cd98/type44799）。两getter实际返回原literal指针，两loader保留同指针执行到`14d6e1570`文件I/O入口前；已初始化class和managed字符串是明确fixture，未执行文件读取、parser或cache构建。
+
+5独立断言及主线第三原生与双跑同字节：完整`eaaf81b5e823cc707cdfc77c97889346efab84c6a353553c416be3961040e3c5`，摘要`bf385528a5f1bffbd15b63a51eea7127469662f93be8c33861f1cc3a8ade3c3d`。证明`local/migration72/astra-main/avatar-ornaments-review.json`；初次缺owner class fixture的失败在`astra-avatar/ornaments-probe1.*`保留。命令：`python tools/client72_avatar_deep_ornaments.py --client <GAME_PATH> --output <独立原始路径> --observations <独立摘要路径>`；测试`python -m unittest tools.test_client72_avatar_deep_ornaments -v`。此项消除资源文件身份未知，不消除实际资源值/revision/初始化来源未知；group/default/member字段英文名仍不批准。

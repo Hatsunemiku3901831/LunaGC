@@ -1,0 +1,261 @@
+{
+  "task": "F-03d3f4d2-ornament-source",
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "inputContracts": {
+    "avatar-deep-suffix-observations.json": "5e03ba3486470055450cc4233f8cf3a500680569d874e5e8b1e1efad5b9e58c6"
+  },
+  "declarations": [
+    {
+      "owner": 28604,
+      "literal": {
+        "usageRow": 776174,
+        "index": 29427,
+        "slot": 29427,
+        "cell": "0x145b035b8",
+        "value": "Data/_ExcelBinOutput/AvatarOrnamentGroupExcelConfigData"
+      },
+      "cacheOffset": "0x13b70",
+      "cacheField": {
+        "index": 140384,
+        "name": "FNLANEFCGPE",
+        "nameIndex": "0xb1895f2",
+        "typeIndex": 531916,
+        "type": {
+          "kind": "genericinst",
+          "attributes": "0x11",
+          "data": "0x2c944",
+          "byRef": false,
+          "genericIndex": 182596,
+          "instanceIndex": 23907,
+          "arguments": [
+            {
+              "kind": "uint32",
+              "attributes": "0x0",
+              "data": "0x13f",
+              "byRef": false
+            },
+            {
+              "kind": "class",
+              "attributes": "0x0",
+              "data": "0xef66",
+              "byRef": false,
+              "typeDefinition": 61286,
+              "name": "LPACJAENFID",
+              "namespace": ""
+            }
+          ],
+          "typeDefinition": 1222,
+          "name": "Dictionary`2",
+          "namespace": "System.Collections.Generic"
+        },
+        "offset": null,
+        "rawOffset": "0x4013b70",
+        "offsetKind": "runtime"
+      },
+      "functions": [
+        {
+          "entry": "0x15437ad90",
+          "end": "0x15437ada0",
+          "method": {
+            "index": 223033,
+            "name": "LJNPMLJAIAO",
+            "nameIndex": "0xb18963f",
+            "registeredAddress": "0x15437ad90",
+            "parameterCount": 0,
+            "flags": "0x891",
+            "virtualSlot": 65535
+          },
+          "nativeBytesSHA256": "c8cbb944de1db2d6490fe25f4d58e0156ed539bd6df6bd881228587916b85df4",
+          "literalReferenceSites": [
+            "0x15437ad90"
+          ]
+        },
+        {
+          "entry": "0x15437ab80",
+          "end": "0x15437ac71",
+          "method": {
+            "index": 223031,
+            "name": "CDMPEFBPCLP",
+            "nameIndex": "0xb188f9c",
+            "registeredAddress": "0x15437ab80",
+            "parameterCount": 0,
+            "flags": "0x96",
+            "virtualSlot": 65535
+          },
+          "nativeBytesSHA256": "f1d2fdeb650e5d7557a7d193827285743fad92c016003ad385bb95459d137888",
+          "literalReferenceSites": [
+            "0x15437aba7"
+          ]
+        }
+      ],
+      "initializedOwnerCells": [
+        "0x1458b7150"
+      ]
+    },
+    {
+      "owner": 39027,
+      "literal": {
+        "usageRow": 778360,
+        "index": 40297,
+        "slot": 40297,
+        "cell": "0x145b18968",
+        "value": "Data/_ExcelBinOutput/AvatarOrnamentExcelConfigData"
+      },
+      "cacheOffset": "0x1cd98",
+      "cacheField": {
+        "index": 191733,
+        "name": "FNLANEFCGPE",
+        "nameIndex": "0xb1895f2",
+        "typeIndex": 561791,
+        "type": {
+          "kind": "genericinst",
+          "attributes": "0x11",
+          "data": "0x3a300",
+          "byRef": false,
+          "genericIndex": 238336,
+          "instanceIndex": 31013,
+          "arguments": [
+            {
+              "kind": "uint32",
+              "attributes": "0x0",
+              "data": "0x13f",
+              "byRef": false
+            },
+            {
+              "kind": "class",
+              "attributes": "0x0",
+              "data": "0xaeff",
+              "byRef": false,
+              "typeDefinition": 44799,
+              "name": "GKLFKGDJOHC",
+              "namespace": ""
+            }
+          ],
+          "typeDefinition": 1222,
+          "name": "Dictionary`2",
+          "namespace": "System.Collections.Generic"
+        },
+        "offset": null,
+        "rawOffset": "0x401cd98",
+        "offsetKind": "runtime"
+      },
+      "functions": [
+        {
+          "entry": "0x147366b70",
+          "end": "0x147366b80",
+          "method": {
+            "index": 324857,
+            "name": "LJNPMLJAIAO",
+            "nameIndex": "0xb18963f",
+            "registeredAddress": "0x147366b70",
+            "parameterCount": 0,
+            "flags": "0x891",
+            "virtualSlot": 65535
+          },
+          "nativeBytesSHA256": "4ba6fff20550dde9eb427cd2376f68005ffd6f2dd266912c3b6b66f89ff9517f",
+          "literalReferenceSites": [
+            "0x147366b70"
+          ]
+        },
+        {
+          "entry": "0x147366a40",
+          "end": "0x147366b31",
+          "method": {
+            "index": 324851,
+            "name": "CDMPEFBPCLP",
+            "nameIndex": "0xb188f9c",
+            "registeredAddress": "0x147366a40",
+            "parameterCount": 0,
+            "flags": "0x96",
+            "virtualSlot": 65535
+          },
+          "nativeBytesSHA256": "7b33f534bc61e6dfb7ae5f5a05086841ddf6406d9de77fe86e7d2872893da8b2",
+          "literalReferenceSites": [
+            "0x147366a67"
+          ]
+        }
+      ],
+      "initializedOwnerCells": [
+        "0x1458d61d0"
+      ]
+    }
+  ],
+  "native": [
+    {
+      "resource": "Data/_ExcelBinOutput/AvatarOrnamentGroupExcelConfigData",
+      "exactLiteralPointerPreserved": true,
+      "traces": [
+        {
+          "entry": "0x15437ad90",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008"
+          },
+          "instructions": 3,
+          "nativePathSHA256": "0faf4605587a5bb2c6e2fd37fb4c9c6cdab71a3aba2e8f3a8c670b41b2bc3237",
+          "models": []
+        },
+        {
+          "entry": "0x15437ab80",
+          "stop": "0x14d6e1570",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008"
+          },
+          "instructions": 13,
+          "nativePathSHA256": "a8a1e96e333cf83da8cda0cb8f6f61bf97494de82e092708b5b37b6cad3f1e5c",
+          "models": []
+        }
+      ]
+    },
+    {
+      "resource": "Data/_ExcelBinOutput/AvatarOrnamentExcelConfigData",
+      "exactLiteralPointerPreserved": true,
+      "traces": [
+        {
+          "entry": "0x147366b70",
+          "stop": "0x620000100",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008"
+          },
+          "instructions": 3,
+          "nativePathSHA256": "fb798d90736b8d64f222624a2b319e25b5314d239fc231fcb7107aafcd60b1d4",
+          "models": []
+        },
+        {
+          "entry": "0x147366a40",
+          "stop": "0x14d6e1570",
+          "completion": "bounded-fragment",
+          "liveIn": {
+            "rsp": "0x600100008"
+          },
+          "instructions": 13,
+          "nativePathSHA256": "0dedaa5cb57da71bf5b7fcb8b751dc567706f332e1efb7ea77d0d234a0091dcf",
+          "models": []
+        }
+      ]
+    }
+  ],
+  "resourceFileIOExecuted": false,
+  "completeAvatarHandler": false,
+  "completeConstructor": false,
+  "runtimeStatus": "not-tested",
+  "targetProtocolReady": false,
+  "sourceSHA256": {
+    "tools/client72_avatar_deep_ornaments.py": "39cce9518a99b3ae51d0bed39e57ddc7f3307d19954922b9316fbded89fb34cc",
+    "tools/client72_emulator.py": "8007d2594ef8058a4f2a9f1c24094fb5d2551a202b4e52154876cdfe77a17c3c",
+    "tools/client72_session_runtime.py": "c6ff407e33416869a855cfa86e97c3f63a9d24019ac0f6e6dfc74a959bfe1439",
+    "tools/extract_client72.py": "7d1c75162f77c0fe0df154aa1240c142ad3f6af3295c89cc3d7b85372d3cb97d",
+    "tools/extract_client72_literals.py": "865c6f7f8fbcea164fa535a12eabc3c9d67ebb1fd0ef3f12c5ec7a1898dce6ed"
+  },
+  "models": [
+    "Initialized literal cells hold explicit managed string fixtures; native getter/loader instructions execute up to file I/O.",
+    "No resource file parser/cache construction or real client is executed. Group/default/member field English names remain unapproved."
+  ]
+}

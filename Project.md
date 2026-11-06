@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+Avatar tag38资源来源小项已主线审核：两具名Ornament表的literal/getter/loader/cache类型交叉、4原生路径到文件I/O前；5独立断言及第三native同双跑。实际资源blob/parser/cache构建未执行，不批准生产字段映射。
+
 E-01/R3 n4c已主线审核：8 selector样本、4新增/19关联断言及第三native同双跑；已知BGH消费链筛选GAME_TIME_TICK18而非LuaNotify20。资源线本轮限定研究完成，余缺实际blob/exporter映射、接受规则、Lua键匹配、revision选择；禁止alias/loadAll或2B晋级。
 
 E-01/R3 n4b外层LHFO已主线审核：真实depot→数组wrapper→slot4元素parser→查询，5完整/4拒绝，5新增/15关联断言及第三native同双跑。准确class分配与类型反例明确，候选JSON桥梁仍缺，BGH条件选择后继继续。

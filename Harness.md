@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+`client72_avatar_deep_ornaments.py`及同名test：主线5项、第三完整`eaaf81b5…40e3c5`/摘要`bf385528…ade3c3d`同双跑，证明`local/migration72/astra-main/avatar-ornaments-review.json`；两表来源与tag38合同衔接，原始astra-avatar/ornaments-*。
+
 资源n4c入口`client72_resource_deep_quest.py`；主线19项与第三完整`c6d815b0…ceafa16`/摘要`0451e15f…93104f2`同双跑，证明`local/migration72/astra-main/resource-quest-review.json`。三项原始证据`astra-resources/`，具体输入/观察/解除条件见资源深入专题。
 
 资源n4b入口`client72_resource_deep_nested.py`和同名test；主线15项，第三完整SHA`430b63e5…641575`/摘要`628b58e0…ef4e44`同双跑，证明`local/migration72/astra-main/resource-nested-review.json`。类型兼容为有反例的明确模型，非完整IL2CPP；不批准候选JSON转换。
