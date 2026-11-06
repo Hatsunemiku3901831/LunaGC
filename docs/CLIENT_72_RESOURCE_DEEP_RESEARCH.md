@@ -99,3 +99,31 @@ python -m unittest tools.test_client72_resource_deep -v
 主线第三复验应比较完整和摘要字节、检查sourceSHA及每个stop/models，不只看退出码。本卡不自行Git提交，公共Project/Harness/交接由主线协调。以上冻结项之后还有表中明确可离线工作的n4b和BGH调用关联，不能以这一小项完成称资源研究整体穷尽或D-02完成。
 
 主线逐项审核分配call-site/宽度、实际parser与模型、错误停止点，并独立执行10项断言及第三新进程；完整与摘要均同上述最终双跑。证明`local/migration72/astra-main/resource-review.json`，日志`resource-{tests,native}.log`。首次比较器误用不存在的summary-3文件名，改为实际summary-4后核同；不影响原生执行。无JSON alias或资源就绪晋级。
+
+## n4b：外层 LHFO 数组链已继续实际执行
+
+后继独立入口 [client72_resource_deep_nested.py](../tools/client72_resource_deep_nested.py) 固定首卡工具和摘要hash，没有修改它们或公共runtime。两个新进程重新核三客户端输入、提metadata及usage type cells，再完整执行 `148328b60 → 15113ce30 → slot4/15113cbb0`，并逐元素执行 `15113cf70`。上文“未执行外层wrapper”为首卡冻结时的历史边界；现仅本段指定样本已完成，候选 JSON 桥梁仍未成立。
+
+三个独立 allocation cell 分别是 `1458a5698 → class40302[]`、`1458b97e8 → class40302`、`1458973e8 → encoded58209[]`；实际元素parser声明virtualSlot4，fixture vtable `+f0` 绑定该真实入口。native wrapper读取长度、分配后循环、间接调用真实parser、检查类型库结果并写入引用数组。
+
+五个完整外层样本分别为省略数组、显式空、两个默认元素、两条非零/高位条件、未知enum777和空条件；前3组字节消耗4/8/12，native wrapper调用0/1/1次、元素parser调用0/0/2次。非零样本得到两个独立元素 `[group901, params30302/0x80000001, kind1]` 与 `[group0xffffffff, params0xffffffff, kind1]`，真实首参数查询各返回30302和`0xffffffff`。`group`仍是中性实验标签，未命名业务。
+
+托管数组/对象分配、class/vtable及类型registry存储是明确模型；`14051b7b0`类型兼容内部没有执行，模型严格比较已声明的40302 fixture class，并有错误class反例，不能视作真实IL2CPP类型系统验收。四个反例分别到原生 array-type helper `1404c2c70`、null object/null array `1404c2be0`、截断子项 `1404c2650`；没有把类型检查恒定设true或跳过错误。首轮曾漏掉registry的二次解引用，在类型模型中明确拒绝；仅补模型需要的slot，记录 `nested-initial-failure.txt`。原始首成功nested-1和正式2/3均保留。
+
+新增5项独立断言与原10项合计15项通过，两个新进程完整/摘要逐字节一致：
+
+| n4b产物 | SHA-256 | 字节 |
+| --- | --- | --- |
+| `local/migration72/astra-resources/nested-{2,3}.json` | `430b63e55ebe0a3091bffdb39ace3b583758c151329e79965fbbc83b43641575` | 105975 |
+| `protocol/cn-7.2/resource-deep-nested-observations.json` / 本机nested-summary-3 | `628b58e0484c0cd92581256937263325e7522279cd0c1a8cf222e9f976ef4e44` | 16584 |
+| 新工具源码 | `fbb62a933cef882cee7d04437f6a9631c37ca5ce4ebfb2661432f58720251e2f` | 9912 |
+
+```powershell
+$resourceClient = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/game_path.ps1
+python tools/client72_resource_deep_nested.py --client $resourceClient --output local/migration72/astra-resources/nested-review.json --summary local/migration72/astra-resources/nested-summary-review.json
+python -m unittest tools.test_client72_resource_deep_nested tools.test_client72_resource_deep -v
+```
+
+此后不再把“未执行LHFO外层wrapper”列为当前阻塞。仍不能将候选 `[{},{}]` 转成上述真实装载结果：缺的是候选JSON和客户端读取字节的来源对应，不是现在已经跑通的parser分支。将同一候选JSON重新序列化成自造字节不会形成独立验证。生产alias和资源门禁保持不变。
+
+n4b主线核对精确type cells、slot4和类型拒绝模型，15项关联及第三新进程报告/摘要同双跑；证明`local/migration72/astra-main/resource-nested-review.json`，日志同前缀。仅闭合指定二进制外层数组样本，不批准候选JSON资源装载。

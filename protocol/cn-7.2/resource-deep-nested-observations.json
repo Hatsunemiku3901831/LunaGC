@@ -1,0 +1,581 @@
+{
+  "schemaVersion": 1,
+  "task": "E-01/R3-resource-deep-nested",
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "priorInputs": {
+    "tools/client72_resource_deep.py": "95787d9e4cf3b941bb17045986ffa6234352818bb89e0d02ece9094b1c78e265",
+    "protocol/cn-7.2/resource-deep-observations.json": "5d0f7487de6bc4c1a5b5d43460d6e4c70152d6d8613ba16c764a2359246c69d7"
+  },
+  "allocationTypeCells": [
+    {
+      "usageRow": 704627,
+      "sourceIndex": 565241,
+      "cell": "0x1458a5698",
+      "type": {
+        "kind": "szarray",
+        "attributes": "0x0",
+        "data": "0x142f334f0",
+        "byRef": false,
+        "elementType": {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0x9d6e",
+          "byRef": false,
+          "typeDefinition": 40302,
+          "name": "CGKGCLDHAHE",
+          "namespace": ""
+        },
+        "rank": 1
+      }
+    },
+    {
+      "usageRow": 708185,
+      "sourceIndex": 53538,
+      "cell": "0x1458b97e8",
+      "type": {
+        "kind": "class",
+        "attributes": "0x0",
+        "data": "0x9d6e",
+        "byRef": false,
+        "typeDefinition": 40302,
+        "name": "CGKGCLDHAHE",
+        "namespace": ""
+      }
+    },
+    {
+      "usageRow": 702203,
+      "sourceIndex": 45810,
+      "cell": "0x1458973e8",
+      "type": {
+        "kind": "szarray",
+        "attributes": "0x0",
+        "data": "0x142edbe10",
+        "byRef": false,
+        "elementType": {
+          "kind": "valuetype",
+          "attributes": "0x0",
+          "data": "0xe361",
+          "byRef": false,
+          "typeDefinition": 58209,
+          "name": "COJIPHBKKGB",
+          "namespace": ""
+        },
+        "rank": 1
+      }
+    }
+  ],
+  "elementParser": {
+    "index": 337165,
+    "name": "CNLIBMNOALB",
+    "nameIndex": "0xb187df6",
+    "registeredAddress": "0x15113cbb0",
+    "parameterCount": 1,
+    "flags": "0x3c3",
+    "virtualSlot": 4
+  },
+  "cases": [
+    {
+      "name": "omitted",
+      "expected": [],
+      "actual": [],
+      "bytesConsumed": 4,
+      "trace": {
+        "entry": "0x148328b60",
+        "stop": "0x620000100",
+        "completion": "bounded-fragment",
+        "instructions": 506,
+        "nativePathSHA256": "db4cf11fdf1163123b42636870e91c5f66aa5dc767816222d26d31b2f7dbb9ab",
+        "models": [],
+        "nativeEntryVisits": {
+          "0x148328b60": 1,
+          "0x15113ce30": 0,
+          "0x15113cbb0": 0
+        }
+      }
+    },
+    {
+      "name": "empty",
+      "expected": [],
+      "actual": [],
+      "bytesConsumed": 8,
+      "trace": {
+        "entry": "0x148328b60",
+        "stop": "0x620000100",
+        "completion": "bounded-fragment",
+        "instructions": 543,
+        "nativePathSHA256": "b289186e8109606c4d095c3c3a29d8533c3f2884760d3372b38747e9d1c11b98",
+        "models": [],
+        "nativeEntryVisits": {
+          "0x148328b60": 1,
+          "0x15113ce30": 1,
+          "0x15113cbb0": 0
+        }
+      }
+    },
+    {
+      "name": "two-default-elements",
+      "expected": [
+        {
+          "group": 0,
+          "params": [],
+          "kind": 0,
+          "queriedParameter": 0
+        },
+        {
+          "group": 0,
+          "params": [],
+          "kind": 0,
+          "queriedParameter": 0
+        }
+      ],
+      "actual": [
+        {
+          "group": 0,
+          "params": [],
+          "kind": 0,
+          "queriedParameter": 0,
+          "query": {
+            "entry": "0x15113cf70",
+            "stop": "0x620000100",
+            "completion": "bounded-fragment",
+            "instructions": 11,
+            "nativePathSHA256": "28e8e2bdb7282938f945e9b3253a76f3088453a8b0cfe2ce62eca5af10eb5572",
+            "models": []
+          }
+        },
+        {
+          "group": 0,
+          "params": [],
+          "kind": 0,
+          "queriedParameter": 0,
+          "query": {
+            "entry": "0x15113cf70",
+            "stop": "0x620000100",
+            "completion": "bounded-fragment",
+            "instructions": 11,
+            "nativePathSHA256": "28e8e2bdb7282938f945e9b3253a76f3088453a8b0cfe2ce62eca5af10eb5572",
+            "models": []
+          }
+        }
+      ],
+      "bytesConsumed": 12,
+      "trace": {
+        "entry": "0x148328b60",
+        "stop": "0x620000100",
+        "completion": "bounded-fragment",
+        "instructions": 802,
+        "nativePathSHA256": "b62060f70d3ff091a8f2a02e4dfcfad40900647f28b0c76ba0cf64199644f0eb",
+        "models": [
+          "0x140514ee0",
+          "0x1405336c0",
+          "0x14051b7b0",
+          "0x1405336c0",
+          "0x14051b7b0"
+        ],
+        "nativeEntryVisits": {
+          "0x148328b60": 1,
+          "0x15113ce30": 1,
+          "0x15113cbb0": 2
+        }
+      }
+    },
+    {
+      "name": "nonzero-and-highbit",
+      "expected": [
+        {
+          "group": 901,
+          "params": [
+            30302,
+            2147483649
+          ],
+          "kind": 1,
+          "queriedParameter": 30302
+        },
+        {
+          "group": 4294967295,
+          "params": [
+            4294967295
+          ],
+          "kind": 1,
+          "queriedParameter": 4294967295
+        }
+      ],
+      "actual": [
+        {
+          "group": 901,
+          "params": [
+            30302,
+            2147483649
+          ],
+          "kind": 1,
+          "queriedParameter": 30302,
+          "query": {
+            "entry": "0x15113cf70",
+            "stop": "0x620000100",
+            "completion": "bounded-fragment",
+            "instructions": 66,
+            "nativePathSHA256": "f537884804bc5f41132e30434b614f9d37edec2b76be1f1135bb693a2274827f",
+            "models": []
+          }
+        },
+        {
+          "group": 4294967295,
+          "params": [
+            4294967295
+          ],
+          "kind": 1,
+          "queriedParameter": 4294967295,
+          "query": {
+            "entry": "0x15113cf70",
+            "stop": "0x620000100",
+            "completion": "bounded-fragment",
+            "instructions": 66,
+            "nativePathSHA256": "f537884804bc5f41132e30434b614f9d37edec2b76be1f1135bb693a2274827f",
+            "models": []
+          }
+        }
+      ],
+      "bytesConsumed": 48,
+      "trace": {
+        "entry": "0x148328b60",
+        "stop": "0x620000100",
+        "completion": "bounded-fragment",
+        "instructions": 1089,
+        "nativePathSHA256": "5a55892a8c3da2acfbfa18ebf1f210fac4edf1571f296d8f72b15272424058dc",
+        "models": [
+          "0x140514ee0",
+          "0x1405336c0",
+          "0x140514ee0",
+          "0x14051b7b0",
+          "0x1405336c0",
+          "0x140514ee0",
+          "0x14051b7b0"
+        ],
+        "nativeEntryVisits": {
+          "0x148328b60": 1,
+          "0x15113ce30": 1,
+          "0x15113cbb0": 2
+        }
+      }
+    },
+    {
+      "name": "nonmatching-and-empty-condition",
+      "expected": [
+        {
+          "group": 17,
+          "params": [
+            30302
+          ],
+          "kind": 777,
+          "queriedParameter": 0
+        },
+        {
+          "group": 18,
+          "params": [],
+          "kind": 1,
+          "queriedParameter": 0
+        }
+      ],
+      "actual": [
+        {
+          "group": 17,
+          "params": [
+            30302
+          ],
+          "kind": 777,
+          "queriedParameter": 0,
+          "query": {
+            "entry": "0x15113cf70",
+            "stop": "0x620000100",
+            "completion": "bounded-fragment",
+            "instructions": 11,
+            "nativePathSHA256": "28e8e2bdb7282938f945e9b3253a76f3088453a8b0cfe2ce62eca5af10eb5572",
+            "models": []
+          }
+        },
+        {
+          "group": 18,
+          "params": [],
+          "kind": 1,
+          "queriedParameter": 0,
+          "query": {
+            "entry": "0x15113cf70",
+            "stop": "0x620000100",
+            "completion": "bounded-fragment",
+            "instructions": 17,
+            "nativePathSHA256": "3d8180515f2537276e507f9ea84eaa161b1ee90519cf79c14e9bcaf19be56a3f",
+            "models": []
+          }
+        }
+      ],
+      "bytesConsumed": 40,
+      "trace": {
+        "entry": "0x148328b60",
+        "stop": "0x620000100",
+        "completion": "bounded-fragment",
+        "instructions": 947,
+        "nativePathSHA256": "4b2e08561dd53922b3b8d2ba3014280f72719b902fd042ef86fc7c41dff2c8d8",
+        "models": [
+          "0x140514ee0",
+          "0x1405336c0",
+          "0x140514ee0",
+          "0x14051b7b0",
+          "0x1405336c0",
+          "0x14051b7b0"
+        ],
+        "nativeEntryVisits": {
+          "0x148328b60": 1,
+          "0x15113ce30": 1,
+          "0x15113cbb0": 2
+        }
+      }
+    }
+  ],
+  "rejections": [
+    {
+      "name": "wrong-class",
+      "bytesConsumed": 26,
+      "trace": {
+        "entry": "0x148328b60",
+        "stop": "0x1404c2c70",
+        "completion": "bounded-fragment",
+        "instructions": 691,
+        "nativePathSHA256": "01e0eaa7034b0ff81c620076101abb09c10c1aa3eebc0608e3bf755a4714a28f",
+        "models": [
+          "0x140514ee0",
+          "0x1405336c0",
+          "0x140514ee0",
+          "0x14051b7b0"
+        ]
+      },
+      "exceptionHelperExecuted": false
+    },
+    {
+      "name": "null-object",
+      "bytesConsumed": 8,
+      "trace": {
+        "entry": "0x148328b60",
+        "stop": "0x1404c2be0",
+        "completion": "bounded-fragment",
+        "instructions": 465,
+        "nativePathSHA256": "01271736acd5ad183dd649fef0d6a11c994be22f45c95a994186e1a3be23cb6c",
+        "models": [
+          "0x140514ee0",
+          "0x1405336c0"
+        ]
+      },
+      "exceptionHelperExecuted": false
+    },
+    {
+      "name": "null-array",
+      "bytesConsumed": 26,
+      "trace": {
+        "entry": "0x148328b60",
+        "stop": "0x1404c2be0",
+        "completion": "bounded-fragment",
+        "instructions": 679,
+        "nativePathSHA256": "8bd1db83aaa70bff59b2bccb13ae03c141bf197f597e82e4f23bfedd0fdf3a62",
+        "models": [
+          "0x140514ee0",
+          "0x1405336c0",
+          "0x140514ee0"
+        ]
+      },
+      "exceptionHelperExecuted": false
+    },
+    {
+      "name": "truncated-child",
+      "bytesConsumed": 8,
+      "trace": {
+        "entry": "0x148328b60",
+        "stop": "0x1404c2650",
+        "completion": "bounded-fragment",
+        "instructions": 492,
+        "nativePathSHA256": "587b8ad3134e70ba0bed064226522977dba40171767707e70c2090c23efb7c8b",
+        "models": [
+          "0x140514ee0",
+          "0x1405336c0"
+        ]
+      },
+      "exceptionHelperExecuted": false
+    }
+  ],
+  "allocationModels": [
+    {
+      "site": "0x15113cea3",
+      "count": 2,
+      "element": "class40302",
+      "width": 8,
+      "scope": "Managed reference-array storage model from decoded type cell"
+    },
+    {
+      "site": "0x15113cea3",
+      "count": 2,
+      "element": "class40302",
+      "width": 8,
+      "scope": "Managed reference-array storage model from decoded type cell"
+    },
+    {
+      "site": "0x15113ccca",
+      "count": 2,
+      "element": "encoded uint32 type58209",
+      "width": 4,
+      "scope": "Managed array storage model; element type follows this reviewed caller, not a live type object"
+    },
+    {
+      "site": "0x15113ccca",
+      "count": 1,
+      "element": "encoded uint32 type58209",
+      "width": 4,
+      "scope": "Managed array storage model; element type follows this reviewed caller, not a live type object"
+    },
+    {
+      "site": "0x15113cea3",
+      "count": 2,
+      "element": "class40302",
+      "width": 8,
+      "scope": "Managed reference-array storage model from decoded type cell"
+    },
+    {
+      "site": "0x15113ccca",
+      "count": 1,
+      "element": "encoded uint32 type58209",
+      "width": 4,
+      "scope": "Managed array storage model; element type follows this reviewed caller, not a live type object"
+    },
+    {
+      "site": "0x15113cea3",
+      "count": 1,
+      "element": "class40302",
+      "width": 8,
+      "scope": "Managed reference-array storage model from decoded type cell"
+    },
+    {
+      "site": "0x15113ccca",
+      "count": 1,
+      "element": "encoded uint32 type58209",
+      "width": 4,
+      "scope": "Managed array storage model; element type follows this reviewed caller, not a live type object"
+    },
+    {
+      "site": "0x15113cea3",
+      "count": 1,
+      "element": "class40302",
+      "width": 8,
+      "scope": "Managed reference-array storage model from decoded type cell"
+    },
+    {
+      "site": "0x15113cea3",
+      "count": 1,
+      "element": "class40302",
+      "width": 8,
+      "scope": "Managed reference-array storage model from decoded type cell"
+    },
+    {
+      "site": "0x15113ccca",
+      "count": 1,
+      "element": "encoded uint32 type58209",
+      "width": 4,
+      "scope": "Managed array storage model; element type follows this reviewed caller, not a live type object"
+    },
+    {
+      "site": "0x15113cea3",
+      "count": 1,
+      "element": "class40302",
+      "width": 8,
+      "scope": "Managed reference-array storage model from decoded type cell"
+    }
+  ],
+  "objectModels": [
+    {
+      "type": 40302,
+      "deliberateWrongClass": false
+    },
+    {
+      "type": 40302,
+      "deliberateWrongClass": false
+    },
+    {
+      "type": 40302,
+      "deliberateWrongClass": false
+    },
+    {
+      "type": 40302,
+      "deliberateWrongClass": false
+    },
+    {
+      "type": 40302,
+      "deliberateWrongClass": false
+    },
+    {
+      "type": 40302,
+      "deliberateWrongClass": false
+    },
+    {
+      "type": 40302,
+      "deliberateWrongClass": true
+    },
+    {
+      "type": 40302,
+      "deliberateWrongClass": false
+    },
+    {
+      "type": 40302,
+      "deliberateWrongClass": false
+    }
+  ],
+  "typeCheckModels": [
+    {
+      "expectedType": 40302,
+      "fixtureClassMatches": true
+    },
+    {
+      "expectedType": 40302,
+      "fixtureClassMatches": true
+    },
+    {
+      "expectedType": 40302,
+      "fixtureClassMatches": true
+    },
+    {
+      "expectedType": 40302,
+      "fixtureClassMatches": true
+    },
+    {
+      "expectedType": 40302,
+      "fixtureClassMatches": true
+    },
+    {
+      "expectedType": 40302,
+      "fixtureClassMatches": true
+    },
+    {
+      "expectedType": 40302,
+      "fixtureClassMatches": false
+    }
+  ],
+  "resourceReady": false,
+  "targetProtocolReady": false,
+  "runtimeStatus": "not-tested",
+  "JSONToNativeFieldBridgeVerified": false,
+  "aliasesApproved": [],
+  "limitations": [
+    "Native depot parser, array wrapper, virtual element parser and per-element query execute; no client process or file IO.",
+    "Managed allocation/vtable/type-registry storage is a fixture bound to independently decoded class/array cells.",
+    "Runtime type compatibility is an exact fixture comparison with a deliberate wrong-class negative; IL2CPP type helper internals are not executed.",
+    "Synthetic binary missing/empty objects do not establish candidate JSON serialization or actual installed resource values.",
+    "Element group output is only a neutral value label; no proudSkillGroupId/energySkill/BGH alias is approved."
+  ],
+  "sourceSHA256": {
+    "tools/client72_resource_deep_nested.py": "fbb62a933cef882cee7d04437f6a9631c37ca5ce4ebfb2661432f58720251e2f",
+    "tools/client72_resource_deep.py": "95787d9e4cf3b941bb17045986ffa6234352818bb89e0d02ece9094b1c78e265",
+    "tools/client72_emulator.py": "8007d2594ef8058a4f2a9f1c24094fb5d2551a202b4e52154876cdfe77a17c3c",
+    "tools/client72_session_runtime.py": "c6ff407e33416869a855cfa86e97c3f63a9d24019ac0f6e6dfc74a959bfe1439",
+    "tools/extract_client72.py": "7d1c75162f77c0fe0df154aa1240c142ad3f6af3295c89cc3d7b85372d3cb97d",
+    "tools/trace_client72_player_store.py": "62540f670c18ac4efd0bc09d896cc1279b3e5c2404d05f8f9d3e8f62da5ecabe"
+  }
+}
