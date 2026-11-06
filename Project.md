@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+E-01d1n3收尾已补实际反射验证：152资源类/注解文件/优先级逐项等于静态清单，真实GameData map全部存在，优先级8/7/128/9/0；两个新JVM报告同SHA `3b5d7799…f6f25a`。保留Map.of键序造成的首轮字节不一致，改审计输出有序map后通过；没有载入其余表或晋级resourceReady。生产构建仍为8c1fb85，不因离线工具变化重复打包。
+
 F-03d3g2-prep本轮限定验收完成：[实际Java来源投影](docs/CLIENT_72_AVATAR_JAVA_PROJECTION.md)1项Java/两次原生相同（`0d608af8…418c14`），真实getter→独立adapter→f1/f3既有消费者片段、非零/64位/map/list/显式零/确定性/Store GUID关联通过。生命周期、FightProp计算、depot和s2a未承接字段另列来源/省略规格；旧sender/共享Proto/opcode未改。首次夹具接口/ASCII复用失败保留，未新建ABI模型；f4d2/复杂SceneInfo继续阻塞g2主体。
 
 E-01d1n3本轮限定验收完成：目标ChapterExcel实际双JVM436安装/339及326键，30302无begin/end；新增目标表模式经独立Mongo真实303启动/保存2项全过、2/64包无ChapterState增量，loadedAll=false门禁保留。152注解/161表引用机械清单与准确缺口见[章节专题](docs/CLIENT_72_D02_CHAPTER_LOAD.md)。E-01/R3与2B正向重绑定继续阻塞，未启动真实loadAll或客户端。

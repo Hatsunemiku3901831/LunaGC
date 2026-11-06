@@ -6,6 +6,8 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.AppenderBase;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.data.ResourceLoader;
+import emu.grasscutter.data.ResourceType;
+import emu.grasscutter.data.GameData;
 import emu.grasscutter.data.excels.ChapterData;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -58,10 +60,47 @@ public final class D02ChapterAudit {
   for (var e:begin.entrySet()) check(projection(ChapterData.getBeginQuestChapterMap().get(e.getKey())).equals(e.getValue()), "begin last writer "+e.getKey());
   for (var e:end.entrySet()) check(projection(ChapterData.getEndQuestChapterMap().get(e.getKey())).equals(e.getValue()), "end last writer "+e.getKey());
   var rows=new TreeMap<Integer,Map<String,Integer>>();
-  map.forEach((id,c)->rows.put(id,Map.of("beginQuestId",c.getBeginQuestId(),"endQuestId",c.getEndQuestId(),"needPlayerLevel",c.getNeedPlayerLevel())));
+  map.forEach((id,c)->{
+   var row=new TreeMap<String,Integer>();
+   row.put("beginQuestId",c.getBeginQuestId()); row.put("endQuestId",c.getEndQuestId()); row.put("needPlayerLevel",c.getNeedPlayerLevel());
+   rows.put(id,row);
+  });
   var result=new TreeMap<String,Object>(); result.put("installed",rows); result.put("begin30302",id(ChapterData.getBeginQuestChapterMap().get(30302))); result.put("end30302",id(ChapterData.getEndQuestChapterMap().get(30302))); result.put("beginIndexSize",ChapterData.getBeginQuestChapterMap().size()); result.put("endIndexSize",ChapterData.getEndQuestChapterMap().size()); result.put("loadedAll",ResourceLoader.isLoadedAll()); result.put("sourceRows",raw.size()); result.put("idCounts",idCounts); result.put("beginCounts",beginCounts); result.put("endCounts",endCounts); result.put("errors",errors);
   check(!ResourceLoader.isLoadedAll(), "loadAll unexpectedly true");
+  result.put("resourceDefinitions", resourceDefinitions(repo));
   Files.writeString(output,new GsonBuilder().setPrettyPrinting().create().toJson(result)+"\n");
+ }
+ static Map<String,Object> resourceDefinitions(Path repo) throws Exception {
+  Path manifest=repo.resolve("local/migration72/offline-sol-terra/chapter-audit/static-manifest.json");
+  check(hash(manifest).equals("f12e46ffe9615c9d552ebe6b383d0ac42ac112b79afae61c92674573bcea5f33"), "static manifest hash");
+  var expected=new TreeMap<String,List<String>>();
+  for (var value:JsonParser.parseString(Files.readString(manifest)).getAsJsonObject().getAsJsonArray("annotations")) {
+   var row=value.getAsJsonObject(); var names=new ArrayList<String>();
+   names.add(row.get("priority").getAsString());
+   for (var file:row.getAsJsonArray("files")) names.add(file.getAsJsonObject().get("name").getAsString());
+   expected.put(row.get("class").getAsString(),names);
+  }
+  var actual=new TreeMap<String,List<String>>();
+  for (var type:ResourceLoader.getResourceDefClasses()) {
+   var annotation=type.getAnnotation(ResourceType.class); var names=new ArrayList<String>();
+   names.add(annotation.loadPriority().name()); names.addAll(Arrays.asList(annotation.name()));
+   check(actual.put(type.getSimpleName(),names)==null, "duplicate resource simple name");
+   check(GameData.getMapByResourceDef(type)!=null, "missing actual resource map "+type.getName());
+  }
+  check(actual.equals(expected), "reflection/annotation/priority differs from source manifest");
+  var method=ResourceLoader.class.getDeclaredMethod("getResourceDefClassesPrioritySets");
+  method.setAccessible(true);
+  var groups=(List<?>)method.invoke(null); var priorities=ResourceType.LoadPriority.getInOrder();
+  check(groups.size()==priorities.size(), "priority group count");
+  var counts=new LinkedHashMap<String,Integer>();
+  for (int i=0;i<groups.size();i++) {
+   var classes=(Set<?>)groups.get(i);
+   for (var value:classes) check(((Class<?>)value).getAnnotation(ResourceType.class).loadPriority()==priorities.get(i), "priority set mismatch");
+   counts.put(priorities.get(i).name(),classes.size());
+  }
+  var result=new TreeMap<String,Object>();
+  result.put("annotations",actual); result.put("priorityCounts",counts); result.put("allActualMapsAvailable",true);
+  return result;
  }
  static List<Integer> projection(ChapterData c) { return c==null ? List.of() : List.of(c.getId(),c.getBeginQuestId(),c.getEndQuestId(),c.getNeedPlayerLevel()); }
  static int integer(JsonObject row,String name) { return !row.has(name) || row.get(name).isJsonNull() ? 0 : row.get(name).getAsInt(); }

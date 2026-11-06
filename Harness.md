@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+章节收尾反射实测：`tools/D02ChapterAudit.java`实际getResourceDefClasses/私有priority sets/真实getMapByResourceDef，152类逐注解/优先级/map均符静态清单。最终两个JVM报告SHA `3b5d7799…f6f25a`、目录`offline-sol-terra/chapter-audit/run-dae689a49a2f4f5fa2dd7cd4cb1b261d/`；Map.of键序首次字节不一致及相等对象保留`run-b8f3bcd8209b4dc3ae16e23eee6c3039/`，不把重复加载计成新增测试。根生产JAR不受离线驱动修改影响。
+
 F-03d3g2-prep：[Java有限投影](docs/CLIENT_72_AVATAR_JAVA_PROJECTION.md)，`Protocol72AvatarProjectionTest`实际1项通过；`tools/trace_client72_avatar_projection.py`两新进程原生结果同SHA `0d608af8…418c14`。输入/工具/真实getter来源pin、XML与轨迹在`offline-sol-terra/avatar-projection/{java-final,native-final}/`；初轮接口及ASCII夹具失败保留，仅用已验f1/f3独立context与Team UTF-8 reader改正。正式生产g2、完整构造/后缀、复杂SceneInfo和物品ID对应未通过。
 
 E-01d1n3：[章节实际加载](docs/CLIENT_72_D02_CHAPTER_LOAD.md)，入口`tools/audit_d02_chapter_{manifest,run}.py`与`tools/D02ChapterAudit.java`。真实双JVM结果SHA `47524bc3…6814a62`；可选`d02.chapterExcel`新增目标表模式由主线在`offline-sol-terra/mongo-8c106c20b11743a8a73280ccc13b74fc/chapter-start/`运行2项全过，包类2/64无ChapterState、BSON/冷读及未就绪manager拒绝保持。首个实例正常关闭，保留303库；不能据此进入2B。脚本固定旧dfde archive作loader对照，不随根JAR更新擅自换输入。

@@ -67,3 +67,9 @@ python tools/audit_d02_chapter_run.py
 这解决n2原来“没加载Chapter表”的夹具缺口，不证明章节通知目标wire、任务完成效果或完整登录。原n2不带property的模式仍保留；新增property只改变测试资源输入。该实例之后的关联套件曾因漏接相对输入失败，失败目录保留，Mongo在finally中正常shutdown；测试303库及BSON保留、不清库，27027已释放。关联回归另用新目录修正输入后全过，不能与本两项重复累计。
 
 2B仍因真实生产loadAll及必要记录未满足而阻塞。已证目标QuestExcel30302解析拒绝和未知LogicType/字段不加猜测alias；自然加载完整输入及引用/日志、候选revision关系仍开放。当前静态清单不是全部P0或完整资源闭包，不能把最终loadedAll标志单独当成功。
+
+## 收尾补核：真实反射、优先级与资源map
+
+主线补完上文原来尚未执行、但可机械验证的反射项：实际调用归档JAR的 `ResourceLoader.getResourceDefClasses`、私有 `getResourceDefClassesPrioritySets` 和生产 `GameData.getMapByResourceDef`。实际152类的注解文件名/优先级与静态清单逐项相等，所有实际map非null；五优先级计数8/7/128/9/0，同级仍无顺序。没有调用loadAll或载入其余表，不能扩大成逐表解析、引用及输出已通过。
+
+双新JVM最终报告逐字节相同，SHA `3b5d7799d11317aae890b62462d9a77b250bac7b515efc13c008e72f5bf6f25a`，目录`local/migration72/offline-sol-terra/chapter-audit/run-dae689a49a2f4f5fa2dd7cd4cb1b261d/`。驱动源SHA `87de0a9d1bd53c3678304ce28cdfd32df3e57d613794099bfc955487a23d70d7`。新增反射输出的首轮在`run-b8f3bcd8209b4dc3ae16e23eee6c3039/`暴露JSON键顺序不确定：两个对象相等但字节不同，原因是Java Map.of的跨JVM遍历次序。原始失败保留，改用有序map后复验，不删除确定性断言、不改生产或静态来源hash。旧47524报告保留为不含反射项的较早输出，不将两次重复章节加载累计为新增测试数。
