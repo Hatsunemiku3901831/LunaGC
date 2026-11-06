@@ -1,5 +1,9 @@
 # 研发索引与执行骨架
 
+F-03d1c：[PlayerData有限接入](docs/CLIENT_72_PLAYER_DATA_CONTRACT.md)，9a9853e；`generate_player_data72_sources.py --client $env:GAME_PATH --check`及`Protocol72PlayerDataTest`。11 Java、3真实producer包交原生consumer、7生成器/47映射关联均过；564研究、独立Mongo45套778 Java、六生成检查通过。便携22秒JAR aa4b3fa5…790aa45，10变化/7新增与编译相同，117业务/Lua/旧PropValue class保持；未部署原因和验证在`local/migration72/evidence/player-data-*`。这不是D-02。
+
+F-03d2b1：[库存/Material合同](docs/CLIENT_72_INVENTORY_CONTRACT.md)，fb6440d；9新增/59关联通过，19通知/22物品/5拒绝双跑一致，六字段限定完成，完整单例/分类fanout未验。F-03d3b：[AvatarInfo raw下界](docs/CLIENT_72_AVATAR_CORE.md)，7470ef6；6类53wire、1536扫描/24图/11拒绝、9新增/69关联双跑一致；shared map reader先复现Wrong codec再专用路由，不改公共runtime。继续Project的b2/d3c，未知不迁生产。
+
 F-04c：[正式信任补丁](docs/CLIENT_72_TRUST_PATCH.md)，patch `3675ea7`已按6文件差异和生产回调/实际ilhook ABI证据审阅接收。50 Rust/25 Python、6 ABI与11原生密码学样本均过，双跑一致；DLL仅本机构建，未安装，全DLL/SDK/D-02不晋级。portable信任路径接线另见F-04c2，既有调试器仍需独立环境核对。
 
 F-03d3a：[Avatar raw外层](docs/CLIENT_72_AVATAR_OUTER.md)，`python -m unittest tools.test_client72_avatar_outer -v`；384扫描/19原生图/5拒绝双跑，8新增/62关联通过。3类14wire限定完成；65类368存储和85 AOT仅静态依赖。AvatarInfo非空仍拒绝，继续Project F-03d3b，不把候选身份或完整闭包晋级。

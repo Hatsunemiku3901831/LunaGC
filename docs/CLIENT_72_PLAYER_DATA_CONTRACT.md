@@ -78,3 +78,5 @@ python -m unittest tools.test_client72_player_data_contract tools.test_client72_
 统一人工review旧守卫先拒绝，复核后1267→1268源码/Proto、79→84证据，只有PlayerData sender/root及新nested源变化，已有其它源码与77既有证据hash不变。新增5份已验摘要，mappings与Asta审计2份更新；151根/矩阵、1121描述符文件、1258类型/4810字段，两次recover一致。未知physical文件矩阵行保持unknown；开放边界、P0闭包和runtime不晋级。原始证据位于`local/migration72/evidence/player-data-*`及同前缀logs/results。
 
 上游固定参考仍为a49f51aa6f2787ffbc25cee46801b70dee860d23，原21目标行/源码tree不变，新增两行9字段。对照248字段中156同tag同外形、92缺tag、0外形冲突；标记的5个已验名称差异包括既有两MD5及本卡nickname/nick_name、property_type/type、int64_value/ival三种用途别名差异，不把后者称新wire矛盾。审计工具原先把具名map值`PropValue`和种类`message`比较，已用独立合成用例先红后修正，只比较外层种类，不宣称递归内容相同。
+
+运行代码提交9a9853e后，Windows portable入口实际构建22秒成功；JAR SHA-256为`aa4b3fa5dc6c084e43788f1cceb8e6cfa6077c7f2d3c4983432b0c085790aa45`，内嵌9a9853e。10变化及7新增class均与本次编译输出逐字节相同，其余45934 class不变；117个账号/Guard/Player/Lua/旧PropValue class另核保持。InfoCommand/StartupArguments反编译仅嵌入commit字符串变化。旧JAR在忽略builds校hash归档。完整初始化/P0、SDK/补丁实际加载与资源前置不齐，故未部署、未装DLL；portable status实际stopped/Healthy=false（退出1），无运行JAR或健康成功可验，不把构建当实机验收。
