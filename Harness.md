@@ -1,5 +1,9 @@
 # 研发索引与执行骨架
 
+F-03d2c1：[独立库存raw Java适配器](docs/CLIENT_72_INVENTORY_WIRE_ADAPTER.md)，b47a490；36 Java/4生成守卫通过，含32组native对象oracle。`generate_inventory72_wire.py --client $env:GAME_PATH --check`仅生成独立namespace Proto，旧Store/Item/包号/sender不改。portable22秒JAR5db5d3b2…28fd73，70新raw class+3 build元信息、其余45948不变；未部署。
+
+D-01b3a：[Marshal存储合同及三轮动态证据](docs/CLIENT_72_MARSHAL_STORAGE.md)，038132e；17例原生转换返回/双跑、12聚焦通过，CRT/GC明确为模型。真实TLS/UTF8捕获不等于live Marshal；两轮80000003及末硬件观察80000004、PUB末事件缺失均未归因。最终无target，不能沿旧PID；继续独立合成目标D-01b4分清观察通道行为。
+
 F-03d3c：[Avatar两个小树](docs/CLIENT_72_AVATAR_TREES.md)，24caff2；6类18wire、768扫描/20图/10拒绝、8新增/77关联及双跑通过。仅27196/66308两个子树raw闭包完成；完整Avatar仍缺16352/53824，继续Project d3d，不升级业务或实机。
 
 F-03d1c：[PlayerData有限接入](docs/CLIENT_72_PLAYER_DATA_CONTRACT.md)，9a9853e；`generate_player_data72_sources.py --client $env:GAME_PATH --check`及`Protocol72PlayerDataTest`。11 Java、3真实producer包交原生consumer、7生成器/47映射关联均过；564研究、独立Mongo45套778 Java、六生成检查通过。便携22秒JAR aa4b3fa5…790aa45，10变化/7新增与编译相同，117业务/Lua/旧PropValue class保持；未部署原因和验证在`local/migration72/evidence/player-data-*`。这不是D-02。

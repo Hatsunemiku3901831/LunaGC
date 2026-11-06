@@ -17,3 +17,5 @@ python -m unittest tools.test_generate_inventory72_wire -v
 ```
 
 本机证据和失败/成功日志分别在忽略`local/migration72/evidence/inventory-wire-*`、`logs/inventory-wire-*`及对应results。该独立Proto未由任何生产Java引用，故不自动进入当前登录发送候选/import矩阵；不扩大P0必需集合。业务接管须等待F-03d2b2及独立生产子卡，限定[Material合同](CLIENT_72_INVENTORY_CONTRACT.md)的六字段不能批准全部装备/其他物品分支。
+
+提交b47a490后实际Windows portable构建22秒成功，JAR SHA-256 `5db5d3b2db6c2ab5392b0526d9af63208a3ba6e6df507ecfe234a25a0d28fd73`，内嵌b47a490；70新增raw class与编译输出逐字节相同。除BuildConfig/InfoCommand/StartupArguments的commit元信息外，其余45948个旧class不变，旧包号/发送类/共享Item保持。旧JAR校hash归档。业务初始化/P0、SDK/补丁实际加载及资源前置未齐，未部署/未安装，无运行JAR或健康成功对象。
