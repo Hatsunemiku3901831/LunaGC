@@ -4,6 +4,17 @@
 
 ## 当前阶段
 
+2026-11-06本次用户已明确恢复持续推进至D-02，覆盖下方历史暂停范围。接手`65fc59a`；先补F-02连续收帧、F-03初始化与E-01真实加载缺口，再依赖满足后部署/实机。不将已有468研究/761 Java当作本轮重跑，不用离线或健康代替D-02。AGENTS/resources既有差异保留；只用Windows portable及脚本/API。
+
+| 本次子项 | 依赖/限定工作 | 验收与边界 | 状态 |
+| --- | --- | --- | --- |
+| F-02c 连续响应收帧及选key来源 | 固定三输入；复用Token Handler安装key的同一原生运行时，追踪selector写入/读取、LoginRsp真实reader/路由 | 非零/64位/嵌套、独立wire、dispatch/session差异及错误key/边界；二次产物/关联回归；完整Handler/SDK/socket未执行不得晋级 | 进行中 |
+| F-03d1 PlayerData独立身份与raw下界 | F-03；固定目标命名/注册/消费、5外字段及非空map闭包 | 上游7193仅候选；独立身份来源、实际reader/64位/错误wire及重复性；未知不命名、不改生产 | 进行中 |
+| F-03d2 PlayerStore递归Item闭包 | F-03d1方法、本地固定输入 | 20892仅候选；先核Item/oneof闭包及独立身份/wire，未验不得发送 | 待开始 |
+| F-03d3 AvatarData递归Avatar闭包 | F-03d1方法、本地固定输入 | 20143仅候选；AvatarInfo/Team/Rename及packed64位闭包，未验不得发送 | 待开始 |
+| E-01c6 嵌套require调用者bindings恢复 | E-01c5已复现成功置null/异常残留 | 真实生产JUnit先红后绿；eval仅保存/try-finally恢复调用者，双require/异常/隔离与相关Lua回归；不称修复local词法defs、吞错或完整资源；构建/部署按实际前置记录 | 进行中 |
+| F-04a SDK/补丁/资源前置现场复核 | 当前checkout/config/GAME_PATH、三输入与现有会话 | 只读归属/哈希及实际可执行缺口；禁止沿旧PID直接run/load、禁止跳校验；前置未齐不启猜测服务 | 进行中 |
+
 2026-11-06本批F-02b1/b2、F-03a/b/c限定融合验收完成，按用户要求暂停；暂不D-02实机。运行代码提交`4bbf9fd`：完整LoginReq/两响应及嵌套21类198字段，八个场景握手、容量5字段、进入场景通知四字段及8类44字段raw闭包已接入。未知字段保留原名且不发送；完整初始化/P0、SDK/补丁/资源及实际客户端序列仍未验。
 
 实际468项研究、独立Mongo43套761项Java全部通过（失败/错误/跳过均0），五个生成检查无漂移。研究结构0错误、ready205缺口；74证据/1267源码与Proto、150根/矩阵、1120描述符文件、1257声明/4806字段，recover双跑。JDK17 portable构建24秒，JAR SHA-256 `570d64f4f1680ab023c7eda7f2e930ebf5eba79791030e8499100ca8f2799bf5`内嵌4bbf9fd；92变化/114新增class均匹配编译输出，109账号/Guard/Lua class保持，3个旧LoginRsp map holder被新raw字段替换。
