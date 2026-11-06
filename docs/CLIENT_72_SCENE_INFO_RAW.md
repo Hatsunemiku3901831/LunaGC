@@ -79,4 +79,4 @@ python -m unittest tools.test_client72_scene_info_raw tools.test_client72_scene_
 
 主线已审核四新文件、显式模型/范围拒绝，独立28项及第三全新原生回放均通过，完整/摘要与上表双跑逐字节相同，四份source pin保持。证明为 `local/migration72/evidence/scene-info-raw-main-review.json`，独立输出 `evidence/scene-info-raw-main-{native,summary}.json`，日志 `logs/scene-info-raw-main-{tests,native}.log`。未改运行文件，故无需构建、重启或部署；没有客户端验收。`completeSceneInfoRawClosure/targetProtocolReady/fullNetworkHandler/fullSceneEntityEffects` 均保持false。
 
-下一项先沿场景实际消费者确定必要分支、实体/GUID关联、初始化顺序和省略等待条件，再据证据限定72829/54267 Object后继的具体AOT、判别与非空wire任务；83320等业务名称也须独立来源。不把未闭合战斗后代全部当作入场必需，不用空外壳绕过未知内容。本卡不自动生成Proto、批准ready或接入生产。
+后继[s2a身份合同](CLIENT_72_SCENE_INFO_CONTRACT.md)已限定证明18295四个GUID/实体字段关系和根tag12关联，并经主线第三回放；附属51522的Weapon名称、真正实体构造/完整handler、能力必要性与等待条件仍未闭。恢复后据实际消费者证据限定72829/54267 Object后继；83320等业务名称也须独立来源。不把未闭战斗后代全部当入场必需，不用空外壳绕过未知内容。当前按用户要求收口暂停，不生成Proto、批准ready或接生产。

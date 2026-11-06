@@ -8,6 +8,8 @@
 
 ## 当前阶段
 
+F-03d3s2a已审：[SceneInfo身份关联](docs/CLIENT_72_SCENE_INFO_CONTRACT.md)由真实列表/GUID字典/store和具名GetAvatarEntityId确认18295 tag13/4为Avatar GUID/实体ID，tag10/7为type51522附属模型GUID/实体ID并关联owner；Weapon英文名仍未知。25消费/停止夹具及3拒绝，主线28与第三新进程完整/摘要同双跑；首项角色缺失/错误class会结束整列表。世界实体为明确fixture，完整handler/能力/初始化必要集合未验；按最新指令收口，后继留交接。
+
 D-01b5g-preflight已审：[单HW前置](docs/CLIENT_72_SINGLE_HARDWARE_OBSERVER.md)实现共用单槽控制及原观察器接入；1个固定自有fixture实得9停点/4次切换/入口返回及三方exit0，原代码窗口和全GPR保持。主线28守卫、逐停点/四动作/终态及四核心函数AST独立审核；原始游戏HW轮尚未启动，按用户最新收口暂停指令留待恢复，不以预验证代替R2/D-02。当前无target/API点空，游戏4点/fixture3点持久ledger仍须分别核归属。
 
 D-01b5h1已验取证：[真实HTTP路由/版本拒绝](docs/CLIENT_72_HTTP_ROUTE_CONTRACT.md)执行生产HttpServer/RegionHandler及真实7.2请求，三新JVM各两请求/78 class核同并正常停端口；实际列表九字段原生可读，正式key4/seed当前区返回加密签名版本拒绝。目标原生与独立RSA解密/验签同、坏正文签名拒绝，错误detail reader前止步；固定同输入独立重放字节一致。归档仍7.1.0，7.2未获准，未改版本或以旧请求求绿；正式7.2准入留R4，R2继续自然调用与ABI/加载。
@@ -122,6 +124,7 @@ E-01d1a（D02-R3子合同A）已验收：固定候选commit/tree/blob四表，�
 | F-03d3f4b Avatar初始FightProp有限消费 | f1/f3/f4a/e8及固定三输入 | tag7 map真实清理/编码/写入，7个具名ID、HP事件/watcher/有限UI块已审；23样本/24应用/5错误，主线58与第三原生同双跑。省略清旧值，业务数值/完整handler/入场必要性仍待 | 已完成 |
 | F-03d3f4c Avatar depot/当前Team派生资源消费 | f1/f3/f4b/e8、固定四表来源 | tag11→具名depot缓存ID、默认/当前资源链分离；22组/109消费/42字段/6拒绝，主线70/第三原生同双跑。501/701仅零缺省投影，目标反序列化/别名/完整初始化未知 | 已完成 |
 | F-03d3s1 SceneInfo有限非空raw图 | f2b/e8及固定三输入 | 9类36字段，1152扫描/40成功/21拒绝；fixed32、36/42 reader非空组合及主线28/第三原生同双跑。72829非空显式拒绝，完整闭包/业务/实体效果仍未知 | 已完成 |
+| F-03d3s2a SceneInfo有限GUID/实体关联 | f2b/s1/e8与固定三输入 | 18295四字段的Avatar/附属51522关联、根tag12关联及首项缺失中止列表；25夹具/3拒绝，主线28/第三原生同双跑。Weapon名/真实实体构造/完整handler及必要集合未验 | 已完成 |
 | E-01d1i～j 日常持久化及初始实体 | R3固定候选表、旧daily/Lua/combat、独立Mongo | 唯一新库真实1项通过，生成4/保存/新Player冷读/同日不重抽、生成前后场景0/4；23怪物/41装置逐类型/资源ID已验。主线13输入hash/source/class/XML及正常关闭审核；受控调度不代表后台/完整Done，自动事件后代/其它随机组/目标协议未验 | 已完成 |
 | E-01d1k 出生点实际初始实体 | R3生产网格/固定表、Gather、旧Lua/combat/drop | 真实25组/checkGroups，隔离inline1项通过/0加载ERROR，逐实体类型与ID、自然601 option173已验；fast1项失败449保留，根config不改。主线35输入及source/class/XML/351静态重建引用审核，无重复测试；其他异步/完整调度/网络仍未知 | 已完成 |
 | E-01d1l 出生初始本组自动事件 | K所选25suite、既有505/601事件合同 | 有限订阅表与505自然onLoadGroup1项通过，真实action返回计数1/4及门箱状态/0 ERROR；主线补block必要输入hash后独立新JVM1项通过，重叠不相加。跨组/插件/其它suite/完整异步后代与客户端未验 | 已完成 |
