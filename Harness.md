@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+F-03d3c：[Avatar两个小树](docs/CLIENT_72_AVATAR_TREES.md)，24caff2；6类18wire、768扫描/20图/10拒绝、8新增/77关联及双跑通过。仅27196/66308两个子树raw闭包完成；完整Avatar仍缺16352/53824，继续Project d3d，不升级业务或实机。
+
 F-03d1c：[PlayerData有限接入](docs/CLIENT_72_PLAYER_DATA_CONTRACT.md)，9a9853e；`generate_player_data72_sources.py --client $env:GAME_PATH --check`及`Protocol72PlayerDataTest`。11 Java、3真实producer包交原生consumer、7生成器/47映射关联均过；564研究、独立Mongo45套778 Java、六生成检查通过。便携22秒JAR aa4b3fa5…790aa45，10变化/7新增与编译相同，117业务/Lua/旧PropValue class保持；未部署原因和验证在`local/migration72/evidence/player-data-*`。这不是D-02。
 
 F-03d2b1：[库存/Material合同](docs/CLIENT_72_INVENTORY_CONTRACT.md)，fb6440d；9新增/59关联通过，19通知/22物品/5拒绝双跑一致，六字段限定完成，完整单例/分类fanout未验。F-03d3b：[AvatarInfo raw下界](docs/CLIENT_72_AVATAR_CORE.md)，7470ef6；6类53wire、1536扫描/24图/11拒绝、9新增/69关联双跑一致；shared map reader先复现Wrong codec再专用路由，不改公共runtime。继续Project的b2/d3c，未知不迁生产。
