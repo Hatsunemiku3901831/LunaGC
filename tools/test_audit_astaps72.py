@@ -109,6 +109,23 @@ public static final int Negative = -1001; // no old ID
         self.assertEqual(2, result['counts']['matchingOuterShape'])
         self.assertEqual(2, result['counts']['verifiedSemanticConflict'])
 
+    def test_named_target_message_map_compares_outer_kind_without_claiming_nested_equivalence(self):
+        messages, _ = indexed('''message Example {
+ map<uint32, SourceChild> values = 6;
+}
+message SourceChild {
+ uint64 value = 1;
+}
+''')
+        field = dict(target(tag=6, typ='map', cardinality='map'), keyType='uint32', valueType='TargetChild')
+        data = mapping([field])
+        data['schemas'].append(dict(semanticName='TargetChild', status='unresolved', fields=[]))
+        result = audit.compare_targets(data, messages, {})[0]
+        self.assertTrue(result['fields'][0]['sameOuterShape'])
+        self.assertEqual('SourceChild', result['fields'][0]['astaAtSameTag']['mapValueTypeName'])
+        field['valueType'] = 'uint64'
+        self.assertFalse(audit.compare_targets(data, messages, {})[0]['fields'][0]['sameOuterShape'])
+
     def test_candidate_name_is_not_promoted_and_mapping_is_not_mutated(self):
         messages, _ = indexed('message Example {\n uint32 old_business_name = 1;\n}')
         data = mapping([target('TARGETRAW', status='candidate', semantic='guessed_business_name')])
@@ -157,7 +174,7 @@ public static final int Negative = -1001; // no old ID
         self.assertEqual(audit.COMMIT, summary['reference']['commit'])
         self.assertEqual(audit.PROTO_DIGEST, summary['protoSourceTree']['sha256'])
         self.assertEqual(audit.MAPPING_SHA256, summary['targetMapping']['sha256'])
-        self.assertEqual((239, 147, 92, 2), tuple(summary['counts'][k] for k in
+        self.assertEqual((248, 156, 92, 5), tuple(summary['counts'][k] for k in
             ('targetFields', 'matchingTargetOuterShape', 'missingTargetTags', 'verifiedSemanticConflicts')))
         self.assertEqual((967, 567, 12), tuple(summary['counts'][k] for k in ('parkedFields', 'zeroOpcodes', 'negativeOpcodes')))
         self.assertTrue(summary['compilation']['success'])

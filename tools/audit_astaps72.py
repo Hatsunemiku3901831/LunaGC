@@ -23,7 +23,7 @@ ROOT = Path(__file__).resolve().parents[1]
 COMMIT = 'a49f51aa6f2787ffbc25cee46801b70dee860d23'
 TREE = '9940bf7756ce5ff8be8a836a4485a645b490c2e1'
 PROTO_DIGEST = '86d9e71e600ca29b286c53a17bffb94657fce7e797d837c1f0108b33cd91be18'
-MAPPING_SHA256 = 'd6cbc918a69ac87bb3e738bc5b94abda9eb808d25210512448384bfad67e9926'
+MAPPING_SHA256 = 'e3749bb1a0041d21371940d0028e33f26578ff0b2f2b02fec009ba97a212d28c'
 KEY_FILES = (
     'LICENSE', 'LICENSE-ClassGraph.txt', 'README.md',
     'docs/protocol-generation-7.2.md', 'docs/protocol-7.2-gaps.md',
@@ -158,6 +158,7 @@ def parse_opcodes(source):
 
 def compare_targets(mapping, messages, opcodes):
     result = []
+    target_messages = {schema['semanticName'] for schema in mapping['schemas']}
     for schema in mapping['schemas']:
         if schema['status'] == 'unresolved':
             continue
@@ -171,7 +172,8 @@ def compare_targets(mapping, messages, opcodes):
                 kind_match = upstream['type'] == target['type'] or upstream['type'] == 'enum' and target['type'] == 'int32'
                 shape = kind_match and upstream['cardinality'] == target['cardinality'] and upstream['packed'] == target['packed']
                 if target['type'] == 'map':
-                    shape = shape and upstream['mapKeyType'] == target['keyType'] and upstream['mapValueType'] == target['valueType']
+                    value_kind = 'message' if target['valueType'] in target_messages else target['valueType']
+                    shape = shape and upstream['mapKeyType'] == target['keyType'] and upstream['mapValueType'] == value_kind
             target_keys = ('clientField', 'tag', 'type', 'cardinality', 'packed', 'semanticField', 'status', 'clientNestedType', 'keyType', 'valueType')
             fields.append(dict(target={k: target[k] for k in target_keys if k in target},
                 proposedFieldName=target['semanticField'] if target['status'] == 'verified' else target['clientField'],

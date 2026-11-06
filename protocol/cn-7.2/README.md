@@ -1,5 +1,7 @@
 # 7.2 三层映射输入
 
+2026-11-06 F-03d1c：PlayerData用途及五字段有限接入，28三层行，Cmd/类型23 verified/5 unresolved，schema10 verified/13 candidate/5 unresolved；248字段70 verified/9 candidate/169 unresolved。完整raw不等于业务完成，ready仍拒绝（208条缺口；较205增加来自显式列出raw未知，并非静默清零）。统一review84证据/1268源码与Proto，151根/矩阵、1121描述符文件、1258类型/4810字段，两次recover一致。见[PlayerData合同](../../docs/CLIENT_72_PLAYER_DATA_CONTRACT.md)；完整P0与实机未验。
+
 2026-11-06 F-02b/F-03当前：27三层行（含embedded Vector用途别名），Cmd/类型21 verified/6 unresolved，schema10 verified/11 candidate/6 unresolved；239字段65 verified/9 candidate/165 unresolved。字段wire和应用编码分别存，Java optional为存在性适配；不声称原target语法。研究结构0错误，ready仍205缺口，P0闭包unresolved。74证据/1267源码与Proto、150根及矩阵双跑相同；468研究/761 Java及portable构建通过后按要求暂停。当前Asta对照239/147/92、两个MD5冲突保留本地结论，旧214/130/84为F-01快照。见Project/HANDOFF2与新scene/response合同；无D-02/运行部署验收。
 
 2026-11-06固定AstaPS审计与F-02a融合：[协议来源](../../docs/CLIENT_72_ASTAPS_AUDIT.md)/[实现候选](../../docs/CLIENT_72_ASTAPS_IMPLEMENTATION.md)及两个astaps-*-observations摘要新增，研究输入65→67。四运行schema45字段仅10个用已验业务名、35保留目标原名，生成器`tools/generate_login72_slice.py`不晋级mappings。10个上游CmdID相符不等于全闭包；214字段130同形/84缺tag，两个MD5语义冲突保留本地结论。399研究、结构校验通过/ready228；完整P0/客户端未验。按用户要求限定融合后暂停，见Project/HANDOFF2。原source/dependency/proto review已逐差异人工复核、旧守卫拒绝证据保留，未改变守卫算法。

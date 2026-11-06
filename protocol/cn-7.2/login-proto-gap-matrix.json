@@ -105,7 +105,7 @@
     "src/main/java/emu/grasscutter/server/packet/send/PacketOpenStateUpdateNotify.java": "c10dbc0eeb91b1ba2e9a4598a95c120ae8ce16c4800528914e62a85b2ca7fc67",
     "src/main/java/emu/grasscutter/server/packet/send/PacketPingRsp.java": "13bf9906d97bb852a774146f2e130668dea99545f366cd4b3a0aefe036c8c2ab",
     "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerChatNotify.java": "50fac21700f54dd7b2c87712b27eb4d1a013a876882d875b422922c4fee5ad77",
-    "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerDataNotify.java": "9d340b0be5e6b9d0e001019d00b6ec3764e9381223400884bd73c6b09644554d",
+    "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerDataNotify.java": "8f36d1645d7fa3bb69ae47de2ea71b50e5ddcfe36569333e31a89eef93e1f08b",
     "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerEnterSceneInfoNotify.java": "a6f06d8941e42cee0df1775f22313c8627de708cd3caf84a8c78aa75e50ba2b2",
     "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerEnterSceneNotify.java": "c77aa8b20da9f550e22566c91ef0cbe3d696667eeeeb562853f3dd08edf67ac2",
     "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerGameTimeNotify.java": "33e44ca66f91b90617dad59e6ee4b92b545133b861c97963c86346fc8a406036",
@@ -334,6 +334,7 @@
     "src/main/proto/ChildQuest.proto": "9f7108f768c5d07d94a5adfdd54562d9f599878b6f27517900bba7b6f1f42fed",
     "src/main/proto/Client72EnterSceneNested.proto": "4f6b0e60ddb1d00d1c8062ede749e1fbc22ac489cd4ef4eb1859e479ad81bb73",
     "src/main/proto/Client72LoginNested.proto": "e8b0861d58b1716fa0a3e2926bc430e47345f68238ff286c128c02e56f52e421",
+    "src/main/proto/Client72PlayerDataNested.proto": "7f5fc766109b40281701bc3d05099326201eb3c9f7c7dabc239963397dc89edc",
     "src/main/proto/Client72SceneHandshakeNested.proto": "4b5e9c08cff259e03bd477452d5ecba1d013901f94a124ef3f9d5cb8a2b92175",
     "src/main/proto/ClientCollectorData.proto": "7b031847881ef20d31916bace1801464daabed3952369c08f07ec2b31d675f8a",
     "src/main/proto/ClientGadgetInfo.proto": "6c4cf4c205f5373dfbc4d664325c599fe1a9bf6501bb4fb380a4822cf1786701",
@@ -905,7 +906,7 @@
     "src/main/proto/PlatformType.proto": "4331aeb53cae5aaa8ee8e254a8fba10fe24b235289fe6920eb9a1d8f10bf2156",
     "src/main/proto/PlayTeamEntityInfo.proto": "27c68f41525a772336d3f637d4105c484b0737d78b8cf3993a0b2e54cce7adf5",
     "src/main/proto/PlayerChatNotify.proto": "ed17e5671b689dd916660c2e1df7566751b7e465fe6ad707222dce96f8dbd317",
-    "src/main/proto/PlayerDataNotify.proto": "50b41af9b39411f8bebb39c20e6452f04a5be77c0ec4a0a5db31d2423c7876e9",
+    "src/main/proto/PlayerDataNotify.proto": "837ce2e5fe9745c060c85da3fb595080778bbd91461fd51b98c1ea301f3dff54",
     "src/main/proto/PlayerEnterSceneInfoNotify.proto": "b17e125f7abbb7f042ba1417168bc894ec13ea068c654448ea76373fa7fe34dc",
     "src/main/proto/PlayerEnterSceneNotify.proto": "940717ee69af2bce93684d7d2899eb2928b513ea006961bbf5735de7f84847af",
     "src/main/proto/PlayerGameTimeNotify.proto": "af24682e638d74ffceb189d19dc76747ccde5aa8f3bbbbb1940f28d5b74243c1",
@@ -1275,12 +1276,13 @@
   },
   "evidenceSHA256": {
     "protocol/cn-7.2/profile.json": "afce9267696712860c9d4585c7b09b242ad993fa504c177f4466d51104328315",
-    "protocol/cn-7.2/mappings.json": "d6cbc918a69ac87bb3e738bc5b94abda9eb808d25210512448384bfad67e9926",
+    "protocol/cn-7.2/mappings.json": "e3749bb1a0041d21371940d0028e33f26578ff0b2f2b02fec009ba97a212d28c",
     "protocol/cn-7.2/commands.json": "93376c770ff8362303817da1d03032f08495c04affc9ce1f7697470ff970d4a8",
-    "protocol/cn-7.2/astaps-audit-observations.json": "d47c3b2247fb772e01bd6b14746374f36d6866b6174d8227d521527cde3e7396",
+    "protocol/cn-7.2/astaps-audit-observations.json": "5f2c5104a6797aec77582137424995b9062b5df9085cdc8b590d9af7fafd400c",
     "protocol/cn-7.2/astaps-implementation-observations.json": "85e0ffcfa2f4908064bb269538e0dd4692a2159662ecff71fce5ae5e0ee07036",
     "protocol/cn-7.2/auth-sources-observations.json": "3d21f2e0b992bdcb253ddc3f4406b57327cc473b5b1b0474ba519de7c6795beb",
     "protocol/cn-7.2/auth-tail-observations.json": "be8c6e59ace621b3feb595c50a337d2166bd3b0124b681246e1bd8a5d11c622d",
+    "protocol/cn-7.2/avatar-outer-observations.json": "6ddc5e023c81f443e09280fcd393fa5754b688687aa83acc280ce61874bc3f93",
     "protocol/cn-7.2/born-continuation-observations.json": "568b4eda08a5d69f71a4dac35e763e664a04724f51de8c59b8c7e39f3271675c",
     "protocol/cn-7.2/born-observations.json": "0c1332a98c25a06431fe853def7e060d08ca77630b865d3cfbb8089d0903d943",
     "protocol/cn-7.2/cmd1017-domain-observations.json": "c9461188f5b9f4b2a54b0de642f327761ddb0e644af991f62d467f24d0a649db",
@@ -1301,6 +1303,8 @@
     "protocol/cn-7.2/handler-login-observations.json": "698567b1d84b4a75de94b56dee6e982644223a73585e02d30b4cbe155df9c022",
     "protocol/cn-7.2/handler-tail-observations.json": "ea54de803a14722ed744926110b60e850968e904ff8ffa052cb3f02df019636c",
     "protocol/cn-7.2/initialization-wire-observations.json": "aac02539467456dd392bf9cf662aaa2025ea4fb10e98eca17705e5da0f7d27f4",
+    "protocol/cn-7.2/inventory-container-observations.json": "3df10f8b3356e99ec601d49c9e06d21b365cf492a29cbb748e535d14ba18783a",
+    "protocol/cn-7.2/inventory-graph-observations.json": "b21904536dc21997f2ee9c1ecb2761e63d521f8cebb72a7320620ec7b3660fe8",
     "protocol/cn-7.2/key-selection-observations.json": "8c6f5002587681f60f0ee91d4bb91bb9c667fdb89506f863d4a5e39d5bb17277",
     "protocol/cn-7.2/login-constructor-observations.json": "a1fd3c1b73d7f5dfd3a880a64b38a6c273002e8b5fbc632b5835d358669ec605",
     "protocol/cn-7.2/login-dependency-observations.json": "beb69a19c7b608ec0ec2065be9ee3b651179c89acc68804cabd3a519691a597a",
@@ -1310,6 +1314,7 @@
     "protocol/cn-7.2/login-wire-observations.json": "3f456f7de02ba1c41c2133b6de350e11d2d593d53b9e6108d7d843d332d8cff4",
     "protocol/cn-7.2/map-aot-observations.json": "5aa270cfaec352651c4b142a23472f22d6fee3b3728a866f6d118a7711d795cb",
     "protocol/cn-7.2/patch-abi-observations.json": "4194c8d1a2fcc911e0c1ac23b70cf2764bbe52c7e39e50bcc280ec5c8d9b3e92",
+    "protocol/cn-7.2/player-data-contract-observations.json": "11f9e48ded39c8a227669085a9377c46b6a9dbbf79d3474aa18f07cf6e509068",
     "protocol/cn-7.2/player-data-wire-observations.json": "357a8c967fb1b4457559d50b8737498cf0c673fb4212fb8fd6720e0cab38a674",
     "protocol/cn-7.2/player-store-outer-observations.json": "545d2e2f07d44a5e55bbd5c0a05fe073faf8705c28e0dd7326d65863e8a041ae",
     "protocol/cn-7.2/receive-key-observations.json": "379970307e6c09c8cc4219137690e90de0da224d48620f587aeddd8fe63a90f3",
@@ -1352,6 +1357,7 @@
     "protocol/cn-7.2/token-frame-observations.json": "37b93fcefc0e48bad48ab88dee34f3626e32c554b969a26ef5b1e228af7ebb0a",
     "protocol/cn-7.2/token-wire-observations.json": "90b21d7c5142f4db4b5f0f623c84f6e4dfe4355887975e27ceda19b935692567",
     "protocol/cn-7.2/trust-contract-observations.json": "4fd8e056d679c53a1232914798efba6b0b1351445916b3227cb9335f53124682",
+    "protocol/cn-7.2/trust-patch-observations.json": "982b8ce15e7057e0b2255725ec83f47573fa0deb276601b68d5a96193f850c30",
     "protocol/cn-7.2/wire-observations.json": "3566f5fd2140056402727db383557b836816438a454bbac81e0abb4b020430f8"
   },
   "clientInputSHA256": {
@@ -2746,13 +2752,13 @@
         }
       ],
       "javaSourceSHA256": {
-        "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerDataNotify.java": "9d340b0be5e6b9d0e001019d00b6ec3764e9381223400884bd73c6b09644554d",
+        "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerDataNotify.java": "8f36d1645d7fa3bb69ae47de2ea71b50e5ddcfe36569333e31a89eef93e1f08b",
         "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
       },
       "directProtoReferences": [
+        "Client72PlayerDataNested.proto",
         "PacketHead.proto",
-        "PlayerDataNotify.proto",
-        "PropValue.proto"
+        "PlayerDataNotify.proto"
       ],
       "meaning": "legacy source construction; not proof of sending, CN72 identity or necessity"
     },
@@ -4058,6 +4064,7 @@
     "ChatEmojiCollectionData.proto",
     "ChatInfo.proto",
     "Client72LoginNested.proto",
+    "Client72PlayerDataNested.proto",
     "Client72SceneHandshakeNested.proto",
     "CodexDataFullNotify.proto",
     "CodexTypeData.proto",
@@ -5562,6 +5569,11 @@
       "Client72LoginNested.proto": {
         "package": "",
         "javaOuterClass": "Client72LoginNestedOuterClass",
+        "imports": []
+      },
+      "Client72PlayerDataNested.proto": {
+        "package": "",
+        "javaOuterClass": "Client72PlayerDataNestedOuterClass",
         "imports": []
       },
       "Client72SceneHandshakeNested.proto": {
@@ -9193,7 +9205,7 @@
         "package": "",
         "javaOuterClass": "PlayerDataNotifyOuterClass",
         "imports": [
-          "PropValue.proto"
+          "Client72PlayerDataNested.proto"
         ]
       },
       "PlayerEnterSceneInfoNotify.proto": {
@@ -12638,6 +12650,11 @@
       },
       ".ChildQuest": {
         "file": "ChildQuest.proto",
+        "kind": "message",
+        "mapEntry": false
+      },
+      ".Client72PlayerPropValue": {
+        "file": "Client72PlayerDataNested.proto",
         "kind": "message",
         "mapEntry": false
       },
@@ -30268,6 +30285,54 @@
         "name": "quest_config_id",
         "legacyTag": 13,
         "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72PlayerDataNested.proto",
+        "owner": ".Client72PlayerPropValue",
+        "name": "property_type",
+        "legacyTag": 1,
+        "type": "TYPE_UINT32",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": null,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72PlayerDataNested.proto",
+        "owner": ".Client72PlayerPropValue",
+        "name": "int64_value",
+        "legacyTag": 2,
+        "type": "TYPE_INT64",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72PlayerDataNested.proto",
+        "owner": ".Client72PlayerPropValue",
+        "name": "BNJKCHONGGE_float",
+        "legacyTag": 3,
+        "type": "TYPE_FLOAT",
+        "label": "LABEL_OPTIONAL",
+        "typeName": null,
+        "oneofIndex": 0,
+        "explicitPacked": null,
+        "proto3Optional": false
+      },
+      {
+        "file": "Client72PlayerDataNested.proto",
+        "owner": ".Client72PlayerPropValue",
+        "name": "AEJAFPNBBHO",
+        "legacyTag": 4,
+        "type": "TYPE_INT64",
         "label": "LABEL_OPTIONAL",
         "typeName": null,
         "oneofIndex": null,
@@ -56101,7 +56166,7 @@
       {
         "file": "PlayerDataNotify.proto",
         "owner": ".PlayerDataNotify",
-        "name": "region_id",
+        "name": "PLMNNCGEMIN",
         "legacyTag": 5,
         "type": "TYPE_UINT32",
         "label": "LABEL_OPTIONAL",
@@ -56114,7 +56179,7 @@
         "file": "PlayerDataNotify.proto",
         "owner": ".PlayerDataNotify",
         "name": "prop_map",
-        "legacyTag": 8,
+        "legacyTag": 6,
         "type": "TYPE_MESSAGE",
         "label": "LABEL_REPEATED",
         "typeName": ".PlayerDataNotify.PropMapEntry",
@@ -56125,8 +56190,8 @@
       {
         "file": "PlayerDataNotify.proto",
         "owner": ".PlayerDataNotify",
-        "name": "is_first_login_today",
-        "legacyTag": 9,
+        "name": "OMFPDOKCLNL",
+        "legacyTag": 7,
         "type": "TYPE_BOOL",
         "label": "LABEL_OPTIONAL",
         "typeName": null,
@@ -56137,8 +56202,8 @@
       {
         "file": "PlayerDataNotify.proto",
         "owner": ".PlayerDataNotify",
-        "name": "nick_name",
-        "legacyTag": 13,
+        "name": "nickname",
+        "legacyTag": 8,
         "type": "TYPE_STRING",
         "label": "LABEL_OPTIONAL",
         "typeName": null,
@@ -56150,7 +56215,7 @@
         "file": "PlayerDataNotify.proto",
         "owner": ".PlayerDataNotify",
         "name": "server_time",
-        "legacyTag": 15,
+        "legacyTag": 13,
         "type": "TYPE_UINT64",
         "label": "LABEL_OPTIONAL",
         "typeName": null,
@@ -56177,7 +56242,7 @@
         "legacyTag": 2,
         "type": "TYPE_MESSAGE",
         "label": "LABEL_OPTIONAL",
-        "typeName": ".PropValue",
+        "typeName": ".Client72PlayerPropValue",
         "oneofIndex": null,
         "explicitPacked": null,
         "proto3Optional": false
@@ -81439,7 +81504,7 @@
         "legacyValue": 3
       }
     ],
-    "descriptorSHA256": "6b74095656602e2d4596ff41df79f41f8ce886214dae2cc5f5c2b257f5024e6e",
+    "descriptorSHA256": "12ec2daa4abaf7de2857655e55a65bc063e09c221f867cf81d42a32fd7e61177",
     "protocVersion": "libprotoc 3.18.1",
     "warningCount": 0
   },
@@ -82635,6 +82700,49 @@
         },
         "schemas": {
           "semanticName": "Client72LoginNested",
+          "status": "unresolved",
+          "evidence": [],
+          "ambiguities": [
+            "No CN72 evidence row; legacy type/name is not a target mapping"
+          ]
+        }
+      },
+      "fieldStatusCounts": {},
+      "gaps": [
+        "opcodes: identity/semantics/wire not fully verified",
+        "messages: identity/semantics/wire not fully verified",
+        "schemas: identity/semantics/wire not fully verified",
+        "schemas: no field evidence; this does not prove an empty target message",
+        "runtime: no actual CN72 client sequence acceptance"
+      ],
+      "targetProtocolReady": false,
+      "targetCommandBindings": []
+    },
+    {
+      "legacyName": "Client72PlayerDataNested",
+      "sourceOrigins": [
+        "PacketPlayerDataNotify"
+      ],
+      "sourceNameIsTargetEvidence": false,
+      "layers": {
+        "opcodes": {
+          "semanticName": "Client72PlayerDataNested",
+          "status": "unresolved",
+          "evidence": [],
+          "ambiguities": [
+            "No CN72 evidence row; legacy type/name is not a target mapping"
+          ]
+        },
+        "messages": {
+          "semanticName": "Client72PlayerDataNested",
+          "status": "unresolved",
+          "evidence": [],
+          "ambiguities": [
+            "No CN72 evidence row; legacy type/name is not a target mapping"
+          ]
+        },
+        "schemas": {
+          "semanticName": "Client72PlayerDataNested",
           "status": "unresolved",
           "evidence": [],
           "ambiguities": [
@@ -86992,40 +87100,159 @@
       "layers": {
         "opcodes": {
           "semanticName": "PlayerDataNotify",
-          "status": "unresolved",
-          "evidence": [],
+          "status": "verified",
+          "evidence": [
+            "player-data-command"
+          ],
           "ambiguities": [],
-          "clientType": null,
-          "cmdId": null
+          "clientType": "BIMKHOFCKHB",
+          "cmdId": 7193,
+          "verificationScope": "Native bounded player initialization purpose alias; no recovered English spelling or live acceptance"
         },
         "messages": {
           "semanticName": "PlayerDataNotify",
-          "status": "unresolved",
-          "evidence": [],
+          "status": "verified",
+          "evidence": [
+            "player-data-identity"
+          ],
           "ambiguities": [],
-          "clientType": null,
+          "clientType": "BIMKHOFCKHB",
           "direction": "S2C",
           "aliases": [],
-          "runtimeStatus": "not-tested"
+          "runtimeStatus": "not-tested",
+          "verificationScope": "Native bounded player initialization purpose alias; no recovered English spelling or live acceptance",
+          "semanticNameBasis": "inferred-native-player-initialization-purpose"
         },
         "schemas": {
           "semanticName": "PlayerDataNotify",
-          "status": "unresolved",
-          "evidence": [],
-          "ambiguities": [],
-          "fields": []
+          "status": "candidate",
+          "evidence": [
+            "player-data-wire",
+            "player-data-fields"
+          ],
+          "ambiguities": [
+            "Business meaning of two raw fields remains unresolved"
+          ],
+          "fields": [
+            {
+              "clientField": "PLMNNCGEMIN",
+              "objectOffset": 44,
+              "tag": 5,
+              "type": "uint32",
+              "cardinality": "singular",
+              "presence": "implicit",
+              "packed": false,
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "semanticField": "unknown_field_5",
+              "status": "unresolved",
+              "evidence": [
+                "player-data-wire"
+              ],
+              "ambiguities": [
+                "Business meaning unresolved"
+              ]
+            },
+            {
+              "clientField": "IKIFIBAEDGD",
+              "objectOffset": 24,
+              "tag": 6,
+              "type": "map",
+              "keyType": "uint32",
+              "valueType": "PropValue",
+              "cardinality": "map",
+              "nestedTypeIndex": 78350,
+              "presence": "implicit",
+              "packed": false,
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "semanticField": "prop_map",
+              "status": "verified",
+              "evidence": [
+                "player-data-wire",
+                "player-data-fields"
+              ],
+              "ambiguities": [],
+              "clientNestedType": "CODAEKFNEEE"
+            },
+            {
+              "clientField": "OMFPDOKCLNL",
+              "objectOffset": 40,
+              "tag": 7,
+              "type": "bool",
+              "cardinality": "singular",
+              "presence": "implicit",
+              "packed": false,
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "semanticField": "unknown_field_7",
+              "status": "unresolved",
+              "evidence": [
+                "player-data-wire"
+              ],
+              "ambiguities": [
+                "Business meaning unresolved"
+              ]
+            },
+            {
+              "clientField": "FPOLBCIBIOB",
+              "objectOffset": 32,
+              "tag": 8,
+              "type": "string",
+              "cardinality": "singular",
+              "presence": "implicit",
+              "packed": false,
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "semanticField": "nickname",
+              "status": "verified",
+              "evidence": [
+                "player-data-wire",
+                "player-data-fields"
+              ],
+              "ambiguities": []
+            },
+            {
+              "clientField": "KFICMDLCEHE",
+              "objectOffset": 48,
+              "tag": 13,
+              "type": "uint64",
+              "cardinality": "singular",
+              "presence": "implicit",
+              "packed": false,
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "semanticField": "server_time",
+              "status": "verified",
+              "evidence": [
+                "player-data-wire",
+                "player-data-fields"
+              ],
+              "ambiguities": []
+            }
+          ],
+          "verificationScope": "Complete raw two-type wire closure; only five field meanings approved; no full initialization or live acceptance"
         }
       },
-      "fieldStatusCounts": {},
+      "fieldStatusCounts": {
+        "unresolved": 2,
+        "verified": 3
+      },
       "gaps": [
-        "opcodes: identity/semantics/wire not fully verified",
-        "messages: identity/semantics/wire not fully verified",
         "schemas: identity/semantics/wire not fully verified",
-        "schemas: no field evidence; this does not prove an empty target message",
+        "schemas: unresolved or candidate business fields remain",
         "runtime: no actual CN72 client sequence acceptance"
       ],
       "targetProtocolReady": false,
-      "targetCommandBindings": []
+      "targetCommandBindings": [
+        {
+          "typeIndex": 79263,
+          "clientType": "BIMKHOFCKHB",
+          "cmdId": 7193,
+          "getter": "0x14e420720",
+          "methodIndex": 656911
+        }
+      ]
     },
     {
       "legacyName": "PlayerEnterSceneInfoNotify",
@@ -90446,42 +90673,138 @@
     {
       "legacyName": "PropValue",
       "sourceOrigins": [
-        "PacketPlayerDataNotify",
-        "PacketWorldDataNotify"
+        "PacketWorldDataNotify",
+        "verified target nested dependency: PlayerDataNotify/prop_map; no runtime necessity claim"
       ],
       "sourceNameIsTargetEvidence": false,
       "layers": {
         "opcodes": {
           "semanticName": "PropValue",
-          "status": "unresolved",
-          "evidence": [],
-          "ambiguities": [
-            "No CN72 evidence row; legacy type/name is not a target mapping"
-          ]
+          "status": "verified",
+          "evidence": [
+            "player-property-embedded"
+          ],
+          "ambiguities": [],
+          "clientType": "CODAEKFNEEE",
+          "verificationScope": "Native bounded player initialization purpose alias; no recovered English spelling or live acceptance",
+          "cmdId": null
         },
         "messages": {
           "semanticName": "PropValue",
-          "status": "unresolved",
-          "evidence": [],
-          "ambiguities": [
-            "No CN72 evidence row; legacy type/name is not a target mapping"
-          ]
+          "status": "verified",
+          "evidence": [
+            "player-property-identity"
+          ],
+          "ambiguities": [],
+          "clientType": "CODAEKFNEEE",
+          "verificationScope": "Native bounded player initialization purpose alias; no recovered English spelling or live acceptance",
+          "direction": "embedded",
+          "aliases": [],
+          "runtimeStatus": "not-tested",
+          "semanticNameBasis": "server-purpose-alias"
         },
         "schemas": {
           "semanticName": "PropValue",
-          "status": "unresolved",
-          "evidence": [],
+          "status": "candidate",
+          "evidence": [
+            "player-data-wire",
+            "player-data-fields"
+          ],
+          "fields": [
+            {
+              "clientField": "NOEEBKJAFAG",
+              "objectOffset": 36,
+              "tag": 1,
+              "type": "uint32",
+              "cardinality": "singular",
+              "presence": "implicit",
+              "packed": false,
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "semanticField": "property_type",
+              "status": "verified",
+              "evidence": [
+                "player-data-wire",
+                "player-data-fields"
+              ],
+              "ambiguities": []
+            },
+            {
+              "clientField": "BNJKCHONGGE_int64",
+              "objectOffset": 24,
+              "tag": 2,
+              "type": "int64",
+              "cardinality": "singular",
+              "discriminatorOffset": 32,
+              "discriminatorValue": 2,
+              "presence": "oneof",
+              "packed": false,
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "semanticField": "int64_value",
+              "status": "verified",
+              "evidence": [
+                "player-data-wire",
+                "player-data-fields"
+              ],
+              "ambiguities": [],
+              "oneof": "raw_value"
+            },
+            {
+              "clientField": "BNJKCHONGGE_float",
+              "objectOffset": 24,
+              "tag": 3,
+              "type": "float",
+              "cardinality": "singular",
+              "discriminatorOffset": 32,
+              "discriminatorValue": 3,
+              "presence": "oneof",
+              "packed": false,
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "semanticField": "unknown_field_3",
+              "status": "unresolved",
+              "evidence": [
+                "player-data-wire"
+              ],
+              "ambiguities": [
+                "Business meaning unresolved"
+              ],
+              "oneof": "raw_value"
+            },
+            {
+              "clientField": "AEJAFPNBBHO",
+              "objectOffset": 40,
+              "tag": 4,
+              "type": "int64",
+              "cardinality": "singular",
+              "presence": "implicit",
+              "packed": false,
+              "wireStatus": "native-graph-observed",
+              "runtimeStatus": "not-tested",
+              "semanticField": "unknown_field_4",
+              "status": "unresolved",
+              "evidence": [
+                "player-data-wire"
+              ],
+              "ambiguities": [
+                "Business meaning unresolved"
+              ]
+            }
+          ],
           "ambiguities": [
-            "No CN72 evidence row; legacy type/name is not a target mapping"
-          ]
+            "Business meaning of two raw fields remains unresolved"
+          ],
+          "verificationScope": "Complete raw two-type wire closure; only five field meanings approved; no full initialization or live acceptance"
         }
       },
-      "fieldStatusCounts": {},
+      "fieldStatusCounts": {
+        "unresolved": 2,
+        "verified": 2
+      },
       "gaps": [
-        "opcodes: identity/semantics/wire not fully verified",
-        "messages: identity/semantics/wire not fully verified",
         "schemas: identity/semantics/wire not fully verified",
-        "schemas: no field evidence; this does not prove an empty target message",
+        "schemas: unresolved or candidate business fields remain",
         "runtime: no actual CN72 client sequence acceptance"
       ],
       "targetProtocolReady": false,
@@ -93047,6 +93370,48 @@
       "inputFile": "binary",
       "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
       "location": "docs/CLIENT_72_ENTER_SCENE_CONTRACT.md; native embedded BGDCNKAKGHI -> typed named UnityEngine.Vector3 axes; server purpose alias"
+    },
+    {
+      "id": "player-data-command",
+      "layer": "opcode",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "commands.json: BIMKHOFCKHB getter/registration7193; player-data-contract-observations.json typed native dispatch"
+    },
+    {
+      "id": "player-data-identity",
+      "layer": "message",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "player-data-contract-observations.json: actual native initialization/model/clock/nickname to SDK login_will_enter_game; purpose inference, original English spelling unknown"
+    },
+    {
+      "id": "player-property-embedded",
+      "layer": "opcode",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "player-data-wire-observations.json: concrete AOT9505 map<u32,CODAEKFNEEE> embedded value, no network command"
+    },
+    {
+      "id": "player-property-identity",
+      "layer": "message",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "player-data-contract-observations.json: typed normal-property consumer/setter and independent enum/model/SDK; server purpose alias"
+    },
+    {
+      "id": "player-data-wire",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "player-data-wire-observations.json: two actual readers, concrete map codec, 256 scans/14 native graphs including int64/oneof/map replacement"
+    },
+    {
+      "id": "player-data-fields",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "player-data-contract-observations.json: five limited source-to-native-model/SDK/DateTime bindings; other tags unknown"
     }
   ],
   "commandTableScope": {
@@ -93100,11 +93465,11 @@
   "counts": {
     "packetCandidates": 98,
     "dynamicPacketCandidates": 1,
-    "protoRootFiles": 150,
-    "protoFiles": 1120,
-    "descriptorTypes": 1257,
-    "descriptorFields": 4806,
-    "messageMatrix": 150
+    "protoRootFiles": 151,
+    "protoFiles": 1121,
+    "descriptorTypes": 1258,
+    "descriptorFields": 4810,
+    "messageMatrix": 151
   },
   "openBoundaries": [
     "Java parse only; same-owner name/arity candidates, inherited/Lombok accessors and virtual/overloaded targets are not attributed",
@@ -93125,7 +93490,7 @@
     "Nonzero/64-bit/nested/list/error/boundary wire regressions remain separate required evidence",
     "No protocol generation, runtime integration, client reverse engineering or client debugging"
   ],
-  "reviewSHA256": "e4080c7f5bf34314ac0b0c6ded34407a0274d9f9ccad1f8c795bb51583b63c7c",
+  "reviewSHA256": "065e4953af718663bfd5f6b2e66002a01e7494a8cb8d0bbbbdc837897a988354",
   "toolSourceSHA256": {
     "tools/review_client72_login_proto.py": "d2b4c962bd883227550e6e7eebb8e6f40176c640619740fe74308ec5d8c751e4",
     "tools/Client72ProtoDependencies.java": "517838c3cd34b051c47205e71d45d2d3c99cc6bb4fb32379c34e0d0cea418f0a"

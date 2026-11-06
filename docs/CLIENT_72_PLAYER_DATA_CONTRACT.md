@@ -2,7 +2,7 @@
 
 本项从目标7193→79263/BIMKHOFCKHB的实际分发和消费链，确认其用途为登录阶段的玩家数据初始化，并采用`PlayerDataNotify`作为稳定业务别名。这是**原生用途证据上的明确推断**，不声称恢复客户端原始英文拼写。不是依据Asta同名或单独字符串：真实分发进入typed handler，重置并应用玩家属性、同步时钟、保存昵称，再把同一模型值交给`login_will_enter_game`调用边界。纯改名或增量属性更新无法解释这一组合；`PlayerInfo`等另一种拼写只属同用途命名差异。
 
-消息用途、五个字段绑定分别记录，**完整schema语义、全部玩家属性枚举、初始化顺序/P0及D-02仍未完成**。本项没有修改生产Proto、包号、运行代码或三层汇总映射。
+消息用途、五个字段绑定分别记录，**完整schema语义、全部玩家属性枚举、初始化顺序/P0及D-02仍未完成**。F-03d1b1本身只交付研究证据；后续F-03d1c的有限生产接入记录见本文末节。
 
 ## 固定输入与证据
 
@@ -64,3 +64,17 @@ python -m unittest tools.test_client72_player_data_contract tools.test_client72_
 2026-11-06实际验收：15样本完整trace与摘要两轮逐字节相同；摘要SHA-256为`e239ee03cc645d61dfa87ad87db827eb268273f049c496f3730a213153c29689`。新增7项及6个关联模块共59项通过，失败/错误/跳过均0；核对见本机`local/migration72/evidence/player-contract-determinism.json`。新测试先红测（缺工具导入失败），再以真实native产物做scope、独立值、未知不晋级和反模型守卫。仅离线研究、测试、文档和摘要改变，无需服务重启；没有操作客户端、调试器、服务或数据库。
 
 下一可执行项：主线先审核用途及五字段进入三层模型，随后按独立子卡接生产最小合同；实际builder需明确使用已验属性ID与子tag1/tag2，不照搬旧全部enum。继续tag5/tag7需从模型+178/+15c的独立consumer或具名输入回证；当前已查58013、56238及SDK owner14237相关方法，未找到可命名闭环。完整特殊属性、后续SDK/Handler与实际初始化序列另验，不因本卡用途已明而整体晋级。
+
+## F-03d1c有限生产接入
+
+三层仅接管`PlayerDataNotify`/7193与嵌入用途别名`PropValue`：2类9个raw字段、五个已验业务绑定；两条schema均保持candidate，四个未知业务字段保留unresolved。生成器`tools/generate_player_data72_sources.py`每次核验实际三输入及完整raw字段/oneof/map codec、限定消费合同和三层模型，拒绝未知命名、合同漂移、正包号碰撞。没有把原始英文拼写恢复或完整初始化晋级。
+
+生产root改用tag6 map、tag8 nickname、tag13 server_time；tag5/7用原名。嵌入值使用独立物理适配器`Client72PlayerPropValue`，子tag1/2使用已验别名，tag2/3保留同一oneof，tag4独立。共享旧`PropValue.proto`被其他未迁移消息引用，本卡不修改它；逻辑用途别名不表示该旧文件已全部批准。所有Java由Gradle/protoc生成，没有手改生成类。普通标量使用proto3隐式存在性；本卡未声称所有对象级mergeFrom与目标运行时等价。
+
+实际sender只发送nickname、当前毫秒时钟及`PROP_PLAYER_LEVEL=10013`；外map key和子property_type均10013，int64_value即真实`Player.getLevel()`。不发送全部旧PlayerProperty枚举、未知region/first-login或子tag4；服务器属性/账号/经济/保存数据保持原业务行为。独立原生先验证canonical key=childId、未知外5/7省略后的等级0/1/60，再从JUnit真实producer输出提取三包交给实际目标reader/dispatch/consumer：三包分别得到SDK role_level=0/1/60、同一Tester昵称、实际时钟加50ms及login_will_enter_game边界。沿用本专题显式存储/SDK模型，不能称实机收包。
+
+改前有效Java基线11项10失败（旧号3272及旧字段）；首次夹具调用setNickname曾触发未初始化数据库，这次夹具误用另行保留，已改为专用昵称getter而不改变生产或旧断言。改后11项全过，包括int64负数/>2^53、显式oneof零、float切换/独立tag4、重复map替换、UTF8字符串、截断/错wire。新生成器7项及映射/上游审核关联47项全部通过。扩大45套778 Java时，初轮40项因隔离工作目录缺相对资源/src而NoSuchFileException；保留全部失败，补齐只读输入junction后45套778项全部通过，失败/错误/跳过均0（44秒），不删改断言。独立Mongo关闭前仅admin/config/local并正常退出，原27017/运行数据未改。完整研究回归564项通过（约61秒），六个生成检查均无漂移；这些分别为独立执行，不相加为一次测试。
+
+统一人工review旧守卫先拒绝，复核后1267→1268源码/Proto、79→84证据，只有PlayerData sender/root及新nested源变化，已有其它源码与77既有证据hash不变。新增5份已验摘要，mappings与Asta审计2份更新；151根/矩阵、1121描述符文件、1258类型/4810字段，两次recover一致。未知physical文件矩阵行保持unknown；开放边界、P0闭包和runtime不晋级。原始证据位于`local/migration72/evidence/player-data-*`及同前缀logs/results。
+
+上游固定参考仍为a49f51aa6f2787ffbc25cee46801b70dee860d23，原21目标行/源码tree不变，新增两行9字段。对照248字段中156同tag同外形、92缺tag、0外形冲突；标记的5个已验名称差异包括既有两MD5及本卡nickname/nick_name、property_type/type、int64_value/ival三种用途别名差异，不把后者称新wire矛盾。审计工具原先把具名map值`PropValue`和种类`message`比较，已用独立合成用例先红后修正，只比较外层种类，不宣称递归内容相同。

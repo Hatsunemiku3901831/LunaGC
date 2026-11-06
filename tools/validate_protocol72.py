@@ -738,6 +738,78 @@ def validate_scene_wait(document, profile, table):
     return errors
 
 
+def validate_player_data(document, profile, raw, contract):
+    """Keep the complete raw pair separate from the five proven field meanings."""
+    try:
+        from .client72_player_data_contract import validate_report
+        from .extract_client72 import HASHES
+    except ImportError:
+        from client72_player_data_contract import validate_report
+        from extract_client72 import HASHES
+    errors = ['Player data: ' + error for error in validate_report(contract)]
+    hashes = {profile['files'][key]['path']: profile['files'][key]['sha256']
+              for key in ('binary', 'metadata', 'startup')}
+    if hashes != HASHES or raw.get('inputSHA256') != hashes:
+        errors.append('Player data: fixed input mismatch')
+    if raw.get('runtimeStatus') != 'not-tested' or raw.get('targetProtocolReady') is not False:
+        errors.append('Player data: raw evidence cannot claim live acceptance')
+    shapes = {
+        79263: ('PlayerDataNotify', 'BIMKHOFCKHB', [
+            ('PLMNNCGEMIN', 44, 5, 'uint32'), ('IKIFIBAEDGD', 24, 6, 'map'),
+            ('OMFPDOKCLNL', 40, 7, 'bool'), ('FPOLBCIBIOB', 32, 8, 'string'),
+            ('KFICMDLCEHE', 48, 13, 'uint64')]),
+        78350: ('PropValue', 'CODAEKFNEEE', [
+            ('NOEEBKJAFAG', 36, 1, 'uint32'), ('BNJKCHONGGE_int64', 24, 2, 'int64'),
+            ('BNJKCHONGGE_float', 24, 3, 'float'), ('AEJAFPNBBHO', 40, 4, 'int64')])}
+    bindings = {(b['typeIndex'], b['tag']): b['semanticField'] for b in contract.get('fieldBindings', [])}
+    observed = {row['typeIndex']: row for row in raw.get('messages', [])}
+    if set(observed) != set(shapes): errors.append('Player data: two-type raw closure changed')
+    tables = {key: {r['semanticName']: r for r in document[key]}
+              for key in ('opcodes', 'messages', 'schemas')}
+    for index, (name, client, fields) in shapes.items():
+        original = observed.get(index, {})
+        expected_raw = [dict(clientField=client_field, objectOffset=offset, tag=tag, type=kind,
+                             cardinality='map' if kind == 'map' else 'singular')
+                        for client_field, offset, tag, kind in fields]
+        for field in expected_raw:
+            if field['type'] == 'map': field.update(keyType='uint32', valueType='message', nestedTypeIndex=78350)
+            if index == 78350 and field['tag'] in (2, 3):
+                field.update(discriminatorOffset=32, discriminatorValue=field['tag'])
+        if original.get('clientType') != client or original.get('fields') != expected_raw:
+            errors.append(f'Player data {name}: native raw field set changed')
+        for table, evidence in (('opcodes', 'player-data-command' if index == 79263 else 'player-property-embedded'),
+                                ('messages', 'player-data-identity' if index == 79263 else 'player-property-identity')):
+            row = tables[table].get(name, {})
+            if (row.get('status') != 'verified' or row.get('clientType') != client or
+                    row.get('evidence') != [evidence] or row.get('ambiguities') or
+                    (table == 'opcodes' and row.get('cmdId') != (7193 if index == 79263 else None)) or
+                    (table == 'messages' and (row.get('direction') != ('S2C' if index == 79263 else 'embedded') or
+                        row.get('aliases') or row.get('runtimeStatus') != 'not-tested'))):
+                errors.append(f'Player data {name}: native identity/direction mismatch')
+        schema = tables['schemas'].get(name, {})
+        expected = []
+        for source in original.get('fields', []):
+            field = dict(source, presence='oneof' if 'discriminatorValue' in source else 'implicit',
+                         packed=False, wireStatus='native-graph-observed', runtimeStatus='not-tested')
+            semantic = bindings.get((index, source['tag']))
+            field.update(semanticField=semantic or f"unknown_field_{source['tag']}",
+                status='verified' if semantic else 'unresolved', evidence=['player-data-wire'] +
+                (['player-data-fields'] if semantic else []), ambiguities=[] if semantic else ['Business meaning unresolved'])
+            if source['type'] == 'map':
+                if source.get('keyType') != 'uint32' or source.get('valueType') != 'message' or source.get('nestedTypeIndex') != 78350:
+                    errors.append('Player data: concrete property map codec changed')
+                field.update(valueType='PropValue', clientNestedType='CODAEKFNEEE')
+            if 'discriminatorValue' in source:
+                if source.get('discriminatorOffset') != 32 or source['discriminatorValue'] != source['tag']:
+                    errors.append('Player data: native oneof discriminator changed')
+                field['oneof'] = 'raw_value'
+            expected.append(field)
+        if (schema.get('status') != 'candidate' or schema.get('fields') != expected or
+                schema.get('evidence') != ['player-data-wire', 'player-data-fields']):
+            errors.append(f'Player data {name}: raw/semantic boundary or schema changed')
+    return errors
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--directory', type=Path, default=Path(__file__).resolve().parents[1] / 'protocol/cn-7.2')
@@ -787,6 +859,9 @@ def main():
     errors.extend(validate_key_selection(document,profile,key_selection,protected))
     send_flow=json.loads((args.directory/'send-flow-observations.json').read_text('utf8'))
     errors.extend(validate_send_flow(document,profile,send_flow))
+    player_data = [json.loads((args.directory / name).read_text('utf8')) for name in
+                   ('player-data-wire-observations.json', 'player-data-contract-observations.json')]
+    errors.extend(validate_player_data(document, profile, *player_data))
     print(json.dumps({'mode': 'ready' if args.ready else 'research-structure', 'valid': not errors, 'errors': errors},
                      ensure_ascii=False, indent=2))
     raise SystemExit(bool(errors))
