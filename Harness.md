@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+F-03d3a：[Avatar raw外层](docs/CLIENT_72_AVATAR_OUTER.md)，`python -m unittest tools.test_client72_avatar_outer -v`；384扫描/19原生图/5拒绝双跑，8新增/62关联通过。3类14wire限定完成；65类368存储和85 AOT仅静态依赖。AvatarInfo非空仍拒绝，继续Project F-03d3b，不把候选身份或完整闭包晋级。
+
 F-04c2：[便携信任路径供给](docs/CLIENT_72_TRUST_LAUNCHER.md)，`python -m unittest tools.test_client72_trust_launcher tools.test_local_windows -v`实际22项全过；新子进程继承/副作用前缺文件拒绝/版本守卫保持。底层材料校验和既有管理员调试器环境不据此晋级。原始红绿与真实版本拒绝日志为`local/migration72/logs/trust-launcher-*`，证明`evidence/trust-launcher-verification.json`。
 
 本轮阶段完整研究复现为`local/migration72/analysis/run_resume_d02_research.py`固定已提交的80模块，496项全部通过，证据`evidence/resume-d02-research-regression-summary.json`、日志`logs/resume-d02-research-regression.log`。人工review仅加receive-key/player-data-wire/player-store-outer/require-bindings-scene-load/trust-contract五摘要，74原hash及1267源、三层/源码/Proto/开放边界保持，两次recover相同；`evidence/resume-d02-proto-review-check.json`，结构0/ready205。前次中途输入集漂移拒绝保留并重做审核，不按新文件存在自动批准。

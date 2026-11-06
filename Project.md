@@ -25,7 +25,8 @@
 | F-03d2a2 uint32 map与packed列表 | F-03d2a1 | eec23d2；6类22wire，5map/5list；768扫描/29图/3模型拒绝，8新增/46关联及双跑；公共runtime未改 | 已完成 |
 | F-03d2a3 嵌套oneof及库存组合图 | F-03d2a1/a2 | 9fd871e；15类47wire、1920扫描/32图/6拒绝，8新增/54关联及双跑；6 Item非空分支、3组oneof、map clear/copy/list append真实执行，身份/业务不晋级 | 已完成 |
 | F-03d3 AvatarData递归Avatar闭包 | F-03d1方法、本地固定输入 | 20143仅候选；AvatarInfo/Team/Rename及packed64位闭包，未验不得发送 | 进行中 |
-| F-03d3a Avatar候选依赖与raw外层下界 | F-03d1a/d2a方法、本地固定三输入 | 重核30509实际usage/嵌套/oneof闭包规模，不把51类331元数据存储当完整wire；先验外层标量/packed列表及可恢复原生容器，非空nested逐边记范围，复杂子图先拆卡；独立wire/边界/双跑，不改生产 | 进行中 |
+| F-03d3a Avatar候选依赖与raw外层下界 | F-03d1a/d2a方法、本地固定三输入 | 2cfe1e4；3类14wire、384扫描/19原生图/5拒绝、8新增/62关联及双跑一致；65类368存储/37容器85 AOT仅静态审计；AvatarInfo非空拒绝，身份unknown/fullAvatarRawClosure=false | 已完成 |
+| F-03d3b AvatarInfo外层与四叶子raw下界 | F-03d3a、已有78350 raw图 | 限48178外层37字段、66100/27246/13438/40807四叶子12字段及已验78350四字段；先复现共享map reader的codec选择，用专用上下文不改公共runtime；float map/u32/u64列表及嵌套独立样本，复杂四子图非空拒绝；全部metadata字段核对、错误边界、双跑，不迁生产 | 进行中 |
 | E-01c6 嵌套require调用者bindings恢复 | E-01c5已复现成功置null/异常残留 | b74cd16；6例先5失败后全过，6套32 Lua及8加载审计全过；portable25秒JAR7ca18e10…e8f5f、9class相符，其余45935不变；双轮整场fast407/449、inline0，30错误组恢复且无新增；完整前置不足未部署，local/资源/实机不晋级 | 已完成 |
 | F-04a SDK/补丁/资源前置现场复核 | 当前checkout/config/GAME_PATH、三输入与现有会话 | 三哈希/参考clean/归属已验；API会话无target；两个status退出1及6个revision候选；源码旧强制验签钩子与字符串工厂缺口保留，见CLIENT_72_RUNTIME_PREREQUISITES；仅核对不代表F-04完成 | 已完成 |
 | F-04b 保留验签的本地信任供给合同 | F-04a、既有原生seed/response/dispatch密码学 | 6b72887；14原生/23次key验签（4成功10拒绝）、18关联和双跑；COPY只R13、CHECK只R8/root第五参数，返回/flags不变；未知key不供给；未装钩子/未导出私钥 | 已完成 |
