@@ -2,7 +2,7 @@ package emu.grasscutter.net.packet;
 
 import java.util.HashSet;
 
-/** 7.1 CmdIds from the upstream protocol table. Negative values are unresolved messages. */
+/** Partial CN 7.2 migration. Unmigrated legacy entries are not target protocol evidence. */
 public final class PacketOpcodes {
     public static final int NONE = 0;
     // Verified 7.1 artifact transmuter packet getters; retain the opaque aliases below.
@@ -16,10 +16,10 @@ public final class PacketOpcodes {
     public static final int ReliquaryDustRsp = 9807;
     public static final int ReliquaryDustSelectReq = 28022;
     public static final int ReliquaryDustSelectRsp = 4210;
-    public static final int GetPlayerTokenReq = 23252;
+    public static final int GetPlayerTokenReq = 24604;
     public static final int GetPlayerTokenRsp = 3713;
-    public static final int PingReq = 20324;
-    public static final int PingRsp = 26578;
+    public static final int PingReq = 26605;
+    public static final int PingRsp = 25763;
     public static final int PlayerLoginReq = 9282;
     public static final int PlayerLoginRsp = 4026;
     public static final int PlayerEnterSceneNotify = 9582;
@@ -2717,7 +2717,8 @@ public final class PacketOpcodes {
     public static final int LBNEIHILDLE = 36220;
     public static final int LCANGKBCNKJ = 20939;
     public static final int LCCCMJKPNEA = 24123;
-    public static final int LCNLHAOBBFE = 24604;
+    // Retired legacy-only name: 24604 belongs to the verified CN 7.2 GetPlayerTokenReq.
+    public static final int LCNLHAOBBFE = -124604;
     public static final int LDBPMFNPEAI = 1016;
     public static final int LEBNIJBHBGP = 2704;
     public static final int LEJDICHKPAJ = 26088;

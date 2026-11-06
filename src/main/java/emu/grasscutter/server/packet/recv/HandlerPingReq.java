@@ -13,8 +13,9 @@ public class HandlerPingReq extends PacketHandler {
     public void handle(GameSession session, byte[] header, byte[] payload) throws Exception {
         PacketHead head = PacketHead.parseFrom(header);
         var request = PingReq.parseFrom(payload);
-        var clientTime = request.getClientTime();
-        var seq = request.getSeq();
+        // Echo the two shared target fields. Their business names remain candidates.
+        var clientTime = request.getOILKPHNHCHB();
+        var seq = request.getAMLHAGPHMHN();
 
         session.updateLastPingTime(clientTime);
 

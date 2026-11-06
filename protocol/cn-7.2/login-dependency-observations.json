@@ -48,7 +48,7 @@
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerEnterSceneDoneReq.java": "ded9306c1008be0bc6a6d8f33b1f549c7b8faa505b1d8581909d55e4bde8a9ea",
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerEnterSceneReadyReq.java": "28eb1a2a066f18614887e5312a9dd2f7da974fc616e30527e37812ac889b57a6",
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerGetPlayerTokenReq.java": "179066bc7989479a4c4d2ca7b69f090552e4547b726538ff6e87de9deea95407",
-    "src/main/java/emu/grasscutter/server/packet/recv/HandlerPingReq.java": "d662b07f75dfceb8741fb990f8270e38cdb626b67000d514c0f6ff60ee9c0596",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerPingReq.java": "4b1e73761c952c8ad5af5b4565b532c1f931391e8b5b82dc6e040a067571df77",
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerPlayerLoginReq.java": "80e78b7cb1f5baa420333ce00e33ec9a6661a0d32aac0ca2ae57a7ca71262499",
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerPostEnterSceneReq.java": "0dea78b9a4623e28742db242b57a8f9e9db60b7f285d79fd6f92200be40e4edd",
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerSceneInitFinishReq.java": "59c1acdc54f68632536a1942e1a4fe46fad6cc75edabb0ae1e9281170465b037",
@@ -4058,12 +4058,12 @@
       "id": "emu.grasscutter.server.packet.recv.HandlerPingReq#handle(GameSession,byte[],byte[])",
       "file": "src/main/java/emu/grasscutter/server/packet/recv/HandlerPingReq.java",
       "line": 12,
-      "sourceSHA256": "999b5d9bb30dcf513dcd0e24e8813513798b903f94997050eb1a69285e771cb1",
+      "sourceSHA256": "4ed058b3b45f44f81ba3717652072ff5ea6bd10b374ad193c379b2573700d104",
       "callCount": 8,
       "directPacketArguments": [
         {
-          "callLine": 21,
-          "constructionLine": 21,
+          "callLine": 22,
+          "constructionLine": 22,
           "receiverCall": "session.send",
           "argument": 0,
           "constructedType": "PacketPingRsp",
@@ -4073,7 +4073,7 @@
       ],
       "packetConstructions": [
         {
-          "line": 21,
+          "line": 22,
           "constructedType": "PacketPingRsp",
           "lambdaDepth": 0
         }
@@ -8390,8 +8390,8 @@
     "CN72 client identity/wire evidence and actual new/returning character/scene sequences remain independent and untested"
   ],
   "parentReview": "protocol/cn-7.2/login-source-review.json",
-  "parentReviewSHA256": "2d654904f9be6ed30d0767544b4fac3bad28063e6aca90919882dfcbf18fd04a",
-  "reviewSHA256": "032a867ef6960a7296e2c435c36788d599b81df01a0c34f9e9bbe95b5013a31c",
+  "parentReviewSHA256": "55e917b63e1d4673c4c2d05594aa30db42c6bc85b42fef0819637a3226b2ffa6",
+  "reviewSHA256": "b555141fff37ef439843a0f61c19504306e84e4d8bf159c8e0917f3f3a5d2cae",
   "toolSourceSHA256": {
     "tools/Client72JavaSurface.java": "f28d4605a864d71126c5d1460c50ea5c080f52ca14581eaa1aa5b0098754327a",
     "tools/client72_java_surface.py": "5dd4a9328e46635f87bef99c099840366ae312fd22d32172bd6aacc7b8939690",

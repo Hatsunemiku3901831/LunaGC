@@ -15,7 +15,7 @@
     "src/main/java/emu/grasscutter/game/player/InvestigationHandbook.java": "cf2a2b5c85b9a72ff7f10567a83b4a03de56bda3ef77bd6453e05da435057817",
     "src/main/java/emu/grasscutter/game/player/InvokeHandler.java": "78e7caaeaad0e7f834203da65fed4227a04e8716028bcb3d6527960ddfb9dd82",
     "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f",
-    "src/main/java/emu/grasscutter/net/packet/PacketOpcodes.java": "3075eb21f8cd3d218b3e8446c7badefdd9768c7e6f9f254eb6108ec5dfdda3a1",
+    "src/main/java/emu/grasscutter/net/packet/PacketOpcodes.java": "38e432f4f4dbdc71cab98320af692e601b6643c406d8d045c7d8a785e9ce1d86",
     "src/main/java/emu/grasscutter/net/packet/PacketOpcodesUtils.java": "4b838183747ac97051f108e700ba4ffbe41bf47513163e6b1c1b370e65cd73d2",
     "src/main/java/emu/grasscutter/server/event/game/SendPacketEvent.java": "6691ed4aecda14e9254e35a44fb65204dd09cd47ed31b07fb0bdca526f45f697",
     "src/main/java/emu/grasscutter/server/game/FanOut.java": "193a80da6afe4bb0580394d540c712914cabb9e1cf901f3e4caeb2aebe4ae014",
