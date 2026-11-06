@@ -449,5 +449,47 @@
     },
     "conclusion": "Removing five main-module software points allowed this original target to reach 88 DLL events and remain alive through the bounded observation. This supports observation-point interference within the contrast, not an attribution to protection or SDK/login acceptance.",
     "resumePolicy": "The original target is retained at the observer-owned budget pause. Recheck identity and pause ownership before bare con plus ordinary run if further execution is authorized; do not use the application-exception path or start another load."
+  },
+  "retainedPauseReadOnlyStage": {
+    "task": "D-01b5c",
+    "sameRetainedTarget": true,
+    "newLoad": false,
+    "targetRun": false,
+    "newPoints": false,
+    "debugging": true,
+    "running": false,
+    "osAlive": true,
+    "normalPointCount": 0,
+    "hardwarePointCount": 0,
+    "observedDebugRegistersZero": true,
+    "currentSelectedThread": "original CREATE_PROCESS main thread",
+    "originalBudgetPauseSelectionRestored": false,
+    "originalBudgetPauseEventPreserved": true,
+    "selectionRestoreHelperReturned": true,
+    "selectionRestoreObserved": false,
+    "registerApisAgree": true,
+    "priorStageLogIsCompletePrefix": true,
+    "additionalLogEntries": 1,
+    "additionalLogKind": "thread selection",
+    "windowPresent": true,
+    "threadCountAtStageSnapshot": 237,
+    "tcpStates": {
+      "Bound": 5,
+      "CloseWait": 2
+    },
+    "udpCount": 0,
+    "snapshotInterpretation": "Main-thread bounded stack candidates and fixed-code frame pacing; exact initialization wait condition unknown",
+    "moduleEventInventory": "88 prior loaded DLL events; no AccountPlatNative/Astrolabe names in this inventory",
+    "naturalCallReturnObserved": false,
+    "sourceCorrection": "Earlier progress summary wrongly said selection restored; original raw already recorded false",
+    "sourceSHA256": {
+      "d02-r2-d01b5c-current-stage.json": "5adffd943dc1bd2303a99f5db13f02e49da5d4dbf765fb996eba1611bcde03b6",
+      "d02-r2-d01b5c-os-stage.json": "d5ffe9e8c905c9c45b2a22a4ecf1f951c5e1bf8f2772ba250114acb463dc3b12",
+      "d02-r2-d01b5c-thread-stacks.json": "7894d453767c17422db98ea02095e9c9faf713d5b8acbc9acb52e426aa54114b",
+      "d02-r2-d01b5c-main-wait-functions.json": "4606cb05e7e91bdf45c3f1fd2ab0fc618495d9bbbbbc63755892097a4e44d641",
+      "d02-r2-d01b5c-retention-mismatch.json": "fb1696619ead31509db7607b00f2008e801f6ad3252bdd4ee07fefaf0381dd3b",
+      "d02-r2-d01b5c-retention-comparison.json": "c070e60e576ac3339420fce11fd13a73dc3f5a05c72173203465147e55ab7dc1",
+      "d02-r2-d01b5c-restore-selection.json": "db00524c31d1cef619a278adaed2773ed7a444ec012b5a58f6dca1c88f57d3c2"
+    }
   }
 }

@@ -6,6 +6,8 @@
 
 ## 当前阶段
 
+D-01b5c已审：[HTTP当前区输出](docs/CLIENT_72_HTTP_DISPATCH.md)固定JAR六组实际Java响应→八组原生完整返回/三拒绝，主线独立重生成14文件、22定向及第三原生回放与双跑逐字节一致；只关八字段的有限wire前置，不代表完整RegionHandler/路由/SDK。保留目标只读阶段同时纠正线程选择恢复：helper返回true但原始记录和独立核查均为未恢复，当前选中主线程、原预算pause事件保持；固定调试器源码解释no-op，未新run/load/挂点。追加摘要后主线17观察守卫通过。继续RegionList独立来源/非空消费，R2及实机不晋级。
+
 E-01d1i～j已审：[最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)I/J与独立复现驱动在唯一Mongo27027库实际完成1项测试，真实daily生成/保存/新Player冷读/同日不重抽及两场景0/4边界通过；本次随机4组的23怪物/41装置逐config验证类型和资源ID，NPC均空。主线核源码/class/XML、13输入hash及正常shutdown exit0，未重复执行该随机测试，不把各历史轮次相加。旧daily/Lua/combat与候选Monster/Curve/Gadget是明确混合夹具；异步事件后代、后台调度、完整Done/网络/客户端仍待。继续出生点25组真实初始实体，R3/resourceReady不晋级。
 
 F-03d3f3已验：[队伍与当前Team消费](docs/CLIENT_72_AVATAR_TEAM.md)独立证明root tag5的Team ID映射、child tag2名称/tag12有序Avatar GUID成员，以及root tag12选择当前Team；具名TeamNameRefresh/CurrentTeamChanged与实际写入、GUID查找相互印证。13组wire/42次消费/9拒绝，主线35定向和第三全新原生回放通过，完整/摘要与代理双跑逐字节相同。仅批准四字段的限定消费关系；完整Handler、Rename、保存、实体效果及root3当前控制GUID仍未验，不改映射/ready或生产发送。继续Avatar状态、属性与非空场景实体合同。
@@ -96,6 +98,7 @@ E-01d1a（D02-R3子合同A）已验收：固定候选commit/tree/blob四表，�
 | D-01b3a 真实TLS来源与Marshal存储模型 | D-01b3已复现141CAD123/141CA72CF | 038132e；自然E06暂停两份Global/TLS/UTF8、4代码窗live同固定EXE，GC+19D0/CRT+1A50/页表非零；17 native Marshal+转换返回、独立UTF16/双跑、12聚焦通过；CRT/GC仍模型，live Marshal未命中，末80000004/前80000003及PUB缺口不归因 | 已完成 |
 | D-01b4 独立目标复现调试观察通道 | D-01b3无目标/末事件缺失 | 14df545；5模式双跑10自有进程均OS退出0/PUB EXIT/STOP/log闭合，8守卫过；裸con与con0差异、弱load判定及新load日志游标已复现，未复现旧游戏末事件缺口，退出根因仍unknown；最终无target/相关进程/HW，D01b5未执行并按要求暂停 | 已完成 |
 | D-01b5a 有界启动退出与DR恢复复现 | D-01b4、固定五输入及实时归属 | 两游戏OS/PUB/log退出闭合、WER均factory RVA52FBF0；第二轮39停点DR0/双API一致仍80000003。三自有合成目标复现系统→EP的DR恢复并最终退出0；16守卫全过，主线核raw/源码摘要hash。仅观察合同已验，启动/SDK/HTTP仍未通过，下一零主模块点单变量对照 | 已完成 |
+| D-01b5c HTTP当前区及保留目标只读阶段 | b保留的同一目标、固定JAR与客户端三输入 | 六Java/八native/三拒绝双跑及主线第三相同；主线14文件重生成、22 HTTP及17观察守卫通过。当前区八字段仅有限wire，线程选择no-op已保留原失败并核源码，当前主线程上下文不能套旧CIP/RSP。无新客户端run/load，完整HTTP/自然SDK未知 | 已完成 |
 
 2026-11-06本批F-02b1/b2、F-03a/b/c限定融合验收完成，按用户要求暂停；暂不D-02实机。运行代码提交`4bbf9fd`：完整LoginReq/两响应及嵌套21类198字段，八个场景握手、容量5字段、进入场景通知四字段及8类44字段raw闭包已接入。未知字段保留原名且不发送；完整初始化/P0、SDK/补丁/资源及实际客户端序列仍未验。
 

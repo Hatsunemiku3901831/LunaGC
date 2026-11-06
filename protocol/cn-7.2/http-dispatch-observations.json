@@ -1,0 +1,283 @@
+{
+  "schemas": [
+    {
+      "typeIndex": 30677,
+      "clientType": "IBOFGKFAEPI",
+      "fields": [
+        {
+          "clientField": "LDLIEKOAFBP",
+          "objectOffset": 80,
+          "tag": 1,
+          "type": "int32",
+          "cardinality": "singular"
+        },
+        {
+          "clientField": "EHCHDIJEJEJ",
+          "objectOffset": 48,
+          "tag": 2,
+          "type": "string",
+          "cardinality": "singular"
+        },
+        {
+          "clientField": "NBBEAACDEFM",
+          "objectOffset": 72,
+          "tag": 3,
+          "type": "message",
+          "cardinality": "singular",
+          "nestedTypeIndex": 67961
+        },
+        {
+          "clientField": "MNJHOKMKIIO",
+          "objectOffset": 64,
+          "tag": 11,
+          "type": "bytes",
+          "cardinality": "singular"
+        },
+        {
+          "clientField": "DGHGFAELIDO",
+          "objectOffset": 32,
+          "tag": 14,
+          "type": "string",
+          "cardinality": "singular"
+        }
+      ]
+    },
+    {
+      "typeIndex": 67961,
+      "clientType": "IENBACJFBGI",
+      "fields": [
+        {
+          "clientField": "GOFEDFBICAJ",
+          "objectOffset": 208,
+          "tag": 1,
+          "type": "string",
+          "cardinality": "singular"
+        },
+        {
+          "clientField": "KJGNCFLEJLK",
+          "objectOffset": 316,
+          "tag": 2,
+          "type": "uint32",
+          "cardinality": "singular"
+        },
+        {
+          "clientField": "IJNBKLIHNJP",
+          "objectOffset": 216,
+          "tag": 36,
+          "type": "string",
+          "cardinality": "singular"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "name": "minimal",
+      "wireLength": 2106,
+      "wireSHA256": "fc6ad54f8f6bbf50a83c5d8cedb38d30ed13106fadbe308e8061c402a441cf2c",
+      "rootReaderEntries": 1,
+      "regionReaderEntries": 1,
+      "regionPresent": true,
+      "nested": {
+        "GOFEDFBICAJ": "127.0.0.1",
+        "KJGNCFLEJLK": 22101,
+        "IJNBKLIHNJP": "hk4e_cn"
+      },
+      "retcode": 0,
+      "message": "",
+      "rawTag14Text": "",
+      "seedLength": 2076,
+      "seedSHA256": "2258b87182df6e8e679c15a86184ddaf8d4b5eda24cd81bf12e85bb8a9e00637",
+      "nativeReaderReturned": true
+    },
+    {
+      "name": "uint32-boundary",
+      "wireLength": 2114,
+      "wireSHA256": "6cd4f62206877eb52d65b2df2fee3001bb56a93d006aa78a58c61d65e774a9dd",
+      "rootReaderEntries": 1,
+      "regionReaderEntries": 1,
+      "regionPresent": true,
+      "nested": {
+        "GOFEDFBICAJ": "fixture.invalid",
+        "KJGNCFLEJLK": 4294967295,
+        "IJNBKLIHNJP": "hk4e_cn"
+      },
+      "retcode": 0,
+      "message": "",
+      "rawTag14Text": "",
+      "seedLength": 2076,
+      "seedSHA256": "2258b87182df6e8e679c15a86184ddaf8d4b5eda24cd81bf12e85bb8a9e00637",
+      "nativeReaderReturned": true
+    },
+    {
+      "name": "empty-region",
+      "wireLength": 2081,
+      "wireSHA256": "d7e776241c58095fe93bfcf99d9b46c86f631316a4f5935c04b9b55dc3a106e2",
+      "rootReaderEntries": 1,
+      "regionReaderEntries": 1,
+      "regionPresent": true,
+      "nested": {},
+      "retcode": 0,
+      "message": "",
+      "rawTag14Text": "",
+      "seedLength": 2076,
+      "seedSHA256": "2258b87182df6e8e679c15a86184ddaf8d4b5eda24cd81bf12e85bb8a9e00637",
+      "nativeReaderReturned": true
+    },
+    {
+      "name": "missing-region",
+      "wireLength": 2079,
+      "wireSHA256": "eb9150f770fd0d61deecc4663338fa5d18f81ecdbdabb5d7ca8da7055a3ee342",
+      "rootReaderEntries": 1,
+      "regionReaderEntries": 0,
+      "regionPresent": false,
+      "nested": null,
+      "retcode": 0,
+      "message": "",
+      "rawTag14Text": "",
+      "seedLength": 2076,
+      "seedSHA256": "2258b87182df6e8e679c15a86184ddaf8d4b5eda24cd81bf12e85bb8a9e00637",
+      "nativeReaderReturned": true
+    },
+    {
+      "name": "error-retcode",
+      "wireLength": 2133,
+      "wireSHA256": "ac73d1b10c17194f11df2fc8a28f883c7a41093b761e87889c70d58267a375a0",
+      "rootReaderEntries": 1,
+      "regionReaderEntries": 1,
+      "regionPresent": true,
+      "nested": {
+        "GOFEDFBICAJ": "127.0.0.1",
+        "KJGNCFLEJLK": 22101,
+        "IJNBKLIHNJP": "hk4e_cn"
+      },
+      "retcode": -4005,
+      "message": "fixture-denied",
+      "rawTag14Text": "",
+      "seedLength": 2076,
+      "seedSHA256": "2258b87182df6e8e679c15a86184ddaf8d4b5eda24cd81bf12e85bb8a9e00637",
+      "nativeReaderReturned": true
+    },
+    {
+      "name": "raw-text",
+      "wireLength": 2124,
+      "wireSHA256": "58c8689311779413c7f51d58a5fbf968142da370b9d994c95285cfc9fff8c809",
+      "rootReaderEntries": 1,
+      "regionReaderEntries": 1,
+      "regionPresent": true,
+      "nested": {
+        "GOFEDFBICAJ": "127.0.0.1",
+        "KJGNCFLEJLK": 22101,
+        "IJNBKLIHNJP": "hk4e_cn"
+      },
+      "retcode": 0,
+      "message": "",
+      "rawTag14Text": "9007199254740993",
+      "seedLength": 2076,
+      "seedSHA256": "2258b87182df6e8e679c15a86184ddaf8d4b5eda24cd81bf12e85bb8a9e00637",
+      "nativeReaderReturned": true
+    },
+    {
+      "name": "merged-region-overwrite",
+      "wireLength": 4220,
+      "wireSHA256": "7a893feeb493c5be12700509ebae5e40b528dab2c6bf1531e8b8737ac257c5ff",
+      "rootReaderEntries": 1,
+      "regionReaderEntries": 2,
+      "regionPresent": true,
+      "nested": {
+        "GOFEDFBICAJ": "fixture.invalid",
+        "KJGNCFLEJLK": 4294967295,
+        "IJNBKLIHNJP": "hk4e_cn"
+      },
+      "retcode": 0,
+      "message": "",
+      "rawTag14Text": "",
+      "seedLength": 2076,
+      "seedSHA256": "2258b87182df6e8e679c15a86184ddaf8d4b5eda24cd81bf12e85bb8a9e00637",
+      "nativeReaderReturned": true
+    },
+    {
+      "name": "negative-retcode-cleared-by-explicit-zero",
+      "wireLength": 2135,
+      "wireSHA256": "b9f798483f37e4df7ff4a2280484e767fe944ecee67efd52fe2e7b9b818d3df4",
+      "rootReaderEntries": 1,
+      "regionReaderEntries": 1,
+      "regionPresent": true,
+      "nested": {
+        "GOFEDFBICAJ": "127.0.0.1",
+        "KJGNCFLEJLK": 22101,
+        "IJNBKLIHNJP": "hk4e_cn"
+      },
+      "retcode": 0,
+      "message": "fixture-denied",
+      "rawTag14Text": "",
+      "seedLength": 2076,
+      "seedSHA256": "2258b87182df6e8e679c15a86184ddaf8d4b5eda24cd81bf12e85bb8a9e00637",
+      "nativeReaderReturned": true
+    }
+  ],
+  "rejections": [
+    {
+      "name": "truncated-java-seed",
+      "wireSHA256": "524a5853346b8dc36210098eb07d295301cac1145374958ece441ff7e5d9d6d5",
+      "reason": "0x1475208d0: Truncated or invalid length",
+      "nativeErrorBranch": false
+    },
+    {
+      "name": "nested-length-exceeds-input",
+      "wireSHA256": "4ce3aaa88d8a28b5baa62dfc0e60ba9a51026fd5837e196620dc46a2a78d0395",
+      "reason": "0x147500e70: Truncated or invalid length",
+      "nativeErrorBranch": false
+    },
+    {
+      "name": "negative-nested-length",
+      "wireSHA256": "822d537ce59ce91e58b5d0bc4423164b583aa4e338d3c2f7dd7c5c4cf1c9a4b6",
+      "reason": "0x1509cafa0: Native error branch: negative-length",
+      "nativeErrorBranch": true
+    }
+  ],
+  "javaFixtureCount": 6,
+  "nativeCombinationCount": 8,
+  "rejectedFixtureCount": 3,
+  "fullCurrentRegionSchema": false,
+  "fullRegionInfoSchema": false,
+  "regionListConsumed": false,
+  "schemaVersion": 1,
+  "task": "D02-R2 HTTP current-region builder wire",
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "javaJarSHA256": "dfdebbda0352055540c44a54e2eebfd4ffdfe679db74270044d3d55aeb006ec3",
+  "dispatchSeedSHA256": "2258b87182df6e8e679c15a86184ddaf8d4b5eda24cd81bf12e85bb8a9e00637",
+  "sourceSHA256": "fdaab04339830efbfd614b1b69f3fa763c1a6af2743d4fdc076c167838004910",
+  "javaFixtureSourceSHA256": "f1389116a71464fb7fb05fc781e4d3d314be65159244ebbd2c9651ac5e00bda4",
+  "sourceInputs": {
+    "src/main/proto/QueryCurrRegionHttpRsp.proto": "0d7644de54ace5411bf66bd0d927cd464d4705103e87f331567b6c76ee7a4c6b",
+    "src/main/proto/RegionInfo.proto": "f31d18ca9b298550d0a400e7c5a9e97b09aa86e4d5910ce94ede3706360e2ecf",
+    "src/main/java/emu/grasscutter/server/http/dispatch/RegionHandler.java": "b808b99e1e678d98b8b7f2c422aadd8b170ef88e711a92c1a73d49df72f6e0b6",
+    "tools/client72_graph.py": "bfa2f846e858327c7b592ba1139b6f50f0f0d27edc478d6475723064353cd4ab",
+    "tools/trace_client72_responses.py": "b12d1e6a2fcd5ddcb88365188f759d3a6f08f43ab9cb7fbe4a2fa8f6db348c32",
+    "tools/trace_client72_dispatch_post.py": "54933d80411c701a4444d450109582a438e9e486ebe928679d76c8a7c20a04a0"
+  },
+  "models": [
+    "Synthetic managed class/object allocation and empty default string/ByteString storage",
+    "Bounded input tag/varint/blob helper models; typed readers and native ReadMessage/limits execute",
+    "Existing graph metadata/interface dispatch; no actual GC, HTTP or SDK"
+  ],
+  "layers": {
+    "commandId": "not-applicable-to-HTTP; no game CmdID assigned",
+    "semanticIdentity": "Existing dispatch input type and Java producer names are associated; no live route or complete business semantics asserted",
+    "wire": "Eight listed raw fields consumed from actual fixed-JAR Java bytes"
+  },
+  "outsideScope": [
+    "Full RegionHandler request/event/cryptographic producer execution",
+    "QueryRegionList native identity/reader and nested list",
+    "Remaining current-region oneof/config and RegionInfo/ResVersion fields",
+    "Full dispatch handler, SDK initialization, HTTP transport, live call/return and D-02"
+  ],
+  "productionCodeChanged": false,
+  "clientExecuted": false,
+  "runtimeStatus": "not-tested"
+}

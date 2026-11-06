@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+D-01b5c：[HTTP_DISPATCH](docs/CLIENT_72_HTTP_DISPATCH.md)、`Client72HttpDispatchFixture.java`、`trace_client72_http_dispatch.py`/`test_client72_http_dispatch`；六实际Java/八原生/三拒绝，主线独立重生成14文件、22项和第三native与双跑同SHA `81474612…67326`/`7f9d3843…13e1c9`，原始`d02-http-dispatch/main-review/`、证明`evidence/d02-r2-http-dispatch-main-review.json`。STARTUP_OBSERVER及摘要追加当前只读阶段，七raw hash逐项一致，17观察守卫通过；初次测试拼错debug模块名的失败日志保留。**线程选择未恢复：当前选中主线程，原budget event保持；不能沿旧active-session的CIP/RSP或switch返回true判断。** 无run/load/新点、自然SDK/HTTP未知；继续独立RegionList来源与实际输出消费。
+
 E-01d1i～j：[最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)I/J、`D02DailyRuntimeMongoTest`和`tools/audit_d02_daily_runtime72.ps1`。驱动新UUID目录/独立27027库实际1项通过，23怪物/41装置逐config类型/ID，真实保存/冷读/同日不重抽及两场景0/4；主线只审该次源码/class/XML与13输入hash、正常shutdown，不另算一次测试。原始`local/migration72/d02-r3-daily-replay-a7bd7db7bca549e19bdc39cd457a90e9/`，主线`evidence/d02-r3-daily-main-review.json`。PowerShell5日志为UTF-16，原生stderr提示处理首失败保留；必须串行Gradle/27027，数据库保留。未等待自动Lua事件或运行tick/完整Done/网络，继续出生点实体，不晋级R3。
 
 F-03d3f3：[队伍与当前Team](docs/CLIENT_72_AVATAR_TEAM.md)，`client72_avatar_team.py`/`test_client72_avatar_team`；四字段限定消费、13独立wire/42选择消费/9拒绝。主线35定向及第三新进程原生回放与双跑完整/摘要同SHA `e5167295…9eceb9`/`3a085032…93073`，证据`evidence/avatar-team-main-{native,summary,review}.json`、`logs/avatar-team-main-{tests,native}.log`。具名事件与真实字典写入/成员去重/64位查询已审；完整handler、保存、非空fallback/override、场景效果和root3当前控制GUID未知。不改mapping/ready/sender，继续f4a状态及完整SceneInfo。

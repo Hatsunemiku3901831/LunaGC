@@ -108,3 +108,19 @@ python -m unittest tools.test_client72_startup_observer tools.test_debug_channel
 ```
 
 下一步从当前已证明可存活的零主点状态制定自然调用观察，不重复已有Marshal离线转换/CRT模型研究。现有暂停目标可继续只读核查；进一步执行按新观察目标安排，下一次客户端load仍由主线协调。
+
+## D-01b5c：保留目标的阶段快照与线程选择问题
+
+本批没有新load、run、pause、断点或寄存器/客户端内存写入。先从D-01b5b同一自有预算pause读取OS、窗口元数据、日志、已加载模块、全局槽位和有限栈；只用既有Automate脚本API，未使用computer-use。窗口标题为“原神”，当时有237线程；7条TCP中5条Bound、2条远端443的CloseWait，无UDP。没有URL/请求体来源，不据此判断认证完成或等待特定服务。
+
+原预算pause选中线程在`ntdll.NtWaitForSingleObject+14`，有限栈内有gmesdk候选返回地址。为区分音频等待与主循环，观察工具切换到最初CREATE_PROCESS的主线程，TEB的ClientId独立核为本进程；其CIP为`ntdll.NtDelayExecution+14`，栈内候选地址可关联到原文件`1416BD4C0`的`PlayerUpdateTime`字符串与`141706410`的帧率/时钟计算和SleepEx式等待路径。依据PE exception目录的函数边界重新解码，未采用最初任意地址起始的错位反汇编。栈候选不等于完整unwind调用栈，单张帧等待快照不能证明具体登录等待条件或排除其他初始化问题。
+
+既有88个DLL事件中未出现AccountPlatNative或Astrolabe；这只是事件库存的缺项，不是对手动映射或全部模块状态的无限保证。当前output_log为空；旧SDK日志时间早于该进程，不能归入本轮。关键全局指针和若干UTF8/初始化槽位非零，已知19580/19588槽位仍零；阶段数组为16个零但记录开关也是0，不能用此数组推断“一个阶段也没执行”。这些证据支持继续查实际调用来源，未支持直接挂WinHttpOpenRequest：固定主EXE仅导入WinHTTP代理配置API，实际请求API来自尚未在事件库存中出现的Astrolabe模块。
+
+**线程选择未恢复必须保留为工具问题。** 本批第一次栈工具的raw已写`selectionRestored=false`；此前进度总结称已恢复是错误总结，已向主线纠正。后续独立retention检查正确拒绝CIP/RSP与原预算pause不一致。只读比较证明当前TEB线程、CIP/RSP与先前主线程快照完全相同；双寄存器API一致，六DR为0，普通/HW表为空，OS同目标仍存活且debugging=true/running=false。日志与原快照完整同前缀，仅增加一条线程切换日志，未出现后续执行/退出记录。
+
+确认原选中线程的OS句柄仍属于同一目标后，工具仅请求恢复该选中线程。`switch_thread`返回true，但TEB/CIP/RSP完全未变且无新增切换日志。[固定版本cbDebugSwitchthread](https://github.com/x64dbg/x64dbg/blob/2026.05.27/src/dbg/commands/cmd-thread-control.cpp)比较的是`GetDebugData()->dwThreadId`与请求线程；请求原事件线程时跳过更新`hActiveThread`，仍返回true。这与本机“已切到主线程，再切回原事件线程无效”相符。没有修改调试器内存、绕判断、恢复执行或再load来解决它。
+
+当前准确状态为：**原目标保持预算暂停，但调试器选中上下文仍为主线程；原事件仍属D-01b5b自有pause。** 最新只读证据是`d02-r2-d01b5c-retention-mismatch.json`，恢复尝试为`d02-r2-d01b5c-restore-selection.json`；不能直接拿旧active-session的CIP/RSP作为当前选中线程。恢复执行前需同时核当前选中线程、原事件身份和OS归属；普通helper返回值不能代替核对。初次retention拒绝、序列化失败日志、旧`selectionRestored=false`及返回true但无效的恢复尝试均保留。
+
+本批独立完成的Java当前区输出→原生消费前置见[HTTP_DISPATCH](CLIENT_72_HTTP_DISPATCH.md)：固定JAR六组实际响应、八组原生返回、三组拒绝，双跑一致及22项守卫通过。它没有推动暂停目标执行，也不替代自然SDK/HTTP/Marshal调用和返回。下一步先核RegionList的真实parse/caller/class/codec身份及路由信任闭包；新的同目标自然观察需先指定合适阶段与单个必要点，不能再同时装五个主模块点或重复factory软件点。
