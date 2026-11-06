@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+2026-11-07限定离线执行已恢复，边界与依赖见[本轮记录](docs/CLIENT_72_SOL_TERRA_OFFLINE.md)、Project Sol/Terra路线。接手清点`local/migration72/offline-sol-terra/initial-inventory.json`；Terra枚举后主线独立核原始引用/提交/历史tool hash，review108→116，原107摘要/1269生产来源、三层/required/runtime不变。旧review拒绝、精确接纳、双recover一致及24测试/结构0/ready224在`offline-sol-terra/evidence-integration/`；audit报告SHA `f0bb0bdf…99da81`。后续C-01/Chapter/g2准备仍独立验收，不接Avatar正式sender，不启动游戏/调试器/补丁/服务或Astra；旧暂停与测试数按历史读取。
+
 2026-11-07新增[Sol/Terra离线前置路线](Project.md#d02-offline-sol-terra)，基线34479d4；本次仅规划，开发暂停保持。现有任务顺序：108输入后证据增量审核→C-01已验帧/注册边界、E-01 Chapter/真实资源加载前置、F-03d3g2有限测试投影准备→条件满足的Quest正向重绑定→R4受影响回归/构建。该阶段不做实机、调试器或依赖其加速的探索，不派Astra；f4d2/复杂SceneInfo/新语义冲突及g2生产主体按依赖后置。此路线优先于旧R2真实观察建议，不宣布D-02可离线完成。
 
 本次实际`validate_protocol72.py`研究结构0错误、`--ready`224拒绝；仍不等于108之后全体摘要已受审。faadfc8至34479d4的src/main、patch及portable主入口无生产差异；阶段整体工作量仍估约75%（70%～80%）。后续复用`review_client72_login_proto.py`、现有frame/wire与注册源码、E-01章节/资源/保存专题及g1独立适配器；QuestResourceRebindTest人工设置loadedAll的旧夹具不能替代n2真实资源正向重绑定。h1真实HTTP拒绝已验，无相关变更不重复当新成果。
