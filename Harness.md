@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+Avatar suffix入口`client72_avatar_deep_suffix.py --native`、`test_client72_avatar_deep_suffix`；主线22关联通过、第三完整`c7ea819a…18aaf8`/摘要`5e03ba34…9e58c6`同双跑，证明`local/migration72/astra-main/avatar-suffix-review.json`。初次漏--native的静态报告保留，不计原生；最终命令与限定范围见Avatar深入专题。
+
 资源深入第一项：`client72_resource_deep.py`、`test_client72_resource_deep`主线10项通过；第三native SHA `05c6d8ee…413692`、摘要`5d0f7487…6c69d7`同双跑，`local/migration72/astra-main/resource-review.json`及同前缀日志；关键parser/codec实际运行，字符串/分配为明确模型，未运行loadAll/DB。命令见[专题](docs/CLIENT_72_RESOURCE_DEEP_RESEARCH.md)。
 
 F-03d3f4d2第一项：`client72_avatar_deep.py --native`、`test_client72_avatar_deep`主线11项通过；第三完整报告SHA `1f937e7d…9cb16`、摘要`fc08a415…2a44c7`与双跑一致，证明`local/migration72/astra-main/avatar-review.json`，命令/模型/真实停止点见[专题](docs/CLIENT_72_AVATAR_DEEP_RESEARCH.md)。未纳入统一review的新增摘要由主线最终精确整合；不晋级ready。

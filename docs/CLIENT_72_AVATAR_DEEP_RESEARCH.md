@@ -82,3 +82,67 @@ python -m unittest tools.test_client72_avatar_deep -v
 Git和共享索引/交接由主线协调，本代理没有提交。下一立即可执行项是tag29辅助构造与tag38资源筛选，不需要实机或生产接入。
 
 主线独立审核并执行11项断言及第三新进程原生回放，完整报告/摘要与上述双跑逐字节相同；证明`local/migration72/astra-main/avatar-review.json`，日志同目录`avatar-{tests,native}.log`。仅接受明确片段和模型边界，不批准完整g2。
+
+## 第二项：tag29、tag38和装备工厂的独立后继
+
+新工具 `client72_avatar_deep_suffix.py` 固定第一项摘要hash，重新提取14个准确函数和两个工厂MethodSpec。没有修改第一项工具或摘要。11项新增独立断言通过，连同第一项11项共22项实际通过；第二项包含17组结果，其中8组mask分别执行6个原生bit片段。两次全新进程的完整报告/摘要逐字节相同。
+
+| 产物（相对 `local/migration72/astra-avatar/`） | SHA-256 | bytes |
+| --- | --- | --- |
+| `suffix-first-native.json` / `suffix-repeat-native.json` | `c7ea819a323a6c08a68538cbb2f141820ca3976804bd53195018eec6c218aaf8` | 564154 |
+| `suffix-first-summary.json` / `suffix-repeat-summary.json` | `5e03ba3486470055450cc4233f8cf3a500680569d874e5e8b1e1efad5b9e58c6` | 115617 |
+
+发布 `protocol/cn-7.2/avatar-deep-suffix-observations.json` 使用同一摘要；`suffix-determinism.json`和`suffix-tests-final.log`为本轮实际证据。第一项测试曾把14778当作要检查的SortedDictionary重载：重新逐参数核对后，14778是`IDictionary`重载，真正comparer重载为14780。本轮只将该断言改为14780并增加参数名`comparer`验证，第一项原生/摘要没有变化，不无故重跑其旧oracle。此修正不影响此前“没有准确comparer callee”的结论。
+
+### tag29的准确六位映射
+
+raw `48178 tag29 EACODLJLDIL/+bc` 进入 `15184fc80`，随后 `151840eb0` 以列表索引位而非enum数值位构造辅助字典。目标静态构造 `15184dca0` 的六处store顺序为 `[2,5,6,7,8,16]`。本卡从 `15184dcf9` 执行至 `15184dedc`，明确 live-in为容量6的List/backing array、index0；真实store写出上述顺序并将List保存到GLOBAL+2a5c0。**未执行完整.cctor的分配/growth和后段字典构造**。
+
+| wire位 | enum20060值 | 目标原始符号 |
+| --- | --- | --- |
+| bit0 | 2 | Fishing |
+| bit1 | 5 | PlayLyre |
+| bit2 | 6 | PlayQin |
+| bit3 | 7 | PlayDrum |
+| bit4 | 8 | PlayFrenchHorn |
+| bit5 | 16 | PlayNatlanKeyBoard |
+
+8个mask覆盖0、单低位、末位、低六位全开、bit6、bit31和uint32全1。每位都实际运行 `151840fbe→151840ff9`，核对将交付的enum key/bool；bit6与bit31均不设置这六项。完整辅助函数入口另真实清除旧count3字典，停在首个`15582ba40`调用前。未执行字典插入、`HashSet<enum20060>.Contains`或模式增删效果，因此只批准“这一目标六模式位图”的有限语义，**不能据此生产发送、批准其它位或把0当作不改变旧模式**。后续consumer会比较desired bool与已有HashSet，实际效果仍开放。
+
+### tag38完整消费者：资源默认值与首个匹配输入
+
+raw `48178 tag38 EIBCGPEOJLB/+60` 的实际非null列表进入完整 `15184fe30`。在显式初始化的合成资源缓存中，原生连续执行 `15437ada0`（按真实model Avatar ID1001查询）和 `15184d840→1473673b0`，最终完整返回。Array.Count/Item接口读取真正reader的array/count；资源字典key→index是明确存储模型，消费者和查询函数没有成功stub。
+
+缓存布局已由独立metadata固定：type28604的GLOBAL+13b70为 `Dictionary<uint32,61286>`，+13b78为 `Dictionary<uint32,List<61286>>`。按Avatar ID得到有序group资源行，解码row+10作为匹配group、row+1c作为默认返回ID；每个tag38候选ID经GLOBAL+1cd98查资源，解码row+24做group比较，选择**输入中的第一个匹配ID**，否则使用默认ID。
+
+本次独立合成group101/202、default501/502：省略、未知999、0均输出`[501,502]`；输入`[7001(group202),7002(group101)]`输出`[7002,7001]`；输入`[7003(group101),7002(group101),7001(group202)]`输出`[7003,7001]`；uint32最大候选ID完整保留。每次都先清旧model+70，再写新列表。primary缓存为空时完整函数返回，旧count3变0。没有把合成资源缺失分支当作实际入场资源可省略。
+
+这组证据闭合**给定缓存下完整函数的选择和更新行为**，没有建立资源文件来源、parser、cache builder `15437af90`、默认记录完整性或字段业务英文名。Java `skillLevelMap/skillExtraChargeMap/getProudSkillBonusMap/getCostume`等已有字段并不据此成为tag38来源，禁止按旧名字猜映射。
+
+### Weapon/Relic工厂准确分流
+
+固定`15184a5f0`签名的两个来源参数分别为既有装备合同type29353（Weapon输入）和type52700（Reliquary输入）。实际callsite使用的MethodInfo经重新解码usage→MethodSpec→method294224闭合泛型参数：
+
+| typed来源分支 | MethodInfo cell / usage / spec | 工厂模型 |
+| --- | --- | --- |
+| Weapon，`15184a679→15184a683` | `145994388 / 738059 / 23017` | 51522 |
+| Reliquary，`15184a6f8→15184a702` | `145a30858 / 753864 / 77834` | 87122 |
+
+因此51522可以在该准确分支关联为**Weapon模型角色**，并交叉支持Scene同一个factory binding。不是把51522的所有分支/字段都泛称Weapon；slot7用途仍单独未知。新摘要`factoryCallsites`逐项保存参数、callsite、来源合同与binding，供Scene跨卡引用。第二项没有重新执行完整工厂或重新计算第一项非空赋值样本。
+
+### 间接构造的实际剩余输入与下一出口
+
+本轮进一步静态解析 `140524010→1404ee6f0`：resolver先取runtime class+30的rgctx，缺槽时用class+68的泛型实例上下文；`context+8`指向每槽的32位definition word，原生以高部kind分派，再按低部index恢复/膨胀MethodSpec。三份固定输入虽包含静态metadata，但现有提取器**尚未恢复这些closed-class的definition-word来源、共享方法inflation映射和实际缓存ABI**。没有用MethodSpec存在、wrapper地址或同形ctor填补这个依赖。
+
+下一纯离线任务应从class构建/rgctx definition表的生产路径恢复这些准确输入，优先验证：`145a30968`对应enum HashSet context+18，`145a30970`对应SortedDictionary context+10，`145a1a910`对应custom父类context+18及下一层List context；目标是各MethodInfo+8真正callee及其泛型参数，不是再跑同一个空槽失败。若需要实机辅助，需另有实机授权后仅观察同一固定版本自然构造时上述typed context/MethodInfo；本轮没有执行这些读取或调试动作。
+
+至此本轮要求的间接构造/继承、HashSet comparer、空/非空装备、depot+68、61980池/后缀、零/省略/更新全部分别取得新证据或精确依赖出口，没有以首个未知为由停止其它独立难点。仍开放：准确constructor/comparer、完整装备工厂+槽替换+refresh、技能复杂列表/排序/效果、tag29模式效果、tag38资源来源，以及完整初始化业务来源和实机。第一项g2规格继续有效，tag29/tag38新结论只增加隔离测试可验证范围，**不批准生产g2**。
+
+```powershell
+$avatarDeepGame = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/game_path.ps1
+python tools/client72_avatar_deep_suffix.py --native --client $avatarDeepGame --output local/migration72/astra-avatar/suffix-first-native.json --observations local/migration72/astra-avatar/suffix-first-summary.json
+python tools/client72_avatar_deep_suffix.py --native --client $avatarDeepGame --output local/migration72/astra-avatar/suffix-repeat-native.json --observations local/migration72/astra-avatar/suffix-repeat-summary.json
+python -m unittest tools.test_client72_avatar_deep tools.test_client72_avatar_deep_suffix -v
+```
+
+第二项主线22关联断言及第三原生完整/摘要与上述双跑核同，证明`local/migration72/astra-main/avatar-suffix-review.json`。首次调用漏`--native`只产出静态报告，保留且不计原生；最终带该参数执行并核每个实际stop/model。未修改production或推广完整合同。

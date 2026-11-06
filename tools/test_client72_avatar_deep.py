@@ -33,7 +33,10 @@ class AvatarDeepTest(unittest.TestCase):
         aot = self.report['concreteAOT']
         self.assertEqual({(2147, 5917, 15590), (2034, 12373, 14777), (69137, 5278, 572243)},
                          {(row['owner'], row['classInstance'], row['methodDefinition']) for row in aot})
-        self.assertFalse({15591, 14778} & {row['methodDefinition'] for row in aot})
+        self.assertFalse({15591, 14780} & {row['methodDefinition'] for row in aot})
+        declared = {row['method']['index']: row for row in self.report['methods']}
+        self.assertEqual('comparer', declared[15591]['parameters'][0]['name'])
+        self.assertEqual('comparer', declared[14780]['parameters'][0]['name'])
         parents = {row['index']: row['parent'] for row in self.report['owners']}
         self.assertEqual((69137, 5278), (parents[34054]['typeDefinition'], parents[34054]['instanceIndex']))
         self.assertEqual(63831, parents[34054]['arguments'][0]['typeDefinition'])
