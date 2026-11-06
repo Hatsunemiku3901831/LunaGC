@@ -6,6 +6,8 @@
 
 ## 当前阶段
 
+F-03d3f4a已审：[生命状态输入](docs/CLIENT_72_AVATAR_STATE.md)将AvatarInfo tag4/u32连至目标LIFE枚举、真实模型写入与具名状态/刷新事件，实体Kill/Revive构造在投递前明确停止；26样本/28应用/5错误、主线46定向及第三全新原生完整/摘要与双跑一致。只批准该字段限定语义，不据省略保留受控状态断言入场可省略，不批准REVIVE作持久状态；完整实体效果/IFix/初始化必要集合仍未知。继续FightProp及技能depot，不扩完整战斗验收。
+
 D-01b5c已审：[HTTP当前区输出](docs/CLIENT_72_HTTP_DISPATCH.md)固定JAR六组实际Java响应→八组原生完整返回/三拒绝，主线独立重生成14文件、22定向及第三原生回放与双跑逐字节一致；只关八字段的有限wire前置，不代表完整RegionHandler/路由/SDK。保留目标只读阶段同时纠正线程选择恢复：helper返回true但原始记录和独立核查均为未恢复，当前选中主线程、原预算pause事件保持；固定调试器源码解释no-op，未新run/load/挂点。追加摘要后主线17观察守卫通过。继续RegionList独立来源/非空消费，R2及实机不晋级。
 
 E-01d1i～j已审：[最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)I/J与独立复现驱动在唯一Mongo27027库实际完成1项测试，真实daily生成/保存/新Player冷读/同日不重抽及两场景0/4边界通过；本次随机4组的23怪物/41装置逐config验证类型和资源ID，NPC均空。主线核源码/class/XML、13输入hash及正常shutdown exit0，未重复执行该随机测试，不把各历史轮次相加。旧daily/Lua/combat与候选Monster/Curve/Gadget是明确混合夹具；异步事件后代、后台调度、完整Done/网络/客户端仍待。继续出生点25组真实初始实体，R3/resourceReady不晋级。
@@ -88,6 +90,7 @@ E-01d1a（D02-R3子合同A）已验收：固定候选commit/tree/blob四表，�
 | F-03d3g1 独立完整Avatar raw适配器 | F-03d3e8及固定11来源 | 独立65类372wire/7 oneof/13 map/42 packed；275新Java+36库存、8新Python/22关联、主线22及生成check通过；268实际Java→native双跑及主线第三完整/摘要相同，负零/64位/复制/merge/错误差异明确，旧schema/sender/opcode未改。未批准生产发送或runtime | 已完成 |
 | F-03d3f1 Avatar初始化用途与最小字段语义 | 已验root/48178子集及Equip合同，完整raw另等e8 | 36a4669；5字段/3属性ID，22通知/25应用/24分配/54属性/44装备槽交付/7拒绝，10新增79关联及双跑；具名Avatar资源/原生u64字典和int64→double消费通过，cur_avatar_guid/FightProp/完整Handler未知，未迁生产，已停止后续工作 | 已完成 |
 | F-03d3f3 Team映射与当前Team消费 | f1、f2a、e8及固定三输入 | 四字段、13组wire/42消费/9拒绝；原生Team名称事件/去重/qword扩容/当前选择/GUID查找及零值边界已验。10新增/35关联与主线35通过，第三全新原生完整/摘要与双跑相同；完整Handler/保存/场景与root3当前控制语义不晋级 | 已完成 |
+| F-03d3f4a Avatar生命状态应用 | f1/f2a/f2b/f3/e8及固定三输入 | tag4/u32经独立参数/模型enum57376及371/16、75/82具名事件证明用途；26样本/28应用/5错误，11新增/46关联及主线46/第三原生与双跑一致。实体虚调用/投递前止步，字段入场必要性和完整效果未验 | 已完成 |
 | E-01d1i～j 日常持久化及初始实体 | R3固定候选表、旧daily/Lua/combat、独立Mongo | 唯一新库真实1项通过，生成4/保存/新Player冷读/同日不重抽、生成前后场景0/4；23怪物/41装置逐类型/资源ID已验。主线13输入hash/source/class/XML及正常关闭审核；受控调度不代表后台/完整Done，自动事件后代/其它随机组/目标协议未验 | 已完成 |
 | E-01c6 嵌套require调用者bindings恢复 | E-01c5已复现成功置null/异常残留 | b74cd16；6例先5失败后全过，6套32 Lua及8加载审计全过；portable25秒JAR7ca18e10…e8f5f、9class相符，其余45935不变；双轮整场fast407/449、inline0，30错误组恢复且无新增；完整前置不足未部署，local/资源/实机不晋级 | 已完成 |
 | F-04a SDK/补丁/资源前置现场复核 | 当前checkout/config/GAME_PATH、三输入与现有会话 | 三哈希/参考clean/归属已验；API会话无target；两个status退出1及6个revision候选；源码旧强制验签钩子与字符串工厂缺口保留，见CLIENT_72_RUNTIME_PREREQUISITES；仅核对不代表F-04完成 | 已完成 |

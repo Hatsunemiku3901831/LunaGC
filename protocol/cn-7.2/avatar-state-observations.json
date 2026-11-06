@@ -1,0 +1,4706 @@
+{
+  "schemaVersion": 1,
+  "task": "F-03d3f4a",
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "inputContracts": {
+    "avatar-complete-raw-observations.json": "37c90e4dea9fccc4ac20ce68616612250b5a57169e564081c33dc69a25def837",
+    "avatar-contract-observations.json": "a54f62de9a803e2070c515ecc854488827ea6c62db4468c633190d6733f2b2f3",
+    "avatar-control-observations.json": "8e2433b3d13ec17414cc26f21461f1cc62f64b16c413b327610ce0b7e7480ec0",
+    "scene-entry-identity-observations.json": "550fcdd642132598256aca41bc79eec89bdfb7009ad2d22ab7a82409484644d1",
+    "avatar-team-observations.json": "3a08503225ecbb198a7cc6340b203cc6ce76dd7c14b5619da845b35e74993073"
+  },
+  "declarations": {
+    "methods": [
+      {
+        "owner": 18163,
+        "method": {
+          "index": 138207,
+          "name": "GLJODPOHMME",
+          "nameIndex": "0xb24eeeb",
+          "registeredAddress": "0x15184e100",
+          "parameterCount": 2,
+          "flags": "0x86",
+          "virtualSlot": 65535
+        },
+        "parameters": [
+          {
+            "name": "DOMNAIHHNHC",
+            "type": {
+              "kind": "class",
+              "attributes": "0x0",
+              "data": "0xbc32",
+              "byRef": false,
+              "typeDefinition": 48178,
+              "name": "ONGOHFDHHNI",
+              "namespace": ""
+            }
+          },
+          {
+            "name": "DLLICBNGNFB",
+            "type": {
+              "kind": "class",
+              "attributes": "0x1010",
+              "data": "0xa38c",
+              "byRef": false,
+              "typeDefinition": 41868,
+              "name": "FKDEDKIHNDA",
+              "namespace": ""
+            }
+          }
+        ]
+      },
+      {
+        "owner": 18163,
+        "method": {
+          "index": 138240,
+          "name": "AACHNGGMEIO",
+          "nameIndex": "0xb24f098",
+          "registeredAddress": "0x151840630",
+          "parameterCount": 1,
+          "flags": "0x81",
+          "virtualSlot": 65535
+        },
+        "parameters": [
+          {
+            "name": "BKKEELPDALF",
+            "type": {
+              "kind": "valuetype",
+              "attributes": "0x0",
+              "data": "0xe020",
+              "byRef": false,
+              "typeDefinition": 57376,
+              "name": "LOEACNBBAAB",
+              "namespace": ""
+            }
+          }
+        ]
+      },
+      {
+        "owner": 18163,
+        "method": {
+          "index": 138241,
+          "name": "JFFJCLLGGNE",
+          "nameIndex": "0xb24f0a3",
+          "registeredAddress": "0x151852150",
+          "parameterCount": 0,
+          "flags": "0x86",
+          "virtualSlot": 65535
+        },
+        "parameters": []
+      },
+      {
+        "owner": 18163,
+        "method": {
+          "index": 138246,
+          "name": "ICLPGPBPCOF",
+          "nameIndex": "0xb24ecba",
+          "registeredAddress": "0x151849670",
+          "parameterCount": 4,
+          "flags": "0x86",
+          "virtualSlot": 65535
+        },
+        "parameters": [
+          {
+            "name": "CLMAGBKCOHB",
+            "type": {
+              "kind": "valuetype",
+              "attributes": "0x0",
+              "data": "0xe020",
+              "byRef": false,
+              "typeDefinition": 57376,
+              "name": "LOEACNBBAAB",
+              "namespace": ""
+            }
+          },
+          {
+            "name": "EIJBDFBBCAN",
+            "type": {
+              "kind": "uint32",
+              "attributes": "0x1010",
+              "data": "0x13f",
+              "byRef": false
+            }
+          },
+          {
+            "name": "ELMJCJHIFBJ",
+            "type": {
+              "kind": "valuetype",
+              "attributes": "0x1010",
+              "data": "0xe02f",
+              "byRef": false,
+              "typeDefinition": 57391,
+              "name": "CEMLKNLPGOF",
+              "namespace": ""
+            }
+          },
+          {
+            "name": "AGJOOPDLJJJ",
+            "type": {
+              "kind": "uint32",
+              "attributes": "0x1010",
+              "data": "0x13f",
+              "byRef": false
+            }
+          }
+        ]
+      },
+      {
+        "owner": 49228,
+        "method": {
+          "index": 409427,
+          "name": "KMFHNJMFFKN",
+          "nameIndex": "0xb5a9639",
+          "registeredAddress": "0x1517ab3a0",
+          "parameterCount": 2,
+          "flags": "0x81",
+          "virtualSlot": 65535
+        },
+        "parameters": [
+          {
+            "name": "IBFJDMPAMOJ",
+            "type": {
+              "kind": "uint32",
+              "attributes": "0x0",
+              "data": "0x13f",
+              "byRef": false
+            }
+          },
+          {
+            "name": "OLBJJLIAMLI",
+            "type": {
+              "kind": "bool",
+              "attributes": "0x0",
+              "data": "0xae",
+              "byRef": false
+            }
+          }
+        ]
+      },
+      {
+        "owner": 28174,
+        "method": {
+          "index": 219027,
+          "name": "KNEJNEELNCM",
+          "nameIndex": "0xb3728a0",
+          "registeredAddress": "0x148d74b00",
+          "parameterCount": 0,
+          "flags": "0x1c6",
+          "virtualSlot": 98
+        },
+        "parameters": []
+      }
+    ],
+    "stateField": {
+      "index": 85876,
+      "name": "BOCCNJLBFCJ",
+      "nameIndex": "0xb19504c",
+      "typeIndex": 500827,
+      "type": {
+        "kind": "valuetype",
+        "attributes": "0x1",
+        "data": "0xe020",
+        "byRef": false,
+        "typeDefinition": 57376,
+        "name": "LOEACNBBAAB",
+        "namespace": ""
+      },
+      "offset": 716,
+      "rawOffset": "0x2cc",
+      "offsetKind": "instance"
+    },
+    "entityVirtual": {
+      "index": 219027,
+      "name": "KNEJNEELNCM",
+      "nameIndex": "0xb3728a0",
+      "registeredAddress": "0x148d74b00",
+      "parameterCount": 0,
+      "flags": "0x1c6",
+      "virtualSlot": 98
+    },
+    "enums": [
+      {
+        "typeIndex": 57376,
+        "clientType": "LOEACNBBAAB",
+        "namespace": "",
+        "underlyingType": "int32",
+        "values": [
+          {
+            "symbol": "LIFE_NONE",
+            "value": 0,
+            "fieldIndex": 284960,
+            "defaultRow": 49605,
+            "typeIndex": 70,
+            "dataIndex": 536985
+          },
+          {
+            "symbol": "LIFE_ALIVE",
+            "value": 1,
+            "fieldIndex": 284961,
+            "defaultRow": 49606,
+            "typeIndex": 70,
+            "dataIndex": 536989
+          },
+          {
+            "symbol": "LIFE_DEAD",
+            "value": 2,
+            "fieldIndex": 284962,
+            "defaultRow": 49607,
+            "typeIndex": 70,
+            "dataIndex": 536993
+          },
+          {
+            "symbol": "LIFE_REVIVE",
+            "value": 3,
+            "fieldIndex": 284963,
+            "defaultRow": 49608,
+            "typeIndex": 70,
+            "dataIndex": 536997
+          }
+        ],
+        "semanticStatus": "target-symbols-only"
+      },
+      {
+        "typeIndex": 57391,
+        "clientType": "CEMLKNLPGOF",
+        "namespace": "",
+        "underlyingType": "int32",
+        "values": [
+          {
+            "symbol": "PlayerDieNone",
+            "value": 0,
+            "fieldIndex": 285018,
+            "defaultRow": 49613,
+            "typeIndex": 70,
+            "dataIndex": 537017
+          },
+          {
+            "symbol": "PlayerDieKillByMonster",
+            "value": 1,
+            "fieldIndex": 285019,
+            "defaultRow": 49614,
+            "typeIndex": 70,
+            "dataIndex": 537021
+          },
+          {
+            "symbol": "PlayerDieKillByGear",
+            "value": 2,
+            "fieldIndex": 285020,
+            "defaultRow": 49615,
+            "typeIndex": 70,
+            "dataIndex": 537025
+          },
+          {
+            "symbol": "PlayerDieFall",
+            "value": 3,
+            "fieldIndex": 285021,
+            "defaultRow": 49616,
+            "typeIndex": 70,
+            "dataIndex": 537029
+          },
+          {
+            "symbol": "PlayerDieDrawn",
+            "value": 4,
+            "fieldIndex": 285022,
+            "defaultRow": 49617,
+            "typeIndex": 70,
+            "dataIndex": 537033
+          },
+          {
+            "symbol": "PlayerDieAbyss",
+            "value": 5,
+            "fieldIndex": 285023,
+            "defaultRow": 49618,
+            "typeIndex": 70,
+            "dataIndex": 537037
+          },
+          {
+            "symbol": "PlayerDieGm",
+            "value": 6,
+            "fieldIndex": 285024,
+            "defaultRow": 49619,
+            "typeIndex": 70,
+            "dataIndex": 537041
+          },
+          {
+            "symbol": "PlayerDieClimateCold",
+            "value": 7,
+            "fieldIndex": 285025,
+            "defaultRow": 49620,
+            "typeIndex": 70,
+            "dataIndex": 537045
+          },
+          {
+            "symbol": "PlayerDieStormLighting",
+            "value": 8,
+            "fieldIndex": 285026,
+            "defaultRow": 49621,
+            "typeIndex": 70,
+            "dataIndex": 537049
+          },
+          {
+            "symbol": "PlayerDieDirtyWaterErosion",
+            "value": 9,
+            "fieldIndex": 285027,
+            "defaultRow": 49622,
+            "typeIndex": 70,
+            "dataIndex": 537053
+          },
+          {
+            "symbol": "PlayerDieLiquidPhlogiston",
+            "value": 10,
+            "fieldIndex": 285028,
+            "defaultRow": 49623,
+            "typeIndex": 70,
+            "dataIndex": 537057
+          },
+          {
+            "symbol": "PlayerDieLevelForceDie",
+            "value": 11,
+            "fieldIndex": 285029,
+            "defaultRow": 49624,
+            "typeIndex": 70,
+            "dataIndex": 537061
+          },
+          {
+            "symbol": "PlayerDieHeartBloodUsedOut",
+            "value": 12,
+            "fieldIndex": 285030,
+            "defaultRow": 49625,
+            "typeIndex": 70,
+            "dataIndex": 537065
+          },
+          {
+            "symbol": "PlayerDieBeyondBlueprint",
+            "value": 13,
+            "fieldIndex": 285031,
+            "defaultRow": 49626,
+            "typeIndex": 70,
+            "dataIndex": 537069
+          },
+          {
+            "symbol": "PlayerDieTheGrey",
+            "value": 14,
+            "fieldIndex": 285032,
+            "defaultRow": 49627,
+            "typeIndex": 70,
+            "dataIndex": 537073
+          }
+        ],
+        "semanticStatus": "target-symbols-only"
+      },
+      {
+        "typeIndex": 75464,
+        "clientType": "BAAMJHPNAGA",
+        "namespace": "",
+        "underlyingType": "int32",
+        "values": [
+          {
+            "symbol": "RefreshAvatarData",
+            "value": 16,
+            "fieldIndex": 374784,
+            "defaultRow": 63823,
+            "typeIndex": 70,
+            "dataIndex": 605708
+          },
+          {
+            "symbol": "AvatarLifeStateChanged",
+            "value": 371,
+            "fieldIndex": 375139,
+            "defaultRow": 64178,
+            "typeIndex": 70,
+            "dataIndex": 607128
+          }
+        ],
+        "semanticStatus": "target-symbols-only"
+      },
+      {
+        "typeIndex": 74697,
+        "clientType": "ACAMLDKEIEO",
+        "namespace": "",
+        "underlyingType": "int32",
+        "values": [
+          {
+            "symbol": "EvtKill",
+            "value": 75,
+            "fieldIndex": 370524,
+            "defaultRow": 63096,
+            "typeIndex": 70,
+            "dataIndex": 601900
+          },
+          {
+            "symbol": "EvtRevive",
+            "value": 82,
+            "fieldIndex": 370531,
+            "defaultRow": 63103,
+            "typeIndex": 70,
+            "dataIndex": 601928
+          }
+        ],
+        "semanticStatus": "target-symbols-only"
+      }
+    ],
+    "pools": [
+      {
+        "usageRow": 740636,
+        "cell": "0x1459ae430",
+        "methodSpec": 32634,
+        "methodDefinition": 645855,
+        "owner": 77908,
+        "classInstance": -1,
+        "methodArguments": 59362,
+        "arguments": [
+          {
+            "kind": "class",
+            "attributes": "0x0",
+            "data": "0x54f7",
+            "byRef": false,
+            "typeDefinition": 21751,
+            "name": "MMOMICNOHMC",
+            "namespace": ""
+          }
+        ],
+        "aot": {
+          "tableIndex": 530341,
+          "pointerIndex": 11396,
+          "address": "0x1547a9320"
+        }
+      },
+      {
+        "usageRow": 754018,
+        "cell": "0x145a31670",
+        "methodSpec": 78152,
+        "methodDefinition": 645855,
+        "owner": 77908,
+        "classInstance": -1,
+        "methodArguments": 59156,
+        "arguments": [
+          {
+            "kind": "class",
+            "attributes": "0x0",
+            "data": "0x3c32",
+            "byRef": false,
+            "typeDefinition": 15410,
+            "name": "KLDGCJPGJDP",
+            "namespace": ""
+          }
+        ],
+        "aot": {
+          "tableIndex": 530295,
+          "pointerIndex": 11396,
+          "address": "0x1547a9320"
+        }
+      }
+    ],
+    "eventFields": {
+      "15410": [
+        {
+          "index": 73087,
+          "name": "HONNDFNAAGD",
+          "nameIndex": "0xb2020f3",
+          "typeIndex": 445681,
+          "type": {
+            "kind": "uint32",
+            "attributes": "0x6",
+            "data": "0x13f",
+            "byRef": false
+          },
+          "offset": 48,
+          "rawOffset": "0x30",
+          "offsetKind": "instance"
+        }
+      ],
+      "21751": [
+        {
+          "index": 102561,
+          "name": "POBFOKAAPMA",
+          "nameIndex": "0xb2040e0",
+          "typeIndex": 445048,
+          "type": {
+            "kind": "szarray",
+            "attributes": "0x6",
+            "data": "0x142e624e0",
+            "byRef": false,
+            "elementType": {
+              "kind": "string",
+              "attributes": "0x0",
+              "data": "0x125",
+              "byRef": false
+            },
+            "rank": 1
+          },
+          "offset": 48,
+          "rawOffset": "0x30",
+          "offsetKind": "instance"
+        },
+        {
+          "index": 102562,
+          "name": "CGKEAFPBEOL",
+          "nameIndex": "0xb2040d5",
+          "typeIndex": 444181,
+          "type": {
+            "kind": "string",
+            "attributes": "0x6",
+            "data": "0x125",
+            "byRef": false
+          },
+          "offset": 56,
+          "rawOffset": "0x38",
+          "offsetKind": "instance"
+        },
+        {
+          "index": 102563,
+          "name": "ELMJCJHIFBJ",
+          "nameIndex": "0xb24f106",
+          "typeIndex": 512604,
+          "type": {
+            "kind": "valuetype",
+            "attributes": "0x6",
+            "data": "0xbeb2",
+            "byRef": false,
+            "typeDefinition": 48818,
+            "name": "KHENFFBEEJE",
+            "namespace": ""
+          },
+          "offset": 64,
+          "rawOffset": "0x40",
+          "offsetKind": "instance"
+        },
+        {
+          "index": 102564,
+          "name": "GEPNCNKMPBO",
+          "nameIndex": "0xb2a9bb5",
+          "typeIndex": 445681,
+          "type": {
+            "kind": "uint32",
+            "attributes": "0x6",
+            "data": "0x13f",
+            "byRef": false
+          },
+          "offset": 68,
+          "rawOffset": "0x44",
+          "offsetKind": "instance"
+        },
+        {
+          "index": 102565,
+          "name": "KGFOKJKDKNF",
+          "nameIndex": "0xb2a9bc0",
+          "typeIndex": 512605,
+          "type": {
+            "kind": "valuetype",
+            "attributes": "0x6",
+            "data": "0x11bb3",
+            "byRef": false,
+            "typeDefinition": 72627,
+            "name": "JOFOAIGBOAO",
+            "namespace": ""
+          },
+          "offset": 72,
+          "rawOffset": "0x48",
+          "offsetKind": "instance"
+        }
+      ],
+      "58582": [
+        {
+          "index": 291195,
+          "name": "LDHBOJBCDHM",
+          "nameIndex": "0xb68ef39",
+          "typeIndex": 610864,
+          "type": {
+            "kind": "valuetype",
+            "attributes": "0x6",
+            "data": "0x1565b",
+            "byRef": false,
+            "typeDefinition": 87643,
+            "name": "ODFEOKIBJOG",
+            "namespace": ""
+          },
+          "offset": 16,
+          "rawOffset": "0x10",
+          "offsetKind": "instance"
+        },
+        {
+          "index": 291196,
+          "name": "ELPLKPBDAGO",
+          "nameIndex": "0xb202d9a",
+          "typeIndex": 610865,
+          "type": {
+            "kind": "valuetype",
+            "attributes": "0x6",
+            "data": "0x123c9",
+            "byRef": false,
+            "typeDefinition": 74697,
+            "name": "ACAMLDKEIEO",
+            "namespace": ""
+          },
+          "offset": 20,
+          "rawOffset": "0x14",
+          "offsetKind": "instance"
+        },
+        {
+          "index": 291197,
+          "name": "OPJBFICICJF",
+          "nameIndex": "0xb68ef44",
+          "typeIndex": 610866,
+          "type": {
+            "kind": "valuetype",
+            "attributes": "0x6",
+            "data": "0xc846",
+            "byRef": false,
+            "typeDefinition": 51270,
+            "name": "KAPDCLBODNE",
+            "namespace": ""
+          },
+          "offset": 24,
+          "rawOffset": "0x18",
+          "offsetKind": "instance"
+        },
+        {
+          "index": 291198,
+          "name": "GFJILGADLJL",
+          "nameIndex": "0xb68ef4f",
+          "typeIndex": 444357,
+          "type": {
+            "kind": "bool",
+            "attributes": "0x6",
+            "data": "0xae",
+            "byRef": false
+          },
+          "offset": 28,
+          "rawOffset": "0x1c",
+          "offsetKind": "instance"
+        },
+        {
+          "index": 291199,
+          "name": "JPNGPLBOMCB",
+          "nameIndex": "0xb68ef5a",
+          "typeIndex": 444357,
+          "type": {
+            "kind": "bool",
+            "attributes": "0x6",
+            "data": "0xae",
+            "byRef": false
+          },
+          "offset": 29,
+          "rawOffset": "0x1d",
+          "offsetKind": "instance"
+        },
+        {
+          "index": 291200,
+          "name": "PACPNBJJEGD",
+          "nameIndex": "0xb68ef65",
+          "typeIndex": 444357,
+          "type": {
+            "kind": "bool",
+            "attributes": "0x6",
+            "data": "0xae",
+            "byRef": false
+          },
+          "offset": 30,
+          "rawOffset": "0x1e",
+          "offsetKind": "instance"
+        },
+        {
+          "index": 291201,
+          "name": "ICMHFKFNCKA",
+          "nameIndex": "0xb68ef70",
+          "typeIndex": 444357,
+          "type": {
+            "kind": "bool",
+            "attributes": "0x6",
+            "data": "0xae",
+            "byRef": false
+          },
+          "offset": 31,
+          "rawOffset": "0x1f",
+          "offsetKind": "instance"
+        },
+        {
+          "index": 291202,
+          "name": "LKJNALCLJFE",
+          "nameIndex": "0xb68ef7b",
+          "typeIndex": 444357,
+          "type": {
+            "kind": "bool",
+            "attributes": "0x6",
+            "data": "0xae",
+            "byRef": false
+          },
+          "offset": 32,
+          "rawOffset": "0x20",
+          "offsetKind": "instance"
+        },
+        {
+          "index": 291203,
+          "name": "HFCCBKGLKIA",
+          "nameIndex": "0xb68ef86",
+          "typeIndex": 444357,
+          "type": {
+            "kind": "bool",
+            "attributes": "0x6",
+            "data": "0xae",
+            "byRef": false
+          },
+          "offset": 33,
+          "rawOffset": "0x21",
+          "offsetKind": "instance"
+        },
+        {
+          "index": 291204,
+          "name": "PJHAIFHPCAK",
+          "nameIndex": "0xb68ef91",
+          "typeIndex": 445681,
+          "type": {
+            "kind": "uint32",
+            "attributes": "0x6",
+            "data": "0x13f",
+            "byRef": false
+          },
+          "offset": 36,
+          "rawOffset": "0x24",
+          "offsetKind": "instance"
+        },
+        {
+          "index": 291205,
+          "name": "LINPIOMDPHB",
+          "nameIndex": "0xb68ef9c",
+          "typeIndex": 444357,
+          "type": {
+            "kind": "bool",
+            "attributes": "0x6",
+            "data": "0xae",
+            "byRef": false
+          },
+          "offset": 40,
+          "rawOffset": "0x28",
+          "offsetKind": "instance"
+        },
+        {
+          "index": 291206,
+          "name": "PJAKLMPHLFG",
+          "nameIndex": "0xb68efa7",
+          "typeIndex": 444357,
+          "type": {
+            "kind": "bool",
+            "attributes": "0x6",
+            "data": "0xae",
+            "byRef": false
+          },
+          "offset": 41,
+          "rawOffset": "0x29",
+          "offsetKind": "instance"
+        },
+        {
+          "index": 291207,
+          "name": "OFIPKAPMFMH",
+          "nameIndex": "0xb68efb2",
+          "typeIndex": 444357,
+          "type": {
+            "kind": "bool",
+            "attributes": "0x6",
+            "data": "0xae",
+            "byRef": false
+          },
+          "offset": 42,
+          "rawOffset": "0x2a",
+          "offsetKind": "instance"
+        },
+        {
+          "index": 291208,
+          "name": "DMBJMMILKCO",
+          "nameIndex": "0xb18be5d",
+          "typeIndex": 445681,
+          "type": {
+            "kind": "uint32",
+            "attributes": "0x6",
+            "data": "0x13f",
+            "byRef": false
+          },
+          "offset": 44,
+          "rawOffset": "0x2c",
+          "offsetKind": "instance"
+        }
+      ]
+    },
+    "sceneFields": [
+      {
+        "index": 243508,
+        "name": "HPEIJPFADKM",
+        "nameIndex": "0xb5a9075",
+        "typeIndex": 495537,
+        "type": {
+          "kind": "genericinst",
+          "attributes": "0x1",
+          "data": "0x78dd",
+          "byRef": false,
+          "genericIndex": 30941,
+          "instanceIndex": 4054,
+          "arguments": [
+            {
+              "kind": "class",
+              "attributes": "0x0",
+              "data": "0x6e0e",
+              "byRef": false,
+              "typeDefinition": 28174,
+              "name": "GCGEJOPPGAE",
+              "namespace": ""
+            }
+          ],
+          "typeDefinition": 1255,
+          "name": "List`1",
+          "namespace": "System.Collections.Generic"
+        },
+        "offset": 192,
+        "rawOffset": "0xc0",
+        "offsetKind": "instance"
+      },
+      {
+        "index": 243526,
+        "name": "LDIOHFDBHME",
+        "nameIndex": "0xb5a913b",
+        "typeIndex": 494205,
+        "type": {
+          "kind": "genericinst",
+          "attributes": "0x1",
+          "data": "0x12ae3",
+          "byRef": false,
+          "genericIndex": 76515,
+          "instanceIndex": 9926,
+          "arguments": [
+            {
+              "kind": "uint32",
+              "attributes": "0x0",
+              "data": "0x13f",
+              "byRef": false
+            },
+            {
+              "kind": "class",
+              "attributes": "0x0",
+              "data": "0x6e0e",
+              "byRef": false,
+              "typeDefinition": 28174,
+              "name": "GCGEJOPPGAE",
+              "namespace": ""
+            }
+          ],
+          "typeDefinition": 1222,
+          "name": "Dictionary`2",
+          "namespace": "System.Collections.Generic"
+        },
+        "offset": 336,
+        "rawOffset": "0x150",
+        "offsetKind": "instance"
+      }
+    ],
+    "nativeSites": {
+      "0x15184e1e4": {
+        "instruction": "mov edx, dword ptr [rbx + 0xc8]",
+        "instructionSHA256": "c899337b097b8b197ed496d516851656a51839b5cd5cdb9803ed8006e9ad5848"
+      },
+      "0x15184e1fd": {
+        "instruction": "call 0x151849670",
+        "instructionSHA256": "c281f5d7b064926cd456f29c588711dd154f160450593f6c14cc5aa17bb92085"
+      },
+      "0x15184064b": {
+        "instruction": "mov dword ptr [rdx + 0x2cc], r8d",
+        "instructionSHA256": "f44e47a7fec1bd340623a738e5222d6de189ae321baa8b80d4a6283a44d8c5fa"
+      },
+      "0x1518406a5": {
+        "instruction": "mov dword ptr [rsp + 0x20], 0x173",
+        "instructionSHA256": "da258cdfdd9092b341469bb5377576b6a024258cc4cc2f6f2cfa525a1263aa5a"
+      },
+      "0x151849a49": {
+        "instruction": "mov dword ptr [rsp + 0x50], 0x10",
+        "instructionSHA256": "268e63e8ff507b3c6557187ad7d7112f1dd9cb6924dbcc535d7d31df099eb30b"
+      },
+      "0x151849777": {
+        "instruction": "mov dword ptr [rsi + 0x14], 0x52",
+        "instructionSHA256": "0b0921ba932378df3be6ea1d38876ea0eaabbe7e25fc48999eaa35c24a3a0d70"
+      },
+      "0x151849985": {
+        "instruction": "mov dword ptr [rsi + 0x14], 0x4b",
+        "instructionSHA256": "3f020428d00a047b40661a1299872cbeda80f9d49efde553af433b22924f726b"
+      },
+      "0x15184973c": {
+        "instruction": "call 0x1547a9320",
+        "instructionSHA256": "c7914e8d755b37012013641f58332699e223949f3ea87b584f9d63382022e920"
+      },
+      "0x15184992d": {
+        "instruction": "call 0x1547a9320",
+        "instructionSHA256": "af366e3ea133c5d93b9544072a40f4b0d507a0795898901a17ef2b6485f905e5"
+      },
+      "0x148d74b20": {
+        "instruction": "mov byte ptr [rsi + 0x4fa], 1",
+        "instructionSHA256": "b880c1ed6abb100e7de10f099a0fc9f7f0eff0c7e5b3dcac3f267dbdb14b5f3c"
+      },
+      "0x148d74b38": {
+        "instruction": "call qword ptr [rax + 0x4b8]",
+        "instructionSHA256": "926066463d3fad5ab601d294fce5b413e5ab4938bc3772262ff4d73d627fc2f4"
+      }
+    }
+  },
+  "fixtures": [
+    {
+      "name": "none-zero",
+      "values": [
+        0
+      ],
+      "presence": "none",
+      "initial": 2,
+      "active": false,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": null,
+      "guid": 9007199254740993,
+      "wire": "320e08e9071081808080808080102000",
+      "rawState": 0,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 2,
+          "events": [
+            {
+              "id": 16,
+              "value": 65535
+            }
+          ],
+          "writes": [],
+          "sceneQueries": [],
+          "effectAtBoundary": null,
+          "entityFlag4fa": null,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x15184e202",
+            "instructions": 75,
+            "nativePathSHA256": "57675ce0cfeb8daa23d6f60536b4ab6be10d1259883b142ed5b3c4b3935b00fc",
+            "models": [
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x151849670",
+              "0x15184e1e4",
+              "0x15184e202"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "alive-one",
+      "values": [
+        1
+      ],
+      "presence": "none",
+      "initial": 2,
+      "active": false,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": null,
+      "guid": 9007199254740993,
+      "wire": "320e08e9071081808080808080102001",
+      "rawState": 1,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 1,
+          "events": [
+            {
+              "id": 371,
+              "guid": 9007199254740993,
+              "state": 1
+            },
+            {
+              "id": 16,
+              "value": 65535
+            }
+          ],
+          "writes": [
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 1
+            }
+          ],
+          "sceneQueries": [],
+          "effectAtBoundary": null,
+          "entityFlag4fa": null,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x15184e202",
+            "instructions": 126,
+            "nativePathSHA256": "94b99be8d471ba5b5e29dfd5c58930a1857744ed68abab793ffea96df3cb86f9",
+            "models": [
+              "0x140525c40",
+              "0x1532d6720",
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x151840630",
+              "0x151849670",
+              "0x15184e1e4",
+              "0x15184e202"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 1,
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "dead-two",
+      "values": [
+        2
+      ],
+      "presence": "none",
+      "initial": 2,
+      "active": false,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": null,
+      "guid": 9007199254740993,
+      "wire": "320e08e9071081808080808080102002",
+      "rawState": 2,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 2,
+          "events": [
+            {
+              "id": 371,
+              "guid": 9007199254740993,
+              "state": 2
+            },
+            {
+              "id": 16,
+              "value": 65535
+            }
+          ],
+          "writes": [
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 2
+            }
+          ],
+          "sceneQueries": [],
+          "effectAtBoundary": null,
+          "entityFlag4fa": null,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x15184e202",
+            "instructions": 124,
+            "nativePathSHA256": "8452f5a0793cbf1c9b624caba6403cfaa29710e677edf575df9408b31f6b451d",
+            "models": [
+              "0x140525c40",
+              "0x1532d6720",
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x151840630",
+              "0x151849670",
+              "0x15184e1e4",
+              "0x15184e202"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 2,
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "revive-three",
+      "values": [
+        3
+      ],
+      "presence": "none",
+      "initial": 2,
+      "active": false,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": null,
+      "guid": 9007199254740993,
+      "wire": "320e08e9071081808080808080102003",
+      "rawState": 3,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 1,
+          "events": [
+            {
+              "id": 371,
+              "guid": 9007199254740993,
+              "state": 1
+            },
+            {
+              "id": 16,
+              "value": 65535
+            }
+          ],
+          "writes": [
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 1
+            }
+          ],
+          "sceneQueries": [],
+          "effectAtBoundary": null,
+          "entityFlag4fa": null,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x15184e202",
+            "instructions": 122,
+            "nativePathSHA256": "ee38b185ae1f576388c3c09bc0cbb7079ce579f0755050e7af3cfcc3b99ae78b",
+            "models": [
+              "0x140525c40",
+              "0x1532d6720",
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x151840630",
+              "0x151849670",
+              "0x15184e1e4",
+              "0x15184e202"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 3,
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "unknown-seven",
+      "values": [
+        7
+      ],
+      "presence": "none",
+      "initial": 2,
+      "active": false,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": null,
+      "guid": 9007199254740993,
+      "wire": "320e08e9071081808080808080102007",
+      "rawState": 7,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 2,
+          "events": [
+            {
+              "id": 16,
+              "value": 65535
+            }
+          ],
+          "writes": [],
+          "sceneQueries": [],
+          "effectAtBoundary": null,
+          "entityFlag4fa": null,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x15184e202",
+            "instructions": 75,
+            "nativePathSHA256": "57675ce0cfeb8daa23d6f60536b4ab6be10d1259883b142ed5b3c4b3935b00fc",
+            "models": [
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x151849670",
+              "0x15184e1e4",
+              "0x15184e202"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 7,
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "unknown-max-u32",
+      "values": [
+        4294967295
+      ],
+      "presence": "none",
+      "initial": 2,
+      "active": false,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": null,
+      "guid": 9007199254740993,
+      "wire": "321208e90710818080808080801020ffffffff0f",
+      "rawState": 4294967295,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 2,
+          "events": [
+            {
+              "id": 16,
+              "value": 65535
+            }
+          ],
+          "writes": [],
+          "sceneQueries": [],
+          "effectAtBoundary": null,
+          "entityFlag4fa": null,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x15184e202",
+            "instructions": 75,
+            "nativePathSHA256": "57675ce0cfeb8daa23d6f60536b4ab6be10d1259883b142ed5b3c4b3935b00fc",
+            "models": [
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x151849670",
+              "0x15184e1e4",
+              "0x15184e202"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 4294967295,
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "omitted",
+      "values": [],
+      "presence": "none",
+      "initial": 2,
+      "active": false,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": null,
+      "guid": 9007199254740993,
+      "wire": "320c08e907108180808080808010",
+      "rawState": 0,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 2,
+          "events": [
+            {
+              "id": 16,
+              "value": 65535
+            }
+          ],
+          "writes": [],
+          "sceneQueries": [],
+          "effectAtBoundary": null,
+          "entityFlag4fa": null,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x15184e202",
+            "instructions": 75,
+            "nativePathSHA256": "57675ce0cfeb8daa23d6f60536b4ab6be10d1259883b142ed5b3c4b3935b00fc",
+            "models": [
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x151849670",
+              "0x15184e1e4",
+              "0x15184e202"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "duplicate-last-revive",
+      "values": [
+        2,
+        1,
+        3
+      ],
+      "presence": "none",
+      "initial": 2,
+      "active": false,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": null,
+      "guid": 9007199254740993,
+      "wire": "321208e907108180808080808010200220012003",
+      "rawState": 3,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 1,
+          "events": [
+            {
+              "id": 371,
+              "guid": 9007199254740993,
+              "state": 1
+            },
+            {
+              "id": 16,
+              "value": 65535
+            }
+          ],
+          "writes": [
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 1
+            }
+          ],
+          "sceneQueries": [],
+          "effectAtBoundary": null,
+          "entityFlag4fa": null,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x15184e202",
+            "instructions": 122,
+            "nativePathSHA256": "ee38b185ae1f576388c3c09bc0cbb7079ce579f0755050e7af3cfcc3b99ae78b",
+            "models": [
+              "0x140525c40",
+              "0x1532d6720",
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x151840630",
+              "0x151849670",
+              "0x15184e1e4",
+              "0x15184e202"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 3,
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "explicit-zero-last",
+      "values": [
+        1,
+        0
+      ],
+      "presence": "none",
+      "initial": 2,
+      "active": false,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": null,
+      "guid": 9007199254740993,
+      "wire": "321008e90710818080808080801020012000",
+      "rawState": 0,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 2,
+          "events": [
+            {
+              "id": 16,
+              "value": 65535
+            }
+          ],
+          "writes": [],
+          "sceneQueries": [],
+          "effectAtBoundary": null,
+          "entityFlag4fa": null,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x15184e202",
+            "instructions": 75,
+            "nativePathSHA256": "57675ce0cfeb8daa23d6f60536b4ab6be10d1259883b142ed5b3c4b3935b00fc",
+            "models": [
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x151849670",
+              "0x15184e1e4",
+              "0x15184e202"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "same-alive-repeated",
+      "values": [
+        1
+      ],
+      "presence": "none",
+      "initial": 1,
+      "active": false,
+      "canDie": false,
+      "usable": true,
+      "repeat": 2,
+      "ifix": null,
+      "guid": 9223372036854775809,
+      "wire": "321008e90710818080808080808080012001",
+      "rawState": 1,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9223372036854775809,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 1,
+          "state": 1,
+          "events": [
+            {
+              "id": 371,
+              "guid": 9223372036854775809,
+              "state": 1
+            },
+            {
+              "id": 16,
+              "value": 65535
+            }
+          ],
+          "writes": [
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 1
+            }
+          ],
+          "sceneQueries": [],
+          "effectAtBoundary": null,
+          "entityFlag4fa": null,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x15184e202",
+            "instructions": 126,
+            "nativePathSHA256": "94b99be8d471ba5b5e29dfd5c58930a1857744ed68abab793ffea96df3cb86f9",
+            "models": [
+              "0x140525c40",
+              "0x1532d6720",
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x151840630",
+              "0x151849670",
+              "0x15184e1e4",
+              "0x15184e202"
+            ]
+          }
+        },
+        {
+          "priorState": 1,
+          "state": 1,
+          "events": [
+            {
+              "id": 371,
+              "guid": 9223372036854775809,
+              "state": 1
+            },
+            {
+              "id": 16,
+              "value": 65535
+            }
+          ],
+          "writes": [
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 1
+            }
+          ],
+          "sceneQueries": [],
+          "effectAtBoundary": null,
+          "entityFlag4fa": null,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x15184e202",
+            "instructions": 126,
+            "nativePathSHA256": "94b99be8d471ba5b5e29dfd5c58930a1857744ed68abab793ffea96df3cb86f9",
+            "models": [
+              "0x140525c40",
+              "0x1532d6720",
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x151840630",
+              "0x151849670",
+              "0x15184e1e4",
+              "0x15184e202"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 1,
+            "FBLKPHOCBIK": 9223372036854775809,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "same-dead-repeated",
+      "values": [
+        2
+      ],
+      "presence": "none",
+      "initial": 2,
+      "active": false,
+      "canDie": false,
+      "usable": true,
+      "repeat": 2,
+      "ifix": null,
+      "guid": 18446744073709551615,
+      "wire": "321008e90710ffffffffffffffffff012002",
+      "rawState": 2,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 18446744073709551615,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 2,
+          "events": [
+            {
+              "id": 371,
+              "guid": 18446744073709551615,
+              "state": 2
+            },
+            {
+              "id": 16,
+              "value": 65535
+            }
+          ],
+          "writes": [
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 2
+            }
+          ],
+          "sceneQueries": [],
+          "effectAtBoundary": null,
+          "entityFlag4fa": null,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x15184e202",
+            "instructions": 124,
+            "nativePathSHA256": "8452f5a0793cbf1c9b624caba6403cfaa29710e677edf575df9408b31f6b451d",
+            "models": [
+              "0x140525c40",
+              "0x1532d6720",
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x151840630",
+              "0x151849670",
+              "0x15184e1e4",
+              "0x15184e202"
+            ]
+          }
+        },
+        {
+          "priorState": 2,
+          "state": 2,
+          "events": [
+            {
+              "id": 371,
+              "guid": 18446744073709551615,
+              "state": 2
+            },
+            {
+              "id": 16,
+              "value": 65535
+            }
+          ],
+          "writes": [
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 2
+            }
+          ],
+          "sceneQueries": [],
+          "effectAtBoundary": null,
+          "entityFlag4fa": null,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x15184e202",
+            "instructions": 124,
+            "nativePathSHA256": "8452f5a0793cbf1c9b624caba6403cfaa29710e677edf575df9408b31f6b451d",
+            "models": [
+              "0x140525c40",
+              "0x1532d6720",
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x151840630",
+              "0x151849670",
+              "0x15184e1e4",
+              "0x15184e202"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 2,
+            "FBLKPHOCBIK": 18446744073709551615,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "missing-entity-1",
+      "values": [
+        1
+      ],
+      "presence": "missing",
+      "initial": 2,
+      "active": false,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": null,
+      "guid": 9007199254740993,
+      "wire": "320e08e9071081808080808080102001",
+      "rawState": 1,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 1,
+          "events": [
+            {
+              "id": 371,
+              "guid": 9007199254740993,
+              "state": 1
+            },
+            {
+              "id": 16,
+              "value": 65535
+            }
+          ],
+          "writes": [
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 1
+            }
+          ],
+          "sceneQueries": [
+            1048577
+          ],
+          "effectAtBoundary": null,
+          "entityFlag4fa": null,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x15184e202",
+            "instructions": 172,
+            "nativePathSHA256": "2e5e68fb1172158b33f2c897cc23c18cc6c77d1224df2145a5fb62d275e5ed62",
+            "models": [
+              "0x1578b66f0",
+              "0x140525c40",
+              "0x1532d6720",
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x1517ab3a0",
+              "0x151840630",
+              "0x151849670",
+              "0x15184e1e4",
+              "0x15184e202"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 1,
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "missing-entity-2",
+      "values": [
+        2
+      ],
+      "presence": "missing",
+      "initial": 2,
+      "active": false,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": null,
+      "guid": 9007199254740993,
+      "wire": "320e08e9071081808080808080102002",
+      "rawState": 2,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 2,
+          "events": [
+            {
+              "id": 371,
+              "guid": 9007199254740993,
+              "state": 2
+            },
+            {
+              "id": 16,
+              "value": 65535
+            }
+          ],
+          "writes": [
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 2
+            }
+          ],
+          "sceneQueries": [
+            1048577
+          ],
+          "effectAtBoundary": null,
+          "entityFlag4fa": null,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x15184e202",
+            "instructions": 170,
+            "nativePathSHA256": "c7d520d31613cadf5c5c2e31d786e3b6a248e6a4e601f123885d85115308b841",
+            "models": [
+              "0x1578b66f0",
+              "0x140525c40",
+              "0x1532d6720",
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x1517ab3a0",
+              "0x151840630",
+              "0x151849670",
+              "0x15184e1e4",
+              "0x15184e202"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 2,
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "missing-entity-3",
+      "values": [
+        3
+      ],
+      "presence": "missing",
+      "initial": 2,
+      "active": false,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": null,
+      "guid": 9007199254740993,
+      "wire": "320e08e9071081808080808080102003",
+      "rawState": 3,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 1,
+          "events": [
+            {
+              "id": 371,
+              "guid": 9007199254740993,
+              "state": 1
+            },
+            {
+              "id": 16,
+              "value": 65535
+            }
+          ],
+          "writes": [
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 1
+            }
+          ],
+          "sceneQueries": [
+            1048577
+          ],
+          "effectAtBoundary": null,
+          "entityFlag4fa": null,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x15184e202",
+            "instructions": 168,
+            "nativePathSHA256": "03b29d67629262f492f5505c9cdafc34b24f0e65212126d01d391237bb60a2c3",
+            "models": [
+              "0x1578b66f0",
+              "0x140525c40",
+              "0x1532d6720",
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x1517ab3a0",
+              "0x151840630",
+              "0x151849670",
+              "0x15184e1e4",
+              "0x15184e202"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 3,
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "alive-entity-flag-set",
+      "values": [
+        1
+      ],
+      "presence": "entity",
+      "initial": 2,
+      "active": true,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": null,
+      "guid": 9007199254740993,
+      "wire": "320e08e9071081808080808080102001",
+      "rawState": 1,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 1,
+          "events": [
+            {
+              "id": 371,
+              "guid": 9007199254740993,
+              "state": 1
+            },
+            {
+              "id": 16,
+              "value": 65535
+            }
+          ],
+          "writes": [
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 1
+            }
+          ],
+          "sceneQueries": [
+            1048577
+          ],
+          "effectAtBoundary": null,
+          "entityFlag4fa": 1,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x15184e202",
+            "instructions": 176,
+            "nativePathSHA256": "431fdbf8ee0def6489480141d10ea53ac03703b5890205197f106e134f2be301",
+            "models": [
+              "0x1578b66f0",
+              "0x140525c40",
+              "0x1532d6720",
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x1517ab3a0",
+              "0x151840630",
+              "0x151849670",
+              "0x15184e1e4",
+              "0x15184e202"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 1,
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "alive-entity-flag-clear",
+      "values": [
+        1
+      ],
+      "presence": "entity",
+      "initial": 2,
+      "active": false,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": null,
+      "guid": 9007199254740993,
+      "wire": "320e08e9071081808080808080102001",
+      "rawState": 1,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 1,
+          "events": [
+            {
+              "id": 371,
+              "guid": 9007199254740993,
+              "state": 1
+            }
+          ],
+          "writes": [
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 1
+            }
+          ],
+          "sceneQueries": [
+            1048577
+          ],
+          "effectAtBoundary": null,
+          "entityFlag4fa": 1,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x148d74b38",
+            "instructions": 151,
+            "nativePathSHA256": "f8756e5a5d5239af78f776db3f8ca312ae6dd37c171973308a7f7bff2dc80e2c",
+            "models": [
+              "0x1578b66f0",
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x148d74b00",
+              "0x148d74b38",
+              "0x1517ab3a0",
+              "0x151840630",
+              "0x151849670",
+              "0x15184e1e4"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 1,
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "revive-entity-flag-set",
+      "values": [
+        3
+      ],
+      "presence": "entity",
+      "initial": 2,
+      "active": true,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": null,
+      "guid": 9007199254740993,
+      "wire": "320e08e9071081808080808080102003",
+      "rawState": 3,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 1,
+          "events": [
+            {
+              "id": 371,
+              "guid": 9007199254740993,
+              "state": 1
+            },
+            {
+              "id": 371,
+              "guid": 9007199254740993,
+              "state": 1
+            }
+          ],
+          "writes": [
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 1
+            },
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 1
+            }
+          ],
+          "sceneQueries": [
+            1048577
+          ],
+          "effectAtBoundary": {
+            "typeIndex": 15410,
+            "eventId": 82,
+            "entityId": 1048577,
+            "flag1d": 1,
+            "flag1e": 1,
+            "flag1f": 1,
+            "flag29": 1,
+            "parameter30": 0,
+            "flag2a": 1
+          },
+          "entityFlag4fa": 1,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x14e4e1000",
+            "instructions": 243,
+            "nativePathSHA256": "1c5bfff696581669cba3d7e02b0aded74b4c54a26876c9edfc4799908cf70270",
+            "models": [
+              "0x1578b66f0",
+              "0x140525c40",
+              "0x1532d6720",
+              "0x140525c40",
+              "0x1532d6720",
+              "0x1547a9320"
+            ],
+            "nativeEntries": [
+              "0x148d74b00",
+              "0x14e4e1000",
+              "0x1517ab3a0",
+              "0x151840630",
+              "0x151849670",
+              "0x15184e1e4",
+              "0x151852150"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 3,
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "revive-entity-flag-clear",
+      "values": [
+        3
+      ],
+      "presence": "entity",
+      "initial": 2,
+      "active": false,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": null,
+      "guid": 9007199254740993,
+      "wire": "320e08e9071081808080808080102003",
+      "rawState": 3,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 1,
+          "events": [
+            {
+              "id": 371,
+              "guid": 9007199254740993,
+              "state": 1
+            }
+          ],
+          "writes": [
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 1
+            }
+          ],
+          "sceneQueries": [
+            1048577
+          ],
+          "effectAtBoundary": null,
+          "entityFlag4fa": 1,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x148d74b38",
+            "instructions": 145,
+            "nativePathSHA256": "1c73dcc17265367bf9ed24f54f68bb31962f9a59df6a56f3d8bd9ad9d45f11a1",
+            "models": [
+              "0x1578b66f0",
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x148d74b00",
+              "0x148d74b38",
+              "0x1517ab3a0",
+              "0x151840630",
+              "0x151849670",
+              "0x15184e1e4"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 3,
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "dead-entity-guard-clear",
+      "values": [
+        2
+      ],
+      "presence": "entity",
+      "initial": 2,
+      "active": false,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": null,
+      "guid": 9007199254740993,
+      "wire": "320e08e9071081808080808080102002",
+      "rawState": 2,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 2,
+          "events": [
+            {
+              "id": 371,
+              "guid": 9007199254740993,
+              "state": 2
+            },
+            {
+              "id": 16,
+              "value": 65535
+            }
+          ],
+          "writes": [
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 2
+            }
+          ],
+          "sceneQueries": [
+            1048577
+          ],
+          "effectAtBoundary": null,
+          "entityFlag4fa": 0,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x15184e202",
+            "instructions": 176,
+            "nativePathSHA256": "3ea1f6658d3e5bf1674b411885d3be33528a3214f518acdcac5f5fcd4ee4d1cf",
+            "models": [
+              "0x1578b66f0",
+              "0x140525c40",
+              "0x1532d6720",
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x1517ab3a0",
+              "0x151840630",
+              "0x151849670",
+              "0x15184e1e4",
+              "0x15184e202"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 2,
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "dead-entity-guard-set",
+      "values": [
+        2
+      ],
+      "presence": "entity",
+      "initial": 2,
+      "active": false,
+      "canDie": true,
+      "usable": true,
+      "repeat": 1,
+      "ifix": null,
+      "guid": 9007199254740993,
+      "wire": "320e08e9071081808080808080102002",
+      "rawState": 2,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 2,
+          "events": [
+            {
+              "id": 371,
+              "guid": 9007199254740993,
+              "state": 2
+            }
+          ],
+          "writes": [
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 2
+            }
+          ],
+          "sceneQueries": [
+            1048577
+          ],
+          "effectAtBoundary": {
+            "typeIndex": 21751,
+            "eventId": 75,
+            "entityId": 1048577,
+            "flag1d": 1,
+            "flag1e": 1,
+            "flag1f": 1,
+            "flag29": 1,
+            "reason40": 0,
+            "parameter44": 0,
+            "value48": 0
+          },
+          "entityFlag4fa": 0,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x14e4e1000",
+            "instructions": 183,
+            "nativePathSHA256": "95cc637a507628c2769418a3f7d5c706886fe9f8fa98df2518f2cd9d806d23bb",
+            "models": [
+              "0x1578b66f0",
+              "0x140525c40",
+              "0x1532d6720",
+              "0x1547a9320"
+            ],
+            "nativeEntries": [
+              "0x14e4e1000",
+              "0x1517ab3a0",
+              "0x151840630",
+              "0x151849670",
+              "0x15184e1e4"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 2,
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "entity-unusable",
+      "values": [
+        3
+      ],
+      "presence": "entity",
+      "initial": 2,
+      "active": false,
+      "canDie": false,
+      "usable": false,
+      "repeat": 1,
+      "ifix": null,
+      "guid": 9007199254740993,
+      "wire": "320e08e9071081808080808080102003",
+      "rawState": 3,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 1,
+          "events": [
+            {
+              "id": 371,
+              "guid": 9007199254740993,
+              "state": 1
+            },
+            {
+              "id": 16,
+              "value": 65535
+            }
+          ],
+          "writes": [
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 1
+            }
+          ],
+          "sceneQueries": [
+            1048577
+          ],
+          "effectAtBoundary": null,
+          "entityFlag4fa": 0,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x15184e202",
+            "instructions": 170,
+            "nativePathSHA256": "b98674f46bff5bb1e8cbbbb87d93c9e916be778802e605a3e472dbe2ecab2dac",
+            "models": [
+              "0x1578b66f0",
+              "0x140525c40",
+              "0x1532d6720",
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x1517ab3a0",
+              "0x151840630",
+              "0x151849670",
+              "0x15184e1e4",
+              "0x15184e202"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 3,
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "fallback-entity",
+      "values": [
+        3
+      ],
+      "presence": "fallback",
+      "initial": 2,
+      "active": true,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": null,
+      "guid": 9007199254740993,
+      "wire": "320e08e9071081808080808080102003",
+      "rawState": 3,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 1,
+          "events": [
+            {
+              "id": 371,
+              "guid": 9007199254740993,
+              "state": 1
+            },
+            {
+              "id": 371,
+              "guid": 9007199254740993,
+              "state": 1
+            }
+          ],
+          "writes": [
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 1
+            },
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 1
+            }
+          ],
+          "sceneQueries": [
+            1048577
+          ],
+          "effectAtBoundary": {
+            "typeIndex": 15410,
+            "eventId": 82,
+            "entityId": 1048577,
+            "flag1d": 1,
+            "flag1e": 1,
+            "flag1f": 1,
+            "flag29": 1,
+            "parameter30": 0,
+            "flag2a": 1
+          },
+          "entityFlag4fa": 1,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x14e4e1000",
+            "instructions": 255,
+            "nativePathSHA256": "4f624b47bf1f42deb4b2a9b4beeeadfa9783da4e96541035419e457711e11ec4",
+            "models": [
+              "0x1578b66f0",
+              "0x140525c40",
+              "0x1532d6720",
+              "0x140525c40",
+              "0x1532d6720",
+              "0x1547a9320"
+            ],
+            "nativeEntries": [
+              "0x148d74b00",
+              "0x14e4e1000",
+              "0x1517ab3a0",
+              "0x151840630",
+              "0x151849670",
+              "0x15184e1e4",
+              "0x151852150"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 3,
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "zero-guid-state-event",
+      "values": [
+        1
+      ],
+      "presence": "none",
+      "initial": 2,
+      "active": false,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": null,
+      "guid": 0,
+      "wire": "320708e90710002001",
+      "rawState": 1,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 342,
+        "nativePathSHA256": "b45c9b959b5d26f8bff9bd84534198a005b255838b3e715c527958186d7bc58b",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 0,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 1,
+          "events": [
+            {
+              "id": 371,
+              "guid": 0,
+              "state": 1
+            },
+            {
+              "id": 16,
+              "value": 65535
+            }
+          ],
+          "writes": [
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 1
+            }
+          ],
+          "sceneQueries": [],
+          "effectAtBoundary": null,
+          "entityFlag4fa": null,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x15184e202",
+            "instructions": 126,
+            "nativePathSHA256": "94b99be8d471ba5b5e29dfd5c58930a1857744ed68abab793ffea96df3cb86f9",
+            "models": [
+              "0x140525c40",
+              "0x1532d6720",
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x151840630",
+              "0x151849670",
+              "0x15184e1e4",
+              "0x15184e202"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 1,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "ifix-state",
+      "values": [
+        3
+      ],
+      "presence": "entity",
+      "initial": 2,
+      "active": false,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": "state",
+      "guid": 9007199254740993,
+      "wire": "320e08e9071081808080808080102003",
+      "rawState": 3,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 2,
+          "events": [],
+          "writes": [],
+          "sceneQueries": [],
+          "effectAtBoundary": null,
+          "entityFlag4fa": 0,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x151849abc",
+            "instructions": 23,
+            "nativePathSHA256": "09354e18462e56325f33cc8fdb722d3d3344ab87bb4b53f714e9311c1b93855a",
+            "models": [],
+            "nativeEntries": [
+              "0x151849670",
+              "0x151849abc",
+              "0x15184e1e4"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 3,
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "ifix-setter",
+      "values": [
+        3
+      ],
+      "presence": "entity",
+      "initial": 2,
+      "active": false,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": "setter",
+      "guid": 9007199254740993,
+      "wire": "320e08e9071081808080808080102003",
+      "rawState": 3,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 2,
+          "events": [],
+          "writes": [],
+          "sceneQueries": [
+            1048577
+          ],
+          "effectAtBoundary": null,
+          "entityFlag4fa": 0,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x151840710",
+            "instructions": 86,
+            "nativePathSHA256": "122de501e6c3328f24ecd6bb435a15fbe45c213a1bcaeed1cd9eebd3404cb417",
+            "models": [
+              "0x1578b66f0"
+            ],
+            "nativeEntries": [
+              "0x1517ab3a0",
+              "0x151840630",
+              "0x151840710",
+              "0x151849670",
+              "0x15184e1e4"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 3,
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    },
+    {
+      "name": "ifix-entity",
+      "values": [
+        3
+      ],
+      "presence": "entity",
+      "initial": 2,
+      "active": false,
+      "canDie": false,
+      "usable": true,
+      "repeat": 1,
+      "ifix": "entity",
+      "guid": 9007199254740993,
+      "wire": "320e08e9071081808080808080102003",
+      "rawState": 3,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "instructions": 460,
+        "nativePathSHA256": "47ab18df553d3495fb80002c9e0665374376ccad4717f8d61c6ad3af800fa28e",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x1507cc240",
+          "0x1507cf07a",
+          "0x15184e100"
+        ]
+      },
+      "identity": {
+        "trace": {
+          "entry": "0x15184e100",
+          "stop": "0x15184e1e4",
+          "instructions": 1121,
+          "nativePathSHA256": "433dd0fe50e4cfb4b4015ac05ea50f4800d54f15b93cdf3ab3dec6da51e70bf3",
+          "models": [
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050",
+            "0x149a75140",
+            "0x620001050"
+          ],
+          "nativeEntries": [
+            "0x15184e100",
+            "0x15184e1e4"
+          ]
+        },
+        "id": 1001,
+        "guid": 9007199254740993,
+        "decode": {
+          "entry": "0x14b1049f0",
+          "stop": "0x620000100",
+          "instructions": 512,
+          "nativePathSHA256": "6a88776f922391567dc052bc0771c54a1867b02b98bc1114c288ed3fb471c76a",
+          "models": [],
+          "nativeEntries": [
+            "0x14b1049f0",
+            "0x620000100"
+          ]
+        },
+        "resource": {
+          "entry": "0x15184adf0",
+          "stop": "0x620000100",
+          "instructions": 596,
+          "nativePathSHA256": "2376679d003210bc8c5dabc87f2e851905d0d486ca8eda9f0bc8d40bf5a3b3d4",
+          "models": [
+            "0x1578b66f0"
+          ],
+          "nativeEntries": [
+            "0x15184adf0",
+            "0x620000100"
+          ]
+        },
+        "resourceValue": 4573
+      },
+      "steps": [
+        {
+          "priorState": 2,
+          "state": 1,
+          "events": [
+            {
+              "id": 371,
+              "guid": 9007199254740993,
+              "state": 1
+            }
+          ],
+          "writes": [
+            {
+              "source": "0x15184064b",
+              "width": 4,
+              "value": 1
+            }
+          ],
+          "sceneQueries": [
+            1048577
+          ],
+          "effectAtBoundary": null,
+          "entityFlag4fa": 0,
+          "trace": {
+            "entry": "0x15184e1e4",
+            "stop": "0x148d74b5e",
+            "instructions": 137,
+            "nativePathSHA256": "27fca1aefa4c63b954ae852f519fb53fb6bad4d90e6f50f6f0e6ab162548e63d",
+            "models": [
+              "0x1578b66f0",
+              "0x140525c40",
+              "0x1532d6720"
+            ],
+            "nativeEntries": [
+              "0x148d74b00",
+              "0x148d74b5e",
+              "0x1517ab3a0",
+              "0x151840630",
+              "0x151849670",
+              "0x15184e1e4"
+            ]
+          }
+        }
+      ],
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "DFENDOGMEAD": 3,
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          }
+        ]
+      }
+    }
+  ],
+  "rejections": [
+    {
+      "name": "truncated-state-varint",
+      "typeIndex": 48178,
+      "wire": "2080",
+      "error": "0x147520110: Truncated or invalid length",
+      "scope": "explicit-input-model"
+    },
+    {
+      "name": "state-varint-overflow",
+      "typeIndex": 48178,
+      "wire": "20ffffffffffffffffff02",
+      "error": "0x147520110: Varint exceeds uint64",
+      "scope": "explicit-input-model"
+    },
+    {
+      "name": "invalid-state-tag",
+      "typeIndex": 48178,
+      "wire": "00",
+      "error": "0x1474d8100: Unsupported or invalid tag",
+      "scope": "explicit-input-model"
+    },
+    {
+      "name": "negative-avatar-length",
+      "typeIndex": 30509,
+      "wire": "32ffffffff0f",
+      "error": "0x1509cafa0: Native error branch: negative-length",
+      "scope": "native-reader-error-helper"
+    },
+    {
+      "name": "null-scene-dictionary",
+      "scope": "native-null-error-helper-boundary",
+      "trace": {
+        "entry": "0x15184e1e4",
+        "stop": "0x1404c2be0",
+        "instructions": 47,
+        "nativePathSHA256": "b21f066b12a739b58ed55ed2cbbda58f4cd3989abbbe67ef652ee884a5d8aead",
+        "models": [],
+        "nativeEntries": [
+          "0x1404c2be0",
+          "0x1517ab3a0",
+          "0x151849670",
+          "0x15184e1e4"
+        ]
+      }
+    }
+  ],
+  "semanticEvidence": {
+    "typeIndex": 48178,
+    "tag": 4,
+    "clientField": "DFENDOGMEAD",
+    "objectOffset": 200,
+    "rawType": "uint32",
+    "meaning": "Avatar life-state application input",
+    "status": "proposed-for-independent-review",
+    "sources": [
+      "Actual 15184e1e4/1fd typed application call into enum57376 parameter",
+      "Model+0x2cc has same enum type; actual setter constructs AvatarLifeStateChanged371",
+      "Actual entity branches construct EvtKill75 / EvtRevive82 before delivery boundary"
+    ]
+  },
+  "producer": {
+    "wireRequired": false,
+    "businessRequiredForEntry": "not-established",
+    "observedOmission": "Absent/default0 preserves controlled prior state and constructs RefreshAvatarData16",
+    "candidateUse": "After independent review, explicit LIFE_ALIVE1/LIFE_DEAD2 can represent known stored state in an isolated producer",
+    "notApproved": [
+      "Full entry minimum, default model state or sending LIFE_REVIVE3 as persistent state",
+      "Unknown values as safe fallback, FightProp consistency or completed death/revive effects"
+    ]
+  },
+  "completeAvatarHandler": false,
+  "completeEntityEffects": false,
+  "ifixExecutionVerified": false,
+  "runtimeStatus": "not-tested",
+  "targetProtocolReady": false,
+  "models": [
+    "Inherited fixed f1 allocation, Avatar batch delivery, encoded identity and resource fixtures",
+    "Scene dictionary index lookup and entity/list storage are explicit controlled inputs; actual scene lookup and fallback scan execute",
+    "Concrete entity28174 virtual slot98 points to native148d74b00; deeper virtual effect stops before148d74b38",
+    "Generic pool is an explicit fresh managed-object allocation model bound to actual method-spec event types15410/21751",
+    "Actual EvtKill/EvtRevive objects stop before14e4e1000 delivery; no subscriber or effect is reported complete",
+    "Actual AvatarLifeStateChanged/RefreshAvatarData construction is captured at the existing event bus boundary",
+    "15184e1e4..15184e202 is an exact application call block with rdi=model/rbx=decoded AvatarInfo live-ins",
+    "Model dictionary+0x80 is null in these fixtures; its nonempty downstream meaning and initialization are not inferred",
+    "IFix enabled branches stop before dereferencing unknown patch state; no wrapper is modeled successful"
+  ],
+  "sourceSHA256": {
+    "tools/client72_avatar_state.py": "a70c2a520a7faac9585587551d55e9dc23b9c8f30b129df724629164e93b6389",
+    "tools/client72_avatar_contract.py": "74383f9c724767bb0ff3e1d9f0436b516a328f6858154063a846a03733b68491",
+    "tools/client72_emulator.py": "8007d2594ef8058a4f2a9f1c24094fb5d2551a202b4e52154876cdfe77a17c3c",
+    "tools/client72_session_runtime.py": "c6ff407e33416869a855cfa86e97c3f63a9d24019ac0f6e6dfc74a959bfe1439"
+  }
+}
