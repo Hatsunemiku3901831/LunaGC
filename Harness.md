@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+D-01b5f：[软件点合成对照](docs/CLIENT_72_SOFTWARE_BREAKPOINT_CHANNEL.md)、`observe_client72_software_fixture.py`及`software-breakpoint-observations.json`；2完整成功/2驱动首失败分列，7/9停点、自然SW入口返回/两窗口恢复、OS/PUB/log0及EXIT/STOP均核。主线7 rawhash/逐停点/固定插件源码审计，19守卫沿用e同源执行，未另跑fixture；证明`evidence/d02-r2-d01b5f-main-review.json`。PUB仅高层CB，不能推出最终内核事件被丢；无新增游戏load，下一g单HW先自有验证，h保留真实HTTP7.2拒绝链。
+
 D-01b5e：[重启/单GlobalDispatch观察](docs/CLIENT_72_STARTUP_OBSERVER.md#d-01b5e用户要求重启后的单globaldispatch点观察)，主线19守卫及11 raw hash、实际执行源码、旧共享章节保持、WER PID/路径/ReportId/单点RVA和持久4点逐项核同。证明`evidence/d02-r2-d01b5e-main-review.json`，主线日志`logs/d02-r2-d01b5e-main-guards.log`；新run37.766秒/39停点/90DLL/0自然入口后exit80000003。最新无target/相关游戏/API四表空，持久库4点须另清，b/c/d保留pause仅历史。仅关闭本轮观察记录，继续自有SW/异常序列对照及事件分发，不重复原参数load。
 
 E-01d1n1：[目标303恢复](docs/CLIENT_72_D02_QUEST_303_RECOVERY.md)、`Client72Quest303Audit.java`；目标Excel负例拒绝1/安装0，真实章节onLoad/Fallback安装63、63条件/136 exec逐项匹配、auto索引0。主线11源码/37 class核同并按文档javac+双新JVM独立复现，报告SHA `d34b13d5…5a184`；证明`evidence/d02-r3-quest303-main-review.json`，原始`d02-r3-quest303-n1-replay-c316f14e2e9d44c5a4193987ebdf66d3/`。无数据库/任务启动/保存/客户端，未知字段不加alias，继续n2。

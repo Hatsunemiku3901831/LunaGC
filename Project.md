@@ -8,6 +8,8 @@
 
 ## 当前阶段
 
+D-01b5f已审：[软件点/前序异常对照](docs/CLIENT_72_SOFTWARE_BREAKPOINT_CHANNEL.md)在固定自有fixture有/无AV+C++前序均自然收到SW入口及同TID/RSP返回，7/9停点、三终止点、OS/PUB/log exit0和EXIT/STOP完整；两次驱动退出收口读错误原样保留。主线审291行工具、7 raw hash/全部成功停点/代码恢复及固定插件源码，复用同源码刚执行的19守卫，未重跑合成。未追加游戏load；只排除通用con1解释，原游戏未观测高层BP/异常发布的原因仍未知，继续有界单HW方式及真实HTTP拒绝链取证。
+
 E-01d1n1已审：[目标303实际恢复](docs/CLIENT_72_D02_QUEST_303_RECOVERY.md)由真实Excel loader保留30302拒绝1/安装0，再经真实MainQuestData.onLoad/Fallback安装63个子项；逐项ID/order、63条件与136 exec参数均匹配，63项auto=false/索引0。主线审核11源码/37 archive class，按文档独立编译并跑两个新JVM，报告同代理最终SHA。未知字段/文本和目标语义未扩大解释，未启DB或启动任务；下一做真实显式30302及独立保存冷读。
 
 F-03d3s1已审：[SceneInfo有限raw图](docs/CLIENT_72_SCENE_INFO_RAW.md)补9类36字段、1152扫描/40成功/21拒绝；83320的tag2/3独立证明为fixed32，不能照metadata uint32写varint。主线28关联及第三新进程完整/摘要与双跑逐字节一致；18295/34208非空图实际进入36/42 reader。72829仅空外壳且非空显式拒绝、54267/Object后代仍未知；下一沿实际场景消费者确定必要分支、GUID/实体关联与等待条件，不将所有未闭战斗分支直接推入P0或用空对象批准发送。
@@ -128,6 +130,7 @@ E-01d1a（D02-R3子合同A）已验收：固定候选commit/tree/blob四表，�
 | D-01b5c HTTP当前区及保留目标只读阶段 | b保留的同一目标、固定JAR与客户端三输入 | 六Java/八native/三拒绝双跑及主线第三相同；主线14文件重生成、22 HTTP及17观察守卫通过。当前区八字段仅有限wire，线程选择no-op已保留原失败并核源码，当前主线程上下文不能套旧CIP/RSP。无新客户端run/load，完整HTTP/自然SDK未知 | 已完成 |
 | D-01b5d RegionList独立来源/实际Java消费 | 固定客户端/JAR、c当前区前置 | 具名GlobalDispatch caller/class/codec与三HTTP支来源已分层，九raw字段、六Java/八native/三拒绝，主线重生成13文件/22测试/第三native同双跑；完整callback/原生Base64/运行分支/传输仍未知。窗口读取error5保留，随后用户要求重启观察 | 已完成 |
 | D-01b5e 重启后单GlobalDispatch观察 | 用户重启指令、d来源、同调试通道 | 旧stop exit1明确非正常退出；新run37.766秒/39停点双API及DR0后80000003，WER精确单点但无自然BP。主线19及11 raw hash核同；当前无target/API点空，持久库4自有点另列。只关观察记录，SDK/连接根因未解 | 已完成 |
+| D-01b5f 前序异常后自然SW入口/返回对照 | e退出证据、固定自有fixture及共享观察器 | 2成功/2首驱动失败分别保存；有/无AV+C++均普通SW入口/匹配返回、正常三方0及EXIT/STOP；主线源码/7raw/逐停点/代码恢复审核，同19守卫复用。游戏追加load0，原游戏原因未解 | 已完成 |
 
 2026-11-06本批F-02b1/b2、F-03a/b/c限定融合验收完成，按用户要求暂停；暂不D-02实机。运行代码提交`4bbf9fd`：完整LoginReq/两响应及嵌套21类198字段，八个场景握手、容量5字段、进入场景通知四字段及8类44字段raw闭包已接入。未知字段保留原名且不发送；完整初始化/P0、SDK/补丁/资源及实际客户端序列仍未验。
 

@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "task": "D-01b5f",
+  "fixtureSHA256": "54b68323ec091af156788d08cb36d412f3d812cd6b596cc9c21978766f5196b7",
+  "fixtureSourceSHA256": "2e3c36a17b3bcc5627a63bfc5954b69c6b83e7df2ce7d2d3eb3e968a841406ff",
+  "driverSHA256": "e5192d5e22e0c4a2ae00df3ba09ea1221cd43dc6e96520f9f9a9f1751b64beff",
+  "sharedObserverSHA256": "bfdf08471ae11e928d66b266284209b01b29646b58bb1400ef70d07ea33ee031",
+  "sourceExecutableUnchanged": true,
+  "gameLoaded": false,
+  "clientCallsSynthesized": false,
+  "originalGameAdditionalLoads": 0,
+  "newFixtureBuild": false,
+  "syntheticProcessCount": 4,
+  "completedControlledCases": [
+    {
+      "mode": "exceptions",
+      "stops": 9,
+      "firstChanceExceptions": [
+        "C0000005",
+        "E06D7363"
+      ],
+      "markerEntryAndMatchedReturn": true,
+      "normalExitApiHits": 3,
+      "finalFixture": {
+        "phase": 40,
+        "avCaught": 1,
+        "cppCaught": 1,
+        "markerCalls": 3,
+        "ticks": 2
+      },
+      "osPubLogExit": 0,
+      "exitAndStopPresent": true,
+      "drGuardAllStops": true,
+      "explicitContinuationEveryStop": true,
+      "restoredMainCodeWindows": 2,
+      "logEvicted": 0,
+      "pubThreadAlive": true
+    },
+    {
+      "mode": "no-exceptions",
+      "stops": 7,
+      "firstChanceExceptions": [],
+      "markerEntryAndMatchedReturn": true,
+      "normalExitApiHits": 3,
+      "finalFixture": {
+        "phase": 40,
+        "avCaught": 0,
+        "cppCaught": 0,
+        "markerCalls": 3,
+        "ticks": 3
+      },
+      "osPubLogExit": 0,
+      "exitAndStopPresent": true,
+      "drGuardAllStops": true,
+      "explicitContinuationEveryStop": true,
+      "restoredMainCodeWindows": 2,
+      "logEvicted": 0,
+      "pubThreadAlive": true
+    }
+  ],
+  "priorFailedDriverCases": [
+    {
+      "name": "no-exceptions first",
+      "markerEntryReturnObserved": true,
+      "nativePhase40": true,
+      "osExitCode": 0,
+      "finalPubClosureIncomplete": true,
+      "reason": "Unnecessary running-memory poll during process unload caused driver read failure"
+    },
+    {
+      "name": "no-exceptions v2",
+      "markerEntryReturnObserved": true,
+      "nativePhase40": true,
+      "osExitCode": 0,
+      "finalPubClosureIncomplete": true,
+      "reason": "Unmapped memory preceded signaled OS handle; initial fix too narrow"
+    }
+  ],
+  "fix": "After both explicit fixture gates, stop polling fixture memory and only collect OS/PUB/log completion; no general retry added",
+  "sharedGuardTests": 19,
+  "finalNoGameOrFixture": true,
+  "apiPointTablesEmpty": true,
+  "gamePersistedFourPointDatabaseUnchanged": true,
+  "fixturePersistedOwnedExitPointCount": 3,
+  "currentBridgeSettings": {
+    "Exceptions.IgnoreRange": "00000000-00000000:first:log:debuggee",
+    "Engine.VerboseExceptionLogging": 1,
+    "Engine.MaxSkipExceptionCount": 0,
+    "Events.ThreadNameSet": 0
+  },
+  "conclusion": "Prior con1 does not universally prevent a later normal software breakpoint/return in this fixed debugger and fixture; original game high-level BP/exception publication still unobserved, underlying cause unknown",
+  "runtimeAcceptance": false,
+  "rawSHA256": {
+    "d02-r2-synthetic-sw-exceptions.json": "874fc6e8b1d5486754468af1ac833f07fc6eb3d62453eae5bf083a88ca5e293d",
+    "d02-r2-synthetic-sw-no-exceptions-v3.json": "2916f54d8a8277b10f9e245089d448147e4e29697426e64f97dbaf69cac01003",
+    "d02-r2-synthetic-sw-no-exceptions.json": "c65d4969944fb67c69079f16abc187c83bbe285b969db92c7095f7adb288bddc",
+    "d02-r2-synthetic-sw-no-exceptions-v2.json": "216fcf5ae1bef1edbc483de435a49254113a1bde0cba43cc16d05e4c3a1de1ce",
+    "d02-r2-synthetic-sw-final-audit.json": "0331557f755d50cd7384482b836f9210e82488c801bc318f5a17159c69a56f75",
+    "d02-r2-synthetic-sw-preflight-database.json": "c5aad3b6a1718cf4e0a4c58bf7de29512b3877064b11576abf1bad01b1654fe0",
+    "d02-r2-synthetic-sw-plugin-source.json": "bc47ab005efed9e8bbf02d69cf8d15029d381f756462d14c970b55145ff63097"
+  }
+}
