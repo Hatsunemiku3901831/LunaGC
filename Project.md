@@ -16,6 +16,8 @@ D-01b5b对照已审核：零主模块点、相同三终止点下，同一原始�
 
 F-03d3e8完成raw闭包：[双Object及完整Avatar raw图](docs/CLIENT_72_AVATAR_COMPLETE_RAW.md)。51050的12存储实际11wire、512扫描/24图/9拒绝；完整复杂34类237wire、AvatarInfo62类、Avatar65类372wire均实际进入全量reader并无untracedType。10新增/166关联及主线10定向通过，主线第三全新原生回放与双跑完整/摘要逐字节相同。只批准raw闭包，业务/完整发送/targetProtocolReady/runtime不晋级；继续独立适配器及语义，不用完整raw替代D-02。
 
+F-03d3g1独立适配器已审核：[Avatar raw Java适配器](docs/CLIENT_72_AVATAR_WIRE_ADAPTER.md)生成65类372字段、7 oneof/13 map/42 packed，未知保留raw，旧共享Proto/sender/opcode不改。实际protoc/编译及275 Avatar+36库存Java全过；8新/22关联Python与主线22复跑、生成check通过。268组实际Java输出→目标原生reader经主线第三回放与代理双跑完整/摘要逐字节相同，134组编码变化但对象/float bits一致，差异边界保留。当前只是编译/test输出，下一portable打包及逐class核对；完整生产/SDK/资源前置未齐，不部署。
+
 E-01d1b～e（D02-R3有限子合同）已审核：[最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)记录出生点源码等价网格25候选及两模式真实顶层loader、depot特殊键未绑定红测、六固定表21引用，和505组真实Lua事件2项。主线独立extended CLI与双跑同SHA `70ddb0ca…dde6e`、11 Python通过；按共享文档新建隔离目录实际Gradle定向2项通过，真实ScriptLib状态/实体移除及跨组反例，无数据库/HTTP/Dispatch初始化。25候选尚非生产getGroupGrids，有限测试不替代场景tick、运行revision或实机；继续真实生产网格和能力加载，不晋级R3/resourceReady。根JAR/配置/resources原dirty未变。
 
 F-03d3f2a限定完成：[Hero/本地角色消费](docs/CLIENT_72_AVATAR_CONTROL.md)实际将root tag3经GUID模型索引接到具名SetHeroMoveRatio，而GetLocalAvatarConfigId另用场景管理器+0x284；7个独立原生图/15关联测试及双新进程一致。不批准`cur_avatar_guid`，不把夹具中的两类实体关联当实际入场/切人；F-03d3f2继续找场景控制实体写入与队伍来源，映射/ready保持。
@@ -71,6 +73,7 @@ E-01d1a（D02-R3子合同A）已验收：固定候选commit/tree/blob四表，�
 | F-03d3e6 大标量节点与signed列表 | F-03d3e3/e4 | 两类36wire/256扫描/13图/9拒绝，6AOT；三同形48088独立值/合并、signed真实Add、三uint64换位与零/错误通过。8新增及138关联、主线8定向/第三原生进程与双跑完整/摘要相同；完整复杂图/业务/runtime不晋级 | 已完成 |
 | F-03d3e7 多份message列表中层 | F-03d3e3/e6 | 两类29wire/256扫描/14图/9拒绝，12具体AOT；多份同形msg-list独立非空/追加、signed Add、uint64交换与合并/零/错误已验。8新增/146关联、主线8定向及第三原生回放与双跑完整/摘要逐字节相同；完整Avatar与业务/runtime不晋级 | 已完成 |
 | F-03d3e8 双Object与完整复杂图 | F-03d3e1至e7 | 51050的12存储→11wire/512扫描、24图/9拒绝；tag100复制与双Object独立、全部非空复杂34类237wire/Avatar65类372wire完整reader进入。10新增/166关联及主线10定向、第三原生重跑与双跑完整/摘要相同。只raw闭包true，业务/发送/runtime仍未验 | 已完成 |
+| F-03d3g1 独立完整Avatar raw适配器 | F-03d3e8及固定11来源 | 独立65类372wire/7 oneof/13 map/42 packed；275新Java+36库存、8新Python/22关联、主线22及生成check通过；268实际Java→native双跑及主线第三完整/摘要相同，负零/64位/复制/merge/错误差异明确，旧schema/sender/opcode未改。未批准生产发送或runtime | 已完成 |
 | F-03d3f1 Avatar初始化用途与最小字段语义 | 已验root/48178子集及Equip合同，完整raw另等e8 | 36a4669；5字段/3属性ID，22通知/25应用/24分配/54属性/44装备槽交付/7拒绝，10新增79关联及双跑；具名Avatar资源/原生u64字典和int64→double消费通过，cur_avatar_guid/FightProp/完整Handler未知，未迁生产，已停止后续工作 | 已完成 |
 | E-01c6 嵌套require调用者bindings恢复 | E-01c5已复现成功置null/异常残留 | b74cd16；6例先5失败后全过，6套32 Lua及8加载审计全过；portable25秒JAR7ca18e10…e8f5f、9class相符，其余45935不变；双轮整场fast407/449、inline0，30错误组恢复且无新增；完整前置不足未部署，local/资源/实机不晋级 | 已完成 |
 | F-04a SDK/补丁/资源前置现场复核 | 当前checkout/config/GAME_PATH、三输入与现有会话 | 三哈希/参考clean/归属已验；API会话无target；两个status退出1及6个revision候选；源码旧强制验签钩子与字符串工厂缺口保留，见CLIENT_72_RUNTIME_PREREQUISITES；仅核对不代表F-04完成 | 已完成 |
