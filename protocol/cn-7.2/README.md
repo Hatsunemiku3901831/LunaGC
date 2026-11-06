@@ -1,5 +1,7 @@
 # 7.2 三层映射输入
 
+2026-11-06 F-02b/F-03当前：27三层行（含embedded Vector用途别名），Cmd/类型21 verified/6 unresolved，schema10 verified/11 candidate/6 unresolved；239字段65 verified/9 candidate/165 unresolved。字段wire和应用编码分别存，Java optional为存在性适配；不声称原target语法。研究结构0错误，ready仍205缺口，P0闭包unresolved。74证据/1267源码与Proto、150根及矩阵双跑相同；468研究/761 Java及portable构建通过后按要求暂停。当前Asta对照239/147/92、两个MD5冲突保留本地结论，旧214/130/84为F-01快照。见Project/HANDOFF2与新scene/response合同；无D-02/运行部署验收。
+
 2026-11-06固定AstaPS审计与F-02a融合：[协议来源](../../docs/CLIENT_72_ASTAPS_AUDIT.md)/[实现候选](../../docs/CLIENT_72_ASTAPS_IMPLEMENTATION.md)及两个astaps-*-observations摘要新增，研究输入65→67。四运行schema45字段仅10个用已验业务名、35保留目标原名，生成器`tools/generate_login72_slice.py`不晋级mappings。10个上游CmdID相符不等于全闭包；214字段130同形/84缺tag，两个MD5语义冲突保留本地结论。399研究、结构校验通过/ready228；完整P0/客户端未验。按用户要求限定融合后暂停，见Project/HANDOFF2。原source/dependency/proto review已逐差异人工复核、旧守卫拒绝证据保留，未改变守卫算法。
 
 B-02e3计时纠名新增[stage-timing-observations](stage-timing-observations.json)，并把旧摘要误称identity request的三个键修为stageValue/stageBodyExecuted。14C8AE9A0是85949/OnPlayerEnterSceneNotify阶段计时；13原生样本、311完整研究回归、两次一致，55研究输入受hash约束。三层字段与runtime不晋级，见[计时证据](../../docs/CLIENT_72_STAGE_TIMING.md)。

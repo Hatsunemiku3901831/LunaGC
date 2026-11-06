@@ -1,5 +1,11 @@
 # 7.2 迁移现状与本地运行基线
 
+2026-11-06 F-02b/F-03本批限定融合已验收并暂停，运行提交4bbf9fd，D-02未执行。468研究/43套761 Java/五生成检查全过；结构0/ready205。便携构建24秒，JAR `570d64f4f1680ab023c7eda7f2e930ebf5eba79791030e8499100ca8f2799bf5`内嵌4bbf9fd，92变化+114新增class匹配编译、109账号/Guard/Lua保持。前置不足未部署、无服务/测试监听；客户端目标当前未见原因未知，未操作调试器。下文更早的数量与暂停均为历史，当前以../Project.md及../HANDOFF2.md为准。
+
+已接入范围见[融合记录](CLIENT_72_ASTAPS_FUSION.md)、[响应合同](CLIENT_72_RESPONSE_CONTRACT.md)、[八握手](CLIENT_72_SCENE_HANDSHAKE.md)、[请求省略](CLIENT_72_SCENE_REQUEST_CONTRACT.md)、[1017域](CLIENT_72_CMD1017_DOMAIN.md)、[容量](CLIENT_72_STORE_WEIGHT_CONTRACT.md)、[最小入场](CLIENT_72_ENTER_SCENE_CONTRACT.md)。27个三层行含嵌入Vector用途别名；Cmd/类型21 verified，schema10 verified/11 candidate/6 unresolved，239字段65 verified/9 candidate/165 unresolved。P0依赖闭包仍unresolved，原种子不是完整必需序列。
+
+后续优先复用已有字段图/消费偏移，补PlayerData/PlayerStore/Avatar完整初始化及未命名ownerUID/world/time/dungeon等具名目的地；不把raw图、上游0/旧号/20000+或同形当业务证明。SDK/信任、补丁ABI/路由和最小资源另有前置；本批未部署、未启动客户端、未确认新旧号实机/场景/心跳/重登。
+
 2026-11-06融合最终状态：F-01来源审计和F-02a四schema/45字段/3包号已完成限定验收，按用户要求暂停。399研究、43协议及关联、589账号/经济/保存/Lua分别全过，portable构建23秒；矩阵65→67输入，原三层状态/开放边界未晋级、ready仍228。未部署或进行新实机阶段，D-02仍未验；见[融合记录](CLIENT_72_ASTAPS_FUSION.md)、Project和HANDOFF2。以下“当前恢复”与旧暂停段落为本日更早历史。
 
 2026-11-06当前批：[固定AstaPS融合](CLIENT_72_ASTAPS_FUSION.md)，任务F-01～F-05见Project。用户已覆盖旧暂停，并随后明确本轮先融合、对应验收及维护文档后暂停；D-02保留未完成，不推进新实机阶段。以下暂停基线和测试数量为历史记录。

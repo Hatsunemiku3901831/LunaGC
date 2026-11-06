@@ -1,5 +1,7 @@
 # A-03c 候选消息、Proto依赖与7.2三层证据缺口矩阵
 
+2026-11-06 F-02b/F-03最终人工复核：74证据、1267源码/Proto；98候选、150根及矩阵、1120依赖文件、1257声明/4806字段，原开放边界保持，recover双跑相同。原review实际拒绝；只更新28既有源、4新增、24退场依赖、4变化证据及7新增native摘要，原63证据保持。Vector是新具名embedded用途别名，沿已verified的Notify/pos依赖入索引，不依赖Java使用同名import；candidate字段不会产生已验依赖。矩阵包含raw容器/旧来源候选，不能据150行称完整必需序列。研究468和结构通过，ready205；完整客户端/D-02未验。前批99/148/1140/1254/4786和67输入是历史。
+
 2026-11-06 F-01/F-02a人工复核：旧review先实际拒绝变更，只更新Ping handler/sender与四Proto共6源码hash、source/dependency两摘要及2新增Asta摘要（65→67证据）。仅PacketPingRsp候选来源位置/hash和四descriptor owner的45字段变化；1287源码/Proto、99候选/148根与矩阵/1140文件/1254声明/4786字段、全部三层状态/开放边界保持，recover双跑相同。399研究通过、结构0/ready228；完整P0与runtime不晋级，见[融合记录](CLIENT_72_ASTAPS_FUSION.md)。
 
 2026-11-06暂停前最终复核：当前65输入，新增[scene-data](CLIENT_72_SCENE_DATA.md)及[生产加载](CLIENT_72_PRODUCTION_SCENE_LOAD.md)两份脱敏摘要，原63输入hash保持。1287源码/Proto、148行三层/计数、99候选、1140描述符及开放边界逐结构不变，旧review实际以输入集合漂移拒绝；人工复核后recover双跑一致，384研究回归通过、研究结构0/ready228。原始raw SHA与本矩阵规范换行digest分开，不把缓存消费或Lua加载结果晋级业务语义、runtime或D-02。证据scene-pause-login-proto-review-check.json和scene-pause-first-input-set-rejection.txt留忽略目录。按用户要求已停止新增工作，详细交接见HANDOFF2；下方为历史检查点。

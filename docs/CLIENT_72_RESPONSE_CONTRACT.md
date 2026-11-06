@@ -1,5 +1,7 @@
 # 7.2登录响应最小发送合同（F-02b）
 
+运行接入补充（4bbf9fd）：下表最小合同已用于生产builder。Token仅uid/token/sign/server_rand_key，retcode-only错误；key<=0在账号准入前拒绝，实际RSA失败不伪造签名、不切secret key。资源61只投影四字段。真实Java RSA成功及两坏参数、完整账号/UID/确认保存回归通过；LoginRsp连续收帧key selector未证，最小合同不代表SDK/完整Handler/实机登录。
+
 本项仅为固定国服7.2三输入的离线原生wire/消费证据，不是完整Handler、SDK、网络或实机验收。不改三层mappings的状态；只有既有verified语义采用业务名，其余运行schema仍用clientField原名。AstaPS固定提交a49f51aa6f2787ffbc25cee46801b70dee860d23仅作对照，不作为本工具输入。
 
 ## 最小发送范围

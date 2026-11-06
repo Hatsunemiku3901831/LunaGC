@@ -147,3 +147,8 @@ B-02e7限定原生部分消费51f7cd2、E-01c5实际生产Lua加载审计9aa8ca7
 最新用户范围为“先进行融合和维护文档，融合完成通过验收后暂停”。F-01固定来源/协议及实现差异（45e22ce）、F-02a四schema45字段/3包号（4324cd7）已完成限定验收；73dd759为计划提交，均未推送。399研究、43协议及关联、独立Mongo29套589账号/经济/保存/Lua分别全过；生成/结构通过、ready仍228。portable构建23秒，JAR a8c2d893…53a8f8内嵌4324cd7，163个Guard/Player/脚本class保持；完整P0/SDK/补丁/资源前置不齐，未部署/新实机，D-02仍未验。
 
 现按要求暂停，不开始下一项。F-02b响应/完整Login和F-03场景语义仍阻塞；Asta仅候选，不采用0/旧号/20000+或7.1选人启发式。原数据、调试目标进程树、AGENTS/resources差异及子模块引用保持。详细完成/缺口/避坑/下一步/复现见[HANDOFF2](HANDOFF2.md)。覆盖前旧HANDOFF2备份到`local/migration72/handoffs/HANDOFF2-before-astaps-fusion-c9aafa6-20261106.md`，SHA-256 4e5740c0…bff2，逐字节/hash核验；本文件原字节前缀保持。当前两个scene离线审计CLI仍固定旧JAR，复现用已校验归档，不刷新历史守卫。
+
+
+## 2026-11-06 F-02b/F-03限定融合验收后暂停
+
+运行接入4bbf9fd，本批native分项def036e/a5fe305/d0cddb0/fbe99d5，未推送。468研究/43套761 Java/五生成检查通过，portable构建24秒；JAR 570d64f4f1680ab023c7eda7f2e930ebf5eba79791030e8499100ca8f2799bf5。74证据/1267源、150根/矩阵，结构0/ready205；完整初始化/P0/SDK/场景落地和D-02未验。原H2已先备份/hash核验再覆盖，详见[HANDOFF2](HANDOFF2.md)。前置不足未部署，无项目服务或测试库监听；原客户端目标当前未见、原因unknown，本轮未操作调试器，不按旧PID直接恢复。AGENTS/resources原差异、配置/子模块/原数据保护。按用户要求暂停，恢复后从完整初始化/Notify未知目的地和连续keyselector继续。

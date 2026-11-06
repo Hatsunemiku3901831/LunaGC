@@ -1,5 +1,13 @@
 # 研发索引与执行骨架
 
+2026-11-06 F-02b/F-03本批限定融合已验收并暂停，运行提交4bbf9fd，D-02未执行。468研究/43套761 Java/五生成检查全过；结构0/ready205。便携构建24秒，JAR `570d64f4f1680ab023c7eda7f2e930ebf5eba79791030e8499100ca8f2799bf5`内嵌4bbf9fd，92变化+114新增class匹配编译、109账号/Guard/Lua保持。前置不足未部署、无服务/测试监听；客户端目标当前未见原因未知，未操作调试器。下文更早的数量与暂停均为历史，当前以Project/HANDOFF2为准。
+
+复现索引：`generate_login72_contract.py --client $env:GAME_PATH --check`（21类198字段）；`check_login72_contract.py`（50 writer/34 native graph/6拒绝）；`generate_scene72_sources.py`（八握手/容量）；`generate_enter_scene72_sources.py`（8类44字段/四字段最小Notify）；旧`generate_login72_slice.py`及`generate_born72_sources.py`仍零漂移。研究用`test_client72*.py`及13个旧选集/4个新生成校验模块，精确76模块/468测试清单在`local/migration72/evidence/f02b-f03-final-research-regression-summary.json`。Java43套/761及独立库清理见`f02b-f03-final-java-regression-summary.json`；Native/API/raw证据与首次失败全部留忽略local目录。
+
+源码review13源/81方法/98边（16人工/82候选）及49源/294方法/411边（75人工/336候选）已逐差异核查；4条请求关联为明确static边。Proto review74证据/1267源，98候选、150根及矩阵/1120文件/1257声明/4806字段，双跑相同。新增Vector嵌套语义行由已verified字段依赖显式入矩阵；不是源Java同名或编译自动批准。实际工作请从HANDOFF2下一项恢复，不重做与此无关的底层。
+
+以下为本批中途及更早历史检查点，不代表当前执行状态。
+
 F-03追加复现：[request-contract](docs/CLIENT_72_SCENE_REQUEST_CONTRACT.md)（8 native writer边界、5测试、双跑相同）与[1017域](docs/CLIENT_72_CMD1017_DOMAIN.md)（3 native出站流样本、5测试、双跑相同）。请求缺tag必须按raw0解码；Done42557/Post64180是正常本地范围值。生产入口关联有12项独立回归，另15项握手含响应编码raw0必须显式发送的边界。上游忽略payload、当前解析后丢弃payload都不作为完整握手验收。
 
 F-03研究新入口：[scene-handshake](docs/CLIENT_72_SCENE_HANDSHAKE.md)由`tools/client72_scene_handshake.py`固定输入复现116原生结果/10类20字段/13业务绑定，10测试；[store-weight-contract](docs/CLIENT_72_STORE_WEIGHT_CONTRACT.md)由`tools/client72_store_weight_contract.py`复现12次真实字典路由和5字段容量目的地，8测试。两份trace/摘要均双跑一致。握手response的构造默认与显式raw0分记，Java optional只是存在性适配；DoneReq1017的另一域仍单独核查。`generate_scene72_sources.py`只接管这8握手和容量消息；Notify生产字段另列Project F-03c，当前尚未验收接入。

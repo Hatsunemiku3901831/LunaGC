@@ -1,5 +1,7 @@
 # 国服7.2初始化raw字段与遗留坐标核查
 
+F-03b运行补充（4bbf9fd）：容量目的别名经独立[消费合同](CLIENT_72_STORE_WEIGHT_CONTRACT.md)确认，5字段/enum已接入，3 raw未知省略；134原生reader的原始证据不因业务晋级而重写。旧选择缓存21136/46070不能用于目标，正号与onLogin发送停用，DoSet/SetPlayerBorn显式选人、准入与确认保存保留。完整初始化仍缺PlayerData/Store/Avatar等，非D-02。
+
 2026-11-06，F-03限定离线证据。只读固定客户端三输入；不启动客户端、服务或调试目标，不修改运行Proto或三层mappings。参考AstaPS固定`a49f51aa6f2787ffbc25cee46801b70dee860d23`仅用于筛候选，不用其名称、tag或同型字段晋级目标语义。完整初始化闭包与D-02仍未完成。
 
 ## type28836/Cmd22609的完整raw标量切片

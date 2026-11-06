@@ -1,5 +1,7 @@
 # 国服7.2库存种类容量通知合同
 
+生产融合补充（4bbf9fd）：只发送已验pack/relic/weapon/material/furniture五字段；不发送未具名总weight字段，服务端经济/库存Guard未改。容量6项独立wire及完整43套761业务/协议选集通过，仍不保证完整客户端初始化。
+
 2026-11-06，F-03b限定离线闭包。工具[client72_store_weight_contract.py](../tools/client72_store_weight_contract.py)固定`extract_client72.HASHES`三输入，复用已验raw reader切片，不重复扫描reader，也不把Asta字段名/tag当目标证明。正式摘要为[store-weight-contract-observations.json](../protocol/cn-7.2/store-weight-contract-observations.json)。本项没有启动客户端、服务或调试目标，D-02未验。
 
 ## 身份与实际完整消费路径

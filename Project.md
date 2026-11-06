@@ -4,25 +4,31 @@
 
 ## 当前阶段
 
-2026-11-06再次恢复：当前用户授权推进F-02b/F-03融合、对应回归及文档，验收后暂停；明确暂不D-02实机，覆盖下方暂停。本批从4b566f9接手，只保留AGENTS/resources原差异。先复用现有LoginReq12类83字段和响应18类137字段的原生对象图/wire及来源；不复制Asta生成Java、不以未验证setter或同形字段代替业务证据。
+2026-11-06本批F-02b1/b2、F-03a/b/c限定融合验收完成，按用户要求暂停；暂不D-02实机。运行代码提交`4bbf9fd`：完整LoginReq/两响应及嵌套21类198字段，八个场景握手、容量5字段、进入场景通知四字段及8类44字段raw闭包已接入。未知字段保留原名且不发送；完整初始化/P0、SDK/补丁/资源及实际客户端序列仍未验。
+
+实际468项研究、独立Mongo43套761项Java全部通过（失败/错误/跳过均0），五个生成检查无漂移。研究结构0错误、ready205缺口；74证据/1267源码与Proto、150根/矩阵、1120描述符文件、1257声明/4806字段，recover双跑。JDK17 portable构建24秒，JAR SHA-256 `570d64f4f1680ab023c7eda7f2e930ebf5eba79791030e8499100ca8f2799bf5`内嵌4bbf9fd；92变化/114新增class均匹配编译输出，109账号/Guard/Lua class保持，3个旧LoginRsp map holder被新raw字段替换。
+
+前置不齐未部署，HTTP8088/UDP22101/测试Mongo27027无监听，无服务PID、健康及运行JAR无对象。三个独立测试库运行均正常关闭，关闭前仅admin/config/local；原Mongo/数据、配置和AGENTS/resources差异保留。收尾既有x64dbg进程仍在，原客户端目标进程未见、退出原因unknown；本轮仅盘点进程，没有客户端/调试器操作，不能据旧PID无条件run/load。详见[交接](HANDOFF2.md)与[融合记录](docs/CLIENT_72_ASTAPS_FUSION.md)。
 
 | 本批子项 | 依赖与实际工作 | 验收 | 状态 |
 | --- | --- | --- | --- |
-| F-02b1 登录请求/两响应及嵌套wire接管 | 固定三输入与既有writer/reader/graph；合并相同raw类型，已验名保留、其余原名；三已验CmdID | 原生独立样本、非零/64位/map/list/oneof/错误边界，protoc确定生成，拒绝证据/冲突漂移 | 进行中 |
-| F-02b2 响应builder实际发送合同 | 复用Token密码学/Handler和LoginRsp全局消费来源，剔除旧号/parked/伪签名；保留账号准入/确认保存 | retcode错误分支、RSA成功和不切错key、资源版本非空字段由target消费验证；不发无来源值 | 进行中 |
-| F-03a 场景握手三层及值编码 | Ready/Init/Done/Post命名literal/typed callback→消息→wire；应用token/retcode算术与原始字段分记 | 固定native执行/独立非零边界/失败分支，8包及用到nested，不凭Asta名称或旧常量猜配 | 进行中 |
-| F-03b 初始化最小消息 | 既有P0来源图、Asta候选和本地reader/消费证据，优先PlayerData/StoreWeight等小闭包 | 明确身份/字段/来源/未知；独立wire和受影响业务/保存回归，不扩无关玩法 | 进行中 |
-| F-03c 进入场景通知生产合同 | 复用既有46311/27748及26字段、6类nested的目标reader；从现有builder所需字段追到具名消费，单独复核值编码 | 仅接入具名来源和独立native样本已足的字段；嵌套float/64位及token链；其余原名并省略，不沿用7.1 setter或Asta推断 | 进行中 |
+| F-02b1 登录请求/两响应及嵌套wire接管 | 固定三输入；21类198字段、三已验CmdID；未知原名，nested optional仅Java存在性适配 | 50原生writer/34响应图/6拒绝；4显式0/false/空合并回归；468研究/761 Java、生成/构建均过 | 已完成 |
+| F-02b2 响应builder实际发送合同 | Token仅uid/token/sign/server_rand_key，拒绝retcode-only；资源61仅子1/3/4/5 | 6原生消费；真实Java RSA成功及两坏参数、准入/UID/保存回归；无伪签名或失败切key；连续收帧selector未验 | 已完成 |
+| F-03a 场景握手三层及值编码 | Ready/Init/Done/Post 8包、10类20字段，token/retcode与raw值分记；四请求关联当前场景 | 116原生结果+8省略边界+3独立1017通道；请求12/响应等15 Java；重发/完整调度不晋级 | 已完成 |
+| F-03b 初始化最小消息 | 容量28836/22609的5业务字段/8 raw字段；历史选择缓存号及发送停用，显式选人保留 | 134 reader+12实际字典路由、enum/阈值；容量6 Java、账号/经济/保存回归；PlayerData/Store/Avatar完整初始化另缺 | 已完成 |
+| F-03c 进入场景通知最小发送合同 | scene_id/type/token/非空pos；完整8类44 raw字段，Vector另验3轴；其余业务未知不发送 | 40原生样本两轮相同；wire12+producer8、三套入场/成员/复活81；原7构造API及LOADING/随机token保留；非实际落地 | 已完成 |
 
-运行代码/Proto变更后做JDK17便携构建及产物/进程/日志/端口核对；完整前置未齐不部署，D-02不验收。本批完成后再备份核验HANDOFF2、只追加HANDOFF。
+运行代码/Proto变更后做JDK17便携构建及产物/进程/日志/端口核对；完整前置未齐不部署，D-02不验收。本批已按交接流程备份核验HANDOFF2后覆盖，并只追加HANDOFF；暂停后不自动推进下一项。
 
-F-03c已完成40组固定原生取证和48项组合研究回归，两轮逐字节一致；最小可发送字段为scene_id/type/token/非空pos，8类44 raw字段完整保留。位置由实际任务→传送载体→真实队列→具体Default/DirectlySetPos接收者，及独立QuickV3具名pos2/centerAfter两路确认；未执行最终头像落地。见[进入场景合同](docs/CLIENT_72_ENTER_SCENE_CONTRACT.md)。world/time/UID/dungeon/transaction/limited-region继续未知，当前正以独立Java首红接入四字段，不将完整sender或P0/D-02标完成。
+F-03c已完成40组固定原生取证和48项组合研究回归，两轮逐字节一致；最小可发送字段为scene_id/type/token/非空pos，8类44 raw字段完整保留。位置由实际任务→传送载体→真实队列→具体Default/DirectlySetPos接收者，及独立QuickV3具名pos2/centerAfter两路确认；未执行最终头像落地。见[进入场景合同](docs/CLIENT_72_ENTER_SCENE_CONTRACT.md)。world/time/UID/dungeon/transaction/limited-region继续未知，四字段已接入并由20项独立wire/producer及三业务套81项验收，不将完整sender或P0/D-02标完成。
 
-本批研究验收：F-02b2的[最小响应合同](docs/CLIENT_72_RESPONSE_CONTRACT.md)新增6原生夹具，tag61四字段具名全局目的地和next1337/7边界闭合，工具/摘要两轮相同；最小RSA4字段/retcode-only与既有crypto/Handler4组摘要重跑一致。F-03b的[初始化raw切片](docs/CLIENT_72_INITIALIZATION_WIRE.md)134原生reader/8字段/5模型拒绝、6测试及双跑一致；21136/46070历史选择通知坐标已证不能沿用。以上仅研究合同，不等于父项、运行接入或实机完成；对应生产回归/构建与场景8握手正在实施。
+本批研究验收：F-02b2的[最小响应合同](docs/CLIENT_72_RESPONSE_CONTRACT.md)新增6原生夹具，tag61四字段具名全局目的地和next1337/7边界闭合，工具/摘要两轮相同；最小RSA4字段/retcode-only与既有crypto/Handler4组摘要重跑一致。F-03b的[初始化raw切片](docs/CLIENT_72_INITIALIZATION_WIRE.md)134原生reader/8字段/5模型拒绝、6测试及双跑一致；21136/46070历史选择通知坐标已证不能沿用。研究合同边界保留，对应最小生产接入/468研究/761 Java及构建如首段；不等于完整父项或实机完成。
 
-F-03新增已验研究：[八握手合同](docs/CLIENT_72_SCENE_HANDSHAKE.md)116原生有限结果、10类20字段、13条业务绑定，10聚焦测试；请求/响应token及retcode值变换和缺省/raw0分别验证，DoneReq的1017重号域继续独立复核。[容量消费合同](docs/CLIENT_72_STORE_WEIGHT_CONTRACT.md)12次完整native接收/分发/真实字典插入，5字段目的地和enum/容量阈值另验，8聚焦测试；3字段保持未知。两份合同均双跑一致，仅离线研究验收，生产回归/源码矩阵/构建仍待本批收口。
+F-03新增已验研究：[八握手合同](docs/CLIENT_72_SCENE_HANDSHAKE.md)116原生有限结果、10类20字段、13条业务绑定，10聚焦测试；请求/响应token及retcode值变换和缺省/raw0分别验证，DoneReq的1017已限定分清正常Game C2S与另一出站流，保留全局重号。[容量消费合同](docs/CLIENT_72_STORE_WEIGHT_CONTRACT.md)12次完整native接收/分发/真实字典插入，5字段目的地和enum/容量阈值另验，8聚焦测试；3字段保持未知。两份合同均双跑一致，最小运行接入/回归/源码矩阵/构建已收口，完整调度与客户端仍未验。
 
-本轮收尾：F-01及F-02a限定验收完成，按最新用户要求暂停；F-02/F-02b/F-03仍阻塞，F-04/F-05/D-02未验。提交73dd759（计划）、45e22ce（来源/差异）、4324cd7（四schema融合），均仅本地。399研究、4套43协议及关联、独立Mongo29套589账号/经济/保存/Lua各自全过，完整Java未重跑；结构0/ready228。便携构建23秒、JAR a8c2d893…53a8f8内嵌4324cd7；30变化class与编译输出一致，163个Guard/Player/脚本class保持。TCP8088/UDP22101/测试Mongo27027均无监听，无服务PID；健康/运行JAR无对象。完整P0/SDK/补丁/资源前置不齐且本轮不推进新实机，故未部署；原数据、原调试进程树与AGENTS/resources差异保持。详细备份和恢复入口见HANDOFF2。
+以下为F-01/F-02a及更早历史检查点，当前状态以上文为准。
+
+上一批收尾：F-01及F-02a限定验收完成，按最新用户要求暂停；F-02/F-02b/F-03仍阻塞，F-04/F-05/D-02未验。提交73dd759（计划）、45e22ce（来源/差异）、4324cd7（四schema融合），均仅本地。399研究、4套43协议及关联、独立Mongo29套589账号/经济/保存/Lua各自全过，完整Java未重跑；结构0/ready228。便携构建23秒、JAR a8c2d893…53a8f8内嵌4324cd7；30变化class与编译输出一致，163个Guard/Player/脚本class保持。TCP8088/UDP22101/测试Mongo27027均无监听，无服务PID；健康/运行JAR无对象。完整P0/SDK/补丁/资源前置不齐且本轮不推进新实机，故未部署；原数据、原调试进程树与AGENTS/resources差异保持。详细备份和恢复入口见HANDOFF2。
 
 最新范围调整：用户要求“目前先进行融合和维护文档，融合完成通过验收后进行暂停”。因此本轮先验收F-01及证据已足的F-02/F-03融合片段、对应构建/回归与文档，然后暂停；F-04/F-05及D-02保留未完成，不推进新实机阶段。下文最初的持续D-02指令已被此收束覆盖。
 
@@ -31,10 +37,10 @@ F-03新增已验研究：[八握手合同](docs/CLIENT_72_SCENE_HANDSHAKE.md)116
 | 融合子卡/优先级 | 依赖 | 实际差异与交付 | 验收 | 状态 |
 | --- | --- | --- | --- | --- |
 | F-01 / P0 来源与三层差异 | 当前checkout/固定参考 | 固定来源/commit/tree/GPLv3，协议与64源码差异审计；10包号相符、214字段130同形/84缺失、2处MD5语义冲突 | 45e22ce；2105 Proto/8066字段独立descriptor比对0差异，11测试及双跑一致；来源候选不晋级 | 已完成 |
-| F-02 / P0 Token/Login/Ping接入 | F-01、本地原生wire/语义 | F-02a四schema已接入；F-02b完整响应/Login嵌套的业务证据未齐，不采用Asta占位或忽略payload | 子项逐独立wire/生成/构建/业务回归；父项与D-02不晋级 | 阻塞 |
+| F-02 / P0 Token/Login/Ping接入 | F-01、F-02a/b | 已验wire与最小响应接入；连续收帧keyselector、SDK/完整P0与实际登录序列仍缺 | 子卡限定通过；不以761选集或构建替代完整登录/客户端验收 | 阻塞 |
 | F-02a / P0 请求、包头与心跳wire片段 | F-01、本地固定wire及10已验业务名 | TokenReq/Head/PingReq/PingRsp共45字段，35保持原名；3已验号，停用无引用旧混淆号24604碰撞；Ping共享字段原样回显 | 4324cd7；改前14/8失败；改后43/0、独立Mongo29套589/0、399研究/0；两生成检查无差异，JDK17便携构建23秒、30变化class与编译输出相同；前置不足未部署，不晋级语义/父项/实机 | 已完成 |
-| F-02b / P0 响应与完整Login接管 | F-02a、目标消费/嵌套证据 | 两响应/完整LoginReq保留未迁入；MD5冲突本地证据优先，Asta无LoginReq schema | 所用字段及nested逐三层/独立wire，禁止旧名/parked代替；下次恢复先从实际builder使用字段的来源开始 | 阻塞 |
-| F-03 / P0 初始化/场景握手与嵌套 | F-01、F-02、本地scene证据 | 已完成107包候选/166根与1150/1157 imports审计；没有新增已验场景语义schema，不重复接入无消费者raw类 | Ready/Init/Done/Post三层与完整继续/序列仍缺；Asta缺ReadyReq、忽略payload不算空schema；保留显式选人 | 阻塞 |
+| F-02b / P0 响应与完整Login接管 | F-02a、本地固定原生合同 | 21类198字段/完整raw闭包及最小发送，MD5采用本地结论；4bbf9fd | 50/34/6独立native、468研究/43套761 Java、五生成检查和portable构建；完整登录另由父项验收 | 已完成 |
+| F-03 / P0 初始化/场景握手与嵌套 | F-01、F-02、本地scene证据 | 8握手、容量、四字段Notify及nested已接入；PlayerData/Store/Avatar、Notify其余业务及完整继续序列仍缺 | F-03a/b/c限定通过；完整P0/场景落地及D-02未验，不自动填补未知 | 阻塞 |
 | F-04 / P0 SDK/补丁/资源运行前置 | F-02/F-03、D-01/E-01 | 核对本地信任与路由/ABI、最小资源及Lua复现；上游自动选人/版本放行不迁入 | 保留校验；实际构建、portable部署及日志/健康/TCP/UDP/PID/运行JAR SHA；不满足记录尝试/解除条件 | 待开始 |
 | F-05 / P0 D-02实机闭环 | F-02/F-03/F-04 | 独立测试库/数据，新号显式选人、旧测试号、完整初始化/场景握手、心跳、退出重登 | 脚本/API实际客户端证据逐项通过，不使用computer-use、不操作无关目标、不以离线/健康代替 | 待开始 |
 

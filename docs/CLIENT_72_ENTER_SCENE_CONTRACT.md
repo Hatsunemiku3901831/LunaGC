@@ -1,5 +1,7 @@
 # F-03c：入场通知的已验字段与发送缺口
 
+生产融合补充（4bbf9fd）：最小四字段已接入，完整8类44 raw闭包保留；unknown world/time/UID/dungeon/transaction/limited-region不发。旧7个public入场/传送构造API、LOADING与随机token保留；独立wire12和producer8、三套入场/成员/复活81均通过。Vector仅用已验xyz转换，未使用旧region或Asta名字填未知。完整sender合同/调度/头像落地、P0与D-02仍未验，下面40组原生证据边界保持。
+
 2026-11-06。固定国服7.2三输入，新增`tools/client72_enter_scene_contract.py`、10项测试及[机器契约](../protocol/cn-7.2/enter-scene-contract-observations.json)。本项没有修改八握手的五个既有交付文件、生产源码、mappings或共享任务表，没有启动客户端、调试API、服务或数据库，也没有本地提交。**最小Notify发送字段已确认scene_id、type、enter_scene_token和必需非空pos；完整场景入场及头像实际落地仍未验，不能由字段契约推导成功。**
 
 ## 实际可接入范围

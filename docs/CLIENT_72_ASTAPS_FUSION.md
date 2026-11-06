@@ -1,5 +1,24 @@
 # AstaPS成果融合与D-02
 
+2026-11-06 F-02b/F-03本批限定融合已验收并暂停，运行提交4bbf9fd，D-02未执行。468研究/43套761 Java/五生成检查全过；结构0/ready205。便携构建24秒，JAR `570d64f4f1680ab023c7eda7f2e930ebf5eba79791030e8499100ca8f2799bf5`内嵌4bbf9fd，92变化+114新增class匹配编译、109账号/Guard/Lua保持。前置不足未部署、无服务/测试监听；客户端目标当前未见原因未知，未操作调试器。下文更早的数量与暂停均为历史，当前以Project/HANDOFF2为准。
+
+本批来源继续固定MeChen618/AstaPS a49f51aa6f2787ffbc25cee46801b70dee860d23，HEAD/tree/clean和GPLv3署名保持；没有整仓合并或复制生成Java。所有运行Proto由本地固定native证据生成，JDK17/Gradle/protoc接管Java。本地account_type/tag15、sub_channel_id/tag10及LoginRsp两MD5字段结论不变。
+
+| 子项 | 实际采用与独立验收 | 仍未验范围 |
+| --- | --- | --- |
+| F-02b1/b2 | LoginReq55字段、TokenRsp41、LoginRsp44、18 raw nested58；最小Token四字段/拒绝retcode-only及资源61子1/3/4/5 | 其他业务未知；连续真实收帧keyselector/SDK/完整Handler与登录未验 |
+| F-03a | Ready5046/9948、Init4905/21392、Done1017/298、Post1696/26760；真实应用编码、请求一次关联当前token | unknown Post double、Done nested业务、实际调度/重发恢复未验；1017仅正常Game与另一流通道区分 |
+| F-03b | 容量22609的pack enum及relic/weapon/material/furniture五字段；旧选择缓存正号与onLogin发送停用 | 三raw字段不命名weight_limit；PlayerData/Store/Avatar等完整初始化仍缺，服务端经济总量Guard不变 |
+| F-03c | Notify27748仅scene_id/type/token/非空pos；Vector三轴、完整8类44 raw闭包；7个public构造入口/LOADING/随机token保留 | world/time/UID/dungeon/transaction/region未知不发，最小合同不保证客户端落地 |
+
+当前三层对照21目标类型/239字段，Asta同tag同外形147、缺tag92、形状冲突0、已验业务冲突仍2（MD5）；上游2105 Proto/8066字段、967 parked/567零/12负号未改变。F-01原214/130/84是旧映射快照；implementation摘要仍是c9aafa6源码基线，未冒称本轮运行源码。
+
+红测与修正：响应4/4旧schema失败；nested merge4中3失败→Java存在性适配；初始化15中7失败；握手14中10失败；请求关联12中4失配进入游戏逻辑；Notify producer7/7、raw12/12旧载体失败。最终均由独立native/wire/业务回归覆盖。首660 Java有6夹具/旧断言失败（账号测试明确无加密前提2、RSA回复计数3、旧号1），修正测试前提后全过；实际新号Player构造会先发既有初始化通知，因此只断言TokenRsp自身单回复，不谎称整个初始化序列只有1包。Notify生成后另有6旧坐标getter编译点，三套81业务测试适配三轴/四字段合同后通过。研究首468有1嵌套Vector索引遗漏，加入verified嵌套依赖再双跑矩阵；未丢弃未知行或放宽输入哈希。
+
+原source/dependency与surface守卫先实际拒绝；人工逐源复核，保留原人工边及开放边界。Proto review67→74，28既有输入变化、4加入、24仅依赖退场（没有删除这些旧文件），原63证据hash保持；新增已验nested别名显式入矩阵，150根/行仍不是最小客户端必需集合。所有原始红测、helper首次失败、重复性、生成与构建结果在忽略local，公共摘要脱敏。
+
+本批本地提交：0ebe663计划、def036e响应/初始化raw、a5fe305八握手/容量、d0cddb0请求省略/1017、fbe99d5位置消费、4bbf9fd运行接入。未推送。下一项须用户恢复后从未命名初始化/Notify目的地及连续keyselector开始，不重复已验wire和无关底层；D-02只在前置齐后另验。
+
 最新用户范围：本轮先完成有独立证据支持的融合、相应验收和文档维护，然后暂停；D-02仍是后续目标，本轮不推进新实机阶段。后续缺独立证据的上游候选不能为了收尾而批准。
 
 2026-11-06恢复，接手主仓库c9aafa6。参考仓库为MeChen618/AstaPS，固定提交`a49f51aa6f2787ffbc25cee46801b70dee860d23`，本机路径`local/migration72/references/AstaPS-7.2.155`（忽略目录）。来源/HEAD/干净状态已核对；本项目patch/resources锁定引用及既有他人差异不变。当前仍没有D-02客户端验收。
