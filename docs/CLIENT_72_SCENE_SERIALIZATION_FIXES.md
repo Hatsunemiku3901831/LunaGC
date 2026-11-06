@@ -1,5 +1,7 @@
 # E-01c2：已复现Lua序列化问题的最小修复
 
+2026-11-06 F-02a保留全部Lua/序列化修复；当前JAR a8c2d893…53a8f8中163个Guard/Player/脚本class与旧2566f466…83fe逐字节相同，589业务/Lua和399研究分别通过。此专题CLI仍固定旧JAR守卫；复现请使用已校验归档`local/migration72/builds/LunaGC-before-fusion-2566f466.jar`，不自动更新历史证据或守卫。完整加载/资源/实机边界不变；本轮限定融合验收后按用户要求暂停，见[融合记录](CLIENT_72_ASTAPS_FUSION.md)。
+
 2026-11-06。本批承接[生产序列化审计](CLIENT_72_SCENE_SERIALIZATION.md)的真实失败，只修改LuaSerializer、SceneRegion、SceneMonster、SceneGadget及新增生产JUnit。没有修改旧Lua、运行配置、资源、Proto、旧审计结果或其源码/JAR守卫；E-01c、E-01及D-02仍未完成。
 
 ## 失败复现与修复

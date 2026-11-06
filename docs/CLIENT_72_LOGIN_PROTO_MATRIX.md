@@ -1,5 +1,7 @@
 # A-03c 候选消息、Proto依赖与7.2三层证据缺口矩阵
 
+2026-11-06 F-01/F-02a人工复核：旧review先实际拒绝变更，只更新Ping handler/sender与四Proto共6源码hash、source/dependency两摘要及2新增Asta摘要（65→67证据）。仅PacketPingRsp候选来源位置/hash和四descriptor owner的45字段变化；1287源码/Proto、99候选/148根与矩阵/1140文件/1254声明/4786字段、全部三层状态/开放边界保持，recover双跑相同。399研究通过、结构0/ready228；完整P0与runtime不晋级，见[融合记录](CLIENT_72_ASTAPS_FUSION.md)。
+
 2026-11-06暂停前最终复核：当前65输入，新增[scene-data](CLIENT_72_SCENE_DATA.md)及[生产加载](CLIENT_72_PRODUCTION_SCENE_LOAD.md)两份脱敏摘要，原63输入hash保持。1287源码/Proto、148行三层/计数、99候选、1140描述符及开放边界逐结构不变，旧review实际以输入集合漂移拒绝；人工复核后recover双跑一致，384研究回归通过、研究结构0/ready228。原始raw SHA与本矩阵规范换行digest分开，不把缓存消费或Lua加载结果晋级业务语义、runtime或D-02。证据scene-pause-login-proto-review-check.json和scene-pause-first-input-set-rejection.txt留忽略目录。按用户要求已停止新增工作，详细交接见HANDOFF2；下方为历史检查点。
 
 2026-11-06当前63输入：owner只读API迁移后，唯一源码hash变更ScriptLib（旧220方法原样、新方法未进入原48源码图），三脚本/依赖/serialization五份摘要真实重跑后替换，另新增当前API与列表摘要（60→62）；非空嵌套摘要使62→63。两次人工复核均保持三层矩阵、Proto描述符、候选、计数和开放边界；recover各双跑一致，366研究回归通过、研究结构0/ready228。没有用API可调用或新raw字段wire晋级业务语义/实机。证据scene-owner-list-login-proto-review-check.json和scene-nested-login-proto-review-check.json。

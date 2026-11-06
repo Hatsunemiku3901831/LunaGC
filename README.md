@@ -1,10 +1,10 @@
 # LunaGC CN 7.2 开发分支
 
-2026-11-06当前已恢复，覆盖下方历史暂停：先融合固定AstaPS成果并完成对应验收/文档维护，然后暂停。D-02仍未完成，本轮不推进新实机阶段。详见[融合子卡](Project.md)和[融合记录](docs/CLIENT_72_ASTAPS_FUSION.md)。接手基线c9aafa6/384研究/ready228；参考库来源、HEAD和干净状态已核对，保留本地账号/保存/经济/Lua修复。
+2026-11-06本轮限定融合验收完成，按最新用户要求暂停。F-01固定AstaPS来源/差异审计（45e22ce）、F-02a四schema45字段及3包号接入（4324cd7）；其余登录响应/场景语义仍阻塞，D-02未完成。399研究、43协议及关联、589账号/经济/保存/Lua测试分别通过，JDK17便携构建23秒成功；未部署或实机验收。详见[融合子卡](Project.md)、[融合记录](docs/CLIENT_72_ASTAPS_FUSION.md)、[交接](HANDOFF2.md)。保留本地账号/保存/经济/Lua修复及他人差异，未经恢复不开始下一项。
 
 目标是原生适配所提供的国服 7.2 客户端，包括网络指令、消息及字段、客户端补丁与资源。**尚未支持 7.2 登录或进入世界。** 本分支不维护 7.1 兼容；遗留版本号、Proto、包号仍是研究输入，不能视为目标协议。
 
-当前批（2026-11-06，已暂停）：[69612部分消费](docs/CLIENT_72_SCENE_DATA.md)及[真实生产Lua加载审计](docs/CLIENT_72_PRODUCTION_SCENE_LOAD.md)限定完成，本地提交51f7cd2/9aa8ca7；最终384研究回归通过、65输入复核、ready仍228缺口。实际fast加载437组部分求值/481错误，inline13,616组零错误，未修生产或改根配置。未知helper/完整协议/SDK/资源与D-02实机仍未完成，未部署。已按用户要求停止新增工作，恢复入口见[HANDOFF2](HANDOFF2.md)，任务状态见[Project](Project.md)；下方旧数量/运行记录为历史。
+前批暂停基线（c9aafa6）：[69612部分消费](docs/CLIENT_72_SCENE_DATA.md)、[生产Lua审计](docs/CLIENT_72_PRODUCTION_SCENE_LOAD.md)，384研究/65输入。当前67输入、ready仍228；fast437组部分求值/481错误及inline13,616组零错误的历史范围保持，未修生产或改根配置。下方旧数量/运行记录均为历史。
 
 接手顺序：[工作规范](AGENTS.md) → [任务与验收](Project.md) → [研发索引](Harness.md)。详细方法见 [迁移研究](docs/CLIENT_72_MIGRATION.md)。历史专题保留业务背景，不构成 7.2 验收。
 
@@ -12,7 +12,7 @@
 | --- | --- |
 | 计划支持 | 新旧账号登录、选人、入场、基础玩法及后续内容，按 Project 分项验收 |
 | 已实现 | 继承业务/便携脚本，7.2安装清单、元数据/泛型/父类/静态布局提取、静态CmdID→类型表、服务协议盘点、登录原始wire与响应对象图离线读取；不代表业务已匹配7.2 |
-| 测试通过 | 当前266项研究工具/映射/资源审计回归通过；原生seed加密、响应解密验签/密钥Java对照、Handler核心、SDK认证来源、两处分区恢复路径、key_id密钥选择及Handler原生版本哈希、独立封/收帧及XOR、连续Token序列化封包及Ec2b验证通过；分区key到Token帧4样本、Handler到Login完整帧10样本与独立protoc/重复验证通过，具体范围见Harness；Java完整集既有217项失败未据此消除 |
+| 测试通过 | 当前399研究、43协议及关联、589账号/经济/保存/Lua选集分别通过，互有选人覆盖，不相加为一次执行；TokenReq/Head/Ping目标wire及原有原生密码学/连续封帧研究范围见Harness。完整Java集历史217失败未据此消除 |
 | 客户端验收通过 | 暂无；进入世界与完整玩法分别验收 |
 
 前置缺口：完整三层业务映射、其余枚举/字段语义、运行时泛型ABI/IFix和 7.2 资源来源；补丁仍需 ABI 与实机验证。本地安装清单7,830条大小/MD5已匹配；静态包号4,012条含5组未解决重号；包头/心跳请求与响应共17个静态wire字段已恢复，业务字段语义仍不完整，见[网络研究](docs/CLIENT_72_NETWORK.md)。未知项不发布为服务端正式包号或字段。
@@ -50,7 +50,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/local_windows.ps1 
 
 Proto Java 由 Gradle/protoc 生成，不编辑 build/generated。版本无关业务回归保留；旧协议断言在有证据的 7.2 fixture 接管后替换，不能删除后声称兼容。
 
-上游与署名：[girluh/LunaGC](https://github.com/girluh/LunaGC)（基于 Grasscutter）、[capyb2222/animegamepatch](https://github.com/capyb2222/animegamepatch)；Terax（nt）。资源来源和权属见 [资源 README](resources/README.md)。
+上游与署名：[girluh/LunaGC](https://github.com/girluh/LunaGC)（基于 Grasscutter）、[capyb2222/animegamepatch](https://github.com/capyb2222/animegamepatch)；Terax（nt）。本轮对照来源：[MeChen618/AstaPS](https://github.com/MeChen618/AstaPS)固定a49f51a，根许可证GPLv3，未复制其实现/Proto或生成Java；详见[来源审计](docs/CLIENT_72_ASTAPS_AUDIT.md)。资源来源和权属见 [资源 README](resources/README.md)。
 
 
 2026-11-06 A-03a收尾：重新执行固定12源码/JDK17解析、8项聚焦测试和研究映射校验均通过；重生成摘要与已提交产物逐字节一致，ready仍退出1（213缺口）。`local/migration72/evidence/login-source-close{,-summary,-check,-ready}.json`为本机复核证据。本次用户指令覆盖旧暂停状态，依次推进V-01b/V-01c/A-03b/A-03c，A-03c提交后停止；禁止B-03/C-01/D-02及实机调试。A-03整体仍待完整闭包和实机复核。

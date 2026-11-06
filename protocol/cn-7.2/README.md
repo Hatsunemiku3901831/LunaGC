@@ -1,5 +1,7 @@
 # 7.2 三层映射输入
 
+2026-11-06固定AstaPS审计与F-02a融合：[协议来源](../../docs/CLIENT_72_ASTAPS_AUDIT.md)/[实现候选](../../docs/CLIENT_72_ASTAPS_IMPLEMENTATION.md)及两个astaps-*-observations摘要新增，研究输入65→67。四运行schema45字段仅10个用已验业务名、35保留目标原名，生成器`tools/generate_login72_slice.py`不晋级mappings。10个上游CmdID相符不等于全闭包；214字段130同形/84缺tag，两个MD5语义冲突保留本地结论。399研究、结构校验通过/ready228；完整P0/客户端未验。按用户要求限定融合后暂停，见Project/HANDOFF2。原source/dependency/proto review已逐差异人工复核、旧守卫拒绝证据保留，未改变守卫算法。
+
 B-02e3计时纠名新增[stage-timing-observations](stage-timing-observations.json)，并把旧摘要误称identity request的三个键修为stageValue/stageBodyExecuted。14C8AE9A0是85949/OnPlayerEnterSceneNotify阶段计时；13原生样本、311完整研究回归、两次一致，55研究输入受hash约束。三层字段与runtime不晋级，见[计时证据](../../docs/CLIENT_72_STAGE_TIMING.md)。
 
 B-02e2新增[scene-wait-observations](scene-wait-observations.json)，见[入场通知/缓存等待](../../docs/CLIENT_72_SCENE_WAIT.md)：27748/46311/PlayerEnterSceneNotify两层身份verified，26外层业务字段全部unknown/unresolved，三float非空/列表/原生clone与明确缓存/前置边界已执行。完整研究305通过，矩阵54输入受hash约束；研究校验通过，ready仍228缺口。没有把wire夹具载体中的opaque bytes当成完整消息schema或生成生产Proto。

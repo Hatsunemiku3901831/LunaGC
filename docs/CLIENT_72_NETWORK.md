@@ -1,5 +1,7 @@
 # 7.2 网络调用和登录协议研究
 
+2026-11-06 F-02a已将TokenReq/PacketHead/PingReq/PingRsp的45字段wire接入生产Proto源，3包号24604/26605/25763；只保留10个已验业务名，Ping含义仍candidate、其余原名不变。Ping只对共享字段13→6/14→1回显，不晋级语义。14独立Java wire及关联43、589业务/Lua与399研究分别通过；目标hash、映射状态/完整P0/实机边界不变，ready仍228。详见[融合记录](CLIENT_72_ASTAPS_FUSION.md)，限定验收后暂停；本页早期“尚未接入”按其历史批次理解。
+
 2026-11-06后续入口：[PlayerEnterSceneNotify与选人缓存等待](CLIENT_72_SCENE_WAIT.md)核对27748/46311身份、26外层wire、非空三float与原生clone；32正式样本、305完整研究回归通过，26字段业务含义仍未知、生产/实机未接管。下述旧包数/字段数为各阶段范围，以Project和最新三层矩阵为准。
 
 2026-11-05；输入 SHA-256 见 [提取记录](CLIENT_72_EXTRACTION.md)。所有 VA 只对应该输入。以下区分静态代码证据、业务命名和客户端验收；没有执行目标客户端登录。

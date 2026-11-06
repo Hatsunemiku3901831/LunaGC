@@ -1,5 +1,7 @@
 # 账号与存档系统接手指南
 
+2026-11-06 F-02a只接管TokenReq目标wire（account_uid=9、account_token=2、account_type=15、sub_channel_id=10、key_id=1184、client_rand_key=623），保留AccountLoginAdmission、稳定UID归属及确认保存实现；未迁入Asta异步登录、自动选人/修档或RSA失败切key。独立Mongo下账号/经济/保存/Lua29套589项及协议关联43项分别通过，未进行真实认证或D-02；详见[融合记录](CLIENT_72_ASTAPS_FUSION.md)。按用户要求验收后暂停。
+
 本项目的账号负责登录身份、凭据与权限；玩家存档负责游戏进度。两者通过账号 ID 和玩家 UID 关联，但保存位置、保存时机和并发保护并不相同。完整存档由多个 MongoDB 集合及运行数据文件共同组成，单独复制 `players` 集合无法完整恢复一个玩家。
 
 历史业务说明基线：2026-10-21，源码提交 `63f0fa7923ddd68c9c62e0dfb8cbcbc756d07371`。当前分支仅面向国服7.2，迁移任务和实际验收以[Project](../Project.md)为准；下述账号/保存机制不能证明旧协议仍可运行。本文依据内置实现；插件可以替换认证系统或玩家类，需要另行检查。

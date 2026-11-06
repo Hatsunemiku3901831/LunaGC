@@ -1,5 +1,7 @@
 # 账号与存档数据模型
 
+2026-11-06 F-02a仅更新连接Proto/包号和Ping原始字段回显；无数据库字段、集合、UID或存档格式迁移。本地已验TokenReq account_type/tag15、sub_channel_id/tag10覆盖上游parked候选；新号持久归属及确认保存流程保持，独立589业务/Lua回归通过。真实登录/选人/保存客户端验收仍未进行，见[融合记录](CLIENT_72_ASTAPS_FUSION.md)。
+
 本字典用于定位一项进度究竟保存在哪里、依赖哪些身份和恢复记录。与[系统接手指南](ACCOUNT_AND_SAVE_SYSTEM.md)、[运维与验证手册](ACCOUNT_AND_SAVE_OPERATIONS.md)配套使用。核对日期为 2026-10-21，源码基线为 `63f0fa7923ddd68c9c62e0dfb8cbcbc756d07371`。
 
 下文示例使用虚构编号和 UUID，仅展示关系；省略了实际建档必需字段，不能作为可导入存档。

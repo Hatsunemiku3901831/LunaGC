@@ -140,3 +140,10 @@ Astra下一研究为现有B-02下DoSetPlayerBornDataNotify/SetPlayerBornDataReq/
 B-02e7限定原生部分消费51f7cd2、E-01c5实际生产Lua加载审计9aa8ca7均已完成并停止，整合4d78fa3，未推送。最终384研究回归0失败/错误/跳过；两项正式产物各自双跑字节一致，原失败保留。65输入仅新增两摘要hash，三层/原63输入/源码/候选/开放边界不变，ready仍228。真实fast437组部分求值/481错误，inline13,616组零错误；未知helper/25866后缀、完整SDK/资源与D-02实机仍未完成。根配置true、JAR2566f466…83fe未改，未部署，原数据/调试对象/他人差异保留。
 
 已先备份原HANDOFF2至`local/migration72/handoffs/HANDOFF2-before-scene-pause-20261106-105909.md`，字节/hash核验一致，SHA-256 `306e9c0c41e14db7c7bf83aa831c6bf04a801de1bd0367bcf2c7b732e93e52cf`；证据scene-pause-handoff-backup.json。随后覆盖详版，本文件只追加。当前状态、完成/未完成、阻塞、弯路/避坑、复现证据及恢复后计划见[HANDOFF2.md](HANDOFF2.md)。**本次明确暂停，用户恢复前不启动下一任务；D-02没有完成。**
+
+
+## 2026-11-06：AstaPS限定融合验收后按最新要求暂停
+
+最新用户范围为“先进行融合和维护文档，融合完成通过验收后暂停”。F-01固定来源/协议及实现差异（45e22ce）、F-02a四schema45字段/3包号（4324cd7）已完成限定验收；73dd759为计划提交，均未推送。399研究、43协议及关联、独立Mongo29套589账号/经济/保存/Lua分别全过；生成/结构通过、ready仍228。portable构建23秒，JAR a8c2d893…53a8f8内嵌4324cd7，163个Guard/Player/脚本class保持；完整P0/SDK/补丁/资源前置不齐，未部署/新实机，D-02仍未验。
+
+现按要求暂停，不开始下一项。F-02b响应/完整Login和F-03场景语义仍阻塞；Asta仅候选，不采用0/旧号/20000+或7.1选人启发式。原数据、调试目标进程树、AGENTS/resources差异及子模块引用保持。详细完成/缺口/避坑/下一步/复现见[HANDOFF2](HANDOFF2.md)。覆盖前旧HANDOFF2备份到`local/migration72/handoffs/HANDOFF2-before-astaps-fusion-c9aafa6-20261106.md`，SHA-256 4e5740c0…bff2，逐字节/hash核验；本文件原字节前缀保持。当前两个scene离线审计CLI仍固定旧JAR，复现用已校验归档，不刷新历史守卫。

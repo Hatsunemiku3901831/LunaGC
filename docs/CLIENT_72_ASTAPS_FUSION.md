@@ -22,6 +22,12 @@ Project中F-01至F-05按来源、登录协议、初始化/场景、运行前置�
 
 ## 当前开放项
 
+限定验收已完成并按用户最新指令暂停。本地提交73dd759（计划）/45e22ce（审计）/4324cd7（接入），未推送。399研究、43协议及关联、独立Mongo29套589业务/Lua全部通过；两生成检查无漂移，结构0/ready228。portable构建23秒，JAR `a8c2d89357e1c9253bbb9e982e95e075952f0b32968af3f5b0f236941a53a8f8`内嵌4324cd7；30变化class匹配编译输出、163个Guard/Player/脚本class保持。旧JAR2566f466…83fe已校验归档至忽略目录，仅供固定离线证据复现。
+
+原source/dependency索引只变Ping方法，Proto review只变6源码/Proto、2既有摘要并新增2Asta摘要；65→67证据、1287源码/Proto保持，99候选/148矩阵/1140依赖/1254声明/4786字段、三层状态及开放边界均不变，recover两轮一致。改前14/8真实失败日志保留；首次改后测试为夹具初始化顺序失败，先初始化Grasscutter后43全过，未改生产初始化。初次Gradle未指向便携cache的下载尝试未作为结果；正式测试/构建均使用local/gradle和JDK17。
+
+前置不足：F-02b/F-03完整协议、D-01 SDK/信任/补丁与E-01最小资源仍未齐，不能启动猜测协议。本轮没有部署/安装补丁/操作客户端；最终无游戏服务或HTTP8088/UDP22101/测试27027监听，便携status退出1为无服务器，健康/运行JAR均无对象。测试Mongo正常shutdown前仅admin/config/local；原Mongo27017/数据保留。原AGENTS/resources差异及根config/fastRequire=true均未动。实际新号显式选人、旧号登录、场景握手、心跳、退出重登均未验，D-02不晋级。
+
 F-01限定来源审计已完成，见[协议审计](CLIENT_72_ASTAPS_AUDIT.md)和[实现/闭包差异](CLIENT_72_ASTAPS_IMPLEMENTATION.md)。10个CmdID相符；214外层字段仅130同tag同外层形状、84缺tag。LoginRsp的两个MD5字段名与本地已验语义颠倒，采用本地证据；嵌套/业务不得据相同外壳晋级。64源码、107包候选、166 Proto根及两仓1150/1157 imports闭包只是可计算的源码候选，不是实机必需序列。
 
 F-02a限定融合TokenReq/Head/PingReq/PingRsp，45字段仅10个保留已verified业务名，其余用目标原名；本地account_type=15、sub_channel_id=10，0/20000+/旧号未进入本批输出。新生成器拒绝目标hash/原始wire/已审语义边界/包号漂移和新碰撞；旧混淆常量LCNLHAOBBFE无运行引用且占用24604，已置负并验证规范反向名称。Ping仅将共享原始值从13→6、14→1原样回显；业务名称不晋级。

@@ -1,5 +1,7 @@
 # 给 Codex 的 Windows 一键部署与排障手册
 
+2026-11-06融合构建：F-02a已通过JDK17 portable构建，JAR SHA-256 `a8c2d89357e1c9253bbb9e982e95e075952f0b32968af3f5b0f236941a53a8f8`内嵌4324cd7。完整P0/SDK/补丁/资源前置仍未满足，未启动服务或安装补丁；无8088TCP/22101UDP服务监听，健康/运行JAR无对象。status在server-only只读模式退出1为预期无服务器，不是部署成功；原调试目标/配置/数据保留。本轮按用户要求限定融合验收后暂停，恢复先读HANDOFF2/Project，不按本文旧版本示例直接play。
+
 > 7.2 分支接手：本文保留历史部署细节，不能整段照搬旧路径、7.1 补丁或 Compose 流程。当前入口与验收以 [AGENTS](../AGENTS.md)、[README](../README.md)、[Project](../Project.md)、[Harness](../Harness.md) 为准；仅 Windows 便携方式，路径由当前 checkout 和本机 GAME_PATH 指定。用户已指定目标客户端时无需再搜索/复制另一份。7.2 协议与补丁前置尚未满足，不执行旧补丁安装。
 
 基线：2026-10-23，服务端 `19d6a51`；补丁子模块 `f2874103ab70afc56260ee12d1eaca96247933b2`；资源子模块 `dac2a9d43332ef51879522cf39da2831b0ca0543`。后续以当前源码、子模块锁定提交和根目录 `AGENTS.md` 为准。
