@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+D-01b5h1：[实际HTTP路由](docs/CLIENT_72_HTTP_ROUTE_CONTRACT.md)、`audit_client72_http_route.py`→`Client72HttpRouteAudit.java`→`trace_client72_http_route.py`；三新JVM各两真实请求/78 class匹配及正常停，实际JSON的正确签名拒绝/坏签名拒绝与列表九字段原生均验，固定同fixture重放完整/摘要同字节。正式SHA `50c365f7…0afb4`/`d7806baf…669af`，证明`evidence/http-route-main-review.json`、原始`d02-http-route-main-ef0f51ef96f94b3181889def8a9e9691/`。归档7.1.0实拒7.2，不改版本/走占位sign；当前区错误detail reader及准入仍待，不能以HTTP200晋级。
+
 F-03d3f4c：[Avatar depot](docs/CLIENT_72_AVATAR_SKILL_DEPOT.md)、`client72_avatar_skill_depot.py`/`test_client72_avatar_skill_depot`；22组/109实际Team消费/42字段/6拒绝，主线70与第三原生同双跑，完整/摘要SHA `0d1868c9…b9f4d`/`a8a7b4ce…e1a95`。证明`evidence/avatar-skill-depot-main-review.json`及`avatar-skill-depot-main-*`原始/日志。具名资源literal/cache/独立GetAvatarElementType与当前Team链已审；501/701只零缺省投影，目标parser/constructor与energySkill/LHFOOP alias未验，继续f4d真正构造/必经handler。
 
 E-01d1n2：[303启动/保存](docs/CLIENT_72_D02_QUEST_303_START.md)、`D02Quest303StartMongoTest`及`audit_d02_quest303_start.ps1`；独立27027真实两项、主线按驱动另复现两项全过，三方源码/class/11输入及26生产指纹核同。主线目录`d02-r3-quest303-replay-873511c485744e10b8dad1d75e481df8/`、证明`evidence/d02-r3-quest303-start-main-review.json`；1/63未完成保存/真实冷读、loadedAll=false门禁与BSON保持。无正向manager重绑/full onLogin/目标ChapterExcel/客户端，Mongo均正常shutdown、库保留；不是更多测试总数或R3通过。

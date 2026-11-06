@@ -8,6 +8,8 @@
 
 ## 当前阶段
 
+D-01b5h1已验取证：[真实HTTP路由/版本拒绝](docs/CLIENT_72_HTTP_ROUTE_CONTRACT.md)执行生产HttpServer/RegionHandler及真实7.2请求，三新JVM各两请求/78 class核同并正常停端口；实际列表九字段原生可读，正式key4/seed当前区返回加密签名版本拒绝。目标原生与独立RSA解密/验签同、坏正文签名拒绝，错误detail reader前止步；固定同输入独立重放字节一致。归档仍7.1.0，7.2未获准，未改版本或以旧请求求绿；正式7.2准入留R4，R2继续自然调用与ABI/加载。
+
 F-03d3f4c已审：[depot/当前Team资源消费](docs/CLIENT_72_AVATAR_SKILL_DEPOT.md)将tag11/u32连至具名AvatarSkillDepot资源缓存ID，区分默认资源与当前wire值；22组/109次Team消费/42字段读回/6拒绝，主线70及第三全新原生完整/摘要同双跑。501/701仅固定源的零缺省投影，未验目标parser/constructor/energySkill或LHFOOP别名，不作生产资源许可。继续真实15184e100构造/必经初始化和最小producer计划，不能沿f1零分配模型裁掉未知必需字段。
 
 E-01d1n2已审：[303真实启动/保存](docs/CLIENT_72_D02_QUEST_303_START.md)以真实QuestManager/QuestSystem/World、未启动GameServer及独立Mongo完成2项，主线按独立驱动再复现2项全过并正常shutdown。直接30302保存1未完成/62未开始，真实Progress私有入口保存63未完成；包构造2/64仅到边界。loadedAll全程false，真实门禁阻止manager重绑定且BSON保持；正向重绑定、目标ChapterExcel/完整登录/任务完成效果及客户端仍待，不扩大成R3通过。
@@ -137,6 +139,7 @@ E-01d1a（D02-R3子合同A）已验收：固定候选commit/tree/blob四表，�
 | D-01b5d RegionList独立来源/实际Java消费 | 固定客户端/JAR、c当前区前置 | 具名GlobalDispatch caller/class/codec与三HTTP支来源已分层，九raw字段、六Java/八native/三拒绝，主线重生成13文件/22测试/第三native同双跑；完整callback/原生Base64/运行分支/传输仍未知。窗口读取error5保留，随后用户要求重启观察 | 已完成 |
 | D-01b5e 重启后单GlobalDispatch观察 | 用户重启指令、d来源、同调试通道 | 旧stop exit1明确非正常退出；新run37.766秒/39停点双API及DR0后80000003，WER精确单点但无自然BP。主线19及11 raw hash核同；当前无target/API点空，持久库4自有点另列。只关观察记录，SDK/连接根因未解 | 已完成 |
 | D-01b5f 前序异常后自然SW入口/返回对照 | e退出证据、固定自有fixture及共享观察器 | 2成功/2首驱动失败分别保存；有/无AV+C++均普通SW入口/匹配返回、正常三方0及EXIT/STOP；主线源码/7raw/逐停点/代码恢复审核，同19守卫复用。游戏追加load0，原游戏原因未解 | 已完成 |
+| D-01b5h1 实际HTTP路由与7.2拒绝链 | c/d字段、F-04b/c信任、固定dfde archive | 真实两路由/三隔离JVM各两请求，78 class/正常停；每批实际JSON→原生正确签名拒绝/坏签名拒绝及列表九字段，固定输入重放同字节。只完成拒绝链取证，archive7.1.0/7.2准入与错误nested消费仍未通过 | 已完成 |
 
 2026-11-06本批F-02b1/b2、F-03a/b/c限定融合验收完成，按用户要求暂停；暂不D-02实机。运行代码提交`4bbf9fd`：完整LoginReq/两响应及嵌套21类198字段，八个场景握手、容量5字段、进入场景通知四字段及8类44字段raw闭包已接入。未知字段保留原名且不发送；完整初始化/P0、SDK/补丁/资源及实际客户端序列仍未验。
 

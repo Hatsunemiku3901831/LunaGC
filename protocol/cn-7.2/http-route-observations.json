@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "task": "D-01b5h1",
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "actualHttpRequests": 2,
+  "archiveVersion": "7.1.0",
+  "requestedVersion": "CNRELWin7.2.0",
+  "serverAdmittedClient": false,
+  "nativeCryptoCases": 2,
+  "validSignedVersionRejection": true,
+  "badBodySignatureRejected": true,
+  "nativeCurrentRegionReaderExecuted": false,
+  "stopBeforeUnrecoveredErrorDetail": true,
+  "actualHttpListNativeFields": 9,
+  "actualHttpListNativeReaderExecuted": true,
+  "originalClientExecuted": false,
+  "privateKeyExported": false,
+  "verificationForced": false,
+  "runtimeStatus": "not-tested",
+  "targetProtocolReady": false,
+  "sourceSHA256": {
+    "tools/trace_client72_http_route.py": "64eb720c9436ed8eec2ddfba3aa5de48beb3cee80728feb524299b7beea84033",
+    "tools/Client72HttpRouteAudit.java": "680b3763e5d5abfac4eda56ded75d06c03a78633fcf0d8ddd27645105388da11",
+    "tools/trace_client72_trust_contract.py": "e5f4191e2037c3182ad992acad5f516a842e70bee8e45b94b034909c1b796602",
+    "tools/trace_client72_dispatch_prefix.py": "3247b2ee1fd8e6591a56aac5590bb15b042ad87dcab275ca6d877ecc3fc61da7",
+    "tools/trace_client72_region_list.py": "00925f9f386dd100b377bc1442cba07f4f1fbc79bcc393dc1cbae2de6036912a"
+  },
+  "fixtureFileSHA256": {
+    "result.json": "e1ac80dc53c18cb2c18a681ebab6acacb311a83639664e933fba76e37ad7ffb0",
+    "region-list.response.bin": "08854bf5538abe7fe4e0fb107356e5ab285e5bef1eb5fb549b33a1e354d3dc99",
+    "current-region.json": "90fe59599228fd3660aba0632a563b3f6af9bb1ccb33e5bfbce400cc3d4bebf6",
+    "current-region.bad-sign.json": "6aa89216e660041b6917447afe94ad7430b251f3d2f28f058d2b31c5ef7f2319"
+  },
+  "boundaries": [
+    "Actual isolated HTTP only; no official SDK route or patched-client connection",
+    "Native JSON storage, managed runtime and trust input models reused explicitly",
+    "Version-error detail only interpreted as server producer data; target nested consumer unknown",
+    "No version override, production code/ready change or successful 7.2 admission"
+  ]
+}
