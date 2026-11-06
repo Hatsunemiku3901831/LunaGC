@@ -107,3 +107,51 @@ REA的target-free IL2CPP检查实际返回encrypted/unrecognized-magic，保留�
 最终双跑与守卫的准确文件hash/数量由本卡收尾写入；主线独立第三次复验、Git和共享索引由主线协调。本卡没有自行提交Git。
 
 主线已审核具体usage/虚槽、显式managed模型和pool flag修正，独立39项聚焦及第三新进程均通过；完整/摘要同最终双跑，证明`local/migration72/astra-main/scene-review.json`。不批准完整handler或生产SceneInfo；独立CopyFrom/hash后继继续。
+
+## 后继：具体 CopyFrom 上下文与非零能力哈希注册表
+
+独立工具 [client72_scene_deep_followup.py](../tools/client72_scene_deep_followup.py) 固定首项摘要 SHA `bed41fc74af5ef39b951c6d57834c10a56b0577da1166957d5221f19ada4acd5`，并核首项全部source hash。新摘要 `scene-deep-followup-observations.json` 不改首项受审产物。原始尝试和新报告仍在 `local/migration72/astra-scene/`。
+
+最小计划是先解当前clear/copy的具体泛型usage，在真实非空bool、两同形子list和旧值上比较；再用明确非零注册表执行真正ContainsKey/get_Item/FindEntry，跨过首项缺表错误，到下一实际消费者。没有以缺live内存为由跳过这两项，也没有为新对象填默认成功。
+
+### CopyFrom 已推进的实际范围
+
+owner61203两方法的当前usage重新确定：507471/HAPHBJOOKLA→clear、507465/JBBEIEPPIGB→copy；方法实例5883/27561/27562/27563分别绑定77771/70808/51162/51050。必要MethodInfo/rgctx存储仍是显式托管模型，函数本体、计数guard、清理、复制和写入执行原生指令。
+
+最初非空bool已能连续经 `1507E4900→14AD08270→147CCFC70→147CCF650→154C79510/154C79640→158DC4600/158DC2140` 返回；两条77771子list则真实止于resolver `140524010`，返回地址 `158DC239E`，准确缺少class context+58。原失败 `copy-probe2/3.log` 保留。
+
+与 Avatar rgctx 线协调后，本工具独立从固定文件重读 class range/definition，按5883实参展开：owner25060 definitionIndex6347的 slot9/+58/typeRef686353 是 **type89084 `KPLNPGCDMDK<77771>`**，slot3/+28/typeRef686352是 **`List<77771>.Enumerator/type1256`**。前者的唯一方法为零参 `GFJDJODGIDB`，与77771具体Clone声明关联；不是凭猜测的System.ICloneable名称绑定。接口表、实例化metadata和共享Enumerator.Dispose仍为已声明的模型。
+
+现在7个原生场景均到预期返回：非空bool、显式零、重复bool后零、错wire跳过、两条不同非空77771子list、复用旧目标后清理，以及省略附属子对象。两条子对象确实新分配，源/副本地址不同、1.25/-2.5分别保持，原输入不被改动。复用场景又向同一已非空目标CopyFrom另一份真实reader生成的零/空内容，bool和两list清空；实际清理范围各1个8字节元素，Array.Clear字节操作单独标为模型。
+
+本后继批准的是 **34045非空bool及两份77771 list的限定复制合同**，`coveredNonemptyListTypes=[77771]`。70808/51162/51050只恢复当前方法实参，不声称已执行其全部非空Clone。完整能力业务字段、对象池现场、正式生产者发送集合仍未批准；也不因此接生产SceneInfo。
+
+### 能力哈希表的非零真实查询
+
+精确 `Dictionary<uint32,string>/instance4742` 的 ContainsKey=`1578B63C0`、get_Item=`1578B5FD0` 与独立共享 `Dictionary<uint32,Object>/instance1541` 的 FindEntry=`1578B66F0` 重新从AOT表取得。两个wrapper实际直接调用同一FindEntry；不能误称4742自己另有已登记FindEntry。
+
+8个场景从完整typed Handler入口连续执行，真实uint32掩码、取模、桶链和完整key比较都在目标代码内，**没有Python字典查询回调**。注册表bucket/entry及UTF-16字符串对象是明确输入夹具，既不是实际资源数据，也不证明加载已完成。覆盖不同非零名、1与0x80000001相同masked hash、1与8同bucket链、重复与逆序、Unicode原指针、零值、缺key和空名。
+
+查到两个有效名称后，实际tuple为 `(tag3名称指针, tag2名称指针, tag1 u32)`，保持max uint32与列表顺序，随后到 `1507E44F0`。未执行该后继浮点列表消费者的完整效果。
+
+独立边界修正了“缺key必然报错”的过度概括：函数先把 `GLOBAL+C698` 默认字符串作为候选；缺key且该默认值非空时，真实返回该原指针。没有默认值，或命中一个长度为0的字符串时，才进入 `1500D872C` 错误日志准备分支。本卡在准备分支停止，没有把它称为异常抛出、断线或完整日志派发。零hash直接采用受控默认值；本机自然默认值和生产可否采用它仍未知。
+
+初轮后继把共用检查 `1500D871C` 误选作仅miss边界；真实命中/get_Item执行已反驳它，保留 `followup-probe3/4.log` 与 `registry-boundary-failure.json`。随后依据实际test/字符串长度分支修正停止位置并补上述正反例，没有放宽成功断言。
+
+### 后继实现规格与剩余界限
+
+Sol/Terra可以把本卡15个场景作为独立适配器的合同回归：两同形34045子对象必须保持原来字段用途，附属分支copy不得误实现为Avatar的retain；两个83320 hash仍是fixed32；不使用int32符号截断、double或map遍历顺序替代uint32键/有序列表。Java值依然必须来自已核实际getter和资源，不能据本卡人工注册表生成正式哈希值或默认名。
+
+首项的 `154C795C4` 和“C6D0完全无法继续”的宽阻塞已缩小。当前精确未闭合范围是：其它复杂非空list的Clone及业务含义、自然AddAbilityString注册和默认字符串来源、`1507E44F0` 非零列表的状态消费、完整stage/44512实体创建及旧实体teardown。C6D0受控有表的成功不替代这些条件，原来的构造/入场/运行状态均不晋级。
+
+```powershell
+$game = & tools/game_path.ps1
+python tools/client72_scene_deep_followup.py --client $game --output local/migration72/astra-scene/followup-replay-native.json --observations local/migration72/astra-scene/followup-replay-summary.json
+python -m unittest tools.test_client72_scene_deep_followup tools.test_client72_scene_deep tools.test_client72_scene_info_contract tools.test_client72_scene_info_raw tools.test_client72_scene_entry_identity -v
+```
+
+实际9个新增守卫加既有39个关联守卫共48项通过，失败/错误/跳过0；不与15个原生场景或首项36个场景相加为一次测试量。最终双跑hash和主线独立复验由本节收尾继续记录。没有生产变更、构建、部署、客户端/调试器操作或自行Git提交。
+
+正式双新进程 `followup-final-{a,b}-native.json` 均418,551 bytes，SHA `9fdbe3e0d1c76925c7bdaf0d60196a2a64d1cabdf621aadc0034b1e9834ef6f6`；summary均101,415 bytes，SHA `755ff3ad04ec69684b608de36667619746ec7421b463a5728b32f292b613e974`，与共享后继摘要相同。末次25.380秒；守卫日志 `followup-tests.log`。主线独立第三复验另记。
+
+后继主线48项关联及第三原生报告/摘要同双跑；已审核rgctx类型展开、Clone名称/入口、真实字典调用与默认/错误分支。证明`local/migration72/astra-main/scene-followup-review.json`，日志同前缀；仅批准所列77771复制和受控表查询范围，不批准全部非空图或自然注册。
