@@ -1,6 +1,6 @@
 # 7.2登录响应最小发送合同（F-02b）
 
-运行接入补充（4bbf9fd）：下表最小合同已用于生产builder。Token仅uid/token/sign/server_rand_key，retcode-only错误；key<=0在账号准入前拒绝，实际RSA失败不伪造签名、不切secret key。资源61只投影四字段。真实Java RSA成功及两坏参数、完整账号/UID/确认保存回归通过；LoginRsp连续收帧key selector未证，最小合同不代表SDK/完整Handler/实机登录。
+运行接入补充（4bbf9fd）：下表最小合同已用于生产builder。Token仅uid/token/sign/server_rand_key，retcode-only错误；key<=0在账号准入前拒绝，实际RSA失败不伪造签名、不切secret key。资源61只投影四字段。真实Java RSA成功及两坏参数、完整账号/UID/确认保存回归通过；F-02c已补同一离线会话状态的实际LoginRsp收帧选key合同，见[收帧研究](CLIENT_72_RECEIVE_KEY.md)，真实调度/SDK/完整Handler/实机登录仍未验。
 
 本项仅为固定国服7.2三输入的离线原生wire/消费证据，不是完整Handler、SDK、网络或实机验收。不改三层mappings的状态；只有既有verified语义采用业务名，其余运行schema仍用clientField原名。AstaPS固定提交a49f51aa6f2787ffbc25cee46801b70dee860d23仅作对照，不作为本工具输入。
 
@@ -36,7 +36,7 @@ tag658/FIHDHDLJBLC已有独立wire→CalcVersionHash(version, secretKey)输入�
 
 LoginRsp原有本地MD5必须保持：437→DATA_MD5/client_md5，1255→SILENCE_DATA_MD5/client_silence_md5，744/1792分别silence/data suffix。Asta两MD5名字相反，不覆盖本地消费证据。
 
-LoginRsp封帧密钥本批保持待核：既有14A446CC0收帧工具真实验证selector0→GLOBAL+19580、1→19588，但selector由夹具显式提供，factory是不透明模型，未包含20835。连续Token Handler→LoginReq封帧已证安装19580并维持selector0，未接到响应收帧/NDEN reader/Handler。本项不以一般协议习惯修改旧setUseDispatchKey(true)；解除条件为复用该已安装运行时，连续执行LoginRsp接收解帧与真实reader/dispatch，并核对其间selector来源与复写。
+F-02c补充：同一个Offline72实例完成Token Handler安装19580/原生selector=0、实际LoginReq封帧后，接收回调1472CF280→14A446CC0读取同一个19580，再由真实factory/字典查找→20835/NDEN reader→原生1507CC240分发至Login Handler前缀。11样本含非零64位/嵌套/列表/跨key周期/5拒绝，原key指针及4096字节不变，接收和消费期间无原生selector写入。使用dispatch key加密的20835返回6且不入队；错误后session key仍正常。此处三次入口保持内存而由工具分别调用，managed分配/生命周期及队列sink仍是模型；真实socket/线程调度、完整Handler和启动来源未证。该合同没有修改运行builder或把实机状态晋级，详见[范围和复现](CLIENT_72_RECEIVE_KEY.md)。
 
 ## 复现与解除条件
 

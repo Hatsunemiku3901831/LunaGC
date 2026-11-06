@@ -1,0 +1,679 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "fixtureCount": 11,
+  "results": [
+    {
+      "name": "nonzero-64-error",
+      "returnCode": 1,
+      "stop": "0x620000100",
+      "enqueued": true,
+      "readerReleased": true,
+      "selectorBefore": 0,
+      "selectorAfter": 0,
+      "selectorWrites": [],
+      "keyPointerPreserved": true,
+      "keyBytesPreserved": true,
+      "slotReads": [
+        {
+          "instruction": "0x14a446d65",
+          "offset": "0x19580"
+        }
+      ],
+      "frameLength": 44,
+      "bodyLength": 20,
+      "xorIterations": 44,
+      "nativeEntries": [
+        "0x1472cf280",
+        "0x14a446cc0",
+        "0x151a853d0",
+        "0x15585b760",
+        "0x14b89ec90"
+      ],
+      "models": [
+        "0x620001210",
+        "0x14d4480c0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x620001210",
+        "0x14d4480c0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x14b8a05f0",
+        "0x620001220",
+        "0x159af2f20",
+        "0x1567aff90"
+      ],
+      "independentObjectMatch": true,
+      "independentDecryptMatch": true,
+      "bodySHA256": "02be9539a6c30e108b0e9f818b95e0e9cbcd1f620dda14aa25e3975dd4fc8ed3",
+      "objectSHA256": "d836a2439733dad8fa50ee5065cfcdc8c66d7dd27fab0d93d0ca80a956e1b204",
+      "consumer": {
+        "entry": "0x1507cc240",
+        "handler": "0x1507b7be0",
+        "stop": "0x1531dc5e0",
+        "messagePointerPreserved": true,
+        "nativeHandlerExecuted": true
+      },
+      "nativePathSHA256": "99c2fe837153adeb6f484c4cdc5c98d7b1cee1a3eb5ccca15ed3b32de7542351",
+      "passed": true
+    },
+    {
+      "name": "resource-consumer",
+      "returnCode": 1,
+      "stop": "0x620000100",
+      "enqueued": true,
+      "readerReleased": true,
+      "selectorBefore": 0,
+      "selectorAfter": 0,
+      "selectorWrites": [],
+      "keyPointerPreserved": true,
+      "keyBytesPreserved": true,
+      "slotReads": [
+        {
+          "instruction": "0x14a446d65",
+          "offset": "0x19580"
+        }
+      ],
+      "frameLength": 44,
+      "bodyLength": 20,
+      "xorIterations": 44,
+      "nativeEntries": [
+        "0x1472cf280",
+        "0x14a446cc0",
+        "0x151a853d0",
+        "0x15585b760",
+        "0x14b89ec90"
+      ],
+      "models": [
+        "0x620001210",
+        "0x14d4480c0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x620001210",
+        "0x14d4480c0",
+        "0x1405336c0",
+        "0x147500e70",
+        "0x147500e70",
+        "0x147500e70",
+        "0x1405336c0",
+        "0x147500e70",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x14b8a05f0",
+        "0x620001220",
+        "0x159af2f20",
+        "0x1567aff90"
+      ],
+      "independentObjectMatch": true,
+      "independentDecryptMatch": true,
+      "bodySHA256": "2d31bd144426260e18d48ede8fa0686b1f3b1efe04a10f6e4da7de17ea04955b",
+      "objectSHA256": "4f6dc5e5dd1544c5ffbcb92b9dfc5d93f760f7347bd2bba8baf7b9a9813b1830",
+      "consumer": {
+        "entry": "0x1507cc240",
+        "handler": "0x1507b7be0",
+        "stop": "0x1507b8368",
+        "messagePointerPreserved": true,
+        "nativeHandlerExecuted": true,
+        "resourcePointersPreserved": true,
+        "resourceVersion": 42
+      },
+      "nativePathSHA256": "6a7b44edf2dd4669c095803adb730ae8b22a92ac3f3b7111d6d5fc9ecc6a0f39",
+      "passed": true
+    },
+    {
+      "name": "message-list",
+      "returnCode": 1,
+      "stop": "0x620000100",
+      "enqueued": true,
+      "readerReleased": true,
+      "selectorBefore": 0,
+      "selectorAfter": 0,
+      "selectorWrites": [],
+      "keyPointerPreserved": true,
+      "keyBytesPreserved": true,
+      "slotReads": [
+        {
+          "instruction": "0x14a446d65",
+          "offset": "0x19580"
+        }
+      ],
+      "frameLength": 57,
+      "bodyLength": 33,
+      "xorIterations": 57,
+      "nativeEntries": [
+        "0x1472cf280",
+        "0x14a446cc0",
+        "0x151a853d0",
+        "0x15585b760",
+        "0x14b89ec90"
+      ],
+      "models": [
+        "0x620001210",
+        "0x14d4480c0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x620001210",
+        "0x14d4480c0",
+        "0x14d4480c0",
+        "0x14d4480c0",
+        "0x14d4480c0",
+        "0x14d4480c0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x14b8a05f0",
+        "0x620001220",
+        "0x159af2f20",
+        "0x1567aff90"
+      ],
+      "independentObjectMatch": true,
+      "independentDecryptMatch": true,
+      "bodySHA256": "896781c61f227702854f0df7b8b4b79b7077115e6c69842e978566d606bf4e28",
+      "objectSHA256": "deaf011899c34f86319d2b62172cb85e58e9ee30ca4ce3fdc856f63f0a17de8c",
+      "consumer": {
+        "entry": "0x1507cc240",
+        "handler": "0x1507b7be0",
+        "stop": "0x1507b8368",
+        "messagePointerPreserved": true,
+        "nativeHandlerExecuted": true
+      },
+      "nativePathSHA256": "cde888ad6d7328b9905ae70b887bb6c090047f2096c3a7db5d1ac321233328f7",
+      "passed": true
+    },
+    {
+      "name": "key-wrap-string",
+      "returnCode": 1,
+      "stop": "0x620000100",
+      "enqueued": true,
+      "readerReleased": true,
+      "selectorBefore": 0,
+      "selectorAfter": 0,
+      "selectorWrites": [],
+      "keyPointerPreserved": true,
+      "keyBytesPreserved": true,
+      "slotReads": [
+        {
+          "instruction": "0x14a446d65",
+          "offset": "0x19580"
+        }
+      ],
+      "frameLength": 4228,
+      "bodyLength": 4204,
+      "xorIterations": 4228,
+      "nativeEntries": [
+        "0x1472cf280",
+        "0x14a446cc0",
+        "0x151a853d0",
+        "0x15585b760",
+        "0x14b89ec90"
+      ],
+      "models": [
+        "0x620001210",
+        "0x14d4480c0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x620001210",
+        "0x14d4480c0",
+        "0x147500e70",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x14b8a05f0",
+        "0x620001220",
+        "0x159af2f20",
+        "0x1567aff90"
+      ],
+      "independentObjectMatch": true,
+      "independentDecryptMatch": true,
+      "bodySHA256": "bc04751851a4dbbf81069e55443bd24f4b5fdb78f7c185c950a9c576ec4aaae9",
+      "objectSHA256": "303491954c1310642fa7ab43690f2982dbf80e3f18d476a20050847439cc7c56",
+      "consumer": {
+        "entry": "0x1507cc240",
+        "handler": "0x1507b7be0",
+        "stop": "0x1507b8368",
+        "messagePointerPreserved": true,
+        "nativeHandlerExecuted": true
+      },
+      "nativePathSHA256": "321ba95a5f9f07578717108d1754eefeecfb5f4bfd7a972d571b2fc9ee16292a",
+      "passed": true
+    },
+    {
+      "name": "empty-response",
+      "returnCode": 1,
+      "stop": "0x620000100",
+      "enqueued": true,
+      "readerReleased": true,
+      "selectorBefore": 0,
+      "selectorAfter": 0,
+      "selectorWrites": [],
+      "keyPointerPreserved": true,
+      "keyBytesPreserved": true,
+      "slotReads": [
+        {
+          "instruction": "0x14a446d65",
+          "offset": "0x19580"
+        }
+      ],
+      "frameLength": 24,
+      "bodyLength": 0,
+      "xorIterations": 24,
+      "nativeEntries": [
+        "0x1472cf280",
+        "0x14a446cc0",
+        "0x151a853d0",
+        "0x15585b760",
+        "0x14b89ec90"
+      ],
+      "models": [
+        "0x620001210",
+        "0x14d4480c0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x620001210",
+        "0x14d4480c0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x14b8a05f0",
+        "0x620001220",
+        "0x159af2f20",
+        "0x1567aff90"
+      ],
+      "independentObjectMatch": true,
+      "independentDecryptMatch": true,
+      "bodySHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "objectSHA256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "consumer": {
+        "entry": "0x1507cc240",
+        "handler": "0x1507b7be0",
+        "stop": "0x1507b8368",
+        "messagePointerPreserved": true,
+        "nativeHandlerExecuted": true
+      },
+      "nativePathSHA256": "83fac3a94ca78fc38c6adc384cf627b03f324d7421b1ad76e28849ed09150c51",
+      "passed": true
+    },
+    {
+      "name": "dispatch-key-rejected",
+      "returnCode": 6,
+      "stop": "0x620000100",
+      "enqueued": false,
+      "readerReleased": false,
+      "selectorBefore": 0,
+      "selectorAfter": 0,
+      "selectorWrites": [],
+      "keyPointerPreserved": true,
+      "keyBytesPreserved": true,
+      "slotReads": [
+        {
+          "instruction": "0x14a446d65",
+          "offset": "0x19580"
+        }
+      ],
+      "frameLength": 44,
+      "bodyLength": 20,
+      "xorIterations": 44,
+      "nativeEntries": [
+        "0x1472cf280",
+        "0x14a446cc0"
+      ],
+      "models": [
+        "0x620001210",
+        "0x14d4480c0",
+        "0x146f63190",
+        "0x146f633a0"
+      ],
+      "independentObjectMatch": true,
+      "independentDecryptMatch": false,
+      "bodySHA256": "02be9539a6c30e108b0e9f818b95e0e9cbcd1f620dda14aa25e3975dd4fc8ed3",
+      "objectSHA256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "consumer": null,
+      "nativePathSHA256": "8a748ff72acb5832d0bf3979f4c4d7356d2135af23e6b3eeb145e0c3c1b19927",
+      "passed": true
+    },
+    {
+      "name": "bad-start",
+      "returnCode": 6,
+      "stop": "0x620000100",
+      "enqueued": false,
+      "readerReleased": false,
+      "selectorBefore": 0,
+      "selectorAfter": 0,
+      "selectorWrites": [],
+      "keyPointerPreserved": true,
+      "keyBytesPreserved": true,
+      "slotReads": [
+        {
+          "instruction": "0x14a446d65",
+          "offset": "0x19580"
+        }
+      ],
+      "frameLength": 44,
+      "bodyLength": 20,
+      "xorIterations": 44,
+      "nativeEntries": [
+        "0x1472cf280",
+        "0x14a446cc0"
+      ],
+      "models": [
+        "0x620001210",
+        "0x14d4480c0",
+        "0x146f63190",
+        "0x146f633a0"
+      ],
+      "independentObjectMatch": true,
+      "independentDecryptMatch": true,
+      "bodySHA256": "02be9539a6c30e108b0e9f818b95e0e9cbcd1f620dda14aa25e3975dd4fc8ed3",
+      "objectSHA256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "consumer": null,
+      "nativePathSHA256": "8a748ff72acb5832d0bf3979f4c4d7356d2135af23e6b3eeb145e0c3c1b19927",
+      "passed": true
+    },
+    {
+      "name": "truncated-frame",
+      "returnCode": 2,
+      "stop": "0x620000100",
+      "enqueued": false,
+      "readerReleased": false,
+      "selectorBefore": 0,
+      "selectorAfter": 0,
+      "selectorWrites": [],
+      "keyPointerPreserved": true,
+      "keyBytesPreserved": true,
+      "slotReads": [
+        {
+          "instruction": "0x14a446d65",
+          "offset": "0x19580"
+        }
+      ],
+      "frameLength": 43,
+      "bodyLength": 20,
+      "xorIterations": 43,
+      "nativeEntries": [
+        "0x1472cf280",
+        "0x14a446cc0"
+      ],
+      "models": [
+        "0x620001210",
+        "0x14d4480c0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0"
+      ],
+      "independentObjectMatch": true,
+      "independentDecryptMatch": true,
+      "bodySHA256": "02be9539a6c30e108b0e9f818b95e0e9cbcd1f620dda14aa25e3975dd4fc8ed3",
+      "objectSHA256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "consumer": null,
+      "nativePathSHA256": "12b7851b6ef7dab9d56facbbfe928f53340923fb3037f97bc59b6d457d4e6bc9",
+      "passed": true
+    },
+    {
+      "name": "bad-end-after-body",
+      "returnCode": 7,
+      "stop": "0x620000100",
+      "enqueued": false,
+      "readerReleased": false,
+      "selectorBefore": 0,
+      "selectorAfter": 0,
+      "selectorWrites": [],
+      "keyPointerPreserved": true,
+      "keyBytesPreserved": true,
+      "slotReads": [
+        {
+          "instruction": "0x14a446d65",
+          "offset": "0x19580"
+        }
+      ],
+      "frameLength": 44,
+      "bodyLength": 20,
+      "xorIterations": 44,
+      "nativeEntries": [
+        "0x1472cf280",
+        "0x14a446cc0",
+        "0x151a853d0",
+        "0x15585b760",
+        "0x14b89ec90"
+      ],
+      "models": [
+        "0x620001210",
+        "0x14d4480c0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x620001210",
+        "0x14d4480c0",
+        "0x146f63190",
+        "0x146f633a0"
+      ],
+      "independentObjectMatch": true,
+      "independentDecryptMatch": true,
+      "bodySHA256": "02be9539a6c30e108b0e9f818b95e0e9cbcd1f620dda14aa25e3975dd4fc8ed3",
+      "objectSHA256": "d836a2439733dad8fa50ee5065cfcdc8c66d7dd27fab0d93d0ca80a956e1b204",
+      "consumer": null,
+      "nativePathSHA256": "075060c1989242b863bafdbf7e92aa337962cfe591ec29ad8f8d3e31fc52fb37",
+      "passed": true
+    },
+    {
+      "name": "invalid-body-tag",
+      "returnCode": null,
+      "stop": "0x1509cb150",
+      "enqueued": false,
+      "readerReleased": false,
+      "selectorBefore": 0,
+      "selectorAfter": 0,
+      "selectorWrites": [],
+      "keyPointerPreserved": true,
+      "keyBytesPreserved": true,
+      "slotReads": [
+        {
+          "instruction": "0x14a446d65",
+          "offset": "0x19580"
+        }
+      ],
+      "frameLength": 26,
+      "bodyLength": 2,
+      "xorIterations": 26,
+      "nativeEntries": [
+        "0x1472cf280",
+        "0x14a446cc0",
+        "0x151a853d0",
+        "0x15585b760",
+        "0x14b89ec90"
+      ],
+      "models": [
+        "0x620001210",
+        "0x14d4480c0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x620001210",
+        "0x14d4480c0"
+      ],
+      "independentObjectMatch": true,
+      "independentDecryptMatch": true,
+      "bodySHA256": "b413f47d13ee2fe6c845b2ee141af81de858df4ec549a58b7970bb96645bc8d2",
+      "objectSHA256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "consumer": null,
+      "nativePathSHA256": "d5c8fa0ac1d1a033364947130dbd61909f5acbc678da360f0fddb353b365efb5",
+      "passed": true
+    },
+    {
+      "name": "session-after-errors",
+      "returnCode": 1,
+      "stop": "0x620000100",
+      "enqueued": true,
+      "readerReleased": true,
+      "selectorBefore": 0,
+      "selectorAfter": 0,
+      "selectorWrites": [],
+      "keyPointerPreserved": true,
+      "keyBytesPreserved": true,
+      "slotReads": [
+        {
+          "instruction": "0x14a446d65",
+          "offset": "0x19580"
+        }
+      ],
+      "frameLength": 44,
+      "bodyLength": 20,
+      "xorIterations": 44,
+      "nativeEntries": [
+        "0x1472cf280",
+        "0x14a446cc0",
+        "0x151a853d0",
+        "0x15585b760",
+        "0x14b89ec90"
+      ],
+      "models": [
+        "0x620001210",
+        "0x14d4480c0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x620001210",
+        "0x14d4480c0",
+        "0x1405336c0",
+        "0x147500e70",
+        "0x147500e70",
+        "0x147500e70",
+        "0x1405336c0",
+        "0x147500e70",
+        "0x146f63190",
+        "0x146f633a0",
+        "0x14b8a05f0",
+        "0x620001220",
+        "0x159af2f20",
+        "0x1567aff90"
+      ],
+      "independentObjectMatch": true,
+      "independentDecryptMatch": true,
+      "bodySHA256": "2d31bd144426260e18d48ede8fa0686b1f3b1efe04a10f6e4da7de17ea04955b",
+      "objectSHA256": "4f6dc5e5dd1544c5ffbcb92b9dfc5d93f760f7347bd2bba8baf7b9a9813b1830",
+      "consumer": {
+        "entry": "0x1507cc240",
+        "handler": "0x1507b7be0",
+        "stop": "0x1507b8368",
+        "messagePointerPreserved": true,
+        "nativeHandlerExecuted": true,
+        "resourcePointersPreserved": true,
+        "resourceVersion": 42
+      },
+      "nativePathSHA256": "6a7b44edf2dd4669c095803adb730ae8b22a92ac3f3b7111d6d5fc9ecc6a0f39",
+      "passed": true
+    }
+  ],
+  "runtimeStatus": "not-tested",
+  "sameRuntimeState": true,
+  "continuousControlFlow": false,
+  "wholeHandlerReturned": false,
+  "keySuppliedToReceiver": false,
+  "sessionKeySHA256": "5d517d6c52800a32b573b136c7a469131670b869881157c2fa013f714b796df5",
+  "nativeInstallWrites": [
+    {
+      "instruction": "0x15a4e0d3b",
+      "value": 0
+    }
+  ],
+  "javaSourceSHA256": {
+    "tools/Client72SeedReference.java": "9d4886741c825bbd95d47688e606b724cb97a2b6a288e52f3778a07e38b8fcc1",
+    "src/main/java/emu/grasscutter/utils/algorithms/MersenneTwister64.java": "c46c8c05acf697fded0ef1685a0e64d6fb5a13933d10d07b3c387c36a6cabebb"
+  },
+  "declaration": {
+    "handlerMethod": 467396,
+    "parameterIndex": 381034,
+    "parameterType": 260940,
+    "getter": "0x14b89ec80",
+    "registrationFunction": "0x1532ed560"
+  },
+  "nativeKeyChecks": [
+    {
+      "operation": 101,
+      "oracle": true,
+      "derSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+      "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+      "native": true
+    },
+    {
+      "operation": 103,
+      "oracle": true,
+      "derSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+      "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+      "native": true
+    }
+  ],
+  "loginFrameReturned": true,
+  "signingFixtureSHA256": "4830a2c186bf114d7523796a3360e13ea1bb667f1921e3253aab154133a7501e",
+  "models": [
+    "Existing Handler crypto trust/SDK/clock/managed storage fixtures",
+    "Registry initialized with independently verified 20835 -> type40503; native dictionary lookup executes",
+    "Managed graph allocation, ASCII/blob storage, pooled packet/header/reader storage and concrete lifecycle boundary",
+    "Receive queue lock and enqueue sink; consumer explicitly invoked with the same queued packet",
+    "Handler stage/cache reset and error formatting boundaries"
+  ],
+  "outsideScope": [
+    "Socket/real client/thread scheduling/IFix",
+    "Complete Token/Login Handler return",
+    "Whole registry and real object-pool startup",
+    "All possible selector writers/reconnect branches"
+  ],
+  "sourceSHA256": {
+    "tools/trace_client72_receive_key.py": "779e0d396c15bd0ca9d49d0bdffdcfe716ad8eb1111098f1b2a126248307e36f",
+    "tools/client72_graph.py": "bfa2f846e858327c7b592ba1139b6f50f0f0d27edc478d6475723064353cd4ab",
+    "tools/trace_client72_handler_login_frame.py": "062123dc8bed08e72186a3039e8cb642d70c71a8fba1e23beb672c54b35c74ca",
+    "protocol/cn-7.2/response-wire-observations.json": "eae0e61bd6cdc0b0ff1995ac778da1d37890fd707937cfaaf5b3e18137dc6e64",
+    "protocol/cn-7.2/response-leaf-wire-observations.json": "61a8cdc6e6098a1f237f82a4efa5c63d8144782eb228d568359bfee1f3fba0bc"
+  }
+}
