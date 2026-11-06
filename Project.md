@@ -8,10 +8,10 @@
 
 | 本次子项 | 依赖/限定工作 | 验收与边界 | 状态 |
 | --- | --- | --- | --- |
-| F-02c 连续响应收帧及选key来源 | 固定三输入；复用Token Handler安装key的同一原生运行时，追踪selector写入/读取、LoginRsp真实reader/路由 | 非零/64位/嵌套、独立wire、dispatch/session差异及错误key/边界；二次产物/关联回归；完整Handler/SDK/socket未执行不得晋级 | 进行中 |
+| F-02c 连续响应收帧及选key来源 | 固定三输入；复用Token Handler安装key的同一原生运行时，追踪selector写入/读取、LoginRsp真实reader/路由 | 75bafc7；11原生/32关联及双跑，6入队/5拒绝，真实factory/reader/分发，selector0/session4096字节不变；错误dispatch key拒绝；三次工具调用非真实线程调度，完整Handler/SDK/socket未执行不晋级 | 已完成 |
 | F-03d1 PlayerData独立身份与raw下界 | F-03；固定目标命名/注册/消费、5外字段及非空map闭包 | 上游7193仅候选；独立身份来源、实际reader/64位/错误wire及重复性；未知不命名、不改生产 | 进行中 |
 | F-03d1a 79263/78350初始化raw对象图 | F-03d1固定输入、独立AOT9505/shared1541 | 0cd95ef；2类型9raw字段、256扫描/14原生图/4模型拒绝，8新增/42关联及双跑一致；map/boxed int64/float/显式0/覆盖/64位已验，身份仍unresolved | 已完成 |
-| F-03d1b PlayerData业务身份及字段来源 | F-03d1a、typed handler1507BC0E0及Player模型 | 独立目标literal/具名调用链闭合；禁止按上游或NICKNAME孤立字串批准；没有命名证据保持unknown | 待开始 |
+| F-03d1b PlayerData业务身份及字段来源 | F-03d1a、typed handler1507BC0E0及Player模型 | 独立目标literal/具名调用链闭合；禁止按上游或NICKNAME孤立字串批准；没有命名证据保持unknown | 进行中 |
 | F-03d2 PlayerStore递归Item闭包 | F-03d1方法、本地固定输入 | 20892仅候选；先核Item/oneof闭包及独立身份/wire，未验不得发送 | 待开始 |
 | F-03d2a 68537/65333库存raw闭包 | F-03d1a方法、本地固定三输入 | 先固定实际Item/oneof及所有必要nested依赖，独立native/wire/错误/list/64位与双跑；若闭包超出本项先列缺口再分卡，身份未闭不进生产 | 进行中 |
 | F-03d2a1 库存15类型依赖与原始外层 | F-03d2a固定输入/全部usage来源 | 15类型/42实例存储依赖及AOT，Item六分支、两个单u32叶子和根原始字段；跨usage不可漏掉嵌套类型，空嵌套不算完整图；独立wire/边界/双跑 | 进行中 |
@@ -20,7 +20,7 @@
 | F-03d3 AvatarData递归Avatar闭包 | F-03d1方法、本地固定输入 | 20143仅候选；AvatarInfo/Team/Rename及packed64位闭包，未验不得发送 | 待开始 |
 | E-01c6 嵌套require调用者bindings恢复 | E-01c5已复现成功置null/异常残留 | b74cd16；6例先5失败后全过，6套32 Lua及8加载审计全过；portable25秒JAR7ca18e10…e8f5f、9class相符，其余45935不变；双轮整场fast407/449、inline0，30错误组恢复且无新增；完整前置不足未部署，local/资源/实机不晋级 | 已完成 |
 | F-04a SDK/补丁/资源前置现场复核 | 当前checkout/config/GAME_PATH、三输入与现有会话 | 三哈希/参考clean/归属已验；API会话无target；两个status退出1及6个revision候选；源码旧强制验签钩子与字符串工厂缺口保留，见CLIENT_72_RUNTIME_PREREQUISITES；仅核对不代表F-04完成 | 已完成 |
-| F-04b 保留验签的本地信任供给合同 | F-04a、既有原生seed/response/dispatch密码学 | 固定目标与源码key来源，实际原生核对旧钩子位置寄存器/长度、root与两类key签名供给；独立RSA及篡改拒绝/重复性；不强置验签结果、不安装未验补丁，不导出目标私钥 | 待开始 |
+| F-04b 保留验签的本地信任供给合同 | F-04a、既有原生seed/response/dispatch密码学 | 固定目标与源码key来源，实际原生核对旧钩子位置寄存器/长度、root与两类key签名供给；独立RSA及篡改拒绝/重复性；不强置验签结果、不安装未验补丁，不导出目标私钥 | 进行中 |
 
 2026-11-06本批F-02b1/b2、F-03a/b/c限定融合验收完成，按用户要求暂停；暂不D-02实机。运行代码提交`4bbf9fd`：完整LoginReq/两响应及嵌套21类198字段，八个场景握手、容量5字段、进入场景通知四字段及8类44字段raw闭包已接入。未知字段保留原名且不发送；完整初始化/P0、SDK/补丁/资源及实际客户端序列仍未验。
 

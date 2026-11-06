@@ -1,5 +1,7 @@
 # 7.2 Token 成功分支与会话研究
 
+2026-11-06后续F-02c已从本页Token Handler安装的同一内存状态执行LoginRsp收帧/选key、真实factory/reader/分发；11原生/32关联、双跑一致（75bafc7），见[收帧key合同](CLIENT_72_RECEIVE_KEY.md)。三次入口由工具分别调用，不是实机线程调度；完整Handler返回/SDK/补丁信任/D-02仍未验。未知字段及本页既有边界不晋级。
+
 输入为 extract_client72.HASHES 固定的三份目标文件。本页只记实际执行范围；不是客户端登录或补丁验收。
 
 ## A-04d5a 解密后 seed、整数存储与会话密钥
