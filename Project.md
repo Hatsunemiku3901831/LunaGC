@@ -8,6 +8,8 @@
 
 当前独立子合同：F-03d3e4按signed-list具体AOT与三新类取证；F-03d3f2从root tag3→Player+0x128继续追实际当前控制消费者，不按存储或旧名直接命名；D-01b5执行单次120秒、新事件/OS门及裸con分类的真实启动观察；E-01d1核受控角色默认装备/scene3最小引用与真实加载。各卡只改独立工具/证据，主线串行审核提交；新增运行代码仍须相应回归/构建及条件满足的部署核验。
 
+F-03d3f2a限定完成：[Hero/本地角色消费](docs/CLIENT_72_AVATAR_CONTROL.md)实际将root tag3经GUID模型索引接到具名SetHeroMoveRatio，而GetLocalAvatarConfigId另用场景管理器+0x284；7个独立原生图/15关联测试及双新进程一致。不批准`cur_avatar_guid`，不把夹具中的两类实体关联当实际入场/切人；F-03d3f2继续找场景控制实体写入与队伍来源，映射/ready保持。
+
 E-01d1a（D02-R3子合同A）已验收：固定候选commit/tree/blob四表，受控角色10000005/10000007→武器11101及501/504/701/704四depot的skills/subSkills/energySkill/attackModeSkill正引用全存在；0保持空引用。3新增及原资源7项共10聚焦测试通过，主线独立重跑报告SHA `a5974ef3…f5698f`与两份代理报告相同。标准模块入口首次导入失败已修并真实复验；天赋/成长/突破/能力/武器后代及revision、真实加载仍未知，R3父项/resourceReady不晋级。见[最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)；仅离线工具/测试/文档，未部署。
 
 本轮现场已重新核对：三份客户端输入及SDK/Astrolabe哈希匹配；`.env`与config哈希保持，无`.env.local`；patch/resources锁定提交保持，resources原有单文件差异未动；参考Asta固定HEAD及clean保持。没有服务Java/客户端目标，8088TCP/22101UDP/27027无监听；原Mongo27017与已有调试器保留。证据在忽略`local/migration72/evidence/d02-resume-inventory.json`。未重跑旧667研究/829 Java，未部署或安装补丁。以下暂停段落均为历史。

@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+F-03d3f2a：[Hero与本地角色来源](docs/CLIENT_72_AVATAR_CONTROL.md)，`client72_avatar_control.py`及`test_client72_avatar_control`；7原生图，5新增/15关联通过，完整/摘要双新进程逐字节一致。证据`evidence/avatar-control-{native,native2,summary,summary2}.json`，日志`logs/avatar-control-run{1,2}.log`。只证明root3的具名Hero消费与另一路本地实体ID来源，不批准当前控制GUID，继续+0x284的场景消息写入合同。
+
 F-03d3e5：[中层list与int64](docs/CLIENT_72_AVATAR_MIDDLE_TREES.md)，`trace_client72_avatar_middle_trees.py`/`test_client72_avatar_middle_trees`；五类24wire、640扫描/21图/8拒绝。8新增/130关联及主线8定向通过；主线第三新进程完整/摘要与双跑同为`5a7d86a7…1cb5e36`/`8481fb5e…893e193`，证据`evidence/avatar-middle-trees-*`。完整复杂图/语义/runtime仍未晋级，继续e6/e7/e8。
 
 F-03d3e4：[signed-list与同形子字段](docs/CLIENT_72_AVATAR_SIGNED_TREES.md)，`trace_client72_avatar_signed_trees.py`及`test_client72_avatar_signed_trees`。三类40wire、384扫描/19图/10拒绝；代理双新进程与主线第三重跑的完整/摘要SHA相同（`c1c6cd41…b45d27c`/`6ec19e0b…b056ee0`），8新增/122关联及主线16定向通过，范围不同不相加。原始`evidence/avatar-signed-trees-*`，主线review同前缀；完整复杂图仍未验，继续e5与e6→e7→e8，无运行改动或重启。

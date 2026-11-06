@@ -1,0 +1,778 @@
+{
+  "schemaVersion": 1,
+  "task": "F-03d3f2a",
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "avatarContractSHA256": "a54f62de9a803e2070c515ecc854488827ea6c62db4468c633190d6733f2b2f3",
+  "declarations": {
+    "methods": [
+      {
+        "owner": 49228,
+        "index": 409569,
+        "name": "EJKLFEKAPHE",
+        "nameIndex": "0xb5a9c53",
+        "registeredAddress": "0x1517b8730",
+        "parameterCount": 0,
+        "flags": "0x86",
+        "virtualSlot": 65535
+      },
+      {
+        "owner": 49228,
+        "index": 409460,
+        "name": "ICLMKLPEJCM",
+        "nameIndex": "0xb5a978e",
+        "registeredAddress": "0x1517abd80",
+        "parameterCount": 1,
+        "flags": "0x86",
+        "virtualSlot": 65535
+      },
+      {
+        "owner": 58088,
+        "index": 482495,
+        "name": "GetLocalAvatarConfigId",
+        "nameIndex": "0x1667ed4e",
+        "registeredAddress": "0x153e46950",
+        "parameterCount": 0,
+        "flags": "0x96",
+        "virtualSlot": 65535
+      },
+      {
+        "owner": 58088,
+        "index": 482567,
+        "name": "SetHeroMoveRatio",
+        "nameIndex": "0x1067f32f",
+        "registeredAddress": "0x153e4d900",
+        "parameterCount": 1,
+        "flags": "0x96",
+        "virtualSlot": 65535
+      }
+    ],
+    "playerGuidField": {
+      "index": 288240,
+      "name": "MDCKEABAHNP",
+      "nameIndex": "0xb67d0aa",
+      "typeIndex": 445682,
+      "type": {
+        "kind": "uint64",
+        "attributes": "0x6",
+        "data": "0x140",
+        "byRef": false
+      },
+      "offset": 296,
+      "rawOffset": "0x128",
+      "offsetKind": "instance"
+    },
+    "activeEntityField": {
+      "index": 243575,
+      "name": "LFKGEFNCLLN",
+      "nameIndex": "0xb5a935d",
+      "typeIndex": 444309,
+      "type": {
+        "kind": "uint32",
+        "attributes": "0x1",
+        "data": "0x13f",
+        "byRef": false
+      },
+      "offset": 644,
+      "rawOffset": "0x284",
+      "offsetKind": "instance"
+    },
+    "classUsages": [
+      {
+        "usageRow": 702959,
+        "sourceIndex": 53502,
+        "cell": "0x14589bc70",
+        "type": {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0x46f3",
+          "byRef": false,
+          "typeDefinition": 18163,
+          "name": "LOPOKBINJOP",
+          "namespace": ""
+        }
+      },
+      {
+        "usageRow": 702505,
+        "sourceIndex": 32909,
+        "cell": "0x145898d98",
+        "type": {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0xd32d",
+          "byRef": false,
+          "typeDefinition": 54061,
+          "name": "PECHLEKMHDF",
+          "namespace": ""
+        }
+      },
+      {
+        "usageRow": 702260,
+        "sourceIndex": 443060,
+        "cell": "0x145897948",
+        "type": {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0xe2e8",
+          "byRef": false,
+          "typeDefinition": 58088,
+          "name": "ActorUtils",
+          "namespace": "MoleMole"
+        }
+      }
+    ]
+  },
+  "fixtures": [
+    {
+      "name": "hero-a-local-b",
+      "guids": [
+        9007199254740993,
+        9223372036854775809
+      ],
+      "active": 1,
+      "enabled": true,
+      "wire": "188180808080808010320c08e907108180808080808010320e08ea071081808080808080808001",
+      "storedGuid": 9007199254740993,
+      "heroOrdinal": 0,
+      "activeOrdinal": 1,
+      "localConfig": 1002,
+      "heroEffectDelivered": true,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "nativePathSHA256": "c123d47b05e1f10b3330b24fd26c0a466bd1f5867210657d9e7417b8aa6aee52",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x14e9b2c60",
+          "0x1507cc240",
+          "0x1507cee50",
+          "0x156f6f510"
+        ]
+      },
+      "hero": {
+        "entry": "0x1517b8730",
+        "stop": "0x620000100",
+        "nativePathSHA256": "60b1276f373e6f9d3dea87ba4ac607bd78ceb2a8d299b1e25907bd6b6ba9dbcd",
+        "models": [
+          "0x1578b66f0"
+        ],
+        "nativeEntries": [
+          "0x14e9b2c60",
+          "0x1517abd80",
+          "0x1517b8730",
+          "0x156f6f510"
+        ]
+      },
+      "local": {
+        "entry": "0x153e46950",
+        "stop": "0x620000100",
+        "nativePathSHA256": "03eaa87cc13b0bebee711ad4e92a9bd7c292b1553f3f6999bfafebe70cc6e681",
+        "models": [
+          "0x1578b66f0"
+        ],
+        "nativeEntries": [
+          "0x1517abd80",
+          "0x153e46950"
+        ]
+      },
+      "heroEffect": {
+        "entry": "0x153e4d900",
+        "stop": "0x153e6d660",
+        "nativePathSHA256": "1cab30cd805c0af6498219845cc60c254d458d545be008108ed962cedcc8fa57",
+        "models": [
+          "0x1578b66f0"
+        ],
+        "nativeEntries": [
+          "0x14e9b2c60",
+          "0x1517abd80",
+          "0x1517b8730",
+          "0x153e4d900",
+          "0x156f6f510"
+        ]
+      },
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          },
+          {
+            "FBLKPHOCBIK": 9223372036854775809,
+            "NLNJDCDLHHE": 1002
+          }
+        ],
+        "LFMIIOCDKNK": 9007199254740993
+      }
+    },
+    {
+      "name": "hero-b-local-a",
+      "guids": [
+        9007199254740993,
+        9223372036854775809
+      ],
+      "active": 0,
+      "enabled": true,
+      "wire": "1881808080808080808001320c08e907108180808080808010320e08ea071081808080808080808001",
+      "storedGuid": 9223372036854775809,
+      "heroOrdinal": 1,
+      "activeOrdinal": 0,
+      "localConfig": 1001,
+      "heroEffectDelivered": true,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "nativePathSHA256": "c123d47b05e1f10b3330b24fd26c0a466bd1f5867210657d9e7417b8aa6aee52",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x14e9b2c60",
+          "0x1507cc240",
+          "0x1507cee50",
+          "0x156f6f510"
+        ]
+      },
+      "hero": {
+        "entry": "0x1517b8730",
+        "stop": "0x620000100",
+        "nativePathSHA256": "911123b5675060a3cce5396868b49082683807b9d2f385264c39229d1ce44d50",
+        "models": [
+          "0x1578b66f0"
+        ],
+        "nativeEntries": [
+          "0x14e9b2c60",
+          "0x1517abd80",
+          "0x1517b8730",
+          "0x156f6f510"
+        ]
+      },
+      "local": {
+        "entry": "0x153e46950",
+        "stop": "0x620000100",
+        "nativePathSHA256": "03eaa87cc13b0bebee711ad4e92a9bd7c292b1553f3f6999bfafebe70cc6e681",
+        "models": [
+          "0x1578b66f0"
+        ],
+        "nativeEntries": [
+          "0x1517abd80",
+          "0x153e46950"
+        ]
+      },
+      "heroEffect": {
+        "entry": "0x153e4d900",
+        "stop": "0x153e6d660",
+        "nativePathSHA256": "56853fae874acef3c332442c4cad974b829a50c083a6c2d5f7124620939057fb",
+        "models": [
+          "0x1578b66f0"
+        ],
+        "nativeEntries": [
+          "0x14e9b2c60",
+          "0x1517abd80",
+          "0x1517b8730",
+          "0x153e4d900",
+          "0x156f6f510"
+        ]
+      },
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "FBLKPHOCBIK": 9007199254740993,
+            "NLNJDCDLHHE": 1001
+          },
+          {
+            "FBLKPHOCBIK": 9223372036854775809,
+            "NLNJDCDLHHE": 1002
+          }
+        ],
+        "LFMIIOCDKNK": 9223372036854775809
+      }
+    },
+    {
+      "name": "hero-and-local-match",
+      "guids": [
+        4294967297,
+        8589934594
+      ],
+      "active": 0,
+      "enabled": true,
+      "wire": "188180808010320908e907108180808010320908ea07108280808020",
+      "storedGuid": 4294967297,
+      "heroOrdinal": 0,
+      "activeOrdinal": 0,
+      "localConfig": 1001,
+      "heroEffectDelivered": true,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "nativePathSHA256": "e83683ef04177a329073311f0a44d81916c5b46f475c2c29241446125ee2cbce",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x14e9b2c60",
+          "0x1507cc240",
+          "0x1507cee50",
+          "0x156f6f510"
+        ]
+      },
+      "hero": {
+        "entry": "0x1517b8730",
+        "stop": "0x620000100",
+        "nativePathSHA256": "8d49038236a8a13ad09c0e4698e0581746c8035958c83ef518cdade12aa4b0eb",
+        "models": [
+          "0x1578b66f0"
+        ],
+        "nativeEntries": [
+          "0x14e9b2c60",
+          "0x1517abd80",
+          "0x1517b8730",
+          "0x156f6f510"
+        ]
+      },
+      "local": {
+        "entry": "0x153e46950",
+        "stop": "0x620000100",
+        "nativePathSHA256": "03eaa87cc13b0bebee711ad4e92a9bd7c292b1553f3f6999bfafebe70cc6e681",
+        "models": [
+          "0x1578b66f0"
+        ],
+        "nativeEntries": [
+          "0x1517abd80",
+          "0x153e46950"
+        ]
+      },
+      "heroEffect": {
+        "entry": "0x153e4d900",
+        "stop": "0x153e6d660",
+        "nativePathSHA256": "97f395152a388fed9e76a6c268d03cb1506f2d187217d87bfb14c23a131ea36c",
+        "models": [
+          "0x1578b66f0"
+        ],
+        "nativeEntries": [
+          "0x14e9b2c60",
+          "0x1517abd80",
+          "0x1517b8730",
+          "0x153e4d900",
+          "0x156f6f510"
+        ]
+      },
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "FBLKPHOCBIK": 4294967297,
+            "NLNJDCDLHHE": 1001
+          },
+          {
+            "FBLKPHOCBIK": 8589934594,
+            "NLNJDCDLHHE": 1002
+          }
+        ],
+        "LFMIIOCDKNK": 4294967297
+      }
+    },
+    {
+      "name": "max-u64-hero",
+      "guids": [
+        18446744073709551615,
+        8589934594
+      ],
+      "active": 1,
+      "enabled": true,
+      "wire": "18ffffffffffffffffff01320e08e90710ffffffffffffffffff01320908ea07108280808020",
+      "storedGuid": 18446744073709551615,
+      "heroOrdinal": 0,
+      "activeOrdinal": 1,
+      "localConfig": 1002,
+      "heroEffectDelivered": true,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "nativePathSHA256": "e83683ef04177a329073311f0a44d81916c5b46f475c2c29241446125ee2cbce",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x14e9b2c60",
+          "0x1507cc240",
+          "0x1507cee50",
+          "0x156f6f510"
+        ]
+      },
+      "hero": {
+        "entry": "0x1517b8730",
+        "stop": "0x620000100",
+        "nativePathSHA256": "8d49038236a8a13ad09c0e4698e0581746c8035958c83ef518cdade12aa4b0eb",
+        "models": [
+          "0x1578b66f0"
+        ],
+        "nativeEntries": [
+          "0x14e9b2c60",
+          "0x1517abd80",
+          "0x1517b8730",
+          "0x156f6f510"
+        ]
+      },
+      "local": {
+        "entry": "0x153e46950",
+        "stop": "0x620000100",
+        "nativePathSHA256": "03eaa87cc13b0bebee711ad4e92a9bd7c292b1553f3f6999bfafebe70cc6e681",
+        "models": [
+          "0x1578b66f0"
+        ],
+        "nativeEntries": [
+          "0x1517abd80",
+          "0x153e46950"
+        ]
+      },
+      "heroEffect": {
+        "entry": "0x153e4d900",
+        "stop": "0x153e6d660",
+        "nativePathSHA256": "97f395152a388fed9e76a6c268d03cb1506f2d187217d87bfb14c23a131ea36c",
+        "models": [
+          "0x1578b66f0"
+        ],
+        "nativeEntries": [
+          "0x14e9b2c60",
+          "0x1517abd80",
+          "0x1517b8730",
+          "0x153e4d900",
+          "0x156f6f510"
+        ]
+      },
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "FBLKPHOCBIK": 18446744073709551615,
+            "NLNJDCDLHHE": 1001
+          },
+          {
+            "FBLKPHOCBIK": 8589934594,
+            "NLNJDCDLHHE": 1002
+          }
+        ],
+        "LFMIIOCDKNK": 18446744073709551615
+      }
+    },
+    {
+      "name": "missing-hero-keeps-local",
+      "guids": [
+        4294967297,
+        8589934594
+      ],
+      "active": 1,
+      "enabled": true,
+      "wire": "18e707320908e907108180808010320908ea07108280808020",
+      "storedGuid": 999,
+      "heroOrdinal": null,
+      "activeOrdinal": 1,
+      "localConfig": 1002,
+      "heroEffectDelivered": false,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "nativePathSHA256": "e83683ef04177a329073311f0a44d81916c5b46f475c2c29241446125ee2cbce",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x14e9b2c60",
+          "0x1507cc240",
+          "0x1507cee50",
+          "0x156f6f510"
+        ]
+      },
+      "hero": {
+        "entry": "0x1517b8730",
+        "stop": "0x620000100",
+        "nativePathSHA256": "551ddca06e2d0d21417cb34b1f8c69fa022aa7b89690a1aca953d7ad605d3753",
+        "models": [],
+        "nativeEntries": [
+          "0x14e9b2c60",
+          "0x1517b8730",
+          "0x156f6f510"
+        ]
+      },
+      "local": {
+        "entry": "0x153e46950",
+        "stop": "0x620000100",
+        "nativePathSHA256": "03eaa87cc13b0bebee711ad4e92a9bd7c292b1553f3f6999bfafebe70cc6e681",
+        "models": [
+          "0x1578b66f0"
+        ],
+        "nativeEntries": [
+          "0x1517abd80",
+          "0x153e46950"
+        ]
+      },
+      "heroEffect": {
+        "entry": "0x153e4d900",
+        "stop": "0x620000100",
+        "nativePathSHA256": "54a5c902f297c472e96318c6a3e14dc4b43dcb59d8e090e103e6ec362bb3f189",
+        "models": [],
+        "nativeEntries": [
+          "0x14e9b2c60",
+          "0x1517b8730",
+          "0x153e4d900",
+          "0x156f6f510"
+        ]
+      },
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "FBLKPHOCBIK": 4294967297,
+            "NLNJDCDLHHE": 1001
+          },
+          {
+            "FBLKPHOCBIK": 8589934594,
+            "NLNJDCDLHHE": 1002
+          }
+        ],
+        "LFMIIOCDKNK": 999
+      }
+    },
+    {
+      "name": "zero-hero-keeps-local",
+      "guids": [
+        4294967297,
+        8589934594
+      ],
+      "active": 1,
+      "enabled": true,
+      "wire": "1800320908e907108180808010320908ea07108280808020",
+      "storedGuid": 0,
+      "heroOrdinal": null,
+      "activeOrdinal": 1,
+      "localConfig": 1002,
+      "heroEffectDelivered": false,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "nativePathSHA256": "e83683ef04177a329073311f0a44d81916c5b46f475c2c29241446125ee2cbce",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x14e9b2c60",
+          "0x1507cc240",
+          "0x1507cee50",
+          "0x156f6f510"
+        ]
+      },
+      "hero": {
+        "entry": "0x1517b8730",
+        "stop": "0x620000100",
+        "nativePathSHA256": "d42395ae8295d2471c5d291f653ecc95f28b7a52011982e8a0e793baac8eab5e",
+        "models": [],
+        "nativeEntries": [
+          "0x14e9b2c60",
+          "0x1517b8730",
+          "0x156f6f510"
+        ]
+      },
+      "local": {
+        "entry": "0x153e46950",
+        "stop": "0x620000100",
+        "nativePathSHA256": "03eaa87cc13b0bebee711ad4e92a9bd7c292b1553f3f6999bfafebe70cc6e681",
+        "models": [
+          "0x1578b66f0"
+        ],
+        "nativeEntries": [
+          "0x1517abd80",
+          "0x153e46950"
+        ]
+      },
+      "heroEffect": {
+        "entry": "0x153e4d900",
+        "stop": "0x620000100",
+        "nativePathSHA256": "77168e57eaae1644b37008a57a2787cc43d386d52f391c11d7928c3da2731b22",
+        "models": [],
+        "nativeEntries": [
+          "0x14e9b2c60",
+          "0x1517b8730",
+          "0x153e4d900",
+          "0x156f6f510"
+        ]
+      },
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "FBLKPHOCBIK": 4294967297,
+            "NLNJDCDLHHE": 1001
+          },
+          {
+            "FBLKPHOCBIK": 8589934594,
+            "NLNJDCDLHHE": 1002
+          }
+        ]
+      }
+    },
+    {
+      "name": "disabled-hero-keeps-local",
+      "guids": [
+        4294967297,
+        8589934594
+      ],
+      "active": 1,
+      "enabled": false,
+      "wire": "188180808010320908e907108180808010320908ea07108280808020",
+      "storedGuid": 4294967297,
+      "heroOrdinal": null,
+      "activeOrdinal": 1,
+      "localConfig": 1002,
+      "heroEffectDelivered": false,
+      "dispatch": {
+        "entry": "0x1507cc240",
+        "stop": "0x1507cf07a",
+        "nativePathSHA256": "e83683ef04177a329073311f0a44d81916c5b46f475c2c29241446125ee2cbce",
+        "models": [
+          "0x15881f800",
+          "0x15881f800",
+          "0x15881f800",
+          "0x620001070",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360",
+          "0x1404c2eb0",
+          "0x15184e100",
+          "0x151a9c360"
+        ],
+        "nativeEntries": [
+          "0x14e9b2c60",
+          "0x1507cc240",
+          "0x1507cee50",
+          "0x156f6f510"
+        ]
+      },
+      "hero": {
+        "entry": "0x1517b8730",
+        "stop": "0x620000100",
+        "nativePathSHA256": "68a72447e8c13b1972a1ab25d4b4aee35ef0c06360898f6d52c9726ad96931b4",
+        "models": [
+          "0x1578b66f0"
+        ],
+        "nativeEntries": [
+          "0x14e9b2c60",
+          "0x1517abd80",
+          "0x1517b8730",
+          "0x156f6f510"
+        ]
+      },
+      "local": {
+        "entry": "0x153e46950",
+        "stop": "0x620000100",
+        "nativePathSHA256": "03eaa87cc13b0bebee711ad4e92a9bd7c292b1553f3f6999bfafebe70cc6e681",
+        "models": [
+          "0x1578b66f0"
+        ],
+        "nativeEntries": [
+          "0x1517abd80",
+          "0x153e46950"
+        ]
+      },
+      "heroEffect": {
+        "entry": "0x153e4d900",
+        "stop": "0x620000100",
+        "nativePathSHA256": "63580e976912697a6ecb305bcfec96794887e89040a929f382602aba16a704c5",
+        "models": [
+          "0x1578b66f0"
+        ],
+        "nativeEntries": [
+          "0x14e9b2c60",
+          "0x1517abd80",
+          "0x1517b8730",
+          "0x153e4d900",
+          "0x156f6f510"
+        ]
+      },
+      "readerResult": {
+        "JGECGMPNGBD": [
+          {
+            "FBLKPHOCBIK": 4294967297,
+            "NLNJDCDLHHE": 1001
+          },
+          {
+            "FBLKPHOCBIK": 8589934594,
+            "NLNJDCDLHHE": 1002
+          }
+        ],
+        "LFMIIOCDKNK": 4294967297
+      }
+    }
+  ],
+  "runtimeStatus": "not-tested",
+  "targetProtocolReady": false,
+  "currentControlGuidBindingApproved": false,
+  "completeSceneHandler": false,
+  "conclusion": "Root tag3 feeds the named Hero entity consumer; the local-avatar consumer separately reads scene entity ID +0x284",
+  "models": [
+    "Managed class/allocation and Avatar batch application boundaries inherit fixed F-03d3f1",
+    "Scene entity rows, model-to-entity IDs and active entity ID are explicit controlled storage",
+    "UInt32 entity dictionary index lookup is a declared fixture; native UInt64 GUID lookup executes",
+    "Hero movement ends at the real effect entry; scene generation, switching and movement effects are not executed"
+  ],
+  "sourceSHA256": {
+    "tools/client72_avatar_control.py": "16194f5b60dcb61d6e78e10389039fb5e26dcb7f4ecc4969bdf6dad5802df9bf",
+    "tools/client72_avatar_contract.py": "74383f9c724767bb0ff3e1d9f0436b516a328f6858154063a846a03733b68491",
+    "tools/client72_emulator.py": "8007d2594ef8058a4f2a9f1c24094fb5d2551a202b4e52154876cdfe77a17c3c",
+    "tools/client72_session_runtime.py": "c6ff407e33416869a855cfa86e97c3f63a9d24019ac0f6e6dfc74a959bfe1439"
+  }
+}
