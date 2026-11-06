@@ -17,4 +17,12 @@
 
 每个结论分开记录目标静态证据、实际原生路径、托管/分配/容器/输入模型、未执行分支。CmdID→类型、类型→语义、字段→wire不混层。新实验需独立断言和重复验证；非零、64位、非空嵌套/list、显式零、合并、错误/边界按适用范围覆盖。完整合同未闭只交限定结论。
 
+## 主线复核的 Java 来源时序（静态，不是新执行验收）
+
+`Player.loadFromDatabase` 的同一任务按 AvatarStorage → QuestManager → legacy trial恢复 → Inventory 顺序执行；`Inventory.loadFromDatabase` 在保存装备归属恢复及TPS附件处理后调用 `AvatarStorage.postLoad`，随后才标记inventory loaded。postLoad补缺失起始装备、recalcStats，再completeLoadingVitals；`Avatar.@PostLoad`保存的绝对HP/能量在此最终阶段恢复。故后续g2读取FightProp不能早于完整装备/属性恢复，不能把`getFightProperties`方法存在当成有效值证明。技能depot缺失或非零energySkill缺资源时，captureVitals明确保留存档scalar；不能用临时零容量覆盖保存值。
+
+`AvatarStorage.loadFromDatabase`从存档skillDepotId查询当前depot，缺Avatar/depot资源会跳过该角色；旅行者随后setSkillDepotData/recalc/save。`Avatar.setSkillDepotData`补技能等级、天赋并重算属性/队伍加成，不是只设置一个ID。目标默认depot、当前网络depot及保存来源必须独立核对，禁止照抄默认值修档。
+
+当前源码`Player.onLogin`构造AvatarData；`HandlerSceneInitFinishReq`构造PlayerEnterSceneInfo，随后才构造SceneTeamUpdate。客户端s2a另已证明首个Avatar未注册会结束整个列表。这两类证据分别约束实现顺序，但不等于目标网络完整handler或实机顺序已验。未来不得因旧sender的Weapon字段名给目标type51522定名。
+
 本轮不操作客户端/调试器、不部署/安装补丁、不改生产sender/共享Proto/版本准入/根配置。实机或不可取得输入成为必要条件时记录任务、输入、失败、排除项、最小观察/解除条件及后继，再转其它独立难点。可离线必要项耗尽后停止，备份核验HANDOFF2再覆盖，HANDOFF仅追加；每项验收及时本地提交、不推送。D-02仍未完成。
