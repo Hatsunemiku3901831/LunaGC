@@ -278,3 +278,35 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/audit_d02_daily_runtim
 主线审核了最终测试源码、实际编译class、该次新XML及逐实体输出，独立重算13份输入指纹全部相同，并核Mongo最后的正常退出记录；未重复执行随机测试。审核证明在`local/migration72/evidence/d02-r3-daily-main-review.json`，原XML为1项通过，不能将I历史轮次或主线审核再计为新增测试。
 
 四组初始 trigger 均有 ANY_MONSTER_DIE，其中组 `133104406` 另有 ANY_MONSTER_LIVE；后者由怪物 tick 发出，测试未执行 tick。场景装入会提交 GROUP_REFRESH/GROUP_LOAD，真实装置 onCreate 会提交 GADGET_CREATE；这些异步事件及后代未等待或断言，不能由实体通过推断 action 执行成功。实际 Player 后台调度、完整 Done、战斗死亡、协议网络和客户端仍未验证；R3/resourceReady 未完成。
+
+## 子合同 K：出生点生产选组、初始实体与 601 事件
+
+`src/test/java/emu/grasscutter/scripts/D02BirthInitialEntitiesTest.java` 在独立 JVM、空缓存、非持久 scene3 和 `(2747,194,-1719)` 使用真实 `getGroupGrids → getPlayerActiveGroups → Scene.checkGroups → onLoadGroup → refreshGroup/addGroupSuite`。未启动服务器或数据库，网络广播由测试场景记录构造边界。读取旧脚本、旧 GlobalCombat/DropTable，以及候选 commit `d54f6f0d423ded9d055bb740a3e5f3aa8f2667f1` 的 Monster、MonsterCurve、Gadget、Scene、Gather 表；Gather 表为本实验发现的真实依赖：`GadgetGatherPoint` 按 pointType 查询该表，再创建其 gadgetId 子实体。目标 Gather 的 tree blob `d546754989c48c64770f9ddc338c25237ee23a63`，SHA-256 `c805f2ebde4bdd37de5ecd612e8ddf4e30f193f78876b35fdd30790bbb81cbb0`；候选 Scene 表 SHA-256 `5a906393d1de46a6d397ae169cdcfb76a9ee77fc1c9e38dd3aec752656978550`，其余固定输入见 E/I/J。
+
+按根配置 `fastRequire=true` 的第三轮，生产入口实际选择 25 组，初始实体断言全部执行到末尾，601 装置真实 GADGET_CREATE 后在限时内观察到 option 173；但全场网格加载实际记录 449 个 Lua ERROR，最后错误断言失败，**1 项测试失败**。449 条涉及 27 个不同脚本；25 个选中组自身 Lua 文件没有字面直接 require 这些脚本，这不能排除传递调用，也不能把所有错误视为已解决。第一轮隔离 Player 缺 TeamManager，第二轮夹具缺 Gather 表，首失败均留存；第三轮的原 XML、日志和隔离目录为 `local/migration72/d02-r3-birth-initial-a5be3779f81a4bb598defdc08c7e8597/`。
+
+仅改变隔离配置为 `fastRequire=false`、使用新 JVM 和空缓存的 inline 对照，真实入口同样选择 25 组，**1 项通过、失败/错误/跳过为 0，记录加载错误为 0**。实际选中 suite 由生产随机逻辑决定：本轮 429 组为 suite 2，其余 24 组为 suite 1；这些选择恰与上述 fast 样本一致，不代表其他运行一定相同。测试逐组断言 active suite 声明的怪物和装置 config 均解析，并对每个 config 查询到的实体断言类型与资源 ID；将实际 suite ID 与先前 25 组 Lua 报告独立交叉统计，声明数为 **52 个怪物、299 个装置**。该数是事后交叉统计，本轮 XML 逐组打印 suite 而非逐实体列表；没有涵盖其他候选 suite。25 组 NPC 列表均空。601 的 option 173 是本轮实际异步结果的完成信号；505 的 GROUP_LOAD 在选中 suite 中，但本轮没有等待其专属完成信号，其受控事件合同见 E。GROUP_REFRESH、GROUP_LOAD、GADGET_CREATE 及其他后代不因 601 完成就被视作全部完成；未执行 region tick、主动战斗或客户端。
+
+inline 实际 source SHA-256 `7249713e3df03ddb1c74511340c86e5bc1f0e30c5d45b585ae0c37983c98a790`，class `852d5eaaa715de2f9169daf8754b326485571002e563c4b1eb7767aab6b90140`，XML `f2c17cd6c5af2953dd8a8dc705924b37e22aa7d35ed7f2625d504f9987472ab2`；完整输入及 25 组 Lua 的本机 hash 清单位于 `local/migration72/d02-r3-birth-inline-86563b38420d4457b5a25ff91e4a1eb1/input-sha256.json`，该文件 SHA-256 `0f72cd2d52f6092f76caf8b894ac3ec4ee3fc7ca002f138faadfa0b63319ae3b`。class-init 未发现 database、HTTP 或 DispatchServer 初始化。此合同不证明根 fast 配置通过、生产完整运行调度、网络 wire、版本 revision 或客户端入场；不得标记 resourceReady。
+
+主线审核了源码、实际class及inline/fast两份XML，独立重算该清单的35份输入hash相同；另将`selected-suite-reconstructed-references.json`的351条config/资源ID逐条与固定Lua核同，并与XML中的25个实际suite对应。重建清单不是直接运行轨迹，真实逐实体断言依据执行的测试循环；没有重复运行本测试。主线证明在`local/migration72/evidence/d02-r3-birth-main-review.json`。原根配置和已有资源差异仍保持。
+
+以下复现 inline 定向测试，需先协调独占 Gradle，准备上述固定候选表。脚本从根配置读取 vision 参数，创建独立 config/data/cache；不启用 Mongo，也不修改根配置。实际使用的 fast 开关仅在这个独立 config 中设为 false。
+
+```powershell
+@'
+from pathlib import Path
+import json,uuid
+r=Path('.').resolve(); w=r/'local/migration72'/('d02-r3-birth-inline-replay-'+uuid.uuid4().hex); w.mkdir()
+game=json.loads((r/'config.json').read_text(encoding='utf8'))['server']['game']; assert game['gameOptions']['isPreventEntityError'] is True
+cfg={'version':14,'folderStructure':{'resources':str(r/'resources'),'scripts':str(r/'resources/Scripts'),**{x:str(w/x) for x in ['data','plugins','cache','packets']}},'server':{'fastRequire':False,'game':{'enableScriptInBigWorld':True,'visionOptions':game['visionOptions'],'gameOptions':{'isPreventEntityError':True}}}}
+(w/'config.json').write_text(json.dumps(cfg),encoding='utf8'); t=str(w).replace('\\','/')
+init='''allprojects { tasks.withType(Test).configureEach {\n workingDir file("%s")\n systemProperty "user.dir", file("%s").absolutePath\n systemProperty "d02.resources", rootProject.file("resources").absolutePath\n systemProperty "d02.excel", rootProject.file("local/migration72/sources/AnimeGameData/d54f6f0d423ded9d055bb740a3e5f3aa8f2667f1/ExcelBinOutput").absolutePath\n environment "LUNAGC_RESOURCES_DIR", rootProject.file("resources").absolutePath\n jvmArgs "-Xlog:class+init=info:file=%s/class-init.log"\n} }\n'''%(t,t,t)
+(w/'birth.init.gradle').write_text(init,encoding='utf8'); (r/'local/migration72/d02-r3-birth-replay-path.txt').write_text(str(w),encoding='utf8'); print(w)
+'@ | python -
+$d02Work = [IO.File]::ReadAllText((Resolve-Path 'local/migration72/d02-r3-birth-replay-path.txt'))
+$env:JAVA_HOME = (Get-ChildItem local/runtime -Directory -Filter 'jdk-17*' | Select-Object -First 1).FullName
+$env:GRADLE_USER_HOME = (Resolve-Path local/gradle).Path
+$env:LUNAGC_RUNTIME = 'portable'
+./gradlew.bat --no-daemon test --tests emu.grasscutter.scripts.D02BirthInitialEntitiesTest -PskipHandbook=1 -I (Join-Path $d02Work 'birth.init.gradle') --console=plain
+```
