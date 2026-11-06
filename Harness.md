@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+E-01d1b～e / D02-R3：[最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)子合同B～E；`audit_d02_resources72 --extended-source`核六表21引用，主线CLI与双跑同SHA`70ddb0ca…dde6e`、11 Python通过。`Client72D02ResourceAudit.java`只查询源码等价出生网格；25组真实顶层fast/inline对照及depot特殊键红测边界分开记录。`D02Group505LoadTest`真实Scene/ScriptLib/DropSystem、状态/实体/跨组反例2项，主线按文档在新目录独立Gradle复验通过，原始`local/migration72/d02-r3-group505-main-review/`，class-init无DB/HTTP/Dispatch。未运行完整tick/客户端，继续生产网格及其余可达资源，不重复大套测试或晋级R3。
+
 F-03d3e8：[完整Avatar raw图](docs/CLIENT_72_AVATAR_COMPLETE_RAW.md)，`trace_client72_avatar_complete_raw.py`/`test_client72_avatar_complete_raw`。新51050的11wire/512扫描、24图/9拒绝；完整复杂34类237wire/Avatar65类372wire均实际reader进入，双Object及tag100真实复制已验。10新增/166关联和主线10定向通过，第三新进程完整/摘要与双跑同为`5556baf4…db0961`/`37c90e4d…def837`，证据`evidence/avatar-complete-raw-*`；raw true与业务/runtime false分开，继续独立适配器和必要语义。
 
 D-01b5a / D02-R2：[启动观察](docs/CLIENT_72_STARTUP_OBSERVER.md)，`observe_client72_startup.py`/`test_client72_startup_observer`。两游戏退出的OS/PUB/log与WER闭合，三自有进程复现系统→EP的旧DR恢复；第二游戏39停点DR0仍80000003，未获自然SDK/HTTP/Marshal。主线重跑8新+8旧守卫共16项、核五raw hash及源码/摘要一致；证据`evidence/d02-r2-*`，共享摘要SHA`d815dfac…f2d2d`。下一零主模块点单变量对照，父R2不晋级；不按弱running状态或旧数据库点直接run/load。
