@@ -53,7 +53,7 @@ Gradle/build是共享串行窗口，复制本轮XML后再交下一轮使用；�
 
 ## 最小 producer 的已验范围与待取证清单
 
-以下是[f1消费合同](CLIENT_72_AVATAR_CONTRACT.md)允许用于下一独立producer验证的字段，**不是完整入场发送许可**。旧 `Avatar.toProto()` 和 `PacketAvatarDataNotify` 的业务名不能按类型相似直接搬到新raw字段。
+以下是[f1消费合同](CLIENT_72_AVATAR_CONTRACT.md)及后续逐项审核允许用于下一独立producer验证的字段，**不是完整入场发送许可**。旧 `Avatar.toProto()` 和 `PacketAvatarDataNotify` 的业务名不能按类型相似直接搬到新raw字段。
 
 | 层 | 当前已验字段/来源 | 下一producer可独立验证 |
 | --- | --- | --- |
@@ -61,11 +61,15 @@ Gradle/build是共享串行窗口，复制本轮XML后再交下一轮使用；�
 | 48178 tag1/tag2 | avatar_id/u32、guid/u64，具名Avatar资源与真实GUID模型索引 | 保留现有Avatar ID和完整实例GUID；不同高位GUID/重复模型/资源命中边界 |
 | 48178 tag5 | equip_guid_list/u64，真实库存索引和Weapon/Reliquary槽消费者 | 与已接入PlayerStore输出的同一GameItem GUID逐一关联，不能截成32位或另造GUID |
 | 48178 tag3→78350 | prop_map，子tag1 property_type/u32、tag2 boxed int64 | 仅1001 EXP、1002 BREAK_LEVEL、4001 LEVEL；map key与子ID明确区分，不发送旧表其余ID |
+| root tag5/tag12、26081 tag2/tag12 | [f3队伍](CLIENT_72_AVATAR_TEAM.md)的Team ID映射、当前Team、名称和完整有序成员GUID | 实际Player队伍与角色模型集合关联，仍需完整handler、fallback/override及保存语义 |
+| 48178 tag4 | [f4a](CLIENT_72_AVATAR_STATE.md)生命状态枚举/真实模型写入 | 不从省略保留旧状态推定可省略，不批准REVIVE作持久状态 |
+| 48178 tag7 | [f4b](CLIENT_72_AVATAR_FIGHT_PROPS.md)float map及7个限定具名ID | 实际HP/MaxHP及受控基础/当前攻防数值来源另审；省略会清旧map |
+| 48178 tag11 | [f4c](CLIENT_72_AVATAR_SKILL_DEPOT.md)目标具名depot缓存资源ID | 区分保存当前值、默认Avatar资源和实际目标资源加载；501/701零缺省投影不是loader或energySkill别名证明 |
 
 必须继续取证/验收的缺口：
 
 - root tag3仍不能批准为当前控制角色GUID。[f2a](CLIENT_72_AVATAR_CONTROL.md)证明其Hero消费者与场景管理器+0x284的本地角色选择可以指向不同实体；需要实际场景消息对+0x284的写入、队伍关系及非零原生组合证据。
-- root其余9字段中，除上述仍未知tag3外，四份同形u32列表、Team候选map、两份其他列表及u32标量用途未批准。不能按旧flycloak/costume/trace/temp/team名字配对。
-- AvatarInfo除1/2/3/5外33字段仍缺业务消费合同，包括FightProp候选map、技能/天赋、生命状态、装备扩展、皮肤及复杂53824图。需从实际typed handler各分支到具名/独立消费者，验证非零、缺省/清零和错误，而非用raw完全恢复代替业务映射。
-- f1仅执行通知/模型的限定片段；完整角色handler尾部、场景实体关联、初始化完成条件和最小发送集合未验。新producer可先做上述5字段的隔离合同与Store GUID关联，不能因此直接替换完整登录链。
+- root四份同形u32列表、两份其他列表及未闭标量用途仍未知；f3只关闭上述限定Team关系。不能按旧flycloak/costume/trace/temp名字配对。
+- AvatarInfo已审1/2/3/4/5/7/11仅各自有限消费；其它字段及技能/天赋、装备扩展、皮肤、复杂53824的业务仍缺证。完整raw不替代实际typed handler分支到具名/独立消费者与省略/清零/错误边界。
+- f1至f4c执行的都是明确片段；完整`15184e100`必须先核真实模型构造及必经调用，不能由f1零分配夹具裁定最小集合。场景实体关联、初始化完成条件及完整生产仍待，隔离producer或Store GUID关联不授权替换完整登录链。
 - SDK/信任/补丁ABI/实际最小资源、完整P0和D-02新旧号实机继续属于各自卡。适配器没有解除任何门禁。

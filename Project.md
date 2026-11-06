@@ -8,6 +8,8 @@
 
 ## 当前阶段
 
+F-03d3f4c已审：[depot/当前Team资源消费](docs/CLIENT_72_AVATAR_SKILL_DEPOT.md)将tag11/u32连至具名AvatarSkillDepot资源缓存ID，区分默认资源与当前wire值；22组/109次Team消费/42字段读回/6拒绝，主线70及第三全新原生完整/摘要同双跑。501/701仅固定源的零缺省投影，未验目标parser/constructor/energySkill或LHFOOP别名，不作生产资源许可。继续真实15184e100构造/必经初始化和最小producer计划，不能沿f1零分配模型裁掉未知必需字段。
+
 E-01d1n2已审：[303真实启动/保存](docs/CLIENT_72_D02_QUEST_303_START.md)以真实QuestManager/QuestSystem/World、未启动GameServer及独立Mongo完成2项，主线按独立驱动再复现2项全过并正常shutdown。直接30302保存1未完成/62未开始，真实Progress私有入口保存63未完成；包构造2/64仅到边界。loadedAll全程false，真实门禁阻止manager重绑定且BSON保持；正向重绑定、目标ChapterExcel/完整登录/任务完成效果及客户端仍待，不扩大成R3通过。
 
 D-01b5f已审：[软件点/前序异常对照](docs/CLIENT_72_SOFTWARE_BREAKPOINT_CHANNEL.md)在固定自有fixture有/无AV+C++前序均自然收到SW入口及同TID/RSP返回，7/9停点、三终止点、OS/PUB/log exit0和EXIT/STOP完整；两次驱动退出收口读错误原样保留。主线审291行工具、7 raw hash/全部成功停点/代码恢复及固定插件源码，复用同源码刚执行的19守卫，未重跑合成。未追加游戏load；只排除通用con1解释，原游戏未观测高层BP/异常发布的原因仍未知，继续有界单HW方式及真实HTTP拒绝链取证。
@@ -114,6 +116,7 @@ E-01d1a（D02-R3子合同A）已验收：固定候选commit/tree/blob四表，�
 | F-03d3f3 Team映射与当前Team消费 | f1、f2a、e8及固定三输入 | 四字段、13组wire/42消费/9拒绝；原生Team名称事件/去重/qword扩容/当前选择/GUID查找及零值边界已验。10新增/35关联与主线35通过，第三全新原生完整/摘要与双跑相同；完整Handler/保存/场景与root3当前控制语义不晋级 | 已完成 |
 | F-03d3f4a Avatar生命状态应用 | f1/f2a/f2b/f3/e8及固定三输入 | tag4/u32经独立参数/模型enum57376及371/16、75/82具名事件证明用途；26样本/28应用/5错误，11新增/46关联及主线46/第三原生与双跑一致。实体虚调用/投递前止步，字段入场必要性和完整效果未验 | 已完成 |
 | F-03d3f4b Avatar初始FightProp有限消费 | f1/f3/f4a/e8及固定三输入 | tag7 map真实清理/编码/写入，7个具名ID、HP事件/watcher/有限UI块已审；23样本/24应用/5错误，主线58与第三原生同双跑。省略清旧值，业务数值/完整handler/入场必要性仍待 | 已完成 |
+| F-03d3f4c Avatar depot/当前Team派生资源消费 | f1/f3/f4b/e8、固定四表来源 | tag11→具名depot缓存ID、默认/当前资源链分离；22组/109消费/42字段/6拒绝，主线70/第三原生同双跑。501/701仅零缺省投影，目标反序列化/别名/完整初始化未知 | 已完成 |
 | F-03d3s1 SceneInfo有限非空raw图 | f2b/e8及固定三输入 | 9类36字段，1152扫描/40成功/21拒绝；fixed32、36/42 reader非空组合及主线28/第三原生同双跑。72829非空显式拒绝，完整闭包/业务/实体效果仍未知 | 已完成 |
 | E-01d1i～j 日常持久化及初始实体 | R3固定候选表、旧daily/Lua/combat、独立Mongo | 唯一新库真实1项通过，生成4/保存/新Player冷读/同日不重抽、生成前后场景0/4；23怪物/41装置逐类型/资源ID已验。主线13输入hash/source/class/XML及正常关闭审核；受控调度不代表后台/完整Done，自动事件后代/其它随机组/目标协议未验 | 已完成 |
 | E-01d1k 出生点实际初始实体 | R3生产网格/固定表、Gather、旧Lua/combat/drop | 真实25组/checkGroups，隔离inline1项通过/0加载ERROR，逐实体类型与ID、自然601 option173已验；fast1项失败449保留，根config不改。主线35输入及source/class/XML/351静态重建引用审核，无重复测试；其他异步/完整调度/网络仍未知 | 已完成 |

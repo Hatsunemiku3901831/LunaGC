@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+F-03d3f4c：[Avatar depot](docs/CLIENT_72_AVATAR_SKILL_DEPOT.md)、`client72_avatar_skill_depot.py`/`test_client72_avatar_skill_depot`；22组/109实际Team消费/42字段/6拒绝，主线70与第三原生同双跑，完整/摘要SHA `0d1868c9…b9f4d`/`a8a7b4ce…e1a95`。证明`evidence/avatar-skill-depot-main-review.json`及`avatar-skill-depot-main-*`原始/日志。具名资源literal/cache/独立GetAvatarElementType与当前Team链已审；501/701只零缺省投影，目标parser/constructor与energySkill/LHFOOP alias未验，继续f4d真正构造/必经handler。
+
 E-01d1n2：[303启动/保存](docs/CLIENT_72_D02_QUEST_303_START.md)、`D02Quest303StartMongoTest`及`audit_d02_quest303_start.ps1`；独立27027真实两项、主线按驱动另复现两项全过，三方源码/class/11输入及26生产指纹核同。主线目录`d02-r3-quest303-replay-873511c485744e10b8dad1d75e481df8/`、证明`evidence/d02-r3-quest303-start-main-review.json`；1/63未完成保存/真实冷读、loadedAll=false门禁与BSON保持。无正向manager重绑/full onLogin/目标ChapterExcel/客户端，Mongo均正常shutdown、库保留；不是更多测试总数或R3通过。
 
 D-01b5f：[软件点合成对照](docs/CLIENT_72_SOFTWARE_BREAKPOINT_CHANNEL.md)、`observe_client72_software_fixture.py`及`software-breakpoint-observations.json`；2完整成功/2驱动首失败分列，7/9停点、自然SW入口返回/两窗口恢复、OS/PUB/log0及EXIT/STOP均核。主线7 rawhash/逐停点/固定插件源码审计，19守卫沿用e同源执行，未另跑fixture；证明`evidence/d02-r2-d01b5f-main-review.json`。PUB仅高层CB，不能推出最终内核事件被丢；无新增游戏load，下一g单HW先自有验证，h保留真实HTTP7.2拒绝链。
