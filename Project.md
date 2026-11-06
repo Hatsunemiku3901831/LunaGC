@@ -1,6 +1,6 @@
 # 国服 7.2 任务与验收
 
-2026-11-07最新现场指令：用户明确要求重启游戏再观察，覆盖此前保留原pause的决定。R2独占客户端/调试器，先核并结束已明确归属的旧target、确认OS/PUB/log闭合，再新启动固定原始EXE；D-01b5e仅一个有来源的GlobalDispatch入口点、120秒预算，当前阶段以新现场为准，不沿下方旧PID/暂停上下文。服务仍未部署，R1/R3继续。
+2026-11-07最新现场：用户要求的重启观察已执行并完成D-01b5e审核。已核旧target由debugger stop结束，OS/PUB/log exit1；新原始EXE在单GlobalDispatch点下运行37.766秒后OS/PUB/log均80000003，WER偏移恰在该软件点，但无自然入口/BP/返回证据，根因仍未知。当前无target/相关游戏，API四表空；持久调试库另存4个自有点，后续load前须核清，不能当空库。主线19守卫及11原始来源hash/归属核同，R2继续自有合成对照和事件分发取证；服务未部署，R1/R3持续开发。
 
 2026-11-07 g1构建核验完成：portable入口30秒，JAR SHA `dfdebbda0352055540c44a54e2eebfd4ffdfe679db74270044d3d55aeb006ec3`内嵌c667344；282新增Avatar raw及3个build元信息class与编译输出逐字节相同，其余46019 class保持、无删除。旧eee18371已归档供固定研究重放。status退出1为stopped/Healthy=false，8088TCP/22101UDP/27027无监听，原27017保持；R2唯一原始客户端仍在自有pause，不是服务运行验收。完整P0/SDK/资源前置仍缺，未部署/装补丁，运行服务PID/JAR/健康通过无对象；开发继续。
 
@@ -127,6 +127,7 @@ E-01d1a（D02-R3子合同A）已验收：固定候选commit/tree/blob四表，�
 | D-01b5a 有界启动退出与DR恢复复现 | D-01b4、固定五输入及实时归属 | 两游戏OS/PUB/log退出闭合、WER均factory RVA52FBF0；第二轮39停点DR0/双API一致仍80000003。三自有合成目标复现系统→EP的DR恢复并最终退出0；16守卫全过，主线核raw/源码摘要hash。仅观察合同已验，启动/SDK/HTTP仍未通过，下一零主模块点单变量对照 | 已完成 |
 | D-01b5c HTTP当前区及保留目标只读阶段 | b保留的同一目标、固定JAR与客户端三输入 | 六Java/八native/三拒绝双跑及主线第三相同；主线14文件重生成、22 HTTP及17观察守卫通过。当前区八字段仅有限wire，线程选择no-op已保留原失败并核源码，当前主线程上下文不能套旧CIP/RSP。无新客户端run/load，完整HTTP/自然SDK未知 | 已完成 |
 | D-01b5d RegionList独立来源/实际Java消费 | 固定客户端/JAR、c当前区前置 | 具名GlobalDispatch caller/class/codec与三HTTP支来源已分层，九raw字段、六Java/八native/三拒绝，主线重生成13文件/22测试/第三native同双跑；完整callback/原生Base64/运行分支/传输仍未知。窗口读取error5保留，随后用户要求重启观察 | 已完成 |
+| D-01b5e 重启后单GlobalDispatch观察 | 用户重启指令、d来源、同调试通道 | 旧stop exit1明确非正常退出；新run37.766秒/39停点双API及DR0后80000003，WER精确单点但无自然BP。主线19及11 raw hash核同；当前无target/API点空，持久库4自有点另列。只关观察记录，SDK/连接根因未解 | 已完成 |
 
 2026-11-06本批F-02b1/b2、F-03a/b/c限定融合验收完成，按用户要求暂停；暂不D-02实机。运行代码提交`4bbf9fd`：完整LoginReq/两响应及嵌套21类198字段，八个场景握手、容量5字段、进入场景通知四字段及8类44字段raw闭包已接入。未知字段保留原名且不发送；完整初始化/P0、SDK/补丁/资源及实际客户端序列仍未验。
 

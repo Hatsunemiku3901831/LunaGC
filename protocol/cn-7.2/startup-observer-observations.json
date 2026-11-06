@@ -491,5 +491,85 @@
       "d02-r2-d01b5c-retention-comparison.json": "c070e60e576ac3339420fce11fd13a73dc3f5a05c72173203465147e55ab7dc1",
       "d02-r2-d01b5c-restore-selection.json": "db00524c31d1cef619a278adaed2773ed7a444ec012b5a58f6dca1c88f57d3c2"
     }
+  },
+  "singleGlobalDispatchContrast": {
+    "task": "D-01b5e",
+    "sameDebuggerOriginalInputs": true,
+    "oldTargetShutdown": "authorized debugger stop; OS/PUB/log exit1; not application-normal exit",
+    "singleNewGameLoad": true,
+    "mainSoftwarePointCount": 1,
+    "mainSoftwarePoint": "GlobalDispatch response consumer",
+    "diagnosticTerminationPoints": 3,
+    "newHardware": false,
+    "loadToFirstRunSeconds": 0.343,
+    "firstRunToExitSeconds": 37.766,
+    "observerElapsedSeconds": 42.343,
+    "observationBudgetSeconds": 120,
+    "observedStops": 39,
+    "dualRegisterApisAgree": true,
+    "observedDRValues": {
+      "dr0": [
+        0
+      ],
+      "dr1": [
+        0
+      ],
+      "dr2": [
+        0
+      ],
+      "dr3": [
+        0
+      ],
+      "dr6": [
+        0
+      ],
+      "dr7": [
+        0
+      ]
+    },
+    "firstChanceAV": 37,
+    "loadedDllCount": 90,
+    "naturalEntryCount": 0,
+    "naturalReturnCount": 0,
+    "terminationApiHitCount": 0,
+    "exitCode": "80000003",
+    "osPubLogExitAgree": true,
+    "exitAndStopEventsPresent": true,
+    "logEvicted": 0,
+    "pubThreadAlive": true,
+    "finalExceptionPubPresent": false,
+    "wer": {
+      "pidPathMatches": true,
+      "reportIdsMatch": true,
+      "exceptionCode": "80000003",
+      "module": "YuanShen.exe",
+      "faultRva": "112250E0",
+      "matchesOnlyMainSoftwarePoint": true,
+      "referencedAttachments": 9,
+      "copiedAttachments": 0
+    },
+    "finalNoTarget": true,
+    "apiPointTablesEmpty": true,
+    "persistedOwnedPointCount": 4,
+    "persistedLedgerVerified": true,
+    "clientAndConfigHashesUnchanged": true,
+    "newCause": "unknown; software observation influence strengthened, no protection/handler mechanism asserted",
+    "runtimeAcceptance": false,
+    "tests": 19,
+    "sourceSHA256": {
+      "d02-r2-d01b5e-run1.json": "b311887ba1718dcdcef8b63fde5f96fba1bbb96905ffc257367275610c17fcde",
+      "d02-r2-d01b5e-stop-retained-v5.json": "8292c7fdaedbcbb4522e23d91ab19a6b877052050da0f3a5fd5c79a6a6344dcf",
+      "d02-r2-d01b5e-context-raw.json": "b4eb6350768b80da63d579ef8b66af6938187aa612456de86631f969fdfebfc1",
+      "d02-r2-d01b5e-final-audit.json": "429f16467cbce035aa460eb1146cf0f3035df7e29ce2584fd25707914a7ea9a6",
+      "d02-r2-d01b5e-application-events.json": "5cdaf5b423a406d371802a390377655be5360ab8400c5e809dd4df6a0faaa57e",
+      "d02-r2-d01b5e-application-parsed.json": "ac61ca59c1b3fb6bcaa5bacb9c14f71d1f2058a75a54991195276a3eee0a9cec",
+      "d02-r2-d01b5e-wer-correlation.json": "aab0e8bf60cfab6834dca5d5f6d6f429b1d2adbdf9fe36fd239f378a629d85f7",
+      "d02-r2-d01b5e-wer-attached-files.json": "e50676b677bce8c2d76b073b9501d3f7c6176f5926ecc33d2e7358398366aa33",
+      "d02-r2-d01b5e-wer-0-Report.wer": "6735ca1df61e68c835bfda9efe2326cdb04141df4b52e4afbac1c2dce95e69c5",
+      "d02-r2-d01b5e-game-database.dd64": "ef1c1bca5b7a61d359a5a4d66cb01aca66d152d22135013a8e3025ac9df95528",
+      "d02-r2-d01b5e-game-database.json": "3e425b17fcffd9131e2c633249cc5951674c64c69f766634e75c0e4ffdc3d84d"
+    },
+    "executedObserverSHA256": "68eb35de6ac16fe29abd9732cc8b9cdffa545171294aed4a72adea2f1b6c95a6",
+    "currentObserverSHA256": "bfdf08471ae11e928d66b266284209b01b29646b58bb1400ef70d07ea33ee031"
   }
 }

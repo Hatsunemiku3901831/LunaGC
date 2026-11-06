@@ -124,3 +124,35 @@ python -m unittest tools.test_client72_startup_observer tools.test_debug_channel
 当前准确状态为：**原目标保持预算暂停，但调试器选中上下文仍为主线程；原事件仍属D-01b5b自有pause。** 最新只读证据是`d02-r2-d01b5c-retention-mismatch.json`，恢复尝试为`d02-r2-d01b5c-restore-selection.json`；不能直接拿旧active-session的CIP/RSP作为当前选中线程。恢复执行前需同时核当前选中线程、原事件身份和OS归属；普通helper返回值不能代替核对。初次retention拒绝、序列化失败日志、旧`selectionRestored=false`及返回true但无效的恢复尝试均保留。
 
 本批独立完成的Java当前区输出→原生消费前置见[HTTP_DISPATCH](CLIENT_72_HTTP_DISPATCH.md)：固定JAR六组实际响应、八组原生返回、三组拒绝，双跑一致及22项守卫通过。它没有推动暂停目标执行，也不替代自然SDK/HTTP/Marshal调用和返回。下一步先核RegionList的真实parse/caller/class/codec身份及路由信任闭包；新的同目标自然观察需先指定合适阶段与单个必要点，不能再同时装五个主模块点或重复factory软件点。
+
+## D-01b5e：用户要求重启后的单GlobalDispatch点观察
+
+用户明确要求“重启游戏，再进行观察”，覆盖此前保留旧pause的决定。D-01b5d的[RegionList来源与三HTTP支](CLIENT_72_REGION_LIST.md)先冻结审核后，本次只选择其共同正文consumer `1512250E0`的一个主模块软件入口点，保留原三个系统终止API诊断点；不重复原五点/factory，不新增硬件点，不装补丁或强造调用。目标ABI为RCX管理器、RDX托管Base64正文string、R8 completion Action。计划只读取header及有界UTF16；若自然命中，先移除入口点，再仅在已核caller `14F894D43`设置一个临时返回点，以同TID、RSP+8关联，void返回不把RAX当string。
+
+关闭旧target前，执行策略参数遗漏、旧上下文相等/双API守卫和可见窗口唯一性先后导致准备脚本停止，所有首失败保留，均发生在close/stop之前。新的只读记录一度出现CIP/RSP和TEB均0，故不能把这时的DR零当成有效CPU寄存器读取；未据此恢复未知线程或异常。关闭已核目标与续接旧栈是不同操作：最终依据新OS句柄的完整路径/PID、固定EXE hash、调试器目标身份及无其他相关游戏核归属，选中上下文可用性单独记录。此时没有唯一可见标题游戏窗，未发送WM_CLOSE；仅执行一次既有debugger `stop`。旧进程OS/PUB/log均exit1，EXIT+STOP齐全、相关游戏0，明确记录为**调试器终止，不是应用正常退出**。
+
+新load重新从日志游标0开始，并得到新CREATE_PROCESS/SYSTEMBREAKPOINT、匹配路径/PID、debugging=true/running=false及独立OS句柄。系统→EP及每停点双API/DR合同保持；匹配首次应用异常con1，自有系统/EP使用裸con。以下为实际结果：
+
+| 项目 | 结果 |
+| --- | --- |
+| load事件至首次run | 0.343秒 |
+| 首次run至EXIT | 37.766秒；观察器总耗时42.343秒，未达到120秒预算 |
+| 调试停止 | 39个：系统、EP及37次首次AV；两API一致，所见六DR始终0 |
+| 加载模块 | 90条DLL事件，末端包括网络/音频库及windows.ui |
+| 自然入口/返回/终止点命中 | 0 / 0 / 0 |
+| OS / PUB / 日志 | 均为`80000003`，EXIT与STOP齐全，eviction0，PUB订阅线程存活 |
+| 文件/配置 | 五原始客户端文件及根配置hash保持 |
+
+Windows Application1000按本次新PID和路径匹配，异常`80000003`、模块YuanShen.exe、故障RVA **`112250E0`**，恰为唯一主模块软件观察入口。Application1001及归档Report.wer的IntegratorReportIdentifier相同，code/offset亦一致；已保存原Report.wer和hash。1001列出的9个附件在读取时均不存在，未取得minidump。没有对应的最终异常/BREAKPOINT PUB或参数/调用栈，不能据WER故障地址宣称观察到了业务调用、参数或返回。
+
+与旧结果并列后，证据是：五点轮两次WER在factory RVA52FBF0；撤五点后零主点观察118.641秒并预算pause；这次一个不同主点后，WER移到该点RVA112250E0。它加强“主模块软件观察改变启动结果”的候选，但不识别具体保护/线程/异常机制，也不是完整随机因果实验。39个已观测停点无DR残留、无日志eviction且PUB线程存活，分别排除了这些停点的已知DR问题和明显日志/订阅线程失效；它们不能证明最终事件一定曾由调试器或插件产生。
+
+收口只读复核同一管理员会话无target，相关游戏0，当前API四种点表均空。调试器持久库另行只读复制、解压核到**4个本轮自有软件点**：GlobalDispatch及三终止点，名字/模块/RVA按本轮raw ledger逐个匹配；无未知点。未改库或据API表空宣称库中也无点。后续游戏load前必须按该ledger清理/复核，不能原样重试本次参数；本批没有再次load游戏。
+
+工具新增`global-dispatch`模式，并保证该模式与原五点集合不相交；void返回不解引用RAX。新增两项回归与原17项合计19项通过，失败/错误/跳过0。实际运行版本按raw的`sourceSHA256`原样保存在`analysis/d02-r2-d01b5e-observer-executed.py`；运行后为可测试的单点选择/void返回提取了同语义函数，并使旧点归属读取尊重上一轮模式，未将新源码hash追写进原始运行。共享摘要分别保留executed/current源码hash。
+
+原始运行`d02-r2-d01b5e-run1.json`、旧目标最终关闭`d02-r2-d01b5e-stop-retained-v5.json`、无目标/持久库审计`d02-r2-d01b5e-final-audit.json`及同前缀Application/WER/附件读取记录均在忽略证据目录。共享`singleGlobalDispatchContrast`只追加本阶段，旧b/c/d字段保留。没有运行代码/配置/Proto/补丁变更，不需部署。
+
+主线已审核四文件及实际执行源码区别，独立19项通过；逐项核11原始来源hash、39停点的双API/六DR、OS/PUB/log终态、WER新PID/路径/报告ID及单点RVA、持久库四点归属，原共享其它章节逐字节保持。证明为 `local/migration72/evidence/d02-r2-d01b5e-main-review.json`，日志 `local/migration72/logs/d02-r2-d01b5e-main-guards.log`。不把当前helper的running=true读法当有target，也不把本卡完成当自然SDK/HTTP已完成。
+
+下一项先用现有自有合成目标区分通道和目标特有行为。D-01b4覆盖普通系统/EP、硬件点、pause和AV/C++交付，尚未覆盖“先con1交付应用异常，再自然命中主EXE软件点，收到普通BP并裸con到返回”的完整序列。最小对照使用同固定fixture、同三终止诊断点和同一停止分类/返回关联合同，比较有/无前序AV+C++时的marker软件入口/返回/正常exit0。若合成也丢BP或异常退出，优先修通道；若合成全过，只能缩小通用continue状态解释，仍需对游戏特有线程/异常路由与插件事件来源取证，不能据此直接关闭检查或宣布根因。

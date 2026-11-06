@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+D-01b5e：[重启/单GlobalDispatch观察](docs/CLIENT_72_STARTUP_OBSERVER.md#d-01b5e用户要求重启后的单globaldispatch点观察)，主线19守卫及11 raw hash、实际执行源码、旧共享章节保持、WER PID/路径/ReportId/单点RVA和持久4点逐项核同。证明`evidence/d02-r2-d01b5e-main-review.json`，主线日志`logs/d02-r2-d01b5e-main-guards.log`；新run37.766秒/39停点/90DLL/0自然入口后exit80000003。最新无target/相关游戏/API四表空，持久库4点须另清，b/c/d保留pause仅历史。仅关闭本轮观察记录，继续自有SW/异常序列对照及事件分发，不重复原参数load。
+
 E-01d1n1：[目标303恢复](docs/CLIENT_72_D02_QUEST_303_RECOVERY.md)、`Client72Quest303Audit.java`；目标Excel负例拒绝1/安装0，真实章节onLoad/Fallback安装63、63条件/136 exec逐项匹配、auto索引0。主线11源码/37 class核同并按文档javac+双新JVM独立复现，报告SHA `d34b13d5…5a184`；证明`evidence/d02-r3-quest303-main-review.json`，原始`d02-r3-quest303-n1-replay-c316f14e2e9d44c5a4193987ebdf66d3/`。无数据库/任务启动/保存/客户端，未知字段不加alias，继续n2。
 
 F-03d3s1：[SceneInfo有限raw](docs/CLIENT_72_SCENE_INFO_RAW.md)，`trace_client72_scene_info_raw.py`/`test_client72_scene_info_raw`；9类36字段、1152扫描/40成功/21拒绝，主线28关联及第三原生同双跑，完整/摘要SHA `74cd8618…6a7ab`/`f52f41a8…7f7c75`。证明`evidence/scene-info-raw-main-review.json`、主线输出/日志同`scene-info-raw-main-*`前缀。83320 tag2/3实际fixed32；64→65增长是模型边界。72829仅空外壳、非空拒绝，完整SceneInfo/生产未知；先沿实际消费者确定必要分支及实体关联，再定Object后继范围。

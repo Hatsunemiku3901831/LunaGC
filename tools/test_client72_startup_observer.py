@@ -6,7 +6,7 @@ import sys
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from observe_client72_startup import exit_log_codes, matching_returns, register_action, stop_action, summarize, thread_name_payload
+from observe_client72_startup import exit_log_codes, matching_returns, register_action, stop_action, summarize, thread_name_payload, main_entries, return_observation
 
 
 class StartupObserverTests(unittest.TestCase):
@@ -80,6 +80,21 @@ class StartupObserverTests(unittest.TestCase):
             self.assertEqual(matching_returns([origin], changed), [])
         changed = copy.deepcopy(snap); changed['tid'] += 1
         self.assertEqual(matching_returns([origin], changed), [])
+
+    def test_global_dispatch_selection_excludes_all_five_previous_points(self):
+        selected = main_entries('global-dispatch')
+        self.assertEqual(list(selected), ['global_dispatch'])
+        self.assertFalse(set(selected.values()) & set(main_entries('software').values()))
+        self.assertEqual(main_entries('none'), {})
+
+    def test_void_return_never_dereferences_rax_as_a_string(self):
+        def forbidden_read(_):
+            self.fail('A void native return must not interpret RAX as a managed pointer')
+        for kind in ('global_dispatch', 'browser'):
+            row = return_observation(dict(kind=kind), dict(registers=dict(rax=1)), forbidden_read)
+            self.assertTrue(row['returnMatched'])
+            self.assertNotIn('resultPointer', row)
+            self.assertIn('void', row['returnValueSemantics'])
 
     def test_every_stop_rechecks_both_apis_and_active_hardware(self):
         values = dict(cip=0x1000, rsp=0x9000, eflags=0x244,

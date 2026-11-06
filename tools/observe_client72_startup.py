@@ -19,6 +19,8 @@ from extract_client72 import HASHES, PE, number, read_verified
 
 ENTRIES = {'marshal': 0x159C21C90, 'factory': 0x14052FBF0,
            'http': 0x15A3464C0, 'browser': 0x15A366300, 'sdk_rsa': 0x15997C290}
+GLOBAL_DISPATCH_ENTRY = 0x1512250E0
+GLOBAL_DISPATCH_RETURN = 0x14F894D43
 TERMINATORS = ('ntdll.NtTerminateProcess', 'ntdll.RtlExitUserProcess',
                'kernelbase.TerminateProcess')
 DR_NAMES = ('dr0', 'dr1', 'dr2', 'dr3', 'dr6', 'dr7')
@@ -31,8 +33,8 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--seconds', type=int, default=120, choices=range(90, 151))
     parser.add_argument('--summary-output', type=Path)
-    parser.add_argument('--main-observations', choices=('software', 'none'), default='software',
-                        help='none runs the zero-main-module-point contrast; no natural entry inference.')
+    parser.add_argument('--main-observations', choices=('software', 'none', 'global-dispatch'), default='software',
+                        help='none runs zero main points; global-dispatch observes only the verified HTTP body consumer.')
     parser.add_argument('--resume-from', type=Path,
                         help='Resume only this observer\'s first system-stop hardware rejection; no new load.')
     parser.add_argument('--continue-thread-name-from', type=Path,
@@ -98,6 +100,26 @@ def matching_returns(pending, snapshot):
     regs = snapshot['registers']
     return [item for item in pending if item['address'] == regs['cip']
             and item['expectedRsp'] == regs['rsp'] and item['tid'] == snapshot['tid']]
+
+
+def main_entries(mode):
+    return {'software': ENTRIES, 'none': {},
+            'global-dispatch': {'global_dispatch': GLOBAL_DISPATCH_ENTRY}}[mode]
+
+
+def return_observation(origin, snapshot, managed_string):
+    item = dict(kind=origin['kind'], returnMatched=True, origin=origin, **snapshot)
+    if origin['kind'] not in ('browser', 'global_dispatch'):
+        item.update(managed_string(snapshot['registers']['rax']))
+    else:
+        item['returnValueSemantics'] = 'void; no result object asserted'
+    if origin.get('inputHex') is not None and item.get('resultUtf16Hex') is not None:
+        try:
+            expected = bytes.fromhex(origin['inputHex']).decode('utf8').encode('utf-16-le')
+            item['conversionMatches'] = expected.hex() == item['resultUtf16Hex']
+        except UnicodeError:
+            item['conversionMatches'] = 'input-not-valid-utf8'
+    return item
 
 
 def register_action(snapshot):
@@ -389,19 +411,11 @@ def execute(root, args):
             if not matches:
                 return 'return-unrelated-thread-or-stack'
             for origin in matches:
-                item = dict(kind=origin['kind'], returnMatched=True, origin=origin, **snap)
-                if origin['kind'] != 'browser':
-                    item.update(managed_string(regs['rax']))
-                if origin.get('inputHex') is not None and item.get('resultUtf16Hex') is not None:
-                    try:
-                        expected = bytes.fromhex(origin['inputHex']).decode('utf8').encode('utf-16-le')
-                        item['conversionMatches'] = expected.hex() == item['resultUtf16Hex']
-                    except UnicodeError:
-                        item['conversionMatches'] = 'input-not-valid-utf8'
+                item = return_observation(origin, snap, managed_string)
                 report['observations'].append(item)
                 pending.remove(origin)
             remove(regs['cip'])
-            if any(item['kind'] in ('http', 'browser', 'sdk_rsa') or
+            if any(item['kind'] in ('http', 'browser', 'sdk_rsa', 'global_dispatch') or
                    (item['kind'] == 'marshal' and item.get('inputHex')) for item in matches):
                 return 'natural-call-return-observed'
             return None
@@ -416,6 +430,15 @@ def execute(root, args):
             length = regs['rdx'] & 0xffffffff
             raw = read(regs['rcx'], length) if length else b''
             item['inputByteLength'] = length
+        elif kind == 'global_dispatch':
+            item['receiver'] = regs['rcx']
+            item['completionAction'] = regs['r8']
+            item['bodyString'] = managed_string(regs['rdx'])
+            body_length = item['bodyString'].get('resultLength')
+            if body_length and body_length > 4096:
+                prefix = read(regs['rdx'] + 20, 8192)
+                item['bodyString']['prefixUtf16Hex'] = prefix.hex() if prefix else None
+                item['bodyString']['prefixCharLimit'] = 4096
         else:
             # Browser receiver is RCX; all other named parameters are strings.
             for reg in (('rdx',) if kind == 'browser' else ('rcx', 'rdx')):
@@ -423,13 +446,25 @@ def execute(root, args):
         report['observations'].append(item)
         address = c.read_qword(regs['rsp'])
         assert c.check_valid_read_ptr(address)
+        if kind == 'global_dispatch':
+            if (not item['bodyString'].get('resultLength') or
+                    item['bodyString'].get('resultUtf16Hex') is None and
+                    item['bodyString'].get('prefixUtf16Hex') is None):
+                return 'global-dispatch-body-unreadable-or-empty'
+            if address != base + GLOBAL_DISPATCH_RETURN - pe.base:
+                return 'global-dispatch-unreviewed-return-site'
+            expected = binary[pe.offset(GLOBAL_DISPATCH_RETURN, 32, executable=True):][:32]
+            assert c.read_memory(address, 32) == expected
+            # Keep exactly one main-module point: replace entry by this return site.
+            remove(regs['cip'])
         if address not in points:
             point(address, 'cn72_r2_return')
         else:
             assert points[address] == 'cn72_r2_return'
         pending.append(dict(kind=kind, address=address, expectedRsp=regs['rsp'] + 8,
                             tid=snap['tid'], inputHex=raw.hex() if raw is not None else None))
-        remove(regs['cip'])
+        if kind != 'global_dispatch':
+            remove(regs['cip'])
         return None
 
     def verified_tls_addresses(event):
@@ -597,7 +632,7 @@ def execute(root, args):
                 assert name in prior_observation['ownedPointsRemaining'].values()
                 known_old[name] = address
         if prior_observation:
-            for kind, original in ENTRIES.items():
+            for kind, original in main_entries(prior_observation.get('mainObservationMode', 'software')).items():
                 name = 'cn72_r2_' + kind
                 assert name in prior_observation['ownedPointsRemaining'].values()
                 known_old[name] = base + original - pe.base
@@ -616,8 +651,15 @@ def execute(root, args):
             assert actual == expected
             report.setdefault('codeChecks', []).append(dict(kind=kind, originalVA=f'{original:X}',
                                                             sha256=hashlib.sha256(actual).hexdigest(), match=True))
-            if args.main_observations == 'software':
-                point(address, 'cn72_r2_' + kind)
+        if args.main_observations == 'global-dispatch':
+            address = base + GLOBAL_DISPATCH_ENTRY - pe.base
+            expected = binary[pe.offset(GLOBAL_DISPATCH_ENTRY, 32, executable=True):][:32]
+            actual = c.read_memory(address, 32)
+            assert actual == expected
+            report['codeChecks'].append(dict(kind='global_dispatch', originalVA=f'{GLOBAL_DISPATCH_ENTRY:X}',
+                                             sha256=hashlib.sha256(actual).hexdigest(), match=True))
+        for kind, original in main_entries(args.main_observations).items():
+            point(base + original - pe.base, 'cn72_r2_' + kind)
         for symbol, address in symbols.items():
             point(address, 'cn72_r2_exit_' + symbol.replace('.', '_'))
         report['stopReason'] = 'observation-budget'
