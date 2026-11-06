@@ -1,5 +1,9 @@
 # 研发索引与执行骨架
 
+用户2026-11-07最新要求“重启游戏，再进行观察”：旧保留pause限制已覆盖，D-01b5e由R2独占先核旧target→结束/OS+PUB+log闭合→新load固定原始客户端，单一GlobalDispatch入口、120秒预算。下方b/c/d暂停上下文均为各阶段历史，不能直接当最新PID/目标或阻止已授权重启；无服务部署，其他开发继续。
+
+D-01b5d：[RegionList](docs/CLIENT_72_REGION_LIST.md)、`Client72RegionListFixture`、`trace_client72_region_list.py`/`test_client72_region_list`；主线独立13文件重生成、22测试及第三native同双跑，完整/摘要SHA `e17f8443…79d8c`/`04bb034e…8dd57`。原始`d02-region-list/main-review/`、证明`evidence/d02-r2-region-list-main-review.json`。87445/13336具名caller/class/codec来源及三HTTP支静态交叉已审，九raw字段消费不替代完整callback/路由/自然SDK；target窗口PrintWindow error5没有产出图像，用户已授权e重启。
+
 E-01d1l：[最小资源L](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)、`D02Birth505AutoEventTest`；25个所选suite三类本组订阅有限表，505生产自然加载的1次GROUP_LOAD/4次GADGET_CREATE调用返回、门Default/箱ChestLocked与0 ERROR。主线核计数发生在action返回后，增加实际block3003 hash并按K独立配置复现1项通过；最终source/class/XML在`evidence/d02-r3-birth-505-main-review.json`，目录`d02-r3-birth-505-main-8b8d50fc7c974a7c8fccb65f0abcf43b/`。无DB/HTTP/Dispatch/网络或手动派发，计数不等于后代异步结束，R3仍未完成。
 
 E-01d1k：[最小资源K](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)、`D02BirthInitialEntitiesTest`；真实出生点25组/初始suite、逐实体类型/ID、自然601 option173，inline1项通过0 ERROR；fast第三轮1失败449 ERROR，根fast保持。主线35输入/source/class/XML核同，351重建引用逐项对固定Lua，区分52/299静态统计和真实循环断言，证明`evidence/d02-r3-birth-main-review.json`；原始`d02-r3-birth-inline-86563b38420d4457b5a25ff91e4a1eb1/`及fast失败目录见K。无DB/HTTP/Dispatch，按K命令独立配置/JVM/cache复现；其余初始事件/实际调度/revision/客户端未验，继续L。

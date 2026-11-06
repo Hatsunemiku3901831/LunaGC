@@ -1,0 +1,346 @@
+{
+  "schemas": [
+    {
+      "typeIndex": 87445,
+      "clientType": "MADDBHHMFNG",
+      "fields": [
+        {
+          "clientField": "MNJHOKMKIIO",
+          "objectOffset": 24,
+          "tag": 5,
+          "type": "bytes",
+          "cardinality": "singular"
+        },
+        {
+          "clientField": "PNECJNBHCNG",
+          "objectOffset": 32,
+          "tag": 2,
+          "type": "message",
+          "cardinality": "repeated",
+          "nestedTypeIndex": 13336
+        },
+        {
+          "clientField": "AMANAEJDNNF",
+          "objectOffset": 40,
+          "tag": 6,
+          "type": "bytes",
+          "cardinality": "singular"
+        },
+        {
+          "clientField": "LCCLHKIFBMJ",
+          "objectOffset": 48,
+          "tag": 7,
+          "type": "bool",
+          "cardinality": "singular"
+        },
+        {
+          "clientField": "LDLIEKOAFBP",
+          "objectOffset": 52,
+          "tag": 1,
+          "type": "int32",
+          "cardinality": "singular"
+        }
+      ]
+    },
+    {
+      "typeIndex": 13336,
+      "clientType": "JCOJNGKFIOM",
+      "fields": [
+        {
+          "clientField": "NOEEBKJAFAG",
+          "objectOffset": 24,
+          "tag": 3,
+          "type": "string",
+          "cardinality": "singular"
+        },
+        {
+          "clientField": "HDLLHEMPPCF",
+          "objectOffset": 32,
+          "tag": 2,
+          "type": "string",
+          "cardinality": "singular"
+        },
+        {
+          "clientField": "OKDLHHPJOLA",
+          "objectOffset": 40,
+          "tag": 1,
+          "type": "string",
+          "cardinality": "singular"
+        },
+        {
+          "clientField": "MJCIFCHMPGH",
+          "objectOffset": 48,
+          "tag": 4,
+          "type": "string",
+          "cardinality": "singular"
+        }
+      ]
+    }
+  ],
+  "javaFixtureCount": 6,
+  "nativeCombinationCount": 8,
+  "results": [
+    {
+      "name": "empty-response",
+      "wireLength": 0,
+      "wireSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rootEntries": 1,
+      "childEntries": 0,
+      "children": [],
+      "retcode": 0,
+      "enableLoginPc": false,
+      "seedLength": 0,
+      "seedSHA256": null,
+      "configHex": "",
+      "nativeReaderReturned": true
+    },
+    {
+      "name": "one",
+      "wireLength": 2172,
+      "wireSHA256": "201d89a4577a712bfb98331e55c08269282fd50e4900f0e5aea007653ee04e2c",
+      "rootEntries": 1,
+      "childEntries": 1,
+      "children": [
+        {
+          "NOEEBKJAFAG": "DEV_PUBLIC",
+          "HDLLHEMPPCF": "Title A",
+          "OKDLHHPJOLA": "fixture_a",
+          "MJCIFCHMPGH": "http://127.0.0.1:8088/query_cur_region/fixture_a"
+        }
+      ],
+      "retcode": 0,
+      "enableLoginPc": true,
+      "seedLength": 2076,
+      "seedSHA256": "2258b87182df6e8e679c15a86184ddaf8d4b5eda24cd81bf12e85bb8a9e00637",
+      "configHex": "00017f80ff",
+      "nativeReaderReturned": true
+    },
+    {
+      "name": "two",
+      "wireLength": 2261,
+      "wireSHA256": "c1f145fae8248aab2cf1b5a90ed3c2cc95ac0b09e25ac3ddb30b3004f3797e18",
+      "rootEntries": 1,
+      "childEntries": 2,
+      "children": [
+        {
+          "NOEEBKJAFAG": "DEV_PUBLIC",
+          "HDLLHEMPPCF": "Title A",
+          "OKDLHHPJOLA": "fixture_a",
+          "MJCIFCHMPGH": "http://127.0.0.1:8088/query_cur_region/fixture_a"
+        },
+        {
+          "NOEEBKJAFAG": "fixture_other",
+          "HDLLHEMPPCF": "Title B",
+          "OKDLHHPJOLA": "fixture_b",
+          "MJCIFCHMPGH": "https://fixture.invalid/query_cur_region/fixture_b"
+        }
+      ],
+      "retcode": 0,
+      "enableLoginPc": true,
+      "seedLength": 2076,
+      "seedSHA256": "2258b87182df6e8e679c15a86184ddaf8d4b5eda24cd81bf12e85bb8a9e00637",
+      "configHex": "00017f80ff",
+      "nativeReaderReturned": true
+    },
+    {
+      "name": "empty-entry",
+      "wireLength": 2090,
+      "wireSHA256": "39d78e49f761bfa6025ab69a421c5f1a4f60ec991ea6bb62519a2abd59fce2fc",
+      "rootEntries": 1,
+      "childEntries": 1,
+      "children": [
+        {}
+      ],
+      "retcode": 0,
+      "enableLoginPc": true,
+      "seedLength": 2076,
+      "seedSHA256": "2258b87182df6e8e679c15a86184ddaf8d4b5eda24cd81bf12e85bb8a9e00637",
+      "configHex": "00017f80ff",
+      "nativeReaderReturned": true
+    },
+    {
+      "name": "error-retcode",
+      "wireLength": 2183,
+      "wireSHA256": "36eb70ffa1abb841cb6c8b75da0f21f7e47fed31018bc5f31bf4dc8e7b98234f",
+      "rootEntries": 1,
+      "childEntries": 1,
+      "children": [
+        {
+          "NOEEBKJAFAG": "DEV_PUBLIC",
+          "HDLLHEMPPCF": "Title A",
+          "OKDLHHPJOLA": "fixture_a",
+          "MJCIFCHMPGH": "http://127.0.0.1:8088/query_cur_region/fixture_a"
+        }
+      ],
+      "retcode": -4005,
+      "enableLoginPc": true,
+      "seedLength": 2076,
+      "seedSHA256": "2258b87182df6e8e679c15a86184ddaf8d4b5eda24cd81bf12e85bb8a9e00637",
+      "configHex": "00017f80ff",
+      "nativeReaderReturned": true
+    },
+    {
+      "name": "raw-text",
+      "wireLength": 2179,
+      "wireSHA256": "191bc37000c894218a6c52e6bdfaec2123be8946ab7e61ed80c6798bd24755ca",
+      "rootEntries": 1,
+      "childEntries": 1,
+      "children": [
+        {
+          "NOEEBKJAFAG": "DEV_PUBLIC",
+          "HDLLHEMPPCF": "Title A",
+          "OKDLHHPJOLA": "9007199254740993",
+          "MJCIFCHMPGH": "http://127.0.0.1:8088/query_cur_region/fixture_a"
+        }
+      ],
+      "retcode": 0,
+      "enableLoginPc": true,
+      "seedLength": 2076,
+      "seedSHA256": "2258b87182df6e8e679c15a86184ddaf8d4b5eda24cd81bf12e85bb8a9e00637",
+      "configHex": "00017f80ff",
+      "nativeReaderReturned": true
+    },
+    {
+      "name": "repeated-root-appends",
+      "wireLength": 4344,
+      "wireSHA256": "97d692b6037fab16242190a42563b5461605957e25b788948ffd8aa1fd528fd4",
+      "rootEntries": 1,
+      "childEntries": 2,
+      "children": [
+        {
+          "NOEEBKJAFAG": "DEV_PUBLIC",
+          "HDLLHEMPPCF": "Title A",
+          "OKDLHHPJOLA": "fixture_a",
+          "MJCIFCHMPGH": "http://127.0.0.1:8088/query_cur_region/fixture_a"
+        },
+        {
+          "NOEEBKJAFAG": "DEV_PUBLIC",
+          "HDLLHEMPPCF": "Title A",
+          "OKDLHHPJOLA": "fixture_a",
+          "MJCIFCHMPGH": "http://127.0.0.1:8088/query_cur_region/fixture_a"
+        }
+      ],
+      "retcode": 0,
+      "enableLoginPc": true,
+      "seedLength": 2076,
+      "seedSHA256": "2258b87182df6e8e679c15a86184ddaf8d4b5eda24cd81bf12e85bb8a9e00637",
+      "configHex": "00017f80ff",
+      "nativeReaderReturned": true
+    },
+    {
+      "name": "explicit-zero-clears-retcode-and-bool",
+      "wireLength": 2187,
+      "wireSHA256": "e57f29a2197ef705c4a0e79e50b1610e666e833e34e89ed77ed5d1e55b5ce835",
+      "rootEntries": 1,
+      "childEntries": 1,
+      "children": [
+        {
+          "NOEEBKJAFAG": "DEV_PUBLIC",
+          "HDLLHEMPPCF": "Title A",
+          "OKDLHHPJOLA": "fixture_a",
+          "MJCIFCHMPGH": "http://127.0.0.1:8088/query_cur_region/fixture_a"
+        }
+      ],
+      "retcode": 0,
+      "enableLoginPc": false,
+      "seedLength": 2076,
+      "seedSHA256": "2258b87182df6e8e679c15a86184ddaf8d4b5eda24cd81bf12e85bb8a9e00637",
+      "configHex": "00017f80ff",
+      "nativeReaderReturned": true
+    }
+  ],
+  "rejections": [
+    {
+      "name": "truncated-child-string",
+      "wireSHA256": "dd488009de7d26f985b120884d5a8e17946c95044504f7552334cff255c58aa8",
+      "reason": "0x147500e70: Truncated or invalid length",
+      "nativeErrorBranch": false
+    },
+    {
+      "name": "negative-child-length",
+      "wireSHA256": "171beeae169628f3d1b2c04356087f96a8f58893449bad74b5a81ec25a8d5c28",
+      "reason": "0x1509cafa0: Native error branch: negative-length",
+      "nativeErrorBranch": true
+    },
+    {
+      "name": "truncated-seed",
+      "wireSHA256": "b8e3b06cade88747329c59f40b61bd8eb9e0be1890d6a29bf22a9cd78f5ea560",
+      "reason": "0x1475208d0: Truncated or invalid length",
+      "nativeErrorBranch": false
+    }
+  ],
+  "allDeclaredInstanceFieldsCovered": true,
+  "fullCallbackExecuted": false,
+  "schemaVersion": 1,
+  "task": "D-01b5d",
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "javaJarSHA256": "dfdebbda0352055540c44a54e2eebfd4ffdfe679db74270044d3d55aeb006ec3",
+  "javaSourceSHA256": "2c688eec3cf50cbd7e411cca00a060a0e4c387ac3a79267264a3c610cd812602",
+  "sourceSHA256": "00925f9f386dd100b377bc1442cba07f4f1fbc79bcc393dc1cbae2de6036912a",
+  "identityEvidence": {
+    "callback": "0x1512250e0",
+    "bodyArgument": "rdx stored at frame+0x40",
+    "base64Call": "0x151225498 -> System.Convert.FromBase64CharPtr",
+    "parseCall": "0x1512254a7 -> 0x147ea0940",
+    "rootClassCell": "0x1458c5708",
+    "childClassCell": "0x1458d5748",
+    "codecInitializer": "0x152fef100",
+    "codecWireKey": 18,
+    "codecGlobalOffset": "0x29040",
+    "literal": {
+      "usageRow": 777368,
+      "index": 35025,
+      "slot": 35025,
+      "cell": "0x145b0e4a8",
+      "value": "[GlobalDispatch] Parse QueryRegionListHttpRsp: "
+    },
+    "transportSource": {
+      "scope": "static source/data flow; no transport executed",
+      "callerCoroutine": "23186/0x14f8949b0",
+      "directCallbackCall": "0x14f894d3e",
+      "bodyClosure": "23181+0x18",
+      "errorClosure": "23181+0x20",
+      "branches": [
+        "0: UnityEngine.WWW coroutine 23178/0x151d8d620",
+        "1: System.Net.HttpWebRequest helper 0x151219230",
+        "2: coroutine 23199/0x15122a290 -> helper 0x151223770 -> HoYoSDKNetworkInterface.InitEnv / HoYoSDKHttpWebRequest.CreateHttpReuquest; worker completion untraced"
+      ],
+      "bodyStores": [
+        "WWW 0x151d8d9cb",
+        "HttpWebRequest 0x1512194fa"
+      ],
+      "urlBuilder": "MoleMole.Miscs.GetGlobalDispatchUrl 0x1531e0a10",
+      "actualRuntimeSelectedBranch": "unknown"
+    }
+  },
+  "sourceInputs": {
+    "src/main/proto/QueryRegionListHttpRsp.proto": "18215b839abee13c4a2b2a27df843db7548bc426cdd40a2d487b1b28a0825b1e",
+    "src/main/proto/RegionSimpleInfo.proto": "406760fc6c249903043e177c2dc17bbd4b90260a5492f91c29ee56cc7c0a4846",
+    "src/main/java/emu/grasscutter/server/http/dispatch/RegionHandler.java": "b808b99e1e678d98b8b7f2c422aadd8b170ef88e711a92c1a73d49df72f6e0b6",
+    "tools/client72_graph.py": "bfa2f846e858327c7b592ba1139b6f50f0f0d27edc478d6475723064353cd4ab",
+    "tools/trace_client72_responses.py": "b12d1e6a2fcd5ddcb88365188f759d3a6f08f43ab9cb7fbe4a2fa8f6db348c32"
+  },
+  "models": [
+    "Synthetic managed class/object/string/ByteString/array storage",
+    "Bounded tag/varint/blob helpers and fixed-capacity generic context; native typed readers, list append and nested limits execute",
+    "Java Base64 text independently decoded in the harness; native Base64 and full HTTP callback are not executed"
+  ],
+  "layers": {
+    "commandId": "HTTP has no game CmdID assigned here",
+    "identity": "Fixed class/codec and callback with named QueryRegionListHttpRsp error literal",
+    "wire": "Nine raw fields consumed from actual fixed-JAR Java bytes; no global map promotion"
+  },
+  "runtimeStatus": "not-tested",
+  "liveClientExecuted": false,
+  "productionCodeChanged": false,
+  "outsideScope": [
+    "Full callback including IFix, allocation, server grouping, config consumption and completion Action",
+    "Native Base64 decoding and actual HTTP transport/callback execution",
+    "Endpoint URL selection, TLS/certificate/signature trust, SDK loading conditions and live call/return",
+    "Real GC/CRT, full generic list capacity/Unicode behavior and D-02"
+  ]
+}
