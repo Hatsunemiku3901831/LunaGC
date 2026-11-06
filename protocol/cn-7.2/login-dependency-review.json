@@ -40,7 +40,7 @@
     "src/main/java/emu/grasscutter/server/event/player/PlayerJoinEvent.java": "6145718d871ea78063352d80987cea0c77c24e25fb2668f7766beefb827fdfa1",
     "src/main/java/emu/grasscutter/server/event/types/PlayerEvent.java": "40567ca0404309097b50edf6645e9b8d596b5304eaf6648e4e56b6eabda04e55",
     "src/main/java/emu/grasscutter/server/game/GameServer.java": "3d6c770a1b37b27752f94995ff36822589c6d2de902c0816dbee47f0b9902223",
-    "src/main/java/emu/grasscutter/server/game/GameSession.java": "7e988eabf22c45ee87f6a689e10bafee0b645c3cc201582b99a0f759fea8a33d",
+    "src/main/java/emu/grasscutter/server/game/GameSession.java": "9643722b771c68bdb4f271b3096cb1cd4dbb3ba83a5c973d5c4c9fd9f2d6a3e0",
     "src/main/java/emu/grasscutter/server/game/SceneHandshakeToken.java": "34abb22c52aea125ea03e2a9557106dd968e840bf707fccaa48775eea1fd6eda",
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerEnterSceneDoneReq.java": "e750b2ffd19df8bd8511739e10837380aac2619c45523cac005c7e2b946778dc",
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerEnterSceneReadyReq.java": "d3af12beabe61b847c1212c8c3173caed563f2e1752853c9389767e94a06f7b0",

@@ -342,9 +342,16 @@ public class GameSession implements GameSessionManager.KcpChannel {
                     }
                     return; // Bad packet
                 }
-                int opcode = packet.readShort();
-                int headerLength = packet.readShort();
+                int opcode = packet.readUnsignedShort();
+                int headerLength = packet.readUnsignedShort();
                 int payloadLength = packet.readInt();
+                // Validate the complete declared window before allocating either byte array.
+                // The body field is u32 on wire; values beyond Java's positive array length
+                // cannot fit this received byte[] and must be rejected without allocation.
+                if (payloadLength < 0
+                        || (long) headerLength + payloadLength + 2 > packet.readableBytes()) {
+                    return;
+                }
                 byte[] header = new byte[headerLength];
                 byte[] payload = new byte[payloadLength];
 

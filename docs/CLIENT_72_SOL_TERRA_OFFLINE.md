@@ -36,3 +36,13 @@
 - 资源：根配置 fastRequire=true 保留。既有 inline 夹具和混合来源逐份保留，不作为目标 revision 或完整资源 ready。
 
 网络、资源和有限投影的后续实际结果由各专题及本文件后续记录；本节是已执行的证据整合，不把后继标为通过。
+
+## 1A：C-01b 网络入口边界
+
+[网络边界](CLIENT_72_NETWORK_BOUNDARIES.md)先经真实接收/注册/事件替包入口红测40项、24个预期失败，再最小修复三个生产文件；绿测36帧+7注册全过。实际反射发现324类、启用227/注册227/冲突0。未知Union、别名、业务号及完整初始化未扩大，C-01/R4父项不关闭。
+
+主线逐行复核后，表面review只更新3个实际来源指纹；49源依赖只更新GameSession，294方法/411边及边界保持；Proto review只更新GameSession/BasePacket及相应依赖摘要，116输入/1269来源、98候选/156矩阵/全部描述符与三层/required/runtime保持。旧拒绝及双恢复证明在`local/migration72/offline-sol-terra/network-source-review/`。首次主线比较器漏排除嵌套javaSourceSHA256的失败保留，仅修比较器，不放宽语义断言；一次测试模块名写错的导入错误也保留，正确入口后实际120研究检查通过，9生成器check无漂移。
+
+独立Mongo关联回归实际50套875项全部通过，失败/错误/跳过0（其中包含网络43，不能与绿测重复相加）。原47套账号/经济/保存/Lua/协议及CombatSessionSequence和两网络套件使用独立运行目录；关闭前仅admin/config/local，Mongo正常退出且27027释放。证据目录`local/migration72/offline-sol-terra/mongo-e825b6f516564e888f0b4d5bce19d2da/`。首轮新cwd漏接相对输入导致41个路径失败，目录`mongo-8c106c20b11743a8a73280ccc13b74fc/`保留；补齐既有夹具的resources/protocol/src输入后重跑，无产品或断言修改。
+
+本阶段仍不部署游戏服务；生产修复的portable打包与class/JAR核验由阶段收尾记录，不以编译或上述注册成功代替D-02实机。

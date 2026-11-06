@@ -25,12 +25,22 @@ public final class GameServerPacketHandler {
     }
 
     public void registerPacketHandler(Class<? extends PacketHandler> handlerClass) {
-        try {
-            var opcode = handlerClass.getAnnotation(Opcodes.class);
-            if (opcode == null || opcode.disabled() || opcode.value() <= 0) {
-                return;
-            }
+        var opcode = handlerClass.getAnnotation(Opcodes.class);
+        if (opcode == null || opcode.disabled() || opcode.value() <= 0) {
+            return;
+        }
+        if (opcode.value() > 0xffff) {
+            throw new IllegalArgumentException("Handler opcode is outside uint16: " + opcode.value());
+        }
+        var existing = this.handlers.get(opcode.value());
+        if (existing != null) {
+            throw new IllegalStateException(
+                    "Opcode " + opcode.value() + " is already registered to "
+                            + existing.getClass().getName() + "; cannot register "
+                            + handlerClass.getName());
+        }
 
+        try {
             var packetHandler = handlerClass.getDeclaredConstructor().newInstance();
             this.handlers.put(opcode.value(), packetHandler);
 
@@ -40,7 +50,7 @@ public final class GameServerPacketHandler {
             if (handlerClass.isAnnotationPresent(NoResponseExpected.class)) {
                 this.noResponseOpcodes.add(opcode.value());
             }
-        } catch (Exception e) {
+        } catch (ReflectiveOperationException e) {
             Grasscutter.getLogger()
                     .warn("Unable to register handler {}.", handlerClass.getSimpleName(), e);
         }

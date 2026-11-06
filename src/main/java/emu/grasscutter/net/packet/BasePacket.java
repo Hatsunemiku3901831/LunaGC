@@ -88,8 +88,15 @@ public class BasePacket {
     }
 
     public byte[] build() {
+        if (opcode < 0 || opcode > 0xffff) {
+            throw new IllegalArgumentException("Opcode is outside uint16: " + opcode);
+        }
+
         if (getHeader() == null) {
             this.header = new byte[0];
+        }
+        if (header.length > 0xffff) {
+            throw new IllegalArgumentException("Header length is outside uint16: " + header.length);
         }
 
         if (getData() == null) {

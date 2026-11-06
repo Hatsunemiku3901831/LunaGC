@@ -35,7 +35,7 @@
     "src/main/java/emu/grasscutter/game/world/Scene.java": "100d28f74ea1fe5291458d0ec0a4f898fa10cd7551fade2b95b8e6b6f4adcc35",
     "src/main/java/emu/grasscutter/game/world/World.java": "3fe1b04b3c2681dd96a5206a60a0035952de827cf69a5dd6c7f0ff5e44768147",
     "src/main/java/emu/grasscutter/game/world/sceneplay/ScenePlayBattleManager.java": "13794c14ceb20c8a17b57886f381556e10a1d4ec557edc17764cb0d84a10603f",
-    "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f",
+    "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe",
     "src/main/java/emu/grasscutter/plugin/PluginManager.java": "c5a47244b050922e24dab4fe56c38ee6bc7f14e053e13e4ef1dd72f1c142480c",
     "src/main/java/emu/grasscutter/scripts/SceneScriptManager.java": "e6c707e1eab5d439e6762a25a0591a2c798125d1e95cb3091a72127929b8b89e",
     "src/main/java/emu/grasscutter/scripts/ScriptLib.java": "3b554d175c4028e0d30bc4727035f5f04d44f76a3d88b562b0d03227b4cfcdf2",
@@ -44,7 +44,7 @@
     "src/main/java/emu/grasscutter/server/event/player/PlayerJoinEvent.java": "6145718d871ea78063352d80987cea0c77c24e25fb2668f7766beefb827fdfa1",
     "src/main/java/emu/grasscutter/server/event/types/PlayerEvent.java": "40567ca0404309097b50edf6645e9b8d596b5304eaf6648e4e56b6eabda04e55",
     "src/main/java/emu/grasscutter/server/game/GameServer.java": "3d6c770a1b37b27752f94995ff36822589c6d2de902c0816dbee47f0b9902223",
-    "src/main/java/emu/grasscutter/server/game/GameSession.java": "7e988eabf22c45ee87f6a689e10bafee0b645c3cc201582b99a0f759fea8a33d",
+    "src/main/java/emu/grasscutter/server/game/GameSession.java": "9643722b771c68bdb4f271b3096cb1cd4dbb3ba83a5c973d5c4c9fd9f2d6a3e0",
     "src/main/java/emu/grasscutter/server/game/SceneHandshakeToken.java": "34abb22c52aea125ea03e2a9557106dd968e840bf707fccaa48775eea1fd6eda",
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerEnterSceneDoneReq.java": "e750b2ffd19df8bd8511739e10837380aac2619c45523cac005c7e2b946778dc",
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerEnterSceneReadyReq.java": "d3af12beabe61b847c1212c8c3173caed563f2e1752853c9389767e94a06f7b0",
@@ -1332,7 +1332,7 @@
     "protocol/cn-7.2/inventory-graph-observations.json": "b21904536dc21997f2ee9c1ecb2761e63d521f8cebb72a7320620ec7b3660fe8",
     "protocol/cn-7.2/key-selection-observations.json": "8c6f5002587681f60f0ee91d4bb91bb9c667fdb89506f863d4a5e39d5bb17277",
     "protocol/cn-7.2/login-constructor-observations.json": "a1fd3c1b73d7f5dfd3a880a64b38a6c273002e8b5fbc632b5835d358669ec605",
-    "protocol/cn-7.2/login-dependency-observations.json": "beb69a19c7b608ec0ec2065be9ee3b651179c89acc68804cabd3a519691a597a",
+    "protocol/cn-7.2/login-dependency-observations.json": "fe031e9f7278fb7f49ebb6eb282be9a609219c71ff9faa09e3942a5598882a46",
     "protocol/cn-7.2/login-literal-observations.json": "0253393d651914cf467ded6764dcdb20b4efd2bde7a0b3e6759385bfaaaecefe",
     "protocol/cn-7.2/login-semantic-observations.json": "53ef84c98299af53b9d96585ca2a3ab712dac7bc9488406e40569cb147debaf9",
     "protocol/cn-7.2/login-source-observations.json": "a64e56833cd9673cfa6b2bbaec46b6e1318bb05ddf8a135f05965ca8a046d9f0",
@@ -1465,7 +1465,7 @@
         }
       ],
       "javaSourceSHA256": {
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto"
@@ -1488,7 +1488,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketAchievementAllDataNotify.java": "1fc7796fdf2f454fcffeb9959e16b80c63c815ecb6d4cef59358e801e82730fe",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "AchievementAllDataNotify.proto",
@@ -1519,7 +1519,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketActivityInfoNotify.java": "083bd4d24816604dd5cfdc56b038ad08d1e82c3d05802907b6e1f8e78847f3f1",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "ActivityInfo.proto",
@@ -1551,7 +1551,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketActivityScheduleInfoNotify.java": "22f52436cc9bee0249596f1aea594a8a6368fdd00a9172167180aa523fc7b585",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "ActivityScheduleInfo.proto",
@@ -1576,7 +1576,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketAllWidgetDataNotify.java": "daab6ad81a9ca54847645fd5033eed83a2a2b79dd5b04b66c20c01fd37bd000b",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "AllWidgetDataNotify.proto",
@@ -1607,7 +1607,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketAvatarAddNotify.java": "512a60a7c5e7168fb245293b8061910fde4dda9a01df1443f5554ac4e6153756",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "AvatarAddNotify.proto",
@@ -1631,7 +1631,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketAvatarDataNotify.java": "2c4eedfabe215bfaa4cb48a9046265f52fd796ece283b1008d5d9209ba4e2fd2",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "AvatarDataNotify.proto",
@@ -1655,7 +1655,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketAvatarEscoffierSkillCookDataNotify.java": "7748e9796a5aa0e405e3bfcb62c69e18321d828514824a8211355181dea85043",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "AvatarEscoffierSkillCookDataNotify.proto",
@@ -1686,7 +1686,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketAvatarTeamUpdateNotify.java": "1aa387bc165a72ce65d73cfde6cdd8cb4082d1929132f80754a6f6bd21d60712",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "AvatarTeamUpdateNotify.proto",
@@ -1710,7 +1710,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketAvatarWeaponSkinDataNotify.java": "e4505deadac39280bd8972065f3b54eae86e41487bea857c75ba778a08d0ae56",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "AvatarWeaponSkin.proto",
@@ -1735,7 +1735,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketBattlePassAllDataNotify.java": "ca17926d8bfc867caeca125e13ccfa3aa11dcd18d64b3c81db86bed6e636e81e",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "BattlePassAllDataNotify.proto",
@@ -1759,7 +1759,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketBattlePassCurScheduleUpdateNotify.java": "0c2f3c94a23b1dde273d7a7bf2e329c20d09a9835b854adea9f235b5ab161cc6",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "BattlePassCurScheduleUpdateNotify.proto",
@@ -1783,7 +1783,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketBattlePassMissionUpdateNotify.java": "f546b7102b2de41764b19edd02104105063f1d5b60179f4aa75466171894d434",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "BattlePassMissionUpdateNotify.proto",
@@ -1807,7 +1807,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketBeyondCosmeticDataNotify.java": "76f7f52444275c714605060b88005d9ead2e884a747976a56c6217af5c5d7806",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "BeyondCosmeticDataNotify.proto",
@@ -1831,7 +1831,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketCardProductRewardNotify.java": "7ca81021b13a0cf907de0e27cb628d993b19dad380329d0f9b673dc843a03ab1",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "CardProductRewardNotify.proto",
@@ -1855,7 +1855,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketCodexDataFullNotify.java": "8d2191384e5efafe1f78d85e4b0cf20e71a0708ea8569d84a888d04167012617",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "CodexDataFullNotify.proto",
@@ -1880,7 +1880,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketCombineDataNotify.java": "ae2f4a516ce12f8835155cc0268376a8929865a60804c6c617aeab94f0cfedf5",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "CombineDataNotify.proto",
@@ -1904,7 +1904,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketCompoundDataNotify.java": "b60ed2e20c2eaa932257bf1c48bb5ade24138c90a9198e3b5cdea121ac627477",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "CompoundDataNotify.proto",
@@ -1929,7 +1929,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketCookDataNotify.java": "03f48be5fcee7f8806169cc8c2c3a1f19f8e97af37c142cb4864e48f7b231f5d",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "CookDataNotify.proto",
@@ -1954,7 +1954,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketCutsceneBeginNotify.java": "033afdfc6fabd0385159e520a2e067d87da9346bd12aa5f156f990bc0362fc5c",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "CutSceneBeginNotify.proto",
@@ -1985,7 +1985,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketDailyTaskDataNotify.java": "0317e123c86f6a744e37bf0ecf38490428ee62dc68c80fc17f414a01058d1c4b",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto"
@@ -2008,7 +2008,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketDelScenePlayTeamEntityNotify.java": "25bf97d400cbaa6238d159a839c28c654cd06cea3a53c72d91c7f6471ab1147c",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "DelScenePlayTeamEntityNotify.proto",
@@ -2032,7 +2032,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketDoSetPlayerBornDataNotify.java": "2fadfebf5a7c3dadcfbb646024a94ef40d6713a712b082832ae0e19e863d467a",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "DoSetPlayerBornDataNotify.proto",
@@ -2056,7 +2056,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketEnterSceneDoneRsp.java": "c4c72825c8d28ecaec3439ec33b7d942cdfc1f2506eb557d5fd87f6816b32808",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "EnterSceneDoneRsp.proto",
@@ -2087,7 +2087,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketEnterScenePeerNotify.java": "5fd9860440840a71e18a47e50e12a441849b6c94d930b6abafe87f6ff5ad8bbc",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "EnterScenePeerNotify.proto",
@@ -2111,7 +2111,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketEnterSceneReadyRsp.java": "79f49b2d94ba812f8229a538026fab7ed5a562d73449cab306fe6a70115f579e",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "EnterSceneReadyRsp.proto",
@@ -2135,7 +2135,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketEntityFightPropChangeReasonNotify.java": "a81715ac1a72288d082df58a7f42cb42ee1efb97395ecd8730f4b03d0c661860",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "AbilityString.proto",
@@ -2166,7 +2166,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketFinishedParentQuestNotify.java": "8234a8ec3c953681a557af1fa81f4262d3289523b04a30ebe9fcdaab88e6653e",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "FinishedParentQuestNotify.proto",
@@ -2190,7 +2190,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketFinishedParentQuestUpdateNotify.java": "81f8ce12ccdb847796d46edbf51c7d727d620e07cb901d5c5c94e80e9e797a26",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "FinishedParentQuestUpdateNotify.proto",
@@ -2215,7 +2215,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketForgeDataNotify.java": "361224f434e3af75bd4c234c2415417c7032d55d43bb76f69672b1cd98a68fc9",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "ForgeDataNotify.proto",
@@ -2240,7 +2240,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketFurnitureCurModuleArrangeCountNotify.java": "eda14dade4d808231889626c162cbc19b909a53a5e12c7a510f5a44e9bffc2d5",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "FurnitureCurModuleArrangeCountNotify.proto",
@@ -2264,7 +2264,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketGetChatEmojiCollectionRsp.java": "6f5bedb3982a5506e7093046402a5688829044aed4660a866f24953f0dfa28be",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "ChatEmojiCollectionData.proto",
@@ -2317,7 +2317,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketGetPlayerTokenRsp.java": "b66a682e040b0cffabd7394ceae073ef8277238760f2594f47116248903c64f8",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "GetPlayerTokenRsp.proto",
@@ -2341,7 +2341,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketGivingRecordNotify.java": "2720f1a786dd978cc55fa2d0da4bf0798985987109ef3c5cd418d2e1323933e4",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "GivingRecord.proto",
@@ -2373,7 +2373,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketGroupSuiteNotify.java": "67d9e66fc1f8f3f7ec69981fb1afeaa90879776b6045f93c6a9c5d0415e21d9b",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "GroupSuiteNotify.proto",
@@ -2397,7 +2397,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketHomeAllUnlockedBgmIdListNotify.java": "6473abb4418d64b6a3d2505212d26245fd53c3c1363b80c642bd669ed420b56a",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "HomeAllUnlockedBgmIdListNotify.proto",
@@ -2421,7 +2421,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketHomeAvatarAllFinishRewardNotify.java": "489412207c06ceeac46d219129d21083d72505f3473f68648ae74a49039095ec",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "HomeAvatarAllFinishRewardNotify.proto",
@@ -2445,7 +2445,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketHomeAvatarRewardEventNotify.java": "67671ab3b63f59d9110fae504d334c48b20d97d479a1e95b979daace2946b002",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto"
@@ -2468,7 +2468,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketHomeAvatarTalkFinishInfoNotify.java": "c0524d5c971468f6b8eb55e6da96f74f630870bc25a59db1e1bc584eb1b04e17",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "HomeAvatarTalkFinishInfoNotify.proto",
@@ -2492,7 +2492,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketHomeBasicInfoNotify.java": "4c654c239399837bab4fd8e0aed241debc15bca633a1c9f4accaa2cf5e0a1783",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "HomeBasicInfo.proto",
@@ -2517,7 +2517,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketHomeComfortInfoNotify.java": "943dfefe1d7d7066b8eb243918c14e131ed9c67b1f93a6b17b64472d7a464fd2",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "HomeComfortInfoNotify.proto",
@@ -2542,7 +2542,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketHomeMarkPointNotify.java": "534dee3b7a964d3e89399064d42b272d3b648e8753cc7b5e2a498ea973283ca3",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "HomeMarkPointNotify.proto",
@@ -2567,7 +2567,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketHomeResourceNotify.java": "da83b200fcff638aed12898e8a22c7e4408bbf3f626410e4ed44a93352bf1811",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "HomeResource.proto",
@@ -2592,7 +2592,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketHostPlayerNotify.java": "89c0e0b122b616b17be62472938d2f6bb869a5680bab68c946ee5c5643c2e8e8",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "HostPlayerNotify.proto",
@@ -2616,7 +2616,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketItemCdGroupTimeNotify.java": "13b6dbb07a056df6227c9252e4b92862beb691312d61158c2ee9a5038d348ca2",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "ItemCdGroupTimeNotify.proto",
@@ -2640,7 +2640,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketMusicGameBookAllDataNotify.java": "9501d40ff6fa8f1d55a19bbccad9301b92fade7ed28f1a9c302ce18107465632",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "MusicGameBookAllDataNotify.proto",
@@ -2664,7 +2664,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketMusicGameThemeUnlockNotify.java": "0eccd5baf15f35b154f80f47cfe0bff31e8ff12d754646509513ae387bb9a6ea",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "MusicGameThemeUnlockNotify.proto",
@@ -2688,7 +2688,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketOpenStateChangeNotify.java": "1ea0470bbafa2f03619aef3063c24274742695e3949c22c50989f43f39d23404",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "OpenStateChangeNotify.proto",
@@ -2712,7 +2712,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketOpenStateUpdateNotify.java": "c10dbc0eeb91b1ba2e9a4598a95c120ae8ce16c4800528914e62a85b2ca7fc67",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "OpenStateUpdateNotify.proto",
@@ -2736,7 +2736,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketPingRsp.java": "13bf9906d97bb852a774146f2e130668dea99545f366cd4b3a0aefe036c8c2ab",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -2760,7 +2760,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerChatNotify.java": "50fac21700f54dd7b2c87712b27eb4d1a013a876882d875b422922c4fee5ad77",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "ChatInfo.proto",
@@ -2786,7 +2786,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerDataNotify.java": "8f36d1645d7fa3bb69ae47de2ea71b50e5ddcfe36569333e31a89eef93e1f08b",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "Client72PlayerDataNested.proto",
@@ -2811,7 +2811,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerEnterSceneInfoNotify.java": "a6f06d8941e42cee0df1775f22313c8627de708cd3caf84a8c78aa75e50ba2b2",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "AbilityAppliedAbility.proto",
@@ -2849,7 +2849,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerEnterSceneNotify.java": "c77aa8b20da9f550e22566c91ef0cbe3d696667eeeeb562853f3dd08edf67ac2",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "Client72SceneHandshakeNested.proto",
@@ -2875,7 +2875,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerGameTimeNotify.java": "33e44ca66f91b90617dad59e6ee4b92b545133b861c97963c86346fc8a406036",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -2899,7 +2899,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerHomeCompInfoNotify.java": "6adddc93c9d94a871ccf9a179e662def288fadabedcc592c26d87c0bc03e7228",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -2924,7 +2924,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerLevelRewardUpdateNotify.java": "d365e221e2f925e9789e93f3375a04be0eb36cfe814c69a23203c4d430461796",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -2955,7 +2955,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerLoginRsp.java": "0e10714aa63be75e8fa4bb1b1dc51acd97159d0e95d0c3688e281bf80235c353",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "Client72LoginNested.proto",
@@ -2982,7 +2982,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerPropChangeNotify.java": "33991a7f1c6bafabe227108fb5f5e9edfb5df1ae56f851949a75f7a09bb9a05e",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3020,7 +3020,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerPropChangeReasonNotify.java": "0618b35ce2704c7dfe4fc8c290624bdb6404ebbba2b6eaf7aae8b4197426980e",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3052,7 +3052,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerPropNotify.java": "8875c4536d83e3880947363864e051fa3cffa34732d776ce12d58a438b0c9fda",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3076,7 +3076,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerRechargeDataNotify.java": "63dc822fc5a5050d6ebe31b79955a0937c633121c6150dcfae5f24162545b435",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3101,7 +3101,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerStoreNotify.java": "6486bc3bd9c4337d6dfc3381a716e6c6a57c3c2388d41a758b72dd9278a95437",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "Client72InventoryWire.proto",
@@ -3127,7 +3127,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerTimeNotify.java": "c4ccfd945279cff1c545577e55c61c3d209d9369cc86f8ea15c6a12199b1c022",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3151,7 +3151,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketPlayerWorldSceneInfoListNotify.java": "297b2dc3345222f5b56f79949943521c16527217b417e5ce293afbb568151455",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "MapLayerInfo.proto",
@@ -3177,7 +3177,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketPostEnterSceneRsp.java": "072fa88f5e40ca5c717a2a769b7a8611d08712acd692d5d942331d84bcdf02d0",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3201,7 +3201,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketQuestGlobalVarNotify.java": "8e4ae59c8ddff45c778e77b7103937a4f0e76133f286770498bf53ebda030995",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3226,7 +3226,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketQuestListNotify.java": "1d8dc91bed870b0fc4543d45122362ddf48b779612573f602fcb0e8e15ed98a8",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3250,7 +3250,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketReliquaryOfferDataNotify.java": "02b58a903b91783f998d90c0ff3dd375fb2a2474238b99e65e3946402d073fdc",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3274,7 +3274,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketResinChangeNotify.java": "56be4214030885433da3a6f895ab685e6c56efc5653d0035eb3b6d0721e8644f",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3298,7 +3298,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketSceneAreaWeatherNotify.java": "7c1365fee283eca27f4c451d99fbbb328dce12244723a75266ed4710223696d9",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3322,7 +3322,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketSceneDataNotify.java": "38b031e7748105a93fdd448f45f5a7dfad83c1515033a9a9d8ed1e6e87d6bf58",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto"
@@ -3352,7 +3352,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketSceneEntityAppearNotify.java": "d2c1e84f3a0a9f63f9f54f3d23ec83a6ce35e5460844c71107e5be1a201ad701",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3377,7 +3377,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketSceneForceUnlockNotify.java": "4b9fb705b5c48cbeaa28f4fe6edb5fe87dd8c6e0e539982ba1a7a8e176d2d8c2",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3401,7 +3401,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketSceneInitFinishRsp.java": "9c6da1df35391a772e84bdddd629aaf56b2714bdaff7731f227ea3341921d359",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3432,7 +3432,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketScenePlayerInfoNotify.java": "f3ecd4114230311fba0732c265ae5d1c0c79cc9d025f66c6e136f68444a97c4a",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3457,7 +3457,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketScenePlayerLocationNotify.java": "0076405aa0092d2743f134e9a7e81c2b1ff2ce4fbb7d009eb1d86874ed29c2e4",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3495,7 +3495,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketSceneTeamUpdateNotify.java": "1fab7a81e94f0c944b874cf909b7b14f8fdd0e908174f10f7dc22b6577e9c501",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "AbilitySyncStateInfo.proto",
@@ -3521,7 +3521,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketSceneTimeNotify.java": "f6b0ddc777951fafc30fce6cde0f2077795a6a7e82e2fa08815a86e5af8db17b",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3559,7 +3559,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketServerGlobalValueChangeNotify.java": "b2cac641fb54f2a73d2a2a2798bb40f142a920a4f6287fa24cc332411eb6a96a",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3583,7 +3583,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketServerTimeNotify.java": "a35bb49e760e1ff564f022ee4ee021d21a412555b2681bfff89d1b45bb121746",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3628,7 +3628,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketSetPlayerBornDataRsp.java": "3156510f6304d635680f6428d3a3d3a9455381ffcdc6174cd424bb5c2acdd4b4",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3652,7 +3652,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketStoreWeightLimitNotify.java": "e6c0385720775819f386a691696c82b309c2812b289d7a7a17a8d55506055391",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3683,7 +3683,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketSyncScenePlayTeamEntityNotify.java": "3289baf7ea37456382b2be30d73d2c1ddac23bd25369b927dde93c93ab960698",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3714,7 +3714,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketSyncTeamEntityNotify.java": "6e079a5c1f0eba72e3c19a1c518058beccc56d6e8fcebefb5fe59a9b9f7640f9",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3746,7 +3746,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketTeamHexenzirkelChangeNotify.java": "dec35a19d9bcf534e17e71890040b77b4eb6daf7c0b8e3cb2d6af2bb12c03609",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto"
@@ -3769,7 +3769,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketTeamMoonPhaseChangeNotify.java": "e9cf858dc5931d101df2bfc506289ebf9971da1962c3b267b3a9ed3ebc9729cd",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3793,7 +3793,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketUnlockedFurnitureFormulaDataNotify.java": "4e2e457f6679ed11c76000dd041a1247360d77fc3c956487826dc5f8f2db823d",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3817,7 +3817,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketUnlockedFurnitureSuiteDataNotify.java": "9f66ba9bed6b34aaa6b41c7d0d08b1535a61851503721eb7f28630c449c4579f",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3841,7 +3841,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketWidgetGadgetAllDataNotify.java": "258cd19afa9a1d6e7e9db99a958c22ec0a1b815a03bcba844265f03e783ada5a",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3879,7 +3879,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketWindSeedClientNotify.java": "c57a9b41018a3e9a1549776a9d1d5c2403b94a45dcca65616a455ee72ba7c3ea",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto"
@@ -3902,7 +3902,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketWindSeedUID.java": "1e81ab7536201b0c03b9f50ee1cd31f4ed6bb8bf8b8a0467d2158a4697ac8b5d",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto"
@@ -3925,7 +3925,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketWorldDataNotify.java": "3d1da76776979de8ee295df975c0cfa6161ba0a13d10bad73c50ea8540b8c459",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -3950,7 +3950,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketWorldOwnerDailyTaskNotify.java": "84d1a9e2cff24ba910a2086cc1a62b3e7005361d4019621fa89340a5546cbf59",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto"
@@ -3980,7 +3980,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketWorldPlayerInfoNotify.java": "3095da723abf31ad5fa0e010c2f2831abb7aa3f59b5eab063091344bc38a4589",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -4004,7 +4004,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketWorldPlayerLocationNotify.java": "36e5e23e1e1e210efcb5b3838c4404b941c4cb2541222968930a6d93a332c204",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -4035,7 +4035,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketWorldPlayerRTTNotify.java": "53352884eecbd64ca56ada662461b8970052a670c1e825326b1df06a0909749e",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto",
@@ -4060,7 +4060,7 @@
       ],
       "javaSourceSHA256": {
         "src/main/java/emu/grasscutter/server/packet/send/PacketWorldWatcherAllDataNotify.java": "9b7d44cb365c8fe4a4b279589932e2e7fc3a9cd5785a84744f86b75eb6b1d579",
-        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "8b7edc561cb62197c8e9c19f5d340ab2ed7f5cfe18b0c25aa0084167ac836d0f"
+        "src/main/java/emu/grasscutter/net/packet/BasePacket.java": "c66412a82d233a78a1807c760e114450e5956d4d68634c2b4418d10049e98dfe"
       },
       "directProtoReferences": [
         "PacketHead.proto"
@@ -95454,7 +95454,7 @@
     "Nonzero/64-bit/nested/list/error/boundary wire regressions remain separate required evidence",
     "No protocol generation, runtime integration, client reverse engineering or client debugging"
   ],
-  "reviewSHA256": "abf5e546cdbfea2e59d28fe2b2d4abe85c8a3d20c42008977f5ae5fa2053bc53",
+  "reviewSHA256": "ec7f608c03b77f9fc0ce4af566192a4bfd9f4bc910aa8dce78b5d357abf47115",
   "toolSourceSHA256": {
     "tools/review_client72_login_proto.py": "d2b4c962bd883227550e6e7eebb8e6f40176c640619740fe74308ec5d8c751e4",
     "tools/Client72ProtoDependencies.java": "517838c3cd34b051c47205e71d45d2d3c99cc6bb4fb32379c34e0d0cea418f0a"

@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+C-01b实际红绿及主线来源复核：`local/migration72/offline-sol-terra/network-{red,green,source-review}/`；Frame36+注册7通过、扫描324/227/227/0，旧来源拒绝和精确同步双recover保持三层/required/runtime。`associated-research/`实际120、`generation-checks/`9入口全过。关联Java50套875/0及正常Mongo shutdown在`mongo-e825b6f516564e888f0b4d5bce19d2da/`；首轮缺相对输入的41路径失败在`mongo-8c106c20b11743a8a73280ccc13b74fc/`，不要将其初始化失败1项与完整Inventory36项口径混加。所有上述目录相对`local/migration72/offline-sol-terra/`；生产打包/最终现场随后补充。
+
 2026-11-07限定离线执行已恢复，边界与依赖见[本轮记录](docs/CLIENT_72_SOL_TERRA_OFFLINE.md)、Project Sol/Terra路线。接手清点`local/migration72/offline-sol-terra/initial-inventory.json`；Terra枚举后主线独立核原始引用/提交/历史tool hash，review108→116，原107摘要/1269生产来源、三层/required/runtime不变。旧review拒绝、精确接纳、双recover一致及24测试/结构0/ready224在`offline-sol-terra/evidence-integration/`；audit报告SHA `f0bb0bdf…99da81`。后续C-01/Chapter/g2准备仍独立验收，不接Avatar正式sender，不启动游戏/调试器/补丁/服务或Astra；旧暂停与测试数按历史读取。
 
 2026-11-07新增[Sol/Terra离线前置路线](Project.md#d02-offline-sol-terra)，基线34479d4；本次仅规划，开发暂停保持。现有任务顺序：108输入后证据增量审核→C-01已验帧/注册边界、E-01 Chapter/真实资源加载前置、F-03d3g2有限测试投影准备→条件满足的Quest正向重绑定→R4受影响回归/构建。该阶段不做实机、调试器或依赖其加速的探索，不派Astra；f4d2/复杂SceneInfo/新语义冲突及g2生产主体按依赖后置。此路线优先于旧R2真实观察建议，不宣布D-02可离线完成。

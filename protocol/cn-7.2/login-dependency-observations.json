@@ -44,7 +44,7 @@
     "src/main/java/emu/grasscutter/server/event/player/PlayerJoinEvent.java": "6145718d871ea78063352d80987cea0c77c24e25fb2668f7766beefb827fdfa1",
     "src/main/java/emu/grasscutter/server/event/types/PlayerEvent.java": "40567ca0404309097b50edf6645e9b8d596b5304eaf6648e4e56b6eabda04e55",
     "src/main/java/emu/grasscutter/server/game/GameServer.java": "3d6c770a1b37b27752f94995ff36822589c6d2de902c0816dbee47f0b9902223",
-    "src/main/java/emu/grasscutter/server/game/GameSession.java": "7e988eabf22c45ee87f6a689e10bafee0b645c3cc201582b99a0f759fea8a33d",
+    "src/main/java/emu/grasscutter/server/game/GameSession.java": "9643722b771c68bdb4f271b3096cb1cd4dbb3ba83a5c973d5c4c9fd9f2d6a3e0",
     "src/main/java/emu/grasscutter/server/game/SceneHandshakeToken.java": "34abb22c52aea125ea03e2a9557106dd968e840bf707fccaa48775eea1fd6eda",
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerEnterSceneDoneReq.java": "e750b2ffd19df8bd8511739e10837380aac2619c45523cac005c7e2b946778dc",
     "src/main/java/emu/grasscutter/server/packet/recv/HandlerEnterSceneReadyReq.java": "d3af12beabe61b847c1212c8c3173caed563f2e1752853c9389767e94a06f7b0",
@@ -8416,7 +8416,7 @@
   ],
   "parentReview": "protocol/cn-7.2/login-source-review.json",
   "parentReviewSHA256": "f7858932a242c22423bb2d427414814743e9faeeb885f373550a96fff615eee8",
-  "reviewSHA256": "f21391ea2840837b4eb902a1dd53446eb394c59505c23cd7763c5a0171f33244",
+  "reviewSHA256": "1f28c53d50046e2cbaf20e3897b9198a93ab1a90606570d6cca7d3b668d76a4d",
   "toolSourceSHA256": {
     "tools/Client72JavaSurface.java": "f28d4605a864d71126c5d1460c50ea5c080f52ca14581eaa1aa5b0098754327a",
     "tools/client72_java_surface.py": "5dd4a9328e46635f87bef99c099840366ae312fd22d32172bd6aacc7b8939690",
