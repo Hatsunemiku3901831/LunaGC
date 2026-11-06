@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+F-03d3f4d1：[构造片段](docs/CLIENT_72_AVATAR_INITIALIZER.md)、`client72_avatar_initializer.py`/`test_client72_avatar_initializer`；主线82及第三原生同双跑，7组/28 ctor片段/70省略分段/7flush/7连续前缀+7边界。完整/摘要SHA `3b314e34…9af63`/`1a0889af…2acaf`，证明`evidence/avatar-initializer-main-review.json`及同`avatar-initializer-main-*`原始/日志。未知间接构造和装备必经15183f290/15184a5f0前止，完整ctor/handler/最小producer未验；用户要求统一暂停，f4d2/g2不启动。
+
 F-03d3s2a：[SceneInfo身份关联](docs/CLIENT_72_SCENE_INFO_CONTRACT.md)、`client72_scene_info_contract.py`/`test_client72_scene_info_contract`；25夹具/3拒绝，主线28及第三新进程完整/摘要同双跑 SHA `c9fd50ba…7121db`/`a0c88290…48a2ad`，证明`evidence/scene-contract-main-review.json`及`scene-contract-main-*`原始/日志。tag13/4为Avatar GUID/实体ID，10/7仅附属type51522关联、Weapon名仍未知；首个角色缺失终止整列表。scene实体为fixture，完整handler/能力/必要集合仍待，后继按暂停指令留交接。
 
 D-01b5g-preflight：[单HW前置](docs/CLIENT_72_SINGLE_HARDWARE_OBSERVER.md)、`client72_single_hardware.py`/`observe_client72_hardware_fixture.py`及原观察器`global-dispatch-hardware`模式；主线28守卫通过，现有1个fixture9停点/4动作独立重分类、全GPR/代码/入口返回/三方0及EXIT/STOP核同，未另开fixture或game。证明`evidence/d02-r2-single-hardware-main-review.json`、主线日志`logs/d02-r2-single-hardware-main-tests.log`、最终只读`evidence/d02-r2-d01b5g-pause-state.json`。原游戏轮未执行，当前无target/API空，游戏4点和fixture3点持久库保留，用户恢复后再协调单次120秒。
