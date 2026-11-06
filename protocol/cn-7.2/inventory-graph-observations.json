@@ -1,0 +1,4459 @@
+{
+  "schemaVersion": 1,
+  "task": "F-03d2a3",
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "outerEvidenceSHA256": "2c14b416e5e18d868bde7d645939f6ea9c2a936761967e555e92538c2d11e20f",
+  "containerEvidenceSHA256": "352f094fec870074abb70207af317870525b025c9b68805500c6410347feb72d",
+  "runtimeStatus": "not-tested",
+  "semanticIdentityStatus": "unresolved",
+  "fullStoreRawClosure": true,
+  "targetProtocolReady": false,
+  "messages": [
+    {
+      "typeIndex": 14095,
+      "clientType": "JLAGHMMLDCA",
+      "fields": [
+        {
+          "clientField": "JMGKMMFNABP",
+          "objectOffset": 24,
+          "type": "map",
+          "cardinality": "map",
+          "keyType": "uint32",
+          "valueType": "uint32",
+          "tag": 3,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "EIBDIEHEAKF",
+          "objectOffset": 32,
+          "type": "uint32",
+          "cardinality": "repeated",
+          "packed": true,
+          "tag": 2,
+          "acceptedWireTypes": [
+            0,
+            2
+          ],
+          "semanticStatus": "unresolved"
+        }
+      ]
+    },
+    {
+      "typeIndex": 28471,
+      "clientType": "JDDDHIGLMGJ",
+      "fields": [
+        {
+          "clientField": "IJPBJCNCDEC",
+          "objectOffset": 36,
+          "tag": 1,
+          "type": "bool",
+          "cardinality": "singular",
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "PNGOHOKGKHP_2",
+          "objectOffset": 24,
+          "tag": 2,
+          "type": "message",
+          "cardinality": "singular",
+          "nestedTypeIndex": 28473,
+          "oneof": "raw_detail",
+          "discriminatorOffset": 32,
+          "discriminatorValue": 2,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "PNGOHOKGKHP_3",
+          "objectOffset": 24,
+          "tag": 3,
+          "type": "message",
+          "cardinality": "singular",
+          "nestedTypeIndex": 28474,
+          "oneof": "raw_detail",
+          "discriminatorOffset": 32,
+          "discriminatorValue": 3,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "PNGOHOKGKHP_4",
+          "objectOffset": 24,
+          "tag": 4,
+          "type": "message",
+          "cardinality": "singular",
+          "nestedTypeIndex": 28475,
+          "oneof": "raw_detail",
+          "discriminatorOffset": 32,
+          "discriminatorValue": 4,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        }
+      ]
+    },
+    {
+      "typeIndex": 28473,
+      "clientType": "PEMOFGMDGHP",
+      "fields": [
+        {
+          "clientField": "ALNBHHEJLKP",
+          "objectOffset": 24,
+          "type": "map",
+          "cardinality": "map",
+          "keyType": "uint32",
+          "valueType": "uint32",
+          "tag": 1,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "MNBPLFPCJLG",
+          "objectOffset": 32,
+          "type": "uint32",
+          "cardinality": "singular",
+          "tag": 2,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        }
+      ]
+    },
+    {
+      "typeIndex": 28474,
+      "clientType": "KNNPHAOJMAH",
+      "fields": [
+        {
+          "clientField": "BHOHKJOCNOL",
+          "objectOffset": 24,
+          "tag": 1,
+          "type": "uint32",
+          "cardinality": "singular",
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        }
+      ]
+    },
+    {
+      "typeIndex": 28475,
+      "clientType": "DFPLPBLIEEK",
+      "fields": [
+        {
+          "clientField": "ALNBHHEJLKP",
+          "objectOffset": 24,
+          "type": "map",
+          "cardinality": "map",
+          "keyType": "uint32",
+          "valueType": "uint32",
+          "tag": 1,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "MNBPLFPCJLG",
+          "objectOffset": 32,
+          "type": "uint32",
+          "cardinality": "singular",
+          "tag": 3,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "PGDAIKELICG",
+          "objectOffset": 36,
+          "type": "uint32",
+          "cardinality": "singular",
+          "tag": 2,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        }
+      ]
+    },
+    {
+      "typeIndex": 40274,
+      "clientType": "MIEKLLOFKOJ",
+      "fields": [
+        {
+          "clientField": "GNHFNECPAHD",
+          "objectOffset": 24,
+          "tag": 1,
+          "type": "uint32",
+          "cardinality": "singular",
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        }
+      ]
+    },
+    {
+      "typeIndex": 44169,
+      "clientType": "BNDIKNLDLOJ",
+      "fields": [
+        {
+          "clientField": "FAPABAJBMAK",
+          "objectOffset": 32,
+          "tag": 3,
+          "type": "bool",
+          "cardinality": "singular",
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "FLPGMLOFAKP_1",
+          "objectOffset": 24,
+          "tag": 1,
+          "type": "message",
+          "cardinality": "singular",
+          "nestedTypeIndex": 74063,
+          "oneof": "raw_detail",
+          "discriminatorOffset": 36,
+          "discriminatorValue": 1,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "FLPGMLOFAKP_2",
+          "objectOffset": 24,
+          "tag": 2,
+          "type": "message",
+          "cardinality": "singular",
+          "nestedTypeIndex": 64947,
+          "oneof": "raw_detail",
+          "discriminatorOffset": 36,
+          "discriminatorValue": 2,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        }
+      ]
+    },
+    {
+      "typeIndex": 51247,
+      "clientType": "JOPADICJMPJ",
+      "fields": [
+        {
+          "clientField": "GNHFNECPAHD",
+          "objectOffset": 24,
+          "tag": 1,
+          "type": "uint32",
+          "cardinality": "singular",
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        }
+      ]
+    },
+    {
+      "typeIndex": 61085,
+      "clientType": "MCBNNKGKJCI",
+      "fields": [
+        {
+          "clientField": "ALNBHHEJLKP",
+          "objectOffset": 24,
+          "type": "map",
+          "cardinality": "map",
+          "keyType": "uint32",
+          "valueType": "uint32",
+          "tag": 1,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        }
+      ]
+    },
+    {
+      "typeIndex": 63442,
+      "clientType": "KKOPHGDBCEO",
+      "fields": [
+        {
+          "clientField": "GNHFNECPAHD",
+          "objectOffset": 32,
+          "tag": 1,
+          "type": "uint32",
+          "cardinality": "singular",
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "PNGOHOKGKHP",
+          "objectOffset": 24,
+          "tag": 2,
+          "type": "message",
+          "cardinality": "singular",
+          "nestedTypeIndex": 28471,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        }
+      ]
+    },
+    {
+      "typeIndex": 63899,
+      "clientType": "MKFCDFEEAAL",
+      "fields": [
+        {
+          "clientField": "GNHFNECPAHD",
+          "objectOffset": 32,
+          "tag": 1,
+          "type": "uint32",
+          "cardinality": "singular",
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "PNGOHOKGKHP",
+          "objectOffset": 24,
+          "tag": 2,
+          "type": "message",
+          "cardinality": "singular",
+          "nestedTypeIndex": 61085,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        }
+      ]
+    },
+    {
+      "typeIndex": 64947,
+      "clientType": "FNECPDFLEHN",
+      "fields": [
+        {
+          "clientField": "JMGKMMFNABP",
+          "objectOffset": 24,
+          "type": "map",
+          "cardinality": "map",
+          "keyType": "uint32",
+          "valueType": "uint32",
+          "tag": 4,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "FLGGIMBHFOO",
+          "objectOffset": 32,
+          "type": "uint32",
+          "cardinality": "repeated",
+          "packed": true,
+          "tag": 6,
+          "acceptedWireTypes": [
+            0,
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "NILMBAGDEAL",
+          "objectOffset": 40,
+          "type": "uint32",
+          "cardinality": "singular",
+          "tag": 2,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "KFDCBKBPPGL",
+          "objectOffset": 44,
+          "type": "uint32",
+          "cardinality": "singular",
+          "tag": 3,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "NJAGFJINHMA",
+          "objectOffset": 48,
+          "type": "uint32",
+          "cardinality": "singular",
+          "tag": 1,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "MNCFEDPDEAG",
+          "objectOffset": 52,
+          "type": "bool",
+          "cardinality": "singular",
+          "tag": 5,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        }
+      ]
+    },
+    {
+      "typeIndex": 65333,
+      "clientType": "NDGHFPMJFIM",
+      "fields": [
+        {
+          "clientField": "PJAGIOHBKLD",
+          "objectOffset": 40,
+          "tag": 1,
+          "type": "uint32",
+          "cardinality": "singular",
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "FBLKPHOCBIK",
+          "objectOffset": 32,
+          "tag": 2,
+          "type": "uint64",
+          "cardinality": "singular",
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "FLPGMLOFAKP_5",
+          "objectOffset": 24,
+          "tag": 5,
+          "type": "message",
+          "cardinality": "singular",
+          "nestedTypeIndex": 63442,
+          "oneof": "raw_detail",
+          "discriminatorOffset": 44,
+          "discriminatorValue": 5,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "FLPGMLOFAKP_6",
+          "objectOffset": 24,
+          "tag": 6,
+          "type": "message",
+          "cardinality": "singular",
+          "nestedTypeIndex": 44169,
+          "oneof": "raw_detail",
+          "discriminatorOffset": 44,
+          "discriminatorValue": 6,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "FLPGMLOFAKP_7",
+          "objectOffset": 24,
+          "tag": 7,
+          "type": "message",
+          "cardinality": "singular",
+          "nestedTypeIndex": 51247,
+          "oneof": "raw_detail",
+          "discriminatorOffset": 44,
+          "discriminatorValue": 7,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "FLPGMLOFAKP_8",
+          "objectOffset": 24,
+          "tag": 8,
+          "type": "message",
+          "cardinality": "singular",
+          "nestedTypeIndex": 63899,
+          "oneof": "raw_detail",
+          "discriminatorOffset": 44,
+          "discriminatorValue": 8,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "FLPGMLOFAKP_9",
+          "objectOffset": 24,
+          "tag": 9,
+          "type": "message",
+          "cardinality": "singular",
+          "nestedTypeIndex": 40274,
+          "oneof": "raw_detail",
+          "discriminatorOffset": 44,
+          "discriminatorValue": 9,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "FLPGMLOFAKP_10",
+          "objectOffset": 24,
+          "tag": 10,
+          "type": "message",
+          "cardinality": "singular",
+          "nestedTypeIndex": 14095,
+          "oneof": "raw_detail",
+          "discriminatorOffset": 44,
+          "discriminatorValue": 10,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        }
+      ]
+    },
+    {
+      "typeIndex": 68537,
+      "clientType": "CAIHCNHAMHB",
+      "fields": [
+        {
+          "clientField": "MBEEKCPJBEL",
+          "objectOffset": 24,
+          "tag": 2,
+          "type": "message",
+          "cardinality": "repeated",
+          "nestedTypeIndex": 65333,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "PAKLDABINMP",
+          "objectOffset": 32,
+          "tag": 8,
+          "type": "uint32",
+          "cardinality": "singular",
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "CLFJNKKFONI",
+          "objectOffset": 36,
+          "tag": 14,
+          "type": "uint32",
+          "cardinality": "singular",
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        }
+      ]
+    },
+    {
+      "typeIndex": 74063,
+      "clientType": "JBBEOMJDLFM",
+      "fields": [
+        {
+          "clientField": "FOFCJMPCEBB",
+          "objectOffset": 24,
+          "type": "uint32",
+          "cardinality": "repeated",
+          "packed": true,
+          "tag": 5,
+          "acceptedWireTypes": [
+            0,
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "IMEGOOADEBF",
+          "objectOffset": 32,
+          "type": "uint32",
+          "cardinality": "repeated",
+          "packed": true,
+          "tag": 7,
+          "acceptedWireTypes": [
+            0,
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "IHKPPDPBEML",
+          "objectOffset": 40,
+          "type": "uint32",
+          "cardinality": "repeated",
+          "packed": true,
+          "tag": 8,
+          "acceptedWireTypes": [
+            0,
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "KFDCBKBPPGL",
+          "objectOffset": 48,
+          "type": "uint32",
+          "cardinality": "singular",
+          "tag": 3,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "OJDKGGHBKKK",
+          "objectOffset": 52,
+          "type": "uint32",
+          "cardinality": "singular",
+          "tag": 4,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "NILMBAGDEAL",
+          "objectOffset": 56,
+          "type": "uint32",
+          "cardinality": "singular",
+          "tag": 2,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "CGKIGPFDFOF",
+          "objectOffset": 60,
+          "type": "bool",
+          "cardinality": "singular",
+          "tag": 6,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "NJAGFJINHMA",
+          "objectOffset": 64,
+          "type": "uint32",
+          "cardinality": "singular",
+          "tag": 1,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        }
+      ]
+    }
+  ],
+  "scan": {
+    "nativeFixtures": 1920,
+    "scope": "15-type complete metadata/object/oneof raw closure; tags1..32/wire0,1,2,5",
+    "fields": [
+      {
+        "typeIndex": 14095,
+        "tag": 2,
+        "wireType": 0,
+        "result": {
+          "EIBDIEHEAKF": [
+            305419896
+          ]
+        },
+        "stores": [],
+        "entered": [
+          {
+            "typeIndex": 14095,
+            "entry": "0x149c5c150"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8e10"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 14095,
+        "tag": 2,
+        "wireType": 2,
+        "result": {
+          "EIBDIEHEAKF": [
+            8,
+            1
+          ]
+        },
+        "stores": [],
+        "entered": [
+          {
+            "typeIndex": 14095,
+            "entry": "0x149c5c150"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8e10"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 14095,
+        "tag": 3,
+        "wireType": 2,
+        "result": {
+          "JMGKMMFNABP": {
+            "1": 0
+          }
+        },
+        "stores": [
+          {
+            "typeIndex": 17964,
+            "objectOffset": 28,
+            "key": 26,
+            "size": 4,
+            "source": "0x15893d4b0"
+          },
+          {
+            "typeIndex": 17964,
+            "objectOffset": 24,
+            "key": 26,
+            "size": 4,
+            "source": "0x15893d4bf"
+          },
+          {
+            "typeIndex": 17964,
+            "objectOffset": 28,
+            "key": 8,
+            "size": 4,
+            "source": "0x158935d92"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 14095,
+            "entry": "0x149c5c150"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x15893d460"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x158935d30"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x15893e4d0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 28471,
+        "tag": 1,
+        "wireType": 0,
+        "result": {
+          "IJPBJCNCDEC": true
+        },
+        "stores": [
+          {
+            "typeIndex": 28471,
+            "objectOffset": 36,
+            "key": 8,
+            "size": 1,
+            "source": "0x148fc629f"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 28471,
+            "entry": "0x148fc60e0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 28471,
+        "tag": 2,
+        "wireType": 2,
+        "result": {
+          "PNGOHOKGKHP_2": {}
+        },
+        "stores": [
+          {
+            "typeIndex": 28471,
+            "objectOffset": 24,
+            "key": 0,
+            "size": 8,
+            "source": "0x148fc61ca"
+          },
+          {
+            "typeIndex": 28471,
+            "objectOffset": 32,
+            "key": 0,
+            "size": 4,
+            "source": "0x148fc61d8"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 28471,
+            "entry": "0x148fc60e0"
+          },
+          {
+            "typeIndex": 28473,
+            "entry": "0x14e457f70"
+          }
+        ]
+      },
+      {
+        "typeIndex": 28471,
+        "tag": 3,
+        "wireType": 2,
+        "result": {
+          "PNGOHOKGKHP_3": {
+            "BHOHKJOCNOL": 1
+          }
+        },
+        "stores": [
+          {
+            "typeIndex": 28474,
+            "objectOffset": 24,
+            "key": 8,
+            "size": 4,
+            "source": "0x14a870471"
+          },
+          {
+            "typeIndex": 28471,
+            "objectOffset": 24,
+            "key": 0,
+            "size": 8,
+            "source": "0x148fc6339"
+          },
+          {
+            "typeIndex": 28471,
+            "objectOffset": 32,
+            "key": 0,
+            "size": 4,
+            "source": "0x148fc6348"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 28471,
+            "entry": "0x148fc60e0"
+          },
+          {
+            "typeIndex": 28474,
+            "entry": "0x14a870410"
+          }
+        ]
+      },
+      {
+        "typeIndex": 28471,
+        "tag": 4,
+        "wireType": 2,
+        "result": {
+          "PNGOHOKGKHP_4": {}
+        },
+        "stores": [
+          {
+            "typeIndex": 28471,
+            "objectOffset": 24,
+            "key": 0,
+            "size": 8,
+            "source": "0x148fc626d"
+          },
+          {
+            "typeIndex": 28471,
+            "objectOffset": 32,
+            "key": 0,
+            "size": 4,
+            "source": "0x148fc627c"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 28471,
+            "entry": "0x148fc60e0"
+          },
+          {
+            "typeIndex": 28475,
+            "entry": "0x152274ca0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 28473,
+        "tag": 1,
+        "wireType": 2,
+        "result": {
+          "ALNBHHEJLKP": {
+            "1": 0
+          }
+        },
+        "stores": [
+          {
+            "typeIndex": 17964,
+            "objectOffset": 28,
+            "key": 10,
+            "size": 4,
+            "source": "0x15893d4b0"
+          },
+          {
+            "typeIndex": 17964,
+            "objectOffset": 24,
+            "key": 10,
+            "size": 4,
+            "source": "0x15893d4bf"
+          },
+          {
+            "typeIndex": 17964,
+            "objectOffset": 28,
+            "key": 8,
+            "size": 4,
+            "source": "0x158935d92"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 28473,
+            "entry": "0x14e457f70"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x15893d460"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x158935d30"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x15893e4d0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 28473,
+        "tag": 2,
+        "wireType": 0,
+        "result": {
+          "MNBPLFPCJLG": 305419896
+        },
+        "stores": [
+          {
+            "typeIndex": 28473,
+            "objectOffset": 32,
+            "key": 16,
+            "size": 4,
+            "source": "0x14e458031"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 28473,
+            "entry": "0x14e457f70"
+          }
+        ]
+      },
+      {
+        "typeIndex": 28474,
+        "tag": 1,
+        "wireType": 0,
+        "result": {
+          "BHOHKJOCNOL": 305419896
+        },
+        "stores": [
+          {
+            "typeIndex": 28474,
+            "objectOffset": 24,
+            "key": 8,
+            "size": 4,
+            "source": "0x14a870471"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 28474,
+            "entry": "0x14a870410"
+          }
+        ]
+      },
+      {
+        "typeIndex": 28475,
+        "tag": 1,
+        "wireType": 2,
+        "result": {
+          "ALNBHHEJLKP": {
+            "1": 0
+          }
+        },
+        "stores": [
+          {
+            "typeIndex": 17964,
+            "objectOffset": 28,
+            "key": 10,
+            "size": 4,
+            "source": "0x15893d4b0"
+          },
+          {
+            "typeIndex": 17964,
+            "objectOffset": 24,
+            "key": 10,
+            "size": 4,
+            "source": "0x15893d4bf"
+          },
+          {
+            "typeIndex": 17964,
+            "objectOffset": 28,
+            "key": 8,
+            "size": 4,
+            "source": "0x158935d92"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 28475,
+            "entry": "0x152274ca0"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x15893d460"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x158935d30"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x15893e4d0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 28475,
+        "tag": 2,
+        "wireType": 0,
+        "result": {
+          "PGDAIKELICG": 305419896
+        },
+        "stores": [
+          {
+            "typeIndex": 28475,
+            "objectOffset": 36,
+            "key": 16,
+            "size": 4,
+            "source": "0x152274d71"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 28475,
+            "entry": "0x152274ca0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 28475,
+        "tag": 3,
+        "wireType": 0,
+        "result": {
+          "MNBPLFPCJLG": 305419896
+        },
+        "stores": [
+          {
+            "typeIndex": 28475,
+            "objectOffset": 32,
+            "key": 24,
+            "size": 4,
+            "source": "0x152274d91"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 28475,
+            "entry": "0x152274ca0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 40274,
+        "tag": 1,
+        "wireType": 0,
+        "result": {
+          "GNHFNECPAHD": 305419896
+        },
+        "stores": [
+          {
+            "typeIndex": 40274,
+            "objectOffset": 24,
+            "key": 8,
+            "size": 4,
+            "source": "0x1518c3ae1"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 40274,
+            "entry": "0x1518c3a80"
+          }
+        ]
+      },
+      {
+        "typeIndex": 44169,
+        "tag": 1,
+        "wireType": 2,
+        "result": {
+          "FLPGMLOFAKP_1": {
+            "NJAGFJINHMA": 1
+          }
+        },
+        "stores": [
+          {
+            "typeIndex": 74063,
+            "objectOffset": 64,
+            "key": 8,
+            "size": 4,
+            "source": "0x1477447e8"
+          },
+          {
+            "typeIndex": 44169,
+            "objectOffset": 24,
+            "key": 0,
+            "size": 8,
+            "source": "0x15408afb6"
+          },
+          {
+            "typeIndex": 44169,
+            "objectOffset": 36,
+            "key": 0,
+            "size": 4,
+            "source": "0x15408afc2"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 44169,
+            "entry": "0x15408aee0"
+          },
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          }
+        ]
+      },
+      {
+        "typeIndex": 44169,
+        "tag": 2,
+        "wireType": 2,
+        "result": {
+          "FLPGMLOFAKP_2": {
+            "NJAGFJINHMA": 1
+          }
+        },
+        "stores": [
+          {
+            "typeIndex": 64947,
+            "objectOffset": 48,
+            "key": 8,
+            "size": 4,
+            "source": "0x1504d7c53"
+          },
+          {
+            "typeIndex": 44169,
+            "objectOffset": 24,
+            "key": 0,
+            "size": 8,
+            "source": "0x15408b03a"
+          },
+          {
+            "typeIndex": 44169,
+            "objectOffset": 36,
+            "key": 0,
+            "size": 4,
+            "source": "0x15408b048"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 44169,
+            "entry": "0x15408aee0"
+          },
+          {
+            "typeIndex": 64947,
+            "entry": "0x1504d7b30"
+          }
+        ]
+      },
+      {
+        "typeIndex": 44169,
+        "tag": 3,
+        "wireType": 0,
+        "result": {
+          "FAPABAJBMAK": true
+        },
+        "stores": [
+          {
+            "typeIndex": 44169,
+            "objectOffset": 32,
+            "key": 24,
+            "size": 1,
+            "source": "0x15408b06a"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 44169,
+            "entry": "0x15408aee0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 51247,
+        "tag": 1,
+        "wireType": 0,
+        "result": {
+          "GNHFNECPAHD": 305419896
+        },
+        "stores": [
+          {
+            "typeIndex": 51247,
+            "objectOffset": 24,
+            "key": 8,
+            "size": 4,
+            "source": "0x14c06c4b1"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 51247,
+            "entry": "0x14c06c450"
+          }
+        ]
+      },
+      {
+        "typeIndex": 61085,
+        "tag": 1,
+        "wireType": 2,
+        "result": {
+          "ALNBHHEJLKP": {
+            "1": 0
+          }
+        },
+        "stores": [
+          {
+            "typeIndex": 17964,
+            "objectOffset": 28,
+            "key": 10,
+            "size": 4,
+            "source": "0x15893d4b0"
+          },
+          {
+            "typeIndex": 17964,
+            "objectOffset": 24,
+            "key": 10,
+            "size": 4,
+            "source": "0x15893d4bf"
+          },
+          {
+            "typeIndex": 17964,
+            "objectOffset": 28,
+            "key": 8,
+            "size": 4,
+            "source": "0x158935d92"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 61085,
+            "entry": "0x14b6fab30"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x15893d460"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x158935d30"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x15893e4d0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 63442,
+        "tag": 1,
+        "wireType": 0,
+        "result": {
+          "GNHFNECPAHD": 305419896
+        },
+        "stores": [
+          {
+            "typeIndex": 63442,
+            "objectOffset": 32,
+            "key": 8,
+            "size": 4,
+            "source": "0x152ee3111"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 63442,
+            "entry": "0x152ee3080"
+          }
+        ]
+      },
+      {
+        "typeIndex": 63442,
+        "tag": 2,
+        "wireType": 2,
+        "result": {
+          "PNGOHOKGKHP": {
+            "IJPBJCNCDEC": true
+          }
+        },
+        "stores": [
+          {
+            "typeIndex": 63442,
+            "objectOffset": 24,
+            "key": 18,
+            "size": 8,
+            "source": "0x152ee3132"
+          },
+          {
+            "typeIndex": 28471,
+            "objectOffset": 36,
+            "key": 8,
+            "size": 1,
+            "source": "0x148fc629f"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 63442,
+            "entry": "0x152ee3080"
+          },
+          {
+            "typeIndex": 28471,
+            "entry": "0x148fc60e0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 63899,
+        "tag": 1,
+        "wireType": 0,
+        "result": {
+          "GNHFNECPAHD": 305419896
+        },
+        "stores": [
+          {
+            "typeIndex": 63899,
+            "objectOffset": 32,
+            "key": 8,
+            "size": 4,
+            "source": "0x153de61e1"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 63899,
+            "entry": "0x153de6130"
+          }
+        ]
+      },
+      {
+        "typeIndex": 63899,
+        "tag": 2,
+        "wireType": 2,
+        "result": {
+          "PNGOHOKGKHP": {}
+        },
+        "stores": [
+          {
+            "typeIndex": 63899,
+            "objectOffset": 24,
+            "key": 18,
+            "size": 8,
+            "source": "0x153de6202"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 63899,
+            "entry": "0x153de6130"
+          },
+          {
+            "typeIndex": 61085,
+            "entry": "0x14b6fab30"
+          }
+        ]
+      },
+      {
+        "typeIndex": 64947,
+        "tag": 1,
+        "wireType": 0,
+        "result": {
+          "NJAGFJINHMA": 305419896
+        },
+        "stores": [
+          {
+            "typeIndex": 64947,
+            "objectOffset": 48,
+            "key": 8,
+            "size": 4,
+            "source": "0x1504d7c53"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 64947,
+            "entry": "0x1504d7b30"
+          }
+        ]
+      },
+      {
+        "typeIndex": 64947,
+        "tag": 2,
+        "wireType": 0,
+        "result": {
+          "NILMBAGDEAL": 305419896
+        },
+        "stores": [
+          {
+            "typeIndex": 64947,
+            "objectOffset": 40,
+            "key": 16,
+            "size": 4,
+            "source": "0x1504d7c70"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 64947,
+            "entry": "0x1504d7b30"
+          }
+        ]
+      },
+      {
+        "typeIndex": 64947,
+        "tag": 3,
+        "wireType": 0,
+        "result": {
+          "KFDCBKBPPGL": 305419896
+        },
+        "stores": [
+          {
+            "typeIndex": 64947,
+            "objectOffset": 44,
+            "key": 24,
+            "size": 4,
+            "source": "0x1504d7ba5"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 64947,
+            "entry": "0x1504d7b30"
+          }
+        ]
+      },
+      {
+        "typeIndex": 64947,
+        "tag": 4,
+        "wireType": 2,
+        "result": {
+          "JMGKMMFNABP": {
+            "1": 0
+          }
+        },
+        "stores": [
+          {
+            "typeIndex": 17964,
+            "objectOffset": 28,
+            "key": 34,
+            "size": 4,
+            "source": "0x15893d4b0"
+          },
+          {
+            "typeIndex": 17964,
+            "objectOffset": 24,
+            "key": 34,
+            "size": 4,
+            "source": "0x15893d4bf"
+          },
+          {
+            "typeIndex": 17964,
+            "objectOffset": 28,
+            "key": 8,
+            "size": 4,
+            "source": "0x158935d92"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 64947,
+            "entry": "0x1504d7b30"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x15893d460"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x158935d30"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x15893e4d0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 64947,
+        "tag": 5,
+        "wireType": 0,
+        "result": {
+          "MNCFEDPDEAG": true
+        },
+        "stores": [
+          {
+            "typeIndex": 64947,
+            "objectOffset": 52,
+            "key": 40,
+            "size": 1,
+            "source": "0x1504d7bdd"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 64947,
+            "entry": "0x1504d7b30"
+          }
+        ]
+      },
+      {
+        "typeIndex": 64947,
+        "tag": 6,
+        "wireType": 0,
+        "result": {
+          "FLGGIMBHFOO": [
+            305419896
+          ]
+        },
+        "stores": [],
+        "entered": [
+          {
+            "typeIndex": 64947,
+            "entry": "0x1504d7b30"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8e10"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 64947,
+        "tag": 6,
+        "wireType": 2,
+        "result": {
+          "FLGGIMBHFOO": [
+            8,
+            1
+          ]
+        },
+        "stores": [],
+        "entered": [
+          {
+            "typeIndex": 64947,
+            "entry": "0x1504d7b30"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8e10"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 65333,
+        "tag": 1,
+        "wireType": 0,
+        "result": {
+          "PJAGIOHBKLD": 305419896
+        },
+        "stores": [
+          {
+            "typeIndex": 65333,
+            "objectOffset": 40,
+            "key": 8,
+            "size": 4,
+            "source": "0x14b8a5853"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 65333,
+            "entry": "0x14b8a55e0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 65333,
+        "tag": 2,
+        "wireType": 0,
+        "result": {
+          "FBLKPHOCBIK": 305419896
+        },
+        "stores": [
+          {
+            "typeIndex": 65333,
+            "objectOffset": 32,
+            "key": 16,
+            "size": 8,
+            "source": "0x14b8a5679"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 65333,
+            "entry": "0x14b8a55e0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 65333,
+        "tag": 5,
+        "wireType": 2,
+        "result": {
+          "FLPGMLOFAKP_5": {
+            "GNHFNECPAHD": 1
+          }
+        },
+        "stores": [
+          {
+            "typeIndex": 63442,
+            "objectOffset": 32,
+            "key": 8,
+            "size": 4,
+            "source": "0x152ee3111"
+          },
+          {
+            "typeIndex": 65333,
+            "objectOffset": 24,
+            "key": 0,
+            "size": 8,
+            "source": "0x14b8a5970"
+          },
+          {
+            "typeIndex": 65333,
+            "objectOffset": 44,
+            "key": 0,
+            "size": 4,
+            "source": "0x14b8a597f"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 65333,
+            "entry": "0x14b8a55e0"
+          },
+          {
+            "typeIndex": 63442,
+            "entry": "0x152ee3080"
+          }
+        ]
+      },
+      {
+        "typeIndex": 65333,
+        "tag": 6,
+        "wireType": 2,
+        "result": {
+          "FLPGMLOFAKP_6": {}
+        },
+        "stores": [
+          {
+            "typeIndex": 65333,
+            "objectOffset": 24,
+            "key": 0,
+            "size": 8,
+            "source": "0x14b8a579d"
+          },
+          {
+            "typeIndex": 65333,
+            "objectOffset": 44,
+            "key": 0,
+            "size": 4,
+            "source": "0x14b8a58fc"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 65333,
+            "entry": "0x14b8a55e0"
+          },
+          {
+            "typeIndex": 44169,
+            "entry": "0x15408aee0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 65333,
+        "tag": 7,
+        "wireType": 2,
+        "result": {
+          "FLPGMLOFAKP_7": {
+            "GNHFNECPAHD": 1
+          }
+        },
+        "stores": [
+          {
+            "typeIndex": 51247,
+            "objectOffset": 24,
+            "key": 8,
+            "size": 4,
+            "source": "0x14c06c4b1"
+          },
+          {
+            "typeIndex": 65333,
+            "objectOffset": 24,
+            "key": 0,
+            "size": 8,
+            "source": "0x14b8a58ed"
+          },
+          {
+            "typeIndex": 65333,
+            "objectOffset": 44,
+            "key": 0,
+            "size": 4,
+            "source": "0x14b8a58fc"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 65333,
+            "entry": "0x14b8a55e0"
+          },
+          {
+            "typeIndex": 51247,
+            "entry": "0x14c06c450"
+          }
+        ]
+      },
+      {
+        "typeIndex": 65333,
+        "tag": 8,
+        "wireType": 2,
+        "result": {
+          "FLPGMLOFAKP_8": {
+            "GNHFNECPAHD": 1
+          }
+        },
+        "stores": [
+          {
+            "typeIndex": 63899,
+            "objectOffset": 32,
+            "key": 8,
+            "size": 4,
+            "source": "0x153de61e1"
+          },
+          {
+            "typeIndex": 65333,
+            "objectOffset": 24,
+            "key": 0,
+            "size": 8,
+            "source": "0x14b8a5702"
+          },
+          {
+            "typeIndex": 65333,
+            "objectOffset": 44,
+            "key": 0,
+            "size": 4,
+            "source": "0x14b8a5711"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 65333,
+            "entry": "0x14b8a55e0"
+          },
+          {
+            "typeIndex": 63899,
+            "entry": "0x153de6130"
+          }
+        ]
+      },
+      {
+        "typeIndex": 65333,
+        "tag": 9,
+        "wireType": 2,
+        "result": {
+          "FLPGMLOFAKP_9": {
+            "GNHFNECPAHD": 1
+          }
+        },
+        "stores": [
+          {
+            "typeIndex": 40274,
+            "objectOffset": 24,
+            "key": 8,
+            "size": 4,
+            "source": "0x1518c3ae1"
+          },
+          {
+            "typeIndex": 65333,
+            "objectOffset": 24,
+            "key": 0,
+            "size": 8,
+            "source": "0x14b8a5a19"
+          },
+          {
+            "typeIndex": 65333,
+            "objectOffset": 44,
+            "key": 0,
+            "size": 4,
+            "source": "0x14b8a5a28"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 65333,
+            "entry": "0x14b8a55e0"
+          },
+          {
+            "typeIndex": 40274,
+            "entry": "0x1518c3a80"
+          }
+        ]
+      },
+      {
+        "typeIndex": 65333,
+        "tag": 10,
+        "wireType": 2,
+        "result": {
+          "FLPGMLOFAKP_10": {}
+        },
+        "stores": [
+          {
+            "typeIndex": 65333,
+            "objectOffset": 24,
+            "key": 0,
+            "size": 8,
+            "source": "0x14b8a582d"
+          },
+          {
+            "typeIndex": 65333,
+            "objectOffset": 44,
+            "key": 0,
+            "size": 4,
+            "source": "0x14b8a58fc"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 65333,
+            "entry": "0x14b8a55e0"
+          },
+          {
+            "typeIndex": 14095,
+            "entry": "0x149c5c150"
+          }
+        ]
+      },
+      {
+        "typeIndex": 68537,
+        "tag": 2,
+        "wireType": 2,
+        "result": {
+          "MBEEKCPJBEL": [
+            {
+              "PJAGIOHBKLD": 1
+            }
+          ]
+        },
+        "stores": [
+          {
+            "typeIndex": 65333,
+            "objectOffset": 40,
+            "key": 8,
+            "size": 4,
+            "source": "0x14b8a5853"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 68537,
+            "entry": "0x1494200e0"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158dc41f0"
+          },
+          {
+            "typeIndex": 65333,
+            "entry": "0x14b8a55e0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 68537,
+        "tag": 8,
+        "wireType": 0,
+        "result": {
+          "PAKLDABINMP": 305419896
+        },
+        "stores": [
+          {
+            "typeIndex": 68537,
+            "objectOffset": 32,
+            "key": 64,
+            "size": 4,
+            "source": "0x1494201b1"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 68537,
+            "entry": "0x1494200e0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 68537,
+        "tag": 14,
+        "wireType": 0,
+        "result": {
+          "CLFJNKKFONI": 305419896
+        },
+        "stores": [
+          {
+            "typeIndex": 68537,
+            "objectOffset": 36,
+            "key": 112,
+            "size": 4,
+            "source": "0x149420140"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 68537,
+            "entry": "0x1494200e0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 1,
+        "wireType": 0,
+        "result": {
+          "NJAGFJINHMA": 305419896
+        },
+        "stores": [
+          {
+            "typeIndex": 74063,
+            "objectOffset": 64,
+            "key": 8,
+            "size": 4,
+            "source": "0x1477447e8"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          }
+        ]
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 2,
+        "wireType": 0,
+        "result": {
+          "NILMBAGDEAL": 305419896
+        },
+        "stores": [
+          {
+            "typeIndex": 74063,
+            "objectOffset": 56,
+            "key": 16,
+            "size": 4,
+            "source": "0x1477446c1"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          }
+        ]
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 3,
+        "wireType": 0,
+        "result": {
+          "KFDCBKBPPGL": 305419896
+        },
+        "stores": [
+          {
+            "typeIndex": 74063,
+            "objectOffset": 48,
+            "key": 24,
+            "size": 4,
+            "source": "0x147744827"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          }
+        ]
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 4,
+        "wireType": 0,
+        "result": {
+          "OJDKGGHBKKK": 305419896
+        },
+        "stores": [
+          {
+            "typeIndex": 74063,
+            "objectOffset": 52,
+            "key": 32,
+            "size": 4,
+            "source": "0x147744844"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          }
+        ]
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 5,
+        "wireType": 0,
+        "result": {
+          "FOFCJMPCEBB": [
+            305419896
+          ]
+        },
+        "stores": [],
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8e10"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 5,
+        "wireType": 2,
+        "result": {
+          "FOFCJMPCEBB": [
+            8,
+            1
+          ]
+        },
+        "stores": [],
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8e10"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 6,
+        "wireType": 0,
+        "result": {
+          "CGKIGPFDFOF": true
+        },
+        "stores": [
+          {
+            "typeIndex": 74063,
+            "objectOffset": 60,
+            "key": 48,
+            "size": 1,
+            "source": "0x14774480a"
+          }
+        ],
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          }
+        ]
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 7,
+        "wireType": 0,
+        "result": {
+          "IMEGOOADEBF": [
+            305419896
+          ]
+        },
+        "stores": [],
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8e10"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 7,
+        "wireType": 2,
+        "result": {
+          "IMEGOOADEBF": [
+            8,
+            1
+          ]
+        },
+        "stores": [],
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8e10"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 8,
+        "wireType": 0,
+        "result": {
+          "IHKPPDPBEML": [
+            305419896
+          ]
+        },
+        "stores": [],
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8e10"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          }
+        ]
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 8,
+        "wireType": 2,
+        "result": {
+          "IHKPPDPBEML": [
+            8,
+            1
+          ]
+        },
+        "stores": [],
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8e10"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          }
+        ]
+      }
+    ]
+  },
+  "primitiveMapAOT": [
+    {
+      "owner": 17964,
+      "classInstance": 3723,
+      "method": ".ctor",
+      "methodDefinition": 136471,
+      "tableIndex": 304449,
+      "methodSpec": 189217,
+      "pointerIndex": 97995,
+      "address": "0x158935cd0",
+      "arguments": [
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        },
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        }
+      ]
+    },
+    {
+      "owner": 17964,
+      "classInstance": 3723,
+      "method": "MOMMACBEMEK",
+      "methodDefinition": 136478,
+      "tableIndex": 304452,
+      "methodSpec": 189227,
+      "pointerIndex": 98005,
+      "address": "0x158935d30",
+      "arguments": [
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        },
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        }
+      ]
+    },
+    {
+      "owner": 17961,
+      "classInstance": 3723,
+      "method": ".ctor",
+      "methodDefinition": 136414,
+      "tableIndex": 304849,
+      "methodSpec": 190772,
+      "pointerIndex": 99497,
+      "address": "0x15893cfe0",
+      "arguments": [
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        },
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        }
+      ]
+    },
+    {
+      "owner": 17961,
+      "classInstance": 3723,
+      "method": "FNNADLCNGFO",
+      "methodDefinition": 136431,
+      "tableIndex": 304856,
+      "methodSpec": 190836,
+      "pointerIndex": 99558,
+      "address": "0x15893d460",
+      "arguments": [
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        },
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        }
+      ]
+    },
+    {
+      "owner": 17961,
+      "classInstance": 3723,
+      "method": "set_Item",
+      "methodDefinition": 136450,
+      "tableIndex": 304863,
+      "methodSpec": 191168,
+      "pointerIndex": 99883,
+      "address": "0x15893e4d0",
+      "arguments": [
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        },
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        }
+      ]
+    }
+  ],
+  "nativeFixtures": 32,
+  "rejections": [
+    {
+      "name": "recursion-limit",
+      "typeIndex": 68537,
+      "wire": "1200",
+      "recursionLimit": 0,
+      "error": "0x1509cb410: Native error branch: recursion-limit",
+      "scope": "native-error-branch"
+    },
+    {
+      "name": "negative-length",
+      "typeIndex": 68537,
+      "wire": "12ffffffff0f",
+      "recursionLimit": 100,
+      "error": "0x1509cafa0: Native error branch: negative-length",
+      "scope": "native-error-branch"
+    },
+    {
+      "name": "truncated-nested",
+      "typeIndex": 68537,
+      "wire": "12050a00",
+      "recursionLimit": 100,
+      "error": "0x1509cb360: Native error branch: truncated-message",
+      "scope": "native-error-branch"
+    },
+    {
+      "name": "invalid-tag",
+      "typeIndex": 68537,
+      "wire": "00",
+      "recursionLimit": 100,
+      "error": "0x1474d8100: Unsupported or invalid tag",
+      "scope": "explicit-input-model"
+    },
+    {
+      "name": "packed-truncated",
+      "typeIndex": 64947,
+      "wire": "320180",
+      "recursionLimit": 100,
+      "error": "0x147520110: Truncated or invalid length",
+      "scope": "explicit-input-model"
+    },
+    {
+      "name": "guid-overflow",
+      "typeIndex": 65333,
+      "wire": "10ffffffffffffffffff02",
+      "recursionLimit": 100,
+      "error": "0x1475202d0: Varint exceeds uint64",
+      "scope": "explicit-input-model"
+    }
+  ],
+  "limitations": [
+    "Raw graph only; all business identities/field names remain unresolved",
+    "Managed allocation/default containers, metadata contexts, primitives/delegates, array copying/clearing and bounded dictionary lookup/insertion modeled",
+    "Managed map enumeration/linked-clear callbacks modeled; concrete message clones, map clear/copy and list copy execute natively",
+    "No IFix/live ABI/handler/UI/client acceptance or protocol production integration"
+  ],
+  "fixtures": [
+    {
+      "name": "leaf-u32-upper",
+      "typeIndex": 28474,
+      "wire": "08ffffffff0f",
+      "result": {
+        "BHOHKJOCNOL": 4294967295
+      },
+      "entered": [
+        {
+          "typeIndex": 28474,
+          "entry": "0x14a870410"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "nested-special",
+      "typeIndex": 63442,
+      "wire": "080b120c080112080a040807100b100c",
+      "result": {
+        "GNHFNECPAHD": 11,
+        "PNGOHOKGKHP": {
+          "IJPBJCNCDEC": true,
+          "PNGOHOKGKHP_2": {
+            "ALNBHHEJLKP": {
+              "7": 11
+            },
+            "MNBPLFPCJLG": 12
+          }
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 63442,
+          "entry": "0x152ee3080"
+        },
+        {
+          "typeIndex": 28471,
+          "entry": "0x148fc60e0"
+        },
+        {
+          "typeIndex": 28473,
+          "entry": "0x14e457f70"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "nested-ordinary",
+      "typeIndex": 63899,
+      "wire": "080b12060a040807100b",
+      "result": {
+        "GNHFNECPAHD": 11,
+        "PNGOHOKGKHP": {
+          "ALNBHHEJLKP": {
+            "7": 11
+          }
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 63899,
+          "entry": "0x153de6130"
+        },
+        {
+          "typeIndex": 61085,
+          "entry": "0x14b6fab30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "equip-branch-two",
+      "typeIndex": 44169,
+      "wire": "18011213080b1016182122040807100b28023203018001",
+      "result": {
+        "FAPABAJBMAK": true,
+        "FLPGMLOFAKP_2": {
+          "JMGKMMFNABP": {
+            "7": 11
+          },
+          "FLGGIMBHFOO": [
+            1,
+            128
+          ],
+          "NILMBAGDEAL": 22,
+          "KFDCBKBPPGL": 33,
+          "NJAGFJINHMA": 11,
+          "MNCFEDPDEAG": true
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 44169,
+          "entry": "0x15408aee0"
+        },
+        {
+          "typeIndex": 64947,
+          "entry": "0x1504d7b30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "tps-branch-two",
+      "typeIndex": 28471,
+      "wire": "080112080a040807100b100c",
+      "result": {
+        "IJPBJCNCDEC": true,
+        "PNGOHOKGKHP_2": {
+          "ALNBHHEJLKP": {
+            "7": 11
+          },
+          "MNBPLFPCJLG": 12
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 28471,
+          "entry": "0x148fc60e0"
+        },
+        {
+          "typeIndex": 28473,
+          "entry": "0x14e457f70"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "tps-branch-three",
+      "typeIndex": 28471,
+      "wire": "1a02082a",
+      "result": {
+        "PNGOHOKGKHP_3": {
+          "BHOHKJOCNOL": 42
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 28471,
+          "entry": "0x148fc60e0"
+        },
+        {
+          "typeIndex": 28474,
+          "entry": "0x14a870410"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "tps-branch-four",
+      "typeIndex": 28471,
+      "wire": "220a0a040807100b100c180d",
+      "result": {
+        "PNGOHOKGKHP_4": {
+          "ALNBHHEJLKP": {
+            "7": 11
+          },
+          "MNBPLFPCJLG": 13,
+          "PGDAIKELICG": 12
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 28471,
+          "entry": "0x148fc60e0"
+        },
+        {
+          "typeIndex": 28475,
+          "entry": "0x152274ca0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "equip-branch-one",
+      "typeIndex": 44169,
+      "wire": "0a0f2a030180013a030280014203038001",
+      "result": {
+        "FLPGMLOFAKP_1": {
+          "FOFCJMPCEBB": [
+            1,
+            128
+          ],
+          "IMEGOOADEBF": [
+            2,
+            128
+          ],
+          "IHKPPDPBEML": [
+            3,
+            128
+          ]
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 44169,
+          "entry": "0x15408aee0"
+        },
+        {
+          "typeIndex": 74063,
+          "entry": "0x147744650"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "item-nonempty-5",
+      "typeIndex": 65333,
+      "wire": "082a1081808080808080102a10080b120c080112080a040807100b100c",
+      "result": {
+        "PJAGIOHBKLD": 42,
+        "FBLKPHOCBIK": 9007199254740993,
+        "FLPGMLOFAKP_5": {
+          "GNHFNECPAHD": 11,
+          "PNGOHOKGKHP": {
+            "IJPBJCNCDEC": true,
+            "PNGOHOKGKHP_2": {
+              "ALNBHHEJLKP": {
+                "7": 11
+              },
+              "MNBPLFPCJLG": 12
+            }
+          }
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        },
+        {
+          "typeIndex": 63442,
+          "entry": "0x152ee3080"
+        },
+        {
+          "typeIndex": 28471,
+          "entry": "0x148fc60e0"
+        },
+        {
+          "typeIndex": 28473,
+          "entry": "0x14e457f70"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "item-nonempty-6",
+      "typeIndex": 65333,
+      "wire": "082a108180808080808010321718011213080b1016182122040807100b28023203018001",
+      "result": {
+        "PJAGIOHBKLD": 42,
+        "FBLKPHOCBIK": 9007199254740993,
+        "FLPGMLOFAKP_6": {
+          "FAPABAJBMAK": true,
+          "FLPGMLOFAKP_2": {
+            "JMGKMMFNABP": {
+              "7": 11
+            },
+            "FLGGIMBHFOO": [
+              1,
+              128
+            ],
+            "NILMBAGDEAL": 22,
+            "KFDCBKBPPGL": 33,
+            "NJAGFJINHMA": 11,
+            "MNCFEDPDEAG": true
+          }
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        },
+        {
+          "typeIndex": 44169,
+          "entry": "0x15408aee0"
+        },
+        {
+          "typeIndex": 64947,
+          "entry": "0x1504d7b30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "item-nonempty-7",
+      "typeIndex": 65333,
+      "wire": "082a1081808080808080103a02082a",
+      "result": {
+        "PJAGIOHBKLD": 42,
+        "FBLKPHOCBIK": 9007199254740993,
+        "FLPGMLOFAKP_7": {
+          "GNHFNECPAHD": 42
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        },
+        {
+          "typeIndex": 51247,
+          "entry": "0x14c06c450"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "item-nonempty-8",
+      "typeIndex": 65333,
+      "wire": "082a108180808080808010420a080b12060a040807100b",
+      "result": {
+        "PJAGIOHBKLD": 42,
+        "FBLKPHOCBIK": 9007199254740993,
+        "FLPGMLOFAKP_8": {
+          "GNHFNECPAHD": 11,
+          "PNGOHOKGKHP": {
+            "ALNBHHEJLKP": {
+              "7": 11
+            }
+          }
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        },
+        {
+          "typeIndex": 63899,
+          "entry": "0x153de6130"
+        },
+        {
+          "typeIndex": 61085,
+          "entry": "0x14b6fab30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "item-nonempty-9",
+      "typeIndex": 65333,
+      "wire": "082a1081808080808080104a02084d",
+      "result": {
+        "PJAGIOHBKLD": 42,
+        "FBLKPHOCBIK": 9007199254740993,
+        "FLPGMLOFAKP_9": {
+          "GNHFNECPAHD": 77
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        },
+        {
+          "typeIndex": 40274,
+          "entry": "0x1518c3a80"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "item-nonempty-10",
+      "typeIndex": 65333,
+      "wire": "082a108180808080808010520b12030180011a040807100b",
+      "result": {
+        "PJAGIOHBKLD": 42,
+        "FBLKPHOCBIK": 9007199254740993,
+        "FLPGMLOFAKP_10": {
+          "JMGKMMFNABP": {
+            "7": 11
+          },
+          "EIBDIEHEAKF": [
+            1,
+            128
+          ]
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        },
+        {
+          "typeIndex": 14095,
+          "entry": "0x149c5c150"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "root-six-nonempty-items",
+      "typeIndex": 68537,
+      "wire": "121d082a1081808080808080102a10080b120c080112080a040807100b100c1224082a108180808080808010321718011213080b1016182122040807100b28023203018001120f082a1081808080808080103a02082a1217082a108180808080808010420a080b12060a040807100b120f082a1081808080808080104a02084d1218082a108180808080808010520b12030180011a040807100b400b7001",
+      "result": {
+        "MBEEKCPJBEL": [
+          {
+            "PJAGIOHBKLD": 42,
+            "FBLKPHOCBIK": 9007199254740993,
+            "FLPGMLOFAKP_5": {
+              "GNHFNECPAHD": 11,
+              "PNGOHOKGKHP": {
+                "IJPBJCNCDEC": true,
+                "PNGOHOKGKHP_2": {
+                  "ALNBHHEJLKP": {
+                    "7": 11
+                  },
+                  "MNBPLFPCJLG": 12
+                }
+              }
+            }
+          },
+          {
+            "PJAGIOHBKLD": 42,
+            "FBLKPHOCBIK": 9007199254740993,
+            "FLPGMLOFAKP_6": {
+              "FAPABAJBMAK": true,
+              "FLPGMLOFAKP_2": {
+                "JMGKMMFNABP": {
+                  "7": 11
+                },
+                "FLGGIMBHFOO": [
+                  1,
+                  128
+                ],
+                "NILMBAGDEAL": 22,
+                "KFDCBKBPPGL": 33,
+                "NJAGFJINHMA": 11,
+                "MNCFEDPDEAG": true
+              }
+            }
+          },
+          {
+            "PJAGIOHBKLD": 42,
+            "FBLKPHOCBIK": 9007199254740993,
+            "FLPGMLOFAKP_7": {
+              "GNHFNECPAHD": 42
+            }
+          },
+          {
+            "PJAGIOHBKLD": 42,
+            "FBLKPHOCBIK": 9007199254740993,
+            "FLPGMLOFAKP_8": {
+              "GNHFNECPAHD": 11,
+              "PNGOHOKGKHP": {
+                "ALNBHHEJLKP": {
+                  "7": 11
+                }
+              }
+            }
+          },
+          {
+            "PJAGIOHBKLD": 42,
+            "FBLKPHOCBIK": 9007199254740993,
+            "FLPGMLOFAKP_9": {
+              "GNHFNECPAHD": 77
+            }
+          },
+          {
+            "PJAGIOHBKLD": 42,
+            "FBLKPHOCBIK": 9007199254740993,
+            "FLPGMLOFAKP_10": {
+              "JMGKMMFNABP": {
+                "7": 11
+              },
+              "EIBDIEHEAKF": [
+                1,
+                128
+              ]
+            }
+          }
+        ],
+        "PAKLDABINMP": 11,
+        "CLFJNKKFONI": 1
+      },
+      "entered": [
+        {
+          "typeIndex": 68537,
+          "entry": "0x1494200e0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158dc41f0"
+        },
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        },
+        {
+          "typeIndex": 63442,
+          "entry": "0x152ee3080"
+        },
+        {
+          "typeIndex": 28471,
+          "entry": "0x148fc60e0"
+        },
+        {
+          "typeIndex": 28473,
+          "entry": "0x14e457f70"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        },
+        {
+          "typeIndex": 44169,
+          "entry": "0x15408aee0"
+        },
+        {
+          "typeIndex": 64947,
+          "entry": "0x1504d7b30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        },
+        {
+          "typeIndex": 51247,
+          "entry": "0x14c06c450"
+        },
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        },
+        {
+          "typeIndex": 63899,
+          "entry": "0x153de6130"
+        },
+        {
+          "typeIndex": 61085,
+          "entry": "0x14b6fab30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        },
+        {
+          "typeIndex": 40274,
+          "entry": "0x1518c3a80"
+        },
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        },
+        {
+          "typeIndex": 14095,
+          "entry": "0x149c5c150"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "same-item-ten-map-overwrite-list-append",
+      "typeIndex": 65333,
+      "wire": "520b12030180011a040807100b520a120280011a0408071000",
+      "result": {
+        "FLPGMLOFAKP_10": {
+          "JMGKMMFNABP": {
+            "7": 0
+          },
+          "EIBDIEHEAKF": [
+            1,
+            128,
+            128
+          ]
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        },
+        {
+          "typeIndex": 14095,
+          "entry": "0x149c5c150"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893c8b0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x158db7cd0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893c340"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893d3a0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "typeIndex": 14095,
+          "entry": "0x149c5c150"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": [
+        {
+          "nodeOffset": 40,
+          "size": 8,
+          "source": "0x15893e565"
+        }
+      ]
+    },
+    {
+      "name": "same-item-eight-keep-map-explicit-zero-count",
+      "typeIndex": 65333,
+      "wire": "420a080b12060a040807100b42020800",
+      "result": {
+        "FLPGMLOFAKP_8": {
+          "PNGOHOKGKHP": {
+            "ALNBHHEJLKP": {
+              "7": 11
+            }
+          }
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        },
+        {
+          "typeIndex": 63899,
+          "entry": "0x153de6130"
+        },
+        {
+          "typeIndex": 61085,
+          "entry": "0x14b6fab30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893c8b0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893c340"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893d3a0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "typeIndex": 63899,
+          "entry": "0x153de6130"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "same-item-five-preserve-nested-zero-count",
+      "typeIndex": 65333,
+      "wire": "2a10080b120c080112080a040807100b100c2a020800",
+      "result": {
+        "FLPGMLOFAKP_5": {
+          "PNGOHOKGKHP": {
+            "IJPBJCNCDEC": true,
+            "PNGOHOKGKHP_2": {
+              "ALNBHHEJLKP": {
+                "7": 11
+              },
+              "MNBPLFPCJLG": 12
+            }
+          }
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        },
+        {
+          "typeIndex": 63442,
+          "entry": "0x152ee3080"
+        },
+        {
+          "typeIndex": 28471,
+          "entry": "0x148fc60e0"
+        },
+        {
+          "typeIndex": 28473,
+          "entry": "0x14e457f70"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893c8b0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893c340"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893d3a0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "typeIndex": 63442,
+          "entry": "0x152ee3080"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "tps-switch-and-return-empty",
+      "typeIndex": 28471,
+      "wire": "12080a040807100b100c1a02082a1200",
+      "result": {
+        "PNGOHOKGKHP_2": {}
+      },
+      "entered": [
+        {
+          "typeIndex": 28471,
+          "entry": "0x148fc60e0"
+        },
+        {
+          "typeIndex": 28473,
+          "entry": "0x14e457f70"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "typeIndex": 28474,
+          "entry": "0x14a870410"
+        },
+        {
+          "typeIndex": 28473,
+          "entry": "0x14e457f70"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "equip-switch-and-return-empty",
+      "typeIndex": 44169,
+      "wire": "1213080b1016182122040807100b280232030180010a032a01011200",
+      "result": {
+        "FLPGMLOFAKP_2": {}
+      },
+      "entered": [
+        {
+          "typeIndex": 44169,
+          "entry": "0x15408aee0"
+        },
+        {
+          "typeIndex": 64947,
+          "entry": "0x1504d7b30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "typeIndex": 74063,
+          "entry": "0x147744650"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "typeIndex": 64947,
+          "entry": "0x1504d7b30"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "same-equip-one-list-append",
+      "typeIndex": 44169,
+      "wire": "0a0f2a030180013a0302800142030380010a032a0104",
+      "result": {
+        "FLPGMLOFAKP_1": {
+          "FOFCJMPCEBB": [
+            1,
+            128,
+            4
+          ],
+          "IMEGOOADEBF": [
+            2,
+            128
+          ],
+          "IHKPPDPBEML": [
+            3,
+            128
+          ]
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 44169,
+          "entry": "0x15408aee0"
+        },
+        {
+          "typeIndex": 74063,
+          "entry": "0x147744650"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x158db7cd0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x158db7cd0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x158db7cd0"
+        },
+        {
+          "typeIndex": 74063,
+          "entry": "0x147744650"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "same-equip-two-map-zero-list-append",
+      "typeIndex": 44169,
+      "wire": "1213080b1016182122040807100b28023203018001120b2204080710003201002800",
+      "result": {
+        "FLPGMLOFAKP_2": {
+          "JMGKMMFNABP": {
+            "7": 0
+          },
+          "FLGGIMBHFOO": [
+            1,
+            128,
+            0
+          ],
+          "NILMBAGDEAL": 22,
+          "KFDCBKBPPGL": 33,
+          "NJAGFJINHMA": 11
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 44169,
+          "entry": "0x15408aee0"
+        },
+        {
+          "typeIndex": 64947,
+          "entry": "0x1504d7b30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893c8b0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893c340"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893d3a0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x158db7cd0"
+        },
+        {
+          "typeIndex": 64947,
+          "entry": "0x1504d7b30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        }
+      ],
+      "mapStores": [
+        {
+          "nodeOffset": 40,
+          "size": 8,
+          "source": "0x15893e565"
+        }
+      ]
+    },
+    {
+      "name": "same-item-six-nested-merge-and-bool-zero",
+      "typeIndex": 65333,
+      "wire": "321718011213080b1016182122040807100b28023203018001320f1800120b2204080710003201002800",
+      "result": {
+        "FLPGMLOFAKP_6": {
+          "FLPGMLOFAKP_2": {
+            "JMGKMMFNABP": {
+              "7": 0
+            },
+            "FLGGIMBHFOO": [
+              1,
+              128,
+              0
+            ],
+            "NILMBAGDEAL": 22,
+            "KFDCBKBPPGL": 33,
+            "NJAGFJINHMA": 11
+          }
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        },
+        {
+          "typeIndex": 44169,
+          "entry": "0x15408aee0"
+        },
+        {
+          "typeIndex": 64947,
+          "entry": "0x1504d7b30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893c8b0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893c340"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893d3a0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x158db7cd0"
+        },
+        {
+          "typeIndex": 44169,
+          "entry": "0x15408aee0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893c8b0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893c340"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893d3a0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x158db7cd0"
+        },
+        {
+          "typeIndex": 64947,
+          "entry": "0x1504d7b30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        }
+      ],
+      "mapStores": [
+        {
+          "nodeOffset": 40,
+          "size": 8,
+          "source": "0x15893e565"
+        }
+      ]
+    },
+    {
+      "name": "same-tps-two-map-zero-counter-zero",
+      "typeIndex": 28471,
+      "wire": "080112080a040807100b100c080012080a04080710001000",
+      "result": {
+        "PNGOHOKGKHP_2": {
+          "ALNBHHEJLKP": {
+            "7": 0
+          }
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 28471,
+          "entry": "0x148fc60e0"
+        },
+        {
+          "typeIndex": 28473,
+          "entry": "0x14e457f70"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893c8b0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893c340"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893d3a0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "typeIndex": 28473,
+          "entry": "0x14e457f70"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": [
+        {
+          "nodeOffset": 40,
+          "size": 8,
+          "source": "0x15893e565"
+        }
+      ]
+    },
+    {
+      "name": "same-tps-four-counter-zero",
+      "typeIndex": 28471,
+      "wire": "220a0a040807100b100c180d22021000",
+      "result": {
+        "PNGOHOKGKHP_4": {
+          "ALNBHHEJLKP": {
+            "7": 11
+          },
+          "MNBPLFPCJLG": 13
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 28471,
+          "entry": "0x148fc60e0"
+        },
+        {
+          "typeIndex": 28475,
+          "entry": "0x152274ca0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893c8b0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893c340"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893d3a0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "typeIndex": 28475,
+          "entry": "0x152274ca0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "same-tps-three-zero",
+      "typeIndex": 28471,
+      "wire": "1a02082a1a020800",
+      "result": {
+        "PNGOHOKGKHP_3": {}
+      },
+      "entered": [
+        {
+          "typeIndex": 28471,
+          "entry": "0x148fc60e0"
+        },
+        {
+          "typeIndex": 28474,
+          "entry": "0x14a870410"
+        },
+        {
+          "typeIndex": 28474,
+          "entry": "0x14a870410"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "same-item-five-tps-type-switch",
+      "typeIndex": 65333,
+      "wire": "2a10080b120c080112080a040807100b100c2a0612041a020863",
+      "result": {
+        "FLPGMLOFAKP_5": {
+          "GNHFNECPAHD": 11,
+          "PNGOHOKGKHP": {
+            "IJPBJCNCDEC": true,
+            "PNGOHOKGKHP_3": {
+              "BHOHKJOCNOL": 99
+            }
+          }
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        },
+        {
+          "typeIndex": 63442,
+          "entry": "0x152ee3080"
+        },
+        {
+          "typeIndex": 28471,
+          "entry": "0x148fc60e0"
+        },
+        {
+          "typeIndex": 28473,
+          "entry": "0x14e457f70"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893c8b0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893c340"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893d3a0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "typeIndex": 63442,
+          "entry": "0x152ee3080"
+        },
+        {
+          "typeIndex": 28471,
+          "entry": "0x148fc60e0"
+        },
+        {
+          "typeIndex": 28474,
+          "entry": "0x14a870410"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "same-item-eight-map-zero",
+      "typeIndex": 65333,
+      "wire": "420a080b12060a040807100b420812060a0408071000",
+      "result": {
+        "FLPGMLOFAKP_8": {
+          "GNHFNECPAHD": 11,
+          "PNGOHOKGKHP": {
+            "ALNBHHEJLKP": {
+              "7": 0
+            }
+          }
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        },
+        {
+          "typeIndex": 63899,
+          "entry": "0x153de6130"
+        },
+        {
+          "typeIndex": 61085,
+          "entry": "0x14b6fab30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893c8b0"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893c340"
+        },
+        {
+          "kind": "native-copy-helper",
+          "entry": "0x15893d3a0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "typeIndex": 63899,
+          "entry": "0x153de6130"
+        },
+        {
+          "typeIndex": 61085,
+          "entry": "0x14b6fab30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": [
+        {
+          "nodeOffset": 40,
+          "size": 8,
+          "source": "0x15893e565"
+        }
+      ]
+    },
+    {
+      "name": "same-item-seven-zero",
+      "typeIndex": 65333,
+      "wire": "3a02082a3a020800",
+      "result": {
+        "FLPGMLOFAKP_7": {}
+      },
+      "entered": [
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        },
+        {
+          "typeIndex": 51247,
+          "entry": "0x14c06c450"
+        },
+        {
+          "typeIndex": 51247,
+          "entry": "0x14c06c450"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "same-item-nine-zero",
+      "typeIndex": 65333,
+      "wire": "4a02082a4a020800",
+      "result": {
+        "FLPGMLOFAKP_9": {}
+      },
+      "entered": [
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        },
+        {
+          "typeIndex": 40274,
+          "entry": "0x1518c3a80"
+        },
+        {
+          "typeIndex": 40274,
+          "entry": "0x1518c3a80"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "item-switch-all-and-return-empty",
+      "typeIndex": 65333,
+      "wire": "2a10080b120c080112080a040807100b100c321718011213080b1016182122040807100b280232030180013a02082a420a080b12060a040807100b4a02084d520b12030180011a040807100b2a00",
+      "result": {
+        "FLPGMLOFAKP_5": {}
+      },
+      "entered": [
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        },
+        {
+          "typeIndex": 63442,
+          "entry": "0x152ee3080"
+        },
+        {
+          "typeIndex": 28471,
+          "entry": "0x148fc60e0"
+        },
+        {
+          "typeIndex": 28473,
+          "entry": "0x14e457f70"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "typeIndex": 44169,
+          "entry": "0x15408aee0"
+        },
+        {
+          "typeIndex": 64947,
+          "entry": "0x1504d7b30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "typeIndex": 51247,
+          "entry": "0x14c06c450"
+        },
+        {
+          "typeIndex": 63899,
+          "entry": "0x153de6130"
+        },
+        {
+          "typeIndex": 61085,
+          "entry": "0x14b6fab30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "typeIndex": 40274,
+          "entry": "0x1518c3a80"
+        },
+        {
+          "typeIndex": 14095,
+          "entry": "0x149c5c150"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "typeIndex": 63442,
+          "entry": "0x152ee3080"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "root-outer-upper-and-high-guid",
+      "typeIndex": 68537,
+      "wire": "121108ffffffff0f10ffffffffffffffffff0140ffffffff0f70ffffffff0f",
+      "result": {
+        "MBEEKCPJBEL": [
+          {
+            "PJAGIOHBKLD": 4294967295,
+            "FBLKPHOCBIK": 18446744073709551615
+          }
+        ],
+        "PAKLDABINMP": 4294967295,
+        "CLFJNKKFONI": 4294967295
+      },
+      "entered": [
+        {
+          "typeIndex": 68537,
+          "entry": "0x1494200e0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158dc41f0"
+        },
+        {
+          "typeIndex": 65333,
+          "entry": "0x14b8a55e0"
+        }
+      ],
+      "mapStores": []
+    }
+  ]
+}
