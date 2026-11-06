@@ -8,6 +8,8 @@
 
 ## 当前阶段
 
+E-01d1n2已审：[303真实启动/保存](docs/CLIENT_72_D02_QUEST_303_START.md)以真实QuestManager/QuestSystem/World、未启动GameServer及独立Mongo完成2项，主线按独立驱动再复现2项全过并正常shutdown。直接30302保存1未完成/62未开始，真实Progress私有入口保存63未完成；包构造2/64仅到边界。loadedAll全程false，真实门禁阻止manager重绑定且BSON保持；正向重绑定、目标ChapterExcel/完整登录/任务完成效果及客户端仍待，不扩大成R3通过。
+
 D-01b5f已审：[软件点/前序异常对照](docs/CLIENT_72_SOFTWARE_BREAKPOINT_CHANNEL.md)在固定自有fixture有/无AV+C++前序均自然收到SW入口及同TID/RSP返回，7/9停点、三终止点、OS/PUB/log exit0和EXIT/STOP完整；两次驱动退出收口读错误原样保留。主线审291行工具、7 raw hash/全部成功停点/代码恢复及固定插件源码，复用同源码刚执行的19守卫，未重跑合成。未追加游戏load；只排除通用con1解释，原游戏未观测高层BP/异常发布的原因仍未知，继续有界单HW方式及真实HTTP拒绝链取证。
 
 E-01d1n1已审：[目标303实际恢复](docs/CLIENT_72_D02_QUEST_303_RECOVERY.md)由真实Excel loader保留30302拒绝1/安装0，再经真实MainQuestData.onLoad/Fallback安装63个子项；逐项ID/order、63条件与136 exec参数均匹配，63项auto=false/索引0。主线审核11源码/37 archive class，按文档独立编译并跑两个新JVM，报告同代理最终SHA。未知字段/文本和目标语义未扩大解释，未启DB或启动任务；下一做真实显式30302及独立保存冷读。
@@ -118,6 +120,7 @@ E-01d1a（D02-R3子合同A）已验收：固定候选commit/tree/blob四表，�
 | E-01d1l 出生初始本组自动事件 | K所选25suite、既有505/601事件合同 | 有限订阅表与505自然onLoadGroup1项通过，真实action返回计数1/4及门箱状态/0 ERROR；主线补block必要输入hash后独立新JVM1项通过，重叠不相加。跨组/插件/其它suite/完整异步后代与客户端未验 | 已完成 |
 | E-01d1m Quest入场必要性及目标字段缺口台账 | 登录/进度/任务源码、固定旧/目标四数据 | 303/30302条件查询/显式路径、旧动态组及deferred边界与目标17814字段冲突已登记；主线重算数据/配置hash及分布，未重跑五行红测或实际Fallback。只完成只读台账，资源/语义/保存与R3仍开放 | 已完成 |
 | E-01d1n1 目标303真实loader/Fallback | m固定四数据、固定dfde JAR及37 class | Excel负例拒绝1/安装0；BIN 63子项、63条件/136 exec匹配、自动索引0；主线文档独立编译及双新JVM同报告。未启任务/DB/客户端，未知字段及保存待n2 | 已完成 |
+| E-01d1n2 目标303真实启动及保存门禁 | n1/固定旧GlobalCombat/独立27027 | 直接30302及Progress私有入口两项、主线独立两项全过；保存/DatabaseHelper冷读1与63未完成，loadedAll=false时manager不重绑且BSON保持。Mongo正常退出/数据保留；正向重绑定/目标ChapterExcel/完整登录未验 | 已完成 |
 | E-01c6 嵌套require调用者bindings恢复 | E-01c5已复现成功置null/异常残留 | b74cd16；6例先5失败后全过，6套32 Lua及8加载审计全过；portable25秒JAR7ca18e10…e8f5f、9class相符，其余45935不变；双轮整场fast407/449、inline0，30错误组恢复且无新增；完整前置不足未部署，local/资源/实机不晋级 | 已完成 |
 | F-04a SDK/补丁/资源前置现场复核 | 当前checkout/config/GAME_PATH、三输入与现有会话 | 三哈希/参考clean/归属已验；API会话无target；两个status退出1及6个revision候选；源码旧强制验签钩子与字符串工厂缺口保留，见CLIENT_72_RUNTIME_PREREQUISITES；仅核对不代表F-04完成 | 已完成 |
 | F-04b 保留验签的本地信任供给合同 | F-04a、既有原生seed/response/dispatch密码学 | 6b72887；14原生/23次key验签（4成功10拒绝）、18关联和双跑；COPY只R13、CHECK只R8/root第五参数，返回/flags不变；未知key不供给；未装钩子/未导出私钥 | 已完成 |

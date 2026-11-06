@@ -49,4 +49,4 @@ assert (base/'first/result.json').read_bytes()==(base/'repeat/result.json').read
 
 主线逐项审核工具及真实生产调用顺序，核对11个源码hash及37个archive class，再从本专题提取命令独立javac、运行两个新JVM；报告与上述最终值逐字节相同，未见所列数据库/服务/ScriptLoader初始化。主线目录 `local/migration72/d02-r3-quest303-n1-replay-c316f14e2e9d44c5a4193987ebdf66d3/`，证明 `local/migration72/evidence/d02-r3-quest303-main-review.json`。各批次结果不累加为客户端通过数。
 
-后续 n2 应先在独立存档和真实业务入口验证显式 30302 启动、保存/重载及 scene/通知依赖，再决定哪些资源进入必要闭包；针对其他章节的非空未知字段需要独立目标消费者证据，不能以本合同扩大字段 alias 或标记 R3/resourceReady。
+后续[n2真实启动/保存](CLIENT_72_D02_QUEST_303_START.md)已通过两项独立Mongo定向并经主线复现，验证直接30302/Progress私有入口、异步保存/DatabaseHelper冷读及真实未就绪门禁；正向QuestManager重绑定、完整登录/scene/目标通知仍未验。针对其他章节的非空未知字段需要独立目标消费者证据，不能以本合同扩大字段 alias 或标记 R3/resourceReady。
