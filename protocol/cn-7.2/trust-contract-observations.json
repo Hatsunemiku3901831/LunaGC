@@ -1,0 +1,1166 @@
+{
+  "schemaVersion": 1,
+  "task": "F-04b",
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "fixtureCount": 14,
+  "sites": [
+    {
+      "address": "0x140572059",
+      "pattern": "E8 ? ? ? ? 48 83 C4 20 66 41 C7 06 30 82",
+      "hits": [
+        "0x140572059"
+      ],
+      "callTarget": "0x141fdf9c0",
+      "bytesSHA256": "8eca626106c12564d943b7e68858dbf7e8af38a76bf73395f308a321e2dd284c"
+    },
+    {
+      "address": "0x140574a95",
+      "pattern": "E8 ? ? ? ? 48 83 C4 30 84 C0 74 ? 41 8B 04 24",
+      "hits": [
+        "0x140574a95"
+      ],
+      "callTarget": "0x14078bab0",
+      "bytesSHA256": "35a3550be77498400864d95c75e95deae9489ecf92cb00de5db4d67e1d3a8507"
+    }
+  ],
+  "runtimeStatus": "not-tested",
+  "hookInstalled": false,
+  "verificationForced": false,
+  "targetPrivateKeyExported": false,
+  "rootSource": "explicit fixture: existing SigningKey public key also serves as offline trust root",
+  "sourceEvidence": {
+    "stockDerSHA256": {
+      "public": "7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e",
+      "private": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602"
+    },
+    "nativePrivateDerLength": 1192,
+    "nativePrivateSignatureSHA256": "4c909e6d7ef763868cacc2af764bd73a633158f3bb3fc4408a07b230da3c97f9",
+    "clientPublicFileSHA256": "591445eaed578dd6431f11e69fbb13df0dfd46a682348e111305c6a848725e78",
+    "clientPublicMatch": "src/main/resources/keys/game_keys/4_Pub.der",
+    "localRootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+    "localPublicDerSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+    "patchPublicBlobSHA256": "c2fa85c0e70922380c10ffdc8f20b9ada0be2db3e226132587f10fd77a2ef017",
+    "signingFixtureSHA256": "4830a2c186bf114d7523796a3360e13ea1bb667f1921e3253aab154133a7501e"
+  },
+  "materialDiscovery": {
+    "entry": "0x15a4de707",
+    "stop": "0x15a4dfb35",
+    "observedInstructionsOutsideLibrary": 9110,
+    "instructionPathSHA256": "d2a1ae78cc7af7d06b99fc0a2616f6c03b0a75f67cb53cd23d167eb38c9dc043",
+    "nativeLibraryBlocks": 0,
+    "nativeLibraryBlockSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "blockTraceRange": [
+      "0x140580000",
+      "0x140780000"
+    ],
+    "visits": {
+      "0x15a4de707": 1,
+      "0x15a4dfb35": 1
+    },
+    "models": {
+      "0x140514ee0": 1,
+      "0x141c41728": 2,
+      "0x149a75140": 1,
+      "0x620001000": 1
+    }
+  },
+  "javaSourceSHA256": {
+    "tools/Client72SeedReference.java": "9d4886741c825bbd95d47688e606b724cb97a2b6a288e52f3778a07e38b8fcc1",
+    "src/main/java/emu/grasscutter/utils/algorithms/MersenneTwister64.java": "c46c8c05acf697fded0ef1685a0e64d6fb5a13933d10d07b3c387c36a6cabebb"
+  },
+  "results": [
+    {
+      "name": "seed-local",
+      "kind": "seed",
+      "accepted": true,
+      "inputTamper": null,
+      "nativeInstructionWindowsUnchanged": true,
+      "events": [
+        {
+          "operation": 100,
+          "kind": "public",
+          "rawLength": 268,
+          "derLength": 270,
+          "allocationLength": 271,
+          "originalDerSHA256": "7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [
+            "r13"
+          ],
+          "supplied": true,
+          "verifierDerSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "signatureSHA256": "28c22daca51efe0c2bbe92f3ce52c2310f5964eb6f4e00e896874a372364cc20",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [
+            5
+          ],
+          "returnRegistersAndFlagsUntouched": true
+        }
+      ],
+      "calls": [
+        {
+          "operation": 100,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 8,
+          "signatureLength": 256
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 100,
+          "oracle": true,
+          "native": true
+        }
+      ],
+      "ioctlReturn": 0,
+      "base64Length": 344,
+      "encryptionOracle": {
+        "plainLength": 8,
+        "paddingLength": 245,
+        "cipherLength": 256,
+        "cipherSHA256": "6d5644da9eb5099b62f60556baf40d37ef147903da58dc4b52e83f92ed891e31",
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "name": "seed-other-entropy",
+      "kind": "seed",
+      "accepted": true,
+      "inputTamper": "entropy",
+      "nativeInstructionWindowsUnchanged": true,
+      "events": [
+        {
+          "operation": 100,
+          "kind": "public",
+          "rawLength": 268,
+          "derLength": 270,
+          "allocationLength": 271,
+          "originalDerSHA256": "7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [
+            "r13"
+          ],
+          "supplied": true,
+          "verifierDerSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "signatureSHA256": "28c22daca51efe0c2bbe92f3ce52c2310f5964eb6f4e00e896874a372364cc20",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [
+            5
+          ],
+          "returnRegistersAndFlagsUntouched": true
+        }
+      ],
+      "calls": [
+        {
+          "operation": 100,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 8,
+          "signatureLength": 256
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 100,
+          "oracle": true,
+          "native": true
+        }
+      ],
+      "ioctlReturn": 0,
+      "base64Length": 344,
+      "encryptionOracle": {
+        "plainLength": 8,
+        "paddingLength": 245,
+        "cipherLength": 256,
+        "cipherSHA256": "77144afd577cea6610588c57ffba69ddee8eec83226a32d09fe058c6263ca7c5",
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "name": "seed-bad-key-signature",
+      "kind": "seed",
+      "accepted": false,
+      "inputTamper": "public-signature",
+      "nativeInstructionWindowsUnchanged": true,
+      "events": [
+        {
+          "operation": 100,
+          "kind": "public",
+          "rawLength": 268,
+          "derLength": 270,
+          "allocationLength": 271,
+          "originalDerSHA256": "7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [
+            "r13"
+          ],
+          "supplied": true,
+          "verifierDerSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "signatureSHA256": "6aaa95b965dd172d7256445e0d90edce256755560b7b946c607a72778468b6c8",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [
+            5
+          ],
+          "returnRegistersAndFlagsUntouched": true
+        }
+      ],
+      "calls": [
+        {
+          "operation": 100,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 8,
+          "signatureLength": 256
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 100,
+          "oracle": false,
+          "native": false
+        }
+      ],
+      "ioctlReturn": -7,
+      "base64Length": 0,
+      "encryptionOracle": null,
+      "passed": true
+    },
+    {
+      "name": "seed-wrong-root",
+      "kind": "seed",
+      "accepted": false,
+      "inputTamper": "root",
+      "nativeInstructionWindowsUnchanged": true,
+      "events": [
+        {
+          "operation": 100,
+          "kind": "public",
+          "rawLength": 268,
+          "derLength": 270,
+          "allocationLength": 271,
+          "originalDerSHA256": "7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [
+            "r13"
+          ],
+          "supplied": true,
+          "verifierDerSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "signatureSHA256": "28c22daca51efe0c2bbe92f3ce52c2310f5964eb6f4e00e896874a372364cc20",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [],
+          "returnRegistersAndFlagsUntouched": true
+        }
+      ],
+      "calls": [
+        {
+          "operation": 100,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 8,
+          "signatureLength": 256
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 100,
+          "oracle": false,
+          "native": false
+        }
+      ],
+      "ioctlReturn": -7,
+      "base64Length": 0,
+      "encryptionOracle": null,
+      "passed": true
+    },
+    {
+      "name": "seed-unknown-key",
+      "kind": "seed",
+      "accepted": false,
+      "inputTamper": "unknown-key",
+      "nativeInstructionWindowsUnchanged": true,
+      "events": [
+        {
+          "operation": 100,
+          "kind": "public",
+          "rawLength": 268,
+          "derLength": 270,
+          "allocationLength": 271,
+          "originalDerSHA256": "5f5e3218685503364d9faa19840a21f543d31628c660e3ffdf5d756e4517e4ba",
+          "sourceRecognized": false,
+          "copyChangedRegisters": [],
+          "supplied": false,
+          "verifierDerSHA256": "5f5e3218685503364d9faa19840a21f543d31628c660e3ffdf5d756e4517e4ba",
+          "signatureSHA256": "520da33620e8c69eff6b6b3d40fd699a4642583e3e33cd1b53aa19150633cf4d",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "signatureLength": 256,
+          "checkChangedRegisters": [],
+          "checkChangedStackArguments": [],
+          "returnRegistersAndFlagsUntouched": true
+        }
+      ],
+      "calls": [
+        {
+          "operation": 100,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 8,
+          "signatureLength": 256
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 100,
+          "oracle": false,
+          "native": false
+        }
+      ],
+      "ioctlReturn": -7,
+      "base64Length": 0,
+      "encryptionOracle": null,
+      "passed": true
+    },
+    {
+      "name": "response-local",
+      "kind": "response",
+      "accepted": true,
+      "inputTamper": null,
+      "nativeInstructionWindowsUnchanged": true,
+      "events": [
+        {
+          "operation": 101,
+          "kind": "private",
+          "rawLength": 1190,
+          "derLength": 1192,
+          "allocationLength": 1193,
+          "originalDerSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [],
+          "supplied": true,
+          "verifierDerSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "signatureSHA256": "3b2304666c8495cb3cc7162551c82857da60b993d31fd7a88a7d3467302ed9f2",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [
+            5
+          ],
+          "returnRegistersAndFlagsUntouched": true
+        },
+        {
+          "operation": 103,
+          "kind": "public",
+          "rawLength": 268,
+          "derLength": 270,
+          "allocationLength": 271,
+          "originalDerSHA256": "7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [
+            "r13"
+          ],
+          "supplied": true,
+          "verifierDerSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "signatureSHA256": "28c22daca51efe0c2bbe92f3ce52c2310f5964eb6f4e00e896874a372364cc20",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [
+            5
+          ],
+          "returnRegistersAndFlagsUntouched": true
+        }
+      ],
+      "calls": [
+        {
+          "operation": 101,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 256,
+          "signatureLength": 256
+        },
+        {
+          "operation": 103,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 32,
+          "signatureLength": 256
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "native": true
+        }
+      ],
+      "nativeOperations": {
+        "101": 0,
+        "103": 0
+      },
+      "bodySignatureAccepted": true,
+      "bodySignatureIntegerOracle": true,
+      "nativeSHA256": "18f9781b1b2c2d85dc80ea6af8a7acf9bf1911a768411d39280818bf0fa7e28e",
+      "sessionKeySHA256": "5d517d6c52800a32b573b136c7a469131670b869881157c2fa013f714b796df5",
+      "javaByteComparison": true,
+      "passed": true
+    },
+    {
+      "name": "response-bad-private-signature",
+      "kind": "response",
+      "accepted": false,
+      "inputTamper": "private-signature",
+      "nativeInstructionWindowsUnchanged": true,
+      "events": [
+        {
+          "operation": 101,
+          "kind": "private",
+          "rawLength": 1190,
+          "derLength": 1192,
+          "allocationLength": 1193,
+          "originalDerSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [],
+          "supplied": true,
+          "verifierDerSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "signatureSHA256": "2342f6cc9f029de24cde636b204673db5418fba1a704c0606372034701940e29",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [
+            5
+          ],
+          "returnRegistersAndFlagsUntouched": true
+        },
+        {
+          "operation": 103,
+          "kind": "public",
+          "rawLength": 268,
+          "derLength": 270,
+          "allocationLength": 271,
+          "originalDerSHA256": "7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [
+            "r13"
+          ],
+          "supplied": true,
+          "verifierDerSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "signatureSHA256": "28c22daca51efe0c2bbe92f3ce52c2310f5964eb6f4e00e896874a372364cc20",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [
+            5
+          ],
+          "returnRegistersAndFlagsUntouched": true
+        }
+      ],
+      "calls": [
+        {
+          "operation": 101,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 256,
+          "signatureLength": 256
+        },
+        {
+          "operation": 103,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 32,
+          "signatureLength": 256
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": false,
+          "native": false
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "native": true
+        }
+      ],
+      "nativeOperations": {
+        "101": -7,
+        "103": -7
+      },
+      "bodySignatureAccepted": false,
+      "bodySignatureIntegerOracle": false,
+      "nativeSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sessionKeySHA256": null,
+      "javaByteComparison": false,
+      "passed": true
+    },
+    {
+      "name": "response-bad-public-signature",
+      "kind": "response",
+      "accepted": false,
+      "inputTamper": "public-signature",
+      "nativeInstructionWindowsUnchanged": true,
+      "events": [
+        {
+          "operation": 101,
+          "kind": "private",
+          "rawLength": 1190,
+          "derLength": 1192,
+          "allocationLength": 1193,
+          "originalDerSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [],
+          "supplied": true,
+          "verifierDerSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "signatureSHA256": "3b2304666c8495cb3cc7162551c82857da60b993d31fd7a88a7d3467302ed9f2",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [
+            5
+          ],
+          "returnRegistersAndFlagsUntouched": true
+        },
+        {
+          "operation": 103,
+          "kind": "public",
+          "rawLength": 268,
+          "derLength": 270,
+          "allocationLength": 271,
+          "originalDerSHA256": "7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [
+            "r13"
+          ],
+          "supplied": true,
+          "verifierDerSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "signatureSHA256": "6aaa95b965dd172d7256445e0d90edce256755560b7b946c607a72778468b6c8",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [
+            5
+          ],
+          "returnRegistersAndFlagsUntouched": true
+        }
+      ],
+      "calls": [
+        {
+          "operation": 101,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 256,
+          "signatureLength": 256
+        },
+        {
+          "operation": 103,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 32,
+          "signatureLength": 256
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": false,
+          "native": false
+        }
+      ],
+      "nativeOperations": {
+        "101": 0,
+        "103": -7
+      },
+      "bodySignatureAccepted": false,
+      "bodySignatureIntegerOracle": true,
+      "nativeSHA256": "18f9781b1b2c2d85dc80ea6af8a7acf9bf1911a768411d39280818bf0fa7e28e",
+      "sessionKeySHA256": null,
+      "javaByteComparison": false,
+      "passed": true
+    },
+    {
+      "name": "response-wrong-root",
+      "kind": "response",
+      "accepted": false,
+      "inputTamper": "root",
+      "nativeInstructionWindowsUnchanged": true,
+      "events": [
+        {
+          "operation": 101,
+          "kind": "private",
+          "rawLength": 1190,
+          "derLength": 1192,
+          "allocationLength": 1193,
+          "originalDerSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [],
+          "supplied": true,
+          "verifierDerSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "signatureSHA256": "3b2304666c8495cb3cc7162551c82857da60b993d31fd7a88a7d3467302ed9f2",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [],
+          "returnRegistersAndFlagsUntouched": true
+        },
+        {
+          "operation": 103,
+          "kind": "public",
+          "rawLength": 268,
+          "derLength": 270,
+          "allocationLength": 271,
+          "originalDerSHA256": "7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [
+            "r13"
+          ],
+          "supplied": true,
+          "verifierDerSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "signatureSHA256": "28c22daca51efe0c2bbe92f3ce52c2310f5964eb6f4e00e896874a372364cc20",
+          "rootSHA256": "2e8c1d2b12a122e20865bcebe078febdaede3cccb31fd8e9b6bd665c05ed848d",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [],
+          "returnRegistersAndFlagsUntouched": true
+        }
+      ],
+      "calls": [
+        {
+          "operation": 101,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 256,
+          "signatureLength": 256
+        },
+        {
+          "operation": 103,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 32,
+          "signatureLength": 256
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": false,
+          "native": false
+        },
+        {
+          "operation": 103,
+          "oracle": false,
+          "native": false
+        }
+      ],
+      "nativeOperations": {
+        "101": -7,
+        "103": -7
+      },
+      "bodySignatureAccepted": false,
+      "bodySignatureIntegerOracle": false,
+      "nativeSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sessionKeySHA256": null,
+      "javaByteComparison": false,
+      "passed": true
+    },
+    {
+      "name": "response-wrong-server-key",
+      "kind": "response",
+      "accepted": false,
+      "inputTamper": "wrong-server-key",
+      "nativeInstructionWindowsUnchanged": true,
+      "events": [
+        {
+          "operation": 101,
+          "kind": "private",
+          "rawLength": 1190,
+          "derLength": 1192,
+          "allocationLength": 1193,
+          "originalDerSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [],
+          "supplied": true,
+          "verifierDerSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "signatureSHA256": "3b2304666c8495cb3cc7162551c82857da60b993d31fd7a88a7d3467302ed9f2",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [
+            5
+          ],
+          "returnRegistersAndFlagsUntouched": true
+        },
+        {
+          "operation": 103,
+          "kind": "public",
+          "rawLength": 268,
+          "derLength": 270,
+          "allocationLength": 271,
+          "originalDerSHA256": "7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [
+            "r13"
+          ],
+          "supplied": true,
+          "verifierDerSHA256": "c5dae22817432f2cd5670a1f89056460943743282e576d0e6ab01a93ef27d1c0",
+          "signatureSHA256": "57f92cb295db11eced2b84a6a7dcaffbc63666a23422ce30271f3379df6166ab",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [
+            5
+          ],
+          "returnRegistersAndFlagsUntouched": true
+        }
+      ],
+      "calls": [
+        {
+          "operation": 101,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 256,
+          "signatureLength": 256
+        },
+        {
+          "operation": 103,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 32,
+          "signatureLength": 256
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "native": true
+        }
+      ],
+      "nativeOperations": {
+        "101": 0,
+        "103": -7
+      },
+      "bodySignatureAccepted": false,
+      "bodySignatureIntegerOracle": false,
+      "nativeSHA256": "18f9781b1b2c2d85dc80ea6af8a7acf9bf1911a768411d39280818bf0fa7e28e",
+      "sessionKeySHA256": null,
+      "javaByteComparison": false,
+      "passed": true
+    },
+    {
+      "name": "response-bad-body-signature",
+      "kind": "response",
+      "accepted": false,
+      "inputTamper": "body-signature",
+      "nativeInstructionWindowsUnchanged": true,
+      "events": [
+        {
+          "operation": 101,
+          "kind": "private",
+          "rawLength": 1190,
+          "derLength": 1192,
+          "allocationLength": 1193,
+          "originalDerSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [],
+          "supplied": true,
+          "verifierDerSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "signatureSHA256": "3b2304666c8495cb3cc7162551c82857da60b993d31fd7a88a7d3467302ed9f2",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [
+            5
+          ],
+          "returnRegistersAndFlagsUntouched": true
+        },
+        {
+          "operation": 103,
+          "kind": "public",
+          "rawLength": 268,
+          "derLength": 270,
+          "allocationLength": 271,
+          "originalDerSHA256": "7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [
+            "r13"
+          ],
+          "supplied": true,
+          "verifierDerSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "signatureSHA256": "28c22daca51efe0c2bbe92f3ce52c2310f5964eb6f4e00e896874a372364cc20",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [
+            5
+          ],
+          "returnRegistersAndFlagsUntouched": true
+        }
+      ],
+      "calls": [
+        {
+          "operation": 101,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 256,
+          "signatureLength": 256
+        },
+        {
+          "operation": 103,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 32,
+          "signatureLength": 256
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "native": true
+        }
+      ],
+      "nativeOperations": {
+        "101": 0,
+        "103": -7
+      },
+      "bodySignatureAccepted": false,
+      "bodySignatureIntegerOracle": false,
+      "nativeSHA256": "18f9781b1b2c2d85dc80ea6af8a7acf9bf1911a768411d39280818bf0fa7e28e",
+      "sessionKeySHA256": null,
+      "javaByteComparison": false,
+      "passed": true
+    },
+    {
+      "name": "response-bad-cipher",
+      "kind": "response",
+      "accepted": false,
+      "inputTamper": "cipher",
+      "nativeInstructionWindowsUnchanged": true,
+      "events": [
+        {
+          "operation": 101,
+          "kind": "private",
+          "rawLength": 1190,
+          "derLength": 1192,
+          "allocationLength": 1193,
+          "originalDerSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [],
+          "supplied": true,
+          "verifierDerSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "signatureSHA256": "3b2304666c8495cb3cc7162551c82857da60b993d31fd7a88a7d3467302ed9f2",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [
+            5
+          ],
+          "returnRegistersAndFlagsUntouched": true
+        },
+        {
+          "operation": 103,
+          "kind": "public",
+          "rawLength": 268,
+          "derLength": 270,
+          "allocationLength": 271,
+          "originalDerSHA256": "7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [
+            "r13"
+          ],
+          "supplied": true,
+          "verifierDerSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "signatureSHA256": "28c22daca51efe0c2bbe92f3ce52c2310f5964eb6f4e00e896874a372364cc20",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [
+            5
+          ],
+          "returnRegistersAndFlagsUntouched": true
+        }
+      ],
+      "calls": [
+        {
+          "operation": 101,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 256,
+          "signatureLength": 256
+        },
+        {
+          "operation": 103,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 32,
+          "signatureLength": 256
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "native": true
+        }
+      ],
+      "nativeOperations": {
+        "101": -7,
+        "103": -7
+      },
+      "bodySignatureAccepted": false,
+      "bodySignatureIntegerOracle": false,
+      "nativeSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sessionKeySHA256": null,
+      "javaByteComparison": false,
+      "passed": true
+    },
+    {
+      "name": "dispatch-local",
+      "kind": "dispatch",
+      "accepted": true,
+      "inputTamper": null,
+      "nativeInstructionWindowsUnchanged": true,
+      "events": [
+        {
+          "operation": 101,
+          "kind": "private",
+          "rawLength": 1190,
+          "derLength": 1192,
+          "allocationLength": 1193,
+          "originalDerSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [],
+          "supplied": true,
+          "verifierDerSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "signatureSHA256": "3b2304666c8495cb3cc7162551c82857da60b993d31fd7a88a7d3467302ed9f2",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [
+            5
+          ],
+          "returnRegistersAndFlagsUntouched": true
+        },
+        {
+          "operation": 103,
+          "kind": "public",
+          "rawLength": 268,
+          "derLength": 270,
+          "allocationLength": 271,
+          "originalDerSHA256": "7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [
+            "r13"
+          ],
+          "supplied": true,
+          "verifierDerSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "signatureSHA256": "28c22daca51efe0c2bbe92f3ce52c2310f5964eb6f4e00e896874a372364cc20",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [
+            5
+          ],
+          "returnRegistersAndFlagsUntouched": true
+        }
+      ],
+      "calls": [
+        {
+          "operation": 101,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 256,
+          "signatureLength": 256
+        },
+        {
+          "operation": 103,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 32,
+          "signatureLength": 256
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "native": true
+        }
+      ],
+      "readerCalls": 1,
+      "nativePlaintextSHA256": "d5c4713bcb906df1d7d0951e9678e07882e8fb57b325de9cc5348349dd3d0c57",
+      "postParsePointerPreserved": true,
+      "passed": true
+    },
+    {
+      "name": "dispatch-bad-body-signature",
+      "kind": "dispatch",
+      "accepted": false,
+      "inputTamper": "body-signature",
+      "nativeInstructionWindowsUnchanged": true,
+      "events": [
+        {
+          "operation": 101,
+          "kind": "private",
+          "rawLength": 1190,
+          "derLength": 1192,
+          "allocationLength": 1193,
+          "originalDerSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [],
+          "supplied": true,
+          "verifierDerSHA256": "e27f729e1944a7550b51d27b3c3bf4b680209cb982413d3245d56df2ae7f0602",
+          "signatureSHA256": "3b2304666c8495cb3cc7162551c82857da60b993d31fd7a88a7d3467302ed9f2",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [
+            5
+          ],
+          "returnRegistersAndFlagsUntouched": true
+        },
+        {
+          "operation": 103,
+          "kind": "public",
+          "rawLength": 268,
+          "derLength": 270,
+          "allocationLength": 271,
+          "originalDerSHA256": "7427ee11ef690cfd43a001758eabc3604042b62f78a31cb21f4afe6d715d629e",
+          "sourceRecognized": true,
+          "copyChangedRegisters": [
+            "r13"
+          ],
+          "supplied": true,
+          "verifierDerSHA256": "46cf36c9b816eb147b75ff26a09412b368c8f945d0a76b9a252b989184245a0b",
+          "signatureSHA256": "28c22daca51efe0c2bbe92f3ce52c2310f5964eb6f4e00e896874a372364cc20",
+          "rootSHA256": "f1085f473bb98d8a1213a087e62e04061c407fe84c6bd58261a7bf4fcd5c3aa8",
+          "signatureLength": 256,
+          "checkChangedRegisters": [
+            "r8"
+          ],
+          "checkChangedStackArguments": [
+            5
+          ],
+          "returnRegistersAndFlagsUntouched": true
+        }
+      ],
+      "calls": [
+        {
+          "operation": 101,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 256,
+          "signatureLength": 256
+        },
+        {
+          "operation": 103,
+          "callerReturn": "0x15a4d7f00",
+          "dataLength": 32,
+          "signatureLength": 256
+        }
+      ],
+      "keyChecks": [
+        {
+          "operation": 101,
+          "oracle": true,
+          "native": true
+        },
+        {
+          "operation": 103,
+          "oracle": true,
+          "native": true
+        }
+      ],
+      "readerCalls": 0,
+      "nativePlaintextSHA256": null,
+      "postParsePointerPreserved": false,
+      "passed": true
+    }
+  ],
+  "modelsFrom": [
+    "seed-crypto-observations.json",
+    "response-crypto-observations.json",
+    "dispatch-prefix-observations.json"
+  ],
+  "permittedSupply": {
+    "copy": [
+      "R13 raw-public-key pointer only; matching source and equal DER length"
+    ],
+    "check": [
+      "R8 precomputed key-signature pointer",
+      "stack argument5 root-public-PEM pointer"
+    ],
+    "privateMaterial": "native source stays unchanged; only its precomputed signature supplied"
+  },
+  "outsideScope": [
+    "actual DLL hook trampoline and live ABI",
+    "production root provisioning and bundle packaging",
+    "SDK initialization/HTTP route/string factory",
+    "whole Handler/dispatch/socket",
+    "real-client acceptance"
+  ]
+}
