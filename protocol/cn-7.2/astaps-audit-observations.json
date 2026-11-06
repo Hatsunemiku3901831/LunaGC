@@ -1,0 +1,5164 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "reference": {
+    "commit": "a49f51aa6f2787ffbc25cee46801b70dee860d23",
+    "gitTree": "9940bf7756ce5ff8be8a836a4485a645b490c2e1",
+    "clean": true
+  },
+  "targetMapping": {
+    "file": "protocol/cn-7.2/mappings.json",
+    "sha256": "e72a9161cc7420cde7f0ef59bcb82a23103172ca51d20c3213e952f90e918048",
+    "hashConvention": "UTF-8 LF"
+  },
+  "protoSourceTree": {
+    "fileCount": 2105,
+    "sha256": "86d9e71e600ca29b286c53a17bffb94657fce7e797d837c1f0108b33cd91be18",
+    "hashConvention": "SHA-256(canonical sorted file/LF-SHA256 rows)"
+  },
+  "keySourceSHA256": {
+    "LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+    "LICENSE-ClassGraph.txt": "4107216e853eee237beca89fe7d460271baf03eb70713f796bea46226b568944",
+    "README.md": "15b98e9580a6b2a595ca0d2c75254c9e9376fa1d4e09bf107359856126fe95fb",
+    "docs/protocol-generation-7.2.md": "16d2483b16ac986baba489908ad08b64c6dd7082e49e804149fa48a17d53a67a",
+    "docs/protocol-7.2-gaps.md": "f2e481a4c27ce349140317bcf7e7f084765bc009b6536d33980a9cba0c0b5ad2",
+    "tools/protocol/remap/remap_71_to_72.py": "11f91d48bc25de6c239a27bf25e84e2f8a895ae888076dc2017225af9015695e",
+    "tools/protocol/remap/recover_lost_72.py": "172ea476c02737f699de32a1edcbd90668543002b48f63225b010f12c1369b52",
+    "tools/protocol/remap/export_proto_72.py": "4fadea1ba11692af515a641b0ae6485da455a3180970feabf68babde0fbf7e80",
+    "src/main/java/emu/grasscutter/net/packet/PacketOpcodes.java": "18f93e5946d509b5549c0916479f5341e2534cd2009ab05891e0d8ce42fd6171",
+    "src/main/java/emu/grasscutter/server/game/GameSession.java": "22440a85bd88fc82812c344a42d01879c10610d7b07aa6c2316aaf6dd232f497",
+    "src/main/java/emu/grasscutter/server/game/GameServerPacketHandler.java": "56676be245c93f19b0619748d1e49dd1970a0675cc634e8f9bd0befbecf2f11f",
+    "src/main/java/emu/grasscutter/server/packet/send/PacketGetPlayerTokenRsp.java": "ab72915e724608a7913e9284795ecd2bbb42e6698f7774df40d358b79a79f1d4",
+    "src/main/java/emu/grasscutter/server/packet/recv/HandlerPlayerLoginReq.java": "f32347974d5c9a1fca862b5962bd499941e81571e2959fb820cfcd1935caec4b",
+    "src/generated/java/emu/grasscutter/net/proto/GetPlayerTokenRspOuterClass.java": "d5724e35cf866c5eb16d3d6fbc7145c63bd88473e309beb6da587ea1d20ca199"
+  },
+  "counts": {
+    "protoFiles": 2105,
+    "messagesIncludingMapEntries": 2154,
+    "messagesExcludingMapEntries": 2033,
+    "enums": 147,
+    "fieldsExcludingMapEntries": 8066,
+    "parkedFields": 967,
+    "parkedMessages": 331,
+    "opcodes": 1895,
+    "zeroOpcodes": 567,
+    "positiveOpcodes": 1316,
+    "negativeOpcodes": 12,
+    "duplicatePositiveOpcodeValues": 13,
+    "documentedLegacyMessages": 105,
+    "documentedLegacyFields": 218,
+    "targetMessages": 11,
+    "targetFields": 214,
+    "matchingTargetOuterShape": 130,
+    "missingTargetTags": 84,
+    "targetOuterShapeConflicts": 0,
+    "verifiedSemanticConflicts": 2
+  },
+  "compilation": {
+    "success": true,
+    "warningCount": 17,
+    "protocVersion": "libprotoc 3.18.1"
+  },
+  "targets": [
+    {
+      "message": "GetPlayerTokenReq",
+      "clientType": "NJAALDCMHEP",
+      "targetCmdId": 24604,
+      "astaOpcode": {
+        "value": 24604,
+        "line": 2298,
+        "legacy71": 23252
+      },
+      "opcodeMatches": true,
+      "astaSchema": {
+        "file": "src/main/proto/GetPlayerTokenReq.proto",
+        "line": 5
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "CANLDLBEODF",
+            "tag": 1,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "CANLDLBEODF",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "HCEBHLIPLOD",
+            "tag": 2,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "account_token",
+            "status": "verified"
+          },
+          "proposedFieldName": "account_token",
+          "astaAtSameTag": {
+            "name": "account_token",
+            "tag": 2,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 9,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LGMEFCCONPE",
+            "tag": 3,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "channel_id",
+            "status": "verified"
+          },
+          "proposedFieldName": "channel_id",
+          "astaAtSameTag": {
+            "name": "channel_id",
+            "tag": 3,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 27,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "JFEGKNOHCMM",
+            "tag": 4,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_4",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "JFEGKNOHCMM",
+          "astaAtSameTag": {
+            "name": "cloud_client_ip",
+            "tag": 4,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 32,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "IDBJELLONNH",
+            "tag": 5,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_5",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "IDBJELLONNH",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "ANIBEAMGKDP",
+            "tag": 6,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_6",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "ANIBEAMGKDP",
+          "astaAtSameTag": {
+            "name": "client_ip_str",
+            "tag": 6,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 10,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "GKODOLODOGC",
+            "tag": 7,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_7",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "GKODOLODOGC",
+          "astaAtSameTag": {
+            "name": "platform_type",
+            "tag": 7,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 25,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "BGEAPNNMOCP",
+            "tag": 8,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_8",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "BGEAPNNMOCP",
+          "astaAtSameTag": {
+            "name": "country_code",
+            "tag": 8,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 8,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "JEBFKCCKKPP",
+            "tag": 9,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "account_uid",
+            "status": "verified"
+          },
+          "proposedFieldName": "account_uid",
+          "astaAtSameTag": {
+            "name": "account_uid",
+            "tag": 9,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 18,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LJLGGDEBGKD",
+            "tag": 10,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "sub_channel_id",
+            "status": "verified"
+          },
+          "proposedFieldName": "sub_channel_id",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "EJHPCJMKBOM",
+            "tag": 11,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "is_guest",
+            "status": "verified"
+          },
+          "proposedFieldName": "is_guest",
+          "astaAtSameTag": {
+            "name": "is_guest",
+            "tag": 11,
+            "declaredType": "bool",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 29,
+            "type": "bool",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "PJAJDHBBMGB",
+            "tag": 12,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_12",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "PJAJDHBBMGB",
+          "astaAtSameTag": {
+            "name": "uid",
+            "tag": 12,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 24,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "GCBLHKIJHPC",
+            "tag": 13,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_13",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "GCBLHKIJHPC",
+          "astaAtSameTag": {
+            "name": "psn_id",
+            "tag": 13,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 17,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FKNBPCAPKCJ",
+            "tag": 14,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_14",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "FKNBPCAPKCJ",
+          "astaAtSameTag": {
+            "name": "online_id",
+            "tag": 14,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 12,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "HLNLCJBLCMM",
+            "tag": 15,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "account_type",
+            "status": "verified"
+          },
+          "proposedFieldName": "account_type",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "PIALLCNIKEE",
+            "tag": 83,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_83",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "PIALLCNIKEE",
+          "astaAtSameTag": {
+            "name": "auth_appid",
+            "tag": 83,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 15,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "DCHAEKJAMBA",
+            "tag": 561,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_561",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "DCHAEKJAMBA",
+          "astaAtSameTag": {
+            "name": "authkey_ver",
+            "tag": 561,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 23,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "JFCLDBKLKDF",
+            "tag": 623,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "client_rand_key",
+            "status": "verified"
+          },
+          "proposedFieldName": "client_rand_key",
+          "astaAtSameTag": {
+            "name": "client_rand_key",
+            "tag": 623,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 16,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FGJNONFBDHO",
+            "tag": 645,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_645",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "FGJNONFBDHO",
+          "astaAtSameTag": {
+            "name": "minors_reg_min_age",
+            "tag": 645,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 26,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "JIHMKEJCCGA",
+            "tag": 793,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_793",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "JIHMKEJCCGA",
+          "astaAtSameTag": {
+            "name": "lang",
+            "tag": 793,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 22,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "NGHMHALIAIO",
+            "tag": 884,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_884",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "NGHMHALIAIO",
+          "astaAtSameTag": {
+            "name": "_xuid",
+            "tag": 884,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 14,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "MHNPBDMNCAA",
+            "tag": 924,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_924",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "MHNPBDMNCAA",
+          "astaAtSameTag": {
+            "name": "birthday",
+            "tag": 924,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 7,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "OEDFOPBKADI",
+            "tag": 965,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_965",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "OEDFOPBKADI",
+          "astaAtSameTag": {
+            "name": "FDCECMCNKGC",
+            "tag": 965,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 20,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FMMLBHKFGDH",
+            "tag": 1184,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "key_id",
+            "status": "verified"
+          },
+          "proposedFieldName": "key_id",
+          "astaAtSameTag": {
+            "name": "key_id",
+            "tag": 1184,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 33,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "PJHOCPFACEK",
+            "tag": 1206,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1206",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "PJHOCPFACEK",
+          "astaAtSameTag": {
+            "name": "sign_type",
+            "tag": 1206,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 28,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "HNNICOEFLAK",
+            "tag": 1283,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1283",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "HNNICOEFLAK",
+          "astaAtSameTag": {
+            "name": "_xbox_gamertag",
+            "tag": 1283,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 11,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "JJEGEAOIFOC",
+            "tag": 1300,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1300",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "JJEGEAOIFOC",
+          "astaAtSameTag": {
+            "name": "GGKODKLBGFD",
+            "tag": 1300,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 13,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "IJANGEDLOMK",
+            "tag": 1730,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1730",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "IJANGEDLOMK",
+          "astaAtSameTag": {
+            "name": "BKIICHHOJAF",
+            "tag": 1730,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenReq.proto",
+            "line": 6,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 28,
+        "asta": 28,
+        "matchingOuterShape": 24,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 4,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
+      "message": "GetPlayerTokenRsp",
+      "clientType": "CLDBKDNJHFG",
+      "targetCmdId": 27808,
+      "astaOpcode": {
+        "value": 27808,
+        "line": 958,
+        "legacy71": 3713
+      },
+      "opcodeMatches": true,
+      "astaSchema": {
+        "file": "src/main/proto/GetPlayerTokenRsp.proto",
+        "line": 7
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "KFLDOHAMPAN",
+            "tag": 1,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "KFLDOHAMPAN",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "HLNLCJBLCMM",
+            "tag": 2,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_2",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "HLNLCJBLCMM",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "BHHECPBGDKB",
+            "tag": 3,
+            "type": "bytes",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_3",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "BHHECPBGDKB",
+          "astaAtSameTag": {
+            "name": "security_cmd_buffer",
+            "tag": 3,
+            "declaredType": "bytes",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 27,
+            "type": "bytes",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "GKODOLODOGC",
+            "tag": 4,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_4",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "GKODOLODOGC",
+          "astaAtSameTag": {
+            "name": "platform_type",
+            "tag": 4,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 48,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "JEBFKCCKKPP",
+            "tag": 5,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_5",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "JEBFKCCKKPP",
+          "astaAtSameTag": {
+            "name": "account_uid",
+            "tag": 5,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 18,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "MCCMLHDDHAJ",
+            "tag": 6,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "token",
+            "status": "verified"
+          },
+          "proposedFieldName": "token",
+          "astaAtSameTag": {
+            "name": "token",
+            "tag": 6,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 19,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "CHOCAOJJPKC",
+            "tag": 7,
+            "type": "uint64",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_7",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "CHOCAOJJPKC",
+          "astaAtSameTag": {
+            "name": "secret_key_seed",
+            "tag": 7,
+            "declaredType": "uint64",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 35,
+            "type": "uint64",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "JDIKEKHHFFB",
+            "tag": 8,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_8",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "JDIKEKHHFFB",
+          "astaAtSameTag": {
+            "name": "secret_key",
+            "tag": 8,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 17,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "PJAJDHBBMGB",
+            "tag": 9,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "uid",
+            "status": "verified"
+          },
+          "proposedFieldName": "uid",
+          "astaAtSameTag": {
+            "name": "uid",
+            "tag": 9,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 36,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "PHEIMMPCLMP",
+            "tag": 10,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_10",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "PHEIMMPCLMP",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "EJHPCJMKBOM",
+            "tag": 11,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_11",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "EJHPCJMKBOM",
+          "astaAtSameTag": {
+            "name": "is_guest",
+            "tag": 11,
+            "declaredType": "bool",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 41,
+            "type": "bool",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FBEFGOKJNFM",
+            "tag": 12,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_12",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "FBEFGOKJNFM",
+          "astaAtSameTag": {
+            "name": "black_uid_end_time",
+            "tag": 12,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 34,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "EHCHDIJEJEJ",
+            "tag": 13,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_13",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "EHCHDIJEJEJ",
+          "astaAtSameTag": {
+            "name": "msg",
+            "tag": 13,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 28,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LDLIEKOAFBP",
+            "tag": 14,
+            "type": "int32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "retcode",
+            "status": "verified"
+          },
+          "proposedFieldName": "retcode",
+          "astaAtSameTag": {
+            "name": "retcode",
+            "tag": 14,
+            "declaredType": "int32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 30,
+            "type": "int32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "DAGAIOINCOO",
+            "tag": 15,
+            "type": "bytes",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_15",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "DAGAIOINCOO",
+          "astaAtSameTag": {
+            "name": "extra_bin_data",
+            "tag": 15,
+            "declaredType": "bytes",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 10,
+            "type": "bytes",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "MEFINEPJONK",
+            "tag": 74,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_74",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "MEFINEPJONK",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "GKBJLBAKMCJ",
+            "tag": 208,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "sign",
+            "status": "verified"
+          },
+          "proposedFieldName": "sign",
+          "astaAtSameTag": {
+            "name": "sign",
+            "tag": 208,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 14,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "GNHGKGCEFIO",
+            "tag": 376,
+            "type": "uint32",
+            "cardinality": "repeated",
+            "packed": true,
+            "semanticField": "unknown_field_376",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "GNHGKGCEFIO",
+          "astaAtSameTag": {
+            "name": "finish_collection_id_list",
+            "tag": 376,
+            "declaredType": "uint32",
+            "cardinality": "repeated",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 8,
+            "type": "uint32",
+            "typeName": null,
+            "packed": true
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "IJNBKLIHNJP",
+            "tag": 410,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_410",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "IJNBKLIHNJP",
+          "astaAtSameTag": {
+            "name": "game_biz",
+            "tag": 410,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 22,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FMMLBHKFGDH",
+            "tag": 440,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_440",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "FMMLBHKFGDH",
+          "astaAtSameTag": {
+            "name": "key_id",
+            "tag": 440,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 45,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "KMLEGLIGNPH",
+            "tag": 454,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_454",
+            "status": "unresolved",
+            "clientNestedType": "NNKFJMDCCMB"
+          },
+          "proposedFieldName": "KMLEGLIGNPH",
+          "astaAtSameTag": {
+            "name": "stop_server",
+            "tag": 454,
+            "declaredType": "StopServerInfo",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 16,
+            "type": "message",
+            "typeName": "StopServerInfo",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "CGDONMBOALA",
+            "tag": 477,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "server_rand_key",
+            "status": "verified"
+          },
+          "proposedFieldName": "server_rand_key",
+          "astaAtSameTag": {
+            "name": "server_rand_key",
+            "tag": 477,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 21,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "ENBECCJFNIL",
+            "tag": 646,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_646",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "ENBECCJFNIL",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FIHDHDLJBLC",
+            "tag": 658,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_658",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "FIHDHDLJBLC",
+          "astaAtSameTag": {
+            "name": "client_version_random_key",
+            "tag": 658,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 25,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "PIALLCNIKEE",
+            "tag": 808,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_808",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "PIALLCNIKEE",
+          "astaAtSameTag": {
+            "name": "auth_appid",
+            "tag": 808,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 12,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "HCFFDGMAOAC",
+            "tag": 838,
+            "type": "bytes",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_838",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "HCFFDGMAOAC",
+          "astaAtSameTag": {
+            "name": "_security_file",
+            "tag": 838,
+            "declaredType": "bytes",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 15,
+            "type": "bytes",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "GCBLHKIJHPC",
+            "tag": 954,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_954",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "GCBLHKIJHPC",
+          "astaAtSameTag": {
+            "name": "psn_id",
+            "tag": 954,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 23,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "DCHAEKJAMBA",
+            "tag": 1031,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1031",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "DCHAEKJAMBA",
+          "astaAtSameTag": {
+            "name": "authkey_ver",
+            "tag": 1031,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 31,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "NGHMHALIAIO",
+            "tag": 1170,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1170",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "NGHMHALIAIO",
+          "astaAtSameTag": {
+            "name": "_xuid",
+            "tag": 1170,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 11,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "JNPMKMIMKCA",
+            "tag": 1205,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1205",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "JNPMKMIMKCA",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "NFMJKLLKJPB",
+            "tag": 1352,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1352",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "NFMJKLLKJPB",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "MHNPBDMNCAA",
+            "tag": 1417,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1417",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "MHNPBDMNCAA",
+          "astaAtSameTag": {
+            "name": "birthday",
+            "tag": 1417,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 13,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FGJNONFBDHO",
+            "tag": 1497,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1497",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "FGJNONFBDHO",
+          "astaAtSameTag": {
+            "name": "minors_reg_min_age",
+            "tag": 1497,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 32,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "ANIBEAMGKDP",
+            "tag": 1508,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1508",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "ANIBEAMGKDP",
+          "astaAtSameTag": {
+            "name": "client_ip_str",
+            "tag": 1508,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 24,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "AHFLNIHHLNL",
+            "tag": 1544,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1544",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "AHFLNIHHLNL",
+          "astaAtSameTag": {
+            "name": "tag",
+            "tag": 1544,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 44,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "PJHOCPFACEK",
+            "tag": 1570,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1570",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "PJHOCPFACEK",
+          "astaAtSameTag": {
+            "name": "sign_type",
+            "tag": 1570,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 42,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "HMJCMBNBLDL",
+            "tag": 1726,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1726",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "HMJCMBNBLDL",
+          "astaAtSameTag": {
+            "name": "authkey",
+            "tag": 1726,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 26,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "JJEGEAOIFOC",
+            "tag": 1745,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1745",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "JJEGEAOIFOC",
+          "astaAtSameTag": {
+            "name": "GGKODKLBGFD",
+            "tag": 1745,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 20,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LJLGGDEBGKD",
+            "tag": 1826,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1826",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "LJLGGDEBGKD",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "BGEAPNNMOCP",
+            "tag": 1847,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1847",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "BGEAPNNMOCP",
+          "astaAtSameTag": {
+            "name": "country_code",
+            "tag": 1847,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 9,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LGMEFCCONPE",
+            "tag": 1915,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1915",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "LGMEFCCONPE",
+          "astaAtSameTag": {
+            "name": "channel_id",
+            "tag": 1915,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/GetPlayerTokenRsp.proto",
+            "line": 47,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 41,
+        "asta": 41,
+        "matchingOuterShape": 33,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 8,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
+      "message": "PlayerLoginReq",
+      "clientType": "KOHBOMDDFCB",
+      "targetCmdId": 23172,
+      "astaOpcode": {
+        "value": 23172,
+        "line": 2423,
+        "legacy71": 9282
+      },
+      "opcodeMatches": true,
+      "astaSchema": null,
+      "fields": [
+        {
+          "target": {
+            "clientField": "MCCMLHDDHAJ",
+            "tag": 1,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "token",
+            "status": "verified"
+          },
+          "proposedFieldName": "token",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "ECAEIDMALFM",
+            "tag": 2,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "system_version",
+            "status": "verified"
+          },
+          "proposedFieldName": "system_version",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LDNJIHGCFON",
+            "tag": 3,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_3",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "LDNJIHGCFON",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LAFEHJFNDIB",
+            "tag": 4,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "language_type",
+            "status": "verified"
+          },
+          "proposedFieldName": "language_type",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "BNAIJDNIBIC",
+            "tag": 5,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_5",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "BNAIJDNIBIC",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "EJHPCJMKBOM",
+            "tag": 6,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_6",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "EJHPCJMKBOM",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "CCCKKDAAEME",
+            "tag": 7,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "device_name",
+            "status": "verified"
+          },
+          "proposedFieldName": "device_name",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "KHJKGGNMAGJ",
+            "tag": 8,
+            "type": "uint64",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_8",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "KHJKGGNMAGJ",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LCNMJGGNIND",
+            "tag": 9,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "client_version",
+            "status": "verified"
+          },
+          "proposedFieldName": "client_version",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "GKODOLODOGC",
+            "tag": 10,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "platform_type",
+            "status": "verified"
+          },
+          "proposedFieldName": "platform_type",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "JEBFKCCKKPP",
+            "tag": 11,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_11",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "JEBFKCCKKPP",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "HLNLCJBLCMM",
+            "tag": 12,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "channel_id",
+            "status": "verified"
+          },
+          "proposedFieldName": "channel_id",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "NBDGINFCIIK",
+            "tag": 13,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_13",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "NBDGINFCIIK",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "EGDHLKIDOID",
+            "tag": 14,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_14",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "EGDHLKIDOID",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LBOBFKPDBHE",
+            "tag": 15,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "device_info",
+            "status": "verified"
+          },
+          "proposedFieldName": "device_info",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "JNPMKMIMKCA",
+            "tag": 60,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_60",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "JNPMKMIMKCA",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "COEFLDLMONK",
+            "tag": 115,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_115",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "COEFLDLMONK",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FKNBPCAPKCJ",
+            "tag": 165,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_165",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "FKNBPCAPKCJ",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "NGHMHALIAIO",
+            "tag": 190,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_190",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "NGHMHALIAIO",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "KALFFFLADGM",
+            "tag": 213,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "fp_id",
+            "status": "verified"
+          },
+          "proposedFieldName": "fp_id",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "PJICEKGDLFM",
+            "tag": 274,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "client_data_version",
+            "status": "verified"
+          },
+          "proposedFieldName": "client_data_version",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "GPFPMHJGKFH",
+            "tag": 345,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "cps",
+            "status": "verified"
+          },
+          "proposedFieldName": "cps",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LGMEFCCONPE",
+            "tag": 361,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_361",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "LGMEFCCONPE",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LJLGGDEBGKD",
+            "tag": 364,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "sub_channel_id",
+            "status": "verified"
+          },
+          "proposedFieldName": "sub_channel_id",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "DAGAIOINCOO",
+            "tag": 415,
+            "type": "bytes",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_415",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "DAGAIOINCOO",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "COAMILMLPIC",
+            "tag": 473,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_473",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "COAMILMLPIC",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "GCBLHKIJHPC",
+            "tag": 492,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_492",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "GCBLHKIJHPC",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LJGEIHAKLHH",
+            "tag": 552,
+            "type": "bytes",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "robot_check_output",
+            "status": "verified"
+          },
+          "proposedFieldName": "robot_check_output",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LDEIEFPNIEN",
+            "tag": 624,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_624",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "LDEIEFPNIEN",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "GGJNKLPEPFG",
+            "tag": 751,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_751",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "GGJNKLPEPFG",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "HDGALALKMCK",
+            "tag": 769,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_769",
+            "status": "unresolved",
+            "clientNestedType": "NBFMIBMFJIO"
+          },
+          "proposedFieldName": "HDGALALKMCK",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "PLOBPNJINMB",
+            "tag": 891,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "game_version",
+            "status": "verified"
+          },
+          "proposedFieldName": "game_version",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "AJAJHFKLHBH",
+            "tag": 944,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_944",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "AJAJHFKLHBH",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "HIAJLCOHEFP",
+            "tag": 962,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_962",
+            "status": "unresolved",
+            "clientNestedType": "HMLAJHBHLOC"
+          },
+          "proposedFieldName": "HIAJLCOHEFP",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "DIJEIJEALKE",
+            "tag": 978,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_978",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "DIJEIJEALKE",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "PNFFKLNLFMN",
+            "tag": 1090,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1090",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "PNFFKLNLFMN",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "KOKJAFONGAN",
+            "tag": 1105,
+            "type": "bytes",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1105",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "KOKJAFONGAN",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "GJKKCNFPPGA",
+            "tag": 1168,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1168",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "GJKKCNFPPGA",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "AMLBGPGIJBD",
+            "tag": 1185,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1185",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "AMLBGPGIJBD",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "PJFPOHEKNEF",
+            "tag": 1295,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1295",
+            "status": "unresolved",
+            "clientNestedType": "PBBDOCEDNIE"
+          },
+          "proposedFieldName": "PJFPOHEKNEF",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "AGPMKEEOBGD",
+            "tag": 1312,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1312",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "AGPMKEEOBGD",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "JNDGHFMPBOA",
+            "tag": 1327,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1327",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "JNDGHFMPBOA",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "HNNICOEFLAK",
+            "tag": 1492,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1492",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "HNNICOEFLAK",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "PHEIMMPCLMP",
+            "tag": 1494,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1494",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "PHEIMMPCLMP",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "PMKEHCKOHFJ",
+            "tag": 1533,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "uapc",
+            "status": "verified"
+          },
+          "proposedFieldName": "uapc",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "AHFLNIHHLNL",
+            "tag": 1601,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1601",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "AHFLNIHHLNL",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "JILJKLNFMMK",
+            "tag": 1640,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1640",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "JILJKLNFMMK",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "HHMNDFCCNED",
+            "tag": 1657,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1657",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "HHMNDFCCNED",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FDEFONJLCAG",
+            "tag": 1710,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1710",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "FDEFONJLCAG",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "BGEAPNNMOCP",
+            "tag": 1719,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1719",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "BGEAPNNMOCP",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "IJANGEDLOMK",
+            "tag": 1785,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "client_ip_str",
+            "status": "verified"
+          },
+          "proposedFieldName": "client_ip_str",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "MHNPBDMNCAA",
+            "tag": 1790,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1790",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "MHNPBDMNCAA",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "OOGECEEANJA",
+            "tag": 1868,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1868",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "OOGECEEANJA",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "JFEGKNOHCMM",
+            "tag": 1931,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "network_ip",
+            "status": "verified"
+          },
+          "proposedFieldName": "network_ip",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "KHJPHBAPAPE",
+            "tag": 1996,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "client_version_hash",
+            "status": "verified"
+          },
+          "proposedFieldName": "client_version_hash",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 55,
+        "asta": 0,
+        "matchingOuterShape": 0,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 55,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
+      "message": "PlayerLoginRsp",
+      "clientType": "NDENMDAIAMC",
+      "targetCmdId": 20835,
+      "astaOpcode": {
+        "value": 20835,
+        "line": 1892,
+        "legacy71": 4026
+      },
+      "opcodeMatches": true,
+      "astaSchema": {
+        "file": "src/main/proto/PlayerLoginRsp.proto",
+        "line": 14
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "CFFKHCLGAAB",
+            "tag": 1,
+            "type": "bytes",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "CFFKHCLGAAB",
+          "astaAtSameTag": {
+            "name": "player_data",
+            "tag": 1,
+            "declaredType": "bytes",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 18,
+            "type": "bytes",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "KACKGOIGHKI",
+            "tag": 2,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_2",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "KACKGOIGHKI",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "IJNBKLIHNJP",
+            "tag": 3,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_3",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "IJNBKLIHNJP",
+          "astaAtSameTag": {
+            "name": "game_biz",
+            "tag": 3,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 28,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "GIKCIPFKPIH",
+            "tag": 4,
+            "type": "map",
+            "cardinality": "map",
+            "packed": false,
+            "semanticField": "unknown_field_4",
+            "status": "unresolved",
+            "keyType": "string",
+            "valueType": "int32"
+          },
+          "proposedFieldName": "GIKCIPFKPIH",
+          "astaAtSameTag": {
+            "name": "ability_hash_map",
+            "tag": 4,
+            "declaredType": "map<string, int32>",
+            "cardinality": "map",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 32,
+            "type": "map",
+            "mapKeyType": "string",
+            "mapValueType": "int32",
+            "mapValueTypeName": null,
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "KHJKGGNMAGJ",
+            "tag": 5,
+            "type": "uint64",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_5",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "KHJKGGNMAGJ",
+          "astaAtSameTag": {
+            "name": "login_rand",
+            "tag": 5,
+            "declaredType": "uint64",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 58,
+            "type": "uint64",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "NBDGINFCIIK",
+            "tag": 6,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_6",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "NBDGINFCIIK",
+          "astaAtSameTag": {
+            "name": "target_uid",
+            "tag": 6,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 38,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "HKBHPGJADGA",
+            "tag": 7,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_7",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "HKBHPGJADGA",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LDLIEKOAFBP",
+            "tag": 8,
+            "type": "int32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "retcode",
+            "status": "verified"
+          },
+          "proposedFieldName": "retcode",
+          "astaAtSameTag": {
+            "name": "retcode",
+            "tag": 8,
+            "declaredType": "int32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 42,
+            "type": "int32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "JOAEHNGDAPK",
+            "tag": 10,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_10",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "JOAEHNGDAPK",
+          "astaAtSameTag": {
+            "name": "client_silence_data_version",
+            "tag": 10,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 48,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "PJICEKGDLFM",
+            "tag": 11,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_11",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "PJICEKGDLFM",
+          "astaAtSameTag": {
+            "name": "client_data_version",
+            "tag": 11,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 41,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "CMFBIHHPCFL",
+            "tag": 12,
+            "type": "int32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_12",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "CMFBIHHPCFL",
+          "astaAtSameTag": {
+            "name": "ability_hash_code",
+            "tag": 12,
+            "declaredType": "int32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 40,
+            "type": "int32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "PNKDIONMIGP",
+            "tag": 14,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_14",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "PNKDIONMIGP",
+          "astaAtSameTag": {
+            "name": "is_relogin",
+            "tag": 14,
+            "declaredType": "bool",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 50,
+            "type": "bool",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "IFPCNHMNFGE",
+            "tag": 15,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_15",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "IFPCNHMNFGE",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FHCEHICKAIP",
+            "tag": 61,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_61",
+            "status": "unresolved",
+            "clientNestedType": "MDKGJAOEHIL"
+          },
+          "proposedFieldName": "FHCEHICKAIP",
+          "astaAtSameTag": {
+            "name": "res_version_config",
+            "tag": 61,
+            "declaredType": "ResVersionConfig",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 19,
+            "type": "message",
+            "typeName": "ResVersionConfig",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "GKODOLODOGC",
+            "tag": 120,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_120",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "GKODOLODOGC",
+          "astaAtSameTag": {
+            "name": "platform_type",
+            "tag": 120,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 52,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "GEFJDEHGHGI",
+            "tag": 142,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_142",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "GEFJDEHGHGI",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "EHCHDIJEJEJ",
+            "tag": 154,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_154",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "EHCHDIJEJEJ",
+          "astaAtSameTag": {
+            "name": "msg",
+            "tag": 154,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 17,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "HJOEAOKMIHD",
+            "tag": 259,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_259",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "HJOEAOKMIHD",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "HIHJANHKAMO",
+            "tag": 265,
+            "type": "map",
+            "cardinality": "map",
+            "packed": false,
+            "semanticField": "unknown_field_265",
+            "status": "unresolved",
+            "clientNestedType": "DKFJJMGPCMD",
+            "keyType": "uint64",
+            "valueType": "message"
+          },
+          "proposedFieldName": "HIHJANHKAMO",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "ACKCOFBGOBG",
+            "tag": 288,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_288",
+            "status": "unresolved",
+            "clientNestedType": "FAHEHGJDAME"
+          },
+          "proposedFieldName": "ACKCOFBGOBG",
+          "astaAtSameTag": {
+            "name": "LPFKKMMLFOP",
+            "tag": 288,
+            "declaredType": "NGKOPBGLDJM",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 20,
+            "type": "message",
+            "typeName": "NGKOPBGLDJM",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "JILJKLNFMMK",
+            "tag": 389,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_389",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "JILJKLNFMMK",
+          "astaAtSameTag": {
+            "name": "CGMBIAPFHGE",
+            "tag": 389,
+            "declaredType": "bool",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 44,
+            "type": "bool",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "AMFFCKBGFLH",
+            "tag": 410,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_410",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "AMFFCKBGFLH",
+          "astaAtSameTag": {
+            "name": "MBPNFGLAJOG",
+            "tag": 410,
+            "declaredType": "bool",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 55,
+            "type": "bool",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "CCDEHJGJFBD",
+            "tag": 437,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "client_md5",
+            "status": "verified"
+          },
+          "proposedFieldName": "client_md5",
+          "astaAtSameTag": {
+            "name": "client_silence_md5",
+            "tag": 437,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 22,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": true
+        },
+        {
+          "target": {
+            "clientField": "PMABFENIPCO",
+            "tag": 451,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_451",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "PMABFENIPCO",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "HIAJLCOHEFP",
+            "tag": 470,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_470",
+            "status": "unresolved",
+            "clientNestedType": "HMLAJHBHLOC"
+          },
+          "proposedFieldName": "HIAJLCOHEFP",
+          "astaAtSameTag": {
+            "name": "KJEMCDAJINF",
+            "tag": 470,
+            "declaredType": "FNGEEAFJCDG",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 33,
+            "type": "message",
+            "typeName": "FNGEEAFJCDG",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "BGEAPNNMOCP",
+            "tag": 500,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_500",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "BGEAPNNMOCP",
+          "astaAtSameTag": {
+            "name": "country_code",
+            "tag": 500,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 30,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "NDIJJNPLONB",
+            "tag": 548,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_548",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "NDIJJNPLONB",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FJJDOOJKBDN",
+            "tag": 558,
+            "type": "message",
+            "cardinality": "repeated",
+            "packed": false,
+            "semanticField": "unknown_field_558",
+            "status": "unresolved",
+            "clientNestedType": "LINNJHPIFAO"
+          },
+          "proposedFieldName": "FJJDOOJKBDN",
+          "astaAtSameTag": {
+            "name": "feature_block_info_list",
+            "tag": 558,
+            "declaredType": "FeatureBlockInfo",
+            "cardinality": "repeated",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 34,
+            "type": "message",
+            "typeName": "FeatureBlockInfo",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "NKLDPLCCLAE",
+            "tag": 583,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_583",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "NKLDPLCCLAE",
+          "astaAtSameTag": {
+            "name": "is_audit",
+            "tag": 583,
+            "declaredType": "bool",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 53,
+            "type": "bool",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "HHMNDFCCNED",
+            "tag": 646,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_646",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "HHMNDFCCNED",
+          "astaAtSameTag": {
+            "name": "HPHGKOCDPJE",
+            "tag": 646,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 49,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "MIDCBCOAFLC",
+            "tag": 744,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "client_silence_version_suffix",
+            "status": "verified"
+          },
+          "proposedFieldName": "client_silence_version_suffix",
+          "astaAtSameTag": {
+            "name": "client_silence_version_suffix",
+            "tag": 744,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 36,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FCPOHNDGFMF",
+            "tag": 831,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_831",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "FCPOHNDGFMF",
+          "astaAtSameTag": {
+            "name": "next_resource_url",
+            "tag": 831,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 15,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "CKBPPJMNJDJ",
+            "tag": 972,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_972",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "CKBPPJMNJDJ",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LCILAPOPGFA",
+            "tag": 1018,
+            "type": "message",
+            "cardinality": "repeated",
+            "packed": false,
+            "semanticField": "unknown_field_1018",
+            "status": "unresolved",
+            "clientNestedType": "GHANJBIKPDH"
+          },
+          "proposedFieldName": "LCILAPOPGFA",
+          "astaAtSameTag": {
+            "name": "short_ability_hash_map",
+            "tag": 1018,
+            "declaredType": "ShortAbilityHashPair",
+            "cardinality": "repeated",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 27,
+            "type": "message",
+            "typeName": "ShortAbilityHashPair",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "BMKPNLLLMAO",
+            "tag": 1218,
+            "type": "map",
+            "cardinality": "map",
+            "packed": false,
+            "semanticField": "unknown_field_1218",
+            "status": "unresolved",
+            "clientNestedType": "ANDFHAFNBOJ",
+            "keyType": "uint32",
+            "valueType": "message"
+          },
+          "proposedFieldName": "BMKPNLLLMAO",
+          "astaAtSameTag": {
+            "name": "block_info_map",
+            "tag": 1218,
+            "declaredType": "map<uint32, BlockInfo>",
+            "cardinality": "map",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 35,
+            "type": "map",
+            "mapKeyType": "uint32",
+            "mapValueType": "message",
+            "mapValueTypeName": "BlockInfo",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "BCAADIFIJMN",
+            "tag": 1255,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "client_silence_md5",
+            "status": "verified"
+          },
+          "proposedFieldName": "client_silence_md5",
+          "astaAtSameTag": {
+            "name": "client_md5",
+            "tag": 1255,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 24,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": true
+        },
+        {
+          "target": {
+            "clientField": "LBDHEONCLNL",
+            "tag": 1314,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1314",
+            "status": "unresolved",
+            "clientNestedType": "NNKFJMDCCMB"
+          },
+          "proposedFieldName": "LBDHEONCLNL",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "HEEDMJDJFLF",
+            "tag": 1331,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1331",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "HEEDMJDJFLF",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "MONEPNFKIML",
+            "tag": 1337,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1337",
+            "status": "unresolved",
+            "clientNestedType": "MDKGJAOEHIL"
+          },
+          "proposedFieldName": "MONEPNFKIML",
+          "astaAtSameTag": {
+            "name": "next_res_version_config",
+            "tag": 1337,
+            "declaredType": "ResVersionConfig",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 25,
+            "type": "message",
+            "typeName": "ResVersionConfig",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "MHNPBDMNCAA",
+            "tag": 1363,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1363",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "MHNPBDMNCAA",
+          "astaAtSameTag": {
+            "name": "birthday",
+            "tag": 1363,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 21,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "BLLEFMDBOPJ",
+            "tag": 1603,
+            "type": "bytes",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1603",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "BLLEFMDBOPJ",
+          "astaAtSameTag": {
+            "name": "sc_info",
+            "tag": 1603,
+            "declaredType": "bytes",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 26,
+            "type": "bytes",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "NAACMBICAKP",
+            "tag": 1792,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "client_version_suffix",
+            "status": "verified"
+          },
+          "proposedFieldName": "client_version_suffix",
+          "astaAtSameTag": {
+            "name": "client_version_suffix",
+            "tag": 1792,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 29,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "PGKLJPPFEIO",
+            "tag": 1805,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1805",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "PGKLJPPFEIO",
+          "astaAtSameTag": {
+            "name": "register_cps",
+            "tag": 1805,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 31,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "MHCBMOHFBCK",
+            "tag": 1852,
+            "type": "double",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1852",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "MHCBMOHFBCK",
+          "astaAtSameTag": {
+            "name": "total_tick_time",
+            "tag": 1852,
+            "declaredType": "double",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerLoginRsp.proto",
+            "line": 37,
+            "type": "double",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 44,
+        "asta": 44,
+        "matchingOuterShape": 33,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 11,
+        "verifiedSemanticConflict": 2
+      }
+    },
+    {
+      "message": "PingReq",
+      "clientType": "LMINJCCKNDD",
+      "targetCmdId": 26605,
+      "astaOpcode": {
+        "value": 26605,
+        "line": 2066,
+        "legacy71": 20324
+      },
+      "opcodeMatches": true,
+      "astaSchema": {
+        "file": "src/main/proto/PingReq.proto",
+        "line": 5
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "LBEAJJBNBIF",
+            "tag": 1,
+            "type": "uint64",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "process_memory_bytes",
+            "status": "candidate"
+          },
+          "proposedFieldName": "LBEAJJBNBIF",
+          "astaAtSameTag": {
+            "name": "memory_usage",
+            "tag": 1,
+            "declaredType": "uint64",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PingReq.proto",
+            "line": 10,
+            "type": "uint64",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "BFNKMJBHCKJ",
+            "tag": 2,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "_cur_fps",
+            "status": "candidate"
+          },
+          "proposedFieldName": "BFNKMJBHCKJ",
+          "astaAtSameTag": {
+            "name": "_cur_fps",
+            "tag": 2,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PingReq.proto",
+            "line": 8,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "IMEDCDCPICN",
+            "tag": 3,
+            "type": "bytes",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_3",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "IMEDCDCPICN",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "MHCBMOHFBCK",
+            "tag": 5,
+            "type": "double",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "total_tick_time",
+            "status": "candidate"
+          },
+          "proposedFieldName": "MHCBMOHFBCK",
+          "astaAtSameTag": {
+            "name": "total_tick_time",
+            "tag": 5,
+            "declaredType": "double",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PingReq.proto",
+            "line": 11,
+            "type": "double",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "BAHKGFLONLL",
+            "tag": 9,
+            "type": "bytes",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_9",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "BAHKGFLONLL",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "HDLNEABIBJF",
+            "tag": 10,
+            "type": "float",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "ue_time",
+            "status": "candidate"
+          },
+          "proposedFieldName": "HDLNEABIBJF",
+          "astaAtSameTag": {
+            "name": "ue_time",
+            "tag": 10,
+            "declaredType": "float",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PingReq.proto",
+            "line": 12,
+            "type": "float",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "OILKPHNHCHB",
+            "tag": 13,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "client_time",
+            "status": "candidate"
+          },
+          "proposedFieldName": "OILKPHNHCHB",
+          "astaAtSameTag": {
+            "name": "client_time",
+            "tag": 13,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PingReq.proto",
+            "line": 13,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "AMLHAGPHMHN",
+            "tag": 14,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "seq",
+            "status": "candidate"
+          },
+          "proposedFieldName": "AMLHAGPHMHN",
+          "astaAtSameTag": {
+            "name": "seq",
+            "tag": 14,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PingReq.proto",
+            "line": 9,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 8,
+        "asta": 8,
+        "matchingOuterShape": 6,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 2,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
+      "message": "PingRsp",
+      "clientType": "MJGOAHFNCGC",
+      "targetCmdId": 25763,
+      "astaOpcode": {
+        "value": 25763,
+        "line": 1776,
+        "legacy71": 26578
+      },
+      "opcodeMatches": true,
+      "astaSchema": {
+        "file": "src/main/proto/PingRsp.proto",
+        "line": 5
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "AMLHAGPHMHN",
+            "tag": 1,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "seq",
+            "status": "candidate"
+          },
+          "proposedFieldName": "AMLHAGPHMHN",
+          "astaAtSameTag": {
+            "name": "seq",
+            "tag": 1,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PingRsp.proto",
+            "line": 8,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "OILKPHNHCHB",
+            "tag": 6,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "client_time",
+            "status": "candidate"
+          },
+          "proposedFieldName": "OILKPHNHCHB",
+          "astaAtSameTag": {
+            "name": "client_time",
+            "tag": 6,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PingRsp.proto",
+            "line": 6,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LDLIEKOAFBP",
+            "tag": 11,
+            "type": "int32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "retcode",
+            "status": "candidate"
+          },
+          "proposedFieldName": "LDLIEKOAFBP",
+          "astaAtSameTag": {
+            "name": "retcode",
+            "tag": 11,
+            "declaredType": "int32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PingRsp.proto",
+            "line": 7,
+            "type": "int32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 3,
+        "asta": 3,
+        "matchingOuterShape": 3,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 0,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
+      "message": "DoSetPlayerBornDataNotify",
+      "clientType": "PMNMDAIKALO",
+      "targetCmdId": 5008,
+      "astaOpcode": {
+        "value": 5008,
+        "line": 2978,
+        "legacy71": 22899
+      },
+      "opcodeMatches": true,
+      "astaSchema": null,
+      "fields": [],
+      "counts": {
+        "target": 0,
+        "asta": 0,
+        "matchingOuterShape": 0,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 0,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
+      "message": "SetPlayerBornDataReq",
+      "clientType": "JNJOMANHPCD",
+      "targetCmdId": 8541,
+      "astaOpcode": {
+        "value": 8541,
+        "line": 1665,
+        "legacy71": 26105
+      },
+      "opcodeMatches": true,
+      "astaSchema": {
+        "file": "src/main/proto/SetPlayerBornDataReq.proto",
+        "line": 5
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "FPOLBCIBIOB",
+            "tag": 4,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "nick_name",
+            "status": "verified"
+          },
+          "proposedFieldName": "nick_name",
+          "astaAtSameTag": {
+            "name": "nick_name",
+            "tag": 4,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/SetPlayerBornDataReq.proto",
+            "line": 6,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "NLNJDCDLHHE",
+            "tag": 11,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "avatar_id",
+            "status": "verified"
+          },
+          "proposedFieldName": "avatar_id",
+          "astaAtSameTag": {
+            "name": "avatar_id",
+            "tag": 11,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/SetPlayerBornDataReq.proto",
+            "line": 7,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 2,
+        "asta": 2,
+        "matchingOuterShape": 2,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 0,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
+      "message": "SetPlayerBornDataRsp",
+      "clientType": "EODFLMDBPOG",
+      "targetCmdId": 414,
+      "astaOpcode": {
+        "value": 414,
+        "line": 3010,
+        "legacy71": 4385
+      },
+      "opcodeMatches": true,
+      "astaSchema": {
+        "file": "src/main/proto/SetPlayerBornDataRsp.proto",
+        "line": 5
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "LDLIEKOAFBP",
+            "tag": 15,
+            "type": "int32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "retcode",
+            "status": "verified"
+          },
+          "proposedFieldName": "retcode",
+          "astaAtSameTag": {
+            "name": "retcode",
+            "tag": 15,
+            "declaredType": "int32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/SetPlayerBornDataRsp.proto",
+            "line": 6,
+            "type": "int32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 1,
+        "asta": 1,
+        "matchingOuterShape": 1,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 0,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
+      "message": "PlayerEnterSceneNotify",
+      "clientType": "BBECFDMDFJC",
+      "targetCmdId": 27748,
+      "astaOpcode": {
+        "value": 27748,
+        "line": 1420,
+        "legacy71": 9582
+      },
+      "opcodeMatches": true,
+      "astaSchema": {
+        "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+        "line": 13
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "PKGEAAKBCNC",
+            "tag": 1,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "PKGEAAKBCNC",
+          "astaAtSameTag": {
+            "name": "dungeon_id",
+            "tag": 1,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 37,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "CMAFDGGJDNK",
+            "tag": 2,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_2",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "CMAFDGGJDNK",
+          "astaAtSameTag": {
+            "name": "world_level",
+            "tag": 2,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 29,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "IOLBHNOIGJN",
+            "tag": 5,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_5",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "IOLBHNOIGJN",
+          "astaAtSameTag": {
+            "name": "_dungeon_difficulty_type",
+            "tag": 5,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 34,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "CNABNLMHMII",
+            "tag": 6,
+            "type": "uint64",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_6",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "CNABNLMHMII",
+          "astaAtSameTag": {
+            "name": "scene_begin_time",
+            "tag": 6,
+            "declaredType": "uint64",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 39,
+            "type": "uint64",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "JMHKHAPJADA",
+            "tag": 7,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_7",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "JMHKHAPJADA",
+          "astaAtSameTag": {
+            "name": "scene_id",
+            "tag": 7,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 36,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "NOEEBKJAFAG",
+            "tag": 8,
+            "type": "int32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_8",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "NOEEBKJAFAG",
+          "astaAtSameTag": {
+            "name": "type",
+            "tag": 8,
+            "declaredType": "EnterType",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 35,
+            "type": "enum",
+            "typeName": "EnterType",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "MCCMGLDOECH",
+            "tag": 10,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_10",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "MCCMGLDOECH",
+          "astaAtSameTag": {
+            "name": "enter_scene_token",
+            "tag": 10,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 26,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "NBDGINFCIIK",
+            "tag": 11,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_11",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "NBDGINFCIIK",
+          "astaAtSameTag": {
+            "name": "target_uid",
+            "tag": 11,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 31,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "KLDLBMCOGFC",
+            "tag": 12,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_12",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "KLDLBMCOGFC",
+          "astaAtSameTag": {
+            "name": "FKICGIHNPOI",
+            "tag": 12,
+            "declaredType": "bool",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 32,
+            "type": "bool",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "EMLMBEIBJHJ",
+            "tag": 13,
+            "type": "uint32",
+            "cardinality": "repeated",
+            "packed": true,
+            "semanticField": "unknown_field_13",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "EMLMBEIBJHJ",
+          "astaAtSameTag": {
+            "name": "scene_tag_id_list",
+            "tag": 13,
+            "declaredType": "uint32",
+            "cardinality": "repeated",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 21,
+            "type": "uint32",
+            "typeName": null,
+            "packed": true
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "HHAFHFEPLPD",
+            "tag": 14,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_14",
+            "status": "unresolved",
+            "clientNestedType": "BGDCNKAKGHI"
+          },
+          "proposedFieldName": "HHAFHFEPLPD",
+          "astaAtSameTag": {
+            "name": "pos",
+            "tag": 14,
+            "declaredType": "Vector",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 20,
+            "type": "message",
+            "typeName": "Vector",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "ABIFGOBLNDN",
+            "tag": 15,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_15",
+            "status": "unresolved",
+            "clientNestedType": "BGDCNKAKGHI"
+          },
+          "proposedFieldName": "ABIFGOBLNDN",
+          "astaAtSameTag": {
+            "name": "prev_pos",
+            "tag": 15,
+            "declaredType": "Vector",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 15,
+            "type": "message",
+            "typeName": "Vector",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LMKLCDPJOBJ",
+            "tag": 46,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_46",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "LMKLCDPJOBJ",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "JEPBJIIEFOM",
+            "tag": 157,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_157",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "JEPBJIIEFOM",
+          "astaAtSameTag": {
+            "name": "world_type",
+            "tag": 157,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 30,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "CPIINPOJLCM",
+            "tag": 293,
+            "type": "string",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_293",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "CPIINPOJLCM",
+          "astaAtSameTag": {
+            "name": "scene_transaction",
+            "tag": 293,
+            "declaredType": "string",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 17,
+            "type": "string",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "NBBEIFOKKNG",
+            "tag": 395,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_395",
+            "status": "unresolved",
+            "clientNestedType": "NAECHMKLBEI"
+          },
+          "proposedFieldName": "NBBEIFOKKNG",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "CCKBJJPAGGG",
+            "tag": 739,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_739",
+            "status": "unresolved",
+            "clientNestedType": "HKDMELCIJGB"
+          },
+          "proposedFieldName": "CCKBJJPAGGG",
+          "astaAtSameTag": {
+            "name": "_limited_region_info",
+            "tag": 739,
+            "declaredType": "_LimitedRegionInfo",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 16,
+            "type": "message",
+            "typeName": "_LimitedRegionInfo",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LFPEKBJIJNG",
+            "tag": 763,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_763",
+            "status": "unresolved",
+            "clientNestedType": "BGDCNKAKGHI"
+          },
+          "proposedFieldName": "LFPEKBJIJNG",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "OHHFLAOMMEC",
+            "tag": 941,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_941",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "OHHFLAOMMEC",
+          "astaAtSameTag": {
+            "name": "prev_scene_id",
+            "tag": 941,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 24,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "EHONLMHNLDP",
+            "tag": 957,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_957",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "EHONLMHNLDP",
+          "astaAtSameTag": {
+            "name": "create_player_uid",
+            "tag": 957,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 27,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "OACAAAMNGFI",
+            "tag": 1345,
+            "type": "bool",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1345",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "OACAAAMNGFI",
+          "astaAtSameTag": {
+            "name": "DGILMKBJBMH",
+            "tag": 1345,
+            "declaredType": "bool",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 33,
+            "type": "bool",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "BJMCOIFDONK",
+            "tag": 1357,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1357",
+            "status": "unresolved",
+            "clientNestedType": "HJLMHFHHJKM"
+          },
+          "proposedFieldName": "BJMCOIFDONK",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "AJMJGIKBOPO",
+            "tag": 1583,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1583",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "AJMJGIKBOPO",
+          "astaAtSameTag": {
+            "name": "enter_reason",
+            "tag": 1583,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 38,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FEANOEECAIM",
+            "tag": 1723,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1723",
+            "status": "unresolved",
+            "clientNestedType": "PCCNENMODDD"
+          },
+          "proposedFieldName": "FEANOEECAIM",
+          "astaAtSameTag": {
+            "name": "_mirror_world_scene_detail",
+            "tag": 1723,
+            "declaredType": "_MirrorWorldSceneDetail",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 14,
+            "type": "message",
+            "typeName": "_MirrorWorldSceneDetail",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "KFIJNBDGBAH",
+            "tag": 1964,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1964",
+            "status": "unresolved",
+            "clientNestedType": "ABJMLEPLFJG"
+          },
+          "proposedFieldName": "KFIJNBDGBAH",
+          "astaAtSameTag": {
+            "name": "_map_layer_info",
+            "tag": 1964,
+            "declaredType": "_MapLayerInfo",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 18,
+            "type": "message",
+            "typeName": "_MapLayerInfo",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "DGIBDKELFNG",
+            "tag": 2008,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_2008",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "DGIBDKELFNG",
+          "astaAtSameTag": {
+            "name": "_template_loading_id",
+            "tag": 2008,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PlayerEnterSceneNotify.proto",
+            "line": 28,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 26,
+        "asta": 26,
+        "matchingOuterShape": 22,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 4,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
+      "message": "PacketHead",
+      "clientType": "LOPNMMJPFAJ",
+      "targetCmdId": null,
+      "astaOpcode": null,
+      "opcodeMatches": null,
+      "astaSchema": {
+        "file": "src/main/proto/PacketHead.proto",
+        "line": 5
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "MIBNHKIPDIM",
+            "tag": 3,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "client_sequence_id",
+            "status": "verified"
+          },
+          "proposedFieldName": "client_sequence_id",
+          "astaAtSameTag": {
+            "name": "client_sequence_id",
+            "tag": 3,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PacketHead.proto",
+            "line": 10,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "BCNJAEDGBCK",
+            "tag": 6,
+            "type": "uint64",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "sent_ms",
+            "status": "verified"
+          },
+          "proposedFieldName": "sent_ms",
+          "astaAtSameTag": {
+            "name": "sent_ms",
+            "tag": 6,
+            "declaredType": "uint64",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PacketHead.proto",
+            "line": 7,
+            "type": "uint64",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "POAOKGCEJPF",
+            "tag": 7,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_7",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "POAOKGCEJPF",
+          "astaAtSameTag": {
+            "name": "NAOICAHMEBA",
+            "tag": 7,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PacketHead.proto",
+            "line": 6,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "KNKMLHHGPPE",
+            "tag": 8,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_8",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "KNKMLHHGPPE",
+          "astaAtSameTag": {
+            "name": "NHBKNKEIPAB",
+            "tag": 8,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PacketHead.proto",
+            "line": 11,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "BNHLJEGKGEM",
+            "tag": 9,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_9",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "BNHLJEGKGEM",
+          "astaAtSameTag": {
+            "name": "KIBNBAGOICF",
+            "tag": 9,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PacketHead.proto",
+            "line": 8,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "FKKOHHCLCPH",
+            "tag": 10,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_10",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "FKKOHHCLCPH",
+          "astaAtSameTag": {
+            "name": "IJAEGLBPOBJ",
+            "tag": 10,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PacketHead.proto",
+            "line": 9,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 6,
+        "asta": 6,
+        "matchingOuterShape": 6,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 0,
+        "verifiedSemanticConflict": 0
+      }
+    }
+  ],
+  "parkedWireCheck": {
+    "input": "account_type: 1 reg_platform: 3 is_proficient_player: true",
+    "expectedWireHex": "90e20903b0e20901b8e20901",
+    "actualWireHex": "90e20903b0e20901b8e20901",
+    "independentWireAssert": true,
+    "independentReadAssert": true,
+    "meaning": "20000+ is a migration marker, not a protobuf send/read prohibition"
+  },
+  "license": {
+    "project": "GPL-3.0",
+    "source": "LICENSE",
+    "classGraphNotice": "LICENSE-ClassGraph.txt (MIT dependency only)",
+    "attribution": [
+      "AstaPS",
+      "Grasscutter",
+      "LunaGC",
+      "HunkyMeow",
+      "kitkat 7.1 and NT 7.2 dump names per generation document"
+    ]
+  },
+  "runtimeStatus": "not-tested",
+  "targetProtocolReady": false,
+  "boundaries": [
+    "Upstream remapped 7.1 schema is candidate evidence, not target-client proof",
+    "Same outer shape excludes recursive nested schema and unresolved business meaning",
+    "Only local verified semantic names may replace original target clientField names",
+    "No mappings status changed; no runtime/source/Proto imported from AstaPS by this audit",
+    "No service/client action; no login/scene/D-02 acceptance"
+  ]
+}

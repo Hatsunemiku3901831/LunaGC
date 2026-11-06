@@ -6,7 +6,7 @@
 
 ## 来源与采用规则
 
-已读参考`docs/protocol-generation-7.2.md`、`docs/protocol-7.2-gaps.md`。上游由7.1 descriptor经kitkat 7.1和NT 7.2按名称/父字段桥接，保留服务端类型；未匹配字段停放20000+、92个包号为0、105个消息无7.2 counterpart。protobuf本身允许20000+，不能把“停放”当成不会发送的保证。跨消息共现恢复和单字段推断均需独立目标证据，不能直接批准运行。
+已读参考`docs/protocol-generation-7.2.md`、`docs/protocol-7.2-gaps.md`。上游由7.1 descriptor经kitkat 7.1和NT 7.2按名称/父字段桥接，保留服务端类型；其文档“server code uses”口径列92零号/105无counterpart。实际全量审计为2105 Proto/8066字段、967个20000+字段、567零号/12负号/13组正号重复。protobuf本身允许20000+，独立编码和读取已证明其仍可发送；跨消息共现恢复和单字段推断均需独立目标证据，不能直接批准运行。
 
 本地固定目标以`protocol/cn-7.2/profile.json`和`tools/extract_client72.py`的三输入SHA-256为准。CmdID→类型、类型→语义、字段→wire分别对照本地原生记录；相符仅表示对照相符，冲突逐项保留。Token请求account_type/tag15、sub_channel_id/tag10使用本地证据；上游两项为20004/20005。Asta不含PlayerLoginReq Proto，其Handler忽略payload；不能据此称该请求已适配。
 
@@ -22,4 +22,8 @@ Project中F-01至F-05按来源、登录协议、初始化/场景、运行前置�
 
 ## 当前开放项
 
-F-01进行中。完整P0、SDK/信任/补丁、资源及客户端流程尚未完成；ready228为接手基线。仅相符字段或编译/健康均不能令D-02通过。
+F-01限定来源审计已完成，见[协议审计](CLIENT_72_ASTAPS_AUDIT.md)和[实现/闭包差异](CLIENT_72_ASTAPS_IMPLEMENTATION.md)。10个CmdID相符；214外层字段仅130同tag同外层形状、84缺tag。LoginRsp的两个MD5字段名与本地已验语义颠倒，采用本地证据；嵌套/业务不得据相同外壳晋级。64源码、107包候选、166 Proto根及两仓1150/1157 imports闭包只是可计算的源码候选，不是实机必需序列。
+
+F-02a限定融合TokenReq/Head/PingReq/PingRsp，45字段仅10个保留已verified业务名，其余用目标原名；本地account_type=15、sub_channel_id=10，0/20000+/旧号未进入本批输出。新生成器拒绝目标hash/原始wire/已审语义边界/包号漂移和新碰撞；旧混淆常量LCNLHAOBBFE无运行引用且占用24604，已置负并验证规范反向名称。Ping仅将共享原始值从13→6、14→1原样回显；业务名称不晋级。
+
+F-02b（两个响应与完整LoginReq/嵌套）及F-03场景语义仍阻塞。本轮没有新增已验证场景握手schema；既有选人3消息保留，8类44个raw场景字段只保留既有研究载体，未重复生成无业务消费者的运行类。Asta缺PlayerLoginReq/EnterSceneReadyReq，忽略payload不是空schema；不采用旧号/parked/default选人/7.1 pause启发式、RSA失败切key及未知经济fallback。SDK/信任/补丁/资源和D-02仍未完成。
