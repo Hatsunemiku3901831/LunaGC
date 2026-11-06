@@ -1,5 +1,7 @@
 # F-03d3g1：独立 Avatar raw Java 适配器
 
+主线后续构建于2026-11-07完成：portable入口30秒，JAR SHA-256 `dfdebbda0352055540c44a54e2eebfd4ffdfe679db74270044d3d55aeb006ec3`、内嵌c667344。逐class比较282新增均为本独立Avatar容器，3个build元信息变化；它们均与实际编译输出逐字节相同，其余46019旧class保持，无删除。证据`evidence/avatar-wire-build-artifact.json`。status实际退出1、stopped/Healthy=false，8088TCP/22101UDP/27027无监听，原Mongo27017和R2已核暂停目标保留，配置及原资源dirty hash保持，见`avatar-wire-postbuild-runtime.json`。完整P0/SDK/资源前置未齐，未部署或安装补丁，没有运行服务JAR/PID或客户端成功对象。后文“未打包”为代理初交付时的历史范围。
+
 将[e8完整raw图](CLIENT_72_AVATAR_COMPLETE_RAW.md)的65类372个字段生成到独立 `cn72.avatarwire` Proto package，Java容器为 `Client72AvatarWireOuterClass`。所有目标消息/字段保留原raw名，包含7组真实oneof、13个map、42个primitive packed list；14个Item子类在本独立包内完整复现，不改既有库存适配器或共享Item。enum只保留已验int32 raw，不生成猜测的业务枚举。
 
 没有修改 `AvatarDataNotify`/`AvatarInfo` 旧共享Proto、Avatar.toProto、PacketAvatarDataNotify、PacketOpcodes、业务映射或ready准入。该独立适配器没有生产sender引用，`targetProtocolReady=false`、runtime/实机未验，不代表最小初始化发送集已经成立。

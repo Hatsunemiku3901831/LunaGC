@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+g1 portable构建（2026-11-07）：30秒JAR `dfdebbda…006ec3`内嵌c667344，282新增Avatar raw/3元信息变化匹配编译输出、46019旧class保持，无删除。证据`evidence/avatar-wire-{build-artifact,postbuild-runtime}.json`及`logs/avatar-wire-portable-{build,status}.log`；stopped/Healthy=false、8088/22101/27027无监听，原27017保留，R2原始目标仍在自有pause。前置未齐故未部署/装补丁；归档旧JAR `local/migration72/builds/LunaGC-before-avatar-wire-62a86fb.jar`固定eee18371供R3重放，不能套用新JAR替换旧hash。
+
 F-03d3g1：[Avatar独立适配器](docs/CLIENT_72_AVATAR_WIRE_ADAPTER.md)，`generate_avatar72_wire.py --check`、`test_generate_avatar72_wire`、`Protocol72AvatarWireTest`和`trace_client72_avatar_wire_adapter.py`。65类372字段；275 Avatar+36库存Java、主线22 Python/check通过，268实际Java bytes→原生第三回放与双跑同SHA`a2408117…0ada92`/`f7a41406…5acf29`；XML已复制到`local/migration72/avatar-wire-java-results/`避免后续Gradle覆盖。237旧保护class保持、282新增编译类；下一portable打包核对，未部署/接生产，业务与完整P0仍待。
 
 D-01b5b：同[启动观察](docs/CLIENT_72_STARTUP_OBSERVER.md)，`--main-observations none`对照的同一原始目标在118.641秒运行区间后存活，审计暂停216.656秒不计连续运行；88 DLL/40首次异常，已核线程命名结构、17守卫主线重跑通过。五份raw hash及源码/摘要匹配，摘要SHA`2b8ba611…8a0ff4`。**当前保留在自有预算pause，normal/HW点0，须核`evidence/d02-r2-d01b5b-active-session.json`后裸con恢复；不可照旧无target索引load。** 尚无自然SDK/HTTP/Marshal返回，不晋级R2。
