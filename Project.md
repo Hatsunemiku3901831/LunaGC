@@ -8,6 +8,8 @@
 
 ## 当前阶段
 
+E-01d1m只读台账已审：[Quest入场依赖](docs/CLIENT_72_D02_QUEST_ENTRY.md)明确登录ProgressManager对303/30302的条件查询/显式addQuest、旧2101001动态组后代及旧号deferred边界。主线独立重算四数据/配置hash及17814行分布、16/63章节子项、61/29 Excel行，与源码核同。目标Quest三个LogicType字段形状冲突、缺acceptCond和BGH字符串字段仍未转换；63行静态形状不代替实际Fallback，下一做隔离303真实加载/显式路径，不关闭quest或删旧档求绿。
+
 统一review本批已核：95→108输入只追加13份已逐项审核且已提交的raw/语义/资源/启动/HTTP摘要，原95 hash和1269生产源码hash全部保持；98发送候选、156根/矩阵、1122描述符/1278类型/4867字段、三层状态及开放边界不变。旧review先拒绝，人工限定新增集后两次recover一致；24项矩阵/校验定向与Avatar raw生成check通过，结构0、ready仍224拒绝。不自动把独立65类适配器算进尚未接入的生产依赖，也不借索引同步晋级R4/部署/实机。证明`evidence/active-d02-proto-review-check.json`。
 
 D-01b5d已审：[RegionList](docs/CLIENT_72_REGION_LIST.md)由独立caller/具名literal/class/codec确认87445→13336，三HTTP支和SDK InitEnv来源只作静态链；六实际Java/八native/三拒绝，主线13文件重生成、22定向及第三native与双跑逐字节一致。九个raw字段可消费，完整callback/Base64原生/HTTP传输/路由与信任仍未验。窗口读取被Windows以error5拒绝，无伪图；用户随后明确重启，依e新现场继续，不将d冻结时的保留目标状态当最新运行验收。
@@ -104,6 +106,7 @@ E-01d1a（D02-R3子合同A）已验收：固定候选commit/tree/blob四表，�
 | E-01d1i～j 日常持久化及初始实体 | R3固定候选表、旧daily/Lua/combat、独立Mongo | 唯一新库真实1项通过，生成4/保存/新Player冷读/同日不重抽、生成前后场景0/4；23怪物/41装置逐类型/资源ID已验。主线13输入hash/source/class/XML及正常关闭审核；受控调度不代表后台/完整Done，自动事件后代/其它随机组/目标协议未验 | 已完成 |
 | E-01d1k 出生点实际初始实体 | R3生产网格/固定表、Gather、旧Lua/combat/drop | 真实25组/checkGroups，隔离inline1项通过/0加载ERROR，逐实体类型与ID、自然601 option173已验；fast1项失败449保留，根config不改。主线35输入及source/class/XML/351静态重建引用审核，无重复测试；其他异步/完整调度/网络仍未知 | 已完成 |
 | E-01d1l 出生初始本组自动事件 | K所选25suite、既有505/601事件合同 | 有限订阅表与505自然onLoadGroup1项通过，真实action返回计数1/4及门箱状态/0 ERROR；主线补block必要输入hash后独立新JVM1项通过，重叠不相加。跨组/插件/其它suite/完整异步后代与客户端未验 | 已完成 |
+| E-01d1m Quest入场必要性及目标字段缺口台账 | 登录/进度/任务源码、固定旧/目标四数据 | 303/30302条件查询/显式路径、旧动态组及deferred边界与目标17814字段冲突已登记；主线重算数据/配置hash及分布，未重跑五行红测或实际Fallback。只完成只读台账，资源/语义/保存与R3仍开放 | 已完成 |
 | E-01c6 嵌套require调用者bindings恢复 | E-01c5已复现成功置null/异常残留 | b74cd16；6例先5失败后全过，6套32 Lua及8加载审计全过；portable25秒JAR7ca18e10…e8f5f、9class相符，其余45935不变；双轮整场fast407/449、inline0，30错误组恢复且无新增；完整前置不足未部署，local/资源/实机不晋级 | 已完成 |
 | F-04a SDK/补丁/资源前置现场复核 | 当前checkout/config/GAME_PATH、三输入与现有会话 | 三哈希/参考clean/归属已验；API会话无target；两个status退出1及6个revision候选；源码旧强制验签钩子与字符串工厂缺口保留，见CLIENT_72_RUNTIME_PREREQUISITES；仅核对不代表F-04完成 | 已完成 |
 | F-04b 保留验签的本地信任供给合同 | F-04a、既有原生seed/response/dispatch密码学 | 6b72887；14原生/23次key验签（4成功10拒绝）、18关联和双跑；COPY只R13、CHECK只R8/root第五参数，返回/flags不变；未知key不供给；未装钩子/未导出私钥 | 已完成 |

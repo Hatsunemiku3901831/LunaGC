@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+E-01d1m：[Quest入场台账](docs/CLIENT_72_D02_QUEST_ENTRY.md)，固定旧/目标QuestExcel和chapter303，ProgressManager实际条件调用30302、旧2101001组套件、QuestBinFallback/自动索引与旧档deferred边界分开。主线静态证明`evidence/d02-r3-quest-entry-main-review.json`（四数据/配置hash、17814分布、16/63及61/29计数），未新增loader/Gradle/DB/客户端执行。历史五行红测`d02-r3-quest-red/`复用，不加alias/关quest；下一按专题做隔离303真实加载与条件启动。
+
 本批统一review：`login-proto-review.json`/`login-proto-gap-matrix.json`由95→108，仅13份已审已提交摘要新增，原95 hash/1269生产源码/三层/156矩阵及描述符/开放边界保持，旧守卫拒绝后双recover一致。24项`test_client72_login_proto`/`test_validate_protocol72`通过，结构0/ready224，独立Avatar生成`--check`无漂移；原始`logs/active-d02-proto-*`及`logs/active-d02-avatar-wire-check.log`、证明`evidence/active-d02-proto-review-check.json`。该范围截至f06100f，之后未审新摘要须继续独立review，不自动rehash或升级ready；独立Avatar adapter的65类未伪装成生产已引用。
 
 用户2026-11-07最新要求“重启游戏，再进行观察”：旧保留pause限制已覆盖，D-01b5e由R2独占先核旧target→结束/OS+PUB+log闭合→新load固定原始客户端，单一GlobalDispatch入口、120秒预算。下方b/c/d暂停上下文均为各阶段历史，不能直接当最新PID/目标或阻止已授权重启；无服务部署，其他开发继续。
