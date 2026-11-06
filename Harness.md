@@ -1,5 +1,9 @@
 # 研发索引与执行骨架
 
+2026-11-07新增[Sol/Terra离线前置路线](Project.md#d02-offline-sol-terra)，基线34479d4；本次仅规划，开发暂停保持。现有任务顺序：108输入后证据增量审核→C-01已验帧/注册边界、E-01 Chapter/真实资源加载前置、F-03d3g2有限测试投影准备→条件满足的Quest正向重绑定→R4受影响回归/构建。该阶段不做实机、调试器或依赖其加速的探索，不派Astra；f4d2/复杂SceneInfo/新语义冲突及g2生产主体按依赖后置。此路线优先于旧R2真实观察建议，不宣布D-02可离线完成。
+
+本次实际`validate_protocol72.py`研究结构0错误、`--ready`224拒绝；仍不等于108之后全体摘要已受审。faadfc8至34479d4的src/main、patch及portable主入口无生产差异；阶段整体工作量仍估约75%（70%～80%）。后续复用`review_client72_login_proto.py`、现有frame/wire与注册源码、E-01章节/资源/保存专题及g1独立适配器；QuestResourceRebindTest人工设置loadedAll的旧夹具不能替代n2真实资源正向重绑定。h1真实HTTP拒绝已验，无相关变更不重复当新成果。
+
 2026-11-07最新收口：当前四项D-01b5h1 / D-01b5g-preflight / F-03d3s2a / F-03d3f4d1均已主线验收并提交，按用户要求暂停，不启动后继或游戏HW轮。主线实际范围分别为三新JVM各两HTTP请求及原生拒绝链、28项HW前置守卫及既有单fixture审核、28项SceneInfo关联测试及第三原生、82项Avatar构造片段测试及第三原生；批次相互覆盖，数量不相加。完整D-02未验收，恢复入口见[HANDOFF2](HANDOFF2.md)。
 
 最终只读核对：`local/migration72/evidence/d02-final-pause-inventory.json`固定五输入/配置/原资源差异/JAR一致，仅原Mongo27017监听，测试27027/HTTP8088/游戏22101无监听，无游戏/Java/观察器。调试器终态另见`evidence/d02-r2-d01b5g-pause-state.json`：API四表空，游戏持久库4自有点、fixture库3自有点仍保留。交接备份及前缀验证见`evidence/d02-current-cards-pause-handoff-{backup,written}.json`。108输入的统一review是较早批次结果；新独立摘要及变更摘要的差异审核尚未执行，不把旧结构0/ready224当作当前全量重跑。下方持续/暂停记录均为历史批次。
