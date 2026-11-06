@@ -1,5 +1,7 @@
 # CN7.2库存完整raw对象图
 
+后续状态：F-03d2b1已取得[库存用途/Material六字段合同](CLIENT_72_INVENTORY_CONTRACT.md)；F-03d2c1新增[独立raw Java适配器](CLIENT_72_INVENTORY_WIRE_ADAPTER.md)，15类47字段由实际Gradle/protoc及32组原生对象向量核对。旧生产Store/Item/包号/发送链仍未接管，原raw摘要与本页研究边界不变。
+
 2026-11-06，F-03d2a3。**PlayerStore用途候选的15类型47个wire字段raw闭包已完成离线验证；身份/业务字段名仍unresolved，生产与客户端初始化未验收。** 本卡接续[d2a1依赖/外层](CLIENT_72_INITIALIZATION_CANDIDATES.md)和[d2a2 primitive容器](CLIENT_72_INVENTORY_CONTAINERS.md)，不是将候选Asta名批量晋级。
 
 正式工具[trace_client72_inventory_graph.py](../tools/trace_client72_inventory_graph.py)每次校验并重读固定三输入、重新提取metadata及primitive map AOT；固定依赖outer摘要SHA-256 `2c14b416e5e18d868bde7d645939f6ea9c2a936761967e555e92538c2d11e20f`和container摘要`352f094fec870074abb70207af317870525b025c9b68805500c6410347feb72d`。目标Cmd20892→68537来源保留在outer证据，不借用旧22160。Asta仅作初始候选，不提供本卡任何字段命名或raw结果oracle。
