@@ -1,5 +1,7 @@
 # 给 Codex 的 Windows 一键部署与排障手册
 
+2026-11-06已恢复持续D-02；新便携构建25秒、JAR `7ca18e10c056fd0715e57cdbbb13b4607e324362675a7127b2ed28b5269e8f5f`内嵌b74cd16，loader及build元信息9类与编译输出一致，45935其余class不变。496研究、32 Lua/8加载审计与两轮整场已过限定合同，完整P0/SDK/补丁/资源前置仍缺；不改版本放行，未部署/未客户端验收。[现场前置](CLIENT_72_RUNTIME_PREREQUISITES.md)及Project F-04c记录正式保留验签补丁的后续。旧暂停范围已被用户最新恢复覆盖。
+
 2026-11-06 F-02b/F-03本批限定融合已验收并暂停，运行提交4bbf9fd，D-02未执行。468研究/43套761 Java/五生成检查全过；结构0/ready205。便携构建24秒，JAR `570d64f4f1680ab023c7eda7f2e930ebf5eba79791030e8499100ca8f2799bf5`内嵌4bbf9fd，92变化+114新增class匹配编译、109账号/Guard/Lua保持。前置不足未部署、无服务/测试监听；客户端目标当前未见原因未知，未操作调试器。下文更早的数量与暂停均为历史，当前以Project/HANDOFF2为准。
 
 本批实际执行`tools/local_windows.ps1 -Mode build`及只读`-Mode status`；status退出1表示没有服务器，非部署成功。当前仅Windows portable；源码HTTP/游戏端口为8088 TCP/22101 UDP，Mongo原27017保留，测试固定27027与独立新目录。不得仅改环境变量宣称源码固定端口已隔离。部署解除条件：完整已验P0、SDK/信任/补丁ABI/资源前置齐备，再用独立运行库/数据、核对PID/日志/健康/TCP/UDP/运行JAR SHA后验收；不能靠改版本、跳校验或本JAR编译成功放行。本轮用户明确暂不D-02。

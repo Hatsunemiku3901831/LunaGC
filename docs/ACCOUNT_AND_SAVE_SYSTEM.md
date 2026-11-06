@@ -1,5 +1,7 @@
 # 账号与存档系统接手指南
 
+2026-11-06本轮F-02c确认Token安装key后同原生内存状态的LoginRsp选key/收帧合同；F-04b确认保留真实验签的本地输入供给及坏key/root/签名拒绝，见[收帧](CLIENT_72_RECEIVE_KEY.md)与[信任合同](CLIENT_72_TRUST_CONTRACT.md)。它们没有改变账号准入/UID/确认保存或Mongo字段，不代表真实线程调度、补丁加载、SDK认证或D-02完成。本轮496研究/32 Lua通过，前批761 Java与完整集历史失败未重跑。
+
 2026-11-06 F-02b/F-03当前接入：完整LoginReq的55字段、两个响应的85个外层字段及18个raw嵌套类型的58字段，共21类198字段，已进入生产Proto；原生wire闭合不等于业务语义全部恢复。独立50组native writer、34组response native graph及6组错误拒绝对照通过；嵌套标量的proto3 optional只是Java存在性/合并适配，另有4项独立原生wire回归覆盖重复嵌套的显式零、false、空字符串与未覆盖字段保留。来源、生成和最小发送范围见[登录wire](CLIENT_72_LOGIN_WIRE.md)、[响应合同](CLIENT_72_RESPONSE_CONTRACT.md)及[非空对象图](CLIENT_72_GRAPH_READERS.md)。
 
 加密Token成功仅发送uid/tag9、token/tag6、sign/tag208、server_rand_key/tag477；拒绝只发送retcode/tag14，RSA失败不伪造签名、不降级成功、不安装会话key。加密模式下key_id缺失、0或Java表示为非正值时，在AccountLoginAdmission之前拒绝；有效key进入既有准入及玩家准备后才进行RSA，因此后续RSA失败不能宣称没有发生建档或加载。AccountLoginAdmission、稳定UID归属、确认保存、经济Guard及Lua流程保持。独立Mongo的真实JCA RSA成功与`%%`、`AQ==`两种失败共3项已通过；使用明确本地密钥和NoLoadPlayer夹具，覆盖真实准入/建档及密码学，不证明完整资源加载或客户端认证。

@@ -1,5 +1,7 @@
 # 7.2 迁移现状与本地运行基线
 
+2026-11-06用户已恢复持续D-02。新增收帧key/初始化raw/信任供给合同与嵌套require修复均分项本地提交，496研究回归通过，统一review79输入/1267源且三层/Proto/开放边界保持，ready仍205。当前portable JAR7ca18e10…e8f5f（b74cd16），仅Lua加载器/build元信息改变，整场fast437→407错误组、inline仍0。F-03d1b/d2递归与F-04c运行补丁继续；未部署/未新增实机，不能据此称7.2可登录。以下旧暂停/统计为历史。
+
 2026-11-06 F-02b/F-03本批限定融合已验收并暂停，运行提交4bbf9fd，D-02未执行。468研究/43套761 Java/五生成检查全过；结构0/ready205。便携构建24秒，JAR `570d64f4f1680ab023c7eda7f2e930ebf5eba79791030e8499100ca8f2799bf5`内嵌4bbf9fd，92变化+114新增class匹配编译、109账号/Guard/Lua保持。前置不足未部署、无服务/测试监听；客户端目标当前未见原因未知，未操作调试器。下文更早的数量与暂停均为历史，当前以../Project.md及../HANDOFF2.md为准。
 
 已接入范围见[融合记录](CLIENT_72_ASTAPS_FUSION.md)、[响应合同](CLIENT_72_RESPONSE_CONTRACT.md)、[八握手](CLIENT_72_SCENE_HANDSHAKE.md)、[请求省略](CLIENT_72_SCENE_REQUEST_CONTRACT.md)、[1017域](CLIENT_72_CMD1017_DOMAIN.md)、[容量](CLIENT_72_STORE_WEIGHT_CONTRACT.md)、[最小入场](CLIENT_72_ENTER_SCENE_CONTRACT.md)。27个三层行含嵌入Vector用途别名；Cmd/类型21 verified，schema10 verified/11 candidate/6 unresolved，239字段65 verified/9 candidate/165 unresolved。P0依赖闭包仍unresolved，原种子不是完整必需序列。

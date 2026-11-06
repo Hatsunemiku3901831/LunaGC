@@ -1310,7 +1310,11 @@
     "protocol/cn-7.2/login-wire-observations.json": "3f456f7de02ba1c41c2133b6de350e11d2d593d53b9e6108d7d843d332d8cff4",
     "protocol/cn-7.2/map-aot-observations.json": "5aa270cfaec352651c4b142a23472f22d6fee3b3728a866f6d118a7711d795cb",
     "protocol/cn-7.2/patch-abi-observations.json": "4194c8d1a2fcc911e0c1ac23b70cf2764bbe52c7e39e50bcc280ec5c8d9b3e92",
+    "protocol/cn-7.2/player-data-wire-observations.json": "357a8c967fb1b4457559d50b8737498cf0c673fb4212fb8fd6720e0cab38a674",
+    "protocol/cn-7.2/player-store-outer-observations.json": "545d2e2f07d44a5e55bbd5c0a05fe073faf8705c28e0dd7326d65863e8a041ae",
+    "protocol/cn-7.2/receive-key-observations.json": "379970307e6c09c8cc4219137690e90de0da224d48620f587aeddd8fe63a90f3",
     "protocol/cn-7.2/request-identity-observations.json": "80462ba6d6aa2847a552fba3ba80f2878d99df72588bda1735373b074ef408f6",
+    "protocol/cn-7.2/require-bindings-scene-load-observations.json": "3a140ed18c27d23712ecceb85d329dccdbc8a9784075c3438ff5340547f68509",
     "protocol/cn-7.2/resource-candidate-observations.json": "799eef22ac11515597e2ff439b67dea0764b1222288abb62a0865317bfd0651a",
     "protocol/cn-7.2/response-contract-observations.json": "e4c19d44db6c0083490457d78ef15829b25ce2a62863240b6c7632675e4a418f",
     "protocol/cn-7.2/response-crypto-observations.json": "5f99c226906187ce76246524b2e7a7b7d2b3bf4fd4f65c561f11051c0cc8ee2c",
@@ -1347,6 +1351,7 @@
     "protocol/cn-7.2/token-constructor-observations.json": "94a266f31f3a3f8be4d2ab730bf3d794c31ccb7e4ab8fa35d35e232739c24cf2",
     "protocol/cn-7.2/token-frame-observations.json": "37b93fcefc0e48bad48ab88dee34f3626e32c554b969a26ef5b1e228af7ebb0a",
     "protocol/cn-7.2/token-wire-observations.json": "90b21d7c5142f4db4b5f0f623c84f6e4dfe4355887975e27ceda19b935692567",
+    "protocol/cn-7.2/trust-contract-observations.json": "4fd8e056d679c53a1232914798efba6b0b1351445916b3227cb9335f53124682",
     "protocol/cn-7.2/wire-observations.json": "3566f5fd2140056402727db383557b836816438a454bbac81e0abb4b020430f8"
   },
   "clientInputSHA256": {
@@ -93120,7 +93125,7 @@
     "Nonzero/64-bit/nested/list/error/boundary wire regressions remain separate required evidence",
     "No protocol generation, runtime integration, client reverse engineering or client debugging"
   ],
-  "reviewSHA256": "01019c9542115660ee8d331e7935c0cbd9e28371ad7ccef885552ac02bd59ebc",
+  "reviewSHA256": "e4080c7f5bf34314ac0b0c6ded34407a0274d9f9ccad1f8c795bb51583b63c7c",
   "toolSourceSHA256": {
     "tools/review_client72_login_proto.py": "d2b4c962bd883227550e6e7eebb8e6f40176c640619740fe74308ec5d8c751e4",
     "tools/Client72ProtoDependencies.java": "517838c3cd34b051c47205e71d45d2d3c99cc6bb4fb32379c34e0d0cea418f0a"

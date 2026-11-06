@@ -1,5 +1,7 @@
 # 账号与存档数据模型
 
+2026-11-06 F-02c的selector/session key及F-04b的root公钥/两类key签名均是连接临时状态/本机信任输入，不入MongoDB、不等同账号token。供给对象不持有目标或服务端私钥；目标私钥只在研究过程内存中核对，禁止导出。PlayerData候选新raw图含boxed int64/float oneof及独立int64，业务身份仍未知，不据此新增存档字段。详见[初始化候选](CLIENT_72_INITIALIZATION_CANDIDATES.md)。
+
 2026-11-06 F-02b/F-03当前数据边界：生产登录schema已包含LoginReq55字段、两个Rsp85个外层字段及18个raw嵌套类型58字段，共21类198字段；这次是连接wire接入，没有新增MongoDB字段、集合、UID规则或存档格式。嵌套proto3 optional用于Java保留显式零/false/空字符串的存在性并正确合并重复消息，不是目标原Proto使用optional的证据，也不表示持久数据字段可选性改变。独立50组native writer、34组response native graph、6组错误拒绝及4项重复合并Java回归通过，详见[非空对象图](CLIENT_72_GRAPH_READERS.md)。
 
 Token加密成功仅投影uid/tag9、token/tag6、sign/tag208、server_rand_key/tag477；失败仅retcode/tag14。key_id<=0在加密模式的账号准入前拒绝；后续RSA失败仍可能已完成既有玩家准备，不能据拒绝包推断数据库未写入。准入、确认保存、经济Guard与Lua不变。LoginRsp资源配置仅将既有RegionInfo值投影到raw tag61的子字段1/3/4/5，保留原始字段名，不新增持久资源状态；其目标消费与旧release_total_size命名边界见[响应最小合同](CLIENT_72_RESPONSE_CONTRACT.md)。
