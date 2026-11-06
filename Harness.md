@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+F-03d3d：[双Item列表](docs/CLIENT_72_AVATAR_ITEMS.md)，8a03338；16类50wire、2048扫描/44图/10拒绝、8新增/85关联双跑通过，两份Item列表各9个非空独立元素。该摘要刚发布，尚待下一次统一review。最后53824静态闭包为34类238存储，与已有raw无重叠；按Project e1至e8独立取证，18/36/43/40/24/36/29/12仅存储下界，不能当已验wire数。
+
 阶段复核：`local/migration72/analysis/run_post_adapter_research.py`本机实际600项研究回归全过（约65秒）；原始日志/summary为`logs/post-adapter-research-regression.log`、`evidence/post-adapter-research-regression-summary.json`。人工review新增inventory-contract/avatar-core/avatar-trees/marshal-storage四摘要，84→88输入，旧84份/1268源及三层/151行/1121描述符/4810字段/开放边界保持，旧守卫拒绝后双跑一致，证明`evidence/post-adapter-proto-review-check.json`。结构0错误/ready208，D-02未验。
 
 F-03d2c1：[独立库存raw Java适配器](docs/CLIENT_72_INVENTORY_WIRE_ADAPTER.md)，b47a490；36 Java/4生成守卫通过，含32组native对象oracle。`generate_inventory72_wire.py --client $env:GAME_PATH --check`仅生成独立namespace Proto，旧Store/Item/包号/sender不改。portable22秒JAR5db5d3b2…28fd73，70新raw class+3 build元信息、其余45948不变；未部署。
