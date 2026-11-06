@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+D-01b5b：同[启动观察](docs/CLIENT_72_STARTUP_OBSERVER.md)，`--main-observations none`对照的同一原始目标在118.641秒运行区间后存活，审计暂停216.656秒不计连续运行；88 DLL/40首次异常，已核线程命名结构、17守卫主线重跑通过。五份raw hash及源码/摘要匹配，摘要SHA`2b8ba611…8a0ff4`。**当前保留在自有预算pause，normal/HW点0，须核`evidence/d02-r2-d01b5b-active-session.json`后裸con恢复；不可照旧无target索引load。** 尚无自然SDK/HTTP/Marshal返回，不晋级R2。
+
 E-01d1b～e / D02-R3：[最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)子合同B～E；`audit_d02_resources72 --extended-source`核六表21引用，主线CLI与双跑同SHA`70ddb0ca…dde6e`、11 Python通过。`Client72D02ResourceAudit.java`只查询源码等价出生网格；25组真实顶层fast/inline对照及depot特殊键红测边界分开记录。`D02Group505LoadTest`真实Scene/ScriptLib/DropSystem、状态/实体/跨组反例2项，主线按文档在新目录独立Gradle复验通过，原始`local/migration72/d02-r3-group505-main-review/`，class-init无DB/HTTP/Dispatch。未运行完整tick/客户端，继续生产网格及其余可达资源，不重复大套测试或晋级R3。
 
 F-03d3e8：[完整Avatar raw图](docs/CLIENT_72_AVATAR_COMPLETE_RAW.md)，`trace_client72_avatar_complete_raw.py`/`test_client72_avatar_complete_raw`。新51050的11wire/512扫描、24图/9拒绝；完整复杂34类237wire/Avatar65类372wire均实际reader进入，双Object及tag100真实复制已验。10新增/166关联和主线10定向通过，第三新进程完整/摘要与双跑同为`5556baf4…db0961`/`37c90e4d…def837`，证据`evidence/avatar-complete-raw-*`；raw true与业务/runtime false分开，继续独立适配器和必要语义。

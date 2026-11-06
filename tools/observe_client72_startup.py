@@ -31,8 +31,12 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--seconds', type=int, default=120, choices=range(90, 151))
     parser.add_argument('--summary-output', type=Path)
+    parser.add_argument('--main-observations', choices=('software', 'none'), default='software',
+                        help='none runs the zero-main-module-point contrast; no natural entry inference.')
     parser.add_argument('--resume-from', type=Path,
                         help='Resume only this observer\'s first system-stop hardware rejection; no new load.')
+    parser.add_argument('--continue-thread-name-from', type=Path,
+                        help='Continue the same pending, verified Windows thread-name exception; no new load.')
     parser.add_argument('--prior-observation', type=Path,
                         help='Local evidence proving ownership of restored R2 software points.')
     args = parser.parse_args()
@@ -44,6 +48,10 @@ def main():
         args.resume_from = args.resume_from.resolve()
         if not args.resume_from.is_relative_to(root / 'local'):
             parser.error('Resume evidence must be in local/.')
+    if args.continue_thread_name_from:
+        args.continue_thread_name_from = args.continue_thread_name_from.resolve()
+        if args.resume_from or not args.continue_thread_name_from.is_relative_to(root / 'local'):
+            parser.error('Choose one local continuation source.')
     if args.prior_observation:
         args.prior_observation = args.prior_observation.resolve()
         if not args.prior_observation.is_relative_to(root / 'local'):
@@ -54,7 +62,7 @@ def main():
     print(json.dumps(summarize(report)), flush=True)
 
 
-def stop_action(event, expressions, cip, owned, entrypoint, tls_addresses):
+def stop_action(event, expressions, cip, owned, entrypoint, tls_addresses, thread_name_validated=False):
     """Classify current evidence; stale ex.* never classifies a breakpoint."""
     if event is None:
         return 'stop-missing-event'
@@ -67,6 +75,8 @@ def stop_action(event, expressions, cip, owned, entrypoint, tls_addresses):
         if not data['dwFirstChance']:
             return 'stop-second-chance'
         if data['ExceptionCode'] in (0xC0000005, 0xE06D7363):
+            return 'deliver-current-application-first-chance'
+        if data['ExceptionCode'] == 0x406D1388 and thread_name_validated:
             return 'deliver-current-application-first-chance'
         return 'stop-unknown-exception'
     if kind == 'EVENT_SYSTEMBREAKPOINT':
@@ -101,6 +111,14 @@ def register_action(snapshot):
     return None
 
 
+def thread_name_payload(event_data):
+    """Microsoft's x64 pack(8) THREADNAME_INFO occupies three ULONG_PTR values."""
+    values = event_data['ExceptionInformation']
+    return (event_data['ExceptionCode'] == 0x406D1388 and event_data['dwFirstChance']
+            and event_data['NumberParameters'] == 3 and len(values) == 3
+            and values[0] == 0x1000 and values[1] != 0 and values[2] >> 32 == 0)
+
+
 def exit_log_codes(messages):
     # This fixed debugger emits a localized stop line followed by the .dd64 save path.
     return re.findall(r'\b0x([0-9A-Fa-f]{1,8}) \((?:STATUS_[A-Z0-9_]+|[0-9]+)\)[^\n]*\.dd64',
@@ -115,6 +133,8 @@ def summarize(report):
     return dict(schemaVersion=1, task='D02-R2 / D-01b5', inputSHA256=report['inputSHA256'],
                 debuggerFiles=report['debuggerFiles'], pythonClientVersion='0.9.2',
                 observationBudgetSeconds=report['observationBudgetSeconds'],
+                mainObservationMode=report.get('mainObservationMode', 'software'),
+                naturalEntryObservationEnabled=report.get('mainObservationMode', 'software') != 'none',
                 ready=report.get('ready', False), stopReason=report.get('stopReason'),
                 elapsedSeconds=report.get('elapsedSeconds'), events=dict(events),
                 exceptions=dict(exceptions), pubThreadAlive=report.get('pubThreadAlive'),
@@ -165,14 +185,22 @@ def execute(root, args):
     assert provenance == DEBUGGER_FILES and version('x64dbg_automate') == '0.9.2'
     sessions = [s for s in X64DbgClient.list_sessions() if s.host in ('localhost', '127.0.0.1')]
     assert len(sessions) == 1 and Path(sessions[0].cmdline[0]).resolve() == debugger
-    resumed = json.loads(args.resume_from.read_text('utf8')) if args.resume_from else None
+    continuation = args.continue_thread_name_from
+    resume_path = continuation or args.resume_from
+    resumed = json.loads(resume_path.read_text('utf8')) if resume_path else None
     prior_observation = json.loads(args.prior_observation.read_text('utf8')) if args.prior_observation else None
     if prior_observation:
         assert prior_observation['inputSHA256'] == hashes
         assert not prior_observation['finalState']['debugging']
     related = relevant_processes(process_inventory(), game, target)
     if resumed:
-        assert resumed['ready'] and not resumed['commands'] and not resumed['ownedPointsRemaining']
+        assert resumed['ready'] and not resumed['ownedPointsRemaining']
+        if continuation:
+            assert resumed['mainObservationMode'] == args.main_observations == 'none'
+            assert resumed['stopReason'] == 'stop-unknown-exception'
+            assert thread_name_payload(resumed['stops'][-1]['event']['data'])
+        else:
+            assert not resumed['commands']
         assert resumed['finalState'] == dict(debugging=True, running=False)
         assert resumed['osStatus']['alive'] and resumed['inputSHA256'] == hashes
         assert resumed['session']['pid'] == sessions[0].pid
@@ -181,6 +209,7 @@ def execute(root, args):
         assert not related, 'Existing game must not be replaced'
     report = dict(task='D02-R2 / D-01b5', inputSHA256=hashes, debuggerFiles=provenance,
                   sourceSHA256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+                  mainObservationMode=args.main_observations,
                   observationBudgetSeconds=args.seconds, events=[], stops=[], observations=[], commands=[],
                   logMessages=[], logEvicted=0, session=sessions[0].model_dump(mode='json'),
                   configSHA256={name: hashlib.sha256((root / name).read_bytes()).hexdigest()
@@ -194,6 +223,13 @@ def execute(root, args):
     k32.WaitForSingleObject.restype = C.c_uint32
     k32.QueryFullProcessImageNameW.argtypes = [C.c_void_p, C.c_uint32, C.c_wchar_p, C.POINTER(C.c_uint32)]
     k32.CloseHandle.argtypes = [C.c_void_p]
+    class ThreadEntry(C.Structure):
+        _fields_ = [('size', C.c_uint32), ('usage', C.c_uint32), ('tid', C.c_uint32),
+                    ('pid', C.c_uint32), ('priority', C.c_long), ('delta', C.c_long), ('flags', C.c_uint32)]
+    k32.CreateToolhelp32Snapshot.argtypes = [C.c_uint32, C.c_uint32]
+    k32.CreateToolhelp32Snapshot.restype = C.c_void_p
+    k32.Thread32First.argtypes = [C.c_void_p, C.POINTER(ThreadEntry)]
+    k32.Thread32Next.argtypes = [C.c_void_p, C.POINTER(ThreadEntry)]
     c = X64DbgClient(str(debugger))
     c.attach_session(sessions[0].pid)
     points, pending, process, pid, base = {}, [], None, None, None
@@ -242,6 +278,34 @@ def execute(root, args):
         if not c.check_valid_read_ptr(pointer) or not c.check_valid_read_ptr(pointer + length - 1):
             return None
         return c.read_memory(pointer, length)
+
+    def validate_thread_name(data):
+        if not thread_name_payload(data):
+            return None
+        values = data['ExceptionInformation']
+        name = read(values[1], 256)
+        if name is None or b'\0' not in name:
+            return None
+        target_tid = values[2] & 0xffffffff
+        if target_tid == 0xffffffff:
+            target_tid, ok = c.eval_sync('tid()'); assert ok
+        handle = k32.CreateToolhelp32Snapshot(4, 0)
+        assert handle not in (None, 0, C.c_void_p(-1).value)
+        entry = ThreadEntry(); entry.size = C.sizeof(entry)
+        found = False
+        try:
+            ok = k32.Thread32First(handle, C.byref(entry))
+            while ok:
+                if entry.pid == pid and entry.tid == target_tid:
+                    found = True
+                    break
+                ok = k32.Thread32Next(handle, C.byref(entry))
+        finally:
+            k32.CloseHandle(handle)
+        if not found:
+            return None
+        return dict(payloadMatches=True, targetThreadExists=True, targetTid=target_tid,
+                    nameBytesHex=name.split(b'\0')[0].hex())
 
     def snapshot():
         context = c.get_regs().context
@@ -427,12 +491,14 @@ def execute(root, args):
             assert c.eval_sync('$pid') == (resumed['pid'], True)
             assert c.eval_sync('mod.main()') == (resumed['base'], True)
             current = snapshot()
+            previous_snapshot = resumed['finalSnapshot'] if continuation else resumed['initialSnapshot']
             for key in ('cip', 'rsp'):
-                assert current['registers'][key] == resumed['initialSnapshot']['registers'][key]
-            assert current['tid'] == resumed['initialSnapshot']['tid']
-            report['resumeFrom'] = str(args.resume_from)
-            report['resumeEvidenceSHA256'] = hashlib.sha256(args.resume_from.read_bytes()).hexdigest()
-            report['osHandleGapAfterRejectedPreflight'] = True
+                assert current['registers'][key] == previous_snapshot['registers'][key]
+            assert current['tid'] == previous_snapshot['tid']
+            report['resumeFrom'] = str(resume_path)
+            report['resumeEvidenceSHA256'] = hashlib.sha256(resume_path.read_bytes()).hexdigest()
+            report['osHandleGapBeforeContinuation'] = True
+            report['continuationKind'] = 'verified-thread-name-stop' if continuation else 'rejected-system-preflight'
             report['events'] = list(resumed['events'])
         else:
             assert not c.is_debugging()
@@ -468,6 +534,14 @@ def execute(root, args):
         if not resumed:
             clear_inherited_factory('system-breakpoint')
             report['initialSnapshot'] = snapshot()
+        elif continuation:
+            assert not c.get_breakpoints(BreakpointType.BpHardware)
+            pending_exception = resumed['stops'][-1]['event']['data']
+            for key, value in (('code', pending_exception['ExceptionCode']),
+                               ('addr', pending_exception['ExceptionAddress']), ('firstchance', 1)):
+                assert c.eval_sync('ex.' + key + '()') == (value, True)
+            report['pendingThreadNameValidation'] = validate_thread_name(pending_exception)
+            assert report['pendingThreadNameValidation']
         elif c.get_breakpoints(BreakpointType.BpHardware):
             # The first load exposed this exact old owned point from the debugger database.
             old_path = root / 'local/migration72/evidence/d01b3-hardware.json'
@@ -542,12 +616,13 @@ def execute(root, args):
             assert actual == expected
             report.setdefault('codeChecks', []).append(dict(kind=kind, originalVA=f'{original:X}',
                                                             sha256=hashlib.sha256(actual).hexdigest(), match=True))
-            point(address, 'cn72_r2_' + kind)
+            if args.main_observations == 'software':
+                point(address, 'cn72_r2_' + kind)
         for symbol, address in symbols.items():
             point(address, 'cn72_r2_exit_' + symbol.replace('.', '_'))
         report['stopReason'] = 'observation-budget'
         deadline = time.monotonic() + args.seconds
-        event = systems[-1]
+        event = resumed['stops'][-1]['event'] if continuation else systems[-1]
         while time.monotonic() < deadline and c.is_debugging() and os_status()['alive']:
             assert not c.is_running() and c.eval_sync('$pid') == (pid, True)
             row = dict(event=event, snapshot=snapshot())
@@ -564,10 +639,12 @@ def execute(root, args):
                 expressions = {name: list(c.eval_sync('ex.' + name + '()'))
                                for name in ('code', 'addr', 'firstchance', 'flags')}
                 row['exceptionExpressions'] = expressions
+                if event['data']['ExceptionCode'] == 0x406D1388:
+                    row['threadNameValidation'] = validate_thread_name(event['data'])
             tls = verified_tls_addresses(event) if event else set()
             row['verifiedTlsAddresses'] = sorted(tls)
             action = stop_action(event, expressions, row['snapshot']['registers']['cip'],
-                                 points, entrypoint, tls)
+                                 points, entrypoint, tls, bool(row.get('threadNameValidation')))
             row['action'] = action
             if action.startswith('stop-'):
                 report['stopReason'] = action

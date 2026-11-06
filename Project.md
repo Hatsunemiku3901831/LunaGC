@@ -12,6 +12,8 @@ F-03d3e7限定验收：两类29wire、256扫描/14图/9拒绝，六种message-li
 
 D-01b5a（D02-R2观察子合同）已审核：[有界启动观察](docs/CLIENT_72_STARTUP_OBSERVER.md)保留两次游戏退出与三自有进程复现。第二轮39停点双API一致/DR全0，12.625秒后OS/PUB/log同为80000003；两轮独立WER均指factory RVA52FBF0，未取得自然Marshal/SDK/HTTP调用。16离线守卫主线复跑通过，五份raw hash/源码hash与共享摘要逐项核同；不晋级启动/连接。下一单变量撤五个主模块点、保留相同三终止点及120秒通道，按新证据决定后续，不盲重载。
 
+D-01b5b对照已审核：零主模块点、相同三终止点下，同一原始客户端实际运行区间18.516+100.125=118.641秒后仍存活，88 DLL/37 AV/1已核线程命名/2 C++，停点双API一致/DR0。中间216.656秒审计暂停与OS句柄间隙分列；主线17守卫及五原始输入hash核同。**最新目标保留在已核观察器预算pause，普通/HW点0，不能沿旧无target记录另load；恢复须新核归属并用裸con。** 仅支持主模块观察点影响此前启动，不证明自然SDK/HTTP/Marshal或登录成功；继续当前目标的有目的观察。
+
 F-03d3e8完成raw闭包：[双Object及完整Avatar raw图](docs/CLIENT_72_AVATAR_COMPLETE_RAW.md)。51050的12存储实际11wire、512扫描/24图/9拒绝；完整复杂34类237wire、AvatarInfo62类、Avatar65类372wire均实际进入全量reader并无untracedType。10新增/166关联及主线10定向通过，主线第三全新原生回放与双跑完整/摘要逐字节相同。只批准raw闭包，业务/完整发送/targetProtocolReady/runtime不晋级；继续独立适配器及语义，不用完整raw替代D-02。
 
 E-01d1b～e（D02-R3有限子合同）已审核：[最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)记录出生点源码等价网格25候选及两模式真实顶层loader、depot特殊键未绑定红测、六固定表21引用，和505组真实Lua事件2项。主线独立extended CLI与双跑同SHA `70ddb0ca…dde6e`、11 Python通过；按共享文档新建隔离目录实际Gradle定向2项通过，真实ScriptLib状态/实体移除及跨组反例，无数据库/HTTP/Dispatch初始化。25候选尚非生产getGroupGrids，有限测试不替代场景tick、运行revision或实机；继续真实生产网格和能力加载，不晋级R3/resourceReady。根JAR/配置/resources原dirty未变。

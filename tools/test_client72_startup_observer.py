@@ -6,7 +6,7 @@ import sys
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from observe_client72_startup import exit_log_codes, matching_returns, register_action, stop_action, summarize
+from observe_client72_startup import exit_log_codes, matching_returns, register_action, stop_action, summarize, thread_name_payload
 
 
 class StartupObserverTests(unittest.TestCase):
@@ -40,6 +40,18 @@ class StartupObserverTests(unittest.TestCase):
         self.assertEqual(self.classify(None), 'stop-missing-event')
         self.assertEqual(self.classify({'event': 'EVENT_PAUSE_DEBUG', 'data': None}),
                          'stop-unrequested-pause')
+
+    def test_thread_name_requires_the_observed_x64_contract(self):
+        event = self.exception(0x406D1388)
+        data = event['data']
+        data.update(NumberParameters=3, ExceptionInformation=[0x1000, 0x100000, 72])
+        self.assertTrue(thread_name_payload(data))
+        self.assertEqual(self.classify(event, self.expressions(event)), 'stop-unknown-exception')
+        self.assertEqual(stop_action(event, self.expressions(event), 0x1234, {}, 0x9000, set(), True),
+                         'deliver-current-application-first-chance')
+        for values in ([0x1001, 0x100000, 72], [0x1000, 0, 72], [0x1000, 0x100000, (1 << 32) | 72]):
+            bad = copy.deepcopy(data); bad['ExceptionInformation'] = values
+            self.assertFalse(thread_name_payload(bad))
 
     def test_owned_stop_ignores_stale_exception_state(self):
         event = {'event': 'EVENT_BREAKPOINT', 'data': {
@@ -103,6 +115,10 @@ class StartupObserverTests(unittest.TestCase):
         self.assertEqual(summary['softwarePointsRemaining'], 0)
         self.assertFalse(summary['sdkAuthenticationVerified'])
         self.assertFalse(summary['loginOrWorldVerified'])
+        raw['mainObservationMode'] = 'none'
+        contrast = summarize(raw)
+        self.assertEqual(contrast['mainObservationMode'], 'none')
+        self.assertFalse(contrast['naturalEntryObservationEnabled'])
 
 
 if __name__ == '__main__':

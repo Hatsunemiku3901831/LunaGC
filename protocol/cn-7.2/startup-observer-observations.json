@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "task": "D02-R2 / D-01b5",
   "status": "startup-not-accepted",
-  "sourceSHA256": "56b004135285e0b1adc510fd68ca0dc387f2ef2947b5fe14c2830580f66ff423",
+  "sourceSHA256": "d4f2934a48fa41058fa3c5f37b9a17e5d0d2e52350c8d93c9e41067d87e88e95",
   "gameAttempts": [
     {
       "schemaVersion": 1,
@@ -335,11 +335,13 @@
   },
   "finalState": {
     "debuggerPreserved": true,
-    "debugging": false,
-    "relatedGameOrFixtureCount": 0,
+    "debugging": true,
+    "running": false,
+    "relatedGameCount": 1,
+    "relatedFixtureCount": 0,
     "normalBreakpointTableCount": 0,
     "hardwareBreakpointTableCount": 0,
-    "runningHelperAloneIsNotLiveness": true
+    "ownedBudgetPause": true
   },
   "boundaries": {
     "clientFilesChanged": false,
@@ -353,5 +355,99 @@
     "revisionEstablished": false,
     "rootCause": "unknown"
   },
-  "nextExperiment": "Review zero main-module software observation points, retain the same three termination API points and continuous bounded channel, then compare natural progress and WER; no attribution to protection."
+  "nextExperiment": "Preserve and audit the same paused target; plan further natural observation from the demonstrated zero-main-module-point state. Coordinate any next client load with the mainline.",
+  "sourceSHA256BeforeD01b5b": "56b004135285e0b1adc510fd68ca0dc387f2ef2947b5fe14c2830580f66ff423",
+  "finalStateD01b5a": {
+    "debuggerPreserved": true,
+    "debugging": false,
+    "relatedGameOrFixtureCount": 0,
+    "normalBreakpointTableCount": 0,
+    "hardwareBreakpointTableCount": 0,
+    "runningHelperAloneIsNotLiveness": true
+  },
+  "zeroMainModuleContrast": {
+    "task": "D-01b5b",
+    "singleClientLoad": true,
+    "mainModuleSoftwareObservationPoints": 0,
+    "terminationApiPoints": 3,
+    "plannedTotalObservationBudgetSeconds": 120,
+    "firstSegmentRunIntervalSeconds": 18.516,
+    "secondSegmentRunIntervalSeconds": 100.125,
+    "totalObservedRunIntervalsSeconds": 118.641,
+    "auditPauseGapSeconds": 216.656,
+    "osHandleReopenedAfterAudit": true,
+    "stopReason": "verified-owned-budget-pause",
+    "budgetPauseVerified": true,
+    "osAlive": true,
+    "osSignaled": false,
+    "debugging": true,
+    "running": false,
+    "eventCounts": {
+      "EVENT_CREATE_PROCESS": 1,
+      "EVENT_LOAD_DLL": 88,
+      "EVENT_SYSTEMBREAKPOINT": 1,
+      "EVENT_PAUSE_DEBUG": 43,
+      "EVENT_RESUME_DEBUG": 42,
+      "EVENT_BREAKPOINT": 1,
+      "EVENT_EXCEPTION": 40
+    },
+    "exceptionCounts": {
+      "C0000005": 37,
+      "406D1388": 1,
+      "E06D7363": 2
+    },
+    "knownThreadNameException": {
+      "code": "406D1388",
+      "firstChance": true,
+      "threeUlongPtrPayload": true,
+      "type4096": true,
+      "flagsZero": true,
+      "nulNameReadable": true,
+      "targetThreadExists": true,
+      "deliveredUnchanged": true,
+      "source": "https://learn.microsoft.com/en-us/visualstudio/debugger/how-to-set-a-thread-name-in-native-code"
+    },
+    "allObservedStopApisAgree": true,
+    "allObservedDrZero": true,
+    "logEvicted": 0,
+    "pubThreadAlive": true,
+    "clientFilesUnchanged": true,
+    "liveFiveCodeWindowsOriginal": true,
+    "naturalEntryObservationEnabled": false,
+    "naturalCallsOrReturnsNotInferred": true,
+    "terminationApiHits": 0,
+    "exitEvents": 0,
+    "evidence": [
+      {
+        "file": "d02-r2-d01b5b-preflight.json",
+        "sha256": "84b36ef87a56e01bebdd514af462b3516de12dea572edd17d6aef0bf69468f49"
+      },
+      {
+        "file": "d02-r2-d01b5b-run1.json",
+        "sha256": "9cc7080a38e7382ea2e999cbe12703aa50f4e0520643f771efa4d6e3092ef2a2"
+      },
+      {
+        "file": "d02-r2-d01b5b-thread-name-readonly.json",
+        "sha256": "245bc740bec636517df8dcca50d2d62038aeb33d49252960e03d075493d4dd0d"
+      },
+      {
+        "file": "d02-r2-d01b5b-continue1.json",
+        "sha256": "d2cff1e7179b124a273833c20b4e6dfd1d71835cac954d5ca357bd660e4c2d81"
+      },
+      {
+        "file": "d02-r2-d01b5b-active-session.json",
+        "sha256": "20add726023f6dcb88be675858b3bd6725771fff3b30c5c2acd5a7385916fc36"
+      }
+    ],
+    "actualTests": {
+      "startupObserverGuards": 9,
+      "existingChannelGuards": 8,
+      "total": 17,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "conclusion": "Removing five main-module software points allowed this original target to reach 88 DLL events and remain alive through the bounded observation. This supports observation-point interference within the contrast, not an attribution to protection or SDK/login acceptance.",
+    "resumePolicy": "The original target is retained at the observer-owned budget pause. Recheck identity and pause ownership before bare con plus ordinary run if further execution is authorized; do not use the application-exception path or start another load."
+  }
 }
