@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+资源n4c入口`client72_resource_deep_quest.py`；主线19项与第三完整`c6d815b0…ceafa16`/摘要`0451e15f…93104f2`同双跑，证明`local/migration72/astra-main/resource-quest-review.json`。三项原始证据`astra-resources/`，具体输入/观察/解除条件见资源深入专题。
+
 资源n4b入口`client72_resource_deep_nested.py`和同名test；主线15项，第三完整SHA`430b63e5…641575`/摘要`628b58e0…ef4e44`同双跑，证明`local/migration72/astra-main/resource-nested-review.json`。类型兼容为有反例的明确模型，非完整IL2CPP；不批准候选JSON转换。
 
 Scene深入入口`client72_scene_deep.py`；主线39聚焦、第三native SHA`9cf97f36…f0d7e2`/摘要`bed41fc7…4acd5`同双跑。证明`local/migration72/astra-main/scene-review.json`、日志`scene-{native,tests}.log`，typed weapon-role仅准确工厂分支，不把全部51522定名。旧pool flag夹具红测留存，完整handler/世界未验。

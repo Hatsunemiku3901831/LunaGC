@@ -126,4 +126,44 @@ python -m unittest tools.test_client72_resource_deep_nested tools.test_client72_
 
 此后不再把“未执行LHFO外层wrapper”列为当前阻塞。仍不能将候选 `[{},{}]` 转成上述真实装载结果：缺的是候选JSON和客户端读取字节的来源对应，不是现在已经跑通的parser分支。将同一候选JSON重新序列化成自造字节不会形成独立验证。生产alias和资源门禁保持不变。
 
+## n4c：BGH 已知消费路径限定为 GameTime 条件
+
+后继独立入口 [client72_resource_deep_quest.py](../tools/client72_resource_deep_quest.py) 重新提取两个方法参数，确认selector `1487cbb80` 的输出引用以及 `149987a80` 的入参都确为69472。固定原生caller `1499882f0` 在 `149988628` 调selector，检查成功且指针非空，再检查 `1487ca860` 为false，才在 `14998865c` 把同一指针交给字符串consumer；两条call机器码重新核对。该caller只作静态条件调用链，`1487ca860` 和完整caller没有执行。
+
+selector实际扫描父对象`+48`数组、跳过非18的条件、返回首个enum18；18已独立恢复为 `QUEST_CONTENT_GAME_TIME_TICK`，不是20/LUA_NOTIFY。8个实际样本分别为 `[20]`拒绝、`[18]`接受、`[20,18]`选第二项、`[18,18]`首项优先、空列表、空父、空数组、null元素。前6项完整返回，最后两项到原生null helper；输出在搜索前实际清零。每个非null条件先通过首卡真实parser生成，未直接伪造BGH字段；父/数组存储是显式夹具。
+
+这个结果关闭“已知非空字符串消费者是否足以解释LuaNotify”的歧义：**它不能**。这不是全二进制不存在其他LUA_NOTIFY消费者的证明；有界声明参数/直接call发现没有提供所需的Lua键匹配证据，不能把这条GAME_TIME_TICK链换名使用。
+
+新增4项独立断言；与n4a/b合计19项通过，未增加Java/全面回归。两次新进程完整和摘要逐字节相同：
+
+| n4c产物 | SHA-256 | 字节 |
+| --- | --- | --- |
+| `local/migration72/astra-resources/quest-{1,2}.json` | `c6d815b0b0094186e80f3cdba514508cd73c381aaf4125596e46027ecceafa16` | 15609 |
+| `protocol/cn-7.2/resource-deep-quest-observations.json` / 本机quest-summary-2 | `0451e15f8e74040b5051ff5fafdfca6168e7ba0f30811f8f516a9fbbb93104f2` | 8823 |
+| 新工具源码 | `e06e537e8c31e9aabfb0e33bbb38a87f4348ad7ca69bbea7c403429f23c5b6d0` | 7379 |
+
+```powershell
+$resourceClient = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/game_path.ps1
+python tools/client72_resource_deep_quest.py --client $resourceClient --output local/migration72/astra-resources/quest-review.json --summary local/migration72/astra-resources/quest-summary-review.json
+python -m unittest tools.test_client72_resource_deep_quest tools.test_client72_resource_deep_nested tools.test_client72_resource_deep -v
+```
+
+## 本轮结束时的准确后继，不把未知改成默认成功
+
+已实际推进到独立native parser可回答的默认/非零/边界、LHFO完整嵌套和BGH现有消费链；此前列出的n4b以及已知BGH typed调用关联均已执行，不能再将它们原样交接为未开始。仍未穷尽客户端全部玩法或资源图，也没有新证据允许生产转换。当前可直接执行的Sol/Terra工作仅限复验这些已固定的工具和边界、整理受控输入，不能实现尚无来源的alias。
+
+| 仍缺证据 | 已查范围与最小补充 | 所阻塞后继 / 何时可以继续 |
+| --- | --- | --- |
+| 候选 JSON 对应目标 parser 字段/flag | 当前研究目录只找到固定候选Quest/depot JSON和旧producer；没有可用原始资源blob、该候选exporter映射或接受规则数据。固定metadata现有literal/类型/parser已查；不以同shape或同值作转换来源。 | 需提供同一固定客户端的解密资源输入blob及路径/revision来源，或可信且固定hash的exporter字段映射。取得后可纯离线把原始字节送本工具独立解析，与明确ID候选记录比对；无需先部署。 |
+| 接受规则 | 30302候选Excel/BIN均无acceptCond，现有client条件类/引导对象不能创造这些server条件。 | 需独立的server acceptance源，或另一个确有该信息且来源清楚的数据。否则保留显式303和自动接受不可恢复，不能提供“转换即可完整loadAll”的规格。 |
+| BGH用于LuaNotify的业务关系 | 非空parser已验；现有typed consumer属于enum18，enum20被该selector拒绝。 | 最小目标观察为一个非空LUA_NOTIFY20资源字段及其真实进度匹配/事件键来源，或有版本依据的server消费者资料。空303与旧2101001同值不够；取得后才审 `QuestData.QuestCondition`、`QuestBinFallback` 入口alias/冲突拒绝及 `ContentLuaNotify` 回归。 |
+| 候选revision与实际选中资源 | 三固定二进制、内置revision、候选commit标签均已固定；尚无运行时热更新选择证据。 | 在未来单独授权的最小观察中记录depot loader `14d6d53a0→14d6e1570` 实际取回的必要blob、revision及输入hash，成功/失败都保留；不能修改版本文件或用健康检查解除。 |
+| 正向QuestManager/能量保存 | 只复用既有303冷读拒绝；本轮没有执行loadAll/DB。 | Java门禁 `QuestManager.java:705`、`ResourceLoader.java:85/131` 需自然满足并验必要map/引用/ERROR。Avatar `1564/1579/1605/1612` 的加载能量与保存保护要求真实depot/skill来源；未知不得填0。 |
+
+另外两条协作线已提供可复用的定向静态来源，实际语义与执行由对应代理独立核验：Scene的`GLOBAL+C6D0`在owner41992，getter `1500d85a0` 关联具名ABILITY HASH日志，`1500d5480` 是同表的AddAbilityString入口；Avatar的owner28604和39027分别关联 `AvatarOrnamentGroupExcelConfigData` 与 `AvatarOrnamentExcelConfigData` literal/getter/loader。探索摘要只在本机 `scene-string-source.json` 和 `avatar-tag38-resources.json`，不冒充本卡已批准的协议或资源字段映射。
+
+这里的实机缺口是明确的外部证据边界，不是声称任何资源难点都必须实机：如果能取得来源完整的原始blob/exporter输入，JSON映射、parser和引用可继续离线。没有该输入时重复生成同一个合成样本、重扫全部表、完整loadAll碰错或扩大模型默认值，都不能解除当前缺口。生产内容未改，未构建/部署/重启，无新增客户端验收。
+
 n4b主线核对精确type cells、slot4和类型拒绝模型，15项关联及第三新进程报告/摘要同双跑；证明`local/migration72/astra-main/resource-nested-review.json`，日志同前缀。仅闭合指定二进制外层数组样本，不批准候选JSON资源装载。
+
+n4c主线核对typed参数和caller条件边界，19项关联及第三原生报告/摘要均同双跑；证明`local/migration72/astra-main/resource-quest-review.json`。仅GAME_TIME selector有限闭合，未执行LuaNotify或批准alias。

@@ -1,0 +1,270 @@
+{
+  "schemaVersion": 1,
+  "task": "E-01/R3-resource-deep-quest-consumer",
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "priorInputs": {
+    "tools/client72_resource_deep.py": "95787d9e4cf3b941bb17045986ffa6234352818bb89e0d02ece9094b1c78e265",
+    "protocol/cn-7.2/resource-deep-observations.json": "5d0f7487de6bc4c1a5b5d43460d6e4c70152d6d8613ba16c764a2359246c69d7"
+  },
+  "declarations": {
+    "typedMethods": [
+      {
+        "owner": 55330,
+        "method": {
+          "index": 459574,
+          "name": "BGEAJKEHECK",
+          "nameIndex": "0xb63d6ad",
+          "registeredAddress": "0x1487cbb80",
+          "parameterCount": 1,
+          "flags": "0x86",
+          "virtualSlot": 65535
+        },
+        "parameters": [
+          {
+            "name": "FONLMCONKPL",
+            "type": {
+              "kind": "class",
+              "attributes": "0x2",
+              "data": "0x10f60",
+              "byRef": true,
+              "typeDefinition": 69472,
+              "name": "HOFCNOMNAME",
+              "namespace": ""
+            }
+          }
+        ]
+      },
+      {
+        "owner": 56410,
+        "method": {
+          "index": 469139,
+          "name": "BFBPOLEAEFF",
+          "nameIndex": "0xb657e9c",
+          "registeredAddress": "0x149987a80",
+          "parameterCount": 3,
+          "flags": "0x91",
+          "virtualSlot": 65535
+        },
+        "parameters": [
+          {
+            "name": "PLIHJCJDEBF",
+            "type": {
+              "kind": "class",
+              "attributes": "0x0",
+              "data": "0x9257",
+              "byRef": false,
+              "typeDefinition": 37463,
+              "name": "QuestProxy",
+              "namespace": "MoleMole"
+            }
+          },
+          {
+            "name": "FONLMCONKPL",
+            "type": {
+              "kind": "class",
+              "attributes": "0x0",
+              "data": "0x10f60",
+              "byRef": false,
+              "typeDefinition": 69472,
+              "name": "HOFCNOMNAME",
+              "namespace": ""
+            }
+          },
+          {
+            "name": "KNFNKJOMMEB",
+            "type": {
+              "kind": "valuetype",
+              "attributes": "0x0",
+              "data": "0xdc5b",
+              "byRef": true,
+              "typeDefinition": 56411,
+              "name": "EBDHBFPDPME",
+              "namespace": ""
+            }
+          }
+        ]
+      }
+    ],
+    "caller": "0x1499882f0",
+    "directCalls": [
+      {
+        "site": "0x149988628",
+        "target": "0x1487cbb80",
+        "bytesSHA256": "1a8ef6a4772272a7c75e7d2eae4275f424244510e9ad5f30f486666bd9a05104"
+      },
+      {
+        "site": "0x14998865c",
+        "target": "0x149987a80",
+        "bytesSHA256": "a44f131780ce330de08484f93e21dc9a8e47387d411ea0a0d73408f0796b07c3"
+      }
+    ],
+    "interveningPredicate": "0x1487ca860; not executed",
+    "interpretation": "static conditional caller, not a full runtime path"
+  },
+  "cases": [
+    {
+      "name": "lua-only",
+      "enumValues": [
+        20
+      ],
+      "selectedIndex": null,
+      "selected": false,
+      "outputClearedBeforeSearch": true,
+      "trace": {
+        "entry": "0x1487cbb80",
+        "stop": "0x620000100",
+        "completion": "bounded-fragment",
+        "instructions": 30,
+        "nativePathSHA256": "f56d1b769727c8f8f6315c6ad728cc6dfb5196b42dc1da17d7cc96738fc80719",
+        "models": []
+      },
+      "errorHelperExecuted": false
+    },
+    {
+      "name": "time-only",
+      "enumValues": [
+        18
+      ],
+      "selectedIndex": 0,
+      "selected": true,
+      "outputClearedBeforeSearch": true,
+      "trace": {
+        "entry": "0x1487cbb80",
+        "stop": "0x620000100",
+        "completion": "bounded-fragment",
+        "instructions": 28,
+        "nativePathSHA256": "2eba93839291118d275119b0e2802e67b09cedfd2ce531e34abe42b88ec99978",
+        "models": []
+      },
+      "errorHelperExecuted": false
+    },
+    {
+      "name": "lua-then-time",
+      "enumValues": [
+        20,
+        18
+      ],
+      "selectedIndex": 1,
+      "selected": true,
+      "outputClearedBeforeSearch": true,
+      "trace": {
+        "entry": "0x1487cbb80",
+        "stop": "0x620000100",
+        "completion": "bounded-fragment",
+        "instructions": 37,
+        "nativePathSHA256": "617357fce96b958caf79c4ffbec74af4f818ee98484c9bf7c5820dd770a9857f",
+        "models": []
+      },
+      "errorHelperExecuted": false
+    },
+    {
+      "name": "first-of-two-time",
+      "enumValues": [
+        18,
+        18
+      ],
+      "selectedIndex": 0,
+      "selected": true,
+      "outputClearedBeforeSearch": true,
+      "trace": {
+        "entry": "0x1487cbb80",
+        "stop": "0x620000100",
+        "completion": "bounded-fragment",
+        "instructions": 28,
+        "nativePathSHA256": "2eba93839291118d275119b0e2802e67b09cedfd2ce531e34abe42b88ec99978",
+        "models": []
+      },
+      "errorHelperExecuted": false
+    },
+    {
+      "name": "empty",
+      "enumValues": [],
+      "selectedIndex": null,
+      "selected": false,
+      "outputClearedBeforeSearch": true,
+      "trace": {
+        "entry": "0x1487cbb80",
+        "stop": "0x620000100",
+        "completion": "bounded-fragment",
+        "instructions": 19,
+        "nativePathSHA256": "a78d6482f3133566860ccb4f30fe8933404c8d5b2dfff3732a028de7194d18da",
+        "models": []
+      },
+      "errorHelperExecuted": false
+    },
+    {
+      "name": "null-parent",
+      "enumValues": [],
+      "selectedIndex": null,
+      "selected": false,
+      "outputClearedBeforeSearch": true,
+      "trace": {
+        "entry": "0x1487cbb80",
+        "stop": "0x620000100",
+        "completion": "bounded-fragment",
+        "instructions": 13,
+        "nativePathSHA256": "99369cc69df4255afab313bdf224ac41a8611f3b55de76f44408b9b8ea48ea3e",
+        "models": []
+      },
+      "errorHelperExecuted": false
+    },
+    {
+      "name": "null-array",
+      "enumValues": [],
+      "selectedIndex": null,
+      "selected": false,
+      "outputClearedBeforeSearch": true,
+      "trace": {
+        "entry": "0x1487cbb80",
+        "stop": "0x1404c2be0",
+        "completion": "bounded-fragment",
+        "instructions": 14,
+        "nativePathSHA256": "696e98cd430a2e0b640d401e652b3e67161dde271f0b46375f2fcd4f690aa440",
+        "models": []
+      },
+      "errorHelperExecuted": false
+    },
+    {
+      "name": "null-element",
+      "enumValues": [
+        null
+      ],
+      "selectedIndex": null,
+      "selected": false,
+      "outputClearedBeforeSearch": true,
+      "trace": {
+        "entry": "0x1487cbb80",
+        "stop": "0x1404c2be0",
+        "completion": "bounded-fragment",
+        "instructions": 23,
+        "nativePathSHA256": "c99f4a1995dec195e7f968be3fe4d1da4557d078932528c03befe9930da70360",
+        "models": []
+      },
+      "errorHelperExecuted": false
+    }
+  ],
+  "resourceReady": false,
+  "targetProtocolReady": false,
+  "runtimeStatus": "not-tested",
+  "aliasesApproved": [],
+  "luaNotifyEvaluationExecuted": false,
+  "limitations": [
+    "Actual condition parser and selector execute over explicit managed parent/array storage.",
+    "Static caller links selector to comma-string consumer after an additional unevaluated predicate.",
+    "Selection excludes enum20 in the tested array; this is not proof of absence of every LuaNotify consumer.",
+    "No JSON conversion, automatic acceptance rules, game-time or Lua gameplay evaluation is implemented."
+  ],
+  "sourceSHA256": {
+    "tools/client72_resource_deep_quest.py": "e06e537e8c31e9aabfb0e33bbb38a87f4348ad7ca69bbea7c403429f23c5b6d0",
+    "tools/client72_resource_deep.py": "95787d9e4cf3b941bb17045986ffa6234352818bb89e0d02ece9094b1c78e265",
+    "tools/client72_resource_deep_nested.py": "fbb62a933cef882cee7d04437f6a9631c37ca5ce4ebfb2661432f58720251e2f",
+    "tools/client72_emulator.py": "8007d2594ef8058a4f2a9f1c24094fb5d2551a202b4e52154876cdfe77a17c3c",
+    "tools/client72_session_runtime.py": "c6ff407e33416869a855cfa86e97c3f63a9d24019ac0f6e6dfc74a959bfe1439",
+    "tools/extract_client72.py": "7d1c75162f77c0fe0df154aa1240c142ad3f6af3295c89cc3d7b85372d3cb97d",
+    "tools/extract_client72_signatures.py": "ee92527f3607be774c28be694d6f57e9eed3aa40068b7b584979e27b6470c349"
+  }
+}
