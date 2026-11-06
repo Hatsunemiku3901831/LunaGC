@@ -1,5 +1,7 @@
 # AstaPS成果融合与D-02
 
+当前持续推进（覆盖下方历史暂停）：PlayerData已由本地native证据接入9a9853e，只发送昵称/毫秒时钟/等级10013；共享旧PropValue不变。后续b47a490仅新增独立15类47wire库存适配器，旧Store/Item/sender/包号未接管。独立Mongo778 Java、库存36 wire Java和最新600研究各自通过；统一review88证据/1268源码与Proto、151行/1121描述符/4810字段双跑一致。三层28行/248字段、结构0/ready208，固定参考及来源/GPLv3规则不变。当前JAR5db5d3b2…28fd73未部署，完整P0/SDK/资源和D-02仍未完成。详见[PlayerData](CLIENT_72_PLAYER_DATA_CONTRACT.md)与[库存适配器](CLIENT_72_INVENTORY_WIRE_ADAPTER.md)。
+
 2026-11-06 F-02b/F-03本批限定融合已验收并暂停，运行提交4bbf9fd，D-02未执行。468研究/43套761 Java/五生成检查全过；结构0/ready205。便携构建24秒，JAR `570d64f4f1680ab023c7eda7f2e930ebf5eba79791030e8499100ca8f2799bf5`内嵌4bbf9fd，92变化+114新增class匹配编译、109账号/Guard/Lua保持。前置不足未部署、无服务/测试监听；客户端目标当前未见原因未知，未操作调试器。下文更早的数量与暂停均为历史，当前以Project/HANDOFF2为准。
 
 本批来源继续固定MeChen618/AstaPS a49f51aa6f2787ffbc25cee46801b70dee860d23，HEAD/tree/clean和GPLv3署名保持；没有整仓合并或复制生成Java。所有运行Proto由本地固定native证据生成，JDK17/Gradle/protoc接管Java。本地account_type/tag15、sub_channel_id/tag10及LoginRsp两MD5字段结论不变。

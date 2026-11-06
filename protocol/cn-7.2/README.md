@@ -1,5 +1,7 @@
 # 7.2 三层映射输入
 
+最新复核：600研究回归通过；统一review84→88输入，仅新增已验inventory-contract/avatar-core/avatar-trees/marshal-storage四摘要，原84份证据和1268源/Proto、三层/151行/1121描述符/4810字段、开放边界保持，两次recover一致。独立库存wire适配器未由生产引用，不擅自加入P0必需集合。旧守卫实际拒绝新增集合；结构0/ready仍208，无实机晋级。
+
 2026-11-06 F-03d1c：PlayerData用途及五字段有限接入，28三层行，Cmd/类型23 verified/5 unresolved，schema10 verified/13 candidate/5 unresolved；248字段70 verified/9 candidate/169 unresolved。完整raw不等于业务完成，ready仍拒绝（208条缺口；较205增加来自显式列出raw未知，并非静默清零）。统一review84证据/1268源码与Proto，151根/矩阵、1121描述符文件、1258类型/4810字段，两次recover一致。见[PlayerData合同](../../docs/CLIENT_72_PLAYER_DATA_CONTRACT.md)；完整P0与实机未验。
 
 2026-11-06 F-02b/F-03当前：27三层行（含embedded Vector用途别名），Cmd/类型21 verified/6 unresolved，schema10 verified/11 candidate/6 unresolved；239字段65 verified/9 candidate/165 unresolved。字段wire和应用编码分别存，Java optional为存在性适配；不声称原target语法。研究结构0错误，ready仍205缺口，P0闭包unresolved。74证据/1267源码与Proto、150根及矩阵双跑相同；468研究/761 Java及portable构建通过后按要求暂停。当前Asta对照239/147/92、两个MD5冲突保留本地结论，旧214/130/84为F-01快照。见Project/HANDOFF2与新scene/response合同；无D-02/运行部署验收。
