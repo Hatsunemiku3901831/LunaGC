@@ -179,3 +179,8 @@ B-02e7限定原生部分消费51f7cd2、E-01c5实际生产Lua加载审计9aa8ca7
 
 
 2026-11-07活动交接（持续开发，不暂停）：D02-R0台账及Avatar e4～e8、g1独立raw适配器、f2a/f2b限定语义、R2有界对照、R3有限资源事件已审并本地提交；HEAD写入前2aeecee，JAR dfdebbda…006ec3内嵌c667344、portable30秒/逐class核对，前置未齐未部署。原始客户端留在R2自有budget pause，不能按旧无target记录另load；daily独立Mongo已正常关闭。f3 Team与daily最终1test待主线审，HTTP实际Java→native在途，REA/Ghidra注册健康且公共CLI可用、MCP当前未暴露。完整状态、失败/模型边界/文件归属和下一可执行动作见[HANDOFF2](HANDOFF2.md)；旧H2已先备份核hash，H1仅追加，D-02实机尚未通过。
+
+
+2026-11-07持续D-02活动检查点：主线截至f3e3b58，Team/生命状态、HTTP当前区/RegionList、真实daily保存/实体、出生inline及505自然事件和Quest入场台账已分别审核提交；统一review108来源/原95hash及1269生产源码保持，24定向/结构0/ready224。未部署、D-02未过，开发继续。
+用户最新“重启游戏，再进行观察”已由R2落实：旧target经已核归属的debugger stop结束，新单GlobalDispatch SW点观察37.766秒后退出80000003，WER随点移到RVA112250E0；仍待主线审核及观察通道合成复现，不盲目重复load。f4b FightProp和s1 SceneInfo raw新卡已冻结，主线58/28定向过、第三native在途，未提交/晋级；f4c及R3目标303真实恢复继续。
+详细最新现场、提交、原始证据、未审归属、运行会话、失败避坑与直接下一步见[HANDOFF2.md](HANDOFF2.md)。旧H2已先备份核验至忽略handoffs目录，证明evidence/d02-active-f3e3b58-handoff-{backup,written}.json；本条仅追加，不暂停或推送。
