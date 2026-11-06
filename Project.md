@@ -12,9 +12,11 @@
 | F-02b2 响应builder实际发送合同 | 复用Token密码学/Handler和LoginRsp全局消费来源，剔除旧号/parked/伪签名；保留账号准入/确认保存 | retcode错误分支、RSA成功和不切错key、资源版本非空字段由target消费验证；不发无来源值 | 进行中 |
 | F-03a 场景握手三层及值编码 | Ready/Init/Done/Post命名literal/typed callback→消息→wire；应用token/retcode算术与原始字段分记 | 固定native执行/独立非零边界/失败分支，8包及用到nested，不凭Asta名称或旧常量猜配 | 进行中 |
 | F-03b 初始化最小消息 | 既有P0来源图、Asta候选和本地reader/消费证据，优先PlayerData/StoreWeight等小闭包 | 明确身份/字段/来源/未知；独立wire和受影响业务/保存回归，不扩无关玩法 | 进行中 |
-| F-03c 进入场景通知生产合同 | 复用既有15237/27748及26字段、6层nested的目标reader；从现有builder所需字段追到具名消费，单独复核值编码 | 仅接入具名来源和独立native样本已足的字段；嵌套float/64位及token链；其余原名并省略，不沿用7.1 setter或Asta推断 | 进行中 |
+| F-03c 进入场景通知生产合同 | 复用既有46311/27748及26字段、6类nested的目标reader；从现有builder所需字段追到具名消费，单独复核值编码 | 仅接入具名来源和独立native样本已足的字段；嵌套float/64位及token链；其余原名并省略，不沿用7.1 setter或Asta推断 | 进行中 |
 
 运行代码/Proto变更后做JDK17便携构建及产物/进程/日志/端口核对；完整前置未齐不部署，D-02不验收。本批完成后再备份核验HANDOFF2、只追加HANDOFF。
+
+F-03c已完成40组固定原生取证和48项组合研究回归，两轮逐字节一致；最小可发送字段为scene_id/type/token/非空pos，8类44 raw字段完整保留。位置由实际任务→传送载体→真实队列→具体Default/DirectlySetPos接收者，及独立QuickV3具名pos2/centerAfter两路确认；未执行最终头像落地。见[进入场景合同](docs/CLIENT_72_ENTER_SCENE_CONTRACT.md)。world/time/UID/dungeon/transaction/limited-region继续未知，当前正以独立Java首红接入四字段，不将完整sender或P0/D-02标完成。
 
 本批研究验收：F-02b2的[最小响应合同](docs/CLIENT_72_RESPONSE_CONTRACT.md)新增6原生夹具，tag61四字段具名全局目的地和next1337/7边界闭合，工具/摘要两轮相同；最小RSA4字段/retcode-only与既有crypto/Handler4组摘要重跑一致。F-03b的[初始化raw切片](docs/CLIENT_72_INITIALIZATION_WIRE.md)134原生reader/8字段/5模型拒绝、6测试及双跑一致；21136/46070历史选择通知坐标已证不能沿用。以上仅研究合同，不等于父项、运行接入或实机完成；对应生产回归/构建与场景8握手正在实施。
 
