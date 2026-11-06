@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "task": "D-01b5g",
+  "stage": "implementation and synthetic preflight; original game not loaded",
+  "gameExecuted": false,
+  "r2Accepted": false,
+  "newSyntheticProcesses": 1,
+  "fixtureSHA256": "54b68323ec091af156788d08cb36d412f3d812cd6b596cc9c21978766f5196b7",
+  "fixtureSourceSHA256": "2e3c36a17b3bcc5627a63bfc5954b69c6b83e7df2ce7d2d3eb3e968a841406ff",
+  "fixtureDriverSHA256": "8d5b58255bb497043635137c4d882d42d9a4db58f785bdead620078fe748354c",
+  "hardwareControllerSHA256": "afdd662087817a77a6839821b1666d5f803eac0ebc604408c196bbde9b02c24b",
+  "fixtureSharedObserverSHA256": "bfdf08471ae11e928d66b266284209b01b29646b58bb1400ef70d07ea33ee031",
+  "integratedObserverSHA256": "2298ef9e7258bd0abbd1458be6306a285eec175d42f4e3fee37d179825f37928",
+  "coreHelpersUnchangedFromCommit": "942205c",
+  "sharedHelpers": [
+    "stop_action",
+    "register_action",
+    "matching_returns",
+    "return_observation"
+  ],
+  "tests": {
+    "shared": 19,
+    "newHardware": 6,
+    "realNestedIntegration": 3,
+    "total": 28,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0
+  },
+  "fixture": {
+    "stops": 9,
+    "systemAndEntrySixDrZero": true,
+    "hardwareInstalledAfterEntry": true,
+    "entryAndReturnMatched": true,
+    "hardwareOperations": [
+      "install-entry",
+      "clear-entry",
+      "install-return",
+      "clear-return"
+    ],
+    "observedAfterDr7": [
+      1,
+      0,
+      1,
+      0
+    ],
+    "observedAfterDr6": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "flagsXor": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "fullGprPreserved": true,
+    "codeWindowsUnchanged": true,
+    "finalPhase": 40,
+    "markerCalls": 3,
+    "avCaught": 1,
+    "cppCaught": 1,
+    "threeNormalExitApis": true,
+    "osPubLogExit": 0,
+    "exitAndStopPresent": true,
+    "logEvicted": 0,
+    "pubThreadAlive": true,
+    "hardwareRemaining": false
+  },
+  "finalNoGameOrFixture": true,
+  "apiPointTablesEmpty": true,
+  "gamePersistedFourPointDatabaseUnchanged": true,
+  "fixturePersistedThreeOwnedExitPoints": true,
+  "plannedGame": {
+    "seconds": 120,
+    "mainSoftwareObservations": 0,
+    "hardwareExecutionSlot": 0,
+    "entry": "1512250E0",
+    "returnSite": "14F894D43",
+    "oldFourPointLedger": "D-01b5e",
+    "serviceOrPatchChanges": false,
+    "requiresRootReviewBeforeLoad": true
+  },
+  "serverAcceptance": "h found fixed dfde JAR BuildConfig7.1.0 rejects actual CNRELWin7.2.0; builder compatibility is not routing admission; positive acceptance awaits R4",
+  "rawSHA256": {
+    "d02-r2-hw-switch-fixture.json": "52e08f11b77b2489cba5de2ba52383a34bd1d8af4fe0b5a1a5e94ed51d15d721",
+    "d02-r2-hw-switch-verification.json": "2046e4cb5ddde23f7c358b0074cfe6c552f8ab573b114fd74aad16b97d445f1b",
+    "d02-r2-hw-switch-final-audit.json": "0331557f755d50cd7384482b836f9210e82488c801bc318f5a17159c69a56f75"
+  }
+}

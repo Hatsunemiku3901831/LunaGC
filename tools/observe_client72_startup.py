@@ -16,6 +16,7 @@ import traceback
 
 from check_debug_channel72 import DEBUGGER_FILES, process_inventory, relevant_processes
 from extract_client72 import HASHES, PE, number, read_verified
+from client72_single_hardware import SingleHardwarePoint
 
 ENTRIES = {'marshal': 0x159C21C90, 'factory': 0x14052FBF0,
            'http': 0x15A3464C0, 'browser': 0x15A366300, 'sdk_rsa': 0x15997C290}
@@ -33,7 +34,7 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--seconds', type=int, default=120, choices=range(90, 151))
     parser.add_argument('--summary-output', type=Path)
-    parser.add_argument('--main-observations', choices=('software', 'none', 'global-dispatch'), default='software',
+    parser.add_argument('--main-observations', choices=('software', 'none', 'global-dispatch', 'global-dispatch-hardware'), default='software',
                         help='none runs zero main points; global-dispatch observes only the verified HTTP body consumer.')
     parser.add_argument('--resume-from', type=Path,
                         help='Resume only this observer\'s first system-stop hardware rejection; no new load.')
@@ -58,6 +59,8 @@ def main():
         args.prior_observation = args.prior_observation.resolve()
         if not args.prior_observation.is_relative_to(root / 'local'):
             parser.error('Prior observation must be in local/.')
+    if args.main_observations == 'global-dispatch-hardware' and (args.resume_from or args.continue_thread_name_from):
+        parser.error('The reviewed HW experiment is one fresh load; continuation needs a separate evidence review.')
     report = execute(root, args)
     if args.summary_output:
         args.summary_output.write_text(json.dumps(summarize(report), indent=2) + '\n', 'utf8')
@@ -104,7 +107,8 @@ def matching_returns(pending, snapshot):
 
 def main_entries(mode):
     return {'software': ENTRIES, 'none': {},
-            'global-dispatch': {'global_dispatch': GLOBAL_DISPATCH_ENTRY}}[mode]
+            'global-dispatch': {'global_dispatch': GLOBAL_DISPATCH_ENTRY},
+            'global-dispatch-hardware': {}}[mode]
 
 
 def return_observation(origin, snapshot, managed_string):
@@ -171,7 +175,11 @@ def summarize(report):
                 originalClientFilesUnchanged=report.get('originalClientFilesUnchanged'),
                 softwarePointsRemaining=(len(report.get('ownedPointsRemaining', {}))
                                          if report.get('finalState', {}).get('debugging') else 0),
-                newHardwareInstalled=False,
+                newHardwareInstalled=bool(report.get('hardwareInstalledAfterEntry')),
+                hardwareInstallationAttempted=bool(report.get('hardwareOperations')),
+                ownedHardwareLedgerRetained=report.get('ownedHardwareRemaining') is not None,
+                hardwarePointActive=bool(report.get('ownedHardwareRemaining') and report.get('osStatus')
+                                         and report['osStatus']['alive'] and report.get('finalState', {}).get('debugging')),
                 inheritedHardwareRemoved=('inheritedHardwareCleanup' in report or
                                            report.get('inheritedHardwareAlreadyCleared', False) or
                                            bool(report.get('factoryHardwareCleanup'))),
@@ -255,6 +263,7 @@ def execute(root, args):
     c = X64DbgClient(str(debugger))
     c.attach_session(sessions[0].pid)
     points, pending, process, pid, base = {}, [], None, None, None
+    hardware = None
     log_index, started, entrypoint = 0, time.monotonic(), None
 
     def capture(event):
@@ -292,6 +301,7 @@ def execute(root, args):
         report['osStatus'] = os_status()
         report['finalState'] = dict(debugging=c.is_debugging(), running=c.is_running())
         report['ownedPointsRemaining'] = {str(k): v for k, v in points.items()}
+        report['ownedHardwareRemaining'] = hardware.owned if hardware else None
         args.output.write_text(json.dumps(report, indent=2) + '\n', 'utf8')
 
     def read(pointer, length):
@@ -337,9 +347,16 @@ def execute(root, args):
         registers['cip'] = context.rip
         stack, code = read(registers['rsp'], 256), read(registers['cip'], 64)
         tid, ok = c.eval_sync('tid()'); assert ok
-        return dict(registers=registers, tid=tid, stackHex=stack.hex() if stack else None,
+        result = dict(registers=registers, tid=tid, stackHex=stack.hex() if stack else None,
                     codeHex=code.hex() if code else None,
                     registerExpressions={key: c.get_reg(key) for key in ('cip', 'rsp', 'eflags') + DR_NAMES})
+        if args.main_observations == 'global-dispatch-hardware':
+            teb, ok = c.eval_sync('teb()'); assert ok
+            identity = read(teb+0x40, 16) if teb else None
+            result.update(selectedTeb=teb,
+                          selectedPid=int.from_bytes(identity[:8], 'little') if identity else None,
+                          selectedTid=int.from_bytes(identity[8:], 'little') if identity else None)
+        return result
 
     def clear_inherited_factory(label):
         hardware = c.get_breakpoints(BreakpointType.BpHardware)
@@ -402,7 +419,8 @@ def execute(root, args):
     def observe(row):
         snap = row['snapshot']
         regs = snap['registers']
-        name = points[regs['cip']]
+        using_hardware = bool(hardware and hardware.owned and hardware.owned['address'] == regs['cip'])
+        name = hardware.owned['name'] if using_hardware else points[regs['cip']]
         if name.startswith('cn72_r2_exit_'):
             report['observations'].append(dict(kind=name, terminationApiReached=True, **snap))
             return 'termination-api-pending'
@@ -414,12 +432,15 @@ def execute(root, args):
                 item = return_observation(origin, snap, managed_string)
                 report['observations'].append(item)
                 pending.remove(origin)
-            remove(regs['cip'])
+            if using_hardware:
+                hardware.clear('matched-natural-return', row['event'])
+            else:
+                remove(regs['cip'])
             if any(item['kind'] in ('http', 'browser', 'sdk_rsa', 'global_dispatch') or
                    (item['kind'] == 'marshal' and item.get('inputHex')) for item in matches):
                 return 'natural-call-return-observed'
             return None
-        kind = name.removeprefix('cn72_r2_')
+        kind = 'global_dispatch' if name == 'cn72_r2_global_dispatch_hw' else name.removeprefix('cn72_r2_')
         item = dict(kind=kind, entryReached=True, **snap)
         raw = None
         if kind == 'marshal':
@@ -455,12 +476,17 @@ def execute(root, args):
                 return 'global-dispatch-unreviewed-return-site'
             expected = binary[pe.offset(GLOBAL_DISPATCH_RETURN, 32, executable=True):][:32]
             assert c.read_memory(address, 32) == expected
-            # Keep exactly one main-module point: replace entry by this return site.
-            remove(regs['cip'])
-        if address not in points:
-            point(address, 'cn72_r2_return')
-        else:
-            assert points[address] == 'cn72_r2_return'
+            if using_hardware:
+                hardware.clear('natural-entry-to-return', row['event'])
+                hardware.install(address, 'cn72_r2_return_hw', expected, snap['tid'], regs['rsp']+8)
+            else:
+                # Keep exactly one main-module point: replace entry by this return site.
+                remove(regs['cip'])
+        if not using_hardware:
+            if address not in points:
+                point(address, 'cn72_r2_return')
+            else:
+                assert points[address] == 'cn72_r2_return'
         pending.append(dict(kind=kind, address=address, expectedRsp=regs['rsp'] + 8,
                             tid=snap['tid'], inputHex=raw.hex() if raw is not None else None))
         if kind != 'global_dispatch':
@@ -618,6 +644,12 @@ def execute(root, args):
                                            differingBits=current['eflags'] ^ original['eflags'])
         assert not c.get_breakpoints(BreakpointType.BpHardware)
         assert register_action(report['initialSnapshot']) is None
+        if args.main_observations == 'global-dispatch-hardware':
+            report['hardwareOperations'] = []
+            report['hardwareControllerSHA256'] = hashlib.sha256((root/'tools/client72_single_hardware.py').read_bytes()).hexdigest()
+            hardware = SingleHardwarePoint(c, pid, target.name.lower(), snapshot, report['hardwareOperations'])
+            assert hardware.check(report['initialSnapshot']) is None
+            assert not any(report['initialSnapshot']['registers'][n] for n in DR_NAMES)
         assert not prior[str(BreakpointType.BpMemory)] and not prior[str(BreakpointType.BpException)]
         # A prior point is adopted only by its exact known name AND live symbol address.
         known_old = {}
@@ -651,7 +683,7 @@ def execute(root, args):
             assert actual == expected
             report.setdefault('codeChecks', []).append(dict(kind=kind, originalVA=f'{original:X}',
                                                             sha256=hashlib.sha256(actual).hexdigest(), match=True))
-        if args.main_observations == 'global-dispatch':
+        if args.main_observations in ('global-dispatch', 'global-dispatch-hardware'):
             address = base + GLOBAL_DISPATCH_ENTRY - pe.base
             expected = binary[pe.offset(GLOBAL_DISPATCH_ENTRY, 32, executable=True):][:32]
             actual = c.read_memory(address, 32)
@@ -672,7 +704,8 @@ def execute(root, args):
             if event and event['event'] == 'EVENT_BREAKPOINT' and event['data']['singleshoot'] and event['data']['addr'] == entrypoint:
                 clear_inherited_factory('main-entrypoint')
                 row['snapshotAfterEntryHardwareReview'] = snapshot()
-            register_problem = register_action(row.get('snapshotAfterEntryHardwareReview', row['snapshot']))
+            checked_snapshot = row.get('snapshotAfterEntryHardwareReview', row['snapshot'])
+            register_problem = hardware.check(checked_snapshot, event) if hardware else register_action(checked_snapshot)
             if register_problem:
                 row['action'] = report['stopReason'] = register_problem
                 break
@@ -685,12 +718,23 @@ def execute(root, args):
                     row['threadNameValidation'] = validate_thread_name(event['data'])
             tls = verified_tls_addresses(event) if event else set()
             row['verifiedTlsAddresses'] = sorted(tls)
+            owned = dict(points)
+            if hardware and hardware.owned:
+                owned[hardware.owned['address']] = hardware.owned['name']
             action = stop_action(event, expressions, row['snapshot']['registers']['cip'],
-                                 points, entrypoint, tls, bool(row.get('threadNameValidation')))
+                                 owned, entrypoint, tls, bool(row.get('threadNameValidation')))
             row['action'] = action
             if action.startswith('stop-'):
                 report['stopReason'] = action
                 break
+            if hardware and action == 'consume-main-entrypoint':
+                assert not report.get('hardwareInstalledAfterEntry')
+                assert not any(checked_snapshot['registers'][n] for n in DR_NAMES)
+                address = base+GLOBAL_DISPATCH_ENTRY-pe.base
+                expected = binary[pe.offset(GLOBAL_DISPATCH_ENTRY,32,executable=True):][:32]
+                hardware.install(address, 'cn72_r2_global_dispatch_hw', expected)
+                row['snapshotAfterHardwareInstall'] = snapshot()
+                report['hardwareInstalledAfterEntry'] = True
             if action == 'observe-owned-point':
                 reason = observe(row)
                 if reason:
@@ -719,6 +763,16 @@ def execute(root, args):
             report['budgetPauseVerified'] = True
         if c.is_debugging() and not c.is_running():
             report['finalSnapshot'] = snapshot()
+            if hardware and hardware.owned:
+                final_event = report.get('pauseEvent') or event
+                problem = hardware.check(report['finalSnapshot'], final_event)
+                if problem is None:
+                    hardware.clear('verified-final-owned-cleanup', final_event)
+                    report['finalHardwareSnapshot'] = snapshot()
+                else:
+                    report['hardwareRetainedDueToUnknownState'] = problem
+                    report['stopReasonBeforeFinalHardwareReview'] = report['stopReason']
+                    report['stopReason'] = problem
             # Restore only points created in this invocation; leave the target paused.
             for address in list(points):
                 remove(address)

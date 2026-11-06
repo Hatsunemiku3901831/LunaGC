@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+D-01b5g-preflight：[单HW前置](docs/CLIENT_72_SINGLE_HARDWARE_OBSERVER.md)、`client72_single_hardware.py`/`observe_client72_hardware_fixture.py`及原观察器`global-dispatch-hardware`模式；主线28守卫通过，现有1个fixture9停点/4动作独立重分类、全GPR/代码/入口返回/三方0及EXIT/STOP核同，未另开fixture或game。证明`evidence/d02-r2-single-hardware-main-review.json`、主线日志`logs/d02-r2-single-hardware-main-tests.log`、最终只读`evidence/d02-r2-d01b5g-pause-state.json`。原游戏轮未执行，当前无target/API空，游戏4点和fixture3点持久库保留，用户恢复后再协调单次120秒。
+
 D-01b5h1：[实际HTTP路由](docs/CLIENT_72_HTTP_ROUTE_CONTRACT.md)、`audit_client72_http_route.py`→`Client72HttpRouteAudit.java`→`trace_client72_http_route.py`；三新JVM各两真实请求/78 class匹配及正常停，实际JSON的正确签名拒绝/坏签名拒绝与列表九字段原生均验，固定同fixture重放完整/摘要同字节。正式SHA `50c365f7…0afb4`/`d7806baf…669af`，证明`evidence/http-route-main-review.json`、原始`d02-http-route-main-ef0f51ef96f94b3181889def8a9e9691/`。归档7.1.0实拒7.2，不改版本/走占位sign；当前区错误detail reader及准入仍待，不能以HTTP200晋级。
 
 F-03d3f4c：[Avatar depot](docs/CLIENT_72_AVATAR_SKILL_DEPOT.md)、`client72_avatar_skill_depot.py`/`test_client72_avatar_skill_depot`；22组/109实际Team消费/42字段/6拒绝，主线70与第三原生同双跑，完整/摘要SHA `0d1868c9…b9f4d`/`a8a7b4ce…e1a95`。证明`evidence/avatar-skill-depot-main-review.json`及`avatar-skill-depot-main-*`原始/日志。具名资源literal/cache/独立GetAvatarElementType与当前Team链已审；501/701只零缺省投影，目标parser/constructor与energySkill/LHFOOP alias未验，继续f4d真正构造/必经handler。

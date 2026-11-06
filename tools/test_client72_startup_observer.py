@@ -86,6 +86,7 @@ class StartupObserverTests(unittest.TestCase):
         self.assertEqual(list(selected), ['global_dispatch'])
         self.assertFalse(set(selected.values()) & set(main_entries('software').values()))
         self.assertEqual(main_entries('none'), {})
+        self.assertEqual(main_entries('global-dispatch-hardware'), {})
 
     def test_void_return_never_dereferences_rax_as_a_string(self):
         def forbidden_read(_):
@@ -134,6 +135,16 @@ class StartupObserverTests(unittest.TestCase):
         contrast = summarize(raw)
         self.assertEqual(contrast['mainObservationMode'], 'none')
         self.assertFalse(contrast['naturalEntryObservationEnabled'])
+        raw.update(mainObservationMode='global-dispatch-hardware',
+                   hardwareOperations=[dict(action='install')],
+                   ownedHardwareRemaining=dict(address=12345,name='private-point'),
+                   osStatus=dict(alive=False))
+        hardware = summarize(raw)
+        self.assertTrue(hardware['hardwareInstallationAttempted'])
+        self.assertFalse(hardware['newHardwareInstalled'])
+        self.assertTrue(hardware['ownedHardwareLedgerRetained'])
+        self.assertFalse(hardware['hardwarePointActive'])
+        self.assertNotIn('private-point',json.dumps(hardware))
 
 
 if __name__ == '__main__':
