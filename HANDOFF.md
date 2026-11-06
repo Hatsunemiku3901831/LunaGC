@@ -160,3 +160,6 @@ B-02e7限定原生部分消费51f7cd2、E-01c5实际生产Lua加载审计9aa8ca7
 当前portable JAR7ca18e10…e8f5f（b74cd16），整场两轮fast437→407错误组、inline仍0；未部署/未新增实机，D-02未完成。F-03d1b具名链、d2a3组合图及F-04c正式保留验签补丁正在三子代理推进；不得误还原patch在制差异。AGENTS原改动由外部f4354ef提交，resources原差异保留。只用脚本/API，API无target，不沿旧PID。
 
 详见[HANDOFF2](HANDOFF2.md)的在途归属/证据/失败/后续。覆盖前旧详细交接已备份至local/migration72/handoffs/HANDOFF2.before-resume-checkpoint-2ae4ca3.md并逐字节/hash一致，证明evidence/resume-d02-handoff-checkpoint-backup.json；本简交接仅追加。此为中途检查点，持续active，不是新的暂停指令。
+
+
+2026-11-06 活动检查点（未暂停）：持续D-02授权有效。PlayerData有限接入9a9853e、独立库存raw适配器b47a490及库存/Avatar/Marshal研究分项提交；600研究、778隔离Mongo Java、库存36 wire Java分别通过。当前JAR5db5d3b2…28fd73未部署，完整P0/SDK/资源/实机未齐。88输入统一review已a2f56ce双跑，d3d新摘要8a03338待下一次受审；三层结构0/ready208。旧HANDOFF2已逐字节备份核hash后覆盖，详见HANDOFF2.md及local证据post-adapter-handoff-backup.json。当前继续Weapon/Equip、53824拆卡及独立调试通道复现；不要沿旧PID或把原生存储模型当实机通过。
