@@ -1,0 +1,357 @@
+{
+  "schemaVersion": 1,
+  "task": "D02-R2 / D-01b5",
+  "status": "startup-not-accepted",
+  "sourceSHA256": "56b004135285e0b1adc510fd68ca0dc387f2ef2947b5fe14c2830580f66ff423",
+  "gameAttempts": [
+    {
+      "schemaVersion": 1,
+      "task": "D02-R2 / D-01b5",
+      "inputSHA256": {
+        "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+        "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+        "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105",
+        "YuanShen_Data/Plugins/AccountPlatNative.dll": "adecdf0bd5442e321b1b66b0ca9e98bef76d5067326aa4add5b75266055a6c25",
+        "YuanShen_Data/Plugins/Astrolabe.dll": "87e0a005ac46515156636af2120d3f824bcd28d69253e7d7235b959b54a0b442"
+      },
+      "debuggerFiles": {
+        "x64dbg.exe": "68d6afc2cc5a5bfd74a1b4066c0651254661355a0e384524cd1a8772adb95092",
+        "x64dbg.dll": "dc9d5ff18d6e5fc9d667a2c2bc8fa9cce15fa5e0da9728222259a4525d542c0f",
+        "plugins/x64dbg-automate.dp64": "c68f468cdfc3b0beef2ad3f1afdf8465d36cc1274fc874600eb4c5301ac1fcac",
+        "plugins/libzmq-mt-4_3_5.dll": "008828618c4abb16f63d146370fa9af5150ba024ba9bd7e16b6181d5a14d6303"
+      },
+      "pythonClientVersion": "0.9.2",
+      "observationBudgetSeconds": 120,
+      "ready": true,
+      "stopReason": "target-exited",
+      "elapsedSeconds": 15.531,
+      "events": {
+        "EVENT_CREATE_PROCESS": 1,
+        "EVENT_LOAD_DLL": 56,
+        "EVENT_SYSTEMBREAKPOINT": 1,
+        "EVENT_PAUSE_DEBUG": 39,
+        "EVENT_RESUME_DEBUG": 39,
+        "EVENT_BREAKPOINT": 1,
+        "EVENT_EXCEPTION": 37,
+        "EVENT_EXIT_PROCESS": 1,
+        "EVENT_STOP_DEBUG": 1
+      },
+      "exceptions": {
+        "C0000005": 37
+      },
+      "pubThreadAlive": true,
+      "osStatus": {
+        "alive": false,
+        "signaled": true,
+        "exitCode": 2147483652
+      },
+      "finalState": {
+        "debugging": false,
+        "running": true
+      },
+      "logExitCodes": [
+        "80000004"
+      ],
+      "logEvicted": 0,
+      "codeChecks": [
+        {
+          "kind": "marshal",
+          "originalVA": "159C21C90",
+          "sha256": "b1d43d87095c1a3de17d21704e4486c00f8a7a4a356e314c458be36d1ed7ff8c",
+          "match": true
+        },
+        {
+          "kind": "factory",
+          "originalVA": "14052FBF0",
+          "sha256": "a1f3119bab077a14fd29ea9b62348f4e97c832c1b7b25604475e6214182b680f",
+          "match": true
+        },
+        {
+          "kind": "http",
+          "originalVA": "15A3464C0",
+          "sha256": "f75de334ab9437e3d6f71a8d9ec0e12c7352a31c541244590610a7a5f51c4916",
+          "match": true
+        },
+        {
+          "kind": "browser",
+          "originalVA": "15A366300",
+          "sha256": "fd672ffa8caab098a7edadbe9b0c99eff5eafb7ab31940ba7eb249fcfaabd9a4",
+          "match": true
+        },
+        {
+          "kind": "sdk_rsa",
+          "originalVA": "15997C290",
+          "sha256": "203752af647ab396e72f1e7049c23840817ac6d5af75b4baba40ecebc021f1e4",
+          "match": true
+        }
+      ],
+      "naturalEntries": [],
+      "naturalReturns": [],
+      "originalClientFilesUnchanged": true,
+      "softwarePointsRemaining": 0,
+      "newHardwareInstalled": false,
+      "inheritedHardwareRemoved": true,
+      "clientCallsSynthesized": false,
+      "checksChanged": false,
+      "patchInstalled": false,
+      "serviceStarted": false,
+      "sdkAuthenticationVerified": false,
+      "loginOrWorldVerified": false,
+      "oldExitCause": "unknown",
+      "attempt": 1,
+      "rawEvidence": "d02-r2-startup-resume2.json",
+      "rawSHA256": "c7e119a0cc7618650135b82fabd6bbad0752f0035b4ce5749280c2d9078f66b4",
+      "preRunSeconds": 552.266,
+      "continuousRunToExitSeconds": 13.156,
+      "osPubLogAgree": true,
+      "osHandleGapBeforeRun": true,
+      "allStoppedDrZero": false,
+      "dualApiAtEveryStop": false,
+      "wer": {
+        "processIdMatches": true,
+        "pathMatches": true,
+        "reportIdMatches": true,
+        "exceptionCode": "80000004",
+        "faultModule": "YuanShen.exe",
+        "faultRva": "52FBF0",
+        "factoryEntryCorrelation": true,
+        "finalStackAvailable": false,
+        "minidumpRetained": false
+      },
+      "terminationApiHits": 0,
+      "allNamedEntryHits": 0,
+      "exitCause": "unknown",
+      "hardwareQualification": "System stop cleared only; prior factory DR state reappeared at EP and was not gated in this first implementation."
+    },
+    {
+      "schemaVersion": 1,
+      "task": "D02-R2 / D-01b5",
+      "inputSHA256": {
+        "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+        "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+        "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105",
+        "YuanShen_Data/Plugins/AccountPlatNative.dll": "adecdf0bd5442e321b1b66b0ca9e98bef76d5067326aa4add5b75266055a6c25",
+        "YuanShen_Data/Plugins/Astrolabe.dll": "87e0a005ac46515156636af2120d3f824bcd28d69253e7d7235b959b54a0b442"
+      },
+      "debuggerFiles": {
+        "x64dbg.exe": "68d6afc2cc5a5bfd74a1b4066c0651254661355a0e384524cd1a8772adb95092",
+        "x64dbg.dll": "dc9d5ff18d6e5fc9d667a2c2bc8fa9cce15fa5e0da9728222259a4525d542c0f",
+        "plugins/x64dbg-automate.dp64": "c68f468cdfc3b0beef2ad3f1afdf8465d36cc1274fc874600eb4c5301ac1fcac",
+        "plugins/libzmq-mt-4_3_5.dll": "008828618c4abb16f63d146370fa9af5150ba024ba9bd7e16b6181d5a14d6303"
+      },
+      "pythonClientVersion": "0.9.2",
+      "observationBudgetSeconds": 120,
+      "ready": true,
+      "stopReason": "target-exited",
+      "elapsedSeconds": 16.188,
+      "events": {
+        "EVENT_CREATE_PROCESS": 1,
+        "EVENT_LOAD_DLL": 56,
+        "EVENT_SYSTEMBREAKPOINT": 1,
+        "EVENT_PAUSE_DEBUG": 39,
+        "EVENT_RESUME_DEBUG": 39,
+        "EVENT_BREAKPOINT": 1,
+        "EVENT_EXCEPTION": 37,
+        "EVENT_EXIT_PROCESS": 1,
+        "EVENT_STOP_DEBUG": 1
+      },
+      "exceptions": {
+        "C0000005": 37
+      },
+      "pubThreadAlive": true,
+      "osStatus": {
+        "alive": false,
+        "signaled": true,
+        "exitCode": 2147483651
+      },
+      "finalState": {
+        "debugging": false,
+        "running": true
+      },
+      "logExitCodes": [
+        "80000003"
+      ],
+      "logEvicted": 0,
+      "codeChecks": [
+        {
+          "kind": "marshal",
+          "originalVA": "159C21C90",
+          "sha256": "b1d43d87095c1a3de17d21704e4486c00f8a7a4a356e314c458be36d1ed7ff8c",
+          "match": true
+        },
+        {
+          "kind": "factory",
+          "originalVA": "14052FBF0",
+          "sha256": "a1f3119bab077a14fd29ea9b62348f4e97c832c1b7b25604475e6214182b680f",
+          "match": true
+        },
+        {
+          "kind": "http",
+          "originalVA": "15A3464C0",
+          "sha256": "f75de334ab9437e3d6f71a8d9ec0e12c7352a31c541244590610a7a5f51c4916",
+          "match": true
+        },
+        {
+          "kind": "browser",
+          "originalVA": "15A366300",
+          "sha256": "fd672ffa8caab098a7edadbe9b0c99eff5eafb7ab31940ba7eb249fcfaabd9a4",
+          "match": true
+        },
+        {
+          "kind": "sdk_rsa",
+          "originalVA": "15997C290",
+          "sha256": "203752af647ab396e72f1e7049c23840817ac6d5af75b4baba40ecebc021f1e4",
+          "match": true
+        }
+      ],
+      "naturalEntries": [],
+      "naturalReturns": [],
+      "originalClientFilesUnchanged": true,
+      "softwarePointsRemaining": 0,
+      "newHardwareInstalled": false,
+      "inheritedHardwareRemoved": false,
+      "clientCallsSynthesized": false,
+      "checksChanged": false,
+      "patchInstalled": false,
+      "serviceStarted": false,
+      "sdkAuthenticationVerified": false,
+      "loginOrWorldVerified": false,
+      "oldExitCause": "unknown",
+      "attempt": 2,
+      "rawEvidence": "d02-r2-startup-run2.json",
+      "rawSHA256": "b6a2012d93ca1413c4ad317d67a30bd242d825d6490b0499e8c0fc93c0ec89ad",
+      "preRunSeconds": 0.203,
+      "continuousRunToExitSeconds": 12.625,
+      "osPubLogAgree": true,
+      "osHandleGapBeforeRun": false,
+      "allStoppedDrZero": true,
+      "dualApiAtEveryStop": true,
+      "wer": {
+        "processIdMatches": true,
+        "pathMatches": true,
+        "reportIdMatches": true,
+        "exceptionCode": "80000003",
+        "faultModule": "YuanShen.exe",
+        "faultRva": "52FBF0",
+        "factoryEntryCorrelation": true,
+        "finalStackAvailable": false,
+        "minidumpRetained": false
+      },
+      "terminationApiHits": 0,
+      "allNamedEntryHits": 0,
+      "exitCause": "unknown"
+    }
+  ],
+  "syntheticCases": [
+    {
+      "rawEvidence": "d02-r2-synthetic-registers1.json",
+      "rawSHA256": "8d4f4b502dd3d31c7c7fd7139db78146f95a0d004bc36c539d3d3f3b4c578d2f",
+      "finalOsPubLogExitCode": 0,
+      "phase": 40,
+      "markerCalls": 3,
+      "avCaught": 1,
+      "cppCaught": 1,
+      "dualApiSnapshotsAgree": true
+    },
+    {
+      "rawEvidence": "d02-r2-synthetic-seed-resume.json",
+      "rawSHA256": "2a44161c4d3bbd9351cd0bc0a20ed9ef0f87973a1e8ddce48364ba49cd56528b",
+      "finalOsPubLogExitCode": 0,
+      "phase": 40,
+      "markerCalls": 3,
+      "avCaught": 1,
+      "cppCaught": 1,
+      "dualApiSnapshotsAgree": true
+    },
+    {
+      "rawEvidence": "d02-r2-synthetic-restore-resume.json",
+      "rawSHA256": "e774e455e8dc05a4ada2d259f5821848e73581adcf67d428ced8a077ab88e77a",
+      "finalOsPubLogExitCode": 0,
+      "phase": 40,
+      "markerCalls": 3,
+      "avCaught": 1,
+      "cppCaught": 1,
+      "dualApiSnapshotsAgree": true
+    }
+  ],
+  "channelFindings": {
+    "systemToEntryDrRestorationReproducedOnOwnedFixture": true,
+    "freshSystemSetBecomesZeroAtEntry": true,
+    "restoredSystemDeleteReappearsAtEntry": true,
+    "dualApisSameAtObservedStops": true,
+    "afterOwnedEntryCleanupLaterStopsClean": true,
+    "reservedFlagsBitOneDifferenceAlsoObservedOnFixture": true,
+    "contextRestorationMechanism": "not yet directly traced"
+  },
+  "additionalDebuggerBinaryProvenance": [
+    {
+      "file": "release/x64/TitanEngine.dll",
+      "sha256": "0f4f992b51218b4bca6a0a8aaf7d1044b56666634c9d62948a8e7873736200d0",
+      "exactBytesMatch": true
+    },
+    {
+      "file": "release/x64/x64bridge.dll",
+      "sha256": "39730aea3509e275bc2d69d8d27f22695821b7caffa30943fa0dcf36f9f558cd",
+      "exactBytesMatch": true
+    }
+  ],
+  "sourceAudit": [
+    {
+      "url": "https://github.com/x64dbg/x64dbg/blob/2026.05.27/src/dbg/_exports.cpp",
+      "sha256": "a6711816e2e24ff58b6bb5009a9c2cd786cfaf009a5ec7cb7891dac4b01c8409"
+    },
+    {
+      "url": "https://github.com/x64dbg/x64dbg/blob/2026.05.27/src/dbg/value.cpp",
+      "sha256": "22dbd60b423a05c8a3df3e8deeee73e72dcb5a6750ccbff2c446e2df56f3e8f1"
+    },
+    {
+      "url": "https://github.com/x64dbg/x64dbg/blob/2026.05.27/src/dbg/commands/cmd-breakpoint-control.cpp",
+      "sha256": "e33d8a19c6b2110eb3786ff6532c51f581c7e0ec3b2aa39735c017c96516114d"
+    },
+    {
+      "url": "https://github.com/dariushoule/x64dbg-automate/blob/v0.8.1-ghost_fungus/src/xauto_cmd.cpp",
+      "sha256": "e391df20b911288e6609e5db182afbe8ffe8472519870310bfea2284dc82e978"
+    },
+    {
+      "url": "https://github.com/x64dbg/TitanEngine/blob/ec7a8b9352c47eb0f8cc63f033d36f705d658743/TitanEngine/Global.Engine.Context.cpp",
+      "sha256": "9e08f571a0b69e2835f5eaea00b4d16e13c4ed70d1a17545085851be951520b9"
+    },
+    {
+      "url": "https://github.com/x64dbg/TitanEngine/blob/ec7a8b9352c47eb0f8cc63f033d36f705d658743/TitanEngine/TitanEngine.Debugger.Context.cpp",
+      "sha256": "d875fcf2c67aa0afc2b53c23378bd53aa2fc6f53c16a3468d6e829775f76240f"
+    },
+    {
+      "url": "https://github.com/x64dbg/TitanEngine/blob/ec7a8b9352c47eb0f8cc63f033d36f705d658743/TitanEngine/TitanEngine.Breakpoints.cpp",
+      "sha256": "9886d1e28d60a8099f37765414d0fbdae73587d55ecbaacf88dfa54bb71e0b6e"
+    }
+  ],
+  "actualTests": {
+    "startupObserverGuards": 8,
+    "existingChannelGuards": 8,
+    "total": 16,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "finalState": {
+    "debuggerPreserved": true,
+    "debugging": false,
+    "relatedGameOrFixtureCount": 0,
+    "normalBreakpointTableCount": 0,
+    "hardwareBreakpointTableCount": 0,
+    "runningHelperAloneIsNotLiveness": true
+  },
+  "boundaries": {
+    "clientFilesChanged": false,
+    "patchInstalled": false,
+    "serviceOrDatabaseStarted": false,
+    "targetCallsSynthesized": false,
+    "clientChecksChanged": false,
+    "naturalNonemptyMarshalReturned": false,
+    "sdkHttpReturned": false,
+    "loginWorldVerified": false,
+    "revisionEstablished": false,
+    "rootCause": "unknown"
+  },
+  "nextExperiment": "Review zero main-module software observation points, retain the same three termination API points and continuous bounded channel, then compare natural progress and WER; no attribution to protection."
+}

@@ -10,6 +10,8 @@
 
 F-03d3e7限定验收：两类29wire、256扫描/14图/9拒绝，六种message-list的12条具体AOT；多份同形非空列表、signed真实Add、两uint64高位交换、合并/零/错误均过。8新增及146关联研究通过，主线8定向及第三全新原生回放与代理双跑完整/摘要逐字节相同；仅剩e8的51050及完整组合，业务/runtime仍未知。见[多份message列表](docs/CLIENT_72_AVATAR_MULTI_LISTS.md)。
 
+D-01b5a（D02-R2观察子合同）已审核：[有界启动观察](docs/CLIENT_72_STARTUP_OBSERVER.md)保留两次游戏退出与三自有进程复现。第二轮39停点双API一致/DR全0，12.625秒后OS/PUB/log同为80000003；两轮独立WER均指factory RVA52FBF0，未取得自然Marshal/SDK/HTTP调用。16离线守卫主线复跑通过，五份raw hash/源码hash与共享摘要逐项核同；不晋级启动/连接。下一单变量撤五个主模块点、保留相同三终止点及120秒通道，按新证据决定后续，不盲重载。
+
 F-03d3f2a限定完成：[Hero/本地角色消费](docs/CLIENT_72_AVATAR_CONTROL.md)实际将root tag3经GUID模型索引接到具名SetHeroMoveRatio，而GetLocalAvatarConfigId另用场景管理器+0x284；7个独立原生图/15关联测试及双新进程一致。不批准`cur_avatar_guid`，不把夹具中的两类实体关联当实际入场/切人；F-03d3f2继续找场景控制实体写入与队伍来源，映射/ready保持。
 
 E-01d1a（D02-R3子合同A）已验收：固定候选commit/tree/blob四表，受控角色10000005/10000007→武器11101及501/504/701/704四depot的skills/subSkills/energySkill/attackModeSkill正引用全存在；0保持空引用。3新增及原资源7项共10聚焦测试通过，主线独立重跑报告SHA `a5974ef3…f5698f`与两份代理报告相同。标准模块入口首次导入失败已修并真实复验；天赋/成长/突破/能力/武器后代及revision、真实加载仍未知，R3父项/resourceReady不晋级。见[最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)；仅离线工具/测试/文档，未部署。
@@ -72,6 +74,7 @@ E-01d1a（D02-R3子合同A）已验收：固定候选commit/tree/blob四表，�
 | D-01b3 恢复真实启动与字符串/分配上下文观察 | 固定三输入/SDK/插件归属、原D-01b异常证据、现有Automate会话 | 仅在无其他目标时用已有调试器加载本项目原始客户端，不装未验补丁/服务；同通道捕获并逐次原样交付首次异常，二次异常停；核已知代码及真实初始化/非空Marshal自然调用，分清工具模型缺口/目标退出，禁止强置结果或沿旧PID | 进行中 |
 | D-01b3a 真实TLS来源与Marshal存储模型 | D-01b3已复现141CAD123/141CA72CF | 038132e；自然E06暂停两份Global/TLS/UTF8、4代码窗live同固定EXE，GC+19D0/CRT+1A50/页表非零；17 native Marshal+转换返回、独立UTF16/双跑、12聚焦通过；CRT/GC仍模型，live Marshal未命中，末80000004/前80000003及PUB缺口不归因 | 已完成 |
 | D-01b4 独立目标复现调试观察通道 | D-01b3无目标/末事件缺失 | 14df545；5模式双跑10自有进程均OS退出0/PUB EXIT/STOP/log闭合，8守卫过；裸con与con0差异、弱load判定及新load日志游标已复现，未复现旧游戏末事件缺口，退出根因仍unknown；最终无target/相关进程/HW，D01b5未执行并按要求暂停 | 已完成 |
+| D-01b5a 有界启动退出与DR恢复复现 | D-01b4、固定五输入及实时归属 | 两游戏OS/PUB/log退出闭合、WER均factory RVA52FBF0；第二轮39停点DR0/双API一致仍80000003。三自有合成目标复现系统→EP的DR恢复并最终退出0；16守卫全过，主线核raw/源码摘要hash。仅观察合同已验，启动/SDK/HTTP仍未通过，下一零主模块点单变量对照 | 已完成 |
 
 2026-11-06本批F-02b1/b2、F-03a/b/c限定融合验收完成，按用户要求暂停；暂不D-02实机。运行代码提交`4bbf9fd`：完整LoginReq/两响应及嵌套21类198字段，八个场景握手、容量5字段、进入场景通知四字段及8类44字段raw闭包已接入。未知字段保留原名且不发送；完整初始化/P0、SDK/补丁/资源及实际客户端序列仍未验。
 
