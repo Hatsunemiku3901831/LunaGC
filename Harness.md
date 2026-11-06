@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+F-03d3f3：[队伍与当前Team](docs/CLIENT_72_AVATAR_TEAM.md)，`client72_avatar_team.py`/`test_client72_avatar_team`；四字段限定消费、13独立wire/42选择消费/9拒绝。主线35定向及第三新进程原生回放与双跑完整/摘要同SHA `e5167295…9eceb9`/`3a085032…93073`，证据`evidence/avatar-team-main-{native,summary,review}.json`、`logs/avatar-team-main-{tests,native}.log`。具名事件与真实字典写入/成员去重/64位查询已审；完整handler、保存、非空fallback/override、场景效果和root3当前控制GUID未知。不改mapping/ready/sender，继续f4a状态及完整SceneInfo。
+
 E-01d1f～h：[最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)F/G/H与`d02-resource-observations.json`；tracked `Client72D02ResourceAudit`实际网格/初始suite，`Client72D02AbilityAudit`实际28引用与9缺失反例，`D02Group601CreateTest`真实工作台事件2项。主线独立复算六层cache规范hash（`evidence/d02-r3-grid-main-review.json`）及能力两正常/一反例新JVM与原报告同hash；601 XML/class/source核对通过，无DB/HTTP/Dispatch。fast449/inline0、任务动态组及799目标wire缺口保持，当前daily独立Mongo定向卡占用27027/Gradle，不能同时启停/构建。
 
 F-03d3f2b：[场景入场角色身份](docs/CLIENT_72_SCENE_ENTRY_IDENTITY.md)，`client72_scene_entry_identity.py`/`test_client72_scene_entry_identity`；21761/type34208身份与5外字段、128扫描/10图/3模型拒绝。tag12→真实manager/store→scene+284→具名本地角色getter；6新增/21关联通过，双新进程完整/摘要SHA`0c6a06d8…e91788`/`550fcdd6…4644d1`。原始`evidence/scene-entry-identity-*-final{,2}.json`与失败日志保留；三nested/网络完整Handler/效果/实体生成未验，root3仍非当前控制GUID，不改准入或生产。

@@ -6,6 +6,8 @@
 
 ## 当前阶段
 
+F-03d3f3已验：[队伍与当前Team消费](docs/CLIENT_72_AVATAR_TEAM.md)独立证明root tag5的Team ID映射、child tag2名称/tag12有序Avatar GUID成员，以及root tag12选择当前Team；具名TeamNameRefresh/CurrentTeamChanged与实际写入、GUID查找相互印证。13组wire/42次消费/9拒绝，主线35定向和第三全新原生回放通过，完整/摘要与代理双跑逐字节相同。仅批准四字段的限定消费关系；完整Handler、Rename、保存、实体效果及root3当前控制GUID仍未验，不改映射/ready或生产发送。继续Avatar状态、属性与非空场景实体合同。
+
 E-01d1f～h已审核：[最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)实际生产getGroupGrids及出生点25组成立；fast449错/inline0，不把网格相同当Lua行为相同。主线独立逐cell比较六层规范网格与摘要/旧模型hash全部相同，并纠正一字符手写raw指纹；31初始region均不含出生点，任务/保存套件仍开放。真实能力loader28引用命中与缺Wind9缺失反例经主线独立javac/JVM复验；601真实GADGET_CREATE/Worktop选项2项及源码/class/XML已审，当前sender799及wire未验，尚未联网。只关有限资源/事件合同，R3/resourceReady仍false；继续独立库验证日常实际生成与动态组。
 
 F-03d3f2b已验：[场景入场角色来源](docs/CLIENT_72_SCENE_ENTRY_IDENTITY.md)由具名21761/type34208的tag12/u32实际读入管理器，再经真实store写scene+284并接具名GetLocalAvatarConfigId；五外字段128扫描、10限定图/3模型拒绝，6新增/21关联及双新进程完整/摘要一致。三nested仅空envelope、完整Handler/效果/实体生成未验，root3仍不批准当前控制GUID。继续非空SceneInfo及队伍/实体关联，不以本前缀晋级完整入场。
@@ -66,7 +68,7 @@ E-01d1a（D02-R3子合同A）已验收：固定候选commit/tree/blob四表，�
 | F-03d2a1 库存15类型依赖与原始外层 | F-03d2a固定输入/全部usage来源 | a81f84b；15类型42存储依赖，512扫描/21图/5拒绝、8新增/38关联及双跑；root/Item外层+2叶子13wire限定通过，其他非空nested范围拒绝，fullStoreRawClosure=false | 已完成 |
 | F-03d2a2 uint32 map与packed列表 | F-03d2a1 | eec23d2；6类22wire，5map/5list；768扫描/29图/3模型拒绝，8新增/46关联及双跑；公共runtime未改 | 已完成 |
 | F-03d2a3 嵌套oneof及库存组合图 | F-03d2a1/a2 | 9fd871e；15类47wire、1920扫描/32图/6拒绝，8新增/54关联及双跑；6 Item非空分支、3组oneof、map clear/copy/list append真实执行，身份/业务不晋级 | 已完成 |
-| F-03d3 AvatarData递归Avatar闭包 | F-03d1方法、本地固定输入 | 20143批量Avatar用途及5字段/3属性ID已f1独立证明；e1～e8完成65类372wire raw闭包，完整Team/Rename/当前角色链及生产未验，不发送猜测字段 | 进行中 |
+| F-03d3 AvatarData递归Avatar闭包 | F-03d1方法、本地固定输入 | 20143批量Avatar用途及5字段/3属性ID已f1独立证明；e1～e8完成65类372wire raw闭包，f3限定四个Team字段消费已验；Rename/完整当前角色链及生产未验，不发送猜测字段 | 进行中 |
 | F-03d3a Avatar候选依赖与raw外层下界 | F-03d1a/d2a方法、本地固定三输入 | 2cfe1e4；3类14wire、384扫描/19原生图/5拒绝、8新增/62关联及双跑一致；65类368存储/37容器85 AOT仅静态审计；AvatarInfo非空拒绝，身份unknown/fullAvatarRawClosure=false | 已完成 |
 | F-03d3b AvatarInfo外层与四叶子raw下界 | F-03d3a、已有78350 raw图 | 7470ef6；6类53wire、1536扫描/24独立图/11拒绝、9新增/69关联及双跑一致；共享reader codec冲突先红后专用上下文修复，公共runtime未改；复杂四子图非空拒绝/fullAvatarRawClosure=false，不迁生产 | 已完成 |
 | F-03d3c Avatar两个小树非空raw闭包 | F-03d3b | 24caff2；先审6类18存储/16引用后768扫描确认18wire，20独立图/10拒绝、8新增/77关联及双跑一致；同形两对象独立值、singular合并/list追加实跑；两树限定闭包true，完整Avatar/身份仍false/unknown | 已完成 |
@@ -81,6 +83,7 @@ E-01d1a（D02-R3子合同A）已验收：固定候选commit/tree/blob四表，�
 | F-03d3e8 双Object与完整复杂图 | F-03d3e1至e7 | 51050的12存储→11wire/512扫描、24图/9拒绝；tag100复制与双Object独立、全部非空复杂34类237wire/Avatar65类372wire完整reader进入。10新增/166关联及主线10定向、第三原生重跑与双跑完整/摘要相同。只raw闭包true，业务/发送/runtime仍未验 | 已完成 |
 | F-03d3g1 独立完整Avatar raw适配器 | F-03d3e8及固定11来源 | 独立65类372wire/7 oneof/13 map/42 packed；275新Java+36库存、8新Python/22关联、主线22及生成check通过；268实际Java→native双跑及主线第三完整/摘要相同，负零/64位/复制/merge/错误差异明确，旧schema/sender/opcode未改。未批准生产发送或runtime | 已完成 |
 | F-03d3f1 Avatar初始化用途与最小字段语义 | 已验root/48178子集及Equip合同，完整raw另等e8 | 36a4669；5字段/3属性ID，22通知/25应用/24分配/54属性/44装备槽交付/7拒绝，10新增79关联及双跑；具名Avatar资源/原生u64字典和int64→double消费通过，cur_avatar_guid/FightProp/完整Handler未知，未迁生产，已停止后续工作 | 已完成 |
+| F-03d3f3 Team映射与当前Team消费 | f1、f2a、e8及固定三输入 | 四字段、13组wire/42消费/9拒绝；原生Team名称事件/去重/qword扩容/当前选择/GUID查找及零值边界已验。10新增/35关联与主线35通过，第三全新原生完整/摘要与双跑相同；完整Handler/保存/场景与root3当前控制语义不晋级 | 已完成 |
 | E-01c6 嵌套require调用者bindings恢复 | E-01c5已复现成功置null/异常残留 | b74cd16；6例先5失败后全过，6套32 Lua及8加载审计全过；portable25秒JAR7ca18e10…e8f5f、9class相符，其余45935不变；双轮整场fast407/449、inline0，30错误组恢复且无新增；完整前置不足未部署，local/资源/实机不晋级 | 已完成 |
 | F-04a SDK/补丁/资源前置现场复核 | 当前checkout/config/GAME_PATH、三输入与现有会话 | 三哈希/参考clean/归属已验；API会话无target；两个status退出1及6个revision候选；源码旧强制验签钩子与字符串工厂缺口保留，见CLIENT_72_RUNTIME_PREREQUISITES；仅核对不代表F-04完成 | 已完成 |
 | F-04b 保留验签的本地信任供给合同 | F-04a、既有原生seed/response/dispatch密码学 | 6b72887；14原生/23次key验签（4成功10拒绝）、18关联和双跑；COPY只R13、CHECK只R8/root第五参数，返回/flags不变；未知key不供给；未装钩子/未导出私钥 | 已完成 |
