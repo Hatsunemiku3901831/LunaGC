@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+F-03d3s1：[SceneInfo有限raw](docs/CLIENT_72_SCENE_INFO_RAW.md)，`trace_client72_scene_info_raw.py`/`test_client72_scene_info_raw`；9类36字段、1152扫描/40成功/21拒绝，主线28关联及第三原生同双跑，完整/摘要SHA `74cd8618…6a7ab`/`f52f41a8…7f7c75`。证明`evidence/scene-info-raw-main-review.json`、主线输出/日志同`scene-info-raw-main-*`前缀。83320 tag2/3实际fixed32；64→65增长是模型边界。72829仅空外壳、非空拒绝，完整SceneInfo/生产未知；先沿实际消费者确定必要分支及实体关联，再定Object后继范围。
+
 F-03d3f4b：[初始化FightProp](docs/CLIENT_72_AVATAR_FIGHT_PROPS.md)，`client72_avatar_fight_props.py`/`test_client72_avatar_fight_props`；23组wire/24应用/5错误、12新增/58关联，主线58和第三原生同双跑，完整/摘要SHA `af225811…2f2793`/`66113992…d940e`。证明`evidence/avatar-fight-props-main-review.json`、主线原生/摘要及测试日志同`avatar-fight-props-main-*`前缀。省略map清旧值，float30710与f1 double不同；7个ID及HP事件/watcher/有限UI块之外未知，不批准生产或完整战斗，继续f4c。
 
 E-01d1m：[Quest入场台账](docs/CLIENT_72_D02_QUEST_ENTRY.md)，固定旧/目标QuestExcel和chapter303，ProgressManager实际条件调用30302、旧2101001组套件、QuestBinFallback/自动索引与旧档deferred边界分开。主线静态证明`evidence/d02-r3-quest-entry-main-review.json`（四数据/配置hash、17814分布、16/63及61/29计数），未新增loader/Gradle/DB/客户端执行。历史五行红测`d02-r3-quest-red/`复用，不加alias/关quest；下一按专题做隔离303真实加载与条件启动。
