@@ -14,6 +14,10 @@ import tempfile
 
 
 RUNTIME_SHA256 = '2566f46604df80ddaad05801fb182a7217b9d057a2c8619e21fc54e49db083fe'
+# Independently reviewed E-01c6 build; this is a research baseline, not a second
+# supported client/runtime. Filled only after the portable artifact is checked.
+REQUIRE_BINDINGS_RUNTIME_SHA256 = '7ca18e10c056fd0715e57cdbbb13b4607e324362675a7127b2ed28b5269e8f5f'
+REQUIRE_BINDINGS_LOADER_SHA256 = 'e73c9aff3a76093db7e69ff80b4802888c61eceeffcd20a792acab6f73ebf0b9'
 LEGACY_COMMIT = 'dac2a9d43332ef51879522cf39da2831b0ca0543'
 MANIFEST_SHA256 = '47b783755a7c8f714a868db551f76a503092e0fd7895cc7a787e6060e651c02d'
 PARENT_REPORT_SHA256 = 'b99d5deeb475e2dae3269e7946f574d001230e98d9ae18c212b39ad4eada3a7d'
@@ -46,10 +50,11 @@ def sha256(path, normalize=False):
     return hashlib.sha256(raw.replace(b'\r\n', b'\n') if normalize else raw).hexdigest()
 
 
-def verify_inputs(repository, baseline, parent_path, jar):
-    if sha256(jar) != RUNTIME_SHA256:
+def verify_inputs(repository, baseline, parent_path, jar, *, runtime_sha256=RUNTIME_SHA256,
+                  reviewed_sources=REVIEWED_SOURCES):
+    if sha256(jar) != runtime_sha256:
         raise ValueError('Review changed production loader JAR')
-    for name, expected in REVIEWED_SOURCES.items():
+    for name, expected in reviewed_sources.items():
         if sha256(repository / name, True) != expected:
             raise ValueError('Review changed production loader dependency: ' + name)
     if sha256(parent_path) != PARENT_REPORT_SHA256:
@@ -159,12 +164,20 @@ def main():
     parser.add_argument('--repository', type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument('--parent-report', type=Path, default=Path('local/migration72/evidence/scene-grid-inline-audit.json'))
     parser.add_argument('--scope', choices=('probe', 'all-static'), default='probe')
+    parser.add_argument('--loader-review', choices=('baseline', 'require-bindings'), default='baseline')
     args = parser.parse_args()
     repository, baseline, java, jar = (path.resolve() for path in (args.repository, args.baseline, args.java_home, args.runtime_jar))
     for output in (args.output, args.summary_output):
         if output.resolve().is_relative_to(baseline):
             parser.error('Output must be outside resource input')
-    parent = verify_inputs(repository, baseline, args.parent_report, jar)
+    runtime_sha256 = RUNTIME_SHA256
+    reviewed_sources = REVIEWED_SOURCES
+    if args.loader_review == 'require-bindings':
+        runtime_sha256 = REQUIRE_BINDINGS_RUNTIME_SHA256
+        reviewed_sources = {**REVIEWED_SOURCES,
+            'src/main/java/emu/grasscutter/scripts/ScriptLoader.java': REQUIRE_BINDINGS_LOADER_SHA256}
+    parent = verify_inputs(repository, baseline, args.parent_report, jar,
+                          runtime_sha256=runtime_sha256, reviewed_sources=reviewed_sources)
     groups = [row['id'] for row in parent['groupDeclarations'] if not row['dynamicLoad'] and row['evaluated']]
     if args.scope == 'probe':
         groups = [133106026]
@@ -180,8 +193,9 @@ def main():
                                       root / mode, args.output.resolve().with_name(args.output.stem + '-' + mode))
             if modes[mode]['businessAttempts'] or modes[mode]['effectiveSourceDifferences']:
                 raise ValueError('Observed business/source boundary; raw report retained, stop before expansion')
-    report = dict(schemaVersion=1, scope=args.scope, legacyResourceCommit=LEGACY_COMMIT, runtimeJarSHA256=RUNTIME_SHA256,
-                  parentReportSHA256=PARENT_REPORT_SHA256, inputManifestSHA256=MANIFEST_SHA256, reviewedSources=REVIEWED_SOURCES,
+    report = dict(schemaVersion=1, scope=args.scope, loaderReview=args.loader_review,
+                  legacyResourceCommit=LEGACY_COMMIT, runtimeJarSHA256=runtime_sha256,
+                  parentReportSHA256=PARENT_REPORT_SHA256, inputManifestSHA256=MANIFEST_SHA256, reviewedSources=reviewed_sources,
                   toolSourceSHA256={name: sha256(repository / name, True) for name in (
                       'tools/Client72ProductionSceneLoadAudit.java', 'tools/audit_production_scene_load72.py')},
                   modes=modes, groupDifferences=compare_modes(modes), resourceReady=False, legacySourceIsNative72=False,

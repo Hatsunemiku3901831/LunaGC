@@ -1,5 +1,7 @@
 # E-01c5：真实生产Lua加载、require吞错与绑定差异
 
+2026-11-06后续[E-01c6](CLIENT_72_REQUIRE_BINDINGS_FIX.md)已最小修复嵌套eval的调用者bindings恢复：新portable JAR及只变一个loader来源的独立review通过，两轮整场fast407组/449事件、inline零错误；旧437/481完整报告保留。local defs与其他资源/实机缺口仍在；默认baseline守卫不自动接受新来源，复现新结果须显式`--loader-review require-bindings`。用户已恢复持续D-02，下方旧暂停语句不再代表当前执行指令。
+
 2026-11-06 F-02a构建后，根JAR已是a8c2d893…53a8f8。以下整场审计仍固定旧研究JAR SHA-256 `2566f46604df80ddaad05801fb182a7217b9d057a2c8619e21fc54e49db083fe`；已校验归档到`local/migration72/builds/LunaGC-before-fusion-2566f466.jar`，复现下方CLI时将`--runtime-jar`指向此归档，不能用新JAR并刷新守卫过关。本轮未改加载器/脚本；163个Guard/Player/脚本class对旧构建逐字节相同，589 Java和399研究回归通过，旧437/481与inline零错误结论仍限于原输入/顺序/边界。见[融合记录](CLIENT_72_ASTAPS_FUSION.md)，未部署/实机，验收后暂停。
 
 2026-11-06。本项执行真实`ScriptLoader.init/getScript/createBindings/eval`及`SceneGroup.load`，没有以既有求值模型替代生产加载器。**这仍是限定离线审计，不是原环境兼容、资源ready或实机入场验收；E-01c/E-01/D-02均未完成。** 按用户本轮要求，完成本批限定审计后交主任务整合交接并暂停；没有继续修复生产加载器或改运行配置。

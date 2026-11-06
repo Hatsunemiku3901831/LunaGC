@@ -86,7 +86,7 @@ table.insert(suites[1].gadgets,1)'''
         self.assertNotIn('after_call', group['bindingTypes'])
         self.assertEqual(group['status'], 'outside-scope-business-call-blocked')
 
-    def test_successful_first_require_loses_caller_bindings_for_second_fast_require(self):
+    def test_successful_first_require_preserves_caller_bindings_for_second_fast_require(self):
         group = EMPTY + 'require "First"\nrequire "Second"\nafter_requires=true'
         commons = {'First': 'first_marker=7',
                    'Second': 'if first_marker ~= 7 then error("second require lost caller bindings") end\nsecond_completed=true'}
@@ -94,9 +94,10 @@ table.insert(suites[1].gadgets,1)'''
         inline = self.fixture(group, commons, fast=False)['groups'][0]
         self.assertEqual(fast['scalarBindings']['first_marker']['value'], '7')
         self.assertEqual(fast['scalarBindings']['after_requires']['value'], 'true')
-        self.assertNotIn('second_completed', fast['bindingTypes'])
-        self.assertIn('second require lost caller bindings', fast['errors'][0]['message'])
-        self.assertEqual(fast['status'], 'partial-production-evaluation')
+        self.assertEqual(fast['scalarBindings']['second_completed']['value'], 'true')
+        self.assertEqual(fast['errors'], [])
+        self.assertEqual(fast['status'], 'loaded-within-audit-scope')
+        self.assertEqual(fast['bindingsSHA256'], inline['bindingsSHA256'])
         self.assertEqual(inline['scalarBindings']['second_completed']['value'], 'true')
         self.assertEqual(inline['status'], 'loaded-within-audit-scope')
 

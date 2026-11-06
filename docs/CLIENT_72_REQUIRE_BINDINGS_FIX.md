@@ -1,5 +1,19 @@
 # E-01c6：嵌套 require 的调用者 bindings 恢复
 
+主线整合已完成：生产修复`b74cd16`、32项关联及8项真实加载审计测试通过；portable构建25秒，JAR SHA-256为`7ca18e10c056fd0715e57cdbbb13b4607e324362675a7127b2ed28b5269e8f5f`，内嵌b74cd16。6个loader/嵌套class与编译输出一致；另3个build-info class中两个调用者仅内联提交字符串变化。其余45,935 class逐字节不变，无新增class。未部署：完整P0、SDK/补丁信任与资源前置仍不齐，无健康/运行JAR验收对象；D-02未完成。
+
+主线先实际保留旧loader守卫对ScriptLoader的拒绝，再只为`--loader-review require-bindings`固定上述JAR及一个规范化ScriptLoader hash，另18份生产源码和脚本manifest均重新核对不变；默认baseline不自动放行新源码。两轮13,616组fast/inline真实加载报告及摘要各自逐字节一致；fast从437错误组/481事件降到407组/449事件，30组恢复、无新增错误组，30组typed对象和33组bindings发生实际变化。inline所有组的bindings及typed对象hash对旧报告均不变，仍零错误。两模式间仍有512组bindings/426组typed对象不同，词法local问题不据此消除。
+
+共享摘要为[require-bindings-scene-load-observations.json](../protocol/cn-7.2/require-bindings-scene-load-observations.json)，resourceReady仍false。本机`evidence/require-bindings-{old-guard-rejection,build-artifact,scene-load-determinism}.json`、`require-bindings-scene-load-{audit,repeat,summary,summary-repeat}.json`及同前缀logs保留完整来源、两轮一致和隔离/无业务调用/无基础设施初始化证据。首次本地JAR比较脚本重复枚举ZIP名导致过慢，仅停止了本任务已确认的辅助Python；改用集合后还识别出两个内联提交常量调用者，已用javap核对仅提交字符串变化，不将辅助断言失败当运行缺陷。
+
+```powershell
+$requireJdk = (Get-ChildItem local/runtime -Directory -Filter 'jdk-17*' | Select-Object -First 1).FullName
+python tools/audit_production_scene_load72.py --baseline resources --java-home $requireJdk --runtime-jar LunaGC-7.1.0.jar --loader-review require-bindings --scope all-static --output local/migration72/evidence/require-bindings-scene-load-audit.json --summary-output local/migration72/evidence/require-bindings-scene-load-summary.json
+python -m unittest tools.test_audit_production_scene_load72 -v
+```
+
+以下为子代理交付时的红绿测试及边界记录，“主线待构建/审计”已由上文接管，不改写历史实际执行范围。
+
 2026-11-06。针对 [E-01c5 生产加载审计](CLIENT_72_PRODUCTION_SCENE_LOAD.md) 已复现的问题，新增真实生产 JUnit 回归并修改 `ScriptLoader.eval`。本项限定修复已通过 6 项新增测试和 6 套共 32 项 Lua 关联回归；完整资源、生产整场审计、运行构建/部署及 D-02 验收由主任务继续整合，不能以本项测试替代。
 
 ## 问题与最小改动

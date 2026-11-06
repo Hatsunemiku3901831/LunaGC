@@ -1,0 +1,120 @@
+{
+  "differenceKindCounts": {
+    "bindingTypes": 235,
+    "bindingsSHA256": 512,
+    "collections": 321,
+    "objectsSHA256": 426,
+    "status": 407,
+    "suiteBound": 326
+  },
+  "differentGroups": 512,
+  "groupDifferencesSHA256": "c2ec0092db2f5511c7ed51c37ec050c83ce58b16c28d241c6ce49e20cab2993d",
+  "inputManifestSHA256": "47b783755a7c8f714a868db551f76a503092e0fd7895cc7a787e6060e651c02d",
+  "legacyResourceCommit": "dac2a9d43332ef51879522cf39da2831b0ca0543",
+  "legacySourceIsNative72": false,
+  "limitations": [
+    "Only actual ScriptLoader.init/getScript/createBindings/eval/SceneGroup.load; no modeled loader",
+    "Independent JVM per fast/inline; fresh in-memory caches and isolated config/data/cache paths",
+    "Fixed manifest is pre-read with production readScript to verify effective sources, not an old disk cache",
+    "Group declarations/filter inherited from fixed parent report; SceneBlock.load/events and getGroupGrids not invoked",
+    "No GameData table loading, trigger/action, entity spawn, save, sockets or client acceptance",
+    "Full scope wraps actual API functions with fail-before-call observation; original-userdata compatibility not claimed",
+    "Missing nonexistent API calls can remain ordinary nil errors; captured production errors are not discarded"
+  ],
+  "loaderReview": "require-bindings",
+  "modes": {
+    "fast": {
+      "allCollectionsMaterialized": 13616,
+      "businessAttempts": [],
+      "collections": {
+        "gadgets": 62239,
+        "garbageGadgets": 11410,
+        "monsters": 19233,
+        "npcs": 478,
+        "regions": 4328,
+        "suites": 20871,
+        "triggers": 25883,
+        "variables": 4385
+      },
+      "effectiveSourceDifferences": {},
+      "errorEvents": 449,
+      "forbiddenInfrastructureInitialized": [],
+      "loadedFlagTrue": 13616,
+      "missingScripts": {},
+      "newJavaThreadNames": [],
+      "processed": 13616,
+      "requested": 13616,
+      "statusCounts": {
+        "loaded-within-audit-scope": 13209,
+        "partial-production-evaluation": 407
+      },
+      "suiteBound": {
+        "gadgets": 61410,
+        "monsters": 17481,
+        "regions": 4659,
+        "triggers": 26809
+      }
+    },
+    "inline": {
+      "allCollectionsMaterialized": 13616,
+      "businessAttempts": [],
+      "collections": {
+        "gadgets": 62239,
+        "garbageGadgets": 11410,
+        "monsters": 19233,
+        "npcs": 478,
+        "regions": 4330,
+        "suites": 20871,
+        "triggers": 27133,
+        "variables": 5008
+      },
+      "effectiveSourceDifferences": {},
+      "errorEvents": 0,
+      "forbiddenInfrastructureInitialized": [],
+      "loadedFlagTrue": 13616,
+      "missingScripts": {},
+      "newJavaThreadNames": [],
+      "processed": 13616,
+      "requested": 13616,
+      "statusCounts": {
+        "loaded-within-audit-scope": 13616
+      },
+      "suiteBound": {
+        "gadgets": 64974,
+        "monsters": 17481,
+        "regions": 4661,
+        "triggers": 29734
+      }
+    }
+  },
+  "parentReportSHA256": "b99d5deeb475e2dae3269e7946f574d001230e98d9ae18c212b39ad4eada3a7d",
+  "resourceReady": false,
+  "reviewedSources": {
+    "src/main/java/emu/grasscutter/DebugConstants.java": "9336247c74524049536d03641f09671be3ac94c786a6a1660715911155859c47",
+    "src/main/java/emu/grasscutter/Grasscutter.java": "38988046618236e4459d7870bb5b9d6517ae6b0a39f4b2c350044174a18942e8",
+    "src/main/java/emu/grasscutter/config/ConfigContainer.java": "0f9c3d2c43904083856f9673dc51ba49254abafd33f109572c9ba1b1d9b2c41f",
+    "src/main/java/emu/grasscutter/config/Configuration.java": "b8db10ea40b195f133be85d18782e4cfbd6a0e44ed0674528cd0a08a4cbcf96e",
+    "src/main/java/emu/grasscutter/data/DataLoader.java": "beda4e11fd7476906deb3e0024892733c4331f5233e60743f4dd4cfada354835",
+    "src/main/java/emu/grasscutter/scripts/GroupLuaCall.java": "ab0d0f59ba44ed4ca76e80a7e09e1dec2e43457ea7cf28d0978e6419c29be1d8",
+    "src/main/java/emu/grasscutter/scripts/GroupTimerLua.java": "5fbc7ab94fc36d1c64646ded091f897b4f2a43b04c902d966696dd8df82a9b57",
+    "src/main/java/emu/grasscutter/scripts/MonsterTideLua.java": "c2def0a3229ed951c66e7ec06769fe4671e6dff9cd7507069686a54f58ad4ee1",
+    "src/main/java/emu/grasscutter/scripts/ScenePlayBattleLua.java": "035b10c07d610d5fcdec9a48e9dddc319f7d75e8ae8e483a80c7cdfba0144b34",
+    "src/main/java/emu/grasscutter/scripts/ScenePlayRewardLua.java": "a62dcd288cdd0ab7e25c1a9ab5e6a9aa3b547fb25dcc5ed4a96e558996479301",
+    "src/main/java/emu/grasscutter/scripts/ScriptLib.java": "3b554d175c4028e0d30bc4727035f5f04d44f76a3d88b562b0d03227b4cfcdf2",
+    "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java": "691ac41d63b2fcca6833c989293d7f4df7ddd98261d21162badd90e3c1b102b5",
+    "src/main/java/emu/grasscutter/scripts/ScriptLoader.java": "e73c9aff3a76093db7e69ff80b4802888c61eceeffcd20a792acab6f73ebf0b9",
+    "src/main/java/emu/grasscutter/scripts/TemplateReminderLua.java": "fba2ad78f57dcecf1d16332e80576cdc9a2843a9cb2f63bfaaa0f7e57a97140d",
+    "src/main/java/emu/grasscutter/scripts/data/SceneGroup.java": "7e899a4457920cdc304a9db55450b8eb20062ab25f127165432abd9f92d44f7e",
+    "src/main/java/emu/grasscutter/scripts/data/SceneSuite.java": "825f43f6b8506ff22d2154c1d01772c5f978cccdf86da18e478ac6788e7bccf6",
+    "src/main/java/emu/grasscutter/scripts/serializer/LuaSerializer.java": "3f4c17056f0c83d0380345ba785164bec45133e87613380b6c51105cbc23302f",
+    "src/main/java/emu/grasscutter/utils/FileUtils.java": "5da9bb7ba187c0ba49b846a095a446167a142779e0f97b35e168c6b90f43a2d0",
+    "src/main/java/emu/grasscutter/utils/Utils.java": "c643243b1b46f5b492d98eb5c03245535112c77c8919efe6f0a3ead851559265"
+  },
+  "runtimeJarSHA256": "7ca18e10c056fd0715e57cdbbb13b4607e324362675a7127b2ed28b5269e8f5f",
+  "schemaVersion": 1,
+  "scope": "all-static",
+  "toolSourceSHA256": {
+    "tools/Client72ProductionSceneLoadAudit.java": "f75a0d24416cc739c7852677d7eed97ce1ef916f3b401633ef8ad1044d7d2f9c",
+    "tools/audit_production_scene_load72.py": "ffef9e7021e5ca239ce5f84ca5b59419c4ae2d4caed7da2f9a4dd3237eeffb9d"
+  }
+}
