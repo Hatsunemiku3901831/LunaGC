@@ -1,0 +1,701 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "typeIndex": 28836,
+  "clientType": "KNCCLAJAEEC",
+  "cmdId": 22609,
+  "commandEvidence": "commands.json target getter 0x14fd44ff0",
+  "candidateSemanticName": "StoreWeightLimitNotify",
+  "semanticIdentityStatus": "candidate",
+  "runtimeStatus": "not-tested",
+  "targetProtocolReady": false,
+  "limitations": [
+    "No independent business identity/field-consumer proof",
+    "Reader native dispatch/store to return; WireInput scalar/tag/skip are explicit fixtures",
+    "Managed objects and reference count are explicit fixtures; IFix alternate branch not executed",
+    "Malformed input rejection is model behavior, not target-client rejection",
+    "No nested/list/uint64 fields exist in this slice; no such coverage claimed",
+    "Tag/wire scan bounded to tags 1..32; complete recovered fields equal metadata instance offsets"
+  ],
+  "reader": "0x14fd45000",
+  "fields": [
+    {
+      "clientField": "PHDOBIIMHLB",
+      "objectOffset": 28,
+      "tag": 1,
+      "type": "uint32",
+      "typeDefinition": null,
+      "wireType": 0,
+      "cardinality": "singular",
+      "packed": false,
+      "evidence": {
+        "reader": "0x14fd45000",
+        "nativeStore": "0x14fd45120"
+      },
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved"
+    },
+    {
+      "clientField": "PAKLDABINMP",
+      "objectOffset": 44,
+      "tag": 2,
+      "type": "uint32",
+      "typeDefinition": null,
+      "wireType": 0,
+      "cardinality": "singular",
+      "packed": false,
+      "evidence": {
+        "reader": "0x14fd45000",
+        "nativeStore": "0x14fd45071"
+      },
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved"
+    },
+    {
+      "clientField": "ADCHFHMCOJG",
+      "objectOffset": 24,
+      "tag": 4,
+      "type": "uint32",
+      "typeDefinition": null,
+      "wireType": 0,
+      "cardinality": "singular",
+      "packed": false,
+      "evidence": {
+        "reader": "0x14fd45000",
+        "nativeStore": "0x14fd4515a"
+      },
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved"
+    },
+    {
+      "clientField": "NAEDDJBKCFC",
+      "objectOffset": 32,
+      "tag": 5,
+      "type": "uint32",
+      "typeDefinition": null,
+      "wireType": 0,
+      "cardinality": "singular",
+      "packed": false,
+      "evidence": {
+        "reader": "0x14fd45000",
+        "nativeStore": "0x14fd450d7"
+      },
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved"
+    },
+    {
+      "clientField": "CLFJNKKFONI",
+      "objectOffset": 48,
+      "tag": 6,
+      "type": "enum",
+      "typeDefinition": 55345,
+      "wireType": 0,
+      "cardinality": "singular",
+      "packed": false,
+      "evidence": {
+        "reader": "0x14fd45000",
+        "nativeStore": "0x14fd4513d"
+      },
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved"
+    },
+    {
+      "clientField": "DECHDEGPBOE",
+      "objectOffset": 36,
+      "tag": 7,
+      "type": "uint32",
+      "typeDefinition": null,
+      "wireType": 0,
+      "cardinality": "singular",
+      "packed": false,
+      "evidence": {
+        "reader": "0x14fd45000",
+        "nativeStore": "0x14fd450a8"
+      },
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved"
+    },
+    {
+      "clientField": "CKHIAGMBNCC",
+      "objectOffset": 40,
+      "tag": 9,
+      "type": "uint32",
+      "typeDefinition": null,
+      "wireType": 0,
+      "cardinality": "singular",
+      "packed": false,
+      "evidence": {
+        "reader": "0x14fd45000",
+        "nativeStore": "0x14fd45177"
+      },
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved"
+    },
+    {
+      "clientField": "GGGJAGOKMCI",
+      "objectOffset": 52,
+      "tag": 14,
+      "type": "uint32",
+      "typeDefinition": null,
+      "wireType": 0,
+      "cardinality": "singular",
+      "packed": false,
+      "evidence": {
+        "reader": "0x14fd45000",
+        "nativeStore": "0x14fd45103"
+      },
+      "wireStatus": "emulated-observation",
+      "semanticStatus": "unresolved"
+    }
+  ],
+  "scanFixtureCount": 128,
+  "validationFixtureCount": 6,
+  "modelRejectionCount": 5,
+  "fixtureEvidence": [
+    {
+      "typeIndex": 28836,
+      "wire": "08f8acd19101",
+      "events": [
+        {
+          "key": 8,
+          "objectOffset": 28,
+          "size": 4,
+          "value": 305419896,
+          "source": "0x14fd45120",
+          "observation": "native-store"
+        }
+      ],
+      "observedNativeInstructions": 54,
+      "name": "scan-varint-1"
+    },
+    {
+      "typeIndex": 28836,
+      "wire": "10f8acd19101",
+      "events": [
+        {
+          "key": 16,
+          "objectOffset": 44,
+          "size": 4,
+          "value": 305419896,
+          "source": "0x14fd45071",
+          "observation": "native-store"
+        }
+      ],
+      "observedNativeInstructions": 56,
+      "name": "scan-varint-2"
+    },
+    {
+      "typeIndex": 28836,
+      "wire": "20f8acd19101",
+      "events": [
+        {
+          "key": 32,
+          "objectOffset": 24,
+          "size": 4,
+          "value": 305419896,
+          "source": "0x14fd4515a",
+          "observation": "native-store"
+        }
+      ],
+      "observedNativeInstructions": 54,
+      "name": "scan-varint-4"
+    },
+    {
+      "typeIndex": 28836,
+      "wire": "28f8acd19101",
+      "events": [
+        {
+          "key": 40,
+          "objectOffset": 32,
+          "size": 4,
+          "value": 305419896,
+          "source": "0x14fd450d7",
+          "observation": "native-store"
+        }
+      ],
+      "observedNativeInstructions": 56,
+      "name": "scan-varint-5"
+    },
+    {
+      "typeIndex": 28836,
+      "wire": "30f8acd19101",
+      "events": [
+        {
+          "key": 48,
+          "objectOffset": 48,
+          "size": 4,
+          "value": 305419896,
+          "source": "0x14fd4513d",
+          "observation": "native-store"
+        }
+      ],
+      "observedNativeInstructions": 54,
+      "name": "scan-varint-6"
+    },
+    {
+      "typeIndex": 28836,
+      "wire": "38f8acd19101",
+      "events": [
+        {
+          "key": 56,
+          "objectOffset": 36,
+          "size": 4,
+          "value": 305419896,
+          "source": "0x14fd450a8",
+          "observation": "native-store"
+        }
+      ],
+      "observedNativeInstructions": 56,
+      "name": "scan-varint-7"
+    },
+    {
+      "typeIndex": 28836,
+      "wire": "48f8acd19101",
+      "events": [
+        {
+          "key": 72,
+          "objectOffset": 40,
+          "size": 4,
+          "value": 305419896,
+          "source": "0x14fd45177",
+          "observation": "native-store"
+        }
+      ],
+      "observedNativeInstructions": 54,
+      "name": "scan-varint-9"
+    },
+    {
+      "typeIndex": 28836,
+      "wire": "70f8acd19101",
+      "events": [
+        {
+          "key": 112,
+          "objectOffset": 52,
+          "size": 4,
+          "value": 305419896,
+          "source": "0x14fd45103",
+          "observation": "native-store"
+        }
+      ],
+      "observedNativeInstructions": 56,
+      "name": "scan-varint-14"
+    },
+    {
+      "typeIndex": 28836,
+      "wire": "",
+      "events": [],
+      "observedNativeInstructions": 36,
+      "name": "empty"
+    },
+    {
+      "typeIndex": 28836,
+      "wire": "080b1016202c28373001384d4863708d01",
+      "events": [
+        {
+          "key": 8,
+          "objectOffset": 28,
+          "size": 4,
+          "value": 11,
+          "source": "0x14fd45120",
+          "observation": "native-store"
+        },
+        {
+          "key": 16,
+          "objectOffset": 44,
+          "size": 4,
+          "value": 22,
+          "source": "0x14fd45071",
+          "observation": "native-store"
+        },
+        {
+          "key": 32,
+          "objectOffset": 24,
+          "size": 4,
+          "value": 44,
+          "source": "0x14fd4515a",
+          "observation": "native-store"
+        },
+        {
+          "key": 40,
+          "objectOffset": 32,
+          "size": 4,
+          "value": 55,
+          "source": "0x14fd450d7",
+          "observation": "native-store"
+        },
+        {
+          "key": 48,
+          "objectOffset": 48,
+          "size": 4,
+          "value": 1,
+          "source": "0x14fd4513d",
+          "observation": "native-store"
+        },
+        {
+          "key": 56,
+          "objectOffset": 36,
+          "size": 4,
+          "value": 77,
+          "source": "0x14fd450a8",
+          "observation": "native-store"
+        },
+        {
+          "key": 72,
+          "objectOffset": 40,
+          "size": 4,
+          "value": 99,
+          "source": "0x14fd45177",
+          "observation": "native-store"
+        },
+        {
+          "key": 112,
+          "objectOffset": 52,
+          "size": 4,
+          "value": 141,
+          "source": "0x14fd45103",
+          "observation": "native-store"
+        }
+      ],
+      "observedNativeInstructions": 188,
+      "name": "independent-nonzero"
+    },
+    {
+      "typeIndex": 28836,
+      "wire": "08ffffffff0f10ffffffff0f20ffffffff0f28ffffffff0f30ffffffff0f38ffffffff0f48ffffffff0f70ffffffff0f",
+      "events": [
+        {
+          "key": 8,
+          "objectOffset": 28,
+          "size": 4,
+          "value": 4294967295,
+          "source": "0x14fd45120",
+          "observation": "native-store"
+        },
+        {
+          "key": 16,
+          "objectOffset": 44,
+          "size": 4,
+          "value": 4294967295,
+          "source": "0x14fd45071",
+          "observation": "native-store"
+        },
+        {
+          "key": 32,
+          "objectOffset": 24,
+          "size": 4,
+          "value": 4294967295,
+          "source": "0x14fd4515a",
+          "observation": "native-store"
+        },
+        {
+          "key": 40,
+          "objectOffset": 32,
+          "size": 4,
+          "value": 4294967295,
+          "source": "0x14fd450d7",
+          "observation": "native-store"
+        },
+        {
+          "key": 48,
+          "objectOffset": 48,
+          "size": 4,
+          "value": 4294967295,
+          "source": "0x14fd4513d",
+          "observation": "native-store"
+        },
+        {
+          "key": 56,
+          "objectOffset": 36,
+          "size": 4,
+          "value": 4294967295,
+          "source": "0x14fd450a8",
+          "observation": "native-store"
+        },
+        {
+          "key": 72,
+          "objectOffset": 40,
+          "size": 4,
+          "value": 4294967295,
+          "source": "0x14fd45177",
+          "observation": "native-store"
+        },
+        {
+          "key": 112,
+          "objectOffset": 52,
+          "size": 4,
+          "value": 4294967295,
+          "source": "0x14fd45103",
+          "observation": "native-store"
+        }
+      ],
+      "observedNativeInstructions": 188,
+      "name": "uint32-upper-bound"
+    },
+    {
+      "typeIndex": 28836,
+      "wire": "08001000200028003000380048007000",
+      "events": [
+        {
+          "key": 8,
+          "objectOffset": 28,
+          "size": 4,
+          "value": 0,
+          "source": "0x14fd45120",
+          "observation": "native-store"
+        },
+        {
+          "key": 16,
+          "objectOffset": 44,
+          "size": 4,
+          "value": 0,
+          "source": "0x14fd45071",
+          "observation": "native-store"
+        },
+        {
+          "key": 32,
+          "objectOffset": 24,
+          "size": 4,
+          "value": 0,
+          "source": "0x14fd4515a",
+          "observation": "native-store"
+        },
+        {
+          "key": 40,
+          "objectOffset": 32,
+          "size": 4,
+          "value": 0,
+          "source": "0x14fd450d7",
+          "observation": "native-store"
+        },
+        {
+          "key": 48,
+          "objectOffset": 48,
+          "size": 4,
+          "value": 0,
+          "source": "0x14fd4513d",
+          "observation": "native-store"
+        },
+        {
+          "key": 56,
+          "objectOffset": 36,
+          "size": 4,
+          "value": 0,
+          "source": "0x14fd450a8",
+          "observation": "native-store"
+        },
+        {
+          "key": 72,
+          "objectOffset": 40,
+          "size": 4,
+          "value": 0,
+          "source": "0x14fd45177",
+          "observation": "native-store"
+        },
+        {
+          "key": 112,
+          "objectOffset": 52,
+          "size": 4,
+          "value": 0,
+          "source": "0x14fd45103",
+          "observation": "native-store"
+        }
+      ],
+      "observedNativeInstructions": 188,
+      "name": "explicit-zero"
+    },
+    {
+      "typeIndex": 28836,
+      "wire": "10011002",
+      "events": [
+        {
+          "key": 16,
+          "objectOffset": 44,
+          "size": 4,
+          "value": 1,
+          "source": "0x14fd45071",
+          "observation": "native-store"
+        },
+        {
+          "key": 16,
+          "objectOffset": 44,
+          "size": 4,
+          "value": 2,
+          "source": "0x14fd45071",
+          "observation": "native-store"
+        }
+      ],
+      "observedNativeInstructions": 76,
+      "name": "duplicate-last-wins"
+    },
+    {
+      "typeIndex": 28836,
+      "wire": "1201781801fa010178",
+      "events": [],
+      "observedNativeInstructions": 84,
+      "name": "wrong-wire-and-unknown"
+    }
+  ],
+  "modelRejections": [
+    {
+      "name": "truncated-varint",
+      "wire": "1080",
+      "error": "0x147520110: Truncated or invalid length",
+      "errorScope": "explicit-wire-input-model"
+    },
+    {
+      "name": "uint64-overflow",
+      "wire": "10ffffffffffffffffff02",
+      "error": "0x147520110: Varint exceeds uint64",
+      "errorScope": "explicit-wire-input-model"
+    },
+    {
+      "name": "zero-tag",
+      "wire": "00",
+      "error": "0x1474d8100: Unsupported or invalid tag",
+      "errorScope": "explicit-wire-input-model"
+    },
+    {
+      "name": "truncated-fixed32",
+      "wire": "1501",
+      "error": "0x1474d7bb0: Truncated or invalid length",
+      "errorScope": "explicit-wire-input-model"
+    },
+    {
+      "name": "truncated-blob",
+      "wire": "120378",
+      "error": "0x1474d7bb0: Truncated or invalid length",
+      "errorScope": "explicit-wire-input-model"
+    }
+  ],
+  "legacySelectionAudit": {
+    "historicalClaim": {
+      "clientType": "HPHDHDJHCGO",
+      "typeIndex": 46070,
+      "cmdId": 21136,
+      "source": "docs/COMBINE_UI_2026-10-18.md; src/main/proto/AvatarSelectionDataNotify.proto"
+    },
+    "targetCommandCount": 4012,
+    "targetCmd21136Matches": [],
+    "targetSameIndexCommandBindings": [
+      {
+        "typeIndex": 46070,
+        "clientType": "DDFOJHINPLA",
+        "cmdId": 29156,
+        "getter": "0x149813ec0",
+        "methodIndex": 382511
+      }
+    ],
+    "targetTypeAt46070": {
+      "index": 46070,
+      "name": "DDFOJHINPLA",
+      "namespace": "",
+      "parent": {
+        "kind": "class",
+        "attributes": "0x0",
+        "data": "0x10915",
+        "byRef": false,
+        "typeDefinition": 67861,
+        "name": "NCKOJEOGIIC",
+        "namespace": "",
+        "typeIndex": 140976
+      },
+      "fields": [
+        {
+          "index": 227463,
+          "name": "LDLIEKOAFBP",
+          "nameIndex": "0xb188a80",
+          "typeIndex": 444079,
+          "type": {
+            "kind": "int32",
+            "attributes": "0x1",
+            "data": "0xfb",
+            "byRef": false
+          },
+          "offset": 24,
+          "rawOffset": "0x18",
+          "offsetKind": "instance"
+        }
+      ],
+      "methods": [
+        {
+          "index": 382509,
+          "name": ".ctor",
+          "nameIndex": "0x5000022",
+          "registeredAddress": "0x149814120",
+          "parameterCount": 0,
+          "flags": "0x1886",
+          "virtualSlot": 65535
+        },
+        {
+          "index": 382510,
+          "name": "CopyFrom",
+          "nameIndex": "0x803c371",
+          "registeredAddress": "0x149813e60",
+          "parameterCount": 1,
+          "flags": "0x1e6",
+          "virtualSlot": 24
+        },
+        {
+          "index": 382511,
+          "name": "AMPEGOHOBJM",
+          "nameIndex": "0xb1887e1",
+          "registeredAddress": "0x149813ec0",
+          "parameterCount": 0,
+          "flags": "0x8c4",
+          "virtualSlot": 22,
+          "literalU16Candidate": 29156
+        },
+        {
+          "index": 382512,
+          "name": "EJLPOHJNKLK",
+          "nameIndex": "0xb187ca4",
+          "registeredAddress": "0x149813ed0",
+          "parameterCount": 0,
+          "flags": "0xc6",
+          "virtualSlot": 13
+        },
+        {
+          "index": 382513,
+          "name": "KFIJLJDOHGL",
+          "nameIndex": "0xb187caf",
+          "registeredAddress": "0x149813f90",
+          "parameterCount": 0,
+          "flags": "0xc6",
+          "virtualSlot": 21
+        },
+        {
+          "index": 382514,
+          "name": "DGOODBNLMIN",
+          "nameIndex": "0xb187d12",
+          "registeredAddress": "0x149813ea0",
+          "parameterCount": 0,
+          "flags": "0xc6",
+          "virtualSlot": 15
+        },
+        {
+          "index": 382515,
+          "name": "MOMMACBEMEK",
+          "nameIndex": "0xb187c99",
+          "registeredAddress": "0x149813fa0",
+          "parameterCount": 1,
+          "flags": "0xc6",
+          "virtualSlot": 19
+        },
+        {
+          "index": 382516,
+          "name": "GFJDJODGIDB",
+          "nameIndex": "0xb187cf1",
+          "registeredAddress": "0x149814040",
+          "parameterCount": 0,
+          "flags": "0x1e6",
+          "virtualSlot": 23
+        }
+      ]
+    },
+    "conclusion": "Historical type index/name/Cmd cannot be reused as CN72 proof; absence in bounded static command extraction does not establish protocol nonexistence"
+  }
+}

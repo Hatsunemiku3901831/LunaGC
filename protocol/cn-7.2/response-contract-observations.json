@@ -1,0 +1,359 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "runtimeStatus": "not-tested",
+  "wholeHandlerExecuted": false,
+  "fixtureCount": 6,
+  "fieldBindings": [
+    {
+      "typeIndex": 81270,
+      "clientType": "MDKGJAOEHIL",
+      "tag": 1,
+      "clientField": "KDMKODCHHIP",
+      "objectOffset": 64,
+      "source": {
+        "owner": "GlobalVars",
+        "field": "RESOURCE_VERSION",
+        "rawOffset": "0x200192c"
+      },
+      "semanticField": "version",
+      "status": "verified",
+      "scope": "native-graph-to-bounded-resource-consumer"
+    },
+    {
+      "typeIndex": 81270,
+      "clientType": "MDKGJAOEHIL",
+      "tag": 3,
+      "clientField": "MFHJIGAMNFK",
+      "objectOffset": 56,
+      "source": {
+        "owner": "GlobalVars",
+        "field": "RESOURCE_MD5",
+        "rawOffset": "0x40061f0"
+      },
+      "semanticField": "md5",
+      "status": "verified",
+      "scope": "native-graph-to-bounded-resource-consumer"
+    },
+    {
+      "typeIndex": 81270,
+      "clientType": "MDKGJAOEHIL",
+      "tag": 4,
+      "clientField": "GFCEGMNDCKH",
+      "objectOffset": 48,
+      "source": {
+        "owner": "GlobalVars",
+        "field": "RESOURCE_VERSION_SIZE",
+        "rawOffset": "0x40060b0"
+      },
+      "semanticField": "resource_version_size",
+      "status": "verified",
+      "scope": "native-graph-to-bounded-resource-consumer"
+    },
+    {
+      "typeIndex": 81270,
+      "clientType": "MDKGJAOEHIL",
+      "tag": 5,
+      "clientField": "DIDEGEOAEJN",
+      "objectOffset": 32,
+      "source": {
+        "owner": "GlobalVars",
+        "field": "RES_VERSION_SUFFIX",
+        "rawOffset": "0x40060f8"
+      },
+      "semanticField": "version_suffix",
+      "status": "verified",
+      "scope": "native-graph-to-bounded-resource-consumer"
+    },
+    {
+      "typeIndex": 81270,
+      "clientType": "MDKGJAOEHIL",
+      "tag": 7,
+      "clientField": "LMMCPBMDBKP",
+      "objectOffset": 24,
+      "source": {
+        "owner": "GlobalVars",
+        "field": "NEXT_SCRIPT_VERSION",
+        "rawOffset": "0x4006320"
+      },
+      "semanticField": "next_script_version",
+      "status": "verified",
+      "scope": "native-graph-to-bounded-resource-consumer"
+    }
+  ],
+  "unresolved": [
+    "PlayerLoginRsp.FHCEHICKAIP/tag61 semantic name",
+    "PlayerLoginRsp.MONEPNFKIML/tag1337 semantic name",
+    "MDKGJAOEHIL.FBJOBGOBDIE/tag2 relogin name",
+    "MDKGJAOEHIL.MCKEMGKBDKG/tag6 branch name"
+  ],
+  "limitations": [
+    "Existing graph managed allocations/ASCII storage and runtime metadata models",
+    "Stage bookkeeping and cache reset modeled as in prior login-semantic probe",
+    "True/different-version resource-download branch is not executed",
+    "Nested tag7 consumption proven through outer1337, shared native child type",
+    "No resource data source provisioning or live-client acceptance"
+  ],
+  "sourceSHA256": {
+    "tools/client72_response_contract.py": "8c40154e65da4d6a30f0fee9d5e88bdea48cf1fa794fe01c400958af9668cddf",
+    "tools/client72_graph.py": "bfa2f846e858327c7b592ba1139b6f50f0f0d27edc478d6475723064353cd4ab",
+    "tools/trace_client72_login_semantics.py": "fb9552f2c7863ae6ffa662e059d90dabbf43c17c3926bda1b871dda38eb4c6ab",
+    "protocol/cn-7.2/response-leaf-wire-observations.json": "61a8cdc6e6098a1f237f82a4efa5c63d8144782eb228d568359bfee1f3fba0bc",
+    "protocol/cn-7.2/response-wire-observations.json": "eae0e61bd6cdc0b0ff1995ac778da1d37890fd707937cfaaf5b3e18137dc6e64"
+  },
+  "fixtures": [
+    {
+      "name": "nonzero",
+      "wire": "ea033d082a10001a0b6d64355f6e6f6e7a65726f220c73697a655f6e6f6e7a65726f2a0e7375666669785f6e6f6e7a65726f3a0c6e6578745f6e6f6e7a65726fca533d082a10001a0b6d64355f6e6f6e7a65726f220c73697a655f6e6f6e7a65726f2a0e7375666669785f6e6f6e7a65726f3a0c6e6578745f6e6f6e7a65726f",
+      "observed": [
+        {
+          "tag": 1,
+          "destination": "RESOURCE_VERSION",
+          "value": 42,
+          "pointerPreserved": false
+        },
+        {
+          "tag": 3,
+          "destination": "RESOURCE_MD5",
+          "value": "6d64355f6e6f6e7a65726f",
+          "pointerPreserved": true
+        },
+        {
+          "tag": 4,
+          "destination": "RESOURCE_VERSION_SIZE",
+          "value": "73697a655f6e6f6e7a65726f",
+          "pointerPreserved": true
+        },
+        {
+          "tag": 5,
+          "destination": "RES_VERSION_SUFFIX",
+          "value": "7375666669785f6e6f6e7a65726f",
+          "pointerPreserved": true
+        },
+        {
+          "tag": 7,
+          "destination": "NEXT_SCRIPT_VERSION",
+          "value": "6e6578745f6e6f6e7a65726f",
+          "pointerPreserved": true
+        }
+      ],
+      "passed": true,
+      "trace": {
+        "entry": "0x1507b7be0",
+        "checkpoint": "0x1507b8368",
+        "completion": "checkpoint-only",
+        "models": [
+          "0x14c8ae9a0",
+          "0x147603350"
+        ],
+        "nativePathSHA256": "6daedb3fc81f8d5fa4a5a26b1eafcee317f557b47d11df269485a8fb1e5c73d1"
+      }
+    },
+    {
+      "name": "uint32-max",
+      "wire": "ea034d08ffffffff0f10001a0e6d64355f75696e7433322d6d6178220f73697a655f75696e7433322d6d61782a117375666669785f75696e7433322d6d61783a0f6e6578745f75696e7433322d6d6178ca534d08ffffffff0f10001a0e6d64355f75696e7433322d6d6178220f73697a655f75696e7433322d6d61782a117375666669785f75696e7433322d6d61783a0f6e6578745f75696e7433322d6d6178",
+      "observed": [
+        {
+          "tag": 1,
+          "destination": "RESOURCE_VERSION",
+          "value": 4294967295,
+          "pointerPreserved": false
+        },
+        {
+          "tag": 3,
+          "destination": "RESOURCE_MD5",
+          "value": "6d64355f75696e7433322d6d6178",
+          "pointerPreserved": true
+        },
+        {
+          "tag": 4,
+          "destination": "RESOURCE_VERSION_SIZE",
+          "value": "73697a655f75696e7433322d6d6178",
+          "pointerPreserved": true
+        },
+        {
+          "tag": 5,
+          "destination": "RES_VERSION_SUFFIX",
+          "value": "7375666669785f75696e7433322d6d6178",
+          "pointerPreserved": true
+        },
+        {
+          "tag": 7,
+          "destination": "NEXT_SCRIPT_VERSION",
+          "value": "6e6578745f75696e7433322d6d6178",
+          "pointerPreserved": true
+        }
+      ],
+      "passed": true,
+      "trace": {
+        "entry": "0x1507b7be0",
+        "checkpoint": "0x1507b8368",
+        "completion": "checkpoint-only",
+        "models": [
+          "0x14c8ae9a0",
+          "0x147603350"
+        ],
+        "nativePathSHA256": "6daedb3fc81f8d5fa4a5a26b1eafcee317f557b47d11df269485a8fb1e5c73d1"
+      }
+    },
+    {
+      "name": "zero",
+      "wire": "ea0331080010001a086d64355f7a65726f220973697a655f7a65726f2a0b7375666669785f7a65726f3a096e6578745f7a65726fca5331080010001a086d64355f7a65726f220973697a655f7a65726f2a0b7375666669785f7a65726f3a096e6578745f7a65726f",
+      "observed": [
+        {
+          "tag": 1,
+          "destination": "RESOURCE_VERSION",
+          "value": 0,
+          "pointerPreserved": false
+        },
+        {
+          "tag": 3,
+          "destination": "RESOURCE_MD5",
+          "value": "6d64355f7a65726f",
+          "pointerPreserved": true
+        },
+        {
+          "tag": 4,
+          "destination": "RESOURCE_VERSION_SIZE",
+          "value": "73697a655f7a65726f",
+          "pointerPreserved": true
+        },
+        {
+          "tag": 5,
+          "destination": "RES_VERSION_SUFFIX",
+          "value": "7375666669785f7a65726f",
+          "pointerPreserved": true
+        },
+        {
+          "tag": 7,
+          "destination": "NEXT_SCRIPT_VERSION",
+          "value": "6e6578745f7a65726f",
+          "pointerPreserved": true
+        }
+      ],
+      "passed": true,
+      "trace": {
+        "entry": "0x1507b7be0",
+        "checkpoint": "0x1507b8368",
+        "completion": "checkpoint-only",
+        "models": [
+          "0x14c8ae9a0",
+          "0x147603350"
+        ],
+        "nativePathSHA256": "6daedb3fc81f8d5fa4a5a26b1eafcee317f557b47d11df269485a8fb1e5c73d1"
+      }
+    },
+    {
+      "name": "equal-version-flag",
+      "wire": "ea036a08ac0210011a166d64355f657175616c2d76657273696f6e2d666c6167221773697a655f657175616c2d76657273696f6e2d666c61672a197375666669785f657175616c2d76657273696f6e2d666c61673a176e6578745f657175616c2d76657273696f6e2d666c6167ca536a08ac0210011a166d64355f657175616c2d76657273696f6e2d666c6167221773697a655f657175616c2d76657273696f6e2d666c61672a197375666669785f657175616c2d76657273696f6e2d666c61673a176e6578745f657175616c2d76657273696f6e2d666c6167",
+      "observed": [
+        {
+          "tag": 1,
+          "destination": "RESOURCE_VERSION",
+          "value": 300,
+          "pointerPreserved": false
+        },
+        {
+          "tag": 3,
+          "destination": "RESOURCE_MD5",
+          "value": "6d64355f657175616c2d76657273696f6e2d666c6167",
+          "pointerPreserved": true
+        },
+        {
+          "tag": 4,
+          "destination": "RESOURCE_VERSION_SIZE",
+          "value": "73697a655f657175616c2d76657273696f6e2d666c6167",
+          "pointerPreserved": true
+        },
+        {
+          "tag": 5,
+          "destination": "RES_VERSION_SUFFIX",
+          "value": "7375666669785f657175616c2d76657273696f6e2d666c6167",
+          "pointerPreserved": true
+        },
+        {
+          "tag": 7,
+          "destination": "NEXT_SCRIPT_VERSION",
+          "value": "6e6578745f657175616c2d76657273696f6e2d666c6167",
+          "pointerPreserved": true
+        }
+      ],
+      "passed": true,
+      "trace": {
+        "entry": "0x1507b7be0",
+        "checkpoint": "0x1507b8368",
+        "completion": "checkpoint-only",
+        "models": [
+          "0x14c8ae9a0",
+          "0x147603350"
+        ],
+        "nativePathSHA256": "05bf1c245f6d8cd3fed5ab3f425199607603f45e8c35fda3e0a666c42ec37d5f"
+      }
+    },
+    {
+      "name": "duplicate-resource-configs",
+      "wire": "ea032708071a097072696f722d6d6435220a7072696f722d73697a652a0c7072696f722d737566666978ca532708071a097072696f722d6d6435220a7072696f722d73697a652a0c7072696f722d737566666978ea038901086310001a1e6d64355f6475706c69636174652d7265736f757263652d636f6e66696773221f73697a655f6475706c69636174652d7265736f757263652d636f6e666967732a217375666669785f6475706c69636174652d7265736f757263652d636f6e666967733a1f6e6578745f6475706c69636174652d7265736f757263652d636f6e66696773ca538901086310001a1e6d64355f6475706c69636174652d7265736f757263652d636f6e66696773221f73697a655f6475706c69636174652d7265736f757263652d636f6e666967732a217375666669785f6475706c69636174652d7265736f757263652d636f6e666967733a1f6e6578745f6475706c69636174652d7265736f757263652d636f6e66696773",
+      "observed": [
+        {
+          "tag": 1,
+          "destination": "RESOURCE_VERSION",
+          "value": 99,
+          "pointerPreserved": false
+        },
+        {
+          "tag": 3,
+          "destination": "RESOURCE_MD5",
+          "value": "6d64355f6475706c69636174652d7265736f757263652d636f6e66696773",
+          "pointerPreserved": true
+        },
+        {
+          "tag": 4,
+          "destination": "RESOURCE_VERSION_SIZE",
+          "value": "73697a655f6475706c69636174652d7265736f757263652d636f6e66696773",
+          "pointerPreserved": true
+        },
+        {
+          "tag": 5,
+          "destination": "RES_VERSION_SUFFIX",
+          "value": "7375666669785f6475706c69636174652d7265736f757263652d636f6e66696773",
+          "pointerPreserved": true
+        },
+        {
+          "tag": 7,
+          "destination": "NEXT_SCRIPT_VERSION",
+          "value": "6e6578745f6475706c69636174652d7265736f757263652d636f6e66696773",
+          "pointerPreserved": true
+        }
+      ],
+      "passed": true,
+      "trace": {
+        "entry": "0x1507b7be0",
+        "checkpoint": "0x1507b8368",
+        "completion": "checkpoint-only",
+        "models": [
+          "0x14c8ae9a0",
+          "0x147603350"
+        ],
+        "nativePathSHA256": "6daedb3fc81f8d5fa4a5a26b1eafcee317f557b47d11df269485a8fb1e5c73d1"
+      }
+    },
+    {
+      "name": "missing-resource-configs",
+      "passed": true,
+      "trace": {
+        "entry": "0x1507b7be0",
+        "checkpoint": "0x1507b8368",
+        "completion": "checkpoint-only",
+        "models": [
+          "0x14c8ae9a0",
+          "0x147603350"
+        ],
+        "nativePathSHA256": "7f0afa2388074a7f0bbcb6683e43f8d0d55687eea23c52f29e0f680ffc0d8656"
+      }
+    }
+  ]
+}
