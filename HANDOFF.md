@@ -172,3 +172,7 @@ B-02e7限定原生部分消费51f7cd2、E-01c5实际生产Lua加载审计9aa8ca7
 当前服务/游戏/合成目标均无，8088TCP/22101UDP/27027无监听，原27017/数据和resources原dirty保持；API无target/HW表空，D01b5未执行。按用户最新指令暂停，不再e4或新实机观察，恢复前不启动新任务。完成/未完成、实际阻塞、失败与避坑及下一步详见[HANDOFF2.md](HANDOFF2.md)。
 
 覆盖前旧HANDOFF2已逐字节备份到local/migration72/handoffs/HANDOFF2.before-player-store-62a86fb-pause.md并核hash；证据evidence/player-store-pause-handoff-backup.json。旧HANDOFF也留本机备份，本文件原字节前缀保持，只追加本段。当前暂停覆盖上文历史持续推进授权，所有本地提交均未推送。
+
+## 2026-11-06 D-02恢复后的活动检查点
+
+最新用户明确恢复并覆盖所有旧暂停，持续推进至D-02全部实机通过；本条不代表暂停。R0台账13c3f85、资源引用bd2d9f8、Avatar e4/e5/e6为3be6e19/de1c499/4f0e5c6、Hero/本地角色来源ba9daf5已本地提交未推送；e7/e8、真实启动通道与scene3真实触发仍在并行推进。两轮原始启动均退出，第二轮干净DR/裸con仍80000003，原因unknown；不冒称SDK/实机通过。原resources差异/配置/数据保持，未部署猜测服务。详细已完成/在途归属/失败/下一步见覆盖前已备份核验的[HANDOFF2](HANDOFF2.md)；Project/Harness持续更新。
