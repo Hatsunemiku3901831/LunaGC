@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+F-04c2：[便携信任路径供给](docs/CLIENT_72_TRUST_LAUNCHER.md)，`python -m unittest tools.test_client72_trust_launcher tools.test_local_windows -v`实际22项全过；新子进程继承/副作用前缺文件拒绝/版本守卫保持。底层材料校验和既有管理员调试器环境不据此晋级。原始红绿与真实版本拒绝日志为`local/migration72/logs/trust-launcher-*`，证明`evidence/trust-launcher-verification.json`。
+
 本轮阶段完整研究复现为`local/migration72/analysis/run_resume_d02_research.py`固定已提交的80模块，496项全部通过，证据`evidence/resume-d02-research-regression-summary.json`、日志`logs/resume-d02-research-regression.log`。人工review仅加receive-key/player-data-wire/player-store-outer/require-bindings-scene-load/trust-contract五摘要，74原hash及1267源、三层/源码/Proto/开放边界保持，两次recover相同；`evidence/resume-d02-proto-review-check.json`，结构0/ready205。前次中途输入集漂移拒绝保留并重做审核，不按新文件存在自动批准。
 
 本轮已验入口：F-02c [收帧key合同](docs/CLIENT_72_RECEIVE_KEY.md)（`trace_client72_receive_key.py`，11原生/32关联/双跑，75bafc7）；F-03d1a [初始化raw图](docs/CLIENT_72_INITIALIZATION_CANDIDATES.md)（`trace_client72_player_data.py`，256扫描/14图/4模型拒绝、8新增/42关联/双跑，0cd95ef）；E-01c6 [require修复](docs/CLIENT_72_REQUIRE_BINDINGS_FIX.md)（b74cd16/8a91d41，6例先5失败后绿、32 Lua/8实际加载，portable JAR7ca18e10…e8f5f，整场两轮fast407组/449事件、inline0）。unknown身份、完整P0/SDK/信任/资源和D-02不晋级。后续d1b具名链、库存raw三子项与F-04b信任供给已按Project进行。

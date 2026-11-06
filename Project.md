@@ -27,7 +27,7 @@
 | F-04a SDK/补丁/资源前置现场复核 | 当前checkout/config/GAME_PATH、三输入与现有会话 | 三哈希/参考clean/归属已验；API会话无target；两个status退出1及6个revision候选；源码旧强制验签钩子与字符串工厂缺口保留，见CLIENT_72_RUNTIME_PREREQUISITES；仅核对不代表F-04完成 | 已完成 |
 | F-04b 保留验签的本地信任供给合同 | F-04a、既有原生seed/response/dispatch密码学 | 6b72887；14原生/23次key验签（4成功10拒绝）、18关联和双跑；COPY只R13、CHECK只R8/root第五参数，返回/flags不变；未知key不供给；未装钩子/未导出私钥 | 已完成 |
 | F-04c 将已验信任输入接入7.2补丁 | F-04b正式合同、当前patch归属与本地工具链 | 本机明确以现有SigningKey同时供server与root签名者；只支持固定7.2，移除强置验签结果；不输出目标私钥；实际callback/ilhook ABI/拒绝回归、Rust构建/产物哈希；子模块独立提交/父引用核对；完整前置不足不安装或改版本 | 进行中 |
-| F-04c2 便携入口的信任文件路径供给 | F-04c明确LUNAGC_TRUST_BUNDLE接口 | play/patch及启用客户端guard的start在服务/客户端副作用前检查文件存在，解析为绝对路径并供新子进程；保留版本守卫和server-only；实际PowerShell隔离回归，不声称替代DLL材料校验或传给既有调试器 | 进行中 |
+| F-04c2 便携入口的信任文件路径供给 | F-04c明确LUNAGC_TRUST_BUNDLE接口 | 9新增+13原便携=22真实PowerShell测试全过；副作用前查文件/绝对路径及实际patch子进程继承，版本守卫实际拒绝且客户端hash保持；server-only保留；不替代DLL材料校验或既有调试器环境，见CLIENT_72_TRUST_LAUNCHER | 已完成 |
 
 2026-11-06本批F-02b1/b2、F-03a/b/c限定融合验收完成，按用户要求暂停；暂不D-02实机。运行代码提交`4bbf9fd`：完整LoginReq/两响应及嵌套21类198字段，八个场景握手、容量5字段、进入场景通知四字段及8类44字段raw闭包已接入。未知字段保留原名且不发送；完整初始化/P0、SDK/补丁/资源及实际客户端序列仍未验。
 

@@ -23,6 +23,18 @@ function Resolve-PortablePath([string] $Repository, [string] $Value) {
     return [IO.Path]::GetFullPath($Value).TrimEnd('\', '/')
 }
 
+function Resolve-ClientTrustBundlePath([string] $Repository) {
+    $selected = $env:LUNAGC_TRUST_BUNDLE
+    if ([string]::IsNullOrWhiteSpace($selected)) {
+        $selected = 'local/migration72/trust/client72-trust.json'
+    }
+    $path = Resolve-PortablePath $Repository $selected
+    if (-not (Test-Path -LiteralPath $path -PathType Leaf)) {
+        throw 'CN72 trust bundle is missing. Generate it with tools/generate_client72_trust_bundle.py before client patching or launch.'
+    }
+    return $path
+}
+
 function Assert-PortableConfig([string] $Repository, $Configuration, [int] $MongoPort) {
     $root = [IO.Path]::GetFullPath($Repository).TrimEnd('\', '/') + '\'
     foreach ($name in @('resources', 'data')) {

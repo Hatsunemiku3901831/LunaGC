@@ -222,14 +222,12 @@ function Stop-LocalServer {
 }
 
 function Set-ClientPatch([string] $action) {
-    if ($action -eq 'apply') { Assert-ConfiguredClientVersion }
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'patch_game.ps1') -Mode $action
     if ($LASTEXITCODE -ne 0) { throw "Client patch action failed: $action" }
 }
 
 function Start-ClientPatchGuard {
     if ($env:LUNAGC_CLIENT_PATCH_GUARD -match '^(0|false|off)$') { return }
-    Assert-ConfiguredClientVersion
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'client_patch_guard.ps1') -Mode start
     if ($LASTEXITCODE -ne 0) { throw 'Could not start client patch recovery.' }
 }
@@ -249,7 +247,10 @@ try {
     }
     switch ($Mode) {
         'start' {
-            if ($env:LUNAGC_CLIENT_PATCH_GUARD -notmatch '^(0|false|off)$') { Assert-ConfiguredClientVersion }
+            if ($env:LUNAGC_CLIENT_PATCH_GUARD -notmatch '^(0|false|off)$') {
+                Assert-ConfiguredClientVersion
+                $env:LUNAGC_TRUST_BUNDLE = Resolve-ClientTrustBundlePath $repo
+            }
             Start-LocalServer
             Start-ClientPatchGuard
         }
@@ -275,7 +276,11 @@ try {
             }
             if ($patchExit -ne 0 -or -not $server -or -not $health.status.health.healthy) { exit 1 }
         }
-        'patch' { Set-ClientPatch 'apply' }
+        'patch' {
+            Assert-ConfiguredClientVersion
+            $env:LUNAGC_TRUST_BUNDLE = Resolve-ClientTrustBundlePath $repo
+            Set-ClientPatch 'apply'
+        }
         'reset' {
             & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'client_patch_guard.ps1') -Mode stop
             if ($LASTEXITCODE -ne 0) { throw 'Could not stop the client patch guard.' }
@@ -283,6 +288,7 @@ try {
         }
         'play' {
             Assert-ConfiguredClientVersion
+            $env:LUNAGC_TRUST_BUNDLE = Resolve-ClientTrustBundlePath $repo
             Start-LocalServer
             $game = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'game_path.ps1')
             if ($LASTEXITCODE -ne 0) { throw 'The game directory could not be resolved.' }

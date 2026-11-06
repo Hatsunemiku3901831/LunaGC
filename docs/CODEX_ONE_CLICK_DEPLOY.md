@@ -1,5 +1,7 @@
 # 给 Codex 的 Windows 一键部署与排障手册
 
+便携信任文件供给已接线，见[F-04c2](CLIENT_72_TRUST_LAUNCHER.md)：play/patch及启用客户端guard的start在版本校验后、服务/补丁副作用前检查`LUNAGC_TRUST_BUNDLE`（默认当前checkout的`local/migration72/trust/client72-trust.json`）文件并供绝对路径给新子进程。9新增+13旧入口22项实际PowerShell通过；DLL仍负责固定输入/材料/原生验签，既有调试器不会继承本轮新环境。当前前置仍不足，不安装、不通过改版本放行。
+
 2026-11-06已恢复持续D-02；新便携构建25秒、JAR `7ca18e10c056fd0715e57cdbbb13b4607e324362675a7127b2ed28b5269e8f5f`内嵌b74cd16，loader及build元信息9类与编译输出一致，45935其余class不变。496研究、32 Lua/8加载审计与两轮整场已过限定合同，完整P0/SDK/补丁/资源前置仍缺；不改版本放行，未部署/未客户端验收。[现场前置](CLIENT_72_RUNTIME_PREREQUISITES.md)及Project F-04c记录正式保留验签补丁的后续。旧暂停范围已被用户最新恢复覆盖。
 
 2026-11-06 F-02b/F-03本批限定融合已验收并暂停，运行提交4bbf9fd，D-02未执行。468研究/43套761 Java/五生成检查全过；结构0/ready205。便携构建24秒，JAR `570d64f4f1680ab023c7eda7f2e930ebf5eba79791030e8499100ca8f2799bf5`内嵌4bbf9fd，92变化+114新增class匹配编译、109账号/Guard/Lua保持。前置不足未部署、无服务/测试监听；客户端目标当前未见原因未知，未操作调试器。下文更早的数量与暂停均为历史，当前以Project/HANDOFF2为准。
