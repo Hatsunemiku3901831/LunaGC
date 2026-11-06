@@ -1,6 +1,6 @@
 # AstaPS成果融合与D-02
 
-当前持续推进（覆盖下方历史暂停）：PlayerData已由本地native证据接入9a9853e，只发送昵称/毫秒时钟/等级10013；共享旧PropValue不变。后续b47a490仅新增独立15类47wire库存适配器，旧Store/Item/sender/包号未接管。独立Mongo778 Java、库存36 wire Java和最新600研究各自通过；统一review88证据/1268源码与Proto、151行/1121描述符/4810字段双跑一致。三层28行/248字段、结构0/ready208，固定参考及来源/GPLv3规则不变。当前JAR5db5d3b2…28fd73未部署，完整P0/SDK/资源和D-02仍未完成。详见[PlayerData](CLIENT_72_PLAYER_DATA_CONTRACT.md)与[库存适配器](CLIENT_72_INVENTORY_WIRE_ADAPTER.md)。
+当前已按最新要求暂停，覆盖下方历史“持续推进”。62a86fb完成[库存有限接入](CLIENT_72_INVENTORY_PRODUCTION.md)，根20892/2/14及最小Material/Equip字段由本地原生证据批准，旧共享Item等Proto和GameItem保持；不复制上游refinement转换。667研究、独立Mongo47套829 Java、11实际Java包→原生和八生成检查通过。95证据/1269源、156行/1122描述符/4867字段双recover；三层33行/278字段、结构0/ready224。固定参考与原23条对照保持，新六条共278字段中185同外形、92缺tag、1处uint32/enum表示差异、6个名称差异，差异如实保留。portable19秒JAR eee18371…aeae0e未部署，完整P0/SDK/资源和D-02未完成。旧HANDOFF2先备份核hash后覆盖、HANDOFF仅追加；恢复前不开新卡。
 
 2026-11-06 F-02b/F-03本批限定融合已验收并暂停，运行提交4bbf9fd，D-02未执行。468研究/43套761 Java/五生成检查全过；结构0/ready205。便携构建24秒，JAR `570d64f4f1680ab023c7eda7f2e930ebf5eba79791030e8499100ca8f2799bf5`内嵌4bbf9fd，92变化+114新增class匹配编译、109账号/Guard/Lua保持。前置不足未部署、无服务/测试监听；客户端目标当前未见原因未知，未操作调试器。下文更早的数量与暂停均为历史，当前以Project/HANDOFF2为准。
 

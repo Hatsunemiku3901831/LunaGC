@@ -1,6 +1,6 @@
 # 7.2 迁移现状与本地运行基线
 
-最新持续推进：PlayerData两类9raw/5业务字段及等级最小sender已9a9853e接入；b47a490另加独立15类47wire库存适配器，旧库存sender未接管。600研究、独立Mongo778 Java、独立库存36 wire Java分别通过；88证据/1268源、151行/1121描述符/4810字段及开放边界经双跑复核，ready仍208。当前portable JAR5db5d3b2…28fd73未部署；patch3675ea7信任输入/ABI限定验收，DLL未安装。真实TLS支持17例Marshal转换模型，但没有live Marshal命中，末观察事件缺失由独立合成目标D-01b4追查。库存Equip和Avatar递归继续，完整P0/SDK/资源/D-02均未完成。下方旧暂停/统计只作历史。
+最新状态：按用户要求完成当前项验收后暂停。62a86fb已将库存20892/root2/14与最小Material/Weapon/Reliquary合同接入，未知字段和refinement转换不猜测，共享GameItem/旧物品Proto保持；667研究、独立Mongo47套829 Java、11实际Java包→原生和八生成检查通过。95证据/1269源、156行/1122描述符/4867字段双recover，结构0/ready224。portable19秒JAR eee18371…aeae0e已核对，10变化/1新增和148保护类检查通过，完整前置不足未部署。Avatar raw停在e3，五字段语义卡36a4669、独立调试通道14df545已验；cur_avatar_guid/完整Avatar/自然Marshal/真实SDK/D-02仍未验，D01b5未执行。恢复前不继续新卡，详见Project及HANDOFF2；下方旧状态仅作历史。
 
 2026-11-06用户已恢复持续D-02。新增收帧key/初始化raw/信任供给合同与嵌套require修复均分项本地提交，496研究回归通过，统一review79输入/1267源且三层/Proto/开放边界保持，ready仍205。当前portable JAR7ca18e10…e8f5f（b74cd16），仅Lua加载器/build元信息改变，整场fast437→407错误组、inline仍0。F-03d1b/d2递归与F-04c运行补丁继续；未部署/未新增实机，不能据此称7.2可登录。以下旧暂停/统计为历史。
 

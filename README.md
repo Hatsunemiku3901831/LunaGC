@@ -1,6 +1,6 @@
 # LunaGC CN 7.2 开发分支
 
-当前持续推进至D-02：PlayerData有限接入9a9853e、独立库存raw适配器b47a490，以及库存/Avatar/Marshal证据已分项提交。最新600研究、独立Mongo778 Java、库存36 wire Java分别通过；三层结构0/ready208，统一review88证据/1268源及151行双跑。当前便携JAR5db5d3b2…28fd73（b47a490）未部署，完整P0/SDK/资源与实机仍未完成；后续在途项以[Project](Project.md)/[详细交接](HANDOFF2.md)为准，下方旧阶段数字为历史。
+当前按用户要求暂停：库存有限接入62a86fb及在途Avatar/调试通道限定项已验收并本地提交，未推送。667研究、独立Mongo47套829 Java、11实际Java包→目标原生及八生成检查通过；三层结构0/ready224，95证据/1269源、156行经双跑复核。portable19秒JAR eee18371…aeae0e（62a86fb）已构建核对，前置不足未部署，完整P0/SDK/资源与D-02实机仍未完成。[Project](Project.md)/[详细交接](HANDOFF2.md)记录完成、缺口、备份和恢复步骤；恢复授权前不启新卡，下方旧“继续”及数字均为历史。
 
 本轮新增：F-02c同原生内存状态的响应收帧/选key合同、F-03d1a初始化候选raw图、E-01c6嵌套require修复已按限定范围验收并本地提交；[Project](Project.md)维护各自实际回归。当前构建JAR7ca18e10…e8f5f（b74cd16），仅loader/build元信息类变更，整场fast错误组437→407、inline仍0。完整初始化业务身份、补丁/资源及实机仍未完成，继续推进，不暂停。
 

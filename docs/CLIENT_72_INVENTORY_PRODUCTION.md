@@ -35,4 +35,8 @@
 
 统一review将生产root/发送类及新增raw import纳入来源与protoc闭包；逻辑嵌入别名的进入只表示已验字段依赖，不宣称每份旧同名Proto或全部候选发送必需。旧守卫先拒绝，人工核对后双跑recover，开放边界、runtimeStatus和closureComplete保持未验。最终回归、构建产物及暂停交接见Project、Harness和HANDOFF2。
 
-本卡完成对应便携构建及产物核对后收口。完整P0初始化、SDK/补丁真实加载与资源前置仍不齐，禁止据本有限接入启动猜测协议服务；记录未部署原因，不以构建或健康替代客户端验收。按用户最新要求，本卡及已在途限定研究收口后暂停；恢复授权前不启动Avatar生产接入或新的实机观察。
+运行接入已本地提交62a86fb，667项研究全过（失败/错误/跳过0，约52秒）。统一review最终95证据/1269源码、156根/矩阵、1122描述符文件/1278类型/4867字段，两次recover一致；Avatar合同工具末尾空行改动使单项源hash变化，旧守卫实际再次拒绝，严格核对只有该来源hash变化后再双recover，其余所有内容保持。完整P0/开放边界未晋级。
+
+提交后Windows portable实际构建19秒成功，JAR SHA-256 `eee183715cf27c5d2c25da0591c890f4c144116317ba0bf0afe8bb0030aeae0e`，内嵌62a86fb。10个变化class及1个新增sender switch辅助class与编译输出逐字节相符；其余46011类不变，70个已有库存raw类及148个账号/Guard/Player/GameItem/Lua/共享旧物品Proto保护类另核保持。InfoCommand/StartupArguments仅commit字符串变化。旧JAR5db5d3b2…28fd73已校hash归档。
+
+本卡完成对应构建及产物核对，现按用户最新要求暂停。完整P0初始化、SDK/补丁真实加载与资源前置仍不齐，未部署/未安装DLL；portable status实际stopped/Healthy=false（退出1），HTTP8088/UDP22101/测试Mongo27027无监听，无服务或客户端目标，原Mongo27017保持。配置/.env/原dirty资源及五个客户端输入hash复核保持；无运行JAR或健康通过对象。原始构建/现场证明见`evidence/player-store-{build-artifact,postbuild-runtime}.json`。恢复授权前不启动Avatar生产接入或新的实机观察。

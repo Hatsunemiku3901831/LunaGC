@@ -4,7 +4,9 @@
 
 ## 当前阶段
 
-最新指令：完成当前F-03d2c2及已在途限定验证、通过验收后暂停并交接，不再开启后续任务。库存实际11份Java包已通过目标原生分段消费；独立Mongo47套829 Java、667研究、八个生成检查全部通过，失败/错误/跳过0。当前正在完成对应便携构建与产物/运行现场核对，尚不以此标记D-02。
+最新指令已执行：当前F-03d2c2及已在途限定验证均完成验收，现按要求暂停并交接，不再开启后续任务。库存接入提交62a86fb，11份实际Java包经目标原生分段消费；独立Mongo47套829 Java、667研究、八个生成检查全部通过，失败/错误/跳过0。portable19秒构建与产物/现场核对完成，D-02仍未验收。下方历史“持续推进”及旧JAR/统计不撤销本次暂停。
+
+当前JAR SHA-256 `eee183715cf27c5d2c25da0591c890f4c144116317ba0bf0afe8bb0030aeae0e`内嵌62a86fb；10变化/1新增与编译输出相符，其余46011类、70库存raw类及148账号/保存/Lua/共享物品保护类保持。完整P0/SDK/补丁真实加载/资源不足未部署；status为stopped/Healthy=false，HTTP8088/UDP22101/测试Mongo27027无监听，无服务或客户端目标，原27017保持。旧HANDOFF2先备份核hash后覆盖，HANDOFF仅追加；恢复前不执行新卡或D01b5。
 
 本次人工review89→95证据、1268→1269源码/Proto，只有库存sender/root及新增raw import变化，原有其它源码/映射与开放边界保持；156根/矩阵、1122描述符文件、1278类型/4867字段，两次recover一致。Avatar合同工具末尾空行修正使单项源hash变化，旧守卫再次拒绝、逐内容核对仅此差异后双recover。三层33行/278字段，结构0错误、ready224项仍拒绝；原23条Asta对照保持，新六条带来1处uint32/enum表示差异，未放宽审计。
 
@@ -19,22 +21,22 @@
 | 本次子项 | 依赖/限定工作 | 验收与边界 | 状态 |
 | --- | --- | --- | --- |
 | F-02c 连续响应收帧及选key来源 | 固定三输入；复用Token Handler安装key的同一原生运行时，追踪selector写入/读取、LoginRsp真实reader/路由 | 75bafc7；11原生/32关联及双跑，6入队/5拒绝，真实factory/reader/分发，selector0/session4096字节不变；错误dispatch key拒绝；三次工具调用非真实线程调度，完整Handler/SDK/socket未执行不晋级 | 已完成 |
-| F-03d1 PlayerData独立身份与raw下界 | F-03；固定目标命名/注册/消费、5外字段及非空map闭包 | 上游7193仅候选；独立身份来源、实际reader/64位/错误wire及重复性；未知不命名、不改生产 | 进行中 |
+| F-03d1 PlayerData独立身份与raw下界 | F-03；固定目标命名/注册/消费、5外字段及非空map闭包 | 2类9raw及7193初始化用途已有独立原生合同，5业务字段已d1c有限接入；其余字段/完整初始化仍未知，不按用途别名宣称恢复原英文名 | 进行中 |
 | F-03d1a 79263/78350初始化raw对象图 | F-03d1固定输入、独立AOT9505/shared1541 | 0cd95ef；2类型9raw字段、256扫描/14原生图/4模型拒绝，8新增/42关联及双跑一致；map/boxed int64/float/显式0/覆盖/64位已验，身份仍unresolved | 已完成 |
 | F-03d1b PlayerData业务身份及字段来源 | F-03d1a、typed handler1507BC0E0及Player模型 | 独立目标literal/具名调用链闭合；禁止按上游或NICKNAME孤立字串批准；没有命名证据保持unknown | 进行中 |
 | F-03d1b1 玩家初始化用途与5字段 | F-03d1a/b | 730b90a；真实分发/属性重置/时钟/昵称→login_will_enter_game用途推断，原英文名恢复false；5绑定、2属性ID、15原生/59关联及双跑；外5/7、子3/4及其余属性枚举未知 | 已完成 |
 | F-03d1c PlayerData有限生产接入 | F-03d1b1及raw独立样本、三层审核 | 9a9853e；2类型9wire/5业务，sender只nickname/server_time/等级10013；11 Java先10失败后全过、3实际包→原生消费、7生成器/47关联、564研究/778隔离Mongo Java/六生成检查全过；portable22秒JAR aa4b3fa5…790aa45、10变化7新增相符；完整前置不足不部署 | 已完成 |
-| F-03d2 PlayerStore递归Item闭包 | F-03d1方法、本地固定输入 | 20892仅候选；先核Item/oneof闭包及独立身份/wire，未验不得发送 | 待开始 |
+| F-03d2 PlayerStore递归Item闭包 | F-03d1方法、本地固定输入 | 15类47raw及20892库存替换用途、16字段已验，c2已有限接入；其它Item业务、refinement转换与完整Handler/实机仍未验，父项不按最小发送标完成 | 进行中 |
 | F-03d2b 库存用途与最小字段语义 | F-03d2a完整raw图 | 沿实际typed消费者/manager/独立具名值确认初始化用途及最小Item id/guid/数量/分类，枚举/值编码单独核；非空/64位/oneof/错误及双跑，未知不批全量，不改生产 | 进行中 |
 | F-03d2b1 库存替换用途与Material六字段 | F-03d2a完整raw图 | fb6440d；19通知/22交付/21 Material+1缺资源、5拒绝、9新增/59关联及双跑；实际clear/构造/数量/64位GUID哈希索引分段执行，6业务字段限定通过；单例/分类fanout/UI/实机未验，非材料分支仍unknown | 已完成 |
 | F-03d2b2 Weapon/Equip最小用途及字段合同 | F-03d2b1、已有15类raw图 | 23b50b3；10字段、22原生/26模型/26角色槽片段、8拒绝、10新增/69关联及双跑；具名6资源/模型/slot交叉，锁/星enum1/2、Weapon level/exp/promote/affix key已验；旧refinement转换、其它Relic字段/完整构造/角色fanout未验，生产不改 | 已完成 |
 | F-03d2c1 库存独立raw Java适配器 | F-03d2a完整15类47wire图 | b47a490；独立namespace15类47raw，36 Java（含32原生对象向量）/4生成守卫及固定hash检查通过；旧root2独立断言失败保留，新适配器显式零/oneof/map/list/64位/错误通过；portable22秒JAR5db5d3b2…28fd73，仅70新raw class/3元信息变化，其余45948保持；旧sender/业务映射未改、前置不足未部署 | 已完成 |
-| F-03d2c2 库存有限生产接入 | b1/b2及c1已验合同 | 20892/root2/14及最小Material/Weapon/Reliquary，root8与refinement→affix key不猜测；15新Java/57定向、11实际producer包→原生、47套829隔离Java、667研究/八生成检查通过；共享旧物品Proto/GameItem保持，待对应portable构建及产物核对后收口，完整前置不足不部署 | 进行中 |
+| F-03d2c2 库存有限生产接入 | b1/b2及c1已验合同 | 62a86fb；20892/root2/14及最小Material/Weapon/Reliquary，root8与refinement→affix key不猜测；15新Java/57定向、11实际producer包→原生、47套829隔离Java、667研究/八生成检查通过；portable19秒JAR eee18371…aeae0e、10变化/1新增与编译相符，148保护类保持；完整前置不足未部署，按要求暂停 | 已完成 |
 | F-03d2a 68537/65333库存raw闭包 | F-03d1a方法、本地固定三输入 | a1/a2/a3限定完成；15类47wire、1920扫描/32非空组合图/6拒绝、8新增/54关联及双跑；独立native oneof/map/list/merge已验，身份和字段业务仍unknown，不迁生产 | 已完成 |
 | F-03d2a1 库存15类型依赖与原始外层 | F-03d2a固定输入/全部usage来源 | a81f84b；15类型42存储依赖，512扫描/21图/5拒绝、8新增/38关联及双跑；root/Item外层+2叶子13wire限定通过，其他非空nested范围拒绝，fullStoreRawClosure=false | 已完成 |
 | F-03d2a2 uint32 map与packed列表 | F-03d2a1 | eec23d2；6类22wire，5map/5list；768扫描/29图/3模型拒绝，8新增/46关联及双跑；公共runtime未改 | 已完成 |
 | F-03d2a3 嵌套oneof及库存组合图 | F-03d2a1/a2 | 9fd871e；15类47wire、1920扫描/32图/6拒绝，8新增/54关联及双跑；6 Item非空分支、3组oneof、map clear/copy/list append真实执行，身份/业务不晋级 | 已完成 |
-| F-03d3 AvatarData递归Avatar闭包 | F-03d1方法、本地固定输入 | 20143仅候选；AvatarInfo/Team/Rename及packed64位闭包，未验不得发送 | 进行中 |
+| F-03d3 AvatarData递归Avatar闭包 | F-03d1方法、本地固定输入 | 20143批量Avatar用途及5字段/3属性ID已f1独立证明；raw仍缺e4至e8，完整Team/Rename/当前角色链及生产未验，不发送猜测字段 | 进行中 |
 | F-03d3a Avatar候选依赖与raw外层下界 | F-03d1a/d2a方法、本地固定三输入 | 2cfe1e4；3类14wire、384扫描/19原生图/5拒绝、8新增/62关联及双跑一致；65类368存储/37容器85 AOT仅静态审计；AvatarInfo非空拒绝，身份unknown/fullAvatarRawClosure=false | 已完成 |
 | F-03d3b AvatarInfo外层与四叶子raw下界 | F-03d3a、已有78350 raw图 | 7470ef6；6类53wire、1536扫描/24独立图/11拒绝、9新增/69关联及双跑一致；共享reader codec冲突先红后专用上下文修复，公共runtime未改；复杂四子图非空拒绝/fullAvatarRawClosure=false，不迁生产 | 已完成 |
 | F-03d3c Avatar两个小树非空raw闭包 | F-03d3b | 24caff2；先审6类18存储/16引用后768扫描确认18wire，20独立图/10拒绝、8新增/77关联及双跑一致；同形两对象独立值、singular合并/list追加实跑；两树限定闭包true，完整Avatar/身份仍false/unknown | 已完成 |
