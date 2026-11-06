@@ -1,5 +1,9 @@
 # 研发索引与执行骨架
 
+2026-11-07最新收口：当前四项D-01b5h1 / D-01b5g-preflight / F-03d3s2a / F-03d3f4d1均已主线验收并提交，按用户要求暂停，不启动后继或游戏HW轮。主线实际范围分别为三新JVM各两HTTP请求及原生拒绝链、28项HW前置守卫及既有单fixture审核、28项SceneInfo关联测试及第三原生、82项Avatar构造片段测试及第三原生；批次相互覆盖，数量不相加。完整D-02未验收，恢复入口见[HANDOFF2](HANDOFF2.md)。
+
+最终只读核对：`local/migration72/evidence/d02-final-pause-inventory.json`固定五输入/配置/原资源差异/JAR一致，仅原Mongo27017监听，测试27027/HTTP8088/游戏22101无监听，无游戏/Java/观察器。调试器终态另见`evidence/d02-r2-d01b5g-pause-state.json`：API四表空，游戏持久库4自有点、fixture库3自有点仍保留。交接备份及前缀验证见`evidence/d02-current-cards-pause-handoff-{backup,written}.json`。108输入的统一review是较早批次结果；新独立摘要及变更摘要的差异审核尚未执行，不把旧结构0/ready224当作当前全量重跑。下方持续/暂停记录均为历史批次。
+
 F-03d3f4d1：[构造片段](docs/CLIENT_72_AVATAR_INITIALIZER.md)、`client72_avatar_initializer.py`/`test_client72_avatar_initializer`；主线82及第三原生同双跑，7组/28 ctor片段/70省略分段/7flush/7连续前缀+7边界。完整/摘要SHA `3b314e34…9af63`/`1a0889af…2acaf`，证明`evidence/avatar-initializer-main-review.json`及同`avatar-initializer-main-*`原始/日志。未知间接构造和装备必经15183f290/15184a5f0前止，完整ctor/handler/最小producer未验；用户要求统一暂停，f4d2/g2不启动。
 
 F-03d3s2a：[SceneInfo身份关联](docs/CLIENT_72_SCENE_INFO_CONTRACT.md)、`client72_scene_info_contract.py`/`test_client72_scene_info_contract`；25夹具/3拒绝，主线28及第三新进程完整/摘要同双跑 SHA `c9fd50ba…7121db`/`a0c88290…48a2ad`，证明`evidence/scene-contract-main-review.json`及`scene-contract-main-*`原始/日志。tag13/4为Avatar GUID/实体ID，10/7仅附属type51522关联、Weapon名仍未知；首个角色缺失终止整列表。scene实体为fixture，完整handler/能力/必要集合仍待，后继按暂停指令留交接。
