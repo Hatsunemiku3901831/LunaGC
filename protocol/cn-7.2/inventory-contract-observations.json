@@ -1,0 +1,7163 @@
+{
+  "schemaVersion": 1,
+  "task": "F-03d2b",
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "declarations": {
+    "rawEvidenceSHA256": {
+      "player-store-outer-observations.json": "2c14b416e5e18d868bde7d645939f6ea9c2a936761967e555e92538c2d11e20f",
+      "inventory-container-observations.json": "352f094fec870074abb70207af317870525b025c9b68805500c6410347feb72d",
+      "inventory-graph-observations.json": "ca45b0d9b038cd46fc35943924ca77ae46c8fbae82c06e131245e03f43d95b18"
+    },
+    "typedConsumers": [
+      {
+        "ownerType": 54747,
+        "entry": "0x153caf190",
+        "method": "GKFGCAGEFCJ",
+        "parameters": [
+          {
+            "kind": "class",
+            "attributes": "0x0",
+            "data": "0x10bb9",
+            "byRef": false,
+            "typeDefinition": 68537,
+            "name": "CAIHCNHAMHB",
+            "namespace": ""
+          }
+        ]
+      },
+      {
+        "ownerType": 59658,
+        "entry": "0x14e43be70",
+        "method": "GCKJBBEDENK",
+        "parameters": [
+          {
+            "kind": "class",
+            "attributes": "0x0",
+            "data": "0x10bb9",
+            "byRef": false,
+            "typeDefinition": 68537,
+            "name": "CAIHCNHAMHB",
+            "namespace": ""
+          }
+        ]
+      },
+      {
+        "ownerType": 43222,
+        "entry": "0x150809180",
+        "method": "GCKJBBEDENK",
+        "parameters": [
+          {
+            "kind": "class",
+            "attributes": "0x0",
+            "data": "0x10bb9",
+            "byRef": false,
+            "typeDefinition": 68537,
+            "name": "CAIHCNHAMHB",
+            "namespace": ""
+          }
+        ]
+      },
+      {
+        "ownerType": 59658,
+        "entry": "0x14e43a630",
+        "method": "IICPOPNBNJP",
+        "parameters": [
+          {
+            "kind": "class",
+            "attributes": "0x0",
+            "data": "0xff35",
+            "byRef": false,
+            "typeDefinition": 65333,
+            "name": "NDGHFPMJFIM",
+            "namespace": ""
+          },
+          {
+            "kind": "bool",
+            "attributes": "0x0",
+            "data": "0xae",
+            "byRef": false
+          }
+        ]
+      },
+      {
+        "ownerType": 51337,
+        "entry": "0x150ed35e0",
+        "method": "JCGDDBHMOCL",
+        "parameters": [
+          {
+            "kind": "class",
+            "attributes": "0x0",
+            "data": "0xff35",
+            "byRef": false,
+            "typeDefinition": 65333,
+            "name": "NDGHFPMJFIM",
+            "namespace": ""
+          },
+          {
+            "kind": "class",
+            "attributes": "0x0",
+            "data": "0xc889",
+            "byRef": false,
+            "typeDefinition": 51337,
+            "name": "NMHKDGOMKIM",
+            "namespace": ""
+          }
+        ]
+      },
+      {
+        "ownerType": 68895,
+        "entry": "0x148fed420",
+        "method": "ELMGDFDHGJN",
+        "parameters": [
+          {
+            "kind": "class",
+            "attributes": "0x0",
+            "data": "0xff35",
+            "byRef": false,
+            "typeDefinition": 65333,
+            "name": "NDGHFPMJFIM",
+            "namespace": ""
+          }
+        ]
+      },
+      {
+        "ownerType": 59658,
+        "entry": "0x14e43af70",
+        "method": "KDLELFOFKNJ",
+        "parameters": [
+          {
+            "kind": "class",
+            "attributes": "0x0",
+            "data": "0x5de8",
+            "byRef": false,
+            "typeDefinition": 24040,
+            "name": "DAFOCKPOFEA",
+            "namespace": ""
+          }
+        ]
+      }
+    ],
+    "enums": [
+      {
+        "typeIndex": 55345,
+        "clientType": "CCGFGECDMKL",
+        "namespace": "",
+        "underlyingType": "int32",
+        "values": [
+          {
+            "symbol": "StoreNone",
+            "value": 0,
+            "fieldIndex": 274524,
+            "defaultRow": 47725,
+            "typeIndex": 70,
+            "dataIndex": 528262
+          },
+          {
+            "symbol": "StorePack",
+            "value": 1,
+            "fieldIndex": 274525,
+            "defaultRow": 47726,
+            "typeIndex": 70,
+            "dataIndex": 528266
+          },
+          {
+            "symbol": "StoreDepot",
+            "value": 2,
+            "fieldIndex": 274526,
+            "defaultRow": 47727,
+            "typeIndex": 70,
+            "dataIndex": 528270
+          }
+        ],
+        "semanticStatus": "target-symbols-only"
+      },
+      {
+        "typeIndex": 34819,
+        "clientType": "MBAMMBNKDGF",
+        "namespace": "",
+        "underlyingType": "int32",
+        "values": [
+          {
+            "symbol": "ITEM_MATERIAL",
+            "value": 2,
+            "fieldIndex": 170643,
+            "defaultRow": 32317,
+            "typeIndex": 70,
+            "dataIndex": 418626
+          }
+        ],
+        "semanticStatus": "target-symbols-only"
+      }
+    ],
+    "resourceLiteral": {
+      "usageRow": 783160,
+      "index": 70971,
+      "slot": 70971,
+      "cell": "0x145b547f8",
+      "value": "Data/_ExcelBinOutput/MaterialExcelConfigData"
+    },
+    "resourceDictionary": {
+      "index": 84258,
+      "name": "FNLANEFCGPE",
+      "nameIndex": "0xb1895f2",
+      "typeIndex": 499768,
+      "type": {
+        "kind": "genericinst",
+        "attributes": "0x11",
+        "data": "0x16550",
+        "byRef": false,
+        "genericIndex": 91472,
+        "instanceIndex": 11915,
+        "arguments": [
+          {
+            "kind": "uint32",
+            "attributes": "0x0",
+            "data": "0x13f",
+            "byRef": false
+          },
+          {
+            "kind": "class",
+            "attributes": "0x0",
+            "data": "0xf662",
+            "byRef": false,
+            "typeDefinition": 63074,
+            "name": "BKDPINLDEGM",
+            "namespace": ""
+          }
+        ],
+        "typeDefinition": 1222,
+        "name": "Dictionary`2",
+        "namespace": "System.Collections.Generic"
+      },
+      "offset": null,
+      "rawOffset": "0x4032480",
+      "offsetKind": "runtime"
+    },
+    "guidDictionary": {
+      "index": 296076,
+      "name": "ANCCCLFFACP",
+      "nameIndex": "0xb6a3057",
+      "typeIndex": 613569,
+      "type": {
+        "kind": "genericinst",
+        "attributes": "0x4",
+        "data": "0x18960",
+        "byRef": false,
+        "genericIndex": 100704,
+        "instanceIndex": 13106,
+        "arguments": [
+          {
+            "kind": "uint64",
+            "attributes": "0x0",
+            "data": "0x140",
+            "byRef": false
+          },
+          {
+            "kind": "class",
+            "attributes": "0x0",
+            "data": "0x5de8",
+            "byRef": false,
+            "typeDefinition": 24040,
+            "name": "DAFOCKPOFEA",
+            "namespace": ""
+          }
+        ],
+        "typeDefinition": 1222,
+        "name": "Dictionary`2",
+        "namespace": "System.Collections.Generic"
+      },
+      "offset": 104,
+      "rawOffset": "0x68",
+      "offsetKind": "instance"
+    },
+    "materialFactory": {
+      "usageRow": 760457,
+      "methodSpec": 99291,
+      "cell": "0x145a721f8",
+      "methodDefinition": 426899,
+      "method": "KANBAAMEICC",
+      "instance": 66772,
+      "arguments": [
+        {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0x127f8",
+          "byRef": false,
+          "typeDefinition": 75768,
+          "name": "IDIJDGNJFKK",
+          "namespace": ""
+        }
+      ]
+    },
+    "commandGetter": {
+      "index": 567152,
+      "name": "AMPEGOHOBJM",
+      "nameIndex": "0xb1887e1",
+      "registeredAddress": "0x149420040",
+      "parameterCount": 0,
+      "flags": "0x8c4",
+      "virtualSlot": 22,
+      "literalU16Candidate": 20892
+    },
+    "uint64Equality": {
+      "methodSpec": 360608,
+      "methodDefinition": 10296,
+      "ownerType": 1235,
+      "classInstance": 58,
+      "bindings": [
+        {
+          "tableIndex": 64828,
+          "pointerIndex": 267236,
+          "address": "0x158bb0140"
+        }
+      ],
+      "entry": "0x158bb0140",
+      "scope": "Concrete UInt64 equality, managed singleton supplied"
+    },
+    "nativeEntry32SHA256": {
+      "0x153cbb460": "7623d0fdafa633946464c1f3d3ad87600d4335e41c5b0b28e992cbaac26c2cce",
+      "0x153caf190": "cb2285243f09bc901ae5aa665425cac12cd2b70f38d7a6be98d9799cbf43a979",
+      "0x150809180": "41c3fa8b77a8f20a1fbe052f9fbc870047db5c4c1d607dd00ee04967e5b55473",
+      "0x14e43be70": "1265fe9cfe3e742b1fc66ce33550131b77ea8be104aa7500e951a27fa9de35f0",
+      "0x14e3dc3d0": "2dedc888f99df830d758f376726074ff9f9e0fbc30434e5802df1763c9df34ee",
+      "0x14e43a630": "5720fada3176e2e4042544430d693d12857553602a7183bfadd95654465780d0",
+      "0x150ed35e0": "8004219846e73f2afc99ad72254686665c351a132aa6fa881957ab296f4b9cd7",
+      "0x148fed420": "841cd2925cede485b7dac2038c33208367ef139ca94c30584521aa2c1f9bc1c8",
+      "0x14a1d8440": "a8166af536aaf355c3117aa4bb9d0046daddfdf8b2227116b6a52625db7e8610",
+      "0x14e43af70": "c7841ab75d5960a45c516eecd982aa6f9331bec9af94dfe04e456dad995a715a",
+      "0x156f6f510": "62c27c2bbc4bedddb0d1ceab94c6a548c4c86e2850e236f5275efde01d26b4c7"
+    }
+  },
+  "runtimeStatus": "not-tested",
+  "targetProtocolReady": false,
+  "nativeFixtures": 19,
+  "semanticName": "PlayerStoreNotify",
+  "semanticIdentityStatus": "verified",
+  "identityBasis": "inferred-native-store-replacement-purpose",
+  "originalClientMessageNameRecovered": false,
+  "completeHandlerExecuted": false,
+  "rejections": [
+    {
+      "name": "recursion-limit",
+      "wire": "1200",
+      "recursionLimit": 0,
+      "error": "0x1509cb410: Native error branch: recursion-limit",
+      "scope": "native-error-branch"
+    },
+    {
+      "name": "negative-nested-length",
+      "wire": "12ffffffff0f",
+      "recursionLimit": 100,
+      "error": "0x1509cafa0: Native error branch: negative-length",
+      "scope": "native-error-branch"
+    },
+    {
+      "name": "truncated-material",
+      "wire": "12052a050801",
+      "recursionLimit": 100,
+      "error": "0x1509cb360: Native error branch: truncated-message",
+      "scope": "native-error-branch"
+    },
+    {
+      "name": "invalid-root-tag",
+      "wire": "00",
+      "recursionLimit": 100,
+      "error": "0x1474d8100: Unsupported or invalid tag",
+      "scope": "explicit-input-model"
+    },
+    {
+      "name": "guid-overflow",
+      "wire": "120b10ffffffffffffffffff02",
+      "recursionLimit": 100,
+      "error": "0x1475202d0: Varint exceeds uint64",
+      "scope": "explicit-input-model"
+    }
+  ],
+  "fieldBindings": [
+    {
+      "typeIndex": 68537,
+      "tag": 2,
+      "semanticField": "item_list",
+      "status": "verified"
+    },
+    {
+      "typeIndex": 68537,
+      "tag": 14,
+      "semanticField": "store_type",
+      "status": "verified"
+    },
+    {
+      "typeIndex": 65333,
+      "tag": 1,
+      "semanticField": "item_id",
+      "status": "verified"
+    },
+    {
+      "typeIndex": 65333,
+      "tag": 2,
+      "semanticField": "guid",
+      "status": "verified"
+    },
+    {
+      "typeIndex": 65333,
+      "tag": 5,
+      "semanticField": "material",
+      "status": "verified"
+    },
+    {
+      "typeIndex": 63442,
+      "tag": 1,
+      "semanticField": "count",
+      "status": "verified"
+    }
+  ],
+  "unresolvedTags": {
+    "68537": [
+      8
+    ],
+    "65333": [
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "63442": [
+      2
+    ]
+  },
+  "models": [
+    "Managed protobuf primitive input/default containers/clone allocation",
+    "Explicit declared warehouse vtables; live singleton construction not executed",
+    "Array.Clear storage and repeated-list enumerator over actual reader output",
+    "Notification APPLY delivery sink; each actual item is later passed to a separate native APPLY prefix",
+    "OS FILETIME/UTC offset and diagnostic StackTrace construction/string",
+    "Resource dictionary storage/lookup, controlled rows/category and absent fallback tables",
+    "Pool/metadata generic contexts and existing category-list lookup storage",
+    "Category callback and index fanout omitted; suffix and native GUID primitives run separately"
+  ],
+  "scope": "Separated native notification reset/list delivery, Material application prefix, count selection and GUID-index fragments",
+  "sourceSHA256": {
+    "tools/client72_inventory_contract.py": "4f9aa68a491d56aa6c988bf62d3501d45336caf2b975a628dd7c614d4d31a94c",
+    "tools/trace_client72_inventory_graph.py": "4688e6d3aba3cdc6d6fdd82ae52511dbc90ca7df67c85d01bcb09e9bd5bbb453",
+    "tools/trace_client72_inventory_containers.py": "6e1965046ba7f188c71f04a56aa096a3c1936b7c887c641659ecf9dab4ce6213",
+    "tools/trace_client72_player_store.py": "62540f670c18ac4efd0bc09d896cc1279b3e5c2404d05f8f9d3e8f62da5ecabe",
+    "tools/client72_graph.py": "bfa2f846e858327c7b592ba1139b6f50f0f0d27edc478d6475723064353cd4ab",
+    "tools/client72_map_runtime.py": "c44dc84b227d162a2dfd7f10bf6a43bbba2e3108494e2bb9952becd76113bcde",
+    "tools/client72_session_runtime.py": "c6ff407e33416869a855cfa86e97c3f63a9d24019ac0f6e6dfc74a959bfe1439"
+  },
+  "fixtures": [
+    {
+      "name": "material-nonzero",
+      "storeType": 1,
+      "wire": "121008e9071081808080808080102a02082a7001",
+      "clearCalls": 28,
+      "dictionaries": [
+        {
+          "warehouse": "pack",
+          "offset": "0x68",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x38",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x48",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x70",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x20",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x18",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x60",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x28",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x50",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x88",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xb8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x90",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc0",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x68",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x38",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x48",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x70",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x20",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x18",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x60",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x28",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x50",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        }
+      ],
+      "materialResourceQueries": [
+        1001,
+        1001
+      ],
+      "notification": {
+        "entry": "0x153cbb460",
+        "stop": "0x620000100",
+        "instructions": 516,
+        "nativePathSHA256": "c48a40792aa939b49e41a515ec570f01655bc4ddb46ef996589fde1fceb4b264",
+        "models": [
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x620001080",
+          "0x159c5a080",
+          "0x1405336c0",
+          "0x159b55280",
+          "0x159b55f60",
+          "0x14a9ce8e0",
+          "0x14a9ce8e0",
+          "0x620001090",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0"
+        ],
+        "nativeEntries": [
+          "0x14e3dc3d0",
+          "0x14e43a630",
+          "0x14e43be70",
+          "0x150809180",
+          "0x153caf190",
+          "0x153cbb460",
+          "0x620000100"
+        ]
+      },
+      "resourcePath": {
+        "getter": {
+          "entry": "0x14a1d79c0",
+          "stop": "0x620000100",
+          "instructions": 3,
+          "nativePathSHA256": "2946a30f4ae61ec38c94a54cc60073a45b543afbf847d819bf6ab231fd29cd36",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d79c0",
+            "0x620000100"
+          ]
+        },
+        "loader": {
+          "entry": "0x14a1d7890",
+          "stop": "0x14d6e1570",
+          "instructions": 13,
+          "nativePathSHA256": "9aa99021e4495121413dfc2c2f667e2c07da12db2da05c9efbda2a90e818959c",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d7890",
+            "0x14d6e1570"
+          ]
+        },
+        "fileIOExecuted": false,
+        "path": "Data/_ExcelBinOutput/MaterialExcelConfigData"
+      },
+      "applications": [
+        {
+          "result": {
+            "id": 1001,
+            "guid": 9007199254740993,
+            "count": 42,
+            "category": 2,
+            "delta": 42,
+            "modelClass": true,
+            "resource": true,
+            "clonedMaterial": {
+              "GNHFNECPAHD": 42
+            },
+            "selectedOperation": "insert"
+          },
+          "native": {
+            "prefix": {
+              "entry": "0x14e43a630",
+              "stop": "0x14e43b0e0",
+              "instructions": 646,
+              "nativePathSHA256": "f5e7659383f9d1f4fc90bc988d005a587e7f02058ba1a9c289e7ea7e7a771eb5",
+              "models": [
+                "0x1578b66f0",
+                "0x1565ee8d0",
+                "0x620001070",
+                "0x620001070",
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1578b66f0"
+              ],
+              "nativeEntries": [
+                "0x148446b80",
+                "0x148fed420",
+                "0x1497fd010",
+                "0x14a1d8440",
+                "0x14e3d73e0",
+                "0x14e43a630",
+                "0x14e43b0e0",
+                "0x150ed3210",
+                "0x150ed3510",
+                "0x150ed35e0",
+                "0x152ee2b10",
+                "0x152ee2f00",
+                "0x15459e4b0",
+                "0x156f6f510"
+              ]
+            },
+            "selection": {
+              "entry": "0x14e43a94b",
+              "stop": "0x1508054b0",
+              "instructions": 12,
+              "nativePathSHA256": "051c5a15d6554d3dba4e0303bc6b54e0bc7d817a8067d551bd5e4e1e238cf823",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43a94b",
+                "0x1508054b0"
+              ]
+            }
+          },
+          "guidIndex": {
+            "mutation": {
+              "entry": "0x14e43af70",
+              "stop": "0x620000100",
+              "instructions": 189,
+              "nativePathSHA256": "b862c53cddfc42d55d115faac12ee1116ade3b1c6dac5fe37caab1cdc062e55e",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43af70",
+                "0x156f6f510",
+                "0x156f6f850",
+                "0x620000100"
+              ]
+            },
+            "lookup": {
+              "entry": "0x156f6f510",
+              "stop": "0x620000100",
+              "instructions": 61,
+              "nativePathSHA256": "0713a2e9cb15cc0acdd407fb97dcb1608d76b0483d1cb4e15a3d213abbb80eb1",
+              "models": [],
+              "nativeEntries": [
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "slot": 0,
+            "entries": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "empty-pack",
+      "storeType": 1,
+      "wire": "7001",
+      "clearCalls": 28,
+      "dictionaries": [
+        {
+          "warehouse": "pack",
+          "offset": "0x68",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x38",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x48",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x70",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x20",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x18",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x60",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x28",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x50",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x88",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xb8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x90",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc0",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x68",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x38",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x48",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x70",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x20",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x18",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x60",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x28",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x50",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        }
+      ],
+      "materialResourceQueries": [],
+      "notification": {
+        "entry": "0x153cbb460",
+        "stop": "0x620000100",
+        "instructions": 493,
+        "nativePathSHA256": "f961a0a026849f8e08c96688a78ecd4341932407457344aa551385cea4e0d34e",
+        "models": [
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x620001080",
+          "0x159c5a080",
+          "0x1405336c0",
+          "0x159b55280",
+          "0x159b55f60",
+          "0x14a9ce8e0",
+          "0x14a9ce8e0",
+          "0x620001090",
+          "0x1572292b0"
+        ],
+        "nativeEntries": [
+          "0x14e3dc3d0",
+          "0x14e43be70",
+          "0x150809180",
+          "0x153caf190",
+          "0x153cbb460",
+          "0x620000100"
+        ]
+      },
+      "resourcePath": {
+        "getter": {
+          "entry": "0x14a1d79c0",
+          "stop": "0x620000100",
+          "instructions": 3,
+          "nativePathSHA256": "2946a30f4ae61ec38c94a54cc60073a45b543afbf847d819bf6ab231fd29cd36",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d79c0",
+            "0x620000100"
+          ]
+        },
+        "loader": {
+          "entry": "0x14a1d7890",
+          "stop": "0x14d6e1570",
+          "instructions": 13,
+          "nativePathSHA256": "9aa99021e4495121413dfc2c2f667e2c07da12db2da05c9efbda2a90e818959c",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d7890",
+            "0x14d6e1570"
+          ]
+        },
+        "fileIOExecuted": false,
+        "path": "Data/_ExcelBinOutput/MaterialExcelConfigData"
+      },
+      "applications": []
+    },
+    {
+      "name": "empty-depot",
+      "storeType": 2,
+      "wire": "7002",
+      "clearCalls": 18,
+      "dictionaries": [
+        {
+          "warehouse": "pack",
+          "offset": "0x68",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x38",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x48",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x70",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x20",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x18",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x60",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x28",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x50",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc8",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x88",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xb8",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x90",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc0",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x68",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x38",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x48",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x70",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x20",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x18",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x60",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x28",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x50",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        }
+      ],
+      "materialResourceQueries": [],
+      "notification": {
+        "entry": "0x153cbb460",
+        "stop": "0x620000100",
+        "instructions": 365,
+        "nativePathSHA256": "b6f8b6adc2dee50fac5228ba16d8a069fbb98263665afa2ad98ad221c2fe4f82",
+        "models": [
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x620001080",
+          "0x159c5a080",
+          "0x1405336c0",
+          "0x159b55280",
+          "0x159b55f60",
+          "0x14a9ce8e0",
+          "0x14a9ce8e0",
+          "0x620001090",
+          "0x1572292b0"
+        ],
+        "nativeEntries": [
+          "0x14e3dc3d0",
+          "0x14e43be70",
+          "0x153caf190",
+          "0x153cbb460",
+          "0x620000100"
+        ]
+      },
+      "resourcePath": {
+        "getter": {
+          "entry": "0x14a1d79c0",
+          "stop": "0x620000100",
+          "instructions": 3,
+          "nativePathSHA256": "2946a30f4ae61ec38c94a54cc60073a45b543afbf847d819bf6ab231fd29cd36",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d79c0",
+            "0x620000100"
+          ]
+        },
+        "loader": {
+          "entry": "0x14a1d7890",
+          "stop": "0x14d6e1570",
+          "instructions": 13,
+          "nativePathSHA256": "9aa99021e4495121413dfc2c2f667e2c07da12db2da05c9efbda2a90e818959c",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d7890",
+            "0x14d6e1570"
+          ]
+        },
+        "fileIOExecuted": false,
+        "path": "Data/_ExcelBinOutput/MaterialExcelConfigData"
+      },
+      "applications": []
+    },
+    {
+      "name": "two-materials",
+      "storeType": 1,
+      "wire": "120908e90710472a02082a120908ea0710482a02082b7001",
+      "clearCalls": 28,
+      "dictionaries": [
+        {
+          "warehouse": "pack",
+          "offset": "0x68",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x38",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x48",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x70",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x20",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x18",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x60",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x28",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x50",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x88",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xb8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x90",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc0",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x68",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x38",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x48",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x70",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x20",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x18",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x60",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x28",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x50",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        }
+      ],
+      "materialResourceQueries": [
+        1001,
+        1001,
+        1002,
+        1002
+      ],
+      "notification": {
+        "entry": "0x153cbb460",
+        "stop": "0x620000100",
+        "instructions": 539,
+        "nativePathSHA256": "9d33af0ee8e6373f89158d420dca37ddeddb9f2dc9aa9eba4ab46de483cea209",
+        "models": [
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x620001080",
+          "0x159c5a080",
+          "0x1405336c0",
+          "0x159b55280",
+          "0x159b55f60",
+          "0x14a9ce8e0",
+          "0x14a9ce8e0",
+          "0x620001090",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0"
+        ],
+        "nativeEntries": [
+          "0x14e3dc3d0",
+          "0x14e43a630",
+          "0x14e43be70",
+          "0x150809180",
+          "0x153caf190",
+          "0x153cbb460",
+          "0x620000100"
+        ]
+      },
+      "resourcePath": {
+        "getter": {
+          "entry": "0x14a1d79c0",
+          "stop": "0x620000100",
+          "instructions": 3,
+          "nativePathSHA256": "2946a30f4ae61ec38c94a54cc60073a45b543afbf847d819bf6ab231fd29cd36",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d79c0",
+            "0x620000100"
+          ]
+        },
+        "loader": {
+          "entry": "0x14a1d7890",
+          "stop": "0x14d6e1570",
+          "instructions": 13,
+          "nativePathSHA256": "9aa99021e4495121413dfc2c2f667e2c07da12db2da05c9efbda2a90e818959c",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d7890",
+            "0x14d6e1570"
+          ]
+        },
+        "fileIOExecuted": false,
+        "path": "Data/_ExcelBinOutput/MaterialExcelConfigData"
+      },
+      "applications": [
+        {
+          "result": {
+            "id": 1001,
+            "guid": 71,
+            "count": 42,
+            "category": 2,
+            "delta": 42,
+            "modelClass": true,
+            "resource": true,
+            "clonedMaterial": {
+              "GNHFNECPAHD": 42
+            },
+            "selectedOperation": "insert"
+          },
+          "native": {
+            "prefix": {
+              "entry": "0x14e43a630",
+              "stop": "0x14e43b0e0",
+              "instructions": 646,
+              "nativePathSHA256": "f5e7659383f9d1f4fc90bc988d005a587e7f02058ba1a9c289e7ea7e7a771eb5",
+              "models": [
+                "0x1578b66f0",
+                "0x1565ee8d0",
+                "0x620001070",
+                "0x620001070",
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1578b66f0"
+              ],
+              "nativeEntries": [
+                "0x148446b80",
+                "0x148fed420",
+                "0x1497fd010",
+                "0x14a1d8440",
+                "0x14e3d73e0",
+                "0x14e43a630",
+                "0x14e43b0e0",
+                "0x150ed3210",
+                "0x150ed3510",
+                "0x150ed35e0",
+                "0x152ee2b10",
+                "0x152ee2f00",
+                "0x15459e4b0",
+                "0x156f6f510"
+              ]
+            },
+            "selection": {
+              "entry": "0x14e43a94b",
+              "stop": "0x1508054b0",
+              "instructions": 12,
+              "nativePathSHA256": "051c5a15d6554d3dba4e0303bc6b54e0bc7d817a8067d551bd5e4e1e238cf823",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43a94b",
+                "0x1508054b0"
+              ]
+            }
+          },
+          "guidIndex": {
+            "mutation": {
+              "entry": "0x14e43af70",
+              "stop": "0x620000100",
+              "instructions": 189,
+              "nativePathSHA256": "b862c53cddfc42d55d115faac12ee1116ade3b1c6dac5fe37caab1cdc062e55e",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43af70",
+                "0x156f6f510",
+                "0x156f6f850",
+                "0x620000100"
+              ]
+            },
+            "lookup": {
+              "entry": "0x156f6f510",
+              "stop": "0x620000100",
+              "instructions": 61,
+              "nativePathSHA256": "0713a2e9cb15cc0acdd407fb97dcb1608d76b0483d1cb4e15a3d213abbb80eb1",
+              "models": [],
+              "nativeEntries": [
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "slot": 0,
+            "entries": 1
+          }
+        },
+        {
+          "result": {
+            "id": 1002,
+            "guid": 72,
+            "count": 43,
+            "category": 2,
+            "delta": 43,
+            "modelClass": true,
+            "resource": true,
+            "clonedMaterial": {
+              "GNHFNECPAHD": 43
+            },
+            "selectedOperation": "insert"
+          },
+          "native": {
+            "prefix": {
+              "entry": "0x14e43a630",
+              "stop": "0x14e43b0e0",
+              "instructions": 646,
+              "nativePathSHA256": "f5e7659383f9d1f4fc90bc988d005a587e7f02058ba1a9c289e7ea7e7a771eb5",
+              "models": [
+                "0x1578b66f0",
+                "0x1565ee8d0",
+                "0x620001070",
+                "0x620001070",
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1578b66f0"
+              ],
+              "nativeEntries": [
+                "0x148446b80",
+                "0x148fed420",
+                "0x1497fd010",
+                "0x14a1d8440",
+                "0x14e3d73e0",
+                "0x14e43a630",
+                "0x14e43b0e0",
+                "0x150ed3210",
+                "0x150ed3510",
+                "0x150ed35e0",
+                "0x152ee2b10",
+                "0x152ee2f00",
+                "0x15459e4b0",
+                "0x156f6f510"
+              ]
+            },
+            "selection": {
+              "entry": "0x14e43a94b",
+              "stop": "0x1508054b0",
+              "instructions": 12,
+              "nativePathSHA256": "051c5a15d6554d3dba4e0303bc6b54e0bc7d817a8067d551bd5e4e1e238cf823",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43a94b",
+                "0x1508054b0"
+              ]
+            }
+          },
+          "guidIndex": {
+            "mutation": {
+              "entry": "0x14e43af70",
+              "stop": "0x620000100",
+              "instructions": 189,
+              "nativePathSHA256": "b862c53cddfc42d55d115faac12ee1116ade3b1c6dac5fe37caab1cdc062e55e",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43af70",
+                "0x156f6f510",
+                "0x156f6f850",
+                "0x620000100"
+              ]
+            },
+            "lookup": {
+              "entry": "0x156f6f510",
+              "stop": "0x620000100",
+              "instructions": 61,
+              "nativePathSHA256": "0713a2e9cb15cc0acdd407fb97dcb1608d76b0483d1cb4e15a3d213abbb80eb1",
+              "models": [],
+              "nativeEntries": [
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "slot": 1,
+            "entries": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "high-guid-collision",
+      "storeType": 1,
+      "wire": "120d08e9071081808080102a02082a120d08e9071082808080202a02082b7001",
+      "clearCalls": 28,
+      "dictionaries": [
+        {
+          "warehouse": "pack",
+          "offset": "0x68",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x38",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x48",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x70",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x20",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x18",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x60",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x28",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x50",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x88",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xb8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x90",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc0",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x68",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x38",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x48",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x70",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x20",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x18",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x60",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x28",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x50",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        }
+      ],
+      "materialResourceQueries": [
+        1001,
+        1001,
+        1001,
+        1001
+      ],
+      "notification": {
+        "entry": "0x153cbb460",
+        "stop": "0x620000100",
+        "instructions": 539,
+        "nativePathSHA256": "9d33af0ee8e6373f89158d420dca37ddeddb9f2dc9aa9eba4ab46de483cea209",
+        "models": [
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x620001080",
+          "0x159c5a080",
+          "0x1405336c0",
+          "0x159b55280",
+          "0x159b55f60",
+          "0x14a9ce8e0",
+          "0x14a9ce8e0",
+          "0x620001090",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0"
+        ],
+        "nativeEntries": [
+          "0x14e3dc3d0",
+          "0x14e43a630",
+          "0x14e43be70",
+          "0x150809180",
+          "0x153caf190",
+          "0x153cbb460",
+          "0x620000100"
+        ]
+      },
+      "resourcePath": {
+        "getter": {
+          "entry": "0x14a1d79c0",
+          "stop": "0x620000100",
+          "instructions": 3,
+          "nativePathSHA256": "2946a30f4ae61ec38c94a54cc60073a45b543afbf847d819bf6ab231fd29cd36",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d79c0",
+            "0x620000100"
+          ]
+        },
+        "loader": {
+          "entry": "0x14a1d7890",
+          "stop": "0x14d6e1570",
+          "instructions": 13,
+          "nativePathSHA256": "9aa99021e4495121413dfc2c2f667e2c07da12db2da05c9efbda2a90e818959c",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d7890",
+            "0x14d6e1570"
+          ]
+        },
+        "fileIOExecuted": false,
+        "path": "Data/_ExcelBinOutput/MaterialExcelConfigData"
+      },
+      "applications": [
+        {
+          "result": {
+            "id": 1001,
+            "guid": 4294967297,
+            "count": 42,
+            "category": 2,
+            "delta": 42,
+            "modelClass": true,
+            "resource": true,
+            "clonedMaterial": {
+              "GNHFNECPAHD": 42
+            },
+            "selectedOperation": "insert"
+          },
+          "native": {
+            "prefix": {
+              "entry": "0x14e43a630",
+              "stop": "0x14e43b0e0",
+              "instructions": 646,
+              "nativePathSHA256": "f5e7659383f9d1f4fc90bc988d005a587e7f02058ba1a9c289e7ea7e7a771eb5",
+              "models": [
+                "0x1578b66f0",
+                "0x1565ee8d0",
+                "0x620001070",
+                "0x620001070",
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1578b66f0"
+              ],
+              "nativeEntries": [
+                "0x148446b80",
+                "0x148fed420",
+                "0x1497fd010",
+                "0x14a1d8440",
+                "0x14e3d73e0",
+                "0x14e43a630",
+                "0x14e43b0e0",
+                "0x150ed3210",
+                "0x150ed3510",
+                "0x150ed35e0",
+                "0x152ee2b10",
+                "0x152ee2f00",
+                "0x15459e4b0",
+                "0x156f6f510"
+              ]
+            },
+            "selection": {
+              "entry": "0x14e43a94b",
+              "stop": "0x1508054b0",
+              "instructions": 12,
+              "nativePathSHA256": "051c5a15d6554d3dba4e0303bc6b54e0bc7d817a8067d551bd5e4e1e238cf823",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43a94b",
+                "0x1508054b0"
+              ]
+            }
+          },
+          "guidIndex": {
+            "mutation": {
+              "entry": "0x14e43af70",
+              "stop": "0x620000100",
+              "instructions": 189,
+              "nativePathSHA256": "b862c53cddfc42d55d115faac12ee1116ade3b1c6dac5fe37caab1cdc062e55e",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43af70",
+                "0x156f6f510",
+                "0x156f6f850",
+                "0x620000100"
+              ]
+            },
+            "lookup": {
+              "entry": "0x156f6f510",
+              "stop": "0x620000100",
+              "instructions": 61,
+              "nativePathSHA256": "0713a2e9cb15cc0acdd407fb97dcb1608d76b0483d1cb4e15a3d213abbb80eb1",
+              "models": [],
+              "nativeEntries": [
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "slot": 0,
+            "entries": 1
+          }
+        },
+        {
+          "result": {
+            "id": 1001,
+            "guid": 8589934594,
+            "count": 43,
+            "category": 2,
+            "delta": 43,
+            "modelClass": true,
+            "resource": true,
+            "clonedMaterial": {
+              "GNHFNECPAHD": 43
+            },
+            "selectedOperation": "insert"
+          },
+          "native": {
+            "prefix": {
+              "entry": "0x14e43a630",
+              "stop": "0x14e43b0e0",
+              "instructions": 665,
+              "nativePathSHA256": "0a8cb6162fba59e21c5747d601684f5e362b6479aa2f89899e50ebbc5b8e9b8c",
+              "models": [
+                "0x1578b66f0",
+                "0x1565ee8d0",
+                "0x620001070",
+                "0x620001070",
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1578b66f0"
+              ],
+              "nativeEntries": [
+                "0x148446b80",
+                "0x148fed420",
+                "0x1497fd010",
+                "0x14a1d8440",
+                "0x14e3d73e0",
+                "0x14e43a630",
+                "0x14e43b0e0",
+                "0x150ed3210",
+                "0x150ed3510",
+                "0x150ed35e0",
+                "0x152ee2b10",
+                "0x152ee2f00",
+                "0x15459e4b0",
+                "0x156f6f510"
+              ]
+            },
+            "selection": {
+              "entry": "0x14e43a94b",
+              "stop": "0x1508054b0",
+              "instructions": 12,
+              "nativePathSHA256": "051c5a15d6554d3dba4e0303bc6b54e0bc7d817a8067d551bd5e4e1e238cf823",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43a94b",
+                "0x1508054b0"
+              ]
+            }
+          },
+          "guidIndex": {
+            "mutation": {
+              "entry": "0x14e43af70",
+              "stop": "0x620000100",
+              "instructions": 226,
+              "nativePathSHA256": "1418c18d06fe78eca265a21bd740e2fa20b687499aa9cf2419bf47e1cd26671f",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43af70",
+                "0x156f6f510",
+                "0x156f6f850",
+                "0x620000100"
+              ]
+            },
+            "lookup": {
+              "entry": "0x156f6f510",
+              "stop": "0x620000100",
+              "instructions": 61,
+              "nativePathSHA256": "0713a2e9cb15cc0acdd407fb97dcb1608d76b0483d1cb4e15a3d213abbb80eb1",
+              "models": [],
+              "nativeEntries": [
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "slot": 1,
+            "entries": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "same-guid-overwrite",
+      "storeType": 1,
+      "wire": "120908e90710472a02082a120908ea0710472a02082b7001",
+      "clearCalls": 28,
+      "dictionaries": [
+        {
+          "warehouse": "pack",
+          "offset": "0x68",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x38",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x48",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x70",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x20",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x18",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x60",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x28",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x50",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x88",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xb8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x90",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc0",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x68",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x38",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x48",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x70",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x20",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x18",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x60",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x28",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x50",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        }
+      ],
+      "materialResourceQueries": [
+        1001,
+        1001,
+        1002
+      ],
+      "notification": {
+        "entry": "0x153cbb460",
+        "stop": "0x620000100",
+        "instructions": 539,
+        "nativePathSHA256": "9d33af0ee8e6373f89158d420dca37ddeddb9f2dc9aa9eba4ab46de483cea209",
+        "models": [
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x620001080",
+          "0x159c5a080",
+          "0x1405336c0",
+          "0x159b55280",
+          "0x159b55f60",
+          "0x14a9ce8e0",
+          "0x14a9ce8e0",
+          "0x620001090",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0"
+        ],
+        "nativeEntries": [
+          "0x14e3dc3d0",
+          "0x14e43a630",
+          "0x14e43be70",
+          "0x150809180",
+          "0x153caf190",
+          "0x153cbb460",
+          "0x620000100"
+        ]
+      },
+      "resourcePath": {
+        "getter": {
+          "entry": "0x14a1d79c0",
+          "stop": "0x620000100",
+          "instructions": 3,
+          "nativePathSHA256": "2946a30f4ae61ec38c94a54cc60073a45b543afbf847d819bf6ab231fd29cd36",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d79c0",
+            "0x620000100"
+          ]
+        },
+        "loader": {
+          "entry": "0x14a1d7890",
+          "stop": "0x14d6e1570",
+          "instructions": 13,
+          "nativePathSHA256": "9aa99021e4495121413dfc2c2f667e2c07da12db2da05c9efbda2a90e818959c",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d7890",
+            "0x14d6e1570"
+          ]
+        },
+        "fileIOExecuted": false,
+        "path": "Data/_ExcelBinOutput/MaterialExcelConfigData"
+      },
+      "applications": [
+        {
+          "result": {
+            "id": 1001,
+            "guid": 71,
+            "count": 42,
+            "category": 2,
+            "delta": 42,
+            "modelClass": true,
+            "resource": true,
+            "clonedMaterial": {
+              "GNHFNECPAHD": 42
+            },
+            "selectedOperation": "insert"
+          },
+          "native": {
+            "prefix": {
+              "entry": "0x14e43a630",
+              "stop": "0x14e43b0e0",
+              "instructions": 646,
+              "nativePathSHA256": "f5e7659383f9d1f4fc90bc988d005a587e7f02058ba1a9c289e7ea7e7a771eb5",
+              "models": [
+                "0x1578b66f0",
+                "0x1565ee8d0",
+                "0x620001070",
+                "0x620001070",
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1578b66f0"
+              ],
+              "nativeEntries": [
+                "0x148446b80",
+                "0x148fed420",
+                "0x1497fd010",
+                "0x14a1d8440",
+                "0x14e3d73e0",
+                "0x14e43a630",
+                "0x14e43b0e0",
+                "0x150ed3210",
+                "0x150ed3510",
+                "0x150ed35e0",
+                "0x152ee2b10",
+                "0x152ee2f00",
+                "0x15459e4b0",
+                "0x156f6f510"
+              ]
+            },
+            "selection": {
+              "entry": "0x14e43a94b",
+              "stop": "0x1508054b0",
+              "instructions": 12,
+              "nativePathSHA256": "051c5a15d6554d3dba4e0303bc6b54e0bc7d817a8067d551bd5e4e1e238cf823",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43a94b",
+                "0x1508054b0"
+              ]
+            }
+          },
+          "guidIndex": {
+            "mutation": {
+              "entry": "0x14e43af70",
+              "stop": "0x620000100",
+              "instructions": 189,
+              "nativePathSHA256": "b862c53cddfc42d55d115faac12ee1116ade3b1c6dac5fe37caab1cdc062e55e",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43af70",
+                "0x156f6f510",
+                "0x156f6f850",
+                "0x620000100"
+              ]
+            },
+            "lookup": {
+              "entry": "0x156f6f510",
+              "stop": "0x620000100",
+              "instructions": 61,
+              "nativePathSHA256": "0713a2e9cb15cc0acdd407fb97dcb1608d76b0483d1cb4e15a3d213abbb80eb1",
+              "models": [],
+              "nativeEntries": [
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "slot": 0,
+            "entries": 1
+          }
+        },
+        {
+          "result": {
+            "id": 1002,
+            "guid": 71,
+            "count": 43,
+            "category": 2,
+            "delta": 1,
+            "modelClass": true,
+            "resource": true,
+            "clonedMaterial": {
+              "GNHFNECPAHD": 43
+            },
+            "selectedOperation": "insert"
+          },
+          "native": {
+            "prefix": {
+              "entry": "0x14e43a630",
+              "stop": "0x14e43b0e0",
+              "instructions": 602,
+              "nativePathSHA256": "5ad8d842f4b60fbc8a3625c873d9d4f01f41d6629f73c67b6684d46280e63189",
+              "models": [
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1578b66f0"
+              ],
+              "nativeEntries": [
+                "0x148fed420",
+                "0x14a1d8440",
+                "0x14e43a630",
+                "0x14e43b0e0",
+                "0x150ed3010",
+                "0x150ed3210",
+                "0x150ed3510",
+                "0x150ed35e0",
+                "0x152ee2b10",
+                "0x152ee2f00",
+                "0x15459e4b0",
+                "0x156f6f510"
+              ]
+            },
+            "selection": {
+              "entry": "0x14e43a94b",
+              "stop": "0x1508054b0",
+              "instructions": 12,
+              "nativePathSHA256": "051c5a15d6554d3dba4e0303bc6b54e0bc7d817a8067d551bd5e4e1e238cf823",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43a94b",
+                "0x1508054b0"
+              ]
+            }
+          },
+          "guidIndex": {
+            "mutation": {
+              "entry": "0x14e43af70",
+              "stop": "0x620000100",
+              "instructions": 188,
+              "nativePathSHA256": "13648a900dd4a492a53757635f8199f55a71736663226fce588fdbff97d6cb7d",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43af70",
+                "0x156f6f510",
+                "0x156f6f850",
+                "0x620000100"
+              ]
+            },
+            "lookup": {
+              "entry": "0x156f6f510",
+              "stop": "0x620000100",
+              "instructions": 61,
+              "nativePathSHA256": "0713a2e9cb15cc0acdd407fb97dcb1608d76b0483d1cb4e15a3d213abbb80eb1",
+              "models": [],
+              "nativeEntries": [
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "slot": 0,
+            "entries": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "zero-count",
+      "storeType": 1,
+      "wire": "120708e90710472a007001",
+      "clearCalls": 28,
+      "dictionaries": [
+        {
+          "warehouse": "pack",
+          "offset": "0x68",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x38",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x48",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x70",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x20",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x18",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x60",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x28",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x50",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x88",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xb8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x90",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc0",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x68",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x38",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x48",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x70",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x20",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x18",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x60",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x28",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x50",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        }
+      ],
+      "materialResourceQueries": [
+        1001,
+        1001
+      ],
+      "notification": {
+        "entry": "0x153cbb460",
+        "stop": "0x620000100",
+        "instructions": 516,
+        "nativePathSHA256": "c48a40792aa939b49e41a515ec570f01655bc4ddb46ef996589fde1fceb4b264",
+        "models": [
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x620001080",
+          "0x159c5a080",
+          "0x1405336c0",
+          "0x159b55280",
+          "0x159b55f60",
+          "0x14a9ce8e0",
+          "0x14a9ce8e0",
+          "0x620001090",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0"
+        ],
+        "nativeEntries": [
+          "0x14e3dc3d0",
+          "0x14e43a630",
+          "0x14e43be70",
+          "0x150809180",
+          "0x153caf190",
+          "0x153cbb460",
+          "0x620000100"
+        ]
+      },
+      "resourcePath": {
+        "getter": {
+          "entry": "0x14a1d79c0",
+          "stop": "0x620000100",
+          "instructions": 3,
+          "nativePathSHA256": "2946a30f4ae61ec38c94a54cc60073a45b543afbf847d819bf6ab231fd29cd36",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d79c0",
+            "0x620000100"
+          ]
+        },
+        "loader": {
+          "entry": "0x14a1d7890",
+          "stop": "0x14d6e1570",
+          "instructions": 13,
+          "nativePathSHA256": "9aa99021e4495121413dfc2c2f667e2c07da12db2da05c9efbda2a90e818959c",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d7890",
+            "0x14d6e1570"
+          ]
+        },
+        "fileIOExecuted": false,
+        "path": "Data/_ExcelBinOutput/MaterialExcelConfigData"
+      },
+      "applications": [
+        {
+          "result": {
+            "id": 1001,
+            "guid": 71,
+            "count": 0,
+            "category": 2,
+            "delta": 0,
+            "modelClass": true,
+            "resource": true,
+            "clonedMaterial": {},
+            "selectedOperation": "remove"
+          },
+          "native": {
+            "prefix": {
+              "entry": "0x14e43a630",
+              "stop": "0x14e43b0e0",
+              "instructions": 645,
+              "nativePathSHA256": "5728ddc04a9a80c3ec69fb59c2bec2913607679d2b9a91994dd268b80b958e92",
+              "models": [
+                "0x1578b66f0",
+                "0x1565ee8d0",
+                "0x620001070",
+                "0x620001070",
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1578b66f0"
+              ],
+              "nativeEntries": [
+                "0x148446b80",
+                "0x148fed420",
+                "0x1497fd010",
+                "0x14a1d8440",
+                "0x14e3d73e0",
+                "0x14e43a630",
+                "0x14e43b0e0",
+                "0x150ed3210",
+                "0x150ed3510",
+                "0x150ed35e0",
+                "0x152ee2b10",
+                "0x152ee2f00",
+                "0x15459e4b0",
+                "0x156f6f510"
+              ]
+            },
+            "selection": {
+              "entry": "0x14e43a94b",
+              "stop": "0x150809970",
+              "instructions": 12,
+              "nativePathSHA256": "cd34d3de4a2158f9bf2a1e19699e063981ddca6fa4e7ea829e6df405b7860feb",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43a94b",
+                "0x150809970"
+              ]
+            }
+          },
+          "guidIndex": {
+            "mutation": {
+              "entry": "0x14e3dd4f0",
+              "stop": "0x620000100",
+              "instructions": 78,
+              "nativePathSHA256": "a5a56bec0e739bdbebd7644ccf2cd47f7e2e917aaae4bdcd65ca335720e3699e",
+              "models": [
+                "0x14052d0f0"
+              ],
+              "nativeEntries": [
+                "0x14e3dd4f0",
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "lookup": {
+              "entry": "0x156f6f510",
+              "stop": "0x620000100",
+              "instructions": 48,
+              "nativePathSHA256": "fda5de4221daaaac87994ea7fb0e9cdac86aa8f02ba1d8875f71aab7a1416c15",
+              "models": [],
+              "nativeEntries": [
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "slot": 4294967295,
+            "entries": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "upper-integers",
+      "storeType": 2,
+      "wire": "121908ffffffff0f10ffffffffffffffffff012a0608ffffffff0f7002",
+      "clearCalls": 18,
+      "dictionaries": [
+        {
+          "warehouse": "pack",
+          "offset": "0x68",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x38",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x48",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x70",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x20",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x18",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x60",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x28",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x50",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc8",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x88",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xb8",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x90",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc0",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x68",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x38",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x48",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x70",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x20",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x18",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x60",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x28",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x50",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        }
+      ],
+      "materialResourceQueries": [
+        4294967295,
+        4294967295
+      ],
+      "notification": {
+        "entry": "0x153cbb460",
+        "stop": "0x620000100",
+        "instructions": 388,
+        "nativePathSHA256": "ba348ea935ba0e4919cdafa999ac32ca80d349d916fd4927abfe3318bc5c513e",
+        "models": [
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x620001080",
+          "0x159c5a080",
+          "0x1405336c0",
+          "0x159b55280",
+          "0x159b55f60",
+          "0x14a9ce8e0",
+          "0x14a9ce8e0",
+          "0x620001090",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0"
+        ],
+        "nativeEntries": [
+          "0x14e3dc3d0",
+          "0x14e43a630",
+          "0x14e43be70",
+          "0x153caf190",
+          "0x153cbb460",
+          "0x620000100"
+        ]
+      },
+      "resourcePath": {
+        "getter": {
+          "entry": "0x14a1d79c0",
+          "stop": "0x620000100",
+          "instructions": 3,
+          "nativePathSHA256": "2946a30f4ae61ec38c94a54cc60073a45b543afbf847d819bf6ab231fd29cd36",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d79c0",
+            "0x620000100"
+          ]
+        },
+        "loader": {
+          "entry": "0x14a1d7890",
+          "stop": "0x14d6e1570",
+          "instructions": 13,
+          "nativePathSHA256": "9aa99021e4495121413dfc2c2f667e2c07da12db2da05c9efbda2a90e818959c",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d7890",
+            "0x14d6e1570"
+          ]
+        },
+        "fileIOExecuted": false,
+        "path": "Data/_ExcelBinOutput/MaterialExcelConfigData"
+      },
+      "applications": [
+        {
+          "result": {
+            "id": 4294967295,
+            "guid": 18446744073709551615,
+            "count": 4294967295,
+            "category": 2,
+            "delta": -1,
+            "modelClass": true,
+            "resource": true,
+            "clonedMaterial": {
+              "GNHFNECPAHD": 4294967295
+            },
+            "selectedOperation": "insert"
+          },
+          "native": {
+            "prefix": {
+              "entry": "0x14e43a630",
+              "stop": "0x14e43b0e0",
+              "instructions": 646,
+              "nativePathSHA256": "f5e7659383f9d1f4fc90bc988d005a587e7f02058ba1a9c289e7ea7e7a771eb5",
+              "models": [
+                "0x1578b66f0",
+                "0x1565ee8d0",
+                "0x620001070",
+                "0x620001070",
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1578b66f0"
+              ],
+              "nativeEntries": [
+                "0x148446b80",
+                "0x148fed420",
+                "0x1497fd010",
+                "0x14a1d8440",
+                "0x14e3d73e0",
+                "0x14e43a630",
+                "0x14e43b0e0",
+                "0x150ed3210",
+                "0x150ed3510",
+                "0x150ed35e0",
+                "0x152ee2b10",
+                "0x152ee2f00",
+                "0x15459e4b0",
+                "0x156f6f510"
+              ]
+            },
+            "selection": {
+              "entry": "0x14e43a94b",
+              "stop": "0x14e3dcf30",
+              "instructions": 12,
+              "nativePathSHA256": "6e1b6d4f2bd89ac80f5c6aa8ad3f6e11950897c0e313d735ab56e460318d13ab",
+              "models": [],
+              "nativeEntries": [
+                "0x14e3dcf30",
+                "0x14e43a94b"
+              ]
+            }
+          },
+          "guidIndex": {
+            "mutation": {
+              "entry": "0x14e43af70",
+              "stop": "0x620000100",
+              "instructions": 189,
+              "nativePathSHA256": "b862c53cddfc42d55d115faac12ee1116ade3b1c6dac5fe37caab1cdc062e55e",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43af70",
+                "0x156f6f510",
+                "0x156f6f850",
+                "0x620000100"
+              ]
+            },
+            "lookup": {
+              "entry": "0x156f6f510",
+              "stop": "0x620000100",
+              "instructions": 61,
+              "nativePathSHA256": "0713a2e9cb15cc0acdd407fb97dcb1608d76b0483d1cb4e15a3d213abbb80eb1",
+              "models": [],
+              "nativeEntries": [
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "slot": 0,
+            "entries": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "signed-delta-boundary",
+      "storeType": 1,
+      "wire": "120d08e90710472a060880808080087001",
+      "clearCalls": 28,
+      "dictionaries": [
+        {
+          "warehouse": "pack",
+          "offset": "0x68",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x38",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x48",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x70",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x20",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x18",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x60",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x28",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x50",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x88",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xb8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x90",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc0",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x68",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x38",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x48",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x70",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x20",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x18",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x60",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x28",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x50",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        }
+      ],
+      "materialResourceQueries": [
+        1001,
+        1001
+      ],
+      "notification": {
+        "entry": "0x153cbb460",
+        "stop": "0x620000100",
+        "instructions": 516,
+        "nativePathSHA256": "c48a40792aa939b49e41a515ec570f01655bc4ddb46ef996589fde1fceb4b264",
+        "models": [
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x620001080",
+          "0x159c5a080",
+          "0x1405336c0",
+          "0x159b55280",
+          "0x159b55f60",
+          "0x14a9ce8e0",
+          "0x14a9ce8e0",
+          "0x620001090",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0"
+        ],
+        "nativeEntries": [
+          "0x14e3dc3d0",
+          "0x14e43a630",
+          "0x14e43be70",
+          "0x150809180",
+          "0x153caf190",
+          "0x153cbb460",
+          "0x620000100"
+        ]
+      },
+      "resourcePath": {
+        "getter": {
+          "entry": "0x14a1d79c0",
+          "stop": "0x620000100",
+          "instructions": 3,
+          "nativePathSHA256": "2946a30f4ae61ec38c94a54cc60073a45b543afbf847d819bf6ab231fd29cd36",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d79c0",
+            "0x620000100"
+          ]
+        },
+        "loader": {
+          "entry": "0x14a1d7890",
+          "stop": "0x14d6e1570",
+          "instructions": 13,
+          "nativePathSHA256": "9aa99021e4495121413dfc2c2f667e2c07da12db2da05c9efbda2a90e818959c",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d7890",
+            "0x14d6e1570"
+          ]
+        },
+        "fileIOExecuted": false,
+        "path": "Data/_ExcelBinOutput/MaterialExcelConfigData"
+      },
+      "applications": [
+        {
+          "result": {
+            "id": 1001,
+            "guid": 71,
+            "count": 2147483648,
+            "category": 2,
+            "delta": -2147483648,
+            "modelClass": true,
+            "resource": true,
+            "clonedMaterial": {
+              "GNHFNECPAHD": 2147483648
+            },
+            "selectedOperation": "insert"
+          },
+          "native": {
+            "prefix": {
+              "entry": "0x14e43a630",
+              "stop": "0x14e43b0e0",
+              "instructions": 646,
+              "nativePathSHA256": "f5e7659383f9d1f4fc90bc988d005a587e7f02058ba1a9c289e7ea7e7a771eb5",
+              "models": [
+                "0x1578b66f0",
+                "0x1565ee8d0",
+                "0x620001070",
+                "0x620001070",
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1578b66f0"
+              ],
+              "nativeEntries": [
+                "0x148446b80",
+                "0x148fed420",
+                "0x1497fd010",
+                "0x14a1d8440",
+                "0x14e3d73e0",
+                "0x14e43a630",
+                "0x14e43b0e0",
+                "0x150ed3210",
+                "0x150ed3510",
+                "0x150ed35e0",
+                "0x152ee2b10",
+                "0x152ee2f00",
+                "0x15459e4b0",
+                "0x156f6f510"
+              ]
+            },
+            "selection": {
+              "entry": "0x14e43a94b",
+              "stop": "0x1508054b0",
+              "instructions": 12,
+              "nativePathSHA256": "051c5a15d6554d3dba4e0303bc6b54e0bc7d817a8067d551bd5e4e1e238cf823",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43a94b",
+                "0x1508054b0"
+              ]
+            }
+          },
+          "guidIndex": {
+            "mutation": {
+              "entry": "0x14e43af70",
+              "stop": "0x620000100",
+              "instructions": 189,
+              "nativePathSHA256": "b862c53cddfc42d55d115faac12ee1116ade3b1c6dac5fe37caab1cdc062e55e",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43af70",
+                "0x156f6f510",
+                "0x156f6f850",
+                "0x620000100"
+              ]
+            },
+            "lookup": {
+              "entry": "0x156f6f510",
+              "stop": "0x620000100",
+              "instructions": 61,
+              "nativePathSHA256": "0713a2e9cb15cc0acdd407fb97dcb1608d76b0483d1cb4e15a3d213abbb80eb1",
+              "models": [],
+              "nativeEntries": [
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "slot": 0,
+            "entries": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "same-guid-negative-delta",
+      "storeType": 1,
+      "wire": "120908e90710472a02082a120908e90710472a0208027001",
+      "clearCalls": 28,
+      "dictionaries": [
+        {
+          "warehouse": "pack",
+          "offset": "0x68",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x38",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x48",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x70",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x20",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x18",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x60",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x28",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x50",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x88",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xb8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x90",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc0",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x68",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x38",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x48",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x70",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x20",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x18",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x60",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x28",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x50",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        }
+      ],
+      "materialResourceQueries": [
+        1001,
+        1001,
+        1001
+      ],
+      "notification": {
+        "entry": "0x153cbb460",
+        "stop": "0x620000100",
+        "instructions": 539,
+        "nativePathSHA256": "9d33af0ee8e6373f89158d420dca37ddeddb9f2dc9aa9eba4ab46de483cea209",
+        "models": [
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x620001080",
+          "0x159c5a080",
+          "0x1405336c0",
+          "0x159b55280",
+          "0x159b55f60",
+          "0x14a9ce8e0",
+          "0x14a9ce8e0",
+          "0x620001090",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0"
+        ],
+        "nativeEntries": [
+          "0x14e3dc3d0",
+          "0x14e43a630",
+          "0x14e43be70",
+          "0x150809180",
+          "0x153caf190",
+          "0x153cbb460",
+          "0x620000100"
+        ]
+      },
+      "resourcePath": {
+        "getter": {
+          "entry": "0x14a1d79c0",
+          "stop": "0x620000100",
+          "instructions": 3,
+          "nativePathSHA256": "2946a30f4ae61ec38c94a54cc60073a45b543afbf847d819bf6ab231fd29cd36",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d79c0",
+            "0x620000100"
+          ]
+        },
+        "loader": {
+          "entry": "0x14a1d7890",
+          "stop": "0x14d6e1570",
+          "instructions": 13,
+          "nativePathSHA256": "9aa99021e4495121413dfc2c2f667e2c07da12db2da05c9efbda2a90e818959c",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d7890",
+            "0x14d6e1570"
+          ]
+        },
+        "fileIOExecuted": false,
+        "path": "Data/_ExcelBinOutput/MaterialExcelConfigData"
+      },
+      "applications": [
+        {
+          "result": {
+            "id": 1001,
+            "guid": 71,
+            "count": 42,
+            "category": 2,
+            "delta": 42,
+            "modelClass": true,
+            "resource": true,
+            "clonedMaterial": {
+              "GNHFNECPAHD": 42
+            },
+            "selectedOperation": "insert"
+          },
+          "native": {
+            "prefix": {
+              "entry": "0x14e43a630",
+              "stop": "0x14e43b0e0",
+              "instructions": 646,
+              "nativePathSHA256": "f5e7659383f9d1f4fc90bc988d005a587e7f02058ba1a9c289e7ea7e7a771eb5",
+              "models": [
+                "0x1578b66f0",
+                "0x1565ee8d0",
+                "0x620001070",
+                "0x620001070",
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1578b66f0"
+              ],
+              "nativeEntries": [
+                "0x148446b80",
+                "0x148fed420",
+                "0x1497fd010",
+                "0x14a1d8440",
+                "0x14e3d73e0",
+                "0x14e43a630",
+                "0x14e43b0e0",
+                "0x150ed3210",
+                "0x150ed3510",
+                "0x150ed35e0",
+                "0x152ee2b10",
+                "0x152ee2f00",
+                "0x15459e4b0",
+                "0x156f6f510"
+              ]
+            },
+            "selection": {
+              "entry": "0x14e43a94b",
+              "stop": "0x1508054b0",
+              "instructions": 12,
+              "nativePathSHA256": "051c5a15d6554d3dba4e0303bc6b54e0bc7d817a8067d551bd5e4e1e238cf823",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43a94b",
+                "0x1508054b0"
+              ]
+            }
+          },
+          "guidIndex": {
+            "mutation": {
+              "entry": "0x14e43af70",
+              "stop": "0x620000100",
+              "instructions": 189,
+              "nativePathSHA256": "b862c53cddfc42d55d115faac12ee1116ade3b1c6dac5fe37caab1cdc062e55e",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43af70",
+                "0x156f6f510",
+                "0x156f6f850",
+                "0x620000100"
+              ]
+            },
+            "lookup": {
+              "entry": "0x156f6f510",
+              "stop": "0x620000100",
+              "instructions": 61,
+              "nativePathSHA256": "0713a2e9cb15cc0acdd407fb97dcb1608d76b0483d1cb4e15a3d213abbb80eb1",
+              "models": [],
+              "nativeEntries": [
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "slot": 0,
+            "entries": 1
+          }
+        },
+        {
+          "result": {
+            "id": 1001,
+            "guid": 71,
+            "count": 2,
+            "category": 2,
+            "delta": -40,
+            "modelClass": true,
+            "resource": true,
+            "clonedMaterial": {
+              "GNHFNECPAHD": 2
+            },
+            "selectedOperation": "insert"
+          },
+          "native": {
+            "prefix": {
+              "entry": "0x14e43a630",
+              "stop": "0x14e43b0e0",
+              "instructions": 602,
+              "nativePathSHA256": "5ad8d842f4b60fbc8a3625c873d9d4f01f41d6629f73c67b6684d46280e63189",
+              "models": [
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1578b66f0"
+              ],
+              "nativeEntries": [
+                "0x148fed420",
+                "0x14a1d8440",
+                "0x14e43a630",
+                "0x14e43b0e0",
+                "0x150ed3010",
+                "0x150ed3210",
+                "0x150ed3510",
+                "0x150ed35e0",
+                "0x152ee2b10",
+                "0x152ee2f00",
+                "0x15459e4b0",
+                "0x156f6f510"
+              ]
+            },
+            "selection": {
+              "entry": "0x14e43a94b",
+              "stop": "0x1508054b0",
+              "instructions": 12,
+              "nativePathSHA256": "051c5a15d6554d3dba4e0303bc6b54e0bc7d817a8067d551bd5e4e1e238cf823",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43a94b",
+                "0x1508054b0"
+              ]
+            }
+          },
+          "guidIndex": {
+            "mutation": {
+              "entry": "0x14e43af70",
+              "stop": "0x620000100",
+              "instructions": 188,
+              "nativePathSHA256": "13648a900dd4a492a53757635f8199f55a71736663226fce588fdbff97d6cb7d",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43af70",
+                "0x156f6f510",
+                "0x156f6f850",
+                "0x620000100"
+              ]
+            },
+            "lookup": {
+              "entry": "0x156f6f510",
+              "stop": "0x620000100",
+              "instructions": 61,
+              "nativePathSHA256": "0713a2e9cb15cc0acdd407fb97dcb1608d76b0483d1cb4e15a3d213abbb80eb1",
+              "models": [],
+              "nativeEntries": [
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "slot": 0,
+            "entries": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "same-guid-zero-removes",
+      "storeType": 1,
+      "wire": "120908e90710472a02082a120708e90710472a007001",
+      "clearCalls": 28,
+      "dictionaries": [
+        {
+          "warehouse": "pack",
+          "offset": "0x68",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x38",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x48",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x70",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x20",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x18",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x60",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x28",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x50",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x88",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xb8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x90",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc0",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x68",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x38",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x48",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x70",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x20",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x18",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x60",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x28",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x50",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        }
+      ],
+      "materialResourceQueries": [
+        1001,
+        1001,
+        1001
+      ],
+      "notification": {
+        "entry": "0x153cbb460",
+        "stop": "0x620000100",
+        "instructions": 539,
+        "nativePathSHA256": "9d33af0ee8e6373f89158d420dca37ddeddb9f2dc9aa9eba4ab46de483cea209",
+        "models": [
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x620001080",
+          "0x159c5a080",
+          "0x1405336c0",
+          "0x159b55280",
+          "0x159b55f60",
+          "0x14a9ce8e0",
+          "0x14a9ce8e0",
+          "0x620001090",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0"
+        ],
+        "nativeEntries": [
+          "0x14e3dc3d0",
+          "0x14e43a630",
+          "0x14e43be70",
+          "0x150809180",
+          "0x153caf190",
+          "0x153cbb460",
+          "0x620000100"
+        ]
+      },
+      "resourcePath": {
+        "getter": {
+          "entry": "0x14a1d79c0",
+          "stop": "0x620000100",
+          "instructions": 3,
+          "nativePathSHA256": "2946a30f4ae61ec38c94a54cc60073a45b543afbf847d819bf6ab231fd29cd36",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d79c0",
+            "0x620000100"
+          ]
+        },
+        "loader": {
+          "entry": "0x14a1d7890",
+          "stop": "0x14d6e1570",
+          "instructions": 13,
+          "nativePathSHA256": "9aa99021e4495121413dfc2c2f667e2c07da12db2da05c9efbda2a90e818959c",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d7890",
+            "0x14d6e1570"
+          ]
+        },
+        "fileIOExecuted": false,
+        "path": "Data/_ExcelBinOutput/MaterialExcelConfigData"
+      },
+      "applications": [
+        {
+          "result": {
+            "id": 1001,
+            "guid": 71,
+            "count": 42,
+            "category": 2,
+            "delta": 42,
+            "modelClass": true,
+            "resource": true,
+            "clonedMaterial": {
+              "GNHFNECPAHD": 42
+            },
+            "selectedOperation": "insert"
+          },
+          "native": {
+            "prefix": {
+              "entry": "0x14e43a630",
+              "stop": "0x14e43b0e0",
+              "instructions": 646,
+              "nativePathSHA256": "f5e7659383f9d1f4fc90bc988d005a587e7f02058ba1a9c289e7ea7e7a771eb5",
+              "models": [
+                "0x1578b66f0",
+                "0x1565ee8d0",
+                "0x620001070",
+                "0x620001070",
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1578b66f0"
+              ],
+              "nativeEntries": [
+                "0x148446b80",
+                "0x148fed420",
+                "0x1497fd010",
+                "0x14a1d8440",
+                "0x14e3d73e0",
+                "0x14e43a630",
+                "0x14e43b0e0",
+                "0x150ed3210",
+                "0x150ed3510",
+                "0x150ed35e0",
+                "0x152ee2b10",
+                "0x152ee2f00",
+                "0x15459e4b0",
+                "0x156f6f510"
+              ]
+            },
+            "selection": {
+              "entry": "0x14e43a94b",
+              "stop": "0x1508054b0",
+              "instructions": 12,
+              "nativePathSHA256": "051c5a15d6554d3dba4e0303bc6b54e0bc7d817a8067d551bd5e4e1e238cf823",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43a94b",
+                "0x1508054b0"
+              ]
+            }
+          },
+          "guidIndex": {
+            "mutation": {
+              "entry": "0x14e43af70",
+              "stop": "0x620000100",
+              "instructions": 189,
+              "nativePathSHA256": "b862c53cddfc42d55d115faac12ee1116ade3b1c6dac5fe37caab1cdc062e55e",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43af70",
+                "0x156f6f510",
+                "0x156f6f850",
+                "0x620000100"
+              ]
+            },
+            "lookup": {
+              "entry": "0x156f6f510",
+              "stop": "0x620000100",
+              "instructions": 61,
+              "nativePathSHA256": "0713a2e9cb15cc0acdd407fb97dcb1608d76b0483d1cb4e15a3d213abbb80eb1",
+              "models": [],
+              "nativeEntries": [
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "slot": 0,
+            "entries": 1
+          }
+        },
+        {
+          "result": {
+            "id": 1001,
+            "guid": 71,
+            "count": 0,
+            "category": 2,
+            "delta": -42,
+            "modelClass": true,
+            "resource": true,
+            "clonedMaterial": {},
+            "selectedOperation": "remove"
+          },
+          "native": {
+            "prefix": {
+              "entry": "0x14e43a630",
+              "stop": "0x14e43b0e0",
+              "instructions": 601,
+              "nativePathSHA256": "1c15bf1632afccb7b7a76f837a206280d2eb5a1901aa61490a778624e681a1d9",
+              "models": [
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1578b66f0"
+              ],
+              "nativeEntries": [
+                "0x148fed420",
+                "0x14a1d8440",
+                "0x14e43a630",
+                "0x14e43b0e0",
+                "0x150ed3010",
+                "0x150ed3210",
+                "0x150ed3510",
+                "0x150ed35e0",
+                "0x152ee2b10",
+                "0x152ee2f00",
+                "0x15459e4b0",
+                "0x156f6f510"
+              ]
+            },
+            "selection": {
+              "entry": "0x14e43a94b",
+              "stop": "0x150809970",
+              "instructions": 12,
+              "nativePathSHA256": "cd34d3de4a2158f9bf2a1e19699e063981ddca6fa4e7ea829e6df405b7860feb",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43a94b",
+                "0x150809970"
+              ]
+            }
+          },
+          "guidIndex": {
+            "mutation": {
+              "entry": "0x14e3dd4f0",
+              "stop": "0x620000100",
+              "instructions": 213,
+              "nativePathSHA256": "1e46f43ef0faa9d0ae740d48f16dd2e0af2ce2d9515911e865cf9dfffa7030ed",
+              "models": [
+                "0x14052d0f0"
+              ],
+              "nativeEntries": [
+                "0x14e3dd4f0",
+                "0x156f6f510",
+                "0x156f70100",
+                "0x158bb0140",
+                "0x620000100"
+              ]
+            },
+            "lookup": {
+              "entry": "0x156f6f510",
+              "stop": "0x620000100",
+              "instructions": 48,
+              "nativePathSHA256": "fda5de4221daaaac87994ea7fb0e9cdac86aa8f02ba1d8875f71aab7a1416c15",
+              "models": [],
+              "nativeEntries": [
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "slot": 4294967295,
+            "entries": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "zero-guid",
+      "storeType": 1,
+      "wire": "120908e90710002a0208017001",
+      "clearCalls": 28,
+      "dictionaries": [
+        {
+          "warehouse": "pack",
+          "offset": "0x68",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x38",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x48",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x70",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x20",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x18",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x60",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x28",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x50",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x88",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xb8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x90",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc0",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x68",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x38",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x48",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x70",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x20",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x18",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x60",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x28",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x50",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        }
+      ],
+      "materialResourceQueries": [
+        1001,
+        1001
+      ],
+      "notification": {
+        "entry": "0x153cbb460",
+        "stop": "0x620000100",
+        "instructions": 516,
+        "nativePathSHA256": "c48a40792aa939b49e41a515ec570f01655bc4ddb46ef996589fde1fceb4b264",
+        "models": [
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x620001080",
+          "0x159c5a080",
+          "0x1405336c0",
+          "0x159b55280",
+          "0x159b55f60",
+          "0x14a9ce8e0",
+          "0x14a9ce8e0",
+          "0x620001090",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0"
+        ],
+        "nativeEntries": [
+          "0x14e3dc3d0",
+          "0x14e43a630",
+          "0x14e43be70",
+          "0x150809180",
+          "0x153caf190",
+          "0x153cbb460",
+          "0x620000100"
+        ]
+      },
+      "resourcePath": {
+        "getter": {
+          "entry": "0x14a1d79c0",
+          "stop": "0x620000100",
+          "instructions": 3,
+          "nativePathSHA256": "2946a30f4ae61ec38c94a54cc60073a45b543afbf847d819bf6ab231fd29cd36",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d79c0",
+            "0x620000100"
+          ]
+        },
+        "loader": {
+          "entry": "0x14a1d7890",
+          "stop": "0x14d6e1570",
+          "instructions": 13,
+          "nativePathSHA256": "9aa99021e4495121413dfc2c2f667e2c07da12db2da05c9efbda2a90e818959c",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d7890",
+            "0x14d6e1570"
+          ]
+        },
+        "fileIOExecuted": false,
+        "path": "Data/_ExcelBinOutput/MaterialExcelConfigData"
+      },
+      "applications": [
+        {
+          "result": {
+            "id": 1001,
+            "guid": 0,
+            "count": 1,
+            "category": 2,
+            "delta": 1,
+            "modelClass": true,
+            "resource": true,
+            "clonedMaterial": {
+              "GNHFNECPAHD": 1
+            },
+            "selectedOperation": "insert"
+          },
+          "native": {
+            "prefix": {
+              "entry": "0x14e43a630",
+              "stop": "0x14e43b0e0",
+              "instructions": 646,
+              "nativePathSHA256": "f5e7659383f9d1f4fc90bc988d005a587e7f02058ba1a9c289e7ea7e7a771eb5",
+              "models": [
+                "0x1578b66f0",
+                "0x1565ee8d0",
+                "0x620001070",
+                "0x620001070",
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1578b66f0"
+              ],
+              "nativeEntries": [
+                "0x148446b80",
+                "0x148fed420",
+                "0x1497fd010",
+                "0x14a1d8440",
+                "0x14e3d73e0",
+                "0x14e43a630",
+                "0x14e43b0e0",
+                "0x150ed3210",
+                "0x150ed3510",
+                "0x150ed35e0",
+                "0x152ee2b10",
+                "0x152ee2f00",
+                "0x15459e4b0",
+                "0x156f6f510"
+              ]
+            },
+            "selection": {
+              "entry": "0x14e43a94b",
+              "stop": "0x1508054b0",
+              "instructions": 12,
+              "nativePathSHA256": "051c5a15d6554d3dba4e0303bc6b54e0bc7d817a8067d551bd5e4e1e238cf823",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43a94b",
+                "0x1508054b0"
+              ]
+            }
+          },
+          "guidIndex": {
+            "mutation": {
+              "entry": "0x14e43af70",
+              "stop": "0x620000100",
+              "instructions": 189,
+              "nativePathSHA256": "b862c53cddfc42d55d115faac12ee1116ade3b1c6dac5fe37caab1cdc062e55e",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43af70",
+                "0x156f6f510",
+                "0x156f6f850",
+                "0x620000100"
+              ]
+            },
+            "lookup": {
+              "entry": "0x156f6f510",
+              "stop": "0x620000100",
+              "instructions": 61,
+              "nativePathSHA256": "0713a2e9cb15cc0acdd407fb97dcb1608d76b0483d1cb4e15a3d213abbb80eb1",
+              "models": [],
+              "nativeEntries": [
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "slot": 0,
+            "entries": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "store-none-fallback",
+      "storeType": 0,
+      "wire": "120908e90710472a02082a7000",
+      "clearCalls": 28,
+      "dictionaries": [
+        {
+          "warehouse": "pack",
+          "offset": "0x68",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x38",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x48",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x70",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x20",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x18",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x60",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x28",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x50",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x88",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xb8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x90",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc0",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x68",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x38",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x48",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x70",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x20",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x18",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x60",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x28",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x50",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        }
+      ],
+      "materialResourceQueries": [
+        1001,
+        1001
+      ],
+      "notification": {
+        "entry": "0x153cbb460",
+        "stop": "0x620000100",
+        "instructions": 516,
+        "nativePathSHA256": "c48a40792aa939b49e41a515ec570f01655bc4ddb46ef996589fde1fceb4b264",
+        "models": [
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x620001080",
+          "0x159c5a080",
+          "0x1405336c0",
+          "0x159b55280",
+          "0x159b55f60",
+          "0x14a9ce8e0",
+          "0x14a9ce8e0",
+          "0x620001090",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0"
+        ],
+        "nativeEntries": [
+          "0x14e3dc3d0",
+          "0x14e43a630",
+          "0x14e43be70",
+          "0x150809180",
+          "0x153caf190",
+          "0x153cbb460",
+          "0x620000100"
+        ]
+      },
+      "resourcePath": {
+        "getter": {
+          "entry": "0x14a1d79c0",
+          "stop": "0x620000100",
+          "instructions": 3,
+          "nativePathSHA256": "2946a30f4ae61ec38c94a54cc60073a45b543afbf847d819bf6ab231fd29cd36",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d79c0",
+            "0x620000100"
+          ]
+        },
+        "loader": {
+          "entry": "0x14a1d7890",
+          "stop": "0x14d6e1570",
+          "instructions": 13,
+          "nativePathSHA256": "9aa99021e4495121413dfc2c2f667e2c07da12db2da05c9efbda2a90e818959c",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d7890",
+            "0x14d6e1570"
+          ]
+        },
+        "fileIOExecuted": false,
+        "path": "Data/_ExcelBinOutput/MaterialExcelConfigData"
+      },
+      "applications": [
+        {
+          "result": {
+            "id": 1001,
+            "guid": 71,
+            "count": 42,
+            "category": 2,
+            "delta": 42,
+            "modelClass": true,
+            "resource": true,
+            "clonedMaterial": {
+              "GNHFNECPAHD": 42
+            },
+            "selectedOperation": "insert"
+          },
+          "native": {
+            "prefix": {
+              "entry": "0x14e43a630",
+              "stop": "0x14e43b0e0",
+              "instructions": 646,
+              "nativePathSHA256": "f5e7659383f9d1f4fc90bc988d005a587e7f02058ba1a9c289e7ea7e7a771eb5",
+              "models": [
+                "0x1578b66f0",
+                "0x1565ee8d0",
+                "0x620001070",
+                "0x620001070",
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1578b66f0"
+              ],
+              "nativeEntries": [
+                "0x148446b80",
+                "0x148fed420",
+                "0x1497fd010",
+                "0x14a1d8440",
+                "0x14e3d73e0",
+                "0x14e43a630",
+                "0x14e43b0e0",
+                "0x150ed3210",
+                "0x150ed3510",
+                "0x150ed35e0",
+                "0x152ee2b10",
+                "0x152ee2f00",
+                "0x15459e4b0",
+                "0x156f6f510"
+              ]
+            },
+            "selection": {
+              "entry": "0x14e43a94b",
+              "stop": "0x1508054b0",
+              "instructions": 12,
+              "nativePathSHA256": "051c5a15d6554d3dba4e0303bc6b54e0bc7d817a8067d551bd5e4e1e238cf823",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43a94b",
+                "0x1508054b0"
+              ]
+            }
+          },
+          "guidIndex": {
+            "mutation": {
+              "entry": "0x14e43af70",
+              "stop": "0x620000100",
+              "instructions": 189,
+              "nativePathSHA256": "b862c53cddfc42d55d115faac12ee1116ade3b1c6dac5fe37caab1cdc062e55e",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43af70",
+                "0x156f6f510",
+                "0x156f6f850",
+                "0x620000100"
+              ]
+            },
+            "lookup": {
+              "entry": "0x156f6f510",
+              "stop": "0x620000100",
+              "instructions": 61,
+              "nativePathSHA256": "0713a2e9cb15cc0acdd407fb97dcb1608d76b0483d1cb4e15a3d213abbb80eb1",
+              "models": [],
+              "nativeEntries": [
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "slot": 0,
+            "entries": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "store-unknown-fallback",
+      "storeType": 4294967295,
+      "wire": "120908e90710472a02082a70ffffffff0f",
+      "clearCalls": 28,
+      "dictionaries": [
+        {
+          "warehouse": "pack",
+          "offset": "0x68",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x38",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x48",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x70",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x20",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x18",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x60",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x28",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x50",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x88",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xb8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x90",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc0",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x68",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x38",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x48",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x70",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x20",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x18",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x60",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x28",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x50",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        }
+      ],
+      "materialResourceQueries": [
+        1001,
+        1001
+      ],
+      "notification": {
+        "entry": "0x153cbb460",
+        "stop": "0x620000100",
+        "instructions": 516,
+        "nativePathSHA256": "c48a40792aa939b49e41a515ec570f01655bc4ddb46ef996589fde1fceb4b264",
+        "models": [
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x620001080",
+          "0x159c5a080",
+          "0x1405336c0",
+          "0x159b55280",
+          "0x159b55f60",
+          "0x14a9ce8e0",
+          "0x14a9ce8e0",
+          "0x620001090",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0"
+        ],
+        "nativeEntries": [
+          "0x14e3dc3d0",
+          "0x14e43a630",
+          "0x14e43be70",
+          "0x150809180",
+          "0x153caf190",
+          "0x153cbb460",
+          "0x620000100"
+        ]
+      },
+      "resourcePath": {
+        "getter": {
+          "entry": "0x14a1d79c0",
+          "stop": "0x620000100",
+          "instructions": 3,
+          "nativePathSHA256": "2946a30f4ae61ec38c94a54cc60073a45b543afbf847d819bf6ab231fd29cd36",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d79c0",
+            "0x620000100"
+          ]
+        },
+        "loader": {
+          "entry": "0x14a1d7890",
+          "stop": "0x14d6e1570",
+          "instructions": 13,
+          "nativePathSHA256": "9aa99021e4495121413dfc2c2f667e2c07da12db2da05c9efbda2a90e818959c",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d7890",
+            "0x14d6e1570"
+          ]
+        },
+        "fileIOExecuted": false,
+        "path": "Data/_ExcelBinOutput/MaterialExcelConfigData"
+      },
+      "applications": [
+        {
+          "result": {
+            "id": 1001,
+            "guid": 71,
+            "count": 42,
+            "category": 2,
+            "delta": 42,
+            "modelClass": true,
+            "resource": true,
+            "clonedMaterial": {
+              "GNHFNECPAHD": 42
+            },
+            "selectedOperation": "insert"
+          },
+          "native": {
+            "prefix": {
+              "entry": "0x14e43a630",
+              "stop": "0x14e43b0e0",
+              "instructions": 646,
+              "nativePathSHA256": "f5e7659383f9d1f4fc90bc988d005a587e7f02058ba1a9c289e7ea7e7a771eb5",
+              "models": [
+                "0x1578b66f0",
+                "0x1565ee8d0",
+                "0x620001070",
+                "0x620001070",
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1578b66f0"
+              ],
+              "nativeEntries": [
+                "0x148446b80",
+                "0x148fed420",
+                "0x1497fd010",
+                "0x14a1d8440",
+                "0x14e3d73e0",
+                "0x14e43a630",
+                "0x14e43b0e0",
+                "0x150ed3210",
+                "0x150ed3510",
+                "0x150ed35e0",
+                "0x152ee2b10",
+                "0x152ee2f00",
+                "0x15459e4b0",
+                "0x156f6f510"
+              ]
+            },
+            "selection": {
+              "entry": "0x14e43a94b",
+              "stop": "0x1508054b0",
+              "instructions": 12,
+              "nativePathSHA256": "051c5a15d6554d3dba4e0303bc6b54e0bc7d817a8067d551bd5e4e1e238cf823",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43a94b",
+                "0x1508054b0"
+              ]
+            }
+          },
+          "guidIndex": {
+            "mutation": {
+              "entry": "0x14e43af70",
+              "stop": "0x620000100",
+              "instructions": 189,
+              "nativePathSHA256": "b862c53cddfc42d55d115faac12ee1116ade3b1c6dac5fe37caab1cdc062e55e",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43af70",
+                "0x156f6f510",
+                "0x156f6f850",
+                "0x620000100"
+              ]
+            },
+            "lookup": {
+              "entry": "0x156f6f510",
+              "stop": "0x620000100",
+              "instructions": 61,
+              "nativePathSHA256": "0713a2e9cb15cc0acdd407fb97dcb1608d76b0483d1cb4e15a3d213abbb80eb1",
+              "models": [],
+              "nativeEntries": [
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "slot": 0,
+            "entries": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "same-material-explicit-zero",
+      "storeType": 1,
+      "wire": "120d08e90710472a02082a2a0208007001",
+      "clearCalls": 28,
+      "dictionaries": [
+        {
+          "warehouse": "pack",
+          "offset": "0x68",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x38",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x48",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x70",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x20",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x18",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x60",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x28",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x50",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x88",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xb8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x90",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc0",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x68",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x38",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x48",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x70",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x20",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x18",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x60",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x28",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x50",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        }
+      ],
+      "materialResourceQueries": [
+        1001,
+        1001
+      ],
+      "notification": {
+        "entry": "0x153cbb460",
+        "stop": "0x620000100",
+        "instructions": 516,
+        "nativePathSHA256": "c48a40792aa939b49e41a515ec570f01655bc4ddb46ef996589fde1fceb4b264",
+        "models": [
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x620001080",
+          "0x159c5a080",
+          "0x1405336c0",
+          "0x159b55280",
+          "0x159b55f60",
+          "0x14a9ce8e0",
+          "0x14a9ce8e0",
+          "0x620001090",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0"
+        ],
+        "nativeEntries": [
+          "0x14e3dc3d0",
+          "0x14e43a630",
+          "0x14e43be70",
+          "0x150809180",
+          "0x153caf190",
+          "0x153cbb460",
+          "0x620000100"
+        ]
+      },
+      "resourcePath": {
+        "getter": {
+          "entry": "0x14a1d79c0",
+          "stop": "0x620000100",
+          "instructions": 3,
+          "nativePathSHA256": "2946a30f4ae61ec38c94a54cc60073a45b543afbf847d819bf6ab231fd29cd36",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d79c0",
+            "0x620000100"
+          ]
+        },
+        "loader": {
+          "entry": "0x14a1d7890",
+          "stop": "0x14d6e1570",
+          "instructions": 13,
+          "nativePathSHA256": "9aa99021e4495121413dfc2c2f667e2c07da12db2da05c9efbda2a90e818959c",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d7890",
+            "0x14d6e1570"
+          ]
+        },
+        "fileIOExecuted": false,
+        "path": "Data/_ExcelBinOutput/MaterialExcelConfigData"
+      },
+      "applications": [
+        {
+          "result": {
+            "id": 1001,
+            "guid": 71,
+            "count": 0,
+            "category": 2,
+            "delta": 0,
+            "modelClass": true,
+            "resource": true,
+            "clonedMaterial": {},
+            "selectedOperation": "remove"
+          },
+          "native": {
+            "prefix": {
+              "entry": "0x14e43a630",
+              "stop": "0x14e43b0e0",
+              "instructions": 645,
+              "nativePathSHA256": "5728ddc04a9a80c3ec69fb59c2bec2913607679d2b9a91994dd268b80b958e92",
+              "models": [
+                "0x1578b66f0",
+                "0x1565ee8d0",
+                "0x620001070",
+                "0x620001070",
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1578b66f0"
+              ],
+              "nativeEntries": [
+                "0x148446b80",
+                "0x148fed420",
+                "0x1497fd010",
+                "0x14a1d8440",
+                "0x14e3d73e0",
+                "0x14e43a630",
+                "0x14e43b0e0",
+                "0x150ed3210",
+                "0x150ed3510",
+                "0x150ed35e0",
+                "0x152ee2b10",
+                "0x152ee2f00",
+                "0x15459e4b0",
+                "0x156f6f510"
+              ]
+            },
+            "selection": {
+              "entry": "0x14e43a94b",
+              "stop": "0x150809970",
+              "instructions": 12,
+              "nativePathSHA256": "cd34d3de4a2158f9bf2a1e19699e063981ddca6fa4e7ea829e6df405b7860feb",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43a94b",
+                "0x150809970"
+              ]
+            }
+          },
+          "guidIndex": {
+            "mutation": {
+              "entry": "0x14e3dd4f0",
+              "stop": "0x620000100",
+              "instructions": 78,
+              "nativePathSHA256": "a5a56bec0e739bdbebd7644ccf2cd47f7e2e917aaae4bdcd65ca335720e3699e",
+              "models": [
+                "0x14052d0f0"
+              ],
+              "nativeEntries": [
+                "0x14e3dd4f0",
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "lookup": {
+              "entry": "0x156f6f510",
+              "stop": "0x620000100",
+              "instructions": 48,
+              "nativePathSHA256": "fda5de4221daaaac87994ea7fb0e9cdac86aa8f02ba1d8875f71aab7a1416c15",
+              "models": [],
+              "nativeEntries": [
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "slot": 4294967295,
+            "entries": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "oneof-seven-then-material",
+      "storeType": 1,
+      "wire": "120d08e90710473a0208632a02082a7001",
+      "clearCalls": 28,
+      "dictionaries": [
+        {
+          "warehouse": "pack",
+          "offset": "0x68",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x38",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x48",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x70",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x20",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x18",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x60",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x28",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x50",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x88",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xb8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x90",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc0",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x68",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x38",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x48",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x70",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x20",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x18",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x60",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x28",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x50",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        }
+      ],
+      "materialResourceQueries": [
+        1001,
+        1001
+      ],
+      "notification": {
+        "entry": "0x153cbb460",
+        "stop": "0x620000100",
+        "instructions": 516,
+        "nativePathSHA256": "c48a40792aa939b49e41a515ec570f01655bc4ddb46ef996589fde1fceb4b264",
+        "models": [
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x620001080",
+          "0x159c5a080",
+          "0x1405336c0",
+          "0x159b55280",
+          "0x159b55f60",
+          "0x14a9ce8e0",
+          "0x14a9ce8e0",
+          "0x620001090",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0"
+        ],
+        "nativeEntries": [
+          "0x14e3dc3d0",
+          "0x14e43a630",
+          "0x14e43be70",
+          "0x150809180",
+          "0x153caf190",
+          "0x153cbb460",
+          "0x620000100"
+        ]
+      },
+      "resourcePath": {
+        "getter": {
+          "entry": "0x14a1d79c0",
+          "stop": "0x620000100",
+          "instructions": 3,
+          "nativePathSHA256": "2946a30f4ae61ec38c94a54cc60073a45b543afbf847d819bf6ab231fd29cd36",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d79c0",
+            "0x620000100"
+          ]
+        },
+        "loader": {
+          "entry": "0x14a1d7890",
+          "stop": "0x14d6e1570",
+          "instructions": 13,
+          "nativePathSHA256": "9aa99021e4495121413dfc2c2f667e2c07da12db2da05c9efbda2a90e818959c",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d7890",
+            "0x14d6e1570"
+          ]
+        },
+        "fileIOExecuted": false,
+        "path": "Data/_ExcelBinOutput/MaterialExcelConfigData"
+      },
+      "applications": [
+        {
+          "result": {
+            "id": 1001,
+            "guid": 71,
+            "count": 42,
+            "category": 2,
+            "delta": 42,
+            "modelClass": true,
+            "resource": true,
+            "clonedMaterial": {
+              "GNHFNECPAHD": 42
+            },
+            "selectedOperation": "insert"
+          },
+          "native": {
+            "prefix": {
+              "entry": "0x14e43a630",
+              "stop": "0x14e43b0e0",
+              "instructions": 646,
+              "nativePathSHA256": "f5e7659383f9d1f4fc90bc988d005a587e7f02058ba1a9c289e7ea7e7a771eb5",
+              "models": [
+                "0x1578b66f0",
+                "0x1565ee8d0",
+                "0x620001070",
+                "0x620001070",
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1578b66f0"
+              ],
+              "nativeEntries": [
+                "0x148446b80",
+                "0x148fed420",
+                "0x1497fd010",
+                "0x14a1d8440",
+                "0x14e3d73e0",
+                "0x14e43a630",
+                "0x14e43b0e0",
+                "0x150ed3210",
+                "0x150ed3510",
+                "0x150ed35e0",
+                "0x152ee2b10",
+                "0x152ee2f00",
+                "0x15459e4b0",
+                "0x156f6f510"
+              ]
+            },
+            "selection": {
+              "entry": "0x14e43a94b",
+              "stop": "0x1508054b0",
+              "instructions": 12,
+              "nativePathSHA256": "051c5a15d6554d3dba4e0303bc6b54e0bc7d817a8067d551bd5e4e1e238cf823",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43a94b",
+                "0x1508054b0"
+              ]
+            }
+          },
+          "guidIndex": {
+            "mutation": {
+              "entry": "0x14e43af70",
+              "stop": "0x620000100",
+              "instructions": 189,
+              "nativePathSHA256": "b862c53cddfc42d55d115faac12ee1116ade3b1c6dac5fe37caab1cdc062e55e",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43af70",
+                "0x156f6f510",
+                "0x156f6f850",
+                "0x620000100"
+              ]
+            },
+            "lookup": {
+              "entry": "0x156f6f510",
+              "stop": "0x620000100",
+              "instructions": 61,
+              "nativePathSHA256": "0713a2e9cb15cc0acdd407fb97dcb1608d76b0483d1cb4e15a3d213abbb80eb1",
+              "models": [],
+              "nativeEntries": [
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "slot": 0,
+            "entries": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "nested-detail-retained-unknown",
+      "storeType": 1,
+      "wire": "120f08e90710472a08082a12041a0208117001",
+      "clearCalls": 28,
+      "dictionaries": [
+        {
+          "warehouse": "pack",
+          "offset": "0x68",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x38",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x48",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x70",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x20",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x18",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x60",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x28",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x50",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x88",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xb8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x90",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc0",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x68",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x38",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x48",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x70",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x20",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x18",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x60",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x28",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x50",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        }
+      ],
+      "materialResourceQueries": [
+        1001,
+        1001
+      ],
+      "notification": {
+        "entry": "0x153cbb460",
+        "stop": "0x620000100",
+        "instructions": 516,
+        "nativePathSHA256": "c48a40792aa939b49e41a515ec570f01655bc4ddb46ef996589fde1fceb4b264",
+        "models": [
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x620001080",
+          "0x159c5a080",
+          "0x1405336c0",
+          "0x159b55280",
+          "0x159b55f60",
+          "0x14a9ce8e0",
+          "0x14a9ce8e0",
+          "0x620001090",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0"
+        ],
+        "nativeEntries": [
+          "0x14e3dc3d0",
+          "0x14e43a630",
+          "0x14e43be70",
+          "0x150809180",
+          "0x153caf190",
+          "0x153cbb460",
+          "0x620000100"
+        ]
+      },
+      "resourcePath": {
+        "getter": {
+          "entry": "0x14a1d79c0",
+          "stop": "0x620000100",
+          "instructions": 3,
+          "nativePathSHA256": "2946a30f4ae61ec38c94a54cc60073a45b543afbf847d819bf6ab231fd29cd36",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d79c0",
+            "0x620000100"
+          ]
+        },
+        "loader": {
+          "entry": "0x14a1d7890",
+          "stop": "0x14d6e1570",
+          "instructions": 13,
+          "nativePathSHA256": "9aa99021e4495121413dfc2c2f667e2c07da12db2da05c9efbda2a90e818959c",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d7890",
+            "0x14d6e1570"
+          ]
+        },
+        "fileIOExecuted": false,
+        "path": "Data/_ExcelBinOutput/MaterialExcelConfigData"
+      },
+      "applications": [
+        {
+          "result": {
+            "id": 1001,
+            "guid": 71,
+            "count": 42,
+            "category": 2,
+            "delta": 42,
+            "modelClass": true,
+            "resource": true,
+            "clonedMaterial": {
+              "GNHFNECPAHD": 42,
+              "PNGOHOKGKHP": {
+                "PNGOHOKGKHP_3": {
+                  "BHOHKJOCNOL": 17
+                }
+              }
+            },
+            "selectedOperation": "insert"
+          },
+          "native": {
+            "prefix": {
+              "entry": "0x14e43a630",
+              "stop": "0x14e43b0e0",
+              "instructions": 880,
+              "nativePathSHA256": "ad3ad3ee989c58747f9231e20587432427ea415ef3491463410ceac265328a5b",
+              "models": [
+                "0x1578b66f0",
+                "0x1565ee8d0",
+                "0x620001070",
+                "0x620001070",
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1405336c0",
+                "0x14051a870",
+                "0x14052d0f0",
+                "0x14052d0f0",
+                "0x14052d0f0",
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1578b66f0"
+              ],
+              "nativeEntries": [
+                "0x148446b80",
+                "0x148fed420",
+                "0x1497fd010",
+                "0x14a1d8440",
+                "0x14e3d73e0",
+                "0x14e43a630",
+                "0x14e43b0e0",
+                "0x150ed3210",
+                "0x150ed3510",
+                "0x150ed35e0",
+                "0x152ee2b10",
+                "0x152ee2f00",
+                "0x15459e4b0",
+                "0x156f6f510"
+              ]
+            },
+            "selection": {
+              "entry": "0x14e43a94b",
+              "stop": "0x1508054b0",
+              "instructions": 12,
+              "nativePathSHA256": "051c5a15d6554d3dba4e0303bc6b54e0bc7d817a8067d551bd5e4e1e238cf823",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43a94b",
+                "0x1508054b0"
+              ]
+            }
+          },
+          "guidIndex": {
+            "mutation": {
+              "entry": "0x14e43af70",
+              "stop": "0x620000100",
+              "instructions": 189,
+              "nativePathSHA256": "b862c53cddfc42d55d115faac12ee1116ade3b1c6dac5fe37caab1cdc062e55e",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43af70",
+                "0x156f6f510",
+                "0x156f6f850",
+                "0x620000100"
+              ]
+            },
+            "lookup": {
+              "entry": "0x156f6f510",
+              "stop": "0x620000100",
+              "instructions": 61,
+              "nativePathSHA256": "0713a2e9cb15cc0acdd407fb97dcb1608d76b0483d1cb4e15a3d213abbb80eb1",
+              "models": [],
+              "nativeEntries": [
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "slot": 0,
+            "entries": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "resource-category-is-not-wire-tag",
+      "storeType": 1,
+      "wire": "120908e90710472a02082a7001",
+      "clearCalls": 28,
+      "dictionaries": [
+        {
+          "warehouse": "pack",
+          "offset": "0x68",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x38",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x48",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x70",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x20",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x18",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x60",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x28",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x50",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x88",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xb8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x90",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc0",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x68",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x38",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x48",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x70",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x20",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x18",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x60",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x28",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x50",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        }
+      ],
+      "materialResourceQueries": [
+        1001,
+        1001
+      ],
+      "notification": {
+        "entry": "0x153cbb460",
+        "stop": "0x620000100",
+        "instructions": 516,
+        "nativePathSHA256": "c48a40792aa939b49e41a515ec570f01655bc4ddb46ef996589fde1fceb4b264",
+        "models": [
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x620001080",
+          "0x159c5a080",
+          "0x1405336c0",
+          "0x159b55280",
+          "0x159b55f60",
+          "0x14a9ce8e0",
+          "0x14a9ce8e0",
+          "0x620001090",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0"
+        ],
+        "nativeEntries": [
+          "0x14e3dc3d0",
+          "0x14e43a630",
+          "0x14e43be70",
+          "0x150809180",
+          "0x153caf190",
+          "0x153cbb460",
+          "0x620000100"
+        ]
+      },
+      "resourcePath": {
+        "getter": {
+          "entry": "0x14a1d79c0",
+          "stop": "0x620000100",
+          "instructions": 3,
+          "nativePathSHA256": "2946a30f4ae61ec38c94a54cc60073a45b543afbf847d819bf6ab231fd29cd36",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d79c0",
+            "0x620000100"
+          ]
+        },
+        "loader": {
+          "entry": "0x14a1d7890",
+          "stop": "0x14d6e1570",
+          "instructions": 13,
+          "nativePathSHA256": "9aa99021e4495121413dfc2c2f667e2c07da12db2da05c9efbda2a90e818959c",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d7890",
+            "0x14d6e1570"
+          ]
+        },
+        "fileIOExecuted": false,
+        "path": "Data/_ExcelBinOutput/MaterialExcelConfigData"
+      },
+      "applications": [
+        {
+          "result": {
+            "id": 1001,
+            "guid": 71,
+            "count": 42,
+            "category": 7,
+            "delta": 42,
+            "modelClass": true,
+            "resource": true,
+            "clonedMaterial": {
+              "GNHFNECPAHD": 42
+            },
+            "selectedOperation": "insert"
+          },
+          "native": {
+            "prefix": {
+              "entry": "0x14e43a630",
+              "stop": "0x14e43b0e0",
+              "instructions": 642,
+              "nativePathSHA256": "89593cd006cf5fbaee95bbf0017e66e73c5f8ba67ba7bc1584b98fd1827f1108",
+              "models": [
+                "0x1578b66f0",
+                "0x1565ee8d0",
+                "0x620001070",
+                "0x620001070",
+                "0x1405336c0",
+                "0x14051a870",
+                "0x1578b66f0"
+              ],
+              "nativeEntries": [
+                "0x148446b80",
+                "0x148fed420",
+                "0x1497fd010",
+                "0x14a1d8440",
+                "0x14e3d73e0",
+                "0x14e43a630",
+                "0x14e43b0e0",
+                "0x150ed3210",
+                "0x150ed3510",
+                "0x150ed35e0",
+                "0x152ee2b10",
+                "0x152ee2f00",
+                "0x15459e4b0",
+                "0x156f6f510"
+              ]
+            },
+            "selection": {
+              "entry": "0x14e43a94b",
+              "stop": "0x1508054b0",
+              "instructions": 12,
+              "nativePathSHA256": "051c5a15d6554d3dba4e0303bc6b54e0bc7d817a8067d551bd5e4e1e238cf823",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43a94b",
+                "0x1508054b0"
+              ]
+            }
+          },
+          "guidIndex": {
+            "mutation": {
+              "entry": "0x14e43af70",
+              "stop": "0x620000100",
+              "instructions": 189,
+              "nativePathSHA256": "b862c53cddfc42d55d115faac12ee1116ade3b1c6dac5fe37caab1cdc062e55e",
+              "models": [],
+              "nativeEntries": [
+                "0x14e43af70",
+                "0x156f6f510",
+                "0x156f6f850",
+                "0x620000100"
+              ]
+            },
+            "lookup": {
+              "entry": "0x156f6f510",
+              "stop": "0x620000100",
+              "instructions": 61,
+              "nativePathSHA256": "0713a2e9cb15cc0acdd407fb97dcb1608d76b0483d1cb4e15a3d213abbb80eb1",
+              "models": [],
+              "nativeEntries": [
+                "0x156f6f510",
+                "0x620000100"
+              ]
+            },
+            "slot": 0,
+            "entries": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "missing-resource-rejected-by-application",
+      "storeType": 1,
+      "wire": "120908e90710472a02082a7001",
+      "clearCalls": 28,
+      "dictionaries": [
+        {
+          "warehouse": "pack",
+          "offset": "0x68",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x38",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x48",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x70",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x20",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x18",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x60",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x28",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x50",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x88",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xb8",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0x90",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "pack",
+          "offset": "0xc0",
+          "count": 0,
+          "version": 10,
+          "arraysZero": true
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x68",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x38",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x48",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x70",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x20",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x18",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x60",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x28",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        },
+        {
+          "warehouse": "depot",
+          "offset": "0x50",
+          "count": 1,
+          "version": 9,
+          "arraysZero": false
+        }
+      ],
+      "materialResourceQueries": [
+        1001
+      ],
+      "notification": {
+        "entry": "0x153cbb460",
+        "stop": "0x620000100",
+        "instructions": 516,
+        "nativePathSHA256": "c48a40792aa939b49e41a515ec570f01655bc4ddb46ef996589fde1fceb4b264",
+        "models": [
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x159c68c70",
+          "0x620001080",
+          "0x159c5a080",
+          "0x1405336c0",
+          "0x159b55280",
+          "0x159b55f60",
+          "0x14a9ce8e0",
+          "0x14a9ce8e0",
+          "0x620001090",
+          "0x1572292b0",
+          "0x14e43a630",
+          "0x1572292b0"
+        ],
+        "nativeEntries": [
+          "0x14e3dc3d0",
+          "0x14e43a630",
+          "0x14e43be70",
+          "0x150809180",
+          "0x153caf190",
+          "0x153cbb460",
+          "0x620000100"
+        ]
+      },
+      "resourcePath": {
+        "getter": {
+          "entry": "0x14a1d79c0",
+          "stop": "0x620000100",
+          "instructions": 3,
+          "nativePathSHA256": "2946a30f4ae61ec38c94a54cc60073a45b543afbf847d819bf6ab231fd29cd36",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d79c0",
+            "0x620000100"
+          ]
+        },
+        "loader": {
+          "entry": "0x14a1d7890",
+          "stop": "0x14d6e1570",
+          "instructions": 13,
+          "nativePathSHA256": "9aa99021e4495121413dfc2c2f667e2c07da12db2da05c9efbda2a90e818959c",
+          "models": [],
+          "nativeEntries": [
+            "0x14a1d7890",
+            "0x14d6e1570"
+          ]
+        },
+        "fileIOExecuted": false,
+        "path": "Data/_ExcelBinOutput/MaterialExcelConfigData"
+      },
+      "applications": [
+        {
+          "result": null,
+          "native": {
+            "entry": "0x14e43a630",
+            "stop": "0x620000100",
+            "instructions": 182,
+            "nativePathSHA256": "13ff72d2214a4ac5183230f9d01aa2698fe6e5e57ff613f0b6cbef99f4407f08",
+            "models": [
+              "0x1578b66f0",
+              "0x147c38ec0",
+              "0x1535f65e0",
+              "0x1538b3fd0",
+              "0x14a07bfb0",
+              "0x14ebd90e0"
+            ],
+            "nativeEntries": [
+              "0x148446b80",
+              "0x14a1d8440",
+              "0x14e43a630",
+              "0x156f6f510",
+              "0x620000100"
+            ]
+          },
+          "guidIndex": {}
+        }
+      ]
+    }
+  ]
+}
