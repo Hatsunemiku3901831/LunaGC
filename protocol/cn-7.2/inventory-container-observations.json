@@ -1,0 +1,2300 @@
+{
+  "schemaVersion": 1,
+  "task": "F-03d2a2",
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "outerEvidenceSHA256": "2c14b416e5e18d868bde7d645939f6ea9c2a936761967e555e92538c2d11e20f",
+  "runtimeStatus": "not-tested",
+  "semanticIdentityStatus": "unresolved",
+  "fullStoreRawClosure": false,
+  "messages": [
+    {
+      "typeIndex": 14095,
+      "clientType": "JLAGHMMLDCA",
+      "fields": [
+        {
+          "clientField": "JMGKMMFNABP",
+          "objectOffset": 24,
+          "type": "map",
+          "cardinality": "map",
+          "keyType": "uint32",
+          "valueType": "uint32",
+          "tag": 3,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "EIBDIEHEAKF",
+          "objectOffset": 32,
+          "type": "uint32",
+          "cardinality": "repeated",
+          "packed": true,
+          "tag": 2,
+          "acceptedWireTypes": [
+            0,
+            2
+          ],
+          "semanticStatus": "unresolved"
+        }
+      ]
+    },
+    {
+      "typeIndex": 28473,
+      "clientType": "PEMOFGMDGHP",
+      "fields": [
+        {
+          "clientField": "ALNBHHEJLKP",
+          "objectOffset": 24,
+          "type": "map",
+          "cardinality": "map",
+          "keyType": "uint32",
+          "valueType": "uint32",
+          "tag": 1,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "MNBPLFPCJLG",
+          "objectOffset": 32,
+          "type": "uint32",
+          "cardinality": "singular",
+          "tag": 2,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        }
+      ]
+    },
+    {
+      "typeIndex": 28475,
+      "clientType": "DFPLPBLIEEK",
+      "fields": [
+        {
+          "clientField": "ALNBHHEJLKP",
+          "objectOffset": 24,
+          "type": "map",
+          "cardinality": "map",
+          "keyType": "uint32",
+          "valueType": "uint32",
+          "tag": 1,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "MNBPLFPCJLG",
+          "objectOffset": 32,
+          "type": "uint32",
+          "cardinality": "singular",
+          "tag": 3,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "PGDAIKELICG",
+          "objectOffset": 36,
+          "type": "uint32",
+          "cardinality": "singular",
+          "tag": 2,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        }
+      ]
+    },
+    {
+      "typeIndex": 61085,
+      "clientType": "MCBNNKGKJCI",
+      "fields": [
+        {
+          "clientField": "ALNBHHEJLKP",
+          "objectOffset": 24,
+          "type": "map",
+          "cardinality": "map",
+          "keyType": "uint32",
+          "valueType": "uint32",
+          "tag": 1,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        }
+      ]
+    },
+    {
+      "typeIndex": 64947,
+      "clientType": "FNECPDFLEHN",
+      "fields": [
+        {
+          "clientField": "JMGKMMFNABP",
+          "objectOffset": 24,
+          "type": "map",
+          "cardinality": "map",
+          "keyType": "uint32",
+          "valueType": "uint32",
+          "tag": 4,
+          "acceptedWireTypes": [
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "FLGGIMBHFOO",
+          "objectOffset": 32,
+          "type": "uint32",
+          "cardinality": "repeated",
+          "packed": true,
+          "tag": 6,
+          "acceptedWireTypes": [
+            0,
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "NILMBAGDEAL",
+          "objectOffset": 40,
+          "type": "uint32",
+          "cardinality": "singular",
+          "tag": 2,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "KFDCBKBPPGL",
+          "objectOffset": 44,
+          "type": "uint32",
+          "cardinality": "singular",
+          "tag": 3,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "NJAGFJINHMA",
+          "objectOffset": 48,
+          "type": "uint32",
+          "cardinality": "singular",
+          "tag": 1,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "MNCFEDPDEAG",
+          "objectOffset": 52,
+          "type": "bool",
+          "cardinality": "singular",
+          "tag": 5,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        }
+      ]
+    },
+    {
+      "typeIndex": 74063,
+      "clientType": "JBBEOMJDLFM",
+      "fields": [
+        {
+          "clientField": "FOFCJMPCEBB",
+          "objectOffset": 24,
+          "type": "uint32",
+          "cardinality": "repeated",
+          "packed": true,
+          "tag": 5,
+          "acceptedWireTypes": [
+            0,
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "IMEGOOADEBF",
+          "objectOffset": 32,
+          "type": "uint32",
+          "cardinality": "repeated",
+          "packed": true,
+          "tag": 7,
+          "acceptedWireTypes": [
+            0,
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "IHKPPDPBEML",
+          "objectOffset": 40,
+          "type": "uint32",
+          "cardinality": "repeated",
+          "packed": true,
+          "tag": 8,
+          "acceptedWireTypes": [
+            0,
+            2
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "KFDCBKBPPGL",
+          "objectOffset": 48,
+          "type": "uint32",
+          "cardinality": "singular",
+          "tag": 3,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "OJDKGGHBKKK",
+          "objectOffset": 52,
+          "type": "uint32",
+          "cardinality": "singular",
+          "tag": 4,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "NILMBAGDEAL",
+          "objectOffset": 56,
+          "type": "uint32",
+          "cardinality": "singular",
+          "tag": 2,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "CGKIGPFDFOF",
+          "objectOffset": 60,
+          "type": "bool",
+          "cardinality": "singular",
+          "tag": 6,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        },
+        {
+          "clientField": "NJAGFJINHMA",
+          "objectOffset": 64,
+          "type": "uint32",
+          "cardinality": "singular",
+          "tag": 1,
+          "acceptedWireTypes": [
+            0
+          ],
+          "semanticStatus": "unresolved"
+        }
+      ]
+    }
+  ],
+  "primitiveMapAOT": [
+    {
+      "owner": 17964,
+      "classInstance": 3723,
+      "method": ".ctor",
+      "methodDefinition": 136471,
+      "tableIndex": 304449,
+      "methodSpec": 189217,
+      "pointerIndex": 97995,
+      "address": "0x158935cd0",
+      "arguments": [
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        },
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        }
+      ]
+    },
+    {
+      "owner": 17964,
+      "classInstance": 3723,
+      "method": "MOMMACBEMEK",
+      "methodDefinition": 136478,
+      "tableIndex": 304452,
+      "methodSpec": 189227,
+      "pointerIndex": 98005,
+      "address": "0x158935d30",
+      "arguments": [
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        },
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        }
+      ]
+    },
+    {
+      "owner": 17961,
+      "classInstance": 3723,
+      "method": ".ctor",
+      "methodDefinition": 136414,
+      "tableIndex": 304849,
+      "methodSpec": 190772,
+      "pointerIndex": 99497,
+      "address": "0x15893cfe0",
+      "arguments": [
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        },
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        }
+      ]
+    },
+    {
+      "owner": 17961,
+      "classInstance": 3723,
+      "method": "FNNADLCNGFO",
+      "methodDefinition": 136431,
+      "tableIndex": 304856,
+      "methodSpec": 190836,
+      "pointerIndex": 99558,
+      "address": "0x15893d460",
+      "arguments": [
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        },
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        }
+      ]
+    },
+    {
+      "owner": 17961,
+      "classInstance": 3723,
+      "method": "set_Item",
+      "methodDefinition": 136450,
+      "tableIndex": 304863,
+      "methodSpec": 191168,
+      "pointerIndex": 99883,
+      "address": "0x15893e4d0",
+      "arguments": [
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        },
+        {
+          "kind": "uint32",
+          "attributes": "0x0",
+          "data": "0x13f",
+          "byRef": false
+        }
+      ]
+    }
+  ],
+  "initializers": [
+    {
+      "typeIndex": 14095,
+      "entry": "0x149c5c530",
+      "factoryTags": [
+        18,
+        8,
+        16
+      ],
+      "stores": [
+        {
+          "staticOffset": 141520,
+          "tag": 26
+        },
+        {
+          "staticOffset": 141528,
+          "tag": 18
+        }
+      ]
+    },
+    {
+      "typeIndex": 28473,
+      "entry": "0x14e458080",
+      "factoryTags": [
+        8,
+        16
+      ],
+      "stores": [
+        {
+          "staticOffset": 213744,
+          "tag": 10
+        }
+      ]
+    },
+    {
+      "typeIndex": 28475,
+      "entry": "0x152274e80",
+      "factoryTags": [
+        8,
+        16
+      ],
+      "stores": [
+        {
+          "staticOffset": 152064,
+          "tag": 10
+        }
+      ]
+    },
+    {
+      "typeIndex": 64947,
+      "entry": "0x1504d7a10",
+      "factoryTags": [
+        8,
+        16,
+        50
+      ],
+      "stores": [
+        {
+          "staticOffset": 111544,
+          "tag": 34
+        },
+        {
+          "staticOffset": 111536,
+          "tag": 50
+        }
+      ]
+    },
+    {
+      "typeIndex": 74063,
+      "entry": "0x147744fc0",
+      "factoryTags": [
+        42,
+        58,
+        66
+      ],
+      "stores": [
+        {
+          "staticOffset": 170344,
+          "tag": 42
+        },
+        {
+          "staticOffset": 170352,
+          "tag": 58
+        },
+        {
+          "staticOffset": 170336,
+          "tag": 66
+        }
+      ]
+    },
+    {
+      "typeIndex": 61085,
+      "entry": "0x14b6faa40",
+      "factoryTags": [
+        8,
+        16
+      ],
+      "stores": [
+        {
+          "staticOffset": 180848,
+          "tag": 10
+        }
+      ]
+    }
+  ],
+  "scan": {
+    "nativeFixtures": 768,
+    "scope": "six primitive container types, tags1..32/wire0,1,2,5",
+    "fields": [
+      {
+        "typeIndex": 14095,
+        "tag": 2,
+        "wireType": 0,
+        "result": {
+          "EIBDIEHEAKF": [
+            305419896
+          ]
+        },
+        "entered": [
+          {
+            "typeIndex": 14095,
+            "entry": "0x149c5c150"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8e10"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          }
+        ],
+        "stores": []
+      },
+      {
+        "typeIndex": 14095,
+        "tag": 2,
+        "wireType": 2,
+        "result": {
+          "EIBDIEHEAKF": [
+            8,
+            1
+          ]
+        },
+        "entered": [
+          {
+            "typeIndex": 14095,
+            "entry": "0x149c5c150"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8e10"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          }
+        ],
+        "stores": []
+      },
+      {
+        "typeIndex": 14095,
+        "tag": 3,
+        "wireType": 2,
+        "result": {
+          "JMGKMMFNABP": {
+            "1": 0
+          }
+        },
+        "entered": [
+          {
+            "typeIndex": 14095,
+            "entry": "0x149c5c150"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x15893d460"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x158935d30"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x15893e4d0"
+          }
+        ],
+        "stores": [
+          {
+            "typeIndex": 17964,
+            "objectOffset": 28,
+            "key": 26,
+            "size": 4,
+            "source": "0x15893d4b0"
+          },
+          {
+            "typeIndex": 17964,
+            "objectOffset": 24,
+            "key": 26,
+            "size": 4,
+            "source": "0x15893d4bf"
+          },
+          {
+            "typeIndex": 17964,
+            "objectOffset": 28,
+            "key": 8,
+            "size": 4,
+            "source": "0x158935d92"
+          }
+        ]
+      },
+      {
+        "typeIndex": 28473,
+        "tag": 1,
+        "wireType": 2,
+        "result": {
+          "ALNBHHEJLKP": {
+            "1": 0
+          }
+        },
+        "entered": [
+          {
+            "typeIndex": 28473,
+            "entry": "0x14e457f70"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x15893d460"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x158935d30"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x15893e4d0"
+          }
+        ],
+        "stores": [
+          {
+            "typeIndex": 17964,
+            "objectOffset": 28,
+            "key": 10,
+            "size": 4,
+            "source": "0x15893d4b0"
+          },
+          {
+            "typeIndex": 17964,
+            "objectOffset": 24,
+            "key": 10,
+            "size": 4,
+            "source": "0x15893d4bf"
+          },
+          {
+            "typeIndex": 17964,
+            "objectOffset": 28,
+            "key": 8,
+            "size": 4,
+            "source": "0x158935d92"
+          }
+        ]
+      },
+      {
+        "typeIndex": 28473,
+        "tag": 2,
+        "wireType": 0,
+        "result": {
+          "MNBPLFPCJLG": 305419896
+        },
+        "entered": [
+          {
+            "typeIndex": 28473,
+            "entry": "0x14e457f70"
+          }
+        ],
+        "stores": [
+          {
+            "typeIndex": 28473,
+            "objectOffset": 32,
+            "key": 16,
+            "size": 4,
+            "source": "0x14e458031"
+          }
+        ]
+      },
+      {
+        "typeIndex": 28475,
+        "tag": 1,
+        "wireType": 2,
+        "result": {
+          "ALNBHHEJLKP": {
+            "1": 0
+          }
+        },
+        "entered": [
+          {
+            "typeIndex": 28475,
+            "entry": "0x152274ca0"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x15893d460"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x158935d30"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x15893e4d0"
+          }
+        ],
+        "stores": [
+          {
+            "typeIndex": 17964,
+            "objectOffset": 28,
+            "key": 10,
+            "size": 4,
+            "source": "0x15893d4b0"
+          },
+          {
+            "typeIndex": 17964,
+            "objectOffset": 24,
+            "key": 10,
+            "size": 4,
+            "source": "0x15893d4bf"
+          },
+          {
+            "typeIndex": 17964,
+            "objectOffset": 28,
+            "key": 8,
+            "size": 4,
+            "source": "0x158935d92"
+          }
+        ]
+      },
+      {
+        "typeIndex": 28475,
+        "tag": 2,
+        "wireType": 0,
+        "result": {
+          "PGDAIKELICG": 305419896
+        },
+        "entered": [
+          {
+            "typeIndex": 28475,
+            "entry": "0x152274ca0"
+          }
+        ],
+        "stores": [
+          {
+            "typeIndex": 28475,
+            "objectOffset": 36,
+            "key": 16,
+            "size": 4,
+            "source": "0x152274d71"
+          }
+        ]
+      },
+      {
+        "typeIndex": 28475,
+        "tag": 3,
+        "wireType": 0,
+        "result": {
+          "MNBPLFPCJLG": 305419896
+        },
+        "entered": [
+          {
+            "typeIndex": 28475,
+            "entry": "0x152274ca0"
+          }
+        ],
+        "stores": [
+          {
+            "typeIndex": 28475,
+            "objectOffset": 32,
+            "key": 24,
+            "size": 4,
+            "source": "0x152274d91"
+          }
+        ]
+      },
+      {
+        "typeIndex": 61085,
+        "tag": 1,
+        "wireType": 2,
+        "result": {
+          "ALNBHHEJLKP": {
+            "1": 0
+          }
+        },
+        "entered": [
+          {
+            "typeIndex": 61085,
+            "entry": "0x14b6fab30"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x15893d460"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x158935d30"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x15893e4d0"
+          }
+        ],
+        "stores": [
+          {
+            "typeIndex": 17964,
+            "objectOffset": 28,
+            "key": 10,
+            "size": 4,
+            "source": "0x15893d4b0"
+          },
+          {
+            "typeIndex": 17964,
+            "objectOffset": 24,
+            "key": 10,
+            "size": 4,
+            "source": "0x15893d4bf"
+          },
+          {
+            "typeIndex": 17964,
+            "objectOffset": 28,
+            "key": 8,
+            "size": 4,
+            "source": "0x158935d92"
+          }
+        ]
+      },
+      {
+        "typeIndex": 64947,
+        "tag": 1,
+        "wireType": 0,
+        "result": {
+          "NJAGFJINHMA": 305419896
+        },
+        "entered": [
+          {
+            "typeIndex": 64947,
+            "entry": "0x1504d7b30"
+          }
+        ],
+        "stores": [
+          {
+            "typeIndex": 64947,
+            "objectOffset": 48,
+            "key": 8,
+            "size": 4,
+            "source": "0x1504d7c53"
+          }
+        ]
+      },
+      {
+        "typeIndex": 64947,
+        "tag": 2,
+        "wireType": 0,
+        "result": {
+          "NILMBAGDEAL": 305419896
+        },
+        "entered": [
+          {
+            "typeIndex": 64947,
+            "entry": "0x1504d7b30"
+          }
+        ],
+        "stores": [
+          {
+            "typeIndex": 64947,
+            "objectOffset": 40,
+            "key": 16,
+            "size": 4,
+            "source": "0x1504d7c70"
+          }
+        ]
+      },
+      {
+        "typeIndex": 64947,
+        "tag": 3,
+        "wireType": 0,
+        "result": {
+          "KFDCBKBPPGL": 305419896
+        },
+        "entered": [
+          {
+            "typeIndex": 64947,
+            "entry": "0x1504d7b30"
+          }
+        ],
+        "stores": [
+          {
+            "typeIndex": 64947,
+            "objectOffset": 44,
+            "key": 24,
+            "size": 4,
+            "source": "0x1504d7ba5"
+          }
+        ]
+      },
+      {
+        "typeIndex": 64947,
+        "tag": 4,
+        "wireType": 2,
+        "result": {
+          "JMGKMMFNABP": {
+            "1": 0
+          }
+        },
+        "entered": [
+          {
+            "typeIndex": 64947,
+            "entry": "0x1504d7b30"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x15893d460"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x158935d30"
+          },
+          {
+            "kind": "native-primitive-map",
+            "entry": "0x15893e4d0"
+          }
+        ],
+        "stores": [
+          {
+            "typeIndex": 17964,
+            "objectOffset": 28,
+            "key": 34,
+            "size": 4,
+            "source": "0x15893d4b0"
+          },
+          {
+            "typeIndex": 17964,
+            "objectOffset": 24,
+            "key": 34,
+            "size": 4,
+            "source": "0x15893d4bf"
+          },
+          {
+            "typeIndex": 17964,
+            "objectOffset": 28,
+            "key": 8,
+            "size": 4,
+            "source": "0x158935d92"
+          }
+        ]
+      },
+      {
+        "typeIndex": 64947,
+        "tag": 5,
+        "wireType": 0,
+        "result": {
+          "MNCFEDPDEAG": true
+        },
+        "entered": [
+          {
+            "typeIndex": 64947,
+            "entry": "0x1504d7b30"
+          }
+        ],
+        "stores": [
+          {
+            "typeIndex": 64947,
+            "objectOffset": 52,
+            "key": 40,
+            "size": 1,
+            "source": "0x1504d7bdd"
+          }
+        ]
+      },
+      {
+        "typeIndex": 64947,
+        "tag": 6,
+        "wireType": 0,
+        "result": {
+          "FLGGIMBHFOO": [
+            305419896
+          ]
+        },
+        "entered": [
+          {
+            "typeIndex": 64947,
+            "entry": "0x1504d7b30"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8e10"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          }
+        ],
+        "stores": []
+      },
+      {
+        "typeIndex": 64947,
+        "tag": 6,
+        "wireType": 2,
+        "result": {
+          "FLGGIMBHFOO": [
+            8,
+            1
+          ]
+        },
+        "entered": [
+          {
+            "typeIndex": 64947,
+            "entry": "0x1504d7b30"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8e10"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          }
+        ],
+        "stores": []
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 1,
+        "wireType": 0,
+        "result": {
+          "NJAGFJINHMA": 305419896
+        },
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          }
+        ],
+        "stores": [
+          {
+            "typeIndex": 74063,
+            "objectOffset": 64,
+            "key": 8,
+            "size": 4,
+            "source": "0x1477447e8"
+          }
+        ]
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 2,
+        "wireType": 0,
+        "result": {
+          "NILMBAGDEAL": 305419896
+        },
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          }
+        ],
+        "stores": [
+          {
+            "typeIndex": 74063,
+            "objectOffset": 56,
+            "key": 16,
+            "size": 4,
+            "source": "0x1477446c1"
+          }
+        ]
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 3,
+        "wireType": 0,
+        "result": {
+          "KFDCBKBPPGL": 305419896
+        },
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          }
+        ],
+        "stores": [
+          {
+            "typeIndex": 74063,
+            "objectOffset": 48,
+            "key": 24,
+            "size": 4,
+            "source": "0x147744827"
+          }
+        ]
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 4,
+        "wireType": 0,
+        "result": {
+          "OJDKGGHBKKK": 305419896
+        },
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          }
+        ],
+        "stores": [
+          {
+            "typeIndex": 74063,
+            "objectOffset": 52,
+            "key": 32,
+            "size": 4,
+            "source": "0x147744844"
+          }
+        ]
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 5,
+        "wireType": 0,
+        "result": {
+          "FOFCJMPCEBB": [
+            305419896
+          ]
+        },
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8e10"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          }
+        ],
+        "stores": []
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 5,
+        "wireType": 2,
+        "result": {
+          "FOFCJMPCEBB": [
+            8,
+            1
+          ]
+        },
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8e10"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          }
+        ],
+        "stores": []
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 6,
+        "wireType": 0,
+        "result": {
+          "CGKIGPFDFOF": true
+        },
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          }
+        ],
+        "stores": [
+          {
+            "typeIndex": 74063,
+            "objectOffset": 60,
+            "key": 48,
+            "size": 1,
+            "source": "0x14774480a"
+          }
+        ]
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 7,
+        "wireType": 0,
+        "result": {
+          "IMEGOOADEBF": [
+            305419896
+          ]
+        },
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8e10"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          }
+        ],
+        "stores": []
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 7,
+        "wireType": 2,
+        "result": {
+          "IMEGOOADEBF": [
+            8,
+            1
+          ]
+        },
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8e10"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          }
+        ],
+        "stores": []
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 8,
+        "wireType": 0,
+        "result": {
+          "IHKPPDPBEML": [
+            305419896
+          ]
+        },
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8e10"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          }
+        ],
+        "stores": []
+      },
+      {
+        "typeIndex": 74063,
+        "tag": 8,
+        "wireType": 2,
+        "result": {
+          "IHKPPDPBEML": [
+            8,
+            1
+          ]
+        },
+        "entered": [
+          {
+            "typeIndex": 74063,
+            "entry": "0x147744650"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8e10"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          },
+          {
+            "kind": "container-helper",
+            "entry": "0x158db8bc0"
+          }
+        ],
+        "stores": []
+      }
+    ]
+  },
+  "nativeFixtures": 29,
+  "rejections": [
+    {
+      "name": "truncated-map",
+      "wire": "0a03080110",
+      "error": "0x147520110: Truncated or invalid length",
+      "scope": "explicit-input-model"
+    },
+    {
+      "name": "truncated-packed",
+      "wire": "120180",
+      "error": "0x147520110: Truncated or invalid length",
+      "scope": "explicit-input-model"
+    },
+    {
+      "name": "invalid-tag",
+      "wire": "00",
+      "error": "0x1474d8100: Unsupported or invalid tag",
+      "scope": "explicit-input-model"
+    }
+  ],
+  "limitations": [
+    "Native concrete primitive map reader/adapter/setter, list append and codec initializers execute",
+    "Managed dictionary lookup/insertion and packed-pair node allocation are explicit fixed-capacity64 fixtures",
+    "Managed allocation, metadata usage, primitive input/delegates and initialized class context modeled",
+    "No resize/IFix/live ABI/handler/UI/client acceptance; nested oneof combination remains F-03d2a3"
+  ],
+  "fixtures": [
+    {
+      "name": "map-nonzero-14095",
+      "typeIndex": 14095,
+      "wire": "1a040807100b",
+      "result": {
+        "JMGKMMFNABP": {
+          "7": 11
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 14095,
+          "entry": "0x149c5c150"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "map-duplicate-zero-14095",
+      "typeIndex": 14095,
+      "wire": "1a040807100b1a0408071000",
+      "result": {
+        "JMGKMMFNABP": {
+          "7": 0
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 14095,
+          "entry": "0x149c5c150"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": [
+        {
+          "nodeOffset": 40,
+          "size": 8,
+          "source": "0x15893e565"
+        }
+      ]
+    },
+    {
+      "name": "map-upper-and-default-14095",
+      "typeIndex": 14095,
+      "wire": "1a0c08ffffffff0f10ffffffff0f1a00",
+      "result": {
+        "JMGKMMFNABP": {
+          "4294967295": 4294967295,
+          "0": 0
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 14095,
+          "entry": "0x149c5c150"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "map-nonzero-28473",
+      "typeIndex": 28473,
+      "wire": "0a040807100b",
+      "result": {
+        "ALNBHHEJLKP": {
+          "7": 11
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 28473,
+          "entry": "0x14e457f70"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "map-duplicate-zero-28473",
+      "typeIndex": 28473,
+      "wire": "0a040807100b0a0408071000",
+      "result": {
+        "ALNBHHEJLKP": {
+          "7": 0
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 28473,
+          "entry": "0x14e457f70"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": [
+        {
+          "nodeOffset": 40,
+          "size": 8,
+          "source": "0x15893e565"
+        }
+      ]
+    },
+    {
+      "name": "map-upper-and-default-28473",
+      "typeIndex": 28473,
+      "wire": "0a0c08ffffffff0f10ffffffff0f0a00",
+      "result": {
+        "ALNBHHEJLKP": {
+          "4294967295": 4294967295,
+          "0": 0
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 28473,
+          "entry": "0x14e457f70"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "map-nonzero-28475",
+      "typeIndex": 28475,
+      "wire": "0a040807100b",
+      "result": {
+        "ALNBHHEJLKP": {
+          "7": 11
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 28475,
+          "entry": "0x152274ca0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "map-duplicate-zero-28475",
+      "typeIndex": 28475,
+      "wire": "0a040807100b0a0408071000",
+      "result": {
+        "ALNBHHEJLKP": {
+          "7": 0
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 28475,
+          "entry": "0x152274ca0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": [
+        {
+          "nodeOffset": 40,
+          "size": 8,
+          "source": "0x15893e565"
+        }
+      ]
+    },
+    {
+      "name": "map-upper-and-default-28475",
+      "typeIndex": 28475,
+      "wire": "0a0c08ffffffff0f10ffffffff0f0a00",
+      "result": {
+        "ALNBHHEJLKP": {
+          "4294967295": 4294967295,
+          "0": 0
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 28475,
+          "entry": "0x152274ca0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "map-nonzero-64947",
+      "typeIndex": 64947,
+      "wire": "22040807100b",
+      "result": {
+        "JMGKMMFNABP": {
+          "7": 11
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 64947,
+          "entry": "0x1504d7b30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "map-duplicate-zero-64947",
+      "typeIndex": 64947,
+      "wire": "22040807100b220408071000",
+      "result": {
+        "JMGKMMFNABP": {
+          "7": 0
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 64947,
+          "entry": "0x1504d7b30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": [
+        {
+          "nodeOffset": 40,
+          "size": 8,
+          "source": "0x15893e565"
+        }
+      ]
+    },
+    {
+      "name": "map-upper-and-default-64947",
+      "typeIndex": 64947,
+      "wire": "220c08ffffffff0f10ffffffff0f2200",
+      "result": {
+        "JMGKMMFNABP": {
+          "4294967295": 4294967295,
+          "0": 0
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 64947,
+          "entry": "0x1504d7b30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "map-nonzero-61085",
+      "typeIndex": 61085,
+      "wire": "0a040807100b",
+      "result": {
+        "ALNBHHEJLKP": {
+          "7": 11
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 61085,
+          "entry": "0x14b6fab30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "map-duplicate-zero-61085",
+      "typeIndex": 61085,
+      "wire": "0a040807100b0a0408071000",
+      "result": {
+        "ALNBHHEJLKP": {
+          "7": 0
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 61085,
+          "entry": "0x14b6fab30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": [
+        {
+          "nodeOffset": 40,
+          "size": 8,
+          "source": "0x15893e565"
+        }
+      ]
+    },
+    {
+      "name": "map-upper-and-default-61085",
+      "typeIndex": 61085,
+      "wire": "0a0c08ffffffff0f10ffffffff0f0a00",
+      "result": {
+        "ALNBHHEJLKP": {
+          "4294967295": 4294967295,
+          "0": 0
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 61085,
+          "entry": "0x14b6fab30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "list-packed-unpacked-append",
+      "typeIndex": 14095,
+      "wire": "100112048001ff011000",
+      "result": {
+        "EIBDIEHEAKF": [
+          1,
+          128,
+          255,
+          0
+        ]
+      },
+      "entered": [
+        {
+          "typeIndex": 14095,
+          "entry": "0x149c5c150"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "list-zero-and-upper",
+      "typeIndex": 14095,
+      "wire": "120600ffffffff0f",
+      "result": {
+        "EIBDIEHEAKF": [
+          0,
+          4294967295
+        ]
+      },
+      "entered": [
+        {
+          "typeIndex": 14095,
+          "entry": "0x149c5c150"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "three-lists",
+      "typeIndex": 74063,
+      "wire": "2a030180013a030280014203038001",
+      "result": {
+        "FOFCJMPCEBB": [
+          1,
+          128
+        ],
+        "IMEGOOADEBF": [
+          2,
+          128
+        ],
+        "IHKPPDPBEML": [
+          3,
+          128
+        ]
+      },
+      "entered": [
+        {
+          "typeIndex": 74063,
+          "entry": "0x147744650"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "all-six-64947",
+      "typeIndex": 64947,
+      "wire": "080b1016182122040807100b28023203018001",
+      "result": {
+        "JMGKMMFNABP": {
+          "7": 11
+        },
+        "FLGGIMBHFOO": [
+          1,
+          128
+        ],
+        "NILMBAGDEAL": 22,
+        "KFDCBKBPPGL": 33,
+        "NJAGFJINHMA": 11,
+        "MNCFEDPDEAG": true
+      },
+      "entered": [
+        {
+          "typeIndex": 64947,
+          "entry": "0x1504d7b30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8e10"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        },
+        {
+          "kind": "container-helper",
+          "entry": "0x158db8bc0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "scalar-duplicate-wrong-wire-and-bool-zero",
+      "typeIndex": 64947,
+      "wire": "080108020a0028012800",
+      "result": {
+        "NJAGFJINHMA": 2
+      },
+      "entered": [
+        {
+          "typeIndex": 64947,
+          "entry": "0x1504d7b30"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "map-key-only",
+      "typeIndex": 61085,
+      "wire": "0a020807",
+      "result": {
+        "ALNBHHEJLKP": {
+          "7": 0
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 61085,
+          "entry": "0x14b6fab30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "map-value-only",
+      "typeIndex": 61085,
+      "wire": "0a02100b",
+      "result": {
+        "ALNBHHEJLKP": {
+          "0": 11
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 61085,
+          "entry": "0x14b6fab30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "map-entry-duplicates-and-unknown",
+      "typeIndex": 61085,
+      "wire": "0a0a08070808100b1801100c",
+      "result": {
+        "ALNBHHEJLKP": {
+          "8": 12
+        }
+      },
+      "entered": [
+        {
+          "typeIndex": 61085,
+          "entry": "0x14b6fab30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893d460"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x158935d30"
+        },
+        {
+          "kind": "native-primitive-map",
+          "entry": "0x15893e4d0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "empty-14095",
+      "typeIndex": 14095,
+      "wire": "",
+      "result": {},
+      "entered": [
+        {
+          "typeIndex": 14095,
+          "entry": "0x149c5c150"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "empty-28473",
+      "typeIndex": 28473,
+      "wire": "",
+      "result": {},
+      "entered": [
+        {
+          "typeIndex": 28473,
+          "entry": "0x14e457f70"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "empty-28475",
+      "typeIndex": 28475,
+      "wire": "",
+      "result": {},
+      "entered": [
+        {
+          "typeIndex": 28475,
+          "entry": "0x152274ca0"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "empty-61085",
+      "typeIndex": 61085,
+      "wire": "",
+      "result": {},
+      "entered": [
+        {
+          "typeIndex": 61085,
+          "entry": "0x14b6fab30"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "empty-64947",
+      "typeIndex": 64947,
+      "wire": "",
+      "result": {},
+      "entered": [
+        {
+          "typeIndex": 64947,
+          "entry": "0x1504d7b30"
+        }
+      ],
+      "mapStores": []
+    },
+    {
+      "name": "empty-74063",
+      "typeIndex": 74063,
+      "wire": "",
+      "result": {},
+      "entered": [
+        {
+          "typeIndex": 74063,
+          "entry": "0x147744650"
+        }
+      ],
+      "mapStores": []
+    }
+  ]
+}
