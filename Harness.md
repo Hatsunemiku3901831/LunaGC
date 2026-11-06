@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+`client72_avatar_deep_rgctx.py`和同名test：主线7项，第三完整`9c3adfd6…1f133e`/摘要`a8b29f19…df642e0`同双跑；证明`local/migration72/astra-main/avatar-rgctx-review.json`。原始字节候选不在指令边界的首断言失败保留，不据有界负搜索声称无初始化。
+
 `client72_avatar_deep_ornaments.py`及同名test：主线5项、第三完整`eaaf81b5…40e3c5`/摘要`bf385528…ade3c3d`同双跑，证明`local/migration72/astra-main/avatar-ornaments-review.json`；两表来源与tag38合同衔接，原始astra-avatar/ornaments-*。
 
 资源n4c入口`client72_resource_deep_quest.py`；主线19项与第三完整`c6d815b0…ceafa16`/摘要`0451e15f…93104f2`同双跑，证明`local/migration72/astra-main/resource-quest-review.json`。三项原始证据`astra-resources/`，具体输入/观察/解除条件见资源深入专题。

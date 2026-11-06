@@ -1,0 +1,626 @@
+{
+  "tables": {
+    "classRangeBase": "0x106fda4",
+    "classRangeBytes": 8928,
+    "classRangeCount": 1116,
+    "definitionBase": "0x40925ec",
+    "classRangeSHA256": "611e53115771b933fde961580b2b21028177e2e317c5420d35ed8b63674c75b0"
+  },
+  "selected": [
+    {
+      "owner": 2147,
+      "slot": 1,
+      "count": 28,
+      "definitionIndex": 1361,
+      "word": "0xc08c700",
+      "kind": 3,
+      "methodSpec": 575232,
+      "methodDefinition": 15591,
+      "declaringOwner": 2147,
+      "methodName": ".ctor",
+      "classInstance": 54907,
+      "actualInstance": 5917,
+      "openArguments": [
+        {
+          "kind": "var",
+          "attributes": "0x0",
+          "data": "0x26e",
+          "byRef": false,
+          "genericParameterPosition": 0,
+          "genericParameterOwnerStatus": "not-recovered"
+        }
+      ],
+      "actualArguments": [
+        {
+          "kind": "valuetype",
+          "attributes": "0x0",
+          "data": "0x4e5c",
+          "byRef": false,
+          "typeDefinition": 20060,
+          "name": "FBOAFNIBKED",
+          "namespace": ""
+        }
+      ],
+      "inflatedArguments": [
+        {
+          "kind": "valuetype",
+          "attributes": "0x0",
+          "data": "0x4e5c",
+          "byRef": false,
+          "typeDefinition": 20060,
+          "name": "FBOAFNIBKED",
+          "namespace": ""
+        }
+      ]
+    },
+    {
+      "owner": 2034,
+      "slot": 0,
+      "count": 41,
+      "definitionIndex": 749,
+      "word": "0xc08c5a3",
+      "kind": 3,
+      "methodSpec": 574883,
+      "methodDefinition": 14780,
+      "declaringOwner": 2034,
+      "methodName": ".ctor",
+      "classInstance": 54639,
+      "actualInstance": 12373,
+      "openArguments": [
+        {
+          "kind": "var",
+          "attributes": "0x0",
+          "data": "0x1ad",
+          "byRef": false,
+          "genericParameterPosition": 0,
+          "genericParameterOwnerStatus": "not-recovered"
+        },
+        {
+          "kind": "var",
+          "attributes": "0x0",
+          "data": "0x1ae",
+          "byRef": false,
+          "genericParameterPosition": 1,
+          "genericParameterOwnerStatus": "not-recovered"
+        }
+      ],
+      "actualArguments": [
+        {
+          "kind": "valuetype",
+          "attributes": "0x0",
+          "data": "0x7ff6",
+          "byRef": false,
+          "typeDefinition": 32758,
+          "name": "AEGLMBIBKNP",
+          "namespace": ""
+        },
+        {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0xc761",
+          "byRef": false,
+          "typeDefinition": 51041,
+          "name": "IPJAICIDGHH",
+          "namespace": ""
+        }
+      ],
+      "inflatedArguments": [
+        {
+          "kind": "valuetype",
+          "attributes": "0x0",
+          "data": "0x7ff6",
+          "byRef": false,
+          "typeDefinition": 32758,
+          "name": "AEGLMBIBKNP",
+          "namespace": ""
+        },
+        {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0xc761",
+          "byRef": false,
+          "typeDefinition": 51041,
+          "name": "IPJAICIDGHH",
+          "namespace": ""
+        }
+      ]
+    },
+    {
+      "owner": 69137,
+      "slot": 1,
+      "count": 3,
+      "definitionIndex": 9929,
+      "word": "0xc08dc1a",
+      "kind": 3,
+      "methodSpec": 580634,
+      "methodDefinition": 10374,
+      "declaringOwner": 1255,
+      "methodName": ".ctor",
+      "classInstance": 57177,
+      "actualInstance": 5278,
+      "openArguments": [
+        {
+          "kind": "var",
+          "attributes": "0x0",
+          "data": "0x1360",
+          "byRef": false,
+          "genericParameterPosition": 0,
+          "genericParameterOwnerStatus": "not-recovered"
+        }
+      ],
+      "actualArguments": [
+        {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0xf957",
+          "byRef": false,
+          "typeDefinition": 63831,
+          "name": "MMCKDBLMHDA",
+          "namespace": ""
+        }
+      ],
+      "inflatedArguments": [
+        {
+          "kind": "class",
+          "attributes": "0x0",
+          "data": "0xf957",
+          "byRef": false,
+          "typeDefinition": 63831,
+          "name": "MMCKDBLMHDA",
+          "namespace": ""
+        }
+      ]
+    }
+  ],
+  "canonicalAOT": [
+    {
+      "owner": 1255,
+      "classInstance": 0,
+      "method": ".ctor",
+      "methodDefinition": 10374,
+      "tableIndex": 477654,
+      "methodSpec": 994,
+      "pointerIndex": 948,
+      "address": "0x159111af0",
+      "arguments": [
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        }
+      ]
+    },
+    {
+      "owner": 1255,
+      "classInstance": 0,
+      "method": ".ctor",
+      "methodDefinition": 10376,
+      "tableIndex": 477655,
+      "methodSpec": 996,
+      "pointerIndex": 950,
+      "address": "0x159111bd0",
+      "arguments": [
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        }
+      ]
+    },
+    {
+      "owner": 1255,
+      "classInstance": 0,
+      "method": ".ctor",
+      "methodDefinition": 10375,
+      "tableIndex": 477656,
+      "methodSpec": 995,
+      "pointerIndex": 949,
+      "address": "0x159111b30",
+      "arguments": [
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        }
+      ]
+    },
+    {
+      "owner": 2034,
+      "classInstance": 12374,
+      "method": ".ctor",
+      "methodDefinition": 14777,
+      "tableIndex": 488500,
+      "methodSpec": 471619,
+      "pointerIndex": 14888,
+      "address": "0x1570f5f20",
+      "arguments": [
+        {
+          "kind": "valuetype",
+          "attributes": "0x0",
+          "data": "0x7ff6",
+          "byRef": false,
+          "typeDefinition": 32758,
+          "name": "AEGLMBIBKNP",
+          "namespace": ""
+        },
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        }
+      ]
+    },
+    {
+      "owner": 2034,
+      "classInstance": 12374,
+      "method": ".ctor",
+      "methodDefinition": 14780,
+      "tableIndex": 488501,
+      "methodSpec": 471717,
+      "pointerIndex": 377998,
+      "address": "0x1570f65b0",
+      "arguments": [
+        {
+          "kind": "valuetype",
+          "attributes": "0x0",
+          "data": "0x7ff6",
+          "byRef": false,
+          "typeDefinition": 32758,
+          "name": "AEGLMBIBKNP",
+          "namespace": ""
+        },
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        }
+      ]
+    },
+    {
+      "owner": 2034,
+      "classInstance": 12374,
+      "method": ".ctor",
+      "methodDefinition": 14778,
+      "tableIndex": 488502,
+      "methodSpec": 471640,
+      "pointerIndex": 377921,
+      "address": "0x1570f5f80",
+      "arguments": [
+        {
+          "kind": "valuetype",
+          "attributes": "0x0",
+          "data": "0x7ff6",
+          "byRef": false,
+          "typeDefinition": 32758,
+          "name": "AEGLMBIBKNP",
+          "namespace": ""
+        },
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        }
+      ]
+    },
+    {
+      "owner": 2034,
+      "classInstance": 12374,
+      "method": ".ctor",
+      "methodDefinition": 14779,
+      "tableIndex": 488503,
+      "methodSpec": 471656,
+      "pointerIndex": 377937,
+      "address": "0x1570f5ff0",
+      "arguments": [
+        {
+          "kind": "valuetype",
+          "attributes": "0x0",
+          "data": "0x7ff6",
+          "byRef": false,
+          "typeDefinition": 32758,
+          "name": "AEGLMBIBKNP",
+          "namespace": ""
+        },
+        {
+          "kind": "object",
+          "attributes": "0x0",
+          "data": "0x173",
+          "byRef": false,
+          "typeDefinition": 371,
+          "name": "Object",
+          "namespace": "System"
+        }
+      ]
+    }
+  ],
+  "functions": {
+    "0x14051c9d0": {
+      "end": "0x14051e00d",
+      "nativeBytesSHA256": "d73f483a6f520517421e29303ed51adae405c3e29a59befe484dbc4e6b16a076"
+    },
+    "0x1404eea50": {
+      "end": "0x1404efc2e",
+      "nativeBytesSHA256": "b92006506acefc36c21a50d0ae69e021ee7e249e88ded04f5267d0e18e3c70c2"
+    },
+    "0x1404ee6f0": {
+      "end": "0x1404ee998",
+      "nativeBytesSHA256": "2ed3a71cb7b6fceb24cfaff813cca32df1e73c6a5f4d869a20fb2e94c8aa8a5f"
+    },
+    "0x140524010": {
+      "end": "0x14052407f",
+      "nativeBytesSHA256": "bb2db015a698865226e3f3a79fb5a34f810f7acb0dd850bc8032c648b7157e25"
+    },
+    "0x14052e690": {
+      "end": "0x14052eb30",
+      "nativeBytesSHA256": "a9485e97a41e13a99f8efd084a3ed13e575d51f271d00a3ce416217a209a2ef7"
+    },
+    "0x14052dff0": {
+      "end": "0x14052e0a6",
+      "nativeBytesSHA256": "72f3b49f386d46104ea36075e45410262700f85783f9b9e02cd6528c798a9786"
+    },
+    "0x14052dd70": {
+      "end": "0x14052df3c",
+      "nativeBytesSHA256": "59acb51f60f00f4927d08a1da6fa056737344790eebb0ef37f0e25af381a9dde"
+    },
+    "0x14052e0b0": {
+      "end": "0x14052e1f7",
+      "nativeBytesSHA256": "69adef7a21669571347eb6c9da4badf55fda86a033cbaf2fcf31e983969ecce9"
+    },
+    "0x159111af0": {
+      "end": "0x159111b28",
+      "nativeBytesSHA256": "274447c3369d2de61d9d157e9d98026cf35c4844af0766b4d53c069ed067a8f6"
+    }
+  },
+  "enumSharing": {
+    "flagPointerCell": "0x145bc8ef0",
+    "observedRuntimeValue": null,
+    "pointerCellFileBacked": false,
+    "directMovLeaCandidates": [],
+    "rawByteCandidateChecks": [
+      {
+        "address": "0x1402f8481",
+        "function": "0x1402f8400",
+        "isInstructionBoundary": false
+      }
+    ],
+    "searchScope": "REX.W MOV/LEA RIP disp32 candidates in PE executable raw sections only; excludes vector/indirect/immediate stores; empty result is not proof of no initialization",
+    "unapprovedExampleType": {
+      "index": 57848,
+      "name": "BELNMMLMLDB",
+      "namespace": "",
+      "relation": "Another enum appears at a shared-body candidate; no alias or target equivalence approved"
+    }
+  },
+  "native": [
+    {
+      "name": "reference-canonicalization-63831",
+      "sourceType": 63831,
+      "returnedObjectTypePointer": true,
+      "resultKind": 28,
+      "trace": {
+        "entry": "0x14052dd70",
+        "stop": "0x620000100",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x6120378b0"
+        },
+        "instructions": 24,
+        "nativePathSHA256": "f02ce3051f1728601514e1988b2814e380bb1856a36d73d8946658eb64ad30c3",
+        "models": [],
+        "nativeEntries": [
+          "0x14052dd70"
+        ]
+      }
+    },
+    {
+      "name": "reference-canonicalization-51041",
+      "sourceType": 51041,
+      "returnedObjectTypePointer": true,
+      "resultKind": 28,
+      "trace": {
+        "entry": "0x14052dd70",
+        "stop": "0x620000100",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x6120378c0"
+        },
+        "instructions": 24,
+        "nativePathSHA256": "f02ce3051f1728601514e1988b2814e380bb1856a36d73d8946658eb64ad30c3",
+        "models": [],
+        "nativeEntries": [
+          "0x14052dd70"
+        ]
+      }
+    },
+    {
+      "name": "three-inherited-list-constructors-fresh",
+      "containers": [
+        {
+          "offset": "0x50",
+          "type": 34054,
+          "backingArrayIsInitializedEmpty": true,
+          "count": 0,
+          "arrayLength": 0
+        },
+        {
+          "offset": "0x1c8",
+          "type": 34054,
+          "backingArrayIsInitializedEmpty": true,
+          "count": 0,
+          "arrayLength": 0
+        },
+        {
+          "offset": "0x40",
+          "type": 34054,
+          "backingArrayIsInitializedEmpty": true,
+          "count": 0,
+          "arrayLength": 0
+        }
+      ],
+      "trace": {
+        "entry": "0x15183ff7a",
+        "stop": "0x15184003d",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "r14": "0x6120372b0"
+        },
+        "instructions": 91,
+        "nativePathSHA256": "e09b2c7ba5f9f099a72ee71b9bb20c0f9c31778495dea51f6863f751c1366965",
+        "models": [
+          "0x1405336c0",
+          "0x1405336c0",
+          "0x1405336c0"
+        ],
+        "nativeEntries": [
+          "0x15183ff7a",
+          "0x159111af0"
+        ]
+      }
+    },
+    {
+      "name": "three-inherited-list-constructors-old",
+      "containers": [
+        {
+          "offset": "0x50",
+          "type": 34054,
+          "backingArrayIsInitializedEmpty": true,
+          "count": 0,
+          "arrayLength": 0
+        },
+        {
+          "offset": "0x1c8",
+          "type": 34054,
+          "backingArrayIsInitializedEmpty": true,
+          "count": 0,
+          "arrayLength": 0
+        },
+        {
+          "offset": "0x40",
+          "type": 34054,
+          "backingArrayIsInitializedEmpty": true,
+          "count": 0,
+          "arrayLength": 0
+        }
+      ],
+      "trace": {
+        "entry": "0x15183ff7a",
+        "stop": "0x15184003d",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "r14": "0x6120372b0"
+        },
+        "instructions": 91,
+        "nativePathSHA256": "e09b2c7ba5f9f099a72ee71b9bb20c0f9c31778495dea51f6863f751c1366965",
+        "models": [
+          "0x1405336c0",
+          "0x1405336c0",
+          "0x1405336c0"
+        ],
+        "nativeEntries": [
+          "0x15183ff7a",
+          "0x159111af0"
+        ]
+      }
+    },
+    {
+      "name": "list-constructor-overwrites-old-backing-array",
+      "preservedPointer": true,
+      "trace": {
+        "entry": "0x159111af0",
+        "stop": "0x620000100",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x612038770",
+          "rdx": "0x6120378d0"
+        },
+        "instructions": 15,
+        "nativePathSHA256": "3165064edb43f0e9c25daacdf82c7ba78cb5ffa2e84d4d964e1090f80cfb6537",
+        "models": [],
+        "nativeEntries": [
+          "0x159111af0"
+        ]
+      }
+    },
+    {
+      "name": "missing-list-array-context-before-resolver",
+      "trace": {
+        "entry": "0x159111af0",
+        "stop": "0x159111b1e",
+        "completion": "bounded-fragment",
+        "liveIn": {
+          "rsp": "0x600100008",
+          "rcx": "0x612038770",
+          "rdx": "0x6120378d0"
+        },
+        "instructions": 12,
+        "nativePathSHA256": "6930689a0d66710b4677a06f282558ee52528f1c16aeb54edb36c1914f526f99",
+        "models": [],
+        "nativeEntries": [
+          "0x159111af0"
+        ]
+      }
+    }
+  ],
+  "task": "F-03d3f4d2-rgctx",
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "inputContracts": {
+    "avatar-deep-observations.json": "fc08a41533290f671693ac1a0a0ec3608ac56c1cd93cc039f2c681f8102a44c7"
+  },
+  "completeConstructor": false,
+  "completeAvatarHandler": false,
+  "runtimeStatus": "not-tested",
+  "targetProtocolReady": false,
+  "sourceSHA256": {
+    "tools/client72_avatar_deep_rgctx.py": "d41197f942c3d812921a9e878884ce659233e96ccbf25ca87b462bd2676bba8c",
+    "tools/client72_avatar_deep.py": "3293c8fa8d5b049c64676614d8b2033c550bda0761060d34918b9d63f85c9320",
+    "tools/client72_avatar_initializer.py": "9df1101b6204d371e2e60be593b843d1c1e91a690e9df2444498bde4df49b3b9",
+    "tools/extract_client72.py": "7d1c75162f77c0fe0df154aa1240c142ad3f6af3295c89cc3d7b85372d3cb97d",
+    "tools/extract_client72_signatures.py": "ee92527f3607be774c28be694d6f57e9eed3aa40068b7b584979e27b6470c349",
+    "tools/client72_emulator.py": "8007d2594ef8058a4f2a9f1c24094fb5d2551a202b4e52154876cdfe77a17c3c",
+    "tools/client72_session_runtime.py": "c6ff407e33416869a855cfa86e97c3f63a9d24019ac0f6e6dfc74a959bfe1439"
+  },
+  "models": [
+    "Generic MethodInfo/class/rgctx and initialized System.Object default-class storage are explicit managed fixtures.",
+    "Selected class definition words and original/open MethodSpecs are recovered from fixed metadata tables, not guessed by code shape.",
+    "Actual reference-type canonicalizer, List<object> registered constructor and three Avatar middle constructor stores execute natively.",
+    "Enum sharing option and class metadata normalization remain unknown; no convenient flag value or enum constructor target is selected."
+  ],
+  "unresolved": [
+    "HashSet comparer overload identity15591 is now exact, but its closed enum20060 executable target still depends on unresolved enum-sharing default-class/option state.",
+    "SortedDictionary overload14780 is exact; reference-value normalization has a registered32758/Object candidate, but full key canonicalization and deeper comparer/tree constructors are not executed.",
+    "Avatar middle+50/+1c8/+40 are initialized under declared metadata fixture; +1e8/+1c0, full constructor and full handler remain incomplete."
+  ]
+}

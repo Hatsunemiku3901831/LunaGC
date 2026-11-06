@@ -152,3 +152,40 @@ python -m unittest tools.test_client72_avatar_deep tools.test_client72_avatar_de
 独立`client72_avatar_deep_ornaments.py`重提literal29427/40297、精确getter/loader与cache类型，确认两表为`AvatarOrnamentGroupExcelConfigData`（owner28604/cache+13b70/type61286）和`AvatarOrnamentExcelConfigData`（owner39027/cache+1cd98/type44799）。两getter实际返回原literal指针，两loader保留同指针执行到`14d6e1570`文件I/O入口前；已初始化class和managed字符串是明确fixture，未执行文件读取、parser或cache构建。
 
 5独立断言及主线第三原生与双跑同字节：完整`eaaf81b5e823cc707cdfc77c97889346efab84c6a353553c416be3961040e3c5`，摘要`bf385528a5f1bffbd15b63a51eea7127469662f93be8c33861f1cc3a8ade3c3d`。证明`local/migration72/astra-main/avatar-ornaments-review.json`；初次缺owner class fixture的失败在`astra-avatar/ornaments-probe1.*`保留。命令：`python tools/client72_avatar_deep_ornaments.py --client <GAME_PATH> --output <独立原始路径> --observations <独立摘要路径>`；测试`python -m unittest tools.test_client72_avatar_deep_ornaments -v`。此项消除资源文件身份未知，不消除实际资源值/revision/初始化来源未知；group/default/member字段英文名仍不批准。
+
+## RGCTX准确表来源与三个继承List构造
+
+继续沿resolver而非停在旧未知：`140524010`的直接helper是`1404ee6f0`；固定PE内后者两个经.pdata和反汇编确认的直接caller为`140524010`和`1405240d0`，分别读取class+30/method+18 context。`14051c9d0`实际class初始化代码给出class range表和definition表；`1404eea50`给出method range表。新工具`client72_avatar_deep_rgctx.py`仅恢复本卡所需class表/三个slot，不实施通用运行时。
+
+class range在metadata+`0x106fda4`，8928字节/1116个严格升序8字节记录；value高8位=count、低24位=definition index，definition表在metadata+`0x40925ec`。解码来源分别是目标header+50加`e113ba5c`、header+104加`938d8470`及header+9c XOR `4b5cdca3`；这些新参数由上述目标机器码取得，没有沿用旧客户端解码器。definition word的kind3再指向开放MethodSpec，原泛型参数位置独立恢复后代入实际closed class参数。
+
+| 原call所用class / slot | definition word / spec | 准确方法及实参 |
+| --- | --- | --- |
+| HashSet2147 / slot1(+18) | `0c08c700 / 575232` | method15591，HashSet<enum20060> comparer构造 |
+| SortedDictionary2034 / slot0(+10) | `0c08c5a3 / 574883` | method14780，SortedDictionary<32758,51041> comparer构造 |
+| 父类69137 / slot1(+18) | `0c08dc1a / 580634` | **method10374，List<63831>构造** |
+
+最后一项纠正旧“还要跳入69137 wrapper”的待查假设：wrapper被当前调用处内联，真实slot直接指向List构造。引用类型canonicalizer `14052dd70` 在显式初始化的System.Object default-class夹具中实际将63831和51041类型引用归一为Object；此快速路径没有读取/选择enum共享flag。固定AOT的`List<Object>.ctor`为spec994/Method10374/classInstance0/`159111af0`，来自准确注册，不是按代码形状套用。
+
+在这些有来源的MethodInfo/class/rgctx/空数组夹具下，真实 `15183ff7a→15184003d` 连续执行三个`159111af0`，分别在model+50、+1c8、+40保存真正分配的type34054对象，其backing array非null且长度/count为0。初始三个model字段为0及非零哨兵均由真实store覆盖。直接List构造另验证旧backing指针被替换；缺空数组context时在`159111b1e`调用resolver前止。零length/count属于已声明的managed分配+空数组状态，不将其说成ctor逐字段清零。
+
+6个新原生样本、7项独立断言通过；双新进程完整报告SHA `9c3adfd698677c4cb83464c2bbc81819862361eff2a84d3dd76f33aa451f133e`（362924 bytes），摘要SHA `a8b29f1916799b754669bb1f609fd89f9a8427466217db1460a9503d7df642e0`（18547 bytes）。原始为`astra-avatar/rgctx-final-{first,repeat}-native.json`，摘要为同前缀`-summary.json`；共享`avatar-deep-rgctx-observations.json`相同。测试/比对见`rgctx-tests-final.log`、`rgctx-determinism.json`。
+
+enum共享选项的pointer cell为`145bc8ef0`，不file-backed；其runtime值和默认类型映射未观测。按PE executable sections查限定REX.W RIP MOV/LEA，唯一raw byte候选`1402f8481`并非指令边界，因此有效写址候选为0。首次测试未区分raw candidate和真实指令而失败，原报告/`rgctx-tests-first.log`保留；现显式记录1 raw/0 valid，不把静态字节命中作为来源。该有限负搜索排除不了间接/vector/批量初始化，**不能选择有利flag或套用其它enum的共享body**。class range恢复不等于完整runtime初始化。
+
+HashSet comparer方法身份已闭，具体enum共享target仍未闭；SortedDictionary准确14780已闭，canonical `<32758,Object>`的注册候选`1570f65b0`仍需+20/+28/+30/+38的KeyValuePairComparer/TreeSet构造继续执行，本轮另卡推进。完整18163 ctor仍缺+1e8/+1c0，因此保持`completeConstructor=false`，不把三个List片段当整体完成。
+
+当前g2顺序规格应沿目标handler实际调用次序验证：身份/depot→生命态→装备及refresh→技能复杂输入→其它map/list→普通属性→FightProp清旧/应用→entity flush→61980池边界→标量/集合/optional child→tag29模式差异→tag38 Ornament选择→Costume reset/尾调用。此为固定目标静态顺序，不是已连续执行全链或生产发包次序许可。新tag38可关联“Avatar Ornament选择候选ID列表”的限定用途；当前`src/main/java`和旧/独立Avatar Proto的限定名称检索未见ornament业务getter，Java来源仍缺，不能直接造字段或发默认空列表。
+
+```powershell
+python tools/client72_avatar_deep_rgctx.py --client <GAME_PATH> --output <独立原始路径> --observations <独立摘要路径>
+python -m unittest tools.test_client72_avatar_deep_rgctx -v
+```
+
+## 精确rgctx表与继承List：主线验收
+
+`client72_avatar_deep_rgctx.py`从固定metadata恢复1116条有序class range和definition表（base分别106fda4/40925ec），按目标owner/slot恢复：2147/1→spec575232/method15591；2034/0→spec574883/method14780；69137/1→spec580634/method10374。open泛型实参分别膨胀为20060、32758/51041、63831。reference canonicalizer`14052dd70`实际将63831/51041引用类型映射Object，不依赖enum option；准确List<Object> ctor`159111af0`实际进入Avatar`15183ff7a→15184003d`，三次分配后由原生store写+50/+1c8/+40，backing为明确已初始化空数组。类/MethodInfo/array storage及分配是明示模型；没有执行完整resolver/完整Avatar构造。
+
+6组原生/7独立断言及主线第三回放同双跑：完整`9c3adfd698677c4cb83464c2bbc81819862361eff2a84d3dd76f33aa451f133e`，摘要`a8b29f1916799b754669bb1f609fd89f9a8427466217db1460a9503d7df642e0`；证明`local/migration72/astra-main/avatar-rgctx-review.json`。首次把原始MOV/LEA byte命中误当指令，独立边界断言失败后修为.pdata反汇编核对：1 raw/0有效，保留原报告和失败。搜索限REX.W RIP MOV/LEA，不是全二进制无初始化证明。
+
+enum canonicalization依赖`145bc8ef0`运行时pointer cell，当前不是file-backed且其实际值未观测；不能任选flag或套同形int/u32 comparer。SortedDictionary已恢复准确重载14780，后续comparer/TreeSet精确链继续离线研究。复现：`python tools/client72_avatar_deep_rgctx.py --client <GAME_PATH> --output <独立原始路径> --observations <独立摘要路径>`，`python -m unittest tools.test_client72_avatar_deep_rgctx -v`。上述结果替代“34054中段三个stores未执行”的旧边界，但完整constructor/handler/g2仍false。
