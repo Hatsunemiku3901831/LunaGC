@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+F-03d3f2b：[场景入场角色身份](docs/CLIENT_72_SCENE_ENTRY_IDENTITY.md)，`client72_scene_entry_identity.py`/`test_client72_scene_entry_identity`；21761/type34208身份与5外字段、128扫描/10图/3模型拒绝。tag12→真实manager/store→scene+284→具名本地角色getter；6新增/21关联通过，双新进程完整/摘要SHA`0c6a06d8…e91788`/`550fcdd6…4644d1`。原始`evidence/scene-entry-identity-*-final{,2}.json`与失败日志保留；三nested/网络完整Handler/效果/实体生成未验，root3仍非当前控制GUID，不改准入或生产。
+
 g1 portable构建（2026-11-07）：30秒JAR `dfdebbda…006ec3`内嵌c667344，282新增Avatar raw/3元信息变化匹配编译输出、46019旧class保持，无删除。证据`evidence/avatar-wire-{build-artifact,postbuild-runtime}.json`及`logs/avatar-wire-portable-{build,status}.log`；stopped/Healthy=false、8088/22101/27027无监听，原27017保留，R2原始目标仍在自有pause。前置未齐故未部署/装补丁；归档旧JAR `local/migration72/builds/LunaGC-before-avatar-wire-62a86fb.jar`固定eee18371供R3重放，不能套用新JAR替换旧hash。
 
 F-03d3g1：[Avatar独立适配器](docs/CLIENT_72_AVATAR_WIRE_ADAPTER.md)，`generate_avatar72_wire.py --check`、`test_generate_avatar72_wire`、`Protocol72AvatarWireTest`和`trace_client72_avatar_wire_adapter.py`。65类372字段；275 Avatar+36库存Java、主线22 Python/check通过，268实际Java bytes→原生第三回放与双跑同SHA`a2408117…0ada92`/`f7a41406…5acf29`；XML已复制到`local/migration72/avatar-wire-java-results/`避免后续Gradle覆盖。237旧保护class保持、282新增编译类；下一portable打包核对，未部署/接生产，业务与完整P0仍待。
