@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+F-03d3g2-prep：[Java有限投影](docs/CLIENT_72_AVATAR_JAVA_PROJECTION.md)，`Protocol72AvatarProjectionTest`实际1项通过；`tools/trace_client72_avatar_projection.py`两新进程原生结果同SHA `0d608af8…418c14`。输入/工具/真实getter来源pin、XML与轨迹在`offline-sol-terra/avatar-projection/{java-final,native-final}/`；初轮接口及ASCII夹具失败保留，仅用已验f1/f3独立context与Team UTF-8 reader改正。正式生产g2、完整构造/后缀、复杂SceneInfo和物品ID对应未通过。
+
 E-01d1n3：[章节实际加载](docs/CLIENT_72_D02_CHAPTER_LOAD.md)，入口`tools/audit_d02_chapter_{manifest,run}.py`与`tools/D02ChapterAudit.java`。真实双JVM结果SHA `47524bc3…6814a62`；可选`d02.chapterExcel`新增目标表模式由主线在`offline-sol-terra/mongo-8c106c20b11743a8a73280ccc13b74fc/chapter-start/`运行2项全过，包类2/64无ChapterState、BSON/冷读及未就绪manager拒绝保持。首个实例正常关闭，保留303库；不能据此进入2B。脚本固定旧dfde archive作loader对照，不随根JAR更新擅自换输入。
 
 C-01b实际红绿及主线来源复核：`local/migration72/offline-sol-terra/network-{red,green,source-review}/`；Frame36+注册7通过、扫描324/227/227/0，旧来源拒绝和精确同步双recover保持三层/required/runtime。`associated-research/`实际120、`generation-checks/`9入口全过。关联Java50套875/0及正常Mongo shutdown在`mongo-e825b6f516564e888f0b4d5bce19d2da/`；首轮缺相对输入的41路径失败在`mongo-8c106c20b11743a8a73280ccc13b74fc/`，不要将其初始化失败1项与完整Inventory36项口径混加。所有上述目录相对`local/migration72/offline-sol-terra/`；生产打包/最终现场随后补充。

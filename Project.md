@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+F-03d3g2-prep本轮限定验收完成：[实际Java来源投影](docs/CLIENT_72_AVATAR_JAVA_PROJECTION.md)1项Java/两次原生相同（`0d608af8…418c14`），真实getter→独立adapter→f1/f3既有消费者片段、非零/64位/map/list/显式零/确定性/Store GUID关联通过。生命周期、FightProp计算、depot和s2a未承接字段另列来源/省略规格；旧sender/共享Proto/opcode未改。首次夹具接口/ASCII复用失败保留，未新建ABI模型；f4d2/复杂SceneInfo继续阻塞g2主体。
+
 E-01d1n3本轮限定验收完成：目标ChapterExcel实际双JVM436安装/339及326键，30302无begin/end；新增目标表模式经独立Mongo真实303启动/保存2项全过、2/64包无ChapterState增量，loadedAll=false门禁保留。152注解/161表引用机械清单与准确缺口见[章节专题](docs/CLIENT_72_D02_CHAPTER_LOAD.md)。E-01/R3与2B正向重绑定继续阻塞，未启动真实loadAll或客户端。
 
 本轮进展：C-01b有限网络入口已红40/24→绿43全过，真实扫描324/启用227/注册227/冲突0；50套875项关联回归与120研究、9生成检查通过，原始路径夹具失败保留。源码review只精确更新3/1/2个相关指纹和对应依赖摘要，116输入的三层/required/runtime不变，生产打包及阶段收尾继续。目标Chapter真实双JVM436安装/339及326索引、目标表模式303启动/保存2项通过，正式资源就绪及正向manager重绑仍未满足。具体见[本轮离线记录](docs/CLIENT_72_SOL_TERRA_OFFLINE.md)、[网络](docs/CLIENT_72_NETWORK_BOUNDARIES.md)、[章节](docs/CLIENT_72_D02_CHAPTER_LOAD.md)。

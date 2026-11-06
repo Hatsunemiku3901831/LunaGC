@@ -52,3 +52,9 @@
 [章节专题](CLIENT_72_D02_CHAPTER_LOAD.md)固定目标commit/tree/blob，两个独立JVM真实loader逐行字段/末次写索引核对通过：436安装，339/326键，零键98/111行，30302均无命中、0 ERROR、loadedAll=false。报告SHA `47524bc3879665f68350650dcc7c94a4ab604fc3a11d4963919a3a7176814a62`。成熟n2夹具新增显式目标表模式，独立Mongo实际2项全过；两条启动构造2/64包、没有ChapterState增量，BSON/新Player冷读和真实manager未就绪拒绝保持。
 
 沿loadAll调用顺序建立152资源注解/161文件引用清单，候选tree156有blob、5不在tree，现有24个引用逐blob一致；不猜未知键、不混称全部P0。清单不覆盖完整动态引用或运行revision。目标QuestExcel拒绝、未知字段及必要资源完整性仍阻塞自然就绪，2B正向重绑定没有执行，不伪造loadedAll。
+
+## 1C：F-03d3g2-prep 有限 Java 来源投影
+
+[投影专题](CLIENT_72_AVATAR_JAVA_PROJECTION.md)以真实Avatar/TeamInfo/TeamManager/GameItem getter生成独立raw适配器测试输出，明确只读输入；不调用旧Avatar.toProto。修改后的Java1项通过，覆盖非零/高位GUID/map/list/零值存在性、正逆序属性插入确定性及同一物品实际Store GUID关联。两次全新原生回放逐字节一致，SHA `0d608af88c56b20be36c73deb34fc36075811105fd095a5d0f1f64ee5c418c14`；只验f1身份/属性/装备与f3队伍片段。
+
+首次Team枚举接口复用和第二次ASCII字符串模型错误保留；按已验独立runtime与Team UTF-8 reader正确组合后通过，未新建ABI/未知调用模型。Store ID0与原生row ID10001不作身份一致性断言，仅GUID关联。f4a/b/c、s2a的来源和省略边界另列规格表；完整Avatar构造、15183f290等后缀、复杂SceneInfo仍阻塞正式g2，不以准备段接生产。
