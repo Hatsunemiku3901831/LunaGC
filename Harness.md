@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+F-03d3e4：[signed-list与同形子字段](docs/CLIENT_72_AVATAR_SIGNED_TREES.md)，`trace_client72_avatar_signed_trees.py`及`test_client72_avatar_signed_trees`。三类40wire、384扫描/19图/10拒绝；代理双新进程与主线第三重跑的完整/摘要SHA相同（`c1c6cd41…b45d27c`/`6ec19e0b…b056ee0`），8新增/122关联及主线16定向通过，范围不同不相加。原始`evidence/avatar-signed-trees-*`，主线review同前缀；完整复杂图仍未验，继续e5与e6→e7→e8，无运行改动或重启。
+
 E-01d1a / D02-R3：新增`python -m tools.audit_d02_resources72`固定四表与受控两角色/四depot引用，完整参数及局限见[最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)。`python -m unittest tools.test_audit_d02_resources72 tools.test_audit_resource72 -v`实际10项通过；主线报告`evidence/d02-r3-avatar-references-main-review.json`与原双跑逐字节相同。仅存在性子合同，revision/递归资源/真实加载仍待后继，不重复计算旧849引用或大套件。
 
 本轮D02-R0：[入场依赖台账](docs/CLIENT_72_D02_ENTRY_DEPENDENCIES.md)已受主线审核；98候选/132源码位置登记无缺项，13/49源码hash无漂移，实际recover为81方法/98边与294方法/411边/2854未关联。证据`evidence/d02-r0-{source,dependencies}{,-summary}.json`、`d02-r0-ledger-review.json`；协议结构0、ready仍224拒绝。R0只关闭依赖台账，不晋级完整P0或runtime；接着R1 raw/语义、R2有界真实启动和R3最小资源分别消除已登记阻塞。
