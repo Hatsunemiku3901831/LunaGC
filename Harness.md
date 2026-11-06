@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+2026-11-06当前恢复F-02b/F-03，覆盖下方暂停，范围为离线融合/对应构建回归/文档后暂停，不进行D-02。优先`login-wire-observations`、`response-wire/leaf/graph-observations`及crypto/Handler既有独立样本；场景token/retcode存在应用层算术，rawwire与业务值分开验。Project新增F-02b1/b2、F-03a/b；原数据、调试目标、AGENTS/resources差异保留。
+
 2026-11-06最终状态：F-01（45e22ce）/F-02a（4324cd7）限定验收完成并按用户要求暂停；其余F-02b/F-03及D-02未完成。实际399研究/0、43协议及关联/0、独立Mongo29套589/0，生成器/结构均通过、ready仍228。便携构建23秒；当前JAR SHA-256 `a8c2d89357e1c9253bbb9e982e95e075952f0b32968af3f5b0f236941a53a8f8`，内嵌4324cd7，30变化class均等于本次编译，163个Guard/Player/脚本class对前构建不变。证据`fusion-build-artifact.json`/`fusion-final-runtime-check.json`及`logs/fusion-portable-{build,status}.log`。无游戏服务/8088TCP/22101UDP/27027测试监听，status1是预期无服务器，健康/运行JAR不适用；未安装补丁或操作调试目标。原始配置/AGENTS/resources hash未变。详见HANDOFF2，恢复前不开始下一项。
 
 F-01已完成（45e22ce）：[协议审计](docs/CLIENT_72_ASTAPS_AUDIT.md)、[实现/候选闭包](docs/CLIENT_72_ASTAPS_IMPLEMENTATION.md)，复现`tools/audit_astaps72.py`（固定reference/protoc；11回归）。F-02a生成`python tools/generate_login72_slice.py --client $env:GAME_PATH --check`，四schema45字段、3包号；[独立Java wire](src/test/java/io/grasscutter/Protocol72LoginWireCompatibilityTest.java)改前14/8失败，改后14全过；关联4套43及独立Mongo29套589各自全过。399研究回归通过；人工review精确更新6源码/Proto、2既有摘要和2新增Asta摘要（65→67），仅Ping方法/包候选与四descriptor owner变化，三层/99候选/148矩阵/1140文件/1254声明/4786字段及开放边界不变，recover双跑。证据`fusion-{login-proto-review-check,research-regression-summary,wire-green-summary,java-regression-summary,mapping-check,mapping-ready}`均在local/migration72/evidence。便携构建/暂停最终状态由本批收尾补充；未部署或实机验收。
