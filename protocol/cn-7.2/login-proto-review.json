@@ -1280,6 +1280,7 @@
     "protocol/cn-7.2/auth-sources-observations.json": "3d21f2e0b992bdcb253ddc3f4406b57327cc473b5b1b0474ba519de7c6795beb",
     "protocol/cn-7.2/auth-tail-observations.json": "be8c6e59ace621b3feb595c50a337d2166bd3b0124b681246e1bd8a5d11c622d",
     "protocol/cn-7.2/avatar-core-observations.json": "aba3f915e10d3639280c2e8eacc9ce5935c80efc48c22f4056dfa7bfd73f8739",
+    "protocol/cn-7.2/avatar-items-observations.json": "56c56457a02d1c3fed5db07e4739be19ba2947ef55835427d2b7886f62fbc403",
     "protocol/cn-7.2/avatar-outer-observations.json": "6ddc5e023c81f443e09280fcd393fa5754b688687aa83acc280ce61874bc3f93",
     "protocol/cn-7.2/avatar-trees-observations.json": "b2ff7cce8d9c5cc53442842f970510fbec17da1cc13fb837d55f060837e323be",
     "protocol/cn-7.2/born-continuation-observations.json": "568b4eda08a5d69f71a4dac35e763e664a04724f51de8c59b8c7e39f3271675c",
