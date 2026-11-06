@@ -23,7 +23,7 @@ ROOT = Path(__file__).resolve().parents[1]
 COMMIT = 'a49f51aa6f2787ffbc25cee46801b70dee860d23'
 TREE = '9940bf7756ce5ff8be8a836a4485a645b490c2e1'
 PROTO_DIGEST = '86d9e71e600ca29b286c53a17bffb94657fce7e797d837c1f0108b33cd91be18'
-MAPPING_SHA256 = 'e72a9161cc7420cde7f0ef59bcb82a23103172ca51d20c3213e952f90e918048'
+MAPPING_SHA256 = 'd6cbc918a69ac87bb3e738bc5b94abda9eb808d25210512448384bfad67e9926'
 KEY_FILES = (
     'LICENSE', 'LICENSE-ClassGraph.txt', 'README.md',
     'docs/protocol-generation-7.2.md', 'docs/protocol-7.2-gaps.md',

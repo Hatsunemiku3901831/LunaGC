@@ -1,5 +1,11 @@
 # A-03a 登录与场景的方法级源码索引
 
+2026-11-06 F-02b/F-03当前源码复核：旧source/dependency/surface门禁先实际拒绝后，逐份核对7个变化源码并新增`SceneHandshakeToken.java`。现为13源码/9根/81方法、98边（16人工/82候选）、998未关联调用；61直接构造类型/62总类型，直接包构造参数总数80，`Player.onLogin`由20减为19。原12人工边及开放边界保持，另明确加入Ready/Init/Done/Post四个handler到`SceneHandshakeToken.requireCurrent(Player,int)`的static调用边；不把它们留作未知外部，也不晋级其他候选。删除旧`switchWireKey`方法与新增关联方法各一，方法总数抵消；82候选仍只是语法候选。
+
+本批严格数量守卫同步到实际13源/98边/16人工边，并单独检查四个关联端点；models明确16条。四个入口按[请求token合同](CLIENT_72_SCENE_REQUEST_CONTRACT.md)解码再检查当前token，源码调用归属与该独立原生wire证据分别保留。两轮recover完整报告/摘要逐字节一致；21项受影响研究回归通过（失败/错误/跳过0），未运行Gradle/Mongo或服务。局部结果、旧拒绝及逐文件前后清单在`local/migration72/analysis/fusion-source-review/`。这只更新源码索引，不改mappings、Proto矩阵、Asta审计或任务状态，不代表完整登录/场景运行闭包及D-02验收。
+
+server-surface当前只复核PacketOpcodes、HandlerPlayerLoginReq、HandlerSceneInitFinishReq三个变化hash；15个动态发送点、37个数字case、零个数字发送参数的表达式及行号均逐项保持，8分组/40来源/5开放边界不变，没有凭数量一致自动刷新坐标。下面各批数量与暂停状态均为历史记录，以本段为当前范围。
+
 2026-11-06 F-02a复核只改变HandlerPingReq.handle两个生成Proto getter（目标原名）；81方法、95边、1000未关联调用、根和开放边界均不变。旧source review实际拒绝后只更新该源码hash及重生成方法记录，parent/dependency/proto证据链同步核对；不把字段回显或Asta候选当运行闭包。399研究通过，详见[融合记录](CLIENT_72_ASTAPS_FUSION.md)，本轮限定验收后暂停。
 
 C-01a同步（2026-11-06）：下面为原A-03a验收历史；当前产物已随选人实现重新人工复核。移除scheduleFallback→onLogin边，选人Handler改为player.onLogin；hash门禁未放宽。当前12源码/9根/81方法、95边（12人工/83候选）、1000未关联，62直接构造类型/63总类型；完整闭包与runtime仍未验。新增的半成品保存拒绝路径有隔离Mongo冷读回归，详见[选人实现](CLIENT_72_BORN.md)。

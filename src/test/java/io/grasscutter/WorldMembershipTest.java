@@ -561,6 +561,22 @@ class WorldMembershipTest {
                 .build();
     }
 
+    private void assertTeleportEntry(PlayerEnterSceneNotify packet, int sceneId, Position position) {
+        // Only the four verified destination fields are sent; owner/time/level remain unverified.
+        assertEquals(
+                Set.of(7, 8, 10, 14),
+                Set.copyOf(
+                        packet.getAllFields().keySet().stream()
+                                .map(field -> field.getNumber())
+                                .toList()));
+        assertTrue(packet.getUnknownFields().asMap().isEmpty());
+        assertEquals(sceneId, (packet.getSceneId() ^ 0x2D03) + 0xC0E3);
+        assertEquals(EnterType.EnterType_ENTER_JUMP.getNumber(), packet.getType());
+        assertEquals(position.getX(), packet.getPos().getCJMJBINEBAG());
+        assertEquals(position.getY(), packet.getPos().getALOKJBKPLGA());
+        assertEquals(position.getZ(), packet.getPos().getMGICHKNKDKO());
+    }
+
     @Test
     void completeTeleportSerializesMembershipPositionAndNotifications() throws Exception {
         var player = new Member();
@@ -604,10 +620,10 @@ class WorldMembershipTest {
         assertEquals(2, messages.size());
         var firstPacket = PlayerEnterSceneNotify.parseFrom(messages.get(0).getData());
         var secondPacket = PlayerEnterSceneNotify.parseFrom(messages.get(1).getData());
-        assertEquals(4, (firstPacket.getSceneId() ^ 11523) + 49379);
-        assertEquals(5, (secondPacket.getSceneId() ^ 11523) + 49379);
-        assertEquals(111, firstPacket.getPos().getX());
-        assertEquals(222, secondPacket.getPos().getX());
+        assertTeleportEntry(firstPacket, 4, new Position(111, 1, 2));
+        assertTeleportEntry(secondPacket, 5, new Position(222, 1, 2));
+        assertEquals(
+                player.getEnterSceneToken(), (secondPacket.getEnterSceneToken() + 0x5889) ^ 0xE011);
     }
 
     @Test

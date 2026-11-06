@@ -12,7 +12,7 @@
   },
   "targetMapping": {
     "file": "protocol/cn-7.2/mappings.json",
-    "sha256": "e72a9161cc7420cde7f0ef59bcb82a23103172ca51d20c3213e952f90e918048",
+    "sha256": "d6cbc918a69ac87bb3e738bc5b94abda9eb808d25210512448384bfad67e9926",
     "hashConvention": "UTF-8 LF"
   },
   "protoSourceTree": {
@@ -51,10 +51,10 @@
     "duplicatePositiveOpcodeValues": 13,
     "documentedLegacyMessages": 105,
     "documentedLegacyFields": 218,
-    "targetMessages": 11,
-    "targetFields": 214,
-    "matchingTargetOuterShape": 130,
-    "missingTargetTags": 84,
+    "targetMessages": 21,
+    "targetFields": 239,
+    "matchingTargetOuterShape": 147,
+    "missingTargetTags": 92,
     "targetOuterShapeConflicts": 0,
     "verifiedSemanticConflicts": 2
   },
@@ -4262,6 +4262,175 @@
       }
     },
     {
+      "message": "StoreWeightLimitNotify",
+      "clientType": "KNCCLAJAEEC",
+      "targetCmdId": 22609,
+      "astaOpcode": {
+        "value": 22609,
+        "line": 2628,
+        "legacy71": 450
+      },
+      "opcodeMatches": true,
+      "astaSchema": {
+        "file": "src/main/proto/StoreWeightLimitNotify.proto",
+        "line": 7
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "PHDOBIIMHLB",
+            "tag": 1,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "reliquary_count_limit",
+            "status": "verified"
+          },
+          "proposedFieldName": "reliquary_count_limit",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "PAKLDABINMP",
+            "tag": 2,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_2",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "PAKLDABINMP",
+          "astaAtSameTag": {
+            "name": "weight_limit",
+            "tag": 2,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/StoreWeightLimitNotify.proto",
+            "line": 15,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "ADCHFHMCOJG",
+            "tag": 4,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_4",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "ADCHFHMCOJG",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "NAEDDJBKCFC",
+            "tag": 5,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "furniture_count_limit",
+            "status": "verified"
+          },
+          "proposedFieldName": "furniture_count_limit",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "CLFJNKKFONI",
+            "tag": 6,
+            "type": "enum",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "store_type",
+            "status": "verified"
+          },
+          "proposedFieldName": "store_type",
+          "astaAtSameTag": {
+            "name": "store_type",
+            "tag": 6,
+            "declaredType": "StoreType",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/StoreWeightLimitNotify.proto",
+            "line": 13,
+            "type": "enum",
+            "typeName": "StoreType",
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "DECHDEGPBOE",
+            "tag": 7,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_7",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "DECHDEGPBOE",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "CKHIAGMBNCC",
+            "tag": 9,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "weapon_count_limit",
+            "status": "verified"
+          },
+          "proposedFieldName": "weapon_count_limit",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "GGGJAGOKMCI",
+            "tag": 14,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "material_count_limit",
+            "status": "verified"
+          },
+          "proposedFieldName": "material_count_limit",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 8,
+        "asta": 8,
+        "matchingOuterShape": 2,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 6,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
       "message": "PlayerEnterSceneNotify",
       "clientType": "BBECFDMDFJC",
       "targetCmdId": 27748,
@@ -4391,10 +4560,10 @@
             "type": "uint32",
             "cardinality": "singular",
             "packed": false,
-            "semanticField": "unknown_field_7",
-            "status": "unresolved"
+            "semanticField": "scene_id",
+            "status": "verified"
           },
-          "proposedFieldName": "JMHKHAPJADA",
+          "proposedFieldName": "scene_id",
           "astaAtSameTag": {
             "name": "scene_id",
             "tag": 7,
@@ -4418,10 +4587,10 @@
             "type": "int32",
             "cardinality": "singular",
             "packed": false,
-            "semanticField": "unknown_field_8",
-            "status": "unresolved"
+            "semanticField": "type",
+            "status": "verified"
           },
-          "proposedFieldName": "NOEEBKJAFAG",
+          "proposedFieldName": "type",
           "astaAtSameTag": {
             "name": "type",
             "tag": 8,
@@ -4445,10 +4614,10 @@
             "type": "uint32",
             "cardinality": "singular",
             "packed": false,
-            "semanticField": "unknown_field_10",
-            "status": "unresolved"
+            "semanticField": "enter_scene_token",
+            "status": "verified"
           },
-          "proposedFieldName": "MCCMGLDOECH",
+          "proposedFieldName": "enter_scene_token",
           "astaAtSameTag": {
             "name": "enter_scene_token",
             "tag": 10,
@@ -4553,11 +4722,11 @@
             "type": "message",
             "cardinality": "singular",
             "packed": false,
-            "semanticField": "unknown_field_14",
-            "status": "unresolved",
+            "semanticField": "pos",
+            "status": "verified",
             "clientNestedType": "BGDCNKAKGHI"
           },
-          "proposedFieldName": "HHAFHFEPLPD",
+          "proposedFieldName": "pos",
           "astaAtSameTag": {
             "name": "pos",
             "tag": 14,
@@ -4949,6 +5118,558 @@
       }
     },
     {
+      "message": "EnterSceneReadyReq",
+      "clientType": "DEDHOOCBHCL",
+      "targetCmdId": 5046,
+      "astaOpcode": {
+        "value": 5046,
+        "line": 782,
+        "legacy71": 21608
+      },
+      "opcodeMatches": true,
+      "astaSchema": null,
+      "fields": [
+        {
+          "target": {
+            "clientField": "MCCMGLDOECH",
+            "tag": 3,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "enter_scene_token",
+            "status": "verified"
+          },
+          "proposedFieldName": "enter_scene_token",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 1,
+        "asta": 0,
+        "matchingOuterShape": 0,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 1,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
+      "message": "EnterSceneReadyRsp",
+      "clientType": "MMLHNEJIFHG",
+      "targetCmdId": 9948,
+      "astaOpcode": {
+        "value": 9948,
+        "line": 1144,
+        "legacy71": 6809
+      },
+      "opcodeMatches": true,
+      "astaSchema": {
+        "file": "src/main/proto/EnterSceneReadyRsp.proto",
+        "line": 5
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "MCCMGLDOECH",
+            "tag": 2,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "enter_scene_token",
+            "status": "verified"
+          },
+          "proposedFieldName": "enter_scene_token",
+          "astaAtSameTag": {
+            "name": "enter_scene_token",
+            "tag": 2,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/EnterSceneReadyRsp.proto",
+            "line": 7,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LDLIEKOAFBP",
+            "tag": 12,
+            "type": "int32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "retcode",
+            "status": "verified"
+          },
+          "proposedFieldName": "retcode",
+          "astaAtSameTag": {
+            "name": "retcode",
+            "tag": 12,
+            "declaredType": "int32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/EnterSceneReadyRsp.proto",
+            "line": 6,
+            "type": "int32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 2,
+        "asta": 2,
+        "matchingOuterShape": 2,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 0,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
+      "message": "SceneInitFinishReq",
+      "clientType": "MLIHBBENFFA",
+      "targetCmdId": 4905,
+      "astaOpcode": {
+        "value": 4905,
+        "line": 750,
+        "legacy71": 6623
+      },
+      "opcodeMatches": true,
+      "astaSchema": {
+        "file": "src/main/proto/SceneInitFinishReq.proto",
+        "line": 5
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "MCCMGLDOECH",
+            "tag": 11,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "enter_scene_token",
+            "status": "verified"
+          },
+          "proposedFieldName": "enter_scene_token",
+          "astaAtSameTag": {
+            "name": "enter_scene_token",
+            "tag": 11,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/SceneInitFinishReq.proto",
+            "line": 6,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 1,
+        "asta": 1,
+        "matchingOuterShape": 1,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 0,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
+      "message": "SceneInitFinishRsp",
+      "clientType": "NBCLHOLLHLK",
+      "targetCmdId": 21392,
+      "astaOpcode": {
+        "value": 21392,
+        "line": 613,
+        "legacy71": 23214
+      },
+      "opcodeMatches": true,
+      "astaSchema": {
+        "file": "src/main/proto/SceneInitFinishRsp.proto",
+        "line": 5
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "MCCMGLDOECH",
+            "tag": 1,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "enter_scene_token",
+            "status": "verified"
+          },
+          "proposedFieldName": "enter_scene_token",
+          "astaAtSameTag": {
+            "name": "enter_scene_token",
+            "tag": 1,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/SceneInitFinishRsp.proto",
+            "line": 6,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LDLIEKOAFBP",
+            "tag": 7,
+            "type": "int32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "retcode",
+            "status": "verified"
+          },
+          "proposedFieldName": "retcode",
+          "astaAtSameTag": {
+            "name": "retcode",
+            "tag": 7,
+            "declaredType": "int32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/SceneInitFinishRsp.proto",
+            "line": 7,
+            "type": "int32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 2,
+        "asta": 2,
+        "matchingOuterShape": 2,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 0,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
+      "message": "EnterSceneDoneReq",
+      "clientType": "HDPGCNCMACO",
+      "targetCmdId": 1017,
+      "astaOpcode": {
+        "value": 1017,
+        "line": 983,
+        "legacy71": 5406
+      },
+      "opcodeMatches": true,
+      "astaSchema": {
+        "file": "src/main/proto/EnterSceneDoneReq.proto",
+        "line": 5
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "MCCMGLDOECH",
+            "tag": 12,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "enter_scene_token",
+            "status": "verified"
+          },
+          "proposedFieldName": "enter_scene_token",
+          "astaAtSameTag": {
+            "name": "enter_scene_token",
+            "tag": 12,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/EnterSceneDoneReq.proto",
+            "line": 6,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 1,
+        "asta": 1,
+        "matchingOuterShape": 1,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 0,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
+      "message": "EnterSceneDoneRsp",
+      "clientType": "FIMHLLEPCBH",
+      "targetCmdId": 298,
+      "astaOpcode": {
+        "value": 298,
+        "line": 919,
+        "legacy71": 4752
+      },
+      "opcodeMatches": true,
+      "astaSchema": {
+        "file": "src/main/proto/EnterSceneDoneRsp.proto",
+        "line": 7
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "MCCMGLDOECH",
+            "tag": 4,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "enter_scene_token",
+            "status": "verified"
+          },
+          "proposedFieldName": "enter_scene_token",
+          "astaAtSameTag": {
+            "name": "enter_scene_token",
+            "tag": 4,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/EnterSceneDoneRsp.proto",
+            "line": 10,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LDLIEKOAFBP",
+            "tag": 6,
+            "type": "int32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "retcode",
+            "status": "verified"
+          },
+          "proposedFieldName": "retcode",
+          "astaAtSameTag": {
+            "name": "retcode",
+            "tag": 6,
+            "declaredType": "int32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/EnterSceneDoneRsp.proto",
+            "line": 9,
+            "type": "int32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "MFLHLEMFIGI",
+            "tag": 12,
+            "type": "message",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_12",
+            "status": "unresolved",
+            "clientNestedType": "NFIGDMDEDBC"
+          },
+          "proposedFieldName": "MFLHLEMFIGI",
+          "astaAtSameTag": null,
+          "sameOuterShape": null,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 3,
+        "asta": 3,
+        "matchingOuterShape": 2,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 1,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
+      "message": "PostEnterSceneReq",
+      "clientType": "AHBJNPDFDMJ",
+      "targetCmdId": 1696,
+      "astaOpcode": {
+        "value": 1696,
+        "line": 2611,
+        "legacy71": 3343
+      },
+      "opcodeMatches": true,
+      "astaSchema": {
+        "file": "src/main/proto/PostEnterSceneReq.proto",
+        "line": 5
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "MHCBMOHFBCK",
+            "tag": 1,
+            "type": "double",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "unknown_field_1",
+            "status": "unresolved"
+          },
+          "proposedFieldName": "MHCBMOHFBCK",
+          "astaAtSameTag": {
+            "name": "total_tick_time",
+            "tag": 1,
+            "declaredType": "double",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PostEnterSceneReq.proto",
+            "line": 6,
+            "type": "double",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "MCCMGLDOECH",
+            "tag": 6,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "enter_scene_token",
+            "status": "verified"
+          },
+          "proposedFieldName": "enter_scene_token",
+          "astaAtSameTag": {
+            "name": "enter_scene_token",
+            "tag": 6,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PostEnterSceneReq.proto",
+            "line": 7,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 2,
+        "asta": 2,
+        "matchingOuterShape": 2,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 0,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
+      "message": "PostEnterSceneRsp",
+      "clientType": "ODANIDKHMMG",
+      "targetCmdId": 26760,
+      "astaOpcode": {
+        "value": 26760,
+        "line": 1739,
+        "legacy71": 25882
+      },
+      "opcodeMatches": true,
+      "astaSchema": {
+        "file": "src/main/proto/PostEnterSceneRsp.proto",
+        "line": 5
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "MCCMGLDOECH",
+            "tag": 2,
+            "type": "uint32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "enter_scene_token",
+            "status": "verified"
+          },
+          "proposedFieldName": "enter_scene_token",
+          "astaAtSameTag": {
+            "name": "enter_scene_token",
+            "tag": 2,
+            "declaredType": "uint32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PostEnterSceneRsp.proto",
+            "line": 6,
+            "type": "uint32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "LDLIEKOAFBP",
+            "tag": 6,
+            "type": "int32",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "retcode",
+            "status": "verified"
+          },
+          "proposedFieldName": "retcode",
+          "astaAtSameTag": {
+            "name": "retcode",
+            "tag": 6,
+            "declaredType": "int32",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/PostEnterSceneRsp.proto",
+            "line": 7,
+            "type": "int32",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 2,
+        "asta": 2,
+        "matchingOuterShape": 2,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 0,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
       "message": "PacketHead",
       "clientType": "LOPNMMJPFAJ",
       "targetCmdId": null,
@@ -5126,6 +5847,108 @@
         "target": 6,
         "asta": 6,
         "matchingOuterShape": 6,
+        "outerShapeConflict": 0,
+        "missingTargetTags": 0,
+        "verifiedSemanticConflict": 0
+      }
+    },
+    {
+      "message": "Vector",
+      "clientType": "BGDCNKAKGHI",
+      "targetCmdId": null,
+      "astaOpcode": null,
+      "opcodeMatches": null,
+      "astaSchema": {
+        "file": "src/main/proto/Vector.proto",
+        "line": 5
+      },
+      "fields": [
+        {
+          "target": {
+            "clientField": "CJMJBINEBAG",
+            "tag": 1,
+            "type": "float",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "x",
+            "status": "verified"
+          },
+          "proposedFieldName": "x",
+          "astaAtSameTag": {
+            "name": "x",
+            "tag": 1,
+            "declaredType": "float",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Vector.proto",
+            "line": 6,
+            "type": "float",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "ALOKJBKPLGA",
+            "tag": 2,
+            "type": "float",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "y",
+            "status": "verified"
+          },
+          "proposedFieldName": "y",
+          "astaAtSameTag": {
+            "name": "y",
+            "tag": 2,
+            "declaredType": "float",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Vector.proto",
+            "line": 7,
+            "type": "float",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        },
+        {
+          "target": {
+            "clientField": "MGICHKNKDKO",
+            "tag": 3,
+            "type": "float",
+            "cardinality": "singular",
+            "packed": false,
+            "semanticField": "z",
+            "status": "verified"
+          },
+          "proposedFieldName": "z",
+          "astaAtSameTag": {
+            "name": "z",
+            "tag": 3,
+            "declaredType": "float",
+            "cardinality": "singular",
+            "explicitPacked": null,
+            "oneof": null,
+            "file": "src/main/proto/Vector.proto",
+            "line": 8,
+            "type": "float",
+            "typeName": null,
+            "packed": false
+          },
+          "sameOuterShape": true,
+          "semanticConflict": false
+        }
+      ],
+      "counts": {
+        "target": 3,
+        "asta": 3,
+        "matchingOuterShape": 3,
         "outerShapeConflict": 0,
         "missingTargetTags": 0,
         "verifiedSemanticConflict": 0

@@ -476,6 +476,24 @@ class WorldEntryCallerTest {
                         .getData());
     }
 
+    private void assertEntry(
+            PlayerEnterSceneNotify packet, int sceneId, Position position, EnterType type, int token) {
+        // The current target contract sends only scene, type, token and position (tags 7/8/10/14).
+        assertEquals(
+                Set.of(7, 8, 10, 14),
+                Set.copyOf(
+                        packet.getAllFields().keySet().stream()
+                                .map(field -> field.getNumber())
+                                .toList()));
+        assertTrue(packet.getUnknownFields().asMap().isEmpty());
+        assertEquals(sceneId, (packet.getSceneId() ^ 0x2D03) + 0xC0E3);
+        assertEquals(type.getNumber(), packet.getType());
+        assertEquals(token, (packet.getEnterSceneToken() + 0x5889) ^ 0xE011);
+        assertEquals(position.getX(), packet.getPos().getCJMJBINEBAG());
+        assertEquals(position.getY(), packet.getPos().getALOKJBKPLGA());
+        assertEquals(position.getZ(), packet.getPos().getMGICHKNKDKO());
+    }
+
     @Test
     void ordinaryPromotionAndJoinSendSuccessOnlyAfterBothPlayersEnter() throws Exception {
         personalSceneAvailable();
@@ -506,7 +524,13 @@ class WorldEntryCallerTest {
         assertEquals(1, results.size());
         assertTrue(
                 PlayerApplyEnterMpResultNotify.parseFrom(results.get(0).getData()).getIsAgreed());
-        assertEquals(owner.getUid(), (entryPacket(guest).getTargetUid() ^ 4145) + 30259);
+        assertSame(owner, guest.getWorld().getHost());
+        assertEntry(
+                entryPacket(guest),
+                3,
+                new Position(10, 20, 30),
+                EnterType.EnterType_ENTER_OTHER,
+                guest.getEnterSceneToken());
     }
 
     @Test
@@ -566,7 +590,12 @@ class WorldEntryCallerTest {
         assertEquals(3, guest.getPrevScene());
         samePosition(new Position(100, 200, 300), guest.getPosition());
         assertFalse(guest.isHasSentInitPacketInHome());
-        assertEquals(EnterType.EnterType_ENTER_OTHER_HOME, entryPacket(guest).getType());
+        assertEntry(
+                entryPacket(guest),
+                2001,
+                new Position(100, 200, 300),
+                EnterType.EnterType_ENTER_OTHER_HOME,
+                guest.getEnterSceneToken());
         var response =
                 guest.packets.stream()
                         .filter(p -> p instanceof PacketTryEnterHomeRsp)
@@ -593,7 +622,12 @@ class WorldEntryCallerTest {
         assertSame(guest, guest.getWorld().getHost());
         assertSame(ownHome, guest.getCurHomeWorld());
         samePosition(new Position(7, 8, 9), guest.getPosition());
-        assertEquals(EnterType.EnterType_ENTER_BACK, entryPacket(guest).getType());
+        assertEntry(
+                entryPacket(guest),
+                3,
+                new Position(7, 8, 9),
+                EnterType.EnterType_ENTER_BACK,
+                guest.getEnterSceneToken());
         assertEquals(1, count(guest, PacketPlayerQuitFromHomeNotify.class));
         assertEquals(1, count(owner, PacketOtherPlayerEnterOrLeaveHomeNotify.class));
     }
@@ -810,8 +844,18 @@ class WorldEntryCallerTest {
         var packet =
                 PlayerEnterSceneNotify.parseFrom(
                         new PacketPlayerEnterSceneNotify(guest, target, props).getData());
-        assertEquals(7, (packet.getWorldLevel() - 19873) ^ 31579);
-        assertEquals(owner.getUid(), (packet.getTargetUid() ^ 4145) + 30259);
+        assertSame(target, guest.getWorld());
+        assertSame(owner, target.getHost());
+        assertSame(other, owner.getWorld());
+        assertEquals(7, target.getWorldLevel());
+        assertEquals(2, other.getWorldLevel());
+        // Owner and world level stay business state until their target wire fields are verified.
+        assertEntry(
+                packet,
+                3,
+                props.getTeleportTo(),
+                EnterType.EnterType_ENTER_OTHER,
+                guest.getEnterSceneToken());
     }
 
     @Test

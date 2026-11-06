@@ -21,7 +21,7 @@ MANIFEST_SHA256 = '47b783755a7c8f714a868db551f76a503092e0fd7895cc7a787e6060e651c
 SUMMARY_SHA256 = '9ffd79a3b9321485e2d870fe2bfccd89db0eddc0f0f71d62a778020c8e7b97cf'
 REPORT_SHA256 = 'b99d5deeb475e2dae3269e7946f574d001230e98d9ae18c212b39ad4eada3a7d'
 REVIEWED_SOURCES = {
-    'src/main/java/emu/grasscutter/game/player/Player.java': 'f080a4f521ebeb0467bcb09b84e993a68d147140046cea0e00898f5d9eee0b91',
+    'src/main/java/emu/grasscutter/game/player/Player.java': 'c693e7bc1cd72093d19fa4c8efb28d5233b211291efbc07de17ac403a10a5aed',
     'src/main/java/emu/grasscutter/game/entity/GameEntity.java': '91f3fe982ea91b6028106866d5e616b3968693f113792c096eaa61398140ba56',
     "src/main/java/emu/grasscutter/scripts/ScriptLib.java": "3b554d175c4028e0d30bc4727035f5f04d44f76a3d88b562b0d03227b4cfcdf2",
     "src/main/java/emu/grasscutter/scripts/ScriptLibUserdata.java": "691ac41d63b2fcca6833c989293d7f4df7ddd98261d21162badd90e3c1b102b5",

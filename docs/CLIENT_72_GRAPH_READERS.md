@@ -1,5 +1,15 @@
 # A-04d3c：响应非空嵌套、容器与 oneof
 
+## F-02b/F-03当前生产对照
+
+2026-11-06，本文历史响应闭包18类137字段已与LoginReq研究闭包合并接入生产：三个根类型的55+41+44字段，加18个raw嵌套类型58字段，共21类198字段。这里的18个nested不是下文包含两个响应根的18类；保留原研究数字及原始摘要。生成入口与固定hash/语义边界守卫见[登录wire](CLIENT_72_LOGIN_WIRE.md)。生产Proto经50组独立native writer、34组production→native response graph及下文6组错误拒绝对照通过；5组原生异常分支/1组有界helper拒绝的范围不扩大为完整运行时错误语义。
+
+Client72LoginNested的普通singular原始标量使用proto3 optional，目的是保留Java parse的存在性并让重复消息的显式默认值覆盖旧值；不是恢复了目标Proto的optional声明。`Protocol72ResponseMergeTest`的4项独立原生wire回归分别覆盖Token nested非零→显式零、后次未提供字段保留、同oneof消息bool true→false且保留大于2^53的uint64、Login MDKG非零→零/false/空字符串。预期来自原生reader对象结果和独立hex，不由生产schema往返生成；map value最后替换、普通消息合并及oneof切换仍各按下文已证边界处理。
+
+50组canonical writer比较只设置非默认值以对齐目标writer的默认省略；Java显式setter(0/false/空串)可能因presence编码该字段，不能把canonical比较通过称作这些显式设置的逐字节一致。重复显式默认值的接收行为由上述独立回归单独覆盖，详见[响应合同](CLIENT_72_RESPONSE_CONTRACT.md)。Token仅四字段加密成功/retcode-only失败、Login资源61/1,3,4,5最小投影已接入；LoginRsp连续收帧key selector未证。
+
+F-03的场景scalar存在性同样是Java适配，请求缺字段则必须按raw0逆变换，不能套用响应构造默认，见[场景握手](CLIENT_72_SCENE_HANDSHAKE.md)及[请求边界](CLIENT_72_SCENE_REQUEST_CONTRACT.md)。38套Java中间选集通过，账号准入/确认保存/经济Guard/Lua不变；初始化Notify仍在核实，完整客户端初始化与D-02未验。以下为A-04d3c当批离线记录，未修改生产等描述只针对该历史研究批次。
+
 固定输入同 [目标提取](CLIENT_72_EXTRACTION.md)。本批验收范围是**离线、受控初始化状态下的原生读取控制流和 wire 行为**。未启动/注入真实客户端，未修改服务端主Proto、包号、版本准入或客户端文件；SDK、认证、新旧账号登录和入场仍未验收。字段业务名称与枚举符号继续未知。
 
 `trace_client72_graph.py` 已把此前7个叶子接回 TokenRsp/LoginRsp 父reader，补齐 HMLAJHBHLOC 的reader、两组oneof及其6个子类型。研究闭包为18个消息、137字段。原始观察见 [response-graph-observations.json](../protocol/cn-7.2/response-graph-observations.json)，研究Proto见 [response-graph.proto](../protocol/cn-7.2/response-graph.proto)。旧response-wire-observations是外层扫描检查点，其not-traced状态由新表的contentBindings补充，不篡改历史扫描工具的支持范围。

@@ -18,12 +18,14 @@ import emu.grasscutter.game.player.Player;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.packet.BasePacket;
 import emu.grasscutter.net.proto.GetPlayerTokenReqOuterClass.GetPlayerTokenReq;
+import emu.grasscutter.net.proto.GetPlayerTokenRspOuterClass.GetPlayerTokenRsp;
 import emu.grasscutter.net.proto.SetPlayerBornDataReqOuterClass.SetPlayerBornDataReq;
 import emu.grasscutter.plugin.PluginManager;
 import emu.grasscutter.server.event.EventHandler;
 import emu.grasscutter.server.event.game.PlayerCreationEvent;
 import emu.grasscutter.server.game.*;
 import emu.grasscutter.server.packet.recv.*;
+import emu.grasscutter.utils.Crypto;
 
 import org.bson.Document;
 import org.junit.jupiter.api.*;
@@ -32,10 +34,16 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.lang.reflect.Field;
 import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.security.KeyPairGenerator;
+import java.security.Signature;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+
+import javax.crypto.Cipher;
 
 /**
  * Login entry points and password resets use only isolated Mongo fixtures and a fake KCP tunnel.
@@ -46,7 +54,7 @@ class LocalLoginAdmissionMongoTest {
     private MongoClient mongo;
     private Datastore game, accounts;
     private Object oldGame, oldAccounts, oldServer, oldPlugins;
-    private boolean oldLoaded;
+    private boolean oldLoaded, oldUseXorEncryption;
     private AvatarData oldAvatar;
     private ServerRunMode oldMode;
     private GameServer server;
@@ -69,6 +77,8 @@ class LocalLoginAdmissionMongoTest {
         oldLoaded = ResourceLoader.isLoadedAll();
         oldMode = Grasscutter.getRunMode();
         mongo = MongoClients.create(uri);
+        oldUseXorEncryption = Grasscutter.getConfig().server.game.useXorEncryption;
+        Grasscutter.getConfig().server.game.useXorEncryption = false;
         String suffix = UUID.randomUUID().toString().replace("-", "");
         game = Morphia.createDatastore(mongo, "lunagc_login_game_" + suffix);
         accounts = Morphia.createDatastore(mongo, "lunagc_login_accounts_" + suffix);
@@ -107,6 +117,7 @@ class LocalLoginAdmissionMongoTest {
             extraSessions.forEach(ProbeSession::close);
             assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(10)));
         } finally {
+            Grasscutter.getConfig().server.game.useXorEncryption = oldUseXorEncryption;
             field(DatabaseManager.class, "gameDatastore").set(null, oldGame);
             field(DatabaseManager.class, "dispatchDatastore").set(null, oldAccounts);
             field(Grasscutter.class, "gameServer").set(null, oldServer);
@@ -287,6 +298,158 @@ class LocalLoginAdmissionMongoTest {
         reset();
         assertTrue(session.isLoginRevoked());
         assertEquals(1, session.closed.get());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"%%", "AQ=="})
+    void invalidRsaNegotiationOnlyRepliesWithRefusalAndKeepsTheDispatchKey(String clientRandKey)
+            throws Exception {
+        var oldSigningKey = Crypto.CUR_SIGNING_KEY;
+        var oldEncryptionKeys = Crypto.EncryptionKeys;
+        var gameConfig = Grasscutter.getConfig().server.game;
+        boolean oldUseXor = gameConfig.useXorEncryption;
+        try {
+            var generator = KeyPairGenerator.getInstance("RSA");
+            generator.initialize(2048);
+            var signing = generator.generateKeyPair();
+            Crypto.CUR_SIGNING_KEY = signing.getPrivate();
+            Crypto.EncryptionKeys = new HashMap<>();
+            Crypto.EncryptionKeys.put(1, signing.getPublic());
+            gameConfig.useXorEncryption = true;
+            useNoLoadTokenPlayer();
+
+            new HandlerGetPlayerTokenReq()
+                    .handle(
+                            session,
+                            new byte[0],
+                            GetPlayerTokenReq.newBuilder()
+                                    .setAccountUid(ID)
+                                    .setAccountToken(TOKEN)
+                                    .setKeyId(1)
+                                    .setClientRandKey(clientRandKey)
+                                    .build()
+                                    .toByteArray());
+
+            assertFalse(session.useSecretKey());
+            var packet = onlyTokenReply();
+            assertEquals(PacketOpcodes.GetPlayerTokenRsp, packet.getOpcode());
+            assertTrue(packet.useDispatchKey());
+            var response = GetPlayerTokenRsp.parseFrom(packet.getData());
+            assertEquals(-1, response.getRetcode());
+            assertTrue(response.getUnknownFields().asMap().isEmpty());
+            assertEquals(
+                    Set.of(14),
+                    response.getAllFields().keySet().stream()
+                            .map(descriptor -> descriptor.getNumber())
+                            .collect(Collectors.toSet()));
+            assertEquals(GameSession.SessionState.WAITING_FOR_LOGIN, session.getState());
+            int uid = session.getPlayer().getUid();
+            assertTrue(uid > 0);
+            assertEquals(
+                    1,
+                    game.getDatabase()
+                            .getCollection("players")
+                            .countDocuments(new Document("_id", uid).append("accountId", ID)));
+            assertEquals(TOKEN, account().getToken());
+        } finally {
+            Crypto.CUR_SIGNING_KEY = oldSigningKey;
+            Crypto.EncryptionKeys = oldEncryptionKeys;
+            gameConfig.useXorEncryption = oldUseXor;
+        }
+    }
+
+    @Test
+    void aRealRsaExchangeRepliesWithVerifiedSeedAndIdentityBeforeSwitchingTheSecretKey()
+            throws Exception {
+        var oldSigningKey = Crypto.CUR_SIGNING_KEY;
+        var oldEncryptionKeys = Crypto.EncryptionKeys;
+        var gameConfig = Grasscutter.getConfig().server.game;
+        boolean oldUseXor = gameConfig.useXorEncryption;
+        try {
+            var generator = KeyPairGenerator.getInstance("RSA");
+            generator.initialize(2048);
+            var signing = generator.generateKeyPair();
+            var client = generator.generateKeyPair();
+            Crypto.CUR_SIGNING_KEY = signing.getPrivate();
+            Crypto.EncryptionKeys = new HashMap<>();
+            Crypto.EncryptionKeys.put(1, client.getPublic());
+            gameConfig.useXorEncryption = true;
+            useNoLoadTokenPlayer();
+
+            long clientSeed = 0xFEDCBA9876543210L;
+            long sessionSeed = session.getEncryptSeed();
+            var cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, signing.getPublic());
+            var encryptedClientSeed =
+                    cipher.doFinal(ByteBuffer.allocate(Long.BYTES).putLong(clientSeed).array());
+            new HandlerGetPlayerTokenReq()
+                    .handle(
+                            session,
+                            new byte[0],
+                            GetPlayerTokenReq.newBuilder()
+                                    .setAccountUid(ID)
+                                    .setAccountToken(TOKEN)
+                                    .setKeyId(1)
+                                    .setClientRandKey(
+                                            Base64.getEncoder().encodeToString(encryptedClientSeed))
+                                    .build()
+                                    .toByteArray());
+
+            assertTrue(session.useSecretKey());
+            var packet = onlyTokenReply();
+            assertEquals(PacketOpcodes.GetPlayerTokenRsp, packet.getOpcode());
+            assertTrue(packet.useDispatchKey());
+            var response = GetPlayerTokenRsp.parseFrom(packet.getData());
+            assertEquals(0, response.getRetcode());
+            assertEquals(session.getPlayer().getUid(), response.getUid());
+            assertEquals(TOKEN, response.getToken());
+            assertTrue(response.getUnknownFields().asMap().isEmpty());
+            assertEquals(
+                    Set.of(6, 9, 208, 477),
+                    response.getAllFields().keySet().stream()
+                            .map(descriptor -> descriptor.getNumber())
+                            .collect(Collectors.toSet()));
+
+            cipher.init(Cipher.DECRYPT_MODE, client.getPrivate());
+            var mixedSeed = cipher.doFinal(Base64.getDecoder().decode(response.getServerRandKey()));
+            assertArrayEquals(
+                    ByteBuffer.allocate(Long.BYTES).putLong(sessionSeed ^ clientSeed).array(),
+                    mixedSeed);
+            var verifier = Signature.getInstance("SHA256withRSA");
+            verifier.initVerify(signing.getPublic());
+            verifier.update(mixedSeed);
+            assertTrue(verifier.verify(Base64.getDecoder().decode(response.getSign())));
+            assertEquals(GameSession.SessionState.WAITING_FOR_LOGIN, session.getState());
+            assertEquals(
+                    1,
+                    game.getDatabase()
+                            .getCollection("players")
+                            .countDocuments(
+                                    new Document("_id", response.getUid()).append("accountId", ID)));
+            assertEquals(TOKEN, account().getToken());
+        } finally {
+            Crypto.CUR_SIGNING_KEY = oldSigningKey;
+            Crypto.EncryptionKeys = oldEncryptionKeys;
+            gameConfig.useXorEncryption = oldUseXor;
+        }
+    }
+
+    private void useNoLoadTokenPlayer() {
+        game.getMapper().map(NoLoadPlayer.class);
+        plugins.registerListener(
+                new EventHandler<>(PlayerCreationEvent.class)
+                        .listener(event -> event.setPlayerClass(NoLoadPlayer.class)));
+    }
+
+    private BasePacket onlyTokenReply() {
+        assertEquals(session.sent.get(), session.packets.size());
+        var replies = session.packets.stream()
+                .filter(packet -> packet.getOpcode() == PacketOpcodes.GetPlayerTokenRsp)
+                .toList();
+        assertEquals(1, replies.size());
+        var reply = replies.get(0);
+        assertFalse(session.secretKeyAtSend.get(session.packets.indexOf(reply)));
+        return reply;
     }
 
     @ParameterizedTest
@@ -747,6 +910,8 @@ class LocalLoginAdmissionMongoTest {
     static final class ProbeSession extends GameSession {
         final AtomicInteger closed = new AtomicInteger();
         final AtomicInteger sent = new AtomicInteger();
+        final List<BasePacket> packets = new CopyOnWriteArrayList<>();
+        final List<Boolean> secretKeyAtSend = new CopyOnWriteArrayList<>();
 
         ProbeSession(GameServer server) {
             super(server);
@@ -770,6 +935,8 @@ class LocalLoginAdmissionMongoTest {
 
         @Override
         public void send(BasePacket packet) {
+            packets.add(packet);
+            secretKeyAtSend.add(useSecretKey());
             sent.incrementAndGet();
         }
     }

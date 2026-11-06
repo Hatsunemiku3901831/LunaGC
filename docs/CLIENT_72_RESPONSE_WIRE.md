@@ -1,5 +1,15 @@
 # TokenRsp / LoginRsp 受控读取与外层 wire
 
+## F-02b/F-03当前生产接入
+
+2026-11-06，两个Rsp的41+44个外层字段已与LoginReq55字段、18个raw嵌套类型58字段合并为生产21类198字段；只有已verified语义采用业务名，其余保留raw名。下文A-04d3b/c1的unresolved、空envelope及not-traced均是历史工具检查点；后续非空证据见[响应对象图](CLIENT_72_GRAPH_READERS.md)，最小业务发送与原生消费见[响应合同](CLIENT_72_RESPONSE_CONTRACT.md)。生产生成入口为[登录wire说明](CLIENT_72_LOGIN_WIRE.md)中的`tools/generate_login72_contract.py`；50组独立native writer、34组response native graph及6组错误拒绝对照已通过。
+
+当前加密Token成功只发送uid/tag9、token/tag6、sign/tag208、server_rand_key/tag477；失败只发送retcode/tag14，内部封禁状态保留，未verified的msg/blacktime不发。RSA失败不伪造签名、不切换会话key或降级成功；加密模式key_id<=0在账号准入前拒绝。仅uid/token的入口限于明确useXorEncryption=false的本地分支。响应key_id/tag440、HLN/tag2、account_uid及tag658旧业务名不因请求同名或Asta赋值而晋级；tag658已有CalcVersionHash输入证据仍不在最小发送集合。
+
+PlayerLoginRsp仅从既有RegionInfo资源配置投影raw FHCEHICKAIP/tag61的MDKG子字段1/3/4/5：version、md5、resource_version_size、version_suffix。子tag4来源为旧release_total_size值，不证明该旧名；tag2/6不发，next_script_version/tag7只在外层1337有消费证据，不投影到61。本地MD5语义继续优先：437→DATA_MD5，1255→SILENCE_DATA_MD5，不采用Asta反向命名。LoginRsp连续接收解帧的key selector仍未闭合，保留现有dispatch发送设置，不用一般协议习惯推断。
+
+嵌套proto3 optional只适配Java存在性和重复消息合并；4项原生独立wire回归已覆盖显式零/false/空字符串及缺省字段保留，不宣称恢复目标Proto的optional声明。独立Mongo真实RSA成功与`%%`/`AQ==`拒绝3项通过；实际账号准入、确认保存、经济Guard及Lua保持，夹具边界见[账号运维](ACCOUNT_AND_SAVE_OPERATIONS.md)。F-03及Notify后续范围见[场景握手](CLIENT_72_SCENE_HANDSHAKE.md)；当前中间测试通过不能称完整初始化或D-02。
+
 A-04d3b 的范围是响应外层字段定位与标量受控读取。输入固定为 [目标哈希](CLIENT_72_EXTRACTION.md)，工具 `trace_client72_responses.py`；离线环境同 [保护入口](CLIENT_72_PROTECTED.md)。**两个响应的嵌套内容、业务语义和真实登录仍未验收，本页记录A-04d3b/c1检查点；后续结果见[非空对象图](CLIENT_72_GRAPH_READERS.md)。**
 
 | 候选业务名 | 原始类型 / 索引 | 静态 CmdID | 受保护 reader | 外层实例字段 |

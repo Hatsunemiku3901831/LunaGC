@@ -4,6 +4,7 @@ import emu.grasscutter.Grasscutter;
 import emu.grasscutter.game.AccountLoginAdmission;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.net.packet.*;
+import emu.grasscutter.net.proto.PlayerLoginReqOuterClass.PlayerLoginReq;
 import emu.grasscutter.server.game.GameSession;
 import emu.grasscutter.server.game.GameSession.SessionState;
 import emu.grasscutter.server.packet.send.*;
@@ -13,6 +14,7 @@ public class HandlerPlayerLoginReq extends PacketHandler {
 
     @Override
     public void handle(GameSession session, byte[] header, byte[] payload) throws Exception {
+        PlayerLoginReq.parseFrom(payload);
         AccountLoginAdmission.step(session, () -> handleAdmitted(session));
     }
 

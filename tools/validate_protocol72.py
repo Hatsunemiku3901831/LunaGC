@@ -179,6 +179,125 @@ def validate_observations(document, profile, commands, wire, protected=None, obs
     return errors
 
 
+def validate_scene_fusion(document, profile, handshake, capacity, initialization):
+    """Check the reviewed native handshake/capacity slice across all three layers."""
+    errors=[]
+    hashes={profile['files'][k]['path']:profile['files'][k]['sha256'] for k in ('binary','metadata','startup')}
+    for label,table in [('handshake',handshake),('capacity',capacity),('initialization',initialization)]:
+        if table.get('inputSHA256')!=hashes:errors.append(f'Scene fusion {label}: fixed input mismatch')
+        if table.get('runtimeStatus')!='not-tested' or table.get('targetProtocolReady') is not False:
+            errors.append(f'Scene fusion {label}: offline evidence cannot claim live acceptance')
+    tables={k:{r['semanticName']:r for r in document[k]} for k in ('opcodes','messages','schemas')}
+    roles=handshake.get('roles',[])
+    expected={('EnterSceneReadyReq',74391,5046),('EnterSceneReadyRsp',17278,9948),
+              ('SceneInitFinishReq',20380,4905),('SceneInitFinishRsp',36349,21392),
+              ('EnterSceneDoneReq',63999,1017),('EnterSceneDoneRsp',74698,298),
+              ('PostEnterSceneReq',74076,1696),('PostEnterSceneRsp',51326,26760)}
+    if {(r.get('semanticName'),r.get('typeIndex'),r.get('cmdId')) for r in roles}!=expected:
+        errors.append('Scene fusion: reviewed role/command set changed')
+    raw={r['typeIndex']:r for r in handshake.get('messages',[])}
+    bindings={(b['typeIndex'],b['tag']):b for b in handshake.get('semanticBindings',[])}
+    for role in roles:
+        name=role['semanticName'];index=role['typeIndex']
+        for table,ref in [('opcodes','scene-handshake-command'),('messages','scene-handshake-identity')]:
+            actual=tables[table].get(name,{})
+            if (actual.get('status')!='verified' or actual.get('clientType')!=role['clientType']
+                    or ref not in actual.get('evidence',[])
+                    or (table=='opcodes' and actual.get('cmdId')!=role['cmdId'])):
+                errors.append(f'Scene fusion {name}: {table} native identity mismatch')
+        fields=tables['schemas'].get(name,{}).get('fields',[])
+        if {f['tag'] for f in fields}!={f['tag'] for f in raw.get(index,{}).get('fields',[])}:
+            errors.append(f'Scene fusion {name}: complete raw field set mismatch')
+        for f in fields:
+            original=next((v for v in raw.get(index,{}).get('fields',[]) if v['tag']==f['tag']),{})
+            if any(f.get(k)!=original.get(k) for k in ('tag','clientField','objectOffset','type','cardinality')):
+                errors.append(f'Scene fusion {name}/{f["tag"]}: native wire binding mismatch')
+            child=original.get('nestedTypeIndex')
+            if child is not None and f.get('clientNestedType')!=raw.get(child,{}).get('clientType'):
+                errors.append(f'Scene fusion {name}/{f["tag"]}: nested type mismatch')
+            binding=bindings.get((index,f['tag']))
+            if binding:
+                encoding={k:binding[k] for k in ('applicationToWire','wireToApplication') if k in binding}
+                if (f.get('semanticField')!=binding['name'] or f.get('status')!='verified'
+                        or f.get('applicationEncoding')!=encoding or 'scene-handshake-fields' not in f.get('evidence',[])):
+                    errors.append(f'Scene fusion {name}/{f["tag"]}: token/retcode semantic or encoding mismatch')
+            elif f.get('status')!='unresolved' or not f.get('semanticField','').startswith('unknown_field_'):
+                errors.append(f'Scene fusion {name}/{f["tag"]}: unknown field promoted')
+    name='StoreWeightLimitNotify'
+    for table,ref in [('opcodes','store-capacity-command'),('messages','store-capacity-identity')]:
+        actual=tables[table].get(name,{})
+        if (actual.get('status')!='verified' or actual.get('clientType')!='KNCCLAJAEEC'
+                or ref not in actual.get('evidence',[]) or (table=='opcodes' and actual.get('cmdId')!=22609)):
+            errors.append(f'Scene fusion capacity: {table} purpose alias mismatch')
+    fields=tables['schemas'].get(name,{}).get('fields',[])
+    known={b['tag']:b for b in capacity.get('bindings',[])}
+    if set(known)!={1,5,6,9,14} or {f['tag'] for f in fields}!={f['tag'] for f in initialization.get('fields',[])}:
+        errors.append('Scene fusion capacity: complete raw/semantic field set mismatch')
+    for f in fields:
+        original=next((v for v in initialization.get('fields',[]) if v['tag']==f['tag']),{})
+        if any(f.get(k)!=original.get(k) for k in ('tag','clientField','objectOffset','type','cardinality','packed')):
+            errors.append(f'Scene fusion capacity/{f["tag"]}: native wire mismatch')
+        b=known.get(f['tag'])
+        if b:
+            if (f.get('status')!='verified' or f.get('semanticField')!=b['semanticField']
+                    or f.get('applicationEncoding')!={'valueEncoding':b['valueEncoding']}):
+                errors.append(f'Scene fusion capacity/{f["tag"]}: native capacity purpose mismatch')
+        elif f.get('status')!='unresolved' or not f.get('semanticField','').startswith('unknown_field_'):
+            errors.append(f'Scene fusion capacity/{f["tag"]}: unknown field promoted')
+        if f['tag']==6 and f.get('enumValues')!={'StoreNone':0,'StorePack':1,'StoreDepot':2}:
+            errors.append('Scene fusion capacity: target store enum mismatch')
+    token=next((f for f in tables['schemas'].get('PlayerEnterSceneNotify',{}).get('fields',[]) if f['tag']==10),{})
+    b=bindings.get((46311,10),{})
+    if (token.get('semanticField')!='enter_scene_token' or token.get('status')!='verified'
+            or token.get('applicationEncoding')!={'wireToApplication':b.get('wireToApplication')}):
+        errors.append('Scene fusion Notify: native token chain mismatch')
+    return errors
+
+
+def validate_enter_scene_fusion(document, profile, contract, domain):
+    errors=[]
+    hashes={profile['files'][k]['path']:profile['files'][k]['sha256'] for k in ('binary','metadata','startup')}
+    for label,table in [('enter contract',contract),('1017 domain',domain)]:
+        if (table.get('inputSHA256')!=hashes or table.get('runtimeStatus')!='not-tested'
+                or table.get('targetProtocolReady') is not False):
+            errors.append(f'Scene fusion {label}: fixed offline scope mismatch')
+    schema=next(r for r in document['schemas'] if r['semanticName']=='PlayerEnterSceneNotify')
+    bindings={b['tag']:b for b in contract.get('semanticBindings',[]) if b['typeIndex']==46311}
+    if set(bindings)!={7,8,10,14}:
+        errors.append('Scene fusion Notify: reviewed consumer binding set changed')
+    for tag,b in bindings.items():
+        f=next((f for f in schema['fields'] if f['tag']==tag),{})
+        if (f.get('status')!='verified' or f.get('semanticField')!=b['name']
+                or f.get('objectOffset')!=b['objectOffset']
+                or f.get('applicationEncoding')!={'wireToApplication':b['wireToApplication']}):
+            errors.append(f'Scene fusion Notify/{tag}: named consumer mismatch')
+        if tag==8:
+            values={v['symbol']:v['value'] for v in contract['identity']['enum']['values']}
+            if f.get('enumValues')!=values:errors.append('Scene fusion Notify: target Enter enum mismatch')
+        if tag==14 and (f.get('clientNestedType')!='BGDCNKAKGHI' or f.get('nestedType')!='Vector'):
+            errors.append('Scene fusion Notify: independently named position/vector link missing')
+    if any(f['status']!='unresolved' for f in schema['fields'] if f['tag'] not in bindings):
+        errors.append('Scene fusion Notify: unproved sender field promoted')
+    vector=next((r for r in document['schemas'] if r['semanticName']=='Vector'),{})
+    axes={b['tag']:b for b in contract.get('semanticBindings',[]) if b['typeIndex']==84343}
+    if vector.get('status')!='verified' or len(vector.get('fields',[]))!=3:
+        errors.append('Scene fusion Vector: embedded three-axis schema missing')
+    for f in vector.get('fields',[]):
+        b=axes.get(f['tag'],{})
+        if (f.get('status')!='verified' or f.get('semanticField')!=b.get('name') or f.get('type')!='float'
+                or f.get('objectOffset')!=b.get('objectOffset')):
+            errors.append('Scene fusion Vector: named native axis mismatch')
+    expected={(63999,'game-session','C2S'),(22065,'beyond-wpf-stream','process-outbound-to-external-stream')}
+    if ({(r['typeIndex'],r['transportDomain'],r['direction']) for r in domain.get('domains',[])}!=expected
+            or domain.get('globalStaticDuplicateRetained') is not True
+            or domain.get('gameC2SAmbiguity')!='resolved-for-observed-normal-native-transport-paths'):
+        errors.append('Scene fusion 1017: normal transport distinction or global duplicate lost')
+    opcode=next(r for r in document['opcodes'] if r['semanticName']=='EnterSceneDoneReq')
+    if opcode.get('domainEvidence')!='protocol/cn-7.2/cmd1017-domain-observations.json':
+        errors.append('Scene fusion 1017: mapped domain evidence missing')
+    return errors
+
+
 def validate_login_semantics(document, profile, semantics, literals, enums, wire):
     """Bind semantic claims to bounded target observations, not name resemblance."""
     errors=[]
@@ -613,7 +732,8 @@ def validate_scene_wait(document, profile, table):
         if row.get('clientType') != 'BBECFDMDFJC' or row.get('status') != 'verified' or evidence not in row.get('evidence', []):
             errors.append('Scene wait: mapped identity evidence mismatch')
     schema = next(r for r in document['schemas'] if r['semanticName'] == 'PlayerEnterSceneNotify')
-    if schema.get('status') != 'candidate' or len(schema.get('fields', [])) != 26 or any(f['status'] != 'unresolved' for f in schema['fields']):
+    if (schema.get('status') != 'candidate' or len(schema.get('fields', [])) != 26
+            or any(f['status'] != 'unresolved' for f in schema['fields'] if f['tag'] not in {7,8,10,14})):
         errors.append('Scene wait: unknown field semantics promoted')
     return errors
 
@@ -637,6 +757,12 @@ def main():
         clientType=scene_wait['declarations']['clientType'], fields=scene_wait['fields'])])))
     errors.extend(validate_observations(document, profile, commands, wire, protected, extra))
     errors.extend(validate_scene_wait(document, profile, scene_wait))
+    scene_tables=[json.loads((args.directory/name).read_text('utf8')) for name in (
+        'scene-handshake-observations.json','store-weight-contract-observations.json','initialization-wire-observations.json')]
+    errors.extend(validate_scene_fusion(document,profile,*scene_tables))
+    enter_tables=[json.loads((args.directory/name).read_text('utf8')) for name in (
+        'enter-scene-contract-observations.json','cmd1017-domain-observations.json')]
+    errors.extend(validate_enter_scene_fusion(document,profile,*enter_tables))
     semantic_tables=[json.loads((args.directory/name).read_text('utf8')) for name in
                      ('login-semantic-observations.json','login-literal-observations.json','enum-observations.json','login-wire-observations.json')]
     errors.extend(validate_login_semantics(document,profile,*semantic_tables))

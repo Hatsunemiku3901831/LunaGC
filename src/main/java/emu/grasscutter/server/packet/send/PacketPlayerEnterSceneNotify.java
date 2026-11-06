@@ -7,41 +7,15 @@ import emu.grasscutter.game.world.Position;
 import emu.grasscutter.game.world.World;
 import emu.grasscutter.game.world.data.TeleportProperties;
 import emu.grasscutter.net.packet.*;
+import emu.grasscutter.net.proto.Client72SceneHandshakeNestedOuterClass.BGDCNKAKGHI;
 import emu.grasscutter.net.proto.EnterTypeOuterClass.EnterType;
 import emu.grasscutter.net.proto.PlayerEnterSceneNotifyOuterClass.PlayerEnterSceneNotify;
 import emu.grasscutter.utils.Utils;
 
 public class PacketPlayerEnterSceneNotify extends BasePacket {
-
     public PacketPlayerEnterSceneNotify(Player player) {
         super(PacketOpcodes.PlayerEnterSceneNotify);
-
-        player.setSceneLoadState(SceneLoadState.LOADING);
-        player.setEnterSceneToken(Utils.randomRange(1000, 99999));
-
-        long currentTime = System.currentTimeMillis();
-
-        var proto =
-                PlayerEnterSceneNotify.newBuilder()
-                        .setLimitedRegionInfo(
-                                emu.grasscutter.game.world.WorldRegions.unrestricted())
-                        .setSceneId((player.getSceneId() - 49379) ^ 11523)
-                        .setPos(player.getPosition().toProto())
-                        .setSceneBeginTime((currentTime ^ 27843L) + 16749L)
-                        .setType(EnterType.EnterType_ENTER_SELF)
-                        .setTargetUid((player.getUid() - 30259) ^ 4145)
-                        .setEnterSceneToken((player.getEnterSceneToken() ^ 57361) - 22665)
-                        .setWorldLevel((player.getWorldLevel() ^ 31579) + 19873)
-
-                        .setSceneTransaction(
-                                "3-"
-                                        + player.getUid()
-                                        + "-"
-                                        + (int) (System.currentTimeMillis() / 1000)
-                                        + "-"
-                                        + 18402);
-
-        this.setData(proto);
+        setData(createEntry(player, player.getSceneId(), player.getPosition(), EnterType.EnterType_ENTER_SELF));
     }
 
     public PacketPlayerEnterSceneNotify(
@@ -49,106 +23,43 @@ public class PacketPlayerEnterSceneNotify extends BasePacket {
         this(player, player, type, reason, newScene, newPos);
     }
 
-    public PacketPlayerEnterSceneNotify(Player player, TeleportProperties teleportProperties) {
-        this(player, player, teleportProperties);
-    }
-
-    public PacketPlayerEnterSceneNotify(
-            Player player,
-            Player target,
-            EnterType type,
-            EnterReason reason,
-            int newScene,
-            Position newPos) {
-        this(
-                player,
-                target,
-                TeleportProperties.builder()
-                        .enterType(type)
-                        .enterReason(reason)
-                        .sceneId(newScene)
-                        .teleportTo(newPos)
-                        .build());
-    }
-
-    public PacketPlayerEnterSceneNotify(
-            Player player, Player target, TeleportProperties teleportProperties) {
-        this(player, target.getUid(), target.getWorld().getWorldLevel(), teleportProperties);
-    }
-
-    public PacketPlayerEnterSceneNotify(
-            Player player, World destination, TeleportProperties teleportProperties) {
-        this(player, destination.getHost().getUid(), destination.getWorldLevel(), teleportProperties);
-    }
-
-    private PacketPlayerEnterSceneNotify(
-            Player player, int targetUid, int worldLevel, TeleportProperties teleportProperties) {
+    public PacketPlayerEnterSceneNotify(Player player, TeleportProperties properties) {
         super(PacketOpcodes.PlayerEnterSceneNotify);
+        setData(createEntry(player, properties.getSceneId(), properties.getTeleportTo(), properties.getEnterType()));
+    }
 
+    public PacketPlayerEnterSceneNotify(
+            Player player, Player target, EnterType type, EnterReason reason, int newScene, Position newPos) {
+        this(player, target, TeleportProperties.builder().enterType(type).enterReason(reason)
+                .sceneId(newScene).teleportTo(newPos).build());
+    }
+
+    public PacketPlayerEnterSceneNotify(Player player, Player target, TeleportProperties properties) {
+        this(player, properties);
+    }
+
+    public PacketPlayerEnterSceneNotify(Player player, World destination, TeleportProperties properties) {
+        this(player, properties);
+    }
+
+    public PacketPlayerEnterSceneNotify(
+            Player player, int targetUid, TeleportProperties properties, boolean other) {
+        super(PacketOpcodes.PlayerEnterSceneNotify);
+        var type = other ? EnterType.EnterType_ENTER_OTHER_HOME : EnterType.EnterType_ENTER_SELF_HOME;
+        setData(createEntry(player, properties.getSceneId(), properties.getTeleportTo(), type));
+    }
+
+    private static PlayerEnterSceneNotify createEntry(Player player, int sceneId, Position pos, EnterType type) {
         player.setSceneLoadState(SceneLoadState.LOADING);
         player.setEnterSceneToken(Utils.randomRange(1000, 99999));
-
-        long currentTime = System.currentTimeMillis();
-
-        var proto =
-                PlayerEnterSceneNotify.newBuilder()
-                        .setLimitedRegionInfo(
-                                emu.grasscutter.game.world.WorldRegions.unrestricted())
-
-                        .setSceneId((teleportProperties.getSceneId() - 49379) ^ 11523)
-                        .setPos(teleportProperties.getTeleportTo().toProto())
-                        .setSceneBeginTime((currentTime ^ 27843L) + 16749L)
-                        .setType(teleportProperties.getEnterType())
-                        .setTargetUid((targetUid - 30259) ^ 4145)
-                        .setEnterSceneToken((player.getEnterSceneToken() ^ 57361) - 22665)
-                        .setWorldLevel((worldLevel ^ 31579) + 19873)
-
-                        .setSceneTransaction(
-                                teleportProperties.getSceneId()
-                                        + "-"
-                                        + targetUid
-                                        + "-"
-                                        + (int) (System.currentTimeMillis() / 1000)
-                                        + "-"
-                                        + 18402);
-
-        if (teleportProperties.getDungeonId() != 0) {
-            proto.setDungeonId((teleportProperties.getDungeonId() ^ 27544) - 17829);
-        }
-
-        this.setData(proto);
-    }
-
-    public PacketPlayerEnterSceneNotify(
-            Player player, int targetUid, TeleportProperties teleportProperties, boolean other) {
-        super(PacketOpcodes.PlayerEnterSceneNotify);
-
-        player.setSceneLoadState(SceneLoadState.LOADING);
-        player.setEnterSceneToken(Utils.randomRange(1000, 99999));
-
-        long currentTime = System.currentTimeMillis();
-
-        var proto =
-                PlayerEnterSceneNotify.newBuilder()
-                        .setLimitedRegionInfo(
-                                emu.grasscutter.game.world.WorldRegions.unrestricted())
-
-                        .setSceneId((teleportProperties.getSceneId() - 49379) ^ 11523)
-                        .setPos(teleportProperties.getTeleportTo().toProto())
-                        .setSceneBeginTime((currentTime ^ 27843L) + 16749L)
-                        .setType(other ? EnterType.EnterType_ENTER_OTHER_HOME : EnterType.EnterType_ENTER_SELF_HOME)
-                        .setTargetUid((targetUid - 30259) ^ 4145)
-                        .setEnterSceneToken((player.getEnterSceneToken() ^ 57361) - 22665)
-
-                        .setSceneTransaction(
-                                teleportProperties.getSceneId()
-                                        + "-"
-                                        + targetUid
-                                        + "-"
-                                        + (int) (System.currentTimeMillis() / 1000)
-                                        + "-"
-                                        + 105092);
-
-        this.setData(proto);
+        // Only these four destinations have independent target consumer evidence.
+        // Owner, world level, time, dungeon and region fields remain unnamed.
+        return PlayerEnterSceneNotify.newBuilder()
+                .setSceneId((sceneId - 0xC0E3) ^ 0x2D03)
+                .setType(type.getNumber())
+                .setEnterSceneToken((player.getEnterSceneToken() ^ 0xE011) - 0x5889)
+                .setPos(BGDCNKAKGHI.newBuilder().setCJMJBINEBAG(pos.getX())
+                        .setALOKJBKPLGA(pos.getY()).setMGICHKNKDKO(pos.getZ()))
+                .build();
     }
 }

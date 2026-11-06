@@ -5,13 +5,16 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.google.protobuf.*;
 
 import emu.grasscutter.net.packet.BasePacket;
+import emu.grasscutter.net.packet.PacketOpcodes;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-/** Independent native contract for the avatar lists used while initializing selection dialogs. */
-class AvatarSelectionProtocol71Test {
+/** Historical descriptor diagnostics; these coordinates are not CN72 evidence. */
+class UnmigratedSelectionDescriptorTest {
     private BasePacket notification() throws Exception {
         // The implementation was absent when this regression was introduced.
         return (BasePacket)
@@ -28,12 +31,13 @@ class AvatarSelectionProtocol71Test {
     }
 
     @Test
-    void initializationIsSentEvenWhenBothSelectionListsAreEmpty() throws Exception {
+    void unverifiedHistoricalNotificationCannotRemainAnActiveLoginSend() throws Exception {
         var packet = notification();
-        // Type 46070, getter 0x148d24b70: mov ax, 0x5290.
-        assertEquals(21136, packet.getOpcode());
+        assertTrue(PacketOpcodes.AvatarSelectionDataNotify < 0);
+        assertTrue(packet.getOpcode() < 0);
         assertArrayEquals(new byte[0], packet.getData());
-        assertNotNull(packet.build());
+        var source = Files.readString(Path.of("src/main/java/emu/grasscutter/game/player/Player.java"));
+        assertFalse(source.contains("new PacketAvatarSelectionDataNotify("));
     }
 
     @Test

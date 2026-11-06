@@ -1,5 +1,13 @@
 # 账号与存档运维和开发手册
 
+2026-11-06 F-02b/F-03中间验收已完成：38套Java选集无失败/错误，覆盖本轮协议接入及账号/经济/保存/Lua关联回归；不是完整客户端初始化或D-02验收。登录生产schema为21类198字段（LoginReq55、两Rsp外层85、18个raw嵌套58）；独立50组native writer、34组response native graph及6组错误拒绝通过，4项Java独立wire回归覆盖嵌套显式零、false、空字符串及重复消息合并。生成/核对入口见[登录wire](CLIENT_72_LOGIN_WIRE.md)，存在性适配范围见[对象图](CLIENT_72_GRAPH_READERS.md)。
+
+独立Mongo下真实JCA RSA交换成功与非法Base64 `%%`、错误RSA密文`AQ==`失败共3项通过，实际调用认证后处理、稳定UID建档及确认保存；NoLoadPlayer只隔离完整资源加载，密钥由夹具临时生成，不代表客户端签名信任或实际认证通过。成功包仅uid/token/sign/server_rand_key，失败仅retcode且发送时仍用dispatch key，失败不安装会话key、不产生伪签名回退。另有入口回归证明加密模式key_id缺失/0/非正值在AccountLoginAdmission、创建及加载玩家前拒绝；已进入认证准备后的RSA失败不能套用该无副作用结论。既有账号准入、保存、经济Guard及Lua未绕行。
+
+首跑6个失败已保留原始结果：2项旧登录/重置夹具沿用未显式关闭的加密配置，3项RSA测试把准备阶段全部发包数误当作唯一Token响应数，1项旧基线仍断言已退役场景包号。修正仅为夹具恢复原有非加密测试前提、按opcode筛选Token响应以及移除已迁移协议的旧断言；真实RSA三项显式启用加密，未通过修改生产准入或跳过校验消除失败。首跑及复跑结果留在忽略目录`local/migration72/f02b-f03-java-test-results`、`f02b-f03-retry-java-test-results`。
+
+本轮F-03四组握手/请求token关联和StoreWeight仅覆盖已证字段，见[场景握手](CLIENT_72_SCENE_HANDSHAKE.md)、[请求省略边界](CLIENT_72_SCENE_REQUEST_CONTRACT.md)、[StoreWeight](CLIENT_72_STORE_WEIGHT_CONTRACT.md)。初始化Notify仍在核实，LoginRsp连续收帧key selector未证；SDK/信任/补丁/资源和实机D-02前置不能由测试通过替代。以下F-02a及A系列段落保留各批次的测试数字和交接状态，不作为当前暂停/阻塞状态。
+
 2026-11-06融合验证：独立`local/migration72/test-mongo-fusion`/27027执行29套589项账号/经济/保存/Lua选集，全无失败/错误/跳过；正常shutdown前仅admin/config/local，测试库自清理且原Mongo27017/原数据未动。另43协议及关联全过，完整Java历史失败未重跑/消除。F-02a便携构建成功但完整P0/SDK/补丁/资源前置未齐，未部署、健康/运行JAR无服务对象，D-02仍未验；见[融合记录](CLIENT_72_ASTAPS_FUSION.md)。限定验收后按用户要求暂停，不用账号创建或读档入口做只读探测。
 
 本手册用于接手后的只读排查、备份恢复和修改验证。系统原理见[接手指南](ACCOUNT_AND_SAVE_SYSTEM.md)，字段归属见[数据模型](ACCOUNT_AND_SAVE_DATA_MODEL.md)。核对日期为 2026-10-21，源码基线为 `63f0fa7923ddd68c9c62e0dfb8cbcbc756d07371`。

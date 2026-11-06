@@ -10,31 +10,22 @@ import emu.grasscutter.net.packet.PacketOpcodes;
 import emu.grasscutter.net.proto.AbilityMetaUpdateMoonOvergrowValueOuterClass.AbilityMetaUpdateMoonOvergrowValue;
 import emu.grasscutter.net.proto.DoGachaRspOuterClass.DoGachaRsp;
 import emu.grasscutter.net.proto.DailyTaskDataNotifyOuterClass.DailyTaskDataNotify;
-import emu.grasscutter.net.proto.GetPlayerTokenRspOuterClass.GetPlayerTokenRsp;
 import emu.grasscutter.net.proto.WorldOwnerDailyTaskNotifyOuterClass.WorldOwnerDailyTaskNotify;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
 /** Diagnostic baselines for unported sources; no old client or CN 7.2 compatibility claim.
- * TokenReq/heartbeat/header have moved to Protocol72LoginWireCompatibilityTest.
+ * Migrated login/handshake entries have independent Protocol72 regression suites.
  */
 public final class UnmigratedProtocolBaselineTest {
     @Test
-    public void unportedLoginAndSceneEntriesRemainExplicitLegacyInputs() {
-        assertEquals(3713, PacketOpcodes.GetPlayerTokenRsp);
-        assertEquals(9282, PacketOpcodes.PlayerLoginReq);
-        assertEquals(9582, PacketOpcodes.PlayerEnterSceneNotify);
-        assertEquals(21608, PacketOpcodes.EnterSceneReadyReq);
+    public void unmappedOptionalEntriesRemainExplicitLegacyInputs() {
         assertTrue(PacketOpcodes.AddCustomTeamReq < 0);
         assertTrue(PacketOpcodes.UnnamedOpcode2819 < 0);
     }
 
     @Test
     public void changedResponsesSerialize71Fields() throws Exception {
-        var token = GetPlayerTokenRsp.newBuilder().setClientVersion("OSRELWin7.1.0").build();
-        assertTrue(UnknownFieldSet.parseFrom(token.toByteArray()).hasField(1856));
-        assertFalse(UnknownFieldSet.parseFrom(token.toByteArray()).hasField(1840));
-
         var gacha = DoGachaRsp.newBuilder().setIsCapturingRadiance(true).build();
         assertTrue(UnknownFieldSet.parseFrom(gacha.toByteArray()).hasField(286));
 

@@ -6,6 +6,7 @@ import emu.grasscutter.game.player.Player.SceneLoadState;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.SceneInitFinishReqOuterClass.SceneInitFinishReq;
 import emu.grasscutter.server.game.GameSession;
+import emu.grasscutter.server.game.SceneHandshakeToken;
 import emu.grasscutter.server.packet.send.*;
 import emu.grasscutter.utils.RichTextUtils;
 import emu.grasscutter.utils.WatermarkUtils;
@@ -16,9 +17,10 @@ public class HandlerSceneInitFinishReq extends PacketHandler {
 
     @Override
     public void handle(GameSession session, byte[] header, byte[] payload) throws Exception {
-        SceneInitFinishReq req = SceneInitFinishReq.parseFrom(payload);
+        var request = SceneInitFinishReq.parseFrom(payload);
 
         var player = session.getPlayer();
+        SceneHandshakeToken.requireCurrent(player, (request.getMCCMGLDOECH() - 0xF8CD) ^ 0x5673);
         var world = player.getWorld();
 
         session.send(new PacketServerTimeNotify());

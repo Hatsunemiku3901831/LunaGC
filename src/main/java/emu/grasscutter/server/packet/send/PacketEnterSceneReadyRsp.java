@@ -14,8 +14,8 @@ public class PacketEnterSceneReadyRsp extends BasePacket {
 
         EnterSceneReadyRsp p =
                 EnterSceneReadyRsp.newBuilder()
-                        .setEnterSceneToken(maskedToken)
-                        .setRetcode(maskedRetcode)
+                        .setMCCMGLDOECH(maskedToken)
+                        .setLDLIEKOAFBP(maskedRetcode)
                         .build();
 
         this.setData(p.toByteArray());

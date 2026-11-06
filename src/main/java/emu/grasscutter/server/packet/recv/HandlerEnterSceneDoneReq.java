@@ -5,6 +5,7 @@ import emu.grasscutter.game.player.Player.SceneLoadState;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.EnterSceneDoneReqOuterClass.EnterSceneDoneReq;
 import emu.grasscutter.server.game.GameSession;
+import emu.grasscutter.server.game.SceneHandshakeToken;
 import emu.grasscutter.net.proto.*;
 import emu.grasscutter.game.props.FightProperty;
 import emu.grasscutter.net.proto.ChangeHpDebtsReasonOuterClass;
@@ -18,9 +19,10 @@ public class HandlerEnterSceneDoneReq extends PacketHandler {
 
     @Override
     public void handle(GameSession session, byte[] header, byte[] payload) throws Exception {
-        EnterSceneDoneReq req = EnterSceneDoneReq.parseFrom(payload);
+        var request = EnterSceneDoneReq.parseFrom(payload);
 
         var player = session.getPlayer();
+        SceneHandshakeToken.requireCurrent(player, (request.getMCCMGLDOECH() + 0x8609) ^ 0x2034);
 
         // Finished loading
         player.setSceneLoadState(SceneLoadState.LOADED);

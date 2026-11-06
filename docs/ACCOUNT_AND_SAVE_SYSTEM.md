@@ -1,5 +1,13 @@
 # 账号与存档系统接手指南
 
+2026-11-06 F-02b/F-03当前接入：完整LoginReq的55字段、两个响应的85个外层字段及18个raw嵌套类型的58字段，共21类198字段，已进入生产Proto；原生wire闭合不等于业务语义全部恢复。独立50组native writer、34组response native graph及6组错误拒绝对照通过；嵌套标量的proto3 optional只是Java存在性/合并适配，另有4项独立原生wire回归覆盖重复嵌套的显式零、false、空字符串与未覆盖字段保留。来源、生成和最小发送范围见[登录wire](CLIENT_72_LOGIN_WIRE.md)、[响应合同](CLIENT_72_RESPONSE_CONTRACT.md)及[非空对象图](CLIENT_72_GRAPH_READERS.md)。
+
+加密Token成功仅发送uid/tag9、token/tag6、sign/tag208、server_rand_key/tag477；拒绝只发送retcode/tag14，RSA失败不伪造签名、不降级成功、不安装会话key。加密模式下key_id缺失、0或Java表示为非正值时，在AccountLoginAdmission之前拒绝；有效key进入既有准入及玩家准备后才进行RSA，因此后续RSA失败不能宣称没有发生建档或加载。AccountLoginAdmission、稳定UID归属、确认保存、经济Guard及Lua流程保持。独立Mongo的真实JCA RSA成功与`%%`、`AQ==`两种失败共3项已通过；使用明确本地密钥和NoLoadPlayer夹具，覆盖真实准入/建档及密码学，不证明完整资源加载或客户端认证。
+
+F-03已接入四组场景握手及请求token入口关联，保留原有游戏流程；见[场景握手](CLIENT_72_SCENE_HANDSHAKE.md)、[请求省略边界](CLIENT_72_SCENE_REQUEST_CONTRACT.md)和[StoreWeight合同](CLIENT_72_STORE_WEIGHT_CONTRACT.md)。本轮中间验收已通过38套Java选集；初始化Notify仍在逐字段核实，LoginRsp连续收帧的key selector也未证。SDK/信任/补丁/资源、完整初始化和D-02均未完成，不以本地准入成功替代实机验收。
+
+以下F-02a及A系列段落保留历史检查点的范围与数字；当前接入范围以上述说明为准。
+
 2026-11-06 F-02a只接管TokenReq目标wire（account_uid=9、account_token=2、account_type=15、sub_channel_id=10、key_id=1184、client_rand_key=623），保留AccountLoginAdmission、稳定UID归属及确认保存实现；未迁入Asta异步登录、自动选人/修档或RSA失败切key。独立Mongo下账号/经济/保存/Lua29套589项及协议关联43项分别通过，未进行真实认证或D-02；详见[融合记录](CLIENT_72_ASTAPS_FUSION.md)。按用户要求验收后暂停。
 
 本项目的账号负责登录身份、凭据与权限；玩家存档负责游戏进度。两者通过账号 ID 和玩家 UID 关联，但保存位置、保存时机和并发保护并不相同。完整存档由多个 MongoDB 集合及运行数据文件共同组成，单独复制 `players` 集合无法完整恢复一个玩家。

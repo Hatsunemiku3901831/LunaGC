@@ -48,7 +48,7 @@ def recover(repo,java_home,review_path):
                                               'tools/review_client72_login_surface.py')},
                 models=['JDK17 parse only; no dependency resolution or annotation processing',
                         'same-owner unique name/arity edges remain candidates',
-                        '12 explicitly reviewed built-in receiver/constructor links; timed fallback removed by C-01a',
+                        '16 explicitly reviewed links: original 12 retained plus four static SceneHandshakeToken associations; no runtime claim',
                         'lambda depth is syntax, not evidence of immediate or asynchronous execution',
                         'direct constructor arguments to send-named calls are source candidates, not a complete required set'])
     return report
@@ -58,22 +58,30 @@ def validate_summary(report):
     errors=[]
     expected=dict(schemaVersion=1,scope='method-scoped legacy source; no CN72 mapping',runtimeStatus='not-tested',
                   closureComplete=False,targetProtocolReady=False,javaAttributionExecuted=False,rootCount=9,
-                  methodCount=81,edgeCount=95,unlinkedCallSiteCount=1000,directConstructedTypeCount=62,allConstructedTypeCount=63,
-                  edgeKinds={'reviewed-source-edge':12,'same-owner-unique-name-arity-candidate':83})
+                  methodCount=81,edgeCount=98,unlinkedCallSiteCount=998,directArgumentCount=80,
+                  directConstructedTypeCount=61,allConstructedTypeCount=62,
+                  edgeKinds={'reviewed-source-edge':16,'same-owner-unique-name-arity-candidate':82})
     if any(report.get(k)!=v for k,v in expected.items()):errors.append('Login source scope/count mismatch')
-    if not report.get('openBoundaries') or not report.get('models') or len(report.get('sourceSHA256',{}))!=12:
+    if not report.get('openBoundaries') or not report.get('models') or len(report.get('sourceSHA256',{}))!=13:
         errors.append('Login source input or unresolved boundary missing')
     methods=report.get('methods',[]);edges=report.get('sourceEdges',[])
-    if len(methods)!=81 or len(edges)!=95 or len(report.get('roots',[]))!=9:errors.append('Login source graph incomplete')
+    if len(methods)!=81 or len(edges)!=98 or len(report.get('roots',[]))!=9:errors.append('Login source graph incomplete')
     packets=sorted({v['constructedType'] for row in methods for v in row.get('directPacketArguments',[])})
-    if packets!=report.get('directConstructedTypes') or len(packets)!=62:errors.append('Login source constructor inventory differs')
+    if packets!=report.get('directConstructedTypes') or len(packets)!=61:errors.append('Login source constructor inventory differs')
     constructions=sorted({v['constructedType'] for row in methods for v in row.get('packetConstructions',[])})
     if constructions!=report.get('allConstructedTypes') or set(constructions)-set(packets)!={'PacketWindSeedUID'}:
         errors.append('Indirect packet constructor evidence missing')
     if sum(len(v.get('directPacketArguments',[])) for v in methods)!=report.get('directArgumentCount'):
         errors.append('Login source direct argument count differs')
     rows=[v for v in methods if v['id']=='emu.grasscutter.game.player.Player#onLogin()']
-    if len(rows)!=1 or len(rows[0]['directPacketArguments'])!=20:errors.append('Player.onLogin method scope differs')
+    if len(rows)!=1 or len(rows[0]['directPacketArguments'])!=19:errors.append('Player.onLogin method scope differs')
+    associations=[edge for edge in edges if edge.get('selector')=='SceneHandshakeToken.requireCurrent']
+    callers={f'emu.grasscutter.server.packet.recv.{name}#handle(GameSession,byte[],byte[])' for name in
+             ('HandlerEnterSceneReadyReq','HandlerSceneInitFinishReq','HandlerEnterSceneDoneReq','HandlerPostEnterSceneReq')}
+    if (len(associations)!=4 or {edge.get('source') for edge in associations}!=callers or
+        any(edge.get('target')!='emu.grasscutter.server.game.SceneHandshakeToken#requireCurrent(Player,int)' or
+            edge.get('kind')!='invoke' or edge.get('basis')!='reviewed-source-edge' for edge in associations)):
+        errors.append('Scene token static source associations missing or promoted')
     if any('onLogout(' in v['id'] for v in methods):errors.append('Unreviewed logout expansion entered login source index')
     if Counter(v.get('basis') for v in edges)!=Counter(expected['edgeKinds']):errors.append('Source candidate edges promoted or lost')
     return errors

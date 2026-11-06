@@ -14,8 +14,8 @@ public class PacketSceneInitFinishRsp extends BasePacket {
 
         SceneInitFinishRsp p =
                 SceneInitFinishRsp.newBuilder()
-                        .setEnterSceneToken(maskedToken)
-                        .setRetcode(maskedRetcode)
+                        .setMCCMGLDOECH(maskedToken)
+                        .setLDLIEKOAFBP(maskedRetcode)
                         .build();
 
         this.setData(p.toByteArray());

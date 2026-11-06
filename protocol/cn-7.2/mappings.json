@@ -278,6 +278,69 @@
       "inputFile": "binary",
       "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
       "location": "protocol/cn-7.2/scene-wait-observations.json; docs/CLIENT_72_SCENE_WAIT.md; typed/literal identity, native dispatcher/wrapper/reader/clone/cache and independent wire/protoc"
+    },
+    {
+      "id": "scene-handshake-command",
+      "layer": "opcode",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_SCENE_HANDSHAKE.md; fixed target native execution; no live acceptance"
+    },
+    {
+      "id": "scene-handshake-identity",
+      "layer": "message",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_SCENE_HANDSHAKE.md; fixed target native execution; no live acceptance"
+    },
+    {
+      "id": "scene-handshake-fields",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_SCENE_HANDSHAKE.md; fixed target native execution; no live acceptance"
+    },
+    {
+      "id": "store-capacity-command",
+      "layer": "opcode",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_STORE_WEIGHT_CONTRACT.md; fixed target native execution; no live acceptance"
+    },
+    {
+      "id": "store-capacity-identity",
+      "layer": "message",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_STORE_WEIGHT_CONTRACT.md; fixed target native execution; no live acceptance"
+    },
+    {
+      "id": "store-capacity-fields",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_STORE_WEIGHT_CONTRACT.md; fixed target native execution; no live acceptance"
+    },
+    {
+      "id": "scene-enter-consumer-fields",
+      "layer": "field",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_ENTER_SCENE_CONTRACT.md; fixed native reader -> named scene/enum consumers; no live acceptance"
+    },
+    {
+      "id": "scene-vector-embedded",
+      "layer": "opcode",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_ENTER_SCENE_CONTRACT.md; native embedded BGDCNKAKGHI -> typed named UnityEngine.Vector3 axes; server purpose alias"
+    },
+    {
+      "id": "scene-vector-identity",
+      "layer": "message",
+      "inputFile": "binary",
+      "sha256": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+      "location": "docs/CLIENT_72_ENTER_SCENE_CONTRACT.md; native embedded BGDCNKAKGHI -> typed named UnityEngine.Vector3 axes; server purpose alias"
     }
   ],
   "opcodes": [
@@ -395,11 +458,14 @@
     },
     {
       "semanticName": "StoreWeightLimitNotify",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "store-capacity-command"
+      ],
       "ambiguities": [],
-      "clientType": null,
-      "cmdId": null
+      "clientType": "KNCCLAJAEEC",
+      "cmdId": 22609,
+      "verificationScope": "Verified offline server purpose alias for native pack/depot item-capacity receiver; no official protocol-name literal or live acceptance"
     },
     {
       "semanticName": "AvatarDataNotify",
@@ -421,67 +487,93 @@
     },
     {
       "semanticName": "EnterSceneReadyReq",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-command"
+      ],
       "ambiguities": [],
-      "clientType": null,
-      "cmdId": null
+      "clientType": "DEDHOOCBHCL",
+      "cmdId": 5046,
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "EnterSceneReadyRsp",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-command"
+      ],
       "ambiguities": [],
-      "clientType": null,
-      "cmdId": null
+      "clientType": "MMLHNEJIFHG",
+      "cmdId": 9948,
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "SceneInitFinishReq",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-command"
+      ],
       "ambiguities": [],
-      "clientType": null,
-      "cmdId": null
+      "clientType": "MLIHBBENFFA",
+      "cmdId": 4905,
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "SceneInitFinishRsp",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-command"
+      ],
       "ambiguities": [],
-      "clientType": null,
-      "cmdId": null
+      "clientType": "NBCLHOLLHLK",
+      "cmdId": 21392,
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "EnterSceneDoneReq",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-command"
+      ],
       "ambiguities": [],
-      "clientType": null,
-      "cmdId": null
+      "clientType": "HDPGCNCMACO",
+      "cmdId": 1017,
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance",
+      "otherDomainBoundary": "Normal native paths separated by cmd1017-domain-observations: 63999 Game C2S vs 22065 external beyond/WPF stream output; global static duplicate and untested IFix/peer semantics retained",
+      "domainEvidence": "protocol/cn-7.2/cmd1017-domain-observations.json"
     },
     {
       "semanticName": "EnterSceneDoneRsp",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-command"
+      ],
       "ambiguities": [],
-      "clientType": null,
-      "cmdId": null
+      "clientType": "FIMHLLEPCBH",
+      "cmdId": 298,
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "PostEnterSceneReq",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-command"
+      ],
       "ambiguities": [],
-      "clientType": null,
-      "cmdId": null
+      "clientType": "AHBJNPDFDMJ",
+      "cmdId": 1696,
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "PostEnterSceneRsp",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-command"
+      ],
       "ambiguities": [],
-      "clientType": null,
-      "cmdId": null
+      "clientType": "ODANIDKHMMG",
+      "cmdId": 26760,
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "UnionCmdNotify",
@@ -516,6 +608,17 @@
       "ambiguities": [],
       "clientType": null,
       "cmdId": null
+    },
+    {
+      "semanticName": "Vector",
+      "status": "verified",
+      "evidence": [
+        "scene-vector-embedded"
+      ],
+      "ambiguities": [],
+      "clientType": "BGDCNKAKGHI",
+      "cmdId": null,
+      "verificationScope": "Embedded target vector purpose alias; actual nested reader/position consumers and typed UnityEngine.Vector3 x/y/z declarations; no live acceptance"
     }
   ],
   "messages": [
@@ -656,13 +759,17 @@
     },
     {
       "semanticName": "StoreWeightLimitNotify",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "store-capacity-identity"
+      ],
       "ambiguities": [],
-      "clientType": null,
+      "clientType": "KNCCLAJAEEC",
       "direction": "S2C",
       "aliases": [],
-      "runtimeStatus": "not-tested"
+      "runtimeStatus": "not-tested",
+      "verificationScope": "Verified offline server purpose alias for native pack/depot item-capacity receiver; no official protocol-name literal or live acceptance",
+      "semanticNameBasis": "server-purpose-alias"
     },
     {
       "semanticName": "AvatarDataNotify",
@@ -689,83 +796,107 @@
     },
     {
       "semanticName": "EnterSceneReadyReq",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-identity"
+      ],
       "ambiguities": [],
-      "clientType": null,
+      "clientType": "DEDHOOCBHCL",
       "direction": "C2S",
       "aliases": [],
-      "runtimeStatus": "not-tested"
+      "runtimeStatus": "not-tested",
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "EnterSceneReadyRsp",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-identity"
+      ],
       "ambiguities": [],
-      "clientType": null,
+      "clientType": "MMLHNEJIFHG",
       "direction": "S2C",
       "aliases": [],
-      "runtimeStatus": "not-tested"
+      "runtimeStatus": "not-tested",
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "SceneInitFinishReq",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-identity"
+      ],
       "ambiguities": [],
-      "clientType": null,
+      "clientType": "MLIHBBENFFA",
       "direction": "C2S",
       "aliases": [],
-      "runtimeStatus": "not-tested"
+      "runtimeStatus": "not-tested",
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "SceneInitFinishRsp",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-identity"
+      ],
       "ambiguities": [],
-      "clientType": null,
+      "clientType": "NBCLHOLLHLK",
       "direction": "S2C",
       "aliases": [],
-      "runtimeStatus": "not-tested"
+      "runtimeStatus": "not-tested",
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "EnterSceneDoneReq",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-identity"
+      ],
       "ambiguities": [],
-      "clientType": null,
+      "clientType": "HDPGCNCMACO",
       "direction": "C2S",
       "aliases": [],
-      "runtimeStatus": "not-tested"
+      "runtimeStatus": "not-tested",
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "EnterSceneDoneRsp",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-identity"
+      ],
       "ambiguities": [],
-      "clientType": null,
+      "clientType": "FIMHLLEPCBH",
       "direction": "S2C",
       "aliases": [],
-      "runtimeStatus": "not-tested"
+      "runtimeStatus": "not-tested",
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "PostEnterSceneReq",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-identity"
+      ],
       "ambiguities": [],
-      "clientType": null,
+      "clientType": "AHBJNPDFDMJ",
       "direction": "C2S",
       "aliases": [],
-      "runtimeStatus": "not-tested"
+      "runtimeStatus": "not-tested",
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "PostEnterSceneRsp",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-identity"
+      ],
       "ambiguities": [],
-      "clientType": null,
+      "clientType": "ODANIDKHMMG",
       "direction": "S2C",
       "aliases": [],
-      "runtimeStatus": "not-tested"
+      "runtimeStatus": "not-tested",
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "UnionCmdNotify",
@@ -808,6 +939,20 @@
       "direction": "HTTP",
       "aliases": [],
       "runtimeStatus": "not-tested"
+    },
+    {
+      "semanticName": "Vector",
+      "status": "verified",
+      "evidence": [
+        "scene-vector-identity"
+      ],
+      "ambiguities": [],
+      "clientType": "BGDCNKAKGHI",
+      "direction": "embedded",
+      "aliases": [],
+      "runtimeStatus": "not-tested",
+      "verificationScope": "Embedded target vector purpose alias; actual nested reader/position consumers and typed UnityEngine.Vector3 x/y/z declarations; no live acceptance",
+      "semanticNameBasis": "server-purpose-alias"
     }
   ],
   "schemas": [
@@ -4077,10 +4222,184 @@
     },
     {
       "semanticName": "StoreWeightLimitNotify",
-      "status": "unresolved",
-      "evidence": [],
-      "ambiguities": [],
-      "fields": []
+      "status": "candidate",
+      "evidence": [
+        "store-capacity-fields"
+      ],
+      "ambiguities": [
+        "Three raw fields remain unnamed and omitted by production"
+      ],
+      "fields": [
+        {
+          "clientField": "PHDOBIIMHLB",
+          "objectOffset": 28,
+          "tag": 1,
+          "type": "uint32",
+          "cardinality": "singular",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "presence": "implicit",
+          "semanticField": "reliquary_count_limit",
+          "status": "verified",
+          "evidence": [
+            "store-capacity-fields"
+          ],
+          "ambiguities": [],
+          "runtimeStatus": "not-tested",
+          "applicationEncoding": {
+            "valueEncoding": "identity-uint32"
+          },
+          "verificationScope": "Real native receiver loads -> Dictionary<target item enum,uint32> native insertion and overwrite"
+        },
+        {
+          "clientField": "PAKLDABINMP",
+          "objectOffset": 44,
+          "tag": 2,
+          "type": "uint32",
+          "cardinality": "singular",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "presence": "implicit",
+          "semanticField": "unknown_field_2",
+          "status": "unresolved",
+          "evidence": [
+            "store-capacity-fields"
+          ],
+          "ambiguities": [
+            "Complete tested normal consumer does not read this field; meaning unresolved"
+          ],
+          "runtimeStatus": "not-tested"
+        },
+        {
+          "clientField": "ADCHFHMCOJG",
+          "objectOffset": 24,
+          "tag": 4,
+          "type": "uint32",
+          "cardinality": "singular",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "presence": "implicit",
+          "semanticField": "unknown_field_4",
+          "status": "unresolved",
+          "evidence": [
+            "store-capacity-fields"
+          ],
+          "ambiguities": [
+            "Complete tested normal consumer does not read this field; meaning unresolved"
+          ],
+          "runtimeStatus": "not-tested"
+        },
+        {
+          "clientField": "NAEDDJBKCFC",
+          "objectOffset": 32,
+          "tag": 5,
+          "type": "uint32",
+          "cardinality": "singular",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "presence": "implicit",
+          "semanticField": "furniture_count_limit",
+          "status": "verified",
+          "evidence": [
+            "store-capacity-fields"
+          ],
+          "ambiguities": [],
+          "runtimeStatus": "not-tested",
+          "applicationEncoding": {
+            "valueEncoding": "identity-uint32"
+          },
+          "verificationScope": "Real native receiver loads -> Dictionary<target item enum,uint32> native insertion and overwrite"
+        },
+        {
+          "clientField": "CLFJNKKFONI",
+          "objectOffset": 48,
+          "tag": 6,
+          "type": "enum",
+          "cardinality": "singular",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "presence": "implicit",
+          "semanticField": "store_type",
+          "status": "verified",
+          "evidence": [
+            "store-capacity-fields"
+          ],
+          "ambiguities": [],
+          "runtimeStatus": "not-tested",
+          "applicationEncoding": {
+            "valueEncoding": "identity"
+          },
+          "verificationScope": "Target enum StorePack=1/StoreDepot=2 and native route selection",
+          "enumClientType": "CCGFGECDMKL",
+          "enumValues": {
+            "StoreNone": 0,
+            "StorePack": 1,
+            "StoreDepot": 2
+          },
+          "javaWireAdapter": "int32 preserves verified enum storage and unknown numeric values"
+        },
+        {
+          "clientField": "DECHDEGPBOE",
+          "objectOffset": 36,
+          "tag": 7,
+          "type": "uint32",
+          "cardinality": "singular",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "presence": "implicit",
+          "semanticField": "unknown_field_7",
+          "status": "unresolved",
+          "evidence": [
+            "store-capacity-fields"
+          ],
+          "ambiguities": [
+            "Complete tested normal consumer does not read this field; meaning unresolved"
+          ],
+          "runtimeStatus": "not-tested"
+        },
+        {
+          "clientField": "CKHIAGMBNCC",
+          "objectOffset": 40,
+          "tag": 9,
+          "type": "uint32",
+          "cardinality": "singular",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "presence": "implicit",
+          "semanticField": "weapon_count_limit",
+          "status": "verified",
+          "evidence": [
+            "store-capacity-fields"
+          ],
+          "ambiguities": [],
+          "runtimeStatus": "not-tested",
+          "applicationEncoding": {
+            "valueEncoding": "identity-uint32"
+          },
+          "verificationScope": "Real native receiver loads -> Dictionary<target item enum,uint32> native insertion and overwrite"
+        },
+        {
+          "clientField": "GGGJAGOKMCI",
+          "objectOffset": 52,
+          "tag": 14,
+          "type": "uint32",
+          "cardinality": "singular",
+          "packed": false,
+          "wireStatus": "emulated-observation",
+          "presence": "implicit",
+          "semanticField": "material_count_limit",
+          "status": "verified",
+          "evidence": [
+            "store-capacity-fields"
+          ],
+          "ambiguities": [],
+          "runtimeStatus": "not-tested",
+          "applicationEncoding": {
+            "valueEncoding": "identity-uint32"
+          },
+          "verificationScope": "Real native receiver loads -> Dictionary<target item enum,uint32> native insertion and overwrite"
+        }
+      ]
     },
     {
       "semanticName": "AvatarDataNotify",
@@ -4186,15 +4505,18 @@
           "presence": "implicit",
           "packed": false,
           "wireStatus": "emulated-observation",
-          "semanticField": "unknown_field_7",
-          "status": "unresolved",
+          "semanticField": "scene_id",
+          "status": "verified",
           "evidence": [
-            "scene-enter-field"
+            "scene-enter-field",
+            "scene-enter-consumer-fields"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "runtimeStatus": "not-tested"
+          "ambiguities": [],
+          "runtimeStatus": "not-tested",
+          "applicationEncoding": {
+            "wireToApplication": "u32((raw XOR 0x2d03) + 0xc0e3)"
+          },
+          "verificationScope": "Actual reader -> PlayerModule+1D0 native store -> independent tryEnterSceneId named diagnostic"
         },
         {
           "clientField": "NOEEBKJAFAG",
@@ -4205,14 +4527,13 @@
           "presence": "implicit",
           "packed": false,
           "wireStatus": "emulated-observation",
-          "semanticField": "unknown_field_8",
-          "status": "unresolved",
+          "semanticField": "type",
+          "status": "verified",
           "evidence": [
-            "scene-enter-field"
+            "scene-enter-field",
+            "scene-enter-consumer-fields"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
+          "ambiguities": [],
           "runtimeStatus": "not-tested",
           "clientEnumType": "ILGABKBIAIE",
           "clientEnumTypeIndex": 86551,
@@ -4232,7 +4553,12 @@
             "EnterGotoByTpl": 12,
             "EnterBeyond": 13,
             "EnterHall": 14
-          }
+          },
+          "applicationEncoding": {
+            "wireToApplication": "identity int32; target Enter enum86551,15 exact symbols"
+          },
+          "verificationScope": "Target enum defaults and actual native Enter dispatch including unknown-value diagnostics",
+          "enumClientType": "ILGABKBIAIE"
         },
         {
           "clientField": "MCCMGLDOECH",
@@ -4243,15 +4569,18 @@
           "presence": "implicit",
           "packed": false,
           "wireStatus": "emulated-observation",
-          "semanticField": "unknown_field_10",
-          "status": "unresolved",
+          "semanticField": "enter_scene_token",
+          "status": "verified",
           "evidence": [
-            "scene-enter-field"
+            "scene-enter-field",
+            "scene-handshake-fields"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
-          "runtimeStatus": "not-tested"
+          "ambiguities": [],
+          "runtimeStatus": "not-tested",
+          "applicationEncoding": {
+            "wireToApplication": "u32(raw + 0x5889) XOR 0xe011"
+          },
+          "verificationScope": "Actual notification reader -> 14cd615a0 -> 15121e560 -> Ready send boundary"
         },
         {
           "clientField": "NBDGINFCIIK",
@@ -4320,18 +4649,22 @@
           "presence": "explicit",
           "packed": false,
           "wireStatus": "emulated-observation",
-          "semanticField": "unknown_field_14",
-          "status": "unresolved",
+          "semanticField": "pos",
+          "status": "verified",
           "evidence": [
-            "scene-enter-field"
+            "scene-enter-field",
+            "scene-enter-consumer-fields"
           ],
-          "ambiguities": [
-            "Business field meaning unresolved"
-          ],
+          "ambiguities": [],
           "runtimeStatus": "not-tested",
           "clientNestedType": "BGDCNKAKGHI",
           "clientNestedTypeIndex": 84343,
-          "contentStatus": "native-position-content-observed"
+          "contentStatus": "native-position-content-observed",
+          "nestedType": "Vector",
+          "applicationEncoding": {
+            "wireToApplication": "nested float32 x/y/z bits unchanged into UnityEngine.Vector3"
+          },
+          "verificationScope": "Actual reader -> native task/carrier/queue -> concrete Default/DirectlySetPos receiver; independent same-field QuickV3 -> named pos2/centerAfter"
         },
         {
           "clientField": "ABIFGOBLNDN",
@@ -4643,59 +4976,400 @@
     },
     {
       "semanticName": "EnterSceneReadyReq",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-fields"
+      ],
       "ambiguities": [],
-      "fields": []
+      "fields": [
+        {
+          "clientField": "MCCMGLDOECH",
+          "objectOffset": 24,
+          "tag": 3,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "enter_scene_token",
+          "status": "verified",
+          "evidence": [
+            "scene-handshake-fields"
+          ],
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "applicationEncoding": {
+            "applicationToWire": "u32((token XOR 0xe8c3) + 0x4c01)"
+          },
+          "verificationScope": "Named token literal34850; actual argument to constructor then actual writer",
+          "javaPresenceAdapter": "proto3 optional retains native absent/raw-zero; not original target Proto syntax"
+        }
+      ],
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "EnterSceneReadyRsp",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-fields"
+      ],
       "ambiguities": [],
-      "fields": []
+      "fields": [
+        {
+          "clientField": "MCCMGLDOECH",
+          "objectOffset": 24,
+          "tag": 2,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "enter_scene_token",
+          "status": "verified",
+          "evidence": [
+            "scene-handshake-fields"
+          ],
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "applicationEncoding": {
+            "applicationToWire": "u32(token + 0xe034) XOR 0x21be"
+          },
+          "verificationScope": "Independent raw wire -> actual response handler -> actual LoadingTask lookup -> named token diagnostic literal52998",
+          "javaPresenceAdapter": "proto3 optional retains native absent/raw-zero; not original target Proto syntax"
+        },
+        {
+          "clientField": "LDLIEKOAFBP",
+          "objectOffset": 28,
+          "tag": 12,
+          "type": "int32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "retcode",
+          "status": "verified",
+          "evidence": [
+            "scene-handshake-fields"
+          ],
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "applicationEncoding": {
+            "applicationToWire": "u32((code XOR 0x83be) + 0x1077)"
+          },
+          "verificationScope": "Independent wire -> actual native reader -> own handler success/error diagnostic prefix",
+          "javaPresenceAdapter": "proto3 optional retains native absent/raw-zero; not original target Proto syntax"
+        }
+      ],
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "SceneInitFinishReq",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-fields"
+      ],
       "ambiguities": [],
-      "fields": []
+      "fields": [
+        {
+          "clientField": "MCCMGLDOECH",
+          "objectOffset": 24,
+          "tag": 11,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "enter_scene_token",
+          "status": "verified",
+          "evidence": [
+            "scene-handshake-fields"
+          ],
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "applicationEncoding": {
+            "applicationToWire": "u32((token XOR 0x5673) + 0xf8cd)"
+          },
+          "verificationScope": "Level argument -> actual Init invocation and named LoadingTask token diagnostic",
+          "javaPresenceAdapter": "proto3 optional retains native absent/raw-zero; not original target Proto syntax"
+        }
+      ],
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "SceneInitFinishRsp",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-fields"
+      ],
       "ambiguities": [],
-      "fields": []
+      "fields": [
+        {
+          "clientField": "MCCMGLDOECH",
+          "objectOffset": 24,
+          "tag": 1,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "enter_scene_token",
+          "status": "verified",
+          "evidence": [
+            "scene-handshake-fields"
+          ],
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "applicationEncoding": {
+            "applicationToWire": "u32(token - 0x4765) XOR 0xc7cb"
+          },
+          "verificationScope": "Independent raw wire -> actual response handler -> actual LoadingTask lookup -> named token diagnostic literal52998",
+          "javaPresenceAdapter": "proto3 optional retains native absent/raw-zero; not original target Proto syntax"
+        },
+        {
+          "clientField": "LDLIEKOAFBP",
+          "objectOffset": 28,
+          "tag": 7,
+          "type": "int32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "retcode",
+          "status": "verified",
+          "evidence": [
+            "scene-handshake-fields"
+          ],
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "applicationEncoding": {
+            "applicationToWire": "u32(code - 0xa488) XOR 0x7530"
+          },
+          "verificationScope": "Independent wire -> actual native reader -> own handler success/error diagnostic prefix",
+          "javaPresenceAdapter": "proto3 optional retains native absent/raw-zero; not original target Proto syntax"
+        }
+      ],
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "EnterSceneDoneReq",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-fields"
+      ],
       "ambiguities": [],
-      "fields": []
+      "fields": [
+        {
+          "clientField": "MCCMGLDOECH",
+          "objectOffset": 24,
+          "tag": 12,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "enter_scene_token",
+          "status": "verified",
+          "evidence": [
+            "scene-handshake-fields"
+          ],
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "applicationEncoding": {
+            "applicationToWire": "u32((token XOR 0x2034) - 0x8609)"
+          },
+          "verificationScope": "Native Level producer block passes same preserved token to verified Init and Done constructors",
+          "javaPresenceAdapter": "proto3 optional retains native absent/raw-zero; not original target Proto syntax"
+        }
+      ],
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "EnterSceneDoneRsp",
-      "status": "unresolved",
-      "evidence": [],
-      "ambiguities": [],
-      "fields": []
+      "status": "candidate",
+      "evidence": [
+        "scene-handshake-fields"
+      ],
+      "ambiguities": [
+        "Unresolved raw fields remain; production omits them"
+      ],
+      "fields": [
+        {
+          "clientField": "MCCMGLDOECH",
+          "objectOffset": 36,
+          "tag": 4,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "enter_scene_token",
+          "status": "verified",
+          "evidence": [
+            "scene-handshake-fields"
+          ],
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "applicationEncoding": {
+            "applicationToWire": "u32((token XOR 0xbf71) - 0x860b)"
+          },
+          "verificationScope": "Independent raw wire -> actual response handler -> actual LoadingTask lookup -> named token diagnostic literal52998",
+          "javaPresenceAdapter": "proto3 optional retains native absent/raw-zero; not original target Proto syntax"
+        },
+        {
+          "clientField": "LDLIEKOAFBP",
+          "objectOffset": 32,
+          "tag": 6,
+          "type": "int32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "retcode",
+          "status": "verified",
+          "evidence": [
+            "scene-handshake-fields"
+          ],
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "applicationEncoding": {
+            "applicationToWire": "u32((code XOR 0x6d20) - 0xbeac)"
+          },
+          "verificationScope": "Independent wire -> actual native reader -> own handler success/error diagnostic prefix",
+          "javaPresenceAdapter": "proto3 optional retains native absent/raw-zero; not original target Proto syntax"
+        },
+        {
+          "clientField": "MFLHLEMFIGI",
+          "objectOffset": 24,
+          "tag": 12,
+          "type": "message",
+          "cardinality": "singular",
+          "presence": "explicit",
+          "packed": false,
+          "semanticField": "unknown_field_12",
+          "status": "unresolved",
+          "evidence": [
+            "scene-handshake-fields"
+          ],
+          "ambiguities": [
+            "Business meaning unresolved; raw schema only"
+          ],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "clientNestedType": "NFIGDMDEDBC",
+          "clientNestedTypeIndex": 82602
+        }
+      ],
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "PostEnterSceneReq",
-      "status": "unresolved",
-      "evidence": [],
-      "ambiguities": [],
-      "fields": []
+      "status": "candidate",
+      "evidence": [
+        "scene-handshake-fields"
+      ],
+      "ambiguities": [
+        "Unresolved raw fields remain; production omits them"
+      ],
+      "fields": [
+        {
+          "clientField": "MHCBMOHFBCK",
+          "objectOffset": 24,
+          "tag": 1,
+          "type": "double",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "unknown_field_1",
+          "status": "unresolved",
+          "evidence": [
+            "scene-handshake-fields"
+          ],
+          "ambiguities": [
+            "Business meaning unresolved; raw schema only"
+          ],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "javaPresenceAdapter": "proto3 optional retains native absent/raw-zero; not original target Proto syntax"
+        },
+        {
+          "clientField": "MCCMGLDOECH",
+          "objectOffset": 32,
+          "tag": 6,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "enter_scene_token",
+          "status": "verified",
+          "evidence": [
+            "scene-handshake-fields"
+          ],
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "applicationEncoding": {
+            "applicationToWire": "u32((token XOR 0x4902) - 0xb3b6)"
+          },
+          "verificationScope": "Verified Done response token -> native Level forwarding/coroutine field30 -> native Post invocation block; scheduler not executed",
+          "javaPresenceAdapter": "proto3 optional retains native absent/raw-zero; not original target Proto syntax"
+        }
+      ],
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "PostEnterSceneRsp",
-      "status": "unresolved",
-      "evidence": [],
+      "status": "verified",
+      "evidence": [
+        "scene-handshake-fields"
+      ],
       "ambiguities": [],
-      "fields": []
+      "fields": [
+        {
+          "clientField": "MCCMGLDOECH",
+          "objectOffset": 28,
+          "tag": 2,
+          "type": "uint32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "enter_scene_token",
+          "status": "verified",
+          "evidence": [
+            "scene-handshake-fields"
+          ],
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "applicationEncoding": {
+            "applicationToWire": "u32((token XOR 0xe67b) + 0x4885)"
+          },
+          "verificationScope": "Independent raw wire -> actual response handler -> actual LoadingTask lookup -> named token diagnostic literal52998",
+          "javaPresenceAdapter": "proto3 optional retains native absent/raw-zero; not original target Proto syntax"
+        },
+        {
+          "clientField": "LDLIEKOAFBP",
+          "objectOffset": 24,
+          "tag": 6,
+          "type": "int32",
+          "cardinality": "singular",
+          "presence": "implicit",
+          "packed": false,
+          "semanticField": "retcode",
+          "status": "verified",
+          "evidence": [
+            "scene-handshake-fields"
+          ],
+          "ambiguities": [],
+          "wireStatus": "emulated-observation",
+          "runtimeStatus": "not-tested",
+          "applicationEncoding": {
+            "applicationToWire": "u32(code - 0xf7c) XOR 0x73b7"
+          },
+          "verificationScope": "Independent wire -> actual native reader -> own handler success/error diagnostic prefix",
+          "javaPresenceAdapter": "proto3 optional retains native absent/raw-zero; not original target Proto syntax"
+        }
+      ],
+      "verificationScope": "Fixed target native constructor/send or typed registration/dispatch, named consumer and bounded wire; game handshake scope only; no live acceptance"
     },
     {
       "semanticName": "UnionCmdNotify",
@@ -4829,6 +5503,80 @@
       "evidence": [],
       "ambiguities": [],
       "fields": []
+    },
+    {
+      "semanticName": "Vector",
+      "status": "verified",
+      "evidence": [
+        "scene-enter-consumer-fields"
+      ],
+      "ambiguities": [],
+      "fields": [
+        {
+          "clientField": "CJMJBINEBAG",
+          "objectOffset": 24,
+          "tag": 1,
+          "type": "float",
+          "cardinality": "singular",
+          "packed": false,
+          "semanticField": "x",
+          "status": "verified",
+          "evidence": [
+            "scene-enter-consumer-fields"
+          ],
+          "ambiguities": [],
+          "presence": "implicit",
+          "wireStatus": "emulated-observation",
+          "applicationEncoding": {
+            "wireToApplication": "identity float32 bits"
+          },
+          "verificationScope": "Actual nested reader -> typed UnityEngine.Vector3 member declaration and native transfer",
+          "runtimeStatus": "not-tested"
+        },
+        {
+          "clientField": "ALOKJBKPLGA",
+          "objectOffset": 32,
+          "tag": 2,
+          "type": "float",
+          "cardinality": "singular",
+          "packed": false,
+          "semanticField": "y",
+          "status": "verified",
+          "evidence": [
+            "scene-enter-consumer-fields"
+          ],
+          "ambiguities": [],
+          "presence": "implicit",
+          "wireStatus": "emulated-observation",
+          "applicationEncoding": {
+            "wireToApplication": "identity float32 bits"
+          },
+          "verificationScope": "Actual nested reader -> typed UnityEngine.Vector3 member declaration and native transfer",
+          "runtimeStatus": "not-tested"
+        },
+        {
+          "clientField": "MGICHKNKDKO",
+          "objectOffset": 28,
+          "tag": 3,
+          "type": "float",
+          "cardinality": "singular",
+          "packed": false,
+          "semanticField": "z",
+          "status": "verified",
+          "evidence": [
+            "scene-enter-consumer-fields"
+          ],
+          "ambiguities": [],
+          "presence": "implicit",
+          "wireStatus": "emulated-observation",
+          "applicationEncoding": {
+            "wireToApplication": "identity float32 bits"
+          },
+          "verificationScope": "Actual nested reader -> typed UnityEngine.Vector3 member declaration and native transfer",
+          "runtimeStatus": "not-tested"
+        }
+      ],
+      "verificationScope": "Embedded target vector purpose alias; actual nested reader/position consumers and typed UnityEngine.Vector3 x/y/z declarations; no live acceptance"
     }
   ]
 }

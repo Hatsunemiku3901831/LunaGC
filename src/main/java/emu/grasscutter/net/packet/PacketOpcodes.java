@@ -17,22 +17,22 @@ public final class PacketOpcodes {
     public static final int ReliquaryDustSelectReq = 28022;
     public static final int ReliquaryDustSelectRsp = 4210;
     public static final int GetPlayerTokenReq = 24604;
-    public static final int GetPlayerTokenRsp = 3713;
+    public static final int GetPlayerTokenRsp = 27808;
     public static final int PingReq = 26605;
     public static final int PingRsp = 25763;
-    public static final int PlayerLoginReq = 9282;
-    public static final int PlayerLoginRsp = 4026;
-    public static final int PlayerEnterSceneNotify = 9582;
-    public static final int EnterSceneReadyReq = 21608;
+    public static final int PlayerLoginReq = 23172;
+    public static final int PlayerLoginRsp = 20835;
+    public static final int PlayerEnterSceneNotify = 27748;
+    public static final int EnterSceneReadyReq = 5046;
     public static final int EnterScenePeerNotify = 9633;
-    public static final int EnterSceneReadyRsp = 6809;
-    public static final int SceneInitFinishReq = 6623;
+    public static final int EnterSceneReadyRsp = 9948;
+    public static final int SceneInitFinishReq = 4905;
     public static final int PlayerEnterSceneInfoNotify = 24624;
-    public static final int SceneInitFinishRsp = 23214;
-    public static final int EnterSceneDoneReq = 5406;
-    public static final int EnterSceneDoneRsp = 4752;
-    public static final int PostEnterSceneReq = 3343;
-    public static final int PostEnterSceneRsp = 25882;
+    public static final int SceneInitFinishRsp = 21392;
+    public static final int EnterSceneDoneReq = 1017;
+    public static final int EnterSceneDoneRsp = 298;
+    public static final int PostEnterSceneReq = 1696;
+    public static final int PostEnterSceneRsp = 26760;
     public static final int GetSceneAreaReq = 24721;
     public static final int GetSceneAreaRsp = 23366;
     public static final int GetScenePointReq = 1649;
@@ -40,8 +40,8 @@ public final class PacketOpcodes {
     public static final int CombatInvocationsNotify = 6930;
     public static final int SceneTeamUpdateNotify = 29245;
     public static final int AvatarDataNotify = 27799;
-    // Native type 46070 (HPHDHDJHCGO); purpose alias for selection-cache initialization.
-    public static final int AvatarSelectionDataNotify = 21136;
+    // Historical selection-cache alias has no verified CN72 identity or active login send.
+    public static final int AvatarSelectionDataNotify = -121136;
     public static final int PlayerDataNotify = 3272;
     public static final int SceneEntityAppearNotify = 27685;
     public static final int SceneEntityDisappearNotify = 6253;
@@ -97,7 +97,7 @@ public final class PacketOpcodes {
     public static final int SetUpAvatarTeamReq = 24510;
     public static final int SetUpAvatarTeamRsp = 21109;
     public static final int StoreItemChangeNotify = 26018;
-    public static final int StoreWeightLimitNotify = 450;
+    public static final int StoreWeightLimitNotify = 22609;
     public static final int UseItemReq = 25681;
     public static final int UseItemRsp = 25449;
     public static final int ItemAddHintNotify = 652;
@@ -1753,7 +1753,7 @@ public final class PacketOpcodes {
     public static final int _MonsterChessV2ActionNotify = 23317;
     public static final int _MonsterChessV2ArtifactSelectReq = 29182;
     public static final int _MonsterChessV2ArtifactSelectRsp = 20249;
-    public static final int _MonsterChessV2BattleDataNotify = 1017;
+    public static final int _MonsterChessV2BattleDataNotify = -101017;
     public static final int _MonsterChessV2CardLevelChangeNotify = 9153;
     public static final int _MonsterChessV2CardSelectRsp = 25827;
     public static final int _MonsterChessV2FlagSelectReq = 5213;
@@ -2048,7 +2048,7 @@ public final class PacketOpcodes {
     public static final int MonsterChessV2ActionNotify = 23317;
     public static final int MonsterChessV2ArtifactSelectReq = 29182;
     public static final int MonsterChessV2ArtifactSelectRsp = 20249;
-    public static final int MonsterChessV2BattleDataNotify = 1017;
+    public static final int MonsterChessV2BattleDataNotify = -201017;
     public static final int MonsterChessV2CardLevelChangeNotify = 9153;
     public static final int MonsterChessV2CardSelectRsp = 25827;
     public static final int MonsterChessV2FlagSelectReq = 5213;
@@ -3017,7 +3017,7 @@ public final class PacketOpcodes {
     public static final int DELMJCPELAE = 26422;
     public static final int DFFJAECMKAK = 23158;
     public static final int DFKEAEDEMDN = 5371;
-    public static final int DIICIBFPICB = 21392;
+    public static final int DIICIBFPICB = -121392;
     public static final int DJBBKFGKKKB = 8337;
     public static final int DKBEABLPKHO = 3835;
     public static final int DMCILGNIMHL = 9179;

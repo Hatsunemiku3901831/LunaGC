@@ -156,6 +156,19 @@ def analyze(repo, java_home, protoc, protobuf_jar):
         mapping = json.loads((repo / 'protocol/cn-7.2/mappings.json').read_text('utf8'))
         for name in mapping['requiredMessages']:
             origins[name].add('existing requiredMessages seed; completeness unresolved')
+        # A verified target field can introduce an embedded semantic alias
+        # without a direct Java import of that alias (the runtime keeps its raw
+        # type name). Keep that independently proved dependency in the matrix.
+        target_schemas={row['semanticName']:row for row in mapping['schemas']}
+        pending=list(origins)
+        while pending:
+            name=pending.pop()
+            for field in target_schemas.get(name,{}).get('fields',[]):
+                if field['status']!='verified':continue
+                child=field.get('nestedType') if field['type']=='message' else field.get('valueType') if field['type']=='map' else None
+                if child not in target_schemas:continue
+                if child not in origins:pending.append(child)
+                origins[child].add('verified target nested dependency: '+name+'/'+field['semanticField']+'; no runtime necessity claim')
         proto_roots = {name + '.proto' for name in origins}
         missing_roots = sorted(name for name in proto_roots if not (repo / 'src/main/proto' / name).is_file())
         descriptors = read_descriptors(repo, proto_roots - set(missing_roots), protoc, java_home, protobuf_jar, work)

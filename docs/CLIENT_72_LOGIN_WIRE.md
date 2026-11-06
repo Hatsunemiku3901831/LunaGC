@@ -1,5 +1,15 @@
 # LoginReq 嵌套与布尔字段离线证据
 
+## F-02b/F-03当前生产接入
+
+2026-11-06，生产登录闭包已包含PlayerLoginReq的55个外层字段、GetPlayerTokenRsp/PlayerLoginRsp的41/44个外层字段，以及18个raw嵌套类型58字段，共21类198字段。只有既有verified语义使用业务名，其余保留目标raw名；不是198个字段的业务语义全部恢复。历史A-04d3a的12类83字段是LoginReq单独研究闭包，不改写为本轮union数量。
+
+生成入口为`tools/generate_login72_contract.py --client $env:GAME_PATH`，只生成三个根Proto、Client72LoginNested及已验规范包号；加`--check`只检查漂移。Java继续由项目Gradle/protoc生成。固定三输入hash、独立wire摘要与已审语义边界均由生成器检查。`tools/check_login72_contract.py`已用生产Proto通过50组独立native writer逐字节比较、34组production→response native graph及6组错误拒绝；这不是同schema自编自解。
+
+嵌套标量使用proto3 optional是Java存在性适配：使重复消息的显式零、false、空字符串覆盖旧值，同时保留后次未提供的字段；不宣称目标原Proto写了optional。4项独立原生wire Java回归已通过，普通消息/map/oneof各自合并边界见[响应对象图](CLIENT_72_GRAPH_READERS.md)。最小Token发送、LoginRsp资源tag61/1,3,4,5投影及MD5本地语义见[响应合同](CLIENT_72_RESPONSE_CONTRACT.md)。
+
+F-03四组场景握手及请求token关联另见[场景合同](CLIENT_72_SCENE_HANDSHAKE.md)、[省略边界](CLIENT_72_SCENE_REQUEST_CONTRACT.md)，StoreWeight见[独立合同](CLIENT_72_STORE_WEIGHT_CONTRACT.md)。本轮38套Java中间选集通过；初始化Notify仍在逐项核实，不代表完整初始化或D-02。LoginRsp连续收帧key selector也仍未证明。以下为A-04d3a原始研究记录，保留当批模型边界与验证数字。
+
 固定输入同 [目标提取](CLIENT_72_EXTRACTION.md)，入口为类型 76410 / KOHBOMDDFCB / CmdID 23172 的 WriteTo 152EEB470。三层业务映射仍受 [保护入口模型](CLIENT_72_PROTECTED.md) 的限制；本页仅验收 A-04d3a 的原始 wire 恢复，不宣称客户端登录成功。
 
 `trace_client72_login.py` 已覆盖外层全部 55 个实例字段。三条嵌套边分别为 HDGALALKMCK→NBFMIBMFJIO（tag 769）、HIAJLCOHEFP→HMLAJHBHLOC（962）、PJFPOHEKNEF→PBBDOCEDNIE（1295）。PPGGBLPHADP 是 ByteString，不当作嵌套消息。

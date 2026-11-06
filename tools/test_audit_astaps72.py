@@ -157,7 +157,7 @@ public static final int Negative = -1001; // no old ID
         self.assertEqual(audit.COMMIT, summary['reference']['commit'])
         self.assertEqual(audit.PROTO_DIGEST, summary['protoSourceTree']['sha256'])
         self.assertEqual(audit.MAPPING_SHA256, summary['targetMapping']['sha256'])
-        self.assertEqual((214, 130, 84, 2), tuple(summary['counts'][k] for k in
+        self.assertEqual((239, 147, 92, 2), tuple(summary['counts'][k] for k in
             ('targetFields', 'matchingTargetOuterShape', 'missingTargetTags', 'verifiedSemanticConflicts')))
         self.assertEqual((967, 567, 12), tuple(summary['counts'][k] for k in ('parkedFields', 'zeroOpcodes', 'negativeOpcodes')))
         self.assertTrue(summary['compilation']['success'])

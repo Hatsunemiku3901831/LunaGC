@@ -1,5 +1,11 @@
 # A-03b 登录管理器、事件与脚本源码依赖复核
 
+2026-11-06 F-02b/F-03当前依赖源码复核：旧review先实际拒绝，再对7个变化旧源码及新增`SceneHandshakeToken.java`逐份审查。现49源码/9根/294方法、411边（75人工调用位置/336候选）、2854未关联，10个开放调用锚点原样保持open。原69条人工边规格（展开71位置）完整保留，另加入四个handler到`SceneHandshakeToken.requireCurrent(Player,int)`的明确static边，现73规格/75位置；不以同名或参数数推断接管其他候选。A-03a父review字节hash重新核对，父图新13源码/81方法/98边与本图共同采用相同四边。
+
+`Player.onLogin`删除未验证旧选择通知发送；GetPlayerToken入口增加缺key拒绝并移除失败伪sign降级；PlayerLogin入口实际parse目标payload；四个场景入口先parse、做已证逆变换并关联当前Player token，再进入原有游戏流程。此处只确认源码路径与调用发生位置；[token的raw0省略证据](CLIENT_72_SCENE_REQUEST_CONTRACT.md)、[响应wire/消费证据](CLIENT_72_RESPONSE_CONTRACT.md)独立记录，不把源码hash通过当目标协议或实机通过。原有账号/保存/经济Guard、插件/替包/异步/Lua边界没有因此消失。
+
+两轮recover完整报告及共享摘要逐字节相同，21项JDK语法扫描/依赖边界/server-surface研究回归通过，无失败/错误/跳过。完整旧拒绝、逐文件hash/边增量和重复报告见`local/migration72/analysis/fusion-source-review/`；未执行Gradle、Mongo、服务或客户端。仅维护本复核及A-03a父链，不改mappings、Proto矩阵、Asta审计或任务状态。下面各批数量与暂停说明为历史，当前范围以上述49源码/411边为准；完整初始化与D-02仍未验。
+
 2026-11-06 F-02a只更新Ping方法getter及父source review hash，方法/边/未关联数量、人工边和开放边界保持；旧review拒绝证据保留，重生成后A-03c两轮一致。Asta比较另得到107包/166 Proto候选及1150/1157 imports集合，**不替换本图或称完整运行闭包**，见[实施审计](CLIENT_72_ASTAPS_IMPLEMENTATION.md)。399研究通过；D-02仍未验，本轮限定融合后按用户要求暂停。
 
 C-01a同步（2026-11-06）：下面为原A-03b历史；当前48源码/9根/294方法、408边（71人工/337候选）、2856未关联，10开放锚点仍open。已复核删除的超时兜底边和选人onLogin调用，重设父复核表hash并确定性重生成，未删除未知或晋级完整闭包。99包构造的当前Proto矩阵见[依赖矩阵](CLIENT_72_LOGIN_PROTO_MATRIX.md)，业务/保存范围见[选人实现](CLIENT_72_BORN.md)。

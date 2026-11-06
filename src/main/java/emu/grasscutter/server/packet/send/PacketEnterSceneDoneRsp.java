@@ -13,8 +13,8 @@ public class PacketEnterSceneDoneRsp extends BasePacket {
         int maskedRetcode = (0 ^ 27936) - 48812;
 
         this.setData(EnterSceneDoneRsp.newBuilder()
-            .setEnterSceneToken(maskedToken)
-            .setRetcode(maskedRetcode)
+            .setMCCMGLDOECH(maskedToken)
+            .setLDLIEKOAFBP(maskedRetcode)
             .build());
     }
 }

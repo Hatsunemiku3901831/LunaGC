@@ -1,5 +1,11 @@
 # 账号与存档数据模型
 
+2026-11-06 F-02b/F-03当前数据边界：生产登录schema已包含LoginReq55字段、两个Rsp85个外层字段及18个raw嵌套类型58字段，共21类198字段；这次是连接wire接入，没有新增MongoDB字段、集合、UID规则或存档格式。嵌套proto3 optional用于Java保留显式零/false/空字符串的存在性并正确合并重复消息，不是目标原Proto使用optional的证据，也不表示持久数据字段可选性改变。独立50组native writer、34组response native graph、6组错误拒绝及4项重复合并Java回归通过，详见[非空对象图](CLIENT_72_GRAPH_READERS.md)。
+
+Token加密成功仅投影uid/tag9、token/tag6、sign/tag208、server_rand_key/tag477；失败仅retcode/tag14。key_id<=0在加密模式的账号准入前拒绝；后续RSA失败仍可能已完成既有玩家准备，不能据拒绝包推断数据库未写入。准入、确认保存、经济Guard与Lua不变。LoginRsp资源配置仅将既有RegionInfo值投影到raw tag61的子字段1/3/4/5，保留原始字段名，不新增持久资源状态；其目标消费与旧release_total_size命名边界见[响应最小合同](CLIENT_72_RESPONSE_CONTRACT.md)。
+
+四组场景请求一次关联当前Player的运行时token，省略raw0的含义见[请求边界](CLIENT_72_SCENE_REQUEST_CONTRACT.md)；不把场景wire存在性转换成账号或存档字段。LoginRsp连续收帧key selector、初始化Notify和D-02仍有验收缺口。以下F-02a及A系列数字为各自历史批次记录。
+
 2026-11-06 F-02a仅更新连接Proto/包号和Ping原始字段回显；无数据库字段、集合、UID或存档格式迁移。本地已验TokenReq account_type/tag15、sub_channel_id/tag10覆盖上游parked候选；新号持久归属及确认保存流程保持，独立589业务/Lua回归通过。真实登录/选人/保存客户端验收仍未进行，见[融合记录](CLIENT_72_ASTAPS_FUSION.md)。
 
 本字典用于定位一项进度究竟保存在哪里、依赖哪些身份和恢复记录。与[系统接手指南](ACCOUNT_AND_SAVE_SYSTEM.md)、[运维与验证手册](ACCOUNT_AND_SAVE_OPERATIONS.md)配套使用。核对日期为 2026-10-21，源码基线为 `63f0fa7923ddd68c9c62e0dfb8cbcbc756d07371`。

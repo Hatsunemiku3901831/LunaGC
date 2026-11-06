@@ -4,12 +4,11 @@ import emu.grasscutter.net.packet.BasePacket;
 import emu.grasscutter.net.packet.PacketOpcodes;
 import emu.grasscutter.net.proto.AvatarSelectionDataNotifyOuterClass.AvatarSelectionDataNotify;
 
-/** Initializes the client's selection caches; an empty payload is still a required notification. */
+/** Retired historical payload: neither its CN72 identity nor its old opcode is verified. */
 public final class PacketAvatarSelectionDataNotify extends BasePacket {
     public PacketAvatarSelectionDataNotify() {
         super(PacketOpcodes.AvatarSelectionDataNotify);
-        // No additional selection lists are configured on this server. Omitting the
-        // notification leaves both native caches null and interrupts synthesis SetupView.
+        // Kept only as an unmigrated descriptor diagnostic; no built-in login send remains.
         setData(AvatarSelectionDataNotify.getDefaultInstance());
     }
 }

@@ -15,6 +15,7 @@ import emu.grasscutter.game.world.Position;
 import emu.grasscutter.net.packet.BasePacket;
 import emu.grasscutter.net.packet.PacketOpcodes;
 import emu.grasscutter.net.proto.DungeonDieOptionReqOuterClass.DungeonDieOptionReq;
+import emu.grasscutter.net.proto.EnterTypeOuterClass.EnterType;
 import emu.grasscutter.net.proto.PlayerDieOptionOuterClass.PlayerDieOption;
 import emu.grasscutter.net.proto.PlayerEnterSceneNotifyOuterClass.PlayerEnterSceneNotify;
 import emu.grasscutter.net.proto.WorldPlayerReviveRspOuterClass.WorldPlayerReviveRsp;
@@ -125,6 +126,23 @@ class WorldRespawnPointTest {
 
     void position(Position expected, Position actual) {
         assertEquals(expected.toProto(), actual.toProto());
+    }
+
+    void revivalEntry(Position expected, PlayerEnterSceneNotify entry) {
+        // The target message currently sends only scene, type, token and position.
+        assertEquals(
+                Set.of(7, 8, 10, 14),
+                Set.copyOf(
+                        entry.getAllFields().keySet().stream()
+                                .map(field -> field.getNumber())
+                                .toList()));
+        assertTrue(entry.getUnknownFields().asMap().isEmpty());
+        assertEquals(player.getSceneId(), (entry.getSceneId() ^ 0x2D03) + 0xC0E3);
+        assertEquals(EnterType.EnterType_ENTER_SELF.getNumber(), entry.getType());
+        assertEquals(player.getEnterSceneToken(), (entry.getEnterSceneToken() + 0x5889) ^ 0xE011);
+        assertEquals(expected.getX(), entry.getPos().getCJMJBINEBAG());
+        assertEquals(expected.getY(), entry.getPos().getALOKJBKPLGA());
+        assertEquals(expected.getZ(), entry.getPos().getMGICHKNKDKO());
     }
 
     @ParameterizedTest
@@ -308,7 +326,7 @@ class WorldRespawnPointTest {
         var enter =
                 PlayerEnterSceneNotify.parseFrom(
                         packets(PacketOpcodes.PlayerEnterSceneNotify).get(0).getData());
-        assertEquals(player.getPosition().toProto(), enter.getPos());
+        revivalEntry(new Position(18, 20, 30), enter);
     }
 
     @Test
@@ -328,7 +346,7 @@ class WorldRespawnPointTest {
                 PlayerEnterSceneNotify.parseFrom(
                         packets(PacketOpcodes.PlayerEnterSceneNotify).get(0).getData());
         assertEquals(5, (enter.getSceneId() ^ 11523) + 49379);
-        assertEquals(player.getPosition().toProto(), enter.getPos());
+        revivalEntry(new Position(10, 20, 30), enter);
     }
 
     @Test
@@ -343,8 +361,8 @@ class WorldRespawnPointTest {
         var enter =
                 PlayerEnterSceneNotify.parseFrom(
                         packets(PacketOpcodes.PlayerEnterSceneNotify).get(0).getData());
-        assertEquals(18, enter.getPos().getX());
-        assertEquals(18, player.getPosition().getX());
+        revivalEntry(new Position(18, 20, 30), enter);
+        position(new Position(18, 20, 30), player.getPosition());
     }
 
     @Test

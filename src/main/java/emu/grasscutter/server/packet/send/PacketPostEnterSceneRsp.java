@@ -15,8 +15,8 @@ public class PacketPostEnterSceneRsp extends BasePacket {
         player.unfreezeUnlockedScenePoints();
 
         this.setData(PostEnterSceneRsp.newBuilder()
-            .setEnterSceneToken(maskedToken)
-            .setRetcode(maskedRetcode)
+            .setMCCMGLDOECH(maskedToken)
+            .setLDLIEKOAFBP(maskedRetcode)
             .build());
     }
 }
