@@ -58,7 +58,7 @@ python -m unittest tools.test_client72_trust_contract tools.test_client72_seed_c
 
 ## 尚未解除的运行前置
 
-当前`patch/src/modules/security.rs`依然是原实现，验签返回后置RAX=1不可部署。本项没有变更patch子模块引用、运行Java/Proto/配置/资源，故没有重启或便携部署要求；也没有安装或操作客户端。
+F-04b提交时`patch/src/modules/security.rs`仍是原实现，验签返回后置RAX=1不可部署。本项没有变更patch子模块引用、运行Java/Proto/配置/资源，故没有重启或便携部署要求；也没有安装或操作客户端。随后正式供给接入与ilhook ABI验证见[F-04c](CLIENT_72_TRUST_PATCH.md)，不能把本项的历史patch状态当成后续代码现状。
 
 下一项可执行工作是把上面的已验输入合同接到正式补丁：先决定本机受信root与生成/加载位置，在忽略产物中预制仅含root公钥、服务端公钥、两类签名、三输入哈希及来源指纹的bundle；目标私钥不得输出。随后以固定二进制测试实际hook/trampoline和完整回调ABI，去掉返回值强制成功，并验证实际DLL加载与拒绝路径。离线供给类和现有SigningKey作root只是本次明确夹具，不等于已完成生产信任配置。
 

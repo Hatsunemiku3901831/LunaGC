@@ -1,0 +1,335 @@
+{
+  "schemaVersion": 1,
+  "task": "F-04c",
+  "inputSHA256": {
+    "YuanShen.exe": "8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5",
+    "YuanShen_Data/Managed/Metadata/global-metadata.dat": "45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a",
+    "YuanShen_Data/Managed/Metadata/startup-metadata.dat": "b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105"
+  },
+  "patchCommit": "3675ea789c71a6667c995f104271d1e031c34018",
+  "sourceSHA256": {
+    "patch/Cargo.toml": "2efea6a1af243dd1c2309d638c1d91b23380a934bb59b53d619e1518c9eb2963",
+    "patch/src/interceptor.rs": "d9672211772c42cb4c6f2bd9a28dd5dbbd294aade9c94b889278c0eb4c349f7e",
+    "patch/src/modules/security.rs": "14724a279b02aa430c57a21b1ca379c2647d5f01ca0a997c7c5ebe7925b16ec1",
+    "patch/src/modules/security/trust72.rs": "8a3e219e0a28d7b97455d3e91e684e3ab08555a698f7c34f5ae34533a9189d51",
+    "patch/examples/trust72_abi.rs": "158edeb0d0e6f2d85067108654a62d4dc5238b9d50f457c16b55dff1b2e34437",
+    "patch/examples/trust72_bridge.rs": "3838df90c4c11b0297d9c52ee35a448ce5d5f18fe1c8047ff24cf6042e1b8ff4",
+    "tools/generate_client72_trust_bundle.py": "ee53398cc405d292d9706e7c8a204f252997ecba453e0f92970acf02bec06ed9",
+    "tools/trace_client72_trust_patch.py": "82badfafe81bc9fdbfc2f1b0695999d5d739eea0381d6307a5b3d8ae33fc3fa5",
+    "tools/test_client72_trust_bundle.py": "b74adce0d9bcb0f65717fc2d4740e186849c39fd95385192d7af25b44d4e6ec0"
+  },
+  "toolchain": {
+    "rustc": "1.101.0-nightly (19833af72 2026-10-20)",
+    "cargo": "1.101.0-nightly (3960fa69b 2026-10-12)",
+    "ilhook": "2.3.0",
+    "ilhookSourceSHA256": "1b1350b1fc6b0a2cac0726bd3765c1dbc8bd90450f99439adca02ba208a9e8a7",
+    "cargoLockSHA256": "8482fc5d3e86ac5416038e446431e729a5e55c338d8824407f9aab878c323b2f"
+  },
+  "native": {
+    "fixtures": 11,
+    "keyVerifications": 18,
+    "accepted": 4,
+    "rejected": 7,
+    "productionCallbacksExecuted": true,
+    "callbackInvocations": 36,
+    "results": [
+      {
+        "name": "seed-local",
+        "kind": "seed",
+        "accepted": true,
+        "keyChecks": [
+          {
+            "operation": 100,
+            "oracle": true,
+            "native": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "name": "seed-other-entropy",
+        "kind": "seed",
+        "accepted": true,
+        "keyChecks": [
+          {
+            "operation": 100,
+            "oracle": true,
+            "native": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "name": "seed-bad-key-signature",
+        "kind": "seed",
+        "accepted": false,
+        "keyChecks": [
+          {
+            "operation": 100,
+            "oracle": false,
+            "native": false
+          }
+        ],
+        "passed": true
+      },
+      {
+        "name": "seed-unknown-key",
+        "kind": "seed",
+        "accepted": false,
+        "keyChecks": [
+          {
+            "operation": 100,
+            "oracle": false,
+            "native": false
+          }
+        ],
+        "passed": true
+      },
+      {
+        "name": "response-local",
+        "kind": "response",
+        "accepted": true,
+        "keyChecks": [
+          {
+            "operation": 101,
+            "oracle": true,
+            "native": true
+          },
+          {
+            "operation": 103,
+            "oracle": true,
+            "native": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "name": "response-bad-private-signature",
+        "kind": "response",
+        "accepted": false,
+        "keyChecks": [
+          {
+            "operation": 101,
+            "oracle": false,
+            "native": false
+          },
+          {
+            "operation": 103,
+            "oracle": true,
+            "native": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "name": "response-bad-public-signature",
+        "kind": "response",
+        "accepted": false,
+        "keyChecks": [
+          {
+            "operation": 101,
+            "oracle": true,
+            "native": true
+          },
+          {
+            "operation": 103,
+            "oracle": false,
+            "native": false
+          }
+        ],
+        "passed": true
+      },
+      {
+        "name": "response-bad-body-signature",
+        "kind": "response",
+        "accepted": false,
+        "keyChecks": [
+          {
+            "operation": 101,
+            "oracle": true,
+            "native": true
+          },
+          {
+            "operation": 103,
+            "oracle": true,
+            "native": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "name": "response-bad-cipher",
+        "kind": "response",
+        "accepted": false,
+        "keyChecks": [
+          {
+            "operation": 101,
+            "oracle": true,
+            "native": true
+          },
+          {
+            "operation": 103,
+            "oracle": true,
+            "native": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "name": "dispatch-local",
+        "kind": "dispatch",
+        "accepted": true,
+        "keyChecks": [
+          {
+            "operation": 101,
+            "oracle": true,
+            "native": true
+          },
+          {
+            "operation": 103,
+            "oracle": true,
+            "native": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "name": "dispatch-bad-body-signature",
+        "kind": "dispatch",
+        "accepted": false,
+        "keyChecks": [
+          {
+            "operation": 101,
+            "oracle": true,
+            "native": true
+          },
+          {
+            "operation": 103,
+            "oracle": true,
+            "native": true
+          }
+        ],
+        "passed": true
+      }
+    ]
+  },
+  "synthetic": {
+    "cases": [
+      {
+        "accepted": true,
+        "name": "public100",
+        "registerWhitelist": true,
+        "savedRspEqualsCpuRsp": true,
+        "sourceUnchanged": true,
+        "stackWhitelist": true
+      },
+      {
+        "accepted": true,
+        "name": "public103",
+        "registerWhitelist": true,
+        "savedRspEqualsCpuRsp": true,
+        "sourceUnchanged": true,
+        "stackWhitelist": true
+      },
+      {
+        "accepted": false,
+        "name": "unknown-public",
+        "registerWhitelist": true,
+        "savedRspEqualsCpuRsp": true,
+        "sourceUnchanged": true,
+        "stackWhitelist": true
+      },
+      {
+        "accepted": false,
+        "name": "unsupported-operation",
+        "registerWhitelist": true,
+        "savedRspEqualsCpuRsp": true,
+        "sourceUnchanged": true,
+        "stackWhitelist": true
+      },
+      {
+        "accepted": false,
+        "name": "wrong-length",
+        "registerWhitelist": true,
+        "savedRspEqualsCpuRsp": true,
+        "sourceUnchanged": true,
+        "stackWhitelist": true
+      },
+      {
+        "accepted": false,
+        "name": "bad-key-signature",
+        "registerWhitelist": true,
+        "savedRspEqualsCpuRsp": true,
+        "sourceUnchanged": true,
+        "stackWhitelist": true
+      }
+    ],
+    "copiedSiteWindowsVerified": true,
+    "diskInputsVerified": true,
+    "ilhook": "2.3.0",
+    "malformedBundleRejected": 3,
+    "modifiedSiteRejected": true,
+    "rsaExecuted": false,
+    "scope": "synthetic process, no client"
+  },
+  "tests": {
+    "rust": 50,
+    "pythonFocused": 25,
+    "failed": 0,
+    "errors": 0,
+    "ignoredOrSkipped": 0
+  },
+  "redRegression": {
+    "nativeRejection": 0,
+    "oldCallbackResult": 1,
+    "passedAfterChange": true
+  },
+  "repeatability": {
+    "repeats": [
+      {
+        "kind": "release-native",
+        "bytes": 79105,
+        "sha256": "68e4427e947edfb82d1703685e18dce8db3f2531df4350e7a4d9af020abc2b60",
+        "byteIdentical": true
+      },
+      {
+        "kind": "bundle",
+        "bytes": 3354,
+        "sha256": "325189ba9898e6897593b88482a25f659a83f4b0e882e1b6e85c8ebc224f939b",
+        "byteIdentical": true
+      },
+      {
+        "kind": "bundle-proof",
+        "bytes": 1578,
+        "sha256": "313b46142899a304ce7cc9529f944e1b6db03e5a82cc854c09bd5dbb0bc071ae",
+        "byteIdentical": true
+      }
+    ],
+    "sdkRsaImplementationUnchanged": true,
+    "targetPrivateKeyExported": false
+  },
+  "artifact": {
+    "path": "patch/target/release/ext.dll",
+    "bytes": 931840,
+    "sha256": "dec47347b6e94e9db161705909910f302fdacc39a88c86502213e9ad2713cd4c",
+    "buildEntry": "tools/local_windows.ps1 -Mode buildpatch",
+    "buildExitCode": 0
+  },
+  "bundle": {
+    "path": "local/migration72/trust/client72-trust.json",
+    "sha256": "325189ba9898e6897593b88482a25f659a83f4b0e882e1b6e85c8ebc224f939b",
+    "bytes": 3354,
+    "containsTargetPrivateKey": false,
+    "signer": "existing SigningKey; no new secret generated"
+  },
+  "bridgeSHA256": "033f155e3cb53e0bb2ece1a55d81eea4108d7d3221846aacde4a00dc4aa46f1d",
+  "runtimeStatus": "not-tested",
+  "clientHookInstalled": false,
+  "sdkRsaImplementationUnchanged": true,
+  "outsideScope": [
+    "client environment/bundle propagation into an already running debugger",
+    "live DLL install/load and full startup failure recovery",
+    "SDK/HTTP/string factory and remaining DLL modules",
+    "real-client D-02 acceptance"
+  ]
+}
