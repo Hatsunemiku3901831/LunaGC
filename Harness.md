@@ -1,5 +1,9 @@
 # 研发索引与执行骨架
 
+2026-11-06进度复评与后续路径见[Project D-02最短推进路线](Project.md#d02-route)，基线fab72fa；约70%为工程估计，不是客户端验收。D02-R0依赖台账→R1角色/场景、R2真实启动/SDK、R3最小资源并行准备→R4完整P0汇合→R5隔离部署→R6新旧号实机。仅规划，当前开发暂停保持；不据旧交接最先e4的顺序把连接/资源推迟到最后。
+
+本次实际只重跑`python tools/validate_protocol72.py`及`--ready`：结构0错误、ready224拒绝；读取`evidence/player-store-{research,java}-regression-summary.json`核667研究和47套829 Java的历史通过记录，未重跑大套件、未重建或部署。Avatar已验语义入口为CLIENT_72_AVATAR_CONTRACT，真实观察前置为CLIENT_72_DEBUG_CHANNEL；未知与required范围保持，不通过改门禁推进。
+
 当前已暂停：F-03d2c2 [库存有限生产接入](docs/CLIENT_72_INVENTORY_PRODUCTION.md)62a86fb限定验收完成，15 producer/57定向、11实际Java包→目标原生消费、独立Mongo47套829 Java和667研究（约52秒）全部通过，八生成检查无漂移。`generate_inventory72_sources.py --client $env:GAME_PATH --check`与`Protocol72PlayerStoreContractTest`为新入口；本机完整回归驱动`analysis/run_player_store_research.py`、`analysis/run_player_store_java_regression.ps1`和原始证据`evidence/player-store-*`。不再开后续卡；完整P0/SDK/资源和D-02未验。
 
 portable19秒构建JAR `eee183715cf27c5d2c25da0591c890f4c144116317ba0bf0afe8bb0030aeae0e`内嵌62a86fb，10变化/1新增逐字节匹配编译输出；其余46011类、70库存raw和148保护类保持。证明`evidence/player-store-build-artifact.json`、`player-store-postbuild-runtime.json`及`logs/player-store-portable-{build,status}.log`；无服务/客户端、8088TCP/22101UDP/27027监听，原27017保持。完整前置不足未部署，无运行JAR/健康通过对象。旧H2备份及H1前缀保持证明见`evidence/player-store-pause-handoff-backup.json`。
