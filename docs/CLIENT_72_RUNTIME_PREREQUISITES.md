@@ -18,6 +18,8 @@ HTTP TCP8088、游戏UDP22101及独立测试Mongo27027均无监听，无游戏�
 
 字符串工厂仅到`PtrToStringAnsi→14052FBF0`前缀，完整托管分配/GC与URL实际重写仍未验。[入口ABI](CLIENT_72_PATCH_ABI.md)保留边界；没有因本次重扫而晋级。
 
+后续已做一次工厂体离线探索：复用已验seed工具的NativeCrypto/TLS/字符串分配存储，空NUL串经原生Marshal与工厂返回长度0；非空ASCII URL在native `141CAD123`读取未映射`120`而停止。该结果是当前离线CRT初始化上下文尚缺的复现，不是客户端故障，也不证明非空转换成功。保留`analysis/probe_marshal_factory.py`、`evidence/marshal-factory-exploration.json`和`logs/marshal-factory-exploration*.log`；没有替换未知返回值或以空串案例晋级工厂/GC。解除条件是定位该访问的真实初始化来源，再以非空ASCII/UTF-8/NUL/边界及真实ABI核对继续。
+
 ## 资源revision核对
 
 本机名称含revision的文件及config候选只读搜索到6个：config.ini、Persistent/audio_revision、Persistent/res_revision_eternal及StreamingAssets的data/res/silence_revision。内置data/res与audio为49008628，silence为48722240；eternal为0，含义未知。固定候选标签R49086080/S49210135/D49230962仍不能据此判为同一运行时热更新状态。
