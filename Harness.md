@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+Scene深入入口`client72_scene_deep.py`；主线39聚焦、第三native SHA`9cf97f36…f0d7e2`/摘要`bed41fc7…4acd5`同双跑。证明`local/migration72/astra-main/scene-review.json`、日志`scene-{native,tests}.log`，typed weapon-role仅准确工厂分支，不把全部51522定名。旧pool flag夹具红测留存，完整handler/世界未验。
+
 Avatar suffix入口`client72_avatar_deep_suffix.py --native`、`test_client72_avatar_deep_suffix`；主线22关联通过、第三完整`c7ea819a…18aaf8`/摘要`5e03ba34…9e58c6`同双跑，证明`local/migration72/astra-main/avatar-suffix-review.json`。初次漏--native的静态报告保留，不计原生；最终命令与限定范围见Avatar深入专题。
 
 资源深入第一项：`client72_resource_deep.py`、`test_client72_resource_deep`主线10项通过；第三native SHA `05c6d8ee…413692`、摘要`5d0f7487…6c69d7`同双跑，`local/migration72/astra-main/resource-review.json`及同前缀日志；关键parser/codec实际运行，字符串/分配为明确模型，未运行loadAll/DB。命令见[专题](docs/CLIENT_72_RESOURCE_DEEP_RESEARCH.md)。

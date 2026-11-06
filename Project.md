@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+F-03d3s2后继第一项主线39聚焦/第三native通过且同双跑：36原生场景和3分层wire拒绝；非空retain/release、World/Beyond门禁、能力hash表依赖、不同旧实体替换顺序及尾清理已验。CopyFrom/非零hash后继继续离线，完整SceneInfo与D-02不晋级。见[Scene深入研究](docs/CLIENT_72_SCENE_DEEP_RESEARCH.md)。
+
 F-03d3f4d2后缀第二项已审：17组结果（8×6原生bit片段）、11新增/22关联断言，第三native同双跑；tag29六模式位图、tag38完整筛选/默认/重复清旧及两工厂准确分流已验。资源具名来源续查，间接构造/完整g2仍开放；不是生产发送许可。
 
 E-01/R3资源深入第一项已主线审核：15完整parser样本、1消费者边界、5拒绝，10独立断言及第三新进程同双跑；depot+68/+6c默认/编码、LHFO条件元素和BGH字符串限定消费成立。JSON桥梁/自动接受/自然loadAll/revision未闭；外层LHFO与条件关联继续。见[资源深入研究](docs/CLIENT_72_RESOURCE_DEEP_RESEARCH.md)。
