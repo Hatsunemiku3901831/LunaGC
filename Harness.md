@@ -4,6 +4,8 @@
 
 新增复现：`python -m unittest tools.test_client72_startup_observer tools.test_debug_channel72 tools.test_client72_single_hardware tools.test_client72_hardware_integration -v`本轮主线31项通过；`main/observer-main-review.json`核四核心AST不变、真实失败输入门槛及清理证明。`global-dispatch-resume1.json`及summary记录38.875秒/54停止/80000004三方退出；`wer-after-hw.private.json`为同PID/创建时间的1000/1001事件；`debugger-after-hw.private.json`核API空与持久4点。专用preflight续跑只适用本次run前拒绝，不能重放该命令到已退出目标。
 
+Avatar新复现：`client72_avatar_live_contract.py --client <GAME_PATH> --output <新raw> --observations <新summary>`，再设`CLIENT72_AVATAR_LIVE_REPORT`跑`tools.test_client72_avatar_live_contract`；主线实际11组第三原生/9断言通过，完整4c657341…01f5ef、摘要ba05bc7b…131464与双跑同。`d02-active/main/avatar-third-proof.json`为逐字节证明，暖构造与自然cold/handler/g2边界见[专题](docs/CLIENT_72_AVATAR_LIVE_CONTRACT.md)。
+
 **2026-11-07本轮最终索引**：[Astra离线收口](docs/CLIENT_72_ASTRA_OFFLINE.md)、[HANDOFF2](HANDOFF2.md)；11份主线`*-review.json`、127输入整合/24测试/结构0及ready224、首末清点和交接备份/前缀证明都在`local/migration72/astra-main/`。六Avatar/两Scene/三资源工具各双跑+主线第三原生核同，详细命令/模型/停止点在三专题。5240生产文件及五固定输入/保护文件核同，无本轮进程或8088/22101/27027监听，原Mongo/调试器未动；未构建/部署，D-02未完成。
 
 本轮统一review证据：`local/migration72/astra-main/evidence-integration/`保存旧拒绝、前后矩阵、11新增精确hash、双recover证明、24定向日志及structure/ready结果。review按UTF-8/LF文本hash，与报告字节hash分开；116→127仅增受审摘要，不重新签旧工具或更新生产来源。
