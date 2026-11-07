@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+E-01/R3 payload子合同已审：[三真实完整正文](docs/CLIENT_72_RESOURCE_PAYLOAD.md)400块原生prefix/独立LZ4、5块完整原生链、11错误边界、7检查；主线第三raw及11产物同双跑。取得两真实0000006f byte[]与uint64 FileSize来源，未把该结果称ctable/表资源/revision就绪，继续精确索引和locator。
+
 F-03d3f4d2 cold接口子合同已审：[连续GetInterfaces/HasIEquatable](docs/CLIENT_72_AVATAR_COLD_INTERFACES.md)14原生组、14断言、主线第三raw同双跑；明确typed缓存/分配模型，Array117/Type314自然初始化及generic comparer仍待，未晋级g2。
 
 D02-R5隔离入口前置已实现：[独立运行目录](docs/CLIENT_72_PORTABLE_ISOLATION.md)34项真实PowerShell夹具/独立审核通过；配置/JAR/资源/data/DB/CWD/状态归属及版本/信任守卫保持，先复现并修正同前缀Mongo误复用。无真实实例/新JAR部署，R4/P0/SDK/资源仍待，不能算D-02或R5实部署通过。

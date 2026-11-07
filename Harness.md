@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+资源payload复现：`client72_resource_payload.py --client <GAME_PATH> --blob-report <固定fe10…报告> --context <archive6> --output <新local raw>`；主线`payload-third.json` SHAefd152bc…deced、11产物逐字节同双跑，`tools.test_client72_resource_payload`7项通过。四分钟有界，原生/独立解码范围见[专题](docs/CLIENT_72_RESOURCE_PAYLOAD.md)，不要覆盖已有index报告。
+
 Cold接口复现：`client72_avatar_cold_interfaces.py --client <GAME_PATH> --output <新raw>`，设`CLIENT72_COLD_INTERFACES_REPORT`跑14断言；主线`cold-interfaces-third.json` SHA5539fe3b…d69a同双跑，`main/followups-main-proof.json`。原生顺序/模型与首阻塞见[专题](docs/CLIENT_72_AVATAR_COLD_INTERFACES.md)。
 
 便携实例复现：`tools.test_portable_instance`12 + `tools.test_local_windows`13 + `tools.test_client72_trust_launcher`9，主线34项通过；红测`main/portable-instance-red.log`/`portable-mongo-owner-red.log`，最终`portable-instance-final2.log`。只捕获命令/临时哨兵，未启真实服务；实际status退出1/原config保持，见[隔离专题](docs/CLIENT_72_PORTABLE_ISOLATION.md)。
