@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+E-01/R3 真实blob头已审：[E-01/R3 真实blob头](docs/CLIENT_72_RESOURCE_BLOB.md)，主线第三raw同独立双跑、8检查通过。四自然文件MD5/size/SHA及原生头、52 getter/7参数错误已验，零native函数模型；payload/ctable/0000006f仍未恢复。
+
 F-03d3f4d2 自然资源槽/整数解码已审：[F-03d3f4d2 自然资源槽/整数解码](docs/CLIENT_72_LIVE_RESOURCE_CONTRACT.md)，主线第三raw同独立双跑、9检查通过。93跨度证明七缓存未创建、Weapon准确getter和实际1024B decode窗口；17原生控制不等于实际资源row/revision。
 
 F-03d3f4d2 自然cold后继已审：[F-03d3f4d2 自然cold后继](docs/CLIENT_72_AVATAR_COLD_COMPLETION.md)，主线第三raw同独立双跑、8检查通过。57跨度自然链驱动9组原生enum/underlying/TypeCode9→1239；完整helper/接口/泛型构造仍未知。

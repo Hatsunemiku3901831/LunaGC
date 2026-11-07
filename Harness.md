@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+E-01/R3 真实blob头复现：`client72_resource_blob.py`及`tools.test_client72_resource_blob`；主线`d02-active/main/blob-third.json` SHA `fe10d49fdfd7…`同双跑，8项通过，模型与范围见[专题](docs/CLIENT_72_RESOURCE_BLOB.md)。
+
 F-03d3f4d2 自然资源槽/整数解码复现：`client72_live_resource_contract.py`及`tools.test_client72_live_resource_contract`；主线`d02-active/main/live-resource-third.json` SHA `655465fd6d5a…`同双跑，9项通过，模型与范围见[专题](docs/CLIENT_72_LIVE_RESOURCE_CONTRACT.md)。
 
 F-03d3f4d2 自然cold后继复现：`client72_avatar_cold_completion.py`及`tools.test_client72_avatar_cold_completion`；主线`d02-active/main/cold-completion-third.json` SHA `d94b7990f708…`同双跑，8项通过，模型与范围见[专题](docs/CLIENT_72_AVATAR_COLD_COMPLETION.md)。
