@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+日志修正产物：`auth-logging/build/artifact-proof.json`核JAR64a381dc…e0aab、代码1ea32a4/46,304类/6变化匹配，其余46,298不变；旧JAR先备份。portable build成功、实际status1/无运行JAR或DLL，未部署原因见[日志专题](docs/CLIENT_72_AUTH_LOGGING.md)，不以磁盘归档代实际验收。
+
 认证日志回归：`AuthenticationLoggingTest`6项无需DB；`PasswordResetAuthenticationTest`29项必须新独立Mongo和`LUNAGC_TEST_MONGO_URI`，不接原数据。最终XML/摘要 `auth-logging/mongo-review3/green/`，35项0失败/错误/跳过、Mongo正常shutdown；有效红测及夹具失败见[专题](docs/CLIENT_72_AUTH_LOGGING.md)。
 
 Java资源目的合同：`audit_d02_java_resource_contract.py --output local/migration72/d02-active/java-resource-contract-sol/<新名>.json`，10项`tools.test_audit_d02_java_resource_contract`。一处SCENE_ACTIVE已审文档pin更新的三跑SHA638e5731…fe8bc，除doc/tool hash外与旧epoch完全相同；`doc-reviewed-main-proof.json`及[专题](docs/CLIENT_72_D02_JAVA_RESOURCE_CONTRACT.md)记录原始来源、拒绝/未批准边界，不执行JVM或转换。

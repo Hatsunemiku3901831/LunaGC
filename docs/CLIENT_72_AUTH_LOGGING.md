@@ -20,4 +20,10 @@ AuthenticationLoggingTest实际调用三个handler拒绝分支、exchange错误�
 
 最终独立Mongo/运行目录两套35项通过（6+29），失败/错误/跳过均0，XML在 `auth-logging/mongo-review3/green/test-results/`。第一轮关联34/35：撤销token测试key_id=0，被原配置的加密入口提前返回；仅将测试请求补为已证key_id4，未改生产配置/guard，随后完整35项通过。首个Mongo驱动的额外red自检还误期望内存ListAppender内容出现在stdout；保留失败，改为三个明确assertAll失败标签核验。有效红测、关联失败与最终XML全部保留，未重复假称通过。
 
-三个新Mongo目录均保留，均实际admin shutdown/exit0/27027释放；关前仅admin/config/local，原27017/原数据未操作。所有数据为合成值，源备份及原始日志在忽略的 `local/migration72/d02-active/auth-logging/`。便携构建/产物随后补录；未部署，本服SDK登录与D-02未验。
+三个新Mongo目录均保留，均实际admin shutdown/exit0/27027释放；关前仅admin/config/local，原27017/原数据未操作。所有数据为合成值，源备份及原始日志在忽略的 `local/migration72/d02-active/auth-logging/`。
+
+## 便携构建与部署边界
+
+生产提交`1ea32a4`后，`LUNAGC_RUNTIME=portable tools/local_windows.ps1 -Mode build`实际30秒成功。磁盘JAR SHA-256 `64a381dcc1bc02dbf80280fb14a6c4c4df41a8d9f299afa97eb6fe995b4e0aab`；46,304类无增删，三日志类及三编译内联metadata类共6变化，逐一与真实编译class相同，其余46,298类同旧归档。嵌入GIT_HASH为`1ea32a4`，原版本标签仍7.1.0；这是当前源码归档，**未批准为7.2部署产物**，没有改字符串或guard求通。旧f475dbf6归档已先逐hash备份，原配置/.env/resources既有差异不变。
+
+证明 `auth-logging/build/artifact-proof.json`、构建日志 `portable-build.log`。实际status退出1，OS无本服/游戏/调试器/Mongo，固定TCP/UDP无监听；没有运行JAR、HTTP健康或实际DLL装载对象，不称这些通过。完整R4/资源revision/SDK信任与loader仍未齐，所以没有部署、重启服务或本服账号实测，D-02未完成。
