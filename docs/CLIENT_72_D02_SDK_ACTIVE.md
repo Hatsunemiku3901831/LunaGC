@@ -1,5 +1,7 @@
 # D02-R2：SDK、HTTP 与信任合同的当前离线核查
 
+新[SDK transport合同](CLIENT_72_SDK_TRANSPORT.md)已主线第三原生核同、11检查通过：11自然加载路径对应当前固定磁盘输入，2812导入与独立REA一致；AccountPlatNative的WinHTTP导入仅代理相关，准确curl兼容入口为RVA41E6F0，旧41AE90不能沿用。URL复制/清除/错误及完整64位参数有14原生样本，分配/释放为明确存储模型。自然调用仍未知；后继查Invoke/login worker及持有者生命周期，优先可只读的自然状态，不以模块或静态call命中批准重定向。
+
 2026-11-08更新：两次无调试器原始启动已实际到SDK登录页，用户已正常退出、OS无相关进程/端口。此前单HW实验已收口，无自然GlobalDispatch入口/返回且exit80000004，**下方fresh HW命令仅历史规格，不能原样重试**。主线当前沿已验[原始启动](CLIENT_72_UNINSTRUMENTED_STARTUP.md)、[SDK离线观察夹具](CLIENT_72_SDK_OBSERVER_DESIGN.md)和[ETW自有夹具](CLIENT_72_SDK_ETW_OBSERVER.md)推进无断点观察可行性。标准API包装88断言/主线新编译两守卫、自有ETW PID/ID正负控制及主线实际第三次已通过；都没有绑定真实SDK，不证明真实WinHTTP provider覆盖、路由、Marshal或本服认证。旧patch未安装，不改变原生校验。
 
 真实Microsoft Diagnostics provider的[自有回环实验](CLIENT_72_WINHTTP_ETW_FIXTURE.md)已只做一次：WinHTTP GET207/POST208、服务/端口及会话正常清理，但收到0事件，无法观察字段/状态/SDK覆盖。flush/lost计数未取得，不能推断provider根本不生成事件或SDK无请求。主线审源码/hash及首次raw、2守卫通过；按本次失败出口结束，不在游戏原样重复。离线转查实际11个已加载客户端模块的网络导入及动态调用来源，不以WinHTTP模块存在决定账号传输路径。

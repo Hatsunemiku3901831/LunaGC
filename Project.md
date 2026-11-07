@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+D02-R2 transport限定子合同已审：[准确SDK入口](docs/CLIENT_72_SDK_TRANSPORT.md)，11模块/2812独立导入、14离线原生样本、11检查，主线第三raw同双跑。RVA41E6F0及URL副本/错误/64位已验；自然调用、登录链和装载仍待，旧地址/全patch不获许可。
+
 E-01/R3 payload子合同已审：[三真实完整正文](docs/CLIENT_72_RESOURCE_PAYLOAD.md)400块原生prefix/独立LZ4、5块完整原生链、11错误边界、7检查；主线第三raw及11产物同双跑。取得两真实0000006f byte[]与uint64 FileSize来源，未把该结果称ctable/表资源/revision就绪，继续精确索引和locator。
 
 F-03d3f4d2 cold接口子合同已审：[连续GetInterfaces/HasIEquatable](docs/CLIENT_72_AVATAR_COLD_INTERFACES.md)14原生组、14断言、主线第三raw同双跑；明确typed缓存/分配模型，Array117/Type314自然初始化及generic comparer仍待，未晋级g2。

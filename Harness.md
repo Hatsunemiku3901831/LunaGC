@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+SDK transport复现：`client72_sdk_transport.py --client <GAME_PATH> --natural <固定第二次原始启动> --rea-bundle <固定导出> --output <新local raw>`，设`SDK72_TRANSPORT_REPORT`跑11检查。主线`sdk-transport-third.json` SHA3650c789…ba9fb同双跑，模型/自然缺口见[专题](docs/CLIENT_72_SDK_TRANSPORT.md)。
+
 资源payload复现：`client72_resource_payload.py --client <GAME_PATH> --blob-report <固定fe10…报告> --context <archive6> --output <新local raw>`；主线`payload-third.json` SHAefd152bc…deced、11产物逐字节同双跑，`tools.test_client72_resource_payload`7项通过。四分钟有界，原生/独立解码范围见[专题](docs/CLIENT_72_RESOURCE_PAYLOAD.md)，不要覆盖已有index报告。
 
 Cold接口复现：`client72_avatar_cold_interfaces.py --client <GAME_PATH> --output <新raw>`，设`CLIENT72_COLD_INTERFACES_REPORT`跑14断言；主线`cold-interfaces-third.json` SHA5539fe3b…d69a同双跑，`main/followups-main-proof.json`。原生顺序/模型与首阻塞见[专题](docs/CLIENT_72_AVATAR_COLD_INTERFACES.md)。
