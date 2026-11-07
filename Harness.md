@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+F-03d3f4d2 Ornament标量复现：`client72_avatar_live_contract_ornament.py`及`tools.test_client72_avatar_live_contract_ornament`；主线`d02-active/main/ornament-third.json` SHA `870353377318…`同双跑，10项通过，模型与范围见[专题](docs/CLIENT_72_AVATAR_ORNAMENT_CONTRACT.md)。
+
 F-03d3f4d2 cold输入/cache复现：`client72_avatar_cold_contract.py`及`tools.test_client72_avatar_cold_contract`；主线`d02-active/main/avatar-cold-third.json` SHA `e0ffa6518897…`同双跑，10项通过，模型与范围见[专题](docs/CLIENT_72_AVATAR_COLD_CONTRACT.md)。
 
 2026-11-08活动复现索引：原始启动`plain/run-elevated{1,2}.json`、6批`plain/initialization-*.json`及执行源`plain/source-snapshots/`、用户截图hash、正常退出/OS核对均见[活动交接](HANDOFF2.md)。第一次线程PID0含义撤回，修正11检查通过；自然七缓存未创建不当空资源许可。`main/pending-contracts-main-proof.json`记录9项主线第三完整raw同双跑、73定向检查，正在分项代码/证据审核提交；不算客户端通过。原始只留local，未改生产/配置/补丁，无新构建部署。

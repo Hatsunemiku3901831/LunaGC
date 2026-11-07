@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+F-03d3f4d2 Ornament标量已审：[F-03d3f4d2 Ornament标量](docs/CLIENT_72_AVATAR_ORNAMENT_CONTRACT.md)，主线第三raw同独立双跑、10检查通过。23组parser/字符串/Group-key原生记录已验；候选alias/revision/完整cache-builder和g2未批准。
+
 F-03d3f4d2 cold输入/cache已审：[F-03d3f4d2 cold输入/cache](docs/CLIENT_72_AVATAR_COLD_CONTRACT.md)，主线第三raw同独立双跑、10检查通过。精确type/RGCTX、RuntimeType cache和TypeCode选择已验；完整cold helper/defaultComparer写回未闭。
 
 **2026-11-08持续活动：两次原始启动到SDK登录页，6批初始化/资源只读证据已取得，用户已正常退出；OS无相关进程或端口。** 新9项原生限定合同主线第三同双跑、73检查通过，审核/分项提交继续；四blob头已解，payload/ctable、完整cold/Avatar/Scene及本服SDK仍待。无生产构建/部署，D-02新旧号登录、实际入场、心跳、重登保存均未验。[当前详细活动检查点](HANDOFF2.md)已先备份核验后覆盖；旧暂停为历史，继续R1/R2/R3依赖，之后R4-R6。
