@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+Java资源目的合同：`audit_d02_java_resource_contract.py --output local/migration72/d02-active/java-resource-contract-sol/<新名>.json`，10项`tools.test_audit_d02_java_resource_contract`。一处SCENE_ACTIVE已审文档pin更新的三跑SHA638e5731…fe8bc，除doc/tool hash外与旧epoch完全相同；`doc-reviewed-main-proof.json`及[专题](docs/CLIENT_72_D02_JAVA_RESOURCE_CONTRACT.md)记录原始来源、拒绝/未批准边界，不执行JVM或转换。
+
 SDK登录链复现：`client72_sdk_login_chain.py --client <GAME_PATH> --output <新local raw>`，设`SDK72_LOGIN_CHAIN_REPORT`跑13项`tools.test_client72_sdk_login_chain`。第三SHA3d864c07…c7fd96同v2双跑，`main/sdk-login-chain-main-proof.json`；条件性/native与cut模型边界见[专题](docs/CLIENT_72_SDK_LOGIN_CHAIN.md)。稳定根不是自然请求。
 
 自然cold复现须新用户ready和当次monitor身份；`--scope cold-arrays`只写专属`main/cold-arrays-tool/`。第三原始启动SHA303db4bc…6c58a、新采样SHA63d3aaf8…ef8c0，实际执行源v6及99span校对见[专题](docs/CLIENT_72_COLD_ARRAYS_SNAPSHOT.md)/`executed-source-proof-cold-v6.json`。当前已正常退出，不可重放旧PID；26采样/monitor检查通过。

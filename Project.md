@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+D02-R3 Java目的合同已审：[资源消费者](docs/CLIENT_72_D02_JAVA_RESOURCE_CONTRACT.md)64固定输入/222数据源码、152注解/83字段/22调用事实、13候选来源，主线第三及文档修正后新epoch三跑同字节、10检查通过。纠正缺ItemData先在GameItem构造器失败；未批准target→Java alias/默认/省略或正向资源加载，继续实际row映射。
+
 D02-R2条件登录调用链已审：[SDK login-chain](docs/CLIENT_72_SDK_LOGIN_CHAIN.md)24动作注册/16准确vtable边/任务持有与销毁，主线第三raw同双跑、13检查通过；队列先出队后执行，UI结束不能追已释放URL。完整自然请求、Crypto/key、route、信任与窄patch仍待，不安装旧整DLL。
 
 D02-R1/R2新自然输入已审：[cold-arrays快照](docs/CLIENT_72_COLD_ARRAYS_SNAPSHOT.md)一次90秒/43样本、99span无读错，Type314/Array117/Type[]首候选及SDK稳定根取得，用户确认登录页无错并正常退出，OS已核。采样metadata宽度先红后修、26定向检查通过。完整cold/SDK自然请求/本服验收仍待。

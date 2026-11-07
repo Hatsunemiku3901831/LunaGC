@@ -6,7 +6,7 @@
 
 同一 Init 中 `PacketPlayerEnterSceneInfoNotify` 对无武器写 GUID 0 与空能力，随后 `PacketSceneTeamUpdateNotify` 遍历每个世界玩家的 `getActiveTeam(true)`，对每个角色直接 `getWeaponNotNull()`；该 getter 在武器为 null 时抛异常。故前一个 sender 的零回退不够使当前 Java Init 正常走到 `SceneInitFinishRsp`；这个条件适用于每个被遍历的活动角色，不仅当前角色。单人场景只缩小遍历人数，不消除该条件。
 
-初始选择代码将 `10000005/10000007` 加入队伍。已审核固定候选资源两者 `initialWeapon=11101`，正引用存在；questing 开启基础 depot 501/701，关闭时 504/704，详见 [D02 最小资源 A](CLIENT_72_D02_MINIMUM_RESOURCES.md)。`AvatarStorage.addStartingWeapon` 仅在读取到非空 ItemData 时调用库存添加和装备。候选引用存在只闭合静态 ID 来源；并未证明当前生效的 revision/资源加载、入库、装备、持久化或 live 实体。旧号应按其实际活动队伍和保存装备核对，不能复用新号的 11101。
+初始选择代码将 `10000005/10000007` 加入队伍。已审核固定候选资源两者 `initialWeapon=11101`，正引用存在；questing 开启基础 depot 501/701，关闭时 504/704，详见 [D02 最小资源 A](CLIENT_72_D02_MINIMUM_RESOURCES.md)。`AvatarStorage.addStartingWeapon` 先构造 `new GameItem(initialWeapon)`；构造器会先执行 `data.getId()`，因此缺少ItemData时会在后面的非空判断之前抛异常，不能描述为静默跳过。只有构造成功且ItemData非空才执行库存添加和装备，详见 [Java消费者审计](CLIENT_72_D02_JAVA_RESOURCE_CONTRACT.md)。候选引用存在只闭合静态 ID 来源；并未证明当前生效的 revision/资源加载、入库、装备、持久化或 live 实体。旧号应按其实际活动队伍和保存装备核对，不能复用新号的 11101。
 
 紧接着，SceneTeam 对该武器的 `getWeaponEntity()` 允许 null 并产生空能力，而 `EntityAvatar.getWeaponEntityId()` 在 entity 不存在时返回0；SceneInfo 也有同样零返回。二者**不证明**目标消费允许零。目标已审核 type18295 的角色与附属 GUID/ID 关联，以及 typed Weapon 工厂分支，要求把实际 `GameItem.getGuid()`、`EntityAvatar.getWeaponEntityId()` 与 7.2 的字段身份和生命周期共同核对；不是凭空添加武器实体或把另一个角色 GUID 借用。见 [SceneInfo 合同](CLIENT_72_SCENE_INFO_CONTRACT.md)、[深度研究](CLIENT_72_SCENE_DEEP_RESEARCH.md)。
 
