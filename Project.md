@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+D02-R2未启用SDK key核心与自有ABI子项已审：[输入供给及独立夹具](docs/CLIENT_72_SDK_KEY_INPUT_ABI.md)14合成hook/7拒绝，主线新目录离线release重建及实际运行通过，raw同双跑；patch独立提交1d9cae3。没有注册、整DLL构建/安装或客户端hook；真实native桥接、自然调用、loaded绑定、合法loader及完整生命周期未验。按用户指令只收口本批，不开启后继任务。
+
 D02-R1/R4入口采样器准备已审：[固定17读/785B](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md)两真实合同16窗口/五输入复核、7检查通过；只读NativeConfig与Scene根/头，无字符串/表扫描。主线将未证明结论改显式Verified标记，读逻辑AST不变；未实机执行。按新暂停指令不启动下一次客户端，恢复须新ready/monitor；另新cold descriptor16B需求尚未纳本工具。
 
 D02-R2响应子合同已审：[SDK response](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md)49原生样本/18检查，主线第三同双跑。session/verify的tokens[]导致type0/空combo_token，单token type1格式有真实修复规格；源码未改，认证/DB不因格式卡放行。CookieToken type4不称combo必经，准确combo配置/签名/natural继续未知；新DefaultAuthenticators token片段日志仍待恢复后先修。本批暂停前只接收研究。

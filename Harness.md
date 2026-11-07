@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+SDK key核心自有ABI：主线离线新root-target构建/运行与子代理双跑逐字节一致，14合成+7拒绝，raw SHA d8350d14…59b815；`sdk-key-input-sol/root-main-proof.json`/`root-build.log`及[范围/复验](docs/CLIENT_72_SDK_KEY_INPUT_ABI.md)。patch提交1d9cae3仅三新文件，未注册/部署；命令仅供将来恢复后使用，不启动native桥接或实机。
+
 入口上下文工具：`sample_client72_entry_context.py --observation <新monitor> --output <专属新raw>`；7离线检查、两合同16窗口/五文件主线复核，`main/entry-context-tool/root-reviewed-proof.json`。源58148689…c7d7b，读预算17/785；[专题](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md)标明未执行/未知。当前暂停前只验准备，不使用旧PID或新启动；cold父descriptor16B需恢复后另补合同。
 
 SDK响应复现：`client72_sdk_response_contract.py --client <GAME_PATH> --output <新local raw>`，`SDK72_RESPONSE_REPORT`指定后跑18检查。第三SHA77ffd6e3…442992同双跑，49native范围/内存隐私/响应生产规格和未知见[专题](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md)，`main/final-context-response-review.json`。本轮未实施session DTO或启动本服。
