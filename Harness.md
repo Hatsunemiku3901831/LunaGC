@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+Scene入场后继：`client72_scene_entry_closure.py --client <GAME_PATH> --output <新local raw>`；设`CLIENT72_SCENE_ENTRY_REPORT`按[专题](docs/CLIENT_72_SCENE_ENTRY_CLOSURE.md)跑13新/48旧检查。第三SHA917a5ad0…a9780同双跑，`main/scene-and-sdk-crypto-main-proof.json`；managed gateway/TLS/格式模型与未闭边界不得省略。
+
 日志修正产物：`auth-logging/build/artifact-proof.json`核JAR64a381dc…e0aab、代码1ea32a4/46,304类/6变化匹配，其余46,298不变；旧JAR先备份。portable build成功、实际status1/无运行JAR或DLL，未部署原因见[日志专题](docs/CLIENT_72_AUTH_LOGGING.md)，不以磁盘归档代实际验收。
 
 认证日志回归：`AuthenticationLoggingTest`6项无需DB；`PasswordResetAuthenticationTest`29项必须新独立Mongo和`LUNAGC_TEST_MONGO_URI`，不接原数据。最终XML/摘要 `auth-logging/mongo-review3/green/`，35项0失败/错误/跳过、Mongo正常shutdown；有效红测及夹具失败见[专题](docs/CLIENT_72_AUTH_LOGGING.md)。
