@@ -40,8 +40,18 @@ Git暂存/提交、共享Gradle、数据库、端口、构建安装由主线串�
 
 Terra修复观察器前置只保留独立TLS数组命中且singleshoot的自动点；专用`--resume-preflight-from`仅接受固定旧源码产生的本次归属拒绝、ready/OS存活暂停、无命令/停点/观察/HW操作/自有点的记录，实时重新比较PID/CIP/RSP/TID及全部非DR寄存器（flags仅既有bit1容差），不重新load。普通HW的旧resume/continue限制保持。主线审核真实diff、原始拒绝与清理证明；31项守卫通过，四核心分类/返回函数AST与接手HEAD一致，实际失败输入通过专用门槛。红测为隔离目录的旧源码+新测试重现，原始live失败另留存，不混记。
 
-同target专用续跑已实际结束：预算120秒，38.875秒时OS/PUB/log均退出`80000004`，54停止为1系统/15精确TLS/1EP/37已匹配首机会AV，只有EP后一次slot0安装，无自然HTTP入口/返回及无高层`80000004`事件。Windows Error1000的本轮PID与创建时间匹配，fault RVA恰为`112250e0`；1001为同报告APPCRASH。这不是业务入口成功，也不足以归因保护或仅PUB丢失。继续由Astra只读分析本轮raw、Windows错误报告及固定TitanEngine/x64dbg/Automate源码，禁止原样重复load。普通权限读取WER归档已被OS拒绝，已准备只复制本轮报告的管理员helper，实际授权及执行结果待核，不能说已取得dump。
+同target专用续跑已实际结束：预算120秒，38.875秒时OS/PUB/log均退出`80000004`，54停止为1系统/15精确TLS/1EP/37已匹配首机会AV，只有EP后一次slot0安装，无自然HTTP入口/返回及无高层`80000004`事件。Windows Error1000的PID/路径匹配本轮CREATE，fault RVA恰为`112250e0`；1001为同报告APPCRASH。WER另有创建时间，但原观察器没有独立记录OS创建FILETIME，不将它写成独立比较通过。这不是业务入口成功，也不足以归因保护或仅PUB丢失。用户确认本轮未在现场观测，画面状态为“未观测”，覆盖此前“无窗口”答复。
+
+普通权限读取WER被OS拒绝后，用户实际允许管理员读取。首次helper漏UTF-8、随后PowerShell5顶层数组包装不兼容，失败原样留存；修正并先以ValidateOnly核本轮身份后，管理员副本实际取得`main/wer-copy/Report.wer`，89256字节、SHA `d0aed5de…35737`。本轮临时mdmp不在，归档仅报告，不声称取得dump。Astra低层审计经主线6守卫及真实raw重放、逐字节同（`main/hw-exit-main-audit.json`，SHA `f09f1fb8…fb6e35`）；124个WER模块与88个PUB模块交集84，39个WER独有DLL也未在日志提及，Astrolabe在WER存在而PUB缺项。事件/日志不是完整模块历史，故障TID、底层异常交付及根因仍unknown，详见[退出分析](CLIENT_72_D02_HW_EXIT.md)。
 
 收尾只读API为无target、四类表空；新dd64保存3个当前系统RVA终止点与1个GlobalDispatch HW点，均精确登记到`main/debugger-after-hw.private.json`，下次load前必须按这份新ledger核归属。OS目标已退出，不把HW历史ledger称活跃残留，也不把API空称持久库空。
 
 该修复仅研究观察器/测试，无生产、Proto、配置、资源或补丁变更，无需服务重启。SDK与Scene源码补充审计分别见[SDK合同](CLIENT_72_D02_SDK_ACTIVE.md)、[Scene依赖](CLIENT_72_D02_SCENE_ACTIVE.md)；SceneTeam武器非空及空MEET仍发送等源码事实不能替代目标wire和客户端消费。
+
+## 已审核独立子合同与当前下一实验
+
+- `5cba125`：Avatar真实enum producer与warm完整构造，11组双跑/主线第三同、9断言；cold、完整handler、同源装备/技能/池和g2继续。
+- `b5f65f0`：13资源输入/3161安装清单行来源，8检查/主线第三同；真实ctable及准确parser后继已定位，索引解码/JSON桥梁/revision/accept规则/自然就绪继续。
+- R2下一实验：一次90秒非调试器原始启动对照，固定EXE/工作目录/无额外参数，独立OS句柄、线程/模块与限定日志文件状态，只读采样；不attach、注入、设点或登录官方账号。可选class17只读查询先经自线程支持性验证，任何查询错误保持unknown，不清flag。预算结束若存活由用户正常关闭；用户先明确就绪才启动，不能把未回复当就绪。监测器由Terra实现、主线审核；没有开始这次新启动。
+
+R2对照同时移除调试器及其多种自动/诊断/硬件点，若自然启动更远，也不能单独归因HW。I/O字节计数不证明文件路径/blob，模块快照不证明完整时序，真实资源选择须独立文件事件/日志或消费者证据。全部D-02客户端条件仍未通过。

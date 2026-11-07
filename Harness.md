@@ -2,7 +2,9 @@
 
 2026-11-07活动索引：[D-02持续执行](docs/CLIENT_72_D02_ACTIVE.md)、[SDK/HTTP当前合同](docs/CLIENT_72_D02_SDK_ACTIVE.md)、[Scene发送依赖](docs/CLIENT_72_D02_SCENE_ACTIVE.md)。本轮初始清点及HW观察前28项守卫在`local/migration72/d02-active/main/`；首次真实load停于系统前置拒绝，原始失败和只读TLS/旧点核对、精确清理均留存。旧暂停/仅离线限制已由用户覆盖；主线独占实机/调试器，D-02全部客户端条件仍待实测。
 
-新增复现：`python -m unittest tools.test_client72_startup_observer tools.test_debug_channel72 tools.test_client72_single_hardware tools.test_client72_hardware_integration -v`本轮主线31项通过；`main/observer-main-review.json`核四核心AST不变、真实失败输入门槛及清理证明。`global-dispatch-resume1.json`及summary记录38.875秒/54停止/80000004三方退出；`wer-after-hw.private.json`为同PID/创建时间的1000/1001事件；`debugger-after-hw.private.json`核API空与持久4点。专用preflight续跑只适用本次run前拒绝，不能重放该命令到已退出目标。
+新增复现：`python -m unittest tools.test_client72_startup_observer tools.test_debug_channel72 tools.test_client72_single_hardware tools.test_client72_hardware_integration -v`本轮主线31项通过；`main/observer-main-review.json`核四核心AST不变、真实失败输入门槛及清理证明。`global-dispatch-resume1.json`及summary记录38.875秒/54停止/80000004三方退出；`wer-after-hw.private.json`按PID/路径/报告ID关联1000/1001（未独立比较创建FILETIME）；`debugger-after-hw.private.json`核API空与持久4点。专用preflight续跑只适用本次run前拒绝，不能重放该命令到已退出目标。
+
+HW退出审计：`tools.test_audit_client72_hw_exit`主线6项通过，按[专题](docs/CLIENT_72_D02_HW_EXIT.md)显式固定run/WER/Report.wer/四源码执行audit，原字节f09f1fb8…fb6e35同代理；124/88模块差集不证明hidden，Astrolabe WER存在不证明SDK成功。原始UI未观测、无dump；下一非调试器监测仍待实现审核/用户就绪。
 
 Avatar新复现：`client72_avatar_live_contract.py --client <GAME_PATH> --output <新raw> --observations <新summary>`，再设`CLIENT72_AVATAR_LIVE_REPORT`跑`tools.test_client72_avatar_live_contract`；主线实际11组第三原生/9断言通过，完整4c657341…01f5ef、摘要ba05bc7b…131464与双跑同。`d02-active/main/avatar-third-proof.json`为逐字节证明，暖构造与自然cold/handler/g2边界见[专题](docs/CLIENT_72_AVATAR_LIVE_CONTRACT.md)。
 
