@@ -1,91 +1,82 @@
-# D-02 持续开发活动检查点（2026-11-08）
+# D-02持续开发活动检查点（2026-11-08，第三次）
 
-**活动仍在进行，不表示暂停。** 用户已授权持续研究、生产实现、必要实机、回归、Windows portable隔离部署及联调直到D-02全验；此前暂停/仅离线/模型限制已覆盖。D-02未完成，不得把研究子卡、原生登录页或LOADED算入场成功。完整战斗/商城/深渊/新增内容仍后置。
+**活动继续，不是暂停。** 用户已覆盖此前暂停/仅离线/模型限制，授权研究、生产实现、回归、必要实机、Windows portable隔离部署直到D-02新旧号全部实测通过。D-02未完成，不准以子卡、原生SDK登录页、LOADED、编译或健康代替客户端验收。战斗/商城/深渊/新增内容仍后置；不改原生校验/版本字符串求绿，不清库或覆盖他人差异。
 
-## 当前现场与保护
+## 1. 当前现场/归属
 
-主线是客户端/调试器唯一负责人。用户通过界面正常退出第二次原始启动后，主线再次OS核实游戏、Java、MongoDB、x64dbg均无进程，8088/22101/27017/27027无TCP监听、22101无UDP；证明`local/migration72/d02-active/main/checkpoint2-inventory.private.json`。无待用户完成的操作。旧PID/地址/暂停状态不得沿用；下次启动先重核且用户就绪后再启动。
+主线唯一控制客户端、调试器、Git、共享Gradle、数据库/固定端口、构建和安装。用户最后确认已通过游戏界面正常退出第二次原始启动，之后没有新客户端启动；当前没有待用户操作或UAC。第三次实际清点`main/checkpoint3-inventory.private.json`：无YuanShen/x64dbg/Mongo/本服Java，8088/22101/27017/27027 TCP及22101 UDP无监听；一个java.exe是SDK Native代理的Ghidra静态分析，命令行已核不是LunaGC，不得强停或当服务。主线未用旧PID/地址继续操作。
 
-分支`7.2-dev`，接手HEAD`52999ce`，本检查点前HEAD`297e5a6`。初始唯一他人差异是resources子模块`ScriptSceneData/flat.luas.scenes.full_globals.lua.json`；保留且不提交。patch`3675ea7`clean、resources`dac2a9d`加原差异。五份profile输入反复逐hash验证；配置、原mongodata、local/data和客户端变化均保留，没有生产Java/Proto/config/patch修改、构建、部署或服务启动。原JAR仍`f475dbf6…8cade8`的归档产物，不是新7.2产物。路径与配置细节只存忽略目录。
+接手分支7.2-dev、HEAD52999ce，写本页前HEAD e829f8f。起始只有resources子模块的ScriptSceneData既有dirty，持续保留不提交；patch3675ea7 clean、resources dac2a9d加原差异。五profile输入逐文件SHA反复匹配；原.env/config/mongodata/local/data保留，config SHA0e94caea…75a45实际重核。服务器Java/Proto/patch/config/资源没有本轮生产改动；**便携运行脚本有新正式隔离前置修复c0a6322**，见下文。原JAR仍f475dbf6…8cade8/归档7.1.0，无新服务JAR/补丁构建、实例部署或运行JAR对象。
 
-本页写入前已逐字节备份核验旧HANDOFF2和HANDOFF；proof为`local/migration72/d02-active/main/checkpoint2-written.json`。HANDOFF仅追加并验证旧字节前缀。检查点完成后继续依赖工作。
+本页写入前逐字节备份核验旧HANDOFF2/HANDOFF，证明`main/checkpoint3-written.json`；HANDOFF只追加并核旧前缀。所有机器路径、原始二进制/内存/log/凭据/DB留local忽略目录，共享只摘要。
 
-## 已提交并可复用
+## 2. 已提交成果与主线复验
 
-- `3f1a63f`：观察器保留已核PE TLS自动点，只允许本次未run前拒绝的精确续跑；31守卫，四核心函数AST保持。
-- `114f4f8`：真实HW续跑和部署前置记录。
-- `5cba125`：真实enum选项producer与连续warm Avatar构造，11原生组，主线第三完整/摘要同、9断言；cold和完整handler/g2未批准。
-- `b5f65f0`：13资源输入/3161manifest行来源，主线第三同、8检查；候选revision/exporter/自然loadAll未批准。
-- `297e5a6`：HW退出底层分界，6检查与主线raw重放同；事件库存不完整，根因unknown。
+早期已审：3f1a63f TLS/preflight限定续跑修复31守卫；114f4f8真实HW状态；5cba125 enum真实producer/warm连续构造11组/9断言；b5f65f0 13资源来源/3161清单行/8检查；297e5a6 HW退出分界6检查。这些均有主线第三原始证明，不重做已有合同。
 
-既有C-01b入口修复、协议适配器、原生片段、章节/保存/Lua证明和127份统一证据保留，旧测试数不算本轮执行。统一review暂未吸收本批新研究，ready仍224项拒绝；required/三层/runtime不得改求绿。
+新9项研究逐项已提交：9798383 cold输入/cache10；582aa6d Ornament标量10；20968dc 非空条件数组9；a4c3674 index声明/路径5；f84e6f7 native reader6；e9cb04e provider8；c8a1b82 自然enum/TypeCode8；ac24e61 真实资源槽/decoder9；18e2912 四真实blob头8。合计73定向检查及第三raw同双跑，`main/pending-contracts-main-proof.json`/`accepted-research-cards.json`。完整cold/handler、revision、g2/资源ready均未晋级。
 
-## 真实运行与观察（全部原始在忽略目录）
+- 2ecb0f0：原始启动监测器/有界初始化采样器及实机结果。监测器11+采样器7=18检查，全部8份报告的实际执行源唯一归档/逐hash证明`plain/source-snapshots/executed-source-proof-all.json`。
+- 2b06627：SDK标准WinHTTP观察包装仅合成函数指针，主线独立MSVC构建88断言/2守卫；提交前仅清三个源EOF，先备份旧冻结源并证明语义内容未改，重建main-third-clean后2守卫仍通过。未hook/装载目标，部分GPR检查不等于完整ABI。
+- 498df30：ETW自有provider两进程PID/ID正反控制/TDH/正常清理，主线第三实际跑同判定、2守卫；原型未用于游戏。
+- ca57c08：真实Microsoft Diagnostics provider仅一次自有回环GET207/POST208，却0事件，stop0/query4201及端口rebind成功。主线审source/hash/首raw及2只读守卫；flush/lost未记录，不能说provider无事件/SDK不走WinHTTP。禁止原样扩大或在游戏重试。
+- c0a6322：便携-InstanceRoot正式前置修复。34真实PowerShell夹具（隔离12+原入口13+信任9）、Sol只读独立审核；有效红测证明旧substring会误复用mongodata-old，已解析唯一绝对dbpath并全等比较。无真实DB/服务启动。
+- 97cd1fc：cold接口，14 native/14检查，主线第三SHA5539fe3b…d69a同双跑；完整GetInterfaces/HasIEquatable仅明确typed cache/分配模型下通过，Array117/Type314自然初始化/泛型构造仍缺。
+- 68dc033：三份完整payload，400块均native prefix+独立LZ4，5块另完整native codec，11边界/7单测；主线第三报告efd152bc…deced及11产物同双跑。两个真实0000006f byte[]取得；m_FileSize经原schema纠正为64位，不是length/offset两个u32。
+- 879df59：SDK transport，11固定磁盘模块/2812导入与独立REA逐项一致，14原生/11检查，第三SHA3650c789…ba9fb同双跑。准确入口RVA41E6F0（旧41AE90不适用），URL native复制/清除/43/48/27错误与64位参数已验，非自然调用/登录。
+- e829f8f：两真实index独立完整parse至EOF，4真实记录native对照+3 selector/5 EOF边界，8单测，主线第三报告e8a02de4…54ab9及两定位产物同双跑。Primitive reader/void sink是明确模型，不叫完整native DeserializeBinary/ctable。
 
-### HW一次实验已收口，不能原样重复
+后4项proof `main/followups-main-proof.json`。全部本地提交，无push。新研究尚未并入统一login-proto-review的127证据；ready仍224拒绝、required/三层/runtime不改变，不能自动rehash/伪verified。
 
-首次真实load停system、尚无run/HW/业务观察时因TLS归属前置被拒绝；核10个自动TLS实际PE数组与旧dd64精确四点后清旧点，保留11个TLS+EP，所有GPR/flags/DR保持。同target专用续跑38.875秒、54停止（system1/TLS15/EP1/逐个交付首机会AV37），EP后一次slot0安装，无自然GlobalDispatch入口或返回，高层无80000004事件。OS/PUB/log均exit80000004，WER faultRVA112250e0等于安装点。
+## 3. 实机历史及不能重踩的坑
 
-用户最终更正自己当时离开，UI是“未观测”，不是“没有窗口”。WER核PID/路径/ReportId；原观察器没有独立OS创建FILETIME，旧检查点“创建时间已匹配”说法撤回。用户允许UAC后只取得Report.wer（89256B，SHA d0aed5de…35737），临时dump已不存在，不能说取得dump。124 WER模块与88 PUB模块交集84，39 WER DLL未在PUB/log，含Astrolabe；不据缺事件推断从未加载/隐藏线程/保护根因。
+HW只做一次，首次load在未run/HW前因自动TLS归属拒绝；核PE TLS数组/旧dd64精确四点后清旧点，保留TLS+EP，全GPR/flags/DR保持，同target限定续跑。38.875秒/54停止（system1/TLS15/EP1/首机会AV37逐个con1），EP后一次slot0，无自然GlobalDispatch入口/返回/高层80000004；OS/PUB/log exit80000004，WER faultRVA112250e0正中HW位置，根因unknown。用户后来更正当时离开，UI是未观测；不能保留早先“无窗口”结论。WER PID/路径/ReportId匹配，但旧raw无独立OS创建FILETIME，不说创建时间双证通过。用户允许UAC后取得Report.wer 89256B/d0aed5de…35737，无dump。124 WER vs88 PUB模块不完整，Astrolabe缺事件不证明未加载/hidden/保护原因。
 
-API退出后无target/四表空，但dd64持久保存3当前系统RVA终止点+1GlobalDispatch HW，精确ledger是`main/debugger-after-hw.private.json`与`YuanShen.after-hw.dd64`。主线随后正常终止自身无target调试器，会话数0。下次load必须核新持久ledger，不用旧SW四点记录或API空作清库依据。
+主线已正常关闭自身无target调试器，会话0。API空不等于持久库空：最新dd64 3当前系统终止点+1 GlobalDispatch HW，精确ledger`main/debugger-after-hw.private.json`与YuanShen.after-hw.dd64；未来若用debugger先核新ledger，不用旧SW四点或历史pause。本任务当前不重复HW。
 
-### 非调试器原始启动：两次90秒存活，用户看到登录页
+两次非调试器原始启动90秒/各44样本/151模块，flags0/exe原参数/原工作目录/五输入匹配。首次普通权限740无PID后提升同一工具；run-elevated1 source3925…误传线程PID0，4224个Idle线程OpenThread错误87的含义整段撤回。修正source e0b4134e…33c6e/11tests后，用户要求重启时旧进程已不在，helper没有发关闭；核无游戏后只重启一次。run-elevated2正确线程结果10687false/43true/1unknown，不能倒推旧故障TID/原因。
 
-未attach/注入/设点，EXE原参数、原工作目录、五输入核同。普通权限CreateProcess报740，未创建PID；主线提升同一监测器后启动。第一次`plain/run-elevated1.json` source3925aaa1…d8aad5，90秒存活/44样本/151模块。线程采样误传PID0，4224次OpenThread错误87，因此**整段线程含义撤回**，进程/模块/文件证据仍有效。
+用户SDK登录页截图`plain/login-ui-restart.png` SHA48704303…692a，可见CNRELWin7.2.0_R49008628_S48722240_D49008628；只visible label不是逐blob revision。其前次测试凭据错误发生在无本服/路由/补丁的原客户端，不算本服验收，凭据不入任何文档/log。用户最终正常退出，OS核无游戏；没有句柄观测退出码。
 
-回归直接执行sample函数证明应传实际PID，修正监测器source`e0b4134e6bb7be8c758b3a7bad3884a8246b25c6d65cd8ca3c91d0941ed33c6e`，主线11项通过。用户请求重启时旧进程已自然不在，close helper没有发关闭；核无游戏后仅启动一次。第二次`plain/run-elevated2.json`90秒存活/44样本、151模块；正确线程结果10687 false/43 true/1unknown。hide flag只读观测不改flag，也不能倒推此前HW故障线程或原因。
+## 4. 只读样本及真实资源新输入
 
-用户确认SDK登录页并提供截图`plain/login-ui-restart.png`，SHA`487043039e15e12ae4f4763e816dd94dd5668802930b0ec960da2e155ce8692a`；可见版本`CNRELWin7.2.0_R49008628_S48722240_D49008628`。此前用户试输入测试凭据得到账号密码错误，但当时没有本服/路由/补丁，**不能记成本服账号验收**，凭据不得入文档/日志。截图版本也不等于每个blob的实际revision。采样结束后用户确认正常界面退出，OS验证无进程；未观察退出码。
+第二自然进程6批RPM，OpenProcess仅query/sync/VM_READ，映像/创建FILETIME/实际base/五profile/config核对。raw均immutable：plain/initialization-elevated1(14span)、elevated2(20)、router-elevated3(42)、provider-elevated4(57)、resources-elevated5(93)、archive-elevated6(2)。每span<=256B，filename逐byte到NUL的合并span非一次系统调用；非原子。执行源v0..v5全部独立保存在plain/source-snapshots，不用当前源冒充旧结果。
 
-### 有界ReadProcessMemory样本已取得，现已无活进程
+自然enum20060/underlying251/RuntimeType284/canonical351已取；HashSet getter/ctor槽0是lazy，defaultComparer未读不当null。RuntimeType首bucket只occupied，不错误加tombstone排除；原生反例与红绿已修。router三VT/9代码窗匹配PE、archive:/前缀、selectionByte1新manager；静态objectB+55bc4b8的+8/+10两状态不混，map count38不是+58 internal load counter425/437。资源root非null但Avatar/depot/skill/Group两/Ornament/Weapon七槽当时都0，是未创建不是缺行/默认许可；不要重复采这七槽。自然decoder1024B+seed与archive256B context不同，不互作cipher。
 
-同一第二次自然进程，OpenProcess仅query/sync/VM_READ，映像/创建FILETIME/主模块/五profile/config逐核。每span≤256B，记录原bytes/hash/UTC/error，非原子；filename逐字节直到NUL的合并span不是一次系统调用。未调用target native或写target。
+从前四自然文件实际取得两完整0000006f，完整index独立parse得到类型/925261及257650个u64键、依赖/块/定位，首09302948位置3978B与独立native头一致。**现在真正表输入已到达**：startup_exit新locator用generic T=MiHoYoBinData准确后缀、native MD5/u64/packed8hex→真实index bundle178→固定25539185.blk（25,793,006B，SHA33d71a39…0266a，清单MD5/size匹配）→546块tag3→完整serialized71,555,980B SHA0311cb19…e8c7→实际1210索引/1208字节数组。不是Oodle阻塞；不沿09302948 tag9偏题。
 
-- `plain/initialization-elevated1.json`14span：自然选项和canonical351；准确HashSet context已初始化但闭合getter/ctor槽均0（lazy），不把defaultComparer未读当null。
-- `initialization-elevated2.json`、`initialization-router-elevated3.json`42span：registered enum20060 descriptor、真实cache首候选key/hash/完整64位value；主线采样器原先错误排除tombstone已由真实occupied-only原生反例修正。router三个vtable/9代码窗与PE一致，注册前缀archive:/，selectionByte1选择新manager，不走旧raw-view分支。
-- `initialization-provider-elevated4.json`57span：enum20060→实际underlying251/kind8，RuntimeType class284，canonical351；newManager是静态object B+55bc4b8，+8状态B+57aa100，+10另一个状态B+57aa170，不可混。
-- `initialization-resources-elevated5.json`93span：资源root非null，Avatar/depot/skill/两Group/Ornament/Weapon七缓存槽均0（未创建，不是缺行）；自然decode byte[]索引400..7ff共1024B及seed取得。manager映射count38，另internal-loadcounter437不当映射数；只取前四个fileID→实际filename/descriptor。
-- `initialization-archive-elevated6.json`2span：B+5eed350 cell及256B实际archive context；与managed permutation不同，不公开原字节。
+locator已冻结待主线第三审：报告resource-locator-astra/locator-final-{1,2}.json各1,452,522B/SHAfc2c3aca3f472354f0533c9ac319387102fd6f8a1a7195b0400d06988a420fda，10 artifacts同；source413d2501…34456、test63db65c4…7f614，8tests/11 native边界。八表有真实literal；Quest只是候选命名命中，保持分层。actual各表文件在locator-final-1/（dev-1 SHA相同）：Avatar64384B/466525f2…ed71c9；Depot26024B/fda5ac58…745b14b；Skill141702B/a5d2fdc6…c236fe；Weapon128936、Group22、Ornament346、Chapter39220、Scene280285、Quest候选2921870；完整SHA/offset见CLIENT_72_RESOURCE_LOCATOR.md。byte[]不带原四字节长度前缀。
 
-执行源v0..v5都归档`plain/source-snapshots/`，必须按每raw的sourceSHA256唯一匹配；当前采样器是v5，不能用当前源替旧样本。原始样本不覆盖。四实际自然文件为20527480.blk、blocks/00/31049740.blk、31049741.blk、09302948.blk，每个真实SHA/MD5/size与package及适用资源清单核同；只确定四个文件，不外推全安装。
+新大serialized里的二进制byte[]恰以7b开头，旧冻结serialized17自动json.loads启发假设不适用并UnicodeError；这是新输入下局部parser假设，不是blob解码失败。新locator仅按已证class1208长度提取，旧工具不改且失败留存。m_FileSize曾被候选脚本误拆offset已在冻结前按native8B schema纠正，勿重引。
 
-## 已第三复验、待完成代码审核/分项文档提交
+## 5. 当前活动代理/文件归属
 
-主线独立输出与代理双跑完整逐字节相同，73项定向检查已通过；proof `main/pending-contracts-main-proof.json`（不以代理总结接收）：
+- 主线：所有现场/共享文档/Git/集成/审核。下一先第三复验locator及Java消费者，再审核Terra新采样器，实际用户ready后才启动。无新用户操作请求。
+- Astra avatar_contract：实际表新工具tools/client72_avatar_natural_tables.py/test、docs/CLIENT_72_AVATAR_NATURAL_TABLES.md，raw avatar/natural-tables；刚接真实新输入（父locator待审）。六whole-loader真实prefix已无模型读count：Avatar169/Depot171/Skill1176/Weapon288/Group1/Ornament2，cursor4，下一完整row/builder/query及同源5/7/501/701。所有旧cold卡冻结，不改生产/现场/Git；cold自然缺口待主线样本。
+- Astra sdk_native_transport：tools/client72_sdk_login_chain.py/test、docs/CLIENT_72_SDK_LOGIN_CHAIN.md，raw sdk-login-chain-astra。旧SDK transport已审。正在9MB SDK静态Ghidra（不是旧大EXE重试），需结束close/export，主线不得并行reset共享REA。已提供最小RPM roots合同SHA c2620c93…071da，含原代码窗口。easy在同步清理后释放，禁止在稳定UI追旧easy/URL；优先只读稳定根/队列描述，未采自然事件不准production route。
+- Terra sdk_contract：接管当前sample_client72_initialization.py（原v5 SHA5adcd7d1…e16f8b）、对应test、新docs/CLIENT_72_COLD_ARRAYS_SNAPSHOT.md；仅实现离线--scope cold-arrays，有界class/header/Type[]首bucket及最小SDK根；all/archive行为保持、旧源先备份。禁止live/现有PID/URL/credentials/node读取，主线审核后独占执行。R1默认Type314 cellB+5bc97a8、Array117 B+5bc9868、Type[] B+5886658及rank1 cache5bc7160/7180/7188是新最小输入；不能用prepared缓存当自然ready。
+- Astra startup_exit：locator刚冻结（工具/test/CLIENT_72_RESOURCE_LOCATOR.md）及完整输入已交Avatar，目前子项结束，无现场/Git权限。后续可按明确新任务分析Scene/Chapter/Quest表或资源消费者，不改已冻结source。
+- Sol portable_isolation_review：先独立审R5具体dbpath问题，已修并再审34通过；再交新Java资源消费者tools/audit_d02_java_resource_contract.py/test、docs/CLIENT_72_D02_JAVA_RESOURCE_CONTRACT.md。source522a6b27…723c5，first/repeat166432B SHA2d109f8c…87d9c，10静态tests/6报告断言、64固定输入/222data源码/152ResourceType/83字段/22事实/13候选；待主线第三审。指出缺11101 ItemData会GameItem先NPE，早于AvatarStorage空检查；Weapon11101不是Skill11101（后者Iansan），基本depot正skills100540/100550。Java没有Ornament map/类，不能挪costume/tag38填空。
 
-| 子项 | 主线报告 | 检查/范围 |
-| --- | --- | --- |
-| cold-contract | avatar-cold-third.json | 10；准确localctx/cache/hash/TypeCode选择，完整cold false |
-| Ornament | ornament-third.json | 10；23原生路径，标量/字符串/Group key，alias/revision未知 |
-| Ornament conditions | conditions-third.json | 9；12组，非空嵌套/错误；条件评价/exporter未知 |
-| index | resource-index-third.json | 5；声明/UTF8/u32→0000006f，未读取该entry |
-| native index | resource-index-native-third.json | 6；raw file view是模型，旧ctable头拒绝非自然错误 |
-| provider | provider-third.json | 8；真实vtable/prefix/新manager、native map/cache片段，未实际资源route |
-| cold completion | cold-completion-third.json | 8；自然enum/underlying/TypeCode9，仍未完整helper/comparer |
-| live resource | live-resource-third.json | 9；真实空槽/1024decode与原生dict边界，无实际资源row |
-| blob | blob-third.json | 8；4真实头、52 native getter/7参数错误、无native函数成功模型；payload/ctable仍未解 |
+所有代理不得客户端/断点/数据库/端口/Git/Gradle。纯静态/离线工作并行，生产实现要精确字段/类型/转换/来源/默认/顺序/允许文件和独立样本后由主线协调Sol/Terra。
 
-blob前3逻辑长度覆盖文件，第四仅首3978B逻辑blob，余9655879B未遍历。不要把4头当全部资源就绪。新工具/test/doc未提交者依归属主线审后分项提交，不修改其已冻结源hash。
+## 6. 新SDK最小根与下次实机约束
 
-## 代理与当前依赖计划
+固定SDK entry S+41e6f0共46B可与PE逐byte核。稳定QWORD根7acd88 engine、7e90d0 NetworkManager、7acc80 aggregate均lazy可零；engine VT S+6bf300、manager VT S+6d1f48；aggregate首字是组件指针，不是VT。engine+70 QWORD ThreadPool*，TP+70/78/80/88各QWORD为deque table/map容量/start/未pop count。aggregate/TP无VT，queue count0不排除已在perform。worker flag+128是BYTE1，不是HTTP状态，可不读。只读根/头/描述，绝不读节点、任意easy、URL/query/header/body/凭据及其hash。
 
-- 主线：共享文档/检查点/Git、第三原生复验、代码/证明审查、实际实验与集成。Git/Gradle/DB/固定端口/构建/安装串行。
-- Astra avatar_contract：新cold_completion/live_resource工具/test/doc已冻结，静态继续GetInterfaces/class hierarchy路径，原始在avatar/cold-completion和live-resources；自然七槽空无新信息，不重复启动。禁止现场/Git/共享生产。
-- Astra startup_exit：资源payload新专题/工具/test，原始resource-payload-astra；按已验blob实际v5prefix→codec VT+18找准确注册/真实块，不猜算法，不改冻结blob/provider/index。
-- Terra sdk_contract：离线SDK观察prototype已冻结（tools/sdk72_observer/、test/doc），自有fixture88断言+2 Python；未hook/注入/加载游戏，不称目标ABI。新任务是只读ETW观察可行性/自有provider fixture，tools/sdk72_etw及独立专题；无真实游戏session授权给代理。
-- Sol resources_contract：资源来源和index合同已交付，当前无现场操作权；可在有明确规格后安排生产或测试工作。
+Terra须按rpm-roots-contract固定原代码独立核源，并用fixture测PID绑定/大指针/occupied+tombstone/partial-null/读取上限；不为看数据安装旧patch或启动debugger。下次主线先核最新HEAD/diff/profile/config/GAME_PATH/process/port；用户实际就绪后一次原始启动，限定问题是Array117/Type314自然初始化/Type[]首cache候选及SDK稳定根，不重复空资源槽或盲试SDK登录。保留准确失败，预算结束用户正常退出；无回复不当ready。
 
-## 真正剩余阻塞与失败避坑
+## 7. 真正剩余依赖与连续下一步
 
-R1完整cold helper需要GetInterfaces/反射/generic创建及comparer写回；Avatar真实装备/技能/Ornament同源资源、SavedVitals最终时序、pool/scene生命周期及必经后缀仍需闭。已有分段控制允许继续研究，不是正式g2许可。
+R1：完整cold comparer/generic/default写回、真实表whole loop/row/cache及同源5/7→depot/skill/weapon、Ornament缺行/默认真实分支、装备恢复/SavedVitals最终时序、pool/scene/必经后缀仍需闭。输入现已到，不再笼统称缺资源或只凭同名候选。完整g2未批准。
 
-R2原始SDK可到UI，不等于本服HTTP合同。现归档BuildConfig7.1拒绝7.2，不能靠改版本放行；目标路由/请求/签名/密钥/Marshal/信任继承须准确证据。旧patch含CCP/memguard/NEUTRALIZE/替原文件等未验行为，禁止整DLL安装；只读观察不调用这些。ETW元数据不是实际覆盖，实时模式也可能写RtBackup，不盲启目标session。
+R2：自然SDK调用/请求路由/签名密钥/Marshal/信任继承、必要窄补丁加载尚未验。旧patch有ccp/memguard/NEUTRALIZE/swap等未验行为，禁止整DLL安装。已验F04只供数据保留RSA验证不等于全DLL/SDK许可证；不能改版本放行。
 
-R3 blob头虽已解，payload/ctable/0000006f索引/JSON↔binary exporter/实际revision仍待；候选R49086080/S49210135/D49230962与UI版本不等，不批准默认/空资源。Quest303既有loadedAll=false/deferred/保存证明复用，资源自然就绪后仍需正向QuestManager重绑定。
+R3：真实表已提取还需parser/字段→Java消费者/同源曲线/能力/场景数据及所选revision。Quest候选key不等于真实literal，server acceptance/LUA_NOTIFY未知不得编条件；资源自然就绪后才正向QuestManager重绑。既有303/保存/Lua结果复用，不机械重跑旧875。
 
-R4须核完整必经P0闭包（SceneTeam武器非null、world/team/实体/能力/顺序，Done提前LOADED不能算通过），执行对应wire/账号/经济/保存/Lua/生成检查。R5尚不能部署猜测消息；portable入口Mongo固定27017、默认root mongodata/相对config，仅改.env不形成隔离，需要源码依据的独立运行CWD/数据/DB/config方案。R6先旧号公共链、再新号显式选人/命名、两者实际入世界/连续心跳/退出重登归属保存，全部仍待实测。
+R4：核完整必经消息/嵌套/SceneInfo非空能力、GUID/实体关系、队伍/世界/生命周期顺序。Done先LOADED、SceneTeam武器非null/空MEET等现有事实不可代验。执行对应wire/账号/经济/保存/Lua/生成检查。
 
-## 下一动作
+R5：可选-InstanceRoot隔离入口已验，默认root27017保留，实例实际27027，独立config/JAR/resources/data/mongodata/CWD/logs/running；准备材料前拒绝启动，构建/patch操作从checkout。未创建真实实例/未新JAR构建，前置不齐明确未部署。R4后正常构建、显式复制独立资源/数据及经核旧号备份副本，核日志/健康/TCP/UDP/PID/磁盘及运行JAR SHA/实际DLL/信任。
 
-主线先完成9项第三复验的代码/原始审核、更新Project/Harness/专题并逐项本地提交；提交自然启动监测器/采样器与实际结果（11+5定向测试、执行源归档proof）。继续payload和SDK只读观察新任务及cold静态前置。无需用户重复登录/选人，下一次实机有明确问题/失败出口/收口条件时再发一次具体动作。依赖满足后继续生产实现→R4→隔离部署→R6，不以检查点或任何子任务完成停止。
+R6：旧号公共登录与完整入场→新号显式选人命名→两者持续心跳/会话→退出重登归属与保存，全部仍待本服实测。任何单帧/截图/编译/health/LOADED不算这些验收。现在继续locator/Java卡第三审、新只读scope、实际表原生、SDK后继；依赖满足后继续正式接入→R4→R5→R6，不以检查点或子任务交付结束。

@@ -215,3 +215,8 @@ B-02e7限定原生部分消费51f7cd2、E-01c5实际生产Lua加载审计9aa8ca7
 ## 2026-11-08 D-02持续开发活动检查点（非暂停）
 
 两次90秒原始启动到SDK登录页；第二次正确线程采样及6批有界初始化/资源只读证据已取，用户已正常退出，OS再核无游戏/调试器/Java/Mongo或相关端口。旧第一次线程PID0含义撤回，WER无独立创建FILETIME比较，无dump。9项新原生合同主线第三同双跑、73定向检查通过，代码/分项提交继续；四真实blob头已解，payload/ctable/本服SDK/完整Avatar与Scene仍待。已提交3f1a63f、114f4f8、5cba125、b5f65f0、297e5a6，无生产构建/部署或D-02通过。详见[当前详细活动交接](HANDOFF2.md)及[依赖记录](docs/CLIENT_72_D02_ACTIVE.md)，继续R1/R2/R3可独立任务，之后R4-R6，不沿用历史PID/暂停限制。
+
+
+## 2026-11-08第三次D-02持续活动检查点（不是暂停）
+
+已提交c0a6322便携独立运行目录/准确Mongo归属34检查；97cd1fc cold接口14、68dc033完整payload7、879df59 SDK transport11、e829f8f真实index8均主线第三raw/相应产物同双跑。资源locator已实际取到八真实literal表（另Quest候选），Avatar Astra正跑真实whole-table；SDK Astra继续login持有者静态链，Terra准备冷数组/SDK稳定根只读scope，主线尚未请求新ready/未启动客户端。实际无游戏/调试器/Mongo/本服Java或相关端口，唯一Java为SDK Ghidra静态分析。未构建新JAR/部署或D-02通过；全目标继续，详细归属/原始hash/失败与下一动作见[HANDOFF2](HANDOFF2.md)。
