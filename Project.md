@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+D02-R2条件登录调用链已审：[SDK login-chain](docs/CLIENT_72_SDK_LOGIN_CHAIN.md)24动作注册/16准确vtable边/任务持有与销毁，主线第三raw同双跑、13检查通过；队列先出队后执行，UI结束不能追已释放URL。完整自然请求、Crypto/key、route、信任与窄patch仍待，不安装旧整DLL。
+
 D02-R1/R2新自然输入已审：[cold-arrays快照](docs/CLIENT_72_COLD_ARRAYS_SNAPSHOT.md)一次90秒/43样本、99span无读错，Type314/Array117/Type[]首候选及SDK稳定根取得，用户确认登录页无错并正常退出，OS已核。采样metadata宽度先红后修、26定向检查通过。完整cold/SDK自然请求/本服验收仍待。
 
 E-01/R3真实表定位子合同已审：[locator](docs/CLIENT_72_RESOURCE_LOCATOR.md)用八literal/一候选、准确generic后缀/native hash与真实index定位25539185块，取得九表byte[]；546块native prefix/独立LZ4，首尾两块另完整native codec。主线第三报告及10产物同双跑、8检查通过。资源已取得不等于parser、exporter、自然revision或ready；继续真实行构造与Java映射，不再等待Oodle。

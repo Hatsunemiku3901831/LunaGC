@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+SDK登录链复现：`client72_sdk_login_chain.py --client <GAME_PATH> --output <新local raw>`，设`SDK72_LOGIN_CHAIN_REPORT`跑13项`tools.test_client72_sdk_login_chain`。第三SHA3d864c07…c7fd96同v2双跑，`main/sdk-login-chain-main-proof.json`；条件性/native与cut模型边界见[专题](docs/CLIENT_72_SDK_LOGIN_CHAIN.md)。稳定根不是自然请求。
+
 自然cold复现须新用户ready和当次monitor身份；`--scope cold-arrays`只写专属`main/cold-arrays-tool/`。第三原始启动SHA303db4bc…6c58a、新采样SHA63d3aaf8…ef8c0，实际执行源v6及99span校对见[专题](docs/CLIENT_72_COLD_ARRAYS_SNAPSHOT.md)/`executed-source-proof-cold-v6.json`。当前已正常退出，不可重放旧PID；26采样/monitor检查通过。
 
 真实表定位复现：`client72_resource_locator.py --client <GAME_PATH> --index-report <固定e8a0…报告> --payload-directory <固定真实payload目录> --context <archive6> --output <新local raw>`；`tools.test_client72_resource_locator`8项。第三报告SHA fc2c3aca…20fda及完整serialized/九byte[]同双跑，`main/locator-main-proof.json`。真实表hash、定位、native/模型边界见[locator](docs/CLIENT_72_RESOURCE_LOCATOR.md)，下一交准确loader，不认定revision/ready。
