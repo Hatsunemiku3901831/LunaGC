@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+F-03d3f4d2 Ornament条件数组已审：[F-03d3f4d2 Ornament条件数组](docs/CLIENT_72_AVATAR_ORNAMENT_CONDITIONS.md)，主线第三raw同独立双跑、9检查通过。12组连续非空数组/元素/字符串及拒绝路径已验；条件求值/exporter/运行revision/完整handler仍未知。
+
 F-03d3f4d2 Ornament标量已审：[F-03d3f4d2 Ornament标量](docs/CLIENT_72_AVATAR_ORNAMENT_CONTRACT.md)，主线第三raw同独立双跑、10检查通过。23组parser/字符串/Group-key原生记录已验；候选alias/revision/完整cache-builder和g2未批准。
 
 F-03d3f4d2 cold输入/cache已审：[F-03d3f4d2 cold输入/cache](docs/CLIENT_72_AVATAR_COLD_CONTRACT.md)，主线第三raw同独立双跑、10检查通过。精确type/RGCTX、RuntimeType cache和TypeCode选择已验；完整cold helper/defaultComparer写回未闭。
