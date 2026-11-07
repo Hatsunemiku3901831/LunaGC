@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+F-03d3f4d2 自然cold后继复现：`client72_avatar_cold_completion.py`及`tools.test_client72_avatar_cold_completion`；主线`d02-active/main/cold-completion-third.json` SHA `d94b7990f708…`同双跑，8项通过，模型与范围见[专题](docs/CLIENT_72_AVATAR_COLD_COMPLETION.md)。
+
 E-01/R3 provider自然状态复现：`client72_resource_provider.py`及`tools.test_client72_resource_provider`；主线`d02-active/main/provider-third.json` SHA `bd8908e4469d…`同双跑，8项通过，模型与范围见[专题](docs/CLIENT_72_RESOURCE_PROVIDER.md)。
 
 E-01/R3 native reader复现：`client72_resource_index_native.py`及`tools.test_client72_resource_index_native`；主线`d02-active/main/resource-index-native-third.json` SHA `6a24ef69ded7…`同双跑，6项通过，模型与范围见[专题](docs/CLIENT_72_RESOURCE_INDEX_NATIVE.md)。
