@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+E-01/R3 provider自然状态已审：[E-01/R3 provider自然状态](docs/CLIENT_72_RESOURCE_PROVIDER.md)，主线第三raw同独立双跑、8检查通过。两自然导出vtable/前缀/新manager及原生cache/map片段已验；未观测具体资源route，不把旧头拒绝当自然失败。
+
 E-01/R3 native reader已审：[E-01/R3 native reader](docs/CLIENT_72_RESOURCE_INDEX_NATIVE.md)，主线第三raw同独立双跑、6检查通过。字符串/reader/seek/read边界已验；显式raw-file read模型不等于实际provider或ctable解码。
 
 E-01/R3 index入口已审：[E-01/R3 index入口](docs/CLIENT_72_RESOURCE_INDEX.md)，主线第三raw同独立双跑、5检查通过。准确声明/路径UTF8/u32转0000006f已验；资源manager/ctable及该entry内容仍未闭。
