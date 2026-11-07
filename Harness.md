@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+2026-11-08活动复现索引：原始启动`plain/run-elevated{1,2}.json`、6批`plain/initialization-*.json`及执行源`plain/source-snapshots/`、用户截图hash、正常退出/OS核对均见[活动交接](HANDOFF2.md)。第一次线程PID0含义撤回，修正11检查通过；自然七缓存未创建不当空资源许可。`main/pending-contracts-main-proof.json`记录9项主线第三完整raw同双跑、73定向检查，正在分项代码/证据审核提交；不算客户端通过。原始只留local，未改生产/配置/补丁，无新构建部署。
+
 2026-11-07活动索引：[D-02持续执行](docs/CLIENT_72_D02_ACTIVE.md)、[SDK/HTTP当前合同](docs/CLIENT_72_D02_SDK_ACTIVE.md)、[Scene发送依赖](docs/CLIENT_72_D02_SCENE_ACTIVE.md)。本轮初始清点及HW观察前28项守卫在`local/migration72/d02-active/main/`；首次真实load停于系统前置拒绝，原始失败和只读TLS/旧点核对、精确清理均留存。旧暂停/仅离线限制已由用户覆盖；主线独占实机/调试器，D-02全部客户端条件仍待实测。
 
 新增复现：`python -m unittest tools.test_client72_startup_observer tools.test_debug_channel72 tools.test_client72_single_hardware tools.test_client72_hardware_integration -v`本轮主线31项通过；`main/observer-main-review.json`核四核心AST不变、真实失败输入门槛及清理证明。`global-dispatch-resume1.json`及summary记录38.875秒/54停止/80000004三方退出；`wer-after-hw.private.json`按PID/路径/报告ID关联1000/1001（未独立比较创建FILETIME）；`debugger-after-hw.private.json`核API空与持久4点。专用preflight续跑只适用本次run前拒绝，不能重放该命令到已退出目标。
