@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+2026-11-08 当前状态：按用户最新指令，本批在途工作已完成限定交付、主线复验及本地提交后**暂停，不开启新任务**。Avatar16、Scene74、SDK响应18、ABI14+7及采样器7项选集通过，各自不能外推完整生产或实机；完整Handler/g2、SDK自然/loader、资源revision和R4-R6仍未验。原配置/五客户端输入/8原数据文件及resources差异SHA保持，OS无本项目进程/相关监听。详细状态与恢复入口见[暂停交接](HANDOFF2.md)，下方历史“继续”不覆盖此决定。
+
 D02-R1当前在途研究已收口：[HandlerClosure有限后继](docs/CLIENT_72_AVATAR_HANDLER_CLOSURE.md)7cold分段/8真实Int32配置/同缓存3表3消费，主线第三四组同双跑、16检查通过。准确首阻塞是未采父descriptor16B；完整cold/default/Handler/g2仍未通过，本卡不批准新增生产字段或省略。当前批验收后按用户指令暂停，不启动后继采集或实现。
 
 D02-R2未启用SDK key核心与自有ABI子项已审：[输入供给及独立夹具](docs/CLIENT_72_SDK_KEY_INPUT_ABI.md)14合成hook/7拒绝，主线新目录离线release重建及实际运行通过，raw同双跑；patch独立提交1d9cae3。没有注册、整DLL构建/安装或客户端hook；真实native桥接、自然调用、loaded绑定、合法loader及完整生命周期未验。按用户指令只收口本批，不开启后继任务。
