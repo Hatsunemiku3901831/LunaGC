@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+任务维护分工：[Project](Project.md)只保留目标、依赖、工作包发布顺序、验收和已完成成果索引；本文件及专题继续承接复现入口、执行记录和失败分析。原Project全文已逐字节备份至[只读历史快照](Project.archive-2026-11-08.md)，不再更新该快照。下方历史执行顺序不构成当前待办，接手以Project当前工作包及最新专题证据为准。
+
 2026-11-08 当前暂停：本批限定子项全部完成主线复验和本地提交，未开后继。命令仅作恢复索引，不自动启动游戏、调试器、DB、服务、采样或部署。最终现场/配置/五输入/原8数据文件/子模块证明`main/pause-final-inventory.private.json`；备份与只追加证明`main/pause-handoff-written.json`，总入口[HANDOFF2](HANDOFF2.md)。D-02未完成，完整Handler及自然SDK/场景/资源缺口见专题，旧PID/地址/绿数不复用。
 
 Avatar有限后继：`client72_avatar_handler_closure.py --client <GAME_PATH> --output <本卡新raw>`，`CLIENT72_AVATAR_HANDLER_CLOSURE_REPORT`后跑16检查。主线root-third四组同双跑，综合SHA58c2c448…90d4f67/7,843,813B；`main/avatar-handler-main-proof.json`及[原生/模型/首缺输入](docs/CLIENT_72_AVATAR_HANDLER_CLOSURE.md)。只接受有界研究，完整Handler/default/g2不通过；当前不执行任何后继。
