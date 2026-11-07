@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+真实索引复现：`client72_resource_payload_index.py --client <GAME_PATH> --payload-report <固定efd1…报告> --output <新local raw>`及8项`tools.test_client72_resource_payload_index`。主线`payload-index-third.json` SHAe8a02de4…54ab9与2产物同双跑，完整独立parse/有限native/模型边界见[专题](docs/CLIENT_72_RESOURCE_PAYLOAD_INDEX.md)。
+
 SDK transport复现：`client72_sdk_transport.py --client <GAME_PATH> --natural <固定第二次原始启动> --rea-bundle <固定导出> --output <新local raw>`，设`SDK72_TRANSPORT_REPORT`跑11检查。主线`sdk-transport-third.json` SHA3650c789…ba9fb同双跑，模型/自然缺口见[专题](docs/CLIENT_72_SDK_TRANSPORT.md)。
 
 资源payload复现：`client72_resource_payload.py --client <GAME_PATH> --blob-report <固定fe10…报告> --context <archive6> --output <新local raw>`；主线`payload-third.json` SHAefd152bc…deced、11产物逐字节同双跑，`tools.test_client72_resource_payload`7项通过。四分钟有界，原生/独立解码范围见[专题](docs/CLIENT_72_RESOURCE_PAYLOAD.md)，不要覆盖已有index报告。
