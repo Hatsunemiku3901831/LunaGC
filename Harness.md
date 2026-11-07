@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+WinHTTP Diagnostics单次证据：`sdk-etw-observer/winhttp/actual-once.log` SHA27f8dc34…48b1d；真实回环207/208、0事件，stop0/query4201、port rebind成功。主线只读`tools.test_sdk72_winhttp_etw`2项通过，不重发请求；source/首raw边界及0事件限制见[专题](docs/CLIENT_72_WINHTTP_ETW_FIXTURE.md)。
+
 ETW自有夹具：固定合成EXE/source后，主线实际`third-review.log`核PID/ID正反对照、TDH errors0、child exit0、stop0/query4201；设`SDK72_ETW_FIXTURE_LOG`跑`tools.test_sdk72_etw`2项通过。元数据/代码来源及当前边界见[计划](docs/CLIENT_72_WINHTTP_ETW_PLAN.md)/[夹具](docs/CLIENT_72_SDK_ETW_OBSERVER.md)，不能当目标请求观察器。
 
 SDK离线原型复核：`tools/sdk72_observer/build.ps1 -OutputDirectory <新local目录>`，设`SDK72_OBSERVER_FIXTURE`跑`tools.test_sdk72_observer`；主线新EXE ed0354e6…5cb、88断言/2项通过，`sdk-observer/main-third-{build,tests}.log`。只合成函数指针及部分非易失GPR，不称真实target hook；[范围/来源](docs/CLIENT_72_SDK_OBSERVER_DESIGN.md)。

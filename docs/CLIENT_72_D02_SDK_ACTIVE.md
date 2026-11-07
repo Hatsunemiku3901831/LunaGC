@@ -2,6 +2,8 @@
 
 2026-11-08更新：两次无调试器原始启动已实际到SDK登录页，用户已正常退出、OS无相关进程/端口。此前单HW实验已收口，无自然GlobalDispatch入口/返回且exit80000004，**下方fresh HW命令仅历史规格，不能原样重试**。主线当前沿已验[原始启动](CLIENT_72_UNINSTRUMENTED_STARTUP.md)、[SDK离线观察夹具](CLIENT_72_SDK_OBSERVER_DESIGN.md)和[ETW自有夹具](CLIENT_72_SDK_ETW_OBSERVER.md)推进无断点观察可行性。标准API包装88断言/主线新编译两守卫、自有ETW PID/ID正负控制及主线实际第三次已通过；都没有绑定真实SDK，不证明真实WinHTTP provider覆盖、路由、Marshal或本服认证。旧patch未安装，不改变原生校验。
 
+真实Microsoft Diagnostics provider的[自有回环实验](CLIENT_72_WINHTTP_ETW_FIXTURE.md)已只做一次：WinHTTP GET207/POST208、服务/端口及会话正常清理，但收到0事件，无法观察字段/状态/SDK覆盖。flush/lost计数未取得，不能推断provider根本不生成事件或SDK无请求。主线审源码/hash及首次raw、2守卫通过；按本次失败出口结束，不在游戏原样重复。离线转查实际11个已加载客户端模块的网络导入及动态调用来源，不以WinHTTP模块存在决定账号传输路径。
+
 2026-11-07，基线父仓库 `52999ce1fc20f791c2f51d19ee0a03dc63dd117f`、patch `3675ea789c71a6667c995f104271d1e031c34018`。本次只读源码、已有证据和文件哈希；未操作客户端、调试器、服务、数据库或补丁。资源子模块已有工作区差异，未更改。R2 和 D-02 均未验收。
 
 ## 固定输入与范围
