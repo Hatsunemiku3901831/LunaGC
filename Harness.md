@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+六表原生复现：`client72_avatar_natural_tables.py --client <GAME_PATH> --output <新local raw>`，设`CLIENT72_NATURAL_TABLES_REPORT`跑14检查。第三SHA1e9817cb…f85a86同双跑，`main/avatar-natural-tables-main-proof.json`；配置fixture/默认省略/Java未批边界见[专题](docs/CLIENT_72_AVATAR_NATURAL_TABLES.md)，不能外推自然NativeConfig或g2。
+
 认证最终隔离proof更新：`auth-logging/full-isolation-final-proof.json`、`mongo-review4/green/test-results/`核四可写目录/新Mongo、35项全过、原8数据文件前后SHA一致；review3保留为路径纠正前的结果，不替代review4。三生产类与已核磁盘JAR仍同编译，无新代码变化。
 
 SDK Crypto复现：`client72_sdk_crypto_contract.py --client <GAME_PATH> --output <新local raw>`，设`SDK72_CRYPTO_REPORT`跑15项检查。第三SHAc91ebc70…17313同双跑，`main/scene-and-sdk-crypto-main-proof.json`；公开输入/原生算法与CRT/合成熵模型、准确caller和natural缺口见[专题](docs/CLIENT_72_SDK_CRYPTO_CONTRACT.md)，不包含密码或密文。

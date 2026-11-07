@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+D02-R1/R3六真实表原生子合同已审：[Avatar自然字节](docs/CLIENT_72_AVATAR_NATURAL_TABLES.md)6whole/1807行、25查询/3派生查询/6边界；主线第三15,112,922B同双跑、14检查通过。同源5/7→501/701及Weapon11101/Ornament来源已取得；Weapon NativeConfig托管fixture、alias/revision/完整构造后缀/g2仍未批，继续真实模式与consumer桥梁。
+
 D02-R2隔离复核已纠正测试副本的绝对data路径继承：[日志回归](docs/CLIENT_72_AUTH_LOGGING.md)四可写目录全部指向新runtime后再次35项全过，原8文件前后SHA一致，Mongo正常关闭；最新XML为auth-logging/mongo-review4。原代码/JAR未变，不拿早先仅CWD隔离当完整路径隔离，不重复构建。
 
 D02-R2原生SDK Crypto/route子合同已审：[准确key与加密](docs/CLIENT_72_SDK_CRYPTO_CONTRACT.md)4 getter/14加密/6路由表，主线第三同双跑/15检查。mode0原key与本服四key/旧XML均不等，原生链不经旧managed hook；本地public供给原生互通已验。Sol开始仅自有函数的窄输入ABI核心，目标入口/route、合法loader、校验影响、响应及正式准入仍待，禁止整DLL安装。
