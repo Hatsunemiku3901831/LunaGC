@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+自然cold复现须新用户ready和当次monitor身份；`--scope cold-arrays`只写专属`main/cold-arrays-tool/`。第三原始启动SHA303db4bc…6c58a、新采样SHA63d3aaf8…ef8c0，实际执行源v6及99span校对见[专题](docs/CLIENT_72_COLD_ARRAYS_SNAPSHOT.md)/`executed-source-proof-cold-v6.json`。当前已正常退出，不可重放旧PID；26采样/monitor检查通过。
+
 真实表定位复现：`client72_resource_locator.py --client <GAME_PATH> --index-report <固定e8a0…报告> --payload-directory <固定真实payload目录> --context <archive6> --output <新local raw>`；`tools.test_client72_resource_locator`8项。第三报告SHA fc2c3aca…20fda及完整serialized/九byte[]同双跑，`main/locator-main-proof.json`。真实表hash、定位、native/模型边界见[locator](docs/CLIENT_72_RESOURCE_LOCATOR.md)，下一交准确loader，不认定revision/ready。
 
 真实索引复现：`client72_resource_payload_index.py --client <GAME_PATH> --payload-report <固定efd1…报告> --output <新local raw>`及8项`tools.test_client72_resource_payload_index`。主线`payload-index-third.json` SHAe8a02de4…54ab9与2产物同双跑，完整独立parse/有限native/模型边界见[专题](docs/CLIENT_72_RESOURCE_PAYLOAD_INDEX.md)。

@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+D02-R1/R2新自然输入已审：[cold-arrays快照](docs/CLIENT_72_COLD_ARRAYS_SNAPSHOT.md)一次90秒/43样本、99span无读错，Type314/Array117/Type[]首候选及SDK稳定根取得，用户确认登录页无错并正常退出，OS已核。采样metadata宽度先红后修、26定向检查通过。完整cold/SDK自然请求/本服验收仍待。
+
 E-01/R3真实表定位子合同已审：[locator](docs/CLIENT_72_RESOURCE_LOCATOR.md)用八literal/一候选、准确generic后缀/native hash与真实index定位25539185块，取得九表byte[]；546块native prefix/独立LZ4，首尾两块另完整native codec。主线第三报告及10产物同双跑、8检查通过。资源已取得不等于parser、exporter、自然revision或ready；继续真实行构造与Java映射，不再等待Oodle。
 
 E-01/R3真实索引子合同已审：[两0000006f全量解析](docs/CLIENT_72_RESOURCE_PAYLOAD_INDEX.md)至EOF，4真实记录原生对照/8边界、8检查，主线第三raw及2定位产物同双跑；09302948首3978B与独立native头一致。未批准ctable/revision/表转换，继续literal→实际key/块定位。
