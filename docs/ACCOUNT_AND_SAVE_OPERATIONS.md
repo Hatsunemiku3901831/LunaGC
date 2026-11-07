@@ -1,5 +1,7 @@
 # 账号与存档运维和开发手册
 
+认证日志最新完整隔离结果更新为`d02-active/auth-logging/mongo-review4/green/`：副本原data绝对路径继承已纠正，四可写目录显式归属新runtime后35项全过，原8文件前后SHA一致、Mongo正常关闭。路径纠正前结果/失败保留，详见[日志专题](CLIENT_72_AUTH_LOGGING.md)；无新增运行代码或构建。
+
 2026-11-08 [认证日志修正](CLIENT_72_AUTH_LOGGING.md)两套35项通过：6项handler/RSA日志、29项密码重置/会话/账号验证；新独立Mongo27027正常shutdown/exit0/端口释放，原数据不动。红测、夹具key_id遗漏的关联失败及最终XML分别保留在`d02-active/auth-logging/`。构建随后核验，完整SDK/客户端及部署仍待。
 
 2026-11-07本轮Astra仅离线研究：[资源](CLIENT_72_RESOURCE_DEEP_RESEARCH.md)记录真实parser与缺失转换依据；[Avatar](CLIENT_72_AVATAR_DEEP_RESEARCH.md)记录初始化/后缀。没有新DB、loadAll或正向QuestManager重绑执行。需自然资源就绪及必要map/引用/ERROR核对后才允许2B；装备最终属性恢复前不得把临时零能量覆盖保存值。未构建/部署。

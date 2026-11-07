@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+D02-R2隔离复核已纠正测试副本的绝对data路径继承：[日志回归](docs/CLIENT_72_AUTH_LOGGING.md)四可写目录全部指向新runtime后再次35项全过，原8文件前后SHA一致，Mongo正常关闭；最新XML为auth-logging/mongo-review4。原代码/JAR未变，不拿早先仅CWD隔离当完整路径隔离，不重复构建。
+
 D02-R2原生SDK Crypto/route子合同已审：[准确key与加密](docs/CLIENT_72_SDK_CRYPTO_CONTRACT.md)4 getter/14加密/6路由表，主线第三同双跑/15检查。mode0原key与本服四key/旧XML均不等，原生链不经旧managed hook；本地public供给原生互通已验。Sol开始仅自有函数的窄输入ABI核心，目标入口/route、合法loader、校验影响、响应及正式准入仍待，禁止整DLL安装。
 
 D02-R4场景限定后继已审：[scene-entry](docs/CLIENT_72_SCENE_ENTRY_CLOSURE.md)tag7场景token/8样本、80154消费者10样本及真实Scene2431行；主线第三9,143,952B同双跑，13新+48旧=61检查通过。能力注册、自然stage、44512/实体生命周期及SceneTeam/Entity三层未闭，正式sender未批；继续精确producer和实际资源。

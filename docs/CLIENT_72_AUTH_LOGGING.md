@@ -20,6 +20,8 @@ AuthenticationLoggingTest实际调用三个handler拒绝分支、exchange错误�
 
 最终独立Mongo/运行目录两套35项通过（6+29），失败/错误/跳过均0，XML在 `auth-logging/mongo-review3/green/test-results/`。第一轮关联34/35：撤销token测试key_id=0，被原配置的加密入口提前返回；仅将测试请求补为已证key_id4，未改生产配置/guard，随后完整35项通过。首个Mongo驱动的额外red自检还误期望内存ListAppender内容出现在stdout；保留失败，改为三个明确assertAll失败标签核验。有效红测、关联失败与最终XML全部保留，未重复假称通过。
 
+隔离补查又发现上述副本继承原config的绝对data路径，工作目录隔离不能代替该路径隔离。只读审计原8文件未见测试时段写入；不清理或覆盖原目录。随后把data/cache/packets/plugins四个可写目录全部显式指向新专属runtime，原resources/scripts仅只读引用，在`mongo-review4/green/`再次完整35项通过、0失败/错误/跳过；原8文件在此次前后逐SHA完全一致，证明`full-isolation-final-proof.json`。最新完整隔离结果以review4为准，review3不冒称该路径已隔离。此次没有运行代码变化，不重建已核归档；三日志生产class仍逐字节匹配最终测试编译，metadata后来仅随文档HEAD更新。
+
 三个新Mongo目录均保留，均实际admin shutdown/exit0/27027释放；关前仅admin/config/local，原27017/原数据未操作。所有数据为合成值，源备份及原始日志在忽略的 `local/migration72/d02-active/auth-logging/`。
 
 ## 便携构建与部署边界
