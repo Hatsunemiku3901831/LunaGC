@@ -1,5 +1,7 @@
 # LunaGC CN 7.2 开发分支
 
+2026-11-07当前活动指令：恢复持续开发、必要实机取证与联调，直到D-02全部实测通过；覆盖下方历史暂停/仅离线限制。接手52999ce，五输入匹配，配置/原数据/resources既有差异保留；本轮实际初始现场没有游戏/服务/调试器。关键路径及实验见[持续执行记录](docs/CLIENT_72_D02_ACTIVE.md)。D-02仍未完成，研究片段不作为完整生产许可。
+
 2026-11-07最新：Astra限定离线攻坚已收口，Avatar精确构造片段/装备/技能/Ornament、Scene生命周期/深复制/hash查询及资源parser/条件语义共11项完成限定验证。127证据、24相关检查通过，ready仍224拒绝；完整g2/SceneInfo、自然资源/正向QuestManager和D-02实机未完成。未启动Sol/Terra生产实现、全面回归、客户端/调试器、补丁或部署。结果与准确后继见[HANDOFF2](HANDOFF2.md)、[总记录](docs/CLIENT_72_ASTRA_OFFLINE.md)，历史段落不覆盖本轮停止状态。
 
 2026-11-07本轮限定离线工作已收口：证据108→116、C-01b网络入口红绿、目标Chapter真实加载/通知及有限Java Avatar来源投影已分项本地提交，未推送。50套875项关联Java、120研究、9生成检查通过；portable JAR `f475dbf6…8cade8`内嵌8c1fb85，8变化class匹配编译、46296保持，未部署。原数据/配置/resources差异保留；本轮未启动或操作游戏/调试器/补丁、未调用Astra。完整Avatar/SceneInfo、必要资源语义/revision、QuestManager正向重绑和D-02全部实机条件仍未完成。当前状态与准确后继见[HANDOFF2](HANDOFF2.md)、[本轮记录](docs/CLIENT_72_SOL_TERRA_OFFLINE.md)；下方暂停/继续、PID与数字均按历史批次读取。

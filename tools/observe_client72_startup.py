@@ -29,6 +29,28 @@ STOP_EVENTS = ('EVENT_SYSTEMBREAKPOINT', 'EVENT_BREAKPOINT', 'EVENT_EXCEPTION',
                'EVENT_PAUSE_DEBUG')
 
 
+def preserved_system_breakpoint(address, singleshoot, entrypoint, tls_addresses):
+    return singleshoot and (address == entrypoint or address in tls_addresses)
+
+
+def validate_preflight_resume(raw):
+    assert raw['ready'] and raw['mainObservationMode'] == 'global-dispatch-hardware'
+    assert raw['sourceSHA256'] == '2298ef9e7258bd0abbd1458be6306a285eec175d42f4e3fee37d179825f37928'
+    assert raw['stopReason'] == 'observer-error'
+    assert raw['observerError'].rstrip().endswith('AssertionError: Pre-existing breakpoint needs ownership review')
+    assert not any(raw[key] for key in ('commands', 'stops', 'observations', 'hardwareOperations', 'ownedPointsRemaining'))
+    assert not any(raw.get(key) for key in ('removedVerifiedPriorPoints', 'inheritedHardwareCleanup', 'factoryHardwareCleanup'))
+    assert raw['ownedHardwareRemaining'] is None
+    assert raw['finalState'] == dict(debugging=True, running=False) and raw['osStatus']['alive']
+    snap = raw['initialSnapshot']
+    assert snap['selectedPid'] == raw['pid'] and snap['selectedTid'] == snap['tid']
+    assert snap['registers']['cip'] and snap['registers']['rsp']
+    if 'finalSnapshot' in raw:
+        final = raw['finalSnapshot']
+        assert final['selectedPid'] == raw['pid'] and final['selectedTid'] == final['tid'] == snap['tid']
+        assert all(final['registers'][key] == snap['registers'][key] for key in ('cip', 'rsp'))
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
@@ -36,10 +58,13 @@ def main():
     parser.add_argument('--summary-output', type=Path)
     parser.add_argument('--main-observations', choices=('software', 'none', 'global-dispatch', 'global-dispatch-hardware'), default='software',
                         help='none runs zero main points; global-dispatch observes only the verified HTTP body consumer.')
-    parser.add_argument('--resume-from', type=Path,
+    resume_group = parser.add_mutually_exclusive_group()
+    resume_group.add_argument('--resume-from', type=Path,
                         help='Resume only this observer\'s first system-stop hardware rejection; no new load.')
-    parser.add_argument('--continue-thread-name-from', type=Path,
+    resume_group.add_argument('--continue-thread-name-from', type=Path,
                         help='Continue the same pending, verified Windows thread-name exception; no new load.')
+    resume_group.add_argument('--resume-preflight-from', type=Path,
+                        help='Continue only a verified ownership-rejected HW system preflight; no new load.')
     parser.add_argument('--prior-observation', type=Path,
                         help='Local evidence proving ownership of restored R2 software points.')
     args = parser.parse_args()
@@ -55,6 +80,10 @@ def main():
         args.continue_thread_name_from = args.continue_thread_name_from.resolve()
         if args.resume_from or not args.continue_thread_name_from.is_relative_to(root / 'local'):
             parser.error('Choose one local continuation source.')
+    if args.resume_preflight_from:
+        args.resume_preflight_from = args.resume_preflight_from.resolve()
+        if not args.resume_preflight_from.is_relative_to(root / 'local') or args.main_observations != 'global-dispatch-hardware':
+            parser.error('Preflight continuation requires a local source and global-dispatch-hardware mode.')
     if args.prior_observation:
         args.prior_observation = args.prior_observation.resolve()
         if not args.prior_observation.is_relative_to(root / 'local'):
@@ -216,8 +245,11 @@ def execute(root, args):
     sessions = [s for s in X64DbgClient.list_sessions() if s.host in ('localhost', '127.0.0.1')]
     assert len(sessions) == 1 and Path(sessions[0].cmdline[0]).resolve() == debugger
     continuation = args.continue_thread_name_from
-    resume_path = continuation or args.resume_from
+    preflight = args.resume_preflight_from
+    resume_path = continuation or args.resume_from or preflight
     resumed = json.loads(resume_path.read_text('utf8')) if resume_path else None
+    if preflight:
+        validate_preflight_resume(resumed)
     prior_observation = json.loads(args.prior_observation.read_text('utf8')) if args.prior_observation else None
     if prior_observation:
         assert prior_observation['inputSHA256'] == hashes
@@ -556,6 +588,9 @@ def execute(root, args):
             for key in ('cip', 'rsp'):
                 assert current['registers'][key] == previous_snapshot['registers'][key]
             assert current['tid'] == previous_snapshot['tid']
+            if preflight:
+                assert current['selectedPid'] == resumed['pid'] and current['selectedTid'] == current['tid']
+                report['preflightLiveSnapshot'] = current
             report['resumeFrom'] = str(resume_path)
             report['resumeEvidenceSHA256'] = hashlib.sha256(resume_path.read_bytes()).hexdigest()
             report['osHandleGapBeforeContinuation'] = True
@@ -603,6 +638,13 @@ def execute(root, args):
                 assert c.eval_sync('ex.' + key + '()') == (value, True)
             report['pendingThreadNameValidation'] = validate_thread_name(pending_exception)
             assert report['pendingThreadNameValidation']
+        elif preflight:
+            assert not c.get_breakpoints(BreakpointType.BpHardware)
+            current = report['initialSnapshot']['registers']
+            original = resumed['initialSnapshot']['registers']
+            assert all(current[key] == value for key, value in original.items() if key not in DR_NAMES + ('eflags',))
+            assert current['eflags'] ^ original['eflags'] in (0, 2)
+            report['preflightLiveSnapshot'] = report['initialSnapshot']
         elif c.get_breakpoints(BreakpointType.BpHardware):
             # The first load exposed this exact old owned point from the debugger database.
             old_path = root / 'local/migration72/evidence/d01b3-hardware.json'
@@ -670,7 +712,8 @@ def execute(root, args):
                 known_old[name] = base + original - pe.base
             report['priorObservationSHA256'] = hashlib.sha256(args.prior_observation.read_bytes()).hexdigest()
         for bp in c.get_breakpoints(BreakpointType.BpNormal):
-            if bp.singleshoot and bp.addr == entrypoint:
+            tls = verified_tls_addresses(dict(event='EVENT_BREAKPOINT', data=dict(addr=bp.addr, singleshoot=bp.singleshoot)))
+            if preserved_system_breakpoint(bp.addr, bp.singleshoot, entrypoint, tls):
                 continue
             assert known_old.get(bp.name) == bp.addr, 'Pre-existing breakpoint needs ownership review'
             assert not bp.breakCondition and not bp.commandText and not bp.fastResume

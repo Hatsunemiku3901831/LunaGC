@@ -2,14 +2,56 @@
 import copy
 import json
 from pathlib import Path
+import subprocess
 import sys
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from observe_client72_startup import exit_log_codes, matching_returns, register_action, stop_action, summarize, thread_name_payload, main_entries, return_observation
+from observe_client72_startup import preserved_system_breakpoint, validate_preflight_resume
 
 
 class StartupObserverTests(unittest.TestCase):
+    def test_preflight_tls_requires_verified_address_and_singleshoot(self):
+        self.assertTrue(preserved_system_breakpoint(0x1234, True, 0x9000, {0x1234}))
+        self.assertFalse(preserved_system_breakpoint(0x1235, True, 0x9000, {0x1234}))
+        self.assertFalse(preserved_system_breakpoint(0x1234, False, 0x9000, {0x1234}))
+        self.assertTrue(preserved_system_breakpoint(0x9000, True, 0x9000, set()))
+
+    def test_preflight_resume_rejects_prior_activity_or_wrong_error(self):
+        snap = dict(tid=7, selectedPid=5, selectedTid=7, registers=dict(cip=10, rsp=20))
+        raw = dict(ready=True, pid=5, mainObservationMode='global-dispatch-hardware',
+                   sourceSHA256='2298ef9e7258bd0abbd1458be6306a285eec175d42f4e3fee37d179825f37928',
+                   commands=[], stops=[], observations=[], hardwareOperations=[],
+                   ownedPointsRemaining={}, ownedHardwareRemaining=None,
+                   observerError='AssertionError: Pre-existing breakpoint needs ownership review\n',
+                   stopReason='observer-error', finalState=dict(debugging=True, running=False),
+                   osStatus=dict(alive=True), initialSnapshot=snap)
+        validate_preflight_resume(raw)
+        for key, value in [('commands', [1]), ('stops', [1]), ('observations', [1]),
+                           ('hardwareOperations', [1]), ('ownedPointsRemaining', {'1': 'x'}),
+                           ('removedVerifiedPriorPoints', [1]), ('sourceSHA256', 'wrong'),
+                           ('ownedHardwareRemaining', {'address': 1}), ('mainObservationMode', 'none'),
+                           ('observerError', 'another failure'), ('stopReason', 'observation-budget'),
+                           ('finalState', dict(debugging=True, running=True)),
+                           ('initialSnapshot', dict(snap, selectedPid=6)),
+                           ('finalSnapshot', dict(snap, tid=8))]:
+            changed = copy.deepcopy(raw); changed[key] = value
+            with self.subTest(key=key), self.assertRaises(AssertionError):
+                validate_preflight_resume(changed)
+
+    def test_preflight_resume_arguments_are_exclusive_and_hw_only(self):
+        script = str(Path(__file__).with_name('observe_client72_startup.py'))
+        common = [sys.executable, script, '--output', 'local/preflight-test-unused.json']
+        for extra in [
+            ['--main-observations', 'global-dispatch-hardware', '--resume-preflight-from', 'local/a', '--resume-from', 'local/b'],
+            ['--main-observations', 'global-dispatch-hardware', '--resume-preflight-from', 'local/a', '--continue-thread-name-from', 'local/b'],
+            ['--main-observations', 'none', '--resume-preflight-from', 'local/a'],
+            ['--main-observations', 'global-dispatch-hardware', '--resume-from', 'local/a'],
+        ]:
+            with self.subTest(extra=extra):
+                result = subprocess.run(common + extra, capture_output=True, text=True)
+                self.assertEqual(result.returncode, 2)
     def exception(self, code=0xC0000005, first=True):
         return {'event': 'EVENT_EXCEPTION', 'data': {
             'ExceptionCode': code, 'ExceptionAddress': 0x1234, 'dwFirstChance': first}}

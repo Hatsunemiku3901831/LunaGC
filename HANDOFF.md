@@ -205,3 +205,8 @@ B-02e7限定原生部分消费51f7cd2、E-01c5实际生产Lua加载审计9aa8ca7
 ## 2026-11-07 Astra限定离线攻坚收口
 
 仅Avatar/SceneInfo/必要资源深研，11项双跑及主线第三原生核同，127证据/24定向检查通过，结构0/ready224仍拒绝。六Avatar、两Scene、三资源项已本地分项提交，统一整合2501423；没有生产实现/全面回归/客户端/调试器/补丁/部署。完整g2、SceneInfo、自然资源/正向QuestManager及D-02未完成。具体结果、Sol/Terra限定规格、最小缺输入/实机观察、全部提交与失败记录见[HANDOFF2](HANDOFF2.md)及[总记录](docs/CLIENT_72_ASTRA_OFFLINE.md)。原HANDOFF2已逐字节备份核验，证明local/migration72/astra-main/handoff-backup.json；原resources/config/data保持，所有代理/自有离线进程收口。停止，不自动开启后继实现。
+
+
+## 2026-11-07 D-02持续开发活动检查点
+
+用户已恢复持续研究/实现/必要实机/portable隔离部署和联调至D-02全部实测通过，覆盖历史暂停/仅离线限制；这次是活动检查点，不表示暂停。接手52999ce，五输入/配置/原数据/resources原差异保留；新现场无旧游戏/服务/调试器，已独占新管理员调试器做一次HW启动观察。TLS前置拒绝已修，31守卫通过，同target38.875秒后OS/PUB/log为80000004，WER在HW入口RVA112250e0，无自然HTTP入口/返回。当前无target/API表空，新持久库4自有点另登记。Astra Avatar初始化、Sol资源来源及Astra低层HW事件分析继续；用户画面反馈与管理员WER只读复制待核。未部署、未装补丁、D-02未完成。详细进展、代理文件归属、证据、备份、失败避坑、等待操作和下一动作见[HANDOFF2](HANDOFF2.md)及[活动记录](docs/CLIENT_72_D02_ACTIVE.md)。
