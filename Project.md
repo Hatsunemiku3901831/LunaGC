@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+D02-R2原生SDK Crypto/route子合同已审：[准确key与加密](docs/CLIENT_72_SDK_CRYPTO_CONTRACT.md)4 getter/14加密/6路由表，主线第三同双跑/15检查。mode0原key与本服四key/旧XML均不等，原生链不经旧managed hook；本地public供给原生互通已验。Sol开始仅自有函数的窄输入ABI核心，目标入口/route、合法loader、校验影响、响应及正式准入仍待，禁止整DLL安装。
+
 D02-R4场景限定后继已审：[scene-entry](docs/CLIENT_72_SCENE_ENTRY_CLOSURE.md)tag7场景token/8样本、80154消费者10样本及真实Scene2431行；主线第三9,143,952B同双跑，13新+48旧=61检查通过。能力注册、自然stage、44512/实体生命周期及SceneTeam/Entity三层未闭，正式sender未批；继续精确producer和实际资源。
 
 D02-R2日志产物已核：[认证日志修正](docs/CLIENT_72_AUTH_LOGGING.md)便携build30秒成功，JAR64a381dc…e0aab/代码1ea32a4，6变化class与编译匹配，配置/原数据保持。归档版本/准入guard不改，非7.2部署许可；status1且无运行对象，R4前置不足未部署。
