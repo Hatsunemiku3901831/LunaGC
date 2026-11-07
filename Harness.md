@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+Avatar有限后继：`client72_avatar_handler_closure.py --client <GAME_PATH> --output <本卡新raw>`，`CLIENT72_AVATAR_HANDLER_CLOSURE_REPORT`后跑16检查。主线root-third四组同双跑，综合SHA58c2c448…90d4f67/7,843,813B；`main/avatar-handler-main-proof.json`及[原生/模型/首缺输入](docs/CLIENT_72_AVATAR_HANDLER_CLOSURE.md)。只接受有界研究，完整Handler/default/g2不通过；当前不执行任何后继。
+
 SDK key核心自有ABI：主线离线新root-target构建/运行与子代理双跑逐字节一致，14合成+7拒绝，raw SHA d8350d14…59b815；`sdk-key-input-sol/root-main-proof.json`/`root-build.log`及[范围/复验](docs/CLIENT_72_SDK_KEY_INPUT_ABI.md)。patch提交1d9cae3仅三新文件，未注册/部署；命令仅供将来恢复后使用，不启动native桥接或实机。
 
 入口上下文工具：`sample_client72_entry_context.py --observation <新monitor> --output <专属新raw>`；7离线检查、两合同16窗口/五文件主线复核，`main/entry-context-tool/root-reviewed-proof.json`。源58148689…c7d7b，读预算17/785；[专题](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md)标明未执行/未知。当前暂停前只验准备，不使用旧PID或新启动；cold父descriptor16B需恢复后另补合同。
@@ -18,7 +20,7 @@ Scene入场后继：`client72_scene_entry_closure.py --client <GAME_PATH> --outp
 
 日志修正产物：`auth-logging/build/artifact-proof.json`核JAR64a381dc…e0aab、代码1ea32a4/46,304类/6变化匹配，其余46,298不变；旧JAR先备份。portable build成功、实际status1/无运行JAR或DLL，未部署原因见[日志专题](docs/CLIENT_72_AUTH_LOGGING.md)，不以磁盘归档代实际验收。
 
-认证日志回归：`AuthenticationLoggingTest`6项无需DB；`PasswordResetAuthenticationTest`29项必须新独立Mongo和`LUNAGC_TEST_MONGO_URI`，不接原数据。最终XML/摘要 `auth-logging/mongo-review3/green/`，35项0失败/错误/跳过、Mongo正常shutdown；有效红测及夹具失败见[专题](docs/CLIENT_72_AUTH_LOGGING.md)。
+认证日志回归：`AuthenticationLoggingTest`6项无需DB；`PasswordResetAuthenticationTest`29项必须新独立Mongo和`LUNAGC_TEST_MONGO_URI`，不接原数据。最终XML/摘要 `auth-logging/mongo-review4/green/`，35项0失败/错误/跳过、Mongo正常shutdown；有效红测及夹具失败见[专题](docs/CLIENT_72_AUTH_LOGGING.md)。
 
 Java资源目的合同：`audit_d02_java_resource_contract.py --output local/migration72/d02-active/java-resource-contract-sol/<新名>.json`，10项`tools.test_audit_d02_java_resource_contract`。一处SCENE_ACTIVE已审文档pin更新的三跑SHA638e5731…fe8bc，除doc/tool hash外与旧epoch完全相同；`doc-reviewed-main-proof.json`及[专题](docs/CLIENT_72_D02_JAVA_RESOURCE_CONTRACT.md)记录原始来源、拒绝/未批准边界，不执行JVM或转换。
 
