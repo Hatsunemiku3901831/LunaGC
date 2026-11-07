@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+E-01/R3真实表定位子合同已审：[locator](docs/CLIENT_72_RESOURCE_LOCATOR.md)用八literal/一候选、准确generic后缀/native hash与真实index定位25539185块，取得九表byte[]；546块native prefix/独立LZ4，首尾两块另完整native codec。主线第三报告及10产物同双跑、8检查通过。资源已取得不等于parser、exporter、自然revision或ready；继续真实行构造与Java映射，不再等待Oodle。
+
 E-01/R3真实索引子合同已审：[两0000006f全量解析](docs/CLIENT_72_RESOURCE_PAYLOAD_INDEX.md)至EOF，4真实记录原生对照/8边界、8检查，主线第三raw及2定位产物同双跑；09302948首3978B与独立native头一致。未批准ctable/revision/表转换，继续literal→实际key/块定位。
 
 D02-R2 transport限定子合同已审：[准确SDK入口](docs/CLIENT_72_SDK_TRANSPORT.md)，11模块/2812独立导入、14离线原生样本、11检查，主线第三raw同双跑。RVA41E6F0及URL副本/错误/64位已验；自然调用、登录链和装载仍待，旧地址/全patch不获许可。
