@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+F-03d3f4d2 自然资源槽/整数解码已审：[F-03d3f4d2 自然资源槽/整数解码](docs/CLIENT_72_LIVE_RESOURCE_CONTRACT.md)，主线第三raw同独立双跑、9检查通过。93跨度证明七缓存未创建、Weapon准确getter和实际1024B decode窗口；17原生控制不等于实际资源row/revision。
+
 F-03d3f4d2 自然cold后继已审：[F-03d3f4d2 自然cold后继](docs/CLIENT_72_AVATAR_COLD_COMPLETION.md)，主线第三raw同独立双跑、8检查通过。57跨度自然链驱动9组原生enum/underlying/TypeCode9→1239；完整helper/接口/泛型构造仍未知。
 
 E-01/R3 provider自然状态已审：[E-01/R3 provider自然状态](docs/CLIENT_72_RESOURCE_PROVIDER.md)，主线第三raw同独立双跑、8检查通过。两自然导出vtable/前缀/新manager及原生cache/map片段已验；未观测具体资源route，不把旧头拒绝当自然失败。
