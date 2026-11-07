@@ -220,3 +220,8 @@ B-02e7限定原生部分消费51f7cd2、E-01c5实际生产Lua加载审计9aa8ca7
 ## 2026-11-08第三次D-02持续活动检查点（不是暂停）
 
 已提交c0a6322便携独立运行目录/准确Mongo归属34检查；97cd1fc cold接口14、68dc033完整payload7、879df59 SDK transport11、e829f8f真实index8均主线第三raw/相应产物同双跑。资源locator已实际取到八真实literal表（另Quest候选），Avatar Astra正跑真实whole-table；SDK Astra继续login持有者静态链，Terra准备冷数组/SDK稳定根只读scope，主线尚未请求新ready/未启动客户端。实际无游戏/调试器/Mongo/本服Java或相关端口，唯一Java为SDK Ghidra静态分析。未构建新JAR/部署或D-02通过；全目标继续，详细归属/原始hash/失败与下一动作见[HANDOFF2](HANDOFF2.md)。
+
+
+## 2026-11-08 D-02活动检查点（第四次，继续）
+
+已第三审locator/自然cold/SDK login与Crypto/Scene及Java目的合同；认证日志生产1ea32a4后完整隔离35项通过、8原数据文件SHA保持，portable JAR64a381dc…e0aab/代码1ea32a4已核，原归档标签与guard不改，未部署。Avatar六表第三/14检查已有待完整接收，Sol未启用SDK key ABI核心待主线第三审/子模块提交，Scene和SDK响应Astra继续。用户最后正常退出，当前无target/待操作；所有D-02客户端最终项未验。详见[HANDOFF2](HANDOFF2.md)，本条不是暂停。
