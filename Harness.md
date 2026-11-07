@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+Scene运行上下文：`client72_scene_runtime_context.py --client <GAME_PATH> --output <新local raw>`，设置专题两报告环境后跑7套74检查。第三SHAbf9efd62…db81d4同双跑，`main/final-context-response-review.json`；实际原生/typed模型/Pool首缺和只读根合同见[专题](docs/CLIENT_72_SCENE_RUNTIME_CONTEXT.md)。本批后暂停，命令仅供恢复使用。
+
 六表原生复现：`client72_avatar_natural_tables.py --client <GAME_PATH> --output <新local raw>`，设`CLIENT72_NATURAL_TABLES_REPORT`跑14检查。第三SHA1e9817cb…f85a86同双跑，`main/avatar-natural-tables-main-proof.json`；配置fixture/默认省略/Java未批边界见[专题](docs/CLIENT_72_AVATAR_NATURAL_TABLES.md)，不能外推自然NativeConfig或g2。
 
 认证最终隔离proof更新：`auth-logging/full-isolation-final-proof.json`、`mongo-review4/green/test-results/`核四可写目录/新Mongo、35项全过、原8数据文件前后SHA一致；review3保留为路径纠正前的结果，不替代review4。三生产类与已核磁盘JAR仍同编译，无新代码变化。
