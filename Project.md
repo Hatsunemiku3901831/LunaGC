@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+D02-R2 ETW能力子项已审：[自有provider夹具](docs/CLIENT_72_SDK_ETW_OBSERVER.md)主线第三次PID/ID正反控制/TDH/退出清理通过，2离线守卫通过。仅合成输入，不证明真实WinHTTP provider或SDK覆盖；原型不接入游戏。
+
 D02-R2 SDK最小观察夹具已审：[标准API包装](docs/CLIENT_72_SDK_OBSERVER_DESIGN.md)主线独立新编译88断言/2守卫通过；仅自有函数指针，无hook/DLL/网络/目标。SDK自然路由、装载与ABI仍待，继续真实provider的自有本机请求对照。
 
 D02-R1/R2自然取证已收口：[原始启动](docs/CLIENT_72_UNINSTRUMENTED_STARTUP.md)两次90秒/SDK登录页，[初始化采样](docs/CLIENT_72_RUNTIME_INITIALIZATION_SNAPSHOT.md)6批实际span/执行源逐hash核同。监测器11+采样器7检查通过，第一次线程PID0含义撤回；用户已正常退出，无target。本服登录/入场未验；无生产部署，继续SDK与资源/cold后继。

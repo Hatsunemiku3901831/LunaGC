@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+ETW自有夹具：固定合成EXE/source后，主线实际`third-review.log`核PID/ID正反对照、TDH errors0、child exit0、stop0/query4201；设`SDK72_ETW_FIXTURE_LOG`跑`tools.test_sdk72_etw`2项通过。元数据/代码来源及当前边界见[计划](docs/CLIENT_72_WINHTTP_ETW_PLAN.md)/[夹具](docs/CLIENT_72_SDK_ETW_OBSERVER.md)，不能当目标请求观察器。
+
 SDK离线原型复核：`tools/sdk72_observer/build.ps1 -OutputDirectory <新local目录>`，设`SDK72_OBSERVER_FIXTURE`跑`tools.test_sdk72_observer`；主线新EXE ed0354e6…5cb、88断言/2项通过，`sdk-observer/main-third-{build,tests}.log`。只合成函数指针及部分非易失GPR，不称真实target hook；[范围/来源](docs/CLIENT_72_SDK_OBSERVER_DESIGN.md)。
 
 自然取证工具已审：`observe_client72_uninstrumented.py --user-ready --output <新plain raw> --seconds 90`；有真实活跃身份才运行`sample_client72_initialization.py --observation <当前raw> --output <新raw>`，archive只用`--scope archive-state`。当前无活跃身份，不重放旧PID。主线`tools.test_client72_uninstrumented`11项、`tools.test_sample_client72_initialization`7项通过；`main/plain-sampler-final-tests.log`、`plain/source-snapshots/executed-source-proof-all.json`为测试/8份报告执行源proof，实际范围见[启动](docs/CLIENT_72_UNINSTRUMENTED_STARTUP.md)/[采样](docs/CLIENT_72_RUNTIME_INITIALIZATION_SNAPSHOT.md)。
