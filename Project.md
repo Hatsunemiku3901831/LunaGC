@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+D02-R2 SDK最小观察夹具已审：[标准API包装](docs/CLIENT_72_SDK_OBSERVER_DESIGN.md)主线独立新编译88断言/2守卫通过；仅自有函数指针，无hook/DLL/网络/目标。SDK自然路由、装载与ABI仍待，继续真实provider的自有本机请求对照。
+
 D02-R1/R2自然取证已收口：[原始启动](docs/CLIENT_72_UNINSTRUMENTED_STARTUP.md)两次90秒/SDK登录页，[初始化采样](docs/CLIENT_72_RUNTIME_INITIALIZATION_SNAPSHOT.md)6批实际span/执行源逐hash核同。监测器11+采样器7检查通过，第一次线程PID0含义撤回；用户已正常退出，无target。本服登录/入场未验；无生产部署，继续SDK与资源/cold后继。
 
 E-01/R3 真实blob头已审：[E-01/R3 真实blob头](docs/CLIENT_72_RESOURCE_BLOB.md)，主线第三raw同独立双跑、8检查通过。四自然文件MD5/size/SHA及原生头、52 getter/7参数错误已验，零native函数模型；payload/ctable/0000006f仍未恢复。

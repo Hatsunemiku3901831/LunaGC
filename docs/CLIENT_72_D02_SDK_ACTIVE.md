@@ -1,5 +1,7 @@
 # D02-R2：SDK、HTTP 与信任合同的当前离线核查
 
+2026-11-08更新：两次无调试器原始启动已实际到SDK登录页，用户已正常退出、OS无相关进程/端口。此前单HW实验已收口，无自然GlobalDispatch入口/返回且exit80000004，**下方fresh HW命令仅历史规格，不能原样重试**。主线当前沿已验[原始启动](CLIENT_72_UNINSTRUMENTED_STARTUP.md)、[SDK离线观察夹具](CLIENT_72_SDK_OBSERVER_DESIGN.md)和[ETW自有夹具](CLIENT_72_SDK_ETW_OBSERVER.md)推进无断点观察可行性。标准API包装88断言/主线新编译两守卫、自有ETW PID/ID正负控制及主线实际第三次已通过；都没有绑定真实SDK，不证明真实WinHTTP provider覆盖、路由、Marshal或本服认证。旧patch未安装，不改变原生校验。
+
 2026-11-07，基线父仓库 `52999ce1fc20f791c2f51d19ee0a03dc63dd117f`、patch `3675ea789c71a6667c995f104271d1e031c34018`。本次只读源码、已有证据和文件哈希；未操作客户端、调试器、服务、数据库或补丁。资源子模块已有工作区差异，未更改。R2 和 D-02 均未验收。
 
 ## 固定输入与范围
