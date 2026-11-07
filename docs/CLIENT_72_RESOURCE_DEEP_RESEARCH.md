@@ -1,5 +1,7 @@
 # E-01/R3：固定目标资源字段与默认值深度研究
 
+2026-11-07新增[来源审计](CLIENT_72_D02_RESOURCE_SOURCES.md)已主线审核：13固定输入（含两张Ornament）逐Git blob核验、3161安装清单行有界审计，8测试/第三新进程与双跑原字节同。真实ctable persistent/streaming同hash且MD5匹配声明，已定位准确loader/index parser离线后继；不能再笼统称本机没有资源输入。JSON→binary桥梁、ctable解码、实际revision、接受规则和自然loadAll仍未知，原规则/ready不变。
+
 2026-11-07，D-02 纯离线 Astra 范围。本卡不修改运行 Java、Proto、配置、补丁、resources 或原数据；不运行 loadAll、数据库、客户端、调试器或部署。复用已经验收的 [152 类/Chapter 加载](CLIENT_72_D02_CHAPTER_LOAD.md)、[303 恢复](CLIENT_72_D02_QUEST_303_RECOVERY.md)、[303 启动/保存](CLIENT_72_D02_QUEST_303_START.md) 和 [depot 有限消费](CLIENT_72_AVATAR_SKILL_DEPOT.md)，没有把这些旧执行数计入本轮。
 
 首个独立交付是 **目标二进制 parser 的默认、非零、嵌套及错误边界**。15 个完整解析样本、1 个消费边界、5 个拒绝样本与 10 项独立断言通过。候选 JSON 到该二进制格式的转换来源、自然 loadAll、正向 QuestManager 重绑定、候选 revision 对齐及 D-02 实机仍未完成；`resourceReady=false`，没有批准任何字段 alias。

@@ -6,6 +6,8 @@
 
 F-03d3f4d2后继已验：[真实enum初始化/warm完整构造](docs/CLIENT_72_AVATAR_LIVE_CONTRACT.md)，11组原生双跑及主线第三完整/摘要同，9独立断言通过；无unwind真实producer更正旧搜索边界。自然cold、完整handler、同源装备/技能/池仍开放，g2未批准；仅研究修改，无部署要求。
 
+E-01/R3来源子项已验：[必要输入来源](docs/CLIENT_72_D02_RESOURCE_SOURCES.md)，13固定输入/3161安装清单行、8检查/主线第三新进程原字节同双跑。取得两张候选Ornament与真实ctable双副本hash，定位index parser离线后继；JSON→binary/实际revision/接受规则/自然loadAll仍开放，资源与Quest正向重绑定未晋级。
+
 **2026-11-07最新停止状态：本轮Astra限定离线攻坚已收口；D-02未完成。** 11独立项均双新进程及主线第三原生核同，分项本地提交；统一证据116→127、24定向通过，结构0/ready224拒绝，三层/required/runtime不晋级。完整g2/SceneInfo及自然资源/正向QuestManager仍缺具体输入，不启动Sol/Terra生产实现、全面回归、实机或部署。全部代理/自有离线进程收口；[详细交接](HANDOFF2.md)、[结果/规格](docs/CLIENT_72_ASTRA_OFFLINE.md)。下方进行中/暂停为历史批次。
 
 统一证据已主线精确整合116→127：11个本轮已审摘要加入，旧116/1269生产来源及三层/required/runtime/矩阵其余字段全部保持，旧review真实拒绝留存，双recover一致。24定向检查通过、结构0错误/ready224拒绝；不重跑全面回归或构建。
