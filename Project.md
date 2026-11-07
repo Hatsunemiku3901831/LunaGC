@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+F-03d3f4d2 cold接口子合同已审：[连续GetInterfaces/HasIEquatable](docs/CLIENT_72_AVATAR_COLD_INTERFACES.md)14原生组、14断言、主线第三raw同双跑；明确typed缓存/分配模型，Array117/Type314自然初始化及generic comparer仍待，未晋级g2。
+
 D02-R5隔离入口前置已实现：[独立运行目录](docs/CLIENT_72_PORTABLE_ISOLATION.md)34项真实PowerShell夹具/独立审核通过；配置/JAR/资源/data/DB/CWD/状态归属及版本/信任守卫保持，先复现并修正同前缀Mongo误复用。无真实实例/新JAR部署，R4/P0/SDK/资源仍待，不能算D-02或R5实部署通过。
 
 D02-R2 Diagnostics观察候选按事实收口：[真实WinHTTP回环](docs/CLIENT_72_WINHTTP_ETW_FIXTURE.md)一次GET207/POST208而0事件，主线审source/首raw/hash及2守卫通过、会话/端口清理成立；无SDK覆盖证据，不在游戏重复。R2继续11自然加载模块的准确transport链，SDK父项未验。
