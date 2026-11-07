@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+E-01/R3 index入口已审：[E-01/R3 index入口](docs/CLIENT_72_RESOURCE_INDEX.md)，主线第三raw同独立双跑、5检查通过。准确声明/路径UTF8/u32转0000006f已验；资源manager/ctable及该entry内容仍未闭。
+
 F-03d3f4d2 Ornament条件数组已审：[F-03d3f4d2 Ornament条件数组](docs/CLIENT_72_AVATAR_ORNAMENT_CONDITIONS.md)，主线第三raw同独立双跑、9检查通过。12组连续非空数组/元素/字符串及拒绝路径已验；条件求值/exporter/运行revision/完整handler仍未知。
 
 F-03d3f4d2 Ornament标量已审：[F-03d3f4d2 Ornament标量](docs/CLIENT_72_AVATAR_ORNAMENT_CONTRACT.md)，主线第三raw同独立双跑、10检查通过。23组parser/字符串/Group-key原生记录已验；候选alias/revision/完整cache-builder和g2未批准。

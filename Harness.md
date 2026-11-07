@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+E-01/R3 index入口复现：`client72_resource_index.py`及`tools.test_client72_resource_index`；主线`d02-active/main/resource-index-third.json` SHA `a57966dabbc3…`同双跑，5项通过，模型与范围见[专题](docs/CLIENT_72_RESOURCE_INDEX.md)。
+
 F-03d3f4d2 Ornament条件数组复现：`client72_avatar_live_contract_ornament_conditions.py`及`tools.test_client72_avatar_live_contract_ornament_conditions`；主线`d02-active/main/conditions-third.json` SHA `40c5006267e1…`同双跑，9项通过，模型与范围见[专题](docs/CLIENT_72_AVATAR_ORNAMENT_CONDITIONS.md)。
 
 F-03d3f4d2 Ornament标量复现：`client72_avatar_live_contract_ornament.py`及`tools.test_client72_avatar_live_contract_ornament`；主线`d02-active/main/ornament-third.json` SHA `870353377318…`同双跑，10项通过，模型与范围见[专题](docs/CLIENT_72_AVATAR_ORNAMENT_CONTRACT.md)。
