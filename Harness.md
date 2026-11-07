@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+自然取证工具已审：`observe_client72_uninstrumented.py --user-ready --output <新plain raw> --seconds 90`；有真实活跃身份才运行`sample_client72_initialization.py --observation <当前raw> --output <新raw>`，archive只用`--scope archive-state`。当前无活跃身份，不重放旧PID。主线`tools.test_client72_uninstrumented`11项、`tools.test_sample_client72_initialization`7项通过；`main/plain-sampler-final-tests.log`、`plain/source-snapshots/executed-source-proof-all.json`为测试/8份报告执行源proof，实际范围见[启动](docs/CLIENT_72_UNINSTRUMENTED_STARTUP.md)/[采样](docs/CLIENT_72_RUNTIME_INITIALIZATION_SNAPSHOT.md)。
+
 E-01/R3 真实blob头复现：`client72_resource_blob.py`及`tools.test_client72_resource_blob`；主线`d02-active/main/blob-third.json` SHA `fe10d49fdfd7…`同双跑，8项通过，模型与范围见[专题](docs/CLIENT_72_RESOURCE_BLOB.md)。
 
 F-03d3f4d2 自然资源槽/整数解码复现：`client72_live_resource_contract.py`及`tools.test_client72_live_resource_contract`；主线`d02-active/main/live-resource-third.json` SHA `655465fd6d5a…`同双跑，9项通过，模型与范围见[专题](docs/CLIENT_72_LIVE_RESOURCE_CONTRACT.md)。
