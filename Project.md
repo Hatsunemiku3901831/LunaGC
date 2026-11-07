@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+D02-R5隔离入口前置已实现：[独立运行目录](docs/CLIENT_72_PORTABLE_ISOLATION.md)34项真实PowerShell夹具/独立审核通过；配置/JAR/资源/data/DB/CWD/状态归属及版本/信任守卫保持，先复现并修正同前缀Mongo误复用。无真实实例/新JAR部署，R4/P0/SDK/资源仍待，不能算D-02或R5实部署通过。
+
 D02-R2 Diagnostics观察候选按事实收口：[真实WinHTTP回环](docs/CLIENT_72_WINHTTP_ETW_FIXTURE.md)一次GET207/POST208而0事件，主线审source/首raw/hash及2守卫通过、会话/端口清理成立；无SDK覆盖证据，不在游戏重复。R2继续11自然加载模块的准确transport链，SDK父项未验。
 
 D02-R2 ETW能力子项已审：[自有provider夹具](docs/CLIENT_72_SDK_ETW_OBSERVER.md)主线第三次PID/ID正反控制/TDH/退出清理通过，2离线守卫通过。仅合成输入，不证明真实WinHTTP provider或SDK覆盖；原型不接入游戏。

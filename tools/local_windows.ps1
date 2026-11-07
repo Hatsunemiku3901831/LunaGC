@@ -5,7 +5,8 @@ param(
     [ValidateRange(1, 16384)]
     [int] $GameWidth = 3840,
     [ValidateRange(1, 16384)]
-    [int] $GameHeight = 1645
+    [int] $GameHeight = 1645,
+    [string] $InstanceRoot
 )
 
 $ErrorActionPreference = 'Stop'
@@ -14,6 +15,21 @@ $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSHOME 'Modules\Microsoft.PowerShell.Utility\Microsoft.PowerShell.Utility.psd1') -ErrorAction Stop
 $repo = Split-Path -Parent $PSScriptRoot
 Set-Location -LiteralPath $repo
+$runRoot = $repo
+if ($InstanceRoot) {
+    if ($Mode -in @('build', 'buildpatch', 'patch', 'reset')) {
+        throw 'Build and client patch actions use the checkout; omit InstanceRoot.'
+    }
+    $instances = [IO.Path]::GetFullPath((Join-Path $repo 'local/instances')).TrimEnd('\', '/') + '\'
+    $runRoot = if ([IO.Path]::IsPathRooted($InstanceRoot)) { $InstanceRoot } else { Join-Path $repo $InstanceRoot }
+    $runRoot = [IO.Path]::GetFullPath($runRoot).TrimEnd('\', '/')
+    if (-not $runRoot.StartsWith($instances, [StringComparison]::OrdinalIgnoreCase)) {
+        throw 'InstanceRoot must be a child directory of this checkout local/instances/.'
+    }
+    if (-not (Test-Path -LiteralPath $runRoot -PathType Container)) {
+        throw 'InstanceRoot must already exist with explicitly prepared deployment inputs.'
+    }
+}
 
 # Read literal settings only. A checkout's .env is data, never PowerShell code.
 foreach ($name in @('.env', '.env.local')) {
@@ -31,20 +47,21 @@ foreach ($name in @('.env', '.env.local')) {
     }
 }
 
-$local = Join-Path $repo 'local'
+$runtimeLocal = Join-Path $repo 'local'
+$local = Join-Path $runRoot 'local'
 $logDir = Join-Path $local 'logs'
 . (Join-Path $PSScriptRoot 'portable_settings.ps1')
 $jarName = Get-PortableJarName $repo
-$jar = Join-Path $repo $jarName
-$configFile = Join-Path $repo 'config.json'
+$jar = Join-Path $runRoot $jarName
+$configFile = Join-Path $runRoot 'config.json'
 $httpPort = if ($env:LUNAGC_HTTP_PORT) { [int]$env:LUNAGC_HTTP_PORT } else { 8088 }
 $gamePort = if ($env:LUNAGC_GAME_PORT) { [int]$env:LUNAGC_GAME_PORT } else { 22101 }
-$mongoPort = 27017
+$mongoPort = if ($InstanceRoot) { 27027 } else { 27017 }
 $baseUrl = 'http://127.0.0.1:' + $httpPort
 New-Item -ItemType Directory -Path $logDir -Force | Out-Null
 
 function Get-Java {
-    $jdk = Get-ChildItem -LiteralPath (Join-Path $local 'runtime') -Directory |
+    $jdk = Get-ChildItem -LiteralPath (Join-Path $runtimeLocal 'runtime') -Directory |
         Where-Object Name -Like 'jdk-17*' | Sort-Object Name -Descending | Select-Object -First 1
     if (-not $jdk) { throw 'Portable Java 17 is missing under local\runtime.' }
     $java = Join-Path $jdk.FullName 'bin\java.exe'
@@ -55,7 +72,7 @@ function Get-Java {
 }
 
 function Get-Mongod {
-    $mongo = Get-ChildItem -LiteralPath (Join-Path $local 'runtime') -Directory |
+    $mongo = Get-ChildItem -LiteralPath (Join-Path $runtimeLocal 'runtime') -Directory |
         Where-Object Name -Like 'mongodb-*' | Sort-Object Name -Descending | Select-Object -First 1
     if (-not $mongo) { throw 'Portable MongoDB is missing under local\runtime.' }
     return (Join-Path $mongo.FullName 'bin\mongod.exe')
@@ -77,7 +94,7 @@ function Get-Server {
         }
         if ($process.Name -ne 'java.exe' -or -not $runningJar -or
             -not [IO.Path]::IsPathRooted($runningJar) -or
-            (Split-Path -Parent ([IO.Path]::GetFullPath($runningJar))) -ne $repo) {
+            (Split-Path -Parent ([IO.Path]::GetFullPath($runningJar))) -ne $runRoot) {
             throw "Port $httpPort belongs to another application (PID $($process.ProcessId))."
         }
         # Keep stop usable when this checkout's selected version/JAR has changed.
@@ -105,6 +122,7 @@ function Get-Health {
 
 function Get-Config {
     if (-not (Test-Path -LiteralPath $configFile)) {
+        if ($InstanceRoot) { throw 'InstanceRoot requires an explicitly prepared config.json; no original config or data is copied.' }
         $stateData = Join-Path $local 'data'
         if (-not (Test-Path -LiteralPath $stateData)) {
             Copy-Item -LiteralPath (Join-Path $repo 'data') -Destination $stateData -Recurse
@@ -140,7 +158,7 @@ function Invoke-GmCommand([string] $command) {
 
 function Start-LocalServer {
     $configuration = Get-Config
-    Assert-PortableConfig $repo $configuration $mongoPort
+    Assert-PortableConfig $runRoot $configuration $mongoPort -Isolated:([bool]$InstanceRoot)
     $existing = Get-Server
     if ($existing) {
         Assert-RunningArtifact $existing
@@ -152,7 +170,7 @@ function Start-LocalServer {
     $java = Get-Java
     $mongod = Get-Mongod
     if (-not (Test-Path -LiteralPath $jar)) { throw "Server JAR is missing: $jar" }
-    $resource = Join-Path (Resolve-PortablePath $repo $configuration.folderStructure.resources) 'ExcelBinOutput\AvatarExcelConfigData.json'
+    $resource = Join-Path (Resolve-PortablePath $runRoot $configuration.folderStructure.resources) 'ExcelBinOutput\AvatarExcelConfigData.json'
     if (-not (Test-Path -LiteralPath $resource)) { throw 'Resources are missing. Initialize the resources submodule first.' }
     if ((Get-Content -LiteralPath $resource -TotalCount 1) -match '^version https://git-lfs') {
         throw 'Resources are LFS pointers. Run git -C resources lfs pull first.'
@@ -160,18 +178,24 @@ function Start-LocalServer {
     if ($configuration.server.http.bindPort -ne $httpPort -or $configuration.server.game.bindPort -ne $gamePort) {
         throw 'The .env ports and config.json ports must match.'
     }
-    $db = Join-Path $repo 'mongodata'
+    $db = Join-Path $runRoot 'mongodata'
     New-Item -ItemType Directory -Path $db -Force | Out-Null
     $mongo = Get-Listener $mongoPort
     if ($mongo) {
-        if ($mongo.ExecutablePath -ne $mongod -or $mongo.CommandLine.IndexOf($db, [StringComparison]::OrdinalIgnoreCase) -lt 0) {
-            throw 'Port 27017 belongs to a different database. Refusing to reuse it.'
+        $dbArguments = [regex]::Matches($mongo.CommandLine, '(?:^|\s)--dbpath(?:\s+|=)(?:"([^"]+)"|(\S+))')
+        $runningDb = $null
+        if ($dbArguments.Count -eq 1) {
+            $selectedDb = if ($dbArguments[0].Groups[1].Success) { $dbArguments[0].Groups[1].Value } else { $dbArguments[0].Groups[2].Value }
+            if ([IO.Path]::IsPathRooted($selectedDb)) { $runningDb = [IO.Path]::GetFullPath($selectedDb).TrimEnd('\', '/') }
+        }
+        if ($mongo.ExecutablePath -ne $mongod -or $runningDb -ne $db) {
+            throw "Port $mongoPort belongs to a different database. Refusing to reuse it."
         }
     } else {
         $mongo = Start-Process -FilePath $mongod -ArgumentList @('--dbpath', ('"' + $db + '"'),
             '--bind_ip', '127.0.0.1', '--port', $mongoPort, '--wiredTigerCacheSizeGB', '1',
             '--logpath', ('"' + (Join-Path $logDir 'mongo.log') + '"'), '--logappend') `
-            -WorkingDirectory $repo -WindowStyle Hidden -PassThru
+            -WorkingDirectory $runRoot -WindowStyle Hidden -PassThru
         $deadline = (Get-Date).AddSeconds(45)
         while (-not (Get-Listener $mongoPort)) {
             if ($mongo.HasExited) { throw "MongoDB exited. Check $logDir\mongo.log." }
@@ -184,7 +208,7 @@ function Start-LocalServer {
     $jarHash = (Get-FileHash -LiteralPath $jar -Algorithm SHA256).Hash
     $server = Start-Process -FilePath $java -ArgumentList @('-Xms512m', '-Xmx6g', '-Dfile.encoding=UTF-8',
         ('"-Djdk.net.unixdomain.tmpdir=' + $socketDir + '"'), '-jar', ('"' + $jar + '"'), '-noconsole') `
-        -WorkingDirectory $repo -WindowStyle Hidden -RedirectStandardOutput (Join-Path $logDir 'server-out.log') `
+        -WorkingDirectory $runRoot -WindowStyle Hidden -RedirectStandardOutput (Join-Path $logDir 'server-out.log') `
         -RedirectStandardError (Join-Path $logDir 'server-err.log') -PassThru
     $state = [ordered]@{ started = (Get-Date).ToString('o'); pid = $server.Id; jar = $jar;
         jarSHA256 = $jarHash; gamePath = $env:GAME_PATH }

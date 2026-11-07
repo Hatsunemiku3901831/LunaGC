@@ -35,11 +35,11 @@ function Resolve-ClientTrustBundlePath([string] $Repository) {
     return $path
 }
 
-function Assert-PortableConfig([string] $Repository, $Configuration, [int] $MongoPort) {
+function Assert-PortableConfig([string] $Repository, $Configuration, [int] $MongoPort, [switch] $Isolated) {
     $root = [IO.Path]::GetFullPath($Repository).TrimEnd('\', '/') + '\'
     foreach ($name in @('resources', 'data')) {
         $path = Resolve-PortablePath $Repository $Configuration.folderStructure.$name
-        $externalResources = $name -eq 'resources' -and $env:LUNAGC_RESOURCES_DIR -and
+        $externalResources = -not $Isolated -and $name -eq 'resources' -and $env:LUNAGC_RESOURCES_DIR -and
             $path -eq (Resolve-PortablePath $Repository $env:LUNAGC_RESOURCES_DIR)
         if (-not $path.StartsWith($root, [StringComparison]::OrdinalIgnoreCase) -and -not $externalResources) {
             throw "folderStructure.$name points outside this checkout: $path. Review copied config.json before starting; data is never moved automatically. External resources require matching LUNAGC_RESOURCES_DIR."

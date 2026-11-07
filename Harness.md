@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+便携实例复现：`tools.test_portable_instance`12 + `tools.test_local_windows`13 + `tools.test_client72_trust_launcher`9，主线34项通过；红测`main/portable-instance-red.log`/`portable-mongo-owner-red.log`，最终`portable-instance-final2.log`。只捕获命令/临时哨兵，未启真实服务；实际status退出1/原config保持，见[隔离专题](docs/CLIENT_72_PORTABLE_ISOLATION.md)。
+
 WinHTTP Diagnostics单次证据：`sdk-etw-observer/winhttp/actual-once.log` SHA27f8dc34…48b1d；真实回环207/208、0事件，stop0/query4201、port rebind成功。主线只读`tools.test_sdk72_winhttp_etw`2项通过，不重发请求；source/首raw边界及0事件限制见[专题](docs/CLIENT_72_WINHTTP_ETW_FIXTURE.md)。
 
 ETW自有夹具：固定合成EXE/source后，主线实际`third-review.log`核PID/ID正反对照、TDH errors0、child exit0、stop0/query4201；设`SDK72_ETW_FIXTURE_LOG`跑`tools.test_sdk72_etw`2项通过。元数据/代码来源及当前边界见[计划](docs/CLIENT_72_WINHTTP_ETW_PLAN.md)/[夹具](docs/CLIENT_72_SDK_ETW_OBSERVER.md)，不能当目标请求观察器。
