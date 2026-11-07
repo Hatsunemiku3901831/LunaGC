@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+入口上下文工具：`sample_client72_entry_context.py --observation <新monitor> --output <专属新raw>`；7离线检查、两合同16窗口/五文件主线复核，`main/entry-context-tool/root-reviewed-proof.json`。源58148689…c7d7b，读预算17/785；[专题](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md)标明未执行/未知。当前暂停前只验准备，不使用旧PID或新启动；cold父descriptor16B需恢复后另补合同。
+
 SDK响应复现：`client72_sdk_response_contract.py --client <GAME_PATH> --output <新local raw>`，`SDK72_RESPONSE_REPORT`指定后跑18检查。第三SHA77ffd6e3…442992同双跑，49native范围/内存隐私/响应生产规格和未知见[专题](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md)，`main/final-context-response-review.json`。本轮未实施session DTO或启动本服。
 
 Scene运行上下文：`client72_scene_runtime_context.py --client <GAME_PATH> --output <新local raw>`，设置专题两报告环境后跑7套74检查。第三SHAbf9efd62…db81d4同双跑，`main/final-context-response-review.json`；实际原生/typed模型/Pool首缺和只读根合同见[专题](docs/CLIENT_72_SCENE_RUNTIME_CONTEXT.md)。本批后暂停，命令仅供恢复使用。

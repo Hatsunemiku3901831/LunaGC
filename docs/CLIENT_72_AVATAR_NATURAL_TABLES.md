@@ -52,7 +52,7 @@ locator 报告 `locator-final-1.json` SHA `fc2c3aca3f472354f0533c9ac319387102fd6
 
 resources5 原样本 SHA `c5e6b05778f6326891065f120b966f4a8135b8601f097c30f6477724066a765d`；四段真实逆置换共1024B SHA `8717ded77f717cf44988dee2720b99bbd60c751426b130f6166a2ffc379a57f6`，seed `0x3b0a002e`。工具逐 span 检查长度/hash/array 地址链，并要求四段各为256值双射。正置换逐段取其数学逆，**明确是重建模型，不称自然读到了未采的前1024B**。原生 `14aefa090/14aef9db0` 与 float getter `14f905140` 使用这组存储，文件本身不经过所谓 cipher 解密。旧显式13/29配对置换的 probe 保留，正式数据使用该自然来源。
 
-Weapon 有额外明确边界。首失败在 `.ctor15449a920→base1484451b0→14f587b40→14d5b9fa0` 的 S+60e8 空配置 HashSet。原模型提供count0空存储并给其标61440自有HashSet<uint32>类型，S+6100为absent List；后来HandlerClosure从准确metadata证明S+60e8实际是11325 GlobalVars._serializedCodeSwitches/HashSet<int32>，61440的自有uint32集合真实在S+1d4a8。**该旧类型标签错误，不能作为目标配置的typed身份。** 当前原生空路径只读+20=count0、未消费class，故只保留该受控空存储路径的执行事实，不将其提升为真实配置/自然模式。历史source/raw保持冻结，错误不通过刷hash掩盖。
+Weapon 有额外明确边界。首失败在 `.ctor15449a920→base1484451b0→14f587b40→14d5b9fa0` 的 S+60e8 空配置 HashSet。原模型提供零值存储并给其标61440自有HashSet<uint32>类型，S+6100为absent List；后来HandlerClosure从准确metadata证明S+60e8实际是11325 GlobalVars._serializedCodeSwitches/HashSet<int32>，61440的自有uint32集合真实在S+1d4a8。**该旧类型标签错误，不能作为目标配置的typed身份。** 原生早退路径只检查+20为零，未消费class；新精确布局进一步证明+20是buckets引用，不是count。因此这里只保留零buckets缓冲下Contains早退的执行事实，不宣称正常初始化的集合、count0、真实配置或自然模式。历史source/raw保持冻结，错误不通过刷hash掩盖。
 
 在这一限定fixture下，托管模式`.ctor` slot11 `154498220`原生分配20600 backing，保留87097+10/+20同对象，随后`15043f0f0/150b6a9b0`解析实际字段。这不批准Weapon11101的自然构造上下文或unmanaged路径。GlobalVars.cctor虽写mode false，另一实际writer会在codeSwitches空时写true，不能只据cctor推自然模式；新HandlerClosure须以真实int32来源/相关writer和必要自然值关闭3521/6506/模式条件后再交生产规格。
 
