@@ -35,7 +35,7 @@ public class RSADecryptionUtil {
             KeyFactory kf = KeyFactory.getInstance("RSA");
             return kf.generatePrivate(new PKCS8EncodedKeySpec(keyBytes));
         } catch (Exception e) {
-            Grasscutter.getLogger().warn("Failed to load key " + name + ": " + e.getMessage());
+            Grasscutter.getLogger().warn("Failed to load key {} ({})", name, e.getClass().getSimpleName());
             return null;
         }
     }
@@ -52,7 +52,7 @@ public class RSADecryptionUtil {
             throw new Exception("Failed to base64-decode input", e);
         }
 
-        Grasscutter.getLogger().debug("RSA decrypt attempt: input base64 len=" + encryptedBase64.length() + " bytes=" + encryptedBytes.length);
+        Grasscutter.getLogger().debug("RSA decrypt requested");
 
         if (sdkPrivateKey != null) {
             String result = tryDecrypt(encryptedBytes, sdkPrivateKey, "RSA/ECB/PKCS1Padding", "sdk+PKCS1");
@@ -98,11 +98,11 @@ public class RSADecryptionUtil {
 
         String plaintext = new String(encryptedBytes, StandardCharsets.UTF_8);
         if (isPrintable(plaintext)) {
-            Grasscutter.getLogger().info("RSA decrypt: using plaintext fallback, value=" + plaintext);
+            Grasscutter.getLogger().info("RSA decrypt: using existing plaintext fallback");
             return plaintext;
         }
 
-        Grasscutter.getLogger().error("RSA decrypt: all methods failed for input (base64 len=" + encryptedBase64.length() + ")");
+        Grasscutter.getLogger().error("RSA decrypt: all methods failed");
         throw new Exception("RSA decryption failed: no matching key or padding");
     }
 
@@ -112,10 +112,10 @@ public class RSADecryptionUtil {
             cipher.init(Cipher.DECRYPT_MODE, key);
             byte[] decrypted = cipher.doFinal(data);
             String result = new String(decrypted, StandardCharsets.UTF_8);
-            Grasscutter.getLogger().info("RSA decrypt succeeded with " + label + " -> [" + result + "]");
+            Grasscutter.getLogger().info("RSA decrypt succeeded with {}", label);
             return result;
         } catch (Exception e) {
-            Grasscutter.getLogger().debug("RSA decrypt failed with " + label + ": " + e.getMessage());
+            Grasscutter.getLogger().debug("RSA decrypt failed with {}", label);
             return null;
         }
     }

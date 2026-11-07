@@ -105,7 +105,6 @@ public final class AuthenticationHandler implements Router {
         
         try {
             String rawBodyData = ctx.body();
-            Grasscutter.getLogger().debug("Ma-passport request body: " + rawBodyData);
             
             var request = JsonUtils.decode(rawBodyData, LoginByPasswordRequestJson.class);
             if (request == null) {
@@ -119,8 +118,7 @@ public final class AuthenticationHandler implements Router {
             ctx.json(response);
             
         } catch (Exception e) {
-            Grasscutter.getLogger().error("Error in Ma-Passport login", e);
-            e.printStackTrace();
+            Grasscutter.getLogger().error("Error in Ma-Passport login ({})", e.getClass().getSimpleName());
             ctx.status(500).result("{\"retcode\":-1,\"message\":\"Internal server error\",\"data\":null}");
         }
     }
@@ -134,7 +132,6 @@ public final class AuthenticationHandler implements Router {
         
         try {
             String rawBodyData = ctx.body();
-            Grasscutter.getLogger().debug("Ma-passport verify body: " + rawBodyData);
             
             var request = JsonUtils.decode(rawBodyData, VerifySTokenRequestJson.class);
             if (request == null) {
@@ -148,8 +145,7 @@ public final class AuthenticationHandler implements Router {
             ctx.json(response);
 
         } catch (Exception e) {
-            Grasscutter.getLogger().error("Error in Ma-Passport verify", e);
-            e.printStackTrace();
+            Grasscutter.getLogger().error("Error in Ma-Passport verify ({})", e.getClass().getSimpleName());
             ctx.status(500).result("{\"retcode\":-1,\"message\":\"Internal server error\",\"data\":null}");
         }
     }
@@ -162,8 +158,8 @@ public final class AuthenticationHandler implements Router {
      * server sends an SMS first; this private server never validates the captcha (there
      * is no SMS channel), so the phone number alone identifies the account.
      *
-     * <p>The client's exact field names are unobserved, so the raw body is logged at
-     * debug level and the request POJO accepts every plausible variant.
+     * <p>The client's exact field names still require target-version evidence.
+     * Authentication request bodies are kept out of logs.
      *
      * @route /account/ma-cn-passport/app/loginByMobileCaptcha
      */
@@ -171,7 +167,6 @@ public final class AuthenticationHandler implements Router {
         Grasscutter.getLogger().info("Ma-passport mobile-captcha login request from: " + Utils.address(ctx));
         try {
             String rawBodyData = ctx.body();
-            Grasscutter.getLogger().debug("Ma-passport mobile-captcha request body: " + rawBodyData);
             var request = JsonUtils.decode(rawBodyData, LoginByMobileCaptchaRequestJson.class);
             if (request == null) {
                 ctx.status(400).result("{\"retcode\":-1,\"message\":\"Invalid Request\",\"data\":null}");
@@ -180,8 +175,7 @@ public final class AuthenticationHandler implements Router {
             var response = MaPassportAuthenticator.appLoginByMobileCaptcha(request);
             ctx.json(response);
         } catch (Exception e) {
-            Grasscutter.getLogger().error("Error in Ma-Passport mobile-captcha login", e);
-            e.printStackTrace();
+            Grasscutter.getLogger().error("Error in Ma-Passport mobile-captcha login ({})", e.getClass().getSimpleName());
             ctx.status(500).result("{\"retcode\":-1,\"message\":\"Internal server error\",\"data\":null}");
         }
     }
@@ -223,7 +217,7 @@ public final class AuthenticationHandler implements Router {
 
             ctx.json(response);
         } catch (Exception e) {
-            Grasscutter.getLogger().error("Error in Ma-Passport exchange", e);
+            Grasscutter.getLogger().error("Error in Ma-Passport exchange ({})", e.getClass().getSimpleName());
             ctx.status(500).result("{\"retcode\":-1,\"message\":\"Internal server error\",\"data\":null}");
         }
     }

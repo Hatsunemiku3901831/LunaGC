@@ -1,5 +1,7 @@
 # 账号与存档系统接手指南
 
+2026-11-08 [认证日志修正](CLIENT_72_AUTH_LOGGING.md)移除三个生产类中的认证正文、解密明文、账号和token片段；密码、密钥选择、既有token策略与保存不变。真实handler/RSA和独立Mongo账号回归两套35项通过，无失败/错误/跳过。7.2 SDK key/route和本服客户端仍未验，不批准旧fallback或token策略。
+
 2026-11-07[Astra离线研究](CLIENT_72_ASTRA_OFFLINE.md)未改账号/保存代码或数据库，未执行新的loadAll/正向QuestManager。Avatar最终装备/属性/SavedVitals时序和资源未知不能填零的约束写入后续规格；客户端登录/退出重登仍未验，具体缺输入见HANDOFF2。
 
 2026-11-07离线前置只增强网络边界与测试，账号/保存生产实现及门禁未改。目标Chapter加入真实303启动夹具后，两项保存/BSON/新Player冷读及未就绪manager拒绝通过；自然loadAll、必要资源及正向manager重绑定仍未满足。50套875关联回归通过、独立Mongo正常关闭，不代表新旧号实机。最新范围见[离线执行](CLIENT_72_SOL_TERRA_OFFLINE.md)、[章节验证](CLIENT_72_D02_CHAPTER_LOAD.md)及HANDOFF2。

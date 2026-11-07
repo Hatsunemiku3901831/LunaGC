@@ -5,6 +5,9 @@ import static emu.grasscutter.config.Configuration.ACCOUNT;
 import static org.junit.jupiter.api.Assertions.*;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
 
 import com.google.gson.JsonObject;
 import com.mongodb.client.*;
@@ -281,6 +284,7 @@ class PasswordResetAuthenticationTest {
                 };
         byte[] payload =
                 GetPlayerTokenReq.newBuilder()
+                        .setKeyId(4)
                         .setAccountUid(ID)
                         .setAccountToken("old-login-token")
                         .build()
@@ -327,5 +331,37 @@ class PasswordResetAuthenticationTest {
         assertEquals(0, combo.retcode);
         assertNotNull(DispatchUtils.authenticate(ID, combo.data.combo_token));
         assertEquals(combo.data.combo_token, row().getString("token"));
+    }
+
+    @Test
+    void legacyTokenAdoptionDoesNotLogAccountOrTokenPrefixes() {
+        String oldToken = "synthetic-old-session-047215";
+        String newToken = "synthetic-new-session-047215";
+        rows().updateOne(new Document("_id", ID), new Document("$set",
+                new Document("passwordRequired", false).append("sessionKey", oldToken)));
+        var request = new VerifySTokenRequestJson();
+        request.mid = ID;
+        request.stoken = newToken;
+        var logger = Grasscutter.getLogger();
+        var previousLevel = logger.getLevel();
+        var events = new ListAppender<ILoggingEvent>();
+        events.start();
+        logger.addAppender(events);
+        logger.setLevel(Level.DEBUG);
+        try {
+            assertEquals(0, MaPassportAuthenticator.verifySToken(request).retcode);
+            assertEquals(newToken, row().getString("sessionKey"));
+            String logs = events.list.stream().map(ILoggingEvent::getFormattedMessage)
+                    .collect(java.util.stream.Collectors.joining("\n"));
+            assertFalse(events.list.isEmpty());
+            assertAll(
+                    () -> assertFalse(logs.contains(ID), "Account reached auth log"),
+                    () -> assertFalse(logs.contains(oldToken.substring(0, 12)), "Old session token prefix reached auth log"),
+                    () -> assertFalse(logs.contains(newToken.substring(0, 12)), "New session token prefix reached auth log"));
+        } finally {
+            logger.detachAppender(events);
+            logger.setLevel(previousLevel);
+            events.stop();
+        }
     }
 }

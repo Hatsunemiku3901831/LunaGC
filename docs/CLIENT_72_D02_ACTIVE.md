@@ -2,6 +2,8 @@
 
 用户已明确恢复研究、生产实现、回归、Windows portable 隔离部署及实际客户端验收，覆盖此前暂停、仅离线和模型阶段限制。D-02 未完成；本记录是活动计划，不是暂停交接。完整战斗、商城、深渊和新增内容不在本阶段。
 
+2026-11-08最新批：locator、Java消费者、自然cold99读和条件SDK登录链已主线第三审并本地提交，详见Project/Harness。另有三Java生产类认证日志修正，只改日志/注释，两套35项真实回归已过，独立Mongo正常关闭，便携构建随后核。SDK Crypto/key和Scene/Avatar完整必经后继继续交Astra，不部署或改版本绕前置。最近原始客户端90秒停SDK登录页，用户确认无错并正常退出，OS无游戏/调试器；无本服入世界验收。
+
 ## 接手与依赖
 
 接手 HEAD `52999ce`，分支 `7.2-dev`；主仓库仅 resources 子模块既有 dirty，具体文件与哈希留本机初始清单。patch `3675ea7` clean，resources `dac2a9d` 加原差异。五份 profile 输入逐文件 SHA-256 全匹配；配置、原 mongodata/local/data 保留。当前实际 OS 清点无游戏、Java、MongoDB、调试器进程，8088/22101/27017/27027 无监听；旧会话/PID/保留 pause 不适用。初始私有证明在 `local/migration72/d02-active/main/initial-inventory.private.json`。

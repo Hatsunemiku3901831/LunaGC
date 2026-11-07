@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+认证日志回归：`AuthenticationLoggingTest`6项无需DB；`PasswordResetAuthenticationTest`29项必须新独立Mongo和`LUNAGC_TEST_MONGO_URI`，不接原数据。最终XML/摘要 `auth-logging/mongo-review3/green/`，35项0失败/错误/跳过、Mongo正常shutdown；有效红测及夹具失败见[专题](docs/CLIENT_72_AUTH_LOGGING.md)。
+
 Java资源目的合同：`audit_d02_java_resource_contract.py --output local/migration72/d02-active/java-resource-contract-sol/<新名>.json`，10项`tools.test_audit_d02_java_resource_contract`。一处SCENE_ACTIVE已审文档pin更新的三跑SHA638e5731…fe8bc，除doc/tool hash外与旧epoch完全相同；`doc-reviewed-main-proof.json`及[专题](docs/CLIENT_72_D02_JAVA_RESOURCE_CONTRACT.md)记录原始来源、拒绝/未批准边界，不执行JVM或转换。
 
 SDK登录链复现：`client72_sdk_login_chain.py --client <GAME_PATH> --output <新local raw>`，设`SDK72_LOGIN_CHAIN_REPORT`跑13项`tools.test_client72_sdk_login_chain`。第三SHA3d864c07…c7fd96同v2双跑，`main/sdk-login-chain-main-proof.json`；条件性/native与cut模型边界见[专题](docs/CLIENT_72_SDK_LOGIN_CHAIN.md)。稳定根不是自然请求。

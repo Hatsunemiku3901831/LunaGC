@@ -1,5 +1,7 @@
 # 账号与存档运维和开发手册
 
+2026-11-08 [认证日志修正](CLIENT_72_AUTH_LOGGING.md)两套35项通过：6项handler/RSA日志、29项密码重置/会话/账号验证；新独立Mongo27027正常shutdown/exit0/端口释放，原数据不动。红测、夹具key_id遗漏的关联失败及最终XML分别保留在`d02-active/auth-logging/`。构建随后核验，完整SDK/客户端及部署仍待。
+
 2026-11-07本轮Astra仅离线研究：[资源](CLIENT_72_RESOURCE_DEEP_RESEARCH.md)记录真实parser与缺失转换依据；[Avatar](CLIENT_72_AVATAR_DEEP_RESEARCH.md)记录初始化/后缀。没有新DB、loadAll或正向QuestManager重绑执行。需自然资源就绪及必要map/引用/ERROR核对后才允许2B；装备最终属性恢复前不得把临时零能量覆盖保存值。未构建/部署。
 
 2026-11-07限定离线回归：独立Mongo/运行目录下实际50套875项全过，0失败/错误/跳过，覆盖既有账号/经济/保存/Lua及有限协议选集并含网络43项。新目标Chapter模式真实303启动/保存2项另计，BSON/新Player冷读、loadedAll=false下真实manager拒绝保持，未做正向重绑或客户端。两个实例均正常shutdown，原27017及数据不动，303库/BSON保留。首轮相对输入漏接导致41路径失败原样留存，仅修隔离驱动后重跑。证据及范围见[离线执行](CLIENT_72_SOL_TERRA_OFFLINE.md)、[章节](CLIENT_72_D02_CHAPTER_LOAD.md)和HANDOFF2；本轮没有存档格式或账号生产实现变更。

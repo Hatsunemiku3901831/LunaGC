@@ -33,7 +33,7 @@ public class MaPassportAuthenticator {
             try {
                 username = RSADecryptionUtil.decrypt(request.account);
             } catch (Exception e) {
-                Grasscutter.getLogger().error("Unable to decrypt account", e);
+                Grasscutter.getLogger().error("Unable to decrypt account ({})", e.getClass().getSimpleName());
                 return createLoginErrorResponse(-10, "Unable to decrypt account");
             }
             
@@ -42,7 +42,7 @@ public class MaPassportAuthenticator {
             try {
                 password = RSADecryptionUtil.decrypt(request.password);
             } catch (Exception e) {
-                Grasscutter.getLogger().error("Unable to decrypt account", e);
+                Grasscutter.getLogger().error("Unable to decrypt password ({})", e.getClass().getSimpleName());
                 return createLoginErrorResponse(-10, "Unable to decrypt account");
             }
             
@@ -50,11 +50,11 @@ public class MaPassportAuthenticator {
             
             if (account == null && emu.grasscutter.config.Configuration.ACCOUNT.autoCreate) {
                 account = DatabaseHelper.createAccountWithUid(username, 0);
-                Grasscutter.getLogger().info("Auto-created account for: " + username);
+                Grasscutter.getLogger().info("Ma-passport account created");
             }
             
             if (account == null) {
-                Grasscutter.getLogger().info("Account not found: " + username);
+                Grasscutter.getLogger().info("Ma-passport account not found");
                 return createLoginErrorResponse(-101, "Account or password error");
             }
             
@@ -64,11 +64,11 @@ public class MaPassportAuthenticator {
                     && password != null && !password.isEmpty()) {
                 account.setPassword(hashPassword(password));
                 account.save();
-                Grasscutter.getLogger().info("Password locked for account: " + username);
+                Grasscutter.getLogger().info("Ma-passport password stored");
             }
             
             if (!account.verifyPassword(password)) {
-                Grasscutter.getLogger().info("Password verification failed for: " + username);
+                Grasscutter.getLogger().info("Ma-passport password verification failed");
                 return createLoginErrorResponse(-101, "Account or password error");
             }
             
@@ -77,13 +77,11 @@ public class MaPassportAuthenticator {
             // Always generate a FRESH session key so the client never sees a reused/stale token.
             account.generateV2SessionKey(); // Confirms the versioned write on the account store.
             
-            Grasscutter.getLogger().info("User " + username + " has successfully logged in");
+            Grasscutter.getLogger().info("Ma-passport password login succeeded");
             return createLoginSuccessResponse(account);
             
         } catch (Exception e) {
             Grasscutter.getLogger().error("Exception: " + e.getClass().getName());
-            Grasscutter.getLogger().error("Message: " + e.getMessage());
-            e.printStackTrace();
             return createLoginErrorResponse(-1, "Internal server error: " + e.getMessage());
     }
 }
@@ -117,20 +115,20 @@ public class MaPassportAuthenticator {
             try {
                 mobile = RSADecryptionUtil.decrypt(encryptedMobile);
             } catch (Exception e) {
-                Grasscutter.getLogger().error("Unable to decrypt mobile", e);
+                Grasscutter.getLogger().error("Unable to decrypt mobile ({})", e.getClass().getSimpleName());
                 return createLoginErrorResponse(-10, "Unable to decrypt mobile");
             }
-            Grasscutter.getLogger().info("Mobile-captcha login for: " + mobile);
+            Grasscutter.getLogger().info("Ma-passport mobile-captcha credentials decrypted");
 
             Account account = DatabaseHelper.getAccountByName(mobile);
 
             if (account == null && emu.grasscutter.config.Configuration.ACCOUNT.autoCreate) {
                 account = DatabaseHelper.createAccountWithUid(mobile, 0);
-                Grasscutter.getLogger().info("Auto-created account for: " + mobile);
+                Grasscutter.getLogger().info("Ma-passport account created");
             }
 
             if (account == null) {
-                Grasscutter.getLogger().info("Account not found: " + mobile);
+                Grasscutter.getLogger().info("Ma-passport account not found");
                 return createLoginErrorResponse(-101, "Account or password error");
             }
 
@@ -140,7 +138,7 @@ public class MaPassportAuthenticator {
             }
             account.generateV2SessionKey();
 
-            Grasscutter.getLogger().info("User " + mobile + " has successfully logged in (mobile captcha)");
+            Grasscutter.getLogger().info("Ma-passport mobile-captcha login succeeded");
             LoginByPasswordResponseJson response = createLoginSuccessResponse(account);
             response.data.user_info.mobile = mobile;
             response.data.user_info.area_code = "+86";
@@ -148,20 +146,18 @@ public class MaPassportAuthenticator {
 
         } catch (Exception e) {
             Grasscutter.getLogger().error("Exception: " + e.getClass().getName());
-            Grasscutter.getLogger().error("Message: " + e.getMessage());
-            e.printStackTrace();
             return createLoginErrorResponse(-1, "Internal server error: " + e.getMessage());
         }
     }
 
     public static VerifySTokenResponseJson verifySToken(VerifySTokenRequestJson request) {
         try {
-            Grasscutter.getLogger().debug("Ma-passport token verification for mid: " + request.mid);
+            Grasscutter.getLogger().debug("Ma-passport token verification requested");
             
             // get acc by id in db
             Account account = DatabaseHelper.getAccountById(request.mid);
             if (account == null) {
-                Grasscutter.getLogger().info("Account not found for mid: " + request.mid);
+                Grasscutter.getLogger().info("Ma-passport account not found");
                 return createTokenErrorResponse(-101, "For account safety, please log in again");
             }
             
@@ -178,24 +174,18 @@ public class MaPassportAuthenticator {
                 // The client sent neither a flat stoken nor a nested token. Adopting null would
                 // wipe the stored key and break every later resume, so keep the stored key and
                 // let the lenient path below accept the request.
-                Grasscutter.getLogger().warn(
-                        "verifySToken for account " + account.getUsername()
-                                + " carried no token; keeping stored session key");
+                Grasscutter.getLogger().warn("Ma-passport verify carried no token; keeping stored session key");
             } else if (accountSessionKey == null || !accountSessionKey.equals(requestToken)) {
-                Grasscutter.getLogger().info(
-                        "Adopting stoken for account: " + account.getUsername()
-                                + " (old=" + (accountSessionKey == null ? "null" : accountSessionKey.substring(0, Math.min(12, accountSessionKey.length())))
-                                + " new=" + requestToken.substring(0, Math.min(12, requestToken.length()))
-                                + ")");
+                Grasscutter.getLogger().info("Ma-passport session key updated");
                 account.setSessionKey(requestToken);
                 DatabaseHelper.saveAccountSync(account);
             }
             
-            Grasscutter.getLogger().debug("Ma-Passport token verification successful for: " + account.getUsername());
+            Grasscutter.getLogger().debug("Ma-passport token verification succeeded");
             return createTokenSuccessResponse(account);
             
         } catch (Exception e) {
-            Grasscutter.getLogger().error("Error in ma-passport token verification", e);
+            Grasscutter.getLogger().error("Error in ma-passport token verification ({})", e.getClass().getSimpleName());
             return createTokenErrorResponse(-1, "Internal server error");
         }
     }

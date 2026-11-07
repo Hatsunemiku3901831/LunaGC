@@ -1,5 +1,7 @@
 # 账号与存档数据模型
 
+2026-11-08 [认证日志修正](CLIENT_72_AUTH_LOGGING.md)没有新增或迁移字段/集合，不调整token保存或密码策略。合成账号回归证明原token采用仍保存预期值，日志不含账号及旧/新token片段；两套35项通过，不表示7.2 SDK或真实旧号重登已通过。
+
 2026-11-07本轮未新增数据库字段、集合、UID规则或存档迁移。Chapter模式2项真实303保存及新Player BSON冷读通过，loadedAll=false真实manager拒绝仍保留；这不是正向QuestManager重绑。Avatar准备段只从明确只读夹具getter投影独立测试wire，未改持久模型/正式sender；Store仅关联GUID，未宣称物品ID或完整资源一致。参见[本轮记录](CLIENT_72_SOL_TERRA_OFFLINE.md)。
 
 2026-11-06 F-02c的selector/session key及F-04b的root公钥/两类key签名均是连接临时状态/本机信任输入，不入MongoDB、不等同账号token。供给对象不持有目标或服务端私钥；目标私钥只在研究过程内存中核对，禁止导出。PlayerData候选新raw图含boxed int64/float oneof及独立int64，业务身份仍未知，不据此新增存档字段。详见[初始化候选](CLIENT_72_INITIALIZATION_CANDIDATES.md)。

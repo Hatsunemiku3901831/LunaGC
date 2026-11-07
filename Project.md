@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+D02-R2认证日志前置已修：[三生产类日志](docs/CLIENT_72_AUTH_LOGGING.md)去除认证正文、明文、账号和token片段，认证/密钥/保存逻辑保持。有效泄漏红测后，独立Mongo两套35项通过/正常shutdown；仅测试请求补齐已证key4以到达撤销分支，生产配置/guard不动。便携构建随后核，SDK/资源/R4未齐未部署，D-02未完成。
+
 D02-R3 Java目的合同已审：[资源消费者](docs/CLIENT_72_D02_JAVA_RESOURCE_CONTRACT.md)64固定输入/222数据源码、152注解/83字段/22调用事实、13候选来源，主线第三及文档修正后新epoch三跑同字节、10检查通过。纠正缺ItemData先在GameItem构造器失败；未批准target→Java alias/默认/省略或正向资源加载，继续实际row映射。
 
 D02-R2条件登录调用链已审：[SDK login-chain](docs/CLIENT_72_SDK_LOGIN_CHAIN.md)24动作注册/16准确vtable边/任务持有与销毁，主线第三raw同双跑、13检查通过；队列先出队后执行，UI结束不能追已释放URL。完整自然请求、Crypto/key、route、信任与窄patch仍待，不安装旧整DLL。
