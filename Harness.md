@@ -1,5 +1,7 @@
 # 研发索引与执行骨架
 
+SDK响应复现：`client72_sdk_response_contract.py --client <GAME_PATH> --output <新local raw>`，`SDK72_RESPONSE_REPORT`指定后跑18检查。第三SHA77ffd6e3…442992同双跑，49native范围/内存隐私/响应生产规格和未知见[专题](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md)，`main/final-context-response-review.json`。本轮未实施session DTO或启动本服。
+
 Scene运行上下文：`client72_scene_runtime_context.py --client <GAME_PATH> --output <新local raw>`，设置专题两报告环境后跑7套74检查。第三SHAbf9efd62…db81d4同双跑，`main/final-context-response-review.json`；实际原生/typed模型/Pool首缺和只读根合同见[专题](docs/CLIENT_72_SCENE_RUNTIME_CONTEXT.md)。本批后暂停，命令仅供恢复使用。
 
 六表原生复现：`client72_avatar_natural_tables.py --client <GAME_PATH> --output <新local raw>`，设`CLIENT72_NATURAL_TABLES_REPORT`跑14检查。第三SHA1e9817cb…f85a86同双跑，`main/avatar-natural-tables-main-proof.json`；配置fixture/默认省略/Java未批边界见[专题](docs/CLIENT_72_AVATAR_NATURAL_TABLES.md)，不能外推自然NativeConfig或g2。

@@ -1,5 +1,7 @@
 # 国服 7.2 任务与验收
 
+D02-R2响应子合同已审：[SDK response](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md)49原生样本/18检查，主线第三同双跑。session/verify的tokens[]导致type0/空combo_token，单token type1格式有真实修复规格；源码未改，认证/DB不因格式卡放行。CookieToken type4不称combo必经，准确combo配置/签名/natural继续未知；新DefaultAuthenticators token片段日志仍待恢复后先修。本批暂停前只接收研究。
+
 D02-R4注册/工厂前缀子合同已审：[Scene上下文](docs/CLIENT_72_SCENE_RUNTIME_CONTEXT.md)能力默认槽/双向hash注册、Gadget PrimaryIndex31,682项与90000004真实行/工厂前缀；主线第三3,870,401B同双跑、13新+61旧=74检查通过。PoolCluster、自然注册/stage、MPLevel后继/组件生命周期与正式sender未批。按用户新指令本批验收后暂停，不执行下一课题。
 
 六表卡配置勘误：[Weapon前置](docs/CLIENT_72_AVATAR_NATURAL_TABLES.md)旧S+60e8空缓冲类型标签来自另一uint32集合，真实为GlobalVars HashSet<int32>。原生只检查+20的零buckets早退，不是读取count0；历史仅保留此storage实验，撤销配置typed身份解释，不给自然模式/11101生产许可。新HandlerClosure追真实来源/writer/模式，旧source/raw不刷hash。
