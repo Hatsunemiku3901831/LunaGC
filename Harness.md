@@ -1,3 +1,5 @@
+2026-11-08 F04-LOADER-CLEAN-owned：主线独立release/offline编译production/owned/fixture与3mock；第三真实Win32两新进程各94基线/188比较，同713B ABI，4拒绝均0xe0720001且stage/Win32准确，21相关Python通过。[来源/失败/模型/真实加载准备](docs/CLIENT_72_CLEAN_LOADER.md)；proof `clean-loader/verify-main-third/source-build-artifact-proof.json`。只有自有DLL加载，真实SDK/stock与生产转发未执行；下一实际90秒加载观察先等新ready，原DLL备份/恢复和最多4读781B方案已准备。
+
 2026-11-08 R2-ROUTE-loader：主线第三471,340B/SHA bae776a1…bee1471同v3双跑，decoded/config私有产物三次逐字节同，13检查通过；准确SDKDelegate.LoadFile包来源及url:string/map/app_key片段已验，主combo getter明确R9=0。[复现/来源/错误修正/剩余自然输入](docs/CLIENT_72_SDK_ROUTE_LOADER.md)，proof `d02-resume-20261108/r2-route/main-third-review.private.json`。继续签名/自然Init/env；不重复普通文件或7AD200缺口。
 
 2026-11-08 第二轮联合自然输入：源ecab38c9…f9c7c、24窗/14检查，上限40读2350B；用户ready后90秒/44监测，实际36读2232B零读错，partial仅Object371 kind28不符kind18合同，原结果保留。class1234/NativeConfig typed头/Pool精确绑定已取；用户登录页正常并正常退出，OS核目标不存在。[全部来源/预算/未知](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md#第二轮联合合同与实际结果)；proof `d02-resume-20261108/sampling2-main-review.private.json`。不重复启动同样实验，继续准确后继。

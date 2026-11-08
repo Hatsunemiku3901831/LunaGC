@@ -64,7 +64,7 @@
 | C-01 / F-02 / F-03 网络与初始化整合 | 进行中；全量出口归R4 | 复用C-01b帧/注册修复，补必要Union/枚举/最终发包与序列。检查onLogin、SceneInitFinish、EnterSceneDone后的队伍/世界/实体，不能只验八握手 |
 | V-01 回归失败归因 | 进行中；按本次改动和R4范围选集 | 新运行先明确基线/夹具/生产失败；保护账号、经济、保存、Lua。完整全量未重跑就不宣称全绿；不机械用历史失败总数安排任务 |
 | F-04 部署材料及隔离核验 | 进行中；复用ENV-01基线，实际部署待R4 | 真实SDK/信任/资源合同充分后形成7.2产物；正常构建和停服，按InstanceRoot归属核对，不仅改版本或环境变量放行；[隔离](docs/CLIENT_72_PORTABLE_ISOLATION.md) |
-| F04-LOADER-CLEAN 独立透明入口 | 进行中；原导出表已固定，自有夹具与源码准备中 | 独立于旧模块入口透明转发原库导出，只读核对已加载SDK身份与准确窗口；自有Win32夹具先验，再准备用户在场的真实加载。保留系统/客户端拒绝，不能绕过校验；[计划](docs/CLIENT_72_CLEAN_LOADER.md) |
+| F04-LOADER-CLEAN 独立透明入口 | 进行中；自有Win32透明转发/拒绝已验；实际加载观察已准备 | 独立于旧模块入口透明转发原库导出，只读核对已加载SDK身份与准确窗口；用户在场后真实可回退加载。保留系统/客户端拒绝，不能绕过校验；[计划/产物/范围](docs/CLIENT_72_CLEAN_LOADER.md) |
 
 ## 4. 任务发布与范围控制
 
@@ -152,6 +152,7 @@
 | SDK key核心及采样器准备（归D02-R1/R2/R4） | 已完成 | 未启用核心自有ABI、有限根/头采样工具已验；父descriptor已由后继补取，新增原生桥接见下项，实际加载仍未验。 | [key ABI](docs/CLIENT_72_SDK_KEY_INPUT_ABI.md)、[采样器](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md) |
 | R2-KEY-native-bridge | 已完成 | 同一Rust核心实际供给准确caller→原PEM/RSA/Base64，保持入口状态/原返回及拒绝；限定离线桥接，不证明loaded、自然输入、hook wrapper或整DLL。 | [原生桥接](docs/CLIENT_72_SDK_KEY_NATIVE_BRIDGE.md) |
 | R2-ROUTE-loader | 已完成 | 准确SDKDelegate.LoadFile→包内TextAsset、实际配置与url:string/map/app_key片段；主combo builder直接读初始化map。完整Init、自然环境选择、签名与本服请求未验。 | [配置loader](docs/CLIENT_72_SDK_ROUTE_LOADER.md) |
+| F04-LOADER-CLEAN-owned | 已完成 | 独立零hook入口实际编译，自有Win32夹具核47导出、透明ABI/原调用和4类真实异常拒绝；未加载实际客户端DLL，完整性/实际时序与自然SDK另验。 | [透明加载](docs/CLIENT_72_CLEAN_LOADER.md) |
 | 认证日志与InstanceRoot前置（归D02-R2/R5） | 已完成 | 三个认证类日志修复和数据隔离回归、独立运行目录入口已验；DefaultAuthenticator遗留日志已按R2-LOG修复，真实部署未验。 | [日志](docs/CLIENT_72_AUTH_LOGGING.md)、[隔离入口](docs/CLIENT_72_PORTABLE_ISOLATION.md) |
 
 ### 6.4 资源、脚本、保存与回归
