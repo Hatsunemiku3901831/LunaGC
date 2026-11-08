@@ -54,6 +54,8 @@
 
 # 研发索引与执行骨架
 
+2026-11-09 `R2-CONFIGSYNC-NATURAL-TRIGGER`：主线第三8744B/SHAf99de6aa…ea7eb9同双fresh、47静态断言通过，另核原metadata gate四字段；6新窗19179B/5旧窗及注册/once/插件槽/精确literal来源已审。[条件路径与装载时段未知](docs/CLIENT_72_SDK_CONFIGSYNC_NATURAL_TRIGGER.md)，raw `r2-config-trigger/`。当前页不代验目标路径；继续两个已知账号回调入口，未重启/加hook/读取目标，R2父项未完成。
+
 2026-11-09 `E-01/R3-CRITICAL-CONSUMER`：主线第三静态验证992B/SHA2e9cd93d…90a0f6同双fresh，14pin/6完整窗8768B/1896指令及三实参顺序通过。共父17494路径把63287+98/+78/+a4送1498e2200三float；其类型门禁拒Avatar，未CPU/alias。[准确链/未排除12候选/下一合同](docs/CLIENT_72_D02_AVATAR_CRITICAL_CONSUMER.md)，raw `r3-critical-consumer/`。继续准确installer，完整字段及父项仍未完成。
 
 2026-11-09 `E-01/R3-JAVA-ITEM-AFFIX-FRAGMENT`：便携JDK17实际编译/测试，Gradle21秒、XML3项0fail/error/skip。真实ResourceLoader/onLoad/Item map及new GameItem(11101)保持源[0,0]/NONE、身份/count/level/过滤结果；两个受控Java对照不许可target省略。[复现/源码/验收边界](docs/CLIENT_72_D02_ITEM_AFFIX_JAVA_LOAD.md)，log/XML/private proof在`r3-java-item/`。仅测试/文档，无生产资源变更或GS部署；完整Item/gadget/保存/D-02未验。
