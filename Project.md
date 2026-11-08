@@ -57,7 +57,8 @@
 | E-01/R3-CRITICAL-SEMANTICS | 进行中；准确职责桥仍缺 | 主线核21 Avatar/84 FightProperty typed参数及8准确窗3982B；邻接入口为运行属性/突破差/feature或字符串，未证+98/+a4职责。预算已止，未知值不进Java完整行 | [已查范围/准确缺口](docs/CLIENT_72_D02_AVATAR_CRITICAL_RESOURCE.md) |
 | F-03d3f4d2/R1-METHOD-CACHE | 已完成；限定lookup/collector及原版实际输入，不代验父项 | 原27controls/21检查及主线第三同双跑；live适配6检查，新ready90秒实际141读3048B/8候选hit、15项独立审核；正常页/退出、五输入及保护文件保持。自然caller/完整初始化未验 | [准确合同与实测](docs/CLIENT_72_AVATAR_METHOD_CACHE.md) |
 | F-03d3f4d2/R1-METHOD-CACHE-REPLAY | 已完成；限定源绑定原生回放 | 原GenericInst/8方法、连续原factory与64B写回通过；主线第三同双跑、20检查/12独立审核，旧六前缀保持。准确止16B hierarchy请求，完整cold/default/Handler未验 | [回放](docs/CLIENT_72_AVATAR_METHOD_CACHE_REPLAY.md) |
-| F-03d3f4d2/R1-HIERARCHY-STORAGE | 进行中；依准确原producer/16B请求 | 仅当前registry owner/owned1234/depth2、两次清零及8B已采父层级复制，原指令发布；尾哨兵/正反例/下一真实缺口验收，不预批后续24B或未知pointee | [准确后继合同](docs/CLIENT_72_AVATAR_METHOD_CACHE_REPLAY.md#当前最小后继准确16b-owned-hierarchy-storage) |
+| F-03d3f4d2/R1-HIERARCHY-STORAGE | 已完成；限定16B原生存储/发布 | 原store/xchg发布与尾哨兵保持，主线第三同双跑、17检查/10独立审核、20pin；累计新增4模型/45读345B。准确下一32B仍未供应，完整cold/default/Handler未验 | [实际结果/边界](docs/CLIENT_72_AVATAR_HIERARCHY_STORAGE.md) |
+| F-03d3f4d2/R1-CLASS80-STORAGE | 进行中；准确32B请求及固定12B行 | 同owned1234/count2/class+80，原两clear/发布；固定两6B行的typeRef/offset可提取，原inflation及entry写回另验；未知自然pointee不补值 | [计划/静态来源/预算](docs/CLIENT_72_AVATAR_CLASS80_STORAGE.md) |
 | R2-ROUTE-CONFIG-SELECT | 进行中；准确托管loader存在，自然选择/Init未验 | 固定托管env选择、managed→native必要输入和安全事件；原始材料可得先离线，合同足够再实机 | [执行计划](docs/CLIENT_72_D02_RESUME_20261109.md) |
 | R2-CONFIGSYNC-EVENT | 已完成；限定固定producer与原生dispatcher | 原ctor、真实OS转换、两个name负例/精确local_config到writer入口已执行；主线第三4670B同双跑、6项通过。自然caller/writer返回未验 | [原始证据与模型](docs/CLIENT_72_SDK_CONFIGSYNC_EVENT.md) |
 | R2-CONFIGSYNC-OBSERVE-owned | 已完成；限定独立构建/自有ABI及准备 | release DLL/fixture成功，两个新进程16case/279B实际搬移与恢复、15检查及12独立审核过；50导出/9新源/20旧pin保持。未调用SDK/客户端 | [实际构建与限定验收](docs/CLIENT_72_SDK_CONFIGSYNC_OBSERVER.md#主线实际构建与自有验证) |
@@ -142,6 +143,7 @@
 | --- | --- | --- | --- |
 | F-03d3f4d2/R1-METHOD-CACHE | 已完成 | 原lookup/hash/深比较与hit/miss边界、完整有界collector及主线第三已验；新ready原版90秒实际候选图取得、正常页/退出及保护文件保持。原生采样图回放/自然caller/完整构造/default/Handler/g2未代验。 | [合同与实机输入](docs/CLIENT_72_AVATAR_METHOD_CACHE.md) |
 | F-03d3f4d2/R1-METHOD-CACHE-REPLAY | 已完成 | 同轮采样图的原9查询及连续原factory/8方法/64B写回通过，三新进程同字节、20检查/12独立审核；旧六前缀保留，止准确16B请求。自然caller/完整cold/default/Handler/g2仍未验。 | [源绑定回放](docs/CLIENT_72_AVATAR_METHOD_CACHE_REPLAY.md) |
+| F-03d3f4d2/R1-HIERARCHY-STORAGE | 已完成 | 准确16B/两clear/已采Object8B复制、原store/xchg发布通过；三新进程同字节，17检查及10独立审核；4新增模型/45读345B。下一32B/完整cold/default/Handler/g2未代验。 | [有界原生存储](docs/CLIENT_72_AVATAR_HIERARCHY_STORAGE.md) |
 | B-02e1、B-02e2、B-02e3、B-02e4、B-02e5、B-02e6、B-02e7 | 已完成 | 选人成功继续、缓存等待、计时/场景查询、列表和非空子图消费片段；完整继续/落地未验。 | [继续](docs/CLIENT_72_BORN_CONTINUATION.md)、[场景消费](docs/CLIENT_72_SCENE_DATA.md)、[嵌套](docs/CLIENT_72_SCENE_NESTED.md) |
 | F-03a、F-03b、F-03c | 已完成 | 八握手、容量和进入场景通知最小发送合同；完整初始化/实体另验。 | [握手](docs/CLIENT_72_SCENE_HANDSHAKE.md)、[容量](docs/CLIENT_72_STORE_WEIGHT_CONTRACT.md)、[入场通知](docs/CLIENT_72_ENTER_SCENE_CONTRACT.md) |
 | F-03d1a、F-03d1b1、F-03d1c | 已完成 | PlayerData raw、用途与有限生产接入；其余属性及完整初始化不晋级。 | [PlayerData](docs/CLIENT_72_PLAYER_DATA_CONTRACT.md) |
