@@ -151,6 +151,32 @@ public final class AuthenticationHandler implements Router {
     }
 
     /**
+     * @route /account/ma-cn-session/app/verify
+     */
+    private static void maSessionVerify(Context ctx) {
+        Grasscutter.getLogger().info("Ma-session token verify request from: " + Utils.address(ctx));
+
+        try {
+            var request = JsonUtils.decode(ctx.body(), VerifySTokenRequestJson.class);
+            if (request == null) {
+                Grasscutter.getLogger().warn("Failed to parse Ma-session verify request");
+                ctx.status(400).result("{\"retcode\":-1,\"message\":\"Invalid Request\",\"data\":null}");
+                return;
+            }
+
+            var response = MaPassportAuthenticator.verifySToken(request);
+            if (response.retcode != 0) {
+                ctx.json(response);
+                return;
+            }
+            ctx.json(new SessionVerifyResponseJson(response));
+        } catch (Exception e) {
+            Grasscutter.getLogger().error("Error in Ma-session verify ({})", e.getClass().getSimpleName());
+            ctx.status(500).result("{\"retcode\":-1,\"message\":\"Internal server error\",\"data\":null}");
+        }
+    }
+
+    /**
      * Handles the CN SDK's phone-number + SMS-captcha login.
      *
      * <p>The official endpoint accepts an RSA-encrypted mobile number and an SMS code,
@@ -251,8 +277,8 @@ public final class AuthenticationHandler implements Router {
         javalin.post("/account/ma-cn-passport/app/loginByMobileCaptcha", AuthenticationHandler::maPassportMobileCaptchaLogin);
         javalin.post("/account/ma-cn-passport/token/verifySToken", AuthenticationHandler::maPassportVerify);
         // ma-cn-session (session-api.mihoyo.com/account/ma-cn-session/...) - 国服 SDK 实际请求路径。
-        // 之前未注册，落到通配 handler 返回空 data，客户端拿不到 user_info/token。
-        javalin.post("/account/ma-cn-session/app/verify", AuthenticationHandler::maPassportVerify);
+        // Session verify consumes a single token; passport verifySToken keeps its token array.
+        javalin.post("/account/ma-cn-session/app/verify", AuthenticationHandler::maSessionVerify);
         javalin.post("/account/ma-cn-session/app/exchange", AuthenticationHandler::maPassportExchange);
 
         // External login (from other clients).

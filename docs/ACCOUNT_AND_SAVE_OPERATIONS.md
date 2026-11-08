@@ -409,3 +409,6 @@ C-01a最终回归（2026-11-06）：独立便携Mongo测试实例、随机测试
 
 
 2026-11-08 R2-LOG：真实 SessionKeyAuthenticator 四分支日志红绿及保存/登录校验通过；与前批日志和密码回归合计本轮39项全过，独立新27027/data/cache/packets/plugins，Mongo正常shutdown，原库和运行数据保留。红测、夹具编译首失败与准确复现范围见[认证日志合同](CLIENT_72_AUTH_LOGGING.md)；尚非本服SDK或D-02实机通过。
+
+
+2026-11-08 R2-SESSION主线9套193项隔离回归及实际Java HTTP→固定原生parser/formatter三案例通过；原数据/配置保持，Mongo正常shutdown；自然SDK及D-02仍待验。见[session响应专题](CLIENT_72_SDK_SESSION_ADAPTER.md)。
