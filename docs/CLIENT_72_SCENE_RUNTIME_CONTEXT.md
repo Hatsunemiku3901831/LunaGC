@@ -159,3 +159,5 @@ python -m unittest tools.test_client72_scene_runtime_context tools.test_client72
 原始metadata/函数窗口/头解释在`d02-resume-20261108/fresh-pool-{metadata,code,forward-code}.private.json`及`fresh-scene-typeheads.private.json`；一次误把共享static root所有字段都归11325的离线查询以StopIteration失败，未生成假证明，已按固定root合同纠正owner11061/41992。后继不能沿用该错误归属。
 
 联合第二轮已实际采样：snapshot `main/entry-context-tool/live-resume-20261108-2.json` SHA `119f8a0b3c3ecc8829eda9bf7422c3646c643afa34ac041ea69b5607a02a7384`，Pool class仍11008/kind18，slot4指向当次模块+70687c0，32B精确SHA相符；pool mode1，type46314头id46314/kind18。现在可以沿真实非零分支`14050a890`准备后继；不能重复列“slot/开关/目标头未采”。该采样的partial来自独立Avatar Object kind守卫，与Pool读取错误无关。allocator尚未执行，所需class/metadata/池内容仍按真实首缺取证，不能由头绑定推定分配、注册、MPLevel或生命周期通过。实际预算、源、用户正常退出及未知见[联合采样结果](CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md#第二轮联合合同与实际结果)。
+
+该实际非零模式的[原生前缀后继](CLIENT_72_SCENE_POOL_CONTINUATION.md)现已执行到`14050a8ae`首缺4B loader TLS索引，精确位置由本PE TLS目录AddressOfIndex独立匹配。没有关闭pool开关、补零TLS或stub allocator求成功；mode0只作独立分支控制。下一固定4B可合并未来取证，真实分配线程、allocator返回及生命周期仍未闭。

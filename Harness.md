@@ -1,3 +1,5 @@
+2026-11-08 F-03d3s2-pool-prefix：fresh mode1原生前缀止14050a8ae，首缺模块+5eef080的4B TLS索引，与PE TLS AddressOfIndex独立相符；mode0仅控制。双新进程4,174B/SHA3a650294…ebcc811逐字节同，6检查通过，无allocator/TLS成功模型。[复现/原leaf边界失败/下一输入](docs/CLIENT_72_SCENE_POOL_CONTINUATION.md)。与未来取证合并，不扩当前透明加载4窗范围。
+
 2026-11-08 F04-LOADER-CLEAN-owned：主线独立release/offline编译production/owned/fixture与3mock；第三真实Win32两新进程各94基线/188比较，同713B ABI，4拒绝均0xe0720001且stage/Win32准确，21相关Python通过。[来源/失败/模型/真实加载准备](docs/CLIENT_72_CLEAN_LOADER.md)；proof `clean-loader/verify-main-third/source-build-artifact-proof.json`。只有自有DLL加载，真实SDK/stock与生产转发未执行；下一实际90秒加载观察先等新ready，原DLL备份/恢复和最多4读781B方案已准备。
 
 2026-11-08 R2-ROUTE-loader：主线第三471,340B/SHA bae776a1…bee1471同v3双跑，decoded/config私有产物三次逐字节同，13检查通过；准确SDKDelegate.LoadFile包来源及url:string/map/app_key片段已验，主combo getter明确R9=0。[复现/来源/错误修正/剩余自然输入](docs/CLIENT_72_SDK_ROUTE_LOADER.md)，proof `d02-resume-20261108/r2-route/main-third-review.private.json`。继续签名/自然Init/env；不重复普通文件或7AD200缺口。
