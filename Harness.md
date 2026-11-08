@@ -1,3 +1,5 @@
+2026-11-08 R1-SAMPLE-INTERFACES-prep：主线23 owned检查、当前五stock/4代码窗/2 descriptor/2 metadata/TLS目录复核通过；新源02ffaeab…dda251，最大14读664B/单读208B。[CLI/范围/预算](docs/CLIENT_72_INTERFACE_CONTEXT_SNAPSHOT.md)，proof `r1-interface-sampling/main-preparation-proof.private.json`。未实机执行，新ready后一次90秒原始monitor，再只读新两接口与loader索引；不复用上一ready或旧指针。
+
 2026-11-08 下一接口合同序列化核对：严格gate发现原独立文件实际6614B/c84…，旧声明6465B/bac…是写前LF字符串；主线证实仅149处CRLF、原manifest也记录C84，无字段变化。保留原件，新建从第三冻结报告投影的 `r1-fresh-ancestor/main-sampling-contract.lf.private.json` 实际6465B/BAC并单独pin，proof `sampling-contract-newline-audit.private.json`；[更正](docs/CLIENT_72_AVATAR_FRESH_ANCESTOR.md)，不忽略换行放宽gate。
 
 2026-11-08 R2-NATURAL-CONFIG-contract：主线第三8100B/SHA396b9ceb…28b76d2同双跑，14 owned检查通过；准确Config root/env/URL节点生命周期、5读36B根候选及owned 76读4644B预算已审。[原持锁37E430与key参数事件/自然深读未批准](docs/CLIENT_72_SDK_NATURAL_CONFIG.md)，proof `r2-natural-config/main-third-review.private.json`。不以owner非空或SDK页推定无writer区间。
