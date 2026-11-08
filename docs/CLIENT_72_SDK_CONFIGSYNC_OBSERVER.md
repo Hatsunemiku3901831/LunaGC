@@ -1,6 +1,6 @@
 # R2-CONFIGSYNC-OBSERVE：准确同步入口观察
 
-当前主线已完成release构建、两次自有进程原生验证、15项Python检查及12项独立审核；实际客户端尚未安装/启动。本页下方“夹具要求”和“未执行”描述的是源码冻结时阶段，实际结果以下方主线验收为准。
+当前主线已完成release构建、自有验证及一次新ready实机90秒观察。实际加载/转发/准确hook代码/稳定状态通过，目标事件未捕获，原因未知；用户正常页/退出后已恢复stock及删除本轮orig别名。本页下方“夹具要求”和“未执行”描述的是来源阶段，实际结果以下方主线验收为准。
 
 ## 实施前计划
 
@@ -64,3 +64,13 @@ owned执行工具只持久化严格白名单通过结果；未知stdout/stderr�
 主线另核9份新源码与来源冻结epoch、20旧依赖pin、精确50导出名/ordinal及80B DATA、实际产物SHA、16例结果与279B尾部、唯一安装点及无key激活，共12项，见 `main-owned-review.private.json`。原始构建日志留本卡忽略目录。
 
 新 `run-config-live1.ps1` / `restore-config-live1.ps1` 已生成并通过PowerShell AST解析；启动前会重新核当前GAME_PATH、五stock、13保护文件、当前进程/端口、来源epoch及准确产物，再备份stock、创建本轮orig别名及临时安装本独立DLL。恢复仅在实际客户端退出且安装文件/备份/别名均匹配时执行。主线准备盘点见 `main-preparation.private.json`：五输入和13保护文件保持、相关进程/TCP/UDP均0、无orig别名；尚未安装。下一步等待新的实时ready后单次90秒观察，collector上限11读1429B；自然首次事件是否晚于worker安装仍未知，无事件不能反推未发生。完整路由/信任/认证与D-02仍未验；R4前置未齐，GS不部署。
+
+## 新ready实际90秒、未命中及恢复
+
+用户本轮明确“现在可以，开始本次SDK配置实验”后，主线重新核输入和现场、备份stock，再临时安装准确616448B产物。实际新进程90.0秒、45次模块监测，末尾同一活进程的collector完成11读1429B，零短读/读错。完整raw `live1.private.json` 为1,271,265B/SHA `b036ba21735b780a342083938b83b6bd558d895834e288c0421b26bd37d51df3`，observer exit0。
+
+实际状态为installed/phase5、failure/win32=0、原库及self/SDK/EXE均已hold；47个转发目标相同，非入口五个代码窗保持。入口实际far patch、完整279B trampoline及38B callback比较相同，返回`entry+15`；80B state前后相同。分类为 **no-matching-event**，未取得env或两个引用bool，不能解释为ConfigSync不被自然调用，也不能证明首次事件发生于安装前。未观测writer返回、route效果、认证或本服连接，不继续无假设重复本轮实验。
+
+主线独立核9新源/20旧pin、同epoch构建输入、当前模块base/size、45监测/11读账本、转发/六窗/完整代码比较结果及未知边界，共14项；`live1-main-review.private.json`说明审核只基于冻结采集器的读账本与比较结果，**没有第二轮RPM，也未对未保留的实际code bytes声称独立逐字节回放**。
+
+采集后用户反馈“登录页正常，已正常退出”；主线重新核目标进程不存在，按本轮manifest核安装产物/备份/别名后恢复原DLL并删除本轮创建的orig。五stock、13保护文件保持，相关客户端/服务/DB/调试器进程0，见 `live1-restored.private.json`、`live1-normal-exit.private.json`。本轮ready已消耗；无登录/账号/保存操作，无GS部署。下一项先定位真实托管LocalConfigSync触发和安装时序，取得可验证区别后再决定最小实现或实验。

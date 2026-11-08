@@ -61,7 +61,7 @@
 | R2-ROUTE-CONFIG-SELECT | 进行中；准确托管loader存在，自然选择/Init未验 | 固定托管env选择、managed→native必要输入和安全事件；原始材料可得先离线，合同足够再实机 | [执行计划](docs/CLIENT_72_D02_RESUME_20261109.md) |
 | R2-CONFIGSYNC-EVENT | 已完成；限定固定producer与原生dispatcher | 原ctor、真实OS转换、两个name负例/精确local_config到writer入口已执行；主线第三4670B同双跑、6项通过。自然caller/writer返回未验 | [原始证据与模型](docs/CLIENT_72_SDK_CONFIGSYNC_EVENT.md) |
 | R2-CONFIGSYNC-OBSERVE-owned | 已完成；限定独立构建/自有ABI及准备 | release DLL/fixture成功，两个新进程16case/279B实际搬移与恢复、15检查及12独立审核过；50导出/9新源/20旧pin保持。未调用SDK/客户端 | [实际构建与限定验收](docs/CLIENT_72_SDK_CONFIGSYNC_OBSERVER.md#主线实际构建与自有验证) |
-| R2-CONFIGSYNC-OBSERVE | 进行中；实机准备完成，待新实时ready | 唯一ConfigSync hook，仅准确caller/local_config的内存分类；上限11读1429B，原调用/校验保持。备份/恢复已备，首事件时序及自然分类仍未验 | [边界/产物/验收/停止条件](docs/CLIENT_72_SDK_CONFIGSYNC_OBSERVER.md) |
+| R2-CONFIGSYNC-OBSERVE | 进行中；实机装载已验，目标事件未捕获 | 新ready90秒45监测、11读1429B、实际far/完整279B/38B/47表及稳定state正确；正常页/退出后stock/五输入/13保护恢复。未命中原因未知，先定位触发/安装时序；不重复同实验 | [实际结果与未知](docs/CLIENT_72_SDK_CONFIGSYNC_OBSERVER.md#新ready实际90秒未命中及恢复) |
 | F-03d3f4d2 完整Avatar构造/后缀 | 进行中；三类壳及接口/方法初始化限定前缀已验；方法缓存真实根、完整cold/default与消费时序未闭 | 在有来源输入下连续执行cold/default/装备/技能/池等必经链，保留实际停止点；明确必要字段、同源资源和真实Java读取时机 | [准确后继与首缺](docs/CLIENT_72_AVATAR_FRESH_INTERFACES.md)、[新接口输入](docs/CLIENT_72_INTERFACE_CONTEXT_SNAPSHOT.md)；旧Array/Type已取得，不再重复列缺 |
 | F-03d3g2 正式Avatar发送 | 阻塞；依赖f4d2、R3及同源Store/角色/SavedVitals | 固定字段/tag/类型/枚举/值来源和省略语义，确定性生成；真实Java输出交目标消费者；非零/64位/非空/错误及账号保存回归 | g1和g2-prep已完成；只改Proto源，不改旧共享定义求方便；[投影](docs/CLIENT_72_AVATAR_JAVA_PROJECTION.md) |
 | F-03d3s2 场景/Team/Entity闭合与发送 | 进行中；Pool实际函数绑定/模式/目标头已取；自然注册/stage、分配后继/MPLevel及组件生命周期未闭 | 用准确producer和同源实体完成能力/附属对象/创建替换拆除与通知顺序；逐个批准必需三层和Java来源后接sender | [Scene上下文](docs/CLIENT_72_SCENE_RUNTIME_CONTEXT.md)、[场景token/属性](docs/CLIENT_72_SCENE_ENTRY_CLOSURE.md)；World stage与资源枚举分开 |

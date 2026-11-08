@@ -54,6 +54,8 @@
 
 # 研发索引与执行骨架
 
+2026-11-09 `R2-CONFIGSYNC-OBSERVE-live1`：新ready实际90.0秒/45监测，raw1271265B/SHAb036ba21…51df3；11读1429B零错，installed/actual far/完整279B+38B/47表/五原窗与稳定state比较正确，14项主线审核、无二次RPM。目标event未匹配、原因未知，不能补记自然env/route。[准确边界与后继](docs/CLIENT_72_SDK_CONFIGSYNC_OBSERVER.md#新ready实际90秒未命中及恢复)。用户正常页/退出，stock恢复/orig删除、五输入/13保护及相关进程0复核通过；不重用ready或无假设重复实验。
+
 2026-11-09 `R2-CONFIGSYNC-OBSERVE-owned`：主线实际release DLL616448B/SHA702adc01…b350b、fixture648704B/99f9fe07…9d602构建成功；两个新自有进程16case及真实279B搬移/drop全过，15 Python/12独立审核通过，9新源/20旧pin和50 EAT保持。proof `r2-config-observer/owned-main1/proof.private.json`、`main-owned-review.private.json`。[准确实际范围与复现](docs/CLIENT_72_SDK_CONFIGSYNC_OBSERVER.md)。新备份/安装/恢复脚本已解析、五stock/13保护文件/现场已核；尚未安装或启动真实客户端，下一单次90秒需新ready，GS因R4前置不齐未部署。
 
 2026-11-09 `E-01/R3-CRITICAL-SEMANTICS`：主线准确typeReferences筛出21 Avatar/84 FightProperty参数候选，按计划核8个PE exception原窗3982B；静态投影/SHA保留 `r3-critical/static-review.private.json`。邻接入口无目标职责桥，未执行原生CPU/客户端，未批准alias/默认值；[准确排除与下一输入](docs/CLIENT_72_D02_AVATAR_CRITICAL_RESOURCE.md)。本项未完成，继续其它已就绪分支。
