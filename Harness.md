@@ -54,6 +54,8 @@
 
 # 研发索引与执行骨架
 
+2026-11-09 `R1-METHOD-CACHE`：主线第三438781B/b843915a…bc570同双跑、21工具检查及6个新live生命周期检查过。新user-ready原版90秒后实际141RPM/3048B、exact span复读一致、8方法候选hit，15项主线核对；用户正常页/退出、客户端进程0、五stock/13保护文件保持。raw `local/migration72/d02-resume-20261109/r1-method-cache/live/`。仅候选图，atomic/naturalLookupObserved保持false；[原合同/复现](docs/CLIENT_72_AVATAR_METHOD_CACHE.md)、[原生回放后继](docs/CLIENT_72_AVATAR_METHOD_CACHE_REPLAY.md)。未安装patch或部署GS，完整Avatar/D-02不晋级。
+
 2026-11-09 `E-01/R3-UPSTREAM-D02`、`R2-PATCH-DELTA`：固定两库远端仍为原提交；主线独立核35原文件/13本地资源/18源码，manifest与blob/SHA相符。曲线/突破复用已有；武器省略、303/Scene语义未批，WinHTTP缺自然覆盖暂缓，不安装。[结论/原始入口](docs/CLIENT_72_D02_UPSTREAM_REVIEW.md)。`E-01/R3-JAVA-WEAPON-FRAGMENT`：便携JDK17真实编译/Gson/onLoad 4项通过，失败/错误/跳过0；原生NONE/0保留与上游缺省过滤已实际区分，100曲线及零阶原列表已核。仅测试/文档，无运行材料变更；完整Item/loadAll/revision/保存未验。[复现](docs/CLIENT_72_D02_WEAPON_JAVA_LOAD.md)，raw `local/migration72/d02-resume-20261109/r3-java-weapon/`。
 
 任务维护分工：[Project](Project.md)维护目标、依赖、工作包发布顺序、任务状态、完成标记、验收和已完成成果索引；本文件及专题继续承接复现入口、执行记录和失败分析。任务完成后必须同步更新Project对应状态及验收范围。原Project全文已逐字节备份至[只读历史快照](Project.archive-2026-11-08.md)，不再更新该快照。下方历史执行顺序不构成当前待办，接手以Project当前工作包及最新专题证据为准。

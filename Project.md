@@ -52,7 +52,8 @@
 | E-01/R3-UPSTREAM-D02、R2-PATCH-DELTA | 已完成；限定来源与定向差异审计，不晋级资源/SDK父项 | 两远端仍为固定提交，35文件 blob/SHA及13本地/18源码由主线独立核实；曲线/突破复用已有，武器省略、Quest/Scene差异未批；WinHTTP缺自然覆盖暂缓 | [准确采用/不采用结论及主线证明](docs/CLIENT_72_D02_UPSTREAM_REVIEW.md) |
 | E-01/R3-JAVA-WEAPON-FRAGMENT | 已完成；限定真实 Java 片段加载 | Gson/ItemData/100曲线/零阶突破与上游缺省负对照实际4项通过；完整Item、非零突破Java、loadAll/revision/保存仍未验 | [输入/实际范围](docs/CLIENT_72_D02_WEAPON_JAVA_LOAD.md) |
 | E-01/R3-AVATAR-ENTRY | 进行中；复用六表/能量/装备/突破；剩余HP/critical/成长caller未闭 | 有界原生消费→出生行→Java目的；float32、非零、缺省与未知，足够即给有限转换/加载规格 | [属性后继](docs/CLIENT_72_D02_AVATAR_ENTRY_RESOURCE.md) |
-| F-03d3f4d2/R1-METHOD-CACHE | 进行中；三根最小合同尚未ready | 原生hit/miss/context及完整最小预算；离线连续执行或形成准确主线采样合同，不以空cache替代 | [缓存后继](docs/CLIENT_72_AVATAR_METHOD_CACHE.md) |
+| F-03d3f4d2/R1-METHOD-CACHE | 已完成；限定lookup/collector及原版实际输入，不代验父项 | 原27controls/21检查及主线第三同双跑；live适配6检查，新ready90秒实际141读3048B/8候选hit、15项独立审核；正常页/退出、五输入及保护文件保持。自然caller/完整初始化未验 | [准确合同与实测](docs/CLIENT_72_AVATAR_METHOD_CACHE.md) |
+| F-03d3f4d2/R1-METHOD-CACHE-REPLAY | 进行中；本轮源绑定raw已取得 | 原GenericInst/8方法按真实指针及6根存储别名回放；拒绝矛盾/缺字节/外写，保留旧前缀，不把采样候选当自然执行；连续后缀依新首缺推进 | [回放](docs/CLIENT_72_AVATAR_METHOD_CACHE_REPLAY.md) |
 | R2-ROUTE-CONFIG-SELECT | 进行中；准确托管loader存在，自然选择/Init未验 | 固定托管env选择、managed→native必要输入和安全事件；原始材料可得先离线，合同足够再实机 | [执行计划](docs/CLIENT_72_D02_RESUME_20261109.md) |
 | F-03d3f4d2 完整Avatar构造/后缀 | 进行中；三类壳及接口/方法初始化限定前缀已验；方法缓存真实根、完整cold/default与消费时序未闭 | 在有来源输入下连续执行cold/default/装备/技能/池等必经链，保留实际停止点；明确必要字段、同源资源和真实Java读取时机 | [准确后继与首缺](docs/CLIENT_72_AVATAR_FRESH_INTERFACES.md)、[新接口输入](docs/CLIENT_72_INTERFACE_CONTEXT_SNAPSHOT.md)；旧Array/Type已取得，不再重复列缺 |
 | F-03d3g2 正式Avatar发送 | 阻塞；依赖f4d2、R3及同源Store/角色/SavedVitals | 固定字段/tag/类型/枚举/值来源和省略语义，确定性生成；真实Java输出交目标消费者；非零/64位/非空/错误及账号保存回归 | g1和g2-prep已完成；只改Proto源，不改旧共享定义求方便；[投影](docs/CLIENT_72_AVATAR_JAVA_PROJECTION.md) |
@@ -132,6 +133,7 @@
 
 | 任务ID / 成果 | 状态 | 已验成果 / 保留边界 | 证据 |
 | --- | --- | --- | --- |
+| F-03d3f4d2/R1-METHOD-CACHE | 已完成 | 原lookup/hash/深比较与hit/miss边界、完整有界collector及主线第三已验；新ready原版90秒实际候选图取得、正常页/退出及保护文件保持。原生采样图回放/自然caller/完整构造/default/Handler/g2未代验。 | [合同与实机输入](docs/CLIENT_72_AVATAR_METHOD_CACHE.md) |
 | B-02e1、B-02e2、B-02e3、B-02e4、B-02e5、B-02e6、B-02e7 | 已完成 | 选人成功继续、缓存等待、计时/场景查询、列表和非空子图消费片段；完整继续/落地未验。 | [继续](docs/CLIENT_72_BORN_CONTINUATION.md)、[场景消费](docs/CLIENT_72_SCENE_DATA.md)、[嵌套](docs/CLIENT_72_SCENE_NESTED.md) |
 | F-03a、F-03b、F-03c | 已完成 | 八握手、容量和进入场景通知最小发送合同；完整初始化/实体另验。 | [握手](docs/CLIENT_72_SCENE_HANDSHAKE.md)、[容量](docs/CLIENT_72_STORE_WEIGHT_CONTRACT.md)、[入场通知](docs/CLIENT_72_ENTER_SCENE_CONTRACT.md) |
 | F-03d1a、F-03d1b1、F-03d1c | 已完成 | PlayerData raw、用途与有限生产接入；其余属性及完整初始化不晋级。 | [PlayerData](docs/CLIENT_72_PLAYER_DATA_CONTRACT.md) |
