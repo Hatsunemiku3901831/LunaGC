@@ -113,3 +113,5 @@ Remove-Item Env:CLIENT72_AVATAR_ENTRY_REPORT
 主线已按上述命令实际第三执行，949,711B/SHA与first/second逐字节相同，第三18项定向检查通过。主线另以独立标准库脚本核99原来源pin、实际source/test、6行/两出生片段、float32/有序绑定及未知/未完成状态共11项，证明 `local/migration72/d02-resume-20261109/r3-avatar/main-review.private.json`；原报告和日志已保留。两次主线私有审核初稿分别用了错误的consumers键名、未解析GAME_PATH前缀，失败均属审核脚本，修正后重读原件，没有修改producer或原证明。
 
 批准字段现进入[真实Java片段加载](CLIENT_72_D02_AVATAR_JAVA_LOAD.md)；完整critical/能力/Item、loadAll、revision及保存/客户端父项不晋级。没有修改运行材料或部署GS。
+
+后续单独完成[基础critical两字段许可](CLIENT_72_D02_AVATAR_CRITICAL_INSTALLER.md#主线第三验收)，不得反写本卡冻结报告的`criticalAliasesApproved=false`。HP/grow与新字段以真实行source相等后才合并，完整Avatar/能力与父项仍未验。

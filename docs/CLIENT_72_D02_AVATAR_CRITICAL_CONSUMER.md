@@ -101,3 +101,5 @@ python local/migration72/d02-resume-20261109/r3-critical-consumer/verify.private
 主线已实际运行冻结验证器，第三 `verification-main-third.private.json` 为992B/SHA `2e9cd93d058571d86500c20b51053ae70eacae63d30c10f3d7de88b77790a0f6`，与两个fresh结果逐字节相同。14输入pin、六个完整extent/8768原bytes/1896指令、类型cell及三实参顺序均通过。它仍是静态来源/数据流验证，没有CPU或自然Avatar执行。
 
 后继[准确installer](CLIENT_72_D02_AVATAR_CRITICAL_INSTALLER.md)先只核 `1498e2200`；只有具名属性桥和接收者/模型范围充分时，才准备最小原生正反验证。旧consumer材料与六窗冻结不改；字段alias、完整Java行及D-02仍未批准。
+
+后续状态：原installer及具名20/22消费已通过主线第三，批准基础critical/criticalHurt片段，见该[新验收](CLIENT_72_D02_AVATAR_CRITICAL_INSTALLER.md#主线第三验收)。本页静态阶段及六窗原件不变；Avatar不能自然通过原17494门禁的边界仍保留，完整行/自然调用/D-02未验。

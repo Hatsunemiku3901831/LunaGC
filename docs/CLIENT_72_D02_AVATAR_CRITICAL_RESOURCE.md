@@ -27,3 +27,7 @@
 `typed-candidates.private.json` 保存准确参数投影，`windows{1,2}.private.json` 保存八个完整准确窗与指令，`static-review.private.json` 固定5份材料的实际bytes/SHA。旧14个opcode候选、非目标字段和cache匹配均未计为字段验收，未运行安装脚本，未引入上游资源行。
 
 后继需新的**准确职责锚点**：例如同源字段定义、可追到真实Avatar行的消费者或其整块复制/间接访问。当前证据不足以判定字段未使用，也不足以批准Java critical/criticalHurt或任何默认值。保持字段未知，继续已依赖满足的Item/原构造及SDK工作；本项未完成，未部署。
+
+## 后继限定闭合
+
+以上为本卡冻结八窗的历史范围，不修改其材料或原未知标记。后续[共享字段链](CLIENT_72_D02_AVATAR_CRITICAL_CONSUMER.md)与[原installer/具名消费](CLIENT_72_D02_AVATAR_CRITICAL_INSTALLER.md)已由主线第三验收，批准两个出生行的`+98→critical`、`+a4→criticalHurt`基础贡献。`+78`职责、自然Avatar/总modifier、完整资源及父项继续未验；后继许可仅引用新证据。
