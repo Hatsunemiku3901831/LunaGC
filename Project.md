@@ -53,7 +53,7 @@
 | F-03d3g2 正式Avatar发送 | 阻塞；依赖f4d2、R3及同源Store/角色/SavedVitals | 固定字段/tag/类型/枚举/值来源和省略语义，确定性生成；真实Java输出交目标消费者；非零/64位/非空/错误及账号保存回归 | g1和g2-prep已完成；只改Proto源，不改旧共享定义求方便；[投影](docs/CLIENT_72_AVATAR_JAVA_PROJECTION.md) |
 | F-03d3s2 场景/Team/Entity闭合与发送 | 进行中；Pool实际函数绑定/模式/目标头已取；自然注册/stage、分配后继/MPLevel及组件生命周期未闭 | 用准确producer和同源实体完成能力/附属对象/创建替换拆除与通知顺序；逐个批准必需三层和Java来源后接sender | [Scene上下文](docs/CLIENT_72_SCENE_RUNTIME_CONTEXT.md)、[场景token/属性](docs/CLIENT_72_SCENE_ENTRY_CLOSURE.md)；World stage与资源枚举分开 |
 | R2-ROUTE SDK配置、会话与自然连接（D-01 / F-02 / F-04） | 进行中；包/loader、map/app_key及原生签名/发送前builder已验；自然Init/env、运行接收/route未闭 | 固定来源追配置→选址→签名→会话交换；自然实验一次回答明确问题；必要输入可离线取得时先离线；与R2-SESSION/KEY汇合 | [配置loader](docs/CLIENT_72_SDK_ROUTE_LOADER.md)、[签名](docs/CLIENT_72_SDK_COMBO_SIGNATURE.md)、[请求链](docs/CLIENT_72_SDK_LOGIN_CHAIN.md)；原登录页/root非空不证明请求成功 |
-| E-01 真实资源→Java必要字段 | 进行中；真实字节已取得，缺精确映射/默认/实际选择revision | 同源表/行→目标parser/消费者→Java字段逐项对应；先角色、depot、技能、默认装备、Scene及必需Quest，拒绝无证alias/省略 | [六表](docs/CLIENT_72_AVATAR_NATURAL_TABLES.md)、[Java目的合同](docs/CLIENT_72_D02_JAVA_RESOURCE_CONTRACT.md)、[资源深度](docs/CLIENT_72_RESOURCE_DEEP_RESEARCH.md) |
+| E-01 真实资源→Java必要字段 | 进行中；能量与初始装备/曲线字段桥梁已验，完整行/加载及实际revision未闭 | 同源表/行→目标parser/消费者→Java字段逐项对应；先角色、depot、技能、默认装备、Scene及必需Quest，拒绝无证alias/省略 | [六表](docs/CLIENT_72_AVATAR_NATURAL_TABLES.md)、[Java目的合同](docs/CLIENT_72_D02_JAVA_RESOURCE_CONTRACT.md)、[装备字段](docs/CLIENT_72_D02_EQUIPMENT_RESOURCE.md) |
 | E-01 / E-01c / E-01d1 自然加载与正向保存 | 阻塞；依赖必要资源映射、Lua可达路径和实际加载前提 | 必需map/引用/日志/场景事件有效后，独立库保存→新Player→QuestManager正向重绑；保留未就绪拒绝及BSON不变负例 | [最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)、[Chapter](docs/CLIENT_72_D02_CHAPTER_LOAD.md)、[303保存](docs/CLIENT_72_D02_QUEST_303_START.md)；不只看loadedAll标志 |
 
 ### 3.3 汇合与持续验证
@@ -173,6 +173,7 @@
 | 资源深度parser/条件子合同（归E-01/R3） | 已完成 | depot/条件parser、LHFO嵌套及GameTime/LuaNotify分界，Ornament标量/条件数组；未知JSON映射和接受规则未补造。 | [深度资源](docs/CLIENT_72_RESOURCE_DEEP_RESEARCH.md)、[Ornament](docs/CLIENT_72_AVATAR_ORNAMENT_CONTRACT.md)、[条件数组](docs/CLIENT_72_AVATAR_ORNAMENT_CONDITIONS.md) |
 | 实际资源来源/容器/索引/locator链（归E-01/R3） | 已完成 | 候选/真实来源、provider、索引reader、blob头、完整payload/index与精确表字节取得；不再等待同一已解决解包问题。 | [来源](docs/CLIENT_72_D02_RESOURCE_SOURCES.md)、[provider](docs/CLIENT_72_RESOURCE_PROVIDER.md)、[索引入口](docs/CLIENT_72_RESOURCE_INDEX.md)、[native reader](docs/CLIENT_72_RESOURCE_INDEX_NATIVE.md)、[blob](docs/CLIENT_72_RESOURCE_BLOB.md)、[payload](docs/CLIENT_72_RESOURCE_PAYLOAD.md)、[完整索引](docs/CLIENT_72_RESOURCE_PAYLOAD_INDEX.md)、[locator](docs/CLIENT_72_RESOURCE_LOCATOR.md) |
 | E-01-bridge-energy（归R3） | 已完成 | Avatar/Depot/Skill七字段通过同缓存原生角色索引/能量槽/元素消费者闭合，正引用/缺省/枚举和片段转换已验；完整资源行/加载/revision/保存恢复仍未验。 | [字段桥梁](docs/CLIENT_72_D02_RESOURCE_BRIDGE.md) |
+| E-01-bridge-equipment（归R3） | 已完成 | 真实三表完整解析、初始武器/两项属性/同源曲线及突破ID消费者闭合；非零/64位/float32及缺引用/未知枚举拒绝已验。仍为字段片段，完整Java行/突破加成/加载/revision未验。 | [装备字段桥梁](docs/CLIENT_72_D02_EQUIPMENT_RESOURCE.md) |
 | Java资源目的合同（归E-01/R3） | 已完成 | 加载类/字段/准确消费者及缺Weapon失败位置已审；不是target→Java转换许可。 | [Java目的](docs/CLIENT_72_D02_JAVA_RESOURCE_CONTRACT.md) |
 | V-01a、V-01b、V-01c、V-01d | 已完成 | 能力便携路径、家具保存/加工手册夹具及家具资源路径修复；完整V-01保持未完成。 | [账号保存验证](docs/ACCOUNT_AND_SAVE_OPERATIONS.md)、[离线收口](docs/CLIENT_72_SOL_TERRA_OFFLINE.md) |
 

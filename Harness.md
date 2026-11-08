@@ -1,3 +1,5 @@
+2026-11-08 E-01-bridge-equipment：主线第三4,164,206B/SHA50aaea94…eb5bc同双跑，16相关检查与20独立标准库审计通过；真实Avatar169/Weapon288/Curve100完整表及初始武器、两属性、float32成长和promote ID片段已闭。[来源/模型/完整行缺口](docs/CLIENT_72_D02_EQUIPMENT_RESOURCE.md)，proof `r3-equipment/main-third-review.private.json`。继续真实突破表和完整必要Java行，不补空addProps，不代验加载/revision/保存。
+
 2026-11-08 R1-SAMPLE-INTERFACES-prep：主线23 owned检查、当前五stock/4代码窗/2 descriptor/2 metadata/TLS目录复核通过；新源02ffaeab…dda251，最大14读664B/单读208B。[CLI/范围/预算](docs/CLIENT_72_INTERFACE_CONTEXT_SNAPSHOT.md)，proof `r1-interface-sampling/main-preparation-proof.private.json`。未实机执行，新ready后一次90秒原始monitor，再只读新两接口与loader索引；不复用上一ready或旧指针。
 
 2026-11-08 下一接口合同序列化核对：严格gate发现原独立文件实际6614B/c84…，旧声明6465B/bac…是写前LF字符串；主线证实仅149处CRLF、原manifest也记录C84，无字段变化。保留原件，新建从第三冻结报告投影的 `r1-fresh-ancestor/main-sampling-contract.lf.private.json` 实际6465B/BAC并单独pin，proof `sampling-contract-newline-audit.private.json`；[更正](docs/CLIENT_72_AVATAR_FRESH_ANCESTOR.md)，不忽略换行放宽gate。
