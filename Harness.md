@@ -54,6 +54,8 @@
 
 # 研发索引与执行骨架
 
+2026-11-09 `E-01/R3-JAVA-AVATAR-FRAGMENT`：JDK17实际编译/ResourceLoader→Gson→onLoad→map安装，本类4项+32隔离关联同次36项0fail/error/skip、23秒；100Curve、两出生片段18个native float32相同，缺binding/curve真实拒绝，内存maps/fetters/loadedAll边界保持。[复现/限定验收](docs/CLIENT_72_D02_AVATAR_JAVA_LOAD.md)，日志/XML `local/migration72/d02-resume-20261109/r3-java-avatar/`。未填critical/能力，不代完整资源/revision/保存或D-02。
+
 2026-11-09 `R2-CONFIGSYNC-EVENT`：主线第三4670B/3ecd3a8b…8680f同双跑、6项测试/9项独立审核过。原ctor89073步、两个name负例373/449步返回，准确local_config464步至378850入口cut；6次真实系统MultiByte转换仅作用自有复制bytes。保密proof含原path/stack/代码窗，不含自然payload/key/url。复现与准确调用边见[事件合同](docs/CLIENT_72_SDK_CONFIGSYNC_EVENT.md)、[托管生产](docs/CLIENT_72_SDK_CONFIG_SELECTION.md)；[独立观察后继](docs/CLIENT_72_SDK_CONFIGSYNC_OBSERVER.md)未装载，writer返回/自然env/route/D-02未验。
 
 2026-11-09 `E-01/R3-AVATAR-ENTRY`：第三949711B/32cf0c85…c222e同双跑、18项通过，独立11项/99来源pin已核。6真实选中行、27完整153a7f940/27caller片段/12negative，247调用39508hook；HP+64和有序grow职责闭合，两出生片段转真实Java下一步；critical/criticalHurt、完整行/能力/revision/loadAll未批准。[来源/失败/准确规格](docs/CLIENT_72_D02_AVATAR_ENTRY_RESOURCE.md)，raw `local/migration72/d02-resume-20261109/r3-avatar/`。
