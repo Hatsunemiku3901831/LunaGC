@@ -638,3 +638,5 @@ B-02d收口：验收提交36eb486；先建卡3fc7e80。旧HANDOFF2已先备份�
 部署前置仍缺完整P0/成功继续与真实必需首包序列、D-01实际SDK/信任/补丁加载、E-01资源revision/Lua/场景；不启动服务/游戏，不改版本。Astra最小后续取证为B-02e，固定输入沿Rsp0→14CD68860的继续与新旧号序列核对，范围/停止条件见[CLIENT_72_BORN](docs/CLIENT_72_BORN.md)。
 
 最终收尾：C-01a代码/源码审计提交8bd338f；之后便携-Mode build退出0，JAR10类/代码提交相符、旧fallback/配置类均不存在。未部署，无HTTP/游戏/测试端口监听及Java/游戏进程，健康和运行JAR无对象不标通过；原Mongo保留，测试实例核对空测试库后正常关闭。报告evidence/born-{build-check,implementation-final-environment}.json及logs/born-portable-build.log。B-03a/C-01a/V-01d限定项完成；父任务仍进行中，已整理B-02e最小取证并停止新增工作，交接见HANDOFF2。
+
+2026-11-09 R1-CLASS80-STORAGE native限定验收：当前恢复指令持续有效。新`continue72_avatar_class80_storage.py`的主线第三1,371,957B/SHA `75e3bc05bb9a8044318c3fce5d30fc2d9f7a51138ede8af23a7e953e8a361283`与双fresh相同；23测试、11独立审核、27pin通过。原32B发布和inflation/class返回写回两行，累计7模型/64读521B；实际止`140526fc5`读取`B+5bc8f20/8`，未提供自然根或成功替身。原六前缀/捕获指针保持，完整Avatar/default/g2未验。专题[Class80](docs/CLIENT_72_AVATAR_CLASS80_STORAGE.md)，原始第三/审核/日志在`local/migration72/d02-resume-20261109/r1-class80/native/`。只有离线工具/测试/文档变化，无运行部署；下一项准备有界新epoch只读输入，继续R1/R2/R3。
