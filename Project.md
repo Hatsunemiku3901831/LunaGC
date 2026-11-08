@@ -1,10 +1,10 @@
 # 国服 7.2 任务规划与验收
 
-任务证据基线：2026-11-08 / `50f745e`。仅面向国服 7.2，Windows portable。
+任务证据基线：2026-11-09 / `d31de75`。仅面向国服 7.2，Windows portable。
 
 ## 当前阶段
 
-**当前已暂停，不开启新任务；D-02未完成。** 当前在途的key观察、Avatar接口后继与突破资源均已主线完成限定验收并分项本地提交，详细交接及备份入口见[HANDOFF2](HANDOFF2.md)。完整父项和未完成后继保留，恢复需用户授权。此前[恢复计划](docs/CLIENT_72_D02_RESUME_20261108.md)和历史交接供追溯，不覆盖本次暂停决定。
+**当前持续推进，D-02未完成。** 用户本轮继续指令覆盖历史暂停、仅规划及仅离线节奏。最新[执行计划](docs/CLIENT_72_D02_RESUME_20261109.md)复用 key/接口/突破已验成果，推进剩余属性、方法缓存、SDK 自然配置与定向外部资源审计；完整父项和六项实机验收仍未完成。此前[恢复计划](docs/CLIENT_72_D02_RESUME_20261108.md)与[交接](HANDOFF2.md)供追溯，旧暂停不再作为当前限制。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -49,6 +49,10 @@
 
 | 工作包 / 归属 | 状态与当前首缺条件 | 交付与验收 | 证据入口 |
 | --- | --- | --- | --- |
+| E-01/R3-UPSTREAM-D02、R2-PATCH-DELTA | 进行中；固定两库缓存/当前远端，仅审现有缺口 | 必要资源逐行/字段/Java消费者和独立语义；patch须证自然覆盖/真实缺陷。重复成果直接复用，不整包替换 | [本轮设计/依赖/停止条件](docs/CLIENT_72_D02_RESUME_20261109.md) |
+| E-01/R3-AVATAR-ENTRY | 进行中；复用六表/能量/装备/突破；剩余HP/critical/成长caller未闭 | 有界原生消费→出生行→Java目的；float32、非零、缺省与未知，足够即给有限转换/加载规格 | [属性后继](docs/CLIENT_72_D02_AVATAR_ENTRY_RESOURCE.md) |
+| F-03d3f4d2/R1-METHOD-CACHE | 进行中；三根最小合同尚未ready | 原生hit/miss/context及完整最小预算；离线连续执行或形成准确主线采样合同，不以空cache替代 | [缓存后继](docs/CLIENT_72_AVATAR_METHOD_CACHE.md) |
+| R2-ROUTE-CONFIG-SELECT | 进行中；准确托管loader存在，自然选择/Init未验 | 固定托管env选择、managed→native必要输入和安全事件；原始材料可得先离线，合同足够再实机 | [执行计划](docs/CLIENT_72_D02_RESUME_20261109.md) |
 | F-03d3f4d2 完整Avatar构造/后缀 | 进行中；三类壳及接口/方法初始化限定前缀已验；方法缓存真实根、完整cold/default与消费时序未闭 | 在有来源输入下连续执行cold/default/装备/技能/池等必经链，保留实际停止点；明确必要字段、同源资源和真实Java读取时机 | [准确后继与首缺](docs/CLIENT_72_AVATAR_FRESH_INTERFACES.md)、[新接口输入](docs/CLIENT_72_INTERFACE_CONTEXT_SNAPSHOT.md)；旧Array/Type已取得，不再重复列缺 |
 | F-03d3g2 正式Avatar发送 | 阻塞；依赖f4d2、R3及同源Store/角色/SavedVitals | 固定字段/tag/类型/枚举/值来源和省略语义，确定性生成；真实Java输出交目标消费者；非零/64位/非空/错误及账号保存回归 | g1和g2-prep已完成；只改Proto源，不改旧共享定义求方便；[投影](docs/CLIENT_72_AVATAR_JAVA_PROJECTION.md) |
 | F-03d3s2 场景/Team/Entity闭合与发送 | 进行中；Pool实际函数绑定/模式/目标头已取；自然注册/stage、分配后继/MPLevel及组件生命周期未闭 | 用准确producer和同源实体完成能力/附属对象/创建替换拆除与通知顺序；逐个批准必需三层和Java来源后接sender | [Scene上下文](docs/CLIENT_72_SCENE_RUNTIME_CONTEXT.md)、[场景token/属性](docs/CLIENT_72_SCENE_ENTRY_CLOSURE.md)；World stage与资源枚举分开 |
