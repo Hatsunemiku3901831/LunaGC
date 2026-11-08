@@ -19,6 +19,13 @@ CONTRACTS = (
     ('local/migration72/d02-active/avatar/handler-closure/native-config-sampling-contract.json', '6503b65872f093d503c2db8668607542c0a5d3a336002e829e5aa82b924734a4'),
     ('local/migration72/d02-active/scene-runtime-context-astra/minimal-root-contract.json', '149c5ebcacf726009dbd028becf2d75f6caa1b2178ccf38e5566c3de26b4a45d'),
 )
+PARENT_WINDOWS = (
+    (0x517980, 0x77, 'b49101213851b66dcf7162f91b28b6fee7224c0c2c9c551d07109de5068dae72'),
+    (0x5269f0, 5, 'bb3bd836fbc8d866dc73ea8958b74331d207192b579c09e99d87e8637454f8ad'),
+    (0x1a4d6b60, 0xc1, '5245ce48b3f06b60e060ab85ba8d28e0dc98a43bf112b515c74a14ea1cb610a0'),
+    (0x517aa4, 0x28, 'fe29c00adc8ebc21f1374ab96d7dd93cfc71985eb2782603e0589f4b5ba41a98'),
+    (0x4ed9c3, 0x12, '0d967f0101c7f9cbef0d4b846e8e0dcd24ee03c04760159fc134fc6e2c15067a'),
+)
 OUTPUT_ROOT = ROOT / 'local/migration72/d02-active/main/entry-context-tool'
 
 
@@ -41,6 +48,7 @@ def verify_contracts(binary):
                 for w in contracts[1]['windows']]
     if len(windows) != 16:
         raise ValueError('Unexpected contract window count')
+    windows += [(rva, size, digest, None) for rva, size, digest in PARENT_WINDOWS]
     for rva, size, expected, instructions in windows:
         offset = pe.offset(pe.base + rva, size, executable=True)
         actual = binary[offset:offset + size]
@@ -76,9 +84,31 @@ def collect(read, base):
                 klass = pointer(name + '.klass', obj)
                 if klass and class_header:
                     get(name + '.classHeader', klass, 0xd0)
+    table = pointer('parent.classCache.cell', base + 0x5bc8f18)
+    entry = pointer('parent.classCache.entry1239', table + 1239 * 8) if table else None
+    header = get('parent.class1239.header', entry, 0xd0) if entry else None
+    slot = pointer('parent.registry.cell', base + 0x5bc8ad0)
+    registry = pointer('parent.registry.base', slot) if slot else None
+    parent_status = ('class-cache-null' if table == 0 else 'class-entry-null' if entry == 0 else
+                     'registry-slot-null' if slot == 0 else 'registry-base-null' if registry == 0 else
+                     'root-or-class-unavailable')
+    if header is not None:
+        type_id = int.from_bytes(header[0x10:0x18], 'little')
+        kind = (int.from_bytes(header[0x18:0x1c], 'little') >> 16) & 0xff
+        offset = int.from_bytes(header[0xb0:0xb4], 'little')
+        if type_id != 1239 or kind != 18:
+            parent_status = 'class-identity-mismatch'
+        elif not offset:
+            parent_status = 'parent-offset-zero'
+        elif registry:
+            descriptor = get('parent.descriptor', registry + offset + 0x10, 16)
+            parent_status = 'read' if descriptor is not None else 'descriptor-unreadable'
+    if any(r['error'] is not None for r in records if r['name'].startswith('parent.')):
+        parent_status = 'read-failed' if parent_status != 'descriptor-unreadable' else parent_status
     return dict(reads=records, modeValue=mode[0] if mode is not None else None,
                 modeInterpretation=('false' if mode == b'\x00' else 'true' if mode == b'\x01' else 'unknown'),
-                status='partial' if any(r['error'] is not None for r in records) else 'completed',
+                parentDescriptorStatus=parent_status,
+                status='partial' if parent_status != 'read' or any(r['error'] is not None for r in records) else 'completed',
                 atomicSnapshot=False, completeCtorVerified=False, naturalRegistryVerified=False,
                 worldInitializationVerified=False, sdkRequestVerified=False,
                 targetProtocolReady=False, poolAllocateSlotObserved=False)

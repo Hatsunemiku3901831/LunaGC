@@ -1,3 +1,5 @@
+2026-11-08 fresh父descriptor采样准备：主线独立核21个实际PE窗口及10项离线检查；新版最多23读1041B，新增链只读父descriptor16B，原始来源/模型边界见[采样专题](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md)。证明 `d02-resume-20261108/entry-context-main-proof.private.json`；尚未实机采样，下一步等待新用户ready后原始90秒monitor与当次snapshot。
+
 2026-11-08 当前恢复执行入口：[计划](docs/CLIENT_72_D02_RESUME_20261108.md)。主线新现场 `local/migration72/d02-resume-20261108/initial-inventory.private.json`；五输入匹配，无服务/DB/游戏/调试器及相关监听；配置/原数据/resources既有差异保留。下方暂停与数量均为历史。
 
 # 研发索引与执行骨架

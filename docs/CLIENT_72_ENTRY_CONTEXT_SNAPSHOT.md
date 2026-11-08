@@ -20,3 +20,27 @@ python tools/sample_client72_entry_context.py --observation <新监测报告> --
 报告含地址、原始字节、哈希和时间，只留忽略目录；进程退出或任何部分读取不返回成功。登录/入场、能力注册与 D-02 均未验收。
 
 主线审核将旧原型的World/SDKrequest等固定false字段更名为明确的Verified结论标记，表示未证明，不把未知运行状态解释为false；除这些输出字段名外源码AST完全相同，原型源/测试已先备份，旧离线proof不冒称新执行源。新7项检查通过，未进入execute或现场；因用户随后要求本批收口后暂停，不启动下一轮实机。恢复须新ready与新monitor，不复用旧PID。
+
+## F-03d3f4d2：fresh 父 descriptor 最小合同
+
+此前冻结的 `sampler-planned-v6.py` 和99 span 自然样本确定以当次主模块基址 B 的 `B+5bc8f18` 解引用8B class cache，`cache+1239*8` 解引用8B class；原生 cold factory 证据在 `1404ed9c3` 首次需要父 descriptor+8 的4B，稳定链见 [handler closure](CLIENT_72_AVATAR_HANDLER_CLOSURE.md)。该类读取完整 `0xd0` 头，验证 +10 的u64为1239、+18 的u32之16..23位为18；从 +b0 取无符号32位 compact offset。另以 `B+5bc8ad0` 解引用8B registry slot，再解引用8B registry base；只在这些根和offset均非零、头身份匹配时读 `registryBase+offset+10` 的完整16B。父 descriptor 的kind/index/bits 未知，不能预设其值；不跟随其字段或读取其他父class内容。此链是已验采样器和固定原生执行证据，不把模型分配或旧绝对地址当 fresh 值。
+
+新增最多6读256B，连同原有最多23读1041B，单读最大208B。根/项为零、offset为零、身份不符均分别记录为未取得，不按空 descriptor 解读；读错或短读保留原始结果并标 partial；未完成链使整体 partial。每次成功或失败均留逐span时间与字节，快照非原子；终点16B本身不证明冷 comparer、完整 Avatar handler 或实际入场通过。仍须同一 fresh monitor/profile/五输入、进程身份和固定窗口核验；不得复用旧地址。输出包含地址及原始内存，只可存专属忽略目录，不公开。无现场采样；NativeConfig 成员、IFix、完整后继仍未知。
+
+根地址和间接层级来自冻结采样源及该自然样本；本次没有独立定位这两个全局根的写入 producer 或新增其机器码窗口，不能将它们表述为本次新验证的 producer。执行前仍须主线审核该证据边界。离线测试 `python -m unittest tools.test_sample_client72_entry_context -v` 的9项通过，覆盖完整预算、高64位、各链读错、空根/项、类身份不符和零offset。采样器 SHA `961b414c0e7c37c77f622ee73f985da6fbf774105a1e6de76b1d215c3511ce71`，测试 SHA `33ad6abf7e4bfbc3ee57b221310a2af2ec6fa14f7b5449902d7a2099225412c1`。运行命令沿用上文，必须使用新监测报告与不存在的输出文件。
+
+### 原生 reader 窗口补核
+
+固定 EXE hash 与上文一致；以下五窗现由采样器在打开进程前从实际 PE 的可执行段逐个核 SHA，连同原16窗共21窗：
+
+| 首选VA半开区间 | SHA-256 | 有界证据 |
+| --- | --- | --- |
+| `140517980..1405179f7` | `b49101213851b66dcf7162f91b28b6fee7224c0c2c9c551d07109de5068dae72` | cold caller 从 GenericClass +0 取 definition index，调用 `1405269f0`，返回class存于r15。 |
+| `1405269f0..1405269f5` | `bb3bd836fbc8d866dc73ea8958b74331d207192b579c09e99d87e8637454f8ad` | 跳到 `15a4d6b60`。 |
+| `15a4d6b60..15a4d6c21` | `5245ce48b3f06b60e060ab85ba8d28e0dc98a43bf112b515c74a14ea1cb610a0` | `15a4d6bd4` 读 `B+5bc8f18`，`15a4d6be9` 把参数符号扩展到r14，`15a4d6bf1` 读 `[cache+r14*8]`；片段含混淆指令，不能跳过控制流推论其他路径。 |
+| `140517aa4..140517acc` | `fe29c00adc8ebc21f1374ab96d7dd93cfc71985eb2782603e0589f4b5ba41a98` | caller 从该class +b0取u32且零值跳过；`140517ab0`读 `B+5bc8ad0`、`140517ab7`再解引用，加入offset和10后调用 `1404ed990`。 |
+| `1404ed9c3..1404ed9d5` | `0d967f0101c7f9cbef0d4b846e8e0dcd24ee03c04760159fc134fc6e2c15067a` | 被调用者从descriptor +8读取u32并提取16..23位；这是此前首次未采阻塞。 |
+
+冻结 `first.cold.json` SHA `a599ab66270243189c71e84cdbd791f563f3f5dcec40bfb7eccdf2afc43a12aa` 记录 caller、consumer 和实际停止；冻结 `flag-region.json` SHA `a4af071ff1036db8bc02c86af366d858bd3473bbbe826084f17874ee1a884a1` 记录cache reader指令及目标。此前已验自然13类与固定metadata逐字节对应，其中class1239的+10为1239、+18中kind为18；这两个检查是捕获样本和metadata约束，**不是上述机器码自行断言1239及kind18**。父descriptor自身的kind/index/bits依然未知。`mode-registration-static.json` SHA `40b5f1481d22c3c2fc44ce1ac2743b919b90c95b61476ed52614e67a3b5ce1e9` 另记录 `14053f09f` 向cache全局写入分配并清零的表；这说明该写入片段，并不声称已闭合全局生命周期。
+
+本次实际固定EXE离线核对21窗成功，10项测试通过（包括新增父窗漂移拒绝）；未打开目标进程。当前采样器 SHA `e75bf02d6fdb507cf6f326cced320b7b4d030b6332b217dff1db07d81f3cad68`，测试 SHA `ea8b37e5c9c9432d754f994f3899873a8f9c5392fd14c3e35ea7fa3c9592362b`，替代上段历史hash。
