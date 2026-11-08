@@ -1,3 +1,5 @@
+2026-11-08 R2-KEY-LOAD-OBSERVE-prep：主线19项及实际owned emitter→observer比较通过；同profile build4才成功，前三metadata/rlib/LTO构建失败保留。实际Hooker near281B完整相符/drop恢复，原mover另执行合成near17/far33B，不称far Hooker已跑。[来源/固定8读1244B/精确CLI/未知](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md)，proof `key-loader/observation/{owned-emitter-check-main1,main-preparation}.private.json`。新备份/安装/恢复脚本已准备，真实轮另验。
+
 2026-11-08 R2-KEY-LOAD-owned：主线release生产578048B/SHAad18e741…65a2139d与fixture构建，第三两fresh owned各917B/SHA72b0759e…21a8同双跑，12 Python检查过；独立EAT49/DATA/源/产物/拒绝边界复核见 `key-loader/main-review.private.json`。[精确构建/9绑定与2材料拒绝/原callback及主线范围](docs/CLIENT_72_SDK_KEY_LOADER.md)。patch本地e2d3072，未实际安装；下一[固定只读观察](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md)，不代验自然caller/认证。
 
 2026-11-08 R2-COMBO-HTTP：主线实际编译、独立Mongo/Javalin6项0fail/error/skip、16 Python/mock及六例准确native→HTTP→native均通过。报告23,602B/SHA4d8691f3…994b37，source/14 class/输入/原生与保密边界独立核对见 `r2-combo-http/main-review.private.json`；两实例UUID库清完/admin shutdown，原27017不动。[复现/准确ABI/全UI和自然SDK未验](docs/CLIENT_72_SDK_COMBO_HTTP.md)。继续key/route汇合，不把HTTP夹具记为本服登录。

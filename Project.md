@@ -68,7 +68,7 @@
 | F-04 部署材料及隔离核验 | 进行中；复用ENV-01基线，实际部署待R4 | 真实SDK/信任/资源合同充分后形成7.2产物；正常构建和停服，按InstanceRoot归属核对，不仅改版本或环境变量放行；[隔离](docs/CLIENT_72_PORTABLE_ISOLATION.md) |
 | F04-LOADER-CLEAN 独立透明入口 | 已完成；限定零hook真实加载/绑定及恢复；key/trust/route另验 | 独立透明转发、实际stock/SDK身份与准确窗、正常SDK登录页和退出/恢复已验；自然加密、hook启用、完整性全路径与D-02另验 | [计划/产物/真实范围](docs/CLIENT_72_CLEAN_LOADER.md) |
 | R2-KEY-LOAD 独立入口启用key核心 | 进行中；独立产物/守卫/构建与主线owned已验，真实hook接受待观察 | 独立产物仅接准确3950c0和同一callback，核实际loaded身份与精确代码变化，新ready无凭据观察目标影响；不启旧模块或代验自然认证 | [产物与验收](docs/CLIENT_72_SDK_KEY_LOADER.md)、[只读观察计划](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md) |
-| R2-KEY-LOAD-OBSERVE 固定只读观察 | 进行中；依赖key产物/owned和新observer合同；实时执行待新ready | 精确状态/47表/SDK修改及完整trampoline/callback/返回边，预算与拒绝自有验证后再新实机加载、页面/正常退出/恢复；不能只看installed | [来源、范围及验收](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md) |
+| R2-KEY-LOAD-OBSERVE 固定只读观察 | 进行中；准确observer、原编码器/owned及主线准备已验；新ready现场待执行 | 精确状态/47表/SDK修改及完整trampoline/callback/返回边，新实机加载、页面/正常退出/恢复；不能只看installed | [来源、范围及验收](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md) |
 
 ## 4. 任务发布与范围控制
 
