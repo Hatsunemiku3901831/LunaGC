@@ -1,3 +1,5 @@
+2026-11-08 E-01-PROMOTE-ENTRY：主线第三3,297,024B/SHA546b95ce…d70fef1同双跑，20测试/26独立审计/6 host gate回归通过；WP/AP/AC各1821/889/100行，2个出生用途Promote及100Curve输入、完整Weapon stat6非零case已验。重复whitelist宿主扫描已同集合去重修复，旧probe03明确强制性能取消，非native结果。[准确用途/模型/失败/未闭字段](docs/CLIENT_72_D02_PROMOTE_RESOURCE.md)，proof `r3-promote/main-review.private.json`。不启HP/critical/gadget/Java后继，交接后暂停。
+
 2026-11-08 F-03d3f4d2-fresh-interfaces：主线第三2,114,437B/SHAd89df39b…3e9e970同双跑、22测试及23项标准库复核通过；三类壳400/400/208、原64B清零/接口写回已验。原方法表首缺保留，独立不可变index投影后止method-cache mask；3根24B合同仍samplingReady=false。[来源/受控与自然边界/失败及验收](docs/CLIENT_72_AVATAR_FRESH_INTERFACES.md)，proof `r1-fresh-interfaces/main-review.private.json`。当前子项收尾，不扩cache/采样/正式g2；完整父项与D-02未完成。
 
 2026-11-08 R2-KEY-LOAD-OBSERVE-live：新ready90秒/45观察，实际8读1244B零错；真实far297B、原callback/回entry+18、47目标表/固定guard及稳定状态全部匹配。原始1,301,118B/SHA1a43006d…da4535c，主线38项source/账本/比较结果/恢复审核见 `key-loader/observation/live-key1-main-review.private.json`，无二次RPM。用户正常页/退出，stock恢复/实验alias删除，五stock/13保护文件保持；自有资源进程按同creation hold→恢复stock→resume。完整[native调用/信任/route/认证未验范围](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md)保留，当前在途收尾后暂停，不开后继。
