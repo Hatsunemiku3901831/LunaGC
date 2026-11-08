@@ -49,7 +49,8 @@
 
 | 工作包 / 归属 | 状态与当前首缺条件 | 交付与验收 | 证据入口 |
 | --- | --- | --- | --- |
-| E-01/R3-UPSTREAM-D02、R2-PATCH-DELTA | 进行中；固定两库缓存/当前远端，仅审现有缺口 | 必要资源逐行/字段/Java消费者和独立语义；patch须证自然覆盖/真实缺陷。重复成果直接复用，不整包替换 | [本轮设计/依赖/停止条件](docs/CLIENT_72_D02_RESUME_20261109.md) |
+| E-01/R3-UPSTREAM-D02、R2-PATCH-DELTA | 已完成；限定来源与定向差异审计，不晋级资源/SDK父项 | 两远端仍为固定提交，35文件 blob/SHA及13本地/18源码由主线独立核实；曲线/突破复用已有，武器省略、Quest/Scene差异未批；WinHTTP缺自然覆盖暂缓 | [准确采用/不采用结论及主线证明](docs/CLIENT_72_D02_UPSTREAM_REVIEW.md) |
+| E-01/R3-JAVA-WEAPON-FRAGMENT | 已完成；限定真实 Java 片段加载 | Gson/ItemData/100曲线/零阶突破与上游缺省负对照实际4项通过；完整Item、非零突破Java、loadAll/revision/保存仍未验 | [输入/实际范围](docs/CLIENT_72_D02_WEAPON_JAVA_LOAD.md) |
 | E-01/R3-AVATAR-ENTRY | 进行中；复用六表/能量/装备/突破；剩余HP/critical/成长caller未闭 | 有界原生消费→出生行→Java目的；float32、非零、缺省与未知，足够即给有限转换/加载规格 | [属性后继](docs/CLIENT_72_D02_AVATAR_ENTRY_RESOURCE.md) |
 | F-03d3f4d2/R1-METHOD-CACHE | 进行中；三根最小合同尚未ready | 原生hit/miss/context及完整最小预算；离线连续执行或形成准确主线采样合同，不以空cache替代 | [缓存后继](docs/CLIENT_72_AVATAR_METHOD_CACHE.md) |
 | R2-ROUTE-CONFIG-SELECT | 进行中；准确托管loader存在，自然选择/Init未验 | 固定托管env选择、managed→native必要输入和安全事件；原始材料可得先离线，合同足够再实机 | [执行计划](docs/CLIENT_72_D02_RESUME_20261109.md) |
@@ -173,6 +174,8 @@
 
 | 任务ID / 成果 | 状态 | 已验成果 / 保留边界 | 证据 |
 | --- | --- | --- | --- |
+| E-01/R3-UPSTREAM-D02、R2-PATCH-DELTA | 已完成 | 两固定远端/35个原文件及必要行、消费者、许可和差异分类已审；未有可直接解除首缺的合入增量。未知省略/Quest/Scene不造alias，WinHTTP缺覆盖暂缓；不代验父项。 | [定向审计](docs/CLIENT_72_D02_UPSTREAM_REVIEW.md) |
+| E-01/R3-JAVA-WEAPON-FRAGMENT | 已完成 | 准确原生派生11101两属性、100曲线、零阶原列表经真实 Gson/onLoad，4项Java通过；NONE/0保留与上游缺省过滤分列。完整Item/loadAll/revision/保存未验。 | [Java片段加载](docs/CLIENT_72_D02_WEAPON_JAVA_LOAD.md) |
 | E-01a、E-01b | 已完成 | 固定候选七表、scene3依赖及引用审计；不代表整套资源已安装/可用。 | [候选](docs/CLIENT_72_RESOURCE_CANDIDATE.md)、[scene3](docs/CLIENT_72_SCENE_RESOURCES.md) |
 | E-01c2、E-01c3、E-01c4、E-01c5、E-01c6 | 已完成 | Lua序列化修复、API来源、owner UID、生产加载审计及嵌套require恢复；local作用域/必要接口/完整加载仍开放。 | [序列化](docs/CLIENT_72_SCENE_SERIALIZATION_FIXES.md)、[API](docs/CLIENT_72_SCENE_SCRIPT_API.md)、[生产加载](docs/CLIENT_72_PRODUCTION_SCENE_LOAD.md)、[require](docs/CLIENT_72_REQUIRE_BINDINGS_FIX.md) |
 | E-01d1a、E-01d1b、E-01d1c、E-01d1d、E-01d1e、E-01d1f、E-01d1g、E-01d1h、E-01d1i、E-01d1j、E-01d1k、E-01d1l | 已完成 | 受控角色/depot、出生网格、能力、实际Lua事件、日常保存和初始实体/自动回调；只验对应suite/路径，不代替所有异步后代或revision。 | [最小资源各子合同](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md) |
