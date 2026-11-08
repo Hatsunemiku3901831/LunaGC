@@ -103,3 +103,17 @@ python -m unittest tools.test_collect72_avatar_warm_usages -v
 下一现场将与已验SDK早期观察器共用一次90秒启动。外部读合计硬界5285请求98058B、单次512B（本图5276/96608/208加SDK固定9/1450/512）；观察器内部仅对一次准确caller的两个托管字符串作最多65562B的临时有界副本，不保存正文、key、URL、hash或长度。完整准备、当前输入/进程/端口、备份/恢复和新实时ready另行核验；实际候选/partial、页面与退出反馈、恢复结果尚未发生。本纯图完成不自动晋级现场子项或父项。
 
 主线现已封存合并`r2-early-bridge/live-plan.private.json`（14源pin，SHA `8a94557829a23ecffaa307fc7349536fa2fde3e8db5a848df07a86a94f6a983c`）、`run-early-live1.ps1`（SHA `73dd3b78f7fdd12678d73acbfe6c1e0342b53f5e1564bafe1923459cd9199299`）及`restore-early-live1.ps1`（SHA `f79a5a962d98d73fd4803d68a1ec13f05e2869e9b715a94be51d3c06da6dc04e`），两脚本语法检查0错误。实际`-CheckOnly`已核当前五stock、13保护、配置存在性、source/owned artifact及无alias，相关进程/TCP/UDP均0；不安装、不启动。运行分支还要求新`-UserReady`并再次完整预检，备份原DLL后才建立自有alias和安装观察器；正常退出后只对准确自有安装/alias/备份恢复，不触未知修改。SDK分支失败时，若90秒monitor及同轮进程仍有效，R1仍独立采集并保留各自结果。当前等待新的实时在场确认。
+
+## 本轮合并实测与收尾
+
+上述准备后，首个后台Windows PowerShell入口因PSModulePath未能自动加载`Get-FileHash`在安装前结束；只读后台诊断复现，前台同门禁通过，排除了输入漂移。第二个未提权入口已安装观察器但未取得客户端PID，0次target读；静态EXE清单为requireAdministrator，当前启动token非提升，原CreateProcessW入口不弹UAC。原DLL立即恢复。失败报告、空raw及诊断均保留，不把它们记作90秒观察。
+
+主线在新`run-early-live2.ps1`/恢复脚本中明确导入Utility并补正确模块路径，安装前校验管理员token。实际普通token负例拒绝且没有安装、后台只读CheckOnly通过，五stock/13保护和进程端口再次通过。新UAC launcher只启动该固定helper；`live-plan2.private.json` SHA `e04fbd7a8514ba7a385d1f682d189bc027ad7c5c312156244b2744c63a0ff2e1`，run SHA `fbcbbe6872e25467e49a05d081d7551d49da4b968c57ad63e91dbaa916fa1ae1`、restore SHA `d18092456b7f65ad8843f0048968a6bee67e51683ffad41c928bf3ac72325d65`。数据/读预算、DLL和两个adapter源码均未改变；没有无假设重复旧实验。
+
+用户已授权并通过UAC后，实际观察90秒45个监测sample。SDK固定9请求1450B，R1实际256请求8104B，共265请求9554B；最大单次512B，小于准备上限。R1由原cache141/3048、全部新首遍31/1888和最终84unique复读组成，全图与主图末尾均repeated-unchanged，主图83个exact spans。三模块/创建身份/前后存活一致，原指针未改，无写入、remote call或原生CPU。原始`live/warm-live2.private.json` SHA `cfea3e67d6795e791c541e2c140db8b3f19cc70d6c571f47e7ce84c3eb5a4204`。
+
+7/8主候选取得：List类/空数组槽（不含数组body）、HashSet<uint32>类/Default及identity、HashSet<enum>类、既有enum warm getter及identity。同轮enum carrier index15590及owner/上下文成立，但原rgctx+10/+18两槽实际均0，准确停`enumCarrier:getter-slot-mismatch`，没有读取或补造ctor。String primary `B+596c848`实际0，准确停`stringGetter:usage-null`，没有启动稀疏后备或Default/Equals读取。返回整体partial是这些守卫的真实结果，不是短读、复读或生命周期失败；不能标完整候选图、allocator、构造或自然caller已通过。
+
+用户明确反馈“登录页正常，已正常退出，无异常”。主线在进程结束后按自有manifest恢复stock并移除自有alias；五stock、13保护及配置存在性保持，相关客户端/Java/Mongo/调试器/guard、固定TCP/UDP均0，JAR SHA保持。post-exit proof SHA `9115095a3ffefad62b9ef9cbb1f5512610a9e361b8ed0af66b445f943af38a90`。
+
+主线用**已采字节**重新执行SDK纯collector及R1完整时间序列重投影，地址/顺序/字节/全部输出相等；来源、预算、原trampoline、两个零槽/空usage、84项终读及退出恢复等14项通过，`r2-early-bridge/live2-main-review.private.json` SHA `12dd94c7b1457a2a15c4041de45c91931afde773eb24e680e313e326ac0ffb1f`。本子项只验收有界采集与恢复；业务未闭不改成功。用户最新要求当前工作收尾后暂停，未再加采样、执行allocator/constructor、实现String后备或开启新任务；所有旧ready已消费。

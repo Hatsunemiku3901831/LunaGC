@@ -104,3 +104,13 @@ DLL为577,536B/SHA `20186081e073678510d0c162e6bbab1597e8f00b3154861809e909359328
 下一步合并R1新warm usage/optionalString纯图及新adapter后，封存主线脚本、备份/恢复和全源hash，复核当前进程/端口/保护输入，再请求新实时ready。所有历史ready已消费，尚无本轮安装或客户端启动。GS的R4前置仍不足，不部署。
 
 上述准备现已完成：14源pin的合并计划、主线安装/监测及恢复脚本封存，实际CheckOnly核五stock/13保护、无alias/相关进程/固定端口通过。脚本hash、准确总预算及R1独立失败处理见[现场准备](CLIENT_72_AVATAR_WARM_USAGES.md#主线第三与新windows适配器)。安装分支仍需新实时ready，尚未运行；GS继续未部署。
+
+## 本轮自然实测及停止结论
+
+实际启动经历与修复见[R1合并实测](CLIENT_72_AVATAR_WARM_USAGES.md#本轮合并实测与收尾)：后台PowerShell Utility未加载，以及未提权CreateProcess入口，两次均未启动客户端或读取target；临时安装立即还原。补模块路径、明确Utility及安装前管理员guard，普通token负例/后台CheckOnly通过，再用用户已授权的UAC入口进行同范围一次自然实验，DLL和观察代码不变。
+
+实际90秒45sample，9次1450B固定code/72B DATA读及其同次raw账本完整。47原转发目标、EXE入口20B patch、完整284B trampoline/返回+20、callback以及其余准确原代码窗均相符，前后DATA相同、前后身份及最后存活通过。`anyEntrySeen=true`、`expectedCallerSeen=true`：准确caller确实到达新桥；event5为`over-limit`，观察器按预设上限停止。**没有分类成功，也不能从这个合并错误码判断是name还是payload超限，更不能推断配置正文大小、内容或缺NUL。** 未保存自然字符串/密钥/URL及其hash/长度；没有扩大预算、改参数、校验或原转发。
+
+实测主报告`live2.private.json` SHA `d7f1f483ae293069dbd4611837377c4b076674d7fe04cf42c9a1cc1f79488771`；同次9读账本SHA `ad4fe1971aea1a3db7fd384b65d2596cd94560b69480cf9a127ccbf7dcc79c0b`。主线按该账本离线纯重放完全相等，合并14项审核及退出恢复证明见R1。本次完整Marshal/export/writer return/路由/校验/账号认证仍未验证；code-bound与exact caller不能替代这些验收。
+
+用户确认正常登录页、正常退出无异常；stock已恢复、alias移除，五输入/13保护保持，相关进程/固定端口0。用户现要求当前工作收尾后暂停，故本次观察/数据保护已收尾，不启动扩大字符串预算、额外hook/SDK路由或后继实验。父项仍进行中、D-02未完成；恢复前需新的指令、准确假设与准备，以及新的实时ready。

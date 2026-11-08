@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-**当前持续推进，D-02未完成。** 用户本轮继续指令覆盖历史暂停、仅规划及仅离线节奏。最新[执行计划](docs/CLIENT_72_D02_RESUME_20261109.md)复用 key/接口/突破已验成果，推进剩余属性、方法缓存、SDK 自然配置与定向外部资源审计；完整父项和六项实机验收仍未完成。此前[恢复计划](docs/CLIENT_72_D02_RESUME_20261108.md)与[交接](HANDOFF2.md)供追溯，旧暂停不再作为当前限制。
+**已按用户最新指令完成本批收尾并暂停，D-02未完成。** 本轮曾依[执行计划](docs/CLIENT_72_D02_RESUME_20261109.md)持续推进，现以用户“完成当前工作后暂停、不开新任务并交接”的最新指令为准。限定来源/Java/采集及恢复子项已验收；SDK分类超限、enum两个零槽与String空usage等真实未闭项保留，未晋级完整父项或六项D-02实机。恢复须用户另行指示；准确现场、提交、失败与证据见[详细交接](HANDOFF2.md)。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -35,7 +35,7 @@
 
 ## 3. 当前工作包：发布顺序、依赖与验收
 
-以下为当前获授权执行的任务设计；“可发布”表示输入已足，可优先实现。新增工作包复用旧ID/父项，不重复计算成果。
+以下保留任务设计和实际验收状态；暂停期间不执行后继。“可发布”仅表示输入已足，恢复须用户另行指示。新增工作包复用旧ID/父项，不重复计算成果。
 
 ### 3.1 优先发布：明确修复与有界验证
 
@@ -72,7 +72,7 @@
 | F-03d3f4d2/R1-RUNTIME-INPUT-REPLAY | 已完成；限定同轮warm原返回及ordinary四方法写入 | 主线第三1839053B同双fresh，22检查/16独立审核/37pin；warm真实ret、四MethodInfo及ASLR函数指针原store成立；8调用8794步，输入末尾77项保持。cold准确止普通10294槽，完整构造/default原写未验 | [实际消费者与精确后继](docs/CLIENT_72_AVATAR_RUNTIME_REPLAY.md) |
 | E-01/R3-STRING-COMPARER-INPUT | 已完成；限定String来源/ABI及最小静态合同 | 主线静态第三12843B同双fresh，21纯向量/10独立审核；一新383B窗、八复用窗、usage13200/750/265及父VAR0成立。17读920B primary可合并R1，未启两个32-probe后备；自然Default/Equals未取得 | [实际合同、继承/伴随槽与未验边界](docs/CLIENT_72_GADGET_STRING_COMPARER_INPUT.md) |
 | F-03d3f4d2/R1-WARM-USAGES | 已完成；限定纯collector/source与owned | 主线第三212636B同双fresh、37检查/12独立审核/52pin/九复用窗；人工图243请求9032B、85unique统一末尾复读。main与optionalString分立，硬界5276/96608/208、新增首遍64/4096不变 | [真实来源/预算/主线验收](docs/CLIENT_72_AVATAR_WARM_USAGES.md)；无自然采样或完整构造许可 |
-| F-03d3f4d2/R1-WARM-USAGES-ADAPTER | 进行中；13生命周期/source gate及现场CheckOnly通过，待新ready | 新sampler核同轮三模块/创建身份/前后存活；52pin/九窗/13保护门禁通过。合并外部上限5285请求98058B/单次512B；14源pin计划与备份/恢复脚本已封存，当前五stock/13保护、相关进程端口0 | [适配及现场准备](docs/CLIENT_72_AVATAR_WARM_USAGES.md#主线第三与新windows适配器)；尚无新安装或启动，实际/退出/恢复另验 |
+| F-03d3f4d2/R1-WARM-USAGES-ADAPTER | 已完成；限定有界采集/身份/复读/退出恢复，不代验完整图 | 实际90秒45监测、R1 256读8104B及SDK9读1450B；84unique末尾一致，14主线审核通过。7/8主候选取得，enum两个槽0、String usage0按守卫停；用户正常页/退出无异常，五stock/13保护保持、无alias/相关进程端口 | [实际结果与准确未闭项](docs/CLIENT_72_AVATAR_WARM_USAGES.md#本轮合并实测与收尾)；完整图/原消费者/父项未完成，按用户要求暂停 |
 | R2-ROUTE-CONFIG-SELECT | 进行中；准确托管loader存在，自然选择/Init未验 | 固定托管env选择、managed→native必要输入和安全事件；原始材料可得先离线，合同足够再实机 | [执行计划](docs/CLIENT_72_D02_RESUME_20261109.md) |
 | R2-CONFIGSYNC-EVENT | 已完成；限定固定producer与原生dispatcher | 原ctor、真实OS转换、两个name负例/精确local_config到writer入口已执行；主线第三4670B同双跑、6项通过。自然caller/writer返回未验 | [原始证据与模型](docs/CLIENT_72_SDK_CONFIGSYNC_EVENT.md) |
 | R2-CONFIGSYNC-OBSERVE-owned | 已完成；限定独立构建/自有ABI及准备 | release DLL/fixture成功，两个新进程16case/279B实际搬移与恢复、15检查及12独立审核过；50导出/9新源/20旧pin保持。未调用SDK/客户端 | [实际构建与限定验收](docs/CLIENT_72_SDK_CONFIGSYNC_OBSERVER.md#主线实际构建与自有验证) |
@@ -85,8 +85,8 @@
 | R2-CONFIGSYNC-SCALAR-OBSERVE | 已完成；限定新epoch四次1B事实 | registered/once在本轮R1采集前后均01，恰4读4B，正常退出/五stock/13保护及进程端口通过；没有hook/配置堆。不同epoch不解释旧未命中，once不代验SDK事件/返回 | [来源/实测/未知](docs/CLIENT_72_SDK_CONFIGSYNC_SCALAR_OBSERVATION.md) |
 | R2-CONFIGSYNC-EARLY-BRIDGE-owned | 已完成；限定新EXE桥来源/构建及owned | 主线静态第三同双fresh11556B/22断言，10 Python及12独立审核通过；独立DLL577536B、51导出/72B DATA，两fresh各18真实owned case及284B搬移/恢复通过。原EXE桥Marshal/自然输入/完整校验未验 | [实际构建、ABI与边界](docs/CLIENT_72_SDK_CONFIGSYNC_EARLY_BRIDGE.md) |
 | R2-CONFIGSYNC-EARLY-LIVE-ADAPTER | 已完成；限定新只读adapter的owned与真实文件门禁 | 主线实际16项adapter检查/12独立审核；同次9读1450B原字节侧账、三模块前后身份及最后存活核对、finally关闭。隔离文件布局用真实固定五输入/SDK carrier和已验DLL通过source gate；未安装/读真实进程 | [实际范围与现场未知](docs/CLIENT_72_SDK_CONFIGSYNC_EARLY_BRIDGE.md#新现场adapter的owned与真实文件门禁) |
-| R2-CONFIGSYNC-EARLY-BRIDGE | 进行中；adapter/合并脚本/恢复已准备，现场待新ready | 单EXE6d80910入口在首次原转发前同步安装，exact return198035f6；仅有界managed UTF16副本分类。14源pin与CheckOnly通过，无账号/服务启动；真实自然事件及退出恢复另验 | [准备、来源、预算及停止条件](docs/CLIENT_72_SDK_CONFIGSYNC_EARLY_BRIDGE.md)；尚未安装客户端 |
-| F-03d3f4d2 完整Avatar构造/后缀 | 进行中；三类壳/接口前缀、32B原发布、自然输入warm getter与四ordinary方法原写已验；完整后缀未闭 | 在有来源输入下连续执行必要构造/装备/技能/池链；cold普通10294槽与完整入口List/HashSet及uint32 comparer分别保留，先取得warm必经图，明确真实Java时机 | [新原消费者结果](docs/CLIENT_72_AVATAR_RUNTIME_REPLAY.md)、[warm计划](docs/CLIENT_72_AVATAR_WARM_USAGES.md)；已验子项直接复用，完整父项不晋级 |
+| R2-CONFIGSYNC-EARLY-BRIDGE | 进行中；自然准确caller已到达，分类over-limit未通过 | 单EXE入口/完整284B trampoline/47原转发及前后72B DATA实测绑定；anyEntry/expectedCaller均1，event5超限停止，未判明哪个字符串越界，不得扩大预算或称分类成功。用户正常页/退出，stock已恢复；原Marshal/export/writer/route仍未验 | [实测、启动失败修复及边界](docs/CLIENT_72_SDK_CONFIGSYNC_EARLY_BRIDGE.md#本轮自然实测及停止结论)；本批观察/恢复已收尾，父项未完成并暂停后继 |
+| F-03d3f4d2 完整Avatar构造/后缀 | 进行中；三类壳/接口、32B发布、warm getter/四ordinary方法原写及List/HashSet/uint32候选取得；完整后缀未闭 | cold普通10294槽仍缺；新warm主图7/8候选成立，但同轮enum RGCTX getter/ctor两个槽0，未读ctor；实际allocator/完整构造/装备技能后继未验。按用户指令保留状态、暂停后继 | [原消费者结果](docs/CLIENT_72_AVATAR_RUNTIME_REPLAY.md)、[新实测/准确守卫](docs/CLIENT_72_AVATAR_WARM_USAGES.md#本轮合并实测与收尾)；完整父项不晋级 |
 | F-03d3g2 正式Avatar发送 | 阻塞；依赖f4d2、R3及同源Store/角色/SavedVitals | 固定字段/tag/类型/枚举/值来源和省略语义，确定性生成；真实Java输出交目标消费者；非零/64位/非空/错误及账号保存回归 | g1和g2-prep已完成；只改Proto源，不改旧共享定义求方便；[投影](docs/CLIENT_72_AVATAR_JAVA_PROJECTION.md) |
 | F-03d3s2 场景/Team/Entity闭合与发送 | 进行中；Pool实际函数绑定/模式/目标头已取；自然注册/stage、分配后继/MPLevel及组件生命周期未闭 | 用准确producer和同源实体完成能力/附属对象/创建替换拆除与通知顺序；逐个批准必需三层和Java来源后接sender | [Scene上下文](docs/CLIENT_72_SCENE_RUNTIME_CONTEXT.md)、[场景token/属性](docs/CLIENT_72_SCENE_ENTRY_CLOSURE.md)；World stage与资源枚举分开 |
 | R2-ROUTE SDK配置、会话与自然连接（D-01 / F-02 / F-04） | 进行中；包/loader、map/app_key、原生builder/sign与Java真实HTTP/保存往返已验；自然Init/env及运行route未闭 | 固定来源追配置→选址→签名→会话交换；自然实验一次回答明确问题；必要输入可离线取得时先离线；与R2-SESSION/KEY汇合 | [配置loader](docs/CLIENT_72_SDK_ROUTE_LOADER.md)、[真实接收](docs/CLIENT_72_SDK_COMBO_HTTP.md)、[请求链](docs/CLIENT_72_SDK_LOGIN_CHAIN.md)；原登录页/root非空不证明请求成功 |
