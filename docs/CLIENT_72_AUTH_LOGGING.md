@@ -38,3 +38,6 @@ AuthenticationLoggingTest实际调用三个handler拒绝分支、exchange错误�
 生产仅替换两条敏感日志并去掉专供日志的 dbKey 读取；账号查找、认证判断、session采用、save和login token生成保持原流程。没有新增校验、异常处理、日志过滤器或更改宽松认证策略；其是否适用于真实7.2仍另验。
 
 新独立目录 `d02-resume-20261108/r2-log-green/`：AuthenticationLoggingTest 6、PasswordResetAuthenticationTest 33，共39项实际全过，0失败/错误/跳过。data/cache/packets/plugins显式新目录、数据库为新27027实例及随机fixture库，原27017未启；Mongo admin正常shutdown退出0。原数据/配置保留，原始响应和日志只在忽略目录。构建及未部署边界随本批产物核验补充；尚未取得本服SDK或D-02实机验收。
+
+
+本批portable构建退出0，代码496e96f，JAR SHA-256 `8f093e19b839ff1263984c596584d1ae12e6d4fd841d82562aaf30f998267291`；46,306类，新增2/变化9/删除0，所有新增/变化均与编译输出逐字节相同，46,295类保持；4个DefaultAuthenticators兄弟类仅调试行信息变化，javap代码相同。内嵌Git提交核对通过；旧JAR已先备份并逐hash核同。证明 `d02-resume-20261108/build/artifact-proof.json`。实际status退出1且无运行服务对象；完整R4、资源revision及SDK装载/路由/信任未齐，未部署，HTTP健康/运行JAR/DLL不作通过结论。此边界不阻止继续独立前置工作。

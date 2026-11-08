@@ -52,10 +52,13 @@ stdout 是**只供内存管道消费的敏感合成 payload**，字段如下：
 
 ## 主线实际验收
 
-主线 `r2-session-green/` 新独立27027及四可写目录内运行9套193项，0失败/错误/跳过：HTTP10、认证日志6、密码/会话33、账号创建40、密码重置20、账号保存20、Player保存10、物品保存35、选人/保存19。HTTP测试账户查询为内存夹具；其余列明的Mongo套件真实连接新库。Mongo正常admin shutdown退出0；原配置及8个运行数据文件逐SHA不变。未重跑全量Java，不把历史全量结论代入。
+主线 `r2-session-green/` 新独立27027及四可写目录内运行9套193项，0失败/错误/跳过：HTTP10、认证日志6、密码/会话33、账号创建40、密码重置20、账号保存20、Player保存10、物品保存35、选人/保存19。HTTP测试账户查询为内存夹具；其余列明的Mongo套件真实连接新库。Mongo正常admin shutdown退出0；原配置及本轮实际9个运行数据文件逐SHA不变。未重跑全量Java，不把历史全量结论代入。
 
 新 `tools/verify_client72_session_http.py` 从Java helper PIPE取得实际HTTP原始JSON文本，未经重编码直接交固定SDK `342B10→2F6190→338990→31F3F0`；成功再交`342460` formatter。`session-native-final-{first,repeat}.json`两次新进程逐字节一致，三案例分别为：session成功状态0/type1/原token相等/大于2^53身份文本精确；认证错误原生-101且无token；passport数组保留且同consumer把type置0/formatter空token，作为真实格式负对照。parser和formatter的entry/return证明分段保留，未把最后一段trace冒充整个链。
 
 报告只持久化源码/编译类身份、状态、长度、模型和布尔；HTTP正文、token、envelope及其hash均未写文件或日志。查询仍是合成Account，原生存储/单线程同步和稀疏service/config模型沿用父合同，未运行自然UI/回调/真实SDK网络。最初两份`session-native-{first,repeat}`也同字节，但只保留末调用trace；改为分段证明后新final两份替代该证据范围，旧报告不覆盖。
 
 本地生产/测试与研究脚本由主线提交；portable构建和JAR类核对随后补充。R4完整协议/资源revision/SDK信任与合法加载未齐，因此不部署服务或安装补丁。D-02六项实机仍未通过。
+
+
+本批portable构建退出0，代码496e96f，JAR SHA-256 `8f093e19b839ff1263984c596584d1ae12e6d4fd841d82562aaf30f998267291`；46,306类，新增2/变化9/删除0，所有新增/变化均与编译输出逐字节相同，46,295类保持；4个DefaultAuthenticators兄弟类仅调试行信息变化，javap代码相同。内嵌Git提交核对通过；旧JAR已先备份并逐hash核同。证明 `d02-resume-20261108/build/artifact-proof.json`。实际status退出1且无运行服务对象；完整R4、资源revision及SDK装载/路由/信任未齐，未部署，HTTP健康/运行JAR/DLL不作通过结论。此边界不阻止继续独立前置工作。

@@ -41,15 +41,15 @@
 
 | 工作包 / 归属 | 状态与依赖 | 交付与验收 | 边界与证据 |
 | --- | --- | --- | --- |
-| R2-LOG 剩余session日志修复（D-01 / F-04） | 进行中；真实combo凭据测试前完成 | 有效泄漏红测→最小日志修复；认证/会话采用/保存保持，合成token及异常正文不入日志，关联隔离回归/构建 | 只修DefaultAuthenticators.SessionKeyAuthenticator遗留片段；既有三类日志修复保留；[响应规格](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md)、[日志合同](docs/CLIENT_72_AUTH_LOGGING.md) |
-| R2-SESSION 单token响应适配（D-01 / F-02） | 进行中；已有原生正反规格；与R2-LOG协调 | `/account/ma-cn-session/app/verify`成功返回`data.user_info`与`data.token{token_type:1,token}`，沿用同一认证token；真实Java成功/错误响应→原生parser/formatter，64位ID字符串及会话内容一致；独立账号/密码/保存回归 | 不重新生成或轮换token，verifySToken数组合同不一并改；错误认证不得出token，type4不擅认combo必经；[SDK响应](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md) |
+| R2-LOG 剩余session日志修复（D-01 / F-04） | 已完成；限定日志红绿/隔离回归/构建；部署待R4 | 有效泄漏红测→最小日志修复；认证/会话采用/保存保持，合成token及异常正文不入日志，关联隔离回归/构建 | 只修DefaultAuthenticators.SessionKeyAuthenticator遗留片段；既有三类日志修复保留；[响应规格](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md)、[日志合同](docs/CLIENT_72_AUTH_LOGGING.md) |
+| R2-SESSION 单token响应适配（D-01 / F-02） | 已完成；独立HTTP、Java→原生及账号保存回归/构建；部署待R4 | `/account/ma-cn-session/app/verify`成功返回`data.user_info`与`data.token{token_type:1,token}`，沿用同一认证token；真实Java成功/错误响应→原生parser/formatter，64位ID字符串及会话内容一致；独立账号/密码/保存回归 | 不重新生成或轮换token，verifySToken数组合同不一并改；错误认证不得出token，type4不擅认combo必经；[SDK响应](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md) |
 | R2-KEY 窄key核心接原生Crypto（D-01 / F-04） | 进行中；未启用核心自有ABI已验，需精确native桥接 | 同一核心输出供真实SDK Crypto，覆盖身份、caller、寄存器/栈/返回保持及错误拒绝；再形成实际loaded绑定、合法加载/校验影响的最小计划 | 此出口只解锁下一验证，不批准整DLL安装；[ABI](docs/CLIENT_72_SDK_KEY_INPUT_ABI.md)、[Crypto](docs/CLIENT_72_SDK_CRYPTO_CONTRACT.md) |
 
 ### 3.2 并行关闭：必要输入与完整消费者
 
 | 工作包 / 归属 | 状态与当前首缺条件 | 交付与验收 | 证据入口 |
 | --- | --- | --- | --- |
-| F-03d3f4d2 完整Avatar构造/后缀 | 阻塞；fresh父descriptor与NativeConfig真实模式/typed头、消费前状态 | 在有来源输入下连续执行cold/default/装备/技能/池等必经链，保留实际停止点；明确必要字段、同源资源和真实Java读取时机 | [HandlerClosure](docs/CLIENT_72_AVATAR_HANDLER_CLOSURE.md)、[采样准备](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md)；旧Array/Type已取得，不再重复列缺 |
+| F-03d3f4d2 完整Avatar构造/后缀 | 进行中；fresh父descriptor16B与mode=true/对象头已取；typed身份/消费前时序及完整cold/default后继仍待 | 在有来源输入下连续执行cold/default/装备/技能/池等必经链，保留实际停止点；明确必要字段、同源资源和真实Java读取时机 | [HandlerClosure](docs/CLIENT_72_AVATAR_HANDLER_CLOSURE.md)、[采样准备](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md)；旧Array/Type已取得，不再重复列缺 |
 | F-03d3g2 正式Avatar发送 | 阻塞；依赖f4d2、R3及同源Store/角色/SavedVitals | 固定字段/tag/类型/枚举/值来源和省略语义，确定性生成；真实Java输出交目标消费者；非零/64位/非空/错误及账号保存回归 | g1和g2-prep已完成；只改Proto源，不改旧共享定义求方便；[投影](docs/CLIENT_72_AVATAR_JAVA_PROJECTION.md) |
 | F-03d3s2 场景/Team/Entity闭合与发送 | 进行中；缺自然注册/stage、PoolCluster/MPLevel及组件生命周期 | 用准确producer和同源实体完成能力/附属对象/创建替换拆除与通知顺序；逐个批准必需三层和Java来源后接sender | [Scene上下文](docs/CLIENT_72_SCENE_RUNTIME_CONTEXT.md)、[场景token/属性](docs/CLIENT_72_SCENE_ENTRY_CLOSURE.md)；World stage与资源枚举分开 |
 | R2-ROUTE SDK配置、会话与自然连接（D-01 / F-02 / F-04） | 进行中；缺server_pc资源loader producer/准确配置、combo签名和自然消费 | 固定来源追配置→选址→签名→会话交换；自然实验一次回答明确问题；必要输入可离线取得时先离线；与R2-SESSION/KEY汇合 | [请求链](docs/CLIENT_72_SDK_LOGIN_CHAIN.md)、[响应](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md)；原登录页/root非空不证明请求成功 |
@@ -138,15 +138,17 @@
 
 | 任务ID / 成果 | 状态 | 已验成果 / 保留边界 | 证据 |
 | --- | --- | --- | --- |
+| R2-LOG | 已完成 | SessionKeyAuthenticator敏感日志有效红绿、认证/会话采用/保存保持、隔离回归与portable构建；不变更认证策略，真实部署/SDK另验。 | [日志](docs/CLIENT_72_AUTH_LOGGING.md) |
+| R2-SESSION | 已完成 | session verify独立单token响应、真实HTTP成功/错误/64位/嵌套、Java→原生parser/formatter正反和账号/密码/保存回归/构建；自然SDK及D-02未验。 | [适配与验收](docs/CLIENT_72_SDK_SESSION_ADAPTER.md) |
 | D-01a、D-01b1、D-01b2、D-01b3a | 已完成 | 命名入口参数、启动RNG、全局/UTF8、TLS/Marshal限定合同；完整SDK和自然函数返回另验。 | [入口ABI](docs/CLIENT_72_PATCH_ABI.md)、[动态](docs/CLIENT_72_DYNAMIC_DEBUG.md)、[Marshal](docs/CLIENT_72_MARSHAL_STORAGE.md) |
 | D-01b4、D-01b5a、D-01b5b、D-01b5e、D-01b5f、D-01b5g-preflight | 已完成 | 观察通道、自有SW/HW、实际退出/对照与观察前置均按限定范围验收；根因或本服成功未被推定。 | [通道](docs/CLIENT_72_DEBUG_CHANNEL.md)、[启动观察](docs/CLIENT_72_STARTUP_OBSERVER.md)、[软件点](docs/CLIENT_72_SOFTWARE_BREAKPOINT_CHANNEL.md)、[单HW](docs/CLIENT_72_SINGLE_HARDWARE_OBSERVER.md) |
 | D-01b5c、D-01b5d、D-01b5h1 | 已完成 | 当前区/RegionList的身份和Java→原生消费、真实HTTP签名版本拒绝；7.2成功准入未验。 | [当前区](docs/CLIENT_72_HTTP_DISPATCH.md)、[列表](docs/CLIENT_72_REGION_LIST.md)、[HTTP路由](docs/CLIENT_72_HTTP_ROUTE_CONTRACT.md) |
 | F-04a、F-04b、F-04c、F-04c2 | 已完成 | 运行前置核对、本地信任输入/保留验签补丁及便携路径供给；未批准整DLL加载。 | [前置](docs/CLIENT_72_RUNTIME_PREREQUISITES.md)、[信任](docs/CLIENT_72_TRUST_CONTRACT.md)、[补丁](docs/CLIENT_72_TRUST_PATCH.md)、[路径](docs/CLIENT_72_TRUST_LAUNCHER.md) |
 | 原始启动与只读初始化成果（归D-01b / D02-R1/R2） | 已完成 | 原SDK登录页、初始化/cold数组与资源槽取证；首次错误解释已撤回，不代入本服登录。 | [原始启动](docs/CLIENT_72_UNINSTRUMENTED_STARTUP.md)、[初始化](docs/CLIENT_72_RUNTIME_INITIALIZATION_SNAPSHOT.md)、[cold数组](docs/CLIENT_72_COLD_ARRAYS_SNAPSHOT.md)、[资源槽](docs/CLIENT_72_LIVE_RESOURCE_CONTRACT.md) |
 | SDK观察候选与HW分界成果（归D02-R2） | 已完成 | 标准API自有夹具/ETW过滤/WinHTTP无事件结果及HW退出边界已记录；不证明SDK观察覆盖，不默认重试。 | [观察夹具](docs/CLIENT_72_SDK_OBSERVER_DESIGN.md)、[ETW](docs/CLIENT_72_SDK_ETW_OBSERVER.md)、[WinHTTP](docs/CLIENT_72_WINHTTP_ETW_FIXTURE.md)、[HW分界](docs/CLIENT_72_D02_HW_EXIT.md) |
-| SDK transport/login/Crypto/response限定成果（归D02-R2） | 已完成 | 准确请求所有权、原生key/算法/route、session单token规格；成功本服连接与DTO修复未验。 | [transport](docs/CLIENT_72_SDK_TRANSPORT.md)、[登录链](docs/CLIENT_72_SDK_LOGIN_CHAIN.md)、[Crypto](docs/CLIENT_72_SDK_CRYPTO_CONTRACT.md)、[response](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md) |
+| SDK transport/login/Crypto/response限定成果（归D02-R2） | 已完成 | 准确请求所有权、原生key/算法/route、session单token规格；成功本服连接未验；DTO独立修复见R2-SESSION。 | [transport](docs/CLIENT_72_SDK_TRANSPORT.md)、[登录链](docs/CLIENT_72_SDK_LOGIN_CHAIN.md)、[Crypto](docs/CLIENT_72_SDK_CRYPTO_CONTRACT.md)、[response](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md) |
 | SDK key核心及采样器准备（归D02-R1/R2/R4） | 已完成 | 未启用核心自有ABI、有限根/头采样工具已验；真实native桥接/加载与新增采样未执行，cold父descriptor需另补。 | [key ABI](docs/CLIENT_72_SDK_KEY_INPUT_ABI.md)、[采样器](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md) |
-| 认证日志与InstanceRoot前置（归D02-R2/R5） | 已完成 | 三个认证类日志修复和数据隔离回归、独立运行目录入口已验；DefaultAuthenticator遗留日志见R2-LOG，真实部署未验。 | [日志](docs/CLIENT_72_AUTH_LOGGING.md)、[隔离入口](docs/CLIENT_72_PORTABLE_ISOLATION.md) |
+| 认证日志与InstanceRoot前置（归D02-R2/R5） | 已完成 | 三个认证类日志修复和数据隔离回归、独立运行目录入口已验；DefaultAuthenticator遗留日志已按R2-LOG修复，真实部署未验。 | [日志](docs/CLIENT_72_AUTH_LOGGING.md)、[隔离入口](docs/CLIENT_72_PORTABLE_ISOLATION.md) |
 
 ### 6.4 资源、脚本、保存与回归
 

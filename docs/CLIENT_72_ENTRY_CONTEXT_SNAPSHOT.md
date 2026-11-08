@@ -44,3 +44,12 @@ python tools/sample_client72_entry_context.py --observation <新监测报告> --
 冻结 `first.cold.json` SHA `a599ab66270243189c71e84cdbd791f563f3f5dcec40bfb7eccdf2afc43a12aa` 记录 caller、consumer 和实际停止；冻结 `flag-region.json` SHA `a4af071ff1036db8bc02c86af366d858bd3473bbbe826084f17874ee1a884a1` 记录cache reader指令及目标。此前已验自然13类与固定metadata逐字节对应，其中class1239的+10为1239、+18中kind为18；这两个检查是捕获样本和metadata约束，**不是上述机器码自行断言1239及kind18**。父descriptor自身的kind/index/bits依然未知。`mode-registration-static.json` SHA `40b5f1481d22c3c2fc44ce1ac2743b919b90c95b61476ed52614e67a3b5ce1e9` 另记录 `14053f09f` 向cache全局写入分配并清零的表；这说明该写入片段，并不声称已闭合全局生命周期。
 
 本次实际固定EXE离线核对21窗成功，10项测试通过（包括新增父窗漂移拒绝）；未打开目标进程。当前采样器 SHA `e75bf02d6fdb507cf6f326cced320b7b4d030b6332b217dff1db07d81f3cad68`，测试 SHA `ea8b37e5c9c9432d754f994f3899873a8f9c5392fd14c3e35ea7fa3c9592362b`，替代上段历史hash。
+
+
+## 本轮自然采样实际结果
+
+主线完成21窗独立核验和10项测试后，在用户新确认ready下原始启动90秒，44监测样本且最终存活；随后新版采样器实际23读/1041B、0错误、status completed。原始monitor `plain/run-resume-20261108-1.json`，SHA `a48b46ab9206ec8809efc67601d406df067634d44a4230c7aad1497a5662daa2`；snapshot `main/entry-context-tool/live-resume-20261108-1.json`，SHA `c790c70f1e5882666d556ad4ba54250e8cec3e66c4874667576209b05097d152`。执行源先复制并核hash在 `d02-resume-20261108/sampling-source/`，wrapper启动前重核。源码epoch是上文e75bf02d，不把旧7/9项准备计作本次实际采样。
+
+父descriptor16B已取得，kind21，静态注册索引405416；新旧class1239身份/descriptor片段、parent compact offset及尺寸字段一致。NativeConfig mode真实为1/true，HashSet/List对象头以及Scene四根非空；这些头不包含HashSet/List的完整typed class身份/成员，非空不证明自然注册或消费者已运行。父数据用于下一离线重定位模型，不能混写成同一进程完整cold回放。读取是分时非原子，未采字段仍未知；完整Handler/g2/Scene/SDK请求和D-02仍未验。
+
+用户确认本次SDK登录页正常、无报错，随后从窗口正常退出；主线OS复核无目标。此次无补丁、调试器、注入或本服服务，不是本服登录验收。OS/执行源/数据保护与采样预算证明在 `d02-resume-20261108/`；不沿用此次PID到后继。
