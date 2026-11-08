@@ -1,3 +1,5 @@
+2026-11-08 R2-KEY-native-bridge：主线release/offline helper及第三完整回放97,333B/SHA 8d53ace9…439dcdf同v2双跑，14检查通过；18个baseline/bridge原生例、19次同一核心调用。v1析构栈失败保留，不记通过；[复现/翻译/模型/未部署边界](docs/CLIENT_72_SDK_KEY_NATIVE_BRIDGE.md)。proof `d02-resume-20261108/native-third-review.private.json`；R2-KEY实际loaded与自然route继续未完成，独立透明入口准备中。
+
 2026-11-08 F-03d3f4d2-parent-continuation：主线第三完整回放736,365B/SHA 2a58df6a…d32eca9b同双跑，17检查通过；准确vector/单线程已知锁后继后止classCache[1234]未采8B，default/完整Handler未执行。[复现和模型](docs/CLIENT_72_AVATAR_PARENT_CONTINUATION.md)，proof `d02-resume-20261108/native-third-review.private.json`。继续自然最小输入，父项未完成。
 
 2026-11-08 第二轮入口准备：现采样器新增Pool实际slot4/精确代码绑定、独立pool mode/type46314头与NativeConfig两class头，23固定PE窗/12离线检查通过，最多30读1714B，**该准备epoch未实机执行**；后续联合合同见最新入口专题。proof `d02-resume-20261108/entry-context-pool-preparation-proof.json`；[读预算/未知](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md)。

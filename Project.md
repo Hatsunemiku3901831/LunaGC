@@ -43,7 +43,7 @@
 | --- | --- | --- | --- |
 | R2-LOG 剩余session日志修复（D-01 / F-04） | 已完成；限定日志红绿/隔离回归/构建；部署待R4 | 有效泄漏红测→最小日志修复；认证/会话采用/保存保持，合成token及异常正文不入日志，关联隔离回归/构建 | 只修DefaultAuthenticators.SessionKeyAuthenticator遗留片段；既有三类日志修复保留；[响应规格](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md)、[日志合同](docs/CLIENT_72_AUTH_LOGGING.md) |
 | R2-SESSION 单token响应适配（D-01 / F-02） | 已完成；独立HTTP、Java→原生及账号保存回归/构建；部署待R4 | `/account/ma-cn-session/app/verify`成功返回`data.user_info`与`data.token{token_type:1,token}`，沿用同一认证token；真实Java成功/错误响应→原生parser/formatter，64位ID字符串及会话内容一致；独立账号/密码/保存回归 | 不重新生成或轮换token，verifySToken数组合同不一并改；错误认证不得出token，type4不擅认combo必经；[SDK响应](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md) |
-| R2-KEY 窄key核心接原生Crypto（D-01 / F-04） | 进行中；未启用核心自有ABI已验，需精确native桥接 | 同一核心输出供真实SDK Crypto，覆盖身份、caller、寄存器/栈/返回保持及错误拒绝；再形成实际loaded绑定、合法加载/校验影响的最小计划 | 此出口只解锁下一验证，不批准整DLL安装；[ABI](docs/CLIENT_72_SDK_KEY_INPUT_ABI.md)、[Crypto](docs/CLIENT_72_SDK_CRYPTO_CONTRACT.md) |
+| R2-KEY 窄key核心接原生Crypto（D-01 / F-04） | 进行中；同一核心→准确native桥接已验；实际loaded、自然caller/route及生产接入未验 | 同一核心输出供真实SDK Crypto，覆盖身份、caller、寄存器/栈/返回保持及错误拒绝；再形成实际loaded绑定、合法加载/校验影响的最小计划 | 离线出口不批准整DLL安装；[ABI](docs/CLIENT_72_SDK_KEY_INPUT_ABI.md)、[原生桥接](docs/CLIENT_72_SDK_KEY_NATIVE_BRIDGE.md)、[Crypto](docs/CLIENT_72_SDK_CRYPTO_CONTRACT.md) |
 
 ### 3.2 并行关闭：必要输入与完整消费者
 
@@ -64,6 +64,7 @@
 | C-01 / F-02 / F-03 网络与初始化整合 | 进行中；全量出口归R4 | 复用C-01b帧/注册修复，补必要Union/枚举/最终发包与序列。检查onLogin、SceneInitFinish、EnterSceneDone后的队伍/世界/实体，不能只验八握手 |
 | V-01 回归失败归因 | 进行中；按本次改动和R4范围选集 | 新运行先明确基线/夹具/生产失败；保护账号、经济、保存、Lua。完整全量未重跑就不宣称全绿；不机械用历史失败总数安排任务 |
 | F-04 部署材料及隔离核验 | 进行中；复用ENV-01基线，实际部署待R4 | 真实SDK/信任/资源合同充分后形成7.2产物；正常构建和停服，按InstanceRoot归属核对，不仅改版本或环境变量放行；[隔离](docs/CLIENT_72_PORTABLE_ISOLATION.md) |
+| F04-LOADER-CLEAN 独立透明入口 | 进行中；原导出表已固定，自有夹具与源码准备中 | 独立于旧模块入口透明转发原库导出，只读核对已加载SDK身份与准确窗口；自有Win32夹具先验，再准备用户在场的真实加载。保留系统/客户端拒绝，不能绕过校验；[计划](docs/CLIENT_72_CLEAN_LOADER.md) |
 
 ## 4. 任务发布与范围控制
 
@@ -148,7 +149,8 @@
 | 原始启动与只读初始化成果（归D-01b / D02-R1/R2） | 已完成 | 原SDK登录页、初始化/cold数组与资源槽取证；首次错误解释已撤回，不代入本服登录。 | [原始启动](docs/CLIENT_72_UNINSTRUMENTED_STARTUP.md)、[初始化](docs/CLIENT_72_RUNTIME_INITIALIZATION_SNAPSHOT.md)、[cold数组](docs/CLIENT_72_COLD_ARRAYS_SNAPSHOT.md)、[资源槽](docs/CLIENT_72_LIVE_RESOURCE_CONTRACT.md) |
 | SDK观察候选与HW分界成果（归D02-R2） | 已完成 | 标准API自有夹具/ETW过滤/WinHTTP无事件结果及HW退出边界已记录；不证明SDK观察覆盖，不默认重试。 | [观察夹具](docs/CLIENT_72_SDK_OBSERVER_DESIGN.md)、[ETW](docs/CLIENT_72_SDK_ETW_OBSERVER.md)、[WinHTTP](docs/CLIENT_72_WINHTTP_ETW_FIXTURE.md)、[HW分界](docs/CLIENT_72_D02_HW_EXIT.md) |
 | SDK transport/login/Crypto/response限定成果（归D02-R2） | 已完成 | 准确请求所有权、原生key/算法/route、session单token规格；成功本服连接未验；DTO独立修复见R2-SESSION。 | [transport](docs/CLIENT_72_SDK_TRANSPORT.md)、[登录链](docs/CLIENT_72_SDK_LOGIN_CHAIN.md)、[Crypto](docs/CLIENT_72_SDK_CRYPTO_CONTRACT.md)、[response](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md) |
-| SDK key核心及采样器准备（归D02-R1/R2/R4） | 已完成 | 未启用核心自有ABI、有限根/头采样工具已验；真实native桥接/加载与新增采样未执行，cold父descriptor需另补。 | [key ABI](docs/CLIENT_72_SDK_KEY_INPUT_ABI.md)、[采样器](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md) |
+| SDK key核心及采样器准备（归D02-R1/R2/R4） | 已完成 | 未启用核心自有ABI、有限根/头采样工具已验；父descriptor已由后继补取，新增原生桥接见下项，实际加载仍未验。 | [key ABI](docs/CLIENT_72_SDK_KEY_INPUT_ABI.md)、[采样器](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md) |
+| R2-KEY-native-bridge | 已完成 | 同一Rust核心实际供给准确caller→原PEM/RSA/Base64，保持入口状态/原返回及拒绝；限定离线桥接，不证明loaded、自然输入、hook wrapper或整DLL。 | [原生桥接](docs/CLIENT_72_SDK_KEY_NATIVE_BRIDGE.md) |
 | 认证日志与InstanceRoot前置（归D02-R2/R5） | 已完成 | 三个认证类日志修复和数据隔离回归、独立运行目录入口已验；DefaultAuthenticator遗留日志已按R2-LOG修复，真实部署未验。 | [日志](docs/CLIENT_72_AUTH_LOGGING.md)、[隔离入口](docs/CLIENT_72_PORTABLE_ISOLATION.md) |
 
 ### 6.4 资源、脚本、保存与回归
