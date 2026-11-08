@@ -54,6 +54,8 @@
 | F-03d3s2 场景/Team/Entity闭合与发送 | 进行中；Pool实际函数绑定/模式/目标头已取；自然注册/stage、分配后继/MPLevel及组件生命周期未闭 | 用准确producer和同源实体完成能力/附属对象/创建替换拆除与通知顺序；逐个批准必需三层和Java来源后接sender | [Scene上下文](docs/CLIENT_72_SCENE_RUNTIME_CONTEXT.md)、[场景token/属性](docs/CLIENT_72_SCENE_ENTRY_CLOSURE.md)；World stage与资源枚举分开 |
 | R2-ROUTE SDK配置、会话与自然连接（D-01 / F-02 / F-04） | 进行中；包/loader、map/app_key、原生builder/sign与Java真实HTTP/保存往返已验；自然Init/env及运行route未闭 | 固定来源追配置→选址→签名→会话交换；自然实验一次回答明确问题；必要输入可离线取得时先离线；与R2-SESSION/KEY汇合 | [配置loader](docs/CLIENT_72_SDK_ROUTE_LOADER.md)、[真实接收](docs/CLIENT_72_SDK_COMBO_HTTP.md)、[请求链](docs/CLIENT_72_SDK_LOGIN_CHAIN.md)；原登录页/root非空不证明请求成功 |
 | E-01 真实资源→Java必要字段 | 进行中；能量与初始装备/曲线字段桥梁已验，完整行/加载及实际revision未闭 | 同源表/行→目标parser/消费者→Java字段逐项对应；先角色、depot、技能、默认装备、Scene及必需Quest，拒绝无证alias/省略 | [六表](docs/CLIENT_72_AVATAR_NATURAL_TABLES.md)、[Java目的合同](docs/CLIENT_72_D02_JAVA_RESOURCE_CONTRACT.md)、[装备字段](docs/CLIENT_72_D02_EQUIPMENT_RESOURCE.md) |
+| E-01-PROMOTE-ENTRY 真实突破/出生必要行（归R3） | 进行中；依赖已验装备桥梁，首缺同源突破加成和完整必要字段 | 取得WeaponPromote11101/phase0与Avatar曲线/突破/基础属性/引用的准确规格，足够后立即接Java实际加载，不补空addProps | [来源、范围及验收](docs/CLIENT_72_D02_PROMOTE_RESOURCE.md) |
+| F-03d3f4d2-fresh-interfaces（归R1） | 进行中；新1169/1249输入已验，依赖冻结ancestor前缀 | 显式重绑定有来源字段，继续准确类初始化/cold/default，列真实首缺；完整构造有证后立即交g2实现 | [准确输入、预算和返回条件](docs/CLIENT_72_AVATAR_FRESH_INTERFACES.md) |
 | E-01 / E-01c / E-01d1 自然加载与正向保存 | 阻塞；依赖必要资源映射、Lua可达路径和实际加载前提 | 必需map/引用/日志/场景事件有效后，独立库保存→新Player→QuestManager正向重绑；保留未就绪拒绝及BSON不变负例 | [最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)、[Chapter](docs/CLIENT_72_D02_CHAPTER_LOAD.md)、[303保存](docs/CLIENT_72_D02_QUEST_303_START.md)；不只看loadedAll标志 |
 
 ### 3.3 汇合与持续验证
@@ -66,6 +68,7 @@
 | F-04 部署材料及隔离核验 | 进行中；复用ENV-01基线，实际部署待R4 | 真实SDK/信任/资源合同充分后形成7.2产物；正常构建和停服，按InstanceRoot归属核对，不仅改版本或环境变量放行；[隔离](docs/CLIENT_72_PORTABLE_ISOLATION.md) |
 | F04-LOADER-CLEAN 独立透明入口 | 已完成；限定零hook真实加载/绑定及恢复；key/trust/route另验 | 独立透明转发、实际stock/SDK身份与准确窗、正常SDK登录页和退出/恢复已验；自然加密、hook启用、完整性全路径与D-02另验 | [计划/产物/真实范围](docs/CLIENT_72_CLEAN_LOADER.md) |
 | R2-KEY-LOAD 独立入口启用key核心 | 进行中；独立产物/守卫/构建与主线owned已验，真实hook接受待观察 | 独立产物仅接准确3950c0和同一callback，核实际loaded身份与精确代码变化，新ready无凭据观察目标影响；不启旧模块或代验自然认证 | [产物与验收](docs/CLIENT_72_SDK_KEY_LOADER.md)、[只读观察计划](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md) |
+| R2-KEY-LOAD-OBSERVE 固定只读观察 | 进行中；依赖key产物/owned和新observer合同；实时执行待新ready | 精确状态/47表/SDK修改及完整trampoline/callback/返回边，预算与拒绝自有验证后再新实机加载、页面/正常退出/恢复；不能只看installed | [来源、范围及验收](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md) |
 
 ## 4. 任务发布与范围控制
 
