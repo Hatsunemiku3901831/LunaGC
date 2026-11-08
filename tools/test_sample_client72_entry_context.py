@@ -9,6 +9,7 @@ from tools import sample_client72_entry_context as s
 
 B = 0x1800000000
 R = 0x2200000000
+METADATA = {1234: b'\xd2' * 70, 371: b'\x73' * 70}
 
 def u64(value):
     return value.to_bytes(8, 'little')
@@ -46,6 +47,18 @@ class SnapshotTests(unittest.TestCase):
         memory.update({B + 0x5bc8f18: u64(table), table + 1239 * 8: u64(klass),
                        klass: bytes(header), B + 0x5bc8ad0: u64(slot), slot: u64(registry),
                        registry + 0x1234 + 0x10: bytes(range(16))})
+        for n, (index, metadata) in enumerate(METADATA.items()):
+            ancestor = 0xaa00000000 + n * 0x10000
+            header = bytearray(0xd0)
+            header[0x10:0x18] = u64(index)
+            header[0x18:0x1c] = (18 << 16).to_bytes(4, 'little')
+            header[0x58:0x60] = u64(ancestor + 0x1000)
+            header[0xb0:0xb4] = (0x2345 + n * 0x100).to_bytes(4, 'little')
+            header[0xa8:0xac] = (0x3456 + n * 0x100).to_bytes(4, 'little')
+            memory.update({table + index * 8: u64(ancestor), ancestor: bytes(header),
+                           ancestor + 0x1000: metadata,
+                           registry + 0x2345 + n * 0x100 + 0x10: bytes(16),
+                           registry + 0x3456 + n * 0x100 + 0x10: bytes(16)})
         return memory
 
     def collect(self, memory, failure=None):
@@ -55,11 +68,13 @@ class SnapshotTests(unittest.TestCase):
             if address == failure:
                 return b'\x01', {'bytesRead': 1}
             return memory[address], None
-        return s.collect(read, B), calls
+        with patch.object(s, 'ANCESTOR_CLASSES', tuple((index, hashlib.sha256(metadata).hexdigest()) for index, metadata in METADATA.items())):
+            return s.collect(read, B), calls
 
     def test_full_high_pointers_and_budget(self):
         result, calls = self.collect(self.fixture())
-        self.assertEqual((len(calls), sum(n for _, n in calls), max(n for _, n in calls)), (30, 1714, 208))
+        self.assertEqual((len(calls), sum(n for _, n in calls), max(n for _, n in calls)), (40, 2350, 208))
+        self.assertEqual([row['status'] for row in result['ancestorClasses']], ['read', 'read'])
         self.assertEqual(result['parentDescriptorStatus'], 'read')
         self.assertEqual(result['modeValue'], 1)
         self.assertEqual(result['status'], 'completed')
@@ -74,14 +89,14 @@ class SnapshotTests(unittest.TestCase):
     def test_null_root_and_mode_independent(self):
         memory = self.fixture(); memory[B + 0x586b600] = u64(0)
         result, calls = self.collect(memory)
-        self.assertEqual(len(calls), 11)
+        self.assertEqual(len(calls), 21)
         self.assertEqual(result['modeInterpretation'], 'true')
 
     def test_null_slot_and_class_stop(self):
         memory = self.fixture(); memory[R + 0x60e8] = u64(0)
         pool = int.from_bytes(memory[R + 0x5d60], 'little'); memory[pool] = u64(0)
         result, calls = self.collect(memory)
-        self.assertEqual(len(calls), 25)
+        self.assertEqual(len(calls), 35)
         self.assertNotIn('hashSet.header', [r['name'] for r in result['reads']])
         self.assertNotIn('pool.classHeader', [r['name'] for r in result['reads']])
 
@@ -89,7 +104,7 @@ class SnapshotTests(unittest.TestCase):
         memory = self.fixture()
         result, calls = self.collect(memory, R + 0xc608)
         self.assertEqual(result['status'], 'partial')
-        self.assertEqual(len(calls), 28)
+        self.assertEqual(len(calls), 38)
         self.assertNotIn('registryStringToUint.klass', [r['name'] for r in result['reads']])
 
     def test_mode_unknown_and_failed(self):
@@ -122,6 +137,29 @@ class SnapshotTests(unittest.TestCase):
         result, calls = self.collect(self.fixture(), 0x4400000000)
         self.assertEqual(result['status'], 'partial')
         self.assertFalse(result['completeCtorVerified'])
+
+    def test_ancestor_metadata_identity_and_zero_offsets(self):
+        memory = self.fixture(); memory[0xaa00001000] = bytes(70)
+        result, calls = self.collect(memory)
+        self.assertEqual(result['ancestorClasses'][0]['status'], 'metadata-mismatch')
+        self.assertNotIn((0x8800000000 + 0x2345 + 0x10, 16), calls)
+        memory = self.fixture(); header = bytearray(memory[0xaa00000000])
+        header[0xa8:0xac] = bytes(4); header[0xb0:0xb4] = bytes(4)
+        memory[0xaa00000000] = bytes(header)
+        result, calls = self.collect(memory)
+        self.assertEqual(result['ancestorClasses'][0]['compactOffsets'], {'parent': 0, 'declaring': 0})
+        self.assertEqual(result['ancestorClasses'][0]['status'], 'read')
+        self.assertNotIn((0x8800000000 + 0x2345 + 0x10, 16), calls)
+
+    def test_ancestor_cache_null_and_short_read_are_distinct(self):
+        address = 0x5500000000 + 1234 * 8
+        memory = self.fixture(); memory[address] = u64(0)
+        result, calls = self.collect(memory)
+        self.assertEqual(result['ancestorClasses'][0]['status'], 'cache-entry-null')
+        self.assertNotIn((0xaa00000000, 0xd0), calls)
+        result, calls = self.collect(self.fixture(), address)
+        self.assertEqual(result['ancestorClasses'][0]['status'], 'cache-entry-unreadable')
+        self.assertNotIn((0xaa00000000, 0xd0), calls)
 
     def test_parent_chain_failures_do_not_follow(self):
         for address in (B + 0x5bc8f18, 0x5500000000 + 1239 * 8,
@@ -193,13 +231,18 @@ class SnapshotTests(unittest.TestCase):
                 def __init__(self, binary): pass
                 def offset(self, address, size, executable=False): return 0
             good = ((100, len(native), hashlib.sha256(native).hexdigest()),)
-            with patch.object(s, 'ROOT', root), patch.object(s, 'CONTRACTS', contracts), patch.object(s, 'PE', FakePE), patch.object(s, 'POOL_WINDOWS', ((101, len(native), hashlib.sha256(native).hexdigest()),)):
+            with patch.object(s, 'ROOT', root), patch.object(s, 'CONTRACTS', contracts), patch.object(s, 'PE', FakePE), patch.object(s, 'CLASS_CONTINUATION_WINDOWS', ()), patch.object(s, 'POOL_WINDOWS', ((101, len(native), hashlib.sha256(native).hexdigest()),)):
                 with patch.object(s, 'PARENT_WINDOWS', good): self.assertEqual(s.verify_contracts(native), 18)
                 with patch.object(s, 'PARENT_WINDOWS', ((100, len(native), '0' * 64),)):
                     with self.assertRaisesRegex(ValueError, 'Code window mismatch at RVA 0x64'):
                         s.verify_contracts(native)
                 with patch.object(s, 'PARENT_WINDOWS', good), patch.object(s, 'POOL_WINDOWS', ((101, len(native), '0' * 64),)):
                     with self.assertRaisesRegex(ValueError, 'Code window mismatch at RVA 0x65'):
+                        s.verify_contracts(native)
+                with patch.object(s, 'PARENT_WINDOWS', good), patch.object(s, 'CLASS_CONTINUATION_WINDOWS', ((102, len(native), hashlib.sha256(native).hexdigest()),)):
+                    self.assertEqual(s.verify_contracts(native), 19)
+                with patch.object(s, 'PARENT_WINDOWS', good), patch.object(s, 'CLASS_CONTINUATION_WINDOWS', ((102, len(native), '0' * 64),)):
+                    with self.assertRaisesRegex(ValueError, 'Code window mismatch at RVA 0x66'):
                         s.verify_contracts(native)
 
 if __name__ == '__main__': unittest.main()

@@ -157,3 +157,5 @@ python -m unittest tools.test_client72_scene_runtime_context tools.test_client72
 下一联合取证计划：保持fresh monitor/OS/五输入/固定窗验证，已采Pool头先确认11008再只读class+f0的8B；只有该指针等于fresh模块+70687c0才取32B原指令核对，未知target不跟随。独立读取pool开关1B及cell5897b48的8B，非空仅读0xd0 class头；另读NativeConfig两对象头中klass各0xd0（由既有对象头导出，不多读对象内容）。新增最多7读673B，单读208B以内；不读字符串、参数正文或任意池元素，不调用pool。目的只为精确绑定与下一allocator前提，不等于分配/lifecycle通过。与R1 class1234合同合并并完成离线守卫后才请用户ready，当前没有执行此新采样。
 
 原始metadata/函数窗口/头解释在`d02-resume-20261108/fresh-pool-{metadata,code,forward-code}.private.json`及`fresh-scene-typeheads.private.json`；一次误把共享static root所有字段都归11325的离线查询以StopIteration失败，未生成假证明，已按固定root合同纠正owner11061/41992。后继不能沿用该错误归属。
+
+联合第二轮已实际采样：snapshot `main/entry-context-tool/live-resume-20261108-2.json` SHA `119f8a0b3c3ecc8829eda9bf7422c3646c643afa34ac041ea69b5607a02a7384`，Pool class仍11008/kind18，slot4指向当次模块+70687c0，32B精确SHA相符；pool mode1，type46314头id46314/kind18。现在可以沿真实非零分支`14050a890`准备后继；不能重复列“slot/开关/目标头未采”。该采样的partial来自独立Avatar Object kind守卫，与Pool读取错误无关。allocator尚未执行，所需class/metadata/池内容仍按真实首缺取证，不能由头绑定推定分配、注册、MPLevel或生命周期通过。实际预算、源、用户正常退出及未知见[联合采样结果](CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md#第二轮联合合同与实际结果)。

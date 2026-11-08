@@ -30,6 +30,13 @@ POOL_WINDOWS = (
     (0x70687c0, 0x20, '98a93ee052b474915ef1212a25986b49326f99a9f91f23530bb52b0196432861'),
     (0x1154bfb9, 0x22, '97df417780bfa1b4acf52b347cd4087bc7d12a127830746fa2ea0399e98ec25b'),
 )
+CLASS_CONTINUATION_WINDOWS = (
+    (0x517a79, 0xad, '7f004e2bc2bdc301f8fde1da759b3d3bc6b610dc013d334fbf4264959b22a3d2'),
+)
+ANCESTOR_CLASSES = (
+    (1234, '00b9a09dbe29589ee7a40b147d587b1cdbbd1f4c1e8eee101a9d886a500837f7'),
+    (371, '371fb9438e596c52db92d2c2f841aa76abf5e5b5cf604cad767ad60ba76d9ee1'),
+)
 OUTPUT_ROOT = ROOT / 'local/migration72/d02-active/main/entry-context-tool'
 
 
@@ -52,7 +59,7 @@ def verify_contracts(binary):
                 for w in contracts[1]['windows']]
     if len(windows) != 16:
         raise ValueError('Unexpected contract window count')
-    windows += [(rva, size, digest, None) for rva, size, digest in PARENT_WINDOWS + POOL_WINDOWS]
+    windows += [(rva, size, digest, None) for rva, size, digest in PARENT_WINDOWS + POOL_WINDOWS + CLASS_CONTINUATION_WINDOWS]
     for rva, size, expected, instructions in windows:
         offset = pe.offset(pe.base + rva, size, executable=True)
         actual = binary[offset:offset + size]
@@ -124,15 +131,51 @@ def collect(read, base):
             parent_status = 'read' if descriptor is not None else 'descriptor-unreadable'
     if any(r['error'] is not None for r in records if r['name'].startswith('parent.')):
         parent_status = 'read-failed' if parent_status != 'descriptor-unreadable' else parent_status
+    ancestors = [sample_runtime_definition(get, pointer, table, registry, index, metadata_sha)
+                 for index, metadata_sha in ANCESTOR_CLASSES]
     return dict(reads=records, modeValue=mode[0] if mode is not None else None,
                 modeInterpretation=('false' if mode == b'\x00' else 'true' if mode == b'\x01' else 'unknown'),
                 parentDescriptorStatus=parent_status,
                 poolModeValue=pool_mode[0] if pool_mode is not None else None,
                 poolAllocateBindingVerified=pool_binding_verified,
-                status='partial' if parent_status != 'read' or any(r['error'] is not None for r in records) else 'completed',
+                ancestorClasses=ancestors,
+                status='partial' if parent_status != 'read' or any(r['status'] != 'read' for r in ancestors) or any(r['error'] is not None for r in records) else 'completed',
                 atomicSnapshot=False, completeCtorVerified=False, naturalRegistryVerified=False,
                 worldInitializationVerified=False, sdkRequestVerified=False,
                 targetProtocolReady=False, poolAllocateSlotObserved=pool_slot_read)
+
+
+def sample_runtime_definition(get, pointer, table, registry, index, metadata_sha):
+    name = 'ancestor.' + str(index)
+    if not table:
+        return dict(type=index, status='cache-null' if table == 0 else 'cache-unreadable')
+    entry = pointer(name + '.cacheEntry', table + index * 8)
+    if not entry:
+        return dict(type=index, status='cache-entry-null' if entry == 0 else 'cache-entry-unreadable')
+    header = get(name + '.header', entry, 0xd0)
+    if header is None:
+        return dict(type=index, status='class-header-unreadable')
+    if int.from_bytes(header[0x10:0x18], 'little') != index or (int.from_bytes(header[0x18:0x1c], 'little') >> 16) & 255 != 18:
+        return dict(type=index, status='class-identity-mismatch')
+    metadata_pointer = int.from_bytes(header[0x58:0x60], 'little')
+    if not metadata_pointer:
+        return dict(type=index, status='metadata-null')
+    metadata = get(name + '.metadata', metadata_pointer, 70)
+    if metadata is None:
+        return dict(type=index, status='metadata-unreadable')
+    if hashlib.sha256(metadata).hexdigest() != metadata_sha:
+        return dict(type=index, status='metadata-mismatch')
+    offsets = {}
+    status = 'read'
+    for label, offset in (('parent', 0xb0), ('declaring', 0xa8)):
+        compact = int.from_bytes(header[offset:offset + 4], 'little')
+        offsets[label] = compact
+        if compact:
+            if not registry:
+                status = 'registry-null' if registry == 0 else 'registry-unreadable'
+            elif get(name + '.' + label + 'Descriptor', registry + compact + 0x10, 16) is None:
+                status = 'descriptor-unreadable'
+    return dict(type=index, status=status, compactOffsets=offsets)
 
 
 def execute(observation):

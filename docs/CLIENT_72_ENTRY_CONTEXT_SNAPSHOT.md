@@ -1,4 +1,4 @@
-当前状态：第一轮e75bf02d源已完成用户配合采样；当前源码进入下一联合轮准备，新增Pool精确绑定/type46314及NativeConfig两class头，尚未执行该新版。各epoch与范围见末节，旧“仅准备/未执行”按对应源读取。
+当前状态：第二轮ecab38c9源已完成用户配合采样，36读2232B零读错；保守partial仅因System.Object的实际kind28与kind18合同不符。父class1234/NativeConfig typed头/Pool精确绑定已取得；371后继和完整消费者仍待。各epoch与范围见末节，旧“仅准备/未执行”按对应源读取。
 
 # D02-R1/R4：登录页入口上下文只读快照
 
@@ -57,8 +57,20 @@ python tools/sample_client72_entry_context.py --observation <新监测报告> --
 用户确认本次SDK登录页正常、无报错，随后从窗口正常退出；主线OS复核无目标。此次无补丁、调试器、注入或本服服务，不是本服登录验收。OS/执行源/数据保护与采样预算证明在 `d02-resume-20261108/`；不沿用此次PID到后继。
 
 
-## 第二轮 Pool/NativeConfig 准备（尚未执行）
+## 第二轮 Pool/NativeConfig 初步准备（历史源epoch）
 
 按[Scene Pool准确reader合同](CLIENT_72_SCENE_RUNTIME_CONTEXT.md)追加最多7读673B，总预算30读1714B，单次最多208B。已有两个NativeConfig对象头非空才读其klass头；Pool头必须为普通class11008才读+f0，target必须精确为fresh模块+70687c0才读32B代码，按固定SHA核绑定。未知class/target不跟随，记录Observed与BindingVerified的不同含义，未执行分配/注册/生命周期。独立pool mode、type46314 cell及非空class头分开采集，null/短读保持原错误语义；没有扩大到任意池内容或字符串。
 
 固定PE23窗实际核对通过，12项离线检查通过，覆盖高64位、预算、未知class/target不跟随、代码漂移/读取错误及原父descriptor错误分支。一项旧窗口mock起初未覆盖新增Pool窗口而失败；仅扩充合成mock与独立Pool漂移负例，生产校验不放宽。证据`d02-resume-20261108/entry-context-pool-preparation-tests.log`与`entry-context-pool-preparation-proof.json`。R1 class1234合同另待合并，当前不据30读声称已闭下一轮全部输入，也没有启动新客户端。
+
+## 第二轮联合合同与实际结果
+
+在上项准确Pool合同上合并[父class最小输入](CLIENT_72_AVATAR_PARENT_CONTINUATION.md)：1234/371各cache槽8B、非空头208B、身份相符后准确metadata70B；parent/declaring compact offset非零才按registry链读descriptor16B，零值记录且不跟随。最多新增10读636B，联合上限40读2350B；不读层级/接口数组，不复用旧绝对地址。新增精确reader窗使固定PE共24窗，两个metadata行SHA实际核对，14项检查通过；采样器源SHA `ecab38c9e39daf5ea48bb017cc7060c61c8b142c4f3844d37b54c3e7374f9c7c`。执行前原字节副本与核对在`d02-resume-20261108/sampling-source2/`及`sampling-source2-proof.json`，wrapper启动时重核源。
+
+用户新确认ready后原始客户端自然启动90秒，44监测样本且最终存活；monitor `plain/run-resume-20261108-2.json` SHA `5ca5b6e5af9bba74889495426e983d5b8d55048f82091fb10dcd3ed08d732fb2`。snapshot `main/entry-context-tool/live-resume-20261108-2.json` SHA `119f8a0b3c3ecc8829eda9bf7422c3646c643afa34ac041ea69b5607a02a7384`，实际36读2232B、0读取错误、24窗已核；status=partial、sampler exit1保留，不能改写成完整成功。
+
+- class1234实际id1234/kind18，70B metadata逐字节匹配，parent descriptor16B已取，declaring offset0；371实际id371/kind28，合同只允许kind18，因此停止该分支，未读其metadata。这是实际类型表示与采样预期的分歧，不是ReadProcessMemory失败；是否可按准确System.Object合同继续由新离线卡核对，不放宽成任意kind。
+- NativeConfig mode1；HashSet/List实际klass头分别kind21/index12184与2089，对应最小合同固定startup泛型索引。头身份仍不能证明predicate消费前状态或成员调用时序，HashSet内容未读。
+- Pool实际class11008、+f0 slot4及32B代码与准确`1470687c0`绑定，独立pool mode1；type46314头id46314/kind18。只证明读取时的绑定/输入，不执行allocator、ctor或实体生命周期，不据此声称注册或世界初始化。
+
+主线逐read核宽度/hash、零错、预算、唯一partial原因及monitor身份，采后14检查通过，证明`d02-resume-20261108/sampling2-main-review.private.json`。用户确认SDK登录页正常并从窗口正常退出，OS复核目标不存在，证明`client-exit2.private.json`。无补丁、调试器、凭据或本服请求；完整cold/default/Handler、Scene发送和D-02仍未完成。新样本交后继复用，不因保守partial重启同样实验。
