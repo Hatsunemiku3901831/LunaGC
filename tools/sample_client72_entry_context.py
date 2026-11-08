@@ -26,6 +26,10 @@ PARENT_WINDOWS = (
     (0x517aa4, 0x28, 'fe29c00adc8ebc21f1374ab96d7dd93cfc71985eb2782603e0589f4b5ba41a98'),
     (0x4ed9c3, 0x12, '0d967f0101c7f9cbef0d4b846e8e0dcd24ee03c04760159fc134fc6e2c15067a'),
 )
+POOL_WINDOWS = (
+    (0x70687c0, 0x20, '98a93ee052b474915ef1212a25986b49326f99a9f91f23530bb52b0196432861'),
+    (0x1154bfb9, 0x22, '97df417780bfa1b4acf52b347cd4087bc7d12a127830746fa2ea0399e98ec25b'),
+)
 OUTPUT_ROOT = ROOT / 'local/migration72/d02-active/main/entry-context-tool'
 
 
@@ -48,7 +52,7 @@ def verify_contracts(binary):
                 for w in contracts[1]['windows']]
     if len(windows) != 16:
         raise ValueError('Unexpected contract window count')
-    windows += [(rva, size, digest, None) for rva, size, digest in PARENT_WINDOWS]
+    windows += [(rva, size, digest, None) for rva, size, digest in PARENT_WINDOWS + POOL_WINDOWS]
     for rva, size, expected, instructions in windows:
         offset = pe.offset(pe.base + rva, size, executable=True)
         actual = binary[offset:offset + size]
@@ -72,18 +76,33 @@ def collect(read, base):
 
     mode = get('nativeConfig.mode', base + 0x586ceb2, 1)
     root = pointer('staticRoot', base + 0x586b600)
+    pool_slot_read = False
+    pool_binding_verified = False
     if root:
         for name, offset, size in (('hashSet', 0x60e8, 40), ('list', 0x6100, 32)):
             obj = pointer(name + '.slot', root + offset)
             if obj:
-                get(name + '.header', obj, size)
+                head = get(name + '.header', obj, size)
+                klass = int.from_bytes(head[:8], 'little') if head is not None else None
+                if klass:
+                    get(name + '.classHeader', klass, 0xd0)
         for name, offset, class_header in (('pool', 0x5d60, True), ('registryStringToUint', 0xc608, True),
                                           ('registryUintToString', 0xc6d0, True), ('defaultString', 0xc698, False)):
             obj = pointer(name + '.slot', root + offset)
             if obj:
                 klass = pointer(name + '.klass', obj)
                 if klass and class_header:
-                    get(name + '.classHeader', klass, 0xd0)
+                    head = get(name + '.classHeader', klass, 0xd0)
+                    if name == 'pool' and head is not None and int.from_bytes(head[0x10:0x18], 'little') == 11008 and (int.from_bytes(head[0x18:0x1c], 'little') >> 16) & 255 == 18:
+                        target = pointer('pool.allocateSlot4', klass + 0xf0)
+                        pool_slot_read = target is not None
+                        if target == base + 0x70687c0:
+                            code = get('pool.allocateCode', target, 32)
+                            pool_binding_verified = code is not None and hashlib.sha256(code).hexdigest() == POOL_WINDOWS[0][2]
+    pool_mode = get('pool.mode', base + 0x586d70b, 1)
+    entity_class = pointer('pool.entityClass46314.cell', base + 0x5897b48)
+    if entity_class:
+        get('pool.entityClass46314.header', entity_class, 0xd0)
     table = pointer('parent.classCache.cell', base + 0x5bc8f18)
     entry = pointer('parent.classCache.entry1239', table + 1239 * 8) if table else None
     header = get('parent.class1239.header', entry, 0xd0) if entry else None
@@ -108,10 +127,12 @@ def collect(read, base):
     return dict(reads=records, modeValue=mode[0] if mode is not None else None,
                 modeInterpretation=('false' if mode == b'\x00' else 'true' if mode == b'\x01' else 'unknown'),
                 parentDescriptorStatus=parent_status,
+                poolModeValue=pool_mode[0] if pool_mode is not None else None,
+                poolAllocateBindingVerified=pool_binding_verified,
                 status='partial' if parent_status != 'read' or any(r['error'] is not None for r in records) else 'completed',
                 atomicSnapshot=False, completeCtorVerified=False, naturalRegistryVerified=False,
                 worldInitializationVerified=False, sdkRequestVerified=False,
-                targetProtocolReady=False, poolAllocateSlotObserved=False)
+                targetProtocolReady=False, poolAllocateSlotObserved=pool_slot_read)
 
 
 def execute(observation):

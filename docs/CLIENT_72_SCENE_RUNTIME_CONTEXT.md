@@ -146,3 +146,14 @@ python -m unittest tools.test_client72_scene_runtime_context tools.test_client72
 主线已审真实代码、原始证明和typed存储/同步模型，第三`main/scene-runtime-context-third.json`为同一3,870,401字节/SHA，三报告逐字节相同，13新+61旧=74检查通过；证明`main/final-context-response-review.json`、日志`main/scene-runtime-context-main-tests.log`。完整handler/自然注册/stage/实体生命周期仍未闭，不批生产sender或入场。用户随后要求当前批次收口后暂停，覆盖此前继续推进指令；本卡验收后不执行新观察或MPLevel后继。
 
 恢复后的首项是按已证producer恢复自然能力名称来源及MPLevel配置注册；准备好的有限登录页根观察只补实际实现/根存在性，再由准确class/分支推进Allocate与原生构造，不能把根非空当世界初始化。
+
+
+## 恢复批 fresh Pool 绑定与下一最小输入
+
+本轮snapshot `main/entry-context-tool/live-resume-20261108-1.json` 的已采Pool class头，其descriptor kind18/index11008，固定metadata对应`MoleMole.ObjectPoolIl2CppCluster`；这是实际自然头的类型证据，不再把两种cluster选择一律未知。两registry的头分别为Dictionary1222/generic inst3472和4742；静态接口字段来自owner41992（不是GlobalVars11325），它们是接口1246。仅参数实例一致，尚未审runtime接口数组，不据此批准调度/注册。
+
+主线从固定metadata独立核ObjectPoolIl2CppCluster.Allocate method77579/virtualSlot4→`1470687c0`，`1470687c0..1470687e0` SHA `98a93ee052b474915ef1212a25986b49326f99a9f91f23530bb52b0196432861`。该方法把原RDX类指针转RCX，读模块RVA`586d70b`布尔，非零转`14050a890`、零转`14050ad90`；这是pool自己的开关，不能与NativeConfig mode的RVA586ceb2混同。准确factory窗口`15154bfb9..15154bfdb` SHA `97df417780bfa1b4acf52b347cd4087bc7d12a127830746fa2ea0399e98ec25b`：取cell5897b48类型46314、清R8、调用实际class+f0，再把返回对象送146e055f0。当前未读运行时+f0/开关/type46314 class，未执行任何allocator或伪造entity。
+
+下一联合取证计划：保持fresh monitor/OS/五输入/固定窗验证，已采Pool头先确认11008再只读class+f0的8B；只有该指针等于fresh模块+70687c0才取32B原指令核对，未知target不跟随。独立读取pool开关1B及cell5897b48的8B，非空仅读0xd0 class头；另读NativeConfig两对象头中klass各0xd0（由既有对象头导出，不多读对象内容）。新增最多7读673B，单读208B以内；不读字符串、参数正文或任意池元素，不调用pool。目的只为精确绑定与下一allocator前提，不等于分配/lifecycle通过。与R1 class1234合同合并并完成离线守卫后才请用户ready，当前没有执行此新采样。
+
+原始metadata/函数窗口/头解释在`d02-resume-20261108/fresh-pool-{metadata,code,forward-code}.private.json`及`fresh-scene-typeheads.private.json`；一次误把共享static root所有字段都归11325的离线查询以StopIteration失败，未生成假证明，已按固定root合同纠正owner11061/41992。后继不能沿用该错误归属。

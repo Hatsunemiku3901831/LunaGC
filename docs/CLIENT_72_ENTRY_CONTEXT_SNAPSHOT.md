@@ -1,3 +1,5 @@
+当前状态：第一轮e75bf02d源已完成用户配合采样；当前源码进入下一联合轮准备，新增Pool精确绑定/type46314及NativeConfig两class头，尚未执行该新版。各epoch与范围见末节，旧“仅准备/未执行”按对应源读取。
+
 # D02-R1/R4：登录页入口上下文只读快照
 
 此卡仅准备离线审核的采样器，尚未对客户端执行。自然模式、存储和场景根的当前值均未知；本工具不启动客户端。需由主线审核后，在用户新一轮就绪和唯一监测启动完成且目标仍存活时使用。
@@ -53,3 +55,10 @@ python tools/sample_client72_entry_context.py --observation <新监测报告> --
 父descriptor16B已取得，kind21，静态注册索引405416；新旧class1239身份/descriptor片段、parent compact offset及尺寸字段一致。NativeConfig mode真实为1/true，HashSet/List对象头以及Scene四根非空；这些头不包含HashSet/List的完整typed class身份/成员，非空不证明自然注册或消费者已运行。父数据用于下一离线重定位模型，不能混写成同一进程完整cold回放。读取是分时非原子，未采字段仍未知；完整Handler/g2/Scene/SDK请求和D-02仍未验。
 
 用户确认本次SDK登录页正常、无报错，随后从窗口正常退出；主线OS复核无目标。此次无补丁、调试器、注入或本服服务，不是本服登录验收。OS/执行源/数据保护与采样预算证明在 `d02-resume-20261108/`；不沿用此次PID到后继。
+
+
+## 第二轮 Pool/NativeConfig 准备（尚未执行）
+
+按[Scene Pool准确reader合同](CLIENT_72_SCENE_RUNTIME_CONTEXT.md)追加最多7读673B，总预算30读1714B，单次最多208B。已有两个NativeConfig对象头非空才读其klass头；Pool头必须为普通class11008才读+f0，target必须精确为fresh模块+70687c0才读32B代码，按固定SHA核绑定。未知class/target不跟随，记录Observed与BindingVerified的不同含义，未执行分配/注册/生命周期。独立pool mode、type46314 cell及非空class头分开采集，null/短读保持原错误语义；没有扩大到任意池内容或字符串。
+
+固定PE23窗实际核对通过，12项离线检查通过，覆盖高64位、预算、未知class/target不跟随、代码漂移/读取错误及原父descriptor错误分支。一项旧窗口mock起初未覆盖新增Pool窗口而失败；仅扩充合成mock与独立Pool漂移负例，生产校验不放宽。证据`d02-resume-20261108/entry-context-pool-preparation-tests.log`与`entry-context-pool-preparation-proof.json`。R1 class1234合同另待合并，当前不据30读声称已闭下一轮全部输入，也没有启动新客户端。
