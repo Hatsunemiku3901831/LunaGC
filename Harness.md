@@ -54,6 +54,8 @@
 
 # 研发索引与执行骨架
 
+2026-11-09 `E-01/R3-CRITICAL-CONSUMER`：主线第三静态验证992B/SHA2e9cd93d…90a0f6同双fresh，14pin/6完整窗8768B/1896指令及三实参顺序通过。共父17494路径把63287+98/+78/+a4送1498e2200三float；其类型门禁拒Avatar，未CPU/alias。[准确链/未排除12候选/下一合同](docs/CLIENT_72_D02_AVATAR_CRITICAL_CONSUMER.md)，raw `r3-critical-consumer/`。继续准确installer，完整字段及父项仍未完成。
+
 2026-11-09 `E-01/R3-JAVA-ITEM-AFFIX-FRAGMENT`：便携JDK17实际编译/测试，Gradle21秒、XML3项0fail/error/skip。真实ResourceLoader/onLoad/Item map及new GameItem(11101)保持源[0,0]/NONE、身份/count/level/过滤结果；两个受控Java对照不许可target省略。[复现/源码/验收边界](docs/CLIENT_72_D02_ITEM_AFFIX_JAVA_LOAD.md)，log/XML/private proof在`r3-java-item/`。仅测试/文档，无生产资源变更或GS部署；完整Item/gadget/保存/D-02未验。
 
 2026-11-09 `E-01/R3-ITEM-AFFIX-FRAGMENT`：主线第三447517B/SHA9007d08f…5a53c2同双跑、17检查/11审核及91pin过。两源行/实际Array ICollection/IList AOT、11101[0,0]/11501[111501,0]到具名group入口通过，106调用10361hooks全部计入，未供应正Affix行。[真实字段/失败/最小Java后继及gadget缺口](docs/CLIENT_72_D02_ITEM_ENTRY_RESOURCE.md)。完整Item父项未闭，不以同ID或空分支补gadget/config/ability。
