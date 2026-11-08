@@ -64,6 +64,8 @@
 | F-03d3f4d2/R1-METHOD-CACHE-REPLAY | 已完成；限定源绑定原生回放 | 原GenericInst/8方法、连续原factory与64B写回通过；主线第三同双跑、20检查/12独立审核，旧六前缀保持。准确止16B hierarchy请求，完整cold/default/Handler未验 | [回放](docs/CLIENT_72_AVATAR_METHOD_CACHE_REPLAY.md) |
 | F-03d3f4d2/R1-HIERARCHY-STORAGE | 已完成；限定16B原生存储/发布 | 原store/xchg发布与尾哨兵保持，主线第三同双跑、17检查/10独立审核、20pin；累计新增4模型/45读345B。准确下一32B仍未供应，完整cold/default/Handler未验 | [实际结果/边界](docs/CLIENT_72_AVATAR_HIERARCHY_STORAGE.md) |
 | F-03d3f4d2/R1-CLASS80-STORAGE | 已完成；限定原32B发布、两行与首vtable消费 | 主线native第三1371957B同双跑、23检查/11审核/27pin；原inflation/class返回与offset4/6写回成立，累计7模型/64读521B。准确止普通缓存根+5bc8f20/8B，完整初始化/default未验 | [实际结果/预算/准确后继](docs/CLIENT_72_AVATAR_CLASS80_STORAGE.md) |
+| F-03d3f4d2/R1-RUNTIME-INPUT-COLLECTOR | 已完成；限定纯collector/source与owned正反验收 | 主线第三138380B同双fresh、27检查/10独立审核/30pin；旧内部复读保持，新增后全unique末尾复读。上限5188读89960B/max208，无native/target调用 | [实际接口与来源](docs/CLIENT_72_AVATAR_RUNTIME_INPUTS.md) |
+| F-03d3f4d2/R1-RUNTIME-INPUT-ADAPTER | 进行中；自有/来源/准备已验，新ready实机进行 | 新adapter9自有检查及实际五stock/12旧pin/30新pin/六scalar源窗过，预检13保护/相关进程端口0；合计最多5192读89964B，无DLL安装/账号输入 | [准备和实机入口](docs/CLIENT_72_AVATAR_RUNTIME_INPUTS.md#主线第三与新适配器) |
 | R2-ROUTE-CONFIG-SELECT | 进行中；准确托管loader存在，自然选择/Init未验 | 固定托管env选择、managed→native必要输入和安全事件；原始材料可得先离线，合同足够再实机 | [执行计划](docs/CLIENT_72_D02_RESUME_20261109.md) |
 | R2-CONFIGSYNC-EVENT | 已完成；限定固定producer与原生dispatcher | 原ctor、真实OS转换、两个name负例/精确local_config到writer入口已执行；主线第三4670B同双跑、6项通过。自然caller/writer返回未验 | [原始证据与模型](docs/CLIENT_72_SDK_CONFIGSYNC_EVENT.md) |
 | R2-CONFIGSYNC-OBSERVE-owned | 已完成；限定独立构建/自有ABI及准备 | release DLL/fixture成功，两个新进程16case/279B实际搬移与恢复、15检查及12独立审核过；50导出/9新源/20旧pin保持。未调用SDK/客户端 | [实际构建与限定验收](docs/CLIENT_72_SDK_CONFIGSYNC_OBSERVER.md#主线实际构建与自有验证) |
