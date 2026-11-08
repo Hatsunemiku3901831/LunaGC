@@ -15,3 +15,11 @@ Java `GadgetData.jsonName`的实际职责由`EntityWeapon`交`GameData.getGadget
 只新增独立Java合同测试与本专题；不改运行代码、资源、patch、配置、Proto、DB或已有测试。以新批准报告和原配置键报告为固定输入，用真实`ResourceLoader.loadFromResource`/Gson/onLoad加载最小片段到隔离Gadget map，读回`getJsonName()`的精确key；删除key的Java null对照不能推成客户端省略许可。不创建假ConfigEntityGadget来声称配置可用。
 
 测试前后保存恢复Gadget map和`ResourceLoader.loadedAll`，不手设loadedAll。主线统一执行便携Gradle/JDK与审核实际测试差异/日志/XML、边界标记，然后本地提交；子代理不构建、不Git、不触客户端/DB/端口。只有上述真实Java测试通过才关闭本子项。完整实体构造/abilities、自然revision/loadAll、正向Manager恢复与D-02仍未验；仅测试/文档修改无需GS重启。
+
+## 主线实际验收
+
+新增`D02BirthGadgetLookupKeyResourceContractTest` SHA `278ed937ffd9f44af29c3ab3e5c76c74a4a9f32fbd69317be77bcc9e022366d4`，主线已读完整测试与来源门禁。便携JDK17/Gradle以offline/no-daemon实际编译和执行，退出0/21秒，两项0失败/错误/跳过。真实loader读回`Weapon_Sword_Metal`；删除字段只得到Java null对照。Gadget map恢复、loadedAll不变断言通过，没有创建假配置对象或手设就绪。
+
+日志/XML/输入/主线证明保留在`local/migration72/d02-resume-20261109/r3-java-gadget-key/`。XML SHA `7bcf08bd644edcb12c44d58747012a89ecf2db876a8c929f6a516745830de988`；`main-proof.private.json` SHA `a7e4653d41e66e8f7ae355692fe6c14662a8e9ecdefd78adda34ea9b08edb581`。整理证明时曾将日志编码名称误写`utf8-sig`，读取前失败，改用`utf-8-sig`后才保存本证明；未改原测试或结果。
+
+本子项完成只覆盖lookup-key片段，配置内容/实际hit、String原比较、完整Gadget/实体、ability、自然revision/loadAll及D-02仍未通过。现有资源中的同字面值没有被计作新增资源或本地迁移成果；无生产资源、配置或服务器运行变化，无需重启。
