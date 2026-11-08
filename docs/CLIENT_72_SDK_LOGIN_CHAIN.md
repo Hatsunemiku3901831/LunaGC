@@ -1,5 +1,7 @@
 # D02-R2：SDK登录调用链与只读状态入口
 
+恢复后配置来源已补：准确`SDKDelegate.LoadFile→AssetUtil.LoadJsonFile`定位包内`server_pc`，原生Init的`url:string→map+860`与`app_key→ConfigModel+130`已有独立原生片段验证；主combo builder调用getter时明确R9=0，直接读初始化map。普通文件或native回调producer缺失不再作为该分支必需阻塞；完整Init、自然env、签名算法及本服请求仍未验。见[新配置合同](CLIENT_72_SDK_ROUTE_LOADER.md)，下文旧未知按对应卡范围读取。
+
 ## 独立攻坚计划（2026-11-08）
 
 目标：承接已冻结 [SDK transport](CLIENT_72_SDK_TRANSPORT.md)，从固定输入恢复Invoke动作注册→login worker→HoYoNetworkEngine/transport；优先研究有明确producer的单例、全局或容器是否持有可供ReadProcessMemory只读采样的自然easy handle/URL副本。新卡不修改父卡三个冻结文件。
