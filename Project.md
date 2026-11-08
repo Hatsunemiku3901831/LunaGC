@@ -49,13 +49,13 @@
 
 | 工作包 / 归属 | 状态与当前首缺条件 | 交付与验收 | 证据入口 |
 | --- | --- | --- | --- |
-| F-03d3f4d2 完整Avatar构造/后缀 | 进行中；Object表示、两动态类壳及接口1169/1249 fresh头已取；接口后继、消费前时序及完整cold/default仍待 | 在有来源输入下连续执行cold/default/装备/技能/池等必经链，保留实际停止点；明确必要字段、同源资源和真实Java读取时机 | [fresh后继](docs/CLIENT_72_AVATAR_FRESH_ANCESTOR.md)、[新接口输入](docs/CLIENT_72_INTERFACE_CONTEXT_SNAPSHOT.md)；旧Array/Type已取得，不再重复列缺 |
+| F-03d3f4d2 完整Avatar构造/后缀 | 进行中；三类壳及接口/方法初始化限定前缀已验；方法缓存真实根、完整cold/default与消费时序未闭 | 在有来源输入下连续执行cold/default/装备/技能/池等必经链，保留实际停止点；明确必要字段、同源资源和真实Java读取时机 | [准确后继与首缺](docs/CLIENT_72_AVATAR_FRESH_INTERFACES.md)、[新接口输入](docs/CLIENT_72_INTERFACE_CONTEXT_SNAPSHOT.md)；旧Array/Type已取得，不再重复列缺 |
 | F-03d3g2 正式Avatar发送 | 阻塞；依赖f4d2、R3及同源Store/角色/SavedVitals | 固定字段/tag/类型/枚举/值来源和省略语义，确定性生成；真实Java输出交目标消费者；非零/64位/非空/错误及账号保存回归 | g1和g2-prep已完成；只改Proto源，不改旧共享定义求方便；[投影](docs/CLIENT_72_AVATAR_JAVA_PROJECTION.md) |
 | F-03d3s2 场景/Team/Entity闭合与发送 | 进行中；Pool实际函数绑定/模式/目标头已取；自然注册/stage、分配后继/MPLevel及组件生命周期未闭 | 用准确producer和同源实体完成能力/附属对象/创建替换拆除与通知顺序；逐个批准必需三层和Java来源后接sender | [Scene上下文](docs/CLIENT_72_SCENE_RUNTIME_CONTEXT.md)、[场景token/属性](docs/CLIENT_72_SCENE_ENTRY_CLOSURE.md)；World stage与资源枚举分开 |
 | R2-ROUTE SDK配置、会话与自然连接（D-01 / F-02 / F-04） | 进行中；包/loader、map/app_key、原生builder/sign与Java真实HTTP/保存往返已验；自然Init/env及运行route未闭 | 固定来源追配置→选址→签名→会话交换；自然实验一次回答明确问题；必要输入可离线取得时先离线；与R2-SESSION/KEY汇合 | [配置loader](docs/CLIENT_72_SDK_ROUTE_LOADER.md)、[真实接收](docs/CLIENT_72_SDK_COMBO_HTTP.md)、[请求链](docs/CLIENT_72_SDK_LOGIN_CHAIN.md)；原登录页/root非空不证明请求成功 |
 | E-01 真实资源→Java必要字段 | 进行中；能量与初始装备/曲线字段桥梁已验，完整行/加载及实际revision未闭 | 同源表/行→目标parser/消费者→Java字段逐项对应；先角色、depot、技能、默认装备、Scene及必需Quest，拒绝无证alias/省略 | [六表](docs/CLIENT_72_AVATAR_NATURAL_TABLES.md)、[Java目的合同](docs/CLIENT_72_D02_JAVA_RESOURCE_CONTRACT.md)、[装备字段](docs/CLIENT_72_D02_EQUIPMENT_RESOURCE.md) |
 | E-01-PROMOTE-ENTRY 真实突破/出生必要行（归R3） | 进行中；依赖已验装备桥梁，首缺同源突破加成和完整必要字段 | 取得WeaponPromote11101/phase0与Avatar曲线/突破/基础属性/引用的准确规格，足够后立即接Java实际加载，不补空addProps | [来源、范围及验收](docs/CLIENT_72_D02_PROMOTE_RESOURCE.md) |
-| F-03d3f4d2-fresh-interfaces（归R1） | 进行中；新1169/1249输入已验，依赖冻结ancestor前缀 | 显式重绑定有来源字段，继续准确类初始化/cold/default，列真实首缺；完整构造有证后立即交g2实现 | [准确输入、预算和返回条件](docs/CLIENT_72_AVATAR_FRESH_INTERFACES.md) |
+| F-03d3f4d2-fresh-interfaces（归R1） | 已完成；限定三类壳/方法前缀及两独立case首缺 | 原缺口保留，静态index受控投影后止method-cache mask；来源/模型/确定性/主线第三及拒绝已验，完整构造/default/g2仍未验 | [实际范围、最小未ready合同及验收](docs/CLIENT_72_AVATAR_FRESH_INTERFACES.md) |
 | E-01 / E-01c / E-01d1 自然加载与正向保存 | 阻塞；依赖必要资源映射、Lua可达路径和实际加载前提 | 必需map/引用/日志/场景事件有效后，独立库保存→新Player→QuestManager正向重绑；保留未就绪拒绝及BSON不变负例 | [最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)、[Chapter](docs/CLIENT_72_D02_CHAPTER_LOAD.md)、[303保存](docs/CLIENT_72_D02_QUEST_303_START.md)；不只看loadedAll标志 |
 
 ### 3.3 汇合与持续验证
@@ -180,6 +180,7 @@
 | R1-SAMPLE-INTERFACES（归R1/Scene） | 已完成 | 新ready原始启动后准确取得1169/1249头及metadata、双零compact与loader TLS索引；预算、五输入及正常退出已验。线程TLS、消费时序及完整构造未验。 | [输入合同与实测](docs/CLIENT_72_INTERFACE_CONTEXT_SNAPSHOT.md) |
 | R2-COMBO-HTTP（归R2-ROUTE） | 已完成 | 准确原生builder/sign字节→真实Java HTTP/default认证/Mongo同步保存→原生parser/formatter六正反例及关联测试已验；64位归属和失败BSON保持。全UI/callback/自然SDK/route未验。 | [真实接收与主线证明](docs/CLIENT_72_SDK_COMBO_HTTP.md) |
 | R2-KEY-LOAD-owned（归R2-KEY/F-04） | 已完成 | 独立47转发/key入口、准确SDK三窗/材料守卫、release构建/精确EAT49及主线owned正反例通过；冻结core/clean/依赖对应同一来源。真实安装/自然caller/校验/route未验。 | [构建及主线第三](docs/CLIENT_72_SDK_KEY_LOADER.md) |
+| F-03d3f4d2-fresh-interfaces（归R1） | 已完成 | 原前缀保持、第三类壳/接口写回及方法64B存储已验；两case/不可变index投影和准确method-cache首缺有来源。完整初始化/default/Handler未完成，最小roots合同不等于采样ready。 | [主线第三与边界](docs/CLIENT_72_AVATAR_FRESH_INTERFACES.md) |
 | Java资源目的合同（归E-01/R3） | 已完成 | 加载类/字段/准确消费者及缺Weapon失败位置已审；不是target→Java转换许可。 | [Java目的](docs/CLIENT_72_D02_JAVA_RESOURCE_CONTRACT.md) |
 | V-01a、V-01b、V-01c、V-01d | 已完成 | 能力便携路径、家具保存/加工手册夹具及家具资源路径修复；完整V-01保持未完成。 | [账号保存验证](docs/ACCOUNT_AND_SAVE_OPERATIONS.md)、[离线收口](docs/CLIENT_72_SOL_TERRA_OFFLINE.md) |
 

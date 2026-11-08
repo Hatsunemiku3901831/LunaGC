@@ -1,3 +1,5 @@
+2026-11-08 F-03d3f4d2-fresh-interfaces：主线第三2,114,437B/SHAd89df39b…3e9e970同双跑、22测试及23项标准库复核通过；三类壳400/400/208、原64B清零/接口写回已验。原方法表首缺保留，独立不可变index投影后止method-cache mask；3根24B合同仍samplingReady=false。[来源/受控与自然边界/失败及验收](docs/CLIENT_72_AVATAR_FRESH_INTERFACES.md)，proof `r1-fresh-interfaces/main-review.private.json`。当前子项收尾，不扩cache/采样/正式g2；完整父项与D-02未完成。
+
 2026-11-08 R2-KEY-LOAD-OBSERVE-live：新ready90秒/45观察，实际8读1244B零错；真实far297B、原callback/回entry+18、47目标表/固定guard及稳定状态全部匹配。原始1,301,118B/SHA1a43006d…da4535c，主线38项source/账本/比较结果/恢复审核见 `key-loader/observation/live-key1-main-review.private.json`，无二次RPM。用户正常页/退出，stock恢复/实验alias删除，五stock/13保护文件保持；自有资源进程按同creation hold→恢复stock→resume。完整[native调用/信任/route/认证未验范围](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md)保留，当前在途收尾后暂停，不开后继。
 
 2026-11-08 R2-KEY-LOAD-OBSERVE-prep：主线19项及实际owned emitter→observer比较通过；同profile build4才成功，前三metadata/rlib/LTO构建失败保留。实际Hooker near281B完整相符/drop恢复，原mover另执行合成near17/far33B，不称far Hooker已跑。[来源/固定8读1244B/精确CLI/未知](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md)，proof `key-loader/observation/{owned-emitter-check-main1,main-preparation}.private.json`。新备份/安装/恢复脚本已准备，真实轮另验。
