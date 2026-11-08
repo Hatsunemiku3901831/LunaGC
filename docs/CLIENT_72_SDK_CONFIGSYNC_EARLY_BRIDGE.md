@@ -90,3 +90,15 @@ DLL为577,536B/SHA `20186081e073678510d0c162e6bbab1597e8f00b3154861809e909359328
 主线另12项独立审核核29冻结pin、5个新source、三份静态相等、source/manifest/lock、两个实际artifact、两个fresh结果/18case、所有ABI/隐私断言和完整emitter，证明`main-owned-review.private.json`。`owned-main1/proof.private.json` SHA `394964693753e2f52e12cc298d8502ae7bcd8a0094536f48a8b703c2a71c1b04`。Cargo manifest本次新SHA单独记录，不冒充继承旧source pin。
 
 尚未安装客户端、读取自然managed输入、验证完整原桥/SDK调用/信任或部署GS。下一项是新独立adapter与可恢复脚本；准备和实际现场分别验收，另等新user-ready。R4、完整Avatar/资源前置尚未闭，不部署猜测协议。
+
+## 新现场adapter的owned与真实文件门禁
+
+新增`tools/observe_client72_config_early_proxy.py`，13,697B/SHA `d2f9a6f0a8d69e6eacba65c838fd9f25bfe4c12167000349dbc05a162ab5702b`；测试22,957B/SHA `94d0659582517fc37c058a8982d22a603c3653a5e2b5f4fe2e0fb93bb3fcd9a0`。旧adapter/verifier不变。新入口先核准确accepted proof、两fresh18例、实际fixture/artifact、29冻结pin/新source/Cargo及binding/ref来源，再按安装布局明确核四stock常规路径、原Astrolabe alias和已验观察DLL；不调用或放松原五stock的旧门禁。
+
+独立raw侧账仅保存纯collector**同次**最多9次/1450B/单次512B返回的固定code、pointer与自有72B DATA，没有额外RPM或managed payload读取。完整90秒monitor字段仍保存在主报告；三模块必须唯一且path/size/hash/base与同轮前后身份一致，末尾磁盘核对之后再查存活，finally关闭句柄。退出/创建身份变化/模块变化、短读、异常及中途失败保留实际raw且拒绝成功，不输出任意异常正文。事件是否发生与code-bound状态分开，未发生不冒充成功配置。
+
+主线实际运行新增16项测试通过，另13项R1适配器生命周期测试同次通过；已审新adapter实际源码与各测试、实际accepted source gate。主线12项独立检查核9次同源raw/1450B、完整284B trampoline、两次72B DATA、三模块、前后metadata与最后存活、真实close、没有payload/reference/nativeMarshal宣称等，证明`adapter-main/main-review.private.json` SHA `0c2fc894db874bac0159751292357ace843ab23938fa31ca18a5e7affc12602b`。
+
+另在忽略目录构造隔离文件布局：六个只读输入hardlink（固定五stock与SDK carrier）和一份已验proxy副本，实际执行未mock的`preflight`，五逻辑输入、47转发目标、binding/真实私有reference全等通过。证明`adapter-main/source-gate-owned-layout.private.json` SHA `e4d830b0b7179f0d7349a6fc4704ef960a353f2ef5da525ab41612489b16440b`。没有启动该布局或改动原文件；这只验证真实文件门禁，不等于GAME_PATH已安装、WinAPI现场或自然事件通过。
+
+下一步合并R1新warm usage/optionalString纯图及新adapter后，封存主线脚本、备份/恢复和全源hash，复核当前进程/端口/保护输入，再请求新实时ready。所有历史ready已消费，尚无本轮安装或客户端启动。GS的R4前置仍不足，不部署。
