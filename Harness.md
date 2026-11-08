@@ -54,6 +54,8 @@
 
 # 研发索引与执行骨架
 
+2026-11-09 `E-01/R3-UPSTREAM-D02`、`R2-PATCH-DELTA`：固定两库远端仍为原提交；主线独立核35原文件/13本地资源/18源码，manifest与blob/SHA相符。曲线/突破复用已有；武器省略、303/Scene语义未批，WinHTTP缺自然覆盖暂缓，不安装。[结论/原始入口](docs/CLIENT_72_D02_UPSTREAM_REVIEW.md)。`E-01/R3-JAVA-WEAPON-FRAGMENT`：便携JDK17真实编译/Gson/onLoad 4项通过，失败/错误/跳过0；原生NONE/0保留与上游缺省过滤已实际区分，100曲线及零阶原列表已核。仅测试/文档，无运行材料变更；完整Item/loadAll/revision/保存未验。[复现](docs/CLIENT_72_D02_WEAPON_JAVA_LOAD.md)，raw `local/migration72/d02-resume-20261109/r3-java-weapon/`。
+
 任务维护分工：[Project](Project.md)维护目标、依赖、工作包发布顺序、任务状态、完成标记、验收和已完成成果索引；本文件及专题继续承接复现入口、执行记录和失败分析。任务完成后必须同步更新Project对应状态及验收范围。原Project全文已逐字节备份至[只读历史快照](Project.archive-2026-11-08.md)，不再更新该快照。下方历史执行顺序不构成当前待办，接手以Project当前工作包及最新专题证据为准。
 
 2026-11-08 当前暂停：本批限定子项全部完成主线复验和本地提交，未开后继。命令仅作恢复索引，不自动启动游戏、调试器、DB、服务、采样或部署。最终现场/配置/五输入/原8数据文件/子模块证明`main/pause-final-inventory.private.json`；备份与只追加证明`main/pause-handoff-written.json`，总入口[HANDOFF2](HANDOFF2.md)。D-02未完成，完整Handler及自然SDK/场景/资源缺口见专题，旧PID/地址/绿数不复用。
