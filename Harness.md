@@ -1,3 +1,5 @@
+2026-11-08 F-03d3f4d2-fresh-ancestor：主线第三1,703,202B/SHA dc738c4f…933256b同双跑，22检查通过；Object kind28由原表/canonical producer解除，原指令发布两400B类壳，实际止cache1169未采8B。[模型/Nullable对照/接口1169与1249最小合同](docs/CLIENT_72_AVATAR_FRESH_ANCESTOR.md)，proof `r1-fresh-ancestor/main-third-review.private.json`。完整初始化/default/Handler未完成，不重复371采样。
+
 2026-11-08 R2-ROUTE-SIGN：主线第三185,859B/SHA f2f8f3ad…379d434同双跑，15原生/oracle检查及20独立标准库审计通过；原始data字符串/四键HMAC/发送前outer已闭，当前Java未消费sign。[准确合同/失败/HTTP未验边界](docs/CLIENT_72_SDK_COMBO_SIGNATURE.md)，proof `r2-sign/main-third-{determinism,independent-review}.private.json`。继续实际输入/接收，不重复算法研究。
 
 2026-11-08 F04-LOADER-CLEAN-live：新ready后真实proxy/stock/SDK加载，90秒45监测；同进程最终4读781B，47目标表+SDK Crypto/两caller原窗相符。前两工具失败分别缺SYNCHRONIZE与扩展路径字符串，0次RPM，原失败保留，修后9回归。[范围/失败/真实SHA/恢复](docs/CLIENT_72_CLEAN_LOADER.md#真实零hook加载观察器修正与恢复)。用户登录页正常退出，OS无目标，stock恢复、仅实验orig别名删除，13保护文件不变；不代验自然caller或本服连接。

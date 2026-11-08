@@ -1,4 +1,4 @@
-当前状态：第二轮ecab38c9源已完成用户配合采样，36读2232B零读错；保守partial仅因System.Object的实际kind28与kind18合同不符。父class1234/NativeConfig typed头/Pool精确绑定已取得；371后继和完整消费者仍待。各epoch与范围见末节，旧“仅准备/未执行”按对应源读取。
+当前状态：第二轮ecab38c9源已完成用户配合采样，36读2232B零读错；保守partial仅因System.Object的实际kind28与kind18合同不符。该Object表示已由原生表/producer解释，原partial保留；父class1234/NativeConfig typed头/Pool精确绑定已取得，原生后继已到接口1169。各epoch与范围见末节，旧“仅准备/未执行”按对应源读取。
 
 # D02-R1/R4：登录页入口上下文只读快照
 
@@ -74,3 +74,5 @@ python tools/sample_client72_entry_context.py --observation <新监测报告> --
 - Pool实际class11008、+f0 slot4及32B代码与准确`1470687c0`绑定，独立pool mode1；type46314头id46314/kind18。只证明读取时的绑定/输入，不执行allocator、ctor或实体生命周期，不据此声称注册或世界初始化。
 
 主线逐read核宽度/hash、零错、预算、唯一partial原因及monitor身份，采后14检查通过，证明`d02-resume-20261108/sampling2-main-review.private.json`。用户确认SDK登录页正常并从窗口正常退出，OS复核目标不存在，证明`client-exit2.private.json`。无补丁、调试器、凭据或本服请求；完整cold/default/Handler、Scene发送和D-02仍未完成。新样本交后继复用，不因保守partial重启同样实验。
+
+[fresh后继](CLIENT_72_AVATAR_FRESH_ANCESTOR.md)已证明371本来就是kind28，原跳转表直接选canonical Object且该支不需要新371metadata；不更改本次冻结sampler或原partial。跨epoch受控重定位后，原指令已发布1239/1234两个类壳，实际首缺推进到cache1169，其条件后继1249也有准确固定接口行来源。下一最小合同只采这两个cache/head及按需验证，不重采旧Array/Type或371头，不泛化放行任意kind28。

@@ -49,7 +49,7 @@
 
 | 工作包 / 归属 | 状态与当前首缺条件 | 交付与验收 | 证据入口 |
 | --- | --- | --- | --- |
-| F-03d3f4d2 完整Avatar构造/后缀 | 进行中；父descriptor、class1234/typed头已取，Object kind分歧待核；消费前时序及完整cold/default后继仍待 | 在有来源输入下连续执行cold/default/装备/技能/池等必经链，保留实际停止点；明确必要字段、同源资源和真实Java读取时机 | [父类后继](docs/CLIENT_72_AVATAR_PARENT_CONTINUATION.md)、[采样结果](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md)；旧Array/Type已取得，不再重复列缺 |
+| F-03d3f4d2 完整Avatar构造/后缀 | 进行中；Object表示已解、两动态类壳已发布；接口1169/条件1249 fresh输入、消费前时序及完整cold/default仍待 | 在有来源输入下连续执行cold/default/装备/技能/池等必经链，保留实际停止点；明确必要字段、同源资源和真实Java读取时机 | [fresh后继](docs/CLIENT_72_AVATAR_FRESH_ANCESTOR.md)、[采样结果](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md)；旧Array/Type已取得，不再重复列缺 |
 | F-03d3g2 正式Avatar发送 | 阻塞；依赖f4d2、R3及同源Store/角色/SavedVitals | 固定字段/tag/类型/枚举/值来源和省略语义，确定性生成；真实Java输出交目标消费者；非零/64位/非空/错误及账号保存回归 | g1和g2-prep已完成；只改Proto源，不改旧共享定义求方便；[投影](docs/CLIENT_72_AVATAR_JAVA_PROJECTION.md) |
 | F-03d3s2 场景/Team/Entity闭合与发送 | 进行中；Pool实际函数绑定/模式/目标头已取；自然注册/stage、分配后继/MPLevel及组件生命周期未闭 | 用准确producer和同源实体完成能力/附属对象/创建替换拆除与通知顺序；逐个批准必需三层和Java来源后接sender | [Scene上下文](docs/CLIENT_72_SCENE_RUNTIME_CONTEXT.md)、[场景token/属性](docs/CLIENT_72_SCENE_ENTRY_CLOSURE.md)；World stage与资源枚举分开 |
 | R2-ROUTE SDK配置、会话与自然连接（D-01 / F-02 / F-04） | 进行中；包/loader、map/app_key及原生签名/发送前builder已验；自然Init/env、运行接收/route未闭 | 固定来源追配置→选址→签名→会话交换；自然实验一次回答明确问题；必要输入可离线取得时先离线；与R2-SESSION/KEY汇合 | [配置loader](docs/CLIENT_72_SDK_ROUTE_LOADER.md)、[签名](docs/CLIENT_72_SDK_COMBO_SIGNATURE.md)、[请求链](docs/CLIENT_72_SDK_LOGIN_CHAIN.md)；原登录页/root非空不证明请求成功 |
@@ -65,6 +65,7 @@
 | V-01 回归失败归因 | 进行中；按本次改动和R4范围选集 | 新运行先明确基线/夹具/生产失败；保护账号、经济、保存、Lua。完整全量未重跑就不宣称全绿；不机械用历史失败总数安排任务 |
 | F-04 部署材料及隔离核验 | 进行中；复用ENV-01基线，实际部署待R4 | 真实SDK/信任/资源合同充分后形成7.2产物；正常构建和停服，按InstanceRoot归属核对，不仅改版本或环境变量放行；[隔离](docs/CLIENT_72_PORTABLE_ISOLATION.md) |
 | F04-LOADER-CLEAN 独立透明入口 | 已完成；限定零hook真实加载/绑定及恢复；key/trust/route另验 | 独立透明转发、实际stock/SDK身份与准确窗、正常SDK登录页和退出/恢复已验；自然加密、hook启用、完整性全路径与D-02另验 | [计划/产物/真实范围](docs/CLIENT_72_CLEAN_LOADER.md) |
+| R2-KEY-LOAD 独立入口启用key核心 | 进行中；依赖已验core/ABI/native桥梁与真实零hook加载 | 独立产物仅接准确3950c0和同一callback，实际loaded原窗/材料守卫、自有测试/构建后再新ready实测hook影响；不启旧模块或代验自然认证 | [实施计划](docs/CLIENT_72_SDK_KEY_LOADER.md) |
 
 ## 4. 任务发布与范围控制
 
@@ -134,6 +135,7 @@
 | Avatar深度子合同（归F-03d3f4d2） | 已完成 | rgctx/List/Sorted、槽查询/回退、tag29/38、Ornament来源、warm/cold与接口片段已验；父descriptor/完整Handler仍未验。 | [深度合同](docs/CLIENT_72_AVATAR_DEEP_RESEARCH.md)、[warm构造](docs/CLIENT_72_AVATAR_LIVE_CONTRACT.md)、[cold合同](docs/CLIENT_72_AVATAR_COLD_CONTRACT.md)、[cold后继](docs/CLIENT_72_AVATAR_COLD_COMPLETION.md)、[接口](docs/CLIENT_72_AVATAR_COLD_INTERFACES.md) |
 | Avatar真实表与HandlerClosure限定成果（归D02-R1/R3） | 已完成 | 六真实表、同缓存消费、Int32配置与泛型factory有限后继；NativeConfig旧typed解释已撤回，不批准自然模式/默认或g2。 | [六表/勘误](docs/CLIENT_72_AVATAR_NATURAL_TABLES.md)、[HandlerClosure](docs/CLIENT_72_AVATAR_HANDLER_CLOSURE.md) |
 | F-03d3f4d2-parent-continuation | 已完成 | fresh静态父descriptor重定位模型、准确vector增长/释放及单线程已知锁后继；实际止于class1234未采读，未写cachedclass/default，完整cold/Handler未完成。 | [父类后继](docs/CLIENT_72_AVATAR_PARENT_CONTINUATION.md) |
+| F-03d3f4d2-fresh-ancestor | 已完成 | 精确Object kind28/canonical模型、fresh1234重定位及原1239/1234类壳发布；真实首缺cache1169。Nullable opaque模型与未绑定对照分列，完整类初始化/default/Handler未完成。 | [fresh后继](docs/CLIENT_72_AVATAR_FRESH_ANCESTOR.md) |
 | Scene深度/运行上下文限定成果（归D02-R1/R4） | 已完成 | retain/copy、hash注册/查询、token与80154消费、真实Scene/Gadget索引及工厂前缀；PoolCluster/stage/实体后继未验。 | [深度合同](docs/CLIENT_72_SCENE_DEEP_RESEARCH.md)、[入场后继](docs/CLIENT_72_SCENE_ENTRY_CLOSURE.md)、[运行上下文](docs/CLIENT_72_SCENE_RUNTIME_CONTEXT.md) |
 | F-03d3s2-pool-prefix | 已完成 | fresh实际Pool绑定→真实非零Allocate前缀，准确首缺loader TLS索引；独立零模式控制已验，未提供TLS/allocator成功模型，分配/生命周期仍未闭。 | [Pool后继](docs/CLIENT_72_SCENE_POOL_CONTINUATION.md) |
 
