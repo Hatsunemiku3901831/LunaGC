@@ -56,6 +56,8 @@
 | F-03d3f4d2/R1-METHOD-CACHE | 已完成；限定lookup/collector及原版实际输入，不代验父项 | 原27controls/21检查及主线第三同双跑；live适配6检查，新ready90秒实际141读3048B/8候选hit、15项独立审核；正常页/退出、五输入及保护文件保持。自然caller/完整初始化未验 | [准确合同与实测](docs/CLIENT_72_AVATAR_METHOD_CACHE.md) |
 | F-03d3f4d2/R1-METHOD-CACHE-REPLAY | 进行中；本轮源绑定raw已取得 | 原GenericInst/8方法按真实指针及6根存储别名回放；拒绝矛盾/缺字节/外写，保留旧前缀，不把采样候选当自然执行；连续后缀依新首缺推进 | [回放](docs/CLIENT_72_AVATAR_METHOD_CACHE_REPLAY.md) |
 | R2-ROUTE-CONFIG-SELECT | 进行中；准确托管loader存在，自然选择/Init未验 | 固定托管env选择、managed→native必要输入和安全事件；原始材料可得先离线，合同足够再实机 | [执行计划](docs/CLIENT_72_D02_RESUME_20261109.md) |
+| R2-CONFIGSYNC-EVENT | 已完成；限定固定producer与原生dispatcher | 原ctor、真实OS转换、两个name负例/精确local_config到writer入口已执行；主线第三4670B同双跑、6项通过。自然caller/writer返回未验 | [原始证据与模型](docs/CLIENT_72_SDK_CONFIGSYNC_EVENT.md) |
+| R2-CONFIGSYNC-OBSERVE | 进行中；独立准确观察入口实现，实机待构建/owned验收及新ready | 复用透明转发/固定绑定；唯一ConfigSync hook，仅准确caller/local_config的内存分类，无key/route/trust修改；真实ABI及恢复后单次实机 | [边界/产物/验收/停止条件](docs/CLIENT_72_SDK_CONFIGSYNC_OBSERVER.md) |
 | F-03d3f4d2 完整Avatar构造/后缀 | 进行中；三类壳及接口/方法初始化限定前缀已验；方法缓存真实根、完整cold/default与消费时序未闭 | 在有来源输入下连续执行cold/default/装备/技能/池等必经链，保留实际停止点；明确必要字段、同源资源和真实Java读取时机 | [准确后继与首缺](docs/CLIENT_72_AVATAR_FRESH_INTERFACES.md)、[新接口输入](docs/CLIENT_72_INTERFACE_CONTEXT_SNAPSHOT.md)；旧Array/Type已取得，不再重复列缺 |
 | F-03d3g2 正式Avatar发送 | 阻塞；依赖f4d2、R3及同源Store/角色/SavedVitals | 固定字段/tag/类型/枚举/值来源和省略语义，确定性生成；真实Java输出交目标消费者；非零/64位/非空/错误及账号保存回归 | g1和g2-prep已完成；只改Proto源，不改旧共享定义求方便；[投影](docs/CLIENT_72_AVATAR_JAVA_PROJECTION.md) |
 | F-03d3s2 场景/Team/Entity闭合与发送 | 进行中；Pool实际函数绑定/模式/目标头已取；自然注册/stage、分配后继/MPLevel及组件生命周期未闭 | 用准确producer和同源实体完成能力/附属对象/创建替换拆除与通知顺序；逐个批准必需三层和Java来源后接sender | [Scene上下文](docs/CLIENT_72_SCENE_RUNTIME_CONTEXT.md)、[场景token/属性](docs/CLIENT_72_SCENE_ENTRY_CLOSURE.md)；World stage与资源枚举分开 |

@@ -54,6 +54,8 @@
 
 # 研发索引与执行骨架
 
+2026-11-09 `R2-CONFIGSYNC-EVENT`：主线第三4670B/3ecd3a8b…8680f同双跑、6项测试/9项独立审核过。原ctor89073步、两个name负例373/449步返回，准确local_config464步至378850入口cut；6次真实系统MultiByte转换仅作用自有复制bytes。保密proof含原path/stack/代码窗，不含自然payload/key/url。复现与准确调用边见[事件合同](docs/CLIENT_72_SDK_CONFIGSYNC_EVENT.md)、[托管生产](docs/CLIENT_72_SDK_CONFIG_SELECTION.md)；[独立观察后继](docs/CLIENT_72_SDK_CONFIGSYNC_OBSERVER.md)未装载，writer返回/自然env/route/D-02未验。
+
 2026-11-09 `E-01/R3-AVATAR-ENTRY`：第三949711B/32cf0c85…c222e同双跑、18项通过，独立11项/99来源pin已核。6真实选中行、27完整153a7f940/27caller片段/12negative，247调用39508hook；HP+64和有序grow职责闭合，两出生片段转真实Java下一步；critical/criticalHurt、完整行/能力/revision/loadAll未批准。[来源/失败/准确规格](docs/CLIENT_72_D02_AVATAR_ENTRY_RESOURCE.md)，raw `local/migration72/d02-resume-20261109/r3-avatar/`。
 
 2026-11-09 `R1-METHOD-CACHE`：主线第三438781B/b843915a…bc570同双跑、21工具检查及6个新live生命周期检查过。新user-ready原版90秒后实际141RPM/3048B、exact span复读一致、8方法候选hit，15项主线核对；用户正常页/退出、客户端进程0、五stock/13保护文件保持。raw `local/migration72/d02-resume-20261109/r1-method-cache/live/`。仅候选图，atomic/naturalLookupObserved保持false；[原合同/复现](docs/CLIENT_72_AVATAR_METHOD_CACHE.md)、[原生回放后继](docs/CLIENT_72_AVATAR_METHOD_CACHE_REPLAY.md)。未安装patch或部署GS，完整Avatar/D-02不晋级。
