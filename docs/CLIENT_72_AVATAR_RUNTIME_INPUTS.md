@@ -81,3 +81,13 @@ warm getter可独立用本轮10288的完整56B MethodInfo作为RCX，映其owner
 自有第一稿实际发现`OSError(5).winerror=None`导致丢errno，保存原source/失败后仅在新adapter显式回退errno，9项全过。接口审核还按新collector无顶层failure的真实schema调整退出后保留raw的路径，负例通过。没有改冻结旧collector错误格式。实际source gate与9项日志在`adapter-owned/`，采样器及脚本源码身份/当前预检在`live/`。
 
 新脚本AST与来源pin已核，实际CheckOnly为五stock/13保护相同、相关进程/固定TCP/UDP均0、无alias，无目标启动。取得准备完成后的新user-ready后，主线已开始一次90秒原版monitor再采集；这是新epoch，不复用旧PID/owner/ready。实测原件和用户页面/正常退出反馈另记，不能把准备或owned正例当作自然warm输入/原getter执行，更不关闭完整Avatar/default/Handler/g2或D-02。没有运行服务材料变化或GS部署。
+
+## 新ready原版实测
+
+本轮实际完成90秒、44次原版监测，随后采样退出0。`live/runtime-live1.private.json`为530,177B/SHA `04cbe1ffd685244d4599a384186297fa4fdf19e50c2d7c6864f6b9cb4a3b48ac`。采样器源码SHA `c388f4d555ce019b143d125a9effda5c32da8cab642d10019a7a983af5dc54ad`，test SHA `92fce4144523c7827a21324b78c11d6b943601fcc540a2c0f8ec38053710fb66`。没有安装DLL或输入账号，不改运行资源/配置。
+
+R1实际231请求5869B：原collect141/3048、新20/772、最后70个unique exact span共2049B完整复读；加独立SDK四1B为235请求5873B，均低于5192/89964的总界。所有读取完整、逐byte重叠一致、末尾一致；当前ordinary四index、warm getter及definition1239对象身份候选输入都完整。完整64位值只来自这次采样，旧canonical/owner不替换进本图。
+
+主线独立14项审核核prepared source/snapshot、固定pins、90秒/创建时间/image/module及前后身份、八语义cache hits、每条raw/顺序/bytes/时刻、全部重叠/70末尾跨度、四普通index/owner flag、同轮warm definition/canonical、四scalar与总账以及未验边界，见`live/main-review.private.json`；没有额外目标内存读取。正常退出后实际五stock与13保护文件不变、无alias、相关进程/固定TCP/UDP均0，见`live/post-exit.private.json`。用户明确反馈“正常退出”，未单独明确反馈本轮登录页状态，不将其补写成页面已验。
+
+下一项仅用这个冻结图回放原get_Default，并在准确source overlay隔离成立时接回原七调用。输入候选完整不等于原getter/自然caller、cold/default写回、完整Avatar/Handler/g2/D-02已验；本轮没有GS/DB启动或部署。
