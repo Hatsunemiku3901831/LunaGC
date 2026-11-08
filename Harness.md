@@ -1,3 +1,5 @@
+2026-11-08 R2-NATURAL-CONFIG-contract：主线第三8100B/SHA396b9ceb…28b76d2同双跑，14 owned检查通过；准确Config root/env/URL节点生命周期、5读36B根候选及owned 76读4644B预算已审。[原持锁37E430与key参数事件/自然深读未批准](docs/CLIENT_72_SDK_NATURAL_CONFIG.md)，proof `r2-natural-config/main-third-review.private.json`。不以owner非空或SDK页推定无writer区间。
+
 2026-11-08 F-03d3f4d2-fresh-ancestor：主线第三1,703,202B/SHA dc738c4f…933256b同双跑，22检查通过；Object kind28由原表/canonical producer解除，原指令发布两400B类壳，实际止cache1169未采8B。[模型/Nullable对照/接口1169与1249最小合同](docs/CLIENT_72_AVATAR_FRESH_ANCESTOR.md)，proof `r1-fresh-ancestor/main-third-review.private.json`。完整初始化/default/Handler未完成，不重复371采样。
 
 2026-11-08 R2-ROUTE-SIGN：主线第三185,859B/SHA f2f8f3ad…379d434同双跑，15原生/oracle检查及20独立标准库审计通过；原始data字符串/四键HMAC/发送前outer已闭，当前Java未消费sign。[准确合同/失败/HTTP未验边界](docs/CLIENT_72_SDK_COMBO_SIGNATURE.md)，proof `r2-sign/main-third-{determinism,independent-review}.private.json`。继续实际输入/接收，不重复算法研究。

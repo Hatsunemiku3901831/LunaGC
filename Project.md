@@ -156,6 +156,7 @@
 | R2-KEY-native-bridge | 已完成 | 同一Rust核心实际供给准确caller→原PEM/RSA/Base64，保持入口状态/原返回及拒绝；限定离线桥接，不证明loaded、自然输入、hook wrapper或整DLL。 | [原生桥接](docs/CLIENT_72_SDK_KEY_NATIVE_BRIDGE.md) |
 | R2-ROUTE-loader | 已完成 | 准确SDKDelegate.LoadFile→包内TextAsset、实际配置与url:string/map/app_key片段；主combo builder直接读初始化map。完整Init、自然环境选择、签名与本服请求未验。 | [配置loader](docs/CLIENT_72_SDK_ROUTE_LOADER.md) |
 | R2-ROUTE-SIGN | 已完成 | 原生HMAC-SHA256字节合同/准确caller与外层序列化；固定Java源码接收条件已审。完整builder/网络、自然配置/请求和运行HTTP接受未验，不新增无依据验签策略。 | [combo签名](docs/CLIENT_72_SDK_COMBO_SIGNATURE.md) |
+| R2-NATURAL-CONFIG-contract | 已完成 | 准确Config root/env/map writer/reader与owned不可变collector；原持锁URL事件及key参数事件已定位。自然Init完成/teardown区间未闭，禁止外部异步深读，未取得自然env/key/route。 | [配置生命周期合同](docs/CLIENT_72_SDK_NATURAL_CONFIG.md) |
 | F04-LOADER-CLEAN-owned | 已完成 | 独立零hook入口实际编译，自有Win32夹具核47导出、透明ABI/原调用和4类真实异常拒绝；未加载实际客户端DLL，完整性/实际时序与自然SDK另验。 | [透明加载](docs/CLIENT_72_CLEAN_LOADER.md) |
 | F04-LOADER-CLEAN-live | 已完成 | 实际透明proxy/stock加载、47目标表与SDK Crypto/两caller原窗一致；登录页正常、正常退出后恢复stock。只核零hook加载/绑定，未启用key/trust/route或认证。 | [真实加载](docs/CLIENT_72_CLEAN_LOADER.md#真实零hook加载观察器修正与恢复) |
 | 认证日志与InstanceRoot前置（归D02-R2/R5） | 已完成 | 三个认证类日志修复和数据隔离回归、独立运行目录入口已验；DefaultAuthenticator遗留日志已按R2-LOG修复，真实部署未验。 | [日志](docs/CLIENT_72_AUTH_LOGGING.md)、[隔离入口](docs/CLIENT_72_PORTABLE_ISOLATION.md) |
