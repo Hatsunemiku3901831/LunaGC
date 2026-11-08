@@ -1,3 +1,5 @@
+2026-11-08 当前在途已验收/提交，现暂停，不开启新任务。[完整交接](HANDOFF2.md)、[当前任务与未完成父项](Project.md)；旧HANDOFF2先备份、HANDOFF逐bytes追加已核。最终现场 `d02-resume-20261108/final-pause-inventory.private.json`：五stock/13保护文件保持、原DLL恢复/实验alias移除，无项目进程或相关端口，GS未部署，D-02未完成。源码收口9f0002e/patch e2d3072，最终文档提交见Git实际HEAD及post-commit proof，均未推送。
+
 2026-11-08 E-01-PROMOTE-ENTRY：主线第三3,297,024B/SHA546b95ce…d70fef1同双跑，20测试/26独立审计/6 host gate回归通过；WP/AP/AC各1821/889/100行，2个出生用途Promote及100Curve输入、完整Weapon stat6非零case已验。重复whitelist宿主扫描已同集合去重修复，旧probe03明确强制性能取消，非native结果。[准确用途/模型/失败/未闭字段](docs/CLIENT_72_D02_PROMOTE_RESOURCE.md)，proof `r3-promote/main-review.private.json`。不启HP/critical/gadget/Java后继，交接后暂停。
 
 2026-11-08 F-03d3f4d2-fresh-interfaces：主线第三2,114,437B/SHAd89df39b…3e9e970同双跑、22测试及23项标准库复核通过；三类壳400/400/208、原64B清零/接口写回已验。原方法表首缺保留，独立不可变index投影后止method-cache mask；3根24B合同仍samplingReady=false。[来源/受控与自然边界/失败及验收](docs/CLIENT_72_AVATAR_FRESH_INTERFACES.md)，proof `r1-fresh-interfaces/main-review.private.json`。当前子项收尾，不扩cache/采样/正式g2；完整父项与D-02未完成。

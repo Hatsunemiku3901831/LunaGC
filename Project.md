@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-**当前仅收束已在途任务，验收/提交/交接后暂停；D-02未完成。** 用户最新明确不开启新任务；当前只完成key观察、Avatar接口后继与突破资源的既定验收，未完成后继留待恢复授权。此前[恢复计划](docs/CLIENT_72_D02_RESUME_20261108.md)和历史交接供追溯，不覆盖本次暂停决定。
+**当前已暂停，不开启新任务；D-02未完成。** 当前在途的key观察、Avatar接口后继与突破资源均已主线完成限定验收并分项本地提交，详细交接及备份入口见[HANDOFF2](HANDOFF2.md)。完整父项和未完成后继保留，恢复需用户授权。此前[恢复计划](docs/CLIENT_72_D02_RESUME_20261108.md)和历史交接供追溯，不覆盖本次暂停决定。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -179,7 +179,7 @@
 | E-01-bridge-equipment（归R3） | 已完成 | 真实三表完整解析、初始武器/两项属性/同源曲线及突破ID消费者闭合；非零/64位/float32及缺引用/未知枚举拒绝已验。仍为字段片段，完整Java行/突破加成/加载/revision未验。 | [装备字段桥梁](docs/CLIENT_72_D02_EQUIPMENT_RESOURCE.md) |
 | R1-SAMPLE-INTERFACES（归R1/Scene） | 已完成 | 新ready原始启动后准确取得1169/1249头及metadata、双零compact与loader TLS索引；预算、五输入及正常退出已验。线程TLS、消费时序及完整构造未验。 | [输入合同与实测](docs/CLIENT_72_INTERFACE_CONTEXT_SNAPSHOT.md) |
 | R2-COMBO-HTTP（归R2-ROUTE） | 已完成 | 准确原生builder/sign字节→真实Java HTTP/default认证/Mongo同步保存→原生parser/formatter六正反例及关联测试已验；64位归属和失败BSON保持。全UI/callback/自然SDK/route未验。 | [真实接收与主线证明](docs/CLIENT_72_SDK_COMBO_HTTP.md) |
-| R2-KEY-LOAD-owned（归R2-KEY/F-04） | 已完成 | 独立47转发/key入口、准确SDK三窗/材料守卫、release构建/精确EAT49及主线owned正反例通过；冻结core/clean/依赖对应同一来源。真实安装/自然caller/校验/route未验。 | [构建及主线第三](docs/CLIENT_72_SDK_KEY_LOADER.md) |
+| R2-KEY-LOAD-owned（归R2-KEY/F-04） | 已完成 | 独立47转发/key入口、准确SDK三窗/材料守卫、release构建/精确EAT49及主线owned正反例通过；冻结core/clean/依赖对应同一来源。本子项只验owned，实际安装见OBS；自然caller/完整校验/route未验。 | [构建及主线第三](docs/CLIENT_72_SDK_KEY_LOADER.md) |
 | F-03d3f4d2-fresh-interfaces（归R1） | 已完成 | 原前缀保持、第三类壳/接口写回及方法64B存储已验；两case/不可变index投影和准确method-cache首缺有来源。完整初始化/default/Handler未完成，最小roots合同不等于采样ready。 | [主线第三与边界](docs/CLIENT_72_AVATAR_FRESH_INTERFACES.md) |
 | E-01-PROMOTE-ENTRY（归R3） | 已完成 | 三真实表完整解析及出生用途2个Promote/100个AvatarCurve输入、Avatar批准字段片段、完整Weapon属性6例/非零突破已验；宿主白名单同集合修复验证。完整Avatar/Item、加载/revision/保存恢复未验。 | [主线第三与准确用途](docs/CLIENT_72_D02_PROMOTE_RESOURCE.md) |
 | Java资源目的合同（归E-01/R3） | 已完成 | 加载类/字段/准确消费者及缺Weapon失败位置已审；不是target→Java转换许可。 | [Java目的](docs/CLIENT_72_D02_JAVA_RESOURCE_CONTRACT.md) |
