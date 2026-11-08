@@ -137,3 +137,17 @@ python -m tools.observe_client72_key_loader --client $client72Path --owned-emitt
 结果的`installed-code-bound`只表示实际稳定installed状态与本次固定8窗链相符；`failed-state-original-code-bound`表示固定失败终态和原窗/转发相符，失败没有变成hook接受。二者都不声称自然callback、key替换发生、Config选择、route、信任或登录成功。主线再记录页面/完整性表现、用户正常退出、OS无目标、stock与配置/数据恢复；不沿用此前ready，也不借本观察子项晋级R2-KEY/F-04/D-02。
 
 主线已独立运行19项测试并审核源码、实际emitter/build及纯collector边界；同一source epoch为`44c37ec…4b5e2`、test`3800064…d1605`、owned Rust`fc9cdaf…136cc2`。真实emitter和原编码校验由主线实际执行，不以代理报告代验。私有 `main-preparation.private.json`记录新安装/恢复脚本语法核验与源/产物固定身份；本轮现场最多8读1244B，无目标调用或认证输入。此准备出口已验；实际客户端结果随后另记，父项仍进行中。
+
+## 实际key安装、固定代码观察与恢复
+
+主线在新的用户在场确认后，重核五stock/配置/进程/端口/无guard，先独立备份stock，再临时安装本卡固定key DLL与准确stock别名。90秒45项模块监测后，**实际8读1244B，零错误/短读**，结果为`installed-code-bound`。64B状态前后相同，phase5/installed1、failure/Win32均0，实际SDK base/SizeOfImage及路径/磁盘/三窗守卫、原库与self/SDK引用标志均匹配。
+
+实际47转发目标均是本次stock模块的对应出口；两caller原窗保持。SDK `3950c0`采用**far JMP**，完整**297B** trampoline、far RIP/RBX搬移、原38B callback及`entry+18`返回边同步比对全部相符。这是本次真实进程安装和代码绑定证据；没有远程调用函数、读userdata/core/公钥正文、读callback计数或输入凭据，`naturalCallerObserved=false`。实际Crypto调用、key被选中/替换、自然Config/route、完整信任路径和本服登录仍未验。
+
+原始结构化观察 `live-key1.private.json` 为 **1,301,118B / SHA-256 `1a43006daa85e09dc02d9e1b4dc4859a2f8c9fa3f9335eb20314af346da4535c`**，包含模块/状态/逐读地址、请求/实际长度、错误与固定比较结果；没有导出未知代码正文或其hash。主线独立38项复核source/owned证明、账本、实际地址推导、guard/代码比较结果、输入及恢复，见 `live-key1-main-review.private.json`；该审核没有进行第二轮RPM，不宣称退出后重新读取了原内存。
+
+用户确认SDK登录页正常、无报错并正常退出；OS确认游戏不在后恢复stock SHA `87e0a005ac46515156636af2120d3f824bcd28d69253e7d7235b959b54a0b442`，只删除本实验新建且hash相符的orig别名。`live-key1-restored.private.json`、`live-key1-post-environment.private.json`记录恢复、无游戏/Java/Mongo/debugger及相关空端口；五stock、13个保护文件和原resources差异均保持。服务JAR未变，R4/完整资源/SDK自然链未齐，未部署GS服务，健康/运行JAR没有对象，不能代验D-02。
+
+为保护同时在途资源解析的末尾五输入核验，主线按当前CIM/命令/双OS创建时间核属后，仅暂时hold自有离线Python；其无wall-clock deadline/外部事务，模型内存和原调用未改。stock恢复后以同一creation resume，NT status均0；`owned-resource-{held,resumed}.private.json`保存过程。不是重启、重跑或修改后验门，未对客户端或未知进程作暂停/调试。
+
+`R2-KEY-LOAD-OBSERVE`在以上固定范围已完成。后继自然caller/认证/route和完整校验需要独立验收，R2-KEY、F-04及D-02不由本项关闭；用户最新要求收束当前在途后暂停，本轮不再开启后继。

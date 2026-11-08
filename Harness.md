@@ -1,3 +1,5 @@
+2026-11-08 R2-KEY-LOAD-OBSERVE-live：新ready90秒/45观察，实际8读1244B零错；真实far297B、原callback/回entry+18、47目标表/固定guard及稳定状态全部匹配。原始1,301,118B/SHA1a43006d…da4535c，主线38项source/账本/比较结果/恢复审核见 `key-loader/observation/live-key1-main-review.private.json`，无二次RPM。用户正常页/退出，stock恢复/实验alias删除，五stock/13保护文件保持；自有资源进程按同creation hold→恢复stock→resume。完整[native调用/信任/route/认证未验范围](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md)保留，当前在途收尾后暂停，不开后继。
+
 2026-11-08 R2-KEY-LOAD-OBSERVE-prep：主线19项及实际owned emitter→observer比较通过；同profile build4才成功，前三metadata/rlib/LTO构建失败保留。实际Hooker near281B完整相符/drop恢复，原mover另执行合成near17/far33B，不称far Hooker已跑。[来源/固定8读1244B/精确CLI/未知](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md)，proof `key-loader/observation/{owned-emitter-check-main1,main-preparation}.private.json`。新备份/安装/恢复脚本已准备，真实轮另验。
 
 2026-11-08 R2-KEY-LOAD-owned：主线release生产578048B/SHAad18e741…65a2139d与fixture构建，第三两fresh owned各917B/SHA72b0759e…21a8同双跑，12 Python检查过；独立EAT49/DATA/源/产物/拒绝边界复核见 `key-loader/main-review.private.json`。[精确构建/9绑定与2材料拒绝/原callback及主线范围](docs/CLIENT_72_SDK_KEY_LOADER.md)。patch本地e2d3072，未实际安装；下一[固定只读观察](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md)，不代验自然caller/认证。

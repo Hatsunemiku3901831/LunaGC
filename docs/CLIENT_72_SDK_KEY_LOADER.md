@@ -1,6 +1,6 @@
 # R2-KEY-LOAD：独立入口接入已验key核心
 
-当前限定实现、release构建和主线第三owned验收已通过，实际安装/目标hook接受尚待新的无凭据实机观察。原核心与clean转发源码保持；没有启用旧整DLL。观察合同另见[实际窄hook计划](CLIENT_72_KEY_LOADER_OBSERVATION.md)。
+当前限定实现、release构建、主线第三owned和新ready实际安装/代码绑定观察已通过；自然caller、完整校验/route及认证仍未验。原核心与clean转发源码保持；没有启用旧整DLL。实际far297B、正常页/退出/stock恢复范围见[窄hook观察](CLIENT_72_KEY_LOADER_OBSERVATION.md)。
 
 当前状态：独立opt-in生产DLL与owned fixture已由主线离线编译；实际EAT严格为原47+state数据@48+冻结核心内部符号@49。新runner两个fresh owned进程各917B、逐字节相同，12项独立Python检查通过。生产源码/578048B产物已冻结。本卡没有加载真实SDK或调用getter/目标函数，没有安装客户端文件；目标hook接受、自然key回调、route/trust/认证及D-02仍未完成。
 

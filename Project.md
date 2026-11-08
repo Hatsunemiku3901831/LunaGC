@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-**已恢复持续执行；D-02 未完成。** 用户恢复指令覆盖历史暂停/仅离线/阶段后停止的节奏限制；当前执行计划和现场入口见[恢复计划](docs/CLIENT_72_D02_RESUME_20261108.md)。历史交接仅用于追溯。
+**当前仅收束已在途任务，验收/提交/交接后暂停；D-02未完成。** 用户最新明确不开启新任务；当前只完成key观察、Avatar接口后继与突破资源的既定验收，未完成后继留待恢复授权。此前[恢复计划](docs/CLIENT_72_D02_RESUME_20261108.md)和历史交接供追溯，不覆盖本次暂停决定。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -43,7 +43,7 @@
 | --- | --- | --- | --- |
 | R2-LOG 剩余session日志修复（D-01 / F-04） | 已完成；限定日志红绿/隔离回归/构建；部署待R4 | 有效泄漏红测→最小日志修复；认证/会话采用/保存保持，合成token及异常正文不入日志，关联隔离回归/构建 | 只修DefaultAuthenticators.SessionKeyAuthenticator遗留片段；既有三类日志修复保留；[响应规格](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md)、[日志合同](docs/CLIENT_72_AUTH_LOGGING.md) |
 | R2-SESSION 单token响应适配（D-01 / F-02） | 已完成；独立HTTP、Java→原生及账号保存回归/构建；部署待R4 | `/account/ma-cn-session/app/verify`成功返回`data.user_info`与`data.token{token_type:1,token}`，沿用同一认证token；真实Java成功/错误响应→原生parser/formatter，64位ID字符串及会话内容一致；独立账号/密码/保存回归 | 不重新生成或轮换token，verifySToken数组合同不一并改；错误认证不得出token，type4不擅认combo必经；[SDK响应](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md) |
-| R2-KEY 窄key核心接原生Crypto（D-01 / F-04） | 进行中；同核native桥接、零hook透明加载及实际SDK原窗绑定已验；自然caller/route及核心实际启用未验 | 同一核心输出供真实SDK Crypto，覆盖身份、caller、寄存器/栈/返回保持及错误拒绝；在独立入口按窄规格实现/验证实际启用与校验影响 | 不启用旧整DLL；[ABI](docs/CLIENT_72_SDK_KEY_INPUT_ABI.md)、[原生桥接](docs/CLIENT_72_SDK_KEY_NATIVE_BRIDGE.md)、[实际加载](docs/CLIENT_72_CLEAN_LOADER.md) |
+| R2-KEY 窄key核心接原生Crypto（D-01 / F-04） | 进行中；同核native桥接、实际零hook/窄key装载及精确代码绑定已验；自然caller/route和完整校验未验 | 同一核心输出供真实SDK Crypto，覆盖身份、caller、寄存器/栈/返回保持及错误拒绝；自然key/认证与完整校验仍须实际验证 | 不启用旧整DLL；[ABI](docs/CLIENT_72_SDK_KEY_INPUT_ABI.md)、[原生桥接](docs/CLIENT_72_SDK_KEY_NATIVE_BRIDGE.md)、[实际key观察](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md) |
 
 ### 3.2 并行关闭：必要输入与完整消费者
 
@@ -67,8 +67,8 @@
 | V-01 回归失败归因 | 进行中；按本次改动和R4范围选集 | 新运行先明确基线/夹具/生产失败；保护账号、经济、保存、Lua。完整全量未重跑就不宣称全绿；不机械用历史失败总数安排任务 |
 | F-04 部署材料及隔离核验 | 进行中；复用ENV-01基线，实际部署待R4 | 真实SDK/信任/资源合同充分后形成7.2产物；正常构建和停服，按InstanceRoot归属核对，不仅改版本或环境变量放行；[隔离](docs/CLIENT_72_PORTABLE_ISOLATION.md) |
 | F04-LOADER-CLEAN 独立透明入口 | 已完成；限定零hook真实加载/绑定及恢复；key/trust/route另验 | 独立透明转发、实际stock/SDK身份与准确窗、正常SDK登录页和退出/恢复已验；自然加密、hook启用、完整性全路径与D-02另验 | [计划/产物/真实范围](docs/CLIENT_72_CLEAN_LOADER.md) |
-| R2-KEY-LOAD 独立入口启用key核心 | 进行中；独立产物/守卫/构建与主线owned已验，真实hook接受待观察 | 独立产物仅接准确3950c0和同一callback，核实际loaded身份与精确代码变化，新ready无凭据观察目标影响；不启旧模块或代验自然认证 | [产物与验收](docs/CLIENT_72_SDK_KEY_LOADER.md)、[只读观察计划](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md) |
-| R2-KEY-LOAD-OBSERVE 固定只读观察 | 进行中；准确observer、原编码器/owned及主线准备已验；新ready现场待执行 | 精确状态/47表/SDK修改及完整trampoline/callback/返回边，新实机加载、页面/正常退出/恢复；不能只看installed | [来源、范围及验收](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md) |
+| R2-KEY-LOAD 独立入口启用key核心 | 进行中；产物/owned与实际安装/代码绑定/正常页恢复已验；自然caller与完整校验未验 | 独立产物仅接准确3950c0和同一callback；实际代码绑定不代验自然key被选中、认证或完整信任路径 | [产物与验收](docs/CLIENT_72_SDK_KEY_LOADER.md)、[实际观察](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md) |
+| R2-KEY-LOAD-OBSERVE 固定只读观察 | 已完成；限定新ready正常页90秒/精确代码绑定与恢复 | 实际稳定状态、47表、far297B trampoline/callback/返回边匹配；正常页/退出/stock恢复及保护文件已验；自然caller/route另验 | [实际结果、来源与边界](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md) |
 
 ## 4. 任务发布与范围控制
 
