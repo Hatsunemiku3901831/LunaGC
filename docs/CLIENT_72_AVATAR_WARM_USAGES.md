@@ -101,3 +101,5 @@ python -m unittest tools.test_collect72_avatar_warm_usages -v
 已用忽略目录的隔离安装布局及人工monitor调用实际source gate，52pin、九窗、13保护和五逻辑输入通过；90.004秒的正常调度尾差可以接受，不把精确等于90作为条件。证明`adapter-owned/main-source-gate.private.json` SHA `e5b34be0e6d057f0fa8ec7fdfd860c225e27e4c98c3ce389fed6041a84414321`。没有调用任何真实目标进程API、安装GAME_PATH或启动客户端。
 
 下一现场将与已验SDK早期观察器共用一次90秒启动。外部读合计硬界5285请求98058B、单次512B（本图5276/96608/208加SDK固定9/1450/512）；观察器内部仅对一次准确caller的两个托管字符串作最多65562B的临时有界副本，不保存正文、key、URL、hash或长度。完整准备、当前输入/进程/端口、备份/恢复和新实时ready另行核验；实际候选/partial、页面与退出反馈、恢复结果尚未发生。本纯图完成不自动晋级现场子项或父项。
+
+主线现已封存合并`r2-early-bridge/live-plan.private.json`（14源pin，SHA `8a94557829a23ecffaa307fc7349536fa2fde3e8db5a848df07a86a94f6a983c`）、`run-early-live1.ps1`（SHA `73dd3b78f7fdd12678d73acbfe6c1e0342b53f5e1564bafe1923459cd9199299`）及`restore-early-live1.ps1`（SHA `f79a5a962d98d73fd4803d68a1ec13f05e2869e9b715a94be51d3c06da6dc04e`），两脚本语法检查0错误。实际`-CheckOnly`已核当前五stock、13保护、配置存在性、source/owned artifact及无alias，相关进程/TCP/UDP均0；不安装、不启动。运行分支还要求新`-UserReady`并再次完整预检，备份原DLL后才建立自有alias和安装观察器；正常退出后只对准确自有安装/alias/备份恢复，不触未知修改。SDK分支失败时，若90秒monitor及同轮进程仍有效，R1仍独立采集并保留各自结果。当前等待新的实时在场确认。

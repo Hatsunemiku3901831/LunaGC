@@ -102,3 +102,5 @@ DLL为577,536B/SHA `20186081e073678510d0c162e6bbab1597e8f00b3154861809e909359328
 另在忽略目录构造隔离文件布局：六个只读输入hardlink（固定五stock与SDK carrier）和一份已验proxy副本，实际执行未mock的`preflight`，五逻辑输入、47转发目标、binding/真实私有reference全等通过。证明`adapter-main/source-gate-owned-layout.private.json` SHA `e4d830b0b7179f0d7349a6fc4704ef960a353f2ef5da525ab41612489b16440b`。没有启动该布局或改动原文件；这只验证真实文件门禁，不等于GAME_PATH已安装、WinAPI现场或自然事件通过。
 
 下一步合并R1新warm usage/optionalString纯图及新adapter后，封存主线脚本、备份/恢复和全源hash，复核当前进程/端口/保护输入，再请求新实时ready。所有历史ready已消费，尚无本轮安装或客户端启动。GS的R4前置仍不足，不部署。
+
+上述准备现已完成：14源pin的合并计划、主线安装/监测及恢复脚本封存，实际CheckOnly核五stock/13保护、无alias/相关进程/固定端口通过。脚本hash、准确总预算及R1独立失败处理见[现场准备](CLIENT_72_AVATAR_WARM_USAGES.md#主线第三与新windows适配器)。安装分支仍需新实时ready，尚未运行；GS继续未部署。
