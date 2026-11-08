@@ -96,3 +96,7 @@ python -m unittest tools.test_probe72_item_entry_resource_fields -v
 ```
 
 修改仅为本专题与两个新增离线文件；旧原生/Java工具、报告、Project/Harness/HANDOFF、生产Java/Proto/resources/patch/config全部冻结，本卡不Git提交、不构建、不部署或操作客户端/共享REA。完整Item、Gadget/能力、自然Java loadAll/revision与D-02仍未完成。
+
+## 后继gadgetId限定闭合
+
+上述材料和旧报告的field2c未知标记保持原范围。后续[Weapon→named Gadget桥](CLIENT_72_D02_WEAPON_GADGET_BRIDGE.md#主线第三验收)已通过主线第三/15检查/12审核，批准出生`{id:11101,gadgetId:50011101}`；经原字段、准确call/prologue和独立原named-query片段，真实Gadget指针命中及交换/缺引用反例成立，不按同ID批准。当前剩余是Gadget具名字段→配置/能力闭包和EntityWeapon自然生命周期，不能继续把gadgetId职责列为缺输入，也不晋级完整Item或资源父项。
