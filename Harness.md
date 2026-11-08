@@ -54,6 +54,8 @@
 
 # 研发索引与执行骨架
 
+2026-11-09 `E-01/R3-JAVA-ITEM-AFFIX-FRAGMENT`：便携JDK17实际编译/测试，Gradle21秒、XML3项0fail/error/skip。真实ResourceLoader/onLoad/Item map及new GameItem(11101)保持源[0,0]/NONE、身份/count/level/过滤结果；两个受控Java对照不许可target省略。[复现/源码/验收边界](docs/CLIENT_72_D02_ITEM_AFFIX_JAVA_LOAD.md)，log/XML/private proof在`r3-java-item/`。仅测试/文档，无生产资源变更或GS部署；完整Item/gadget/保存/D-02未验。
+
 2026-11-09 `E-01/R3-ITEM-AFFIX-FRAGMENT`：主线第三447517B/SHA9007d08f…5a53c2同双跑、17检查/11审核及91pin过。两源行/实际Array ICollection/IList AOT、11101[0,0]/11501[111501,0]到具名group入口通过，106调用10361hooks全部计入，未供应正Affix行。[真实字段/失败/最小Java后继及gadget缺口](docs/CLIENT_72_D02_ITEM_ENTRY_RESOURCE.md)。完整Item父项未闭，不以同ID或空分支补gadget/config/ability。
 
 2026-11-09 `R1-CLASS80-STORAGE-static`：主线第三5912B/SHA8e7decdd…246c99d同双跑，明确指定第三报告的10项检查通过。固定两6B metadata行/1169及1249&lt;VAR362槽0&gt;/offset4、6来源已核，static工具不导入Unicorn，不代验inflation或32B原生发布。[静态source epoch/计划/边界](docs/CLIENT_72_AVATAR_CLASS80_STORAGE.md)。stock及16B前置均已验，继续独立native入口。

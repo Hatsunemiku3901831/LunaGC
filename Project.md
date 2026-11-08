@@ -54,6 +54,7 @@
 | E-01/R3-AVATAR-ENTRY | 已完成；限定HP/grow职责和批准片段，critical及完整行未闭 | 六真实选中row、27完整helper/27caller片段及12负例已验；主线第三同双跑、18检查/99源pin核对通过。两出生hpBase/有序grow可交Java，critical两项不批准 | [准确范围/原生与Java规格](docs/CLIENT_72_D02_AVATAR_ENTRY_RESOURCE.md) |
 | E-01/R3-JAVA-AVATAR-FRAGMENT | 已完成；限定真实loader/HP/grow片段 | 两出生片段及100Curve经真实ResourceLoader/Gson/onLoad，18个float32值一致，缺binding/曲线真实拒绝；本类4项+关联32隔离项实际通过，loadedAll未改。完整行/能力仍未验 | [实际加载与边界](docs/CLIENT_72_D02_AVATAR_JAVA_LOAD.md) |
 | E-01/R3-ITEM-AFFIX-FRAGMENT | 已完成；限定真实数组/具名group消费者 | 原11101[0,0]/独立11501[111501,0]、实际ICollection/IList AOT通过；主线第三同双跑、17检查/11审核/91pin。出生无需正affix行；完整Item/gadget未验 | [源/消费者/限定投影](docs/CLIENT_72_D02_ITEM_ENTRY_RESOURCE.md) |
+| E-01/R3-JAVA-ITEM-AFFIX-FRAGMENT | 已完成；限定真实loader与GameItem构造 | 两固定片段同源合并，真实ResourceLoader/onLoad/Item map→GameItem，源[0,0]保持、count/level1、运行affixes空；3项Java通过，maps恢复/loadedAll不变 | [实际Java验证](docs/CLIENT_72_D02_ITEM_AFFIX_JAVA_LOAD.md) |
 | E-01/R3-ITEM-ENTRY | 进行中；剩gadgetId职责及Gadget/config/ability闭包 | 同源Gadget50011101真实row直接复用；Item+2c→Gadget职责和字符串→Java配置仍未闭，不以相同ID或空entity分支许可省略 | [准确剩余输入](docs/CLIENT_72_D02_ITEM_ENTRY_RESOURCE.md#最小真实java后继与尚缺输入) |
 | E-01/R3-CRITICAL-SEMANTICS | 进行中；准确职责桥仍缺 | 主线核21 Avatar/84 FightProperty typed参数及8准确窗3982B；邻接入口为运行属性/突破差/feature或字符串，未证+98/+a4职责。预算已止，未知值不进Java完整行 | [已查范围/准确缺口](docs/CLIENT_72_D02_AVATAR_CRITICAL_RESOURCE.md) |
 | F-03d3f4d2/R1-METHOD-CACHE | 已完成；限定lookup/collector及原版实际输入，不代验父项 | 原27controls/21检查及主线第三同双跑；live适配6检查，新ready90秒实际141读3048B/8候选hit、15项独立审核；正常页/退出、五输入及保护文件保持。自然caller/完整初始化未验 | [准确合同与实测](docs/CLIENT_72_AVATAR_METHOD_CACHE.md) |
@@ -188,6 +189,7 @@
 | 任务ID / 成果 | 状态 | 已验成果 / 保留边界 | 证据 |
 | --- | --- | --- | --- |
 | E-01/R3-ITEM-AFFIX-FRAGMENT | 已完成 | 11101真实有序[0,0]经原数组AOT/解码至具名EquipAffix getter；独立11501非零/零对照通过。三新进程同字节、17检查/11审核/91pin；完整Item/gadget/正引用未验。 | [真实数组与来源](docs/CLIENT_72_D02_ITEM_ENTRY_RESOURCE.md) |
+| E-01/R3-JAVA-ITEM-AFFIX-FRAGMENT | 已完成 | 真实ResourceLoader/onLoad→Item map→GameItem身份/count/level/affixes及受控对照3项通过；源[0,0]/NONE保持，map恢复、loadedAll不变。完整Item/实体/保存未验。 | [Java真实加载与构造](docs/CLIENT_72_D02_ITEM_AFFIX_JAVA_LOAD.md) |
 | E-01/R3-JAVA-AVATAR-FRAGMENT | 已完成 | 100Curve/两出生HP/grow片段真实ResourceLoader加载，18个native float32结果一致；4项及32隔离回归通过，缺binding/curve真实拒绝，loadedAll保持。完整行/critical/能力/自然加载与保存未验。 | [真实Java加载](docs/CLIENT_72_D02_AVATAR_JAVA_LOAD.md) |
 | E-01/R3-AVATAR-ENTRY | 已完成 | Avatar.hpBase/grow binding通过真实选中行→原缓存查询片段→完整helper闭合；主线第三与双跑同原字节、18项和99源pin已核。critical/完整Avatar/Item/能力/自然加载/revision未验。 | [属性与成长](docs/CLIENT_72_D02_AVATAR_ENTRY_RESOURCE.md) |
 | E-01/R3-UPSTREAM-D02、R2-PATCH-DELTA | 已完成 | 两固定远端/35个原文件及必要行、消费者、许可和差异分类已审；未有可直接解除首缺的合入增量。未知省略/Quest/Scene不造alias，WinHTTP缺覆盖暂缓；不代验父项。 | [定向审计](docs/CLIENT_72_D02_UPSTREAM_REVIEW.md) |
