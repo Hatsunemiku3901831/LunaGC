@@ -54,6 +54,8 @@
 
 # 研发索引与执行骨架
 
+2026-11-09 `E-01/R3-AVATAR-ENTRY`：第三949711B/32cf0c85…c222e同双跑、18项通过，独立11项/99来源pin已核。6真实选中行、27完整153a7f940/27caller片段/12negative，247调用39508hook；HP+64和有序grow职责闭合，两出生片段转真实Java下一步；critical/criticalHurt、完整行/能力/revision/loadAll未批准。[来源/失败/准确规格](docs/CLIENT_72_D02_AVATAR_ENTRY_RESOURCE.md)，raw `local/migration72/d02-resume-20261109/r3-avatar/`。
+
 2026-11-09 `R1-METHOD-CACHE`：主线第三438781B/b843915a…bc570同双跑、21工具检查及6个新live生命周期检查过。新user-ready原版90秒后实际141RPM/3048B、exact span复读一致、8方法候选hit，15项主线核对；用户正常页/退出、客户端进程0、五stock/13保护文件保持。raw `local/migration72/d02-resume-20261109/r1-method-cache/live/`。仅候选图，atomic/naturalLookupObserved保持false；[原合同/复现](docs/CLIENT_72_AVATAR_METHOD_CACHE.md)、[原生回放后继](docs/CLIENT_72_AVATAR_METHOD_CACHE_REPLAY.md)。未安装patch或部署GS，完整Avatar/D-02不晋级。
 
 2026-11-09 `E-01/R3-UPSTREAM-D02`、`R2-PATCH-DELTA`：固定两库远端仍为原提交；主线独立核35原文件/13本地资源/18源码，manifest与blob/SHA相符。曲线/突破复用已有；武器省略、303/Scene语义未批，WinHTTP缺自然覆盖暂缓，不安装。[结论/原始入口](docs/CLIENT_72_D02_UPSTREAM_REVIEW.md)。`E-01/R3-JAVA-WEAPON-FRAGMENT`：便携JDK17真实编译/Gson/onLoad 4项通过，失败/错误/跳过0；原生NONE/0保留与上游缺省过滤已实际区分，100曲线及零阶原列表已核。仅测试/文档，无运行材料变更；完整Item/loadAll/revision/保存未验。[复现](docs/CLIENT_72_D02_WEAPON_JAVA_LOAD.md)，raw `local/migration72/d02-resume-20261109/r3-java-weapon/`。
