@@ -56,6 +56,7 @@
 | E-01/R3-ITEM-AFFIX-FRAGMENT | 已完成；限定真实数组/具名group消费者 | 原11101[0,0]/独立11501[111501,0]、实际ICollection/IList AOT通过；主线第三同双跑、17检查/11审核/91pin。出生无需正affix行；完整Item/gadget未验 | [源/消费者/限定投影](docs/CLIENT_72_D02_ITEM_ENTRY_RESOURCE.md) |
 | E-01/R3-JAVA-ITEM-AFFIX-FRAGMENT | 已完成；限定真实loader与GameItem构造 | 两固定片段同源合并，真实ResourceLoader/onLoad/Item map→GameItem，源[0,0]保持、count/level1、运行affixes空；3项Java通过，maps恢复/loadedAll不变 | [实际Java验证](docs/CLIENT_72_D02_ITEM_AFFIX_JAVA_LOAD.md) |
 | E-01/R3-ITEM-ENTRY | 进行中；剩gadgetId职责及Gadget/config/ability闭包 | 同源Gadget50011101真实row直接复用；Item+2c→Gadget职责和字符串→Java配置仍未闭，不以相同ID或空entity分支许可省略 | [准确剩余输入](docs/CLIENT_72_D02_ITEM_ENTRY_RESOURCE.md#最小真实java后继与尚缺输入) |
+| E-01/R3-WEAPON-GADGET-BRIDGE | 进行中；独立typed Weapon参数路径 | 复用旧getter/41caller结果，从12个准确Weapon参数方法的具名Codex预览入手，总≤4新窗；实际字段→具名Gadget职责有证后才验证，不按ID猜 | [范围/停止条件](docs/CLIENT_72_D02_WEAPON_GADGET_BRIDGE.md) |
 | E-01/R3-CRITICAL-SEMANTICS | 进行中；共享字段链已审，具名20/22职责仍缺 | 旧8窗复用；新共父17494链在6窗中确认+98/+78/+a4→三float installer，主线第三992B同双跑、14pin。该分支拒Avatar，未执行CPU/批准alias | [范围](docs/CLIENT_72_D02_AVATAR_CRITICAL_RESOURCE.md)、[准确共享链](docs/CLIENT_72_D02_AVATAR_CRITICAL_CONSUMER.md) |
 | E-01/R3-CRITICAL-INSTALLER | 进行中；准确1498e2200输出待核 | 先核唯一installer及有理由的具名映射；总≤3新窗，CPU前固定接收者/模型与正反合同，未知不补默认 | [计划/停止条件](docs/CLIENT_72_D02_AVATAR_CRITICAL_INSTALLER.md) |
 | F-03d3f4d2/R1-METHOD-CACHE | 已完成；限定lookup/collector及原版实际输入，不代验父项 | 原27controls/21检查及主线第三同双跑；live适配6检查，新ready90秒实际141读3048B/8候选hit、15项独立审核；正常页/退出、五输入及保护文件保持。自然caller/完整初始化未验 | [准确合同与实测](docs/CLIENT_72_AVATAR_METHOD_CACHE.md) |
