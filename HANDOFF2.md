@@ -1,91 +1,99 @@
-# GS 7.2 收尾交接（2026-11-08，已暂停）
+# 国服7.2收尾交接（2026-11-09，已暂停）
 
-**当前已按用户最新指令暂停，不开启新任务。D-02 / F-05 / D02-R6 未完成。** 当前在途的key实际观察、Avatar接口后继与突破资源已由主线完成既定范围的第三复验、验收和分项本地提交；没有把局部研究或SDK页面当作D-02。此暂停决定覆盖先前“持续执行直到D-02”的节奏要求。恢复前不得自行新开卡、采样、客户端、生产实现、构建或部署。
+**已按用户最新要求完成本批限定工作收尾，现暂停，不开启新任务。D-02 / F-05 / D02-R6未完成。** 本轮开始时用户要求继续至D-02，后来明确要求“目前正在做的任务完成收尾后先暂停并交接”；以最新暂停指令为准。停止原因是用户要求，不是所有独立工作都存在外部阻塞。
 
-接手顺序：AGENTS → README → Project → Harness → 本页 → docs/CLIENT_72_MIGRATION.md → docs/CODEX_ONE_CLICK_DEPLOY.md，再读专题。Project是唯一当前任务/验收队列；历史快照和本页旧备份只作追溯。当前技术缺口不等于全部外部阻塞，本次停止原因是用户明确要求暂停。
+完成标记只覆盖Project列明的来源、原生片段、真实Java加载、只读采集及数据保护范围。最新实验采集/身份/复读/退出恢复通过14项审核；SDK分类超限、enum两零槽与String空usage仍未闭，不伪称业务通过或完整Avatar/D-02完成。没有在用户要求暂停后启动后继研究、String后备、自然loadAll driver、生产实现或部署。
 
-## 交接保护与实际现场
+接手顺序：AGENTS → README → Project → Harness → 本页 → docs/CLIENT_72_MIGRATION.md → docs/CODEX_ONE_CLICK_DEPLOY.md，再读对应专题。Project为当前任务/验收队列；历史暂停、继续及旧交接只供追溯。恢复须用户另行指示，不自动消费旧ready。
 
-覆盖本页前已逐字节备份旧HANDOFF2：`local/migration72/d02-resume-20261108/handoffs/HANDOFF2.before-final-pause-20261108T032618Z.md`，SHA `70810efe28e78c9a0525bd4b92ca822e36d8ce7a942e2cabe9bd5d42bd1adc51`。另备份旧HANDOFF以核append-only：`local/migration72/d02-resume-20261108/handoffs/HANDOFF.before-final-pause-20261108T032618Z.md`。HANDOFF只在原始bytes之后追加，不归一化其历史混合换行、不删改旧内容；写入/前缀核对在本轮忽略目录`handoff-close-proof.private.json`。
+## 备份、Git和现场
 
-本页写入前主仓库为`9f0002e8d891febf4e560796f6a99af0ce1d3bce`、分支`7.2-dev`；最终文档提交以实际Git HEAD及`final-pause-post-commit.private.json`为准，不能把这个写入前hash当未来HEAD。patch当前`e2d307227c6b5614260d63b0b73776962583dc19`，本地分支`codex/7.2-sdk-key-loader`；resources当前`dac2a9d43332ef51879522cf39da2831b0ca0543`。所有提交仅本地，未推送。
+覆盖前已逐字节备份原HANDOFF2：`local/migration72/d02-resume-20261109/handoffs/HANDOFF2.before-final-pause-20261108T232909Z.md`，SHA `ffa090124827adcb5de7151b7c97ff4cf03c66ba1d05140feaa4efe53130bcae`。HANDOFF原件也备份在`local/migration72/d02-resume-20261109/handoffs/HANDOFF.before-final-pause-20261108T232909Z.md`；本轮仅在其原始bytes后追加，不改历史混合换行或旧内容。备份及append-only证明在`local/migration72/d02-resume-20261109/handoffs/`。
 
-最终现场入口：`local/migration72/d02-resume-20261108/final-pause-inventory.private.json`。实际无项目游戏、Java、MongoDB、调试器、patch guard或本批研究进程；TCP8088/22101/27017/27027及UDP22101均空。无待恢复的暂停研究进程，无待用户处理的客户端/实时动作。无关MCP/其它Python进程未操作。GAME_PATH只取当前配置及`tools/game_path.ps1`，不复制历史路径、PID或地址。
+本页写入前主线为`408d07d066860ea61a043383489f716d50127f91`，分支`7.2-dev`。最终文档提交不自引用自身hash，以实际Git HEAD及`local/migration72/d02-resume-20261109/final-pause-post-commit.private.json`为准。patch为`8c255548e89c54d01f71c44dee0820831c7f0b87`，分支`codex/7.2-sdk-key-loader`，clean；resources为`dac2a9d43332ef51879522cf39da2831b0ca0543`。
 
-原Astrolabe已恢复stock，实验新建Astrolabe_orig别名已移除。原.env/config、AGENTS、原resources差异及local/data实际9文件共13项逐hash保持；.env.local仍不存在，原mongodata/local/data均未清理。保留且不提交`resources/ScriptSceneData/flat.luas.scenes.full_globals.lua.json`既有差异（SHA `db3e6a2e87436fefb57d43e8f2b52528017d2a68d530e8cf56b85a53242e5bfe`）。主仓库预期只剩resources的既有dirty标记，patch应clean；最终以post-commit盘点核对。
+主仓库预期只剩resources原有dirty标记。保留、不提交其`ScriptSceneData/flat.luas.scenes.full_globals.lua.json`差异，SHA `db3e6a2e87436fefb57d43e8f2b52528017d2a68d530e8cf56b85a53242e5bfe`。所有提交仅本地，未推送。不要reset、clean、更新子模块或整包替换资源。
 
-五stock输入在最终现场重新核对：
+最新真实退出证明：`local/migration72/d02-resume-20261109/r2-early-bridge/live2-post-exit.private.json`，SHA `9115095a3ffefad62b9ef9cbb1f5512610a9e361b8ed0af66b445f943af38a90`。用户明确反馈登录页正常、已正常退出、无异常；原Astrolabe恢复stock、自有Astrolabe_orig alias移除。五stock、13保护文件、配置存在性均保持；相关游戏/Java/Mongo/调试器/patch guard及固定TCP/UDP均0。没有待恢复研究进程、待安装DLL或待用户处理的现场动作。所有子代理均已结束，没有后台在途任务。
 
-| 输入 | SHA-256 |
+GAME_PATH只用当前配置和`tools/game_path.ps1`解析，不沿历史路径/PID/base/地址。`.env`为portable，`.env.local`不存在；原config、AGENTS、resources差异和local/data九文件组成13项保护，原mongodata/local/data未清理。固定输入见`protocol/cn-7.2/profile.json`：EXE `8b014f64…b6b5`、metadata `45dc7a44…ef2a`、startup `b3148108…5105`、AccountPlatNative `adecdf0b…6c25`、Astrolabe `87e0a005…b442`，完整SHA在profile和本轮盘点；不得只用简称核验。
+
+## 构建、部署与数据边界
+
+只用Windows portable；不Docker/WSL/虚拟化。便携JDK17.0.20.1+1、Mongo7.0.45和Rust nightly1.101.0为本轮已读工具身份，恢复时重核，不套历史环境。HTTP/SDK8088、GS UDP22101、Mongo27017/测试27027按源码核，不凭环境变量声称隔离。
+
+根JAR仍为`LunaGC-7.1.0.jar`，SHA `8f093e19b839ff1263984c596584d1ae12e6d4fd841d82562aaf30f998267291`，既有内嵌496e96f。文件名版本来自既有build.gradle，未改版本绕guard。本轮真实Gradle执行相关Java测试/compileTestJava，不把它称作生产JAR重建或部署。R4、完整Avatar/Scene、必要资源及SDK自然链未齐，**未部署或启动GS**；没有HTTP健康/运行JAR正向服务验收对象，不能记通过。
+
+独立早期观察DLL已经release/locked/offline构建并做两fresh各18 owned case，随后仅临时装到固定客户端取证，现已恢复。没有启用旧整DLL、额外WinHTTP hook、强制验签、未知输入放行或SDK key核心。纯工具/测试/文档修改无需GS重启。账号/数据库、原运行配置和生产资源未因这些片段测试改变。
+
+日志、机器路径、凭据、依赖、客户端二进制、raw、数据库和临时安装备份均在忽略目录。临时配置字符串只在有界回调内复制，不保存自然正文、密钥、URL或其hash/长度。
+
+## 本轮已验收及提交
+
+本轮起点`d31de75`。完整逐项状态在Project，详细日志/命令在Harness及专题；不要按下表测试数量重复加总完成率。
+
+| 任务/成果 | 实际范围、验收及本地提交 |
 | --- | --- |
-| YuanShen.exe | `8b014f64b5dc12fbc476e0c362b053abfdd7a1378cd282e4ad81057621dbd6b5` |
-| global-metadata.dat | `45dc7a44dc9fc187146c52f6c33de57e2d1c1dcfec57f8736431553460f6ef2a` |
-| startup-metadata.dat | `b314810840ca6f495822c9c44483dde2394b9f09ed3c6b13c2782092f04d5105` |
-| AccountPlatNative.dll | `adecdf0bd5442e321b1b66b0ca9e98bef76d5067326aa4add5b75266055a6c25` |
-| Astrolabe.dll | `87e0a005ac46515156636af2120d3f824bcd28d69253e7d7235b959b54a0b442` |
+| E-01/R3-UPSTREAM-D02、R2-PATCH-DELTA | 本轮开始核两远端仍为固定参考提交，35原文件、13本地/18源码及manifest核对；无新资源/patch差异被采用。`b9280d9`，见[定向审计](docs/CLIENT_72_D02_UPSTREAM_REVIEW.md)。 |
+| R3装备/成长/affix真实Java片段 | 原11101两属性、100曲线、零阶突破及有序[0,0]通过真实loader/ItemData/GameItem。武器Java4项、affix Java3项；已有NONE/0与上游省略分列。`4f6b72f`、`f67bcfd`、`2202fb2`。 |
+| R3出生Avatar HP/grow及critical | 原生HP/grow18检查/99pin、Java4项及关联隔离项复用；critical原installer/typed20/22实际8case174调用40140hooks，主线14检查/12审核/111pin，Java3项过。`e25d4ce`、`a77d13f`、`525f31f`、`435577a`；+78及自然完整行仍未知。 |
+| R3 Weapon→Gadget | 原Item+2c指向50011101，7case124调用12052hooks，15检查/12审核/98pin；真实Java2项过，GameItem持同数据对象。`3fd1ff8`、`35850c2`，见[Gadget桥](docs/CLIENT_72_D02_WEAPON_GADGET_BRIDGE.md)。 |
+| R3 Gadget配置key/Java | 原+58键至原查询/hash，7case21调用3425hooks，18检查/15审核/113源路径/13原范围，`8f616cb`。后续独立核typed实体配置域和Java职责，仅批{id50011101,jsonName:Weapon_Sword_Metal}，真实Java2项0失败/错误/跳过，21秒，`d6e9766`。旧false报告不改，配置内容/actual hit不升级。见[key Java](docs/CLIENT_72_D02_GADGET_LOOKUP_KEY_JAVA_LOAD.md)。 |
+| R1方法缓存/16B/32B后继 | 原自然cache141/3048、9原lookup及factory/8方法64B、16B发布/32B类接口行连续原前缀已验。第三分别20/17/23检查并同双fresh；`e24da93`、`0cb9a8e`、`241161b`、`8606a83`。原六前缀保留，完整cold未验。 |
+| R1新ordinary/warm输入与原回放 | 原版90秒44监测，235/5873（R1 231/5869+SDK4/4），14审核；用户只确认退出，没有单独页面确认。原warm getter真实ret、四MethodInfo/ASLR函数指针由原store写入，8调用8794步，第三1839053B/22检查/16审核/37pin同双fresh；`1d94f27`、`759d7d4`。cold准确缺普通root+10294×8，未借inflated同号。 |
+| R3 String合同、R1 warm collector/adapter | String静态21向量/10审核/17pin/一新383B窗八复用，普通1243与generic VAR0继承分立。纯collector主线第三212636B同双fresh，37检查/12审核/52pin/九复用窗，人工243/9032，85unique统一末尾复读；新adapter13检查及真实隔离文件gate过。`fc92620`。 |
+| R2托管配置/UI与早期observer | callback/fallback/ShowLoginView/typed注册入口静态限定已验，实际UI producer仍未闭。早期EXE单入口源22断言/10 Python，实际DLL577536B SHA20186081…2854a9、51 EAT/72B DATA，两fresh18 owned与完整284B搬移/恢复通过。patch`8c25554`及父`e173839`；新Windows adapter16检查/12审核和真实文件gate，`ea6ae7a`。 |
+| 当前合并实测 | UAC后90秒45监测，SDK9/1450+R1 256/8104=265/9554，84unique复读保持；14项纯重放/身份/保护验收过，用户正常页/退出无异常。SDK准确caller到达但event5超限；enum两个槽0、String usage0，业务仍partial。`408d07d`，见下节。 |
+| 自然loadAll入口审计 | 只读31源/四候选、两JAR24类族共192条class及10依赖、LuaJ能力等10主线审核过；不需要先启动服务/DB。未确定首诊输入/脚本范围，未建driver或执行loadAll。`6edea26`，见[审计](docs/CLIENT_72_D02_NATURAL_LOAD_FIRST_AUDIT.md)。 |
 
-只用Windows portable，不部署Docker/WSL或虚拟化。实际工具版本本次读取为：Java `openjdk 17.0.20.1 2026-08-18`；Mongo `db version v7.0.45`；Rust `rustc 1.101.0-nightly (19833af72 2026-10-20)`。HTTP/SDK8088、Mongo27017等硬编码边界按源码核查，环境变量不能单独证明隔离。
+本轮没有重新研究已验账号/保存、raw投影、八握手、SDK响应/真实HTTP、原生密钥桥接、透明加载、能量/装备/突破、Lua网格/Chapter/303及InstanceRoot成果；这些继续直接复用，不自动关闭父项。
 
-## 构建、部署和数据库边界
+## 最新实机原始入口（全部忽略）
 
-最后生产Java变更仍为R2-LOG `a9fb9df`与R2-SESSION `496e96f`。已有portable构建`build/artifact-proof.json`记录JAR46306类、新增2/变化9/删除0均与该次编译匹配、46295保持；这是该次记录，本轮未重做广泛class比较。本轮另做真实compileTestJava与test runtime classpath生成，不把它当作生产JAR重建或部署。
+共同根为`local/migration72/d02-resume-20261109/`：
 
-当前磁盘JAR重新核SHA为`8f093e19b839ff1263984c596584d1ae12e6d4fd841d82562aaf30f998267291`，既有产物内嵌496e96f。版本名称仍由build.gradle导出7.1.0；没有改版本绕guard。R4、完整资源及SDK自然链未齐，**未部署GS服务**，健康/TCP/UDP/运行JAR没有服务对象，不记通过。Rust新入口已实际构建并仅临时安装取证，现客户端恢复stock；没有启用旧ext.dll/ccp/memguard/swap或完整性绕过。
+- `r2-early-bridge/live2.private.json`：SDK45次monitor、前后身份及绑定；SHA `d7f1f483ae293069dbd4611837377c4b076674d7fe04cf42c9a1cc1f79488771`。
+- `r2-early-bridge/live2.private.json.reads.private.json`：同次9读1450B固定code/pointer/自有DATA，SHA `ad4fe1971aea1a3db7fd384b65d2596cd94560b69480cf9a127ccbf7dcc79c0b`。
+- `r1-warm-usages/live/warm-live2.private.json`：256读8104B、全部source/同轮cache/header和最终84 spans，SHA `cfea3e67d6795e791c541e2c140db8b3f19cc70d6c571f47e7ce84c3eb5a4204`。
+- `r2-early-bridge/live2-main-review.private.json`：14独立检查/SDK纯重放及R1完整时间序列重投影，SHA `12dd94c7b1457a2a15c4041de45c91931afde773eb24e680e313e326ac0ffb1f`。
+- `r2-early-bridge/live2-post-exit.private.json`：用户反馈/5+13保护、stock恢复/无alias/进程端口0，SHA见前文。
+- `r2-early-bridge/live-plan2.private.json`及run/restore/launch-early-live2脚本：固定scope/14source pins、模块环境和admin guard。输出/ready已消费，恢复时不能重放这些文件名。
+- `r3-java-gadget-key/main-proof.private.json`：真实Java2项及XML/输入SHA，证明SHA `a7e4653d41e66e8f7ae355692fe6c14662a8e9ecdefd78adda34ea9b08edb581`。
+- `r3-natural-load-audit/main-review.private.json`：只读入口审计10项，SHA `da6b883b644fd493697a23e4dd2ad0c6c11ca664c8a94f4eac372bdc721ae012`。
 
-独立Mongo27027的账号/HTTP实验都用新runtime/db及UUID库，完成后正常admin shutdown/exit0/端口释放，关闭前仅admin/config/local。原27017未启动，未在原数据库创建/修改测试账号。本批不需要冷备/迁移原数据；不得以在线复制mongodata冒充冷备。原始日志、机器路径、token、密码、客户端字节、依赖、数据库和PIPE正文留忽略目录；PIPE正文/token/sign及其hash没有导出。
+## 当前未完成、准确首缺和停止边界
 
-## 本轮已验收成果和本地提交
+1. **完整Avatar/R1（F-03d3f4d2、g2）**：当前List/HashSet<uint32>/Default/enum类及旧warm getter/identity七候选取得。enum carrier15590的owner/同一canonical成立，但真实rgctx+10/+18均0，停getter-slot-mismatch，没读或造ctor。须先按原代码/实际同轮数据区分未初始化或其它语义，不能手设slot/flag、host返回Default或借旧owner。typed managed allocator、完整构造/装备/技能/池、自然caller/Handler和正式g2仍未验。旧cold分支另缺普通10294槽，不能拿inflated10294替代；两条路线不混成已闭。
+2. **String/Gadget配置（R3及Scene）**：primary B+596c848实际0，停usage-null；没有Default/Equals输入，没有运行两个32-probe后备。jsonName lookup-key已独立通过Java，不应再把字段职责绑到完整配置actual hit。配置资产u64注册key、17591 owner、25270真实配置bytes/解析/ability仍未闭。Scene/Team/Entity自然注册、stage、Pool/分配、MPLevel和组件生命周期继续未知；不能用空配置或空实体代验。
+3. **SDK自然链（R2）**：新单EXE入口、47转发、20B patch/完整284B trampoline、callback/其余代码窗及72B DATA相符，any_entry_seen/expected_caller_seen均1。event5 over-limit按预设停止，没有成功分类；合并错误码不能判明name还是payload，更不能推断正文大小/内容/缺NUL。原Marshal、SDK export/writer return/路由/校验/自然本服认证未验。不要仅放大限额或再跑相同实验，先审具体ABI/边界假设及安全事件；不扩大hook/强制成功。
+4. **自然资源/保存（E-01/E-01c/E-01d1）**：必要字段片段可复用，但完整Avatar/Item、选中revision和实际loadAll/引用/日志闭包、正向QuestManager恢复仍未验。直接loadAll无需服务/DB，但LuaJ标准globals具有实际文件/进程/Java能力；本次首诊准确输入/脚本范围未选定。这个实验输入边界不新增AGENTS逐项审批规则，不把全部Lua/161表列P0。未启动新driver，不能手设loadedAll或把catch后自然true当完整兼容。
+5. **R4/R5/R6**：正式sender/必要合同未汇合，隔离便携GS未部署，新旧号六项最终实机均未验。SDK登录页不是本服登录；没有显式选人/命名保存、完整场景/实际进世界、预定连续10分钟心跳或两类账号正常退出重登持久一致的完成证据。
 
-原有R0、协议raw/库存/Avatar片段、隔离脚本、Lua/Chapter及资源解包/索引/六表成果直接复用；完整旧细节见本页备份和Project第6节，不重新排队。
+## 外部来源与已审结果
 
-| 子项/本地提交 | 实际验收与边界 |
-| --- | --- |
-| R2-LOG / R2-SESSION，a9fb9df / 496e96f | 有效日志红绿、单token session独立适配、真实HTTP→原生、账号/密码/保存关联193项及构建已有证明；日志39与193互含，不相加。原passport数组不改，session不重新轮换token。原生session双报告6634B/7a5f3bd1…69fff6。部署待R4。 |
-| E-01-bridge-energy，029fea2 | 七字段/真实三表能量消费者，主线第三10,370,640B/d990c2c4…66307e、17项；不是完整Java资源或revision。 |
-| fresh-ancestor，0676a00及前置0cbf31e/0890588 | Object kind28已解、两400B类壳原生发布；旧Array/Type和已采父descriptor不再列缺。第三1,703,202B/dc738c4f…933256b、22项，止1169接口。 |
-| R2 loader/sign/natural-config，305d9de / b287819 / 5768668 | 准确SDKDelegate.LoadFile包/typed字段、url:string、map/app_key片段；完整原生signer/发送前builder、HMAC独立oracle；Config根/生命周期与原持锁事件合同。主线第三分别471340B/bae776a1…bee1471（13项）、185859B/f2f8f3ad…379d434（15及20审计）、8100B/396b9ceb…28b76d2（14项）。自然Config/env/route未验。 |
-| E-01-bridge-equipment，6328e0b | Avatar169/Weapon288/WeaponCurve100真实表与初始武器/两属性/成长片段；第三4,164,206B/50aaea94…eb5bc，16项及20审计。Weapon NONE/zero原项保留，Promote缺口当时没有补空。完整Java行/加载未验。 |
-| R1-SAMPLE-INTERFACES，9a2c099 / 86b5318 | 新ready原始90秒44观察，8读584B零错，1169/1249 kind18头/70B metadata相符、双零compact，TLS索引实读0；主线29项。raw SHA3c08c1f7…64d040。用户正常页/退出；线程TLS和消费前时序未证。 |
-| R2-COMBO-HTTP，7ae58b3 | 实际Java编译、6项真实Javalin/default认证/Mongo同步保存JUnit（0fail/error/skip）、16 Python/mock及六例准确native builder/sign→真实HTTP/Mongo→native parser/formatter全部通过。23,602B/4d8691f3…994b37，14 class/source/输入/保密独立核对。失败BSON不变/无token，成功沿既有login-token轮换；完整UI/自然SDK未验。 |
-| R2-KEY-LOAD-owned，patch e2d3072 / parent9ea77cd | 独立47转发+准确key核心，release生产578048B/ad18e741…65a2139d，fixture631808B/ded080ec…adce8。主线第三两新owned各917B/72b0759e…21a8同双跑、12项及独立EAT49审核；9绑定/2材料拒绝和真实ilhook错误。 |
-| R2-KEY-LOAD-OBSERVE，4eb17f1 / fdec2b6 | 主线19项、实际owned emitter与原mover证明；新ready真实90秒45观察，8读1244B零错，稳定state5、47表、far297B完整trampoline/原38Bcallback/回entry+18均相符。raw1,301,118B/1a43006d…da4535c、38项复核。用户正常页/退出，原DLL恢复、实验alias删除。自然caller/key选中/route/完整信任未验。 |
-| F-03d3f4d2-fresh-interfaces，42310a2 | 第三2,114,437B/d89df39b…3e9e970同双跑、22项及23审计。三类壳400/400/208、原64B清零/接口写回；原方法表首缺保留，独立静态index投影后准确止method-cache mask。完整初始化/default/Handler/g2仍未验。 |
-| E-01-PROMOTE-ENTRY，9f0002e | 第三3,297,024B/546b95ce…d70fef1同双跑，20项/26独立审计/6宿主gate回归过。WP1821/AP889/AC100完整原parser与EOF，出生用途2个Promote/100完整Curve输入、Avatar批准字段片段、完整Weapon stat6非零case通过。不是完整Avatar/Item/自然Java加载。 |
+缓存`local/migration72/upstream-review-20261108/`仍是逐文件/tree/commit审计材料，不是Git checkout。本轮开始已核远端HEAD为AstaPS-Resource `6cfecfb55f889f8e3b7156adb12809608db4f74b`和hk4e-patch-universal `2b589125874b0b96f8694bfad31e34811eba8573`；不声称它们永久是远端最新。恢复后若需要新增增量，先固定新提交，只审对应缺口，不混数据epoch。
 
-以上是分项范围，不相加为一次“全量测试”。所有“已完成”均保留ID、来源、模型/受控片段/自然状态/实机效果的区别；子项通过不自动关闭父项。本批沿用已配置Sol max处理资源/Avatar、Sol xhigh处理HTTP/observer，主线检查源码、原证明并独立第三；未调用Astra。历史目录含astra不代表本次换模型。
+相同出生行/曲线/突破直接复用，不能算新增资源；Weapon省略propType/initValue与明确NONE/0影响本地结果，不擅自等同。Quest接受条件/Lua/默认值、Scene差异未获语义许可。新Gadget候选key/ability本地已有，上游aggregate只看固定tree，不下载正文不能替代目标配置来源。未整包替换、未加猜测alias、未运行未审上游安装/同步/部署脚本。
 
-## 未完成、准确首缺和禁止绕行
+WinHTTP域名限制/句柄关闭候选缺当前curl/Winsock自然路径覆盖和本地有效缺陷，暂缓；不因上游称登录重定向就安装hook。已有SDK key/透明加载、响应修复、ABI成果不重复做；强制验签成功不采用。
 
-1. **R1完整Avatar/g2：**未投影case仍在14051e387读1234+98方法表首8B时停止。独立受控投影仅array64B及8个MethodInfo+18的4B index10287..10294，没提供其它MethodInfo字节/自然指针。之后原1404eeb80首缺module+5bc7290的mask8B，随后+5bc72b0 blocks8B、+5bc72b8 probeLimit8B。`r1-fresh-interfaces/next-runtime-contract.private.json`实际3843B/c7b6b894…541e83f3，**只是3根24B最小解除点，samplingReady=false**；需先闭合真实hit/miss/上下文和完整预算，不能把模型classInstance/hash当live bucket或只补空cache。两新窗口/2组case/各调用cap2M，旧六前缀path/regs保持。完整cold/default写回、Avatar Handler、同源保存字段及正式g2未闭。
+## 走过的弯路与复现注意
 
-2. **Scene/Team/Entity：**Pool slot4/mode/type46314已取，原前缀到TLS索引后继；索引0是实际loader值，不证明分配线程GS:[58]/TLS数组或allocator。能力注册根/typed头非空不证明完整key/string/bucket/entry、默认名、stage/MPLevel已加载。stage与Scene3表枚举不能混用；还需组件创建/替换/拆除、owner和通知顺序。SceneTeam/EntityAppear及世界后续各自三层未闭，不能只验八握手、删通知或用LOADED代替角色落地。
+- 后台Start-Process继承的PowerShell模块环境可能找不到Get-FileHash；直接前台gate通过不代表后台环境通过。只读后台诊断实际复现后，新helper显式Utility和PSModulePath，后台CheckOnly复验。曾怀疑父进程寿命，但owned子进程正常完成，未据此改DLL。
+- 固定EXE manifest为requireAdministrator；原CreateProcessW不弹UAC。启动token未提升会在PID取得前失败。当前helper安装前检查admin，UAC launcher先请求提升；不能把CreateProcess失败算作一次90秒实测。前两个失败均0 target读，临时安装已各自恢复。
+- Cargo自动example是bin，不能直接覆盖cdylib；仅新增本example的crate-type声明，DLL显式cdylib、owned fixture显式bin。旧lock/依赖和入口不变。真实两fresh18例及284B实际emitter已过，不只核摘要/后缀。
+- Marshal原helper以+14十六进制处UTF16/NUL扫描，不读取+10长度；旧SDK+OS转换proof不能冒充EXE managed Marshal已执行。当前event5也不能补出这项。
+- 旧class80 Object模板有明确controlled来源，当前自然header不拿来填owned冷类；保持旧56B SourceMemory限制，新208B overlay独立核。实际ASLR函数指针原样存储，尚未发生该间接dispatch，不能大范围重定位“修好”。prologue中途[RSP]叫stackTop，不是caller return证据。
+- String类型kind14的data/attrs不被原hash/equality消费，不把data当definition293；ordinary1243与generic父VAR0分别核，继承Equals的MI owner要实际读，伴随槽是derived+110+vtableCount*8，不是固定+118。slot函数不要求等于MI+8，两者原值保留、代码绑定另验。
+- 定向窗口已有缓存就复用；hash leaf没有pdata时只可用独立下一个registered method边界，不能猜函数尾。旧/新AOT共享类型与concrete caller context分开。minified JSON必须结构化投影，别rg整行泄出巨量raw。
+- private旧失败和确定性报告不覆盖；日志UTF-8 BOM名称是utf-8-sig。JSON数字存在/同ID/同数量不证明语义；省略、显式零、float32、顺序和list结果继续分别记。
 
-3. **R2自然SDK/route/trust：**准确包/LoadFile producer与map/app_key/sign/Java接收可复用，不再找普通Config/server_pc文件或重开7AD200旧阻塞。自然选env、实际managed→native Init、运行route/会话、真实key caller/替换和完整校验仍未验。完整378850旧探针止CRT locale encoded callback（490af1→591860→591820），未加atoi/locale成功桩；现只批准writer片段。Config+860是shared ownership且writer会释放旧节点，双读头不证明无writer；原持锁37e430区间仅保护URL map，不保护env/app_key。新key实际installed不等于自然认证；旧整DLL未验且禁止顺手启用。
+## 恢复后的候选顺序（现不执行）
 
-4. **R3完整资源/保存：**已取得真实资源字节、完整解包/index/六表；不再重排这些已完成定位。Promote当前只批准出生必要用途group/phase/costItems/addProps，两条0阶原列表不能伪造[]：武器5个zero props/3个(0,0)材料槽，Avatar4个zero props/4槽。其余coin/scoin/unlockMaxLevel/requiredPlayerLevel职责未闭。AvatarCurve100×4全部MULTI、完整声明字段齐；Avatar仅id/avatarPromoteId/attackBase/defenseBase片段批准。+64目前只证MAX_HP/CUR_HP，不是hpBase；+98/+a4的critical/criticalHurt及growth caller未批准，完整Item/ability/gadget/ID引用仍需核。Java onLoad过滤是源码模型，不是JVM自然加载。active selectedRevision、自然NativeConfig必要输入、loadAll/事件/Lua闭包与保存→新Player→真实Manager正向恢复未验；保留loadedAll=false拒绝/BSON不变负例，禁止手设ready。
+先按AGENTS重新读当前HEAD/差异/子模块、配置/GAME_PATH、五输入/13保护、进程和端口，不沿本页旧PID/base/结果。复用现有证据与本批local提交，不重做整轮历史回归。
 
-5. **R4/R5/R6：**完整P0的CmdID→type、type→语义、field→wire、嵌套/聚合/枚举/时序/最终sender未汇合。Proto只改源并经Gradle/protoc生成；未知保持未知，不能把旧legacy正包号当目标。独立InstanceRoot已验入口可复用，但GS独立配置/资源/DB/运行JAR部署未做。D-02六项（旧号本服登录、新号显式选人命名、完整初始化、实际落地、约定时长心跳、两类退出重登保存）**全部没有最终实机通过证据**。
+优先离线审最新enum两零槽、String空usage和SDK over-limit的准确原语义，给最小解除条件；需要新实机时先准备具体范围/预算、源门禁、UAC/备份恢复、自有验证，再一次请求新实时ready。旧ready全部消费，当前没有待用户操作。
 
-## 失败记录和避坑
+资源继续已批最小片段→真实消费者和必要引用；Gadget配置/ability、Scene生命周期与自然loadAll/正向保存按真实缺口逐项推进，不改成全量迁移。输入足够后立即最小实现并真实Java/保存/任务回归，不长期停在研究卡。Sol max处理冲突/ABI，明确实现交Sol/Terra；Root独占Git/构建/DB/端口/客户端/安装。Astra只有用户指定的最后升级条件满足才用，本轮未使用。
 
-- 最早Session日志所谓red1是缺throws编译失败/旧XML，只有sdk-red2四分支4/4是真红；35/39/193等不同阶段有交叠，不求总和。SDK PIPE必须内存通道，禁止terminal/tee/正文或凭据hash落盘。
-- 原接口合同原件为6614B/c84…，写前LF声明误作6465B/bac…；149处CRLF而字段相同。保留原件，新建主线LF投影6465B/bac…并单独pin；不能忽略换行放宽gate。见`sampling-contract-newline-audit.private.json`。
-- 原透明观察0x410缺SYNCHRONIZE导致Wait WinError5，另有\\?\路径字符串差异；两次失败均发生0 RPM前。改0x101010与samefile，不能改目标绕失败。新key observer已沿正确合同。
-- 新owned emitter构建main1缺full rmeta，main2只rmeta缺rlib，main3漏同release LTO导致LNK1107；main4同名双格式--extern+原profile才成功。Rust源和库未变，不能把编译输入失败说成native编码差异。实际owned Hooker当时near281；far33B是原mover合成地址。随后真实客户端另证far297，层次分开，详见key观察专题。
-- 新key EAT实际49：stock47、state DATA@48、冻结核心既有sdk72_key_input_inner@49。仅这一准确内部符号经主线显式接受，不得把未知导出统统放行；不为统计复制callback或加未验wrapper。userdata不读、R8正文不读。
-- 原资源probe01 whole2M触限保留；WP1821行的连续原调用分段由主线批准累计6M，AP/AC各2M。正式累计含readout/index为WP2,910,551/AP1,508,548/AC111,853，无重置/隐藏getter开销，段间寄存器/stack/heap/global/cursor连续校验。
-- 资源probe03先为实机窗口按准确ownership/creation短暂hold，stock恢复后同creation resume；后来定位每primitive call追加重复allowed区间导致数十亿宿主扫描，主线终止这个确属旧开发预览（非graceful、非native失败/通过）。当前formal源只sorted(set)去重同一tuple集合，6个真实host gate断言证明覆盖/拒绝不变，双跑和第三均成功。不要再启动、resume或等待旧硬编码PID脚本；无遗留暂停任务。
-- 主线审核helper的offset类型误写及一次shell引号准备失败仅属私有工具，原失败/源保留；只修审核表示/文件脚本，没有改原生producer/断言/原报告。最终现场盘点改为文件脚本和准确guard后缀/排除自身，避免inline命令字符串自匹配，不操作无关Python进程。
-- 没有稳定输入就不扩大推理/模型或盲重复SW/HW/ETW；需要新现场先补合同/预算，再取得新user-ready。历史ready、指针、PID和ASLR不能复用。
-
-## 证据入口与恢复后候选步骤（当前不执行）
-
-本轮raw统一前缀`local/migration72/d02-resume-20261108/`：
-
-- `r1-fresh-interfaces/{main-third.json,main-review.private.json,tests-main-third.log,manifest.private.json,next-runtime-contract.private.json}`。
-- `r3-promote/{main-third.json,main-third.independent.json,main-review.private.json,tests-main-third.log,allow-list-check-main-third.private.json,delivery-manifest.private.json,probe03-host-cancellation.private.json}`。
-- `key-loader/{main-review.private.json,verify-owned-main-third/proof.private.json}`及`observation/{live-key1.private.json,live-key1-main-review.private.json,live-key1-restored.private.json,live-key1-post-environment.private.json,owned-emitter-build-main4.private.json}`。
-- `r2-combo-http/{native-http-main1.private.json,main-review.private.json,native-main1-runtime-proof.private.json}`、`r2-combo-http-green-main1/`。
-- `r3-equipment/main-third-review.private.json`、`r1-interface-sampling/main-live-review.private.json`、`build/artifact-proof.json`和最终现场/交接proof。
-
-恢复授权后先重新核HEAD/dirty/子模块/配置/GAME_PATH/五输入/进程端口，再从Project未完成包选关键路径：方法cache准确输入、SDK自然Config/route/caller或剩余必要资源字段可独立计划；批准用途输入达到实现条件时交明确Java规格，不扩全玩法。前置齐才R4→R5隔离部署→R6新旧号实测。需要用户实时动作，先准备构建/采集/观察方案，再一次说明具体操作并等新确认；用户不在时推进独立工作。现在不派代理、不启动这些候选动作。
+只有R1/R2/R3必要出口齐备才R4正式发送汇合→R5独立便携部署→R6真实新旧号六项实测。运行代码/Proto/资源/配置/patch变化后按AGENTS构建、部署及日志/健康/端口/PID/运行JAR核；前置不足记录未部署原因。Proto只改源经Gradle/protoc生成。所有提交本地，不自动推送。
