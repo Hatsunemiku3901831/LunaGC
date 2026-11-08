@@ -94,6 +94,7 @@
 | E-01-PROMOTE-ENTRY 真实突破/出生必要行（归R3） | 已完成；限定两个出生用途Promote/100个Curve输入与准确消费者 | 完整Weapon属性函数/非零突破、原列表/float32/来源/缺省边界及主线第三已验；其它字段职责、完整Avatar/Item与实际加载未验 | [批准用途、未知及验收](docs/CLIENT_72_D02_PROMOTE_RESOURCE.md) |
 | F-03d3f4d2-fresh-interfaces（归R1） | 已完成；限定三类壳/方法前缀及两独立case首缺 | 原缺口保留，静态index受控投影后止method-cache mask；来源/模型/确定性/主线第三及拒绝已验，完整构造/default/g2仍未验 | [实际范围、最小未ready合同及验收](docs/CLIENT_72_AVATAR_FRESH_INTERFACES.md) |
 | E-01 / E-01c / E-01d1 自然加载与正向保存 | 阻塞；依赖必要资源映射、Lua可达路径和实际加载前提 | 必需map/引用/日志/场景事件有效后，独立库保存→新Player→QuestManager正向重绑；保留未就绪拒绝及BSON不变负例 | [最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)、[Chapter](docs/CLIENT_72_D02_CHAPTER_LOAD.md)、[303保存](docs/CLIENT_72_D02_QUEST_303_START.md)；不只看loadedAll标志 |
+| E-01/R3-NATURAL-LOAD-FIRST-AUDIT | 已完成；限定入口/副作用及隔离首诊规格 | 主线10项独立核31源/四候选、两JAR24类族/192条class与10依赖及LuaJ能力；无需服务/DB的直接入口成立，准确首诊输入/脚本范围尚未选定。未实现driver或实际调用loadAll | [准确结论与主线收尾](docs/CLIENT_72_D02_NATURAL_LOAD_FIRST_AUDIT.md)；不扩大P0/新增审批要求，按用户指令收尾暂停 |
 
 ### 3.3 汇合与持续验证
 
