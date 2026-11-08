@@ -1,3 +1,5 @@
+2026-11-08 E-01-bridge-energy：新工具`client72_d02_resource_bridge.py`同缓存三表/技能role4→槽4→具名能量消费者；主线第三10,370,640B/SHA d990c2c4…66307e同双跑、22pin及17检查通过。复现命令/模型/七字段规格/未批完整行见[专题](docs/CLIENT_72_D02_RESOURCE_BRIDGE.md)，proof `d02-resume-20261108/r3-mapping/main-review-proof.json`。不安装资源，R3/活动revision/正向manager仍未完成。
+
 2026-11-08 SDK修复主线验收：R2-LOG a9fb9df、R2-SESSION 496e96f；有效红测/193项关联隔离回归、Java HTTP→原生分段parser/formatter双跑、portable构建与类核对见[日志](docs/CLIENT_72_AUTH_LOGGING.md)/[session适配](docs/CLIENT_72_SDK_SESSION_ADAPTER.md)。证据 `d02-resume-20261108/{sdk-red2,r2-session-green,session-native-final-first.json,session-native-main-proof.json,build/artifact-proof.json}`；新Mongo正常shutdown，原配置/实际9数据文件保持。status1/未部署，完整前置和D-02未验。
 
 自然输入主线：本轮新ready→90秒原始monitor→23读1041B零错，父descriptor16B已取、mode=true，用户确认登录页正常并退出，OS核无目标；[采样范围](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md)及 `d02-resume-20261108/sampling-source-proof.json`。继续cold后继，非本服验收。
