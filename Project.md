@@ -65,7 +65,7 @@
 | V-01 回归失败归因 | 进行中；按本次改动和R4范围选集 | 新运行先明确基线/夹具/生产失败；保护账号、经济、保存、Lua。完整全量未重跑就不宣称全绿；不机械用历史失败总数安排任务 |
 | F-04 部署材料及隔离核验 | 进行中；复用ENV-01基线，实际部署待R4 | 真实SDK/信任/资源合同充分后形成7.2产物；正常构建和停服，按InstanceRoot归属核对，不仅改版本或环境变量放行；[隔离](docs/CLIENT_72_PORTABLE_ISOLATION.md) |
 | F04-LOADER-CLEAN 独立透明入口 | 已完成；限定零hook真实加载/绑定及恢复；key/trust/route另验 | 独立透明转发、实际stock/SDK身份与准确窗、正常SDK登录页和退出/恢复已验；自然加密、hook启用、完整性全路径与D-02另验 | [计划/产物/真实范围](docs/CLIENT_72_CLEAN_LOADER.md) |
-| R2-KEY-LOAD 独立入口启用key核心 | 进行中；依赖已验core/ABI/native桥梁与真实零hook加载 | 独立产物仅接准确3950c0和同一callback，实际loaded原窗/材料守卫、自有测试/构建后再新ready实测hook影响；不启旧模块或代验自然认证 | [实施计划](docs/CLIENT_72_SDK_KEY_LOADER.md) |
+| R2-KEY-LOAD 独立入口启用key核心 | 进行中；独立产物/守卫/构建与主线owned已验，真实hook接受待观察 | 独立产物仅接准确3950c0和同一callback，核实际loaded身份与精确代码变化，新ready无凭据观察目标影响；不启旧模块或代验自然认证 | [产物与验收](docs/CLIENT_72_SDK_KEY_LOADER.md)、[只读观察计划](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md) |
 
 ## 4. 任务发布与范围控制
 
@@ -176,6 +176,7 @@
 | E-01-bridge-equipment（归R3） | 已完成 | 真实三表完整解析、初始武器/两项属性/同源曲线及突破ID消费者闭合；非零/64位/float32及缺引用/未知枚举拒绝已验。仍为字段片段，完整Java行/突破加成/加载/revision未验。 | [装备字段桥梁](docs/CLIENT_72_D02_EQUIPMENT_RESOURCE.md) |
 | R1-SAMPLE-INTERFACES（归R1/Scene） | 已完成 | 新ready原始启动后准确取得1169/1249头及metadata、双零compact与loader TLS索引；预算、五输入及正常退出已验。线程TLS、消费时序及完整构造未验。 | [输入合同与实测](docs/CLIENT_72_INTERFACE_CONTEXT_SNAPSHOT.md) |
 | R2-COMBO-HTTP（归R2-ROUTE） | 已完成 | 准确原生builder/sign字节→真实Java HTTP/default认证/Mongo同步保存→原生parser/formatter六正反例及关联测试已验；64位归属和失败BSON保持。全UI/callback/自然SDK/route未验。 | [真实接收与主线证明](docs/CLIENT_72_SDK_COMBO_HTTP.md) |
+| R2-KEY-LOAD-owned（归R2-KEY/F-04） | 已完成 | 独立47转发/key入口、准确SDK三窗/材料守卫、release构建/精确EAT49及主线owned正反例通过；冻结core/clean/依赖对应同一来源。真实安装/自然caller/校验/route未验。 | [构建及主线第三](docs/CLIENT_72_SDK_KEY_LOADER.md) |
 | Java资源目的合同（归E-01/R3） | 已完成 | 加载类/字段/准确消费者及缺Weapon失败位置已审；不是target→Java转换许可。 | [Java目的](docs/CLIENT_72_D02_JAVA_RESOURCE_CONTRACT.md) |
 | V-01a、V-01b、V-01c、V-01d | 已完成 | 能力便携路径、家具保存/加工手册夹具及家具资源路径修复；完整V-01保持未完成。 | [账号保存验证](docs/ACCOUNT_AND_SAVE_OPERATIONS.md)、[离线收口](docs/CLIENT_72_SOL_TERRA_OFFLINE.md) |
 

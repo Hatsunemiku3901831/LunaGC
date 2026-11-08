@@ -1,3 +1,5 @@
+2026-11-08 R2-KEY-LOAD-owned：主线release生产578048B/SHAad18e741…65a2139d与fixture构建，第三两fresh owned各917B/SHA72b0759e…21a8同双跑，12 Python检查过；独立EAT49/DATA/源/产物/拒绝边界复核见 `key-loader/main-review.private.json`。[精确构建/9绑定与2材料拒绝/原callback及主线范围](docs/CLIENT_72_SDK_KEY_LOADER.md)。patch本地e2d3072，未实际安装；下一[固定只读观察](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md)，不代验自然caller/认证。
+
 2026-11-08 R2-COMBO-HTTP：主线实际编译、独立Mongo/Javalin6项0fail/error/skip、16 Python/mock及六例准确native→HTTP→native均通过。报告23,602B/SHA4d8691f3…994b37，source/14 class/输入/原生与保密边界独立核对见 `r2-combo-http/main-review.private.json`；两实例UUID库清完/admin shutdown，原27017不动。[复现/准确ABI/全UI和自然SDK未验](docs/CLIENT_72_SDK_COMBO_HTTP.md)。继续key/route汇合，不把HTTP夹具记为本服登录。
 
 2026-11-08 R1-SAMPLE-INTERFACES-live：新ready原始90秒/44观察，实际8读584B零错；1169/1249 kind18头及70B metadata匹配、双零compact，TLS loader索引实读0。主线29项独立复核，raw SHA3c08c1f7…64d040，proof `r1-interface-sampling/main-live-review.private.json`；用户登录页正常退出/OS无目标。[范围与跨轮重绑定限制](docs/CLIENT_72_INTERFACE_CONTEXT_SNAPSHOT.md)。不代验分配线程、自然消费时序或完整构造。
