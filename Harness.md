@@ -1,4 +1,6 @@
-2026-11-08 第二轮入口准备：现采样器新增Pool实际slot4/精确代码绑定、独立pool mode/type46314头与NativeConfig两class头，23固定PE窗/12离线检查通过，最多30读1714B，**新版未实机执行**；待合并R1 class1234最小闭包后一次请用户ready。proof `d02-resume-20261108/entry-context-pool-preparation-proof.json`；[读预算/未知](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md)。
+2026-11-08 F-03d3f4d2-parent-continuation：主线第三完整回放736,365B/SHA 2a58df6a…d32eca9b同双跑，17检查通过；准确vector/单线程已知锁后继后止classCache[1234]未采8B，default/完整Handler未执行。[复现和模型](docs/CLIENT_72_AVATAR_PARENT_CONTINUATION.md)，proof `d02-resume-20261108/native-third-review.private.json`。继续自然最小输入，父项未完成。
+
+2026-11-08 第二轮入口准备：现采样器新增Pool实际slot4/精确代码绑定、独立pool mode/type46314头与NativeConfig两class头，23固定PE窗/12离线检查通过，最多30读1714B，**该准备epoch未实机执行**；后续联合合同见最新入口专题。proof `d02-resume-20261108/entry-context-pool-preparation-proof.json`；[读预算/未知](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md)。
 
 2026-11-08 E-01-bridge-energy：新工具`client72_d02_resource_bridge.py`同缓存三表/技能role4→槽4→具名能量消费者；主线第三10,370,640B/SHA d990c2c4…66307e同双跑、22pin及17检查通过。复现命令/模型/七字段规格/未批完整行见[专题](docs/CLIENT_72_D02_RESOURCE_BRIDGE.md)，proof `d02-resume-20261108/r3-mapping/main-review-proof.json`。不安装资源，R3/活动revision/正向manager仍未完成。
 

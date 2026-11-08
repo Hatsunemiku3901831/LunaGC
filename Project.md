@@ -49,7 +49,7 @@
 
 | 工作包 / 归属 | 状态与当前首缺条件 | 交付与验收 | 证据入口 |
 | --- | --- | --- | --- |
-| F-03d3f4d2 完整Avatar构造/后缀 | 进行中；fresh父descriptor16B与mode=true/对象头已取；typed身份/消费前时序及完整cold/default后继仍待 | 在有来源输入下连续执行cold/default/装备/技能/池等必经链，保留实际停止点；明确必要字段、同源资源和真实Java读取时机 | [HandlerClosure](docs/CLIENT_72_AVATAR_HANDLER_CLOSURE.md)、[采样准备](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md)；旧Array/Type已取得，不再重复列缺 |
+| F-03d3f4d2 完整Avatar构造/后缀 | 进行中；fresh父descriptor16B已取，离线cold推进到class1234首缺；typed身份/消费前时序及完整cold/default后继仍待 | 在有来源输入下连续执行cold/default/装备/技能/池等必经链，保留实际停止点；明确必要字段、同源资源和真实Java读取时机 | [父类后继](docs/CLIENT_72_AVATAR_PARENT_CONTINUATION.md)、[采样合同](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md)；旧Array/Type已取得，不再重复列缺 |
 | F-03d3g2 正式Avatar发送 | 阻塞；依赖f4d2、R3及同源Store/角色/SavedVitals | 固定字段/tag/类型/枚举/值来源和省略语义，确定性生成；真实Java输出交目标消费者；非零/64位/非空/错误及账号保存回归 | g1和g2-prep已完成；只改Proto源，不改旧共享定义求方便；[投影](docs/CLIENT_72_AVATAR_JAVA_PROJECTION.md) |
 | F-03d3s2 场景/Team/Entity闭合与发送 | 进行中；缺自然注册/stage、PoolCluster/MPLevel及组件生命周期 | 用准确producer和同源实体完成能力/附属对象/创建替换拆除与通知顺序；逐个批准必需三层和Java来源后接sender | [Scene上下文](docs/CLIENT_72_SCENE_RUNTIME_CONTEXT.md)、[场景token/属性](docs/CLIENT_72_SCENE_ENTRY_CLOSURE.md)；World stage与资源枚举分开 |
 | R2-ROUTE SDK配置、会话与自然连接（D-01 / F-02 / F-04） | 进行中；缺server_pc资源loader producer/准确配置、combo签名和自然消费 | 固定来源追配置→选址→签名→会话交换；自然实验一次回答明确问题；必要输入可离线取得时先离线；与R2-SESSION/KEY汇合 | [请求链](docs/CLIENT_72_SDK_LOGIN_CHAIN.md)、[响应](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md)；原登录页/root非空不证明请求成功 |
@@ -132,6 +132,7 @@
 | F-03d3s1、F-03d3s2a | 已完成 | SceneInfo有限非空raw及GUID/实体/附属模型关联；完整能力/生命周期未验。 | [Scene raw](docs/CLIENT_72_SCENE_INFO_RAW.md)、[身份关联](docs/CLIENT_72_SCENE_INFO_CONTRACT.md) |
 | Avatar深度子合同（归F-03d3f4d2） | 已完成 | rgctx/List/Sorted、槽查询/回退、tag29/38、Ornament来源、warm/cold与接口片段已验；父descriptor/完整Handler仍未验。 | [深度合同](docs/CLIENT_72_AVATAR_DEEP_RESEARCH.md)、[warm构造](docs/CLIENT_72_AVATAR_LIVE_CONTRACT.md)、[cold合同](docs/CLIENT_72_AVATAR_COLD_CONTRACT.md)、[cold后继](docs/CLIENT_72_AVATAR_COLD_COMPLETION.md)、[接口](docs/CLIENT_72_AVATAR_COLD_INTERFACES.md) |
 | Avatar真实表与HandlerClosure限定成果（归D02-R1/R3） | 已完成 | 六真实表、同缓存消费、Int32配置与泛型factory有限后继；NativeConfig旧typed解释已撤回，不批准自然模式/默认或g2。 | [六表/勘误](docs/CLIENT_72_AVATAR_NATURAL_TABLES.md)、[HandlerClosure](docs/CLIENT_72_AVATAR_HANDLER_CLOSURE.md) |
+| F-03d3f4d2-parent-continuation | 已完成 | fresh静态父descriptor重定位模型、准确vector增长/释放及单线程已知锁后继；实际止于class1234未采读，未写cachedclass/default，完整cold/Handler未完成。 | [父类后继](docs/CLIENT_72_AVATAR_PARENT_CONTINUATION.md) |
 | Scene深度/运行上下文限定成果（归D02-R1/R4） | 已完成 | retain/copy、hash注册/查询、token与80154消费、真实Scene/Gadget索引及工厂前缀；PoolCluster/stage/实体后继未验。 | [深度合同](docs/CLIENT_72_SCENE_DEEP_RESEARCH.md)、[入场后继](docs/CLIENT_72_SCENE_ENTRY_CLOSURE.md)、[运行上下文](docs/CLIENT_72_SCENE_RUNTIME_CONTEXT.md) |
 
 ### 6.3 SDK、补丁、观察与运维前置
