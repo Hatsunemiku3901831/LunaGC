@@ -2,6 +2,8 @@
 
 恢复后配置来源已补：准确`SDKDelegate.LoadFile→AssetUtil.LoadJsonFile`定位包内`server_pc`，原生Init的`url:string→map+860`与`app_key→ConfigModel+130`已有独立原生片段验证；主combo builder调用getter时明确R9=0，直接读初始化map。普通文件或native回调producer缺失不再作为该分支必需阻塞；完整Init、自然env、签名算法及本服请求仍未验。见[新配置合同](CLIENT_72_SDK_ROUTE_LOADER.md)，下文旧未知按对应卡范围读取。
 
+签名后继也已补：完整原生signer为原始四字段字节排序/连接后HMAC-SHA256，准确builder已执行到发送call前，实际Java默认接收器没有消费sign，未擅自新增验签策略；[签名合同](CLIENT_72_SDK_COMBO_SIGNATURE.md)。独立透明入口已实际加载、47目标表与SDK Crypto/两caller原窗已核且已恢复stock，见[真实加载](CLIENT_72_CLEAN_LOADER.md)；自然caller、Config事件、实际key启用/route和HTTP接受仍未验，不由这些限定成果代替。
+
 ## 独立攻坚计划（2026-11-08）
 
 目标：承接已冻结 [SDK transport](CLIENT_72_SDK_TRANSPORT.md)，从固定输入恢复Invoke动作注册→login worker→HoYoNetworkEngine/transport；优先研究有明确producer的单例、全局或容器是否持有可供ReadProcessMemory只读采样的自然easy handle/URL副本。新卡不修改父卡三个冻结文件。

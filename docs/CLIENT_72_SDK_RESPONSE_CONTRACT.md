@@ -1,5 +1,7 @@
 # D02-R2：SDK登录响应与会话交换合同
 
+最新后继：[session单token适配](CLIENT_72_SDK_SESSION_ADAPTER.md)已通过真实Java HTTP→原生消费；[准确配置loader](CLIENT_72_SDK_ROUTE_LOADER.md)已解除下文旧普通文件/producer缺口；[combo签名](CLIENT_72_SDK_COMBO_SIGNATURE.md)已闭原始字节/HMAC算法与发送前builder，Java默认认证仍未消费sign。下文冻结研究中的对应“未知”按当时epoch追溯；自然请求、运行HTTP接受及完整SDK/游戏会话仍未验。
+
 ## 独立攻坚计划（2026-11-08）
 
 1. 目标：沿固定AccountPlatAccountLoginJobber→RequestManager→NetworkManager的准确返回回调，闭合loginByPassword响应字段、错误/默认/省略、所有权与处理顺序；继续定位session verify/exchange和游戏combo的必要producer/consumer，形成可交主线/Sol的明确合同。

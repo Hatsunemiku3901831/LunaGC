@@ -52,7 +52,7 @@
 | F-03d3f4d2 完整Avatar构造/后缀 | 进行中；父descriptor、class1234/typed头已取，Object kind分歧待核；消费前时序及完整cold/default后继仍待 | 在有来源输入下连续执行cold/default/装备/技能/池等必经链，保留实际停止点；明确必要字段、同源资源和真实Java读取时机 | [父类后继](docs/CLIENT_72_AVATAR_PARENT_CONTINUATION.md)、[采样结果](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md)；旧Array/Type已取得，不再重复列缺 |
 | F-03d3g2 正式Avatar发送 | 阻塞；依赖f4d2、R3及同源Store/角色/SavedVitals | 固定字段/tag/类型/枚举/值来源和省略语义，确定性生成；真实Java输出交目标消费者；非零/64位/非空/错误及账号保存回归 | g1和g2-prep已完成；只改Proto源，不改旧共享定义求方便；[投影](docs/CLIENT_72_AVATAR_JAVA_PROJECTION.md) |
 | F-03d3s2 场景/Team/Entity闭合与发送 | 进行中；Pool实际函数绑定/模式/目标头已取；自然注册/stage、分配后继/MPLevel及组件生命周期未闭 | 用准确producer和同源实体完成能力/附属对象/创建替换拆除与通知顺序；逐个批准必需三层和Java来源后接sender | [Scene上下文](docs/CLIENT_72_SCENE_RUNTIME_CONTEXT.md)、[场景token/属性](docs/CLIENT_72_SCENE_ENTRY_CLOSURE.md)；World stage与资源枚举分开 |
-| R2-ROUTE SDK配置、会话与自然连接（D-01 / F-02 / F-04） | 进行中；真实server_pc包/loader、map/app_key片段已验；自然Init/env、combo签名和实际消费未闭 | 固定来源追配置→选址→签名→会话交换；自然实验一次回答明确问题；必要输入可离线取得时先离线；与R2-SESSION/KEY汇合 | [配置loader](docs/CLIENT_72_SDK_ROUTE_LOADER.md)、[请求链](docs/CLIENT_72_SDK_LOGIN_CHAIN.md)、[响应](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md)；原登录页/root非空不证明请求成功 |
+| R2-ROUTE SDK配置、会话与自然连接（D-01 / F-02 / F-04） | 进行中；包/loader、map/app_key及原生签名/发送前builder已验；自然Init/env、运行接收/route未闭 | 固定来源追配置→选址→签名→会话交换；自然实验一次回答明确问题；必要输入可离线取得时先离线；与R2-SESSION/KEY汇合 | [配置loader](docs/CLIENT_72_SDK_ROUTE_LOADER.md)、[签名](docs/CLIENT_72_SDK_COMBO_SIGNATURE.md)、[请求链](docs/CLIENT_72_SDK_LOGIN_CHAIN.md)；原登录页/root非空不证明请求成功 |
 | E-01 真实资源→Java必要字段 | 进行中；真实字节已取得，缺精确映射/默认/实际选择revision | 同源表/行→目标parser/消费者→Java字段逐项对应；先角色、depot、技能、默认装备、Scene及必需Quest，拒绝无证alias/省略 | [六表](docs/CLIENT_72_AVATAR_NATURAL_TABLES.md)、[Java目的合同](docs/CLIENT_72_D02_JAVA_RESOURCE_CONTRACT.md)、[资源深度](docs/CLIENT_72_RESOURCE_DEEP_RESEARCH.md) |
 | E-01 / E-01c / E-01d1 自然加载与正向保存 | 阻塞；依赖必要资源映射、Lua可达路径和实际加载前提 | 必需map/引用/日志/场景事件有效后，独立库保存→新Player→QuestManager正向重绑；保留未就绪拒绝及BSON不变负例 | [最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md)、[Chapter](docs/CLIENT_72_D02_CHAPTER_LOAD.md)、[303保存](docs/CLIENT_72_D02_QUEST_303_START.md)；不只看loadedAll标志 |
 
@@ -153,6 +153,7 @@
 | SDK key核心及采样器准备（归D02-R1/R2/R4） | 已完成 | 未启用核心自有ABI、有限根/头采样工具已验；父descriptor已由后继补取，新增原生桥接见下项，实际加载仍未验。 | [key ABI](docs/CLIENT_72_SDK_KEY_INPUT_ABI.md)、[采样器](docs/CLIENT_72_ENTRY_CONTEXT_SNAPSHOT.md) |
 | R2-KEY-native-bridge | 已完成 | 同一Rust核心实际供给准确caller→原PEM/RSA/Base64，保持入口状态/原返回及拒绝；限定离线桥接，不证明loaded、自然输入、hook wrapper或整DLL。 | [原生桥接](docs/CLIENT_72_SDK_KEY_NATIVE_BRIDGE.md) |
 | R2-ROUTE-loader | 已完成 | 准确SDKDelegate.LoadFile→包内TextAsset、实际配置与url:string/map/app_key片段；主combo builder直接读初始化map。完整Init、自然环境选择、签名与本服请求未验。 | [配置loader](docs/CLIENT_72_SDK_ROUTE_LOADER.md) |
+| R2-ROUTE-SIGN | 已完成 | 原生HMAC-SHA256字节合同/准确caller与外层序列化；固定Java源码接收条件已审。完整builder/网络、自然配置/请求和运行HTTP接受未验，不新增无依据验签策略。 | [combo签名](docs/CLIENT_72_SDK_COMBO_SIGNATURE.md) |
 | F04-LOADER-CLEAN-owned | 已完成 | 独立零hook入口实际编译，自有Win32夹具核47导出、透明ABI/原调用和4类真实异常拒绝；未加载实际客户端DLL，完整性/实际时序与自然SDK另验。 | [透明加载](docs/CLIENT_72_CLEAN_LOADER.md) |
 | F04-LOADER-CLEAN-live | 已完成 | 实际透明proxy/stock加载、47目标表与SDK Crypto/两caller原窗一致；登录页正常、正常退出后恢复stock。只核零hook加载/绑定，未启用key/trust/route或认证。 | [真实加载](docs/CLIENT_72_CLEAN_LOADER.md#真实零hook加载观察器修正与恢复) |
 | 认证日志与InstanceRoot前置（归D02-R2/R5） | 已完成 | 三个认证类日志修复和数据隔离回归、独立运行目录入口已验；DefaultAuthenticator遗留日志已按R2-LOG修复，真实部署未验。 | [日志](docs/CLIENT_72_AUTH_LOGGING.md)、[隔离入口](docs/CLIENT_72_PORTABLE_ISOLATION.md) |
