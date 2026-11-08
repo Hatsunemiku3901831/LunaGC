@@ -665,3 +665,5 @@ B-02d收口：验收提交36eb486；先建卡3fc7e80。旧HANDOFF2已先备份�
 
 
 2026-11-09 R1-RUNTIME-INPUT-REPLAY：主线第三1839053B/SHA `ddd04bb05d43f7104f3561026b749c37e930175f895ca79d667c1772f5574839`同双fresh，22检查/16独立审核/37pin通过。同轮warm getter真实ret、四普通MethodInfo/ASLR函数指针由原store写入；8调用8794步，输入末尾77项不变，7storage/72读569B。cold准确止普通root+10294×8，不借inflated同号；完整Avatar/default原写/自然caller/g2仍未验。专题[回放与准确后继](docs/CLIENT_72_AVATAR_RUNTIME_REPLAY.md)，主线证明`local/migration72/d02-resume-20261109/r1-runtime-replay/main-review.private.json`。工具/测试/文档无运行变化，无需GS重启；下一可执行为完整入口warm usage及String comparer来源，独立准备新SDK早期adapter。
+
+2026-11-09 E-01/R3-GADGET-CONFIG-KEY：主线第三389999B/SHA `10085ff137a6d918a43adaa2cf27754e4b5c638c9de12c3119705852e65e5abd`同双fresh，18检查/15独立审核，113源路径及13原范围通过。两真实Gadget完整原行→+58键的原查询/hash，交换/+50对照/空cache/null共7case21调用3425hooks；准确停String Default carrier前，不批准jsonName/配置命中。专题[来源/模型/准确后继](docs/CLIENT_72_D02_GADGET_CONFIG_KEY.md)，证明`local/migration72/d02-resume-20261109/r3-gadget-config-key/main-review.private.json`；原审核缓存日期/list API两次错误保留，未改正式source/raw。上游仅固定tree候选，无新下载或生产资源变更，无需构建部署。完整Gadget/config/ability仍未闭，下一String comparer输入已规划。
