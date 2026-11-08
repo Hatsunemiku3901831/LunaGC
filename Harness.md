@@ -54,6 +54,8 @@
 
 # 研发索引与执行骨架
 
+2026-11-09 `E-01/R3-CRITICAL-SEMANTICS`：主线准确typeReferences筛出21 Avatar/84 FightProperty参数候选，按计划核8个PE exception原窗3982B；静态投影/SHA保留 `r3-critical/static-review.private.json`。邻接入口无目标职责桥，未执行原生CPU/客户端，未批准alias/默认值；[准确排除与下一输入](docs/CLIENT_72_D02_AVATAR_CRITICAL_RESOURCE.md)。本项未完成，继续其它已就绪分支。
+
 2026-11-09 `R1-METHOD-CACHE-REPLAY`：主线第三1,329,181B/SHA02f1182f…38bbc同双跑、20项检查/12项独立审核通过，17来源pin保持。原9查询及连续factory/8方法/64B写回已验，旧六前缀相同，227条capture读取均有原字节；准确止未建模16B hierarchy请求。[回放/负例/复现/后继合同](docs/CLIENT_72_AVATAR_METHOD_CACHE_REPLAY.md)，raw `local/migration72/d02-resume-20261109/r1-method-cache/replay/`。继续准确自有storage，不需新live；完整cold/default/Handler/g2及D-02未验。
 
 2026-11-09 `E-01/R3-JAVA-AVATAR-FRAGMENT`：JDK17实际编译/ResourceLoader→Gson→onLoad→map安装，本类4项+32隔离关联同次36项0fail/error/skip、23秒；100Curve、两出生片段18个native float32相同，缺binding/curve真实拒绝，内存maps/fetters/loadedAll边界保持。[复现/限定验收](docs/CLIENT_72_D02_AVATAR_JAVA_LOAD.md)，日志/XML `local/migration72/d02-resume-20261109/r3-java-avatar/`。未填critical/能力，不代完整资源/revision/保存或D-02。

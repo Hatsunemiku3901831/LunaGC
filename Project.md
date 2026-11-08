@@ -54,6 +54,7 @@
 | E-01/R3-AVATAR-ENTRY | 已完成；限定HP/grow职责和批准片段，critical及完整行未闭 | 六真实选中row、27完整helper/27caller片段及12负例已验；主线第三同双跑、18检查/99源pin核对通过。两出生hpBase/有序grow可交Java，critical两项不批准 | [准确范围/原生与Java规格](docs/CLIENT_72_D02_AVATAR_ENTRY_RESOURCE.md) |
 | E-01/R3-JAVA-AVATAR-FRAGMENT | 已完成；限定真实loader/HP/grow片段 | 两出生片段及100Curve经真实ResourceLoader/Gson/onLoad，18个float32值一致，缺binding/曲线真实拒绝；本类4项+关联32隔离项实际通过，loadedAll未改。完整行/能力仍未验 | [实际加载与边界](docs/CLIENT_72_D02_AVATAR_JAVA_LOAD.md) |
 | E-01/R3-ITEM-ENTRY | 进行中；已验Item片段复用，gadgetId/skillAffix必要职责及引用未闭 | 先核Java入场必要链，再定向真实11101/独立对照的字段消费者；最多12直接窗，不以ID/零槽猜映射，不重解整资源 | [具体锚点/预算/停止条件](docs/CLIENT_72_D02_ITEM_ENTRY_RESOURCE.md) |
+| E-01/R3-CRITICAL-SEMANTICS | 进行中；准确职责桥仍缺 | 主线核21 Avatar/84 FightProperty typed参数及8准确窗3982B；邻接入口为运行属性/突破差/feature或字符串，未证+98/+a4职责。预算已止，未知值不进Java完整行 | [已查范围/准确缺口](docs/CLIENT_72_D02_AVATAR_CRITICAL_RESOURCE.md) |
 | F-03d3f4d2/R1-METHOD-CACHE | 已完成；限定lookup/collector及原版实际输入，不代验父项 | 原27controls/21检查及主线第三同双跑；live适配6检查，新ready90秒实际141读3048B/8候选hit、15项独立审核；正常页/退出、五输入及保护文件保持。自然caller/完整初始化未验 | [准确合同与实测](docs/CLIENT_72_AVATAR_METHOD_CACHE.md) |
 | F-03d3f4d2/R1-METHOD-CACHE-REPLAY | 已完成；限定源绑定原生回放 | 原GenericInst/8方法、连续原factory与64B写回通过；主线第三同双跑、20检查/12独立审核，旧六前缀保持。准确止16B hierarchy请求，完整cold/default/Handler未验 | [回放](docs/CLIENT_72_AVATAR_METHOD_CACHE_REPLAY.md) |
 | F-03d3f4d2/R1-HIERARCHY-STORAGE | 进行中；依准确原producer/16B请求 | 仅当前registry owner/owned1234/depth2、两次清零及8B已采父层级复制，原指令发布；尾哨兵/正反例/下一真实缺口验收，不预批后续24B或未知pointee | [准确后继合同](docs/CLIENT_72_AVATAR_METHOD_CACHE_REPLAY.md#当前最小后继准确16b-owned-hierarchy-storage) |
