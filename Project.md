@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-**研发执行暂停；D-02 未完成。** 任务状态表示交付进度，不表示当前有代理或进程在执行。恢复决定及现场在 [HANDOFF2](HANDOFF2.md)。
+**已恢复持续执行；D-02 未完成。** 用户恢复指令覆盖历史暂停/仅离线/阶段后停止的节奏限制；当前执行计划和现场入口见[恢复计划](docs/CLIENT_72_D02_RESUME_20261108.md)。历史交接仅用于追溯。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -35,14 +35,14 @@
 
 ## 3. 当前工作包：发布顺序、依赖与验收
 
-以下为恢复后的任务设计；“可发布”表示输入已足，可优先实现，不是本次恢复授权。新增工作包复用旧ID/父项，不重复计算成果。
+以下为当前获授权执行的任务设计；“可发布”表示输入已足，可优先实现。新增工作包复用旧ID/父项，不重复计算成果。
 
 ### 3.1 优先发布：明确修复与有界验证
 
 | 工作包 / 归属 | 状态与依赖 | 交付与验收 | 边界与证据 |
 | --- | --- | --- | --- |
-| R2-LOG 剩余session日志修复（D-01 / F-04） | 待开始；可优先发布，真实combo凭据测试前完成 | 有效泄漏红测→最小日志修复；认证/会话采用/保存保持，合成token及异常正文不入日志，关联隔离回归/构建 | 只修DefaultAuthenticators.SessionKeyAuthenticator遗留片段；既有三类日志修复保留；[响应规格](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md)、[日志合同](docs/CLIENT_72_AUTH_LOGGING.md) |
-| R2-SESSION 单token响应适配（D-01 / F-02） | 待开始；已有原生正反规格；与R2-LOG协调 | `/account/ma-cn-session/app/verify`成功返回`data.user_info`与`data.token{token_type:1,token}`，沿用同一认证token；真实Java成功/错误响应→原生parser/formatter，64位ID字符串及会话内容一致；独立账号/密码/保存回归 | 不重新生成或轮换token，verifySToken数组合同不一并改；错误认证不得出token，type4不擅认combo必经；[SDK响应](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md) |
+| R2-LOG 剩余session日志修复（D-01 / F-04） | 进行中；真实combo凭据测试前完成 | 有效泄漏红测→最小日志修复；认证/会话采用/保存保持，合成token及异常正文不入日志，关联隔离回归/构建 | 只修DefaultAuthenticators.SessionKeyAuthenticator遗留片段；既有三类日志修复保留；[响应规格](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md)、[日志合同](docs/CLIENT_72_AUTH_LOGGING.md) |
+| R2-SESSION 单token响应适配（D-01 / F-02） | 进行中；已有原生正反规格；与R2-LOG协调 | `/account/ma-cn-session/app/verify`成功返回`data.user_info`与`data.token{token_type:1,token}`，沿用同一认证token；真实Java成功/错误响应→原生parser/formatter，64位ID字符串及会话内容一致；独立账号/密码/保存回归 | 不重新生成或轮换token，verifySToken数组合同不一并改；错误认证不得出token，type4不擅认combo必经；[SDK响应](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md) |
 | R2-KEY 窄key核心接原生Crypto（D-01 / F-04） | 进行中；未启用核心自有ABI已验，需精确native桥接 | 同一核心输出供真实SDK Crypto，覆盖身份、caller、寄存器/栈/返回保持及错误拒绝；再形成实际loaded绑定、合法加载/校验影响的最小计划 | 此出口只解锁下一验证，不批准整DLL安装；[ABI](docs/CLIENT_72_SDK_KEY_INPUT_ABI.md)、[Crypto](docs/CLIENT_72_SDK_CRYPTO_CONTRACT.md) |
 
 ### 3.2 并行关闭：必要输入与完整消费者
