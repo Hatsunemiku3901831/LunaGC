@@ -406,3 +406,6 @@ V-01d（2026-11-06）：扩展Guard选集实际467项中1项失败，原因是Fu
 C-01a最终回归（2026-11-06）：独立便携Mongo测试实例、随机测试库；21套495项Java全部通过，失败/错误/跳过均0，其中包含原221项经济/保存选集、新19项选人、15项wire及原33项登录准入。新号、旧号冷读、重复幂等、凭据轮换、保存前失败/写后丢确认和半成品冷读均有验证；onLogin与欢迎邮件只观察继续入口，不是客户端/实际邮件落库验收。报告evidence/born-guard-final-summary.json和born-guard-final-test-results/，日志logs/born-guard-final.log，均在local/migration72。完整Java集未重跑；新运行代码需构建，但P0/SDK/补丁/资源前置未齐，不启动服务/游戏，未部署原因与最小后续取证见CLIENT_72_BORN。
 
 2026-11-06 E-01c2回归：Lua序列化最小修复后，独立便携Mongo与随机测试库实际重跑前批21套495项账号/选人/经济/保存选集，并加入区域/脚本85项，共28套580项，失败/错误/跳过均0；没有改账号数据模型、认证或保存规则。测试收尾辅助JVM曾因fat JAR日志初始化卡住，已留线程栈并仅终止该辅助进程，修正辅助日志配置；测试Mongo正常关闭、同一目录复查仅admin/config/local，原数据保留。证据scene-serialization-java-regression-summary.json及scene-serialization-test-mongo-final.json在local/migration72；完整Java集未重跑，历史217失败保留。运行JAR已构建但7.2完整前置未齐不部署，D-02未完成。
+
+
+2026-11-08 R2-LOG：真实 SessionKeyAuthenticator 四分支日志红绿及保存/登录校验通过；与前批日志和密码回归合计本轮39项全过，独立新27027/data/cache/packets/plugins，Mongo正常shutdown，原库和运行数据保留。红测、夹具编译首失败与准确复现范围见[认证日志合同](CLIENT_72_AUTH_LOGGING.md)；尚非本服SDK或D-02实机通过。

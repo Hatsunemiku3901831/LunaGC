@@ -29,3 +29,12 @@ AuthenticationLoggingTest实际调用三个handler拒绝分支、exchange错误�
 生产提交`1ea32a4`后，`LUNAGC_RUNTIME=portable tools/local_windows.ps1 -Mode build`实际30秒成功。磁盘JAR SHA-256 `64a381dcc1bc02dbf80280fb14a6c4c4df41a8d9f299afa97eb6fe995b4e0aab`；46,304类无增删，三日志类及三编译内联metadata类共6变化，逐一与真实编译class相同，其余46,298类同旧归档。嵌入GIT_HASH为`1ea32a4`，原版本标签仍7.1.0；这是当前源码归档，**未批准为7.2部署产物**，没有改字符串或guard求通。旧f475dbf6归档已先逐hash备份，原配置/.env/resources既有差异不变。
 
 证明 `auth-logging/build/artifact-proof.json`、构建日志 `portable-build.log`。实际status退出1，OS无本服/游戏/调试器/Mongo，固定TCP/UDP无监听；没有运行JAR、HTTP健康或实际DLL装载对象，不称这些通过。完整R4/资源revision/SDK信任与loader仍未齐，所以没有部署、重启服务或本服账号实测，D-02未完成。
+
+
+## R2-LOG：SessionKeyAuthenticator 遗留日志（恢复批）
+
+接手 `72aa9c5`，真实源码仍打印 uid、输入 token/dbKey 前20字符、采用前后 token 前12字符。新增同一真实认证入口的四个参数化用例，覆盖免密匹配/采用、保护账号匹配/拒绝；独立 Mongo 保存及 DispatchUtils 登录校验同时断言。有效红测 `d02-resume-20261108/sdk-red2/` 为4/4失败，命中账号、库存储片段、输入片段三种准确日志断言。首轮 `r2-log-red` 是测试未声明 InterruptedException 的编译失败，XML是旧文件，不算有效红测；修正仅测试方法异常声明后新轮才取得上述红测，保留首次失败。
+
+生产仅替换两条敏感日志并去掉专供日志的 dbKey 读取；账号查找、认证判断、session采用、save和login token生成保持原流程。没有新增校验、异常处理、日志过滤器或更改宽松认证策略；其是否适用于真实7.2仍另验。
+
+新独立目录 `d02-resume-20261108/r2-log-green/`：AuthenticationLoggingTest 6、PasswordResetAuthenticationTest 33，共39项实际全过，0失败/错误/跳过。data/cache/packets/plugins显式新目录、数据库为新27027实例及随机fixture库，原27017未启；Mongo admin正常shutdown退出0。原数据/配置保留，原始响应和日志只在忽略目录。构建及未部署边界随本批产物核验补充；尚未取得本服SDK或D-02实机验收。

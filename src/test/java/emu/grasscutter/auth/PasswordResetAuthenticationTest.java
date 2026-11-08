@@ -364,4 +364,53 @@ class PasswordResetAuthenticationTest {
             events.stop();
         }
     }
+
+    static java.util.stream.Stream<Arguments> comboLogCases() {
+        return java.util.stream.Stream.of(
+                Arguments.of(false, false), Arguments.of(false, true),
+                Arguments.of(true, false), Arguments.of(true, true));
+    }
+
+    @ParameterizedTest
+    @MethodSource("comboLogCases")
+    void comboAuthenticationKeepsCredentialsOutOfLogs(boolean protectedAccount, boolean matching) throws Exception {
+        String oldToken = "synthetic-combo-old-session-047215";
+        String supplied = matching ? oldToken : "synthetic-combo-new-session-047215";
+        rows().updateOne(new Document("_id", ID), new Document("$set",
+                new Document("passwordRequired", protectedAccount).append("sessionKey", oldToken)));
+        var before = row();
+        var logger = Grasscutter.getLogger();
+        var previousLevel = logger.getLevel();
+        var events = new ListAppender<ILoggingEvent>();
+        events.start();
+        logger.addAppender(events);
+        logger.setLevel(Level.DEBUG);
+        try {
+            var response = combo(supplied);
+            boolean accepted = !protectedAccount || matching;
+            assertEquals(accepted, response.retcode == 0);
+            assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(10)));
+            if (accepted) {
+                assertEquals(ID, response.data.open_id);
+                assertEquals(supplied, row().getString("sessionKey"));
+                assertEquals(response.data.combo_token, row().getString("token"));
+                assertNotNull(DispatchUtils.authenticate(ID, response.data.combo_token));
+            } else {
+                assertEquals(before, row());
+            }
+            String logs = events.list.stream().map(event -> event.getFormattedMessage()
+                            + (event.getThrowableProxy() == null ? "" :
+                            ch.qos.logback.classic.spi.ThrowableProxyUtil.asString(event.getThrowableProxy())))
+                    .collect(java.util.stream.Collectors.joining("\n"));
+            assertFalse(events.list.isEmpty(), "The real logger must be captured");
+            assertAll(
+                    () -> assertFalse(logs.contains(ID), "Account reached combo log"),
+                    () -> assertFalse(logs.contains(oldToken.substring(0, 12)), "Stored session prefix reached combo log"),
+                    () -> assertFalse(logs.contains(supplied.substring(0, 20)), "Supplied session prefix reached combo log"));
+        } finally {
+            logger.detachAppender(events);
+            logger.setLevel(previousLevel);
+            events.stop();
+        }
+    }
 }
