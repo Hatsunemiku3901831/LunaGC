@@ -54,6 +54,8 @@
 
 # 研发索引与执行骨架
 
+2026-11-09 `R1-CLASS80-STORAGE-static`：主线第三5912B/SHA8e7decdd…246c99d同双跑，明确指定第三报告的10项检查通过。固定两6B metadata行/1169及1249&lt;VAR362槽0&gt;/offset4、6来源已核，static工具不导入Unicorn，不代验inflation或32B原生发布。[静态source epoch/计划/边界](docs/CLIENT_72_AVATAR_CLASS80_STORAGE.md)。stock及16B前置均已验，继续独立native入口。
+
 2026-11-09 `R1-HIERARCHY-STORAGE`：stock恢复后主线第三1180851B/SHA7026c7f3…54d344同双跑、17检查/10独立审核及20pin通过。原16B/两clear/Object8B复制与原store/xchg发布，新增4模型、累计45读345B、尾哨兵保持；准确止下一32B class+80请求。[真实路径/模型/失败/复现](docs/CLIENT_72_AVATAR_HIERARCHY_STORAGE.md)。[新class+80计划](docs/CLIENT_72_AVATAR_CLASS80_STORAGE.md)独立推进，完整cold/default/Handler/g2仍未验。
 
 2026-11-09 `R2-CONFIGSYNC-OBSERVE-live1`：新ready实际90.0秒/45监测，raw1271265B/SHAb036ba21…51df3；11读1429B零错，installed/actual far/完整279B+38B/47表/五原窗与稳定state比较正确，14项主线审核、无二次RPM。目标event未匹配、原因未知，不能补记自然env/route。[准确边界与后继](docs/CLIENT_72_SDK_CONFIGSYNC_OBSERVER.md#新ready实际90秒未命中及恢复)。用户正常页/退出，stock恢复/orig删除、五输入/13保护及相关进程0复核通过；不重用ready或无假设重复实验。

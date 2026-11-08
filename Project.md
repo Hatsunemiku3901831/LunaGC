@@ -58,7 +58,7 @@
 | F-03d3f4d2/R1-METHOD-CACHE | 已完成；限定lookup/collector及原版实际输入，不代验父项 | 原27controls/21检查及主线第三同双跑；live适配6检查，新ready90秒实际141读3048B/8候选hit、15项独立审核；正常页/退出、五输入及保护文件保持。自然caller/完整初始化未验 | [准确合同与实测](docs/CLIENT_72_AVATAR_METHOD_CACHE.md) |
 | F-03d3f4d2/R1-METHOD-CACHE-REPLAY | 已完成；限定源绑定原生回放 | 原GenericInst/8方法、连续原factory与64B写回通过；主线第三同双跑、20检查/12独立审核，旧六前缀保持。准确止16B hierarchy请求，完整cold/default/Handler未验 | [回放](docs/CLIENT_72_AVATAR_METHOD_CACHE_REPLAY.md) |
 | F-03d3f4d2/R1-HIERARCHY-STORAGE | 已完成；限定16B原生存储/发布 | 原store/xchg发布与尾哨兵保持，主线第三同双跑、17检查/10独立审核、20pin；累计新增4模型/45读345B。准确下一32B仍未供应，完整cold/default/Handler未验 | [实际结果/边界](docs/CLIENT_72_AVATAR_HIERARCHY_STORAGE.md) |
-| F-03d3f4d2/R1-CLASS80-STORAGE | 进行中；准确32B请求及固定12B行 | 同owned1234/count2/class+80，原两clear/发布；固定两6B行的typeRef/offset可提取，原inflation及entry写回另验；未知自然pointee不补值 | [计划/静态来源/预算](docs/CLIENT_72_AVATAR_CLASS80_STORAGE.md) |
+| F-03d3f4d2/R1-CLASS80-STORAGE | 进行中；准确32B及固定12B来源已核 | 主线静态第三5912B同双跑、10检查；两6B行对应1169/offset4及1249&lt;VAR362槽0&gt;/offset6。原32B发布/inflation/entry写回待实际执行，未知自然pointee不补值 | [计划/静态来源/预算](docs/CLIENT_72_AVATAR_CLASS80_STORAGE.md) |
 | R2-ROUTE-CONFIG-SELECT | 进行中；准确托管loader存在，自然选择/Init未验 | 固定托管env选择、managed→native必要输入和安全事件；原始材料可得先离线，合同足够再实机 | [执行计划](docs/CLIENT_72_D02_RESUME_20261109.md) |
 | R2-CONFIGSYNC-EVENT | 已完成；限定固定producer与原生dispatcher | 原ctor、真实OS转换、两个name负例/精确local_config到writer入口已执行；主线第三4670B同双跑、6项通过。自然caller/writer返回未验 | [原始证据与模型](docs/CLIENT_72_SDK_CONFIGSYNC_EVENT.md) |
 | R2-CONFIGSYNC-OBSERVE-owned | 已完成；限定独立构建/自有ABI及准备 | release DLL/fixture成功，两个新进程16case/279B实际搬移与恢复、15检查及12独立审核过；50导出/9新源/20旧pin保持。未调用SDK/客户端 | [实际构建与限定验收](docs/CLIENT_72_SDK_CONFIGSYNC_OBSERVER.md#主线实际构建与自有验证) |
