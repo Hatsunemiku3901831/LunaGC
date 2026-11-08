@@ -58,3 +58,13 @@ python -m tools.sample_client72_interface_context --observation $freshMonitor --
 原始结构字节/错误仅在专属忽略目录；共享摘要只记录成功/空/未知/失败与预算，不把null cache当头地址、不把metadata相符当自然构造完成。若两类metadata均匹配且所有实际非零descriptor跨度及TLS读成功，`status=completed`仅表示本卡固定采样范围完成；descriptor语义仍为unknown，所有上层ready/comparer/类初始化/Handler/D-02布尔均false。其余情况保留partial，后继按准确实际首缺另立合同。
 
 主线独立23项检查通过，重新从当前stock五文件核4代码窗、2 descriptor、2 metadata和TLS目录，source/hash及预算均符；证明 `main-preparation-proof.private.json`、日志 `tests-main-review.log`，执行源原字节副本在 `executed-source/`。私有准备helper初次因脚本目录sys.path找不到tools，在接触输入前失败；只修该忽略helper导入路径，sampler源不变。新wrapper只执行冻结90秒monitor与本sampler，启动前重核源、无既有客户端/调试器及新输出；新user-ready仍待主线取得，未沿用上轮。
+
+## 本轮实际结果与主线验收
+
+上述准备之后，已取得新的用户在场确认；主线重新核五stock文件、配置、脚本身份及进程/端口，再执行原始90秒monitor（44项模块观察）和一次采样。未安装DLL、未输入凭据。实际 **8读584B，零错误/短读**：1169/1249均有准确kind18头，70B metadata各与固定文件匹配；两个compact字段均实读0，因此未读registry或descriptor。该零值没有被推成新的父类/declaring语义。
+
+模块`+5eef080`的DWORD实读 **0**。这是实际loader TLS索引值，未读取或证明分配线程、`GS:[58]`、TLS数组或allocator内容。Pool后继仍须准确线程上下文；不能任取登录线程、复用旧绝对指针或把空TLS模型当自然输入。
+
+原始采样 `live-first.private.json` 的SHA-256为 `3c08c1f72e181084bc3d22e7199cf08ca306083322d0638cd6322ef42064d040`；绑定本次monitor SHA `8136125522ddc6983a0c22e37bffe5556da58fbb981416493e5b1a6442d7e6fc`。主线标准库独立审核29项，逐条复核实际地址推导、原始bytes/宽度、typed头、metadata、预算、当前五stock文件及配置；证明 `main-live-review.private.json`，退出核对 `exit-main.private.json`，均在本卡忽略目录。用户确认SDK登录页正常并正常退出，随后OS核游戏进程不存在。
+
+本卡固定取证范围已完成；保留非原子、消费前时序未证、完整comparer/类初始化/Handler未完成及全部ready=false。后继复用本轮有身份的两个头，跨轮对象只能显式重绑定为受控输入；不得把多个自然快照拼成同一次自然内存图。本项不代表本服SDK登录、完整资源或D-02验收。

@@ -1,3 +1,5 @@
+2026-11-08 R1-SAMPLE-INTERFACES-live：新ready原始90秒/44观察，实际8读584B零错；1169/1249 kind18头及70B metadata匹配、双零compact，TLS loader索引实读0。主线29项独立复核，raw SHA3c08c1f7…64d040，proof `r1-interface-sampling/main-live-review.private.json`；用户登录页正常退出/OS无目标。[范围与跨轮重绑定限制](docs/CLIENT_72_INTERFACE_CONTEXT_SNAPSHOT.md)。不代验分配线程、自然消费时序或完整构造。
+
 2026-11-08 E-01-bridge-equipment：主线第三4,164,206B/SHA50aaea94…eb5bc同双跑，16相关检查与20独立标准库审计通过；真实Avatar169/Weapon288/Curve100完整表及初始武器、两属性、float32成长和promote ID片段已闭。[来源/模型/完整行缺口](docs/CLIENT_72_D02_EQUIPMENT_RESOURCE.md)，proof `r3-equipment/main-third-review.private.json`。继续真实突破表和完整必要Java行，不补空addProps，不代验加载/revision/保存。
 
 2026-11-08 R1-SAMPLE-INTERFACES-prep：主线23 owned检查、当前五stock/4代码窗/2 descriptor/2 metadata/TLS目录复核通过；新源02ffaeab…dda251，最大14读664B/单读208B。[CLI/范围/预算](docs/CLIENT_72_INTERFACE_CONTEXT_SNAPSHOT.md)，proof `r1-interface-sampling/main-preparation-proof.private.json`。未实机执行，新ready后一次90秒原始monitor，再只读新两接口与loader索引；不复用上一ready或旧指针。
