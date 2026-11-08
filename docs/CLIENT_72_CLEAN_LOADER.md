@@ -1,5 +1,7 @@
 # F04-LOADER-CLEAN：独立透明加载入口
 
+当前状态：owned与真实零hook加载/绑定限定验收均已完成；用户确认登录页正常并正常退出，原DLL已恢复。最初两次观察器错误及同进程修复见末节。没有启用key/trust/route，SDK自然加密/请求及D-02继续未完成；下文“未安装/待真实”属于各自历史epoch。
+
 ## 实施前计划（2026-11-08）
 
 目标是将实际 DLL 加载与已有 SDK key/信任核心分开验证，形成一个可审阅的独立入口。现有 `patch/src/lib.rs` 默认启用未验的 ccp/memguard、proxy neutralize、swap 等路径，不能作为这次加载许可。新入口只透明转发准确原 Astrolabe 导出，并对当前进程已加载的 SDK 做有来源的身份/入口窗口核对；本子项不安装 hook、不启动网络、不绕过游戏或协议校验。
@@ -171,3 +173,26 @@ python -m unittest tools.test_audit_sdk72_clean_loader tools.test_verify_sdk72_c
 下一项由主线独占：新 user ready 和五输入/当前进程清点 → 审核透明 proxy/固定 stock 的备份、文件归属及回退方案 → 按本页透明实验许可准备真实加载。新 proxy 的磁盘身份必须如实保留，stock 只作为明确的 Astrolabe_orig.dll，不做 swap、隐藏或校验伪成功。真实客户端若拒绝模块签名/身份，保留准确系统/客户端返回并正常退出和回退。
 
 随后需取得真实模块 Windows 路径、基址、SizeOfImage、磁盘身份和自然 SDK 的 253B 准确窗口。诊断 export 不是自然 producer，本卡未新增自动轮询或远程调用；主线须指定已审的实际只读观察入口/时序，不能把“诊断函数存在”当作自然 SDK 已绑定。首次原函数调用时机、加载器锁上下文及客户端完整生命周期仍须实测，owned 正例不能替代这些合同。用户此前的一次 ready 不沿用为新的安装/启动许可，具体真实实验流程由主线当前活动计划负责。
+
+## 真实零hook加载、观察器修正与恢复
+
+用户新确认ready后，主线按准备脚本核四个其它原输入与原Astrolabe、无游戏/调试器、proxy构建SHA及源，备份原DLL并只安装本卡proxy及stock别名。实际proxy为前述156672B/SHA `b61fde01eefc86ce96afd135bcf171b0650a0dafe59bb0ef43cea6379ed2ab05`，原stock仍为固定SHA，SDK/EXE/metadata/profile不改；没有旧模块、hook、远程调用、凭据、服务或网络重定向。CreateProcess正常启动，90秒45次模块/存活采样，目标持续存活，三个准确模块都已出现。
+
+初次 `live1-observation.private.json` SHA `003f1ca85bcf2e85a61f8fb55eff2c5550e1c93067a0e8b4bcafafab45c3644f` 在末尾WinError5停止。根因是观察器重开句柄只给0x410，而随后WaitForSingleObject需要SYNCHRONIZE；不是客户端拒绝DLL。一次不读内存的定向API复现证明旧mask的creation/image均匹配、wait确实报5。改为既有采样器已用的0x101010（VM_READ/QUERY_LIMITED_INFORMATION/SYNCHRONIZE），新增实际入口回归；没有请求写/调试权限。
+
+随后同一PID/creation/image检查到原库长路径表示差异：Rust canonical路径含Windows扩展前缀，Python resolve的字符串与普通路径不同，但samefile、大小与磁盘SHA均相同。`live1-module-path-diagnostic.private.json`保留三个独立结果。原失败 `live1-binding-fixed.private.json` SHA `e49e01f75293fad4d0eb36e4f4dbe61543923658794a733533102b7fa3106e88` 未覆盖；入口路径核对改为文件身份samefile，保留SizeOfImage与disk SHA检查，新加真实Windows长路径回归。两次工具错误均发生在ReadProcessMemory之前，未消耗或扩大4读781B预算，未重新启动客户端。
+
+修后同一进程 `live1-binding-paths-fixed.private.json` SHA `2cf58ea677d932b392d030af2183dff0d4de043da9f72bb7e7b6f5152d28a6da` 真实4读781B全部相符：
+
+| 读取窗口 | 字节 | 实际结果 |
+| --- | --- | --- |
+| proxy47目标表 | 376 | 全部等于当次stock模块base+47个准确导出RVA |
+| SDK Crypto入口 | 253 | 与固定原码相等，SHA `634a8f823f6f84675977f867ec3e114c6eed100f68be81bb49e2add2e0820b8c` |
+| account caller | 76 | 原码相等，SHA `a8c01b85e8f4f33a66b66f715337e0170ea3cbda961578afe2ba4f52e0243a8a` |
+| password caller | 76 | 原码相等，SHA `f986612ad684f67b05286d4a367d6a163ef0f0c5a5f549cf13b9d4f00c08d24d` |
+
+每个模块均核实际Windows路径/文件身份、SizeOfImage和磁盘SHA；终检仍存活。没有调用诊断export或目标函数，SDK window匹配不证明这些caller已经自然执行。观察器最后9项测试通过，日志 `observer-tests-path-fix.log`；首次源67b6bc73已按原字节保留 `observer-source-live1.py`，最终新源hash记在成功报告，不将新代码倒写成最初源码。
+
+用户确认SDK登录页正常、从窗口正常退出；主线OS核目标不存在，使用固定备份恢复Astrolabe.dll并重核stock SHA，仅删除本实验创建且仍匹配stock的Astrolabe_orig.dll。`live1-restored.private.json`及恢复console保留，原DLL/stock/实验proxy均留专属备份/产物目录；13个保护配置/资源/原数据文件全不变，证明 `protected-after-clean-live1.private.json`。这次没有改变Rust DLL，无需重编DLL；两个工具修正只需相应回归和同进程观察，不重启服务。
+
+限定出口现在成立：准确独立proxy实际可加载并转发，原库自然装载，准确SDK实际loaded身份及三个key相关内存窗已核。下一步可以在新有界计划中接未启用key核心/窄观察，再以新用户ready验证实际hook影响；trust、自然caller/config/route、认证、本服场景和D-02不能由本轮代验。

@@ -18,6 +18,7 @@ except ImportError:
 
 RAW = ROOT / 'local/migration72/d02-resume-20261108/clean-loader'
 CALLER_WINDOWS = ((0x34ee6b, 76), (0x34ef3c, 76))
+PROCESS_READ_QUERY_WAIT = 0x101010
 
 
 def main():
@@ -113,7 +114,7 @@ class ModuleBackend(WindowsBackend):
 
 
 def inspect_process(backend, game, evidence, proxy, stock, sdk):
-    handle = backend.k.OpenProcess(0x410, False, evidence['pid'])
+    handle = backend.k.OpenProcess(PROCESS_READ_QUERY_WAIT, False, evidence['pid'])
     if not handle:
         return {'status': 'process-unavailable', 'winerror': C.get_last_error()}
     try:
@@ -130,7 +131,7 @@ def inspect_process(backend, game, evidence, proxy, stock, sdk):
             if len(rows) != 1:
                 return {'status': 'module-not-uniquely-loaded', 'module': name, 'count': len(rows)}
             row = rows[0]
-            if Path(row['path']).resolve() != (game/'YuanShen_Data/Plugins'/name).resolve() or row['size'] != PE(data).image_size or sha256(Path(row['path'])) != digest(data):
+            if not Path(row['path']).samefile(game/'YuanShen_Data/Plugins'/name) or row['size'] != PE(data).image_size or sha256(Path(row['path'])) != digest(data):
                 raise ValueError('Loaded module path/size/disk identity differs: '+name)
             wanted[name] = row
         backend.k.ReadProcessMemory.argtypes = [W.HANDLE, C.c_void_p, C.c_void_p, C.c_size_t, C.POINTER(C.c_size_t)]

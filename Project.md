@@ -43,7 +43,7 @@
 | --- | --- | --- | --- |
 | R2-LOG 剩余session日志修复（D-01 / F-04） | 已完成；限定日志红绿/隔离回归/构建；部署待R4 | 有效泄漏红测→最小日志修复；认证/会话采用/保存保持，合成token及异常正文不入日志，关联隔离回归/构建 | 只修DefaultAuthenticators.SessionKeyAuthenticator遗留片段；既有三类日志修复保留；[响应规格](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md)、[日志合同](docs/CLIENT_72_AUTH_LOGGING.md) |
 | R2-SESSION 单token响应适配（D-01 / F-02） | 已完成；独立HTTP、Java→原生及账号保存回归/构建；部署待R4 | `/account/ma-cn-session/app/verify`成功返回`data.user_info`与`data.token{token_type:1,token}`，沿用同一认证token；真实Java成功/错误响应→原生parser/formatter，64位ID字符串及会话内容一致；独立账号/密码/保存回归 | 不重新生成或轮换token，verifySToken数组合同不一并改；错误认证不得出token，type4不擅认combo必经；[SDK响应](docs/CLIENT_72_SDK_RESPONSE_CONTRACT.md) |
-| R2-KEY 窄key核心接原生Crypto（D-01 / F-04） | 进行中；同一核心→准确native桥接已验；实际loaded、自然caller/route及生产接入未验 | 同一核心输出供真实SDK Crypto，覆盖身份、caller、寄存器/栈/返回保持及错误拒绝；再形成实际loaded绑定、合法加载/校验影响的最小计划 | 离线出口不批准整DLL安装；[ABI](docs/CLIENT_72_SDK_KEY_INPUT_ABI.md)、[原生桥接](docs/CLIENT_72_SDK_KEY_NATIVE_BRIDGE.md)、[Crypto](docs/CLIENT_72_SDK_CRYPTO_CONTRACT.md) |
+| R2-KEY 窄key核心接原生Crypto（D-01 / F-04） | 进行中；同核native桥接、零hook透明加载及实际SDK原窗绑定已验；自然caller/route及核心实际启用未验 | 同一核心输出供真实SDK Crypto，覆盖身份、caller、寄存器/栈/返回保持及错误拒绝；在独立入口按窄规格实现/验证实际启用与校验影响 | 不启用旧整DLL；[ABI](docs/CLIENT_72_SDK_KEY_INPUT_ABI.md)、[原生桥接](docs/CLIENT_72_SDK_KEY_NATIVE_BRIDGE.md)、[实际加载](docs/CLIENT_72_CLEAN_LOADER.md) |
 
 ### 3.2 并行关闭：必要输入与完整消费者
 
@@ -64,7 +64,7 @@
 | C-01 / F-02 / F-03 网络与初始化整合 | 进行中；全量出口归R4 | 复用C-01b帧/注册修复，补必要Union/枚举/最终发包与序列。检查onLogin、SceneInitFinish、EnterSceneDone后的队伍/世界/实体，不能只验八握手 |
 | V-01 回归失败归因 | 进行中；按本次改动和R4范围选集 | 新运行先明确基线/夹具/生产失败；保护账号、经济、保存、Lua。完整全量未重跑就不宣称全绿；不机械用历史失败总数安排任务 |
 | F-04 部署材料及隔离核验 | 进行中；复用ENV-01基线，实际部署待R4 | 真实SDK/信任/资源合同充分后形成7.2产物；正常构建和停服，按InstanceRoot归属核对，不仅改版本或环境变量放行；[隔离](docs/CLIENT_72_PORTABLE_ISOLATION.md) |
-| F04-LOADER-CLEAN 独立透明入口 | 进行中；自有Win32透明转发/拒绝已验；实际加载观察已准备 | 独立于旧模块入口透明转发原库导出，只读核对已加载SDK身份与准确窗口；用户在场后真实可回退加载。保留系统/客户端拒绝，不能绕过校验；[计划/产物/范围](docs/CLIENT_72_CLEAN_LOADER.md) |
+| F04-LOADER-CLEAN 独立透明入口 | 已完成；限定零hook真实加载/绑定及恢复；key/trust/route另验 | 独立透明转发、实际stock/SDK身份与准确窗、正常SDK登录页和退出/恢复已验；自然加密、hook启用、完整性全路径与D-02另验 | [计划/产物/真实范围](docs/CLIENT_72_CLEAN_LOADER.md) |
 
 ## 4. 任务发布与范围控制
 
@@ -154,6 +154,7 @@
 | R2-KEY-native-bridge | 已完成 | 同一Rust核心实际供给准确caller→原PEM/RSA/Base64，保持入口状态/原返回及拒绝；限定离线桥接，不证明loaded、自然输入、hook wrapper或整DLL。 | [原生桥接](docs/CLIENT_72_SDK_KEY_NATIVE_BRIDGE.md) |
 | R2-ROUTE-loader | 已完成 | 准确SDKDelegate.LoadFile→包内TextAsset、实际配置与url:string/map/app_key片段；主combo builder直接读初始化map。完整Init、自然环境选择、签名与本服请求未验。 | [配置loader](docs/CLIENT_72_SDK_ROUTE_LOADER.md) |
 | F04-LOADER-CLEAN-owned | 已完成 | 独立零hook入口实际编译，自有Win32夹具核47导出、透明ABI/原调用和4类真实异常拒绝；未加载实际客户端DLL，完整性/实际时序与自然SDK另验。 | [透明加载](docs/CLIENT_72_CLEAN_LOADER.md) |
+| F04-LOADER-CLEAN-live | 已完成 | 实际透明proxy/stock加载、47目标表与SDK Crypto/两caller原窗一致；登录页正常、正常退出后恢复stock。只核零hook加载/绑定，未启用key/trust/route或认证。 | [真实加载](docs/CLIENT_72_CLEAN_LOADER.md#真实零hook加载观察器修正与恢复) |
 | 认证日志与InstanceRoot前置（归D02-R2/R5） | 已完成 | 三个认证类日志修复和数据隔离回归、独立运行目录入口已验；DefaultAuthenticator遗留日志已按R2-LOG修复，真实部署未验。 | [日志](docs/CLIENT_72_AUTH_LOGGING.md)、[隔离入口](docs/CLIENT_72_PORTABLE_ISOLATION.md) |
 
 ### 6.4 资源、脚本、保存与回归

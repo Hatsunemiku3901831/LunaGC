@@ -1,3 +1,5 @@
+2026-11-08 F04-LOADER-CLEAN-live：新ready后真实proxy/stock/SDK加载，90秒45监测；同进程最终4读781B，47目标表+SDK Crypto/两caller原窗相符。前两工具失败分别缺SYNCHRONIZE与扩展路径字符串，0次RPM，原失败保留，修后9回归。[范围/失败/真实SHA/恢复](docs/CLIENT_72_CLEAN_LOADER.md#真实零hook加载观察器修正与恢复)。用户登录页正常退出，OS无目标，stock恢复、仅实验orig别名删除，13保护文件不变；不代验自然caller或本服连接。
+
 2026-11-08 F-03d3s2-pool-prefix：fresh mode1原生前缀止14050a8ae，首缺模块+5eef080的4B TLS索引，与PE TLS AddressOfIndex独立相符；mode0仅控制。双新进程4,174B/SHA3a650294…ebcc811逐字节同，6检查通过，无allocator/TLS成功模型。[复现/原leaf边界失败/下一输入](docs/CLIENT_72_SCENE_POOL_CONTINUATION.md)。与未来取证合并，不扩当前透明加载4窗范围。
 
 2026-11-08 F04-LOADER-CLEAN-owned：主线独立release/offline编译production/owned/fixture与3mock；第三真实Win32两新进程各94基线/188比较，同713B ABI，4拒绝均0xe0720001且stage/Win32准确，21相关Python通过。[来源/失败/模型/真实加载准备](docs/CLIENT_72_CLEAN_LOADER.md)；proof `clean-loader/verify-main-third/source-build-artifact-proof.json`。只有自有DLL加载，真实SDK/stock与生产转发未执行；下一实际90秒加载观察先等新ready，原DLL备份/恢复和最多4读781B方案已准备。
