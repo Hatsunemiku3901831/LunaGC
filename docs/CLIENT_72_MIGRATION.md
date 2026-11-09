@@ -1,3 +1,5 @@
+2026-11-10恢复执行：用户已明确解除旧暂停并授权持续推进D-02、必要受控取证及前置充分后的portable隔离部署。最新HEAD/固定输入/配置/保护与现场已重新核对；按[Project](../Project.md)及[本批路线](CLIENT_72_D02_RESUME_20261110.md)复用已验成果继续后继。完整Avatar、SDK自然writer/route、最小资源及六项客户端验收仍未完成，下方暂停与现场信息均为历史。
+
 # 7.2 迁移现状与本地运行基线
 
 2026-11-10当前：用户要求当前在途子项完成后暂停，主线已完成验收与本地提交，现不开新任务。String owned字符路径、Gadget有限parser语义、Metal真实Java局部生命周期及SDK后继规格已收尾；新八点观察器未实施。完整Avatar/Scene、Hash/FindEntry/自然键、必要资源与保存、完整SDK/route和D-02仍未完成，未部署GS。真实状态及恢复条件以[Project](../Project.md)和[HANDOFF2](../HANDOFF2.md)为准；下方持续执行/暂停和数字均按历史批次读取。

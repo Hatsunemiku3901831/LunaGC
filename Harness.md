@@ -1,3 +1,5 @@
+2026-11-10恢复执行：用户明确解除上一轮暂停，当前派工与验收以[Project](Project.md)和[本批记录](docs/CLIENT_72_D02_RESUME_20261110.md)为准。新盘点为`local/migration72/d02-resume-20261110/initial-inventory.private.json`（SHA `117cb1d4…2032fe`），五stock/carrier/13保护、缺席及portable/config均匹配，相关进程/固定监听0；Project原文先备份。A/B显式Sol max，C Terra xhigh做已批Promote/Curve的真实Java加载准备，构建/现场/提交归主线。旧ready全部消费，旧暂停段落仅作证据历史。
+
 2026-11-10当前：**在途工作已验收收尾并按用户明确要求暂停，不开启新任务。** 任务及完成边界见[Project](Project.md)，提交、原始证据、恢复门槛和交接备份见[HANDOFF2](HANDOFF2.md)。下方恢复/持续执行段落均属历史；原ready/PID/地址不得复用。SDK八点后继只有规格，未实现或实机；D-02六项、R4/R5/R6仍未完成。
 
 2026-11-10 最终暂停交接：四项在途收尾提交cfd9c53/a8f96cc/1f9e003/d66429d。最终只读文件与运行盘点SHA`67022c094ce0df672bded7674a0ae40b6e3c57b1d4e38ecc8fbbe0d3c1883719`，五stock/carrier/13保护/缺席匹配、alias无、进程/TCP/UDP0；原Windows PowerShell自有只读helper异常耗时中止(exit1)保留，替代Python流式hash及有界CIM/native netstat实际通过，不重启客户端/DB。详细交接[HANDOFF2](HANDOFF2.md)已先备份再覆盖，HANDOFF原bytes仅追加；proof `local/migration72/d02-parallel-20261109/closeout-20261109T164643Z/handoffs/handoff-close-proof.private.json`。新任务/八点SDK实现/部署均未启动，D-02六项未完成，按用户要求暂停。
