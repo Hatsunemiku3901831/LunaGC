@@ -1,3 +1,7 @@
+2026-11-10当前：**在途工作已验收收尾并按用户明确要求暂停，不开启新任务。** 任务及完成边界见[Project](Project.md)，提交、原始证据、恢复门槛和交接备份见[HANDOFF2](HANDOFF2.md)。下方恢复/持续执行段落均属历史；原ready/PID/地址不得复用。SDK八点后继只有规格，未实现或实机；D-02六项、R4/R5/R6仍未完成。
+
+2026-11-10 最终暂停交接：四项在途收尾提交cfd9c53/a8f96cc/1f9e003/d66429d。最终只读文件与运行盘点SHA`67022c094ce0df672bded7674a0ae40b6e3c57b1d4e38ecc8fbbe0d3c1883719`，五stock/carrier/13保护/缺席匹配、alias无、进程/TCP/UDP0；原Windows PowerShell自有只读helper异常耗时中止(exit1)保留，替代Python流式hash及有界CIM/native netstat实际通过，不重启客户端/DB。详细交接[HANDOFF2](HANDOFF2.md)已先备份再覆盖，HANDOFF原bytes仅追加；proof `local/migration72/d02-parallel-20261109/closeout-20261109T164643Z/handoffs/handoff-close-proof.private.json`。新任务/八点SDK实现/部署均未启动，D-02六项未完成，按用户要求暂停。
+
 当前已按用户最新指令恢复持续执行：[Project并行路线与模型分配](Project.md#d02-parallel)。从`7d1244f`核对恢复，A/B为Sol max，C由主线固定首诊边界后交Terra；本页历史暂停只供追溯。新盘点`local/migration72/d02-parallel-20261109/initial-inventory.private.json`：五stock匹配，13个现存保护文件及`.env.local`不存在事实已固定，相关进程和固定端口均0。Project修改前副本在同目录`Project.before-resume.md`，SHA`e67d321f5e3494a373e7a40570dcbc204579c9dbd8cf0a92bf4d2a05911145ea`。任务状态/完成标记在Project维护，日志和原始失败继续留本页与专题。
 
 2026-11-10 SDK prefix后继规格收尾：原writer5422B/1223指令、八点JmpBack覆盖与21静态投影通过；主线指出once之前重复读caller预算缺口后，改首次任意P0先占尝试、P2同理，错caller拒绝seal不重试。12纯模型（含1000后续调用）通过，摘要SHA`2f45829e…982f0d`；参数16/37、独立绑定17/6409、外成功30/10415、拒绝1/256，旧报告源保持。[完整规格、复现来源及未实施边界](docs/CLIENT_72_SDK_PREFIX_NATURAL_SUCCESSOR.md)。主线8审核SHA`954ca9ac…6c6f96`，原件`local/migration72/d02-parallel-20261109/b-sdk-prefix-successor/`；八点产物未实现/构建/安装/实机，unwind及完整Marshal/writer/Init/route未知。用户要求暂停，不进入后继实现。

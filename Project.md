@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-**已按用户最新指令恢复持续并行执行；D-02未完成。** 历史暂停、仅规划及仅离线节奏已被覆盖，按第3.2—3.5节推进研究、实现、回归、部署和实机联调。限定来源/Java/采集及恢复子项直接复用；SDK分类超限、enum两个零槽与String空usage等真实未闭项保留。当前恢复与实验入口见[执行记录](docs/CLIENT_72_D02_RESUME_20261109.md)，旧[详细交接](HANDOFF2.md)保留追溯，不作为暂停指令。全部验收通过、用户明确暂停或所有独立工作均有准确外部阻塞前持续推进。
+**已按用户最新要求完成当前在途子项验收与收尾，现暂停，不开启新任务。D-02 / F-05 / D02-R6未完成。** 本批String原字符路径、Gadget/ability有限静态语义、Metal真实Java局部生命周期及SDK后继规格均已主线验收并本地提交；八点观察器仍只为规格，未实施。暂停依据为用户最新明确指令，覆盖此前持续执行节奏；不是所有独立工作均外部阻塞。父项真实状态、已验范围及缺口继续保留。当前交接见[HANDOFF2](HANDOFF2.md)，本轮恢复历史见[执行记录](docs/CLIENT_72_D02_RESUME_20261109.md)。恢复须用户另行明确指示，旧ready全部消费。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -35,7 +35,7 @@
 
 ## 3. 并行执行路线与派工
 
-本节并行路线已恢复执行，不改变任务ID、范围或验收条件。批次号和A/B/C仅为调度标签，不新增任务或计入完成量。已完成前置统一在第6节维护，不重新排队。
+本节保留本轮恢复时的并行路线，不改变任务ID、范围或验收条件。当前已按用户要求暂停，无自动派工或继续实验。批次号和A/B/C仅为调度标签；已完成前置统一在第6节维护，不重新排队。
 
 <a id="d02-parallel"></a>
 
@@ -82,14 +82,14 @@
 
 | 批次 / 工作包 | 状态与依赖 | 交付与验收 | 推荐模型 | 证据与边界 |
 | --- | --- | --- | --- | --- |
-| 1A→按需2→3 / F-03d3f4d2 完整Avatar构造/后缀 | 进行中；String原getter返回与owned字符比较通过，完整Avatar→allocator→普通lookup/比较止TLS index准确首缺；完整后缀未闭 | String共同图冻结供R3；Hash/FindEntry及自然键未验。allocator仍须TLS/TEB/GC准确合同，enum/cold普通10294及完整构造/g2不补值或host成功；本批收尾后按用户要求暂停 | Sol max执行疑难后继；Sol xhigh/Terra接明确实现 | [真实后继与共同边界](docs/CLIENT_72_FRESH_AVATAR_STRING_SUCCESSOR.md)、[字符比较验收](docs/CLIENT_72_STRING_EQUALS_CONTENT.md)；完整父项不晋级 |
-| 1B→按需2→3 / R2-CONFIGSYNC-EARLY-BRIDGE | 进行中；自然13必要前缀env-0/两reference及退出恢复通过；原writer静态窗口、八点后继规格与整轮预算修正已审，新观察器未实现 | 首次任意P0/P2先占唯一尝试，参数/绑定/外collector分别限额；异常unwind保持未知。按用户要求收尾后暂停，不交新实现或实机；完整payload/Marshal/Init/route未闭 | Sol max处理协议/ABI；Sol xhigh最小实现/现场 | [实际自然13](docs/CLIENT_72_SDK_CONFIG_PREFIX_OBSERVER.md#新epoch自然13正常退出与stock恢复)、[仅规格验收与未实施边界](docs/CLIENT_72_SDK_PREFIX_NATURAL_SUCCESSOR.md) |
+| 1A→按需2→3 / F-03d3f4d2 完整Avatar构造/后缀 | 进行中；String原getter返回与owned字符比较通过，完整Avatar→allocator→普通lookup/比较止TLS index准确首缺；完整后缀未闭 | String共同图冻结供R3；Hash/FindEntry及自然键未验。allocator仍须TLS/TEB/GC准确合同，enum/cold普通10294及完整构造/g2不补值或host成功；已按用户要求暂停后继 | Sol max执行疑难后继；Sol xhigh/Terra接明确实现 | [真实后继与共同边界](docs/CLIENT_72_FRESH_AVATAR_STRING_SUCCESSOR.md)、[字符比较验收](docs/CLIENT_72_STRING_EQUALS_CONTENT.md)；完整父项不晋级 |
+| 1B→按需2→3 / R2-CONFIGSYNC-EARLY-BRIDGE | 进行中；自然13必要前缀env-0/两reference及退出恢复通过；原writer静态窗口、八点后继规格与整轮预算修正已审，新观察器未实现 | 首次任意P0/P2先占唯一尝试，参数/绑定/外collector分别限额；异常unwind保持未知。已按用户要求暂停后继，不交新实现或实机；完整payload/Marshal/Init/route未闭 | Sol max处理协议/ABI；Sol xhigh最小实现/现场 | [实际自然13](docs/CLIENT_72_SDK_CONFIG_PREFIX_OBSERVER.md#新epoch自然13正常退出与stock恢复)、[仅规格验收与未实施边界](docs/CLIENT_72_SDK_PREFIX_NATURAL_SUCCESSOR.md) |
 | 1B→按需2→3 / R2-ROUTE-CONFIG-SELECT | 进行中；准确托管loader存在，自然选择/Init未验 | 固定托管env选择、managed→native必要输入和安全事件；原始材料可得先离线，合同足够再实机 | Sol max语义；Sol xhigh接入 | [执行计划](docs/CLIENT_72_D02_RESUME_20261109.md) |
 | 1B/3，必要性确认后 / R2-PLUGIN-UI-REGISTRATION | 进行中；137B入口静态子项已验，producer未闭 | 固定RegisterTask入参、field25231字典set_Item上下文、真实producer和所选task；只在自然路径必要时继续，不以静态入口通过代验entry写入、实际转发或视图行为 | Sol max | [来源、已验子项及准确解除输入](docs/CLIENT_72_SDK_PLUGIN_UI_REGISTRATION.md) |
 | 2/3，复用early结论 / R2-CONFIGSYNC-OBSERVE | 进行中；实机装载已验，目标事件未捕获 | 复用装载/恢复和early结论核触发/安装时序；确需不同观察时先列新问题，取得目标事件及producer/consumer身份后验收。保持原转发/校验/恢复，不重复同实验 | Sol xhigh执行；Sol max处理未闭语义 | [实际结果与未知](docs/CLIENT_72_SDK_CONFIGSYNC_OBSERVER.md#新ready实际90秒未命中及恢复) |
 | 1C首诊→3加载→4恢复 / E-01 / E-01c / E-01d1 自然加载与正向保存 | 进行中；三文件自然首诊及303局部真实保存→新Player→Manager重绑已完成，完整必要资源/日志/场景事件与入场恢复仍未闭 | 局部63项及未就绪BSON不变直接复用；继续实际必需map/引用和完整加载，不由自然loadedAll=true推断resourceReady或全部恢复通过 | Sol xhigh定边界/集成；Terra做明确driver/清单 | [局部正向恢复](docs/CLIENT_72_D02_QUEST_303_NATURAL_REBIND.md)、[实际首诊](docs/CLIENT_72_D02_NATURAL_LOAD_FIRST_RUN.md)、[最小资源](docs/CLIENT_72_D02_MINIMUM_RESOURCES.md) |
 | 1C/3→4 / E-01 真实资源→Java必要字段 | 进行中；能量/装备/曲线桥梁及出生用途突破输入已验；完整Avatar/Item、加载/revision仍未闭 | 同源表/行→目标parser/消费者→Java字段逐项对应；先角色、depot、技能、默认装备、Scene及必需Quest，拒绝无证alias/省略 | Sol max处理新语义；Sol xhigh实现；Terra做已批投影 | [六表](docs/CLIENT_72_AVATAR_NATURAL_TABLES.md)、[Java目的合同](docs/CLIENT_72_D02_JAVA_RESOURCE_CONTRACT.md)、[突破/成长范围](docs/CLIENT_72_D02_PROMOTE_RESOURCE.md) |
-| 1A共同输入→3→4 / E-01/R3-ITEM-ENTRY | 进行中；gadgetId/key、完整候选/Java加载、有限parser语义、D-02必要性及Metal局部真实生命周期已验；String同epoch图/getter/owned字符路径已验，目标完整内容未闭 | Hash/FindEntry/自然配置命中及目标字段仍未知；不猜defense/common/LKLP alias、不许可空ability。完整能力、必要加载及保存另验；本批收尾后按用户要求暂停，factory及sender未启动 | Sol max维护String/配置语义；Sol xhigh现场/加载；Terra明确实现 | [真实候选/Java加载](docs/CLIENT_72_D02_GADGET_ABILITY_CANDIDATE.md)、[必要性与生命周期验收](docs/CLIENT_72_D02_GADGET_NECESSITY.md)、[目标未知](docs/CLIENT_72_GADGET_ABILITY_SEMANTICS.md) |
+| 1A共同输入→3→4 / E-01/R3-ITEM-ENTRY | 进行中；gadgetId/key、完整候选/Java加载、有限parser语义、D-02必要性及Metal局部真实生命周期已验；String同epoch图/getter/owned字符路径已验，目标完整内容未闭 | Hash/FindEntry/自然配置命中及目标字段仍未知；不猜defense/common/LKLP alias、不许可空ability。完整能力、必要加载及保存另验；已按用户要求暂停后继，factory及sender未启动 | Sol max维护String/配置语义；Sol xhigh现场/加载；Terra明确实现 | [真实候选/Java加载](docs/CLIENT_72_D02_GADGET_ABILITY_CANDIDATE.md)、[必要性与生命周期验收](docs/CLIENT_72_D02_GADGET_NECESSITY.md)、[目标未知](docs/CLIENT_72_GADGET_ABILITY_SEMANTICS.md) |
 | 3→4 / R2-ROUTE SDK配置、会话与自然连接（D-01 / F-02 / F-04） | 进行中；包/loader、map/app_key、原生builder/sign与Java真实HTTP/保存往返已验；自然Init/env及运行route未闭 | 固定来源追配置→选址→签名→会话交换；自然实验一次回答明确问题；必要输入可离线取得时先离线；与R2-SESSION/KEY汇合 | Sol max闭合新语义；Sol xhigh接入 | [配置loader](docs/CLIENT_72_SDK_ROUTE_LOADER.md)、[真实接收](docs/CLIENT_72_SDK_COMBO_HTTP.md)、[请求链](docs/CLIENT_72_SDK_LOGIN_CHAIN.md)；原登录页/root非空不证明请求成功 |
 | 3→4 / R2-KEY 窄key核心接原生Crypto（D-01 / F-04） | 进行中；同核native桥接、实际零hook/窄key装载及精确代码绑定已验；自然caller/route和完整校验未验 | 同一核心输出供真实SDK Crypto，覆盖身份、caller、寄存器/栈/返回保持及错误拒绝；自然key/认证与完整校验仍须实际验证 | Sol xhigh复用实现；Sol max处理自然caller/校验难点 | 不启用旧整DLL；[ABI](docs/CLIENT_72_SDK_KEY_INPUT_ABI.md)、[原生桥接](docs/CLIENT_72_SDK_KEY_NATIVE_BRIDGE.md)、[实际key观察](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md) |
 | 2/3→4 / R2-KEY-LOAD 独立入口启用key核心 | 进行中；产物/owned与实际安装/代码绑定/正常页恢复已验；自然caller与完整校验未验 | 独立产物仅接准确3950c0和同一callback；实际代码绑定不代验自然key被选中、认证或完整信任路径 | 主线Sol xhigh实机；Sol max处理已复现难点 | [产物与验收](docs/CLIENT_72_SDK_KEY_LOADER.md)、[实际观察](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md) |
@@ -115,7 +115,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 
 ## 4. 任务发布与范围控制
 
-1. **按3.2的依赖调度。** 恢复后先发A/B/C：最新warm/enum/String输入、SDK over-limit、真实loadAll首诊。R2-LOG、R2-SESSION、外部来源审计和已验采样器只复用，不重复发布。
+1. **恢复后按3.2依赖及3.4准确缺口调度。** 本轮A/B/C的已验子项列在第6节，包括自然首诊及303局部恢复，不重新发布旧研究或重复首诊。当前暂停，只有用户新恢复指令后才选取未闭出口；R2-LOG/SESSION及既有来源/采样成果直接复用。
 2. **规格成熟就实现。** Sol max给出明确来源/字段/时序和验收后，转Sol xhigh/Terra做最小变更；重大问题或长任务先规划。主线审核后执行必要测试/独立复现、本地提交、更新状态，再启动后继；无新变化或未决风险不重跑历史全量。
 3. **实机只补准确缺输入。** 不直接放大SDK预算、重复同参数观察或用零槽补值；需要用户操作时先备妥实验再一次说明操作/预期/反馈并等待新ready，同时继续独立工作。采集通过不代替消费者或业务通过。
 4. **必要性先于扩展。** 缺表/日志须结合真实入场调用筛选；不把全部Lua/资源表/玩法列P0，也不将未知默认判作可省略。完整Avatar/Scene、自然SDK、真实资源与保存各有独立出口，不以一项片段通过互相代验。

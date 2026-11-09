@@ -1,5 +1,7 @@
 # 7.2 迁移现状与本地运行基线
 
+2026-11-10当前：用户要求当前在途子项完成后暂停，主线已完成验收与本地提交，现不开新任务。String owned字符路径、Gadget有限parser语义、Metal真实Java局部生命周期及SDK后继规格已收尾；新八点观察器未实施。完整Avatar/Scene、Hash/FindEntry/自然键、必要资源与保存、完整SDK/route和D-02仍未完成，未部署GS。真实状态及恢复条件以[Project](../Project.md)和[HANDOFF2](../HANDOFF2.md)为准；下方持续执行/暂停和数字均按历史批次读取。
+
 2026-11-08持续执行入口以[Project](../Project.md)和[恢复计划](CLIENT_72_D02_RESUME_20261108.md)为准：R2-LOG/SESSION已完成限定修复、隔离回归与portable构建；key同核原生桥接、准确SDK配置loader/签名及资源七字段桥梁已验。fresh父descriptor、class1234/NativeConfig typed头/Pool精确绑定已取，Object表示已按原表解除，原生后继已到接口1169。独立透明入口零hook真实加载/SDK三窗已验，正常退出后已恢复stock。旧暂停、数量、PID和构建结论不作为当前现场。实际key启用、自然SDK事件、完整Avatar/Scene与必要资源加载持续推进；服务未部署，D-02六项真实验收全部未完成。
 
 2026-11-07已恢复持续D-02开发与必要实机联调；旧暂停/仅离线限制不再适用。五输入与保护文件本轮匹配，原数据/resources差异保留。R1/R2/R3合同先闭合，再R4汇合、portable隔离部署和R6新旧号完整实测；片段研究不批准未知生产字段。见[活动记录](CLIENT_72_D02_ACTIVE.md)。
