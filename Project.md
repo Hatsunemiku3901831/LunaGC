@@ -82,7 +82,7 @@
 
 | 批次 / 工作包 | 状态与依赖 | 交付与验收 | 推荐模型 | 证据与边界 |
 | --- | --- | --- | --- | --- |
-| 1A→按需2→3 / F-03d3f4d2 完整Avatar构造/后缀 | 进行中；三类壳/接口、32B发布、warm getter/四ordinary方法原写及List/HashSet/uint32候选取得；完整后缀未闭 | cold普通10294槽、同轮enum两个零槽分别取证；闭合真实allocator、完整cold/default、装备/技能/池及Handler后继，明确同源资源与Java读取时机。不补槽/flag/host成功，缺输入保留准确停止点 | Sol max；明确实现转Sol xhigh | [原消费者结果](docs/CLIENT_72_AVATAR_RUNTIME_REPLAY.md)、[新实测/准确守卫](docs/CLIENT_72_AVATAR_WARM_USAGES.md#本轮合并实测与收尾)；完整父项不晋级 |
+| 1A→按需2→3 / F-03d3f4d2 完整Avatar构造/后缀 | 进行中；最新uint32 HashSet构造/enum warm getter真实返回，List原片段及enum零槽lazy分支已执行；完整后缀未闭 | 继续准确allocator、enum锁来源/实际definition pointer、cold普通10294及完整cold/default/装备/技能/池/Handler。String真实carrier合同已冻结交独立collector；不补槽/flag/host成功，不借inflated同号 | Sol max语义已交限定后继；Sol xhigh/Terra接明确实现 | [最新原执行/首缺/共同合同](docs/CLIENT_72_AVATAR_WARM_CONTINUATION.md)、[原回放](docs/CLIENT_72_AVATAR_RUNTIME_REPLAY.md)；完整父项不晋级 |
 | 1B→按需2→3 / R2-CONFIGSYNC-EARLY-BRIDGE | 进行中；自然准确caller已到达；同epoch/ABI已核，旧event5可排除name，payload两限额出口仍未分辨 | 已验离线归因直接复用；Sol xhigh实现独立11/12终态并保留旧源/pin/限额，实际构建/owned后再按新规格实机。保持原转发/参数/校验；原Marshal/export/writer返回及route继续各自验收 | Sol max分析已交付；Sol xhigh实现 | [归因与最小规格](docs/CLIENT_72_SDK_EARLY_CLASSIFICATION_AUDIT.md)、[原实测](docs/CLIENT_72_SDK_CONFIGSYNC_EARLY_BRIDGE.md#本轮自然实测及停止结论)；不由旧5推断自然长度/NUL/具体出口 |
 | 1B→按需2→3 / R2-ROUTE-CONFIG-SELECT | 进行中；准确托管loader存在，自然选择/Init未验 | 固定托管env选择、managed→native必要输入和安全事件；原始材料可得先离线，合同足够再实机 | Sol max语义；Sol xhigh接入 | [执行计划](docs/CLIENT_72_D02_RESUME_20261109.md) |
 | 1B/3，必要性确认后 / R2-PLUGIN-UI-REGISTRATION | 进行中；137B入口静态子项已验，producer未闭 | 固定RegisterTask入参、field25231字典set_Item上下文、真实producer和所选task；只在自然路径必要时继续，不以静态入口通过代验entry写入、实际转发或视图行为 | Sol max | [来源、已验子项及准确解除输入](docs/CLIENT_72_SDK_PLUGIN_UI_REGISTRATION.md) |
@@ -195,6 +195,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3f4d2/R1-RUNTIME-INPUT-REPLAY | 已完成 | 同轮warm原返回、四ordinary MethodInfo及ASLR函数指针原store已验；cold停普通10294槽，完整构造/default原写未验。 | [实际消费者与精确后继](docs/CLIENT_72_AVATAR_RUNTIME_REPLAY.md) |
 | F-03d3f4d2/R1-WARM-USAGES | 已完成 | main/optionalString分立的纯collector、来源、读预算与统一末尾复读owned已验；自然输入由adapter另验，完整构造未验。 | [真实来源/预算/主线验收](docs/CLIENT_72_AVATAR_WARM_USAGES.md) |
 | F-03d3f4d2/R1-WARM-USAGES-ADAPTER | 已完成 | 有界自然采集、身份/复读及退出恢复已验；7/8候选取得，enum两个零槽及String空usage真实保留，完整图/消费者/父项未完成。 | [实际结果与准确未闭项](docs/CLIENT_72_AVATAR_WARM_USAGES.md#本轮合并实测与收尾) |
+| F-03d3f4d2（最新warm原消费者后继）；E-01/R3-ITEM-ENTRY（String共同合同v2） | 已完成 | 三fresh10case/158步同字节，20检查及主线17审核；uint32构造/getter/List片段和零槽lazy分支有界执行，allocator/锁/definition pointer分别止准确首缺。String真实Dictionary carrier合同已由主线冻结为独立54读2704B；只批准collector实现，未采自然图、未完成比较/配置/父项。 | [原执行、未知和合同](docs/CLIENT_72_AVATAR_WARM_CONTINUATION.md) |
 
 ### 6.3 SDK、补丁、观察与运维前置
 
