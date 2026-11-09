@@ -200,6 +200,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3f4d2；E-01/R3-ITEM-ENTRY（同epoch联合后继采集工具步骤） | 已完成 | 独立collector/adapter、三fresh人工图、16测试及134项审核通过；最坏76读/3264B、统一final与18父pin保持，主线实际stock/source门禁通过。只批准新epoch采集准备，未采自然String/普通root或验原生消费，父项不晋级。 | [合同、工具及实际门禁范围](docs/CLIENT_72_AVATAR_STRING_SUCCESSOR_INPUTS.md) |
 | F-03d3f4d2；E-01/R3-ITEM-ENTRY（联合stock自然输入采集步骤） | 已完成 | 新实时确认下90秒/44监测，69读2704B取得四分支同epoch候选图；15项完整纯重放、身份/末尾复读及正常页/退出保护通过。FindEntry仍零，factory/比较/完整构造/配置能力未验；只交冻结输入给后继，不晋级父项。 | [实际输入、去重预算及未验边界](docs/CLIENT_72_AVATAR_STRING_SUCCESSOR_INPUTS.md#新实时确认的联合stock采集) |
 | F-03d3f4d2；E-01/R3-ITEM-ENTRY（fresh原getter/普通查询比较后继步骤） | 已完成 | 两fresh同字节，真实GetDefault25条返回同轮Default；完整Avatar连续105完成后止缺TLS4B。13测试/13主线审核及限定String共同边界冻结通过；无host返回/跨epoch数据，Equals体/allocator返回/完整父项未验。 | [实际原执行、准确首缺及冻结范围](docs/CLIENT_72_FRESH_AVATAR_STRING_SUCCESSOR.md) |
+| F-03d3f4d2；E-01/R3-ITEM-ENTRY（String Equals实际入口前缀步骤） | 已完成 | 无pdata事实保留，独立获批64B中只执行可达48B；两fresh8call/66完成、13测试及12主线审核通过。null/null、同owned指针、长度不同实际AL=1/1/0；等长不同地址停Helper2908尾跳前，未比较字符/自然键，不完成完整比较器/FindEntry或父项。 | [准确源、owned范围与尾ABI](docs/CLIENT_72_STRING_EQUALS_SUCCESSOR.md) |
 
 ### 6.3 SDK、补丁、观察与运维前置
 
