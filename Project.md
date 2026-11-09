@@ -82,8 +82,8 @@
 
 | 批次 / 工作包 | 状态与依赖 | 交付与验收 | 推荐模型 | 证据与边界 |
 | --- | --- | --- | --- | --- |
-| 1A→按需2→3 / F-03d3f4d2 完整Avatar构造/后缀 | 进行中；String原getter返回与owned字符比较通过，完整Avatar→allocator→普通lookup/比较止TLS index准确首缺；完整后缀未闭 | String共同图冻结供R3；自然Hash/FindEntry及自然键未验。allocator仍须TLS/TEB/GC准确合同，enum/cold普通10294及完整构造/g2不补值或host成功；当前先审能解除必需Gadget查询的最小String后继 | Sol max执行疑难后继；Sol xhigh/Terra接明确实现 | [真实后继与共同边界](docs/CLIENT_72_FRESH_AVATAR_STRING_SUCCESSOR.md)、[字符比较验收](docs/CLIENT_72_STRING_EQUALS_CONTENT.md)；完整父项不晋级 |
-| 1B→按需2→3 / R2-CONFIGSYNC-EARLY-BRIDGE | 进行中；自然13必要前缀env-0/两reference及退出恢复通过；原writer静态窗口、八点后继规格与整轮预算修正已审，新观察器未实现 | 首次任意P0/P2先占唯一尝试，参数/绑定/外collector分别限额；异常unwind保持未知。当前审核准确搬移/观测合同后交独立实现、owned和collector；完整payload/Marshal/Init/route未闭 | Sol max处理协议/ABI；Sol xhigh最小实现/现场 | [实际自然13](docs/CLIENT_72_SDK_CONFIG_PREFIX_OBSERVER.md#新epoch自然13正常退出与stock恢复)、[冻结规格](docs/CLIENT_72_SDK_PREFIX_NATURAL_SUCCESSOR.md) |
+| 1A→按需2→3 / F-03d3f4d2 完整Avatar构造/后缀 | 进行中；String原getter/owned字符已验，必要FindEntry新输入边界及TLS静态后继已明确；fresh准确首缺仍TLS index，完整后缀未闭 | 自然String字典/查询/MI/调用帧及trigger未知，不重复SDK页碰运气；当前仅核allocator直接callee的一个准确PE原窗。TLS/TEB/GC、enum/cold普通10294及完整构造/g2不补值或host成功 | Sol max执行疑难后继；Sol xhigh/Terra接明确实现 | [新自然输入边界](docs/CLIENT_72_D02_A_SUCCESSOR_20261110.md)、[字符比较验收](docs/CLIENT_72_STRING_EQUALS_CONTENT.md)；完整父项不晋级 |
+| 1B→按需2→3 / R2-CONFIGSYNC-EARLY-BRIDGE | 进行中；自然13/env-0/两reference/恢复及八点修正规格已验；Sol xhigh正在独立实现，尚未构建/owned/实机 | P0实际14B→C3；首次任意P0/P2先占唯一尝试，参数/绑定/外collector分别限额，失败保留真实mask；异常unwind保持未知。完成独立产物/owned/collector后才申请新ready；完整payload/Marshal/Init/route未闭 | Sol max处理协议/ABI；Sol xhigh最小实现/现场 | [八点实施审核及覆盖纠正](docs/CLIENT_72_D02_B_SDK_AUDIT_20261110.md)、[实际自然13](docs/CLIENT_72_SDK_CONFIG_PREFIX_OBSERVER.md#新epoch自然13正常退出与stock恢复) |
 | 1B→按需2→3 / R2-ROUTE-CONFIG-SELECT | 进行中；准确托管loader存在，自然选择/Init未验 | 固定托管env选择、managed→native必要输入和安全事件；原始材料可得先离线，合同足够再实机 | Sol max语义；Sol xhigh接入 | [执行计划](docs/CLIENT_72_D02_RESUME_20261109.md) |
 | 1B/3，必要性确认后 / R2-PLUGIN-UI-REGISTRATION | 进行中；137B入口静态子项已验，producer未闭 | 固定RegisterTask入参、field25231字典set_Item上下文、真实producer和所选task；只在自然路径必要时继续，不以静态入口通过代验entry写入、实际转发或视图行为 | Sol max | [来源、已验子项及准确解除输入](docs/CLIENT_72_SDK_PLUGIN_UI_REGISTRATION.md) |
 | 2/3，复用early结论 / R2-CONFIGSYNC-OBSERVE | 进行中；实机装载已验，目标事件未捕获 | 复用装载/恢复和early结论核触发/安装时序；确需不同观察时先列新问题，取得目标事件及producer/consumer身份后验收。保持原转发/校验/恢复，不重复同实验 | Sol xhigh执行；Sol max处理未闭语义 | [实际结果与未知](docs/CLIENT_72_SDK_CONFIGSYNC_OBSERVER.md#新ready实际90秒未命中及恢复) |
@@ -202,6 +202,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3f4d2；E-01/R3-ITEM-ENTRY（fresh原getter/普通查询比较后继步骤） | 已完成 | 两fresh同字节，真实GetDefault25条返回同轮Default；完整Avatar连续105完成后止缺TLS4B。13测试/13主线审核及限定String共同边界冻结通过；无host返回/跨epoch数据，Equals体/allocator返回/完整父项未验。 | [实际原执行、准确首缺及冻结范围](docs/CLIENT_72_FRESH_AVATAR_STRING_SUCCESSOR.md) |
 | F-03d3f4d2；E-01/R3-ITEM-ENTRY（String Equals实际入口前缀步骤） | 已完成 | 无pdata事实保留，独立获批64B中只执行可达48B；两fresh8call/66完成、13测试及12主线审核通过。null/null、同owned指针、长度不同实际AL=1/1/0；等长不同地址停Helper2908尾跳前，未比较字符/自然键，不完成完整比较器/FindEntry或父项。 | [准确源、owned范围与尾ABI](docs/CLIENT_72_STRING_EQUALS_SUCCESSOR.md) |
 | F-03d3f4d2；E-01/R3-ITEM-ENTRY（String原字符比较步骤） | 已完成 | 两fresh各14case从实际10339经原尾跳/177B Helper2908返回，累计28call/1302完成且预期AL全符；13只读测试及主线15审核通过。显式owned NUL尾读逐字节保留；自然allocator终止存储、Hash/FindEntry、自然键、完整Comparer/构造及父项未验。 | [原字符路径、预算与主线验收](docs/CLIENT_72_STRING_EQUALS_CONTENT.md) |
+| F-03d3f4d2；E-01/R3-ITEM-ENTRY（必要String自然后继边界） | 已完成 | 三个原窗/28关键opcode/10pin及TLS420B静态复核、6测试与主线第三同字节；明确Gadget到asset-key的实际consumer及首NUL hash规则，旧5次hash只复用。自然字典/查询/MI/帧/trigger缺失，26/816图仅proposal，未新CPU/PE/live或验完整查询。 | [准确源、必要性、输入与停止条件](docs/CLIENT_72_D02_A_SUCCESSOR_20261110.md) |
 
 ### 6.3 SDK、补丁、观察与运维前置
 
@@ -240,6 +241,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | R2-CONFIGSYNC-EARLY-BRIDGE（独立前缀产物与文件门禁步骤） | 已完成 | 原读取限额内借用已有副本，独立DLL/fixture实际release构建、两fresh各54例ABI、51EAT/72B DATA/完整284B、六源/86pin及主线14审核通过；新adapter四SHA绑定、33检查和真实隔离布局文件门禁通过。未安装GAME_PATH或取得新自然13/11，不代验完整payload/Marshal/Init/route。 | [实际构建、ABI及门禁](docs/CLIENT_72_SDK_CONFIG_PREFIX_OBSERVER.md#主线实际构建abi及文件门禁验收) |
 | R2-CONFIGSYNC-EARLY-BRIDGE（自然必要前缀13观察步骤） | 已完成 | 新ready下90秒/45monitor、9读1450B、完整原代码绑定及16项主线纯重放通过；自然cn-env-0/两reference等值已取，用户正常页/退出及stock/保护恢复通过。仅前缀，不代验完整payload/NUL、原Marshal/SDK writer/Init/route/认证。 | [实际事件、恢复及准确未验范围](docs/CLIENT_72_SDK_CONFIG_PREFIX_OBSERVER.md#新epoch自然13正常退出与stock恢复) |
 | R2-CONFIGSYNC-EARLY-BRIDGE（writer窗口与整轮后继观察规格步骤） | 已完成 | 原5422B完整writer、21项静态投影与12项预算纯模型、主线8项审核通过；首次任意P0/P2唯一尝试，参数16读/37B、绑定17读/6409B、外采成功30读/10415B和拒绝1读/256B分别固定。仅规格；八点观察器未实现/构建/实机，unwind、自然Marshal/writer/Init/route及父项未验。 | [来源、修正、主线验收及未实施边界](docs/CLIENT_72_SDK_PREFIX_NATURAL_SUCCESSOR.md) |
+| R2-CONFIGSYNC-EARLY-BRIDGE、R2-ROUTE-CONFIG-SELECT（八点实施审核步骤） | 已完成 | 26项冻结材料审核与主线第三同字节，明确P0实际14B→C3、新loader窗口分块、首次尝试、writer-open、真实mask及三账本；旧原文/报告保持。已交Sol xhigh实施，实际产物/owned/collector/自然执行、unwind和业务均待验。 | [实施合同、覆盖纠正与出口](docs/CLIENT_72_D02_B_SDK_AUDIT_20261110.md) |
 | F04-LOADER-CLEAN 独立透明入口 | 已完成 | 零hook独立透明入口、实际stock/SDK绑定、正常登录页/退出恢复已验；key/trust/route自然链和完整校验另验。 | [计划/产物/真实范围](docs/CLIENT_72_CLEAN_LOADER.md) |
 | R2-KEY-LOAD-OBSERVE 固定只读观察 | 已完成 | 窄key入口实际安装、精确代码/转发/回调绑定、正常页及退出恢复已验；未证明自然key调用、route或完整校验。 | [实际结果、来源与边界](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md) |
 
