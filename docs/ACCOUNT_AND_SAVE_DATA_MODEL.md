@@ -1,5 +1,7 @@
 # 账号与存档数据模型
 
+2026-11-10 [303局部自然恢复](CLIENT_72_D02_QUEST_303_NATURAL_REBIND.md)未新增生产字段/集合或迁移。历史宽松JSON夹具导入后，首次真实Morphia保存将63个child的startGameDay=0与timeVar十项=-1由BSON INT32写为INT64，73处值保持、恰增长292B；另做类型保真原始BSON比较确认无字段增删/值/顺序变化，Manager恢复后字节完全相同。driver的RawFieldDifferences字段基于宽松JSON，不能单独证明整数宽度或字节一致。
+
 2026-11-08 [认证日志修正](CLIENT_72_AUTH_LOGGING.md)没有新增或迁移字段/集合，不调整token保存或密码策略。合成账号回归证明原token采用仍保存预期值，日志不含账号及旧/新token片段；两套35项通过，不表示7.2 SDK或真实旧号重登已通过。
 
 2026-11-07本轮未新增数据库字段、集合、UID规则或存档迁移。Chapter模式2项真实303保存及新Player BSON冷读通过，loadedAll=false真实manager拒绝仍保留；这不是正向QuestManager重绑。Avatar准备段只从明确只读夹具getter投影独立测试wire，未改持久模型/正式sender；Store仅关联GUID，未宣称物品ID或完整资源一致。参见[本轮记录](CLIENT_72_SOL_TERRA_OFFLINE.md)。

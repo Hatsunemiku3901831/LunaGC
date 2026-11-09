@@ -1,5 +1,7 @@
 # 账号与存档系统接手指南
 
+2026-11-10 [303局部自然恢复](CLIENT_72_D02_QUEST_303_NATURAL_REBIND.md)通过：固定三文件自然loadAll后，真实Morphia保存→新Player→QuestManager将63个child绑定该轮真实定义，父子owner/manager及状态/进度保持。未就绪负例0写且原始BSON不变；正向显式保存和一次空fail keys元数据重绑各完成一写。未改生产保存/准入或手设loadedAll；完整资源、事件/场景和新旧号实机重登仍未验。
+
 2026-11-08 [认证日志修正](CLIENT_72_AUTH_LOGGING.md)移除三个生产类中的认证正文、解密明文、账号和token片段；密码、密钥选择、既有token策略与保存不变。真实handler/RSA和独立Mongo账号回归两套35项通过，无失败/错误/跳过。7.2 SDK key/route和本服客户端仍未验，不批准旧fallback或token策略。
 
 2026-11-07[Astra离线研究](CLIENT_72_ASTRA_OFFLINE.md)未改账号/保存代码或数据库，未执行新的loadAll/正向QuestManager。Avatar最终装备/属性/SavedVitals时序和资源未知不能填零的约束写入后续规格；客户端登录/退出重登仍未验，具体缺输入见HANDOFF2。

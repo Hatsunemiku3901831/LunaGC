@@ -1,5 +1,7 @@
 # 账号与存档运维和开发手册
 
+2026-11-10 [303局部自然恢复](CLIENT_72_D02_QUEST_303_NATURAL_REBIND.md)在新独立27027/随机库实际编译及运行通过，10工具检查、24主线审核；新Player/真实Manager恢复63项、未就绪BSON不变、队列0→1→2且失败/拒绝/未完成均0。保留三文件loadAll的10WARN/326ERROR及17814行拒绝，不以此断言原resources有缺陷；全局resourceReady仍false。自身Mongo正常shutdown/exit0/端口释放，DB/BSON及失败run保留，原27017/运行数据不动；未部署GS或验客户端重登。
+
 2026-11-08 R2-COMBO-HTTP：6项真实Javalin/default认证/独立Mongo同步保存测试及六例原生请求→真实HTTP→原生响应通过；错误认证不出token、BSON不变，成功login token沿既有规则轮换且session/角色归属保持。未新增字段或修改认证/保存策略；两新27027实例正常停库，原27017/数据不动。准确PIPE保密、64位/嵌套、16项mock与复现见[combo HTTP](CLIENT_72_SDK_COMBO_HTTP.md)，不代验自然SDK或D-02旧号重登。
 
 认证日志最新完整隔离结果更新为`d02-active/auth-logging/mongo-review4/green/`：副本原data绝对路径继承已纠正，四可写目录显式归属新runtime后35项全过，原8文件前后SHA一致、Mongo正常关闭。路径纠正前结果/失败保留，详见[日志专题](CLIENT_72_AUTH_LOGGING.md)；无新增运行代码或构建。
