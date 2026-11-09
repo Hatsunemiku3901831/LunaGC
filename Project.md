@@ -82,7 +82,7 @@
 
 | 批次 / 工作包 | 状态与依赖 | 交付与验收 | 推荐模型 | 证据与边界 |
 | --- | --- | --- | --- | --- |
-| 1A→按需2→3 / F-03d3f4d2 完整Avatar构造/后缀 | 进行中；普通root/1255槽、比较单元及String1243/Equals10339同轮输入图已取，旧allocator原首缺有新输入；完整后缀未闭 | Sol max只用新epoch图与冻结原窗推进getter/allocator消费者；继续enum锁/definition pointer、cold普通10294及完整构造/g2。不得把新根插入旧warm图，不补槽/flag/host成功 | Sol max执行疑难后继；Sol xhigh/Terra接明确实现 | [新同轮输入与范围](docs/CLIENT_72_AVATAR_STRING_SUCCESSOR_INPUTS.md#新实时确认的联合stock采集)、[allocator旧停止点](docs/CLIENT_72_AVATAR_ALLOCATOR_SUCCESSOR.md)；完整父项不晋级 |
+| 1A→按需2→3 / F-03d3f4d2 完整Avatar构造/后缀 | 进行中；String原warm getter真实返回Default，完整Avatar→allocator→普通lookup/比较已至TLS index准确首缺；完整后缀未闭 | 单独推进实际Equals10339原窗/消费者，String共同图已主线冻结供R3；allocator须先定TLS/TEB/GC准确合同，继续enum/cold普通10294及完整构造/g2，不补值或host成功 | Sol max执行疑难后继；Sol xhigh/Terra接明确实现 | [真实后继、主线验收和共同边界](docs/CLIENT_72_FRESH_AVATAR_STRING_SUCCESSOR.md)、[新同轮图](docs/CLIENT_72_AVATAR_STRING_SUCCESSOR_INPUTS.md)；完整父项不晋级 |
 | 1B→按需2→3 / R2-CONFIGSYNC-EARLY-BRIDGE | 进行中；新自然13确认必要前缀env-0/两reference等值及language预算位置，正常页/退出/stock恢复通过；完整payload/Marshal/Init未闭 | Sol max消费新前缀事实，沿原桥的Marshal→SDK writer→返回/route最短路径补准确执行事实，规格明确即交Sol xhigh；不重做language超限或扩大读取 | Sol max处理协议/ABI；Sol xhigh最小实现/现场 | [自然13、恢复及保留边界](docs/CLIENT_72_SDK_CONFIG_PREFIX_OBSERVER.md#新epoch自然13正常退出与stock恢复)；完整payload/NUL/Marshal/Init/route仍未知 |
 | 1B→按需2→3 / R2-ROUTE-CONFIG-SELECT | 进行中；准确托管loader存在，自然选择/Init未验 | 固定托管env选择、managed→native必要输入和安全事件；原始材料可得先离线，合同足够再实机 | Sol max语义；Sol xhigh接入 | [执行计划](docs/CLIENT_72_D02_RESUME_20261109.md) |
 | 1B/3，必要性确认后 / R2-PLUGIN-UI-REGISTRATION | 进行中；137B入口静态子项已验，producer未闭 | 固定RegisterTask入参、field25231字典set_Item上下文、真实producer和所选task；只在自然路径必要时继续，不以静态入口通过代验entry写入、实际转发或视图行为 | Sol max | [来源、已验子项及准确解除输入](docs/CLIENT_72_SDK_PLUGIN_UI_REGISTRATION.md) |
@@ -199,6 +199,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3f4d2（typed allocator普通查询后继步骤） | 已完成 | 原完整Avatar入口连续执行allocator及旧已验纯native查询，61条完成/62次前观察，准确止于未采普通类缓存root；三fresh同字节，26测试及主线13项审核通过。未取得分配返回、普通1255结果或GC/TLS/OS成功，不代验完整构造。 | [原窗、执行、真实首缺及String后继](docs/CLIENT_72_AVATAR_ALLOCATOR_SUCCESSOR.md) |
 | F-03d3f4d2；E-01/R3-ITEM-ENTRY（同epoch联合后继采集工具步骤） | 已完成 | 独立collector/adapter、三fresh人工图、16测试及134项审核通过；最坏76读/3264B、统一final与18父pin保持，主线实际stock/source门禁通过。只批准新epoch采集准备，未采自然String/普通root或验原生消费，父项不晋级。 | [合同、工具及实际门禁范围](docs/CLIENT_72_AVATAR_STRING_SUCCESSOR_INPUTS.md) |
 | F-03d3f4d2；E-01/R3-ITEM-ENTRY（联合stock自然输入采集步骤） | 已完成 | 新实时确认下90秒/44监测，69读2704B取得四分支同epoch候选图；15项完整纯重放、身份/末尾复读及正常页/退出保护通过。FindEntry仍零，factory/比较/完整构造/配置能力未验；只交冻结输入给后继，不晋级父项。 | [实际输入、去重预算及未验边界](docs/CLIENT_72_AVATAR_STRING_SUCCESSOR_INPUTS.md#新实时确认的联合stock采集) |
+| F-03d3f4d2；E-01/R3-ITEM-ENTRY（fresh原getter/普通查询比较后继步骤） | 已完成 | 两fresh同字节，真实GetDefault25条返回同轮Default；完整Avatar连续105完成后止缺TLS4B。13测试/13主线审核及限定String共同边界冻结通过；无host返回/跨epoch数据，Equals体/allocator返回/完整父项未验。 | [实际原执行、准确首缺及冻结范围](docs/CLIENT_72_FRESH_AVATAR_STRING_SUCCESSOR.md) |
 
 ### 6.3 SDK、补丁、观察与运维前置
 
