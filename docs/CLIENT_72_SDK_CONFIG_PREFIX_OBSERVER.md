@@ -54,7 +54,17 @@ DATA仍72B、event offset56、原字段顺序和release发布、准确caller及o
 
 主线只回填新adapter四个SHA常量；绑定后33项再通过。adapter SHA `c3ffdeb1713c789378e74190b7b32c77abbf189bc21134d6c72697621f2f41b1`。在忽略目录以当前stock硬链接和独立proxy副本构成隔离文件布局，实际未mock的accepted/preflight门禁通过，记录SHA `67c824047dada8190f0ce1c69b68025647a72443f31587a28e6656a33e23ab83`。此布局不是GAME_PATH安装，也未启动客户端。私有wrapper的旧LASTEXITCODE、审核中exports列表计数及记录bytes序列化问题均保留原件，修正未改变源、产物、预算或门禁。
 
-当前仅验本节产物与文件门禁，新的自然13/11均尚未取得。原Marshal、完整Init/route/认证、R1/R3及R4前置仍未齐，未部署游戏服务。新的prefix专属scope、备份/安装/退出恢复脚本须主线预检并取得新实时确认；旧ready不复用。
+本节构建验收时尚未取得新自然13/11；其后实际新epoch见下节。原Marshal、完整Init/route/认证、R1/R3及R4前置仍未齐，未部署游戏服务。每轮prefix专属scope、备份/安装/退出恢复脚本须主线预检并取得新实时确认；旧ready不复用。
+
+## 新epoch自然13、正常退出与stock恢复
+
+专属helper经主线逐项审阅，122个唯一source pin含实际28文件Python导入闭包；新plan SHA `69e6662d7d990ef6d262dd44e1ca5561ecf9f90089b9a72ec9248287a564a80c`。实际CheckOnly五stock/13保护/SDK carrier/无进程端口通过；用户随后新确认后才写本epoch ready、Hidden UAC备份/安装准确DLL并启动90秒观察。没有复用先前split或联合stock采集的ready。
+
+实际45次monitor、唯一9读1450B/max512，前后72B自有DATA相同，完整284B trampoline、38B wrapper及47原转发精确绑定。准确caller自然取得**event13、cn-env-0、appKeyMatches=true、comboUrlMatches=true**，只确认必要前缀字段及后续language quoted value跨原unit预算。四项完整payload/NUL/Marshal/Init-route标志仍false，未保存自然正文、长度/hash、key或URL。原5/11 epoch和限额不改，停止继续追大language或无假设扩大读取。
+
+原始`helper-preparation/live1.private.json` SHA `8be0a8a53eb173a375473645ad955d0fdd5ce5b0d63fa3f8c91dcfb73e3cdef2`；同名`.reads.private.json` SHA `2ed9de53be71624df8844d93ac6e01f63d8ebad38ad146374b8ac4927738691b`。主线以这9条原始账本纯重放，完整输出逐字段相同；16审核通过，`main-live-acceptance.private.json` SHA `934ba6137f724ffa35d20628ea7e8fd40cc65ed6a621df36892c9cd01844171e`。前后creation/module身份、末尾alive/关闭和新ready/source/artifact join均通过，observer实际exit0。
+
+用户反馈页面正常、已正常退出。仅恢复本轮精确备份和自建alias，恢复helper实际exit0，五stock/13保护/缺席/carrier保持、自有alias移除；主线结束相关进程及固定监听0。原始journal/launch/prepared/finished/restored/after均在本卡`helper-preparation/`，stock互斥已释放。此自然前缀不关闭完整分类/原Marshal、SDK writer返回、自然Init/route、认证或D-02；已交Sol max固定最短后继，继续复用原桥/writer/HTTP/key，不重做语言预算实验。未部署GS。
 
 ## 主线构建复现和新的自然准备范围
 
