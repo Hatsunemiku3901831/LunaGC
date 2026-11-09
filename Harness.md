@@ -1,3 +1,5 @@
+当前调度入口：[Project并行路线与模型分配](Project.md#d02-parallel)。研发仍暂停，恢复后按依赖派工；本页历史执行顺序只供复现，不作为当前待办。任务状态/完成标记在Project维护，日志和原始失败继续留本页与专题。
+
 2026-11-09 持续执行 D-02：[当前计划](docs/CLIENT_72_D02_RESUME_20261109.md)、[任务/验收](Project.md)。历史暂停、仅规划及仅离线节奏由本轮用户继续指令覆盖。接手 d31de75，五 stock 输入及13保护文件已重新固定，无项目客户端/服务/调试器或相关监听；原始盘点 `local/migration72/d02-resume-20261109/initial-inventory.private.json`。resources 原有场景 JSON 差异保留；不重计已验成果，前置合同充分后再隔离部署及六项新旧号实测。
 
 2026-11-08 E-01-PROMOTE-ENTRY：主线第三3,297,024B/SHA546b95ce…d70fef1同双跑，20测试/26独立审计/6 host gate回归通过；WP/AP/AC各1821/889/100行，2个出生用途Promote及100Curve输入、完整Weapon stat6非零case已验。重复whitelist宿主扫描已同集合去重修复，旧probe03明确强制性能取消，非native结果。[准确用途/模型/失败/未闭字段](docs/CLIENT_72_D02_PROMOTE_RESOURCE.md)，proof `r3-promote/main-review.private.json`。不启HP/critical/gadget/Java后继，交接后暂停。
