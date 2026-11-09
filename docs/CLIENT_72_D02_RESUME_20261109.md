@@ -1,5 +1,15 @@
 # D-02 持续执行与定向外部复用
 
+## 本次恢复：现有并行路线实际执行
+
+用户最新指令恢复至D-02全部实测通过，覆盖下方历史批次与交接中的暂停节奏。接手`7d1244f`，当前盘点与规划备份位于`local/migration72/d02-parallel-20261109/`；五stock相符，13个现存保护文件及`.env.local`缺席保持，相关进程/固定监听均0。patch为`8c25554`且clean，resources为`dac2a9d`并保留原场景JSON差异。原任务ID、完成范围和未知不重排、不升父项；调度依据仍为Project第3.2—3.5节。
+
+A实际指定`gpt-6.1-sol/max`：`F-03d3f4d2`与String共同输入，冻结最新warm-live2及原回放，先执行已足消费者，解释enum两零槽/String空usage；新工具/专题与输出`a-avatar-string/`独占，不改旧collector/pin。B实际指定`gpt-6.1-sol/max`：`R2-CONFIGSYNC-EARLY-BRIDGE`与`R2-ROUTE-CONFIG-SELECT`，先用冻结ABI及owned正反区分over-limit，输出`b-sdk-analysis/`；新实现规格交主线后再由Sol xhigh实现，不直接扩大限额。两分支只读输入/旧报告/运行材料；Git、构建、资源实际加载、DB、客户端及共享文档由主线独占。
+
+C为现有`E-01/E-01c/E-01d1`首诊步骤，主线采用[首诊审计](CLIENT_72_D02_NATURAL_LOAD_FIRST_AUDIT.md)中的三文件部分输入：Chapter `6c291ee3…55f164`、QuestExcel `c8561299…37a87`、303 `aaf6901d…d3cca`，完整SHA与路径在原审计和新manifest。固定根JAR `8f093e19…267291`，构建来源`d02-resume-20261108/build/artifact-proof.json`（源码提交`496e96f`、release JAR、变化class匹配编译）与原31源/24类族审计复用并重核。独立W内R仅三个文件；S=`R/Scripts/`，Quest/Share、Gadget空目录，Scene/groups_replacement.lua自然缺席；选定JAR三个historical直接域必须为空。D为空，现行DataLoader真实使用该固定JAR默认项，逐项记录，不加入原data或空占位表。生产各步照常调用，不手设loadedAll，不跳Lua初始化或吞生产异常。
+
+Terra按上述完整规格做新driver、清单与记录器，主线审核后在新JVM仅调用一次真实loadAll；编译/运行各90秒，堆上限1024MiB，真实CWD和所有可写目录归W。记录来源、实际路径/格式竞争、首WARN/ERROR及完整诊断/拒绝、关键map/303/Chapter事实、返回或异常、自然loadedAll、线程/class-init及输入外影响。来源漂移、未声明脚本/输入、服务/DB类初始化、外部副作用或预算耗尽停在准确边界。这个固定部分输入的缺失不代表原resources缺陷，loadedAll自然true也不批准resourceReady或正向Manager恢复。实际命令/结果后续写本节或专题，不记作D-02实机。
+
 本轮按用户继续指令执行，覆盖历史暂停、仅规划及仅离线节奏；验收、数据保护和部署门禁保持。起始提交 `d31de75`，patch/resources 锁定提交与交接相符，主仓库仅 resources 原有场景 JSON 差异。当前配置为 portable；五个 stock 输入哈希相符、13 个保护文件已固定；本轮盘点无项目客户端、Java、MongoDB、调试器及相关监听。原始盘点在 `local/migration72/d02-resume-20261109/initial-inventory.private.json`，不沿用旧 PID 或地址。
 
 ## 当前关键路径与复用

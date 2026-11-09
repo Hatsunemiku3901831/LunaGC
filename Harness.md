@@ -1,4 +1,4 @@
-当前调度入口：[Project并行路线与模型分配](Project.md#d02-parallel)。研发仍暂停，恢复后按依赖派工；本页历史执行顺序只供复现，不作为当前待办。任务状态/完成标记在Project维护，日志和原始失败继续留本页与专题。
+当前已按用户最新指令恢复持续执行：[Project并行路线与模型分配](Project.md#d02-parallel)。从`7d1244f`核对恢复，A/B为Sol max，C由主线固定首诊边界后交Terra；本页历史暂停只供追溯。新盘点`local/migration72/d02-parallel-20261109/initial-inventory.private.json`：五stock匹配，13个现存保护文件及`.env.local`不存在事实已固定，相关进程和固定端口均0。Project修改前副本在同目录`Project.before-resume.md`，SHA`e67d321f5e3494a373e7a40570dcbc204579c9dbd8cf0a92bf4d2a05911145ea`。任务状态/完成标记在Project维护，日志和原始失败继续留本页与专题。
 
 2026-11-09 持续执行 D-02：[当前计划](docs/CLIENT_72_D02_RESUME_20261109.md)、[任务/验收](Project.md)。历史暂停、仅规划及仅离线节奏由本轮用户继续指令覆盖。接手 d31de75，五 stock 输入及13保护文件已重新固定，无项目客户端/服务/调试器或相关监听；原始盘点 `local/migration72/d02-resume-20261109/initial-inventory.private.json`。resources 原有场景 JSON 差异保留；不重计已验成果，前置合同充分后再隔离部署及六项新旧号实测。
 
