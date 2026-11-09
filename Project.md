@@ -83,7 +83,7 @@
 | 批次 / 工作包 | 状态与依赖 | 交付与验收 | 推荐模型 | 证据与边界 |
 | --- | --- | --- | --- | --- |
 | 1A→按需2→3 / F-03d3f4d2 完整Avatar构造/后缀 | 进行中；最新uint32 HashSet构造/enum warm getter真实返回，List原片段及enum零槽lazy分支已执行；完整后缀未闭 | 继续准确allocator、enum锁来源/实际definition pointer、cold普通10294及完整cold/default/装备/技能/池/Handler。String真实carrier合同已冻结交独立collector；不补槽/flag/host成功，不借inflated同号 | Sol max语义已交限定后继；Sol xhigh/Terra接明确实现 | [最新原执行/首缺/共同合同](docs/CLIENT_72_AVATAR_WARM_CONTINUATION.md)、[原回放](docs/CLIENT_72_AVATAR_RUNTIME_REPLAY.md)；完整父项不晋级 |
-| 1B→按需2→3 / R2-CONFIGSYNC-EARLY-BRIDGE | 进行中；自然准确caller已到达；独立11/12产物、两fresh真实owned与新现场预检已验，旧event5的自然具体出口仍未分辨 | 按已封存新规格取得实时ready后实机；保持原限额/转发/参数/校验。原Marshal/export/writer返回、分类/Init及route继续各自验收 | Sol max分析已交付；Sol xhigh实现/现场 | [新产物与预检](docs/CLIENT_72_SDK_EARLY_SPLIT_OBSERVER.md)、[归因](docs/CLIENT_72_SDK_EARLY_CLASSIFICATION_AUDIT.md)；不由旧5推断自然长度/NUL/具体出口 |
+| 1B→按需2→3 / R2-CONFIGSYNC-EARLY-BRIDGE | 进行中；新split自然准确caller终态11及退出/stock恢复已验，JSON分类/Init仍未闭；旧5不回填出口 | 先核真实其它输入/序列化表示及有来源的正反，保持原限额/转发/参数/校验。原Marshal/export/writer返回、env/Init与route继续各自验收，不无假设重复实机 | Sol max处理新首缺；Sol xhigh最小实现/现场 | [新自然终态与范围](docs/CLIENT_72_SDK_EARLY_SPLIT_OBSERVER.md#新实时确认的实际终态11与恢复)、[原归因](docs/CLIENT_72_SDK_EARLY_CLASSIFICATION_AUDIT.md)；自然length/NUL与完整payload仍未知 |
 | 1B→按需2→3 / R2-ROUTE-CONFIG-SELECT | 进行中；准确托管loader存在，自然选择/Init未验 | 固定托管env选择、managed→native必要输入和安全事件；原始材料可得先离线，合同足够再实机 | Sol max语义；Sol xhigh接入 | [执行计划](docs/CLIENT_72_D02_RESUME_20261109.md) |
 | 1B/3，必要性确认后 / R2-PLUGIN-UI-REGISTRATION | 进行中；137B入口静态子项已验，producer未闭 | 固定RegisterTask入参、field25231字典set_Item上下文、真实producer和所选task；只在自然路径必要时继续，不以静态入口通过代验entry写入、实际转发或视图行为 | Sol max | [来源、已验子项及准确解除输入](docs/CLIENT_72_SDK_PLUGIN_UI_REGISTRATION.md) |
 | 2/3，复用early结论 / R2-CONFIGSYNC-OBSERVE | 进行中；实机装载已验，目标事件未捕获 | 复用装载/恢复和early结论核触发/安装时序；确需不同观察时先列新问题，取得目标事件及producer/consumer身份后验收。保持原转发/校验/恢复，不重复同实验 | Sol xhigh执行；Sol max处理未闭语义 | [实际结果与未知](docs/CLIENT_72_SDK_CONFIGSYNC_OBSERVER.md#新ready实际90秒未命中及恢复) |
@@ -229,6 +229,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | R2-CONFIGSYNC-EARLY-LIVE-ADAPTER | 已完成 | 新只读adapter的owned正反和真实文件门禁已验；自然事件结果由EARLY-BRIDGE父项维护。 | [实际范围与现场未知](docs/CLIENT_72_SDK_CONFIGSYNC_EARLY_BRIDGE.md#新现场adapter的owned与真实文件门禁) |
 | R2-CONFIGSYNC-EARLY-BRIDGE（离线超限归因步骤） | 已完成 | live/accepted/源/构建/实际artifact同epoch及caller/两managed String/Marshal表示已核；旧5只来自payload的两个限额出口，18个owned Python模型/13检查及主线第三同双fresh。自然具体出口、原Marshal执行、分类/Init/route仍未验。 | [归因、边界和独立split规格](docs/CLIENT_72_SDK_EARLY_CLASSIFICATION_AUDIT.md) |
 | R2-CONFIGSYNC-EARLY-BRIDGE（独立11/12产物及现场准备步骤） | 已完成 | 最小分流保持旧源和限额；新DLL/EXE实际构建、两fresh各23个真实owned、30项检查、accepted绑定及真实隔离文件门禁通过；主线新CheckOnly与独立审核通过。未安装/启动本轮客户端，实时ready和自然终态仍待取得。 | [实际产物、预检及未验边界](docs/CLIENT_72_SDK_EARLY_SPLIT_OBSERVER.md) |
+| R2-CONFIGSYNC-EARLY-BRIDGE（split自然预算出口区分步骤） | 已完成 | 新实时确认下准确caller终态11，45监测/9同源读取、完整代码绑定及纯重放经16项主线审核；用户正常页/正常退出，stock和保护恢复保持。只区分本epoch预算出口，不验JSON分类/Marshal/Init/route或父项；旧5仍未知具体出口。 | [实际终态、恢复及未验范围](docs/CLIENT_72_SDK_EARLY_SPLIT_OBSERVER.md#新实时确认的实际终态11与恢复) |
 | F04-LOADER-CLEAN 独立透明入口 | 已完成 | 零hook独立透明入口、实际stock/SDK绑定、正常登录页/退出恢复已验；key/trust/route自然链和完整校验另验。 | [计划/产物/真实范围](docs/CLIENT_72_CLEAN_LOADER.md) |
 | R2-KEY-LOAD-OBSERVE 固定只读观察 | 已完成 | 窄key入口实际安装、精确代码/转发/回调绑定、正常页及退出恢复已验；未证明自然key调用、route或完整校验。 | [实际结果、来源与边界](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md) |
 

@@ -1,6 +1,6 @@
 # R2 early split：两个 payload 预算终态的独立诊断产物
 
-本项归属 `R2-CONFIGSYNC-EARLY-BRIDGE`、`R2-ROUTE-CONFIG-SELECT`。冻结规格来自[首诊审计](CLIENT_72_SDK_EARLY_CLASSIFICATION_AUDIT.md)，ABI、来源、装载和 owned 限制承接[早期桥](CLIENT_72_SDK_CONFIGSYNC_EARLY_BRIDGE.md)及[观察器](CLIENT_72_SDK_CONFIGSYNC_OBSERVER.md)。独立诊断产物、真实 owned 和新现场预检现已通过；原 Marshal、SDK export/writer 返回、自然 Init/env/route 和 D-02 均未因此通过。
+本项归属 `R2-CONFIGSYNC-EARLY-BRIDGE`、`R2-ROUTE-CONFIG-SELECT`。冻结规格来自[首诊审计](CLIENT_72_SDK_EARLY_CLASSIFICATION_AUDIT.md)，ABI、来源、装载和 owned 限制承接[早期桥](CLIENT_72_SDK_CONFIGSYNC_EARLY_BRIDGE.md)及[观察器](CLIENT_72_SDK_CONFIGSYNC_OBSERVER.md)。独立产物、真实owned、自然终态11及正常退出/stock恢复已通过限定验收；原Marshal、SDK export/writer返回、自然Init/env/route和D-02均未因此通过。
 
 ## 精确差异与冻结边界
 
@@ -98,9 +98,9 @@ python -B -m unittest tools.test_verify_sdk72_config_early_split_proxy tools.tes
 python -B -m tools.observe_client72_config_early_split_proxy --client $env:GAME_PATH --production local/migration72/d02-parallel-20261109/b-sdk-split/target/release/examples/sdk72_config_early_split_proxy.dll --artifact-audit local/migration72/d02-parallel-20261109/b-sdk-split/owned-main1/proof.private.json --output local/migration72/d02-parallel-20261109/b-sdk-split/NEW-LIVE-NAME.private.json --user-ready
 ```
 
-此次没有调用该现场CLI。自然实验仍只回答准确caller的11/12或其它明确终态，原90秒、一次尝试和读取预算保持；不清once、不重arm、不新增自然内容/length/header/指针记录，不记录payload/key/URL正文、hash或长度。父项和D-02继续未完成。
+本节是构建完成时的现场接口说明；后续已按下节新实时确认实际调用CLI。自然实验只回答准确caller的11/12或其它明确终态，原90秒、一次尝试和读取预算保持；不清once、不重arm、不新增自然内容/length/header/指针记录，不记录payload/key/URL正文、hash或长度。父项和D-02继续未完成。
 
-## 新现场准备与主线预检
+## 第一版现场准备与主线预检（历史快照）
 
 本轮独立 `run/launch/restore-split-live1.ps1`、新 inventory/plan 已封存。计划 SHA-256 `72a368e21b7e0b79757b35d412aa15eb3549b9987b1388d3460278037022d3fb`，91 项源 pin 包含实际 Python 导入闭包，三脚本 Parser 零错误；launcher 在外层 proof 绑定，避免计划哈希循环。新 ready 必须关联 runId/计划 SHA，确认时间不早于计划且使用时不超过300秒。只有主线取得新的实时回复后才生成凭据；本次尚未生成。
 
@@ -109,3 +109,15 @@ python -B -m tools.observe_client72_config_early_split_proxy --client $env:GAME_
 预检后 AGENTS 再有外部文字更新，明确 GitHub 检索关注分支。原 live1 盘点、计划和实际预检均保留；其保护基线不再用于安装。新的 live2 准备继承同一已验产物和源 epoch，显式记录新 AGENTS，再由主线实际预检；不重写旧 inventory 或豁免漂移。
 
 现场只采 SDK，一次90秒、外部最多9读1450B/单次512B；内部回调限额保持。用户需允许本次 UAC、等待正常登录页并保持不登录；主线完成采集后提示正常退出，再按同一 journal/backup/新DLL/stock精确恢复并复核。String 使用原版身份，分次串行，不使用此实验的 alias 替代 stock。新自然终态尚未知，不提前标记分类、Init 或路由通过。GS必要前置未齐，未部署 GS。
+
+## 新实时确认的实际终态11与恢复
+
+本批split-live2预检通过后，AGENTS在UAC helper启动前约8秒再次外部更新，新增“小任务无需检索”和“中文md规划”。helper在安装前结束，用户反馈已允许UAC但无客户端；没有preflight/安装journal/alias，五stock保持。主线以原脚本只读CheckOnly准确复现 `Protected file differs`，实际保护集合唯一差异为AGENTS；其mtime、helper事件与原停止证据都留在 `live2-main-*`。旧计划/ready/receipt/盘点不改，不能把这次当客户端或SDK失败。
+
+读取新规范后另建split-live3，计划SHA-256 `ac30e07bf2138ff328e56d0ee104f09afdea50cfd1a72d7a84c6ab42d67d4e99`，新保护基线与91源pin再次预检通过。只为已复现的启动前错误加入首异常私有记录trap，无自动重试、恢复或放宽保护。主线获得另一次明确实时确认后才创建ready3并提权启动；本次实际安装新已验DLL，90秒45样本，observer退出0。
+
+`live3.private.json` 记录准确caller终态 `payload-unit-scan-limit=11`、两个seen位true；没有env/等值位。它只证明32768个UTF-16单元扫描预算内未遇NUL；不能推断实际managed长度、后面是否有NUL、完整payload或哪个语言被选中。旧event5报告保持，不回填历史具体出口。
+
+同次raw侧账 `live3.private.json.reads.private.json` 恰9读1450B/单次≤512B，无payload/reference正文读取。主线在stock恢复后，用实际artifact/固定EXE/stock导出及相同9次原始读取，纯重放collector所有字段完全一致；完整284B搬移/回跳、callback、47转发、DATA及状态前后相等，前后模块/创建身份及最终alive、handle关闭记录通过。主线16项审核为 `main-live3-acceptance.private.py/json`，proof SHA-256 `01f56c4d85e859e5b0a1d1fdabe5a54ab57b958dc5a8682479a000734029d9d4`。
+
+用户明确反馈正常页、正常退出后，主线实际restore3退出0，五stock/13现存保护/配置缺省保持，owned alias移除；相关进程和固定TCP/UDP均0。没有启动GS/DB。新的11已区分预算出口，**JSON分类、原Marshal/export/writer返回、自然Init/env/route、key/信任和D-02均未通过**。后继先离线核真实LocalConfigSync其余输入及序列化表示，不能只放大限额重复同实验。
