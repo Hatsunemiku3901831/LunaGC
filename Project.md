@@ -197,6 +197,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3f4d2/R1-WARM-USAGES-ADAPTER | 已完成 | 有界自然采集、身份/复读及退出恢复已验；7/8候选取得，enum两个零槽及String空usage真实保留，完整图/消费者/父项未完成。 | [实际结果与准确未闭项](docs/CLIENT_72_AVATAR_WARM_USAGES.md#本轮合并实测与收尾) |
 | F-03d3f4d2（最新warm原消费者后继）；E-01/R3-ITEM-ENTRY（String共同合同v2） | 已完成 | 三fresh10case/158步同字节，20检查及主线17审核；uint32构造/getter/List片段和零槽lazy分支有界执行，allocator/锁/definition pointer分别止准确首缺。String真实Dictionary carrier合同已由主线冻结为独立54读2704B；只批准collector实现，未采自然图、未完成比较/配置/父项。 | [原执行、未知和合同](docs/CLIENT_72_AVATAR_WARM_CONTINUATION.md) |
 | F-03d3f4d2（typed allocator普通查询后继步骤） | 已完成 | 原完整Avatar入口连续执行allocator及旧已验纯native查询，61条完成/62次前观察，准确止于未采普通类缓存root；三fresh同字节，26测试及主线13项审核通过。未取得分配返回、普通1255结果或GC/TLS/OS成功，不代验完整构造。 | [原窗、执行、真实首缺及String后继](docs/CLIENT_72_AVATAR_ALLOCATOR_SUCCESSOR.md) |
+| F-03d3f4d2；E-01/R3-ITEM-ENTRY（同epoch联合后继采集工具步骤） | 已完成 | 独立collector/adapter、三fresh人工图、16测试及134项审核通过；最坏76读/3264B、统一final与18父pin保持，主线实际stock/source门禁通过。只批准新epoch采集准备，未采自然String/普通root或验原生消费，父项不晋级。 | [合同、工具及实际门禁范围](docs/CLIENT_72_AVATAR_STRING_SUCCESSOR_INPUTS.md) |
 
 ### 6.3 SDK、补丁、观察与运维前置
 
