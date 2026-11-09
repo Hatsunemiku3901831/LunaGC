@@ -232,6 +232,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | R2-CONFIGSYNC-EARLY-BRIDGE（独立11/12产物及现场准备步骤） | 已完成 | 最小分流保持旧源和限额；新DLL/EXE实际构建、两fresh各23个真实owned、30项检查、accepted绑定及真实隔离文件门禁通过；主线新CheckOnly与独立审核通过。未安装/启动本轮客户端，实时ready和自然终态仍待取得。 | [实际产物、预检及未验边界](docs/CLIENT_72_SDK_EARLY_SPLIT_OBSERVER.md) |
 | R2-CONFIGSYNC-EARLY-BRIDGE（split自然预算出口区分步骤） | 已完成 | 新实时确认下准确caller终态11，45监测/9同源读取、完整代码绑定及纯重放经16项主线审核；用户正常页/正常退出，stock和保护恢复保持。只区分本epoch预算出口，不验JSON分类/Marshal/Init/route或父项；旧5仍未知具体出口。 | [实际终态、恢复及未验范围](docs/CLIENT_72_SDK_EARLY_SPLIT_OBSERVER.md#新实时确认的实际终态11与恢复) |
 | R2-CONFIGSYNC-EARLY-BRIDGE（language输入与前缀后继规格步骤） | 已完成 | 两个准确完整原窗、695字段模型及24项来源投影、13项前缀正反、12测试和主线三fresh/13审核通过；language结构足以使自有合法候选超预算。仅离线来源/规格，不确认自然language位置、完整serializer、NUL/Marshal/Init/route。 | [来源、实施合同及新实验边界](docs/CLIENT_72_SDK_SCAN_LIMIT_FOLLOWUP.md) |
+| R2-CONFIGSYNC-EARLY-BRIDGE（独立前缀产物与文件门禁步骤） | 已完成 | 原读取限额内借用已有副本，独立DLL/fixture实际release构建、两fresh各54例ABI、51EAT/72B DATA/完整284B、六源/86pin及主线14审核通过；新adapter四SHA绑定、33检查和真实隔离布局文件门禁通过。未安装GAME_PATH或取得新自然13/11，不代验完整payload/Marshal/Init/route。 | [实际构建、ABI及门禁](docs/CLIENT_72_SDK_CONFIG_PREFIX_OBSERVER.md#主线实际构建abi及文件门禁验收) |
 | F04-LOADER-CLEAN 独立透明入口 | 已完成 | 零hook独立透明入口、实际stock/SDK绑定、正常登录页/退出恢复已验；key/trust/route自然链和完整校验另验。 | [计划/产物/真实范围](docs/CLIENT_72_CLEAN_LOADER.md) |
 | R2-KEY-LOAD-OBSERVE 固定只读观察 | 已完成 | 窄key入口实际安装、精确代码/转发/回调绑定、正常页及退出恢复已验；未证明自然key调用、route或完整校验。 | [实际结果、来源与边界](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md) |
 
