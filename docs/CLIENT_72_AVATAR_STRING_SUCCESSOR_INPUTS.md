@@ -15,3 +15,13 @@ Dictionary 固定验证 TryGetValue 10200、owner1222 和 String/UInt64 参数�
 主线已审核实际差异、独立审阅的134项断言及16测试；第三人工报告44742B与原两份逐byte相同，SHA仍为上述`cf9f728c…1097`。审核SHA `11a747040fa41fd24d5f9b2e7a45525e1bb67ffd512ef1434f68dd8320102171`，覆盖七派生类型、FindEntry零/非零/最大64位、准确地址、统一final、生命周期与保密范围；108输入前后相同。实际当前五stock、13保护及`.env.local`缺席、18父pin和旧String源/原窗门禁通过，`main-stock-source-gate.private.json` SHA `cf3a92c70f82319d0fa44a8832b9f0f03a9223cc0555a565c2c4bbd2627a18c6`。这不是自然图或目标进程门禁验收。
 
 下一步仅按已批准合同准备独立计划/启动/退出后核验，取得新的明确实时确认后原版90秒一次采集；不与SDK临时DLL安装并行。客户端验收、原生执行、完整构造和D-02均未验。本卡仅新增离线工具、测试和本文档，不触发GS部署；Git、Project/Harness由主线负责。
+
+## 新实时确认的联合stock采集
+
+主线审阅专属run/launch/after脚本并将新plan精确封存，CheckOnly实际五stock/13保护/固定carrier/无进程端口通过。取得本轮新实时确认后，Hidden UAC helper执行原版90秒监测及唯一一次采样；44次monitor观察、目标末尾alive。实际69读2704B、每读无错，首遍35读1360B；末尾34个unique span精确复读1344B并保持。首遍的`dictionary.string`与`string.owner.argument.type0`共享同一个16B span，因此final按unique去重后少1读16B，未减少最终覆盖或重置计账。
+
+四分支均为candidate：Dictionary仍是FindEntry slot13零、getter slot2非零；count37和两个definition word保持。独立getter图实际Default派生definition1243、Equals MethodInfo10339，捕获函数槽与MethodInfo函数相等；这尚不证明factory选择或Equals机器码执行。List同轮class/GenericClass/UInt32图与实际`ca=62`已取；普通root和definition1255槽均非零，槽值不同于closed List，allocator比较单元也不同于该普通槽。三者各自保留，没有以closed backref替普通类。
+
+原始输出由`live-plan.private.json`的outputPath固定，SHA `1a2e7509f6149f995cc0cc5c4ddc8f0c3f8acd297afcfc27c1eb9d5caee9c63e`。主线用同一原始读取序列和原时钟纯重放，完整collection逐字段相同；15项审核通过，`main-live-acceptance.private.json` SHA `d2b0a9a3389f7f0b8d0947efd6b72cfb6e54bf33731369e61ba3614f8daccd22`。前后creation/module/image、end inputs、final alive及finally关闭记录均核；两退出码0。用户明确页面正常、已正常退出，专属after复核五stock/13保护/缺席、alias无、相关进程及固定监听0。没有临时DLL安装或游戏服务部署。
+
+该fresh图已交Sol max按冻结原窗执行必要消费者，必须以本epoch捕获建立内存，不能将新普通root拼入旧warm capture。旧allocator/enum/cold完整缺口仍独立；FindEntry仍未知、Default factory及完整比较/配置/ability/D-02未由采集晋级。已有1661B Avatar入口与两个旧纯native查询窗由主线在stock期另封存原字节，0新范围/0旧heap导入，后继可在SDK临时安装期间只用冻结材料分析。
