@@ -71,7 +71,7 @@
 | 分支 / 既有任务 | 本批具体动作及前置 | 产物与验收出口 | 责任文件与模型 |
 | --- | --- | --- | --- |
 | A：F-03d3f4d2；必要String共同合同 | 复用stock v2完整head/HashSet；oldFlags8 helper静态及真入口首pop副本已验；完整20分配/12根及子构造已列清，当前推进第二record/block/Default准确输入；自然线程、GC所有权与完整构造仍未验。旧cold普通10294、enum、fresh分立，已验getter/owned字符比较复用 | 有界准确原窗、GC/所有权与副本写域合同或准确首缺、完整构造依赖和最小实现规格；自然allocator线程单独验，不补槽/TLS/对象/未知页或host成功 | Sol max；独有GC专题、`tools/client72_d02_gc_helper_20261110.py`及test、私有`a-gc/`。清楚后交Sol xhigh/Terra |
-| B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 复用八点原返回、锁内map和stock v2 managed env/base；核LoadLocalConfig/SetEnv/GetURL必要选择、准确RequestComboLogin/PostRequest消费者和触发 | 最终URL分类、调用身份和返回边界形成可实现观察/接入规格；map已写/env0不当调用，不跨epoch拼业务，不重复页面/扩预算，UI注册仅必要时继续；EH/unwind未知保持 | Sol max分析，Sol xhigh实现；独有ROUTE_ADOPTION专题/离线脚本和私有`b-route/`，patch/现场归主线 |
+| B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 复用八点原返回、锁内map和stock v2 managed env/base；LoadLocalConfig必要选择静态子出口/最终URL纯分类器已验；下一核33107入口准确body/pdata、原caller和hook生命周期，以及合法本服触发 | 最终URL分类、调用身份和返回边界形成可实现观察/接入规格；map已写/env0不当调用，不跨epoch拼业务，不重复页面/扩预算，UI注册仅必要时继续；EH/unwind未知保持 | Sol max分析，Sol xhigh实现；独有ROUTE_ADOPTION专题/离线脚本和私有`b-route/`，patch/现场归主线 |
 | C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 已验出生装备/303/Metal/Promote/Curve/Skill/Depot/talents复用；用户已选定旧号；依赖driver子出口已验，主线准备原物理数据的独立副本只读导出，按实际持久行收敛必要资源，区分已批资源与额外引用/未知。没有明确旧号不猜账号 | 固定SHA离线BSON/EXTENDED JSON只读提取、UID/缺字段/正引用测试及脱敏清单；没有快照准确列取得条件。后续按不重叠资源族/测试拆多个Terra；proud/ability/parser新语义交Sol max | 主线Sol xhigh定规格，Terra xhigh执行；独有old_save_dependencies工具/test/专题及私有`c-old-save/`。共享JVM/DB仅主线 |
 | Scene：F-03d3s2 | 首个A/B max槽释放后优先；沿World row真实148d6ebf0下游核MPLevel、Pool/Scene分配、组件创建/替换/拆除及通知顺序；包装器仅转发、回收接口不是ctor | 新窗先证明必要性/有界计划；准确producer/生命周期与最小实现合同，明确发送交Sol xhigh，不据偏移/同值猜alias | Sol max语义；Sol xhigh发送。发布前主线冻结独立文件与输入；现为待开始 |
 
@@ -275,6 +275,9 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | R2-CONFIG-ROUTE-WRITE（五点独立产物准入步骤） | 已完成 | 36传递源/147冻结pin、独立DLL/EXE构建、两fresh owned及第三、10 near/far实际emitter/真实mini帧、24 Python、51导出/256B DATA及真实隔离文件门禁通过；新helper实际CheckOnly通过。新实时ready/自然map仍待，完整writer/真实SDK锁/route采用/auth/EH不由owned代验。 | [实际产物/accepted/准备与边界](docs/CLIENT_72_SDK_CONFIG_ROUTE_OBSERVER.md) |
 | F04-LOADER-CLEAN 独立透明入口 | 已完成 | 零hook独立透明入口、实际stock/SDK绑定、正常登录页/退出恢复已验；key/trust/route自然链和完整校验另验。 | [计划/产物/真实范围](docs/CLIENT_72_CLEAN_LOADER.md) |
 | R2-KEY-LOAD-OBSERVE 固定只读观察 | 已完成 | 窄key入口实际安装、精确代码/转发/回调绑定、正常页及退出恢复已验；未证明自然key调用、route或完整校验。 | [实际结果、来源与边界](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md) |
+| R2-ROUTE-CONFIG-SELECT/B-REQUEST-ADOPTION（静态选择子出口） | 已完成 | 唯一LoadLocalConfig2481B/504条、三caller、readOnly仅跳local回写与cp_app_id匹配client.gameKey、两次加载和返回边界已核。来源23/最终31断言及主线23复核通过；自然选择/实际采用未验。 | [精确选择与请求入口规格](docs/CLIENT_72_D02_ROUTE_ADOPTION_20261110.md) |
+| R2-ROUTE-CONFIG-SELECT/FINAL-URL-CLASSIFIER | 已完成 | 八个完整base各加单?的纯UTF16LE分类器及七直接源门禁，18测试/独立8正例1090扰动/7漂移主线复核通过；只输出固定类/unknown。未观察33107/HTTP或认证，不解锁hook。 | [实现、来源与边界](docs/CLIENT_72_SDK_FINAL_ROUTE_CLASSIFIER_20261110B.md) |
+
 
 ### 6.4 资源、脚本、保存与回归
 

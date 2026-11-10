@@ -1,3 +1,5 @@
+2026-11-11 R2必要选择/最终URL：LoadLocalConfig唯一2481B/504条静态caller与readOnly/cp_app_id职责已验，主线重做来源绑定23项通过，原最终31检查保留。纯分类器主线18测试、8正例/1090扰动/7来源漂移及source门禁通过。原CALL前候选不冒称PostRequest已进入；下一准确观察33107入口caller=B+19801317，缺body/pdata及生命周期/合法触发。无live/生产材料变化。[静态链](docs/CLIENT_72_D02_ROUTE_ADOPTION_20261110.md)、[纯分类器](docs/CLIENT_72_SDK_FINAL_ROUTE_CLASSIFIER_20261110B.md)。
+
 2026-11-11 `F-03d3f4d2/A-GC-OLDFLAGS8`与`FIRST-POP-COPY`：主线静态第三18pin/15条同SHA`ff87585a…b952c`；8项Python及真入口CPU第三200指令/31captured读/九原写七span44B，通过同SHA`be49a4e9…b0e74`。helper同址两写与4原call/5原ret保留；83历史source快照、原件/静态EXE保持，owned sentinel不是自然ctor frame。第二record/block/Default、自然线程/GC/完整Avatar/g2/D02未验。[范围与CLI](docs/CLIENT_72_D02_FIRST_POP_COPY_20261110B.md)。用户当前AGENTS差异归用户，保留不提交。
 
 2026-11-10 `E-01d1/R3-OLD-SAVE-DEPENDENCIES`离线driver出口：5项Python、54固定输入/九组BSON与Extended JSON、独立引用/CLI/hash拒绝主审通过，proof `local/migration72/d02-resume-20261110b/c-old-save/main-review-v2/main-review.private.json` SHA`930f6624…693bd`；初审集合形状错误保留，仅修harness。inactive Item按真实数据库查询排除运行依赖，原始保存字段保留。用户已选定旧号，真实快照/资源/完整恢复未验，无JVM/DB/客户端动作。[实际范围](docs/CLIENT_72_D02_OLD_SAVE_DEPENDENCIES_20261110.md)。
