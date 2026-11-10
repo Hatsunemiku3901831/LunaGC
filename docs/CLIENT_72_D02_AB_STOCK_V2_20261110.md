@@ -21,3 +21,17 @@
 主线证明 `local/migration72/d02-resume-20261110/ab-stock-v2/main-review/main-review.private.json` SHA `9bd1a1536e0df4939c5ee9d88309ac64644b996fda7fd7c51703a89b31019fde`，显式绑定本v2 flow/coordinator/spec，旧A helper证明仅作原源来源。新root-third/parser原始stdout/stderr及invocation保持，不将这些人工项称作实际CheckOnly或自然成功。
 
 此处只关闭离线实现子项。下一步由主线另封新plan/source、实际CheckOnly、现stock/配置/进程端口核对和新的实时ready；旧失败run/ready始终保留且不能复用。原299子阶段/根因、页面表现、自然托管值、完整Avatar/Scene/资源/客户端和D-02未因v2人工通过而晋级。
+
+## 本轮实际输入采集、原件审核与退出
+
+主线在本轮新ready后正常创建stock客户端，严格原45次/90秒窗口：首次299/空items原样记unavailable，随后44次唯一EXE身份保持；没有第46救场、加时或额外RPM。A和B各执行一次、各自final，实际 **A62读1388B、B26读432B，合计88读1820B，最大单读208B**，均为稳定候选。正常方法组数保持status51/sample50/image6/creation6；不是逐native调用账。
+
+主线9项独立审核将A全部原始请求/图/预算/末次复读重新构造，B用实际whitelist bytes重验类别；Win64实际24B PROCESS_INFORMATION、两次48B TBI及原PID/TID/TEB相符，primary/process各关闭一次。B两个完整module快照各151项，额外native计数316只按已冻源码派生，不冒称逐调用记录或固定上界。A五tool和B两tool epoch分开，同原进程但并非联合原子快照。
+
+本epoch受控primary候选图取得TLS/R1、完整32B非零head、items非零opaque值及HashSet<UInt32>身份/实际U16=56、bin4；没有读取第二record/block、Default或items数组body。原head实际oldFlags=8，故已有原指令表明若推进原pop会走141fdf9c0，仍是未闭helper；原生执行、captured-copy-write、GC所有权及自然allocator caller均未由采样批准。此前fresh原回放停TLS的记录保留，不能把新输入直接写成已执行完整构造。
+
+B当前ConfigModel.env=0，URLConfig.comboLogin原UTF16LE完整base归 `managed-current-base-cn-env-0`，两者本次候选一致。它不证明SetEnv/GetURL或40108/PostRequest执行、实际route采用或认证；也不能与前轮SDK native map拼成同一epoch。
+
+用户本轮反馈“已退出，无异常”；随后独立提升核验stock五/载体/13保护/portable14及缺席、相关进程和固定端口为空。没有安装DLL或修改客户端文件。原件在 `local/migration72/d02-resume-20261110/ab-stock-v2/` 的 `ab-stock-v2-live1-20261110T052505Z-2d3fe291-*`；主线证明 `live1-main-review/main-live-acceptance.private.json` SHA `d6ad7d00f2656c017e74fbf828683fe8d2be98c54800db87e28a3558009338fb`。
+
+追加本节前已把当轮全部83项source实际bytes及manifest逐一存入 `live1-main-review/source-snapshot/`，旧plan/document hash只能通过该历史快照追溯，不改写旧pin，也不允许复用旧ready或地址。仅关闭本次输入采集子项；完整Avatar/Scene/资源/R2业务/D-02仍未完成。按用户最新指令，收尾既有装备恢复验收后暂停，不开启GC helper、第二pop、route采用或其他后继任务。
