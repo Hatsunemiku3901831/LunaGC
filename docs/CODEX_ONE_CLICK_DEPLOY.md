@@ -6,6 +6,8 @@
 
 # 给 Codex 的 Windows 一键部署与排障手册
 
+2026-11-11 当前暂停。收尾构建针对独立 native 研究工具。完整 R1/R2/R3 与 R4 前置尚待验证，GS 便携实例未部署。收尾盘点核到固定端口无监听，磁盘 JAR 的 SHA-256 见 [详细交接](../HANDOFF2.md)。以后恢复部署按 [Project](../Project.md) 核前置及新现场，下方启动和部署记录为历史。
+
 2026-11-10当前：已按用户要求完成在途验收收尾并暂停，不自动构建、部署或启动新实验。本次收尾仅离线工具/测试/文档，未重建生产JAR或部署GS；根JAR仍为已核496e96f构建，SHA `8f093e19b839ff1263984c596584d1ae12e6d4fd841d82562aaf30f998267291`。前轮SDK观察DLL已恢复stock，新八点观察器只有规格。R4前置未齐，日志/健康/运行JAR没有正向部署验收对象，D-02未完成。恢复须用户新指令并重核现场，见[Project](../Project.md)和[HANDOFF2](../HANDOFF2.md)；下方历史部署记录不构成当前启动许可。
 
 2026-11-08已验隔离入口：`local_windows.ps1 -InstanceRoot <checkout/local/instances/子目录>`及四个英文cmd参数转发。配置/JAR/resources/data/DB/CWD/日志/running归属实例，Mongo实际27027且两URI匹配；默认原根目录27017不变。34项PowerShell夹具及独立审核通过，修正同前缀dbpath误复用，见[规格/失败证据](CLIENT_72_PORTABLE_ISOLATION.md)。**未准备或部署真实实例**，P0/SDK/资源准入不齐，不能直接启动猜测协议或改版本放行；先正常构建并审核材料，再显式准备独立资源/数据及经核旧号副本。

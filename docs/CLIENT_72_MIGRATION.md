@@ -1,3 +1,5 @@
+2026-11-11 当前已按用户要求收尾并暂停。原 helper 的两条人工路径、Proud 固定单 key 文件语法及 Scene MPLevel parser 原窗已分别验收。自然分配与完整 Avatar、SDK 请求采用/认证、必要资源和完整保存恢复仍有缺口。R4/R5/R6 尚未完成，当前没有运行中的便携服务。见 [Project](../Project.md) 和 [详细交接](../HANDOFF2.md)。下方为历史进展。
+
 2026-11-10恢复执行批次B：最新用户授权解除上轮收尾后暂停，依[Project](../Project.md)和[计划](CLIENT_72_D02_RESUME_20261110B.md)推进oldFlags8 GC合同、准确SDK请求采用、Scene和旧号必要资源/恢复；已验子项直接复用。当前五stock/载体/保护和现场已重新核对，未取得新ready、未部署GS，D-02未完成。下方暂停与旧现场是历史记录。
 
 2026-11-10阶段增量：SDK八点自然90秒与15项原件审核通过，只证明本轮同配置writer/parser/env状态和native返回；完整payload/自然Init/route/auth仍未知。owned线程ABI与同源未装备武器Mongo库存恢复通过，完整Avatar/Scene/资源和D-02仍未验。见[SDK实际](CLIENT_72_SDK_CONFIG_STAGE_OBSERVER.md)、[库存实际](CLIENT_72_D02_ITEM_SAVE_JAVA_20261110.md)。

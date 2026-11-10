@@ -1,3 +1,5 @@
+2026-11-11 CLEAR48-FULL 人工首组已验。33 项 Python、MSVC 67 个偏移断言、实际 PE/依赖与两组原记录复核通过。257/258 分别实际退休 37/40 条 helper 指令，两组正常返回退出。旧 SSE 停在 BOOT 的失败原件保留。复核使用 `tools/client72_d02_clear48_full_validate.py`，指定专题列出的 main3 build、bootstrap、dependency review、冻结合同和现有 run，输出到新私有文件。人工首组、C 单 key 和 Scene 原窗验收均收尾，当前暂停。见 [CLEAR48 原件索引](docs/CLIENT_72_D02_CLEAR48_FULL_BOOT_CONTRACT_20261111.md) 和 [交接](HANDOFF2.md)。
+
 2026-11-11 `PROUD-SINGLE-KEY最终`：root16门通过，U32 header标记16→32红绿更正，旧epoch保留；新双fresh/第三82835B SHA`30b99d804468f9572a54f60b1e3dfc0838d38e55c52e8ae11e285f7fcd1d9a2c`，81raw span逐项匹配payload到334。仅固定key条件文件syntax，业务/自然/资源ready仍false。用户要求当前已启动项收尾后暂停，不开后继。[最终范围](docs/CLIENT_72_D02_PROUD_SINGLE_KEY_REFERENCE_20261111.md)。
 
 2026-11-11 `PROUD单key条件语法 / Scene parser`：C元素合同root第三228055B SHA`3cb8f15c510dc01b317dbff3b0963ba229cccb56a4a7939fea51c64e55858e0c`，四元素到330/尾4B到334，Terra reference实现另验。Scene完整131B/42条原窗root4门禁/第三10458B SHA`97340321181a358d78b8953f0ad78bdcb0fb17c0f8078a39ceb77125cfe4cbb2`同双fresh，语义交max。均不代自然/业务/入场。[C合同](docs/CLIENT_72_D02_PROUD_NATIVE_17208_ELEMENT_CONTRACT_20261111.md)、[Scene原窗](docs/CLIENT_72_D02_SCENE_MPLEVEL_PARSER_WINDOW_20261111.md)。
