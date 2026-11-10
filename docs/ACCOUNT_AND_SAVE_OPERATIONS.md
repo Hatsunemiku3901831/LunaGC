@@ -416,3 +416,6 @@ C-01a最终回归（2026-11-06）：独立便携Mongo测试实例、随机测试
 
 
 2026-11-08 R2-SESSION主线9套193项隔离回归及实际Java HTTP→固定原生parser/formatter三案例通过；原数据/配置保持，Mongo正常shutdown；自然SDK及D-02仍待验。见[session响应专题](CLIENT_72_SDK_SESSION_ADAPTER.md)。
+
+
+2026-11-10 E-01/R3-ITEM-ENTRY局部保存：固定同源出生Weapon11101六键经真实loader、普通Item队列/Guard/Mongo和新Player真实Inventory冷恢复；主线独立库/JVM三测试通过，两件不同ObjectId、cold Guard重存revision2、缺定义保留与重绑、UID隔离及冷读零写成立。未改生产保存或账号规则；完整Player、角色装备、退出重登和D-02未验。独立Mongo正常关闭且原数据保护保持，准确命令/原件/范围见[局部库存实际验收](CLIENT_72_D02_ITEM_SAVE_JAVA_20261110.md)。
