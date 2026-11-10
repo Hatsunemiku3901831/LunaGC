@@ -1,3 +1,5 @@
+2026-11-11 所选旧号的[隔离物理副本/只读快照](CLIENT_72_D02_OLD_ACCOUNT_SNAPSHOT_20261110B.md)已验真实Account→Player→owner/claim→角色物品关系；仅原始快照，未执行认证/生产加载/保存，不代表完整Player恢复或客户端登录。
+
 # 账号与存档系统接手指南
 
 2026-11-10 [303局部自然恢复](CLIENT_72_D02_QUEST_303_NATURAL_REBIND.md)通过：固定三文件自然loadAll后，真实Morphia保存→新Player→QuestManager将63个child绑定该轮真实定义，父子owner/manager及状态/进度保持。未就绪负例0写且原始BSON不变；正向显式保存和一次空fail keys元数据重绑各完成一写。未改生产保存/准入或手设loadedAll；完整资源、事件/场景和新旧号实机重登仍未验。

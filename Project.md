@@ -1,6 +1,6 @@
 # 国服 7.2 任务规划与验收
 
-任务证据基线：2026-11-10 / `a38aef7`；本批起点见[恢复执行批次B](docs/CLIENT_72_D02_RESUME_20261110B.md)。仅面向国服 7.2，Windows portable。
+任务证据基线：2026-11-11；本批起始HEAD `a38aef7`；本批起点见[恢复执行批次B](docs/CLIENT_72_D02_RESUME_20261110B.md)。仅面向国服 7.2，Windows portable。
 
 ## 当前阶段
 
@@ -72,7 +72,7 @@
 | --- | --- | --- | --- |
 | A：F-03d3f4d2；必要String共同合同 | 复用stock v2完整head/HashSet；oldFlags8 helper静态及真入口首pop副本已验；完整20分配/12根及子构造已列清，当前推进第二record/block/Default准确输入；自然线程、GC所有权与完整构造仍未验。旧cold普通10294、enum、fresh分立，已验getter/owned字符比较复用 | 有界准确原窗、GC/所有权与副本写域合同或准确首缺、完整构造依赖和最小实现规格；自然allocator线程单独验，不补槽/TLS/对象/未知页或host成功 | Sol max；独有GC专题、`tools/client72_d02_gc_helper_20261110.py`及test、私有`a-gc/`。清楚后交Sol xhigh/Terra |
 | B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 复用八点原返回、锁内map和stock v2 managed env/base；LoadLocalConfig必要选择静态子出口/最终URL纯分类器已验；下一核33107入口准确body/pdata、原caller和hook生命周期，以及合法本服触发 | 最终URL分类、调用身份和返回边界形成可实现观察/接入规格；map已写/env0不当调用，不跨epoch拼业务，不重复页面/扩预算，UI注册仅必要时继续；EH/unwind未知保持 | Sol max分析，Sol xhigh实现；独有ROUTE_ADOPTION专题/离线脚本和私有`b-route/`，patch/现场归主线 |
-| C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 已验出生装备/303/Metal/Promote/Curve/Skill/Depot/talents复用；用户已选定旧号；依赖driver子出口已验，主线准备原物理数据的独立副本只读导出，按实际持久行收敛必要资源，区分已批资源与额外引用/未知。没有明确旧号不猜账号 | 固定SHA离线BSON/EXTENDED JSON只读提取、UID/缺字段/正引用测试及脱敏清单；没有快照准确列取得条件。后续按不重叠资源族/测试拆多个Terra；proud/ability/parser新语义交Sol max | 主线Sol xhigh定规格，Terra xhigh执行；独有old_save_dependencies工具/test/专题及私有`c-old-save/`。共享JVM/DB仅主线 |
+| C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 已验出生装备/303/Metal/Promote/Curve/Skill/Depot/talents复用；所选旧号固定快照/真实关联已验；实际121角色level100/phase6、12254物品，按实际持久行收敛必要资源与完整恢复，区分已批资源与额外引用/未知。没有明确旧号不猜账号 | 固定SHA离线BSON/EXTENDED JSON只读提取、UID/缺字段/正引用测试及脱敏清单；没有快照准确列取得条件。后续按不重叠资源族/测试拆多个Terra；proud/ability/parser新语义交Sol max | 主线Sol xhigh定规格，Terra xhigh执行；独有old_save_dependencies工具/test/专题及私有`c-old-save/`。共享JVM/DB仅主线 |
 | Scene：F-03d3s2 | 已优先完成148d6ebf0模板关联静态出口；首未闭actual slot114、MPLevel原分组输入及Pool/Scene/组件创建替换拆除与通知，沿准确producer继续；包装器仅转发、回收接口不是ctor | 新窗先证明必要性/有界计划；准确producer/生命周期与最小实现合同，明确发送交Sol xhigh，不据偏移/同值猜alias | Sol max语义；Sol xhigh发送。新包发布前主线冻结独立文件与输入；父项进行中，已验模板子出口不重发 |
 
 本批[详细计划](docs/CLIENT_72_D02_RESUME_20261110B.md)固定输入/准确问题/只读依赖、可写文件、独立目录、禁止项、验收/停止恢复。实际4槽：主线＋A/B两个Sol max＋C Terra；任务交回立即释放，成熟包改派多个Terra。主线派遣，子代理禁止扩招；不能以责任线数量冒称并发。
@@ -330,6 +330,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01/R3-ITEM-ENTRY；F-03d3f4d2（String独立采集器实现步骤） | 已完成 | 冻结Dictionary carrier→实际Default/Equals的独立54读2704B collector及stock epoch adapter通过17测试、三同字节owned和16主线审核/当前来源门禁。只验人工输入及工具，未采自然图、未执行比较器/配置/ability或完成父项。 | [实现、主线证据及自然输入缺口](docs/CLIENT_72_STRING_CONSUMER_COLLECTOR.md) |
 | E-01/R3-ITEM-ENTRY；F-03d3f4d2（String自然carrier诊断步骤） | 已完成 | 新实时stock采集取得真实Dictionary泛型owner、FindEntry零/getter非零、37项definition来源与精确末尾复读；15项主线纯重放审核及正常退出保护通过。v2按门禁partial，getter对象/完整String图/消费者仍未验，不晋级父项。 | [实际输入、停止及未知](docs/CLIENT_72_STRING_CONSUMER_COLLECTOR.md#新stock实测的lazy诊断与非零getter) |
 | E-01/R3-NATURAL-LOAD-FIRST-AUDIT | 已完成 | 真实loadAll直接入口、路径/副作用、Lua执行域和独立JVM首诊规格已审；未选定首诊输入、未建driver或运行loadAll，不新增逐项审批/全资源P0要求。 | [准确结论与主线收尾](docs/CLIENT_72_D02_NATURAL_LOAD_FIRST_AUDIT.md) |
+| E-01d1/R3-OLD-ACCOUNT-SNAPSHOT | 已完成 | 用户所选旧号在原物理证据副本的第二工作副本恢复并只读导出；唯一账号/Player及owner/claim关联通过，142源文件在当时前后保持，owned27027正常关闭。实际121角色/12254物品/471装备，原库/配置未写；仅快照，不验业务完整恢复或客户端。 | [复制、恢复、实际关系与边界](docs/CLIENT_72_D02_OLD_ACCOUNT_SNAPSHOT_20261110B.md) |
+
 
 ## 7. 旧任务归并与后续范围
 

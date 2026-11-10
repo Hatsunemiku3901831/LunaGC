@@ -1,3 +1,5 @@
+2026-11-11 [所选旧号原始快照](CLIENT_72_D02_OLD_ACCOUNT_SNAPSHOT_20261110B.md)中reservedPlayerId为缺省0，实际Player.accountId和account_uid_owners/player_uid_reservations仍一致。预留值不能单独代替现存Player UID；本项只读核对，没有新增/迁移字段、重新分配或修复。
+
 # 账号与存档数据模型
 
 2026-11-10 [303局部自然恢复](CLIENT_72_D02_QUEST_303_NATURAL_REBIND.md)未新增生产字段/集合或迁移。历史宽松JSON夹具导入后，首次真实Morphia保存将63个child的startGameDay=0与timeVar十项=-1由BSON INT32写为INT64，73处值保持、恰增长292B；另做类型保真原始BSON比较确认无字段增删/值/顺序变化，Manager恢复后字节完全相同。driver的RawFieldDifferences字段基于宽松JSON，不能单独证明整数宽度或字节一致。
