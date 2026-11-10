@@ -52,6 +52,8 @@
 
 显式传入工具支持的模型与档位；模型不可用应如实返回主线调整，不能静默升级Astra或冒称已使用指定模型。子代理不得自行扩大派遣和修改范围。
 
+当前平台新建代理返回thread limit，主线复用既有Sol max槽位核Proud mode/factory与row reader；本时段为主线加两个分析包，未声称新增Terra并发。成熟实施规格仍优先Terra xhigh，实际可用槽位恢复后再派；不另开聊天或借Daybreak阻塞包换模型重试。
+
 ### 3.2 批次路线与退出条件
 
 | 批次 | 既有任务 / 本批动作 | 并行安排 | 退出条件与推荐模型 |
@@ -354,6 +356,11 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01/R3-ALL-SAVED-DEPOT-REFS | 已完成 | 全121实际保存当前Depot原whole171/cursor26024、121 query/2924 getter RETURN，34批准/11实际区间及各span核对；14测试/主线第三9014403B与两fresh同SHA通过。726外层/嵌套原值和presence unknown保留，仅数据样本，不批准字段alias/全phase6资源或完整恢复。 | [原字段、数量与后继边界](docs/CLIENT_72_D02_ALL_SAVED_DEPOT_REFS_20261111.md) |
 | E-01/R3-PROUD-ACTUAL-FIELDS（producer与闭合身份） | 已完成 | 174B getter/3179B producer两fresh及原source核；同原row的+90/+84经codec组成pair并传同枚举行键，56 QWORD闭合map138526及HashSet15620 AddIfNotPresent身份。6测试/主线复验通过。map写入/真实Proud表/group-level/门槛及Java算式仍未知。 | [原关系、AOT与后继](docs/CLIENT_72_D02_PROUD_ACTUAL_FIELDS_20261111.md) |
 | E-01/R3-PROUD-ROW-WINDOW（机械取窗） | 已完成 | 精确df70原caller/AOT两QWORD/唯一pdata后772B/152条连续body已取；5门禁与主线第三8原件和两fresh逐byte同SHA通过。21 direct call/25 RIP仅原指令，不批准资源来源/返回对象业务语义，另交Sol max。 | [原窗、绑定及引用](docs/CLIENT_72_D02_PROUD_ROW_WINDOW_20261111.md) |
+| E-01/R3-PROUD-ROW-SOURCE | 已完成 | 原606B producer、唯一literal与typed63831/529236 parser链闭合；主线第三48799B与两fresh一致，6测试。两个U32仍未命名offset/size，真实行/codec/业务alias未验。 | [原行来源](docs/CLIENT_72_D02_PROUD_ROW_SOURCE_20261111.md) |
+| E-01/R3-PROUD-PAYLOAD-LOCATOR | 已完成 | 复用固定index/sidecar/serialized输入，唯一Proud m_bytes 2132778B已提取；主线第三四原件与final3/4逐byte一致，5测试。host hash/pack定位不替代目标native命中、revision、行边界或resourceReady。 | [完整payload定位及限制](docs/CLIENT_72_D02_PROUD_PAYLOAD_LOCATOR_20261111.md) |
+| E-01/R3-PROUD-PARSER-CONTRACT | 已完成 | 原parser/derived/base ctor三窗8412B/1956条及原child E9、+20/+40来源已核；主线第三91234B同两fresh，6测试。child未取/未执行、actual mode与factory产物和行span未闭，非完整parser成功。 | [表示来源和最小输入](docs/CLIENT_72_D02_PROUD_PARSER_CONTRACT_20261111.md) |
+| E-01/R3-PROUD-MODE-FACTORY-SOURCE | 进行中 | Sol max只核63831 slot9冻结vtable-definition/AOT与两个准确mode helper有界静态窗；不取factory body/child或设置+20/+40，先交完整mode输入与下一最小规格。 | [有界计划](docs/CLIENT_72_D02_PROUD_MODE_FACTORY_20261111.md) |
+| E-01/R3-PROUD-ROW-READER | 进行中 | Sol max只核准确14bb5b0b0(String,int32,int32)原窗及读者/行范围合同；与mode/factory独立。禁止whole payload当row0、猜索引格式或扩callee树。 | [有界计划](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md) |
 
 
 ## 7. 旧任务归并与后续范围
