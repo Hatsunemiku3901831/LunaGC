@@ -1,3 +1,5 @@
+2026-11-11 `R3-OLD-AVATAR/ITEM-COVERAGE`：主线11测试（5+6）及两个第四CLI通过，报告各同三fresh SHA`ca9b24ed…246ea` / `faf0f7a4…7018`。121角色/当前Depot/389保存Skill键存在，762Talent/410Proud与phase6未闭；Item活动10727/9128ID、inactive1527保留，239targetWeapon键、9120候选ID命中、224001–224008未知。只核键/记录的span和固定候选tree/blob，不验目标完整语义/资源ready或恢复。[角色](docs/CLIENT_72_D02_OLD_AVATAR_COVERAGE_20261111.md)、[物品](docs/CLIENT_72_D02_OLD_ITEM_COVERAGE_20261111.md)。
+
 2026-11-11 `E-01d1/R3-OLD-ACCOUNT-SNAPSHOT`：原物理证据/第二工作副本隔离恢复、纯Java只读导出两轮后owned27027均正常关闭。大小写精确首轮0匹配、第二轮定位唯一旧号/Player；reservedUID0不等于实际UID，改按accountId/owner/claim核一致，无生产分配/索引/修复。45导出/142原文件当时前后保持，proof SHA`363ec11e…0f8bf9`、选定验收SHA`80a39b39…447667`。121角色/12254物品/471装备只是快照，完整恢复/客户端未验。[方法、失败及SHA](docs/CLIENT_72_D02_OLD_ACCOUNT_SNAPSHOT_20261110B.md)。
 
 2026-11-11 `F-03d3s2/SCENE-ROW-LIFECYCLE`：唯一585B/120条准确下游、原row→field138373/+140，16pin/30静态断言主线第三25730B同SHA`fc37cad3…7f061`。custom13732.method101367不是具名Remove；actual slot114未采，metadata候选不代自然vtable。MPLevel/组件/替换拆除/通知及完整Scene未验，无sender许可。[固定来源与第三CLI](docs/CLIENT_72_D02_SCENE_ROW_LIFECYCLE_20261110B.md)。
