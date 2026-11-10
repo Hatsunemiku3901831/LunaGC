@@ -75,7 +75,7 @@
 | C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 已验出生装备/303/Metal/Promote/Curve/Skill/Depot/talents复用；所选旧号固定快照/真实关联已验；实际121角色level100/phase6、12254物品，按实际持久行收敛必要资源与完整恢复，区分已批资源与额外引用/未知。没有明确旧号不猜账号 | driver/快照/角色与Item键对照已验；全部121在postLoad重建proud；phase6准确首缺及四保存Depot原字段样本子出口已验，group/level/门槛仍未知，按真实正引用选择后继。8个Item未知ID及各候选族目标对应另核，不用candidate命中代恢复 | 主线Sol xhigh定规格，Terra xhigh执行；独有old_save_dependencies工具/test/专题及私有`c-old-save/`。共享JVM/DB仅主线 |
 | Scene：F-03d3s2 | 已优先完成148d6ebf0模板关联静态出口；首未闭actual slot114、MPLevel原分组输入及Pool/Scene/组件创建替换拆除与通知，沿准确producer继续；包装器仅转发、回收接口不是ctor | 新窗先证明必要性/有界计划；准确producer/生命周期与最小实现合同，明确发送交Sol xhigh，不据偏移/同值猜alias | Sol max语义；Sol xhigh发送。新包发布前主线冻结独立文件与输入；父项进行中，已验模板子出口不重发 |
 
-本批[详细计划](docs/CLIENT_72_D02_RESUME_20261110B.md)固定输入/准确问题/只读依赖、可写文件、独立目录、禁止项、验收/停止恢复。实际并发上限4槽含主线；当前按后继轮转：主线统一验收/集成，Sol max第二GC64及实际proud语义，Sol xhigh服务入口owned；Terra已交A2 flow测试及全121 Depot数据，主线持续验收。独立包交回即释放，成熟实现/测试可再分多个Terra，不新增聊天绕上限。主线派遣，子代理禁止扩招；不能以责任线数量冒称并发。
+本批[详细计划](docs/CLIENT_72_D02_RESUME_20261110B.md)固定输入/准确问题/只读依赖、可写文件、独立目录、禁止项、验收/停止恢复。实际并发上限4槽含主线；当前按后继轮转：主线统一验收/集成，Sol max核SDK自然trigger及实际Proud行来源，Terra xhigh核GC/Default adapter；第二GC64、服务owned与全121 Depot数据已交验，主线持续集成。独立包交回即释放，成熟实现/测试可再分多个Terra，不新增聊天绕上限。主线派遣，子代理禁止扩招；不能以责任线数量冒称并发。
 每次派工先固定：**任务ID、输入版本/来源、准确问题、允许修改的文件、只读依赖、独立输出目录、禁止操作、产物、验收、停止/返回条件**。所有者以本批派工为准，一个文件同一时刻只有一个写入者。子代理返回“已完成/有界结论/阻塞”及证据；主线审核实际差异、必要独立样本和回归，再更新本页并提交。阻塞时写准确解除条件，不改父项为完成。
 
 ### 3.4 未完成工作包与模型分配
@@ -231,6 +231,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | D02-R2/NATIVE-ACCOUNT-LOCAL-ROUTE（共用入口合同） | 已完成 | MDK/Account同3413E0唯一1071B/265条，min14搬移21B、首次任意入口仅读8B service/低32 mode；5测试和第三7原件同SHA通过。自然service/mode/loginUrl未知，批准自然route0项，不借MDK注册代客户端合同。 | [来源、ABI与接线条件](docs/CLIENT_72_SDK_NATIVE_ACCOUNT_LOCAL_ROUTE_20261111.md) |
 | D02-R2/COMMON-SERVICE-OWNED | 已完成 | 6离线测试/15源epoch、独立Cargo构建及两fresh各104真实case通过（200原SUB+8独立witness），208完整emitter；source覆盖21B、实际near/far均20B规范编码/284B emitter，唯一resume/普通Win64/8B参数与1087B绑定账核实。自然服务/route/trigger、EH/高向量未验。 | [原SUB与独立witness实际验收](docs/CLIENT_72_SDK_SERVICE_ENTRY_OWNED_20261111.md) |
 | F-03d3s2/SCENE-ROW-LIFECYCLE（模板关联子出口） | 已完成 | 唯一585B/120条下游将原row存entity.field138373/+140；不消费row+50/+58。16pin/30静态断言主线第三同SHA通过。条件容器调用非具名Remove，首未闭actual slot114、组件/拆除/通知及MPLevel完整配置不批准。 | [原窗、准确排除与后继](docs/CLIENT_72_D02_SCENE_ROW_LIFECYCLE_20261110B.md) |
+| F-03d3s2/SCENE-SLOT114-FROZEN-AUDIT | 已完成 | 7pin/17静态断言主线第三5325B与两fresh同SHA；冻结36读全不含klass+460的8B，也没有factory实际返回实体→klass来源。只关闭准确缺输入审计；1483df040仍metadata候选，不读候选body。后继同调用frame及3读224B需合法factory触发/独立合同，Scene父项未完成。 | [缺口及最小来源链](docs/CLIENT_72_D02_SCENE_SLOT114_20261111.md) |
 
 
 ### 6.3 SDK、补丁、观察与运维前置
