@@ -271,6 +271,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3s2/SCENE-TEMPLATE-PREDECESSOR | 已完成 | 原592B/119条证明普通路径旧模板引用正常清空后再由wrapper关联新引用；主线第三46断言同两fresh及6测试。不证明销毁/组件拆除、helper所有权或动态slot114，完整Scene仍未验。 | [原引用生命周期](docs/CLIENT_72_D02_SCENE_TEMPLATE_PREDECESSOR_20261111.md) |
 | F-03d3s2/SCENE-MPLEVEL-GROUP-SOURCE | 已完成 | root第三51096B同双fresh，4pin/35断言；ConfigMetaConfig路径hash数组选bin第二QWORD→reader→70954.m587454→同对象register来源已闭。actual bin/group/能力仍未知，slot114未晋级。 | [准确producer与唯一原窗](docs/CLIENT_72_D02_SCENE_MPLEVEL_GROUP_SOURCE_20261111.md) |
 | F-03d3s2/SCENE-MPLEVEL-PARSER-WINDOW | 已完成 | 两fresh九原件相同，fresh完整817B caller及E8/AOT/唯一pdata得131B/42条；root4门禁/10458B第三同双fresh。仅source，不代MPLevel分组/自然reader或实际注册。 | [准确parser原窗](docs/CLIENT_72_D02_SCENE_MPLEVEL_PARSER_WINDOW_20261111.md) |
+| F-03d3s2/SCENE-MPLEVEL-PREFIX | 已完成 | 131 B 原窗内联1 B、条件 refill、置位输出地址及 typed 消费者经125断言复核；实际2675 B正分支原窗双读一致。清位、实际分组及完整Scene待验。 | [前缀和原窗](docs/CLIENT_72_D02_SCENE_MPLEVEL_PREFIX_20261111.md) |
 | F-03d3s2/SCENE-MPLEVEL-PARSER-CONTRACT | 待开始 | 原窗已验，语义后继尚未实际派发；用户要求当前工作验收后暂停，本卡不启动。以后恢复再审131B普通inline/refill及field350252首缺，不按机械首call盲扩helper树。 | 预留独有专题/private；需以后明确恢复 |
 
 
