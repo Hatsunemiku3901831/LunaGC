@@ -1,3 +1,5 @@
+2026-11-11 `R3-OLD-ITEM-TPS-CANDIDATE`：沿当前ItemData第五ResourceType及源码initial224001，既有固定AstaPS tree唯一TPS blob增量1次/8行；原8活动ID均唯一候选命中。完整SHA/blob/strict JSON与旧报告/投影主审SHA`ef2d6457…9eac7`，不修改四表历史报告或批准target等价/完整恢复。[来源和范围](docs/CLIENT_72_D02_OLD_ITEM_COVERAGE_20261111.md#tps-candidate)。
+
 2026-11-11 `R3-PROUD-ROW-READER`：主线第三31839B/85断言同两fresh SHA`90c39207…2aeee`及6测试通过；1438B/309条说明两个U32用途按backend分开，42005+1c写不代真实row span。400190 index producer未闭，仅唯一.cctor候选待另批。max已转Scene predecessor有界续项。[来源与限制](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md)。
 
 2026-11-11 `R3-PROUD-MODE-FACTORY-SOURCE`：6门禁/主线第三41737B同SHA`b5cbd9f0…ad987`，63831 slot9原definition→529228/AOT与345B/90条mode原窗、typed集合/dispatch初始化输入账已核；自然mode/vtable/MethodInfo及factory/parser仍未验。max转AVX原6B规格，单factory窗交既有Sol xhigh。[已验范围](docs/CLIENT_72_D02_PROUD_MODE_FACTORY_20261111.md)。

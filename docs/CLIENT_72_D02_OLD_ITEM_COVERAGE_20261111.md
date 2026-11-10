@@ -55,3 +55,15 @@ python tools/client72_d02_old_item_coverage.py --clone <固定仓库外clone路�
 本包仅离线工具、测试和本文，无运行代码、Proto、配置或资源修改，无构建、部署、数据库、JVM、服务或客户端操作。未作 Git 提交；主线负责整体状态更新及审阅。新旧号完整恢复、R3、资源 readiness 和 D-02 六项实机验收均未通过。
 
 主线独立运行6项测试与当前实际外部clone的第四CLI，报告7994179B/SHA `faf0f7a46989fc0380468dc7ba81d7305b6f31a4122bd0690c00e607eea07018` 与三fresh一致，接受key-only和候选存在性。原Player BSON的手填SHA末尾已按固定manifest纠正为7a43，原文件及工具pin没有变化；不扩大目标语义/装备恢复或客户端结论。
+
+<a id="tps-candidate"></a>
+
+## 第五资源族的定向候选增量
+
+`E-01/R3-OLD-ITEM-TPS-CANDIDATE` 只补原四表未知的8个活动ID。当前`ItemData`的ResourceType明确还包括`TpsWeaponExcelConfigData.json`，`TpsAvatarSystem.INITIAL_WEAPON`为224001；`Inventory.loadFromDatabase`在ItemData缺失时跳过原行，故有实际恢复路径价值。这个源码关系足以选下一候选文件，不能证明目标客户端类型或这些ID的原消费。
+
+先在私有`tps-candidate-followup-plan.zh.md`冻结方法/单文件2MiB/至多1次网络/停止条件；复用既有README与固定commit/tree。固定Excel tree给出唯一blob `86af23355376accec851270b850db27a19b3d888`；外部clone原对象缺席，实际只请求该blob一次，不重试或扩其他表，不改clone refs。原候选为[固定提交的TPS表](https://github.com/MeChen618/AstaPS-Resource/blob/6cfecfb55f889f8e3b7156adb12809608db4f74b/ExcelBinOutput/TpsWeaponExcelConfigData.json)，完整SHA-256 `1134be51680369087c229f42347396a696077f4b64740c412b9dab8ab3716daf`。git blob、长度、strict JSON重复键与唯一id均核验。
+
+该候选恰8行，224001–224008全部各命中一行，源字段字面`itemType`均为`ITEM_TPS_WEAPON`；这是候选原字段，不提升为目标ItemType等价。主线再次核原不可变dependency SHA及7994179B四表报告SHA，按原active条件确认8个活动保存行恰对应这8个ID。原四表结果和unknown标记保留为历史，不覆盖或回填旧报告。
+
+私有`tps-candidate/retrieval-and-coverage.private.json` SHA `1c69406861042935cc1c513e57f1f39351cd547f9ffd9962c03c927b60892aa1`；独立`main-review.private.json` SHA `ef2d645759ffe92b52aa86ac88a744b1531b18f4cba810dba18c8256c9d9eac7`，含四个现有Java消费来源完整pin。候选资源族存在性缺口已关闭；目标表/解析器/引用/装备与完整Inventory保存冷恢复仍未知，不猜alias、不导入生产资源或整包替换。此增量没有运行代码、Proto、配置或资源变更，无构建/部署/数据库/客户端动作，也不关闭R3/D-02。
