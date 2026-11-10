@@ -386,7 +386,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01/R3-PROUD-PREPARE-CONTRACT | 已完成 | 主线第三36303B同两fresh，185来源/82条重解码/58原PC通过；壳+20路径→原loader/type8026/suffix已闭合，+28分支按实际成功/空/handler结果分开。本289B不读写壳+18，实际填充/row仍未验。 | [必要loader链与单source规格](docs/CLIENT_72_D02_PROUD_PREPARE_CONTRACT_20261111.md) |
 | E-01/R3-PROUD-PRIMARY-INDEX-LOCATOR | 已完成 | 两fresh及主线第三四件同byte/5测试；准确路径唯一record/variant/tag0/bundle178/location/serialized entry闭合，31858B原payload SHA f87adf6f…e8eb05。185旧源完整hash另账，无新PE/native hash或index解析。内容/row/自然加载/资源ready未验。 | [准确完整payload与范围](docs/CLIENT_72_D02_PROUD_PRIMARY_INDEX_LOCATOR_20261111.md) |
 | E-01/R3-PROUD-INDEX-HANDLER-WINDOW | 已完成 | 主线第三29862B同两fresh八原件、6测试；原两E8/138530/5071/slot/唯一pdata绑定，735B/189条完整窗。目录选择扫描14344080B/1195340条单独记账，目标pdata12B；不读xdata/callee或推index语义。 | [原窗、预算及复现](docs/CLIENT_72_D02_PROUD_INDEX_HANDLER_WINDOW_20261111.md) |
-| E-01/R3-PROUD-INDEX-HANDLER-CONTRACT | 进行中 | Sol max只审已验735B与准确31858B payload身份，核typed42005消费/壳+18和75077两U32必要生产；只读既有冻结源，形成最小解析或唯一下一source，未批新窗或猜格式。 | 独有index_handler合同专题/`c-proud-index-handler-contract/`，loader/locator工具只读 |
+| E-01/R3-PROUD-INDEX-HANDLER-CONTRACT | 已完成 | 主线第三128270B同两fresh，238源/四已存body3178B/852条/95原PC通过；同735B与旧Scene/refU64原bytes闭合普通格式、ZigZag/低32/U32wrap/第10字节/替换及错误边界。仅普通条件规格，不代自然flag/backend或新Proud native。 | [准确合同与旧证据适用范围](docs/CLIENT_72_D02_PROUD_INDEX_HANDLER_CONTRACT_20261111.md) |
+| E-01/R3-PROUD-PRIMARY-INDEX-REFERENCE | 已完成 | 主线第三5954083B同双fresh，全部6371项/span/slice独立audit及10边界测试通过；旧Gadget31682全项原oracle复算匹配。新Proud cursor31858=EOF，0wrap/越界，首(4,330)/末(2132482,296)仅候选范围。原覆盖输出缺口已修CreateNew，历史原件保留；未新native/row批准/alias/ready。 | [文件参考、边界和未验](docs/CLIENT_72_D02_PROUD_PRIMARY_INDEX_REFERENCE_20261111.md) |
 | E-01/R3-PROUD-ROW-READER | 已完成 | 原1438B/309条、三个backend分支参数及typed缓存已核；6测试/主线第三85断言31839B同两fresh。两个U32用途按分支分开，不统一offset/size；+1c赋值不证明有效row span，400190 producer及真实索引仍未闭。 | [准确合同与下一候选](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md) |
 
 
