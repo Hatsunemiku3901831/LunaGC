@@ -1,3 +1,5 @@
+2026-11-11 `R3-PROUD-PRIMARY-INDEX-LOCATOR`：5测试/主线第三四件同两fresh；result52202B SHA`1a2d897cf40fd1b922ecf8e46e1c5c040ad06f2d6483360b6bab2eb2f63e3b02`，payload31858B SHA`f87adf6f8b1006ccc99483af251b9d491737bf8bc87b4c7097bb893301e8eb05`。唯一record/variant/location及serialized原entry真实范围闭合，185源hash另账；无新native hash/index解析/row或资源ready。[复现、范围及SHA](docs/CLIENT_72_D02_PROUD_PRIMARY_INDEX_LOCATOR_20261111.md)。
+
 2026-11-11 `R3-PROUD-PREPARE-CONTRACT`：主线第三36303B与两fresh同SHA`9eb26c03c1ceb6f9cd9a000e7b9de688a2c9c8f2e2cf893902f8e119fbff5e27`，185源/82原指令/58断言通过；同壳+20到准确loader/type8026/suffix有原来源，+28及null/handler路线分立。仅静态合同，无壳+18实际填充/row/资源ready；最小PrimaryIndex locator已交Terra。[完整值流和复现](docs/CLIENT_72_D02_PROUD_PREPARE_CONTRACT_20261111.md)。
 
 2026-11-11 `CLEAR48-NATIVE-TRACE-IMPLEMENTATION-CONTRACT`：四JSON/root唯一header的48offset、256/128B及原bytes源级第三通过，proof SHA`cbbda65b163adc2f7192299df7ceb85e33fb4b976a622cf02a74a9cece678f77`；未编译/Debug API。W1/W2/W3 child/parent已按独有文件分Terra，parent未完不得build/运行，904B仍未链接。child原epoch及root CPUID门顺序纠正分账保留。[合同与精确预算](docs/CLIENT_72_D02_CLEAR48_TRACE_IMPLEMENTATION_CONTRACT_20261111.md)。
