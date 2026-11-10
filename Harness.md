@@ -1,3 +1,5 @@
+2026-11-11 E-01d1 旧号主角 phase 6：独立 Gradle worker 1 项真实 loader，四个非零属性位及材料过滤通过。[来源与复现](docs/CLIENT_72_D02_OLD_TRAVELER_PROMOTE_20261111.md)。
+
 2026-11-11 A、Scene、C 本批恢复盘点和入口见[执行计划](docs/CLIENT_72_D02_RESUME_ASC_20261111.md)。E-01d1 旧号 Talent 引用：主线7项和第三CLI通过，726当前查键、36非当前保存键，目标行与 OpenConfig 另验。[复现](docs/CLIENT_72_D02_OLD_TALENT_REFS_20261111.md)。
 
 2026-11-11 CLEAR48-FULL 人工首组已验。33 项 Python、MSVC 67 个偏移断言、实际 PE/依赖与两组原记录复核通过。257/258 分别实际退休 37/40 条 helper 指令，两组正常返回退出。旧 SSE 停在 BOOT 的失败原件保留。复核使用 `tools/client72_d02_clear48_full_validate.py`，指定专题列出的 main3 build、bootstrap、dependency review、冻结合同和现有 run，输出到新私有文件。人工首组、C 单 key 和 Scene 原窗验收均收尾，当前暂停。见 [CLEAR48 原件索引](docs/CLIENT_72_D02_CLEAR48_FULL_BOOT_CONTRACT_20261111.md) 和 [交接](HANDOFF2.md)。
