@@ -1,3 +1,5 @@
+2026-11-11 F-03d3f4d2 stock 条件：主线第三只读审计与两 fresh 同 SHA，三个控制/16 B、36 条静态 AVX 候选；人工写域与 stock 原返回分别记录。[条件和复现](docs/CLIENT_72_D02_CLEAR48_STOCK_DELTA_20261111.md)。
+
 2026-11-11 E-01d1 旧号主角 phase 6：独立 Gradle worker 1 项真实 loader，四个非零属性位及材料过滤通过。[来源与复现](docs/CLIENT_72_D02_OLD_TRAVELER_PROMOTE_20261111.md)。
 
 2026-11-11 A、Scene、C 本批恢复盘点和入口见[执行计划](docs/CLIENT_72_D02_RESUME_ASC_20261111.md)。E-01d1 旧号 Talent 引用：主线7项和第三CLI通过，726当前查键、36非当前保存键，目标行与 OpenConfig 另验。[复现](docs/CLIENT_72_D02_OLD_TALENT_REFS_20261111.md)。
