@@ -26,6 +26,9 @@ EPOCH_KEYS = ('descriptorRva', 'armRva', 'callRva', 'afterCallRva', 'wrapperEndR
 GPRS = ('Rax', 'Rbx', 'Rcx', 'Rdx', 'Rsi', 'Rdi', 'Rbp', 'R8', 'R9', 'R10', 'R11', 'R12', 'R13', 'R14', 'R15')
 CONTROL = ('SegCs', 'SegSs', 'EFlags', 'Rsp', 'Rip')
 EFLAGS_READBACK_POLICY = 'c48-tf-only-reserved-bit1-readback-v2'
+EXIT_LIFECYCLE_POLICY = 'c48-owned-exit-lifecycle-v2'
+EXIT_LIFECYCLE_CONTRACT_SHA256 = 'cf52cfafa00eab47316a756a5e04a1edc59ca2b5606d4fa89d6cc2cb552105d8'
+EXIT_LIFECYCLE_CONTRACT_PATH = (Path(__file__).resolve().parents[1] / 'local/migration72/d02-resume-20261110b/a-clear48-trace-exit-lifecycle/exit-lifecycle-supplement.v2.private.json').resolve()
 
 
 def need(condition, message):
@@ -131,17 +134,18 @@ def check_records(rows, summary, receipt, epoch):
         need([r['apiOrdinal'] for r in by_kind.get(k, [])] == list(range(1, len(by_kind.get(k, []))+1)), k + ' ordinals')
     ep = exact_one(by_kind.get('epoch', []), 'epoch count')
     need({k: ep[k] for k in epoch} == epoch and summary['sourceProof'] == epoch, 'epoch/sourceProof')
+    for obj in (ep, summary):
+        need(obj['exitLifecyclePolicy'] == EXIT_LIFECYCLE_POLICY and obj['exitLifecycleContractSHA256'] == EXIT_LIFECYCLE_CONTRACT_SHA256, 'exit lifecycle policy')
+    need(summary['schema'] == 'c48-parent-result-v2', 'summary schema')
     owned = exact_one(by_kind.get('ownedChild', []), 'owned child count')
     pid, tid = owned['pid'], owned['tid']
-    need(integer(pid) and integer(tid) and pid > 0 and tid > 0 and pid != receipt['parentPid'] and
+    need(integer(pid) and integer(tid) and 0 < pid <= 0xffffffff and 0 < tid <= 0xffffffff and pid != receipt['parentPid'] and
          owned['GetProcessTimesBOOL'] is True and owned['lastErrorIfFalse'] is None and
          hx(owned['creationFileTime']) >= hx(receipt['parentCreationFileTime']) > 0 and
          owned['processHandleOrigin'] == 'CreateProcess.PI.hProcess' and owned['threadHandleOrigin'] == 'CreateProcess.PI.hThread' and
          (summary['pid'], summary['tid']) == (pid, tid), 'owned child identity')
+    need(all(hx(owned[k]) not in (0, 0xffffffffffffffff) for k in ('processHandleRaw','threadHandleRaw')), 'PI handles')
     events = {r['seq']: r for r in by_kind.get('event', [])}
-    for row in rows:
-        need((row['eventPID'], row['eventTID'], row['eventType']) == (None, None, None) or
-             (row['eventPID'], row['eventTID']) == (pid, tid), 'event PID/TID')
     waits = by_kind.get('wait', [])
     successes = []
     for w in waits:
@@ -149,22 +153,23 @@ def check_records(rows, summary, receipt, epoch):
         if w['BOOL'] is True:
             need(w['lastErrorIfFalse'] is None and w['stopEventSeq'] == w['seq'] + 1 and w['stopEventSeq'] in events, 'wait/event')
             e = events[w['stopEventSeq']]
-            need((w['eventPID'],w['eventTID'],w['eventType']) == (pid,tid,e['rawDebugEventCode']), 'wait identity')
+            need(all(integer(w[k]) for k in ('eventPID','eventTID','eventType')) and (w['eventPID'],w['eventTID'],w['eventType']) == (e['eventPID'],e['eventTID'],e['rawDebugEventCode']), 'wait identity')
             successes.append(w['stopEventSeq'])
         else:
-            need(w['BOOL'] is False and w['lastErrorIfFalse'] == 121 and w['stopEventSeq'] is None, 'wait failure')
+            need(w['BOOL'] is False and w['lastErrorIfFalse'] == 121 and w['stopEventSeq'] is None and (w['eventPID'],w['eventTID'],w['eventType']) == (None,None,None), 'wait failure')
     need(successes == list(events), 'missing or duplicate event wait')
     for e in events.values():
-        need((e['eventPID'],e['eventTID']) == (pid,tid) and e['eventType'] == e['rawDebugEventCode'] and e['continueStatus'] is None and
+        need(integer(e['eventPID']) and integer(e['eventType']) and e['eventPID'] == pid and integer(e['eventTID']) and 0 < e['eventTID'] <= 0xffffffff and integer(e['rawDebugEventCode']) and e['eventType'] == e['rawDebugEventCode'] and e['continueStatus'] is None and
              e['ContinueDebugEventBOOL'] is None and e['continueRecordStatus'] == 'separate', 'raw event')
     continues = by_kind.get('continue', [])
     need(len(continues) == len(events), 'event continue count')
     for e in events.values():
         c = exact_one([c for c in continues if c['stopEventSeq'] == e['seq']], 'event continue association')
-        need(c['seq'] > e['seq'] and (c['eventPID'], c['eventTID'], c['eventType']) == (pid, tid, e['eventType']) and
+        need(c['seq'] > e['seq'] and all(integer(c[k]) for k in ('eventPID','eventTID','eventType')) and (c['eventPID'], c['eventTID'], c['eventType']) == (e['eventPID'], e['eventTID'], e['eventType']) and
              c['BOOL'] is True and c['lastErrorIfFalse'] is None and c['continueStatus'] == '00010002' and type(c['cleanupOnly']) is bool, 'continue failed')
         later_events = [n for n in events if n > e['seq']]
-        need(not later_events or c['seq'] < min(later_events), 'event continued after next event')
+        later_waits = [w['seq'] for w in waits if w['seq'] > e['seq']]
+        need(not later_waits or c['seq'] < min(later_waits), 'event continued after next wait')
     for g in by_kind.get('get', []):
         need(g['requestedGroups'] == ['CONTROL', 'INTEGER'] and g['BOOL'] is True and g['lastErrorIfFalse'] is None and
              g['threadHandleOrigin'] == 'CreateProcess.PI.hThread' and g['stopEventSeq'] in events and g['seq'] > g['stopEventSeq'], 'get')
@@ -198,7 +203,7 @@ def check_records(rows, summary, receipt, epoch):
         for row in by_kind.get(kind, []):
             stop = row['stopEventSeq']
             c = exact_one([c for c in continues if c['stopEventSeq'] == stop], 'stopped operation continuation')
-            need(stop < row['seq'] < c['seq'] and
+            need(stop < row['seq'] < c['seq'] and all(integer(row[k]) for k in ('eventPID','eventTID','eventType')) and
                  (row['eventPID'],row['eventTID'],row['eventType']) ==
                  (pid,tid,events[stop]['eventType']), 'operation outside stop')
     counts = {k: len(by_kind.get(v, [])) for k, v in [('events', 'event'), ('waits', 'wait'), ('gets', 'get'), ('sets', 'set'), ('reads', 'memory'), ('continues', 'continue')]}
@@ -225,10 +230,9 @@ def check_witness(case, run_id, records, events, summary, child, epoch, receipt)
     need(base > 0 and hx(create['moduleImageBytes']) == image_size and create['fileSHA256'] == epoch['childExeSHA256'] and
          create['fileHandleValid'] is True and create['fileIdentityBOOL'] is True and create['fileCloseBOOL'] is True and
          create['debugProcessHandleOrigin'] == create['debugThreadHandleOrigin'] == 'CREATE_PROCESS.borrowed', 'created image proof')
-    need(all(e['rawDebugEventCode'] in (1, 3, 5, 6) for e in event_list), 'unexpected event')
     for e in event_list:
         if e['rawDebugEventCode'] == 6 and e['fileHandleValid'] is True:
-            need(e['fileIdentityBOOL'] is True and e['fileCloseBOOL'] is True, 'module file proof')
+            need(e['fileIdentityBOOL'] is True and e['fileCloseBOOL'] is True and isinstance(e['filePath'], str) and bool(e['filePath']) and hx(e['moduleImageBytes']) > 0, 'module file proof')
         if e['rawDebugEventCode'] == 1:
             need(e['firstChance'] is True and integer(e['exceptionParameterCount']) and
                  e['exceptionParameterCount'] == len(e['exceptionParameters']) <= 15, 'exception')
@@ -257,9 +261,7 @@ def check_witness(case, run_id, records, events, summary, child, epoch, receipt)
     need(0 < sys_index < own_index and event_codes[:sys_index] == [3] + [6]*(sys_index-1) and
          event_codes[sys_index] == event_codes[own_index] == 1 and
          event_codes[sys_index+1:own_index] == [6]*(own_index-sys_index-1) and
-         tail[:retired_events] == [1]*retired_events and tail[-1:] == [5] and
-         (tail[retired_events:-1] == [] if case == 3 else
-          all(code == 6 for code in tail[retired_events:-1])), 'debug event sequence')
+         tail[:retired_events] == [1]*retired_events and tail[-1:] == [5], 'debug event sequence')
     stack_c = hx(arm['control']['Rsp'])
     need(stack_c % 16 == 0, 'stack alignment')
     leaf_rva = epoch[{1:'returnLeafRva', 2:'ymmLeafRva', 3:'faultLeafRva'}[case]]
@@ -321,7 +323,7 @@ def check_witness(case, run_id, records, events, summary, child, epoch, receipt)
     cont = {c['apiOrdinal']:c for c in records['continue']}
     for i, (tx, (pc, code)) in enumerate(zip(txs, pcs)):
         pre_stop, post_stop = tx['preEventSeq'], tx['postEventSeq']
-        need(pre_stop in events and post_stop in events and pre_stop < post_stop and (i == 0 or pre_stop == txs[i-1]['postEventSeq']), 'transaction stops')
+        need(all(integer(tx[k]) for k in ('eventPID','eventTID','eventType')) and (tx['eventPID'],tx['eventTID'],tx['eventType']) == (summary['pid'],summary['tid'],events[post_stop]['eventType']) and pre_stop in events and post_stop in events and pre_stop < post_stop and (i == 0 or pre_stop == txs[i-1]['postEventSeq']), 'transaction stops')
         pre = context_at(records, pre_stop, pc)
         post = context_at(records, post_stop)
         fault = case == 3 and i == 1
@@ -398,15 +400,122 @@ def check_witness(case, run_id, records, events, summary, child, epoch, receipt)
              summary['firstFailureKind'] == 'expectedUD2' and summary['normalTracePassed'] is False and summary['pendingRetired'] is False and
              summary['pendingTxId'] == 2 and summary['lastCompletedTx'] == 1 and summary['stopEventSeq'] == txs[-1]['postEventSeq'] and
              summary['rawCode'] == 'c000001d' and summary['exceptionAddress'] == summary['contextRip'] == f'{leaf:016x}' and
-             len(cleanup_cont) == 2 and all(c['seq'] > term['seq'] for c in cleanup_cont) and
-             {c['stopEventSeq'] for c in cleanup_cont} == {txs[-1]['postEventSeq'],exit_event['seq']}, 'fault cleanup')
+             term['requestedExitCode'] == 90 and txs[-1]['seq'] < term['seq'] and
+             all(c['seq'] > term['seq'] for c in cleanup_cont) and
+             {c['stopEventSeq'] for c in cleanup_cont} == {e['seq'] for e in event_list if e['seq'] >= txs[-1]['postEventSeq']}, 'fault cleanup')
     else:
         need(summary['normalTracePassed'] is True and summary['firstFailureKind'] is None and summary['pendingTxId'] is None and
              summary['pendingRetired'] is None and summary['lastCompletedTx'] == len(pcs) and summary['TerminateProcessBOOL'] is None and
              summary['terminationRequestedExit'] is None and not cleanup_cont and
              all(summary[k] is None for k in ('stopEventSeq','rawCode','exceptionAddress','contextRip')), 'normal summary')
         restore = records['set'][-1]
-        need(restore['stopEventSeq'] == txs[-1]['postEventSeq'] and not hx(restore['submittedControl']['EFlags'],8) & 0x100, 'TF restore')
+        need(restore['stopEventSeq'] == txs[-1]['postEventSeq'] and restore['beforeControl'] == context_at(records, txs[-1]['postEventSeq'])['control'] and not hx(restore['submittedControl']['EFlags'],8) & 0x100, 'TF restore')
+    return check_lifecycle(case, records, events, summary, txs, exit_event)
+
+
+def check_lifecycle(case, records, events, summary, txs, exit_event):
+    """Reconstruct owned thread origins and releases from raw events and API results."""
+    pid, primary = summary['pid'], summary['tid']
+    continues = {c['stopEventSeq']: c for c in records['continue']}
+    terminal = txs[-1]['postEventSeq']
+    if case == 3:
+        boundary = txs[-1]['seq']
+    else:
+        restore = records['set'][-1]
+        c = continues[terminal]
+        need(txs[-1]['seq'] < restore['seq'] < c['seq'] and c['cleanupOnly'] is False,
+             'terminal restore/continue boundary')
+        boundary = c['seq']
+    need(all(r['seq'] <= boundary for kind in ('get','set','memory','transaction','calibration')
+             for r in records.get(kind, [])), 'operation after boundary')
+    thread_table = {}
+    releases = []
+    create_count = 0
+    def raw_handle(e, field, origin):
+        value = hx(e[field + 'Raw'])
+        valid = e[field + 'Valid']
+        need(type(valid) is bool and valid == (value not in (0, 0xffffffffffffffff)), 'handle validity')
+        need(value != 0xffffffffffffffff and e[field + 'Origin'] == origin, 'borrowed handle origin')
+    def dword(value):
+        need(integer(value) and 0 <= value <= 0xffffffff, 'DWORD')
+    for e in events.values():
+        code, tid, seq = e['rawDebugEventCode'], e['eventTID'], e['seq']
+        c = continues[seq]
+        need(not any(k in e for k in ('automaticCloseBOOL','borrowedCloseBOOL')), 'fabricated automatic close')
+        if seq > boundary:
+            need(code in (2,4,5,6,7,8), 'unexpected exit notification')
+            need(c['cleanupOnly'] is (case == 3), 'exit continue mode')
+        else:
+            need(tid == primary and code in (1,3,6), 'TRACE identity/event')
+            if case == 3 and seq == terminal:
+                need(c['cleanupOnly'] is True, 'fault continue mode')
+            else:
+                need(c['cleanupOnly'] is False, 'trace continue mode')
+        if code == 3:
+            create_count += 1
+            need(create_count == 1 and tid == primary and tid not in thread_table, 'initial thread origin')
+            raw_handle(e, 'debugProcessHandle', 'CREATE_PROCESS.borrowed')
+            raw_handle(e, 'debugThreadHandle', 'CREATE_PROCESS.borrowed')
+            hx(e['startAddress']); hx(e['threadLocalBase'])
+            thread_table[tid] = (seq, e['debugThreadHandleValid'])
+        elif code == 2:
+            need(tid not in thread_table and len(thread_table) < 128, 'duplicate thread origin')
+            raw_handle(e, 'debugThreadHandle', 'CREATE_THREAD.borrowed')
+            hx(e['startAddress']); hx(e['threadLocalBase'])
+            thread_table[tid] = (seq, e['debugThreadHandleValid'])
+        else:
+            need(tid in thread_table and thread_table[tid] is not None, 'unknown or exited thread')
+        if code in (3,6):
+            value = hx(e['fileHandleRaw'])
+            need(type(e['fileHandleValid']) is bool and e['fileHandleValid'] == (value not in (0,0xffffffffffffffff)) and
+                 e['fileHandleOrigin'] == ('CREATE_PROCESS.hFile' if code == 3 else 'LOAD_DLL.hFile'), 'file handle raw/origin')
+            if e['fileHandleValid']:
+                need(e['fileIdentityBOOL'] is True and e['fileCloseBOOL'] is True and
+                     isinstance(e['filePath'], str) and bool(e['filePath']) and hx(e['moduleImageBytes']) > 0 and
+                     e['fileIdentityError'] is None and e['fileCloseError'] is None and e['filePathError'] is None and
+                     integer(e['filePathRequiredLength']) and 0 < e['filePathRequiredLength'] < 2048, 'file proof')
+                identity = e['fileIdentity']
+                need(isinstance(identity, dict) and set(identity) == {'volumeSerial','indexHigh','indexLow'}, 'file identity')
+                for value in identity.values(): dword(value)
+            else:
+                need(e['filePath'] is None and e['filePathError'] is None and e['filePathRequiredLength'] == 0 and
+                     e['fileIdentityBOOL'] is None and e['fileIdentityError'] is None and e['fileIdentity'] is None and
+                     e['fileCloseBOOL'] is None and e['fileCloseError'] is None and e['moduleImageBytes'] is None, 'null file evidence')
+        if code in (4,5): dword(e['exitCode'])
+        if code == 7: hx(e['moduleBase'])
+        if code == 8:
+            hx(e['debugStringAddress'])
+            need(all(integer(e[k]) and 0 <= e[k] <= 65535 for k in ('debugStringUnicode','debugStringLength')), 'debug string WORD')
+        if code == 4:
+            origin, valid = thread_table[tid]
+            if valid:
+                releases.append({'originEventSeq':origin, 'continueSeq':c['seq'], 'tid':tid, 'basis':'api_contract'})
+            thread_table[tid] = None
+        if code == 5:
+            need(seq == exit_event['seq'] and seq == max(events), 'final exit order')
+            for t, entry in thread_table.items():
+                if entry is not None and entry[1]:
+                    releases.append({'originEventSeq':entry[0], 'continueSeq':c['seq'], 'tid':t, 'basis':'api_contract'})
+            create = next(x for x in events.values() if x['rawDebugEventCode'] == 3)
+            if create['debugProcessHandleValid']:
+                releases.append({'originEventSeq':create['seq'], 'continueSeq':c['seq'], 'basis':'api_contract', 'object':'process'})
+    need(create_count == 1 and summary['exitEventSeq'] == exit_event['seq'] and
+         summary['exitEventTID'] == exit_event['eventTID'] and summary['threadLifecycleConsistent'] is True, 'lifecycle summary')
+    owned = records['ownedChild'][0]
+    for r in records.get('cleanup', []):
+        origin, api = r['handleOrigin'], r['api']
+        need(api != 'CloseHandle' or origin in ('CreateProcess.PI.hProcess','CreateProcess.PI.hThread','NULInput','stdout','stderr'), 'manual borrowed close')
+        if origin in ('CreateProcess.PI.hProcess','CreateProcess.PI.hThread'):
+            need(r['handleRaw'] == owned['processHandleRaw' if origin.endswith('hProcess') else 'threadHandleRaw'], 'PI handle raw')
+        if api == 'GetExitCodeProcess':
+            need(r['BOOL'] is True and r['exitCode'] == exit_event['exitCode'] and integer(r['exitCode']), 'exit code agreement')
+    terms = [r for r in records['cleanup'] if r['api'] == 'TerminateProcess']
+    need(len(terms) == (1 if case == 3 else 0), 'terminate count')
+    for api in ('GetExitCodeProcess','WaitForSingleObject'):
+        exact_one([r for r in records['cleanup'] if r['api'] == api], 'cleanup API count')
+    for origin in ('CreateProcess.PI.hProcess','CreateProcess.PI.hThread'):
+        exact_one([r for r in records['cleanup'] if r['api'] == 'CloseHandle' and r['handleOrigin'] == origin], 'PI close count')
+    return releases
 
 
 def check_dependency(receipt, paths):
@@ -429,6 +538,9 @@ def check_dependency(receipt, paths):
     for name in ('source','includes','libraries','compilerDlls','buildLogs'):
         need(isinstance(review[name],list) and review[name], 'empty dependency group ' + name)
         entries += review[name]
+    contract_path = str(EXIT_LIFECYCLE_CONTRACT_PATH.resolve())
+    contract_entry = exact_one([e for e in review['source'] if e['path'] == contract_path], 'exit lifecycle contract source')
+    need(contract_entry['sha256'] == EXIT_LIFECYCLE_CONTRACT_SHA256, 'exit lifecycle contract hash')
     source_names = {Path(e['path']).name.lower() for e in review['source']}
     need({'shared.h','child.c','witness.asm','parent.c','build.ps1','build-epoch.h'} <= source_names, 'review source set')
     for name, entry in review['artifacts'].items():
@@ -461,16 +573,18 @@ def validate(args):
     case, run_id = receipt['caseId'], receipt['runId']
     need(type(case) is int and case in (1,2,3), 'caseId')
     hx(run_id,32)
-    need(summary['schema'] == 'c48-parent-result-v1' and summary['caseId'] == case and summary['runId'] == run_id, 'summary identity')
+    need(summary['schema'] == 'c48-parent-result-v2' and summary['caseId'] == case and summary['runId'] == run_id, 'summary identity')
     rows = [json.loads(line, object_pairs_hook=unique_object) for line in args.events.read_text(encoding='utf-8-sig').splitlines()]
     child = read_json(args.child_result) if args.child_result.exists() else None
     records, events = check_records(rows,summary,receipt,epoch)
-    check_witness(case,run_id,records,events,summary,child,epoch,receipt)
+    releases = check_witness(case,run_id,records,events,summary,child,epoch,receipt)
     output_files = [args.events,args.parent_result,args.receipt] + ([args.child_result] if child is not None else [])
-    return {'schema':'c48-trace-validation-v1','caseId':case,'runId':run_id,'accepted':True,
+    return {'schema':'c48-trace-validation-v2','caseId':case,'runId':run_id,'accepted':True,
             'normalTracePassed':case != 3,'expectedNegativeAccepted':case == 3,
             'pureArtifactValidationOnly':True,'independentReviewIsExternal':True,
             'eflagsReadbackPolicy':EFLAGS_READBACK_POLICY,
+            'exitLifecyclePolicy':EXIT_LIFECYCLE_POLICY, 'exitLifecycleContractSHA256':EXIT_LIFECYCLE_CONTRACT_SHA256,
+            'borrowedReleases':releases,
             'inputSHA256':{str(p.resolve()):sha(p.read_bytes()) for p in output_files}}
 
 
@@ -485,8 +599,9 @@ def main(argv=None):
             result = validate(args)
             status = 0
         except (ValueError, KeyError, TypeError, IndexError, OSError, AttributeError, OverflowError, StopIteration, struct.error) as exc:
-            result = {'schema':'c48-trace-validation-v1','accepted':False,'pureArtifactValidationOnly':True,
+            result = {'schema':'c48-trace-validation-v2','accepted':False,'pureArtifactValidationOnly':True,
                       'eflagsReadbackPolicy':EFLAGS_READBACK_POLICY,
+            'exitLifecyclePolicy':EXIT_LIFECYCLE_POLICY, 'exitLifecycleContractSHA256':EXIT_LIFECYCLE_CONTRACT_SHA256,
                       'error':str(exc),'errorType':type(exc).__name__}
             status = 1
         json.dump(result,out,sort_keys=True,indent=2,ensure_ascii=False)

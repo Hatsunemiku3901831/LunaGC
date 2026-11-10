@@ -4,6 +4,7 @@ import json
 import struct
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 from tools import client72_d02_trace_validate as v
@@ -28,6 +29,12 @@ def fixture(case, late_dlls=0, dll_before_last_step=False):
         rows[-1].update(eventPID=pid,eventTID=tid,eventType=code)
         defaults=dict(rawDebugEventCode=code,firstChance=None,exceptionCode=None,exceptionAddress=None,exceptionFlags=None,
                       exceptionParameters=None,exceptionParameterCount=None,continueStatus=None,ContinueDebugEventBOOL=None,continueRecordStatus='separate')
+        if code in (3,6):
+            defaults.update(fileHandleRaw='0000000000000200',fileHandleOrigin='CREATE_PROCESS.hFile' if code==3 else 'LOAD_DLL.hFile',filePath='synthetic.dll',filePathError=None,filePathRequiredLength=13,fileIdentityError=None,fileIdentity={'volumeSerial':1,'indexHigh':0,'indexLow':1},fileCloseError=None)
+        if code == 3:
+            defaults.update(debugProcessHandleRaw='0000000000000300',debugProcessHandleValid=True,
+                            debugThreadHandleRaw='0000000000000301',debugThreadHandleValid=True,
+                            startAddress='0000000000001234',threadLocalBase='0000000000005678')
         defaults.update(kw); e=emit('event',**defaults); stop=e['seq']; return e
     def exception(code, address):
         return event(1,firstChance=True,exceptionCode=code,exceptionAddress=f'{address:016x}',exceptionFlags='00000000',exceptionParameters=[],exceptionParameterCount=0)
@@ -58,11 +65,16 @@ def fixture(case, late_dlls=0, dll_before_last_step=False):
                     allowedRegion={'begin':f'{begin:016x}','endExclusive':f'{end:016x}'},ReadProcessMemoryBOOL=True,
                     lastErrorIfFalse=None,actualBytesRead=len(data),rawHex=data.hex())
     def cleanup(api,origin,ok=True,err=None):
-        return emit('cleanup',api=api,handleOrigin=origin,BOOL=ok,lastErrorIfFalse=err)
-    emit('epoch',**epoch)
+        extra={}
+        if origin.startswith('CreateProcess.PI.'):
+            extra['handleRaw']='0000000000000100' if origin.endswith('hProcess') else '0000000000000101'
+        if api=='TerminateProcess': extra['requestedExitCode']=90
+        if api=='GetExitCodeProcess': extra['exitCode']=90 if case==3 else 0
+        return emit('cleanup',api=api,handleOrigin=origin,BOOL=ok,lastErrorIfFalse=err,**extra)
+    emit('epoch',exitLifecyclePolicy=v.EXIT_LIFECYCLE_POLICY,exitLifecycleContractSHA256=v.EXIT_LIFECYCLE_CONTRACT_SHA256,**epoch)
     cleanup('CreateProcessW','newOwnedChild')
     emit('ownedChild',pid=pid,tid=tid,processHandleOrigin='CreateProcess.PI.hProcess',threadHandleOrigin='CreateProcess.PI.hThread',
-         GetProcessTimesBOOL=True,lastErrorIfFalse=None,creationFileTime='0000000000000020')
+         GetProcessTimesBOOL=True,lastErrorIfFalse=None,creationFileTime='0000000000000020',processHandleRaw='0000000000000100',threadHandleRaw='0000000000000101')
     cleanup('DebugSetProcessKillOnExit','debuggerThread')
     event(3,moduleBase=f'{base:016x}',moduleImageBytes=epoch['imageBytes'],fileSHA256=epoch['childExeSHA256'],fileHandleValid=True,
           fileIdentityBOOL=True,fileCloseBOOL=True,debugProcessHandleOrigin='CREATE_PROCESS.borrowed',debugThreadHandleOrigin='CREATE_PROCESS.borrowed'); cont()
@@ -123,13 +135,13 @@ def fixture(case, late_dlls=0, dll_before_last_step=False):
               ntdllNameMatch=False,fileHandleValid=True,fileIdentityBOOL=True,fileCloseBOOL=True,
               filePath='synthetic.dll',fileIdentity={'volumeSerial':1,'indexHigh':0,'indexLow':1}); cont()
     event(5,exitCode=90 if case==3 else 0); cont(case==3)
-    emit('cleanup',api='WaitForSingleObject',handleOrigin='CreateProcess.PI.hProcess',timeoutMs=1,result=0,lastErrorIfFailed=None)
+    emit('cleanup',api='WaitForSingleObject',handleOrigin='CreateProcess.PI.hProcess',handleRaw='0000000000000100',timeoutMs=1,result=0,lastErrorIfFailed=None)
     cleanup('GetExitCodeProcess','CreateProcess.PI.hProcess'); cleanup('CloseHandle','CreateProcess.PI.hThread'); cleanup('CloseHandle','CreateProcess.PI.hProcess')
     cleanup('GetFileAttributesW','childResult',case!=3,2 if case==3 else None)
     counts={'events':len([r for r in rows if r['kind']=='event']),'waits':count['wait'],'gets':count['get'],'sets':count['set'],
             'reads':count['memory'],'readRequestedBytes':sum(r['width'] for r in rows if r['kind']=='memory'),
             'continues':count['continue'],'retired':sum(r['retired'] for r in rows if r['kind']=='transaction')}
-    summary=dict(schema='c48-parent-result-v1',caseId=case,runId=run,pid=pid,tid=tid,sourceProof=epoch,budgets=counts,
+    summary=dict(schema='c48-parent-result-v2',exitLifecyclePolicy=v.EXIT_LIFECYCLE_POLICY,exitLifecycleContractSHA256=v.EXIT_LIFECYCLE_CONTRACT_SHA256,exitEventSeq=next(r['seq'] for r in rows if r['kind']=='event' and r['rawDebugEventCode']==5),exitEventTID=tid,threadLifecycleConsistent=True,caseId=case,runId=run,pid=pid,tid=tid,sourceProof=epoch,budgets=counts,
                  normalTracePassed=case!=3,firstFailureKind='expectedUD2' if case==3 else None,pendingTxId=2 if case==3 else None,
                  pendingRetired=False if case==3 else None,lastCompletedTx=1 if case==3 else len(pcs),TerminateProcessBOOL=True if case==3 else None,
                  terminationRequestedExit=90 if case==3 else None,cleanupContinues=2 if case==3 else 0,childExitCode=90 if case==3 else 0,
@@ -150,7 +162,175 @@ def check(data):
     v.check_witness(receipt['caseId'],receipt['runId'],records,events,summary,child,epoch,receipt)
 
 
+def add_tail(data, notifications, final_tid=None):
+    """Insert synthetic wait/event/continue triplets before the process exit."""
+    rows, summary, _, receipt, _ = data
+    exit_event = next(r for r in rows if r['kind']=='event' and r['rawDebugEventCode']==5)
+    exit_wait = next(r for r in rows if r['kind']=='wait' and r['stopEventSeq']==exit_event['seq'])
+    at = exit_wait['seq']; delta = 3 * len(notifications)
+    for row in rows:
+        for key in ('stopEventSeq','preEventSeq','postEventSeq'):
+            if type(row.get(key)) is int and row[key] >= at: row[key] += delta
+        if row['seq'] >= at: row['seq'] += delta
+    summary['exitEventSeq'] += delta
+    if final_tid is not None:
+        exit_event['eventTID']=exit_wait['eventTID']=final_tid
+        next(r for r in rows if r['kind']=='continue' and r['stopEventSeq']==exit_event['seq'])['eventTID']=final_tid
+        summary['exitEventTID']=final_tid
+    wait_ord=exit_wait['apiOrdinal']; cont_exit=next(r for r in rows if r['kind']=='continue' and r['stopEventSeq']==exit_event['seq'])
+    cont_ord=cont_exit['apiOrdinal']; exit_wait['apiOrdinal'] += len(notifications); cont_exit['apiOrdinal'] += len(notifications)
+    inserted=[]
+    for i,(code,tid,fields) in enumerate(notifications):
+        seq=at+i*3
+        common=dict(phase='SYNTHETIC',eventPID=summary['pid'],eventTID=tid,eventType=code)
+        w=dict(common,kind='wait',seq=seq,apiOrdinal=wait_ord+i,BOOL=True,lastErrorIfFalse=None,timeoutMs=50,stopEventSeq=seq+1)
+        e=dict(common,kind='event',seq=seq+1,rawDebugEventCode=code,continueStatus=None,ContinueDebugEventBOOL=None,continueRecordStatus='separate',**fields)
+        c=dict(common,kind='continue',seq=seq+2,apiOrdinal=cont_ord+i,stopEventSeq=seq+1,continueStatus='00010002',BOOL=True,lastErrorIfFalse=None,cleanupOnly=receipt['caseId']==3)
+        inserted.extend((w,e,c))
+    rows.extend(inserted); rows.sort(key=lambda x:x['seq'])
+    for i,row in enumerate(rows): row['monotonicElapsedUs']=i*1000
+    for key in ('events','waits','continues'): summary['budgets'][key] += len(notifications)
+    if receipt['caseId']==3: summary['cleanupContinues'] += len(notifications)
+    return data
+
+
+def move_before(data, group, before):
+    rows, summary, _, _, _ = data
+    reordered=[r for r in rows if r not in group]
+    index=reordered.index(before)
+    reordered[index:index]=group
+    mapping={r['seq']:i+1 for i,r in enumerate(reordered)}
+    for i,r in enumerate(reordered):
+        for key in ('stopEventSeq','preEventSeq','postEventSeq'):
+            if type(r.get(key)) is int: r[key]=mapping[r[key]]
+        r['seq']=i+1; r['monotonicElapsedUs']=i*1000
+    summary['exitEventSeq']=mapping[summary['exitEventSeq']]
+    rows[:]=reordered
+
+
+
+def synthetic_create(tid, raw='f123456789abcdef'):
+    return (2,tid,dict(debugThreadHandleRaw=raw,debugThreadHandleValid=raw != '0000000000000000',
+                       debugThreadHandleOrigin='CREATE_THREAD.borrowed',startAddress='f123456789abcdef',threadLocalBase='a123456789abcdef'))
+
+
+def synthetic_dll(tid, valid):
+    return (6,tid,dict(moduleBase='a123456789abcdef',moduleImageBytes='0000000000001000' if valid else None,
+                       fileHandleRaw='f123456789abcdef' if valid else '0000000000000000',fileHandleOrigin='LOAD_DLL.hFile',
+                       fileHandleValid=valid,filePath='synthetic.dll' if valid else None,filePathError=None,
+                       filePathRequiredLength=13 if valid else 0,fileIdentityBOOL=True if valid else None,fileIdentityError=None,
+                       fileIdentity={'volumeSerial':1,'indexHigh':0,'indexLow':1} if valid else None,
+                       fileCloseBOOL=True if valid else None,fileCloseError=None,ntdllNameMatch=False))
+
+
 class TraceTests(unittest.TestCase):
+    def test_synthetic_w3_termination_follows_fault_transaction(self):
+        for target_kind in ('fault_wait', 'fault_transaction'):
+            with self.subTest(target_kind=target_kind):
+                data = fixture(3)
+                rows, summary, _, _, _ = data
+                term = next(r for r in rows if r['kind'] == 'cleanup' and r['api'] == 'TerminateProcess')
+                fault = next(r for r in rows if r['kind'] == 'event' and r.get('exceptionCode') == 'c000001d')
+                before = (next(r for r in rows if r['kind'] == 'wait' and r['stopEventSeq'] == fault['seq'])
+                          if target_kind == 'fault_wait' else
+                          next(r for r in rows if r['kind'] == 'transaction' and r['txId'] == 2))
+                move_before(data, [term], before)
+                summary['stopEventSeq'] = fault['seq']
+                with self.assertRaisesRegex(ValueError, 'fault cleanup'):
+                    check(data)
+
+    def test_synthetic_lifecycle_permutations(self):
+        for case in (1,2,3):
+            for tail, final in [([synthetic_create(202),(4,201,{'exitCode':0xffffffff})],202),
+                                ([synthetic_create(202),(4,202,{'exitCode':1})],201),
+                                ([synthetic_create(202),synthetic_create(203,'0000000000000000'),(4,202,{'exitCode':9})],203),
+                                ([synthetic_create(202),synthetic_dll(202,True),synthetic_dll(202,False)],202),
+                                ([(7,201,{'moduleBase':'f123456789abcdef'}),(8,201,{'debugStringAddress':'a123456789abcdef','debugStringUnicode':65535,'debugStringLength':65535})],201),
+                                ([(8,201,{'debugStringAddress':'0000000000000000','debugStringUnicode':0,'debugStringLength':0})],201)]:
+                with self.subTest(case=case,tail=tail): check(add_tail(fixture(case),tail,final))
+
+    def test_synthetic_lifecycle_invalid_origins_and_raw(self):
+        invalid = [
+            ([(4,202,{'exitCode':0})],201), ([(5,202,{'exitCode':0})],201),
+            ([(7,202,{'moduleBase':'0000000000000000'})],201), ( [synthetic_dll(202,False)],201),
+            ([(8,202,{'debugStringAddress':'0000000000000000','debugStringUnicode':0,'debugStringLength':0})],201),
+            ([synthetic_create(201)],201), ([synthetic_create(202),synthetic_create(202)],201),
+            ([synthetic_create(202),(4,202,{'exitCode':0}),synthetic_create(202)],201),
+            ([synthetic_create(202),(4,202,{'exitCode':0})],202),
+            ([synthetic_create(202,'ffffffffffffffff')],201),
+            ([(4,201,{'exitCode':4294967296})],201),
+            ([(8,201,{'debugStringAddress':'0000000000000000','debugStringUnicode':0,'debugStringLength':65536})],201),
+            ([(7,201,{})],201), ([(9,201,{'ripError':1,'ripType':1})],201),
+        ]
+        for tail, final in invalid:
+            with self.subTest(tail=tail):
+                with self.assertRaises((ValueError,KeyError)): check(add_tail(fixture(1),tail,final))
+
+    def test_synthetic_lifecycle_required_and_cleanup_fields(self):
+        def row(d,k): return next(r for r in d[0] if r['kind']==k)
+        changes=[lambda d: row(d,'epoch').pop('exitLifecyclePolicy'),
+                 lambda d: d[1].update(schema='c48-parent-result-v1'),
+                 lambda d: d[1].update(exitEventTID=202),
+                 lambda d: d[1].update(threadLifecycleConsistent=False),
+                 lambda d: row(d,'ownedChild').pop('processHandleRaw'),
+                 lambda d: next(r for r in d[0] if r['kind']=='event' and r['rawDebugEventCode']==3).pop('startAddress'),
+                 lambda d: next(r for r in d[0] if r['kind']=='event' and r['rawDebugEventCode']==3).update(debugThreadHandleValid=False),
+                 lambda d: next(r for r in d[0] if r['kind']=='event' and r['rawDebugEventCode']==6).update(filePath=''),
+                 lambda d: next(r for r in d[0] if r['kind']=='cleanup' and r['api']=='GetExitCodeProcess').update(exitCode=1),
+                 lambda d: next(r for r in d[0] if r['kind']=='cleanup' and r['api']=='CloseHandle').update(handleRaw='0000000000000000'),
+                 lambda d: next(r for r in d[0] if r['kind']=='event' and r['rawDebugEventCode']==5).update(automaticCloseBOOL=True)]
+        for change in changes:
+            with self.subTest(change=change):
+                d=fixture(1); change(d)
+                with self.assertRaises((ValueError,KeyError)): check(d)
+
+    def test_synthetic_null_file_and_release_provenance(self):
+        data=fixture(1,1)
+        e=[r for r in data[0] if r['kind']=='event' and r['rawDebugEventCode']==6][-1]
+        e.update(fileHandleRaw='0000000000000000',fileHandleValid=False,filePath=None,filePathError=None,
+                 filePathRequiredLength=0,fileIdentityBOOL=None,fileIdentityError=None,fileIdentity=None,
+                 fileCloseBOOL=None,fileCloseError=None,moduleImageBytes=None)
+        check(data)
+        data=add_tail(fixture(1),[synthetic_create(202,'0000000000000000')],202)
+        records, events=v.check_records(data[0],data[1],data[3],data[4])
+        releases=v.check_witness(1,data[3]['runId'],records,events,data[1],data[2],data[4],data[3])
+        self.assertFalse(any(r.get('tid')==202 for r in releases))
+        self.assertTrue(all(r['basis']=='api_contract' for r in releases))
+
+    def test_synthetic_trace_boundary_and_failure(self):
+        for case in (1,2):
+            for code in (2,4,6,7,8):
+                data=fixture(case,1); e=[r for r in data[0] if r['kind']=='event' and r['rawDebugEventCode']==6][-1]
+                final_tx=[r for r in data[0] if r['kind']=='transaction'][-1]
+                w=next(r for r in data[0] if r['kind']=='wait' and r['stopEventSeq']==e['seq'])
+                c=next(r for r in data[0] if r['kind']=='continue' and r['stopEventSeq']==e['seq'])
+                w['eventType']=e['eventType']=e['rawDebugEventCode']=c['eventType']=code
+                e['phase']='WAIT_EXIT'
+                restore=[r for r in data[0] if r['kind']=='set'][-1]
+                move_before(data,[w,e,c],restore)
+                with self.subTest(case=case,code=code), self.assertRaises((ValueError,KeyError)): check(data)
+        for change in (lambda d: next(r for r in d[0] if r['kind']=='cleanup' and r['api']=='TerminateProcess').update(BOOL=False,lastErrorIfFalse=5),
+                       lambda d: next(r for r in d[0] if r['kind']=='cleanup' and r['api']=='TerminateProcess').update(requestedExitCode=91),
+                       lambda d: d[1].update(firstFailureKind='other'),
+                       lambda d: next(r for r in d[0] if r['kind']=='cleanup' and r['api']=='WaitForSingleObject').update(result=258),
+                       lambda d: d[1].update(cleanupComplete=False)):
+            d=fixture(3); change(d)
+            with self.subTest(change=change), self.assertRaises((ValueError,KeyError)): check(d)
+
+    def test_synthetic_identity_and_terminal_association(self):
+        for key in ('eventPID','eventTID','eventType'):
+            for kind in ('wait','continue'):
+                d=add_tail(fixture(1),[synthetic_create(202)],202)
+                e=next(r for r in d[0] if r['kind']=='event' and r['rawDebugEventCode']==2)
+                r=next(r for r in d[0] if r['kind']==kind and r['stopEventSeq']==e['seq'])
+                r[key]=999
+                with self.subTest(kind=kind,key=key), self.assertRaises(ValueError): check(d)
+        for kind in ('get','set','memory','transaction'):
+            d=fixture(1); next(r for r in d[0] if r['kind']==kind)['eventTID']=202
+            with self.subTest(kind=kind), self.assertRaises(ValueError): check(d)
+        d=fixture(3); next(r for r in d[0] if r['kind']=='event' and r['rawDebugEventCode']==5)['exitCode']=0
+        with self.assertRaises(ValueError): check(d)
+
     def test_successful_wait_requires_returned_event_identity(self):
         # Actual main4 emitted null here despite a successful Wait and real event.
         for case in (1, 2, 3):
@@ -159,7 +339,7 @@ class TraceTests(unittest.TestCase):
                     data = fixture(case)
                     wait = next(r for r in data[0] if r['kind'] == 'wait')
                     wait[key] = None
-                    failure = 'wait identity' if key == 'eventType' else 'event PID/TID'
+                    failure = 'wait identity'
                     with self.assertRaisesRegex(ValueError, failure):
                         check(data)
 
@@ -202,7 +382,6 @@ class TraceTests(unittest.TestCase):
             lambda d: late_continue(d).update(BOOL=False,lastErrorIfFalse=5),
             lambda d: late_continue(d).update(continueStatus='80010001'),
             lambda d: late_continue(d).update(cleanupOnly=True),
-            lambda d: set_code(d,7),
             lambda d: set_code(d,1),
             lambda d: [r for r in d[0] if r['kind']=='transaction'][-1].update(retired=False,status='unretired'),
             leave_tf_set,
@@ -220,7 +399,7 @@ class TraceTests(unittest.TestCase):
             with self.subTest(case=case,dll_before_last_step=True):
                 with self.assertRaisesRegex(ValueError,'debug event sequence'):
                     check(fixture(case,dll_before_last_step=True))
-        with self.assertRaisesRegex(ValueError,'debug event sequence'):
+        with self.assertRaisesRegex(ValueError,'fault cleanup'):
             check(fixture(3,1))
 
     def test_synthetic_eflags_manual_truth_table(self):
@@ -409,7 +588,8 @@ class TraceTests(unittest.TestCase):
                 source=[]
                 for name in ('child.c','witness.asm','parent.c','build.ps1','build-epoch.h'):
                     source.append(record(put(temp/name,('synthetic source '+name).encode())))
-                review['source']=[record(header)]+source
+                supplement=put(temp/'supplement.synthetic.json',b'synthetic supplement')
+                review['source']=[record(header),record(supplement)]+source
                 for name in ('includes','libraries','compilerDlls','buildLogs'):
                     review[name]=[record(put(temp/(name+'.synthetic'),('synthetic '+name).encode()))]
                 review_path=put(temp/'review.synthetic.json',encoded(review))
@@ -432,12 +612,30 @@ class TraceTests(unittest.TestCase):
                 for name,path in [('header',header),('bootstrap',boot),('bootstrap-mirror',mirror),('contract-dir',contracts),('events',events),
                                   ('parent-result',parent),('child-result',child_path),('receipt',receipt_path),('output',report)]:
                     argv.extend(['--'+name,str(path)])
-                status=v.main(argv)
+                with mock.patch.object(v,'EXIT_LIFECYCLE_CONTRACT_PATH',supplement), mock.patch.object(v,'EXIT_LIFECYCLE_CONTRACT_SHA256',v.sha(supplement.read_bytes())):
+                    # Synthetic artifacts explicitly mock the new data pin.
+                    for row in rows:
+                        if row['kind']=='epoch': row['exitLifecycleContractSHA256']=v.EXIT_LIFECYCLE_CONTRACT_SHA256
+                    summary['exitLifecycleContractSHA256']=v.EXIT_LIFECYCLE_CONTRACT_SHA256
+                    events.write_bytes(b''.join(encoded(r)+b'\n' for r in rows)); parent.write_bytes(encoded(summary))
+                    status=v.main(argv)
                 result=json.loads(report.read_text())
                 self.assertEqual(status,0,result)
                 self.assertTrue(result['pureArtifactValidationOnly'])
                 self.assertEqual(result['eflagsReadbackPolicy'],v.EFLAGS_READBACK_POLICY)
                 self.assertEqual(result['expectedNegativeAccepted'],case==3)
+                self.assertEqual(result['exitLifecyclePolicy'],v.EXIT_LIFECYCLE_POLICY)
+                if case==1:
+                    # Review source must include the exact synthetic pin, independently of artifact count.
+                    original=review_path.read_bytes()
+                    for changed in ([], [dict(record(supplement),sha256='00'*32)]):
+                        altered=copy.deepcopy(review)
+                        altered['source']=[x for x in altered['source'] if x['path'] != str(supplement)] + changed
+                        review_path.write_bytes(encoded(altered))
+                        modified=copy.deepcopy(receipt); modified['before'][str(review_path)]=v.sha(review_path.read_bytes())
+                        with mock.patch.object(v,'EXIT_LIFECYCLE_CONTRACT_PATH',supplement), mock.patch.object(v,'EXIT_LIFECYCLE_CONTRACT_SHA256',v.sha(supplement.read_bytes())):
+                            with self.assertRaises(ValueError): v.check_dependency(modified,paths)
+                    review_path.write_bytes(original)
                 if case == 1:
                     mutations = [
                         lambda x: x['after'].update({str(header):'00'*32}),
@@ -451,7 +649,8 @@ class TraceTests(unittest.TestCase):
                         changed_receipt=put(temp/f'mutated-receipt-{i}.json',encoded(altered))
                         changed_report=temp/f'mutated-result-{i}.json'
                         alt=list(argv); alt[alt.index('--receipt')+1]=str(changed_receipt); alt[alt.index('--output')+1]=str(changed_report)
-                        self.assertEqual(v.main(alt),1)
+                        with mock.patch.object(v,'EXIT_LIFECYCLE_CONTRACT_PATH',supplement), mock.patch.object(v,'EXIT_LIFECYCLE_CONTRACT_SHA256',v.sha(supplement.read_bytes())):
+                            self.assertEqual(v.main(alt),1)
                         failed=json.loads(changed_report.read_text())
                         self.assertFalse(failed['accepted'])
                         self.assertEqual(failed['eflagsReadbackPolicy'],v.EFLAGS_READBACK_POLICY)

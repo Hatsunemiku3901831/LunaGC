@@ -26,6 +26,8 @@ class RunnerTests(unittest.TestCase):
         for name in ('parent.exe', 'parent.map'):
             (f.build / name).write_bytes(('synthetic ' + name).encode())
         (f.build / 'build-epoch.h').write_bytes(b'synthetic epoch')
+        self.lifecycle_contract = f.root / 'synthetic-exit-contract.json'
+        self.lifecycle_contract.write_bytes(b'{"syntheticOnly":true}\n')
         def entry(path):
             path = path.resolve()
             return dict(path=str(path), bytes=path.stat().st_size, sha256=r.digest(path))
@@ -37,7 +39,8 @@ class RunnerTests(unittest.TestCase):
         review = dict(schema='c48-trace-dependency-review-v1', independentlyReviewed=True,
                       actualBuildExit=0, peAndCallerUnwindReviewed=True,
                       artifacts={k: entry(f.build / filename) for k, filename in r.ARTIFACT_FILES.items()},
-                      source=[entry(f.build / name) for name in (*a.BUILD_SOURCES, 'build-epoch.h')], **dict(extra))
+                      source=[entry(f.build / name) for name in (*a.BUILD_SOURCES, 'build-epoch.h')] +
+                             [entry(self.lifecycle_contract)], **dict(extra))
         self.review = f.root / 'synthetic-review.json'
         self.review.write_text(json.dumps(review), encoding='utf-8')
         self.owned = f.build.parent
@@ -46,7 +49,9 @@ class RunnerTests(unittest.TestCase):
         self.patch = patch.multiple(r, OWNED=self.owned, SOURCE=f.source)
         self.patch.start()
         self.addCleanup(self.patch.stop)
-        self.validator_patch = patch.multiple(v, HEADER=a.HEADER, PINS=a.CONTRACT_PINS)
+        self.validator_patch = patch.multiple(v, HEADER=a.HEADER, PINS=a.CONTRACT_PINS,
+                                             EXIT_LIFECYCLE_CONTRACT_PATH=self.lifecycle_contract,
+                                             EXIT_LIFECYCLE_CONTRACT_SHA256=r.digest(self.lifecycle_contract))
         self.validator_patch.start()
         self.addCleanup(self.validator_patch.stop)
 
@@ -97,6 +102,27 @@ class RunnerTests(unittest.TestCase):
         self.assertEqual(receipt['parentExit'], 0)
         self.assertEqual(receipt['parentCreationFileTime'], '0000000000001234')
         self.assertIsNone(receipt['childCreated'])
+
+    def test_missing_or_changed_lifecycle_contract_never_spawns(self):
+        original_review = self.review.read_bytes()
+        original_contract = self.lifecycle_contract.read_bytes()
+        for mode in ('missing', 'changed'):
+            with self.subTest(mode=mode):
+                review = json.loads(original_review)
+                if mode == 'missing':
+                    review['source'] = [e for e in review['source'] if e['path'] != str(self.lifecycle_contract.resolve())]
+                else:
+                    self.lifecycle_contract.write_bytes(b'{"syntheticOnly":true,"changed":true}\n')
+                    entry = next(e for e in review['source'] if e['path'] == str(self.lifecycle_contract.resolve()))
+                    entry.update(bytes=self.lifecycle_contract.stat().st_size, sha256=r.digest(self.lifecycle_contract))
+                self.review.write_text(json.dumps(review), encoding='utf-8')
+                self.args.output = self.owned / ('bad-lifecycle-' + mode)
+                with patch.object(r.subprocess, 'Popen') as popen:
+                    self.assertEqual(r.run(self.args), 1)
+                    popen.assert_not_called()
+                self.assertFalse(self.receipt()['parentCreated'])
+                self.lifecycle_contract.write_bytes(original_contract)
+        self.review.write_bytes(original_review)
 
     def test_drift_and_actual_exit_are_failures(self):
         proc = self.process(exitcode=17)

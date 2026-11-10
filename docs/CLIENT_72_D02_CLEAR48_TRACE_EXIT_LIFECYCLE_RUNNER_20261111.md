@@ -1,0 +1,11 @@
+# F-03d3f4d2 / CLEAR48-TRACE-EXIT-LIFECYCLE：root材料绑定
+
+2026-11-11，主线Sol xhigh。按[已采纳v2合同](CLIENT_72_D02_CLEAR48_TRACE_EXIT_LIFECYCLE_CONTRACT_20261111.md)及私有实施计划，runner在任何Popen前要求独立review.source包含固定补充合同的真实绝对路径及SHA `cf52cfafa00eab47316a756a5e04a1edc59ca2b5606d4fa89d6cc2cb552105d8`。文件沿原依赖逐条size/hash检查，并进入统一before/after；缺失或更新合同而未更新已批pin均拒绝启动。
+
+保持原12个artifact、五实际编译源集合、bootstrap128B、四旧JSON/header与argv接口。补充合同是review中的数据来源，不是第13个artifact；validator的check_inputs仍返回legacy sourceProof，policy与合同SHA在epoch/summary/验证报告顶层分别核。导入validator不读合同文件，新常量路径只由preflight/check_dependency消费。
+
+root实际运行36项纯测试通过：独立validator18、runner10、artifact8。runner新反例包括去掉合同来源，以及修改文件并同时更新review内hash但仍与已批合同pin不同，两者均确认不Popen。其余精确argv、owned句柄、创建失败/超时、源漂移、错误返回及拒绝覆盖原门保持。所有process/Windows API均mock，不能代替真实emitter、构建或native通过。
+
+runner源SHA `900503a9505344ffb08d7cfc3662939ec88f50c9b11728b73fdde7cf818e95d5`；测试SHA `79d25733168a7653b7ae8ba02923e6d3e6d90da2277720c8a012ebf926b99740`。主线集成回执与stdout/stderr位于忽略的`a-clear48-trace-exit-implementation/`。原三次W1、其失败码/metadata未知/cleanup false均不追认。
+
+parent末审另有W3 sticky首失败后drain元数据失败的状态遗漏，主线已具体修复，普通errno22写入故障原件保留；见[parent集成更正](CLIENT_72_D02_CLEAR48_TRACE_EXIT_LIFECYCLE_PARENT_20261111.md#主线集成更正)。接口独立审核与真实source/build/PE/依赖新epoch尚未完成前不运行新W1；完整通过后才W2/W3。此离线工具变更不操作客户端或生产服务，无便携部署/重启或D-02客户端验收增量。

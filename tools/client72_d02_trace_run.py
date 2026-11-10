@@ -123,6 +123,10 @@ def preflight(args):
         need(path not in declared or declared[path] == (entry['bytes'], entry['sha256']), 'contradictory dependency')
         declared[path] = (entry['bytes'], entry['sha256'])
         paths.add(path)
+    lifecycle_contract = v.EXIT_LIFECYCLE_CONTRACT_PATH.resolve()
+    need(str(lifecycle_contract) in source_paths and
+         declared[lifecycle_contract][1] == v.EXIT_LIFECYCLE_CONTRACT_SHA256,
+         'review must bind the frozen exit lifecycle contract')
     bootstrap = artifacts['bootstrap'].read_bytes()
     mirror = read_json(artifacts['bootstrapMirror'])
     # Reuse the frozen bootstrap structural checks; the dummy receipt is not written or accepted.

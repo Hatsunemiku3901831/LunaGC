@@ -8,6 +8,9 @@
 #include <wchar.h>
 #include "shared.h"
 
+static const char C48_EXIT_POLICY[] = "c48-owned-exit-lifecycle-v2";
+static const char C48_EXIT_CONTRACT_SHA[] = "cf52cfafa00eab47316a756a5e04a1edc59ca2b5606d4fa89d6cc2cb552105d8";
+
 #ifndef C48_SHARED_HEADER_SHA256_HEX
 #error C48_SHARED_HEADER_SHA256_HEX_must_come_from_build_epoch
 #endif
@@ -304,6 +307,11 @@ static int integer_equal(const CONTEXT *a, const CONTEXT *b)
         a->R13 == b->R13 && a->R14 == b->R14 && a->R15 == b->R15;
 }
 
+typedef struct C48Thread {
+    DWORD tid;
+    int state; /* 1: creation observed, 2: live, 3: exited */
+} C48Thread;
+
 typedef struct C48Run {
     C48Log log;
     PROCESS_INFORMATION pi;
@@ -345,6 +353,11 @@ typedef struct C48Run {
     int exitSeen;
     int exitContinued;
     int cleanupInconsistent;
+    C48Thread threads[C48_MAX_EVENTS];
+    uint32_t threadCount;
+    int eventLifecycleError;
+    uint64_t exitEventSeq;
+    DWORD exitEventTID;
     DWORD eventExitCode;
     int processSignaled;
     int getExitOk;
@@ -844,6 +857,44 @@ static uint64_t image_size_from_handle(HANDLE file)
     return nt.OptionalHeader.SizeOfImage;
 }
 
+static C48Thread *find_thread(C48Run *run, DWORD tid)
+{
+    uint32_t i;
+    for (i = 0; i < run->threadCount; ++i)
+        if (run->threads[i].tid == tid) return &run->threads[i];
+    return NULL;
+}
+
+/* Observe each actual creation once, even when its phase will reject the event. */
+static void observe_thread_origin(C48Run *run)
+{
+    DEBUG_EVENT *ev = &run->event;
+    HANDLE handle;
+    int creation = ev->dwDebugEventCode == CREATE_PROCESS_DEBUG_EVENT ||
+        ev->dwDebugEventCode == CREATE_THREAD_DEBUG_EVENT;
+    run->eventLifecycleError = 0;
+    if (!creation || ev->dwProcessId != run->pi.dwProcessId) return;
+    handle = ev->dwDebugEventCode == CREATE_PROCESS_DEBUG_EVENT ?
+        ev->u.CreateProcessInfo.hThread : ev->u.CreateThread.hThread;
+    if (!ev->dwThreadId || find_thread(run, ev->dwThreadId) ||
+        run->threadCount >= C48_MAX_EVENTS || handle == INVALID_HANDLE_VALUE ||
+        (ev->dwDebugEventCode == CREATE_PROCESS_DEBUG_EVENT &&
+         (ev->dwThreadId != run->pi.dwThreadId ||
+          ev->u.CreateProcessInfo.hProcess == INVALID_HANDLE_VALUE))) {
+        run->eventLifecycleError = 1;
+        run->cleanupInconsistent = 1;
+        return;
+    }
+    run->threads[run->threadCount].tid = ev->dwThreadId;
+    run->threads[run->threadCount++].state = 1;
+}
+
+static int known_live_thread(C48Run *run)
+{
+    C48Thread *thread = find_thread(run, run->event.dwThreadId);
+    return thread != NULL && thread->state == 2;
+}
+
 static int log_event(C48Run *run)
 {
     C48Line line;
@@ -856,6 +907,7 @@ static int log_event(C48Run *run)
     BOOL infoOk = FALSE, closeOk = FALSE;
     DWORD i;
     int ntdll = 0, fileHashOk = 0;
+    int owned = ev->dwProcessId == run->pi.dwProcessId;
     uint8_t fileHash[32];
     memset(&info, 0, sizeof(info));
     path[0] = 0;
@@ -866,7 +918,7 @@ static int log_event(C48Run *run)
         file = ev->u.LoadDll.hFile;
         moduleBase = (uint64_t)(uintptr_t)ev->u.LoadDll.lpBaseOfDll;
     }
-    if (file != NULL && file != INVALID_HANDLE_VALUE) {
+    if (owned && file != NULL && file != INVALID_HANDLE_VALUE) {
         const wchar_t *base;
         pathLength = GetFinalPathNameByHandleW(file, path, (DWORD)(sizeof(path) / sizeof(path[0])), FILE_NAME_NORMALIZED);
         if (pathLength == 0 || pathLength >= sizeof(path) / sizeof(path[0])) {
@@ -889,6 +941,12 @@ static int log_event(C48Run *run)
     }
     line_begin(&run->log, &line, "event");
     run->log.stopSeq = run->log.sequence;
+    if (owned && ev->dwDebugEventCode == EXIT_PROCESS_DEBUG_EVENT) {
+        run->exitSeen = 1;
+        run->eventExitCode = ev->u.ExitProcess.dwExitCode;
+        run->exitEventSeq = run->log.stopSeq;
+        run->exitEventTID = ev->dwThreadId;
+    }
     line_add(&line, ",\"rawDebugEventCode\":%lu,\"firstChance\":", (unsigned long)ev->dwDebugEventCode);
     if (ev->dwDebugEventCode == EXCEPTION_DEBUG_EVENT) {
         const EXCEPTION_DEBUG_INFO *x = &ev->u.Exception;
@@ -907,41 +965,72 @@ static int log_event(C48Run *run)
     if (ev->dwDebugEventCode == CREATE_PROCESS_DEBUG_EVENT || ev->dwDebugEventCode == LOAD_DLL_DEBUG_EVENT) {
         line_add(&line, ",\"moduleBase\":\"%016llx\",\"moduleImageBytes\":", (unsigned long long)moduleBase);
         if (moduleBytes) line_add(&line, "\"%016llx\"", (unsigned long long)moduleBytes); else line_add(&line, "null");
-        line_add(&line, ",\"fileHandleValid\":%s,\"filePath\":", file && file != INVALID_HANDLE_VALUE ? "true" : "false");
+        line_add(&line, ",\"fileHandleRaw\":\"%016llx\",\"fileHandleOrigin\":\"%s\",\"fileHandleValid\":%s,\"filePath\":",
+            (unsigned long long)(uintptr_t)file, ev->dwDebugEventCode == CREATE_PROCESS_DEBUG_EVENT ? "CREATE_PROCESS.hFile" : "LOAD_DLL.hFile",
+            file && file != INVALID_HANDLE_VALUE ? "true" : "false");
         if (path[0]) line_wide_json(&line, path); else line_add(&line, "null");
         line_add(&line, ",\"filePathError\":");
-        if (pathLength == 0 && file && file != INVALID_HANDLE_VALUE) line_add(&line, "%lu", (unsigned long)pathError);
+        if (owned && pathLength == 0 && file && file != INVALID_HANDLE_VALUE) line_add(&line, "%lu", (unsigned long)pathError);
         else line_add(&line, "null");
-        line_add(&line, ",\"filePathRequiredLength\":%lu,\"fileIdentityBOOL\":", (unsigned long)pathLength);
-        if (file && file != INVALID_HANDLE_VALUE) line_add(&line, "%s", infoOk ? "true" : "false");
+        line_add(&line, ",\"filePathRequiredLength\":");
+        if (owned && file && file != INVALID_HANDLE_VALUE) line_add(&line, "%lu", (unsigned long)pathLength);
+        else if (owned) line_add(&line, "0"); else line_add(&line, "null");
+        line_add(&line, ",\"fileIdentityBOOL\":");
+        if (owned && file && file != INVALID_HANDLE_VALUE) line_add(&line, "%s", infoOk ? "true" : "false");
         else line_add(&line, "null");
         line_add(&line, ",\"fileIdentityError\":");
-        if (file && file != INVALID_HANDLE_VALUE && !infoOk) line_add(&line, "%lu", (unsigned long)infoError);
+        if (owned && file && file != INVALID_HANDLE_VALUE && !infoOk) line_add(&line, "%lu", (unsigned long)infoError);
         else line_add(&line, "null");
         line_add(&line, ",\"fileIdentity\":");
         if (infoOk) line_add(&line, "{\"volumeSerial\":%lu,\"indexHigh\":%lu,\"indexLow\":%lu}",
             (unsigned long)info.dwVolumeSerialNumber, (unsigned long)info.nFileIndexHigh, (unsigned long)info.nFileIndexLow);
         else line_add(&line, "null");
         line_add(&line, ",\"fileCloseBOOL\":");
-        if (file && file != INVALID_HANDLE_VALUE) line_add(&line, "%s", closeOk ? "true" : "false");
+        if (owned && file && file != INVALID_HANDLE_VALUE) line_add(&line, "%s", closeOk ? "true" : "false");
         else line_add(&line, "null");
         line_add(&line, ",\"fileCloseError\":");
-        if (file && file != INVALID_HANDLE_VALUE && !closeOk) line_add(&line, "%lu", (unsigned long)closeError);
+        if (owned && file && file != INVALID_HANDLE_VALUE && !closeOk) line_add(&line, "%lu", (unsigned long)closeError);
         else line_add(&line, "null");
         if (ev->dwDebugEventCode == CREATE_PROCESS_DEBUG_EVENT) {
-            line_add(&line, ",\"debugProcessHandleOrigin\":\"CREATE_PROCESS.borrowed\","
+            line_add(&line, ",\"debugProcessHandleRaw\":\"%016llx\",\"debugProcessHandleValid\":%s,"
+                "\"debugThreadHandleRaw\":\"%016llx\",\"debugThreadHandleValid\":%s,"
+                "\"debugProcessHandleOrigin\":\"CREATE_PROCESS.borrowed\","
                 "\"debugThreadHandleOrigin\":\"CREATE_PROCESS.borrowed\",\"startAddress\":\"%016llx\","
                 "\"threadLocalBase\":\"%016llx\"",
+                (unsigned long long)(uintptr_t)ev->u.CreateProcessInfo.hProcess,
+                ev->u.CreateProcessInfo.hProcess && ev->u.CreateProcessInfo.hProcess != INVALID_HANDLE_VALUE ? "true" : "false",
+                (unsigned long long)(uintptr_t)ev->u.CreateProcessInfo.hThread,
+                ev->u.CreateProcessInfo.hThread && ev->u.CreateProcessInfo.hThread != INVALID_HANDLE_VALUE ? "true" : "false",
                 (unsigned long long)(uintptr_t)ev->u.CreateProcessInfo.lpStartAddress,
                 (unsigned long long)(uintptr_t)ev->u.CreateProcessInfo.lpThreadLocalBase);
         }
-        line_add(&line, ",\"ntdllNameMatch\":%s,\"fileSHA256\":", ntdll ? "true" : "false");
+        line_add(&line, ",\"ntdllNameMatch\":%s,\"fileSHA256\":", owned ? (ntdll ? "true" : "false") : "null");
         if (fileHashOk) { line_add(&line, "\""); line_hex(&line, fileHash, 32); line_add(&line, "\""); }
         else line_add(&line, "null");
     }
+    if (ev->dwDebugEventCode == CREATE_THREAD_DEBUG_EVENT)
+        line_add(&line, ",\"debugThreadHandleRaw\":\"%016llx\",\"debugThreadHandleValid\":%s,"
+            "\"debugThreadHandleOrigin\":\"CREATE_THREAD.borrowed\",\"startAddress\":\"%016llx\",\"threadLocalBase\":\"%016llx\"",
+            (unsigned long long)(uintptr_t)ev->u.CreateThread.hThread,
+            ev->u.CreateThread.hThread && ev->u.CreateThread.hThread != INVALID_HANDLE_VALUE ? "true" : "false",
+            (unsigned long long)(uintptr_t)ev->u.CreateThread.lpStartAddress,
+            (unsigned long long)(uintptr_t)ev->u.CreateThread.lpThreadLocalBase);
+    if (ev->dwDebugEventCode == EXIT_THREAD_DEBUG_EVENT)
+        line_add(&line, ",\"exitCode\":%lu", (unsigned long)ev->u.ExitThread.dwExitCode);
+    if (ev->dwDebugEventCode == UNLOAD_DLL_DEBUG_EVENT)
+        line_add(&line, ",\"moduleBase\":\"%016llx\"", (unsigned long long)(uintptr_t)ev->u.UnloadDll.lpBaseOfDll);
+    if (ev->dwDebugEventCode == OUTPUT_DEBUG_STRING_EVENT)
+        line_add(&line, ",\"debugStringAddress\":\"%016llx\",\"debugStringUnicode\":%u,\"debugStringLength\":%u",
+            (unsigned long long)(uintptr_t)ev->u.DebugString.lpDebugStringData,
+            (unsigned)ev->u.DebugString.fUnicode, (unsigned)ev->u.DebugString.nDebugStringLength);
+    if (ev->dwDebugEventCode == RIP_EVENT)
+        line_add(&line, ",\"ripError\":%lu,\"ripType\":%lu", (unsigned long)ev->u.RipInfo.dwError,
+            (unsigned long)ev->u.RipInfo.dwType);
     if (ev->dwDebugEventCode == EXIT_PROCESS_DEBUG_EVENT)
         line_add(&line, ",\"exitCode\":%lu", (unsigned long)ev->u.ExitProcess.dwExitCode);
     if (!line_finish(&run->log, &line)) return fail_run(run, "writeEvents");
+    if (!owned) { run->cleanupInconsistent = 1; return fail_run(run, "unknownPidOrThread"); }
+    if (run->eventLifecycleError) return fail_run(run, "threadLifecycle");
     if (file && file != INVALID_HANDLE_VALUE && !closeOk) return fail_run(run, "eventFileClose");
     if (file && file != INVALID_HANDLE_VALUE && (!infoOk || !path[0] || !moduleBytes))
         return fail_run(run, "eventFileIdentity");
@@ -976,6 +1065,7 @@ static int wait_event(C48Run *run)
         run->log.tid = run->event.dwThreadId;
         run->log.eventType = run->event.dwDebugEventCode;
         run->log.stopSeq = run->log.sequence + 2u;
+        observe_thread_origin(run);
     }
     line_begin(&run->log, &line, "wait");
     line_add(&line, ",\"apiOrdinal\":%u,\"BOOL\":%s,\"lastErrorIfFalse\":", run->waitCount, ok ? "true" : "false");
@@ -1012,7 +1102,19 @@ static int continue_event(C48Run *run, DWORD status, int cleanup)
     if (ok) line_add(&line, "null"); else line_add(&line, "%lu", (unsigned long)error);
     line_add(&line, ",\"cleanupOnly\":%s", cleanup ? "true" : "false");
     if (cleanup) ++run->cleanupContinues;
-    if (ok) run->outstanding = 0;
+    if (ok) {
+        C48Thread *thread = find_thread(run, run->event.dwThreadId);
+        DWORD code = run->event.dwDebugEventCode;
+        run->outstanding = 0;
+        if ((code == CREATE_PROCESS_DEBUG_EVENT || code == CREATE_THREAD_DEBUG_EVENT) &&
+            !run->eventLifecycleError && thread && thread->state == 1) thread->state = 2;
+        else if (code == EXIT_THREAD_DEBUG_EVENT && thread && thread->state == 2) thread->state = 3;
+        else if (code == EXIT_PROCESS_DEBUG_EVENT) {
+            uint32_t i;
+            run->exitContinued = 1;
+            for (i = 0; i < run->threadCount; ++i) run->threads[i].state = 3;
+        }
+    }
     if (!line_finish(&run->log, &line)) return fail_run(run, "writeEvents");
     if (!ok) return fail_run(run, "ContinueDebugEvent");
     return 1;
@@ -1045,7 +1147,8 @@ static int event_loop(C48Run *run, const C48Arguments *args)
         waitResult = wait_event(run);
         if (waitResult == 2) continue;
         if (!waitResult) break;
-        if (run->event.dwProcessId != run->pi.dwProcessId || run->event.dwThreadId != run->pi.dwThreadId) {
+        if (run->event.dwProcessId != run->pi.dwProcessId ||
+            (strcmp(run->log.phase, "WAIT_EXIT") != 0 && run->event.dwThreadId != run->pi.dwThreadId)) {
             fail_run(run, "unknownPidOrThread"); break;
         }
         code = run->event.dwDebugEventCode;
@@ -1137,17 +1240,21 @@ static int event_loop(C48Run *run, const C48Arguments *args)
                 continue;
             }
         } else if (strcmp(run->log.phase, "WAIT_EXIT") == 0) {
-            if (code == LOAD_DLL_DEBUG_EVENT) {
-                if (!continue_event(run, DBG_CONTINUE, 0)) break;
-                continue;
+            if (code != CREATE_THREAD_DEBUG_EVENT && !known_live_thread(run)) {
+                run->cleanupInconsistent = 1;
+                fail_run(run, "unknownPidOrThread"); break;
             }
-            if (code != EXIT_PROCESS_DEBUG_EVENT) { fail_run(run, "unexpectedExitEvent"); break; }
-            run->exitSeen = 1;
-            run->eventExitCode = run->event.u.ExitProcess.dwExitCode;
+            if (code != CREATE_THREAD_DEBUG_EVENT && code != EXIT_THREAD_DEBUG_EVENT &&
+                code != EXIT_PROCESS_DEBUG_EVENT && code != LOAD_DLL_DEBUG_EVENT &&
+                code != UNLOAD_DLL_DEBUG_EVENT && code != OUTPUT_DEBUG_STRING_EVENT) {
+                fail_run(run, "unexpectedExitEvent"); break;
+            }
             if (!continue_event(run, DBG_CONTINUE, 0)) break;
-            run->exitContinued = 1;
-            run->log.phase = "EXITED";
-            return 1;
+            if (code == EXIT_PROCESS_DEBUG_EVENT) {
+                run->log.phase = "EXITED";
+                return 1;
+            }
+            continue;
         } else { fail_run(run, "invalidState"); break; }
         run->pendingValid = 1;
         run->pendingId = run->retired + 1u;
@@ -1183,6 +1290,16 @@ static int log_api(C48Run *run, const char *name, BOOL ok, DWORD error, const ch
     line_add(&line, ",\"api\":\"%s\",\"handleOrigin\":\"%s\",\"BOOL\":%s,\"lastErrorIfFalse\":",
         name, origin, ok ? "true" : "false");
     if (ok) line_add(&line, "null"); else line_add(&line, "%lu", (unsigned long)error);
+    if (strcmp(origin, "CreateProcess.PI.hProcess") == 0)
+        line_add(&line, ",\"handleRaw\":\"%016llx\"", (unsigned long long)(uintptr_t)run->pi.hProcess);
+    else if (strcmp(origin, "CreateProcess.PI.hThread") == 0)
+        line_add(&line, ",\"handleRaw\":\"%016llx\"", (unsigned long long)(uintptr_t)run->pi.hThread);
+    if (strcmp(name, "TerminateProcess") == 0)
+        line_add(&line, ",\"requestedExitCode\":%u", C48_ABORT_EXIT);
+    if (strcmp(name, "GetExitCodeProcess") == 0) {
+        line_add(&line, ",\"exitCode\":");
+        if (ok) line_add(&line, "%lu", (unsigned long)run->childExit); else line_add(&line, "null");
+    }
     return line_finish(&run->log, &line) ? 1 : fail_run(run, "writeEvents");
 }
 
@@ -1199,25 +1316,41 @@ static int cleanup_run(C48Run *run, int traceDone)
         run->terminateOk = ok != FALSE;
         (void)log_api(run, "TerminateProcess", ok, error, "CreateProcess.PI.hProcess");
         if (run->terminateOk) {
-            if (run->outstanding) (void)continue_event(run, DBG_CONTINUE, 1);
-            while (!run->outstanding && !run->exitContinued) {
-                next = wait_event(run);
-                if (next == 2) continue;
-                if (!next) break;
-                if (run->event.dwDebugEventCode == EXIT_PROCESS_DEBUG_EVENT &&
-                    run->event.dwProcessId == run->pi.dwProcessId) {
-                    run->exitSeen = 1;
-                    run->eventExitCode = run->event.u.ExitProcess.dwExitCode;
-                    if (run->event.dwThreadId != run->pi.dwThreadId) run->cleanupInconsistent = 1;
-                    if (continue_event(run, DBG_CONTINUE, 1)) run->exitContinued = 1;
+            int original = run->outstanding;
+            while (!run->exitContinued) {
+                DWORD code;
+                if (!run->outstanding) {
+                    next = wait_event(run);
+                    original = 0;
+                    if (next == 2) continue;
+                    if (!next) {
+                        run->cleanupInconsistent = 1;
+                        if (!run->outstanding) break;
+                    }
+                }
+                if (run->event.dwProcessId != run->pi.dwProcessId) {
+                    run->cleanupInconsistent = 1;
                     break;
                 }
-                if (run->event.dwProcessId != run->pi.dwProcessId || run->event.dwThreadId != run->pi.dwThreadId)
+                code = run->event.dwDebugEventCode;
+                if (code == CREATE_THREAD_DEBUG_EVENT ||
+                    (original && code == CREATE_PROCESS_DEBUG_EVENT)) {
+                    if (run->eventLifecycleError) run->cleanupInconsistent = 1;
+                } else if (code == EXIT_THREAD_DEBUG_EVENT || code == EXIT_PROCESS_DEBUG_EVENT ||
+                    code == LOAD_DLL_DEBUG_EVENT || code == UNLOAD_DLL_DEBUG_EVENT ||
+                    code == OUTPUT_DEBUG_STRING_EVENT) {
+                    if (!known_live_thread(run)) run->cleanupInconsistent = 1;
+                } else if (!(original && code == EXCEPTION_DEBUG_EVENT && run->failure &&
+                    strcmp(run->failure, "expectedUD2") == 0 &&
+                    run->firstFailureStop == run->log.stopSeq)) {
                     run->cleanupInconsistent = 1;
-                if (!continue_event(run, DBG_CONTINUE, 1)) break;
+                }
+                if (!continue_event(run, DBG_CONTINUE, 1) && run->outstanding) break;
+                original = 0;
             }
         }
     }
+
     if (run->exitContinued) {
         elapsed = GetTickCount64() - run->log.started;
         timeout = elapsed >= C48_WALL_MILLISECONDS ? 0u : (DWORD)(C48_WALL_MILLISECONDS - elapsed);
@@ -1227,8 +1360,8 @@ static int cleanup_run(C48Run *run, int traceDone)
             C48Line line;
             line_begin(&run->log, &line, "cleanup");
             line_add(&line, ",\"api\":\"WaitForSingleObject\",\"handleOrigin\":\"CreateProcess.PI.hProcess\","
-                "\"timeoutMs\":%lu,\"result\":%lu,\"lastErrorIfFailed\":",
-                (unsigned long)timeout, (unsigned long)waitResult);
+                "\"handleRaw\":\"%016llx\",\"timeoutMs\":%lu,\"result\":%lu,\"lastErrorIfFailed\":",
+                (unsigned long long)(uintptr_t)run->pi.hProcess, (unsigned long)timeout, (unsigned long)waitResult);
             if (waitResult == WAIT_FAILED) line_add(&line, "%lu", (unsigned long)error);
             else line_add(&line, "null");
             (void)line_finish(&run->log, &line);
@@ -1265,9 +1398,11 @@ static int write_summary(HANDLE file, C48Run *run, const C48Arguments *args, int
     memset(&line, 0, sizeof(line));
     for (i = 0; i < 32; ++i) id[i] = (char)args->runIdText[i];
     id[32] = 0;
-    line_add(&line, "{\"schema\":\"c48-parent-result-v1\",\"caseId\":%u,\"runId\":\"%s\","
+    line_add(&line, "{\"schema\":\"c48-parent-result-v2\",\"caseId\":%u,\"runId\":\"%s\","
+        "\"exitLifecyclePolicy\":\"%s\",\"exitLifecycleContractSHA256\":\"%s\","
         "\"epochValidated\":%s,\"normalTracePassed\":%s,\"firstFailureKind\":",
-        run->caseId, id, run->epochValidated ? "true" : "false", normal ? "true" : "false");
+        run->caseId, id, C48_EXIT_POLICY, C48_EXIT_CONTRACT_SHA,
+        run->epochValidated ? "true" : "false", normal ? "true" : "false");
     if (run->failure) line_add(&line, "\"%s\"", run->failure); else line_add(&line, "null");
     line_add(&line, ",\"pid\":");
     if (run->childCreated) line_add(&line, "%lu", (unsigned long)run->pi.dwProcessId); else line_add(&line, "null");
@@ -1297,7 +1432,12 @@ static int write_summary(HANDLE file, C48Run *run, const C48Arguments *args, int
     line_add(&line, ",\"killOnDebuggerExitAccepted\":");
     if (run->killAttempted) line_add(&line, "%s", run->killAccepted ? "true" : "false");
     else line_add(&line, "null");
-    line_add(&line, ",\"cleanupComplete\":%s,\"sourceProof\":", cleanupComplete ? "true" : "false");
+    line_add(&line, ",\"exitEventSeq\":");
+    if (run->exitSeen) line_add(&line, "%llu", (unsigned long long)run->exitEventSeq); else line_add(&line, "null");
+    line_add(&line, ",\"exitEventTID\":");
+    if (run->exitSeen) line_add(&line, "%lu", (unsigned long)run->exitEventTID); else line_add(&line, "null");
+    line_add(&line, ",\"threadLifecycleConsistent\":%s,\"cleanupComplete\":%s,\"sourceProof\":",
+        run->cleanupInconsistent ? "false" : "true", cleanupComplete ? "true" : "false");
     if (run->epochValidated) {
         line_add(&line, "{\"childExeSHA256\":\""); line_hex(&line, run->sourceChildSHA, 32);
         line_add(&line, "\",\"bootstrapSHA256\":\""); line_hex(&line, run->sourceBootstrapSHA, 32);
@@ -1408,6 +1548,7 @@ static int run_witness(const C48Arguments *args)
     {
         C48Line line;
         line_begin(&run.log, &line, "epoch");
+        line_add(&line, ",\"exitLifecyclePolicy\":\"%s\",\"exitLifecycleContractSHA256\":\"%s\"", C48_EXIT_POLICY, C48_EXIT_CONTRACT_SHA);
         line_add(&line, ",\"childExeSHA256\":\""); line_hex(&line, childHash, 32);
         line_add(&line, "\",\"bootstrapSHA256\":\""); line_hex(&line, bootstrapHash, 32);
         line_add(&line, "\",\"sharedHeaderSHA256\":\""); line_hex(&line, headerHash, 32);
@@ -1449,8 +1590,10 @@ static int run_witness(const C48Arguments *args)
         }
         line_begin(&run.log, &line, "ownedChild");
         line_add(&line, ",\"pid\":%lu,\"tid\":%lu,\"processHandleOrigin\":\"CreateProcess.PI.hProcess\","
-            "\"threadHandleOrigin\":\"CreateProcess.PI.hThread\",\"GetProcessTimesBOOL\":",
-            (unsigned long)run.pi.dwProcessId, (unsigned long)run.pi.dwThreadId);
+            "\"threadHandleOrigin\":\"CreateProcess.PI.hThread\",\"processHandleRaw\":\"%016llx\","
+            "\"threadHandleRaw\":\"%016llx\",\"GetProcessTimesBOOL\":",
+            (unsigned long)run.pi.dwProcessId, (unsigned long)run.pi.dwThreadId,
+            (unsigned long long)(uintptr_t)run.pi.hProcess, (unsigned long long)(uintptr_t)run.pi.hThread);
         if (timesAttempted) line_add(&line, "%s", timesOk ? "true" : "false"); else line_add(&line, "null");
         line_add(&line, ",\"lastErrorIfFalse\":");
         if (timesAttempted && !timesOk) line_add(&line, "%lu", (unsigned long)timesError); else line_add(&line, "null");
