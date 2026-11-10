@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-**已按用户最新指令恢复持续并行执行，上一轮“收尾后暂停”调度限制解除；D-02 / F-05 / D02-R6仍未完成。** 八点SDK同配置阶段、锁内map、stock v2候选及出生默认装备局部恢复直接复用。当前关键路径为首pop之后的完整Avatar分配/Default、准确SDK请求采用与认证、Scene生命周期，以及选定旧号和必要资源/完整恢复；成熟后进入正式发送、R4汇合、R5 portable隔离部署及R6六项实机。当前没有已准备完毕的用户操作，旧ready全部已消费。技术门禁、未知及缺省语义保持，恢复盘点、包边界与实机插入条件见[本批计划](docs/CLIENT_72_D02_RESUME_20261110B.md)；HANDOFF2的暂停为上一轮历史。
+**已按用户最新指令恢复持续并行执行，上一轮“收尾后暂停”调度限制解除；D-02 / F-05 / D02-R6仍未完成。** 八点SDK同配置阶段、锁内map、stock v2候选及出生默认装备局部恢复直接复用。当前关键路径为首pop之后的完整Avatar分配/Default、准确SDK请求采用与认证、Scene生命周期，以及选定旧号和必要资源/完整恢复；成熟后进入正式发送、R4汇合、R5 portable隔离部署及R6六项实机。A2-only stock新采集已完成离线/源seal/actualCheckOnly，等待本轮新实时ready；旧ready全部已消费。技术门禁、未知及缺省语义保持，恢复盘点、包边界与实机插入条件见[本批计划](docs/CLIENT_72_D02_RESUME_20261110B.md)；HANDOFF2的暂停为上一轮历史。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -70,7 +70,7 @@
 
 | 分支 / 既有任务 | 本批具体动作及前置 | 产物与验收出口 | 责任文件与模型 |
 | --- | --- | --- | --- |
-| A：F-03d3f4d2；必要String共同合同 | 复用stock v2完整head/HashSet；oldFlags8 helper静态及真入口首pop副本已验；完整20分配/12根及子构造已列清，第五只读profile/adapter离线验收，当前准备第二record/block/Default的新A-only stock采集；自然线程、GC所有权与完整构造仍未验。旧cold普通10294、enum、fresh分立，已验getter/owned字符比较复用 | 有界准确原窗、GC/所有权与副本写域合同或准确首缺、完整构造依赖和最小实现规格；自然allocator线程单独验，不补槽/TLS/对象/未知页或host成功 | Sol max；独有GC专题、`tools/client72_d02_gc_helper_20261110.py`及test、私有`a-gc/`。清楚后交Sol xhigh/Terra |
+| A：F-03d3f4d2；必要String共同合同 | 复用stock v2完整head/HashSet；oldFlags8 helper静态及真入口首pop副本已验；完整20分配/12根及子构造已列清，第五只读profile/adapter离线验收，第二record/block/Default的新A-only stock采集已准备并等待新ready；自然线程、GC所有权与完整构造仍未验。旧cold普通10294、enum、fresh分立，已验getter/owned字符比较复用 | 有界准确原窗、GC/所有权与副本写域合同或准确首缺、完整构造依赖和最小实现规格；自然allocator线程单独验，不补槽/TLS/对象/未知页或host成功 | Sol max；独有GC专题、`tools/client72_d02_gc_helper_20261110.py`及test、私有`a-gc/`。清楚后交Sol xhigh/Terra |
 | B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 复用八点原返回、锁内map和stock v2 managed env/base；LoadLocalConfig必要选择静态子出口/最终URL纯分类器已验；33107入口310B/原caller与168B观察合同已验；native共用3413E0服务选择1071B/21B/8B合同已验。当前准备独立owned，合法本服触发及自然service/mode仍缺 | 最终URL分类、调用身份和返回边界形成可实现观察/接入规格；map已写/env0不当调用，不跨epoch拼业务，不重复页面/扩预算，UI注册仅必要时继续；EH/unwind未知保持 | POSTREQUEST_ENTRY与NATIVE_ACCOUNT_LOCAL_ROUTE静态子出口已交；Sol xhigh实现独立owned、max仅处理未闭自然接线，旧ROUTE_ADOPTION/分类器冻结，patch/现场归主线 |
 | C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 已验出生装备/303/Metal/Promote/Curve/Skill/Depot/talents复用；所选旧号固定快照/真实关联已验；实际121角色level100/phase6、12254物品，按实际持久行收敛必要资源与完整恢复，区分已批资源与额外引用/未知。没有明确旧号不猜账号 | driver/快照/角色与Item键对照已验；全部121在postLoad重建proud；phase6准确首缺及四保存Depot原字段样本子出口已验，group/level/门槛仍未知，按真实正引用选择后继。8个Item未知ID及各候选族目标对应另核，不用candidate命中代恢复 | 主线Sol xhigh定规格，Terra xhigh执行；独有old_save_dependencies工具/test/专题及私有`c-old-save/`。共享JVM/DB仅主线 |
 | Scene：F-03d3s2 | 已优先完成148d6ebf0模板关联静态出口；首未闭actual slot114、MPLevel原分组输入及Pool/Scene/组件创建替换拆除与通知，沿准确producer继续；包装器仅转发、回收接口不是ctor | 新窗先证明必要性/有界计划；准确producer/生命周期与最小实现合同，明确发送交Sol xhigh，不据偏移/同值猜alias | Sol max语义；Sol xhigh发送。新包发布前主线冻结独立文件与输入；父项进行中，已验模板子出口不重发 |
@@ -222,6 +222,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3f4d2/A-GC-OLDFLAGS8 | 已完成 | 本epoch L32/oldFlags8必经904B helper的准确15条SSE分支闭合：两次同址H+10h/16清理、无该分支GC回调/外部call。18pin与主线第三同字节；完整20分配/12根及子构造依赖列全，其他长度/GC/自然线程未验。 | [静态合同与完整构造依赖](docs/CLIENT_72_D02_GC_HELPER_20261110.md) |
 | F-03d3f4d2/FIRST-POP-COPY | 已完成 | 原1405336c0入口经同epoch普通查询/TLS/pop/helper/post原ret到owned sentinel，200条原指令、九写七span44B；8测试及主线第三36425B同SHA通过。无自然ctor frame，线程/GC所有权、第二分配/Default及完整Avatar/g2仍未验。 | [原CPU副本、拒绝与边界](docs/CLIENT_72_D02_FIRST_POP_COPY_20261110B.md) |
 | F-03d3f4d2/SECOND-INPUTS-OFFLINE | 已完成 | 第五pure profile/六pin adapter固定44/1184首账、88/2368总账及208单读；83人工测试、旧11路径仅adapter源pin变、两个最终driver同SHA通过。首块仅已验L32/flags8继续；第二helper/Default cold及自然输入/线程/GC/完整构造未验。 | [精确图、纠正与准备门禁](docs/CLIENT_72_D02_SECOND_INPUT_COLLECTOR_20261111.md) |
+| F-03d3f4d2/A2-STOCK-PREPARATION | 已完成 | 两fresh及主线第三14人工组/4 PS parser同SHA，98源新seal与actualCheckOnly/19文件保护/进程固定监听空通过。新库存仅接纳已知用户AGENTS修改，其余保护不变。仅准备完成；新ready未取，采集/正常退出另验。 | [范围与操作条件](docs/CLIENT_72_D02_A2_STOCK_PREPARATION_20261111.md) |
 | R2-ROUTE-CONFIG-SELECT/POSTREQUEST-ENTRY | 已完成 | 唯一310B/79条、原40108 CALL/return与16B搬移静态核实，首次任意入口String观察5读168B/绑定2读315B已定；5测试/主线第三95断言同SHA通过。普通尾跳不等于同步返回，自然请求/GC/EH未知。 | [入口与合法触发前置](docs/CLIENT_72_SDK_POSTREQUEST_ENTRY_20261111.md) |
 | D02-R2/NATIVE-ACCOUNT-LOCAL-ROUTE（共用入口合同） | 已完成 | MDK/Account同3413E0唯一1071B/265条，min14搬移21B、首次任意入口仅读8B service/低32 mode；5测试和第三7原件同SHA通过。自然service/mode/loginUrl未知，批准自然route0项，不借MDK注册代客户端合同。 | [来源、ABI与接线条件](docs/CLIENT_72_SDK_NATIVE_ACCOUNT_LOCAL_ROUTE_20261111.md) |
 | F-03d3s2/SCENE-ROW-LIFECYCLE（模板关联子出口） | 已完成 | 唯一585B/120条下游将原row存entity.field138373/+140；不消费row+50/+58。16pin/30静态断言主线第三同SHA通过。条件容器调用非具名Remove，首未闭actual slot114、组件/拆除/通知及MPLevel完整配置不批准。 | [原窗、准确排除与后继](docs/CLIENT_72_D02_SCENE_ROW_LIFECYCLE_20261110B.md) |
