@@ -212,7 +212,6 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3f4d2（完整head输入及单pop副本合同步骤） | 已完成 | 27pin/44关键bytes、409B必经callee与20直接site/12roots，双23139B及主线第三同字节；真实L32..208完整span、六精确写域仅proposal，未获CPU/写/live许可。单block不是完整构造，后继items/第二类另记。 | [真实长度、原指令与精确边界](docs/CLIENT_72_D02_AVATAR_CAPTURE_ALLOCATION_SPEC_20261110.md) |
 | F-03d3f4d2（完整head只读工具实现步骤） | 已完成 | 52人工测试、原34源码保持、两旧profile完整输出同before、主线L87/L208第三图/四tool来源与primary人工门禁通过；第三固定profile最大28/622→56/1244，API上限不变。0真实API/native/live，未实采block、执行pop或批准写。 | [实现及主线独立审核](docs/CLIENT_72_D02_AVATAR_BLOCK_COLLECTOR_20261110.md) |
 | F-03d3f4d2（items与第二类输入合同步骤） | 已完成 | 20pin/metadata/call字节双10281B与主线第三同字节；B+5b74628仅原值供H+10，producer/数组身份未知；第二B+5897cf0绑定HashSet2147/instance11 UInt32，旧请求56/bin4非新值。增量8/304→16/608为未批proposal，不补普通槽或盲跟N。 | [准确来源与下一有限输入](docs/CLIENT_72_D02_AVATAR_CTOR_NEXT_INPUTS_20261110.md) |
-
 | E-01（两出生Avatar已批准片段合并步骤） | 已完成 | 五完整报告同canonical行、32片段值/float32位、两独立与主线第三1211B输出/20940B来源manifest逐字节一致，七正反测试通过；仅十个已批字段，completeAvatar/resourceReady仍false。0新Java/CPU/live，不覆盖talents、完整构造/保存。 | [同源规则、实际审核及边界](docs/CLIENT_72_D02_BIRTH_AVATAR_JOIN_20261110.md) |
 
 ### 6.3 SDK、补丁、观察与运维前置
