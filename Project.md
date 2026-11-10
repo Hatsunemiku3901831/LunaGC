@@ -234,6 +234,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3f4d2/CLEAR48-OWNED-PREP | 已完成 | 独立owned两路径driver及7纯门禁已交；主线区分固定Capstone distribution5.0.9/binding5.0.7/native(5,0,1280)并固定原文件。实际SSE35条/三写/RET通过，AVX20条后严格guard停止，完整两路径执行未完成。 | [原件与实际边界](docs/CLIENT_72_D02_CLEAR48_OWNED_20261111.md) |
 | F-03d3f4d2/CLEAR48-BACKEND | 已完成 | 一次原6B owned诊断invalid10、一次CPUID原AVX bit0，112pin稳定；不再XGETBV/改model/强走SSE。主线纯第三21462B同两fresh，定位当前backend能力边界；非AVX成功或原GC返回。 | [准确失败及下一后端规格](docs/CLIENT_72_D02_CLEAR48_BACKEND_20261111.md) |
 | F-03d3f4d2/CLEAR48-BACKEND-GITHUB | 已完成 | Terra max按Sol max中文计划README-first核官方12调用/two ref/四blob，主线静态核原tree/blob一致。VEX-L拒绝/缺opcode项解释边界，无可直接使用AVX支持；DLL实际构建关联及全分支覆盖未知。 | [来源及复用范围](docs/CLIENT_72_D02_UNICORN_AVX_SOURCES_20261111.md) |
+| F-03d3f4d2/CLEAR48-NATIVE-CAPABILITY-SPEC | 进行中 | Sol max复用已验Unicorn失败和官方源，先定独立自有EXE原6B能力fixture/CPUID-XGETBV前置/SEH与源ABI预算；现有MSVC四工具已只读盘点。未构建/CPU，不扩904B或捕获副本。 | [规格包](docs/CLIENT_72_D02_CLEAR48_NATIVE_CAPABILITY_20261111.md) |
 | R2-ROUTE-CONFIG-SELECT/POSTREQUEST-ENTRY | 已完成 | 唯一310B/79条、原40108 CALL/return与16B搬移静态核实，首次任意入口String观察5读168B/绑定2读315B已定；5测试/主线第三95断言同SHA通过。普通尾跳不等于同步返回，自然请求/GC/EH未知。 | [入口与合法触发前置](docs/CLIENT_72_SDK_POSTREQUEST_ENTRY_20261111.md) |
 | R2-ROUTE-CONFIG-SELECT/POSTREQUEST-OWNED | 已完成 | 8离线测试/12源epoch及独立Cargo release locked/offline构建通过；两fresh Win32各32 case共64个280B完整near/far emitter、原16B搬移/原caller/寄存器/128B栈/flags/LastError/高64返回及首次占用/失败通过。无SDK/客户端/安装/自然请求，GC/EH未验。 | [实际owned与边界](docs/CLIENT_72_SDK_POSTREQUEST_OWNED_20261111.md) |
 | D02-R2/NATIVE-ACCOUNT-LOCAL-ROUTE（共用入口合同） | 已完成 | MDK/Account同3413E0唯一1071B/265条，min14搬移21B、首次任意入口仅读8B service/低32 mode；5测试和第三7原件同SHA通过。自然service/mode/loginUrl未知，批准自然route0项，不借MDK注册代客户端合同。 | [来源、ABI与接线条件](docs/CLIENT_72_SDK_NATIVE_ACCOUNT_LOCAL_ROUTE_20261111.md) |
@@ -363,7 +364,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01/R3-PROUD-ROW-SOURCE | 已完成 | 原606B producer、唯一literal与typed63831/529236 parser链闭合；主线第三48799B与两fresh一致，6测试。两个U32仍未命名offset/size，真实行/codec/业务alias未验。 | [原行来源](docs/CLIENT_72_D02_PROUD_ROW_SOURCE_20261111.md) |
 | E-01/R3-PROUD-PAYLOAD-LOCATOR | 已完成 | 复用固定index/sidecar/serialized输入，唯一Proud m_bytes 2132778B已提取；主线第三四原件与final3/4逐byte一致，5测试。host hash/pack定位不替代目标native命中、revision、行边界或resourceReady。 | [完整payload定位及限制](docs/CLIENT_72_D02_PROUD_PAYLOAD_LOCATOR_20261111.md) |
 | E-01/R3-PROUD-PARSER-CONTRACT | 已完成 | 原parser/derived/base ctor三窗8412B/1956条及原child E9、+20/+40来源已核；主线第三91234B同两fresh，6测试。child未取/未执行、actual mode与factory产物和行span未闭，非完整parser成功。 | [表示来源和最小输入](docs/CLIENT_72_D02_PROUD_PARSER_CONTRACT_20261111.md) |
-| E-01/R3-PROUD-MODE-FACTORY-SOURCE | 进行中 | Sol max只核63831 slot9冻结vtable-definition/AOT与两个准确mode helper有界静态窗；不取factory body/child或设置+20/+40，先交完整mode输入与下一最小规格。 | [有界计划](docs/CLIENT_72_D02_PROUD_MODE_FACTORY_20261111.md) |
+| E-01/R3-PROUD-MODE-FACTORY-SOURCE | 已完成 | 原63831 slot9 definition→529228/AOT已静态绑定，两mode原窗345B/90条、typed Int32集合/六dispatch及初始化输入合同已闭；6门禁/主线第三41737B同两fresh。自然mode/vtable/MethodInfo、factory/parser执行仍未验，不置+20/+40。 | [静态合同和下一输入](docs/CLIENT_72_D02_PROUD_MODE_FACTORY_20261111.md) |
+| E-01/R3-PROUD-FACTORY-WINDOW | 进行中 | 根冻结准确529228/149f0bb40与原slot9间接caller，既有Sol xhigh执行单窗≤1024B/256条机械取证。五hash/typed/AOT/唯一pdata先验，不读子callee或推断自然factory成功。 | [窗口合同](docs/CLIENT_72_D02_PROUD_FACTORY_WINDOW_20261111.md) |
 | E-01/R3-PROUD-ROW-READER | 进行中 | Sol max只核准确14bb5b0b0(String,int32,int32)原窗及读者/行范围合同；与mode/factory独立。禁止whole payload当row0、猜索引格式或扩callee树。 | [有界计划](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md) |
 
 
