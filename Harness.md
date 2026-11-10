@@ -1,3 +1,5 @@
+2026-11-11 `CLEAR48-NATIVE-TRACE-IMPLEMENTATION-CONTRACT`：四JSON/root唯一header的48offset、256/128B及原bytes源级第三通过，proof SHA`cbbda65b163adc2f7192299df7ceb85e33fb4b976a622cf02a74a9cece678f77`；未编译/Debug API。W1/W2/W3 child/parent已按独有文件分Terra，parent未完不得build/运行，904B仍未链接。child原epoch及root CPUID门顺序纠正分账保留。[合同与精确预算](docs/CLIENT_72_D02_CLEAR48_TRACE_IMPLEMENTATION_CONTRACT_20261111.md)。
+
 2026-11-11 `R3-PROUD-PREPARE-WINDOW-W`：主线第三14701B同双fresh SHA`c322aa7f0d5d397c21e35edf86422cab2794a401d0784fd68045e6e7884d81cf`、6门禁通过；唯一原窗289B/82条、八原件/原caller/slot/pdata完整核实。仅机械，8call/14branch/2RIP不代loader语义；Sol max接冻结原窗。[来源、预算与复现](docs/CLIENT_72_D02_PROUD_PREPARE_WINDOW_20261111.md)。
 
 2026-11-11 `R3-PROUD-LAZY-INDEX/PREPARE-AOT-D`：主线第三纯合同12550B/34断言同双fresh SHA`2c35406ac5f3ac296fc55e7975c882fb375e22bba2f0c9ef10c2f76641f24224`；D第三24456B同双audit SHA`0bff021d1171cde4c1248370da22718887765e472c788ecfba619aa41e5ff5e3`及5测试。16个已知slot唯一绑定157ffc650→138529/5071/ptr84545，跨其他index同code未知；只批下一唯一W机械窗，未验loader/path/真实row。[合同](docs/CLIENT_72_D02_PROUD_LAZY_INDEX_CONTRACT_20261111.md)、[原tuple](docs/CLIENT_72_D02_PROUD_PREPARE_AOT_20261111.md)。

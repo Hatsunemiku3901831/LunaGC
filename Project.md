@@ -52,7 +52,7 @@
 
 显式传入工具支持的模型与档位；模型不可用应如实返回主线调整，不能静默升级Astra或冒称已使用指定模型。子代理不得自行扩大派遣和修改范围。
 
-平台并发上限4。此前旧pending_init占槽导致新建被拒，已让旧任务交回；按成熟规格轮转多个Terra，最多主线＋3个子代理，不固定A/B/C名额。原AVX最小owned实现及Proud单tuple数据已交验，当前Sol max冻结trace witness实现合同，Terra xhigh取Proud准备调用唯一原窗；合同冻结后可拆不重叠实现包。完成分析及时交回；不另开聊天、不借Daybreak阻塞包换模型重试。
+平台并发上限4。此前旧pending_init占槽导致新建被拒，已让旧任务交回；按成熟规格轮转多个Terra，最多主线＋3个子代理，不固定A/B/C名额。当前trace合同/header已冻结，child Terra源码已交，parent Terra独有实现与PrimaryIndex locator Terra并行；Sol max仅收口prepare语义并交成熟单source。完成分析及时交回；不另开聊天、不借Daybreak阻塞包换模型重试。
 
 ### 3.2 批次路线与退出条件
 
@@ -238,7 +238,9 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3f4d2/CLEAR48-NATIVE-CAPABILITY-IMPL | 已完成 | 5纯测试/112原pin通过；主线独立构建exit0、128实际include/6搜索库/编译DLL与PE/caller/SEH核实。两次真实原6B能力及独立UD2通过，完整288B核对；两轮包装器失败原件保留。仅owned单条能力，未验904B/自然GC/第二分配/Avatar。 | [实际构建、三run与边界](docs/CLIENT_72_D02_CLEAR48_NATIVE_CAPABILITY_RESULTS_20261111.md)、[冻结实现交付](docs/CLIENT_72_D02_CLEAR48_NATIVE_IMPLEMENTATION_20261111.md) |
 | F-03d3f4d2/CLEAR48-NATIVE-TRACE-SPEC | 已完成 | Sol max原176条/读写域、真实CALL/RET与逐条事务合同主线静态复核；仅规格，不证明debug TF/YMM或原904B运行。 | [原窗与准确范围](docs/CLIENT_72_D02_CLEAR48_NATIVE_TRACE_SPEC_20261111.md) |
 | F-03d3f4d2/CLEAR48-NATIVE-TRACE-GITHUB | 已完成 | Sol max中文计划、Terra max README-first/分支定向24高层操作，外部clone固定ref/tree/blob与16项主审通过；部分覆盖，参考Win32事件模式，不导入TitanEngine或其bytepatch/context写法。 | [来源、差异与剩余witness](docs/CLIENT_72_D02_CLEAR48_TRACE_GITHUB_20261111.md) |
-| F-03d3f4d2/CLEAR48-NATIVE-TRACE-IMPLEMENTATION-CONTRACT | 进行中 | Sol max将原规格、已验native能力及固定GitHub证据收敛成witness-first接口；root冻结共享header后拆Terra。只批自有child witness准备，完整904B/捕获副本另批。 | [原trace规格](docs/CLIENT_72_D02_CLEAR48_NATIVE_TRACE_SPEC_20261111.md)；独立`a-clear48-trace-implementation-contract/` |
+| F-03d3f4d2/CLEAR48-NATIVE-TRACE-IMPLEMENTATION-CONTRACT | 已完成 | 四设计JSON/256B descriptor/128B bootstrap及48字段offset、精确25/11/23/3/13B由root源级第三核通过；只冻结W1/W2/W3，未编译断言/执行debug witness。root唯一header已给Terra，完整904B/捕获副本仍另批。 | [分包、接口与预算](docs/CLIENT_72_D02_CLEAR48_TRACE_IMPLEMENTATION_CONTRACT_20261111.md) |
+| F-03d3f4d2/CLEAR48-TRACE-WITNESS-CHILD | 进行中 | Terra已交独有child.c/witness.asm及静态bytes；root将max-leaf门移至CPUID1前，成功计数保持2/1。统一build/PE/unwind和实际W1/W2/W3未验；不把源码交付标为CPU成功。 | [Terra源码交付范围](docs/CLIENT_72_D02_CLEAR48_TRACE_CHILD_20261111.md)；`a-clear48-trace-witness/` |
+| F-03d3f4d2/CLEAR48-TRACE-WITNESS-PARENT | 进行中 | Terra xhigh独有parent.c实现自建child事件/TF/读写事务与失败收尾，root负责header/build/bootstrap和执行。当前不具备可运行witness，保留未实现编译阻断；不启动904B或客户端。 | 独有parent专题/`a-clear48-trace-parent/`，child/header只读 |
 | R2-ROUTE-CONFIG-SELECT/POSTREQUEST-ENTRY | 已完成 | 唯一310B/79条、原40108 CALL/return与16B搬移静态核实，首次任意入口String观察5读168B/绑定2读315B已定；5测试/主线第三95断言同SHA通过。普通尾跳不等于同步返回，自然请求/GC/EH未知。 | [入口与合法触发前置](docs/CLIENT_72_SDK_POSTREQUEST_ENTRY_20261111.md) |
 | R2-ROUTE-CONFIG-SELECT/POSTREQUEST-OWNED | 已完成 | 8离线测试/12源epoch及独立Cargo release locked/offline构建通过；两fresh Win32各32 case共64个280B完整near/far emitter、原16B搬移/原caller/寄存器/128B栈/flags/LastError/高64返回及首次占用/失败通过。无SDK/客户端/安装/自然请求，GC/EH未验。 | [实际owned与边界](docs/CLIENT_72_SDK_POSTREQUEST_OWNED_20261111.md) |
 | D02-R2/NATIVE-ACCOUNT-LOCAL-ROUTE（共用入口合同） | 已完成 | MDK/Account同3413E0唯一1071B/265条，min14搬移21B、首次任意入口仅读8B service/低32 mode；5测试和第三7原件同SHA通过。自然service/mode/loginUrl未知，批准自然route0项，不借MDK注册代客户端合同。 | [来源、ABI与接线条件](docs/CLIENT_72_SDK_NATIVE_ACCOUNT_LOCAL_ROUTE_20261111.md) |
@@ -381,6 +383,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01/R3-PROUD-PREPARE-AOT-D | 已完成 | 已知5071的16准确slot/128B中唯一目标157ffc650绑定138529/spec175101/ptr84545；主线第三24456B同两audit、5测试。同index共享行仅自身，跨其他index同code未知，不推loader语义。 | [原槽及范围](docs/CLIENT_72_D02_PROUD_PREPARE_AOT_20261111.md) |
 | E-01/R3-PROUD-PREPARE-WINDOW-W | 已完成 | 唯一pdata给289B/82条，两fresh八原件与主线第三14701B同SHA，6门禁通过；真实caller/5071 AOT/五hash已核。8call/14branch/2RIP仅机械，不推loader语义。 | [独立原窗专题](docs/CLIENT_72_D02_PROUD_PREPARE_WINDOW_20261111.md) |
 | E-01/R3-PROUD-PREPARE-CONTRACT | 进行中 | Sol max只审已验289B，核普通/替换/ready条件、壳+20路径/+18 index及第一必要loader/type边；仅既有输入，无新窗或suffix猜测，成熟单source交Terra。 | 独有prepare合同专题/`c-proud-prepare-contract/`，旧窗口/AOT/helper只读 |
+| E-01/R3-PROUD-PRIMARY-INDEX-LOCATOR | 进行中 | prepare第三36303B/58断言已闭合PrimaryIndex壳路径→原14d6e1570→type8026及固定suffix；另批Terra只定位这个完整payload，既有资源/索引/serialized纯工具冻结，无新窗或native hash执行。index内容、row、自然加载及资源ready不随命中通过。 | 独有primary_index_locator工具/test/专题及`c-proud-primary-index-locator/`；禁止扩IndexGroupId或157ffc780 |
 | E-01/R3-PROUD-ROW-READER | 已完成 | 原1438B/309条、三个backend分支参数及typed缓存已核；6测试/主线第三85断言31839B同两fresh。两个U32用途按分支分开，不统一offset/size；+1c赋值不证明有效row span，400190 producer及真实索引仍未闭。 | [准确合同与下一候选](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md) |
 
 
