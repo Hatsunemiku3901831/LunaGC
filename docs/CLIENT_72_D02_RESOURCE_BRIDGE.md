@@ -73,7 +73,7 @@
 | 必需组 | 已取得且可复用 | 本卡之后的准确缺口/下一输入 |
 | --- | --- | --- |
 | Avatar默认与初始装备 | 七字段内的id/defaultDepot；+154真实11101并指向实际Weapon；基础float位值和曲线enum见六表 | `initialWeapon`英文职责需原生装备消费者；基础属性到最终属性需同源AvatarCurve/Promote和具名消费。不能把局部两字段片段当完整Avatar行。 |
-| Depot技能与能量 | +30和+6c新闭合；+38/+28/+20/+48实际列表/字符串已经取得 | subSkills/talents/extraAbilities/AbilityGroup的完整用途及引用、+68 attackModeSkill、40302→proud字段仍未批准。新初始化片段之后用+50配置角色5，这不能反证或批准+68为英文attackModeSkill。 |
+| Depot技能与能量 | +30和+6c已闭；+38/+28/+20/+48实际列表/字符串已取得；[最新+28 talents直接职责及真实Java](CLIENT_72_D02_DEPOT_TALENTS_JAVA_20261110.md)已验 | subSkills/extraAbilities/AbilityGroup、+68 attackModeSkill、40302→proud仍未批准；非零talents/保存解锁的完整Talent/OpenConfig引用另验。+50配置角色5不能反证或批准+68为英文attackModeSkill。 |
 | Skill | id/元素域已闭；实际abilityName、proud group与float/wrapper见六表 | abilityName/proudSkillGroupId/costElemVal/充能/冷却/特殊池英文职责及必要值仍需消费者；未知符号不得归None或补成本0。 |
 | Weapon11101 | 实际payload/首行、key；backing+38原enum ITEM_WEAPON4、+98武器enum、+68完整两属性，第二项FIGHT_PROP_NONE确实存在 | 本卡不给新的Weapon字段许可。Avatar+154职责、gadget/promote/affix/属性及同源曲线仍需准确消费；自然NativeConfig mode/3521/6506和native backend继续未知。旧六表空HashSet的typed错误已由HandlerClosure更正，不能据此批准自然构造或删除第二属性。 |
 | 最小资源整体/保存 | 已审Lua/Scene/Quest/Chapter及有限保存合同继续复用 | 实际活动revision、同源Curve/Promote/Ability输入、完整必要rows/loader拒绝记录、真实保存→新Player→manager正向恢复仍未闭。不能设loadedAll或以本卡7字段/17检查完成R3/D-02。 |

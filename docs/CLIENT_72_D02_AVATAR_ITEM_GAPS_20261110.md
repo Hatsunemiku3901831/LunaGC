@@ -2,7 +2,7 @@
 
 本批消费最新Project与已验的自然六表、七字段bridge、HP/growth、critical、装备/Item/Gadget、Promote及真实Java专题。主线本轮 `fddc0e0` 已完成两个出生Promote与100条AvatarCurve的真实加载，不重跑该验收、whole、HP/critical、装备或303。这里只收敛当前新号出生、旧号恢复、SceneTeam与实体实际需要的字段。
 
-**可立即实施的出口是已批七字段bridge→Skill/Depot/Avatar真实Java绑定加载，0新PE、0CPU。** 完整Avatar的首个未闭资源职责是Depot `talents` 等必要输入；本批没有找到它的直接目标consumer锚点，不能凭六零/71..76或Java默认批准。完整父项不晋级。
+**最新出口：七字段真实Java、两出生十字段同源合并，以及Depot talents的直接目标职责/投影/真实Java五项均已验。** [talents后继](CLIENT_72_D02_DEPOT_TALENTS_SUCCESSOR_20261110.md)以唯一5901B typed iterator与真实field-default常量闭合职责；[实际Java](CLIENT_72_D02_DEPOT_TALENTS_JAVA_20261110.md)两出生真实构造返回、仅删talents的两例准确止529。不能由此批准proud规范化、空ability、完整资源或原生Avatar；下文首次审查排除项保留为历史。
 
 ## 已有独立目标语义与真实Java范围
 
@@ -24,7 +24,7 @@ Item11101当前出生Weapon分支的上述字段均已有可消费合同，不�
 
 | 精确Java正常/条件路径 | 尚缺的目标语义或引用 | 当前决策 |
 | --- | --- | --- |
-| `Avatar(data)→setSkillDepotData→recalcConstellations→getTalentIdList` | `new IntOpenHashSet(getSkillDepot().getTalents())`直接使用talents；Depot22284 field105357 `DEGJNDCIFLE/+28`为encoded58209[]，出生501/701六零、704为71..76；英文talents职责未批 | **真实构造的当前首阻之一**。不能省略成null，不能补空、按候选键或值形状批准。需同一typed Depot字段→明确talent/constellation对象/具名consumer的直接链 |
+| `Avatar(data)→setSkillDepotData→recalcConstellations→getTalentIdList` | Depot22284/105357/+28→解码ID成员匹配→typed EnhanceDetail Talent=8→current发布已闭；501/701六零、704非零原列表保留 | [五项真实Java及独立审核](CLIENT_72_D02_DEPOT_TALENTS_JAVA_20261110.md)已验，两出生构造返回、单删talents准确NPE529；不造空数组/0号Talent行，非零或保存解锁的Talent/OpenConfig引用仍须另验 |
 | `setSkillDepotData`迭代inherentProudSkillOpens及questProudSkillGroupIds | 原数组/嵌套40302值已得，Java proud职责/对应入口尚未闭；Java onLoad把缺项规范化为空仅是本机行为 | 不用规范化结果批准目标缺省；与talents分别取证，不把全部嵌套叶无条件列P0 |
 | `getSkillsAndEnergySkill()`同时读取attackModeSkill | 原+68有实际缺flag/逻辑0及其他非零证据，但英文attackModeSkill尚未批准；已有初始化中的角色5还来自+50，不能混同 | 出生字段真实零不授权用Java缺键零绕职责；留准确consumer缺口，不把+50或同值强行映射 |
 | `AvatarData.onLoad→buildEmbryo`；`TeamManager/EntityAvatar.getAbilityControlBlock` | Avatar+ c8字符串、Depot+48字符串已有真实值，但iconName→AbilityEmbryo、skillDepotAbilityGroup→PlayerAbilities的完整目标职责/同源Config/Ability引用未闭 | Java空ability容忍不是目标空许可。Metal仅覆盖武器局部，不替代角色/队伍能力 |
@@ -43,7 +43,7 @@ Avatar nameTextMapHash、weaponType及其他外观/玩法字段在日志、换�
 
 已检查Project第6节和当前data测试源：`E-01-bridge-energy`仍只有原生/转换；既有出生Java专项不消费该报告。TPS测试使用合成/旧资源50001，不能代验本源。新增测试建议为 `D02BirthSkillDepotBridgeResourceLoadTest.java`，由Terra准备、主线实际JDK17/Gradle运行，0新PE/0CPU。本代理不写/运行Java、不执行共享构建。
 
-## talents 已排除项与准确解除输入
+## talents 首次审查的排除项与后继解除
 
 本批仅消费冻结metadata cache（SHA `df52eb70fe8e70dfecd1059e898d15e288cfa98bcefc78bcaabf753ae150349f`）和既存 `r3-mapping` 静态consumer材料，没有读取新PE或客户端。元数据确认 field105357 的准确owner/encoded数组类型，不恢复英文职责。
 
@@ -54,10 +54,10 @@ Avatar nameTextMapHash、weaponType及其他外观/玩法字段在日志、换�
 - 固定metadata没有找到可直接关联该字段的具名模型GetTalents/GetConstellation getter。MonoAvatarTalent/Constellation UI名称及UI对象getter不足以证明它读取同一Depot字段，不按名称申请窗口。
 - 首次metadata辅助查询将list误按dict调用items而失败，0PE/0CPU；随后只修查询schema，并确认field rawOffset是`0x28`而数值offset为40。此修正不是原生目标失败或新语义证据。
 
-**当前不申请任何新窗口或CPU。** 解除条件是取得一条可核直接调用链：同一typed Depot22284实例的field105357读取，流入目标talent/constellation资源或具名consumer，含准确调用位置/参数来源；届时先交最多3个准确exception窗及累计预算给主线审，不能从UI名称猜窗、扩大搜索或造正常返回。主线已要求本批收口，此缺口留存，七字段实施不等它。
+**该次缺口现已由新直接证据解除。** 主线重核固定EXE/AOT唯一入口及真实exception，只取13300/97810的5901B完整窗；后继以同typed Depot+28元素、原58209解码比较及typed Talent=8写入/发布闭合，不依赖UI名、数值形状或host正常返回。16pin/18165B主线第三与原件一致，见[talents后继](CLIENT_72_D02_DEPOT_TALENTS_SUCCESSOR_20261110.md)。没有第二窗或CPU；首次审查所排除的证据仍不足，不因最终职责闭合而反向变成有效证明。
 
 ## 本批实际检查与状态
 
 实际完成源码/Project/既有测试排重、三完整报告SHA核对、选中canonical片段/同源source及原非零704关系核对、冻结metadata与已存静态指令读取。没有新native/JVM/DB/现场验收，没有新增运行代码、资源或配置，不需GS重启。没有执行Git或本地提交；本新专题与私有合同由主线审核归属后提交，Project/Harness/HANDOFF统一更新。
 
-复用上一轮Sol中文GitHub计划及Terra bounded-partial；旧partial/超时保持，没有新外部检索或新的重大复用目标。下一可执行动作已明确为七字段Java绑定加载，交Terra/主线；talents等新语义只在新直接证据到达后继续。完整Avatar/Item、active revision/loadAll、正向完整保存、正式g2及D-02仍未完成。
+复用上一轮Sol中文GitHub计划及Terra bounded-partial；旧partial/超时保持，没有新外部检索或新的重大复用目标。七字段Java与本次talents实际出口均已验；下一项由Sol max仅审真实必读的proud嵌套数组/技能组与提升门槛职责，不能以onLoad规范化为空批准。完整Avatar/Item、active revision/loadAll、正向完整保存、正式g2及D-02仍未完成。
