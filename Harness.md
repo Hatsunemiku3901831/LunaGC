@@ -1,3 +1,5 @@
+2026-11-11 `R3-PROUD-FACTORY-WINDOW`：7门禁/主线第三audit12296B同两fresh SHA`6ae2d166…d6ce9`，529228原114B/27条、精确type/slot9间接caller/AOT/pdata核实；两call/六RIP/零RET仅机械，不称自然分配或factory返回成功。Sol xhigh转准确index.cctor候选机械窗。[来源与下一分析](docs/CLIENT_72_D02_PROUD_FACTORY_WINDOW_20261111.md)。
+
 2026-11-11 `R3-OLD-ITEM-TPS-CANDIDATE`：沿当前ItemData第五ResourceType及源码initial224001，既有固定AstaPS tree唯一TPS blob增量1次/8行；原8活动ID均唯一候选命中。完整SHA/blob/strict JSON与旧报告/投影主审SHA`ef2d6457…9eac7`，不修改四表历史报告或批准target等价/完整恢复。[来源和范围](docs/CLIENT_72_D02_OLD_ITEM_COVERAGE_20261111.md#tps-candidate)。
 
 2026-11-11 `R3-PROUD-ROW-READER`：主线第三31839B/85断言同两fresh SHA`90c39207…2aeee`及6测试通过；1438B/309条说明两个U32用途按backend分开，42005+1c写不代真实row span。400190 index producer未闭，仅唯一.cctor候选待另批。max已转Scene predecessor有界续项。[来源与限制](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md)。

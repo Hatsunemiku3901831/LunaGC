@@ -367,7 +367,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01/R3-PROUD-PAYLOAD-LOCATOR | 已完成 | 复用固定index/sidecar/serialized输入，唯一Proud m_bytes 2132778B已提取；主线第三四原件与final3/4逐byte一致，5测试。host hash/pack定位不替代目标native命中、revision、行边界或resourceReady。 | [完整payload定位及限制](docs/CLIENT_72_D02_PROUD_PAYLOAD_LOCATOR_20261111.md) |
 | E-01/R3-PROUD-PARSER-CONTRACT | 已完成 | 原parser/derived/base ctor三窗8412B/1956条及原child E9、+20/+40来源已核；主线第三91234B同两fresh，6测试。child未取/未执行、actual mode与factory产物和行span未闭，非完整parser成功。 | [表示来源和最小输入](docs/CLIENT_72_D02_PROUD_PARSER_CONTRACT_20261111.md) |
 | E-01/R3-PROUD-MODE-FACTORY-SOURCE | 已完成 | 原63831 slot9 definition→529228/AOT已静态绑定，两mode原窗345B/90条、typed Int32集合/六dispatch及初始化输入合同已闭；6门禁/主线第三41737B同两fresh。自然mode/vtable/MethodInfo、factory/parser执行仍未验，不置+20/+40。 | [静态合同和下一输入](docs/CLIENT_72_D02_PROUD_MODE_FACTORY_20261111.md) |
-| E-01/R3-PROUD-FACTORY-WINDOW | 进行中 | 根冻结准确529228/149f0bb40与原slot9间接caller，既有Sol xhigh执行单窗≤1024B/256条机械取证。五hash/typed/AOT/唯一pdata先验，不读子callee或推断自然factory成功。 | [窗口合同](docs/CLIENT_72_D02_PROUD_FACTORY_WINDOW_20261111.md) |
+| E-01/R3-PROUD-FACTORY-WINDOW | 已完成 | 准确529228/149f0bb40原114B/27条与原slot9间接caller、五hash/typed/AOT/唯一pdata已核；两fresh八件、主线第三12296B同SHA及7测试。仅机械原窗/两call六RIP，不证明factory产物或执行，交Sol max语义。 | [原窗与复核](docs/CLIENT_72_D02_PROUD_FACTORY_WINDOW_20261111.md) |
+| E-01/R3-PROUD-INDEX-CTOR-WINDOW | 进行中 | field400190同owner80063唯一.cctor候选663526/14d7adbc0，Sol xhigh执行单窗≤2048B/512条机械包；不伪造caller或称已证index producer，closed-AOT数据包暂不扩。 | [冻结规格](docs/CLIENT_72_D02_PROUD_INDEX_CTOR_WINDOW_20261111.md) |
 | E-01/R3-PROUD-ROW-READER | 已完成 | 原1438B/309条、三个backend分支参数及typed缓存已核；6测试/主线第三85断言31839B同两fresh。两个U32用途按分支分开，不统一offset/size；+1c赋值不证明有效row span，400190 producer及真实索引仍未闭。 | [准确合同与下一候选](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md) |
 
 
