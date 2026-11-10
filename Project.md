@@ -349,6 +349,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01/R3-OLD-DEPOT-FIELDS（四行字段样本） | 已完成 | 原whole171行/26024B与mapping一致，四原query返回本次typed对象，97 getter到原RETURN；5测试与主线第三1121330B同SHA通过。保留170字符串/模型/34批准11执行区间及对象零空，input presence和业务alias仍未知，非全121恢复。 | [原执行、模型与字段边界](docs/CLIENT_72_D02_OLD_DEPOT_FIELDS_20261111.md) |
 | E-01/R3-ALL-SAVED-DEPOT-REFS | 已完成 | 全121实际保存当前Depot原whole171/cursor26024、121 query/2924 getter RETURN，34批准/11实际区间及各span核对；14测试/主线第三9014403B与两fresh同SHA通过。726外层/嵌套原值和presence unknown保留，仅数据样本，不批准字段alias/全phase6资源或完整恢复。 | [原字段、数量与后继边界](docs/CLIENT_72_D02_ALL_SAVED_DEPOT_REFS_20261111.md) |
 | E-01/R3-PROUD-ACTUAL-FIELDS（producer与闭合身份） | 已完成 | 174B getter/3179B producer两fresh及原source核；同原row的+90/+84经codec组成pair并传同枚举行键，56 QWORD闭合map138526及HashSet15620 AddIfNotPresent身份。6测试/主线复验通过。map写入/真实Proud表/group-level/门槛及Java算式仍未知。 | [原关系、AOT与后继](docs/CLIENT_72_D02_PROUD_ACTUAL_FIELDS_20261111.md) |
+| E-01/R3-PROUD-ROW-WINDOW（机械取窗） | 已完成 | 精确df70原caller/AOT两QWORD/唯一pdata后772B/152条连续body已取；5门禁与主线第三8原件和两fresh逐byte同SHA通过。21 direct call/25 RIP仅原指令，不批准资源来源/返回对象业务语义，另交Sol max。 | [原窗、绑定及引用](docs/CLIENT_72_D02_PROUD_ROW_WINDOW_20261111.md) |
 
 
 ## 7. 旧任务归并与后续范围

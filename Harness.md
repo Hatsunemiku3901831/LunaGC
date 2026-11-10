@@ -1,5 +1,7 @@
 2026-11-11 定向GitHub增量主审：AB8输入/16原件SHA核对通过，历史B派工计划按原5407B/SHA恢复快照，旧manifest不改，proof`63688e2e…1e259f`；bounded partial无新集成。Scene README优先的两固定World JSON/tree/blob/本地三方对照主线第三同SHA`330be5e2…3765c1`；仅外部样本，分组/目标命中/生命周期未验。两包请求错误、budget偏差和覆盖缺口保留。[AB](docs/CLIENT_72_D02_GITHUB_INCREMENT_20261110B.md)、[Scene](docs/CLIENT_72_D02_SCENE_GITHUB_INCREMENT_20261111.md)。
 
+2026-11-11 `R3-PROUD-ROW-WINDOW`：5门禁/主线第三8原件与两fresh相同，唯一df70 body772B/152instr SHA`f413cdae…90cf`，精确原caller/AOT/pdata通过。21 call/25 RIP不代语义，交Sol max核真实行来源。[复现与边界](docs/CLIENT_72_D02_PROUD_ROW_WINDOW_20261111.md)。
+
 2026-11-11 `SCENE-SLOT114-FROZEN-AUDIT`：7pin/17断言主线第三5325B同SHA`0d423a50…f6e25`，冻结36原读缺klass+460全部8B且无实际返回对象来源。下一同factory frame/3读224B须另有合法trigger；metadata候选不代动态目标，Scene未验。[来源与出口](docs/CLIENT_72_D02_SCENE_SLOT114_20261111.md)。
 
 2026-11-11 `R3-PROUD-ACTUAL-FIELDS`：174/3179B两原窗、56QWORD闭合map138526与HashSet15620 AddIfNotPresent身份，6测试/root两CLI同SHA`a756aea2…0bcb63`。root仅修旧closed-AOT未审label及self SHA，原source均相同；map写入/真实表/alias/门槛未验，df70后继已交独立包。[准确关系和失败边界](docs/CLIENT_72_D02_PROUD_ACTUAL_FIELDS_20261111.md)。
