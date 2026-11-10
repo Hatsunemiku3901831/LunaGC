@@ -278,6 +278,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | R2-KEY-LOAD-OBSERVE 固定只读观察 | 已完成 | 窄key入口实际安装、精确代码/转发/回调绑定、正常页及退出恢复已验；未证明自然key调用、route或完整校验。 | [实际结果、来源与边界](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md) |
 | R2-ROUTE-CONFIG-SELECT/B-REQUEST-ADOPTION（静态选择子出口） | 已完成 | 唯一LoadLocalConfig2481B/504条、三caller、readOnly仅跳local回写与cp_app_id匹配client.gameKey、两次加载和返回边界已核。来源23/最终31断言及主线23复核通过；自然选择/实际采用未验。 | [精确选择与请求入口规格](docs/CLIENT_72_D02_ROUTE_ADOPTION_20261110.md) |
 | R2-ROUTE-CONFIG-SELECT/FINAL-URL-CLASSIFIER | 已完成 | 八个完整base各加单?的纯UTF16LE分类器及七直接源门禁，18测试/独立8正例1090扰动/7漂移主线复核通过；只输出固定类/unknown。未观察33107/HTTP或认证，不解锁hook。 | [实现、来源与边界](docs/CLIENT_72_SDK_FINAL_ROUTE_CLASSIFIER_20261110B.md) |
+| D02-GITHUB-INCREMENT-AB（有界补查） | 已完成 | Sol max中文计划→Terra max检索，8输入/16原件主审通过；bounded partial/no-new-evidence，未发现可直接集成实现。B401/词条重复及A分支覆盖不全保留，历史B派工计划按原SHA恢复快照，不改旧pin。 | [范围、来源与限制](docs/CLIENT_72_D02_GITHUB_INCREMENT_20261110B.md) |
+| F-03d3s2/SCENE-GITHUB-INCREMENT（有界补查） | 已完成 | README优先，两个固定World JSON均有MPLevel且与本地三者两两不同；主线第三同SHA，三层tree/两blob复核。12请求上限及响应丢失/分页缺口保留，target分组/自然命中/生命周期仍未知，无集成许可。 | [候选样本与准确未闭](docs/CLIENT_72_D02_SCENE_GITHUB_INCREMENT_20261111.md) |
 
 
 ### 6.4 资源、脚本、保存与回归
