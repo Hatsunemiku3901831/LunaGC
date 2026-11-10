@@ -121,7 +121,7 @@ class SampleStop(Exception):
     pass
 
 
-def sample_primary(backend, epoch, identity, *, now=card.utc):
+def sample_primary(backend, epoch, identity, *, now=card.utc, include_pool=False):
     """Use only the original handles. The caller supplies full fresh identity.
 
 identity(hProcess, pid) -> {pid, image, processCreationTime, module:{name,path,base,size}}.
@@ -154,9 +154,14 @@ does not launch, open a process/thread, choose a thread, or authorize a live run
         return record["result"]
 
     try:
-        _validate_entry(primary, epoch, identity, now)
+        _validate_entry(primary, epoch, identity, now, include_pool)
+        if include_pool:
+            from . import client72_d02_tls_pool_inputs as selected
+            result.update(profile="avatar-r1-pool", naturalPoolAllocatorThreadObserved=False)
+        else:
+            selected = card
         result.update(epochId=epoch["epochId"], launchPrimary=dict(primary),
-                      stockInputPins=dict(epoch["stockInputPins"]), sourceChecks=card.verify_sources(),
+                      stockInputPins=dict(epoch["stockInputPins"]), sourceChecks=selected.verify_sources(),
                       implementationPins=dict(epoch["implementationPins"]))
         stage = "identity-before"
         _observe_identity(identity, primary, epoch, result, stage, now)
@@ -179,7 +184,7 @@ does not launch, open a process/thread, choose a thread, or authorize a live run
         teb = _basic_identity(before, primary)
         result["threadBefore"] = before
         stage = "collection"
-        result["collection"] = card.collect(lambda address, width: backend.read(primary["processHandle"], address, width),
+        result["collection"] = selected.collect(lambda address, width: backend.read(primary["processHandle"], address, width),
                                              epoch["module"]["base"], teb, now=now)
         stage = "thread-after"
         after = call("NtQueryInformationThread", backend.thread_basic)
@@ -218,7 +223,9 @@ does not launch, open a process/thread, choose a thread, or authorize a live run
     return result
 
 
-def _validate_entry(primary, epoch, identity, now):
+def _validate_entry(primary, epoch, identity, now, include_pool):
+    if type(include_pool) is not bool:
+        raise ValueError("include_pool must select one of the two fixed profiles")
     if primary is None or primary["source"] != "launch-primary-thread" or primary["creationFlags"] != 0:
         raise ValueError("Only this normal CreateProcessW primary handle is accepted")
     if not callable(identity) or not callable(now) or not isinstance(epoch["epochId"], str) or not epoch["epochId"]:
@@ -230,8 +237,10 @@ def _validate_entry(primary, epoch, identity, now):
             or type(epoch["processCreationTime"]) is not int or not 0 < epoch["processCreationTime"] <= card.U64
             or ntpath.normcase(ntpath.normpath(epoch["image"])) != ntpath.normcase(ntpath.normpath(primary["target"]))):
         raise ValueError("Epoch process or fixed stock identity differs")
-    expected_pins = {name: card.digest((card.ROOT / name).read_bytes()) for name in (
-        "tools/client72_d02_tls_inputs.py", "tools/observe_client72_tls_inputs.py")}
+    source_names = ["tools/client72_d02_tls_inputs.py", "tools/observe_client72_tls_inputs.py"]
+    if include_pool:
+        source_names.append("tools/client72_d02_tls_pool_inputs.py")
+    expected_pins = {name: card.digest((card.ROOT / name).read_bytes()) for name in source_names}
     if epoch["implementationPins"] != expected_pins:
         raise ValueError("Fresh helper implementation pins differ")
     module = epoch["module"]

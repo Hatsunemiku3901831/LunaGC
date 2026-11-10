@@ -22,6 +22,7 @@ SOURCE_PINS = {
     OWNED + "main-independent-review.private.json": "88d59287628a883f62a372acfc40e902076455fc27fa4ccbb2e4c37bc80ebd46",
 }
 FIRST_READS, FIRST_BYTES, MAX_READS, MAX_BYTES, MAX_SINGLE = 13, 340, 26, 680, 208
+READ_PROFILES = {"avatar-r1": (13, 340, 26, 680), "avatar-r1-pool": (18, 369, 36, 738)}
 U64 = (1 << 64) - 1
 
 
@@ -76,15 +77,18 @@ class ReadStop(Exception):
 
 
 class ReadLedger:
-    def __init__(self, read, now):
+    def __init__(self, read, now, *, profile="avatar-r1"):
+        if profile not in READ_PROFILES:
+            raise ValueError("Unknown fixed TLS read profile")
+        self.first_read_limit, self.first_byte_limit, self.read_limit, self.byte_limit = READ_PROFILES[profile]
         self.read, self.now = read, now
         self.records, self.successful = [], {}
         self.requested = self.first_reads = self.first_bytes = 0
         self.final = {"status": "not-started", "uniqueSuccessfulSpans": 0, "verifiedSpans": 0, "records": []}
 
-    def get(self, name, address, width, phase="first"):
-        if (not 0 < width <= MAX_SINGLE or len(self.records) >= MAX_READS or self.requested + width > MAX_BYTES
-                or (phase == "first" and (self.first_reads >= FIRST_READS or self.first_bytes + width > FIRST_BYTES))):
+    def get(self, name, address, width, phase="first", *, source_reader=None):
+        if (not 0 < width <= MAX_SINGLE or len(self.records) >= self.read_limit or self.requested + width > self.byte_limit
+                or (phase == "first" and (self.first_reads >= self.first_read_limit or self.first_bytes + width > self.first_byte_limit))):
             raise ReadStop("read-budget")
         self.requested += width
         if phase == "first":
@@ -107,6 +111,8 @@ class ReadLedger:
                "requested": width, "bytesRead": len(raw), "bytesHex": raw.hex(), "error": error,
                "backendCalled": called, "beginUTC": begin, "endUTC": self.now()}
         self.records.append(row)
+        if source_reader is not None:
+            row["sourceReader"] = source_reader
         if error is not None:
             raise ReadStop(name + ":unreadable")
         if phase == "first":
@@ -115,7 +121,8 @@ class ReadLedger:
                 if start < end and raw[start-address:end-address] != old["raw"][start-old_address:end-old_address]:
                     row["error"] = {"kind": "overlap-drift"}
                     raise ReadStop(name + ":overlap-drift")
-            self.successful.setdefault((address, width), {"raw": raw, "ordinal": row["ordinal"], "name": name})
+            self.successful.setdefault((address, width), {"raw": raw, "ordinal": row["ordinal"], "name": name,
+                                                         "sourceReader": source_reader})
         return raw
 
     def pointer(self, name, address):
@@ -131,7 +138,7 @@ class ReadLedger:
             row = {"firstOrdinal": first["ordinal"], "address": address, "requested": width, "status": "partial"}
             self.final["records"].append(row)
             try:
-                raw = self.get(first["name"], address, width, "final")
+                raw = self.get(first["name"], address, width, "final", source_reader=first["sourceReader"])
                 row["finalOrdinal"] = self.records[-1]["ordinal"]
                 if raw != first["raw"]:
                     row["status"] = "changed"
@@ -142,36 +149,45 @@ class ReadLedger:
                 self.final.update(status="partial", failure=str(failure))
                 break
 
+    def finish(self, result):
+        self.repeat_final()
+        if result["failure"] is None and self.final["status"] == "repeated-unchanged":
+            result["status"] = "candidate"
+        elif result["failure"] is None:
+            result["failure"] = self.final["failure"]
+        result.update(records=self.records, inputConsistency=self.final, endUTC=self.now(),
+                      budget={"reads": len(self.records), "requestedBytes": self.requested,
+                              "backendReads": sum(row["backendCalled"] for row in self.records),
+                              "firstPassReads": self.first_reads, "firstPassBytes": self.first_bytes,
+                              "maxFirstPassReads": self.first_read_limit, "maxFirstPassBytes": self.first_byte_limit,
+                              "maxReads": self.read_limit, "maxBytes": self.byte_limit, "maxSingleRead": MAX_SINGLE})
+        return result
+
 
 def collect(read, module, teb, *, now=utc):
     """Collect this epoch only. A TEB must come from the retained-primary adapter."""
+    ledger, result = start_collection(read, module, teb, now=now)
+    try:
+        _collect_tls(ledger, module, teb, result["tls"])
+        _collect_r1(ledger, module, result["r1"])
+    except ReadStop as failure:
+        result["failure"] = str(failure)
+    return ledger.finish(result)
+
+
+def start_collection(read, module, teb, *, now=utc, profile="avatar-r1"):
+    """Shared entrance for the two fixed TLS/R1 consumers; one final per ledger."""
     if (not callable(read) or not callable(now) or type(module) is not int or type(teb) is not int
             or not 0 < module <= U64 - 0x5eef084 or not 0 < teb <= U64 - 0x60):
         raise ValueError("Read callback, clock and full64 module/TEB are required")
-    ledger = ReadLedger(read, now)
+    ledger = ReadLedger(read, now, profile=profile)
     result = {"schema": "client72-tls-r1-inputs-v1", "status": "partial", "failure": None,
               "beginUTC": now(), "moduleBase": module, "teb": teb, "tls": {}, "r1": {},
               "requiresRetainedPrimaryProof": True, "candidateGraphOnly": True,
               "nonAtomic": True, "noWrites": True, "noNativeCPU": True,
               "naturalAvatarAllocatorThreadObserved": False, "canReplayPop": False, "oldHeapImported": False,
               "gsBaseRegisterReadDirectly": False, "liveApproved": False, "replayApproved": False}
-    try:
-        _collect_tls(ledger, module, teb, result["tls"])
-        _collect_r1(ledger, module, result["r1"])
-    except ReadStop as failure:
-        result["failure"] = str(failure)
-    ledger.repeat_final()
-    if result["failure"] is None and ledger.final["status"] == "repeated-unchanged":
-        result["status"] = "candidate"
-    elif result["failure"] is None:
-        result["failure"] = ledger.final["failure"]
-    result.update(records=ledger.records, inputConsistency=ledger.final, endUTC=now(),
-                  budget={"reads": len(ledger.records), "requestedBytes": ledger.requested,
-                          "backendReads": sum(row["backendCalled"] for row in ledger.records),
-                          "firstPassReads": ledger.first_reads, "firstPassBytes": ledger.first_bytes,
-                          "maxFirstPassReads": FIRST_READS, "maxFirstPassBytes": FIRST_BYTES,
-                          "maxReads": MAX_READS, "maxBytes": MAX_BYTES, "maxSingleRead": MAX_SINGLE})
-    return result
+    return ledger, result
 
 
 def _collect_tls(ledger, module, teb, result):
