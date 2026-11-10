@@ -70,7 +70,7 @@
 
 | 分支 / 既有任务 | 本批具体动作及前置 | 产物与验收出口 | 责任文件与模型 |
 | --- | --- | --- | --- |
-| A：F-03d3f4d2；E-01/R3-ITEM-ENTRY的String共同输入 | String后继边界/allocator单窗及owned线程ABI已完成；自然FindEntry仍缺tuple/trigger。当前Sol xhigh按冻结规格实现launch-primary同epoch只读TLS/R1采集器，13首读340B/总26读680B，API另账；未批准live/replay | 新工具/人工反例、精确身份与末尾复读；natural allocator线程仍未证明，15/82及副本写域未批。fresh TLS、旧cold普通10294、enum分别保留；不补对象/页/返回值。完整构造/资源充分后转g2 | 新TLS collector四tool及独立专题归Sol xhigh；旧输入/ABI冻结。主线实际stock门禁/现场，和临时SDK安装互斥。[线程ABI实际验证](docs/CLIENT_72_D02_OWNED_TEB_ABI_20261110.md) |
+| A：F-03d3f4d2；E-01/R3-ITEM-ENTRY的String共同输入 | String后继边界/allocator单窗及owned线程ABI已完成；自然FindEntry仍缺tuple/trigger。launch-primary同epoch只读TLS/R1采集器已实现，21人工测试/主线第三图和来源门禁通过，13首读340B/总26读680B，API另账；尚未集成实际stock/helper或批准live/replay | 新工具/人工反例、精确身份与末尾复读；natural allocator线程仍未证明，15/82及副本写域未批。fresh TLS、旧cold普通10294、enum分别保留；不补对象/页/返回值。完整构造/资源充分后转g2 | 新TLS collector四tool及独立专题归Sol xhigh；旧输入/ABI冻结。主线实际stock门禁/现场，和临时SDK安装互斥。[线程ABI实际验证](docs/CLIENT_72_D02_OWNED_TEB_ABI_20261110.md) |
 | B：R2-CONFIGSYNC-EARLY-BRIDGE、R2-ROUTE-CONFIG-SELECT；必要时R2-PLUGIN-UI-REGISTRATION | 八点实现/离线门禁已完成，本轮新ready自然90秒观察、原字节重放/15审核和正常退出stock恢复通过；下一步自然Init/env→route必要consumer | 同配置writerGate/parserAccepted/envPath/store及native返回成立，cn-env-0；P5/P6仅分支、P7结合P1只证明正常epilogue后返回。完整payload/Init/route/unwind仍未知，不重复本轮问题 | 主线Sol xhigh独占安装/现场/恢复；33源/105pin及新accepted冻结，旧产物只读。冻结分析可并行。[实现与实际门禁](docs/CLIENT_72_SDK_CONFIG_STAGE_OBSERVER.md) |
 | C：E-01/E-01c/E-01d1；后继R3-ITEM-ENTRY必要加载与恢复 | 两Promote、七字段绑定及同源Item11101真实Mongo保存/新Player库存恢复已完成；三文件首诊/303恢复/候选/Metal复用。下一必要项按完整Avatar/talents、Gadget配置/ability及Scene真实调用继续筛选 | 三项局部保存/冷Guard重存/缺定义保留恢复/UID隔离已实际通过，冷读零写；未装备武器范围不覆盖完整Avatar/Player、角色装备、场景或退出重登 | 明确数据/测试准备交Terra，未知consumer交Sol max；主线定规格/运行/DB/Git，旧C文件冻结。[局部保存实际结果](docs/CLIENT_72_D02_ITEM_SAVE_JAVA_20261110.md) |
 
@@ -205,6 +205,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3f4d2；E-01/R3-ITEM-ENTRY（必要String自然后继边界） | 已完成 | 三个原窗/28关键opcode/10pin及TLS420B静态复核、6测试与主线第三同字节；明确Gadget到asset-key的实际consumer及首NUL hash规则，旧5次hash只复用。自然字典/查询/MI/帧/trigger缺失，26/816图仅proposal，未新CPU/PE/live或验完整查询。 | [准确源、必要性、输入与停止条件](docs/CLIENT_72_D02_A_SUCCESSOR_20261110.md) |
 | F-03d3f4d2（allocator TLS直接callee单窗步骤） | 已完成 | 重新核五stock后取得唯一312B/74指令PE exception完整窗；双静态报告与主线第三同字节，明确size32/bin2、真实freelist/写域及三个未审外部边。15/82读取与捕获副本写域仅proposal，未新CPU/live或验allocator返回/完整Avatar。 | [真实原窗、输入、写入与停止合同](docs/CLIENT_72_D02_AVATAR_TLS_SUCCESSOR_20261110.md) |
 | F-03d3f4d2（owned线程ABI步骤） | 已完成 | 固定phnt分支/提交及SDK来源，独立cl构建、两fresh恰六次class0、9测试和原48B独立审核通过；仅当前机器原生x64自有main/worker的TEB/身份/GS58关系成立。不是游戏线程/TLS/池或回放许可，未晋级完整Avatar。 | [实际构建、原件、失败及后继](docs/CLIENT_72_D02_OWNED_TEB_ABI_20261110.md) |
+| F-03d3f4d2（同epoch只读TLS/R1采集器实现步骤） | 已完成 | 七冻结来源/原audit27–35关系、21人工测试及主线独立第三图/失败守卫通过；保留本次正常launch原primary，API另账、13/340→统一26/680。仅工具实现，未调用真实目标API或采自然TLS，primary非自然allocator线程证明、pool写域/replay仍未批。 | [实现、准确预算及主线审核](docs/CLIENT_72_D02_TLS_INPUT_COLLECTOR_20261110.md) |
 
 ### 6.3 SDK、补丁、观察与运维前置
 
