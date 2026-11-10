@@ -52,7 +52,7 @@
 
 显式传入工具支持的模型与档位；模型不可用应如实返回主线调整，不能静默升级Astra或冒称已使用指定模型。子代理不得自行扩大派遣和修改范围。
 
-平台并发上限4。此前旧pending_init占槽导致新建被拒，已让旧任务交回；按成熟规格轮转多个Terra，最多主线＋3个子代理，不固定A/B/C名额。当前trace合同/header已冻结，child Terra源码已交，parent Terra独有实现与PrimaryIndex locator Terra并行；Sol max仅收口prepare语义并交成熟单source。完成分析及时交回；不另开聊天、不借Daybreak阻塞包换模型重试。
+平台并发上限4。此前旧pending_init占槽导致新建被拒，已让旧任务交回；按成熟规格轮转多个Terra，最多主线＋3个子代理，不固定A/B/C名额。当前trace合同/header已冻结，child Terra源码已交；Sol max prepare语义已交成熟单source，parent Terra独有实现与PrimaryIndex locator Terra并行，成熟validator再拆包。完成分析及时交回；不另开聊天、不借Daybreak阻塞包换模型重试。
 
 ### 3.2 批次路线与退出条件
 
@@ -382,7 +382,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01/R3-PROUD-LAZY-INDEX-CONTRACT | 已完成 | 主线第三12550B/34原PC断言同两fresh；先无条件call157ffc650再读壳+18，本236B不读壳+20。negative index清8B/AL0，nonnegative复制8B/AL1，整个RAX不是bool合同。loader/path/index实际填充仍未知。 | [值流及唯一下一source](docs/CLIENT_72_D02_PROUD_LAZY_INDEX_CONTRACT_20261111.md) |
 | E-01/R3-PROUD-PREPARE-AOT-D | 已完成 | 已知5071的16准确slot/128B中唯一目标157ffc650绑定138529/spec175101/ptr84545；主线第三24456B同两audit、5测试。同index共享行仅自身，跨其他index同code未知，不推loader语义。 | [原槽及范围](docs/CLIENT_72_D02_PROUD_PREPARE_AOT_20261111.md) |
 | E-01/R3-PROUD-PREPARE-WINDOW-W | 已完成 | 唯一pdata给289B/82条，两fresh八原件与主线第三14701B同SHA，6门禁通过；真实caller/5071 AOT/五hash已核。8call/14branch/2RIP仅机械，不推loader语义。 | [独立原窗专题](docs/CLIENT_72_D02_PROUD_PREPARE_WINDOW_20261111.md) |
-| E-01/R3-PROUD-PREPARE-CONTRACT | 进行中 | Sol max只审已验289B，核普通/替换/ready条件、壳+20路径/+18 index及第一必要loader/type边；仅既有输入，无新窗或suffix猜测，成熟单source交Terra。 | 独有prepare合同专题/`c-proud-prepare-contract/`，旧窗口/AOT/helper只读 |
+| E-01/R3-PROUD-PREPARE-CONTRACT | 已完成 | 主线第三36303B同两fresh，185来源/82条重解码/58原PC通过；壳+20路径→原loader/type8026/suffix已闭合，+28分支按实际成功/空/handler结果分开。本289B不读写壳+18，实际填充/row仍未验。 | [必要loader链与单source规格](docs/CLIENT_72_D02_PROUD_PREPARE_CONTRACT_20261111.md) |
 | E-01/R3-PROUD-PRIMARY-INDEX-LOCATOR | 进行中 | prepare第三36303B/58断言已闭合PrimaryIndex壳路径→原14d6e1570→type8026及固定suffix；另批Terra只定位这个完整payload，既有资源/索引/serialized纯工具冻结，无新窗或native hash执行。index内容、row、自然加载及资源ready不随命中通过。 | 独有primary_index_locator工具/test/专题及`c-proud-primary-index-locator/`；禁止扩IndexGroupId或157ffc780 |
 | E-01/R3-PROUD-ROW-READER | 已完成 | 原1438B/309条、三个backend分支参数及typed缓存已核；6测试/主线第三85断言31839B同两fresh。两个U32用途按分支分开，不统一offset/size；+1c赋值不证明有效row span，400190 producer及真实索引仍未闭。 | [准确合同与下一候选](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md) |
 

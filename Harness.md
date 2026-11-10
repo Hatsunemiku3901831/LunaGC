@@ -1,3 +1,5 @@
+2026-11-11 `R3-PROUD-PREPARE-CONTRACT`：主线第三36303B与两fresh同SHA`9eb26c03c1ceb6f9cd9a000e7b9de688a2c9c8f2e2cf893902f8e119fbff5e27`，185源/82原指令/58断言通过；同壳+20到准确loader/type8026/suffix有原来源，+28及null/handler路线分立。仅静态合同，无壳+18实际填充/row/资源ready；最小PrimaryIndex locator已交Terra。[完整值流和复现](docs/CLIENT_72_D02_PROUD_PREPARE_CONTRACT_20261111.md)。
+
 2026-11-11 `CLEAR48-NATIVE-TRACE-IMPLEMENTATION-CONTRACT`：四JSON/root唯一header的48offset、256/128B及原bytes源级第三通过，proof SHA`cbbda65b163adc2f7192299df7ceb85e33fb4b976a622cf02a74a9cece678f77`；未编译/Debug API。W1/W2/W3 child/parent已按独有文件分Terra，parent未完不得build/运行，904B仍未链接。child原epoch及root CPUID门顺序纠正分账保留。[合同与精确预算](docs/CLIENT_72_D02_CLEAR48_TRACE_IMPLEMENTATION_CONTRACT_20261111.md)。
 
 2026-11-11 `R3-PROUD-PREPARE-WINDOW-W`：主线第三14701B同双fresh SHA`c322aa7f0d5d397c21e35edf86422cab2794a401d0784fd68045e6e7884d81cf`、6门禁通过；唯一原窗289B/82条、八原件/原caller/slot/pdata完整核实。仅机械，8call/14branch/2RIP不代loader语义；Sol max接冻结原窗。[来源、预算与复现](docs/CLIENT_72_D02_PROUD_PREPARE_WINDOW_20261111.md)。
