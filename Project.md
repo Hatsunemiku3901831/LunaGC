@@ -394,6 +394,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01d1/R3-OLD-TALENT-SOURCES | 已完成 | 两个固定 Excel 来源均命中726查键，6个空/缺差异、720个非空 checkout 精确键。7项和主线CLI一致。实际目标 OpenConfig 和恢复待验。 | [来源和消费差异](docs/CLIENT_72_D02_OLD_TALENT_SOURCES_20261111.md) |
 | E-01d1/R3-OLD-TRAVELER-PROMOTE | 已完成 | 已选旧号主角真实 group 12/phase 6 行通过独立 Java loader，四个非零属性位、三正材料和零 ID 过滤均通过。其余角色和实际属性/完整恢复待验。 | [来源、测试和范围](docs/CLIENT_72_D02_OLD_TRAVELER_PROMOTE_20261111.md) |
 | E-01d1/R3-OLD-PROMOTE-GROUPS | 已完成 | 121 个真实保存角色均经原Avatar切片取得独立 group，phase6 唯一行与原跨度匹配，缺键0；10项和主线CLI一致。字段和真实加载另验。 | [原引用和复现](docs/CLIENT_72_D02_OLD_PROMOTE_GROUPS_20261111.md) |
+| E-01d1/R3-OLD-PROUD-PAIR | 已完成 | 原组/等级用途、首个实际旧号 tuple 候选 221/1 及正 handle getter 的同一读写基址已证；87条原窗双读一致。实际 tuple 命中、门槛与 Java 资源消费仍待。 | [语义和原窗](docs/CLIENT_72_D02_OLD_PROUD_PAIR_20261111.md) |
 | E-01/R3-PROUD-ACTUAL-FIELDS（producer与闭合身份） | 已完成 | 174B getter/3179B producer两fresh及原source核；同原row的+90/+84经codec组成pair并传同枚举行键，56 QWORD闭合map138526及HashSet15620 AddIfNotPresent身份。6测试/主线复验通过。map写入/真实Proud表/group-level/门槛及Java算式仍未知。 | [原关系、AOT与后继](docs/CLIENT_72_D02_PROUD_ACTUAL_FIELDS_20261111.md) |
 | E-01/R3-PROUD-ROW-WINDOW（机械取窗） | 已完成 | 精确df70原caller/AOT两QWORD/唯一pdata后772B/152条连续body已取；5门禁与主线第三8原件和两fresh逐byte同SHA通过。21 direct call/25 RIP仅原指令，不批准资源来源/返回对象业务语义，另交Sol max。 | [原窗、绑定及引用](docs/CLIENT_72_D02_PROUD_ROW_WINDOW_20261111.md) |
 | E-01/R3-PROUD-ROW-SOURCE | 已完成 | 原606B producer、唯一literal与typed63831/529236 parser链闭合；主线第三48799B与两fresh一致，6测试。两个U32仍未命名offset/size，真实行/codec/业务alias未验。 | [原行来源](docs/CLIENT_72_D02_PROUD_ROW_SOURCE_20261111.md) |
