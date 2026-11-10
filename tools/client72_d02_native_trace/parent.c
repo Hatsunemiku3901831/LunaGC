@@ -420,9 +420,10 @@ static int set_tf(C48Run *run, const CONTEXT *before, int tf, CONTEXT *readback)
     C48Line line;
     CONTEXT submitted;
     BOOL ok;
-    DWORD error;
+    DWORD error, eflagsXor = 0;
+    const char *eflagsRepresentation = NULL;
     uint32_t setOrdinal, readbackOrdinal = 0, beforeGet;
-    int unchanged = 0, got = 0;
+    int unchanged = 0, got = 0, eflagsAccepted = 0;
     if (!within_wall(run)) return 0;
     if (run->setCount >= C48_MAX_SET_CONTEXT) return fail_run(run, "setBudget");
     ++run->setCount;
@@ -440,10 +441,22 @@ static int set_tf(C48Run *run, const CONTEXT *before, int tf, CONTEXT *readback)
         beforeGet = run->getCount;
         got = get_context(run, readback);
         if (run->getCount != beforeGet) readbackOrdinal = run->getCount;
-        if (got) unchanged = integer_equal(before, readback) &&
-            readback->SegCs == submitted.SegCs && readback->SegSs == submitted.SegSs &&
-            readback->Rsp == submitted.Rsp && readback->Rip == submitted.Rip &&
-            readback->EFlags == submitted.EFlags;
+        if (got) {
+            eflagsXor = submitted.EFlags ^ readback->EFlags;
+            if (eflagsXor == 0) {
+                eflagsRepresentation = "exact";
+                eflagsAccepted = 1;
+            } else if ((submitted.EFlags & 2u) != 0 && eflagsXor == 2u) {
+                eflagsRepresentation = "reserved_bit1_1_to_0";
+                eflagsAccepted = 1;
+            } else {
+                eflagsRepresentation = "rejected";
+            }
+            unchanged = integer_equal(before, readback) &&
+                readback->SegCs == submitted.SegCs && readback->SegSs == submitted.SegSs &&
+                readback->Rsp == submitted.Rsp && readback->Rip == submitted.Rip &&
+                eflagsAccepted;
+        }
     }
     line_begin(&run->log, &line, "set");
     line_add(&line, ",\"apiOrdinal\":%u,\"stopEventSeq\":%llu,\"requestedGroups\":[\"CONTROL\"],"
@@ -457,6 +470,11 @@ static int set_tf(C48Run *run, const CONTEXT *before, int tf, CONTEXT *readback)
     if (readbackOrdinal) line_add(&line, "%u", readbackOrdinal); else line_add(&line, "null");
     line_add(&line, ",\"readbackControl\":");
     if (got) line_control(&line, readback); else line_add(&line, "null");
+    line_add(&line, ",\"eflagsReadbackPolicy\":\"c48-tf-only-reserved-bit1-readback-v2\","
+        "\"eflagsReadbackXor\":");
+    if (got) line_add(&line, "\"%08lx\"", (unsigned long)eflagsXor); else line_add(&line, "null");
+    line_add(&line, ",\"eflagsReadbackRepresentation\":");
+    if (got) line_add(&line, "\"%s\"", eflagsRepresentation); else line_add(&line, "null");
     line_add(&line, ",\"integerUnchanged\":");
     if (got) line_add(&line, "%s", integer_equal(before, readback) ? "true" : "false");
     else line_add(&line, "null");

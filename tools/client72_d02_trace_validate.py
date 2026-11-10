@@ -25,6 +25,7 @@ EPOCH_KEYS = ('descriptorRva', 'armRva', 'callRva', 'afterCallRva', 'wrapperEndR
               'returnLeafRva', 'ymmLeafRva', 'faultLeafRva', 'wrapperBeginRva')
 GPRS = ('Rax', 'Rbx', 'Rcx', 'Rdx', 'Rsi', 'Rdi', 'Rbp', 'R8', 'R9', 'R10', 'R11', 'R12', 'R13', 'R14', 'R15')
 CONTROL = ('SegCs', 'SegSs', 'EFlags', 'Rsp', 'Rip')
+EFLAGS_READBACK_POLICY = 'c48-tf-only-reserved-bit1-readback-v2'
 
 
 def need(condition, message):
@@ -174,9 +175,19 @@ def check_records(rows, summary, receipt, epoch):
         prior = [g for g in by_kind['get'] if g['stopEventSeq'] == s['stopEventSeq'] and g['seq'] < rb['seq'] and g['control'] == s['beforeControl']]
         pre = exact_one(prior[-1:], 'set before')
         need(rb['stopEventSeq'] == s['stopEventSeq'] and rb['seq'] < s['seq'] and
-             rb['integer'] == pre['integer'] and rb['control'] == s['readbackControl'] == s['submittedControl'], 'set context readback')
+             rb['integer'] == pre['integer'] and rb['control'] == s['readbackControl'], 'set context readback')
         a, b = s['beforeControl'], s['submittedControl']
-        need(all(a[k] == b[k] for k in CONTROL if k != 'EFlags') and (hx(a['EFlags'], 8) ^ hx(b['EFlags'], 8)) & ~0x100 == 0, 'set changed non-TF')
+        need(set(b) == set(CONTROL) and all(a[k] == b[k] for k in CONTROL if k != 'EFlags') and
+             (hx(a['EFlags'], 8) ^ hx(b['EFlags'], 8)) & ~0x100 == 0, 'set changed non-TF')
+        submitted, readback = hx(b['EFlags'], 8), hx(rb['control']['EFlags'], 8)
+        difference = submitted ^ readback
+        representation = ('exact' if difference == 0 else
+                          'reserved_bit1_1_to_0' if submitted & 2 and difference == 2 else 'rejected')
+        need(s['eflagsReadbackPolicy'] == EFLAGS_READBACK_POLICY and
+             s['eflagsReadbackXor'] == f'{difference:08x}' and
+             s['eflagsReadbackRepresentation'] == representation, 'set EFlags audit')
+        need(all(rb['control'][k] == b[k] for k in CONTROL if k != 'EFlags') and
+             representation != 'rejected', 'set context readback')
     for m in by_kind.get('memory', []):
         width = m['width']; addr = hx(m['address']); span = m['allowedRegion']
         need(integer(width) and width > 0 and m['stopEventSeq'] in events and
@@ -455,6 +466,7 @@ def validate(args):
     return {'schema':'c48-trace-validation-v1','caseId':case,'runId':run_id,'accepted':True,
             'normalTracePassed':case != 3,'expectedNegativeAccepted':case == 3,
             'pureArtifactValidationOnly':True,'independentReviewIsExternal':True,
+            'eflagsReadbackPolicy':EFLAGS_READBACK_POLICY,
             'inputSHA256':{str(p.resolve()):sha(p.read_bytes()) for p in output_files}}
 
 
@@ -470,6 +482,7 @@ def main(argv=None):
             status = 0
         except (ValueError, KeyError, TypeError, IndexError, OSError, AttributeError, OverflowError, StopIteration, struct.error) as exc:
             result = {'schema':'c48-trace-validation-v1','accepted':False,'pureArtifactValidationOnly':True,
+                      'eflagsReadbackPolicy':EFLAGS_READBACK_POLICY,
                       'error':str(exc),'errorType':type(exc).__name__}
             status = 1
         json.dump(result,out,sort_keys=True,indent=2,ensure_ascii=False)

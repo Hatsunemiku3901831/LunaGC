@@ -45,7 +45,8 @@ def fixture(case):
         get(submitted,g); count['set']+=1
         row=emit('set',apiOrdinal=count['set'],stopEventSeq=stop,requestedGroups=['CONTROL'],beforeControl=before,
                  submittedControl=submitted,BOOL=True,lastErrorIfFalse=None,readbackGetOrdinal=count['get'],
-                 readbackControl=copy.deepcopy(submitted),integerUnchanged=True)
+                 readbackControl=copy.deepcopy(submitted),integerUnchanged=True,
+                 eflagsReadbackPolicy=v.EFLAGS_READBACK_POLICY,eflagsReadbackXor='00000000',eflagsReadbackRepresentation='exact')
         return row
     def cont(clean=False):
         count['continue']+=1
@@ -146,6 +147,118 @@ class TraceTests(unittest.TestCase):
     def test_synthetic_three_cases(self):
         for case in (1,2,3):
             with self.subTest(case=case): check(fixture(case))
+
+    def test_synthetic_eflags_manual_truth_table(self):
+        # Fixed expected values are authored independently of the validator.
+        cases = [
+            (0, 0x202, 0x302, 0x302, '00000000', 'exact', True),
+            (0, 0x202, 0x302, 0x300, '00000002', 'reserved_bit1_1_to_0', True),
+            (-1, 0x302, 0x202, 0x202, '00000000', 'exact', True),
+            (-1, 0x302, 0x202, 0x200, '00000002', 'reserved_bit1_1_to_0', True),
+            (0, 0x200, 0x300, 0x302, '00000002', 'rejected', False),
+            (0, 0x202, 0x300, 0x300, '00000000', 'exact', False),
+            (0, 0x202, 0x302, 0x202, '00000100', 'rejected', False),
+            (0, 0x202, 0x302, 0x200, '00000102', 'rejected', False),
+            (0, 0x202, 0x302, 0x301, '00000003', 'rejected', False),
+            (0, 0x202, 0x302, 0x100, '00000202', 'rejected', False),
+            (0, 0x202, 0x302, 0x308, '0000000a', 'rejected', False),
+        ]
+        # Every bit other than bit1 is independently flipped in raw readback.
+        cases += [(0, 0x202, 0x302, 0x302 ^ (1 << bit),
+                   f'{1 << bit:08x}', 'rejected', False)
+                  for bit in range(32) if bit != 1]
+        for index, before, submitted, readback, xor, representation, accepted in cases:
+            with self.subTest(index=index, before=before, submitted=submitted, readback=readback):
+                data=fixture(1); rows,summary,child,receipt,epoch=data
+                sets=[r for r in rows if r['kind']=='set']; target=sets[index]
+                gets=[r for r in rows if r['kind']=='get']
+                rb=next(g for g in gets if g['apiOrdinal']==target['readbackGetOrdinal'])
+                pre=[g for g in gets if g['stopEventSeq']==target['stopEventSeq'] and g['seq']<rb['seq']][-1]
+                pre['control']['EFlags']=target['beforeControl']['EFlags']=f'{before:08x}'
+                target['submittedControl']['EFlags']=f'{submitted:08x}'
+                rb['control']['EFlags']=target['readbackControl']['EFlags']=f'{readback:08x}'
+                target.update(eflagsReadbackXor=xor, eflagsReadbackRepresentation=representation)
+                if accepted:
+                    v.check_records(rows,summary,receipt,epoch)
+                else:
+                    with self.assertRaises((ValueError,KeyError,IndexError)):
+                        v.check_records(rows,summary,receipt,epoch)
+
+    def test_synthetic_reserved_bit1_full_witness(self):
+        data=fixture(1); rows=data[0]
+        target=next(r for r in rows if r['kind']=='set')
+        rb=next(r for r in rows if r['kind']=='get' and r['apiOrdinal']==target['readbackGetOrdinal'])
+        pre=[r for r in rows if r['kind']=='get' and r['stopEventSeq']==target['stopEventSeq'] and r['seq']<rb['seq']][-1]
+        pre['control']['EFlags']=target['beforeControl']['EFlags']='00000202'
+        target['submittedControl']['EFlags']='00000302'
+        rb['control']['EFlags']=target['readbackControl']['EFlags']='00000300'
+        target.update(eflagsReadbackXor='00000002',eflagsReadbackRepresentation='reserved_bit1_1_to_0')
+        next(r for r in rows if r['kind']=='transaction')['preEFlags']='00000202'
+        check(data)
+
+    def test_synthetic_eflags_negative_associations_and_audit(self):
+        def set_row(d): return next(r for r in d[0] if r['kind']=='set')
+        def readback(d):
+            s=set_row(d)
+            return next(r for r in d[0] if r['kind']=='get' and r['apiOrdinal']==s['readbackGetOrdinal'])
+        def alter_readback_control(d, field, value):
+            readback(d)['control'][field]=value
+            set_row(d)['readbackControl'][field]=value
+        changes = [
+            lambda d: set_row(d).update(eflagsReadbackPolicy='old'),
+            lambda d: set_row(d).update(eflagsReadbackXor='00000002'),
+            lambda d: set_row(d).update(eflagsReadbackXor='0000000A'),
+            lambda d: set_row(d).update(eflagsReadbackRepresentation='reserved_bit1_1_to_0'),
+            lambda d: set_row(d).update(eflagsReadbackRepresentation='rejected'),
+            lambda d: set_row(d).update(eflagsReadbackXor=None),
+            lambda d: set_row(d).update(eflagsReadbackRepresentation=None),
+            lambda d: set_row(d).update(readbackGetOrdinal=999),
+            lambda d: set_row(d).update(stopEventSeq=1),
+            lambda d: readback(d).update(stopEventSeq=1),
+            lambda d: readback(d).update(eventTID=999),
+            lambda d: readback(d).update(requestedGroups=['CONTROL']),
+            lambda d: set_row(d).update(requestedGroups=['CONTROL','INTEGER']),
+            lambda d: readback(d)['integer'].update(Rax='0000000000000001'),
+            lambda d: set_row(d)['readbackControl'].update(EFlags='00000102'),
+            lambda d: set_row(d)['submittedControl'].update(extra=1),
+        ]
+        for register in v.GPRS:
+            changes.append(lambda d,register=register: readback(d)['integer'].update({register:'ffffffffffffffff'}))
+        for field,value in [('SegCs',52),('SegSs',44),('Rip','0000000000000001'),('Rsp','0000000000000001')]:
+            changes.append(lambda d,field=field,value=value: alter_readback_control(d,field,value))
+        for field in ('eflagsReadbackPolicy','eflagsReadbackXor','eflagsReadbackRepresentation',
+                      'beforeControl','submittedControl','readbackControl','readbackGetOrdinal'):
+            changes.append(lambda d,field=field: set_row(d).pop(field))
+        changes.append(lambda d: [r.pop('eflagsReadbackPolicy') for r in d[0] if r['kind']=='set'])
+        for field in ('beforeControl','submittedControl','readbackControl'):
+            changes.append(lambda d,field=field: set_row(d)[field].pop('EFlags'))
+        for change in changes:
+            with self.subTest(change=change):
+                data=fixture(1); change(data)
+                with self.assertRaises((ValueError,KeyError,IndexError)): check(data)
+
+    def test_synthetic_reserved_bit1_forged_audit_is_rejected(self):
+        for field,value in [('eflagsReadbackPolicy','old'), ('eflagsReadbackXor','00000000'),
+                            ('eflagsReadbackRepresentation','exact'), ('eflagsReadbackRepresentation','rejected')]:
+            with self.subTest(field=field,value=value):
+                data=fixture(1); rows=data[0]
+                target=next(r for r in rows if r['kind']=='set')
+                rb=next(r for r in rows if r['kind']=='get' and r['apiOrdinal']==target['readbackGetOrdinal'])
+                pre=[r for r in rows if r['kind']=='get' and r['stopEventSeq']==target['stopEventSeq'] and r['seq']<rb['seq']][-1]
+                pre['control']['EFlags']=target['beforeControl']['EFlags']='00000202'
+                target['submittedControl']['EFlags']='00000302'
+                rb['control']['EFlags']=target['readbackControl']['EFlags']='00000300'
+                target.update(eflagsReadbackXor='00000002',eflagsReadbackRepresentation='reserved_bit1_1_to_0')
+                target[field]=value
+                with self.assertRaises(ValueError): v.check_records(rows,data[1],data[3],data[4])
+
+    def test_synthetic_w3_cleanup_is_not_transaction_authorization(self):
+        data=fixture(3); rows,summary,child,receipt,epoch=data
+        tx=next(r for r in rows if r['kind']=='transaction')
+        cont=next(r for r in rows if r['kind']=='continue' and r['apiOrdinal']==tx['continueOrdinal'])
+        cont['cleanupOnly']=True
+        summary['cleanupContinues']+=1
+        with self.assertRaises(ValueError): check(data)
 
     def test_mutations(self):
         def row(data, kind, index=0): return [r for r in data[0] if r['kind']==kind][index]
@@ -248,6 +361,7 @@ class TraceTests(unittest.TestCase):
                 result=json.loads(report.read_text())
                 self.assertEqual(status,0,result)
                 self.assertTrue(result['pureArtifactValidationOnly'])
+                self.assertEqual(result['eflagsReadbackPolicy'],v.EFLAGS_READBACK_POLICY)
                 self.assertEqual(result['expectedNegativeAccepted'],case==3)
                 if case == 1:
                     mutations = [
@@ -263,7 +377,9 @@ class TraceTests(unittest.TestCase):
                         changed_report=temp/f'mutated-result-{i}.json'
                         alt=list(argv); alt[alt.index('--receipt')+1]=str(changed_receipt); alt[alt.index('--output')+1]=str(changed_report)
                         self.assertEqual(v.main(alt),1)
-                        self.assertFalse(json.loads(changed_report.read_text())['accepted'])
+                        failed=json.loads(changed_report.read_text())
+                        self.assertFalse(failed['accepted'])
+                        self.assertEqual(failed['eflagsReadbackPolicy'],v.EFLAGS_READBACK_POLICY)
 
 
 if __name__ == '__main__':
