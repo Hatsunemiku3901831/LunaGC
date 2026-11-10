@@ -388,6 +388,9 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01/R3-PROUD-INDEX-HANDLER-WINDOW | 已完成 | 主线第三29862B同两fresh八原件、6测试；原两E8/138530/5071/slot/唯一pdata绑定，735B/189条完整窗。目录选择扫描14344080B/1195340条单独记账，目标pdata12B；不读xdata/callee或推index语义。 | [原窗、预算及复现](docs/CLIENT_72_D02_PROUD_INDEX_HANDLER_WINDOW_20261111.md) |
 | E-01/R3-PROUD-INDEX-HANDLER-CONTRACT | 已完成 | 主线第三128270B同两fresh，238源/四已存body3178B/852条/95原PC通过；同735B与旧Scene/refU64原bytes闭合普通格式、ZigZag/低32/U32wrap/第10字节/替换及错误边界。仅普通条件规格，不代自然flag/backend或新Proud native。 | [准确合同与旧证据适用范围](docs/CLIENT_72_D02_PROUD_INDEX_HANDLER_CONTRACT_20261111.md) |
 | E-01/R3-PROUD-PRIMARY-INDEX-REFERENCE | 已完成 | 主线第三5954083B同双fresh，全部6371项/span/slice独立audit及10边界测试通过；旧Gadget31682全项原oracle复算匹配。新Proud cursor31858=EOF，0wrap/越界，首(4,330)/末(2132482,296)仅候选范围。原覆盖输出缺口已修CreateNew，历史原件保留；未新native/row批准/alias/ready。 | [文件参考、边界和未验](docs/CLIENT_72_D02_PROUD_PRIMARY_INDEX_REFERENCE_20261111.md) |
+| E-01/R3-PROUD-ACTUAL-ROW-CONTRACT | 已完成 | 主线第三6382B同两fresh，147源/10915已存bytes/2527条/28anchor；同key22101候选[4,334)已核。缓存backend可在明确条件下承载完整file+cursor4，B不消费；+40=null首inlineDWORD前必须经过base493918，尚不能恢复本体值或批准行尾。 | [新输入与首缺](docs/CLIENT_72_D02_PROUD_ACTUAL_ROW_CONTRACT_20261111.md) |
+| E-01/R3-PROUD-BASE-PARSER-WINDOW | 已完成 | 两fresh八原件、主线第三71756B同SHA与7门禁；准确59500.m493918/ordinaryAOT/两QWORD/unique pdata给2097B/483条完整窗。目录选择扫描单列，未新CPU/reader消费或alias。 | [单窗与预算](docs/CLIENT_72_D02_PROUD_BASE_PARSER_WINDOW_20261111.md) |
+| E-01/R3-PROUD-BASE-PARSER-CONTRACT | 进行中 | Sol max只审已验2097B及已有必要叶，核base前缀/reader推进/allocator与首未闭边，优先复用既有精确source；不跳base、不默认mode、不扩child14f6f13c0，成熟数据规格交Terra。 | 独有base_parser合同专题/`c-proud-base-parser-contract/`，旧helper与原件只读 |
 | E-01/R3-PROUD-ROW-READER | 已完成 | 原1438B/309条、三个backend分支参数及typed缓存已核；6测试/主线第三85断言31839B同两fresh。两个U32用途按分支分开，不统一offset/size；+1c赋值不证明有效row span，400190 producer及真实索引仍未闭。 | [准确合同与下一候选](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md) |
 
 
