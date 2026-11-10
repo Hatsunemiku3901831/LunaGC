@@ -72,7 +72,7 @@
 | --- | --- | --- | --- |
 | A：F-03d3f4d2；必要String共同合同 | 复用stock v2完整head/HashSet；oldFlags8 helper静态及真入口首pop副本已验；完整20分配/12根及子构造已列清，当前推进第二record/block/Default准确输入；自然线程、GC所有权与完整构造仍未验。旧cold普通10294、enum、fresh分立，已验getter/owned字符比较复用 | 有界准确原窗、GC/所有权与副本写域合同或准确首缺、完整构造依赖和最小实现规格；自然allocator线程单独验，不补槽/TLS/对象/未知页或host成功 | Sol max；独有GC专题、`tools/client72_d02_gc_helper_20261110.py`及test、私有`a-gc/`。清楚后交Sol xhigh/Terra |
 | B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 复用八点原返回、锁内map和stock v2 managed env/base；LoadLocalConfig必要选择静态子出口/最终URL纯分类器已验；下一核33107入口准确body/pdata、原caller和hook生命周期，以及合法本服触发 | 最终URL分类、调用身份和返回边界形成可实现观察/接入规格；map已写/env0不当调用，不跨epoch拼业务，不重复页面/扩预算，UI注册仅必要时继续；EH/unwind未知保持 | Sol max当前核POSTREQUEST_ENTRY新专题/独立工具与`b-postrequest/`；明确规格Sol xhigh实现，旧ROUTE_ADOPTION/分类器冻结，patch/现场归主线 |
-| C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 已验出生装备/303/Metal/Promote/Curve/Skill/Depot/talents复用；所选旧号固定快照/真实关联已验；实际121角色level100/phase6、12254物品，按实际持久行收敛必要资源与完整恢复，区分已批资源与额外引用/未知。没有明确旧号不猜账号 | driver/快照/角色与Item键对照已验；全部121在postLoad重建proud，当前Sol max核phase6 proud/group/门槛，明确字段立即转多个Terra。8个Item未知ID及各候选族目标对应另核，不用candidate命中代恢复 | 主线Sol xhigh定规格，Terra xhigh执行；独有old_save_dependencies工具/test/专题及私有`c-old-save/`。共享JVM/DB仅主线 |
+| C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 已验出生装备/303/Metal/Promote/Curve/Skill/Depot/talents复用；所选旧号固定快照/真实关联已验；实际121角色level100/phase6、12254物品，按实际持久行收敛必要资源与完整恢复，区分已批资源与额外引用/未知。没有明确旧号不猜账号 | driver/快照/角色与Item键对照已验；全部121在postLoad重建proud；phase6准确首缺及四保存Depot原字段样本子出口已验，group/level/门槛仍未知，按真实正引用选择后继。8个Item未知ID及各候选族目标对应另核，不用candidate命中代恢复 | 主线Sol xhigh定规格，Terra xhigh执行；独有old_save_dependencies工具/test/专题及私有`c-old-save/`。共享JVM/DB仅主线 |
 | Scene：F-03d3s2 | 已优先完成148d6ebf0模板关联静态出口；首未闭actual slot114、MPLevel原分组输入及Pool/Scene/组件创建替换拆除与通知，沿准确producer继续；包装器仅转发、回收接口不是ctor | 新窗先证明必要性/有界计划；准确producer/生命周期与最小实现合同，明确发送交Sol xhigh，不据偏移/同值猜alias | Sol max语义；Sol xhigh发送。新包发布前主线冻结独立文件与输入；父项进行中，已验模板子出口不重发 |
 
 本批[详细计划](docs/CLIENT_72_D02_RESUME_20261110B.md)固定输入/准确问题/只读依赖、可写文件、独立目录、禁止项、验收/停止恢复。实际4槽：主线＋A/B两个Sol max＋C Terra；任务交回立即释放，成熟包改派多个Terra。主线派遣，子代理禁止扩招；不能以责任线数量冒称并发。
@@ -335,6 +335,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01d1/R3-OLD-ACCOUNT-SNAPSHOT | 已完成 | 用户所选旧号在原物理证据副本的第二工作副本恢复并只读导出；唯一账号/Player及owner/claim关联通过，142源文件在当时前后保持，owned27027正常关闭。实际121角色/12254物品/471装备，原库/配置未写；仅快照，不验业务完整恢复或客户端。 | [复制、恢复、实际关系与边界](docs/CLIENT_72_D02_OLD_ACCOUNT_SNAPSHOT_20261110B.md) |
 | E-01d1/R3-OLD-AVATAR-COVERAGE | 已完成 | 固定旧号121 Avatar/121当前Depot/409次389不同保存Skill均命中目标键/报告span；5测试及主线第四与三fresh同SHA通过。762 Talent/410 Proud、实际phase6资源/完整字段及恢复未闭；四活动不代全部121。 | [键对照与准确后继](docs/CLIENT_72_D02_OLD_AVATAR_COVERAGE_20261111.md) |
 | E-01d1/R3-OLD-ITEM-COVERAGE | 已完成 | 活动10727/不同ID9128、inactive1527保留；目标Weapon交239ID/1663行，四固定候选表命中9120ID，8ID未知。6测试及主线第四/三fresh同SHA，候选tree/blob/SHA已核；不是目标类型/装备恢复许可。 | [有界四族对照与未知](docs/CLIENT_72_D02_OLD_ITEM_COVERAGE_20261111.md) |
+| E-01/R3-OLD-PHASE6-PROUD（首缺与样本规格） | 已完成 | 全121 postLoad实际重建proud，四活动真实保存样本/四原payload跨度/16同窗opcode及20旧pin主线第三同SHA；不批准pair group/level、81127+10门槛或Java算式。 | [准确必经消费与未闭语义](docs/CLIENT_72_D02_OLD_PHASE6_PROUD_20261111.md) |
+| E-01/R3-OLD-DEPOT-FIELDS（四行字段样本） | 已完成 | 原whole171行/26024B与mapping一致，四原query返回本次typed对象，97 getter到原RETURN；5测试与主线第三1121330B同SHA通过。保留170字符串/模型/34批准11执行区间及对象零空，input presence和业务alias仍未知，非全121恢复。 | [原执行、模型与字段边界](docs/CLIENT_72_D02_OLD_DEPOT_FIELDS_20261111.md) |
 
 
 ## 7. 旧任务归并与后续范围

@@ -1,5 +1,7 @@
 2026-11-11 定向GitHub增量主审：AB8输入/16原件SHA核对通过，历史B派工计划按原5407B/SHA恢复快照，旧manifest不改，proof`63688e2e…1e259f`；bounded partial无新集成。Scene README优先的两固定World JSON/tree/blob/本地三方对照主线第三同SHA`330be5e2…3765c1`；仅外部样本，分组/目标命中/生命周期未验。两包请求错误、budget偏差和覆盖缺口保留。[AB](docs/CLIENT_72_D02_GITHUB_INCREMENT_20261110B.md)、[Scene](docs/CLIENT_72_D02_SCENE_GITHUB_INCREMENT_20261111.md)。
 
+2026-11-11 `E-01/R3-OLD-PHASE6-PROUD` 与 `R3-OLD-DEPOT-FIELDS`：20旧pin/四payload/16同窗opcode第三20547B同SHA；四行原whole/query/97 getter第三1121330B同SHA`8c06c130…f3dfd5`，5测试通过。四样本不能代全121，presence/group/level/门槛未批。[首缺](docs/CLIENT_72_D02_OLD_PHASE6_PROUD_20261111.md)、[原字段CLI](docs/CLIENT_72_D02_OLD_DEPOT_FIELDS_20261111.md)。
+
 2026-11-11 `R3-OLD-AVATAR/ITEM-COVERAGE`：主线11测试（5+6）及两个第四CLI通过，报告各同三fresh SHA`ca9b24ed…246ea` / `faf0f7a4…7018`。121角色/当前Depot/389保存Skill键存在，762Talent/410Proud与phase6未闭；Item活动10727/9128ID、inactive1527保留，239targetWeapon键、9120候选ID命中、224001–224008未知。只核键/记录的span和固定候选tree/blob，不验目标完整语义/资源ready或恢复。[角色](docs/CLIENT_72_D02_OLD_AVATAR_COVERAGE_20261111.md)、[物品](docs/CLIENT_72_D02_OLD_ITEM_COVERAGE_20261111.md)。
 
 2026-11-11 `E-01d1/R3-OLD-ACCOUNT-SNAPSHOT`：原物理证据/第二工作副本隔离恢复、纯Java只读导出两轮后owned27027均正常关闭。大小写精确首轮0匹配、第二轮定位唯一旧号/Player；reservedUID0不等于实际UID，改按accountId/owner/claim核一致，无生产分配/索引/修复。45导出/142原文件当时前后保持，proof SHA`363ec11e…0f8bf9`、选定验收SHA`80a39b39…447667`。121角色/12254物品/471装备只是快照，完整恢复/客户端未验。[方法、失败及SHA](docs/CLIENT_72_D02_OLD_ACCOUNT_SNAPSHOT_20261110B.md)。
