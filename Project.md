@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-**已按用户2026-11-10最新指令恢复并行执行，持续推进D-02全部验收；D-02 / F-05 / D02-R6未完成。** 先复用已验String字符路径、Gadget有限语义、Metal局部Java生命周期及SDK冻结规格，继续必要实现与回归。当前八点观察器尚未实现，完整Avatar止allocator的TLS index；父项及未知不晋级。起始HEAD/差异、五stock输入、SDK carrier、13项保护文件及配置/进程/固定端口已重新核对，Project原文已先备份；没有复用旧ready/PID/地址。当前批次、文件归属、实机插入条件及证据见[恢复执行记录](docs/CLIENT_72_D02_RESUME_20261110.md)，旧[交接](HANDOFF2.md)仅作前批证据。
+**已按用户2026-11-10最新指令恢复并行执行，持续推进D-02全部验收；D-02 / F-05 / D02-R6未完成。** 八点SDK观察器的独立构建、两fresh owned/第三复核、真实隔离文件门禁及本轮CheckOnly通过，等待新的实机配合；owned线程ABI两fresh/六query通过，只读TLS采集器进入明确实现。七字段真实Java绑定已验，C继续出生武器真实Mongo保存/新Player库存恢复。完整Avatar仍止allocator的TLS index，父项及未知不晋级。起始HEAD/差异、五stock输入、SDK carrier、13项保护文件及配置/进程/固定端口已重新核对，Project每次修改前先备份；没有复用旧ready/PID/地址。当前批次、文件归属、实机插入条件及证据见[恢复执行记录](docs/CLIENT_72_D02_RESUME_20261110.md)，旧[交接](HANDOFF2.md)仅作前批证据。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -70,9 +70,9 @@
 
 | 分支 / 既有任务 | 本批具体动作及前置 | 产物与验收出口 | 责任文件与模型 |
 | --- | --- | --- | --- |
-| A：F-03d3f4d2；E-01/R3-ITEM-ENTRY的String共同输入 | 已完成必要String后继边界和allocator单callee原窗；自然FindEntry仍缺tuple/trigger，当前设计真实线程/TEB→TLS有限前沿。fresh首缺TLS index，后续有真实TLS写和池/GC条件；旧cold普通10294另记，enum未知保留 | 先冻结可实施线程来源/同epoch/捕获副本写域，再交有界采集或回放；未批15/82不作为执行cap。不得补槽、fake TLS/对象、页填零或host成功；完整构造/资源充分后转g2 | Sol max设计后转明确实现；新A/TLS独占目录和专题，旧共同输入不改。stock读取与安装互斥，现场归主线。[准确TLS后继](docs/CLIENT_72_D02_AVATAR_TLS_SUCCESSOR_20261110.md) |
-| B：R2-CONFIGSYNC-EARLY-BRIDGE、R2-ROUTE-CONFIG-SELECT；必要时R2-PLUGIN-UI-REGISTRATION | 复用自然prefix13/env-0/两reference及恢复，审八点ABI、观测含义、首次任意P0/P2占用、整轮预算和异常边。规格明确即转Sol xhigh独立实现/owned/collector，不重做over-limit归因 | 独立构建、规定两fresh owned及主线第三审核、外collector门禁和恢复准备齐后申请新实时ready；本轮只回答同一配置的writer/parser必要分支及真实状态，不把P5/P6/P7/void当业务成功 | Sol max只写新B审核专题及独立`b/`；新实现另分配Sol xhigh，旧产物/accepted只读。主线独占Cargo、安装与现场。[冻结实施规格](docs/CLIENT_72_SDK_PREFIX_NATURAL_SUCCESSOR.md) |
-| C：E-01/E-01c/E-01d1；后继R3-ITEM-ENTRY必要加载与恢复 | 两个Promote真实加载步骤已完成，三文件首诊、303全部63恢复及候选/Metal直接复用。当前确定规格：已批七字段Skill→Depot→Avatar真实绑定加载，100Curve/HP仅为前置；完整Avatar的talents/能力等仍缺目标职责 | Terra准备新桥接测试，主线实际新JVM验四个正反分支/map恢复；不把loader接受缺引用当资源正确。完整Avatar/Item、Gadget/ability、Scene/引用/revision按真实调用筛选；未知不猜alias或全部提P0 | Terra xhigh只写新`D02BirthSkillDepotBridgeResourceLoadTest.java`和独占桥接专题/准备目录；主线运行，旧C文件冻结。[字段分层与精确规格](docs/CLIENT_72_D02_AVATAR_ITEM_GAPS_20261110.md) |
+| A：F-03d3f4d2；E-01/R3-ITEM-ENTRY的String共同输入 | String后继边界/allocator单窗及owned线程ABI已完成；自然FindEntry仍缺tuple/trigger。当前Sol xhigh按冻结规格实现launch-primary同epoch只读TLS/R1采集器，13首读340B/总26读680B，API另账；未批准live/replay | 新工具/人工反例、精确身份与末尾复读；natural allocator线程仍未证明，15/82及副本写域未批。fresh TLS、旧cold普通10294、enum分别保留；不补对象/页/返回值。完整构造/资源充分后转g2 | 新TLS collector四tool及独立专题归Sol xhigh；旧输入/ABI冻结。主线实际stock门禁/现场，和临时SDK安装互斥。[线程ABI实际验证](docs/CLIENT_72_D02_OWNED_TEB_ABI_20261110.md) |
+| B：R2-CONFIGSYNC-EARLY-BRIDGE、R2-ROUTE-CONFIG-SELECT；必要时R2-PLUGIN-UI-REGISTRATION | 八点实施、独立DLL/fixture、两fresh owned/主线第三、17测试及真实隔离文件门禁已完成；本轮专用helper实际CheckOnly通过，下一步新实时ready后定向观察 | 首次任意P0/P2、三账本/真实mask保持；本轮只回答同一配置writer/parser必要分支和实际状态。P5/P6为分支、P7为epilogue、void不代业务；自然Init/route及unwind仍未知 | 主线Sol xhigh独占安装/现场/恢复；33源/105pin及新accepted冻结，旧产物只读。冻结分析可并行。[实现与实际门禁](docs/CLIENT_72_SDK_CONFIG_STAGE_OBSERVER.md) |
+| C：E-01/E-01c/E-01d1；后继R3-ITEM-ENTRY必要加载与恢复 | 两Promote及七字段Skill→Depot→Avatar真实Java绑定已完成，三文件首诊/303恢复/候选/Metal复用。当前新规格为已批六键Item11101→真实loader→GameItem保存→新Player空Avatar/Inventory恢复 | Terra已准备三个Mongo测试；主线独立库/JVM实际执行两实例/冷Guard重存、缺定义保留与恢复、UID隔离。只验未装备武器，完整Avatar/talents/能力/场景/退出重登仍未闭 | 新`D02BirthWeaponInventoryMongoTest.java`及独立专题归Terra xhigh准备，主线运行/DB/Git；旧C文件冻结。[准确局部保存规格](docs/CLIENT_72_D02_ITEM_SAVE_SPEC_20261110.md) |
 
 每次派工先固定：**任务ID、输入版本/来源、准确问题、允许修改的文件、只读依赖、独立输出目录、禁止操作、产物、验收、停止/返回条件**。所有者以本批派工为准，一个文件同一时刻只有一个写入者。子代理返回“已完成/有界结论/阻塞”及证据；主线审核实际差异、必要独立样本和回归，再更新本页并提交。阻塞时写准确解除条件，不改父项为完成。
 
@@ -83,7 +83,7 @@
 | 批次 / 工作包 | 状态与依赖 | 交付与验收 | 推荐模型 | 证据与边界 |
 | --- | --- | --- | --- | --- |
 | 1A→按需2→3 / F-03d3f4d2 完整Avatar构造/后缀 | 进行中；String原getter/owned字符已验，必要FindEntry新输入边界及TLS静态后继已明确；fresh准确首缺仍TLS index，完整后缀未闭 | 自然String字典/查询/MI/调用帧及trigger未知，不重复SDK页碰运气；当前仅核allocator直接callee的一个准确PE原窗。TLS/TEB/GC、enum/cold普通10294及完整构造/g2不补值或host成功 | Sol max执行疑难后继；Sol xhigh/Terra接明确实现 | [新自然输入边界](docs/CLIENT_72_D02_A_SUCCESSOR_20261110.md)、[字符比较验收](docs/CLIENT_72_STRING_EQUALS_CONTENT.md)；完整父项不晋级 |
-| 1B→按需2→3 / R2-CONFIGSYNC-EARLY-BRIDGE | 进行中；自然13/env-0/两reference/恢复及八点修正规格已验；Sol xhigh正在独立实现，尚未构建/owned/实机 | P0实际14B→C3；首次任意P0/P2先占唯一尝试，参数/绑定/外collector分别限额，失败保留真实mask；异常unwind保持未知。完成独立产物/owned/collector后才申请新ready；完整payload/Marshal/Init/route未闭 | Sol max处理协议/ABI；Sol xhigh最小实现/现场 | [八点实施审核及覆盖纠正](docs/CLIENT_72_D02_B_SDK_AUDIT_20261110.md)、[实际自然13](docs/CLIENT_72_SDK_CONFIG_PREFIX_OBSERVER.md#新epoch自然13正常退出与stock恢复) |
+| 1B→按需2→3 / R2-CONFIGSYNC-EARLY-BRIDGE | 进行中；自然13/env-0/两reference/恢复、八点实现及最终两fresh owned/第三/真实文件门禁/本轮CheckOnly已验，尚未新实机 | P0实际14B→C3；首次任意P0/P2先占唯一尝试，参数/绑定/外collector分别限额，失败保留真实mask。新ready后只取本轮明确问题，unwind/完整payload/Marshal/Init/route未闭 | Sol max处理新语义；Sol xhigh现场/恢复 | [八点实际验证](docs/CLIENT_72_SDK_CONFIG_STAGE_OBSERVER.md)、[实施审核](docs/CLIENT_72_D02_B_SDK_AUDIT_20261110.md) |
 | 1B→按需2→3 / R2-ROUTE-CONFIG-SELECT | 进行中；准确托管loader存在，自然选择/Init未验 | 固定托管env选择、managed→native必要输入和安全事件；原始材料可得先离线，合同足够再实机 | Sol max语义；Sol xhigh接入 | [执行计划](docs/CLIENT_72_D02_RESUME_20261109.md) |
 | 1B/3，必要性确认后 / R2-PLUGIN-UI-REGISTRATION | 进行中；137B入口静态子项已验，producer未闭 | 固定RegisterTask入参、field25231字典set_Item上下文、真实producer和所选task；只在自然路径必要时继续，不以静态入口通过代验entry写入、实际转发或视图行为 | Sol max | [来源、已验子项及准确解除输入](docs/CLIENT_72_SDK_PLUGIN_UI_REGISTRATION.md) |
 | 2/3，复用early结论 / R2-CONFIGSYNC-OBSERVE | 进行中；实机装载已验，目标事件未捕获 | 复用装载/恢复和early结论核触发/安装时序；确需不同观察时先列新问题，取得目标事件及producer/consumer身份后验收。保持原转发/校验/恢复，不重复同实验 | Sol xhigh执行；Sol max处理未闭语义 | [实际结果与未知](docs/CLIENT_72_SDK_CONFIGSYNC_OBSERVER.md#新ready实际90秒未命中及恢复) |
@@ -204,6 +204,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3f4d2；E-01/R3-ITEM-ENTRY（String原字符比较步骤） | 已完成 | 两fresh各14case从实际10339经原尾跳/177B Helper2908返回，累计28call/1302完成且预期AL全符；13只读测试及主线15审核通过。显式owned NUL尾读逐字节保留；自然allocator终止存储、Hash/FindEntry、自然键、完整Comparer/构造及父项未验。 | [原字符路径、预算与主线验收](docs/CLIENT_72_STRING_EQUALS_CONTENT.md) |
 | F-03d3f4d2；E-01/R3-ITEM-ENTRY（必要String自然后继边界） | 已完成 | 三个原窗/28关键opcode/10pin及TLS420B静态复核、6测试与主线第三同字节；明确Gadget到asset-key的实际consumer及首NUL hash规则，旧5次hash只复用。自然字典/查询/MI/帧/trigger缺失，26/816图仅proposal，未新CPU/PE/live或验完整查询。 | [准确源、必要性、输入与停止条件](docs/CLIENT_72_D02_A_SUCCESSOR_20261110.md) |
 | F-03d3f4d2（allocator TLS直接callee单窗步骤） | 已完成 | 重新核五stock后取得唯一312B/74指令PE exception完整窗；双静态报告与主线第三同字节，明确size32/bin2、真实freelist/写域及三个未审外部边。15/82读取与捕获副本写域仅proposal，未新CPU/live或验allocator返回/完整Avatar。 | [真实原窗、输入、写入与停止合同](docs/CLIENT_72_D02_AVATAR_TLS_SUCCESSOR_20261110.md) |
+| F-03d3f4d2（owned线程ABI步骤） | 已完成 | 固定phnt分支/提交及SDK来源，独立cl构建、两fresh恰六次class0、9测试和原48B独立审核通过；仅当前机器原生x64自有main/worker的TEB/身份/GS58关系成立。不是游戏线程/TLS/池或回放许可，未晋级完整Avatar。 | [实际构建、原件、失败及后继](docs/CLIENT_72_D02_OWNED_TEB_ABI_20261110.md) |
 
 ### 6.3 SDK、补丁、观察与运维前置
 
@@ -243,6 +244,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | R2-CONFIGSYNC-EARLY-BRIDGE（自然必要前缀13观察步骤） | 已完成 | 新ready下90秒/45monitor、9读1450B、完整原代码绑定及16项主线纯重放通过；自然cn-env-0/两reference等值已取，用户正常页/退出及stock/保护恢复通过。仅前缀，不代验完整payload/NUL、原Marshal/SDK writer/Init/route/认证。 | [实际事件、恢复及准确未验范围](docs/CLIENT_72_SDK_CONFIG_PREFIX_OBSERVER.md#新epoch自然13正常退出与stock恢复) |
 | R2-CONFIGSYNC-EARLY-BRIDGE（writer窗口与整轮后继观察规格步骤） | 已完成 | 原5422B完整writer、21项静态投影与12项预算纯模型、主线8项审核通过；首次任意P0/P2唯一尝试，参数16读/37B、绑定17读/6409B、外采成功30读/10415B和拒绝1读/256B分别固定。仅规格；八点观察器未实现/构建/实机，unwind、自然Marshal/writer/Init/route及父项未验。 | [来源、修正、主线验收及未实施边界](docs/CLIENT_72_SDK_PREFIX_NATURAL_SUCCESSOR.md) |
 | R2-CONFIGSYNC-EARLY-BRIDGE、R2-ROUTE-CONFIG-SELECT（八点实施审核步骤） | 已完成 | 26项冻结材料审核与主线第三同字节，明确P0实际14B→C3、新loader窗口分块、首次尝试、writer-open、真实mask及三账本；旧原文/报告保持。已交Sol xhigh实施，实际产物/owned/collector/自然执行、unwind和业务均待验。 | [实施合同、覆盖纠正与出口](docs/CLIENT_72_D02_B_SDK_AUDIT_20261110.md) |
+| R2-CONFIGSYNC-EARLY-BRIDGE、R2-ROUTE-CONFIG-SELECT（八点观察器离线产物步骤） | 已完成 | 33源/105pin、独立DLL/fixture构建、规定两fresh owned及主线第三、16个near/far实际emitter、17测试、51导出/256B DATA及真实隔离文件门禁通过；新helper实际CheckOnly匹配保护/输入且进程端口空。自然现场尚待新ready，unwind/完整Marshal/writer/Init/route及业务不由owned通过代验。 | [产物SHA、accepted、复现与现场出口](docs/CLIENT_72_SDK_CONFIG_STAGE_OBSERVER.md) |
 | F04-LOADER-CLEAN 独立透明入口 | 已完成 | 零hook独立透明入口、实际stock/SDK绑定、正常登录页/退出恢复已验；key/trust/route自然链和完整校验另验。 | [计划/产物/真实范围](docs/CLIENT_72_CLEAN_LOADER.md) |
 | R2-KEY-LOAD-OBSERVE 固定只读观察 | 已完成 | 窄key入口实际安装、精确代码/转发/回调绑定、正常页及退出恢复已验；未证明自然key调用、route或完整校验。 | [实际结果、来源与边界](docs/CLIENT_72_KEY_LOADER_OBSERVATION.md) |
 

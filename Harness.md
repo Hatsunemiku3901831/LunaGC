@@ -1,4 +1,8 @@
-2026-11-10恢复执行：用户明确解除上一轮暂停，当前派工与验收以[Project](Project.md)和[本批记录](docs/CLIENT_72_D02_RESUME_20261110.md)为准。新盘点为`local/migration72/d02-resume-20261110/initial-inventory.private.json`（SHA `117cb1d4…2032fe`），五stock/carrier/13保护、缺席及portable/config均匹配，相关进程/固定监听0；Project原文先备份。A/B显式Sol max，C Terra xhigh做已批Promote/Curve的真实Java加载准备，构建/现场/提交归主线。旧ready全部消费，旧暂停段落仅作证据历史。
+2026-11-10恢复执行：用户明确解除上一轮暂停，当前派工与验收以[Project](Project.md)和[本批记录](docs/CLIENT_72_D02_RESUME_20261110.md)为准。新盘点为`local/migration72/d02-resume-20261110/initial-inventory.private.json`（SHA `117cb1d4…2032fe`），五stock/carrier/13保护、缺席及portable/config均匹配，相关进程/固定监听0；Project原文先备份。A/B显式Sol max，明确实现转Sol xhigh、C Terra xhigh；构建/现场/提交归主线。旧ready全部消费，旧暂停段落仅作证据历史。
+
+2026-11-10 八点SDK离线产物验收：最终source-main4的33源/105pin，实际release/locked/offline DLL与fixture、owned-main4两fresh及主线独立第三通过；16 near/far实际emitter、17 Python、51导出/256B DATA及真实隔离文件布局门禁成立。新accepted SHA`77296f80…57abd`，主线11项proof`b-implementation/main-owned-review.private.json` SHA`121709c4…50690`。本轮helper实际CheckOnly退出0、五stock/carrier/13保护/配置匹配、相关进程端口空；尚无新ready/安装/自然观察。详[源码、真实原件及边界](docs/CLIENT_72_SDK_CONFIG_STAGE_OBSERVER.md)；P5/P6/P7/void及完整Marshal/Init/route/unwind不因owned通过晋级。
+
+2026-11-10 owned线程ABI实际验收：已有MSVC/SDK独立cl退出0、四header真实showIncludes通过；v3恰两fresh/六class0原48B与SDK TEB/身份/GS58/清理一致，9测试及独立解码审核通过，`a-tls-preparation/owned-teb/implementation-20261110-sol-xhigh-v3/main-independent-review.private.json` SHA`88d59287…ebd46`。v2中文include解析失败保留且没有执行probe；最终EXE SHA`1171a329…1a008`。详[精确命令、来源和范围](docs/CLIENT_72_D02_OWNED_TEB_ABI_20261110.md)。游戏primary/TLS/池仍未知，只读collector进入实现，live/replay未批准。
 
 2026-11-10 E-01出生Promote真实加载：四Python/两JUnit通过，主线JDK17/离线单worker实际Gradle16秒exit0，两个复合键及原零槽→onLoad过滤成立；100Curve为新上下文前置复验。7134行class-init无DB/服务/脚本/插件初始化，13保护/输入/JAR保持。实际根`local/migration72/d02-resume-20261110/c/main-java-20261109T235105Z-2990f173/`，证明SHA`fb80672c…a145c`；两轮构建/隔离bootstrap失败保留。[精确命令、结果和缺曲线限制](docs/CLIENT_72_D02_C_RESOURCE_LOAD_20261110.md)。未loadAll/完整资源/保存/部署或客户端验收。
 
