@@ -243,6 +243,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | D02-R2/SERVICE-TRIGGER-LOADER | 阻塞 | 源码包6纯检查已过，实际组合build退出101（u64→usize）；后继子代理遭平台安全门禁。按用户最新指示只保留source epoch/20源快照/失败日志，未来统一Daybreak处理，不重试或换模型。DLL/组合owned/自然事件未验，A/C继续。 | [Daybreak队列及具体恢复动作](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md) |
 | F-03d3s2/SCENE-ROW-LIFECYCLE（模板关联子出口） | 已完成 | 唯一585B/120条下游将原row存entity.field138373/+140；不消费row+50/+58。16pin/30静态断言主线第三同SHA通过。条件容器调用非具名Remove，首未闭actual slot114、组件/拆除/通知及MPLevel完整配置不批准。 | [原窗、准确排除与后继](docs/CLIENT_72_D02_SCENE_ROW_LIFECYCLE_20261110B.md) |
 | F-03d3s2/SCENE-SLOT114-FROZEN-AUDIT | 已完成 | 7pin/17静态断言主线第三5325B与两fresh同SHA；冻结36读全不含klass+460的8B，也没有factory实际返回实体→klass来源。只关闭准确缺输入审计；1483df040仍metadata候选，不读候选body。后继同调用frame及3读224B需合法factory触发/独立合同，Scene父项未完成。 | [缺口及最小来源链](docs/CLIENT_72_D02_SCENE_SLOT114_20261111.md) |
+| F-03d3s2/SCENE-TEMPLATE-PREDECESSOR | 进行中 | 复用准确365B wrapper与原148d8e3f0直接边，Sol max只核关联前单窗职责/参数/引用替换边界。8192B/2048条上限、五hash/AOT/pdata先验，不称旧模板释放或完整实体拆除，不替代actual slot114/MPLevel/通知。 | [原调用后继计划](docs/CLIENT_72_D02_SCENE_TEMPLATE_PREDECESSOR_20261111.md) |
 
 
 ### 6.3 SDK、补丁、观察与运维前置
@@ -366,7 +367,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01/R3-PROUD-PARSER-CONTRACT | 已完成 | 原parser/derived/base ctor三窗8412B/1956条及原child E9、+20/+40来源已核；主线第三91234B同两fresh，6测试。child未取/未执行、actual mode与factory产物和行span未闭，非完整parser成功。 | [表示来源和最小输入](docs/CLIENT_72_D02_PROUD_PARSER_CONTRACT_20261111.md) |
 | E-01/R3-PROUD-MODE-FACTORY-SOURCE | 已完成 | 原63831 slot9 definition→529228/AOT已静态绑定，两mode原窗345B/90条、typed Int32集合/六dispatch及初始化输入合同已闭；6门禁/主线第三41737B同两fresh。自然mode/vtable/MethodInfo、factory/parser执行仍未验，不置+20/+40。 | [静态合同和下一输入](docs/CLIENT_72_D02_PROUD_MODE_FACTORY_20261111.md) |
 | E-01/R3-PROUD-FACTORY-WINDOW | 进行中 | 根冻结准确529228/149f0bb40与原slot9间接caller，既有Sol xhigh执行单窗≤1024B/256条机械取证。五hash/typed/AOT/唯一pdata先验，不读子callee或推断自然factory成功。 | [窗口合同](docs/CLIENT_72_D02_PROUD_FACTORY_WINDOW_20261111.md) |
-| E-01/R3-PROUD-ROW-READER | 进行中 | Sol max只核准确14bb5b0b0(String,int32,int32)原窗及读者/行范围合同；与mode/factory独立。禁止whole payload当row0、猜索引格式或扩callee树。 | [有界计划](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md) |
+| E-01/R3-PROUD-ROW-READER | 已完成 | 原1438B/309条、三个backend分支参数及typed缓存已核；6测试/主线第三85断言31839B同两fresh。两个U32用途按分支分开，不统一offset/size；+1c赋值不证明有效row span，400190 producer及真实索引仍未闭。 | [准确合同与下一候选](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md) |
 
 
 ## 7. 旧任务归并与后续范围

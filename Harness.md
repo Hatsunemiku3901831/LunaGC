@@ -1,3 +1,5 @@
+2026-11-11 `R3-PROUD-ROW-READER`：主线第三31839B/85断言同两fresh SHA`90c39207…2aeee`及6测试通过；1438B/309条说明两个U32用途按backend分开，42005+1c写不代真实row span。400190 index producer未闭，仅唯一.cctor候选待另批。max已转Scene predecessor有界续项。[来源与限制](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md)。
+
 2026-11-11 `R3-PROUD-MODE-FACTORY-SOURCE`：6门禁/主线第三41737B同SHA`b5cbd9f0…ad987`，63831 slot9原definition→529228/AOT与345B/90条mode原窗、typed集合/dispatch初始化输入账已核；自然mode/vtable/MethodInfo及factory/parser仍未验。max转AVX原6B规格，单factory窗交既有Sol xhigh。[已验范围](docs/CLIENT_72_D02_PROUD_MODE_FACTORY_20261111.md)。
 
 2026-11-11 `NATURAL-SERVICE-TRIGGER`已有静态出口主审：37断言/7测试，第三22嵌套原件与两fresh同字节，review SHA`c79bdc20…ea52f`。原19B/三桥1181B/51B名字身份成立，不等于自然事件/route/认证；只整理既有静态成果，未重试Daybreak loader。[复现和未验](docs/CLIENT_72_SDK_NATURAL_SERVICE_TRIGGER_20261111.md)。
