@@ -1,5 +1,7 @@
 2026-11-11 定向GitHub增量主审：AB8输入/16原件SHA核对通过，历史B派工计划按原5407B/SHA恢复快照，旧manifest不改，proof`63688e2e…1e259f`；bounded partial无新集成。Scene README优先的两固定World JSON/tree/blob/本地三方对照主线第三同SHA`330be5e2…3765c1`；仅外部样本，分组/目标命中/生命周期未验。两包请求错误、budget偏差和覆盖缺口保留。[AB](docs/CLIENT_72_D02_GITHUB_INCREMENT_20261110B.md)、[Scene](docs/CLIENT_72_D02_SCENE_GITHUB_INCREMENT_20261111.md)。
 
+2026-11-11 `POSTREQUEST-ENTRY` 主线第三95静态断言/5测试同SHA`8eb14997…a5dfa5`，310B/16B搬移及168B String首尝试合同；`NATIVE-ACCOUNT-LOCAL-ROUTE` 第三7原件/5测试同SHA`a68dbaa1…87bee`，共用3413E0/21B/8B观察合同。两者均非owned或自然业务，service/mode/loginUrl未知、自然route批准0项。[托管入口](docs/CLIENT_72_SDK_POSTREQUEST_ENTRY_20261111.md)、[服务选择](docs/CLIENT_72_SDK_NATIVE_ACCOUNT_LOCAL_ROUTE_20261111.md)。
+
 2026-11-11 `E-01/R3-OLD-PHASE6-PROUD` 与 `R3-OLD-DEPOT-FIELDS`：20旧pin/四payload/16同窗opcode第三20547B同SHA；四行原whole/query/97 getter第三1121330B同SHA`8c06c130…f3dfd5`，5测试通过。四样本不能代全121，presence/group/level/门槛未批。[首缺](docs/CLIENT_72_D02_OLD_PHASE6_PROUD_20261111.md)、[原字段CLI](docs/CLIENT_72_D02_OLD_DEPOT_FIELDS_20261111.md)。
 
 2026-11-11 `R3-OLD-AVATAR/ITEM-COVERAGE`：主线11测试（5+6）及两个第四CLI通过，报告各同三fresh SHA`ca9b24ed…246ea` / `faf0f7a4…7018`。121角色/当前Depot/389保存Skill键存在，762Talent/410Proud与phase6未闭；Item活动10727/9128ID、inactive1527保留，239targetWeapon键、9120候选ID命中、224001–224008未知。只核键/记录的span和固定候选tree/blob，不验目标完整语义/资源ready或恢复。[角色](docs/CLIENT_72_D02_OLD_AVATAR_COVERAGE_20261111.md)、[物品](docs/CLIENT_72_D02_OLD_ITEM_COVERAGE_20261111.md)。
