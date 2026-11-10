@@ -2,7 +2,7 @@
 
 本批消费最新Project与已验的自然六表、七字段bridge、HP/growth、critical、装备/Item/Gadget、Promote及真实Java专题。主线本轮 `fddc0e0` 已完成两个出生Promote与100条AvatarCurve的真实加载，不重跑该验收、whole、HP/critical、装备或303。这里只收敛当前新号出生、旧号恢复、SceneTeam与实体实际需要的字段。
 
-**最新出口：七字段真实Java、两出生十字段同源合并、Depot talents直接职责/投影/五项真实Java，以及两出生AvatarStorage局部保存/冷绑定三项真实Mongo均已验。** [局部保存](CLIENT_72_D02_AVATAR_LOCAL_SAVE_JAVA_20261110.md)只覆盖未装备AvatarStorage；正向Inventory和完整资源仍未闭。 [talents后继](CLIENT_72_D02_DEPOT_TALENTS_SUCCESSOR_20261110.md)以唯一5901B typed iterator与真实field-default常量闭合职责；[实际Java](CLIENT_72_D02_DEPOT_TALENTS_JAVA_20261110.md)两出生真实构造返回、仅删talents的两例准确止529。不能由此批准proud规范化、空ability、完整资源或原生Avatar；下文首次审查排除项保留为历史。
+**最新出口：七字段真实Java、两出生十字段同源合并、Depot talents直接职责/投影/五项真实Java，以及两出生AvatarStorage局部保存/冷绑定三项真实Mongo均已验。** [局部保存](CLIENT_72_D02_AVATAR_LOCAL_SAVE_JAVA_20261110.md)覆盖未装备AvatarStorage；后续[默认装备真实保存/局部恢复](CLIENT_72_D02_EQUIPPED_LOCAL_RESTORE_20261110.md)三项及13项原件审核已验，两性自然默认装备各两次冷绑定、缺定义原BSON保留及恢复成立。两者均不覆盖完整Player、World/Entity或完整资源就绪。 [talents后继](CLIENT_72_D02_DEPOT_TALENTS_SUCCESSOR_20261110.md)以唯一5901B typed iterator与真实field-default常量闭合职责；[实际Java](CLIENT_72_D02_DEPOT_TALENTS_JAVA_20261110.md)两出生真实构造返回、仅删talents的两例准确止529。不能由此批准proud规范化、空ability、完整资源或原生Avatar；下文首次审查排除项保留为历史。
 
 ## 已有独立目标语义与真实Java范围
 
