@@ -10,6 +10,16 @@
 
 本轮专用helper已静态审查且主线实际 `-CheckOnly` 退出0；`helper-preparation/live1-prepared.private.json`记录五stock/carrier/13保护/portable/config与当前进程、固定端口检查，未安装或启动。计划 SHA `f7b8ca2c77d8085e45772fce715ecb3c43a97919746278ce418ac291631ce193`绑定新runId、产物/accepted、备份及恢复。新实时ready、实际90秒自然观察和正常退出后的stock恢复仍待执行。下文源码开发期间的“待主线”是阶段历史，以本节实际出口为准；unwind、自然Marshal/writer/Init/route及父项未知保留。
 
+## 本轮自然阶段观察与恢复
+
+本轮在新的实时ready后使用专用计划实际启动；90秒/45次metadata，observer退出0，外部collector严格30请求10415B、单读最大512B。原始256B DATA前后逐字节相同；phase5、event2、installed_mask255、facts1023、env0、failure/win32_error0。完整两EXE/五SDK原窗、47转发、callback与八个实际trampoline/zero-tail均绑定本轮模块与固定来源；进程创建、image/模块身份、末尾alive和CloseHandle一次通过。
+
+已验事实：同一ordinary配置经原bridge/native调用，writer gate到达、parser接受、env分支及store完成且值cn-env-0；P5 app-key和P6 URL分支到达，P7为正常epilogue入口，随后匹配owner/bridge的P1证明native调用返回。**P5/P6不证明各自setter完成，P7不是RET，void返回不是业务成功**。未外读payload/reference；完整payload、Marshal完整内容、自然Init/route/key/信任/认证、异常unwind继续未验。后继只追这些尚未回答的必要合同，不重复prefix/同阶段或直接增加预算。
+
+用户确认SDK页正常、正常退出、无报错。专用恢复helper核本次journal/backup/proxy/alias和无目标进程后恢复stock并删除本轮alias；主线独立复核五stock、SDK carrier、13保护/缺席、portable/config以及相关进程和固定TCP/UDP均通过。原数据库/运行数据保留。GS未部署，准确原因是R1完整Avatar/Scene及R3完整必要资源/入场保存和R4尚未闭合；这轮只是临时观察DLL的受控安装与恢复。
+
+原件位于本批 `b-implementation/helper-preparation/`。主线 `main-live1-acceptance.private.json` 的15项审核通过，SHA `9ca7be02728749d5e8ac10c5cd099318b720e79348680585aab2b32c1eb76f33`；`main-live1-replay.private.json`仅消费同次30读原字节，不是新采集。独立 `post-sdk-stage-live1-inventory.private.json` SHA `7bc1939bd8463a3c5a41832773510536027001fa10d3e604790a2cca11edab62`。本轮ready已消费、PID/VA均不得作为下一轮输入。离线实现阶段的待验段落仅保留历史。
+
 ## 实现和固定来源
 
 新增 example `sdk72_config_stage_proxy`，复用冻结 core、47 转发、ilhook 2.3.0 与 mover。新 `loader.rs` 使用两 EXE 窗及五 SDK 窗的独立切片合同，writer 连续 5422B 以 10×512+302 分块。未调用旧 loader 的 `wait_loaded/activate`，未主动装载 SDK、创建 worker、调用目标函数或安装 route/key 点。旧 `sdk72_config_inner`、`sdk72_key_input_inner` 仅为明确 dormant EAT 项。

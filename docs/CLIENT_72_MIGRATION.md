@@ -1,3 +1,5 @@
+2026-11-10阶段增量：SDK八点自然90秒与15项原件审核通过，只证明本轮同配置writer/parser/env状态和native返回；完整payload/自然Init/route/auth仍未知。owned线程ABI与同源未装备武器Mongo库存恢复通过，完整Avatar/Scene/资源和D-02仍未验。见[SDK实际](CLIENT_72_SDK_CONFIG_STAGE_OBSERVER.md)、[库存实际](CLIENT_72_D02_ITEM_SAVE_JAVA_20261110.md)。
+
 2026-11-10恢复执行：用户已明确解除旧暂停并授权持续推进D-02、必要受控取证及前置充分后的portable隔离部署。最新HEAD/固定输入/配置/保护与现场已重新核对；按[Project](../Project.md)及[本批路线](CLIENT_72_D02_RESUME_20261110.md)复用已验成果继续后继。完整Avatar、SDK自然writer/route、最小资源及六项客户端验收仍未完成，下方暂停与现场信息均为历史。
 
 # 7.2 迁移现状与本地运行基线

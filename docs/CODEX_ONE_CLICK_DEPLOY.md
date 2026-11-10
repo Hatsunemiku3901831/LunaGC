@@ -1,3 +1,5 @@
+2026-11-10实际安装范围：八点SDK研究DLL独立构建/owned/真实文件门禁后，在新ready下临时安装观察90秒，正常退出并恢复stock，五输入/保护及进程TCPUDP复核通过。不是R5服务部署；完整Avatar/Scene、必要资源及R4前置未齐，GS仍不启动。见[本轮观察及恢复](CLIENT_72_SDK_CONFIG_STAGE_OBSERVER.md#本轮自然阶段观察与恢复)。
+
 2026-11-10恢复执行：用户最新指令明确解除暂停，允许必要实现/受控取证及前置充分后的Windows portable隔离部署。起始重新核验五stock/carrier/13保护、配置/GAME_PATH及进程/固定端口，全部匹配且无相关监听；原数据保留。当前R4必要合同未齐，尚未启动或部署GS；按[Project](../Project.md)和[本批路线](CLIENT_72_D02_RESUME_20261110.md)推进，不能套用下方历史ready/PID或以改版本放行。
 
 # 给 Codex 的 Windows 一键部署与排障手册
