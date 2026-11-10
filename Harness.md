@@ -1,4 +1,8 @@
+2026-11-11 `GC-DEFAULT-STOCK-CAPTURE`：新ready45时点/一次采样、42稳定span/84读1648B；I6/T0=524288→原AVX table01fdfb94，Default非零opaque不读对象。主线纯重建/PI/TBI/关闭/107源快照及退出stock/进程端口通过，review SHA`55f26e40…ffd5b0`。用户只确认已退出；原helper/第二返回/完整Avatar未验。[原件、退出及后继](docs/CLIENT_72_D02_GC_DEFAULT_STOCK_CAPTURE_20261111.md)。
+
 2026-11-11 定向GitHub增量主审：AB8输入/16原件SHA核对通过，历史B派工计划按原5407B/SHA恢复快照，旧manifest不改，proof`63688e2e…1e259f`；bounded partial无新集成。Scene README优先的两固定World JSON/tree/blob/本地三方对照主线第三同SHA`330be5e2…3765c1`；仅外部样本，分组/目标命中/生命周期未验。两包请求错误、budget偏差和覆盖缺口保留。[AB](docs/CLIENT_72_D02_GITHUB_INCREMENT_20261110B.md)、[Scene](docs/CLIENT_72_D02_SCENE_GITHUB_INCREMENT_20261111.md)。
+
+2026-11-11 `GC-DEFAULT-OFFLINE/STOCK-PREPARATION`：100测试/第三adapter同SHA`e6ecfe17…090e9`；15人工flow/4 PS parser第三同SHA`ec2291cb…51212`；107源seal/actualCheckOnly19文件及进程固定监听空通过，proof`37515ed1…2a8e7`。新ready未取，CPU/写未授。[离线](docs/CLIENT_72_D02_GC_DEFAULT_INPUTS_20261111.md)、[实机准备](docs/CLIENT_72_D02_GC_DEFAULT_STOCK_PREPARATION_20261111.md)。
 
 2026-11-11 `SERVICE-TRIGGER-LOADER`：首build101/E0308，后续Sol xhigh turn触平台安全门禁；用户明确未来统一Daybreak处理。本轮只记录epoch/20源快照/日志，不重试或换模型；新DLL/组合owned未验，A/C继续。[队列与恢复](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)。
 

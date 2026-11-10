@@ -122,7 +122,7 @@ class SampleStop(Exception):
 
 
 def sample_primary(backend, epoch, identity, *, now=card.utc, include_pool=False, include_allocator_inputs=False,
-                   include_ctor_inputs=False, include_second_allocator_inputs=False):
+                   include_ctor_inputs=False, include_second_allocator_inputs=False, include_gc_default_inputs=False):
     """Use only the original handles. The caller supplies full fresh identity.
 
 identity(hProcess, pid) -> {pid, image, processCreationTime, module:{name,path,base,size}}.
@@ -156,8 +156,11 @@ does not launch, open a process/thread, choose a thread, or authorize a live run
 
     try:
         _validate_entry(primary, epoch, identity, now, include_pool, include_allocator_inputs, include_ctor_inputs,
-                        include_second_allocator_inputs)
-        if include_second_allocator_inputs:
+                        include_second_allocator_inputs, include_gc_default_inputs)
+        if include_gc_default_inputs:
+            from . import client72_d02_gc_default_inputs as selected
+            result.update(profile=selected.PROFILE, naturalPoolAllocatorThreadObserved=False)
+        elif include_second_allocator_inputs:
             from . import client72_d02_second_allocator_inputs as selected
             result.update(profile=selected.PROFILE, naturalPoolAllocatorThreadObserved=False)
         elif include_ctor_inputs:
@@ -235,10 +238,12 @@ does not launch, open a process/thread, choose a thread, or authorize a live run
 
 
 def _validate_entry(primary, epoch, identity, now, include_pool, include_allocator_inputs, include_ctor_inputs,
-                    include_second_allocator_inputs):
+                    include_second_allocator_inputs, include_gc_default_inputs):
     if any(type(value) is not bool for value in
-           (include_pool, include_allocator_inputs, include_ctor_inputs, include_second_allocator_inputs)):
+           (include_pool, include_allocator_inputs, include_ctor_inputs, include_second_allocator_inputs, include_gc_default_inputs)):
         raise ValueError("Explicit booleans must select a fixed TLS profile")
+    if include_gc_default_inputs and not (include_pool and include_allocator_inputs and include_ctor_inputs and include_second_allocator_inputs):
+        raise ValueError("GC Default inputs require the combined second allocator profile")
     if include_second_allocator_inputs and not (include_pool and include_allocator_inputs and include_ctor_inputs):
         raise ValueError("Second allocator inputs require the combined ctor profile")
     if include_ctor_inputs and not (include_pool and include_allocator_inputs):
@@ -265,13 +270,16 @@ def _validate_entry(primary, epoch, identity, now, include_pool, include_allocat
         source_names.append("tools/client72_d02_avatar_ctor_inputs.py")
     if include_second_allocator_inputs:
         source_names.append("tools/client72_d02_second_allocator_inputs.py")
+    if include_gc_default_inputs:
+        source_names.append("tools/client72_d02_gc_default_inputs.py")
     expected_pins = {name: card.digest((card.ROOT / name).read_bytes()) for name in source_names}
     if epoch["implementationPins"] != expected_pins:
         raise ValueError("Fresh helper implementation pins differ")
     module = epoch["module"]
+    required_end = 0x6d19144 if include_gc_default_inputs else 0x5eef084
     if (module["name"].casefold() != "yuanshen.exe" or type(module["base"]) is not int
-            or type(module["size"]) is not int or not 0 < module["base"] <= card.U64 - 0x5eef084
-            or module["size"] < 0x5eef084
+            or type(module["size"]) is not int or not 0 < module["base"] <= card.U64 - required_end
+            or module["size"] < required_end
             or ntpath.normcase(ntpath.normpath(module["path"])) != ntpath.normcase(ntpath.normpath(primary["target"]))):
         raise ValueError("Epoch main module identity differs")
 
