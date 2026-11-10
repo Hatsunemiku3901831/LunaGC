@@ -262,6 +262,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3s2/SCENE-ROW-LIFECYCLE（模板关联子出口） | 已完成 | 唯一585B/120条下游将原row存entity.field138373/+140；不消费row+50/+58。16pin/30静态断言主线第三同SHA通过。条件容器调用非具名Remove，首未闭actual slot114、组件/拆除/通知及MPLevel完整配置不批准。 | [原窗、准确排除与后继](docs/CLIENT_72_D02_SCENE_ROW_LIFECYCLE_20261110B.md) |
 | F-03d3s2/SCENE-SLOT114-FROZEN-AUDIT | 已完成 | 7pin/17静态断言主线第三5325B与两fresh同SHA；冻结36读全不含klass+460的8B，也没有factory实际返回实体→klass来源。只关闭准确缺输入审计；1483df040仍metadata候选，不读候选body。后继同调用frame及3读224B需合法factory触发/独立合同，Scene父项未完成。 | [缺口及最小来源链](docs/CLIENT_72_D02_SCENE_SLOT114_20261111.md) |
 | F-03d3s2/SCENE-TEMPLATE-PREDECESSOR | 已完成 | 原592B/119条证明普通路径旧模板引用正常清空后再由wrapper关联新引用；主线第三46断言同两fresh及6测试。不证明销毁/组件拆除、helper所有权或动态slot114，完整Scene仍未验。 | [原引用生命周期](docs/CLIENT_72_D02_SCENE_TEMPLATE_PREDECESSOR_20261111.md) |
+| F-03d3s2/SCENE-MPLEVEL-GROUP-SOURCE | 进行中 | 独立Sol max只追type70954/field350252原分组输入的producer来源，复用已验注册及fixed GitHub，先审metadata/signature/既存原件；不重复slot114缺输入审计。仅交唯一有来源source请求或准确外部缺输入，不猜MPLevel路径/空能力。 | 独有专题/private，原件只读；新PE/现场需root另批，成熟即释放max |
 
 
 ### 6.3 SDK、补丁、观察与运维前置
@@ -410,7 +411,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01/R3-PROUD-DERIVED-FILE-CONTRACT | 已完成 | root第三576784B同双fresh，36源/1778条/83锚点/22presence及21样本call；rawH与P分立，条件142→318后必经17208.m130225，同reader返回后还需4B，不能反推nested消费12B/终点334。 | [准确消费/未知/唯一后继](docs/CLIENT_72_D02_PROUD_DERIVED_FILE_CONTRACT_20261111.md) |
 | E-01/R3-PROUD-NATIVE-17208-ARRAY-WINDOW | 已完成 | 新两QWORD/unique pdata得完整329B/90条；双fresh八件相同，root第三17885B及5门禁通过。仅source，不代文件消费/实际对象；无xdata/邻callee/CPU。 | [准确数组原窗](docs/CLIENT_72_D02_PROUD_NATIVE_17208_ARRAY_WINDOW_20261111.md) |
 | E-01/R3-PROUD-NATIVE-17208-ARRAY-CONTRACT | 已完成 | root第三96575B同双fresh，90条/65锚点；同key318→322、count4、同reader首元素及分配/Empty/循环边界分立。nested返回/最终row未知，不反推元素宽度。 | [准确合同及唯一后继](docs/CLIENT_72_D02_PROUD_NATIVE_17208_ARRAY_CONTRACT_20261111.md) |
-| E-01/R3-PROUD-NATIVE-17208-ELEMENT-WINDOW | 进行中 | root采纳唯一147e917c0/m130222实例元素source：新核五输入/329B caller/typed、新两QWORD/unique pdata后完整body≤1024B/256条，双fresh/root第三。旧317B摘要只提示，无xdata/邻callee/CPU。 | Terra xhigh独有17208-element工具/test/doc/private；上游冻结，root统一验收/Git |
+| E-01/R3-PROUD-NATIVE-17208-ELEMENT-WINDOW | 已完成 | 两fresh八件与完整目录唯一pdata，317B/86条；root5门禁/15137B机械audit及1719B独立第三同双fresh。旧摘要未作门禁，无CPU/helper新取。 | [准确元素原窗与第三](docs/CLIENT_72_D02_PROUD_NATIVE_17208_ELEMENT_WINDOW_20261111.md) |
+| E-01/R3-PROUD-NATIVE-17208-ELEMENT-CONTRACT | 进行中 | Sol max仅审既存317B完整reader原体、字段输入/默认与四元素条件cursor，继续同key到首未闭文件边；不猜58209存储/alias，不反推334。规格成熟即交Sol xhigh/Terra，任何新source另批。 | 独有专题/private；上游/共享工具冻结，root第三/集成 |
 | E-01/R3-PROUD-ROW-READER | 已完成 | 原1438B/309条、三个backend分支参数及typed缓存已核；6测试/主线第三85断言31839B同两fresh。两个U32用途按分支分开，不统一offset/size；+1c赋值不证明有效row span，400190 producer及真实索引仍未闭。 | [准确合同与下一候选](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md) |
 
 
