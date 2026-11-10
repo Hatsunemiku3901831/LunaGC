@@ -1,6 +1,6 @@
 # E-01d1 / R3-AVATAR-LOCAL-SAVE：出生 Avatar 局部保存与冷绑定准备
 
-本卡已准备三个 JUnit 和独立 Mongo driver 草稿，**未编译、未运行 JVM/Mongo，尚无保存或冷恢复通过结论**。实际运行、原件审核与本地提交由主线串行完成。父项 E-01d1/D02-R3 仍进行中；`completeAvatar=false`、`resourceReady=false`、`d02Complete=false`。复用已验 C 固定 GitHub/AstaPS 检索与来源，没有新网络检索或 clone。
+子代理完成三个 JUnit 和独立 Mongo driver 准备后，主线已实际运行三项并独立审核通过；准确范围见下方实际验收。父项 E-01d1/D02-R3 仍进行中；`completeAvatar=false`、`resourceReady=false`、`d02Complete=false`。复用已验 C 固定 GitHub/AstaPS 检索与来源，没有新网络检索或 clone。
 
 ## 合同更正与真实入口
 
@@ -68,8 +68,20 @@ init 会向 forked Test JVM 设置上表三属性、`d02.avatar.save.evidence`�
 
 首个 loader、Crypto公开加载、Player构造、Morphia、目标状态或命令断言失败保留原栈和原件，不补数据、raw成功Avatar、loadedAll、空proud/ability、manager或发送返回值；修正有来源的准备错误后另建新 run，原件不覆盖。`awaitIdle` 本身不等于保存成功，必须同时核队列失败、实际命令、原文档和 XML。只有测试/私有离线工具/文档变化，无需重启GS。
 
-## 本卡实际验证与未完成项
+## 子代理准备阶段的验证与未完成项
 
-已执行的仅为只读源码/输入审核、runner 文本准备和20项静态检查（包括固定 SHA、旧loader同源、三案例范围与私有Python AST）。这20项不是JUnit数量，也不是运行时结果。静态证明 `preparation-review.private.json` 记录源码/输入完整 SHA 和 `javaRun=false/mongoRun=false`。读取时三个错误候选路径均已按真实 `rg --files` 更正并记入私有证明，没有以缺路径推断实现缺失。
+交付时仅执行只读源码/输入审核、runner 文本准备和20项静态检查（包括固定 SHA、旧loader同源、三案例范围与私有Python AST）。这20项不是JUnit数量，也不是运行时结果。静态证明 `preparation-review.private.json` 记录源码/输入完整 SHA 和 `javaRun=false/mongoRun=false`。读取时三个错误候选路径均已按真实 `rg --files` 更正并记入私有证明，没有以缺路径推断实现缺失。
 
-尚未执行编译、Java、Mongo、服务、网络、客户端、native/PE/API或Git；没有本地提交。下一可执行任务是主线审核新源/driver与当前保护盘点后，串行运行三项并独立核原件。即使局部通过，也不覆盖正向 Inventory/初始武器/装备、完整Player、Guard并发/版本防护、proud/ability、场景、客户端保存/退出重登或D-02。
+交付时尚未执行编译、Java、Mongo、服务、网络、客户端、native/PE/API或Git；随后主线完成如下真实运行。即使局部通过，也不覆盖正向 Inventory/初始武器/装备、完整Player、Guard并发/版本防护、proud/ability、场景、客户端保存/退出重登或D-02。
+
+## 主线实际运行与独立验收
+
+主线在AB首次299/0RPM轮正常退出核验后重新解析GAME_PATH、完整重核五stock/载体/13保护、portable14/缺席、进程与固定监听空；新盘点SHA `26691bcae15f152838066ea5a483573fc17e9c133b2725246c199edda3b0b745`。没有借用旧PID/ready或启动原数据库。
+
+便携JDK17实际offline/no-daemon/max-workers1，真实compileTestJava/test通过，Gradle24秒/exit0；XML **tests3/failures0/errors0/skipped0**。AS-01两真实出生保存后新Player/定义重载，原objectId、owner和受控字段保持、GUID重绑、逐条既有update且条数仍2；AS-02两个缺定义阶段和AS-03另一UID均零业务写，原BSON不变。公开Crypto/Account/GameSession/Player入口真实执行，未伪manager/Guard/loadedAll、未关闭XOR；无tunnel发送尝试保留在原日志，不代验任何发包。
+
+主线11项独立文件审核重读XML/源、12份实际BSON及三库命令，确认正向2insert+2update、两个负向各2insert后零update，选定字段与原ID保持；11301条class-init无GameServer/HTTP/DispatchServer/ScriptLoader/PluginManager初始化。三个UUID库留在本run的独立dbpath，27027 owned Mongo正常shutdown/exit0、日志完成，结束进程/固定监听空；原JAR、13保护和三个输入保持。
+
+原件 `local/migration72/d02-resume-20261110/c-avatar-local-save/run-20261110T050108Z-765c9beb/`：`main-run.private.json` SHA `10740b5ab497996da07498812fb69ff6f6e3a5ca8d29d281d2750a427f1a9924`；`main-review.private.json` SHA `13dd95ac25364e11a4e0af0d6624f1bb379bb7bb414df74fe2ab428ac4ac3625`。原test/doc准备字节已被并行外部提交42c8a06收录，主线保留该提交，在新HEAD上补实际验收记录，不重写历史。
+
+仅关闭E-01d1/R3-AVATAR-LOCAL-SAVE的局部子项。正向Inventory/默认武器/装备和最终vitals、完整Player/资源/proud/ability、自然revision、场景及客户端退出重登仍未验；resourceReady和D-02保持未完成。仅测试/私有driver/文档变化，没有GS重启或部署。

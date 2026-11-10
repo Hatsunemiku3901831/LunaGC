@@ -2,7 +2,7 @@
 
 本批消费最新Project与已验的自然六表、七字段bridge、HP/growth、critical、装备/Item/Gadget、Promote及真实Java专题。主线本轮 `fddc0e0` 已完成两个出生Promote与100条AvatarCurve的真实加载，不重跑该验收、whole、HP/critical、装备或303。这里只收敛当前新号出生、旧号恢复、SceneTeam与实体实际需要的字段。
 
-**最新出口：七字段真实Java、两出生十字段同源合并，以及Depot talents的直接目标职责/投影/真实Java五项均已验。** [talents后继](CLIENT_72_D02_DEPOT_TALENTS_SUCCESSOR_20261110.md)以唯一5901B typed iterator与真实field-default常量闭合职责；[实际Java](CLIENT_72_D02_DEPOT_TALENTS_JAVA_20261110.md)两出生真实构造返回、仅删talents的两例准确止529。不能由此批准proud规范化、空ability、完整资源或原生Avatar；下文首次审查排除项保留为历史。
+**最新出口：七字段真实Java、两出生十字段同源合并、Depot talents直接职责/投影/五项真实Java，以及两出生AvatarStorage局部保存/冷绑定三项真实Mongo均已验。** [局部保存](CLIENT_72_D02_AVATAR_LOCAL_SAVE_JAVA_20261110.md)只覆盖未装备AvatarStorage；正向Inventory和完整资源仍未闭。 [talents后继](CLIENT_72_D02_DEPOT_TALENTS_SUCCESSOR_20261110.md)以唯一5901B typed iterator与真实field-default常量闭合职责；[实际Java](CLIENT_72_D02_DEPOT_TALENTS_JAVA_20261110.md)两出生真实构造返回、仅删talents的两例准确止529。不能由此批准proud规范化、空ability、完整资源或原生Avatar；下文首次审查排除项保留为历史。
 
 ## 已有独立目标语义与真实Java范围
 
@@ -25,7 +25,7 @@ Item11101当前出生Weapon分支的上述字段均已有可消费合同，不�
 | 精确Java正常/条件路径 | 尚缺的目标语义或引用 | 当前决策 |
 | --- | --- | --- |
 | `Avatar(data)→setSkillDepotData→recalcConstellations→getTalentIdList` | Depot22284/105357/+28→解码ID成员匹配→typed EnhanceDetail Talent=8→current发布已闭；501/701六零、704非零原列表保留 | [五项真实Java及独立审核](CLIENT_72_D02_DEPOT_TALENTS_JAVA_20261110.md)已验，两出生构造返回、单删talents准确NPE529；不造空数组/0号Talent行，非零或保存解锁的Talent/OpenConfig引用仍须另验 |
-| `setSkillDepotData`迭代inherentProudSkillOpens及questProudSkillGroupIds | 原数组/嵌套40302值已得，Java proud职责/对应入口尚未闭；Java onLoad把缺项规范化为空仅是本机行为 | 不用规范化结果批准目标缺省；与talents分别取证，不把全部嵌套叶无条件列P0 |
+| `setSkillDepotData`迭代inherentProudSkillOpens及questProudSkillGroupIds | 已分清inherent为+18/81127、special为+10/40302，typed pair查询已验；group/level身份与提升门槛仍未闭；Java空规范化仅是本机行为 | 不用规范化结果批准目标缺省；与talents分别取证，不把全部嵌套叶无条件列P0 |
 | `getSkillsAndEnergySkill()`同时读取attackModeSkill | 原+68有实际缺flag/逻辑0及其他非零证据，但英文attackModeSkill尚未批准；已有初始化中的角色5还来自+50，不能混同 | 出生字段真实零不授权用Java缺键零绕职责；留准确consumer缺口，不把+50或同值强行映射 |
 | `AvatarData.onLoad→buildEmbryo`；`TeamManager/EntityAvatar.getAbilityControlBlock` | Avatar+ c8字符串、Depot+48字符串已有真实值，但iconName→AbilityEmbryo、skillDepotAbilityGroup→PlayerAbilities的完整目标职责/同源Config/Ability引用未闭 | Java空ability容忍不是目标空许可。Metal仅覆盖武器局部，不替代角色/队伍能力 |
 | 主角`setOwner/changeElement`与旧号保存的当前depot | candSkillDepotIds原数组已得，元素索引/当前选择和保存来源须独立；旧号可能实际用504/704或其他depot | 新号默认与保存depot分开。只验501/701不能宣称全部旧号加载；依主线受控账号实际保存ID收敛，不要求盲转169角色全部玩法 |
