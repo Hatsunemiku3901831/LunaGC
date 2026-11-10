@@ -22,7 +22,8 @@ SOURCE_PINS = {
     OWNED + "main-independent-review.private.json": "88d59287628a883f62a372acfc40e902076455fc27fa4ccbb2e4c37bc80ebd46",
 }
 FIRST_READS, FIRST_BYTES, MAX_READS, MAX_BYTES, MAX_SINGLE = 13, 340, 26, 680, 208
-READ_PROFILES = {"avatar-r1": (13, 340, 26, 680), "avatar-r1-pool": (18, 369, 36, 738)}
+READ_PROFILES = {"avatar-r1": (13, 340, 26, 680), "avatar-r1-pool": (18, 369, 36, 738),
+                 "avatar-r1-pool-head": (28, 622, 56, 1244)}
 U64 = (1 << 64) - 1
 
 

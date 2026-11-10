@@ -121,7 +121,7 @@ class SampleStop(Exception):
     pass
 
 
-def sample_primary(backend, epoch, identity, *, now=card.utc, include_pool=False):
+def sample_primary(backend, epoch, identity, *, now=card.utc, include_pool=False, include_allocator_inputs=False):
     """Use only the original handles. The caller supplies full fresh identity.
 
 identity(hProcess, pid) -> {pid, image, processCreationTime, module:{name,path,base,size}}.
@@ -154,8 +154,11 @@ does not launch, open a process/thread, choose a thread, or authorize a live run
         return record["result"]
 
     try:
-        _validate_entry(primary, epoch, identity, now, include_pool)
-        if include_pool:
+        _validate_entry(primary, epoch, identity, now, include_pool, include_allocator_inputs)
+        if include_allocator_inputs:
+            from . import client72_d02_avatar_block_inputs as selected
+            result.update(profile="avatar-r1-pool-head", naturalPoolAllocatorThreadObserved=False)
+        elif include_pool:
             from . import client72_d02_tls_pool_inputs as selected
             result.update(profile="avatar-r1-pool", naturalPoolAllocatorThreadObserved=False)
         else:
@@ -223,9 +226,11 @@ does not launch, open a process/thread, choose a thread, or authorize a live run
     return result
 
 
-def _validate_entry(primary, epoch, identity, now, include_pool):
-    if type(include_pool) is not bool:
-        raise ValueError("include_pool must select one of the two fixed profiles")
+def _validate_entry(primary, epoch, identity, now, include_pool, include_allocator_inputs):
+    if type(include_pool) is not bool or type(include_allocator_inputs) is not bool:
+        raise ValueError("Explicit booleans must select a fixed TLS profile")
+    if include_allocator_inputs and not include_pool:
+        raise ValueError("Allocator inputs require the combined Pool profile")
     if primary is None or primary["source"] != "launch-primary-thread" or primary["creationFlags"] != 0:
         raise ValueError("Only this normal CreateProcessW primary handle is accepted")
     if not callable(identity) or not callable(now) or not isinstance(epoch["epochId"], str) or not epoch["epochId"]:
@@ -240,6 +245,8 @@ def _validate_entry(primary, epoch, identity, now, include_pool):
     source_names = ["tools/client72_d02_tls_inputs.py", "tools/observe_client72_tls_inputs.py"]
     if include_pool:
         source_names.append("tools/client72_d02_tls_pool_inputs.py")
+    if include_allocator_inputs:
+        source_names.append("tools/client72_d02_avatar_block_inputs.py")
     expected_pins = {name: card.digest((card.ROOT / name).read_bytes()) for name in source_names}
     if epoch["implementationPins"] != expected_pins:
         raise ValueError("Fresh helper implementation pins differ")
