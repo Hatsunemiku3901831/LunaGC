@@ -1,3 +1,5 @@
+2026-11-10 当前恢复执行：用户已明确解除上一轮“收尾后暂停”，持续推进D-02全部实机验收。已验八点/锁内map/stock v2/出生默认装备局部恢复直接复用；当前A核oldFlags8 GC helper，B核准确请求采用，C准备所选旧号依赖，Scene纳入关键路径。新盘点五stock/载体/13保护、portable配置及相关进程/端口通过；原resources差异/数据保留。按[Project](Project.md)与[本批计划](docs/CLIENT_72_D02_RESUME_20261110B.md)执行，下方暂停/现场均为历史，旧ready不复用。
+
 2026-11-10 最新收尾：**当前在途子任务已验收、提交并收尾，现按用户要求暂停，不开启新任务。** stock v2实际88读1820B与退出核验、默认装备三项真实Java/Mongo及13项原件审核通过；完整Avatar/Scene/资源、自然route/认证及D-02六项最终实机仍未完成，未部署GS。没有待用户操作，旧ready不复用。详见[Project](Project.md)、[HANDOFF2](HANDOFF2.md)；下方“当前/继续/恢复”段落均按各历史批次读取，不能自动重启工作。
 
 2026-11-10阶段增量：八点SDK自然观察已验同配置parser/env写入与原生返回，stock已恢复；独立owned线程ABI及出生武器真实Mongo库存恢复已验限定范围。完整Avatar/Scene、自然Init/route及D-02仍未完成，按[Project](Project.md)继续。

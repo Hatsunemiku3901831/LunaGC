@@ -1,10 +1,10 @@
 # 国服 7.2 任务规划与验收
 
-任务证据基线：2026-11-10 / `aa1d132`。仅面向国服 7.2，Windows portable。
+任务证据基线：2026-11-10 / `a38aef7`；本批起点见[恢复执行批次B](docs/CLIENT_72_D02_RESUME_20261110B.md)。仅面向国服 7.2，Windows portable。
 
 ## 当前阶段
 
-**已按用户最新指令完成当前在途子任务的验收、本地提交与收尾，现暂停，不开启新任务；D-02 / F-05 / D02-R6未完成。** 八点SDK同配置阶段、锁内map、stock v2候选输入及正常退出/保护均已验；默认装备三项真实JDK17/Mongo及13项原件审核通过，完成范围已归入第6节。本次采样取得完整head和HashSet身份，实际oldFlags8 helper、自然route采用/认证、完整Avatar/Scene/资源仍未闭。没有GS部署，R4/R5/R6不晋级。当前无待用户实机动作，旧ready全部消费；详细备份、失败边界、提交、证据与条件后继见[HANDOFF2](HANDOFF2.md)。
+**已按用户最新指令恢复持续并行执行，上一轮“收尾后暂停”调度限制解除；D-02 / F-05 / D02-R6仍未完成。** 八点SDK同配置阶段、锁内map、stock v2候选及出生默认装备局部恢复直接复用。当前关键路径为oldFlags=8必经GC helper/完整Avatar、准确SDK请求采用与认证、Scene生命周期，以及选定旧号和必要资源/完整恢复；成熟后进入正式发送、R4汇合、R5 portable隔离部署及R6六项实机。当前没有已准备完毕的用户操作，旧ready全部已消费。技术门禁、未知及缺省语义保持，恢复盘点、包边界与实机插入条件见[本批计划](docs/CLIENT_72_D02_RESUME_20261110B.md)；HANDOFF2的暂停为上一轮历史。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -35,7 +35,7 @@
 
 ## 3. 并行执行路线与派工
 
-本节保留本批恢复执行时的任务ID、范围、模型、依赖和文件归属，已完成前置统一在第6节维护，不重新排队。当前在途已验收并收尾，按用户最新指令暂停；3.2及3.4是恢复后的路线设计，当前不据此发布新任务。批次号和A/B/C仅为调度标签。
+本节保留本批恢复执行时的任务ID、范围、模型、依赖和文件归属，已完成前置统一在第6节维护，不重新排队。当前恢复执行；3.2及3.4按实际已完成缺口推进，3.3列本批唯一写入归属。批次号和A/B/C仅为调度标签。
 
 <a id="d02-parallel"></a>
 
@@ -57,7 +57,7 @@
 | 批次 | 既有任务 / 本批动作 | 并行安排 | 退出条件与推荐模型 |
 | --- | --- | --- | --- |
 | 0 恢复盘点 | 复用R0及全部已验前置，重核HEAD/差异、输入、配置、现场；固定本批各分支来源与文件清单 | 主线准备后发布A/B/C，不重做历史全量研究 | 主线Sol xhigh；各任务输入、责任文件、可复现证据入口与验收出口明确 |
-| 1 复用已验成果推进后继 | A：fresh Avatar的TLS/分配或必需String消费者；B：八点SDK冻结规格审核→独立实现；C：已批Promote/Curve→真实Java必要加载 | A/B Sol max分析、C Terra xhigh有界实现，见3.3；明确实现转Sol xhigh，主线串行构建/JVM | 解除一个实际后继依赖或交准确最小缺输入；SDK独立产物/owned/collector；真实资源loader及拒绝回归。自然首诊和303恢复不重开 |
+| 1 复用已验成果推进后继 | A：stock v2 oldFlags8必经GC helper及完整构造依赖；B：选择语义→准确请求采用/触发；C：所选旧号实际存档依赖及明确资源/driver；Scene优先承接释放max槽 | A/B Sol max分析、C Terra xhigh有界实现，见3.3；明确实现转Sol xhigh，主线串行构建/JVM | 解除实际依赖或交准确最小缺输入；准确请求消费者/边界及实现规格；旧号必要引用/完整恢复准备。八点、锁内map、stock v2、Promote/Curve、出生装备局部恢复和303不重开 |
 | 2 定向实机，按需插入 | 只补批次1证明必须取得的上下文、自然选择或SDK事件；已完成采样器复用 | 主线独占客户端/安装；同身份、同阶段、预算兼容才合并采集，否则分次串行 | 自有验证、源门禁及恢复方案先通过，再新实时ready；取得准确输入或保留有效失败。Sol max设计难点，Sol xhigh执行 |
 | 3 三线闭合 | R1：完整构造→g2规格；R2：自然Init/env→route→key/信任→认证；R3：完整必要行→Gadget配置/ability→实际加载，Scene后继按共同依赖推进 | 三线不同文件可并行；String共同合同由A维护，C消费冻结版本；资源/Scene缺口按必经路径收敛 | 有证据即交Sol xhigh最小实现；新语义交Sol max；Terra做明确输入转换/回归准备。完整消费者、顺序和必需数据分别成立 |
 | 4 接入与正向恢复 | F-03d3g2、F-03d3s2正式发送；E-01/E-01c/E-01d1真实必要加载及保存→新Player→Manager恢复 | 独立sender源码可并行；共享Proto/生成器/矩阵、构建与DB串行集成 | Sol xhigh主责；真实Java输出与目标消费者一致、独立库正向恢复及拒绝回归成立。父项前置不满足则只完成相应子出口 |
@@ -70,19 +70,21 @@
 
 | 分支 / 既有任务 | 本批具体动作及前置 | 产物与验收出口 | 责任文件与模型 |
 | --- | --- | --- | --- |
-| A：F-03d3f4d2；E-01/R3-ITEM-ENTRY的String共同输入 | String后继边界/allocator单窗及owned线程ABI已完成；自然FindEntry仍缺tuple/trigger。launch-primary同epoch只读TLS/R1采集器已实现，21人工测试/主线第三图和来源门禁通过，原13首读340B/总26读680B已验实现，API另账；新Pool+1990条件诊断与Avatar+19d0分开，合并18/369→36/738已通过34人工测试/主线第三；完整head及后继items/第二HashSet第四profile已通过68人工测试/主线第三与原三profile九场景等价；最大72/1852只读输入实现已验，AB同进程stock helper离线实现及主线111项/第三98读2050B审核已验，63源seal/实际CheckOnly通过，实际新ready首次metadata299/0RPM停止且退出核验通过；独立v2实际88读1820B/9审核及用户无异常退出/保护核验已验；201B零参HashSet/secondpop/Default后继规格已审，仅后续proposal，不扩本轮98/2304；未批准replay/写域 | 新工具/人工反例、精确身份与末尾复读；natural allocator线程仍未证明，15/82及副本写域未批。fresh TLS、旧cold普通10294、enum分别保留；不补对象/页/返回值。完整构造/资源充分后转g2 | 新TLS collector五tool及独立专题归Sol xhigh；旧输入/ABI冻结。主线实际stock门禁/现场，和临时SDK安装互斥。[线程ABI实际验证](docs/CLIENT_72_D02_OWNED_TEB_ABI_20261110.md) |
-| B：R2-CONFIGSYNC-EARLY-BRIDGE、R2-ROUTE-CONFIG-SELECT；必要时R2-PLUGIN-UI-REGISTRATION | 八点实现/离线门禁已完成，本轮新ready自然90秒观察、原字节重放/15审核和正常退出stock恢复通过；五点P0/P1/P2/P7/M0窄route分类器已实际构建/两fresh/第三/24测试/真实文件门禁，本轮CheckOnly及新ready自然锁内map/16项原件审核与恢复通过；托管comboLogin+?→PostRequest静态89项及主线第三已验；managed当前env/base的13项stock规格、68项来源审计及主线第三已验，合采实现/111项/第三及实际CheckOnly已验；首轮metadata299止/0RPM及退出核验保留；v2新ready实际托管env/base同为0，9项原件审核和用户无异常退出/保护核验已验；自然Init/env→route未闭，当前不派发后继 | 同配置writerGate/parserAccepted/envPath/store及native返回成立，cn-env-0；P5/P6仅分支、P7结合P1只证明正常epilogue后返回。完整payload/Init/route/unwind仍未知，不重复本轮问题 | 新route例/四tool/专题归Sol xhigh；主线独占Cargo、安装/现场/恢复。历史stage accepted只作冻结来源，新Cargo声明前已存旧manifest快照。[自然后继规格](docs/CLIENT_72_SDK_STAGE_NATURAL_SUCCESSOR_20261110.md) |
-| C：E-01/E-01c/E-01d1；后继R3-ITEM-ENTRY必要加载与恢复 | 两Promote、七字段绑定及同源Item11101真实Mongo恢复、两出生十字段合并、talents直接职责/投影/五项真实Java均已验；proud的group/level身份及提升门槛未闭。未装备AvatarStorage三项、自然默认装备→受控保存→各两次新Player冷绑定及缺定义恢复三项JDK17/Mongo均已验，主线分别11/13项原件审核；三文件首诊/303恢复/候选/Metal直接复用。当前在途已收尾，不再派发后继 | 装备例实际核27份BSON，原ID/owner/HP0.5/装备关联及五次冷Item Guard推进成立，无重复发放或冷Player写；缺定义准确NPE且BSON保留、同源恢复后绑定原Item。仅局部AvatarStorage/Inventory，不覆盖完整Player/资源、World/Entity、客户端退出重登 | 明确准备Terra，未知consumer Sol max，设计明确测试Sol xhigh；主线独占实际JVM/DB/Git，旧C文件冻结。[默认装备实际验收](docs/CLIENT_72_D02_EQUIPPED_LOCAL_RESTORE_20261110.md) |
+| A：F-03d3f4d2；必要String共同合同 | 复用stock v2完整head/HashSet；先核实际oldFlags8必经141fdf9c0语义、输入/外部边/执行范围；列出多次分配与子构造的完整已覆盖/未闭路径，再判断secondpop/Default必要后继。旧cold普通10294、enum、fresh分立，已验getter/owned字符比较复用 | 有界准确原窗、GC/所有权与副本写域合同或准确首缺、完整构造依赖和最小实现规格；自然allocator线程单独验，不补槽/TLS/对象/未知页或host成功 | Sol max；独有GC专题、`tools/client72_d02_gc_helper_20261110.py`及test、私有`a-gc/`。清楚后交Sol xhigh/Terra |
+| B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 复用八点原返回、锁内map和stock v2 managed env/base；核LoadLocalConfig/SetEnv/GetURL必要选择、准确RequestComboLogin/PostRequest消费者和触发 | 最终URL分类、调用身份和返回边界形成可实现观察/接入规格；map已写/env0不当调用，不跨epoch拼业务，不重复页面/扩预算，UI注册仅必要时继续；EH/unwind未知保持 | Sol max分析，Sol xhigh实现；独有ROUTE_ADOPTION专题/离线脚本和私有`b-route/`，patch/现场归主线 |
+| C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 已验出生装备/303/Metal/Promote/Curve/Skill/Depot/talents复用；只读定位选定旧号固定快照，按真实持久字段准备依赖driver，区分已批资源与额外引用/未知。没有明确旧号不猜账号 | 固定SHA离线BSON/EXTENDED JSON只读提取、UID/缺字段/正引用测试及脱敏清单；没有快照准确列取得条件。后续按不重叠资源族/测试拆多个Terra；proud/ability/parser新语义交Sol max | 主线Sol xhigh定规格，Terra xhigh执行；独有old_save_dependencies工具/test/专题及私有`c-old-save/`。共享JVM/DB仅主线 |
+| Scene：F-03d3s2 | 首个A/B max槽释放后优先；沿World row真实148d6ebf0下游核MPLevel、Pool/Scene分配、组件创建/替换/拆除及通知顺序；包装器仅转发、回收接口不是ctor | 新窗先证明必要性/有界计划；准确producer/生命周期与最小实现合同，明确发送交Sol xhigh，不据偏移/同值猜alias | Sol max语义；Sol xhigh发送。发布前主线冻结独立文件与输入；现为待开始 |
 
+本批[详细计划](docs/CLIENT_72_D02_RESUME_20261110B.md)固定输入/准确问题/只读依赖、可写文件、独立目录、禁止项、验收/停止恢复。实际4槽：主线＋A/B两个Sol max＋C Terra；任务交回立即释放，成熟包改派多个Terra。主线派遣，子代理禁止扩招；不能以责任线数量冒称并发。
 每次派工先固定：**任务ID、输入版本/来源、准确问题、允许修改的文件、只读依赖、独立输出目录、禁止操作、产物、验收、停止/返回条件**。所有者以本批派工为准，一个文件同一时刻只有一个写入者。子代理返回“已完成/有界结论/阻塞”及证据；主线审核实际差异、必要独立样本和回归，再更新本页并提交。阻塞时写准确解除条件，不改父项为完成。
 
 ### 3.4 未完成工作包与模型分配
 
-此表是原未完成任务的状态与验收账本；批次和模型仅在用户明确恢复后作为调度建议，当前不派工。各行已有完成子项直接复用，R2-LOG/SESSION等不再列为优先待办。
+此表是原未完成任务的状态与验收账本；本轮已恢复，按依赖和3.3实际缺口发布任务。各行已有完成子项直接复用，R2-LOG/SESSION等不再列为优先待办。
 
 | 批次 / 工作包 | 状态与依赖 | 交付与验收 | 推荐模型 | 证据与边界 |
 | --- | --- | --- | --- | --- |
-| 1A→按需2→3 / F-03d3f4d2 完整Avatar构造/后缀 | 进行中；String原getter/owned字符已验，必要FindEntry新输入边界及TLS静态后继已明确；此前fresh原回放首缺TLS index；新受控primary同epoch候选已取得，未新执行CPU，实际head oldFlags8的141fdf9c0后继未闭 | 自然String字典/查询/MI/调用帧及trigger未知，不重复SDK页碰运气；当前仅核allocator直接callee的一个准确PE原窗。TLS/TEB/GC、enum/cold普通10294及完整构造/g2不补值或host成功 | Sol max执行疑难后继；Sol xhigh/Terra接明确实现 | [新自然输入边界](docs/CLIENT_72_D02_A_SUCCESSOR_20261110.md)、[字符比较验收](docs/CLIENT_72_STRING_EQUALS_CONTENT.md)；完整父项不晋级 |
+| 1A→按需2→3 / F-03d3f4d2 完整Avatar构造/后缀 | 进行中；String原getter/owned字符已验，必要FindEntry新输入边界及TLS静态后继已明确；此前fresh原回放首缺TLS index；新受控primary同epoch候选已取得，未新执行CPU，实际head oldFlags8的141fdf9c0后继未闭 | 自然String字典/查询/MI/调用帧及trigger未知，不重复SDK页碰运气；当前核oldFlags8必经GC helper及完整构造未闭依赖。TLS/TEB/GC、enum/cold普通10294及完整构造/g2不补值或host成功 | Sol max执行疑难后继；Sol xhigh/Terra接明确实现 | [新自然输入边界](docs/CLIENT_72_D02_A_SUCCESSOR_20261110.md)、[字符比较验收](docs/CLIENT_72_STRING_EQUALS_CONTENT.md)；完整父项不晋级 |
 | 1B→按需2→3 / R2-CONFIGSYNC-EARLY-BRIDGE | 进行中；自然13及八点实际同配置writer/parser/env写入/原生返回与正常退出恢复已验，完整业务及自然Init/route未闭 | 首次任意P0/P2与三预算保持，实际外采30读10415B/512；原状态前后相同，8点代码/真实trampoline绑定。后继自然Init/env→route按证据最小推进；unwind/完整payload及业务未闭 | Sol max处理新语义；Sol xhigh现场/恢复 | [八点实际验证](docs/CLIENT_72_SDK_CONFIG_STAGE_OBSERVER.md)、[实施审核](docs/CLIENT_72_D02_B_SDK_AUDIT_20261110.md) |
 | 1B→按需2→3 / R2-ROUTE-CONFIG-SELECT | 进行中；准确托管loader存在，当前env/base=0的同epochstock候选已验；自然选择/Init/采用未验 | 固定托管env选择、managed→native必要输入和安全事件；原始材料可得先离线，合同足够再实机 | Sol max语义；Sol xhigh接入 | [执行计划](docs/CLIENT_72_D02_RESUME_20261109.md) |
 | 1B→按需2→3 / R2-CONFIG-ROUTE-WRITE（归R2-ROUTE-CONFIG-SELECT） | 已完成；36源147pin/独立产物准入与新ready90秒/16项原件审核和恢复通过，仅关闭锁内map观察 | 首同owner M0占尝试后验同writer帧/caller，锁内只查comboLogin并输出固定类别；新M0账69/4440、绑定15/6408、外采25/9262原件已验；非空comboLogin为固定cn-route-env-0。托管/native reader采用与认证另验 | Sol xhigh实现与主线现场；新语义再Sol max | [单一五点合同、原码及边界](docs/CLIENT_72_SDK_STAGE_NATURAL_SUCCESSOR_20261110.md) |
@@ -116,7 +118,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 
 ## 4. 任务发布与范围控制
 
-1. **按3.2依赖及3.4准确缺口持续调度。** 本轮A/B/C的已验子项列在第6节，包括自然首诊及303局部恢复，不重新发布旧研究或重复首诊。用户最新要求收尾后暂停，当前不再选取或发布未闭出口；R2-LOG/SESSION及既有来源/采样成果直接复用。
+1. **按3.2依赖及3.4准确缺口持续调度。** 本轮A/B/C的已验子项列在第6节，包括自然首诊及303局部恢复，不重新发布旧研究或重复首诊。本轮恢复授权覆盖上轮暂停，按准确缺口持续发布、验收并汇合未闭出口；R2-LOG/SESSION及既有来源/采样成果直接复用。
 2. **规格成熟就实现。** Sol max给出明确来源/字段/时序和验收后，转Sol xhigh/Terra做最小变更；重大问题或长任务先规划。主线审核后执行必要测试/独立复现、本地提交、更新状态，再启动后继；无新变化或未决风险不重跑历史全量。
 3. **实机只补准确缺输入。** 不直接放大SDK预算、重复同参数观察或用零槽补值；需要用户操作时先备妥实验再一次说明操作/预期/反馈并等待新ready，同时继续独立工作。采集通过不代替消费者或业务通过。
 4. **必要性先于扩展。** 缺表/日志须结合真实入场调用筛选；不把全部Lua/资源表/玩法列P0，也不将未知默认判作可省略。完整Avatar/Scene、自然SDK、真实资源与保存各有独立出口，不以一项片段通过互相代验。
