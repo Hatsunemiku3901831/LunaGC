@@ -4,6 +4,8 @@
 
 2026-11-10 A/B准确后继审核：A的10pin/三原窗/28 opcode/TLS420B及6测试、主线第三8600B与双报告SHA`30da1ab2…86717`同字节；自然tuple/trigger仍缺，26/816仅proposal，不重采SDK页。[A边界](docs/CLIENT_72_D02_A_SUCCESSOR_20261110.md)。B的26项只读审核及主线第三同字节SHA`ecb97406…ddcb`，原文P0覆盖20B纠正为冻结emitter实际14B→C3，独立loader/once/三账本/真实mask合同交Sol xhigh；尚未新构建/owned/实机。[B规格](docs/CLIENT_72_D02_B_SDK_AUDIT_20261110.md)。原件及新主线proof分别位于本批`a/`、`b/`，原报告/pin不改。
 
+2026-11-10 A-TLS单窗及C字段分层：A仅新提140563cd0的唯一PE exception312B/74指令，code SHA`8ce320df…e3a7c`，双静态6953B与主线第三SHA`3518e1fb…db0ed7`相同，独立原bytes/pdata/3直接目标复核proof`a-tls/main-readonly-review.private.json`（`eabd88c8…1af0a0`）。size32/bin2与真实TLS/池写明确，15/82及副本写域尚未批，0新CPU/live。[后继](docs/CLIENT_72_D02_AVATAR_TLS_SUCCESSOR_20261110.md)。资源Sol max排重并固定七字段bridge的三报告/9行，主线准入proof`c-resource-semantics/main-bridge-admission.private.json` SHA`df1b860a…738a29`；已交Terra准备、主线JDK17实际验证，talents直接语义仍缺。[字段分层与排除项](docs/CLIENT_72_D02_AVATAR_ITEM_GAPS_20261110.md)。
+
 2026-11-10当前：**在途工作已验收收尾并按用户明确要求暂停，不开启新任务。** 任务及完成边界见[Project](Project.md)，提交、原始证据、恢复门槛和交接备份见[HANDOFF2](HANDOFF2.md)。下方恢复/持续执行段落均属历史；原ready/PID/地址不得复用。SDK八点后继只有规格，未实现或实机；D-02六项、R4/R5/R6仍未完成。
 
 2026-11-10 最终暂停交接：四项在途收尾提交cfd9c53/a8f96cc/1f9e003/d66429d。最终只读文件与运行盘点SHA`67022c094ce0df672bded7674a0ae40b6e3c57b1d4e38ecc8fbbe0d3c1883719`，五stock/carrier/13保护/缺席匹配、alias无、进程/TCP/UDP0；原Windows PowerShell自有只读helper异常耗时中止(exit1)保留，替代Python流式hash及有界CIM/native netstat实际通过，不重启客户端/DB。详细交接[HANDOFF2](HANDOFF2.md)已先备份再覆盖，HANDOFF原bytes仅追加；proof `local/migration72/d02-parallel-20261109/closeout-20261109T164643Z/handoffs/handoff-close-proof.private.json`。新任务/八点SDK实现/部署均未启动，D-02六项未完成，按用户要求暂停。

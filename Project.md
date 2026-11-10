@@ -70,9 +70,9 @@
 
 | 分支 / 既有任务 | 本批具体动作及前置 | 产物与验收出口 | 责任文件与模型 |
 | --- | --- | --- | --- |
-| A：F-03d3f4d2；E-01/R3-ITEM-ENTRY的String共同输入 | 复用warm、同epoch对象图、真实getter及owned字符比较，先比较TLS/分配与必需Hash/FindEntry的解阻价值，再执行最小后继。fresh首缺TLS index；旧cold普通10294另记，enum零槽未知保留 | 明确可执行后继/准确缺输入及退出条件；String冻结后通知C。不得补槽、fake TLS/对象、页填零或host成功；完整构造/资源充分后转g2 | Sol max；新`tools/client72_d02_a_*`、对应测试、新A专题和独立`local/migration72/d02-resume-20261110/a/`；旧输入/共享String专题只读，新增范围先回主线。[真实后继](docs/CLIENT_72_FRESH_AVATAR_STRING_SUCCESSOR.md) |
+| A：F-03d3f4d2；E-01/R3-ITEM-ENTRY的String共同输入 | 已完成必要String后继边界和allocator单callee原窗；自然FindEntry仍缺tuple/trigger，当前设计真实线程/TEB→TLS有限前沿。fresh首缺TLS index，后续有真实TLS写和池/GC条件；旧cold普通10294另记，enum未知保留 | 先冻结可实施线程来源/同epoch/捕获副本写域，再交有界采集或回放；未批15/82不作为执行cap。不得补槽、fake TLS/对象、页填零或host成功；完整构造/资源充分后转g2 | Sol max设计后转明确实现；新A/TLS独占目录和专题，旧共同输入不改。stock读取与安装互斥，现场归主线。[准确TLS后继](docs/CLIENT_72_D02_AVATAR_TLS_SUCCESSOR_20261110.md) |
 | B：R2-CONFIGSYNC-EARLY-BRIDGE、R2-ROUTE-CONFIG-SELECT；必要时R2-PLUGIN-UI-REGISTRATION | 复用自然prefix13/env-0/两reference及恢复，审八点ABI、观测含义、首次任意P0/P2占用、整轮预算和异常边。规格明确即转Sol xhigh独立实现/owned/collector，不重做over-limit归因 | 独立构建、规定两fresh owned及主线第三审核、外collector门禁和恢复准备齐后申请新实时ready；本轮只回答同一配置的writer/parser必要分支及真实状态，不把P5/P6/P7/void当业务成功 | Sol max只写新B审核专题及独立`b/`；新实现另分配Sol xhigh，旧产物/accepted只读。主线独占Cargo、安装与现场。[冻结实施规格](docs/CLIENT_72_SDK_PREFIX_NATURAL_SUCCESSOR.md) |
-| C：E-01/E-01c/E-01d1；后继R3-ITEM-ENTRY必要加载与恢复 | 复用三文件自然loadAll、303全部63子项恢复、AstaPS两完整候选与Metal局部生命周期。当前确定规格：已批准AvatarPromote12/0、WeaponPromote11101/0及100条AvatarCurve投影→真实Java loader，保留零槽与用途省略边界 | Terra准备固定SHA投影、独立driver和测试；主线实际新JVM验证必要map/onLoad及缺引用拒绝。完整Avatar/Item、Gadget/ability、Scene/引用/revision按真实调用筛选；未知不猜alias或全部提P0 | Terra xhigh；新`tools/client72_d02_c_resource_load.py`及测试、新`D02BirthPromoteCurveResourceLoadTest.java`/C专题及独立`c/`；不运行共享构建或DB。[已批出生用途](docs/CLIENT_72_D02_PROMOTE_RESOURCE.md) |
+| C：E-01/E-01c/E-01d1；后继R3-ITEM-ENTRY必要加载与恢复 | 两个Promote真实加载步骤已完成，三文件首诊、303全部63恢复及候选/Metal直接复用。当前确定规格：已批七字段Skill→Depot→Avatar真实绑定加载，100Curve/HP仅为前置；完整Avatar的talents/能力等仍缺目标职责 | Terra准备新桥接测试，主线实际新JVM验四个正反分支/map恢复；不把loader接受缺引用当资源正确。完整Avatar/Item、Gadget/ability、Scene/引用/revision按真实调用筛选；未知不猜alias或全部提P0 | Terra xhigh只写新`D02BirthSkillDepotBridgeResourceLoadTest.java`和独占桥接专题/准备目录；主线运行，旧C文件冻结。[字段分层与精确规格](docs/CLIENT_72_D02_AVATAR_ITEM_GAPS_20261110.md) |
 
 每次派工先固定：**任务ID、输入版本/来源、准确问题、允许修改的文件、只读依赖、独立输出目录、禁止操作、产物、验收、停止/返回条件**。所有者以本批派工为准，一个文件同一时刻只有一个写入者。子代理返回“已完成/有界结论/阻塞”及证据；主线审核实际差异、必要独立样本和回归，再更新本页并提交。阻塞时写准确解除条件，不改父项为完成。
 
@@ -203,6 +203,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3f4d2；E-01/R3-ITEM-ENTRY（String Equals实际入口前缀步骤） | 已完成 | 无pdata事实保留，独立获批64B中只执行可达48B；两fresh8call/66完成、13测试及12主线审核通过。null/null、同owned指针、长度不同实际AL=1/1/0；等长不同地址停Helper2908尾跳前，未比较字符/自然键，不完成完整比较器/FindEntry或父项。 | [准确源、owned范围与尾ABI](docs/CLIENT_72_STRING_EQUALS_SUCCESSOR.md) |
 | F-03d3f4d2；E-01/R3-ITEM-ENTRY（String原字符比较步骤） | 已完成 | 两fresh各14case从实际10339经原尾跳/177B Helper2908返回，累计28call/1302完成且预期AL全符；13只读测试及主线15审核通过。显式owned NUL尾读逐字节保留；自然allocator终止存储、Hash/FindEntry、自然键、完整Comparer/构造及父项未验。 | [原字符路径、预算与主线验收](docs/CLIENT_72_STRING_EQUALS_CONTENT.md) |
 | F-03d3f4d2；E-01/R3-ITEM-ENTRY（必要String自然后继边界） | 已完成 | 三个原窗/28关键opcode/10pin及TLS420B静态复核、6测试与主线第三同字节；明确Gadget到asset-key的实际consumer及首NUL hash规则，旧5次hash只复用。自然字典/查询/MI/帧/trigger缺失，26/816图仅proposal，未新CPU/PE/live或验完整查询。 | [准确源、必要性、输入与停止条件](docs/CLIENT_72_D02_A_SUCCESSOR_20261110.md) |
+| F-03d3f4d2（allocator TLS直接callee单窗步骤） | 已完成 | 重新核五stock后取得唯一312B/74指令PE exception完整窗；双静态报告与主线第三同字节，明确size32/bin2、真实freelist/写域及三个未审外部边。15/82读取与捕获副本写域仅proposal，未新CPU/live或验allocator返回/完整Avatar。 | [真实原窗、输入、写入与停止合同](docs/CLIENT_72_D02_AVATAR_TLS_SUCCESSOR_20261110.md) |
 
 ### 6.3 SDK、补丁、观察与运维前置
 
@@ -271,6 +272,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3f4d2-fresh-interfaces（归R1） | 已完成 | 原前缀保持、第三类壳/接口写回及方法64B存储已验；两case/不可变index投影和准确method-cache首缺有来源。完整初始化/default/Handler未完成，最小roots合同不等于采样ready。 | [主线第三与边界](docs/CLIENT_72_AVATAR_FRESH_INTERFACES.md) |
 | E-01-PROMOTE-ENTRY（归R3） | 已完成 | 三真实表完整解析及出生用途2个Promote/100个AvatarCurve输入、Avatar批准字段片段、完整Weapon属性6例/非零突破已验；宿主白名单同集合修复验证。完整Avatar/Item、加载/revision/保存恢复未验。 | [主线第三与准确用途](docs/CLIENT_72_D02_PROMOTE_RESOURCE.md) |
 | E-01/E-01c/E-01d1（出生Promote真实Java加载步骤） | 已完成 | 固定第三报告→两个出生Promote真实ResourceLoader/onLoad与复合键通过，保留原零槽后由onLoad过滤；同上下文复验100Curve。四Python/两JUnit及保护/class-init检查通过；缺曲线由投影入口拒绝，loader不自行保证。非完整Avatar/Item/资源就绪、manager保存或D-02验收。 | [实际加载、拒绝及限制](docs/CLIENT_72_D02_C_RESOURCE_LOAD_20261110.md) |
+| E-01/R3-AVATAR-ITEM-ENTRY（实际必读字段分层与桥接规格步骤） | 已完成 | 排重既有目标/Java成果，按出生/旧号恢复/SceneTeam分层必要字段；已批七字段真实绑定后继交Terra及主线执行。talents+28缺直接consumer，保留源/排除项，不用六零/71..76或Java默认批准；不是完整资源验收。 | [准确字段分层、可执行后继与未知](docs/CLIENT_72_D02_AVATAR_ITEM_GAPS_20261110.md) |
 | Java资源目的合同（归E-01/R3） | 已完成 | 加载类/字段/准确消费者及缺Weapon失败位置已审；不是target→Java转换许可。 | [Java目的](docs/CLIENT_72_D02_JAVA_RESOURCE_CONTRACT.md) |
 | V-01a、V-01b、V-01c、V-01d | 已完成 | 能力便携路径、家具保存/加工手册夹具及家具资源路径修复；完整V-01保持未完成。 | [账号保存验证](docs/ACCOUNT_AND_SAVE_OPERATIONS.md)、[离线收口](docs/CLIENT_72_SOL_TERRA_OFFLINE.md) |
 | E-01/R3-WEAPON-GADGET-BRIDGE | 已完成 | 出生武器gadgetId经原具名查询绑定50011101，交换/高位/缺缓存/空对象边界已验；完整factory、配置和生命周期未验。 | [实际来源/片段/边界](docs/CLIENT_72_D02_WEAPON_GADGET_BRIDGE.md) |
