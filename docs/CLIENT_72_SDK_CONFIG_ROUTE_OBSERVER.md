@@ -90,3 +90,24 @@ python -B -m unittest tools.test_verify_sdk72_config_route_proxy tools.test_obse
 每步核真实exit，失败留证，新轮用新目录。主线追加的唯一Cargo声明为该example的cdylib；lock保持。accepted/真实隔离文件门禁全过后再准备独立scope/stock与保护备份/恢复脚本和新ready。自然adapter接口为 `python -B -m tools.observe_client72_config_route_proxy --client ... --production ... --acceptance ... --acceptance-sha256 ... --output ... --user-ready`；文件预检使用同接口加 `--preflight-only`、去掉ready。
 
 原xdata `738AD4`/`739C94`、finally/异常cleanup及搬移CALL异常栈透明性未知；不注册猜测EH/unwind、不用host unlock/默认空map/业务成功兜底。若异常透明成为实际前置或目标异常/完整性拒绝，停在该缺口交主线。自然env/app_key、原getter采用、真实route/HTTP、RSA/HMAC/窄信任/认证和D-02仍未关闭。不部署GS。正常退出、OS确认目标结束后，只恢复本轮精确stock和新建alias，再核五stock/carrier/13保护/config/进程端口；共享Project/Harness/HANDOFF及Git由主线维护。
+
+## 本轮自然锁内map观察与恢复
+
+本轮全新实时ready后，独立受控helper核输入/保护/进程端口、备份并安装已验main2产物；正常90秒/45次metadata结束后只执行一次固定collector。用户新反馈页面正常、无报错并已完全退出；主线重新核进程结束，再经本轮恢复UAC还原stock并移除owned alias。没有提交账号或凭据，没有启动GS。
+
+同一256B DATA首末完全相同：schema3、phase5、event2、mask31、failure/win32_error0、facts1023、route_class256。普通name/caller、parser accepted、同owner writer帧与M0 caller成立；lookup完成、comboLogin存在且非空，其完整值属于固定 **cn-route-env-0** 类别；P7正常epilogue后P1同owner native调用返回。完整五点代码/trampoline/零tail、47转发槽及本次进程创建/模块身份均与原件绑定。
+
+这只是原锁内写入结果。当前轮没有读取stored env，不与上一八点轮的DWORD0 store拼成同一epoch；route类别0也不是托管env选择。完整payload、自然Init/实际getter或route采用、请求/认证与exception-unwind继续未验，void返回不作为业务成功。
+
+外采实际25读/9262B、单读最大512，全部成功且按序；原raw逐读重放与binding完全一致。主线16项独立审核全过，原件在本批 `b-route-implementation/helper-preparation/`：
+
+| 原件 | 完整SHA-256 |
+| --- | --- |
+| `live1.private.json` | `62cc6a700e3e811250e34c3150bdceaca3cf35fd4032277dbecf5a5f828b1b84` |
+| `live1.private.json.reads.private.json` | `7de0a6a0967ac3d6f1e4876a00c70f62e5c83ea3cded7b9f8e830b188cb1b182` |
+| `main-live1-replay.private.json` | `765ed13656aed720081e33a93f707ff7b08470f47cc7241b542daea218c1e536` |
+| `main-live1-acceptance.private.json` | `ff65adf58a0dfea4ece85fa6a468748b89f4812aaecfd1bd2fd14b01e592b09f` |
+
+本批前缀为 `local/migration72/d02-resume-20261110/`。`post-sdk-route-live1-inventory.private.json` SHA `45a94c3d2111ce0528a7b6f0b5249c3aa44a2ea9a9ab9fdf4304e30855783fd1`：五stock/carrier/13保护及portable14配置一致、alias缺席、相关进程和固定TCP/UDP端口为空。原运行JAR、原数据库与运行数据未操作。ready及正常退出确认均属本轮新回复，不复用历史PID/地址/现场。
+
+明确下一分界见[托管必要消费者](CLIENT_72_SDK_ROUTE_CONSUMER_SUCCESSOR_20261110.md)：成功账号回调的RequestComboLogin40108读取的是托管URLConfig.Instance.comboLogin，原Concat追加单个 `?` 后交PostRequest33107，不读取此SDK native map。该89项静态结论经主线第三20425B同原件验证；证明 `b-route-consumer/main-review.private.json` SHA `637bd2793f3c93936b1eb47eb5045f09f6ead23b420ee09609c4817b1463db03`。自然托管URL/env与真正请求采用另验，不能为套用旧classifier而剥query或放宽匹配。
