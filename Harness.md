@@ -1,3 +1,5 @@
+2026-11-11 E-01d1 旧号 phase6：121 角色经原 group 切片，121 个实际键及原跨度匹配、缺键0。主线10项与CLI复核通过。[复现](docs/CLIENT_72_D02_OLD_PROMOTE_GROUPS_20261111.md)。
+
 2026-11-11 F-03d3s2 MPLevel 前缀 125 项断言，第三一致；置位后继原窗2675 B/628指令，两 fresh 一致。[复现和边界](docs/CLIENT_72_D02_SCENE_MPLEVEL_PREFIX_20261111.md)。
 
 2026-11-11 F-03d3f4d2 stock CLEAR48：实际 MSVC，自有用例259双进程均退出0、返回 destination、48 B 清零及头部/守卫保持。[复现](docs/CLIENT_72_D02_CLEAR48_STOCK_OWNED_20261111.md)。
