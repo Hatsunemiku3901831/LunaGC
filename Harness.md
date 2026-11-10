@@ -1,4 +1,5 @@
 2026-11-10 五点route独立准入：main2的36源/147pin、DLL587776B/3705960d…27b3、EXE827392B/6cd63c1d…0808，实际两fresh/第三10emitter、24 Python和真实文件门禁通过；11主审SHA`6bde1a88…47d48d`，新accepted SHA`979cc7ac…e4697`。EOF空行检查疏漏修复后新轮全部重验，main1原件保留；本轮CheckOnly通过、未安装启动，等待新ready。见[实际产物与恢复准备](docs/CLIENT_72_SDK_CONFIG_ROUTE_OBSERVER.md)。自然map/route采用/认证/EH/D-02未验，GS前置不足未部署。
+- 2026-11-10 E-01 两出生Avatar五源同canonical片段合并，主线第三/32值与float32位及七正反通过；非完整Avatar/资源就绪/Java构造。[规则、原件SHA与复现](docs/CLIENT_72_D02_BIRTH_AVATAR_JOIN_20261110.md)。
 
 2026-11-10 Avatar完整head输入：27pin/44 bytes双23139B及主线第三SHA`c522c0fc…31e14`；原525e00单窗409B/108instr只在实际C7非0可fast-return。第三profile52人工测试/四tool来源/主线L87/L208第三图通过，proof SHA`29afb5cb…72fc`，最大56/1244，0真实API/native/live/write。20直接site/12roots及第二HashSet/空items另经20pin双10281B和主线第三SHA`8612bd1e…d0703`；旧56/bin4不是新值，items数组producer未知。见[完整head合同](docs/CLIENT_72_D02_AVATAR_CAPTURE_ALLOCATION_SPEC_20261110.md)、[工具主审](docs/CLIENT_72_D02_AVATAR_BLOCK_COLLECTOR_20261110.md)、[后继输入](docs/CLIENT_72_D02_AVATAR_CTOR_NEXT_INPUTS_20261110.md)。完整Ctor/自然caller及pop父项不晋级。
 
