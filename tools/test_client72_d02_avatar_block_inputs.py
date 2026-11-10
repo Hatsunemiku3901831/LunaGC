@@ -229,7 +229,7 @@ class BlockArtificialTests(unittest.TestCase):
             self.assertEqual(memory.spans, original)
 
     def test_fixed_third_profile_and_old_caps(self):
-        self.assertEqual(set(core.READ_PROFILES), {"avatar-r1", "avatar-r1-pool", "avatar-r1-pool-head"})
+        self.assertEqual(set(core.READ_PROFILES), {"avatar-r1", "avatar-r1-pool", "avatar-r1-pool-head", "avatar-r1-pool-head-ctor"})
         self.assertEqual(core.READ_PROFILES["avatar-r1"], (13, 340, 26, 680))
         self.assertEqual(core.READ_PROFILES["avatar-r1-pool"], (18, 369, 36, 738))
         self.assertEqual(core.READ_PROFILES["avatar-r1-pool-head"], (28, 622, 56, 1244))

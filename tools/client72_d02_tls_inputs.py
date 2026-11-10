@@ -23,7 +23,8 @@ SOURCE_PINS = {
 }
 FIRST_READS, FIRST_BYTES, MAX_READS, MAX_BYTES, MAX_SINGLE = 13, 340, 26, 680, 208
 READ_PROFILES = {"avatar-r1": (13, 340, 26, 680), "avatar-r1-pool": (18, 369, 36, 738),
-                 "avatar-r1-pool-head": (28, 622, 56, 1244)}
+                 "avatar-r1-pool-head": (28, 622, 56, 1244),
+                 "avatar-r1-pool-head-ctor": (36, 926, 72, 1852)}
 U64 = (1 << 64) - 1
 
 

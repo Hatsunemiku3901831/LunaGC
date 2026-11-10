@@ -50,7 +50,15 @@ def verify_sources(root=core.ROOT):
 
 
 def collect(read, module, teb, *, now=core.utc):
-    ledger, result = core.start_collection(read, module, teb, now=now, profile="avatar-r1-pool-head")
+    ledger, result = begin_head_inputs(read, module, teb, now=now)
+    return finish_head_inputs(ledger, result)
+
+
+def begin_head_inputs(read, module, teb, *, now=core.utc, profile="avatar-r1-pool-head"):
+    """Shared first pass for the head reader and its fixed ctor successor."""
+    if profile not in ("avatar-r1-pool-head", "avatar-r1-pool-head-ctor"):
+        raise ValueError("A fixed head input profile is required")
+    ledger, result = core.start_collection(read, module, teb, now=now, profile=profile)
     capture = {"status": "partial", "failure": None, "readOnlyStopBefore": None,
                "rawHeadCaptured": False, "nextNodeRead": False, "objectsAllocated": False,
                "nativeCPUExecuted": False, "externalCallExecuted": False, "capturedWriteExecuted": False,
@@ -80,9 +88,13 @@ def collect(read, module, teb, *, now=core.utc):
             pool_result["failure"] = str(failure)
         else:
             capture["failure"] = str(failure)
+    return ledger, result
+
+
+def finish_head_inputs(ledger, result):
     ledger.finish(result)
-    capture["stableInputBytes"] = result["status"] == "candidate"
-    pool_result["stableInputBytes"] = result["status"] == "candidate"
+    result["allocationInputs"]["stableInputBytes"] = result["status"] == "candidate"
+    result["pool"]["stableInputBytes"] = result["status"] == "candidate"
     return result
 
 
