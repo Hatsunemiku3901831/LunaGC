@@ -343,6 +343,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01d1/R3-OLD-ITEM-COVERAGE | 已完成 | 活动10727/不同ID9128、inactive1527保留；目标Weapon交239ID/1663行，四固定候选表命中9120ID，8ID未知。6测试及主线第四/三fresh同SHA，候选tree/blob/SHA已核；不是目标类型/装备恢复许可。 | [有界四族对照与未知](docs/CLIENT_72_D02_OLD_ITEM_COVERAGE_20261111.md) |
 | E-01/R3-OLD-PHASE6-PROUD（首缺与样本规格） | 已完成 | 全121 postLoad实际重建proud，四活动真实保存样本/四原payload跨度/16同窗opcode及20旧pin主线第三同SHA；不批准pair group/level、81127+10门槛或Java算式。 | [准确必经消费与未闭语义](docs/CLIENT_72_D02_OLD_PHASE6_PROUD_20261111.md) |
 | E-01/R3-OLD-DEPOT-FIELDS（四行字段样本） | 已完成 | 原whole171行/26024B与mapping一致，四原query返回本次typed对象，97 getter到原RETURN；5测试与主线第三1121330B同SHA通过。保留170字符串/模型/34批准11执行区间及对象零空，input presence和业务alias仍未知，非全121恢复。 | [原执行、模型与字段边界](docs/CLIENT_72_D02_OLD_DEPOT_FIELDS_20261111.md) |
+| E-01/R3-ALL-SAVED-DEPOT-REFS | 已完成 | 全121实际保存当前Depot原whole171/cursor26024、121 query/2924 getter RETURN，34批准/11实际区间及各span核对；14测试/主线第三9014403B与两fresh同SHA通过。726外层/嵌套原值和presence unknown保留，仅数据样本，不批准字段alias/全phase6资源或完整恢复。 | [原字段、数量与后继边界](docs/CLIENT_72_D02_ALL_SAVED_DEPOT_REFS_20261111.md) |
 
 
 ## 7. 旧任务归并与后续范围
