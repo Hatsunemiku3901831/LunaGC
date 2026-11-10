@@ -1,3 +1,5 @@
+2026-11-11 E-01d1 旧号 phase6 字段：7 项和第三原 parser 一致，真实 Java loader 1项涵盖121行、484属性和材料过滤。[复现](docs/CLIENT_72_D02_OLD_PROMOTE_FIELDS_20261111.md)。
+
 2026-11-11 E-01d1 Proud 组/等级：21来源、67锚点、605槽，第三相同；435 B 原 getter 两 fresh 相同，正 handle 读取接同一 parser out0。实际 tuple/门槛待验。[复现](docs/CLIENT_72_D02_OLD_PROUD_PAIR_20261111.md)。
 
 2026-11-11 E-01d1 Talent 来源：726键在两固定表中存在，6个缺字段/空字符串差异，720个非空本地条目。7项和主线CLI通过。[复现](docs/CLIENT_72_D02_OLD_TALENT_SOURCES_20261111.md)。
