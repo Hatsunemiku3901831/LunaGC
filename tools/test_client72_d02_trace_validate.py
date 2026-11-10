@@ -9,7 +9,7 @@ from pathlib import Path
 from tools import client72_d02_trace_validate as v
 
 
-def fixture(case):
+def fixture(case, late_dlls=0, dll_before_last_step=False):
     epoch = dict(zip(v.EPOCH_KEYS,[0x1000,0x2010,0x2011,0x2014,0x2019,0x2100,0x2200,0x2300,0x2000]))
     epoch.update(childExeSHA256='11'*32,bootstrapSHA256='22'*32,sharedHeaderSHA256=v.HEADER,imageBytes='0000000000004000')
     pid,tid,base,stack = 200,201,0x100000,0x300000
@@ -100,6 +100,9 @@ def fixture(case):
                       preReadOrdinal=m['apiOrdinal'],preHex=old.hex(),postReadOrdinal=None,postHex=None)]
         s=set_tf(c,g,True); co=cont(); fault=case==3 and i==1
         nextpc=pcs[i+1][0] if i+1<len(pcs) else after
+        if dll_before_last_step and i==len(pcs)-1:
+            event(6,moduleBase='0000000000800000',moduleImageBytes='0000000000010000',
+                  ntdllNameMatch=False,fileHandleValid=True,fileIdentityBOOL=True,fileCloseBOOL=True); cont()
         exception('c000001d' if fault else '80000004',leaf if fault else nextpc)
         rsp=stack if not fault and i==len(pcs)-1 else stack-8
         rax=0xf123456789abcdef if case==1 and i>=1 else 0
@@ -115,6 +118,10 @@ def fixture(case):
     if case==2: memory('ownedBufferFinal',blocks[0],bytes(final))
     if case!=3: set_tf(c,g,False); cont()
     else: cleanup('TerminateProcess','CreateProcess.PI.hProcess'); cont(True)
+    for i in range(late_dlls):
+        event(6,moduleBase=f'{0x800000+i*0x10000:016x}',moduleImageBytes='0000000000010000',
+              ntdllNameMatch=False,fileHandleValid=True,fileIdentityBOOL=True,fileCloseBOOL=True,
+              filePath='synthetic.dll',fileIdentity={'volumeSerial':1,'indexHigh':0,'indexLow':1}); cont()
     event(5,exitCode=90 if case==3 else 0); cont(case==3)
     emit('cleanup',api='WaitForSingleObject',handleOrigin='CreateProcess.PI.hProcess',timeoutMs=1,result=0,lastErrorIfFailed=None)
     cleanup('GetExitCodeProcess','CreateProcess.PI.hProcess'); cleanup('CloseHandle','CreateProcess.PI.hThread'); cleanup('CloseHandle','CreateProcess.PI.hProcess')
@@ -144,9 +151,77 @@ def check(data):
 
 
 class TraceTests(unittest.TestCase):
+    def test_successful_wait_requires_returned_event_identity(self):
+        # Actual main4 emitted null here despite a successful Wait and real event.
+        for case in (1, 2, 3):
+            for key in ('eventPID', 'eventTID', 'eventType'):
+                with self.subTest(case=case, key=key):
+                    data = fixture(case)
+                    wait = next(r for r in data[0] if r['kind'] == 'wait')
+                    wait[key] = None
+                    failure = 'wait identity' if key == 'eventType' else 'event PID/TID'
+                    with self.assertRaisesRegex(ValueError, failure):
+                        check(data)
+
     def test_synthetic_three_cases(self):
         for case in (1,2,3):
             with self.subTest(case=case): check(fixture(case))
+
+    def test_synthetic_late_dll_after_tf_restore(self):
+        for case in (1,2):
+            for late_dlls in (1,2):
+                with self.subTest(case=case,late_dlls=late_dlls):
+                    check(fixture(case,late_dlls))
+
+    def test_synthetic_late_dll_rejections(self):
+        def late(data): return [r for r in data[0] if r['kind']=='event' and r['rawDebugEventCode']==6][-1]
+        def late_continue(data):
+            e=late(data)
+            return next(r for r in data[0] if r['kind']=='continue' and r['stopEventSeq']==e['seq'])
+        def set_code(data, code):
+            e=late(data)
+            w=next(r for r in data[0] if r['kind']=='wait' and r['stopEventSeq']==e['seq'])
+            c=late_continue(data)
+            w['eventType']=e['eventType']=e['rawDebugEventCode']=c['eventType']=code
+            if code == 1:
+                e.update(firstChance=True,exceptionCode='80000004',exceptionAddress='0000000000102019',
+                         exceptionFlags='00000000',exceptionParameters=[],exceptionParameterCount=0)
+        def leave_tf_set(data):
+            restore=[r for r in data[0] if r['kind']=='set'][-1]
+            restore['submittedControl']['EFlags']='00000100'
+            restore['readbackControl']['EFlags']='00000100'
+            rb=next(r for r in data[0] if r['kind']=='get' and r['apiOrdinal']==restore['readbackGetOrdinal'])
+            rb['control']['EFlags']='00000100'
+        changes=[
+            lambda d: late(d).update(fileIdentityBOOL=False),
+            lambda d: late(d).pop('fileIdentityBOOL'),
+            lambda d: late(d).update(fileCloseBOOL=False),
+            lambda d: late(d).pop('fileCloseBOOL'),
+            lambda d: late(d).update(eventPID=999),
+            lambda d: late(d).update(eventTID=999),
+            lambda d: late_continue(d).update(BOOL=False,lastErrorIfFalse=5),
+            lambda d: late_continue(d).update(continueStatus='80010001'),
+            lambda d: late_continue(d).update(cleanupOnly=True),
+            lambda d: set_code(d,7),
+            lambda d: set_code(d,1),
+            lambda d: [r for r in d[0] if r['kind']=='transaction'][-1].update(retired=False,status='unretired'),
+            leave_tf_set,
+        ]
+        for case in (1,2):
+            for change in changes:
+                with self.subTest(case=case,change=change):
+                    data=fixture(case,1); change(data)
+                    with self.assertRaises((ValueError,KeyError,IndexError)): check(data)
+            with self.subTest(case=case,budget='128'):
+                base_events=fixture(case)[1]['budgets']['events']
+                check(fixture(case,128-base_events))
+                with self.assertRaisesRegex(ValueError,'budget'):
+                    check(fixture(case,129-base_events))
+            with self.subTest(case=case,dll_before_last_step=True):
+                with self.assertRaisesRegex(ValueError,'debug event sequence'):
+                    check(fixture(case,dll_before_last_step=True))
+        with self.assertRaisesRegex(ValueError,'debug event sequence'):
+            check(fixture(3,1))
 
     def test_synthetic_eflags_manual_truth_table(self):
         # Fixed expected values are authored independently of the validator.
@@ -317,7 +392,7 @@ class TraceTests(unittest.TestCase):
                 header=put(temp/'shared.h',(root/'tools/client72_d02_native_trace/shared.h').read_bytes())
                 for name in v.PINS: put(contracts/name,(source_contract/name).read_bytes())
                 artifacts={name:put(temp/(name+'.synthetic'),('synthetic '+name).encode()) for name in ('parentExe','parentMap','childExe','childMap')}
-                data=fixture(case); rows,summary,child,receipt,epoch=data
+                data=fixture(case,2 if case in (1,2) else 0); rows,summary,child,receipt,epoch=data
                 epoch['childExeSHA256']=v.sha(artifacts['childExe'].read_bytes())
                 b=struct.pack('<8sIIIIQ32s32s8I',b'C48BOOT1',1,128,epoch['descriptorRva'],7,int(epoch['imageBytes'],16),
                               bytes.fromhex(epoch['childExeSHA256']),bytes.fromhex(v.HEADER),

@@ -252,10 +252,14 @@ def check_witness(case, run_id, records, events, summary, child, epoch, receipt)
     event_codes = [e['rawDebugEventCode'] for e in event_list]
     sys_index = next(i for i,e in enumerate(event_list) if e['seq'] == sysbp['stopEventSeq'])
     own_index = next(i for i,e in enumerate(event_list) if e['seq'] == own['stopEventSeq'])
+    tail = event_codes[own_index+1:]
+    retired_events = {1:3,2:7,3:2}[case]
     need(0 < sys_index < own_index and event_codes[:sys_index] == [3] + [6]*(sys_index-1) and
          event_codes[sys_index] == event_codes[own_index] == 1 and
          event_codes[sys_index+1:own_index] == [6]*(own_index-sys_index-1) and
-         event_codes[own_index+1:] == [1]*{1:3,2:7,3:2}[case] + [5], 'debug event sequence')
+         tail[:retired_events] == [1]*retired_events and tail[-1:] == [5] and
+         (tail[retired_events:-1] == [] if case == 3 else
+          all(code == 6 for code in tail[retired_events:-1])), 'debug event sequence')
     stack_c = hx(arm['control']['Rsp'])
     need(stack_c % 16 == 0, 'stack alignment')
     leaf_rva = epoch[{1:'returnLeafRva', 2:'ymmLeafRva', 3:'faultLeafRva'}[case]]

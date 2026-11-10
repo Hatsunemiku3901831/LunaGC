@@ -975,6 +975,7 @@ static int wait_event(C48Run *run)
         run->log.pid = run->event.dwProcessId;
         run->log.tid = run->event.dwThreadId;
         run->log.eventType = run->event.dwDebugEventCode;
+        run->log.stopSeq = run->log.sequence + 2u;
     }
     line_begin(&run->log, &line, "wait");
     line_add(&line, ",\"apiOrdinal\":%u,\"BOOL\":%s,\"lastErrorIfFalse\":", run->waitCount, ok ? "true" : "false");
@@ -1136,6 +1137,10 @@ static int event_loop(C48Run *run, const C48Arguments *args)
                 continue;
             }
         } else if (strcmp(run->log.phase, "WAIT_EXIT") == 0) {
+            if (code == LOAD_DLL_DEBUG_EVENT) {
+                if (!continue_event(run, DBG_CONTINUE, 0)) break;
+                continue;
+            }
             if (code != EXIT_PROCESS_DEBUG_EVENT) { fail_run(run, "unexpectedExitEvent"); break; }
             run->exitSeen = 1;
             run->eventExitCode = run->event.u.ExitProcess.dwExitCode;

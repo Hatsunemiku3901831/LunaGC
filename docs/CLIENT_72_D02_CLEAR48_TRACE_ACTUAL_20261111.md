@@ -48,3 +48,27 @@ events SHA为 `7377c54ffa294c714214f8179476ffe0a2c9a077f44775623f952cc8dd306932`
 Sol max核同epoch源码、SDK/ISA和Get/Set公开表示，Terra max按中文有界计划补官方/固定GitHub来源；尚不改raw记录或blind mask，不以新合同追认旧W1。只有准确语义和必要实现/纯门明确后，root另定新epoch与单case步骤。实际安全门禁/Daybreak问题只记录停该包；没有证据时不将普通ABI疑难自动归入该队列。
 
 本轮没有客户端、DLL安装、生产Java/Proto/配置/资源或数据库变更；不需GS重启或portable部署。C资源分支继续独立推进，D-02/F-05/D02-R6及全部六项客户端验收保持未完成。
+
+
+## main4 / V2与第二次W1（仍失败）
+
+主线接受[限定EFlags合同](CLIENT_72_D02_CLEAR48_TRACE_EFLAGS_20261111.md)后，两个Terra分别交[parent V2](CLIENT_72_D02_CLEAR48_TRACE_EFLAGS_PARENT_V2_20261111.md)与[独立validator](CLIENT_72_D02_CLEAR48_TRACE_EFLAGS_VALIDATOR_V2_20261111.md)，root26纯门通过。新main4构建exit0；五实际源及epoch、129include、5链接库、2compiler DLL和10日志已第三审核；当前内容hash不替代编译时独立采样，完整系统模块清单仍未知。
+
+| main4材料 | SHA-256 |
+| --- | --- |
+| parent源 | `781e5ee0c22f2d7d1583f6b59d692db827af03a84e343081cea92a2640771c7e` |
+| child EXE / map | `9412200c5c820a885a925b627b14ef92b09192ea747d335c2fc91fadea28ffc4` / `372959fb6bc970026d2ae860cbd72e017face8d69f6ea609ac7f94b097324867` |
+| parent EXE / map | `151e6c1bae8fbfe350ddf93b97bfa4f90c943098d808ea600a3e58f58cf1f07e` / `7cf5b8c9e361912e8a5e7c23affef1b4f2ae8dec5baf29b080d433b585dd11c4` |
+| bootstrap128B | `d11f5af63a1cf40661291d0bc5a9232edd96d5e3be0d3dc26752fb424e0cba81` |
+| root PE/caller/unwind审核 | `6d66cd1a7c31225a8903d155ce4c50e30dea78d3cf91e1c004d238c8375097c8` |
+| root依赖第三审39876B | `bb38f101ae5105fe37b5119ca9a3d228e1037c3d70b6f2b719bb18324a22412b` |
+
+新独立输出`a-clear48-trace-witness/w1-main2-20261111/`，未复用旧身份。root runner实际exit1、parent2，未超时、全部材料before=after。events SHA `e382f2b7c9589a6b71f17e66eea733da16d0670efd8d584eb0198aa1357d3c5f`；失败freeze SHA `e869cfffe4513e785443e0a3e5829c0fc225bb86169f7dcc881a4a952de304af`。旧main3的W1保持失败/零退休。
+
+本轮每次Set原始206→306→304，恢复206→206→204，差均2、仅bit1从1到0；新V2审计字段与15GPR/其余控制检查吻合。三条实际事务分别为CALL、MOV RAX imm64、RET；原事件与Get/Read关联确认CALL真实栈写、RET同槽读取、RSP恢复和RAX=`f123456789abcdef`，但**完整W1仍未通过**。预算12event/12wait/9Get/4Set/9read330B/3retired。
+
+准确失败为WAIT_EXIT阶段的event69：同owned PID/TID在退出前收到LOAD_DLL_DEBUG_EVENT，实际模块为kernel.appcore.dll，事件原件的file identity/SizeOfImage/关闭门均通过；原分支只接受EXIT_PROCESS，故`unexpectedExitEvent`。child-result虽已写`continuedToC=true/exit=0`，真实OS退出是随后parent主动终止的90，不能混淆。owned终止、EXIT继续、signal、句柄关闭和fresh OS查询无残留均已核。W2/W3没有执行。
+
+root继续纯文件诊断发现另一准确接口缺口：12个成功wait原件均有指向后续event的stopEventSeq，但header PID/TID/type为null，独立validator正确在`wait identity`拒绝。原因是wait_event已取得实际身份却在line_begin时log.stopSeq仍0；人工fixture已有真实身份，因此原纯测试未覆盖该源记录错误。此次诊断没有产生通过报告或改写原件；随后root仅按原Get/事务/内存逐项独立核局部三退休，部分报告SHA `db09fa6dae89f4bb2debea05ec06e7651c39c086ae5ad4fefaab46006ce8d691`，明确fullW1Accepted=false。该接口冲突交Sol max冻结最小修复，不放宽validator身份门。
+
+[WAIT_EXIT源码续项](CLIENT_72_D02_CLEAR48_TRACE_WAIT_EXIT_PARENT_20261111.md)和[尾事件序列回归](CLIENT_72_D02_CLEAR48_TRACE_WAIT_EXIT_VALIDATOR_20261111.md)为已明确小修：仅W1/W2完整退休并恢复TF后至退出间允许原LOAD_DLL；BOOT/PENDING、W3及其他事件/身份/预算不变。有效file句柄继续受原identity/path/size/close门约束，不将原条件检查描述为无条件要求。新的wait身份合同与纯回归闭合、新source/build/PE/依赖epoch后才可另一次W1；不在相同源码重复。没有安全或Daybreak拒绝、没有客户端/生产部署变化。

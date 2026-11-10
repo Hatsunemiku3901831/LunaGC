@@ -1,3 +1,7 @@
+2026-11-11 `PROUD-STRUCT-ARRAY-CONTRACT`：root第三207092B同双fresh SHA`ef4347336c719c56b9546edb4ae0e86ae05b4e007e0d1b9f5243b0e1f92ff6b1`，571条/52锚点/count2/cursor138有条件已核；下一唯一439383/285B源已派Terra，完整row与业务映射未知。[合同和后继](docs/CLIENT_72_D02_PROUD_NATIVE_STRUCT_ARRAY_CONTRACT_20261111.md)。
+
+2026-11-11 `CLEAR48-TRACE/main4`：新root依赖审核SHA`bb38f101ae5105fe37b5119ca9a3d228e1037c3d70b6f2b719bb18324a22412b`后执行唯一第二W1，三退休/RAX/栈槽有原证，但完整仍exit2：late LOAD_DLL触WAIT_EXIT拒绝；另成功wait的header身份为null，独立validator拒绝。两旧W1保持失败、W2/W3未起；修准确源/尾序列，不扩预算。[原件/边界/下一步](docs/CLIENT_72_D02_CLEAR48_TRACE_ACTUAL_20261111.md#main4--v2与第二次w1仍失败)。
+
 2026-11-11 `EFLAGS-V2-IMPLEMENTATION / PROUD-STRUCT-ARRAY-WINDOW`：root26纯门与新main4构建exit0/PE caller-unwind通过，实际新witness待独立依赖；C root第三16984B SHA`16b255d425747d86cffdf941472e04c48b32ff9edec15fea5b63e8f90b88ecaf`同双fresh、5门禁，唯一329B/88条源已交Sol max。[parent](docs/CLIENT_72_D02_CLEAR48_TRACE_EFLAGS_PARENT_V2_20261111.md)、[validator](docs/CLIENT_72_D02_CLEAR48_TRACE_EFLAGS_VALIDATOR_V2_20261111.md)、[C原窗](docs/CLIENT_72_D02_PROUD_NATIVE_STRUCT_ARRAY_WINDOW_20261111.md)。
 
 2026-11-11 `EFLAGS-V2 / PROUD-BASE-CONTRACT`：root采纳限定回读二分支（exact或bit1单向1→0），旧W1永久失败/零退休；parent与validator分文件Terra实现，新build/review才可新W1。root base第三100731B同两fresh SHA`2814615c93d8ebfafdd20c64832012c5f623dadcaafcdadb37aa2c2060b552f2`，下一必经文件消费者14ee1eb20，不在cursor134猜presence。[EFlags合同](docs/CLIENT_72_D02_CLEAR48_TRACE_EFLAGS_20261111.md)、[来源偏差](docs/CLIENT_72_D02_CLEAR48_TRACE_EFLAGS_SOURCES_20261111.md)、[base合同](docs/CLIENT_72_D02_PROUD_BASE_PARSER_CONTRACT_20261111.md)。
