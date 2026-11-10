@@ -77,7 +77,7 @@
 | C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 已验出生装备/303/Metal/Promote/Curve/Skill/Depot/talents复用；用户选定旧号的固定快照/真实关联已验，121角色level100/phase6、12254物品。全121 Depot引用已核，准确prepare/loader/6371项primary-index已验，当前沿同keybase前缀的唯一必要数组parser查真实行，区分已批资源与额外引用/未知 | 全121在postLoad重建proud；group/level/门槛仍未知。8个Item在第五TPS候选族的存在性已补齐，但目标对应/字段/发送与完整恢复仍另核，不用candidate命中代恢复 | 主线Sol xhigh定规格；Sol max语义、多个Terra xhigh按独有资源族/driver执行，旧快照/工具冻结。共享JVM/DB仅主线 |
 | Scene：F-03d3s2 | 已优先完成148d6ebf0模板关联静态出口；首未闭actual slot114、MPLevel原分组输入及Pool/Scene/组件创建替换拆除与通知，沿准确producer继续；包装器仅转发、回收接口不是ctor | 新窗先证明必要性/有界计划；准确producer/生命周期与最小实现合同，明确发送交Sol xhigh，不据偏移/同值猜alias | Sol max语义；Sol xhigh发送。新包发布前主线冻结独立文件与输入；父项进行中，已验模板子出口不重发 |
 
-本批[详细计划](docs/CLIENT_72_D02_RESUME_20261110B.md)固定输入/准确问题/只读依赖、可写文件、独立目录、禁止项、验收/停止恢复。实际并发上限4槽含主线；当前A Sol max制定完整904B独立合同，C Terra xhigh仅取17208.m130222完整元素原窗（≤1024B/256条），根因/语义再交max；两包不重叠。C条件前缀142→318、数组header→322/count4已审，最终row仍未知。B组合loader留Daybreak队列，不重试。独立包交回即释放，成熟实现/测试再分多个Terra，不新增聊天绕上限。主线派遣，子代理禁止扩招；不能以责任线数量冒称并发。
+本批[详细计划](docs/CLIENT_72_D02_RESUME_20261110B.md)固定输入/准确问题/只读依赖、可写文件、独立目录、禁止项、验收/停止恢复。实际并发上限4槽含主线；当前A Sol max收口完整904B独立合同，C Sol max仅审已验317B元素消费/单key条件文件规格，Scene Sol max仅追type70954分组producer；三包独有写域。C条件前缀142→318、数组header→322/count4已审，最终row待元素合同主线验收。成熟规格立即释放max并切Terra独立实现。B组合loader留Daybreak队列，不重试。独立包交回即释放，成熟实现/测试再分多个Terra，不新增聊天绕上限。主线派遣，子代理禁止扩招；不能以责任线数量冒称并发。
 每次派工先固定：**任务ID、输入版本/来源、准确问题、允许修改的文件、只读依赖、独立输出目录、禁止操作、产物、验收、停止/返回条件**。所有者以本批派工为准，一个文件同一时刻只有一个写入者。子代理返回“已完成/有界结论/阻塞”及证据；主线审核实际差异、必要独立样本和回归，再更新本页并提交。阻塞时写准确解除条件，不改父项为完成。
 
 ### 3.4 未完成工作包与模型分配
@@ -239,6 +239,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3f4d2/CLEAR48-NATIVE-TRACE-SPEC | 已完成 | Sol max原176条/读写域、真实CALL/RET与逐条事务合同主线静态复核；仅规格，不证明debug TF/YMM或原904B运行。 | [原窗与准确范围](docs/CLIENT_72_D02_CLEAR48_NATIVE_TRACE_SPEC_20261111.md) |
 | F-03d3f4d2/CLEAR48-NATIVE-TRACE-GITHUB | 已完成 | Sol max中文计划、Terra max README-first/分支定向24高层操作，外部clone固定ref/tree/blob与16项主审通过；部分覆盖，参考Win32事件模式，不导入TitanEngine或其bytepatch/context写法。 | [来源、差异与剩余witness](docs/CLIENT_72_D02_CLEAR48_TRACE_GITHUB_20261111.md) |
 | F-03d3f4d2/CLEAR48-NATIVE-TRACE-IMPLEMENTATION-CONTRACT | 已完成 | 四设计JSON/256B descriptor/128B bootstrap及48字段offset、精确25/11/23/3/13B由root源级第三核通过；只冻结W1/W2/W3，未编译断言/执行debug witness。root唯一header已给Terra，完整904B/捕获副本仍另批。 | [分包、接口与预算](docs/CLIENT_72_D02_CLEAR48_TRACE_IMPLEMENTATION_CONTRACT_20261111.md) |
+| F-03d3f4d2/CLEAR48-FULL-HELPER-IMPLEMENTATION-CONTRACT | 进行中 | main6三witness前置已验；Sol max冻结完整904B的新独立ABI/schema/176条目录、两人工long case、稀疏映射及逐PC许可。旧框架和112源保持，合同/布局先第三审，再交多个Terra；尚未链接或执行904B。 | 独有FULL_HELPER_IMPLEMENTATION_CONTRACT专题/private；root唯一新header/build/runtime，child/parent/checker分写域 |
 | F-03d3f4d2/CLEAR48-TRACE-WITNESS-CHILD | 已完成 | main6实际三项新owned witness均验收：W1三退休/非零64位返回/正常退出，W2七退休/两32B原件及288B guards，W3仅CALL退休、UD2未退休/负证人收口。只限backend，904B未链接。 | [三项实际原件与准确范围](docs/CLIENT_72_D02_CLEAR48_TRACE_RESULTS_20261111.md) |
 | F-03d3f4d2/CLEAR48-TRACE-WITNESS-PARENT | 已完成 | 完整v2实际正常与负证人通过，TF-only/原flags/逐stop old-new与真实新线程退出来源、实际Continue/PI关闭通过；W1/W2 OS0、W3 parent30/child90，旧三W1失败永久保留。自然GC/allocator与Avatar不晋级。 | [三项实际原件与准确范围](docs/CLIENT_72_D02_CLEAR48_TRACE_RESULTS_20261111.md) |
 | F-03d3f4d2/CLEAR48-TRACE-ARTIFACT-TESTS | 已完成 | 独立Terra及root各8组纯人工PE/map门通过；旧空/缺/重复source清单红测保留，root要求精确五源后全绿。只验离线bootstrap材料门，不代真实构建/PE或debug witness。 | [主线源审核与门禁](docs/CLIENT_72_D02_CLEAR48_TRACE_CHILD_20261111.md#主线源级审核与独立-artifact-门)；独有trace_artifacts工具/test |
@@ -262,7 +263,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3s2/SCENE-ROW-LIFECYCLE（模板关联子出口） | 已完成 | 唯一585B/120条下游将原row存entity.field138373/+140；不消费row+50/+58。16pin/30静态断言主线第三同SHA通过。条件容器调用非具名Remove，首未闭actual slot114、组件/拆除/通知及MPLevel完整配置不批准。 | [原窗、准确排除与后继](docs/CLIENT_72_D02_SCENE_ROW_LIFECYCLE_20261110B.md) |
 | F-03d3s2/SCENE-SLOT114-FROZEN-AUDIT | 已完成 | 7pin/17静态断言主线第三5325B与两fresh同SHA；冻结36读全不含klass+460的8B，也没有factory实际返回实体→klass来源。只关闭准确缺输入审计；1483df040仍metadata候选，不读候选body。后继同调用frame及3读224B需合法factory触发/独立合同，Scene父项未完成。 | [缺口及最小来源链](docs/CLIENT_72_D02_SCENE_SLOT114_20261111.md) |
 | F-03d3s2/SCENE-TEMPLATE-PREDECESSOR | 已完成 | 原592B/119条证明普通路径旧模板引用正常清空后再由wrapper关联新引用；主线第三46断言同两fresh及6测试。不证明销毁/组件拆除、helper所有权或动态slot114，完整Scene仍未验。 | [原引用生命周期](docs/CLIENT_72_D02_SCENE_TEMPLATE_PREDECESSOR_20261111.md) |
-| F-03d3s2/SCENE-MPLEVEL-GROUP-SOURCE | 进行中 | 独立Sol max只追type70954/field350252原分组输入的producer来源，复用已验注册及fixed GitHub，先审metadata/signature/既存原件；不重复slot114缺输入审计。仅交唯一有来源source请求或准确外部缺输入，不猜MPLevel路径/空能力。 | 独有专题/private，原件只读；新PE/现场需root另批，成熟即释放max |
+| F-03d3s2/SCENE-MPLEVEL-GROUP-SOURCE | 已完成 | root第三51096B同双fresh，4pin/35断言；ConfigMetaConfig路径hash数组选bin第二QWORD→reader→70954.m587454→同对象register来源已闭。actual bin/group/能力仍未知，slot114未晋级。 | [准确producer与唯一原窗](docs/CLIENT_72_D02_SCENE_MPLEVEL_GROUP_SOURCE_20261111.md) |
+| F-03d3s2/SCENE-MPLEVEL-PARSER-WINDOW | 进行中 | root采纳唯一14b6accb0/m587454原窗≤2048B/512条；先fresh五输入/metadata/完整817B caller及E8、新两QWORD/唯一pdata，再取完整body，双fresh与第三。0xdata/子callee/CPU，超预算停包。 | Terra xhigh独有scene_mplevel_parser_window工具/test/专题/private；共享/Git仅root |
 
 
 ### 6.3 SDK、补丁、观察与运维前置
