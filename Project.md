@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-**已按用户最新指令恢复持续并行执行，上一轮“收尾后暂停”调度限制解除；D-02 / F-05 / D02-R6仍未完成。** 八点SDK同配置阶段、锁内map、stock v2候选及出生默认装备局部恢复直接复用。关键路径仍为完整Avatar分配/Default、SDK请求采用与认证、Scene生命周期、所选旧号必要资源及完整恢复，再进入正式发送、R4/R5/R6。A2及GC/Default同epoch输入/退出已验限定范围；42稳定span选原AVX，Default非零不透明，两次独立native原6B能力通过，三个owned debug witness现已实测通过；完整904B/第二分配/GC所有权/构造仍未验。所有旧ready已消费；B组合loader遇安全门禁按用户要求记录待Daybreak，不重复尝试。技术门禁、未知及缺省语义保持，包边界与实机插入条件见[本批计划](docs/CLIENT_72_D02_RESUME_20261110B.md)；HANDOFF2暂停为历史。
+**按用户最新要求，当前已开始工作完成验收和收尾后暂停，不再开启新任务；D-02 / F-05 / D02-R6仍未完成。** 收尾范围固定为CLEAR48-FULL Parent/Child/Validator/Shared的当前实现、必要集成构建与已批人工首组，以及已交回C单keyreference/元素合同和Scene parser原窗的主线验收、文档与本地提交。尚未派发的Scene parser语义后继恢复为待开始；不启动stock-derived、第二allocator、Default、自然GC或新现场轮。B安全门禁继续留Daybreak队列，不重复尝试。所有旧ready已消费，原配置/数据/resources和用户差异保留。完成收尾后按AGENTS备份并更新HANDOFF2、追加HANDOFF，再暂停。此前恢复执行授权及完成项保留为历史。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -77,7 +77,7 @@
 | C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 已验出生装备/303/Metal/Promote/Curve/Skill/Depot/talents复用；用户选定旧号的固定快照/真实关联已验，121角色level100/phase6、12254物品。全121 Depot引用已核，准确prepare/loader/6371项primary-index已验，当前沿同keybase前缀的唯一必要数组parser查真实行，区分已批资源与额外引用/未知 | 全121在postLoad重建proud；group/level/门槛仍未知。8个Item在第五TPS候选族的存在性已补齐，但目标对应/字段/发送与完整恢复仍另核，不用candidate命中代恢复 | 主线Sol xhigh定规格；Sol max语义、多个Terra xhigh按独有资源族/driver执行，旧快照/工具冻结。共享JVM/DB仅主线 |
 | Scene：F-03d3s2 | 已优先完成148d6ebf0模板关联静态出口；首未闭actual slot114、MPLevel原分组输入及Pool/Scene/组件创建替换拆除与通知，沿准确producer继续；包装器仅转发、回收接口不是ctor | 新窗先证明必要性/有界计划；准确producer/生命周期与最小实现合同，明确发送交Sol xhigh，不据偏移/同值猜alias | Sol max语义；Sol xhigh发送。新包发布前主线冻结独立文件与输入；父项进行中，已验模板子出口不重发 |
 
-本批[详细计划](docs/CLIENT_72_D02_RESUME_20261110B.md)固定输入/准确问题/只读依赖、可写文件、独立目录、禁止项、验收/停止恢复。实际并发上限4槽含主线；当前A Sol max收口完整904B独立合同，C Sol max仅审已验317B元素消费/单key条件文件规格，Scene Sol max仅追type70954分组producer；三包独有写域。C条件前缀142→318、数组header→322/count4已审，最终row待元素合同主线验收。成熟规格立即释放max并切Terra独立实现。B组合loader留Daybreak队列，不重试。独立包交回即释放，成熟实现/测试再分多个Terra，不新增聊天绕上限。主线派遣，子代理禁止扩招；不能以责任线数量冒称并发。
+本批[详细计划](docs/CLIENT_72_D02_RESUME_20261110B.md)固定输入/准确问题/只读依赖、可写文件、独立目录、禁止项、验收/停止恢复。实际并发上限4槽含主线；当前仅收尾已启动A Parent/Child/Validator及root共享构建/验收、C完整单keyreference和Scene原窗验收；不再分派后继。合同max已全部交回，实际剩余并发为root与Parent/Validator两个Terra，C实现已交回。C单key条件推进至334已由合同第三核实，工具另验。B组合loader留Daybreak队列，不重试。独立包交回即释放，成熟实现/测试再分多个Terra，不新增聊天绕上限。主线派遣，子代理禁止扩招；不能以责任线数量冒称并发。
 每次派工先固定：**任务ID、输入版本/来源、准确问题、允许修改的文件、只读依赖、独立输出目录、禁止操作、产物、验收、停止/返回条件**。所有者以本批派工为准，一个文件同一时刻只有一个写入者。子代理返回“已完成/有界结论/阻塞”及证据；主线审核实际差异、必要独立样本和回归，再更新本页并提交。阻塞时写准确解除条件，不改父项为完成。
 
 ### 3.4 未完成工作包与模型分配
@@ -239,7 +239,11 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3f4d2/CLEAR48-NATIVE-TRACE-SPEC | 已完成 | Sol max原176条/读写域、真实CALL/RET与逐条事务合同主线静态复核；仅规格，不证明debug TF/YMM或原904B运行。 | [原窗与准确范围](docs/CLIENT_72_D02_CLEAR48_NATIVE_TRACE_SPEC_20261111.md) |
 | F-03d3f4d2/CLEAR48-NATIVE-TRACE-GITHUB | 已完成 | Sol max中文计划、Terra max README-first/分支定向24高层操作，外部clone固定ref/tree/blob与16项主审通过；部分覆盖，参考Win32事件模式，不导入TitanEngine或其bytepatch/context写法。 | [来源、差异与剩余witness](docs/CLIENT_72_D02_CLEAR48_TRACE_GITHUB_20261111.md) |
 | F-03d3f4d2/CLEAR48-NATIVE-TRACE-IMPLEMENTATION-CONTRACT | 已完成 | 四设计JSON/256B descriptor/128B bootstrap及48字段offset、精确25/11/23/3/13B由root源级第三核通过；只冻结W1/W2/W3，未编译断言/执行debug witness。root唯一header已给Terra，完整904B/捕获副本仍另批。 | [分包、接口与预算](docs/CLIENT_72_D02_CLEAR48_TRACE_IMPLEMENTATION_CONTRACT_20261111.md) |
-| F-03d3f4d2/CLEAR48-FULL-HELPER-IMPLEMENTATION-CONTRACT | 进行中 | main6三witness前置已验；Sol max冻结完整904B的新独立ABI/schema/176条目录、两人工long case、稀疏映射及逐PC许可。旧框架和112源保持，合同/布局先第三审，再交多个Terra；尚未链接或执行904B。 | 独有FULL_HELPER_IMPLEMENTATION_CONTRACT专题/private；root唯一新header/build/runtime，child/parent/checker分写域 |
+| F-03d3f4d2/CLEAR48-FULL-HELPER-IMPLEMENTATION-CONTRACT | 已完成 | root第三3449B同最终交付SHA，54源/112旧pin/176原指令/67offset，37/40路径及63允许目录已审；只限人工首组规格，不代helper执行或完整Avatar。 | [冻结合同及主线发布](docs/CLIENT_72_D02_CLEAR48_FULL_HELPER_IMPLEMENTATION_CONTRACT_20261111.md) |
+| F-03d3f4d2/CLEAR48-FULL-SHARED-V1 | 进行中 | root唯一新shared.h已发布，384/256B与67offset纯核通过；两生成fresh字节一致、176C目录独立拼回。root负责build/epoch/runner与实际PE/依赖；未编译断言/执行904B。 | root独有新header/build/runner/generate；旧框架冻结 |
+| F-03d3f4d2/CLEAR48-FULL-PARENT-V1 | 进行中 | Terra xhigh按冻结新ABI/生成C目录和13页查询/两case精确预算实现逐PC门、真实TF事务与v2退出。只写新parent.c及独立专题/private，root构建运行。 | 新full_helper/parent.c唯一写入者；旧parent只读 |
+| F-03d3f4d2/CLEAR48-FULL-CHILD-V1 | 进行中 | Terra xhigh按冻结ABI/精确四页及128B、27B真CALL/原904B和真实C结果实现；旧captured copy/TLS/第二分配未批。 | 新full_helper/child.c/full_wrapper.asm唯一写入者，root构建运行 |
+| F-03d3f4d2/CLEAR48-FULL-VALIDATOR-V1 | 进行中 | Terra xhigh独立artifact/严格raw checker与人工变异，重算实际页/EA/flags/old-new/RET/生命周期，不执行目标；root验收后方可新owned首组。 | 新full_artifacts/full_validate及对应tests独有，root统一runner |
 | F-03d3f4d2/CLEAR48-TRACE-WITNESS-CHILD | 已完成 | main6实际三项新owned witness均验收：W1三退休/非零64位返回/正常退出，W2七退休/两32B原件及288B guards，W3仅CALL退休、UD2未退休/负证人收口。只限backend，904B未链接。 | [三项实际原件与准确范围](docs/CLIENT_72_D02_CLEAR48_TRACE_RESULTS_20261111.md) |
 | F-03d3f4d2/CLEAR48-TRACE-WITNESS-PARENT | 已完成 | 完整v2实际正常与负证人通过，TF-only/原flags/逐stop old-new与真实新线程退出来源、实际Continue/PI关闭通过；W1/W2 OS0、W3 parent30/child90，旧三W1失败永久保留。自然GC/allocator与Avatar不晋级。 | [三项实际原件与准确范围](docs/CLIENT_72_D02_CLEAR48_TRACE_RESULTS_20261111.md) |
 | F-03d3f4d2/CLEAR48-TRACE-ARTIFACT-TESTS | 已完成 | 独立Terra及root各8组纯人工PE/map门通过；旧空/缺/重复source清单红测保留，root要求精确五源后全绿。只验离线bootstrap材料门，不代真实构建/PE或debug witness。 | [主线源审核与门禁](docs/CLIENT_72_D02_CLEAR48_TRACE_CHILD_20261111.md#主线源级审核与独立-artifact-门)；独有trace_artifacts工具/test |
@@ -264,7 +268,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3s2/SCENE-SLOT114-FROZEN-AUDIT | 已完成 | 7pin/17静态断言主线第三5325B与两fresh同SHA；冻结36读全不含klass+460的8B，也没有factory实际返回实体→klass来源。只关闭准确缺输入审计；1483df040仍metadata候选，不读候选body。后继同调用frame及3读224B需合法factory触发/独立合同，Scene父项未完成。 | [缺口及最小来源链](docs/CLIENT_72_D02_SCENE_SLOT114_20261111.md) |
 | F-03d3s2/SCENE-TEMPLATE-PREDECESSOR | 已完成 | 原592B/119条证明普通路径旧模板引用正常清空后再由wrapper关联新引用；主线第三46断言同两fresh及6测试。不证明销毁/组件拆除、helper所有权或动态slot114，完整Scene仍未验。 | [原引用生命周期](docs/CLIENT_72_D02_SCENE_TEMPLATE_PREDECESSOR_20261111.md) |
 | F-03d3s2/SCENE-MPLEVEL-GROUP-SOURCE | 已完成 | root第三51096B同双fresh，4pin/35断言；ConfigMetaConfig路径hash数组选bin第二QWORD→reader→70954.m587454→同对象register来源已闭。actual bin/group/能力仍未知，slot114未晋级。 | [准确producer与唯一原窗](docs/CLIENT_72_D02_SCENE_MPLEVEL_GROUP_SOURCE_20261111.md) |
-| F-03d3s2/SCENE-MPLEVEL-PARSER-WINDOW | 进行中 | root采纳唯一14b6accb0/m587454原窗≤2048B/512条；先fresh五输入/metadata/完整817B caller及E8、新两QWORD/唯一pdata，再取完整body，双fresh与第三。0xdata/子callee/CPU，超预算停包。 | Terra xhigh独有scene_mplevel_parser_window工具/test/专题/private；共享/Git仅root |
+| F-03d3s2/SCENE-MPLEVEL-PARSER-WINDOW | 已完成 | 两fresh九原件相同，fresh完整817B caller及E8/AOT/唯一pdata得131B/42条；root4门禁/10458B第三同双fresh。仅source，不代MPLevel分组/自然reader或实际注册。 | [准确parser原窗](docs/CLIENT_72_D02_SCENE_MPLEVEL_PARSER_WINDOW_20261111.md) |
+| F-03d3s2/SCENE-MPLEVEL-PARSER-CONTRACT | 待开始 | 原窗已验，语义后继尚未实际派发；用户要求当前工作验收后暂停，本卡不启动。以后恢复再审131B普通inline/refill及field350252首缺，不按机械首call盲扩helper树。 | 预留独有专题/private；需以后明确恢复 |
 
 
 ### 6.3 SDK、补丁、观察与运维前置
@@ -414,7 +419,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01/R3-PROUD-NATIVE-17208-ARRAY-WINDOW | 已完成 | 新两QWORD/unique pdata得完整329B/90条；双fresh八件相同，root第三17885B及5门禁通过。仅source，不代文件消费/实际对象；无xdata/邻callee/CPU。 | [准确数组原窗](docs/CLIENT_72_D02_PROUD_NATIVE_17208_ARRAY_WINDOW_20261111.md) |
 | E-01/R3-PROUD-NATIVE-17208-ARRAY-CONTRACT | 已完成 | root第三96575B同双fresh，90条/65锚点；同key318→322、count4、同reader首元素及分配/Empty/循环边界分立。nested返回/最终row未知，不反推元素宽度。 | [准确合同及唯一后继](docs/CLIENT_72_D02_PROUD_NATIVE_17208_ARRAY_CONTRACT_20261111.md) |
 | E-01/R3-PROUD-NATIVE-17208-ELEMENT-WINDOW | 已完成 | 两fresh八件与完整目录唯一pdata，317B/86条；root5门禁/15137B机械audit及1719B独立第三同双fresh。旧摘要未作门禁，无CPU/helper新取。 | [准确元素原窗与第三](docs/CLIENT_72_D02_PROUD_NATIVE_17208_ELEMENT_WINDOW_20261111.md) |
-| E-01/R3-PROUD-NATIVE-17208-ELEMENT-CONTRACT | 进行中 | Sol max仅审既存317B完整reader原体、字段输入/默认与四元素条件cursor，继续同key到首未闭文件边；不猜58209存储/alias，不反推334。规格成熟即交Sol xhigh/Terra，任何新source另批。 | 独有专题/private；上游/共享工具冻结，root第三/集成 |
+| E-01/R3-PROUD-NATIVE-17208-ELEMENT-CONTRACT | 已完成 | root第三228055B同双fresh，73源/全86条/41元素及53跨窗锚点、81连续物理span；四元素322→330、尾33位和低U32输入2→334。仅单key条件语法，actual encoded/row/自然命中未验。 | [准确元素合同](docs/CLIENT_72_D02_PROUD_NATIVE_17208_ELEMENT_CONTRACT_20261111.md) |
+| E-01/R3-PROUD-SINGLE-KEY-REFERENCE | 已完成 | root16门禁及新双fresh/第三82835B同SHA，81 raw span逐项匹配完整payload，从4到334/330B，候选只事后对照。U32 header运算标记16→32红绿已修并保留旧epoch；只验固定key条件文件语法，encoded/alias/自然backend/完整Proud未验。 | [最终源码/第三/边界](docs/CLIENT_72_D02_PROUD_SINGLE_KEY_REFERENCE_20261111.md) |
 | E-01/R3-PROUD-ROW-READER | 已完成 | 原1438B/309条、三个backend分支参数及typed缓存已核；6测试/主线第三85断言31839B同两fresh。两个U32用途按分支分开，不统一offset/size；+1c赋值不证明有效row span，400190 producer及真实索引仍未闭。 | [准确合同与下一候选](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md) |
 
 

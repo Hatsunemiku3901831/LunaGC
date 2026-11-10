@@ -1,3 +1,7 @@
+2026-11-11 `PROUD-SINGLE-KEY最终`：root16门通过，U32 header标记16→32红绿更正，旧epoch保留；新双fresh/第三82835B SHA`30b99d804468f9572a54f60b1e3dfc0838d38e55c52e8ae11e285f7fcd1d9a2c`，81raw span逐项匹配payload到334。仅固定key条件文件syntax，业务/自然/资源ready仍false。用户要求当前已启动项收尾后暂停，不开后继。[最终范围](docs/CLIENT_72_D02_PROUD_SINGLE_KEY_REFERENCE_20261111.md)。
+
+2026-11-11 `PROUD单key条件语法 / Scene parser`：C元素合同root第三228055B SHA`3cb8f15c510dc01b317dbff3b0963ba229cccb56a4a7939fea51c64e55858e0c`，四元素到330/尾4B到334，Terra reference实现另验。Scene完整131B/42条原窗root4门禁/第三10458B SHA`97340321181a358d78b8953f0ad78bdcb0fb17c0f8078a39ceb77125cfe4cbb2`同双fresh，语义交max。均不代自然/业务/入场。[C合同](docs/CLIENT_72_D02_PROUD_NATIVE_17208_ELEMENT_CONTRACT_20261111.md)、[Scene原窗](docs/CLIENT_72_D02_SCENE_MPLEVEL_PARSER_WINDOW_20261111.md)。
+
 2026-11-11 `SCENE-MPLEVEL-GROUP-SOURCE`：root第三51096B SHA`d45198fa2cc6919ecb2c5f4f84c6264e214048d4169abf31c8e7b32ea1bbb3e2`同双fresh；4pin/35断言，原PathHash.bin→reader→70954.m587454→register闭合。下一唯一parser窗≤2048B/512条已交Terra；实际bin/group/能力/Scene未验。[来源/原窗规格](docs/CLIENT_72_D02_SCENE_MPLEVEL_GROUP_SOURCE_20261111.md)。
 
 2026-11-11 `PROUD-17208-ELEMENT-WINDOW`：完整317B/86条与旧SHA独立吻合；root5门禁、机械15137B SHA`31c96d915eeee7cf87e9e658e8aca49603c17510cfb50d1ec292912b406ff775`及独立第三1719B SHA`e5c8c08132ccbef1eb083039d93ad004e44610e3aa30da44a46b202cdff560d1`同两fresh。仅原窗完成，消费/终点交Sol max，不扩source。[原窗及复现](docs/CLIENT_72_D02_PROUD_NATIVE_17208_ELEMENT_WINDOW_20261111.md)。
