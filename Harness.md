@@ -1,3 +1,5 @@
+2026-11-11 `F-03d3s2/SCENE-ROW-LIFECYCLE`：唯一585B/120条准确下游、原row→field138373/+140，16pin/30静态断言主线第三25730B同SHA`fc37cad3…7f061`。custom13732.method101367不是具名Remove；actual slot114未采，metadata候选不代自然vtable。MPLevel/组件/替换拆除/通知及完整Scene未验，无sender许可。[固定来源与第三CLI](docs/CLIENT_72_D02_SCENE_ROW_LIFECYCLE_20261110B.md)。
+
 2026-11-11 R2必要选择/最终URL：LoadLocalConfig唯一2481B/504条静态caller与readOnly/cp_app_id职责已验，主线重做来源绑定23项通过，原最终31检查保留。纯分类器主线18测试、8正例/1090扰动/7来源漂移及source门禁通过。原CALL前候选不冒称PostRequest已进入；下一准确观察33107入口caller=B+19801317，缺body/pdata及生命周期/合法触发。无live/生产材料变化。[静态链](docs/CLIENT_72_D02_ROUTE_ADOPTION_20261110.md)、[纯分类器](docs/CLIENT_72_SDK_FINAL_ROUTE_CLASSIFIER_20261110B.md)。
 
 2026-11-11 `F-03d3f4d2/A-GC-OLDFLAGS8`与`FIRST-POP-COPY`：主线静态第三18pin/15条同SHA`ff87585a…b952c`；8项Python及真入口CPU第三200指令/31captured读/九原写七span44B，通过同SHA`be49a4e9…b0e74`。helper同址两写与4原call/5原ret保留；83历史source快照、原件/静态EXE保持，owned sentinel不是自然ctor frame。第二record/block/Default、自然线程/GC/完整Avatar/g2/D02未验。[范围与CLI](docs/CLIENT_72_D02_FIRST_POP_COPY_20261110B.md)。用户当前AGENTS差异归用户，保留不提交。
