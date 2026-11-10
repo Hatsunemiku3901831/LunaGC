@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-**按用户最新指令，仅完成已启动任务的验收与交接，收尾后暂停，不开启新任务；D-02 / F-05 / D02-R6未完成。** 八点SDK及五点锁内map自然观察已验且stock恢复保持；v2新ready45次/90秒实际A/B合计88读1820B和9项原件审核通过，用户无异常退出，stock/保护/进程监听核验通过。本次受控primary图含完整32B head和HashSet身份，实际oldFlags8的helper仍未闭；托管当前env/base同归cn-env-0，但自然选择/route采用和认证未验。C未装备AvatarStorage三项及默认装备三项真实JDK17/Mongo保存恢复已验；默认装备另经13项原件审核，当前所有已启动子项已完成验收，正在交接后暂停，不继续发布GC/secondpop/Scene/route后继。完整Avatar/Scene/资源、R4/R5/R6仍未闭；没有GS部署。证据及文件归属见本页、[v2实测](docs/CLIENT_72_D02_AB_STOCK_V2_20261110.md)和本次交接。
+**已按用户最新指令完成当前在途子任务的验收、本地提交与收尾，现暂停，不开启新任务；D-02 / F-05 / D02-R6未完成。** 八点SDK同配置阶段、锁内map、stock v2候选输入及正常退出/保护均已验；默认装备三项真实JDK17/Mongo及13项原件审核通过，完成范围已归入第6节。本次采样取得完整head和HashSet身份，实际oldFlags8 helper、自然route采用/认证、完整Avatar/Scene/资源仍未闭。没有GS部署，R4/R5/R6不晋级。当前无待用户实机动作，旧ready全部消费；详细备份、失败边界、提交、证据与条件后继见[HANDOFF2](HANDOFF2.md)。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -26,7 +26,7 @@
 | D02-R0 入场依赖台账 | 已完成 | 已登记源码候选、管理器/事件/脚本开放边界；运行闭包继续由R4/R6更新 | 新旧号路径及必需依赖有来源，未知未被标成可省略；[台账](docs/CLIENT_72_D02_ENTRY_DEPENDENCIES.md) |
 | D02-R1 角色与场景初始化 | 进行中 | raw适配器、类/方法后继、warm输入及有限Java投影可复用；enum/String、完整Avatar构造、g2和Scene/Team/Entity未闭 | 同源角色/库存/资源→真实Java发送→目标消费者及必要状态/顺序闭合，未知不参与发送 |
 | D02-R2 SDK与连接前置 | 进行中 | 日志/响应修复、真实HTTP往返、key桥接/装载及准确caller到达已验限定范围；SDK分类、自然Init/env/route/认证与完整校验未闭 | 正确认证/错误拒绝、会话交换、dispatch/密钥和必需补丁合同成立；实际装载/本服连接在R5/R6复核 |
-| D02-R3 最小资源与保存恢复 | 进行中 | 真实资源/曲线/突破、出生HP/critical/装备/Gadget查找键、自然首诊及303局部正向Manager恢复已验；完整行、配置/ability、revision及入场全部必要加载/恢复未闭 | 必需资源/引用/脚本实际加载有效；保存→新Player→真实manager恢复成立，不能手设loadedAll |
+| D02-R3 最小资源与保存恢复 | 进行中 | 真实资源/曲线/突破、出生HP/critical/装备/Gadget查找键、自然首诊、303局部正向Manager恢复及出生默认装备局部保存/冷绑定已验；完整行、配置/ability、revision及入场全部必要加载/恢复未闭 | 必需资源/引用/脚本实际加载有效；保存→新Player→真实manager恢复成立，不能手设loadedAll |
 | D02-R4 P0部署前汇合 | 待开始 | 依赖R1/R2/R3的必要合同；C-01b网络边界与既有回归直接复用 | 必经请求/响应/通知、嵌套、聚合、顺序、资源与最终发包一致；生成、相关回归和构建通过，未验runtime继续保留 |
 | D02-R5 隔离部署 | 待开始 | 依赖R4；InstanceRoot入口已验，真实实例未部署 | 独立配置/data/DB/资源，日志/健康/TCP/UDP/PID/运行JAR SHA及实际DLL/信任一致；[部署手册](docs/CODEX_ONE_CLICK_DEPLOY.md) |
 | D02-R6 客户端验收（D-02 / F-05） | 待开始 | 依赖R5；原SDK登录页不等于本服登录 | 第5节每项通过并记录范围；失败需修复、回归和正常重部署后复验 |
@@ -35,7 +35,7 @@
 
 ## 3. 并行执行路线与派工
 
-本节按本轮实际缺口恢复派工，不改变任务ID、范围或验收条件。旧暂停调度已由用户明确解除；批次号和A/B/C仅为调度标签。已完成前置统一在第6节维护，不重新排队。
+本节保留本批恢复执行时的任务ID、范围、模型、依赖和文件归属，已完成前置统一在第6节维护，不重新排队。当前在途已验收并收尾，按用户最新指令暂停；3.2及3.4是恢复后的路线设计，当前不据此发布新任务。批次号和A/B/C仅为调度标签。
 
 <a id="d02-parallel"></a>
 
@@ -78,7 +78,7 @@
 
 ### 3.4 未完成工作包与模型分配
 
-此表是原未完成任务的状态与验收账本；批次和模型为调度建议。各行已有完成子项直接复用，R2-LOG/SESSION等不再列为优先待办。
+此表是原未完成任务的状态与验收账本；批次和模型仅在用户明确恢复后作为调度建议，当前不派工。各行已有完成子项直接复用，R2-LOG/SESSION等不再列为优先待办。
 
 | 批次 / 工作包 | 状态与依赖 | 交付与验收 | 推荐模型 | 证据与边界 |
 | --- | --- | --- | --- | --- |
@@ -264,7 +264,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | R2-ROUTE-MANAGED-STOCK-SPEC（归R2-ROUTE-CONFIG-SELECT） | 已完成 | 21pin/68项来源审计与主线独立第三13884B一致；真实typed/String布局和13项固定读图、unknown统一脱敏、A/B独立final与98/2304合计上界已冻结。仅stock当前值输入规格，不证明SetEnv/GetURL/请求采用、GC所有权或认证。 | [已审规格、隐私及预算](docs/CLIENT_72_SDK_MANAGED_ROUTE_STOCK_SPEC_20261110.md) |
 | AB-STOCK-CURRENT-INPUTS（归F-03d3f4d2/R2-ROUTE-CONFIG-SELECT） | 已完成 | 有界B reader/adapter、新协调器和门禁离线实现；两fresh及主线各111人工项通过，第三98读2050B，source/晚失败脱敏和一次cleanup独立审核通过。旧A18源/四profile字节保持；总cap98/2304，尚无实际CheckOnly/自然输入/目标CPU或副本写权限。 | [实现、主审及现场前置](docs/CLIENT_72_SDK_MANAGED_ROUTE_STOCK_COLLECTOR_20261110.md) |
 | AB-STOCK-PREPARATION（归F-03d3f4d2/R2-ROUTE-CONFIG-SELECT） | 已完成 | 主线63源并集seal、实际CheckOnly及8项独立审核通过，五stock/载体/13保护/portable14/缺席与进程固定监听空；该准备不代验现场；之后本轮实际0RPM失败见299后继。新轮必须新实时确认，A/B各自身份/final/敏感seal保持。 | [实现与门禁入口](docs/CLIENT_72_SDK_MANAGED_ROUTE_STOCK_COLLECTOR_20261110.md) |
-| AB-STOCK-STARTUP-299（归F-03d3f4d2/R2-ROUTE-CONFIG-SELECT） | 已完成 | 首次模块聚合错误299/空items、A/B0RPM、自有句柄各关闭一次及用户退出后stock/保护/进程监听复核均已核；184项静态/主线第三通过。仅关闭失败归因边界及最窄v2规格，Create/First子阶段、唯一根因和页面表现未知；独立v2实施中，不能重用本轮ready。 | [原件、API证据与v2严格边界](docs/CLIENT_72_D02_STOCK_STARTUP_299_20261110.md) |
+| AB-STOCK-STARTUP-299（归F-03d3f4d2/R2-ROUTE-CONFIG-SELECT） | 已完成 | 首次模块聚合错误299/空items、A/B0RPM、自有句柄各关闭一次及用户退出后stock/保护/进程监听复核均已核；184项静态/主线第三通过。仅关闭失败归因边界及最窄v2规格，Create/First子阶段、唯一根因和页面表现未知；独立v2及后续实际采集另项已验，本失败不代验自然输入，不能重用本轮ready。 | [原件、API证据与v2严格边界](docs/CLIENT_72_D02_STOCK_STARTUP_299_20261110.md) |
 | AB-STOCK-STARTUP-299-V2（离线实现及实际准备步骤） | 已完成 | 最小新flow仅pre-first299空结果及窗口末None拒绝，原helpers/A4/B2字节保持；两fresh及主线各136人工项、四PS Parser及主线第三98读2078B通过。83源seal/真实CheckOnly与8项独立门禁核对通过，尚不代验自然输入或业务。 | [新实现、审核与门禁](docs/CLIENT_72_D02_AB_STOCK_V2_20261110.md) |
 | AB-STOCK-V2-CAPTURE（归F-03d3f4d2/R2-ROUTE-CONFIG-SELECT） | 已完成 | 新ready45次/90秒，实际A62/1388+B26/432=88读1820B；9项原件重构/ABI/身份/末核/83源快照审核通过，用户无异常退出且stock/保护/进程监听核验通过。32B head/HashSet身份与托管当前env/base0仅为候选；未执行native或证明GC/自然caller/route采用/认证。 | [同一v2合同](docs/CLIENT_72_D02_AB_STOCK_V2_20261110.md) |
 | R2-CONFIG-ROUTE-WRITE（五点独立产物准入步骤） | 已完成 | 36传递源/147冻结pin、独立DLL/EXE构建、两fresh owned及第三、10 near/far实际emitter/真实mini帧、24 Python、51导出/256B DATA及真实隔离文件门禁通过；新helper实际CheckOnly通过。新实时ready/自然map仍待，完整writer/真实SDK锁/route采用/auth/EH不由owned代验。 | [实际产物/accepted/准备与边界](docs/CLIENT_72_SDK_CONFIG_ROUTE_OBSERVER.md) |

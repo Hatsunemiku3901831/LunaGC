@@ -1,3 +1,5 @@
+2026-11-10 最新收尾：**当前在途子任务已验收、提交并收尾，现按用户要求暂停，不开启新任务。** stock v2实际88读1820B与退出核验、默认装备三项真实Java/Mongo及13项原件审核通过；完整Avatar/Scene/资源、自然route/认证及D-02六项最终实机仍未完成，未部署GS。没有待用户操作，旧ready不复用。详见[Project](Project.md)、[HANDOFF2](HANDOFF2.md)；下方“当前/继续/恢复”段落均按各历史批次读取，不能自动重启工作。
+
 2026-11-10阶段增量：八点SDK自然观察已验同配置parser/env写入与原生返回，stock已恢复；独立owned线程ABI及出生武器真实Mongo库存恢复已验限定范围。完整Avatar/Scene、自然Init/route及D-02仍未完成，按[Project](Project.md)继续。
 
 2026-11-10当前：按[Project](Project.md)及[本批路线](docs/CLIENT_72_D02_RESUME_20261110.md)推进A/B/C，起始身份、固定输入、保护及现场已重新核对；D-02全部六项、R4/R5/R6仍未完成。下方暂停、ready/PID及状态属于各历史批次，不复用为当前许可。
