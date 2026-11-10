@@ -1,3 +1,5 @@
+2026-11-11 `R3-PROUD-INDEX-HANDLER-WINDOW`：主线第三29862B同两fresh SHA`88ac1e710db2952673bceeb47e66c4f878bc393b2b2fa8d26d03e26f6001100d`，6门禁；原138530/5071准确735B/189条、两E8/slot/pdata核实。目录选择扫描14344080B/1195340条另账，未xdata/callee；20call/21branch/10RIP仅机械，交Sol max语义。[完整来源与边界](docs/CLIENT_72_D02_PROUD_INDEX_HANDLER_WINDOW_20261111.md)。
+
 2026-11-11 `R3-PROUD-PRIMARY-INDEX-LOCATOR`：5测试/主线第三四件同两fresh；result52202B SHA`1a2d897cf40fd1b922ecf8e46e1c5c040ad06f2d6483360b6bab2eb2f63e3b02`，payload31858B SHA`f87adf6f8b1006ccc99483af251b9d491737bf8bc87b4c7097bb893301e8eb05`。唯一record/variant/location及serialized原entry真实范围闭合，185源hash另账；无新native hash/index解析/row或资源ready。[复现、范围及SHA](docs/CLIENT_72_D02_PROUD_PRIMARY_INDEX_LOCATOR_20261111.md)。
 
 2026-11-11 `R3-PROUD-PREPARE-CONTRACT`：主线第三36303B与两fresh同SHA`9eb26c03c1ceb6f9cd9a000e7b9de688a2c9c8f2e2cf893902f8e119fbff5e27`，185源/82原指令/58断言通过；同壳+20到准确loader/type8026/suffix有原来源，+28及null/handler路线分立。仅静态合同，无壳+18实际填充/row/资源ready；最小PrimaryIndex locator已交Terra。[完整值流和复现](docs/CLIENT_72_D02_PROUD_PREPARE_CONTRACT_20261111.md)。
