@@ -244,7 +244,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | D02-R2/SERVICE-TRIGGER-LOADER | 阻塞 | 源码包6纯检查已过，实际组合build退出101（u64→usize）；后继子代理遭平台安全门禁。按用户最新指示只保留source epoch/20源快照/失败日志，未来统一Daybreak处理，不重试或换模型。DLL/组合owned/自然事件未验，A/C继续。 | [Daybreak队列及具体恢复动作](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md) |
 | F-03d3s2/SCENE-ROW-LIFECYCLE（模板关联子出口） | 已完成 | 唯一585B/120条下游将原row存entity.field138373/+140；不消费row+50/+58。16pin/30静态断言主线第三同SHA通过。条件容器调用非具名Remove，首未闭actual slot114、组件/拆除/通知及MPLevel完整配置不批准。 | [原窗、准确排除与后继](docs/CLIENT_72_D02_SCENE_ROW_LIFECYCLE_20261110B.md) |
 | F-03d3s2/SCENE-SLOT114-FROZEN-AUDIT | 已完成 | 7pin/17静态断言主线第三5325B与两fresh同SHA；冻结36读全不含klass+460的8B，也没有factory实际返回实体→klass来源。只关闭准确缺输入审计；1483df040仍metadata候选，不读候选body。后继同调用frame及3读224B需合法factory触发/独立合同，Scene父项未完成。 | [缺口及最小来源链](docs/CLIENT_72_D02_SCENE_SLOT114_20261111.md) |
-| F-03d3s2/SCENE-TEMPLATE-PREDECESSOR | 进行中 | 复用准确365B wrapper与原148d8e3f0直接边，Sol max只核关联前单窗职责/参数/引用替换边界。8192B/2048条上限、五hash/AOT/pdata先验，不称旧模板释放或完整实体拆除，不替代actual slot114/MPLevel/通知。 | [原调用后继计划](docs/CLIENT_72_D02_SCENE_TEMPLATE_PREDECESSOR_20261111.md) |
+| F-03d3s2/SCENE-TEMPLATE-PREDECESSOR | 已完成 | 原592B/119条证明普通路径旧模板引用正常清空后再由wrapper关联新引用；主线第三46断言同两fresh及6测试。不证明销毁/组件拆除、helper所有权或动态slot114，完整Scene仍未验。 | [原引用生命周期](docs/CLIENT_72_D02_SCENE_TEMPLATE_PREDECESSOR_20261111.md) |
 
 
 ### 6.3 SDK、补丁、观察与运维前置
@@ -369,8 +369,11 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01/R3-PROUD-PARSER-CONTRACT | 已完成 | 原parser/derived/base ctor三窗8412B/1956条及原child E9、+20/+40来源已核；主线第三91234B同两fresh，6测试。child未取/未执行、actual mode与factory产物和行span未闭，非完整parser成功。 | [表示来源和最小输入](docs/CLIENT_72_D02_PROUD_PARSER_CONTRACT_20261111.md) |
 | E-01/R3-PROUD-MODE-FACTORY-SOURCE | 已完成 | 原63831 slot9 definition→529228/AOT已静态绑定，两mode原窗345B/90条、typed Int32集合/六dispatch及初始化输入合同已闭；6门禁/主线第三41737B同两fresh。自然mode/vtable/MethodInfo、factory/parser执行仍未验，不置+20/+40。 | [静态合同和下一输入](docs/CLIENT_72_D02_PROUD_MODE_FACTORY_20261111.md) |
 | E-01/R3-PROUD-FACTORY-WINDOW | 已完成 | 准确529228/149f0bb40原114B/27条与原slot9间接caller、五hash/typed/AOT/唯一pdata已核；两fresh八件、主线第三12296B同SHA及7测试。仅机械原窗/两call六RIP，不证明factory产物或执行，交Sol max语义。 | [原窗与复核](docs/CLIENT_72_D02_PROUD_FACTORY_WINDOW_20261111.md) |
-| E-01/R3-PROUD-INDEX-CTOR-WINDOW | 进行中 | field400190同owner80063唯一.cctor候选663526/14d7adbc0，Sol xhigh执行单窗≤2048B/512条机械包；不伪造caller或称已证index producer，closed-AOT数据包暂不扩。 | [冻结规格](docs/CLIENT_72_D02_PROUD_INDEX_CTOR_WINDOW_20261111.md) |
-| E-01/R3-PROUD-INDEX-AOT | 进行中 | Terra xhigh仅核18192实例5071与原157ffc4c0的闭合身份，最多32QWORD/256B；同pointerIndex共享row完整列明，跨未读slot code等值未知。非唯一则partial，不命名查找语义或执行。 | [纯数据范围](docs/CLIENT_72_D02_PROUD_INDEX_AOT_20261111.md) |
+| E-01/R3-PROUD-INDEX-CTOR-WINDOW | 已完成 | 准确663526原221B/45条及AOT/pdata、两fresh八件核实；主线第三14772B同SHA/7测试。仅机械窗，不以.cctor存在代index实际填充。 | [原窗](docs/CLIENT_72_D02_PROUD_INDEX_CTOR_WINDOW_20261111.md) |
+| E-01/R3-PROUD-INDEX-AOT | 已完成 | 18192实例5071声明筛得138527/ptr84537→157ffc4c0，实际1QWORD；同index共享唯一，跨未读slot同code未知。主线第三12430B同两fresh、5测试；返回类型/方法行为未验。 | [限定闭合身份](docs/CLIENT_72_D02_PROUD_INDEX_AOT_20261111.md) |
+| E-01/R3-PROUD-FACTORY-INDEX-CONTRACT | 已完成 | factory请求41105并尾跳allocator；cctor仅直接写400190/400189/400193，不写400191/400192，不填index。主线第三24断言41969B同两fresh、6测试。原返回/loader/有效row及字段业务身份未闭。 | [准确来源和停止点](docs/CLIENT_72_D02_PROUD_FACTORY_INDEX_CONTRACT_20261111.md) |
+| E-01/R3-PROUD-INDEX-LITERALS | 已完成 | 两原cell分别解PrimaryIndex/IndexGroupId，2×74B；主线第三2429B同audit、6测试，sourceIndex/slot分离。不推业务角色/填充或借旧MiHoYoBinData suffix求命中。 | [两literal身份](docs/CLIENT_72_D02_PROUD_INDEX_LITERALS_20261111.md) |
+| E-01/R3-PROUD-LOOKUP-WINDOW | 已完成 | 157ffc4c0完整236B/71条、原caller/5071 AOT/pdata及双八原件已核；主线第三15186B同两fresh、6测试。仅机械窗口，首惰性loader/path边及行为待Sol max，不命名FindEntry/TryGetValue。 | [原消费者窗口](docs/CLIENT_72_D02_PROUD_LOOKUP_WINDOW_20261111.md) |
 | E-01/R3-PROUD-ROW-READER | 已完成 | 原1438B/309条、三个backend分支参数及typed缓存已核；6测试/主线第三85断言31839B同两fresh。两个U32用途按分支分开，不统一offset/size；+1c赋值不证明有效row span，400190 producer及真实索引仍未闭。 | [准确合同与下一候选](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md) |
 
 

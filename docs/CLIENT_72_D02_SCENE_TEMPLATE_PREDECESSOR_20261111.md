@@ -86,3 +86,5 @@ python -B tools/client72_d02_scene_template_predecessor.py --output <新私有ba
 实际6项测试通过：真实field/清零与未批准销毁边界、source漂移在window/metadata前拒绝、原code漂移、假邻界/填充extent、重复containing pdata与错误AOT。两fresh最终CLI各46项静态断言通过，报告各11614B、逐byte相同，SHA **`938b6b796b7362fbe7d55f588ed3065a24d1b33918fee049f812829c063c2593`**。原完整365B、592B和既有585B的精确store、receiver来源、字段index/typed容器、返回与错误边界均有源门禁。它们不是native测试、异常返回或客户端验收。
 
 本轮未遇安全/Daybreak门禁，没有重试旧B包。只新增本页、public工具/同名测试及指定私有根；Proud旧写权、Project/Harness/旧文件/Proto/patch/resources/config保持只读，不操作Git、客户端/调试器/DLL/live、新REA、构建/JVM/DB/服务。仅离线研究无需部署/重启，新增客户端验收0；完整Scene/resourceReady/D-02未验。主线负责独立第三、共享状态和本地提交；max交回全部写权，不自行扩下项。
+
+主线第三已按本卡最终原件/报告通过，测试及限定验收见Project/Harness；六出口汇合proof SHA `0431793b8b8310d027d08d9de6761fe2164ce6f748eca039bb18a6b26b40c151`。只验本文静态/机械范围，真实执行、row/loader/语义及各父项不因该接受段晋级。

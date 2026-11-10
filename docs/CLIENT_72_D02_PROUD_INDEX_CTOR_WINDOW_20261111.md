@@ -57,3 +57,5 @@ python -B -m unittest tools.test_client72_d02_proud_index_ctor_window -v
 工具16370B/SHA `9735a22b8c9c9f3855bb55fda5d33ecce28fcbcc109025d2c4829ed07396ae79`；测试6424B/SHA `89d75c44b6c7adeb3282f806ce8eece20f51d4ab2dd856a8a6dd316e9db7149b`。完整source/两fresh八件/报告和执行原件SHA逐项列于私有delivery。主线第三使用新的JSON名称，预期最终14772B/SHA保持一致，无需另取第三窗。
 
 下一可执行项为root第三机械复验后交Sol max解读这唯一完整body；若需要loader或别的代码/数据，先交有来源的准确机械规格，不能本包自行追取。所有旧源码与上一factory/public专题未改，B loader未读改重试；无Git、共享索引、Proto/patch/resources/config、JVM/Mongo、目标进程、native CPU/live、新REA、网络、构建/部署操作。纯离线研究无需重启，新增客户端验收0，无待用户操作；Project/Harness/HANDOFF及提交留root统一维护。
+
+主线第三已按本卡最终原件/报告通过，测试及限定验收见Project/Harness；六出口汇合proof SHA `0431793b8b8310d027d08d9de6761fe2164ce6f748eca039bb18a6b26b40c151`。只验本文静态/机械范围，真实执行、row/loader/语义及各父项不因该接受段晋级。

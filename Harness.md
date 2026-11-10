@@ -1,3 +1,5 @@
+2026-11-11 六个Scene/Proud静态出口主审：Scene旧模板清空6测试，index.cctor机械7、factory/index合同6、单tuple AOT5、两literal6、lookup机械6，均第三与最终双fresh同SHA，合计36；proof`0431793b8b8310d027d08d9de6761fe2164ce6f748eca039bb18a6b26b40c151`。真实row/loader/field alias/原factory执行与完整Scene未验。[Scene](docs/CLIENT_72_D02_SCENE_TEMPLATE_PREDECESSOR_20261111.md)、[Proud合同](docs/CLIENT_72_D02_PROUD_FACTORY_INDEX_CONTRACT_20261111.md)、[lookup](docs/CLIENT_72_D02_PROUD_LOOKUP_WINDOW_20261111.md)。
+
 2026-11-11 `CLEAR48-NATIVE-CAPABILITY-SPEC`：Sol max原23B/13B最小fixture、ISA/ABI/SEH及host门已成熟，主线112pin/904+6切片/拟定bytes/固定Intel PDF核验通过，review SHA`080d7d79…46c9af`。未构建/host指令，Terra xhigh仅实现/纯测；root另批独立UD2 witness与后续一次能力流程，不扩904B。[冻结规格](docs/CLIENT_72_D02_CLEAR48_NATIVE_CAPABILITY_20261111.md)。
 
 2026-11-11 `R3-PROUD-FACTORY-WINDOW`：7门禁/主线第三audit12296B同两fresh SHA`6ae2d166…d6ce9`，529228原114B/27条、精确type/slot9间接caller/AOT/pdata核实；两call/六RIP/零RET仅机械，不称自然分配或factory返回成功。Sol xhigh转准确index.cctor候选机械窗。[来源与下一分析](docs/CLIENT_72_D02_PROUD_FACTORY_WINDOW_20261111.md)。
