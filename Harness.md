@@ -1,3 +1,5 @@
+2026-11-11 `F-03d3f4d2/A-GC-OLDFLAGS8`与`FIRST-POP-COPY`：主线静态第三18pin/15条同SHA`ff87585a…b952c`；8项Python及真入口CPU第三200指令/31captured读/九原写七span44B，通过同SHA`be49a4e9…b0e74`。helper同址两写与4原call/5原ret保留；83历史source快照、原件/静态EXE保持，owned sentinel不是自然ctor frame。第二record/block/Default、自然线程/GC/完整Avatar/g2/D02未验。[范围与CLI](docs/CLIENT_72_D02_FIRST_POP_COPY_20261110B.md)。用户当前AGENTS差异归用户，保留不提交。
+
 2026-11-10 `E-01d1/R3-OLD-SAVE-DEPENDENCIES`离线driver出口：5项Python、54固定输入/九组BSON与Extended JSON、独立引用/CLI/hash拒绝主审通过，proof `local/migration72/d02-resume-20261110b/c-old-save/main-review-v2/main-review.private.json` SHA`930f6624…693bd`；初审集合形状错误保留，仅修harness。inactive Item按真实数据库查询排除运行依赖，原始保存字段保留。用户已选定旧号，真实快照/资源/完整恢复未验，无JVM/DB/客户端动作。[实际范围](docs/CLIENT_72_D02_OLD_SAVE_DEPENDENCIES_20261110.md)。
 
 2026-11-10 恢复执行批次B：用户解除收尾后暂停，当前按[Project](Project.md)及[计划/归属/验收](docs/CLIENT_72_D02_RESUME_20261110B.md)持续并行。Project等七文档先备份于`local/migration72/d02-resume-20261110b/before/`；新`initial-inventory.private.json` SHA`6c6c8f9e…c307f8`核当前GAME_PATH、五stock/载体/13保护/portable14/缺席、子模块gitlink及相关进程/固定监听0。只读盘点不启动目标，旧ready全部消费；原resources差异和数据库保持。A/B Sol max、C Terra xhigh，现场/构建/提交由主线串行；已验子项不重发。下方暂停均按历史读取。

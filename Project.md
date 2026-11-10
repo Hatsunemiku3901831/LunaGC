@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-**已按用户最新指令恢复持续并行执行，上一轮“收尾后暂停”调度限制解除；D-02 / F-05 / D02-R6仍未完成。** 八点SDK同配置阶段、锁内map、stock v2候选及出生默认装备局部恢复直接复用。当前关键路径为oldFlags=8必经GC helper/完整Avatar、准确SDK请求采用与认证、Scene生命周期，以及选定旧号和必要资源/完整恢复；成熟后进入正式发送、R4汇合、R5 portable隔离部署及R6六项实机。当前没有已准备完毕的用户操作，旧ready全部已消费。技术门禁、未知及缺省语义保持，恢复盘点、包边界与实机插入条件见[本批计划](docs/CLIENT_72_D02_RESUME_20261110B.md)；HANDOFF2的暂停为上一轮历史。
+**已按用户最新指令恢复持续并行执行，上一轮“收尾后暂停”调度限制解除；D-02 / F-05 / D02-R6仍未完成。** 八点SDK同配置阶段、锁内map、stock v2候选及出生默认装备局部恢复直接复用。当前关键路径为首pop之后的完整Avatar分配/Default、准确SDK请求采用与认证、Scene生命周期，以及选定旧号和必要资源/完整恢复；成熟后进入正式发送、R4汇合、R5 portable隔离部署及R6六项实机。当前没有已准备完毕的用户操作，旧ready全部已消费。技术门禁、未知及缺省语义保持，恢复盘点、包边界与实机插入条件见[本批计划](docs/CLIENT_72_D02_RESUME_20261110B.md)；HANDOFF2的暂停为上一轮历史。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -70,7 +70,7 @@
 
 | 分支 / 既有任务 | 本批具体动作及前置 | 产物与验收出口 | 责任文件与模型 |
 | --- | --- | --- | --- |
-| A：F-03d3f4d2；必要String共同合同 | 复用stock v2完整head/HashSet；先核实际oldFlags8必经141fdf9c0语义、输入/外部边/执行范围；列出多次分配与子构造的完整已覆盖/未闭路径，再判断secondpop/Default必要后继。旧cold普通10294、enum、fresh分立，已验getter/owned字符比较复用 | 有界准确原窗、GC/所有权与副本写域合同或准确首缺、完整构造依赖和最小实现规格；自然allocator线程单独验，不补槽/TLS/对象/未知页或host成功 | Sol max；独有GC专题、`tools/client72_d02_gc_helper_20261110.py`及test、私有`a-gc/`。清楚后交Sol xhigh/Terra |
+| A：F-03d3f4d2；必要String共同合同 | 复用stock v2完整head/HashSet；oldFlags8 helper静态及真入口首pop副本已验；完整20分配/12根及子构造已列清，当前推进第二record/block/Default准确输入；自然线程、GC所有权与完整构造仍未验。旧cold普通10294、enum、fresh分立，已验getter/owned字符比较复用 | 有界准确原窗、GC/所有权与副本写域合同或准确首缺、完整构造依赖和最小实现规格；自然allocator线程单独验，不补槽/TLS/对象/未知页或host成功 | Sol max；独有GC专题、`tools/client72_d02_gc_helper_20261110.py`及test、私有`a-gc/`。清楚后交Sol xhigh/Terra |
 | B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 复用八点原返回、锁内map和stock v2 managed env/base；核LoadLocalConfig/SetEnv/GetURL必要选择、准确RequestComboLogin/PostRequest消费者和触发 | 最终URL分类、调用身份和返回边界形成可实现观察/接入规格；map已写/env0不当调用，不跨epoch拼业务，不重复页面/扩预算，UI注册仅必要时继续；EH/unwind未知保持 | Sol max分析，Sol xhigh实现；独有ROUTE_ADOPTION专题/离线脚本和私有`b-route/`，patch/现场归主线 |
 | C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 已验出生装备/303/Metal/Promote/Curve/Skill/Depot/talents复用；用户已选定旧号；依赖driver子出口已验，主线准备原物理数据的独立副本只读导出，按实际持久行收敛必要资源，区分已批资源与额外引用/未知。没有明确旧号不猜账号 | 固定SHA离线BSON/EXTENDED JSON只读提取、UID/缺字段/正引用测试及脱敏清单；没有快照准确列取得条件。后续按不重叠资源族/测试拆多个Terra；proud/ability/parser新语义交Sol max | 主线Sol xhigh定规格，Terra xhigh执行；独有old_save_dependencies工具/test/专题及私有`c-old-save/`。共享JVM/DB仅主线 |
 | Scene：F-03d3s2 | 首个A/B max槽释放后优先；沿World row真实148d6ebf0下游核MPLevel、Pool/Scene分配、组件创建/替换/拆除及通知顺序；包装器仅转发、回收接口不是ctor | 新窗先证明必要性/有界计划；准确producer/生命周期与最小实现合同，明确发送交Sol xhigh，不据偏移/同值猜alias | Sol max语义；Sol xhigh发送。发布前主线冻结独立文件与输入；现为待开始 |
@@ -84,7 +84,7 @@
 
 | 批次 / 工作包 | 状态与依赖 | 交付与验收 | 推荐模型 | 证据与边界 |
 | --- | --- | --- | --- | --- |
-| 1A→按需2→3 / F-03d3f4d2 完整Avatar构造/后缀 | 进行中；String原getter/owned字符已验，必要FindEntry新输入边界及TLS静态后继已明确；此前fresh原回放首缺TLS index；新受控primary同epoch候选已取得，未新执行CPU，实际head oldFlags8的141fdf9c0后继未闭 | 自然String字典/查询/MI/调用帧及trigger未知，不重复SDK页碰运气；当前核oldFlags8必经GC helper及完整构造未闭依赖。TLS/TEB/GC、enum/cold普通10294及完整构造/g2不补值或host成功 | Sol max执行疑难后继；Sol xhigh/Terra接明确实现 | [新自然输入边界](docs/CLIENT_72_D02_A_SUCCESSOR_20261110.md)、[字符比较验收](docs/CLIENT_72_STRING_EQUALS_CONTENT.md)；完整父项不晋级 |
+| 1A→按需2→3 / F-03d3f4d2 完整Avatar构造/后缀 | 进行中；String原getter/owned字符已验，必要FindEntry新输入边界及TLS静态后继已明确；此前fresh原回放首缺TLS index；新受控primary同epoch候选已取得，未新执行CPU，实际head oldFlags8的141fdf9c0及首pop副本已验，第二record/block/Default未闭 | 自然String字典/查询/MI/调用帧及trigger未知，不重复SDK页碰运气；当前推进首pop后准确items/第二HashSet/Default与其余构造未闭依赖。TLS/TEB/GC、enum/cold普通10294及完整构造/g2不补值或host成功 | Sol max执行疑难后继；Sol xhigh/Terra接明确实现 | [新自然输入边界](docs/CLIENT_72_D02_A_SUCCESSOR_20261110.md)、[字符比较验收](docs/CLIENT_72_STRING_EQUALS_CONTENT.md)；完整父项不晋级 |
 | 1B→按需2→3 / R2-CONFIGSYNC-EARLY-BRIDGE | 进行中；自然13及八点实际同配置writer/parser/env写入/原生返回与正常退出恢复已验，完整业务及自然Init/route未闭 | 首次任意P0/P2与三预算保持，实际外采30读10415B/512；原状态前后相同，8点代码/真实trampoline绑定。后继自然Init/env→route按证据最小推进；unwind/完整payload及业务未闭 | Sol max处理新语义；Sol xhigh现场/恢复 | [八点实际验证](docs/CLIENT_72_SDK_CONFIG_STAGE_OBSERVER.md)、[实施审核](docs/CLIENT_72_D02_B_SDK_AUDIT_20261110.md) |
 | 1B→按需2→3 / R2-ROUTE-CONFIG-SELECT | 进行中；准确托管loader存在，当前env/base=0的同epochstock候选已验；自然选择/Init/采用未验 | 固定托管env选择、managed→native必要输入和安全事件；原始材料可得先离线，合同足够再实机 | Sol max语义；Sol xhigh接入 | [执行计划](docs/CLIENT_72_D02_RESUME_20261109.md) |
 | 1B→按需2→3 / R2-CONFIG-ROUTE-WRITE（归R2-ROUTE-CONFIG-SELECT） | 已完成；36源147pin/独立产物准入与新ready90秒/16项原件审核和恢复通过，仅关闭锁内map观察 | 首同owner M0占尝试后验同writer帧/caller，锁内只查comboLogin并输出固定类别；新M0账69/4440、绑定15/6408、外采25/9262原件已验；非空comboLogin为固定cn-route-env-0。托管/native reader采用与认证另验 | Sol xhigh实现与主线现场；新语义再Sol max | [单一五点合同、原码及边界](docs/CLIENT_72_SDK_STAGE_NATURAL_SUCCESSOR_20261110.md) |
@@ -219,6 +219,9 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3f4d2（items与HashSet同epoch只读工具步骤） | 已完成 | 第四固定profile、68人工测试/主线S65/L87及共享L208第三与API人工门禁通过；原三profile九场景完整报告/请求同before，旧test只适配一处registry名称。最大36/926→72/1852，统一final、五tool新epoch；0真实API/native/live，不验第二pop/数组身份/完整Ctor。 | [实现、预算与主线审核](docs/CLIENT_72_D02_AVATAR_CTOR_COLLECTOR_20261110.md) |
 | E-01（Depot talents职责/投影/真实Java步骤） | 已完成 | 同typed Depot+28→解码匹配→EnhanceDetail Talent=8/current发布、唯一5901B/16pin及原default常量主线第三通过；八投影正反/第三同bytes、五实际Java/14独立审核通过。两出生真实构造返回，单删talents均NPE529；不批准proud规范化、空能力、完整资源/原生Avatar/g2/保存。 | [直接职责](docs/CLIENT_72_D02_DEPOT_TALENTS_SUCCESSOR_20261110.md)、[真实Java与scope](docs/CLIENT_72_D02_DEPOT_TALENTS_JAVA_20261110.md) |
 | E-01（两出生Avatar已批准片段合并步骤） | 已完成 | 五完整报告同canonical行、32片段值/float32位、两独立与主线第三1211B输出/20940B来源manifest逐字节一致，七正反测试通过；仅十个已批字段，completeAvatar/resourceReady仍false。0新Java/CPU/live，不覆盖talents、完整构造/保存。 | [同源规则、实际审核及边界](docs/CLIENT_72_D02_BIRTH_AVATAR_JOIN_20261110.md) |
+| F-03d3f4d2/A-GC-OLDFLAGS8 | 已完成 | 本epoch L32/oldFlags8必经904B helper的准确15条SSE分支闭合：两次同址H+10h/16清理、无该分支GC回调/外部call。18pin与主线第三同字节；完整20分配/12根及子构造依赖列全，其他长度/GC/自然线程未验。 | [静态合同与完整构造依赖](docs/CLIENT_72_D02_GC_HELPER_20261110.md) |
+| F-03d3f4d2/FIRST-POP-COPY | 已完成 | 原1405336c0入口经同epoch普通查询/TLS/pop/helper/post原ret到owned sentinel，200条原指令、九写七span44B；8测试及主线第三36425B同SHA通过。无自然ctor frame，线程/GC所有权、第二分配/Default及完整Avatar/g2仍未验。 | [原CPU副本、拒绝与边界](docs/CLIENT_72_D02_FIRST_POP_COPY_20261110B.md) |
+
 
 ### 6.3 SDK、补丁、观察与运维前置
 
