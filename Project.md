@@ -377,6 +377,10 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01/R3-PROUD-FACTORY-INDEX-CONTRACT | 已完成 | factory请求41105并尾跳allocator；cctor仅直接写400190/400189/400193，不写400191/400192，不填index。主线第三24断言41969B同两fresh、6测试。原返回/loader/有效row及字段业务身份未闭。 | [准确来源和停止点](docs/CLIENT_72_D02_PROUD_FACTORY_INDEX_CONTRACT_20261111.md) |
 | E-01/R3-PROUD-INDEX-LITERALS | 已完成 | 两原cell分别解PrimaryIndex/IndexGroupId，2×74B；主线第三2429B同audit、6测试，sourceIndex/slot分离。不推业务角色/填充或借旧MiHoYoBinData suffix求命中。 | [两literal身份](docs/CLIENT_72_D02_PROUD_INDEX_LITERALS_20261111.md) |
 | E-01/R3-PROUD-LOOKUP-WINDOW | 已完成 | 157ffc4c0完整236B/71条、原caller/5071 AOT/pdata及双八原件已核；主线第三15186B同两fresh、6测试。仅机械窗口，首惰性loader/path边及行为待Sol max，不命名FindEntry/TryGetValue。 | [原消费者窗口](docs/CLIENT_72_D02_PROUD_LOOKUP_WINDOW_20261111.md) |
+| E-01/R3-PROUD-LAZY-INDEX-CONTRACT | 已完成 | 主线第三12550B/34原PC断言同两fresh；先无条件call157ffc650再读壳+18，本236B不读壳+20。negative index清8B/AL0，nonnegative复制8B/AL1，整个RAX不是bool合同。loader/path/index实际填充仍未知。 | [值流及唯一下一source](docs/CLIENT_72_D02_PROUD_LAZY_INDEX_CONTRACT_20261111.md) |
+| E-01/R3-PROUD-PREPARE-AOT-D | 已完成 | 已知5071的16准确slot/128B中唯一目标157ffc650绑定138529/spec175101/ptr84545；主线第三24456B同两audit、5测试。同index共享行仅自身，跨其他index同code未知，不推loader语义。 | [原槽及范围](docs/CLIENT_72_D02_PROUD_PREPARE_AOT_20261111.md) |
+| E-01/R3-PROUD-PREPARE-WINDOW-W | 已完成 | 唯一pdata给289B/82条，两fresh八原件与主线第三14701B同SHA，6门禁通过；真实caller/5071 AOT/五hash已核。8call/14branch/2RIP仅机械，不推loader语义。 | [独立原窗专题](docs/CLIENT_72_D02_PROUD_PREPARE_WINDOW_20261111.md) |
+| E-01/R3-PROUD-PREPARE-CONTRACT | 进行中 | Sol max只审已验289B，核普通/替换/ready条件、壳+20路径/+18 index及第一必要loader/type边；仅既有输入，无新窗或suffix猜测，成熟单source交Terra。 | 独有prepare合同专题/`c-proud-prepare-contract/`，旧窗口/AOT/helper只读 |
 | E-01/R3-PROUD-ROW-READER | 已完成 | 原1438B/309条、三个backend分支参数及typed缓存已核；6测试/主线第三85断言31839B同两fresh。两个U32用途按分支分开，不统一offset/size；+1c赋值不证明有效row span，400190 producer及真实索引仍未闭。 | [准确合同与下一候选](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md) |
 
 
