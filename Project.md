@@ -52,7 +52,7 @@
 
 显式传入工具支持的模型与档位；模型不可用应如实返回主线调整，不能静默升级Astra或冒称已使用指定模型。子代理不得自行扩大派遣和修改范围。
 
-当前平台新建代理返回thread limit，主线复用既有Sol max槽位核Proud mode/factory与row reader；本时段为主线加两个分析包，未声称新增Terra并发。成熟实施规格仍优先Terra xhigh，实际可用槽位恢复后再派；不另开聊天或借Daybreak阻塞包换模型重试。
+平台并发上限4。此前旧pending_init占槽导致新建被拒；已让完成旧任务交回空槽，目前为主线＋1个Sol max语义包＋2个Terra xhigh执行包（原AVX最小owned实现、Proud单tuple AOT数据）。已完成分析及时交回；不另开聊天、不借Daybreak阻塞包换模型重试。
 
 ### 3.2 批次路线与退出条件
 
@@ -234,7 +234,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3f4d2/CLEAR48-OWNED-PREP | 已完成 | 独立owned两路径driver及7纯门禁已交；主线区分固定Capstone distribution5.0.9/binding5.0.7/native(5,0,1280)并固定原文件。实际SSE35条/三写/RET通过，AVX20条后严格guard停止，完整两路径执行未完成。 | [原件与实际边界](docs/CLIENT_72_D02_CLEAR48_OWNED_20261111.md) |
 | F-03d3f4d2/CLEAR48-BACKEND | 已完成 | 一次原6B owned诊断invalid10、一次CPUID原AVX bit0，112pin稳定；不再XGETBV/改model/强走SSE。主线纯第三21462B同两fresh，定位当前backend能力边界；非AVX成功或原GC返回。 | [准确失败及下一后端规格](docs/CLIENT_72_D02_CLEAR48_BACKEND_20261111.md) |
 | F-03d3f4d2/CLEAR48-BACKEND-GITHUB | 已完成 | Terra max按Sol max中文计划README-first核官方12调用/two ref/四blob，主线静态核原tree/blob一致。VEX-L拒绝/缺opcode项解释边界，无可直接使用AVX支持；DLL实际构建关联及全分支覆盖未知。 | [来源及复用范围](docs/CLIENT_72_D02_UNICORN_AVX_SOURCES_20261111.md) |
-| F-03d3f4d2/CLEAR48-NATIVE-CAPABILITY-SPEC | 进行中 | Sol max复用已验Unicorn失败和官方源，先定独立自有EXE原6B能力fixture/CPUID-XGETBV前置/SEH与源ABI预算；现有MSVC四工具已只读盘点。未构建/CPU，不扩904B或捕获副本。 | [规格包](docs/CLIENT_72_D02_CLEAR48_NATIVE_CAPABILITY_20261111.md) |
+| F-03d3f4d2/CLEAR48-NATIVE-CAPABILITY-SPEC | 已完成 | Sol max固定原6B/23B/13B、Intel SDM及MS ABI/SEH，主线静态核112pin与原904切片通过；独立EXE/host前置/一次call/异常/输出/预算合同已定。仅规格，未build/CPU，不扩904B或捕获副本。 | [完整最小规格](docs/CLIENT_72_D02_CLEAR48_NATIVE_CAPABILITY_20261111.md) |
+| F-03d3f4d2/CLEAR48-NATIVE-CAPABILITY-IMPL | 进行中 | Terra xhigh按冻结规格实现C+ml64/独立build与PE/runner/纯测试；root明确另批单独UD2负证人。root统一构建/来源及PE审核后，先负证人再首能力，成功才第二fresh；当前未build/CPU，不碰客户端。 | [实现与未验边界](docs/CLIENT_72_D02_CLEAR48_NATIVE_IMPLEMENTATION_20261111.md) |
 | R2-ROUTE-CONFIG-SELECT/POSTREQUEST-ENTRY | 已完成 | 唯一310B/79条、原40108 CALL/return与16B搬移静态核实，首次任意入口String观察5读168B/绑定2读315B已定；5测试/主线第三95断言同SHA通过。普通尾跳不等于同步返回，自然请求/GC/EH未知。 | [入口与合法触发前置](docs/CLIENT_72_SDK_POSTREQUEST_ENTRY_20261111.md) |
 | R2-ROUTE-CONFIG-SELECT/POSTREQUEST-OWNED | 已完成 | 8离线测试/12源epoch及独立Cargo release locked/offline构建通过；两fresh Win32各32 case共64个280B完整near/far emitter、原16B搬移/原caller/寄存器/128B栈/flags/LastError/高64返回及首次占用/失败通过。无SDK/客户端/安装/自然请求，GC/EH未验。 | [实际owned与边界](docs/CLIENT_72_SDK_POSTREQUEST_OWNED_20261111.md) |
 | D02-R2/NATIVE-ACCOUNT-LOCAL-ROUTE（共用入口合同） | 已完成 | MDK/Account同3413E0唯一1071B/265条，min14搬移21B、首次任意入口仅读8B service/低32 mode；5测试和第三7原件同SHA通过。自然service/mode/loginUrl未知，批准自然route0项，不借MDK注册代客户端合同。 | [来源、ABI与接线条件](docs/CLIENT_72_SDK_NATIVE_ACCOUNT_LOCAL_ROUTE_20261111.md) |
@@ -369,6 +370,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01/R3-PROUD-MODE-FACTORY-SOURCE | 已完成 | 原63831 slot9 definition→529228/AOT已静态绑定，两mode原窗345B/90条、typed Int32集合/六dispatch及初始化输入合同已闭；6门禁/主线第三41737B同两fresh。自然mode/vtable/MethodInfo、factory/parser执行仍未验，不置+20/+40。 | [静态合同和下一输入](docs/CLIENT_72_D02_PROUD_MODE_FACTORY_20261111.md) |
 | E-01/R3-PROUD-FACTORY-WINDOW | 已完成 | 准确529228/149f0bb40原114B/27条与原slot9间接caller、五hash/typed/AOT/唯一pdata已核；两fresh八件、主线第三12296B同SHA及7测试。仅机械原窗/两call六RIP，不证明factory产物或执行，交Sol max语义。 | [原窗与复核](docs/CLIENT_72_D02_PROUD_FACTORY_WINDOW_20261111.md) |
 | E-01/R3-PROUD-INDEX-CTOR-WINDOW | 进行中 | field400190同owner80063唯一.cctor候选663526/14d7adbc0，Sol xhigh执行单窗≤2048B/512条机械包；不伪造caller或称已证index producer，closed-AOT数据包暂不扩。 | [冻结规格](docs/CLIENT_72_D02_PROUD_INDEX_CTOR_WINDOW_20261111.md) |
+| E-01/R3-PROUD-INDEX-AOT | 进行中 | Terra xhigh仅核18192实例5071与原157ffc4c0的闭合身份，最多32QWORD/256B；同pointerIndex共享row完整列明，跨未读slot code等值未知。非唯一则partial，不命名查找语义或执行。 | [纯数据范围](docs/CLIENT_72_D02_PROUD_INDEX_AOT_20261111.md) |
 | E-01/R3-PROUD-ROW-READER | 已完成 | 原1438B/309条、三个backend分支参数及typed缓存已核；6测试/主线第三85断言31839B同两fresh。两个U32用途按分支分开，不统一offset/size；+1c赋值不证明有效row span，400190 producer及真实索引仍未闭。 | [准确合同与下一候选](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md) |
 
 
