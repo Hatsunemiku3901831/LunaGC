@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-**A、Scene、C 恢复执行。D-02 / F-05 / D02-R6 仍未完成。** A 复用 CLEAR48-FULL 人工 SSE/AVX，Scene 消费已取得的 MPLevel 131 B 原窗，C 复用已固定且核验归属的旧号及 Proud 单 key 文件语法。B 组合 loader 留待 Daybreak。当前无待启动的现场实验，旧 ready 已消费。
+**本轮 A、Scene、C 已收尾，按用户要求暂停。D-02 / F-05 / D02-R6 仍未完成。** A 的同 epoch stock 条件自有 helper、Scene 字典前缀/置位/清位、C 的旧号 121 条 phase6 Java 加载已验收。A 第二分配合同遇平台安全审查中止，B 组合 loader 留待 Daybreak。无待启动现场，旧 ready 已消费。[交接](HANDOFF2.md)。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -48,7 +48,7 @@
 | 有界执行子代理 | GPT-6.1 Terra（`gpt-6.1-terra`，档位按任务指定） | 规格完整的清单/数据对照、受控转换、driver、测试准备、机械修改和文档整理；未知语义返回主线，不自行猜测 |
 | 最后升级，非日常排班 | GPT-6 Astra max（`gpt-6-astra` / `max`） | 仅主线和Sol max实质分析仍不能解决、且影响D-02关键路径时使用；须先说明已排除假设、升级理由、准确问题和返回条件。缺样本、缺现场或未读既有证据不构成升级理由 |
 
-起步采用 **主线＋A、Scene 两个 Sol max 子代理＋C 一个 Terra xhigh 子代理**。首个槽交回后已派 Sol max 推进 Proud 语义。明确规格随槽位交 Sol xhigh 或 Terra xhigh。
+本批实际起步采用 **主线＋A、Scene 两个 Sol max 子代理＋C 一个 Terra xhigh 子代理**。首个槽交回后已派 Sol max 推进 Proud 语义。明确规格随槽位交 Sol xhigh 或 Terra xhigh。
 
 显式传入工具支持的模型与档位；模型不可用应如实返回主线调整，不能静默升级Astra或冒称已使用指定模型。子代理不得自行扩大派遣和修改范围。
 
@@ -72,12 +72,12 @@
 
 | 分支 / 既有任务 | 本批具体动作及前置 | 产物与验收出口 | 责任文件与模型 |
 | --- | --- | --- | --- |
-| A：F-03d3f4d2；必要 String 共同合同 | 人工 SSE/AVX、第二 L64/flags8 及同 epoch GC/Default 已验输入。对照 stock 条件与人工路径 | 定最小输入、读写域和执行边界；第二分配、Default、自然线程、GC 所有权和对象身份分别验收 | Sol max 离线分析，产物限私有 a-stock-delta |
+| A：F-03d3f4d2；必要 String 共同合同 | 同 epoch GC/Default 输入、人工双路径、stock 条件自有原 helper 已验 | 第二分配合同遇平台安全审查。原第二返回、Default 消费、自然线程、GC 所有权和对象身份待验 | 已交回；无在途实施 |
 | B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 已验八点、锁内 map、stock v2、PostRequest 和共用服务入口可只读复用 | 组合 loader 源、失败证据和未提交差异保留；自然请求采用、信任、认证与会话交换未闭 | 留待用户使用 [Daybreak](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md) |
-| C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 固定旧号 121 角色/12254 物品，全 Depot getter，Proud 单 key 文件语法已验 | 先核当前 Depot 的实际 Talent 引用，再核 Proud typed 行、group/level 和门槛。完整旧号恢复依赖真实必要行 | Terra xhigh 独占 Talent 引用 driver 与测试；Sol max 接 Proud，JVM/DB 归主线 |
-| Scene：F-03d3s2 | 消费已得 131 B MPLevel parser 原窗及同源上下游，保留模板关联和包装器/回收入口的已有结论 | 先确定内联消费、refill、reader 状态和输出，再定首个缺口；slot114、Pool/Scene 与组件生命周期仍分项验收 | Sol max 离线分析，产物限私有 scene-parser |
+| C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 旧号已固定，121 条真实阶段行已通过 Java loader，726 个 Talent 查键已核 | Proud 原 tuple 命中和 +10 门槛、目标 Talent/OpenConfig、装备配置与完整 Player 恢复仍待 | 已交回；JVM/DB 归主线 |
+| Scene：F-03d3s2 | 131 B 前缀、2675 B 置位字典、666 B 清位/count0 共用原窗与泛型已验 | 缺实际分组原输入、动态 slot114、Pool/Scene 和组件生命周期 | 已交回；sender 前置待满足 |
 
-本批输入、文件归属、产物及退出条件见 [执行计划](docs/CLIENT_72_D02_RESUME_ASC_20261111.md)。
+本批输入、文件归属、产物及退出条件见 [执行计划](docs/CLIENT_72_D02_RESUME_ASC_20261111.md)。当前无在途派工。
 每次派工先固定：**任务ID、输入版本/来源、准确问题、允许修改的文件、只读依赖、独立输出目录、禁止操作、产物、验收、停止/返回条件**。所有者以本批派工为准，一个文件同一时刻只有一个写入者。子代理返回“已完成/有界结论/阻塞”及证据；主线审核实际差异、必要独立样本和回归，再更新本页并提交。阻塞时写准确解除条件，不改父项为完成。
 
 ### 3.4 未完成工作包与模型分配
@@ -86,7 +86,7 @@
 
 | 批次 / 工作包 | 状态与依赖 | 交付与验收 | 推荐模型 | 证据与边界 |
 | --- | --- | --- | --- | --- |
-| 1A→按需2→3 / F-03d3f4d2 完整Avatar构造/后缀 | 进行中；原getter/owned字符及首pop副本已验；第二record/L64/flags8与GC/Default同epoch输入已取得，Default对象身份仍opaque。完整904B人工SSE/AVX读写和RET已验，stock条件路径待核 | 先核stock与人工路径差异，再推进第二分配/Default消费者；完整20分配/12根及子构造逐项闭合。自然String tuple/caller/trigger、TLS/GC所有权、enum/cold普通10294及g2保持未知，不补值/host成功 | Sol max冻结复杂合同，Sol xhigh/Terra接明确实现 | [自然输入边界](docs/CLIENT_72_D02_A_SUCCESSOR_20261110.md)、[原6B实际能力](docs/CLIENT_72_D02_CLEAR48_NATIVE_CAPABILITY_RESULTS_20261111.md)；完整父项不晋级 |
+| 1A→按需2→3 / F-03d3f4d2 完整Avatar构造/后缀 | 进行中；原getter/owned字符及首pop副本已验；第二record/L64/flags8与GC/Default同epoch输入已取得，Default对象身份仍opaque。完整904B人工SSE/AVX和stock条件自有前后结果已验 | 第二分配合同遇平台门禁，解除后先核原返回，再核Default消费者；完整20分配/12根及子构造逐项闭合。自然String tuple/caller/trigger、TLS/GC所有权、enum/cold普通10294及g2保持未知，不补值/host成功 | Sol max冻结复杂合同，Sol xhigh/Terra接明确实现 | [自然输入边界](docs/CLIENT_72_D02_A_SUCCESSOR_20261110.md)、[原6B实际能力](docs/CLIENT_72_D02_CLEAR48_NATIVE_CAPABILITY_RESULTS_20261111.md)；完整父项不晋级 |
 | 1B→按需2→3 / R2-CONFIGSYNC-EARLY-BRIDGE | 进行中；自然13及八点实际同配置writer/parser/env写入/原生返回与正常退出恢复已验，完整业务及自然Init/route未闭 | 首次任意P0/P2与三预算保持，实际外采30读10415B/512；原状态前后相同，8点代码/真实trampoline绑定。后继自然Init/env→route按证据最小推进；unwind/完整payload及业务未闭 | Sol max处理新语义；Sol xhigh现场/恢复 | [八点实际验证](docs/CLIENT_72_SDK_CONFIG_STAGE_OBSERVER.md)、[实施审核](docs/CLIENT_72_D02_B_SDK_AUDIT_20261110.md) |
 | 1B→按需2→3 / R2-ROUTE-CONFIG-SELECT | 进行中；准确托管loader存在，当前env/base=0的同epochstock候选已验；自然选择/Init/采用未验 | 固定托管env选择、managed→native必要输入和安全事件；原始材料可得先离线，合同足够再实机 | Sol max语义；Sol xhigh接入 | [执行计划](docs/CLIENT_72_D02_RESUME_20261109.md) |
 | 1B→按需2→3 / R2-CONFIG-ROUTE-WRITE（归R2-ROUTE-CONFIG-SELECT） | 已完成；36源147pin/独立产物准入与新ready90秒/16项原件审核和恢复通过，仅关闭锁内map观察 | 首同owner M0占尝试后验同writer帧/caller，锁内只查comboLogin并输出固定类别；新M0账69/4440、绑定15/6408、外采25/9262原件已验；非空comboLogin为固定cn-route-env-0。托管/native reader采用与认证另验 | Sol xhigh实现与主线现场；新语义再Sol max | [单一五点合同、原码及边界](docs/CLIENT_72_SDK_STAGE_NATURAL_SUCCESSOR_20261110.md) |
@@ -246,6 +246,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3f4d2/CLEAR48-FULL-VALIDATOR-V1 | 已完成 | 33项Python通过，包括两条完整人工CLI、BOOT来源与TRACE线程变异。两次实际原始记录经严格checker与主线写域复核。 | [validator设计](docs/CLIENT_72_D02_CLEAR48_FULL_VALIDATOR_20261111.md)、[实际验收](docs/CLIENT_72_D02_CLEAR48_FULL_BOOT_CONTRACT_20261111.md) |
 | F-03d3f4d2/CLEAR48-STOCK-DELTA | 已完成 | 核 stock 三个控制量和 taken 路径，36 条静态候选；人工 AVX 共有尾部和写域可复用。第三复核一致。stock 原写/返回、第二 allocator、Default 消费待验。 | [条件和后继](docs/CLIENT_72_D02_CLEAR48_STOCK_DELTA_20261111.md) |
 | F-03d3f4d2/CLEAR48-STOCK-OWNED | 已完成 | 同 epoch H2/三个控制量在两个自有进程调用原904 B helper，两个返回地址/清零48 B/守卫头部/释放及退出通过。逐指令、第二 allocator/Default 与自然所有权另验。 | [运行和边界](docs/CLIENT_72_D02_CLEAR48_STOCK_OWNED_20261111.md) |
+| F-03d3f4d2/A-SECOND-RETURN-CONTRACT | 阻塞 | Sol max 收尾遇平台自动安全审查，草稿保留，未取得独立验收。第二 allocator 原返回及热 Default 消费开放。 | [阻塞与恢复](HANDOFF2.md#失败阻塞和恢复第一步) |
 | F-03d3f4d2/CLEAR48-TRACE-WITNESS-CHILD | 已完成 | main6实际三项新owned witness均验收：W1三退休/非零64位返回/正常退出，W2七退休/两32B原件及288B guards，W3仅CALL退休、UD2未退休/负证人收口。只限backend，904B未链接。 | [三项实际原件与准确范围](docs/CLIENT_72_D02_CLEAR48_TRACE_RESULTS_20261111.md) |
 | F-03d3f4d2/CLEAR48-TRACE-WITNESS-PARENT | 已完成 | 完整v2实际正常与负证人通过，TF-only/原flags/逐stop old-new与真实新线程退出来源、实际Continue/PI关闭通过；W1/W2 OS0、W3 parent30/child90，旧三W1失败永久保留。自然GC/allocator与Avatar不晋级。 | [三项实际原件与准确范围](docs/CLIENT_72_D02_CLEAR48_TRACE_RESULTS_20261111.md) |
 | F-03d3f4d2/CLEAR48-TRACE-ARTIFACT-TESTS | 已完成 | 独立Terra及root各8组纯人工PE/map门通过；旧空/缺/重复source清单红测保留，root要求精确五源后全绿。只验离线bootstrap材料门，不代真实构建/PE或debug witness。 | [主线源审核与门禁](docs/CLIENT_72_D02_CLEAR48_TRACE_CHILD_20261111.md#主线源级审核与独立-artifact-门)；独有trace_artifacts工具/test |
