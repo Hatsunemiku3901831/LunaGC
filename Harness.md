@@ -1,3 +1,5 @@
+2026-11-11 `CLEAR48/main5 / PROUD-ELEMENT`：root29纯门、新build/PE/依赖后唯一第三W1仍失败：WAIT_EXIT type2新TID触unknownPidOrThread，owned90/cleanupComplete=false如实保留，fresh无残留，W2/W3未起；先Sol max完整退出合同+定向来源，不逐事件试补。C第三13768B同双fresh SHA`5a9632b259cfc673d9b7457ae9af1b54e9b53f276a059fd3fe4573fd7ffc81fe`及5门通过，285B/80条交max语义。[A实际范围](docs/CLIENT_72_D02_CLEAR48_TRACE_ACTUAL_20261111.md)、[Wait合同](docs/CLIENT_72_D02_CLEAR48_TRACE_WAIT_IDENTITY_CONTRACT_20261111.md)、[C原窗](docs/CLIENT_72_D02_PROUD_ELEMENT_READER_WINDOW_20261111.md)。
+
 2026-11-11 `PROUD-STRUCT-ARRAY-CONTRACT`：root第三207092B同双fresh SHA`ef4347336c719c56b9546edb4ae0e86ae05b4e007e0d1b9f5243b0e1f92ff6b1`，571条/52锚点/count2/cursor138有条件已核；下一唯一439383/285B源已派Terra，完整row与业务映射未知。[合同和后继](docs/CLIENT_72_D02_PROUD_NATIVE_STRUCT_ARRAY_CONTRACT_20261111.md)。
 
 2026-11-11 `CLEAR48-TRACE/main4`：新root依赖审核SHA`bb38f101ae5105fe37b5119ca9a3d228e1037c3d70b6f2b719bb18324a22412b`后执行唯一第二W1，三退休/RAX/栈槽有原证，但完整仍exit2：late LOAD_DLL触WAIT_EXIT拒绝；另成功wait的header身份为null，独立validator拒绝。两旧W1保持失败、W2/W3未起；修准确源/尾序列，不扩预算。[原件/边界/下一步](docs/CLIENT_72_D02_CLEAR48_TRACE_ACTUAL_20261111.md#main4--v2与第二次w1仍失败)。

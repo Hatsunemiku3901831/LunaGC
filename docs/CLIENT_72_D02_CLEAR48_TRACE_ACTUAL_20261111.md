@@ -72,3 +72,14 @@ Sol max核同epoch源码、SDK/ISA和Get/Set公开表示，Terra max按中文有
 root继续纯文件诊断发现另一准确接口缺口：12个成功wait原件均有指向后续event的stopEventSeq，但header PID/TID/type为null，独立validator正确在`wait identity`拒绝。原因是wait_event已取得实际身份却在line_begin时log.stopSeq仍0；人工fixture已有真实身份，因此原纯测试未覆盖该源记录错误。此次诊断没有产生通过报告或改写原件；随后root仅按原Get/事务/内存逐项独立核局部三退休，部分报告SHA `db09fa6dae89f4bb2debea05ec06e7651c39c086ae5ad4fefaab46006ce8d691`，明确fullW1Accepted=false。该接口冲突交Sol max冻结最小修复，不放宽validator身份门。
 
 [WAIT_EXIT源码续项](CLIENT_72_D02_CLEAR48_TRACE_WAIT_EXIT_PARENT_20261111.md)和[尾事件序列回归](CLIENT_72_D02_CLEAR48_TRACE_WAIT_EXIT_VALIDATOR_20261111.md)为已明确小修：仅W1/W2完整退休并恢复TF后至退出间允许原LOAD_DLL；BOOT/PENDING、W3及其他事件/身份/预算不变。有效file句柄继续受原identity/path/size/close门约束，不将原条件检查描述为无条件要求。新的wait身份合同与纯回归闭合、新source/build/PE/依赖epoch后才可另一次W1；不在相同源码重复。没有安全或Daybreak拒绝、没有客户端/生产部署变化。
+
+
+## main5 / 第三次W1（退出线程合同未闭）
+
+按[Wait身份合同](CLIENT_72_D02_CLEAR48_TRACE_WAIT_IDENTITY_CONTRACT_20261111.md)及已闭late DLL小修，root一行源码与Sol max提案逐byte同SHA `6e0e7d331184dfdc039f081d017419222fa3e312511fcc700ff1d8bb7f148d73`。29纯门通过；新main5实际build exit0、bootstrap128B SHA `6efbe89c3cb05c5b474b22c58c26fd16d7c6753c5f1d855a8b548f0321a32b65`、PE/caller-unwind审核SHA `22a947086f0d99e9703708f47fb91eb572ffc917dd97e43c20e7ac92c0940e37`、root依赖审核SHA `3682de8e2a87f49b4e940226db29a35bc3957109b67e96b6c0bbd7574998d5f2`均成立。
+
+唯一新run在`a-clear48-trace-witness/w1-main3-20261111/`，仍完整失败：成功Wait头已保留实际身份，三条真实退休后进入WAIT_EXIT，event69/72为LOAD_DLL，event75为同owned PID而新TID的CREATE_THREAD。原所有阶段的单thread等式以`unknownPidOrThread`停止。child自报返回C不替代OS退出；后续owned终止90，主TID的EXIT_THREAD及新TID的EXIT_PROCESS被原件记录。parent2、15event/15wait/9Get/4Set/9read330B/3retired，before=after、未超时。W2/W3未启动。
+
+本轮`cleanupComplete=false`必须保持：真实PI process signaled、GetExit/PI两个Close均true，fresh OS查询无自有parent/child残留；不同TID使现有cleanup一致性门失败，不能改成清理成功。新失败freeze SHA `07e8d8e98dc64d0834798ee82de54d166709be37d5439d71acb3ab4e10e758c4`保存receipt/events/summary/child/审核和当前源完整身份。前三次完整W1均失败；第一轮零退休、后两轮三退休的范围分别保留。
+
+停止此分支CPU，交Sol max完整规划退出期线程生命周期、debug event句柄来源/自动关闭责任、末EXIT线程身份及validator合同。先依AGENTS中文有界外部来源计划交Terra max，当前原四JSON/header不重写；TRACE期间主线程/TF/owned内存/预算保持严格，不简单放行任意TID，也不改child跳CRT或host成功。新来源和完整可实现规格充分后才新epoch实施/纯回归/构建/owned验证，不继续逐事件试补。这是API生命周期合同缺口，没有平台安全/Daybreak拒绝；B原队列继续不重试。未操作游戏/原DB/生产服务，无部署需求和D-02客户端验收增量。
