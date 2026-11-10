@@ -1,5 +1,7 @@
 2026-11-11 定向GitHub增量主审：AB8输入/16原件SHA核对通过，历史B派工计划按原5407B/SHA恢复快照，旧manifest不改，proof`63688e2e…1e259f`；bounded partial无新集成。Scene README优先的两固定World JSON/tree/blob/本地三方对照主线第三同SHA`330be5e2…3765c1`；仅外部样本，分组/目标命中/生命周期未验。两包请求错误、budget偏差和覆盖缺口保留。[AB](docs/CLIENT_72_D02_GITHUB_INCREMENT_20261110B.md)、[Scene](docs/CLIENT_72_D02_SCENE_GITHUB_INCREMENT_20261111.md)。
 
+2026-11-11 `A-GC-SECOND64`：主线第三15094B同SHA`665a737f…afe3a`；clear48必经4 globals+互斥2 table共6unique29B全部当轮缺席，SSE/AVX写域/窗外尾跳已定，未CPU/写/原返回。新GC-DEFAULT-INPUTS按独立49/1209、98/2418规格交Terra，旧v1不变。[完整条件合同](docs/CLIENT_72_D02_SECOND_GC64_20261111.md)。
+
 2026-11-11 `COMMON-SERVICE-OWNED`：6测试/15源epoch、13.55秒独立构建、两fresh各104实际case共208 emitter通过。source21B→实际near/far均20B规范搬移/284B，200原SUB+8独立witness、3/1087绑定与1/8参数账核实；EXE SHA`86f843d2…50d5d`，子模块提交`50f9bf8`。无客户端/自然service/route，EH未知。[实际结果](docs/CLIENT_72_SDK_SERVICE_ENTRY_OWNED_20261111.md)。
 
 2026-11-11 `R3-ALL-SAVED-DEPOT-REFS`：14测试/主线第三9014403B与两fresh同SHA`b6c806df…9527a`，121 query/2924 getter/726外层字段及34批准11实际区间核实。正数仅按原fieldIndex计数，presence/alias、全phase6资源/完整恢复未验。[原执行和CLI](docs/CLIENT_72_D02_ALL_SAVED_DEPOT_REFS_20261111.md)。
