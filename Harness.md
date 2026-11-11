@@ -1,6 +1,8 @@
-2026-11-11 文档重规划索引：任务依赖、派工与验收以 [Project](Project.md) 为准；[README](README.md) 保留稳定项目说明，重排前原文见 [README 历史快照](README.archive-2026-11-11.md)。本轮仅文档整理，研发仍暂停，未新增技术或客户端验收；恢复入口与既有阻塞见 [HANDOFF2](HANDOFF2.md)。
+2026-11-11C 恢复执行索引：用户已恢复研发，D-02 / F-05 / D02-R6 客户端验收仍 0/6。Scene工厂语义、Proud setter语义及条件投影、Scene 430B机械窗的集成第三独立验收通过；限定范围、hash、原件和命令见[本轮索引](docs/CLIENT_72_D02_RESUME_20261111C.md)及专题，任务状态见[Project](Project.md)。LoadedBundle单窗双fresh待第三；backend语义及World触发分析待独立核验，World现场包阻塞。run2一次启动/采样3读24B在O=0 cold停止，收尾独立核对通过；新现场须新ready。A/B拒绝冻结继续有效，历史暂停条目仅反映当时状态。
 
-2026-11-11 本轮 A、Scene、C 已按最新指令暂停。只读收尾盘点与任务阻塞见[详细交接](HANDOFF2.md)，旧现场 ready 已消费。
+2026-11-11 历史文档重规划索引：任务依赖、派工与验收以 [Project](Project.md) 为准；[README](README.md) 保留稳定项目说明，重排前原文见 [README 历史快照](README.archive-2026-11-11.md)。本轮仅文档整理，研发仍暂停，未新增技术或客户端验收；恢复入口与既有阻塞见 [HANDOFF2](HANDOFF2.md)。
+
+2026-11-11 历史状态：当时 A、Scene、C 已按当时指令暂停。只读收尾盘点与任务阻塞见[详细交接](HANDOFF2.md)，旧现场 ready 已消费。
 
 2026-11-11 F-03d3s2 字典置位语义995项第三复核，清位/count0 的同一 MethodSpec 和666 B原窗双读通过，真实 MPLevel payload 待验。[复现](docs/CLIENT_72_D02_SCENE_MPLEVEL_DICTIONARY_20261111.md)。
 
