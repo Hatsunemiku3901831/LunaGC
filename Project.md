@@ -75,7 +75,7 @@
 | A：F-03d3f4d2；必要 String 共同合同 | 同 epoch GC/Default 输入、人工双路径、stock 条件自有原 helper 已验，只读复用 | A-SECOND-RETURN-CONTRACT及依赖保持拒绝阻塞；其他独立任务必须先通过移除拒绝动作/产物后的独立性判断 | 不派被拒项，不运行草稿 |
 | B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 已验八点、锁内 map、stock v2、PostRequest 和共用服务入口可只读复用 | 组合 loader 源、失败证据和未提交差异保留；自然请求采用、信任、认证与会话交换未闭 | 留待用户使用 [Daybreak](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md) |
 | C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 旧号/121阶段行/Talent真实Java复用；Proud原热写与三组合法miss已验 | 真正hit缺准确热Equals链；只读7读采样已离线验收，等待本轮新ready。原行/producer/+10门槛、目标OpenConfig、装备配置与完整恢复仍待 | 主线现场/集成，Sol max按新证据处理语义；不以候选加载或miss批准父项 |
-| Scene：F-03d3s2 | 已验前缀/字典等直接复用；真实路径/header/prefix后，固定外置decoder实际解出334996B payload，三轮13原件相同 | Sol max核serialized目录/脚本身份与PathHash、实际MPLevel输入；Terra接成熟parser/driver。旧parser的class114和engine门禁失败保留，未放宽。World实际返回对象/slot114及生命周期仍待 | 独有Scene/codec工具和专题；外置解码不代目标native生命周期或自然加载 |
+| Scene：F-03d3s2 | MetaConfig真实payload/实例、182数组与准确bin/entry、物理header及首块131072B均已验 | metadata实际需要27块，block0已验，其余1..26仅计划；Sol max形成精确补齐目录规格，Terra实施后按真实entry选目标对象。World实际返回对象/slot114及生命周期仍待 | 独有Scene/codec工具和专题；不以部分输出代完整目录、MPLevel或自然加载 |
 
 本批输入、文件归属、产物及退出条件见 [执行计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。Talent 两个限定出口已验；当前 Scene 解码与 Proud 新输入按成熟规格轮转，分析交回即释放 max 槽。
 每次派工先固定：**任务ID、输入版本/来源、准确问题、允许修改的文件、只读依赖、独立输出目录、禁止操作、产物、验收、停止/返回条件**。所有者以本批派工为准，一个文件同一时刻只有一个写入者。子代理返回“已完成/有界结论/阻塞”及证据；主线审核实际差异、必要独立样本和回归，再更新本页并提交。阻塞时写准确解除条件，不改父项为完成。
@@ -286,6 +286,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3s2/CONFIGMETA-SERIALIZED-IDENTITY | 已完成 | 精确含换行engine的新限定v17目录metadata EOF213/三对象；local PPtr→同CAB105B MonoScript与旧目标逐byte相同，class114实例MetaConfig前缀至object+44。第三七件同最终双fresh，7反例及纯audit通过。自定义330568B仅抽取，PathHash/MPLevel后继未验。 | [身份、来源及复现](docs/CLIENT_72_D02_CONFIGMETA_SERIALIZED_20261111B.md) |
 | F-03d3s2/CONFIGMETA-FIELDS-BIN-LOCATOR | 已完成 | 按本已绑定实例公开字段/数组schema，182 PathHash数组/20615对恰EOF；field386052与已验consumer接同第二U64，完整两索引唯一命中entry44935541/location24230448。第三四件同最终双fresh，纯audit及针对性测试通过。实际bin payload/reader状态与MPLevel分组仍待，不用runtime offset作serialized依据。 | [字段桥与准确索引](docs/CLIENT_72_D02_CONFIGMETA_FIELDS_BIN_HEADER_20261111B.md) |
 | F-03d3s2/GADGET-BIN-ACTUAL-HEADER | 已完成 | 唯一物理139134667B顺序SHA/MD5验证，仅取13737B header；原header/parser/14getter第三四件同双fresh，纯audit通过，合计6定向测试过。实际tag3/3399块/单content445421180B/tail0；尚0 payload前缀或解码。 | [源、原件及下一选择性范围](docs/CLIENT_72_D02_CONFIGMETA_FIELDS_BIN_HEADER_20261111B.md) |
+| F-03d3s2/GADGET-BIN-FIRST-BLOCK | 已完成 | 仅block0原81B prefix+独立LZ4，真实60990→131072B，guards/保护保持；最终第三六件同双fresh、7反例及纯audit过。metadataEnd3523165超prefix，未读目录；后续1..26只列准确范围，不能把本项标为外部阻塞或已得MPLevel。 | [实际首部与精确后继](docs/CLIENT_72_D02_GADGET_BIN_FIRST_BLOCK_20261111B.md) |
 
 
 ### 6.3 SDK、补丁、观察与运维前置
@@ -455,6 +456,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01d1/R3-PROUD-GATE-COMPARISON-WINDOW | 已完成 | 按准确Avatar参数从原索引缩窄唯一候选；普通AOT原cell/slot、唯一pdata/原site门后取得944B/238条。第三九原件同双fresh，8人工门禁及独立产物audit通过；只证明来源及site边界，同对象门槛比较/采用仍交Sol max。 | [来源、范围及复现](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_WINDOW_20261111B.md) |
 | E-01d1/R3-PROUD-GATE-COMPARISON-BODY-CONTRACT | 已完成 | 29源/55锚点/11typed字段/三helper E8及七query join第三46067B同双fresh。本体读取已验skills/energy，未读81127+10；同Avatar/Proud helper整链仍未知，不能称排除。准确query caller后继另验。 | [准确值流与未闭](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_SEMANTICS_20261111B.md) |
 | E-01d1/R3-PROUD-GATE-COMPARISON-QUERY-WINDOW | 已完成 | 七准确query中按声明上下文缩窄795B候选；两个普通AOT原slot与准确E8/唯一pdata门通过，第三九件同双fresh、201条及8反例通过。只关闭来源，其他六候选未排除，query输入/返回业务身份及门槛待Sol max。 | [原窗及边界](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_QUERY_WINDOW_20261111B.md) |
+| E-01d1/R3-PROUD-GATE-QUERY-BODY-CONTRACT | 已完成 | 第三38653B同双fresh，25源/50锚点/七typed；已核同Avatar→Depot→skills/energy→已有Proud集合正静态链，本体未读同81127+10。typed缩窄与原覆盖边界准确保留；Promote配置context与候选交集第三14264B同双fresh，group不是实际phase，2034B原窗后继待验。 | [准确关系、更正与后继](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_QUERY_SEMANTICS_20261111B.md) |
 | E-01/R3-PROUD-ROW-READER | 已完成 | 原1438B/309条、三个backend分支参数及typed缓存已核；6测试/主线第三85断言31839B同两fresh。两个U32用途按分支分开，不统一offset/size；+1c赋值不证明有效row span，400190 producer及真实索引仍未闭。 | [准确合同与下一候选](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md) |
 
 
