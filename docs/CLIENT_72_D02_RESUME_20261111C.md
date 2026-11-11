@@ -2,7 +2,7 @@
 
 本页记录 `DOC-D02-RESUME-20261111C` 的本轮派工、输入、证据和停止点；任务状态和验收以 [Project](../Project.md) 为准，复现命令及完整原件清单见各专题。接手基线 HEAD `1410df707cf52794afadbd2e9bfec9c7be01026b`；国服 7.2、Windows portable。此前用户要求暂停及文档重规划均为历史事实，用户现已要求继续至 D-02 全过或所有可独立任务明确阻塞。该恢复不解除安全拒绝，也不放宽 ready 或验收门禁。
 
-D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开始。现有局部成果和本轮交回均不等于自然客户端入场或资源 ready。主线负责管理、独立验收；用户允许需要联调的部分由主线承担。共享 Git/index/提交、构建和运行现场须唯一执行；本轮现场已明确交由主线接管，`intake_audit` 负责独立验收及只读收尾，不双执行。各专题写者不操作共享 Git/index。本页与 Project/Harness 的写者为文档代理 GPT-6.1 Terra xhigh；不碰 README、交接、其他专题、源码或冻结报告。
+D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开始。现有局部成果和本轮交回均不等于自然客户端入场或资源 ready。主线负责管理、独立验收；用户允许需要联调的部分由主线承担。共享 Git/index/提交、构建和运行现场须唯一执行；run2主线现场占用已结束，共享运行权恢复唯一执行者 `intake_audit`；后续若由主线接管须重新明确交接，不双执行。各专题写者不操作共享 Git/index。本页与 Project/Harness 的写者为文档代理 GPT-6.1 Terra xhigh；不碰 README、交接、其他专题、源码或冻结报告。
 
 ## 本轮任务与证据状态
 
@@ -32,9 +32,14 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 | Proud registration普通诊断 / Terra xhigh | [诊断](CLIENT_72_D02_PROUD_SCALAR_CALLBACK_REGISTRATION_WINDOW_20261111C.md)；当前无unique pdata，双fresh exit2/body0。 | **诊断已完成限定验收**；完整source未取得，不称外部阻塞；不自动取274B。 |
 | Proud EC8 14B局部合同与源 / Sol max、Terra xhigh | [合同](CLIENT_72_D02_PROUD_EC8_STORE_SOURCE_CONTRACT_20261111C.md)、[14B源](CLIENT_72_D02_PROUD_EC8_STORE_SLICE_WINDOW_20261111C.md)，SHA `c7730f930c4f55575aaa824be335917b027790f67be9b0b5d91fcccc4f62250f`。 | **已完成限定验收**；41旧PC是sorted集合非edges；局部顺序LEA `1408b9780`→EC8，不证current/global/natural。 |
 | Scene 415B续段源与loop语义 / Terra xhigh、Sol max | [源](CLIENT_72_D02_SCENE_READ_CORE_CONTINUATION_REGION_20261111C.md)、[语义](CLIENT_72_D02_SCENE_READ_CONTINUATION_SEMANTICS_20261111C.md)，sourcecheck 8836B SHA `12430f9acb39d1472cef79a3b2010471640f26a3430e3d64c6525319c1146612`。 | **已完成限定验收**；0 RET，edb/f06/efa及原f85未闭，非完整logical read。原文回daa已按raw改为回da6重做表界比较，原raw/spec不变，见 `integration/acceptance13/loop-coordinate-correction1.private.json`；实际copy未验。 |
-| Proud EC8局部绑定和条件prefix / Sol max、Terra xhigh | [绑定](CLIENT_72_D02_PROUD_EC8_LOCAL_BINDING_SEMANTICS_20261111C.md)、[prefix](CLIENT_72_D02_PROUD_EC8_CONDITIONAL_TARGET_PREFIX_20261111C.md)，review 7921B SHA `15d08fd0a75a54a54e9ecb4c5b21ce9c45d5cec932525f3f365e4f2f112bcbac`。 | **已完成限定验收，待提交**；5B E9→`1408b94a0`，第三四件一致、6测试，metadata缺席与条件前缀规划有界；不证明自然目标或完整函数。 |
-| Scene 31B返回region / Terra xhigh、Sol max | [返回region](CLIENT_72_D02_SCENE_READ_RETURN_CONTINUATION_REGION_20261111C.md) `[edb,efa)`，9条、ef9 RET，双fresh七件/7测试。 | **待第三验收**；Sol max语义进行中，f06/efa/f85小批计划尚未派工。 |
-| Proud callback后继 / Sol max、Terra xhigh | [5B tail来源语义](CLIENT_72_D02_PROUD_CALLBACK_TAIL_SOURCE_SEMANTICS_20261111C.md) 6491B已交；callback-core `1408b94a0`完整窗已派，≤1024B/512条，current unique pdata，extent未知。 | **语义待独立核、原窗进行中**；尚未交回，不写实际结果。World观察阻塞不泛封readerPool。 |
+| Proud EC8局部绑定和条件prefix / Sol max、Terra xhigh | [绑定](CLIENT_72_D02_PROUD_EC8_LOCAL_BINDING_SEMANTICS_20261111C.md)、[prefix](CLIENT_72_D02_PROUD_EC8_CONDITIONAL_TARGET_PREFIX_20261111C.md)，review 7921B SHA `15d08fd0a75a54a54e9ecb4c5b21ce9c45d5cec932525f3f365e4f2f112bcbac`。 | **已完成限定验收**；5B E9→`1408b94a0`，第三四件一致、6测试，metadata缺席与条件前缀规划有界；不证明自然目标或完整函数。 |
+| Scene 31B返回region与语义 / Terra xhigh、Sol max | [原窗](CLIENT_72_D02_SCENE_READ_RETURN_CONTINUATION_REGION_20261111C.md)、[语义](CLIENT_72_D02_SCENE_READ_RETURN_SEMANTICS_20261111C.md)。 | **已完成限定验收**；31B/9条含ef9 RET及限定语义，非完整logical read。 |
+| Proud tail来源与717B条件目标源 / Sol max、Terra xhigh | [tail来源](CLIENT_72_D02_PROUD_CALLBACK_TAIL_SOURCE_SEMANTICS_20261111C.md)、[条件目标源](CLIENT_72_D02_PROUD_CALLBACK_TAIL_WINDOW_20261111C.md)。 | **已完成限定验收**；条件边和原窗不证明当前callback或自然执行。 |
+| Proud条件生成语义 / Sol max | [生成语义](CLIENT_72_D02_PROUD_TABLE_GENERATION_SEMANTICS_20261111C.md)，9504B SHA `0fa87964716a94475bae94c8456b307c175d7e04a25dc5fffc02c6e7a7ab81ab`。 | **已完成限定验收**；1024次AL交换及第1025次完整seed，在正常返回、ABI及工作区非干扰条件下保持不变量；实际callback/自然seed未知。256B常量后继规格已定。 |
+| Scene控制尾原窗 / Terra xhigh | [控制尾](CLIENT_72_D02_SCENE_READ_CONTROL_TAIL_REGIONS_20261111C.md)，三target去重两region共146B/43条。 | **已完成限定验收**；十件三方一致/6测试，尚未证明完整logical read或自然reader。 |
+| Proud 256B常量 / Terra xhigh | [常量专题](CLIENT_72_D02_PROUD_INITIAL_QUARTER_CONSTANTS_20261111C.md)，双fresh五件、5测试，permutation=identity，C SHA `40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880`。 | **进行中**；集成第三尚待，不提升已完成；有限生成投影本轮未派。 |
+| Scene控制尾及自然Pool首缺 / Sol max | 固定已验reader控制尾原件。 | **进行中**；Recreate空缓存 `146ecd8bc→1405336c0` 命中A拒绝入口，停止该分支及依赖；缓存已有和ReplaceCluster路线未知，不泛封reader。 |
+| `CURRENT-ADOPTION-SOURCE-PLAN` / Sol max | 已从既有 `AvatarInfo15184e100→151847f70` 找到非预览静态采用链线索。 | **进行中**；仍核来源与生命周期，不称已验业务或自然采用。 |
 | `DOC-D02-RESUME-20261111C` / GPT-6.1 Terra xhigh | 本页、[Project](../Project.md)、[Harness](../Harness.md)；输入为既有计划、专题及本轮主线交接事实。 | 文档初稿供集成执行者审核；不做测试、构建、客户端、DB、部署或 Git。后续由同一写者按实际集成结论更新，不提前声明已验。 |
 
 固定 hash 只标识所列输入或产物，不表示本页写者重新读取目标客户端或执行相关研究；所有来源范围、歧义、具体复现与停止条件以各专题原文为准。旧成果包括 Talent 六个 null/空串、720 必要键与目录加载、121 Depot/605槽两叶 Java、phase6 和旧号已有结果直接复用。`threshold==phase+1` 已确定为下一突破 UI 预览，冻结该分支，不将其当当前采用。
@@ -45,14 +50,14 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 
 run2 主线明确接管并取得新ready后正常启动一次，用户确认标题/SDK页；identity/sample各一次，实际 partial 3读24B，Q/S非零、O为0后按cold停止，K/N/F/M未读，无重试或冷创建。用户确认正常关闭、界面正常。集成执行者只读 closeout 独立通过：原记录纯重放一致；Launch CloseHandle 实际返回 true，3个UAC父 Dispose=true，helper退出分别为 Launch 0、Identity 0、Sample 1；target/helper PID均不存在，相关进程与固定TCP/UDP为0，五stock/source/config/JAR/20保护/138原数据逐项零差异。sampler句柄JSON不记录关闭返回值，仅AST/finally保证调用且helper已退出，不称返回值已观测。原件 `local/migration72/d02-resume-20261111c/integration/acceptance1/live2-closeout1.private.json`。
 
-当前没有待用户ready事项，不沿同一页面重复观察；以后若确有必要新现场须新实时 ready，Proud 与World/slot114不混采。World合法同帧触发和受支持观察机制未成熟，三读224B只是输入规格。具体来源、命令与停止规则见[采样准备](CLIENT_72_D02_PROUD_HOT_EQUALITY_SAMPLER_20261111B.md)及[World触发条件](CLIENT_72_D02_SCENE_SLOT114_TRIGGER_CONDITIONS_20261111C.md)。
+当前没有待用户ready事项，不沿同一页面重复观察；以后若确有必要新现场须新实时 ready，Proud 与World/slot114不混采。World合法同帧触发和受支持观察机制未成熟，三读224B只是输入规格；World必要配置上游待按需独立计划，不混入Proud。具体来源、命令与停止规则见[采样准备](CLIENT_72_D02_PROUD_HOT_EQUALITY_SAMPLER_20261111B.md)及[World触发条件](CLIENT_72_D02_SCENE_SLOT114_TRIGGER_CONDITIONS_20261111C.md)。
 
 ## 拒绝冻结与独立后继
 
 A-SECOND-RETURN-CONTRACT 及依赖、B组合 loader 仍因安全审查拒绝冻结，不运行草稿、不换模型或工具、不间接重试。A 的完整原拒绝仍缺，不能将摘要冒充原提示；B 保留原句 `This content was flagged for possible cybersecurity risk.`。现有[最小包队列](CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)只读复用，队列开头的暂停叙述属于历史状态，不自动新增或派发 Daybreak。移除被拒动作后，仅推进能靠已有输入独立完成且产物不直接实现被拒动作的任务；局部通过不升级父项或 ready。真实门禁、认证、资源和完整旧号恢复仍约束 R4。
 
-下一执行顺序：集成验收31B返回region，独立核验tail语义并等待callback-core原窗；按各自真实缺口继续可独立工作。现场只在完成门禁并取得新 ready 后单独判断；R1/R2/R3 必要合同齐备后才进入 R4，继而 R5/R6。
+下一执行顺序：集成第三验收Proud常量，继续Scene控制尾/Pool及Proud当前采用来源计划；按各自真实缺口继续可独立工作。现场只在完成门禁并取得新 ready 后单独判断；R1/R2/R3 必要合同齐备后才进入 R4，继而 R5/R6。
 
 ## 已验本地提交索引
 
-首批五项本地提交的身份与路径已核验，未推送；原核验索引 `local/migration72/d02-resume-20261111c/integration/acceptance2/commits-accepted1.private.json`。`ad1d52c` 工厂语义、`3bed8c9` Proud setter语义、`d1144c2` Proud条件投影、`f8ab2f0` Scene 430B单窗、`e9eaca5` 本轮状态与冷采样文档。第二批 `f9495b9` backend语义、`4a92683` World触发条件、`a2bf69e` LoadedBundle单窗、`9a1f0e9` 状态文档；第三批 `815a853` LoadedBundle语义、`3565847` token生产者单窗。另有 `ada8042` 状态、`fa367a79` owner规划、`5e5cbf04` token语义、`807fb41c` Proud九候选源、`b873a3f6` Scene refill源；另有 `18779b`、`b8241b`、`906c841`（第5轮状态）、`4c9c79cd` builder源与 `d181851c` native read源；另有 `592fd65` 投影v2、`6536c5f` builder语义、`579d7f0` native语义、`fca01a1` 状态，`5265fe38` core region、`14be965f` registration诊断、`9c97b082` EC8合同、`bd5c39a2` core语义、`902aaad` 勘误、`dcc19019` 14B源、`a30b28e9` 415B源；截至当前共32项本地提交，身份及路径已核，未推送；核验原件分别见 `integration/acceptance3/commits-accepted2.private.json`、`integration/commit4/commits.private.json`（相对本轮私有根）。acceptance13三项限定成果与本次状态文档尚待提交，不预写提交号。
+首批五项本地提交的身份与路径已核验，未推送；原核验索引 `local/migration72/d02-resume-20261111c/integration/acceptance2/commits-accepted1.private.json`。`ad1d52c` 工厂语义、`3bed8c9` Proud setter语义、`d1144c2` Proud条件投影、`f8ab2f0` Scene 430B单窗、`e9eaca5` 本轮状态与冷采样文档。第二批 `f9495b9` backend语义、`4a92683` World触发条件、`a2bf69e` LoadedBundle单窗、`9a1f0e9` 状态文档；第三批 `815a853` LoadedBundle语义、`3565847` token生产者单窗。另有 `ada8042` 状态、`fa367a79` owner规划、`5e5cbf04` token语义、`807fb41c` Proud九候选源、`b873a3f6` Scene refill源；另有 `18779b`、`b8241b`、`906c841`（第5轮状态）、`4c9c79cd` builder源与 `d181851c` native read源；另有 `592fd65` 投影v2、`6536c5f` builder语义、`579d7f0` native语义、`fca01a1` 状态，`5265fe38` core region、`14be965f` registration诊断、`9c97b082` EC8合同、`bd5c39a2` core语义、`902aaad` 勘误、`dcc19019` 14B源、`a30b28e9` 415B源；另有 `3dd90a5`、`c8fc882`、`6c2fa95`、`b271490`、`38a9c395`、`32f711cb`、`4ac11c5f`、`6bd19575`、`0fe6fef9`、`7728033a`；截至当前共42项本地提交，身份及路径已核，未推送；核验原件分别见 `integration/acceptance3/commits-accepted2.private.json`、`integration/commit4/commits.private.json`（相对本轮私有根）。本次状态文档尚待集成提交，不预写提交号。
