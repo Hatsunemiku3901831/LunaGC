@@ -957,3 +957,5 @@ B-02d收口：验收提交36eb486；先建卡3fc7e80。旧HANDOFF2已先备份�
 2026-11-11 GADGET-BIN-FIRST-BLOCK：block0原prefix+独立LZ4得131072B/SHA05eee2cc，补Reader直接pin后的最终第三六件同fresh4/5，7测试/纯audit SHA88990269通过。真实metadataEnd3523165/dataOffset3523168，1..26仅计划，不造全445MB；旧epoch第三保留。见[首块与精确后继](docs/CLIENT_72_D02_GADGET_BIN_FIRST_BLOCK_20261111B.md)。Proud795本体纯第三38653B/SHA10b6901a、Promote配置context交集纯第三14264B/SHA9a2487a7同双fresh；group/实际phase明确区分，2034B待机械验收，见[新准确语义](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_QUERY_SEMANTICS_20261111B.md)。
 
 2026-11-11 PROUD-GATE-PROMOTE-WINDOW：2034B/437条第三十件同双fresh，code SHA0a07ead5，7组反例及独立artifact/reference audit通过；实际三个slot、准确候选/三E8与唯一pdata已核。group与phase不混用，同81127比较/列表语义继续Sol。见[复现与范围](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_PROMOTE_WINDOW_20261111B.md)，无callee扩读、native或客户端验收。
+
+2026-11-11 GADGET-BIN-METADATA-PREFIX：补1..26后真实prefix3538944B/SHA4c99c4ec、metadata3523145B/SHA79cedf3b，精确platform-2/三type/176152对象，脚本外部计数与userInfo由末尾实读EOF。第三110件同fresh4/5、5反例/纯audit15903B SHA51d11181通过；唯一1210对象[5637072,11273880)计划43..86，未解索引。见[目录与CLI](docs/CLIENT_72_D02_GADGET_BIN_METADATA_PREFIX_20261111B.md)；主线已冻结下一索引包，旧100000样本cap保持，新的同schema入口按实际对象bytes有界解析。
