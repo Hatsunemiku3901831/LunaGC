@@ -457,6 +457,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01d1/R3-PROUD-GATE-COMPARISON-BODY-CONTRACT | 已完成 | 29源/55锚点/11typed字段/三helper E8及七query join第三46067B同双fresh。本体读取已验skills/energy，未读81127+10；同Avatar/Proud helper整链仍未知，不能称排除。准确query caller后继另验。 | [准确值流与未闭](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_SEMANTICS_20261111B.md) |
 | E-01d1/R3-PROUD-GATE-COMPARISON-QUERY-WINDOW | 已完成 | 七准确query中按声明上下文缩窄795B候选；两个普通AOT原slot与准确E8/唯一pdata门通过，第三九件同双fresh、201条及8反例通过。只关闭来源，其他六候选未排除，query输入/返回业务身份及门槛待Sol max。 | [原窗及边界](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_QUERY_WINDOW_20261111B.md) |
 | E-01d1/R3-PROUD-GATE-QUERY-BODY-CONTRACT | 已完成 | 第三38653B同双fresh，25源/50锚点/七typed；已核同Avatar→Depot→skills/energy→已有Proud集合正静态链，本体未读同81127+10。typed缩窄与原覆盖边界准确保留；Promote配置context与候选交集第三14264B同双fresh，group不是实际phase，2034B原窗后继待验。 | [准确关系、更正与后继](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_QUERY_SEMANTICS_20261111B.md) |
+| E-01d1/R3-PROUD-GATE-PROMOTE-WINDOW | 已完成 | 旧配置query context与候选准确交集选2034B，三个普通AOT原slot/唯一pdata/候选及三原E8门通过；第三十件同双fresh、437条及7组反例通过。只关闭新完整来源，group/实际phase及同元素比较由Sol max另核，4427B交集未读。 | [真实边界与原件](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_PROMOTE_WINDOW_20261111B.md) |
 | E-01/R3-PROUD-ROW-READER | 已完成 | 原1438B/309条、三个backend分支参数及typed缓存已核；6测试/主线第三85断言31839B同两fresh。两个U32用途按分支分开，不统一offset/size；+1c赋值不证明有效row span，400190 producer及真实索引仍未闭。 | [准确合同与下一候选](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md) |
 
 
