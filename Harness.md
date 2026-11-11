@@ -1,4 +1,4 @@
-2026-11-11C 恢复执行索引：D-02 / F-05 / D02-R6 客户端验收仍 0/6。builder 117B、native read 208B的原窗与语义，以及refill条件投影v2已限定验收；范围和复现见[本轮索引](docs/CLIENT_72_D02_RESUME_20261111C.md)，任务状态见[Project](Project.md)。v1投影普通返修封存，不追认；read-core region与registration候选待核，World观察包仍阻塞。run2 cold停止及收尾已核，无待用户ready事项；A/B拒绝冻结不变。
+2026-11-11C 恢复执行索引：D-02 / F-05 / D02-R6 客户端验收仍 0/6。read-core 204B和415B续段原窗/语义、EC8局部合同/14B/绑定/条件5B前缀均已限定验收；registration只完成无pdata诊断，完整源未取得。31B返回region待第三、callback-core在途；复现与证据见[本轮索引](docs/CLIENT_72_D02_RESUME_20261111C.md)，状态见[Project](Project.md)。World观察包仍阻塞，A/B拒绝冻结不变；run2 cold停止及收尾已核，无待用户ready事项。
 
 2026-11-11 历史文档重规划索引：任务依赖、派工与验收以 [Project](Project.md) 为准；[README](README.md) 保留稳定项目说明，重排前原文见 [README 历史快照](README.archive-2026-11-11.md)。本轮仅文档整理，研发仍暂停，未新增技术或客户端验收；恢复入口与既有阻塞见 [HANDOFF2](HANDOFF2.md)。
 
