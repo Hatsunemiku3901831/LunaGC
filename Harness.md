@@ -1,4 +1,4 @@
-2026-11-11C 恢复执行索引：D-02 / F-05 / D02-R6 客户端验收仍 0/6。Proud当前采用合同、World条件父消费者合同及QueryWrapper借用源V2已限定验收；复现、旧失败与边界见[本轮索引](docs/CLIENT_72_D02_RESUME_20261111C.md)及专题。nativeWrapper ctor与World factory源窗进行中，作者语义/raw审核待独立验收；自然reader、row与采用未知，A/B拒绝冻结。run2收尾已核，无待用户ready事项。
+2026-11-11C 恢复执行索引：D-02 / F-05 / D02-R6 客户端验收仍 0/6。QueryWrapper借用语义、nativeWrapper ctor源窗、World factory raw布局复核及修正源窗已限定验收；复现与旧失败见[本轮索引](docs/CLIENT_72_D02_RESUME_20261111C.md)和专题。ctor借用合同与Scene cluster来源分析进行中，自然reader、row与采用未知；A/B拒绝冻结，run2收尾已核，无待用户ready事项。
 
 2026-11-11 历史文档重规划索引：任务依赖、派工与验收以 [Project](Project.md) 为准；[README](README.md) 保留稳定项目说明，重排前原文见 [README 历史快照](README.archive-2026-11-11.md)。本轮仅文档整理，研发仍暂停，未新增技术或客户端验收；恢复入口与既有阻塞见 [HANDOFF2](HANDOFF2.md)。
 
