@@ -929,3 +929,5 @@ B-02d收口：验收提交36eb486；先建卡3fc7e80。旧HANDOFF2已先备份�
 2026-11-11 本批恢复 `R3-OLD-TALENT-ENTRY-NULLS` 已限定验收：`OldTalentEntryNullBehaviorTest` 最终5项全过，真实ResourceLoader/OpenConfigLoader/Avatar与静态场景能力builder覆盖六个null/空串、正配置、缺Talent行/缺配置键和人工哨兵；固定AvatarTalents目录720个必要源键实际安装，非生产完整加载或目标语义。复现四个JVM属性、隔离命令、原件和java1准备失败见[专题](docs/CLIENT_72_D02_OLD_TALENT_ENTRY_NULLS_20261111B.md)。当前Scene/Proud仍并行推进，A/B拒绝项不重试，D-02仍未验。
 
 2026-11-11 R3-OLD-TALENT-CATALOG-LOAD：142文件四目录与缺省缓存固定；无参数生产OpenConfig loader在隔离Java中实际安装720必要Talent键，完整条目与单Avatar目录一致，缺失/变更0，1项通过。目标身份、effect/revision和完整恢复仍未验。规范化manifest、JVM属性、原件与两次准备问题见[专题](docs/CLIENT_72_D02_OLD_TALENT_CATALOG_LOAD_20261111B.md)。
+
+2026-11-11 SCENE-ACTUAL-BUILTIN-CATALOGS：15同源安装catalog共42879对象、4430脚本PPtr核对；唯一ConfigMeta MonoScript及0实例引用，第三20492B/SHA3b3bc0c7与双fresh一致，6测试通过。只关闭内置目录清查，不推bundle不存在；下一步精确LoadConfig cell的caller/filePath。CLI与原件见[专题](docs/CLIENT_72_D02_SCENE_ACTUAL_INPUTS_20261111B.md)。
