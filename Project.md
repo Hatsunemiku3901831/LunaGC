@@ -436,6 +436,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01/R3-PROUD-NATIVE-17208-ELEMENT-WINDOW | 已完成 | 两fresh八件与完整目录唯一pdata，317B/86条；root5门禁/15137B机械audit及1719B独立第三同双fresh。旧摘要未作门禁，无CPU/helper新取。 | [准确元素原窗与第三](docs/CLIENT_72_D02_PROUD_NATIVE_17208_ELEMENT_WINDOW_20261111.md) |
 | E-01/R3-PROUD-NATIVE-17208-ELEMENT-CONTRACT | 已完成 | root第三228055B同双fresh，73源/全86条/41元素及53跨窗锚点、81连续物理span；四元素322→330、尾33位和低U32输入2→334。仅单key条件语法，actual encoded/row/自然命中未验。 | [准确元素合同](docs/CLIENT_72_D02_PROUD_NATIVE_17208_ELEMENT_CONTRACT_20261111.md) |
 | E-01/R3-PROUD-SINGLE-KEY-REFERENCE | 已完成 | root16门禁及新双fresh/第三82835B同SHA，81 raw span逐项匹配完整payload，从4到334/330B，候选只事后对照。U32 header运算标记16→32红绿已修并保留旧epoch；只验固定key条件文件语法，encoded/alias/自然backend/完整Proud未验。 | [最终源码/第三/边界](docs/CLIENT_72_D02_PROUD_SINGLE_KEY_REFERENCE_20261111.md) |
+| E-01d1/R3-PROUD-HOT-MAP-SOURCES | 已完成 | 同wrapper热Store178B与Dictionary80067/U32的准确TryInsert AOT接上；212B静态类型来源第三同双fresh，TryInsert1455B/380条第三及6门禁通过。热写入、lookup实际命中、原行构造与自然dispatch仍未验，不涉及冷allocator/Default。 | [来源与范围](docs/CLIENT_72_D02_PROUD_ACTUAL_ADOPTION_20261111B.md)、[原TryInsert窗口](docs/CLIENT_72_D02_PROUD_TRYINSERT_WINDOW_20261111B.md) |
+| E-01d1/R3-PROUD-GATE-ENTRY-INDEX | 已完成 | 固定PE形状索引73候选（7 query E8、66 displacement load），69函数/47owner；第三同双fresh及5门禁通过。仅原字节候选/pdata与声明，不证明指令边界、同typed+10消费或提升门槛；后继按准确来源另验。 | [扫描范围、原件与未验](docs/CLIENT_72_D02_PROUD_ACTUAL_ADOPTION_20261111B.md) |
 | E-01/R3-PROUD-ROW-READER | 已完成 | 原1438B/309条、三个backend分支参数及typed缓存已核；6测试/主线第三85断言31839B同两fresh。两个U32用途按分支分开，不统一offset/size；+1c赋值不证明有效row span，400190 producer及真实索引仍未闭。 | [准确合同与下一候选](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md) |
 
 
