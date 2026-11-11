@@ -13,7 +13,7 @@
 
 ## 当前状态
 
-原候选预算停止有效，属于本次扫描包的范围门禁，不是外部输入或安全阻塞。来源关联已形成最小优先范围，主线已批准先取单个141 B完整窗；本卡尚未读取或验证该body。
+原候选预算停止有效，属于原扫描包的范围门禁，不是外部输入或安全阻塞。已按准确字段owner优先取得单个141 B完整窗，**普通路径的真实filePath来源和返回值发布到field108683已闭合**。未知泛型callee内部效果、自然分支与实际配置对象仍未验；357 B及10,851 B均未启。
 
 ## 候选的准确声明关系
 
@@ -59,4 +59,43 @@
 python -X utf8 -B local/migration72/d02-resume-20261111b/scene/audit-configmeta-candidate-priority.private.py --output local/migration72/d02-resume-20261111b/scene/priority-main-third.private.json
 ```
 
-使用新输出名，不覆盖已存原件。主线第三尚待；已验assets文件/工具保持冻结。本轮仅离线来源关联和规格，没有运行材料变更、构建、部署或客户端新增验收。实际ConfigMeta.bin/payload/reader、MPLevel原分组、World返回对象/slot114、Pool/组件与完整D-02均未验。
+使用新输出名，不覆盖已存原件。主线第三已通过，12,150 B/SHA与双fresh相同；已验assets文件/工具保持冻结。
+
+## 141 B实际来源语义：精确path和同一消费字段
+
+[完整原窗](CLIENT_72_D02_SCENE_CONFIGMETA_HOLDER_WINDOW_20261111B.md)两fresh均141 B/32条，原code SHA-256 **`f62abe553b1ce6225660e55d5b8eb40ad239f5b36c94f225ebfc1468abbee14f`**；原asm 5,649 B/SHA `0865d5a8f142c92527439953bc24588bcbd46f5b65d121d27c43407498deed35`，extraction 5,101 B/SHA `49fa229f5130f5a0c8b6a5ca541b891b782eb20e29d4acd25862da9aaa5fab65`。rawsite `14d1dad92` 已通过完整指令边界验证；本节只解释已有原窗，没有重提任何body。
+
+| 普通路径site | 原指令及已绑定输入 | 结论和限制 |
+| --- | --- | --- |
+| `dad6e..dad7c` | class cell `14589cc88` → type23071，检查其+`c7`；冷路径`dade0→140525e00`后回`dad7e` | 同一字段owner的类初始化前置，未观察自然flag。 |
+| `dad7e/dad85` | RSI取原地址 `145871708`，ECX读该地址旧U32 | 由原primitive base `14586b610` 加 `60f8`，精确绑定23071.field108686/rawOffset`20060f8`。这里取地址供随后ref参数，不能只记录旧数值。 |
+| `dad8b/dad8d` | EDX=0，原CALL `146eb81e0` | 唯一声明为11307.method80121 `CommonMiscs.DismissExternal(uint32 resourceHandle,bool async)`。本窗确证传旧handle和false；其内部释放/句柄变化未审，不能说已释放或已清零。 |
+| `dad92` | R8取 `145a5ee48` | 准确MethodInfo source复用并重新绑定usage758408/spec93696/`(80455,-1,66311)`，实参T=ConfigMeta77121。 |
+| `dad99` | RCX取literal cell `145b51ee0` | 只按准确cell找到usage783116/source index69656/slot69656；原decoder仅解此index，得到 **`Data/Common/MetaConfig`**。这是编译期filePath来源，未以类型名或外部JSON推路径。 |
+| `dada0/dada3` | RDX=RSI，即&field108686；CALL `1547b09a0` | 实际输入为准确filePath、真实ref-U32槽地址和上述MethodInfo。此目标没有普通方法登记，未取泛型callee body，不据call返回位置推测内部资源加载、句柄结果或返回类型声明。 |
+| `dada8/dadaf` | RCX从GLOBAL root cell `14586b600`取得；`[RCX+c8e0]=RAX` | 原返回值直接写到已验消费者同一 `23071.field108683 : ConfigMetaConfig`；call与store之间没有RAX替换或null检查。仅当普通call正常返回时成立，不能称实际非null对象或自然采用已观察。 |
+| `dadb6..dadbb` | 原栈恢复/RET | 末尾没有新增成功判定或对象验证；声明返回类型仍未知。 |
+
+入口 `1457e1e05` 非零走独立IFix分支：读取 `GLOBAL+232a0` 后取其 `+15b5c8` 到RCX；非null时原尾跳 `14d9638a0`，metadata唯一对应33459.method265719 `ILFixDynamicMethodWrapper.__Gen_Wrap_142`。该wrapper未审，自然IFix flag未采，不能把普通发布路径说成自然必经；null到原错误helper `1404c2be0`。这里没有以正常RET替代任何未知callee或错误分支。
+
+独立来源CLI每次先核五stock/上述两fresh原件/metadata/signature/冻结decoder及usage工具，然后只做原语义数据流与精确literal解码。脚本私有 `audit-configmeta-load-source.private.py` SHA **`a541b78788b09aceebbe5ec70f52d33101a8b15eea7299794e2991056109655e`**。两fresh各26项来源断言、**8,667 B / SHA `90eb3d0cb54347aaac11b1b00a5fd82c17c9a3e9536d631166eff3f756b0c7f3`**，逐byte一致；不称26项native测试。主线第三使用新输出名：
+
+```powershell
+python -X utf8 -B local/migration72/d02-resume-20261111b/scene/audit-configmeta-load-source.private.py --output local/migration72/d02-resume-20261111b/scene/load-source-main-third.private.json
+```
+
+主线第三已实际通过：8,667 B/SHA与双fresh相同，26项来源/流程断言成立；完整body的机械第三、三项门禁及八原件一致另见原窗专题。没有CPU、native、live、客户端或新callee操作。
+
+## 直接下一包：准确资源对象定位
+
+已有准确path和原索引type pair `ConfigMetaConfig/.ScriptableObject`，无需先开启357 B或10,851 B。只用已验ASCII reference hash/pack和两个固定实际asset索引，本轮得到以下**待后继独立复核**的精确定位链：
+
+`Data/Common/MetaConfig` + `.ScriptableObject` → U64 `69d7a7642027d5f7` → 31049740原记录 `[19917,19931)`、唯一variant `(0,33095)` → bundle33095 /entry `642027d5` → 唯一location `(block2455671,A308700,B212203,group0,bits6)`。
+
+安装manifest第341行给出的准确block为 `blocks/00/02455671.blk`，1,751,851 B/SHA **`f0191829b0d173e2da353c06c81b119c0ceac7c4875f43da077d4e78c4f46a76`**；本轮完整核其大小/SHA/MD5后，只固定所选 `[308700,520903)` 的212,203 B切片，SHA **`2033c3659731308aa208d4e3ac9ee52e0b9df1396a5d0be32a3b5f5971859bb0`**。没有解blob header、codec或serialized内容；其原header size117仍需原消费者验证。这条reference/实际索引关系不能代未知泛型loader成功。
+
+已交机械规格 `scene/configmeta-locator-spec.zh.md`，10,929 B / SHA **`908a7c9ab8de67853b95c1b35fb37cdb859212b37eb63213ccbd508ef1811881`**。它固定原literal/141B/类型后缀、既有locator/BlobProbe/PayloadProbe来源及context，先核本segment header，再只沿已验codec和实际content成员到serialized目录；准确entry必须以原引用唯一命中对象，再以实际MonoScript/PPtr证明ConfigMeta三元组。未知codec/entry schema保留准确首缺，不套旧MiHoYoBinData或旧546块wrapper。后继资源对象/字段语义另立专题，本页不与其并写。
+
+本轮新增客户端验收0，无运行材料、Proto、资源、配置或patch变更，不需构建/部署/重启。实际ConfigMeta对象字段、PathHash.bin U64、对应payload/reader、MPLevel原分组与原序名称仍待后继；World返回对象/slot114、Pool/组件和D-02保持未验。
+
+本来源出口和私有审核CLI已交回冻结，由主线更新共享状态并本地提交；后继locator单独执行，不再扩本页或旧assets来源。

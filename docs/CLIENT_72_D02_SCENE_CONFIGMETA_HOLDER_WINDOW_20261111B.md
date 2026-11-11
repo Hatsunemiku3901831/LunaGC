@@ -1,6 +1,6 @@
 # F-03d3s2 / CONFIGMETA-M177845-ONE-WINDOW
 
-已按单窗请求完成静态提取与两份新鲜原件比较；语义解释及主线第三复核待办。目标仅为 owner23071.method177845 的完整 `[14d1dad60,14d1daded)`，141 B / 32 条。原码 SHA-256 `f62abe553b1ce6225660e55d5b8eb40ad239f5b36c94f225ebfc1468abbee14f`。这不是自然调用或客户端验收。
+已按单窗请求完成静态提取，主线第三八原件与两fresh逐字节相同，独立6190B审核及3项门禁通过。目标仅为 owner23071.method177845 的完整 `[14d1dad60,14d1daded)`，141 B / 32 条。原码 SHA-256 `f62abe553b1ce6225660e55d5b8eb40ad239f5b36c94f225ebfc1468abbee14f`。这不是自然调用或客户端验收。
 
 ## 来源与读取前门禁
 
@@ -32,4 +32,4 @@ python -B local/migration72/d02-resume-20261111b/scene-holder-window/audit.priva
 
 三项合成门禁测试通过，覆盖输入大小/SHA 漂移、受限 pickle、真实边界与 RIP 目标及不完整解码拒绝。[提取器](../tools/migration72/scene_mplevel_actual_holder_window.py) 和 [测试](../tools/migration72/test_scene_mplevel_actual_holder_window.py) 为独有离线文件。本轮未重新扫描 376 MB 可执行区，未读取其他候选 body、callee 或 xdata，未执行目标 CPU、客户端、JVM 或数据库，也未部署。完整文件 SHA 读取另计，不能与定向证据字节混淆。
 
-实际 filePath 值、相应 payload/reader、MPLevel 分组、自然调用、World 生命周期及完整 Scene/D-02 均未验。下一步是 Scene 语义负责人只读原件并指出精确缺口，主线执行第三复核；任何额外原窗需另定范围。
+实际filePath来源及返回值发布已由[来源合同](CLIENT_72_D02_SCENE_CONFIGMETA_LOAD_CONTRACT_20261111B.md)独立闭合：准确literal是 `Data/Common/MetaConfig`。相应对象/payload/reader、MPLevel分组、自然调用、World生命周期及完整Scene/D-02仍未验；任何额外原窗需另定范围。
