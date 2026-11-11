@@ -941,3 +941,5 @@ B-02d收口：验收提交36eb486；先建卡3fc7e80。旧HANDOFF2已先备份�
 2026-11-11 Proud查询后继：237/289/802原合同完成限定来源，三组原hot miss在主线第三与双fresh一致，6门禁通过；真实hit仍需精确热Equals对象。只读7读50B采样已8纯Python+1实际Win32自进程测试及五输入/source预检通过，未读客户端；命令和新ready边界见[采样准备](docs/CLIENT_72_D02_PROUD_HOT_EQUALITY_SAMPLER_20261111B.md)，实际miss见[原查询](docs/CLIENT_72_D02_PROUD_HOT_LOOKUP_MISS_20261111B.md)。
 
 2026-11-11 ConfigMeta真实blob：原212203B短段失败由主线第三保留；精确完整284563B header/14getter与两个prefix-only输入第三分别同双fresh五件/四件，7+6+5门禁及独立审计通过。prefix输出仍为压缩字节，尚无serialized/MPLevel。原件与命令见[定位](docs/CLIENT_72_D02_SCENE_CONFIGMETA_ACTUAL_LOCATOR_20261111B.md)、[完整header](docs/CLIENT_72_D02_SCENE_CONFIGMETA_COMPLETE_HEADER_20261111B.md)、[prefix-only](docs/CLIENT_72_D02_SCENE_CONFIGMETA_CODEC9_PREFIX_20261111B.md)；[上游检索](docs/CLIENT_72_D02_CODEC9_UPSTREAM_REUSE_20261111B.md)只建立固定候选，尚未执行。无需服务重启或部署。
+
+2026-11-11 CODEC9-INTERNAL-HEADER-READER-WINDOW：准确caller 5B→唯一pdata888B/271条，第三五原件同双fresh、4门禁及独立产物审计通过，body SHA718bf931。3外跳未追踪、xdata未读，语义继续；初始指派pin转录失败保留，未改范围。见[来源与复现](docs/CLIENT_72_D02_CODEC9_INTERNAL_HEADER_READER_WINDOW_20261111B.md)。Proud lookup/prepare/index合同的主线第三纯审计也分别26/31/36锚点通过并同双fresh；初次误传完整输出路径在CLI门禁停止，改为既定basename后通过，未覆盖原件。

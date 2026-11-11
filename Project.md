@@ -280,6 +280,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3s2/SCENE-CONFIGMETA-BLOB-HEADER | 已完成 | 精确路径/后缀命中bundle33095；原短段212203B按原parser拒绝，完整284563B同源范围与14getter通过，第三五原件同双fresh。7定位/6完整header测试及43关系审计通过；本样本B止于首压缩块，不推普遍语义。尚无解压对象。 | [原短段及失败](docs/CLIENT_72_D02_SCENE_CONFIGMETA_ACTUAL_LOCATOR_20261111B.md)、[根因](docs/CLIENT_72_D02_SCENE_CONFIGMETA_HEADER_CONFLICT_20261111B.md)、[完整header](docs/CLIENT_72_D02_SCENE_CONFIGMETA_COMPLETE_HEADER_20261111B.md) |
 | F-03d3s2/SCENE-CONFIGMETA-CODEC9-PREFIX | 已完成 | 两实际压缩切片由已验81B原前缀执行，各原AL=1且无model；guards/128B后尾部/header/table保持，第三四原件同双fresh、5门禁通过。输出仍为压缩字节，codec/serialized/实际MPLevel未验。 | [来源、范围及复现](docs/CLIENT_72_D02_SCENE_CONFIGMETA_CODEC9_PREFIX_20261111B.md) |
 | F-03d3s2/CODEC9-ACTUAL-SUPPORT | 进行中 | Sol max规划与Terra max README/分支检索交回，三个外置固定源码为同一ooz谱系；内部流头单窗与精确ABI继续，尚未构建或运行外部解码器。不能按外层tag9猜算法或绕目标状态/收尾。 | [定向复用检索](docs/CLIENT_72_D02_CODEC9_UPSTREAM_REUSE_20261111B.md) |
+| F-03d3s2/CODEC9-INTERNAL-HEADER-READER-WINDOW | 已完成 | 准确5B E8及唯一pdata得888B/271条，第三五原件同双fresh，4门禁/独立产物审计通过；3外跳未跟随，xdata未读，来源覆盖不完整。只关闭限定来源，不批准流头完整语义或codec执行。 | [边界及原件](docs/CLIENT_72_D02_CODEC9_INTERNAL_HEADER_READER_WINDOW_20261111B.md) |
 
 
 ### 6.3 SDK、补丁、观察与运维前置
