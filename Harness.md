@@ -1,4 +1,4 @@
-2026-11-11C 恢复执行索引：用户已恢复研发，D-02 / F-05 / D02-R6 客户端验收仍 0/6。Scene工厂/backend语义、430B与220B单窗、World触发条件分析，以及Proud setter语义与条件投影均已限定验收；实际原件、hash和复现见[本轮索引](docs/CLIENT_72_D02_RESUME_20261111C.md)及专题，任务状态见[Project](Project.md)。LoadedBundle语义待独立核，token生产者单窗与Proud初始化writer来源分析进行中；World观察包仍阻塞。run2在O=0 cold停止，收尾独立核对通过，当前无待用户ready事项。A/B拒绝冻结继续有效，历史暂停条目仅反映当时状态。
+2026-11-11C 恢复执行索引：用户已恢复研发，D-02 / F-05 / D02-R6 客户端验收仍 0/6。Scene工厂/backend语义、430B与220B单窗、World触发条件分析，以及Proud setter语义与条件投影均已限定验收；实际原件、hash和复现见[本轮索引](docs/CLIENT_72_D02_RESUME_20261111C.md)及专题，任务状态见[Project](Project.md)。LoadedBundle语义及token生产者44B单窗已限定验收；44B语义与Proud初始化writer来源规划进行中；World观察包仍阻塞。run2在O=0 cold停止，收尾独立核对通过，当前无待用户ready事项。A/B拒绝冻结继续有效，历史暂停条目仅反映当时状态。
 
 2026-11-11 历史文档重规划索引：任务依赖、派工与验收以 [Project](Project.md) 为准；[README](README.md) 保留稳定项目说明，重排前原文见 [README 历史快照](README.archive-2026-11-11.md)。本轮仅文档整理，研发仍暂停，未新增技术或客户端验收；恢复入口与既有阻塞见 [HANDOFF2](HANDOFF2.md)。
 

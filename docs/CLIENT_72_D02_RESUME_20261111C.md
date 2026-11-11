@@ -15,9 +15,10 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 | `F-03d3s2/SCENE-READER-BACKEND` 语义 / GPT-6.1 Sol max | [backend语义专题](CLIENT_72_D02_SCENE_READER_BACKEND_SEMANTICS_20261111C.md)，430B已验原窗及其固定来源。 | **已完成限定验收**；9183B来源检查 SHA `9d187719bde08e7a117d00529c10b010fc25f17ada4bffa306ee6d1b1e2f68de`，22 pin/19值流锚点及metadata/signature独立核对。自然backend/cursor/refill仍未知。 |
 | Scene LoadedBundle 单窗 / GPT-6.1 Terra xhigh | 固定request SHA-256 `0174f4ee26b991b3c417dd0d9e2dfba2d283dcb6a6eb25632e09eca92551af05`；双fresh真实pdata完整220B code SHA-256 `9f1480af9cb4063240eb6445a62813f945f1ac73bfc0730e8edec0dbb4690e9e`，70条/15引用，8门禁及纯audit同。 | **已完成限定验收**；第三九件同双fresh，8测试，纯audit SHA `1909e4981b904fa9b5edd198200adfdb28c1757c81196b942a4c88ebf07b5ca1`。不升级自然reader。 |
 | `F-03d3s2/SCENE-SLOT114-TRIGGER-CONDITIONS` / 独立分析 | [触发条件专题](CLIENT_72_D02_SCENE_SLOT114_TRIGGER_CONDITIONS_20261111C.md)第三6548B SHA `b89e43451a91f53d4b62e3dd158cc822feeeed7763cc3220c2131378327f7427`，11 pin/11坐标。 | **分析已完成限定验收**，allocator停止边、RSP规则和224B非总预算核对通过；World观察包仍**阻塞**：共用allocator `14828ba31→1405336c0` 停止主动触发依赖；真实World/44512缺实体、受支持同帧和RSP规则、Pool来源与整轮预算均缺。三读224B不是成熟现场包。 |
-| `F-03d3s2/SCENE-READER-LOADED-BUNDLE-SEMANTICS` / GPT-6.1 Sol max | [LoadedBundle语义](CLIENT_72_D02_SCENE_LOADED_BUNDLE_SEMANTICS_20261111C.md)交回，来源检查 SHA `88a4f3340914b91c358829a30ff8dc7d3846810c5683aabad95e0f6776f95061`。 | **待独立核验**；报告区分零长度查询、有符号长度门和参数符号扩展，最终返回为 `141139040` 生产的opaque U64，RBX对象不能称buffer；自然有效范围/refill未知。 |
-| Scene token生产者单窗 / GPT-6.1 Terra xhigh | 固定request 15731B SHA `eb57e978e7792002c4f8589529621add7080c00093e49125622e6144494a0ba7`；[规格](CLIENT_72_D02_SCENE_LOADED_BUNDLE_SEMANTICS_20261111C.md)。 | **进行中**；owner非ordinary、AOT实际不适用；unique pdata真实extent≤1024B/256条，无unique先存诊断并0 body停止，拒绝边不续。 |
-| Proud初始化writer来源定位 / GPT-6.1 Sol max | 已将table/seed绑定owner17408，九个ordinary候选正文/写入xref仍待缩窄。 | **进行中**；TLS helper `149a75140` 在与A共享边停止，不把整个独立分析标阻塞或完成。实际hot input未取得。 |
+| `F-03d3s2/SCENE-READER-LOADED-BUNDLE-SEMANTICS` / GPT-6.1 Sol max | [LoadedBundle语义](CLIENT_72_D02_SCENE_LOADED_BUNDLE_SEMANTICS_20261111C.md)，来源检查 SHA `88a4f3340914b91c358829a30ff8dc7d3846810c5683aabad95e0f6776f95061`。 | **已完成限定验收**；26 pin、三raw 783B与22/21/11锚点独立核对，区分零长度查询、有符号长度门和参数符号扩展，最终返回为 `141139040` 生产的opaque U64，RBX对象不能称buffer；自然有效范围/refill未知。 |
+| Scene token生产者单窗 / GPT-6.1 Terra xhigh | 固定request 15731B SHA `eb57e978e7792002c4f8589529621add7080c00093e49125622e6144494a0ba7`；[规格](CLIENT_72_D02_SCENE_LOADED_BUNDLE_SEMANTICS_20261111C.md)。 | **已完成限定验收**；44B/13条/3引用/2 RET，第三七件同双fresh、6测试与caller/pdata通过；ordinary零命中、AOT不适用。1112B纯audit SHA `47a99cd8ca3ba43c9e3772289485f2d58c2ab6bd9abadce4cbf37971925d4154`；见[token生产者原窗](CLIENT_72_D02_SCENE_READER_TOKEN_PRODUCER_WINDOW_20261111C.md)。 |
+| Scene 44B语义与reader桥 / GPT-6.1 Sol max | 已验44B窗及Scene 131B消费者；桥候选 `42005.m350685/14f614760`。 | **进行中**：`+20`可作为opaque U64传下游，已验消费者在非零时调用该桥后重读`+10/+1c`；正在形成唯一新窗request，尚未派Terra或采窗。不追通用registry `1415cb9f0` 或ctor内部。readerPool尚无本题准确A边，不由World边泛封全线。 |
+| Proud初始化writer来源定位 / GPT-6.1 Sol max | 已将table/seed绑定owner17408，正对九个ordinary候选制定中文有界源定位规划，未交回、未执行新body。 | **进行中**；TLS helper `131995/149a75140` 及其A依赖排除，不把整个独立分析标阻塞或完成。实际hot input未取得。 |
 | `DOC-D02-RESUME-20261111C` / GPT-6.1 Terra xhigh | 本页、[Project](../Project.md)、[Harness](../Harness.md)；输入为既有计划、专题及本轮主线交接事实。 | 文档初稿供集成执行者审核；不做测试、构建、客户端、DB、部署或 Git。后续由同一写者按实际集成结论更新，不提前声明已验。 |
 
 固定 hash 只标识所列输入或产物，不表示本页写者重新读取目标客户端或执行相关研究；所有来源范围、歧义、具体复现与停止条件以各专题原文为准。旧成果包括 Talent 六个 null/空串、720 必要键与目录加载、121 Depot/605槽两叶 Java、phase6 和旧号已有结果直接复用。`threshold==phase+1` 已确定为下一突破 UI 预览，冻结该分支，不将其当当前采用。
@@ -34,8 +35,8 @@ run2 主线明确接管并取得新ready后正常启动一次，用户确认标�
 
 A-SECOND-RETURN-CONTRACT 及依赖、B组合 loader 仍因安全审查拒绝冻结，不运行草稿、不换模型或工具、不间接重试。A 的完整原拒绝仍缺，不能将摘要冒充原提示；B 保留原句 `This content was flagged for possible cybersecurity risk.`。现有[最小包队列](CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)只读复用，队列开头的暂停叙述属于历史状态，不自动新增或派发 Daybreak。移除被拒动作后，仅推进能靠已有输入独立完成且产物不直接实现被拒动作的任务；局部通过不升级父项或 ready。真实门禁、认证、资源和完整旧号恢复仍约束 R4。
 
-下一执行顺序：独立核验LoadedBundle语义，继续token生产者单窗和Proud writer来源定位；按各自真实缺口继续可独立工作。现场只在完成门禁并取得新 ready 后单独判断；R1/R2/R3 必要合同齐备后才进入 R4，继而 R5/R6。
+下一执行顺序：继续44B语义、reader必要桥规格和Proud writer来源规划；按各自真实缺口继续可独立工作。现场只在完成门禁并取得新 ready 后单独判断；R1/R2/R3 必要合同齐备后才进入 R4，继而 R5/R6。
 
 ## 已验本地提交索引
 
-首批五项本地提交的身份与路径已核验，未推送；原核验索引 `local/migration72/d02-resume-20261111c/integration/acceptance2/commits-accepted1.private.json`。`ad1d52c` 工厂语义、`3bed8c9` Proud setter语义、`d1144c2` Proud条件投影、`f8ab2f0` Scene 430B单窗、`e9eaca5` 本轮状态与冷采样文档。新增三项验收与本次状态尚待集成提交，不预写提交号。
+首批五项本地提交的身份与路径已核验，未推送；原核验索引 `local/migration72/d02-resume-20261111c/integration/acceptance2/commits-accepted1.private.json`。`ad1d52c` 工厂语义、`3bed8c9` Proud setter语义、`d1144c2` Proud条件投影、`f8ab2f0` Scene 430B单窗、`e9eaca5` 本轮状态与冷采样文档。第二批 `f9495b9` backend语义、`4a92683` World触发条件、`a2bf69e` LoadedBundle单窗、`9a1f0e9` 状态文档；第三批 `815a853` LoadedBundle语义、`3565847` token生产者单窗。共11项本地提交，身份及路径已核，未推送；核验原件分别见 `integration/acceptance3/commits-accepted2.private.json`、`integration/commit4/commits.private.json`（相对本轮私有根）。本次状态文档尚待提交，不预写提交号。
