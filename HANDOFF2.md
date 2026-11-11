@@ -1,104 +1,53 @@
-# 国服 7.2 详细交接（2026-11-11，文档重规划）
+# 国服 7.2 暂停交接（2026-11-12）
 
-## 当前指令与停止点
+**用户要求完成已派工作后暂停，不开启新任务，联调留待下次；禁止 computer-use。** D-02 / F-05 / D02-R6 六项客户端验收仍为 0/6，R4/R5/R6 未开始。当前是用户主动暂停，不是声明所有技术路线都已耗尽。任务状态以 [Project](Project.md) 为准，方法、原件和复现入口见 [Harness](Harness.md) 与 [本轮恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。运行仅面向国服7.2，使用Windows portable（`LUNAGC_RUNTIME=portable`），入口为 [tools/local_windows.ps1](tools/local_windows.ps1) 及对应cmd；7.1仅用于理解和恢复映射，不部署Docker/WSL或启用虚拟化。接手先读 [README](README.md)、[AGENTS](AGENTS.md)、[Project](Project.md)、[Harness](Harness.md)、[迁移研究](docs/CLIENT_72_MIGRATION.md)和[部署手册](docs/CODEX_ONE_CLICK_DEPLOY.md)，核对 `.env`、`.env.local`、`config.json`、实际 `GAME_PATH`、子模块、进程及端口归属；固定端口按源码核查，不能只改环境变量声称隔离。
 
-本轮仅重排 [Project](Project.md)、精简 [README](README.md)、维护索引和交接；研发仍暂停，尚未执行恢复提示词。没有启动研究、构建、服务、客户端、数据库或部署，也没有新增技术或客户端验收。技术证据基线是文档重规划前 HEAD `6e51a15`；下文保留的研发、进程、端口和测试数字均为此前批次的历史证据，不是本轮重查结果。
+## 本轮已完成的有限范围
 
-D-02 / F-05 / D02-R6 未完成，六项客户端验收仍为 0/6。A-SECOND-RETURN-CONTRACT及其依赖、B组合loader维持原安全审查拒绝；已验局部成果只读复用，不能升级父项或重试被拒动作。旧ready不能用于后续现场。
+- 31A `R3-PROUD-MANAGED-ROW-REMAINING-TRIAGE`：提交 `62653e682f19a91dfddba767b8565e94faf2503c`，限定三字段布局、条件输入与 host 单 catalog 候选；[专题](docs/CLIENT_72_D02_PROUD_MANAGED_ROW_REMAINING_20261112.md) SHA `60741b92b7db4a55fcc9d83d03bafbc0fc2750e4519cc2520b2721fd6d2e84a2`。三业务 alias、实际 M 和完整 row 未知，五个准确 A parser 构造边冻结，不泛判所有列。独立验收回执见本轮恢复索引。
+- 31B float getter 单窗：提交 `5c7da72238b9964da1ec0fa4364b370990229bdb`；[专题](docs/CLIENT_72_D02_PROUD_MANAGED_FLOAT_GETTER_WINDOW_20261112.md)固定原窗166B/45条，7项纯测试、双 fresh 与独立第三八件逐字节一致，唯一 pdata、194B 证据及 strict128/129 已核。逻辑返回、原 caller E8、语义合同、实际 Float 与 alias/完整 row 均未知，未执行语义后继。31B 回执 SHA `62ab88a57a0d31fc0c82afd938a32d3fe74f067947746d3626e34aa3c5e5884e`。
+- 29 code/preflight/plan 仅离线限定验收：21纯测试+2实际self、独立4个late cancel/deadline与9个真实self身份API；当前目标未读取，79全账为 mock+source 上限。r1原latecancel失败保留，不追认；最终修复只在 Close 后成功发布门。真实 native getter/current/actual row/resourceReady 仍未知。完整范围和固定哈希见[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。
+- 26/27 已验 ctor 局部借用合同、Scene cluster 剩余来源、Proud FindEntry及Scene getter原窗等均保留限定范围；不能用局部通过升级自然 reader、实际采用或客户端验收。既有 Talent 720 必要键、121 Depot/605 槽、phase6 和303局部恢复等直接复用，不重开。
 
-## 本次文档交付与恢复入口
+## 现场事实和停止点
 
-- [Project](Project.md) 维护当前任务、依赖、验收与状态。路线先消费Scene reader工厂238B、Proud 157B setter及已有getter两个现成原窗，成熟规格再实现；实际必要资源与旧号恢复、R4汇合、R5隔离部署及R6六项实测按依赖推进。已有Talent、资源及局部成果按已验范围复用；World和Proud现场各需先满足准确前置及新的实时ready。
-- [README](README.md) 说明项目目标、现有能力、7.2已验范围、便携入口和文档导航；仅在项目范围、对外能力、运行要求或重要使用说明变化时更新。重排前完整原文在 [README 历史快照](README.archive-2026-11-11.md)，作为历史资料，不是当前执行指令。
-- [Harness](Harness.md) 顶部提供本次文档索引；复现与技术细节继续放原专题。原Project第6节已完成任务及成果目录逐字节保留，包含任务ID和完成标记；[HANDOFF](HANDOFF.md) 只追加本轮简要入口。
-- 覆盖本文件前已把原Project、README、Harness、HANDOFF、HANDOFF2逐字节备份到忽略目录 `local/migration72/docs-replan-20261111-ad1e4032670b4275807e4b91f90bc331/`。原HANDOFF2为19976B，SHA-256 `312a029c7d91cbabdd65587e5e0baa09418e346b1582924e734729d93d8d4580`。原AGENTS、patch、resources既有差异与子模块引用保留，不纳入本轮提交。
-- 后续只有收到用户恢复指令或执行用户选用的恢复提示词后，才按当前AGENTS、Project、Harness及本交接重新核对输入、差异、配置与现场并调度；历史现场、旧PID和旧ready不复用。完整恢复提示词由本次交付另行提供，不代表研发已经恢复。
+本轮用户曾同意新范围、两次普通UAC及实时ready。cache1正常RunAs时，Launch/helper回执缺席且父receipt始终0B，超过原90秒总等待后停止。此前错误后移90秒起点已纠正并保留；sample CLI从未派发、target RPM为0，这不是cold/null、SDK校验失败或新安全拒绝。协调者按原helper.log以CreateNew写入明确的超时取消标记；它不是helper运行日志。旧no-repeat门防晚启动；会话正常Ctrl+C退出，两个已知控制进程退出，没有StopProcess或强杀游戏/consent。0B父receipt锁自然解除后保留原样复制，Launch/helper JSON仍缺。
 
-## 以下为先前研发批次的历史记录
+当时只读closeout的fresh Game/helper为0，五stock、149保护数据、config/JAR及21 source-seal相同；这只是该时点结果。用户随后报告“已点是，现有游戏窗口”，其时序与旧回执未知。主线曾仅做应用/窗口列表只读观察，没有可目标Game；这不证明用户未见窗口或窗口已关闭，没有点击、关闭、重启、UAC操作或采样。随后用户禁止computer-use并取消此次联调，第二次启动未执行，无新包/nonce2，不再向用户要求本轮UI/UAC反馈。当前实际状态只采用终态只读盘点，不操作任何已有游戏。
 
-## 版本、差异归属与现场
+最终只读盘点为2026-11-12 01:49:41 Sydney：CIM YuanShen候选0、项目Java/Mongo/旧helper及源码固定TCP/UDP为0；仅为该时点进程元数据，不证明窗口正常退出，也不否定用户先前看到窗口。五stock、149保护数据、config/JAR及21 source-seal零差异，旧取消标记hash不变、0B父receipt副本保留、helper/Launch JSON缺席，sample/RPM 0。回执 `integration/acceptance31-closeout/completion1.private.json` 5461B SHA `4411fb52571782d7dbec7e1975cceb29b1e4049cdfe50aecc3a4651713406a6c`。patch HEAD `50f9bf82b3dbc0d4857321417dccf40f78c13ce4`、resources HEAD `dac2a9d43332ef51879522cf39da2831b0ca0543` 与父gitlink一致；原patch七处、resources一处和AGENTS用户差异保留未提交。
 
-- 本批起始HEAD为`14e63dc297768edc71b9f4cbb2c666999b3582be`；最后验收提交为`742c6eee5068f1b1a9380518abcc23c71f616c51`，本交接文档另作本地收尾提交。27个本批研发提交逐个核过Author和Committer，均为`Hatsunemiku3901831 <273283003+Hatsunemiku3901831@users.noreply.github.com>`；有效本仓配置相同，无Git身份环境覆盖。不改全局、不改历史、未推送。
-- `640c5ec`（信息`1`）由用户确认是手工提交，保留其历史与归属，不计为代理研发提交。当前新增AGENTS差异仅把GitHub Terra指令改为“根据计划文档”，按用户差异保留且未提交。
-- patch的HEAD/gitlink均为`50f9bf82b3dbc0d4857321417dccf40f78c13ce4`；其Cargo.toml及`examples/sdk72_service_trigger_proxy.rs`/同名目录是B被拒任务未验源码，原样保留未提交。resources的HEAD/gitlink均为`dac2a9d43332ef51879522cf39da2831b0ca0543`；既有`ScriptSceneData/flat.luas.scenes.full_globals.lua.json`差异未改、未提交。本批没有子模块提交或父gitlink变更。
-- GAME_PATH按当前`.env`核对；`.env.local`仍不存在，`LUNAGC_RUNTIME=portable`，config version14。HTTP/SDK TCP8088、游戏UDP22101、默认Mongo27017和独立测试27027按现有源码/配置口径核对，未把改环境变量当端口隔离。
-- 最终现场相关游戏/Java/Mongo/调试器/自有helper进程为0，固定端口TCP监听0、UDP端点0。没有运行GS或客户端，当前没有可验的服务健康、运行PID或运行JAR对象；未清库、未强杀进程、未操作无关客户端。
-- 五份stock和SDK carrier均与批次初始哈希一致。20个受保护工作区文件中19个完全相同，唯一变化是上述用户AGENTS编辑。原`local/data/`、`mongodata/`共138个文件逐文件相同；两子模块HEAD/gitlink/dirty清单相同。
-- 磁盘旧名`LunaGC-7.1.0.jar`未变化，98007078B、SHA-256`8f093e19b839ff1263984c596584d1ae12e6d4fd841d82562aaf30f998267291`。未改版本或把它部署成本批成果。修改仅离线工具、独立测试和文档；没有运行代码、Proto、配置、补丁或资源变更，因此没有GS构建/部署或客户端验收。
-- 实际调度上限4含主线：复杂分析显式Sol max，成熟实现显式Terra xhigh；GitHub补充检索为Sol max中文计划、Terra max执行。主会话没有独立可核验的模型切换接口，不冒称已切换。规格交回即轮换，没有为填槽制造重复任务。所有共享Git/JVM/文档/环境由主线管理。
+cache1旧包已取消，不复用旧ready、PID、nonce或同SDK页反复尝试。恢复时重新核验输入、差异、实际环境和支持方式，另取新实时ready；不得自动启动或采样。保留原 mongodata、local/data、现有配置及他人 AGENTS.md、patch、resources 差异，不能清库或强杀未知进程。
 
-## 本批已完成的限定成果
+## 未完成与准确阻塞
 
-| 任务 / 提交 | 实际修改、验收范围与边界 |
-| --- | --- |
-| 恢复/最小交接边界：`ceb0fa8`、`451b05d` | 盘点归属、模型、文件写入者及独立性判断；更正完整Avatar父项为依赖A拒绝阻塞；Daybreak只保留最小候选编译包，不派整条B或后续现场。 |
-| R3-OLD-TALENT-ENTRY-NULLS及完整目录：`9ce7444`、`7c7be88` | 六个null/空字符串差异经真实ResourceLoader/OpenConfigLoader/Avatar和场景能力builder的5项JUnit验收；720源键实际安装，完整候选AvatarTalents目录的真实加载也已验收。候选覆盖/当前Java行为/目标语义分别保留，未声称完整Player/postLoad或客户端入场。[空值专题](docs/CLIENT_72_D02_OLD_TALENT_ENTRY_NULLS_20261111B.md)。 |
-| Scene本机目录/准确load/完整header与prefix：`84a4982`、`95ae57b`、`9e7a20b` | 15内置目录无目标实例，准确Data/Common/MetaConfig和泛型载入来源已核；实际完整blob284563B、header14getter和两压缩输入prefix逐步验收。复用旧parser/字典，不重提旧窗；早期短段未冒称完整输入。 |
-| Scene codec流/真实外置解码：`60baeb0`、`7998351` | 原内部reader888B来源、两8c06/type6量子边界及独立流合同已验；按GitHub定向计划，在仓外固定GPL上游源码MSVC构建，通过公开XML逐byte、append/truncate负例、两目标完整消费及双入口输出一致。13件双fresh/第三同字节，得到真实334996B content。未执行目标native codec或自然loader。[外置实际结果](docs/CLIENT_72_D02_CODEC9_OOZ_PAYLOAD_20261111B.md)。 |
-| Scene实例/字段/bin/header：`3128725`、`81a56c4` | 精确含换行engine的v17限定目录及同CAB MonoScript绑定ConfigMeta实例；标准prefix至object+44，182个PathHash数组/20615对恰EOF。field386052第二U64准确命中entry44935541/location24230448；仅header原件核3399块/单CAB，不猜runtime offset或bin含义。[字段桥](docs/CLIENT_72_D02_CONFIGMETA_FIELDS_BIN_HEADER_20261111B.md)。 |
-| Scene gadget目录/索引/真实byte[]：`afece33`、`e62bc28`、`073d3cd`、`c86fd43` | 只选block0、1..26、43..86及765..771，原prefix+独立LZ4；真实176152对象、176150索引记录恰EOF。唯一44935541以local fileID0及完整64位pathID14783接class1208；对象782524B、LE32 count782517与索引一致，真实payload及尾3原字节分别保存。目录第三110件/5测试，索引第三182件/6测试，目标第三34件/4测试及纯audit均通过；旧100000样本cap未改、不造全445MB输出。[索引](docs/CLIENT_72_D02_GADGET_BIN_ACTUAL_INDEX_20261111B.md) / [byte array](docs/CLIENT_72_D02_GADGET_BIN_TARGET_BYTES_20261111B.md)。 |
-| Scene MPLEVEL-ACTUAL-HOST-REFERENCE：`0c5dcac` | 完整782517B从文件0按已验语法消费恰EOF，707组/15835子名称；唯一含MPLevel的是ordinal544的`Data/_BinOutput/Gadget/ConfigGadget_Scene_World`，21名称原序恢复。5个零child组，无重复/空文字；全文件逆编码逐byte相同，第三4件同双fresh、6测试/纯audit通过。不是自然reader对象或World返回证明。[真实分组](docs/CLIENT_72_D02_MPLEVEL_HOST_REFERENCE_20261111B.md)。 |
-| Scene READER-FACTORY-ONE-WINDOW：`742c6ee` | 原13B caller、ordinary AOT和unique pdata门后取60257.m500134完整238B/68条；code SHA`f3c65163277d38595ff0b48bac94e1a6a047c097f71b28f518c545b028a9c905`。主线第三9件同双fresh，8测试/纯audit通过；0子callee/xdata/global内容/CPU/live。两个int32零参数、自然backend/初始cursor/refill仍未知；后继未启。[工厂原窗](docs/CLIENT_72_D02_SCENE_READER_FACTORY_WINDOW_20261111B.md)。 |
-| Proud map来源/原热写/三合法miss/采样准备：`19cec33`、`ef5fa2c`、`22f19c2` | 原Store178B→TryInsert1455B在自有已分配数组条件下3例各122原指令/67访问、无model；Lookup三miss各109/87/104原指令原RET，prepare首次置flag后跳过，out清零、map/guards保持。第三/测试通过。readonly sampler8纯测试+Win32自进程读自测及源预检完成；没有读取游戏。真正hit仍缺准确热Equals输入。[Proud实际采用入口](docs/CLIENT_72_D02_PROUD_ACTUAL_ADOPTION_20261111B.md)。 |
-| Proud准确候选/两caller/Promote预览：`cec26e8`、`e371b01`、`ffa97a7`、`554ac23`，以及`afece33`的语义校正 | 944B/795B原窗与准确声明证明skills/energy/Proud集合来源，未把它们误当同81127门槛。2034B原窗找到同Avatar property1002实际phase、同Depot/同81127元素：group非零且threshold==phase+1才加入StarUpDialog的下一突破预览列表。纯第三47421B同双fresh、25源/55既有与40新锚点及静态oracle通过；旧号phase6/threshold1在预览中跳过不代表当前Proud未采用。15184adf0是Promote group，已纠正此前phase误称；当前入站ID/资源/group行选择与Java<=分别记录。[预览准确语义](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_PROMOTE_SEMANTICS_20261111B.md)。 |
-| Proud OBSERVED-81127-LEAF-PROJECTION：`a1d004f` | 全121 Depot/605槽按原序投影已观察的group/门槛两个对象叶，保留零/重复/presence未知。第三957523B SHA`0dc990d1331619073cfc42023b4fe34ce7234590703cb621d884eaae93a917c9`同双fresh、6 Python测试。portable JDK17/offline Gradle真实2项JUnit全过，独立原native报告期望核全121行和四活动行，0失败/错误/跳过，21s；class-init无DB/服务Manager初始化。仅批准两叶对象投影/loader往返，不批准完整Depot/当前采用公式。[真实Java及命令](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_PROJECTION_JAVA_20261111B.md)。 |
-| Proud CONDITIONAL-TWO-FIELDS：`d5a30f4` | 固定22101原span/presence及setter输入221/1经准确wrapper/getter/parser桥绑定到41105字段203376/203373；私有绑定第三5123B SHA`91f62c32da64a025ea08db4c95d16d2b470c1368a3025dd01b748adc6046f94a`同双fresh，4测试通过。actualEncoded/actualGetter仍null，actualManagedObject=false。不能填空addProps/paramList通过ProudSkillData加载。[冻结字段桥](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_ROW_BRIDGE_20261111B.md)。 |
-| Proud NATIVE-SCALAR-SETTER-SOURCE：`42c392b` | 原caller5/27B、ordinary AOT与唯一pdata后取58209.m483726完整157B/45条，code SHA`5c7bd52bc54dd9ebfa01137bd2b56c741eb5f9bb2ad05331158a9c85aa20d3dc`；第三10件同双fresh、5测试/纯audit通过。未执行setter或读取globals，正常存储/逆关系后继未启。[限定原窗](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_SCALAR_SETTER_WINDOW_20261111B.md)。 |
+- D-02仍需新旧账号登录、选人、完整初始化及入场、心跳、退出重登与保存的独立环境实机验收。R1/R2/R3必要合同和资源未闭，R4/R5/R6未开始；健康、构建或局部研究不能代替实机通过。
+- Proud实际row、三业务alias、当前采用、codec真实epoch及配置/完整旧号恢复未验；Float原窗已经取得，返回语义与准确caller仍待用户恢复后另定合同。完整资源条件齐后，才在独立数据库中以同一旧号真实Player恢复全部121角色、背包、装备、postLoad与属性重算；不用活动4替代、不手设loadedAll，也不将全资源/Lua默认为前置。预览 `threshold==phase+1` 冻结，不替代当前采用、Java `<=` 或行ID公式。不得以空行或条件模型冒充自然值。
+- Scene实际receiver、返回reader及+18初始化/reset未知；getter `146e52c62` / `146e52c7e` 指向 `1405336c0` 的返回、身份和reset依赖停止。World slot114仍缺合法同帧触发/观察机制及整轮预算；已有cache和ReplaceCluster未知，不泛封全reader。
+- A-SECOND-RETURN-CONTRACT及依赖、B组合loader仍受原安全审查拒绝及专项限制冻结，不能换模型/工具、运行草稿或间接重试。A完整原拒绝仍缺，不能把摘要冒充原提示；B原句 `This content was flagged for possible cybersecurity risk.` 已保留。[Daybreak最小队列](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)仅供用户判断，未经明确选择不派工、不自动串包；已验独立成果不能解除拒绝或升级父项。
 
-本批研究结构校验已实际退出0，`--ready`退出1且224项未闭，日志保留；后续没有改协议矩阵/ready要求，不拿它当实机通过。本表各测试是各自任务的实际结果，不拼成新的全量回归结论。旧号快照、121实际phase6资源、出生装备/303/Metal及既有Skill/Depot/talents直接复用，未重跑或重开其已验范围。
+## D-02六项实机出口
 
-## 未完成项、原因与解除条件
+以下仍全部0/6，须在独立环境逐项记录实际结果；局部验证不代替实机。
 
-| 项目 | 分类/准确停止点 | 恢复后的动作与解除条件 |
-| --- | --- | --- |
-| A-SECOND-RETURN-CONTRACT，完整F-03d3f4d2及g2 | 安全审查拒绝。上一批原第二allocator返回及同epoch后继合同被平台以潜在网络安全风险中止；私有草稿未验，完整原拒绝原文文件仍缺。完整20分配/12根和自然String/enum等也未闭。 | 不运行草稿/换模型/拆包。保留原提示摘要和证据入口，最小Daybreak包先补输入且必须由用户判断已获批范围；本轮无新许可。局部helper不升级父项。 |
-| B组合SERVICE-TRIGGER-LOADER | 安全审查拒绝。原Cargo exit101、observer.rs:49的u64→usize错误；修复动作被安全门禁中止。未验Cargo/源码保持。 | 不修/重建/现场。仅保留B-LOADER-COMPILE最小候选包；用户确认前不派，编译子出口也不代组合owned/装载或自然认证。 |
-| Proud准确pair map hit | 缺热输入/待现场，当前调度暂停。原FindEntry同hash路径缺当前热Default派生对象、klass函数与伴随MI；不能按名字选Equals或用host比较替代。 | 用户恢复后重核stock/现场和离线预检，再取得新的实时ready。只按已备7读50B一次只读范围，null/空/cold/读取失败即停，不扩scope、不重试或创建Default。 |
-| Proud setter/getter及当前行/采用 | 普通技术后继未启动；157B完整源已齐，可先静态分析，不应标全线阻塞。实际编码/QueryWrapper base寿命、reader/allocator/codec状态及实际41105构造仍未知。 | 恢复后Sol max只基于已验getter+完整setter给正常存储/逆关系和准确运行前置；成熟再交Terra。若出现A被拒核心的准确CALL/data依赖，仅停止该依赖。当前采用/Java<=/group*100+1无目标证明，addProps/OpenConfig不补空值。 |
-| Scene reader自然初始化 | 普通技术后继未启动；238B完整工厂源已齐。文件0+EOF不能代自然reader backend/初始cursor/refill。 | 恢复后先分析本完整原窗及引用；两个零不猜offset/count/mode。若缺新source给准确single-window规格，先判拒绝边界。不得重复已验parser/字典静态审计。 |
-| Scene World/slot114/组件 | 缺准确同调用frame及受支持观察条件。必须实际15154c07e frame的RSI→klass→klass+460；既有metadata候选1483df040不能代。后续13次151539a40及147c4b850均在slot114正常返回之后。 | 复用既有三读224B规格，先完成合法factory触发/同frame及supported观察条件准备，再另轮新ready；不并入C7/50B。配置正文须用准确type/后缀/索引定位，World key不授权猜hash。 |
-| Scene Pool | 已验独立TLS/Pool+1990门静态/只读准备可复用；原source14050ab6e/ac0d有CALL1405336c0共用A allocator，当前停止在call前。 | 只允许独立诊断既有范围；不能借Scene验证被拒返回、热Default或相关归属。launch-primary不是自然allocator caller证据。 |
-| C完整旧号Player/背包/装备/postLoad | 必要资源/实际Proud行及配置、真实采用和属性重算前置未齐。已验局部Java/保存不等完整恢复。 | 只验证同旧号实际必经资源，不把全资源库列P0；条件齐后由主线在独立数据库串行恢复/回归，保留原数据。 |
-| R4→R5→R6 | R1/R2/R3必要合同未齐；未正式Avatar/Scene发送汇合或portable部署。 | 依赖齐后才生成Proto Java、定向回归/构建、独立部署并核日志/健康/TCP/UDP/PID/运行JAR，再请求六项客户端实测。 |
+1. 旧号真实登录本服，账号及角色归属正确。
+2. 新号显式选人、命名并保存；错误和重复操作不重复创建或发放。
+3. 完整初始化及场景握手中，角色、库存、队伍和世界实体被正确消费。
+4. 角色实际进入世界，客户端、服务和协议观察一致。
+5. 连续10分钟心跳无异常断会话。
+6. 新旧号分别正常退出重登，角色、装备归属及受控进度持久一致。
 
-当前没有新现场请求、自动继续或Daybreak派工。恢复后优先两个现成原窗的语义分析；这是下一可执行动作，仍须用户解除本次暂停。不要把“普通来源还未分析”写成外部输入阻塞，也不要把安全拒绝写成普通技术失败。
+## 已走弯路和恢复避坑
 
-## Daybreak最小队列
+- 31B只验source，不能把166B/45条或方法名当逻辑返回、原caller或实际业务语义。直接引用本轮原窗，恢复后再制定独立分析；不追未批准allocator返回或扩大成全codec。
+- 单key输入的v1十六进制偏移笔误在实现前发现并更正冻结v2，v3增加同epoch必要输入；这是普通更正，不是安全拒绝。r1 latecancel原失败保留，不追认旧epoch。主线前检绝对路径形状旧版被替代且未执行，保留旧记录，按最终合同重核。
+- 对schema、列表、数值、offset与wire三层分别核来源和边界，不复用旧客户端包号或未验证地址，不生成虚假Java空行；Proto仅改源并经Gradle/protoc生成。不得以跳校验、伪造ready或静态命中代替实测。
+- 原0B receipt和取消标记分别保留；不能把协调者标记称helper运行日志，也不能把无helper回执推断为用户未看到窗口。禁止重试旧包、晚到的ready或以历史PID判断当前现场。
 
-完整字段和原拒绝出处见[专门队列](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)，本轮只缩小边界，未派工。
+## 分工与恢复顺序
 
-1. **A-SECOND-RETURN-CONTRACT：缺输入。** 先补完整原拒绝提示、逐项固定输入和可独立验收的单一返回/归属问题；现有摘要及未验audit草稿不能代许可。候选产物只是一份来源/合同/未知报告，不包括Default实现、完整Avatar、hook或现场。用户未确认范围前不可执行。
-2. **B-LOADER-COMPILE：待用户判断。** 仅针对首次observer.rs:49类型错误的私有隔离最小差异及一次准确编译；不改Cargo/core/emitter/校验/预算，不运行fixture、装DLL或客户端。需保留原64位地址且来源epoch一致；遇下一设计错误即返回。通过后由主线审核才另定后续，不自动串包。
+本批源码/专题基线 HEAD `5c7da72238b9964da1ec0fa4364b370990229bdb`，相对本轮接手基线69个本地提交；盘点时index空，未推送。交接自身提交尚待集成，不预写提交号。
 
-两包没有新增授权，也互不作为Scene/C已允许独立任务的前置。来源冲突、缺输入、超范围、关键设计判断或新安全拒绝均停止返回，不由Daybreak自行猜测。
+按用户指定排班：主线仅负责规划、依赖、派工、用户协调和审核验收；具体实现、文档修改、测试、构建、部署及提交交执行子代理。用户允许需要的联调时主线可临时接管，但禁止computer-use仍有效。每文件同一时刻仅一个写者；并发上限4（含主线），共享Git/index/提交及运行/只读收尾由唯一执行者intake_audit串行。执行子代理显式使用 `gpt-6.1-sol` 的 `xhigh` 或 `max`、`gpt-6.1-terra` 的 `xhigh`，模型不可用则如实报告，不替换冒称；主线没有可独立核验的模型切换接口，不据此声称已切换。Astra仅在主线和Sol max实质分析仍不能解决的关键难题作为最后升级，绝不用于重试被拒动作。新大任务先由Sol max写中文复用检索计划，Terra max按README→仓库→相关分支检索；已有固定来源、检索和仓外克隆直接复用，只补当前缺口。本次不执行新检索。本批无运行Java、Proto、配置、资源或补丁改动，也无服务部署；不将有限测试宣称为全套测试通过。所有新提交的Author和Committer均固定为 `Hatsunemiku3901831 <273283003+Hatsunemiku3901831@users.noreply.github.com>`；执行者须核对环境覆盖、提交前后双身份及差异归属，不改global、不改历史、不推送。子模块提交与父仓库引用分开核对，不夹带用户差异或拒绝相关未验差异。所有已验提交仅本地；状态文档本批提交以集成回执为准。
 
-## 失败原件和避坑
-
-- 保留初始ConfigMeta短blob与旧engine/class114解析拒绝；实际engine是`2017.4.30f1\n2`，gadget platform为-2。新限定工具不放宽旧parser。不要重复按旧截断段或低32位pathID选目标。
-- 外置codec构建build1的自有helper名与WinSDK boolean冲突，原失败保留；build2仅重命名后通过。三个上游语言实现同谱系，不冒称独立算法。GPL源码/构建产物在仓外，未拷入服务器生产代码。
-- 原internal-reader尾40B是跳表数据，线性反汇编伪外跳不当实际执行路径。没有native目标成功或容量/lifecycle结论。
-- 各任务fresh1等开发失败不覆盖；最终双fresh序号以专题为准。早期source hash转录、缺cursor提示、Reader直接pin、flags及END审计元数据等失败均保留，不能把旧epoch与最终第三混比。
-- Proud别把skills/energy caller当+10门槛消费；15184adf0只提供Promote group，phase来自property1002。下一突破预览相等比较不批准当前Java<=或group*100+1；tag14/35不发布未经审查的业务别名。
-- 两叶Java最初准备误用不存在的fresh1目录，JVM启动前已停，修为真实输出basename后两项通过。Source pins的JSON有list也有dict，读取前核类型；不要再次用items()处理list或打印巨大raw报告。
-- Powershell中rg的文件glob用`-g`或先`rg --files`；不要把literal通配路径当已搜索。公共文档只留相对路径/哈希摘要，完整路径、客户端bytes、日志/DB都在忽略目录。
-- 需要当前stock身份的离线回放与临时DLL安装互斥；没有本轮stock客户端读。旧ready不可复用，本次暂停也不会被迟到ready自动解除。
-
-## 交接备份与证据入口
-
-交接覆盖前，旧HANDOFF2、HANDOFF、Project、README已复制到`local/migration72/d02-resume-20261111b/closeout-paused-20261111b/before/`。旧HANDOFF2为7503B、SHA-256`76d63284fd871f466f4b547c1e98af58f54f22b547a37a4e0bf35d13c7829ce6`；HANDOFF仅追加本轮引导。每次Project实际任务编辑也各有`before-plan/`原件。
-
-| 私有证据（相对本批根`local/migration72/d02-resume-20261111b/`） | 核定结果 |
-| --- | --- |
-| `closeout-pre-handoff-inventory.private.json` | SHA`e3302c5c9dc235da64facb2c51bd115b7e4599086794868f7a84fc70371f73eb`；五stock/载体/20保护/138原数据、配置、JAR、Git身份和子模块。 |
-| `closeout-processes.private.json` | SHA`1afc8ffd71838e34d0065ce4ea1dd48b12b2000de77b1b3d59fb4cef195092c2`；相关进程/TCP/UDP均0。 |
-| `closeout-paused-20261111b/pre-handoff-proof.private.json` | SHA`0dfd4d1039328662420611ed3af456c4b28a9a26f0ae0a1efb3349d4e2ed4b56`；保护比对、实际28笔历史身份（含用户手工1笔）、备份SHA及提交清单。 |
-| `scene-gadget-bin-index/audit-third.private.json` | 26248B/SHA`cad4dc075ea8c90e5ea441fbcb04fbbeb4b0a2ad98cd12db744afc3b827bd20b`。 |
-| `scene-gadget-bin-target/audit-third.private.json` | 4977B/SHA`603c2892ec83bebcc81755f0f06a1ab045965afdb517fc6f191376e8b464f1d4`。 |
-| `scene-mplevel-actual-host/audit-third.private.json` | 698B/SHA`7d6fa5456742d0227d0599ec16a8f70ceb5c81dd78bb91515d9cb676cb5cfa56`。 |
-| `scene-reader-factory-window/audit-third.private.json` | 1366B/SHA`87cee18986e6ab1068cb0826afd4b1ae1c3ef55ab3162705f3b397e09118eb14`。 |
-| `proud-gate/promote-semantics-main-third.private.json` | 47421B/SHA`ecdbace6ebda2667182dc5d2cdfa092759b17a71919d352d23d7a9e99732df8d`。 |
-| `proud-gate/projection/java1/` | 指定JUnit XML/Gradle和class-init日志，2项全过；Python第三位于同projection根的`main-third-20261111b/`。 |
-| `proud-gate/row-bridge/conditional-fields-main-third.private.json` | 5123B/SHA`91f62c32da64a025ea08db4c95d16d2b470c1368a3025dd01b748adc6046f94a`。 |
-| `proud-gate/scalar-setter-window/audit-third.private.json` | 1509B/SHA`51eb10d63e4ac831aee610b0dedc5ff2a5fcdc6a4e85b169ad263cea18b3bf6a`。 |
-
-最后提交后再核实际身份及工作区仅保留AGENTS/patch/resources三项既有差异。没有自动推送或后续任务。恢复时先读当前AGENTS、README、Project、Harness、本交接及相关专题，核最新HEAD、差异/配置/stock与现场，再从未启动的准确后继规划；不要重做已验文件提取、整个GitHub检索或静态审计。
+等待用户明确恢复前不开始新研究、语义分析、业务alias、String采样器、Java、部署或现场联调。恢复后先核对当前checkout、差异归属、配置/子模块、进程端口与固定输入；可在批准范围内基于已验Float原窗规划独立语义或业务alias来源，不自动接A/B拒绝边。现场先确认当前输入、合法支持方式、环境与新实时ready；仍不使用computer-use。只在R1/R2/R3必需合同齐备后汇合R4、隔离部署R5并执行R6六项实机验收。

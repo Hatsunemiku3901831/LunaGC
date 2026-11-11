@@ -1,4 +1,4 @@
-2026-11-11C 恢复执行索引：D-02 / F-05 / D02-R6 客户端验收仍 0/6。QueryWrapper借用语义、nativeWrapper ctor源窗与借用合同、World factory raw布局复核及修正源窗、Scene cluster剩余来源已限定验收；复现与旧失败见[本轮索引](docs/CLIENT_72_D02_RESUME_20261111C.md)和专题。FindEntry与Scene getter新原窗已限定验收；标准cache单key输入工具与环境/退出预案已通过2026-11-12限定离线验收；现场采样所需新scope、两次UAC同意和实时ready的问题已发出，等待用户明确回复；managed row剩余有界分析进行中；自然reader、row与采用未知；A/B拒绝冻结，run2收尾已核，实际输入尚未采集。
+2026-11-11C 恢复执行索引：D-02 / F-05 / D02-R6 客户端验收仍 0/6。QueryWrapper借用语义、nativeWrapper ctor源窗与借用合同、World factory raw布局复核及修正源窗、Scene cluster剩余来源已限定验收；复现与旧失败见[本轮索引](docs/CLIENT_72_D02_RESUME_20261111C.md)和专题。FindEntry与Scene getter新原窗已限定验收；标准cache单key输入工具与环境/退出预案已通过2026-11-12限定离线验收；cache1正常启动超时取消，sample未派/目标读取0，旧包和ready不复用；31A managed row与31B float getter源窗均已限定验收；按用户明确指示已暂停，新研发及联调下次恢复，不用computer-use；自然reader、row与采用未知；A/B拒绝冻结，run2收尾已核，本轮cache1实际输入尚未采集。
 
 2026-11-11 历史文档重规划索引：任务依赖、派工与验收以 [Project](Project.md) 为准；[README](README.md) 保留稳定项目说明，重排前原文见 [README 历史快照](README.archive-2026-11-11.md)。本轮仅文档整理，研发仍暂停，未新增技术或客户端验收；恢复入口与既有阻塞见 [HANDOFF2](HANDOFF2.md)。
 
