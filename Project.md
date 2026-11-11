@@ -449,6 +449,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01d1/R3-PROUD-HOT-LOOKUP-MISS | 已完成 | 原Store后连续三次原Lookup各109/87/104条、原RET，无model；首次prepare原置flag、后两次skip，out4B原清零且guards/map/64位key保持。第三同双fresh及6门禁通过，只验条件miss。 | [实际原查询与边界](docs/CLIENT_72_D02_PROUD_HOT_LOOKUP_MISS_20261111B.md) |
 | E-01d1/R3-PROUD-HOT-EQUALITY-INPUT/PREPARE | 已完成 | 显式PID的readonly identity与7读50B采样器；8纯Python及1真实Win32自进程测试、当前五输入/source预检通过。尚未读取客户端，实际采集须新ready，不创建或调用Default/Equals。 | [准备、命令与范围](docs/CLIENT_72_D02_PROUD_HOT_EQUALITY_SAMPLER_20261111B.md) |
 | E-01d1/R3-PROUD-GATE-ENTRY-INDEX | 已完成 | 固定PE形状索引73候选（7 query E8、66 displacement load），69函数/47owner；第三同双fresh及5门禁通过。仅原字节候选/pdata与声明，不证明指令边界、同typed+10消费或提升门槛；后继按准确来源另验。 | [扫描范围、原件与未验](docs/CLIENT_72_D02_PROUD_ACTUAL_ADOPTION_20261111B.md) |
+| E-01d1/R3-PROUD-GATE-COMPARISON-WINDOW | 已完成 | 按准确Avatar参数从原索引缩窄唯一候选；普通AOT原cell/slot、唯一pdata/原site门后取得944B/238条。第三九原件同双fresh，8人工门禁及独立产物audit通过；只证明来源及site边界，同对象门槛比较/采用仍交Sol max。 | [来源、范围及复现](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_WINDOW_20261111B.md) |
 | E-01/R3-PROUD-ROW-READER | 已完成 | 原1438B/309条、三个backend分支参数及typed缓存已核；6测试/主线第三85断言31839B同两fresh。两个U32用途按分支分开，不统一offset/size；+1c赋值不证明有效row span，400190 producer及真实索引仍未闭。 | [准确合同与下一候选](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md) |
 
 

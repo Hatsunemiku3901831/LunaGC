@@ -945,3 +945,5 @@ B-02d收口：验收提交36eb486；先建卡3fc7e80。旧HANDOFF2已先备份�
 2026-11-11 CODEC9-INTERNAL-HEADER-READER-WINDOW：准确caller 5B→唯一pdata888B/271条，第三五原件同双fresh、4门禁及独立产物审计通过，body SHA718bf931。3外跳未追踪、xdata未读，语义继续；初始指派pin转录失败保留，未改范围。见[来源与复现](docs/CLIENT_72_D02_CODEC9_INTERNAL_HEADER_READER_WINDOW_20261111B.md)。Proud lookup/prepare/index合同的主线第三纯审计也分别26/31/36锚点通过并同双fresh；初次误传完整输出路径在CLI门禁停止，改为既定basename后通过，未覆盖原件。
 
 2026-11-11 实际ConfigMeta payload：流头16源纯审计第三同双fresh7410B/SHA155de713；固定GPL外置CLI主线MSVC build2通过（build1自有函数名冲突保留），公开XML逐byte、两错误边界及两目标真实解码全部过。13件双fresh/第三同字节，纯产物audit SHA97491a0b；concat334996B/SHA5dbd48d5。原serialized17 class114门、旧assets engine门均按原范围停止，实际engine含换行2，后继对象/schema交Sol。见[流头](docs/CLIENT_72_D02_SCENE_CONFIGMETA_CODEC9_STREAM_20261111B.md)、[构建、执行及原件CLI](docs/CLIENT_72_D02_CODEC9_OOZ_PAYLOAD_20261111B.md)。无target native、客户端、JVM/DB/服务部署。
+
+2026-11-11 PROUD-GATE-COMPARISON-WINDOW：73原候选按准确Avatar参数缩窄的944B/238条单窗第三九件同双fresh，8门禁及独立产物audit通过，code SHAab0370d2；实际普通AOT/唯一pdata与site原指令边界成立。比较/采用语义继续Sol max，尚无新现场或ready。命令和原件见[机械范围](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_WINDOW_20261111B.md)。
