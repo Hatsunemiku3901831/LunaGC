@@ -1,4 +1,4 @@
-2026-11-11C 恢复执行索引：D-02 / F-05 / D02-R6 客户端验收仍 0/6。Proud owner规划、九候选源与publication语义，Scene token语义、refill源与语义已限定验收；范围、证据和复现见[本轮索引](docs/CLIENT_72_D02_RESUME_20261111C.md)与专题，状态见[Project](Project.md)。builder 117B、native read 208B和refill条件投影待第三验收，两项新源语义进行中；World观察包仍阻塞。run2 O=0 cold停止与收尾已核，当前无待用户ready事项。A/B拒绝冻结不变。
+2026-11-11C 恢复执行索引：D-02 / F-05 / D02-R6 客户端验收仍 0/6。builder 117B、native read 208B的原窗与语义，以及refill条件投影v2已限定验收；范围和复现见[本轮索引](docs/CLIENT_72_D02_RESUME_20261111C.md)，任务状态见[Project](Project.md)。v1投影普通返修封存，不追认；read-core region与registration候选待核，World观察包仍阻塞。run2 cold停止及收尾已核，无待用户ready事项；A/B拒绝冻结不变。
 
 2026-11-11 历史文档重规划索引：任务依赖、派工与验收以 [Project](Project.md) 为准；[README](README.md) 保留稳定项目说明，重排前原文见 [README 历史快照](README.archive-2026-11-11.md)。本轮仅文档整理，研发仍暂停，未新增技术或客户端验收；恢复入口与既有阻塞见 [HANDOFF2](HANDOFF2.md)。
 
