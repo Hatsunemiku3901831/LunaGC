@@ -284,6 +284,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3s2/CODEC9-ACTUAL-STREAM-CONTRACT | 已完成 | 两实际流头8c06的可达原分支、量子精确长度/restart/CRC0及fresh状态关系，16固定源纯审计第三7410B同双fresh；线性尾部40B为跳表数据，伪指令外跳不作实际分支。未执行target reader/native。 | [字段与独立边界](docs/CLIENT_72_D02_SCENE_CONFIGMETA_CODEC9_STREAM_20261111B.md) |
 | F-03d3s2/CONFIGMETA-CODEC9-OOZ-PAYLOAD | 已完成 | 固定外置源码MSVC实际build；公开XML逐byte、append/truncate原-1、两目标完整消费/精确262144+72852及双入口输出一致、guards保持。双fresh/第三13件同字节，纯产物审计通过；concat334996B。对象身份/PathHash/MPLevel仍待，不代target native或自然loader。 | [真实结果、复现及限制](docs/CLIENT_72_D02_CODEC9_OOZ_PAYLOAD_20261111B.md) |
 | F-03d3s2/CONFIGMETA-SERIALIZED-IDENTITY | 已完成 | 精确含换行engine的新限定v17目录metadata EOF213/三对象；local PPtr→同CAB105B MonoScript与旧目标逐byte相同，class114实例MetaConfig前缀至object+44。第三七件同最终双fresh，7反例及纯audit通过。自定义330568B仅抽取，PathHash/MPLevel后继未验。 | [身份、来源及复现](docs/CLIENT_72_D02_CONFIGMETA_SERIALIZED_20261111B.md) |
+| F-03d3s2/CONFIGMETA-FIELDS-BIN-LOCATOR | 已完成 | 按本已绑定实例公开字段/数组schema，182 PathHash数组/20615对恰EOF；field386052与已验consumer接同第二U64，完整两索引唯一命中entry44935541/location24230448。第三四件同最终双fresh，纯audit及针对性测试通过。实际bin payload/reader状态与MPLevel分组仍待，不用runtime offset作serialized依据。 | [字段桥与准确索引](docs/CLIENT_72_D02_CONFIGMETA_FIELDS_BIN_HEADER_20261111B.md) |
+| F-03d3s2/GADGET-BIN-ACTUAL-HEADER | 已完成 | 唯一物理139134667B顺序SHA/MD5验证，仅取13737B header；原header/parser/14getter第三四件同双fresh，纯audit通过，合计6定向测试过。实际tag3/3399块/单content445421180B/tail0；尚0 payload前缀或解码。 | [源、原件及下一选择性范围](docs/CLIENT_72_D02_CONFIGMETA_FIELDS_BIN_HEADER_20261111B.md) |
 
 
 ### 6.3 SDK、补丁、观察与运维前置

@@ -951,3 +951,5 @@ B-02d收口：验收提交36eb486；先建卡3fc7e80。旧HANDOFF2已先备份�
 2026-11-11 CONFIGMETA-SERIALIZED-IDENTITY：精确engine含换行的新独有parser，目录3对象/metadata EOF213、local PPtr→同CAB脚本105B与旧目标同byte，实例MetaConfig实际前缀游标44。第三七件同fresh4/5，7反例及纯audit第三SHA716c6b85通过；早期补逐字段偏移前产物保留不用作最终复核。自定义330568B已提取，PathHash字段与MPLevel后继继续Sol。见[实际身份与CLI](docs/CLIENT_72_D02_CONFIGMETA_SERIALIZED_20261111B.md)，无decoder重跑、PE/目标CPU或客户端操作。
 
 2026-11-11 Proud本体/准确query后继：944B本体29源55锚点/11typed/三E8/七join的纯第三46067B同双fresh SHA5f8fdd6b，skills/energy与81127未混用，helper整链仍未知；795B query caller第三九件同双fresh SHA2c45365f，201条/两个AOT slot/准确E8及8门禁过。见[本体合同](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_SEMANTICS_20261111B.md)、[query单窗](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_QUERY_WINDOW_20261111B.md)。新原窗继续Sol语义，未验同81127门槛/自然hit或客户端。
+
+2026-11-11 ConfigMeta fields/bin/header：182数组20615对/EOF→准确field386052第二U64→两完整索引唯一entry44935541/location24230448，第三四件同双fresh，纯audit SHA8ade21b8；139134667B物理源仅hash和13737B header，原native14getter+parser第三四件同双fresh/audit SHA3968f8a9，tag3/3399块/单content445421180B。6项定向测试主线通过。命令/来源与开发firstPairs失败见[专题](docs/CLIENT_72_D02_CONFIGMETA_FIELDS_BIN_HEADER_20261111B.md)；payload未提取，选择性目录/entry后继交Sol。
