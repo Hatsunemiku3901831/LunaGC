@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-**用户已解除暂停，Scene、C 恢复并行推进；D-02 / F-05 / D02-R6 仍未完成。** Scene 已实际解出同源 ConfigMeta payload、核定目录及实例脚本身份，继续序列化字段→PathHash.bin→实际 MPLevel；C 已核 Talent 六个空值差异及完整候选目录加载，继续 Proud `(221,1)` 命中/门槛。Proud 只读采样准备已完成，等待本轮新实时 ready；离线工作继续。A-SECOND-RETURN-CONTRACT 及其依赖、B 组合 loader 保持安全审查拒绝阻塞，不重试或换模型接续。[本批计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。
+**用户已解除暂停，Scene、C 恢复并行推进；D-02 / F-05 / D02-R6 仍未完成。** Scene 已从同源ConfigMeta字段/索引恢复真实payload，完整707组和含MPLevel的World组21个原序名称已验，继续自然reader及World/slot114；C 已核 Talent 六个空值差异及完整候选目录加载，继续 Proud `(221,1)` 命中/门槛。Proud 只读采样准备已完成，等待本轮新实时 ready；离线工作继续。A-SECOND-RETURN-CONTRACT 及其依赖、B 组合 loader 保持安全审查拒绝阻塞，不重试或换模型接续。[本批计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -75,7 +75,7 @@
 | A：F-03d3f4d2；必要 String 共同合同 | 同 epoch GC/Default 输入、人工双路径、stock 条件自有原 helper 已验，只读复用 | A-SECOND-RETURN-CONTRACT及依赖保持拒绝阻塞；其他独立任务必须先通过移除拒绝动作/产物后的独立性判断 | 不派被拒项，不运行草稿 |
 | B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 已验八点、锁内 map、stock v2、PostRequest 和共用服务入口可只读复用 | 组合 loader 源、失败证据和未提交差异保留；自然请求采用、信任、认证与会话交换未闭 | 留待用户使用 [Daybreak](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md) |
 | C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 旧号/121阶段行/Talent真实Java复用；Proud原热写与三组合法miss已验 | 真正hit缺准确热Equals链；只读7读采样已离线验收，等待本轮新ready。原行/producer/+10门槛、目标OpenConfig、装备配置与完整恢复仍待 | 主线现场/集成，Sol max按新证据处理语义；不以候选加载或miss批准父项 |
-| Scene：F-03d3s2 | MetaConfig实例/182数组→准确bin/entry、完整目录/索引→真实782517B payload已验 | 实际payload解析及原序MPLevel分组按独立规格验收；自然reader、World返回对象/slot114及生命周期仍待 | 新成熟机械步骤主线/Terra直推；未知parser/自然对象才交Sol max，不把全部对象列为P0 |
+| Scene：F-03d3s2 | 同源字段/索引→真实782517B payload→707组/15835子名称、唯一World组21原序名称已验 | reader工厂60257.m500134单窗规格已冻结，Terra实施；自然backend/cursor/refill、World实际返回对象/slot114和后续组件仍待。Pool独立诊断只到共用allocator调用前 | Sol max语义/明确来源，Terra xhigh单窗；主线验收/提交及独占现场。已有slot114三读规格复用，不读metadata候选 |
 
 本批输入、文件归属、产物及退出条件见 [执行计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。Talent 两个限定出口已验；当前 Scene 解码与 Proud 新输入按成熟规格轮转，分析交回即释放 max 槽。
 每次派工先固定：**任务ID、输入版本/来源、准确问题、允许修改的文件、只读依赖、独立输出目录、禁止操作、产物、验收、停止/返回条件**。所有者以本批派工为准，一个文件同一时刻只有一个写入者。子代理返回“已完成/有界结论/阻塞”及证据；主线审核实际差异、必要独立样本和回归，再更新本页并提交。阻塞时写准确解除条件，不改父项为完成。
@@ -274,7 +274,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3s2/SCENE-MPLEVEL-PARSER-WINDOW | 已完成 | 两fresh九原件相同，fresh完整817B caller及E8/AOT/唯一pdata得131B/42条；root4门禁/10458B第三同双fresh。仅source，不代MPLevel分组/自然reader或实际注册。 | [准确parser原窗](docs/CLIENT_72_D02_SCENE_MPLEVEL_PARSER_WINDOW_20261111.md) |
 | F-03d3s2/SCENE-MPLEVEL-PREFIX | 已完成 | 131 B 原窗内联1 B、条件 refill、置位输出地址及 typed 消费者经125断言复核；实际2675 B正分支原窗双读一致。清位、实际分组及完整Scene待验。 | [前缀和原窗](docs/CLIENT_72_D02_SCENE_MPLEVEL_PREFIX_20261111.md) |
 | F-03d3s2/SCENE-MPLEVEL-DICTIONARY | 已完成 | 正分支 count、字符串与插入合同经995断言，第三一致；清位/count0 绑定同实际泛型并取得666 B原窗。重复处理、实际分组输入及自然生命周期待验。 | [字典与空分支](docs/CLIENT_72_D02_SCENE_MPLEVEL_DICTIONARY_20261111.md) |
-| F-03d3s2/SCENE-MPLEVEL-PARSER-CONTRACT | 进行中 | 原预留的inline/refill/字段与字典语义由已验PREFIX/DICTIONARY直接复用；本批继续补实际ConfigMeta/payload/reader输入，重复键与实际分组仍未知。不重新提取原窗或重复静态断言。 | [既有字典合同](docs/CLIENT_72_D02_SCENE_MPLEVEL_DICTIONARY_20261111.md)、[实际输入后继](docs/CLIENT_72_D02_SCENE_ACTUAL_INPUTS_20261111B.md) |
+| F-03d3s2/SCENE-MPLEVEL-PARSER-CONTRACT | 进行中 | inline/refill/字段/字典语义直接复用；同源payload及实际完整分组已验，本样本无重复key。自然reader初始化/返回仍待，不重新提取旧窗；其他输入的重复处理语义不由本样本补定。 | [既有字典合同](docs/CLIENT_72_D02_SCENE_MPLEVEL_DICTIONARY_20261111.md)、[实际host reference](docs/CLIENT_72_D02_MPLEVEL_HOST_REFERENCE_20261111B.md)、[reader后继](docs/CLIENT_72_D02_SCENE_READER_FACTORY_SUCCESSOR_20261111B.md) |
 | F-03d3s2/SCENE-ACTUAL-BUILTIN-CATALOGS | 已完成 | 15固定内置catalog/42879对象、4430脚本PPtr核对；唯一105B ConfigMeta MonoScript，目标实例引用0。6测试及第三同双fresh。不含bundle，实际PathHash/分组/slot114未验。 | [实际本机来源与范围](docs/CLIENT_72_D02_SCENE_ACTUAL_INPUTS_20261111B.md) |
 | F-03d3s2/SCENE-CONFIGMETA-LOAD-SOURCE | 已完成 | 141B/32条第三八原件与双fresh相同、3门禁及26来源断言通过；literal69656为Data/Common/MetaConfig，同handle槽作ref参数，正常返回直写field108683。泛型callee/IFix自然值和实际对象未验；原8候选预算停止未被改成外部阻塞。 | [原窗](docs/CLIENT_72_D02_SCENE_CONFIGMETA_HOLDER_WINDOW_20261111B.md)、[真实来源与发布](docs/CLIENT_72_D02_SCENE_CONFIGMETA_LOAD_CONTRACT_20261111B.md) |
 | F-03d3s2/SCENE-CONFIGMETA-BLOB-HEADER | 已完成 | 精确路径/后缀命中bundle33095；原短段212203B按原parser拒绝，完整284563B同源范围与14getter通过，第三五原件同双fresh。7定位/6完整header测试及43关系审计通过；本样本B止于首压缩块，不推普遍语义。尚无解压对象。 | [原短段及失败](docs/CLIENT_72_D02_SCENE_CONFIGMETA_ACTUAL_LOCATOR_20261111B.md)、[根因](docs/CLIENT_72_D02_SCENE_CONFIGMETA_HEADER_CONFLICT_20261111B.md)、[完整header](docs/CLIENT_72_D02_SCENE_CONFIGMETA_COMPLETE_HEADER_20261111B.md) |
@@ -290,6 +290,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3s2/GADGET-BIN-METADATA-PREFIX | 已完成 | 新增1..26加复用0，真实prefix3538944B/metadata3523145B，EOF/script/external/userInfo均实读；精确engine含换行、platform-2，176152对象。第三110件同最终双fresh、5反例/纯audit通过；唯一1210 pathID2需43..86，索引尚未读，本项不恢复MPLevel。 | [完整真实目录与精确后继](docs/CLIENT_72_D02_GADGET_BIN_METADATA_PREFIX_20261111B.md) |
 | F-03d3s2/GADGET-BIN-ACTUAL-INDEX | 已完成 | 仅43..86原prefix/独立LZ4，完整实际176150条索引恰EOF；唯一44935541按local fileID及完整U64关联class1208/path14783，fileSize782517。第三182件同最终双fresh、6反例及纯audit通过；目标765..771只作后继计划，本项无MPLevel/reader或客户端验收。 | [真实索引、64位关联及复现](docs/CLIENT_72_D02_GADGET_BIN_ACTUAL_INDEX_20261111B.md) |
 | F-03d3s2/GADGET-BIN-TARGET-BYTES | 已完成 | 仅765..771原prefix/独立LZ4；实际class1208对象782524B，LE32 count782517与索引fileSize相同，真实payload及3个原尾字节分别保存。第三34件同双fresh、4反例及纯audit通过；file offset0未自动升级自然reader起点，本项不恢复MPLevel。 | [真实byte array及边界](docs/CLIENT_72_D02_GADGET_BIN_TARGET_BYTES_20261111B.md) |
+| F-03d3s2/MPLEVEL-ACTUAL-HOST-REFERENCE | 已完成 | 完整782517B按已验语法从0消费恰EOF；707组/15835子名称，唯一MPLevel所在完整World key及21原序名称、5个零child组、无重复/空文字已验。全文件逆编码逐byte一致，第三四件同双fresh、6测试和纯audit通过；不代自然reader/字典返回或World生命周期。 | [真实分组、复现及剩余边界](docs/CLIENT_72_D02_MPLEVEL_HOST_REFERENCE_20261111B.md) |
 
 ### 6.3 SDK、补丁、观察与运维前置
 
