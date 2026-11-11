@@ -74,7 +74,7 @@
 | --- | --- | --- | --- |
 | A：F-03d3f4d2；必要 String 共同合同 | 同 epoch GC/Default 输入、人工双路径、stock 条件自有原 helper 已验，只读复用 | A-SECOND-RETURN-CONTRACT及依赖保持拒绝阻塞；其他独立任务必须先通过移除拒绝动作/产物后的独立性判断 | 不派被拒项，不运行草稿 |
 | B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 已验八点、锁内 map、stock v2、PostRequest 和共用服务入口可只读复用 | 组合 loader 源、失败证据和未提交差异保留；自然请求采用、信任、认证与会话交换未闭 | 留待用户使用 [Daybreak](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md) |
-| C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 旧号固定，121 条真实阶段行 Java loader 与726 Talent 查键直接复用 | Proud `(221,1)` 原 map/目标行/+10门槛由 Sol max 推进；六个 Talent 空值差异真实调用与独立测试由 Terra xhigh 推进，目标语义与完整恢复另验 | 独有Proud/Talent工具、测试和专题；JVM/DB归主线 |
+| C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 旧号固定，121条阶段行、六个Talent差异真实Java与四目录720必要键实际安装均已限定验收 | Proud `(221,1)` 原map/目标行/+10门槛由Sol max推进；目标Talent/OpenConfig同源语义、装备配置与完整恢复仍待，不以候选加载批准 | 独有Proud工具和专题；JVM/DB归主线 |
 | Scene：F-03d3s2 | 已验前缀、字典、文本游标、原序名称、插入及空分支直接复用 | Sol max先查同源PathHash.bin/payload/reader起点与实际MPLevel，再沿真实World返回对象和slot114接生命周期 | 独有Scene工具和专题；缺输入准确返回，sender前置待满足 |
 
 本批输入、文件归属、产物及退出条件见 [执行计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。当前在途 Scene、Proud、Talent 三包；规格成熟即交回释放分析槽。
@@ -395,6 +395,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01d1/R3-OLD-TALENT-REFS | 已完成 | 固定全121角色的 Java 当前 Depot Talent 查键，共726，活动24；36个非当前 Depot 保存引用保留。7项定向测试和第三CLI一致。目标行、OpenConfig和 revision 待验证。 | [引用与复现](docs/CLIENT_72_D02_OLD_TALENT_REFS_20261111.md) |
 | E-01d1/R3-OLD-TALENT-SOURCES | 已完成 | 两个固定 Excel 来源均命中726查键，6个空/缺差异、720个非空 checkout 精确键。7项和主线CLI一致。实际目标 OpenConfig 和恢复待验。 | [来源和消费差异](docs/CLIENT_72_D02_OLD_TALENT_SOURCES_20261111.md) |
 | E-01d1/R3-OLD-TALENT-ENTRY-NULLS | 已完成 | 5项真实Java通过：六行null/空串、正配置、缺Talent行/缺非空配置键及人工哨兵分开验证；固定AvatarTalents目录720源键均由真实loader安装。六键属于非当前活动角色。实际缓存/四目录胜出、目标配置和完整Player恢复仍待，不批准空ability。 | [当前Java行为、真实加载与边界](docs/CLIENT_72_D02_OLD_TALENT_ENTRY_NULLS_20261111B.md) |
+| E-01d1/R3-OLD-TALENT-CATALOG-LOAD | 已完成 | 四目录142源固定、缓存实际缺省；无参数生产OpenConfig loader的真实Java1项通过，720必要键均安装且完整条目与Avatar目录一致，无覆盖或缺失。目标同源身份/effect语义/revision和完整旧号恢复仍待。 | [完整catalog入口与限定验收](docs/CLIENT_72_D02_OLD_TALENT_CATALOG_LOAD_20261111B.md) |
 | E-01d1/R3-OLD-TRAVELER-PROMOTE | 已完成 | 已选旧号主角真实 group 12/phase 6 行通过独立 Java loader，四个非零属性位、三正材料和零 ID 过滤均通过。其余角色和实际属性/完整恢复待验。 | [来源、测试和范围](docs/CLIENT_72_D02_OLD_TRAVELER_PROMOTE_20261111.md) |
 | E-01d1/R3-OLD-PROMOTE-GROUPS | 已完成 | 121 个真实保存角色均经原Avatar切片取得独立 group，phase6 唯一行与原跨度匹配，缺键0；10项和主线CLI一致。字段和真实加载另验。 | [原引用和复现](docs/CLIENT_72_D02_OLD_PROMOTE_GROUPS_20261111.md) |
 | E-01d1/R3-OLD-PROMOTE-FIELDS-JAVA | 已完成 | 同源原121条 phase6 行字段、跨度和预算通过；真实独立 Java loader 验484属性、483正材料及零 ID 过滤。实际属性重算及完整恢复仍待。 | [字段与运行](docs/CLIENT_72_D02_OLD_PROMOTE_FIELDS_20261111.md) |

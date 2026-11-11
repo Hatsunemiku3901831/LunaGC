@@ -422,4 +422,3 @@ C-01a最终回归（2026-11-06）：独立便携Mongo测试实例、随机测试
 
 2026-11-10 E-01/R3-ITEM-ENTRY局部保存：固定同源出生Weapon11101六键经真实loader、普通Item队列/Guard/Mongo和新Player真实Inventory冷恢复；主线独立库/JVM三测试通过，两件不同ObjectId、cold Guard重存revision2、缺定义保留与重绑、UID隔离及冷读零写成立。未改生产保存或账号规则；完整Player、角色装备、退出重登和D-02未验。独立Mongo正常关闭且原数据保护保持，准确命令/原件/范围见[局部库存实际验收](CLIENT_72_D02_ITEM_SAVE_JAVA_20261110.md)。
 2026-11-11 [Talent六差异与当前Java](CLIENT_72_D02_OLD_TALENT_ENTRY_NULLS_20261111B.md)经隔离5项测试通过，固定AvatarTalents目录的720源键实际加载；六空值差异只涉及旧号非活动角色。未启Mongo、未读写原库、未执行完整Player/背包/postLoad或客户端重登，不能据此关闭保存恢复前置。
-
