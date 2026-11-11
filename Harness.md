@@ -949,3 +949,5 @@ B-02d收口：验收提交36eb486；先建卡3fc7e80。旧HANDOFF2已先备份�
 2026-11-11 PROUD-GATE-COMPARISON-WINDOW：73原候选按准确Avatar参数缩窄的944B/238条单窗第三九件同双fresh，8门禁及独立产物audit通过，code SHAab0370d2；实际普通AOT/唯一pdata与site原指令边界成立。比较/采用语义继续Sol max，尚无新现场或ready。命令和原件见[机械范围](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_WINDOW_20261111B.md)。
 
 2026-11-11 CONFIGMETA-SERIALIZED-IDENTITY：精确engine含换行的新独有parser，目录3对象/metadata EOF213、local PPtr→同CAB脚本105B与旧目标同byte，实例MetaConfig实际前缀游标44。第三七件同fresh4/5，7反例及纯audit第三SHA716c6b85通过；早期补逐字段偏移前产物保留不用作最终复核。自定义330568B已提取，PathHash字段与MPLevel后继继续Sol。见[实际身份与CLI](docs/CLIENT_72_D02_CONFIGMETA_SERIALIZED_20261111B.md)，无decoder重跑、PE/目标CPU或客户端操作。
+
+2026-11-11 Proud本体/准确query后继：944B本体29源55锚点/11typed/三E8/七join的纯第三46067B同双fresh SHA5f8fdd6b，skills/energy与81127未混用，helper整链仍未知；795B query caller第三九件同双fresh SHA2c45365f，201条/两个AOT slot/准确E8及8门禁过。见[本体合同](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_SEMANTICS_20261111B.md)、[query单窗](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_QUERY_WINDOW_20261111B.md)。新原窗继续Sol语义，未验同81127门槛/自然hit或客户端。

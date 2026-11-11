@@ -86,7 +86,7 @@
 
 | 批次 / 工作包 | 状态与依赖 | 交付与验收 | 推荐模型 | 证据与边界 |
 | --- | --- | --- | --- | --- |
-| 1A→按需2→3 / F-03d3f4d2 完整Avatar构造/后缀 | 进行中；原getter/owned字符及首pop副本已验；第二record/L64/flags8与GC/Default同epoch输入已取得，Default对象身份仍opaque。完整904B人工SSE/AVX和stock条件自有前后结果已验 | 第二分配合同遇平台门禁，解除后先核原返回，再核Default消费者；完整20分配/12根及子构造逐项闭合。自然String tuple/caller/trigger、TLS/GC所有权、enum/cold普通10294及g2保持未知，不补值/host成功 | Sol max冻结复杂合同，Sol xhigh/Terra接明确实现 | [自然输入边界](docs/CLIENT_72_D02_A_SUCCESSOR_20261110.md)、[原6B实际能力](docs/CLIENT_72_D02_CLEAR48_NATIVE_CAPABILITY_RESULTS_20261111.md)；完整父项不晋级 |
+| 1A→按需2→3 / F-03d3f4d2 完整Avatar构造/后缀 | 阻塞；依赖已拒绝A-SECOND-RETURN-CONTRACT。原getter/owned字符及首pop副本、第二record/L64/flags8与GC/Default同epoch输入、904B人工SSE/AVX和stock条件自有前后结果只读复用，Default对象身份仍opaque | 第二分配合同及其依赖不重试、不运行草稿；完整20分配/12根及子构造未闭。自然String tuple/caller/trigger、TLS/GC所有权、enum/cold普通10294及g2保持未知，不补值/host成功；其他A任务先独立性判断 | 当前不派拒绝项；独立任务另定Sol/Terra范围 | [自然输入边界](docs/CLIENT_72_D02_A_SUCCESSOR_20261110.md)、[原6B实际能力](docs/CLIENT_72_D02_CLEAR48_NATIVE_CAPABILITY_RESULTS_20261111.md)；完整父项和g2继续阻塞 |
 | 1B→按需2→3 / R2-CONFIGSYNC-EARLY-BRIDGE | 进行中；自然13及八点实际同配置writer/parser/env写入/原生返回与正常退出恢复已验，完整业务及自然Init/route未闭 | 首次任意P0/P2与三预算保持，实际外采30读10415B/512；原状态前后相同，8点代码/真实trampoline绑定。后继自然Init/env→route按证据最小推进；unwind/完整payload及业务未闭 | Sol max处理新语义；Sol xhigh现场/恢复 | [八点实际验证](docs/CLIENT_72_SDK_CONFIG_STAGE_OBSERVER.md)、[实施审核](docs/CLIENT_72_D02_B_SDK_AUDIT_20261110.md) |
 | 1B→按需2→3 / R2-ROUTE-CONFIG-SELECT | 进行中；准确托管loader存在，当前env/base=0的同epochstock候选已验；自然选择/Init/采用未验 | 固定托管env选择、managed→native必要输入和安全事件；原始材料可得先离线，合同足够再实机 | Sol max语义；Sol xhigh接入 | [执行计划](docs/CLIENT_72_D02_RESUME_20261109.md) |
 | 1B→按需2→3 / R2-CONFIG-ROUTE-WRITE（归R2-ROUTE-CONFIG-SELECT） | 已完成；36源147pin/独立产物准入与新ready90秒/16项原件审核和恢复通过，仅关闭锁内map观察 | 首同owner M0占尝试后验同writer帧/caller，锁内只查comboLogin并输出固定类别；新M0账69/4440、绑定15/6408、外采25/9262原件已验；非空comboLogin为固定cn-route-env-0。托管/native reader采用与认证另验 | Sol xhigh实现与主线现场；新语义再Sol max | [单一五点合同、原码及边界](docs/CLIENT_72_SDK_STAGE_NATURAL_SUCCESSOR_20261110.md) |
@@ -451,6 +451,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01d1/R3-PROUD-HOT-EQUALITY-INPUT/PREPARE | 已完成 | 显式PID的readonly identity与7读50B采样器；8纯Python及1真实Win32自进程测试、当前五输入/source预检通过。尚未读取客户端，实际采集须新ready，不创建或调用Default/Equals。 | [准备、命令与范围](docs/CLIENT_72_D02_PROUD_HOT_EQUALITY_SAMPLER_20261111B.md) |
 | E-01d1/R3-PROUD-GATE-ENTRY-INDEX | 已完成 | 固定PE形状索引73候选（7 query E8、66 displacement load），69函数/47owner；第三同双fresh及5门禁通过。仅原字节候选/pdata与声明，不证明指令边界、同typed+10消费或提升门槛；后继按准确来源另验。 | [扫描范围、原件与未验](docs/CLIENT_72_D02_PROUD_ACTUAL_ADOPTION_20261111B.md) |
 | E-01d1/R3-PROUD-GATE-COMPARISON-WINDOW | 已完成 | 按准确Avatar参数从原索引缩窄唯一候选；普通AOT原cell/slot、唯一pdata/原site门后取得944B/238条。第三九原件同双fresh，8人工门禁及独立产物audit通过；只证明来源及site边界，同对象门槛比较/采用仍交Sol max。 | [来源、范围及复现](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_WINDOW_20261111B.md) |
+| E-01d1/R3-PROUD-GATE-COMPARISON-BODY-CONTRACT | 已完成 | 29源/55锚点/11typed字段/三helper E8及七query join第三46067B同双fresh。本体读取已验skills/energy，未读81127+10；同Avatar/Proud helper整链仍未知，不能称排除。准确query caller后继另验。 | [准确值流与未闭](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_SEMANTICS_20261111B.md) |
+| E-01d1/R3-PROUD-GATE-COMPARISON-QUERY-WINDOW | 已完成 | 七准确query中按声明上下文缩窄795B候选；两个普通AOT原slot与准确E8/唯一pdata门通过，第三九件同双fresh、201条及8反例通过。只关闭来源，其他六候选未排除，query输入/返回业务身份及门槛待Sol max。 | [原窗及边界](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_QUERY_WINDOW_20261111B.md) |
 | E-01/R3-PROUD-ROW-READER | 已完成 | 原1438B/309条、三个backend分支参数及typed缓存已核；6测试/主线第三85断言31839B同两fresh。两个U32用途按分支分开，不统一offset/size；+1c赋值不证明有效row span，400190 producer及真实索引仍未闭。 | [准确合同与下一候选](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md) |
 
 
