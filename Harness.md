@@ -1,3 +1,5 @@
+2026-11-11 文档重规划索引：任务依赖、派工与验收以 [Project](Project.md) 为准；[README](README.md) 保留稳定项目说明，重排前原文见 [README 历史快照](README.archive-2026-11-11.md)。本轮仅文档整理，研发仍暂停，未新增技术或客户端验收；恢复入口与既有阻塞见 [HANDOFF2](HANDOFF2.md)。
+
 2026-11-11 本轮 A、Scene、C 已按最新指令暂停。只读收尾盘点与任务阻塞见[详细交接](HANDOFF2.md)，旧现场 ready 已消费。
 
 2026-11-11 F-03d3s2 字典置位语义995项第三复核，清位/count0 的同一 MethodSpec 和666 B原窗双读通过，真实 MPLevel payload 待验。[复现](docs/CLIENT_72_D02_SCENE_MPLEVEL_DICTIONARY_20261111.md)。

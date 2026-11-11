@@ -261,3 +261,6 @@ B-02e7限定原生部分消费51f7cd2、E-01c5实际生产Lua加载审计9aa8ca7
 
 
 2026-11-11 本批B已完成当前全部在途子任务的限定验收、分项本地提交及收尾，按用户最新要求暂停，不开启后继。交接前HEAD742c6ee，27个本批研发提交使用用户指定Author/Committer身份，640c5ec为用户确认的手工提交，未推送。真实MPLevel的707组/World组21原序名称、reader工厂238B原窗、Proud预览分支/121行605槽两叶真实Java/字段桥及157B setter原窗已验；D-02客户端仍0/6，GS未部署。最终五stock/载体、19个未变保护文件及138原数据保持，AGENTS新差异归用户，patch/resources既有差异保留未提交；相关进程和固定端口0。Proud现场未执行，当前无待用户操作，迟到ready不自动解除暂停；A第二返回及B组合loader安全拒绝继续有效。已先备份HANDOFF2到本批closeout-paused-20261111b/before/再覆盖，HANDOFF本条仅追加。详细修改/实际测试/提交、原失败、未闭项分类、最小Daybreak队列及恢复后第一步见[HANDOFF2](HANDOFF2.md)和[Project](Project.md)；恢复须用户新的明确指令。
+
+
+2026-11-11 文档重规划：已重排 [Project](Project.md) 的依赖、未完成工作包与验收顺序，精简 [README](README.md) 并保存完整[历史原文](README.archive-2026-11-11.md)；[Harness](Harness.md) 已更新索引。技术证据基线为 `6e51a15`，本轮仅文档，不恢复研发、不新增技术或客户端验收；D-02 六项仍为 0/6，A/B 原安全拒绝继续有效。详细范围、旧成果、未闭项及恢复入口见 [HANDOFF2](HANDOFF2.md)。
