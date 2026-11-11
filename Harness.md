@@ -967,3 +967,5 @@ B-02d收口：验收提交36eb486；先建卡3fc7e80。旧HANDOFF2已先备份�
 2026-11-11 MPLEVEL-ACTUAL-HOST-REFERENCE：真实782517B从0按已验语法完整消费/逆编码逐byte相同，707组/15835 child，唯一World组ordinal544含MPLevel及21原序名称。第三四件同fresh3/4，6测试及纯audit698B/SHA7d6fa545通过；无原reader/原生字典/World返回。见[实际分组及CLI](docs/CLIENT_72_D02_MPLEVEL_HOST_REFERENCE_20261111B.md)、[reader/World/Pool准确后继](docs/CLIENT_72_D02_SCENE_READER_FACTORY_SUCCESSOR_20261111B.md)；factory单窗已交Terra，Pool停共用allocator前，C7/50B现场范围保持。
 
 2026-11-11 PROUD-GATE-PROMOTE-SEMANTICS：同Avatar/property1002实际phase→同Depot/81127两字段→group非零且threshold==phase+1→预览group列表→StarUpDialog，静态分支与入站ID恢复来源分别有证。主线纯第三47421B/SHAecdbace6同双fresh，25源/55既有及40新PC、10单项/5数组oracle通过；无新CPU/现场。见[冻结语义及复现](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_PROMOTE_SEMANTICS_20261111B.md)；不把预览条件当当前Java<=或group*100+1证明。
+
+2026-11-11 OBSERVED-81127-LEAF-PROJECTION：全121行/605槽两叶对象投影第三957523B/SHA0dc990d1同双fresh，6 Python测试；主线portable JDK17/offline Gradle实际2 JUnit全过、21s，XML 0失败/错误/跳过。独立原native报告期望核全部行与四活动行，class-init无DB/服务Manager初始化，未启Mongo/客户端。见[限定加载、实际命令和准备首失败](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_PROJECTION_JAVA_20261111B.md)，原件位于该专题指定private projection/java1；生产Java/resources/build.gradle均未改，无部署。

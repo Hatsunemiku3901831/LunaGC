@@ -74,7 +74,7 @@
 | --- | --- | --- | --- |
 | A：F-03d3f4d2；必要 String 共同合同 | 同 epoch GC/Default 输入、人工双路径、stock 条件自有原 helper 已验，只读复用 | A-SECOND-RETURN-CONTRACT及依赖保持拒绝阻塞；其他独立任务必须先通过移除拒绝动作/产物后的独立性判断 | 不派被拒项，不运行草稿 |
 | B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 已验八点、锁内 map、stock v2、PostRequest 和共用服务入口可只读复用 | 组合 loader 源、失败证据和未提交差异保留；自然请求采用、信任、认证与会话交换未闭 | 留待用户使用 [Daybreak](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md) |
-| C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 旧号/121阶段行/Talent真实Java复用；Proud热写/三miss及同81127门槛的下一突破预览分支已验 | 真正hit缺准确热Equals链，7读采样等待本轮新ready；当前采用由入站ID/资源及group行选择驱动，不用预览相等条件批准Java的<=。原行/producer、目标OpenConfig、装备配置与完整恢复仍待 | 主线现场/集成；Sol max准确语义→Terra明确投影/测试，不以局部静态分支或miss批准父项 |
+| C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 旧号/121阶段行/Talent真实Java复用；同81127下一突破预览分支、121行/605槽两叶对象投影及真实ResourceLoader已验 | 真正hit缺准确热Equals链，7读采样等待本轮新ready；原行两字段静态桥/标量setter继续独立推进。当前采用、Java<=/行ID公式、目标OpenConfig、装备配置及完整恢复仍待 | 主线现场/集成；Sol max准确语义→Terra明确投影/测试，不以对象叶加载或预览分支批准父项 |
 | Scene：F-03d3s2 | 同源字段/索引→真实782517B payload→707组/15835子名称、唯一World组21原序名称已验 | reader工厂60257.m500134单窗规格已冻结，Terra实施；自然backend/cursor/refill、World实际返回对象/slot114和后续组件仍待。Pool独立诊断只到共用allocator调用前 | Sol max语义/明确来源，Terra xhigh单窗；主线验收/提交及独占现场。已有slot114三读规格复用，不读metadata候选 |
 
 本批输入、文件归属、产物及退出条件见 [执行计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。Talent 两个限定出口已验；当前 Scene 解码与 Proud 新输入按成熟规格轮转，分析交回即释放 max 槽。
@@ -462,6 +462,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01d1/R3-PROUD-GATE-QUERY-BODY-CONTRACT | 已完成 | 第三38653B同双fresh，25源/50锚点/七typed；已核同Avatar→Depot→skills/energy→已有Proud集合正静态链，本体未读同81127+10。typed缩窄与原覆盖边界准确保留；Promote配置context与候选交集第三14264B同双fresh，group不是实际phase，2034B原窗后继待验。 | [准确关系、更正与后继](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_QUERY_SEMANTICS_20261111B.md) |
 | E-01d1/R3-PROUD-GATE-PROMOTE-WINDOW | 已完成 | 旧配置query context与候选准确交集选2034B，三个普通AOT原slot/唯一pdata/候选及三原E8门通过；第三十件同双fresh、437条及7组反例通过。只关闭新完整来源，group/实际phase及同元素比较由Sol max另核，4427B交集未读。 | [真实边界与原件](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_PROMOTE_WINDOW_20261111B.md) |
 | E-01d1/R3-PROUD-GATE-PROMOTE-SEMANTICS | 已完成 | 同Avatar property1002实际phase、同Depot/81127元素与group非零且threshold==phase+1比较/采用/跳过接到StarUpDialog下一突破预览列表；第三47421B同双fresh，25源/55既有及40新锚点、分支oracle通过。旧号phase6/threshold1在此预览跳过；不代当前采用、Java<=、行ID公式或实际map hit。 | [准确用途、同元素比较和独立入站ID来源](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_PROMOTE_SEMANTICS_20261111B.md) |
+| E-01d1/R3-PROUD-GATE-COMPARISON/OBSERVED-81127-LEAF-PROJECTION | 已完成 | 121行/605槽按原序投影已观察对象两叶，保留0/重复/presence未知；第三957523B同双fresh及6 Python测试通过。真实ResourceLoader两项JUnit全过，独立原报告期望核全部行/四活动行；不代当前采用、Proud原行/公式、完整资源或保存恢复。 | [冻结规格](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_PROJECTION_PLAN_20261111B.md)、[真实Java、复现和边界](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_PROJECTION_JAVA_20261111B.md) |
 | E-01/R3-PROUD-ROW-READER | 已完成 | 原1438B/309条、三个backend分支参数及typed缓存已核；6测试/主线第三85断言31839B同两fresh。两个U32用途按分支分开，不统一offset/size；+1c赋值不证明有效row span，400190 producer及真实索引仍未闭。 | [准确合同与下一候选](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md) |
 
 
