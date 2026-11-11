@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-**用户已解除暂停，Scene、C 恢复并行推进；D-02 / F-05 / D02-R6 仍未完成。** 复用已验 Scene 字典、旧号 121 条 phase6 Java 加载及其他限定成果，优先实际 MPLevel 输入、Proud `(221,1)` 命中/门槛、Talent 六个空值差异的真实入场行为。A-SECOND-RETURN-CONTRACT 及其依赖、B 组合 loader 保持安全审查拒绝阻塞，不重试或换模型接续。现场尚未准备完成，旧 ready 不复用。[本批计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。
+**用户已解除暂停，Scene、C 恢复并行推进；D-02 / F-05 / D02-R6 仍未完成。** Scene 已定位同源 ConfigMeta 完整 blob 并验证 header、两块压缩输入前缀，继续真实解码与 MPLevel；C 已核 Talent 六个空值差异及完整候选目录加载，继续 Proud `(221,1)` 命中/门槛。Proud 只读采样准备已完成，等待本轮新实时 ready；离线工作继续。A-SECOND-RETURN-CONTRACT 及其依赖、B 组合 loader 保持安全审查拒绝阻塞，不重试或换模型接续。[本批计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -75,9 +75,9 @@
 | A：F-03d3f4d2；必要 String 共同合同 | 同 epoch GC/Default 输入、人工双路径、stock 条件自有原 helper 已验，只读复用 | A-SECOND-RETURN-CONTRACT及依赖保持拒绝阻塞；其他独立任务必须先通过移除拒绝动作/产物后的独立性判断 | 不派被拒项，不运行草稿 |
 | B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 已验八点、锁内 map、stock v2、PostRequest 和共用服务入口可只读复用 | 组合 loader 源、失败证据和未提交差异保留；自然请求采用、信任、认证与会话交换未闭 | 留待用户使用 [Daybreak](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md) |
 | C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 旧号/121阶段行/Talent真实Java复用；Proud原热写与三组合法miss已验 | 真正hit缺准确热Equals链；只读7读采样已离线验收，等待本轮新ready。原行/producer/+10门槛、目标OpenConfig、装备配置与完整恢复仍待 | 主线现场/集成，Sol max按新证据处理语义；不以候选加载或miss批准父项 |
-| Scene：F-03d3s2 | 已验前缀/字典等直接复用；141B准确生产来源已给真实路径，完整284563B header已由原parser验证 | Sol max推进tag9状态/ABI，Terra max定向GitHub复用检索；实际ConfigMeta对象/PathHash.bin/payload/reader、World实际返回对象/slot114及生命周期仍待 | 独有Scene/codec工具和专题；不以header或外部候选代payload/自然加载 |
+| Scene：F-03d3s2 | 已验前缀/字典等直接复用；真实路径与完整284563B header、两块prefix-only均通过主线第三 | 上游检索已交回；Sol max核内部流头/状态/ABI并形成精确解码规格，Terra xhigh执行单窗与成熟driver；实际ConfigMeta对象/PathHash.bin/payload/reader、World实际返回对象/slot114及生命周期仍待 | 独有Scene/codec工具和专题；不以header、前缀或外部候选代payload/自然加载 |
 
-本批输入、文件归属、产物及退出条件见 [执行计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。当前在途 Scene、Proud、Talent 三包；规格成熟即交回释放分析槽。
+本批输入、文件归属、产物及退出条件见 [执行计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。Talent 两个限定出口已验；当前 Scene 解码与 Proud 新输入按成熟规格轮转，分析交回即释放 max 槽。
 每次派工先固定：**任务ID、输入版本/来源、准确问题、允许修改的文件、只读依赖、独立输出目录、禁止操作、产物、验收、停止/返回条件**。所有者以本批派工为准，一个文件同一时刻只有一个写入者。子代理返回“已完成/有界结论/阻塞”及证据；主线审核实际差异、必要独立样本和回归，再更新本页并提交。阻塞时写准确解除条件，不改父项为完成。
 
 ### 3.4 未完成工作包与模型分配
@@ -277,6 +277,9 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3s2/SCENE-MPLEVEL-PARSER-CONTRACT | 进行中 | 原预留的inline/refill/字段与字典语义由已验PREFIX/DICTIONARY直接复用；本批继续补实际ConfigMeta/payload/reader输入，重复键与实际分组仍未知。不重新提取原窗或重复静态断言。 | [既有字典合同](docs/CLIENT_72_D02_SCENE_MPLEVEL_DICTIONARY_20261111.md)、[实际输入后继](docs/CLIENT_72_D02_SCENE_ACTUAL_INPUTS_20261111B.md) |
 | F-03d3s2/SCENE-ACTUAL-BUILTIN-CATALOGS | 已完成 | 15固定内置catalog/42879对象、4430脚本PPtr核对；唯一105B ConfigMeta MonoScript，目标实例引用0。6测试及第三同双fresh。不含bundle，实际PathHash/分组/slot114未验。 | [实际本机来源与范围](docs/CLIENT_72_D02_SCENE_ACTUAL_INPUTS_20261111B.md) |
 | F-03d3s2/SCENE-CONFIGMETA-LOAD-SOURCE | 已完成 | 141B/32条第三八原件与双fresh相同、3门禁及26来源断言通过；literal69656为Data/Common/MetaConfig，同handle槽作ref参数，正常返回直写field108683。泛型callee/IFix自然值和实际对象未验；原8候选预算停止未被改成外部阻塞。 | [原窗](docs/CLIENT_72_D02_SCENE_CONFIGMETA_HOLDER_WINDOW_20261111B.md)、[真实来源与发布](docs/CLIENT_72_D02_SCENE_CONFIGMETA_LOAD_CONTRACT_20261111B.md) |
+| F-03d3s2/SCENE-CONFIGMETA-BLOB-HEADER | 已完成 | 精确路径/后缀命中bundle33095；原短段212203B按原parser拒绝，完整284563B同源范围与14getter通过，第三五原件同双fresh。7定位/6完整header测试及43关系审计通过；本样本B止于首压缩块，不推普遍语义。尚无解压对象。 | [原短段及失败](docs/CLIENT_72_D02_SCENE_CONFIGMETA_ACTUAL_LOCATOR_20261111B.md)、[根因](docs/CLIENT_72_D02_SCENE_CONFIGMETA_HEADER_CONFLICT_20261111B.md)、[完整header](docs/CLIENT_72_D02_SCENE_CONFIGMETA_COMPLETE_HEADER_20261111B.md) |
+| F-03d3s2/SCENE-CONFIGMETA-CODEC9-PREFIX | 已完成 | 两实际压缩切片由已验81B原前缀执行，各原AL=1且无model；guards/128B后尾部/header/table保持，第三四原件同双fresh、5门禁通过。输出仍为压缩字节，codec/serialized/实际MPLevel未验。 | [来源、范围及复现](docs/CLIENT_72_D02_SCENE_CONFIGMETA_CODEC9_PREFIX_20261111B.md) |
+| F-03d3s2/CODEC9-ACTUAL-SUPPORT | 进行中 | Sol max规划与Terra max README/分支检索交回，三个外置固定源码为同一ooz谱系；内部流头单窗与精确ABI继续，尚未构建或运行外部解码器。不能按外层tag9猜算法或绕目标状态/收尾。 | [定向复用检索](docs/CLIENT_72_D02_CODEC9_UPSTREAM_REUSE_20261111B.md) |
 
 
 ### 6.3 SDK、补丁、观察与运维前置
