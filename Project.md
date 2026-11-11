@@ -394,6 +394,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01/R3-ALL-SAVED-DEPOT-REFS | 已完成 | 全121实际保存当前Depot原whole171/cursor26024、121 query/2924 getter RETURN，34批准/11实际区间及各span核对；14测试/主线第三9014403B与两fresh同SHA通过。726外层/嵌套原值和presence unknown保留，仅数据样本，不批准字段alias/全phase6资源或完整恢复。 | [原字段、数量与后继边界](docs/CLIENT_72_D02_ALL_SAVED_DEPOT_REFS_20261111.md) |
 | E-01d1/R3-OLD-TALENT-REFS | 已完成 | 固定全121角色的 Java 当前 Depot Talent 查键，共726，活动24；36个非当前 Depot 保存引用保留。7项定向测试和第三CLI一致。目标行、OpenConfig和 revision 待验证。 | [引用与复现](docs/CLIENT_72_D02_OLD_TALENT_REFS_20261111.md) |
 | E-01d1/R3-OLD-TALENT-SOURCES | 已完成 | 两个固定 Excel 来源均命中726查键，6个空/缺差异、720个非空 checkout 精确键。7项和主线CLI一致。实际目标 OpenConfig 和恢复待验。 | [来源和消费差异](docs/CLIENT_72_D02_OLD_TALENT_SOURCES_20261111.md) |
+| E-01d1/R3-OLD-TALENT-ENTRY-NULLS | 已完成 | 5项真实Java通过：六行null/空串、正配置、缺Talent行/缺非空配置键及人工哨兵分开验证；固定AvatarTalents目录720源键均由真实loader安装。六键属于非当前活动角色。实际缓存/四目录胜出、目标配置和完整Player恢复仍待，不批准空ability。 | [当前Java行为、真实加载与边界](docs/CLIENT_72_D02_OLD_TALENT_ENTRY_NULLS_20261111B.md) |
 | E-01d1/R3-OLD-TRAVELER-PROMOTE | 已完成 | 已选旧号主角真实 group 12/phase 6 行通过独立 Java loader，四个非零属性位、三正材料和零 ID 过滤均通过。其余角色和实际属性/完整恢复待验。 | [来源、测试和范围](docs/CLIENT_72_D02_OLD_TRAVELER_PROMOTE_20261111.md) |
 | E-01d1/R3-OLD-PROMOTE-GROUPS | 已完成 | 121 个真实保存角色均经原Avatar切片取得独立 group，phase6 唯一行与原跨度匹配，缺键0；10项和主线CLI一致。字段和真实加载另验。 | [原引用和复现](docs/CLIENT_72_D02_OLD_PROMOTE_GROUPS_20261111.md) |
 | E-01d1/R3-OLD-PROMOTE-FIELDS-JAVA | 已完成 | 同源原121条 phase6 行字段、跨度和预算通过；真实独立 Java loader 验484属性、483正材料及零 ID 过滤。实际属性重算及完整恢复仍待。 | [字段与运行](docs/CLIENT_72_D02_OLD_PROMOTE_FIELDS_20261111.md) |

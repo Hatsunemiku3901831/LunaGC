@@ -926,3 +926,5 @@ B-02d收口：验收提交36eb486；先建卡3fc7e80。旧HANDOFF2已先备份�
 
 
 2026-11-10 出生武器真实Mongo库存恢复：三同源报告/六键经真实ResourceLoader→GameItem普通队列/Guard→新Player空Avatar/Inventory，主线JDK17/offline Gradle26秒exit0、三JUnit全过。两实例/冷Guard重存revision2、缺定义BSON保持和恢复、UID隔离及冷读零写成立；12项独立原件审核SHA`6a1ac760…94f10`，实际根`local/migration72/d02-resume-20261110/c-item-java/run-20261110T005820Z-9287f146/`。10215 class-init无服务/脚本/插件，保护/三输入/JAR保持，Mongo正常shutdown/27027释放、独立dbpath保留。见[真实结果与CLI](docs/CLIENT_72_D02_ITEM_SAVE_JAVA_20261110.md)。仅未装备Item11101，完整Avatar/Player/角色装备/客户端和D-02未验。
+2026-11-11 本批恢复 `R3-OLD-TALENT-ENTRY-NULLS` 已限定验收：`OldTalentEntryNullBehaviorTest` 最终5项全过，真实ResourceLoader/OpenConfigLoader/Avatar与静态场景能力builder覆盖六个null/空串、正配置、缺Talent行/缺配置键和人工哨兵；固定AvatarTalents目录720个必要源键实际安装，非生产完整加载或目标语义。复现四个JVM属性、隔离命令、原件和java1准备失败见[专题](docs/CLIENT_72_D02_OLD_TALENT_ENTRY_NULLS_20261111B.md)。当前Scene/Proud仍并行推进，A/B拒绝项不重试，D-02仍未验。
+
