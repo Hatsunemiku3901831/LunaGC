@@ -933,3 +933,5 @@ B-02d收口：验收提交36eb486；先建卡3fc7e80。旧HANDOFF2已先备份�
 2026-11-11 SCENE-ACTUAL-BUILTIN-CATALOGS：15同源安装catalog共42879对象、4430脚本PPtr核对；唯一ConfigMeta MonoScript及0实例引用，第三20492B/SHA3b3bc0c7与双fresh一致，6测试通过。只关闭内置目录清查，不推bundle不存在；下一步精确LoadConfig cell的caller/filePath。CLI与原件见[专题](docs/CLIENT_72_D02_SCENE_ACTUAL_INPUTS_20261111B.md)。
 
 2026-11-11 Proud热map来源与门槛入口索引限定通过：静态类型来源第三9507B/212B同双fresh，Store178B后接准确TryInsert1455B/380条，原窗第三/42871B离线audit一致，6门禁通过；另73个原query/load候选索引第三53025B同双fresh，5门禁通过。实际热写入、lookup/门槛/自然对象均未验；原件、CLI与冷分支排除见[来源专题](docs/CLIENT_72_D02_PROUD_ACTUAL_ADOPTION_20261111B.md)及[单窗](docs/CLIENT_72_D02_PROUD_TRYINSERT_WINDOW_20261111B.md)。
+
+2026-11-11 R3-PROUD-HOT-INSERT：三自有缓冲条件样本执行原Store→TryInsert，各122指令/67访问且原RET、无model；主线第三同双fresh SHA cb3bb72b，5独立门禁通过，完整64位pair/U32 ID与七原写核实。仅条件热写入，原资源行/producer/lookup/门槛及ready仍未验。运行与首映射失败原件见[专题](docs/CLIENT_72_D02_PROUD_HOT_INSERT_20261111B.md)。
