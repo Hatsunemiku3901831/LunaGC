@@ -47,11 +47,15 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 | `R3-PROUD-EXISTING-HANDLE-QUERYWRAPPER-BORROW-SOURCE` V2 / Terra xhigh | [借用源](CLIENT_72_D02_PROUD_QUERYWRAPPER_BORROW_WINDOW_20261111C.md)，544B/111条 SHA `b826fc0b2db135bdf66f323bccc8f08f32b6973e3ac89c5c7f3ba543efcd6d19`。 | **已完成限定验收**；7测试、八件三方同，源不证明lease。原512 cap request不改：fresh1 API bytes解包导致实际AOT8/report0、body0，fresh2/3以544>512停、body0；按唯一pdata新批544/572 V2，旧六测试完整日志缺失未补造。 |
 | `WORLD-MPLEVEL-PARENT-CONSUMER` / Sol max | [条件消费者](CLIENT_72_D02_WORLD_MPLEVEL_PARENT_CONSUMER_20261111C.md)，acceptance22独立核验。 | **已完成限定验收**；origin0 count21/L7/字面MPLevel是文件投影，P13/keyhelper来自旧host UTF8模型，不证原生cursor；`14b132224→1405336c0` 的map分配/return/initializer/outmap冻结，仅conditional factory=1供静态分析。 |
 | `R3-PROUD-QUERYWRAPPER-BORROW-SEMANTICS` / Sol max | [借用语义](CLIENT_72_D02_PROUD_QUERYWRAPPER_BORROW_SEMANTICS_20261111C.md)，acceptance24独立核验。 | **已完成限定验收**；仅544B本体32B输出、参数拆分、未知Empty模板、负h路线与single_ctor首缺，不证明lease。 |
-| nativeWrapper ctor source / Terra xhigh | [ctor源窗](CLIENT_72_D02_PROUD_NATIVEWRAPPER_CTOR_WINDOW_20261111C.md)，owner11712 ordinary83916 `146e03c70`，290B/78条。 | **已完成限定验收**；6测试/八件三方同/318B证据账；instance_ctor显式INativePage、int32、int32，不与83889 hidden out混用。仅源，不称ctor借用语义已验。 |
-| `NATIVEWRAPPER-CTOR-BORROW-CONTRACT` / Sol max | 已验ctor原窗。 | **进行中**；作者核本地+1/read/-1及真实剩余输入。固定22101只读方案尚不成熟，FindEntry `1578b66f0` 单源规格正在规划；不称可执行采样，不扩hotEquals 7读50B，不追TryGetPage/GetSize/manager树或121 manifest。 |
+| nativeWrapper ctor source / Terra xhigh | [ctor源窗](CLIENT_72_D02_PROUD_NATIVEWRAPPER_CTOR_WINDOW_20261111C.md)，owner11712 ordinary83916 `146e03c70`，290B/78条。 | **已完成限定验收**；6测试/八件三方同/318B证据账；instance_ctor显式INativePage、int32、int32，不与83889 hidden out混用。本项仅源；ctor借用合同另项限定验收。 |
+| `NATIVEWRAPPER-CTOR-BORROW-CONTRACT` / Sol max | [借用合同](CLIENT_72_D02_PROUD_NATIVEWRAPPER_CTOR_BORROW_CONTRACT_20261111C.md)，11654B SHA `c52f17d0ea91e014f535bb86cfa968a0853bf2f54ddaccbb9497f73c428625c2`，提交 `37eb4f4b30ea198bfb7a8c44bfd01524f7afd82d`。 | **已完成限定验收**；正常局部同P+34 INC→读→DEC闭合；实际page、lease、codec、encoded、getter及current未知。existing-cache单key两managed字段输入合同由Sol max规划中，只规划不采样；不继承已cold结束的hotEquals 7读50B范围或ready。 |
+| Proud standard-cache FindEntry source / Terra xhigh | [原窗](CLIENT_72_D02_PROUD_STANDARD_CACHE_FINDENTRY_WINDOW_20261111C.md)，663B/177条、33 relative/2 RIP，唯一pdata `1b0736cc`；提交 `4f9a2abe15f398f419b50658be0c2400d46af831`。 | **已完成限定验收**；6测试，v2双fresh与真正main-third六原件一致；旧fresh1/2不追认。仅source，不证明实际cache命中或当前采用。27A完成回执 `integration/acceptance27a/completion1.private.json` 6304B SHA `5afbf36fab59187608c7696bb94aa64a331c917e0dd3d2c3daacfb52f8b1fc33`。 |
 | World type factory raw布局复核与source / Sol max、Terra xhigh | [raw复核](CLIENT_72_D02_WORLD_TYPE_FACTORY_RAW_REVIEW_20261111C.md)、[factory源窗](CLIENT_72_D02_WORLD_MPLEVEL_TYPE_FACTORY_WINDOW_20261111C.md)。 | **已完成限定验收**；392=358B/81条code+2B `6690` NOP+32B/8项signed rel32表；修复源8测试/十件三方同、39引用/93 CFG，无gap/overlap/sharedbase改动。仅source/layout，不证逻辑业务。旧fresh1真实decode失败、后direct-script import失败0 PE未建fresh2分别保留，模块入口另批fresh2/3及第三成功；不追认旧轮。case1仅requested25270，`14e8a8595→1405336c0` allocator/constructor-return/实际klass/+100/slot6/MPLevel依赖冻结。 |
-| `READER-CLUSTER-REMAINING-SOURCE-TRIAGE` / Sol max | 同_cluster三writer及11009既有producer前沿。 | **进行中**；不泛封reader，不称自然receiver/+18已验；Recreate空cache的准确A分支继续冻结。 |
+| `READER-CLUSTER-REMAINING-SOURCE-TRIAGE` / Sol max | [剩余来源](CLIENT_72_D02_SCENE_READER_CLUSTER_REMAINING_20261111C.md)，9044B SHA `ae74dfa00204e12377994ebf0069be62b916492595cecab3e9608ddc868b742a`，提交 `a70b8b4c2a69fd911250a247570cf1faf8e5cc3b`。 | **已完成限定验收**；三writer及11009 producer来源有界分析，识别getter源及Recreate空cache准确A边。自然receiver/返回reader及+18初始化reset仍未知；已有cache、ReplaceCluster和11009未知，不泛封reader。 |
+| Scene cluster getter source / Terra xhigh | [原窗](CLIENT_72_D02_SCENE_READER_CLUSTER_GETTER_WINDOW_20261111C.md)，316B/63条 SHA `5cb613136200b12274b42c859e7448ed31f693f9b673c04f911b3720c44794d4`；提交 `5458d0f763dc428ec37e51d89043800cafe79803`。 | **已完成限定验收**；7测试、真实v2-third与双fresh十件一致；旧七原件相同、三报告仅tool hash变，严格256上限核过，共享base未改。`146e52c62`、`146e52c7e` 均指向 `1405336c0` 准确A边，返回、身份及reset依赖停止；自然receiver/+18未知，不自动追返回、新getter或cctor。27B回执 `integration/acceptance27b/completion1.private.json` 7494B SHA `1a43f25e70e5da6e9d70126292cf589050f5b69c0074d8fddf1c390dcb3fb6a5`。首提交wrapper因collector文件末空行的diff-check exit 2停止，首日志保留；主线确认正常提交、未跳hooks且源hash不变。 |
 | `DOC-D02-RESUME-20261111C` / GPT-6.1 Terra xhigh | 本页、[Project](../Project.md)、[Harness](../Harness.md)；输入为既有计划、专题及本轮主线交接事实。 | 文档初稿供集成执行者审核；不做测试、构建、客户端、DB、部署或 Git。后续由同一写者按实际集成结论更新，不提前声明已验。 |
+
+INTEGRATE-20261111C-26 两项有限审核通过，核75固定pin与原hex；完整私有回执 `integration/acceptance26/completion1.private.json` SHA `49c94ac44353d6317fc50308efe70712844d8c84c63d68cae2688751e35a4e7f`。普通严格cap修正保留原epoch，不记为新安全拒绝。
 
 固定 hash 只标识所列输入或产物，不表示本页写者重新读取目标客户端或执行相关研究；所有来源范围、歧义、具体复现与停止条件以各专题原文为准。旧成果包括 Talent 六个 null/空串、720 必要键与目录加载、121 Depot/605槽两叶 Java、phase6 和旧号已有结果直接复用。`threshold==phase+1` 已确定为下一突破 UI 预览，冻结该分支，不将其当当前采用。
 
@@ -67,7 +71,7 @@ run2 主线明确接管并取得新ready后正常启动一次，用户确认标�
 
 A-SECOND-RETURN-CONTRACT 及依赖、B组合 loader 仍因安全审查拒绝冻结，不运行草稿、不换模型或工具、不间接重试。A 的完整原拒绝仍缺，不能将摘要冒充原提示；B 保留原句 `This content was flagged for possible cybersecurity risk.`。现有[最小包队列](CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)只读复用，队列开头的暂停叙述属于历史状态，不自动新增或派发 Daybreak。移除被拒动作后，仅推进能靠已有输入独立完成且产物不直接实现被拒动作的任务；局部通过不升级父项或 ready。真实门禁、认证、资源和完整旧号恢复仍约束 R4。
 
-下一执行顺序：继续ctor借用合同和Scene cluster有界来源分析；按各自真实缺口继续可独立工作。现场只在完成门禁并取得新 ready 后单独判断；R1/R2/R3 必要合同齐备后才进入 R4，继而 R5/R6。
+下一执行顺序：existing-cache单key两managed字段输入合同继续规划，完成前不消费或采样，现场准备未完成且无新ready。按各自真实缺口继续可独立工作。现场只在完成门禁并取得新 ready 后单独判断；R1/R2/R3 必要合同齐备后才进入 R4，继而 R5/R6。
 
 ## 已验本地提交索引
 
