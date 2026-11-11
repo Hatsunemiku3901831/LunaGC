@@ -1,4 +1,4 @@
-2026-11-11C 恢复执行索引：D-02 / F-05 / D02-R6 客户端验收仍 0/6。Proud初始常量与Scene控制尾/自然Pool来源已限定验收，复现与证据见[本轮索引](docs/CLIENT_72_D02_RESUME_20261111C.md)及专题；World必要配置和Proud当前采用来源计划进行中。自然reader、row与当前采用仍未知，World观察包阻塞，A/B拒绝冻结；run2收尾已核，无待用户ready事项。
+2026-11-11C 恢复执行索引：D-02 / F-05 / D02-R6 客户端验收仍 0/6。Proud当前采用来源计划与双源、World类型后缀和父payload已限定验收；范围、返修及复现见[本轮索引](docs/CLIENT_72_D02_RESUME_20261111C.md)与专题。Proud合同待独立验收、已有handle借用源和World父消费者分析进行中；自然reader、row与采用未知，A/B拒绝冻结。run2收尾已核，无待用户ready事项。
 
 2026-11-11 历史文档重规划索引：任务依赖、派工与验收以 [Project](Project.md) 为准；[README](README.md) 保留稳定项目说明，重排前原文见 [README 历史快照](README.archive-2026-11-11.md)。本轮仅文档整理，研发仍暂停，未新增技术或客户端验收；恢复入口与既有阻塞见 [HANDOFF2](HANDOFF2.md)。
 
