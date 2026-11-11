@@ -75,7 +75,7 @@
 | A：F-03d3f4d2；必要 String 共同合同 | 同 epoch GC/Default 输入、人工双路径、stock 条件自有原 helper 已验，只读复用 | A-SECOND-RETURN-CONTRACT及依赖保持拒绝阻塞；其他独立任务必须先通过移除拒绝动作/产物后的独立性判断 | 不派被拒项，不运行草稿 |
 | B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 已验八点、锁内 map、stock v2、PostRequest 和共用服务入口可只读复用 | 组合 loader 源、失败证据和未提交差异保留；自然请求采用、信任、认证与会话交换未闭 | 留待用户使用 [Daybreak](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md) |
 | C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 旧号/121阶段行/Talent真实Java复用；同81127下一突破预览分支、121行/605槽两叶对象投影及真实ResourceLoader已验 | 真正hit缺准确热Equals链，7读采样等待本轮新ready；原行两字段静态桥/标量setter继续独立推进。当前采用、Java<=/行ID公式、目标OpenConfig、装备配置及完整恢复仍待 | 主线现场/集成；Sol max准确语义→Terra明确投影/测试，不以对象叶加载或预览分支批准父项 |
-| Scene：F-03d3s2 | 同源字段/索引→真实782517B payload→707组/15835子名称、唯一World组21原序名称已验 | reader工厂60257.m500134单窗规格已冻结，Terra实施；自然backend/cursor/refill、World实际返回对象/slot114和后续组件仍待。Pool独立诊断只到共用allocator调用前 | Sol max语义/明确来源，Terra xhigh单窗；主线验收/提交及独占现场。已有slot114三读规格复用，不读metadata候选 |
+| Scene：F-03d3s2 | 同源字段/索引→真实payload→707组/15835子名称及World组21名称、reader工厂238B原窗已验 | 自然backend/cursor/refill、工厂原引用语义、World实际返回对象/slot114和后续组件仍待；按用户要求不启后继。Pool独立诊断只到共用allocator调用前 | 主线已完成当前Terra单窗验收；恢复后Sol max先复核原引用，成熟后再Terra。已有slot114三读规格复用，不读metadata候选 |
 
 本批输入、文件归属、产物及退出条件见 [执行计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。Talent 两个限定出口已验；当前 Scene 解码与 Proud 新输入按成熟规格轮转，分析交回即释放 max 槽。
 每次派工先固定：**任务ID、输入版本/来源、准确问题、允许修改的文件、只读依赖、独立输出目录、禁止操作、产物、验收、停止/返回条件**。所有者以本批派工为准，一个文件同一时刻只有一个写入者。子代理返回“已完成/有界结论/阻塞”及证据；主线审核实际差异、必要独立样本和回归，再更新本页并提交。阻塞时写准确解除条件，不改父项为完成。
@@ -291,6 +291,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3s2/GADGET-BIN-ACTUAL-INDEX | 已完成 | 仅43..86原prefix/独立LZ4，完整实际176150条索引恰EOF；唯一44935541按local fileID及完整U64关联class1208/path14783，fileSize782517。第三182件同最终双fresh、6反例及纯audit通过；目标765..771只作后继计划，本项无MPLevel/reader或客户端验收。 | [真实索引、64位关联及复现](docs/CLIENT_72_D02_GADGET_BIN_ACTUAL_INDEX_20261111B.md) |
 | F-03d3s2/GADGET-BIN-TARGET-BYTES | 已完成 | 仅765..771原prefix/独立LZ4；实际class1208对象782524B，LE32 count782517与索引fileSize相同，真实payload及3个原尾字节分别保存。第三34件同双fresh、4反例及纯audit通过；file offset0未自动升级自然reader起点，本项不恢复MPLevel。 | [真实byte array及边界](docs/CLIENT_72_D02_GADGET_BIN_TARGET_BYTES_20261111B.md) |
 | F-03d3s2/MPLEVEL-ACTUAL-HOST-REFERENCE | 已完成 | 完整782517B按已验语法从0消费恰EOF；707组/15835子名称，唯一MPLevel所在完整World key及21原序名称、5个零child组、无重复/空文字已验。全文件逆编码逐byte一致，第三四件同双fresh、6测试和纯audit通过；不代自然reader/字典返回或World生命周期。 | [真实分组、复现及剩余边界](docs/CLIENT_72_D02_MPLEVEL_HOST_REFERENCE_20261111B.md) |
+| F-03d3s2/SCENE-READER-FACTORY-ONE-WINDOW | 已完成 | 准确13B caller/ordinary AOT/唯一pdata门后得238B/68条完整60257.m500134；第三九件同双fresh、8测试及纯audit通过。只记录引用，不追callee/xdata/global内容或执行CPU/live；两个int32零参数、自然reader返回/backend/cursor及World仍未验。 | [实际原窗、主线验收及复现](docs/CLIENT_72_D02_SCENE_READER_FACTORY_WINDOW_20261111B.md) |
 
 ### 6.3 SDK、补丁、观察与运维前置
 

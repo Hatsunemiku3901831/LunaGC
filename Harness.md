@@ -973,3 +973,5 @@ B-02d收口：验收提交36eb486；先建卡3fc7e80。旧HANDOFF2已先备份�
 2026-11-11 R3-PROUD-ROW-BRIDGE/CONDITIONAL-TWO-FIELDS：复用准确分支/原getter/原parser，固定22101两span及presence绑定到41105字段203376/203373，setter输入221/1；私有`proud-gate/row-bridge/bind-conditional-row-fields.private.py --output conditional-fields-main-third.private.json`第三5123B/SHA91f62c32同双fresh，`test_bind_conditional_row_fields.private.py -v`四项通过。actualEncoded/getter仍null、actualManagedObject=false，未执行parser/造Proud资源。见[冻结来源桥](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_ROW_BRIDGE_20261111B.md)，源入口在本批忽略目录；后继setter单窗单独验收。
 
 2026-11-11 NATIVE-SCALAR-SETTER-SOURCE：58209.m483726准确caller5/27B、当前ordinary AOT两QWORD及唯一pdata门后取得157B/45条，code SHA5c7bd52b。主线第三十件同fresh2/3，5测试及纯audit1509B/SHA51eb10d6通过。见[原窗、实际验收与CLI](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_SCALAR_SETTER_WINDOW_20261111B.md)；没有跟随call/读取globals/目标执行，后继正常存储语义按用户暂停未启。
+
+2026-11-11 SCENE-READER-FACTORY-ONE-WINDOW：60257.m500134完整238B/68条，code SHAf3c65163；准确13B caller、普通AOT、唯一pdata及完整原字节连续解码通过。主线第三九件同双fresh，8测试及纯audit1366B/SHA87cee189通过。见[原窗、验收及CLI](docs/CLIENT_72_D02_SCENE_READER_FACTORY_WINDOW_20261111B.md)；原引用/两个零参数含义、自然backend/游标和World返回保持未知，按用户暂停未启后继。
