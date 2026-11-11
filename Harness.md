@@ -965,3 +965,5 @@ B-02d收口：验收提交36eb486；先建卡3fc7e80。旧HANDOFF2已先备份�
 2026-11-11 GADGET-BIN-TARGET-BYTES：765..771真实窗口917504B，唯一对象782524B/SHA91f24ac2；LE32 count782517与索引fileSize相同，payload SHA25bf9c7e，尾3B原样另存。第三34件同fresh2/3，4测试及纯audit4977B/SHA603c2892通过。见[字节来源与CLI](docs/CLIENT_72_D02_GADGET_BIN_TARGET_BYTES_20261111B.md)；无全archive解码/target codec/reader/native对象，不把byte offset0当自然reader入口。
 
 2026-11-11 MPLEVEL-ACTUAL-HOST-REFERENCE：真实782517B从0按已验语法完整消费/逆编码逐byte相同，707组/15835 child，唯一World组ordinal544含MPLevel及21原序名称。第三四件同fresh3/4，6测试及纯audit698B/SHA7d6fa545通过；无原reader/原生字典/World返回。见[实际分组及CLI](docs/CLIENT_72_D02_MPLEVEL_HOST_REFERENCE_20261111B.md)、[reader/World/Pool准确后继](docs/CLIENT_72_D02_SCENE_READER_FACTORY_SUCCESSOR_20261111B.md)；factory单窗已交Terra，Pool停共用allocator前，C7/50B现场范围保持。
+
+2026-11-11 PROUD-GATE-PROMOTE-SEMANTICS：同Avatar/property1002实际phase→同Depot/81127两字段→group非零且threshold==phase+1→预览group列表→StarUpDialog，静态分支与入站ID恢复来源分别有证。主线纯第三47421B/SHAecdbace6同双fresh，25源/55既有及40新PC、10单项/5数组oracle通过；无新CPU/现场。见[冻结语义及复现](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_PROMOTE_SEMANTICS_20261111B.md)；不把预览条件当当前Java<=或group*100+1证明。
