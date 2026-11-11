@@ -959,3 +959,5 @@ B-02d收口：验收提交36eb486；先建卡3fc7e80。旧HANDOFF2已先备份�
 2026-11-11 PROUD-GATE-PROMOTE-WINDOW：2034B/437条第三十件同双fresh，code SHA0a07ead5，7组反例及独立artifact/reference audit通过；实际三个slot、准确候选/三E8与唯一pdata已核。group与phase不混用，同81127比较/列表语义继续Sol。见[复现与范围](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_PROMOTE_WINDOW_20261111B.md)，无callee扩读、native或客户端验收。
 
 2026-11-11 GADGET-BIN-METADATA-PREFIX：补1..26后真实prefix3538944B/SHA4c99c4ec、metadata3523145B/SHA79cedf3b，精确platform-2/三type/176152对象，脚本外部计数与userInfo由末尾实读EOF。第三110件同fresh4/5、5反例/纯audit15903B SHA51d11181通过；唯一1210对象[5637072,11273880)计划43..86，未解索引。见[目录与CLI](docs/CLIENT_72_D02_GADGET_BIN_METADATA_PREFIX_20261111B.md)；主线已冻结下一索引包，旧100000样本cap保持，新的同schema入口按实际对象bytes有界解析。
+
+2026-11-11 GADGET-BIN-ACTUAL-INDEX：43..86真实窗口5767168B，完整索引5636808B/SHA584c840f，176150记录恰EOF；唯一entry44935541/fileID0/U64 path14783准确接class1208，目标765..771。第三182件同fresh4/5，6测试和纯audit26248B/SHAcad4dc07通过。见[实际索引与CLI](docs/CLIENT_72_D02_GADGET_BIN_ACTUAL_INDEX_20261111B.md)；旧asset_index样本cap未修改，无target native/reader/客户端执行。
