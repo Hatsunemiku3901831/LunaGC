@@ -75,7 +75,7 @@
 | A：F-03d3f4d2；必要 String 共同合同 | 同 epoch GC/Default 输入、人工双路径、stock 条件自有原 helper 已验，只读复用 | A-SECOND-RETURN-CONTRACT及依赖保持拒绝阻塞；其他独立任务必须先通过移除拒绝动作/产物后的独立性判断 | 不派被拒项，不运行草稿 |
 | B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 已验八点、锁内 map、stock v2、PostRequest 和共用服务入口可只读复用 | 组合 loader 源、失败证据和未提交差异保留；自然请求采用、信任、认证与会话交换未闭 | 留待用户使用 [Daybreak](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md) |
 | C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 旧号/121阶段行/Talent真实Java复用；Proud原热写与三组合法miss已验 | 真正hit缺准确热Equals链；只读7读采样已离线验收，等待本轮新ready。原行/producer/+10门槛、目标OpenConfig、装备配置与完整恢复仍待 | 主线现场/集成，Sol max按新证据处理语义；不以候选加载或miss批准父项 |
-| Scene：F-03d3s2 | 已验前缀/字典等直接复用；真实路径与完整284563B header、两块prefix-only均通过主线第三 | 上游检索已交回；Sol max核内部流头/状态/ABI并形成精确解码规格，Terra xhigh执行单窗与成熟driver；实际ConfigMeta对象/PathHash.bin/payload/reader、World实际返回对象/slot114及生命周期仍待 | 独有Scene/codec工具和专题；不以header、前缀或外部候选代payload/自然加载 |
+| Scene：F-03d3s2 | 已验前缀/字典等直接复用；真实路径/header/prefix后，固定外置decoder实际解出334996B payload，三轮13原件相同 | Sol max核serialized目录/脚本身份与PathHash、实际MPLevel输入；Terra接成熟parser/driver。旧parser的class114和engine门禁失败保留，未放宽。World实际返回对象/slot114及生命周期仍待 | 独有Scene/codec工具和专题；外置解码不代目标native生命周期或自然加载 |
 
 本批输入、文件归属、产物及退出条件见 [执行计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。Talent 两个限定出口已验；当前 Scene 解码与 Proud 新输入按成熟规格轮转，分析交回即释放 max 槽。
 每次派工先固定：**任务ID、输入版本/来源、准确问题、允许修改的文件、只读依赖、独立输出目录、禁止操作、产物、验收、停止/返回条件**。所有者以本批派工为准，一个文件同一时刻只有一个写入者。子代理返回“已完成/有界结论/阻塞”及证据；主线审核实际差异、必要独立样本和回归，再更新本页并提交。阻塞时写准确解除条件，不改父项为完成。
@@ -279,8 +279,10 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3s2/SCENE-CONFIGMETA-LOAD-SOURCE | 已完成 | 141B/32条第三八原件与双fresh相同、3门禁及26来源断言通过；literal69656为Data/Common/MetaConfig，同handle槽作ref参数，正常返回直写field108683。泛型callee/IFix自然值和实际对象未验；原8候选预算停止未被改成外部阻塞。 | [原窗](docs/CLIENT_72_D02_SCENE_CONFIGMETA_HOLDER_WINDOW_20261111B.md)、[真实来源与发布](docs/CLIENT_72_D02_SCENE_CONFIGMETA_LOAD_CONTRACT_20261111B.md) |
 | F-03d3s2/SCENE-CONFIGMETA-BLOB-HEADER | 已完成 | 精确路径/后缀命中bundle33095；原短段212203B按原parser拒绝，完整284563B同源范围与14getter通过，第三五原件同双fresh。7定位/6完整header测试及43关系审计通过；本样本B止于首压缩块，不推普遍语义。尚无解压对象。 | [原短段及失败](docs/CLIENT_72_D02_SCENE_CONFIGMETA_ACTUAL_LOCATOR_20261111B.md)、[根因](docs/CLIENT_72_D02_SCENE_CONFIGMETA_HEADER_CONFLICT_20261111B.md)、[完整header](docs/CLIENT_72_D02_SCENE_CONFIGMETA_COMPLETE_HEADER_20261111B.md) |
 | F-03d3s2/SCENE-CONFIGMETA-CODEC9-PREFIX | 已完成 | 两实际压缩切片由已验81B原前缀执行，各原AL=1且无model；guards/128B后尾部/header/table保持，第三四原件同双fresh、5门禁通过。输出仍为压缩字节，codec/serialized/实际MPLevel未验。 | [来源、范围及复现](docs/CLIENT_72_D02_SCENE_CONFIGMETA_CODEC9_PREFIX_20261111B.md) |
-| F-03d3s2/CODEC9-ACTUAL-SUPPORT | 进行中 | Sol max规划与Terra max README/分支检索交回，三个外置固定源码为同一ooz谱系；内部流头单窗与精确ABI继续，尚未构建或运行外部解码器。不能按外层tag9猜算法或绕目标状态/收尾。 | [定向复用检索](docs/CLIENT_72_D02_CODEC9_UPSTREAM_REUSE_20261111B.md) |
+| F-03d3s2/CODEC9-ACTUAL-SUPPORT | 进行中 | Sol max规划与Terra max检索已复用；实际type6流头/边界、外置解码限定出口已验。目标native容量/初始化与所选算法生命周期尚未闭，不以外置结果批准它们；实际payload后继优先。 | [定向复用检索](docs/CLIENT_72_D02_CODEC9_UPSTREAM_REUSE_20261111B.md)、[准确语义](docs/CLIENT_72_D02_SCENE_CONFIGMETA_CODEC9_STREAM_20261111B.md) |
 | F-03d3s2/CODEC9-INTERNAL-HEADER-READER-WINDOW | 已完成 | 准确5B E8及唯一pdata得888B/271条，第三五原件同双fresh，4门禁/独立产物审计通过；3外跳未跟随，xdata未读，来源覆盖不完整。只关闭限定来源，不批准流头完整语义或codec执行。 | [边界及原件](docs/CLIENT_72_D02_CODEC9_INTERNAL_HEADER_READER_WINDOW_20261111B.md) |
+| F-03d3s2/CODEC9-ACTUAL-STREAM-CONTRACT | 已完成 | 两实际流头8c06的可达原分支、量子精确长度/restart/CRC0及fresh状态关系，16固定源纯审计第三7410B同双fresh；线性尾部40B为跳表数据，伪指令外跳不作实际分支。未执行target reader/native。 | [字段与独立边界](docs/CLIENT_72_D02_SCENE_CONFIGMETA_CODEC9_STREAM_20261111B.md) |
+| F-03d3s2/CONFIGMETA-CODEC9-OOZ-PAYLOAD | 已完成 | 固定外置源码MSVC实际build；公开XML逐byte、append/truncate原-1、两目标完整消费/精确262144+72852及双入口输出一致、guards保持。双fresh/第三13件同字节，纯产物审计通过；concat334996B。对象身份/PathHash/MPLevel仍待，不代target native或自然loader。 | [真实结果、复现及限制](docs/CLIENT_72_D02_CODEC9_OOZ_PAYLOAD_20261111B.md) |
 
 
 ### 6.3 SDK、补丁、观察与运维前置
