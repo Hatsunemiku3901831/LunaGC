@@ -1,10 +1,10 @@
 # 国服 7.2 任务规划与验收
 
-任务证据基线：2026-11-11；本批起始 HEAD `c1b652f`，见 [A、Scene、C 执行计划](docs/CLIENT_72_D02_RESUME_ASC_20261111.md)。仅面向国服 7.2，Windows portable。
+任务证据基线：2026-11-11；本批起始 HEAD `14e63dc`，见 [恢复执行计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。仅面向国服 7.2，Windows portable。
 
 ## 当前阶段
 
-**本轮 A、Scene、C 已收尾，按用户要求暂停。D-02 / F-05 / D02-R6 仍未完成。** A 的同 epoch stock 条件自有 helper、Scene 字典前缀/置位/清位、C 的旧号 121 条 phase6 Java 加载已验收。A 第二分配合同遇平台安全审查中止，B 组合 loader 留待 Daybreak。无待启动现场，旧 ready 已消费。[交接](HANDOFF2.md)。
+**用户已解除暂停，Scene、C 恢复并行推进；D-02 / F-05 / D02-R6 仍未完成。** 复用已验 Scene 字典、旧号 121 条 phase6 Java 加载及其他限定成果，优先实际 MPLevel 输入、Proud `(221,1)` 命中/门槛、Talent 六个空值差异的真实入场行为。A-SECOND-RETURN-CONTRACT 及其依赖、B 组合 loader 保持安全审查拒绝阻塞，不重试或换模型接续。现场尚未准备完成，旧 ready 不复用。[本批计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -48,7 +48,7 @@
 | 有界执行子代理 | GPT-6.1 Terra（`gpt-6.1-terra`，档位按任务指定） | 规格完整的清单/数据对照、受控转换、driver、测试准备、机械修改和文档整理；未知语义返回主线，不自行猜测 |
 | 最后升级，非日常排班 | GPT-6 Astra max（`gpt-6-astra` / `max`） | 仅主线和Sol max实质分析仍不能解决、且影响D-02关键路径时使用；须先说明已排除假设、升级理由、准确问题和返回条件。缺样本、缺现场或未读既有证据不构成升级理由 |
 
-本批实际起步采用 **主线＋A、Scene 两个 Sol max 子代理＋C 一个 Terra xhigh 子代理**。首个槽交回后已派 Sol max 推进 Proud 语义。明确规格随槽位交 Sol xhigh 或 Terra xhigh。
+本批实际起步采用 **主线＋Scene、Proud 两个 Sol max 子代理＋Talent 一个 Terra xhigh 子代理**。均已显式指定模型与档位；明确规格随槽位交 Sol xhigh 或 Terra xhigh。主会话没有可独立核验的切换接口，不据此声称已切换模型。
 
 显式传入工具支持的模型与档位；模型不可用应如实返回主线调整，不能静默升级Astra或冒称已使用指定模型。子代理不得自行扩大派遣和修改范围。
 
@@ -58,8 +58,8 @@
 
 | 批次 | 既有任务 / 本批动作 | 并行安排 | 退出条件与推荐模型 |
 | --- | --- | --- | --- |
-| 0 恢复盘点 | 复用R0及全部已验前置，重核HEAD/差异、输入、配置、现场；固定本批各分支来源与文件清单 | 主线准备后发布 A、Scene、C，不重做历史全量研究 | 主线Sol xhigh；各任务输入、责任文件、可复现证据入口与验收出口明确 |
-| 1 复用已验成果推进后继 | A 对照 stock 条件与人工 CLEAR48；Scene 分析 131 B 原窗；C 推进旧号必要资源及 Proud | A、Scene Sol max，C Terra xhigh；语义交回后续派，主线串行构建/JVM | 分别交已验结论、明确实现规格或准确缺输入。出生装备、303、Metal、Promote/Curve、Skill/Depot/talents 和旧号快照直接复用 |
+| 0 恢复盘点 | 复用R0及全部已验前置，重核HEAD/差异、输入、配置、现场；固定本批各分支来源与文件清单 | 主线准备后发布 Scene、Proud、Talent，不重做历史全量研究 | 主线Sol xhigh；各任务输入、责任文件、可复现证据入口与验收出口明确 |
+| 1 复用已验成果推进后继 | Scene 核实际 ConfigMetaConfig/MPLevel；C 核 Proud 实际采用及 Talent 空值入场行为 | Scene、Proud Sol max，Talent Terra xhigh；语义交回后续派，主线串行构建/JVM；A/B被拒项跳过 | 分别交已验结论、明确实现规格或准确缺输入。出生装备、303、Metal、Promote/Curve、Skill/Depot/talents 和旧号快照直接复用 |
 | 2 定向实机，按需插入 | 只补批次1证明必须取得的上下文和必需输入；已完成采样器复用 | 主线独占客户端/安装；同身份、同阶段、预算兼容才合并采集，否则分次串行 | 自有验证、源门禁及恢复方案先通过，再新实时ready；取得准确输入或保留有效失败。Sol max设计难点，Sol xhigh执行 |
 | 3 A、Scene、C 闭合 | R1 完整 Avatar 和 Scene/Team/Entity，R3 必要资源和实际加载；R2 仅复用已验成果 | 各线责任文件独立，主线统一集成 | 必要消费者、顺序和数据分别成立。R2 剩余依赖继续约束 R4 |
 | 4 接入与正向恢复 | F-03d3g2、F-03d3s2正式发送；E-01/E-01c/E-01d1真实必要加载及保存→新Player→Manager恢复 | 独立sender源码可并行；共享Proto/生成器/矩阵、构建与DB串行集成 | Sol xhigh主责；真实Java输出与目标消费者一致、独立库正向恢复及拒绝回归成立。父项前置不满足则只完成相应子出口 |
@@ -72,12 +72,12 @@
 
 | 分支 / 既有任务 | 本批具体动作及前置 | 产物与验收出口 | 责任文件与模型 |
 | --- | --- | --- | --- |
-| A：F-03d3f4d2；必要 String 共同合同 | 同 epoch GC/Default 输入、人工双路径、stock 条件自有原 helper 已验 | 第二分配合同遇平台安全审查。原第二返回、Default 消费、自然线程、GC 所有权和对象身份待验 | 已交回；无在途实施 |
+| A：F-03d3f4d2；必要 String 共同合同 | 同 epoch GC/Default 输入、人工双路径、stock 条件自有原 helper 已验，只读复用 | A-SECOND-RETURN-CONTRACT及依赖保持拒绝阻塞；其他独立任务必须先通过移除拒绝动作/产物后的独立性判断 | 不派被拒项，不运行草稿 |
 | B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 已验八点、锁内 map、stock v2、PostRequest 和共用服务入口可只读复用 | 组合 loader 源、失败证据和未提交差异保留；自然请求采用、信任、认证与会话交换未闭 | 留待用户使用 [Daybreak](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md) |
-| C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 旧号已固定，121 条真实阶段行已通过 Java loader，726 个 Talent 查键已核 | Proud 原 tuple 命中和 +10 门槛、目标 Talent/OpenConfig、装备配置与完整 Player 恢复仍待 | 已交回；JVM/DB 归主线 |
-| Scene：F-03d3s2 | 131 B 前缀、2675 B 置位字典、666 B 清位/count0 共用原窗与泛型已验 | 缺实际分组原输入、动态 slot114、Pool/Scene 和组件生命周期 | 已交回；sender 前置待满足 |
+| C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 旧号固定，121 条真实阶段行 Java loader 与726 Talent 查键直接复用 | Proud `(221,1)` 原 map/目标行/+10门槛由 Sol max 推进；六个 Talent 空值差异真实调用与独立测试由 Terra xhigh 推进，目标语义与完整恢复另验 | 独有Proud/Talent工具、测试和专题；JVM/DB归主线 |
+| Scene：F-03d3s2 | 已验前缀、字典、文本游标、原序名称、插入及空分支直接复用 | Sol max先查同源PathHash.bin/payload/reader起点与实际MPLevel，再沿真实World返回对象和slot114接生命周期 | 独有Scene工具和专题；缺输入准确返回，sender前置待满足 |
 
-本批输入、文件归属、产物及退出条件见 [执行计划](docs/CLIENT_72_D02_RESUME_ASC_20261111.md)。当前无在途派工。
+本批输入、文件归属、产物及退出条件见 [执行计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。当前在途 Scene、Proud、Talent 三包；规格成熟即交回释放分析槽。
 每次派工先固定：**任务ID、输入版本/来源、准确问题、允许修改的文件、只读依赖、独立输出目录、禁止操作、产物、验收、停止/返回条件**。所有者以本批派工为准，一个文件同一时刻只有一个写入者。子代理返回“已完成/有界结论/阻塞”及证据；主线审核实际差异、必要独立样本和回归，再更新本页并提交。阻塞时写准确解除条件，不改父项为完成。
 
 ### 3.4 未完成工作包与模型分配

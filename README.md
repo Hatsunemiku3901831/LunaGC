@@ -1,4 +1,4 @@
-2026-11-11 当前状态为暂停。按用户要求，已完成在途的 CLEAR48 人工 SSE/AVX、Proud 固定单 key 语法和 Scene MPLevel parser 原窗验收，并在本地提交。D-02 六项客户端验收仍待，便携服务尚未部署。后续从 [任务状态](Project.md) 和 [详细交接](HANDOFF2.md) 恢复。下方为历史批次。
+2026-11-11 已按用户最新指令恢复并行研发，优先 Scene 实际 MPLevel 输入、C 的 Proud 采用与 Talent 空值入场行为。A 第二分配合同及 B 组合 loader 保持安全审查拒绝阻塞，不重试。D-02 六项客户端验收仍待，便携服务尚未部署；当前任务见 [Project](Project.md) 与 [本批计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。下方为历史批次。
 
 2026-11-10 当前恢复执行：用户已明确解除上一轮“收尾后暂停”，持续推进D-02全部实机验收。已验八点/锁内map/stock v2/出生默认装备局部恢复直接复用；当前A核oldFlags8 GC helper，B核准确请求采用，C准备所选旧号依赖，Scene纳入关键路径。新盘点五stock/载体/13保护、portable配置及相关进程/端口通过；原resources差异/数据保留。按[Project](Project.md)与[本批计划](docs/CLIENT_72_D02_RESUME_20261110B.md)执行，下方暂停/现场均为历史，旧ready不复用。
 
