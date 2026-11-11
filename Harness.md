@@ -937,3 +937,5 @@ B-02d收口：验收提交36eb486；先建卡3fc7e80。旧HANDOFF2已先备份�
 2026-11-11 R3-PROUD-HOT-INSERT：三自有缓冲条件样本执行原Store→TryInsert，各122指令/67访问且原RET、无model；主线第三同双fresh SHA cb3bb72b，5独立门禁通过，完整64位pair/U32 ID与七原写核实。仅条件热写入，原资源行/producer/lookup/门槛及ready仍未验。运行与首映射失败原件见[专题](docs/CLIENT_72_D02_PROUD_HOT_INSERT_20261111B.md)。
 
 2026-11-11 SCENE-CONFIGMETA-LOAD-SOURCE：原8候选在预算门停后按准确field owner选择唯一141B，root第三八件同两fresh，3门禁、26来源断言和25关联断言均过。真实literal为Data/Common/MetaConfig，正常返回发布到同field108683；自然IFix/loader/对象未验。复现见[原窗](docs/CLIENT_72_D02_SCENE_CONFIGMETA_HOLDER_WINDOW_20261111B.md)及[来源合同](docs/CLIENT_72_D02_SCENE_CONFIGMETA_LOAD_CONTRACT_20261111B.md)，后继blob另卡。
+
+2026-11-11 Proud查询后继：237/289/802原合同完成限定来源，三组原hot miss在主线第三与双fresh一致，6门禁通过；真实hit仍需精确热Equals对象。只读7读50B采样已8纯Python+1实际Win32自进程测试及五输入/source预检通过，未读客户端；命令和新ready边界见[采样准备](docs/CLIENT_72_D02_PROUD_HOT_EQUALITY_SAMPLER_20261111B.md)，实际miss见[原查询](docs/CLIENT_72_D02_PROUD_HOT_LOOKUP_MISS_20261111B.md)。

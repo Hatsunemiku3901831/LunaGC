@@ -74,7 +74,7 @@
 | --- | --- | --- | --- |
 | A：F-03d3f4d2；必要 String 共同合同 | 同 epoch GC/Default 输入、人工双路径、stock 条件自有原 helper 已验，只读复用 | A-SECOND-RETURN-CONTRACT及依赖保持拒绝阻塞；其他独立任务必须先通过移除拒绝动作/产物后的独立性判断 | 不派被拒项，不运行草稿 |
 | B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 已验八点、锁内 map、stock v2、PostRequest 和共用服务入口可只读复用 | 组合 loader 源、失败证据和未提交差异保留；自然请求采用、信任、认证与会话交换未闭 | 留待用户使用 [Daybreak](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md) |
-| C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 旧号固定，121条阶段行、六个Talent差异真实Java与四目录720必要键实际安装均已限定验收 | Proud `(221,1)` 原map/目标行/+10门槛由Sol max推进；目标Talent/OpenConfig同源语义、装备配置与完整恢复仍待，不以候选加载批准 | 独有Proud工具和专题；JVM/DB归主线 |
+| C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 旧号/121阶段行/Talent真实Java复用；Proud原热写与三组合法miss已验 | 真正hit缺准确热Equals链；只读7读采样已离线验收，等待本轮新ready。原行/producer/+10门槛、目标OpenConfig、装备配置与完整恢复仍待 | 主线现场/集成，Sol max按新证据处理语义；不以候选加载或miss批准父项 |
 | Scene：F-03d3s2 | 已验前缀/字典等直接复用；141B准确生产来源已给真实路径，完整284563B header已由原parser验证 | Sol max推进tag9状态/ABI，Terra max定向GitHub复用检索；实际ConfigMeta对象/PathHash.bin/payload/reader、World实际返回对象/slot114及生命周期仍待 | 独有Scene/codec工具和专题；不以header或外部候选代payload/自然加载 |
 
 本批输入、文件归属、产物及退出条件见 [执行计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。当前在途 Scene、Proud、Talent 三包；规格成熟即交回释放分析槽。
@@ -439,6 +439,9 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | E-01/R3-PROUD-SINGLE-KEY-REFERENCE | 已完成 | root16门禁及新双fresh/第三82835B同SHA，81 raw span逐项匹配完整payload，从4到334/330B，候选只事后对照。U32 header运算标记16→32红绿已修并保留旧epoch；只验固定key条件文件语法，encoded/alias/自然backend/完整Proud未验。 | [最终源码/第三/边界](docs/CLIENT_72_D02_PROUD_SINGLE_KEY_REFERENCE_20261111.md) |
 | E-01d1/R3-PROUD-HOT-MAP-SOURCES | 已完成 | 同wrapper热Store178B与Dictionary80067/U32的准确TryInsert AOT接上；212B静态类型来源第三同双fresh，TryInsert1455B/380条第三及6门禁通过。热写入、lookup实际命中、原行构造与自然dispatch仍未验，不涉及冷allocator/Default。 | [来源与范围](docs/CLIENT_72_D02_PROUD_ACTUAL_ADOPTION_20261111B.md)、[原TryInsert窗口](docs/CLIENT_72_D02_PROUD_TRYINSERT_WINDOW_20261111B.md) |
 | E-01d1/R3-PROUD-HOT-INSERT | 已完成 | 三自有空bucket/已有数组条件case经原Store→TryInsert→RET，各122原指令/67访问、无model；第三同双fresh及5独立门禁通过，完整64位pair/U32 ID/entry/bucket/状态符合。仅条件热写，原Proud行/producer/lookup命中/门槛仍未验，冷allocator/Default未执行。 | [实际离线CPU与范围](docs/CLIENT_72_D02_PROUD_HOT_INSERT_20261111B.md) |
+| E-01d1/R3-PROUD-LOOKUP-CONTRACT | 已完成 | 237/289/802B原源三阶段26/31/36锚点双fresh一致；准确核prepare两热路径、负miss/正越界、完整pair与热Equals缺口。旧payload full extent另核保持；自然hit/原行/producer/门槛未验。 | [准确合同与输入缺口](docs/CLIENT_72_D02_PROUD_LOOKUP_CONTRACT_20261111B.md) |
+| E-01d1/R3-PROUD-HOT-LOOKUP-MISS | 已完成 | 原Store后连续三次原Lookup各109/87/104条、原RET，无model；首次prepare原置flag、后两次skip，out4B原清零且guards/map/64位key保持。第三同双fresh及6门禁通过，只验条件miss。 | [实际原查询与边界](docs/CLIENT_72_D02_PROUD_HOT_LOOKUP_MISS_20261111B.md) |
+| E-01d1/R3-PROUD-HOT-EQUALITY-INPUT/PREPARE | 已完成 | 显式PID的readonly identity与7读50B采样器；8纯Python及1真实Win32自进程测试、当前五输入/source预检通过。尚未读取客户端，实际采集须新ready，不创建或调用Default/Equals。 | [准备、命令与范围](docs/CLIENT_72_D02_PROUD_HOT_EQUALITY_SAMPLER_20261111B.md) |
 | E-01d1/R3-PROUD-GATE-ENTRY-INDEX | 已完成 | 固定PE形状索引73候选（7 query E8、66 displacement load），69函数/47owner；第三同双fresh及5门禁通过。仅原字节候选/pdata与声明，不证明指令边界、同typed+10消费或提升门槛；后继按准确来源另验。 | [扫描范围、原件与未验](docs/CLIENT_72_D02_PROUD_ACTUAL_ADOPTION_20261111B.md) |
 | E-01/R3-PROUD-ROW-READER | 已完成 | 原1438B/309条、三个backend分支参数及typed缓存已核；6测试/主线第三85断言31839B同两fresh。两个U32用途按分支分开，不统一offset/size；+1c赋值不证明有效row span，400190 producer及真实索引仍未闭。 | [准确合同与下一候选](docs/CLIENT_72_D02_PROUD_ROW_READER_20261111.md) |
 
