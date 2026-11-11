@@ -40,7 +40,7 @@ callback 的非零分支没有执行 `141fdf310`。零分支若 R 无效，则�
 
 ## 最小后继：只定位 EC8 绑定
 
-私有 `next-window-request.private.json` 固定唯一候选入口 `1411267b0`。必要性来自已存注册入口实际写同一槽族的原 listing 和完整执行 PC，而不是声称它已经是 EC8 writer。先完成该入口静态写值绑定，比先读取未知 callback/global 或补整个初始化树更小。
+私有 `next-window-request.private.json` 固定唯一候选入口 `1411267b0`。必要性来自已存注册入口实际写同一槽族的原 listing 和按地址排序的 PC 命中集合，非动态边序列，而不是声称它已经是 EC8 writer。先完成该入口静态写值绑定，比先读取未知 callback/global 或补整个初始化树更小。
 
 - 历史 41 个 native PC 加独立 pause-on-RET 记录提示连续跨度 `[1411267b0,1411268c2)`，预计 274B；这不是当前 pdata 或完整函数边界原证。先查固定 EXE 的唯一 exact/containing/overlap pdata，完整可执行 file-backed body 上限 **320B / 64 条**，pdata 原记录最多 12B，bounded evidence 合计上限 332B。不新读 caller、AOT、xdata、邻窗或任何 global 内容。
 - **若无 unique pdata，bodyRead=0 交边界诊断。** 主线可另行审定是否仅取这一个精确 274B 的历史 trace-span，并明确其不是已证完整函数；本 request 不自动采用 RET、对齐或下一入口作 fallback。这避免把 leaf 无 pdata 误写成环境阻塞，也不偷偷扩大授权。
