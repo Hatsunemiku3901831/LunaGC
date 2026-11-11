@@ -1,6 +1,21 @@
-# 国服 7.2 暂停交接（2026-11-12）
+# 国服7.2轻度重规划交接（2026-11-12）
 
-**用户要求完成已派工作后暂停，不开启新任务，联调留待下次；禁止 computer-use。** D-02 / F-05 / D02-R6 六项客户端验收仍为 0/6，R4/R5/R6 未开始。当前是用户主动暂停，不是声明所有技术路线都已耗尽。任务状态以 [Project](Project.md) 为准，方法、原件和复现入口见 [Harness](Harness.md) 与 [本轮恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。运行仅面向国服7.2，使用Windows portable（`LUNAGC_RUNTIME=portable`），入口为 [tools/local_windows.ps1](tools/local_windows.ps1) 及对应cmd；7.1仅用于理解和恢复映射，不部署Docker/WSL或启用虚拟化。接手先读 [README](README.md)、[AGENTS](AGENTS.md)、[Project](Project.md)、[Harness](Harness.md)、[迁移研究](docs/CLIENT_72_MIGRATION.md)和[部署手册](docs/CODEX_ONE_CLICK_DEPLOY.md)，核对 `.env`、`.env.local`、`config.json`、实际 `GAME_PATH`、子模块、进程及端口归属；固定端口按源码核查，不能只改环境变量声称隔离。
+本次按用户要求读取最新状态并微调Project排期，未恢复研发、联调或任何被拒动作。技术证据基线为`09d69d3`；D-02 / F-05 / D02-R6仍为0/6，R4/R5/R6未开始。README保持稳定，未作修改。下方技术结果及01:49:41现场均为此前批次证据，不是本次重新运行。
+
+## 更新后的下一步
+
+- 恢复后优先基于已验166B Float原窗及三字段布局，完成独立语义/准确消费来源分析；31A/31B source完成标记不变，实际M、值、alias、完整row和资源ready仍未知。
+- 独立处理cache1已发生的启动回执缺失/超时。先用原日志和必要自有验证定位阶段，准备充分后再取新实时ready；旧包/等待起点/身份不复用，禁止computer-use。本次没有要求用户启动或操作游戏。
+- 原Scene reader、Proud setter及World父payload/布局结果复用。Scene自然receiver/+18和已有cache等未知单列；World slot114及确认共用A allocator返回的依赖继续冻结，不通过替代触发接续。
+- 成熟条件投影/实现按模型职责转Sol xhigh/Terra，必要资源齐后再做同一旧号完整Player/背包/装备/postLoad、正式发送、R4/R5/R6。A/B最小队列仍仅供用户判断获批范围，不自动派工，不以低拒答模型重试。
+
+## 本次文档交付
+
+Project保留原任务ID、已完成目录、第5节验收和第7节减量规则；微调当前阶段、恢复排班与准确下一出口。Harness新增本次索引，HANDOFF仅追加。本次没有构建、测试执行、客户端/服务/DB操作或部署，不新增技术验收。
+
+覆盖前四份文档已逐字节备份到`local/migration72/project-light-replan-20261112-b0509be5/`；原HANDOFF2 SHA-256 `39428c5a525394fdbd8ad2cb7097369ed0be09f534d5fa4dd0770bf2fca44f5a`。README、用户AGENTS、patch/resources既有差异及gitlink按本次基线保持。提交仅包含上述四份文档，使用用户指定Author/Committer，本地提交、不推送。
+
+## 此前研发交接正文（历史事实与完整证据）
 
 ## 本轮已完成的有限范围
 
