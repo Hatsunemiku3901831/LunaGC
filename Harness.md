@@ -947,3 +947,5 @@ B-02d收口：验收提交36eb486；先建卡3fc7e80。旧HANDOFF2已先备份�
 2026-11-11 实际ConfigMeta payload：流头16源纯审计第三同双fresh7410B/SHA155de713；固定GPL外置CLI主线MSVC build2通过（build1自有函数名冲突保留），公开XML逐byte、两错误边界及两目标真实解码全部过。13件双fresh/第三同字节，纯产物audit SHA97491a0b；concat334996B/SHA5dbd48d5。原serialized17 class114门、旧assets engine门均按原范围停止，实际engine含换行2，后继对象/schema交Sol。见[流头](docs/CLIENT_72_D02_SCENE_CONFIGMETA_CODEC9_STREAM_20261111B.md)、[构建、执行及原件CLI](docs/CLIENT_72_D02_CODEC9_OOZ_PAYLOAD_20261111B.md)。无target native、客户端、JVM/DB/服务部署。
 
 2026-11-11 PROUD-GATE-COMPARISON-WINDOW：73原候选按准确Avatar参数缩窄的944B/238条单窗第三九件同双fresh，8门禁及独立产物audit通过，code SHAab0370d2；实际普通AOT/唯一pdata与site原指令边界成立。比较/采用语义继续Sol max，尚无新现场或ready。命令和原件见[机械范围](docs/CLIENT_72_D02_PROUD_GATE_COMPARISON_WINDOW_20261111B.md)。
+
+2026-11-11 CONFIGMETA-SERIALIZED-IDENTITY：精确engine含换行的新独有parser，目录3对象/metadata EOF213、local PPtr→同CAB脚本105B与旧目标同byte，实例MetaConfig实际前缀游标44。第三七件同fresh4/5，7反例及纯audit第三SHA716c6b85通过；早期补逐字段偏移前产物保留不用作最终复核。自定义330568B已提取，PathHash字段与MPLevel后继继续Sol。见[实际身份与CLI](docs/CLIENT_72_D02_CONFIGMETA_SERIALIZED_20261111B.md)，无decoder重跑、PE/目标CPU或客户端操作。

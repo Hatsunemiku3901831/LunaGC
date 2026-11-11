@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-**用户已解除暂停，Scene、C 恢复并行推进；D-02 / F-05 / D02-R6 仍未完成。** Scene 已定位同源 ConfigMeta 完整 blob 并验证 header、两块压缩输入前缀，继续真实解码与 MPLevel；C 已核 Talent 六个空值差异及完整候选目录加载，继续 Proud `(221,1)` 命中/门槛。Proud 只读采样准备已完成，等待本轮新实时 ready；离线工作继续。A-SECOND-RETURN-CONTRACT 及其依赖、B 组合 loader 保持安全审查拒绝阻塞，不重试或换模型接续。[本批计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。
+**用户已解除暂停，Scene、C 恢复并行推进；D-02 / F-05 / D02-R6 仍未完成。** Scene 已实际解出同源 ConfigMeta payload、核定目录及实例脚本身份，继续序列化字段→PathHash.bin→实际 MPLevel；C 已核 Talent 六个空值差异及完整候选目录加载，继续 Proud `(221,1)` 命中/门槛。Proud 只读采样准备已完成，等待本轮新实时 ready；离线工作继续。A-SECOND-RETURN-CONTRACT 及其依赖、B 组合 loader 保持安全审查拒绝阻塞，不重试或换模型接续。[本批计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -280,9 +280,10 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有ea
 | F-03d3s2/SCENE-CONFIGMETA-BLOB-HEADER | 已完成 | 精确路径/后缀命中bundle33095；原短段212203B按原parser拒绝，完整284563B同源范围与14getter通过，第三五原件同双fresh。7定位/6完整header测试及43关系审计通过；本样本B止于首压缩块，不推普遍语义。尚无解压对象。 | [原短段及失败](docs/CLIENT_72_D02_SCENE_CONFIGMETA_ACTUAL_LOCATOR_20261111B.md)、[根因](docs/CLIENT_72_D02_SCENE_CONFIGMETA_HEADER_CONFLICT_20261111B.md)、[完整header](docs/CLIENT_72_D02_SCENE_CONFIGMETA_COMPLETE_HEADER_20261111B.md) |
 | F-03d3s2/SCENE-CONFIGMETA-CODEC9-PREFIX | 已完成 | 两实际压缩切片由已验81B原前缀执行，各原AL=1且无model；guards/128B后尾部/header/table保持，第三四原件同双fresh、5门禁通过。输出仍为压缩字节，codec/serialized/实际MPLevel未验。 | [来源、范围及复现](docs/CLIENT_72_D02_SCENE_CONFIGMETA_CODEC9_PREFIX_20261111B.md) |
 | F-03d3s2/CODEC9-ACTUAL-SUPPORT | 进行中 | Sol max规划与Terra max检索已复用；实际type6流头/边界、外置解码限定出口已验。目标native容量/初始化与所选算法生命周期尚未闭，不以外置结果批准它们；实际payload后继优先。 | [定向复用检索](docs/CLIENT_72_D02_CODEC9_UPSTREAM_REUSE_20261111B.md)、[准确语义](docs/CLIENT_72_D02_SCENE_CONFIGMETA_CODEC9_STREAM_20261111B.md) |
-| F-03d3s2/CODEC9-INTERNAL-HEADER-READER-WINDOW | 已完成 | 准确5B E8及唯一pdata得888B/271条，第三五原件同双fresh，4门禁/独立产物审计通过；3外跳未跟随，xdata未读，来源覆盖不完整。只关闭限定来源，不批准流头完整语义或codec执行。 | [边界及原件](docs/CLIENT_72_D02_CODEC9_INTERNAL_HEADER_READER_WINDOW_20261111B.md) |
+| F-03d3s2/CODEC9-INTERNAL-HEADER-READER-WINDOW | 已完成 | 准确5B E8及唯一pdata得888B/271行，第三五原件同双fresh，4门禁/独立产物审计通过。后续原件证明末40B为跳表数据，线性解码出的伪外跳不作实际分支；xdata未读，其他路径未执行。 | [边界及原件](docs/CLIENT_72_D02_CODEC9_INTERNAL_HEADER_READER_WINDOW_20261111B.md)、[后续语义](docs/CLIENT_72_D02_SCENE_CONFIGMETA_CODEC9_STREAM_20261111B.md) |
 | F-03d3s2/CODEC9-ACTUAL-STREAM-CONTRACT | 已完成 | 两实际流头8c06的可达原分支、量子精确长度/restart/CRC0及fresh状态关系，16固定源纯审计第三7410B同双fresh；线性尾部40B为跳表数据，伪指令外跳不作实际分支。未执行target reader/native。 | [字段与独立边界](docs/CLIENT_72_D02_SCENE_CONFIGMETA_CODEC9_STREAM_20261111B.md) |
 | F-03d3s2/CONFIGMETA-CODEC9-OOZ-PAYLOAD | 已完成 | 固定外置源码MSVC实际build；公开XML逐byte、append/truncate原-1、两目标完整消费/精确262144+72852及双入口输出一致、guards保持。双fresh/第三13件同字节，纯产物审计通过；concat334996B。对象身份/PathHash/MPLevel仍待，不代target native或自然loader。 | [真实结果、复现及限制](docs/CLIENT_72_D02_CODEC9_OOZ_PAYLOAD_20261111B.md) |
+| F-03d3s2/CONFIGMETA-SERIALIZED-IDENTITY | 已完成 | 精确含换行engine的新限定v17目录metadata EOF213/三对象；local PPtr→同CAB105B MonoScript与旧目标逐byte相同，class114实例MetaConfig前缀至object+44。第三七件同最终双fresh，7反例及纯audit通过。自定义330568B仅抽取，PathHash/MPLevel后继未验。 | [身份、来源及复现](docs/CLIENT_72_D02_CONFIGMETA_SERIALIZED_20261111B.md) |
 
 
 ### 6.3 SDK、补丁、观察与运维前置
