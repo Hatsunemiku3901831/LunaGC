@@ -1,4 +1,4 @@
-2026-11-11 已按用户最新指令恢复并行研发，优先 Scene 实际 MPLevel 输入、C 的 Proud 采用与 Talent 空值入场行为。A 第二分配合同及 B 组合 loader 保持安全审查拒绝阻塞，不重试。D-02 六项客户端验收仍待，便携服务尚未部署；当前任务见 [Project](Project.md) 与 [本批计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。下方为历史批次。
+2026-11-11 最新收尾：当前在途任务均已完成限定验收并本地提交，按用户指令暂停，不开启后继。真实MPLevel分组、reader工厂原窗、Proud预览分支/两叶真实Java/字段桥及setter原窗已验；D-02六项客户端仍0/6，便携服务未部署。A第二返回及B组合loader安全拒绝继续有效。Proud现场未执行，当前无待用户操作；详细成果、未闭项、失败与恢复入口见 [HANDOFF2](HANDOFF2.md)、[Project](Project.md)。下方恢复/暂停均为历史批次，不自动恢复。
 
 2026-11-10 当前恢复执行：用户已明确解除上一轮“收尾后暂停”，持续推进D-02全部实机验收。已验八点/锁内map/stock v2/出生默认装备局部恢复直接复用；当前A核oldFlags8 GC helper，B核准确请求采用，C准备所选旧号依赖，Scene纳入关键路径。新盘点五stock/载体/13保护、portable配置及相关进程/端口通过；原resources差异/数据保留。按[Project](Project.md)与[本批计划](docs/CLIENT_72_D02_RESUME_20261110B.md)执行，下方暂停/现场均为历史，旧ready不复用。
 

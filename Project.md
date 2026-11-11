@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-**用户已解除暂停，Scene、C 恢复并行推进；D-02 / F-05 / D02-R6 仍未完成。** Scene 已从同源ConfigMeta字段/索引恢复真实payload，完整707组和含MPLevel的World组21个原序名称已验，继续自然reader及World/slot114；C 已核 Talent 六个空值差异及完整候选目录加载，继续 Proud `(221,1)` 命中/门槛。Proud 只读采样准备已完成，等待本轮新实时 ready；离线工作继续。A-SECOND-RETURN-CONTRACT 及其依赖、B 组合 loader 保持安全审查拒绝阻塞，不重试或换模型接续。[本批计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。
+**按用户最新指令，当前在途任务均已完成限定验收及提交，调度暂停，不开启后继。D-02 / F-05 / D02-R6 仍未完成，六项客户端验收0/6。** Scene 已恢复真实payload、707组/15835子名称及World组21原序名称，reader工厂238B单窗已验；C 的Talent空值/完整目录、Proud预览分支、121行/605槽两叶真实Java、行字段桥及157B setter单窗已验。自然reader、当前Proud实际采用及完整恢复仍待。Proud现场未执行，本轮待ready安排已随暂停撤下，当前无待用户操作；恢复和现场各需新的明确指令/实时ready。A-SECOND-RETURN-CONTRACT及其依赖、B组合loader继续安全审查拒绝阻塞。详见[交接](HANDOFF2.md)，[本批计划](docs/CLIENT_72_D02_RESUME_20261111B.md)保留恢复时的设计与依赖。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -74,10 +74,10 @@
 | --- | --- | --- | --- |
 | A：F-03d3f4d2；必要 String 共同合同 | 同 epoch GC/Default 输入、人工双路径、stock 条件自有原 helper 已验，只读复用 | A-SECOND-RETURN-CONTRACT及依赖保持拒绝阻塞；其他独立任务必须先通过移除拒绝动作/产物后的独立性判断 | 不派被拒项，不运行草稿 |
 | B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 已验八点、锁内 map、stock v2、PostRequest 和共用服务入口可只读复用 | 组合 loader 源、失败证据和未提交差异保留；自然请求采用、信任、认证与会话交换未闭 | 留待用户使用 [Daybreak](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md) |
-| C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 旧号/121阶段行/Talent真实Java复用；同81127下一突破预览分支、121行/605槽两叶对象投影及真实ResourceLoader已验 | 真正hit缺准确热Equals链，7读采样等待本轮新ready；原行两字段静态桥/标量setter继续独立推进。当前采用、Java<=/行ID公式、目标OpenConfig、装备配置及完整恢复仍待 | 主线现场/集成；Sol max准确语义→Terra明确投影/测试，不以对象叶加载或预览分支批准父项 |
+| C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 旧号/Talent真实Java、同81127预览分支、121行/605槽两叶真实ResourceLoader、原行两字段桥及157B setter单窗已验 | 真正hit仍缺准确热Equals链；现场未执行且当前无待ready安排。正常codec存储关系、当前采用、Java<=/行ID公式、目标OpenConfig、装备配置及完整恢复仍待，后继未启 | 当前暂停；恢复后Sol max语义→Terra明确实现；主线现场/集成，不以对象叶加载或预览分支批准父项 |
 | Scene：F-03d3s2 | 同源字段/索引→真实payload→707组/15835子名称及World组21名称、reader工厂238B原窗已验 | 自然backend/cursor/refill、工厂原引用语义、World实际返回对象/slot114和后续组件仍待；按用户要求不启后继。Pool独立诊断只到共用allocator调用前 | 主线已完成当前Terra单窗验收；恢复后Sol max先复核原引用，成熟后再Terra。已有slot114三读规格复用，不读metadata候选 |
 
-本批输入、文件归属、产物及退出条件见 [执行计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。Talent 两个限定出口已验；当前 Scene 解码与 Proud 新输入按成熟规格轮转，分析交回即释放 max 槽。
+本批输入、文件归属、产物及退出条件见 [执行计划](docs/CLIENT_72_D02_RESUME_20261111B.md)。Talent、Scene及Proud本批各限定出口已在第6节登记；所有代理已交回。暂停原因是用户本次指令；恢复后仍有可独立推进的普通技术后继，不将其虚报为全局阻塞。
 每次派工先固定：**任务ID、输入版本/来源、准确问题、允许修改的文件、只读依赖、独立输出目录、禁止操作、产物、验收、停止/返回条件**。所有者以本批派工为准，一个文件同一时刻只有一个写入者。子代理返回“已完成/有界结论/阻塞”及证据；主线审核实际差异、必要独立样本和回归，再更新本页并提交。阻塞时写准确解除条件，不改父项为完成。
 
 ### 3.4 未完成工作包与模型分配
