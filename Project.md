@@ -4,7 +4,9 @@
 
 ## 当前阶段
 
-**本次仅更新下一步排期，研发与联调仍暂停；D-02 / F-05 / D02-R6 六项客户端验收仍为0/6。** 原Scene reader与Proud setter首发包及其后继限定成果直接复用，不重新排队。Proud三字段布局与166B Float getter来源已验，语义、业务alias及实际row仍待；existing-cache离线准备已验，但cache1启动超时取消、sample未派，实际输入未取得。恢复后优先Float/字段来源的独立分析，并处理已发生的启动回执超时；新现场须另取实时ready，禁止computer-use。Scene自然receiver/初始化及World slot114保留准确缺口，已确认的共用allocator返回依赖与A/B拒绝项冻结。详细研究过程和历史现场见[交接](HANDOFF2.md)及[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。
+2026-11-14 `UP-72-20261114`：按用户指令开展公开上游静态调研，阶段成果及未覆盖分页见[研究报告](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)和[检索账本](docs/CLIENT_72_UPSTREAM_LEDGER_20261114.md)。状态**进行中**：发现 LunaGC 7.2 及 AstaPS 非默认任务分支，已固定部分源码并识别协议冲突；长尾搜索拆分、部分 Fork 和跨平台线索仍待核。下一独立任务为 UP-72-N1 离线三层对照；本轮未改运行代码、未部署或实机验收，D-02 状态不变。原 A/B 拒绝及其依赖继续冻结。
+
+**2026-11-12 排期批次仅更新下一步排期，研发与联调仍暂停；D-02 / F-05 / D02-R6 六项客户端验收仍为0/6。** 原Scene reader与Proud setter首发包及其后继限定成果直接复用，不重新排队。Proud三字段布局与166B Float getter来源已验，语义、业务alias及实际row仍待；existing-cache离线准备已验，但cache1启动超时取消、sample未派，实际输入未取得。恢复后优先Float/字段来源的独立分析，并处理已发生的启动回执超时；新现场须另取实时ready，禁止computer-use。Scene自然receiver/初始化及World slot114保留准确缺口，已确认的共用allocator返回依赖与A/B拒绝项冻结。详细研究过程和历史现场见[交接](HANDOFF2.md)及[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 

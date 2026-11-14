@@ -273,3 +273,6 @@ B-02e7限定原生部分消费51f7cd2、E-01c5实际生产Lua加载审计9aa8ca7
 
 
 2026-11-12 轻度重规划：已根据`09d69d3`技术基线更新[Project](Project.md)，前移Proud Float/字段来源与cache1启动超时归因，复用旧首发成果，保留World及A/B准确阻塞。研发、联调均未恢复，六项D-02仍0/6，README未改；已备份后更新[HANDOFF2](HANDOFF2.md)，本文件只追加。验证、原件和下一步见详细交接。
+
+
+2026-11-14 `UP-72-20261114`：完成公开上游研究的阶段报告，发现 LunaGC 7.2 与 AstaPS 非默认分支的可复用线索及明确协议冲突；部分搜索分片、Fork 和跨平台线索仍待续查。本轮未改运行文件、未启动服务/数据库/客户端，D-02 与 A/B 冻结不变。原 HANDOFF2 已先备份，详细证据、失败、续查入口和下一步见 [HANDOFF2](HANDOFF2.md)、[研究报告](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md) 与 [检索账本](docs/CLIENT_72_UPSTREAM_LEDGER_20261114.md)。

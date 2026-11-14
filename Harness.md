@@ -1,3 +1,5 @@
+2026-11-14 `UP-72-20261114`：本轮公开资料与离线静态阶段结果见[研究报告](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)、[检索与续查账本](docs/CLIENT_72_UPSTREAM_LEDGER_20261114.md)、[67 分支表](docs/CLIENT_72_UPSTREAM_BRANCHES_20261114.md)及[关键文件固定清单](docs/CLIENT_72_UPSTREAM_SOURCES_20261114.md)。外置研究根的 `verify_review.py` 核对 67 个根树/README blob、23 文件 blob/SHA 和 303 的 16 行比较通过；这是离线材料核对，不是生产测试或客户端验收。原始 API 响应、缓存及复现脚本不入仓库。部分搜索分片、Fork 和跨平台线索未完成；运行代码、配置、资源与补丁未改，未启服务/数据库/客户端，D-02 与 A/B 冻结不变。
+
 2026-11-12 轻度重规划：按最新验收将Proud Float/三字段独立语义与cache1启动超时归因前移，旧reader/setter包和run2冷结果直接复用；World slot114及A/B拒绝依赖冻结。仅更新文档，研发与联调仍暂停，README保持稳定；路线见 [Project](Project.md)，既有证据与现场事实见[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)，本次交接见[HANDOFF2](HANDOFF2.md)。
 
 2026-11-11C 恢复执行索引：D-02 / F-05 / D02-R6 客户端验收仍 0/6。QueryWrapper借用语义、nativeWrapper ctor源窗与借用合同、World factory raw布局复核及修正源窗、Scene cluster剩余来源已限定验收；复现与旧失败见[本轮索引](docs/CLIENT_72_D02_RESUME_20261111C.md)和专题。FindEntry与Scene getter新原窗已限定验收；标准cache单key输入工具与环境/退出预案已通过2026-11-12限定离线验收；cache1正常启动超时取消，sample未派/目标读取0，旧包和ready不复用；31A managed row与31B float getter源窗均已限定验收；按用户明确指示已暂停，新研发及联调下次恢复，不用computer-use；自然reader、row与采用未知；A/B拒绝冻结，run2收尾已核，本轮cache1实际输入尚未采集。
