@@ -37,6 +37,8 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 | `R3-ACTIVE-RELIQUARY-MINIMUM-SEMANTICS` | 已完成；首分支前父CALL及寄存器转交、+7c条件store限定验收。[语义](CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md) | 不证明ABI/实际183行值；rank/set未知。 |
 | `R3-ACTIVE-ITEM-BASE-PARSER-SOURCE` | 已完成；共同父parser完整2018B/488指令/130引用。[来源](CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md) | 仅静态来源，直接冻结命中0不证明传递A-free。 |
 | `R3-ACTIVE-ITEM-BASE-MINIMUM-SEMANTICS` | 进行中；Sol max统一审定共同父id/itemType。 | 未有结论，不重复取源。 |
+| `R3-ACTIVE-MATERIAL-MINIMUM-SEMANTICS` | 已完成；首分支前父CALL及+78两条件store限定语义。[结果](CLIENT_72_D02_MATERIAL_TYPE_DECLARATION_20261116.md) | 未证明MaterialType职责、实际值或初态。 |
+| `R3-ACTIVE-MATERIAL-TYPE62334-DECLARATION` | 已完成；固定完整五字段含四个FOOD_QUALITY literal及value__，method 0、常数值unknown。[声明](CLIENT_72_D02_MATERIAL_TYPE_DECLARATION_20261116.md) | `targetSymbols` 仅筛MATERIAL_，空不等于无具名符号；+78作为MaterialType的候选依据撤回，实际字段/具名consumer未知。 |
 | `R3-OLD121-DEPOT-CORE-FRAGMENT-SCOPE` | 已完成；既有全121 Depot原值与来源的三键纯host范围审定。[结果](CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) | 不重跑Depot/phase6，不证明当前采用。 |
 | `R3-OLD121-DEPOT-CORE-FRAGMENT-PROJECTION` | 已完成；121片段/363字段/726既有getter引用，484普通slot中248正236零、121正energy，369不同正引用仅key/span。[结果](CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) | presence unknown；结构探查曾展示部分超范围既有Skill字段，最终代码不使用Skill.values作oracle。 |
 | `R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA` | 阻塞；正引用缺367 id/element片段，energy正向绑定缺120；121 energy行costElemVal/specialEnergyMin/Max均未闭。 | 不以空Skill/None或假cost补齐；无新JVM或当前采用证明。 |

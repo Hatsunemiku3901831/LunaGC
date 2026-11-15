@@ -218,6 +218,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-ACTIVE-RELIQUARY-MINIMUM-SEMANTICS | 已完成 | 首分支前父CALL及RCX/RDX局部转交、+7c条件store限定验收；rank/set职责及183行值未知。[语义](docs/CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md) |
 | R3-ACTIVE-ITEM-BASE-PARSER-SOURCE | 已完成 | 准确共同父parser完整2018B静态来源；不证明自然调用或资源值。[来源](docs/CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md) |
 | R3-ACTIVE-ITEM-BASE-MINIMUM-SEMANTICS | 进行中 | Sol max统一审定共同父id/itemType；不重复取源，不预称结论。 |
+| R3-ACTIVE-MATERIAL-MINIMUM-SEMANTICS | 已完成 | 首分支前父CALL与+78条件覆盖限定语义；不证明MaterialType职责、行值或初态。[结果](docs/CLIENT_72_D02_MATERIAL_TYPE_DECLARATION_20261116.md) |
+| R3-ACTIVE-MATERIAL-TYPE62334-DECLARATION | 已完成 | 固定五字段声明含FOOD_QUALITY符号、常量数值未知；撤回+78作为MaterialType接线依据，实际职责仍缺具名来源。[结果](docs/CLIENT_72_D02_MATERIAL_TYPE_DECLARATION_20261116.md) |
 | R3-OLD121-DEPOT-CORE-FRAGMENT-SCOPE | 已完成 | 限定审定既有全121 Depot的id/skills/energy原值与来源可供纯host三键投影；不重跑Depot/phase6。[结果](docs/CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) |
 | R3-OLD121-DEPOT-CORE-FRAGMENT-PROJECTION | 已完成 | 121片段、363字段及726既有getter引用，484普通slot与121正energy保留；369不同正Skill引用仅key/span，不证明Skill值或当前采用。[结果](docs/CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) |
 | R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA | 阻塞 | 正引用缺367 id/element片段、energy绑定缺120；包括10068在内121个energy的costElemVal/specialEnergyMin/Max均未闭，不得以空Skill/None或假cost补齐。 |
@@ -563,6 +565,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-ACTIVE-MATERIAL-RESOURCE-PARSER-SOURCE / R3-ACTIVE-MATERIAL-RESOURCE-PARSER-SOURCE-RUN2 / R3-ACTIVE-RELIQUARY-RESOURCE-PARSER-SOURCE | 已完成 | 两个parser完整静态来源限定验收；值、初始化和自然调用未验。 | [原窗与分账](docs/CLIENT_72_D02_ACTIVE_ITEM_PARSER_SOURCES_20261116.md) |
 | R3-OLD121-SKILL-PARSER-MINIMUM-SEMANTICS、R3-ACTIVE-RELIQUARY-MINIMUM-SEMANTICS | 已完成 | 两字段条件覆盖与Reliquary入口/槽位局部条件来源；值、初态及rank/set未知。 | [限定语义](docs/CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md) |
 | R3-OLD121-SKILL-FLOAT-SETTER-SOURCE-WINDOW、R3-ACTIVE-ITEM-BASE-PARSER-SOURCE | 已完成 | 不同Float setter与共同父parser完整静态来源；直接冻结命中0不证明传递A-free。 | [原窗与分账](docs/CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md) |
+| R3-ACTIVE-MATERIAL-MINIMUM-SEMANTICS、R3-ACTIVE-MATERIAL-TYPE62334-DECLARATION | 已完成 | Material +78局部条件覆盖及type62334完整声明限定验收；原MaterialType候选职责冲突，实际字段/消费来源未知。 | [语义与声明](docs/CLIENT_72_D02_MATERIAL_TYPE_DECLARATION_20261116.md) |
 | R3-PROUD-ENUM32419-CONSUMER-QUERY | 已完成 | 固定signature显参116唯一匹配及type32419声明限定验收，不证明业务或全客户端穷尽。 | [查询](docs/CLIENT_72_D02_PROUD_ENUM32419_CONSUMER_QUERY_20261115.md) |
 | R3-PROUD-PAIR-CONSUMER-QUERY-TRIAGE | 已完成 | 声明域有界判断及type54724文字勘误；ordinary业务caller及type-erased MethodInfo/callsite未知。 | [限定判断](docs/CLIENT_72_D02_PROUD_PAIR_CONSUMER_TRIAGE_20261115.md) |
 | R3-PROUD-PAIR-CONSUMER-QUERY | 已完成 | 65条指定receiver声明与固定signature全表6唯一显参匹配；非全客户端或业务穷尽。 | [有界查询](docs/CLIENT_72_D02_PROUD_PAIR_CONSUMER_QUERY_20261115.md) |
