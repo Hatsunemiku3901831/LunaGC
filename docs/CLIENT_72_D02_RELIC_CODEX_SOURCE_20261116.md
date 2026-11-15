@@ -48,3 +48,31 @@ REA `inspect_binary_layout`在本机Windows不支持，边界任务沿固定已�
 动态分支只证明原X/U与对应Q/Z的参数转交到`14e1c9920`，未读取自然分派flag或动态接收者global内容、未追尾目标实现。空receiver/setup分支保留原helper调用，不假设异常分类或返回。完整两body均没有X或raw46431成员读；互换rank/set候选标签不改变这些已观察的本地指令或转交，所以这两条UI路径不能区分rankLevel/setId。此有限结论不套用到60446的字典及byRef边；其public501523独立来源线另行研究。
 
 配对proof为`local/migration72/d02-incremental-relic-remaining-typed-20261116/consumer411125-and-503451-route-proof.private.json`，8674B，SHA-256 `f2587593c1c74e6be4150701e75a5fca014d8b22cbd4b7e1388938862d6e628d`。原source分别在`local/migration72/d02-incremental-relic-consumer503451-source-20261116/`和`d02-incremental-relic-consumer411125-source-20261116/`，各自manifest SHA为`310b6ad85d76bdeba405762954687dc2dcf6dde474475bee26eaad9a6c4d5e07` / `96edf99a305a6e8e0aca02f23a75c54071ead364b64e55fd5eb7d5be8dfcad8b`。集成只读核上述body/result/manifest/proof身份全匹配，未重拼、采集或运行测试；没有动态/客户端或回归验收。A1与Relic其他独立路径继续，rank/set、资源ready和D-02六项0/6保持。
+
+## 501523 typed缓存入口与剩余边覆盖
+
+`A2-RELIC-REMAINING-TYPED-20261116/CONSUMER501523-SEMANTICS`已完成60446唯一public入口`m501523/FIGBFDOHGGD`的准确来源及局部语义。完整`[147c38270,147c384e8)`632B/134条，body SHA-256 `a303ba3b502007213d446aaad2c14d1aaac66dca0f0bd78a3d1643bd82ed2496`，result SHA-256 `5a6e8efa25d0c4401bd26225ee9d188e1db8da84e96e972c147ccc2a87b4d9d2`。来源阶段`semanticInterpretation=false`及直接冻结引用0按原件保留，后继proof只判本地值流。
+
+真实入口为`(uint32 K,74316& O,bool C)`，方法先将输出槽`[O]`清0；不读取传入资源。实际static字段选择绑定60446.field299590（`13732<U32,74316>`，runtime raw`4035468`，代码root`+35468`）和field299591（`Dictionary<U32,74316>`，runtime raw`4035470`，代码root`+35470`）。自然flag未读，不把容器命名成等级表或套装表。
+
+299590路线向helper传原K与同输出槽；fallback `147c3832d→m501535/147c38a60`仍是原K/O，AL非零后将`[O]`作为整个74316指针连同原K转交同类helper。299591路线把原K交候选索引helper，本地r非负且经原array边界门后，将`A+24*r+30h`的整个指针写O；helper是否真正匹配原key仍未知。没有本地raw46431字段被读取并用作另一张表的key，也未证明非空有效资源或实际cache插入。
+
+返回只闭AL状态，声明返回类型仍未知：`SETNS BL`仅替换低字节，随后`MOV EAX,EBX`；字典索引路线EAX高24位仍带字典指针低32的对应位，负索引的AL0不等于完整EAX0。只有显式`XOR EBX,EBX`出口证明完整零。自定义helper普通ABI路径也只将低字节置1，不能推成规范bool/u32返回。
+
+本批固定的3字段、6参数最终覆盖如下；它只覆盖列明边，不把未读body写成不存在：
+
+| 边 | 已验范围与准确剩余 |
+| --- | --- |
+| 52700.field261342/+80→74316 | 既有74316.+20→raw46431及raw+88 getter链复用；`151851c21→1405336c0`的dictionary返回/分组语义准确A冻结，不据容器形状选rank/set |
+| 60446.field299590 | 501523实际选择root+35468，原K/O查找及whole-value转交已闭；不证明key职责或容器角色 |
+| 60446.field299591 | 501523实际选择root+35470，候选索引/whole-pointer输出已闭；匹配和rank/set角色未知 |
+| 21946.m168869(74316,U32) | 2792B来源及既验前108条String-only范围复用；整窗semanticfalse、准确A CALL仍停 |
+| 49417.m411125(74316,U32) | 146B/35条及普通typed setup→Codex转交已闭；动态尾未追，无rank/set桥 |
+| 60446.m501523(U32,74316&,bool) | 632B/134条、两缓存实际选择、原K和whole-output流及AL限制已闭；没有raw角色字段到不同表key |
+| 60446.m501529(U32,74316&) | 声明/真实参数已核；不是501523直接CALL，未选中有独立role判别力的消费边，body未取 |
+| 60446.m501535(U32,74316&) | 已证501523以同K/O调用；只有同lookup后继，body未读，不继续扩树；不宣其永不读raw |
+| 60698.m503451(74316,U32) | 92B/23条及普通setup→Codex转交已闭；动态尾只转交，无rank/set桥 |
+
+501523其余helper只保留当前同查找/整体值边，没有新的独立raw/role证据选中它们；不预取501529或继续501535。交换rank/set标签仍与全部这些typed、UI和原U32→whole-resource关系相容。准确缺的是raw成员进入等级/套装用途的区分消费边，或绑定目标row/字段/单位且独立具名的非零oracle；raw+88准确A依赖与此普通缺边分列。
+
+source原件在`local/migration72/d02-incremental-relic-consumer501523-source-20261116/`，manifest SHA-256 `9eab9b6dc5c640360f6cc86348de668ea14c5b646fc66c4131ca13924fcd8377`。局部proof `consumer501523-semantics.private.json`为8666B/SHA`e351b41270157dedcd82a9855d2eb338a148a829636a8d8779a65ce9ec09aee9`；最终覆盖表`FINAL_REMAINING_TYPED.zh.md`为5306B/SHA`247c5502adaee2dd5ab6ba4e72b7c766f3d5ade061a9f8ee8a0bd6f001e1c425`，均在`d02-incremental-relic-remaining-typed-20261116/`。集成只核固定身份，未重跑、重拼或测试。没有新字段值、资源行/ready或客户端验收；当前A1准确source门失败的离线归因仍进行中，不因此最终收口或交接。

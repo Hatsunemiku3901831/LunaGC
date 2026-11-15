@@ -7,7 +7,7 @@
 | 子项 | 本轮已验出口 | 当前必要缺口与下一动作 |
 | --- | --- | --- |
 | A1 `D02-INCR-A-MAX-20261116` | [A组有界公开检索](CLIENT_72_D02_INCREMENTAL_REUSE_A_20261116.md)已完成，未给新的目标MAX cap职责桥；代码接口401不记源码零命中 | 同target88602字段/getter到24887 enum77/MAX_SPECIAL的独立值流仍缺；Sol max自主关联进行中，不以无直接同owner排除间接消费，不读取候选值选cap |
-| A2 `D02-INCR-A-RELIC-20261116` | 公开出口与[Codex准确来源](CLIENT_72_D02_RELIC_CODEX_SOURCE_20261116.md)已完成；后继503451/411125共238B/58条来源及配对局部UI转交语义已完成：真实typed祖先→setup、普通分支原X/U尾跳Codex，411125内联而非CALL503451 | 两新body无X/raw成员读，不能区分rank/set互换；动态尾仅参数转交未追。Codex准确A CALL/整窗semanticfalse保持；不把UI有限结论套60446字典线，其public501523独立来源继续，目标等级/套装职责仍未闭 |
+| A2 `D02-INCR-A-RELIC-20261116` | 公开/Codex及两UI转交来源和局部语义已完成；后继[501523缓存入口](CLIENT_72_D02_RELIC_CODEX_SOURCE_20261116.md#501523-typed缓存入口与剩余边覆盖)632B/134条来源/局部语义已验，3字段6参数覆盖固定，实际绑定299590/299591及原K/whole-output/AL限制 | 两UI路径与501523均无已闭raw成员→另一表key，rank/set仍不可区分。501535只同lookup后继，501529未选中，不扩树或推未读即不存在；raw+88分组及Codex准确A边独立保留，未知动态实现不外推 |
 | B1 `D02-INCR-B-MATERIAL-20261116` | [公开检索](CLIENT_72_D02_INCREMENTAL_REUSE_B_20261116.md)及[本地有界关联](CLIENT_72_D02_INCREMENTAL_LOCAL_B_20261116.md)已完成；首次read的O仍消费未知B，后台创建a=0不消O；post-parser覆盖+18的清理不支配首读 | 实际入口阻塞：需首refill前同R的有效B定义、backend与固定m_bytes物理起点，或独立目标revision文件语法。准确pool/getter→A返回依赖保留，不泛封Material；12混淆声明未选出有用新窗，无合格现场包 |
 | B2 `D02-INCR-B-WEAPON-20261116` | 公开及本地有界关联已完成；288组三入口同reader、raw/base同row关联成立，但记录不含内部cursor/caller/return stack | 实际F入口阻塞：需同reader/同row的`P_wrapper→P_raw→P_F`与物理边界/补读关系的新允许独立来源或准确记录。旧wrapper/raw body仍属已停路径；不以[4,400)、String尾、平铺schema或11101值补差，不扩11201 |
 
@@ -20,6 +20,8 @@ B组报告SHA-256 `9497b02788d53fded16786ae89e8d0e5cc1ca28f9da6c1f5d19a88a3d8a86
 `D02-INCR-B-LOCAL-RESEARCH-20261116`的[报告](CLIENT_72_D02_INCREMENTAL_LOCAL_B_20261116.md)SHA `db9a44443d7054527bb06be183e353af4dd903653799d1b9a4928860cb60c2d3`已验收有界结论；8既存body4182B/1070条重拼一致，另3个旧wrapper raw共1100B只核hash。集成只读核6份manifest/关键结果身份全匹配，回执`local/migration72/d02-resume-20261116b/b-local-integration-identities.private.json` SHA`44277961873457c2e6a3f283558bf4eab3b5714fecf5cf9e995ef613829309f9`。原typeReferences字典误作list的首失败与修正run2均保留；未重跑研究脚本/原源/测试。B1/B2没有成熟header、F入口或新必要字段规格，按报告最小输入表继续，不要求用户重复启动；A/Relic仍执行，未作最终收口或交接。
 
 `A2-RELIC-REMAINING-TYPED-20261116/PAIRED-UI-TRANSFER`的proof 8674B/SHA`f2587593c1c74e6be4150701e75a5fca014d8b22cbd4b7e1388938862d6e628d`已验局部转交，两个source/result与manifest身份一并核同；集成回执`local/migration72/d02-resume-20261116b/paired-ui-transfer-identities.private.json` SHA`4dada65c30ee16752563381eae5bf13d5794cfd744791669dbb7d87d988a116f`。未重拼/重取原源或测试；只闭两条UI转交路径，不证明动态实现、目标rank/set或60446其他线，A1精确静态筛选与A2 public501523来源仍执行，不最终收口。
+
+`A2-RELIC-REMAINING-TYPED-20261116/CONSUMER501523-SEMANTICS`的source body/result、manifest、8666B局部proof及5306B最终覆盖表共5项身份集成核同，回执`local/migration72/d02-resume-20261116b/consumer501523-identities.private.json` SHA`409758b2423081818449671081f09a8db326746e1c0e555c621b4221bbcca9f6`。proof SHA`e351b41270157dedcd82a9855d2eb338a148a829636a8d8779a65ce9ec09aee9`，最终覆盖SHA`247c5502adaee2dd5ab6ba4e72b7c766f3d5ade061a9f8ee8a0bd6f001e1c425`。未重拼/采集/测试或改运行；当前A1准确source严格门失败仍离线归因，非安全拒绝，其他独立工作继续，不最终收口。
 
 ## 2026-11-16B 当前接手与规划验收
 
