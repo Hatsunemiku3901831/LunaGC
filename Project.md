@@ -150,7 +150,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-PROUD-REMAINING-CARRIER-WINDOW | 已完成 | 一次1745B/383条来源及自身账本限定验收，AOT/pdata/body共1773B；无重采/新测试，冻结直接目标0不证明间接无关。[来源](docs/CLIENT_72_D02_PROUD_REMAINING_CARRIER_WINDOW_20261115.md) |
 | R3-PROUD-REMAINING-CARRIER-SEMANTICS | 已完成 | b=0传原L、否则传null，但两模式均枚举原L；String过滤后向69644条件转交whole carrier。V及W身份/稳定性未知，不证明callee数组消费。[语义](docs/CLIENT_72_D02_PROUD_REMAINING_CARRIER_SEMANTICS_20261115.md) |
 | R3-PROUD-WHOLE-CARRIER-CONSUMER-SOURCE-PLAN | 已完成 | 选择69644.m576788/14758efb0单个来源问题，问条件转交后的List；不预称业务或消费。 |
-| R3-PROUD-WHOLE-CARRIER-CONSUMER-WINDOW | 进行中 | 一次完整source窗≤4096B/strict≤1024，结果未知；A/B/preview及冻结tail不追。 |
+| R3-PROUD-WHOLE-CARRIER-CONSUMER-WINDOW | 已完成 | 一次1239B/314条来源及自身账本限定验收，AOT/pdata/body共1267B，无重采/新测试；直接冻结目标0不证明间接无关。[来源](docs/CLIENT_72_D02_PROUD_WHOLE_CARRIER_CONSUMER_WINDOW_20261115.md) |
+| R3-PROUD-WHOLE-CARRIER-CONSUMER-SEMANTICS | 进行中 | 审whole List转交及getter caller来源，不预称数组消费、业务或实际值；冻结tail不触。 |
 | R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS | 已完成 | 本体双遍历、同N指针store、中性native+2c↔41105.field203368/+70表示桥及准确缺口限定验收；未消费26072三字段。上游旧listing的共用allocator调用属于准确A冻结边，停在CALL；业务桥、实际M/数组/String、row/current/epoch及ready未知。见[成员语义](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_SEMANTICS_20261115.md)。 |
 | F-03d3s2-SCENE-ALLOWED-SOURCE-GAP | 已完成 | 既有允许来源有界差距审阅已验；4 pin、三writer、238B工厂及6锚点独核，316B getter直接复用未重验。M1–M4实际receiver/派发与返回/初值/reset关系缺新增允许的固定独立来源，尚无成熟sender；不泛封Scene。见[关系矩阵](docs/CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)。 |
 | R3-PROUD-STRING-INPUT-CONTRACT | 已完成 | 中性输入状态及来源合同准备限定验收，9源pin和独立14/0；未创建采样器/读取器。实际M、pointer、length、UTF16、业务桥及配置同源仍未知，OpenConfig仅候选；不并入 Avatar String 或 Gadget 路线。见[合同](docs/CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)。 |
@@ -463,6 +464,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-PROUD-CARRIER-CONSUMER-SEMANTICS | 已完成 | 有限String consumer值流及双匹配gate限定验收；K不是entry R8，实际值/业务名/current/ready未知。 | [限定语义](docs/CLIENT_72_D02_PROUD_CARRIER_CONSUMER_SEMANTICS_20261115.md) |
 | R3-PROUD-ARRAY-CARRIER-CTOR-BINDING | 已完成 | pre-tail条件引用复制及M0/M1边界限定验收，未证明tail后状态或实际对象。 | [限定绑定](docs/CLIENT_72_D02_PROUD_ARRAY_CARRIER_CTOR_BINDING_20261115.md) |
 | R3-PROUD-REMAINING-CARRIER-SEMANTICS | 已完成 | whole carrier按b条件转交及两模式枚举原L限定验收；V/W身份及callee数组消费未知。 | [语义](docs/CLIENT_72_D02_PROUD_REMAINING_CARRIER_SEMANTICS_20261115.md) |
+| R3-PROUD-WHOLE-CARRIER-CONSUMER-WINDOW | 已完成 | 单次1239B/314条来源及自身账本限定验收；业务、数组消费和实际值未验。 | [source-only](docs/CLIENT_72_D02_PROUD_WHOLE_CARRIER_CONSUMER_WINDOW_20261115.md) |
 | R3-PROUD-WHOLE-CARRIER-CONSUMER-SOURCE-PLAN | 已完成 | 69644.m576788单个typed来源问题；不证明消费或业务。 | 私有计划见 `local/migration72/d02-resume-20261115/proud-remaining-carrier-semantics/` |
 | R3-PROUD-REMAINING-CARRIER-WINDOW | 已完成 | 一次1745B/383条来源及自身账本限定验收；不证明数组消费或bool业务。 | [source-only](docs/CLIENT_72_D02_PROUD_REMAINING_CARRIER_WINDOW_20261115.md) |
 | R3-PROUD-REMAINING-CARRIER-SOURCE-PLAN | 已完成 | 既有metadata/listing只选69135.m572227单个source问题，另两候选未关闭；不证明数组消费。 | 规划见 `local/migration72/d02-resume-20261115/proud-remaining-carrier-plan/` |
