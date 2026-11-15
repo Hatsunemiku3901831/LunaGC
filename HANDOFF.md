@@ -313,3 +313,12 @@ B-02e7限定原生部分消费51f7cd2、E-01c5实际生产Lua加载审计9aa8ca7
 
 
 2026-11-16 进度复核与方向微调：对比`420002e..c0e3f16`的24提交，原367 Skill/120绑定及121cost/START已闭，六项D-02仍0/6。仅调整下一轮顺序，UP-72-N1/N2有界来源增量待开始，实现/现场仍缺准确输入；不将有限检索解释为永久无独立路径。五文档修改前已备份，详细已验范围、剩余输入与并行顺序见[HANDOFF2](HANDOFF2.md)和[Project](Project.md)，未恢复研究或实机。
+
+
+## 2026-11-16B D-02准确输入缺口交接
+
+`D02-RESUME-INTEGRATION-20261116B`本轮计划、四公开/两自主研究、独立静态来源/局部语义及集成已完成。用户恢复授权仍有效；本轮实际研究后MAX资源producer、Relic role、Material/Weapon入口各缺准确输入，R1/R2/Scene/Proud必要边未被解除，现无成熟必要实现或现场包。不是用户暂停，不沿用旧条件2或宣称来源穷尽；D-02/F-05/D02-R6仍0/6、R4–R6未开始，A/B/preview准确冻结及A明文误验撤回保持。
+
+既验369 Skill、121cost/START/双Depot Java等只读复用。本轮新成果包括同组件类型桥、3328B独立code/data布局与generic MAX/START写入/旧值通知、Relic typed分项转交/两缓存输出、Material首读及Weapon嵌套cursor的准确缺边；没有新Java/DB/client或运行改动，无构建部署要求。逐项IDs、原件/失败、最小解除输入、8条交接前提交及Daybreak边界见[HANDOFF2](HANDOFF2.md)、[Project](Project.md)。
+
+旧HANDOFF2及本文件/五状态手册已先备份并核7件一致于`local/migration72/d02-resume-20261116b/final-handoff-244932e6/before/`；本文件原49753B逐字节前缀保留，只追加。最终交接提交的实际HEAD/本轮总数/双身份/文件范围及保护核对见同目录提交后`final-state.private.json`；不自动推送。

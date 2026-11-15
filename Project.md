@@ -4,9 +4,9 @@
 
 ## 当前阶段
 
-**用户恢复D-02的授权仍有效；本轮已实际完成UP-72-N1/N2的有界增量计划、四项公开检索及两组自主研究。MAX cap、Relic rank/set、Material和Weapon实际字段/入口各缺准确来源，尚无成熟必要实现合同。D-02 / F-05 / D02-R6仍0/6，R1/R2/R3的必要实现出口阻塞，R4/R5/R6未开始。** 新结论与逐项解除输入见[A本地研究](docs/CLIENT_72_D02_INCREMENTAL_LOCAL_A_20261116.md)、[B本地研究](docs/CLIENT_72_D02_INCREMENTAL_LOCAL_B_20261116.md)和[活动检查点](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)；旧暂停/前轮条件2不是本轮依据，A/B、preview与准确依赖仍冻结，局部成果不晋级父项或ready。
+**用户恢复D-02的授权仍有效；本轮已实际完成UP-72-N1/N2的有界增量计划、四项公开检索及两组自主研究。MAX cap、Relic rank/set、Material和Weapon实际字段/入口各缺准确来源；R1/R2/Scene/Proud亦未得到解除必要边的新输入，现无成熟可独立实施的必要合同，按各最小缺边交接等待准确输入。D-02 / F-05 / D02-R6仍0/6，R1/R2/R3的必要实现出口阻塞，R4/R5/R6未开始。** 这是本轮实际研究后的分项判断，不是用户暂停，也不沿前轮条件2或宣称公开/本地来源穷尽。逐项解除条件与下一动作见[本轮交接](HANDOFF2.md)、[A本地研究](docs/CLIENT_72_D02_INCREMENTAL_LOCAL_A_20261116.md)、[B本地研究](docs/CLIENT_72_D02_INCREMENTAL_LOCAL_B_20261116.md)；A/B、preview与准确依赖仍冻结，局部成果不晋级父项或ready。
 
-本轮369个Skill id/element、121普通cost与START及两次真实Depot Java加载已闭，原367片段/120绑定阻塞解除；97literal、Material准确payload/有限header源、shared String尾游标、Relic有限typed及Weapon单字段独立性判断均已分项提交。当前实施仍缺[必要前沿矩阵](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)中的准确来源：energy MAX cap职责、Material有效backend/filecursor、Relic rank/set角色、Weapon独立raw父入口语法，以及R1/R2/Scene/Proud各自的准确限制/自然输入。已验结果只读复用，不再添加raw-id/native门或泛扫替代输入；普通来源缺口与A/B准确冻结边分列，不宣称整族或潜在host路径必然依A。
+既验369个Skill id/element、121普通cost与START及两次真实Depot Java加载已闭，原367片段/120绑定阻塞解除；97literal、Material准确payload/有限header源、shared String尾游标、Relic有限typed及Weapon单字段独立性判断均已分项提交，本轮只读复用。当前实施仍缺[必要前沿矩阵](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)中的准确来源：energy MAX cap职责、Material有效backend/filecursor、Relic rank/set角色、Weapon独立raw父入口语法，以及R1/R2/Scene/Proud各自的准确限制/自然输入。已验结果只读复用，不再添加raw-id/native门或泛扫替代输入；普通来源缺口与A/B准确冻结边分列，不宣称整族或潜在host路径必然依A。
 
 [UP-72-20261114阶段调研](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)仍为进行中；UP-72-N1/N2只按当前具体缺口消费固定候选及现有冲突，不整包替换。UP-72-N3长尾检索在D-02排期后移，原继续位置保留，不关闭原调研。A/B、preview与准确依赖仍冻结；A已找回平台错误及opaque事件关联，原请求明文恢复验收已撤回，可读正文和技术输入仍缺，见[纠错](docs/CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)。当前没有需要用户启动的现场；重复同SDK页采样无新输入依据时不排期。
 
@@ -80,7 +80,7 @@
 | 分支 / 既有任务 | 本批具体动作及前置 | 产物与验收出口 | 责任文件与模型 |
 | --- | --- | --- | --- |
 | D02-RESUME-INTEGRATION-20261116 | 本轮接手、最小字段实现、相关Java与文档/提交集成已完成；条件2等待准确输入/限制解除 | 11个既验产物hash及脱敏preflight可定位；不重跑旧验收、不部署、不收他人差异 | Sol xhigh唯一集成者：Project/Harness/HANDOFF/HANDOFF2及本轮集成状态文档；独占Git/生成/构建/DB/运行写入 |
-| D02-RESUME-INTEGRATION-20261116B | 进行中；用户恢复授权下核对当前checkout、输入版本、配置与进程端口，集成本轮有界计划及后续成熟必要合同 | 直接复用369 Skill、121 cost/START、双Depot Java、Avatar七键、Talent/phase6、97枚举、Material准确payload、Float/Pair及启动/cold；不重跑无变化验收，不自造字段或加载规格 | 本轮唯一Sol xhigh集成者独占共享Git/生成/构建/JVM/DB/实例及Project/Harness/活动汇总；研究代理只写指定专题与独立证据 |
+| D02-RESUME-INTEGRATION-20261116B | 本轮接手、计划、四公开/两自主研究、独立静态来源/局部语义及文档提交集成已完成；准确输入缺口交接，D-02父项未完成 | 直接复用369 Skill、121 cost/START、双Depot Java、Avatar七键、Talent/phase6、97枚举、Material准确payload、Float/Pair及启动/cold；无新Java/DB/client验收。新最小来源到达后从[交接](HANDOFF2.md)对应项继续 | 本轮唯一Sol xhigh集成者管理共享Git/状态；保护原差异，HANDOFF2先备份后覆盖、HANDOFF只追加；仅文档/离线研究，无运行变更或构建部署要求 |
 | D02-INCR-PLAN-20261116 / UP-72-N1/N2 | 已完成准确四出口增量规划；检索、source与字段实现各自另验 | [计划](docs/CLIENT_72_D02_INCREMENTAL_REUSE_PLAN_20261116.md)固定A1 MAX cap、A2 Relic角色、B1 Material入口和B2 Weapon父入口；包含公开无桥后的有界本地新关联，未执行这些后继 | Sol max规划；主线验收，唯一集成者提交计划及共享状态 |
 | D02-INCR-A-MAX-20261116 / D02-INCR-A-RELIC-20261116 | 公开检索及本轮有界自主研究已完成；MAX资源字段与rank/set角色桥仍准确阻塞 | [A组公开](docs/CLIENT_72_D02_INCREMENTAL_REUSE_A_20261116.md)与[本地结果](docs/CLIENT_72_D02_INCREMENTAL_LOCAL_A_20261116.md)分别验收；generic setter/旧值通知和typed整体资源消费不代字段职责，不证明来源穷尽 | Terra max公开、Sol max自主研究已交；唯一集成者维护共享状态与提交 |
 | D02-INCR-A-LOCAL-RESEARCH-20261116 | 已完成有界类型/原窗关联、批准静态来源、独立code/data布局与参数流及Relic分项判断 | [结果](docs/CLIENT_72_D02_INCREMENTAL_LOCAL_A_20261116.md)：3328B=2992B代码668条+两表336B/84项，enum77/78写incoming float至24887+6d0/+458，386通知送old getter值；缺实际slot70 producer→同88602字段，不取通知helper或泛扫 | Sol max研究、指定执行者独立静态采源、主线分项验收；集成仅核22件proof身份。Ghidra0/2无可用索引、原strict失败与后继证明分列，无Java/DB/client/实现验收 |
