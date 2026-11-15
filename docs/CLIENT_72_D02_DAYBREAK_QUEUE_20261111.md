@@ -17,6 +17,7 @@
 ### A-SECOND-RETURN-CONTRACT：原事件已找回，执行范围仍缺输入
 
 - 父项：F-03d3f4d2 / D02-R1。第二 allocator CALL/RET、共用分配返回/构造、热 Default 消费与同 epoch 归属及准确上游 `151841361` 依赖继续冻结；不运行或修复原 `audit.private.py/json` 未验草稿。
+- 新确切依赖边：`R3-PROUD-BOUND-ARRAY-TAIL-CONSUMER` 的 `1488a5772→1405336c0` 命中既有A冻结CALL；调用前34B未读T+20。停止返回、构造及后续语义，不使用IFix替代；[来源](CLIENT_72_D02_PROUD_BOUND_ARRAY_TAIL_WINDOW_20261115.md)已限定验收，不是新拒绝，也不扩大A待判断包。
 - 原事件：已恢复父原输入、A计划、可信子任务关联、原平台错误、turn时间及原 `audit.py` 身份。原平台提示包含 `This content was flagged for possible cybersecurity risk.`，后附 Daybreak Blue、Advanced Account Security 与兼容 FIDO2 硬件密钥条件，软件或同步 passkey 不满足，并注明其他保护仍适用。此为历史提示，不证明当前资格或解除冻结；完整原文见忽略目录 `local/migration72/d02-resume-20261115/a-refusal-provenance-review/a-refusal-child-turn-v4-evidence.private.json` 的 `targetTurn.error.message`，SHA-256 `b8f73dd7a2400908f4254ec311c4771efe25b4bbe62e79a5682a0fb01bd21179`。原事件时间窗口为 2026-11-10 23:32:33–23:43:35 UTC；父创建时间异常的原值保留，不推测原因。
 - 查找来源与限制：v1 `review.private.json` 曾查39个去重记录未找回；v2 `metadata-mapping-v2.private.json` 确认仓库到本地项目映射，接口schema不提供服务端过滤；v3 对元数据输出按projectId和cwd在客户端精确筛选出33个同仓候选，只读必要关联父/子正文后找到原事件。v3 `thread-inventory-v3.private.json` SHA-256 `d422500b4138ff061fbc2c74eca14b30388b42670a1f724055b557ab6198b994`；v1/v2历史原件保留，不以后续结果覆盖。
 - 停止点与缺口：最后可见命令已完成且退出0，之后turn级失败；接口未独立暴露被拒工具调用，不能猜触因或认定A合同已经执行。`read_thread` 未提供完整A子执行请求及原follow-up事件，不等于它们不存在；若需逐字固定执行范围/调用输入，仍须原follow-up导出。还须为唯一剩余问题逐项固定技术规格、允许输入和验收；不把原未验 `audit.py/json` 当作已验前提，不让执行者猜缺参数。不可见内部审查原因无需用户推测。

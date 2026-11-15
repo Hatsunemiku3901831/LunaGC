@@ -26,7 +26,9 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 | `R3-PROUD-ARRAY-CARRIER-CTOR-WINDOW` | 已完成；[单窗来源](CLIENT_72_D02_PROUD_ARRAY_CARRIER_CTOR_WINDOW_20261115.md)125B/38条，一次采集及自身账本，AOT/pdata/body共153B。 | 无重采/新测试；直接冻结目标0不证明间接无关，间接call与tail合同未知。 |
 | `R3-PROUD-ARRAY-CARRIER-CTOR-BINDING` | 已完成；[pre-tail条件引用复制](CLIENT_72_D02_PROUD_ARRAY_CARRIER_CTOR_BINDING_20261115.md)：Msel非空取managed数组，否则取native wrapper对象并原样存+20；managed数组null不fallback。 | M0/M1不假设同一或同epoch；未知间接call/tail，未证完整构造、实际值、业务或ready。 |
 | `R3-PROUD-BOUND-ARRAY-TAIL-SOURCE-PLAN` | 已完成；唯一flags81h、instance、零显参33507.m281259/1488a5750及原ctor tail。 | 只问T+20与紧贴传递，不预称消费或完整ctor。 |
-| `R3-PROUD-BOUND-ARRAY-TAIL-WINDOW` | 进行中；一次完整source窗≤4096B/strict≤1024。 | 结果未知；准确冻结边停语义，不晋级父项或ready。 |
+| `R3-PROUD-BOUND-ARRAY-TAIL-WINDOW` | 已完成；[单窗来源](CLIENT_72_D02_PROUD_BOUND_ARRAY_TAIL_WINDOW_20261115.md)447B/121条、一次采集及自身账本，证据475B。 | 无重采/新测试；普通metadata零显参门通过，参数签名缓存缺席不恢复return/ABI。 |
+| `R3-PROUD-BOUND-ARRAY-TAIL-CONSUMER` | 阻塞；主线只读至 `1488a5772→1405336c0` 准确A冻结CALL，之前34B未读T+20。 | 不追返回/构造或后续语义，不用IFix替代；完整raw不证明数组消费或完整ctor。 |
+| `R3-PROUD-REMAINING-CARRIER-SOURCE-PLAN` | 进行中；仅3个未关闭69135 ordinary候选既有metadata/listing域。 | 移除A/B动作及产物后仍独立才选择一个source，不泛封Proud。 |
 | `R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS` | 已完成；[成员语义](CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_SEMANTICS_20261115.md)的本体双遍历、同N指针store、中性native+2c↔41105.field203368/+70表示桥及准确缺口限定验收。 | 未消费26072三字段，业务桥和实际M/数组/String/row/current/epoch/ready未知；上游旧listing共用allocator准确A边停在CALL，无新driver/投影/取源规格。 |
 | `R3-NEXT-LAUNCH-WINDOWED-2560X1440` | 已完成；新包与seal离线验收，作者及独立各4项合成测试，见[窗口化准备](CLIENT_72_D02_NEXT_LAUNCH_WINDOWED_20261115.md)。 | 未再启动，实际窗口尺寸未知；未来现场须新fresh和实时ready，不提供自然非空cache。 |
 | `F-03d3s2-SCENE-ALLOWED-SOURCE-GAP` | 已完成；[既有来源关系矩阵](CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)，专题 SHA-256 `c5428cf602b2e7b63400a440c447082857dcb532998db567eff857506f9f5bd6`；独核4 pin、三writer、238B工厂与6锚点，316B来源未重验。集成回执 `local/migration72/d02-resume-20261115/launch-timeout/gap-integration1/completion.private.json` SHA-256 `d8720288120fc2360a6433fe173d133978b5546be6fb821d3118f5a4ea8b343f`。 | M1–M4的实际receiver、派发与返回、初值及reset关系仍缺新增允许的固定独立来源，无成熟sender；不泛封Scene，不晋级父项或ready。 |
