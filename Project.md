@@ -8,6 +8,8 @@
 
 `R3-OLD121-AVATAR-BASE-GROWTH-PROJECTION` 及其 Java 子项已完成限定验收：实际121 Avatar五字段片段中120行新读出、7号行复用，363例原helper对照及限定真实loader通过，见[结果](docs/CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_20261115.md)。完整Avatar、critical、Skill、装备与实际Player全量恢复仍未闭；121 Depot、phase6和Talent已有范围直接复用。继续其他依赖满足的普通后继；原A/B、preview冻结不变，不晋级R4或ready。
 
+2026-11-16 当前后继：旧号当前Depot的369个正Skill需求已限定整理，其中2个出生结果复用、367个值未知；保存Skill的389个键是另一集合。Skill资源构造器单窗因普通边界门失败而停止，[限定归因](docs/CLIENT_72_D02_OLD121_SKILL_SOURCE_BLOCKER_20261116.md)已完成，该单窗仍缺同固定PE的准确完整边界来源，未授权重取或放宽；另并行审定critical基础贡献是否具有独立跨行规格，出生限定仍有效。两项具体边界不代表全部Skill、完整Avatar/R3或所有独立工作阻塞；A/B及preview冻结保持，未有新现场或ready，D-02 / F-05 / D02-R6仍0/6。
+
 **用户已指示继续任务；D-02 / F-05 / D02-R6 六项客户端验收仍为0/6。** 原Scene reader与Proud setter首发包及其后继限定成果直接复用，不重新排队。Proud三字段布局、166B Float getter和共享Pair的key检索→encoded value→getter消费正例已限定验收；Proud目标字段到该consumer的来源绑定、业务alias与实际row仍未知，见[复用判断](docs/CLIENT_72_D02_PROUD_ENUM32419_TRIAGE_20261115.md)。existing-cache离线准备已验，旧cache1启动超时取消、sample未派；本轮一次采样为cold-cache，实际输入未取得。Float正常路径条件合同与机械断言已限定验收，三字段消费桥及实际值仍未知；启动回执超时归因、薄封装修复及新身份绑定接线已限定离线验收，本轮真实Launch及一次采样后以cold-cache停止，现场回执与收尾已独立审阅通过；实际M/getter/row/current/epoch未知。新现场须另取实时ready，禁止computer-use。Scene自然receiver/初始化及World slot114保留准确缺口，已确认的共用allocator返回依赖与A/B拒绝项冻结。下一步审核准确依赖与缺少的来源输入，不自动另开UI或全codec窗口。详细研究过程和历史现场见[交接](HANDOFF2.md)及[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
@@ -175,6 +177,11 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-OLD121-AVATAR-PROJECTION-SCOPE | 已完成 | 原typed、共享consumer、固定输入及执行预算限定审定，形成121实际角色五字段的实施规格；来源许可不预先批准新行数值。[计划](docs/CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_PLAN_20261115.md) |
 | R3-OLD121-AVATAR-BASE-GROWTH-PROJECTION | 已完成 | 120新行+7号复用构成121五字段片段；360新+3复用原helper对照、115 pin/121 span，冻结访问0。完整Avatar及critical等未闭。[结果](docs/CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_20261115.md) |
 | R3-OLD121-AVATAR-BASE-GROWTH-JAVA | 已完成 | 唯一launch_timeout实际隔离JVM以ResourceLoader加载旧100 Curve及121片段，363结果/factor对照，1项通过；仅限定loader，不验Player恢复。[结果](docs/CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_20261115.md) |
+| R3-OLD121-CURRENTDEPOT-SKILL-PLAN | 已完成 | 限定整理369个正Skill需求，其中2个旧出生结果复用、367个值未知；保存Skill的389个键是另一集合。原whole A计数按原记录更正为1177，旧私有摘要保留。 |
+| R3-OLD121-SKILL-ROW-INDEPENDENCE | 已完成 | Skill行独立性完成有限范围审定，source-only规格 `bf72e96…` 已批准；不泛封全Skill，未批准新值或Java。 |
+| R3-OLD121-SKILL-RESOURCE-CTOR-WINDOW | 阻塞 | 普通边界门失败，`149b59940` 无包含项、pdata/body/read均0；缺同固定PE该ctor可追溯完整边界或已验同输入完整body+边界，不猜范围或放宽原规格。[停止与解除](docs/CLIENT_72_D02_OLD121_SKILL_SOURCE_BLOCKER_20261116.md) |
+| R3-OLD121-SKILL-CTOR-BOUNDARY-TRIAGE | 已完成 | 限定归因未发现gate或索引用错，既有来源未找到精确完整ctor边界；两个空列表不是独立负证据。[归因](docs/CLIENT_72_D02_OLD121_SKILL_SOURCE_BLOCKER_20261116.md) |
+| R3-OLD121-CRITICAL-PROJECTION-SCOPE | 进行中 | Sol max审定已批两出生critical installer及具名20/22是否能形成实际旧号121角色的新基础贡献片段；跨行值和执行尚未批准，独立路径/codec/model/允许fixture待明确。 |
 | R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS | 已完成 | 本体双遍历、同N指针store、中性native+2c↔41105.field203368/+70表示桥及准确缺口限定验收；未消费26072三字段。上游旧listing的共用allocator调用属于准确A冻结边，停在CALL；业务桥、实际M/数组/String、row/current/epoch及ready未知。见[成员语义](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_SEMANTICS_20261115.md)。 |
 | F-03d3s2-SCENE-ALLOWED-SOURCE-GAP | 已完成 | 既有允许来源有界差距审阅已验；4 pin、三writer、238B工厂及6锚点独核，316B getter直接复用未重验。M1–M4实际receiver/派发与返回/初值/reset关系缺新增允许的固定独立来源，尚无成熟sender；不泛封Scene。见[关系矩阵](docs/CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)。 |
 | R3-PROUD-STRING-INPUT-CONTRACT | 已完成 | 中性输入状态及来源合同准备限定验收，9源pin和独立14/0；未创建采样器/读取器。实际M、pointer、length、UTF16、业务桥及配置同源仍未知，OpenConfig仅候选；不并入 Avatar String 或 Gadget 路线。见[合同](docs/CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)。 |
@@ -495,6 +502,9 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-OLD121-AVATAR-PROJECTION-SCOPE | 已完成 | 既有来源、共享consumer、允许输入与预算的限定审定，形成五字段最小包；不预先批准新行值。 | [计划与边界](docs/CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_PLAN_20261115.md) |
 | R3-OLD121-AVATAR-BASE-GROWTH-PROJECTION | 已完成 | 121五字段片段及363例level100原helper对照，120行新读出，冻结访问0；不代表完整资源。 | [限定结果](docs/CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_20261115.md) |
 | R3-OLD121-AVATAR-BASE-GROWTH-JAVA | 已完成 | 真实ResourceLoader隔离加载旧100 Curve及121片段，1项通过、363结果及factor一致，状态恢复；不验Player。 | [实际JVM](docs/CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_20261115.md) |
+| R3-OLD121-CURRENTDEPOT-SKILL-PLAN | 已完成 | 当前Depot的369个正Skill需求限定整理；2旧值复用、367值未知，保存389键为另一集合，whole A原记录计数更正1177。 | 既有私有需求整理及原记录 |
+| R3-OLD121-SKILL-ROW-INDEPENDENCE | 已完成 | 有限独立性审定与source-only规格批准；未证明全部Skill或新值。 | 私有规格 `bf72e96…` |
+| R3-OLD121-SKILL-CTOR-BOUNDARY-TRIAGE | 已完成 | 一次失败的边界门与固定既有来源限定归因；准确完整边界仍缺，非新安全拒绝。 | [停止与解除条件](docs/CLIENT_72_D02_OLD121_SKILL_SOURCE_BLOCKER_20261116.md) |
 | R3-PROUD-ENUM32419-CONSUMER-QUERY | 已完成 | 固定signature显参116唯一匹配及type32419声明限定验收，不证明业务或全客户端穷尽。 | [查询](docs/CLIENT_72_D02_PROUD_ENUM32419_CONSUMER_QUERY_20261115.md) |
 | R3-PROUD-PAIR-CONSUMER-QUERY-TRIAGE | 已完成 | 声明域有界判断及type54724文字勘误；ordinary业务caller及type-erased MethodInfo/callsite未知。 | [限定判断](docs/CLIENT_72_D02_PROUD_PAIR_CONSUMER_TRIAGE_20261115.md) |
 | R3-PROUD-PAIR-CONSUMER-QUERY | 已完成 | 65条指定receiver声明与固定signature全表6唯一显参匹配；非全客户端或业务穷尽。 | [有界查询](docs/CLIENT_72_D02_PROUD_PAIR_CONSUMER_QUERY_20261115.md) |

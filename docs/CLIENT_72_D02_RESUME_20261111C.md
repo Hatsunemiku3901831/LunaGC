@@ -4,6 +4,18 @@
 
 D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开始。现有局部成果和本轮交回均不等于自然客户端入场或资源 ready。主线负责管理和独立验收；共享 Git/index/提交、构建和运行现场须唯一执行。当前按依赖继续可独立验收工作，不复用旧现场ready；新现场须新fresh和实时ready。
 
+## 2026-11-16 当前后继
+
+| 任务 | 状态与证据 | 边界 |
+| --- | --- | --- |
+| `R3-OLD121-CURRENTDEPOT-SKILL-PLAN` | 已完成；限定整理369正Skill需求，其中2个出生结果复用、367个值未知；whole A计数由旧摘要1178按原记录更正1177，旧私有文件保留。 | 保存389个不同Skill键为另一集合，不当作本需求的相同集合。 |
+| `R3-OLD121-SKILL-ROW-INDEPENDENCE` | 已完成；有限范围审定及source-only规格 `bf72e96…` 已批准。 | 不泛封全Skill，不批准新行值或Java。 |
+| `R3-OLD121-SKILL-RESOURCE-CTOR-WINDOW` | 阻塞；一次采集五stock/pins/metadata/fresh AOT通过，`149b59940` 在完整exception目录 `containing=[]` / `beginMultiplicity=[]`，选中pdata/body/read均0；无code hash/指令或重试。[来源缺口](CLIENT_72_D02_OLD121_SKILL_SOURCE_BLOCKER_20261116.md) | 两列表非独立负证据，后者是前者投影；缺同固定PE的准确完整边界或已验同输入完整body+边界，不猜16B、下一metadata地址、截RET或放宽原规格。旧manifest/来源摘要未创建。 |
+| `R3-OLD121-SKILL-CTOR-BOUNDARY-TRIAGE` | 已完成；只读限定归因未发现gate/index错用，有限既有来源未找到精确完整ctor边界。[归因与解除](CLIENT_72_D02_OLD121_SKILL_SOURCE_BLOCKER_20261116.md) | 非新安全拒绝，未授权重取、放宽或执行；不泛封全Skill/R3/A。 |
+| `R3-OLD121-CRITICAL-PROJECTION-SCOPE` | 进行中；Sol max审定两出生critical installer及具名20/22能否形成实际旧号121的基础贡献片段。 | 未批准跨行值或执行；独立路径、codec、model及允许fixture需先明确。出生限制保持。 |
+
+本批无新现场或ready；A/B、preview和准确冻结边不变，不将上述具体停止泛化为所有独立任务阻塞。
+
 ## 2026-11-15 限定验收
 
 | 任务 | 状态与证据 | 边界 |
