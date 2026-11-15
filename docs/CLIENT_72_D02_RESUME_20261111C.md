@@ -14,7 +14,8 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 | `R3-PROUD-E8-STOP-LEDGER` | 已完成；作者与独立各10项合成回归，回执 `local/migration72/d02-resume-20261115/launch-timeout/e8-stop-ledger-integration1/completion.private.json` SHA-256 `acab44b42edef1ea9f6dce9b9cf0a19d29ee6aeebba67c9afb107ad76f2ec3ca`。 | 仅未来停止留证合同，没作真实resolver/PE测试；不回填旧轮；整体工具未完成实际源验收、保持未提交，不晋级stage1。 |
 | `R3-PROUD-NARROW-TYPED-CONSUMER-SOURCE` | 已完成；owner69135.m572230 单窗346B/91条，AOT/pdata/body共374B；双fresh及第三13件一致，32引用独核。[来源与验收](CLIENT_72_D02_PROUD_TYPED_BASE_LIST_WINDOW_20261115.md)。 | 仅source；flags81不推ABI/返回，preview直接边0不证明传递无关；M/桥/row/current未知。 |
 | `R3-PROUD-TYPED-BASE-LIST-SEMANTICS` | 已完成；346B物理路径、类型对照与一个准确后继首缺限定验收；23 pin、4附件、39原件和5声明/3布局独核。[限定语义](CLIENT_72_D02_PROUD_TYPED_BASE_LIST_SEMANTICS_20261115.md)。 | ABI、S身份、共享helper、三字段桥及row/current/epoch/ready未知。 |
-| `R3-PROUD-TYPED-LIST-MEMBER-SOURCE` | 进行中；作者5门测试、双fresh及纯audit已交，独立第三进行中。 | 仅单List来源，返回/ABI及业务语义未知；准备失败的合并输出限制保留。 |
+| `R3-PROUD-TYPED-LIST-MEMBER-SOURCE` | 已完成；856B/211条单窗，双fresh与独立第三13件一致、88引用独核。[成员来源](CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_WINDOW_20261115.md)。 | 仅source；返回/ABI及业务语义未知，准备失败的合并输出限制保留。 |
+| `R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS` | 进行中；Sol max只用已验成员窗、父窗和metadata分析。 | 不新增PE/目标/codec，三字段桥及实际row/current/epoch/ready未知。 |
 | `R3-NEXT-LAUNCH-WINDOWED-2560X1440` | 已完成；新包与seal离线验收，作者及独立各4项合成测试，见[窗口化准备](CLIENT_72_D02_NEXT_LAUNCH_WINDOWED_20261115.md)。 | 未再启动，实际窗口尺寸未知；未来现场须新fresh和实时ready，不提供自然非空cache。 |
 | `F-03d3s2-SCENE-ALLOWED-SOURCE-GAP` | 已完成；[既有来源关系矩阵](CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)，专题 SHA-256 `c5428cf602b2e7b63400a440c447082857dcb532998db567eff857506f9f5bd6`；独核4 pin、三writer、238B工厂与6锚点，316B来源未重验。集成回执 `local/migration72/d02-resume-20261115/launch-timeout/gap-integration1/completion.private.json` SHA-256 `d8720288120fc2360a6433fe173d133978b5546be6fb821d3118f5a4ea8b343f`。 | M1–M4的实际receiver、派发与返回、初值及reset关系仍缺新增允许的固定独立来源，无成熟sender；不泛封Scene，不晋级父项或ready。 |
 | `R3-PROUD-STRING-INPUT-CONTRACT` | 已完成；[中性输入合同](CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)，专题 SHA-256 `19ec33d8c7dcd8af29496cb7d79f5b07fe5072032a573c6f77094df6c5adc0a9`；9固定pin、独立14/0，集成回执 `local/migration72/d02-resume-20261115/launch-timeout/gap-integration1/completion.private.json` SHA-256 `d8720288120fc2360a6433fe173d133978b5546be6fb821d3118f5a4ea8b343f`。原stdin脚本未保存，后补同断言脚本独立复跑。 | 未创建sampler/读取器；实际M、pointer、length、UTF16、业务桥、配置同源与ready仍未知。 |
@@ -101,7 +102,7 @@ cache1 RunAs无Launch/helper回执，父receipt始终0B，超90秒停止；采�
 
 A-SECOND-RETURN-CONTRACT 及依赖、B组合 loader 仍因安全审查拒绝冻结，不运行草稿、不换模型或工具、不间接重试。A 的完整原拒绝仍缺，不能将摘要冒充原提示；B 保留原句 `This content was flagged for possible cybersecurity risk.`。现有[最小包队列](CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)只读复用，队列开头的暂停叙述属于历史状态，不自动新增或派发 Daybreak。移除被拒动作后，仅推进能靠已有输入独立完成且产物不直接实现被拒动作的任务；局部通过不升级父项或 ready。真实门禁、认证、资源和完整旧号恢复仍约束 R4。
 
-`R3-PROUD-FLOAT-CONSUMER-SOURCES` 的166B正常路径条件合同和三consumer准确缺口，以及 `R3-PROUD-FLOAT-NORMAL-PATH-ASSERTIONS` 的机械断言已完成限定验收；实际M、同epoch输入、三消费桥、row/current与resourceReady仍未知。启动超时归因及薄封装修复已限定离线验收；身份绑定接线已限定离线验收；common E8索引预算停止、其留证合同合成回归已验，typed单窗来源与限定语义已验、单List成员来源第三进行中；不调用目标getter、创建cache/Default或消费拒绝依赖。Proud String中性输入合同准备已限定验收，实际输入及业务桥仍未知；Scene既有允许来源差距审阅已限定验收，M1–M4实际关系须新增明确允许且固定的独立来源；新现场另需新ready。R1/R2/R3 必要合同齐备后才进入 R4，继而 R5/R6。
+`R3-PROUD-FLOAT-CONSUMER-SOURCES` 的166B正常路径条件合同和三consumer准确缺口，以及 `R3-PROUD-FLOAT-NORMAL-PATH-ASSERTIONS` 的机械断言已完成限定验收；实际M、同epoch输入、三消费桥、row/current与resourceReady仍未知。启动超时归因及薄封装修复已限定离线验收；身份绑定接线已限定离线验收；common E8索引预算停止、其留证合同合成回归已验，typed单窗来源与限定语义已验、单List成员来源已验、其语义分析进行中；不调用目标getter、创建cache/Default或消费拒绝依赖。Proud String中性输入合同准备已限定验收，实际输入及业务桥仍未知；Scene既有允许来源差距审阅已限定验收，M1–M4实际关系须新增明确允许且固定的独立来源；新现场另需新ready。R1/R2/R3 必要合同齐备后才进入 R4，继而 R5/R6。
 
 ## 已验本地提交索引
 

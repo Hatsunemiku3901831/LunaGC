@@ -132,7 +132,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-PROUD-E8-STOP-LEDGER | 已完成 | 仅停止留证合同合成回归限定验收，作者与独立各10项；未来才可保已读/已扫分账和4096前缀，不回填旧轮；整体工具未完成实际源验收、保持未提交，不晋级stage1。 |
 | R3-PROUD-NARROW-TYPED-CONSUMER-SOURCE | 已完成 | owner69135.m572230 的346B/91条来源窗限定验收；双fresh与第三13件同字节、32引用独核。仅source，实际M/bridge/row/current未知，flags81不推ABI或返回；冻结preview直接边为零不证明传递无关。见[单窗](docs/CLIENT_72_D02_PROUD_TYPED_BASE_LIST_WINDOW_20261115.md)。 |
 | R3-PROUD-TYPED-BASE-LIST-SEMANTICS | 已完成 | 限定346B本体物理路径、类型对照和一个准确后继首缺，23 pin/4附件/39原件及5声明/3布局独核；ABI、返回、S身份、共享helper与三字段桥/actualRow/current/epoch/ready未知。[限定语义](docs/CLIENT_72_D02_PROUD_TYPED_BASE_LIST_SEMANTICS_20261115.md)。 |
-| R3-PROUD-TYPED-LIST-MEMBER-SOURCE | 进行中 | 同owner单List方法来源：作者5门测试及双fresh/纯audit记录已交，独立第三进行中；formal/native ABI未知，不能预称业务语义。 |
+| R3-PROUD-TYPED-LIST-MEMBER-SOURCE | 已完成 | 同owner单List方法来源856B/211条；双fresh与独立第三13件一致，88引用独核。仅source，formal/native ABI及业务语义未知。[成员单窗](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_WINDOW_20261115.md)。 |
+| R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS | 进行中 | Sol max仅基于已验成员窗、父窗和metadata分析；不新增PE/目标/codec，三字段桥及actualM/row/current/epoch/ready未知。 |
 | F-03d3s2-SCENE-ALLOWED-SOURCE-GAP | 已完成 | 既有允许来源有界差距审阅已验；4 pin、三writer、238B工厂及6锚点独核，316B getter直接复用未重验。M1–M4实际receiver/派发与返回/初值/reset关系缺新增允许的固定独立来源，尚无成熟sender；不泛封Scene。见[关系矩阵](docs/CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)。 |
 | R3-PROUD-STRING-INPUT-CONTRACT | 已完成 | 中性输入状态及来源合同准备限定验收，9源pin和独立14/0；未创建采样器/读取器。实际M、pointer、length、UTF16、业务桥及配置同源仍未知，OpenConfig仅候选；不并入 Avatar String 或 Gadget 路线。见[合同](docs/CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)。 |
 | R3-PROUD-FLOAT-NORMAL-PATH-ASSERTIONS | 已完成 | 固定166B及合成向量419项/0失败，作者两次与集成独立重跑一致，七个分支目标独核；不证明实际输入或业务桥。见[断言与复现](docs/CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md)。 |
@@ -151,7 +152,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 
 ## 4. 任务发布与范围控制
 
-1. **按3.2依赖及3.4准确缺口调度。** 31B Float条件合同、cache1启动超时归因及新身份绑定接线已限定离线验收；common E8索引预算停止、停止留证合同合成回归已验，typed单窗source及限定语义已完成，单List成员来源独立第三进行中；本轮cold-cache采样及收尾回执已独立审阅；后续现场须新包与新实时ready。旧Scene/Proud首发及后继限定成果直接复用；A/B拒绝与准确依赖不派发，World slot114不作为下一轮可直接执行的现场任务。
+1. **按3.2依赖及3.4准确缺口调度。** 31B Float条件合同、cache1启动超时归因及新身份绑定接线已限定离线验收；common E8索引预算停止、停止留证合同合成回归已验，typed单窗source及限定语义已完成，单List成员来源已限定验收、语义分析进行中；本轮cold-cache采样及收尾回执已独立审阅；后续现场须新包与新实时ready。旧Scene/Proud首发及后继限定成果直接复用；A/B拒绝与准确依赖不派发，World slot114不作为下一轮可直接执行的现场任务。
 2. **规格成熟就实现。** Sol max给出明确来源/字段/时序和验收后，转Sol xhigh/Terra做最小变更；重大问题或长任务先规划。主线审核后执行必要测试/独立复现、本地提交、更新状态，再启动后继；无新变化或未决风险不重跑历史全量。
 3. **实机只补准确缺输入。** 不直接放大SDK预算、重复同参数观察或用零槽补值；需要用户操作时先备妥实验再一次说明操作/预期/反馈并等待新ready，同时继续独立工作。采集通过不代替消费者或业务通过。
 4. **必要性先于扩展。** 缺表/日志须结合真实入场调用筛选；不把全707组业务、全资源/Lua、完整codec通用工具或预览UI列默认P0，也不将未知默认判作可省略。实际必经通知、资源、所选旧号121角色及活动物品/装备依赖不能删。完整Avatar/Scene、自然SDK、真实资源与保存各有独立出口，不以一项片段互相代验。
@@ -441,6 +442,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-PROUD-E8-STOP-LEDGER | 已完成 | 作者与独立各10项合成回归，仅验未来停止留证合同；旧fresh2实际exec读取量及覆盖未知，不回填原件、不晋级stage1。 | [停止与限定验收](docs/CLIENT_72_D02_PROUD_FLOAT_DIRECT_E8_INDEX_20261115.md) |
 | R3-PROUD-NARROW-TYPED-CONSUMER-SOURCE | 已完成 | 346B/91条，双fresh与第三13件一致、32引用独核；仅source，不证明消费桥、ABI或实际row。 | [单窗验收](docs/CLIENT_72_D02_PROUD_TYPED_BASE_LIST_WINDOW_20261115.md) |
 | R3-PROUD-TYPED-BASE-LIST-SEMANTICS | 已完成 | 346B物理路径、类型对照及单一后继首缺限定验收；实际S、ABI、三字段桥、row/current和ready未知。 | [限定语义](docs/CLIENT_72_D02_PROUD_TYPED_BASE_LIST_SEMANTICS_20261115.md) |
+| R3-PROUD-TYPED-LIST-MEMBER-SOURCE | 已完成 | 856B/211条，双fresh与独立第三13件同、88引用独核；仅source，ABI和业务语义未知。 | [成员单窗](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_WINDOW_20261115.md) |
 | R3-NEXT-LAUNCH-WINDOWED-2560X1440 | 已完成 | 仅窗口化新包与seal离线验收；作者与独立各4项合成测试，实际窗口尺寸待现场。 | [窗口化准备](docs/CLIENT_72_D02_NEXT_LAUNCH_WINDOWED_20261115.md) |
 | R3-PROUD-CACHE-NEW-LIVE-PLAN/IDENTITY-BINDING | 已完成 | 新包接线及离线验收：作者7 driver+5协调测试，独立10绑定/期限/driver.main及5自有协调stub、3 PS parse通过；不证明真实RunAs或采样。 | [验收及复现](docs/CLIENT_72_D02_PROUD_CACHE_IDENTITY_BINDING_20261115.md) |
 | R3-PROUD-CACHE1-LAUNCH-TIMEOUT | 已完成 | 原同步RunAs/elevation交接未有可观测返回；16合同检查及6自有stub验证通过，原90秒期限未后移。真实启动、原因、UAC/点击时间和cache采样未验。 | [离线归因与修复](docs/CLIENT_72_D02_CACHE1_LAUNCH_TIMEOUT_20261115.md) |
