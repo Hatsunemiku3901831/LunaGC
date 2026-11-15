@@ -1,4 +1,6 @@
-当前恢复索引：`R3-PROUD-FLOAT-CONSUMER-SOURCES` 条件合同及 `R3-PROUD-FLOAT-NORMAL-PATH-ASSERTIONS` 已完成限定验收；启动超时归因进行中，String中性输入合同准备已限定验收，Scene既有来源差距审阅已限定验收，M1–M4待新增独立来源。具体状态见 [Project](Project.md) 和[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。以下日期记录反映各历史时点，不替代当前排期。
+当前恢复索引：`R3-PROUD-FLOAT-CONSUMER-SOURCES` 条件合同及 `R3-PROUD-FLOAT-NORMAL-PATH-ASSERTIONS` 已完成限定验收；启动超时离线归因及薄封装修复已限定验收，身份绑定后继进行中，String中性输入合同准备已限定验收，Scene既有来源差距审阅已限定验收，M1–M4待新增独立来源。具体状态见 [Project](Project.md) 和[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。以下日期记录反映各历史时点，不替代当前排期。
+
+2026-11-15 `R3-PROUD-CACHE1-LAUNCH-TIMEOUT`：原同步RunAs/elevation交接未有可观测返回；[离线归因与薄封装](docs/CLIENT_72_D02_CACHE1_LAUNCH_TIMEOUT_20261115.md)的16合同检查及6自有stub已限定验收，保留原90秒起点与失败记录。不能判定UAC表现、用户点击时刻、操作系统原因或SDK失败。主线只读新前检27 pins/149数据/五stock/config/JAR匹配，相关进程及端口为空，回执 `local/migration72/d02-resume-20261115/launch-timeout/fresh-preflight-20261115T0142450952252Z.private.json` SHA-256 `e1e3522044f7cbe6b6ed5da792b1e05b9da7cedc1aad163712bd4a359675e480`，`ready=false`、实际Launch/UAC/RPM均0；此快照不代现场验收。新身份绑定driver仍进行中。
 
 2026-11-15 `F-03d3s2-SCENE-ALLOWED-SOURCE-GAP`：[既有来源关系矩阵](docs/CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)限定验收，4 pin、三writer完整性、238B工厂和6锚点独立核对；316B getter既有验收直接复用，未重验。集成回执 `local/migration72/d02-resume-20261115/launch-timeout/gap-integration1/completion.private.json` SHA-256 `d8720288120fc2360a6433fe173d133978b5546be6fb821d3118f5a4ea8b343f`。固定来源不足以闭合M1–M4，须新增明确允许且固定的独立来源；无成熟sender，不泛封Scene或提升父项。
 

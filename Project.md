@@ -6,7 +6,7 @@
 
 2026-11-14 `UP-72-20261114`：按用户指令开展公开上游静态调研，阶段成果及未覆盖分页见[研究报告](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)和[检索账本](docs/CLIENT_72_UPSTREAM_LEDGER_20261114.md)。状态**进行中**：发现 LunaGC 7.2 及 AstaPS 非默认任务分支，已固定部分源码并识别协议冲突；长尾搜索拆分、部分 Fork 和跨平台线索仍待核。UP-72-N1/N2 对照候选须先核现有成果并证明能解除具体 D-02 合同缺口，避免重复；本轮未改运行代码、未部署或实机验收，D-02 状态不变。原 A/B 拒绝及其依赖继续冻结。
 
-**当前离线研究已恢复；D-02 / F-05 / D02-R6 六项客户端验收仍为0/6。** 原Scene reader与Proud setter首发包及其后继限定成果直接复用，不重新排队。Proud三字段布局与166B Float getter来源已验，语义、业务alias及实际row仍待；existing-cache离线准备已验，但cache1启动超时取消、sample未派，实际输入未取得。Float正常路径条件合同与机械断言已限定验收，三字段消费桥及实际值仍未知；启动回执超时的离线归因进行中；新现场须另取实时ready，禁止computer-use。Scene自然receiver/初始化及World slot114保留准确缺口，已确认的共用allocator返回依赖与A/B拒绝项冻结。详细研究过程和历史现场见[交接](HANDOFF2.md)及[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。
+**当前离线研究已恢复；D-02 / F-05 / D02-R6 六项客户端验收仍为0/6。** 原Scene reader与Proud setter首发包及其后继限定成果直接复用，不重新排队。Proud三字段布局与166B Float getter来源已验，语义、业务alias及实际row仍待；existing-cache离线准备已验，但cache1启动超时取消、sample未派，实际输入未取得。Float正常路径条件合同与机械断言已限定验收，三字段消费桥及实际值仍未知；启动回执超时的归因及薄封装修复已限定离线验收，身份绑定后继进行中；新现场须另取实时ready，禁止computer-use。Scene自然receiver/初始化及World slot114保留准确缺口，已确认的共用allocator返回依赖与A/B拒绝项冻结。详细研究过程和历史现场见[交接](HANDOFF2.md)及[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -50,7 +50,7 @@
 | 有界执行子代理 | GPT-6.1 Terra（`gpt-6.1-terra`，档位按任务指定） | 规格完整的清单/数据对照、受控转换、driver、测试准备、机械修改和文档整理；未知语义返回主线，不自行猜测 |
 | 最后升级，非日常排班 | GPT-6 Astra max（`gpt-6-astra` / `max`） | 仅主线和Sol max实质分析仍不能解决、且影响D-02关键路径时使用；须先说明已排除假设、升级理由、准确问题和返回条件。缺样本、缺现场或未读既有证据不构成升级理由 |
 
-原Scene reader/Proud setter首轮及后继的已验范围见第6节和[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)，不重发旧包。恢复后的语义首发是Proud Float及三字段准确消费来源，由Sol max处理；独立的启动回执超时归因由Sol xhigh执行子代理处理。Terra xhigh仅承接成熟规格、测试和有界实现，未形成规格时不为填槽造工作。共享Git、构建和运行由当轮指定的唯一集成执行者串行操作，不复用历史代理名或运行权。主线负责规划和验收；用户另行允许的现场接管须明确交接，禁止computer-use继续有效。
+原Scene reader/Proud setter首轮及后继的已验范围见第6节和[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)，不重发旧包。恢复后的语义首发是Proud Float及三字段准确消费来源，由Sol max处理；启动回执超时归因及薄封装修复已限定离线验收，新的采样身份绑定后继进行中。Terra xhigh仅承接成熟规格、测试和有界实现，未形成规格时不为填槽造工作。共享Git、构建和运行由当轮指定的唯一集成执行者串行操作，不复用历史代理名或运行权。主线负责规划和验收；用户另行允许的现场接管须明确交接，禁止computer-use继续有效。
 
 显式传入工具支持的模型与档位；模型不可用应如实返回主线调整，不能静默升级Astra或冒称已使用指定模型。子代理不得自行扩大派遣和修改范围。
 
@@ -61,7 +61,7 @@
 | 批次 | 既有任务 / 下一动作 | 并行安排 | 退出条件与推荐模型 |
 | --- | --- | --- | --- |
 | 0 恢复盘点 | 收到研发恢复指令后核HEAD/差异、固定输入及现场；复用已验首轮、World父payload/布局、Proud借用和cache准备 | 主线审核执行代理的盘点，不重发238B工厂或157B setter旧首发包 | 已验与未验分开；旧run2/cold及cache1/timeout分开，旧ready和取消包不复用 |
-| 1 并行处理当前首缺 | Proud：用31B已验166B getter分析正常输出及必要条件，核三字段准确消费来源；现场准备：只围绕cache1已发生的启动回执缺失/超时归因 | Sol max负责语义；Sol xhigh执行子代理负责现有日志和自有薄封装的定向验证；Terra承接明确包 | 不重提Float源、不扩全codec或先建全unknown资源；启动问题尚未定位就不重复让用户启动，不后移总等待起点或延时掩盖失败 |
+| 1 并行处理当前首缺 | Proud：用31B已验166B getter分析正常输出及必要条件，核三字段准确消费来源；现场准备：只围绕cache1已发生的启动回执缺失/超时归因 | Sol max负责语义；Sol xhigh执行子代理负责现有日志和自有薄封装的定向验证；Terra承接明确包 | 不重提Float源、不扩全codec或先建全unknown资源；身份绑定后继未验前不执行现场，不后移总等待起点或延时掩盖失败 |
 | 2 成熟规格与最小输入 | 按实际必要性形成字段/条件投影和测试；标准cache单key准备已有，现场另待归因、预检与新ready | 独立文件可并行；集成执行者独占运行。String/float新字段读取没有随旧52RPM/298B范围获准 | 实际M若不来自允许的既存来源则停；不创建cache/Default或主动调用目标getter；候选、条件值和实际值分别验收 |
 | 按需现场 / R3-PROUD-EXISTING-CACHE-CAPTURE | 解决已发生的启动协调问题并重核后，以新包、新实时ready执行既定单次范围；旧7读50B已cold结束，不沿同SDK页重复碰运气 | 唯一现场执行者；主线协调用户；禁止computer-use，不与World混采 | 先核允许的支持方式及退出恢复；真实输入、cold/miss、启动超时分别留证。现场成功不自动证明codec原子epoch、当前采用或完整row |
 | 3 条件满足后的独立Scene/C后继 | Scene只处理已有来源支持的receiver/返回reader/+18关系；Proud核实际row、三alias和当前采用，准确拒绝边仍停止 | Sol max判来源与必要性，Sol xhigh/Terra接明确实现；不得为绕过A去构造已有cache或替代触发 | Scene已有cache/ReplaceCluster的未知不等于可执行；World slot114缺成熟包且主动触发依赖A，当前不排现场；不重补read尾窗 |
@@ -77,7 +77,7 @@
 | --- | --- | --- | --- |
 | A：F-03d3f4d2；必要 String 共同合同 | 同 epoch GC/Default 输入、人工双路径、stock 条件自有原 helper 已验，只读复用 | A-SECOND-RETURN-CONTRACT及依赖保持拒绝阻塞；其他独立任务必须先通过移除拒绝动作/产物后的独立性判断 | 不派被拒项，不运行草稿 |
 | B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 已验八点、锁内 map、stock v2、PostRequest 和共用服务入口可只读复用 | 组合 loader 源、失败证据和未提交差异保留；自然请求采用、信任、认证与会话交换未闭 | 留待用户使用 [Daybreak](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md) |
-| C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 条件codec、当前采用双源、QueryWrapper/NativeWrapper借用合同与FindEntry源已验；31A三字段布局和31B 166B Float源已验，旧Talent/121Depot/phase6复用 | 首发Float输出及三字段消费来源的独立分析；实际M/Float/三alias/row/current仍未知。cache1仅启动超时且sample为0，不能当cold结果；旧run2热Equals链已按cold结束 | Sol max语义，Sol xhigh负责启动协调与集成，Terra接明确包；不得运行A/B草稿，不补空Proud行 |
+| C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 条件codec、当前采用双源、QueryWrapper/NativeWrapper借用合同与FindEntry源已验；31A三字段布局和31B 166B Float源已验，旧Talent/121Depot/phase6复用 | Float正常路径条件合同及三字段消费来源缺口已限定验收；实际M/Float/三alias/row/current仍未知。cache1仅启动超时且sample为0，不能当cold结果；旧run2热Equals链已按cold结束 | Sol max语义，Sol xhigh负责启动协调与集成，Terra接明确包；不得运行A/B草稿，不补空Proud行 |
 | Scene：F-03d3s2 | reader各限定源/语义、World类型后缀与父payload/条件消费者、factory布局及cluster getter源均已验，707组/World21名称复用 | 首缺为9251实际receiver、返回reader及+18初始化/reset；已确认getter/Recreate/World主动构造共用A allocator的返回依赖冻结，World slot114没有成熟现场包。已有cache/ReplaceCluster未知但不能据此自动继续 | 有独立允许来源才派Sol max；无新证据不继续补read尾窗或展开组件树，成熟规格交Sol/Terra |
 
 原批次输入、已验产物及停止点见 [原执行计划](docs/CLIENT_72_D02_RESUME_20261111B.md)和第6节；当前具体派工和文件归属以[本轮恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)为准。此前暂停与恢复记录属于历史；不将尚待集成的交回结果标为已完成。
@@ -96,7 +96,7 @@
 | 2准备 / INTEGRATE29-PREFLIGHT-PREPARE | 已完成；环境/退出/UAC薄封装预案限定验收，未启动或读取目标 | 执行前重核源码、配置及stock；预案不等于现场许可 | intake_audit | [验收与边界](docs/CLIENT_72_D02_RESUME_20261111C.md) |
 | 1优先 / R3-PROUD-MANAGED-ROW-REMAINING-TRIAGE | 已完成；31A限定三字段布局/条件输入及host单catalog候选 | 三业务alias、实际M及完整row未知；准确五A parser构造边冻结，不泛冻结全列或伪造Java空行 | Sol max；intake_audit独立审核 | [有界分析](docs/CLIENT_72_D02_PROUD_MANAGED_ROW_REMAINING_20261112.md)、[验收](docs/CLIENT_72_D02_RESUME_20261111C.md) |
 | 1优先 / Proud float getter单窗 | 已完成；166B/45条原窗限定验收 | 逻辑返回、原caller E8、语义合同、实际Float/三alias/完整row未知；正常路径条件合同后继已限定验收；formal logical return仍未知 | Terra xhigh；intake_audit独立审核 | [原窗](docs/CLIENT_72_D02_PROUD_MANAGED_FLOAT_GETTER_WINDOW_20261112.md)、[验收](docs/CLIENT_72_D02_RESUME_20261111C.md) |
-| 先启动归因→按需现场 / R3-PROUD-EXISTING-CACHE-CAPTURE | 待开始；cache1启动超过原等待而Launch/helper回执缺席，sample未派、target RPM为0；旧包已取消 | 独立任务 R3-PROUD-CACHE1-LAUNCH-TIMEOUT 正在据原日志/回执及自有 stub 归因 RunAs/elevation 同步交接；原90秒等待起点不变。取得允许的启动支持方式并完成新预检后再请用户新ready；不复试旧包、不重置总等待起点、不将超时解释为cold/null或SDK失败，禁止computer-use | Sol xhigh执行子代理；主线协调验收，明确纯测试可交Terra | [实际停止点及准备范围](docs/CLIENT_72_D02_RESUME_20261111C.md)、[终态交接](HANDOFF2.md)；不追加String/Float读取到旧范围 |
+| 先启动归因→按需现场 / R3-PROUD-EXISTING-CACHE-CAPTURE | 待开始；cache1启动超过原等待而Launch/helper回执缺席，sample未派、target RPM为0；旧包已取消 | 归因及离线薄封装修复已限定验收；新身份绑定后继进行中，真实RunAs/客户端启动与cache采样待新实时ready及实测。原90秒等待起点不变；不复试旧包、不重置总等待起点、不将超时解释为cold/null或SDK失败，禁止computer-use | Sol xhigh执行子代理；主线协调验收，明确纯测试可交Terra | [实际停止点及准备范围](docs/CLIENT_72_D02_RESUME_20261111C.md)、[终态交接](HANDOFF2.md)；不追加String/Float读取到旧范围 |
 | 历史cold结果复用，不重排同实验 / E-01d1/R3-PROUD-HOT-EQUALITY-INPUT | 进行中；PREPARE/run2预检和收尾已验；一次partial 3读24B，Q/S非零、O为0，F/M未读 | 旧7读50B结束，不沿同页循环或建立Default。只有新必要输入与独立规格成立才重新评估；本轮优先已准备的existing-cache任务，不混用两轮身份或结果 | 只读复用；新问题先由Sol max判必要性 | [原准备](docs/CLIENT_72_D02_PROUD_HOT_EQUALITY_SAMPLER_20261111B.md)、[lookup合同](docs/CLIENT_72_D02_PROUD_LOOKUP_CONTRACT_20261111B.md)、[实际run2](docs/CLIENT_72_D02_RESUME_20261111C.md) |
 | 阻塞保留，当前不排现场 / F-03d3s2/SCENE-SLOT114 | 阻塞；没有成熟包，主动触发准确共用allocator返回依赖冻结；真实World/44512、受支持同帧/RSP规则、Pool来源和总预算未齐 | 只在不依赖被拒动作的新允许来源存在时重新审必要条件；不能以metadata候选、已有缓存猜测或替代触发补同帧。已有三读224B只是输入规格，不是采样许可 | 目前不派触发/现场；独立来源问题另定Sol max范围 | [三读规格](docs/CLIENT_72_D02_SCENE_SLOT114_20261111.md)、[已验触发边界](docs/CLIENT_72_D02_SCENE_SLOT114_TRIGGER_CONDITIONS_20261111C.md)；slot114之后组件不提前展开 |
 | 拒绝依赖冻结 / F-03d3f4d2 完整Avatar构造/后缀 | 阻塞；依赖已拒绝A-SECOND-RETURN-CONTRACT。原getter/owned字符及首pop副本、第二record/L64/flags8与GC/Default同epoch输入、904B人工SSE/AVX和stock条件自有前后结果只读复用，Default对象身份仍opaque | 第二分配合同及其依赖不重试、不运行草稿；完整20分配/12根及子构造未闭。自然String tuple/caller/trigger、TLS/GC所有权、enum/cold普通10294及g2保持未知，不补值/host成功；其他A任务先独立性判断 | 当前不派拒绝项；独立任务另定Sol/Terra范围 | [自然输入边界](docs/CLIENT_72_D02_A_SUCCESSOR_20261110.md)、[原6B实际能力](docs/CLIENT_72_D02_CLEAR48_NATIVE_CAPABILITY_RESULTS_20261111.md)；完整父项和g2继续阻塞 |
@@ -125,7 +125,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | 工作包 | 状态 | 当前范围和下一判断 |
 | --- | --- | --- |
 | R3-PROUD-FLOAT-CONSUMER-SOURCES | 已完成 | 已验166B正常路径条件合同与三consumer准确缺口；实际消费桥、M、row/current、同epoch输入及resourceReady未知。见[专题](docs/CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md)。 |
-| R3-PROUD-CACHE1-LAUNCH-TIMEOUT | 进行中 | 原 cache1 父回执0B、helper缺席，sample未派；用离线自有 stub 定位同步 RunAs/elevation 交接，90秒起点不变。结果待主线验收。 |
+| R3-PROUD-CACHE1-LAUNCH-TIMEOUT | 已完成 | 归因及离线薄封装修复限定验收：原同步RunAs/elevation交接未有可观测返回，16合同检查及6自有stub通过，原90秒起点不变。OS内部阻塞原因、原UAC表现及用户点击时间未知；真实启动和采样另验。见[专题](docs/CLIENT_72_D02_CACHE1_LAUNCH_TIMEOUT_20261115.md)。 |
+| R3-PROUD-CACHE-NEW-LIVE-PLAN/IDENTITY-BINDING | 进行中 | 新私有driver复用同一次原11 API身份检查，先与本轮launch比对后传sample；维持79 API/52 RPM、298B上限，无额外身份预读，不改原sampler。总协调90秒与driver 30秒取较早期限；自有stub实现待验，尚无新实时ready、现场未执行。 |
 | F-03d3s2-SCENE-ALLOWED-SOURCE-GAP | 已完成 | 既有允许来源有界差距审阅已验；4 pin、三writer、238B工厂及6锚点独核，316B getter直接复用未重验。M1–M4实际receiver/派发与返回/初值/reset关系缺新增允许的固定独立来源，尚无成熟sender；不泛封Scene。见[关系矩阵](docs/CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)。 |
 | R3-PROUD-STRING-INPUT-CONTRACT | 已完成 | 中性输入状态及来源合同准备限定验收，9源pin和独立14/0；未创建采样器/读取器。实际M、pointer、length、UTF16、业务桥及配置同源仍未知，OpenConfig仅候选；不并入 Avatar String 或 Gadget 路线。见[合同](docs/CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)。 |
 | R3-PROUD-FLOAT-NORMAL-PATH-ASSERTIONS | 已完成 | 固定166B及合成向量419项/0失败，作者两次与集成独立重跑一致，七个分支目标独核；不证明实际输入或业务桥。见[断言与复现](docs/CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md)。 |
@@ -144,7 +145,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 
 ## 4. 任务发布与范围控制
 
-1. **按3.2依赖及3.4准确缺口调度。** 当前开展31B Float/三字段消费来源和cache1启动回执超时的离线归因。旧Scene/Proud首发及后继限定成果直接复用；A/B拒绝与准确依赖不派发，World slot114不作为下一轮可直接执行的现场任务。
+1. **按3.2依赖及3.4准确缺口调度。** 31B Float条件合同与cache1启动超时离线归因已限定验收，采样身份绑定后继进行中。旧Scene/Proud首发及后继限定成果直接复用；A/B拒绝与准确依赖不派发，World slot114不作为下一轮可直接执行的现场任务。
 2. **规格成熟就实现。** Sol max给出明确来源/字段/时序和验收后，转Sol xhigh/Terra做最小变更；重大问题或长任务先规划。主线审核后执行必要测试/独立复现、本地提交、更新状态，再启动后继；无新变化或未决风险不重跑历史全量。
 3. **实机只补准确缺输入。** 不直接放大SDK预算、重复同参数观察或用零槽补值；需要用户操作时先备妥实验再一次说明操作/预期/反馈并等待新ready，同时继续独立工作。采集通过不代替消费者或业务通过。
 4. **必要性先于扩展。** 缺表/日志须结合真实入场调用筛选；不把全707组业务、全资源/Lua、完整codec通用工具或预览UI列默认P0，也不将未知默认判作可省略。实际必经通知、资源、所选旧号121角色及活动物品/装备依赖不能删。完整Avatar/Scene、自然SDK、真实资源与保存各有独立出口，不以一项片段互相代验。
@@ -431,6 +432,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | E-01d1/R3-PROUD-NATIVEWRAPPER-CTOR-SOURCE | 已完成 | 290B/78条原窗，第三八件一致、6测试；仅源，借用合同另项限定验收。 | [ctor源窗](docs/CLIENT_72_D02_PROUD_NATIVEWRAPPER_CTOR_WINDOW_20261111C.md) |
 | E-01d1/R3-PROUD-NATIVEWRAPPER-CTOR-BORROW-CONTRACT | 已完成 | 正常局部同P+34 INC→读→DEC闭合；实际page、lease、codec、encoded、getter和current仍未知，不证明自然采用。 | [借用合同](docs/CLIENT_72_D02_PROUD_NATIVEWRAPPER_CTOR_BORROW_CONTRACT_20261111C.md)、[本轮验收](docs/CLIENT_72_D02_RESUME_20261111C.md) |
 | F-03d3s2-SCENE-ALLOWED-SOURCE-GAP | 已完成 | 4 pin、三writer、238B工厂及6锚点独核，316B来源只读复用未重验；M1–M4关系缺新增允许的固定独立来源，无成熟sender，不晋级父项。 | [关系矩阵](docs/CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)、[验收](docs/CLIENT_72_D02_RESUME_20261111C.md) |
+| R3-PROUD-CACHE1-LAUNCH-TIMEOUT | 已完成 | 原同步RunAs/elevation交接未有可观测返回；16合同检查及6自有stub验证通过，原90秒期限未后移。真实启动、原因、UAC/点击时间和cache采样未验。 | [离线归因与修复](docs/CLIENT_72_D02_CACHE1_LAUNCH_TIMEOUT_20261115.md) |
 | R3-PROUD-STRING-INPUT-CONTRACT | 已完成 | 9固定来源pin、独立14/0；仅中性String输入合同准备，未建采样器/读取器，实际M、pointer、length、UTF16、业务桥与配置同源未知。 | [合同](docs/CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)、[验收](docs/CLIENT_72_D02_RESUME_20261111C.md) |
 | R3-PROUD-FLOAT-CONSUMER-SOURCES | 已完成 | 166B正常路径条件位样及长度门、三consumer准确缺口限定验收；实际M、同epoch输入、消费桥、alias、row/current仍未知。 | [条件合同](docs/CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md) |
 | R3-PROUD-FLOAT-NORMAL-PATH-ASSERTIONS | 已完成 | 作者两次及集成独立419/0、报告逐字节相同及七分支目标独核；仅固定来源与合成数据，不晋级父项。 | [断言和复现](docs/CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md) |
