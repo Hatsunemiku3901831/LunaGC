@@ -1,3 +1,5 @@
+2026-11-16 方向微调：复用已验Float/Pair、启动修复与cold结果及121角色七键片段，首发改为Skill/energy及必要Item真实值与loader依赖的小合同；上游固定候选仅定向消费，长尾检索后移。仅更新文档，研发仍暂停，README不变；路线见[Project](Project.md)，新交接见[HANDOFF2](HANDOFF2.md)。
+
 2026-11-16 用户要求现有在途工作验收收尾后暂停，不开启新业务任务；此停止不等于所有独立工作技术上阻塞。A/B、preview、准确依赖与opaque纠错保持，D-02 / F-05 / D02-R6仍0/6。
 
 2026-11-16 已验收[共同父字段与raw来源盘点](docs/CLIENT_72_D02_ACTIVE_ITEM_BASE_RAW_INVENTORY_20261116.md)：id缺flag仍经setter(0)、不等物理零；三根7666项0精确stem，四处depth8截止，补充locator实读不冒作原driver自动重现。[Material分类与Relic边界](docs/CLIENT_72_D02_MATERIAL_RELIC_ROLE_BOUNDARIES_20261116.md)：六个直接Enum声明145字段；+c8分类职责限定成立，literal数值/实际consumer及row未知；Relic rank/set九派生+六继承候选缺具名职责。[Skill首长度](docs/CLIENT_72_D02_SKILL_STRING1_LENGTH_20261116.md)：371个N均14..23、742B语义读，未读payload，不证明TLS/调用或值。缺失值和完整恢复未闭，不启动后继。
