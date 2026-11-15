@@ -146,7 +146,9 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-PROUD-BOUND-ARRAY-TAIL-SOURCE-PLAN | 已完成 | 选择flags81h、instance、零显参33507.m281259/1488a5750，原ctor有直接tail；只问T+20及紧贴传递，不预称消费。 |
 | R3-PROUD-BOUND-ARRAY-TAIL-WINDOW | 已完成 | 一次447B/121条来源及自身账本限定验收，AOT/pdata/body共475B；无重采/新测试。[来源](docs/CLIENT_72_D02_PROUD_BOUND_ARRAY_TAIL_WINDOW_20261115.md) |
 | R3-PROUD-BOUND-ARRAY-TAIL-CONSUMER | 阻塞 | 从入口起前34B未读T+20，随后准确A冻结CALL；不追返回/构造、后段或IFix，完整raw不升级消费语义。 |
-| R3-PROUD-REMAINING-CARRIER-SOURCE-PLAN | 进行中 | 仅分析3个尚未关闭的69135 ordinary候选的既有metadata/listing；移除A/B动作及产物后仍独立才选一项，不泛封Proud。 |
+| R3-PROUD-REMAINING-CARRIER-SOURCE-PLAN | 已完成 | 仅选69135.m572227/14c5115e0，flags81h、instance、List<59500>/bool两显参；仅因可在一个body核两数组路径与条件输入，不预称consumer或bool业务。572215/572222仍未关闭。 |
+| R3-PROUD-REMAINING-CARRIER-WINDOW | 已完成 | 一次1745B/383条来源及自身账本限定验收，AOT/pdata/body共1773B；无重采/新测试，冻结直接目标0不证明间接无关。[来源](docs/CLIENT_72_D02_PROUD_REMAINING_CARRIER_WINDOW_20261115.md) |
+| R3-PROUD-REMAINING-CARRIER-SEMANTICS | 进行中 | 仅分析可见whole carrier传递与条件，不展开数值codec或使用冻结tail；不预称数组消费/bool业务。 |
 | R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS | 已完成 | 本体双遍历、同N指针store、中性native+2c↔41105.field203368/+70表示桥及准确缺口限定验收；未消费26072三字段。上游旧listing的共用allocator调用属于准确A冻结边，停在CALL；业务桥、实际M/数组/String、row/current/epoch及ready未知。见[成员语义](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_SEMANTICS_20261115.md)。 |
 | F-03d3s2-SCENE-ALLOWED-SOURCE-GAP | 已完成 | 既有允许来源有界差距审阅已验；4 pin、三writer、238B工厂及6锚点独核，316B getter直接复用未重验。M1–M4实际receiver/派发与返回/初值/reset关系缺新增允许的固定独立来源，尚无成熟sender；不泛封Scene。见[关系矩阵](docs/CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)。 |
 | R3-PROUD-STRING-INPUT-CONTRACT | 已完成 | 中性输入状态及来源合同准备限定验收，9源pin和独立14/0；未创建采样器/读取器。实际M、pointer、length、UTF16、业务桥及配置同源仍未知，OpenConfig仅候选；不并入 Avatar String 或 Gadget 路线。见[合同](docs/CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)。 |
@@ -458,6 +460,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-PROUD-TYPED-BASE-LIST-SEMANTICS | 已完成 | 346B物理路径、类型对照及单一后继首缺限定验收；实际S、ABI、三字段桥、row/current和ready未知。 | [限定语义](docs/CLIENT_72_D02_PROUD_TYPED_BASE_LIST_SEMANTICS_20261115.md) |
 | R3-PROUD-CARRIER-CONSUMER-SEMANTICS | 已完成 | 有限String consumer值流及双匹配gate限定验收；K不是entry R8，实际值/业务名/current/ready未知。 | [限定语义](docs/CLIENT_72_D02_PROUD_CARRIER_CONSUMER_SEMANTICS_20261115.md) |
 | R3-PROUD-ARRAY-CARRIER-CTOR-BINDING | 已完成 | pre-tail条件引用复制及M0/M1边界限定验收，未证明tail后状态或实际对象。 | [限定绑定](docs/CLIENT_72_D02_PROUD_ARRAY_CARRIER_CTOR_BINDING_20261115.md) |
+| R3-PROUD-REMAINING-CARRIER-WINDOW | 已完成 | 一次1745B/383条来源及自身账本限定验收；不证明数组消费或bool业务。 | [source-only](docs/CLIENT_72_D02_PROUD_REMAINING_CARRIER_WINDOW_20261115.md) |
+| R3-PROUD-REMAINING-CARRIER-SOURCE-PLAN | 已完成 | 既有metadata/listing只选69135.m572227单个source问题，另两候选未关闭；不证明数组消费。 | 规划见 `local/migration72/d02-resume-20261115/proud-remaining-carrier-plan/` |
 | R3-PROUD-BOUND-ARRAY-TAIL-WINDOW | 已完成 | 单次447B/121条来源及自身账本限定验收；准确A依赖阻塞后继消费语义。 | [source-only及停止点](docs/CLIENT_72_D02_PROUD_BOUND_ARRAY_TAIL_WINDOW_20261115.md) |
 | R3-PROUD-BOUND-ARRAY-TAIL-SOURCE-PLAN | 已完成 | 选择33507.m281259的单个tail来源问题，不预称T+20消费。 | 规格见 `local/migration72/d02-resume-20261115/proud-array-carrier-ctor-binding/` |
 | R3-PROUD-ARRAY-CARRIER-CTOR-WINDOW | 已完成 | 一次125B/38条来源及自身账本限定验收；不证明输入绑定、完整构造或实际值。 | [source-only](docs/CLIENT_72_D02_PROUD_ARRAY_CARRIER_CTOR_WINDOW_20261115.md) |
