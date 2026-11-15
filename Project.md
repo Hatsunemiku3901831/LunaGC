@@ -79,7 +79,7 @@
 | 分支 / 既有任务 | 本批具体动作及前置 | 产物与验收出口 | 责任文件与模型 |
 | --- | --- | --- | --- |
 | D02-RESUME-INTEGRATION-20261116 | 接手只读核对及当前状态纠正子出口已完成；等待成熟最小实现规格，集成继续 | 11个既验产物hash及脱敏preflight可定位；不重跑旧验收、不部署、不收他人差异 | Sol xhigh唯一集成者：Project/Harness/HANDOFF/HANDOFF2及本轮集成状态文档；独占Git/生成/构建/DB/运行写入 |
-| D02-SKILL-ENERGY-SEARCH-20261116 | Sol max中文计划已成；本地合同分析、Terra max公开定向检索正在执行 | 分开交367新Skill、120energy绑定及121三字段的允许独立来源/冲突或最小成熟规格；局部结论不升级父项 | Sol max：Skill/energy计划及本地语义；Terra max：按计划新增检索结果；均不写共享索引/构建/运行 |
+| D02-SKILL-ENERGY-SEARCH-20261116 | Sol max中文规划子出口已完成限定验收；本地合同分析、Terra max公开定向检索仍进行中 | 分开交367新Skill、120energy绑定及121三字段的允许独立来源/冲突或最小成熟规格；规划完成不批准执行或升级父项 | Sol max：[冻结计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)及本地语义；Terra max：按计划新增检索结果；均不写共享索引/构建/运行 |
 | D02-INDEPENDENT-INPUT-AUDIT-20261116 | 已完成既有本地Material/Relic/Proud/Scene/SDK五线有界审阅与10个hash核对，原始结论只读复用 | 暂无成熟本地包；精确公开问题尚未查尽，不写成全部外部阻塞 | Terra xhigh：忽略目录审阅；正式状态摘要由集成者收录[活动检查点](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md) |
 | A：F-03d3f4d2；必要 String 共同合同 | 同 epoch GC/Default 输入、人工双路径、stock 条件自有原 helper 已验，只读复用 | A-SECOND-RETURN-CONTRACT及依赖保持拒绝阻塞；其他独立任务必须先通过移除拒绝动作/产物后的独立性判断 | 不派被拒项，不运行草稿 |
 | B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 已验八点、锁内 map、stock v2、PostRequest 和共用服务入口可只读复用 | 组合 loader 源、失败证据和未提交差异保留；自然请求采用、信任、认证与会话交换未闭 | 留待用户使用 [Daybreak](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md) |
@@ -131,6 +131,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 
 | 工作包 | 状态 | 当前范围和下一判断 |
 | --- | --- | --- |
+| D02-SKILL-ENERGY-SEARCH-20261116 / PLAN | 已完成 | 中文定向复用计划已冻结并限定验收：固定当前Skill/energy三类缺口、仓库/README/分支检索顺序、来源独立性和准确停止条件。仅规划；本地合同分析、公开检索及R3父项仍进行中。[计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md) |
 | R3-PROUD-FLOAT-CONSUMER-SOURCES | 已完成 | 已验166B正常路径条件合同与三consumer准确缺口；实际消费桥、M、row/current、同epoch输入及resourceReady未知。见[专题](docs/CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md)。 |
 | R3-PROUD-CACHE1-LAUNCH-TIMEOUT | 已完成 | 归因及离线薄封装修复限定验收：原同步RunAs/elevation交接未有可观测返回，16合同检查及6自有stub通过，原90秒起点不变。OS内部阻塞原因、原UAC表现及用户点击时间未知；真实启动和采样另验。见[专题](docs/CLIENT_72_D02_CACHE1_LAUNCH_TIMEOUT_20261115.md)。 |
 | R3-PROUD-CACHE-NEW-LIVE-PLAN/IDENTITY-BINDING | 已完成 | 新包接线与离线验收限定通过：原11 identity + 68 sample API、52 RPM/298B上限不变；同次identity先绑定本轮Launch，90秒与driver 30秒取较早截止。真实RunAs、目标及采样未验。见[范围与复现](docs/CLIENT_72_D02_PROUD_CACHE_IDENTITY_BINDING_20261115.md)。 |
