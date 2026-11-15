@@ -1,3 +1,5 @@
+2026-11-16 `R3-OLD121-SKILL-SPECIAL-START-HOST-BATCH-20261116`完成[START121零新raw合片](docs/CLIENT_72_D02_SKILL_SPECIAL_START_20261116.md#121-行零新-raw-合片)：两present复用100/50、119原双PXOR源确证+0；8既验pins、byte-index/同row/Floatbits通过。result SHA`9d4b69d00a438084cd9a10b6b4eacda5618eaeebdab735a3bfe38cd3c4e755cb`，287241B输出，369片段为121四键+248两键，capMin不输出。cost/START真实Java另项，无native/JVM/部署。
+
 2026-11-16 完成[Material准确locator与serialized entry提取](docs/CLIENT_72_D02_MATERIAL_EXACT_PAYLOAD_20261116.md)：9host控制，唯一key16540db9943871cc/entry b9943871/block25539185；file0/path1362/class1208的m_bytes1560105B，SHA`088f2b43c860c2892c1f6e9a0349547dcd94b021e5d56983349f2cfd81e7ee89`。locator result92f9a5d...、提取result812fe541...及首pins角色对调失败/纠错完整hash见专题。原三根stem0只是历史，不再列输入缺失；row/keyspan/cursor/真实分类值/自然revision尚未验，无native/JVM/部署。
 
 2026-11-16 `R3-MATERIAL-SPECIAL-ENUM-CONSTANTS-STATIC-20261116`完成[97固定enum literal](docs/CLIENT_72_D02_MATERIAL_SPECIAL_ENUM_CONSTANTS_20261116.md)：94 Material+3special，明确int32/95非零；MATERIAL_NONE0，特殊0/1/2实际读取。result SHA`206351858a5ae43c5c222762f0f1a721c01fb8990999d131a85c8a3fe7b7da29`；原resolver执行策略错误与缺Astrolabe误因撤回分列，RUN2包装修正后才开两binary各一次。388B数值/915840B表、PE语义上界892B、49382B输出；无row/token值/native/JVM或部署。
@@ -10,7 +12,7 @@
 
 2026-11-16 `R3-OLD121-SKILL-ORDINARY-COST-HOST-PILOT-20261116`完成[普通cost单字段host验证](docs/CLIENT_72_D02_SKILL_ORDINARY_COST_20261116.md)：10019实际cost80/Float bits42a00000，exact4B，13来源pins与独立原消费者职责、位/字节XOR/逆wire/exactJavaInt通过。result SHA`4b5650c2dcb2a22d8db6a5e44f2492edd0a1790d8e2772d4a6087f0b65327492`；只此字段，不代121/特殊池/maximum采用，无native/JVM/部署。
 
-2026-11-16 当前恢复执行：D-02继续推进，六项仍0/6、R4/R5/R6未开始。367新Skill两键片段及121 Depot真实正向Java已通过，原`R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA`完成，120新energy绑定已解除；121行普通cost字段现已闭，特殊START/MAX cap与完整Skill/Player恢复另验。[Java结果](docs/CLIENT_72_D02_OLD121_SKILL_DEPOT_JAVA_20261116.md)与[活动矩阵](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)为当前出口。以下接手/检索/pilot/批量记录按各时点读取，不再把已解除的367/120缺口当当前阻塞；A/B、preview、准确依赖及A明文误验撤回保持，继续必要独立项。
+2026-11-16 当前恢复执行：D-02继续推进，六项仍0/6、R4/R5/R6未开始。367新Skill两键片段及121 Depot真实正向Java已通过，原`R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA`完成，120新energy绑定已解除；121行普通cost字段现已闭，121 START字段亦已闭，特殊MAX cap与完整Skill/Player恢复另验。[Java结果](docs/CLIENT_72_D02_OLD121_SKILL_DEPOT_JAVA_20261116.md)与[活动矩阵](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)为当前出口。以下接手/检索/pilot/批量记录按各时点读取，不再把已解除的367/120缺口当当前阻塞；A/B、preview、准确依赖及A明文误验撤回保持，继续必要独立项。
 
 2026-11-16 `R3-OLD121-SKILL-DEPOT-RESOURCELOAD-JAVA-20261116`及原`R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA`完成[真实ResourceLoader验收](docs/CLIENT_72_D02_OLD121_SKILL_DEPOT_JAVA_20261116.md)：26.031s/exit0，JUnit1/F0/E0/S0，compileJava/compileTestJava实际、generateProto UP-TO-DATE；369Skill/121Depot、484槽与121energy缓存同对象/element及map/loadedAll保持。completion SHA`f89ba5eece7cc3bd9bd6d2c759c174ce1ab84f6d164f91165d75847dde3f00d0`；无失败重跑、DB/Player/client/服务或部署。成本特殊池121行未验，不解释未提供成员的Java默认为目标值。
 
