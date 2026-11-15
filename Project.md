@@ -131,6 +131,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 
 | 工作包 | 状态 | 当前范围和下一判断 |
 | --- | --- | --- |
+| R3-WEAPON-ONE-NEW-FIELD-HOST-DEPENDENCY-ASSESSMENT-20261116 | 已完成 | 固定raw/288键EOF与wrapper首span来源核清；11201不在239必要cohort，wrapper[4,400)不是raw父F入口。缺独立于A返回/构造的wrapper→raw父filecursor/token语法，P_tail不升P_entry；无成熟新必需字段host合同，不泛封潜在独立路径。[准确剩余](docs/CLIENT_72_D02_SHARED_STRING_CURSOR_SOURCE_20261116.md) |
 | R3-SHARED-STRING-CURSOR-SOURCE-20261116 | 已完成 | 准确50379.m418862完整253B来源/70条；整窗semanticfalse，准确A CALL停。独立normal-tail同reader非空时P_after=wrap32(P_at_tail+uint32 N)字节推进成立，不生成String或替代native parser。Material+18仍缺，Weapon新字段须独立合同。[来源](docs/CLIENT_72_D02_SHARED_STRING_CURSOR_SOURCE_20261116.md) |
 | R3-RELIC-NAMED-CANDIDATE-TYPED-ASSOCIATION-20261116 | 已完成 | 既选27方法/10owner准确祖先与真实完整参数有限核查，无46431/74316 receiver字段边；26同名字段为UI类型，body/return不冒称已证。74316的18方法16零参/1String/1reader+allocator，未给rank/set职责；缺同target角色桥或独立非零oracle。[结果](docs/CLIENT_72_D02_RELIC_TYPED_CANDIDATES_20261116.md) |
 | R3-MATERIAL-TABLE-FRAMING-SOURCE-20261116 | 已完成 | 准确17822.m135074完整569B来源/140条通过，整窗语义false；两处A直CALL及其返回/构造/row依赖停。未读header或造count/framing。[来源](docs/CLIENT_72_D02_MATERIAL_HEADER_SOURCE_20261116.md) |
