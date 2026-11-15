@@ -2,6 +2,8 @@
 
 2026-11-16 `D02-SKILL-ENERGY-SEARCH-20261116 / PLAN`完成[中文定向复用计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)限定验收；冻结版SHA-256 `239602ecee31e39a59d9666ae1b98addb23cbbf024d635ba7c165f2fe03ec61e`。仅规划，不是来源/资源值或执行验收；公开检索、本地最小合同及R3仍进行中，无新测试/构建/部署或客户端操作。
 
+2026-11-16 `R3-SKILL-ELEMENT-SUFFIX-SOURCE-CONTRACT-20261116`与`R3-SKILL-ELEMENT-SUFFIX-HOST-PILOT-20261116`完成[113条来源合同](docs/CLIENT_72_D02_SKILL_SUFFIX_SOURCE_CONTRACT_20261116.md)及[唯一实际host验证](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_PILOT_20261116.md)：固定三span、原mask尾公式、10068 Wind7/11364 Electric4双非零控制，得唯一新10019 element=Ice5。新语义20B，位索引/逐字节算术/逆序/end通过，输出18697B；准备期schema KeyError另记，不当执行失败或成功。pilot只产element；随后`R3-SKILL-LOGICAL-ID-SOURCE-BINDING-20261116`复用同row原getter→dict key→source链，接受canonical id=tableKey，撤回raw-id复解额外前置、取消未执行reader窗。批量可据此合并id/element；成本/特殊池/完整Skill/Java绑定另验，无native/JVM/运行变更或部署。
+
 2026-11-16 历史方向微调：复用已验Float/Pair、启动修复与cold结果及121角色七键片段，首发改为Skill/energy及必要Item真实值与loader依赖的小合同；上游固定候选仅定向消费，长尾检索后移。当时仅更新文档、研发仍暂停；本轮已恢复，当前路线见[Project](Project.md)。
 
 2026-11-16 用户要求现有在途工作验收收尾后暂停，不开启新业务任务；此停止不等于所有独立工作技术上阻塞。A/B、preview、准确依赖与opaque纠错保持，D-02 / F-05 / D02-R6仍0/6。

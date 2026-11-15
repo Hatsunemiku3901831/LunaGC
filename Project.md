@@ -6,7 +6,7 @@
 
 **用户已明确解除旧暂停，持续推进至D-02六项实机通过，或所有必要独立项各自有准确外部阻塞；当前D-02 / F-05 / D02-R6为0/6，R4/R5/R6未开始。** 旧号121 Avatar基础成长及critical七键片段、两个限定Java loader、121 Depot三键host投影已验；完整Avatar、Skill/energy、装备及同旧号实际Player恢复未闭。Float条件合同、共享Pair消费正例、启动修复及一次cold-cache采样直接复用，不再作为首发旧任务。
 
-当前以能解除真实资源加载或恢复依赖的最小出口为优先：[Skill/energy定向计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)及本地合同分析、固定候选公开检索正在执行，分别判断367个Skill新值、120个energy正向绑定和121行energy三字段缺口。Skill ctor普通边界失败不等安全拒绝，缺同固定PE准确边界时不重取或放宽。Weapon239中仅11101的1种27行有既验片段，其余238种1636行缺允许独立值来源；已确认A构造返回依赖冻结。Material/Relic缺literal、具名consumer或独立非零oracle时保留准确缺口；五线本地审阅尚未提供成熟执行包，其精确定向公开问题尚待检索，不能据此标为全部外部阻塞，不以新增盘点替代出值。
+当前以能解除真实资源加载或恢复依赖的最小出口为优先：[Skill/energy定向计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)及本地合同分析、固定候选公开检索正在执行，分别判断367个完整Skill新片段、120个energy正向绑定和121行energy三字段缺口。[后缀host pilot](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_PILOT_20261116.md)已闭合10019的element单字段Ice5；主线已接受既验logicalID=tableKey绑定，批量可形成canonical id/element片段，不再要求额外raw-id复解，当前先固定集合。Skill ctor普通边界失败不等安全拒绝，缺同固定PE准确边界时不重取或放宽；该单窗不作为已有独立element/ID来源的额外门。Weapon239中仅11101的1种27行有既验片段，其余238种1636行缺允许独立值来源；已确认A构造返回依赖冻结。Material/Relic缺literal、具名consumer或独立非零oracle时保留准确缺口；五线本地审阅尚未提供成熟执行包，其精确定向公开问题尚待检索，不能据此标为全部外部阻塞，不以新增盘点替代出值。
 
 [UP-72-20261114阶段调研](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)仍为进行中；UP-72-N1/N2只按当前具体缺口消费固定候选及现有冲突，不整包替换。UP-72-N3长尾检索在D-02排期后移，原继续位置保留，不关闭原调研。A/B、preview与准确依赖仍冻结；A已找回平台错误及opaque事件关联，原请求明文恢复验收已撤回，可读正文和技术输入仍缺，见[纠错](docs/CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)。当前没有需要用户启动的现场；重复同SDK页采样无新输入依据时不排期。
 
@@ -131,6 +131,9 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 
 | 工作包 | 状态 | 当前范围和下一判断 |
 | --- | --- | --- |
+| R3-SKILL-LOGICAL-ID-SOURCE-BINDING-20261116 | 已完成 | 同row +68→原UInt32 getter→dictionary key、同entry key/row及同row span链已验，logicalID=tableKey可复用；撤回必须raw-id复解的额外前置，准备reader窗已取消未执行。不代element/成本或完整Skill。[绑定与更正](docs/CLIENT_72_D02_SKILL_SUFFIX_SOURCE_CONTRACT_20261116.md#logicalid-与-tablekey-的既验绑定) |
+| R3-SKILL-ELEMENT-SUFFIX-SOURCE-CONTRACT-20261116 | 已完成 | 固定113条后缀、原mask bit25及尾54/53/11、既验row.end和双非零控制形成独立element合同；不解id/成本/完整parser。[来源](docs/CLIENT_72_D02_SKILL_SUFFIX_SOURCE_CONTRACT_20261116.md) |
+| R3-SKILL-ELEMENT-SUFFIX-HOST-PILOT-20261116 | 已完成 | 唯一纯host三行验证：10068 Wind7、out-of-cohort 11364 Electric4控制一致，新10019 Ice5；新语义20B，独立位索引/算术/逆序及精确end通过。pilot只产element，批量将复用既验logicalID形成片段；120绑定/121成本特殊字段未闭，集合另定。[结果](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_PILOT_20261116.md) |
 | D02-SKILL-ENERGY-SEARCH-20261116 / PLAN | 已完成 | 中文定向复用计划已冻结并限定验收：固定当前Skill/energy三类缺口、仓库/README/分支检索顺序、来源独立性和准确停止条件。仅规划；本地合同分析、公开检索及R3父项仍进行中。[计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md) |
 | R3-PROUD-FLOAT-CONSUMER-SOURCES | 已完成 | 已验166B正常路径条件合同与三consumer准确缺口；实际消费桥、M、row/current、同epoch输入及resourceReady未知。见[专题](docs/CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md)。 |
 | R3-PROUD-CACHE1-LAUNCH-TIMEOUT | 已完成 | 归因及离线薄封装修复限定验收：原同步RunAs/elevation交接未有可观测返回，16合同检查及6自有stub通过，原90秒起点不变。OS内部阻塞原因、原UAC表现及用户点击时间未知；真实启动和采样另验。见[专题](docs/CLIENT_72_D02_CACHE1_LAUNCH_TIMEOUT_20261115.md)。 |
