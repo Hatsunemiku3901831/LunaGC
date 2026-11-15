@@ -16,6 +16,9 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 | `R3-OLD121-AVATAR-CRITICAL-PROJECTION` | 已完成；120新+7旧片段、240新+2旧具名读回，1081调用/0错误、835392/2M，冻结及未用范围访问0。[实际执行](CLIENT_72_D02_OLD121_AVATAR_CRITICAL_20261116.md) | 只验实际执行版完整ledger；最终收窄driver未native重跑，presence未知。 |
 | `R3-OLD121-AVATAR-CRITICAL-JAVA` | 已完成；唯一真实JVM加载121七键，1项通过、242具名bits及map/fetters/loadedAll保持。[结果](CLIENT_72_D02_OLD121_AVATAR_CRITICAL_20261116.md) | JUnit loadedAll修正在首次JVM前，无Player/Avatar构造、DB/服务或完整恢复。 |
 | `R3-OLD-WEAPON239-APPROVED-FIELDS-PLAN` | 已完成；目标Weapon交239种/1663活动行，11101已验六键复用1种/27行，其余238种/1636行缺获批片段和限定loader。[来源与行级依赖](CLIENT_72_D02_OLD_WEAPON239_SOURCE_BLOCKER_20261116.md) | 11101/11501已存行级ctor各一次、parser各两次A model命中，原caller PC未知；不是新拒绝，不泛封全Weapon或自动Daybreak。 |
+| `R3-ACTIVE-ITEM-REMAINING-SCOPE` | 已完成；四族冷读必要性及metadata、保存引用两个普通包限定规划。[范围](CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md) | 不批准目标资源值或完整恢复。 |
+| `R3-ACTIVE-ITEM-SAVED-REFS` | 已完成；12254 Item/121 Avatar全EOF及旧键匹配，候选Reliquary main 28/append 22不同正引用、TPS两类各12不同正引用；121 Avatar TPS武器列表显式空。[结果](CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md) | 仅固定旧号保存数据，不证target资料/槽位/恢复；不省略配件恢复或自动授予条件。最终私有脚本补对照后未重扫BSON。 |
+| `R3-ACTIVE-ITEM-BASE-DERIVED-METADATA` | 进行中；有限继承/声明查询另行验收。 | 不预先认定业务族或目标资源值。 |
 
 本批无新现场或ready；A/B、preview和准确冻结边不变，不将上述具体停止泛化为所有独立任务阻塞。
 
