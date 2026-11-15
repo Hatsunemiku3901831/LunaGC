@@ -1,6 +1,6 @@
 # 旧号 121 Avatar 基础属性与成长投影计划
 
-`R3-OLD121-AVATAR-PROJECTION-SCOPE` 已完成限定来源审定；主线已接受 `R3-OLD121-AVATAR-BASE-GROWTH-PROJECTION` 实施规格并派 Terra，实施**进行中**。此时新投影、原生读出及真实 JVM 加载均未验；计划和来源许可不预先批准任何新行的值，也不提升完整资源、旧号恢复、R4 或 ready。D-02 / F-05 / D02-R6 仍为 0/6。
+`R3-OLD121-AVATAR-PROJECTION-SCOPE` 的限定来源审定及五字段计划现已实施，投影与限定真实 JVM loader 已验收，见[实际结果](CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_20261115.md)。以下为原计划、输入、预算与许可边界，不代表完整资源、旧号恢复、R4 或 ready 已完成；D-02 / F-05 / D02-R6 仍为 0/6。
 
 ## 范围与输入
 
