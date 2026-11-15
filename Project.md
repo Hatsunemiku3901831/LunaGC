@@ -1,10 +1,10 @@
 # 国服 7.2 任务规划与验收
 
-任务证据基线：2026-11-16；本轮研发接手 HEAD `420002e`，本次进度复核与方向微调基线 `c0e3f16`。近期限定成果、停止点及纠错见[活动检查点](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)、[交接](HANDOFF2.md)与[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。仅面向国服 7.2，Windows portable。
+任务证据基线：2026-11-16；本轮恢复任务 `D02-RESUME-INTEGRATION-20261116B` 接手 HEAD `99a868d`，前轮研发与方向复核基线分别为 `420002e` / `c0e3f16`。近期限定成果、停止点及纠错见[活动检查点](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)、[交接](HANDOFF2.md)与[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。仅面向国服 7.2，Windows portable。
 
 ## 当前阶段
 
-**上一轮在已审来源范围内按条件2收口，当前没有可直接实施或联调的成熟必要合同；这不是用户暂停，也不等于所有独立来源检索已穷尽。本次仅修正规划，将既有UP-72-N1/N2的定向增量子项列为待开始，尚未执行。D-02 / F-05 / D02-R6仍0/6，R1/R2/R3的必要实现出口阻塞，R4/R5/R6未开始。** [详细交接](HANDOFF2.md)保留准确解除输入和已验范围；局部成果不晋级父项或ready。
+**用户已明确恢复D-02，本轮持续执行已授权的必要独立工作；前轮条件2与历史暂停不作为本轮停止依据。UP-72-N1/N2的[有界增量计划](docs/CLIENT_72_D02_INCREMENTAL_REUSE_PLAN_20261116.md)已验收，准确来源检索与成熟合同实施按3.2依赖推进。D-02 / F-05 / D02-R6仍0/6，R1/R2/R3的必要实现出口阻塞，R4/R5/R6未开始。** [详细交接](HANDOFF2.md)保留前轮实证、准确解除输入和已验范围；A/B、preview与准确依赖仍冻结，局部成果不晋级父项或ready。
 
 本轮369个Skill id/element、121普通cost与START及两次真实Depot Java加载已闭，原367片段/120绑定阻塞解除；97literal、Material准确payload/有限header源、shared String尾游标、Relic有限typed及Weapon单字段独立性判断均已分项提交。当前实施仍缺[必要前沿矩阵](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)中的准确来源：energy MAX cap职责、Material有效backend/filecursor、Relic rank/set角色、Weapon独立raw父入口语法，以及R1/R2/Scene/Proud各自的准确限制/自然输入。已验结果只读复用，不再添加raw-id/native门或泛扫替代输入；普通来源缺口与A/B准确冻结边分列，不宣称整族或潜在host路径必然依A。
 
@@ -52,7 +52,7 @@
 | 有界执行子代理 | GPT-6.1 Terra（`gpt-6.1-terra`，档位按任务指定） | 规格完整的清单/数据对照、受控转换、driver、测试准备、机械修改和文档整理；未知语义返回主线，不自行猜测 |
 | 最后升级，非日常排班 | GPT-6 Astra max（`gpt-6-astra` / `max`） | 仅主线和Sol max实质分析仍不能解决、且影响D-02关键路径时使用；须先说明已排除假设、升级理由、准确问题和返回条件。缺样本、缺现场或未读既有证据不构成升级理由 |
 
-原Scene reader/Proud setter首轮及后继的已验范围见第6节和[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)，不重发旧包。本轮Skill/energy计划、限定公开检索及id/element批量已完成；本轮成本/START与真实Java及剩余来源复核已完成，实现出口按条件2等待准确输入；下一轮有界来源增量见3.2，尚未执行；Float/Pair、启动修复和cold结果直接复用。Terra xhigh仅承接成熟规格、测试和有界实现，未形成规格时不为填槽造工作。共享Git、Proto生成、构建、数据库及运行实例由本轮唯一集成执行者串行操作；当前R1/R2/R3未齐，不部署。主线负责规划和验收；用户另行允许的现场接管须明确交接，禁止computer-use继续有效。
+原Scene reader/Proud setter首轮及后继的已验范围见第6节和[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)，不重发旧包。前轮Skill/energy计划、限定公开检索、id/element批量、成本/START与真实Java及剩余来源复核已完成；本轮恢复3.2有界来源增量，成熟必要合同到达即实施。Float/Pair、启动修复和cold结果直接复用。Terra xhigh仅承接成熟规格、测试和有界实现，未形成规格时不为填槽造工作。共享Git、Proto生成、构建、数据库及运行实例由本轮唯一集成执行者串行操作；当前R1/R2/R3未齐，不部署。主线负责规划和验收；用户另行允许的现场接管须明确交接，禁止computer-use继续有效。
 
 显式传入工具支持的模型与档位；模型不可用应如实返回主线调整，不能静默升级Astra或冒称已使用指定模型。子代理不得自行扩大派遣和修改范围。
 
@@ -63,9 +63,9 @@
 | 批次 | 既有任务 / 下一动作 | 并行安排 | 退出条件与推荐模型 |
 | --- | --- | --- | --- |
 | 0 已验复用 / D02-RESUME-INTEGRATION-20261116、D02-SKILL-ENERGY-SEARCH-20261116 | 本批限定计划/检索、369 Skill id/element、121 cost/START、两次真实Depot加载、97 literal及Material payload已完成；连同既有Avatar七键、Talent/phase6、Float/Pair和启动修复直接复用 | 唯一集成者核当前差异及输入版本；不重跑无变化的既验结果 | 原367片段与120新energy绑定不再是阻塞；完整Skill/Player、MAX cap及R1/R2/Scene仍未闭。任务历史与证据见[活动检查点](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md) |
-| 1 定向增量计划 / UP-72-N1/N2 | 待开始；复用两份限定检索报告，只对下一两行的剩余问题制定一份中文增量计划。列尚未覆盖的相关Fork/分支、精确代码查询、筛选依据和本轮结束条件 | Sol max先定问题与排除重复；不得将计划当新来源或实施规格 | 现有报告没有证明公开来源穷尽；不重查已闭367/cost/START，不重做广泛关键词搜索，不把无访问能力写成零命中。UP-72-N3无关长尾仍后移 |
-| 1A 并行来源组 / Skill MAX cap、Relic rank/set | energy只找同目标上限职责或有版本身份的schema，不重复cost/START；Relic只找能排除rank/set标签交换的新具名来源，已有27候选/typed结果复用 | Terra max按计划检索精确字段及相关分支；Sol max只分析新命中的职责证据。两项分别验收，不互相等待 | 每个候选固定来源/版本并说明与目标的连接；无新桥则返回准确缺输入。Asta候选200/100不当目标上限，119行START为0不推断cap缺席 |
-| 1B 并行来源组 / Material、Weapon入口 | 只找固定目标或可验证版本差异的独立文件语法、首行/父入口与cursor来源；可补YSRes尚未审的相关Fork、DataParser的6个Fork及其README命中分支，不重读已审旧schema | Terra max先README/分支筛选，命中才读源码；两类入口可共享来源调查，字段合同分别验收 | 5.2/2.2方法仅参考；没有目标连接不生成walker或批量行。Material槽0、String尾游标、Weapon wrapper跨度均不代真实文件入口；准确A依赖仍停 |
+| 1 定向增量计划 / UP-72-N1/N2 | 已完成；`D02-INCR-PLAN-20261116`的[中文增量计划](docs/CLIENT_72_D02_INCREMENTAL_REUSE_PLAN_20261116.md)已限定验收，固定四个子出口、未覆盖Fork/分支、精确查询和结束条件 | Sol max规划；只证明规划可执行，不是新来源、字段或实施验收。主线按计划派两组检索；无桥后可做列明的既存来源新关联 | 现有报告没有证明公开来源穷尽；不重查已闭367/cost/START，不重做广泛关键词搜索，不把无访问能力写成零命中。UP-72-N3无关长尾仍后移 |
+| 1A 并行来源组 / Skill MAX cap、Relic rank/set | 进行中；`D02-INCR-A-MAX-20261116`只找同目标上限职责或有版本身份的schema，不重复cost/START；`D02-INCR-A-RELIC-20261116`只找能排除rank/set标签交换的新具名来源，已有27候选/typed结果复用 | Terra max按[增量计划](docs/CLIENT_72_D02_INCREMENTAL_REUSE_PLAN_20261116.md)检索精确字段及相关分支；Sol max只分析新命中的职责证据。两项分别验收，不互相等待 | 每个候选固定来源/版本并说明与目标的连接；无新桥则返回准确缺输入。Asta候选200/100不当目标上限，119行START为0不推断cap缺席 |
+| 1B 并行来源组 / Material、Weapon入口 | 进行中；`D02-INCR-B-MATERIAL-20261116` / `D02-INCR-B-WEAPON-20261116`只找固定目标或可验证版本差异的独立文件语法、首行/父入口与cursor来源；可补YSRes尚未审的相关Fork、DataParser的6个Fork及其README命中分支，不重读已审旧schema | Terra max先README/分支筛选，命中才读源码；两类入口可共享来源调查，字段合同分别验收 | 5.2/2.2方法仅参考；没有目标连接不生成walker或批量行。Material槽0、String尾游标、Weapon wrapper跨度均不代真实文件入口；准确A依赖仍停 |
 | 与1并行跟踪 / R1、R2、Scene、Proud | 保留完整Avatar、SDK自然认证、Scene M1–M4和Proud目标桥/非空cache各自准确缺口；新允许独立来源到达即可前移，不等待资源全齐才分析其必要合同 | Sol max接具体新证据；A/B最小用户判断材料沿既有交接复用，不扩大或自动派Daybreak | 缺资料不靠模型升级补事实；没有新输入不重发旧窗、泛扫对象/全域E8或重复SDK页。A原请求正文仍缺，既有冻结不解除 |
 | 2 一个真实合同→必要集合实现 | 某字段/入口来源闭合后先验证一个最小实际样本，再扩到必要集合；MAX cap可优先以11065/11145检验非零职责，其他行的presence另按原合同判断 | Sol xhigh做集成；Terra xhigh并行不同成熟字段/资源包；Git/Proto/JVM/DB单写串行 | 仅运行受影响加载/保存验证，既验两次Depot模式不无故重跑。未形成字段合同则不造值、不手设loadedAll，不以候选或Java默认值补资源 |
 | 按需现场 / 新的明确问题 | 当前无成熟新现场包；自然输入有明确获取条件、能解除必要依赖时才准备实验并请用户配合，既有cold结果直接复用 | 单一现场执行者；新fresh/实时ready，禁止computer-use；窗口化2560×1440需现场核实 | 明确用户操作、预期、证据和正常退出；不创建cache/Default或主动getter补输入，不沿同SDK页碰运气，不复用旧包 |
@@ -80,6 +80,8 @@
 | 分支 / 既有任务 | 本批具体动作及前置 | 产物与验收出口 | 责任文件与模型 |
 | --- | --- | --- | --- |
 | D02-RESUME-INTEGRATION-20261116 | 本轮接手、最小字段实现、相关Java与文档/提交集成已完成；条件2等待准确输入/限制解除 | 11个既验产物hash及脱敏preflight可定位；不重跑旧验收、不部署、不收他人差异 | Sol xhigh唯一集成者：Project/Harness/HANDOFF/HANDOFF2及本轮集成状态文档；独占Git/生成/构建/DB/运行写入 |
+| D02-RESUME-INTEGRATION-20261116B | 进行中；用户恢复授权下核对当前checkout、输入版本、配置与进程端口，集成本轮有界计划及后续成熟必要合同 | 直接复用369 Skill、121 cost/START、双Depot Java、Avatar七键、Talent/phase6、97枚举、Material准确payload、Float/Pair及启动/cold；不重跑无变化验收，不自造字段或加载规格 | 本轮唯一Sol xhigh集成者独占共享Git/生成/构建/JVM/DB/实例及Project/Harness/活动汇总；研究代理只写指定专题与独立证据 |
+| D02-INCR-PLAN-20261116 / UP-72-N1/N2 | 已完成准确四出口增量规划；检索、source与字段实现各自另验 | [计划](docs/CLIENT_72_D02_INCREMENTAL_REUSE_PLAN_20261116.md)固定A1 MAX cap、A2 Relic角色、B1 Material入口和B2 Weapon父入口；包含公开无桥后的有界本地新关联，未执行这些后继 | Sol max规划；主线验收，唯一集成者提交计划及共享状态 |
 | D02-SKILL-ENERGY-SEARCH-20261116 | Sol max中文规划与Terra max本批公开定向检索均已限定验收；本地合同分析及实际字段/加载出口继续 | [检索报告](docs/CLIENT_72_D02_TARGETED_REUSE_SEARCH_20261116.md)保留候选presence、同源冲突、失败及未覆盖；候选不当target值，局部结果不升级父项 | Sol max：[冻结计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)及本地语义；Terra max：本批报告已交；共享写入/运行仍归唯一集成者 |
 | D02-INDEPENDENT-INPUT-AUDIT-20261116 | 已完成既有本地Material/Relic/Proud/Scene/SDK五线有界审阅与10个hash核对，原始结论只读复用 | 暂无成熟本地包；精确公开问题尚未查尽，不写成全部外部阻塞 | Terra xhigh：忽略目录审阅；正式状态摘要由集成者收录[活动检查点](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md) |
 | A：F-03d3f4d2；必要 String 共同合同 | 同 epoch GC/Default 输入、人工双路径、stock 条件自有原 helper 已验，只读复用 | A-SECOND-RETURN-CONTRACT及依赖保持拒绝阻塞；其他独立任务必须先通过移除拒绝动作/产物后的独立性判断 | 不派被拒项，不运行草稿 |
@@ -267,7 +269,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | F-03d3s2-SCENE-ALLOWED-SOURCE-GAP | 已完成 | 既有允许来源有界差距审阅已验；4 pin、三writer、238B工厂及6锚点独核，316B getter直接复用未重验。M1–M4实际receiver/派发与返回/初值/reset关系缺新增允许的固定独立来源，尚无成熟sender；不泛封Scene。见[关系矩阵](docs/CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)。 |
 | R3-PROUD-STRING-INPUT-CONTRACT | 已完成 | 中性输入状态及来源合同准备限定验收，9源pin和独立14/0；未创建采样器/读取器。实际M、pointer、length、UTF16、业务桥及配置同源仍未知，OpenConfig仅候选；不并入 Avatar String 或 Gadget 路线。见[合同](docs/CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)。 |
 | R3-PROUD-FLOAT-NORMAL-PATH-ASSERTIONS | 已完成 | 固定166B及合成向量419项/0失败，作者两次与集成独立重跑一致，七个分支目标独核；不证明实际输入或业务桥。见[断言与复现](docs/CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md)。 |
-| UP-72-N1/N2、F-04离线清单候选 | 待开始 | 后移：N1仅在明确P0字段/顺序缺口及独立目标依据后缩小对照；N2仅在具体旧号必经资源/ID及目标消费者缺口明确后评估。303既有16行对照与局部恢复直接复用，目标revision未证。F-04复用ENV-01、信任与InstanceRoot已验入口，待R4及真实材料成熟后按部署手册核验，不重复制表；实际部署仍待R4。 |
+| UP-72-N1/N2 | 进行中 | 按3.2完成MAX cap/Relic准确职责与Material/Weapon独立入口有界增量计划；后继检索及既存来源新关联按四个出口分别验收。N1其余P0字段/顺序、N2其余旧号必经资源仍须准确目标缺口后启动。303既有16行对照与局部恢复直接复用，目标revision未证。 |
+| F-04离线清单候选 | 待开始 | 复用ENV-01、信任与InstanceRoot已验入口，待R4及真实材料成熟后按部署手册核验，不重复制表；实际部署仍待R4。 |
 
 ### 3.5 并行与互斥规则
 
@@ -282,7 +285,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 
 ## 4. 任务发布与范围控制
 
-1. **按3.2处理剩余准确依赖。** 369 Skill、121 cost/START和两次Depot加载已闭，Float/启动/cold及其他既验来源直接复用。下一轮先做MAX cap/Relic职责与Material/Weapon入口的有界来源增量，再接成熟小合同；R1/R2/Scene/Proud有新独立输入即前移。A/B、preview、准确依赖及A opaque纠错保持，World slot114不排现场；本次只更新规划。
+1. **按3.2处理剩余准确依赖。** 369 Skill、121 cost/START和两次Depot加载已闭，Float/启动/cold及其他既验来源直接复用。本轮恢复MAX cap/Relic职责与Material/Weapon入口的有界来源增量，再接成熟小合同；R1/R2/Scene/Proud有新独立输入即前移。A/B、preview、准确依赖及A opaque纠错保持，World slot114不排现场；旧暂停与前轮条件2不替代本轮逐项判断。
 2. **规格成熟就实现。** 重大问题和长任务先规划；一个独立字段/引用合同成熟后交Sol xhigh/Terra做最小实现及有意义的受影响验证，再按同源数据批量覆盖。简单一次性任务不另派独立审核、不为它新增测试；协议wire、真实资源加载与保存等必要验证保留。无新变化或未决风险不重跑历史全量，不把测试或报告数量当业务进度。
 3. **实机只补准确缺输入。** 不直接放大SDK预算、重复同参数观察或用零槽补值；需要用户操作时先备妥实验再一次说明操作/预期/反馈并等待新ready，同时继续独立工作。采集通过不代替消费者或业务通过。
 4. **必要性先于扩展。** 缺表/日志须结合真实入场调用筛选；不把全707组业务、全资源/Lua、完整codec通用工具或预览UI列默认P0，也不将未知默认判作可省略。实际必经通知、资源、所选旧号121角色及活动物品/装备依赖不能删。完整Avatar/Scene、自然SDK、真实资源与保存各有独立出口，不以一项片段互相代验。

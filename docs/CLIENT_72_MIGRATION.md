@@ -1,4 +1,4 @@
-2026-11-11 当前已按用户要求收尾并暂停。原 helper 的两条人工路径、Proud 固定单 key 文件语法及 Scene MPLevel parser 原窗已分别验收。自然分配与完整 Avatar、SDK 请求采用/认证、必要资源和完整保存恢复仍有缺口。R4/R5/R6 尚未完成，当前没有运行中的便携服务。见 [Project](../Project.md) 和 [详细交接](../HANDOFF2.md)。下方为历史进展。
+2026-11-16 当前用户已恢复D-02，任务`D02-RESUME-INTEGRATION-20261116B`继续有界来源增量及成熟必要合同集成；旧暂停与前轮条件2不作为本轮停止依据。369 Skill id/element、121 cost/START、双Depot Java及其他既验局部成果直接复用。完整Avatar、自然SDK/认证、必要资源/保存与Scene/Proud仍缺准确输入，R1/R2/R3必要出口阻塞、R4/R5/R6未开始，六项实机仍0/6；A/B、preview与准确依赖保持冻结。当前任务与本轮核对见[Project](../Project.md)和[活动检查点](CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)，下方暂停、现场及测试数字均为历史记录。
 
 2026-11-10恢复执行批次B：最新用户授权解除上轮收尾后暂停，依[Project](../Project.md)和[计划](CLIENT_72_D02_RESUME_20261110B.md)推进oldFlags8 GC合同、准确SDK请求采用、Scene和旧号必要资源/恢复；已验子项直接复用。当前五stock/载体/保护和现场已重新核对，未取得新ready、未部署GS，D-02未完成。下方暂停与旧现场是历史记录。
 

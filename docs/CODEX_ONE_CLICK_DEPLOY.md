@@ -1,4 +1,4 @@
-2026-11-10恢复执行批次B：用户已解除上轮暂停，授权必要研究/实现/取证和前置满足后的Windows portable隔离部署。新盘点portable/config14、五stock/载体/保护与固定端口/进程通过；当前R1/R2/R3必要合同未齐，未部署GS，无运行PID/JAR/健康验收对象。完成R4后按InstanceRoot真实隔离部署再验连接，不以尚未实机成功阻止部署。当前依据[Project](../Project.md)/[计划](CLIENT_72_D02_RESUME_20261110B.md)，不沿用下方旧ready/PID或暂停限制。
+2026-11-16 当前用户已恢复D-02，任务`D02-RESUME-INTEGRATION-20261116B`继续必要独立研究与成熟合同集成；旧暂停与前轮条件2不作为本轮停止依据。当前R1/R2/R3必要合同未齐，R4/R5/R6未开始，GS未部署，六项实机仍0/6；A/B、preview与准确依赖冻结。R4充分后按本手册用Windows portable与InstanceRoot隔离部署，核日志/健康/TCP/UDP/PID/运行JAR SHA后再验客户端，不以实机尚未通过反向阻止合格部署。当前任务及本轮配置/输入/端口事实见[Project](../Project.md)和[活动检查点](CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)，下方暂停、部署、ready、PID及产物数字均为历史记录。
 
 2026-11-10实际安装范围：八点SDK研究DLL独立构建/owned/真实文件门禁后，在新ready下临时安装观察90秒，正常退出并恢复stock，五输入/保护及进程TCPUDP复核通过。不是R5服务部署；完整Avatar/Scene、必要资源及R4前置未齐，GS仍不启动。见[本轮观察及恢复](CLIENT_72_SDK_CONFIG_STAGE_OBSERVER.md#本轮自然阶段观察与恢复)。
 

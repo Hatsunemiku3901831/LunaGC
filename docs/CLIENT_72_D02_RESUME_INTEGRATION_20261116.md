@@ -1,6 +1,16 @@
 # D-02 恢复集成活动检查点
 
-任务 `D02-RESUME-INTEGRATION-20261116`，研发接手 HEAD `420002edaa07bf7050ba51a90dcc734332c36475`，收口 HEAD `c0e3f16`。上一轮在已审来源范围内按条件2停止实施：当前没有成熟必要字段/现场合同，等待准确输入；不是用户暂停，也不证明公开检索穷尽。本次仅复核状态与微调下一轮排期，UP-72-N1/N2有界来源增量待开始；既有实现出口仍阻塞，D-02 / F-05 / D02-R6仍0/6，R4/R5/R6待开始。历史实证与本次方向见[交接](../HANDOFF2.md)，当前任务与验收见[Project](../Project.md)。
+本轮任务 `D02-RESUME-INTEGRATION-20261116B`，接手 HEAD `99a868d2c58730dd1f39a7f3d5dbee1d62eb57b4`。用户已明确恢复D-02，持续推进必要独立研究及成熟合同集成；旧暂停与前轮条件2不是本轮停止依据。`D02-INCR-PLAN-20261116`的[中文增量计划](CLIENT_72_D02_INCREMENTAL_REUSE_PLAN_20261116.md)已限定验收，UP-72-N1/N2两组来源检索进行中。R1/R2/R3必要实现出口仍阻塞，D-02 / F-05 / D02-R6仍0/6，R4/R5/R6待开始，A/B、preview与准确依赖继续冻结。当前任务与验收见[Project](../Project.md)。
+
+## 2026-11-16B 当前接手与规划验收
+
+实际HEAD及空索引已核，patch/resources的gitlink与各自HEAD分别保持`50f9bf82b3dbc0d4857321417dccf40f78c13ce4` / `dac2a9d43332ef51879522cf39da2831b0ca0543`。既存用户AGENTS、patch三类差异、resources单文件差异及两份未跟踪E8草稿均保留不提交；11个受保护文件与前轮指纹一致。最小完成回执只核当前输入与保护差异，旧11项已验产物回执直接复用，不报告新的产物hash验收或测试。
+
+当前`.env`为portable、HTTP8088/game22101，`.env.local`不存在，根config v14/HYBRID、两Mongo URI端口27017；资源/data目录存在。`GAME_PATH`的config声明7.2.0/channel1/sub_channel1，五固定输入均逐文件SHA-256匹配profile。相关Java/Mongo/客户端/调试器进程0，TCP8088/22101/27017/27027与UDP22101监听0，`local/running.json`存在但没有运行JAR/健康验收对象。源码仍为InstanceRoot Mongo27027、根Mongo27017与patch HTTP8088，不据环境变量宣称全端口隔离。
+
+私有最小接手回执`local/migration72/d02-resume-20261116b/preflight-minimal.private.json` SHA-256 `897b0c5c61135715b8daa121fad1c105a32f3ea913192b319ba22b17ec49432e`，独立进程端口回执`process-ports.private.json` SHA-256 `946f51b0b0ea4a0240869fa9549c09c237e4261f300e68a9d6505cd664b00d01`。初始盘点包装器停止及后续准确范围在[Harness](../Harness.md)留索引；无客户端、computer-use、JVM/数据库、构建、Proto生成或部署。
+
+计划冻结版SHA-256 `50abc5bdd26c6c8c9c80ec00e60938ba0240834e02ac41e13f805dfa510cce69`，四个出口分别为`D02-INCR-A-MAX-20261116`、`D02-INCR-A-RELIC-20261116`、`D02-INCR-B-MATERIAL-20261116`与`D02-INCR-B-WEAPON-20261116`，两组Terra max已经启动。计划覆盖README/相关Fork/分支/精确代码查询，以及公开无桥后可独立的既存来源新关联；目前没有未入计划但已成熟的必要实施合同。新来源先证明同目标与独立性，一个最小真实样本成立后再扩必要集合及受影响加载/保存，不能用计划或命中替代字段验收。本文下方为前轮`D02-RESUME-INTEGRATION-20261116`（接手`420002e`、收口`c0e3f16`）实证与历史方向，前轮条件2仅保留其当时来源范围。
 
 ## 接手核对与已验复用
 
@@ -34,7 +44,7 @@ A第二allocator返回/构造、热Default/sameepoch、`151841361`及准确tail/
 
 Project/Harness/HANDOFF/HANDOFF2已先备份至本批忽略目录`integration-resume-20261116/before/`，四件字节/hash匹配；原HANDOFF2 SHA-256 `cabe165b17c6375a2d9ba3e745588b557bdaf88632aa63a1e7d385d436ea9c2f`。接手阶段先纠正当前授权和过时首发排期；随后独立实施及相关验收已按上表追加，历史事实、完成标记、拒绝/未知保留，HANDOFF只追加。接手核对及后继独立实现/相关Java/文档提交均已完成；本轮按条件2等待准确输入，后续成熟包从对应最小缺口恢复。仅文档/离线工具/测试变更，无需重启。
 
-## 本次方向微调：只排下一轮，不新增技术验收
+## 前轮方向微调（历史）：只排下一轮，不新增技术验收
 
 以`c0e3f16`为复核基线，两次Java completion与JUnit原件已只读核对，未重跑。369 id/element、121cost/START及energy绑定不再排开发；特殊MAX cap职责、Material/Weapon独立入口、Relic角色映射为资源首缺，完整Avatar/SDK/Scene/Proud仍有各自必要缺口。
 
