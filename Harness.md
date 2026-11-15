@@ -1,3 +1,5 @@
+2026-11-16 `R3-MATERIAL-HOST-ROW-SYNTAX-20261116 / PLAN`完成[Material binary/首row中文增量检索计划](docs/CLIENT_72_D02_MATERIAL_ROW_SEARCH_PLAN_20261116.md)，5839B/SHA`c70ea69d9119862e76217428a6611abeb56582a01f6c1cc33b22c65a96956c28`。复用既有账本/payload/parser/literal，不重搜旧范围、不预设count/String单位或首flag；70971 literal与60257.m500132 loader身份明确。仅计划出口，公开增量/source仍进行中，无新raw/PE/native/JVM/部署。
+
 2026-11-16 `R3-OLD121-SKILL-SPECIAL-START-HOST-BATCH-20261116`完成[START121零新raw合片](docs/CLIENT_72_D02_SKILL_SPECIAL_START_20261116.md#121-行零新-raw-合片)：两present复用100/50、119原双PXOR源确证+0；8既验pins、byte-index/同row/Floatbits通过。result SHA`9d4b69d00a438084cd9a10b6b4eacda5618eaeebdab735a3bfe38cd3c4e755cb`，287241B输出，369片段为121四键+248两键，capMin不输出。cost/START真实Java另项，无native/JVM/部署。
 
 2026-11-16 完成[Material准确locator与serialized entry提取](docs/CLIENT_72_D02_MATERIAL_EXACT_PAYLOAD_20261116.md)：9host控制，唯一key16540db9943871cc/entry b9943871/block25539185；file0/path1362/class1208的m_bytes1560105B，SHA`088f2b43c860c2892c1f6e9a0349547dcd94b021e5d56983349f2cfd81e7ee89`。locator result92f9a5d...、提取result812fe541...及首pins角色对调失败/纠错完整hash见专题。原三根stem0只是历史，不再列输入缺失；row/keyspan/cursor/真实分类值/自然revision尚未验，无native/JVM/部署。
