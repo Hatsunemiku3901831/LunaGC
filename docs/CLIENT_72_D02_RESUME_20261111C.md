@@ -23,10 +23,18 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 | `R3-SAVED-REF-CANDIDATE-BLOB-PLAN` / `R3-SAVED-REF-CANDIDATE-BLOB-FETCH-COVERAGE` / `R3-SAVED-REF-CANDIDATE-COVERAGE-REVIEW` | 已完成；三固定候选表的28/22/12引用均各唯一命中，候选表66/350/12行。[来源与HTTP账](CLIENT_72_D02_SAVED_REF_CANDIDATE_COVERAGE_20261116.md) | 仅候选ID存在；status数字被checked覆盖，三次200由成功门禁路径推得；target row/值、自动授予全部来源和ready未知。 |
 | `R3-ACTIVE-MATERIAL-RESOURCE-CTOR-SOURCE` / `R3-ACTIVE-RELIQUARY-RESOURCE-CTOR-SOURCE` | 阻塞；两次各在唯一pdata门停止，body/read均0。[来源](CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md) | 缺完整边界，不猜16B、下一metadata地址或扫描RET；新入口不追认旧失败。 |
 | `R3-OLD121-SKILL-RESOURCE-ENTRY-1B-SOURCE` / `R3-ACTIVE-MATERIAL-RESOURCE-ENTRY-1B-SOURCE` / `R3-ACTIVE-RELIQUARY-RESOURCE-ENTRY-1B-SOURCE` | 已完成；三准确入口各1B c3，strict Capstone单ret。[来源与分账](CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md) | 仅条件入口至return transfer，无store/CALL；完整end、初始化、ABI/row未知。 |
-| `R3-OLD121-SKILL-ENTRY-TO-PROJECTION-SCOPE` | 进行中；Sol max审定typed条件输入。 | 不自动批准执行或初始化。 |
+| `R3-OLD121-SKILL-ENTRY-TO-PROJECTION-SCOPE` | 已完成；仅形成Skill parser完整来源后继规格。[范围](CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) | 不批准typed行执行；包括10068在内121 energy行costElemVal/specialEnergyMin/Max均未闭。 |
+| `R3-OLD121-SKILL-PARSER-SOURCE-WINDOW` | 已完成；首轮identity阶段ENTRY缺失NameError及零stock/PE/body保留，后继RUN2取得完整来源。[结果](CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) | 仅source，不能证明初始化、row或值。 |
+| `R3-OLD121-SKILL-PARSER-SOURCE-WINDOW-RUN2` | 已完成；fresh AOT/唯一pdata/完整目录与8309B body通过，strict 1985指令/539引用。[来源与分账](CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) | 直接冻结site/target零不证明传递A-free；无目标CPU/进程读取，底层loader/OS IO未计。 |
+| `R3-OLD121-SKILL-PARSER-MINIMUM-SEMANTICS` | 进行中；Sol max审定已验source最小语义。 | 尚无语义结论或typed row许可。 |
+| `R3-ACTIVE-MATERIAL-RELIQUARY-PARSER-SOURCE-SCOPE` | 已完成；两个独立单窗source-only规格与唯一typeRef已定。[规划](CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) | 此前错误typename已撤回；不证明row/值/ABI。 |
+| `R3-ACTIVE-MATERIAL-RESOURCE-PARSER-SOURCE` | 阻塞；完整pdata界定7128B，超原4096B cap，body/read/pdata evidence 0，无decode。[停止](CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) | 是完整长度超预算，不是缺边界；原件保留，不泛封Material。 |
+| `R3-ACTIVE-MATERIAL-PARSER-EXACT-EXTENT-SCOPE` | 已完成；按已确认7128B边界形成新窗规格，7156B evidence、strict≤7128。[规格](CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) | 原cap失败保留；新窗须重新核fresh AOT、完整exception hash和pdata。 |
+| `R3-ACTIVE-MATERIAL-RESOURCE-PARSER-SOURCE-RUN2` | 待开始；使用新prefix按精确范围单独执行。 | 尚未执行，不追认旧失败。 |
+| `R3-ACTIVE-RELIQUARY-RESOURCE-PARSER-SOURCE` | 进行中；主线按原4096B规格独立派Terra xhigh。 | 尚无成功结果；失败不自动授权重试或凭parent扩窗。 |
 | `R3-OLD121-DEPOT-CORE-FRAGMENT-SCOPE` | 已完成；既有全121 Depot原值与来源的三键纯host范围审定。[结果](CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) | 不重跑Depot/phase6，不证明当前采用。 |
 | `R3-OLD121-DEPOT-CORE-FRAGMENT-PROJECTION` | 已完成；121片段/363字段/726既有getter引用，484普通slot中248正236零、121正energy，369不同正引用仅key/span。[结果](CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) | presence unknown；结构探查曾展示部分超范围既有Skill字段，最终代码不使用Skill.values作oracle。 |
-| `R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA` | 阻塞；正引用缺367 Skill片段，energy正向绑定缺120。 | 不以空Skill/None或假cost补齐；无新JVM或当前采用证明。 |
+| `R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA` | 阻塞；正引用缺367 id/element片段，energy正向绑定缺120；121 energy行costElemVal/specialEnergyMin/Max均未闭。 | 不以空Skill/None或假cost补齐；无新JVM或当前采用证明。 |
 
 本批无新现场或ready；A/B、preview和准确冻结边不变，不将上述具体停止泛化为所有独立任务阻塞。
 

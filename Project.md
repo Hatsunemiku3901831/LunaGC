@@ -12,7 +12,7 @@
 
 `R3-OLD-WEAPON239-APPROVED-FIELDS-PLAN` 已完成限定资料及依赖审阅：239种/1663行目标Weapon键中，11101的1种/27行可复用既验六键片段，其余238种/1636行缺获批读出与限定loader；已存11101和11501的行级ctor/parser轨迹命中准确A入口，caller site未知。[来源与停止点](docs/CLIENT_72_D02_OLD_WEAPON239_SOURCE_BLOCKER_20261116.md)；仅该新值需求受相关依赖约束，继续其他独立工作。
 
-`R3-ACTIVE-ITEM-REMAINING-SCOPE` 已完成限定必要性及两个普通资料包规划，`R3-ACTIVE-ITEM-SAVED-REFS` 已完成固定快照保存引用投影：候选Reliquary的main 28、append 22及TPS两类各12个不同正引用已限定统计，121个Avatar保存TPS武器列表均显式空；仅本旧号、非目标资源值或恢复证明。[结果](docs/CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md)。有限[metadata声明查询](docs/CLIENT_72_D02_ACTIVE_ITEM_BASE_METADATA_20261116.md)及[旧号Depot三键纯host投影](docs/CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md)已完成；Depot Java后继因Skill片段缺口阻塞。[三个资源入口首指令来源](docs/CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md)与[三blob候选ID覆盖](docs/CLIENT_72_D02_SAVED_REF_CANDIDATE_COVERAGE_20261116.md)已限定验收；原完整ctor窗仍缺边界，Skill条件输入继续审定，target row、值与初始化未知。
+`R3-ACTIVE-ITEM-REMAINING-SCOPE` 已完成限定必要性及两个普通资料包规划，`R3-ACTIVE-ITEM-SAVED-REFS` 已完成固定快照保存引用投影：候选Reliquary的main 28、append 22及TPS两类各12个不同正引用已限定统计，121个Avatar保存TPS武器列表均显式空；仅本旧号、非目标资源值或恢复证明。[结果](docs/CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md)。有限[metadata声明查询](docs/CLIENT_72_D02_ACTIVE_ITEM_BASE_METADATA_20261116.md)及[旧号Depot三键纯host投影](docs/CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md)已完成；Depot Java后继因Skill片段缺口阻塞。[三个资源入口首指令来源](docs/CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md)、[三blob候选ID覆盖](docs/CLIENT_72_D02_SAVED_REF_CANDIDATE_COVERAGE_20261116.md)和[Skill parser完整来源](docs/CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md)已限定验收；原完整ctor窗仍缺边界，Material完整7128B的新范围已规划、RUN2待开始，Reliquary独立单窗进行中；target row、值与初始化未知。
 
 `A-PROMPT-LOCAL-PROVENANCE` 此前的明文恢复验收已撤回：已定位的是原事件和不透明序列化字面串，仍缺可核对的执行请求正文；`A-PROMPT-PLAINTEXT-RECOVERY` 阻塞，见[纠错](docs/CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)。原平台错误仍已恢复；A/B及preview冻结未解除，普通独立工作继续。
 
@@ -204,10 +204,18 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-OLD121-SKILL-RESOURCE-ENTRY-1B-SOURCE | 已完成 | 准确入口1B为ret，仅条件入口至return transfer，无store/CALL；完整end/初始化/ABI未知。[来源](docs/CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md) |
 | R3-ACTIVE-MATERIAL-RESOURCE-ENTRY-1B-SOURCE | 已完成 | 准确入口1B为ret，仅限定入口source，不证明完整body或row。[来源](docs/CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md) |
 | R3-ACTIVE-RELIQUARY-RESOURCE-ENTRY-1B-SOURCE | 已完成 | 准确入口1B为ret，仅限定入口source，不证明完整body或row。[来源](docs/CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md) |
-| R3-OLD121-SKILL-ENTRY-TO-PROJECTION-SCOPE | 进行中 | Sol max审定typed条件输入；不自动批准执行或资源初始化。 |
+| R3-OLD121-SKILL-ENTRY-TO-PROJECTION-SCOPE | 已完成 | 审定仅parser完整来源后继；未批准typed行执行，121个energy行的costElemVal/specialEnergyMin/Max均未闭。[范围](docs/CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) |
+| R3-OLD121-SKILL-PARSER-SOURCE-WINDOW | 已完成 | 首轮包装NameError保留；经授权RUN2取得完整8309B来源及逐条listing，仅source，不证明初始化或值。[结果](docs/CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) |
+| R3-OLD121-SKILL-PARSER-SOURCE-WINDOW-RUN2 | 已完成 | fresh AOT/唯一pdata及完整body验收，1985指令/539引用；直接冻结引用为空不证明传递A-free。[结果](docs/CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) |
+| R3-OLD121-SKILL-PARSER-MINIMUM-SEMANTICS | 进行中 | Sol max审定已验来源的最小语义；不预称结论或批准typed row。 |
+| R3-ACTIVE-MATERIAL-RELIQUARY-PARSER-SOURCE-SCOPE | 已完成 | Material/Reliquary两个独立parser单窗限定规划；一参typeRef及预算固定，不批准字段值或初始化。[范围](docs/CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) |
+| R3-ACTIVE-MATERIAL-RESOURCE-PARSER-SOURCE | 阻塞 | 已确定完整边界为7128B，超过原4096B cap；body未读，非缺边界。[停止](docs/CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) |
+| R3-ACTIVE-MATERIAL-PARSER-EXACT-EXTENT-SCOPE | 已完成 | 已确认7128B精确范围的独立新窗规格；原失败保留，未执行RUN2。[规格](docs/CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) |
+| R3-ACTIVE-MATERIAL-RESOURCE-PARSER-SOURCE-RUN2 | 待开始 | 新窗7156B evidence、strict≤7128，重新核fresh AOT/完整exception hash/pdata；尚未执行。 |
+| R3-ACTIVE-RELIQUARY-RESOURCE-PARSER-SOURCE | 进行中 | 主线已按原4096B规格独立派Terra xhigh，尚无成功结果；不自动重试或扩父窗。 |
 | R3-OLD121-DEPOT-CORE-FRAGMENT-SCOPE | 已完成 | 限定审定既有全121 Depot的id/skills/energy原值与来源可供纯host三键投影；不重跑Depot/phase6。[结果](docs/CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) |
 | R3-OLD121-DEPOT-CORE-FRAGMENT-PROJECTION | 已完成 | 121片段、363字段及726既有getter引用，484普通slot与121正energy保留；369不同正Skill引用仅key/span，不证明Skill值或当前采用。[结果](docs/CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) |
-| R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA | 阻塞 | 全部正引用缺367 Skill片段、正向energy绑定缺120；不得以空Skill/None或假cost充当正向加载。 |
+| R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA | 阻塞 | 正引用缺367 id/element片段、energy绑定缺120；包括10068在内121个energy的costElemVal/specialEnergyMin/Max均未闭，不得以空Skill/None或假cost补齐。 |
 | A-PROMPT-PLAINTEXT-RECOVERY | 阻塞 | 缺经允许且可核对的执行请求正文；此前明文恢复验收撤回，原事件与不透明字面串关联仍保留。[纠错](docs/CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md) |
 | R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS | 已完成 | 本体双遍历、同N指针store、中性native+2c↔41105.field203368/+70表示桥及准确缺口限定验收；未消费26072三字段。上游旧listing的共用allocator调用属于准确A冻结边，停在CALL；业务桥、实际M/数组/String、row/current/epoch及ready未知。见[成员语义](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_SEMANTICS_20261115.md)。 |
 | F-03d3s2-SCENE-ALLOWED-SOURCE-GAP | 已完成 | 既有允许来源有界差距审阅已验；4 pin、三writer、238B工厂及6锚点独核，316B getter直接复用未重验。M1–M4实际receiver/派发与返回/初值/reset关系缺新增允许的固定独立来源，尚无成熟sender；不泛封Scene。见[关系矩阵](docs/CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)。 |
@@ -544,6 +552,9 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-ACTIVE-ITEM-NEXT-INPUTS-TRIAGE | 已完成 | 两ctor来源及固定保存引用候选的限定输入规划，非新row验收。 | [入口来源](docs/CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md) |
 | R3-OLD121-SKILL-RESOURCE-ENTRY-1B-SOURCE、R3-ACTIVE-MATERIAL-RESOURCE-ENTRY-1B-SOURCE、R3-ACTIVE-RELIQUARY-RESOURCE-ENTRY-1B-SOURCE | 已完成 | 三个准确入口各一条1B ret；完整物理边界、ABI及初始化未知。 | [来源与分账](docs/CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md) |
 | R3-SAVED-REF-CANDIDATE-BLOB-PLAN、R3-SAVED-REF-CANDIDATE-BLOB-FETCH-COVERAGE、R3-SAVED-REF-CANDIDATE-COVERAGE-REVIEW | 已完成 | 三固定候选blob的62个保存引用均唯一命中；不证明target值、业务alias或ready。 | [限定覆盖与HTTP账](docs/CLIENT_72_D02_SAVED_REF_CANDIDATE_COVERAGE_20261116.md) |
+| R3-OLD121-SKILL-ENTRY-TO-PROJECTION-SCOPE、R3-ACTIVE-MATERIAL-RELIQUARY-PARSER-SOURCE-SCOPE | 已完成 | 三个parser来源问题、准确身份和独立预算限定规划；不批准typed行、目标值或初始化。 | [来源规划](docs/CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) |
+| R3-OLD121-SKILL-PARSER-SOURCE-WINDOW / R3-OLD121-SKILL-PARSER-SOURCE-WINDOW-RUN2 | 已完成 | RUN2完整8309B、1985指令/539引用限定来源；首轮包装失败保留，不证明初始化或传递A-free。 | [来源与分账](docs/CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) |
+| R3-ACTIVE-MATERIAL-PARSER-EXACT-EXTENT-SCOPE | 已完成 | 根据确认的7128B完整边界形成新窗规格，未执行RUN2、不追认旧cap失败。 | [限定规格](docs/CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) |
 | R3-PROUD-ENUM32419-CONSUMER-QUERY | 已完成 | 固定signature显参116唯一匹配及type32419声明限定验收，不证明业务或全客户端穷尽。 | [查询](docs/CLIENT_72_D02_PROUD_ENUM32419_CONSUMER_QUERY_20261115.md) |
 | R3-PROUD-PAIR-CONSUMER-QUERY-TRIAGE | 已完成 | 声明域有界判断及type54724文字勘误；ordinary业务caller及type-erased MethodInfo/callsite未知。 | [限定判断](docs/CLIENT_72_D02_PROUD_PAIR_CONSUMER_TRIAGE_20261115.md) |
 | R3-PROUD-PAIR-CONSUMER-QUERY | 已完成 | 65条指定receiver声明与固定signature全表6唯一显参匹配；非全客户端或业务穷尽。 | [有界查询](docs/CLIENT_72_D02_PROUD_PAIR_CONSUMER_QUERY_20261115.md) |
