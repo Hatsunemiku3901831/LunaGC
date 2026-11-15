@@ -1,51 +1,60 @@
-# 国服 7.2 用户停止交接（2026-11-15）
+# 国服 7.2 当前工作收尾交接（2026-11-16）
 
-## 当前状态与工作边界
+## 当前指令与验收状态
 
-用户明确要求**停止并交接**。本次只整理交接与任务索引，不继续开发、语义分析、取源、测试、构建、部署或现场；恢复须用户另行指示。停止是调度状态，不代表所有独立工作都遇到技术阻塞。任务使用待开始 / 进行中 / 阻塞 / 已完成四状态；`R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS` 仍为进行中，用户停止时草稿未最终验收，不能标已完成。
+用户要求**当前已派子任务验收和收尾后暂停，不开启新业务任务**；恢复须用户新的明确指示。暂停是调度决定，不代表所有独立工作均技术阻塞。任务只用待开始 / 进行中 / 阻塞 / 已完成；局部成果不升级父项或 ready。仅面向国服 7.2，Windows portable，禁止 computer-use。
 
-D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**，R4/R5/R6 未开始；SDK 页面、离线研究、静态来源和局部测试均不代完整登录/选人/入场、心跳及重登保存验收。原 A/B 安全审查拒绝及依赖、冻结 preview 的专项边继续有效；禁止 computer-use。只面向国服 7.2、Windows portable，路径以当前 checkout 和本机配置为准，保护既有 `mongodata/`、`local/data/`。
+D-02 / F-05 / D02-R6 客户端验收仍 **0/6**，R4/R5/R6 未开始。SDK 页面、静态来源、host 片段和局部 Java 均不能代替完整新旧号本服登录、显式选人、初始化入场、心跳及退出重登保存。完整 Avatar/Team/Scene、SDK 自然认证/route、必要资源和旧号 Player 全量恢复均未闭。任务与验收以 [Project](Project.md) 为准，[Harness](Harness.md) 管复现，[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md) 汇总本轮结果。
 
-交接前本地 HEAD 为 `714af158a929415f0e97ffdc1852c5b412369840`。本轮已提交 11 项：`6a0b92d`、`e0049c4`、`f2d7f2b`、`3795282`、`89cc25e`、`1015d53`、`657abb1`、`4796306`、`44b0dc5`、`52e61ab`、`714af15`；按本轮执行记录使用指定身份，未推送。此处 HEAD 是交接文档提交前基线，不冒称最终交接提交号。
+## 现场与 Git 的时点
 
-## 现场事实与已验有限成果
+唯一集成者只读快照 `local/migration72/d02-resume-20261116/final-closeout/snapshot-20261115T163450586549Z.private.json` SHA-256 `6241a667bbbf15ac06af8651225ff71536afb6b9a9b46811e4abc64d43b9350f`；观察时刻 2026-11-15T16:34:52Z。该时点 HEAD `4211c73e37d91ff646236a66544256d01e8bd85c`，自基线 `1609fe511cb13bfab565247c1b6b07890468d24b` exclusive 为 38 次本地提交，Author/Committer 均 38/38 符合指定身份；当时 index 空，保护差异与 gitlinks 未变。此快照不代表后续文档提交后的 HEAD。
 
-- 本轮真实 Launch 4.498 秒；用户在原 90 秒内于 55.579 秒反馈 SDK 页。唯一 sample 4.567 秒以 cold-cache 停止：backend 00、root 非零、cache 0，实际 3 次 RPM / 17B，identity 11 + sample 19 = 30 API；不是 miss 或 timeout。用户正常退出后，主线当时核五个已知进程退出、27 pin、149 项数据、五 stock、config/JAR 和端口快照，以及另 33 sample pin；身份和句柄记录已独核。此为既有时点记录，交接未重新探测进程或端口。本轮没有第二次启动或采样。回执与审核入口见 [恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。
-- 用户要求未来 2560×1440 窗口化：新包及 seal 已限定离线验收，作者与独立各 4 项合成测试、新 seal 28 pin 和旧 seal 27 pin；独立回执 SHA `29448e6ccda5a8bf0944de43dd05ba913b6005853bbc096a5bb2063f94d345fa`。实际窗口与尺寸未验；用户明确恢复后，按已授权范围完成新 fresh 并取得当次实时 ready，不复用旧 ready。见[窗口化准备](docs/CLIENT_72_D02_NEXT_LAUNCH_WINDOWED_20261115.md)。
-- Proud Float 166B 条件合同与 419 项机械断言限定验收；String 中性输入合同独核 14 项；Scene 既有允许来源的差距审阅限定验收，M1–M4 自然关系缺明确独立来源。见 [Float](docs/CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md)、[String](docs/CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)、[Scene](docs/CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)。这些不证明实际 M、真实 getter、row、current 或 ready。
-- typed 346B/91 条来源窗：双 fresh 与第三 13 件一致、32 引用独核；346B 物理路径、类型对照及一个准确后继首缺的语义限定验收已独立通过。856B/211 条成员窗：双 fresh 与第三 13 件一致、88 引用独核；成员**来源**已验，语义未最终验收。见[346B 来源](docs/CLIENT_72_D02_PROUD_TYPED_BASE_LIST_WINDOW_20261115.md)、[346B 语义](docs/CLIENT_72_D02_PROUD_TYPED_BASE_LIST_SEMANTICS_20261115.md)、[856B 来源](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_WINDOW_20261115.md)。
-- `R3-PROUD-FLOAT-DIRECT-E8-INDEX` 第 4097 个 raw 候选触预算停止，pdata 0、无完整索引。旧 resolver 三次的原始流缺失；旧 exec 实际读量和扫描覆盖未保存，永久未知，不补造。后续 stop-ledger 作者与独立各 10 项合成验证仅证明未来留证合同，整体工具未完成真实来源验收，不升级父项。见 [E8 停止记录](docs/CLIENT_72_D02_PROUD_FLOAT_DIRECT_E8_INDEX_20261115.md)。
+交接前集成 HEAD：`85d5504bced6ec1c44890c56545295157409837d`；自上述基线的实际提交总数：42。新增收尾提交：`8473cb566e352f669f7aa03168e7993cb40d6686`（父字段/raw专题）、`527d6c0c85151661d600bd96340cb350bcf774b5`（Material/Relic专题）、`fe26d316ff1be9c58e766913e2383789a2a7705d`（Skill长度专题）、`85d5504bced6ec1c44890c56545295157409837d`（三个索引）。此为交接文档提交前基线；最终交接提交以提交后实际 HEAD 查询为准，不反复补写。未自动推送。
 
-## 未完成的成员语义草稿与固定输入
+该时点未见 java/mongod/client/debugger 匹配进程；TCP 8088/22101/27017/27027 和 UDP 22101 无监听，无运行 JAR 可取 hash。配置为 `.env` portable、`.env.local` 不存在、`config.json` v14 HYBRID、HTTP 8088、game 22101、根 Mongo 27017；InstanceRoot 源码使用 27027，不称全端口隔离。这是只读观察，不是新启动 preflight；恢复须重新核配置、进程/端口归属和现场，不复用旧 PID/ready/JAR 结论。原数据库和运行数据保留。
 
-`R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS` 在用户停止时保存为未验草稿 [成员语义草稿](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_SEMANTICS_20261115.md)，7030B、SHA-256 `b7d33d1a6c95f93a23b90e94e33b99d437dcf935b2be932856e051f6f1771240`；未完成独立验收，不提交、不当作已通过。以下只是草稿的未终审摘要：856B 窗有两轮列表遍历、条件容器调用和保存原输入引用；新增中性 native `+2c` ↔ `41105.field203368/+70` 对照，经 `58209.m483725`。它不是三字段消费桥，不能命名 Add/Remove、事件或 current。native ABI、formal/隐式返回、S 身份/内容、实际 M、三字段 bridge、实际 row/current/epoch 与 ready 均仍未知。
+历史唯一一次 Launch 用时 4.498 秒，用户 55.579 秒反馈 SDK 页，仍在原 90 秒窗口内；唯一 sample 以 cold-cache 停止，3 RPM / 17B、identity 和 sample 共 30 API，用户随后正常退出。下次启动用户要求窗口化 2560×1440；新包与 seal 仅离线验收，实际窗口尺寸未验，旧 ready 失效。本次恢复收尾未新增客户端操作；历史现场与新现场必须分开。
 
-固定私有材料留忽略目录：
+保留用户 `AGENTS.md`、`patch`/`resources` 既有差异及 gitlink，不夹带他人修改；上述快照中 `patch` gitlink 为 `50f9bf82b3dbc0d4857321417dccf40f78c13ce4`、`resources` 为 `dac2a9d43332ef51879522cf39da2831b0ca0543`。`tools/migration72/proud_float_direct_e8_index.py` 与 `tools/migration72/test_proud_float_direct_e8_index.py` 为未完成实际来源验收的未跟踪草稿，不能因合成测试通过提交或升级 stage1。机器路径、凭据、原始日志、客户端文件、原 BSON 和抓包留忽略目录。
 
-- `local/migration72/d02-resume-20261115/proud-typed-list-member-semantics/source-audit.private.json`，7028B，SHA-256 `b935fdb1a649c1963cf784c72620c246af4ba76572965644adcac19a183425d5`。
-- 同目录 `semantics.private.json`，7117B，SHA-256 `a5006f9c214bd97505b9f9867af6d89a7f30f2870d2d37bdac9b1ebf9358f877`。矩阵尚未补齐最后上游冻结边复核。
-- `local/migration72/analysis/avatar-team-native-owner18163.txt`，898784B，SHA-256 `425e8e64afb31e59b7ce85e8444f242d724068be9c5f3682cd5ffdcdb000309a`；与旧 promote/query 审计 pin 对应。该 listing 无原始 hex，不能为新 E8/pdata 提供证据，也不能将 232B 提示当完整窗。
+## 已完成的限定成果
 
-已有 346B 窗的直接边 `14c51240a e831ef3205 → 151841340`，声明为 `18163.m138138 NBAOBFKAHPC`、flags `86h`、instance、一个 `28174` 参数，formal ABI 未知。已存 listing 的 `15184135a` 标 `List59500`，`151841361` 调 `1405336c0`：这是准确 A 共用分配返回/构造冻结边，**停在 CALL**，不解释返回、不跟后继、不取新窗，也不以 IFix 替代。此处仅交接已有信息，不构成新来源审核或重开被冻结动作。
+- Proud typed base/list 来源与成员语义已验，旧交接“成员语义未验”已过时；carrier/String 等按专题范围复用。Pair/enum 有界查询后复用已有 148B 共享 consumer：低32显式key首匹配、高32 encoded54724 至 Float getter，正常未命中 XMM0 为零；Proud 目标字段绑定、实际 row/M/cache/key/同 epoch/current 和 alias 仍未知。[成员语义](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_SEMANTICS_20261115.md)、[共享Pair](docs/CLIENT_72_D02_PROUD_ENUM32419_TRIAGE_20261115.md)。
+- 旧号 Avatar 121 角色 base/growth 五键片段为120新+7号旧复用、363例 level100 oracle，限定真实 ResourceLoader 1项通过；critical 两基础贡献为120个新片段+7号角色既验片段复用，共121个，242 named读回，七键同源合并及真实 ResourceLoader 1项通过。critical 唯一 native 执行使用保存的旧driver；过宽执行门及先合并pin缺陷以完整ledger/逐组无冲突限定接受，最终收窄driver仅语法/源码审阅、**未native重跑**。JUnit 首次JVM前删去会掩盖loadedAll变化的手动修改，最终测试真实验证原值未变，不是先失败后通过。[base](docs/CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_20261115.md)、[critical](docs/CLIENT_72_D02_OLD121_AVATAR_CRITICAL_20261116.md)。
+- Depot：121保存当前Depot的 id/skills/energySkill 三键 host 片段、363字段/726旧getter引用限定验收；369不同正Skill仅核key/span。Java正向加载仍缺367 Skill片段及120 energy绑定，不能空Skill/None/假cost；121 energy行的costElemVal/specialEnergyMin/Max target职责仍未知。[Depot](docs/CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md)。
+- Item：固定保存引用中候选 main 28、append 22、TPS两类各12不同正引用已限定投影，此旧号121 Avatar TPS武器列表显式空；不能外推其他账号或省略配件恢复、自动授予。三固定公开候选 blob 之62个分表引用均唯一命中，仅证候选ID存在；ledger数字HTTP status被checked覆盖，三次200只由成功门禁路径推得，原始状态行未留。[保存引用](docs/CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md)、[候选覆盖](docs/CLIENT_72_D02_SAVED_REF_CANDIDATE_COVERAGE_20261116.md)。
+- parser/scalar：Skill 8309B、Material 7128B、Reliquary 3347B、共同父2018B、不同Float setter 163B和Int32 setter157B静态原窗已限定验收，直接冻结引用为空不证明传递 A-free。Float/Int32正常条件位级合同已验，实际M/表/seed/epoch未知。Skill首轮ENTRY包装NameError、Material原4096 cap失败及预检KeyError保留，后继来源成功不追认旧轮。[原窗](docs/CLIENT_72_D02_ACTIVE_ITEM_PARSER_SOURCES_20261116.md)、[scalar](docs/CLIENT_72_D02_SCALAR_CONTRACTS_AND_SKILL_FLAGS_20261116.md)。
+- 当前收尾：共同父id/itemType条件store已验，id缺flag仍setter(0)，S(0)不等物理0。三个根7666项精确raw stem零命中、四处depth8停止，one-off locator补读不冒作原driver自动复现，不推全盘缺失。Material六直接Enum声明145字段，+c8/type34165与MATERIAL_*符号支持有限分类职责，literal值/实际consumer/row未知；+78 FoodQuality异证保留。Relic rank/set九派生+六继承候选有标签互换反例。Skill 371行首个String1长度N=14..23、742B语义头；不读payload、不证明TLS/调用或值。[父/raw](docs/CLIENT_72_D02_ACTIVE_ITEM_BASE_RAW_INVENTORY_20261116.md)、[Material/Relic](docs/CLIENT_72_D02_MATERIAL_RELIC_ROLE_BOUNDARIES_20261116.md)、[Skill长度](docs/CLIENT_72_D02_SKILL_STRING1_LENGTH_20261116.md)。
 
-## 阻塞、拒绝与避免重走弯路
+### 当前收尾任务 ID
 
-- `R3-PROUD-EXISTING-CACHE-CAPTURE` 阻塞于合法自然非空 cache/key 输入。不能重复同 SDK 页循环碰运气，不能主动 getter、创建 cache 或 Default、造样本或把 cold-cache 写成 miss。用户恢复后，现场按已授权范围重新准备并等待当次 ready。
-- `A-SECOND-RETURN-CONTRACT` 原第二 allocator CALL/RET、热 Default 消费与同 epoch 归属及其依赖被安全审查拒绝；原完整提示未保存，不能以摘要冒充原文。最小交接仍缺完整原提示、可独立验收剩余问题和逐项固定输入。不能运行原草稿、改代理/工具/措辞或间接续接。
-- `D02-R2/SERVICE-TRIGGER-LOADER` / `B-LOADER-COMPILE` 原 `observer.rs:49` 的首次 Cargo 类型错误修复被拒；原句为 `This content was flagged for possible cybersecurity risk.`。原 blocker `local/migration72/d02-resume-20261110b/b-service-trigger-loader/daybreak-blocker.private.json`，1032B、SHA-256 `a238657a9226534b45fb412a03cd306e75c5493542483f4be6221cdd6aff5ada`。保留未验源码和失败证据，不修改或重试组合 loader。
-- 仅现有必要、明确的最小包留在 [Daybreak 队列](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)供用户判断；未经用户指示不自动派工，不生成被拒动作的实现。局部通过不升级父项或 ready。
-- 旧 E8 首次 resolver 漏既定 portable 参数并有两次诊断调用，三次原缓冲未保存；之后主线只读复核未发现内容安全审查拒绝证据，修复范围仅为既定入口合同。此结论不解除任何 A/B 内容安全拒绝；不能把重建诊断冒充原始流。
-- 856B 来源准备曾因 JSON 数字与字符串键不一致失败，按现有格式修正后成功；原执行工具仅留合并输出，不是缺少类型输入或安全拒绝。第三时 27 pin 一致；随后语义专题的批准追加单列，当前 26 源未变，不声称当前 27 项均与当时相同。
-- Scene M1–M4 的自然 receiver/派发/初始化关系缺新增明确允许的独立来源；World slot114 的准确 A 调用返回依赖仍冻结。来源缺口、现场输入缺失和安全审查拒绝分别记录，不泛称全部阻塞。
+以下均为已完成的限定审阅、查询或清查，不等于资源值或完整恢复验收：
 
-## 工作区归属和交接文件
+| 任务 ID | 证据入口 |
+| --- | --- |
+| `R3-ACTIVE-ITEM-BASE-MINIMUM-SEMANTICS` | [父字段与 raw](docs/CLIENT_72_D02_ACTIVE_ITEM_BASE_RAW_INVENTORY_20261116.md) |
+| `R3-ACTIVE-ITEM-RAW-SOURCE-INVENTORY` | [父字段与 raw](docs/CLIENT_72_D02_ACTIVE_ITEM_BASE_RAW_INVENTORY_20261116.md) |
+| `R3-ACTIVE-MATERIAL-TYPE-ROLE-SCOPE` | [Material / Relic](docs/CLIENT_72_D02_MATERIAL_RELIC_ROLE_BOUNDARIES_20261116.md) |
+| `R3-ACTIVE-MATERIAL-DIRECT-TYPE-DECLARATIONS` | [Material / Relic](docs/CLIENT_72_D02_MATERIAL_RELIC_ROLE_BOUNDARIES_20261116.md) |
+| `R3-ACTIVE-MATERIAL-TYPE34165-ROLE-REVIEW` | [Material / Relic](docs/CLIENT_72_D02_MATERIAL_RELIC_ROLE_BOUNDARIES_20261116.md) |
+| `R3-ACTIVE-RELIQUARY-RANK-SET-SOURCE-GAP` | [Material / Relic](docs/CLIENT_72_D02_MATERIAL_RELIC_ROLE_BOUNDARIES_20261116.md) |
+| `R3-OLD121-SKILL-RAW-FLAG-TRIAGE` | [Skill 首长度](docs/CLIENT_72_D02_SKILL_STRING1_LENGTH_20261116.md) |
+| `R3-OLD121-SKILL-STRING1-LENGTH-INVENTORY` | [Skill 首长度](docs/CLIENT_72_D02_SKILL_STRING1_LENGTH_20261116.md) |
 
-保留用户的 `AGENTS.md` 改动、`patch`/`resources` 既有差异与父仓库 gitlink，不覆盖、不夹带。`tools/migration72/proud_float_direct_e8_index.py`、`tools/migration72/test_proud_float_direct_e8_index.py` 为未完成实际源验收的 untracked 草稿，不能因合成测试通过而提交或升级 stage1。上述未验成员语义专题及其私有材料同样不提交；未经授权不清除、不覆盖。客户端二进制、私有日志、原始抓包、依赖和数据库留忽略目录；共享文档只写脱敏摘要。
+## 准确未完成与冻结
 
-按交接流程，原 `HANDOFF2.md` 覆盖前已备份至 `local/migration72/d02-resume-20261115/handoff-before-user-stop-20261115T0319363927479Z/HANDOFF2.md`。原件与备份均 4869B、SHA-256 `e3d092f1a829890b413ab3e7e76706b1f51daf5734ea737964bc0a9e4d4801e8`。`HANDOFF.md` 只追加本轮简略记录，旧字节前缀保留。本轮交接文档及索引由唯一指定 Git 集成者分项审核、提交，不能夹带未验稿或他人差异；不自动推送。
+- A 第二 allocator 返回/构造、热 Default/sameepoch、151841361 和准确tail依赖；B组合loader及首个Cargo错误被拒修复均保留原拒绝和冻结，preview 保持既定专项冻结。不得运行A/B草稿、换模型/工具或借IFix、旧对象、host zero间接续接；不泛封整列、全部族或所有独立工作。
+- A 原平台错误 v4 的 `targetTurn.error.message` 已恢复，历史FIDO2资格后缀不归给B、不证明当前资格。此前“原followup明文已恢复”验收已**撤回**：1528字符是不透明序列化字面串，仅证事件/目标/时间与字面串关联；可核对正文、固定技术规格和输入仍缺。不自动搜索密钥/解密或派Daybreak。[纠错](docs/CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)、[原拒绝与最小队列](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)。
+- 最小队列中 A 仍缺可读原请求和固定技术输入，无可执行包。B 仅保留现存八字段隔离副本 compile-only 候选供用户判断；原 `observer.rs:49` 停止点、拒绝入口和范围见[队列](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)，未经用户明确指示不自动执行或派 Daybreak。
+- Proud 自然非空cache+key、实际getter/row/current及同epoch仍缺；最近唯一采样为cold-cache，不是miss/timeout，不沿同SDK页重复碰运气或创建Default/cache。Scene M1–M4自然receiver/派发/初始化/reset缺允许独立来源，World slot114存在准确A返回依赖。
+- Material 分类literal原值、实际row、独立oracle及真实consumer仍缺；无固定literal来源入口，不派常量query。Reliquary rank/set缺允许具名target来源或同源输入+独立非零oracle。Weapon239仅11101的1种27行有六键片段，其他238种1636行缺允许独立值来源；11101/11501行级旧ctor/parser轨迹命中A，caller PC未知。[Weapon](docs/CLIENT_72_D02_OLD_WEAPON239_SOURCE_BLOCKER_20261116.md)。
+- Skill 367个id/element新值、121 energy的三字段、合法typed输入/reader/TLS与独立oracle未闭；371长度仅证头，不读取payload，也不能造None/空对象。完整旧号恢复须使用同一旧号的真实 Player，覆盖全部实际加载的121角色、活动物品和装备及其 postLoad/recalc/save；不能以活动四人代替，装备槽和自然资源采用仍待必要合同。
 
-## 恢复后的第一步
+## 已知失误、备份与恢复
 
-1. 等用户明确指示恢复；先读 [AGENTS](AGENTS.md)、[Project](Project.md)、[Harness](Harness.md)、[迁移研究](docs/CLIENT_72_MIGRATION.md)和[部署手册](docs/CODEX_ONE_CLICK_DEPLOY.md)，核当前差异归属及本机实际状态，不套用历史 PID、路径或 ready。
-2. 第一可独立步骤仅只读核成员语义草稿与上述固定原件、补充上游冻结边记录，并对照已验来源进行独立审核；不新取 source、跟 CALL、补 codec 或启动现场。保留原资料、缺项与新发现的停止边。审核通过后才判断普通独立后继；若仅剩必需且被拒的最小动作，交用户依据现有队列判断，不自动派 Daybreak。
-3. 后续用户恢复现场时，先确认合法自然非空 cache/key 的证据来源、全新 fresh 和实时 ready；窗口化包仅离线验收，不自动启动。完整 R1/R2/R3 合同齐备并完成 R4，才能按部署手册进入 R5，再开展 R6 客户端验收。
+Skill首轮ENTRY包装错误、Material原cap停止和schema KeyError、metadata v1二元容器误读均按专题保留；不得把修正后的source追认为旧轮通过。Relic source两历史ctor entry pins未用作输入/单独重核，主线限定接受；不推初始化。Depot结构探查曾误展开mapping.selected展示超范围既有Skill字段，最终代码只用key/source与存在性，不能称无额外读取。
+
+本次HANDOFF2备份首次尝试因 Copy-Item 不支持 `-NoClobber` 失败、没有复制；随后确认目标不存在并完成备份。原 `HANDOFF2.md` 与备份 `local/migration72/d02-resume-20261116/handoff-before-final-closeout/HANDOFF2.md` SHA-256 均 `515259bd018dff962d853cc2a89bd67b6bbd396e968ef27aa31bc0f8c3a13c9c`。HANDOFF 只追加，prefix 与备份/hash receipt 留同批忽略目录。
+
+恢复须用户明确指示；先读 [AGENTS](AGENTS.md)、[README](README.md)、[Project](Project.md)、[Harness](Harness.md)、[迁移研究](docs/CLIENT_72_MIGRATION.md)和[部署手册](docs/CODEX_ONE_CLICK_DEPLOY.md)，核 checkout、差异归属、子模块、.env/.env.local/config、GAME_PATH、进程与端口，不套用历史快照。按新指令只读复用已验成果，缺literal/具名consumer/非零oracle或现场输入分开记录，不猜字段或造空值。真实现场须明确合法输入、当次 fresh 和实时 ready；必要合同闭合并通过R4后才隔离便携部署R5，再做R6六项真实客户端验收。
