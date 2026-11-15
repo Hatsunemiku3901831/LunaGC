@@ -4,9 +4,9 @@
 
 ## 当前阶段
 
-2026-11-14 `UP-72-20261114`：按用户指令开展公开上游静态调研，阶段成果及未覆盖分页见[研究报告](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)和[检索账本](docs/CLIENT_72_UPSTREAM_LEDGER_20261114.md)。状态**进行中**：发现 LunaGC 7.2 及 AstaPS 非默认任务分支，已固定部分源码并识别协议冲突；长尾搜索拆分、部分 Fork 和跨平台线索仍待核。下一独立任务为 UP-72-N1 离线三层对照；本轮未改运行代码、未部署或实机验收，D-02 状态不变。原 A/B 拒绝及其依赖继续冻结。
+2026-11-14 `UP-72-20261114`：按用户指令开展公开上游静态调研，阶段成果及未覆盖分页见[研究报告](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)和[检索账本](docs/CLIENT_72_UPSTREAM_LEDGER_20261114.md)。状态**进行中**：发现 LunaGC 7.2 及 AstaPS 非默认任务分支，已固定部分源码并识别协议冲突；长尾搜索拆分、部分 Fork 和跨平台线索仍待核。UP-72-N1/N2 对照候选须先核现有成果并证明能解除具体 D-02 合同缺口，避免重复；本轮未改运行代码、未部署或实机验收，D-02 状态不变。原 A/B 拒绝及其依赖继续冻结。
 
-**2026-11-12 排期批次仅更新下一步排期，研发与联调仍暂停；D-02 / F-05 / D02-R6 六项客户端验收仍为0/6。** 原Scene reader与Proud setter首发包及其后继限定成果直接复用，不重新排队。Proud三字段布局与166B Float getter来源已验，语义、业务alias及实际row仍待；existing-cache离线准备已验，但cache1启动超时取消、sample未派，实际输入未取得。恢复后优先Float/字段来源的独立分析，并处理已发生的启动回执超时；新现场须另取实时ready，禁止computer-use。Scene自然receiver/初始化及World slot114保留准确缺口，已确认的共用allocator返回依赖与A/B拒绝项冻结。详细研究过程和历史现场见[交接](HANDOFF2.md)及[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。
+**当前离线研究已恢复；D-02 / F-05 / D02-R6 六项客户端验收仍为0/6。** 原Scene reader与Proud setter首发包及其后继限定成果直接复用，不重新排队。Proud三字段布局与166B Float getter来源已验，语义、业务alias及实际row仍待；existing-cache离线准备已验，但cache1启动超时取消、sample未派，实际输入未取得。当前进行 Float/字段消费来源的独立分析与已发生启动回执超时的离线归因；新现场须另取实时ready，禁止computer-use。Scene自然receiver/初始化及World slot114保留准确缺口，已确认的共用allocator返回依赖与A/B拒绝项冻结。详细研究过程和历史现场见[交接](HANDOFF2.md)及[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -80,7 +80,7 @@
 | C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 条件codec、当前采用双源、QueryWrapper/NativeWrapper借用合同与FindEntry源已验；31A三字段布局和31B 166B Float源已验，旧Talent/121Depot/phase6复用 | 首发Float输出及三字段消费来源的独立分析；实际M/Float/三alias/row/current仍未知。cache1仅启动超时且sample为0，不能当cold结果；旧run2热Equals链已按cold结束 | Sol max语义，Sol xhigh负责启动协调与集成，Terra接明确包；不得运行A/B草稿，不补空Proud行 |
 | Scene：F-03d3s2 | reader各限定源/语义、World类型后缀与父payload/条件消费者、factory布局及cluster getter源均已验，707组/World21名称复用 | 首缺为9251实际receiver、返回reader及+18初始化/reset；已确认getter/Recreate/World主动构造共用A allocator的返回依赖冻结，World slot114没有成熟现场包。已有cache/ReplaceCluster未知但不能据此自动继续 | 有独立允许来源才派Sol max；无新证据不继续补read尾窗或展开组件树，成熟规格交Sol/Terra |
 
-原批次输入、已验产物及停止点见 [原执行计划](docs/CLIENT_72_D02_RESUME_20261111B.md)和第6节；当前具体派工和文件归属以[本轮恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)为准。此前恢复记录属于历史，当前按用户明确要求暂停；不将尚待集成的交回结果标为已完成。
+原批次输入、已验产物及停止点见 [原执行计划](docs/CLIENT_72_D02_RESUME_20261111B.md)和第6节；当前具体派工和文件归属以[本轮恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)为准。此前暂停与恢复记录属于历史；不将尚待集成的交回结果标为已完成。
 每次派工先固定：**任务ID、输入版本/来源、准确问题、允许修改的文件、只读依赖、独立输出目录、禁止操作、产物、验收、停止/返回条件**。所有者以本批派工为准，一个文件同一时刻只有一个写入者。子代理返回“已完成/有界结论/阻塞”及证据；主线审核实际差异、必要独立样本和回归，再更新本页并提交。阻塞时写准确解除条件，不改父项为完成。
 
 ### 3.4 未完成工作包与模型分配
@@ -91,12 +91,12 @@
 | --- | --- | --- | --- | --- |
 | 已验复用→独立输入到位后 / F-03d3s2 reader工厂语义后继 | 进行中；工厂/backend/LoadedBundle/token/refill/read-core及控制尾、cluster getter限定来源与语义已验 | 当前只核9251实际receiver/返回reader/+18初始化reset的允许来源；不重发238B工厂、不补已闭read尾窗。getter及Recreate空cache的准确A调用返回依赖停止；未知已有cache/ReplaceCluster不作为执行许可 | Sol max仅处理有来源独立问题；明确实现交Sol xhigh/Terra | [本轮限定出口](docs/CLIENT_72_D02_RESUME_20261111C.md)、[准确原始后继](docs/CLIENT_72_D02_SCENE_READER_FACTORY_SUCCESSOR_20261111B.md)；自然reader与World仍未验 |
 | 已验复用→当前row所需后继 / E-01d1 Proud setter/getter语义后继 | 进行中；条件存储、initializer/builder/常量、当前采用双源及QueryWrapper/NativeWrapper借用、FindEntry来源已验 | 不重发157B setter旧包；将31A布局、31B Float原窗和现有cache输入准备对齐。准确业务alias、实际编码/值、row及当前采用未闭，不能以条件生成或host候选补Java空行 | Sol max语义；Sol xhigh/Terra接成熟实现 | [三字段当前边界](docs/CLIENT_72_D02_PROUD_MANAGED_ROW_REMAINING_20261112.md)、[完整Float来源](docs/CLIENT_72_D02_PROUD_MANAGED_FLOAT_GETTER_WINDOW_20261112.md)；准确A parser构造依赖冻结 |
-| 1优先 / E-01d1 Proud Float与三字段语义后继 | 待开始；31A布局分析、31B 166B/45条来源已完成，不能将source标记改成语义完成 | 先核正常路径输出、所需seed/table和准确caller/字段消费首缺；String字段与两个Float列分别定来源，实际M/值、业务alias及完整row保持未知。仅使用已有允许来源；新采样或构造不在此包 | Sol max分析；明确条件测试/投影交Terra xhigh | [31A边界](docs/CLIENT_72_D02_PROUD_MANAGED_ROW_REMAINING_20261112.md)、[31B原窗](docs/CLIENT_72_D02_PROUD_MANAGED_FLOAT_GETTER_WINDOW_20261112.md) |
+| 1优先 / R3-PROUD-FLOAT-CONSUMER-SOURCES | 进行中；31A布局分析、31B 166B/45条来源已完成，不能将source标记改成语义完成 | 先核正常路径输出、所需seed/table和准确caller/字段消费首缺；String字段与两个Float列分别定来源，实际M/值、业务alias及完整row保持未知。仅使用已有允许来源；新采样或构造不在此包 | Sol max分析；明确条件测试/投影交Terra xhigh | [31A边界](docs/CLIENT_72_D02_PROUD_MANAGED_ROW_REMAINING_20261112.md)、[31B原窗](docs/CLIENT_72_D02_PROUD_MANAGED_FLOAT_GETTER_WINDOW_20261112.md) |
 | 2准备 / R3-PROUD-EXISTING-STANDARD-CACHE-INPUT-PREPARE | 已完成；固定key 22101的已有managed两encoded及同批getter所需既存inverse选择字节/seed的离线准备限定验收 | 实际输入、native getter、current和row仍未知；host仅条件投影，不证明原子codec epoch；准确触A拒绝依赖即停 | Terra xhigh离线准备；intake_audit独立验收 | [验收与边界](docs/CLIENT_72_D02_RESUME_20261111C.md) |
 | 2准备 / INTEGRATE29-PREFLIGHT-PREPARE | 已完成；环境/退出/UAC薄封装预案限定验收，未启动或读取目标 | 执行前重核源码、配置及stock；预案不等于现场许可 | intake_audit | [验收与边界](docs/CLIENT_72_D02_RESUME_20261111C.md) |
 | 1优先 / R3-PROUD-MANAGED-ROW-REMAINING-TRIAGE | 已完成；31A限定三字段布局/条件输入及host单catalog候选 | 三业务alias、实际M及完整row未知；准确五A parser构造边冻结，不泛冻结全列或伪造Java空行 | Sol max；intake_audit独立审核 | [有界分析](docs/CLIENT_72_D02_PROUD_MANAGED_ROW_REMAINING_20261112.md)、[验收](docs/CLIENT_72_D02_RESUME_20261111C.md) |
-| 1优先 / Proud float getter单窗 | 已完成；166B/45条原窗限定验收 | 逻辑返回、原caller E8、语义合同、实际Float/三alias/完整row未知；语义后继待用户恢复 | Terra xhigh；intake_audit独立审核 | [原窗](docs/CLIENT_72_D02_PROUD_MANAGED_FLOAT_GETTER_WINDOW_20261112.md)、[验收](docs/CLIENT_72_D02_RESUME_20261111C.md) |
-| 先启动归因→按需现场 / R3-PROUD-EXISTING-CACHE-CAPTURE | 待开始；cache1启动超过原等待而Launch/helper回执缺席，sample未派、target RPM为0；旧包已取消 | 恢复后先根据原日志/回执核超时阶段和退出交接，必要时只验证自有薄封装。取得允许的启动支持方式并完成新预检后再请用户新ready；不复试旧包、不重置总等待起点、不将超时解释为cold/null或SDK失败，禁止computer-use | Sol xhigh执行子代理；主线协调验收，明确纯测试可交Terra | [实际停止点及准备范围](docs/CLIENT_72_D02_RESUME_20261111C.md)、[终态交接](HANDOFF2.md)；不追加String/Float读取到旧范围 |
+| 1优先 / Proud float getter单窗 | 已完成；166B/45条原窗限定验收 | 逻辑返回、原caller E8、语义合同、实际Float/三alias/完整row未知；语义后继正在独立分析 | Terra xhigh；intake_audit独立审核 | [原窗](docs/CLIENT_72_D02_PROUD_MANAGED_FLOAT_GETTER_WINDOW_20261112.md)、[验收](docs/CLIENT_72_D02_RESUME_20261111C.md) |
+| 先启动归因→按需现场 / R3-PROUD-EXISTING-CACHE-CAPTURE | 待开始；cache1启动超过原等待而Launch/helper回执缺席，sample未派、target RPM为0；旧包已取消 | 独立任务 R3-PROUD-CACHE1-LAUNCH-TIMEOUT 正在据原日志/回执及自有 stub 归因 RunAs/elevation 同步交接；原90秒等待起点不变。取得允许的启动支持方式并完成新预检后再请用户新ready；不复试旧包、不重置总等待起点、不将超时解释为cold/null或SDK失败，禁止computer-use | Sol xhigh执行子代理；主线协调验收，明确纯测试可交Terra | [实际停止点及准备范围](docs/CLIENT_72_D02_RESUME_20261111C.md)、[终态交接](HANDOFF2.md)；不追加String/Float读取到旧范围 |
 | 历史cold结果复用，不重排同实验 / E-01d1/R3-PROUD-HOT-EQUALITY-INPUT | 进行中；PREPARE/run2预检和收尾已验；一次partial 3读24B，Q/S非零、O为0，F/M未读 | 旧7读50B结束，不沿同页循环或建立Default。只有新必要输入与独立规格成立才重新评估；本轮优先已准备的existing-cache任务，不混用两轮身份或结果 | 只读复用；新问题先由Sol max判必要性 | [原准备](docs/CLIENT_72_D02_PROUD_HOT_EQUALITY_SAMPLER_20261111B.md)、[lookup合同](docs/CLIENT_72_D02_PROUD_LOOKUP_CONTRACT_20261111B.md)、[实际run2](docs/CLIENT_72_D02_RESUME_20261111C.md) |
 | 阻塞保留，当前不排现场 / F-03d3s2/SCENE-SLOT114 | 阻塞；没有成熟包，主动触发准确共用allocator返回依赖冻结；真实World/44512、受支持同帧/RSP规则、Pool来源和总预算未齐 | 只在不依赖被拒动作的新允许来源存在时重新审必要条件；不能以metadata候选、已有缓存猜测或替代触发补同帧。已有三读224B只是输入规格，不是采样许可 | 目前不派触发/现场；独立来源问题另定Sol max范围 | [三读规格](docs/CLIENT_72_D02_SCENE_SLOT114_20261111.md)、[已验触发边界](docs/CLIENT_72_D02_SCENE_SLOT114_TRIGGER_CONDITIONS_20261111C.md)；slot114之后组件不提前展开 |
 | 拒绝依赖冻结 / F-03d3f4d2 完整Avatar构造/后缀 | 阻塞；依赖已拒绝A-SECOND-RETURN-CONTRACT。原getter/owned字符及首pop副本、第二record/L64/flags8与GC/Default同epoch输入、904B人工SSE/AVX和stock条件自有前后结果只读复用，Default对象身份仍opaque | 第二分配合同及其依赖不重试、不运行草稿；完整20分配/12根及子构造未闭。自然String tuple/caller/trigger、TLS/GC所有权、enum/cold普通10294及g2保持未知，不补值/host成功；其他A任务先独立性判断 | 当前不派拒绝项；独立任务另定Sol/Terra范围 | [自然输入边界](docs/CLIENT_72_D02_A_SUCCESSOR_20261110.md)、[原6B实际能力](docs/CLIENT_72_D02_CLEAR48_NATIVE_CAPABILITY_RESULTS_20261111.md)；完整父项和g2继续阻塞 |
@@ -120,6 +120,17 @@
 
 R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有结果，旧UI/WinHTTP或旧观察默认不排期；只有新的必经路径证据和准确不同问题才重新评估，不能接续被拒B动作。E-01自然首诊、Talent空值/完整候选加载、121Depot两叶和phase6已验范围不重开，完整恢复仍受必要资源约束。新发现先归现有任务并证明D-02必要性，不因一个失败再复制父任务；全707组业务、全资源/Lua扫清及完整codec通用工具转第7节按需。
 
+当前独立任务与候选的状态：
+
+| 工作包 | 状态 | 当前范围和下一判断 |
+| --- | --- | --- |
+| R3-PROUD-FLOAT-CONSUMER-SOURCES | 进行中 | 仅以已验166B来源分析正常路径和三 consumer 缺口；不取新原窗、不调用 getter、不建立 cache/Default，不消费被拒分配返回。结果待主线验收。 |
+| R3-PROUD-CACHE1-LAUNCH-TIMEOUT | 进行中 | 原 cache1 父回执0B、helper缺席，sample未派；用离线自有 stub 定位同步 RunAs/elevation 交接，90秒起点不变。结果待主线验收。 |
+| Scene 有界差距 | 待开始 | 9251实际receiver、virtual +f0返回reader及其+18初始化/reset未知。316B getter来源已验；先判是否有不消费 A 拒绝动作及产物的已有输入，未知已有cache/ReplaceCluster不是执行许可。 |
+| Proud String 输入合同候选 | 待开始 | 仅核26072.field127898的 M+20 String、type293 length+10/UTF16+14 输入及 host 同源配置身份；OpenConfig仅业务候选。先证明其对 D-02 的具体必要性与独立输入；不并入 Avatar String 的 tuple/TLS/GC 或 Gadget Hash/FindEntry 路线。 |
+| Float机械断言候选 | 待开始 | 待当前分析形成可独立验证且能解除具体缺口的规格后决定；不预设新采样或自然值。 |
+| UP-72-N1/N2、F-04离线清单候选 | 待开始 | 分别先核已验上游对照与 ENV-01/InstanceRoot 成果；只有能解除当前 D-02 的具体合同或部署准备缺口才派发。实际部署仍待 R4。 |
+
 ### 3.5 并行与互斥规则
 
 | 对象 | 可同步执行 | 必须由主线串行或先冻结的操作 |
@@ -133,7 +144,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 
 ## 4. 任务发布与范围控制
 
-1. **恢复后按3.2依赖及3.4准确缺口调度。** 本次仅轻度重规划，研发/联调继续暂停；恢复后从31B Float/三字段消费来源和cache1启动回执超时归因开始。旧Scene/Proud首发及后继限定成果直接复用；A/B拒绝与准确依赖不派发，World slot114不作为下一轮可直接执行的现场任务。
+1. **按3.2依赖及3.4准确缺口调度。** 当前开展31B Float/三字段消费来源和cache1启动回执超时的离线归因。旧Scene/Proud首发及后继限定成果直接复用；A/B拒绝与准确依赖不派发，World slot114不作为下一轮可直接执行的现场任务。
 2. **规格成熟就实现。** Sol max给出明确来源/字段/时序和验收后，转Sol xhigh/Terra做最小变更；重大问题或长任务先规划。主线审核后执行必要测试/独立复现、本地提交、更新状态，再启动后继；无新变化或未决风险不重跑历史全量。
 3. **实机只补准确缺输入。** 不直接放大SDK预算、重复同参数观察或用零槽补值；需要用户操作时先备妥实验再一次说明操作/预期/反馈并等待新ready，同时继续独立工作。采集通过不代替消费者或业务通过。
 4. **必要性先于扩展。** 缺表/日志须结合真实入场调用筛选；不把全707组业务、全资源/Lua、完整codec通用工具或预览UI列默认P0，也不将未知默认判作可省略。实际必经通知、资源、所选旧号121角色及活动物品/装备依赖不能删。完整Avatar/Scene、自然SDK、真实资源与保存各有独立出口，不以一项片段互相代验。

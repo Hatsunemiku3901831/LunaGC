@@ -1,8 +1,8 @@
 # D-02 恢复执行索引（2026-11-11C）
 
-本页记录 `DOC-D02-RESUME-20261111C` 的本轮派工、输入、证据和停止点；任务状态和验收以 [Project](../Project.md) 为准，复现命令及完整原件清单见各专题。接手基线 HEAD `1410df707cf52794afadbd2e9bfec9c7be01026b`；国服 7.2、Windows portable。已派工作验收与终态只读盘点完成，按用户明确指示暂停；新研发及联调下次恢复，禁止computer-use。安全拒绝及专项限制、ready与验收门禁继续有效。
+本页记录 `DOC-D02-RESUME-20261111C` 的本轮派工、输入、证据和停止点；任务状态和验收以 [Project](../Project.md) 为准，复现命令及完整原件清单见各专题。接手基线 HEAD `1410df707cf52794afadbd2e9bfec9c7be01026b`；国服 7.2、Windows portable。前轮终态只读盘点和暂停为历史；当前离线研究已恢复，禁止computer-use。安全拒绝及专项限制、ready与验收门禁继续有效。
 
-D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开始。现有局部成果和本轮交回均不等于自然客户端入场或资源 ready。主线负责管理、独立验收；用户允许需要联调的部分由主线承担。共享 Git/index/提交、构建和运行现场须唯一执行；run2主线现场占用已结束，共享运行权恢复唯一执行者 `intake_audit`；后续若由主线接管须重新明确交接，不双执行。各专题写者不操作共享 Git/index。本页与 Project/Harness 的写者为文档代理 GPT-6.1 Terra xhigh；不碰 README、交接、其他专题、源码或冻结报告。
+D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开始。现有局部成果和本轮交回均不等于自然客户端入场或资源 ready。主线负责管理、独立验收；用户允许需要联调的部分由主线承担。共享 Git/index/提交、构建和运行现场须唯一执行；当前由本轮指定的集成执行者负责，不双执行。各专题写者不操作共享 Git/index。本页与 Project/Harness 的写者为文档代理 GPT-6.1 Terra xhigh；不碰 README、交接、其他专题、源码或冻结报告。
 
 ## 本轮任务与证据状态
 
@@ -78,7 +78,7 @@ cache1 RunAs无Launch/helper回执，父receipt始终0B，超90秒停止；采�
 
 A-SECOND-RETURN-CONTRACT 及依赖、B组合 loader 仍因安全审查拒绝冻结，不运行草稿、不换模型或工具、不间接重试。A 的完整原拒绝仍缺，不能将摘要冒充原提示；B 保留原句 `This content was flagged for possible cybersecurity risk.`。现有[最小包队列](CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)只读复用，队列开头的暂停叙述属于历史状态，不自动新增或派发 Daybreak。移除被拒动作后，仅推进能靠已有输入独立完成且产物不直接实现被拒动作的任务；局部通过不升级父项或 ready。真实门禁、认证、资源和完整旧号恢复仍约束 R4。
 
-当前按用户要求暂停；不开始Float语义、业务alias、String采样器、Java或部署等后继。用户恢复后先核对固定输入、工作区和现场，再按已验原窗确定独立后继；新现场另需新ready。R1/R2/R3 必要合同齐备后才进入 R4，继而 R5/R6。
+当前 `R3-PROUD-FLOAT-CONSUMER-SOURCES` 与 `R3-PROUD-CACHE1-LAUNCH-TIMEOUT` 为进行中，结果待主线验收；不扩大为新原窗、目标getter/cache/Default或现场。Proud String 输入合同、Scene差距及Float机械断言为待开始候选，须先证明具体必要性与独立输入；新现场另需新ready。R1/R2/R3 必要合同齐备后才进入 R4，继而 R5/R6。
 
 ## 已验本地提交索引
 

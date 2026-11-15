@@ -2,7 +2,7 @@
 
 任务 `F-03d3s2/READER-CLUSTER-REMAINING-SOURCE-TRIAGE`，父项 `D02-R1/R3`。本包只复用 reader 工厂238B、同一 `_cluster` 的三个 writer、typed metadata 与既存 Scene/Pool 索引；不新增取源或运行。
 
-**仍有一个准确、可独立取证的静态首缺：`11009.m77588 get_instance / 146e52c30`。** Recreate 中两个已有 E8 直接调用它，普通返回的完整 RAX 又直接写入工厂实际消费的 `_cluster`。现存原件没有这个 getter 的完整 raw，因此交一个 source-only 原窗规格；不以“未知 receiver”直接宣告外部阻塞，也不根据 Allocate 声明读取两个实现。
+**本包当时识别的静态首缺 `11009.m77588 get_instance / 146e52c30` 已由后继316B来源限定验收。** 见[原窗](CLIENT_72_D02_SCENE_READER_CLUSTER_GETTER_WINDOW_20261111C.md)与[恢复索引](CLIENT_72_D02_RESUME_20261111C.md)；以下取窗请求为历史规格，不再排期。Recreate 中两个已有 E8 直接调用它，普通返回的完整 RAX 又直接写入工厂实际消费的 `_cluster`。本包当时的原件没有这个 getter 的完整 raw，因此交出 source-only 原窗规格；不以“未知 receiver”直接宣告外部阻塞，也不根据 Allocate 声明读取两个实现。
 
 这只推进所证 writer 的返回生产来源。自然选择、receiver、virtual `+f0` 返回 reader 与同对象 `+18` 初值/reset 尚未成立；本包不升级自然 reader、read success、Scene/resourceReady 或父项。
 
@@ -46,7 +46,7 @@ typed owner11061 `ObjectPoolUtility` 的 field52910 `_cluster`，raw `4005d60`�
 
 typed 记录实际存在 `11009.m77588`：`get_instance`、flags `0x896`、0显参、slot `ffff`、registered `146e52c30`。其返回声明未由旧提取物给出，不能按名称断言读取 `_ins`。固定 `client72-signatures.json`（78649549B，SHA `28377e7a8d3c891cd61be97ddb74f8502a22f2f2f039d6a91dba3b092d7822fe`）对此 index/目标为0命中；**这不消除完整 typed metadata 的 ordinary method 记录，不得错误标 AOT 不适用。** 完整 metadata pin 继续复用117201003B / `df52eb70fe8e70dfecd1059e898d15e288cfa98bcefc78bcaabf753ae150349f`，不运行旧入口。
 
-## 唯一后继：getter 原窗，而非 Allocate 或现场
+## 历史后继规格：getter 原窗，而非 Allocate 或现场
 
 私有 `getter-one-window-request.private.json` 已给 Terra 可执行的来源、顺序和验收条件：
 
@@ -58,7 +58,7 @@ typed 记录实际存在 `11009.m77588`：`get_instance`、flags `0x896`、0显�
 
 它能判定这个准确 writer 输入的返回位来源、各返回/外 tail、静态 cache/初始化依赖及是否出现准确 A/B 边。若出现拒绝边，即停止对应返回/对象身份/reset 依赖；不借缓存或正常 RET 完成被拒身份研究。若只暴露另一个未绑定字段，按真实首缺交回，不自动追 cctor、ctor、Allocate 或 pool tree。
 
-自然 reader 的首缺仍是工厂 `14d6f9251` 从 `_cluster` 取得的实际 receiver、其 virtual `+f0` 返回对象与同 reader `+18` writer/reset。工厂只清 `+10/+1c`，refill 不补 B；旧 World11008快照或受控 host 分配都不能替代该帧。当前没有已支持的同帧自然触发/reset输入，本包不请求现场或写 observer。静态 getter 原窗尚有准确来源可取，所以这里不是外部 blocked，也不把 reader 全部泛封为 A/B；Proud 直接 token/shared-array 路另不消费这个 B，仍独立验收。
+自然 reader 的首缺仍是工厂 `14d6f9251` 从 `_cluster` 取得的实际 receiver、其 virtual `+f0` 返回对象与同 reader `+18` writer/reset。工厂只清 `+10/+1c`，refill 不补 B；旧 World11008快照或受控 host 分配都不能替代该帧。当前没有已支持的同帧自然触发/reset输入，本包不请求现场或写 observer。静态 getter 原窗随后已完成限定来源验收，准确 A 返回依赖停止；不把 reader 全部泛封为 A/B；Proud 直接 token/shared-array 路另不消费这个 B，仍独立验收。
 
 ## 本包交付
 

@@ -6,7 +6,7 @@
 
 ## 固定来源与当前验收状态
 
-原件根 `local/migration72/d02-resume-20261111c/world-mplevel-type-factory-window/fresh1/`：完整pdata region `[14e8a84a0,14e8a8628)`、392B，body SHA `780ba856fa671de842d525ab9dc0684d7f5a0267332cf532bbb902af3f83c9b8`；原failure7328B/SHA `f7297f43301d34927f506559292dbf0122b10787d454924c1da005dba3d7f1c0`。失败保持 `stage=single-body/newBodies=1/bodyBytesRead=392/passed=false`；没有完整asm、第二fresh、audit或集成第三，不能晋级source验收。
+原件根 `local/migration72/d02-resume-20261111c/world-mplevel-type-factory-window/fresh1/`：完整pdata region `[14e8a84a0,14e8a8628)`、392B，body SHA `780ba856fa671de842d525ab9dc0684d7f5a0267332cf532bbb902af3f83c9b8`；原failure7328B/SHA `f7297f43301d34927f506559292dbf0122b10787d454924c1da005dba3d7f1c0`。原轮失败保持 `stage=single-body/newBodies=1/bodyBytesRead=392/passed=false`，当时没有完整asm、第二fresh、audit或集成第三，不追认该轮。后续修正源已完成限定验收：8测试、双fresh与独立第三十件一致；见[恢复索引](CLIENT_72_D02_RESUME_20261111C.md)，提交 `08ee5792`。
 
 本轮复核保存的8件门证据及failure引用的固定输入，共34个来源pin。boundary/pre-body各7252B同SHA `361f538d58b9e72c46b8ddb274bedfbff1e117282aaf816208d318caf5c3fcde`；真实pdata record RVA `1aa83f98`、原12B `a0848a0e28868a0ec00e5004`，unwind RVA `4500ec0`，exact/containing相同。原caller20B/AOT16B/profile/五stock/mapping/预算已过是**保存门证据的事实**；本轮没有重新打开GAME_PATH/PE或重验现场stock。
 
@@ -64,7 +64,7 @@ U32=1仍仅来自[首项合同](CLIENT_72_D02_WORLD_MPLEVEL_PARENT_CONSUMER_2026
 
 因此新增有界结论是“条件case1请求25270类型的来源已定”。不能由请求class推实际返回klass，不能据其选择 `14b132c20` slot6或取得原parser字段，也不通过host填返回值。旧1343B parser `224→1405336c0` map分配及key-helper/cursor模型边界继续有效。其它selector只核表目标/布局，不扩其配置业务。
 
-## 最小修正与后续验收规格
+## 历史最小修正与验收规格
 
 私有规格 `local/migration72/d02-resume-20261111c/world-type-factory-raw-review/collector-layout-fix-spec.private.json`：**9355B / SHA `802e711249e8cf5d75e30f20c7c582f4b3df1532c185c4a1b1944edfbe494e18`**。本包不改collector、不运行测试或fresh。
 
@@ -77,10 +77,10 @@ U32=1仍仅来自[首项合同](CLIENT_72_D02_WORLD_MPLEVEL_PARENT_CONSUMER_2026
 
 测试规格包括真实392B的81+1+8独立预期、入口bounds/LEA/scale/MOVSXD/ADD/JMP变异拒绝、signed32/64位地址及table/NOP/interior/outside目标拒绝、未解释bytes与落入data拒绝、不匹配的普通incomplete样本仍失败、完整重建与audit篡改拒绝/0PE/CPU，以及全部业务flags保持false。原6组来源/rel32/AOT/pdata/节/预算/short read/late-failure门禁保留，不能用新布局放宽它们。
 
-主线审核规格后，Terra可修并在**新目录fresh2/fresh3**只重取原同一个392B窗，补十件双fresh、pureartifact audit及主线第三；不重取callee/global/额外window。此处只是成熟派工规格，本包没有执行重试。源修正可独立验收，A依赖仍停，不因这是普通解码问题转用其它工具取得被拒返回。
+本包当时建议在**新目录fresh2/fresh3**只重取原同一个392B窗，补十件双fresh、pureartifact audit及主线第三；不重取callee/global/额外window。此处只是成熟派工规格，本包没有执行重试。源修正可独立验收，A依赖仍停，不因这是普通解码问题转用其它工具取得被拒返回。
 
 ## 本包交付
 
 独占根 `local/migration72/d02-resume-20261111c/world-type-factory-raw-review/` 的 `layout-review.private.json` 为 **39946B / SHA `ccaf52110596c89ad81155beb31a22c8cead8b592e9b68921d05b30ba319e368`**，含34pin、原392B、82条静态解码记录（含NOP）、完整表/边及A停止点。
 
-本轮新PE/callee/global/xdata/live/目标CPU读取与执行均0，模型/collector实现/测试/fresh/构建/Java/DB/端口/client/调试器/部署/Git/index均0。旧所有工具、专题和原件只读；只写本新专题/私有证据。没有新安全拒绝，不将普通技术失败称外部blocked，也不启新研究树。完整source验收、自然reader/MPLevel对象/字段、Scene/resourceReady/D02均未晋级；有界结论及修正规格交回即结束。
+本轮新PE/callee/global/xdata/live/目标CPU读取与执行均0，模型/collector实现/测试/fresh/构建/Java/DB/端口/client/调试器/部署/Git/index均0。旧所有工具、专题和原件只读；只写本新专题/私有证据。没有新安全拒绝，不将普通技术失败称外部blocked，也不启新研究树。本包交回时source尚未验收；后续修正源已按本页首段限定验收，自然reader/MPLevel对象/字段、Scene/resourceReady/D02仍未晋级。

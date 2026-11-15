@@ -1,6 +1,6 @@
 # Scene cluster getter 单原窗采源
 
-任务 `F-03d3s2/SCENE-READER-CLUSTER-GET-INSTANCE-WINDOW`；父项 `D02-R1/R3`。本文只交采源与停止点。**严格解码上限修正后的双 fresh 和纯原件 audit 通过，主线独立第三次尚待执行与比较；来源尚未最终接受。** 不证明自然 reader、receiver、`+18` 初值/reset 或 D-02 客户端验收。
+任务 `F-03d3s2/SCENE-READER-CLUSTER-GET-INSTANCE-WINDOW`；父项 `D02-R1/R3`。本文只交采源与停止点。**316B/63条来源已完成限定验收：严格上限修正后真实第三与双 fresh 十件一致，7测试通过。** 提交 `5458d0f`，独立回执 `integration/acceptance27b/completion1.private.json` SHA-256 `1a43f25e70e5da6e9d70126292cf589050f5b69c0074d8fddf1c390dcb3fb6a5`（相对本轮忽略证据根），详见[恢复索引](CLIENT_72_D02_RESUME_20261111C.md)。不证明自然 reader、receiver、`+18` 初值/reset 或 D-02 客户端验收。
 
 ## 固定输入和门禁
 
@@ -44,6 +44,6 @@ header、exception directory、五件 stock 哈希、caller、AOT、selected pda
 - `python -m unittest tools.migration72.test_scene_reader_cluster_getter_window -v`：7 项通过。用真实 Capstone 的包裹计数核对传入引擎的 `count` 为256，且 257 条单字节指令样本只产出256条即停止；另覆盖恰好256条、短读原件保留及不完整解码失败。
 - `--output v2-fresh1` 和 `--output v2-fresh2`：各自门禁通过，完整原窗仍为316B / 63指令，body SHA 与修前相同；两次十件原件逐字节一致。`--audit v2-fresh1 v2-fresh2 --output v2-audit.private.json` 通过，当前 PE 读取0，audit SHA-256 `86411a24e5586257f579b06cc69ed26d3aad37023e64eed4536492ad607dac44`。
 - 修前 `fresh1` 与 `v2-fresh1` 的 caller、AOT、pdata、body、解码记录七个文件逐字节相同；三个报告仅 `toolSHA256` 不同。无新普通失败或输入冲突。每轮原件读取账保持上表范围。
-- 主线第三次准确命令：`python -m tools.migration72.scene_reader_cluster_getter_window --output v2-third`；比较命令：`python -m tools.migration72.scene_reader_cluster_getter_window --audit v2-fresh1 v2-third --output v2-audit-third.private.json`。本子任务没有执行第三次，待主线独立验证。
+- 主线第三次准确命令：`python -m tools.migration72.scene_reader_cluster_getter_window --output v2-third`；比较命令：`python -m tools.migration72.scene_reader_cluster_getter_window --audit v2-fresh1 v2-third --output v2-audit-third.private.json`。作者子任务当时没有执行第三次；其后主线已独立执行并比较通过，结果见本页首段。
 
 此修正不解释或实现 A 调用对应返回、对象身份及 reset。无目标执行、运行服务、构建或 Git/index 操作。

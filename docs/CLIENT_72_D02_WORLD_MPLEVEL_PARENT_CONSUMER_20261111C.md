@@ -49,7 +49,7 @@
 
 已验167B m196498在原reader当前位置取1B，先将cursor加1写回，再对AL加`35`作8位回绕，零扩展ECX；`14b135d07 e894277703`准确CALL `14e8a84a0`。非空结果还要通过25270层级兼容性检查，之后才CALL **实际返回对象klass+100**，并返回原对象。
 
-`25270.m196496/14b132c20`的slot6只是metadata声明，不是已绑定的实际+100值，不能先取它。下一窗只补 **62017.m514570 `PCKPBPDHLNB(uint32)`/`14e8a84a0`**，研究显式条件输入1的静态class/分派关系。返回声明类型尚未恢复；此窗不执行工厂，不以host成功对象填洞。若遇准确A分配，只记录该支的请求类型/原边，停止其构造返回及actual klass/slot依赖。
+`25270.m196496/14b132c20`的slot6只是metadata声明，不是已绑定的实际+100值，不能先取它。本包当时计划的下一窗为 **62017.m514570 `PCKPBPDHLNB(uint32)`/`14e8a84a0`**，研究显式条件输入1的静态class/分派关系。返回声明类型尚未恢复；此窗不执行工厂，不以host成功对象填洞。若遇准确A分配，只记录该支的请求类型/原边，停止其构造返回及actual klass/slot依赖。
 
 本轮按准确entry/start和工件名定向检查既存local JSON/原件，只找到四份旧analysis/request记录，没有找到该factory完整带raw body。不是重发旧无必要性研究：现在已有同源父正文与首必要entry字节，输入条件/收益更窄；不扩其余20或通用factory树，也不将可本机取source称外部blocked。
 
@@ -63,6 +63,8 @@
 | pdata/body | 固定exception目录14344080B/SHA `5895dbeef8fe13458720889e318ba64f3fc9c5d3ca03bf01b0adc70eee16c08d`；exact/containing各唯一且同原行、Begin=entry，先存12B/pre-body。**end未知**，只取真实完整正extent≤8192B/2048指令、可执行/file-backed；缺/歧义/超限0body返回，不猜邻窗/前缀 |
 | 采集及验收 | 只1body，原bytes/asm/hash/RIP/CALL/branch/RET/fallthrough；保留computed branch/内联data歧义，不假logical complete；双fresh/pureartifact audit/主线第三。0子callee/global/xdata/live/CPU/model；来源、E8/AOT/范围/短读失败保存后停 |
 | 直接收益 | 条件case1若有独立静态映射，可缩窄请求class/表/constructor/真实parser来源；A或未知返回边仍停，不能升级为MPLevel对象/字段。后续只按这个实际首缺再判，不自动扩slot6/helper |
+
+后继392B来源及code/NOP/跳表布局已完成限定验收，见[恢复索引](CLIENT_72_D02_RESUME_20261111C.md)和[raw复核](CLIENT_72_D02_WORLD_TYPE_FACTORY_RAW_REVIEW_20261111C.md)；上方原取窗规格为历史，不再重排。仅条件case1请求25270类型成立，A分配/返回与实际klass、slot及MPLevel对象依赖仍停。
 
 ## 产物与状态
 
