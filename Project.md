@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-2026-11-14 `UP-72-20261114`：按用户指令开展公开上游静态调研，阶段成果及未覆盖分页见[研究报告](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)和[检索账本](docs/CLIENT_72_UPSTREAM_LEDGER_20261114.md)。状态**进行中**：发现 LunaGC 7.2 及 AstaPS 非默认任务分支，已固定部分源码并识别协议冲突；长尾搜索拆分、部分 Fork 和跨平台线索仍待核。UP-72-N1/N2 对照候选须先核现有成果并证明能解除具体 D-02 合同缺口，避免重复；本轮未改运行代码、未部署或实机验收，D-02 状态不变。原 A/B 拒绝及其依赖继续冻结。
+2026-11-14 `UP-72-20261114`：按用户指令开展公开上游静态调研，阶段成果及未覆盖分页见[研究报告](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)和[检索账本](docs/CLIENT_72_UPSTREAM_LEDGER_20261114.md)。状态**进行中**：发现 LunaGC 7.2 及 AstaPS 非默认任务分支，已固定部分源码并识别协议冲突；长尾搜索拆分、部分 Fork 和跨平台线索仍待核。UP-72-N1/N2 对照候选须先核现有成果并证明能解除具体 D-02 合同缺口，避免重复；本轮未改运行代码、未部署或实机验收，D-02 状态不变。原 A/B 拒绝及其依赖继续冻结；A原平台事件已找回，具体执行范围及技术输入仍缺。
 
 **用户已指示继续任务；D-02 / F-05 / D02-R6 六项客户端验收仍为0/6。** 原Scene reader与Proud setter首发包及其后继限定成果直接复用，不重新排队。Proud三字段布局与166B Float getter来源已验，语义、业务alias及实际row仍待；existing-cache离线准备已验，旧cache1启动超时取消、sample未派；本轮一次采样为cold-cache，实际输入未取得。Float正常路径条件合同与机械断言已限定验收，三字段消费桥及实际值仍未知；启动回执超时归因、薄封装修复及新身份绑定接线已限定离线验收，本轮真实Launch及一次采样后以cold-cache停止，现场回执与收尾已独立审阅通过；实际M/getter/row/current/epoch未知。新现场须另取实时ready，禁止computer-use。Scene自然receiver/初始化及World slot114保留准确缺口，已确认的共用allocator返回依赖与A/B拒绝项冻结。详细研究过程和历史现场见[交接](HANDOFF2.md)及[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。
 
@@ -133,6 +133,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-PROUD-NARROW-TYPED-CONSUMER-SOURCE | 已完成 | owner69135.m572230 的346B/91条来源窗限定验收；双fresh与第三13件同字节、32引用独核。仅source，实际M/bridge/row/current未知，flags81不推ABI或返回；冻结preview直接边为零不证明传递无关。见[单窗](docs/CLIENT_72_D02_PROUD_TYPED_BASE_LIST_WINDOW_20261115.md)。 |
 | R3-PROUD-TYPED-BASE-LIST-SEMANTICS | 已完成 | 限定346B本体物理路径、类型对照和一个准确后继首缺，23 pin/4附件/39原件及5声明/3布局独核；ABI、返回、S身份、共享helper与三字段桥/actualRow/current/epoch/ready未知。[限定语义](docs/CLIENT_72_D02_PROUD_TYPED_BASE_LIST_SEMANTICS_20261115.md)。 |
 | R3-PROUD-TYPED-LIST-MEMBER-SOURCE | 已完成 | 同owner单List方法来源856B/211条；双fresh与独立第三13件一致，88引用独核。仅source，formal/native ABI及业务语义未知。[成员单窗](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_WINDOW_20261115.md)。 |
+| R3-PROUD-CONFIRMED-CARRIER-CANDIDATES | 已完成 | 既有59500的16签名与63831的25个候选及声明字段/方法完成只读查询；不证明三字段消费。 |
+| R3-PROUD-CARRIER-CONSUMER-SOURCE-PLAN | 进行中 | 仅用既存metadata/listing核同owner的String/List/refbool上下文及旧Avatar候选段；有typed理由时至多提一个source问题，不新读PE/取窗、不续A/B或preview。 |
 | R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS | 已完成 | 本体双遍历、同N指针store、中性native+2c↔41105.field203368/+70表示桥及准确缺口限定验收；未消费26072三字段。上游旧listing的共用allocator调用属于准确A冻结边，停在CALL；业务桥、实际M/数组/String、row/current/epoch及ready未知。见[成员语义](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_SEMANTICS_20261115.md)。 |
 | F-03d3s2-SCENE-ALLOWED-SOURCE-GAP | 已完成 | 既有允许来源有界差距审阅已验；4 pin、三writer、238B工厂及6锚点独核，316B getter直接复用未重验。M1–M4实际receiver/派发与返回/初值/reset关系缺新增允许的固定独立来源，尚无成熟sender；不泛封Scene。见[关系矩阵](docs/CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)。 |
 | R3-PROUD-STRING-INPUT-CONTRACT | 已完成 | 中性输入状态及来源合同准备限定验收，9源pin和独立14/0；未创建采样器/读取器。实际M、pointer、length、UTF16、业务桥及配置同源仍未知，OpenConfig仅候选；不并入 Avatar String 或 Gadget 路线。见[合同](docs/CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)。 |
@@ -442,6 +444,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-PROUD-E8-STOP-LEDGER | 已完成 | 作者与独立各10项合成回归，仅验未来停止留证合同；旧fresh2实际exec读取量及覆盖未知，不回填原件、不晋级stage1。 | [停止与限定验收](docs/CLIENT_72_D02_PROUD_FLOAT_DIRECT_E8_INDEX_20261115.md) |
 | R3-PROUD-NARROW-TYPED-CONSUMER-SOURCE | 已完成 | 346B/91条，双fresh与第三13件一致、32引用独核；仅source，不证明消费桥、ABI或实际row。 | [单窗验收](docs/CLIENT_72_D02_PROUD_TYPED_BASE_LIST_WINDOW_20261115.md) |
 | R3-PROUD-TYPED-BASE-LIST-SEMANTICS | 已完成 | 346B物理路径、类型对照及单一后继首缺限定验收；实际S、ABI、三字段桥、row/current和ready未知。 | [限定语义](docs/CLIENT_72_D02_PROUD_TYPED_BASE_LIST_SEMANTICS_20261115.md) |
+| R3-PROUD-CONFIRMED-CARRIER-CANDIDATES | 已完成 | 复用59500的16签名并查询63831的25个候选及声明字段/方法；仅只读候选盘点，不证明三字段消费。 | 结果后继由 `R3-PROUD-CARRIER-CONSUMER-SOURCE-PLAN` 规划 |
 | R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS | 已完成 | 双遍历/同N指针store及中性native+2c↔41105.field203368/+70限定验收，未消费26072三字段；业务桥、实际值和ready未知。 | [成员语义](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_SEMANTICS_20261115.md) |
 | R3-PROUD-TYPED-LIST-MEMBER-SOURCE | 已完成 | 856B/211条，双fresh与独立第三13件同、88引用独核；仅source，ABI和业务语义未知。 | [成员单窗](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_WINDOW_20261115.md) |
 | R3-NEXT-LAUNCH-WINDOWED-2560X1440 | 已完成 | 仅窗口化新包与seal离线验收；作者与独立各4项合成测试，实际窗口尺寸待现场。 | [窗口化准备](docs/CLIENT_72_D02_NEXT_LAUNCH_WINDOWED_20261115.md) |
