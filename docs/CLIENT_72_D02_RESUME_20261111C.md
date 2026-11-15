@@ -46,6 +46,9 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 | `R3-PROUD-CARRIER-572232-SOURCE-PREPARE` | 已完成；69135.m572232/14c510320，flags81h、instance、String/String/List<59500>三显参；规格 `local/migration72/d02-resume-20261115/proud-carrier-572232-plan/规格.zh.md` SHA-256 `5893cdd76abdcd08a41515e214a868e7f37eddb89c20d96a59345adf85ee1228`。 | formal/hidden/ABI未知；只完成声明及私有source规格，不证明数组消费。 |
 | `R3-PROUD-CARRIER-572232-WINDOW` | 已完成；[单窗来源](CLIENT_72_D02_PROUD_CARRIER_572232_WINDOW_20261115.md)一次575B/148条及自身账本，证据603B。 | 与String helper预算分别记录；无重采/新测试，数组消费及业务未知。 |
 | `R3-PROUD-CARRIER-572232-SEMANTICS` | 已完成；[精确17390双String匹配](CLIENT_72_D02_PROUD_STRING_LOOKUP_AND_GATE_SEMANTICS_20261115.md)限定验收，命中仅AL/BL=1。 | EAX高位/formal return未知；无目标双数组直接读或whole List转交，不批准业务或ready。 |
+| `R3-PROUD-PAIR-CONSUMER-COVERAGE-PLAN` | 已完成；v2限定A已知receiver声明域、B固定signature全表显参字面52802递归过滤；`local/migration72/d02-resume-20261115/proud-pair-consumer-plan/query-spec-v2.private.json` SHA-256 `d763712e4b2dfe7f2070a102732fc8caf8fb01be0f4c1310ba1d5f92b9706102`。 | v1未执行保留；不沿fields/hierarchy扩大，不因其他A边泛封52802；formal return和业务未知。 |
+| `R3-PROUD-PAIR-CONSUMER-QUERY` | 已完成；[有界声明查询](CLIENT_72_D02_PROUD_PAIR_CONSUMER_QUERY_20261115.md)A十receiver共65声明，B遍历固定signature 326354/326354条得6唯一匹配method，未触cap。 | 仅字面嵌套显参覆盖，非全客户端或业务穷尽；return unknown，open/shared/IFix不冒业务。 |
+| `R3-PROUD-PAIR-CONSUMER-QUERY-TRIAGE` | 进行中；只核65+6记录是否形成D-02 ordinary来源问题。 | 尚未选新窗，不因其他A边泛封52802或宣称全部独立工作阻塞。 |
 | `R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS` | 已完成；[成员语义](CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_SEMANTICS_20261115.md)的本体双遍历、同N指针store、中性native+2c↔41105.field203368/+70表示桥及准确缺口限定验收。 | 未消费26072三字段，业务桥和实际M/数组/String/row/current/epoch/ready未知；上游旧listing共用allocator准确A边停在CALL，无新driver/投影/取源规格。 |
 | `R3-NEXT-LAUNCH-WINDOWED-2560X1440` | 已完成；新包与seal离线验收，作者及独立各4项合成测试，见[窗口化准备](CLIENT_72_D02_NEXT_LAUNCH_WINDOWED_20261115.md)。 | 未再启动，实际窗口尺寸未知；未来现场须新fresh和实时ready，不提供自然非空cache。 |
 | `F-03d3s2-SCENE-ALLOWED-SOURCE-GAP` | 已完成；[既有来源关系矩阵](CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)，专题 SHA-256 `c5428cf602b2e7b63400a440c447082857dcb532998db567eff857506f9f5bd6`；独核4 pin、三writer、238B工厂与6锚点，316B来源未重验。集成回执 `local/migration72/d02-resume-20261115/launch-timeout/gap-integration1/completion.private.json` SHA-256 `d8720288120fc2360a6433fe173d133978b5546be6fb821d3118f5a4ea8b343f`。 | M1–M4的实际receiver、派发与返回、初值及reset关系仍缺新增允许的固定独立来源，无成熟sender；不泛封Scene，不晋级父项或ready。 |
@@ -129,7 +132,7 @@ cache1 RunAs无Launch/helper回执，父receipt始终0B，超90秒停止；采�
 
 本轮现场（已有回执独立审阅通过）：一次Launch 4.498秒成功，用户55.579秒反馈SDK页在原90秒内；唯一sample 4.567秒以cold-cache停止，backend 00、root非空、cache 0；实际3 RPM/17B，identity 11 + sample 19 = 30 API，不是miss或timeout。用户确认正常退出，5个本轮已知进程均不在；closeout fresh核27 pin/149数据/五stock/config/JAR及端口通过，另33 sample pins匹配。原件 `local/migration72/d02-resume-20261115/launch-timeout/live-closeout1.private.json` SHA-256 `74feeb347b87a10fcc3a78796c9a735c68af09857bdc4503b4e7689d9f324645`；独立审阅 `local/migration72/d02-resume-20261115/launch-timeout/live-typed-integration1/live-review.private.json` SHA-256 `0ac12ac9a680cffa0b4ef580b12c1365860d9b8866d4f05a1e624ef48148ee1a`，只核已有快照、未重新探测；sample原件SHA-256 `3c17ef9e96bb229cec876fd9db40fc7d8635720bc8d1e5fd312ecae2bf428a14`。实际row/getter/current/epoch和ready仍未知，六项仍0/6。后继需自然非空cache及key输入，不循环同SDK页或创建cache/Default/主动getter；用户要求下次窗口化2560×1440，新包与seal已限定离线验收；未来现场须新fresh和实时ready，实际窗口与尺寸未验，本轮无参数包保留且未再启动。
 
-`R-D02-REMAINING-DEPENDENCIES` 已按既有材料完成只读盘点，见 `local/migration72/d02-resume-20261115/remaining-dependency-inventory/inventory.zh.md`；主线识别String helper与572232两项独立普通来源工作，不能据此宣称全局阻塞。
+`R-D02-REMAINING-DEPENDENCIES` 已按既有材料完成只读盘点，见 `local/migration72/d02-resume-20261115/remaining-dependency-inventory/inventory.zh.md`；该表已更新String限定出口及52802边界，仅支持具体依赖判断，不证明全客户端穷尽或全局阻塞。
 
 ## 拒绝冻结与独立后继
 
