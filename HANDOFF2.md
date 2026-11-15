@@ -1,96 +1,116 @@
-# 国服7.2恢复执行活动检查点（2026-11-16）
+# 国服7.2 D-02 条件2交接（2026-11-16）
 
-后续活动更新：`R3-SKILL-ELEMENT-SUFFIX-HOST-BATCH-20261116`已实际闭合367本轮+2旧的同源Skill id/element片段；`R3-OLD121-SKILL-DEPOT-RESOURCELOAD-JAVA-20261116`及原`R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA`已完成369Skill→121Depot真实加载/引用与element验收，120新energy绑定解除。唯一JVM26.031s/exit0、JUnit1/F0/E0/S0，输入源码及map/loadedAll保持，无DB/Player/client/服务；[实际证据](docs/CLIENT_72_D02_OLD121_SKILL_DEPOT_JAVA_20261116.md)。下面“无新测试”的接手盘点只描述初始时点，不能覆盖本次实际Java结果。
+## 当前状态与恢复入口
 
-121行成本/特殊池、完整Skill/Player恢复及R1/R2其他必要合同继续，D-02仍0/6，不作最终交接或全阻塞结论。下一步复核本成果之后仍真实必需的资源/恢复输入和消费者，不再排已完成367两键、120绑定或额外raw-id/reader窗。A/B、preview与准确依赖未变；仅离线工具/测试/文档，不构建JAR或启动部署。更新前本检查点已另备份至`local/migration72/d02-resume-20261116/integration-resume-20261116/before-java-progress/`，原HANDOFF2 SHA-256 `9884fe06a4c438f3c3fff54ca53de37931cd3c487f9c7624dd701ca76f8c2917`。
+任务`D02-RESUME-INTEGRATION-20261116`本轮独立成果与集成已完成，D-02父项未完成。用户已解除旧暂停；本轮持续执行后，主线按**条件2：各当前必要独立剩余项缺准确外部输入或受既有专项限制，已无可独立立即实施的必要任务**收口等待。这不是用户暂停，也不是宣称全网、全机或所有潜在方法不存在。新准确允许输入到达后，从本文对应最小项继续，不重复本轮已验工作。
 
-用户已明确解除旧暂停，持续推进D-02；此处为活动检查点，不是结束交接。任务`D02-RESUME-INTEGRATION-20261116`接手HEAD为`420002e`，已完成差异/子模块/脱敏配置/进程端口及11个既验产物hash核对，接手与状态纠正子出口完成，集成继续。D-02/F-05/D02-R6仍0/6，R1/R2/R3进行中、R4/R5/R6未开始；没有新测试、构建、Proto生成、数据库/实例写入或客户端启动，当前必要合同未齐，不部署。
+D-02 / F-05 / D02-R6仍**0/6**；R1/R2/R3在下述必要前沿阻塞，R4/R5/R6未开始。六项仍分别缺旧号自然本服登录与归属、新号显式选人命名与确认保存、完整初始化/场景握手、角色可见落地、连续10分钟心跳、两类账号正常退出重登与受控保存。SDK页、静态源、host字段、局部Java或健康检查不代实机验收。当前没有能够回答新必要问题的现场包，不请求新ready、不启动客户端。
 
-当前由Sol max审Skill/energy本地最小合同并完成[中文检索计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)，Terra max按计划定向公开检索。Material/Relic/Proud/Scene/SDK既有本地独立审阅暂无成熟执行包，其准确公开问题尚未查尽；不能据此宣布全部外部阻塞。成熟最小规格回传后，由唯一集成者串行实施和验证。121 Avatar七键及两个Java loader、121 Depot三键、Talent/phase6、Float/Pair、启动修复和唯一cold结果直接复用。
+接手基线`420002edaa07bf7050ba51a90dcc734332c36475`；交接文本前HEAD`2e79e33b0c2a6a7a622e6e33a3fa7f7974ff96fa`，本轮已落23个本地提交。本文最后的提交表及私有审计列出每项准确文件范围；本交接提交自身的实际HEAD/总数/身份及最终保护与进程端口核对，在提交后写入同私有目录`final-state.private.json`，不在提交前预填结果。不推送、不改global身份、不重写历史。
 
-本轮实际盘点、11个hash与保护差异指纹、必要项→准确缺输入→待结果矩阵见[恢复集成活动检查点](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)。当前没有匹配项目服务/数据库/客户端/调试器进程或固定端口监听；`local/running.json`存在不代表运行JAR或健康已验。用户AGENTS、patch/resources差异及两份E8草稿保留，不提交；Git/构建/数据库和运行写入权仅本轮指定集成者持有。
+当前任务状态以[Project](Project.md)为准，复现索引为[Harness](Harness.md)，必要前沿简矩阵见[活动检查点](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)。此前交接和所有失败原件保留，以下是本轮实际结果。
 
-A/B、preview与准确依赖保持冻结；A原平台error已恢复，但opaque字面串不等可读执行正文，原明文恢复误验撤回。准确范围及解除条件仍以[队列](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)和[纠错](docs/CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)为准；不自动派Daybreak或重试被拒动作。下方暂停和排期段落保留历史事实，不覆盖本轮授权。
+## 本轮已完成的真实字段与加载范围
 
-修改前已将原HANDOFF2及另三状态文档备份至`local/migration72/d02-resume-20261116/integration-resume-20261116/before/`并核字节/hash一致，原HANDOFF2 SHA-256 `cabe165b17c6375a2d9ba3e745588b557bdaf88632aa63a1e7d385d436ea9c2f`。HANDOFF本轮只追加；最终交接前须另备份当时版本，不将本检查点当作最终收尾。
+| 任务/范围 | 实际结果与限制 | 入口 |
+| --- | --- | --- |
+| Skill element pilot / batch、logicalID绑定 | 10068 Wind7及out-of-cohort11364 Electric4双控制，新10019 Ice5；pilot20B。随后367本轮+2正式旧准入=369真实id/element，120present/247源确证absent，10019复用后119word/476B。11101按本轮源缺省新闭合，不冒称第三旧正式准入。logicalID=tableKey复用同row getter→dict key→span绑定，idRawDecoded=false，不再要求raw-id/reader额外门 | [source](docs/CLIENT_72_D02_SKILL_SUFFIX_SOURCE_CONTRACT_20261116.md)、[pilot](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_PILOT_20261116.md)、[batch](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md) |
+| `R3-OLD121-SKILL-DEPOT-RESOURCELOAD-JAVA-20261116`及原`R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA` | 真实369 Skill→121 Depot，120新energy正向绑定解除。484普通槽原序/重复/248正236零保持；普通槽是map查找，只有energy缓存同对象。两map引用/内容及loadedAll保持，不手设。26.031s/exit0，JUnit1/F0/E0/S0 | [真实Java](docs/CLIENT_72_D02_OLD121_SKILL_DEPOT_JAVA_20261116.md) |
+| 普通cost pilot / 121 batch | 10019=80，Floatbits42a00000，准确4B；独立consumer证明当前元素能量≥同energy Skill+98阈值。121字段119present/2原PXOR源确证+0；10019复用后118word/472B。实际分布0×2、40×11、50×4、60×55、70×20、80×27、90×2，均有限非负精确Java int，不截断、不强制候选值 | [cost](docs/CLIENT_72_D02_SKILL_ORDINARY_COST_20261116.md) |
+| 特殊START pilot / 121 batch | 11065=100.0、11145=50.0，准确8B；同Skill+74职责为START。其余119原bit30 absent经双PXOR/同Floatsetter/store确证+0，0新raw合片。369输出为121 id/element/cost/START四键与248原两键；当前Java specialEnergyMax=START，specialEnergyMin=MAX cap始终未输出 | [START](docs/CLIENT_72_D02_SKILL_SPECIAL_START_20261116.md) |
+| `R3-OLD121-SKILL-ENERGY-RESOURCELOAD-JAVA-20261116` | 同一隔离测试增加准确新task模式，真实验证121cost exactint、START source原Floatbits及JSON Floatbits、121energy同对象/element和484slot/map/loadedAll恢复。19.516s/exit0，JUnit1/F0/E0/S0。旧模式及四系统属性入口保留，本次只运行新模式，不冒称旧模式新回归 | [cost/START Java](docs/CLIENT_72_D02_OLD121_SKILL_ENERGY_JAVA_20261116.md) |
+| 97 enum literal | 固定PE/global静态提取94 Material+3special，97 explicit int32/95非零。MATERIAL_NONE0、SPECIAL_NONE0/MAVUIKA1/SKIRK2真实读取；388B数值/915840B结构，PE语义上界892B，未读startup。不代实际资源分类token | [常量](docs/CLIENT_72_D02_MATERIAL_SPECIAL_ENUM_CONSTANTS_20261116.md) |
+| Material准确输入 | 9旧host控制；唯一key16540db9943871cc→entry b9943871→block25539185，file0/path1362/class1208。m_bytes1560105B/SHA088f2b43c860c2892c1f6e9a0349547dcd94b021e5d56983349f2cfd81e7ee89。旧三根stem0不再作为输入不存在依据；尚无row/keyspan/cursor/自然revision | [locator及提取](docs/CLIENT_72_D02_MATERIAL_EXACT_PAYLOAD_20261116.md) |
+| 有限source / 语法关系 | energy203/194及457/454/525B分别验来源/职责；Material569B整窗semanticfalse但首A前EDI倒计数独立，239B同返回+10/+1c清零闭合；shared String253B整窗semanticfalse，仅normal-tail非空同reader P_after=wrap32(P_at_tail+N)字节关系，不升P_entry，不构造String | [energy](docs/CLIENT_72_D02_SKILL_ENERGY_BRANCH_FIELDS_20261116.md)、[Material](docs/CLIENT_72_D02_MATERIAL_HEADER_SOURCE_20261116.md)、[String/Weapon](docs/CLIENT_72_D02_SHARED_STRING_CURSOR_SOURCE_20261116.md) |
+| 公开复用/Relic有限核查 | 中文Skill/energy及Material增量计划、本批README/分支/blob/源码检索分别完成。Relic27候选、10owner祖先和真实参数核查无准确46431/74316资源边；26同名字段为UI类型，body/return未知。74316的18方法为16零参、1String、1reader+allocator，不能选rank/set语义 | [公开主报告](docs/CLIENT_72_D02_TARGETED_REUSE_SEARCH_20261116.md)、[Material增量](docs/CLIENT_72_D02_MATERIAL_ROW_REUSE_SEARCH_20261116.md)、[Relic](docs/CLIENT_72_D02_RELIC_TYPED_CANDIDATES_20261116.md) |
 
-# 历史方向微调交接（2026-11-16）
+入场旧成果直接复用：121 Avatar base/growth及critical七键、两个既验Java loader、Talent/phase6、Depot三键、Float条件合同/148B共享Pair、启动修复及唯一cold-cache现场。本轮只核接手11件hash，不重跑这些native/历史回归。完整Avatar/Skill、资源ready、自然采用及同旧号全121角色/活动物品装备Player恢复未因局部字段或Java晋级。
 
-本次按用户要求读取最新状态并轻度修正排期，技术基线为`58ab621`。只修改任务与交接文档，未恢复研究、测试执行、构建、DB、客户端或部署。D-02/F-05/D02-R6仍0/6，R4/R5/R6未开始；以下历史成果继续按各自限定范围复用。
+## 真实验证、输入与未部署原因
 
-## 下一步方向
+本轮两次必要真实Java均JDK17、Gradle offline/单worker/独立work/resources/config/tmp/log，仅各1项JUnit，均一次通过，无失败重跑或历史全量。compileJava/compileTestJava实际，generateProto UP-TO-DATE。DB/服务/插件初始化0，不建立Player、postLoad/recalc/save，不启动Mongo、客户端或实例。
 
-1. Float条件合同、启动修复和最近cold-cache已经有结果，不再作为首发旧任务。121角色base/growth与critical七键片段及真实loader、Depot三键host投影直接复用。
-2. 优先确定一个能解除真实资源加载/恢复依赖的允许小合同。367 Skill新值、121 energy字段及120正向绑定是Depot loader的具体缺口；Skill ctor单窗因普通边界来源缺失而阻塞，不是新安全拒绝。无新准确来源不重取或放宽原门。
-3. Weapon除11101既验范围外的新值已知涉及A依赖，Material/Relic缺literal或具名consumer/非零oracle时保持准确缺口；不泛封全族，也不以继续盘点替代真实值。成熟合同交Sol/Terra按同源数据批量实现，再做实际必要Java/恢复验证。
-4. UP-72-N1/N2只消费能解除具体缺口的固定候选，已有协议冲突和303相同结果不重做；UP-72-N3长尾搜索在D-02排期后移但原任务仍进行中。Proud目标字段绑定、自然cache及Scene M1–M4等待新增允许的独立来源，不重复同SDK页碰运气。
-5. A opaque明文恢复验收撤回仍有效，原平台错误已恢复不等原请求正文已恢复。A/B、preview和准确依赖冻结；不自动派Daybreak或运行两份未跟踪E8草稿。
+第一Java completion SHA`f89ba5eece7cc3bd9bd6d2c759c174ce1ab84f6d164f91165d75847dde3f00d0`；第二SHA`79d3ee4644b95bc78176f7dcc95581a1659de563618137027e8a20610a70716f`。原件分别在`debug/d02-skill-energy-search-20261116/java-resource-load/run1/`及`java-energy-resource-load/run1/`；第二XML SHA`c2c19ea2ed65d59779967e687a99c10ee5a1da19829829f1eddcdd129565cdb5`，原输入/源码运行前后保持。详细固定spec/result/manifest及字节账均沿上述专题定位，不重新产值。
 
-## 文档与保护
+关键最终Skill四键报告`debug/d02-skill-energy-search-20261116/special-start-host-batch/result.private.json` SHA`9d4b69d00a438084cd9a10b6b4eacda5618eaeebdab735a3bfe38cd3c4e755cb`；原Depot报告SHA`24b008df69e853d1739fe408634c77698340c8b69294f8344718aa82f108d654`。四系统属性仍固定报告路径及各SHA；不提供未知cap成员，也不把Java接受缺字段当目标省略许可。
 
-Project第5节验收、第6节完成目录和既有任务ID保留，仅修正当前阶段、排期和少量调度措辞。简单一次性任务按最新AGENTS不另派独立审核或新增测试；必要协议/真实加载/保存验证不减。README和原AGENTS、patch/resources差异、两份未跟踪草稿保持。
+本轮改动仅文档、离线研究工具和测试；**没有修改运行代码、Proto、配置、补丁或运行资源**。故AGENTS不要求重启；没有运行产物待部署，不为证明部署而构建/启动服务。R1/R2/R3必要前置未齐，R4/R5/R6未开始。最近第二Java退出只读盘点的相关进程/TCP/UDP均0；最终一次提交后核对另记`final-state.private.json`。接手`.env` portable、8088/22101、根Mongo27017；InstanceRoot源码Mongo27027，patch HTTP仍8088，不能仅改环境变量声称全部端口隔离。没有运行PID/JAR/健康可验，`local/running.json`存在不代运行事实。
 
-本次四文档修改前已备份到`local/migration72/project-direction-20261116-c9e9aef1/`；原HANDOFF2 SHA-256 `495481e49682cc9bfd8a8466dd495b19a80ca9ff8dab3bcba51bc96961f15573`。Harness加索引，HANDOFF只追加。提交使用用户指定Author/Committer，本地提交、不推送；本轮没有新的现场或技术验收。
+## 必要剩余前沿与准确解除条件
 
-## 原研发交接（以下是历史时点证据）
+| 必要项 | 真实缺口/冻结边 | 最小解除输入及恢复出口 |
+| --- | --- | --- |
+| R1 / F-03d3f4d2 / g2 | 完整Avatar第二allocator返回/构造及准确A依赖冻结；20分配/12根、自然String tuple/caller/trigger、TLS/GC所有权、enum/cold普通10294未闭。g2须同源Store/SavedVitals及必要R3，不以Skill字段代验 | A原可读请求/精确技术范围及固定输入先齐，再由用户判断最小合同；或新的允许独立来源。完整自然合同后才正式Java发送/目标消费，不直接恢复g2或全构造 |
+| R2 SDK/认证/会话 | B首Cargo错误修复与组合loader/owned/安装/自然现场依赖冻结；自然Init/env→route采用、认证/信任/完整校验与会话交换未闭。已有八点/map/HTTP/key局部证明不代完整自然请求 | 既有最小B-LOADER-COMPILE只供用户判断；其他SDK须准确允许独立自然producer/consumer输入。不得把整个SDK泛称依B，不重复旧SDK页观察 |
+| Scene / F-03d3s2 | M1 producer→同次+5d60；M2同receiver+f0/返回R；M3首次消费前R+18及顺序；M4同R release/reacquire/reset缺独立固定来源。getter/Recreate及World slot114主动路径有准确A返回依赖 | 新允许且固定的receiver/派发/初值/reset来源或成熟自然输入。238B工厂/316B getter及控制尾复用，不重发旧窗，不猜已有cache或World同帧/RSP/Pool |
+| Proud / E-01d1 | 目标字段→148B共享Pair/Float消费者的准确桥、实际M/row/alias/current/同epoch未闭；唯一实采cold-cache，缺自然非空cache/key。若干准确构造/尾CALL受A冻结 | 新允许的准确业务字段桥或自然非空cache/key与同epoch独立输入。没有有用新现场包，不循环SDK页、创建Default/cache或主动getter；common E8预算停点不扩扫 |
+| 121 energy MAX cap | cost及START121已真实闭合并加载；specialEnergyMin/MAX cap缺同target88602准确字段职责桥。MAX_SPECIAL属性位置已知，不等其资源来源 | 将一个准确字段/getter独立绑定至MAX_SPECIAL用途的target consumer/property，或具revision/字段身份的schema。先职责再token位置/presence/host值，不把候选200/100、Float同形或相邻位置当上限 |
+| Material | payload/literal/源/倒计数/同cursor槽清零已闭；同reader有效backend起点/+18与首refill关系或独立完整文件语法缺失。槽+1c0不等fileoffset0；569B两A直CALL依赖冻结 | 准确允许的同reader backend+18/首refill来源或独立filecursor语法证据。shared tail只给P_at_tail+N，不能补P_entry或header起点，不读取条件P0的4B、造count/row |
+| Relic rankLevel/setId | 9派生+6继承同型候选的标签互换未排除；27具名候选/typed祖先已实质查，无准确资源角色入口。真实row/cursor另缺 | 同target准确字段到rank等级查找或套装用途的consumer/property，或同源输入与独立非零role oracle；两角色可独立闭合。不凭UI名字、参数形状、Go JSON或数值大小选字段，不试取18混淆body |
+| Weapon239中的238种/1636行 | raw128936B/288键EOF与六字段职责可复用，11101六键1种/27行已验；旧native ctor/parser A路径冻结。87097 wrapper[4,400)不是raw20600/父88968 F入口，400后的11201不在239必要cohort；旧raw body仅hash/RIP refs不足完整语法 | 新允许独立wrapper→raw父入口cursor/字节语法或真实raw入口样本，后续逐字段presence/转换/数组单位/边界及跨行准入。不能拿wrapper400当F，不为11201造必要任务，也不宣潜在purehost全冻结 |
+| R3完整恢复→R4–R6 | 上述必要资源及Avatar/Proud/装备/配置/ability/revision、Scene与最终发送顺序未齐；完整Player不允许用默认字段绕过 | 输入齐后先最小真实字段/引用加载，再独立DB内同旧号全部121角色/实际物品装备postLoad/recalc/save；最后R4汇合→portable隔离部署→六项实机。不能用4活动角色、删库存或空档代完整恢复 |
 
-# 国服 7.2 当前工作收尾交接（2026-11-16）
+这些是经已有字节/metadata/固定公开检索与有限source实际尝试后留下的准确前沿，不以未分析替代阻塞，也不证明潜在来源永久不存在。当前没有成熟的新字段/驱动或能回答新必要问题的现场包；等待对应准确输入/限制解除，不追加泛检索、全域E8、getter/对象树或无关玩法。
 
-## 当前指令与验收状态
+## 原失败、纠错与避免重走
 
-用户要求**当前已派子任务验收和收尾后暂停，不开启新业务任务**；恢复须用户新的明确指示。暂停是调度决定，不代表所有独立工作均技术阻塞。任务只用待开始 / 进行中 / 阻塞 / 已完成；局部成果不升级父项或 ready。仅面向国服 7.2，Windows portable，禁止 computer-use。
+- A原平台错误及opaque事件关联已找回，**原可读请求明文恢复验收撤回**。1528字符opaque不是可核对正文；A技术输入、唯一执行范围仍缺。原`targetTurn.error.message`保留在[纠错](docs/CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)，不推测内部原因，不换模型/工具/措辞重试。
+- element pilot准备期schema KeyError（flags实际skillID而非key）在新语义读取前保留；不是实际pilot执行失败/成功。实际pilot及batch各按新固定合同一次通过。
+- enum首次resolver exit1没有保存原stderr，未开PE/global或产值；“缺Astrolabe”误因已撤回。相同环境重现显示PowerShell执行策略错误，按现有便携argv补ExecutionPolicy Bypass并经主线审定RUN2；重现stderr不是首次原件。这是包装错误，不是新安全拒绝或外部路径不存在。
+- Material locator首pin门因集成对调trace/observations的hash角色而停，无index/key/payload读取；源文件未改。纠错delta及原失败保留，主线重新限定后RUN2。trace实际SHA626cce90…，observations130f6387…；不能自动交换pin或追认首轮成功。
+- 既往Skill ENTRY包装错误、Material cap/KeyError、ctor完整边界缺失、A model callerPC未知等旧事实继续沿原专题；新source/hash成功不追认旧轮。构造边界失败不等拒绝；已闭id/element、cost/START不再加raw-id、reader或native额外门。
+- shared253B及Material569B整窗semanticfalse和准确A CALL仍保留；独立尾部/EDI数值不证明冻结callee执行。P_tail不升P_entry、wrapper跨度不升raw父起点、cursor槽0不升有效fileoffset0。未产header4B、新Weapon/Material行或文本。
 
-D-02 / F-05 / D02-R6 客户端验收仍 **0/6**，R4/R5/R6 未开始。SDK 页面、静态来源、host 片段和局部 Java 均不能代替完整新旧号本服登录、显式选人、初始化入场、心跳及退出重登保存。完整 Avatar/Team/Scene、SDK 自然认证/route、必要资源和旧号 Player 全量恢复均未闭。任务与验收以 [Project](Project.md) 为准，[Harness](Harness.md) 管复现，[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md) 汇总本轮结果。
+## 最小用户判断 / Daybreak候选边界
 
-## 现场与 Git 的时点
+不自动派Daybreak、不将整套A/B/D-02交出，也不因本轮条件2收口解除任何限制。其余普通来源缺口首先等待准确target输入/来源，不以“难”代升级依据。
 
-唯一集成者只读快照 `local/migration72/d02-resume-20261116/final-closeout/snapshot-20261115T163450586549Z.private.json` SHA-256 `6241a667bbbf15ac06af8651225ff71536afb6b9a9b46811e4abc64d43b9350f`；观察时刻 2026-11-15T16:34:52Z。该时点 HEAD `4211c73e37d91ff646236a66544256d01e8bd85c`，自基线 `1609fe511cb13bfab565247c1b6b07890468d24b` exclusive 为 38 次本地提交，Author/Committer 均 38/38 符合指定身份；当时 index 空，保护差异与 gitlinks 未变。此快照不代表后续文档提交后的 HEAD。
+- `A-SECOND-RETURN-CONTRACT`：只有原错误/事件，仍缺可核对的执行请求正文、唯一精确技术范围和固定输入；**当前没有可执行Daybreak包**。未来最小目标须排除客户端/部署/hook、Default实现、完整构造及后续调度，缺输入、来源冲突、超范围或新拒绝即停。已验前置只读复用，原未验audit.py/json不当已验输入。
+- `D02-R2/SERVICE-TRIGGER-LOADER → B-LOADER-COMPILE`：历史拒绝动作是首次Cargo类型错误修复（observer.rs:49，u64→usize，exit101），原句为`This content was flagged for possible cybersecurity risk.`。既验八点/map/PostRequest与固定20源快照只读复用；仅供用户判断在私有隔离副本修对应类型/地址转换并compile-only。产物为最小diff、前后SHA、精确argv/env及原/新完整日志；不改主仓库保留差异、Cargo/锁、core/emitter/校验/预算，不运行fixture/组合owned/DLL安装/客户端/自然现场。另一处需设计、源漂移、冲突或新拒绝即返回。不是新执行许可。
 
-交接前集成 HEAD：`85d5504bced6ec1c44890c56545295157409837d`；自上述基线的实际提交总数：42。新增收尾提交：`8473cb566e352f669f7aa03168e7993cb40d6686`（父字段/raw专题）、`527d6c0c85151661d600bd96340cb350bcf774b5`（Material/Relic专题）、`fe26d316ff1be9c58e766913e2383789a2a7705d`（Skill长度专题）、`85d5504bced6ec1c44890c56545295157409837d`（三个索引）。此为交接文档提交前基线；最终交接提交以提交后实际 HEAD 查询为准，不反复补写。未自动推送。
+原提示、固定快照、任务ID、范围与停止证据以[既有Daybreak队列](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)为准；A历史FIDO2等资格后文不转作B理由或当前资格证明。新发现的Material/String/Weapon准确A边仅保留依赖，不扩大上述候选包。
 
-该时点未见 java/mongod/client/debugger 匹配进程；TCP 8088/22101/27017/27027 和 UDP 22101 无监听，无运行 JAR 可取 hash。配置为 `.env` portable、`.env.local` 不存在、`config.json` v14 HYBRID、HTTP 8088、game 22101、根 Mongo 27017；InstanceRoot 源码使用 27027，不称全端口隔离。这是只读观察，不是新启动 preflight；恢复须重新核配置、进程/端口归属和现场，不复用旧 PID/ready/JAR 结论。原数据库和运行数据保留。
+## Git归属、身份、文档与备份
 
-历史唯一一次 Launch 用时 4.498 秒，用户 55.579 秒反馈 SDK 页，仍在原 90 秒窗口内；唯一 sample 以 cold-cache 停止，3 RPM / 17B、identity 和 sample 共 30 API，用户随后正常退出。下次启动用户要求窗口化 2560×1440；新包与 seal 仅离线验收，实际窗口尺寸未验，旧 ready 失效。本次恢复收尾未新增客户端操作；历史现场与新现场必须分开。
+所有本轮23个交接前提交实际Author和Committer均为`Hatsunemiku3901831 <273283003+Hatsunemiku3901831@users.noreply.github.com>`；每次命令局部配置加显式双环境，不改global。完整私有审计`local/migration72/d02-resume-20261116/condition2-handoff-20261116/pre-final-commit-audit.private.json` SHA`a62db392844cafe92a6efe976160cc6a85f0ac3cc7a27ee95fd5571616c3a814`，含每提交全部文件名。交接自身仅Project/Harness/HANDOFF/HANDOFF2/活动检查点五件；提交后核实际总数、双身份和文件范围，结果见同目录final-state。
 
-保留用户 `AGENTS.md`、`patch`/`resources` 既有差异及 gitlink，不夹带他人修改；上述快照中 `patch` gitlink 为 `50f9bf82b3dbc0d4857321417dccf40f78c13ce4`、`resources` 为 `dac2a9d43332ef51879522cf39da2831b0ca0543`。`tools/migration72/proud_float_direct_e8_index.py` 与 `tools/migration72/test_proud_float_direct_e8_index.py` 为未完成实际来源验收的未跟踪草稿，不能因合成测试通过提交或升级 stage1。机器路径、凭据、原始日志、客户端文件、原 BSON 和抓包留忽略目录。
+未提交/不属于本轮：用户`AGENTS.md`；patch的`Cargo.toml`与`examples/sdk72_service_trigger_proxy.rs`/同名目录（B未验草稿）；resources的`ScriptSceneData/flat.luas.scenes.full_globals.lua.json`；两份未验E8草稿`tools/migration72/proud_float_direct_e8_index.py`及`test_proud_float_direct_e8_index.py`。不提交、不恢复或清理。patch gitlink`50f9bf82b3dbc0d4857321417dccf40f78c13ce4`，resources`dac2a9d43332ef51879522cf39da2831b0ca0543`。原11保护文件的字节/hash接手与ongoing审计均保持，最终提交后再只读核一次。机器路径、令牌、二进制、日志、抓包与DB仅留忽略目录。
 
-## 已完成的限定成果
+按AGENTS先备份后覆盖：旧HANDOFF2为18206B，SHA`406355bcbc74706d6c280df5e54b4615dc43fdeee72de2992131a08eaca9293f`；旧HANDOFF为48062B，SHA`9b4f4d684c0a8cf6c9e6e448c8e014810c7cbc5a80f3a1c653197031ef150606`。两件及Project/Harness原字节均备份并核一致于`local/migration72/d02-resume-20261116/condition2-handoff-20261116/before/`，backup receipt SHA`7df55bbf97e2fb2039cc7860919b201c90f24d37e353efe6d9051f5b43d5cea4`。HANDOFF只追加，原48062B前缀须逐字节相同；历史交接保存在备份，不把旧暂停指令当当前授权。
 
-- Proud typed base/list 来源与成员语义已验，旧交接“成员语义未验”已过时；carrier/String 等按专题范围复用。Pair/enum 有界查询后复用已有 148B 共享 consumer：低32显式key首匹配、高32 encoded54724 至 Float getter，正常未命中 XMM0 为零；Proud 目标字段绑定、实际 row/M/cache/key/同 epoch/current 和 alias 仍未知。[成员语义](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_SEMANTICS_20261115.md)、[共享Pair](docs/CLIENT_72_D02_PROUD_ENUM32419_TRIAGE_20261115.md)。
-- 旧号 Avatar 121 角色 base/growth 五键片段为120新+7号旧复用、363例 level100 oracle，限定真实 ResourceLoader 1项通过；critical 两基础贡献为120个新片段+7号角色既验片段复用，共121个，242 named读回，七键同源合并及真实 ResourceLoader 1项通过。critical 唯一 native 执行使用保存的旧driver；过宽执行门及先合并pin缺陷以完整ledger/逐组无冲突限定接受，最终收窄driver仅语法/源码审阅、**未native重跑**。JUnit 首次JVM前删去会掩盖loadedAll变化的手动修改，最终测试真实验证原值未变，不是先失败后通过。[base](docs/CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_20261115.md)、[critical](docs/CLIENT_72_D02_OLD121_AVATAR_CRITICAL_20261116.md)。
-- Depot：121保存当前Depot的 id/skills/energySkill 三键 host 片段、363字段/726旧getter引用限定验收；369不同正Skill仅核key/span。Java正向加载仍缺367 Skill片段及120 energy绑定，不能空Skill/None/假cost；121 energy行的costElemVal/specialEnergyMin/Max target职责仍未知。[Depot](docs/CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md)。
-- Item：固定保存引用中候选 main 28、append 22、TPS两类各12不同正引用已限定投影，此旧号121 Avatar TPS武器列表显式空；不能外推其他账号或省略配件恢复、自动授予。三固定公开候选 blob 之62个分表引用均唯一命中，仅证候选ID存在；ledger数字HTTP status被checked覆盖，三次200只由成功门禁路径推得，原始状态行未留。[保存引用](docs/CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md)、[候选覆盖](docs/CLIENT_72_D02_SAVED_REF_CANDIDATE_COVERAGE_20261116.md)。
-- parser/scalar：Skill 8309B、Material 7128B、Reliquary 3347B、共同父2018B、不同Float setter 163B和Int32 setter157B静态原窗已限定验收，直接冻结引用为空不证明传递 A-free。Float/Int32正常条件位级合同已验，实际M/表/seed/epoch未知。Skill首轮ENTRY包装NameError、Material原4096 cap失败及预检KeyError保留，后继来源成功不追认旧轮。[原窗](docs/CLIENT_72_D02_ACTIVE_ITEM_PARSER_SOURCES_20261116.md)、[scalar](docs/CLIENT_72_D02_SCALAR_CONTRACTS_AND_SKILL_FLAGS_20261116.md)。
-- 当前收尾：共同父id/itemType条件store已验，id缺flag仍setter(0)，S(0)不等物理0。三个根7666项精确raw stem零命中、四处depth8停止，one-off locator补读不冒作原driver自动复现，不推全盘缺失。Material六直接Enum声明145字段，+c8/type34165与MATERIAL_*符号支持有限分类职责，literal值/实际consumer/row未知；+78 FoodQuality异证保留。Relic rank/set九派生+六继承候选有标签互换反例。Skill 371行首个String1长度N=14..23、742B语义头；不读payload、不证明TLS/调用或值。[父/raw](docs/CLIENT_72_D02_ACTIVE_ITEM_BASE_RAW_INVENTORY_20261116.md)、[Material/Relic](docs/CLIENT_72_D02_MATERIAL_RELIC_ROLE_BOUNDARIES_20261116.md)、[Skill长度](docs/CLIENT_72_D02_SKILL_STRING1_LENGTH_20261116.md)。
+## 下一次有输入后的执行顺序
 
-### 当前收尾任务 ID
+1. 先读AGENTS/README/Project/Harness/本交接/迁移与部署手册；涉及账号补读三篇账号文档。核实际HEAD、差异归属、子模块及GAME_PATH/.env/.env.local/config、进程端口，不复用旧PID/ready/JAR结论。
+2. 只选择上表已得到准确解除输入的一项，先固定一个最小task/input hash/问题/字段或source/预算/验收/停止；A/B仍需用户明确判断，不能从既有草稿或同工具重试起步。无输入不猜格式、alias、row、Default、cap或wrapper起点。
+3. 先做成熟真实字段/引用的host或单窗source，再同源必要cohort扩展；保留原控制与已验值复用，不再排367/120、cost/START121、97literal或旧source重验。相关真实ResourceLoader/保存验证依合同必要性运行，所有Git/Gradle/Proto/JVM/DB/实例写入由指定唯一集成者串行。
+4. 只有完整必要资源/协议/场景/认证合同充分后，做真实同旧号全量Player恢复与R4汇合；运行代码/Proto/配置/补丁/资源若变化，再按AGENTS构建、portable隔离部署及日志/健康/TCP/UDP/PID/JAR SHA核验，最后六项实机。当前不启动客户端、不请求ready、不构造新现场。
 
-以下均为已完成的限定审阅、查询或清查，不等于资源值或完整恢复验收：
+## 交接前23个本地提交的准确文件范围
 
-| 任务 ID | 证据入口 |
-| --- | --- |
-| `R3-ACTIVE-ITEM-BASE-MINIMUM-SEMANTICS` | [父字段与 raw](docs/CLIENT_72_D02_ACTIVE_ITEM_BASE_RAW_INVENTORY_20261116.md) |
-| `R3-ACTIVE-ITEM-RAW-SOURCE-INVENTORY` | [父字段与 raw](docs/CLIENT_72_D02_ACTIVE_ITEM_BASE_RAW_INVENTORY_20261116.md) |
-| `R3-ACTIVE-MATERIAL-TYPE-ROLE-SCOPE` | [Material / Relic](docs/CLIENT_72_D02_MATERIAL_RELIC_ROLE_BOUNDARIES_20261116.md) |
-| `R3-ACTIVE-MATERIAL-DIRECT-TYPE-DECLARATIONS` | [Material / Relic](docs/CLIENT_72_D02_MATERIAL_RELIC_ROLE_BOUNDARIES_20261116.md) |
-| `R3-ACTIVE-MATERIAL-TYPE34165-ROLE-REVIEW` | [Material / Relic](docs/CLIENT_72_D02_MATERIAL_RELIC_ROLE_BOUNDARIES_20261116.md) |
-| `R3-ACTIVE-RELIQUARY-RANK-SET-SOURCE-GAP` | [Material / Relic](docs/CLIENT_72_D02_MATERIAL_RELIC_ROLE_BOUNDARIES_20261116.md) |
-| `R3-OLD121-SKILL-RAW-FLAG-TRIAGE` | [Skill 首长度](docs/CLIENT_72_D02_SKILL_STRING1_LENGTH_20261116.md) |
-| `R3-OLD121-SKILL-STRING1-LENGTH-INVENTORY` | [Skill 首长度](docs/CLIENT_72_D02_SKILL_STRING1_LENGTH_20261116.md) |
+以下为本轮基线之后、交接文档提交之前的实际Git记录；独立成果均及时提交，不含用户/子模块差异。最终文档提交单列于提交后审计。
 
-## 准确未完成与冻结
-
-- A 第二 allocator 返回/构造、热 Default/sameepoch、151841361 和准确tail依赖；B组合loader及首个Cargo错误被拒修复均保留原拒绝和冻结，preview 保持既定专项冻结。不得运行A/B草稿、换模型/工具或借IFix、旧对象、host zero间接续接；不泛封整列、全部族或所有独立工作。
-- A 原平台错误 v4 的 `targetTurn.error.message` 已恢复，历史FIDO2资格后缀不归给B、不证明当前资格。此前“原followup明文已恢复”验收已**撤回**：1528字符是不透明序列化字面串，仅证事件/目标/时间与字面串关联；可核对正文、固定技术规格和输入仍缺。不自动搜索密钥/解密或派Daybreak。[纠错](docs/CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)、[原拒绝与最小队列](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)。
-- 最小队列中 A 仍缺可读原请求和固定技术输入，无可执行包。B 仅保留现存八字段隔离副本 compile-only 候选供用户判断；原 `observer.rs:49` 停止点、拒绝入口和范围见[队列](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)，未经用户明确指示不自动执行或派 Daybreak。
-- Proud 自然非空cache+key、实际getter/row/current及同epoch仍缺；最近唯一采样为cold-cache，不是miss/timeout，不沿同SDK页重复碰运气或创建Default/cache。Scene M1–M4自然receiver/派发/初始化/reset缺允许独立来源，World slot114存在准确A返回依赖。
-- Material 分类literal原值、实际row、独立oracle及真实consumer仍缺；无固定literal来源入口，不派常量query。Reliquary rank/set缺允许具名target来源或同源输入+独立非零oracle。Weapon239仅11101的1种27行有六键片段，其他238种1636行缺允许独立值来源；11101/11501行级旧ctor/parser轨迹命中A，caller PC未知。[Weapon](docs/CLIENT_72_D02_OLD_WEAPON239_SOURCE_BLOCKER_20261116.md)。
-- Skill 367个id/element新值、121 energy的三字段、合法typed输入/reader/TLS与独立oracle未闭；371长度仅证头，不读取payload，也不能造None/空对象。完整旧号恢复须使用同一旧号的真实 Player，覆盖全部实际加载的121角色、活动物品和装备及其 postLoad/recalc/save；不能以活动四人代替，装备槽和自然资源采用仍待必要合同。
-
-## 已知失误、备份与恢复
-
-Skill首轮ENTRY包装错误、Material原cap停止和schema KeyError、metadata v1二元容器误读均按专题保留；不得把修正后的source追认为旧轮通过。Relic source两历史ctor entry pins未用作输入/单独重核，主线限定接受；不推初始化。Depot结构探查曾误展开mapping.selected展示超范围既有Skill字段，最终代码只用key/source与存在性，不能称无额外读取。
-
-本次HANDOFF2备份首次尝试因 Copy-Item 不支持 `-NoClobber` 失败、没有复制；随后确认目标不存在并完成备份。原 `HANDOFF2.md` 与备份 `local/migration72/d02-resume-20261116/handoff-before-final-closeout/HANDOFF2.md` SHA-256 均 `515259bd018dff962d853cc2a89bd67b6bbd396e968ef27aa31bc0f8c3a13c9c`。HANDOFF 只追加，prefix 与备份/hash receipt 留同批忽略目录。
-
-恢复须用户明确指示；先读 [AGENTS](AGENTS.md)、[README](README.md)、[Project](Project.md)、[Harness](Harness.md)、[迁移研究](docs/CLIENT_72_MIGRATION.md)和[部署手册](docs/CODEX_ONE_CLICK_DEPLOY.md)，核 checkout、差异归属、子模块、.env/.env.local/config、GAME_PATH、进程与端口，不套用历史快照。按新指令只读复用已验成果，缺literal/具名consumer/非零oracle或现场输入分开记录，不猜字段或造空值。真实现场须明确合法输入、当次 fresh 和实时 ready；必要合同闭合并通过R4后才隔离便携部署R5，再做R6六项真实客户端验收。
+| 提交 | 独立范围 | 实际文件 |
+| --- | --- | --- |
+| `1544608d` | docs: resume D-02 integration and current resource search | `HANDOFF.md`<br>`HANDOFF2.md`<br>`Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md` |
+| `fd5c992b` | docs: record bounded Skill and energy reuse search plan | `Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md` |
+| `454c735d` | research: validate fixed Skill element suffix and logical ID binding | `Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md`<br>`docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_PILOT_20261116.md`<br>`docs/CLIENT_72_D02_SKILL_SUFFIX_SOURCE_CONTRACT_20261116.md`<br>`tools/client72_skill_element_suffix.py` |
+| `2c92acbb` | research: record bounded public reuse search and unresolved target evidence | `Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_TARGETED_REUSE_SEARCH_20261116.md` |
+| `9db31165` | research: project saved Skill ID and element cohort from fixed suffix | `Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md`<br>`docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md`<br>`tools/client72_skill_element_suffix_batch.py` |
+| `39c0b339` | test: verify all saved Depot positive Skill bindings with real loader | `HANDOFF.md`<br>`HANDOFF2.md`<br>`Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md`<br>`docs/CLIENT_72_D02_OLD121_SKILL_DEPOT_JAVA_20261116.md`<br>`docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md`<br>`src/test/java/emu/grasscutter/data/D02Old121SkillDepotResourceLoadTest.java` |
+| `6b4ffaec` | research: record exact Skill energy consumers and category source bridge | `Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_SKILL_ENERGY_CONSUMER_SOURCES_20261116.md`<br>`tools/migration72/skill_special_energy_getter_source.py` |
+| `ab9d0dbc` | feat(research): verify Skill ordinary energy cost pilot | `Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_SKILL_ORDINARY_COST_20261116.md`<br>`tools/client72_skill_ordinary_cost.py` |
+| `9bd6846f` | feat(research): recover 121 energy Skill cost fields | `Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md`<br>`docs/CLIENT_72_D02_SKILL_ORDINARY_COST_20261116.md`<br>`tools/client72_skill_ordinary_cost_batch.py` |
+| `35573830` | feat(research): recover two special energy START thresholds | `Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_SKILL_SPECIAL_START_20261116.md`<br>`tools/client72_skill_special_start.py` |
+| `b327dda7` | docs: record Skill energy field consumers and cap gap | `Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_SKILL_ENERGY_BRANCH_FIELDS_20261116.md` |
+| `0dbb990f` | feat(research): extract Material and special energy enum literals | `Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_MATERIAL_RELIC_ROLE_BOUNDARIES_20261116.md`<br>`docs/CLIENT_72_D02_MATERIAL_SPECIAL_ENUM_CONSTANTS_20261116.md`<br>`docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md`<br>`tools/migration72/material_special_enum_constants.py` |
+| `8815ff03` | docs: record exact Material payload localization | `Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_ACTIVE_ITEM_BASE_RAW_INVENTORY_20261116.md`<br>`docs/CLIENT_72_D02_MATERIAL_EXACT_PAYLOAD_20261116.md`<br>`docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md` |
+| `1f1fb962` | feat(research): close 121 Skill special START fields | `Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md`<br>`docs/CLIENT_72_D02_SKILL_SPECIAL_START_20261116.md`<br>`tools/client72_skill_special_start_batch.py` |
+| `908fdd9a` | docs: fix bounded Material binary row search plan | `Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_MATERIAL_ROW_SEARCH_PLAN_20261116.md` |
+| `a37e05e2` | test(data): load 121 real Skill energy cost and START fields | `Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md`<br>`docs/CLIENT_72_D02_OLD121_SKILL_DEPOT_JAVA_20261116.md`<br>`docs/CLIENT_72_D02_OLD121_SKILL_ENERGY_JAVA_20261116.md`<br>`docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md`<br>`docs/CLIENT_72_D02_SKILL_ORDINARY_COST_20261116.md`<br>`docs/CLIENT_72_D02_SKILL_SPECIAL_START_20261116.md`<br>`src/test/java/emu/grasscutter/data/D02Old121SkillDepotResourceLoadTest.java` |
+| `c572b088` | docs: record bounded Material row reuse search | `Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_MATERIAL_ROW_REUSE_SEARCH_20261116.md` |
+| `14d18a38` | docs: reconcile active ownership and completed energy dependencies | `Harness.md`<br>`Project.md` |
+| `b34b8195` | docs: bound retained Relic role query and remaining dependencies | `Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_RELIC_RETAINED_ROLE_QUERY_20261116.md`<br>`docs/CLIENT_72_D02_RESUME_20261111C.md`<br>`docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md` |
+| `9f833098` | docs: record Material header source and independent cursor gap | `Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_MATERIAL_HEADER_SOURCE_20261116.md`<br>`docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md` |
+| `8364d503` | docs: close finite typed review of Relic role candidates | `Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_RELIC_RETAINED_ROLE_QUERY_20261116.md`<br>`docs/CLIENT_72_D02_RELIC_TYPED_CANDIDATES_20261116.md`<br>`docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md` |
+| `86f0a72f` | docs: isolate shared String cursor source from frozen construction | `Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md`<br>`docs/CLIENT_72_D02_SHARED_STRING_CURSOR_SOURCE_20261116.md` |
+| `2e79e33b` | docs: bound Weapon host entry contract and String tail scope | `Harness.md`<br>`Project.md`<br>`docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md`<br>`docs/CLIENT_72_D02_SHARED_STRING_CURSOR_SOURCE_20261116.md` |

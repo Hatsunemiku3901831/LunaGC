@@ -1,6 +1,6 @@
 # D-02 恢复集成活动检查点
 
-任务 `D02-RESUME-INTEGRATION-20261116`，接手 HEAD `420002edaa07bf7050ba51a90dcc734332c36475`。用户已明确解除旧暂停，继续至六项实机通过或所有必要独立项各自形成准确外部阻塞；当前不是收尾或全阻塞结论。D-02 / F-05 / D02-R6仍0/6，R1/R2/R3进行中，R4/R5/R6待开始。
+任务 `D02-RESUME-INTEGRATION-20261116`，接手 HEAD `420002edaa07bf7050ba51a90dcc734332c36475`。用户已明确解除旧暂停，本轮持续实施至主线审定条件2：当前必要独立剩余项均缺准确外部输入或受既有专项限制，已无可独立立即实施项，等待对应输入/限制解除；不是用户暂停或全网无来源结论。D-02 / F-05 / D02-R6仍0/6，R1/R2/R3在列明前沿阻塞，R4/R5/R6待开始，详见[最终交接](../HANDOFF2.md)。
 
 ## 接手核对与已验复用
 
@@ -32,4 +32,4 @@
 
 A第二allocator返回/构造、热Default/sameepoch、`151841361`及准确tail/caller依赖，B首Cargo类型错误修复及组合loader/owned/装载/自然现场依赖、preview专项冻结均保持。A原平台error已找回；1528字符opaque事件关联不恢复执行正文，原明文验收已撤回，仍缺可读正文与固定技术输入。原提示、停止点和最小候选见[队列](CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)与[纠错](CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)，不重试或自动派Daybreak，不扩大成整族/所有独立工作禁止。
 
-Project/Harness/HANDOFF/HANDOFF2已先备份至本批忽略目录`integration-resume-20261116/before/`，四件字节/hash匹配；原HANDOFF2 SHA-256 `cabe165b17c6375a2d9ba3e745588b557bdaf88632aa63a1e7d385d436ea9c2f`。本轮只纠正当前授权和过时首发排期，历史事实、完成标记、拒绝/未知保留，HANDOFF只追加。接手核对与状态纠正子出口完成，集成继续等成熟字段包；本项无需独立测试或重启。
+Project/Harness/HANDOFF/HANDOFF2已先备份至本批忽略目录`integration-resume-20261116/before/`，四件字节/hash匹配；原HANDOFF2 SHA-256 `cabe165b17c6375a2d9ba3e745588b557bdaf88632aa63a1e7d385d436ea9c2f`。接手阶段先纠正当前授权和过时首发排期；随后独立实施及相关验收已按上表追加，历史事实、完成标记、拒绝/未知保留，HANDOFF只追加。接手核对及后继独立实现/相关Java/文档提交均已完成；本轮按条件2等待准确输入，后续成熟包从对应最小缺口恢复。仅文档/离线工具/测试变更，无需重启。

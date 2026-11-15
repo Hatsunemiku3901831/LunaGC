@@ -4,9 +4,9 @@
 
 ## 当前阶段
 
-**用户已明确解除旧暂停，持续推进至D-02六项实机通过，或所有必要独立项各自有准确外部阻塞；当前D-02 / F-05 / D02-R6为0/6，R4/R5/R6未开始。** 旧号121 Avatar基础成长及critical七键片段、两个限定Java loader、121 Depot三键host投影已验；完整Avatar、Skill/energy、装备及同旧号实际Player恢复未闭。Float条件合同、共享Pair消费正例、启动修复及一次cold-cache采样直接复用，不再作为首发旧任务。
+**本轮依用户继续指令执行至条件2：已审必要前沿均缺准确外部输入或受既有专项限制，当前无可独立立即实施的必要任务，等待对应输入/限制解除；这不是用户暂停。D-02 / F-05 / D02-R6仍0/6，R1/R2/R3在列明前沿阻塞，R4/R5/R6未开始。** [详细交接](HANDOFF2.md)保留逐项解除输入、真实验收范围及下一执行顺序；局部成果不晋级父项或ready。
 
-当前以能解除真实资源加载或恢复依赖的最小出口为优先：[Skill/energy定向计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)对应本批公开检索已限定交付；367个本轮Skill id/element片段已实际闭合，121 Depot正向Java及120新energy绑定已实际通过，121行energy普通cost字段已闭，121行START也已闭（两行100/50、119源确证0），MAX cap及真实maximum采用继续按准确来源推进；cost/START-aware真实Java已通过，完整恢复仍需MAX cap/装备等必要合同。[批量结果](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md)已形成367本轮+2旧的canonical id/element片段；logicalID=tableKey复用已验绑定，不要求额外raw-id复解。Skill ctor普通边界失败不等安全拒绝，缺同固定PE准确边界时不重取或放宽；该单窗不作为已有独立element/ID来源的额外门。Weapon239中仅11101的1种27行有既验六键片段，其余238种1636行未有获准入的独立跨行host合同；已知旧native ctor/parser的A构造返回路径冻结，固定raw和六字段职责可复用，潜在纯host路径不自动冻结。Material94与特殊类别3个literal已固定出值；Material实际row/consumer、Relic rank/set职责或独立非零oracle保留准确缺口；五线定向公开检索已补有限来源，目标值/consumer及未覆盖范围仍需新输入，不能据此标为全部外部阻塞，不以新增盘点替代出值。
+本轮369个Skill id/element、121普通cost与START及两次真实Depot Java加载已闭，原367片段/120绑定阻塞解除；97literal、Material准确payload/有限header源、shared String尾游标、Relic有限typed及Weapon单字段独立性判断均已分项提交。当前仅等待[必要前沿矩阵](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)中的准确来源：energy MAX cap职责、Material有效backend/filecursor、Relic rank/set角色、Weapon独立raw父入口语法，以及R1/R2/Scene/Proud各自的准确限制/自然输入。已验结果只读复用，不再添加raw-id/native门或泛扫替代输入；普通来源缺口与A/B准确冻结边分列，不宣称整族或潜在host路径必然依A。
 
 [UP-72-20261114阶段调研](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)仍为进行中；UP-72-N1/N2只按当前具体缺口消费固定候选及现有冲突，不整包替换。UP-72-N3长尾检索在D-02排期后移，原继续位置保留，不关闭原调研。A/B、preview与准确依赖仍冻结；A已找回平台错误及opaque事件关联，原请求明文恢复验收已撤回，可读正文和技术输入仍缺，见[纠错](docs/CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)。当前没有需要用户启动的现场；重复同SDK页采样无新输入依据时不排期。
 
@@ -28,9 +28,9 @@
 | 阶段 | 状态 | 已有基础与剩余目标 | 阶段验收出口 |
 | --- | --- | --- | --- |
 | D02-R0 入场依赖台账 | 已完成 | 已登记源码候选、管理器/事件/脚本开放边界；运行闭包继续由R4/R6更新 | 新旧号路径及必需依赖有来源，未知未被标成可省略；[台账](docs/CLIENT_72_D02_ENTRY_DEPENDENCIES.md) |
-| D02-R1 角色与场景初始化 | 进行中 | raw适配器、类/方法后继、warm输入及有限Java投影可复用；enum/String、完整Avatar构造、g2和Scene/Team/Entity未闭 | 同源角色/库存/资源→真实Java发送→目标消费者及必要状态/顺序闭合，未知不参与发送 |
-| D02-R2 SDK与连接前置 | 进行中 | 日志/响应修复、真实HTTP往返、key桥接/装载及准确caller到达已验限定范围；SDK分类、自然Init/env/route/认证与完整校验未闭 | 正确认证/错误拒绝、会话交换、dispatch/密钥和必需补丁合同成立；实际装载/本服连接在R5/R6复核 |
-| D02-R3 最小资源与保存恢复 | 进行中 | 真实资源/曲线/突破、出生HP/critical/装备/Gadget查找键、自然首诊、303局部正向Manager恢复及出生默认装备局部保存/冷绑定已验；完整行、配置/ability、revision及入场全部必要加载/恢复未闭 | 必需资源/引用/脚本实际加载有效；保存→新Player→真实manager恢复成立，不能手设loadedAll |
+| D02-R1 角色与场景初始化 | 阻塞 | raw适配器、类/方法后继、warm输入及有限Java投影可复用；enum/String、完整Avatar构造、g2和Scene/Team/Entity未闭 | 同源角色/库存/资源→真实Java发送→目标消费者及必要状态/顺序闭合，未知不参与发送 |
+| D02-R2 SDK与连接前置 | 阻塞 | 日志/响应修复、真实HTTP往返、key桥接/装载及准确caller到达已验限定范围；SDK分类、自然Init/env/route/认证与完整校验未闭 | 正确认证/错误拒绝、会话交换、dispatch/密钥和必需补丁合同成立；实际装载/本服连接在R5/R6复核 |
+| D02-R3 最小资源与保存恢复 | 阻塞 | 真实资源/曲线/突破、出生HP/critical/装备/Gadget查找键、自然首诊、303局部正向Manager恢复及出生默认装备局部保存/冷绑定已验；完整行、配置/ability、revision及入场全部必要加载/恢复未闭 | 必需资源/引用/脚本实际加载有效；保存→新Player→真实manager恢复成立，不能手设loadedAll |
 | D02-R4 P0部署前汇合 | 待开始 | 依赖R1/R2/R3的必要合同；C-01b网络边界与既有回归直接复用 | 必经请求/响应/通知、嵌套、聚合、顺序、资源与最终发包一致；生成、相关回归和构建通过，未验runtime继续保留 |
 | D02-R5 隔离部署 | 待开始 | 依赖R4；InstanceRoot入口已验，真实实例未部署 | 独立配置/data/DB/资源，日志/健康/TCP/UDP/PID/运行JAR SHA及实际DLL/信任一致；[部署手册](docs/CODEX_ONE_CLICK_DEPLOY.md) |
 | D02-R6 客户端验收（D-02 / F-05） | 待开始 | 依赖R5；原SDK登录页不等于本服登录 | 第5节每项通过并记录范围；失败需修复、回归和正常重部署后复验 |
@@ -52,7 +52,7 @@
 | 有界执行子代理 | GPT-6.1 Terra（`gpt-6.1-terra`，档位按任务指定） | 规格完整的清单/数据对照、受控转换、driver、测试准备、机械修改和文档整理；未知语义返回主线，不自行猜测 |
 | 最后升级，非日常排班 | GPT-6 Astra max（`gpt-6-astra` / `max`） | 仅主线和Sol max实质分析仍不能解决、且影响D-02关键路径时使用；须先说明已排除假设、升级理由、准确问题和返回条件。缺样本、缺现场或未读既有证据不构成升级理由 |
 
-原Scene reader/Proud setter首轮及后继的已验范围见第6节和[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)，不重发旧包。本轮Skill/energy计划、限定公开检索及id/element批量已完成；Sol max继续必要成本合同，唯一集成者复核已完成Java后的必要恢复缺口；Float/Pair、启动修复和cold结果直接复用。Terra xhigh仅承接成熟规格、测试和有界实现，未形成规格时不为填槽造工作。共享Git、Proto生成、构建、数据库及运行实例由本轮唯一集成执行者串行操作；当前R1/R2/R3未齐，不部署。主线负责规划和验收；用户另行允许的现场接管须明确交接，禁止computer-use继续有效。
+原Scene reader/Proud setter首轮及后继的已验范围见第6节和[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)，不重发旧包。本轮Skill/energy计划、限定公开检索及id/element批量已完成；本轮成本/START与真实Java及剩余来源复核已完成，当前按条件2等待准确输入；Float/Pair、启动修复和cold结果直接复用。Terra xhigh仅承接成熟规格、测试和有界实现，未形成规格时不为填槽造工作。共享Git、Proto生成、构建、数据库及运行实例由本轮唯一集成执行者串行操作；当前R1/R2/R3未齐，不部署。主线负责规划和验收；用户另行允许的现场接管须明确交接，禁止computer-use继续有效。
 
 显式传入工具支持的模型与档位；模型不可用应如实返回主线调整，不能静默升级Astra或冒称已使用指定模型。子代理不得自行扩大派遣和修改范围。
 
@@ -62,7 +62,7 @@
 
 | 批次 | 既有任务 / 下一动作 | 并行安排 | 退出条件与推荐模型 |
 | --- | --- | --- | --- |
-| 0 恢复与缺口对齐 / D02-RESUME-INTEGRATION-20261116 | 已核当前HEAD、差异归属、子模块、脱敏配置、进程端口及11个既验产物hash；复用121 Avatar七键/loader、Depot三键、Float/Pair及启动修复/cold采样 | 主线管理验收，唯一集成执行者维护共享状态并等待成熟最小规格；不重发旧首窗或启动超时任务 | 接手核对与当前状态纠正子出口已完成，集成工作继续；未测试/构建/部署/启动客户端，其他研究结果未因本项晋级。[活动检查点](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md) |
+| 0 恢复与缺口对齐 / D02-RESUME-INTEGRATION-20261116 | 已核当前HEAD、差异归属、子模块、脱敏配置、进程端口及11个既验产物hash；复用121 Avatar七键/loader、Depot三键、Float/Pair及启动修复/cold采样 | 主线管理验收，唯一集成执行者维护共享状态并等待成熟最小规格；不重发旧首窗或启动超时任务 | 接手核对及本轮独立实现/Java/状态集成已完成；当前按条件2等待，接手盘点本身未运行测试，后继双Java按各任务实际验收，未部署/启动客户端。[活动检查点](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md) |
 | 1 选择最小资源出值出口 / D02-SKILL-ENERGY-SEARCH-20261116 | 367个Skill id/element批量已闭，正向Depot loader已实际通过；121普通cost与START及真实Java已闭，特殊MAX cap目标字段职责桥仍待准确来源。本批中文计划及定向公开检索已限定交付。已有parser/scalar/371长度结果复用；ctor边界缺失时该单窗继续阻塞 | Sol max判断一个明确字段包能否独立闭合，Terra max按计划检索；Sol xhigh/Terra只在输入和验收成熟后实现 | 交可实施的最小出值/loader规格，或准确缺输入；不猜ctor长度、不按RET补边界，不用None/空Skill/假cost。没有新来源就不重复旧清查 |
 | 按需并行 / 固定上游候选 | UP-72-N1/N2仅核能解除当前调用点、字段或资源缺口的独有增量，先与已有成果对照；已有LoginReq冲突和303相同子行直接引用 | Sol max定具体问题，Terra按冻结源码做有界对照；不重复广泛搜索或深审全部Fork | 候选名称/版本及同形不当目标真值；无实际增量则结束该比较。UP-72-N3继续位置保留但不阻塞D-02 |
 | 2 小合同实现→同源批量覆盖 | 一个实际字段/引用合同成熟后，先验证真实值与consumer，再参数化覆盖所选旧号集合；随后补121 Depot正向Java及energy绑定 | Sol xhigh执行集成，Terra并行不同成熟字段/资源包；JVM/DB串行 | 本轮367两键与121energy绑定已通过；后继仅在各自真实字段合同齐后执行，不跑伪正向loader；复用七键/phase6/Talent，不为简单一次性工作额外派独立审核或写测试 |
@@ -72,13 +72,13 @@
 | 5 R4汇合 | 三层、最终收发/嵌套/顺序/资源及受影响回归/构建 | 主线核依赖，集成执行者统一操作 | 不降低ready/required，不把无关玩法列前置 |
 | 6 R5→R6 | Windows portable隔离部署→第5节六项实机 | 单一执行者串行部署，用户配合实际验收 | 核运行产物/环境，六项全部通过才完成D-02/F-05/D02-R6 |
 
-批次是依赖顺序，不是全员屏障。以解除真实值、加载或恢复缺口为任务出口；普通未处理来源与准确外部阻塞分别记录。缺资料先复用已有允许来源，新增大任务按AGENTS先写中文检索计划再定向检索；不为重复盘点、全域索引或额外确认增加流程。本轮恢复核对已执行，Skill id/element批量和本批限定公开检索已交付，Depot真实Java已通过，必要成本合同与剩余恢复缺口继续；本机没有成熟实现包不等于公开来源已查尽，待结果回传后发布最小实现，不提前结束D-02。
+批次是依赖顺序，不是全员屏障。以解除真实值、加载或恢复缺口为任务出口；普通未处理来源与准确外部阻塞分别记录。缺资料先复用已有允许来源，新增大任务按AGENTS先写中文检索计划再定向检索；不为重复盘点、全域索引或额外确认增加流程。本轮恢复核对已执行，Skill id/element及121cost/START和相关真实Java已交付；剩余前沿已按条件2收口等待准确输入，不把有限公开检索解释为全网查尽。新输入满足后再发布对应最小实现，D-02父项仍未完成。
 
 ### 3.3 当前批次派工与文件归属
 
 | 分支 / 既有任务 | 本批具体动作及前置 | 产物与验收出口 | 责任文件与模型 |
 | --- | --- | --- | --- |
-| D02-RESUME-INTEGRATION-20261116 | 接手只读核对及当前状态纠正子出口已完成；等待成熟最小实现规格，集成继续 | 11个既验产物hash及脱敏preflight可定位；不重跑旧验收、不部署、不收他人差异 | Sol xhigh唯一集成者：Project/Harness/HANDOFF/HANDOFF2及本轮集成状态文档；独占Git/生成/构建/DB/运行写入 |
+| D02-RESUME-INTEGRATION-20261116 | 本轮接手、最小字段实现、相关Java与文档/提交集成已完成；条件2等待准确输入/限制解除 | 11个既验产物hash及脱敏preflight可定位；不重跑旧验收、不部署、不收他人差异 | Sol xhigh唯一集成者：Project/Harness/HANDOFF/HANDOFF2及本轮集成状态文档；独占Git/生成/构建/DB/运行写入 |
 | D02-SKILL-ENERGY-SEARCH-20261116 | Sol max中文规划与Terra max本批公开定向检索均已限定验收；本地合同分析及实际字段/加载出口继续 | [检索报告](docs/CLIENT_72_D02_TARGETED_REUSE_SEARCH_20261116.md)保留候选presence、同源冲突、失败及未覆盖；候选不当target值，局部结果不升级父项 | Sol max：[冻结计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)及本地语义；Terra max：本批报告已交；共享写入/运行仍归唯一集成者 |
 | D02-INDEPENDENT-INPUT-AUDIT-20261116 | 已完成既有本地Material/Relic/Proud/Scene/SDK五线有界审阅与10个hash核对，原始结论只读复用 | 暂无成熟本地包；精确公开问题尚未查尽，不写成全部外部阻塞 | Terra xhigh：忽略目录审阅；正式状态摘要由集成者收录[活动检查点](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md) |
 | A：F-03d3f4d2；必要 String 共同合同 | 同 epoch GC/Default 输入、人工双路径、stock 条件自有原 helper 已验，只读复用 | A-SECOND-RETURN-CONTRACT及依赖保持拒绝阻塞；其他独立任务必须先通过移除拒绝动作/产物后的独立性判断 | 不派被拒项，不运行草稿 |
