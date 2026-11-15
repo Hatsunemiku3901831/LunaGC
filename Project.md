@@ -131,6 +131,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 
 | 工作包 | 状态 | 当前范围和下一判断 |
 | --- | --- | --- |
+| R3-MATERIAL-EXACT-PAYLOAD-LOCATOR-20261116 | 已完成 | 9旧host控制及两固定index唯一命中，Material path→key16540db9943871cc→entry b9943871→block25539185；首pins角色错误留证并审定纠正，不再以三根stem0列本机输入阻塞。[定位](docs/CLIENT_72_D02_MATERIAL_EXACT_PAYLOAD_20261116.md) |
+| R3-MATERIAL-SERIALIZED-ENTRY-EXTRACT-20261116 | 已完成 | 复用旧固定容器图，精确file0/path1362/class1208提取1560105B Material m_bytes，同旧图hash；2153索引名/68904B索引及整容器读分账。只输入，不代row/keyspan/cursor、分类值或自然revision。[结果](docs/CLIENT_72_D02_MATERIAL_EXACT_PAYLOAD_20261116.md) |
 | R3-MATERIAL-SPECIAL-ENUM-CONSTANTS-STATIC-20261116 | 已完成 | 固定PE/global静态读取94 Material+3特殊类别literal，97明确int32/95非零，MATERIAL_NONE0、特殊NONE0/MAVUIKA1/SKIRK2；388B数值，表结构915840B，PE语义上界892B。首次resolver错因撤回并留证；不代资源row或实际token。[结果](docs/CLIENT_72_D02_MATERIAL_SPECIAL_ENUM_CONSTANTS_20261116.md) |
 | R3-SKILL-ENERGY-RESOURCE-BRANCH-SOURCES-20261116 | 已完成 | 准确完整457/454B静态源及FightProp职责，将同energy Skill+98绑定普通cost、+74绑定特殊START；不是MAX cap。实际值由后继host另验。[来源](docs/CLIENT_72_D02_SKILL_ENERGY_BRANCH_FIELDS_20261116.md) |
 | R3-SKILL-ENERGY-INIT-CONSUMER-SOURCE-20261116 | 已完成 | 准确完整525B/137条为53767对象延迟注册/合并，没有同Skill字段→MAX_SPECIAL职责桥；不继续两个通用后继。[范围](docs/CLIENT_72_D02_SKILL_ENERGY_BRANCH_FIELDS_20261116.md) |
