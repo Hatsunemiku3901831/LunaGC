@@ -1,4 +1,6 @@
-当前恢复索引：`R3-PROUD-FLOAT-CONSUMER-SOURCES` 条件合同及 `R3-PROUD-FLOAT-NORMAL-PATH-ASSERTIONS` 已完成限定验收；启动超时归因进行中，String中性输入合同准备已限定验收，Scene差距分析待验。具体状态见 [Project](Project.md) 和[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。以下日期记录反映各历史时点，不替代当前排期。
+当前恢复索引：`R3-PROUD-FLOAT-CONSUMER-SOURCES` 条件合同及 `R3-PROUD-FLOAT-NORMAL-PATH-ASSERTIONS` 已完成限定验收；启动超时归因进行中，String中性输入合同准备已限定验收，Scene既有来源差距审阅已限定验收，M1–M4待新增独立来源。具体状态见 [Project](Project.md) 和[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。以下日期记录反映各历史时点，不替代当前排期。
+
+2026-11-15 `F-03d3s2-SCENE-ALLOWED-SOURCE-GAP`：[既有来源关系矩阵](docs/CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)限定验收，4 pin、三writer完整性、238B工厂和6锚点独立核对；316B getter既有验收直接复用，未重验。集成回执 `local/migration72/d02-resume-20261115/launch-timeout/gap-integration1/completion.private.json` SHA-256 `d8720288120fc2360a6433fe173d133978b5546be6fb821d3118f5a4ea8b343f`。固定来源不足以闭合M1–M4，须新增明确允许且固定的独立来源；无成熟sender，不泛封Scene或提升父项。
 
 2026-11-15 `R3-PROUD-STRING-INPUT-CONTRACT`：9固定来源pin及独立14项/0失败，见[输入合同](docs/CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)；原stdin脚本未保存，后补同断言脚本独立复跑。集成回执 `local/migration72/d02-resume-20261115/launch-timeout/gap-integration1/completion.private.json` SHA-256 `d8720288120fc2360a6433fe173d133978b5546be6fb821d3118f5a4ea8b343f`。未创建sampler/读取器；实际M、pointer、length、UTF16、业务桥及配置同源均未知，不提升父项或ready。
 

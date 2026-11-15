@@ -89,7 +89,7 @@
 
 | 批次 / 工作包 | 状态与依赖 | 交付与验收 | 推荐模型 | 证据与边界 |
 | --- | --- | --- | --- | --- |
-| 已验复用→独立输入到位后 / F-03d3s2 reader工厂语义后继 | 进行中；工厂/backend/LoadedBundle/token/refill/read-core及控制尾、cluster getter限定来源与语义已验 | 当前只核9251实际receiver/返回reader/+18初始化reset的允许来源；不重发238B工厂、不补已闭read尾窗。getter及Recreate空cache的准确A调用返回依赖停止；未知已有cache/ReplaceCluster不作为执行许可 | Sol max仅处理有来源独立问题；明确实现交Sol xhigh/Terra | [本轮限定出口](docs/CLIENT_72_D02_RESUME_20261111C.md)、[准确原始后继](docs/CLIENT_72_D02_SCENE_READER_FACTORY_SUCCESSOR_20261111B.md)；自然reader与World仍未验 |
+| 已验复用→独立输入到位后 / F-03d3s2 reader工厂语义后继 | 进行中；工厂/backend/LoadedBundle/token/refill/read-core及控制尾、cluster getter限定来源与语义已验 | 已完成既有允许来源的有界差距审阅；9251实际receiver/派发与返回reader/+18初始化reset的M1–M4关系仍缺新增允许的固定独立来源，不重发238B工厂、316B getter或已闭read尾窗。getter及Recreate空cache的准确A调用返回依赖停止；未知已有cache/ReplaceCluster不作为执行许可 | Sol max仅处理有来源独立问题；明确实现交Sol xhigh/Terra | [本轮限定出口](docs/CLIENT_72_D02_RESUME_20261111C.md)、[准确原始后继](docs/CLIENT_72_D02_SCENE_READER_FACTORY_SUCCESSOR_20261111B.md)；自然reader与World仍未验 |
 | 已验复用→当前row所需后继 / E-01d1 Proud setter/getter语义后继 | 进行中；条件存储、initializer/builder/常量、当前采用双源及QueryWrapper/NativeWrapper借用、FindEntry来源已验 | 不重发157B setter旧包；将31A布局、31B Float原窗和现有cache输入准备对齐。准确业务alias、实际编码/值、row及当前采用未闭，不能以条件生成或host候选补Java空行 | Sol max语义；Sol xhigh/Terra接成熟实现 | [三字段当前边界](docs/CLIENT_72_D02_PROUD_MANAGED_ROW_REMAINING_20261112.md)、[完整Float来源](docs/CLIENT_72_D02_PROUD_MANAGED_FLOAT_GETTER_WINDOW_20261112.md)；准确A parser构造依赖冻结 |
 | 1优先 / R3-PROUD-FLOAT-CONSUMER-SOURCES | 已完成；166B正常路径条件合同及三consumer准确缺口限定验收 | 物理输出位样和长度门为条件关系；三个准确消费桥、实际M/encoded、同epoch seed/table、alias、完整row/current仍未知，不晋级资源ready | Sol max分析；独立机械断言另项已验 | [条件合同与来源](docs/CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md) |
 | 2准备 / R3-PROUD-EXISTING-STANDARD-CACHE-INPUT-PREPARE | 已完成；固定key 22101的已有managed两encoded及同批getter所需既存inverse选择字节/seed的离线准备限定验收 | 实际输入、native getter、current和row仍未知；host仅条件投影，不证明原子codec epoch；准确触A拒绝依赖即停 | Terra xhigh离线准备；intake_audit独立验收 | [验收与边界](docs/CLIENT_72_D02_RESUME_20261111C.md) |
@@ -126,10 +126,10 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | --- | --- | --- |
 | R3-PROUD-FLOAT-CONSUMER-SOURCES | 已完成 | 已验166B正常路径条件合同与三consumer准确缺口；实际消费桥、M、row/current、同epoch输入及resourceReady未知。见[专题](docs/CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md)。 |
 | R3-PROUD-CACHE1-LAUNCH-TIMEOUT | 进行中 | 原 cache1 父回执0B、helper缺席，sample未派；用离线自有 stub 定位同步 RunAs/elevation 交接，90秒起点不变。结果待主线验收。 |
-| Scene 有界差距 | 进行中 | 9251实际receiver、virtual +f0返回reader及其+18初始化/reset未知。316B getter来源已验；先判是否有不消费 A 拒绝动作及产物的已有输入，未知已有cache/ReplaceCluster不是执行许可。 |
+| F-03d3s2-SCENE-ALLOWED-SOURCE-GAP | 已完成 | 既有允许来源有界差距审阅已验；4 pin、三writer、238B工厂及6锚点独核，316B getter直接复用未重验。M1–M4实际receiver/派发与返回/初值/reset关系缺新增允许的固定独立来源，尚无成熟sender；不泛封Scene。见[关系矩阵](docs/CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)。 |
 | R3-PROUD-STRING-INPUT-CONTRACT | 已完成 | 中性输入状态及来源合同准备限定验收，9源pin和独立14/0；未创建采样器/读取器。实际M、pointer、length、UTF16、业务桥及配置同源仍未知，OpenConfig仅候选；不并入 Avatar String 或 Gadget 路线。见[合同](docs/CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)。 |
 | R3-PROUD-FLOAT-NORMAL-PATH-ASSERTIONS | 已完成 | 固定166B及合成向量419项/0失败，作者两次与集成独立重跑一致，七个分支目标独核；不证明实际输入或业务桥。见[断言与复现](docs/CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md)。 |
-| UP-72-N1/N2、F-04离线清单候选 | 待开始 | 分别先核已验上游对照与 ENV-01/InstanceRoot 成果；只有能解除当前 D-02 的具体合同或部署准备缺口才派发。实际部署仍待 R4。 |
+| UP-72-N1/N2、F-04离线清单候选 | 待开始 | 后移：N1仅在明确P0字段/顺序缺口及独立目标依据后缩小对照；N2仅在具体旧号必经资源/ID及目标消费者缺口明确后评估。303既有16行对照与局部恢复直接复用，目标revision未证。F-04复用ENV-01、信任与InstanceRoot已验入口，待R4及真实材料成熟后按部署手册核验，不重复制表；实际部署仍待R4。 |
 
 ### 3.5 并行与互斥规则
 
@@ -430,6 +430,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | E-01d1/R3-PROUD-QUERYWRAPPER-BORROW-SEMANTICS | 已完成 | 544B本体32B输出、参数拆分、未知Empty模板和负h路线已验；不证明lease，ctor后继另验。 | [借用语义](docs/CLIENT_72_D02_PROUD_QUERYWRAPPER_BORROW_SEMANTICS_20261111C.md) |
 | E-01d1/R3-PROUD-NATIVEWRAPPER-CTOR-SOURCE | 已完成 | 290B/78条原窗，第三八件一致、6测试；仅源，借用合同另项限定验收。 | [ctor源窗](docs/CLIENT_72_D02_PROUD_NATIVEWRAPPER_CTOR_WINDOW_20261111C.md) |
 | E-01d1/R3-PROUD-NATIVEWRAPPER-CTOR-BORROW-CONTRACT | 已完成 | 正常局部同P+34 INC→读→DEC闭合；实际page、lease、codec、encoded、getter和current仍未知，不证明自然采用。 | [借用合同](docs/CLIENT_72_D02_PROUD_NATIVEWRAPPER_CTOR_BORROW_CONTRACT_20261111C.md)、[本轮验收](docs/CLIENT_72_D02_RESUME_20261111C.md) |
+| F-03d3s2-SCENE-ALLOWED-SOURCE-GAP | 已完成 | 4 pin、三writer、238B工厂及6锚点独核，316B来源只读复用未重验；M1–M4关系缺新增允许的固定独立来源，无成熟sender，不晋级父项。 | [关系矩阵](docs/CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)、[验收](docs/CLIENT_72_D02_RESUME_20261111C.md) |
 | R3-PROUD-STRING-INPUT-CONTRACT | 已完成 | 9固定来源pin、独立14/0；仅中性String输入合同准备，未建采样器/读取器，实际M、pointer、length、UTF16、业务桥与配置同源未知。 | [合同](docs/CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)、[验收](docs/CLIENT_72_D02_RESUME_20261111C.md) |
 | R3-PROUD-FLOAT-CONSUMER-SOURCES | 已完成 | 166B正常路径条件位样及长度门、三consumer准确缺口限定验收；实际M、同epoch输入、消费桥、alias、row/current仍未知。 | [条件合同](docs/CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md) |
 | R3-PROUD-FLOAT-NORMAL-PATH-ASSERTIONS | 已完成 | 作者两次及集成独立419/0、报告逐字节相同及七分支目标独核；仅固定来源与合成数据，不晋级父项。 | [断言和复现](docs/CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md) |
