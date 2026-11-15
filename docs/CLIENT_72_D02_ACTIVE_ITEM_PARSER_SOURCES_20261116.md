@@ -18,4 +18,4 @@
 
 私有根 `local/migration72/d02-resume-20261116/active-item-material-parser-window-run2/`：`capture/result.private.json` SHA-256 `fb45c38944e99756b492bf4daaaa2b4d9ec75e0fbb0672a93297abd3506f2cb2`；`manifest.private.json` SHA-256 `a091503fd0e67580c83ad7106458884404f22ed90deba36f2fcde1065eb07656`；`capture/body.asm.private.json` SHA-256 `90e3002d9a86c40311a7571ea61733f0c7e1f190e86404d9344c0cd5131841d4`；`capture/reference-index.private.json` SHA-256 `bfc29fa85255c9579b71af6227e423a5ef1d71b73c0a171c6e3866d2d2c92a50`。
 
-两项 source 采集未执行目标、native、ctor/parser/getter 或 host row，未运行 JVM、DB、客户端或测试，也未修改 tracked 代码。Skill 最小语义及另一个 `14f905250` Float setter 后续静态来源已限定验收，见[新结果](CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md)；条件合同仍在审定。A/B、preview 和准确冻结边保持，D-02 / F-05 / D02-R6 仍 0/6。
+两项 source 采集未执行目标、native、ctor/parser/getter 或 host row，未运行 JVM、DB、客户端或测试，也未修改 tracked 代码。Skill 最小语义及另一个 `14f905250` Float setter 静态来源已限定验收，见[来源](CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md)；后继[条件合同与raw flag盘点](CLIENT_72_D02_SCALAR_CONTRACTS_AND_SKILL_FLAGS_20261116.md)亦已限定验收，不证明自然输入或新行值。A/B、preview 和准确冻结边保持，D-02 / F-05 / D02-R6 仍 0/6。

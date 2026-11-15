@@ -28,7 +28,11 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 | `R3-OLD121-SKILL-PARSER-SOURCE-WINDOW-RUN2` | 已完成；fresh AOT/唯一pdata/完整目录与8309B body通过，strict 1985指令/539引用。[来源与分账](CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) | 直接冻结site/target零不证明传递A-free；无目标CPU/进程读取，底层loader/OS IO未计。 |
 | `R3-OLD121-SKILL-PARSER-MINIMUM-SEMANTICS` | 已完成；id/+68与element/+54正常条件覆盖旧字段，缺flag局部逻辑0有原来源。[语义](CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md) | 不证明初态或新值；121 energy行三成本/特殊池字段未闭。 |
 | `R3-OLD121-SKILL-FLOAT-SETTER-SOURCE-WINDOW` | 已完成；`14f905250` 完整163B/48指令/9引用。[来源](CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md) | 不同于既验UInt32 setter及Float getter；source不代条件合同。 |
-| `R3-OLD121-SKILL-FLOAT-SETTER-CONDITIONAL-CONTRACT` | 进行中；Sol max审定setter条件合同。 | 尚无结论，不批准typed row。 |
+| `R3-OLD121-SKILL-FLOAT-SETTER-CONDITIONAL-CONTRACT` | 已完成；正常位级写入及getter同表/seed条件逆关系限定验收。[合同](CLIENT_72_D02_SCALAR_CONTRACTS_AND_SKILL_FLAGS_20261116.md) | 实际M/表/seed/epoch未知，不批准typed row。 |
+| `R3-OLD121-SKILL-INT32-SETTER-SOURCE-WINDOW` | 已完成；必经setter完整157B/45指令/9引用。[来源](CLIENT_72_D02_SCALAR_CONTRACTS_AND_SKILL_FLAGS_20261116.md) | 直接冻结0不证明传递A-free。 |
+| `R3-OLD121-SKILL-INT32-SETTER-CONDITIONAL-CONTRACT` | 已完成；EDX低32位无符号抽取、查表/seed及一次覆盖限定验收。[合同](CLIENT_72_D02_SCALAR_CONTRACTS_AND_SKILL_FLAGS_20261116.md) | 不推signed业务、Int32 getter或完整parser。 |
+| `R3-OLD121-SKILL-RAW-FLAG-INVENTORY` | 已完成；371行首8B、26 anchors/8 literal byte oracle，payload语义0、新逻辑值0。[盘点](CLIENT_72_D02_SCALAR_CONTRACTS_AND_SKILL_FLAGS_20261116.md) | 只raw flags，不推String/TLS/实际调用或行值；121 energy的三字段未知。 |
+| `R3-OLD121-SKILL-RAW-FLAG-TRIAGE` | 进行中；Sol max审定必要后继。 | 暂无结论，不批准typed行或新值。 |
 | `R3-ACTIVE-MATERIAL-RELIQUARY-PARSER-SOURCE-SCOPE` | 已完成；两个独立单窗source-only规格与唯一typeRef已定。[规划](CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) | 此前错误typename已撤回；不证明row/值/ABI。 |
 | `R3-ACTIVE-MATERIAL-RESOURCE-PARSER-SOURCE` | 已完成；原4096B cap停body0/read0与KeyError保留，后续RUN2取得完整7128B来源。[结果](CLIENT_72_D02_ACTIVE_ITEM_PARSER_SOURCES_20261116.md) | 不追认原轮，不证明row/值/初始化。 |
 | `R3-ACTIVE-MATERIAL-PARSER-EXACT-EXTENT-SCOPE` | 已完成；按已确认7128B边界形成新窗规格，7156B evidence、strict≤7128。[规格](CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) | 原cap失败保留；后继RUN2的fresh AOT/exception/pdata已验。 |
