@@ -160,10 +160,10 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-PROUD-CARRIER-572222-CONSUMER | 阻塞 | 首次非空row路径遇准确A CALL，另有调用指向已冻tail；停返回/构造/后继，不称整个body数组消费阴性。 |
 | R3-PROUD-STRING-HELPER-SOURCE-PLAN | 已完成 | 选择34315.m287516/151bbd710，flags96h、static、一String显参；仅问可见查找与返回来源，owner字典声明不证明返回或业务。 |
 | R3-PROUD-STRING-HELPER-WINDOW | 已完成 | 一次242B/62条来源及自身账本限定验收，证据270B；无重采/新测试。[来源](docs/CLIENT_72_D02_PROUD_STRING_HELPER_WINDOW_20261115.md) |
-| R3-PROUD-STRING-HELPER-SEMANTICS | 进行中 | 只审两窗关联的有限String查询/判定及必要metadata，不预称正式返回或业务。 |
+| R3-PROUD-STRING-HELPER-SEMANTICS | 已完成 | 条件String查询及物理返回槽限定验收；命中值可null、null输入交未知helper，guard不等于正常0；formal return、业务和实际值未知。[语义](docs/CLIENT_72_D02_PROUD_STRING_LOOKUP_AND_GATE_SEMANTICS_20261115.md) |
 | R3-PROUD-CARRIER-572232-SOURCE-PREPARE | 已完成 | 已审69135.m572232/14c510320，flags81h、instance、String/String/List<59500>三显参及私有source规格；formal/hidden/ABI未知。 |
 | R3-PROUD-CARRIER-572232-WINDOW | 已完成 | 一次575B/148条来源及自身账本限定验收，证据603B；与String helper分账，无重采/新测试。[来源](docs/CLIENT_72_D02_PROUD_CARRIER_572232_WINDOW_20261115.md) |
-| R3-PROUD-CARRIER-572232-SEMANTICS | 进行中 | 只审两窗关联的有限String查询/判定及必要metadata，不预称数组消费或业务。 |
+| R3-PROUD-CARRIER-572232-SEMANTICS | 已完成 | 精确17390类型与两String双匹配条件限定验收；命中仅AL/BL=1，EAX高位/formal return未知，无目标双数组直接读或whole List转交。[语义](docs/CLIENT_72_D02_PROUD_STRING_LOOKUP_AND_GATE_SEMANTICS_20261115.md) |
 | R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS | 已完成 | 本体双遍历、同N指针store、中性native+2c↔41105.field203368/+70表示桥及准确缺口限定验收；未消费26072三字段。上游旧listing的共用allocator调用属于准确A冻结边，停在CALL；业务桥、实际M/数组/String、row/current/epoch及ready未知。见[成员语义](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_SEMANTICS_20261115.md)。 |
 | F-03d3s2-SCENE-ALLOWED-SOURCE-GAP | 已完成 | 既有允许来源有界差距审阅已验；4 pin、三writer、238B工厂及6锚点独核，316B getter直接复用未重验。M1–M4实际receiver/派发与返回/初值/reset关系缺新增允许的固定独立来源，尚无成熟sender；不泛封Scene。见[关系矩阵](docs/CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)。 |
 | R3-PROUD-STRING-INPUT-CONTRACT | 已完成 | 中性输入状态及来源合同准备限定验收，9源pin和独立14/0；未创建采样器/读取器。实际M、pointer、length、UTF16、业务桥及配置同源仍未知，OpenConfig仅候选；不并入 Avatar String 或 Gadget 路线。见[合同](docs/CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)。 |
@@ -478,6 +478,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-PROUD-REMAINING-CARRIER-SEMANTICS | 已完成 | whole carrier按b条件转交及两模式枚举原L限定验收；V/W身份及callee数组消费未知。 | [语义](docs/CLIENT_72_D02_PROUD_REMAINING_CARRIER_SEMANTICS_20261115.md) |
 | R3-PROUD-WHOLE-CARRIER-CONSUMER-SEMANTICS | 已完成 | 五个局部Float getter原caller及输出用途、原List回传限定验收；实际数组归属、业务及全域caller未知。 | [语义](docs/CLIENT_72_D02_PROUD_WHOLE_CARRIER_CONSUMER_SEMANTICS_20261115.md) |
 | R3-PROUD-CARRIER-572215-SEMANTICS | 已完成 | 普通路径反向遍历、跨调用row版本及条件List操作限定验收；目标数组/业务与完整清理合同未知。 | [限定语义](docs/CLIENT_72_D02_PROUD_CARRIER_572215_SEMANTICS_20261115.md) |
+| R3-PROUD-STRING-HELPER-SEMANTICS | 已完成 | String查询与物理返回槽条件限定验收；null命中、guard、formal return及业务边界保留。 | [限定语义](docs/CLIENT_72_D02_PROUD_STRING_LOOKUP_AND_GATE_SEMANTICS_20261115.md) |
+| R3-PROUD-CARRIER-572232-SEMANTICS | 已完成 | 精确17390及双String匹配仅低字节命中限定验收；业务/实际值未知。 | [限定语义](docs/CLIENT_72_D02_PROUD_STRING_LOOKUP_AND_GATE_SEMANTICS_20261115.md) |
 | R3-PROUD-STRING-HELPER-WINDOW | 已完成 | 单次242B/62条来源及自身账本限定验收；正式返回/业务未知。 | [来源](docs/CLIENT_72_D02_PROUD_STRING_HELPER_WINDOW_20261115.md) |
 | R3-PROUD-CARRIER-572232-WINDOW | 已完成 | 单次575B/148条来源及自身账本限定验收；数组消费/业务未知。 | [来源](docs/CLIENT_72_D02_PROUD_CARRIER_572232_WINDOW_20261115.md) |
 | R3-PROUD-CARRIER-572232-SOURCE-PREPARE | 已完成 | 已审69135.m572232声明与私有source规格；形式返回及实际消费未知。 | 规格见 `local/migration72/d02-resume-20261115/proud-carrier-572232-plan/` |
