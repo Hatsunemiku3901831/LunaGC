@@ -6,7 +6,7 @@
 
 **用户已明确解除旧暂停，持续推进至D-02六项实机通过，或所有必要独立项各自有准确外部阻塞；当前D-02 / F-05 / D02-R6为0/6，R4/R5/R6未开始。** 旧号121 Avatar基础成长及critical七键片段、两个限定Java loader、121 Depot三键host投影已验；完整Avatar、Skill/energy、装备及同旧号实际Player恢复未闭。Float条件合同、共享Pair消费正例、启动修复及一次cold-cache采样直接复用，不再作为首发旧任务。
 
-当前以能解除真实资源加载或恢复依赖的最小出口为优先：[Skill/energy定向计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)对应本批公开检索已限定交付；367个本轮Skill id/element片段已实际闭合，121 Depot正向Java及120新energy绑定已实际通过，121行energy普通cost字段已闭，特殊START/MAX cap及真实maximum采用继续按必要合同推进。[批量结果](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md)已形成367本轮+2旧的canonical id/element片段；logicalID=tableKey复用已验绑定，不要求额外raw-id复解。Skill ctor普通边界失败不等安全拒绝，缺同固定PE准确边界时不重取或放宽；该单窗不作为已有独立element/ID来源的额外门。Weapon239中仅11101的1种27行有既验片段，其余238种1636行缺允许独立值来源；已确认A构造返回依赖冻结。Material/Relic缺literal、具名consumer或独立非零oracle时保留准确缺口；五线定向公开检索已补有限来源，目标值/consumer及未覆盖范围仍需新输入，不能据此标为全部外部阻塞，不以新增盘点替代出值。
+当前以能解除真实资源加载或恢复依赖的最小出口为优先：[Skill/energy定向计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)对应本批公开检索已限定交付；367个本轮Skill id/element片段已实际闭合，121 Depot正向Java及120新energy绑定已实际通过，121行energy普通cost字段已闭，特殊START两行已得100.0/50.0，其余119行分支及MAX cap、真实maximum采用继续按必要合同推进。[批量结果](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md)已形成367本轮+2旧的canonical id/element片段；logicalID=tableKey复用已验绑定，不要求额外raw-id复解。Skill ctor普通边界失败不等安全拒绝，缺同固定PE准确边界时不重取或放宽；该单窗不作为已有独立element/ID来源的额外门。Weapon239中仅11101的1种27行有既验片段，其余238种1636行缺允许独立值来源；已确认A构造返回依赖冻结。Material/Relic缺literal、具名consumer或独立非零oracle时保留准确缺口；五线定向公开检索已补有限来源，目标值/consumer及未覆盖范围仍需新输入，不能据此标为全部外部阻塞，不以新增盘点替代出值。
 
 [UP-72-20261114阶段调研](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)仍为进行中；UP-72-N1/N2只按当前具体缺口消费固定候选及现有冲突，不整包替换。UP-72-N3长尾检索在D-02排期后移，原继续位置保留，不关闭原调研。A/B、preview与准确依赖仍冻结；A已找回平台错误及opaque事件关联，原请求明文恢复验收已撤回，可读正文和技术输入仍缺，见[纠错](docs/CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)。当前没有需要用户启动的现场；重复同SDK页采样无新输入依据时不排期。
 
@@ -131,6 +131,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 
 | 工作包 | 状态 | 当前范围和下一判断 |
 | --- | --- | --- |
+| R3-OLD121-SKILL-SPECIAL-START-HOST-PILOT-20261116 | 已完成 | 同源11065/11145两个原bit30 present字段，定宽prefix精确定位8B，模加Float得START100.0/50.0；独立位/逐字节carry/逆wire及消费者职责通过。Java specialEnergyMax是START需求，specialEnergyMin/MAX cap不填。[结果](docs/CLIENT_72_D02_SKILL_SPECIAL_START_20261116.md) |
 | R3-OLD121-SKILL-ORDINARY-COST-HOST-BATCH-20261116 | 已完成 | 121能量Skill普通cost字段闭合：119present/2源确证absent逻辑+0，10019复用后118word/472B；位/字节/Float/逆wire/exactint通过。369合片含121三键与248原两键，特殊START/MAX cap及maximum采用另验。[结果](docs/CLIENT_72_D02_SKILL_ORDINARY_COST_20261116.md#121-行同源批量) |
 | R3-OLD121-SKILL-ORDINARY-COST-HOST-PILOT-20261116 | 已完成 | 同源10019准确4B，原parser XOR得到Float bits42a00000/实际cost80，独立当前元素能量与同Skill+98比较闭合职责；byte/Float位/逆wire/exactint通过。只此字段，不代121或maximum采用。[结果](docs/CLIENT_72_D02_SKILL_ORDINARY_COST_20261116.md) |
 | R3-SKILL-SPECIAL-ENERGY-NAMED-GETTER-SOURCE-WINDOW-20261116 | 已完成 | 固定203B/52条原来源，fresh AOT/独立完整pdata通过，直接冻结site/target0。有限UI/player状态与未知虚目标，不直接读Skill资源，不从名称命三成本字段。[来源/边界](docs/CLIENT_72_D02_SKILL_ENERGY_CONSUMER_SOURCES_20261116.md) |

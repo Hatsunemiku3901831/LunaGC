@@ -1,3 +1,5 @@
+2026-11-16 `R3-OLD121-SKILL-SPECIAL-START-HOST-PILOT-20261116`完成[两个特殊START字段](docs/CLIENT_72_D02_SKILL_SPECIAL_START_20261116.md)：11065=100.0、11145=50.0，exact8B，原bit30/prefix/独立byte-index及ADDcarry/Float位/逆wire通过。result SHA`b3b8921b81c709971a87f915ce23d8e6947e9159414cc8e63ba3746466ca00df`；仅Java specialEnergyMax/START需求，specialEnergyMin/MAX cap未知，其余119分支另核，无native/JVM/部署。
+
 2026-11-16 `R3-OLD121-SKILL-ORDINARY-COST-HOST-BATCH-20261116`完成[121普通cost字段批量](docs/CLIENT_72_D02_SKILL_ORDINARY_COST_20261116.md#121-行同源批量)：119present/2原PXOR源缺席逻辑+0，10019复用后exact472B，0新mask；369合片=121三键+248原两键。结果SHA`f3a82460f93779bbc226ef8fe877c62a7e3586d0b6a0644d4ecf334f3833c0a8`，242430B输出；同row/位/逐字节XOR/Floatbits/逆wire/exactint通过。特殊START/MAX cap、实际maximum采用与Java消费另验，无native/JVM/部署。
 
 2026-11-16 `R3-OLD121-SKILL-ORDINARY-COST-HOST-PILOT-20261116`完成[普通cost单字段host验证](docs/CLIENT_72_D02_SKILL_ORDINARY_COST_20261116.md)：10019实际cost80/Float bits42a00000，exact4B，13来源pins与独立原消费者职责、位/字节XOR/逆wire/exactJavaInt通过。result SHA`4b5650c2dcb2a22d8db6a5e44f2492edd0a1790d8e2772d4a6087f0b65327492`；只此字段，不代121/特殊池/maximum采用，无native/JVM/部署。
