@@ -131,6 +131,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 
 | 工作包 | 状态 | 当前范围和下一判断 |
 | --- | --- | --- |
+| R3-SKILL-SPECIAL-ENERGY-NAMED-GETTER-SOURCE-WINDOW-20261116 | 已完成 | 固定203B/52条原来源，fresh AOT/独立完整pdata通过，直接冻结site/target0。有限UI/player状态与未知虚目标，不直接读Skill资源，不从名称命三成本字段。[来源/边界](docs/CLIENT_72_D02_SKILL_ENERGY_CONSUMER_SOURCES_20261116.md) |
+| R3-SKILL-ENERGY-AVAILABILITY-PREDICATE-SOURCE-WINDOW-20261116 | 已完成 | 固定194B/53条原来源及同receiver Depot→energy ID→Skill+90分类分流成立；enum61184具名NONE/MAVUIKA/SKIRK支持有限特殊能量职责，literal数值及实际资源值未知，不当Min/Max。后继仅准确两分支source，三成本字段未闭。[来源/桥](docs/CLIENT_72_D02_SKILL_ENERGY_CONSUMER_SOURCES_20261116.md) |
 | R3-SKILL-ELEMENT-SUFFIX-HOST-BATCH-SCOPE-20261116 | 已完成 | 固定369需求−正式2旧=367本轮，present120/absent247、121energy对齐；10019复用后119word/476B、0新mask及≤1MiB预算。11101不冒称第三旧准入；canonical ID复用既验key。[范围/结果](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md) |
 | R3-SKILL-ELEMENT-SUFFIX-HOST-BATCH-20261116 | 已完成 | 唯一纯host实际输出367本轮+2旧=369个同源id/element片段；476B准确，absent明确原码逻辑0，名字/数值、独立位/算术/逆序及end通过。仅关闭该片段缺口，不代完整Skill或成本/保存。[结果](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md) |
 | R3-OLD121-SKILL-DEPOT-RESOURCELOAD-JAVA-20261116 | 已完成 | 唯一实际JDK17/Gradle单项JUnit1、F/E/S0；真实369Skill→121Depot、121energy同对象/element及484普通slot原序/重复/零/正引用通过，两map引用/内容与loadedAll保持。输入/源码不变；无DB/Player/client，121成本特殊字段及完整恢复未闭。[结果](docs/CLIENT_72_D02_OLD121_SKILL_DEPOT_JAVA_20261116.md) |

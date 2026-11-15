@@ -2,6 +2,8 @@
 
 2026-11-16 `R3-OLD121-SKILL-DEPOT-RESOURCELOAD-JAVA-20261116`及原`R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA`完成[真实ResourceLoader验收](docs/CLIENT_72_D02_OLD121_SKILL_DEPOT_JAVA_20261116.md)：26.031s/exit0，JUnit1/F0/E0/S0，compileJava/compileTestJava实际、generateProto UP-TO-DATE；369Skill/121Depot、484槽与121energy缓存同对象/element及map/loadedAll保持。completion SHA`f89ba5eece7cc3bd9bd6d2c759c174ce1ab84f6d164f91165d75847dde3f00d0`；无失败重跑、DB/Player/client/服务或部署。成本特殊池121行未验，不解释未提供成员的Java默认为目标值。
 
+2026-11-16 已验[能量消费者203B/194B静态来源及有限字段桥](docs/CLIENT_72_D02_SKILL_ENERGY_CONSUMER_SOURCES_20261116.md)：两个任务均fresh AOT/完整唯一pdata，52/53条、直接冻结site/target0；203B不直接读Skill，194B连接同receiver Depot energy→Skill+90与enum61184特殊类别。literal数值/三成本字段及实际值未知。203B跟踪工具和194B忽略目录独立driver分列；不运行既验采集、native/JVM/DB/client或部署，准确两后继source另项。
+
 2026-11-16 `D02-SKILL-ENERGY-SEARCH-20261116 / PLAN`完成[中文定向复用计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)限定验收；冻结版SHA-256 `239602ecee31e39a59d9666ae1b98addb23cbbf024d635ba7c165f2fe03ec61e`。仅规划，不是来源/资源值或执行验收；公开检索、本地最小合同及R3仍进行中，无新测试/构建/部署或客户端操作。
 
 2026-11-16 `D02-SKILL-ENERGY-SEARCH-20261116 / PUBLIC-SOURCE-REVIEW`完成[本批定向公开检索](docs/CLIENT_72_D02_TARGETED_REUSE_SEARCH_20261116.md)限定验收：固定候选、README/入选分支/讨论、367与121/120集合presence、旧特殊能量键、具名Java差异及五线来源线索已记录；错误首版、重复下载、宽查询/Fork/代码搜索等未覆盖保留，不证明目标值/独立oracle或搜索穷尽。同期本地element/id来源另验，未把候选当其oracle；无上游执行/JVM/部署，R3与六项仍未完成。
