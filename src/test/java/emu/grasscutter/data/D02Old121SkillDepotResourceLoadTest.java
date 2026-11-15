@@ -28,11 +28,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-/** Only approved Skill id/element and Depot id/skills/energySkill fragments. */
+/** Approved Skill fragments and Depot references; optional admitted energy cost/START fields. */
 class D02Old121SkillDepotResourceLoadTest {
     private static final String DEPOT_SHA = "24b008df69e853d1739fe408634c77698340c8b69294f8344718aa82f108d654";
     private static Map<Integer, JsonObject> skills;
     private static Map<Integer, JsonObject> depots;
+    private static boolean energyFields;
+    private static Set<Integer> energyKeys;
+    private static Map<Integer, Integer> startBits;
     @TempDir Path directory;
     private Int2ObjectMap<AvatarSkillData> skillMap;
     private Int2ObjectMap<AvatarSkillDepotData> depotMap;
@@ -46,28 +49,45 @@ class D02Old121SkillDepotResourceLoadTest {
         JsonObject skillReport = report("d02.skillDepot.skillsReport", "d02.skillDepot.skillsReportSHA256");
         JsonObject depotReport = report("d02.skillDepot.depotReport", "d02.skillDepot.depotReportSHA256");
         assertEquals(DEPOT_SHA, required("d02.skillDepot.depotReportSHA256"));
-        assertEquals("R3-SKILL-ELEMENT-SUFFIX-HOST-BATCH-20261116", skillReport.get("task").getAsString());
+        String task = skillReport.get("task").getAsString();
+        energyFields = task.equals("R3-OLD121-SKILL-SPECIAL-START-HOST-BATCH-20261116");
+        assertTrue(energyFields || task.equals("R3-SKILL-ELEMENT-SUFFIX-HOST-BATCH-20261116"));
         assertTrue(skillReport.get("passed").getAsBoolean());
         assertTrue(skillReport.get("fragmentOnly").getAsBoolean());
         assertFalse(skillReport.get("idRawDecoded").getAsBoolean());
         assertFalse(skillReport.get("resourceReady").getAsBoolean());
         assertEquals("R3-OLD121-DEPOT-CORE-FRAGMENT-PROJECTION", depotReport.get("task").getAsString());
 
+        if (energyFields) {
+            energyKeys = integers(skillReport.getAsJsonArray("energyKeys"));
+            assertFalse(skillReport.get("specialEnergyMinOrMaximumCapProven").getAsBoolean());
+            startBits = new HashMap<>();
+            for (JsonElement element : skillReport.getAsJsonArray("javaProjectionFragments")) {
+                JsonObject row = element.getAsJsonObject();
+                int id = row.get("key").getAsInt();
+                if (energyKeys.contains(id)) {
+                    startBits.put(id, Integer.parseUnsignedInt(row.getAsJsonObject("startEvidence").get("float32Bits").getAsString(), 16));
+                }
+            }
+            assertEquals(121, startBits.size());
+        }
         skills = fragments(skillReport.getAsJsonArray("javaProjectionFragments"), "AvatarSkill", Set.of("id", "costElemType"));
         depots = fragments(depotReport.getAsJsonArray("fragments"), "AvatarSkillDepot", Set.of("id", "skills", "energySkill"));
         assertEquals(369, skills.size());
         assertEquals(121, depots.size());
-        JsonObject cohort = skillReport.getAsJsonObject("cohort");
-        Set<Integer> demand = integers(cohort.getAsJsonArray("demandKeys"));
-        Set<Integer> added = integers(cohort.getAsJsonArray("newKeys"));
-        Set<Integer> reused = integers(cohort.getAsJsonArray("reusedJavaApprovedKeys"));
-        Set<Integer> energy = integers(cohort.getAsJsonArray("energyKeys"));
-        assertEquals(skills.keySet(), demand);
-        assertEquals(Set.of(10067, 10068), reused);
-        Set<Integer> expectedNew = new HashSet<>(demand);
-        expectedNew.removeAll(reused);
-        assertEquals(expectedNew, added);
-        assertEquals(367, added.size());
+        Set<Integer> demand = skills.keySet();
+        if (!energyFields) {
+            JsonObject cohort = skillReport.getAsJsonObject("cohort");
+            assertEquals(demand, integers(cohort.getAsJsonArray("demandKeys")));
+            Set<Integer> added = integers(cohort.getAsJsonArray("newKeys"));
+            Set<Integer> reused = integers(cohort.getAsJsonArray("reusedJavaApprovedKeys"));
+            energyKeys = integers(cohort.getAsJsonArray("energyKeys"));
+            assertEquals(Set.of(10067, 10068), reused);
+            Set<Integer> expectedNew = new HashSet<>(demand);
+            expectedNew.removeAll(reused);
+            assertEquals(expectedNew, added);
+            assertEquals(367, added.size());
+        }
 
         Set<Integer> references = new HashSet<>();
         Set<Integer> energyReferences = new HashSet<>();
@@ -90,8 +110,8 @@ class D02Old121SkillDepotResourceLoadTest {
         assertEquals(248, positiveSlots);
         assertEquals(236, zeroSlots);
         assertEquals(demand, references);
-        assertEquals(121, energy.size());
-        assertEquals(energy, energyReferences);
+        assertEquals(121, energyKeys.size());
+        assertEquals(energyKeys, energyReferences);
         for (JsonObject fields : skills.values()) {
             // valueOf rejects an unknown symbol instead of silently mapping it to None.
             ElementType.valueOf(fields.get("costElemType").getAsString());
@@ -130,6 +150,13 @@ class D02Old121SkillDepotResourceLoadTest {
             assertNotNull(actual);
             assertEquals(entry.getKey().intValue(), actual.getId());
             assertEquals(ElementType.valueOf(entry.getValue().get("costElemType").getAsString()), actual.getCostElemType());
+            if (energyFields && energyKeys.contains(entry.getKey())) {
+                JsonObject expected = entry.getValue();
+                assertEquals(expected.get("costElemVal").getAsInt(), actual.getCostElemVal());
+                assertEquals(startBits.get(entry.getKey()).intValue(), Float.floatToRawIntBits(actual.getSpecialEnergyMax()));
+                assertEquals(Float.floatToRawIntBits(expected.get("specialEnergyMax").getAsFloat()),
+                        Float.floatToRawIntBits(actual.getSpecialEnergyMax()));
+            }
             loadedSkills.put(entry.getKey(), actual);
         }
 
@@ -177,13 +204,21 @@ class D02Old121SkillDepotResourceLoadTest {
             assertTrue(source.get("end").getAsLong() > source.get("begin").getAsLong());
             assertTrue(source.get("sha256").getAsString().matches("[0-9a-f]{64}"));
             JsonObject fields = row.getAsJsonObject("javaFields");
-            assertEquals(fieldNames, fields.keySet());
             int id = row.get("key").getAsInt();
+            Set<String> expectedFields = table.equals("AvatarSkill") && energyFields && energyKeys.contains(id)
+                    ? Set.of("id", "costElemType", "costElemVal", "specialEnergyMax") : fieldNames;
+            assertEquals(expectedFields, fields.keySet());
+            if (table.equals("AvatarSkill") && energyFields && energyKeys.contains(id)) {
+                assertEquals(fields.get("costElemVal").getAsDouble(), (double) fields.get("costElemVal").getAsInt());
+                assertTrue(fields.get("costElemVal").getAsInt() >= 0);
+                assertTrue(Float.isFinite(fields.get("specialEnergyMax").getAsFloat()));
+                assertTrue(fields.get("specialEnergyMax").getAsFloat() >= 0);
+            }
             assertTrue(id > 0);
             assertEquals(id, fields.get("id").getAsInt());
             if (table.equals("AvatarSkill")) {
                 assertFalse(row.get("idRawDecoded").getAsBoolean());
-                assertEquals("accepted tableKey identity", row.get("logicalIDSource").getAsString());
+                if (!energyFields) assertEquals("accepted tableKey identity", row.get("logicalIDSource").getAsString());
             }
             assertNull(result.put(id, fields.deepCopy()), "duplicate " + table + "/" + id);
         }

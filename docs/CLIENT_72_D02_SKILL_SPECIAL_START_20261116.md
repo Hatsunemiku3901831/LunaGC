@@ -18,4 +18,4 @@
 
 规格`debug/d02-skill-energy-search-20261116/local-analysis/special-start-host-batch-spec.private.json`72466B，SHA-256 `c7f530ccee6df14ed0fbb6629b1751bc630fb3f3ec3d5b1b38258b8bf5591a06`。结果286804B，SHA-256 `9d4b69d00a438084cd9a10b6b4eacda5618eaeebdab735a3bfe38cd3c4e755cb`；manifest SHA-256 `f8ab88198989fd645e42aeca5efe045309450e311228f49ed364e6681cbbfd4a`，合287241B低于512KiB。原件`debug/d02-skill-energy-search-20261116/special-start-host-batch/`；入口[client72_skill_special_start_batch.py](../tools/client72_skill_special_start_batch.py)，命令`python -X utf8 -B tools/client72_skill_special_start_batch.py`，不覆盖已有输出。
 
-本项关闭121 START字段的来源与值缺口。下一项为真实ResourceLoader消费已验cost/START并复核原121 Depot绑定；本批未执行Java。MAX cap、实际maximum采用、完整Skill/Player及六项仍未完成。
+本项关闭121 START字段的来源与值缺口。后继[真实ResourceLoader](CLIENT_72_D02_OLD121_SKILL_ENERGY_JAVA_20261116.md)现已消费已验cost/START并通过原121 Depot绑定；本批host本身未执行Java。MAX cap、实际maximum采用、完整Skill/Player及六项仍未完成。

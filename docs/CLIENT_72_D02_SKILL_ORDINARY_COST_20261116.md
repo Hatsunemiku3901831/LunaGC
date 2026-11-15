@@ -16,4 +16,4 @@
 
 批量规格`debug/d02-skill-energy-search-20261116/local-analysis/ordinary-cost-host-batch-spec.private.json`93527B，SHA-256 `de081c668c7e9517c53bbe09347d3a5494a4ee9b0efdd78a71526759154be632`。raw141702B一次磁盘/hash；14319B选中span及968B已有mask仅同buffer hash，0新mask语义。结果241982B，SHA-256 `f3a82460f93779bbc226ef8fe877c62a7e3586d0b6a0644d4ecf334f3833c0a8`，manifest SHA-256 `815ae95e3184ba2b767a52fbb75c5d64fe3ffc2576a03e82eeece6b480bd8dbb`，合242430B低于256KiB。原件`debug/d02-skill-energy-search-20261116/ordinary-cost-host-batch/`；入口[client72_skill_ordinary_cost_batch.py](../tools/client72_skill_ordinary_cost_batch.py)，命令`python -X utf8 -B tools/client72_skill_ordinary_cost_batch.py`，不覆盖已有目录。
 
-本批关闭121行`costElemVal`字段缺口；特殊START/MAX cap、实际maximum采用、完整Skill/Player及R3仍另验。尚未用本批结果执行Java；不是运行资源部署，六项仍0/6。
+本批关闭121行`costElemVal`字段缺口；特殊START/MAX cap、实际maximum采用、完整Skill/Player及R3仍另验。本批host本身不执行Java；后继[真实cost/START Java](CLIENT_72_D02_OLD121_SKILL_ENERGY_JAVA_20261116.md)现已通过。不是运行资源部署，六项仍0/6。

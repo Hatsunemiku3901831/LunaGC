@@ -4,7 +4,7 @@
 
 入口校验 6 个固定输入；121 个保存 Avatar–当前 Depot pair 对应 121 个不同 Depot，与既有 171 条 whole 记录及 cursor 26024 对齐。363 个字段引用 726 条既有 getter 证据；484 个普通 skills slot 保留原序、重复及零，其中 248 正、236 零，另 121 个 energy 均为正。369 个不同正 Skill 引用只核既有 key/span，不产出 Skill 值。
 
-既有 mapping 的 5 个控制中只有 704 与该 cohort 重叠，且同 key/source/三值一致；原出生范围真实 Java 控制是 501、701、704，不能称 5 个 mapping 控制均经该轮 Java 验证。**Java前的历史阻塞**曾为缺367个Skill片段及120个正向energy绑定；现已由[同源id/element批量](CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md)及[121 Depot真实ResourceLoader验证](CLIENT_72_D02_OLD121_SKILL_DEPOT_JAVA_20261116.md)解除。原任务`R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA`已完成，限369 Skill两键→121 Depot三键及实际正向引用/element；没有空Skill、缺引用None fallback或假cost。包括10068在内121行成本/特殊能量、完整Skill/Player恢复仍未闭。
+既有 mapping 的 5 个控制中只有 704 与该 cohort 重叠，且同 key/source/三值一致；原出生范围真实 Java 控制是 501、701、704，不能称 5 个 mapping 控制均经该轮 Java 验证。**Java前的历史阻塞**曾为缺367个Skill片段及120个正向energy绑定；现已由[同源id/element批量](CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md)及[121 Depot真实ResourceLoader验证](CLIENT_72_D02_OLD121_SKILL_DEPOT_JAVA_20261116.md)解除。原任务`R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA`已完成，限369 Skill两键→121 Depot三键及实际正向引用/element；没有空Skill、缺引用None fallback或假cost。本轮后继121普通cost与START来源/值及[真实Java加载](CLIENT_72_D02_OLD121_SKILL_ENERGY_JAVA_20261116.md)也已闭；特殊MAX cap、完整Skill/Player恢复仍未闭。
 
 规格 `local/migration72/d02-resume-20261116/old121-depot-core-fragment-scope/spec.private.json` SHA-256 `2788ce4874449fb042eaaf8c1d31a499ad86b89ef32829e0f542bcc6a0205fc8`；投影 `local/migration72/d02-resume-20261116/old121-depot-core-fragment/projection.private.json` 为 266719B，SHA-256 `24b008df69e853d1739fe408634c77698340c8b69294f8344718aa82f108d654`。新 `tools/client72_d02_old121_depot_core_fragment.py` SHA-256 `a7e1d765049f2c1ead87f02d31bc927972748f7f548eeab2de787e49f10ada03`。
 

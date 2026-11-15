@@ -6,7 +6,7 @@
 
 **用户已明确解除旧暂停，持续推进至D-02六项实机通过，或所有必要独立项各自有准确外部阻塞；当前D-02 / F-05 / D02-R6为0/6，R4/R5/R6未开始。** 旧号121 Avatar基础成长及critical七键片段、两个限定Java loader、121 Depot三键host投影已验；完整Avatar、Skill/energy、装备及同旧号实际Player恢复未闭。Float条件合同、共享Pair消费正例、启动修复及一次cold-cache采样直接复用，不再作为首发旧任务。
 
-当前以能解除真实资源加载或恢复依赖的最小出口为优先：[Skill/energy定向计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)对应本批公开检索已限定交付；367个本轮Skill id/element片段已实际闭合，121 Depot正向Java及120新energy绑定已实际通过，121行energy普通cost字段已闭，121行START也已闭（两行100/50、119源确证0），MAX cap及真实maximum采用继续按准确来源推进；cost/START-aware真实Java为下一成熟出口。[批量结果](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md)已形成367本轮+2旧的canonical id/element片段；logicalID=tableKey复用已验绑定，不要求额外raw-id复解。Skill ctor普通边界失败不等安全拒绝，缺同固定PE准确边界时不重取或放宽；该单窗不作为已有独立element/ID来源的额外门。Weapon239中仅11101的1种27行有既验片段，其余238种1636行缺允许独立值来源；已确认A构造返回依赖冻结。Material94与特殊类别3个literal已固定出值；Material实际row/consumer、Relic rank/set职责或独立非零oracle保留准确缺口；五线定向公开检索已补有限来源，目标值/consumer及未覆盖范围仍需新输入，不能据此标为全部外部阻塞，不以新增盘点替代出值。
+当前以能解除真实资源加载或恢复依赖的最小出口为优先：[Skill/energy定向计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)对应本批公开检索已限定交付；367个本轮Skill id/element片段已实际闭合，121 Depot正向Java及120新energy绑定已实际通过，121行energy普通cost字段已闭，121行START也已闭（两行100/50、119源确证0），MAX cap及真实maximum采用继续按准确来源推进；cost/START-aware真实Java已通过，完整恢复仍需MAX cap/装备等必要合同。[批量结果](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md)已形成367本轮+2旧的canonical id/element片段；logicalID=tableKey复用已验绑定，不要求额外raw-id复解。Skill ctor普通边界失败不等安全拒绝，缺同固定PE准确边界时不重取或放宽；该单窗不作为已有独立element/ID来源的额外门。Weapon239中仅11101的1种27行有既验片段，其余238种1636行缺允许独立值来源；已确认A构造返回依赖冻结。Material94与特殊类别3个literal已固定出值；Material实际row/consumer、Relic rank/set职责或独立非零oracle保留准确缺口；五线定向公开检索已补有限来源，目标值/consumer及未覆盖范围仍需新输入，不能据此标为全部外部阻塞，不以新增盘点替代出值。
 
 [UP-72-20261114阶段调研](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)仍为进行中；UP-72-N1/N2只按当前具体缺口消费固定候选及现有冲突，不整包替换。UP-72-N3长尾检索在D-02排期后移，原继续位置保留，不关闭原调研。A/B、preview与准确依赖仍冻结；A已找回平台错误及opaque事件关联，原请求明文恢复验收已撤回，可读正文和技术输入仍缺，见[纠错](docs/CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)。当前没有需要用户启动的现场；重复同SDK页采样无新输入依据时不排期。
 
@@ -131,6 +131,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 
 | 工作包 | 状态 | 当前范围和下一判断 |
 | --- | --- | --- |
+| R3-OLD121-SKILL-ENERGY-RESOURCELOAD-JAVA-20261116 | 已完成 | JDK17/offline单项1/F0/E0/S0，真实369Skill→121Depot；121cost exactint/START Float原位、121energy同对象及484slot/map/loadedAll保持。capMin不提供，无Player/DB/client，最大池/完整恢复另验。[结果](docs/CLIENT_72_D02_OLD121_SKILL_ENERGY_JAVA_20261116.md) |
 | R3-MATERIAL-HOST-ROW-SYNTAX-20261116 / PLAN | 已完成 | Sol max中文增量计划已限定验收，复用准确payload/94literal/既验parser与账本，仅补binary-reader/framing/首row问题；70971明确literal而非AOT。公开增量检索及本地source合同仍进行中，不预称row/count或walker已验。[计划](docs/CLIENT_72_D02_MATERIAL_ROW_SEARCH_PLAN_20261116.md) |
 | R3-OLD121-SKILL-SPECIAL-START-HOST-BATCH-20261116 | 已完成 | 精确121 energy的原bit30只有两行present复用100/50，119absent由双PXOR/同Floatsetter/store证明确切+0；0新raw/PE/metadata。369合片含121 id/element/cost/START四键，capMin不输出；真实Java另验。[结果](docs/CLIENT_72_D02_SKILL_SPECIAL_START_20261116.md#121-行零新-raw-合片) |
 | R3-MATERIAL-EXACT-PAYLOAD-LOCATOR-20261116 | 已完成 | 9旧host控制及两固定index唯一命中，Material path→key16540db9943871cc→entry b9943871→block25539185；首pins角色错误留证并审定纠正，不再以三根stem0列本机输入阻塞。[定位](docs/CLIENT_72_D02_MATERIAL_EXACT_PAYLOAD_20261116.md) |

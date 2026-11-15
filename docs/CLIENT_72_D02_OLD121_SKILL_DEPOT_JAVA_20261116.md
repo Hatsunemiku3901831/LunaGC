@@ -10,4 +10,4 @@
 
 输入、运行源码和测试源码前后保持。JVM采用独立六目录/tmp/log与配置；未初始化DatabaseManager、GameServer、HTTP/DispatchServer或PluginManager，未启动数据库、客户端、服务或Player/postLoad/recalc/save。收尾只读核对匹配进程及固定TCP/UDP均0。仅离线工具/测试/文档，无生产运行代码、Proto、配置、补丁或资源部署修改，无需构建JAR、重启或部署。
 
-当前仍缺包括10068在内121行`costElemVal/specialEnergyMin/Max`的目标字段职责、真实值与独立非零oracle；完整Avatar/Skill、Proud、装备/配置/ability/revision、Scene及同旧号完整Player恢复仍未闭。原“缺367两键/120绑定”的句子只保留为Java前历史，不再派重做。A/B、preview及准确依赖冻结保持，D-02/F-05/D02-R6仍0/6；下一步只核本成果解除依赖后仍必需的准确缺口。
+该轮尚未验成本；本轮后继已闭合121行`costElemVal`及`specialEnergyMax`/START并通过[真实Java](CLIENT_72_D02_OLD121_SKILL_ENERGY_JAVA_20261116.md)，`specialEnergyMin`/MAX cap仍缺准确目标字段职责桥；完整Avatar/Skill、Proud、装备/配置/ability/revision、Scene及同旧号完整Player恢复仍未闭。原“缺367两键/120绑定”的句子只保留为Java前历史，不再派重做。A/B、preview及准确依赖冻结保持，D-02/F-05/D02-R6仍0/6；下一步只核本成果解除依赖后仍必需的准确缺口。
