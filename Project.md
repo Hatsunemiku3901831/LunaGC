@@ -131,6 +131,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 
 | 工作包 | 状态 | 当前范围和下一判断 |
 | --- | --- | --- |
+| R3-RELIC-NAMED-CANDIDATE-TYPED-ASSOCIATION-20261116 | 已完成 | 既选27方法/10owner准确祖先与真实完整参数有限核查，无46431/74316 receiver字段边；26同名字段为UI类型，body/return不冒称已证。74316的18方法16零参/1String/1reader+allocator，未给rank/set职责；缺同target角色桥或独立非零oracle。[结果](docs/CLIENT_72_D02_RELIC_TYPED_CANDIDATES_20261116.md) |
 | R3-MATERIAL-TABLE-FRAMING-SOURCE-20261116 | 已完成 | 准确17822.m135074完整569B来源/140条通过，整窗语义false；两处A直CALL及其返回/构造/row依赖停。未读header或造count/framing。[来源](docs/CLIENT_72_D02_MATERIAL_HEADER_SOURCE_20261116.md) |
 | R3-MATERIAL-HEADER-INDEPENDENT-DATAFLOW-20261116 | 已完成 | 仅既验源8处EDI/RDI用途/3分支证明首A前LE32+6af89eb8标量及signed正值倒计数独立，不解释A输出、不称实际row数或首cursor。[边界](docs/CLIENT_72_D02_MATERIAL_HEADER_SOURCE_20261116.md) |
 | R3-MATERIAL-LOADER-INITIAL-CURSOR-SOURCE-20261116 | 已完成 | 准确60257.m500132完整239B源证明同返回对象+10/+1c清零，slot-init缺口关闭；有效backend+18起点/首refill关系仍缺独立来源，不能由cursor槽0推fileoffset0。[残余](docs/CLIENT_72_D02_MATERIAL_HEADER_SOURCE_20261116.md) |

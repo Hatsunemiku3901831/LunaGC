@@ -24,7 +24,7 @@
 | SDK自然连接与认证 | 新的固定允许来源闭合Init/env→route采用→认证/完整校验及会话交换 | map/HTTP/key局部结果复用；B组合loader及其依赖冻结，未认定全部SDK都依赖B；精确定向公开问题未完成 |
 | R4→R5→R6 | 上述必要合同、最终发送/原消费者顺序、同旧号全121角色和实际物品装备postLoad/recalc/save | 无成熟运行包，暂不部署。成熟最小合同回传后由唯一集成者实施、相关验证、本地提交；R4充分后再portable隔离部署与六项实机 |
 
-当前停条件需分项判断：已知冻结的是上述准确A/B边及其返回/构造/组合现场依赖；Proud自然非空cache/key与Scene M1–M4独立输入缺失，当前没有有用的新同页采样。普通来源缺口包括特殊MAX cap字段职责桥与Relic rank/set具名职责，有限查询未给准确新入口不等于所有本机或外部来源不存在。Material准确payload/literal、[569B来源与独立首A前标量、239B同cursor槽清零](CLIENT_72_D02_MATERIAL_HEADER_SOURCE_20261116.md)均已验，实际file位置仍缺有效backend+18起点/首refill或独立文件语法来源；不读取条件P=0的header4B。Relic27名称候选的typed用途还在Sol有限审定，不能宣布全部必要项外部阻塞。
+当前停条件需分项判断：已知冻结的是上述准确A/B边及其返回/构造/组合现场依赖；Proud自然非空cache/key与Scene M1–M4独立输入缺失，当前没有有用的新同页采样。普通来源缺口包括特殊MAX cap字段职责桥与Relic rank/set具名职责，有限查询未给准确新入口不等于所有本机或外部来源不存在。Material准确payload/literal、[569B来源与独立首A前标量、239B同cursor槽清零](CLIENT_72_D02_MATERIAL_HEADER_SOURCE_20261116.md)均已验，实际file位置仍缺有效backend+18起点/首refill或独立文件语法来源；不读取条件P=0的header4B。[Relic27候选typed/祖先/真实参数](CLIENT_72_D02_RELIC_TYPED_CANDIDATES_20261116.md)有限核查已完成，无准确资源角色入口。最后仍在审的独立方向为Material/Weapon父语法所需shared String helper准确来源及cursor增量，早先为Skill id取消的窗不是安全拒绝；当前不能宣布全部必要项外部阻塞。
 
 第5节六项缺口仍分别为：旧号自然本服登录/归属；新号显式选人命名/确认保存；完整初始化与握手；角色可见落地；连续10分钟心跳；两类账号正常退出重登及受控进度保存。没有以SDK页面、局部Java、hash或服务健康代验。
 

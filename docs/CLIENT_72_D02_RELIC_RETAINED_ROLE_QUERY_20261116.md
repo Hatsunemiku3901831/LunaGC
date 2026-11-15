@@ -17,3 +17,5 @@
 原件在`debug/d02-skill-energy-search-20261116/post-depot-gap/`：query44632B，SHA-256 `398352b413b504a7c59ebac7beaf92d206bf47da1d9ea902a52255d345da60f7`；宽子串补充SHA-256 `e2099197bdd1e9519f4dd18bc589c755f2f62cbf240c12994c374d84881ba039`；分流解释SHA-256 `9b9d8f451fd033a546c9a38a7745702427a09e7225bce4a90b4a933ae02552d4`。准备及查询的完整JSON读/hash次数另账，OS/loader IO未全计；一次性脚本留忽略目录，不新增通用工具/测试。
 
 最小角色输入仍是：同target准确字段或getter到rank等级查找/套装累计用途的具名consumer/property，或可排除同型标签互换的独立非零role oracle；真实取值另需同row输入与cursor。角色来源两者可独立推进；本查询无新拒绝、无值/Java/Player或ready，不泛封Relic或项目。
+
+后继[27候选有限typed关联](CLIENT_72_D02_RELIC_TYPED_CANDIDATES_20261116.md)已完成：准确参数/receiver祖先字段仍未建立46431/74316资源边，没有成熟rank/set consumer窗。该结论基于有限类型核查，保留body/return未知，不把UI字段同名推为实际getter返回。
