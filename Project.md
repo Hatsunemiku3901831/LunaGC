@@ -6,6 +6,8 @@
 
 2026-11-14 `UP-72-20261114`：按用户指令开展公开上游静态调研，阶段成果及未覆盖分页见[研究报告](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)和[检索账本](docs/CLIENT_72_UPSTREAM_LEDGER_20261114.md)。状态**进行中**：发现 LunaGC 7.2 及 AstaPS 非默认任务分支，已固定部分源码并识别协议冲突；长尾搜索拆分、部分 Fork 和跨平台线索仍待核。UP-72-N1/N2 对照候选须先核现有成果并证明能解除具体 D-02 合同缺口，避免重复；本轮未改运行代码、未部署或实机验收，D-02 状态不变。原 A/B 拒绝及其依赖继续冻结；A原平台事件已找回，具体执行范围及技术输入仍缺。
 
+`R3-OLD121-AVATAR-PROJECTION-SCOPE` 已完成限定来源审定，主线接受[基础属性与成长计划](docs/CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_PLAN_20261115.md)；`R3-OLD121-AVATAR-BASE-GROWTH-PROJECTION` **进行中**，Terra已派。仅针对实际121 Avatar五字段，已有7号行复用、120行待新读出，结果和真实JVM尚未验；旧号键/span覆盖不等于完整Avatar字段，121 Depot已有字段报告直接复用。critical仅批准出生范围，不自动外推；121 Depot、phase6和Talent已验范围不重跑。原A/B、preview冻结不变，不晋级父项或ready。
+
 **用户已指示继续任务；D-02 / F-05 / D02-R6 六项客户端验收仍为0/6。** 原Scene reader与Proud setter首发包及其后继限定成果直接复用，不重新排队。Proud三字段布局、166B Float getter和共享Pair的key检索→encoded value→getter消费正例已限定验收；Proud目标字段到该consumer的来源绑定、业务alias与实际row仍未知，见[复用判断](docs/CLIENT_72_D02_PROUD_ENUM32419_TRIAGE_20261115.md)。existing-cache离线准备已验，旧cache1启动超时取消、sample未派；本轮一次采样为cold-cache，实际输入未取得。Float正常路径条件合同与机械断言已限定验收，三字段消费桥及实际值仍未知；启动回执超时归因、薄封装修复及新身份绑定接线已限定离线验收，本轮真实Launch及一次采样后以cold-cache停止，现场回执与收尾已独立审阅通过；实际M/getter/row/current/epoch未知。新现场须另取实时ready，禁止computer-use。Scene自然receiver/初始化及World slot114保留准确缺口，已确认的共用allocator返回依赖与A/B拒绝项冻结。下一步审核准确依赖与缺少的来源输入，不自动另开UI或全codec窗口。详细研究过程和历史现场见[交接](HANDOFF2.md)及[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
@@ -170,6 +172,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-PROUD-ENUM32419-CONSUMER-QUERY | 已完成 | 固定signature 326354条中116唯一字面enum显参匹配；type32419声明与126 literal名称记录，常数值/独立enum flag未知。仅声明覆盖。[查询](docs/CLIENT_72_D02_PROUD_ENUM32419_CONSUMER_QUERY_20261115.md) |
 | R3-PROUD-ENUM32419-QUERY-TRIAGE | 已完成 | 116声明复核，唯一成熟Pair候选直接复用已有148B窗；目标Proud字段来源及当前采用未知。[判断](docs/CLIENT_72_D02_PROUD_ENUM32419_TRIAGE_20261115.md) |
 | R3-PROUD-PAIR-KEY-CONSUMER-REUSE | 已完成 | 17694的52802数组按显式key首匹配，encoded54724送Float getter；共享Pair消费正例成立，Proud字段绑定与业务alias未证。[复用](docs/CLIENT_72_D02_PROUD_ENUM32419_TRIAGE_20261115.md) |
+| R3-OLD121-AVATAR-PROJECTION-SCOPE | 已完成 | 原typed、共享consumer、固定输入及执行预算限定审定，形成121实际角色五字段的实施规格；来源许可不预先批准新行数值。[计划](docs/CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_PLAN_20261115.md) |
+| R3-OLD121-AVATAR-BASE-GROWTH-PROJECTION | 进行中 | Terra已派；7号既有行复用、120行待实际读出及360例原helper oracle，再由唯一launch_timeout执行限定真实loader。严格禁用A地址模型，2M全累计；critical等排除，未验投影/JVM。[计划与停止条件](docs/CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_PLAN_20261115.md) |
 | R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS | 已完成 | 本体双遍历、同N指针store、中性native+2c↔41105.field203368/+70表示桥及准确缺口限定验收；未消费26072三字段。上游旧listing的共用allocator调用属于准确A冻结边，停在CALL；业务桥、实际M/数组/String、row/current/epoch及ready未知。见[成员语义](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_SEMANTICS_20261115.md)。 |
 | F-03d3s2-SCENE-ALLOWED-SOURCE-GAP | 已完成 | 既有允许来源有界差距审阅已验；4 pin、三writer、238B工厂及6锚点独核，316B getter直接复用未重验。M1–M4实际receiver/派发与返回/初值/reset关系缺新增允许的固定独立来源，尚无成熟sender；不泛封Scene。见[关系矩阵](docs/CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)。 |
 | R3-PROUD-STRING-INPUT-CONTRACT | 已完成 | 中性输入状态及来源合同准备限定验收，9源pin和独立14/0；未创建采样器/读取器。实际M、pointer、length、UTF16、业务桥及配置同源仍未知，OpenConfig仅候选；不并入 Avatar String 或 Gadget 路线。见[合同](docs/CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)。 |
@@ -487,6 +491,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-PROUD-ENUM32419-QUERY-TRIAGE | 已完成 | 复核116显参声明；直接复用唯一成熟候选已有原窗，不新增取窗、测试或运行。 | [限定判断](docs/CLIENT_72_D02_PROUD_ENUM32419_TRIAGE_20261115.md) |
 | R3-PROUD-PAIR-KEY-CONSUMER-REUSE | 已完成 | 共享Pair显式key首匹配并送encoded value至Float getter；目标Proud字段来源、实际值与业务alias未知。 | [限定复用](docs/CLIENT_72_D02_PROUD_ENUM32419_TRIAGE_20261115.md) |
 | A-PROMPT-LOCAL-PROVENANCE | 已完成 | 精确父followup本地原文已恢复；未解密子正文，技术合同和唯一剩余规格仍缺，A冻结不变。 | [来源与限制](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md) |
+| R3-OLD121-AVATAR-PROJECTION-SCOPE | 已完成 | 既有来源、共享consumer、允许输入与预算的限定审定，形成五字段最小包；不预先批准新行值。 | [计划与边界](docs/CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_PLAN_20261115.md) |
 | R3-PROUD-ENUM32419-CONSUMER-QUERY | 已完成 | 固定signature显参116唯一匹配及type32419声明限定验收，不证明业务或全客户端穷尽。 | [查询](docs/CLIENT_72_D02_PROUD_ENUM32419_CONSUMER_QUERY_20261115.md) |
 | R3-PROUD-PAIR-CONSUMER-QUERY-TRIAGE | 已完成 | 声明域有界判断及type54724文字勘误；ordinary业务caller及type-erased MethodInfo/callsite未知。 | [限定判断](docs/CLIENT_72_D02_PROUD_PAIR_CONSUMER_TRIAGE_20261115.md) |
 | R3-PROUD-PAIR-CONSUMER-QUERY | 已完成 | 65条指定receiver声明与固定signature全表6唯一显参匹配；非全客户端或业务穷尽。 | [有界查询](docs/CLIENT_72_D02_PROUD_PAIR_CONSUMER_QUERY_20261115.md) |

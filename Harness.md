@@ -1,3 +1,5 @@
+2026-11-15 `R3-OLD121-AVATAR-PROJECTION-SCOPE` 已完成限定来源审定，`R3-OLD121-AVATAR-BASE-GROWTH-PROJECTION` **进行中**：主线接受[五字段实施规格](docs/CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_PLAN_20261115.md)，Terra已派。121实际Avatar中7号既有逻辑行复用、120行待新读出，各以原helper三个level100属性共360例对照；来源支持跨行读取，不预先批准值。旧号Avatar/Depot和389不同保存Skill的key/span覆盖与121 Depot已有原字段报告分别复用；critical仍限出生，phase6/Talent不重跑。实施、投影及JVM尚未验，A/B和preview冻结、Proud及Scene缺口不变，R4/R5/R6待开始、D-02 / F-05 / D02-R6仍0/6。此前 `remaining-dependency-final/old121-candidate-spec.zh.md` 和 `inventory.zh.md` 是当时的候选与盘点，后继审定结果以本计划为准。
+
 2026-11-15 `R3-PROUD-ENUM32419-QUERY-TRIAGE` / `R3-PROUD-PAIR-KEY-CONSUMER-REUSE`：116声明复核后直接复用已有148B窗，共享Pair按低32显式key首匹配并将高32 encoded54724送Float getter，正常未命中XMM0为零；不只是布局。目标Proud字段至consumer的来源、实际row/M/nonempty cache+key/同epoch/current及业务alias未知，详见[限定复用与固定输入](docs/CLIENT_72_D02_PROUD_ENUM32419_TRIAGE_20261115.md)。无新增取窗、测试、运行、构建或部署；下一步审核准确依赖和缺来源输入，不自动开UI或全codec窗口，D-02 / F-05 / D02-R6仍0/6。
 
 2026-11-15 `A-PROMPT-LOCAL-PROVENANCE`：父JSONL第817行精确followup原文及manifest已从本地恢复；子正文未解密，不称收发正文逐字一致，未暴露隐藏被拒调用或内因。无需再索取原followup导出，技术合同与唯一剩余规格仍缺，A冻结不变，见[来源与队列](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)；未新增运行或拒绝。
