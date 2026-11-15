@@ -6,7 +6,7 @@
 
 **用户已明确解除旧暂停，持续推进至D-02六项实机通过，或所有必要独立项各自有准确外部阻塞；当前D-02 / F-05 / D02-R6为0/6，R4/R5/R6未开始。** 旧号121 Avatar基础成长及critical七键片段、两个限定Java loader、121 Depot三键host投影已验；完整Avatar、Skill/energy、装备及同旧号实际Player恢复未闭。Float条件合同、共享Pair消费正例、启动修复及一次cold-cache采样直接复用，不再作为首发旧任务。
 
-当前以能解除真实资源加载或恢复依赖的最小出口为优先：[Skill/energy定向计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)对应本批公开检索已限定交付；367个本轮Skill id/element片段已实际闭合，121 Depot正向Java及120新energy绑定已实际通过，121行energy普通cost字段已闭，特殊START两行已得100.0/50.0，其余119行分支及MAX cap、真实maximum采用继续按必要合同推进。[批量结果](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md)已形成367本轮+2旧的canonical id/element片段；logicalID=tableKey复用已验绑定，不要求额外raw-id复解。Skill ctor普通边界失败不等安全拒绝，缺同固定PE准确边界时不重取或放宽；该单窗不作为已有独立element/ID来源的额外门。Weapon239中仅11101的1种27行有既验片段，其余238种1636行缺允许独立值来源；已确认A构造返回依赖冻结。Material/Relic缺literal、具名consumer或独立非零oracle时保留准确缺口；五线定向公开检索已补有限来源，目标值/consumer及未覆盖范围仍需新输入，不能据此标为全部外部阻塞，不以新增盘点替代出值。
+当前以能解除真实资源加载或恢复依赖的最小出口为优先：[Skill/energy定向计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)对应本批公开检索已限定交付；367个本轮Skill id/element片段已实际闭合，121 Depot正向Java及120新energy绑定已实际通过，121行energy普通cost字段已闭，特殊START两行已得100.0/50.0，其余119行分支及MAX cap、真实maximum采用继续按必要合同推进。[批量结果](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md)已形成367本轮+2旧的canonical id/element片段；logicalID=tableKey复用已验绑定，不要求额外raw-id复解。Skill ctor普通边界失败不等安全拒绝，缺同固定PE准确边界时不重取或放宽；该单窗不作为已有独立element/ID来源的额外门。Weapon239中仅11101的1种27行有既验片段，其余238种1636行缺允许独立值来源；已确认A构造返回依赖冻结。Material94与特殊类别3个literal已固定出值；Material实际row/consumer、Relic rank/set职责或独立非零oracle保留准确缺口；五线定向公开检索已补有限来源，目标值/consumer及未覆盖范围仍需新输入，不能据此标为全部外部阻塞，不以新增盘点替代出值。
 
 [UP-72-20261114阶段调研](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)仍为进行中；UP-72-N1/N2只按当前具体缺口消费固定候选及现有冲突，不整包替换。UP-72-N3长尾检索在D-02排期后移，原继续位置保留，不关闭原调研。A/B、preview与准确依赖仍冻结；A已找回平台错误及opaque事件关联，原请求明文恢复验收已撤回，可读正文和技术输入仍缺，见[纠错](docs/CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)。当前没有需要用户启动的现场；重复同SDK页采样无新输入依据时不排期。
 
@@ -131,6 +131,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 
 | 工作包 | 状态 | 当前范围和下一判断 |
 | --- | --- | --- |
+| R3-MATERIAL-SPECIAL-ENUM-CONSTANTS-STATIC-20261116 | 已完成 | 固定PE/global静态读取94 Material+3特殊类别literal，97明确int32/95非零，MATERIAL_NONE0、特殊NONE0/MAVUIKA1/SKIRK2；388B数值，表结构915840B，PE语义上界892B。首次resolver错因撤回并留证；不代资源row或实际token。[结果](docs/CLIENT_72_D02_MATERIAL_SPECIAL_ENUM_CONSTANTS_20261116.md) |
 | R3-SKILL-ENERGY-RESOURCE-BRANCH-SOURCES-20261116 | 已完成 | 准确完整457/454B静态源及FightProp职责，将同energy Skill+98绑定普通cost、+74绑定特殊START；不是MAX cap。实际值由后继host另验。[来源](docs/CLIENT_72_D02_SKILL_ENERGY_BRANCH_FIELDS_20261116.md) |
 | R3-SKILL-ENERGY-INIT-CONSUMER-SOURCE-20261116 | 已完成 | 准确完整525B/137条为53767对象延迟注册/合并，没有同Skill字段→MAX_SPECIAL职责桥；不继续两个通用后继。[范围](docs/CLIENT_72_D02_SKILL_ENERGY_BRANCH_FIELDS_20261116.md) |
 | R3-SKILL-SPECIAL-CAP-RETAINED-NAME-QUERY-20261116 | 已完成 | 四类固定既存来源的一次有限具名查询未给出准确特殊上限字段桥；保留查询边界，不等全域无来源。最小缺同target88602字段→MAX_SPECIAL职责或同revision字段身份schema。[准确缺口](docs/CLIENT_72_D02_SKILL_ENERGY_BRANCH_FIELDS_20261116.md) |

@@ -1,3 +1,5 @@
+2026-11-16 `R3-MATERIAL-SPECIAL-ENUM-CONSTANTS-STATIC-20261116`完成[97固定enum literal](docs/CLIENT_72_D02_MATERIAL_SPECIAL_ENUM_CONSTANTS_20261116.md)：94 Material+3special，明确int32/95非零；MATERIAL_NONE0，特殊0/1/2实际读取。result SHA`206351858a5ae43c5c222762f0f1a721c01fb8990999d131a85c8a3fe7b7da29`；原resolver执行策略错误与缺Astrolabe误因撤回分列，RUN2包装修正后才开两binary各一次。388B数值/915840B表、PE语义上界892B、49382B输出；无row/token值/native/JVM或部署。
+
 2026-11-16 完成[能量字段457/454B与525B静态来源、特殊cap有限具名查询](docs/CLIENT_72_D02_SKILL_ENERGY_BRANCH_FIELDS_20261116.md)：普通+98/current元素cost和特殊+74/START职责分离；525B仅对象注册/延迟合并，不扩通用树。source专题SHA`b4bb22d60c5c08967f7f2a362f34fdad9c59385e76f4cead172829d0f4889073`，各raw/result/driver固定于忽略目录。MAX cap仍缺同目标字段职责桥或有revision/字段身份依据的schema，非新增native门或raw-id前置；数值由后继host独立验收，不重跑已验来源。
 
 2026-11-16 `R3-OLD121-SKILL-SPECIAL-START-HOST-PILOT-20261116`完成[两个特殊START字段](docs/CLIENT_72_D02_SKILL_SPECIAL_START_20261116.md)：11065=100.0、11145=50.0，exact8B，原bit30/prefix/独立byte-index及ADDcarry/Float位/逆wire通过。result SHA`b3b8921b81c709971a87f915ce23d8e6947e9159414cc8e63ba3746466ca00df`；仅Java specialEnergyMax/START需求，specialEnergyMin/MAX cap未知，其余119分支另核，无native/JVM/部署。
