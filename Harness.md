@@ -1,3 +1,5 @@
+2026-11-16 完成[Relic既存具名入口有限查询](docs/CLIENT_72_D02_RELIC_RETAINED_ROLE_QUERY_20261116.md)：27方法/37字段仅名称候选，四准确边界具名role0，精确rankLevel等方法和SetId getter0；query SHA`398352b413b504a7c59ebac7beaf92d206bf47da1d9ea902a52255d345da60f7`，解释SHA`9b9d8f451fd033a546c9a38a7745702427a09e7225bce4a90b4a933ae02552d4`。没有新PE/body，27候选交Sol，不把未读当最终阻塞。活动矩阵分冻结边/自然输入缺口/普通来源缺口，Material仍在途；旧恢复索引原Depot Java blocked行已按实际369Skill/121绑定和cost/START Java解除，保留历史范围。
+
 2026-11-16 当前路线补校：Project第4节遗漏的旧“本次研发仍暂停”已纠正为用户已恢复执行；3.5按当前分工明确指定唯一集成者串行管理Git/构建/实例写入。当前表内旧pilot/source时点的367/120、121成本/START未验语句已链接到后继实际成果，保留原scope；MAX cap/完整Skill/Player与六项仍未闭。无新执行或历史测试重跑。
 
 2026-11-16 `R3-MATERIAL-ROW-REUSE-SEARCH-20261116`完成[Material row语法本批公开增量](docs/CLIENT_72_D02_MATERIAL_ROW_REUSE_SEARCH_20261116.md)，报告SHA`78af0a1bb44f8151dba00f76e52331009b08e9c5b757440d8a04c3a2a18a35ee`。固定5.2 table/ExistFlag、2.2 Material KSY及3.4 README/分支只作方法参考；未获同target header/首row/Stringcursor合同。两排序/实际页/README/分支/blob和404/未覆盖分别留证，无上游执行、运行修改或客户端验收；最小target源合同另项继续。

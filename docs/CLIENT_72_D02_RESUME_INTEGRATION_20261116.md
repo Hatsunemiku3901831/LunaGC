@@ -16,12 +16,15 @@
 
 | 必要出口 | 准确缺输入 | 已有覆盖 / 本轮动作 |
 | --- | --- | --- |
+| R1完整Avatar与g2正式发送 | f4d2完整20分配/12根、自然String tuple/caller/trigger与TLS/GC所有权、enum/cold普通10294及同源Store/SavedVitals仍未闭 | A第二allocator返回/构造及其准确依赖冻结；其他R1来源不泛封。121 Avatar七键与限定loader直接复用，g2待完整必要合同，不以本轮Skill字段代验 |
 | Skill/energy → Depot实际加载与旧号属性恢复 | 121行costElemVal和specialEnergyMax/START均已闭；specialEnergyMin/MAX cap目标字段职责桥及实际maximum采用仍缺准确来源，影响Avatar.setCurrentEnergy/recalcStats | [367本轮+2旧片段](CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md)和[真实369Skill→121Depot Java](CLIENT_72_D02_OLD121_SKILL_DEPOT_JAVA_20261116.md)已通过，120新正向energy绑定解除；不等raw-id/reader，不建Player或假cost。[121普通cost字段](CLIENT_72_D02_SKILL_ORDINARY_COST_20261116.md)已实际闭合，[START121](CLIENT_72_D02_SKILL_SPECIAL_START_20261116.md)亦已闭，[真实cost/START-aware Java](CLIENT_72_D02_OLD121_SKILL_ENERGY_JAVA_20261116.md)已通过，MAX cap另验；ctor缺边界单窗不加作已闭出口门 |
 | Weapon/Material/Relic必要行 | Weapon其他238种/1636行独立值；Material实际row语法/keyspan/cursor及consumer（94 literal与准确payload已闭）；Relic rank/set具名来源或同源输入+非零oracle排除标签互换 | 11101既验片段保留；[Material literal](CLIENT_72_D02_MATERIAL_SPECIAL_ENUM_CONSTANTS_20261116.md)与[准确payload](CLIENT_72_D02_MATERIAL_EXACT_PAYLOAD_20261116.md)已闭，Material最小row语法另研究，Relic缺准确具名consumer不泛扫18方法；已知Weapon A构造返回依赖冻结 |
 | Proud实际资源/当前采用 | 目标字段到共享Pair的准确桥、实际row/M、非空cache/key、同epoch及独立值 | 148B共享消费正例、Float条件合同已验；不重复SDK页采样，不创建Default/cache；普通新来源尚未查尽 |
 | Scene/Team/Entity必要合同 | M1 producer→同次+5d60；M2同receiver +f0/返回R；M3首次消费前R+18及writer顺序；M4同R release/reacquire/reset | 238B工厂、writer/getter来源复用；本地暂无新输入。World slot114及getter/Recreate准确A返回依赖冻结，普通M1–M4来源问题保留 |
 | SDK自然连接与认证 | 新的固定允许来源闭合Init/env→route采用→认证/完整校验及会话交换 | map/HTTP/key局部结果复用；B组合loader及其依赖冻结，未认定全部SDK都依赖B；精确定向公开问题未完成 |
 | R4→R5→R6 | 上述必要合同、最终发送/原消费者顺序、同旧号全121角色和实际物品装备postLoad/recalc/save | 无成熟运行包，暂不部署。成熟最小合同回传后由唯一集成者实施、相关验证、本地提交；R4充分后再portable隔离部署与六项实机 |
+
+当前停条件需分项判断：已知冻结的是上述准确A/B边及其返回/构造/组合现场依赖；Proud自然非空cache/key与Scene M1–M4独立输入缺失，当前没有有用的新同页采样。普通来源缺口包括特殊MAX cap字段职责桥与Relic rank/set具名职责，有限查询未给准确新入口不等于所有本机或外部来源不存在。Material准确payload及literal已闭，table源中可独立的首A前数字数据流仍在审定；该项在途，不能宣布全部必要项外部阻塞。
 
 第5节六项缺口仍分别为：旧号自然本服登录/归属；新号显式选人命名/确认保存；完整初始化与握手；角色可见落地；连续10分钟心跳；两类账号正常退出重登及受控进度保存。没有以SDK页面、局部Java、hash或服务健康代验。
 

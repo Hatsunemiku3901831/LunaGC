@@ -49,7 +49,7 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 | `R3-ACTIVE-MATERIAL-TYPE62334-DECLARATION` | 已完成；固定完整五字段含四个FOOD_QUALITY literal及value__，method 0、常数值unknown。[声明](CLIENT_72_D02_MATERIAL_TYPE_DECLARATION_20261116.md) | `targetSymbols` 仅筛MATERIAL_，空不等于无具名符号；+78作为MaterialType的候选依据撤回，+c8有限分类职责后续已验，实际consumer未知。 |
 | `R3-OLD121-DEPOT-CORE-FRAGMENT-SCOPE` | 已完成；既有全121 Depot原值与来源的三键纯host范围审定。[结果](CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) | 不重跑Depot/phase6，不证明当前采用。 |
 | `R3-OLD121-DEPOT-CORE-FRAGMENT-PROJECTION` | 已完成；121片段/363字段/726既有getter引用，484普通slot中248正236零、121正energy，369不同正引用仅key/span。[结果](CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) | presence unknown；结构探查曾展示部分超范围既有Skill字段，最终代码不使用Skill.values作oracle。 |
-| `R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA` | 阻塞；正引用缺367 id/element片段，energy正向绑定缺120；121 energy行costElemVal/specialEnergyMin/Max均未闭。 | 不以空Skill/None或假cost补齐；无新JVM或当前采用证明。 |
+| `R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA` | 已完成；该行Java前历史阻塞已由[367本轮+2旧Skill两键](CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md)及[真实121 Depot绑定](CLIENT_72_D02_OLD121_SKILL_DEPOT_JAVA_20261116.md)解除，原120新绑定不再排期。 | 后继121普通cost/START亦已闭并通过[真实Java](CLIENT_72_D02_OLD121_SKILL_ENERGY_JAVA_20261116.md)；特殊MAX cap、完整Skill/Player和自然采用仍未闭，不以省略成员的Java默认代目标值。 |
 
 本批无新现场或ready；A/B、preview和准确冻结边不变，不将上述具体停止泛化为所有独立任务阻塞。
 
