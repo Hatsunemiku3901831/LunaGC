@@ -1,12 +1,12 @@
 # D-02 恢复集成活动检查点
 
-本轮任务 `D02-RESUME-INTEGRATION-20261116B`，接手 HEAD `99a868d2c58730dd1f39a7f3d5dbee1d62eb57b4`。用户已明确恢复D-02，持续推进必要独立研究及成熟合同集成；旧暂停与前轮条件2不是本轮停止依据。`D02-INCR-PLAN-20261116`的[中文增量计划](CLIENT_72_D02_INCREMENTAL_REUSE_PLAN_20261116.md)及两组有限公开检索已验收；B本地有界关联已完成、实际入口阻塞，A/Relic自主研究继续。R1/R2/R3必要实现出口仍阻塞，D-02 / F-05 / D02-R6仍0/6，R4/R5/R6待开始，A/B、preview与准确依赖继续冻结。当前任务与验收见[Project](../Project.md)。
+本轮任务 `D02-RESUME-INTEGRATION-20261116B`，接手 HEAD `99a868d2c58730dd1f39a7f3d5dbee1d62eb57b4`。用户恢复D-02的授权仍有效；本轮已实际完成增量计划、四公开检索出口和两组有界自主研究。四项实际字段/入口仍各缺准确producer、role或cursor来源，未形成成熟必要实现；旧暂停与前轮条件2不是本轮判断依据。R1/R2/R3必要实现出口仍阻塞，D-02 / F-05 / D02-R6仍0/6，R4/R5/R6待开始，A/B、preview与准确依赖继续冻结。当前任务与验收见[Project](../Project.md)。
 
 ## 本轮来源与自主研究出口
 
 | 子项 | 本轮已验出口 | 当前必要缺口与下一动作 |
 | --- | --- | --- |
-| A1 `D02-INCR-A-MAX-20261116` | [A组有界公开检索](CLIENT_72_D02_INCREMENTAL_REUSE_A_20261116.md)已完成，未给新的目标MAX cap职责桥；代码接口401不记源码零命中 | 同target88602字段/getter到24887 enum77/MAX_SPECIAL的独立值流仍缺；Sol max自主关联进行中，不以无直接同owner排除间接消费，不读取候选值选cap |
+| A1 `D02-INCR-A-MAX-20261116` | 公开及[A本地研究](CLIENT_72_D02_INCREMENTAL_LOCAL_A_20261116.md)已完成；闭同组件Skill/属性类型桥、generic enum77/78写入与旧值通知。独立布局覆盖3328B=2992代码+336表数据、84表项，原strict失败保留 | MAX资源字段出口阻塞：缺typed59769 slot70实际producer/caller以enum77输入float并连接同88602准确字段/getter，或目标revision字段schema。386通知只送旧getter值，不取其helper或泛扫；typed直接owner空不排间接来源 |
 | A2 `D02-INCR-A-RELIC-20261116` | 公开/Codex及两UI转交来源和局部语义已完成；后继[501523缓存入口](CLIENT_72_D02_RELIC_CODEX_SOURCE_20261116.md#501523-typed缓存入口与剩余边覆盖)632B/134条来源/局部语义已验，3字段6参数覆盖固定，实际绑定299590/299591及原K/whole-output/AL限制 | 两UI路径与501523均无已闭raw成员→另一表key，rank/set仍不可区分。501535只同lookup后继，501529未选中，不扩树或推未读即不存在；raw+88分组及Codex准确A边独立保留，未知动态实现不外推 |
 | B1 `D02-INCR-B-MATERIAL-20261116` | [公开检索](CLIENT_72_D02_INCREMENTAL_REUSE_B_20261116.md)及[本地有界关联](CLIENT_72_D02_INCREMENTAL_LOCAL_B_20261116.md)已完成；首次read的O仍消费未知B，后台创建a=0不消O；post-parser覆盖+18的清理不支配首读 | 实际入口阻塞：需首refill前同R的有效B定义、backend与固定m_bytes物理起点，或独立目标revision文件语法。准确pool/getter→A返回依赖保留，不泛封Material；12混淆声明未选出有用新窗，无合格现场包 |
 | B2 `D02-INCR-B-WEAPON-20261116` | 公开及本地有界关联已完成；288组三入口同reader、raw/base同row关联成立，但记录不含内部cursor/caller/return stack | 实际F入口阻塞：需同reader/同row的`P_wrapper→P_raw→P_F`与物理边界/补读关系的新允许独立来源或准确记录。旧wrapper/raw body仍属已停路径；不以[4,400)、String尾、平铺schema或11101值补差，不扩11201 |
@@ -22,6 +22,8 @@ B组报告SHA-256 `9497b02788d53fded16786ae89e8d0e5cc1ca28f9da6c1f5d19a88a3d8a86
 `A2-RELIC-REMAINING-TYPED-20261116/PAIRED-UI-TRANSFER`的proof 8674B/SHA`f2587593c1c74e6be4150701e75a5fca014d8b22cbd4b7e1388938862d6e628d`已验局部转交，两个source/result与manifest身份一并核同；集成回执`local/migration72/d02-resume-20261116b/paired-ui-transfer-identities.private.json` SHA`4dada65c30ee16752563381eae5bf13d5794cfd744791669dbb7d87d988a116f`。未重拼/重取原源或测试；只闭两条UI转交路径，不证明动态实现、目标rank/set或60446其他线，A1精确静态筛选与A2 public501523来源仍执行，不最终收口。
 
 `A2-RELIC-REMAINING-TYPED-20261116/CONSUMER501523-SEMANTICS`的source body/result、manifest、8666B局部proof及5306B最终覆盖表共5项身份集成核同，回执`local/migration72/d02-resume-20261116b/consumer501523-identities.private.json` SHA`409758b2423081818449671081f09a8db326746e1c0e555c621b4221bbcca9f6`。proof SHA`e351b41270157dedcd82a9855d2eb338a148a829636a8d8779a65ce9ec09aee9`，最终覆盖SHA`247c5502adaee2dd5ab6ba4e72b7c766f3d5ade061a9f8ee8a0bd6f001e1c425`。未重拼/采集/测试或改运行；当前A1准确source严格门失败仍离线归因，非安全拒绝，其他独立工作继续，不最终收口。
+
+`D02-INCR-A-LOCAL-RESEARCH-20261116`最终[A报告](CLIENT_72_D02_INCREMENTAL_LOCAL_A_20261116.md)已验；集成仅纠正初始既存关联与后续批准Ghidra open的阶段表述，以及A2角色桥仍缺的小标题，最终19224B/SHA`8e241ab0a04df087e5338e0c3873cf8853d5a35e7d56eee90155e243df87e271`。22件proof索引SHA`13cebb86331584426c2a5544ad9261d53ee760c8ff61f1378437940081a59546`及各原件身份全匹配，回执`local/migration72/d02-resume-20261116b/a-local-integration-identities.private.json` SHA`30dd1e1a5ca6c84b54b39ccdac8ac2f0bcf528f5259ed75830c7e54662ec7cae`。新code/data布局和参数流独立于原线性失败；enum77/78分别写incoming float至24887+6d0/+458，386通知送写前旧getter值，缺实际producer→Skill字段。Ghidra两目标覆盖0/2、无可复用索引，超时/正常关闭及direct门停止/strict失败均保留；没有新Java/DB/client/资源行或成熟字段规格，不由有限无桥推来源穷尽。
 
 ## 2026-11-16B 当前接手与规划验收
 
