@@ -19,7 +19,10 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 | `R3-ACTIVE-ITEM-REMAINING-SCOPE` | 已完成；四族冷读必要性及metadata、保存引用两个普通包限定规划。[范围](CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md) | 不批准目标资源值或完整恢复。 |
 | `R3-ACTIVE-ITEM-SAVED-REFS` | 已完成；12254 Item/121 Avatar全EOF及旧键匹配，候选Reliquary main 28/append 22不同正引用、TPS两类各12不同正引用；121 Avatar TPS武器列表显式空。[结果](CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md) | 仅固定旧号保存数据，不证target资料/槽位/恢复；不省略配件恢复或自动授予条件。最终私有脚本补对照后未重扫BSON。 |
 | `R3-ACTIVE-ITEM-BASE-DERIVED-METADATA` | 已完成；v2全89748条、88083 parent边、两root各8后代，18声明/186 field/274 method/9 backing引用及三控制通过。[查询与修正](CLIENT_72_D02_ACTIVE_ITEM_BASE_METADATA_20261116.md) | v1访问0/root controls未查保留；有限声明不证明业务族、实际行值、A-free初始化或ABI。 |
-| `R3-ACTIVE-ITEM-NEXT-INPUTS-TRIAGE` | 进行中；审定已具名Material/Reliquary两个ctor source-only及实际保存引用候选存在性规格。 | 未采两ctor、未取得新值，规格校对后才派执行。 |
+| `R3-ACTIVE-ITEM-NEXT-INPUTS-TRIAGE` | 已完成；Material/Reliquary ctor source及实际保存引用候选存在性限定规格已定。[来源](CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md) | 原完整ctor窗失败；固定三blob候选包进行中，未验新row。 |
+| `R3-ACTIVE-MATERIAL-RESOURCE-CTOR-SOURCE` / `R3-ACTIVE-RELIQUARY-RESOURCE-CTOR-SOURCE` | 阻塞；两次各在唯一pdata门停止，body/read均0。[来源](CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md) | 缺完整边界，不猜16B、下一metadata地址或扫描RET；新入口不追认旧失败。 |
+| `R3-OLD121-SKILL-RESOURCE-ENTRY-1B-SOURCE` / `R3-ACTIVE-MATERIAL-RESOURCE-ENTRY-1B-SOURCE` / `R3-ACTIVE-RELIQUARY-RESOURCE-ENTRY-1B-SOURCE` | 已完成；三准确入口各1B c3，strict Capstone单ret。[来源与分账](CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md) | 仅条件入口至return transfer，无store/CALL；完整end、初始化、ABI/row未知。 |
+| `R3-OLD121-SKILL-ENTRY-TO-PROJECTION-SCOPE` | 进行中；Sol max审定typed条件输入。 | 不自动批准执行或初始化。 |
 | `R3-OLD121-DEPOT-CORE-FRAGMENT-SCOPE` | 已完成；既有全121 Depot原值与来源的三键纯host范围审定。[结果](CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) | 不重跑Depot/phase6，不证明当前采用。 |
 | `R3-OLD121-DEPOT-CORE-FRAGMENT-PROJECTION` | 已完成；121片段/363字段/726既有getter引用，484普通slot中248正236零、121正energy，369不同正引用仅key/span。[结果](CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) | presence unknown；结构探查曾展示部分超范围既有Skill字段，最终代码不使用Skill.values作oracle。 |
 | `R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA` | 阻塞；正引用缺367 Skill片段，energy正向绑定缺120。 | 不以空Skill/None或假cost补齐；无新JVM或当前采用证明。 |
