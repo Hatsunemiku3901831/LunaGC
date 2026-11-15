@@ -131,6 +131,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 
 | 工作包 | 状态 | 当前范围和下一判断 |
 | --- | --- | --- |
+| R3-MATERIAL-ROW-REUSE-SEARCH-20261116 | 已完成 | 按中文计划完成本批binary/Material row有限公开增量；固定5.2 loader/存在位、2.2 KSY及3.4 README/分支差异仅参考，没有同target count/首row/String cursor可直接复用合同。失败/未覆盖分列，不证明全网无来源。[报告](docs/CLIENT_72_D02_MATERIAL_ROW_REUSE_SEARCH_20261116.md) |
 | R3-OLD121-SKILL-ENERGY-RESOURCELOAD-JAVA-20261116 | 已完成 | JDK17/offline单项1/F0/E0/S0，真实369Skill→121Depot；121cost exactint/START Float原位、121energy同对象及484slot/map/loadedAll保持。capMin不提供，无Player/DB/client，最大池/完整恢复另验。[结果](docs/CLIENT_72_D02_OLD121_SKILL_ENERGY_JAVA_20261116.md) |
 | R3-MATERIAL-HOST-ROW-SYNTAX-20261116 / PLAN | 已完成 | Sol max中文增量计划已限定验收，复用准确payload/94literal/既验parser与账本，仅补binary-reader/framing/首row问题；70971明确literal而非AOT。公开增量检索及本地source合同仍进行中，不预称row/count或walker已验。[计划](docs/CLIENT_72_D02_MATERIAL_ROW_SEARCH_PLAN_20261116.md) |
 | R3-OLD121-SKILL-SPECIAL-START-HOST-BATCH-20261116 | 已完成 | 精确121 energy的原bit30只有两行present复用100/50，119absent由双PXOR/同Floatsetter/store证明确切+0；0新raw/PE/metadata。369合片含121 id/element/cost/START四键，capMin不输出；真实Java另验。[结果](docs/CLIENT_72_D02_SKILL_SPECIAL_START_20261116.md#121-行零新-raw-合片) |
