@@ -73,7 +73,7 @@ XMM0.low32 = U          // 14f9051d1 MOVD；14f9051da 正常 RET
 
 本次有界检索覆盖 `docs/`、`tools/migration72/` 对上述三个字段编号／混淆名及 getter 编号／入口的文字引用，另核固定 metadata 的 26072、41105、52802、54724 声明与既有 31A/31B 材料。没有找到上述三条 Proud 准确消费桥；这不是全项目不存在消费者的证明。26072 仅有 `.ctor` 与 parser-like `CNLIBMNOALB` 两方法，41105 同样仅有 `.ctor` 与重写方法；不能从 metadata 编造三个属性 getter。
 
-**“31B 没有原 caller”只限其来源包，不能扩大成整个项目没有 getter 原 caller。** 已有[其他资源消费专题](CLIENT_72_D02_AVATAR_CRITICAL_CONSUMER.md)记录 `1505f5cda/5cf4/5d11` 三次同 getter 调用，来自63287的 `+98/+78/+a4`，再进入 typed 三 float installer；它们的接收对象要求17494，不能连接到 Proud 的26072三字段。本包只复用该已验专题，未重验其六窗／8768B原件，不借旁证批准 Proud alias。该专题当前14447B、SHA `e13383d34c971cf7d86bab4a36ae9a503df6a82ba370aae0519dcff9292a280c`。
+**“31B 没有原 caller”只限其来源包，不能扩大成整个项目没有 getter 原 caller。** 后续已验 whole carrier 窗增加五个局部原E8 caller及输出用途，见[后继语义](CLIENT_72_D02_PROUD_WHOLE_CARRIER_CONSUMER_SEMANTICS_20261115.md)；其数组未绑定26072/59500实际数组，也不代表全项目caller覆盖。 已有[其他资源消费专题](CLIENT_72_D02_AVATAR_CRITICAL_CONSUMER.md)记录 `1505f5cda/5cf4/5d11` 三次同 getter 调用，来自63287的 `+98/+78/+a4`，再进入 typed 三 float installer；它们的接收对象要求17494，不能连接到 Proud 的26072三字段。本包只复用该已验专题，未重验其六窗／8768B原件，不借旁证批准 Proud alias。该专题当前14447B、SHA `e13383d34c971cf7d86bab4a36ae9a503df6a82ba370aae0519dcff9292a280c`。
 
 ## 5. 可独立复用的 host 消费关系
 
@@ -89,8 +89,8 @@ XMM0.low32 = U          // 14f9051d1 MOVD；14f9051da 正常 RET
 | --- | --- | --- | --- |
 | 固定166B重组、索引／移位／MOVD锚点审核 | 是；仅使用已验原件 | 本页静态推导的字节绑定可复核 | caller、metadata formal return、任何实际输入 |
 | 非零与特殊位样、四分区顺序、unsigned长度边界的合成断言 | 是；只使用固定合成值 | 本页正常输出和门条件的数学合同 | 同 epoch 材料、实际Float、row、三alias、资源ready |
-| 三字段业务桥 | 当前没有成熟取源规格；准确caller尚未在允许材料中定位 | 仅保留本页精确缺口 | 不排新采样／原窗／managed parser或自然cache构造 |
-| 既存M／String／数组实际值 | 当前缺独立合法M及获批新范围；不执行 | 将来新授权后才可另审中性值合同 | 旧52RPM/298B不自动覆盖String/Float；原ready不复用 |
+| 三字段业务桥 | 本包当时没有成熟取源规格；后续虽定位五个局部getter caller，三字段到该数组的准确桥仍未证 | 仅保留本页精确缺口 | 本条件断言包不自动包含追加采样／原窗或parser构造；已有独立普通来源按各自已审规格另验 |
+| 既存M／String／数组实际值 | 当前缺独立允许M及已审范围／规格；不执行 | 取得独立允许M且新范围／规格经主线审阅后另验；现场另需fresh与实时ready | 旧52RPM/298B不自动覆盖String/Float；原ready不复用 |
 | host 消费与catalog关系 | 是；源码及现有精确项独立存在 | 候选投影必须保留的形状和槽位 | 目标客户端field→业务名、配置同源、effect/current |
 
 三字段的准确客户端消费来源缺口尚未解除，不能把数学断言通过当整包 ready。Proud 预览下一突破分支继续冻结；本包不使用 `threshold==phase+1` 推断当前采用。
@@ -119,4 +119,4 @@ python local/migration72/d02-resume-20261115/proud-float-assertions/audit.py
 
 脚本 SHA-256 `6f7681b1a1c38caea8107ad69ea6d59244a5e232c76a2012c600d9e0477afa8b`；机器可读结果 `local/migration72/d02-resume-20261115/proud-float-assertions/audit.private.json`，SHA-256 `b869eac5cd1eef7b5d653cc98266b769cda73fd24e3602e2394af5a2da4fd5e8`，含逐项名称、状态和全部固定来源 hash。此实验仅验证已存源窗对应的条件投影及合成数据，不读取或合成目标实际 E、seed、table，也不打开原 PE、客户端或进程。移除 A/B 被拒动作与产物后，输入与断言仍独立成立。
 
-该结果不解除实际 M、同 epoch 输入、Proud caller 桥、三个业务 alias、实际 row、当前采用或资源 ready；formal logical return、真实表长度与互逆关系也仍未知。D02-R3、D-02 和客户端验收状态不因此改变。
+本次断言不解除实际 M、同 epoch 输入、Proud字段到caller的桥、三个业务 alias、实际 row、当前采用或资源 ready；formal logical return、真实表长度与互逆关系也仍未知。D02-R3、D-02 和客户端验收状态不因此改变。
