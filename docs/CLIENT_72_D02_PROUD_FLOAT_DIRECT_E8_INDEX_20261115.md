@@ -10,7 +10,7 @@
 
 首版 8 项合成/mock unittest 通过：64 位地址及正负 rel32；错误目标；E9/FF、末尾不足及末尾完整5B、伪 E8；排除区间和非执行区；pdata 无匹配、重复、重叠、独占 end、跨 end 和单匹配；方法别名保留与未知；纯产物审计缺文件和差字节失败；解析入口 argv 和失败原缓冲；解析成功路径。它们使用合成数据或 mock，不证明目标客户端的候选或指令边界。双 fresh、独立第三和正式纯产物审计均未完成。
 
-候选上限触发后不得自动扩大预算；没有 typed 理由选择任何 Proud caller。另按 Project 中 `R3-PROUD-NARROW-TYPED-CONSUMER-SOURCE` 执行新的 typed 单窗包，不扩大 common E8 预算。本批没有构建、部署、目标进程操作或客户端验收；本执行者没有 Git 写入。
+候选上限触发后不得自动扩大预算；该 common E8 批次没有可据以选择 Proud caller 的索引。另立的 `R3-PROUD-NARROW-TYPED-CONSUMER-SOURCE` 已完成[typed 单窗来源验收](CLIENT_72_D02_PROUD_TYPED_BASE_LIST_WINDOW_20261115.md)，没有扩大 common E8 预算，也不证明 Proud 业务桥。本批没有构建、部署、目标进程操作或客户端验收；本执行者没有 Git 写入。
 
 ## R3-PROUD-E8-STOP-LEDGER：仅读取账修复
 
