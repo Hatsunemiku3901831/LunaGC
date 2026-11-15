@@ -1,5 +1,9 @@
 # 国服7.2恢复执行活动检查点（2026-11-16）
 
+后续活动更新：`R3-SKILL-ELEMENT-SUFFIX-HOST-BATCH-20261116`已实际闭合367本轮+2旧的同源Skill id/element片段；`R3-OLD121-SKILL-DEPOT-RESOURCELOAD-JAVA-20261116`及原`R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA`已完成369Skill→121Depot真实加载/引用与element验收，120新energy绑定解除。唯一JVM26.031s/exit0、JUnit1/F0/E0/S0，输入源码及map/loadedAll保持，无DB/Player/client/服务；[实际证据](docs/CLIENT_72_D02_OLD121_SKILL_DEPOT_JAVA_20261116.md)。下面“无新测试”的接手盘点只描述初始时点，不能覆盖本次实际Java结果。
+
+121行成本/特殊池、完整Skill/Player恢复及R1/R2其他必要合同继续，D-02仍0/6，不作最终交接或全阻塞结论。下一步复核本成果之后仍真实必需的资源/恢复输入和消费者，不再排已完成367两键、120绑定或额外raw-id/reader窗。A/B、preview与准确依赖未变；仅离线工具/测试/文档，不构建JAR或启动部署。更新前本检查点已另备份至`local/migration72/d02-resume-20261116/integration-resume-20261116/before-java-progress/`，原HANDOFF2 SHA-256 `9884fe06a4c438f3c3fff54ca53de37931cd3c487f9c7624dd701ca76f8c2917`。
+
 用户已明确解除旧暂停，持续推进D-02；此处为活动检查点，不是结束交接。任务`D02-RESUME-INTEGRATION-20261116`接手HEAD为`420002e`，已完成差异/子模块/脱敏配置/进程端口及11个既验产物hash核对，接手与状态纠正子出口完成，集成继续。D-02/F-05/D02-R6仍0/6，R1/R2/R3进行中、R4/R5/R6未开始；没有新测试、构建、Proto生成、数据库/实例写入或客户端启动，当前必要合同未齐，不部署。
 
 当前由Sol max审Skill/energy本地最小合同并完成[中文检索计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)，Terra max按计划定向公开检索。Material/Relic/Proud/Scene/SDK既有本地独立审阅暂无成熟执行包，其准确公开问题尚未查尽；不能据此宣布全部外部阻塞。成熟最小规格回传后，由唯一集成者串行实施和验证。121 Avatar七键及两个Java loader、121 Depot三键、Talent/phase6、Float/Pair、启动修复和唯一cold结果直接复用。

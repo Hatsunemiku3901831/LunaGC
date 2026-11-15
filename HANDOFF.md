@@ -295,3 +295,9 @@ B-02e7限定原生部分消费51f7cd2、E-01c5实际生产Lua加载审计9aa8ca7
 用户已明确解除以上历史暂停，D-02持续推进；本条不是收尾。`D02-RESUME-INTEGRATION-20261116`以`420002e`接手，已核差异归属、gitlinks、脱敏配置、进程端口及11个既验产物hash，接手/状态纠正子出口完成，集成继续；没有重跑测试、启动客户端/DB/服务、构建或部署。Sol max本地Skill/energy合同分析与Terra max定向公开检索正在执行；五线暂无成熟本地包不等于已查尽或全部外部阻塞。D-02/F-05/D02-R6仍0/6，R4/R5/R6待开始，A/B、preview、准确依赖及A明文误验撤回保持。
 
 原HANDOFF2与另外三状态文档已先备份并核字节/hash；本文件原字节前缀保留，只追加。当前证据、保护差异、必要项准确缺口和下一动作见[活动检查点](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)、[详细交接](HANDOFF2.md)及[Project](Project.md)。成熟最小规格回传后由唯一集成者实施验证，必要合同满足后才R4汇合与portable隔离部署；不会从旧ready或历史暂停自动开始现场。
+
+## 2026-11-16 Skill两键与121 Depot真实Java通过，继续
+
+367本轮+2旧Skill id/element片段已由固定raw后缀/既验逻辑ID来源实际闭合；唯一真实JVM加载369Skill和121Depot，原`R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA`与本轮`R3-OLD121-SKILL-DEPOT-RESOURCELOAD-JAVA-20261116`限定通过，120新energy绑定解除。26.031秒/exit0、JUnit1/F0/E0/S0，484槽原序/零/重复、121energy同对象/element和map/loadedAll保持；无失败重跑或DB/Player/client/服务/部署。实际证据与未验边界见[Java结果](docs/CLIENT_72_D02_OLD121_SKILL_DEPOT_JAVA_20261116.md)、[Project](Project.md)。
+
+121成本/特殊池、完整Skill/Player及其他R1/R2/R3必要合同继续，D-02仍0/6，不是最终交接。下步只复核新成果后的必要输入/消费者差距，不重做367/120或要求额外raw-id/reader。HANDOFF2更新前已另备份并核hash，本文件仅追加；A/B、preview及准确依赖保持。

@@ -1,4 +1,6 @@
-2026-11-16 当前恢复执行：用户已明确解除旧暂停，D-02继续推进，六项仍0/6、R4/R5/R6未开始。`D02-RESUME-INTEGRATION-20261116`已完成接手只读盘点、11个既验产物hash核对和当前状态纠正子出口，集成继续；未重跑测试或启动客户端/数据库/服务。[活动检查点与必要项矩阵](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)汇总本轮证据、差异保护和准确缺口；[Skill/energy中文计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)对应Sol max本地分析与Terra max定向公开检索。独立本地审阅只说明Material/Relic/Proud/Scene/SDK暂无成熟本地执行包，其准确公开问题尚未查尽，不构成全部外部阻塞。A/B、preview、准确依赖及A明文误验撤回保持。以下日期记录保留各时点事实，不覆盖本轮授权。
+2026-11-16 当前恢复执行：D-02继续推进，六项仍0/6、R4/R5/R6未开始。367新Skill两键片段及121 Depot真实正向Java已通过，原`R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA`完成，120新energy绑定已解除；121行成本/特殊能量、完整Skill/Player恢复仍未知。[Java结果](docs/CLIENT_72_D02_OLD121_SKILL_DEPOT_JAVA_20261116.md)与[活动矩阵](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)为当前出口。以下接手/检索/pilot/批量记录按各时点读取，不再把已解除的367/120缺口当当前阻塞；A/B、preview、准确依赖及A明文误验撤回保持，继续必要独立项。
+
+2026-11-16 `R3-OLD121-SKILL-DEPOT-RESOURCELOAD-JAVA-20261116`及原`R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA`完成[真实ResourceLoader验收](docs/CLIENT_72_D02_OLD121_SKILL_DEPOT_JAVA_20261116.md)：26.031s/exit0，JUnit1/F0/E0/S0，compileJava/compileTestJava实际、generateProto UP-TO-DATE；369Skill/121Depot、484槽与121energy缓存同对象/element及map/loadedAll保持。completion SHA`f89ba5eece7cc3bd9bd6d2c759c174ce1ab84f6d164f91165d75847dde3f00d0`；无失败重跑、DB/Player/client/服务或部署。成本特殊池121行未验，不解释未提供成员的Java默认为目标值。
 
 2026-11-16 `D02-SKILL-ENERGY-SEARCH-20261116 / PLAN`完成[中文定向复用计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)限定验收；冻结版SHA-256 `239602ecee31e39a59d9666ae1b98addb23cbbf024d635ba7c165f2fe03ec61e`。仅规划，不是来源/资源值或执行验收；公开检索、本地最小合同及R3仍进行中，无新测试/构建/部署或客户端操作。
 
