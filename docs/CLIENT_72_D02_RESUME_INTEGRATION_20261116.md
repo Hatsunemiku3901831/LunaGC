@@ -1,6 +1,6 @@
 # D-02 恢复集成活动检查点
 
-本轮任务 `D02-RESUME-INTEGRATION-20261116B`，接手 HEAD `99a868d2c58730dd1f39a7f3d5dbee1d62eb57b4`。用户已明确恢复D-02，持续推进必要独立研究及成熟合同集成；旧暂停与前轮条件2不是本轮停止依据。`D02-INCR-PLAN-20261116`的[中文增量计划](CLIENT_72_D02_INCREMENTAL_REUSE_PLAN_20261116.md)已限定验收，A组公开检索已完成/自主研究进行中，B组公开检索待集成。R1/R2/R3必要实现出口仍阻塞，D-02 / F-05 / D02-R6仍0/6，R4/R5/R6待开始，A/B、preview与准确依赖继续冻结。当前任务与验收见[Project](../Project.md)。
+本轮任务 `D02-RESUME-INTEGRATION-20261116B`，接手 HEAD `99a868d2c58730dd1f39a7f3d5dbee1d62eb57b4`。用户已明确恢复D-02，持续推进必要独立研究及成熟合同集成；旧暂停与前轮条件2不是本轮停止依据。`D02-INCR-PLAN-20261116`的[中文增量计划](CLIENT_72_D02_INCREMENTAL_REUSE_PLAN_20261116.md)及两组有限公开检索已验收，四个出口的自主研究进行中。R1/R2/R3必要实现出口仍阻塞，D-02 / F-05 / D02-R6仍0/6，R4/R5/R6待开始，A/B、preview与准确依赖继续冻结。当前任务与验收见[Project](../Project.md)。
 
 ## 本轮来源与自主研究出口
 
@@ -8,8 +8,12 @@
 | --- | --- | --- |
 | A1 `D02-INCR-A-MAX-20261116` | [A组有界公开检索](CLIENT_72_D02_INCREMENTAL_REUSE_A_20261116.md)已完成，未给新的目标MAX cap职责桥；代码接口401不记源码零命中 | 同target88602字段/getter到24887 enum77/MAX_SPECIAL的独立值流仍缺；Sol max自主关联进行中，不以无直接同owner排除间接消费，不读取候选值选cap |
 | A2 `D02-INCR-A-RELIC-20261116` | 同报告公开出口已完成；新增Jetty固定6.2提交的具名JSON消费参考，7个文本blob与固定tree匹配 | 同target46431/74316字段到等级表/套装用途或同源输入+独立非零oracle仍缺，rank/set互换未解除；Sol max有界typed新关联进行中，未验候选不当成熟字段合同 |
+| B1 `D02-INCR-B-MATERIAL-20261116` | [B组有限公开检索](CLIENT_72_D02_INCREMENTAL_REUSE_B_20261116.md)已完成，新增YSRes 3.5计数/行解析参考但无目标revision连接 | 有效同reader backend/+18基址、首次refill实际文件位置与header/首row仍缺；Sol max自主研究进行中，不以旧count/flag或+1c清零代目标fileoffset0 |
+| B2 `D02-INCR-B-WEAPON-20261116` | 同报告公开出口已完成；3.5较3.4删除一个Weapon旧字段的版本差异可核，只作旧版参考 | 同reader/同row wrapper→20600/88968真实父F入口cursor和物理边界仍缺；Sol max自主研究进行中，不以平铺schema、[4,400)或11101值补F等式，不扩11201 |
 
 A组报告SHA-256 `984d8d1a9f11cc1afc2ae2a09f383c64237cb13c7265a8677c6ea12078cf7228`；集成只读核对7份manifest、7个保存文本的SHA/blob/tree、固定commit/tree和6.2版本说明，均匹配。私有核对`local/migration72/d02-resume-20261116b/a-public-integration-review.private.json` SHA-256 `2ea8ad7b120eef453af5d4536793b4a72430d6d47e0f0373e78ff28acbaf7334`。没有重发查询、运行上游、测试或运行变更；有限公开出口不升级字段、资源ready、R1/R2/R3或六项实机。
+
+B组报告SHA-256 `9497b02788d53fded16786ae89e8d0e5cc1ca28f9da6c1f5d19a88a3d8a861d2`；集成只读核7份manifest、10个保存文本SHA/blob及3.5 commit/tree/README身份均匹配，核对`local/migration72/d02-resume-20261116b/b-public-integration-review.private.json` SHA-256 `69f4e1f67ccf46e0bc923729a516d18d01c675631ac039fb884e35ba76b3cc4f`。原报告partial clone首次对象存在性查询自动补取pack的偏差保留，非安全拒绝；本次不重发查询、不运行上游/测试。旧版本语法、401及未覆盖均不转为目标合同或来源穷尽。
 
 ## 2026-11-16B 当前接手与规划验收
 
