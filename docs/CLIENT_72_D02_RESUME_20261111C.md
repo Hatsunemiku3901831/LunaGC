@@ -72,7 +72,8 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 | `R3-PROUD-ENUM32419-CONSUMER-QUERY` | 已完成；[有界查询](CLIENT_72_D02_PROUD_ENUM32419_CONSUMER_QUERY_20261115.md)固定signature 326354/326354条、116唯一字面显参匹配，未触cap；Python `-B` 一次exit 0。 | 仅固定显参覆盖；type32419的独立enum flag/成员常数值、业务及全客户端路径未知。 |
 | `R3-PROUD-ENUM32419-QUERY-TRIAGE` | 已完成；116声明复核，唯一成熟候选直接复用已有148B原窗。[限定判断](CLIENT_72_D02_PROUD_ENUM32419_TRIAGE_20261115.md) | `UpdateRelicProp` 未绑定当前D-02/Proud，不为泛属性显示扩树；不预称整体阻塞。 |
 | `R3-PROUD-PAIR-KEY-CONSUMER-REUSE` | 已完成；17694的52802数组低32显式key首匹配，高32 encoded54724送已验Float getter；正常未命中保留XMM0零。[限定复用](CLIENT_72_D02_PROUD_ENUM32419_TRIAGE_20261115.md) | 共享Pair消费正例成立；Proud目标字段到该consumer来源、实际row/M/nonempty cache+key/同epoch/current及业务alias未知。 |
-| `A-PROMPT-LOCAL-PROVENANCE` | 已完成；本地父followup原文及来源已恢复，见[队列](CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)。 | 子正文未解密；未识别隐藏被拒调用或内因，技术合同未齐、冻结不变。 |
+| `A-PROMPT-LOCAL-PROVENANCE` | 已完成；仅父事件与不透明序列化字面串定位关联，此前明文恢复验收已撤回。[纠错](CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md) | 不能据此恢复可读执行请求；隐藏被拒调用或内因未识别，冻结不变。 |
+| `A-PROMPT-PLAINTEXT-RECOVERY` | 阻塞；缺允许来源提供可核对的执行请求正文。[纠错](CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md) | 用户未来可提供经允许原正文或导出；不猜算法、自动搜索密钥或解密。 |
 | `R3-OLD121-AVATAR-PROJECTION-SCOPE` | 已完成；Sol max完成原parser/getter、固定全表、consumer及预算的限定来源审定，主线接受[五字段实施规格](CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_PLAN_20261115.md)。 | 原卡时critical限出生，后继限定结果见本页2026-11-16；121 Depot已有字段报告、phase6与Talent成果直接复用。 |
 | `R3-OLD121-AVATAR-BASE-GROWTH-PROJECTION` | 已完成；120新+7号复用为121五字段片段、360新+3复用原helper结果；1086 RETURN/0错误，561600/2M、115 pin/121 span、冻结访问0。[结果](CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_20261115.md) | presence unknown；完整Avatar、Skill等未闭，critical基础贡献另见后继，不晋级父项或ready。 |
 | `R3-OLD121-AVATAR-BASE-GROWTH-JAVA` | 已完成；唯一launch_timeout在真实隔离JVM加载旧100 Curve和121片段，1项通过，363结果/factor对照及maps/fetters/loadedAll恢复。[结果](CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_20261115.md) | 无DB/服务、Player/Avatar构造或客户端；非完整构建部署或全量恢复。 |
@@ -163,7 +164,7 @@ cache1 RunAs无Launch/helper回执，父receipt始终0B，超90秒停止；采�
 
 ## 拒绝冻结与独立后继
 
-A-SECOND-RETURN-CONTRACT 及依赖、B组合 loader 仍因安全审查拒绝冻结，不运行草稿、不换模型或工具、不间接重试。A原平台事件及完整原error已找回，历史提示与来源见[最小包队列](CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)；接口未提供完整followup，但精确父请求原文现已从本地恢复，子正文未解密，技术合同及唯一剩余规格输入仍缺，不能猜被拒调用或认定合同已执行。B原句为 `This content was flagged for possible cybersecurity risk.`，不将A后文归给B；不自动派发Daybreak。移除被拒动作后，仅推进能靠已有输入独立完成且产物不直接实现被拒动作的任务；局部通过不升级父项或 ready。真实门禁、认证、资源和完整旧号恢复仍约束 R4。
+A-SECOND-RETURN-CONTRACT 及依赖、B组合 loader 仍因安全审查拒绝冻结，不运行草稿、不换模型或工具、不间接重试。A原平台事件及完整原error已找回，历史提示与来源见[最小包队列](CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)；此前父followup明文已恢复的验收已撤回，仅不透明字面串与事件关联成立，仍缺可核对正文、技术合同及唯一剩余规格输入，见[纠错](CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)。不能猜被拒调用或认定合同已执行。B原句为 `This content was flagged for possible cybersecurity risk.`，不将A后文归给B；不自动派发Daybreak。移除被拒动作后，仅推进能靠已有输入独立完成且产物不直接实现被拒动作的任务；局部通过不升级父项或 ready。真实门禁、认证、资源和完整旧号恢复仍约束 R4。
 
 `R3-PROUD-FLOAT-CONSUMER-SOURCES` 的166B正常路径条件合同和三consumer准确缺口，以及 `R3-PROUD-FLOAT-NORMAL-PATH-ASSERTIONS` 的机械断言已完成限定验收；实际M、同epoch输入、三消费桥、row/current与resourceReady仍未知。启动超时归因及薄封装修复已限定离线验收；身份绑定接线已限定离线验收；common E8索引预算停止、其留证合同合成回归已验，typed单窗来源与限定语义已验、单List成员本体物理流、中性表示桥及准确缺口已限定验收；不调用目标getter、创建cache/Default或消费拒绝依赖。Proud String中性输入合同准备已限定验收，实际输入及业务桥仍未知；Scene既有允许来源差距审阅已限定验收，M1–M4实际关系须新增明确允许且固定的独立来源；新现场另需新ready。R1/R2/R3 必要合同齐备后才进入 R4，继而 R5/R6。
 
