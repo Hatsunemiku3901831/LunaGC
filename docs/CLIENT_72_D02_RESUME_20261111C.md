@@ -1,8 +1,8 @@
 # D-02 恢复执行索引（2026-11-11C）
 
-本页记录 `DOC-D02-RESUME-20261111C` 的本轮派工、输入、证据和停止点；任务状态和验收以 [Project](../Project.md) 为准，复现命令及完整原件清单见各专题。接手基线 HEAD `1410df707cf52794afadbd2e9bfec9c7be01026b`；国服 7.2、Windows portable。用户此前要求停止并交接，现已指示继续任务；禁止computer-use。安全拒绝及专项限制、ready与验收门禁继续有效。
+本页记录 `DOC-D02-RESUME-20261111C` 的本轮派工、输入、证据和停止点；任务状态和验收以 [Project](../Project.md) 为准，复现命令及完整原件清单见各专题。接手基线 HEAD `1410df707cf52794afadbd2e9bfec9c7be01026b`；国服 7.2、Windows portable。用户现要求当前在途子任务验收收尾后暂停，不开启新业务任务；禁止computer-use。安全拒绝及专项限制、ready与验收门禁继续有效。
 
-D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开始。现有局部成果和本轮交回均不等于自然客户端入场或资源 ready。主线负责管理和独立验收；共享 Git/index/提交、构建和运行现场须唯一执行。当前按依赖继续可独立验收工作，不复用旧现场ready；新现场须新fresh和实时ready。
+D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开始。现有局部成果和本轮交回均不等于自然客户端入场或资源 ready。主线负责收尾和验收；共享 Git/index/提交、构建和运行现场须唯一执行。完成收尾后暂停，不复用旧现场ready；未来现场须新fresh和实时ready。
 
 ## 2026-11-16 当前后继
 
@@ -32,17 +32,21 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 | `R3-OLD121-SKILL-INT32-SETTER-SOURCE-WINDOW` | 已完成；必经setter完整157B/45指令/9引用。[来源](CLIENT_72_D02_SCALAR_CONTRACTS_AND_SKILL_FLAGS_20261116.md) | 直接冻结0不证明传递A-free。 |
 | `R3-OLD121-SKILL-INT32-SETTER-CONDITIONAL-CONTRACT` | 已完成；EDX低32位无符号抽取、查表/seed及一次覆盖限定验收。[合同](CLIENT_72_D02_SCALAR_CONTRACTS_AND_SKILL_FLAGS_20261116.md) | 不推signed业务、Int32 getter或完整parser。 |
 | `R3-OLD121-SKILL-RAW-FLAG-INVENTORY` | 已完成；371行首8B、26 anchors/8 literal byte oracle，payload语义0、新逻辑值0。[盘点](CLIENT_72_D02_SCALAR_CONTRACTS_AND_SKILL_FLAGS_20261116.md) | 只raw flags，不推String/TLS/实际调用或行值；121 energy的三字段未知。 |
-| `R3-OLD121-SKILL-RAW-FLAG-TRIAGE` | 进行中；Sol max审定必要后继。 | 暂无结论，不批准typed行或新值。 |
+| `R3-OLD121-SKILL-RAW-FLAG-TRIAGE` | 已完成；首个String1长度头的限定来源和位置审定。[结果](CLIENT_72_D02_SKILL_STRING1_LENGTH_20261116.md) | 不批准typed行或新值。 |
+| `R3-OLD121-SKILL-STRING1-LENGTH-INVENTORY` | 已完成；371个长度头N均14..23，742B语义读取。[结果](CLIENT_72_D02_SKILL_STRING1_LENGTH_20261116.md) | 不读payload，不证明TLS、实际调用或资源值；不启动small path后继。 |
 | `R3-ACTIVE-MATERIAL-RELIQUARY-PARSER-SOURCE-SCOPE` | 已完成；两个独立单窗source-only规格与唯一typeRef已定。[规划](CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) | 此前错误typename已撤回；不证明row/值/ABI。 |
 | `R3-ACTIVE-MATERIAL-RESOURCE-PARSER-SOURCE` | 已完成；原4096B cap停body0/read0与KeyError保留，后续RUN2取得完整7128B来源。[结果](CLIENT_72_D02_ACTIVE_ITEM_PARSER_SOURCES_20261116.md) | 不追认原轮，不证明row/值/初始化。 |
 | `R3-ACTIVE-MATERIAL-PARSER-EXACT-EXTENT-SCOPE` | 已完成；按已确认7128B边界形成新窗规格，7156B evidence、strict≤7128。[规格](CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) | 原cap失败保留；后继RUN2的fresh AOT/exception/pdata已验。 |
 | `R3-ACTIVE-MATERIAL-RESOURCE-PARSER-SOURCE-RUN2` | 已完成；7128B/1754指令/447引用，fresh AOT/唯一pdata/完整目录通过。[结果](CLIENT_72_D02_ACTIVE_ITEM_PARSER_SOURCES_20261116.md) | 直接冻结命中0不证明传递A-free，底层loader/OS IO未计。 |
 | `R3-ACTIVE-RELIQUARY-RESOURCE-PARSER-SOURCE` | 已完成；3347B/833指令/217引用，fresh AOT/唯一pdata/完整body通过。[结果](CLIENT_72_D02_ACTIVE_ITEM_PARSER_SOURCES_20261116.md) | 两历史ctor入口pins未作为本次输入或单独重核；不据此推ctor/初始化或父body。 |
-| `R3-ACTIVE-RELIQUARY-MINIMUM-SEMANTICS` | 已完成；首分支前父CALL及寄存器转交、+7c条件store限定验收。[语义](CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md) | 不证明ABI/实际183行值；rank/set未知。 |
+| `R3-ACTIVE-RELIQUARY-MINIMUM-SEMANTICS` | 已完成；首分支前父CALL及寄存器转交、+7c条件store限定验收。[语义](CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md) | 不证明ABI/183个候选ID的实际资源值；rank/set未知。 |
 | `R3-ACTIVE-ITEM-BASE-PARSER-SOURCE` | 已完成；共同父parser完整2018B/488指令/130引用。[来源](CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md) | 仅静态来源，直接冻结命中0不证明传递A-free。 |
-| `R3-ACTIVE-ITEM-BASE-MINIMUM-SEMANTICS` | 进行中；Sol max统一审定共同父id/itemType。 | 未有结论，不重复取源。 |
+| `R3-ACTIVE-ITEM-BASE-MINIMUM-SEMANTICS` | 已完成；共同父id/itemType条件store限定验收，缺flag id仍经setter(0)。[语义](CLIENT_72_D02_ACTIVE_ITEM_BASE_RAW_INVENTORY_20261116.md) | S(0)不等物理零，不证明typed初态或值。 |
+| `R3-ACTIVE-ITEM-RAW-SOURCE-INVENTORY` | 已完成；三根7666项、0精确stem命中、四处depth 8截止。[盘点](CLIENT_72_D02_ACTIVE_ITEM_BASE_RAW_INVENTORY_20261116.md) | 不外推全盘；两族raw身份/keyspan/cursor未建立。 |
+| `R3-ACTIVE-MATERIAL-TYPE-ROLE-SCOPE` / `R3-ACTIVE-MATERIAL-DIRECT-TYPE-DECLARATIONS` / `R3-ACTIVE-MATERIAL-TYPE34165-ROLE-REVIEW` | 已完成；六个直接Enum声明145字段，+c8准确边及MATERIAL_*符号支持限定分类职责。[结果](CLIENT_72_D02_MATERIAL_RELIC_ROLE_BOUNDARIES_20261116.md) | 常量数值、实际consumer/row/初始化未知；缺flag局部0不证明MATERIAL_NONE=0。 |
+| `R3-ACTIVE-RELIQUARY-RANK-SET-SOURCE-GAP` | 已完成；9个派生及6个继承候选、标签互换反例限定复核。[缺口](CLIENT_72_D02_MATERIAL_RELIC_ROLE_BOUNDARIES_20261116.md) | rank/set缺具名target来源或同源输入和独立非零oracle，未形成成熟执行包。 |
 | `R3-ACTIVE-MATERIAL-MINIMUM-SEMANTICS` | 已完成；首分支前父CALL及+78两条件store限定语义。[结果](CLIENT_72_D02_MATERIAL_TYPE_DECLARATION_20261116.md) | 未证明MaterialType职责、实际值或初态。 |
-| `R3-ACTIVE-MATERIAL-TYPE62334-DECLARATION` | 已完成；固定完整五字段含四个FOOD_QUALITY literal及value__，method 0、常数值unknown。[声明](CLIENT_72_D02_MATERIAL_TYPE_DECLARATION_20261116.md) | `targetSymbols` 仅筛MATERIAL_，空不等于无具名符号；+78作为MaterialType的候选依据撤回，实际字段/具名consumer未知。 |
+| `R3-ACTIVE-MATERIAL-TYPE62334-DECLARATION` | 已完成；固定完整五字段含四个FOOD_QUALITY literal及value__，method 0、常数值unknown。[声明](CLIENT_72_D02_MATERIAL_TYPE_DECLARATION_20261116.md) | `targetSymbols` 仅筛MATERIAL_，空不等于无具名符号；+78作为MaterialType的候选依据撤回，+c8有限分类职责后续已验，实际consumer未知。 |
 | `R3-OLD121-DEPOT-CORE-FRAGMENT-SCOPE` | 已完成；既有全121 Depot原值与来源的三键纯host范围审定。[结果](CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) | 不重跑Depot/phase6，不证明当前采用。 |
 | `R3-OLD121-DEPOT-CORE-FRAGMENT-PROJECTION` | 已完成；121片段/363字段/726既有getter引用，484普通slot中248正236零、121正energy，369不同正引用仅key/span。[结果](CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) | presence unknown；结构探查曾展示部分超范围既有Skill字段，最终代码不使用Skill.values作oracle。 |
 | `R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA` | 阻塞；正引用缺367 id/element片段，energy正向绑定缺120；121 energy行costElemVal/specialEnergyMin/Max均未闭。 | 不以空Skill/None或假cost补齐；无新JVM或当前采用证明。 |
@@ -185,7 +189,7 @@ cache1 RunAs无Launch/helper回执，父receipt始终0B，超90秒停止；采�
 
 本轮现场（已有回执独立审阅通过）：一次Launch 4.498秒成功，用户55.579秒反馈SDK页在原90秒内；唯一sample 4.567秒以cold-cache停止，backend 00、root非空、cache 0；实际3 RPM/17B，identity 11 + sample 19 = 30 API，不是miss或timeout。用户确认正常退出，5个本轮已知进程均不在；closeout fresh核27 pin/149数据/五stock/config/JAR及端口通过，另33 sample pins匹配。原件 `local/migration72/d02-resume-20261115/launch-timeout/live-closeout1.private.json` SHA-256 `74feeb347b87a10fcc3a78796c9a735c68af09857bdc4503b4e7689d9f324645`；独立审阅 `local/migration72/d02-resume-20261115/launch-timeout/live-typed-integration1/live-review.private.json` SHA-256 `0ac12ac9a680cffa0b4ef580b12c1365860d9b8866d4f05a1e624ef48148ee1a`，只核已有快照、未重新探测；sample原件SHA-256 `3c17ef9e96bb229cec876fd9db40fc7d8635720bc8d1e5fd312ecae2bf428a14`。实际row/getter/current/epoch和ready仍未知，六项仍0/6。后继需自然非空cache及key输入，不循环同SDK页或创建cache/Default/主动getter；用户要求下次窗口化2560×1440，新包与seal已限定离线验收；未来现场须新fresh和实时ready，实际窗口与尺寸未验，本轮无参数包保留且未再启动。
 
-`R-D02-REMAINING-DEPENDENCIES` 已按既有材料完成只读盘点，见 `local/migration72/d02-resume-20261115/remaining-dependency-inventory/inventory.zh.md`；该表已更新String限定出口及52802边界，仅支持具体依赖判断，不证明全客户端穷尽或全局阻塞。后续 `local/migration72/d02-resume-20261115/remaining-dependency-final/inventory.zh.md` 曾识别OLD121独立候选；五字段实施与限定loader现已验收，见[结果](CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_20261115.md)，继续其他依赖满足的普通后继。
+`R-D02-REMAINING-DEPENDENCIES` 已按既有材料完成只读盘点，见 `local/migration72/d02-resume-20261115/remaining-dependency-inventory/inventory.zh.md`；该表已更新String限定出口及52802边界，仅支持具体依赖判断，不证明全客户端穷尽或全局阻塞。后续 `local/migration72/d02-resume-20261115/remaining-dependency-final/inventory.zh.md` 曾识别OLD121独立候选；五字段实施与限定loader现已验收，见[结果](CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_20261115.md)；当前收尾后按用户要求暂停。
 
 ## 拒绝冻结与独立后继
 

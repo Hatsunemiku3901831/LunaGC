@@ -4,19 +4,21 @@
 
 ## 当前阶段
 
+**用户要求当前在途子任务验收和收尾后暂停，不开启新业务任务。** 本页登记已验限定结果与准确缺口；本次不把暂停写成所有独立工作均阻塞。D-02 / F-05 / D02-R6 仍为 0/6，A/B、preview 和准确依赖冻结及 A opaque 纠错保持。
+
 2026-11-14 `UP-72-20261114`：按用户指令开展公开上游静态调研，阶段成果及未覆盖分页见[研究报告](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)和[检索账本](docs/CLIENT_72_UPSTREAM_LEDGER_20261114.md)。状态**进行中**：发现 LunaGC 7.2 及 AstaPS 非默认任务分支，已固定部分源码并识别协议冲突；长尾搜索拆分、部分 Fork 和跨平台线索仍待核。UP-72-N1/N2 对照候选须先核现有成果并证明能解除具体 D-02 合同缺口，避免重复；本轮未改运行代码、未部署或实机验收，D-02 状态不变。原 A/B 拒绝及其依赖继续冻结；A原平台事件已找回，具体执行范围及技术输入仍缺。
 
-`R3-OLD121-AVATAR-BASE-GROWTH-PROJECTION` 及其 Java 子项已完成限定验收：实际121 Avatar五字段片段中120行新读出、7号行复用，363例原helper对照及限定真实loader通过，见[结果](docs/CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_20261115.md)。后继两项critical基础贡献片段与限定loader也已验收，见[结果](docs/CLIENT_72_D02_OLD121_AVATAR_CRITICAL_20261116.md)；完整Avatar、Skill、装备与实际Player全量恢复仍未闭。121 Depot、phase6和Talent已有范围直接复用；继续其他依赖满足的普通后继，原A/B、preview冻结不变，不晋级R4或ready。
+`R3-OLD121-AVATAR-BASE-GROWTH-PROJECTION` 及其 Java 子项已完成限定验收：实际121 Avatar五字段片段中120行新读出、7号行复用，363例原helper对照及限定真实loader通过，见[结果](docs/CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_20261115.md)。后继两项critical基础贡献片段与限定loader也已验收，见[结果](docs/CLIENT_72_D02_OLD121_AVATAR_CRITICAL_20261116.md)；完整Avatar、Skill、装备与实际Player全量恢复仍未闭。121 Depot、phase6和Talent已有范围直接复用；当前只收尾已验工作，原A/B、preview冻结不变，不晋级R4或ready。
 
-2026-11-16 当前后继：旧号当前Depot的369个正Skill需求已限定整理，其中2个出生结果复用、367个值未知；保存Skill的389个键是另一集合。Skill资源构造器单窗因普通边界门失败而停止，[限定归因](docs/CLIENT_72_D02_OLD121_SKILL_SOURCE_BLOCKER_20261116.md)已完成，该单窗仍缺同固定PE的准确完整边界来源，未授权重取或放宽。critical基础贡献新验收限guard后共享片段及限定loader，不证明自然调用或总属性。其他Item四族继续审定独立metadata/BSON保存引用机械包；具体缺口不代表全部Skill、完整Avatar/R3或所有独立工作阻塞。A/B及preview冻结保持，未有新现场或ready，D-02 / F-05 / D02-R6仍0/6。
+2026-11-16 当前后继：旧号当前Depot的369个正Skill需求已限定整理，其中2个出生结果复用、367个值未知；保存Skill的389个键是另一集合。Skill资源构造器单窗因普通边界门失败而停止，[限定归因](docs/CLIENT_72_D02_OLD121_SKILL_SOURCE_BLOCKER_20261116.md)已完成，该单窗仍缺同固定PE的准确完整边界来源，未授权重取或放宽。critical基础贡献新验收限guard后共享片段及限定loader，不证明自然调用或总属性。其他Item四族限定结果与缺口已记录；具体缺口不代表全部Skill、完整Avatar/R3或所有独立工作阻塞。A/B及preview冻结保持，未有新现场或ready，D-02 / F-05 / D02-R6仍0/6。
 
-`R3-OLD-WEAPON239-APPROVED-FIELDS-PLAN` 已完成限定资料及依赖审阅：239种/1663行目标Weapon键中，11101的1种/27行可复用既验六键片段，其余238种/1636行缺获批读出与限定loader；已存11101和11501的行级ctor/parser轨迹命中准确A入口，caller site未知。[来源与停止点](docs/CLIENT_72_D02_OLD_WEAPON239_SOURCE_BLOCKER_20261116.md)；仅该新值需求受相关依赖约束，继续其他独立工作。
+`R3-OLD-WEAPON239-APPROVED-FIELDS-PLAN` 已完成限定资料及依赖审阅：239种/1663行目标Weapon键中，11101的1种/27行可复用既验六键片段，其余238种/1636行缺获批读出与限定loader；已存11101和11501的行级ctor/parser轨迹命中准确A入口，caller site未知。[来源与停止点](docs/CLIENT_72_D02_OLD_WEAPON239_SOURCE_BLOCKER_20261116.md)；仅该新值需求受相关依赖约束，本批收尾后暂停。
 
 `R3-ACTIVE-ITEM-REMAINING-SCOPE` 已完成限定必要性及两个普通资料包规划，`R3-ACTIVE-ITEM-SAVED-REFS` 已完成固定快照保存引用投影：候选Reliquary的main 28、append 22及TPS两类各12个不同正引用已限定统计，121个Avatar保存TPS武器列表均显式空；仅本旧号、非目标资源值或恢复证明。[结果](docs/CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md)。有限[metadata声明查询](docs/CLIENT_72_D02_ACTIVE_ITEM_BASE_METADATA_20261116.md)及[旧号Depot三键纯host投影](docs/CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md)已完成；Depot Java后继因Skill片段缺口阻塞。[三个资源入口首指令来源](docs/CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md)、[三blob候选ID覆盖](docs/CLIENT_72_D02_SAVED_REF_CANDIDATE_COVERAGE_20261116.md)、[Skill parser](docs/CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md)及[Material/Reliquary parser](docs/CLIENT_72_D02_ACTIVE_ITEM_PARSER_SOURCES_20261116.md)完整来源已限定验收；原完整ctor窗仍缺边界，target row、值与初始化未知。
 
-`A-PROMPT-LOCAL-PROVENANCE` 此前的明文恢复验收已撤回：已定位的是原事件和不透明序列化字面串，仍缺可核对的执行请求正文；`A-PROMPT-PLAINTEXT-RECOVERY` 阻塞，见[纠错](docs/CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)。原平台错误仍已恢复；A/B及preview冻结未解除，普通独立工作继续。
+`A-PROMPT-LOCAL-PROVENANCE` 此前的明文恢复验收已撤回：已定位的是原事件和不透明序列化字面串，仍缺可核对的执行请求正文；`A-PROMPT-PLAINTEXT-RECOVERY` 阻塞，见[纠错](docs/CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)。原平台错误仍已恢复；A/B及preview冻结未解除，当前按用户要求收尾后暂停。
 
-**用户已指示继续任务；D-02 / F-05 / D02-R6 六项客户端验收仍为0/6。** 原Scene reader与Proud setter首发包及其后继限定成果直接复用，不重新排队。Proud三字段布局、166B Float getter和共享Pair的key检索→encoded value→getter消费正例已限定验收；Proud目标字段到该consumer的来源绑定、业务alias与实际row仍未知，见[复用判断](docs/CLIENT_72_D02_PROUD_ENUM32419_TRIAGE_20261115.md)。existing-cache离线准备已验，旧cache1启动超时取消、sample未派；本轮一次采样为cold-cache，实际输入未取得。Float正常路径条件合同与机械断言已限定验收，三字段消费桥及实际值仍未知；启动回执超时归因、薄封装修复及新身份绑定接线已限定离线验收，本轮真实Launch及一次采样后以cold-cache停止，现场回执与收尾已独立审阅通过；实际M/getter/row/current/epoch未知。新现场须另取实时ready，禁止computer-use。Scene自然receiver/初始化及World slot114保留准确缺口，已确认的共用allocator返回依赖与A/B拒绝项冻结。下一步审核准确依赖与缺少的来源输入，不自动另开UI或全codec窗口。详细研究过程和历史现场见[交接](HANDOFF2.md)及[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。
+**D-02 / F-05 / D02-R6 六项客户端验收仍为0/6。** 原Scene reader与Proud setter首发包及其后继限定成果直接复用，不重新排队。Proud三字段布局、166B Float getter和共享Pair的key检索→encoded value→getter消费正例已限定验收；Proud目标字段到该consumer的来源绑定、业务alias与实际row仍未知，见[复用判断](docs/CLIENT_72_D02_PROUD_ENUM32419_TRIAGE_20261115.md)。existing-cache离线准备已验，旧cache1启动超时取消、sample未派；本轮一次采样为cold-cache，实际输入未取得。Float正常路径条件合同与机械断言已限定验收，三字段消费桥及实际值仍未知；启动回执超时归因、薄封装修复及新身份绑定接线已限定离线验收，本轮真实Launch及一次采样后以cold-cache停止，现场回执与收尾已独立审阅通过；实际M/getter/row/current/epoch未知。新现场须另取实时ready，禁止computer-use。Scene自然receiver/初始化及World slot114保留准确缺口，已确认的共用allocator返回依赖与A/B拒绝项冻结。本批验收收尾后暂停，不自动另开UI或全codec窗口。详细研究过程和历史现场见[交接](HANDOFF2.md)及[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -213,17 +215,25 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-OLD121-SKILL-INT32-SETTER-SOURCE-WINDOW | 已完成 | 必经Int32 setter完整157B来源，45指令/9引用；直接冻结0不证明传递A-free。[来源](docs/CLIENT_72_D02_SCALAR_CONTRACTS_AND_SKILL_FLAGS_20261116.md) |
 | R3-OLD121-SKILL-INT32-SETTER-CONDITIONAL-CONTRACT | 已完成 | 正常路径按EDX低32位查表/seed并一次覆盖，不读旧目的；不推signed业务或完整parser。[合同](docs/CLIENT_72_D02_SCALAR_CONTRACTS_AND_SKILL_FLAGS_20261116.md) |
 | R3-OLD121-SKILL-RAW-FLAG-INVENTORY | 已完成 | 371行首8B原始flag清查及固定byte oracle；不读payload语义或生成新逻辑值。[结果](docs/CLIENT_72_D02_SCALAR_CONTRACTS_AND_SKILL_FLAGS_20261116.md) |
-| R3-OLD121-SKILL-RAW-FLAG-TRIAGE | 进行中 | Sol max审定固定raw flag清查的必要后继；暂无结论，不批准typed行或新值。 |
+| R3-OLD121-SKILL-RAW-FLAG-TRIAGE | 已完成 | 固定raw flag与首个String1长度头位置限定审定，不批准typed行或新值。[结果](docs/CLIENT_72_D02_SKILL_STRING1_LENGTH_20261116.md) |
+| R3-OLD121-SKILL-STRING1-LENGTH-INVENTORY | 已完成 | 371行首个2B长度头的N均14..23、≤64；不读payload，不证明TLS/调用或资源值。[结果](docs/CLIENT_72_D02_SKILL_STRING1_LENGTH_20261116.md) |
 | R3-ACTIVE-MATERIAL-RELIQUARY-PARSER-SOURCE-SCOPE | 已完成 | Material/Reliquary两个独立parser单窗限定规划；一参typeRef及预算固定，不批准字段值或初始化。[范围](docs/CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) |
 | R3-ACTIVE-MATERIAL-RESOURCE-PARSER-SOURCE | 已完成 | RUN2完整7128B来源限定验收；原4096B cap失败与早期KeyError保留，不追认旧轮。[结果](docs/CLIENT_72_D02_ACTIVE_ITEM_PARSER_SOURCES_20261116.md) |
 | R3-ACTIVE-MATERIAL-PARSER-EXACT-EXTENT-SCOPE | 已完成 | 已确认7128B精确范围的独立新窗规格；原失败保留，未执行RUN2。[规格](docs/CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) |
 | R3-ACTIVE-MATERIAL-RESOURCE-PARSER-SOURCE-RUN2 | 已完成 | 7128B、1754指令/447引用的完整静态来源，fresh AOT及唯一pdata通过；不证明row/值/初始化。[结果](docs/CLIENT_72_D02_ACTIVE_ITEM_PARSER_SOURCES_20261116.md) |
 | R3-ACTIVE-RELIQUARY-RESOURCE-PARSER-SOURCE | 已完成 | 3347B、833指令/217引用的完整静态来源；两历史ctor入口pins未在本次单独重核，具体边界见专题。[结果](docs/CLIENT_72_D02_ACTIVE_ITEM_PARSER_SOURCES_20261116.md) |
-| R3-ACTIVE-RELIQUARY-MINIMUM-SEMANTICS | 已完成 | 首分支前父CALL及RCX/RDX局部转交、+7c条件store限定验收；rank/set职责及183行值未知。[语义](docs/CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md) |
+| R3-ACTIVE-RELIQUARY-MINIMUM-SEMANTICS | 已完成 | 首分支前父CALL及RCX/RDX局部转交、+7c条件store限定验收；rank/set职责及183个候选ID的实际资源值未知。[语义](docs/CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md) |
 | R3-ACTIVE-ITEM-BASE-PARSER-SOURCE | 已完成 | 准确共同父parser完整2018B静态来源；不证明自然调用或资源值。[来源](docs/CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md) |
-| R3-ACTIVE-ITEM-BASE-MINIMUM-SEMANTICS | 进行中 | Sol max统一审定共同父id/itemType；不重复取源，不预称结论。 |
+| R3-ACTIVE-ITEM-BASE-MINIMUM-SEMANTICS | 已完成 | 共同父id/itemType条件store限定验收；缺flag的id仍经setter(0)，不等物理零。[语义](docs/CLIENT_72_D02_ACTIVE_ITEM_BASE_RAW_INVENTORY_20261116.md) |
+| R3-ACTIVE-ITEM-RAW-SOURCE-INVENTORY | 已完成 | 三指定根7666项、精确stem 0命中且四处depth 8截止；两族raw身份/keyspan/cursor未建立，不外推全盘。[盘点](docs/CLIENT_72_D02_ACTIVE_ITEM_BASE_RAW_INVENTORY_20261116.md) |
+| R3-ACTIVE-MATERIAL-TYPE-ROLE-SCOPE | 已完成 | 六条直接valuetype边的限定职责候选范围，不凭布局认业务。[范围](docs/CLIENT_72_D02_MATERIAL_RELIC_ROLE_BOUNDARIES_20261116.md) |
+| R3-ACTIVE-MATERIAL-DIRECT-TYPE-DECLARATIONS | 已完成 | 六个直接Enum声明145字段，literal常数值未知。[声明](docs/CLIENT_72_D02_MATERIAL_RELIC_ROLE_BOUNDARIES_20261116.md) |
+| R3-ACTIVE-MATERIAL-TYPE34165-ROLE-REVIEW | 已完成 | +c8直接边与MATERIAL_*符号建立限定分类职责；数值/实际consumer/row未知。[职责](docs/CLIENT_72_D02_MATERIAL_RELIC_ROLE_BOUNDARIES_20261116.md) |
+| R3-ACTIVE-RELIQUARY-RANK-SET-SOURCE-GAP | 已完成 | 九个派生与六个继承候选仍缺具名职责；标签互换反例保留，不猜值。[缺口](docs/CLIENT_72_D02_MATERIAL_RELIC_ROLE_BOUNDARIES_20261116.md) |
+| Material分类literal原值与实际行绑定 | 阻塞 | 缺固定literal来源、同源实际输入及独立oracle；不派常量查询或以局部0认定MATERIAL_NONE。 |
+| Reliquary rank/set职责与值绑定 | 阻塞 | 缺允许的具名target来源，或同源实际输入及独立非零oracle；没有成熟执行包。 |
 | R3-ACTIVE-MATERIAL-MINIMUM-SEMANTICS | 已完成 | 首分支前父CALL与+78条件覆盖限定语义；不证明MaterialType职责、行值或初态。[结果](docs/CLIENT_72_D02_MATERIAL_TYPE_DECLARATION_20261116.md) |
-| R3-ACTIVE-MATERIAL-TYPE62334-DECLARATION | 已完成 | 固定五字段声明含FOOD_QUALITY符号、常量数值未知；撤回+78作为MaterialType接线依据，实际职责仍缺具名来源。[结果](docs/CLIENT_72_D02_MATERIAL_TYPE_DECLARATION_20261116.md) |
+| R3-ACTIVE-MATERIAL-TYPE62334-DECLARATION | 已完成 | 固定五字段声明含FOOD_QUALITY符号、常量数值未知；撤回+78作为MaterialType接线依据，后继+c8分类职责另有限验收。[结果](docs/CLIENT_72_D02_MATERIAL_TYPE_DECLARATION_20261116.md) |
 | R3-OLD121-DEPOT-CORE-FRAGMENT-SCOPE | 已完成 | 限定审定既有全121 Depot的id/skills/energy原值与来源可供纯host三键投影；不重跑Depot/phase6。[结果](docs/CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) |
 | R3-OLD121-DEPOT-CORE-FRAGMENT-PROJECTION | 已完成 | 121片段、363字段及726既有getter引用，484普通slot与121正energy保留；369不同正Skill引用仅key/span，不证明Skill值或当前采用。[结果](docs/CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) |
 | R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA | 阻塞 | 正引用缺367 id/element片段、energy绑定缺120；包括10068在内121个energy的costElemVal/specialEnergyMin/Max均未闭，不得以空Skill/None或假cost补齐。 |
@@ -571,7 +581,10 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-OLD121-SKILL-FLOAT-SETTER-SOURCE-WINDOW、R3-ACTIVE-ITEM-BASE-PARSER-SOURCE | 已完成 | 不同Float setter与共同父parser完整静态来源；直接冻结命中0不证明传递A-free。 | [原窗与分账](docs/CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md) |
 | R3-OLD121-SKILL-FLOAT-SETTER-CONDITIONAL-CONTRACT、R3-OLD121-SKILL-INT32-SETTER-SOURCE-WINDOW、R3-OLD121-SKILL-INT32-SETTER-CONDITIONAL-CONTRACT | 已完成 | 两setter正常条件位级合同及Int32完整来源；不证明实际M或完整parser。 | [合同与原窗](docs/CLIENT_72_D02_SCALAR_CONTRACTS_AND_SKILL_FLAGS_20261116.md) |
 | R3-OLD121-SKILL-RAW-FLAG-INVENTORY | 已完成 | 固定371行首8B条件位清查，不读payload语义或生成新逻辑值。 | [限定结果](docs/CLIENT_72_D02_SCALAR_CONTRACTS_AND_SKILL_FLAGS_20261116.md) |
-| R3-ACTIVE-MATERIAL-MINIMUM-SEMANTICS、R3-ACTIVE-MATERIAL-TYPE62334-DECLARATION | 已完成 | Material +78局部条件覆盖及type62334完整声明限定验收；原MaterialType候选职责冲突，实际字段/消费来源未知。 | [语义与声明](docs/CLIENT_72_D02_MATERIAL_TYPE_DECLARATION_20261116.md) |
+| R3-ACTIVE-MATERIAL-MINIMUM-SEMANTICS、R3-ACTIVE-MATERIAL-TYPE62334-DECLARATION | 已完成 | Material +78局部条件覆盖及type62334完整声明限定验收；原+78候选职责冲突，后继+c8分类职责已限定验收，实际consumer未知。 | [语义与声明](docs/CLIENT_72_D02_MATERIAL_TYPE_DECLARATION_20261116.md) |
+| R3-ACTIVE-ITEM-BASE-MINIMUM-SEMANTICS、R3-ACTIVE-ITEM-RAW-SOURCE-INVENTORY | 已完成 | 共同父字段条件store及三个指定根的有界raw来源盘点；实际输入与值仍未知。 | [语义与盘点](docs/CLIENT_72_D02_ACTIVE_ITEM_BASE_RAW_INVENTORY_20261116.md) |
+| R3-ACTIVE-MATERIAL-TYPE-ROLE-SCOPE、R3-ACTIVE-MATERIAL-DIRECT-TYPE-DECLARATIONS、R3-ACTIVE-MATERIAL-TYPE34165-ROLE-REVIEW、R3-ACTIVE-RELIQUARY-RANK-SET-SOURCE-GAP | 已完成 | Material分类职责、六声明与Relic rank/set缺口限定审阅；literal数值和实际row未知。 | [职责与边界](docs/CLIENT_72_D02_MATERIAL_RELIC_ROLE_BOUNDARIES_20261116.md) |
+| R3-OLD121-SKILL-RAW-FLAG-TRIAGE、R3-OLD121-SKILL-STRING1-LENGTH-INVENTORY | 已完成 | 371个首长度头限定清查，payload/自然调用和资源值未验。 | [长度清查](docs/CLIENT_72_D02_SKILL_STRING1_LENGTH_20261116.md) |
 | R3-PROUD-ENUM32419-CONSUMER-QUERY | 已完成 | 固定signature显参116唯一匹配及type32419声明限定验收，不证明业务或全客户端穷尽。 | [查询](docs/CLIENT_72_D02_PROUD_ENUM32419_CONSUMER_QUERY_20261115.md) |
 | R3-PROUD-PAIR-CONSUMER-QUERY-TRIAGE | 已完成 | 声明域有界判断及type54724文字勘误；ordinary业务caller及type-erased MethodInfo/callsite未知。 | [限定判断](docs/CLIENT_72_D02_PROUD_PAIR_CONSUMER_TRIAGE_20261115.md) |
 | R3-PROUD-PAIR-CONSUMER-QUERY | 已完成 | 65条指定receiver声明与固定signature全表6唯一显参匹配；非全客户端或业务穷尽。 | [有界查询](docs/CLIENT_72_D02_PROUD_PAIR_CONSUMER_QUERY_20261115.md) |
