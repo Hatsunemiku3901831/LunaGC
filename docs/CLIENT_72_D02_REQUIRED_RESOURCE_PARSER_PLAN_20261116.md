@@ -14,7 +14,7 @@ Skill 首轮在 identity 阶段的私有 runner 抽取 `decode(code,entry=ENTRY.
 
 RUN2 已完成限定 source 验收：fresh AOT、唯一完整 pdata、完整 exception hash 与 8309B body hash 和历史一致；strict 1985 条指令、539 引用（144 CALL / 328 branch / 67 RIP）。直接准确冻结 site/target 索引为空只覆盖本窗直接引用，不证明传递 A-free。来源证据 8337B；header 两读 4616B、distinct 4096B，五 stock hash 550661784B（PE 450927000B），PE stock + header + AOT + 目录 + body 共 465284021B；pdata 12B 从目录复制，不重复记物理读。额外预检、GetFileHash 和 request 应用 IO 见 `capture/io-addendum.private.json`；底层 loader/OS calls 未计量，不称全部物理 IO 已计。目标 CPU/进程读取、row 值及 ready 均无。
 
-RUN2 私有根 `local/migration72/d02-resume-20261116/old121-skill-parser-source-window-run2/`：`capture/result.private.json` SHA-256 `1d8f87ead14d030d01e2efcbe71b1cf9951dbe35443c4c1beb73e5a837262f9c`、`capture/body.asm.private.json` SHA-256 `e05cbc6e1a98af8c21ec442887852a7df2d5fbba86eacfbee2d5d88fc82eaa16`、`capture/reference-index.private.json` SHA-256 `dd10dd1a4e31b97efa788437f8c37b58b570762b7bc216b5ad90ad06c1fe4092`、`manifest.private.json` SHA-256 `cd5bd1e5b1644613bc8094f6491b8c284cd9e03a28a828a4ffb8fde0ba9e981a`。`R3-OLD121-SKILL-PARSER-MINIMUM-SEMANTICS` 进行中，尚无语义结论。
+RUN2 私有根 `local/migration72/d02-resume-20261116/old121-skill-parser-source-window-run2/`：`capture/result.private.json` SHA-256 `1d8f87ead14d030d01e2efcbe71b1cf9951dbe35443c4c1beb73e5a837262f9c`、`capture/body.asm.private.json` SHA-256 `e05cbc6e1a98af8c21ec442887852a7df2d5fbba86eacfbee2d5d88fc82eaa16`、`capture/reference-index.private.json` SHA-256 `dd10dd1a4e31b97efa788437f8c37b58b570762b7bc216b5ad90ad06c1fe4092`、`manifest.private.json` SHA-256 `cd5bd1e5b1644613bc8094f6491b8c284cd9e03a28a828a4ffb8fde0ba9e981a`。后继[最小语义及Float setter来源](CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md)已限定验收；不证明typed row初始化或新值。
 
 ## Material 与 Reliquary
 

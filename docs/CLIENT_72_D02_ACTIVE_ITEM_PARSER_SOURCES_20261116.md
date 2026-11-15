@@ -8,7 +8,7 @@
 
 证据 3375B = AOT 16 + pdata 12 + body 3347；header 两读 4616B / 4096 distinct，exception 一读 14344080B，五 stock hash 550661784B（PE 450927000B），metadata 与预检另账。scope 中两个历史 `entryResultPins` 未作为本次输入且未单独重核 hash；主线判断二者仅为 ctor 1B 上下文，该静态 parser source 不依赖 C3 行为，省略不影响本次准确来源门禁证明；不据此推 ctor/初始化，也不能声称所有历史 pins 均重 hash。父 parser 的 body 未由本窗验收。
 
-私有根 `local/migration72/d02-resume-20261116/active-item-reliquary-parser-window/`：`capture/result.private.json` SHA-256 `76cdf2b241f5f61e31c61dc465c48c18084ba69d28ad0491b5a3f640f3ad9e1d`，`manifest.private.json` SHA-256 `0b0ee6faeba55427fd4b53d41ddcc0309257ca4b8d74c35bccbe6c54e6a06b40`。`R3-ACTIVE-RELIQUARY-MINIMUM-SEMANTICS` 已交 Sol max，进行中，尚无结论。
+私有根 `local/migration72/d02-resume-20261116/active-item-reliquary-parser-window/`：`capture/result.private.json` SHA-256 `76cdf2b241f5f61e31c61dc465c48c18084ba69d28ad0491b5a3f640f3ad9e1d`，`manifest.private.json` SHA-256 `0b0ee6faeba55427fd4b53d41ddcc0309257ca4b8d74c35bccbe6c54e6a06b40`。后继[最小语义及父来源](CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md)已限定验收；该原窗不因后继而证明初始化或实际值。
 
 ## Material
 
@@ -18,4 +18,4 @@
 
 私有根 `local/migration72/d02-resume-20261116/active-item-material-parser-window-run2/`：`capture/result.private.json` SHA-256 `fb45c38944e99756b492bf4daaaa2b4d9ec75e0fbb0672a93297abd3506f2cb2`；`manifest.private.json` SHA-256 `a091503fd0e67580c83ad7106458884404f22ed90deba36f2fcde1065eb07656`；`capture/body.asm.private.json` SHA-256 `90e3002d9a86c40311a7571ea61733f0c7e1f190e86404d9344c0cd5131841d4`；`capture/reference-index.private.json` SHA-256 `bfc29fa85255c9579b71af6227e423a5ef1d71b73c0a171c6e3866d2d2c92a50`。
 
-两项 source 采集未执行目标、native、ctor/parser/getter 或 host row，未运行 JVM、DB、客户端或测试，也未修改 tracked 代码。Skill 最小语义仍在进行，应复用已验 `14aefa090` 的 157B UInt32 setter 与 `14f905140` 的 166B Float getter；不同的 Float setter `14f905250` 仅在最小缺源规划中，不称已验或已采。A/B、preview 和准确冻结边保持，D-02 / F-05 / D02-R6 仍 0/6。
+两项 source 采集未执行目标、native、ctor/parser/getter 或 host row，未运行 JVM、DB、客户端或测试，也未修改 tracked 代码。Skill 最小语义及另一个 `14f905250` Float setter 后续静态来源已限定验收，见[新结果](CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md)；条件合同仍在审定。A/B、preview 和准确冻结边保持，D-02 / F-05 / D02-R6 仍 0/6。

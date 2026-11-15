@@ -207,13 +207,17 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-OLD121-SKILL-ENTRY-TO-PROJECTION-SCOPE | 已完成 | 审定仅parser完整来源后继；未批准typed行执行，121个energy行的costElemVal/specialEnergyMin/Max均未闭。[范围](docs/CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) |
 | R3-OLD121-SKILL-PARSER-SOURCE-WINDOW | 已完成 | 首轮包装NameError保留；经授权RUN2取得完整8309B来源及逐条listing，仅source，不证明初始化或值。[结果](docs/CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) |
 | R3-OLD121-SKILL-PARSER-SOURCE-WINDOW-RUN2 | 已完成 | fresh AOT/唯一pdata及完整body验收，1985指令/539引用；直接冻结引用为空不证明传递A-free。[结果](docs/CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) |
-| R3-OLD121-SKILL-PARSER-MINIMUM-SEMANTICS | 进行中 | Sol max审定已验来源的最小语义；不预称结论或批准typed row。 |
+| R3-OLD121-SKILL-PARSER-MINIMUM-SEMANTICS | 已完成 | id/+68与costElemType/+54正常分支均覆盖旧字段，缺flag局部逻辑0有原来源；不证明初态或新值，121 energy行三成本/特殊池字段仍未知。[语义](docs/CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md) |
+| R3-OLD121-SKILL-FLOAT-SETTER-SOURCE-WINDOW | 已完成 | 不同Float setter `14f905250` 完整163B静态来源；不代条件语义或typed row验收。[来源](docs/CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md) |
+| R3-OLD121-SKILL-FLOAT-SETTER-CONDITIONAL-CONTRACT | 进行中 | Sol max审定已验setter的条件合同；未有结论。 |
 | R3-ACTIVE-MATERIAL-RELIQUARY-PARSER-SOURCE-SCOPE | 已完成 | Material/Reliquary两个独立parser单窗限定规划；一参typeRef及预算固定，不批准字段值或初始化。[范围](docs/CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) |
 | R3-ACTIVE-MATERIAL-RESOURCE-PARSER-SOURCE | 已完成 | RUN2完整7128B来源限定验收；原4096B cap失败与早期KeyError保留，不追认旧轮。[结果](docs/CLIENT_72_D02_ACTIVE_ITEM_PARSER_SOURCES_20261116.md) |
 | R3-ACTIVE-MATERIAL-PARSER-EXACT-EXTENT-SCOPE | 已完成 | 已确认7128B精确范围的独立新窗规格；原失败保留，未执行RUN2。[规格](docs/CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) |
 | R3-ACTIVE-MATERIAL-RESOURCE-PARSER-SOURCE-RUN2 | 已完成 | 7128B、1754指令/447引用的完整静态来源，fresh AOT及唯一pdata通过；不证明row/值/初始化。[结果](docs/CLIENT_72_D02_ACTIVE_ITEM_PARSER_SOURCES_20261116.md) |
 | R3-ACTIVE-RELIQUARY-RESOURCE-PARSER-SOURCE | 已完成 | 3347B、833指令/217引用的完整静态来源；两历史ctor入口pins未在本次单独重核，具体边界见专题。[结果](docs/CLIENT_72_D02_ACTIVE_ITEM_PARSER_SOURCES_20261116.md) |
-| R3-ACTIVE-RELIQUARY-MINIMUM-SEMANTICS | 进行中 | Sol max审定已验source最小语义；不预称结论或父body已验。 |
+| R3-ACTIVE-RELIQUARY-MINIMUM-SEMANTICS | 已完成 | 首分支前父CALL及RCX/RDX局部转交、+7c条件store限定验收；rank/set职责及183行值未知。[语义](docs/CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md) |
+| R3-ACTIVE-ITEM-BASE-PARSER-SOURCE | 已完成 | 准确共同父parser完整2018B静态来源；不证明自然调用或资源值。[来源](docs/CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md) |
+| R3-ACTIVE-ITEM-BASE-MINIMUM-SEMANTICS | 进行中 | Sol max统一审定共同父id/itemType；不重复取源，不预称结论。 |
 | R3-OLD121-DEPOT-CORE-FRAGMENT-SCOPE | 已完成 | 限定审定既有全121 Depot的id/skills/energy原值与来源可供纯host三键投影；不重跑Depot/phase6。[结果](docs/CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) |
 | R3-OLD121-DEPOT-CORE-FRAGMENT-PROJECTION | 已完成 | 121片段、363字段及726既有getter引用，484普通slot与121正energy保留；369不同正Skill引用仅key/span，不证明Skill值或当前采用。[结果](docs/CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) |
 | R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA | 阻塞 | 正引用缺367 id/element片段、energy绑定缺120；包括10068在内121个energy的costElemVal/specialEnergyMin/Max均未闭，不得以空Skill/None或假cost补齐。 |
@@ -557,6 +561,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-OLD121-SKILL-PARSER-SOURCE-WINDOW / R3-OLD121-SKILL-PARSER-SOURCE-WINDOW-RUN2 | 已完成 | RUN2完整8309B、1985指令/539引用限定来源；首轮包装失败保留，不证明初始化或传递A-free。 | [来源与分账](docs/CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) |
 | R3-ACTIVE-MATERIAL-PARSER-EXACT-EXTENT-SCOPE | 已完成 | 根据确认的7128B完整边界形成新窗规格；后继RUN2已验，不追认旧cap失败。 | [限定规格](docs/CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) |
 | R3-ACTIVE-MATERIAL-RESOURCE-PARSER-SOURCE / R3-ACTIVE-MATERIAL-RESOURCE-PARSER-SOURCE-RUN2 / R3-ACTIVE-RELIQUARY-RESOURCE-PARSER-SOURCE | 已完成 | 两个parser完整静态来源限定验收；值、初始化和自然调用未验。 | [原窗与分账](docs/CLIENT_72_D02_ACTIVE_ITEM_PARSER_SOURCES_20261116.md) |
+| R3-OLD121-SKILL-PARSER-MINIMUM-SEMANTICS、R3-ACTIVE-RELIQUARY-MINIMUM-SEMANTICS | 已完成 | 两字段条件覆盖与Reliquary入口/槽位局部条件来源；值、初态及rank/set未知。 | [限定语义](docs/CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md) |
+| R3-OLD121-SKILL-FLOAT-SETTER-SOURCE-WINDOW、R3-ACTIVE-ITEM-BASE-PARSER-SOURCE | 已完成 | 不同Float setter与共同父parser完整静态来源；直接冻结命中0不证明传递A-free。 | [原窗与分账](docs/CLIENT_72_D02_RESOURCE_SCALAR_AND_BASE_SOURCES_20261116.md) |
 | R3-PROUD-ENUM32419-CONSUMER-QUERY | 已完成 | 固定signature显参116唯一匹配及type32419声明限定验收，不证明业务或全客户端穷尽。 | [查询](docs/CLIENT_72_D02_PROUD_ENUM32419_CONSUMER_QUERY_20261115.md) |
 | R3-PROUD-PAIR-CONSUMER-QUERY-TRIAGE | 已完成 | 声明域有界判断及type54724文字勘误；ordinary业务caller及type-erased MethodInfo/callsite未知。 | [限定判断](docs/CLIENT_72_D02_PROUD_PAIR_CONSUMER_TRIAGE_20261115.md) |
 | R3-PROUD-PAIR-CONSUMER-QUERY | 已完成 | 65条指定receiver声明与固定signature全表6唯一显参匹配；非全客户端或业务穷尽。 | [有界查询](docs/CLIENT_72_D02_PROUD_PAIR_CONSUMER_QUERY_20261115.md) |
