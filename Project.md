@@ -6,7 +6,7 @@
 
 **用户已明确解除旧暂停，持续推进至D-02六项实机通过，或所有必要独立项各自有准确外部阻塞；当前D-02 / F-05 / D02-R6为0/6，R4/R5/R6未开始。** 旧号121 Avatar基础成长及critical七键片段、两个限定Java loader、121 Depot三键host投影已验；完整Avatar、Skill/energy、装备及同旧号实际Player恢复未闭。Float条件合同、共享Pair消费正例、启动修复及一次cold-cache采样直接复用，不再作为首发旧任务。
 
-当前以能解除真实资源加载或恢复依赖的最小出口为优先：[Skill/energy定向计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)及本地合同分析、固定候选公开检索正在执行，分别判断367个完整Skill新片段、120个energy正向绑定和121行energy三字段缺口。[后缀host pilot](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_PILOT_20261116.md)已闭合10019的element单字段Ice5；主线已接受既验logicalID=tableKey绑定，批量可形成canonical id/element片段，不再要求额外raw-id复解，当前先固定集合。Skill ctor普通边界失败不等安全拒绝，缺同固定PE准确边界时不重取或放宽；该单窗不作为已有独立element/ID来源的额外门。Weapon239中仅11101的1种27行有既验片段，其余238种1636行缺允许独立值来源；已确认A构造返回依赖冻结。Material/Relic缺literal、具名consumer或独立非零oracle时保留准确缺口；五线本地审阅尚未提供成熟执行包，其精确定向公开问题尚待检索，不能据此标为全部外部阻塞，不以新增盘点替代出值。
+当前以能解除真实资源加载或恢复依赖的最小出口为优先：[Skill/energy定向计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)对应本批公开检索已限定交付；367个本轮Skill id/element片段已实际闭合，当前执行121 Depot的正向Java绑定，121行energy三字段继续按必要合同推进。[批量结果](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md)已形成367本轮+2旧的canonical id/element片段；logicalID=tableKey复用已验绑定，不要求额外raw-id复解。Skill ctor普通边界失败不等安全拒绝，缺同固定PE准确边界时不重取或放宽；该单窗不作为已有独立element/ID来源的额外门。Weapon239中仅11101的1种27行有既验片段，其余238种1636行缺允许独立值来源；已确认A构造返回依赖冻结。Material/Relic缺literal、具名consumer或独立非零oracle时保留准确缺口；五线定向公开检索已补有限来源，目标值/consumer及未覆盖范围仍需新输入，不能据此标为全部外部阻塞，不以新增盘点替代出值。
 
 [UP-72-20261114阶段调研](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)仍为进行中；UP-72-N1/N2只按当前具体缺口消费固定候选及现有冲突，不整包替换。UP-72-N3长尾检索在D-02排期后移，原继续位置保留，不关闭原调研。A/B、preview与准确依赖仍冻结；A已找回平台错误及opaque事件关联，原请求明文恢复验收已撤回，可读正文和技术输入仍缺，见[纠错](docs/CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)。当前没有需要用户启动的现场；重复同SDK页采样无新输入依据时不排期。
 
@@ -52,7 +52,7 @@
 | 有界执行子代理 | GPT-6.1 Terra（`gpt-6.1-terra`，档位按任务指定） | 规格完整的清单/数据对照、受控转换、driver、测试准备、机械修改和文档整理；未知语义返回主线，不自行猜测 |
 | 最后升级，非日常排班 | GPT-6 Astra max（`gpt-6-astra` / `max`） | 仅主线和Sol max实质分析仍不能解决、且影响D-02关键路径时使用；须先说明已排除假设、升级理由、准确问题和返回条件。缺样本、缺现场或未读既有证据不构成升级理由 |
 
-原Scene reader/Proud setter首轮及后继的已验范围见第6节和[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)，不重发旧包。本轮先由Sol max审Skill/energy最小合同并形成中文检索计划，Terra max按计划定向查公开仓库、README及分支；Float/Pair、启动修复和cold结果直接复用。Terra xhigh仅承接成熟规格、测试和有界实现，未形成规格时不为填槽造工作。共享Git、Proto生成、构建、数据库及运行实例由本轮唯一集成执行者串行操作；当前R1/R2/R3未齐，不部署。主线负责规划和验收；用户另行允许的现场接管须明确交接，禁止computer-use继续有效。
+原Scene reader/Proud setter首轮及后继的已验范围见第6节和[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)，不重发旧包。本轮Skill/energy计划、限定公开检索及id/element批量已完成；Sol max继续必要成本合同，唯一集成者执行限定Depot真实Java；Float/Pair、启动修复和cold结果直接复用。Terra xhigh仅承接成熟规格、测试和有界实现，未形成规格时不为填槽造工作。共享Git、Proto生成、构建、数据库及运行实例由本轮唯一集成执行者串行操作；当前R1/R2/R3未齐，不部署。主线负责规划和验收；用户另行允许的现场接管须明确交接，禁止computer-use继续有效。
 
 显式传入工具支持的模型与档位；模型不可用应如实返回主线调整，不能静默升级Astra或冒称已使用指定模型。子代理不得自行扩大派遣和修改范围。
 
@@ -63,7 +63,7 @@
 | 批次 | 既有任务 / 下一动作 | 并行安排 | 退出条件与推荐模型 |
 | --- | --- | --- | --- |
 | 0 恢复与缺口对齐 / D02-RESUME-INTEGRATION-20261116 | 已核当前HEAD、差异归属、子模块、脱敏配置、进程端口及11个既验产物hash；复用121 Avatar七键/loader、Depot三键、Float/Pair及启动修复/cold采样 | 主线管理验收，唯一集成执行者维护共享状态并等待成熟最小规格；不重发旧首窗或启动超时任务 | 接手核对与当前状态纠正子出口已完成，集成工作继续；未测试/构建/部署/启动客户端，其他研究结果未因本项晋级。[活动检查点](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md) |
-| 1 选择最小资源出值出口 / D02-SKILL-ENERGY-SEARCH-20261116 | 优先审367 Skill的id/element及121 energy必需字段的允许来源、typed/reader条件和独立oracle；本地分析及按中文计划定向公开检索正在执行。已有parser/scalar/371长度结果复用；ctor边界缺失时该单窗继续阻塞 | Sol max判断一个明确字段包能否独立闭合，Terra max按计划检索；Sol xhigh/Terra只在输入和验收成熟后实现 | 交可实施的最小出值/loader规格，或准确缺输入；不猜ctor长度、不按RET补边界，不用None/空Skill/假cost。没有新来源就不重复旧清查 |
+| 1 选择最小资源出值出口 / D02-SKILL-ENERGY-SEARCH-20261116 | 367个Skill id/element批量已闭，正向Depot loader已进入本轮实际验证；121 energy成本/特殊池继续审允许来源与独立oracle。本批中文计划及定向公开检索已限定交付。已有parser/scalar/371长度结果复用；ctor边界缺失时该单窗继续阻塞 | Sol max判断一个明确字段包能否独立闭合，Terra max按计划检索；Sol xhigh/Terra只在输入和验收成熟后实现 | 交可实施的最小出值/loader规格，或准确缺输入；不猜ctor长度、不按RET补边界，不用None/空Skill/假cost。没有新来源就不重复旧清查 |
 | 按需并行 / 固定上游候选 | UP-72-N1/N2仅核能解除当前调用点、字段或资源缺口的独有增量，先与已有成果对照；已有LoginReq冲突和303相同子行直接引用 | Sol max定具体问题，Terra按冻结源码做有界对照；不重复广泛搜索或深审全部Fork | 候选名称/版本及同形不当目标真值；无实际增量则结束该比较。UP-72-N3继续位置保留但不阻塞D-02 |
 | 2 小合同实现→同源批量覆盖 | 一个实际字段/引用合同成熟后，先验证真实值与consumer，再参数化覆盖所选旧号集合；随后补121 Depot正向Java及energy绑定 | Sol xhigh执行集成，Terra并行不同成熟字段/资源包；JVM/DB串行 | 367 Skill/120正向energy绑定等依赖未齐则不跑伪正向loader；复用七键/phase6/Talent，不为简单一次性工作额外派独立审核或写测试 |
 | 3 其他必需资源与独立Scene/Proud | Weapon新值已有A依赖时冻结该需求；Material分类、Relic rank/set只有具体来源与非零oracle齐才派；Proud仅接准确目标字段桥，Scene仅有新允许独立输入时前移 | 按一个具体依赖派Sol max；已清楚实现交Sol/Terra，不同时展开所有族全部字段 | 不以metadata候选、raw头、长度或ID命中代资源值。Scene M1–M4/World slot114及准确A/B边保留；不扩全codec/UI/全资源 |
@@ -72,7 +72,7 @@
 | 5 R4汇合 | 三层、最终收发/嵌套/顺序/资源及受影响回归/构建 | 主线核依赖，集成执行者统一操作 | 不降低ready/required，不把无关玩法列前置 |
 | 6 R5→R6 | Windows portable隔离部署→第5节六项实机 | 单一执行者串行部署，用户配合实际验收 | 核运行产物/环境，六项全部通过才完成D-02/F-05/D02-R6 |
 
-批次是依赖顺序，不是全员屏障。以解除真实值、加载或恢复缺口为任务出口；普通未处理来源与准确外部阻塞分别记录。缺资料先复用已有允许来源，新增大任务按AGENTS先写中文检索计划再定向检索；不为重复盘点、全域索引或额外确认增加流程。本轮恢复核对已执行，Skill/energy本地分析及定向公开检索正在执行；本机没有成熟实现包不等于公开来源已查尽，待结果回传后发布最小实现，不提前结束D-02。
+批次是依赖顺序，不是全员屏障。以解除真实值、加载或恢复缺口为任务出口；普通未处理来源与准确外部阻塞分别记录。缺资料先复用已有允许来源，新增大任务按AGENTS先写中文检索计划再定向检索；不为重复盘点、全域索引或额外确认增加流程。本轮恢复核对已执行，Skill id/element批量和本批限定公开检索已交付，Depot真实Java及必要成本合同继续；本机没有成熟实现包不等于公开来源已查尽，待结果回传后发布最小实现，不提前结束D-02。
 
 ### 3.3 当前批次派工与文件归属
 
@@ -131,6 +131,9 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 
 | 工作包 | 状态 | 当前范围和下一判断 |
 | --- | --- | --- |
+| R3-SKILL-ELEMENT-SUFFIX-HOST-BATCH-SCOPE-20261116 | 已完成 | 固定369需求−正式2旧=367本轮，present120/absent247、121energy对齐；10019复用后119word/476B、0新mask及≤1MiB预算。11101不冒称第三旧准入；canonical ID复用既验key。[范围/结果](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md) |
+| R3-SKILL-ELEMENT-SUFFIX-HOST-BATCH-20261116 | 已完成 | 唯一纯host实际输出367本轮+2旧=369个同源id/element片段；476B准确，absent明确原码逻辑0，名字/数值、独立位/算术/逆序及end通过。仅关闭该片段缺口，不代完整Skill或成本/保存。[结果](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md) |
+| R3-OLD121-SKILL-DEPOT-RESOURCELOAD-JAVA-20261116 | 进行中 | 批量片段与原121 Depot输入已齐，唯一集成者获准执行新单项真实ResourceLoader验证；测试准备已完成，JVM尚待执行。仅369Skill→121Depot引用/energy同对象与element及原序零重复，不建Player/DB或读取假cost。 |
 | D02-SKILL-ENERGY-SEARCH-20261116 / PUBLIC-SOURCE-REVIEW | 已完成 | 本批固定仓库/README/入选分支、候选presence及五线定向检索限定验收。367候选120显式元素/247缺席、121 energy成本119显式/2缺席、两角色旧特殊池键及Java差异分开；同数据不作独立oracle，宽查询/Fork等未覆盖保留。该子出口不关R3或全部公开研究。[报告](docs/CLIENT_72_D02_TARGETED_REUSE_SEARCH_20261116.md) |
 | R3-SKILL-LOGICAL-ID-SOURCE-BINDING-20261116 | 已完成 | 同row +68→原UInt32 getter→dictionary key、同entry key/row及同row span链已验，logicalID=tableKey可复用；撤回必须raw-id复解的额外前置，准备reader窗已取消未执行。不代element/成本或完整Skill。[绑定与更正](docs/CLIENT_72_D02_SKILL_SUFFIX_SOURCE_CONTRACT_20261116.md#logicalid-与-tablekey-的既验绑定) |
 | R3-SKILL-ELEMENT-SUFFIX-SOURCE-CONTRACT-20261116 | 已完成 | 固定113条后缀、原mask bit25及尾54/53/11、既验row.end和双非零控制形成独立element合同；不解id/成本/完整parser。[来源](docs/CLIENT_72_D02_SKILL_SUFFIX_SOURCE_CONTRACT_20261116.md) |
@@ -235,7 +238,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-ACTIVE-MATERIAL-TYPE62334-DECLARATION | 已完成 | 固定五字段声明含FOOD_QUALITY符号、常量数值未知；撤回+78作为MaterialType接线依据，后继+c8分类职责另有限验收。[结果](docs/CLIENT_72_D02_MATERIAL_TYPE_DECLARATION_20261116.md) |
 | R3-OLD121-DEPOT-CORE-FRAGMENT-SCOPE | 已完成 | 限定审定既有全121 Depot的id/skills/energy原值与来源可供纯host三键投影；不重跑Depot/phase6。[结果](docs/CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) |
 | R3-OLD121-DEPOT-CORE-FRAGMENT-PROJECTION | 已完成 | 121片段、363字段及726既有getter引用，484普通slot与121正energy保留；369不同正Skill引用仅key/span，不证明Skill值或当前采用。[结果](docs/CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) |
-| R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA | 阻塞 | 正引用缺367 id/element片段、energy绑定缺120；包括10068在内121个energy的costElemVal/specialEnergyMin/Max均未闭，不得以空Skill/None或假cost补齐。 |
+| R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA | 进行中 | 367本轮+2旧Skill id/element片段已实际闭合，限定正向loader输入齐，归本轮ResourceLoad-Java单项执行；120新energy绑定待真实Java。121个energy的costElemVal/specialEnergyMin/Max仍未闭，但不加作只验Depot引用/element的额外门，不得补假cost或称完整Player通过。 |
 | A-PROMPT-PLAINTEXT-RECOVERY | 阻塞 | 缺经允许且可核对的执行请求正文；此前明文恢复验收撤回，原事件与不透明字面串关联仍保留。[纠错](docs/CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md) |
 | R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS | 已完成 | 本体双遍历、同N指针store、中性native+2c↔41105.field203368/+70表示桥及准确缺口限定验收；未消费26072三字段。上游旧listing的共用allocator调用属于准确A冻结边，停在CALL；业务桥、实际M/数组/String、row/current/epoch及ready未知。见[成员语义](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_SEMANTICS_20261115.md)。 |
 | F-03d3s2-SCENE-ALLOWED-SOURCE-GAP | 已完成 | 既有允许来源有界差距审阅已验；4 pin、三writer、238B工厂及6锚点独核，316B getter直接复用未重验。M1–M4实际receiver/派发与返回/初值/reset关系缺新增允许的固定独立来源，尚无成熟sender；不泛封Scene。见[关系矩阵](docs/CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)。 |

@@ -16,7 +16,7 @@
 
 | 必要出口 | 准确缺输入 | 已有覆盖 / 本轮动作 |
 | --- | --- | --- |
-| Skill/energy → Depot实际加载与旧号属性恢复 | 367批量id/element片段、120正向energy绑定、包括10068的121行costElemVal/specialEnergyMin/Max；剩余必要字段仍须允许来源 | [后缀host pilot](CLIENT_72_D02_SKILL_ELEMENT_HOST_PILOT_20261116.md)已验10019 element=Ice5；[logicalID=tableKey绑定](CLIENT_72_D02_SKILL_SUFFIX_SOURCE_CONTRACT_20261116.md#logicalid-与-tablekey-的既验绑定)已验，下一步定批量集合并可合canonical片段，不再等raw-id或reader窗。parser/scalar、371 flags/长度和旧片段复用；Sol max审必要后继，Terra max定向检索。ctor准确边界单窗仍缺，不重取/放宽或加作本独立出口的门 |
+| Skill/energy → Depot实际加载与旧号属性恢复 | 120新正向energy绑定正在实际Java验证；包括10068的121行costElemVal/specialEnergyMin/Max仍缺允许target合同/值/oracle | [批量结果](CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md)已形成367本轮+2旧id/element片段，476B新语义；不等raw-id或reader窗。真实369Skill→121Depot ResourceLoader已授权，JVM待执行，不建Player或假cost。本批[公开检索](CLIENT_72_D02_TARGETED_REUSE_SEARCH_20261116.md)已限定交付；必要成本后继继续，ctor单窗仍不重取/放宽或加作本独立出口的门 |
 | Weapon/Material/Relic必要行 | Weapon其他238种/1636行独立值；Material literal数值/row/consumer；Relic rank/set具名来源或同源输入+非零oracle排除标签互换 | 11101既验片段保留；本地审阅未给成熟包。具体公开问题尚待主线分片，未证明来源不存在；已知Weapon A构造返回依赖冻结 |
 | Proud实际资源/当前采用 | 目标字段到共享Pair的准确桥、实际row/M、非空cache/key、同epoch及独立值 | 148B共享消费正例、Float条件合同已验；不重复SDK页采样，不创建Default/cache；普通新来源尚未查尽 |
 | Scene/Team/Entity必要合同 | M1 producer→同次+5d60；M2同receiver +f0/返回R；M3首次消费前R+18及writer顺序；M4同R release/reacquire/reset | 238B工厂、writer/getter来源复用；本地暂无新输入。World slot114及getter/Recreate准确A返回依赖冻结，普通M1–M4来源问题保留 |

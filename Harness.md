@@ -4,6 +4,8 @@
 
 2026-11-16 `D02-SKILL-ENERGY-SEARCH-20261116 / PUBLIC-SOURCE-REVIEW`完成[本批定向公开检索](docs/CLIENT_72_D02_TARGETED_REUSE_SEARCH_20261116.md)限定验收：固定候选、README/入选分支/讨论、367与121/120集合presence、旧特殊能量键、具名Java差异及五线来源线索已记录；错误首版、重复下载、宽查询/Fork/代码搜索等未覆盖保留，不证明目标值/独立oracle或搜索穷尽。同期本地element/id来源另验，未把候选当其oracle；无上游执行/JVM/部署，R3与六项仍未完成。
 
+2026-11-16 `R3-SKILL-ELEMENT-SUFFIX-HOST-BATCH-SCOPE-20261116`及`R3-SKILL-ELEMENT-SUFFIX-HOST-BATCH-20261116`完成[367本轮+2旧的真实id/element片段](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md)：120 present/247源缺省逻辑0，10019复用，119新word/476B，输出394668B。11101旧whole候选不冒称第三旧正式准入，121energy集合对齐；canonical ID复用同row key。无native/JVM/DB/client或成本字段。唯一集成者下一项真实ResourceLoader→121Depot正向绑定已授权，尚待实际JVM；完整Skill/121成本特殊池/Player恢复及0/6不变。
+
 2026-11-16 `R3-SKILL-ELEMENT-SUFFIX-SOURCE-CONTRACT-20261116`与`R3-SKILL-ELEMENT-SUFFIX-HOST-PILOT-20261116`完成[113条来源合同](docs/CLIENT_72_D02_SKILL_SUFFIX_SOURCE_CONTRACT_20261116.md)及[唯一实际host验证](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_PILOT_20261116.md)：固定三span、原mask尾公式、10068 Wind7/11364 Electric4双非零控制，得唯一新10019 element=Ice5。新语义20B，位索引/逐字节算术/逆序/end通过，输出18697B；准备期schema KeyError另记，不当执行失败或成功。pilot只产element；随后`R3-SKILL-LOGICAL-ID-SOURCE-BINDING-20261116`复用同row原getter→dict key→source链，接受canonical id=tableKey，撤回raw-id复解额外前置、取消未执行reader窗。批量可据此合并id/element；成本/特殊池/完整Skill/Java绑定另验，无native/JVM/运行变更或部署。
 
 2026-11-16 历史方向微调：复用已验Float/Pair、启动修复与cold结果及121角色七键片段，首发改为Skill/energy及必要Item真实值与loader依赖的小合同；上游固定候选仅定向消费，长尾检索后移。当时仅更新文档、研发仍暂停；本轮已恢复，当前路线见[Project](Project.md)。
