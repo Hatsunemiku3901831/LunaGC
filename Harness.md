@@ -1,3 +1,5 @@
+2026-11-16 当前路线补校：Project第4节遗漏的旧“本次研发仍暂停”已纠正为用户已恢复执行；3.5按当前分工明确指定唯一集成者串行管理Git/构建/实例写入。当前表内旧pilot/source时点的367/120、121成本/START未验语句已链接到后继实际成果，保留原scope；MAX cap/完整Skill/Player与六项仍未闭。无新执行或历史测试重跑。
+
 2026-11-16 `R3-MATERIAL-ROW-REUSE-SEARCH-20261116`完成[Material row语法本批公开增量](docs/CLIENT_72_D02_MATERIAL_ROW_REUSE_SEARCH_20261116.md)，报告SHA`78af0a1bb44f8151dba00f76e52331009b08e9c5b757440d8a04c3a2a18a35ee`。固定5.2 table/ExistFlag、2.2 Material KSY及3.4 README/分支只作方法参考；未获同target header/首row/Stringcursor合同。两排序/实际页/README/分支/blob和404/未覆盖分别留证，无上游执行、运行修改或客户端验收；最小target源合同另项继续。
 
 2026-11-16 `R3-OLD121-SKILL-ENERGY-RESOURCELOAD-JAVA-20261116`完成[真实cost/START ResourceLoader](docs/CLIENT_72_D02_OLD121_SKILL_ENERGY_JAVA_20261116.md)：19.516s/exit0、JUnit1/F0/E0/S0，121cost exactint/START source Floatbits+JSON Floatbits、121energy同Skill对象、484slot和map/loadedAll恢复。completion SHA`79d3ee4644b95bc78176f7dcc95581a1659de563618137027e8a20610a70716f`，源码/输入保持，DB/服务初始化0及退出进程端口0；无Player/DB/client/部署。原测试四props与旧模式保留、本次仅新模式实际运行；capMin未知，不解释其默认值。
