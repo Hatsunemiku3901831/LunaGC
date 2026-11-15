@@ -1,4 +1,6 @@
-2026-11-16 方向微调：复用已验Float/Pair、启动修复与cold结果及121角色七键片段，首发改为Skill/energy及必要Item真实值与loader依赖的小合同；上游固定候选仅定向消费，长尾检索后移。仅更新文档，研发仍暂停，README不变；路线见[Project](Project.md)，新交接见[HANDOFF2](HANDOFF2.md)。
+2026-11-16 当前恢复执行：用户已明确解除旧暂停，D-02继续推进，六项仍0/6、R4/R5/R6未开始。`D02-RESUME-INTEGRATION-20261116`已完成接手只读盘点、11个既验产物hash核对和当前状态纠正子出口，集成继续；未重跑测试或启动客户端/数据库/服务。[活动检查点与必要项矩阵](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)汇总本轮证据、差异保护和准确缺口；[Skill/energy中文计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)对应Sol max本地分析与Terra max定向公开检索。独立本地审阅只说明Material/Relic/Proud/Scene/SDK暂无成熟本地执行包，其准确公开问题尚未查尽，不构成全部外部阻塞。A/B、preview、准确依赖及A明文误验撤回保持。以下日期记录保留各时点事实，不覆盖本轮授权。
+
+2026-11-16 历史方向微调：复用已验Float/Pair、启动修复与cold结果及121角色七键片段，首发改为Skill/energy及必要Item真实值与loader依赖的小合同；上游固定候选仅定向消费，长尾检索后移。当时仅更新文档、研发仍暂停；本轮已恢复，当前路线见[Project](Project.md)。
 
 2026-11-16 用户要求现有在途工作验收收尾后暂停，不开启新业务任务；此停止不等于所有独立工作技术上阻塞。A/B、preview、准确依赖与opaque纠错保持，D-02 / F-05 / D02-R6仍0/6。
 

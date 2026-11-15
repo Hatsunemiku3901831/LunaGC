@@ -1,12 +1,12 @@
 # 国服 7.2 任务规划与验收
 
-任务证据基线：2026-11-16；本次方向微调基线 HEAD `58ab621`。近期限定成果、停止点及纠错见[交接](HANDOFF2.md)与[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。仅面向国服 7.2，Windows portable。
+任务证据基线：2026-11-16；本轮恢复接手 HEAD `420002e`。近期限定成果、停止点及纠错见[活动检查点](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)、[交接](HANDOFF2.md)与[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。仅面向国服 7.2，Windows portable。
 
 ## 当前阶段
 
-**本次只修正排期，研发与联调仍按用户要求暂停；D-02 / F-05 / D02-R6为0/6，R4/R5/R6未开始。** 旧号121 Avatar基础成长及critical七键片段、两个限定Java loader、121 Depot三键host投影已验；完整Avatar、Skill/energy、装备及同旧号实际Player恢复未闭。Float条件合同、共享Pair消费正例、启动修复及一次cold-cache采样直接复用，不再作为首发旧任务。
+**用户已明确解除旧暂停，持续推进至D-02六项实机通过，或所有必要独立项各自有准确外部阻塞；当前D-02 / F-05 / D02-R6为0/6，R4/R5/R6未开始。** 旧号121 Avatar基础成长及critical七键片段、两个限定Java loader、121 Depot三键host投影已验；完整Avatar、Skill/energy、装备及同旧号实际Player恢复未闭。Float条件合同、共享Pair消费正例、启动修复及一次cold-cache采样直接复用，不再作为首发旧任务。
 
-恢复后以能解除真实资源加载或恢复依赖的最小出口为优先：367个Skill新值与121个energy三字段缺口先按来源判断；Skill ctor普通边界失败不等安全拒绝，缺同固定PE准确边界时不重取或放宽。Weapon239中仅11101的1种27行有既验片段，其余238种1636行缺允许独立值来源；已确认A构造返回依赖冻结。Material/Relic缺literal、具名consumer或独立非零oracle时先保留准确缺口，不泛封整族，也不以新增盘点替代出值。
+当前以能解除真实资源加载或恢复依赖的最小出口为优先：[Skill/energy定向计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)及本地合同分析、固定候选公开检索正在执行，分别判断367个Skill新值、120个energy正向绑定和121行energy三字段缺口。Skill ctor普通边界失败不等安全拒绝，缺同固定PE准确边界时不重取或放宽。Weapon239中仅11101的1种27行有既验片段，其余238种1636行缺允许独立值来源；已确认A构造返回依赖冻结。Material/Relic缺literal、具名consumer或独立非零oracle时保留准确缺口；五线本地审阅尚未提供成熟执行包，其精确定向公开问题尚待检索，不能据此标为全部外部阻塞，不以新增盘点替代出值。
 
 [UP-72-20261114阶段调研](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)仍为进行中；UP-72-N1/N2只按当前具体缺口消费固定候选及现有冲突，不整包替换。UP-72-N3长尾检索在D-02排期后移，原继续位置保留，不关闭原调研。A/B、preview与准确依赖仍冻结；A已找回平台错误及opaque事件关联，原请求明文恢复验收已撤回，可读正文和技术输入仍缺，见[纠错](docs/CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)。当前没有需要用户启动的现场；重复同SDK页采样无新输入依据时不排期。
 
@@ -52,7 +52,7 @@
 | 有界执行子代理 | GPT-6.1 Terra（`gpt-6.1-terra`，档位按任务指定） | 规格完整的清单/数据对照、受控转换、driver、测试准备、机械修改和文档整理；未知语义返回主线，不自行猜测 |
 | 最后升级，非日常排班 | GPT-6 Astra max（`gpt-6-astra` / `max`） | 仅主线和Sol max实质分析仍不能解决、且影响D-02关键路径时使用；须先说明已排除假设、升级理由、准确问题和返回条件。缺样本、缺现场或未读既有证据不构成升级理由 |
 
-原Scene reader/Proud setter首轮及后继的已验范围见第6节和[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)，不重发旧包。恢复后的语义首发是Proud Float及三字段准确消费来源，由Sol max处理；启动回执超时归因、薄封装修复及新的采样身份绑定接线已限定离线验收。Terra xhigh仅承接成熟规格、测试和有界实现，未形成规格时不为填槽造工作。共享Git、构建和运行由当轮指定的唯一集成执行者串行操作，不复用历史代理名或运行权。主线负责规划和验收；用户另行允许的现场接管须明确交接，禁止computer-use继续有效。
+原Scene reader/Proud setter首轮及后继的已验范围见第6节和[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)，不重发旧包。本轮先由Sol max审Skill/energy最小合同并形成中文检索计划，Terra max按计划定向查公开仓库、README及分支；Float/Pair、启动修复和cold结果直接复用。Terra xhigh仅承接成熟规格、测试和有界实现，未形成规格时不为填槽造工作。共享Git、Proto生成、构建、数据库及运行实例由本轮唯一集成执行者串行操作；当前R1/R2/R3未齐，不部署。主线负责规划和验收；用户另行允许的现场接管须明确交接，禁止computer-use继续有效。
 
 显式传入工具支持的模型与档位；模型不可用应如实返回主线调整，不能静默升级Astra或冒称已使用指定模型。子代理不得自行扩大派遣和修改范围。
 
@@ -62,8 +62,8 @@
 
 | 批次 | 既有任务 / 下一动作 | 并行安排 | 退出条件与推荐模型 |
 | --- | --- | --- | --- |
-| 0 恢复与缺口对齐 | 新恢复指令后核当前差异和来源；复用121 Avatar七键/loader、Depot三键、Float/Pair及启动修复/cold采样 | 主线管理验收，唯一执行者盘点；不重发旧首窗或启动超时任务 | 区分已验片段、缺真实值、普通来源边界失败与A/B拒绝依赖；两份未跟踪E8草稿保持未验 |
-| 1 选择最小资源出值出口 | 优先审367 Skill的id/element及121 energy必需字段的允许来源、typed/reader条件和独立oracle。已有parser/scalar/371长度结果复用；ctor边界缺失时该单窗继续阻塞 | Sol max判断一个明确字段包能否独立闭合；Sol xhigh/Terra只在输入和验收成熟后实现 | 交可实施的最小出值/loader规格，或准确缺输入；不猜ctor长度、不按RET补边界，不用None/空Skill/假cost。没有新来源就不重复旧清查 |
+| 0 恢复与缺口对齐 / D02-RESUME-INTEGRATION-20261116 | 已核当前HEAD、差异归属、子模块、脱敏配置、进程端口及11个既验产物hash；复用121 Avatar七键/loader、Depot三键、Float/Pair及启动修复/cold采样 | 主线管理验收，唯一集成执行者维护共享状态并等待成熟最小规格；不重发旧首窗或启动超时任务 | 接手核对与当前状态纠正子出口已完成，集成工作继续；未测试/构建/部署/启动客户端，其他研究结果未因本项晋级。[活动检查点](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md) |
+| 1 选择最小资源出值出口 / D02-SKILL-ENERGY-SEARCH-20261116 | 优先审367 Skill的id/element及121 energy必需字段的允许来源、typed/reader条件和独立oracle；本地分析及按中文计划定向公开检索正在执行。已有parser/scalar/371长度结果复用；ctor边界缺失时该单窗继续阻塞 | Sol max判断一个明确字段包能否独立闭合，Terra max按计划检索；Sol xhigh/Terra只在输入和验收成熟后实现 | 交可实施的最小出值/loader规格，或准确缺输入；不猜ctor长度、不按RET补边界，不用None/空Skill/假cost。没有新来源就不重复旧清查 |
 | 按需并行 / 固定上游候选 | UP-72-N1/N2仅核能解除当前调用点、字段或资源缺口的独有增量，先与已有成果对照；已有LoginReq冲突和303相同子行直接引用 | Sol max定具体问题，Terra按冻结源码做有界对照；不重复广泛搜索或深审全部Fork | 候选名称/版本及同形不当目标真值；无实际增量则结束该比较。UP-72-N3继续位置保留但不阻塞D-02 |
 | 2 小合同实现→同源批量覆盖 | 一个实际字段/引用合同成熟后，先验证真实值与consumer，再参数化覆盖所选旧号集合；随后补121 Depot正向Java及energy绑定 | Sol xhigh执行集成，Terra并行不同成熟字段/资源包；JVM/DB串行 | 367 Skill/120正向energy绑定等依赖未齐则不跑伪正向loader；复用七键/phase6/Talent，不为简单一次性工作额外派独立审核或写测试 |
 | 3 其他必需资源与独立Scene/Proud | Weapon新值已有A依赖时冻结该需求；Material分类、Relic rank/set只有具体来源与非零oracle齐才派；Proud仅接准确目标字段桥，Scene仅有新允许独立输入时前移 | 按一个具体依赖派Sol max；已清楚实现交Sol/Terra，不同时展开所有族全部字段 | 不以metadata候选、raw头、长度或ID命中代资源值。Scene M1–M4/World slot114及准确A/B边保留；不扩全codec/UI/全资源 |
@@ -72,12 +72,15 @@
 | 5 R4汇合 | 三层、最终收发/嵌套/顺序/资源及受影响回归/构建 | 主线核依赖，集成执行者统一操作 | 不降低ready/required，不把无关玩法列前置 |
 | 6 R5→R6 | Windows portable隔离部署→第5节六项实机 | 单一执行者串行部署，用户配合实际验收 | 核运行产物/环境，六项全部通过才完成D-02/F-05/D02-R6 |
 
-批次是依赖顺序，不是全员屏障。以解除真实值、加载或恢复缺口为任务出口；普通未处理来源与准确外部阻塞分别记录。缺资料先复用已有允许来源，新增大任务按AGENTS先写中文检索计划再定向检索；不为重复盘点、全域索引或额外确认增加流程。本次只更新文档，未启动表中动作。
+批次是依赖顺序，不是全员屏障。以解除真实值、加载或恢复缺口为任务出口；普通未处理来源与准确外部阻塞分别记录。缺资料先复用已有允许来源，新增大任务按AGENTS先写中文检索计划再定向检索；不为重复盘点、全域索引或额外确认增加流程。本轮恢复核对已执行，Skill/energy本地分析及定向公开检索正在执行；本机没有成熟实现包不等于公开来源已查尽，待结果回传后发布最小实现，不提前结束D-02。
 
 ### 3.3 当前批次派工与文件归属
 
 | 分支 / 既有任务 | 本批具体动作及前置 | 产物与验收出口 | 责任文件与模型 |
 | --- | --- | --- | --- |
+| D02-RESUME-INTEGRATION-20261116 | 接手只读核对及当前状态纠正子出口已完成；等待成熟最小实现规格，集成继续 | 11个既验产物hash及脱敏preflight可定位；不重跑旧验收、不部署、不收他人差异 | Sol xhigh唯一集成者：Project/Harness/HANDOFF/HANDOFF2及本轮集成状态文档；独占Git/生成/构建/DB/运行写入 |
+| D02-SKILL-ENERGY-SEARCH-20261116 | Sol max中文计划已成；本地合同分析、Terra max公开定向检索正在执行 | 分开交367新Skill、120energy绑定及121三字段的允许独立来源/冲突或最小成熟规格；局部结论不升级父项 | Sol max：Skill/energy计划及本地语义；Terra max：按计划新增检索结果；均不写共享索引/构建/运行 |
+| D02-INDEPENDENT-INPUT-AUDIT-20261116 | 已完成既有本地Material/Relic/Proud/Scene/SDK五线有界审阅与10个hash核对，原始结论只读复用 | 暂无成熟本地包；精确公开问题尚未查尽，不写成全部外部阻塞 | Terra xhigh：忽略目录审阅；正式状态摘要由集成者收录[活动检查点](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md) |
 | A：F-03d3f4d2；必要 String 共同合同 | 同 epoch GC/Default 输入、人工双路径、stock 条件自有原 helper 已验，只读复用 | A-SECOND-RETURN-CONTRACT及依赖保持拒绝阻塞；其他独立任务必须先通过移除拒绝动作/产物后的独立性判断 | 不派被拒项，不运行草稿 |
 | B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 已验八点、锁内 map、stock v2、PostRequest 和共用服务入口可只读复用 | 组合 loader 源、失败证据和未提交差异保留；自然请求采用、信任、认证与会话交换未闭 | 留待用户使用 [Daybreak](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md) |
 | C：E-01/E-01c/E-01d1；R3-OLD-SAVE-DEPENDENCIES | 条件codec、当前采用双源、QueryWrapper/NativeWrapper借用合同与FindEntry源已验；31A三字段布局和31B 166B Float源已验，旧Talent/121Depot/phase6复用 | Float正常路径条件合同及三字段消费来源缺口已限定验收；实际M/Float/三alias/row/current仍未知。cache1仅启动超时且sample为0，不能当cold结果；旧run2热Equals链已按cold结束 | Sol max语义，Sol xhigh负责启动协调与集成，Terra接明确包；不得运行A/B草稿，不补空Proud行 |
