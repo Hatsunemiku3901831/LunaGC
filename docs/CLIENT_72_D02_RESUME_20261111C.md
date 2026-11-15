@@ -9,7 +9,8 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 | 任务 | 状态与证据 | 边界 |
 | --- | --- | --- |
 | `R3-PROUD-CACHE1-LAUNCH-TIMEOUT` | 已完成；原同步RunAs/elevation交接未有可观测返回，[离线归因与薄封装](CLIENT_72_D02_CACHE1_LAUNCH_TIMEOUT_20261115.md) SHA-256 `23b48b9cc8ca7700e9459d809bc1fce649c615c63593c90e08266d3f00d9761f`；16合同检查及6自有stub通过，原90秒期限未后移。 | 操作系统原因、UAC表现及点击时间未知；真实RunAs/客户端启动和cache采样未验。 |
-| `R3-PROUD-CACHE-NEW-LIVE-PLAN/IDENTITY-BINDING` | 进行中；新私有driver拟用同次原11 API身份检查先绑定本轮launch再传sample，维持79 API/52 RPM、298B限额，总协调90秒与driver 30秒取较早者。 | 自有stub实现及验收尚未完成，不改原sampler、不增加身份预读；尚无新实时ready、现场未执行；不触getter/cache/Default/拒绝依赖。 |
+| `R3-PROUD-CACHE-NEW-LIVE-PLAN/IDENTITY-BINDING` | 已完成；新包接线及离线验收：作者7 driver+5协调，独立10绑定/期限/driver.main和5自有协调stub，3 PS parse无错，33源pin及原9件匹配。[摘要与复现入口](CLIENT_72_D02_PROUD_CACHE_IDENTITY_BINDING_20261115.md)。 | 原11 identity+68 sample API、52 RPM/298B上限不变，90秒与driver 30秒取较早；真实RunAs/目标/采样未验，实际row/current/epoch未知。 |
+| `R3-PROUD-FLOAT-DIRECT-E8-INDEX` | 进行中；仅固定PE raw E8候选及pdata/metadata aliases，排除已验166B/8768B。 | 不取caller body/getter、不执行目标或进入stage2；结果待验。 |
 | `F-03d3s2-SCENE-ALLOWED-SOURCE-GAP` | 已完成；[既有来源关系矩阵](CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)，专题 SHA-256 `c5428cf602b2e7b63400a440c447082857dcb532998db567eff857506f9f5bd6`；独核4 pin、三writer、238B工厂与6锚点，316B来源未重验。集成回执 `local/migration72/d02-resume-20261115/launch-timeout/gap-integration1/completion.private.json` SHA-256 `d8720288120fc2360a6433fe173d133978b5546be6fb821d3118f5a4ea8b343f`。 | M1–M4的实际receiver、派发与返回、初值及reset关系仍缺新增允许的固定独立来源，无成熟sender；不泛封Scene，不晋级父项或ready。 |
 | `R3-PROUD-STRING-INPUT-CONTRACT` | 已完成；[中性输入合同](CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)，专题 SHA-256 `19ec33d8c7dcd8af29496cb7d79f5b07fe5072032a573c6f77094df6c5adc0a9`；9固定pin、独立14/0，集成回执 `local/migration72/d02-resume-20261115/launch-timeout/gap-integration1/completion.private.json` SHA-256 `d8720288120fc2360a6433fe173d133978b5546be6fb821d3118f5a4ea8b343f`。原stdin脚本未保存，后补同断言脚本独立复跑。 | 未创建sampler/读取器；实际M、pointer、length、UTF16、业务桥、配置同源与ready仍未知。 |
 | `R3-PROUD-FLOAT-CONSUMER-SOURCES` | 已完成；[条件合同及三consumer首缺](CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md)，专题 SHA-256 `a8374a9e588eabd91f43cd2cc01db95b622037f290f35ed9a2e45a5f927e4305`。 | 正常路径位样及长度门为条件关系；实际M、encoded、同epoch seed/table、三个业务消费桥及alias、row/current未知。 |
@@ -87,11 +88,13 @@ cache1 RunAs无Launch/helper回执，父receipt始终0B，超90秒停止；采�
 
 主线只读新前检通过：27 pins、149保护/原数据、五stock、config及JAR匹配，相关控制/未知/项目Java Mongo/目标进程及固定端口当时为空；`ready=false`，实际Launch/UAC/RPM均0。原件 `local/migration72/d02-resume-20261115/launch-timeout/fresh-preflight-20261115T0142450952252Z.private.json` SHA-256 `e1e3522044f7cbe6b6ed5da792b1e05b9da7cedc1aad163712bd4a359675e480`。这是该时点只读前检，不是实际Launch验收或新实时ready。
 
+主线后续只读前检 `local/migration72/d02-resume-20261115/launch-timeout/fresh-preflight-20261115T0156274741236Z.private.json` SHA-256 `934a0b368a0c6d839c1df05d2e08d7e6e2daa7ba5ebaff780138766a455833ad`：旧27 pins、149数据、五stock/config/JAR匹配，另核33 sample pins匹配及sample控制进程0；`ready=false`，实际Launch/UAC/RPM为0。主线已请求新实时ready和反馈，等待用户回复；现场尚未开始。此时点前检不代实际启动验收。
+
 ## 拒绝冻结与独立后继
 
 A-SECOND-RETURN-CONTRACT 及依赖、B组合 loader 仍因安全审查拒绝冻结，不运行草稿、不换模型或工具、不间接重试。A 的完整原拒绝仍缺，不能将摘要冒充原提示；B 保留原句 `This content was flagged for possible cybersecurity risk.`。现有[最小包队列](CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)只读复用，队列开头的暂停叙述属于历史状态，不自动新增或派发 Daybreak。移除被拒动作后，仅推进能靠已有输入独立完成且产物不直接实现被拒动作的任务；局部通过不升级父项或 ready。真实门禁、认证、资源和完整旧号恢复仍约束 R4。
 
-`R3-PROUD-FLOAT-CONSUMER-SOURCES` 的166B正常路径条件合同和三consumer准确缺口，以及 `R3-PROUD-FLOAT-NORMAL-PATH-ASSERTIONS` 的机械断言已完成限定验收；实际M、同epoch输入、三消费桥、row/current与resourceReady仍未知。启动超时归因及薄封装修复已限定离线验收；身份绑定后继进行中，不扩大为新原窗、目标getter/cache/Default或现场。Proud String中性输入合同准备已限定验收，实际输入及业务桥仍未知；Scene既有允许来源差距审阅已限定验收，M1–M4实际关系须新增明确允许且固定的独立来源；新现场另需新ready。R1/R2/R3 必要合同齐备后才进入 R4，继而 R5/R6。
+`R3-PROUD-FLOAT-CONSUMER-SOURCES` 的166B正常路径条件合同和三consumer准确缺口，以及 `R3-PROUD-FLOAT-NORMAL-PATH-ASSERTIONS` 的机械断言已完成限定验收；实际M、同epoch输入、三消费桥、row/current与resourceReady仍未知。启动超时归因及薄封装修复已限定离线验收；身份绑定接线已限定离线验收；静态E8索引进行中，不调用目标getter、创建cache/Default或消费拒绝依赖。Proud String中性输入合同准备已限定验收，实际输入及业务桥仍未知；Scene既有允许来源差距审阅已限定验收，M1–M4实际关系须新增明确允许且固定的独立来源；新现场另需新ready。R1/R2/R3 必要合同齐备后才进入 R4，继而 R5/R6。
 
 ## 已验本地提交索引
 
