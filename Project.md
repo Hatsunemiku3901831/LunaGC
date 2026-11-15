@@ -79,7 +79,7 @@
 | 分支 / 既有任务 | 本批具体动作及前置 | 产物与验收出口 | 责任文件与模型 |
 | --- | --- | --- | --- |
 | D02-RESUME-INTEGRATION-20261116 | 接手只读核对及当前状态纠正子出口已完成；等待成熟最小实现规格，集成继续 | 11个既验产物hash及脱敏preflight可定位；不重跑旧验收、不部署、不收他人差异 | Sol xhigh唯一集成者：Project/Harness/HANDOFF/HANDOFF2及本轮集成状态文档；独占Git/生成/构建/DB/运行写入 |
-| D02-SKILL-ENERGY-SEARCH-20261116 | Sol max中文规划子出口已完成限定验收；本地合同分析、Terra max公开定向检索仍进行中 | 分开交367新Skill、120energy绑定及121三字段的允许独立来源/冲突或最小成熟规格；规划完成不批准执行或升级父项 | Sol max：[冻结计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)及本地语义；Terra max：按计划新增检索结果；均不写共享索引/构建/运行 |
+| D02-SKILL-ENERGY-SEARCH-20261116 | Sol max中文规划与Terra max本批公开定向检索均已限定验收；本地合同分析及实际字段/加载出口继续 | [检索报告](docs/CLIENT_72_D02_TARGETED_REUSE_SEARCH_20261116.md)保留候选presence、同源冲突、失败及未覆盖；候选不当target值，局部结果不升级父项 | Sol max：[冻结计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)及本地语义；Terra max：本批报告已交；共享写入/运行仍归唯一集成者 |
 | D02-INDEPENDENT-INPUT-AUDIT-20261116 | 已完成既有本地Material/Relic/Proud/Scene/SDK五线有界审阅与10个hash核对，原始结论只读复用 | 暂无成熟本地包；精确公开问题尚未查尽，不写成全部外部阻塞 | Terra xhigh：忽略目录审阅；正式状态摘要由集成者收录[活动检查点](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md) |
 | A：F-03d3f4d2；必要 String 共同合同 | 同 epoch GC/Default 输入、人工双路径、stock 条件自有原 helper 已验，只读复用 | A-SECOND-RETURN-CONTRACT及依赖保持拒绝阻塞；其他独立任务必须先通过移除拒绝动作/产物后的独立性判断 | 不派被拒项，不运行草稿 |
 | B：R2-ROUTE-CONFIG-SELECT、R2-CONFIGSYNC-EARLY-BRIDGE | 已验八点、锁内 map、stock v2、PostRequest 和共用服务入口可只读复用 | 组合 loader 源、失败证据和未提交差异保留；自然请求采用、信任、认证与会话交换未闭 | 留待用户使用 [Daybreak](docs/CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md) |
@@ -131,6 +131,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 
 | 工作包 | 状态 | 当前范围和下一判断 |
 | --- | --- | --- |
+| D02-SKILL-ENERGY-SEARCH-20261116 / PUBLIC-SOURCE-REVIEW | 已完成 | 本批固定仓库/README/入选分支、候选presence及五线定向检索限定验收。367候选120显式元素/247缺席、121 energy成本119显式/2缺席、两角色旧特殊池键及Java差异分开；同数据不作独立oracle，宽查询/Fork等未覆盖保留。该子出口不关R3或全部公开研究。[报告](docs/CLIENT_72_D02_TARGETED_REUSE_SEARCH_20261116.md) |
 | R3-SKILL-LOGICAL-ID-SOURCE-BINDING-20261116 | 已完成 | 同row +68→原UInt32 getter→dictionary key、同entry key/row及同row span链已验，logicalID=tableKey可复用；撤回必须raw-id复解的额外前置，准备reader窗已取消未执行。不代element/成本或完整Skill。[绑定与更正](docs/CLIENT_72_D02_SKILL_SUFFIX_SOURCE_CONTRACT_20261116.md#logicalid-与-tablekey-的既验绑定) |
 | R3-SKILL-ELEMENT-SUFFIX-SOURCE-CONTRACT-20261116 | 已完成 | 固定113条后缀、原mask bit25及尾54/53/11、既验row.end和双非零控制形成独立element合同；不解id/成本/完整parser。[来源](docs/CLIENT_72_D02_SKILL_SUFFIX_SOURCE_CONTRACT_20261116.md) |
 | R3-SKILL-ELEMENT-SUFFIX-HOST-PILOT-20261116 | 已完成 | 唯一纯host三行验证：10068 Wind7、out-of-cohort 11364 Electric4控制一致，新10019 Ice5；新语义20B，独立位索引/算术/逆序及精确end通过。pilot只产element，批量将复用既验logicalID形成片段；120绑定/121成本特殊字段未闭，集合另定。[结果](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_PILOT_20261116.md) |
