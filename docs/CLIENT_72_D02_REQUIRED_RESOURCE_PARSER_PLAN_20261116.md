@@ -1,6 +1,6 @@
 # 入场必要资源 parser 限定来源规划
 
-`R3-OLD121-SKILL-ENTRY-TO-PROJECTION-SCOPE` 与 `R3-ACTIVE-MATERIAL-RELIQUARY-PARSER-SOURCE-SCOPE` 已完成限定范围审定；两项首轮分别在包装错误和长度预算门停止，Skill 的普通包装修正 RUN2 已完成限定 source 验收，Material 新完整范围规划已完成、RUN2 待开始；Reliquary 单窗已由主线独立派工并进行中，尚无成功结果。这些是静态来源问题，不批准 typed row 执行或资源值、alias、初始化、Java、恢复与 ready。
+`R3-OLD121-SKILL-ENTRY-TO-PROJECTION-SCOPE` 与 `R3-ACTIVE-MATERIAL-RELIQUARY-PARSER-SOURCE-SCOPE` 已完成限定范围审定；Skill RUN2、Material RUN2 与 Reliquary 单窗的静态来源已限定验收，后两项实际结果见[来源验收](CLIENT_72_D02_ACTIVE_ITEM_PARSER_SOURCES_20261116.md)。首轮包装错误与长度预算门的历史记录保留；这些来源不批准 typed row 执行或资源值、alias、初始化、Java、恢复与 ready。
 
 ## Skill 与实际能量字段
 
@@ -22,14 +22,14 @@ Java 冷读最小字段分别为 Material `{id,itemType,materialType}`，Reliqua
 
 | 任务 | 准确 parser | 当前状态 |
 | --- | --- | --- |
-| `R3-ACTIVE-MATERIAL-RESOURCE-PARSER-SOURCE` | `23400.m180606 / 14a88ca00` | 阻塞：原完整边界 7128B 超原 4096B cap |
-| `R3-ACTIVE-RELIQUARY-RESOURCE-PARSER-SOURCE` | `46431.m385148 / 1529b1930` | 进行中，按原 4096B 规格独立派工 |
+| `R3-ACTIVE-MATERIAL-RESOURCE-PARSER-SOURCE` | `23400.m180606 / 14a88ca00` | RUN2 已限定验收；原 4096B cap 失败保留 |
+| `R3-ACTIVE-RELIQUARY-RESOURCE-PARSER-SOURCE` | `46431.m385148 / 1529b1930` | 已限定验收 |
 
 限定旧来源没有两者完整逐条 raw parser listing。原规格各窗独立预算：body ≤4096B、strict ≤1024 指令，fresh AOT 16B + pdata 12B，证据 ≤4124B；header ≤8192B / 2 reads、完整 exception 14344080B、hash 与 metadata 另账，不读 callee/global/xdata。各族须主线按独立规格分别派工，失败不自动授权重试或扩源。
 
 Material 首轮经完整 pdata 门确定 `14a88ca00..14a88e5d8` 为 7128B，超原 cap，按 `ValueError: body extent` 停止；body 0B / 0 read，pdata evidence 0（预算门未接纳），未解码。identity、一参 ref、fresh AOT 与 exception hash 通过；header 4616B、AOT 16B、exception 14344080B、stock 550661784B。原 `local/migration72/d02-resume-20261116/active-item-material-parser-window/capture/failure.private.json` SHA-256 `1f5a7c9140e1902b3c278b66b02ca91239e3bd50419decfd06c9a2e7775dce4a` 保留。这是**完整长度超原 cap**，不是缺边界；不泛封 Material 或其他工作。此前一次 driver 前 schema 查看把字符串键当整数导致 `KeyError 86325`，未读 PE；识别正确字符串键后继续，不是采集重试，额外 signatures 两次、metadata 一次和 derived 一次实读另账。
 
-`R3-ACTIVE-MATERIAL-PARSER-EXACT-EXTENT-SCOPE` 已完成限定规划：仅依据确认的完整 7128B 边界与原 row/raw 12B 修订新单窗，evidence 为 7156B，strict 指令上限 7128（每指令至少 1B 的硬上界）；须重新核 current fresh AOT、完整 exception hash 与 pdata，使用新 prefix `active-item-material-parser-window-run2`。新 source RUN2 **待开始**，原 cap 失败不追认。固定 `local/migration72/d02-resume-20261116/active-item-material-parser-extent-scope/spec.private.json` SHA-256 `9c72aca5edd80e9582bdc99215c1b4e6c2709b93e958e1445ed48f3add1190c1`，同目录 scope SHA-256 `1dccf2e68bd1140c1ae7f2a28fdaf8b2ad794e6ded0dcf31c3688628788684ce`。
+`R3-ACTIVE-MATERIAL-PARSER-EXACT-EXTENT-SCOPE` 已完成限定规划：仅依据确认的完整 7128B 边界与原 row/raw 12B 修订新单窗，evidence 为 7156B，strict 指令上限 7128（每指令至少 1B 的硬上界）；重新核 current fresh AOT、完整 exception hash 与 pdata，使用新 prefix `active-item-material-parser-window-run2`。新 source RUN2 已限定验收，详见[实际结果](CLIENT_72_D02_ACTIVE_ITEM_PARSER_SOURCES_20261116.md)，原 cap 失败不追认。固定 `local/migration72/d02-resume-20261116/active-item-material-parser-extent-scope/spec.private.json` SHA-256 `9c72aca5edd80e9582bdc99215c1b4e6c2709b93e958e1445ed48f3add1190c1`，同目录 scope SHA-256 `1dccf2e68bd1140c1ae7f2a28fdaf8b2ad794e6ded0dcf31c3688628788684ce`。
 
 父 `88968.m735168 / 150b6a9b0` 仅是后置候选，须已验 raw listing 的准确 CALL 和必要字段来源成立后再由主线审定。旧报告有 2018B 范围/hash，但现有 3246B 文本 listing 止于 `150b6ab3a`，不是完整 source。固定 `local/migration72/d02-resume-20261116/active-item-parser-source-scope/scope.zh.md` SHA-256 `26eda8692b0e1b5ca097d1f2991f4ac1c9fc35bae79f377e6aa1e4974e899746`，同目录 `spec.private.json` SHA-256 `29cd7839e7530067519925103c4018c32d37676935300c8d16bb52376fc103d7`。
 

@@ -28,10 +28,11 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 | `R3-OLD121-SKILL-PARSER-SOURCE-WINDOW-RUN2` | 已完成；fresh AOT/唯一pdata/完整目录与8309B body通过，strict 1985指令/539引用。[来源与分账](CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) | 直接冻结site/target零不证明传递A-free；无目标CPU/进程读取，底层loader/OS IO未计。 |
 | `R3-OLD121-SKILL-PARSER-MINIMUM-SEMANTICS` | 进行中；Sol max审定已验source最小语义。 | 尚无语义结论或typed row许可。 |
 | `R3-ACTIVE-MATERIAL-RELIQUARY-PARSER-SOURCE-SCOPE` | 已完成；两个独立单窗source-only规格与唯一typeRef已定。[规划](CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) | 此前错误typename已撤回；不证明row/值/ABI。 |
-| `R3-ACTIVE-MATERIAL-RESOURCE-PARSER-SOURCE` | 阻塞；完整pdata界定7128B，超原4096B cap，body/read/pdata evidence 0，无decode。[停止](CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) | 是完整长度超预算，不是缺边界；原件保留，不泛封Material。 |
-| `R3-ACTIVE-MATERIAL-PARSER-EXACT-EXTENT-SCOPE` | 已完成；按已确认7128B边界形成新窗规格，7156B evidence、strict≤7128。[规格](CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) | 原cap失败保留；新窗须重新核fresh AOT、完整exception hash和pdata。 |
-| `R3-ACTIVE-MATERIAL-RESOURCE-PARSER-SOURCE-RUN2` | 待开始；使用新prefix按精确范围单独执行。 | 尚未执行，不追认旧失败。 |
-| `R3-ACTIVE-RELIQUARY-RESOURCE-PARSER-SOURCE` | 进行中；主线按原4096B规格独立派Terra xhigh。 | 尚无成功结果；失败不自动授权重试或凭parent扩窗。 |
+| `R3-ACTIVE-MATERIAL-RESOURCE-PARSER-SOURCE` | 已完成；原4096B cap停body0/read0与KeyError保留，后续RUN2取得完整7128B来源。[结果](CLIENT_72_D02_ACTIVE_ITEM_PARSER_SOURCES_20261116.md) | 不追认原轮，不证明row/值/初始化。 |
+| `R3-ACTIVE-MATERIAL-PARSER-EXACT-EXTENT-SCOPE` | 已完成；按已确认7128B边界形成新窗规格，7156B evidence、strict≤7128。[规格](CLIENT_72_D02_REQUIRED_RESOURCE_PARSER_PLAN_20261116.md) | 原cap失败保留；后继RUN2的fresh AOT/exception/pdata已验。 |
+| `R3-ACTIVE-MATERIAL-RESOURCE-PARSER-SOURCE-RUN2` | 已完成；7128B/1754指令/447引用，fresh AOT/唯一pdata/完整目录通过。[结果](CLIENT_72_D02_ACTIVE_ITEM_PARSER_SOURCES_20261116.md) | 直接冻结命中0不证明传递A-free，底层loader/OS IO未计。 |
+| `R3-ACTIVE-RELIQUARY-RESOURCE-PARSER-SOURCE` | 已完成；3347B/833指令/217引用，fresh AOT/唯一pdata/完整body通过。[结果](CLIENT_72_D02_ACTIVE_ITEM_PARSER_SOURCES_20261116.md) | 两历史ctor入口pins未作为本次输入或单独重核；不据此推ctor/初始化或父body。 |
+| `R3-ACTIVE-RELIQUARY-MINIMUM-SEMANTICS` | 进行中；Sol max审定最小语义。 | 无最终结论，不预称父body已验。 |
 | `R3-OLD121-DEPOT-CORE-FRAGMENT-SCOPE` | 已完成；既有全121 Depot原值与来源的三键纯host范围审定。[结果](CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) | 不重跑Depot/phase6，不证明当前采用。 |
 | `R3-OLD121-DEPOT-CORE-FRAGMENT-PROJECTION` | 已完成；121片段/363字段/726既有getter引用，484普通slot中248正236零、121正energy，369不同正引用仅key/span。[结果](CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) | presence unknown；结构探查曾展示部分超范围既有Skill字段，最终代码不使用Skill.values作oracle。 |
 | `R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA` | 阻塞；正引用缺367 id/element片段，energy正向绑定缺120；121 energy行costElemVal/specialEnergyMin/Max均未闭。 | 不以空Skill/None或假cost补齐；无新JVM或当前采用证明。 |
