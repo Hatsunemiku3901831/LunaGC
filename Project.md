@@ -127,7 +127,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-PROUD-FLOAT-CONSUMER-SOURCES | 已完成 | 已验166B正常路径条件合同与三consumer准确缺口；实际消费桥、M、row/current、同epoch输入及resourceReady未知。见[专题](docs/CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md)。 |
 | R3-PROUD-CACHE1-LAUNCH-TIMEOUT | 进行中 | 原 cache1 父回执0B、helper缺席，sample未派；用离线自有 stub 定位同步 RunAs/elevation 交接，90秒起点不变。结果待主线验收。 |
 | Scene 有界差距 | 进行中 | 9251实际receiver、virtual +f0返回reader及其+18初始化/reset未知。316B getter来源已验；先判是否有不消费 A 拒绝动作及产物的已有输入，未知已有cache/ReplaceCluster不是执行许可。 |
-| Proud String 输入合同 | 进行中 | 仅核26072.field127898的 M+20 String、type293 length+10/UTF16+14 输入及 host 同源配置身份；OpenConfig仅业务候选；专题已交、独立集成待验，先证明其对 D-02 的具体必要性与独立输入；不并入 Avatar String 的 tuple/TLS/GC 或 Gadget Hash/FindEntry 路线。 |
+| R3-PROUD-STRING-INPUT-CONTRACT | 已完成 | 中性输入状态及来源合同准备限定验收，9源pin和独立14/0；未创建采样器/读取器。实际M、pointer、length、UTF16、业务桥及配置同源仍未知，OpenConfig仅候选；不并入 Avatar String 或 Gadget 路线。见[合同](docs/CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)。 |
 | R3-PROUD-FLOAT-NORMAL-PATH-ASSERTIONS | 已完成 | 固定166B及合成向量419项/0失败，作者两次与集成独立重跑一致，七个分支目标独核；不证明实际输入或业务桥。见[断言与复现](docs/CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md)。 |
 | UP-72-N1/N2、F-04离线清单候选 | 待开始 | 分别先核已验上游对照与 ENV-01/InstanceRoot 成果；只有能解除当前 D-02 的具体合同或部署准备缺口才派发。实际部署仍待 R4。 |
 
@@ -430,6 +430,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | E-01d1/R3-PROUD-QUERYWRAPPER-BORROW-SEMANTICS | 已完成 | 544B本体32B输出、参数拆分、未知Empty模板和负h路线已验；不证明lease，ctor后继另验。 | [借用语义](docs/CLIENT_72_D02_PROUD_QUERYWRAPPER_BORROW_SEMANTICS_20261111C.md) |
 | E-01d1/R3-PROUD-NATIVEWRAPPER-CTOR-SOURCE | 已完成 | 290B/78条原窗，第三八件一致、6测试；仅源，借用合同另项限定验收。 | [ctor源窗](docs/CLIENT_72_D02_PROUD_NATIVEWRAPPER_CTOR_WINDOW_20261111C.md) |
 | E-01d1/R3-PROUD-NATIVEWRAPPER-CTOR-BORROW-CONTRACT | 已完成 | 正常局部同P+34 INC→读→DEC闭合；实际page、lease、codec、encoded、getter和current仍未知，不证明自然采用。 | [借用合同](docs/CLIENT_72_D02_PROUD_NATIVEWRAPPER_CTOR_BORROW_CONTRACT_20261111C.md)、[本轮验收](docs/CLIENT_72_D02_RESUME_20261111C.md) |
+| R3-PROUD-STRING-INPUT-CONTRACT | 已完成 | 9固定来源pin、独立14/0；仅中性String输入合同准备，未建采样器/读取器，实际M、pointer、length、UTF16、业务桥与配置同源未知。 | [合同](docs/CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)、[验收](docs/CLIENT_72_D02_RESUME_20261111C.md) |
 | R3-PROUD-FLOAT-CONSUMER-SOURCES | 已完成 | 166B正常路径条件位样及长度门、三consumer准确缺口限定验收；实际M、同epoch输入、消费桥、alias、row/current仍未知。 | [条件合同](docs/CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md) |
 | R3-PROUD-FLOAT-NORMAL-PATH-ASSERTIONS | 已完成 | 作者两次及集成独立419/0、报告逐字节相同及七分支目标独核；仅固定来源与合成数据，不晋级父项。 | [断言和复现](docs/CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md) |
 | R3-PROUD-MANAGED-FLOAT-GETTER-WINDOW | 已完成 | 166B/45条、7纯测试，双fresh及独立第三八件一致；仅source，逻辑返回/原caller E8及语义未知。 | [原窗](docs/CLIENT_72_D02_PROUD_MANAGED_FLOAT_GETTER_WINDOW_20261112.md)、[验收](docs/CLIENT_72_D02_RESUME_20261111C.md) |
