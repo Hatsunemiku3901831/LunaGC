@@ -20,7 +20,9 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 | `R3-ACTIVE-ITEM-SAVED-REFS` | 已完成；12254 Item/121 Avatar全EOF及旧键匹配，候选Reliquary main 28/append 22不同正引用、TPS两类各12不同正引用；121 Avatar TPS武器列表显式空。[结果](CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md) | 仅固定旧号保存数据，不证target资料/槽位/恢复；不省略配件恢复或自动授予条件。最终私有脚本补对照后未重扫BSON。 |
 | `R3-ACTIVE-ITEM-BASE-DERIVED-METADATA` | 已完成；v2全89748条、88083 parent边、两root各8后代，18声明/186 field/274 method/9 backing引用及三控制通过。[查询与修正](CLIENT_72_D02_ACTIVE_ITEM_BASE_METADATA_20261116.md) | v1访问0/root controls未查保留；有限声明不证明业务族、实际行值、A-free初始化或ABI。 |
 | `R3-ACTIVE-ITEM-NEXT-INPUTS-TRIAGE` | 进行中；审定已具名Material/Reliquary两个ctor source-only及实际保存引用候选存在性规格。 | 未采两ctor、未取得新值，规格校对后才派执行。 |
-| `R3-OLD121-DEPOT-CORE-FRAGMENT-SCOPE` | 进行中；判断既有全121 Depot的id/skills/energy数据能否只读形成host三键fragment。 | 不重跑Depot/phase6，未批准新投影/Java/当前采用，不以空Skill或None掩盖367缺值。 |
+| `R3-OLD121-DEPOT-CORE-FRAGMENT-SCOPE` | 已完成；既有全121 Depot原值与来源的三键纯host范围审定。[结果](CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) | 不重跑Depot/phase6，不证明当前采用。 |
+| `R3-OLD121-DEPOT-CORE-FRAGMENT-PROJECTION` | 已完成；121片段/363字段/726既有getter引用，484普通slot中248正236零、121正energy，369不同正引用仅key/span。[结果](CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) | presence unknown；结构探查曾展示部分超范围既有Skill字段，最终代码不使用Skill.values作oracle。 |
+| `R3-OLD121-DEPOT-CORE-FRAGMENT-JAVA` | 阻塞；正引用缺367 Skill片段，energy正向绑定缺120。 | 不以空Skill/None或假cost补齐；无新JVM或当前采用证明。 |
 
 本批无新现场或ready；A/B、preview和准确冻结边不变，不将上述具体停止泛化为所有独立任务阻塞。
 
