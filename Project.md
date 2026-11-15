@@ -6,7 +6,7 @@
 
 **用户已明确解除旧暂停，持续推进至D-02六项实机通过，或所有必要独立项各自有准确外部阻塞；当前D-02 / F-05 / D02-R6为0/6，R4/R5/R6未开始。** 旧号121 Avatar基础成长及critical七键片段、两个限定Java loader、121 Depot三键host投影已验；完整Avatar、Skill/energy、装备及同旧号实际Player恢复未闭。Float条件合同、共享Pair消费正例、启动修复及一次cold-cache采样直接复用，不再作为首发旧任务。
 
-当前以能解除真实资源加载或恢复依赖的最小出口为优先：[Skill/energy定向计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)对应本批公开检索已限定交付；367个本轮Skill id/element片段已实际闭合，121 Depot正向Java及120新energy绑定已实际通过，121行energy普通cost字段已闭，121行START也已闭（两行100/50、119源确证0），MAX cap及真实maximum采用继续按准确来源推进；cost/START-aware真实Java已通过，完整恢复仍需MAX cap/装备等必要合同。[批量结果](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md)已形成367本轮+2旧的canonical id/element片段；logicalID=tableKey复用已验绑定，不要求额外raw-id复解。Skill ctor普通边界失败不等安全拒绝，缺同固定PE准确边界时不重取或放宽；该单窗不作为已有独立element/ID来源的额外门。Weapon239中仅11101的1种27行有既验片段，其余238种1636行缺允许独立值来源；已确认A构造返回依赖冻结。Material94与特殊类别3个literal已固定出值；Material实际row/consumer、Relic rank/set职责或独立非零oracle保留准确缺口；五线定向公开检索已补有限来源，目标值/consumer及未覆盖范围仍需新输入，不能据此标为全部外部阻塞，不以新增盘点替代出值。
+当前以能解除真实资源加载或恢复依赖的最小出口为优先：[Skill/energy定向计划](docs/CLIENT_72_D02_SKILL_ENERGY_SEARCH_PLAN_20261116.md)对应本批公开检索已限定交付；367个本轮Skill id/element片段已实际闭合，121 Depot正向Java及120新energy绑定已实际通过，121行energy普通cost字段已闭，121行START也已闭（两行100/50、119源确证0），MAX cap及真实maximum采用继续按准确来源推进；cost/START-aware真实Java已通过，完整恢复仍需MAX cap/装备等必要合同。[批量结果](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md)已形成367本轮+2旧的canonical id/element片段；logicalID=tableKey复用已验绑定，不要求额外raw-id复解。Skill ctor普通边界失败不等安全拒绝，缺同固定PE准确边界时不重取或放宽；该单窗不作为已有独立element/ID来源的额外门。Weapon239中仅11101的1种27行有既验六键片段，其余238种1636行未有获准入的独立跨行host合同；已知旧native ctor/parser的A构造返回路径冻结，固定raw和六字段职责可复用，潜在纯host路径不自动冻结。Material94与特殊类别3个literal已固定出值；Material实际row/consumer、Relic rank/set职责或独立非零oracle保留准确缺口；五线定向公开检索已补有限来源，目标值/consumer及未覆盖范围仍需新输入，不能据此标为全部外部阻塞，不以新增盘点替代出值。
 
 [UP-72-20261114阶段调研](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)仍为进行中；UP-72-N1/N2只按当前具体缺口消费固定候选及现有冲突，不整包替换。UP-72-N3长尾检索在D-02排期后移，原继续位置保留，不关闭原调研。A/B、preview与准确依赖仍冻结；A已找回平台错误及opaque事件关联，原请求明文恢复验收已撤回，可读正文和技术输入仍缺，见[纠错](docs/CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)。当前没有需要用户启动的现场；重复同SDK页采样无新输入依据时不排期。
 
@@ -131,6 +131,9 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 
 | 工作包 | 状态 | 当前范围和下一判断 |
 | --- | --- | --- |
+| R3-MATERIAL-TABLE-FRAMING-SOURCE-20261116 | 已完成 | 准确17822.m135074完整569B来源/140条通过，整窗语义false；两处A直CALL及其返回/构造/row依赖停。未读header或造count/framing。[来源](docs/CLIENT_72_D02_MATERIAL_HEADER_SOURCE_20261116.md) |
+| R3-MATERIAL-HEADER-INDEPENDENT-DATAFLOW-20261116 | 已完成 | 仅既验源8处EDI/RDI用途/3分支证明首A前LE32+6af89eb8标量及signed正值倒计数独立，不解释A输出、不称实际row数或首cursor。[边界](docs/CLIENT_72_D02_MATERIAL_HEADER_SOURCE_20261116.md) |
+| R3-MATERIAL-LOADER-INITIAL-CURSOR-SOURCE-20261116 | 已完成 | 准确60257.m500132完整239B源证明同返回对象+10/+1c清零，slot-init缺口关闭；有效backend+18起点/首refill关系仍缺独立来源，不能由cursor槽0推fileoffset0。[残余](docs/CLIENT_72_D02_MATERIAL_HEADER_SOURCE_20261116.md) |
 | R3-RELIC-RANK-SET-RETAINED-NAMED-ENTRY-QUERY-20261116 | 已完成 | 固定既存metadata/business/analysis文本有限具名查询：27 UI名称候选、37字段，四准确边界role0、精确rankLevel/SetId getter0；不新取PE或扫18body。候选交Sol判断typed入口，不以未读body判全外阻塞，rank/set角色仍未闭。[范围](docs/CLIENT_72_D02_RELIC_RETAINED_ROLE_QUERY_20261116.md) |
 | R3-MATERIAL-ROW-REUSE-SEARCH-20261116 | 已完成 | 按中文计划完成本批binary/Material row有限公开增量；固定5.2 loader/存在位、2.2 KSY及3.4 README/分支差异仅参考，没有同target count/首row/String cursor可直接复用合同。失败/未覆盖分列，不证明全网无来源。[报告](docs/CLIENT_72_D02_MATERIAL_ROW_REUSE_SEARCH_20261116.md) |
 | R3-OLD121-SKILL-ENERGY-RESOURCELOAD-JAVA-20261116 | 已完成 | JDK17/offline单项1/F0/E0/S0，真实369Skill→121Depot；121cost exactint/START Float原位、121energy同对象及484slot/map/loadedAll保持。capMin不提供，无Player/DB/client，最大池/完整恢复另验。[结果](docs/CLIENT_72_D02_OLD121_SKILL_ENERGY_JAVA_20261116.md) |

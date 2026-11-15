@@ -1,3 +1,5 @@
+2026-11-16 完成[Material569B源/独立EDI倒计数/239B同cursor槽清零](docs/CLIENT_72_D02_MATERIAL_HEADER_SOURCE_20261116.md)，专题SHA`e604a18e26158ddbdc8da73a12af1d064160c36299491467e51031be42a54140`。569B整窗semantic=false、两A直CALL依赖停；独立数值不依A输出，239B同返回+10/+1c零已闭。实际filecursor仍缺backend+18起点/首refill来源，不读条件P=0 header4B、不重采源。Weapon矩阵仅冻结已知旧ctor/parser A路径，固定raw/11101/六职责复用，纯host跨行cursor/字段语法合同仍未准入，不宣全族必依A。
+
 2026-11-16 完成[Relic既存具名入口有限查询](docs/CLIENT_72_D02_RELIC_RETAINED_ROLE_QUERY_20261116.md)：27方法/37字段仅名称候选，四准确边界具名role0，精确rankLevel等方法和SetId getter0；query SHA`398352b413b504a7c59ebac7beaf92d206bf47da1d9ea902a52255d345da60f7`，解释SHA`9b9d8f451fd033a546c9a38a7745702427a09e7225bce4a90b4a933ae02552d4`。没有新PE/body，27候选交Sol，不把未读当最终阻塞。活动矩阵分冻结边/自然输入缺口/普通来源缺口，Material仍在途；旧恢复索引原Depot Java blocked行已按实际369Skill/121绑定和cost/START Java解除，保留历史范围。
 
 2026-11-16 当前路线补校：Project第4节遗漏的旧“本次研发仍暂停”已纠正为用户已恢复执行；3.5按当前分工明确指定唯一集成者串行管理Git/构建/实例写入。当前表内旧pilot/source时点的367/120、121成本/START未验语句已链接到后继实际成果，保留原scope；MAX cap/完整Skill/Player与六项仍未闭。无新执行或历史测试重跑。

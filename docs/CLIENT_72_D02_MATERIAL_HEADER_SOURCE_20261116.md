@@ -1,0 +1,19 @@
+# Material 表头静态来源与准确停止点
+
+`R3-MATERIAL-TABLE-FRAMING-SOURCE-20261116` 复用[增量计划](CLIENT_72_D02_MATERIAL_ROW_SEARCH_PLAN_20261116.md)的固定payload与既存source。路径literal为70971、cell `145b547f8`；`14d6e1570` 是 `60257.m500132` 的通用路径loader，不能当Material table parser。固定accessor源 `analysis/disasm-14a1d7890.txt`（2478B，SHA-256 `4f86e037e588e7263b27f59cd7095f0efb1237e833479189d21063367ebcc713`）显示同RSI reader在 `14a1d7904` 交RCX、`14a1d7907` 调 `14a1d79d0`。原fixture仅执行到loader入口；这里不重跑或扩称自然加载。
+
+该目标唯一ordinary声明为 `17822.m135074/CNLIBMNOALB`、static一显参，参数124389的typeRef86325为reader42005。当前GAME_PATH、固定五stock、fresh AOT slot135074和完整14344080B exception均实际核对；唯一begin/containing/overlap确定真实范围 `[14a1d79d0,14a1d7c09)`、569B，pdata raw `d0791d0a097c1d0a44f60704`。boundary-only读取body为0，派生delta SHA-256 `810eadd3afb25fc906401e003eb7ca70f28797b77442f9ede5b6270fe15fe0fb`。在公开检索确认无可直接适用的同target增量后，一次读取完整body并strict重拼140指令/53引用；body SHA-256 `5496db40ce945ed05f18b6994740d60003a2bc24b692a8fd39c014e2fe070b1f`，listing SHA-256 `32d39a181e75e1404c8918cd12eed9e0850c5d4fe56828a7267399ed01400ce7`。
+
+首个准确冻结调用之前的29条指令给出独立raw前缀事实：原条件及物理输入有效时，`R15` 是同一个reader，`14a1d7a16` 取cursor P；`7a23..7a32` 从byte数组当前位置取LE32 W，`EDI=U32(W+6af89eb8)`，并把cursor写成 `P+4`。本项没有读取payload的4B，也未输出实际header值。原有global guard、非空/bounds与 `T=[reader+20]` 非零时的refill条件保留；没有执行helper或假定自然reader状态。
+
+完整源的两处准确冻结直接CALL为 `14a1d7a3d → 1405336c0`、`14a1d7aa7 → 1405336c0`。已停止其执行、返回/构造语义和依赖对象/row路径；不跟callee/global/xdata，不运行模型/native/ctor/getter/TLS。source采集与strict完整性通过，整窗语义未通过；这不是新安全拒绝，也不能把冻结对象输出当host输入。
+
+拆分小项 `R3-MATERIAL-HEADER-INDEPENDENT-DATAFLOW-20261116` 仅复用同140条源，穷举8处EDI/RDI用途及3条条件branch：`7a90 TEST/7a92 JLE` 对非正signed值绕过循环，`7b57 DEC/7b59 JNE` 形成正值倒计数，`7bf4 TEST/7bf6 JG` 连到同入口。EDI的定义只有上述raw加常量，没有A返回/构造或对象字段输入；`7a67 MOV EDX,EDI` 仅记录数值复制，不解释其callee。故**header派生标量的静态倒计数角色**独立成立；它不证明A可执行、实际迭代成功、row数量或首rowcursor。该独立记录为 `framing-scope/header-counter-dataflow.private.json`，5810B，SHA-256 `6c8bec04d9fac0c5d6c69b2914e7259307db512885fd4b9686742f7807cc5fe1`。
+
+另完成 `R3-MATERIAL-LOADER-INITIAL-CURSOR-SOURCE-20261116` 的准确239B源。唯一 `60257.m500132/GBPNKANHNCH`、static三参，freshslot与完整唯一pdata确定 `[14d6e1570,14d6e165f)`，body前delta SHA-256 `fa558e970587f880b734b417f2a7368949c3f539fc7c6aaae1889e666e7773f1`。一次完整body SHA-256 `d6851231b0cec0ca2a2bae158bebaa924ace7afddc6604906b18a93342d06c87`，strict65指令/18引用，准确直接冻结命中0。普通分支在 `15d2` 将非空virtual返回保存RBX，`15d5/15dd` 明确写同对象 `+10=0/+1c=0`，`1613` 将同RBX返RAX；**Material准确普通返回的cursor槽清零边已闭**，不再等待500134的额外绑定。这里不解释virtual返回来源/构造，也不分析另一wrapper尾调用 `14d88bb10` 的返回。两个原零参数只是原位转交 `146eb90f0`，不自行命名为初始fileoffset。
+
+实际文件header位置仍未知：本窗读取的是当前cursor P，清 `+1c` 不等于有效fileoffset0。239B源未直接写backend基值 `+18`；既验refill首次领入buffer使用 `wrap32(+18+cursor)`，不重置该基值。故最小残余是**同reader有效backend起点/+18基值与首refill的独立来源**，或完整独立文件语法证据；不是已闭的cursor槽清零。没有新的成熟准确输入时停止该自然初始化依赖，不追virtual/A返回、构造或source树，不补旧模型/hostzero，也不为条件P=0生成4B值。纯host文件语法仍可独立研究，必须真实闭合filecursor边界；不泛封Material整族。
+
+239B原件在 `loader-initial-cursor-source/`：capture result8212B SHA-256 `0cf59142f6eef02570a8de0d989ea2610a0226bd5371dfd3c5357b0254c90268`、manifest1629B `8ba7ee141b1c792ef6bd3b439de1de074bd51ec946fb7b7cc14ac7ba6c02a269`；静态语义记录 `framing-scope/loader-initial-cursor-semantics.private.json` 为7078B、SHA-256 `769d35c2d7ff77fe03a4de6fbe0a8ecc332da934a73e01aa07ac00079b39b0ae`。旧238B工厂和既验refill只读复用，未重取。569B采集、独立EDI关系和239B槽初始化分别验收；首项整窗语义false及两A停点继续保留。
+
+私有根 `debug/d02-material-row-source-20261116/` 保留逐段账：`framing-source/capture/result.private.json`（8494B，SHA-256 `4e4bf5fd1da75e581aac54cb6fc1bd69668a09cfc6baf584cb1571ead54e2e64`）、manifest（1599B，`8ab65ea9317704e2d505bf43846bf21bd9d25a068c20029dd1e54ca4d5babbbb`）；`framing-scope/header-prefix-source.private.json`（9274B，`2d2edd0ab3004faf910eb423389d89ca7cfaaee3c7b17f14e882c41a15668b79`）固定29条前缀anchor、输入与停止点。driver均只在忽略目录，无新增跟踪工具。没有解析row、构建walker或做部署/客户端验收；Material已有payload与literal不等ready。不重新采此569B窗；准确loader初态source问题单独限定，不沿冻结返回或一般source树扩展。
