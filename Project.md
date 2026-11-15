@@ -131,6 +131,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 
 | 工作包 | 状态 | 当前范围和下一判断 |
 | --- | --- | --- |
+| R3-OLD121-SKILL-ORDINARY-COST-HOST-PILOT-20261116 | 已完成 | 同源10019准确4B，原parser XOR得到Float bits42a00000/实际cost80，独立当前元素能量与同Skill+98比较闭合职责；byte/Float位/逆wire/exactint通过。只此字段，不代121或maximum采用。[结果](docs/CLIENT_72_D02_SKILL_ORDINARY_COST_20261116.md) |
 | R3-SKILL-SPECIAL-ENERGY-NAMED-GETTER-SOURCE-WINDOW-20261116 | 已完成 | 固定203B/52条原来源，fresh AOT/独立完整pdata通过，直接冻结site/target0。有限UI/player状态与未知虚目标，不直接读Skill资源，不从名称命三成本字段。[来源/边界](docs/CLIENT_72_D02_SKILL_ENERGY_CONSUMER_SOURCES_20261116.md) |
 | R3-SKILL-ENERGY-AVAILABILITY-PREDICATE-SOURCE-WINDOW-20261116 | 已完成 | 固定194B/53条原来源及同receiver Depot→energy ID→Skill+90分类分流成立；enum61184具名NONE/MAVUIKA/SKIRK支持有限特殊能量职责，literal数值及实际资源值未知，不当Min/Max。后继仅准确两分支source，三成本字段未闭。[来源/桥](docs/CLIENT_72_D02_SKILL_ENERGY_CONSUMER_SOURCES_20261116.md) |
 | R3-SKILL-ELEMENT-SUFFIX-HOST-BATCH-SCOPE-20261116 | 已完成 | 固定369需求−正式2旧=367本轮，present120/absent247、121energy对齐；10019复用后119word/476B、0新mask及≤1MiB预算。11101不冒称第三旧准入；canonical ID复用既验key。[范围/结果](docs/CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md) |
