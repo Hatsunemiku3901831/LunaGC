@@ -1,5 +1,7 @@
 # E-01 / R3-CRITICAL-INSTALLER
 
+2026-11-16 后继：旧号121角色的两项基础贡献及限定loader已在[新验收](CLIENT_72_D02_OLD121_AVATAR_CRITICAL_20261116.md)中闭合；下方原两出生及guard后条件仍为该历史卡的准确范围，不证明自然caller或总属性。
+
 ## 最终限定结果
 
 共享63287字段 **`+98 → AvatarData.critical`、`+a4 → AvatarData.criticalHurt`** 现已取得固定目标enum、原installer和具名typed consumer的原生正反证据，可批准为出生5/7的两个**基础字段片段**。完整Avatar自然consumer、24887/59769/32376自然构造、modifier分支、资源缺省、完整Java加载/active revision和D-02均未通过本卡验收。

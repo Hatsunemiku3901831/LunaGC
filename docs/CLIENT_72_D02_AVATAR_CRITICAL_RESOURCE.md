@@ -1,5 +1,7 @@
 # E-01/R3-CRITICAL-SEMANTICS
 
+2026-11-16 后继：实际旧号121角色的两项critical基础贡献片段及限定loader已验，详见[新范围与实际执行](CLIENT_72_D02_OLD121_AVATAR_CRITICAL_20261116.md)；下方原两出生、guard和历史限制按当时范围保留，不代表自然Avatar或完整恢复已验。
+
 ## 实施前计划
 
 准确缺口是固定客户端 Avatar58272 继承63287的 `+98/+a4` 与 `FIGHT_PROP_CRITICAL20/CRITICAL_HURT22` 的职责关系。原parser已取得float32位值，但数值、上游同名JSON和本地Java赋值不能批准alias。已验HP/growth、100Curve、Promote及真实Java片段直接复用。

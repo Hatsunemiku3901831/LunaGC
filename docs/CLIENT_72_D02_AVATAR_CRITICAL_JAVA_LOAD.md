@@ -1,5 +1,7 @@
 # E-01 / R3-JAVA-CRITICAL-FRAGMENT：出生角色基础暴击字段 Java 加载
 
+2026-11-16 后继：实际旧号121角色七键片段的限定真实loader另已验收，见[新结果](CLIENT_72_D02_OLD121_AVATAR_CRITICAL_20261116.md)；下方出生角色测试结论保持原范围，不代完整Player恢复。
+
 ## 计划与证据边界
 
 [原 installer 证据](CLIENT_72_D02_AVATAR_CRITICAL_INSTALLER.md) 的主线第三报告与双 fresh 字节一致，1,117,902B/SHA-256 `713bc5816eb2e9cca7dc23167e2b14ecf5e890d36286a135c66d1fa23cf0d8a1`；14 项测试、12 项独立检查、111 输入 pin 和 20 原代码范围已核对。其批准出生 5/7 的共享真实字段 `63287+98 → critical`（float32 `3d4ccccd`）和 `+a4 → criticalHurt`（`3f000000`）为基础贡献，经过完整原 installer 和目标 enum 20/22 typed 读回。自然 Avatar、modifier 和目标缺省均未批准。

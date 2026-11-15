@@ -12,7 +12,9 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 | `R3-OLD121-SKILL-ROW-INDEPENDENCE` | 已完成；有限范围审定及source-only规格 `bf72e96…` 已批准。 | 不泛封全Skill，不批准新行值或Java。 |
 | `R3-OLD121-SKILL-RESOURCE-CTOR-WINDOW` | 阻塞；一次采集五stock/pins/metadata/fresh AOT通过，`149b59940` 在完整exception目录 `containing=[]` / `beginMultiplicity=[]`，选中pdata/body/read均0；无code hash/指令或重试。[来源缺口](CLIENT_72_D02_OLD121_SKILL_SOURCE_BLOCKER_20261116.md) | 两列表非独立负证据，后者是前者投影；缺同固定PE的准确完整边界或已验同输入完整body+边界，不猜16B、下一metadata地址、截RET或放宽原规格。旧manifest/来源摘要未创建。 |
 | `R3-OLD121-SKILL-CTOR-BOUNDARY-TRIAGE` | 已完成；只读限定归因未发现gate/index错用，有限既有来源未找到精确完整ctor边界。[归因与解除](CLIENT_72_D02_OLD121_SKILL_SOURCE_BLOCKER_20261116.md) | 非新安全拒绝，未授权重取、放宽或执行；不泛封全Skill/R3/A。 |
-| `R3-OLD121-CRITICAL-PROJECTION-SCOPE` | 进行中；Sol max审定两出生critical installer及具名20/22能否形成实际旧号121的基础贡献片段。 | 未批准跨行值或执行；独立路径、codec、model及允许fixture需先明确。出生限制保持。 |
+| `R3-OLD121-CRITICAL-PROJECTION-SCOPE` | 已完成；guard后共享片段、固定输入与受控模型的限定来源审定。[结果](CLIENT_72_D02_OLD121_AVATAR_CRITICAL_20261116.md) | 不证明自然58272 caller、Actor或总属性。 |
+| `R3-OLD121-AVATAR-CRITICAL-PROJECTION` | 已完成；120新+7旧片段、240新+2旧具名读回，1081调用/0错误、835392/2M，冻结及未用范围访问0。[实际执行](CLIENT_72_D02_OLD121_AVATAR_CRITICAL_20261116.md) | 只验实际执行版完整ledger；最终收窄driver未native重跑，presence未知。 |
+| `R3-OLD121-AVATAR-CRITICAL-JAVA` | 已完成；唯一真实JVM加载121七键，1项通过、242具名bits及map/fetters/loadedAll保持。[结果](CLIENT_72_D02_OLD121_AVATAR_CRITICAL_20261116.md) | JUnit loadedAll修正在首次JVM前，无Player/Avatar构造、DB/服务或完整恢复。 |
 | `R3-OLD-WEAPON239-APPROVED-FIELDS-PLAN` | 已完成；目标Weapon交239种/1663活动行，11101已验六键复用1种/27行，其余238种/1636行缺获批片段和限定loader。[来源与行级依赖](CLIENT_72_D02_OLD_WEAPON239_SOURCE_BLOCKER_20261116.md) | 11101/11501已存行级ctor各一次、parser各两次A model命中，原caller PC未知；不是新拒绝，不泛封全Weapon或自动Daybreak。 |
 
 本批无新现场或ready；A/B、preview和准确冻结边不变，不将上述具体停止泛化为所有独立任务阻塞。
@@ -66,8 +68,8 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 | `R3-PROUD-ENUM32419-QUERY-TRIAGE` | 已完成；116声明复核，唯一成熟候选直接复用已有148B原窗。[限定判断](CLIENT_72_D02_PROUD_ENUM32419_TRIAGE_20261115.md) | `UpdateRelicProp` 未绑定当前D-02/Proud，不为泛属性显示扩树；不预称整体阻塞。 |
 | `R3-PROUD-PAIR-KEY-CONSUMER-REUSE` | 已完成；17694的52802数组低32显式key首匹配，高32 encoded54724送已验Float getter；正常未命中保留XMM0零。[限定复用](CLIENT_72_D02_PROUD_ENUM32419_TRIAGE_20261115.md) | 共享Pair消费正例成立；Proud目标字段到该consumer来源、实际row/M/nonempty cache+key/同epoch/current及业务alias未知。 |
 | `A-PROMPT-LOCAL-PROVENANCE` | 已完成；本地父followup原文及来源已恢复，见[队列](CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)。 | 子正文未解密；未识别隐藏被拒调用或内因，技术合同未齐、冻结不变。 |
-| `R3-OLD121-AVATAR-PROJECTION-SCOPE` | 已完成；Sol max完成原parser/getter、固定全表、consumer及预算的限定来源审定，主线接受[五字段实施规格](CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_PLAN_20261115.md)。 | 新行值未预先批准；critical限出生，121 Depot已有字段报告、phase6与Talent成果直接复用。 |
-| `R3-OLD121-AVATAR-BASE-GROWTH-PROJECTION` | 已完成；120新+7号复用为121五字段片段、360新+3复用原helper结果；1086 RETURN/0错误，561600/2M、115 pin/121 span、冻结访问0。[结果](CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_20261115.md) | presence unknown；完整Avatar、critical、Skill等未闭，不晋级父项或ready。 |
+| `R3-OLD121-AVATAR-PROJECTION-SCOPE` | 已完成；Sol max完成原parser/getter、固定全表、consumer及预算的限定来源审定，主线接受[五字段实施规格](CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_PLAN_20261115.md)。 | 原卡时critical限出生，后继限定结果见本页2026-11-16；121 Depot已有字段报告、phase6与Talent成果直接复用。 |
+| `R3-OLD121-AVATAR-BASE-GROWTH-PROJECTION` | 已完成；120新+7号复用为121五字段片段、360新+3复用原helper结果；1086 RETURN/0错误，561600/2M、115 pin/121 span、冻结访问0。[结果](CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_20261115.md) | presence unknown；完整Avatar、Skill等未闭，critical基础贡献另见后继，不晋级父项或ready。 |
 | `R3-OLD121-AVATAR-BASE-GROWTH-JAVA` | 已完成；唯一launch_timeout在真实隔离JVM加载旧100 Curve和121片段，1项通过，363结果/factor对照及maps/fetters/loadedAll恢复。[结果](CLIENT_72_D02_OLD121_AVATAR_BASE_GROWTH_20261115.md) | 无DB/服务、Player/Avatar构造或客户端；非完整构建部署或全量恢复。 |
 | `R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS` | 已完成；[成员语义](CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_SEMANTICS_20261115.md)的本体双遍历、同N指针store、中性native+2c↔41105.field203368/+70表示桥及准确缺口限定验收。 | 未消费26072三字段，业务桥和实际M/数组/String/row/current/epoch/ready未知；上游旧listing共用allocator准确A边停在CALL，无新driver/投影/取源规格。 |
 | `R3-NEXT-LAUNCH-WINDOWED-2560X1440` | 已完成；新包与seal离线验收，作者及独立各4项合成测试，见[窗口化准备](CLIENT_72_D02_NEXT_LAUNCH_WINDOWED_20261115.md)。 | 未再启动，实际窗口尺寸未知；未来现场须新fresh和实时ready，不提供自然非空cache。 |
