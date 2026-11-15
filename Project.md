@@ -167,7 +167,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-PROUD-PAIR-CONSUMER-COVERAGE-PLAN | 已完成 | v2限定规划：A为既知receiver声明域；B对固定signature显参仅沿typeDef/elementType/arguments递归匹配字面52802。v1未执行保留，field→业务consumer仍未知。 |
 | R3-PROUD-PAIR-CONSUMER-QUERY | 已完成 | A十receiver共65声明；B固定signature全表326354条筛得6唯一method，未触cap；仅显参声明覆盖，不证明业务。[查询](docs/CLIENT_72_D02_PROUD_PAIR_CONSUMER_QUERY_20261115.md) |
 | R3-PROUD-PAIR-CONSUMER-QUERY-TRIAGE | 已完成 | 65+6声明未给新key/value业务caller，未读body不等于阻塞；type54724为UInt32存储及已验encodedFloat路径，不当普通业务enum。[判断](docs/CLIENT_72_D02_PROUD_PAIR_CONSUMER_TRIAGE_20261115.md) |
-| R3-PROUD-ENUM32419-CONSUMER-QUERY | 进行中 | 只对固定signature做字面enum递归显参过滤，256唯一method上限、第257留证即停；不沿Pair字段偷算enum、不扩树或PE/codec。 |
+| R3-PROUD-ENUM32419-CONSUMER-QUERY | 已完成 | 固定signature 326354条中116唯一字面enum显参匹配；type32419声明与126 literal名称记录，常数值/独立enum flag未知。仅声明覆盖。[查询](docs/CLIENT_72_D02_PROUD_ENUM32419_CONSUMER_QUERY_20261115.md) |
+| R3-PROUD-ENUM32419-QUERY-TRIAGE | 进行中 | 判断是否有直接D-02字段/当前caller的ordinary来源；不为泛属性或可能显示用途扩树，不预称全局阻塞。 |
 | R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS | 已完成 | 本体双遍历、同N指针store、中性native+2c↔41105.field203368/+70表示桥及准确缺口限定验收；未消费26072三字段。上游旧listing的共用allocator调用属于准确A冻结边，停在CALL；业务桥、实际M/数组/String、row/current/epoch及ready未知。见[成员语义](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_SEMANTICS_20261115.md)。 |
 | F-03d3s2-SCENE-ALLOWED-SOURCE-GAP | 已完成 | 既有允许来源有界差距审阅已验；4 pin、三writer、238B工厂及6锚点独核，316B getter直接复用未重验。M1–M4实际receiver/派发与返回/初值/reset关系缺新增允许的固定独立来源，尚无成熟sender；不泛封Scene。见[关系矩阵](docs/CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)。 |
 | R3-PROUD-STRING-INPUT-CONTRACT | 已完成 | 中性输入状态及来源合同准备限定验收，9源pin和独立14/0；未创建采样器/读取器。实际M、pointer、length、UTF16、业务桥及配置同源仍未知，OpenConfig仅候选；不并入 Avatar String 或 Gadget 路线。见[合同](docs/CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)。 |
@@ -482,6 +483,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-PROUD-REMAINING-CARRIER-SEMANTICS | 已完成 | whole carrier按b条件转交及两模式枚举原L限定验收；V/W身份及callee数组消费未知。 | [语义](docs/CLIENT_72_D02_PROUD_REMAINING_CARRIER_SEMANTICS_20261115.md) |
 | R3-PROUD-WHOLE-CARRIER-CONSUMER-SEMANTICS | 已完成 | 五个局部Float getter原caller及输出用途、原List回传限定验收；实际数组归属、业务及全域caller未知。 | [语义](docs/CLIENT_72_D02_PROUD_WHOLE_CARRIER_CONSUMER_SEMANTICS_20261115.md) |
 | R3-PROUD-CARRIER-572215-SEMANTICS | 已完成 | 普通路径反向遍历、跨调用row版本及条件List操作限定验收；目标数组/业务与完整清理合同未知。 | [限定语义](docs/CLIENT_72_D02_PROUD_CARRIER_572215_SEMANTICS_20261115.md) |
+| R3-PROUD-ENUM32419-CONSUMER-QUERY | 已完成 | 固定signature显参116唯一匹配及type32419声明限定验收，不证明业务或全客户端穷尽。 | [查询](docs/CLIENT_72_D02_PROUD_ENUM32419_CONSUMER_QUERY_20261115.md) |
 | R3-PROUD-PAIR-CONSUMER-QUERY-TRIAGE | 已完成 | 声明域有界判断及type54724文字勘误；ordinary业务caller及type-erased MethodInfo/callsite未知。 | [限定判断](docs/CLIENT_72_D02_PROUD_PAIR_CONSUMER_TRIAGE_20261115.md) |
 | R3-PROUD-PAIR-CONSUMER-QUERY | 已完成 | 65条指定receiver声明与固定signature全表6唯一显参匹配；非全客户端或业务穷尽。 | [有界查询](docs/CLIENT_72_D02_PROUD_PAIR_CONSUMER_QUERY_20261115.md) |
 | R3-PROUD-PAIR-CONSUMER-COVERAGE-PLAN | 已完成 | v2明确已知receiver与固定signature显参两域，B第257匹配停；v1未执行保留，不证明业务消费。 | 规格见 `local/migration72/d02-resume-20261115/proud-pair-consumer-plan/` |
