@@ -12,7 +12,7 @@
 
 `R3-OLD-WEAPON239-APPROVED-FIELDS-PLAN` 已完成限定资料及依赖审阅：239种/1663行目标Weapon键中，11101的1种/27行可复用既验六键片段，其余238种/1636行缺获批读出与限定loader；已存11101和11501的行级ctor/parser轨迹命中准确A入口，caller site未知。[来源与停止点](docs/CLIENT_72_D02_OLD_WEAPON239_SOURCE_BLOCKER_20261116.md)；仅该新值需求受相关依赖约束，继续其他独立工作。
 
-`R3-ACTIVE-ITEM-REMAINING-SCOPE` 已完成限定必要性及两个普通资料包规划，`R3-ACTIVE-ITEM-SAVED-REFS` 已完成固定快照保存引用投影：候选Reliquary的main 28、append 22及TPS两类各12个不同正引用已限定统计，121个Avatar保存TPS武器列表均显式空；仅本旧号、非目标资源值或恢复证明。[结果](docs/CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md)。有限[metadata声明查询](docs/CLIENT_72_D02_ACTIVE_ITEM_BASE_METADATA_20261116.md)及[旧号Depot三键纯host投影](docs/CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md)已完成；Depot Java后继因Skill片段缺口阻塞。[三个资源入口首指令来源](docs/CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md)已限定验收，原完整ctor窗仍缺边界；固定三blob候选包与Skill条件输入审定继续，不预称row或初始化已验。
+`R3-ACTIVE-ITEM-REMAINING-SCOPE` 已完成限定必要性及两个普通资料包规划，`R3-ACTIVE-ITEM-SAVED-REFS` 已完成固定快照保存引用投影：候选Reliquary的main 28、append 22及TPS两类各12个不同正引用已限定统计，121个Avatar保存TPS武器列表均显式空；仅本旧号、非目标资源值或恢复证明。[结果](docs/CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md)。有限[metadata声明查询](docs/CLIENT_72_D02_ACTIVE_ITEM_BASE_METADATA_20261116.md)及[旧号Depot三键纯host投影](docs/CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md)已完成；Depot Java后继因Skill片段缺口阻塞。[三个资源入口首指令来源](docs/CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md)与[三blob候选ID覆盖](docs/CLIENT_72_D02_SAVED_REF_CANDIDATE_COVERAGE_20261116.md)已限定验收；原完整ctor窗仍缺边界，Skill条件输入继续审定，target row、值与初始化未知。
 
 `A-PROMPT-LOCAL-PROVENANCE` 此前的明文恢复验收已撤回：已定位的是原事件和不透明序列化字面串，仍缺可核对的执行请求正文；`A-PROMPT-PLAINTEXT-RECOVERY` 阻塞，见[纠错](docs/CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)。原平台错误仍已恢复；A/B及preview冻结未解除，普通独立工作继续。
 
@@ -195,7 +195,10 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-ACTIVE-ITEM-REMAINING-SCOPE | 已完成 | 四族冷读必要性与metadata、保存引用两个普通资料包限定规划；不是目标资源值或完整恢复许可。[范围](docs/CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md) |
 | R3-ACTIVE-ITEM-SAVED-REFS | 已完成 | 固定快照全EOF及旧键匹配；候选Reliquary main 28/append 22与TPS两类各12不同正引用，121 Avatar TPS武器列表显式空；不证明target资源。[结果](docs/CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md) |
 | R3-ACTIVE-ITEM-BASE-DERIVED-METADATA | 已完成 | 固定89748条记录、两个root后代声明与三backing控制限定查询；不由继承或形状认定业务族、实际值或ABI。[结果](docs/CLIENT_72_D02_ACTIVE_ITEM_BASE_METADATA_20261116.md) |
-| R3-ACTIVE-ITEM-NEXT-INPUTS-TRIAGE | 已完成 | Material/Reliquary ctor来源与实际保存引用候选存在性限定规格已定；固定三blob候选包进行中，未验新row或值。[入口来源](docs/CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md) |
+| R3-ACTIVE-ITEM-NEXT-INPUTS-TRIAGE | 已完成 | Material/Reliquary ctor来源与实际保存引用候选存在性限定规格已定；三blob候选覆盖后续已验，未验target row或值。[入口来源](docs/CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md) |
+| R3-SAVED-REF-CANDIDATE-BLOB-PLAN | 已完成 | 固定来源、三个blob及保存引用的候选存在性范围和预算限定规划。[结果](docs/CLIENT_72_D02_SAVED_REF_CANDIDATE_COVERAGE_20261116.md) |
+| R3-SAVED-REF-CANDIDATE-BLOB-FETCH-COVERAGE | 已完成 | 三固定公开blob核身后，28/22/12保存引用各唯一命中；仅候选ID存在性，不证明target row/值。[结果](docs/CLIENT_72_D02_SAVED_REF_CANDIDATE_COVERAGE_20261116.md) |
+| R3-SAVED-REF-CANDIDATE-COVERAGE-REVIEW | 已完成 | 主线限定审阅覆盖及来源账；HTTP状态数字由成功门禁路径推得，原账被checked覆盖。[范围](docs/CLIENT_72_D02_SAVED_REF_CANDIDATE_COVERAGE_20261116.md) |
 | R3-ACTIVE-MATERIAL-RESOURCE-CTOR-SOURCE | 阻塞 | 原完整窗在唯一pdata边界门停止，body 0；缺可追溯完整边界，入口1B另项完成不追认原失败。[来源](docs/CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md) |
 | R3-ACTIVE-RELIQUARY-RESOURCE-CTOR-SOURCE | 阻塞 | 原完整窗在唯一pdata边界门停止，body 0；缺可追溯完整边界，入口1B另项完成不追认原失败。[来源](docs/CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md) |
 | R3-OLD121-SKILL-RESOURCE-ENTRY-1B-SOURCE | 已完成 | 准确入口1B为ret，仅条件入口至return transfer，无store/CALL；完整end/初始化/ABI未知。[来源](docs/CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md) |
@@ -540,6 +543,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-OLD121-DEPOT-CORE-FRAGMENT-PROJECTION | 已完成 | 121个fragmentOnly及逐字段既有getter引用；Skill值、Java和当前采用未证。 | [限定投影](docs/CLIENT_72_D02_OLD121_DEPOT_CORE_FRAGMENT_20261116.md) |
 | R3-ACTIVE-ITEM-NEXT-INPUTS-TRIAGE | 已完成 | 两ctor来源及固定保存引用候选的限定输入规划，非新row验收。 | [入口来源](docs/CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md) |
 | R3-OLD121-SKILL-RESOURCE-ENTRY-1B-SOURCE、R3-ACTIVE-MATERIAL-RESOURCE-ENTRY-1B-SOURCE、R3-ACTIVE-RELIQUARY-RESOURCE-ENTRY-1B-SOURCE | 已完成 | 三个准确入口各一条1B ret；完整物理边界、ABI及初始化未知。 | [来源与分账](docs/CLIENT_72_D02_RESOURCE_ENTRY_SOURCE_20261116.md) |
+| R3-SAVED-REF-CANDIDATE-BLOB-PLAN、R3-SAVED-REF-CANDIDATE-BLOB-FETCH-COVERAGE、R3-SAVED-REF-CANDIDATE-COVERAGE-REVIEW | 已完成 | 三固定候选blob的62个保存引用均唯一命中；不证明target值、业务alias或ready。 | [限定覆盖与HTTP账](docs/CLIENT_72_D02_SAVED_REF_CANDIDATE_COVERAGE_20261116.md) |
 | R3-PROUD-ENUM32419-CONSUMER-QUERY | 已完成 | 固定signature显参116唯一匹配及type32419声明限定验收，不证明业务或全客户端穷尽。 | [查询](docs/CLIENT_72_D02_PROUD_ENUM32419_CONSUMER_QUERY_20261115.md) |
 | R3-PROUD-PAIR-CONSUMER-QUERY-TRIAGE | 已完成 | 声明域有界判断及type54724文字勘误；ordinary业务caller及type-erased MethodInfo/callsite未知。 | [限定判断](docs/CLIENT_72_D02_PROUD_PAIR_CONSUMER_TRIAGE_20261115.md) |
 | R3-PROUD-PAIR-CONSUMER-QUERY | 已完成 | 65条指定receiver声明与固定signature全表6唯一显参匹配；非全客户端或业务穷尽。 | [有界查询](docs/CLIENT_72_D02_PROUD_PAIR_CONSUMER_QUERY_20261115.md) |
