@@ -16,7 +16,7 @@
 
 | 必要出口 | 准确缺输入 | 已有覆盖 / 本轮动作 |
 | --- | --- | --- |
-| Skill/energy → Depot实际加载与旧号属性恢复 | 包括10068的121行costElemVal/specialEnergyMin/Max仍缺允许target合同/真实值/独立非零oracle，影响Avatar.setCurrentEnergy/recalcStats | [367本轮+2旧片段](CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md)和[真实369Skill→121Depot Java](CLIENT_72_D02_OLD121_SKILL_DEPOT_JAVA_20261116.md)已通过，120新正向energy绑定解除；不等raw-id/reader，不建Player或假cost。必要成本后继继续，ctor缺边界单窗不重取/放宽或加作已闭出口门 |
+| Skill/energy → Depot实际加载与旧号属性恢复 | 121行costElemVal已闭；specialEnergyMin/MAX cap与START全121覆盖及实际maximum采用仍需准确来源，影响Avatar.setCurrentEnergy/recalcStats | [367本轮+2旧片段](CLIENT_72_D02_SKILL_ELEMENT_HOST_BATCH_20261116.md)和[真实369Skill→121Depot Java](CLIENT_72_D02_OLD121_SKILL_DEPOT_JAVA_20261116.md)已通过，120新正向energy绑定解除；不等raw-id/reader，不建Player或假cost。[121普通cost字段](CLIENT_72_D02_SKILL_ORDINARY_COST_20261116.md)已实际闭合，后继真实cost-aware Java及特殊字段另验；ctor缺边界单窗不加作已闭出口门 |
 | Weapon/Material/Relic必要行 | Weapon其他238种/1636行独立值；Material literal数值/row/consumer；Relic rank/set具名来源或同源输入+非零oracle排除标签互换 | 11101既验片段保留；本地审阅未给成熟包。具体公开问题尚待主线分片，未证明来源不存在；已知Weapon A构造返回依赖冻结 |
 | Proud实际资源/当前采用 | 目标字段到共享Pair的准确桥、实际row/M、非空cache/key、同epoch及独立值 | 148B共享消费正例、Float条件合同已验；不重复SDK页采样，不创建Default/cache；普通新来源尚未查尽 |
 | Scene/Team/Entity必要合同 | M1 producer→同次+5d60；M2同receiver +f0/返回R；M3首次消费前R+18及writer顺序；M4同R release/reacquire/reset | 238B工厂、writer/getter来源复用；本地暂无新输入。World slot114及getter/Recreate准确A返回依赖冻结，普通M1–M4来源问题保留 |
