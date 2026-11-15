@@ -131,6 +131,9 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 
 | 工作包 | 状态 | 当前范围和下一判断 |
 | --- | --- | --- |
+| R3-SKILL-ENERGY-RESOURCE-BRANCH-SOURCES-20261116 | 已完成 | 准确完整457/454B静态源及FightProp职责，将同energy Skill+98绑定普通cost、+74绑定特殊START；不是MAX cap。实际值由后继host另验。[来源](docs/CLIENT_72_D02_SKILL_ENERGY_BRANCH_FIELDS_20261116.md) |
+| R3-SKILL-ENERGY-INIT-CONSUMER-SOURCE-20261116 | 已完成 | 准确完整525B/137条为53767对象延迟注册/合并，没有同Skill字段→MAX_SPECIAL职责桥；不继续两个通用后继。[范围](docs/CLIENT_72_D02_SKILL_ENERGY_BRANCH_FIELDS_20261116.md) |
+| R3-SKILL-SPECIAL-CAP-RETAINED-NAME-QUERY-20261116 | 已完成 | 四类固定既存来源的一次有限具名查询未给出准确特殊上限字段桥；保留查询边界，不等全域无来源。最小缺同target88602字段→MAX_SPECIAL职责或同revision字段身份schema。[准确缺口](docs/CLIENT_72_D02_SKILL_ENERGY_BRANCH_FIELDS_20261116.md) |
 | R3-OLD121-SKILL-SPECIAL-START-HOST-PILOT-20261116 | 已完成 | 同源11065/11145两个原bit30 present字段，定宽prefix精确定位8B，模加Float得START100.0/50.0；独立位/逐字节carry/逆wire及消费者职责通过。Java specialEnergyMax是START需求，specialEnergyMin/MAX cap不填。[结果](docs/CLIENT_72_D02_SKILL_SPECIAL_START_20261116.md) |
 | R3-OLD121-SKILL-ORDINARY-COST-HOST-BATCH-20261116 | 已完成 | 121能量Skill普通cost字段闭合：119present/2源确证absent逻辑+0，10019复用后118word/472B；位/字节/Float/逆wire/exactint通过。369合片含121三键与248原两键，特殊START/MAX cap及maximum采用另验。[结果](docs/CLIENT_72_D02_SKILL_ORDINARY_COST_20261116.md#121-行同源批量) |
 | R3-OLD121-SKILL-ORDINARY-COST-HOST-PILOT-20261116 | 已完成 | 同源10019准确4B，原parser XOR得到Float bits42a00000/实际cost80，独立当前元素能量与同Skill+98比较闭合职责；byte/Float位/逆wire/exactint通过。只此字段，不代121或maximum采用。[结果](docs/CLIENT_72_D02_SKILL_ORDINARY_COST_20261116.md) |

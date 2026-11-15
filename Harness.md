@@ -1,3 +1,5 @@
+2026-11-16 完成[能量字段457/454B与525B静态来源、特殊cap有限具名查询](docs/CLIENT_72_D02_SKILL_ENERGY_BRANCH_FIELDS_20261116.md)：普通+98/current元素cost和特殊+74/START职责分离；525B仅对象注册/延迟合并，不扩通用树。source专题SHA`b4bb22d60c5c08967f7f2a362f34fdad9c59385e76f4cead172829d0f4889073`，各raw/result/driver固定于忽略目录。MAX cap仍缺同目标字段职责桥或有revision/字段身份依据的schema，非新增native门或raw-id前置；数值由后继host独立验收，不重跑已验来源。
+
 2026-11-16 `R3-OLD121-SKILL-SPECIAL-START-HOST-PILOT-20261116`完成[两个特殊START字段](docs/CLIENT_72_D02_SKILL_SPECIAL_START_20261116.md)：11065=100.0、11145=50.0，exact8B，原bit30/prefix/独立byte-index及ADDcarry/Float位/逆wire通过。result SHA`b3b8921b81c709971a87f915ce23d8e6947e9159414cc8e63ba3746466ca00df`；仅Java specialEnergyMax/START需求，specialEnergyMin/MAX cap未知，其余119分支另核，无native/JVM/部署。
 
 2026-11-16 `R3-OLD121-SKILL-ORDINARY-COST-HOST-BATCH-20261116`完成[121普通cost字段批量](docs/CLIENT_72_D02_SKILL_ORDINARY_COST_20261116.md#121-行同源批量)：119present/2原PXOR源缺席逻辑+0，10019复用后exact472B，0新mask；369合片=121三键+248原两键。结果SHA`f3a82460f93779bbc226ef8fe877c62a7e3586d0b6a0644d4ecf334f3833c0a8`，242430B输出；同row/位/逐字节XOR/Floatbits/逆wire/exactint通过。特殊START/MAX cap、实际maximum采用与Java消费另验，无native/JVM/部署。
