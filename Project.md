@@ -12,7 +12,7 @@
 
 `R3-OLD-WEAPON239-APPROVED-FIELDS-PLAN` 已完成限定资料及依赖审阅：239种/1663行目标Weapon键中，11101的1种/27行可复用既验六键片段，其余238种/1636行缺获批读出与限定loader；已存11101和11501的行级ctor/parser轨迹命中准确A入口，caller site未知。[来源与停止点](docs/CLIENT_72_D02_OLD_WEAPON239_SOURCE_BLOCKER_20261116.md)；仅该新值需求受相关依赖约束，继续其他独立工作。
 
-`R3-ACTIVE-ITEM-REMAINING-SCOPE` 已完成限定必要性及两个普通资料包规划，`R3-ACTIVE-ITEM-SAVED-REFS` 已完成固定快照保存引用投影：候选Reliquary的main 28、append 22及TPS两类各12个不同正引用已限定统计，121个Avatar保存TPS武器列表均显式空；仅本旧号、非目标资源值或恢复证明。[结果](docs/CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md)；有限metadata声明查询仍进行中，继续其他依赖满足的工作。
+`R3-ACTIVE-ITEM-REMAINING-SCOPE` 已完成限定必要性及两个普通资料包规划，`R3-ACTIVE-ITEM-SAVED-REFS` 已完成固定快照保存引用投影：候选Reliquary的main 28、append 22及TPS两类各12个不同正引用已限定统计，121个Avatar保存TPS武器列表均显式空；仅本旧号、非目标资源值或恢复证明。[结果](docs/CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md)。有限[metadata声明查询](docs/CLIENT_72_D02_ACTIVE_ITEM_BASE_METADATA_20261116.md)已完成，Material/Reliquary后继输入及旧号Depot三键范围正分别审定；继续其他依赖满足的工作。
 
 **用户已指示继续任务；D-02 / F-05 / D02-R6 六项客户端验收仍为0/6。** 原Scene reader与Proud setter首发包及其后继限定成果直接复用，不重新排队。Proud三字段布局、166B Float getter和共享Pair的key检索→encoded value→getter消费正例已限定验收；Proud目标字段到该consumer的来源绑定、业务alias与实际row仍未知，见[复用判断](docs/CLIENT_72_D02_PROUD_ENUM32419_TRIAGE_20261115.md)。existing-cache离线准备已验，旧cache1启动超时取消、sample未派；本轮一次采样为cold-cache，实际输入未取得。Float正常路径条件合同与机械断言已限定验收，三字段消费桥及实际值仍未知；启动回执超时归因、薄封装修复及新身份绑定接线已限定离线验收，本轮真实Launch及一次采样后以cold-cache停止，现场回执与收尾已独立审阅通过；实际M/getter/row/current/epoch未知。新现场须另取实时ready，禁止computer-use。Scene自然receiver/初始化及World slot114保留准确缺口，已确认的共用allocator返回依赖与A/B拒绝项冻结。下一步审核准确依赖与缺少的来源输入，不自动另开UI或全codec窗口。详细研究过程和历史现场见[交接](HANDOFF2.md)及[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。
 
@@ -192,7 +192,9 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-OLD-WEAPON239 新行六键读出及限定loader | 阻塞 | 已知ctor/parser构造和返回涉及冻结A入口；尚无允许且独立的逐行值来源与oracle。保留11101已验成果，不泛封其他Weapon工作。 |
 | R3-ACTIVE-ITEM-REMAINING-SCOPE | 已完成 | 四族冷读必要性与metadata、保存引用两个普通资料包限定规划；不是目标资源值或完整恢复许可。[范围](docs/CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md) |
 | R3-ACTIVE-ITEM-SAVED-REFS | 已完成 | 固定快照全EOF及旧键匹配；候选Reliquary main 28/append 22与TPS两类各12不同正引用，121 Avatar TPS武器列表显式空；不证明target资源。[结果](docs/CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md) |
-| R3-ACTIVE-ITEM-BASE-DERIVED-METADATA | 进行中 | 有限继承与声明查询，结果另行验收；不预先认定业务族或资源值。 |
+| R3-ACTIVE-ITEM-BASE-DERIVED-METADATA | 已完成 | 固定89748条记录、两个root后代声明与三backing控制限定查询；不由继承或形状认定业务族、实际值或ABI。[结果](docs/CLIENT_72_D02_ACTIVE_ITEM_BASE_METADATA_20261116.md) |
+| R3-ACTIVE-ITEM-NEXT-INPUTS-TRIAGE | 进行中 | 审定已具名Material/Reliquary两个ctor source-only及实际保存引用候选存在性的输入规格；未采两ctor或新值。 |
+| R3-OLD121-DEPOT-CORE-FRAGMENT-SCOPE | 进行中 | 只读判断既有全121 Depot的id/skills/energy原数据能否形成host三键fragment；不重跑Depot/phase6，未批准新投影、Java或当前采用，不以空Skill/None掩盖367缺值。 |
 | R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS | 已完成 | 本体双遍历、同N指针store、中性native+2c↔41105.field203368/+70表示桥及准确缺口限定验收；未消费26072三字段。上游旧listing的共用allocator调用属于准确A冻结边，停在CALL；业务桥、实际M/数组/String、row/current/epoch及ready未知。见[成员语义](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_SEMANTICS_20261115.md)。 |
 | F-03d3s2-SCENE-ALLOWED-SOURCE-GAP | 已完成 | 既有允许来源有界差距审阅已验；4 pin、三writer、238B工厂及6锚点独核，316B getter直接复用未重验。M1–M4实际receiver/派发与返回/初值/reset关系缺新增允许的固定独立来源，尚无成熟sender；不泛封Scene。见[关系矩阵](docs/CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)。 |
 | R3-PROUD-STRING-INPUT-CONTRACT | 已完成 | 中性输入状态及来源合同准备限定验收，9源pin和独立14/0；未创建采样器/读取器。实际M、pointer、length、UTF16、业务桥及配置同源仍未知，OpenConfig仅候选；不并入 Avatar String 或 Gadget 路线。见[合同](docs/CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)。 |
@@ -522,6 +524,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-OLD121-AVATAR-CRITICAL-JAVA | 已完成 | 真实ResourceLoader加载121七键片段，1项通过、242结果一致及状态保持；无Player构造。 | [实际JVM](docs/CLIENT_72_D02_OLD121_AVATAR_CRITICAL_20261116.md) |
 | R3-ACTIVE-ITEM-REMAINING-SCOPE | 已完成 | 四族必要性与两个独立资料包限定规划，未批准目标值。 | [范围与结果](docs/CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md) |
 | R3-ACTIVE-ITEM-SAVED-REFS | 已完成 | 固定快照必要引用投影、旧键逐项匹配和完整EOF；不证明目标资源或Player恢复。 | [限定投影](docs/CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md) |
+| R3-ACTIVE-ITEM-BASE-DERIVED-METADATA | 已完成 | 固定声明及backing引用有限查询和三控制通过；不证明业务族、实际行值或初始化。 | [范围与执行](docs/CLIENT_72_D02_ACTIVE_ITEM_BASE_METADATA_20261116.md) |
 | R3-PROUD-ENUM32419-CONSUMER-QUERY | 已完成 | 固定signature显参116唯一匹配及type32419声明限定验收，不证明业务或全客户端穷尽。 | [查询](docs/CLIENT_72_D02_PROUD_ENUM32419_CONSUMER_QUERY_20261115.md) |
 | R3-PROUD-PAIR-CONSUMER-QUERY-TRIAGE | 已完成 | 声明域有界判断及type54724文字勘误；ordinary业务caller及type-erased MethodInfo/callsite未知。 | [限定判断](docs/CLIENT_72_D02_PROUD_PAIR_CONSUMER_TRIAGE_20261115.md) |
 | R3-PROUD-PAIR-CONSUMER-QUERY | 已完成 | 65条指定receiver声明与固定signature全表6唯一显参匹配；非全客户端或业务穷尽。 | [有界查询](docs/CLIENT_72_D02_PROUD_PAIR_CONSUMER_QUERY_20261115.md) |

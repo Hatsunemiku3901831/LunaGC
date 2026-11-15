@@ -18,7 +18,9 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 | `R3-OLD-WEAPON239-APPROVED-FIELDS-PLAN` | 已完成；目标Weapon交239种/1663活动行，11101已验六键复用1种/27行，其余238种/1636行缺获批片段和限定loader。[来源与行级依赖](CLIENT_72_D02_OLD_WEAPON239_SOURCE_BLOCKER_20261116.md) | 11101/11501已存行级ctor各一次、parser各两次A model命中，原caller PC未知；不是新拒绝，不泛封全Weapon或自动Daybreak。 |
 | `R3-ACTIVE-ITEM-REMAINING-SCOPE` | 已完成；四族冷读必要性及metadata、保存引用两个普通包限定规划。[范围](CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md) | 不批准目标资源值或完整恢复。 |
 | `R3-ACTIVE-ITEM-SAVED-REFS` | 已完成；12254 Item/121 Avatar全EOF及旧键匹配，候选Reliquary main 28/append 22不同正引用、TPS两类各12不同正引用；121 Avatar TPS武器列表显式空。[结果](CLIENT_72_D02_ACTIVE_ITEM_SAVED_REFS_20261116.md) | 仅固定旧号保存数据，不证target资料/槽位/恢复；不省略配件恢复或自动授予条件。最终私有脚本补对照后未重扫BSON。 |
-| `R3-ACTIVE-ITEM-BASE-DERIVED-METADATA` | 进行中；有限继承/声明查询另行验收。 | 不预先认定业务族或目标资源值。 |
+| `R3-ACTIVE-ITEM-BASE-DERIVED-METADATA` | 已完成；v2全89748条、88083 parent边、两root各8后代，18声明/186 field/274 method/9 backing引用及三控制通过。[查询与修正](CLIENT_72_D02_ACTIVE_ITEM_BASE_METADATA_20261116.md) | v1访问0/root controls未查保留；有限声明不证明业务族、实际行值、A-free初始化或ABI。 |
+| `R3-ACTIVE-ITEM-NEXT-INPUTS-TRIAGE` | 进行中；审定已具名Material/Reliquary两个ctor source-only及实际保存引用候选存在性规格。 | 未采两ctor、未取得新值，规格校对后才派执行。 |
+| `R3-OLD121-DEPOT-CORE-FRAGMENT-SCOPE` | 进行中；判断既有全121 Depot的id/skills/energy数据能否只读形成host三键fragment。 | 不重跑Depot/phase6，未批准新投影/Java/当前采用，不以空Skill或None掩盖367缺值。 |
 
 本批无新现场或ready；A/B、preview和准确冻结边不变，不将上述具体停止泛化为所有独立任务阻塞。
 
