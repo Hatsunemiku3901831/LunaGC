@@ -31,3 +31,20 @@
 REA `inspect_binary_layout`在本机Windows不支持，边界任务沿固定已有helper完成回退。首次边界尝试在identity阶段因固定helper的执行环境未绑定`ast`而报`NameError: name 'ast' is not defined`；`stockHashReads=[]`、`peReads=[]`，body/read/decode为0。该失败和原脚本保留于原目录；run2只补`ast`绑定后通过，不追认首次成功。
 
 原件分别保存在忽略目录`local/migration72/d02-incremental-relic-codex-boundary-20261116/`（失败与`run2/`）和`local/migration72/d02-incremental-relic-codex-source-20261116/`。完整asm、references、body、driver、输入账及manifest仅留本机；共享文档只提交本摘要。集成只读核对固定result/body和manifest身份，未重跑PE、采集或测试；没有运行代码、Proto、配置、补丁或资源变更，无构建或部署。
+
+## 两个typed UI转交路径：来源与配对局部语义
+
+`A2-RELIC-REMAINING-TYPED-20261116/PAIRED-UI-TRANSFER`已完成两条新准确来源及其有界局部转交分析；不改变上述2792B Codex整窗的`semanticInterpretation=false`或其中准确A冻结边。
+
+| 方法 / 完整来源 | body SHA-256 | result SHA-256 |
+| --- | --- | --- |
+| 60698.m503451，`[14d27a6a0,14d27a6fc)`92B/23条 | `c1bcf9bdc87494e2cd3eeb869f0c60107899330ff8b94acfb0fcec80916b79a5` | `50dc95e3ef63b53a0499ed76011f1772772813179c27fbc6ecd5366bae73d5ae` |
+| 49417.m411125，`[14cc953d0,14cc95462)`146B/35条 | `ca61bd8d4312f9724a273c7ae796fc2f7c6130f635122307fbba0feb8341156c` | `bf6484596194a643738bcdd770f21e0cbc7835b4d81a838aff072204574a8e5e` |
+
+两个来源共238B/58条，分别以固定metadata/真实签名、fresh AOT和完整pdata边界取得，每body只读/解码一次；两个source结果均未报告直接已知冻结site/target。它们各自的source阶段仍记`semanticInterpretation=false`，后续配对proof只验下述局部值流，不追动态实现或Codex返回。两个任务均无callee/global内容/xdata/payload读取或目标CPU/RPM/client/JVM/DB/build/service。
+
+真实typed链为`49417 → parent61340.field303743/+38:60698 → parent16396.field77631/+10:MonoSceneUISetup21946`。503451接收`(this60698 Q, resource74316 X, uint32 U)`；普通分派条件满足且setup非空时，从`Q+10`取得setup，把原X/U原样转为`(setup,X,U)`，在`14d27a6c9`尾跳`ShowCodexReliquary/14c3fa5a0`。411125接收`(this49417 Z,X,U)`；其普通分支先取`[Z+38]=Q`，再内联同一setup与分派过程，于`14cc9540b`直接尾跳Codex。**411125并不CALL503451。**
+
+动态分支只证明原X/U与对应Q/Z的参数转交到`14e1c9920`，未读取自然分派flag或动态接收者global内容、未追尾目标实现。空receiver/setup分支保留原helper调用，不假设异常分类或返回。完整两body均没有X或raw46431成员读；互换rank/set候选标签不改变这些已观察的本地指令或转交，所以这两条UI路径不能区分rankLevel/setId。此有限结论不套用到60446的字典及byRef边；其public501523独立来源线另行研究。
+
+配对proof为`local/migration72/d02-incremental-relic-remaining-typed-20261116/consumer411125-and-503451-route-proof.private.json`，8674B，SHA-256 `f2587593c1c74e6be4150701e75a5fca014d8b22cbd4b7e1388938862d6e628d`。原source分别在`local/migration72/d02-incremental-relic-consumer503451-source-20261116/`和`d02-incremental-relic-consumer411125-source-20261116/`，各自manifest SHA为`310b6ad85d76bdeba405762954687dc2dcf6dde474475bee26eaad9a6c4d5e07` / `96edf99a305a6e8e0aca02f23a75c54071ead364b64e55fd5eb7d5be8dfcad8b`。集成只读核上述body/result/manifest/proof身份全匹配，未重拼、采集或运行测试；没有动态/客户端或回归验收。A1与Relic其他独立路径继续，rank/set、资源ready和D-02六项0/6保持。
