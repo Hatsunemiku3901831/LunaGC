@@ -13,6 +13,7 @@ D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开�
 | `R3-OLD121-SKILL-RESOURCE-CTOR-WINDOW` | 阻塞；一次采集五stock/pins/metadata/fresh AOT通过，`149b59940` 在完整exception目录 `containing=[]` / `beginMultiplicity=[]`，选中pdata/body/read均0；无code hash/指令或重试。[来源缺口](CLIENT_72_D02_OLD121_SKILL_SOURCE_BLOCKER_20261116.md) | 两列表非独立负证据，后者是前者投影；缺同固定PE的准确完整边界或已验同输入完整body+边界，不猜16B、下一metadata地址、截RET或放宽原规格。旧manifest/来源摘要未创建。 |
 | `R3-OLD121-SKILL-CTOR-BOUNDARY-TRIAGE` | 已完成；只读限定归因未发现gate/index错用，有限既有来源未找到精确完整ctor边界。[归因与解除](CLIENT_72_D02_OLD121_SKILL_SOURCE_BLOCKER_20261116.md) | 非新安全拒绝，未授权重取、放宽或执行；不泛封全Skill/R3/A。 |
 | `R3-OLD121-CRITICAL-PROJECTION-SCOPE` | 进行中；Sol max审定两出生critical installer及具名20/22能否形成实际旧号121的基础贡献片段。 | 未批准跨行值或执行；独立路径、codec、model及允许fixture需先明确。出生限制保持。 |
+| `R3-OLD-WEAPON239-APPROVED-FIELDS-PLAN` | 已完成；目标Weapon交239种/1663活动行，11101已验六键复用1种/27行，其余238种/1636行缺获批片段和限定loader。[来源与行级依赖](CLIENT_72_D02_OLD_WEAPON239_SOURCE_BLOCKER_20261116.md) | 11101/11501已存行级ctor各一次、parser各两次A model命中，原caller PC未知；不是新拒绝，不泛封全Weapon或自动Daybreak。 |
 
 本批无新现场或ready；A/B、preview和准确冻结边不变，不将上述具体停止泛化为所有独立任务阻塞。
 
