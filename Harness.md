@@ -1,3 +1,5 @@
+2026-11-16 进度复核与方向微调（基线`c0e3f16`）：369 Skill、121 cost/START和两次真实Depot加载已闭；仓库检索只读候选/字段线索复用，未引入新上游运行代码。本次仅调整[Project](Project.md)与[交接](HANDOFF2.md)，将UP-72-N1/N2的准确字段职责、Material/Weapon入口增量检索列待开始；实现/现场仍缺准确输入，六项仍0/6，未执行新研究或测试。
+
 2026-11-16 `D02-RESUME-INTEGRATION-20261116`条件2交接：本轮已按继续指令完成所有有成熟允许输入的必要独立项，现无可独立立即实施项，等待准确外部输入/专项限制解除；不是用户暂停，也不宣称全网无来源。369 Skill、121cost/START和双JVM均按限定范围通过，六项仍0/6、R4–6未开始。交接前23本地提交双身份实际全符、准确文件范围及备份见[HANDOFF2](HANDOFF2.md)，HANDOFF只追加；交接提交后一次最终Git/保护/进程端口核对在`local/migration72/d02-resume-20261116/condition2-handoff-20261116/final-state.private.json`，不预填未核结果。无运行变更，未部署/无需重启，不新ready或客户端。
 
 2026-11-16 `R3-WEAPON-ONE-NEW-FIELD-HOST-DEPENDENCY-ASSESSMENT-20261116`完成[首span与新字段独立性判断](docs/CLIENT_72_D02_SHARED_STRING_CURSOR_SOURCE_20261116.md)，shared专题最终5088B/SHA`bd9e1d4e36749b9a61fadbb8287c54f3ca68489fc15cb315e73a10b82acd779c`。wrapper[4,400)不等父F入口，后继11201不在239必要cohort；旧hash/RIP refs不足完整raw字段语法，缺允许独立wrapper→raw父cursor桥，未新取被冻结构造路径。准确assessment6904B/SHA`f008fa394121d96e46d2d4304921be61a2a5d1b21e6480c880f62015d0682d3e`。P_tail+N不升P_entry，无新raw值/新窗/运行或历史重跑。

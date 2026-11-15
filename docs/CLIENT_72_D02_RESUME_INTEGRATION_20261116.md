@@ -1,6 +1,6 @@
 # D-02 恢复集成活动检查点
 
-任务 `D02-RESUME-INTEGRATION-20261116`，接手 HEAD `420002edaa07bf7050ba51a90dcc734332c36475`。用户已明确解除旧暂停，本轮持续实施至主线审定条件2：当前必要独立剩余项均缺准确外部输入或受既有专项限制，已无可独立立即实施项，等待对应输入/限制解除；不是用户暂停或全网无来源结论。D-02 / F-05 / D02-R6仍0/6，R1/R2/R3在列明前沿阻塞，R4/R5/R6待开始，详见[最终交接](../HANDOFF2.md)。
+任务 `D02-RESUME-INTEGRATION-20261116`，研发接手 HEAD `420002edaa07bf7050ba51a90dcc734332c36475`，收口 HEAD `c0e3f16`。上一轮在已审来源范围内按条件2停止实施：当前没有成熟必要字段/现场合同，等待准确输入；不是用户暂停，也不证明公开检索穷尽。本次仅复核状态与微调下一轮排期，UP-72-N1/N2有界来源增量待开始；既有实现出口仍阻塞，D-02 / F-05 / D02-R6仍0/6，R4/R5/R6待开始。历史实证与本次方向见[交接](../HANDOFF2.md)，当前任务与验收见[Project](../Project.md)。
 
 ## 接手核对与已验复用
 
@@ -21,7 +21,7 @@
 | Weapon/Material/Relic必要行 | Weapon其他238种/1636行的独立跨行host cursor/framing、key/span及六字段presence/转换/数组边界合同；Material有效backend+18起点/首refill与实际row语法/keyspan/cursor（94 literal与准确payload已闭）；Relic rank/set具名来源或同源输入+非零oracle排除标签互换 | 11101既验片段保留；[Material literal](CLIENT_72_D02_MATERIAL_SPECIAL_ENUM_CONSTANTS_20261116.md)与[准确payload](CLIENT_72_D02_MATERIAL_EXACT_PAYLOAD_20261116.md)已闭，Material最小row语法另研究，Relic缺准确具名consumer不泛扫18方法；Weapon固定raw、11101 span/六字段职责可复用，冻结仅已知旧native ctor/parser A构造返回路径；潜在纯host合同尚未准入，不泛封整族 |
 | Proud实际资源/当前采用 | 目标字段到共享Pair的准确桥、实际row/M、非空cache/key、同epoch及独立值 | 148B共享消费正例、Float条件合同已验；不重复SDK页采样，不创建Default/cache；普通新来源尚未查尽 |
 | Scene/Team/Entity必要合同 | M1 producer→同次+5d60；M2同receiver +f0/返回R；M3首次消费前R+18及writer顺序；M4同R release/reacquire/reset | 238B工厂、writer/getter来源复用；本地暂无新输入。World slot114及getter/Recreate准确A返回依赖冻结，普通M1–M4来源问题保留 |
-| SDK自然连接与认证 | 新的固定允许来源闭合Init/env→route采用→认证/完整校验及会话交换 | map/HTTP/key局部结果复用；B组合loader及其依赖冻结，未认定全部SDK都依赖B；精确定向公开问题未完成 |
+| SDK自然连接与认证 | 新的固定允许来源闭合Init/env→route采用→认证/完整校验及会话交换 | map/HTTP/key局部结果复用；B组合loader及其依赖冻结，未认定全部SDK都依赖B；本批限定公开检索已完成但未给目标自然链；未覆盖范围只按下一轮具体缺口增量处理 |
 | R4→R5→R6 | 上述必要合同、最终发送/原消费者顺序、同旧号全121角色和实际物品装备postLoad/recalc/save | 无成熟运行包，暂不部署。成熟最小合同回传后由唯一集成者实施、相关验证、本地提交；R4充分后再portable隔离部署与六项实机 |
 
 当前停条件需分项判断：已知冻结的是上述准确A/B边及其返回/构造/组合现场依赖；Proud自然非空cache/key与Scene M1–M4独立输入缺失，当前没有有用的新同页采样。普通来源缺口包括特殊MAX cap字段职责桥与Relic rank/set具名职责，有限查询未给准确新入口不等于所有本机或外部来源不存在。Material准确payload/literal、[569B来源与独立首A前标量、239B同cursor槽清零](CLIENT_72_D02_MATERIAL_HEADER_SOURCE_20261116.md)均已验，实际file位置仍缺有效backend+18起点/首refill或独立文件语法来源；不读取条件P=0的header4B。[Relic27候选typed/祖先/真实参数](CLIENT_72_D02_RELIC_TYPED_CANDIDATES_20261116.md)有限核查已完成，无准确资源角色入口。[shared String helper来源/normal-tail独立N字节推进](CLIENT_72_D02_SHARED_STRING_CURSOR_SOURCE_20261116.md)现已闭，准确A返回/构造仍停；早先Skill id窗取消不是拒绝。Weapon最后[单字段host依赖判断](CLIENT_72_D02_SHARED_STRING_CURSOR_SOURCE_20261116.md)已完成：wrapper span非raw父F入口、11201非必要cohort，缺独立wrapper→raw父cursor/语法桥，P_tail不升P_entry；没有成熟新必需字段合同。Material+18/filebegin不因此闭合。主线据各准确来源缺口及冻结依赖审定条件2等待，未把有限查询解释为全网/全机不存在。
@@ -33,3 +33,11 @@
 A第二allocator返回/构造、热Default/sameepoch、`151841361`及准确tail/caller依赖，B首Cargo类型错误修复及组合loader/owned/装载/自然现场依赖、preview专项冻结均保持。A原平台error已找回；1528字符opaque事件关联不恢复执行正文，原明文验收已撤回，仍缺可读正文与固定技术输入。原提示、停止点和最小候选见[队列](CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)与[纠错](CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)，不重试或自动派Daybreak，不扩大成整族/所有独立工作禁止。
 
 Project/Harness/HANDOFF/HANDOFF2已先备份至本批忽略目录`integration-resume-20261116/before/`，四件字节/hash匹配；原HANDOFF2 SHA-256 `cabe165b17c6375a2d9ba3e745588b557bdaf88632aa63a1e7d385d436ea9c2f`。接手阶段先纠正当前授权和过时首发排期；随后独立实施及相关验收已按上表追加，历史事实、完成标记、拒绝/未知保留，HANDOFF只追加。接手核对及后继独立实现/相关Java/文档提交均已完成；本轮按条件2等待准确输入，后续成熟包从对应最小缺口恢复。仅文档/离线工具/测试变更，无需重启。
+
+## 本次方向微调：只排下一轮，不新增技术验收
+
+以`c0e3f16`为复核基线，两次Java completion与JUnit原件已只读核对，未重跑。369 id/element、121cost/START及energy绑定不再排开发；特殊MAX cap职责、Material/Weapon独立入口、Relic角色映射为资源首缺，完整Avatar/SDK/Scene/Proud仍有各自必要缺口。
+
+既有公开报告明确未做全局代码搜索，YSRes/DataParser相关Fork和非默认分支也未穷尽。因此将UP-72-N1/N2的下一轮增量列待开始：Sol max用已有报告制定一份中文有界计划，Terra max分两组核具体字段职责和文件入口的相关候选，README/版本命中才读源码；固定候选先复用，不重爬旧范围。只有新来源满足独立性和目标连接时交Sol/Terra实现；没有命中则保留实际覆盖与准确缺输入，不能从旧版schema、候选相等或默认值补目标语义。
+
+两组可并行，R1/R2/Scene/Proud仅新输入到达时前移；共享Git/构建/JVM/DB串行。当前没有新现场包，无需用户启动客户端；后续明确实验准备好再取实时ready。原A/B及准确依赖不解除，也不自动派Daybreak。本文新增部分只是规划，上一轮条件2及全部原始证据保持其历史范围。
