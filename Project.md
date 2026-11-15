@@ -6,7 +6,7 @@
 
 2026-11-14 `UP-72-20261114`：按用户指令开展公开上游静态调研，阶段成果及未覆盖分页见[研究报告](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)和[检索账本](docs/CLIENT_72_UPSTREAM_LEDGER_20261114.md)。状态**进行中**：发现 LunaGC 7.2 及 AstaPS 非默认任务分支，已固定部分源码并识别协议冲突；长尾搜索拆分、部分 Fork 和跨平台线索仍待核。UP-72-N1/N2 对照候选须先核现有成果并证明能解除具体 D-02 合同缺口，避免重复；本轮未改运行代码、未部署或实机验收，D-02 状态不变。原 A/B 拒绝及其依赖继续冻结。
 
-**用户已要求停止并交接；不继续研究或现场，恢复须用户另行指示。D-02 / F-05 / D02-R6 六项客户端验收仍为0/6。** 原Scene reader与Proud setter首发包及其后继限定成果直接复用，不重新排队。Proud三字段布局与166B Float getter来源已验，语义、业务alias及实际row仍待；existing-cache离线准备已验，旧cache1启动超时取消、sample未派；本轮一次采样为cold-cache，实际输入未取得。Float正常路径条件合同与机械断言已限定验收，三字段消费桥及实际值仍未知；启动回执超时归因、薄封装修复及新身份绑定接线已限定离线验收，本轮真实Launch及一次采样后以cold-cache停止，现场回执与收尾已独立审阅通过；实际M/getter/row/current/epoch未知。新现场须另取实时ready，禁止computer-use。Scene自然receiver/初始化及World slot114保留准确缺口，已确认的共用allocator返回依赖与A/B拒绝项冻结。详细研究过程和历史现场见[交接](HANDOFF2.md)及[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。
+**用户已指示继续任务；D-02 / F-05 / D02-R6 六项客户端验收仍为0/6。** 原Scene reader与Proud setter首发包及其后继限定成果直接复用，不重新排队。Proud三字段布局与166B Float getter来源已验，语义、业务alias及实际row仍待；existing-cache离线准备已验，旧cache1启动超时取消、sample未派；本轮一次采样为cold-cache，实际输入未取得。Float正常路径条件合同与机械断言已限定验收，三字段消费桥及实际值仍未知；启动回执超时归因、薄封装修复及新身份绑定接线已限定离线验收，本轮真实Launch及一次采样后以cold-cache停止，现场回执与收尾已独立审阅通过；实际M/getter/row/current/epoch未知。新现场须另取实时ready，禁止computer-use。Scene自然receiver/初始化及World slot114保留准确缺口，已确认的共用allocator返回依赖与A/B拒绝项冻结。详细研究过程和历史现场见[交接](HANDOFF2.md)及[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -69,7 +69,7 @@
 | 5 R4汇合 | 三层、最终收发/嵌套/顺序/资源、选择性回归与构建 | 主线核前置；Sol xhigh集成执行，Terra做明确核对 | R1/R2/R3必要合同与实现齐备；不降低ready/required或扩大无关玩法 |
 | 6 R5→R6 | Windows portable隔离部署→第5节六项实机 | 单一执行者串行部署，主线协调用户与验收 | 核真实运行产物及环境，全部六项实测通过才完成D-02/F-05/D02-R6 |
 
-批次表示依赖，不是全员屏障。优先一个有用的语义结论、实际输入或实现出口；相同来源和相同问题不重复开卡。普通未分析来源、缺现场输入、启动协调失败、安全审查拒绝分别记录，不能互相代替。当前仅重规划，不执行表中恢复动作。
+批次表示依赖，不是全员屏障。优先一个有用的语义结论、实际输入或实现出口；相同来源和相同问题不重复开卡。普通未分析来源、缺现场输入、启动协调失败、安全审查拒绝分别记录，不能互相代替。按当前授权和实际依赖执行独立工作，现场另需新fresh与实时ready。
 
 ### 3.3 当前批次派工与文件归属
 
@@ -133,7 +133,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-PROUD-NARROW-TYPED-CONSUMER-SOURCE | 已完成 | owner69135.m572230 的346B/91条来源窗限定验收；双fresh与第三13件同字节、32引用独核。仅source，实际M/bridge/row/current未知，flags81不推ABI或返回；冻结preview直接边为零不证明传递无关。见[单窗](docs/CLIENT_72_D02_PROUD_TYPED_BASE_LIST_WINDOW_20261115.md)。 |
 | R3-PROUD-TYPED-BASE-LIST-SEMANTICS | 已完成 | 限定346B本体物理路径、类型对照和一个准确后继首缺，23 pin/4附件/39原件及5声明/3布局独核；ABI、返回、S身份、共享helper与三字段桥/actualRow/current/epoch/ready未知。[限定语义](docs/CLIENT_72_D02_PROUD_TYPED_BASE_LIST_SEMANTICS_20261115.md)。 |
 | R3-PROUD-TYPED-LIST-MEMBER-SOURCE | 已完成 | 同owner单List方法来源856B/211条；双fresh与独立第三13件一致，88引用独核。仅source，formal/native ABI及业务语义未知。[成员单窗](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_WINDOW_20261115.md)。 |
-| R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS | 进行中 | 用户停止时未最终验收，草稿及固定输入见[交接](HANDOFF2.md)；恢复须先只读独核并记录上游A冻结边。不新增PE/目标/codec，三字段桥及actualM/row/current/epoch/ready未知。 |
+| R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS | 已完成 | 本体双遍历、同N指针store、中性native+2c↔41105.field203368/+70表示桥及准确缺口限定验收；未消费26072三字段。上游旧listing的共用allocator调用属于准确A冻结边，停在CALL；业务桥、实际M/数组/String、row/current/epoch及ready未知。见[成员语义](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_SEMANTICS_20261115.md)。 |
 | F-03d3s2-SCENE-ALLOWED-SOURCE-GAP | 已完成 | 既有允许来源有界差距审阅已验；4 pin、三writer、238B工厂及6锚点独核，316B getter直接复用未重验。M1–M4实际receiver/派发与返回/初值/reset关系缺新增允许的固定独立来源，尚无成熟sender；不泛封Scene。见[关系矩阵](docs/CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)。 |
 | R3-PROUD-STRING-INPUT-CONTRACT | 已完成 | 中性输入状态及来源合同准备限定验收，9源pin和独立14/0；未创建采样器/读取器。实际M、pointer、length、UTF16、业务桥及配置同源仍未知，OpenConfig仅候选；不并入 Avatar String 或 Gadget 路线。见[合同](docs/CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)。 |
 | R3-PROUD-FLOAT-NORMAL-PATH-ASSERTIONS | 已完成 | 固定166B及合成向量419项/0失败，作者两次与集成独立重跑一致，七个分支目标独核；不证明实际输入或业务桥。见[断言与复现](docs/CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md)。 |
@@ -152,7 +152,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 
 ## 4. 任务发布与范围控制
 
-1. **按3.2依赖及3.4准确缺口调度。** 31B Float条件合同、cache1启动超时归因及新身份绑定接线已限定离线验收；common E8索引预算停止、停止留证合同合成回归已验，typed单窗source及限定语义已完成，单List成员来源已限定验收、语义草稿未最终验收；用户停止并交接。本轮cold-cache采样及收尾回执已独立审阅；未来现场须用户另行指示、新fresh及实时ready。旧Scene/Proud首发及后继限定成果直接复用；A/B拒绝与准确依赖不派发，World slot114不作为下一轮可直接执行的现场任务。
+1. **按3.2依赖及3.4准确缺口调度。** 31B Float条件合同、cache1启动超时归因及新身份绑定接线已限定离线验收；common E8索引预算停止、停止留证合同合成回归已验，typed单窗source及限定语义已完成，单List成员来源及本体物理流、中性表示桥与准确缺口已限定验收。本轮cold-cache采样及收尾回执已独立审阅；未来实际现场须新fresh及实时ready。旧Scene/Proud首发及后继限定成果直接复用；A/B拒绝与准确依赖不派发，World slot114不作为下一轮可直接执行的现场任务。
 2. **规格成熟就实现。** Sol max给出明确来源/字段/时序和验收后，转Sol xhigh/Terra做最小变更；重大问题或长任务先规划。主线审核后执行必要测试/独立复现、本地提交、更新状态，再启动后继；无新变化或未决风险不重跑历史全量。
 3. **实机只补准确缺输入。** 不直接放大SDK预算、重复同参数观察或用零槽补值；需要用户操作时先备妥实验再一次说明操作/预期/反馈并等待新ready，同时继续独立工作。采集通过不代替消费者或业务通过。
 4. **必要性先于扩展。** 缺表/日志须结合真实入场调用筛选；不把全707组业务、全资源/Lua、完整codec通用工具或预览UI列默认P0，也不将未知默认判作可省略。实际必经通知、资源、所选旧号121角色及活动物品/装备依赖不能删。完整Avatar/Scene、自然SDK、真实资源与保存各有独立出口，不以一项片段互相代验。
@@ -442,6 +442,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-PROUD-E8-STOP-LEDGER | 已完成 | 作者与独立各10项合成回归，仅验未来停止留证合同；旧fresh2实际exec读取量及覆盖未知，不回填原件、不晋级stage1。 | [停止与限定验收](docs/CLIENT_72_D02_PROUD_FLOAT_DIRECT_E8_INDEX_20261115.md) |
 | R3-PROUD-NARROW-TYPED-CONSUMER-SOURCE | 已完成 | 346B/91条，双fresh与第三13件一致、32引用独核；仅source，不证明消费桥、ABI或实际row。 | [单窗验收](docs/CLIENT_72_D02_PROUD_TYPED_BASE_LIST_WINDOW_20261115.md) |
 | R3-PROUD-TYPED-BASE-LIST-SEMANTICS | 已完成 | 346B物理路径、类型对照及单一后继首缺限定验收；实际S、ABI、三字段桥、row/current和ready未知。 | [限定语义](docs/CLIENT_72_D02_PROUD_TYPED_BASE_LIST_SEMANTICS_20261115.md) |
+| R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS | 已完成 | 双遍历/同N指针store及中性native+2c↔41105.field203368/+70限定验收，未消费26072三字段；业务桥、实际值和ready未知。 | [成员语义](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_SEMANTICS_20261115.md) |
 | R3-PROUD-TYPED-LIST-MEMBER-SOURCE | 已完成 | 856B/211条，双fresh与独立第三13件同、88引用独核；仅source，ABI和业务语义未知。 | [成员单窗](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_WINDOW_20261115.md) |
 | R3-NEXT-LAUNCH-WINDOWED-2560X1440 | 已完成 | 仅窗口化新包与seal离线验收；作者与独立各4项合成测试，实际窗口尺寸待现场。 | [窗口化准备](docs/CLIENT_72_D02_NEXT_LAUNCH_WINDOWED_20261115.md) |
 | R3-PROUD-CACHE-NEW-LIVE-PLAN/IDENTITY-BINDING | 已完成 | 新包接线及离线验收：作者7 driver+5协调测试，独立10绑定/期限/driver.main及5自有协调stub、3 PS parse通过；不证明真实RunAs或采样。 | [验收及复现](docs/CLIENT_72_D02_PROUD_CACHE_IDENTITY_BINDING_20261115.md) |
