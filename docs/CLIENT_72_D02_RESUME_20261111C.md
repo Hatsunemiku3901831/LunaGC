@@ -4,6 +4,13 @@
 
 D-02 / F-05 / D02-R6 六项客户端验收仍 **0/6**；R4、R5、R6 均未开始。现有局部成果和本轮交回均不等于自然客户端入场或资源 ready。主线负责管理、独立验收；用户允许需要联调的部分由主线承担。共享 Git/index/提交、构建和运行现场须唯一执行；当前由本轮指定的集成执行者负责，不双执行。各专题写者不操作共享 Git/index。本页与 Project/Harness 的写者为文档代理 GPT-6.1 Terra xhigh；不碰 README、交接、其他专题、源码或冻结报告。
 
+## 2026-11-15 限定验收
+
+| 任务 | 状态与证据 | 边界 |
+| --- | --- | --- |
+| `R3-PROUD-FLOAT-CONSUMER-SOURCES` | 已完成；[条件合同及三consumer首缺](CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md)，专题 SHA-256 `a8374a9e588eabd91f43cd2cc01db95b622037f290f35ed9a2e45a5f927e4305`。 | 正常路径位样及长度门为条件关系；实际M、encoded、同epoch seed/table、三个业务消费桥及alias、row/current未知。 |
+| `R3-PROUD-FLOAT-NORMAL-PATH-ASSERTIONS` | 已完成；作者两次及集成独立419/0，报告逐字节相同，七分支目标独核；回执 `local/migration72/d02-resume-20261115/launch-timeout/float-integration1/completion.private.json` SHA-256 `db32ebb46edae0248d4195e54bd23e3bb73a3943ed74bd27d6b50d5cd5f9ee02`。 | 仅已存来源及合成向量，不证明真实getter输入、资源ready或客户端验收。 |
+
 ## 本轮任务与证据状态
 
 | 任务 / 执行者 | 固定输入和输出 | 当前状态 / 验收出口与停止点 |
@@ -78,7 +85,7 @@ cache1 RunAs无Launch/helper回执，父receipt始终0B，超90秒停止；采�
 
 A-SECOND-RETURN-CONTRACT 及依赖、B组合 loader 仍因安全审查拒绝冻结，不运行草稿、不换模型或工具、不间接重试。A 的完整原拒绝仍缺，不能将摘要冒充原提示；B 保留原句 `This content was flagged for possible cybersecurity risk.`。现有[最小包队列](CLIENT_72_D02_DAYBREAK_QUEUE_20261111.md)只读复用，队列开头的暂停叙述属于历史状态，不自动新增或派发 Daybreak。移除被拒动作后，仅推进能靠已有输入独立完成且产物不直接实现被拒动作的任务；局部通过不升级父项或 ready。真实门禁、认证、资源和完整旧号恢复仍约束 R4。
 
-当前 `R3-PROUD-FLOAT-CONSUMER-SOURCES` 与 `R3-PROUD-CACHE1-LAUNCH-TIMEOUT` 为进行中，结果待主线验收；不扩大为新原窗、目标getter/cache/Default或现场。Proud String 输入合同、Scene差距及Float机械断言为待开始候选，须先证明具体必要性与独立输入；新现场另需新ready。R1/R2/R3 必要合同齐备后才进入 R4，继而 R5/R6。
+`R3-PROUD-FLOAT-CONSUMER-SOURCES` 的166B正常路径条件合同和三consumer准确缺口，以及 `R3-PROUD-FLOAT-NORMAL-PATH-ASSERTIONS` 的机械断言已完成限定验收；实际M、同epoch输入、三消费桥、row/current与resourceReady仍未知。启动超时归因仍进行中，不扩大为新原窗、目标getter/cache/Default或现场。Proud String输入合同专题已交待独立集成，Scene差距分析进行中、结果待验；新现场另需新ready。R1/R2/R3 必要合同齐备后才进入 R4，继而 R5/R6。
 
 ## 已验本地提交索引
 

@@ -1,4 +1,6 @@
-当前恢复索引：`R3-PROUD-FLOAT-CONSUMER-SOURCES` 与 `R3-PROUD-CACHE1-LAUNCH-TIMEOUT` 进行中，尚待主线验收；候选及边界见 [Project](Project.md) 和[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。以下日期记录反映各历史时点，不替代当前排期。
+当前恢复索引：`R3-PROUD-FLOAT-CONSUMER-SOURCES` 条件合同及 `R3-PROUD-FLOAT-NORMAL-PATH-ASSERTIONS` 已完成限定验收；启动超时归因进行中，String专题已交待独立集成，Scene差距分析待验。具体状态见 [Project](Project.md) 和[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。以下日期记录反映各历史时点，不替代当前排期。
+
+2026-11-15 Float条件合同与机械断言：固定166B来源和三consumer准确缺口见[专题](docs/CLIENT_72_D02_PROUD_FLOAT_CONSUMER_SOURCES_20261115.md)；作者两次及集成独立419项/0失败，报告逐字节相同，七个分支目标独立核对。集成回执位于 `local/migration72/d02-resume-20261115/launch-timeout/float-integration1/completion.private.json`，SHA-256 `db32ebb46edae0248d4195e54bd23e3bb73a3943ed74bd27d6b50d5cd5f9ee02`。仅条件路径和合成数据，实际M、同epoch输入、三个消费桥及row/current仍未知，不晋级资源ready或客户端验收。
 
 2026-11-14 `UP-72-20261114`：本轮公开资料与离线静态阶段结果见[研究报告](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)、[检索与续查账本](docs/CLIENT_72_UPSTREAM_LEDGER_20261114.md)、[67 分支表](docs/CLIENT_72_UPSTREAM_BRANCHES_20261114.md)及[关键文件固定清单](docs/CLIENT_72_UPSTREAM_SOURCES_20261114.md)。外置研究根的 `verify_review.py` 核对 67 个根树/README blob、23 文件 blob/SHA 和 303 的 16 行比较通过；这是离线材料核对，不是生产测试或客户端验收。原始 API 响应、缓存及复现脚本不入仓库。部分搜索分片、Fork 和跨平台线索未完成；运行代码、配置、资源与补丁未改，未启服务/数据库/客户端，D-02 与 A/B 冻结不变。
 
