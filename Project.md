@@ -138,7 +138,8 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-PROUD-CARRIER-CONSUMER-WINDOW | 已完成 | 一次固定来源采集及自身账本限定验收，1770B/410条，AOT/pdata/body共1798B；无独立重采或新测试。列明冻结目标直接边0不证明间接无关。[来源](docs/CLIENT_72_D02_PROUD_CARRIER_CONSUMER_WINDOW_20261115.md) |
 | R3-PROUD-CARRIER-CONSUMER-SEMANTICS | 已完成 | 有限String consumer值流及双匹配gate限定验收；K为当前枚举元素而非entry R8。本体未直接读两个数组；不批准OpenConfig、ABI、实际M/row/current/epoch或ready。[限定语义](docs/CLIENT_72_D02_PROUD_CARRIER_CONSUMER_SEMANTICS_20261115.md) |
 | R3-PROUD-PARAM-ELEMENT-CONSUMER-SOURCE-PLAN | 已完成 | 选择33507.m281263/1488a5af0，flags86h、instance、7显参：owner持IList<54724>且有原body直接调用；列表与carrier数组是否同源未知。 |
-| R3-PROUD-PARAM-ELEMENT-CONSUMER-WINDOW | 进行中 | 按已审规格采一次完整窗，≤4096B/strict≤1024；结果未知，不将source预称为字段消费或业务。 |
+| R3-PROUD-PARAM-ELEMENT-CONSUMER-WINDOW | 已完成 | 一次完整来源采集384B/98条，AOT/pdata/body共412B；无重复采集或新测试。[来源](docs/CLIENT_72_D02_PROUD_PARAM_ELEMENT_CONSUMER_WINDOW_20261115.md) |
+| R3-PROUD-PARAM-ELEMENT-CONSUMER-SEMANTICS | 进行中 | 本体可见owner+18集合；+20仅原typed候选理由，不预称IList<54724>消费、carrier数组绑定或业务。 |
 | R3-PROUD-TYPED-LIST-MEMBER-SEMANTICS | 已完成 | 本体双遍历、同N指针store、中性native+2c↔41105.field203368/+70表示桥及准确缺口限定验收；未消费26072三字段。上游旧listing的共用allocator调用属于准确A冻结边，停在CALL；业务桥、实际M/数组/String、row/current/epoch及ready未知。见[成员语义](docs/CLIENT_72_D02_PROUD_TYPED_LIST_MEMBER_SEMANTICS_20261115.md)。 |
 | F-03d3s2-SCENE-ALLOWED-SOURCE-GAP | 已完成 | 既有允许来源有界差距审阅已验；4 pin、三writer、238B工厂及6锚点独核，316B getter直接复用未重验。M1–M4实际receiver/派发与返回/初值/reset关系缺新增允许的固定独立来源，尚无成熟sender；不泛封Scene。见[关系矩阵](docs/CLIENT_72_D02_SCENE_ALLOWED_SOURCE_GAP_20261115.md)。 |
 | R3-PROUD-STRING-INPUT-CONTRACT | 已完成 | 中性输入状态及来源合同准备限定验收，9源pin和独立14/0；未创建采样器/读取器。实际M、pointer、length、UTF16、业务桥及配置同源仍未知，OpenConfig仅候选；不并入 Avatar String 或 Gadget 路线。见[合同](docs/CLIENT_72_D02_PROUD_STRING_INPUT_CONTRACT_20261115.md)。 |
@@ -449,6 +450,7 @@ R2-CONFIGSYNC-OBSERVE与EARLY-BRIDGE共享自然配置目标：先消费已有�
 | R3-PROUD-NARROW-TYPED-CONSUMER-SOURCE | 已完成 | 346B/91条，双fresh与第三13件一致、32引用独核；仅source，不证明消费桥、ABI或实际row。 | [单窗验收](docs/CLIENT_72_D02_PROUD_TYPED_BASE_LIST_WINDOW_20261115.md) |
 | R3-PROUD-TYPED-BASE-LIST-SEMANTICS | 已完成 | 346B物理路径、类型对照及单一后继首缺限定验收；实际S、ABI、三字段桥、row/current和ready未知。 | [限定语义](docs/CLIENT_72_D02_PROUD_TYPED_BASE_LIST_SEMANTICS_20261115.md) |
 | R3-PROUD-CARRIER-CONSUMER-SEMANTICS | 已完成 | 有限String consumer值流及双匹配gate限定验收；K不是entry R8，实际值/业务名/current/ready未知。 | [限定语义](docs/CLIENT_72_D02_PROUD_CARRIER_CONSUMER_SEMANTICS_20261115.md) |
+| R3-PROUD-PARAM-ELEMENT-CONSUMER-WINDOW | 已完成 | 一次来源采集384B/98条及自身账本限定验收；不证明IList消费或carrier绑定。 | [source-only](docs/CLIENT_72_D02_PROUD_PARAM_ELEMENT_CONSUMER_WINDOW_20261115.md) |
 | R3-PROUD-PARAM-ELEMENT-CONSUMER-SOURCE-PLAN | 已完成 | 确定33507.m281263单个typed来源候选；列表是否来自carrier数组未知。 | 计划见 `local/migration72/d02-resume-20261115/proud-carrier-consumer-semantics/next-source-plan.zh.md` |
 | R3-PROUD-CARRIER-CONSUMER-WINDOW | 已完成 | 一次固定来源采集1770B/410条及自身账本限定验收；无独立重采或新测试；此项仅source，不代语义或业务。 | [source-only](docs/CLIENT_72_D02_PROUD_CARRIER_CONSUMER_WINDOW_20261115.md) |
 | R3-PROUD-CARRIER-CONSUMER-SOURCE-PLAN | 已完成 | 依既有metadata/listing限定一个typed候选69135.m572226；仅规划，不证明三字段消费或业务。 | 规格见 `local/migration72/d02-resume-20261115/proud-carrier-consumer-plan/` |
