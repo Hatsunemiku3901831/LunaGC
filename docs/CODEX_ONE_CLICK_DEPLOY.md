@@ -1,3 +1,5 @@
+2026-11-16 新部署顺序：用户要求先入场，按[Project](../Project.md)的D02-M0/[最小方案](CLIENT_72_D02_ENTRY_MVP_PLAN_20261116.md)准备独立新号实例。M0所选路径的真实资源、必要wire/认证与引用验证齐备后可部署该模式，不必等旧号全121角色或完整R4；不能手设loadedAll、跳认证/信任或把M0当全量ready。当前仅规划，尚无M0运行包；部署仍用portable/InstanceRoot、保护原DB并核日志/健康/端口/PID/JAR SHA，现场取新ready且禁止computer-use。下方原全量部署与历史暂停条件不覆盖本次范围调整。
+
 2026-11-16 当前用户恢复D-02的授权仍有效。本轮已实际完成四公开/两自主研究及独立静态来源/局部语义，必要字段/入口仍缺准确输入，依[本轮交接](../HANDOFF2.md)分项等待；不是用户暂停或沿用旧条件2。仅文档/离线研究，未改运行代码/Proto/config/patch/resource，无需构建重启；R1/R2/R3必要合同未齐，R4/R5/R6未开始，GS未部署、六项0/6和A/B/preview准确冻结保持，没有成熟现场包，不要求重复游戏ready。准确输入闭合后按[Project](../Project.md)汇合，R4充分才用Windows portable/InstanceRoot隔离部署并核日志/健康/TCP/UDP/PID/运行JAR SHA；下方旧暂停、部署、ready/PID和产物数字均为历史。
 
 2026-11-10实际安装范围：八点SDK研究DLL独立构建/owned/真实文件门禁后，在新ready下临时安装观察90秒，正常退出并恢复stock，五输入/保护及进程TCPUDP复核通过。不是R5服务部署；完整Avatar/Scene、必要资源及R4前置未齐，GS仍不启动。见[本轮观察及恢复](CLIENT_72_SDK_CONFIG_STAGE_OBSERVER.md#本轮自然阶段观察与恢复)。

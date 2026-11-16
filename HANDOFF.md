@@ -322,3 +322,6 @@ B-02e7限定原生部分消费51f7cd2、E-01c5实际生产Lua加载审计9aa8ca7
 既验369 Skill、121cost/START/双Depot Java等只读复用。本轮新成果包括同组件类型桥、3328B独立code/data布局与generic MAX/START写入/旧值通知、Relic typed分项转交/两缓存输出、Material首读及Weapon嵌套cursor的准确缺边；没有新Java/DB/client或运行改动，无构建部署要求。逐项IDs、原件/失败、最小解除输入、8条交接前提交及Daybreak边界见[HANDOFF2](HANDOFF2.md)、[Project](Project.md)。
 
 旧HANDOFF2及本文件/五状态手册已先备份并核7件一致于`local/migration72/d02-resume-20261116b/final-handoff-244932e6/before/`；本文件原49753B逐字节前缀保留，只追加。最终交接提交的实际HEAD/本轮总数/双身份/文件范围及保护核对见同目录提交后`final-state.private.json`；不自动推送。
+
+
+2026-11-16 用户改为先入场：复核99a868d..7b2ed77的9个研究文档提交，四公开/两自主研究有局部来源成果但无新运行实现，六项仍0/6。已备份并更新Project为D02-M0先行：独立新号/普通角色/最小资源，允许自编服务端业务与临时数值，旧号全量和精确原版资源后移；必要wire/认证及准确冻结保持。新增[最小实现方案](docs/CLIENT_72_D02_ENTRY_MVP_PLAN_20261116.md)，具体并行任务与实际未实施范围见[HANDOFF2](HANDOFF2.md)。本次仅规划，无部署或实机。
