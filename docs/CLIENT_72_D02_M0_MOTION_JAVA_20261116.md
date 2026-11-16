@@ -32,3 +32,5 @@ Vector84343直接复用既验`Client72SceneHandshakeNested.proto`及`enter-scene
 未发送的`M0AvatarIdentityProjection`现增加Raw Motion：tag1取同实际AvatarEntity.getPosition（与Player.position同对象）的三个float原bit，tag3按明确M0静止出生策略写三轴0。没有造坐标、改变存档位置或借EnterScene轴类型猜Motion角色。tag2虽已知是rotation输入，完整转换/角单位未闭，因此仍不填写；该行不是满足全部非null前置的完整可发送Entity。
 
 新增一条独立手写wire把position(1.25,-2.5,3.75)与非null三轴零velocity区分；真实M0出生/保存/World fixture交叉三轴原bit与同Player身份。4套40项26秒全过，失败/错误/跳过0；`motion-position-velocity-results/`、`motion-position-velocity-results.private.json`与`motion-position-velocity-tests.log`留同ignored集成根。旧raw列表/float/64位断言一起保持；本项没有新native/模型/客户端或完整消息发送，正式构建后补。
+
+位置/速度后继正式portable构建26秒通过，内嵌9d11ae8，JAR SHA `bd9856cbb43110a66720ea712666143f4b6566928fa3f2f5eeea6554df5f1330`，98290007B；4变化/0新增/0移除class全部匹配输出。两个独立实例仅预备同SHA，HTTP8088/27017/game UDP22101/游戏JAR进程0，只有既核自有测试Mongo27027，无健康/运行JAR正向对象或客户端。自然SDK、Peer真分支/Entity根列表及rotation等准确剩余不因此放行；原件`motion-position-portable-build.log`、`motion-position-build-artifact.private.json`、`motion-position-post-build-runtime.private.json`在同ignored根。

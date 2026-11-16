@@ -1,4 +1,4 @@
-最新正式portable构建27秒、内嵌0b7c67e，JAR SHA `d6bd05373dbadad0e9be8538d34730d6133a23882c87c19c360d2636d25a4e1e`；有限core及Motion raw均包含，18变化/5新增class核对，两个实例仅预备未启动。见[本轮产物](CLIENT_72_D02_FINITE_SERVER_BOOT_20261116.md#正式portable构建与未部署)。下方各历史JAR和dispatch-only夹具范围保留，不代表最新实例已部署。
+最新正式portable构建26秒、内嵌9d11ae8，JAR SHA `bd9856cbb43110a66720ea712666143f4b6566928fa3f2f5eeea6554df5f1330`；已包含有限core、Peer同域Host key及实际position/静止velocity部分投影。4变化class匹配输出、0新增，两个实例仅预备未启动；source/root列表及自然SDK剩余继续。下方每份旧JAR均是对应阶段证据；当前范围见[Motion实际部分投影](CLIENT_72_D02_M0_MOTION_JAVA_20261116.md#实际位置与静止出生速度的部分投影)。
 
 有限Server核心后继已通过：生命周期测试不再使用dispatch-only/反射容器，真实finite constructor驱动World/Player tick，正常退出/保存冷读及账号Guard继续成立；M0三缺服务NPE不再发生。4核心、2真实Mongo及86关联通过；无网络绑定，不等于客户端或HTTP健康。见[分流与原推断纠正](CLIENT_72_D02_FINITE_SERVER_BOOT_20261116.md)。
 
@@ -54,3 +54,19 @@ M0独立config/resources/local-data已准备并通过portable配置检查，未�
 该GameServer夹具用DISPATCH_ONLY避免启动端口，match/chat/dungeon三个服务为空；原runLogoutStep分别留下3条NPE警告后仍完成其余正常注销步骤。它们是这次夹具边界，不当生产故障或完整三服务验收，也不为了补无关服务引入DungeonDrop资源闭包。真实队列保存/World/Guard/AccountAdmission可独立验，完整server和客户端退出重登仍未验。
 
 XML和汇总留ignored根`m0-normal-close-results/`、`m0-normal-close-results.private.json`，首轮日志`m0-normal-close-first-tests.log`保留警告。只改测试/文档，无需重建或重启；磁盘正式JAR仍为上述c2faff7/SHA533dce1e…182e4。
+
+## 当前候选发送链与最小阻塞
+
+以下顺序沿[SCOPE](CLIENT_72_D02_M0_SCOPE_20261116.md)的**候选顺序**，不是已实测全链或所有通知严格必经的证明。现只区分选定消费者的必要结构、成熟DTO及尚未判定的前置，不把每个未知字段升为入场门。
+
+| 候选位置 | 已证范围 | 当前最小剩余或必要性限制 |
+| --- | --- | --- |
+| ReadyReq/Rsp | 当前token变换、错误拒绝、Rsp wire已验 | 不能由旧handler发送顺序断言Peer一定在Rsp前；无该完整客户端调度证明 |
+| Peer28392 | 真LoadingTask token、local/Host authority-key同域，三字段供给已验 | tag12/真任务路径准确停CALL15A46C1EF；旧首任务flag[1,1]不能改false。未证四字段都必须非零，不发完整通知 |
+| SceneInfo21761 | 当前角色/装备和两独立World/Team实体ID；新实体null状态及正常空control/状态集合已闭 | 能力/其它Avatar字段仍按具体null/count分支判必要性；不要求先补全global/hash或全嵌套 |
+| SceneTeam24706/83228 | 四字段wire与76429外层已闭 | field4/tag4/+28是151A9C2D0(GLOBAL+A420,key)的上下文查询key，也作worker第五参；身份/上下文建立及flag0的151A9FF40后继用途未闭，不能直接填Scene3/UID。enum==1另走单独尾路径 |
+| SceneTeam1144/86588 | 取GLOBAL+A420+10当前上下文，worker flag1/第五参0；bool13已实测 | 列表5仅cctor来源。flag1实际另调用1507E2A30/151AA0CC0，与83228 flag0不同，不能因为后者全wire就直接替换 |
+| 是否首发必须Team通知 | worker确会更新/初始化Avatar模型及能力身份 | 尚无单女主缺该通知必失败的独立证明；AvatarData已有GUID模型，EntityAppear也查同模型。不能要求两种Team通知都发或先恢复17字段全部业务 |
+| EntityAppear4469 | 真Avatar分派、UID/GUID lookup、Motion及oneof若干非null输入检查 | 发送首先缺root列表tag；Motion position/velocity可独立接，rotation及其它字段只按真实消费继续，不要求31槽完整 |
+
+当前协议研究优先Peer这条真调用和Entity根列表wire；83228上下文key后排，Team是否首发必需另作有限判断。自然SDK/service/mode/批准路由独立继续。此表只读既验来源，无新native、测试或sender/成功状态修改；完整SDK/客户端六项仍0/6。

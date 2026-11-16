@@ -1,4 +1,4 @@
-2026-11-16 当前最新portable构建26秒、内嵌17dc6f2，JAR SHA1821fe9a0e5234fbc7d4ae7b072f9f7c1d3e5e2fcdc37846ddc5e98f5b10ad78；4变化/0新增class逐项匹配，包含已验有限core/Motion raw与Peer同域Host-key部分投影。两个实例同SHA仅预备未启动；HTTP8088/UDP22101/游戏JAR进程0，只有自有测试Mongo27027。自然SDK/Peer field12/Entity等必要合同未齐，无健康/运行JAR正向对象，未装补丁或客户端。见[Peer后继产物](CLIENT_72_D02_M0_PEER_JAVA_20261116.md#同域host-key后继)；下方各SHA均为历史阶段。
+2026-11-16 当前最新portable构建26秒、内嵌9d11ae8，JAR SHAbd9856cbb43110a66720ea712666143f4b6566928fa3f2f5eeea6554df5f1330；4变化class逐项匹配、0新增，包含有限core、Peer Host-key及position/静止velocity部分投影。两个实例仅预备同SHA未启动；HTTP8088/UDP22101/游戏JAR进程0，只有自有测试Mongo27027。必要SDK/Peer真调用/Entity根列表等未齐，无健康/运行JAR正向对象，未装补丁/客户端。见[Motion后继产物](CLIENT_72_D02_M0_MOTION_JAVA_20261116.md#实际位置与静止出生速度的部分投影)；下方各SHA按历史阶段读取。
 
 2026-11-16 已构建M0有限实现并仅预备独立InstanceRoot：最终524项回归通过，portable打包25秒、内嵌d7cdda0，JAR SHA42636ecc42bd9b5c1a98a89fcde662e293f343f589b5e0efd36cf6ec1214e217。同hash已stage；实际HTTP8088/UDP22101/游戏JAR进程均0，无健康或运行JAR正向对象，未装补丁。必要SceneInfo/Entity出现wire与自然SDK路由未闭，版本声明门保持；当前不执行play/start客户端实验。见[真实构建/未部署原因](CLIENT_72_D02_M0_INTEGRATION_20261116.md)，后续先核本轮新必要合同。
 

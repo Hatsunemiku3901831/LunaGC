@@ -1,3 +1,5 @@
+2026-11-16 position/velocity后继正式portable26秒通过，内嵌9d11ae8，JAR SHAbd9856cbb43110a66720ea712666143f4b6566928fa3f2f5eeea6554df5f1330；4变化/0新增class匹配，两个实例仅预备，相关监听/游戏JAR进程0，只有自有测试Mongo27027。另仅只读汇总[候选发送链必要性](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md#当前候选发送链与最小阻塞)：先Peer真调用/Entity列表，83228上下文后排；Team全字段/全部能力不是统一前置。无新增测试或sender放行。
+
 2026-11-16 Motion position/velocity部分Java完成：给定18163的具名MoveSyncTask成员直接桥闭合，未发送行加入同Player实际三轴位置及明确静止出生零速度，rotation/tag2不填。新增独立wire与真实M0对象交叉，4套40项26秒过，完整Entity/实机未放行。见[Motion部分投影](docs/CLIENT_72_D02_M0_MOTION_JAVA_20261116.md#实际位置与静止出生速度的部分投影)。Project当前路线已区分方案历史与已实现/构建但未部署状态，不改0/6。
 
 2026-11-16 Peer Host-key后继正式portable26秒通过，内嵌17dc6f2，JAR SHA1821fe9a0e5234fbc7d4ae7b072f9f7c1d3e5e2fcdc37846ddc5e98f5b10ad78；4变化/0新增class均匹配输出。两个实例仅预备未启动，只有owned测试Mongo27027；HTTP8088/UDP22101/游戏JAR进程0。完整SDK/Peer/Entity仍缺，六项0/6，见[Peer Java](docs/CLIENT_72_D02_M0_PEER_JAVA_20261116.md)。
