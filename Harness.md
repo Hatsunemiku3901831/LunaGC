@@ -1,3 +1,5 @@
+2026-11-16 EntityAppear根列表正式portable23秒通过，内嵌652dd83，JAR SHAbf04283839b4d400a99250809b16d8ea74f214a36e6f717eb4a383984a5c1c50；14变化/0新增class匹配，两个实例仅预备同SHA未启动。HTTP8088/UDP22101/游戏JAR进程0，仅自有测试Mongo27027；自然SDK及必要Peer/appear语义未齐，没有健康/客户端验收。
+
 2026-11-16 EntityAppear根列表外层接入：来源正typed容器读取及两个完整负向仅闭73627.tag2/wire2→repeated16796；Proto由Gradle生成，同真实M0的UID/GUID/位置/显式零rotation/静止velocity组成非发送DTO，未知root tag1/child tag2不填。3套35项38秒全过，完整native元素codec与4469/INIT仍未放行。见[来源与Java证据](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#entityappear根列表外层与非发送dto)。
 
 2026-11-16 武器精炼/首次M0零面向正式portable26秒通过，内嵌49b4ae6，JAR SHA2df2d0954c105e917cbe5bc08d15add0852a51c3ae4663f3de9b0a99dd168e03；7变化/1新增class与编译输出匹配，双实例同SHA仅预备未启动。实际Store producer补验15项22秒全过。HTTP8088/UDP22101/游戏JAR进程0，只有自有测试Mongo27027；缺自然SDK和必要Peer/Entity合同，不部署。另接收[Peer有界来源](docs/CLIENT_72_D02_M0_PEER_CALLEE_SOURCE_20261116.md)六窗1536B+只读4B；field12/返回仍进行中，准确下一1B不是外部阻塞。

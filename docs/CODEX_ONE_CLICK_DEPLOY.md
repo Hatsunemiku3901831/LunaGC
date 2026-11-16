@@ -1,4 +1,4 @@
-2026-11-16 当前最新portable构建26秒、内嵌49b4ae6，JAR SHA2df2d0954c105e917cbe5bc08d15add0852a51c3ae4663f3de9b0a99dd168e03；7变化/1新增class逐项匹配，包含武器原零基精炼map、首次M0零面向及此前有限core/身份投影。两个实例仅预备同SHA未启动；HTTP8088/UDP22101/游戏JAR进程0，只有自有测试Mongo27027。必要SDK/Peer真调用/Entity根列表等未齐，无健康/运行JAR正向对象，未装补丁/客户端。已有M0非零朝向加载保持，当前partial Motion不支持其发送。见[统一产物](CLIENT_72_D02_OLD_WEAPON_PROJECTION_20261116.md#正式portable构建与未部署)；下方各SHA按历史阶段读取。
+2026-11-16 当前最新portable构建23秒、内嵌652dd83，JAR SHAbf04283839b4d400a99250809b16d8ea74f214a36e6f717eb4a383984a5c1c50；14变化/0新增class逐项匹配，增加Entity根列表外层及同M0非发送DTO，包含此前武器精炼/首次零面向与有限core。两个实例仅预备同SHA未启动；HTTP8088/UDP22101/游戏JAR进程0，只有自有测试Mongo27027。必要SDK/Peer/完整appear语义未齐，无健康/运行JAR正向对象，未装补丁/客户端。native元素codec与一般非零朝向未晋级。见[当前产物](CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#entityappear根列表外层与非发送dto)；下方各SHA按历史阶段读取。
 
 2026-11-16 已构建M0有限实现并仅预备独立InstanceRoot：最终524项回归通过，portable打包25秒、内嵌d7cdda0，JAR SHA42636ecc42bd9b5c1a98a89fcde662e293f343f589b5e0efd36cf6ec1214e217。同hash已stage；实际HTTP8088/UDP22101/游戏JAR进程均0，无健康或运行JAR正向对象，未装补丁。必要SceneInfo/Entity出现wire与自然SDK路由未闭，版本声明门保持；当前不执行play/start客户端实验。见[真实构建/未部署原因](CLIENT_72_D02_M0_INTEGRATION_20261116.md)，后续先核本轮新必要合同。
 

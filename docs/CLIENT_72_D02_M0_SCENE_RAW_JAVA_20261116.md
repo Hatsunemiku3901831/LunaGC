@@ -8,7 +8,9 @@
 
 3套35项38秒首次全过，失败/错误/跳过0：Entity raw21、Motion13、真实M0 Born/冷读1。新增四项独立literal断言覆盖双元素顺序、2^53+1与u64 max GUID、三Vector消息存在、空列表/空child区别、错误wire/不同field、截断长度和非法nested。真实新M0冷读后创建DTO并序列化重读，UID/GUID/位置/武器身份一致、未知tag2未填；非零旋转明确拒绝，原INIT不多发任何通知/成功。Java错误断言不冒称本轮native错误路径样本。
 
-原件在ignored集成根：`entity-root-list-first-tests.log`、`entity-root-list-results/`及`entity-root-list-results.private.json`。没有新native/模型、资源、网络启动或客户端验收；正式portable构建另记。完整appear消费、Peer真分支与自然SDK继续，六项0/6。
+原件在ignored集成根：`entity-root-list-first-tests.log`、`entity-root-list-results/`及`entity-root-list-results.private.json`。没有新native/模型、资源、网络启动或客户端验收。完整appear消费、Peer真分支与自然SDK继续，六项0/6。
+
+本项提交652dd83后正式portable构建23秒通过；内嵌652dd83，98295075B，JAR SHA `bf04283839b4d400a99250809b16d8ea74f214a36e6f717eb4a383984a5c1c50`。14变化/0新增/0移除class全部匹配build输出，包括root/child的protoc生成类与M0 projection。两个独立实例仅预备同SHA未启动；HTTP8088/原Mongo27017/game UDP22101/游戏JAR进程0，只有自有测试Mongo27027。自然SDK及必要Peer/appear语义未齐，没有正向健康或运行JAR对象，未装补丁/客户端。构建与身份原件为`entity-root-list-portable-build.log`、`entity-root-list-build-artifact.private.json`及`entity-root-list-post-build-runtime.private.json`。
 
 本项把来源人已完成并固定的SceneAvatar/SceneTeam raw合同转成独立Proto，未编写完整sender、升级Scene握手或运行客户端。三层来源及语义剩余按[SceneAvatar](CLIENT_72_D02_M0_SCENEAVATAR_WIRE_20261116.md)和[SceneTeam](CLIENT_72_D02_M0_SCENETEAM_MIN_WIRE_20261116.md)读取，不能用本项Java编译/测试代替目标实机或fresh原生对象构造。
 

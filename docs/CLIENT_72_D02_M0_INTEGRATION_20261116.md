@@ -1,4 +1,4 @@
-最新正式portable构建26秒、内嵌49b4ae6，JAR SHA `2df2d0954c105e917cbe5bc08d15add0852a51c3ae4663f3de9b0a99dd168e03`；已包含武器原零基精炼map、M0首次Born零面向及此前有限core/身份部分投影。7变化/1新增class匹配输出，两个实例同SHA仅预备未启动；自然SDK及Peer/Entity必要合同继续。下方每份旧JAR均是对应阶段证据；当前产物与未部署原因见[本轮统一构建](CLIENT_72_D02_OLD_WEAPON_PROJECTION_20261116.md#正式portable构建与未部署)。已有M0非零朝向只保证load/onLogin保留，partial Motion明确拒绝，任意朝向客户端重登入场未验。
+最新正式portable构建23秒、内嵌652dd83，JAR SHA `bf04283839b4d400a99250809b16d8ea74f214a36e6f717eb4a383984a5c1c50`；增加Entity根列表外层与非发送M0 DTO，包含此前精炼/首次零面向与有限core。14变化/0新增class匹配输出，两个实例同SHA仅预备未启动；自然SDK及Peer/appear必要语义继续。下方旧JAR按各阶段读取；当前产物见[根列表增量](CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#entityappear根列表外层与非发送dto)。已有M0非零朝向保持原值，partial Motion拒绝非零，任意朝向客户端重登入场未验。
 
 有限Server核心后继已通过：生命周期测试不再使用dispatch-only/反射容器，真实finite constructor驱动World/Player tick，正常退出/保存冷读及账号Guard继续成立；M0三缺服务NPE不再发生。4核心、2真实Mongo及86关联通过；无网络绑定，不等于客户端或HTTP健康。见[分流与原推断纠正](CLIENT_72_D02_FINITE_SERVER_BOOT_20261116.md)。
 
