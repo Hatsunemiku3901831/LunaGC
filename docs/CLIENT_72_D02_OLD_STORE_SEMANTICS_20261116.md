@@ -106,3 +106,14 @@ Furniture/TPS本轮**未取新native source，未选择或执行A/构造动作**
 两个本地输入结构误读及一份raw JSON缺level的初判均保留在ignored原件：ItemId为直接int而非value wrapper；metadata ancestry的parent可为null；raw缺level不能写成实际Java level未知。后续只修正只读分析的来源解释，不更改输入pin或目标模型，完整失败/1018条原初判与最终0错误并存。它们不是安全拒绝、目标源漂移或放宽协议校验。
 
 当前停止原因是主线并发轮转，非安全拒绝；Furniture/TPS普通来源定位作为下一独立followup继续。本阶段没有触达新的准确A/B/preview依赖。refinement合同可独立验收/提交，Furniture/TPS和Relic映射及全量旧号网络入场、Ready/entry-ready仍未完成。
+
+## 第二阶段：Furniture/TPS canonical source（中文有限计划）
+
+第一阶段13157B冻结前缀及SHA `50ddabda678a0b98a9523493c93a878feabdfff3551a14893bec6735dddda183`保持逐字节不变。精炼已由集成者独立实现验收，本阶段不重做1663武器；只保全当前sender尚略过的2331 Furniture与8 TPS。
+
+1. 先查既许原件中 `owner68895/m569928 ELMGDFDHGJN@148FED420(Item65333*)` 的完整body是否可复用，再核固定三hash、普通AOT、唯一pdata、可执行映射及真实split关系。
+2. 唯一canonical完整范围累计不超过16384B时一次取源并strict连续解码/回拼；split只按真实CFG/UNWIND record，不靠近邻拼接。若仅共享超大范围，保留oversize失败，只对精确entry做不超过256B的独立可达CFG诊断，不裁窗冒完整source。
+3. 仅审Item分支到模型/资源类别和必要字段的直接关系。准确A-call停止其返回/依赖，独立的前置类型、field及具名枚举分项保留；未知CALL/间接/范围外不跟，不模拟A返回、不扩全树。
+4. Furniture或TPS任一成熟出口即时交集成者，分别绑定业务身份、tag/wire与当前保存数据。无成熟出口则精确列下一小边及可静态推进条件，不以预算或普通失败泛称外部阻塞。
+
+唯一写入仍为本文末尾和ignored同目录新run；无子代理、Git、Java/Proto、build/JVM/DB、进程或客户端操作。
