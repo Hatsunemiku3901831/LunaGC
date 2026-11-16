@@ -68,7 +68,7 @@ class M0EntityRawWireTest {
     void partialSchemaCannotMasqueradeAsCompleteRootOrAvatarGraph() {
         assertEquals(Set.of(1, 9), NAALIELJILH.getDescriptor().getFields().stream()
                 .map(f -> f.getNumber()).collect(Collectors.toSet()));
-        assertEquals(Set.of(1, 2, 3, 7, 10, 17, 18, 26), IJCEPPNOCNM.getDescriptor().getFields().stream()
+        assertEquals(Set.of(1, 2, 3, 4, 7, 10, 17, 18, 26), IJCEPPNOCNM.getDescriptor().getFields().stream()
                 .map(f -> f.getNumber()).collect(Collectors.toSet()));
         assertEquals(1, IJCEPPNOCNM.getDescriptor().getOneofs().get(0).getFieldCount());
     }

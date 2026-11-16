@@ -6,6 +6,7 @@ package cn72.m0entityraw;
 option java_package = "emu.grasscutter.net.proto";
 option java_outer_classname = "Client72M0EntityRawOuterClass";
 import "Client72M0SceneAvatarRaw.proto";
+import "Client72M0MotionRaw.proto";
 
 message NAALIELJILH {
   optional uint32 OJPFPILNCIC = 1;
@@ -18,6 +19,8 @@ message IJCEPPNOCNM {
   optional uint32 MCPCJJBMHMK = 1;
   optional uint32 LLHEBIHGDAE = 2;
   optional string OKDLHHPJOLA = 3;
+  // Required pointer in the ordinary local Avatar consumer; vector field roles remain raw.
+  cn72.m0motion.Raw49847 raw_motion_4 = 4;
   optional uint32 DFENDOGMEAD = 7;
   optional uint32 CCJOFDMPEEK = 17;
   optional uint32 LKHOHNGMBDM = 18;

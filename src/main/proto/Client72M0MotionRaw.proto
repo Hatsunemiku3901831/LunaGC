@@ -1,0 +1,21 @@
+// CN7.2 type49847 ordinary reader projection. Vector contents reuse approved type84343.
+// Field roles and the field100 codec remain unknown; this is not a movement business contract.
+syntax = "proto3";
+package cn72.m0motion;
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "Client72M0MotionRawOuterClass";
+import "Client72SceneHandshakeNested.proto";
+
+message Raw49847 {
+  .BGDCNKAKGHI HHAFHFEPLPD = 1;
+  .BGDCNKAKGHI HPLBLGJLIFF = 2;
+  .BGDCNKAKGHI DACMFIDFIJA = 3;
+  optional uint32 FAJGLPCKIBH = 4;
+  repeated .BGDCNKAKGHI BCOOEGCDHKK = 5;
+  .BGDCNKAKGHI DFDHCAIKMAI = 6;
+  optional uint32 ADMHCDNJLAI = 7;
+  optional uint32 BBCBHMNKDIB = 8;
+  optional uint64 MIMLOPKLBEH = 9;
+  optional uint32 EEILJPNIHDL = 10;
+  optional uint32 KMMLNDMEIDD = 11;
+}

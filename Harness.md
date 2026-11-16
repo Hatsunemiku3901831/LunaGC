@@ -1,3 +1,5 @@
+2026-11-16 Motion有限raw Java完成：11已证字段及16796.tag4结构，复用84343 Vector；11新+31关联共42项21秒全过，含两元素列表、四不同Vector、float bit/merge与u64边界。+40角色/tag100 codec未闭，实际业务未填Motion、不放完整sender。见[Motion Java](docs/CLIENT_72_D02_M0_MOTION_JAVA_20261116.md)。
+
 2026-11-16 M0新号真实handleClose→onLogout→保存队列→二次新Player正常load独立补验1项12秒通过，位置/HP/同Avatar和武器ObjectId/账号Admission/World注销成立。dispatch-only夹具缺3后台服务的原隔离警告保留，不计完整服务或客户端验收；仅测试/文档，无需重启。见[关闭回调范围](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md#新号真实关闭回调与第二次冷读)。
 
 2026-11-16 最小身份/状态正式portable构建22秒通过：内嵌c2faff7，JAR SHA533dce1ebab1cbd5d147bf769be025cdf19aae16d101ef16721cf49e6cf182e4，18变化/21新增class匹配输出、0移除。54项相关回归通过；两个独立实例同SHA仅预备未启动，HTTP8088/UDP22101/游戏JAR进程0，仍仅自有测试Mongo27027。自然SDK/Entity根列表及Motion前置未齐，不放客户端。见[统一构建](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#最小身份与状态正式构建)。
