@@ -123,6 +123,7 @@
 | D02-M0-SCENEINFO-MIN | 已完成 | [两实体模板与有限静态来源](docs/CLIENT_72_D02_M0_SCENEINFO_MIN_20261116.md)：root14/tag5 World level、root15/tag7 Team身份区分；authority及能力角色仍未知，不是完整sender | Sol max |
 | D02-M0-ENTITY-ACCEPT | 已完成 | [543B typed接收限定静态合同](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)：4469/type73627的OnAccept循环、实体child+98和Vision分支；不含root完整wire/出现sender | Sol max |
 | D02-M0-ENTITY-WIRE | 进行中 | [有限reader/独立scalar与metadata](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)：child独立标量与Avatar oneof、root tag1/tag9的18个owned样本已验；列表tag及完整Avatar子图未闭，317B跳板/167B失败与准确A停止保留，不发不完整4469 | Sol max |
+| D02-M0-ENTITY-SCALAR-JAVA | 已完成 | root2/child7个已证raw字段进入独立Proto，Gradle/protoc生成；12项独立标量/无符号边界/string/错误/存在性断言及2项Scene高64位/列表回归通过。无root list或完整sender，构建另登记 | Sol xhigh |
 | D02-M0-SCENETEAM-LOCATE | 已完成 | [唯一76429子图与双root接收静态链](docs/CLIENT_72_D02_M0_SCENETEAM_LOCATE_20261116.md)：1144本地/24706上下文来源、Avatar GUID及48178/41868初始化限定来源已闭；wire与sender另验 | Sol max |
 | D02-M0-SCENETEAM-MIN-WIRE | 进行中 | 沿已定位1144/type86588与76429恢复必要字段wire；未得到合同前不沿用旧29245 | Sol max |
 | D02-OLD-SNAPSHOT-DATA（OLD-RESOURCE-BUNDLE同项） | 已完成 | [固定旧号限定资源包](docs/CLIENT_72_D02_OLD_SNAPSHOT_DATA_20261116.md)：revision7补真实重算所需羁绊/名片7文件，28表/284输出与10条明示服务器策略；只覆盖选定快照Avatar/Inventory，不代全Manager或客户端ready | Terra xhigh → 唯一集成者 |

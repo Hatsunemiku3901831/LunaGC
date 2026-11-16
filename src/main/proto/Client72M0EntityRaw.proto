@@ -1,0 +1,24 @@
+// Partial CN7.2 contracts only. No root list or complete entity sender is established.
+// Source: CLIENT_72_D02_M0_SCOPE_20261116, ENTITY-WIRE / ROOT-SCALAR.
+syntax = "proto3";
+
+package cn72.m0entityraw;
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "Client72M0EntityRawOuterClass";
+
+message NAALIELJILH {
+  optional uint32 OJPFPILNCIC = 1;
+  // Raw enum42790 bits; VisionBorn=12. uint32 preserves all verified unsigned values.
+  optional uint32 BBHDLEGOLPI = 9;
+}
+
+message IJCEPPNOCNM {
+  // Raw enum31801 bits. These are not a complete entity identity projection.
+  optional uint32 MCPCJJBMHMK = 1;
+  optional uint32 LLHEBIHGDAE = 2;
+  optional string OKDLHHPJOLA = 3;
+  optional uint32 DFENDOGMEAD = 7;
+  optional uint32 CCJOFDMPEEK = 17;
+  optional uint32 LKHOHNGMBDM = 18;
+  optional uint32 PNLLENFDEFH = 26;
+}
