@@ -29,3 +29,5 @@
 `M0PeerIdentityProjection`现填token/tag11、local key/tag10与host key/tag4，field12/tag12不填。真实M0夹具证明Host就是同Player，tag4=真实Host key=该场景local key，并且两者仍不同于Player.uid；原始四字段wire和场景关联继续通过。4套27项26秒全过，XML/汇总在同ignored集成根`peer-host-key-results/`、`peer-host-key-results.private.json`，日志`peer-host-key-tests.log`。正式构建后补。
 
 [TRUE-BRANCH](CLIENT_72_D02_M0_PEER_TRUE_BRANCH_20261116.md) SHA `f97ce7197332a54c4a2286614543905d0ba337a7f770c183294676969270df09`只闭合45B完整保存、全线性strict准确失败与B7入口两条CFG，停在未知CALL15A46C1EF。旧首任务flag[1,1]不能改成false绕真分支；此前没有field12读取不证明它可省。没有发送完整28392或放行Ready/Init/Done，没有新增native/VM/helper/模型或客户端操作。
+
+Host-key后继正式portable构建26秒通过，内嵌17dc6f2；JAR SHA `1821fe9a0e5234fbc7d4ae7b072f9f7c1d3e5e2fcdc37846ddc5e98f5b10ad78`，98289543B。4变化/0新增/0移除class均匹配输出；两独立实例仅预备同SHA未启动。HTTP8088/27017/UDP22101/游戏JAR进程0，只有自有Mongo27027；无健康/运行JAR正向对象，SDK/剩余Peer及场景wire未齐，不部署。原件`peer-host-portable-build.log`、`peer-host-build-artifact.private.json`、`peer-host-post-build-runtime.private.json`在同ignored根。
