@@ -40,7 +40,7 @@ import java.util.*;
 import org.bson.Document;
 import org.junit.jupiter.api.Test;
 
-/** Real finite resources and birth/equipment persistence; no client or World is claimed. */
+/** Real finite resources, World identities and persistence; no client acceptance is claimed. */
 class M0BirthPersistenceMongoTest {
     @Test
     void femaleBirthIsConfirmedBeforeSuccessAndEquipmentRestoresIntoFreshPlayer() throws Exception {
@@ -197,8 +197,32 @@ class M0BirthPersistenceMongoTest {
             assertEquals(packets + 1, freshSession.sent.size(), "unknown initialization cannot emit success or legacy notifications");
             assertEquals(Player.SceneLoadState.LOADING, fresh.getSceneLoadState());
             var joined = fresh.getWorld();
-            AccountLoginAdmission.closed(freshSession);
-            joined.removePlayer(fresh);
+            float savedX = fresh.getPosition().getX() + 0.125f;
+            fresh.getPosition().setX(savedX);
+            restored.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, 123.5f);
+            freshSession.handleClose();
+            assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(10)));
+            assertEquals(GameSession.SessionState.INACTIVE, freshSession.getState());
+            assertEquals(0, joined.getPlayerCount());
+            assertFalse(server.getPlayers().containsKey(fresh.getUid()));
+            var afterLogout = store.find(BirthPlayer.class).first();
+            var afterLogoutSession = new CapturingSession(server);
+            assertTrue(AccountLoginAdmission.begin(afterLogoutSession, "m0-birth", "m0-test-token", account -> {}));
+            afterLogoutSession.setPlayer(afterLogout);
+            afterLogout.loadFromDatabase();
+            var loggedOutAvatar = afterLogout.getAvatars().getAvatarById(10000007);
+            assertNotSame(restored, loggedOutAvatar);
+            assertEquals(avatarObjectId, loggedOutAvatar.getObjectId());
+            assertEquals(weaponObjectId, loggedOutAvatar.getWeaponNotNull().getObjectId());
+            assertEquals(123.5f, loggedOutAvatar.getFightProperty(FightProperty.FIGHT_PROP_CUR_HP));
+            assertEquals(savedX, afterLogout.getPosition().getX());
+            assertEquals("M0新生", afterLogout.getNickname());
+            assertTrue(afterLogout.isM0Profile());
+            assertTrue(afterLogout.getAvatars().isLoaded());
+            assertTrue(afterLogout.getInventory().isLoaded());
+            assertEquals(1, store.getDatabase().getCollection("avatars").countDocuments());
+            assertEquals(1, store.getDatabase().getCollection("items").countDocuments());
+            AccountLoginAdmission.closed(afterLogoutSession);
             store.getDatabase().getCollection("accounts").insertOne(new Document("_id", "old-profile")
                     .append("username", "old-profile").append("token", "old-test-token").append("permissions", List.of()));
             var old = new BirthPlayer();

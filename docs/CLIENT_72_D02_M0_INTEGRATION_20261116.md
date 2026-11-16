@@ -42,3 +42,11 @@ M0独立config/resources/local-data已准备并通过portable配置检查，未�
 新JAR已复制到独立M0实例，同hash；config/resources/data均指向该实例，Mongo配置27027通过portable路径检查。未启动此实例：实际8088 TCP、22101 UDP及游戏JAR进程均0；27027仅为本轮拥有的独立validation Mongo，用于唯一测试库。没有正向服务健康、运行JAR SHA或loaded补丁验收对象，也未安装/构建客户端补丁。patch/resources子模块HEAD及原dirty范围保持，旧运行数据库和data未操作。版本声明门保持原状，不能由本次构建直接启动7.2客户端。
 
 `D02-M0-BUILD`只覆盖上述打包和身份核对；`D02-M0-RUN`仍因SceneInfo必要子图/Entity出现与自然SDK路由前置而阻塞。当前实验包不会请求用户ready。旧号资源与服务器完整冷恢复是下一可独立任务，不受本M0有限资源ready代替。
+
+## 新号真实关闭回调与第二次冷读
+
+后续只补M0生命周期测试，没有修改运行代码。原夹具曾手动removePlayer；现执行正常`GameSession.handleClose → Player.onLogout → 原保存队列/Guard`，随后第二个全新Morphia Player走正常`loadFromDatabase`并重新取得同账号Admission。独立Mongo中1项12秒通过：World成员和在线registry移除，状态INACTIVE；位置x新增0.125与HP123.5按正常保存后冷读保持，同Avatar/11101 ObjectId、名字、m0Profile和两storage加载成立，集合仍恰一角色/一武器，没有重建出生对象。
+
+该GameServer夹具用DISPATCH_ONLY避免启动端口，match/chat/dungeon三个服务为空；原runLogoutStep分别留下3条NPE警告后仍完成其余正常注销步骤。它们是这次夹具边界，不当生产故障或完整三服务验收，也不为了补无关服务引入DungeonDrop资源闭包。真实队列保存/World/Guard/AccountAdmission可独立验，完整server和客户端退出重登仍未验。
+
+XML和汇总留ignored根`m0-normal-close-results/`、`m0-normal-close-results.private.json`，首轮日志`m0-normal-close-first-tests.log`保留警告。只改测试/文档，无需重建或重启；磁盘正式JAR仍为上述c2faff7/SHA533dce1e…182e4。

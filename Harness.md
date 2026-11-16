@@ -1,3 +1,5 @@
+2026-11-16 M0新号真实handleClose→onLogout→保存队列→二次新Player正常load独立补验1项12秒通过，位置/HP/同Avatar和武器ObjectId/账号Admission/World注销成立。dispatch-only夹具缺3后台服务的原隔离警告保留，不计完整服务或客户端验收；仅测试/文档，无需重启。见[关闭回调范围](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md#新号真实关闭回调与第二次冷读)。
+
 2026-11-16 最小身份/状态正式portable构建22秒通过：内嵌c2faff7，JAR SHA533dce1ebab1cbd5d147bf769be025cdf19aae16d101ef16721cf49e6cf182e4，18变化/21新增class匹配输出、0移除。54项相关回归通过；两个独立实例同SHA仅预备未启动，HTTP8088/UDP22101/游戏JAR进程0，仍仅自有测试Mongo27027。自然SDK/Entity根列表及Motion前置未齐，不放客户端。见[统一构建](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#最小身份与状态正式构建)。
 
 2026-11-16 同玩家UID/GUID非发送投影完成：TokenRsp实际UID与SceneTeam76429.tag3、SceneAvatar41868.tag1同源，41868.tag3与同Avatar GUID lookup一致；两GUID/实体/Scene均取实际对象。新增5独立边界wire，6套54项10秒全过；完整根列表/Motion及sender不升级。见[Java身份增量](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#同玩家uid与avatar-guid的非发送投影)。

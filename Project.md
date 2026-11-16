@@ -129,6 +129,7 @@
 | D02-M0-SCENEAVATAR-WIRE | 已完成 | [41868唯一3430B reader的13标量及31外槽分派](docs/CLIENT_72_D02_M0_SCENEAVATAR_WIRE_20261116.md)静态限定完成；普通raw范围完成；后继独立桥仅闭UID/tag1和GUID/tag3，完整实体sender未闭 | Sol max |
 | D02-M0-SCENE-RAW-JAVA | 已完成 | [28字段SceneAvatar/17外字段Team/83228四字段及86588实测bool的Proto与Java回归](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)：10新+14关联共24项全过；未知三内层/cctor-only列表不升格，未发送场景包，portable构建25秒/内嵌89b2ceb及JAR/class核对通过，未部署 | Sol xhigh |
 | D02-M0-ENTITY-APPEAR-NECESSITY | 已完成 | [单本地Avatar的真实分派、UID/GUID桥与必需性分层](docs/CLIENT_72_D02_M0_ENTITY_APPEAR_MIN_DEPENDENCIES_20261116.md)：Gadget谓词不当Avatar消费，Handle/Level code-data proof和本地consumer限定源完成；Motion外层wire/实体root列表及A返回仍分列，不放完整sender | Sol max |
+| D02-M0-CLOSE-SAVE-JAVA | 已完成 | [真实会话关闭与二次冷读](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md#新号真实关闭回调与第二次冷读)：1项12秒，位置/HP/同角色武器ObjectId/账号Admission/World注销保持；dispatch-only缺三后台服务的警告分列，非完整服务或客户端退出重登验收 | Sol xhigh |
 | D02-M0-AVATAR-IDENTITY-JAVA | 已完成 | [同Player UID、Avatar GUID及实际实体的非发送投影](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#同玩家uid与avatar-guid的非发送投影)：独立Token/session与GUID lookup来源，5新wire+49关联共54项通过；正式构建22秒/内嵌c2faff7与JAR/class核对通过，根列表/Motion/完整sender仍未闭 | Sol xhigh |
 | D02-M0-SCENEAVATAR-DIRECT-USES | 已完成 | [旧1480B初始化器独立直接使用与null分支最小性](docs/CLIENT_72_D02_M0_SCENEAVATAR_DIRECT_USES_20261116.md)只读复用；不因SceneTeam可用null输入而给EntityAppear省oneof | Sol max |
 | D02-M0-AUTHORITY-CFG | 已完成 | [base getter/setter的条件CFG及factory比较桥](docs/CLIENT_72_D02_M0_AUTHORITY_CFG_20261116.md)：原0-pdata失败保留，不把+42C猜作HostPeerId、OOJ不作当前常量 | Sol max |
