@@ -1,3 +1,5 @@
+2026-11-16 SceneTeam/SceneAvatar raw外层合同及最小直接使用分项完成，尚无完整sender：[SceneTeam](docs/CLIENT_72_D02_M0_SCENETEAM_MIN_WIRE_20261116.md)17字段/83228四字段/86588 bool19样本；[SceneAvatar](docs/CLIENT_72_D02_M0_SCENEAVATAR_WIRE_20261116.md)3430B及13标量/31槽；[直接使用](docs/CLIENT_72_D02_M0_SCENEAVATAR_DIRECT_USES_20261116.md)不强求全31业务字段；[Authority](docs/CLIENT_72_D02_M0_AUTHORITY_CFG_20261116.md)只闭base目标条件下+460的读写和factory比较，不能直填+42C为peer。源失败/返回依赖仍独立保留，Java增量/完整投影另验。
+
 2026-11-16 旧号有限模式正式portable构建23秒通过：内嵌1382c15，JAR SHA60314848d1164590d3573881c31541c225500021bfe6744838f1a72bf7d827de；52变化/4新增class匹配实际输出。两个独立实例仅预备同SHA未启动；post-build HTTP8088/game UDP22101/游戏JAR进程均0，仅已核自有测试Mongo27027/PID51240。完整快照/Scene/SDK前置仍缺，不启动猜测协议。见[模式构建与未部署边界](docs/CLIENT_72_D02_OLD_SNAPSHOT_MODE_20261116.md)。
 
 2026-11-16 旧号显式模式/有限生命周期完成：29表/287输出，独立资源ready和Storage前manifest/cohort/引用门；错误UID/武器/Reward零写，网络Token在Player创建前拒绝。真实Player.load、World/Team/武器实体、tick、正常注销保存和冷读11秒/JUnit1过；相关9套178项、portable30项、offline2项全过。原档全字段及1527 inactive保全，profile首次失败促收窄为正常lastActiveTime更新。见[限定模式/生命周期](docs/CLIENT_72_D02_OLD_SNAPSHOT_MODE_20261116.md)；完整Store/Avatar/TPS和Scene/SDK wire未闭，六项0/6。

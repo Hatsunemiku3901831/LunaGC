@@ -125,7 +125,10 @@
 | D02-M0-ENTITY-WIRE | 进行中 | [有限reader/独立scalar与metadata](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)：child独立标量与Avatar oneof、root tag1/tag9的18个owned样本已验；列表tag及完整Avatar子图未闭，317B跳板/167B失败与准确A停止保留，不发不完整4469 | Sol max |
 | D02-M0-ENTITY-SCALAR-JAVA | 已完成 | root2/child7个已证raw字段进入独立Proto，Gradle/protoc生成；12项独立标量/无符号边界/string/错误/存在性断言及2项Scene高64位/列表回归通过。无root list或完整sender，构建另登记 | Sol xhigh |
 | D02-M0-SCENETEAM-LOCATE | 已完成 | [唯一76429子图与双root接收静态链](docs/CLIENT_72_D02_M0_SCENETEAM_LOCATE_20261116.md)：1144本地/24706上下文来源、Avatar GUID及48178/41868初始化限定来源已闭；wire与sender另验 | Sol max |
-| D02-M0-SCENETEAM-MIN-WIRE | 进行中 | 沿已定位1144/type86588与76429恢复必要字段wire；未得到合同前不沿用旧29245 | Sol max |
+| D02-M0-SCENETEAM-MIN-WIRE | 已完成 | [76429全部17外字段、83228四字段、86588 bool的19 owned样本](docs/CLIENT_72_D02_M0_SCENETEAM_MIN_WIRE_20261116.md)限定合同完成；能力/flag/UID业务投影及完整sender仍未闭，不沿用旧29245 | Sol max |
+| D02-M0-SCENEAVATAR-WIRE | 已完成 | [41868唯一3430B reader的13标量及31外槽分派](docs/CLIENT_72_D02_M0_SCENEAVATAR_WIRE_20261116.md)静态限定完成；没有13标量的具名业务映射或完整实体sender | Sol max |
+| D02-M0-SCENEAVATAR-DIRECT-USES | 已完成 | [旧1480B初始化器独立直接使用与null分支最小性](docs/CLIENT_72_D02_M0_SCENEAVATAR_DIRECT_USES_20261116.md)只读复用；不因SceneTeam可用null输入而给EntityAppear省oneof | Sol max |
+| D02-M0-AUTHORITY-CFG | 已完成 | [base getter/setter的条件CFG及factory比较桥](docs/CLIENT_72_D02_M0_AUTHORITY_CFG_20261116.md)：原0-pdata失败保留，不把+42C猜作HostPeerId、OOJ不作当前常量 | Sol max |
 | D02-OLD-SNAPSHOT-DATA（OLD-RESOURCE-BUNDLE同项） | 已完成 | [固定旧号限定资源包](docs/CLIENT_72_D02_OLD_SNAPSHOT_DATA_20261116.md)：revision7补真实重算所需羁绊/名片7文件，28表/284输出与10条明示服务器策略；只覆盖选定快照Avatar/Inventory，不代全Manager或客户端ready | Terra xhigh → 唯一集成者 |
 | D02-OLD-SNAPSHOT-LOAD | 已完成 | [revision-5纯ResourceLoader诊断](docs/CLIENT_72_D02_OLD_SNAPSHOT_JAVA_20261116.md)：全部21表选行、121 Avatar/embryo、9128 Item种类及OpenConfig真实加载；没有Player/DB/hydrate，loadedAll保持false | Sol xhigh |
 | D02-OLD-SNAPSHOT-RESTORE | 已完成 | [完整AvatarStorage/Inventory保存冷读](docs/CLIENT_72_D02_OLD_SNAPSHOT_JAVA_20261116.md)已通过全121/10727/471及12254原行字段核对；羁绊多重集合、正常saveStamp和4项HP clamp独立验证；16秒/JUnit1及缺资源零写通过，完整Player业务Manager/认证/客户端仍未验 | 唯一Sol xhigh集成者 |
