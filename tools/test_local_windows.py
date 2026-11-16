@@ -107,6 +107,10 @@ class PortableLauncherTest(unittest.TestCase):
         self.config["server"]["game"]["m0"] = {"enabled": True}
         self.assert_start_rejected("D02-M0 requires an explicitly prepared InstanceRoot")
 
+    def test_old_snapshot_cannot_use_the_original_runtime(self):
+        self.config["server"]["game"]["oldSnapshot"] = {"enabled": True}
+        self.assert_start_rejected("Old snapshot mode requires an explicitly prepared InstanceRoot")
+
     def test_explicit_external_resources_are_allowed(self):
         with tempfile.TemporaryDirectory(prefix="lunagc resources ") as resource_root:
             resources = Path(resource_root)

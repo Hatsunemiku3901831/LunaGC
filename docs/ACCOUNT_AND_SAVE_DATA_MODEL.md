@@ -1,3 +1,5 @@
+2026-11-16 [旧号显式有限模式](CLIENT_72_D02_OLD_SNAPSHOT_MODE_20261116.md)已实现并验证生产资源门、完整Avatar/Inventory、World/Team/tick及正常保存退出冷读；仅manifest绑定的独立复制档可载，不补m0Profile，不设loadedAll。原档进度/集合完整，profile仅更新正常活跃时间；非入场Manager后移。完整Store/Avatar/TPS及场景wire未齐，网络在Player创建前明确拒绝，未部署/客户端未验。
+
 2026-11-16 所选旧号[真实Avatar/Inventory保存冷恢复](CLIENT_72_D02_OLD_SNAPSHOT_JAVA_20261116.md)通过：独立测试库固定1 Player/121 Avatar/12254 Item副本，资源准入缺项零写，10727活动物品/471装备和全部原进度字段保持；羁绊仅比较多重集合，正常保存stamp及4项HP cap独立验证。未改原数据库/快照或生产存档格式，未调用完整业务Manager/认证/客户端，不可导入M0有限实例。
 
 2026-11-16 新增Player布尔字段m0Profile：仅显式M0实例的新Player(GameSession)初始化true，旧档缺失/false不自动迁移。M0在storage hydrate前拒绝未标记档案；该字段不改变UID归属、ObjectId、运行GUID或saveStamp含义。有限出生装备确认保存与新Player冷恢复见[M0集成](CLIENT_72_D02_M0_INTEGRATION_20261116.md)。

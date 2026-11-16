@@ -110,6 +110,20 @@ function Start-Process {
         self.assertEqual(len(calls), 2)
         self.assertTrue(all(row['cwd'] == str(self.instance) for row in calls))
 
+    def test_old_snapshot_uses_only_the_prepared_instance(self):
+        self.config['server']['game']['oldSnapshot'] = {'enabled': True}
+        result, calls = self.run_mode()
+        self.assertIn('FIXTURE_SERVER_LAUNCH_CAPTURED', result.stderr)
+        self.assertEqual(len(calls), 2)
+        self.assertTrue(all(row['cwd'] == str(self.instance) for row in calls))
+
+    def test_old_snapshot_and_m0_cannot_share_one_mode(self):
+        self.config['server']['game']['oldSnapshot'] = {'enabled': True}
+        self.config['server']['game']['m0'] = {'enabled': True}
+        result, calls = self.run_mode()
+        self.assertIn('separate instances', result.stderr)
+        self.assertEqual([], calls)
+
     def test_original_database_uri_is_rejected_before_any_process(self):
         self.config['databaseInfo']['game']['connectionUri'] = 'mongodb://127.0.0.1:27017'
         result, calls = self.run_mode()

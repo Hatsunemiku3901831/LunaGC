@@ -1655,7 +1655,7 @@ public class Player implements PlayerHook, FieldFetch {
             return;
         }
 
-        if (GAME_INFO.m0.enabled) return;
+        if (GAME_INFO.m0.enabled || GAME_INFO.oldSnapshot.enabled) return;
 
         this.getCoopRequests().values().removeIf(this::expireCoopRequest);
 
@@ -1780,6 +1780,8 @@ public class Player implements PlayerHook, FieldFetch {
     }
 
     public void loadFromDatabase() {
+        if (GAME_INFO.oldSnapshot.enabled)
+            emu.grasscutter.data.OldSnapshotResources.requireCopiedPlayer(this);
 
         if (this.getTeamManager() == null) {
             this.teamManager = new TeamManager(this);
@@ -1791,7 +1793,7 @@ public class Player implements PlayerHook, FieldFetch {
             this.getProfile().syncWithCharacter(this);
         }
 
-        if (GAME_INFO.m0.enabled) {
+        if (GAME_INFO.m0.enabled || GAME_INFO.oldSnapshot.enabled) {
             this.getAvatars().loadFromDatabase();
             this.getInventory().loadFromDatabase();
             this.getPlayerProgress().setPlayer(this);
@@ -1859,6 +1861,11 @@ public class Player implements PlayerHook, FieldFetch {
     }
 
     public void onLogin() {
+        if (GAME_INFO.oldSnapshot.enabled) {
+            Grasscutter.getLogger().warn("Old snapshot network entry stopped: complete Avatar/Store/TPS and scene wire remain unverified.");
+            this.getSession().close();
+            return;
+        }
         if (GAME_INFO.m0.enabled) {
             this.onM0Login();
             return;
@@ -2041,6 +2048,20 @@ public class Player implements PlayerHook, FieldFetch {
     }
 
     public void onLogout() {
+        if (GAME_INFO.oldSnapshot.enabled) {
+            try {
+                runLogoutStep("world departure", () -> {
+                    if (this.getWorld() != null) this.getWorld().removePlayer(this);
+                });
+                // This mode never loaded Home or edited profile data; preserve those cached fields.
+                runLogoutStep("profile activity", () -> this.getProfile().updateLastActiveTime());
+                runLogoutStep("player save", this::save);
+                for (var avatar : new ArrayList<>(this.getAvatars().getAvatars().values()))
+                    runLogoutStep("avatar save", avatar::save);
+                runLogoutStep("quit event", () -> new PlayerQuitEvent(this).call());
+            } finally { removeFromServer(); }
+            return;
+        }
         try {
             runLogoutStep("statue recovery", () -> this.getSotsManager().stopRecovery());
             runLogoutStep("matchmaking", () -> this.getServer().getCrucibleMatchSystem().cancel(this));
@@ -2080,6 +2101,16 @@ public class Player implements PlayerHook, FieldFetch {
         } catch (Throwable failure) {
             Grasscutter.getLogger().warn("Player (UID {}) logout step '{}' failed", getUid(), step, failure);
         }
+    }
+
+    /** Server object/lifecycle preparation only; network entry remains explicitly blocked. */
+    public void prepareOldSnapshotWorld() {
+        if (!GAME_INFO.oldSnapshot.enabled || !this.getAvatars().isLoaded() || !this.getInventory().isLoaded())
+            throw new IllegalStateException("Old snapshot storage must be admitted and loaded first");
+        this.getTeamManager().repairPersistentTeams();
+        var world = new World(this);
+        if (!world.tryAddPlayer(this)) throw new IllegalStateException("Old snapshot scene construction failed");
+        this.getTeamManager().applyAbilities(this.getScene());
     }
 
     public void removeFromServer() {

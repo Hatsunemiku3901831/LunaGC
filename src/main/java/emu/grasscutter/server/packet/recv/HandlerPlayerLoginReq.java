@@ -23,6 +23,11 @@ public class HandlerPlayerLoginReq extends PacketHandler {
             session.close();
             return;
         }
+        if (Grasscutter.getConfig().server.game.oldSnapshot.enabled) {
+            Grasscutter.getLogger().warn("Old snapshot login stopped before snapshot senders: required wire is incomplete.");
+            session.close();
+            return;
+        }
 
         Player player = session.getPlayer();
         if (!emu.grasscutter.data.ResourceLoader.isLoginReady()) {

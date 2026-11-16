@@ -2,6 +2,8 @@
 
 本项继续[固定旧号资源准备](CLIENT_72_D02_OLD_SNAPSHOT_DATA_20261116.md)，只面向所选完整快照，不导入M0实例。真实全121 AvatarStorage、10727活动物品Inventory的确认保存与新Player冷载已通过；完整Player业务Manager、自然认证和D-02客户端验收仍未通过。
 
+生产有限模式和Storage前实际资源门已在后续[MODE/LIFECYCLE](CLIENT_72_D02_OLD_SNAPSHOT_MODE_20261116.md)实现并独立验证；本页保留revision7完整manager验证的输入和结果，不把后续模式的网络拒绝说成客户端通过。
+
 ## 首轮纯ResourceLoader诊断
 
 第一次实际Java诊断直接使用只读`revision-5`（与revision-6同字节），没有对旧revision重复测试。manifest SHA-256固定为`1ada44d0ad16e69de52ea182a338c3410aa4c34e140dd78b7ec8cc0b4b7e661b`，入口核该SHA及277个输出SHA；不接受自动刷新输入。真实`ResourceLoader.loadFromResource`逐文件执行Gson与资源`onLoad`，不是反射注入GameData或手设loadedAll。能力及OpenConfig也使用现有真实路径解析入口和显式bundle路径，避免根运行缓存。

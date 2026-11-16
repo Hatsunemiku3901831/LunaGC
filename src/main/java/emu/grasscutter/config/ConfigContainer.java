@@ -275,6 +275,8 @@ public class ConfigContainer {
 
         /** Explicit, isolated new-account entry experiment; never implies full resource readiness. */
         public M0 m0 = new M0();
+        /** Explicit fixed-copy restoration only; no complete network entry contract is claimed. */
+        public OldSnapshot oldSnapshot = new OldSnapshot();
 
         public GameOptions gameOptions = new GameOptions();
         public JoinOptions joinOptions = new JoinOptions();
@@ -292,6 +294,12 @@ public class ConfigContainer {
 
     public static class M0 {
         public boolean enabled = false;
+    }
+
+    public static class OldSnapshot {
+        public boolean enabled = false;
+        public String manifestSha256 = "";
+        public String inputRoot = "";
     }
 
     /* Data containers. */

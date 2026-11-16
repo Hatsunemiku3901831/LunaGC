@@ -36,6 +36,12 @@ function Resolve-ClientTrustBundlePath([string] $Repository) {
 }
 
 function Assert-PortableConfig([string] $Repository, $Configuration, [int] $MongoPort, [switch] $Isolated) {
+    if ($Configuration.server.game.oldSnapshot.enabled -and -not $Isolated) {
+        throw 'Old snapshot mode requires an explicitly prepared InstanceRoot; the original runtime cannot enable it.'
+    }
+    if ($Configuration.server.game.oldSnapshot.enabled -and $Configuration.server.game.m0.enabled) {
+        throw 'Old snapshot mode and D02-M0 require separate instances.'
+    }
     if ($Configuration.server.game.m0.enabled -and -not $Isolated) {
         throw 'D02-M0 requires an explicitly prepared InstanceRoot; the original runtime cannot enable it.'
     }

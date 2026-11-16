@@ -2,6 +2,10 @@
 
 状态：**有限离线数据与引用检查完成；完整旧号恢复未验，ready=false。** 本项只为选定快照准备候选资源和可追溯清单，不改变原 BSON、数据库、资源子模块或 M0 实例。首个可供纯 `ResourceLoader` 诊断的稳定包是 `local/instances/d02-old-restore/resources/revision-5/`；修正缺行报告后的复现包为同目录 `revision-6/`，两者 manifest 字节一致。不要把候选资产身份、离线引用检查或单次 loader 成功当作客户端或完整 Player 恢复验收。
 
+## 有限运行模式补充：revision-8
+
+新增hash固定的Account BSON输入以及从已验M0输出逐字节核对复制的Scene3、Level_BigWorld、显式optional-global策略三文件；29表/287输出。manifest SHA `941c5f30e1d66d0208f8a4618bca30e439b82527130b06a1168aa9cf2574e0b9`，脚本SHA `ccb9c71fd7cca191adc0d4e00e04bb052bc705816fbf7cddea37517afadc044a`。两项离线测试14.969秒通过；原10条业务数值策略与全局能力省略政策分列，不称target能力恢复。实际生产loader/只准复制档的Storage前门及World/保存生命周期见[旧号有限模式](CLIENT_72_D02_OLD_SNAPSHOT_MODE_20261116.md)。revision7保持不变，离线ready仍false。
+
 ## 当前集成补充：revision-7
 
 真实全原字段恢复测试发现21表包缺羁绊/名片派生资源。唯一集成者按同一固定tree补取并核对FetterInfo、Fetters、FetterStory、PhotographExpression、PhotographPosename、FetterCharacterCard、Reward七个具名文件，脚本`FETCH`固定每个Git blob/SHA；私有下载回执留`evidence/explicit-fetter-reward-fetch-receipt.json`。未启用lazy-fetch，旧revision不覆盖。仅选择121角色相关行及名片所需Reward，不扩任务/奖励业务恢复。

@@ -42,6 +42,12 @@ public class HandlerGetPlayerTokenReq extends PacketHandler {
         var keyId = request.getKeyId();
 
         session.setAccount(account);
+        if (Grasscutter.getConfig().server.game.oldSnapshot.enabled) {
+            Grasscutter.getLogger().warn("Old snapshot network admission stopped before player/storage: required snapshot and scene wire are incomplete.");
+            session.send(new PacketGetPlayerTokenRsp(session, -1));
+            session.close();
+            return;
+        }
 
         boolean kicked = false;
         var exists = session.getServer().getPlayerByAccountId(accountId);

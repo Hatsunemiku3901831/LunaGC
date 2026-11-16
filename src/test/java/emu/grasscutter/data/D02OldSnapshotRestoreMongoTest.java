@@ -153,7 +153,7 @@ class D02OldSnapshotRestoreMongoTest {
         }
     }
 
-    private static void assertSnapshot(Player player, List<Document> avatars, List<Document> items) {
+    static void assertSnapshot(Player player, List<Document> avatars, List<Document> items) {
         assertEquals(121, player.getAvatars().getAvatarCount());
         assertEquals(10727, player.getInventory().getItems().size());
         var actualItems = player.getInventory().getItems().values().stream()
@@ -217,7 +217,7 @@ class D02OldSnapshotRestoreMongoTest {
         return !Boolean.TRUE.equals(item.getBoolean("deleted")) && item.getInteger("count") > 0;
     }
 
-    private static void assertStoredFields(com.mongodb.client.MongoCollection<Document> collection,
+    static void assertStoredFields(com.mongodb.client.MongoCollection<Document> collection,
                                            List<Document> source, Set<String> derivedFields) {
         var saved = collection.find().into(new ArrayList<>()).stream()
                 .collect(Collectors.toMap(d -> d.get("_id"), d -> d));

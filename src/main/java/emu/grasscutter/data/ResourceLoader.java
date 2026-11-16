@@ -45,7 +45,8 @@ public final class ResourceLoader {
 
     public static boolean isLoginReady() {
         return loadedAll || (emu.grasscutter.config.Configuration.GAME_INFO.m0.enabled
-                && M0Resources.isBirthReady());
+                && M0Resources.isBirthReady())
+                || (emu.grasscutter.config.Configuration.GAME_INFO.oldSnapshot.enabled && OldSnapshotResources.isReady());
     }
 
     public static List<Class<?>> getResourceDefClasses() {
@@ -374,7 +375,7 @@ public final class ResourceLoader {
         }
     }
 
-    private static void cacheTalentLevelSets() {
+    static void cacheTalentLevelSets() {
 
         GameData.getProudSkillDataMap()
                 .forEach(
@@ -556,7 +557,7 @@ public final class ResourceLoader {
         }
     }
 
-    private static void loadTalent(Path path) {
+    static void loadTalent(Path path) {
         try {
             GameData.getTalents()
                     .putAll(

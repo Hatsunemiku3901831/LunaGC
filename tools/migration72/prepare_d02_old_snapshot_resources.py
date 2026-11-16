@@ -14,6 +14,7 @@ SNAP = 'local/migration72/d02-resume-20261110b/old-account-snapshot/run-20261110
 PINS = {
  SNAP+'selected-manifest.private.json':'9fffdc25ddb24376552e3163db9ed6de441548d843fbda82649996fb59d4910b',
  SNAP+'selected-dependencies.private.json':'3ef64138cd0525442df1625e823bb41a66089c3ea114deb99c7da24f201ec0b7',
+ SNAP+'export/grasscutter/selected-0/account.bson':'19558a3cb414b78d668fcda7f4ed01bc599f729f722ebf6954ea8536e566ee1c',
  SNAP+'export/grasscutter/selected-0/player.bson':'95774a40f97ae3daacbf7a7b8602185889e8a3ca7ac3195fad8d5805f2147a43',
  SNAP+'export/grasscutter/selected-0/avatars-0.bson':'273fa466d17e504d2eef2abb00b175afe3b4aa50f339d622b4614e828c3afc5a',
  SNAP+'export/grasscutter/selected-0/items-0.bson':'563fa1ed07c4fc92722f1b723259ac7a0e79ddc12a718b300e4557e7828712dd',
@@ -60,6 +61,11 @@ GIT = {
  'ProudSkill':('c9e9bae3672c02521058479c4c562d548b44abce','c0083146091ee6968bcf06c5143196eaec4130b0cf105ec0c49bcdc56ae766bc'),
  'Gadget':('5deea852ac4372ebf1d7b593e07b9813a1b14e7f','af66b09f3fcfb511f9f8a49c0d079bfd5bf538d9a6ba3dce8baeddfcb371e9c5'),
 }
+IDENTITY_FILES = {
+ 'ExcelBinOutput/SceneExcelConfigData.json':'a37fce943a2a52025f02dfcbe86dbe25c878daf6d909bf308be6eb8788b5362a',
+ 'BinOutput/Common/ConfigGlobalCombat.json':'7192c58d9170fa6890760be74372f5fcac55dcf8785b93f5268c034c66b6549e',
+ 'BinOutput/LevelEntity/ConfigLevelEntity_Level_BigWorld.json':'fc5ac3306bc51ce9687799136694ee49ca56e6c64658f7cf993962726edf43c3',
+}
 LOCAL_NAMES = {
  'Weapon':'local/migration72/d02-resume-20261110b/c-old-items/WeaponExcelConfigData.json',
  'Reliquary':'local/migration72/d02-resume-20261110b/c-old-items/ReliquaryExcelConfigData.json',
@@ -101,6 +107,11 @@ def load_inputs(repo, evidence):
             actual=subprocess.check_output(['git','-C',str(repo),'rev-parse',f'{REV}:{path}'],env=env).decode().strip()
             if entry.get('error') or actual!=entry['blob'] or blob(data)!=actual or sha(data)!=entry['sha256']: raise ValueError(f'asset candidate mismatch: {path}')
             assets[path]=data;metadata[path]={'blob':actual,'sha256':sha(data),'classification':'upstream-candidate','source':'explicit fixed-commit raw fetch'}
+    for path,expected_sha in IDENTITY_FILES.items():
+        data=(ROOT/'local/instances/d02-m0/resources'/path).read_bytes()
+        if sha(data)!=expected_sha:raise ValueError(f'fixed scene identity input changed: {path}')
+        assets[path]=data
+        metadata[path]={'sha256':expected_sha,'classification':'server-provisional' if 'GlobalCombat' in path else 'fixed-M0-identity-input','source':'audited M0 input copied without modification; optional globals not appended'}
     license_data=subprocess.check_output(['git','-C',str(repo),'show',f'{REV}:LICENSE'],env=env)
     if sha(license_data)!='5653a2bde6fd785bc82cd78fb96dd28c8ebd335e968e5b1a00584c5e0713dda2': raise ValueError('license mismatch')
     return fixed,sources,metadata,license_data,assets

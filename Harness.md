@@ -1,3 +1,7 @@
+2026-11-16 旧号显式模式/有限生命周期完成：29表/287输出，独立资源ready和Storage前manifest/cohort/引用门；错误UID/武器/Reward零写，网络Token在Player创建前拒绝。真实Player.load、World/Team/武器实体、tick、正常注销保存和冷读11秒/JUnit1过；相关9套178项、portable30项、offline2项全过。原档全字段及1527 inactive保全，profile首次失败促收窄为正常lastActiveTime更新。见[限定模式/生命周期](docs/CLIENT_72_D02_OLD_SNAPSHOT_MODE_20261116.md)；完整Store/Avatar/TPS和Scene/SDK wire未闭，六项0/6。
+
+2026-11-16 实体raw独立Proto正式portable构建22秒过：内嵌7b86c53，JAR SHAe48c233e61b8cb5f55d7b93b7270466f8e78f31d29b8b51b8b02bb7848441fa4，3变化/9新增class均匹配编译输出；预备实例未启动，非完整实体发送。旧mode后续运行修改另构建。
+
 2026-11-16 Entity raw标量Java子项完成：SCOPE最终SHA0444aeac95a14625963ac7fd2d01bbcc5f7c46e533ba7d3703bfc1efcb343107的root2/child7字段进入独立Proto，Gradle/protoc真实生成，12新wire+2 Scene高GUID/列表回归全过（19秒）。root列表tag候选1200前缀准确失败未升级；不发不完整4469/旧号，也不宣称native错误行为或完整entry-ready。见[SCOPE可编码清单](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)。
 
 2026-11-16 旧号完整AvatarStorage/Inventory确认保存冷载通过：revision7的28表/284输出，真实121角色/10727活动物品/471装配，12254原物品及1527非活动行保全。16秒/JUnit1与离线2项通过；缺武器/名片Reward零写负例、羁绊多重集合/全原字段/正常stamp及4项HP实际clamp逐项核验。首次全字段失败促补7具名资源，未放宽内容保护。见[完整恢复范围与复现](docs/CLIENT_72_D02_OLD_SNAPSHOT_JAVA_20261116.md)；未调用完整Player业务Manager或认证/场景，六项0/6不变。
