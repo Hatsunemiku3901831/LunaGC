@@ -1,3 +1,5 @@
+最新正式portable构建22秒、内嵌c2faff7，已包含真实World/Team身份、authority-key关联、新实体最小状态及同Player UID/Avatar GUID非发送投影；JAR SHA `533dce1ebab1cbd5d147bf769be025cdf19aae16d101ef16721cf49e6cf182e4`。18变化/21新增class均核对，54项相关回归通过。两个独立实例仅预备未启动，自然SDK/Entity剩余必要wire仍阻部署；详见[统一实际构建](CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#最小身份与状态正式构建)。下方各增量测试/旧产物为阶段证据，不等于客户端验收。
+
 SceneInfo独立身份增量：root14.tag5真实World level ID与root15.tag7真实Team ID已接，两个非空子树独立/非模板，19项29秒通过；完整authority/能力/Entity仍未闭，Init/Done停止保持。此后新构建记录见[场景raw增量](CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#sceneinfo非空身份增量)。
 
 最新构建/增量：显式旧号模式及真实World/保存生命周期已完成，[场景raw Java](CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)24项与正式portable构建25秒通过，内嵌89b2ceb，JAR SHA74049899d59c4a8b2652aeaba2ff14b9fb5ca81ae2e94acd08eb41f1caa001f3。两独立实例仅预备未启动，六项0/6；下文M0首次实现/构建数值按历史阶段读取。

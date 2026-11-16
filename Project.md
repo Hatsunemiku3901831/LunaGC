@@ -1,10 +1,10 @@
 # 国服 7.2 任务规划与验收
 
-任务证据基线：2026-11-16；当前恢复研发从`fcdd46a`继续，近期已验M0有限运行、旧号完整Avatar/Inventory及有限生命周期，并接入增量raw Proto。最新构建内嵌`89b2ceb`，实际部署/客户端六项仍未通过；详见[M0集成](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)、[旧号有限模式](docs/CLIENT_72_D02_OLD_SNAPSHOT_MODE_20261116.md)与[场景raw Java](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)。原`D02-RESUME-INTEGRATION-20261116B`从99a868d到7b2ed77及HANDOFF2为此前历史检查点。仅面向国服7.2，Windows portable。
+任务证据基线：2026-11-16；当前恢复研发从`fcdd46a`继续，近期已验M0有限运行、旧号完整Avatar/Inventory及有限生命周期，并接入增量raw Proto。最新构建内嵌`c2faff7`，实际部署/客户端六项仍未通过；详见[M0集成](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)、[旧号有限模式](docs/CLIENT_72_D02_OLD_SNAPSHOT_MODE_20261116.md)与[场景raw Java](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)。原`D02-RESUME-INTEGRATION-20261116B`从99a868d到7b2ed77及HANDOFF2为此前历史检查点。仅面向国服7.2，Windows portable。
 
 ## 当前阶段
 
-**当前优先目标仍为D02-M0：新测试号正常认证→显式选人命名→场景握手→角色实际可见落地→10分钟心跳→退出重登保存。用户允许临时业务数值，不能代替协议身份/wire或正常认证。** 已验显式M0真实loader、Avatar投影、新号出生/保存冷读及有限登录/tick；旧号全121/10727/471资源门、World/Team/退出冷读也已限定完成，未知三内层不造壳的Scene raw Java已生成并验证。最新portable正式构建25秒，JAR SHA74049899d59c4a8b2652aeaba2ff14b9fb5ca81ae2e94acd08eb41f1caa001f3；仅预备独立实例未启动。全D-02/F-05/D02-R6仍0/6，客户端R4/R5/R6未开始。必要SceneInfo/SceneTeam/Avatar出现业务及自然SDK路由继续；旧档完整Store/Furniture/TPS/Relic/精炼映射按实际出口分项核，不把完整Manager或原版资源全恢复当统一前置。原A/B、preview准确限制保持，M0局部通过不收工。
+**当前优先目标仍为D02-M0：新测试号正常认证→显式选人命名→场景握手→角色实际可见落地→10分钟心跳→退出重登保存。用户允许临时业务数值，不能代替协议身份/wire或正常认证。** 已验显式M0真实loader、Avatar投影、新号出生/保存冷读及有限登录/tick；旧号全121/10727/471资源门、World/Team/退出冷读也已限定完成，未知三内层不造壳的Scene raw Java已生成并验证。最新portable正式构建22秒，JAR SHA533dce1ebab1cbd5d147bf769be025cdf19aae16d101ef16721cf49e6cf182e4；仅预备独立实例未启动。全D-02/F-05/D02-R6仍0/6，客户端R4/R5/R6未开始。必要SceneInfo/SceneTeam/Avatar出现业务及自然SDK路由继续；旧档完整Store/Furniture/TPS/Relic/精炼映射按实际出口分项核，不把完整Manager或原版资源全恢复当统一前置。原A/B、preview准确限制保持，M0局部通过不收工。
 
 既验369个Skill id/element、121普通cost与START及两次真实Depot Java加载已闭，原367片段/120绑定阻塞解除；97literal、Material准确payload/有限header源、shared String尾游标、Relic有限typed及Weapon单字段独立性判断均已分项提交，本轮只读复用。完整原版恢复仍缺[必要前沿矩阵](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)中的准确来源：energy MAX cap职责、Material有效backend/filecursor、Relic rank/set角色、Weapon独立raw父入口语法，以及R1/R2/Scene/Proud各自的准确限制/自然输入。已验结果只读复用，不再添加raw-id/native门或泛扫替代输入；普通来源缺口与A/B准确冻结边分列，不宣称整族或潜在host路径必然依A。
 
@@ -116,7 +116,7 @@
 | D02-M0-CONFIG-BIRTH-LOADER | 已完成 | 默认关闭M0、原runtime拒绝启用、有限真实资源加载/引用与正值重算、缺文件拒绝；loadedAll保持false。仅birth-ready，不是entry-ready或部署 | Sol xhigh |
 | D02-M0-AVATAR-PROJECTION | 已完成 | 同Player/Avatar/Item/Team的目标20143 raw投影及定向wire验证；仅三普通属性、七FightProp、当前depot、HP生命态与已证身份，Hero控制/未知附属不晋级 | Sol xhigh |
 | D02-M0-BIRTH-PERSISTENCE | 已完成 | [真实出生与冷恢复](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)：实际handler拒不支持选择、命名/装备/确认保存，新Player及真实manager恢复同ObjectId/装备/HP；只是服务器保存，不是客户端退出重登 | Sol xhigh |
-| D02-M0-SCENE-IDENTITY | 已完成 | [真实World/Scene对象与21761有限投影](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)：同Avatar/武器GUID/实体/token及root14.tag5真实World/root15.tag7真实Team非空独立ID；authority/能力字段不填，19项关联通过、不放entry-ready | Sol xhigh |
+| D02-M0-SCENE-IDENTITY | 已完成 | [真实World/Scene对象与21761有限投影](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)：同Avatar/武器GUID/实体/token及root14.tag5真实World/root15.tag7真实Team非空独立ID；authority-key及新实体最小状态按后继来源接入，54项关联通过、不放entry-ready | Sol xhigh |
 | D02-M0-LIFECYCLE | 已完成 | [有限登录/加载/周期分流](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)、m0Profile旧档载入前拒绝；Ready已验Rsp，Init/Done在未知wire停止，不假成功 | Sol xhigh |
 | D02-M0-BUILD | 已完成 | [portable正式打包](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)及内嵌d7cdda0/JAR SHA/变化class一致性，独立M0实例同hash预备；未部署或客户端验收 | Sol xhigh |
 | D02-M0-REUSE | 已完成 | [固定上游有界复用](docs/CLIENT_72_D02_M0_REUSE_20261116.md)已闭女主701/六技能/出生装备与Scene3具名来源；候选不晋级target | Terra max |
@@ -129,7 +129,7 @@
 | D02-M0-SCENEAVATAR-WIRE | 已完成 | [41868唯一3430B reader的13标量及31外槽分派](docs/CLIENT_72_D02_M0_SCENEAVATAR_WIRE_20261116.md)静态限定完成；普通raw范围完成；后继独立桥仅闭UID/tag1和GUID/tag3，完整实体sender未闭 | Sol max |
 | D02-M0-SCENE-RAW-JAVA | 已完成 | [28字段SceneAvatar/17外字段Team/83228四字段及86588实测bool的Proto与Java回归](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)：10新+14关联共24项全过；未知三内层/cctor-only列表不升格，未发送场景包，portable构建25秒/内嵌89b2ceb及JAR/class核对通过，未部署 | Sol xhigh |
 | D02-M0-ENTITY-APPEAR-NECESSITY | 已完成 | [单本地Avatar的真实分派、UID/GUID桥与必需性分层](docs/CLIENT_72_D02_M0_ENTITY_APPEAR_MIN_DEPENDENCIES_20261116.md)：Gadget谓词不当Avatar消费，Handle/Level code-data proof和本地consumer限定源完成；Motion外层wire/实体root列表及A返回仍分列，不放完整sender | Sol max |
-| D02-M0-AVATAR-IDENTITY-JAVA | 已完成 | [同Player UID、Avatar GUID及实际实体的非发送投影](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#同玩家uid与avatar-guid的非发送投影)：独立Token/session与GUID lookup来源，5新wire+49关联共54项通过；根列表/Motion/完整sender仍未闭 | Sol xhigh |
+| D02-M0-AVATAR-IDENTITY-JAVA | 已完成 | [同Player UID、Avatar GUID及实际实体的非发送投影](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#同玩家uid与avatar-guid的非发送投影)：独立Token/session与GUID lookup来源，5新wire+49关联共54项通过；正式构建22秒/内嵌c2faff7与JAR/class核对通过，根列表/Motion/完整sender仍未闭 | Sol xhigh |
 | D02-M0-SCENEAVATAR-DIRECT-USES | 已完成 | [旧1480B初始化器独立直接使用与null分支最小性](docs/CLIENT_72_D02_M0_SCENEAVATAR_DIRECT_USES_20261116.md)只读复用；不因SceneTeam可用null输入而给EntityAppear省oneof | Sol max |
 | D02-M0-AUTHORITY-CFG | 已完成 | [base getter/setter的条件CFG及factory比较桥](docs/CLIENT_72_D02_M0_AUTHORITY_CFG_20261116.md)：原0-pdata失败保留，不把+42C猜作HostPeerId、OOJ不作当前常量 | Sol max |
 | D02-M0-PEER-PRODUCER | 已完成 | [Cmd28392/type19176实际1464B消费者](docs/CLIENT_72_D02_M0_PEER_PRODUCER_20261116.md)：+24写localAuthorityKey，+18查询loading token；不扩其它raw writer或旧号包 | Sol max |

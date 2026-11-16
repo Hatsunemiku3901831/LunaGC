@@ -60,3 +60,11 @@ M0 projection现在明确输出Team control对象、0个83320、0个80154；没�
 有限旧号mode已保留全部存档，但完整网络入口仍拒绝。代码及[库存生产合同](CLIENT_72_INVENTORY_PRODUCTION.md)、[Equip合同](CLIENT_72_EQUIP_CONTRACT.md)当前只批准Material与Weapon/Relic有限字段；raw15型47字段不是所有分支业务合同。Item7/8/9/10不能按形状命名Furniture/TPS。现生产Store会略2331 Furniture与8 TPS；Weapon affix_map已证“EquipAffix组→组内level key”，保存refinement的映射尚未有目标桥，不能默认减1或把Java组合lookup当客户端身份；Relic2/3/4/5/7/8仍未闭业务角色。
 
 下一输入分别是准确Item分支typed消费者、Relic字段实际使用或保存精炼与组内key的桥；可用已有raw继续单小合同，不需要全Manager或全97包。未找到可直接照搬的完整Furniture/TPS/Relic生产实现；这个有界检查不是宣称所有外部来源穷尽，也不阻已有M0女主/武器身份子集。
+
+## 最小身份与状态正式构建
+
+SceneInfo A/B/C与UID/GUID独立实现提交后，经`LUNAGC_RUNTIME=portable`及`tools/local_windows.ps1 -Mode build`真实构建22秒通过，内嵌c2faff7。JAR SHA `533dce1ebab1cbd5d147bf769be025cdf19aae16d101ef16721cf49e6cf182e4`，98266970B；相对上一89b2ceb产物，46365→46386 class，18变化/21新增/0移除。所有变化和新增class逐项等于本轮build/classes；没有以测试缓存或旧JAR代替打包结果。
+
+同SHA只预备到两个独立InstanceRoot，没有启动游戏JAR。post-build HTTP8088、Mongo27017、game UDP22101及游戏JAR进程均0；只有既核自有测试Mongo27027/PID51240。日志/健康/运行JAR正向验收仍无部署对象；补丁和客户端未操作。未部署准确前置是自然SDK/service/mode/批准route，以及Entity根列表/Motion等未闭必要合同，不是重新要求全原版资源或全Manager。
+
+原件同ignored根`minimal-identity-portable-build.log`、`minimal-identity-build-artifact.private.json`与`minimal-identity-post-build-runtime.private.json`。上节历史产物及各子项测试范围保留；客户端六项仍0/6。

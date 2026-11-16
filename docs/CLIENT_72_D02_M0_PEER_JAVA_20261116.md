@@ -17,3 +17,5 @@
 同时真实核World/Team的instanced abilities均0，五个PlayerGirl基础embryo全部保留。首次补充测试误把“五基础”写成“场景总数必须5”，失败XML保留；正常applyAbilities会再追加Level_BigWorld候选GrapplingHookSkill_Ability，实际总6，现分别核基础集合及场景追加计数，没有修改运行/资源讨好测试。这个Avatar场景候选不是Team状态或未知83320 hash的供给。
 
 原件位于`local/migration72/d02-m0-integration-20261116/peer-identity-java-results/`、`m0-peer-identity-tests.log`及`m0-team-policy-first-failure.xml`。正式构建在后续实际结果登记；M0普通新实体null/空列表最小性按新的独立source分项接入，不能把这组DTO回归当完整入场或客户端验收。
+
+正式portable构建已包含本项：22秒、内嵌c2faff7、JAR SHA `533dce1ebab1cbd5d147bf769be025cdf19aae16d101ef16721cf49e6cf182e4`；变化18/新增21 class均匹配编译输出。两独立实例仅预备未启动，完整Peer通知和Init/Done仍未放行；详细产物/端口范围见[统一构建](CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#最小身份与状态正式构建)。

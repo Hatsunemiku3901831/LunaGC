@@ -1,3 +1,5 @@
+2026-11-16 最小身份/状态正式portable构建22秒通过：内嵌c2faff7，JAR SHA533dce1ebab1cbd5d147bf769be025cdf19aae16d101ef16721cf49e6cf182e4，18变化/21新增class匹配输出、0移除。54项相关回归通过；两个独立实例同SHA仅预备未启动，HTTP8088/UDP22101/游戏JAR进程0，仍仅自有测试Mongo27027。自然SDK/Entity根列表及Motion前置未齐，不放客户端。见[统一构建](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#最小身份与状态正式构建)。
+
 2026-11-16 同玩家UID/GUID非发送投影完成：TokenRsp实际UID与SceneTeam76429.tag3、SceneAvatar41868.tag1同源，41868.tag3与同Avatar GUID lookup一致；两GUID/实体/Scene均取实际对象。新增5独立边界wire，6套54项10秒全过；完整根列表/Motion及sender不升级。见[Java身份增量](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#同玩家uid与avatar-guid的非发送投影)。
 
 2026-11-16 SceneInfo最小普通新实体状态分项完成：source分别证明World/Team null跳Clone、非null control零记录跳hash、正常空80154清状态；M0实际零团队策略投影这份真实空集合，绝不造空83320/34045。27项27秒通过，热重入/替代分派及完整握手未放行。见[MIN-STATES来源](docs/CLIENT_72_D02_M0_SCENEINFO_MIN_STATES_20261116.md)与[Java增量](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#sceneinfo普通新实体最小状态)。
