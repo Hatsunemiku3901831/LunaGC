@@ -79,6 +79,8 @@ public class HandlerSetPlayerBornDataReq extends PacketHandler {
             mainCharacter.setSkillDepotData(GameData.getAvatarSkillDepotDataMap()
                     .get(avatarId == GameConstants.MAIN_CHARACTER_MALE ? 504 : 704));
         }
+        // Only this validated first birth chooses M0's explicit positive-zero facing policy.
+        if (GAME_INFO.m0.enabled) player.getRotation().setX(0f).setY(0f).setZ(0f);
         player.setNickname(req.getNickName());
         player.addAvatar(mainCharacter, false);
         player.setMainCharacterId(avatarId);

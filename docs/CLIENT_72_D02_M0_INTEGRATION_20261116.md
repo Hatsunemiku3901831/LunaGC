@@ -67,6 +67,6 @@ XML和汇总留ignored根`m0-normal-close-results/`、`m0-normal-close-results.p
 | SceneTeam24706/83228 | 四字段wire与76429外层已闭 | field4/tag4/+28是151A9C2D0(GLOBAL+A420,key)的上下文查询key，也作worker第五参；身份/上下文建立及flag0的151A9FF40后继用途未闭，不能直接填Scene3/UID。enum==1另走单独尾路径 |
 | SceneTeam1144/86588 | 取GLOBAL+A420+10当前上下文，worker flag1/第五参0；bool13已实测 | 列表5仅cctor来源。flag1实际另调用1507E2A30/151AA0CC0，与83228 flag0不同，不能因为后者全wire就直接替换 |
 | 是否首发必须Team通知 | worker确会更新/初始化Avatar模型及能力身份 | 尚无单女主缺该通知必失败的独立证明；AvatarData已有GUID模型，EntityAppear也查同模型。不能要求两种Team通知都发或先恢复17字段全部业务 |
-| EntityAppear4469 | 真Avatar分派、UID/GUID lookup、Motion及oneof若干非null输入检查 | 发送首先缺root列表tag；Motion position/velocity可独立接，rotation及其它字段只按真实消费继续，不要求31槽完整 |
+| EntityAppear4469 | 真Avatar分派、UID/GUID lookup、Motion及oneof若干非null输入检查 | 发送首先缺root列表tag；Motion position/velocity与新号首次Born零rotation策略已接；通用非零及其它字段只按真实消费继续，不要求31槽完整 |
 
 当前协议研究优先Peer这条真调用和Entity根列表wire；83228上下文key后排，Team是否首发必需另作有限判断。自然SDK/service/mode/批准路由独立继续。此表只读既验来源，无新native、测试或sender/成功状态修改；完整SDK/客户端六项仍0/6。

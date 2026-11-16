@@ -1,3 +1,5 @@
+后继已接M0首次有效出生的零面向一致状态及显式tag2 Vector；既有非零只加载保持，partial投影拒绝非零，通用旋转未闭。下面raw/position阶段的旧限制按各阶段读取。
+
 # D02-M0-MOTION-JAVA：有限Motion原始结构
 
 本项只将[Motion外层研究](CLIENT_72_D02_M0_MOTION_WIRE_20261116.md)（最终SHA `713be733e65adf45c606d66e9f96d029c4dce2bb9bf8715893090e836bd081b3`）的成熟部分转成Proto/Java，不给四个Vector套用位置、旋转或速度角色，不发送完整Entity通知。
@@ -34,3 +36,15 @@ Vector84343直接复用既验`Client72SceneHandshakeNested.proto`及`enter-scene
 新增一条独立手写wire把position(1.25,-2.5,3.75)与非null三轴零velocity区分；真实M0出生/保存/World fixture交叉三轴原bit与同Player身份。4套40项26秒全过，失败/错误/跳过0；`motion-position-velocity-results/`、`motion-position-velocity-results.private.json`与`motion-position-velocity-tests.log`留同ignored集成根。旧raw列表/float/64位断言一起保持；本项没有新native/模型/客户端或完整消息发送，正式构建后补。
 
 位置/速度后继正式portable构建26秒通过，内嵌9d11ae8，JAR SHA `bd9856cbb43110a66720ea712666143f4b6566928fa3f2f5eeea6554df5f1330`，98290007B；4变化/0新增/0移除class全部匹配输出。两个独立实例仅预备同SHA，HTTP8088/27017/game UDP22101/游戏JAR进程0，只有既核自有测试Mongo27027，无健康/运行JAR正向对象或客户端。自然SDK、Peer真分支/Entity根列表及rotation等准确剩余不因此放行；原件`motion-position-portable-build.log`、`motion-position-build-artifact.private.json`、`motion-position-post-build-runtime.private.json`在同ignored根。
+
+## M0首次Born零面向一致状态
+
+固定来源[MOTION_USE](CLIENT_72_D02_M0_MOTION_USE_20261116.md) SHA `5e5157db61f022a357a70c8e012f38d1908db51ce29a9c9b70f923e374dfae39`与零面向policy SHA `42ebfcbe5f5b22ec46610ae827d9339e54983d8e00f4b6b027c7c171f0ef752b`。tag2 rotation-input角色与Vector wire已闭；服务器仅为显式M0独立新号的首次有效Born选择(+0,+0,+0)，不是恢复未知数学函数或Quaternion输出。
+
+`HandlerSetPlayerBornDataReq`通过已有首次出生/选择/命名/资源校验后、任何最终保存前设置真实Player.rotation正零；同AvatarEntity.rotation就是同Player对象。后续普通Player/Avatar/装备确认保存链不变。无onLogin/load赋零，没有改旧号，重复Born在原116拒绝点返回；真实出生position保留。
+
+未发送的Motion projection明确保留tag2零Vector message，内部三个float可省略，canonical为`1200`；tag1取实际位置、tag3保留明确静止速度。遇已有非零rotation，partial projection明确拒绝尚未批准的非零单位，不重写其保存状态或假造零。**已有M0非零朝向只保证正常load/onLogin保持，不能宣称任意朝向的客户端重登入场已经通过。** 原SDK/完整Peer/Entity等停止边与0/6保持。
+
+实际6套66项34秒全过，失败/错误/跳过0：M0真实拒不支持选择及空白名时不改原非零旋转；首次成功前数据库、Player、冷读和同Entity三轴正零bit一致；重复Born116不改刻意设置的live非零或原BSON；非零经正常关闭保存、第二新Player.load及onLogin不重设，并被partial Motion拒绝。独立手写wire区分零Vector存在/省略且保位置。普通Born19、Born兼容15、Entity17、Motion13和旧号完整生命周期1共同验证对应边界，没有重复全524。
+
+原XML/汇总`m0-zero-facing-results/`、`m0-zero-facing-results.private.json`，日志`m0-zero-facing-first-tests.log`在同ignored集成根。首次执行即通过；没有新native、客户端、字段猜名、资源或数学返回模型。正式portable与武器精炼成熟项一次构建后补。

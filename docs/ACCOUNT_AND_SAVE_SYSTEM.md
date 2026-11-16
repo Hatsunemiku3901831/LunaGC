@@ -1,3 +1,5 @@
+2026-11-16 M0首次有效Born选择真实正零rotation并经原保存链确认，无新增存储字段；拒错/重复Born、旧号和onLogin/load不归零。已有M0非零朝向加载保持，但partial Motion拒绝未验非零单位；6套66项通过，不是任意朝向客户端重登入场通过。见[限定零面向](CLIENT_72_D02_M0_MOTION_JAVA_20261116.md#m0首次born零面向一致状态)。
+
 2026-11-16 [有限Server核心](CLIENT_72_D02_FINITE_SERVER_BOOT_20261116.md)已实际验证：新旧生命周期夹具改用真实finite constructor/core tick，M0正常关闭不再调用未建后台服务，两项24秒保存/冷读通过，原账号Guard与存档字段保持。无新增Mongo字段、无网络监听或客户端验收；下方dispatch-only三警告是前轮历史边界。
 
 2026-11-16 M0新号补验真实handleClose→onLogout→正常队列保存→二次新Player冷读，1项12秒通过：位置、HP、同Avatar/武器ObjectId与Admission保持，World/在线注销成立；没有新增生产字段或运行改动。dispatch-only缺三后台服务的隔离警告分列，不是完整服务或客户端退出重登。见[实际范围](CLIENT_72_D02_M0_INTEGRATION_20261116.md#新号真实关闭回调与第二次冷读)。

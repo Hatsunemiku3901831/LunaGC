@@ -14,6 +14,20 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class M0MotionRawWireTest {
     @Test
+    void zeroFacingIsAnExplicitNestedVectorRatherThanAnOmittedField() throws Exception {
+        byte[] bytes = hex("0a050d0000a03f12001a00");
+        var motion = Raw49847.parseFrom(bytes);
+        assertTrue(motion.hasHPLBLGJLIFF());
+        assertEquals(0, motion.getHPLBLGJLIFF().getSerializedSize());
+        assertTrue(motion.hasDACMFIDFIJA());
+        assertEquals(1.25f, motion.getHHAFHFEPLPD().getCJMJBINEBAG());
+        assertArrayEquals(hex("1200"), Raw49847.newBuilder()
+                .setHPLBLGJLIFF(BGDCNKAKGHI.getDefaultInstance()).build().toByteArray());
+        assertArrayEquals(bytes, motion.toByteArray());
+        assertFalse(Raw49847.getDefaultInstance().hasHPLBLGJLIFF());
+    }
+
+    @Test
     void positionAndStationaryVelocityUseDistinctProvenVectorFields() throws Exception {
         byte[] bytes = hex("0a0f0d0000a03f15000020c01d000070401a0f0d0000000015000000001d00000000");
         var motion = Raw49847.parseFrom(bytes);

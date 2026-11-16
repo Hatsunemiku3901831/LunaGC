@@ -78,6 +78,7 @@ class M0BirthPersistenceMongoTest {
             player.setM0Profile(true);
             field(Player.class, "accountId").set(player, "m0-birth");
             field(Player.class, "teamManager").set(player, new TeamManager(player));
+            player.getRotation().setX(13f).setY(27f).setZ(39f);
             session.setPlayer(player);
             session.setState(GameSession.SessionState.PICKING_CHARACTER);
             DatabaseHelper.saveGameSync(player);
@@ -87,12 +88,22 @@ class M0BirthPersistenceMongoTest {
             assertEquals(-1, SetPlayerBornDataRsp.parseFrom(session.sent.get(0).getData()).getRetcode());
             assertEquals(0, store.getDatabase().getCollection("avatars").countDocuments());
             assertEquals(0, store.getDatabase().getCollection("items").countDocuments());
+            assertEquals(13f, player.getRotation().getX());
+            assertEquals(27f, player.getRotation().getY());
+            assertEquals(39f, player.getRotation().getZ());
+            session.sent.clear();
+            handler.handle(session, new byte[0], SetPlayerBornDataReq.newBuilder()
+                    .setAvatarId(10000007).setNickName(" ").build().toByteArray());
+            assertEquals(-1, SetPlayerBornDataRsp.parseFrom(session.sent.get(0).getData()).getRetcode());
+            assertEquals(13f, player.getRotation().getX());
+            assertEquals(0, player.getMainCharacterId());
             session.sent.clear();
             handler.handle(session, new byte[0], SetPlayerBornDataReq.newBuilder()
                     .setAvatarId(10000007).setNickName("M0新生").build().toByteArray());
             assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(10)));
             assertTrue(player.confirmed);
             assertEquals(0, SetPlayerBornDataRsp.parseFrom(session.sent.get(session.sent.size() - 1).getData()).getRetcode());
+            assertPositiveZeroFacing(player.getRotation());
             var avatar = player.getAvatars().getAvatarById(10000007);
             var weapon = avatar.getWeaponNotNull();
             assertEquals(11101, weapon.getItemId());
@@ -103,6 +114,16 @@ class M0BirthPersistenceMongoTest {
             assertEquals(weapon.getGuid(), wire.getJGECGMPNGBD(0).getAODNDDBPMFB(0));
             var weaponObjectId = weapon.getObjectId();
             var avatarObjectId = avatar.getObjectId();
+            var beforeDuplicate = store.getDatabase().getCollection("players").find(new Document("_id", player.getUid())).first();
+            player.getRotation().setX(7f).setY(8f).setZ(9f);
+            session.sent.clear();
+            handler.handle(session, new byte[0], SetPlayerBornDataReq.newBuilder()
+                    .setAvatarId(10000007).setNickName("Duplicate").build().toByteArray());
+            assertEquals(116, SetPlayerBornDataRsp.parseFrom(session.sent.get(0).getData()).getRetcode());
+            assertEquals(7f, player.getRotation().getX());
+            assertEquals(8f, player.getRotation().getY());
+            assertEquals(9f, player.getRotation().getZ());
+            assertEquals(beforeDuplicate, store.getDatabase().getCollection("players").find(new Document("_id", player.getUid())).first());
             AccountLoginAdmission.closed(session);
             var fresh = store.find(BirthPlayer.class).first();
             var freshSession = new CapturingSession(server);
@@ -110,6 +131,7 @@ class M0BirthPersistenceMongoTest {
             freshSession.setPlayer(fresh);
             fresh.getAvatars().loadFromDatabase();
             fresh.getInventory().loadFromDatabase();
+            assertPositiveZeroFacing(fresh.getRotation());
             var restored = fresh.getAvatars().getAvatarById(10000007);
             assertNotSame(avatar, restored);
             assertEquals(avatarObjectId, restored.getObjectId());
@@ -126,6 +148,8 @@ class M0BirthPersistenceMongoTest {
             fresh.useNormalLogin = true;
             fresh.onLogin();
             var currentEntity = fresh.getTeamManager().getCurrentAvatarEntity();
+            assertSame(fresh.getRotation(), currentEntity.getRotation());
+            assertPositiveZeroFacing(currentEntity.getRotation());
             assertTrue(currentEntity.getId() != 0);
             assertTrue(restored.getWeaponNotNull().getWeaponEntity().getId() != 0);
             var scenePacket = new PacketPlayerEnterSceneInfoNotify(fresh);
@@ -171,7 +195,8 @@ class M0BirthPersistenceMongoTest {
             assertEquals(0f, motion.getDACMFIDFIJA().getCJMJBINEBAG());
             assertEquals(0f, motion.getDACMFIDFIJA().getALOKJBKPLGA());
             assertEquals(0f, motion.getDACMFIDFIJA().getMGICHKNKDKO());
-            assertFalse(motion.hasHPLBLGJLIFF(), "the unresolved rotation input cannot be filled from a guessed role");
+            assertTrue(motion.hasHPLBLGJLIFF());
+            assertEquals(0, motion.getHPLBLGJLIFF().getSerializedSize());
             assertFalse(identities.getMPHLKPODDHK().hasLLHEBIHGDAE());
             assertTrue(fresh.getWorld().getEntity().getInstancedAbilities().isEmpty());
             assertTrue(fresh.getTeamManager().getEntity().getInstancedAbilities().isEmpty());
@@ -208,6 +233,8 @@ class M0BirthPersistenceMongoTest {
             var joined = fresh.getWorld();
             float savedX = fresh.getPosition().getX() + 0.125f;
             fresh.getPosition().setX(savedX);
+            fresh.getRotation().setX(17f).setY(28f).setZ(39f);
+            assertThrows(IllegalStateException.class, () -> M0AvatarIdentityProjection.projectCurrentPlayer(fresh));
             restored.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, 123.5f);
             freshSession.handleClose();
             assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(10)));
@@ -229,9 +256,19 @@ class M0BirthPersistenceMongoTest {
             assertTrue(afterLogout.isM0Profile());
             assertTrue(afterLogout.getAvatars().isLoaded());
             assertTrue(afterLogout.getInventory().isLoaded());
+            assertEquals(17f, afterLogout.getRotation().getX());
+            assertEquals(28f, afterLogout.getRotation().getY());
+            assertEquals(39f, afterLogout.getRotation().getZ());
+            afterLogout.useNormalLogin = true;
+            afterLogout.onLogin();
+            assertEquals(17f, afterLogout.getRotation().getX());
+            assertEquals(28f, afterLogout.getRotation().getY());
+            assertEquals(39f, afterLogout.getRotation().getZ());
+            assertThrows(IllegalStateException.class, () -> M0AvatarIdentityProjection.projectCurrentPlayer(afterLogout));
             assertEquals(1, store.getDatabase().getCollection("avatars").countDocuments());
             assertEquals(1, store.getDatabase().getCollection("items").countDocuments());
-            AccountLoginAdmission.closed(afterLogoutSession);
+            afterLogoutSession.handleClose();
+            assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(10)));
             store.getDatabase().getCollection("accounts").insertOne(new Document("_id", "old-profile")
                     .append("username", "old-profile").append("token", "old-test-token").append("permissions", List.of()));
             var old = new BirthPlayer();
@@ -268,6 +305,9 @@ class M0BirthPersistenceMongoTest {
         @Override public void onLogin() {
             if (useNormalLogin) { super.onLogin(); return; }
             var db = DatabaseManager.getGameDatastore().getDatabase();
+            var savedRotation = db.getCollection("players").find(new Document("_id", getUid())).first().get("rotation", Document.class);
+            for (String axis : List.of("x", "y", "z"))
+                assertEquals(0, Float.floatToRawIntBits(savedRotation.get(axis, Number.class).floatValue()));
             assertEquals(10000007, db.getCollection("players").find(new Document("_id", getUid())).first().getInteger("mainCharacterId"));
             assertEquals(1, db.getCollection("avatars").countDocuments());
             assertEquals(1, db.getCollection("items").countDocuments());
@@ -279,6 +319,11 @@ class M0BirthPersistenceMongoTest {
         final List<BasePacket> sent = new ArrayList<>();
         CapturingSession(GameServer server) { super(server); }
         @Override public void send(BasePacket packet) { if (!isLoginRevoked()) sent.add(packet); }
+    }
+
+    private static void assertPositiveZeroFacing(emu.grasscutter.game.world.Position rotation) {
+        for (float component : new float[] {rotation.getX(), rotation.getY(), rotation.getZ()})
+            assertEquals(0, Float.floatToRawIntBits(component));
     }
 
     private static Field field(Class<?> type, String name) throws Exception {

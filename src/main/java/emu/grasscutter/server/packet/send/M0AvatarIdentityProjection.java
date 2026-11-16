@@ -16,10 +16,14 @@ public final class M0AvatarIdentityProjection {
         var avatar = entity.getAvatar();
         var weapon = avatar.getWeaponNotNull();
         var position = entity.getPosition();
+        var rotation = entity.getRotation();
+        if (rotation.getX() != 0f || rotation.getY() != 0f || rotation.getZ() != 0f)
+            throw new IllegalStateException("M0 rotation projection supports zero facing only; nonzero units remain unverified");
         var motion = Raw49847.newBuilder()
                 .setHHAFHFEPLPD(BGDCNKAKGHI.newBuilder().setCJMJBINEBAG(position.getX())
                         .setALOKJBKPLGA(position.getY()).setMGICHKNKDKO(position.getZ()))
-                // Explicit M0 stationary-birth policy; the required rotation input is still unknown.
+                .setHPLBLGJLIFF(BGDCNKAKGHI.getDefaultInstance())
+                // Explicit M0 stationary-birth velocity; the zero rotation message remains present.
                 .setDACMFIDFIJA(BGDCNKAKGHI.newBuilder().setCJMJBINEBAG(0f)
                         .setALOKJBKPLGA(0f).setMGICHKNKDKO(0f));
         var localAvatar = FKDEDKIHNDA.newBuilder()

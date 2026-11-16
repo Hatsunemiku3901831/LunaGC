@@ -1,3 +1,5 @@
+2026-11-16 M0首次有效Born零面向后继完成：真实Player/同Entity/确认保存/冷读正零一致，tag2零Vector显式presence1200，位置保持；拒错/重复Born不动live/原BSON，已有M0非零经load/onLogin保持且partial明确拒绝。6套66项34秒全过，通用旋转/任意朝向客户端重登未验，0/6保持。见[限定Java与证据](docs/CLIENT_72_D02_M0_MOTION_JAVA_20261116.md#m0首次born零面向一致状态)。
+
 2026-11-16 [旧档武器精炼Java出口](docs/CLIENT_72_D02_OLD_WEAPON_PROJECTION_20261116.md)完成：same GameItem正affix组作key、原零基refinement作value，不减1/不乘10。1663真实保存/资源/二次冷读、1542 entries/264组合/121空map保持；旧号1+库存36首轮过，修正unit构造夹具后5独立wire18秒过，首次5失败XML保留。完整Store仍缺2331家具/8TPS及Relic其余角色，网络拒绝保持。
 
 2026-11-16 position/velocity后继正式portable26秒通过，内嵌9d11ae8，JAR SHAbd9856cbb43110a66720ea712666143f4b6566928fa3f2f5eeea6554df5f1330；4变化/0新增class匹配，两个实例仅预备，相关监听/游戏JAR进程0，只有自有测试Mongo27027。另仅只读汇总[候选发送链必要性](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md#当前候选发送链与最小阻塞)：先Peer真调用/Entity列表，83228上下文后排；Team全字段/全部能力不是统一前置。无新增测试或sender放行。
