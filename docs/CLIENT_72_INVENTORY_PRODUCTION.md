@@ -10,7 +10,7 @@
 | --- | --- | --- |
 | 根 | item_list、StorePack=1 | tag8不解释为weight_limit |
 | Item/Material | GameItem.itemId/guid/count；原生Material分支tag5 | Material tag2及其它Item分支保持raw |
-| Item/Weapon | Item tag6→Equip tag2；level/exp/promoteLevel及isLocked | affix_map业务含义已验，但服务端refinement到目标level key转换未验，本项不发送；Weapon tag5/6未知 |
+| Item/Weapon | Item tag6→Equip tag2；level/exp/promoteLevel及isLocked | affix_map后继已验正savedAffix→原零基savedRefinement，见[旧档真实精炼出口](CLIENT_72_D02_OLD_WEAPON_PROJECTION_20261116.md)；本节初始阶段未发该map，Weapon tag5/6仍未知 |
 | Item/Reliquary | Item tag6→Equip tag1；level、isFavourite→is_star及isLocked | 其余六字段未知，不发送旧经验/主副词条等猜测值 |
 
 目标锁/星的wire是bool，进入客户端模型后才分别编码为UnLock/Lock、UnStar/Star的1/2。保留这个边界，不把模型枚举直接发到bool字段。其它尚未批准的物品种类不编造wire分支，仍保留在服务端库存；本项不是完整背包功能验收。

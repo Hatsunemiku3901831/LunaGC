@@ -4,7 +4,6 @@ import emu.grasscutter.game.inventory.GameItem;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.net.proto.Client72InventoryWireOuterClass.BNDIKNLDLOJ;
-import emu.grasscutter.net.proto.Client72InventoryWireOuterClass.FNECPDFLEHN;
 import emu.grasscutter.net.proto.Client72InventoryWireOuterClass.JBBEOMJDLFM;
 import emu.grasscutter.net.proto.Client72InventoryWireOuterClass.KKOPHGDBCEO;
 import emu.grasscutter.net.proto.Client72InventoryWireOuterClass.NDGHFPMJFIM;
@@ -38,13 +37,8 @@ public class PacketPlayerStoreNotify extends BasePacket {
             case ITEM_MATERIAL -> result.setFLPGMLOFAKP5(
                     KKOPHGDBCEO.newBuilder().setGNHFNECPAHD(item.getCount()));
             case ITEM_WEAPON -> {
-                var weapon = FNECPDFLEHN.newBuilder()
-                        .setNJAGFJINHMA(item.getLevel())
-                        .setNILMBAGDEAL(item.getExp())
-                        .setKFDCBKBPPGL(item.getPromoteLevel());
-                // Server refinement -> target EquipAffix level keys is still unverified.
                 result.setFLPGMLOFAKP6(BNDIKNLDLOJ.newBuilder()
-                        .setFLPGMLOFAKP2(weapon)
+                        .setFLPGMLOFAKP2(Client72WeaponProjection.project(item))
                         .setFAPABAJBMAK(item.isLocked()));
             }
             case ITEM_RELIQUARY -> result.setFLPGMLOFAKP6(BNDIKNLDLOJ.newBuilder()

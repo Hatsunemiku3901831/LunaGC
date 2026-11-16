@@ -145,6 +145,8 @@
 | D02-OLD-SNAPSHOT-DATA（OLD-RESOURCE-BUNDLE同项） | 已完成 | [固定旧号限定资源包](docs/CLIENT_72_D02_OLD_SNAPSHOT_DATA_20261116.md)：revision7补真实重算所需羁绊/名片7文件，28表/284输出与10条明示服务器策略；只覆盖选定快照Avatar/Inventory，不代全Manager或客户端ready | Terra xhigh → 唯一集成者 |
 | D02-OLD-SNAPSHOT-LOAD | 已完成 | [revision-5纯ResourceLoader诊断](docs/CLIENT_72_D02_OLD_SNAPSHOT_JAVA_20261116.md)：全部21表选行、121 Avatar/embryo、9128 Item种类及OpenConfig真实加载；没有Player/DB/hydrate，loadedAll保持false | Sol xhigh |
 | D02-OLD-SNAPSHOT-RESTORE | 已完成 | [完整AvatarStorage/Inventory保存冷读](docs/CLIENT_72_D02_OLD_SNAPSHOT_JAVA_20261116.md)已通过全121/10727/471及12254原行字段核对；羁绊多重集合、正常saveStamp和4项HP clamp独立验证；16秒/JUnit1及缺资源零写通过，完整Player业务Manager/认证/客户端仍未验 | 唯一Sol xhigh集成者 |
+| D02-OLD-STORE-SEMANTICS（精炼阶段） | 已完成 | [固定保存精炼桥](docs/CLIENT_72_D02_OLD_STORE_SEMANTICS_20261116.md)：全1663武器/1542正组entry/264组合/121空map及真实加载level来源已闭；Furniture/TPS/Relic其余角色不晋级 | Sol max |
+| D02-OLD-WEAPON-PROJECTION-JAVA | 已完成 | [同GameItem正affix组→原零基refinement](docs/CLIENT_72_D02_OLD_WEAPON_PROJECTION_20261116.md)：真实旧档/资源与保存后二次冷读逐1663比对，原字段不变；5独立wire18秒及旧号1+库存36原批已过，正式构建后补，不发完整Store | Sol xhigh |
 | D02-OLD-SNAPSHOT-MODE | 已完成 | [默认关闭、独立InstanceRoot及manifest绑定的真实有限资源门](docs/CLIENT_72_D02_OLD_SNAPSHOT_MODE_20261116.md)：29表/287输出；错UID/缺11101/Reward在Storage前零写，不借M0.birthReady或loadedAll；网络快照前明确拒绝 | Sol xhigh |
 | D02-OLD-SNAPSHOT-LIFECYCLE | 已完成 | [真实有限Player.load/World/Team/tick/退出冷读](docs/CLIENT_72_D02_OLD_SNAPSHOT_MODE_20261116.md)：11秒/JUnit1及9套178相关回归、portable30项通过；121/10727/471与1527非活动原档保全，仅正常时间/stamp和已验HP clamp；正式portable构建23秒/内嵌1382c15及JAR/class核对通过，未部署 | Sol xhigh |
 | D02-OLD-SNAPSHOT-ENTRY-WIRE | 进行中 | 实际Store出口会略2331 Furniture/8 TPS且装备完整效果未投；121 Avatar普通sender未闭。先复核已证raw及必要业务映射，未知不补、不裁库存；旧mode不放网络入场 | 唯一集成者 |

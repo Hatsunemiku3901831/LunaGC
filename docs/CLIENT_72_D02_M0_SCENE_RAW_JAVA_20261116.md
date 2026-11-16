@@ -57,6 +57,8 @@ M0 projection现在明确输出Team control对象、0个83320、0个80154；没�
 
 ## 旧号快照出口短核
 
+此为精炼桥交付前的短核；后继[旧档武器projection](CLIENT_72_D02_OLD_WEAPON_PROJECTION_20261116.md)已独立闭合正affix组→原零基refinement。以下精炼“未闭”按当时阶段读取，Furniture/TPS/Relic其余缺口保留。
+
 有限旧号mode已保留全部存档，但完整网络入口仍拒绝。代码及[库存生产合同](CLIENT_72_INVENTORY_PRODUCTION.md)、[Equip合同](CLIENT_72_EQUIP_CONTRACT.md)当前只批准Material与Weapon/Relic有限字段；raw15型47字段不是所有分支业务合同。Item7/8/9/10不能按形状命名Furniture/TPS。现生产Store会略2331 Furniture与8 TPS；Weapon affix_map已证“EquipAffix组→组内level key”，保存refinement的映射尚未有目标桥，不能默认减1或把Java组合lookup当客户端身份；Relic2/3/4/5/7/8仍未闭业务角色。
 
 下一输入分别是准确Item分支typed消费者、Relic字段实际使用或保存精炼与组内key的桥；可用已有raw继续单小合同，不需要全Manager或全97包。未找到可直接照搬的完整Furniture/TPS/Relic生产实现；这个有界检查不是宣称所有外部来源穷尽，也不阻已有M0女主/武器身份子集。

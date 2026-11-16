@@ -118,6 +118,7 @@ class OldSnapshotLifecycleMongoTest {
             selected.loadFromDatabase();
             assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(30)));
             assertSnapshot(selected, sourceAvatars, sourceItems);
+            assertWeaponProjection(selected, sourceItems);
             assertFalse(selected.isM0Profile());
             assertNull(selected.getActivityManager());
             assertNull(selected.getDailyTaskManager());
@@ -153,6 +154,7 @@ class OldSnapshotLifecycleMongoTest {
             fresh.loadFromDatabase();
             assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(30)));
             assertSnapshot(fresh, sourceAvatars, sourceItems);
+            assertWeaponProjection(fresh, sourceItems);
             assertStoredFields(db.getCollection("items"), sourceItems, Set.of("saveStamp"));
             var allStoredItems = db.getCollection("items").find().into(new ArrayList<>()).stream()
                     .collect(java.util.stream.Collectors.toMap(d -> d.getObjectId("_id"), d -> d));
@@ -184,6 +186,40 @@ class OldSnapshotLifecycleMongoTest {
             Configuration.GAME_INFO.enableScriptInBigWorld = previousScripts;
             Grasscutter.setRunModeOverride(previousRunMode);
         }
+    }
+
+    private static void assertWeaponProjection(Player player, List<Document> sourceItems) throws Exception {
+        var originals = sourceItems.stream().collect(java.util.stream.Collectors.toMap(d -> d.getObjectId("_id"), d -> d));
+        var refinements = new HashMap<Integer, Integer>();
+        var combinations = new HashSet<String>();
+        int weapons = 0, entries = 0, empty = 0;
+        for (var item : player.getInventory()) {
+            if (item.getItemType() != emu.grasscutter.game.inventory.ItemType.ITEM_WEAPON) continue;
+            weapons++;
+            var original = originals.get(item.getObjectId());
+            int savedLevel = original.getInteger("refinement");
+            var expected = new HashMap<Integer, Integer>();
+            for (int savedGroup : original.getList("affixes", Integer.class)) expected.put(savedGroup, savedLevel);
+            var weapon = emu.grasscutter.server.packet.send.Client72WeaponProjection.project(item);
+            assertEquals(expected, weapon.getJMGKMMFNABPMap(), "raw map follows the original BSON, not regenerated item affixes");
+            assertEquals(savedLevel, item.getRefinement());
+            refinements.merge(savedLevel, 1, Integer::sum);
+            if (expected.isEmpty()) empty++;
+            for (var entry : expected.entrySet()) {
+                entries++;
+                combinations.add(entry.getKey() + ":" + entry.getValue());
+                var effect = GameData.getEquipAffixDataMap().get(entry.getKey() * 10 + entry.getValue());
+                assertEquals(entry.getKey().intValue(), effect.getMainId());
+                assertEquals(entry.getValue().intValue(), effect.getLevel());
+                assertTrue(Arrays.stream(item.getItemData().getSkillAffix()).anyMatch(id -> id == entry.getKey()));
+            }
+            assertEquals(weapon, emu.grasscutter.net.proto.Client72InventoryWireOuterClass.FNECPDFLEHN.parseFrom(weapon.toByteArray()));
+        }
+        assertEquals(1663, weapons);
+        assertEquals(1542, entries);
+        assertEquals(121, empty);
+        assertEquals(264, combinations.size());
+        assertEquals(Map.of(0, 1139, 3, 1, 4, 523), refinements);
     }
 
     private static java.lang.reflect.Field field(Class<?> type, String name) throws Exception {
