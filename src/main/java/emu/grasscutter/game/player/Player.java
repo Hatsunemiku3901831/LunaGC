@@ -1790,14 +1790,14 @@ public class Player implements PlayerHook, FieldFetch {
                 () -> {
                     // The game socket accepts connections while resources are still loading.
                     // Wait for resource tables before binding any saved quest definitions.
-                    if (!emu.grasscutter.data.ResourceLoader.isLoadedAll()) {
+                    if (!emu.grasscutter.data.ResourceLoader.isLoginReady()) {
                         Grasscutter.getLogger()
                                 .warn(
                                         "Player {} connected while resources are still loading."
                                                 + " Waiting before reading saved data.",
                                         this.getUid());
                         for (int spin = 0;
-                                spin < 1800 && !emu.grasscutter.data.ResourceLoader.isLoadedAll();
+                                spin < 1800 && !emu.grasscutter.data.ResourceLoader.isLoginReady();
                                 spin++) {
                             try {
                                 Thread.sleep(100);

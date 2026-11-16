@@ -39,7 +39,7 @@ public final class PacketOpcodes {
     public static final int GetScenePointRsp = 26;
     public static final int CombatInvocationsNotify = 6930;
     public static final int SceneTeamUpdateNotify = 29245;
-    public static final int AvatarDataNotify = 27799;
+    public static final int AvatarDataNotify = 20143;
     // Historical selection-cache alias has no verified CN72 identity or active login send.
     public static final int AvatarSelectionDataNotify = -121136;
     public static final int PlayerDataNotify = 7193;

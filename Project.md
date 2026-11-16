@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-**当前优先目标为D02-M0：独立新测试号、普通出生角色与最小装备/场景，先实际落地，再补完整内容。用户已允许自行实现缺失服务端模块并决定临时业务数值；原四项精确资源研究和旧号全量恢复后移，不再统一阻挡M0。** 本轮9个研发提交均为研究文档，未产生新运行实现/部署或实机验收；完整D-02 / F-05 / D02-R6仍0/6，R1/R2/R3全量出口阻塞、R4/R5/R6未开始。本次已完成[最小入场规划](docs/CLIENT_72_D02_ENTRY_MVP_PLAN_20261116.md)，M0实现任务待开始；正常认证、客户端必需wire/对象关系及原A/B、preview准确限制保持，不能以自定数值代替协议。
+**当前优先目标为D02-M0：独立新测试号、普通出生角色与最小装备/场景，先实际落地，再补完整内容。用户已允许自行实现缺失服务端模块并决定临时业务数值；原四项精确资源研究和旧号全量恢复后移，不再统一阻挡M0。** 前轮9个研发提交均为研究文档；本轮已实现并验证显式M0出生loader及目标Avatar投影，未部署或实机验收；完整D-02 / F-05 / D02-R6仍0/6，R1/R2/R3全量出口阻塞、R4/R5/R6未开始。本次已完成[最小入场规划](docs/CLIENT_72_D02_ENTRY_MVP_PLAN_20261116.md)，M0实现进行中，真实装备保存/冷读、场景与自然会话继续；正常认证、客户端必需wire/对象关系及原A/B、preview准确限制保持，不能以自定数值代替协议。
 
 既验369个Skill id/element、121普通cost与START及两次真实Depot Java加载已闭，原367片段/120绑定阻塞解除；97literal、Material准确payload/有限header源、shared String尾游标、Relic有限typed及Weapon单字段独立性判断均已分项提交，本轮只读复用。完整原版恢复仍缺[必要前沿矩阵](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)中的准确来源：energy MAX cap职责、Material有效backend/filecursor、Relic rank/set角色、Weapon独立raw父入口语法，以及R1/R2/Scene/Proud各自的准确限制/自然输入。已验结果只读复用，不再添加raw-id/native门或泛扫替代输入；普通来源缺口与A/B准确冻结边分列，不宣称整族或潜在host路径必然依A。
 
@@ -107,12 +107,14 @@
 | ID | 状态 | 完成/验收范围 | 推荐模型 |
 | --- | --- | --- | --- |
 | D02-M0-PLAN | 已完成 | 已确定新号先行、可自定参数、隔离配置及分工；仅规划，无运行实现 | 主线规划 |
-| D02-M0-SCOPE | 待开始 | 最小请求/发送/引用清单及必要上游差异核对，不是全量研究 | Sol max + Terra max |
-| D02-M0-DATA | 待开始 | 独立资源与临时参数、真实loader/新Player创建和保存 | Terra xhigh + Sol xhigh |
-| D02-M0-PROTOCOL | 待开始 | 最小Avatar/Store/Team/Scene正式发送及状态流 | Sol xhigh；难点Sol max |
-| D02-M0-SESSION | 待开始 | 正常SDK认证和本服会话；原准确冻结动作继续阻塞 | Sol max / Sol xhigh |
+| D02-M0-SCOPE | 进行中 | [首版最小规格](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)已明确701/出生与有限Avatar/SceneInfo字段；剩余SceneTeam/Entity准确三层继续 | Sol max + Terra max |
+| D02-M0-DATA | 进行中 | [独立资源生成](docs/CLIENT_72_D02_M0_DATA_20261116.md)已准备；真实限定loader与缺文件拒绝已验，真实出生装备保存/冷读待验 | Terra xhigh + Sol xhigh |
+| D02-M0-PROTOCOL | 进行中 | [M0 Avatar正式投影](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)已接目标20143及已证字段；SceneInfo/状态流继续，未知实体出现不发旧号 | Sol xhigh；难点Sol max |
+| D02-M0-SESSION | 进行中 | [限定会话审阅](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)无新成熟Java认证缺口；自然service/mode/批准路由仍缺固定输入，原准确冻结动作继续阻塞 | Sol max / Sol xhigh |
 | D02-M0-RUN | 待开始 | 最小前置验证、portable构建部署及用户操作包 | 唯一Sol xhigh集成者 |
 | D02-M0-CLIENT | 待开始 | 新号选人命名、可见落地、10分钟心跳、正常重登保存 | 执行者 + 用户实机 |
+| D02-M0-CONFIG-BIRTH-LOADER | 已完成 | 默认关闭M0、原runtime拒绝启用、有限真实资源加载/引用与正值重算、缺文件拒绝；loadedAll保持false。仅birth-ready，不是entry-ready或部署 | Sol xhigh |
+| D02-M0-AVATAR-PROJECTION | 已完成 | 同Player/Avatar/Item/Team的目标20143 raw投影及定向wire验证；仅三普通属性、七FightProp、当前depot、HP生命态与已证身份，Hero控制/未知附属不晋级 | Sol xhigh |
 
 
 此表保留未完成任务的状态与验收账本，按最快D-02出口重排。按依赖和本轮恢复索引的实际缺口发布任务，已有完成子项直接复用；“前移/后移/按需/冻结”描述排期，不增加任务状态。

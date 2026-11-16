@@ -1,5 +1,4 @@
 """Execute the portable entry in disposable instances; no real service can start."""
-import base64
 import copy
 import hashlib
 import json
@@ -60,10 +59,11 @@ function Start-Process {
         source += ("\ntry { & "+quote(self.root/'tools/local_windows.ps1')+' -Mode '+mode+
                    ' -InstanceRoot '+quote(instance or self.instance)+
                    '; exit $LASTEXITCODE } catch { [Console]::Error.WriteLine($_.Exception.Message); exit 1 }')
-        encoded = base64.b64encode(source.encode('utf-16le')).decode('ascii')
-        result = subprocess.run(['powershell.exe', '-NoProfile', '-OutputFormat', 'Text',
-            '-ExecutionPolicy', 'Bypass', '-EncodedCommand', encoded], env=self.env,
-            capture_output=True, text=True, timeout=30)
+        wrapper = self.root/'fixture-instance-run.ps1'
+        wrapper.write_text(source, encoding='utf-8-sig')
+        result = subprocess.run(['powershell.exe', '-NoProfile', '-NonInteractive', '-OutputFormat', 'Text',
+            '-ExecutionPolicy', 'Bypass', '-File', str(wrapper)], env=self.env,
+            stdin=subprocess.DEVNULL, capture_output=True, text=True, timeout=30)
         self.assertEqual((self.root/'config.json').read_bytes(), self.original_config)
         self.assertEqual((self.root/'mongodata/original').read_bytes(), b'original DB sentinel')
         self.assertEqual((self.root/'local/data/original').read_bytes(), b'original data sentinel')
@@ -102,6 +102,13 @@ function Start-Process {
         self.assertIn('jdk-17-fixture', calls[1]['exe'])
         self.assertEqual(calls[1]['arguments'][-2].strip('"'), str(self.instance/'LunaGC-7.1.0.jar'))
         self.assertTrue((self.instance/'local/java-sockets').is_dir())
+
+    def test_m0_uses_only_the_prepared_instance(self):
+        self.config['server']['game']['m0'] = {'enabled': True}
+        result, calls = self.run_mode()
+        self.assertIn('FIXTURE_SERVER_LAUNCH_CAPTURED', result.stderr)
+        self.assertEqual(len(calls), 2)
+        self.assertTrue(all(row['cwd'] == str(self.instance) for row in calls))
 
     def test_original_database_uri_is_rejected_before_any_process(self):
         self.config['databaseInfo']['game']['connectionUri'] = 'mongodb://127.0.0.1:27017'

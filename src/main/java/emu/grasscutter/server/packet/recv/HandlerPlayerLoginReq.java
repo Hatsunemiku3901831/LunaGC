@@ -25,7 +25,7 @@ public class HandlerPlayerLoginReq extends PacketHandler {
         }
 
         Player player = session.getPlayer();
-        if (!emu.grasscutter.data.ResourceLoader.isLoadedAll()) {
+        if (!emu.grasscutter.data.ResourceLoader.isLoginReady()) {
             Grasscutter.getLogger()
                     .warn(
                             "Player {} login arrived before resources finished. Closing the session.",

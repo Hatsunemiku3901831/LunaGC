@@ -1,6 +1,5 @@
 """Portable launcher regressions using disposable files and no real services."""
 
-import base64
 import json
 import os
 from pathlib import Path
@@ -57,10 +56,12 @@ class PortableLauncherTest(unittest.TestCase):
             f"try {{ & '{path}' -Mode {mode}; exit $LASTEXITCODE }} "
             "catch { [Console]::Error.WriteLine($_.Exception.Message); exit 1 }"
         )
-        encoded = base64.b64encode(source.encode("utf-16le")).decode("ascii")
+        wrapper = self.root / "fixture-run.ps1"
+        wrapper.write_text(source, encoding="utf-8-sig")
         return subprocess.run(
-            ["powershell.exe", "-NoProfile", "-OutputFormat", "Text", "-ExecutionPolicy", "Bypass",
-             "-EncodedCommand", encoded], env=self.env, capture_output=True, text=True, timeout=30)
+            ["powershell.exe", "-NoProfile", "-NonInteractive", "-OutputFormat", "Text", "-ExecutionPolicy", "Bypass",
+             "-File", str(wrapper)], env=self.env, stdin=subprocess.DEVNULL,
+            capture_output=True, text=True, timeout=30)
 
     def test_custom_jar_name_is_passed_to_gradle(self):
         self.env["LUNAGC_JAR"] = "LunaGC-test.jar"
@@ -101,6 +102,10 @@ class PortableLauncherTest(unittest.TestCase):
     def test_valid_local_paths_reach_process_start(self):
         result = self.run_mode("start")
         self.assertIn("UNEXPECTED_PROCESS_LAUNCH", result.stderr)
+
+    def test_m0_cannot_use_the_original_runtime(self):
+        self.config["server"]["game"]["m0"] = {"enabled": True}
+        self.assert_start_rejected("D02-M0 requires an explicitly prepared InstanceRoot")
 
     def test_explicit_external_resources_are_allowed(self):
         with tempfile.TemporaryDirectory(prefix="lunagc resources ") as resource_root:

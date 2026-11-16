@@ -273,6 +273,9 @@ public class ConfigContainer {
 
         public boolean cacheSceneEntitiesEveryRun = false;
 
+        /** Explicit, isolated new-account entry experiment; never implies full resource readiness. */
+        public M0 m0 = new M0();
+
         public GameOptions gameOptions = new GameOptions();
         public JoinOptions joinOptions = new JoinOptions();
         public ConsoleAccount serverAccount = new ConsoleAccount();
@@ -285,6 +288,10 @@ public class ConfigContainer {
             new VisionOptions("VISION_LEVEL_NEARBY"         , 40    , 20),
             new VisionOptions("VISION_LEVEL_SUPER_NEARBY"   , 20    , 20)
         };
+    }
+
+    public static class M0 {
+        public boolean enabled = false;
     }
 
     /* Data containers. */

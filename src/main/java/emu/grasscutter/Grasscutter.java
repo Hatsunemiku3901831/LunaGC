@@ -163,21 +163,25 @@ public final class Grasscutter {
 
         // Load resources.
         if (runMode != ServerRunMode.DISPATCH_ONLY) {
-            // Load all resources.
+            // M0 loads only its declared birth dependencies and retains full-resource unready.
             Grasscutter.updateDayOfWeek();
-            ResourceLoader.loadAll();
+            if (config.server.game.m0.enabled) {
+                emu.grasscutter.data.M0Resources.loadBirthResources();
+            } else {
+                ResourceLoader.loadAll();
+            }
 
             // The game server, and with it the shop system, is built before the resources are, so
             // the shops that come out of the game data are listed now.
-            if (gameServer != null) {
+            if (gameServer != null && !config.server.game.m0.enabled) {
                 gameServer.getShopSystem().load();
                 gameServer.getBattlePassSystem().reload();
             }
 
             // Generate handbooks.
-            Tools.createGmHandbooks(false);
+            if (!config.server.game.m0.enabled) Tools.createGmHandbooks(false);
             // Generate gacha mappings.
-            Tools.generateGachaMappings();
+            if (!config.server.game.m0.enabled) Tools.generateGachaMappings();
         }
 
         // Start servers.

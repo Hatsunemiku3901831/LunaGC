@@ -43,6 +43,11 @@ public final class ResourceLoader {
         return loadedAll;
     }
 
+    public static boolean isLoginReady() {
+        return loadedAll || (emu.grasscutter.config.Configuration.GAME_INFO.m0.enabled
+                && M0Resources.isBirthReady());
+    }
+
     public static List<Class<?>> getResourceDefClasses() {
         Set<?> classes = Grasscutter.reflector.getSubTypesOf(GameResource.class);
 

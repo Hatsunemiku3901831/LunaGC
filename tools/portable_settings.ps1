@@ -36,6 +36,9 @@ function Resolve-ClientTrustBundlePath([string] $Repository) {
 }
 
 function Assert-PortableConfig([string] $Repository, $Configuration, [int] $MongoPort, [switch] $Isolated) {
+    if ($Configuration.server.game.m0.enabled -and -not $Isolated) {
+        throw 'D02-M0 requires an explicitly prepared InstanceRoot; the original runtime cannot enable it.'
+    }
     $root = [IO.Path]::GetFullPath($Repository).TrimEnd('\', '/') + '\'
     foreach ($name in @('resources', 'data')) {
         $path = Resolve-PortablePath $Repository $Configuration.folderStructure.$name

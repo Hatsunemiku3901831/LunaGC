@@ -10,6 +10,11 @@ public class PacketAvatarDataNotify extends BasePacket {
     public PacketAvatarDataNotify(Player player) {
         super(PacketOpcodes.AvatarDataNotify, true);
 
+        if (emu.grasscutter.config.Configuration.GAME_INFO.m0.enabled) {
+            this.setData(M0AvatarProjection.project(player));
+            return;
+        }
+
         AvatarDataNotify.Builder proto =
                 AvatarDataNotify.newBuilder()
                         .setCurAvatarTeamId(player.getTeamManager().getCurrentTeamId())

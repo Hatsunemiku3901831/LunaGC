@@ -1,3 +1,5 @@
+2026-11-16 D02-M0实际集成：默认关闭M0/有限真实出生loader与缺文件拒绝、目标20143 Avatar raw正式sender已分项验证；JUnit312项及后续loader/sender2项、portable夹具27项通过。只有birth-ready，完整生命周期/装备保存/SceneInfo和自然会话继续；未部署/无客户端，六项0/6。失败及复现见[集成记录](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)。
+
 2026-11-16 用户改为先入场、业务数值可自定：基线7b2ed77之后仅完成D02-M0规划，新增实现台账待开始。四项原版资源研究与旧号全量恢复后移，先新测试号/普通角色/出生装备/最小场景；协议wire和正常认证仍必需。见[Project](Project.md)及[最小实现方案](docs/CLIENT_72_D02_ENTRY_MVP_PLAN_20261116.md)。本次无运行变更或新增测试/部署，下面是历史研究记录。
 
 2026-11-16B `D02-RESUME-INTEGRATION-20261116B`准确输入缺口交接：四公开/两自主研究及静态来源/局部语义已完成，四实际字段/入口与R1/R2/Scene/Proud必要边仍缺准确输入，当前无成熟必要实现/现场包，六项0/6、R4–6未开始；不是用户暂停或沿旧条件2。交接前HEAD`27e37429`，本轮8提交双身份/文件范围已核，交接自身实际HEAD/总数/最终状态以`local/migration72/d02-resume-20261116b/final-handoff-244932e6/final-state.private.json`为准。先备份7件再覆盖HANDOFF2，receipt SHA`add85d970c8ad97a827d618da5ee06531e712e43d69d6c593570d140b2fefba8`，HANDOFF原49753B/SHA`40b8711f5fb729c74046c6591de22402f95a37d647021fd3139dd2545625b9e2`前缀保持只追加；详细成果/原失败/准确解除输入与Daybreak边界见[HANDOFF2](HANDOFF2.md)。既验成果只读复用，无新测试/Java/DB/client或运行变更，无需构建重启；原差异/数据及A/B/preview保持，不push。
