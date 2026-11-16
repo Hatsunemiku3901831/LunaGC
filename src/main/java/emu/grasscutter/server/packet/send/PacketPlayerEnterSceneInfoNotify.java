@@ -65,6 +65,11 @@ public class PacketPlayerEnterSceneInfoNotify extends BasePacket {
     public PacketPlayerEnterSceneInfoNotify(Player player) {
         super(PacketOpcodes.PlayerEnterSceneInfoNotify);
 
+        if (emu.grasscutter.config.Configuration.GAME_INFO.m0.enabled) {
+            setData(M0SceneEntryProjection.project(player));
+            return;
+        }
+
         PlayerEnterSceneInfoNotify.Builder proto =
                 PlayerEnterSceneInfoNotify.newBuilder()
                         .setCurAvatarEntityId(player.getTeamManager().getCurrentAvatarEntity().getId())

@@ -21,6 +21,11 @@ public class HandlerSceneInitFinishReq extends PacketHandler {
 
         var player = session.getPlayer();
         SceneHandshakeToken.requireCurrent(player, (request.getMCCMGLDOECH() - 0xF8CD) ^ 0x5673);
+        if (Configuration.GAME_INFO.m0.enabled) {
+            Grasscutter.getLogger().warn("D02-M0 scene initialization stopped: required Team/level/ability and entity wire is not yet implemented.");
+            session.close();
+            return;
+        }
         var world = player.getWorld();
 
         session.send(new PacketServerTimeNotify());

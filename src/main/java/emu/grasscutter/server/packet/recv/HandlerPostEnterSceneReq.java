@@ -19,6 +19,14 @@ public class HandlerPostEnterSceneReq extends PacketHandler {
                 
         var player = session.getPlayer();
         SceneHandshakeToken.requireCurrent(player, (request.getMCCMGLDOECH() + 0xB3B6) ^ 0x4902);
+        if (emu.grasscutter.config.Configuration.GAME_INFO.m0.enabled) {
+            if (player.getSceneLoadState() != emu.grasscutter.game.player.Player.SceneLoadState.LOADED) {
+                session.close();
+                return;
+            }
+            session.send(new PacketPostEnterSceneRsp(player));
+            return;
+        }
         var scene = player.getScene();
         var questManager = player.getQuestManager();
 

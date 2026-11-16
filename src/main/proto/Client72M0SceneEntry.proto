@@ -1,0 +1,20 @@
+// Finite identity projection from scene-info raw/contract/deep/entry-closure evidence.
+// Team, level and ability children remain unresolved and are not empty placeholders here.
+syntax = "proto3";
+
+package cn72.m0sceneentry;
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "Client72M0SceneEntryOuterClass";
+
+message NOCHHDCLKDJ {
+  repeated CKMLFOFDEHN DIGAMAKGCPA = 2;
+  optional uint32 MCCMGLDOECH = 7;
+  optional uint32 OLCJCLBMMCF = 12;
+}
+
+message CKMLFOFDEHN {
+  optional uint32 FDDDFIAINCE = 4;
+  optional uint32 IEDJNHILJBF = 7;
+  optional uint64 NPKKCHABEJH = 10;
+  optional uint64 OKMEHFHNFCG = 13;
+}

@@ -1,3 +1,5 @@
+2026-11-16 新增Player布尔字段m0Profile：仅显式M0实例的新Player(GameSession)初始化true，旧档缺失/false不自动迁移。M0在storage hydrate前拒绝未标记档案；该字段不改变UID归属、ObjectId、运行GUID或saveStamp含义。有限出生装备确认保存与新Player冷恢复见[M0集成](CLIENT_72_D02_M0_INTEGRATION_20261116.md)。
+
 2026-11-11 [所选旧号原始快照](CLIENT_72_D02_OLD_ACCOUNT_SNAPSHOT_20261110B.md)中reservedPlayerId为缺省0，实际Player.accountId和account_uid_owners/player_uid_reservations仍一致。预留值不能单独代替现存Player UID；本项只读核对，没有新增/迁移字段、重新分配或修复。
 
 # 账号与存档数据模型

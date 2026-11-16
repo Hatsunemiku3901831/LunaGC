@@ -23,6 +23,11 @@ public class HandlerEnterSceneDoneReq extends PacketHandler {
 
         var player = session.getPlayer();
         SceneHandshakeToken.requireCurrent(player, (request.getMCCMGLDOECH() + 0x8609) ^ 0x2034);
+        if (emu.grasscutter.config.Configuration.GAME_INFO.m0.enabled) {
+            Grasscutter.getLogger().warn("D02-M0 scene spawn stopped: target entity appearance wire is not yet implemented.");
+            session.close();
+            return;
+        }
 
         // Finished loading
         player.setSceneLoadState(SceneLoadState.LOADED);

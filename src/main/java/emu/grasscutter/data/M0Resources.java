@@ -7,11 +7,14 @@ import emu.grasscutter.data.excels.ItemData;
 import emu.grasscutter.data.excels.avatar.*;
 import emu.grasscutter.data.excels.scene.SceneData;
 import emu.grasscutter.data.excels.weapon.*;
+import emu.grasscutter.data.binout.config.ConfigGlobalCombat;
+import emu.grasscutter.data.binout.config.ConfigLevelEntity;
 import emu.grasscutter.game.avatar.Avatar;
 import emu.grasscutter.game.inventory.ItemType;
 import emu.grasscutter.game.props.FightProperty;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import emu.grasscutter.utils.JsonUtils;
 
 /** Real, finite birth-resource loading for the explicitly enabled D02-M0 instance. */
 public final class M0Resources {
@@ -59,6 +62,23 @@ public final class M0Resources {
         Grasscutter.getLogger().info(
                 "D02-M0 birth resources loaded: avatar {}, depot {}, weapon {}, scene {}. Full resources remain unready.",
                 AVATAR_ID, selectedDepotId(), WEAPON_ID, SCENE_ID);
+    }
+
+    /** Server identity objects only; global ability policy does not close required client wire. */
+    public static void loadSceneIdentityResources() throws Exception {
+        var root = Path.of(Grasscutter.getConfig().folderStructure.resources);
+        var combat = JsonUtils.loadToClass(root.resolve("BinOutput/Common/ConfigGlobalCombat.json"),
+                ConfigGlobalCombat.class);
+        require(combat != null && combat.getDefaultAbilities() != null
+                && combat.getDefaultAbilities().getDefaultMPLevelAbilities() != null
+                && combat.getDefaultAbilities().getDefaultTeamAbilities() != null
+                && combat.getDefaultAbilities().getLevelElementAbilities() != null,
+                "explicit global ability policy");
+        GameData.setConfigGlobalCombat(combat);
+        var levels = JsonUtils.loadToMap(root.resolve("BinOutput/LevelEntity/ConfigLevelEntity_Level_BigWorld.json"),
+                String.class, ConfigLevelEntity.class);
+        require(levels != null && levels.containsKey("Level_BigWorld"), "Level_BigWorld config");
+        GameData.getConfigLevelEntityDataMap().putAll(levels);
     }
 
     static void validateBirthDependencies() {

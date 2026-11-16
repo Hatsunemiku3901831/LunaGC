@@ -167,6 +167,7 @@ public final class Grasscutter {
             Grasscutter.updateDayOfWeek();
             if (config.server.game.m0.enabled) {
                 emu.grasscutter.data.M0Resources.loadBirthResources();
+                emu.grasscutter.data.M0Resources.loadSceneIdentityResources();
             } else {
                 ResourceLoader.loadAll();
             }

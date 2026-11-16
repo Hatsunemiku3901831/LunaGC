@@ -1,3 +1,5 @@
+2026-11-16 M0真实出生/确认保存/冷读、m0Profile旧档载入前拒绝、有限onLogin与tick、真实World/Scene及21761身份投影已验；10套166项相关回归过。未知SceneInfo子图/Entity出现与自然SDK仍阻入场，M0 Init/Done明确停止不发旧通知。复现/失败/测试库边界见[集成记录](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)。
+
 2026-11-16 M0有界规格/复用/SceneInfo最小研究已分项验收；固定来源与真正必要缺口见[SCOPE](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)、[REUSE](docs/CLIENT_72_D02_M0_REUSE_20261116.md)、[SceneInfo](docs/CLIENT_72_D02_M0_SCENEINFO_MIN_20261116.md)。SESSION自然service/mode/批准路由仍准确阻塞；Entity wire后继研究继续。
 
 2026-11-16 D02-M0实际集成：默认关闭M0/有限真实出生loader与缺文件拒绝、目标20143 Avatar raw正式sender已分项验证；JUnit312项及后续loader/sender2项、portable夹具27项通过。只有birth-ready，完整生命周期/装备保存/SceneInfo和自然会话继续；未部署/无客户端，六项0/6。失败及复现见[集成记录](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)。

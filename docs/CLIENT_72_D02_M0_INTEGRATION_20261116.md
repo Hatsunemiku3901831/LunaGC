@@ -15,6 +15,16 @@
 
 ## 当前未部署原因与下一动作
 
-M0完整生命周期、SceneInfo实际对象投影、真实出生装备保存/冷读仍在集成；SceneTeam/Entity出现、SceneInfo Team/level/ability子图及自然SDK路由有准确必要缺口。现没有可请求用户启动的实机包；不能以birth-ready、编译或健康替代入场。后续先完成允许独立验证，再按部署手册构建/准备独立实例；必要wire/会话未齐时不启动猜测协议。
+M0已完成有限onLogin/同步角色库存冷载和Player/World tick分流，不再触发活动、daily、家园和未审周期通知。新Player持久m0Profile=true，Token handler在任何storage加载前拒绝未标记旧档。Born入口创建前拒绝该模式不支持的男主，女主命名后同步确认Player/Avatar/11101装备才返回成功；M0不发欢迎邮件。
+
+实际独立Mongo验证通过：正常出生→同库三对象确认→新Morphia Player→真实AvatarStorage/Inventory冷恢复，角色/装备ObjectId、同owner物品绑定、701、非零HP及装备攻击保持。旧档负例通过真实Token handler，AvatarStorage/Inventory均未加载，原Player BSON逐值相同；测试库留在独立validation实例，没有删除或覆盖原数据库。
+
+同一冷恢复Player通过真实M0 onLogin创建World、EntityTeam、Scene3、EntityAvatar和EntityWeapon；目标21761的独立raw SceneInfo包读取相同Avatar/Item GUID、非零实体ID和本次token。独立literal wire测试覆盖已知tag、嵌套、双列表、高位64位GUID、显式0、uint32高位及截断拒绝；不填未知root14/15或空能力占位。GlobalCombat明确临时策略仅支持服务器身份验证，见[DATA](CLIENT_72_D02_M0_DATA_20261116.md)。
+
+相关10套166项回归全部通过，涵盖M0、Born19、账号创建40、准入36、Account Guard29、Player Guard15、Vitals22及有限wire。随后M0 Ready仅发送已验Rsp，Init/Done在准确未知wire处关闭，保持LOADING并且不发送旧通知/伪成功；Post只在已LOADED时回已验Rsp，跳过任务/cutscene。新增停止边与SceneInfo独立wire3项通过；已有四套场景关联回归也通过。最后合并结果及正式构建另记录。
+
+最终同轮16套**524项全部通过，失败/错误/跳过均0**（14秒），包含上述M0、账号/保存/出生/HP与Avatar/Inventory raw、四套Scene关联。该轮在最后M0握手停止修改后运行；原始XML已保存至`local/migration72/d02-m0-integration-20261116/final-java-results/`，套件汇总为同目录外的`final-java-results.json`，日志`m0-final-related-regressions.log`。没有以测试数量代表入场完成。
+
+M0独立config/resources/local-data已准备并通过portable配置检查，未启动游戏实例。SceneTeam/Entity出现、SceneInfo Team/level/ability子图和自然SDK路由仍有准确必要缺口，当前构建版本声明门也未变更。没有可请求用户启动的实机包；不能以birth-ready、编译或健康替代入场。继续成熟协议及独立旧号资源/恢复工作；必要wire/会话未齐时不启动猜测协议。
 
 原始JUnit、失败、构建和运行材料只留上述忽略目录。Project维护任务与完成范围；Harness索引本报告。M0通过也不关闭完整D-02。

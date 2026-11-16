@@ -14,6 +14,10 @@ public class HandlerEnterSceneReadyReq extends PacketHandler {
         var request = EnterSceneReadyReq.parseFrom(payload);
         var player = session.getPlayer();
         SceneHandshakeToken.requireCurrent(player, (request.getMCCMGLDOECH() - 0x4C01) ^ 0xE8C3);
+        if (emu.grasscutter.config.Configuration.GAME_INFO.m0.enabled) {
+            session.send(new PacketEnterSceneReadyRsp(player));
+            return;
+        }
         session.send(new PacketEnterScenePeerNotify(player));
         session.send(new PacketEnterSceneReadyRsp(player));
     }

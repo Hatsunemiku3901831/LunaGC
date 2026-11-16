@@ -1,6 +1,7 @@
 package emu.grasscutter.game.player;
 
 import static emu.grasscutter.config.Configuration.GAME_OPTIONS;
+import static emu.grasscutter.config.Configuration.GAME_INFO;
 
 import dev.morphia.annotations.*;
 
@@ -477,6 +478,9 @@ public class Player implements PlayerHook, FieldFetch {
 
     @Getter @Setter private ElementType mainCharacterElement = ElementType.None;
 
+    /** Only profiles created inside the isolated finite M0 instance can use its partial loader. */
+    @Getter @Setter private boolean m0Profile;
+
     @Getter @Setter private Map<Integer, CityInfoData> cityInfoData;
     @Getter @Setter private float phlogistonValue;
 
@@ -566,6 +570,8 @@ public class Player implements PlayerHook, FieldFetch {
 
     public Player(GameSession session) {
         this();
+
+        this.m0Profile = GAME_INFO.m0.enabled;
 
         this.account = session.getAccount();
         this.accountId = this.getAccount().getId();
@@ -1649,6 +1655,8 @@ public class Player implements PlayerHook, FieldFetch {
             return;
         }
 
+        if (GAME_INFO.m0.enabled) return;
+
         this.getCoopRequests().values().removeIf(this::expireCoopRequest);
 
         this.getEnterHomeRequests().values().removeIf(this::expireEnterHomeRequest);
@@ -1783,6 +1791,13 @@ public class Player implements PlayerHook, FieldFetch {
             this.getProfile().syncWithCharacter(this);
         }
 
+        if (GAME_INFO.m0.enabled) {
+            this.getAvatars().loadFromDatabase();
+            this.getInventory().loadFromDatabase();
+            this.getPlayerProgress().setPlayer(this);
+            return;
+        }
+
         var runner = Grasscutter.getThreadPool();
         runner.submit(() -> this.achievements = Achievements.getByPlayer(this));
 
@@ -1844,6 +1859,10 @@ public class Player implements PlayerHook, FieldFetch {
     }
 
     public void onLogin() {
+        if (GAME_INFO.m0.enabled) {
+            this.onM0Login();
+            return;
+        }
         // Quest and scene admission conditions need loaded activities. Publish their packets
         // after the player/avatar snapshot, at the existing activity-login stage below.
         this.activityManager = new ActivityManager(this, true);
@@ -1997,6 +2016,28 @@ public class Player implements PlayerHook, FieldFetch {
 
         getServer().registerPlayer(this);
         this.getTeamManager().restoreQuestTrialAvatars();
+    }
+
+    private void onM0Login() {
+        this.getTeamManager().repairPersistentTeams();
+        var world = new World(this);
+        if (!world.tryAddPlayer(this))
+            throw new IllegalStateException("D02-M0 cannot construct scene " + this.getSceneId());
+        this.getTeamManager().applyAbilities(this.getScene());
+        session.send(new PacketPlayerDataNotify(this));
+        session.send(new PacketStoreWeightLimitNotify());
+        session.send(new PacketPlayerStoreNotify(this));
+        session.send(new PacketAvatarDataNotify(this));
+        session.send(new PacketPlayerEnterSceneNotify(this));
+        this.hasSentLoginPackets = true;
+        session.setState(SessionState.ACTIVE);
+        var event = new PlayerJoinEvent(this);
+        event.call();
+        if (event.isCanceled()) {
+            session.close();
+            return;
+        }
+        getServer().registerPlayer(this);
     }
 
     public void onLogout() {

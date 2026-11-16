@@ -1,3 +1,5 @@
+2026-11-16 M0有限模式已接正常AccountLoginAdmission/确认出生保存；Token handler在任何AvatarStorage/Inventory加载前拒绝未标记m0Profile的旧档。M0只同步载入自身角色/库存，不启动活动、daily、家园等登录回调，正常保存Guard与退出清理保留；不代表SDK自然认证或客户端通过。见[实际集成](CLIENT_72_D02_M0_INTEGRATION_20261116.md)。
+
 2026-11-11 所选旧号的[隔离物理副本/只读快照](CLIENT_72_D02_OLD_ACCOUNT_SNAPSHOT_20261110B.md)已验真实Account→Player→owner/claim→角色物品关系；仅原始快照，未执行认证/生产加载/保存，不代表完整Player恢复或客户端登录。
 
 # 账号与存档系统接手指南

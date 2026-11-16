@@ -50,12 +50,14 @@ public class HandlerSetPlayerBornDataReq extends PacketHandler {
         }
         player.onLogin();
         session.send(new PacketSetPlayerBornDataRsp(0));
-        sendWelcomeMail(player);
+        if (!GAME_INFO.m0.enabled) sendWelcomeMail(player);
     }
 
     private static int validateRequest(Player player, SetPlayerBornDataReq req) {
         if (player.getAvatars().getAvatarCount() != 0 || player.getMainCharacterId() != 0) return 116;
         int avatarId = req.getAvatarId();
+        if (GAME_INFO.m0.enabled && avatarId != emu.grasscutter.data.M0Resources.AVATAR_ID)
+            return -1;
         if (avatarId != GameConstants.MAIN_CHARACTER_MALE
                 && avatarId != GameConstants.MAIN_CHARACTER_FEMALE) return -1;
         // Basic server input policy; the full target client nickname validator is still unverified.

@@ -94,6 +94,12 @@ public class HandlerGetPlayerTokenReq extends PacketHandler {
             return;
         }
 
+        if (Grasscutter.getConfig().server.game.m0.enabled && !player.isM0Profile()) {
+            Grasscutter.getLogger().warn("D02-M0 refused a profile created outside its isolated mode before storage loading.");
+            session.send(new PacketGetPlayerTokenRsp(session, -1));
+            session.close();
+            return;
+        }
         player.loadFromDatabase();
         session.setState(SessionState.WAITING_FOR_LOGIN);
         if (!Grasscutter.getConfig().server.game.useXorEncryption) {

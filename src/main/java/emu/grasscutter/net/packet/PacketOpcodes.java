@@ -27,7 +27,7 @@ public final class PacketOpcodes {
     public static final int EnterScenePeerNotify = 9633;
     public static final int EnterSceneReadyRsp = 9948;
     public static final int SceneInitFinishReq = 4905;
-    public static final int PlayerEnterSceneInfoNotify = 24624;
+    public static final int PlayerEnterSceneInfoNotify = 21761;
     public static final int SceneInitFinishRsp = 21392;
     public static final int EnterSceneDoneReq = 1017;
     public static final int EnterSceneDoneRsp = 298;

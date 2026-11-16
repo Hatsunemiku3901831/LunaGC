@@ -1037,6 +1037,8 @@ public class World implements Iterable<Player> {
         }
         // Check if there are players in this world.
         if (this.getPlayerCount() == 0) return this.pendingDepartures.get() == 0 && this.pendingEvacuations.isEmpty();
+        // The finite M0 mode keeps session/save lifecycle, without gameplay timer notifications.
+        if (emu.grasscutter.config.Configuration.GAME_INFO.m0.enabled) return false;
         // Tick all associated scenes.
         final List<Scene> snapshot;
         synchronized (this.scenes) { snapshot = new ArrayList<>(this.scenes.values()); }
