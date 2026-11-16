@@ -1,3 +1,5 @@
+2026-11-16 旧号有限模式正式portable构建23秒通过：内嵌1382c15，JAR SHA60314848d1164590d3573881c31541c225500021bfe6744838f1a72bf7d827de；52变化/4新增class匹配实际输出。两个独立实例仅预备同SHA未启动；post-build HTTP8088/game UDP22101/游戏JAR进程均0，仅已核自有测试Mongo27027/PID51240。完整快照/Scene/SDK前置仍缺，不启动猜测协议。见[模式构建与未部署边界](docs/CLIENT_72_D02_OLD_SNAPSHOT_MODE_20261116.md)。
+
 2026-11-16 旧号显式模式/有限生命周期完成：29表/287输出，独立资源ready和Storage前manifest/cohort/引用门；错误UID/武器/Reward零写，网络Token在Player创建前拒绝。真实Player.load、World/Team/武器实体、tick、正常注销保存和冷读11秒/JUnit1过；相关9套178项、portable30项、offline2项全过。原档全字段及1527 inactive保全，profile首次失败促收窄为正常lastActiveTime更新。见[限定模式/生命周期](docs/CLIENT_72_D02_OLD_SNAPSHOT_MODE_20261116.md)；完整Store/Avatar/TPS和Scene/SDK wire未闭，六项0/6。
 
 2026-11-16 实体raw独立Proto正式portable构建22秒过：内嵌7b86c53，JAR SHAe48c233e61b8cb5f55d7b93b7270466f8e78f31d29b8b51b8b02bb7848441fa4，3变化/9新增class均匹配编译输出；预备实例未启动，非完整实体发送。旧mode后续运行修改另构建。

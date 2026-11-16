@@ -37,4 +37,4 @@ Token handler在认证正常入口之后、任何Player创建/storage之前发�
 
 实际Store生产实现只支持Material/Weapon/Relic，default会省略2331 Furniture与8 TPS；Weapon尚未投保存affix/refinement的目标效果字段，Relic尚未投完整主副词条。M0 Avatar投影只有出生所需字段，普通Avatar分支也不能当已验121角色7.2快照。下一项须逐必要Store/Avatar/TPS出口复核现有raw合同和真实业务投影，成熟部分独立实现，未知身份/wire保留。完整SceneInfo/SceneTeam/Entity、自然SDK批准路由仍独立未闭；没有用“未测全部Manager”阻断已验有限生命周期，也没有放entry-ready。
 
-独立旧号实例配置已准备，尚未启动、导入部署库或运行客户端。正式构建及产物身份在后续实际结果中登记；当前不启动猜测协议，原生产数据不写。
+独立旧号实例配置已准备，尚未启动、导入部署库或运行客户端。正式portable构建23秒通过，内嵌提交1382c15，JAR SHA `60314848d1164590d3573881c31541c225500021bfe6744838f1a72bf7d827de`；52变化/4新增class逐项与build/classes匹配，0移除。M0及旧号两个独立实例预备同SHA JAR，均未启动；post-build只有自有测试Mongo27027/PID51240，HTTP8088与game UDP22101监听0，运行游戏JAR进程0，无运行JAR/健康/补丁身份可宣称。完整Store/Avatar/TPS/Scene和自然SDK前置未齐，当前不启动猜测协议，原生产数据不写。构建、class和端口/PID原件为同一ignored根下old-mode-build-artifact.private.json、old-mode-post-build-runtime.private.json及old-mode-portable-build.log。
