@@ -1,3 +1,5 @@
+2026-11-16 武器精炼/首次M0零面向正式portable26秒通过，内嵌49b4ae6，JAR SHA2df2d0954c105e917cbe5bc08d15add0852a51c3ae4663f3de9b0a99dd168e03；7变化/1新增class与编译输出匹配，双实例同SHA仅预备未启动。实际Store producer补验15项22秒全过。HTTP8088/UDP22101/游戏JAR进程0，只有自有测试Mongo27027；缺自然SDK和必要Peer/Entity合同，不部署。另接收[Peer有界来源](docs/CLIENT_72_D02_M0_PEER_CALLEE_SOURCE_20261116.md)六窗1536B+只读4B；field12/返回仍进行中，准确下一1B不是外部阻塞。
+
 2026-11-16 M0首次有效Born零面向后继完成：真实Player/同Entity/确认保存/冷读正零一致，tag2零Vector显式presence1200，位置保持；拒错/重复Born不动live/原BSON，已有M0非零经load/onLogin保持且partial明确拒绝。6套66项34秒全过，通用旋转/任意朝向客户端重登未验，0/6保持。见[限定Java与证据](docs/CLIENT_72_D02_M0_MOTION_JAVA_20261116.md#m0首次born零面向一致状态)。
 
 2026-11-16 [旧档武器精炼Java出口](docs/CLIENT_72_D02_OLD_WEAPON_PROJECTION_20261116.md)完成：same GameItem正affix组作key、原零基refinement作value，不减1/不乘10。1663真实保存/资源/二次冷读、1542 entries/264组合/121空map保持；旧号1+库存36首轮过，修正unit构造夹具后5独立wire18秒过，首次5失败XML保留。完整Store仍缺2331家具/8TPS及Relic其余角色，网络拒绝保持。

@@ -47,4 +47,6 @@ Vector84343直接复用既验`Client72SceneHandshakeNested.proto`及`enter-scene
 
 实际6套66项34秒全过，失败/错误/跳过0：M0真实拒不支持选择及空白名时不改原非零旋转；首次成功前数据库、Player、冷读和同Entity三轴正零bit一致；重复Born116不改刻意设置的live非零或原BSON；非零经正常关闭保存、第二新Player.load及onLogin不重设，并被partial Motion拒绝。独立手写wire区分零Vector存在/省略且保位置。普通Born19、Born兼容15、Entity17、Motion13和旧号完整生命周期1共同验证对应边界，没有重复全524。
 
-原XML/汇总`m0-zero-facing-results/`、`m0-zero-facing-results.private.json`，日志`m0-zero-facing-first-tests.log`在同ignored集成根。首次执行即通过；没有新native、客户端、字段猜名、资源或数学返回模型。正式portable与武器精炼成熟项一次构建后补。
+原XML/汇总`m0-zero-facing-results/`、`m0-zero-facing-results.private.json`，日志`m0-zero-facing-first-tests.log`在同ignored集成根。首次执行即通过；没有新native、客户端、字段猜名、资源或数学返回模型。
+
+与武器精炼成熟项一次正式portable构建26秒通过，内嵌49b4ae6，JAR SHA `2df2d0954c105e917cbe5bc08d15add0852a51c3ae4663f3de9b0a99dd168e03`；7变化/1新增class匹配输出，双实例同SHA仅预备未启动。详细class/运行边界和未部署原因见[统一构建](CLIENT_72_D02_OLD_WEAPON_PROJECTION_20261116.md#正式portable构建与未部署)。一般非零旋转及任意朝向客户端重登入场仍未验。

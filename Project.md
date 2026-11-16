@@ -1,10 +1,10 @@
 # 国服 7.2 任务规划与验收
 
-任务证据基线：2026-11-16；当前恢复研发从`fcdd46a`继续，近期已验M0有限运行、旧号完整Avatar/Inventory及有限生命周期，并接入增量raw Proto。最新构建内嵌`9d11ae8`，实际部署/客户端六项仍未通过；详见[M0集成](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)、[旧号有限模式](docs/CLIENT_72_D02_OLD_SNAPSHOT_MODE_20261116.md)与[场景raw Java](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)。原`D02-RESUME-INTEGRATION-20261116B`从99a868d到7b2ed77及HANDOFF2为此前历史检查点。仅面向国服7.2，Windows portable。
+任务证据基线：2026-11-16；当前恢复研发从`fcdd46a`继续，近期已验M0有限运行、旧号完整Avatar/Inventory及有限生命周期，并接入增量raw Proto。最新构建内嵌`49b4ae6`，实际部署/客户端六项仍未通过；详见[M0集成](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)、[旧号有限模式](docs/CLIENT_72_D02_OLD_SNAPSHOT_MODE_20261116.md)与[场景raw Java](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)。原`D02-RESUME-INTEGRATION-20261116B`从99a868d到7b2ed77及HANDOFF2为此前历史检查点。仅面向国服7.2，Windows portable。
 
 ## 当前阶段
 
-**当前优先目标仍为D02-M0：新测试号正常认证→显式选人命名→场景握手→角色实际可见落地→10分钟心跳→退出重登保存。用户允许临时业务数值，不能代替协议身份/wire或正常认证。** 已验显式M0真实loader、Avatar投影、新号出生/保存冷读及有限登录/tick；旧号全121/10727/471资源门、World/Team/退出冷读也已限定完成，未知三内层不造壳的Scene raw Java已生成并验证。最新portable正式构建26秒，JAR SHAbd9856cbb43110a66720ea712666143f4b6566928fa3f2f5eeea6554df5f1330；仅预备独立实例未启动。全D-02/F-05/D02-R6仍0/6，客户端R4/R5/R6未开始。必要SceneInfo/SceneTeam/Avatar出现业务及自然SDK路由继续；旧档完整Store/Furniture/TPS/Relic/精炼映射按实际出口分项核，不把完整Manager或原版资源全恢复当统一前置。原A/B、preview准确限制保持，M0局部通过不收工。
+**当前优先目标仍为D02-M0：新测试号正常认证→显式选人命名→场景握手→角色实际可见落地→10分钟心跳→退出重登保存。用户允许临时业务数值，不能代替协议身份/wire或正常认证。** 已验显式M0真实loader、Avatar投影、新号出生/保存冷读及有限登录/tick；旧号全121/10727/471资源门、World/Team/退出冷读也已限定完成，未知三内层不造壳的Scene raw Java已生成并验证。最新portable正式构建26秒，JAR SHA2df2d0954c105e917cbe5bc08d15add0852a51c3ae4663f3de9b0a99dd168e03；已含武器零基精炼与首次M0零面向，仅预备独立实例未启动。全D-02/F-05/D02-R6仍0/6，客户端R4/R5/R6未开始。必要SceneInfo/SceneTeam/Avatar出现业务及自然SDK路由继续；旧档武器精炼出口已闭，完整Store/Furniture/TPS/Relic其余映射按实际出口分项核，不把完整Manager或原版资源全恢复当统一前置。原A/B、preview准确限制保持，M0局部通过不收工。
 
 既验369个Skill id/element、121普通cost与START及两次真实Depot Java加载已闭，原367片段/120绑定阻塞解除；97literal、Material准确payload/有限header源、shared String尾游标、Relic有限typed及Weapon单字段独立性判断均已分项提交，本轮只读复用。完整原版恢复仍缺[必要前沿矩阵](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)中的准确来源：energy MAX cap职责、Material有效backend/filecursor、Relic rank/set角色、Weapon独立raw父入口语法，以及R1/R2/Scene/Proud各自的准确限制/自然输入。已验结果只读复用，不再添加raw-id/native门或泛扫替代输入；普通来源缺口与A/B准确冻结边分列，不宣称整族或潜在host路径必然依A。
 
@@ -133,7 +133,7 @@
 | D02-FINITE-SERVER-BOOT | 已完成 | [显式有限真实constructor/core tick/正常退出](docs/CLIENT_72_D02_FINITE_SERVER_BOOT_20261116.md)：普通fallback基线真实通过，有限非入场系统红例复现；4核心+2真实新旧Mongo+86关联全过，known前缀外明确关闭，无UDP绑定或假健康；正式portable27秒/嵌0b7c67e、18变化/5新增class与JAR核对通过，未部署 | Sol xhigh |
 | D02-M0-MOTION-WIRE | 已完成 | [49847的1487B reader与11字段partial合同](docs/CLIENT_72_D02_M0_MOTION_WIRE_20261116.md)：四Vector与列表直接复用84343，scalar identity已闭；tag100具体codec及tag2业务角色准确后移，不扩全移动/客户端验收 | Sol max |
 | D02-M0-MOTION-USE | 已完成 | [具名MoveSyncTask与零面向限定策略](docs/CLIENT_72_D02_M0_MOTION_USE_20261116.md)：position/velocity桥、rotation-input角色和数值来源分层；首次Born零策略不等待通用math，未升非零算法/Quaternion输出 | Sol max |
-| D02-M0-ZERO-FACING-JAVA | 已完成 | [首次有效Born真实正零/保存/显式tag2](docs/CLIENT_72_D02_M0_MOTION_JAVA_20261116.md#m0首次born零面向一致状态)：66项34秒过，拒错/重复/live/BSON边界保持；已有M0非零只load/onLogin保持且partial拒绝，不是任意朝向客户端重登通过；正式构建后补 | Sol xhigh |
+| D02-M0-ZERO-FACING-JAVA | 已完成 | [首次有效Born真实正零/保存/显式tag2](docs/CLIENT_72_D02_M0_MOTION_JAVA_20261116.md#m0首次born零面向一致状态)：66项34秒过，拒错/重复/live/BSON边界保持；已有M0非零只load/onLogin保持且partial拒绝，不是任意朝向客户端重登通过；正式portable26秒/嵌49b4ae6及JAR/class核对通过，未启动 | Sol xhigh |
 | D02-M0-MOTION-POSITION-JAVA | 已完成 | [具名MoveSyncTask位置/速度来源的实际部分投影](docs/CLIENT_72_D02_M0_MOTION_JAVA_20261116.md#实际位置与静止出生速度的部分投影)：同AvatarEntity/Player位置原bit、明确静止出生三轴0速度，40项26秒通过，正式portable26秒/嵌9d11ae8与4变化class核对；本项position阶段未填rotation；后继首次Born零策略已接tag2，通用非零仍未闭，不发送完整Entity | Sol xhigh |
 | D02-M0-MOTION-RAW-JAVA | 已完成 | [11字段Motion raw及16796.tag4结构](docs/CLIENT_72_D02_M0_MOTION_JAVA_20261116.md)：11新+31关联共42项21秒通过，四Vector/列表/64位/float边界独立；+40业务角色与tag100具体codec未闭，不生成业务Motion或完整Entity sender | Sol xhigh |
 | D02-M0-AVATAR-IDENTITY-JAVA | 已完成 | [同Player UID、Avatar GUID及实际实体的非发送投影](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#同玩家uid与avatar-guid的非发送投影)：独立Token/session与GUID lookup来源，5新wire+49关联共54项通过；正式构建22秒/内嵌c2faff7与JAR/class核对通过，根列表/Motion/完整sender仍未闭 | Sol xhigh |
@@ -142,13 +142,14 @@
 | D02-M0-PEER-PRODUCER | 已完成 | [Cmd28392/type19176实际1464B消费者](docs/CLIENT_72_D02_M0_PEER_PRODUCER_20261116.md)：+24写localAuthorityKey，+18查询loading token；不扩其它raw writer或旧号包 | Sol max |
 | D02-M0-PEER-MIN-SEMANTICS | 已完成 | [117B同Entity key域与加载任务真分支](docs/CLIENT_72_D02_M0_PEER_MIN_SEMANTICS_20261116.md)：tag4可用实际单人Host分配值，不能用默认false绕任务；未闭field12分列 | Sol max |
 | D02-M0-PEER-TRUE-BRANCH | 已完成 | [45B原件与独立入口两指令CFG](docs/CLIENT_72_D02_M0_PEER_TRUE_BRANCH_20261116.md)：整窗strict失败保留，准确停CALL15A46C1EF；field12/完整通知仍未闭，不泛称A或全VM冻结 | Sol max |
+| D02-M0-PEER-CALLEE-SOURCE | 已完成 | [本次PUSH的有界来源与分派](docs/CLIENT_72_D02_M0_PEER_CALLEE_SOURCE_20261116.md)：六窗1536B与只读4B，实际cursor/间接目标已闭；准确停146458F68的新1B，field12/返回仍进行中，静态可继续，不记外部阻塞或完整通知通过 | Sol max |
 | D02-M0-PEER-WIRE/JAVA | 已完成 | [四uint32的33 owned样本及独立Proto/非发送DTO](docs/CLIENT_72_D02_M0_PEER_JAVA_20261116.md)：token/key与实际M0宿主/SceneInfo owner key关联，7新+19关联共26项全过；tag4按后继同域合同接实际Host key，27项关联通过，正式portable26秒/嵌17dc6f2与4变化class匹配；tag12不填，不放完整Peer通知 | Sol max → Sol xhigh |
 | D02-M0-SCENEINFO-MIN-STATES | 已完成 | [新实体null状态与正常空control/state列表](docs/CLIENT_72_D02_M0_SCENEINFO_MIN_STATES_20261116.md)：实际消费分支逐项核；M0显式非null control零记录、正常零条80154，不造34045/83320；27项通过，只限新实体普通路径，不放握手 | Sol max → Sol xhigh |
 | D02-OLD-SNAPSHOT-DATA（OLD-RESOURCE-BUNDLE同项） | 已完成 | [固定旧号限定资源包](docs/CLIENT_72_D02_OLD_SNAPSHOT_DATA_20261116.md)：revision7补真实重算所需羁绊/名片7文件，28表/284输出与10条明示服务器策略；只覆盖选定快照Avatar/Inventory，不代全Manager或客户端ready | Terra xhigh → 唯一集成者 |
 | D02-OLD-SNAPSHOT-LOAD | 已完成 | [revision-5纯ResourceLoader诊断](docs/CLIENT_72_D02_OLD_SNAPSHOT_JAVA_20261116.md)：全部21表选行、121 Avatar/embryo、9128 Item种类及OpenConfig真实加载；没有Player/DB/hydrate，loadedAll保持false | Sol xhigh |
 | D02-OLD-SNAPSHOT-RESTORE | 已完成 | [完整AvatarStorage/Inventory保存冷读](docs/CLIENT_72_D02_OLD_SNAPSHOT_JAVA_20261116.md)已通过全121/10727/471及12254原行字段核对；羁绊多重集合、正常saveStamp和4项HP clamp独立验证；16秒/JUnit1及缺资源零写通过，完整Player业务Manager/认证/客户端仍未验 | 唯一Sol xhigh集成者 |
 | D02-OLD-STORE-SEMANTICS（精炼阶段） | 已完成 | [固定保存精炼桥](docs/CLIENT_72_D02_OLD_STORE_SEMANTICS_20261116.md)：全1663武器/1542正组entry/264组合/121空map及真实加载level来源已闭；Furniture/TPS/Relic其余角色不晋级 | Sol max |
-| D02-OLD-WEAPON-PROJECTION-JAVA | 已完成 | [同GameItem正affix组→原零基refinement](docs/CLIENT_72_D02_OLD_WEAPON_PROJECTION_20261116.md)：真实旧档/资源与保存后二次冷读逐1663比对，原字段不变；5独立wire18秒及旧号1+库存36原批已过，正式构建后补，不发完整Store | Sol xhigh |
+| D02-OLD-WEAPON-PROJECTION-JAVA | 已完成 | [同GameItem正affix组→原零基refinement](docs/CLIENT_72_D02_OLD_WEAPON_PROJECTION_20261116.md)：真实旧档/资源与保存后二次冷读逐1663比对，原字段不变；5独立wire18秒、旧号1+库存36及实际Store producer15项22秒已过；正式portable26秒/嵌49b4ae6及JAR/class核对通过，不发完整Store | Sol xhigh |
 | D02-OLD-SNAPSHOT-MODE | 已完成 | [默认关闭、独立InstanceRoot及manifest绑定的真实有限资源门](docs/CLIENT_72_D02_OLD_SNAPSHOT_MODE_20261116.md)：29表/287输出；错UID/缺11101/Reward在Storage前零写，不借M0.birthReady或loadedAll；网络快照前明确拒绝 | Sol xhigh |
 | D02-OLD-SNAPSHOT-LIFECYCLE | 已完成 | [真实有限Player.load/World/Team/tick/退出冷读](docs/CLIENT_72_D02_OLD_SNAPSHOT_MODE_20261116.md)：11秒/JUnit1及9套178相关回归、portable30项通过；121/10727/471与1527非活动原档保全，仅正常时间/stamp和已验HP clamp；正式portable构建23秒/内嵌1382c15及JAR/class核对通过，未部署 | Sol xhigh |
 | D02-OLD-SNAPSHOT-ENTRY-WIRE | 进行中 | 实际Store出口会略2331 Furniture/8 TPS且装备完整效果未投；121 Avatar普通sender未闭。先复核已证raw及必要业务映射，未知不补、不裁库存；旧mode不放网络入场 | 唯一集成者 |

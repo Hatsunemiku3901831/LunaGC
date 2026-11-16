@@ -1,4 +1,4 @@
-最新正式portable构建26秒、内嵌9d11ae8，JAR SHA `bd9856cbb43110a66720ea712666143f4b6566928fa3f2f5eeea6554df5f1330`；已包含有限core、Peer同域Host key及实际position/静止velocity部分投影。4变化class匹配输出、0新增，两个实例仅预备未启动；source/root列表及自然SDK剩余继续。下方每份旧JAR均是对应阶段证据；当前范围见[Motion实际部分投影](CLIENT_72_D02_M0_MOTION_JAVA_20261116.md#实际位置与静止出生速度的部分投影)。
+最新正式portable构建26秒、内嵌49b4ae6，JAR SHA `2df2d0954c105e917cbe5bc08d15add0852a51c3ae4663f3de9b0a99dd168e03`；已包含武器原零基精炼map、M0首次Born零面向及此前有限core/身份部分投影。7变化/1新增class匹配输出，两个实例同SHA仅预备未启动；自然SDK及Peer/Entity必要合同继续。下方每份旧JAR均是对应阶段证据；当前产物与未部署原因见[本轮统一构建](CLIENT_72_D02_OLD_WEAPON_PROJECTION_20261116.md#正式portable构建与未部署)。已有M0非零朝向只保证load/onLogin保留，partial Motion明确拒绝，任意朝向客户端重登入场未验。
 
 有限Server核心后继已通过：生命周期测试不再使用dispatch-only/反射容器，真实finite constructor驱动World/Player tick，正常退出/保存冷读及账号Guard继续成立；M0三缺服务NPE不再发生。4核心、2真实Mongo及86关联通过；无网络绑定，不等于客户端或HTTP健康。见[分流与原推断纠正](CLIENT_72_D02_FINITE_SERVER_BOOT_20261116.md)。
 
@@ -62,7 +62,7 @@ XML和汇总留ignored根`m0-normal-close-results/`、`m0-normal-close-results.p
 | 候选位置 | 已证范围 | 当前最小剩余或必要性限制 |
 | --- | --- | --- |
 | ReadyReq/Rsp | 当前token变换、错误拒绝、Rsp wire已验 | 不能由旧handler发送顺序断言Peer一定在Rsp前；无该完整客户端调度证明 |
-| Peer28392 | 真LoadingTask token、local/Host authority-key同域，三字段供给已验 | tag12/真任务路径准确停CALL15A46C1EF；旧首任务flag[1,1]不能改false。未证四字段都必须非零，不发完整通知 |
+| Peer28392 | 真LoadingTask token、local/Host authority-key同域，三字段供给已验 | tag12/真任务路径后继六窗1536B+只读4B已核，准确停146458F68的新1B；field12/返回仍进行中，静态可继续。旧首任务flag[1,1]不能改false。未证四字段都必须非零，不发完整通知 |
 | SceneInfo21761 | 当前角色/装备和两独立World/Team实体ID；新实体null状态及正常空control/状态集合已闭 | 能力/其它Avatar字段仍按具体null/count分支判必要性；不要求先补全global/hash或全嵌套 |
 | SceneTeam24706/83228 | 四字段wire与76429外层已闭 | field4/tag4/+28是151A9C2D0(GLOBAL+A420,key)的上下文查询key，也作worker第五参；身份/上下文建立及flag0的151A9FF40后继用途未闭，不能直接填Scene3/UID。enum==1另走单独尾路径 |
 | SceneTeam1144/86588 | 取GLOBAL+A420+10当前上下文，worker flag1/第五参0；bool13已实测 | 列表5仅cctor来源。flag1实际另调用1507E2A30/151AA0CC0，与83228 flag0不同，不能因为后者全wire就直接替换 |
