@@ -27,3 +27,11 @@
 相关六套86项23秒通过：Handler注册、正常logout隔离、World tick、statue tick、Born与本地AccountAdmission。已有故障注入日志按原测试用途保留，不称本轮新生产错误。没有重跑无变化的全部524项。
 
 原件在`local/migration72/d02-m0-integration-20261116/`：`finite-boot-full-probe*.log/xml`、`finite-boot-m0-red.log/xml`、`finite-boot-core-results/`、`finite-boot-lifecycle-results/`、`finite-boot-related-results/`和`finite-boot-results.private.json`；独立实例仅使用其自有数据与27027测试库。相关正式构建、产物和端口记录后补，不能以这些core通过升级entry-ready或客户端验收。
+
+## 正式portable构建与未部署
+
+运行修改本地提交0b7c67e后，通过`LUNAGC_RUNTIME=portable`及`tools/local_windows.ps1 -Mode build`正式构建27秒，命令级Gradle堆2GiB。JAR内嵌0b7c67e，SHA `d6bd05373dbadad0e9be8538d34730d6133a23882c87c19c360d2636d25a4e1e`，98289466B；相比c2faff7产物，class46386→46391，18变化/5新增/0移除，全部变化/新增逐项匹配build/classes。本包同时包含已验Motion前11字段raw。
+
+两个独立InstanceRoot仅预备同SHA，没有start/play、补丁或客户端操作。post-build只有自有测试Mongo27027/PID51240；HTTP8088、Mongo27017、game UDP22101和游戏JAR进程0，没有健康/运行JAR正向对象。自然SDK/service/mode/批准路由和剩余Peer/SceneTeam/Entity必需wire仍未齐，准确记录未部署，不以core测试或JAR编译冒称ready。
+
+产物原件`finite-boot-portable-build.log`、`finite-boot-build-artifact.private.json`及`finite-boot-post-build-runtime.private.json`留同ignored根；原子模块与初始他人差异保持，没有push。

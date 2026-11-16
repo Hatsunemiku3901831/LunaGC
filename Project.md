@@ -1,10 +1,10 @@
 # 国服 7.2 任务规划与验收
 
-任务证据基线：2026-11-16；当前恢复研发从`fcdd46a`继续，近期已验M0有限运行、旧号完整Avatar/Inventory及有限生命周期，并接入增量raw Proto。最新构建内嵌`c2faff7`，实际部署/客户端六项仍未通过；详见[M0集成](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)、[旧号有限模式](docs/CLIENT_72_D02_OLD_SNAPSHOT_MODE_20261116.md)与[场景raw Java](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)。原`D02-RESUME-INTEGRATION-20261116B`从99a868d到7b2ed77及HANDOFF2为此前历史检查点。仅面向国服7.2，Windows portable。
+任务证据基线：2026-11-16；当前恢复研发从`fcdd46a`继续，近期已验M0有限运行、旧号完整Avatar/Inventory及有限生命周期，并接入增量raw Proto。最新构建内嵌`0b7c67e`，实际部署/客户端六项仍未通过；详见[M0集成](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)、[旧号有限模式](docs/CLIENT_72_D02_OLD_SNAPSHOT_MODE_20261116.md)与[场景raw Java](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)。原`D02-RESUME-INTEGRATION-20261116B`从99a868d到7b2ed77及HANDOFF2为此前历史检查点。仅面向国服7.2，Windows portable。
 
 ## 当前阶段
 
-**当前优先目标仍为D02-M0：新测试号正常认证→显式选人命名→场景握手→角色实际可见落地→10分钟心跳→退出重登保存。用户允许临时业务数值，不能代替协议身份/wire或正常认证。** 已验显式M0真实loader、Avatar投影、新号出生/保存冷读及有限登录/tick；旧号全121/10727/471资源门、World/Team/退出冷读也已限定完成，未知三内层不造壳的Scene raw Java已生成并验证。最新portable正式构建22秒，JAR SHA533dce1ebab1cbd5d147bf769be025cdf19aae16d101ef16721cf49e6cf182e4；仅预备独立实例未启动。全D-02/F-05/D02-R6仍0/6，客户端R4/R5/R6未开始。必要SceneInfo/SceneTeam/Avatar出现业务及自然SDK路由继续；旧档完整Store/Furniture/TPS/Relic/精炼映射按实际出口分项核，不把完整Manager或原版资源全恢复当统一前置。原A/B、preview准确限制保持，M0局部通过不收工。
+**当前优先目标仍为D02-M0：新测试号正常认证→显式选人命名→场景握手→角色实际可见落地→10分钟心跳→退出重登保存。用户允许临时业务数值，不能代替协议身份/wire或正常认证。** 已验显式M0真实loader、Avatar投影、新号出生/保存冷读及有限登录/tick；旧号全121/10727/471资源门、World/Team/退出冷读也已限定完成，未知三内层不造壳的Scene raw Java已生成并验证。最新portable正式构建27秒，JAR SHAd6bd05373dbadad0e9be8538d34730d6133a23882c87c19c360d2636d25a4e1e；仅预备独立实例未启动。全D-02/F-05/D02-R6仍0/6，客户端R4/R5/R6未开始。必要SceneInfo/SceneTeam/Avatar出现业务及自然SDK路由继续；旧档完整Store/Furniture/TPS/Relic/精炼映射按实际出口分项核，不把完整Manager或原版资源全恢复当统一前置。原A/B、preview准确限制保持，M0局部通过不收工。
 
 既验369个Skill id/element、121普通cost与START及两次真实Depot Java加载已闭，原367片段/120绑定阻塞解除；97literal、Material准确payload/有限header源、shared String尾游标、Relic有限typed及Weapon单字段独立性判断均已分项提交，本轮只读复用。完整原版恢复仍缺[必要前沿矩阵](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)中的准确来源：energy MAX cap职责、Material有效backend/filecursor、Relic rank/set角色、Weapon独立raw父入口语法，以及R1/R2/Scene/Proud各自的准确限制/自然输入。已验结果只读复用，不再添加raw-id/native门或泛扫替代输入；普通来源缺口与A/B准确冻结边分列，不宣称整族或潜在host路径必然依A。
 
@@ -130,7 +130,7 @@
 | D02-M0-SCENE-RAW-JAVA | 已完成 | [28字段SceneAvatar/17外字段Team/83228四字段及86588实测bool的Proto与Java回归](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)：10新+14关联共24项全过；未知三内层/cctor-only列表不升格，未发送场景包，portable构建25秒/内嵌89b2ceb及JAR/class核对通过，未部署 | Sol xhigh |
 | D02-M0-ENTITY-APPEAR-NECESSITY | 已完成 | [单本地Avatar的真实分派、UID/GUID桥与必需性分层](docs/CLIENT_72_D02_M0_ENTITY_APPEAR_MIN_DEPENDENCIES_20261116.md)：Gadget谓词不当Avatar消费，Handle/Level code-data proof和本地consumer限定源完成；Motion外层wire/实体root列表及A返回仍分列，不放完整sender | Sol max |
 | D02-M0-CLOSE-SAVE-JAVA | 已完成 | [真实会话关闭与二次冷读](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md#新号真实关闭回调与第二次冷读)：1项12秒，位置/HP/同角色武器ObjectId/账号Admission/World注销保持；dispatch-only缺三后台服务的警告分列，非完整服务或客户端退出重登验收 | Sol xhigh |
-| D02-FINITE-SERVER-BOOT | 已完成 | [显式有限真实constructor/core tick/正常退出](docs/CLIENT_72_D02_FINITE_SERVER_BOOT_20261116.md)：普通fallback基线真实通过，有限非入场系统红例复现；4核心+2真实新旧Mongo+86关联全过，known前缀外明确关闭，无UDP绑定或假健康；正式构建另记 | Sol xhigh |
+| D02-FINITE-SERVER-BOOT | 已完成 | [显式有限真实constructor/core tick/正常退出](docs/CLIENT_72_D02_FINITE_SERVER_BOOT_20261116.md)：普通fallback基线真实通过，有限非入场系统红例复现；4核心+2真实新旧Mongo+86关联全过，known前缀外明确关闭，无UDP绑定或假健康；正式portable27秒/嵌0b7c67e、18变化/5新增class与JAR核对通过，未部署 | Sol xhigh |
 | D02-M0-MOTION-WIRE | 已完成 | [49847的1487B reader与11字段partial合同](docs/CLIENT_72_D02_M0_MOTION_WIRE_20261116.md)：四Vector与列表直接复用84343，scalar identity已闭；tag100具体codec及tag2业务角色准确后移，不扩全移动/客户端验收 | Sol max |
 | D02-M0-MOTION-RAW-JAVA | 已完成 | [11字段Motion raw及16796.tag4结构](docs/CLIENT_72_D02_M0_MOTION_JAVA_20261116.md)：11新+31关联共42项21秒通过，四Vector/列表/64位/float边界独立；+40业务角色与tag100具体codec未闭，不生成业务Motion或完整Entity sender | Sol xhigh |
 | D02-M0-AVATAR-IDENTITY-JAVA | 已完成 | [同Player UID、Avatar GUID及实际实体的非发送投影](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#同玩家uid与avatar-guid的非发送投影)：独立Token/session与GUID lookup来源，5新wire+49关联共54项通过；正式构建22秒/内嵌c2faff7与JAR/class核对通过，根列表/Motion/完整sender仍未闭 | Sol xhigh |

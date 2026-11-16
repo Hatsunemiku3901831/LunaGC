@@ -1,3 +1,5 @@
+2026-11-16 有限core+Motion正式portable构建27秒通过，内嵌0b7c67e，JAR SHAd6bd05373dbadad0e9be8538d34730d6133a23882c87c19c360d2636d25a4e1e；18变化/5新增class匹配输出、0移除。两个独立实例仅预备同SHA未启动，HTTP8088/UDP22101/游戏JAR进程0，只有自有测试Mongo27027。SDK/必要wire未齐，六项0/6。见[实际产物](docs/CLIENT_72_D02_FINITE_SERVER_BOOT_20261116.md#正式portable构建与未部署)。
+
 2026-11-16 有限Server core完成：普通constructor空data实际回退内置DungeonDrop通过，真正红例是有限模式仍创建非入场系统/2 Quartz；现M0/old真实constructor/coreTick/known Ping/未知请求关闭4项15秒、真实新旧Mongo生命周期2项24秒及6套86项23秒全过。没有网络绑定/健康对象；M0三缺服务NPE已由明确模式分流消除。见[实际范围与纠正](docs/CLIENT_72_D02_FINITE_SERVER_BOOT_20261116.md)。
 
 2026-11-16 [Motion原始source](docs/CLIENT_72_D02_M0_MOTION_WIRE_20261116.md)最终SHA713be733…081b3已接收：1487B/325 strict与前11字段逐helper/store，tag100具体codec和tag2业务未名仍分层。Java42项为另一独立回归，不计成新native样本。

@@ -22,3 +22,5 @@ Vector84343直接复用既验`Client72SceneHandshakeNested.proto`及`enter-scene
 - Avatar UID/GUID同Motion嵌套共存、未知tag100保留及Java截断/错误长度边界。错误断言不冒称新native错误路径执行。
 
 原件`local/migration72/d02-m0-integration-20261116/motion-raw-first-results/`、`motion-raw-first-results.private.json`及`m0-motion-raw-first-tests.log`。正式构建和必要源后继另记；完整Entity根列表、Motion业务值和完整sender不因这组raw通过而放行。
+
+正式portable构建已包含本项：27秒、内嵌0b7c67e、JAR SHA `d6bd05373dbadad0e9be8538d34730d6133a23882c87c19c360d2636d25a4e1e`；18变化/5新增class全部匹配输出，两个独立实例同SHA只预备未启动。详情见[有限核心正式构建](CLIENT_72_D02_FINITE_SERVER_BOOT_20261116.md#正式portable构建与未部署)。
