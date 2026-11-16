@@ -5,6 +5,7 @@ syntax = "proto3";
 package cn72.m0sceneentry;
 option java_package = "emu.grasscutter.net.proto";
 option java_outer_classname = "Client72M0SceneEntryOuterClass";
+import "Client72M0SharedSceneRaw.proto";
 
 message NOCHHDCLKDJ {
   repeated CKMLFOFDEHN DIGAMAKGCPA = 2;
@@ -20,6 +21,8 @@ message JLILNBLGMIP {
 }
 
 message BINIKNHCLIA {
+  cn72.m0sharedscene.KOKHLKFCIMG EOFFDMLNFIM = 1;
+  repeated cn72.m0sharedscene.JPHJHDMPPBD KNFDPJCMNOE = 3;
   optional uint32 JNBCPNHJCNI = 7;
 }
 

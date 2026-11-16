@@ -22,3 +22,8 @@ message LFOJAILFEPJ {
 message KOKHLKFCIMG {
   repeated LFOJAILFEPJ GFDEDOJEICE = 1;
 }
+
+message JPHJHDMPPBD {
+  optional uint32 ANKEOLKBECN = 1;
+  optional float GOKKMOKPCEE = 2;
+}

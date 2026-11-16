@@ -138,6 +138,9 @@ class M0BirthPersistenceMongoTest {
             assertNotEquals(0, entry.getLFLOLJADPBI().getLLHEBIHGDAE());
             assertNotEquals(0, entry.getAEKMONHBHAA().getJNBCPNHJCNI());
             assertNotEquals(entry.getLFLOLJADPBI().getLLHEBIHGDAE(), entry.getAEKMONHBHAA().getJNBCPNHJCNI());
+            assertTrue(entry.getAEKMONHBHAA().hasEOFFDMLNFIM());
+            assertEquals(0, entry.getAEKMONHBHAA().getEOFFDMLNFIM().getGFDEDOJEICECount());
+            assertEquals(0, entry.getAEKMONHBHAA().getKNFDPJCMNOECount());
             var peerIdentity = M0PeerIdentityProjection.project(fresh);
             assertEquals(fresh.getEnterSceneToken(), peerIdentity.getMCCMGLDOECH());
             assertEquals(fresh.getPeerId(), peerIdentity.getAANCEPCPHKJ());

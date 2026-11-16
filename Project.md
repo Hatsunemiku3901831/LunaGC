@@ -132,6 +132,7 @@
 | D02-M0-AUTHORITY-CFG | 已完成 | [base getter/setter的条件CFG及factory比较桥](docs/CLIENT_72_D02_M0_AUTHORITY_CFG_20261116.md)：原0-pdata失败保留，不把+42C猜作HostPeerId、OOJ不作当前常量 | Sol max |
 | D02-M0-PEER-PRODUCER | 已完成 | [Cmd28392/type19176实际1464B消费者](docs/CLIENT_72_D02_M0_PEER_PRODUCER_20261116.md)：+24写localAuthorityKey，+18查询loading token；不扩其它raw writer或旧号包 | Sol max |
 | D02-M0-PEER-WIRE/JAVA | 已完成 | [四uint32的33 owned样本及独立Proto/非发送DTO](docs/CLIENT_72_D02_M0_PEER_JAVA_20261116.md)：token/key与实际M0宿主/SceneInfo owner key关联，7新+19关联共26项全过；未知tag4/12不填，不放完整Peer通知 | Sol max → Sol xhigh |
+| D02-M0-SCENEINFO-MIN-STATES | 已完成 | [新实体null状态与正常空control/state列表](docs/CLIENT_72_D02_M0_SCENEINFO_MIN_STATES_20261116.md)：实际消费分支逐项核；M0显式非null control零记录、正常零条80154，不造34045/83320；27项通过，只限新实体普通路径，不放握手 | Sol max → Sol xhigh |
 | D02-OLD-SNAPSHOT-DATA（OLD-RESOURCE-BUNDLE同项） | 已完成 | [固定旧号限定资源包](docs/CLIENT_72_D02_OLD_SNAPSHOT_DATA_20261116.md)：revision7补真实重算所需羁绊/名片7文件，28表/284输出与10条明示服务器策略；只覆盖选定快照Avatar/Inventory，不代全Manager或客户端ready | Terra xhigh → 唯一集成者 |
 | D02-OLD-SNAPSHOT-LOAD | 已完成 | [revision-5纯ResourceLoader诊断](docs/CLIENT_72_D02_OLD_SNAPSHOT_JAVA_20261116.md)：全部21表选行、121 Avatar/embryo、9128 Item种类及OpenConfig真实加载；没有Player/DB/hydrate，loadedAll保持false | Sol xhigh |
 | D02-OLD-SNAPSHOT-RESTORE | 已完成 | [完整AvatarStorage/Inventory保存冷读](docs/CLIENT_72_D02_OLD_SNAPSHOT_JAVA_20261116.md)已通过全121/10727/471及12254原行字段核对；羁绊多重集合、正常saveStamp和4项HP clamp独立验证；16秒/JUnit1及缺资源零写通过，完整Player业务Manager/认证/客户端仍未验 | 唯一Sol xhigh集成者 |

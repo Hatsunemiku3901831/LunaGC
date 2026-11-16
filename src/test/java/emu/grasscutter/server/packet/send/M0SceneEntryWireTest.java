@@ -38,8 +38,24 @@ class M0SceneEntryWireTest {
         assertArrayEquals(wire, root.toByteArray());
         assertEquals(Set.of(1, 5), JLILNBLGMIP.getDescriptor().getFields().stream()
                 .map(f -> f.getNumber()).collect(Collectors.toSet()));
-        assertEquals(Set.of(7), BINIKNHCLIA.getDescriptor().getFields().stream()
+        assertEquals(Set.of(1, 3, 7), BINIKNHCLIA.getDescriptor().getFields().stream()
                 .map(f -> f.getNumber()).collect(Collectors.toSet()));
+    }
+
+    @Test
+    void explicitControlWithZeroEntriesDiffersFromAbsentControlAndHasNoFakeStateRecord() throws Exception {
+        byte[] wire = HexFormat.of().parseHex("7a040a003805");
+        var root = NOCHHDCLKDJ.parseFrom(wire);
+        var team = root.getAEKMONHBHAA();
+        assertTrue(team.hasEOFFDMLNFIM());
+        assertEquals(0, team.getEOFFDMLNFIM().getGFDEDOJEICECount());
+        assertEquals(0, team.getKNFDPJCMNOECount());
+        assertEquals(5, team.getJNBCPNHJCNI());
+        assertFalse(NOCHHDCLKDJ.parseFrom(HexFormat.of().parseHex("7a023805"))
+                .getAEKMONHBHAA().hasEOFFDMLNFIM());
+        assertNull(JLILNBLGMIP.getDescriptor().findFieldByNumber(2));
+        assertNull(BINIKNHCLIA.getDescriptor().findFieldByNumber(4));
+        assertArrayEquals(wire, root.toByteArray());
     }
 
     @Test

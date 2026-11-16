@@ -37,6 +37,14 @@ optional标量只用于Java显式零/false合并存在性；packed输出是同�
 
 给来源执行者的待接清单分开处理：Peer raw闭后用真实消费保持localAuthorityKey/OOJ/entity+42C的关系，不因官方英文名缺失阻塞；44512.tag2新实体已有非null才Clone分支，49723.tag4的null状态、tag1/89710 count0是否跳过hash循环、tag3/80154空列表合法性逐个核既采源。未知72829及float不造默认值；真实MP/Team无追加可选global能力和Avatar5基础能力仅是服务器状态，不是所有network能力分支必须存在或必可省的证明。
 
+## SceneInfo普通新实体最小状态
+
+来源[MIN-STATES](CLIENT_72_D02_M0_SCENEINFO_MIN_STATES_20261116.md) SHA `602d8a5f4a070b0573929851a62708878a5e4c3c7d8723550e5fffdef47d4355`分别闭合四个必要性问题：新World与Team分支的34045为null时真实跳过Clone；89710控制对象需非null，其正常零元素83320列表清缓存并直接返回，不调用两个hash lookup；80154正常空列表清状态，不允许拿null代空。替代分派及已有实体+426非零的后继仍未闭，不外推热重入。
+
+M0 projection现在明确输出Team control对象、0个83320、0个80154；没有创建空83320记录或空34045来装作初始化。零列表在wire中省略，control对象保留`0a00`存在性，不能在control内部再写一个`0a00`假元素。单独raw80154两字段来自既验SceneInfo raw，只声明而不赋未知业务key。实际World/Team若已有runtime能力则拒绝该零团队策略；不走legacy默认团队能力getter。
+
+第一组27项27秒通过：真实M0出生/保存/World交叉、Peer7、SceneEntry4、握手15，普通Init/Done仍准确停止。原件`scene-minimal-states-first-results/`与`m0-scene-minimal-states-tests.log`留同ignored根。本增量尚待后续统一正式构建，无客户端或网络发送放行。
+
 ## 旧号快照出口短核
 
 有限旧号mode已保留全部存档，但完整网络入口仍拒绝。代码及[库存生产合同](CLIENT_72_INVENTORY_PRODUCTION.md)、[Equip合同](CLIENT_72_EQUIP_CONTRACT.md)当前只批准Material与Weapon/Relic有限字段；raw15型47字段不是所有分支业务合同。Item7/8/9/10不能按形状命名Furniture/TPS。现生产Store会略2331 Furniture与8 TPS；Weapon affix_map已证“EquipAffix组→组内level key”，保存refinement的映射尚未有目标桥，不能默认减1或把Java组合lookup当客户端身份；Relic2/3/4/5/7/8仍未闭业务角色。
