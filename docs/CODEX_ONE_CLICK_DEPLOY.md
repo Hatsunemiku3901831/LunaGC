@@ -1,3 +1,5 @@
+2026-11-16 当前最新portable构建25秒通过，内嵌89b2ceb，JAR SHA74049899d59c4a8b2652aeaba2ff14b9fb5ca81ae2e94acd08eb41f1caa001f3；3变化/33新增class逐项匹配。M0新号与旧号有限模式/保存生命周期已分项验证，两个独立InstanceRoot仅预备同SHA未启动；HTTP8088/game UDP22101/游戏JAR进程均0，仅自有测试Mongo27027。完整Scene/自然SDK及旧档完整快照wire仍缺准确前置，不启动猜测协议、不装补丁或客户端实验。当前验收见[场景raw构建](CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)与[旧号有限模式](CLIENT_72_D02_OLD_SNAPSHOT_MODE_20261116.md)；下文构建SHA/暂停/仅规划均为各历史阶段。
+
 2026-11-16 已构建M0有限实现并仅预备独立InstanceRoot：最终524项回归通过，portable打包25秒、内嵌d7cdda0，JAR SHA42636ecc42bd9b5c1a98a89fcde662e293f343f589b5e0efd36cf6ec1214e217。同hash已stage；实际HTTP8088/UDP22101/游戏JAR进程均0，无健康或运行JAR正向对象，未装补丁。必要SceneInfo/Entity出现wire与自然SDK路由未闭，版本声明门保持；当前不执行play/start客户端实验。见[真实构建/未部署原因](CLIENT_72_D02_M0_INTEGRATION_20261116.md)，后续先核本轮新必要合同。
 
 2026-11-16 新部署顺序：用户要求先入场，按[Project](../Project.md)的D02-M0/[最小方案](CLIENT_72_D02_ENTRY_MVP_PLAN_20261116.md)准备独立新号实例。M0所选路径的真实资源、必要wire/认证与引用验证齐备后可部署该模式，不必等旧号全121角色或完整R4；不能手设loadedAll、跳认证/信任或把M0当全量ready。当前仅规划，尚无M0运行包；部署仍用portable/InstanceRoot、保护原DB并核日志/健康/端口/PID/JAR SHA，现场取新ready且禁止computer-use。下方原全量部署与历史暂停条件不覆盖本次范围调整。

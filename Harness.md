@@ -1,3 +1,5 @@
+2026-11-16 场景raw正式portable构建25秒通过，内嵌89b2ceb，JAR SHA74049899d59c4a8b2652aeaba2ff14b9fb5ca81ae2e94acd08eb41f1caa001f3；3变化/33新增class匹配输出。两独立实例同SHA仅预备未启动；只有自有测试Mongo27027、HTTP8088/UDP22101/游戏JAR进程0，无新补丁/客户端。最新构建/停止前置见[场景raw Java](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)。
+
 2026-11-16 [场景raw Java增量](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)完成：28字段SceneAvatar、17外字段Team、83228四字段、86588实测bool及既验共享子图进入三份Proto，Gradle/protoc生成；10新+14关联共24项25秒全过，含非零/高64位/嵌套/两元素列表/fixed32/高tag/错误边界。未知三内层不造空对象，86588 cctor-only列表不升级；完整sender/入场仍未验。旧库存短核精确保留Furniture/TPS/Relic/精炼转换缺口，不泛阻全Manager。
 
 2026-11-16 SceneTeam/SceneAvatar raw外层合同及最小直接使用分项完成，尚无完整sender：[SceneTeam](docs/CLIENT_72_D02_M0_SCENETEAM_MIN_WIRE_20261116.md)17字段/83228四字段/86588 bool19样本；[SceneAvatar](docs/CLIENT_72_D02_M0_SCENEAVATAR_WIRE_20261116.md)3430B及13标量/31槽；[直接使用](docs/CLIENT_72_D02_M0_SCENEAVATAR_DIRECT_USES_20261116.md)不强求全31业务字段；[Authority](docs/CLIENT_72_D02_M0_AUTHORITY_CFG_20261116.md)只闭base目标条件下+460的读写和factory比较，不能直填+42C为peer。源失败/返回依赖仍独立保留，Java增量/完整投影另验。

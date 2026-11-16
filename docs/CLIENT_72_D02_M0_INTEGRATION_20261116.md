@@ -1,3 +1,5 @@
+最新构建/增量：显式旧号模式及真实World/保存生命周期已完成，[场景raw Java](CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)24项与正式portable构建25秒通过，内嵌89b2ceb，JAR SHA74049899d59c4a8b2652aeaba2ff14b9fb5ca81ae2e94acd08eb41f1caa001f3。两独立实例仅预备未启动，六项0/6；下文M0首次实现/构建数值按历史阶段读取。
+
 # D02-M0：实际集成与验证
 
 本轮从 `fcdd46af7965980dd4d318b13a646fac943e60fb` 接手；用户原AGENTS、patch/resources差异和两项未跟踪E8工具保持排除。只有国服7.2/Windows portable；没有部署或客户端验收，D-02六项仍0/6。最小规格、来源分类和固定输入分别见[SCOPE](CLIENT_72_D02_M0_SCOPE_20261116.md)、[DATA](CLIENT_72_D02_M0_DATA_20261116.md)、[复用](CLIENT_72_D02_M0_REUSE_20261116.md)。

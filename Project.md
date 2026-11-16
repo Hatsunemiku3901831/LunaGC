@@ -1,10 +1,10 @@
 # 国服 7.2 任务规划与验收
 
-任务证据基线：2026-11-16；本轮研发 `D02-RESUME-INTEGRATION-20261116B` 从 `99a868d` 收口于 `7b2ed77`；本次按用户“先进游戏、数值可自定”更新M0路线。近期限定成果、停止点及纠错见[活动检查点](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)、[交接](HANDOFF2.md)与[恢复索引](docs/CLIENT_72_D02_RESUME_20261111C.md)。仅面向国服 7.2，Windows portable。
+任务证据基线：2026-11-16；当前恢复研发从`fcdd46a`继续，近期已验M0有限运行、旧号完整Avatar/Inventory及有限生命周期，并接入增量raw Proto。最新构建内嵌`89b2ceb`，实际部署/客户端六项仍未通过；详见[M0集成](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)、[旧号有限模式](docs/CLIENT_72_D02_OLD_SNAPSHOT_MODE_20261116.md)与[场景raw Java](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)。原`D02-RESUME-INTEGRATION-20261116B`从99a868d到7b2ed77及HANDOFF2为此前历史检查点。仅面向国服7.2，Windows portable。
 
 ## 当前阶段
 
-**当前优先目标为D02-M0：独立新测试号、普通出生角色与最小装备/场景，先实际落地，再补完整内容。用户已允许自行实现缺失服务端模块并决定临时业务数值；原四项精确资源研究和旧号全量恢复后移，不再统一阻挡M0。** 前轮9个研发提交均为研究文档；本轮已实现并验证显式M0出生loader及目标Avatar投影，未部署或实机验收；完整D-02 / F-05 / D02-R6仍0/6，R1/R2/R3全量出口阻塞、R4/R5/R6未开始。本次已完成[最小入场规划](docs/CLIENT_72_D02_ENTRY_MVP_PLAN_20261116.md)，M0实现进行中，真实装备保存/冷读、场景与自然会话继续；正常认证、客户端必需wire/对象关系及原A/B、preview准确限制保持，不能以自定数值代替协议。
+**当前优先目标仍为D02-M0：新测试号正常认证→显式选人命名→场景握手→角色实际可见落地→10分钟心跳→退出重登保存。用户允许临时业务数值，不能代替协议身份/wire或正常认证。** 已验显式M0真实loader、Avatar投影、新号出生/保存冷读及有限登录/tick；旧号全121/10727/471资源门、World/Team/退出冷读也已限定完成，未知三内层不造壳的Scene raw Java已生成并验证。最新portable正式构建25秒，JAR SHA74049899d59c4a8b2652aeaba2ff14b9fb5ca81ae2e94acd08eb41f1caa001f3；仅预备独立实例未启动。全D-02/F-05/D02-R6仍0/6，客户端R4/R5/R6未开始。必要SceneInfo/SceneTeam/Avatar出现业务及自然SDK路由继续；旧档完整Store/Furniture/TPS/Relic/精炼映射按实际出口分项核，不把完整Manager或原版资源全恢复当统一前置。原A/B、preview准确限制保持，M0局部通过不收工。
 
 既验369个Skill id/element、121普通cost与START及两次真实Depot Java加载已闭，原367片段/120绑定阻塞解除；97literal、Material准确payload/有限header源、shared String尾游标、Relic有限typed及Weapon单字段独立性判断均已分项提交，本轮只读复用。完整原版恢复仍缺[必要前沿矩阵](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)中的准确来源：energy MAX cap职责、Material有效backend/filecursor、Relic rank/set角色、Weapon独立raw父入口语法，以及R1/R2/Scene/Proud各自的准确限制/自然输入。已验结果只读复用，不再添加raw-id/native门或泛扫替代输入；普通来源缺口与A/B准确冻结边分列，不宣称整族或潜在host路径必然依A。
 
@@ -127,7 +127,7 @@
 | D02-M0-SCENETEAM-LOCATE | 已完成 | [唯一76429子图与双root接收静态链](docs/CLIENT_72_D02_M0_SCENETEAM_LOCATE_20261116.md)：1144本地/24706上下文来源、Avatar GUID及48178/41868初始化限定来源已闭；wire与sender另验 | Sol max |
 | D02-M0-SCENETEAM-MIN-WIRE | 已完成 | [76429全部17外字段、83228四字段、86588 bool的19 owned样本](docs/CLIENT_72_D02_M0_SCENETEAM_MIN_WIRE_20261116.md)限定合同完成；能力/flag/UID业务投影及完整sender仍未闭，不沿用旧29245 | Sol max |
 | D02-M0-SCENEAVATAR-WIRE | 已完成 | [41868唯一3430B reader的13标量及31外槽分派](docs/CLIENT_72_D02_M0_SCENEAVATAR_WIRE_20261116.md)静态限定完成；没有13标量的具名业务映射或完整实体sender | Sol max |
-| D02-M0-SCENE-RAW-JAVA | 已完成 | [28字段SceneAvatar/17外字段Team/83228四字段及86588实测bool的Proto与Java回归](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)：10新+14关联共24项全过；未知三内层/cctor-only列表不升格，未发送场景包，正式构建继续 | Sol xhigh |
+| D02-M0-SCENE-RAW-JAVA | 已完成 | [28字段SceneAvatar/17外字段Team/83228四字段及86588实测bool的Proto与Java回归](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)：10新+14关联共24项全过；未知三内层/cctor-only列表不升格，未发送场景包，portable构建25秒/内嵌89b2ceb及JAR/class核对通过，未部署 | Sol xhigh |
 | D02-M0-SCENEAVATAR-DIRECT-USES | 已完成 | [旧1480B初始化器独立直接使用与null分支最小性](docs/CLIENT_72_D02_M0_SCENEAVATAR_DIRECT_USES_20261116.md)只读复用；不因SceneTeam可用null输入而给EntityAppear省oneof | Sol max |
 | D02-M0-AUTHORITY-CFG | 已完成 | [base getter/setter的条件CFG及factory比较桥](docs/CLIENT_72_D02_M0_AUTHORITY_CFG_20261116.md)：原0-pdata失败保留，不把+42C猜作HostPeerId、OOJ不作当前常量 | Sol max |
 | D02-OLD-SNAPSHOT-DATA（OLD-RESOURCE-BUNDLE同项） | 已完成 | [固定旧号限定资源包](docs/CLIENT_72_D02_OLD_SNAPSHOT_DATA_20261116.md)：revision7补真实重算所需羁绊/名片7文件，28表/284输出与10条明示服务器策略；只覆盖选定快照Avatar/Inventory，不代全Manager或客户端ready | Terra xhigh → 唯一集成者 |

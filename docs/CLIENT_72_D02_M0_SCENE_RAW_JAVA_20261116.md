@@ -27,7 +27,7 @@ optional标量只用于Java显式零/false合并存在性；packed输出是同�
 .\gradlew.bat test --tests emu.grasscutter.server.packet.send.M0SceneRawGraphWireTest --tests emu.grasscutter.server.packet.send.M0EntityRawWireTest --tests emu.grasscutter.server.packet.send.M0SceneEntryWireTest -PskipHandbook --console=plain
 ```
 
-原XML和汇总归档于`local/migration72/d02-m0-integration-20261116/scene-raw-java-results/`；首轮日志为同根`m0-scene-raw-graph-wire-tests.log`。本项没有新native CPU、helper/model、A返回、客户端、DB或补丁操作。正式构建随后按实际产物登记；完整SceneTeam/Entity/SceneInfo和自然认证仍有准确未闭边，不发送完整场景包。
+原XML和汇总归档于`local/migration72/d02-m0-integration-20261116/scene-raw-java-results/`；首轮日志为同根`m0-scene-raw-graph-wire-tests.log`。本项没有新native CPU、helper/model、A返回、客户端、DB或补丁操作。正式portable构建25秒通过，内嵌89b2ceb，JAR SHA `74049899d59c4a8b2652aeaba2ff14b9fb5ca81ae2e94acd08eb41f1caa001f3`；3变化/33新增class与build/classes全部匹配，0移除。两个独立实例仅预备同SHA未启动；post-build只有自有测试Mongo27027，HTTP8088/game UDP22101/游戏JAR进程0，无健康或运行JAR正向对象，未装补丁。原件scene-raw-build-artifact.private.json、scene-raw-post-build-runtime.private.json及scene-raw-portable-build.log在同一ignored根。完整SceneTeam/Entity/SceneInfo和自然认证仍有准确未闭边，不发送完整场景包。
 
 ## 旧号快照出口短核
 
