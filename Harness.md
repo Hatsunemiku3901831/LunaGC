@@ -1,3 +1,5 @@
+2026-11-16 旧号完整AvatarStorage/Inventory确认保存冷载通过：revision7的28表/284输出，真实121角色/10727活动物品/471装配，12254原物品及1527非活动行保全。16秒/JUnit1与离线2项通过；缺武器/名片Reward零写负例、羁绊多重集合/全原字段/正常stamp及4项HP实际clamp逐项核验。首次全字段失败促补7具名资源，未放宽内容保护。见[完整恢复范围与复现](docs/CLIENT_72_D02_OLD_SNAPSHOT_JAVA_20261116.md)；未调用完整Player业务Manager或认证/场景，六项0/6不变。
+
 2026-11-16 Entity wire独立child scalar/Avatar oneof与root tag1/tag9的18样本已验，列表tag仍缺；准确A停止和保护窗严格解码失败保持。[SCOPE](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)分层记录。另[SceneTeam定位](docs/CLIENT_72_D02_M0_SCENETEAM_LOCATE_20261116.md)限定完成：唯一76429、Cmd1144/24706的6083B静态来源连接Avatar GUID及48178/41868初始化；完整wire和出现仍未闭，不恢复旧sender。
 
 2026-11-16 旧号revision-5首次纯ResourceLoader诊断10秒/JUnit1过：21表全选行安装，121 Avatar/Embryo、9128 Item种类、1964 OpenConfig；loadedAll=false、未创建Player/DB/hydrate。限定证据和恢复前准入要求见[旧号Java验证](docs/CLIENT_72_D02_OLD_SNAPSHOT_JAVA_20261116.md)。Entity-ACCEPT限定静态已完，ENTITY-WIRE与全旧号保存继续。

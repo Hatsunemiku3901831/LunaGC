@@ -23,6 +23,12 @@ class D02OldSnapshotResourceLoadTest {
 
     @Test
     void fixedBundleLoadsEverySelectedRowBeforeAnyPlayerHydration() throws Exception {
+        loadFixedResources(temporary);
+    }
+
+    record Bundle(Path root, JsonObject manifest, JsonObject diagnostics) {}
+
+    static Bundle loadFixedResources(Path temporary) throws Exception {
         Grasscutter.getConfig();
         String selected = System.getenv("LUNAGC_OLD_RESOURCE_BUNDLE");
         assertNotNull(selected, "LUNAGC_OLD_RESOURCE_BUNDLE must identify an immutable bundle");
@@ -64,17 +70,38 @@ class D02OldSnapshotResourceLoadTest {
         }
         results.addProperty("ItemData", GameData.getItemDataMap().size() + "/" + expectedItems);
         if (GameData.getItemDataMap().size() != expectedItems) failures.add("ItemData collapsed or rejected rows");
+        for (var name : FetterData.class.getAnnotation(ResourceType.class).name()) {
+            var file = root.resolve("ExcelBinOutput").resolve(name);
+            ResourceLoader.loadFromResource(FetterData.class, file, GameData.getMapByResourceDef(FetterData.class));
+        }
+        ResourceLoader.loadFromResource(FetterCharacterCardData.class,
+                root.resolve("ExcelBinOutput/FetterCharacterCardExcelConfigData.json"), GameData.getFetterCharacterCardDataMap());
+        ResourceLoader.loadFromResource(RewardData.class,
+                root.resolve("ExcelBinOutput/RewardExcelConfigData.json"), GameData.getRewardDataMap());
+        results.addProperty("fetterRows", GameData.getMapByResourceDef(FetterData.class).size());
+        results.addProperty("fetterCards", GameData.getFetterCharacterCardDataMap().size());
+        results.addProperty("rewards", GameData.getRewardDataMap().size());
         ResourceLoader.loadFromResource(AvatarData.class, root.resolve("ExcelBinOutput/AvatarExcelConfigData.json"), GameData.getAvatarDataMap());
         results.addProperty("AvatarData", GameData.getAvatarDataMap().size() + "/121");
         if (GameData.getAvatarDataMap().size() != 121) failures.add("AvatarData incomplete");
         results.addProperty("abilityEmbryos", GameData.getAbilityEmbryoInfo().size());
         results.addProperty("playerAbilityGroups", GameDepot.getPlayerAbilities().size());
         results.addProperty("openConfigs", GameData.getOpenConfigEntries().size());
+        var talentLoader = ResourceLoader.class.getDeclaredMethod("loadTalent", Path.class);
+        talentLoader.setAccessible(true);
+        try (var files = Files.list(root.resolve("BinOutput/Talent/AvatarTalents"))) {
+            for (var file : files.toList()) talentLoader.invoke(null, file);
+        }
+        var levels = ResourceLoader.class.getDeclaredMethod("cacheTalentLevelSets");
+        levels.setAccessible(true);
+        levels.invoke(null);
+        results.addProperty("talentConfigs", GameData.getTalents().size());
         results.addProperty("fullReady", ResourceLoader.isLoadedAll());
         results.addProperty("playerHydrated", false);
         System.out.println("OLD_SNAPSHOT_RESOURCE_DIAGNOSTIC " + results);
         assertFalse(ResourceLoader.isLoadedAll());
         assertTrue(failures.isEmpty(), String.join("; ", failures));
+        return new Bundle(root, manifest, results);
     }
 
     private static String sha(byte[] bytes) throws Exception {

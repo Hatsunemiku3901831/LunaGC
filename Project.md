@@ -125,9 +125,9 @@
 | D02-M0-ENTITY-WIRE | 进行中 | [有限reader/独立scalar与metadata](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)：child独立标量与Avatar oneof、root tag1/tag9的18个owned样本已验；列表tag及完整Avatar子图未闭，317B跳板/167B失败与准确A停止保留，不发不完整4469 | Sol max |
 | D02-M0-SCENETEAM-LOCATE | 已完成 | [唯一76429子图与双root接收静态链](docs/CLIENT_72_D02_M0_SCENETEAM_LOCATE_20261116.md)：1144本地/24706上下文来源、Avatar GUID及48178/41868初始化限定来源已闭；wire与sender另验 | Sol max |
 | D02-M0-SCENETEAM-MIN-WIRE | 进行中 | 沿已定位1144/type86588与76429恢复必要字段wire；未得到合同前不沿用旧29245 | Sol max |
-| D02-OLD-SNAPSHOT-DATA（OLD-RESOURCE-BUNDLE同项） | 进行中 | [固定旧号离线包](docs/CLIENT_72_D02_OLD_SNAPSHOT_DATA_20261116.md)21表/277输出与10条明示服务器策略已准备；不能代真实完整恢复/客户端ready | Terra xhigh → 唯一集成者 |
+| D02-OLD-SNAPSHOT-DATA（OLD-RESOURCE-BUNDLE同项） | 已完成 | [固定旧号限定资源包](docs/CLIENT_72_D02_OLD_SNAPSHOT_DATA_20261116.md)：revision7补真实重算所需羁绊/名片7文件，28表/284输出与10条明示服务器策略；只覆盖选定快照Avatar/Inventory，不代全Manager或客户端ready | Terra xhigh → 唯一集成者 |
 | D02-OLD-SNAPSHOT-LOAD | 已完成 | [revision-5纯ResourceLoader诊断](docs/CLIENT_72_D02_OLD_SNAPSHOT_JAVA_20261116.md)：全部21表选行、121 Avatar/embryo、9128 Item种类及OpenConfig真实加载；没有Player/DB/hydrate，loadedAll保持false | Sol xhigh |
-| D02-OLD-SNAPSHOT-RESTORE | 进行中 | 先建立全121/活动10727/471装备的实际资源准入及缺项零写负例，再以固定BSON独立库完整AvatarStorage/Inventory保存冷读；不能用M0准入或离线ready绕过 | 唯一Sol xhigh集成者 |
+| D02-OLD-SNAPSHOT-RESTORE | 已完成 | [完整AvatarStorage/Inventory保存冷读](docs/CLIENT_72_D02_OLD_SNAPSHOT_JAVA_20261116.md)已通过全121/10727/471及12254原行字段核对；羁绊多重集合、正常saveStamp和4项HP clamp独立验证；16秒/JUnit1及缺资源零写通过，完整Player业务Manager/认证/客户端仍未验 | 唯一Sol xhigh集成者 |
 
 
 此表保留未完成任务的状态与验收账本，按最快D-02出口重排。按依赖和本轮恢复索引的实际缺口发布任务，已有完成子项直接复用；“前移/后移/按需/冻结”描述排期，不增加任务状态。

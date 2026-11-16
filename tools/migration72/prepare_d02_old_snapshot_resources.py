@@ -37,6 +37,13 @@ PINS = {
  'local/migration72/d02-resume-20261116/fixed-saved-ref-candidate-blobs/candidate/TpsWeaponAccessoryExcelConfigData.json':'df6840076cd9de5da7f5ef3774fe7404fc272b110f194a6759e358625ccb8cfe',
 }
 FETCH = {
+ 'FetterInfo':('db2de9c0ab0c72feab903dcdba0d3b0d5a431f69','4fff8d7cf99b589dde95d72379e4491fbd13dab51e0c927df904f2ce3d875b21'),
+ 'Fetters':('dac56b51189f95a600862d21295a0d980e976948','bc0d586174e5df8b65087b946eb7e290ded147e720370386ebfc289beac012a9'),
+ 'FetterStory':('27886e75582c7490582be458be9b7e2fe539c84c','36e450af0f1698d1df8a34fb73a4739beb957ba98db3c6cdf1cecf8b8aa92679'),
+ 'PhotographExpression':('adedbaa223628865e878e153a60d07239f73a5d0','583d339e0a885949987e716727c31b25c45fa87d7a8c5de0d98d2d548573960b'),
+ 'PhotographPosename':('6a60ad56806738c663e5726787f3a13d35e4341d','e91949d7ac31a07c686426d2410461bad47e829d6111d62f6062adecc43806f1'),
+ 'FetterCharacterCard':('f0a912a49f61a670863114d6fe2effd7f3d3968d','bdb305db908af0f5da5268d5dfa774fdfa6949672a218636fe09e7b7982eeeb9'),
+ 'Reward':('8deed64c67dd17354398020d83a1aac1563dc678','59425e3cea42b0de7b7cf8b406b22d702792a51559143bec191527fe0d017e1f'),
  'AvatarTalent':('86701f32b7d3251602bf20dd20ae9c9e3c3683b2','ea2c4b8899867eefe497eac82553b04f975ddfaf3dcce3620ae5adb731bac3be'),
  'ReliquaryLevel':('f1ba31891e6207fc9c499369e05ecf211f230f0d','a5b7f25f523b557c1f261e7112ec7b85fa17634fd1544b25fdf1969f0da4f8e1'),
  'ReliquarySet':('ce02f01d0c664bd93be15d4be70dcf1c6ad3e72e','9cee1d3a08fed513346157906723070f011c80fe21ed3249140ba3886888926d'),
@@ -115,6 +122,10 @@ def build(fixed, source, assets):
         summaries[name]={'requested':sorted(ids),'found':len(result)}
         return result
     avatar_ids={x['avatarId'] for x in avatars}; depot_ids={x['skillDepotId'] for x in avatars}
+    for name in ('FetterInfo','Fetters','FetterStory','PhotographExpression','PhotographPosename','FetterCharacterCard'):
+        selected[name]=[row.copy() for row in source[name] if row.get('avatarId') in avatar_ids]
+        summaries[name]={'avatarIds':sorted(avatar_ids),'found':len(selected[name])}
+    select('Reward','rewardId',{row['rewardId'] for row in selected['FetterCharacterCard'] if row.get('rewardId')})
     av=select('Avatar','id',avatar_ids); depot=select('AvatarSkillDepot','id',depot_ids)
     for table,path,member in [('Avatar','local/migration72/d02-resume-20261115/old121-avatar-base-growth/projection.private.json','fragments'),('Avatar','local/migration72/d02-resume-20261115/old121-avatar-critical/projection.private.json','fragments'),('AvatarSkillDepot','local/migration72/d02-resume-20261116/old121-depot-core-fragment/projection.private.json','fragments')]:
         overrides={x['key']:x['javaFields'] for x in fixed[path][member]}
