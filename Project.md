@@ -125,9 +125,11 @@
 | D02-M0-ENTITY-WIRE | 进行中 | [有限reader/独立scalar与metadata](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)：child独立标量与Avatar oneof、root tag1/tag9的18个owned样本已验；列表tag及完整Avatar子图未闭，317B跳板/167B失败与准确A停止保留，不发不完整4469 | Sol max |
 | D02-M0-ENTITY-SCALAR-JAVA | 已完成 | root2/child7个已证raw字段进入独立Proto，Gradle/protoc生成；12项独立标量/无符号边界/string/错误/存在性断言及2项Scene高64位/列表回归通过。无root list或完整sender，构建另登记 | Sol xhigh |
 | D02-M0-SCENETEAM-LOCATE | 已完成 | [唯一76429子图与双root接收静态链](docs/CLIENT_72_D02_M0_SCENETEAM_LOCATE_20261116.md)：1144本地/24706上下文来源、Avatar GUID及48178/41868初始化限定来源已闭；wire与sender另验 | Sol max |
-| D02-M0-SCENETEAM-MIN-WIRE | 已完成 | [76429全部17外字段、83228四字段、86588 bool的19 owned样本](docs/CLIENT_72_D02_M0_SCENETEAM_MIN_WIRE_20261116.md)限定合同完成；能力/flag/UID业务投影及完整sender仍未闭，不沿用旧29245 | Sol max |
-| D02-M0-SCENEAVATAR-WIRE | 已完成 | [41868唯一3430B reader的13标量及31外槽分派](docs/CLIENT_72_D02_M0_SCENEAVATAR_WIRE_20261116.md)静态限定完成；没有13标量的具名业务映射或完整实体sender | Sol max |
+| D02-M0-SCENETEAM-MIN-WIRE | 已完成 | [76429全部17外字段、83228四字段、86588 bool的19 owned样本](docs/CLIENT_72_D02_M0_SCENETEAM_MIN_WIRE_20261116.md)限定合同完成；能力/flag及完整sender仍未闭，UID由后继独立桥接入，不沿用旧29245 | Sol max |
+| D02-M0-SCENEAVATAR-WIRE | 已完成 | [41868唯一3430B reader的13标量及31外槽分派](docs/CLIENT_72_D02_M0_SCENEAVATAR_WIRE_20261116.md)静态限定完成；普通raw范围完成；后继独立桥仅闭UID/tag1和GUID/tag3，完整实体sender未闭 | Sol max |
 | D02-M0-SCENE-RAW-JAVA | 已完成 | [28字段SceneAvatar/17外字段Team/83228四字段及86588实测bool的Proto与Java回归](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)：10新+14关联共24项全过；未知三内层/cctor-only列表不升格，未发送场景包，portable构建25秒/内嵌89b2ceb及JAR/class核对通过，未部署 | Sol xhigh |
+| D02-M0-ENTITY-APPEAR-NECESSITY | 已完成 | [单本地Avatar的真实分派、UID/GUID桥与必需性分层](docs/CLIENT_72_D02_M0_ENTITY_APPEAR_MIN_DEPENDENCIES_20261116.md)：Gadget谓词不当Avatar消费，Handle/Level code-data proof和本地consumer限定源完成；Motion外层wire/实体root列表及A返回仍分列，不放完整sender | Sol max |
+| D02-M0-AVATAR-IDENTITY-JAVA | 已完成 | [同Player UID、Avatar GUID及实际实体的非发送投影](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#同玩家uid与avatar-guid的非发送投影)：独立Token/session与GUID lookup来源，5新wire+49关联共54项通过；根列表/Motion/完整sender仍未闭 | Sol xhigh |
 | D02-M0-SCENEAVATAR-DIRECT-USES | 已完成 | [旧1480B初始化器独立直接使用与null分支最小性](docs/CLIENT_72_D02_M0_SCENEAVATAR_DIRECT_USES_20261116.md)只读复用；不因SceneTeam可用null输入而给EntityAppear省oneof | Sol max |
 | D02-M0-AUTHORITY-CFG | 已完成 | [base getter/setter的条件CFG及factory比较桥](docs/CLIENT_72_D02_M0_AUTHORITY_CFG_20261116.md)：原0-pdata失败保留，不把+42C猜作HostPeerId、OOJ不作当前常量 | Sol max |
 | D02-M0-PEER-PRODUCER | 已完成 | [Cmd28392/type19176实际1464B消费者](docs/CLIENT_72_D02_M0_PEER_PRODUCER_20261116.md)：+24写localAuthorityKey，+18查询loading token；不扩其它raw writer或旧号包 | Sol max |

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import emu.grasscutter.net.proto.Client72M0EntityRawOuterClass.*;
+import emu.grasscutter.net.proto.Client72M0SceneTeamRawOuterClass.Raw76429;
 import java.util.*;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
@@ -67,8 +68,30 @@ class M0EntityRawWireTest {
     void partialSchemaCannotMasqueradeAsCompleteRootOrAvatarGraph() {
         assertEquals(Set.of(1, 9), NAALIELJILH.getDescriptor().getFields().stream()
                 .map(f -> f.getNumber()).collect(Collectors.toSet()));
-        assertEquals(Set.of(1, 2, 3, 7, 17, 18, 26), IJCEPPNOCNM.getDescriptor().getFields().stream()
+        assertEquals(Set.of(1, 2, 3, 7, 10, 17, 18, 26), IJCEPPNOCNM.getDescriptor().getFields().stream()
                 .map(f -> f.getNumber()).collect(Collectors.toSet()));
+        assertEquals(1, IJCEPPNOCNM.getDescriptor().getOneofs().get(0).getFieldCount());
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0,00", "1,01", "2147483648,8080808008", "4294967295,ffffffff0f"})
+    void avatarOneofLocalUidAndTeamUidRetainTheIndependentTokenUidBits(long uid, String varint) throws Exception {
+        byte[] avatar = hex("08" + varint);
+        var child = IJCEPPNOCNM.parseFrom(hex("080152" + HexFormat.of().toHexDigits((byte) avatar.length) + "08" + varint));
+        assertEquals(1, child.getMCPCJJBMHMK());
+        assertEquals(IJCEPPNOCNM.RawAvatarBodyCase.RAW_AVATAR_10, child.getRawAvatarBodyCase());
+        assertEquals(uid, Integer.toUnsignedLong(child.getRawAvatar10().getPJAJDHBBMGB()));
+        assertEquals(uid, Integer.toUnsignedLong(Raw76429.parseFrom(hex("18" + varint)).getHCIEHNNJNCF()));
+        assertFalse(child.getRawAvatar10().hasFBLKPHOCBIK(), "this UID-only fixture has no GUID field");
+    }
+
+    @Test
+    void independentAvatarOneofKeepsUidAndHighGuidAsDifferentFields() throws Exception {
+        byte[] bytes = hex("520b0807188180808080808010");
+        var child = IJCEPPNOCNM.parseFrom(bytes);
+        assertEquals(7, child.getRawAvatar10().getPJAJDHBBMGB());
+        assertEquals(9007199254740993L, child.getRawAvatar10().getFBLKPHOCBIK());
+        assertArrayEquals(bytes, child.toByteArray());
     }
 
     private static byte[] hex(String input) { return HexFormat.of().parseHex(input); }

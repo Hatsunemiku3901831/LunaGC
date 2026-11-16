@@ -1,3 +1,5 @@
+2026-11-16 同玩家UID/GUID非发送投影完成：TokenRsp实际UID与SceneTeam76429.tag3、SceneAvatar41868.tag1同源，41868.tag3与同Avatar GUID lookup一致；两GUID/实体/Scene均取实际对象。新增5独立边界wire，6套54项10秒全过；完整根列表/Motion及sender不升级。见[Java身份增量](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#同玩家uid与avatar-guid的非发送投影)。
+
 2026-11-16 SceneInfo最小普通新实体状态分项完成：source分别证明World/Team null跳Clone、非null control零记录跳hash、正常空80154清状态；M0实际零团队策略投影这份真实空集合，绝不造空83320/34045。27项27秒通过，热重入/替代分派及完整握手未放行。见[MIN-STATES来源](docs/CLIENT_72_D02_M0_SCENEINFO_MIN_STATES_20261116.md)与[Java增量](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#sceneinfo普通新实体最小状态)。
 
 2026-11-16 Peer producer/raw/Java分项完成：Cmd28392/type19176的四uint32来自独立33 owned样本，两个已证token/localAuthorityKey接未发送DTO，与实际M0宿主/SceneInfo44512.tag1关系相符。7新wire+19关联共26项最终8秒全过；World/Team instanced0及Avatar五基础+一Level候选分别真验，错误总数5断言留首失败。见[Peer Java范围](docs/CLIENT_72_D02_M0_PEER_JAVA_20261116.md)；tag4/12未知，不放完整通知/握手，不把body原型或编译当实机。

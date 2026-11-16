@@ -7,7 +7,7 @@
 - SceneAvatar专题SHA `aefcfa3e4e769b5ccdcc163647f62444a08b19977914b280ed8e63ad80eac196`：41868的13个无变换scalar、7个u32列表、2个u32/u32 map及6个已有批准内容的引用槽，共28字段进入`Client72M0SceneAvatarRaw.proto`。26952、17469、27216三个未知内层不声明、不造opaque空对象。scalar名字不自动批准AvatarID/depot/GUID业务值。
 - SceneTeam专题SHA `01cca3ca3dc17c0774e38da334810131f8434bcf941a842602025752c03f40e4`：76429全部17个外字段、83228四字段进入`Client72M0SceneTeamRaw.proto`；86588仅声明19个真实owned样本已证的bool/tag13。其list/tag5保持.cctor-only来源等级，没有因本项Java适配提升为reader闭合。
 - 73976五字段、83320三个字段及89710列表从既验`scene-info-raw-observations.json`复用，文件SHA `f52f41a817241646d63d692b120d5c134c1b30dfe8b2da5d440de5d9557f7c75`，进入`Client72M0SharedSceneRaw.proto`。83320的tag2/3保持fixed32，不赋予name/override角色。34045/27196/27246/48178/53824直接引用已批准65型`Client72AvatarWire.proto`，不复制旧语义schema。
-- 16796仍只引用此前已证scalar子集，不新增未闭的root list或完整Avatar oneof适配。83228外层完备不代表内层实体、业务flag/能力状态或完整场景完备。
+- 初始16796只引用此前已证scalar子集；后续按下节UID/GUID桥增加已证Avatar oneof/tag10，root list仍未闭。83228外层完备不代表内层实体、业务flag/能力状态或完整场景完备。
 
 optional标量只用于Java显式零/false合并存在性；packed输出是同已批准packed/unpacked primitive输入合同的适配，不声称恢复原Proto语法。所有Java由Gradle/protoc生成，未手改生成物。
 
@@ -44,6 +44,16 @@ optional标量只用于Java显式零/false合并存在性；packed输出是同�
 M0 projection现在明确输出Team control对象、0个83320、0个80154；没有创建空83320记录或空34045来装作初始化。零列表在wire中省略，control对象保留`0a00`存在性，不能在control内部再写一个`0a00`假元素。单独raw80154两字段来自既验SceneInfo raw，只声明而不赋未知业务key。实际World/Team若已有runtime能力则拒绝该零团队策略；不走legacy默认团队能力getter。
 
 第一组27项27秒通过：真实M0出生/保存/World交叉、Peer7、SceneEntry4、握手15，普通Init/Done仍准确停止。原件`scene-minimal-states-first-results/`与`m0-scene-minimal-states-tests.log`留同ignored根。本增量尚待后续统一正式构建，无客户端或网络发送放行。
+
+## 同玩家UID与Avatar GUID的非发送投影
+
+固定后继来源[ENTITY-APPEAR最小依赖](CLIENT_72_D02_M0_ENTITY_APPEAR_MIN_DEPENDENCIES_20261116.md) SHA `49e9451fa9c97e04332ee79ae19f3e0e7440ac185b2fa688a037356f2a5817cc`；UID receipt SHA `d2217a9f9251c485e8cf13070d5ad624395d489696c2448efa329bdfb5038f17`、GUID/最小性receipt SHA `b71a89c45aee6bd665e01d9a60b5a03ddd5d9706177ad366bf07ae3e19b3a8fa`。
+
+`M0AvatarIdentityProjection`只构造同一实际Player/Avatar/Weapon的身份行，不是Packet sender。76429.tag3与41868.tag1的UID来自正常`Player.getUid()`；依据既验SESSION A-04d5j/B-02c7中TokenRsp tag9→15217AA90→session58013+168/LastUid的四个原生边界样本，以及新消费者把这两个字段分别与同一session槽比较。正常`PacketGetPlayerTokenRsp`的实际UID也在真实M0出生夹具中交叉验证；它独立于Peer的localAuthorityKey。
+
+41868.tag3使用同Avatar.guid：localAvatar消费者1507E593C读取该u64，599C/599F交既验14E9B2C60→156F6F510的Avatar GUID lookup并核返回18163模型；不另分配Scene GUID。76429中Avatar/Weapon GUID、两实体ID和Scene ID仍来自同实例。16796只增加已证case10 Avatar oneof，不填用途未闭的tag2、不猜MotionInfo或未知子图；完整Entity根列表仍未声明。
+
+新增四个UID边界和一个独立高GUID手写wire，共5项；与真实M0出生/保存冷读、Peer、SceneInfo、Scene raw和握手回归共6套54项，10秒，失败/错误/跳过0。独立向量`520b0807188180808080808010`将UID7与GUID9007199254740993分开编码；真实对象测试核Token UID、Avatar/Team UID、同Avatar GUID及Peer key互不混用。原XML归档`avatar-identity-java-results/`，汇总`avatar-identity-java-results.private.json`，日志`m0-minimal-state-uid-tests.log`，均在同ignored集成根。本增量未放行完整SceneTeam/Entity/Peer通知，正式构建另记。
 
 ## 旧号快照出口短核
 

@@ -31,6 +31,8 @@ import emu.grasscutter.net.proto.SceneInitFinishReqOuterClass.SceneInitFinishReq
 import emu.grasscutter.server.packet.send.PacketAvatarDataNotify;
 import emu.grasscutter.server.packet.send.PacketPlayerEnterSceneInfoNotify;
 import emu.grasscutter.server.packet.send.M0PeerIdentityProjection;
+import emu.grasscutter.server.packet.send.M0AvatarIdentityProjection;
+import emu.grasscutter.server.packet.send.PacketGetPlayerTokenRsp;
 import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.time.Duration;
@@ -149,6 +151,19 @@ class M0BirthPersistenceMongoTest {
             assertEquals(peerIdentity.getAANCEPCPHKJ(), entry.getLFLOLJADPBI().getHKLILOKPKBJ());
             assertFalse(peerIdentity.hasOHNANNOOMCJ());
             assertFalse(peerIdentity.hasOHAKDDILKKB());
+            var identities = M0AvatarIdentityProjection.projectCurrentPlayer(fresh);
+            int tokenUid = GetPlayerTokenRsp.parseFrom(new PacketGetPlayerTokenRsp(freshSession).getData()).getUid();
+            assertEquals(tokenUid, identities.getHCIEHNNJNCF());
+            assertEquals(tokenUid, identities.getMPHLKPODDHK().getRawAvatar10().getPJAJDHBBMGB());
+            assertEquals(fresh.getUid(), tokenUid);
+            assertNotEquals(fresh.getUid(), peerIdentity.getAANCEPCPHKJ());
+            assertEquals(restored.getGuid(), identities.getOKMEHFHNFCG());
+            assertEquals(restored.getGuid(), identities.getMPHLKPODDHK().getRawAvatar10().getFBLKPHOCBIK());
+            assertEquals(currentEntity.getId(), identities.getLLHEBIHGDAE());
+            assertEquals(restored.getWeaponNotNull().getGuid(), identities.getNPKKCHABEJH());
+            assertEquals(currentEntity.getWeaponEntityId(), identities.getIEDJNHILJBF());
+            assertEquals(fresh.getSceneId(), identities.getJMHKHAPJADA());
+            assertFalse(identities.getMPHLKPODDHK().hasLLHEBIHGDAE());
             assertTrue(fresh.getWorld().getEntity().getInstancedAbilities().isEmpty());
             assertTrue(fresh.getTeamManager().getEntity().getInstancedAbilities().isEmpty());
             var baseAbilities = emu.grasscutter.data.GameData.getAbilityEmbryoInfo()

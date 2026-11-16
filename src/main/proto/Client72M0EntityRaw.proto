@@ -5,6 +5,7 @@ syntax = "proto3";
 package cn72.m0entityraw;
 option java_package = "emu.grasscutter.net.proto";
 option java_outer_classname = "Client72M0EntityRawOuterClass";
+import "Client72M0SceneAvatarRaw.proto";
 
 message NAALIELJILH {
   optional uint32 OJPFPILNCIC = 1;
@@ -21,4 +22,8 @@ message IJCEPPNOCNM {
   optional uint32 CCJOFDMPEEK = 17;
   optional uint32 LKHOHNGMBDM = 18;
   optional uint32 PNLLENFDEFH = 26;
+  // Only the proven Avatar case is supported in this M0 subset. Other entity cases are undeclared.
+  oneof raw_avatar_body {
+    cn72.m0sceneavatar.FKDEDKIHNDA raw_avatar_10 = 10;
+  }
 }
