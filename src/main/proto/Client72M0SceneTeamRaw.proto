@@ -1,0 +1,41 @@
+// Independently recovered type76429 / root83228 outer fields; no complete sender.
+syntax = "proto3";
+package cn72.m0sceneteam;
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "Client72M0SceneTeamRawOuterClass";
+import "Client72AvatarWire.proto";
+import "Client72M0EntityRaw.proto";
+import "Client72M0SharedSceneRaw.proto";
+import "Client72M0SceneAvatarRaw.proto";
+
+message Raw76429 {
+  cn72.m0sceneavatar.FKDEDKIHNDA EIHPIGNKAPD = 1;
+  optional bool KGDCGGDELJM = 2;
+  optional uint32 HCIEHNNJNCF = 3;
+  cn72.m0sharedscene.KOKHLKFCIMG EOFFDMLNFIM = 4;
+  optional uint32 IEDJNHILJBF = 5;
+  cn72.avatarwire.PLMODKAFNAD CCODNLIKNGM = 6;
+  optional uint64 NPKKCHABEJH = 7;
+  cn72.avatarwire.PLMODKAFNAD LBJMODOPOCP = 8;
+  optional uint32 LLHEBIHGDAE = 9;
+  optional uint32 JMHKHAPJADA = 10;
+  optional uint64 OKMEHFHNFCG = 11;
+  cn72.m0entityraw.IJCEPPNOCNM MPHLKPODDHK = 12;
+  repeated cn72.m0sharedscene.HBKJMNPBOIG CDOAFDGJGDF = 13;
+  cn72.avatarwire.ONGOHFDHHNI MMCFMLLFAEE = 14;
+  optional bool BCMCOBDAMKM = 15;
+  optional bool OJLCDFKMPLH = 549;
+  repeated cn72.avatarwire.JHPMKLGOMKF JOBBNEKLCOF = 645;
+}
+
+message Raw83228 {
+  optional uint32 raw_context28 = 4;
+  repeated Raw76429 raw_rows18 = 5;
+  optional bool raw_flag24 = 9;
+  optional int32 raw_enum20 = 12;
+}
+
+message Raw86588 {
+  // Only the 19-sample owned bool contract is declared. Its list remains cctor-only evidence.
+  optional bool raw_flag20 = 13;
+}

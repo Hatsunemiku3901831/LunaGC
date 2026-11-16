@@ -1,0 +1,24 @@
+// Reused complete raw leaves from scene-info-raw-observations (f52f41a8...f7c75).
+// No ability hash/flag business meanings or sending policy are assigned here.
+syntax = "proto3";
+package cn72.m0sharedscene;
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "Client72M0SharedSceneRawOuterClass";
+
+message HBKJMNPBOIG {
+  optional uint32 JPCOIFLAAED = 1;
+  optional uint32 CIIBGHCBCGK = 2;
+  optional uint32 FOKGPCODGMF = 3;
+  optional uint32 IJKEMAINHOD = 4;
+  optional bool GAPJBCJONCA = 5;
+}
+
+message LFOJAILFEPJ {
+  optional uint32 DOBGMPBDLKF = 1;
+  optional fixed32 EMBPDEHFOJK = 2;
+  optional fixed32 OPKFBNFODJM = 3;
+}
+
+message KOKHLKFCIMG {
+  repeated LFOJAILFEPJ GFDEDOJEICE = 1;
+}

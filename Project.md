@@ -127,6 +127,7 @@
 | D02-M0-SCENETEAM-LOCATE | 已完成 | [唯一76429子图与双root接收静态链](docs/CLIENT_72_D02_M0_SCENETEAM_LOCATE_20261116.md)：1144本地/24706上下文来源、Avatar GUID及48178/41868初始化限定来源已闭；wire与sender另验 | Sol max |
 | D02-M0-SCENETEAM-MIN-WIRE | 已完成 | [76429全部17外字段、83228四字段、86588 bool的19 owned样本](docs/CLIENT_72_D02_M0_SCENETEAM_MIN_WIRE_20261116.md)限定合同完成；能力/flag/UID业务投影及完整sender仍未闭，不沿用旧29245 | Sol max |
 | D02-M0-SCENEAVATAR-WIRE | 已完成 | [41868唯一3430B reader的13标量及31外槽分派](docs/CLIENT_72_D02_M0_SCENEAVATAR_WIRE_20261116.md)静态限定完成；没有13标量的具名业务映射或完整实体sender | Sol max |
+| D02-M0-SCENE-RAW-JAVA | 已完成 | [28字段SceneAvatar/17外字段Team/83228四字段及86588实测bool的Proto与Java回归](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)：10新+14关联共24项全过；未知三内层/cctor-only列表不升格，未发送场景包，正式构建继续 | Sol xhigh |
 | D02-M0-SCENEAVATAR-DIRECT-USES | 已完成 | [旧1480B初始化器独立直接使用与null分支最小性](docs/CLIENT_72_D02_M0_SCENEAVATAR_DIRECT_USES_20261116.md)只读复用；不因SceneTeam可用null输入而给EntityAppear省oneof | Sol max |
 | D02-M0-AUTHORITY-CFG | 已完成 | [base getter/setter的条件CFG及factory比较桥](docs/CLIENT_72_D02_M0_AUTHORITY_CFG_20261116.md)：原0-pdata失败保留，不把+42C猜作HostPeerId、OOJ不作当前常量 | Sol max |
 | D02-OLD-SNAPSHOT-DATA（OLD-RESOURCE-BUNDLE同项） | 已完成 | [固定旧号限定资源包](docs/CLIENT_72_D02_OLD_SNAPSHOT_DATA_20261116.md)：revision7补真实重算所需羁绊/名片7文件，28表/284输出与10条明示服务器策略；只覆盖选定快照Avatar/Inventory，不代全Manager或客户端ready | Terra xhigh → 唯一集成者 |

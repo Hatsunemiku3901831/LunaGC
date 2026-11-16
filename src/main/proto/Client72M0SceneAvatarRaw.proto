@@ -1,0 +1,40 @@
+// Type41868: 13 identity scalar stores, primitive containers, and previously approved raw children.
+// Three unknown child schemas (26952/17469/27216) are deliberately undeclared.
+// This is not an Avatar business projection or a complete SceneEntity sender.
+syntax = "proto3";
+package cn72.m0sceneavatar;
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "Client72M0SceneAvatarRawOuterClass";
+import "Client72AvatarWire.proto";
+import "Client72M0SharedSceneRaw.proto";
+
+message FKDEDKIHNDA {
+  optional uint32 PJAJDHBBMGB = 1;
+  optional uint32 NLNJDCDLHHE = 2;
+  optional uint64 FBLKPHOCBIK = 3;
+  optional uint32 AANCEPCPHKJ = 4;
+  repeated uint32 DIIEILGCADP = 5 [packed = true];
+  optional uint32 BLBHOJMCOJN = 6;
+  repeated uint32 KLODODOMJPF = 7 [packed = true];
+  cn72.avatarwire.JHPMKLGOMKF INBCHOJBJMP = 8;
+  optional uint32 ACNMNNPAHPA = 11;
+  repeated uint32 HEHFONFNHEH = 12 [packed = true];
+  map<uint32, uint32> PJGIPBJMBOP = 13;
+  map<uint32, uint32> JOJLFAOOLMH = 14;
+  repeated cn72.m0sharedscene.HBKJMNPBOIG CDOAFDGJGDF = 15;
+  repeated uint32 CBEKIIICDOM = 16 [packed = true];
+  optional uint32 HCHEIDINIMO = 17;
+  optional uint32 APNACEAKHPN = 18;
+  optional uint32 MHAIENEPEIP = 19;
+  cn72.avatarwire.CKCLPDDJMII BNHMCGLAMLE = 21;
+  optional uint32 GBBBBHEGCDL = 22;
+  optional uint32 BPGODHNDNNJ = 23;
+  optional uint32 MKFOJONFDMA = 24;
+  cn72.avatarwire.LIIKPPLEEOJ CKDDHADKCBK = 25;
+  optional uint32 JIDLIPEAKLI = 26;
+  repeated cn72.avatarwire.LIIKPPLEEOJ ADLKOJNELLC = 27;
+  repeated uint32 EIJBACPBACO = 29 [packed = true];
+  repeated uint32 LKJJFCJNENG = 30 [packed = true];
+  repeated cn72.avatarwire.JHPMKLGOMKF AMLLHJJIMNI = 31;
+  repeated uint32 EIBCGPEOJLB = 32 [packed = true];
+}
