@@ -24,3 +24,11 @@ Vector84343直接复用既验`Client72SceneHandshakeNested.proto`及`enter-scene
 原件`local/migration72/d02-m0-integration-20261116/motion-raw-first-results/`、`motion-raw-first-results.private.json`及`m0-motion-raw-first-tests.log`。正式构建和必要源后继另记；完整Entity根列表、Motion业务值和完整sender不因这组raw通过而放行。
 
 正式portable构建已包含本项：27秒、内嵌0b7c67e、JAR SHA `d6bd05373dbadad0e9be8538d34730d6133a23882c87c19c360d2636d25a4e1e`；18变化/5新增class全部匹配输出，两个独立实例同SHA只预备未启动。详情见[有限核心正式构建](CLIENT_72_D02_FINITE_SERVER_BOOT_20261116.md#正式portable构建与未部署)。
+
+## 实际位置与静止出生速度的部分投影
+
+后继成熟partial合同SHA `2d7adb8d66c88351c3a5a620ee08c4cafcdeacdba5b6fb9c45578e0536635d06`及receipt `9a8aef2ab1191feb80a30493db3614c50039c1fc2fcc5ff02a8a10b5291b5508`，只读复用旧1102B/338条完整listing，文件SHA `425e8e64afb31e59b7ce85e8444f242d724068be9c5f3682cd5ffdcdb000309a`。metadata把given18163+C0明确绑定MoveSyncTask；boxed header16，position/member10→embedded C0，velocity/member1C→embedded CC；实际原输入分别由Motion.tag1/+30与tag3/+18直接xyz写入，没有新A对象或未知数学输出依赖。
+
+未发送的`M0AvatarIdentityProjection`现增加Raw Motion：tag1取同实际AvatarEntity.getPosition（与Player.position同对象）的三个float原bit，tag3按明确M0静止出生策略写三轴0。没有造坐标、改变存档位置或借EnterScene轴类型猜Motion角色。tag2虽已知是rotation输入，完整转换/角单位未闭，因此仍不填写；该行不是满足全部非null前置的完整可发送Entity。
+
+新增一条独立手写wire把position(1.25,-2.5,3.75)与非null三轴零velocity区分；真实M0出生/保存/World fixture交叉三轴原bit与同Player身份。4套40项26秒全过，失败/错误/跳过0；`motion-position-velocity-results/`、`motion-position-velocity-results.private.json`与`motion-position-velocity-tests.log`留同ignored集成根。旧raw列表/float/64位断言一起保持；本项没有新native/模型/客户端或完整消息发送，正式构建后补。

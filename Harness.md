@@ -1,3 +1,5 @@
+2026-11-16 Motion position/velocity部分Java完成：给定18163的具名MoveSyncTask成员直接桥闭合，未发送行加入同Player实际三轴位置及明确静止出生零速度，rotation/tag2不填。新增独立wire与真实M0对象交叉，4套40项26秒过，完整Entity/实机未放行。见[Motion部分投影](docs/CLIENT_72_D02_M0_MOTION_JAVA_20261116.md#实际位置与静止出生速度的部分投影)。Project当前路线已区分方案历史与已实现/构建但未部署状态，不改0/6。
+
 2026-11-16 Peer Host-key后继正式portable26秒通过，内嵌17dc6f2，JAR SHA1821fe9a0e5234fbc7d4ae7b072f9f7c1d3e5e2fcdc37846ddc5e98f5b10ad78；4变化/0新增class均匹配输出。两个实例仅预备未启动，只有owned测试Mongo27027；HTTP8088/UDP22101/游戏JAR进程0。完整SDK/Peer/Entity仍缺，六项0/6，见[Peer Java](docs/CLIENT_72_D02_M0_PEER_JAVA_20261116.md)。
 
 2026-11-16 Peer同域Host-key后继完成：实际117B consumer把F4A4写同Entity+42C并与OOJ比较，未发送DTO接正常World.hostPeerId/tag4；同M0 Host/local key与SceneInfo关系真验，4套27项26秒过。field12仍未知，真任务45B/2指令准确止未知CALL，完整通知不放行。见[Peer Java后继](docs/CLIENT_72_D02_M0_PEER_JAVA_20261116.md#同域host-key后继)。

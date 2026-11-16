@@ -14,6 +14,21 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class M0MotionRawWireTest {
     @Test
+    void positionAndStationaryVelocityUseDistinctProvenVectorFields() throws Exception {
+        byte[] bytes = hex("0a0f0d0000a03f15000020c01d000070401a0f0d0000000015000000001d00000000");
+        var motion = Raw49847.parseFrom(bytes);
+        assertEquals(1.25f, motion.getHHAFHFEPLPD().getCJMJBINEBAG());
+        assertEquals(-2.5f, motion.getHHAFHFEPLPD().getALOKJBKPLGA());
+        assertEquals(3.75f, motion.getHHAFHFEPLPD().getMGICHKNKDKO());
+        assertTrue(motion.hasDACMFIDFIJA());
+        assertEquals(0f, motion.getDACMFIDFIJA().getCJMJBINEBAG());
+        assertEquals(0f, motion.getDACMFIDFIJA().getALOKJBKPLGA());
+        assertEquals(0f, motion.getDACMFIDFIJA().getMGICHKNKDKO());
+        assertFalse(motion.hasHPLBLGJLIFF());
+        assertArrayEquals(bytes, motion.toByteArray());
+    }
+
+    @Test
     void fourDistinctVectorSlotsReuseTheApprovedFloatWire() throws Exception {
         // x=1.25, y=-2.5, z=3.75; each component has an independent fixed32 literal.
         byte[] bytes = hex("0a050d0000a03f120515000020c01a051d00007040320f0d0000a03f15000020c01d00007040");

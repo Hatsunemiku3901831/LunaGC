@@ -8,7 +8,7 @@
 
 既验369个Skill id/element、121普通cost与START及两次真实Depot Java加载已闭，原367片段/120绑定阻塞解除；97literal、Material准确payload/有限header源、shared String尾游标、Relic有限typed及Weapon单字段独立性判断均已分项提交，本轮只读复用。完整原版恢复仍缺[必要前沿矩阵](docs/CLIENT_72_D02_RESUME_INTEGRATION_20261116.md)中的准确来源：energy MAX cap职责、Material有效backend/filecursor、Relic rank/set角色、Weapon独立raw父入口语法，以及R1/R2/Scene/Proud各自的准确限制/自然输入。已验结果只读复用，不再添加raw-id/native门或泛扫替代输入；普通来源缺口与A/B准确冻结边分列，不宣称整族或潜在host路径必然依A。
 
-[UP-72-20261114阶段调研](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)仍为进行中；UP-72-N1/N2只按当前具体缺口消费固定候选及现有冲突，不整包替换。UP-72-N3长尾检索在D-02排期后移，原继续位置保留，不关闭原调研。A/B、preview与准确依赖仍冻结；A已找回平台错误及opaque事件关联，原请求明文恢复验收已撤回，可读正文和技术输入仍缺，见[纠错](docs/CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)。M0尚无可直接启动的运行包；按下方路线先实现和准备，再请用户配合新号入场实验，不重复同SDK页采样。
+[UP-72-20261114阶段调研](docs/CLIENT_72_UPSTREAM_SURVEY_20261114.md)仍为进行中；UP-72-N1/N2只按当前具体缺口消费固定候选及现有冲突，不整包替换。UP-72-N3长尾检索在D-02排期后移，原继续位置保留，不关闭原调研。A/B、preview与准确依赖仍冻结；A已找回平台错误及opaque事件关联，原请求明文恢复验收已撤回，可读正文和技术输入仍缺，见[纠错](docs/CLIENT_72_D02_A_PROMPT_PROVENANCE_CORRECTION_20261116.md)。M0已有正式构建并预备到独立实例的有限运行JAR；因必要协议和自然认证前置未齐尚未启动部署。按下方路线继续接成熟字段及准备现场，前置满足后再请用户配合新号实验，不重复同SDK页采样。
 
 本文件维护目标、任务设计、依赖、发布顺序、任务状态、完成标记和验收结论。方法/复现索引放 [Harness](Harness.md)，详细证据与失败分析放对应专题，原始日志/进程/路径/凭据留忽略目录；不再向这里追加逐日进展、测试流水、JAR/PID 或暂停历史。旧版全文见[只读历史快照](Project.archive-2026-11-08.md)，旧快照不作为当前执行指令。
 
@@ -72,7 +72,7 @@
 | 4 / 原R1/R2/R3后继 | M0稳定后补第二账号、旧号全121角色/实际物品装备恢复、必要功能和精确数值；原MAX/Relic/Material/Weapon研究按实际用途恢复 | Sol/Terra分包；确有输入的语义难点Sol max | 旧任务和未验不删除；不裁剪旧档或把新号成功代旧号 |
 | 5→6 / R4→R5→R6 | 完整依赖汇合、正常重部署与第5节六项实机 | 唯一集成执行者 | 六项满足各自完整范围才完成D-02/F-05/D02-R6 |
 
-当前状态见3.4；本次只完成规划，未实施M0或执行新的仓库检索。实现任务已有用户授权，下一轮从M0-SCOPE立即推进。新号可以不用圣遗物/额外库存，但客户端必需通知与引用不能因业务名称就删除；以最小路径及实际消费验证判定。运行回路尽早收敛到第一处真实失败，不再用新增索引或原版数值研究代替实现。
+此路线写于方案阶段，当时仅完成规划；当前状态以3.4台账为准。其后M0-SCOPE、固定上游复用、资源生成、有限运行实现、真实保存及正式构建均已分项验收；必要协议/自然认证继续，实例尚未启动。新号可以不用圣遗物/额外库存，但客户端必需通知与引用不能因业务名称就删除；以最小路径及实际消费验证判定。运行回路尽早收敛到第一处真实失败，不再用新增索引或原版数值研究代替实现。
 
 ### 3.3 既有分支范围与文件归属
 
@@ -106,7 +106,7 @@
 
 | ID | 状态 | 完成/验收范围 | 推荐模型 |
 | --- | --- | --- | --- |
-| D02-M0-PLAN | 已完成 | 已确定新号先行、可自定参数、隔离配置及分工；仅规划，无运行实现 | 主线规划 |
+| D02-M0-PLAN | 已完成 | 已确定新号先行、可自定参数、隔离配置及分工；本行记录方案阶段，后继实现/构建按各独立子项验收 | 主线规划 |
 | D02-M0-SCOPE | 已完成 | [首版最小规格](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)明确701/出生与有限Avatar/SceneInfo字段、SESSION准确缺口及旧号独立契约；不是缺包wire或客户端验收完成 | Sol max + Terra max |
 | D02-M0-DATA | 进行中 | [独立资源生成](docs/CLIENT_72_D02_M0_DATA_20261116.md)19文件、真实限定loader/缺文件拒绝、出生装备保存/冷读和World身份已验；客户端必要Scene/ability合同仍缺 | Terra xhigh + Sol xhigh |
 | D02-M0-PROTOCOL | 进行中 | [M0 Avatar正式投影](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)已接目标20143及已证字段；SceneInfo/状态流继续，未知实体出现不发旧号 | Sol xhigh；难点Sol max |
@@ -132,6 +132,7 @@
 | D02-M0-CLOSE-SAVE-JAVA | 已完成 | [真实会话关闭与二次冷读](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md#新号真实关闭回调与第二次冷读)：1项12秒，位置/HP/同角色武器ObjectId/账号Admission/World注销保持；dispatch-only缺三后台服务的警告分列，非完整服务或客户端退出重登验收 | Sol xhigh |
 | D02-FINITE-SERVER-BOOT | 已完成 | [显式有限真实constructor/core tick/正常退出](docs/CLIENT_72_D02_FINITE_SERVER_BOOT_20261116.md)：普通fallback基线真实通过，有限非入场系统红例复现；4核心+2真实新旧Mongo+86关联全过，known前缀外明确关闭，无UDP绑定或假健康；正式portable27秒/嵌0b7c67e、18变化/5新增class与JAR核对通过，未部署 | Sol xhigh |
 | D02-M0-MOTION-WIRE | 已完成 | [49847的1487B reader与11字段partial合同](docs/CLIENT_72_D02_M0_MOTION_WIRE_20261116.md)：四Vector与列表直接复用84343，scalar identity已闭；tag100具体codec及tag2业务角色准确后移，不扩全移动/客户端验收 | Sol max |
+| D02-M0-MOTION-POSITION-JAVA | 已完成 | [具名MoveSyncTask位置/速度来源的实际部分投影](docs/CLIENT_72_D02_M0_MOTION_JAVA_20261116.md#实际位置与静止出生速度的部分投影)：同AvatarEntity/Player位置原bit、明确静止出生三轴0速度，40项26秒通过；rotation/tag2仍未填，不发送完整Entity | Sol xhigh |
 | D02-M0-MOTION-RAW-JAVA | 已完成 | [11字段Motion raw及16796.tag4结构](docs/CLIENT_72_D02_M0_MOTION_JAVA_20261116.md)：11新+31关联共42项21秒通过，四Vector/列表/64位/float边界独立；+40业务角色与tag100具体codec未闭，不生成业务Motion或完整Entity sender | Sol xhigh |
 | D02-M0-AVATAR-IDENTITY-JAVA | 已完成 | [同Player UID、Avatar GUID及实际实体的非发送投影](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#同玩家uid与avatar-guid的非发送投影)：独立Token/session与GUID lookup来源，5新wire+49关联共54项通过；正式构建22秒/内嵌c2faff7与JAR/class核对通过，根列表/Motion/完整sender仍未闭 | Sol xhigh |
 | D02-M0-SCENEAVATAR-DIRECT-USES | 已完成 | [旧1480B初始化器独立直接使用与null分支最小性](docs/CLIENT_72_D02_M0_SCENEAVATAR_DIRECT_USES_20261116.md)只读复用；不因SceneTeam可用null输入而给EntityAppear省oneof | Sol max |

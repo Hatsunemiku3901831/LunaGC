@@ -162,6 +162,16 @@ class M0BirthPersistenceMongoTest {
             assertEquals(restored.getWeaponNotNull().getGuid(), identities.getNPKKCHABEJH());
             assertEquals(currentEntity.getWeaponEntityId(), identities.getIEDJNHILJBF());
             assertEquals(fresh.getSceneId(), identities.getJMHKHAPJADA());
+            var motion = identities.getMPHLKPODDHK().getRawMotion4();
+            assertTrue(motion.hasHHAFHFEPLPD());
+            assertEquals(Float.floatToRawIntBits(fresh.getPosition().getX()), Float.floatToRawIntBits(motion.getHHAFHFEPLPD().getCJMJBINEBAG()));
+            assertEquals(Float.floatToRawIntBits(fresh.getPosition().getY()), Float.floatToRawIntBits(motion.getHHAFHFEPLPD().getALOKJBKPLGA()));
+            assertEquals(Float.floatToRawIntBits(fresh.getPosition().getZ()), Float.floatToRawIntBits(motion.getHHAFHFEPLPD().getMGICHKNKDKO()));
+            assertTrue(motion.hasDACMFIDFIJA());
+            assertEquals(0f, motion.getDACMFIDFIJA().getCJMJBINEBAG());
+            assertEquals(0f, motion.getDACMFIDFIJA().getALOKJBKPLGA());
+            assertEquals(0f, motion.getDACMFIDFIJA().getMGICHKNKDKO());
+            assertFalse(motion.hasHPLBLGJLIFF(), "the unresolved rotation input cannot be filled from a guessed role");
             assertFalse(identities.getMPHLKPODDHK().hasLLHEBIHGDAE());
             assertTrue(fresh.getWorld().getEntity().getInstancedAbilities().isEmpty());
             assertTrue(fresh.getTeamManager().getEntity().getInstancedAbilities().isEmpty());
