@@ -36,7 +36,7 @@ class M0SceneEntryWireTest {
         assertEquals(5, root.getAEKMONHBHAA().getJNBCPNHJCNI());
         assertNotEquals(root.getLFLOLJADPBI().getLLHEBIHGDAE(), root.getAEKMONHBHAA().getJNBCPNHJCNI());
         assertArrayEquals(wire, root.toByteArray());
-        assertEquals(Set.of(5), JLILNBLGMIP.getDescriptor().getFields().stream()
+        assertEquals(Set.of(1, 5), JLILNBLGMIP.getDescriptor().getFields().stream()
                 .map(f -> f.getNumber()).collect(Collectors.toSet()));
         assertEquals(Set.of(7), BINIKNHCLIA.getDescriptor().getFields().stream()
                 .map(f -> f.getNumber()).collect(Collectors.toSet()));

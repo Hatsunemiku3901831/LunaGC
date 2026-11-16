@@ -30,6 +30,7 @@ import emu.grasscutter.net.proto.EnterSceneReadyReqOuterClass.EnterSceneReadyReq
 import emu.grasscutter.net.proto.SceneInitFinishReqOuterClass.SceneInitFinishReq;
 import emu.grasscutter.server.packet.send.PacketAvatarDataNotify;
 import emu.grasscutter.server.packet.send.PacketPlayerEnterSceneInfoNotify;
+import emu.grasscutter.server.packet.send.M0PeerIdentityProjection;
 import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.time.Duration;
@@ -137,6 +138,23 @@ class M0BirthPersistenceMongoTest {
             assertNotEquals(0, entry.getLFLOLJADPBI().getLLHEBIHGDAE());
             assertNotEquals(0, entry.getAEKMONHBHAA().getJNBCPNHJCNI());
             assertNotEquals(entry.getLFLOLJADPBI().getLLHEBIHGDAE(), entry.getAEKMONHBHAA().getJNBCPNHJCNI());
+            var peerIdentity = M0PeerIdentityProjection.project(fresh);
+            assertEquals(fresh.getEnterSceneToken(), peerIdentity.getMCCMGLDOECH());
+            assertEquals(fresh.getPeerId(), peerIdentity.getAANCEPCPHKJ());
+            assertTrue(fresh.getPeerId() > 0);
+            assertSame(fresh, fresh.getWorld().getHost(), "M0 uses its real host world");
+            assertEquals(peerIdentity.getAANCEPCPHKJ(), entry.getLFLOLJADPBI().getHKLILOKPKBJ());
+            assertFalse(peerIdentity.hasOHNANNOOMCJ());
+            assertFalse(peerIdentity.hasOHAKDDILKKB());
+            assertTrue(fresh.getWorld().getEntity().getInstancedAbilities().isEmpty());
+            assertTrue(fresh.getTeamManager().getEntity().getInstancedAbilities().isEmpty());
+            var baseAbilities = emu.grasscutter.data.GameData.getAbilityEmbryoInfo()
+                    .get(restored.getAvatarData().getName()).getAbilities();
+            assertEquals(5, baseAbilities.length);
+            for (var ability : baseAbilities)
+                assertTrue(restored.getAvatarData().getAbilities().contains(emu.grasscutter.utils.Utils.abilityHash(ability)));
+            var levelAbilities = emu.grasscutter.data.GameData.getConfigLevelEntityDataMap().get("Level_BigWorld").getAvatarAbilities();
+            assertEquals(baseAbilities.length + levelAbilities.size(), restored.getAvatarData().getAbilities().size());
             assertEquals(fresh.getEnterSceneToken(), entry.getMCCMGLDOECH());
             assertEquals(1, entry.getDIGAMAKGCPACount());
             var entered = entry.getDIGAMAKGCPA(0);

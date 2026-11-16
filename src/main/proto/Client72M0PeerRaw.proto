@@ -1,0 +1,13 @@
+// Cmd28392/type19176. Four independent owned uint32 identity contracts.
+// tag4/tag12 business meanings remain unresolved; no complete sender is approved.
+syntax = "proto3";
+package cn72.m0peer;
+option java_package = "emu.grasscutter.net.proto";
+option java_outer_classname = "Client72M0PeerRawOuterClass";
+
+message IAKGECCPGDA {
+  optional uint32 OHNANNOOMCJ = 4;
+  optional uint32 AANCEPCPHKJ = 10;
+  optional uint32 MCCMGLDOECH = 11;
+  optional uint32 OHAKDDILKKB = 12;
+}

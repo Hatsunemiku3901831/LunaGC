@@ -12,6 +12,7 @@ final class M0SceneEntryProjection {
                 .setOLCJCLBMMCF(player.getTeamManager().getCurrentAvatarEntity().getId())
                 .setMCCMGLDOECH(player.getEnterSceneToken())
                 .setLFLOLJADPBI(JLILNBLGMIP.newBuilder()
+                        .setHKLILOKPKBJ(player.getWorld().getHostPeerId())
                         .setLLHEBIHGDAE(player.getWorld().getLevelEntityId()))
                 .setAEKMONHBHAA(BINIKNHCLIA.newBuilder()
                         .setJNBCPNHJCNI(player.getTeamManager().getEntity().getId()));

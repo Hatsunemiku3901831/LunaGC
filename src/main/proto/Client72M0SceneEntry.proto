@@ -15,6 +15,7 @@ message NOCHHDCLKDJ {
 }
 
 message JLILNBLGMIP {
+  optional uint32 HKLILOKPKBJ = 1;
   optional uint32 LLHEBIHGDAE = 5;
 }
 

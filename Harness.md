@@ -1,3 +1,5 @@
+2026-11-16 Peer producer/raw/Java分项完成：Cmd28392/type19176的四uint32来自独立33 owned样本，两个已证token/localAuthorityKey接未发送DTO，与实际M0宿主/SceneInfo44512.tag1关系相符。7新wire+19关联共26项最终8秒全过；World/Team instanced0及Avatar五基础+一Level候选分别真验，错误总数5断言留首失败。见[Peer Java范围](docs/CLIENT_72_D02_M0_PEER_JAVA_20261116.md)；tag4/12未知，不放完整通知/握手，不把body原型或编译当实机。
+
 2026-11-16 SceneInfo新增两个真实非空identity子树：root14.tag5=同World level entityID，root15.tag7=同Team实体ID，非零且互异，不发模板/authority/能力空壳。实际M0 projection、出生/冷读World交叉及独立wire共19项29秒全过；Init/Done缺口停止保持。见[SceneInfo身份增量与待接清单](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#sceneinfo非空身份增量)，后续按新源码正式构建。
 
 2026-11-16 场景raw正式portable构建25秒通过，内嵌89b2ceb，JAR SHA74049899d59c4a8b2652aeaba2ff14b9fb5ca81ae2e94acd08eb41f1caa001f3；3变化/33新增class匹配输出。两独立实例同SHA仅预备未启动；只有自有测试Mongo27027、HTTP8088/UDP22101/游戏JAR进程0，无新补丁/客户端。最新构建/停止前置见[场景raw Java](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)。
