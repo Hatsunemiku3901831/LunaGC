@@ -1,3 +1,5 @@
+2026-11-16 M0有界规格/复用/SceneInfo最小研究已分项验收；固定来源与真正必要缺口见[SCOPE](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)、[REUSE](docs/CLIENT_72_D02_M0_REUSE_20261116.md)、[SceneInfo](docs/CLIENT_72_D02_M0_SCENEINFO_MIN_20261116.md)。SESSION自然service/mode/批准路由仍准确阻塞；Entity wire后继研究继续。
+
 2026-11-16 D02-M0实际集成：默认关闭M0/有限真实出生loader与缺文件拒绝、目标20143 Avatar raw正式sender已分项验证；JUnit312项及后续loader/sender2项、portable夹具27项通过。只有birth-ready，完整生命周期/装备保存/SceneInfo和自然会话继续；未部署/无客户端，六项0/6。失败及复现见[集成记录](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)。
 
 2026-11-16 用户改为先入场、业务数值可自定：基线7b2ed77之后仅完成D02-M0规划，新增实现台账待开始。四项原版资源研究与旧号全量恢复后移，先新测试号/普通角色/出生装备/最小场景；协议wire和正常认证仍必需。见[Project](Project.md)及[最小实现方案](docs/CLIENT_72_D02_ENTRY_MVP_PLAN_20261116.md)。本次无运行变更或新增测试/部署，下面是历史研究记录。

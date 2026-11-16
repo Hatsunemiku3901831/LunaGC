@@ -107,14 +107,16 @@
 | ID | 状态 | 完成/验收范围 | 推荐模型 |
 | --- | --- | --- | --- |
 | D02-M0-PLAN | 已完成 | 已确定新号先行、可自定参数、隔离配置及分工；仅规划，无运行实现 | 主线规划 |
-| D02-M0-SCOPE | 进行中 | [首版最小规格](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)已明确701/出生与有限Avatar/SceneInfo字段；剩余SceneTeam/Entity准确三层继续 | Sol max + Terra max |
+| D02-M0-SCOPE | 已完成 | [首版最小规格](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)明确701/出生与有限Avatar/SceneInfo字段、SESSION准确缺口及旧号独立契约；不是缺包wire或客户端验收完成 | Sol max + Terra max |
 | D02-M0-DATA | 进行中 | [独立资源生成](docs/CLIENT_72_D02_M0_DATA_20261116.md)已准备；真实限定loader与缺文件拒绝已验，真实出生装备保存/冷读待验 | Terra xhigh + Sol xhigh |
 | D02-M0-PROTOCOL | 进行中 | [M0 Avatar正式投影](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)已接目标20143及已证字段；SceneInfo/状态流继续，未知实体出现不发旧号 | Sol xhigh；难点Sol max |
-| D02-M0-SESSION | 进行中 | [限定会话审阅](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)无新成熟Java认证缺口；自然service/mode/批准路由仍缺固定输入，原准确冻结动作继续阻塞 | Sol max / Sol xhigh |
-| D02-M0-RUN | 待开始 | 最小前置验证、portable构建部署及用户操作包 | 唯一Sol xhigh集成者 |
+| D02-M0-SESSION | 阻塞 | [限定会话审阅](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)无新成熟Java认证缺口；自然service/mode/批准路由仍缺固定输入，原准确冻结动作继续阻塞 | Sol max / Sol xhigh |
+| D02-M0-RUN | 进行中 | 已准备独立M0配置/资源/data，portable正式构建继续；必要wire/SDK前置不足，未启动实例或请求客户端操作 | 唯一Sol xhigh集成者 |
 | D02-M0-CLIENT | 待开始 | 新号选人命名、可见落地、10分钟心跳、正常重登保存 | 执行者 + 用户实机 |
 | D02-M0-CONFIG-BIRTH-LOADER | 已完成 | 默认关闭M0、原runtime拒绝启用、有限真实资源加载/引用与正值重算、缺文件拒绝；loadedAll保持false。仅birth-ready，不是entry-ready或部署 | Sol xhigh |
 | D02-M0-AVATAR-PROJECTION | 已完成 | 同Player/Avatar/Item/Team的目标20143 raw投影及定向wire验证；仅三普通属性、七FightProp、当前depot、HP生命态与已证身份，Hero控制/未知附属不晋级 | Sol xhigh |
+| D02-M0-REUSE | 已完成 | [固定上游有界复用](docs/CLIENT_72_D02_M0_REUSE_20261116.md)已闭女主701/六技能/出生装备与Scene3具名来源；候选不晋级target | Terra max |
+| D02-M0-SCENEINFO-MIN | 已完成 | [两实体模板与有限静态来源](docs/CLIENT_72_D02_M0_SCENEINFO_MIN_20261116.md)：root14/tag5 World level、root15/tag7 Team身份区分；authority及能力角色仍未知，不是完整sender | Sol max |
 
 
 此表保留未完成任务的状态与验收账本，按最快D-02出口重排。按依赖和本轮恢复索引的实际缺口发布任务，已有完成子项直接复用；“前移/后移/按需/冻结”描述排期，不增加任务状态。
