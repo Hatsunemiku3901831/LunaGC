@@ -61,6 +61,8 @@ public final class GameServer extends KcpServer implements Iterable<Player> {
     private final Map<Integer, Player> players;
     private final Set<World> worlds;
     private final Int2ObjectMap<HomeWorld> homeWorlds;
+    private final boolean transportBound;
+    private Timer gameLoop;
     private volatile long completedTicks;
     private volatile long firstTickStartedNanos;
     private volatile long lastTickCompletedNanos;
@@ -108,6 +110,12 @@ public final class GameServer extends KcpServer implements Iterable<Player> {
     }
 
     public GameServer(InetSocketAddress address) {
+        this(address, true);
+    }
+
+    /** Constructs the same server core without binding UDP for isolated lifecycle tests. */
+    GameServer(InetSocketAddress address, boolean bindTransport) {
+        this.transportBound = bindTransport && Grasscutter.getRunMode() != ServerRunMode.DISPATCH_ONLY;
         // Check if we are in dispatch only mode.
         if (Grasscutter.getRunMode() == ServerRunMode.DISPATCH_ONLY) {
             // Set all the systems to null.
@@ -150,13 +158,16 @@ public final class GameServer extends KcpServer implements Iterable<Player> {
         channelConfig.setUseConvChannel(true);
         channelConfig.setAckNoDelay(false);
 
-        this.init(GameSessionManager.getListener(), channelConfig, address);
+        if (bindTransport) this.init(GameSessionManager.getListener(), channelConfig, address);
 
-        EnergyManager.initialize();
-        StaminaManager.initialize();
-        CookingManager.initialize();
-        CookingCompoundManager.initialize();
-        CombineManger.initialize();
+        boolean finite = GAME_INFO.m0.enabled || GAME_INFO.oldSnapshot.enabled;
+        if (!finite) {
+            EnergyManager.initialize();
+            StaminaManager.initialize();
+            CookingManager.initialize();
+            CookingCompoundManager.initialize();
+            CombineManger.initialize();
+        }
 
         // Game Server base
         this.address = address;
@@ -167,8 +178,30 @@ public final class GameServer extends KcpServer implements Iterable<Player> {
         this.homeWorlds = Int2ObjectMaps.synchronize(new Int2ObjectOpenHashMap<>());
 
         // Extra
-        this.scheduler = new ServerTaskScheduler();
-        this.taskMap = new TaskMap(true);
+        this.scheduler = finite ? null : new ServerTaskScheduler();
+        this.taskMap = finite ? null : new TaskMap(true);
+
+        if (finite) {
+            this.inventorySystem = null;
+            this.gachaSystem = null;
+            this.shopSystem = null;
+            this.multiplayerSystem = null;
+            this.crucibleMatchSystem = null;
+            this.homeWorldMPSystem = null;
+            this.dungeonSystem = null;
+            this.dropSystem = null;
+            this.dropSystemLegacy = null;
+            this.expeditionSystem = null;
+            this.combineSystem = null;
+            this.towerSystem = null;
+            this.worldDataSystem = null;
+            this.battlePassSystem = null;
+            this.announcementSystem = null;
+            this.questSystem = null;
+            this.talkSystem = null;
+            this.chatManager = null;
+            return;
+        }
 
         // Create game systems
         this.inventorySystem = new InventorySystem(this);
@@ -349,10 +382,12 @@ public final class GameServer extends KcpServer implements Iterable<Player> {
             }
         }
 
-        try {
-            this.crucibleMatchSystem.onTick();
-        } catch (Throwable e) {
-            Grasscutter.getLogger().error("Crucible matchmaking threw while ticking.", e);
+        if (!GAME_INFO.m0.enabled && !GAME_INFO.oldSnapshot.enabled) {
+            try {
+                this.crucibleMatchSystem.onTick();
+            } catch (Throwable e) {
+                Grasscutter.getLogger().error("Crucible matchmaking threw while ticking.", e);
+            }
         }
 
         this.players
@@ -366,10 +401,12 @@ public final class GameServer extends KcpServer implements Iterable<Player> {
                             }
                         });
 
-        try {
-            this.getScheduler().runTasks();
-        } catch (Throwable e) {
-            Grasscutter.getLogger().error("A scheduled task threw.", e);
+        if (!GAME_INFO.m0.enabled && !GAME_INFO.oldSnapshot.enabled) {
+            try {
+                this.getScheduler().runTasks();
+            } catch (Throwable e) {
+                Grasscutter.getLogger().error("A scheduled task threw.", e);
+            }
         }
 
         // Call server tick event.
@@ -409,10 +446,10 @@ public final class GameServer extends KcpServer implements Iterable<Player> {
         // Settle which Spiral Abyss rotation is live now that the resources are in. Doing it here
         // rather than on the first abyss screen means a resource set that cannot build any rotation
         // says so at boot, not to whoever opens the abyss first.
-        this.announceTowerRotation();
+        if (!GAME_INFO.m0.enabled && !GAME_INFO.oldSnapshot.enabled) this.announceTowerRotation();
 
         // Schedule game loop.
-        Timer gameLoop = new Timer();
+        this.gameLoop = new Timer();
         gameLoop.scheduleAtFixedRate(
                 new TimerTask() {
                     @Override
@@ -453,6 +490,7 @@ public final class GameServer extends KcpServer implements Iterable<Player> {
     }
 
     public void onServerShutdown() {
+        if (this.gameLoop != null) this.gameLoop.cancel();
         var event = new ServerStopEvent(ServerEvent.Type.GAME, OffsetDateTime.now());
         event.call();
 
@@ -460,6 +498,7 @@ public final class GameServer extends KcpServer implements Iterable<Player> {
         this.getPlayers().forEach((uid, player) -> player.getSession().close());
         this.getWorlds().forEach(World::save);
 
+        if (!this.transportBound) return;
         Utils.sleep(1000L); // Wait 1 second for operations to finish.
         this.stop(); // Stop the server.
 

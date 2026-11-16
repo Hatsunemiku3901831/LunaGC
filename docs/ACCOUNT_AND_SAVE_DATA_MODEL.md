@@ -1,3 +1,5 @@
+2026-11-16 [有限Server核心](CLIENT_72_D02_FINITE_SERVER_BOOT_20261116.md)已实际验证：新旧生命周期夹具改用真实finite constructor/core tick，M0正常关闭不再调用未建后台服务，两项24秒保存/冷读通过，原账号Guard与存档字段保持。无新增Mongo字段、无网络监听或客户端验收；下方dispatch-only三警告是前轮历史边界。
+
 2026-11-16 M0新号补验真实handleClose→onLogout→正常队列保存→二次新Player冷读，1项12秒通过：位置、HP、同Avatar/武器ObjectId与Admission保持，World/在线注销成立；没有新增生产字段或运行改动。dispatch-only缺三后台服务的隔离警告分列，不是完整服务或客户端退出重登。见[实际范围](CLIENT_72_D02_M0_INTEGRATION_20261116.md#新号真实关闭回调与第二次冷读)。
 
 2026-11-16 [旧号显式有限模式](CLIENT_72_D02_OLD_SNAPSHOT_MODE_20261116.md)已实现并验证生产资源门、完整Avatar/Inventory、World/Team/tick及正常保存退出冷读；仅manifest绑定的独立复制档可载，不补m0Profile，不设loadedAll。原档进度/集合完整，profile仅更新正常活跃时间；非入场Manager后移。完整Store/Avatar/TPS及场景wire未齐，网络在Player创建前明确拒绝，未部署/客户端未验。

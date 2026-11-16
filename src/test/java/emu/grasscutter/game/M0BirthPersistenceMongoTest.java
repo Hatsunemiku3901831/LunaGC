@@ -67,11 +67,8 @@ class M0BirthPersistenceMongoTest {
             Configuration.GAME_INFO.m0.enabled = true;
             Configuration.GAME_OPTIONS.questing.enabled = true;
             M0Resources.loadBirthResources();
-            Grasscutter.setRunModeOverride(Grasscutter.ServerRunMode.DISPATCH_ONLY);
-            var server = new GameServer();
-            field(GameServer.class, "players").set(server, new java.util.concurrent.ConcurrentHashMap<Integer, Player>());
-            field(GameServer.class, "worlds").set(server, Collections.synchronizedSet(new HashSet<emu.grasscutter.game.world.World>()));
             Grasscutter.setRunModeOverride(Grasscutter.ServerRunMode.HYBRID);
+            var server = FiniteGameServerTestSupport.unbound();
             store.getDatabase().getCollection("accounts").insertOne(new Document("_id", "m0-birth")
                     .append("username", "m0-birth").append("token", "m0-test-token").append("permissions", List.of()));
             var session = new CapturingSession(server);
@@ -184,8 +181,8 @@ class M0BirthPersistenceMongoTest {
             assertNull(fresh.getActivityManager());
             assertNull(fresh.getDailyTaskManager());
             int packets = freshSession.sent.size();
-            fresh.onTick();
-            assertFalse(fresh.getWorld().onTick());
+            server.onTick();
+            assertEquals(1, server.tickStatus().completed());
             assertEquals(packets, freshSession.sent.size(), "M0 ticks must not enter unreviewed gameplay senders");
             new HandlerEnterSceneReadyReq().handle(freshSession, new byte[0], EnterSceneReadyReq.newBuilder()
                     .setMCCMGLDOECH((fresh.getEnterSceneToken() ^ 0xE8C3) + 0x4C01).build().toByteArray());

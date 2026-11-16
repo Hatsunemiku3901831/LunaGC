@@ -1,3 +1,5 @@
+有限Server核心后继已通过：生命周期测试不再使用dispatch-only/反射容器，真实finite constructor驱动World/Player tick，正常退出/保存冷读及账号Guard继续成立；M0三缺服务NPE不再发生。4核心、2真实Mongo及86关联通过；无网络绑定，不等于客户端或HTTP健康。见[分流与原推断纠正](CLIENT_72_D02_FINITE_SERVER_BOOT_20261116.md)。
+
 # D02-OLD-SNAPSHOT-MODE / LIFECYCLE
 
 本项在[完整Avatar/Inventory恢复](CLIENT_72_D02_OLD_SNAPSHOT_JAVA_20261116.md)之后实现显式旧号有限模式。只绑定已复制的固定账号、owner和Avatar/Item ObjectId集合；保存、真实World/Team/Scene对象和退出冷读已验。网络入口因完整快照及场景wire缺口明确拒绝，D-02六项仍0/6。

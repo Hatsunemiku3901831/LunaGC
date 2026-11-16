@@ -2048,13 +2048,15 @@ public class Player implements PlayerHook, FieldFetch {
     }
 
     public void onLogout() {
-        if (GAME_INFO.oldSnapshot.enabled) {
+        if (GAME_INFO.oldSnapshot.enabled || GAME_INFO.m0.enabled) {
             try {
                 runLogoutStep("world departure", () -> {
                     if (this.getWorld() != null) this.getWorld().removePlayer(this);
                 });
-                // This mode never loaded Home or edited profile data; preserve those cached fields.
-                runLogoutStep("profile activity", () -> this.getProfile().updateLastActiveTime());
+                // The old copy keeps unloaded profile caches; M0 owns and updates its new profile.
+                if (GAME_INFO.oldSnapshot.enabled)
+                    runLogoutStep("profile activity", () -> this.getProfile().updateLastActiveTime());
+                else runLogoutStep("profile", () -> this.getProfile().syncWithCharacter(this));
                 runLogoutStep("player save", this::save);
                 for (var avatar : new ArrayList<>(this.getAvatars().getAvatars().values()))
                     runLogoutStep("avatar save", avatar::save);

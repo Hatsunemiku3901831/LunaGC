@@ -84,11 +84,8 @@ class OldSnapshotLifecycleMongoTest {
             db.getCollection("avatars").insertMany(sourceAvatars);
             db.getCollection("items").insertMany(sourceItems);
             db.getCollection("accounts").insertMany(sourceAccounts);
-            Grasscutter.setRunModeOverride(Grasscutter.ServerRunMode.DISPATCH_ONLY);
-            var server = new GameServer();
-            field(GameServer.class, "players").set(server, new java.util.concurrent.ConcurrentHashMap<Integer, Player>());
-            field(GameServer.class, "worlds").set(server, Collections.synchronizedSet(new HashSet<emu.grasscutter.game.world.World>()));
             Grasscutter.setRunModeOverride(Grasscutter.ServerRunMode.HYBRID);
+            var server = FiniteGameServerTestSupport.unbound();
             var account = store.find(Account.class).first();
             var rejected = new CapturingSession(server);
             int beforeNetwork = writes.get();
@@ -139,8 +136,8 @@ class OldSnapshotLifecycleMongoTest {
             server.registerPlayer(selected);
             int packets = session.sent.size();
             session.updateLastPingTime(1);
-            selected.onTick();
-            assertFalse(joined.onTick());
+            server.onTick();
+            assertEquals(1, server.tickStatus().completed());
             assertEquals(packets, session.sent.size(), "finite ticks cannot start gameplay notification callbacks");
             assertTrue(session.sent.stream().noneMatch(p -> p.getOpcode() == PacketOpcodes.AvatarDataNotify
                     || p.getOpcode() == PacketOpcodes.PlayerStoreNotify));

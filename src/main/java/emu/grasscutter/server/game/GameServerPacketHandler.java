@@ -11,20 +11,30 @@ import emu.grasscutter.server.game.GameSession.SessionState;
 import it.unimi.dsi.fastutil.ints.*;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import emu.grasscutter.server.packet.recv.*;
 public final class GameServerPacketHandler {
 
     private final Int2ObjectMap<PacketHandler> handlers;
+    private final Set<Class<? extends PacketHandler>> finiteHandlers;
 
     /** Opcodes whose handlers are annotated {@link NoResponseExpected}. */
     private final IntSet noResponseOpcodes = new IntOpenHashSet();
 
     public GameServerPacketHandler(Class<? extends PacketHandler> handlerClass) {
         this.handlers = new Int2ObjectOpenHashMap<>();
+        this.finiteHandlers = GAME_INFO.oldSnapshot.enabled
+                ? Set.of(HandlerPingReq.class, HandlerGetPlayerTokenReq.class, HandlerPlayerLoginReq.class)
+                : GAME_INFO.m0.enabled
+                        ? Set.of(HandlerPingReq.class, HandlerGetPlayerTokenReq.class, HandlerPlayerLoginReq.class,
+                                HandlerSetPlayerBornDataReq.class, HandlerEnterSceneReadyReq.class,
+                                HandlerSceneInitFinishReq.class, HandlerEnterSceneDoneReq.class, HandlerPostEnterSceneReq.class)
+                        : null;
 
         this.registerHandlers(handlerClass);
     }
 
     public void registerPacketHandler(Class<? extends PacketHandler> handlerClass) {
+        if (this.finiteHandlers != null && !this.finiteHandlers.contains(handlerClass)) return;
         var opcode = handlerClass.getAnnotation(Opcodes.class);
         if (opcode == null || opcode.disabled() || opcode.value() <= 0) {
             return;
@@ -57,7 +67,8 @@ public final class GameServerPacketHandler {
     }
 
     public void registerHandlers(Class<? extends PacketHandler> handlerClass) {
-        var handlerClasses = Grasscutter.reflector.getSubTypesOf(handlerClass);
+        var handlerClasses = this.finiteHandlers != null
+                ? this.finiteHandlers : Grasscutter.reflector.getSubTypesOf(handlerClass);
         for (var obj : handlerClasses) {
             this.registerPacketHandler(obj);
         }
@@ -72,6 +83,11 @@ public final class GameServerPacketHandler {
             return;
         }
         PacketHandler handler = this.handlers.get(opcode);
+        if (this.finiteHandlers != null && handler == null) {
+            Grasscutter.getLogger().warn("Finite instance stopped unsupported request opcode {} before gameplay handling.", opcode);
+            session.close();
+            return;
+        }
 
         // 7.0 renumbered every message's fields (DropItemReq moved guid 15 -> 5 and pos 1 -> 12), so a
         // Req with no generated proto can only be rebuilt from what the client actually puts on the
