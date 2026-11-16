@@ -1,6 +1,6 @@
 # D02-M0-MOTION-JAVA：有限Motion原始结构
 
-本项只将[Motion外层研究](CLIENT_72_D02_M0_MOTION_WIRE_20261116.md)的成熟部分转成Proto/Java，不给四个Vector套用位置、旋转或速度角色，不发送完整Entity通知。
+本项只将[Motion外层研究](CLIENT_72_D02_M0_MOTION_WIRE_20261116.md)（最终SHA `713be733e65adf45c606d66e9f96d029c4dce2bb9bf8715893090e836bd081b3`）的成熟部分转成Proto/Java，不给四个Vector套用位置、旋转或速度角色，不发送完整Entity通知。
 
 ## 来源与实现
 

@@ -1,3 +1,5 @@
+2026-11-16 [Motion原始source](docs/CLIENT_72_D02_M0_MOTION_WIRE_20261116.md)最终SHA713be733…081b3已接收：1487B/325 strict与前11字段逐helper/store，tag100具体codec和tag2业务未名仍分层。Java42项为另一独立回归，不计成新native样本。
+
 2026-11-16 Motion有限raw Java完成：11已证字段及16796.tag4结构，复用84343 Vector；11新+31关联共42项21秒全过，含两元素列表、四不同Vector、float bit/merge与u64边界。+40角色/tag100 codec未闭，实际业务未填Motion、不放完整sender。见[Motion Java](docs/CLIENT_72_D02_M0_MOTION_JAVA_20261116.md)。
 
 2026-11-16 M0新号真实handleClose→onLogout→保存队列→二次新Player正常load独立补验1项12秒通过，位置/HP/同Avatar和武器ObjectId/账号Admission/World注销成立。dispatch-only夹具缺3后台服务的原隔离警告保留，不计完整服务或客户端验收；仅测试/文档，无需重启。见[关闭回调范围](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md#新号真实关闭回调与第二次冷读)。
