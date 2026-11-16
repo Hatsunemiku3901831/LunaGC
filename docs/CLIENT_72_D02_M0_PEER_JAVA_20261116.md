@@ -1,3 +1,5 @@
+后继已接同域Host authority key/tag4的未发送投影，field12仍未知；初始两字段阶段记录保留，见下节后继。
+
 # D02-M0-PEER-JAVA：原始字段与实际身份关系
 
 只接已证的加载token和localAuthorityKey，不发送完整Peer通知，不改变Ready/Init/Done放行。其它两字段保留raw，尚无业务值映射；不借用旧9633或旧四字段名字。
@@ -19,3 +21,11 @@
 原件位于`local/migration72/d02-m0-integration-20261116/peer-identity-java-results/`、`m0-peer-identity-tests.log`及`m0-team-policy-first-failure.xml`。正式构建在后续实际结果登记；M0普通新实体null/空列表最小性按新的独立source分项接入，不能把这组DTO回归当完整入场或客户端验收。
 
 正式portable构建已包含本项：22秒、内嵌c2faff7、JAR SHA `533dce1ebab1cbd5d147bf769be025cdf19aae16d101ef16721cf49e6cf182e4`；变化18/新增21 class均匹配编译输出。两独立实例仅预备未启动，完整Peer通知和Init/Done仍未放行；详细产物/端口范围见[统一构建](CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#最小身份与状态正式构建)。
+
+## 同域Host key后继
+
+[MIN-SEMANTICS](CLIENT_72_D02_M0_PEER_MIN_SEMANTICS_20261116.md) SHA `d664504f8841873c982528a1b3fd85d251d6f24c1e5efdce428fdb5820e99a6e`的117B/29条完整Entity source证明F4A4与localAuthorityKey/OOJ比较，并原值写同Entity+42C；Peer tag4直接写F4A4。因此M0单人Host使用真实World.getHostPeerId()供给tag4，和本地Player.peerId及SceneInfo owner key同域；不是从两u32形状或默认0猜Host英文名。
+
+`M0PeerIdentityProjection`现填token/tag11、local key/tag10与host key/tag4，field12/tag12不填。真实M0夹具证明Host就是同Player，tag4=真实Host key=该场景local key，并且两者仍不同于Player.uid；原始四字段wire和场景关联继续通过。4套27项26秒全过，XML/汇总在同ignored集成根`peer-host-key-results/`、`peer-host-key-results.private.json`，日志`peer-host-key-tests.log`。正式构建后补。
+
+[TRUE-BRANCH](CLIENT_72_D02_M0_PEER_TRUE_BRANCH_20261116.md) SHA `f97ce7197332a54c4a2286614543905d0ba337a7f770c183294676969270df09`只闭合45B完整保存、全线性strict准确失败与B7入口两条CFG，停在未知CALL15A46C1EF。旧首任务flag[1,1]不能改成false绕真分支；此前没有field12读取不证明它可省。没有发送完整28392或放行Ready/Init/Done，没有新增native/VM/helper/模型或客户端操作。

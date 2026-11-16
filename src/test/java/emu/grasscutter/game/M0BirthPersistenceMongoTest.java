@@ -146,7 +146,9 @@ class M0BirthPersistenceMongoTest {
             assertTrue(fresh.getPeerId() > 0);
             assertSame(fresh, fresh.getWorld().getHost(), "M0 uses its real host world");
             assertEquals(peerIdentity.getAANCEPCPHKJ(), entry.getLFLOLJADPBI().getHKLILOKPKBJ());
-            assertFalse(peerIdentity.hasOHNANNOOMCJ());
+            assertTrue(peerIdentity.hasOHNANNOOMCJ());
+            assertEquals(fresh.getWorld().getHostPeerId(), peerIdentity.getOHNANNOOMCJ());
+            assertEquals(peerIdentity.getAANCEPCPHKJ(), peerIdentity.getOHNANNOOMCJ(), "the real M0 host is this local player");
             assertFalse(peerIdentity.hasOHAKDDILKKB());
             var identities = M0AvatarIdentityProjection.projectCurrentPlayer(fresh);
             int tokenUid = GetPlayerTokenRsp.parseFrom(new PacketGetPlayerTokenRsp(freshSession).getData()).getUid();

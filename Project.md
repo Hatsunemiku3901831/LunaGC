@@ -137,7 +137,9 @@
 | D02-M0-SCENEAVATAR-DIRECT-USES | 已完成 | [旧1480B初始化器独立直接使用与null分支最小性](docs/CLIENT_72_D02_M0_SCENEAVATAR_DIRECT_USES_20261116.md)只读复用；不因SceneTeam可用null输入而给EntityAppear省oneof | Sol max |
 | D02-M0-AUTHORITY-CFG | 已完成 | [base getter/setter的条件CFG及factory比较桥](docs/CLIENT_72_D02_M0_AUTHORITY_CFG_20261116.md)：原0-pdata失败保留，不把+42C猜作HostPeerId、OOJ不作当前常量 | Sol max |
 | D02-M0-PEER-PRODUCER | 已完成 | [Cmd28392/type19176实际1464B消费者](docs/CLIENT_72_D02_M0_PEER_PRODUCER_20261116.md)：+24写localAuthorityKey，+18查询loading token；不扩其它raw writer或旧号包 | Sol max |
-| D02-M0-PEER-WIRE/JAVA | 已完成 | [四uint32的33 owned样本及独立Proto/非发送DTO](docs/CLIENT_72_D02_M0_PEER_JAVA_20261116.md)：token/key与实际M0宿主/SceneInfo owner key关联，7新+19关联共26项全过；未知tag4/12不填，不放完整Peer通知 | Sol max → Sol xhigh |
+| D02-M0-PEER-MIN-SEMANTICS | 已完成 | [117B同Entity key域与加载任务真分支](docs/CLIENT_72_D02_M0_PEER_MIN_SEMANTICS_20261116.md)：tag4可用实际单人Host分配值，不能用默认false绕任务；未闭field12分列 | Sol max |
+| D02-M0-PEER-TRUE-BRANCH | 已完成 | [45B原件与独立入口两指令CFG](docs/CLIENT_72_D02_M0_PEER_TRUE_BRANCH_20261116.md)：整窗strict失败保留，准确停CALL15A46C1EF；field12/完整通知仍未闭，不泛称A或全VM冻结 | Sol max |
+| D02-M0-PEER-WIRE/JAVA | 已完成 | [四uint32的33 owned样本及独立Proto/非发送DTO](docs/CLIENT_72_D02_M0_PEER_JAVA_20261116.md)：token/key与实际M0宿主/SceneInfo owner key关联，7新+19关联共26项全过；tag4按后继同域合同接实际Host key，27项关联通过；tag12不填，不放完整Peer通知 | Sol max → Sol xhigh |
 | D02-M0-SCENEINFO-MIN-STATES | 已完成 | [新实体null状态与正常空control/state列表](docs/CLIENT_72_D02_M0_SCENEINFO_MIN_STATES_20261116.md)：实际消费分支逐项核；M0显式非null control零记录、正常零条80154，不造34045/83320；27项通过，只限新实体普通路径，不放握手 | Sol max → Sol xhigh |
 | D02-OLD-SNAPSHOT-DATA（OLD-RESOURCE-BUNDLE同项） | 已完成 | [固定旧号限定资源包](docs/CLIENT_72_D02_OLD_SNAPSHOT_DATA_20261116.md)：revision7补真实重算所需羁绊/名片7文件，28表/284输出与10条明示服务器策略；只覆盖选定快照Avatar/Inventory，不代全Manager或客户端ready | Terra xhigh → 唯一集成者 |
 | D02-OLD-SNAPSHOT-LOAD | 已完成 | [revision-5纯ResourceLoader诊断](docs/CLIENT_72_D02_OLD_SNAPSHOT_JAVA_20261116.md)：全部21表选行、121 Avatar/embryo、9128 Item种类及OpenConfig真实加载；没有Player/DB/hydrate，loadedAll保持false | Sol xhigh |
