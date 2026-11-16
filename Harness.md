@@ -1,3 +1,5 @@
+2026-11-16 Entity wire独立child scalar/Avatar oneof与root tag1/tag9的18样本已验，列表tag仍缺；准确A停止和保护窗严格解码失败保持。[SCOPE](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)分层记录。另[SceneTeam定位](docs/CLIENT_72_D02_M0_SCENETEAM_LOCATE_20261116.md)限定完成：唯一76429、Cmd1144/24706的6083B静态来源连接Avatar GUID及48178/41868初始化；完整wire和出现仍未闭，不恢复旧sender。
+
 2026-11-16 旧号revision-5首次纯ResourceLoader诊断10秒/JUnit1过：21表全选行安装，121 Avatar/Embryo、9128 Item种类、1964 OpenConfig；loadedAll=false、未创建Player/DB/hydrate。限定证据和恢复前准入要求见[旧号Java验证](docs/CLIENT_72_D02_OLD_SNAPSHOT_JAVA_20261116.md)。Entity-ACCEPT限定静态已完，ENTITY-WIRE与全旧号保存继续。
 
 2026-11-16 M0最终16套524项全过；portable正式构建25秒、内嵌d7cdda0，JAR SHA42636ecc42bd9b5c1a98a89fcde662e293f343f589b5e0efd36cf6ec1214e217。60变化/13新增class与编译输出相同，独立实例只预备未启动；完整部署/实机仍缺必要wire/自然路由。见[构建与集成](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)。
