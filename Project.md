@@ -108,7 +108,7 @@
 | --- | --- | --- | --- |
 | D02-M0-PLAN | 已完成 | 已确定新号先行、可自定参数、隔离配置及分工；仅规划，无运行实现 | 主线规划 |
 | D02-M0-SCOPE | 已完成 | [首版最小规格](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)明确701/出生与有限Avatar/SceneInfo字段、SESSION准确缺口及旧号独立契约；不是缺包wire或客户端验收完成 | Sol max + Terra max |
-| D02-M0-DATA | 进行中 | [独立资源生成](docs/CLIENT_72_D02_M0_DATA_20261116.md)已准备；真实限定loader与缺文件拒绝已验，真实出生装备保存/冷读待验 | Terra xhigh + Sol xhigh |
+| D02-M0-DATA | 进行中 | [独立资源生成](docs/CLIENT_72_D02_M0_DATA_20261116.md)19文件、真实限定loader/缺文件拒绝、出生装备保存/冷读和World身份已验；客户端必要Scene/ability合同仍缺 | Terra xhigh + Sol xhigh |
 | D02-M0-PROTOCOL | 进行中 | [M0 Avatar正式投影](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)已接目标20143及已证字段；SceneInfo/状态流继续，未知实体出现不发旧号 | Sol xhigh；难点Sol max |
 | D02-M0-SESSION | 阻塞 | [限定会话审阅](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)无新成熟Java认证缺口；自然service/mode/批准路由仍缺固定输入，原准确冻结动作继续阻塞 | Sol max / Sol xhigh |
 | D02-M0-RUN | 阻塞 | 已准备独立配置/资源/data及正式JAR；[构建身份已核](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)。必要Scene wire/SDK前置不足，未启动实例或请求客户端操作 | 唯一Sol xhigh集成者 |
@@ -121,6 +121,11 @@
 | D02-M0-BUILD | 已完成 | [portable正式打包](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)及内嵌d7cdda0/JAR SHA/变化class一致性，独立M0实例同hash预备；未部署或客户端验收 | Sol xhigh |
 | D02-M0-REUSE | 已完成 | [固定上游有界复用](docs/CLIENT_72_D02_M0_REUSE_20261116.md)已闭女主701/六技能/出生装备与Scene3具名来源；候选不晋级target | Terra max |
 | D02-M0-SCENEINFO-MIN | 已完成 | [两实体模板与有限静态来源](docs/CLIENT_72_D02_M0_SCENEINFO_MIN_20261116.md)：root14/tag5 World level、root15/tag7 Team身份区分；authority及能力角色仍未知，不是完整sender | Sol max |
+| D02-M0-ENTITY-ACCEPT | 已完成 | [543B typed接收限定静态合同](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)：4469/type73627的OnAccept循环、实体child+98和Vision分支；不含root完整wire/出现sender | Sol max |
+| D02-M0-ENTITY-WIRE | 进行中 | [有限reader/独立scalar与metadata](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)：317B根跳板、3269B child、167B保护窗失败保留；根字段及完整Avatar子图仍未闭，不发旧包号 | Sol max |
+| D02-OLD-SNAPSHOT-DATA（OLD-RESOURCE-BUNDLE同项） | 进行中 | [固定旧号离线包](docs/CLIENT_72_D02_OLD_SNAPSHOT_DATA_20261116.md)21表/277输出与10条明示服务器策略已准备；不能代真实完整恢复/客户端ready | Terra xhigh → 唯一集成者 |
+| D02-OLD-SNAPSHOT-LOAD | 已完成 | [revision-5纯ResourceLoader诊断](docs/CLIENT_72_D02_OLD_SNAPSHOT_JAVA_20261116.md)：全部21表选行、121 Avatar/embryo、9128 Item种类及OpenConfig真实加载；没有Player/DB/hydrate，loadedAll保持false | Sol xhigh |
+| D02-OLD-SNAPSHOT-RESTORE | 进行中 | 先建立全121/活动10727/471装备的实际资源准入及缺项零写负例，再以固定BSON独立库完整AvatarStorage/Inventory保存冷读；不能用M0准入或离线ready绕过 | 唯一Sol xhigh集成者 |
 
 
 此表保留未完成任务的状态与验收账本，按最快D-02出口重排。按依赖和本轮恢复索引的实际缺口发布任务，已有完成子项直接复用；“前移/后移/按需/冻结”描述排期，不增加任务状态。

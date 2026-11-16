@@ -1,3 +1,5 @@
+2026-11-16 旧号revision-5首次纯ResourceLoader诊断10秒/JUnit1过：21表全选行安装，121 Avatar/Embryo、9128 Item种类、1964 OpenConfig；loadedAll=false、未创建Player/DB/hydrate。限定证据和恢复前准入要求见[旧号Java验证](docs/CLIENT_72_D02_OLD_SNAPSHOT_JAVA_20261116.md)。Entity-ACCEPT限定静态已完，ENTITY-WIRE与全旧号保存继续。
+
 2026-11-16 M0最终16套524项全过；portable正式构建25秒、内嵌d7cdda0，JAR SHA42636ecc42bd9b5c1a98a89fcde662e293f343f589b5e0efd36cf6ec1214e217。60变化/13新增class与编译输出相同，独立实例只预备未启动；完整部署/实机仍缺必要wire/自然路由。见[构建与集成](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)。
 
 2026-11-16 M0真实出生/确认保存/冷读、m0Profile旧档载入前拒绝、有限onLogin与tick、真实World/Scene及21761身份投影已验；10套166项相关回归过。未知SceneInfo子图/Entity出现与自然SDK仍阻入场，M0 Init/Done明确停止不发旧通知。复现/失败/测试库边界见[集成记录](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)。
