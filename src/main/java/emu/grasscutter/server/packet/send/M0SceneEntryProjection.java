@@ -10,7 +10,11 @@ final class M0SceneEntryProjection {
     static NOCHHDCLKDJ project(Player player) {
         var result = NOCHHDCLKDJ.newBuilder()
                 .setOLCJCLBMMCF(player.getTeamManager().getCurrentAvatarEntity().getId())
-                .setMCCMGLDOECH(player.getEnterSceneToken());
+                .setMCCMGLDOECH(player.getEnterSceneToken())
+                .setLFLOLJADPBI(JLILNBLGMIP.newBuilder()
+                        .setLLHEBIHGDAE(player.getWorld().getLevelEntityId()))
+                .setAEKMONHBHAA(BINIKNHCLIA.newBuilder()
+                        .setJNBCPNHJCNI(player.getTeamManager().getEntity().getId()));
         for (var entity : player.getTeamManager().getActiveTeam()) {
             var avatar = entity.getAvatar();
             var weapon = avatar.getWeaponNotNull();

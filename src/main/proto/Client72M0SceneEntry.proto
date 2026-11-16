@@ -1,5 +1,5 @@
 // Finite identity projection from scene-info raw/contract/deep/entry-closure evidence.
-// Team, level and ability children remain unresolved and are not empty placeholders here.
+// Only proven nonzero World/Team identity children are included; authority/abilities remain unresolved.
 syntax = "proto3";
 
 package cn72.m0sceneentry;
@@ -10,6 +10,16 @@ message NOCHHDCLKDJ {
   repeated CKMLFOFDEHN DIGAMAKGCPA = 2;
   optional uint32 MCCMGLDOECH = 7;
   optional uint32 OLCJCLBMMCF = 12;
+  JLILNBLGMIP LFLOLJADPBI = 14;
+  BINIKNHCLIA AEKMONHBHAA = 15;
+}
+
+message JLILNBLGMIP {
+  optional uint32 LLHEBIHGDAE = 5;
+}
+
+message BINIKNHCLIA {
+  optional uint32 JNBCPNHJCNI = 7;
 }
 
 message CKMLFOFDEHN {

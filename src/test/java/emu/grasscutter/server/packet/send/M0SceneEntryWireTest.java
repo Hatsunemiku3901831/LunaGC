@@ -22,9 +22,23 @@ class M0SceneEntryWireTest {
         assertEquals(3, row.getNPKKCHABEJH());
         assertEquals(4, row.getOKMEHFHNFCG());
         assertArrayEquals(golden, root.toByteArray());
-        assertEquals(Set.of(2, 7, 12), root.getDescriptorForType().getFields().stream()
+        assertEquals(Set.of(2, 7, 12, 14, 15), root.getDescriptorForType().getFields().stream()
                 .map(f -> f.getNumber()).collect(Collectors.toSet()));
         assertEquals(Set.of(4, 7, 10, 13), row.getDescriptorForType().getFields().stream()
+                .map(f -> f.getNumber()).collect(Collectors.toSet()));
+    }
+
+    @Test
+    void independentWorldAndTeamIdentityChildrenAreNonemptyAndDistinct() throws Exception {
+        byte[] wire = HexFormat.of().parseHex("720228047a023805");
+        var root = NOCHHDCLKDJ.parseFrom(wire);
+        assertEquals(4, root.getLFLOLJADPBI().getLLHEBIHGDAE());
+        assertEquals(5, root.getAEKMONHBHAA().getJNBCPNHJCNI());
+        assertNotEquals(root.getLFLOLJADPBI().getLLHEBIHGDAE(), root.getAEKMONHBHAA().getJNBCPNHJCNI());
+        assertArrayEquals(wire, root.toByteArray());
+        assertEquals(Set.of(5), JLILNBLGMIP.getDescriptor().getFields().stream()
+                .map(f -> f.getNumber()).collect(Collectors.toSet()));
+        assertEquals(Set.of(7), BINIKNHCLIA.getDescriptor().getFields().stream()
                 .map(f -> f.getNumber()).collect(Collectors.toSet()));
     }
 

@@ -116,7 +116,7 @@
 | D02-M0-CONFIG-BIRTH-LOADER | 已完成 | 默认关闭M0、原runtime拒绝启用、有限真实资源加载/引用与正值重算、缺文件拒绝；loadedAll保持false。仅birth-ready，不是entry-ready或部署 | Sol xhigh |
 | D02-M0-AVATAR-PROJECTION | 已完成 | 同Player/Avatar/Item/Team的目标20143 raw投影及定向wire验证；仅三普通属性、七FightProp、当前depot、HP生命态与已证身份，Hero控制/未知附属不晋级 | Sol xhigh |
 | D02-M0-BIRTH-PERSISTENCE | 已完成 | [真实出生与冷恢复](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)：实际handler拒不支持选择、命名/装备/确认保存，新Player及真实manager恢复同ObjectId/装备/HP；只是服务器保存，不是客户端退出重登 | Sol xhigh |
-| D02-M0-SCENE-IDENTITY | 已完成 | [真实World/Scene对象与21761有限投影](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)：同Avatar/武器GUID与非零实体ID/token；未知root14/15与EntityAppear不填、不放entry-ready | Sol xhigh |
+| D02-M0-SCENE-IDENTITY | 已完成 | [真实World/Scene对象与21761有限投影](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)：同Avatar/武器GUID/实体/token及root14.tag5真实World/root15.tag7真实Team非空独立ID；authority/能力字段不填，19项关联通过、不放entry-ready | Sol xhigh |
 | D02-M0-LIFECYCLE | 已完成 | [有限登录/加载/周期分流](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)、m0Profile旧档载入前拒绝；Ready已验Rsp，Init/Done在未知wire停止，不假成功 | Sol xhigh |
 | D02-M0-BUILD | 已完成 | [portable正式打包](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)及内嵌d7cdda0/JAR SHA/变化class一致性，独立M0实例同hash预备；未部署或客户端验收 | Sol xhigh |
 | D02-M0-REUSE | 已完成 | [固定上游有界复用](docs/CLIENT_72_D02_M0_REUSE_20261116.md)已闭女主701/六技能/出生装备与Scene3具名来源；候选不晋级target | Terra max |

@@ -132,6 +132,11 @@ class M0BirthPersistenceMongoTest {
             assertEquals(21761, scenePacket.getOpcode());
             var entry = NOCHHDCLKDJ.parseFrom(scenePacket.getData());
             assertEquals(currentEntity.getId(), entry.getOLCJCLBMMCF());
+            assertEquals(fresh.getWorld().getLevelEntityId(), entry.getLFLOLJADPBI().getLLHEBIHGDAE());
+            assertEquals(fresh.getTeamManager().getEntity().getId(), entry.getAEKMONHBHAA().getJNBCPNHJCNI());
+            assertNotEquals(0, entry.getLFLOLJADPBI().getLLHEBIHGDAE());
+            assertNotEquals(0, entry.getAEKMONHBHAA().getJNBCPNHJCNI());
+            assertNotEquals(entry.getLFLOLJADPBI().getLLHEBIHGDAE(), entry.getAEKMONHBHAA().getJNBCPNHJCNI());
             assertEquals(fresh.getEnterSceneToken(), entry.getMCCMGLDOECH());
             assertEquals(1, entry.getDIGAMAKGCPACount());
             var entered = entry.getDIGAMAKGCPA(0);

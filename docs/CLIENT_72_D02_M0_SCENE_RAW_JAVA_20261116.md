@@ -29,6 +29,14 @@ optional标量只用于Java显式零/false合并存在性；packed输出是同�
 
 原XML和汇总归档于`local/migration72/d02-m0-integration-20261116/scene-raw-java-results/`；首轮日志为同根`m0-scene-raw-graph-wire-tests.log`。本项没有新native CPU、helper/model、A返回、客户端、DB或补丁操作。正式portable构建25秒通过，内嵌89b2ceb，JAR SHA `74049899d59c4a8b2652aeaba2ff14b9fb5ca81ae2e94acd08eb41f1caa001f3`；3变化/33新增class与build/classes全部匹配，0移除。两个独立实例仅预备同SHA未启动；post-build只有自有测试Mongo27027，HTTP8088/game UDP22101/游戏JAR进程0，无健康或运行JAR正向对象，未装补丁。原件scene-raw-build-artifact.private.json、scene-raw-post-build-runtime.private.json及scene-raw-portable-build.log在同一ignored根。完整SceneTeam/Entity/SceneInfo和自然认证仍有准确未闭边，不发送完整场景包。
 
+## SceneInfo非空身份增量
+
+在Peer及能力最小性研究同时，按已证对象关系继续独立实现两个非空identity子树：21761/type34208的root14→44512.tag5来自同World.getLevelEntityId，root15→49723.tag7来自同TeamManager.entity.id；真实非零且两ID不同，不能写90000004/90000002模板。此前六个Avatar/Weapon/当前实体/token关系保留。root14.tag1 authority-key及能力子图仍未宣称闭合，不填未知bool/hash或空能力对象。
+
+`Client72M0SceneEntry.proto`仅增加上述真实ID字段；实际M0 projection与独立golden `720228047a023805`、真实出生/保存/冷读后的World对象交叉全部通过。M0Birth1、SceneEntry wire3、SceneHandshake15共19项，29秒/失败0/错误0/跳过0；原始结果归档同ignored根`scene-nonempty-identity-results/`。Init/Done仍在准确缺口处停止，无完整场景发送或客户端验收。此增量之后另行正式构建，不追认上节89b2ceb产物已经包含新字段。
+
+给来源执行者的待接清单分开处理：Peer raw闭后用真实消费保持localAuthorityKey/OOJ/entity+42C的关系，不因官方英文名缺失阻塞；44512.tag2新实体已有非null才Clone分支，49723.tag4的null状态、tag1/89710 count0是否跳过hash循环、tag3/80154空列表合法性逐个核既采源。未知72829及float不造默认值；真实MP/Team无追加可选global能力和Avatar5基础能力仅是服务器状态，不是所有network能力分支必须存在或必可省的证明。
+
 ## 旧号快照出口短核
 
 有限旧号mode已保留全部存档，但完整网络入口仍拒绝。代码及[库存生产合同](CLIENT_72_INVENTORY_PRODUCTION.md)、[Equip合同](CLIENT_72_EQUIP_CONTRACT.md)当前只批准Material与Weapon/Relic有限字段；raw15型47字段不是所有分支业务合同。Item7/8/9/10不能按形状命名Furniture/TPS。现生产Store会略2331 Furniture与8 TPS；Weapon affix_map已证“EquipAffix组→组内level key”，保存refinement的映射尚未有目标桥，不能默认减1或把Java组合lookup当客户端身份；Relic2/3/4/5/7/8仍未闭业务角色。

@@ -1,3 +1,5 @@
+2026-11-16 SceneInfo新增两个真实非空identity子树：root14.tag5=同World level entityID，root15.tag7=同Team实体ID，非零且互异，不发模板/authority/能力空壳。实际M0 projection、出生/冷读World交叉及独立wire共19项29秒全过；Init/Done缺口停止保持。见[SceneInfo身份增量与待接清单](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#sceneinfo非空身份增量)，后续按新源码正式构建。
+
 2026-11-16 场景raw正式portable构建25秒通过，内嵌89b2ceb，JAR SHA74049899d59c4a8b2652aeaba2ff14b9fb5ca81ae2e94acd08eb41f1caa001f3；3变化/33新增class匹配输出。两独立实例同SHA仅预备未启动；只有自有测试Mongo27027、HTTP8088/UDP22101/游戏JAR进程0，无新补丁/客户端。最新构建/停止前置见[场景raw Java](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)。
 
 2026-11-16 [场景raw Java增量](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md)完成：28字段SceneAvatar、17外字段Team、83228四字段、86588实测bool及既验共享子图进入三份Proto，Gradle/protoc生成；10新+14关联共24项25秒全过，含非零/高64位/嵌套/两元素列表/fixed32/高tag/错误边界。未知三内层不造空对象，86588 cctor-only列表不升级；完整sender/入场仍未验。旧库存短核精确保留Furniture/TPS/Relic/精炼转换缺口，不泛阻全Manager。
