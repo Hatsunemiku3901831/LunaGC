@@ -15,6 +15,7 @@ import emu.grasscutter.net.proto.PlayerStoreNotifyOuterClass.PlayerStoreNotify;
 import emu.grasscutter.server.packet.send.PacketPlayerStoreNotify;
 import java.util.HexFormat;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeAll;
@@ -95,11 +96,23 @@ class Protocol72PlayerStoreContractTest {
         Message detail = (Message) equip.getField(equip.getDescriptorForType().findFieldByNumber(weapon ? 2 : 1));
         var fields = detail.getAllFields().keySet().stream().map(Descriptors.FieldDescriptor::getNumber)
                 .collect(Collectors.toSet());
-        assertEquals(weapon ? Set.of(1, 2, 3) : Set.of(1, 6), fields);
+        assertEquals(weapon ? Set.of(1, 2, 3, 4) : Set.of(1, 6), fields);
         assertEquals(3, detail.getField(detail.getDescriptorForType().findFieldByNumber(1)));
         if (weapon) {
             assertEquals(250, detail.getField(detail.getDescriptorForType().findFieldByNumber(2)));
             assertEquals(2, detail.getField(detail.getDescriptorForType().findFieldByNumber(3)));
+            var rawMap = UnknownFieldSet.parseFrom(detail.toByteArray()).getField(4)
+                    .getLengthDelimitedList().stream().map(entry -> {
+                        try {
+                            var values = UnknownFieldSet.parseFrom(entry).asMap();
+                            assertEquals(Set.of(1, 2), values.keySet());
+                            return Map.entry(values.get(1).getVarintList().get(0),
+                                    values.get(2).getVarintList().get(0));
+                        } catch (java.io.IOException exception) {
+                            throw new AssertionError(exception);
+                        }
+                    }).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            assertEquals(Map.of(77L, 4L, 88L, 4L), rawMap);
         } else {
             assertEquals(favourite, detail.getField(detail.getDescriptorForType().findFieldByNumber(6)));
         }

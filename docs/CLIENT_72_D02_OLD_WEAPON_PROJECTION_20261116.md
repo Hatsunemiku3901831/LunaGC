@@ -16,4 +16,12 @@
 - 独立5项手写wire验证level0/3/4、多组原key及空map区别，不使用待测builder生成golden。未知Weapon tag5/6未赋值。该组最终18秒全过。
 - 库存raw36项和上述旧号生命周期1项在首次31秒批次已通过；同批5个unit因错误使用整GameItem的安全JSON解码得到null而失败。仅修夹具为真实ItemData→GameItem构造器，未加运行判空或放宽断言；失败XML/日志保留。当前通过的42项来自该37项及随后5项，不冒称一次42项成功执行。
 
-原件同ignored集成根：`old-weapon-affix-first-results/`、`old-weapon-affix-first-failure.xml`、`old-weapon-affix-wire-final-results/`、`old-weapon-affix-results.private.json`及两轮日志。没有发送旧号Store通知，现网络准入仍在Player创建前拒绝；实际活动Store仍仅覆盖8388=6367 Material+1663 Weapon+358 Relic，2331 Furniture及8 TPS缺口不消失，350仅是已装备Relic数。正式portable构建后补，客户端六项仍0/6。
+原件同ignored集成根：`old-weapon-affix-first-results/`、`old-weapon-affix-first-failure.xml`、`old-weapon-affix-wire-final-results/`、`old-weapon-affix-results.private.json`及两轮日志。没有发送旧号Store通知，现网络准入仍在Player创建前拒绝；实际活动Store仍仅覆盖8388=6367 Material+1663 Weapon+358 Relic，2331 Furniture及8 TPS缺口不消失，350仅是已装备Relic数。客户端六项仍0/6。
+
+实际`PacketPlayerStoreNotify` producer另补15项22秒回归全过；旧阶段仅允许Weapon1/2/3的期望更新为已证map4，独立UnknownFieldSet逐entry断言正组77/88映射原level4，锁定/收藏组合及高位GUID保持。只改测试期望，没有新增运行防御或更改golden来源；XML和日志为`weapon-actual-store-producer-regression.xml`及同名`.log`。
+
+## 正式portable构建与未部署
+
+两个成熟运行出口分别本地提交`8a7ad19`和`49b4ae6`，随后通过`tools/local_windows.ps1 -Mode build`正式portable构建26秒。内嵌`49b4ae6`，98291387B，SHA `2df2d0954c105e917cbe5bc08d15add0852a51c3ae4663f3de9b0a99dd168e03`。7变化/1新增/0移除class均与编译输出匹配：变化为BuildConfig、InfoCommand、HandlerSetPlayerBornDataReq、M0AvatarIdentityProjection、PacketPlayerStoreNotify及其switch class、StartupArguments；新增Client72WeaponProjection。后补producer仅修改测试，不改变该运行产物。
+
+两个独立实例JAR均为同SHA，仅预备，未启动或安装补丁/客户端。核对HTTP8088/原Mongo27017/game UDP22101/游戏JAR进程均无，只有自有测试Mongo27027；没有可核的正向游戏健康或运行JAR。未部署原因是自然SDK/service/mode/批准路由及必要Peer/Entity合同未齐，不以构建代替实机。原版本名/版本门不重标。原件`weapon-zero-facing-portable-build.log`、`weapon-zero-facing-build-artifact.private.json`和`weapon-zero-facing-post-build-runtime.private.json`留同ignored集成根。
