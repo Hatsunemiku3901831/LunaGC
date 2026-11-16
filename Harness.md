@@ -1,3 +1,5 @@
+2026-11-16 M0最终16套524项全过；portable正式构建25秒、内嵌d7cdda0，JAR SHA42636ecc42bd9b5c1a98a89fcde662e293f343f589b5e0efd36cf6ec1214e217。60变化/13新增class与编译输出相同，独立实例只预备未启动；完整部署/实机仍缺必要wire/自然路由。见[构建与集成](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)。
+
 2026-11-16 M0真实出生/确认保存/冷读、m0Profile旧档载入前拒绝、有限onLogin与tick、真实World/Scene及21761身份投影已验；10套166项相关回归过。未知SceneInfo子图/Entity出现与自然SDK仍阻入场，M0 Init/Done明确停止不发旧通知。复现/失败/测试库边界见[集成记录](docs/CLIENT_72_D02_M0_INTEGRATION_20261116.md)。
 
 2026-11-16 M0有界规格/复用/SceneInfo最小研究已分项验收；固定来源与真正必要缺口见[SCOPE](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)、[REUSE](docs/CLIENT_72_D02_M0_REUSE_20261116.md)、[SceneInfo](docs/CLIENT_72_D02_M0_SCENEINFO_MIN_20261116.md)。SESSION自然service/mode/批准路由仍准确阻塞；Entity wire后继研究继续。

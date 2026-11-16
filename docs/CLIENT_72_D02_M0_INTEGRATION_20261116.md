@@ -28,3 +28,11 @@ M0已完成有限onLogin/同步角色库存冷载和Player/World tick分流，�
 M0独立config/resources/local-data已准备并通过portable配置检查，未启动游戏实例。SceneTeam/Entity出现、SceneInfo Team/level/ability子图和自然SDK路由仍有准确必要缺口，当前构建版本声明门也未变更。没有可请求用户启动的实机包；不能以birth-ready、编译或健康替代入场。继续成熟协议及独立旧号资源/恢复工作；必要wire/会话未齐时不启动猜测协议。
 
 原始JUnit、失败、构建和运行材料只留上述忽略目录。Project维护任务与完成范围；Harness索引本报告。M0通过也不关闭完整D-02。
+
+## 正式便携构建与实际部署状态
+
+运行实现本地提交`366de3d`、`d7cdda0`，规格/复用/SceneInfo限定研究提交`7ff683a`；三次均核对指定Author/Committer，未推送。随后实际执行`tools/local_windows.ps1 -Mode build`，25秒成功；JAR SHA-256为`42636ecc42bd9b5c1a98a89fcde662e293f343f589b5e0efd36cf6ec1214e217`，内嵌`d7cdda0`匹配。旧JAR SHA`8f093e19b839ff1263984c596584d1ae12e6d4fd841d82562aaf30f998267291`已私有备份。旧46306类→新46319类，60变化、13新增、0删除、46246保持；变化和新增运行类全部与当前编译输出SHA一致。构建证明`portable-build-artifact.json`与日志`portable-build.log`位于上述忽略目录。
+
+新JAR已复制到独立M0实例，同hash；config/resources/data均指向该实例，Mongo配置27027通过portable路径检查。未启动此实例：实际8088 TCP、22101 UDP及游戏JAR进程均0；27027仅为本轮拥有的独立validation Mongo，用于唯一测试库。没有正向服务健康、运行JAR SHA或loaded补丁验收对象，也未安装/构建客户端补丁。patch/resources子模块HEAD及原dirty范围保持，旧运行数据库和data未操作。版本声明门保持原状，不能由本次构建直接启动7.2客户端。
+
+`D02-M0-BUILD`只覆盖上述打包和身份核对；`D02-M0-RUN`仍因SceneInfo必要子图/Entity出现与自然SDK路由前置而阻塞。当前实验包不会请求用户ready。旧号资源与服务器完整冷恢复是下一可独立任务，不受本M0有限资源ready代替。
