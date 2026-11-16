@@ -1,5 +1,15 @@
 # D02-M0-SCENE-RAW-JAVA
 
+## EntityAppear根列表外层与非发送DTO
+
+固定[外层列表来源](CLIENT_72_D02_M0_ENTITY_LIST_INDEPENDENT_20261116.md)13547B/SHA `495cb2722ac2c2b4bc2b5fe8d0e64505bfcaba4135c4df781caa7620676ba16a`，合同receipt SHA `1758eab9b28a7c0f5ed65a90e3e947b7dfd58080dbd3cb9186522e002aa63947`。`1200`实际读取typed root+18列表容器后才因class0+C7失败；`1a00`和`1000`完整返回并排除该容器路径。三样本同七model/预算、A/codec/newchild/新增初始化均0。这只闭73627.tag2/wire2→repeated16796，不冒称目标元素codec或完整reader通过。
+
+`Client72M0EntityRaw.proto`增加该列表，由Gradle/protoc生成Java。`M0AvatarIdentityProjection.projectCurrentPlayerAppearance`只把既有同Player/Avatar的partial child放入列表，并取已证VisionBorn12；root tag1业务值及child tag2仍未知，均不赋值。child保同Avatar GUID/Player UID、真实位置、显式零rotation及静止velocity，真实武器GUID/实体ID仍按同次Team identity交叉，不给未知内层移植旧字段。此方法不构造BasePacket或发送4469，INIT仍准确关闭。
+
+3套35项38秒首次全过，失败/错误/跳过0：Entity raw21、Motion13、真实M0 Born/冷读1。新增四项独立literal断言覆盖双元素顺序、2^53+1与u64 max GUID、三Vector消息存在、空列表/空child区别、错误wire/不同field、截断长度和非法nested。真实新M0冷读后创建DTO并序列化重读，UID/GUID/位置/武器身份一致、未知tag2未填；非零旋转明确拒绝，原INIT不多发任何通知/成功。Java错误断言不冒称本轮native错误路径样本。
+
+原件在ignored集成根：`entity-root-list-first-tests.log`、`entity-root-list-results/`及`entity-root-list-results.private.json`。没有新native/模型、资源、网络启动或客户端验收；正式portable构建另记。完整appear消费、Peer真分支与自然SDK继续，六项0/6。
+
 本项把来源人已完成并固定的SceneAvatar/SceneTeam raw合同转成独立Proto，未编写完整sender、升级Scene握手或运行客户端。三层来源及语义剩余按[SceneAvatar](CLIENT_72_D02_M0_SCENEAVATAR_WIRE_20261116.md)和[SceneTeam](CLIENT_72_D02_M0_SCENETEAM_MIN_WIRE_20261116.md)读取，不能用本项Java编译/测试代替目标实机或fresh原生对象构造。
 
 ## 固定来源与schema范围
@@ -7,7 +17,7 @@
 - SceneAvatar专题SHA `aefcfa3e4e769b5ccdcc163647f62444a08b19977914b280ed8e63ad80eac196`：41868的13个无变换scalar、7个u32列表、2个u32/u32 map及6个已有批准内容的引用槽，共28字段进入`Client72M0SceneAvatarRaw.proto`。26952、17469、27216三个未知内层不声明、不造opaque空对象。scalar名字不自动批准AvatarID/depot/GUID业务值。
 - SceneTeam专题SHA `01cca3ca3dc17c0774e38da334810131f8434bcf941a842602025752c03f40e4`：76429全部17个外字段、83228四字段进入`Client72M0SceneTeamRaw.proto`；86588仅声明19个真实owned样本已证的bool/tag13。其list/tag5保持.cctor-only来源等级，没有因本项Java适配提升为reader闭合。
 - 73976五字段、83320三个字段及89710列表从既验`scene-info-raw-observations.json`复用，文件SHA `f52f41a817241646d63d692b120d5c134c1b30dfe8b2da5d440de5d9557f7c75`，进入`Client72M0SharedSceneRaw.proto`。83320的tag2/3保持fixed32，不赋予name/override角色。34045/27196/27246/48178/53824直接引用已批准65型`Client72AvatarWire.proto`，不复制旧语义schema。
-- 初始16796只引用此前已证scalar子集；后续按下节UID/GUID桥增加已证Avatar oneof/tag10，root list仍未闭。83228外层完备不代表内层实体、业务flag/能力状态或完整场景完备。
+- 初始16796只引用此前已证scalar子集；后续按下节UID/GUID桥增加已证Avatar oneof/tag10，再按根列表专题增加73627.tag2的外层typed列表。元素codec/完整native reader未闭。83228外层完备不代表内层实体、业务flag/能力状态或完整场景完备。
 
 optional标量只用于Java显式零/false合并存在性；packed输出是同已批准packed/unpacked primitive输入合同的适配，不声称恢复原Proto语法。所有Java由Gradle/protoc生成，未手改生成物。
 

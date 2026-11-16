@@ -1,5 +1,5 @@
-// Partial CN7.2 contracts only. No root list or complete entity sender is established.
-// Source: CLIENT_72_D02_M0_SCOPE_20261116, ENTITY-WIRE / ROOT-SCALAR.
+// Partial CN7.2 contracts: the root list's outer wire is established, not its native element codec.
+// Sources: CLIENT_72_D02_M0_SCOPE_20261116 and ENTITY_LIST_INDEPENDENT_20261116.
 syntax = "proto3";
 
 package cn72.m0entityraw;
@@ -10,6 +10,8 @@ import "Client72M0MotionRaw.proto";
 
 message NAALIELJILH {
   optional uint32 OJPFPILNCIC = 1;
+  // Positive typed container access plus two complete negative controls bind only this outer field.
+  repeated IJCEPPNOCNM NKBMECCPKPJ = 2;
   // Raw enum42790 bits; VisionBorn=12. uint32 preserves all verified unsigned values.
   optional uint32 BBHDLEGOLPI = 9;
 }
@@ -19,7 +21,7 @@ message IJCEPPNOCNM {
   optional uint32 MCPCJJBMHMK = 1;
   optional uint32 LLHEBIHGDAE = 2;
   optional string OKDLHHPJOLA = 3;
-  // Required pointer in the ordinary local Avatar consumer; vector field roles remain raw.
+  // Ordinary local Avatar consumer pointer; first-born M0 zero facing is a separate limited policy.
   cn72.m0motion.Raw49847 raw_motion_4 = 4;
   optional uint32 DFENDOGMEAD = 7;
   optional uint32 CCJOFDMPEEK = 17;

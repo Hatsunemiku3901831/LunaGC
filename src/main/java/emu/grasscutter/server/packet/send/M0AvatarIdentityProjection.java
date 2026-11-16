@@ -2,6 +2,7 @@ package emu.grasscutter.server.packet.send;
 
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.net.proto.Client72M0EntityRawOuterClass.IJCEPPNOCNM;
+import emu.grasscutter.net.proto.Client72M0EntityRawOuterClass.NAALIELJILH;
 import emu.grasscutter.net.proto.Client72M0SceneAvatarRawOuterClass.FKDEDKIHNDA;
 import emu.grasscutter.net.proto.Client72M0SceneTeamRawOuterClass.Raw76429;
 import emu.grasscutter.net.proto.Client72M0MotionRawOuterClass.Raw49847;
@@ -10,6 +11,14 @@ import emu.grasscutter.net.proto.Client72SceneHandshakeNestedOuterClass.BGDCNKAK
 /** Same-player entry identities and stationary-birth position; not a complete entity/team notice. */
 public final class M0AvatarIdentityProjection {
     private M0AvatarIdentityProjection() {}
+
+    /** Proven root-list envelope only; child tag2 and complete appearance semantics remain unknown. */
+    public static NAALIELJILH projectCurrentPlayerAppearance(Player player) {
+        return NAALIELJILH.newBuilder()
+                .addNKBMECCPKPJ(projectCurrentPlayer(player).getMPHLKPODDHK())
+                .setBBHDLEGOLPI(12) // Target VisionBorn for the explicitly limited first spawn.
+                .build();
+    }
 
     public static Raw76429 projectCurrentPlayer(Player player) {
         var entity = player.getTeamManager().getCurrentAvatarEntity();

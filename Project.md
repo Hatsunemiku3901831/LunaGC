@@ -122,8 +122,10 @@
 | D02-M0-REUSE | 已完成 | [固定上游有界复用](docs/CLIENT_72_D02_M0_REUSE_20261116.md)已闭女主701/六技能/出生装备与Scene3具名来源；候选不晋级target | Terra max |
 | D02-M0-SCENEINFO-MIN | 已完成 | [两实体模板与有限静态来源](docs/CLIENT_72_D02_M0_SCENEINFO_MIN_20261116.md)：root14/tag5 World level、root15/tag7 Team身份区分；authority及能力角色仍未知，不是完整sender | Sol max |
 | D02-M0-ENTITY-ACCEPT | 已完成 | [543B typed接收限定静态合同](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)：4469/type73627的OnAccept循环、实体child+98和Vision分支；不含root完整wire/出现sender | Sol max |
-| D02-M0-ENTITY-WIRE | 进行中 | [有限reader/独立scalar与metadata](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)：child独立标量与Avatar oneof、root tag1/tag9的18个owned样本已验；列表tag及完整Avatar子图未闭，317B跳板/167B失败与准确A停止保留，不发不完整4469 | Sol max |
-| D02-M0-ENTITY-SCALAR-JAVA | 已完成 | root2/child7个已证raw字段进入独立Proto，Gradle/protoc生成；12项独立标量/无符号边界/string/错误/存在性断言及2项Scene高64位/列表回归通过。无root list或完整sender，构建另登记 | Sol xhigh |
+| D02-M0-ENTITY-WIRE | 进行中 | [有限reader/独立scalar与metadata](docs/CLIENT_72_D02_M0_SCOPE_20261116.md)：child独立标量与Avatar oneof、root tag1/tag9的18个owned样本已验；后继已闭根列表外层tag2/wire2，元素codec/完整Avatar消费仍未闭，317B跳板/167B及class-init失败与准确A停止保留，不发不完整4469 | Sol max |
+| D02-M0-ENTITY-LIST-INDEPENDENT | 已完成 | [正实际typed容器读取及两负完整排除](docs/CLIENT_72_D02_M0_ENTITY_LIST_INDEPENDENT_20261116.md)：73627.tag2/wire2→repeated16796外层绑定；正样本后续class0+C7失败、native元素codec未执行，不升级完整parser | Sol max |
+| D02-M0-ENTITY-LIST-JAVA | 已完成 | [根列表Proto与同M0对象的非发送DTO](docs/CLIENT_72_D02_M0_SCENE_RAW_JAVA_20261116.md#entityappear根列表外层与非发送dto)：35项38秒通过，真实Player/Avatar/武器关系及零Motion嵌入；未知root tag1/child tag2不赋值，不启4469/INIT，正式构建后补 | Sol xhigh |
+| D02-M0-ENTITY-SCALAR-JAVA | 已完成 | root2/child7个已证raw字段进入独立Proto，Gradle/protoc生成；12项独立标量/无符号边界/string/错误/存在性断言及2项Scene高64位/列表回归通过。本scalar阶段无root list；后继根列表单独接入，完整sender未放行 | Sol xhigh |
 | D02-M0-SCENETEAM-LOCATE | 已完成 | [唯一76429子图与双root接收静态链](docs/CLIENT_72_D02_M0_SCENETEAM_LOCATE_20261116.md)：1144本地/24706上下文来源、Avatar GUID及48178/41868初始化限定来源已闭；wire与sender另验 | Sol max |
 | D02-M0-SCENETEAM-MIN-WIRE | 已完成 | [76429全部17外字段、83228四字段、86588 bool的19 owned样本](docs/CLIENT_72_D02_M0_SCENETEAM_MIN_WIRE_20261116.md)限定合同完成；能力/flag及完整sender仍未闭，UID由后继独立桥接入，不沿用旧29245 | Sol max |
 | D02-M0-SCENEAVATAR-WIRE | 已完成 | [41868唯一3430B reader的13标量及31外槽分派](docs/CLIENT_72_D02_M0_SCENEAVATAR_WIRE_20261116.md)静态限定完成；普通raw范围完成；后继独立桥仅闭UID/tag1和GUID/tag3，完整实体sender未闭 | Sol max |

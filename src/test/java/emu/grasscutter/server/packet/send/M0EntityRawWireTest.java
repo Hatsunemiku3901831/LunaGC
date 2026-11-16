@@ -66,8 +66,11 @@ class M0EntityRawWireTest {
 
     @Test
     void partialSchemaCannotMasqueradeAsCompleteRootOrAvatarGraph() {
-        assertEquals(Set.of(1, 9), NAALIELJILH.getDescriptor().getFields().stream()
+        assertEquals(Set.of(1, 2, 9), NAALIELJILH.getDescriptor().getFields().stream()
                 .map(f -> f.getNumber()).collect(Collectors.toSet()));
+        var list = NAALIELJILH.getDescriptor().findFieldByNumber(2);
+        assertTrue(list.isRepeated());
+        assertEquals(IJCEPPNOCNM.getDescriptor(), list.getMessageType());
         assertEquals(Set.of(1, 2, 3, 4, 7, 10, 17, 18, 26), IJCEPPNOCNM.getDescriptor().getFields().stream()
                 .map(f -> f.getNumber()).collect(Collectors.toSet()));
         assertEquals(1, IJCEPPNOCNM.getDescriptor().getOneofs().get(0).getFieldCount());
@@ -92,6 +95,57 @@ class M0EntityRawWireTest {
         assertEquals(7, child.getRawAvatar10().getPJAJDHBBMGB());
         assertEquals(9007199254740993L, child.getRawAvatar10().getFBLKPHOCBIK());
         assertArrayEquals(bytes, child.toByteArray());
+    }
+
+    @Test
+    void rootListLiteralRetainsTwoOrderedAvatarGraphsAndBothHighGuids() throws Exception {
+        byte[] bytes = hex("1217080122060a0012001a00520b0807188180808080808010"
+                + "1219080122060a0012001a00520d080818ffffffffffffffffff01480c");
+        var root = NAALIELJILH.parseFrom(bytes);
+        assertEquals(2, root.getNKBMECCPKPJCount());
+        assertEquals(12, root.getBBHDLEGOLPI());
+        assertFalse(root.hasOJPFPILNCIC());
+        var first = root.getNKBMECCPKPJ(0);
+        var second = root.getNKBMECCPKPJ(1);
+        assertEquals(7, first.getRawAvatar10().getPJAJDHBBMGB());
+        assertEquals(9007199254740993L, first.getRawAvatar10().getFBLKPHOCBIK());
+        assertEquals(8, second.getRawAvatar10().getPJAJDHBBMGB());
+        assertEquals(-1L, second.getRawAvatar10().getFBLKPHOCBIK());
+        for (var child : root.getNKBMECCPKPJList()) {
+            assertEquals(1, child.getMCPCJJBMHMK());
+            assertFalse(child.hasLLHEBIHGDAE());
+            assertTrue(child.getRawMotion4().hasHHAFHFEPLPD());
+            assertTrue(child.getRawMotion4().hasHPLBLGJLIFF());
+            assertTrue(child.getRawMotion4().hasDACMFIDFIJA());
+        }
+        assertArrayEquals(bytes, root.toByteArray());
+    }
+
+    @Test
+    void listAppendEmptyMessageAndAbsentListRemainDifferent() throws Exception {
+        assertEquals(0, NAALIELJILH.getDefaultInstance().getNKBMECCPKPJCount());
+        var empty = NAALIELJILH.parseFrom(hex("120012020801"));
+        assertEquals(2, empty.getNKBMECCPKPJCount());
+        assertEquals(IJCEPPNOCNM.getDefaultInstance(), empty.getNKBMECCPKPJ(0));
+        assertEquals(1, empty.getNKBMECCPKPJ(1).getMCPCJJBMHMK());
+        assertArrayEquals(hex("120012020801"), empty.toByteArray());
+    }
+
+    @Test
+    void wrongListWireAndDifferentFieldDoNotSelectTheTypedList() throws Exception {
+        for (String literal : List.of("1001", "1a00")) {
+            var root = NAALIELJILH.parseFrom(hex(literal));
+            assertEquals(0, root.getNKBMECCPKPJCount());
+            assertFalse(root.getUnknownFields().asMap().isEmpty());
+            assertArrayEquals(hex(literal), root.toByteArray());
+        }
+    }
+
+    @Test
+    void truncatedListLengthsAndInvalidNestedChildrenAreRejected() {
+        for (String literal : List.of("12", "1280", "120108", "12025201", "120100",
+                "120322020a"))
+            assertThrows(InvalidProtocolBufferException.class, () -> NAALIELJILH.parseFrom(hex(literal)));
     }
 
     private static byte[] hex(String input) { return HexFormat.of().parseHex(input); }

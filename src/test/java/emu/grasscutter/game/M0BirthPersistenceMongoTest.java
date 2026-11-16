@@ -198,6 +198,19 @@ class M0BirthPersistenceMongoTest {
             assertTrue(motion.hasHPLBLGJLIFF());
             assertEquals(0, motion.getHPLBLGJLIFF().getSerializedSize());
             assertFalse(identities.getMPHLKPODDHK().hasLLHEBIHGDAE());
+            var appearance = M0AvatarIdentityProjection.projectCurrentPlayerAppearance(fresh);
+            assertEquals(12, appearance.getBBHDLEGOLPI());
+            assertFalse(appearance.hasOJPFPILNCIC());
+            assertEquals(1, appearance.getNKBMECCPKPJCount());
+            assertEquals(identities.getMPHLKPODDHK(), appearance.getNKBMECCPKPJ(0));
+            var appearanceCold = emu.grasscutter.net.proto.Client72M0EntityRawOuterClass.NAALIELJILH
+                    .parseFrom(appearance.toByteArray());
+            assertEquals(appearance, appearanceCold);
+            assertFalse(appearanceCold.getNKBMECCPKPJ(0).hasLLHEBIHGDAE(),
+                    "child tag2 is still unknown, even though the same Entity ID is known in SceneInfo");
+            assertEquals(restored.getGuid(), appearanceCold.getNKBMECCPKPJ(0)
+                    .getRawAvatar10().getFBLKPHOCBIK());
+            assertEquals(tokenUid, appearanceCold.getNKBMECCPKPJ(0).getRawAvatar10().getPJAJDHBBMGB());
             assertTrue(fresh.getWorld().getEntity().getInstancedAbilities().isEmpty());
             assertTrue(fresh.getTeamManager().getEntity().getInstancedAbilities().isEmpty());
             var baseAbilities = emu.grasscutter.data.GameData.getAbilityEmbryoInfo()
@@ -235,6 +248,7 @@ class M0BirthPersistenceMongoTest {
             fresh.getPosition().setX(savedX);
             fresh.getRotation().setX(17f).setY(28f).setZ(39f);
             assertThrows(IllegalStateException.class, () -> M0AvatarIdentityProjection.projectCurrentPlayer(fresh));
+            assertThrows(IllegalStateException.class, () -> M0AvatarIdentityProjection.projectCurrentPlayerAppearance(fresh));
             restored.setFightProperty(FightProperty.FIGHT_PROP_CUR_HP, 123.5f);
             freshSession.handleClose();
             assertTrue(DatabaseHelper.awaitIdle(Duration.ofSeconds(10)));
